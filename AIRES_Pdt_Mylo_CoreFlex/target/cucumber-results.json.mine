@@ -1,0 +1,218 @@
+[
+  {
+    "line": 2,
+    "elements": [
+      {
+        "line": 5,
+        "name": "Login to MobilityX Application",
+        "description": "",
+        "type": "background",
+        "keyword": "Background",
+        "steps": [
+          {
+            "result": {
+              "duration": 22040638126,
+              "status": "passed"
+            },
+            "line": 6,
+            "name": "he is logged into MobilityX application as a client user",
+            "match": {
+              "location": "SharedSteps.he_is_logged_into_MobilityX_application_as_a_client_user()"
+            },
+            "keyword": "Given "
+          }
+        ]
+      },
+      {
+        "before": [
+          {
+            "result": {
+              "duration": 6656963106,
+              "status": "passed"
+            },
+            "match": {
+              "location": "Hooks.BeforeSteps(Scenario)"
+            }
+          }
+        ],
+        "line": 150,
+        "name": "Verify YOY data is in chronological descending order in the downloaded excel file for Spending tab of MXR Report",
+        "description": "",
+        "id": "spending-tab;verify-yoy-data-is-in-chronological-descending-order-in-the-downloaded-excel-file-for-spending-tab-of-mxr-report",
+        "after": [
+          {
+            "result": {
+              "duration": 344457,
+              "status": "passed"
+            },
+            "match": {
+              "location": "Hooks.afterScenario(Scenario)"
+            }
+          },
+          {
+            "result": {
+              "duration": 1154759474,
+              "status": "passed"
+            },
+            "match": {
+              "location": "Hooks.AfterSteps(Scenario)"
+            }
+          }
+        ],
+        "type": "scenario",
+        "keyword": "Scenario",
+        "steps": [
+          {
+            "result": {
+              "duration": 14812687715,
+              "status": "passed"
+            },
+            "line": 151,
+            "name": "he is on MobilityX \"Spending\" page",
+            "match": {
+              "arguments": [
+                {
+                  "val": "Spending",
+                  "offset": 20
+                }
+              ],
+              "location": "SharedSteps.he_is_on_mobilityx_something_page(String)"
+            },
+            "keyword": "Given "
+          },
+          {
+            "result": {
+              "duration": 37199869257,
+              "status": "passed"
+            },
+            "line": 152,
+            "name": "he downloads the below filetype for below section after clicking on \"Download\" menu from \"Options\" hamburger",
+            "match": {
+              "arguments": [
+                {
+                  "val": "Download",
+                  "offset": 69
+                },
+                {
+                  "val": "Options",
+                  "offset": 90
+                }
+              ],
+              "location": "SharedSteps.he_downloads_the_below_filetype_for_below_section_after_clicking_on_menu_from_hamburger(String,String,DataTable)"
+            },
+            "rows": [
+              {
+                "cells": [
+                  "SectionName",
+                  "FileType",
+                  "FileName"
+                ],
+                "line": 153
+              },
+              {
+                "cells": [
+                  "Spending History",
+                  "Excel",
+                  "Spending_History.xls"
+                ],
+                "line": 154
+              },
+              {
+                "cells": [
+                  "Spending History",
+                  "Pdf",
+                  "Spending_History.pdf"
+                ],
+                "line": 155
+              }
+            ],
+            "keyword": "When "
+          },
+          {
+            "result": {
+              "duration": 331110588,
+              "status": "passed"
+            },
+            "line": 156,
+            "name": "data displayed in \"Time Period\" column should be sorted in descending order for below excel files",
+            "match": {
+              "arguments": [
+                {
+                  "val": "Time Period",
+                  "offset": 19
+                }
+              ],
+              "location": "SharedSteps.data_displayed_in_column_should_be_sorted_in_descending_order_for_below_excel_files(String,DataTable)"
+            },
+            "rows": [
+              {
+                "cells": [
+                  "ExcelFileName",
+                  "SheetName"
+                ],
+                "line": 157
+              },
+              {
+                "cells": [
+                  "Spending_History.xls",
+                  "Spending Trends"
+                ],
+                "line": 158
+              }
+            ],
+            "keyword": "Then "
+          },
+          {
+            "result": {
+              "duration": 3407021493,
+              "status": "passed"
+            },
+            "comments": [
+              {
+                "line": 159,
+                "value": "#And data displayed in \"Sum of Spending\" column should match with orange dotted line in graph"
+              }
+            ],
+            "line": 160,
+            "name": "sum of \"Sum of Spending\" column, \"Sum of GrossUp\" column should match with value displayed in graph",
+            "match": {
+              "arguments": [
+                {
+                  "val": "Sum of Spending",
+                  "offset": 8
+                },
+                {
+                  "val": "Sum of GrossUp",
+                  "offset": 34
+                }
+              ],
+              "location": "MobilityX_MXReports_SpendingTab_Steps.sum_of_column_column_should_match_with_value_displayed_in_graph(String,String)"
+            },
+            "keyword": "And "
+          }
+        ],
+        "tags": [
+          {
+            "line": 149,
+            "name": "@Sprint-ThirtySix"
+          },
+          {
+            "line": 149,
+            "name": "@yoyspending"
+          }
+        ]
+      }
+    ],
+    "name": "Spending Tab",
+    "description": "Validate the functionality of Edit filter frame",
+    "id": "spending-tab",
+    "keyword": "Feature",
+    "uri": "MobilityX_MXReports_SpendingTab.feature",
+    "tags": [
+      {
+        "line": 1,
+        "name": "@Regression"
+      }
+    ]
+  }
+]

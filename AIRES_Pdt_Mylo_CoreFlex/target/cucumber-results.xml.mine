@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?><testsuite failures="0" name="cucumber.runtime.formatter.JUnitFormatter" skipped="0" tests="1" time="85.603394">
+<testcase classname="Spending Tab" name="Verify YOY data is in chronological descending order in the downloaded excel file for Spending tab of MXR Report" time="85.603394">
+<system-out><![CDATA[Given he is logged into MobilityX application as a client user..............passed
+Given he is on MobilityX "Spending" page....................................passed
+When he downloads the below filetype for below section after clicking on "Download" menu from "Options" hamburger.passed
+Then data displayed in "Time Period" column should be sorted in descending order for below excel files.passed
+And sum of "Sum of Spending" column, "Sum of GrossUp" column should match with value displayed in graph.passed
+]]></system-out>
+</testcase>
+</testsuite>

@@ -1,0 +1,237 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<AuthFormData xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+              xsi:schemaLocation="http://www.aires.com/relonet public_html/XML/AuthFormDataDef.xsd"
+              xmlns="http://www.aires.com/relonet"><DataElement name="authorizationType" value="" type="">
+<domain-mapper semantic-name=""/>
+</DataElement>
+
+<DataElement name="firstName" value="Shiv" type="ss">
+<domain-mapper semantic-name="Transferee First Name"/>
+</DataElement>
+
+<DataElement name="lastName" value="Rana" type="ss">
+<domain-mapper semantic-name="Transferee Last Name"/>
+</DataElement>
+
+<DataElement name="authorizationDate" value="10-26-2020" type="">
+<domain-mapper semantic-name="Authorization Date"/>
+</DataElement>
+
+<DataElement name="startDate" value="06-Jan-2021" type="">
+<domain-mapper semantic-name="Start Date"/>
+</DataElement>
+
+<DataElement name="relocationPolicy" value="Lump Sum Plan" type="">
+<domain-mapper semantic-name="Relocation Policy"/>
+</DataElement>
+
+<DataElement name="relocationPolicy" value="Long Term Domestic Assignment" type="">
+<domain-mapper semantic-name="BSC Relocation Policy"/>
+</DataElement>
+
+
+<DataElement name="destAddress" value="1000 Park Lane" type="">
+<domain-mapper semantic-name="Destination Address"/>
+</DataElement>
+
+<DataElement name="originAddress" value="123 Test St" type="">
+<domain-mapper semantic-name="Origin Address"/>
+</DataElement>
+
+<DataElement name="destCity" value="Louisville" type="">
+<domain-mapper semantic-name="Destination City"/>
+</DataElement>
+
+<DataElement name="destinationState" value="KY" type="">
+<domain-mapper semantic-name="Destination State"/>
+</DataElement>
+
+<DataElement name="originCity" value="Pittsburgh" type="">
+<domain-mapper semantic-name="Origin City"/>
+</DataElement>
+
+<DataElement name="originState" value="New York" type="">
+<domain-mapper semantic-name="Origin State"/>
+</DataElement>
+
+<DataElement name="destZip" value="89001" type="">
+<domain-mapper semantic-name="Destination Zip"/>
+</DataElement>
+
+<DataElement name="originZip" value="15275" type="">
+<domain-mapper semantic-name="Origin Zip"/>
+</DataElement>
+
+<DataElement name="destCountry" value="USA" type="">
+<domain-mapper semantic-name="Destination Country"/>
+</DataElement>
+
+<DataElement name="originCountry" value="USA" type="">
+<domain-mapper semantic-name="Origin Country"/>
+</DataElement>
+
+<DataElement name="newJobTitle" value="Test Title" type="">
+<domain-mapper semantic-name="New Job Title"/>
+</DataElement>
+
+<DataElement name="officePhone" value="524-123-1234" type="">
+<domain-mapper semantic-name="Work Phone"/>
+</DataElement>
+
+<DataElement name="faxNumber" value="524-123-1234" type="">
+<domain-mapper semantic-name="Fax"/>
+</DataElement>
+
+<DataElement name="mobileTelephone" value="412-555-1234" type="">
+<domain-mapper semantic-name="Mobile"/>
+</DataElement>
+
+<DataElement name="email" value="srana@aires.com" type="">
+<domain-mapper semantic-name="Email"/>
+</DataElement>
+
+<DataElement name="homeTelephone" value="740-123-1234" type="">
+<domain-mapper semantic-name="Origin Phone"/>
+</DataElement>
+
+<DataElement name="mode" value="" type="">
+<domain-mapper semantic-name=""/>
+</DataElement>
+
+<DataElement name="transferType" value="New Hire" type="">
+<domain-mapper semantic-name="Transfer Type"/>
+</DataElement>
+
+<DataElement name="homeStatus" value="Renter" type="">
+<domain-mapper semantic-name="Home Status"/>
+</DataElement>
+
+<DataElement name="comments" value="comments" type="">
+<domain-mapper semantic-name="Comment"/>
+</DataElement>
+
+<DataElement name="marriageStatus" value="Single" type="">
+<domain-mapper semantic-name="Marriage Status"/>
+</DataElement>
+
+<DataElement name="familySize" value="1" type="">
+<domain-mapper semantic-name="Transferee Family Size"/>
+</DataElement>
+
+<DataElement name="spouseName" value="" type="">
+<domain-mapper semantic-name="Spouse first name"/>
+</DataElement>
+
+<DataElement name="spousePrimaryContact" value="" type="">
+<domain-mapper semantic-name="Primary Contact"/>
+</DataElement>
+
+<DataElement name="childrenNamesAges" value="" type="">
+<domain-mapper semantic-name=""/>
+</DataElement>
+
+<DataElement name="spouseMobileTelephone" value="" type="">
+<domain-mapper semantic-name=""/>
+</DataElement>
+
+<DataElement name="altEmail" value="" type="">
+<domain-mapper semantic-name=""/>
+</DataElement>
+
+<DataElement name="employeeID" value="AIRES_UPLOAD_1" type="">
+<domain-mapper semantic-name="Eeid"/>
+</DataElement>
+
+<DataElement name="department" value="automation" type="">
+<domain-mapper semantic-name="Department"/>
+</DataElement>
+
+<DataElement name="costCenter" value="43E" type="">
+<domain-mapper semantic-name="Cost Center"/>
+</DataElement>
+
+<DataElement name="gradeLevel" value="12A" type="">
+<domain-mapper semantic-name="Job grade"/>
+</DataElement>
+
+<DataElement name="POnumber" value="" type="">
+<domain-mapper semantic-name="Po #"/>
+</DataElement>
+
+<DataElement name="businessGroup" value="Administration" type="">
+<domain-mapper semantic-name="Operating Unit"/>
+</DataElement>
+
+<DataElement name="division" value="Corporate Functions" type="">
+<domain-mapper semantic-name="Division"/>
+</DataElement>
+
+<DataElement name="companyNumber" value="" type="">
+<domain-mapper semantic-name="Comp code"/>
+</DataElement>
+
+<DataElement name="authorizedBy" value="" type="">
+<domain-mapper semantic-name="Authorizer first name"/>
+</DataElement>
+
+<DataElement name="reloBenefitsExpire" value="" type="">
+<domain-mapper semantic-name="Relocation Benefits Expire Est"/>
+</DataElement>
+
+<DataElement name="emailType" value="Employee Work" type="">
+<domain-mapper semantic-name=""/>
+</DataElement>
+
+<DataElement name="assignmentType" value="One Way" type="">
+<domain-mapper semantic-name="Assignment Type"/>
+</DataElement>
+
+<DataElement name="globalMobilityAssessment" value="No" type=""><domain-mapper semantic-name="Global Mobility Assessment"/>
+</DataElement>
+
+<DataElement name="airesInstructions" value="Employee Pre-Decision Counseling" type="">
+<domain-mapper semantic-name="Aires Instructions"/>
+</DataElement>
+
+<DataElement name="requireCostEstimate" value="Yes" type="">
+<domain-mapper semantic-name="Requires Cost Estimate"/>
+</DataElement>
+
+<DataElement name="originOfficeCityState" value="BTG - USA - Arden Hills" type="">
+<domain-mapper semantic-name="Origin Office City State"/>
+</DataElement>
+
+<DataElement name="HRManagerName" value="HR Manager" type="">
+<domain-mapper semantic-name="HR Manager Name"/>
+</DataElement>
+
+<DataElement name="Hiring Manager" value="Hiring Manager" type="">
+<domain-mapper semantic-name="Hiring Manager Name"/>
+</DataElement>
+
+<DataElement name="Funding EC Member" value="MEGHAN SCANLON" type="">
+<domain-mapper semantic-name="Funding EC Member"/>
+</DataElement>
+
+<DataElement name="Home Finding Radio" value="No" type="">
+<domain-mapper semantic-name="Home Finding Radio"/>
+</DataElement>
+
+<DataElement name="Pet Shipment Radio" value="No" type="">
+<domain-mapper semantic-name="Pet Shipment Radio"/>
+</DataElement>
+
+<DataElement name="Property Management Radio" value="No" type="">
+<domain-mapper semantic-name="Property Management Radio"/>
+</DataElement>
+
+<DataElement name="Appliance Allowance Radio" value="No" type="">
+<domain-mapper semantic-name="Appliance Allowance Radio"/>
+</DataElement>
+
+<DataElement name="Pre Decision Benefit Radio" value="No" type="">
+<domain-mapper semantic-name="Pre Decision Benefit Radio"/>
+</DataElement>
+
+
+</AuthFormData>

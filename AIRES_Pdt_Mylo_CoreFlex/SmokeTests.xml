@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE suite SYSTEM "http://testng.org/testng-1.0.dtd">
+<suite name="SmokeTests">
+	<test name="SmokeTests Execution">
+		<classes>
+			 <class name="com.aires.runner.CreateTestRun_InTestRail_Test" /> 
+			<class name="com.aires.runner.TestRunner" />
+			<!-- <class name="com.aires.runner.TestRunner_Rerun" /> -->
+			<!-- <class name="com.aires.runner.CloseTestRunInTestRail_AfterExecution_Test" /> -->
+			<!-- <class name="com.aires.utilities.SendAutomationReport_ViaMail_Test" /> -->
+		</classes>
+	</test>
+</suite>

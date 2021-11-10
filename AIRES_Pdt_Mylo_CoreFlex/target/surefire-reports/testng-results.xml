@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testng-results skipped="0" failed="0" total="3" passed="3">
+  <reporter-output>
+  </reporter-output>
+  <suite name="SmokeTests" duration-ms="202431" started-at="2020-07-13T10:50:06Z" finished-at="2020-07-13T10:53:29Z">
+    <groups>
+      <group name="cucumber">
+        <method signature="AbstractTestNGCucumberTests.feature(cucumber.api.testng.CucumberFeatureWrapper)[pri:0, instance:runner.TestRunner@ee6fee]" name="feature" class="cucumber.api.testng.AbstractTestNGCucumberTests"/>
+      </group> <!-- cucumber -->
+    </groups>
+    <test name="SmokeTests Execution" duration-ms="202431" started-at="2020-07-13T10:50:06Z" finished-at="2020-07-13T10:53:29Z">
+      <class name="runner.TestRunner">
+        <test-method status="PASS" signature="setUpClass()[pri:0, instance:runner.TestRunner@ee6fee]" name="setUpClass" is-config="true" duration-ms="1309" started-at="2020-07-13T06:50:06Z" finished-at="2020-07-13T06:50:08Z">
+          <reporter-output>
+          </reporter-output>
+        </test-method> <!-- setUpClass -->
+        <test-method status="PASS" signature="setup()[pri:0, instance:runner.TestRunner@ee6fee]" name="setup" is-config="true" duration-ms="164" started-at="2020-07-13T06:50:08Z" finished-at="2020-07-13T06:50:08Z">
+          <reporter-output>
+          </reporter-output>
+        </test-method> <!-- setup -->
+        <test-method status="PASS" signature="feature(cucumber.api.testng.CucumberFeatureWrapper)[pri:0, instance:runner.TestRunner@ee6fee]" name="feature" duration-ms="96810" started-at="2020-07-13T06:50:08Z" description="Runs Cucumber Feature" data-provider="features" finished-at="2020-07-13T06:51:45Z">
+          <params>
+            <param index="0">
+              <value>
+                <![CDATA[Validate the functionality of Assignment Module and their sub-modules]]>
+              </value>
+            </param>
+          </params>
+          <reporter-output>
+          </reporter-output>
+        </test-method> <!-- feature -->
+        <test-method status="PASS" signature="feature(cucumber.api.testng.CucumberFeatureWrapper)[pri:0, instance:runner.TestRunner@ee6fee]" name="feature" duration-ms="47091" started-at="2020-07-13T06:51:45Z" description="Runs Cucumber Feature" data-provider="features" finished-at="2020-07-13T06:52:32Z">
+          <params>
+            <param index="0">
+              <value>
+                <![CDATA[Login to MobilityX Application]]>
+              </value>
+            </param>
+          </params>
+          <reporter-output>
+          </reporter-output>
+        </test-method> <!-- feature -->
+        <test-method status="PASS" signature="feature(cucumber.api.testng.CucumberFeatureWrapper)[pri:0, instance:runner.TestRunner@ee6fee]" name="feature" duration-ms="56250" started-at="2020-07-13T06:52:32Z" description="Runs Cucumber Feature" data-provider="features" finished-at="2020-07-13T06:53:28Z">
+          <params>
+            <param index="0">
+              <value>
+                <![CDATA[Validate the functionality of Dashboard Home page]]>
+              </value>
+            </param>
+          </params>
+          <reporter-output>
+          </reporter-output>
+        </test-method> <!-- feature -->
+        <test-method status="PASS" signature="writeExtentReport()[pri:0, instance:runner.TestRunner@ee6fee]" name="writeExtentReport" is-config="true" duration-ms="14" started-at="2020-07-13T06:53:28Z" finished-at="2020-07-13T06:53:28Z">
+          <reporter-output>
+          </reporter-output>
+        </test-method> <!-- writeExtentReport -->
+        <test-method status="PASS" signature="tearDownClass()[pri:0, instance:runner.TestRunner@ee6fee]" name="tearDownClass" is-config="true" duration-ms="486" started-at="2020-07-13T06:53:28Z" finished-at="2020-07-13T06:53:29Z">
+          <reporter-output>
+          </reporter-output>
+        </test-method> <!-- tearDownClass -->
+      </class> <!-- runner.TestRunner -->
+    </test> <!-- SmokeTests Execution -->
+  </suite> <!-- SmokeTests -->
+</testng-results>

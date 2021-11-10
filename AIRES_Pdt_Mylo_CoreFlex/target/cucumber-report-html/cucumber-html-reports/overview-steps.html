@@ -1,0 +1,333 @@
+<!DOCTYPE html>
+<html>
+<head>
+
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+
+<script src="js/jquery.min.js"></script>
+<script src="js/jquery.tablesorter.min.js"></script>
+<script src="js/Chart.min.js"></script>
+<script src="js/moment.min.js"></script>
+<script src="js/bootstrap.min.js"></script>
+
+<link rel="stylesheet" href="css/bootstrap.min.css" type="text/css"/>
+<link rel="stylesheet" href="css/cucumber.css" type="text/css"/>
+<link rel="stylesheet" href="css/font-awesome.min.css"/>
+<link rel="shortcut icon" href="images/favicon.png"/>
+
+<script>
+$(document).ready(function() {
+    // this will tell tablesorter to try looking for the data-value attribute
+    // if present, it'll sort by that instead
+    // otherwise, it'll sort by the text content of the table cell
+    $("#tablesorter").tablesorter({
+        textAttribute: 'data-value',
+        // ignores the first row of the header, the 'scenario', 'steps', since
+        // sorting those doesn't make sense
+        selectorHeaders: '> thead tr:not(.dont-sort) th',
+        // use a stable sort
+        sortStable: true
+    });
+});
+</script>
+
+
+
+
+
+
+
+
+
+
+
+<title>Cucumber Reports (no 1) - Steps Overview</title>
+
+</head>
+<body>
+
+<nav class="navbar navbar-default navbar-fixed-top" id="navigation">
+  <div class="container-fluid">
+    <div class="collapse navbar-collapse">
+      <p class="navbar-text navbar-left">Cucumber Report</p>
+      <ul class="nav navbar-nav navbar-right">
+        <li role="presentation" ><a href="overview-features.html">Features</a></li>
+        <li role="presentation" ><a href="overview-tags.html">Tags</a></li>
+        <li role="presentation"     class="active" ><a href="overview-steps.html">Steps</a></li>
+        <li role="presentation" ><a href="overview-failures.html">Failures</a></li>
+      </ul>
+    </div>
+  </div>
+</nav>
+
+
+<div class="container-fluid">
+  <div class="col-md-5 col-md-offset-1">
+
+<table class="table table-bordered" id="build-info">
+  <thead>
+    <tr>
+      <th>Project</th>
+        <th>Number</th>
+      <th>Date</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr class="info">
+      <td>Automation-Execution-Report</td>
+        <td>1</td>
+      <td>13 Jul 2020, 06:53</td>
+    </tr>
+  </tbody>
+</table>
+
+  </div>
+  <div class="col-md-3 col-md-offset-2">
+  </div>
+</div>
+
+
+<div id="report-lead" class="container-fluid">
+  <div class="col-md-10 col-md-offset-1">
+    <h2>Steps Statistics</h2>
+      <p>The following graph shows step statistics for this build. Below list is based on results.
+ step does not provide information about result then is not listed below.
+ Additionally @Before and @After are not counted because they are part of the scenarios, not steps.</p>
+  </div>
+</div>
+
+<div class="container-fluid" id="report">
+  <div class="row">
+    <div class="col-md-10 col-md-offset-1">
+      <table id="tablesorter" class="stats-table table-hover">
+
+        <thead>
+          <tr class="header">
+            <th>Implementation</th>
+            <th>Occurrences</th>
+            <th>Average duration</th>
+            <th>Max duration</th>
+            <th>Total durations</th>
+            <th>Ratio</th>
+          </tr>
+        </thead>
+
+        <tbody>
+            <tr>
+              <td class="location">Hooks.AfterSteps(Scenario)</td>
+              <td>3</td>
+              <td class="duration" data-value="2500018927">2.500</td>
+              <td class="duration" data-value="2500018927">5.154</td>
+              <td class="duration" data-value="7500056782">7.500</td>
+              <td class="passed">100.00%</td>
+            </tr>
+            <tr>
+              <td class="location">Hooks.BeforeSteps(Scenario)</td>
+              <td>3</td>
+              <td class="duration" data-value="16685651226">16.685</td>
+              <td class="duration" data-value="16685651226">36.615</td>
+              <td class="duration" data-value="50056953678">50.056</td>
+              <td class="passed">100.00%</td>
+            </tr>
+            <tr>
+              <td class="location">Hooks.afterScenario(Scenario)</td>
+              <td>3</td>
+              <td class="duration" data-value="622099">0.000</td>
+              <td class="duration" data-value="622099">0.001</td>
+              <td class="duration" data-value="1866299">0.001</td>
+              <td class="passed">100.00%</td>
+            </tr>
+            <tr>
+              <td class="location">Iris_AssignmentModule_Steps.account_should_be_displayed_as_actualized_under_tab(String)</td>
+              <td>1</td>
+              <td class="duration" data-value="18598829949">18.598</td>
+              <td class="duration" data-value="18598829949">18.598</td>
+              <td class="duration" data-value="18598829949">18.598</td>
+              <td class="passed">100.00%</td>
+            </tr>
+            <tr>
+              <td class="location">Iris_AssignmentModule_Steps.following_values_Values_should_be_displayed_under_section(String,DataTable)</td>
+              <td>1</td>
+              <td class="duration" data-value="3374570023">3.374</td>
+              <td class="duration" data-value="3374570023">3.374</td>
+              <td class="duration" data-value="3374570023">3.374</td>
+              <td class="passed">100.00%</td>
+            </tr>
+            <tr>
+              <td class="location">Iris_AssignmentModule_Steps.he_is_on_tab_of_module(String,String)</td>
+              <td>1</td>
+              <td class="duration" data-value="6515506789">6.515</td>
+              <td class="duration" data-value="6515506789">6.515</td>
+              <td class="duration" data-value="6515506789">6.515</td>
+              <td class="passed">100.00%</td>
+            </tr>
+            <tr>
+              <td class="location">Iris_AssignmentModule_Steps.he_queries_file_id_from_module(String,String)</td>
+              <td>1</td>
+              <td class="duration" data-value="2523664879">2.523</td>
+              <td class="duration" data-value="2523664879">2.523</td>
+              <td class="duration" data-value="2523664879">2.523</td>
+              <td class="passed">100.00%</td>
+            </tr>
+            <tr>
+              <td class="location">Iris_AssignmentModule_Steps.home_Stat_field_should_display_value_as_under_Misc_information_section_in_Transferee_Family_tab(String)</td>
+              <td>1</td>
+              <td class="duration" data-value="10789015573">10.789</td>
+              <td class="duration" data-value="10789015573">10.789</td>
+              <td class="duration" data-value="10789015573">10.789</td>
+              <td class="passed">100.00%</td>
+            </tr>
+            <tr>
+              <td class="location">Iris_AssignmentModule_Steps.policy_field_should_display_value_as_under_File_section(String)</td>
+              <td>1</td>
+              <td class="duration" data-value="2408826750">2.408</td>
+              <td class="duration" data-value="2408826750">2.408</td>
+              <td class="duration" data-value="2408826750">2.408</td>
+              <td class="passed">100.00%</td>
+            </tr>
+            <tr>
+              <td class="location">MobilityX_DashboardHome_Steps.he_is_on_dialog(String)</td>
+              <td>1</td>
+              <td class="duration" data-value="8017448377">8.017</td>
+              <td class="duration" data-value="8017448377">8.017</td>
+              <td class="duration" data-value="8017448377">8.017</td>
+              <td class="passed">100.00%</td>
+            </tr>
+            <tr>
+              <td class="location">MobilityX_DashboardHome_Steps.he_should_be_able_to_delete_file(String)</td>
+              <td>1</td>
+              <td class="duration" data-value="2182522639">2.182</td>
+              <td class="duration" data-value="2182522639">2.182</td>
+              <td class="duration" data-value="2182522639">2.182</td>
+              <td class="passed">100.00%</td>
+            </tr>
+            <tr>
+              <td class="location">MobilityX_DashboardHome_Steps.he_upload_a_file(String)</td>
+              <td>1</td>
+              <td class="duration" data-value="198586692">0.198</td>
+              <td class="duration" data-value="198586692">0.198</td>
+              <td class="duration" data-value="198586692">0.198</td>
+              <td class="passed">100.00%</td>
+            </tr>
+            <tr>
+              <td class="location">MobilityX_DashboardHome_Steps.select_value_Billing_from_Type_dropdown(String)</td>
+              <td>1</td>
+              <td class="duration" data-value="5189525136">5.189</td>
+              <td class="duration" data-value="5189525136">5.189</td>
+              <td class="duration" data-value="5189525136">5.189</td>
+              <td class="passed">100.00%</td>
+            </tr>
+            <tr>
+              <td class="location">MobilityX_DashboardHome_Steps.success_message_of_file_upload_should_be_displayed()</td>
+              <td>1</td>
+              <td class="duration" data-value="1242413910">1.242</td>
+              <td class="duration" data-value="1242413910">1.242</td>
+              <td class="duration" data-value="1242413910">1.242</td>
+              <td class="passed">100.00%</td>
+            </tr>
+            <tr>
+              <td class="location">MobilityX_DashboardHome_Steps.uploaded_file_should_be_displayed_under_Document_Library_section(String)</td>
+              <td>1</td>
+              <td class="duration" data-value="547337022">0.547</td>
+              <td class="duration" data-value="547337022">0.547</td>
+              <td class="duration" data-value="547337022">0.547</td>
+              <td class="passed">100.00%</td>
+            </tr>
+            <tr>
+              <td class="location">MobilityX_Login_Steps.he_clicks_on_Sign_In_button()</td>
+              <td>1</td>
+              <td class="duration" data-value="2202592578">2.202</td>
+              <td class="duration" data-value="2202592578">2.202</td>
+              <td class="duration" data-value="2202592578">2.202</td>
+              <td class="passed">100.00%</td>
+            </tr>
+            <tr>
+              <td class="location">MobilityX_Login_Steps.he_enter_npant_aires_com_and_P_ssword_in_username_and_password_field(String,String)</td>
+              <td>1</td>
+              <td class="duration" data-value="12057483982">12.057</td>
+              <td class="duration" data-value="12057483982">12.057</td>
+              <td class="duration" data-value="12057483982">12.057</td>
+              <td class="passed">100.00%</td>
+            </tr>
+            <tr>
+              <td class="location">MobilityX_Login_Steps.he_is_on_MobilityX_page()</td>
+              <td>1</td>
+              <td class="duration" data-value="21049197314">21.049</td>
+              <td class="duration" data-value="21049197314">21.049</td>
+              <td class="duration" data-value="21049197314">21.049</td>
+              <td class="passed">100.00%</td>
+            </tr>
+            <tr>
+              <td class="location">MobilityX_Login_Steps.he_should_successfuly_redirected_onto_the_Dashboard_home_page_of_MobilityX()</td>
+              <td>1</td>
+              <td class="duration" data-value="3122780269">3.122</td>
+              <td class="duration" data-value="3122780269">3.122</td>
+              <td class="duration" data-value="3122780269">3.122</td>
+              <td class="passed">100.00%</td>
+            </tr>
+            <tr>
+              <td class="location">MobilityX_Login_Steps.neeraj_Pant_should_be_displayed(String,String)</td>
+              <td>1</td>
+              <td class="duration" data-value="138270786">0.138</td>
+              <td class="duration" data-value="138270786">0.138</td>
+              <td class="duration" data-value="138270786">0.138</td>
+              <td class="passed">100.00%</td>
+            </tr>
+            <tr>
+              <td class="location">SharedSteps.he_clicks_on_submit_changes_button(String)</td>
+              <td>1</td>
+              <td class="duration" data-value="421025367">0.421</td>
+              <td class="duration" data-value="421025367">0.421</td>
+              <td class="duration" data-value="421025367">0.421</td>
+              <td class="passed">100.00%</td>
+            </tr>
+            <tr>
+              <td class="location">SharedSteps.he_ha_logged_into_iris_application_as_something_user(String)</td>
+              <td>1</td>
+              <td class="duration" data-value="10049104006">10.049</td>
+              <td class="duration" data-value="10049104006">10.049</td>
+              <td class="duration" data-value="10049104006">10.049</td>
+              <td class="passed">100.00%</td>
+            </tr>
+            <tr>
+              <td class="location">SharedSteps.he_is_logged_into_MobilityX_application_as_a_client_user()</td>
+              <td>1</td>
+              <td class="duration" data-value="31116136548">31.116</td>
+              <td class="duration" data-value="31116136548">31.116</td>
+              <td class="duration" data-value="31116136548">31.116</td>
+              <td class="passed">100.00%</td>
+            </tr>
+        </tbody>
+
+        <tfoot class="total">
+          <tr>
+            <td>23</td>
+            <td>29</td>
+            <td class="duration">6.872</td>
+            <td class="duration">50.056</td>
+            <td class="duration">3:19.303</td>
+            <td>Totals</td>
+          </tr>
+        </tfoot>
+
+      </table>
+    </div>
+  </div>
+</div>
+
+
+<nav class="navbar navbar-default" id="footer">
+  <div class="container-fluid">
+    <p class="navbar-text navbar-right">
+        <small>generate Cucumber HTML reports via:&nbsp;</small>
+        <a class="navbar-link" href="https://github.com/jenkinsci/cucumber-reports-plugin">Jenkins Plugin</a> |
+        <a class="navbar-link" href="https://github.com/damianszczepanik/cucumber-reporting">Standalone</a> |
+        <a class="navbar-link" href="https://github.com/damianszczepanik/cucumber-sandwich">Sandwich</a> |
+        <a class="navbar-link" href="https://github.com/damianszczepanik/maven-cucumber-reporting">Maven</a>
+        &nbsp;&nbsp;
+    </p>
+  </div>
+</nav>
+
+</body>
+</html>

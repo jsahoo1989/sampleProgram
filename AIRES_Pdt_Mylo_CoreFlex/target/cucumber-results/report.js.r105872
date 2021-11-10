@@ -1,0 +1,8 @@
+$(document).ready(function() {var formatter = new CucumberHTML.DOMFormatter($('.cucumber-report'));formatter.uri("IRIS_AssignmentModule.feature");
+formatter.feature({
+  "line": 1,
+  "name": "Validate the functionality of Assignment Module and their sub-modules",
+  "description": "He wants to validate the functionality of Assignment Module and their sub-modules",
+  "id": "validate-the-functionality-of-assignment-module-and-their-sub-modules",
+  "keyword": "Feature"
+});

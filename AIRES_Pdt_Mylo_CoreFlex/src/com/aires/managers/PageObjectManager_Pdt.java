@@ -19,6 +19,8 @@ package com.aires.managers;
 
 import org.openqa.selenium.WebDriver;
 
+import com.aires.pages.pdt.PDT_AddNewPolicyPage;
+import com.aires.pages.pdt.PDT_GeneralInformationPage;
 import com.aires.pages.pdt.PDT_LoginPage;
 import com.aires.pages.pdt.PDT_ViewPolicyPage;
 
@@ -27,6 +29,8 @@ public class PageObjectManager_Pdt {
 	private WebDriver _driver;
 	private PDT_LoginPage _loginPage;
 	private PDT_ViewPolicyPage _viewPolicyPage;
+	private PDT_AddNewPolicyPage _addNewPolicyPage;
+	private PDT_GeneralInformationPage _generalInfoPage;
 
 	public PageObjectManager_Pdt(WebDriver driver) {
 		this._driver = driver;
@@ -39,5 +43,13 @@ public class PageObjectManager_Pdt {
 	public PDT_ViewPolicyPage getViewPolicyPage() {
 		return (_viewPolicyPage == null) ? _viewPolicyPage = new PDT_ViewPolicyPage(_driver) : _viewPolicyPage;
 	}	
+	
+	public PDT_AddNewPolicyPage getAddNewPolicyPage() {
+		return (_addNewPolicyPage == null) ? _addNewPolicyPage = new PDT_AddNewPolicyPage(_driver) : _addNewPolicyPage;
+	}
+	
+	public PDT_GeneralInformationPage getGeneralInformationPage() {
+		return (_generalInfoPage == null) ? _generalInfoPage = new PDT_GeneralInformationPage(_driver) : _generalInfoPage;
+	}
 	
 }

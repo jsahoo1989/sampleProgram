@@ -66,6 +66,11 @@ public class Hooks {
 			testContext.getWebDriverManager().getDriver().navigate()
 					.to(FileReaderManager.getInstance().getConfigReader().getMyloApplicationUrl());
 		}
+		else if (scenario.getName().contains("CoreFlex")) {
+			Log.info(FileReaderManager.getInstance().getConfigReader().getCoreFlexApplicationUrl());
+			testContext.getWebDriverManager().getDriver().navigate()
+					.to(FileReaderManager.getInstance().getConfigReader().getCoreFlexApplicationUrl());
+		}
 	}
 
 	@After(order = 2)

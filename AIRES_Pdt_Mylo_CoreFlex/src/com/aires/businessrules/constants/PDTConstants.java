@@ -1,7 +1,5 @@
 package com.aires.businessrules.constants;
 
-import org.testng.Assert;
-
 public class PDTConstants {
 
 	public static final String IS_DISPLAYED = " is displayed";
@@ -1638,7 +1636,26 @@ public class PDTConstants {
 	public static final String SUCCESSFULLY_LOGGED_IN_TO_APPLICATION = "{0} User Successfully logged in to Aires Policy Tool application.";
 	public static final String POLICIES_ARE_DISPLAYED = "{0} Verified policies are displayed on ''{1}'' page.";
 	public static final String POLICIES_ARE_NOT_DISPLAYED = "{0} Verified policies are not displayed on ''{1}'' page.";
-
-
-
+	public static final String ADD_NEW_POLICY_FORM = "Add New Policy Form";
+	public static final String FAILED_TO_VERIFY_POLICY_NAME_FIELD_FOR_VALID_CLIENTID ="{0} Failed to verify Policy Name Dropdown field for valid ClientID.";
+	public static final String EXCEPTION_OCCURED_WHILE_VALIDATING_POLICY_NAME_LIST = "{0} Exception Occured while validating Policy Name Dropdown List. ''{1}''";
+	public static final String SUCCESSFULLY_DISPLAYED_POLICIES_IN_POLICY_LIST ="{0} Successfully displayed Policies in Policy Name List.";
+	public static final String INCORRECT_CLIENT_DISPLAYED_FOR_ENTERED_CLIENTID = "{0} Incorrect Client ''{1}'' displayed in dropdown result for entered ClientID ''{2}''.";
+	public static final String ERROR_POP_UP_DISPLAYED_FOR_VALID_CLIENTID = "{0} Error Pop-Up displayed for Valid ClientID. Error Message - ''{1}''";
+	public static final String FAILED_TO_VERIFY_VALID_CLIENT_ID_DROPDOWN_OPTIONS = "{0} Failed to verify valid Client ID dropdown option values.";
+	public static final String FAILED_TO_VERIFY_INVALID_CLIENT_ID_DROPDOWN_OPTIONS = "{0} Failed to verify invalid Client ID dropdown option values.";
+	public static final String CLIENT_OPTIONS_NOT_DISPLAYED_FOR_VALID_CLIENTID = "{0} Client options not displayed for valid client ID - ''{1}''.";
+	public static final String EXCEPTION_OCCURED_WHILE_VALIDATING_CLIENT_OPTIONS_FOR_VALID_CLIENTID = "{0} Exception occured while validating client options for valid client ID. ''{1}''";
+	public static final String SUCCESSFULLY_VERIFIED_CLIENT_OPTIONS_FOR_VALID_CLIENTID = "{0} Successfully verified client options for valid client ID - ''{1}''";
+	public static final String SUCCESSFULLY_VERIFIED_CLIENT_OPTIONS_FOR_INVALID_CLIENTID = "{0} Successfully verified client options for Invalid client ID - ''{1}''";
+	public static final String EXCEPTION_OCCURED_WHILE_VALIDATING_INVALID_CLIENT_ERROR_POPUP = "{0} Exception occured while validating Invalid-ClientID Popup. ''{1}''";
+	public static final String RECORD_DOES_NOT_EXIST = "Record does not exist.";
+	public static final String POLICY_NAME_FIELD_DISPLAYED_FOR_INVALID_CLIENT = "{0} Policy Name field displayed for Invalid Client ''{1}''.";
+	public static final String POLICY_NAME_FIELD_NOT_DISPLAYED_FOR_INVALID_CLIENT = "{0} Policy Name field not displayed for Invalid Client ''{1}''.";
+	public static final String EXCEPTION_OCCURED_WHILE_VALIDATING_POLICY_NAME_FIELD = "{0} Exception occured while validating Policy Name Field. Exception - ''{1}''";
+	public static final String FAILED_TO_SELECT_POLICY_FROM_POLICY_NAME_FIELD = "{0} Failed to select Policy from Policy Name Field.";
+	public static final String EXCEPTION_OCCURED_WHILE_SELECTING_POLICY = "{0} Exception occured while selecting Policy Name from the Policy dropdown. Exception ''{1}''";
+	public static final String SUCCESSFULLY_SELECTED_POLICY_FROM_POLICY_NAME_LIST = "{0} Successfully selected policy from policy name list.";
+	public static final String EXCEPTION_OCCURED_WHILE_VALIDATING_GENERAL_INFORMATION_PAGE = "{0} Exception occured while validating Client & Policy Details on General Information Page. ''{1}''";
+	public static final String SUCCESSFULLY_VERIFIED_CLIENT_AND_POLICY_DETAILS_ON_GENERAL_INFO_PAGE = "{0} Successfully verified Client & Policy Details on ''{1}'' page.";
 }

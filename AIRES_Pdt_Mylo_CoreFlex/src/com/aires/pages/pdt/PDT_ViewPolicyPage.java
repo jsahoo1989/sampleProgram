@@ -33,7 +33,7 @@ public class PDT_ViewPolicyPage extends Base{
 	@FindBy(how = How.CSS, using = "i.material-icons.dp48")
 	private WebElement _logout;
 	
-	//Logout
+	//Progress Bar
 	@FindBy(how = How.CSS, using = "div.ngx-progress-bar.ngx-progress-bar-ltr")
 	private WebElement _progressBar;
 	
@@ -44,6 +44,10 @@ public class PDT_ViewPolicyPage extends Base{
 	//Edit Icon
 	@FindBy(how = How.CSS, using = "img.formicon")
 	private List<WebElement> _txtPolicyName;
+	
+	// Left Menu - Add New Policy
+	@FindBy(how = How.XPATH, using = "//a[contains(string(),'Add New Policy Form')]")
+	private WebElement _addNewPolicyForm;
 	
 	public String getElementText(String elementName) {
 		String elementText = null;
@@ -67,6 +71,10 @@ public class PDT_ViewPolicyPage extends Base{
 		case PDTConstants.LOGOUT:
 			CoreFunctions.highlightObject(driver, _logout);
 			CoreFunctions.clickElement(driver, _logout);
+			break;
+		case PDTConstants.ADD_NEW_POLICY_FORM:
+			CoreFunctions.highlightObject(driver, _addNewPolicyForm);
+			CoreFunctions.clickElement(driver, _addNewPolicyForm);
 			break;
 		default:
 			Assert.fail("Element not found");

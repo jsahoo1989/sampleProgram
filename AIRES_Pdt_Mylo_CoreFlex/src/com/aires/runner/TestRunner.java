@@ -58,7 +58,7 @@ import cucumber.api.testng.AbstractTestNGCucumberTests;
 		//,tags = {"@Pre-Prod","~@ignoreIRIS"}
 		//,tags = (CoreConstants.TAG_VALUE)
 		//,tags =("@214455")
-		,tags = {"@login"}
+		,tags = {"@CF-25"}
 		,plugin = { "com.vimalselvam.cucumber.listener.ExtentCucumberFormatter:", "junit:target/cucumber-results.xml", "html:target/cucumber-results", "json:target/cucumber-results.json"},
 		monochrome = true
 		)

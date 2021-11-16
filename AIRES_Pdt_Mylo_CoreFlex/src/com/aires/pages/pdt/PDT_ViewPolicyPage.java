@@ -2,7 +2,9 @@ package com.aires.pages.pdt;
 
 import java.text.MessageFormat;
 import java.util.List;
+import java.util.Map;
 
+import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
@@ -41,9 +43,40 @@ public class PDT_ViewPolicyPage extends Base{
 	@FindBy(how = How.CSS, using = "img.formicon")
 	private List<WebElement> _iconEdit;
 	
-	//Edit Icon
+	//Policy Name
 	@FindBy(how = How.CSS, using = "img.formicon")
-	private List<WebElement> _txtPolicyName;
+	private List<WebElement> _txtPolicyName;	
+
+	// Input Client/Company Name field
+	@FindBy(how = How.ID, using = "companyName")
+	private WebElement _inputClientName;
+	
+	// Input ClientId field
+	@FindBy(how = How.ID, using = "companyId")
+	private WebElement _inputClientId;
+	
+	// Input Policy Name
+	@FindBy(how = How.ID, using = "policyName")
+	private WebElement _inputPolicyName;
+	
+	//Policies List
+	@FindBy(how = How.CSS, using = "h5.text-info.info-pname")
+	private List<WebElement> _listPolicyName;
+	
+	//Client Name list
+	@FindBy(how = How.CSS , using = "h6.info-pclient")
+	private List<WebElement> _listClientName;
+	
+	//Search Button
+	@FindBy(how = How.CSS , using = "button.searchbtn")
+	private WebElement _btnSearch;
+	
+	//Search Button
+	@FindBy(how = How.CSS , using = "a.clear_filter")
+	private WebElement _clearFilter;
+	
+	final By _listPolicyNameByLocator = By.cssSelector("h5.text-info.info-pname");
+	final By _listClientNameByLocator = By.cssSelector("h6.info-pclient");
 	
 	public String getElementText(String elementName) {
 		String elementText = null;
@@ -68,6 +101,10 @@ public class PDT_ViewPolicyPage extends Base{
 			CoreFunctions.highlightObject(driver, _logout);
 			CoreFunctions.clickElement(driver, _logout);
 			break;
+		case PDTConstants.CLEAR_FILTER:
+			CoreFunctions.highlightObject(driver, _clearFilter);
+			CoreFunctions.clickElement(driver, _clearFilter);
+			break;
 		default:
 			Assert.fail("Element not found");
 		}		
@@ -81,8 +118,7 @@ public class PDT_ViewPolicyPage extends Base{
 	public Boolean verifyUserlogin(String userName, String pageName) {		
 		if ( getUserName().equalsIgnoreCase(userName)) {			
 			CoreFunctions.highlightObject(driver, _userName);
-			Reporter.addStepLog(MessageFormat.format(PDTConstants.VERIFIED_USERNAME_IS_DISPLAYED, CoreConstants.PASS, userName, pageName ));			
-			Log.info("Verified username");
+			Reporter.addStepLog(MessageFormat.format(PDTConstants.VERIFIED_USERNAME_IS_DISPLAYED, CoreConstants.PASS, userName, pageName ));
 			return true;
 		}
 		Reporter.addStepLog(MessageFormat.format(PDTConstants.FAILED_TO_VERIFY_USERNAME, CoreConstants.FAIL, pageName, userName, getUserName()));
@@ -111,5 +147,78 @@ public class PDT_ViewPolicyPage extends Base{
 		}
 		Log.info("Policies are not displayed");
 		return false;
+	}
+	
+	public void performSearchOperation(Map<String, String> policyDetails) {
+		Log.info("searchBy=="+policyDetails.get("SearchBy"));
+		switch(policyDetails.get("SearchBy")) {
+		case PDTConstants.CLIENT_ID:
+			searchByClientId(policyDetails.get("SearchText"));
+			Assert.assertTrue(verifyClientIdAndCompanyName(policyDetails.get("SearchText"), policyDetails.get("CompanyName")), "Failed to verify Client id and Company name");
+			break;
+		case PDTConstants.CLIENT_NAME:
+			searchByClientName(policyDetails.get("SearchText"));
+			Assert.assertTrue(verifyClientIdAndCompanyName(policyDetails.get("ClientId"), policyDetails.get("SearchText")), "Failed to verify Client id and Company name");
+			break;
+		case PDTConstants.POLICY:
+			searchByPolicyName(policyDetails.get("SearchText"));
+			Assert.assertTrue(verifyPolicyName(policyDetails.get("SearchText")), "Failed to verify Policy Details");
+			break;
+		}
+		
+	}
+	
+	public boolean verifyClientIdAndCompanyName(String clientId, String companyName) {
+		Log.info("inside verifyClientIdAndCompanyName");
+		Log.info("Clientid=="+clientId);
+		Log.info("companyName=="+companyName);
+		//CoreFunctions.explicitWaitTillElementListClickable(driver, _listClientName);
+		//_listClientName.stream().forEach(t -> Log.info("origin==" + t.getText()));
+		if(CoreFunctions.isElementByLocatorExist(driver, _listClientNameByLocator, 10)) {
+			CoreFunctions.waitForBrowserToLoad(driver);
+			_listClientName.stream().forEach(t -> Log.info("companyName=="+t.getText()));
+			if ( _listClientName.stream()
+					.allMatch(t -> t.getText().contains(clientId)) && _listClientName.stream()
+					.allMatch(t -> t.getText().toString().contains(companyName.toString()))) {
+				_listClientName.stream().forEach(t -> CoreFunctions.highlightObject(driver, t));				
+				return true;
+			}
+			
+		}
+		return false;
+	}
+	
+	public boolean verifyPolicyName(String policyName) {
+		if(CoreFunctions.isElementByLocatorExist(driver, _listPolicyNameByLocator, 5)) {
+			_listPolicyName.stream().forEach(t -> Log.info("Policy==" + t.getText()));
+			if (_listPolicyName.stream()
+					.allMatch(t -> t.getText().toLowerCase().equalsIgnoreCase(policyName))) {
+				_listPolicyName.stream().forEach(t -> CoreFunctions.highlightObject(driver, t));				
+				return true;
+			}	
+		}
+		return false;
+}
+	
+	public void searchByClientId(String clientId) {
+		CoreFunctions.clearAndSetText(driver, _inputClientId, clientId);
+		CoreFunctions.click(driver, _btnSearch, _btnSearch.getText());
+	}
+	
+	public void searchByClientName(String clientName) {
+		CoreFunctions.clearAndSetText(driver, _inputClientName, clientName);
+		CoreFunctions.click(driver, _btnSearch, _btnSearch.getText());
+	}
+	
+	public void searchByPolicyName(String policyName) {
+		CoreFunctions.clearAndSetText(driver, _inputPolicyName, policyName);
+		CoreFunctions.click(driver, _btnSearch, _btnSearch.getText());
+	}
+	
+	public void iteratePolicyData(List<Map<String, String>> policyData) {
+		for(int i=0; i<policyData.size(); i++) {			
+			performSearchOperation(policyData.get(i));
+			clickElementOfPage(PDTConstants.CLEAR_FILTER);			
+		}
 	}
 }

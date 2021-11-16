@@ -1638,7 +1638,8 @@ public class PDTConstants {
 	public static final String SUCCESSFULLY_LOGGED_IN_TO_APPLICATION = "{0} User Successfully logged in to Aires Policy Tool application.";
 	public static final String POLICIES_ARE_DISPLAYED = "{0} Verified policies are displayed on ''{1}'' page.";
 	public static final String POLICIES_ARE_NOT_DISPLAYED = "{0} Verified policies are not displayed on ''{1}'' page.";
-
+	public static final String VIEW_POLICY = "View Policy";
+	public static final String CLEAR_FILTER = "Clear Filter";
 
 
 }

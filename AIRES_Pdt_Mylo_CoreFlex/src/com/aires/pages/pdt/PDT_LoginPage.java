@@ -62,11 +62,8 @@ public class PDT_LoginPage extends Base {
 
 	public void openApplication() {
 		Log.info(FileReaderManager.getInstance().getConfigReader().getPDTApplicationUrl());
-		CoreFunctions.waitForBrowserToLoad(driver);
-		Log.info("Inside openApplication");
+		CoreFunctions.waitForBrowserToLoad(driver);		
 		VerifyAIRESLogo();
-		// CoreFunctions.explicitWaitTillElementBecomesClickable(driver, _btnLogin,
-		// _btnLogin.getText());
 	}
 
 	public void enterLoginCredentials(String userName, String password) {
@@ -81,8 +78,6 @@ public class PDT_LoginPage extends Base {
 	}
 
 	public void clickLoginBtn() {
-		// CoreFunctions.explicitWaitTillElementBecomesClickable(driver, _btnLogin,
-		// _btnLogin.getText());
 		CoreFunctions.click(driver, _btnLogin, _btnLogin.getText());
 	}
 	

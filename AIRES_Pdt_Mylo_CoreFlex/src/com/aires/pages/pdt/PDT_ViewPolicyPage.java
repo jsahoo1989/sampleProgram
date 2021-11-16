@@ -130,10 +130,8 @@ public class PDT_ViewPolicyPage extends Base{
 		if ( _headingViewEditPolicyForm.getText().equalsIgnoreCase(PDTConstants.VIEW_EDIT_POLICY_FORMS)) {			
 			CoreFunctions.highlightObject(driver, _headingViewEditPolicyForm);
 			Reporter.addStepLog(MessageFormat.format(PDTConstants.VERIFIED_HEADING_ON_PAGE, CoreConstants.PASS, _headingViewEditPolicyForm.getText(), pageName ));			
-			Log.info("Verified Heading");
 			return true;
-		}
-		Log.info("Failed to verify Heading");
+		}		
 		Reporter.addStepLog(MessageFormat.format(PDTConstants.FAILED_TO_VERIFY_HEADING_ON_PAGE, CoreConstants.FAIL, pageName, PDTConstants.VIEW_EDIT_POLICY_FORMS, _headingViewEditPolicyForm.getText()));
 		return false;		
 	}
@@ -149,8 +147,7 @@ public class PDT_ViewPolicyPage extends Base{
 		return false;
 	}
 	
-	public void performSearchOperation(Map<String, String> policyDetails) {
-		Log.info("searchBy=="+policyDetails.get("SearchBy"));
+	public void performSearchOperation(Map<String, String> policyDetails) {		
 		switch(policyDetails.get("SearchBy")) {
 		case PDTConstants.CLIENT_ID:
 			searchByClientId(policyDetails.get("SearchText"));
@@ -164,16 +161,10 @@ public class PDT_ViewPolicyPage extends Base{
 			searchByPolicyName(policyDetails.get("SearchText"));
 			Assert.assertTrue(verifyPolicyName(policyDetails.get("SearchText")), "Failed to verify Policy Details");
 			break;
-		}
-		
+		}		
 	}
 	
 	public boolean verifyClientIdAndCompanyName(String clientId, String companyName) {
-		Log.info("inside verifyClientIdAndCompanyName");
-		Log.info("Clientid=="+clientId);
-		Log.info("companyName=="+companyName);
-		//CoreFunctions.explicitWaitTillElementListClickable(driver, _listClientName);
-		//_listClientName.stream().forEach(t -> Log.info("origin==" + t.getText()));
 		if(CoreFunctions.isElementByLocatorExist(driver, _listClientNameByLocator, 10)) {
 			CoreFunctions.waitForBrowserToLoad(driver);
 			_listClientName.stream().forEach(t -> Log.info("companyName=="+t.getText()));
@@ -182,8 +173,7 @@ public class PDT_ViewPolicyPage extends Base{
 					.allMatch(t -> t.getText().toString().contains(companyName.toString()))) {
 				_listClientName.stream().forEach(t -> CoreFunctions.highlightObject(driver, t));				
 				return true;
-			}
-			
+			}			
 		}
 		return false;
 	}

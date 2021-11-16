@@ -9,6 +9,7 @@ import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.How;
 import org.testng.Assert;
+import org.testng.asserts.SoftAssert;
 
 import com.aires.businessrules.Base;
 import com.aires.businessrules.CoreFunctions;
@@ -82,8 +83,8 @@ public class PDT_LoginPage extends Base {
 	}
 	
 	public void verifyLoginCredentials() {
-		if (CoreFunctions.isElementByLocatorExist(driver, _btnLoginByLocator, 5)) {
-			Assert.fail("Invalid login credentials are entered.");
+		if (CoreFunctions.isElementByLocatorExist(driver, _btnLoginByLocator, 1)) {
+			Assert.fail(PDTConstants.INVALID_CREDENTIALS_ENTERED);
 		}
 	}
 

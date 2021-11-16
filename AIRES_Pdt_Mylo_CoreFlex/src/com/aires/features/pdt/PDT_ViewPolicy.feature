@@ -13,4 +13,4 @@ Feature: Validate the functionality of View Policy page
       | SearchBy    | SearchText                     | ClientId | CompanyName            |
       | Policy      | Canada Field Relocation Policy |    51769 | Urban Outfitters, Inc. |
       | Client Id   |                          51769 |    51769 | Urban Outfitters, Inc. |
-      | Client Name | Urban Outfitters, Inc.         |    51769 | Urban Outfitters, Inc. |
+      | Client Name | Dow Chemical Company           |     7403 | Dow Chemical Company   |

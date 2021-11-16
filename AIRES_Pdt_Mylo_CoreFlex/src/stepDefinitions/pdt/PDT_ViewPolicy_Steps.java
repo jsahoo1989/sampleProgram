@@ -13,7 +13,6 @@ import com.aires.managers.FileReaderManager;
 import com.aires.pages.pdt.PDT_LoginPage;
 import com.aires.pages.pdt.PDT_ViewPolicyPage;
 import com.aires.testdatatypes.pdt.PDT_LoginData;
-import com.aires.utilities.Log;
 
 import cucumber.api.DataTable;
 import cucumber.api.java.en.Given;
@@ -58,8 +57,8 @@ public class PDT_ViewPolicy_Steps {
 	}
 
 	@Then("^he should be able to verify Policy data on \"([^\"]*)\" page after performing below SearchBy operations$")
-	public void he_should_be_able_to_verify_Policy_data_on_page_after_performing_below_SearchBy_operations(String arg1, DataTable policyTableData) throws Throwable {
+	public void he_should_be_able_to_verify_Policy_data_on_page_after_performing_below_SearchBy_operations(String pageName, DataTable policyTableData) throws Throwable {
 		List<Map<String, String>> policyData = policyTableData.asMaps(String.class, String.class);
-		viewPolicyPage.iteratePolicyData(policyData);
+		viewPolicyPage.iteratePolicyData(policyData, pageName);
 	}
 }

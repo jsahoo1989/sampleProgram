@@ -43,8 +43,6 @@ public class LoginToPDT_Steps {
 	@Given("^he enters below login credentials in Username, Password fields$")
 	public void he_enters_below_login_credentials_in_Username_Password_fields(DataTable loginData) throws Throwable {
 		List<Map<String, String>> loginInfo = loginData.asMaps(String.class, String.class);
-		Log.info("UserName:-" + loginInfo.get(0).get("userName"));
-		Log.info("Password:-" + loginInfo.get(0).get("password"));
 		loginPage.enterLoginCredentials(loginInfo.get(0).get("userName"), loginInfo.get(0).get("password"));
 	}
 

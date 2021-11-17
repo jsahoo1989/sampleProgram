@@ -1,0 +1,43 @@
+[{
+		"application": "MobilityX",
+		"mxTransferee": {
+			"userName": "ANortje_558751",
+			"password": "Relonetng1",
+			"firstName": "Anrich",
+			"lastName": "Nortje"
+		},
+		"mxLinkedTransferee": {
+			"userName": "Shreshtha.gupta22@gmail.com",
+			"password": "Password1",
+			"firstName": "Shreshtha",
+			"lastName": "Gupta"
+		},
+		"springboardTransferee": {
+			"userName": "SWillia_558753",
+			"password": "Relonetng1",
+			"firstName": "Sarena",
+			"lastName": "William"
+		}		
+	},
+	{
+		"application": "IRIS",
+		"userIRISTestQA": {
+			"userName": "ckitts",
+			"password": "ck",
+			"firstName": "Chere",
+			"lastName": "kitts"
+		},
+		"userIRISTestDEV": {
+			"userName": "vkamins",
+			"password": "vk",
+			"firstName": "Vladimir",
+			"lastName": "Kaminsky"
+		},
+		"userIRISProd": {
+			"userName": "testemacmgr",
+			"password": "testte",
+			"firstName": "Chere",
+			"lastName": "kitts"
+		}
+	}
+]

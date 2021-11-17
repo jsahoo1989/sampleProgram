@@ -27,6 +27,7 @@ import java.util.List;
 import com.aires.businessrules.constants.CoreConstants;
 import com.aires.managers.FileReaderManager;
 import com.aires.testdatatypes.pdt.PDT_LoginData;
+import com.aires.testdatatypes.pdt.PDT_LoginDetails;
 import com.google.gson.Gson;
 
 public class JsonDataReader_Pdt {
@@ -34,10 +35,15 @@ public class JsonDataReader_Pdt {
 	private final String _loginDataFilePath = FileReaderManager.getInstance().getConfigReader()
 			.getTestDataResourcePath() + "pdt/PDT_LoginData.json";
 	
+	private final String _loginDetailsFilePath = FileReaderManager.getInstance().getConfigReader()
+			.getTestDataResourcePath() + "pdt/PDT_LoginDetails.json";
+	
 	private List<PDT_LoginData> _loginDataList;
+	private List<PDT_LoginDetails> _loginDetailsList;
 	
 	public JsonDataReader_Pdt() {
 		_loginDataList = getUserData();
+		_loginDetailsList = getLoginByApplication();
 	}
 	
 	private List<PDT_LoginData> getUserData() {
@@ -58,9 +64,32 @@ public class JsonDataReader_Pdt {
 		}
 	}
 	
+	private List<PDT_LoginDetails> getLoginByApplication() {
+		Gson gson = new Gson();
+		BufferedReader bufferReader = null;
+		try {
+			bufferReader = new BufferedReader(new FileReader(_loginDetailsFilePath));
+			PDT_LoginDetails[] application = gson.fromJson(bufferReader, PDT_LoginDetails[].class);
+			return Arrays.asList(application);
+		} catch (FileNotFoundException e) {
+			throw new RuntimeException(CoreConstants.JSON_FILE_NOT_FOUND_AT_PATH + _loginDataFilePath);
+		} finally {
+			try {
+				if (bufferReader != null)
+					bufferReader.close();
+			} catch (IOException ignore) {
+			}
+		}
+	}
+	
 	public final PDT_LoginData getloginDetailsByUserFirstName(String userFirstName) {
 		return _loginDataList.stream().filter(x -> x.firstName.equalsIgnoreCase(userFirstName)).findAny().get();
 	}
+	
+	public final PDT_LoginDetails getLoginByApplication(String applicationName) {
+		return _loginDetailsList.stream().filter(x -> x.application.equalsIgnoreCase(applicationName)).findAny().get();
+	}
+
 	
 
 }

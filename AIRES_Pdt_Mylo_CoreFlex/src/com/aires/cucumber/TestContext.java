@@ -17,28 +17,53 @@
 
 package com.aires.cucumber;
 
+import com.aires.managers.IrisPageManager;
 import com.aires.managers.PageObjectManager_Mylo;
 import com.aires.managers.PageObjectManager_Pdt;
 import com.aires.managers.WebDriverManager;
+import com.aires.pages.iris.basepage.BasePage;
 
 public class TestContext {
 	private WebDriverManager _webDriverManager;
-	private PageObjectManager_Pdt _pageObjectManagerPDT;	
+	private PageObjectManager_Pdt _pageObjectManagerPDT;
 	private PageObjectManager_Mylo _pageObjectManagerMylo;
-	
+	private BasePage _basePage;
+	private IrisPageManager _irisPageManager;
+	private String browserTitle;
+
 	public TestContext() throws Exception {
-		
-	}
-	
-	public void initializeWebManager()throws Exception {		
-		_webDriverManager = new WebDriverManager(); 
-		_pageObjectManagerPDT = new PageObjectManager_Pdt(_webDriverManager.getDriver());
-		_pageObjectManagerMylo = new PageObjectManager_Mylo(_webDriverManager.getDriver());
-			
+		_basePage = new BasePage();
+		_irisPageManager = new IrisPageManager(browserTitle);
 	}
 
-	public WebDriverManager getWebDriverManager() { return _webDriverManager; }
-	public PageObjectManager_Pdt getPageObjectManager() { return _pageObjectManagerPDT; }
-	public PageObjectManager_Mylo getMyloPageObjectManager() {return _pageObjectManagerMylo;
+	public void initializeWebManager(boolean isIrisTestCase) throws Exception {
+
+		if (!isIrisTestCase) {
+			_webDriverManager = new WebDriverManager();
+			_pageObjectManagerPDT = new PageObjectManager_Pdt(_webDriverManager.getDriver());
+			_pageObjectManagerMylo = new PageObjectManager_Mylo(_webDriverManager.getDriver());
+		}
+
 	}
+
+	public WebDriverManager getWebDriverManager() {
+		return _webDriverManager;
+	}
+
+	public PageObjectManager_Pdt getPageObjectManager() {
+		return _pageObjectManagerPDT;
+	}
+
+	public PageObjectManager_Mylo getMyloPageObjectManager() {
+		return _pageObjectManagerMylo;
+	}
+
+	public BasePage getBasePage() {
+		return _basePage;
+	}
+
+	public IrisPageManager getIrisPageManager() {
+		return _irisPageManager;
+	}
+
 }

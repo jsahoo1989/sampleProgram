@@ -56,8 +56,11 @@ public class Hooks {
 	public void BeforeSteps(Scenario scenario) throws Exception {
 		scenarioName = scenario;
 		Reporter.assignAuthor("AIRES - Automation - By : " + System.getProperty("user.name"));
-		testContext.initializeWebManager();
-		if (scenario.getName().contains("PDT")) {
+		testContext.initializeWebManager(scenario.getName().contains("IRIS"));
+		if (scenario.getName().contains("IRIS")) {			
+			testContext.getBasePage().invokeIrisApplication();
+			testContext.getBasePage().killExistingBrowsers();
+		}else if (scenario.getName().contains("PDT")) {
 			Log.info(FileReaderManager.getInstance().getConfigReader().getPDTApplicationUrl());
 			testContext.getWebDriverManager().getDriver().navigate()
 					.to(FileReaderManager.getInstance().getConfigReader().getPDTApplicationUrl());
@@ -65,8 +68,7 @@ public class Hooks {
 			Log.info(FileReaderManager.getInstance().getConfigReader().getMyloApplicationUrl());
 			testContext.getWebDriverManager().getDriver().navigate()
 					.to(FileReaderManager.getInstance().getConfigReader().getMyloApplicationUrl());
-		}
-		else if (scenario.getName().contains("CoreFlex")) {
+		}else if (scenario.getName().contains("CoreFlex")) {
 			Log.info(FileReaderManager.getInstance().getConfigReader().getCoreFlexApplicationUrl());
 			testContext.getWebDriverManager().getDriver().navigate()
 					.to(FileReaderManager.getInstance().getConfigReader().getCoreFlexApplicationUrl());

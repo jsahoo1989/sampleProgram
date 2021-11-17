@@ -50,7 +50,9 @@ import org.openqa.selenium.support.ui.Select;
 import org.testng.Assert;
 
 import com.aires.businessrules.constants.PDTConstants;
+import com.aires.iris.helpers.Helpers;
 import com.aires.businessrules.constants.CoreConstants;
+import com.aires.businessrules.constants.IRISConstants;
 import com.aires.businessrules.constants.MYLOConstants;
 import com.aires.utilities.EmailUtil;
 import com.aires.utilities.Log;
@@ -550,6 +552,24 @@ public class BusinessFunctions {
 				act.moveToElement(element).doubleClick().build().perform();
 			}
 		}
+	}
+	
+	/**
+	 * Verify Dropdown value in IRIS application.
+	 * 
+	 * @param drpDwnName
+	 * @param drpDwnVal
+	 * @param tabName
+	 * @return
+	 * @throws GeneralLeanFtException
+	 */
+	public static boolean verifyDropDownValueInIris(com.hp.lft.sdk.java.List drpDwnObj, String drpDwnName,
+			String drpDwnVal, String tabName) throws GeneralLeanFtException {
+		if (Helpers.searchAndVerifySelectedItemInList(drpDwnObj, drpDwnVal))
+			Reporter.addStepLog(MessageFormat.format(IRISConstants.VERIFIED_FIELD_ON_TAB, CoreConstants.PASS,
+					drpDwnName, drpDwnVal, tabName));
+
+		return Helpers.searchAndVerifySelectedItemInList(drpDwnObj, drpDwnVal);
 	}
 
 	public static int returnindexItemFromListUsingAttribute(WebDriver driver, List<WebElement> WebElementList,

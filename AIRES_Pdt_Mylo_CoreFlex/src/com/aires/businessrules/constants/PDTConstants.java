@@ -1,7 +1,5 @@
 package com.aires.businessrules.constants;
 
-import org.testng.Assert;
-
 public class PDTConstants {
 
 	public static final String IS_DISPLAYED = " is displayed";
@@ -1605,7 +1603,6 @@ public class PDTConstants {
 	public static final String FAILED_TO_CREATE_DELEGATE = "{0}Failed to create delegate.";
 	public static final String GM_INTERNATIONAL_AUTH_FORM_TEMPLATE = "International Authorization Form";
 	public static final String FILE_ID_ASSIST = "583898";
-
 	public static final String DELEGATE_EMAIL_SENDER = "securelogin@aires.com";
 	public static final String DELEGATE_PASSWORD = "Delegate Password";
 	public static final String NEW_DELEGATE_PASSWORD = "Relonetng1";
@@ -1638,7 +1635,14 @@ public class PDTConstants {
 	public static final String SUCCESSFULLY_LOGGED_IN_TO_APPLICATION = "{0} User Successfully logged in to Aires Policy Tool application.";
 	public static final String POLICIES_ARE_DISPLAYED = "{0} Verified policies are displayed on ''{1}'' page.";
 	public static final String POLICIES_ARE_NOT_DISPLAYED = "{0} Verified policies are not displayed on ''{1}'' page.";
-
+	public static final String VIEW_POLICY = "View Policy";
+	public static final String CLEAR_FILTER = "Clear Filter";
+	public static final String VERIFIED_POLICY_NAME_ON_PAGE = "{0}Verfied Policy name ''{1}'' is displayed in search result on ''{2}'' page.";
+	public static final String FAIL_TO_VERIFY_POLICY_NAME_ON_PAGE = "{0}Failed to verify Policy name ''{1}'' in search result on ''{2}'' page.";
+	public static final String VERIFIED_CLIENT_ID_COMPANY_NAME = "{0}Verfied Client id :- ''{1}'' and Company name :- ''{2}'' is displayed in search result on ''{3}'' page.";
+	public static final String FAIL_TO_VERIFY_CLIENT_ID_COMPANY_NAME = "{0}Failed to verify Client id :- ''{1}'' and Company name :- ''{2}'' in search result on ''{3}'' page.";
+	public static final String ELEMENT_NOT_FOUND = "''{0}'' element not found.";
+	public static final String INVALID_CREDENTIALS_ENTERED = "Invalid login credentials are entered.";
 
 
 }

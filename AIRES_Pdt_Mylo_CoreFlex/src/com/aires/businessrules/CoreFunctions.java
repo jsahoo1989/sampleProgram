@@ -603,6 +603,10 @@ public class CoreFunctions {
 			element.clear();
 			highlightObject(driver, element);
 			element.sendKeys(textToEnter);
+			if(elementName.equalsIgnoreCase("password"))
+				Reporter.addStepLog(CoreConstants.PASS
+						+ MessageFormat.format(CoreConstants.VRFYD_TXT_CLR_VAL, elementName, "xxxxxx"));
+			else
 			Reporter.addStepLog(CoreConstants.PASS
 					+ MessageFormat.format(CoreConstants.VRFYD_TXT_CLR_VAL, elementName, textToEnter));
 		} catch (Exception e) {
@@ -1472,6 +1476,11 @@ public class CoreFunctions {
 			e.printStackTrace();
 		}
 		
+	}
+	
+	public static void moveToElement(WebDriver driver, WebElement element) {
+		Actions action = new Actions(driver);
+		action.moveToElement(element).build().perform();
 	}
 
 }

@@ -89,7 +89,7 @@ public class PDT_ViewPolicyPage extends Base {
 			elementText = _userName.getText();
 			break;
 		default:
-			Assert.fail("Element not found");
+			Assert.fail(MessageFormat.format(PDTConstants.ELEMENT_NOT_FOUND, elementName));
 		}
 		return elementText;
 
@@ -98,15 +98,13 @@ public class PDT_ViewPolicyPage extends Base {
 	public void clickElementOfPage(String elementName) {
 		switch (elementName) {
 		case PDTConstants.LOGOUT:
-			CoreFunctions.highlightObject(driver, _logout);
-			CoreFunctions.clickElement(driver, _logout);
+			CoreFunctions.highlightElementAndClick(driver, _logout, PDTConstants.LOGOUT);
 			break;
 		case PDTConstants.CLEAR_FILTER:
-			CoreFunctions.highlightObject(driver, _clearFilter);
-			CoreFunctions.clickElement(driver, _clearFilter);
+			CoreFunctions.highlightElementAndClick(driver, _clearFilter, PDTConstants.LOGOUT);
 			break;
 		default:
-			Assert.fail(PDTConstants.ELEMENT_NOT_FOUND);
+			Assert.fail(MessageFormat.format(PDTConstants.ELEMENT_NOT_FOUND, elementName));
 		}
 	}
 
@@ -153,19 +151,22 @@ public class PDT_ViewPolicyPage extends Base {
 	public void performSearchOperation(Map<String, String> policyDetails, String pageName) {
 		switch (policyDetails.get("SearchBy")) {
 		case PDTConstants.CLIENT_ID:
-			searchByClientId(policyDetails.get("SearchText"));
+			CoreFunctions.clearAndSetText(driver, _inputClientId, policyDetails.get("SearchText"));
+			CoreFunctions.click(driver, _btnSearch, _btnSearch.getText());
 			Assert.assertTrue(verifyClientIdAndCompanyName(policyDetails.get("SearchText"), policyDetails.get("CompanyName"), pageName),
 					MessageFormat.format(PDTConstants.FAIL_TO_VERIFY_CLIENT_ID_COMPANY_NAME, CoreConstants.FAIL,
 							policyDetails.get("SearchText"), policyDetails.get("CompanyName"), pageName));
 			break;
 		case PDTConstants.CLIENT_NAME:
-			searchByClientName(policyDetails.get("SearchText"));
+			CoreFunctions.clearAndSetText(driver, _inputClientName, policyDetails.get("SearchText"));
+			CoreFunctions.click(driver, _btnSearch, _btnSearch.getText());
 			Assert.assertTrue(verifyClientIdAndCompanyName(policyDetails.get("ClientId"), policyDetails.get("SearchText"), pageName),
 					MessageFormat.format(PDTConstants.FAIL_TO_VERIFY_CLIENT_ID_COMPANY_NAME, CoreConstants.FAIL,
 							policyDetails.get("ClientId"), policyDetails.get("SearchText"), pageName));
 			break;
-		case PDTConstants.POLICY:
-			searchByPolicyName(policyDetails.get("SearchText"));
+		case PDTConstants.POLICY:			
+			CoreFunctions.clearAndSetText(driver, _inputPolicyName, policyDetails.get("SearchText"));
+			CoreFunctions.click(driver, _btnSearch, _btnSearch.getText());
 			Assert.assertTrue(verifyPolicyName(policyDetails.get("SearchText"), pageName),
 					MessageFormat.format(PDTConstants.FAIL_TO_VERIFY_POLICY_NAME_ON_PAGE, CoreConstants.FAIL,
 							policyDetails.get("SearchText"), pageName));
@@ -177,7 +178,7 @@ public class PDT_ViewPolicyPage extends Base {
 	}
 
 	public boolean verifyClientIdAndCompanyName(String clientId, String companyName, String pageName) {
-		CoreFunctions.isElementByLocatorExist(driver, _listClientNameByLocator, 20);
+		CoreFunctions.isElementByLocatorExist(driver, _listClientNameByLocator, 25);
 		CoreFunctions.waitForBrowserToLoad(driver);
 		if (_listClientName.stream().allMatch(t -> t.getText().contains(clientId))
 				&& _listClientName.stream().allMatch(t -> t.getText().toString().contains(companyName.toString()))) {
@@ -205,21 +206,6 @@ public class PDT_ViewPolicyPage extends Base {
 			return true;
 		}
 		return false;
-	}
-
-	public void searchByClientId(String clientId) {
-		CoreFunctions.clearAndSetText(driver, _inputClientId, clientId);
-		CoreFunctions.click(driver, _btnSearch, _btnSearch.getText());
-	}
-
-	public void searchByClientName(String clientName) {
-		CoreFunctions.clearAndSetText(driver, _inputClientName, clientName);
-		CoreFunctions.click(driver, _btnSearch, _btnSearch.getText());
-	}
-
-	public void searchByPolicyName(String policyName) {
-		CoreFunctions.clearAndSetText(driver, _inputPolicyName, policyName);
-		CoreFunctions.click(driver, _btnSearch, _btnSearch.getText());
 	}
 
 	public void iteratePolicyData(List<Map<String, String>> policyData, String pageName) {

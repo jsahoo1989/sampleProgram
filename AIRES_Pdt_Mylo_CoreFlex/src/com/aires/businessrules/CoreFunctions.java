@@ -1479,7 +1479,6 @@ public class CoreFunctions {
 	}
 	
 	public static void moveToElement(WebDriver driver, WebElement element) {
-		//waitHandler(2);
 		Actions action = new Actions(driver);
 		action.moveToElement(element).build().perform();
 	}

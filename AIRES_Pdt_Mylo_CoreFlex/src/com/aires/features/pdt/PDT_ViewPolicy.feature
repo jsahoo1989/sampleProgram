@@ -1,7 +1,7 @@
 Feature: Validate the functionality of View Policy page
    I want to verify the functionality of View Policy page
 
-  Background: Login to Policy App Application
+  Background: Login to Policy Digitization Application
     Given he is logged into Policy App application with below credentials
       | userName | password |
       | kbrian   | kbrian   |

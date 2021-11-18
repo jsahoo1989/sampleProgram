@@ -34,7 +34,7 @@ public class PDT_ViewPolicy_Steps {
 	}
 	
 	@Given("^he is logged into Policy App application with below credentials$")
-	public void he_is_logged_into_Policy_App_application_with_below_credentials(DataTable loginData) throws Throwable {
+	public void he_is_logged_into_Policy_App_application_with_below_credentials(DataTable loginData) {
 		loginPage.openApplication();
 		List<Map<String, String>> loginInfo = loginData.asMaps(String.class, String.class);
 		loginPage.enterLoginCredentials(loginInfo.get(0).get("userName"), loginInfo.get(0).get("password"));
@@ -50,14 +50,14 @@ public class PDT_ViewPolicy_Steps {
 	}
 
 	@Given("^he is on \"([^\"]*)\" page$")
-	public void he_is_on_page(String pageName) throws Throwable {
+	public void he_is_on_page(String pageName) {
 		Assert.assertTrue(viewPolicyPage.verifyViewPolicyHeading(PDTConstants.VIEW_POLICY),
 				MessageFormat.format(PDTConstants.FAILED_TO_VERIFY_HEADING_ON_PAGE, CoreConstants.FAIL, PDTConstants.VIEW_POLICY,
 						PDTConstants.VIEW_EDIT_POLICY_FORMS, viewPolicyPage.getElementText(PDTConstants.HEADING)));
 	}
 
 	@Then("^he should be able to verify Policy data on \"([^\"]*)\" page after performing below SearchBy operations$")
-	public void he_should_be_able_to_verify_Policy_data_on_page_after_performing_below_SearchBy_operations(String pageName, DataTable policyTableData) throws Throwable {
+	public void he_should_be_able_to_verify_Policy_data_on_page_after_performing_below_SearchBy_operations(String pageName, DataTable policyTableData) {
 		List<Map<String, String>> policyData = policyTableData.asMaps(String.class, String.class);
 		viewPolicyPage.iteratePolicyData(policyData, pageName);
 	}

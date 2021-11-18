@@ -2,7 +2,7 @@ Feature: Login to Policy App Application
   I want to test the login functionality of Policy App application
 
   @login
-  Scenario: PDT - Login to Policy App
+  Scenario: PDT - Login to Policy Digitization Application
     Given he is on Policy App login page
     And he enters below login credentials in Username, Password fields
       | userName | password |
@@ -14,7 +14,7 @@ Feature: Login to Policy App Application
       | AKARNS   |
 
   @pdtLogin
-  Scenario Outline: Login to PDT/CoreFlex Application
+  Scenario Outline: PDT - Login to Policy Digitization Application
     Given he is on Policy App login page
     And he enters "<userName>" and "<password>" in username and password field
     When he clicks on Login button

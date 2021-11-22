@@ -8,7 +8,7 @@ Feature: Validate the functionality of new CoreFlex Column in IRIS Corporation -
   Scenario: IRIS - Verify that a new column 'CoreFlex Enabled' of type checkbox is added in IRIS Application -> Corporation -> Accounting -> Policy Table
     Given he has queried "49211" corporation in "Corporation" module from "Welcome12C" window
     When he navigates to 'Policy table' of "Accounting" tab from "Corporation" module
-    Then "CoreFlex Enabled" checkbox column should be displayed for each Policy in 'Policy table' before "Springboard Enabled" column
+    Then "CoreFleX Enabled" checkbox column should be displayed for each Policy in 'Policy table' before "Springboard Enabled" column
     
     
    @CF-14 @CoreFlex-PolicyUpdate-Sprint1 @CoreFlexEnabledCheckboxUICheck

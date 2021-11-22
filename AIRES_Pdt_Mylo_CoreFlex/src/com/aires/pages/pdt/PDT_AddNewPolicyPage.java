@@ -68,6 +68,10 @@ public class PDT_AddNewPolicyPage extends Base {
 	@FindBy(how = How.CSS, using = "button[class*='btn-next']")
 	private WebElement _buttonNext;
 
+	// Logout Button
+	@FindBy(how = How.XPATH, using = "//i[contains(text(),'exit_to_app')]")
+	private WebElement _buttonLogout;
+
 	/************************************************************************/
 
 	public static String selectedPolicyName;
@@ -108,6 +112,7 @@ public class PDT_AddNewPolicyPage extends Base {
 	public boolean verifyValidClientIDResult(String inputValue) {
 
 		boolean isResultValid = false;
+		
 
 		try {
 			if (_optionsClientID.size() > 0) {
@@ -267,12 +272,12 @@ public class PDT_AddNewPolicyPage extends Base {
 			Reporter.addStepLog(MessageFormat.format(PDTConstants.EXCEPTION_OCCURED_WHILE_VALIDATING_POLICY_NAME_LIST,
 					CoreConstants.FAIL, e.getMessage()));
 		}
-		
-		if(isPolicySelected) {
+
+		if (isPolicySelected) {
 			Reporter.addStepLog(MessageFormat.format(PDTConstants.SUCCESSFULLY_SELECTED_POLICY_FROM_POLICY_NAME_LIST,
 					CoreConstants.PASS));
 		}
-		
+
 		return isPolicySelected;
 
 	}
@@ -291,14 +296,47 @@ public class PDT_AddNewPolicyPage extends Base {
 		return false;
 
 	}
-	
+
 	public String getSelectedPolicyName() {
 		return selectedPolicyName;
-		
+
 	}
 
 	public void clickNext() {
 		CoreFunctions.clickElement(driver, _buttonNext);
+	}
+
+	public void clickLogout() {
+		CoreFunctions.clickElement(driver, _buttonLogout);
+	}
+
+	public boolean selectVerifiedPolicy() {
+
+		boolean isPolicySelected = false;
+
+		try {	
+
+			if (CoreFunctions.isElementExist(driver, _popUpError, 2)) {
+				Reporter.addStepLog(MessageFormat.format(PDTConstants.ERROR_POP_UP_DISPLAYED_FOR_VALID_CLIENTID,
+						CoreConstants.FAIL, CoreFunctions.getElementText(driver, _popUpErrorMessage)));
+
+			} else if (CoreFunctions.isElementExist(driver, _selectPolicyName, 5)) {
+				CoreFunctions.clickElement(driver, _selectPolicyName);
+				CoreFunctions.selectItemInListByText(driver, _optionsPolicyName, selectedPolicyName);
+				isPolicySelected = true;
+			}
+		} catch (Exception e) {
+			Reporter.addStepLog(MessageFormat.format(PDTConstants.EXCEPTION_OCCURED_WHILE_VALIDATING_POLICY_NAME_LIST,
+					CoreConstants.FAIL, e.getMessage()));
+		}
+
+		if (isPolicySelected) {
+			Reporter.addStepLog(MessageFormat.format(PDTConstants.SUCCESSFULLY_SELECTED_POLICY_FROM_POLICY_NAME_LIST,
+					CoreConstants.PASS));
+		}
+
+		return isPolicySelected;
+
 	}
 
 }

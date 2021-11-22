@@ -12,7 +12,6 @@ import com.aires.pages.pdt.PDT_GeneralInformationPage;
 import com.aires.pages.pdt.PDT_LoginPage;
 import com.aires.pages.pdt.PDT_ViewPolicyPage;
 
-import cucumber.api.DataTable;
 import cucumber.api.java.en.Given;
 import cucumber.api.java.en.Then;
 import cucumber.api.java.en.When;
@@ -103,12 +102,6 @@ public class CoreFlex_AddNewPolicy_Steps {
 		addNewPolicyPage.clickNext();
 	}
 
-	@Then("^user should be navigated to the \"([^\"]*)\" page of the selected Client Policy$")
-	public void user_should_be_navigated_to_the_page_of_the_selected_Client_Policy(String pageName, DataTable dataTable) throws Throwable {
-	    				
-		Assert.assertTrue(generalInfoPage.validateGeneralInfo(pageName,dataTable,selectedPolicyName),
-				MessageFormat.format(PDTConstants.FAILED_TO_SELECT_POLICY_FROM_POLICY_NAME_FIELD, CoreConstants.FAIL));		
-		
-	}
+	
 
 }

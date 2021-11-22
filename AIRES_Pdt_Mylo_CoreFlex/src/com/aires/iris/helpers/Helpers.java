@@ -307,4 +307,16 @@ public class Helpers {
 		Button oKButton = messageDialog.describe(Button.class, new ButtonDescription.Builder().label("OK").build());
 		oKButton.click();
 	}
+
+	public static void printColumnHeaders(Table tableObject) throws GeneralLeanFtException {
+		
+		System.out.println(tableObject.getRows().size());
+		
+		for(int i=0; i<tableObject.getColumnHeaders().size();i++) {
+			System.out.println(tableObject.getColumnHeaders().get(i));
+		}
+		
+		
+		
+	}
 }

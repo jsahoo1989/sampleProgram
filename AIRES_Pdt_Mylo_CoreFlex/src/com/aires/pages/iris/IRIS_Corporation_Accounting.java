@@ -60,9 +60,11 @@ public class IRIS_Corporation_Accounting extends BasePage {
 	 * @return
 	 * @throws Exception
 	 */
-	public boolean verifyPolicyTableColumn(String searchColumnName) throws Exception {		
+	public boolean verifyPolicyTableColumn(String searchColumnName) throws Exception {	
 		
-		//_isExists = Helpers.searchJTableColumn((IRIS_PageMaster.getTableObject(_IRIS,test)), searchColumnName);
+		//Helpers.printColumnHeaders(IRIS_PageMaster.getTableObject(_IRIS,"com.aires.iris.view.corporation.accounting.PolicyPanel$1"));
+		
+		_isExists = Helpers.searchJTableColumn((IRIS_PageMaster.getTableObject(_IRIS,"com.aires.iris.view.corporation.accounting.PolicyPanel$1")), searchColumnName);
 		
 		if (_isExists)
 			Reporter.addStepLog(MessageFormat.format(IRISConstants.VERIFIED_TABLE_COLUMN_NAME, CoreConstants.PASS, searchColumnName,

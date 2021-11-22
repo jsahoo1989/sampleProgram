@@ -1,13 +1,16 @@
 package com.aires.pages.pdt;
 
 import java.text.MessageFormat;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
+import java.util.stream.Collector;
 
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.How;
+import org.testng.Assert;
 
 import com.aires.businessrules.Base;
 import com.aires.businessrules.CoreFunctions;
@@ -44,6 +47,34 @@ public class PDT_GeneralInformationPage extends Base {
 	// Client ID - General Information
 	@FindBy(how = How.XPATH, using = "//label[contains(string(),'Client#')]/following-sibling::label")
 	private WebElement _textClientID;
+
+	// CoreFlex Policy Select Field
+	@FindBy(how = How.CSS, using = "ng-select[formcontrolname='coreFlexInd'][class*='ng-select-disabled']")
+	private WebElement _selectCoreFlexPolicy;
+
+	// CoreFlex Policy Select Field Default Value
+	@FindBy(how = How.XPATH, using = "//ng-select[@formcontrolname='coreFlexInd']//span[@class='ng-value-label']")
+	private WebElement _selectCoreFlexPolicyDefaultValue;
+
+	// Benefit Package Type Select Field
+	@FindBy(how = How.CSS, using = "ng-select[formcontrolname='benefitPackageTypeCode'][class*='ng-select-clearable']")
+	private WebElement _selectBenefitPackageType;
+
+	// Benefit Package Type Default Value
+	@FindBy(how = How.XPATH, using = "//ng-select[@formcontrolname='benefitPackageTypeCode']//span[contains(@class,'ng-value-label')]")
+	private WebElement _selectBenefitPackageTypeDefaultValue;
+
+	// Benefit Package Type Select Options
+	@FindBy(how = How.XPATH, using = "//label[contains(string(),'Benefit Package Type')]/following-sibling::ng-select/descendant::div[@role='option']")
+	private List<WebElement> _selectBenefitPackageTypeOptions;
+
+	// Points Based Flex Policy Select Field
+	@FindBy(how = How.CSS, using = "ng-select[formcontrolname='pointBasedFlexInd'][class*='ng-select-clearable']")
+	private WebElement _selectPointsBasedFlexPolicy;
+
+	// Points Based Flex Policy Select Options
+	@FindBy(how = How.XPATH, using = "//label[contains(string(),'Points Based Flex Policy')]/following-sibling::ng-select/descendant::div[@role='option']")
+	private List<WebElement> _selectPointsBasedFlexPolicyOptions;
 
 	/*********************************************************************/
 
@@ -110,6 +141,113 @@ public class PDT_GeneralInformationPage extends Base {
 
 		return (CoreFunctions.isElementExist(driver, _leftNavGeneralInfo, 5) ? true : false);
 
+	}
+
+	public boolean verifyGeneralInfoField(String fieldName, String defaultValue, DataTable dataTable) {
+
+		boolean isFieldVerified = false;
+		boolean isFieldDefaultValueVerified, isFieldSelectOptionsVerified = false;
+
+		try {
+
+			switch (fieldName) {
+
+			case PDTConstants.CORE_FLEX_POLICY:
+				isFieldVerified = verifyCoreFlexPolicyField(defaultValue);
+				break;
+
+			case PDTConstants.BENEFIT_PACKAGE_TYPE:
+				isFieldDefaultValueVerified = verifyBenefitPackageTypeField(defaultValue);
+				isFieldSelectOptionsVerified = verifyBenefitPackageTypeOptions(dataTable);
+				isFieldVerified = isFieldDefaultValueVerified && isFieldSelectOptionsVerified;
+				break;
+
+			case PDTConstants.POINTS_BASED_FLEX_POLICY:
+				isFieldDefaultValueVerified = verifyPointsBasedFlexPolicyField(defaultValue);
+				isFieldSelectOptionsVerified = verifyPointsBasedFlexPolicyOptions(dataTable);
+				isFieldVerified = isFieldDefaultValueVerified && isFieldSelectOptionsVerified;
+				break;
+
+			default:
+				Assert.fail("Field not found");
+
+			}
+
+		} catch (Exception e) {
+			Reporter.addStepLog(
+					MessageFormat.format(PDTConstants.EXCEPTION_OCCURED_WHILE_VALIDATING_GENERAL_INFORMATION_FIELD,
+							CoreConstants.FAIL, fieldName, e.getMessage()));
+		}
+
+		if (isFieldVerified) {
+			Reporter.addStepLog(MessageFormat.format(
+					PDTConstants.SUCCESSFULLY_VERIFIED_FIELD_AND_DEFAULT_VALUE_ON_GENERAL_INFORMATION_PAGE,
+					CoreConstants.PASS, fieldName, defaultValue));
+		}
+
+		return isFieldVerified;
+
+	}
+
+	private boolean verifyPointsBasedFlexPolicyOptions(DataTable dataTable) {
+
+		CoreFunctions.clickElement(driver, _selectPointsBasedFlexPolicy);
+
+		List<String> expectedOptions = dataTable.asList(String.class);
+		List<String> actualOptions = CoreFunctions.getElementTextAndStoreInList(driver,
+				_selectPointsBasedFlexPolicyOptions);
+
+		System.out.println("Expected Options : " + expectedOptions);
+		System.out.println("Actual Options : " + actualOptions);
+
+		return actualOptions.equals(expectedOptions) ? true : false;
+	}
+
+	private boolean verifyPointsBasedFlexPolicyField(String expectedDefaultValue) {
+
+		if ((CoreFunctions.isElementExist(driver, _selectPointsBasedFlexPolicy, 2))) {
+			return true;
+		} else {
+			return false;
+		}
+	}
+
+	private boolean verifyBenefitPackageTypeOptions(DataTable dataTable) {
+
+		CoreFunctions.clickElement(driver, _selectBenefitPackageType);
+
+		List<String> expectedOptions = dataTable.asList(String.class);
+		List<String> actualOptions = CoreFunctions.getElementTextAndStoreInList(driver,
+				_selectBenefitPackageTypeOptions);
+
+		System.out.println("Expected Options : " + expectedOptions);
+		System.out.println("Actual Options : " + actualOptions);
+
+		return actualOptions.equals(expectedOptions) ? true : false;
+	}
+
+	private boolean verifyBenefitPackageTypeField(String expectedDefaultValue) {
+
+		if ((CoreFunctions.isElementExist(driver, _selectBenefitPackageType, 2))
+				&& (CoreFunctions.getElementText(driver, _selectBenefitPackageTypeDefaultValue))
+						.equals(expectedDefaultValue)) {
+
+			return true;
+		} else {
+			return false;
+		}
+	}
+
+	private boolean verifyCoreFlexPolicyField(String expectedDefaultValue) {
+
+		if ((CoreFunctions.isElementExist(driver, _selectCoreFlexPolicy, 2))
+				&& (CoreFunctions.getElementText(driver, _selectCoreFlexPolicyDefaultValue))
+						.equals(expectedDefaultValue)) {
+
+			return true;
+		} else {
+			return false;
+		}
 	}
 
 }

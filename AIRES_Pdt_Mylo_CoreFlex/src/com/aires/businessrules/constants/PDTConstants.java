@@ -1619,6 +1619,9 @@ public class PDTConstants {
 	public static final String EMAIL_PASSWORD_SUBJECT = "MobilityX Password";
 	
 	////PDT CONSTANTS
+	public static final String CORE_FLEX_POLICY = "Core/Flex Policy";
+	public static final String BENEFIT_PACKAGE_TYPE = "Benefit Package Type";
+	public static final String POINTS_BASED_FLEX_POLICY = "Points Based Flex Policy";
 	public static final String VERIFIED_USERNAME_IS_DISPLAYED = "{0}Verified username is displayed as ''{1}'' on ''{2}'' page.";
 	public static final String FAILED_TO_VERIFY_USERNAME = "{0}Failed to match username on ''{1}'' page. Expected username:- ''{2}''. Actual username displayed:- ''{3}''";
 	public static final String VIEW_EDIT_POLICY_FORMS = "View/Edit Policy Forms";
@@ -1658,4 +1661,7 @@ public class PDTConstants {
 	public static final String SUCCESSFULLY_SELECTED_POLICY_FROM_POLICY_NAME_LIST = "{0} Successfully selected policy from policy name list.";
 	public static final String EXCEPTION_OCCURED_WHILE_VALIDATING_GENERAL_INFORMATION_PAGE = "{0} Exception occured while validating Client & Policy Details on General Information Page. ''{1}''";
 	public static final String SUCCESSFULLY_VERIFIED_CLIENT_AND_POLICY_DETAILS_ON_GENERAL_INFO_PAGE = "{0} Successfully verified Client & Policy Details on ''{1}'' page.";
+	public static final String FAILED_TO_VALIDATE_CLIENT_POLICY_DATA_ON_GENERAL_INFORMATION_PAGE = "{0} Failed to validate Client & Policy data on General Information Page.";
+	public static final String EXCEPTION_OCCURED_WHILE_VALIDATING_GENERAL_INFORMATION_FIELD = "{0} Exception occured while validating General Information Field - ''{1}''. Exception ''{2}''";
+	public static final String SUCCESSFULLY_VERIFIED_FIELD_AND_DEFAULT_VALUE_ON_GENERAL_INFORMATION_PAGE = "{0} Successfully verified ''{1}'' field and its default value ''{2}'' on General Information page.";
 }

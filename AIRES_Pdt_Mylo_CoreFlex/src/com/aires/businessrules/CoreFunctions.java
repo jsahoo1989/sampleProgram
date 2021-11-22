@@ -40,6 +40,7 @@ import java.util.List;
 import java.util.Properties;
 import java.util.Random;
 import java.util.Set;
+import java.util.stream.Collectors;
 
 import org.openqa.selenium.Alert;
 import org.openqa.selenium.By;
@@ -1472,6 +1473,12 @@ public class CoreFunctions {
 			e.printStackTrace();
 		}
 		
+	}
+
+	public static List<String> getElementTextAndStoreInList(WebDriver driver,
+			List<WebElement> elementList) {
+		
+		return (elementList.stream().map(x -> x.getText()).collect(Collectors.toList()));
 	}
 
 }

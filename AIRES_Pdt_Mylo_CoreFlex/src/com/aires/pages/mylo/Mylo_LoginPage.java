@@ -65,6 +65,8 @@ public class Mylo_LoginPage extends Base {
 					_txt_UserEmail.getAttribute("placeholder"));
 			CoreFunctions.clearAndSetText(driver, _txt_UserEmail, _txt_UserEmail.getAttribute("placeholder"), userName);
 			CoreFunctions.clickUsingJS(driver, _submit, _submit.getAttribute("value"));
+			CoreFunctions.explicitWaitTillElementVisibility(driver, _txt_Password,
+					_txt_Password.getAttribute("name"));
 			CoreFunctions.clearAndSetText(driver, _txt_Password, _txt_Password.getAttribute("name"), password);
 		} catch (ElementNotFoundException e) {
 			e.printStackTrace();

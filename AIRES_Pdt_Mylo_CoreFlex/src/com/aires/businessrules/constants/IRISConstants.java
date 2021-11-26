@@ -479,5 +479,21 @@ public class IRISConstants {
 	// Corporation Accounting tab
 	public static final String ACCOUNTING = "Accounting";
 	public static final String VERIFIED_TABLE_COLUMN_NAME = "{0} Successfully verified ''{1}'' column name in Policy Table of ''{2}'' tab.";
-
+	public static final String SUCCESSFULLY_CHECKED_COREFLEX_ENABLED_COLUMN_FOR_THE_POLICY = "{0} Successfully checked ''{1}'' for ''{2}'' policy in Policy table of ''{3}'' tab.";
+	public static final String SUCCESSFULLY_UNCHECKED_COREFLEX_ENABLED_COLUMN_FOR_THE_POLICY = "{0} Successfully unchecked ''{1}'' for ''{2}'' policy in Policy table of ''{3}'' tab.";
+	public static final String COREFLEX_ENABLED_COLUMN_ALREADY_CHECKED_FOR_THE_POLICY = "{0} ''{1}'' Column already checked for ''{2}'' policy in Policy table of ''{3}'' tab.";
+	public static final String COREFLEX_ENABLED_COLUMN_ALREADY_UNCHECKED_FOR_THE_POLICY = "{0} ''{1}'' Column already unchecked for ''{2}'' policy in Policy table of ''{3}'' tab.";
+	public static final String CHECKED = "Checked";
+	public static final String UNCHECKED = "Unchecked";
+	public static final String POLICY_NAME_COLUMN = "PolicyName";
+	public static final String COREFLEX_CHECKBOX_SELECTION = "CoreFleXEnabledCheckboxSelection";
+	public static final String NO_VALID_SELECTION = "No Valid Selection";
+	public static final String SAVE_CONFIRMATION_DIALOG_NOT_VISIBLE = "Save Confirmation dialog not visible.";
+	public static final String VERIFIED_SAVED_CONFIRMATION = "{0} Verified user clicked on 'Save & Continue' button.";
+	public static final String VERIFIED_OK_CONFIRMATION = "{0} Verified user clicked on 'OK' button.";
+	public static final String EXCEPTION_OCCURED_WHILE_SAVING_SAVED_CONFIRMATION = "{0} Exception occured while accepting save confirmation dialog.";
+	public static final String SUCCESSFULLY_VERIFIED_COREFLEX_ENABLED_COLUMN_IS_CHECKED_FOR_THE_POLICY = "{0} Successfully verified ''{1}'' is checked for ''{2}'' policy in Policy table of ''{3}'' tab.";
+	public static final String COREFLEX_ENABLED_COLUMN_NOT_CHECKED_FOR_THE_POLICY = "{0} ''{1}'' is Not checked for ''{2}'' policy in Policy table of ''{3}'' tab.";
+	public static final String SUCCESSFULLY_VERIFIED_COREFLEX_ENABLED_COLUMN_IS_UNCHECKED_FOR_THE_POLICY = "{0} Successfully verified ''{1}'' is Unchecked for ''{2}'' policy in Policy table of ''{3}'' tab.";
+	public static final String COREFLEX_ENABLED_COLUMN_NOT_UNCHECKED_FOR_THE_POLICY = "{0} ''{1}'' is Not Unchecked for ''{2}'' policy in Policy table of ''{3}'' tab.";
 }

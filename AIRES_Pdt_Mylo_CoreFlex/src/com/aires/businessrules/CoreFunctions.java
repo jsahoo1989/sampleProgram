@@ -171,9 +171,8 @@ public class CoreFunctions {
 			Log.info(CoreConstants.TXT_ACTUAL + CoreConstants.IS_DISPLAYED_AS + text);
 			Reporter.addStepLog(CoreConstants.PASS + CoreConstants.TXT_ACTUAL + CoreConstants.IS_DISPLAYED_AS + text);
 		} catch (Exception e) {
-			Log.info("Could not get text");
+			Log.info("Could not get text"+e.getMessage());
 			Reporter.addStepLog("Could not get element text");
-			e.printStackTrace();
 		}
 		return text;
 	}
@@ -1148,7 +1147,7 @@ public class CoreFunctions {
 	}
 
 	public static void clearAndSetTextUsingLocator(WebDriver driver, By locator, String textToEnter) {
-		WebDriverWait wait = new WebDriverWait(driver, 30);
+		
 		WebElement element = getElementByLocator(driver, locator);
 		try {
 			element.clear();

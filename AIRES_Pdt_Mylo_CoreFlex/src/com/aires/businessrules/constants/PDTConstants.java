@@ -1664,4 +1664,8 @@ public class PDTConstants {
 	public static final String FAILED_TO_VALIDATE_CLIENT_POLICY_DATA_ON_GENERAL_INFORMATION_PAGE = "{0} Failed to validate Client & Policy data on General Information Page.";
 	public static final String EXCEPTION_OCCURED_WHILE_VALIDATING_GENERAL_INFORMATION_FIELD = "{0} Exception occured while validating General Information Field - ''{1}''. Exception ''{2}''";
 	public static final String SUCCESSFULLY_VERIFIED_FIELD_AND_DEFAULT_VALUE_ON_GENERAL_INFORMATION_PAGE = "{0} Successfully verified ''{1}'' field and its default value ''{2}'' on General Information page.";
+	public static final String POINTS_BASED_FLEX_POLICY_FIELD_DISPLAYED_FOR_NON_COREFLEX_POLICY = "{0} Points based flex Policy Field is displayed for Non CoreFlex Policy.";
+	public static final String SUCCESSFULLY_VERIFIED_FIELD_NOT_DISPLAYED_ON_GENERAL_INFORMATION_PAGE = "{0} Successfully verified ''{1}'' Field is displayed on General Information Page.";
+	public static final String FAILED_TO_VALIDATE_COREFLEX_POLICY_FIELD_ON_GENERAL_INFO_PAGE = "{0} Failed to validate CoreFlex Policy Field on General Information Page.";
+	public static final String FAILED_TO_VALIDATE_BENEFIT_PACKAGE_TYPE_FIELD_ON_GENERAL_INFO_PAGE = "{0} Failed to validate Benefit Package Type Field on General Information Page.";
 }

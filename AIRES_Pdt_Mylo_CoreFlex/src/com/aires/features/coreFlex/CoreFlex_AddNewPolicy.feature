@@ -21,6 +21,7 @@ Feature: Validate the functionality of Add New Policy
 
   @CF-25 @CoreFlex-PolicyUpdate-Sprint1 @ClientIDInvalidDataCheck
   Scenario Outline: CoreFlex - Verify behavior of ClientID field for Invalid data
+
     Given he has navigated to "Add New Policy Form" menu from left navigation of 'Aires Policy Tool' homepage
     When he enters invalid <ClientID> in 'Client ID' dropdown list
     Then 'No items found' text should be displayed in dropdown list followed by 'Record does not exist' Error popup for Invalid <ClientID>
@@ -42,3 +43,5 @@ Feature: Validate the functionality of Add New Policy
     Then user should be navigated to the "General Information" page of the selected Client Policy
       | ClientID | ClientName                   |
       |    49211 | AIRES-CIS-DEMO&'TEST(CLIENT) |
+
+      

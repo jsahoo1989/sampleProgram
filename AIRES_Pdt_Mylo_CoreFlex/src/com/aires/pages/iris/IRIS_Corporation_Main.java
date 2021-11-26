@@ -44,6 +44,9 @@ import com.hp.lft.sdk.java.Window;
 import com.hp.lft.sdk.java.WindowDescription;
 import com.vimalselvam.cucumber.listener.Reporter;
 
+import cucumber.api.DataTable;
+import freemarker.core._ParserConfigurationWithInheritedFormat;
+
 public class IRIS_Corporation_Main extends BasePage {
 	private String windowTitle;
 
@@ -192,6 +195,14 @@ public class IRIS_Corporation_Main extends BasePage {
 		jTabbedPaneTabControl.select(moduleName);
 		Thread.sleep(1000);
 		switchToCorporationModule(moduleName);
+	}
+	
+	
+	public void selectCorporation(String moduleName) throws Exception {
+		_IRIS = getIRISWindow();
+		Thread.sleep(2000);		
+		System.out.println(moduleName);
+		IRIS_PageMaster.getTabControlObject(_IRIS,0).select(moduleName);			
 	}
 
 	public void switchToCorporationModule(String moduleName) throws Exception {
@@ -418,4 +429,6 @@ public class IRIS_Corporation_Main extends BasePage {
 			e.printStackTrace();
 		}
 	}
+
+	
 }

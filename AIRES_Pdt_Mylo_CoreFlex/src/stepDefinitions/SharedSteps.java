@@ -17,7 +17,7 @@ public class SharedSteps {
 	public SharedSteps(TestContext context) {
 		testContext = context;
 		if (!Hooks.scenarioName.getName().contains("IRIS")) {
-
+			irisCorporation_Main = testContext.getIrisPageManager().irisCorporationMain;
 		} else {
 			irisCorporation_Main = testContext.getIrisPageManager().irisCorporationMain;
 		}

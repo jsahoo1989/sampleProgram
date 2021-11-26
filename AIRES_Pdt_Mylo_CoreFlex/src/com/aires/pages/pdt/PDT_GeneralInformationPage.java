@@ -1,11 +1,10 @@
 package com.aires.pages.pdt;
 
 import java.text.MessageFormat;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
-import java.util.stream.Collector;
 
+import org.openqa.selenium.NoSuchElementException;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
@@ -63,6 +62,10 @@ public class PDT_GeneralInformationPage extends Base {
 	// Benefit Package Type Default Value
 	@FindBy(how = How.XPATH, using = "//ng-select[@formcontrolname='benefitPackageTypeCode']//span[contains(@class,'ng-value-label')]")
 	private WebElement _selectBenefitPackageTypeDefaultValue;
+
+	// Benefit Package Type Please Select Value
+	@FindBy(how = How.XPATH, using = "//ng-select[@formcontrolname='benefitPackageTypeCode']//div[@class='ng-placeholder']")
+	private WebElement _selectBenefitPackageTypeSelection;
 
 	// Benefit Package Type Select Options
 	@FindBy(how = How.XPATH, using = "//label[contains(string(),'Benefit Package Type')]/following-sibling::ng-select/descendant::div[@role='option']")
@@ -229,13 +232,26 @@ public class PDT_GeneralInformationPage extends Base {
 	private boolean verifyBenefitPackageTypeField(String expectedDefaultValue) {
 
 		if ((CoreFunctions.isElementExist(driver, _selectBenefitPackageType, 2))
-				&& (CoreFunctions.getElementText(driver, _selectBenefitPackageTypeDefaultValue))
-						.equals(expectedDefaultValue)) {
+				&& getActualDefaultValue().equals(expectedDefaultValue)) {
 
 			return true;
 		} else {
 			return false;
 		}
+
+	}
+
+	private String getActualDefaultValue() {
+
+		String defaultValue;
+
+		defaultValue = CoreFunctions.getElementText(driver, _selectBenefitPackageTypeDefaultValue);
+
+		if (defaultValue.isEmpty()) {
+			defaultValue = CoreFunctions.getElementText(driver, _selectBenefitPackageTypeSelection);
+		}
+
+		return defaultValue;
 	}
 
 	private boolean verifyCoreFlexPolicyField(String expectedDefaultValue) {
@@ -248,6 +264,31 @@ public class PDT_GeneralInformationPage extends Base {
 		} else {
 			return false;
 		}
+	}
+
+	public boolean verifyFieldExist(String fieldName) {
+
+		boolean isFieldExist = false;
+
+		try {
+
+			isFieldExist = CoreFunctions.isElementExist(driver, _selectPointsBasedFlexPolicy, 2);
+
+		} catch (Exception e) {
+
+			Reporter.addStepLog(
+					MessageFormat.format(PDTConstants.EXCEPTION_OCCURED_WHILE_VALIDATING_GENERAL_INFORMATION_FIELD,
+							CoreConstants.FAIL, fieldName, e.getMessage()));
+
+		}
+
+		if (!isFieldExist) {
+			Reporter.addStepLog(MessageFormat.format(
+					PDTConstants.SUCCESSFULLY_VERIFIED_FIELD_NOT_DISPLAYED_ON_GENERAL_INFORMATION_PAGE,
+					CoreConstants.PASS, fieldName));
+		}
+
+		return isFieldExist;
 	}
 
 }

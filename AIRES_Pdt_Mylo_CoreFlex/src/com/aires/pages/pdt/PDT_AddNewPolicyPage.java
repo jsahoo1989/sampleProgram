@@ -112,7 +112,6 @@ public class PDT_AddNewPolicyPage extends Base {
 	public boolean verifyValidClientIDResult(String inputValue) {
 
 		boolean isResultValid = false;
-		
 
 		try {
 			if (_optionsClientID.size() > 0) {
@@ -190,17 +189,17 @@ public class PDT_AddNewPolicyPage extends Base {
 		boolean isPolicyListDisplayed = false;
 
 		try {
-
-			if (CoreFunctions.isElementExist(driver, _popUpError, 2)) {
-				Reporter.addStepLog(MessageFormat.format(PDTConstants.ERROR_POP_UP_DISPLAYED_FOR_VALID_CLIENTID,
-						CoreConstants.FAIL, CoreFunctions.getElementText(driver, _popUpErrorMessage)));
-				return false;
-			} else if (CoreFunctions.isElementExist(driver, _selectPolicyName, 5)) {
+			if (CoreFunctions.isElementExist(driver, _selectPolicyName, 5)) {
 				CoreFunctions.clickElement(driver, _selectPolicyName);
 				isPolicyListDisplayed = verifyPoliciesAreDisplayed();
 				return true;
+			} else if (CoreFunctions.isElementExist(driver, _popUpError, 2)) {
+				Reporter.addStepLog(MessageFormat.format(PDTConstants.ERROR_POP_UP_DISPLAYED_FOR_VALID_CLIENTID,
+						CoreConstants.FAIL, CoreFunctions.getElementText(driver, _popUpErrorMessage)));
+				return false;
 			}
 		} catch (Exception e) {
+
 			Reporter.addStepLog(MessageFormat.format(PDTConstants.EXCEPTION_OCCURED_WHILE_VALIDATING_POLICY_NAME_LIST,
 					CoreConstants.FAIL, e.getMessage()));
 		}
@@ -259,13 +258,12 @@ public class PDT_AddNewPolicyPage extends Base {
 
 		try {
 
-			if (CoreFunctions.isElementExist(driver, _popUpError, 2)) {
-				Reporter.addStepLog(MessageFormat.format(PDTConstants.ERROR_POP_UP_DISPLAYED_FOR_VALID_CLIENTID,
-						CoreConstants.FAIL, CoreFunctions.getElementText(driver, _popUpErrorMessage)));
-
-			} else if (CoreFunctions.isElementExist(driver, _selectPolicyName, 5)) {
+			if (CoreFunctions.isElementExist(driver, _selectPolicyName, 5)) {
 				CoreFunctions.clickElement(driver, _selectPolicyName);
 				isPolicySelected = selectAnyPolicy();
+			} else if (CoreFunctions.isElementExist(driver, _popUpError, 2)) {
+				Reporter.addStepLog(MessageFormat.format(PDTConstants.ERROR_POP_UP_DISPLAYED_FOR_VALID_CLIENTID,
+						CoreConstants.FAIL, CoreFunctions.getElementText(driver, _popUpErrorMessage)));
 
 			}
 		} catch (Exception e) {
@@ -314,16 +312,16 @@ public class PDT_AddNewPolicyPage extends Base {
 
 		boolean isPolicySelected = false;
 
-		try {	
+		try {
 
-			if (CoreFunctions.isElementExist(driver, _popUpError, 2)) {
-				Reporter.addStepLog(MessageFormat.format(PDTConstants.ERROR_POP_UP_DISPLAYED_FOR_VALID_CLIENTID,
-						CoreConstants.FAIL, CoreFunctions.getElementText(driver, _popUpErrorMessage)));
-
-			} else if (CoreFunctions.isElementExist(driver, _selectPolicyName, 5)) {
+			if (CoreFunctions.isElementExist(driver, _selectPolicyName, 5)) {
 				CoreFunctions.clickElement(driver, _selectPolicyName);
 				CoreFunctions.selectItemInListByText(driver, _optionsPolicyName, selectedPolicyName);
 				isPolicySelected = true;
+			} else if (CoreFunctions.isElementExist(driver, _popUpError, 2)) {
+				Reporter.addStepLog(MessageFormat.format(PDTConstants.ERROR_POP_UP_DISPLAYED_FOR_VALID_CLIENTID,
+						CoreConstants.FAIL, CoreFunctions.getElementText(driver, _popUpErrorMessage)));
+
 			}
 		} catch (Exception e) {
 			Reporter.addStepLog(MessageFormat.format(PDTConstants.EXCEPTION_OCCURED_WHILE_VALIDATING_POLICY_NAME_LIST,

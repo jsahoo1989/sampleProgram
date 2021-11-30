@@ -8,6 +8,7 @@ import com.aires.businessrules.constants.CoreConstants;
 import com.aires.businessrules.constants.PDTConstants;
 import com.aires.cucumber.TestContext;
 import com.aires.managers.FileReaderManager;
+import com.aires.pages.coreflex.CoreFlex_FlexPolicySetupPage;
 import com.aires.pages.iris.IRIS_Corporation_Accounting;
 import com.aires.pages.iris.IRIS_Corporation_Main;
 import com.aires.pages.iris.IRIS_LoginPage;
@@ -15,6 +16,7 @@ import com.aires.pages.iris.IRIS_Welcome12C;
 import com.aires.pages.pdt.PDT_AddNewPolicyPage;
 import com.aires.pages.pdt.PDT_GeneralInformationPage;
 import com.aires.pages.pdt.PDT_LoginPage;
+import com.aires.pages.pdt.PDT_PolicyBenefitsCategoriesPage;
 import com.aires.pages.pdt.PDT_ViewPolicyPage;
 import com.aires.testdatatypes.pdt.PDT_LoginDetails;
 
@@ -29,6 +31,9 @@ public class CoreFlex_GeneralInformation_Steps {
 	PDT_ViewPolicyPage viewPolicyPage;
 	PDT_AddNewPolicyPage addNewPolicyPage;
 	PDT_GeneralInformationPage generalInfoPage;
+	CoreFlex_FlexPolicySetupPage flexPolicySetupPage;
+	PDT_PolicyBenefitsCategoriesPage pdtPolicyBenefitsCategoriesPage;
+	
 	private PDT_LoginDetails _loginDetails = null;
 
 	public CoreFlex_GeneralInformation_Steps(TestContext context) {
@@ -37,6 +42,8 @@ public class CoreFlex_GeneralInformation_Steps {
 		viewPolicyPage = testContext.getPageObjectManager().getViewPolicyPage();
 		addNewPolicyPage = testContext.getPageObjectManager().getAddNewPolicyPage();
 		generalInfoPage = testContext.getPageObjectManager().getGeneralInformationPage();
+		flexPolicySetupPage = testContext.getCoreFlexPageObjectManager().getFlexPolicySetupPage();
+		pdtPolicyBenefitsCategoriesPage = testContext.getPageObjectManager().getPolicyBenefitsCategoriesPage();
 	}
 
 	@Then("^user should be navigated to the \"([^\"]*)\" page of the selected Client Policy$")
@@ -69,8 +76,8 @@ public class CoreFlex_GeneralInformation_Steps {
 	public void he_has_saved_the_record_after_checkbox_for_the_policy_selected_above_in_Policy_table_of_tab_from_module_of_corporation(
 			String userSelection, String coreFlexColumnName, String tabName, String moduleName, String corporationId)
 			throws Throwable {
-		
-		testContext.getBasePage().invokeIrisApplication();	
+
+		testContext.getBasePage().invokeIrisApplication();
 		_loginDetails = FileReaderManager.getInstance().getJsonReader().getLoginByApplication("IRIS");
 		testContext.getIrisPageManager().irisLoginPage = new IRIS_LoginPage();
 		testContext.getIrisPageManager().irisLoginPage.getIRISLoginAsPerEnvt(_loginDetails);
@@ -81,10 +88,11 @@ public class CoreFlex_GeneralInformation_Steps {
 		testContext.getIrisPageManager().irisCorporationMain.selectCorporationModules(tabName);
 		testContext.getIrisPageManager().irisCorporationAccounting = new IRIS_Corporation_Accounting();
 		testContext.getIrisPageManager().irisCorporationAccounting.verifyAccountingTab();
-		testContext.getIrisPageManager().irisCorporationAccounting.performCoreFlexCheckboxSelectionForPolicy(coreFlexColumnName,userSelection,addNewPolicyPage.getSelectedPolicyName());
+		testContext.getIrisPageManager().irisCorporationAccounting.performCoreFlexCheckboxSelectionForPolicy(
+				coreFlexColumnName, userSelection, addNewPolicyPage.getSelectedPolicyName());
 		testContext.getIrisPageManager().irisCorporationAccounting.clickOnSaveBtn();
-		testContext.getIrisPageManager().irisCorporationAccounting.saveConfirmation();	
-		testContext.getBasePage().cleanIrisProcesses();	
+		testContext.getIrisPageManager().irisCorporationAccounting.saveConfirmation();
+		testContext.getBasePage().cleanIrisProcesses();
 
 	}
 
@@ -111,7 +119,8 @@ public class CoreFlex_GeneralInformation_Steps {
 			DataTable dataTable) throws Throwable {
 
 		Assert.assertTrue(generalInfoPage.verifyGeneralInfoField(fieldName, defaultValue, dataTable),
-				MessageFormat.format(PDTConstants.FAILED_TO_VALIDATE_COREFLEX_POLICY_FIELD_ON_GENERAL_INFO_PAGE, CoreConstants.FAIL));
+				MessageFormat.format(PDTConstants.FAILED_TO_VALIDATE_COREFLEX_POLICY_FIELD_ON_GENERAL_INFO_PAGE,
+						CoreConstants.FAIL));
 
 	}
 
@@ -120,14 +129,71 @@ public class CoreFlex_GeneralInformation_Steps {
 			String defaultValue, DataTable dataTable) throws Throwable {
 
 		Assert.assertTrue(generalInfoPage.verifyGeneralInfoField(fieldName, defaultValue, dataTable),
-				MessageFormat.format(PDTConstants.FAILED_TO_VALIDATE_BENEFIT_PACKAGE_TYPE_FIELD_ON_GENERAL_INFO_PAGE, CoreConstants.FAIL));
+				MessageFormat.format(PDTConstants.FAILED_TO_VALIDATE_BENEFIT_PACKAGE_TYPE_FIELD_ON_GENERAL_INFO_PAGE,
+						CoreConstants.FAIL));
 	}
-	
+
 	@Then("^\"([^\"]*)\" dropdown field should not be displayed$")
 	public void dropdown_field_should_not_be_displayed(String pointsBasedFlexPolicyFeild) throws Throwable {
+
+		Assert.assertFalse(generalInfoPage.verifyFieldExist(pointsBasedFlexPolicyFeild), MessageFormat.format(
+				PDTConstants.POINTS_BASED_FLEX_POLICY_FIELD_DISPLAYED_FOR_NON_COREFLEX_POLICY, CoreConstants.FAIL));
+	}
+
+	@Given("^he has navigated to \"([^\"]*)\" page after selecting a \"([^\"]*)\" policy for \"([^\"]*)\" Client on \"([^\"]*)\" page of 'Aires Policy Tool' Application$")
+	public void he_has_navigated_to_page_after_selecting_a_policy_for_Client_on_page_of_Aires_Policy_Tool_Application(
+			String pageName, String coreFlexYN, String clientID,String tabName) throws Throwable {
+
+		viewPolicyPage.clickElementOfPage(PDTConstants.ADD_NEW_POLICY_FORM);
+		addNewPolicyPage.enterClientID(clientID);
+		Assert.assertTrue(addNewPolicyPage.verifyValidClientIDResult(clientID), MessageFormat
+				.format(PDTConstants.FAILED_TO_VERIFY_VALID_CLIENT_ID_DROPDOWN_OPTIONS, CoreConstants.FAIL));
+		Assert.assertTrue(addNewPolicyPage.validatePolicyNameList(), MessageFormat
+				.format(PDTConstants.FAILED_TO_VERIFY_POLICY_NAME_FIELD_FOR_VALID_CLIENTID, CoreConstants.FAIL));
+		Assert.assertTrue(addNewPolicyPage.selectPolicy(),
+				MessageFormat.format(PDTConstants.FAILED_TO_SELECT_POLICY_FROM_POLICY_NAME_FIELD, CoreConstants.FAIL));
+
+	}
+
+	@Given("^he has selected \"([^\"]*)\" option for \"([^\"]*)\" dropdown field of \"([^\"]*)\" Policy after filling all other mandatory fields on \"([^\"]*)\" page for \"([^\"]*)\" Client$")
+	public void he_has_selected_option_for_dropdown_field_after_filling_all_other_mandatory_fields_on_page_for_Client(
+			String fieldSelection, String fieldName,String coreFlexYN, String pageName, String clientID) throws Throwable {
+		
+		addNewPolicyPage.clickLogout();
+		Assert.assertTrue(loginPage.loginByUserType(PDTConstants.CSM, viewPolicyPage),
+				MessageFormat.format(PDTConstants.FAILED_TO_VERIFY_LOGGED_IN_USER, CoreConstants.FAIL));
+		viewPolicyPage.clickElementOfPage(PDTConstants.ADD_NEW_POLICY_FORM);
+		addNewPolicyPage.enterClientID(clientID);
+		Assert.assertTrue(addNewPolicyPage.verifyValidClientIDResult(clientID), MessageFormat
+				.format(PDTConstants.FAILED_TO_VERIFY_VALID_CLIENT_ID_DROPDOWN_OPTIONS, CoreConstants.FAIL));
+		Assert.assertTrue(addNewPolicyPage.selectVerifiedPolicy(),
+				MessageFormat.format(PDTConstants.FAILED_TO_SELECT_POLICY_FROM_POLICY_NAME_FIELD, CoreConstants.FAIL));		
+		
+		addNewPolicyPage.clickNext();
+		
+		Assert.assertTrue(generalInfoPage.verifyClientPolicyDetails(clientID,addNewPolicyPage.getSelectedPolicyName()),
+				MessageFormat.format(PDTConstants.FAILED_TO_VALIDATE_CLIENT_POLICY_DATA_ON_GENERAL_INFORMATION_PAGE,
+						CoreConstants.FAIL));
+		
+		Assert.assertTrue(generalInfoPage.verifyGeneralInfoField(PDTConstants.CORE_FLEX_POLICY,coreFlexYN),
+				MessageFormat.format(PDTConstants.FAILED_TO_VALIDATE_COREFLEX_POLICY_FIELD_ON_GENERAL_INFO_PAGE,
+						CoreConstants.FAIL));
+		
+		generalInfoPage.selectOtherMandatoryFields();
+		
+		Assert.assertTrue(generalInfoPage.selectFieldOption(fieldName,fieldSelection),
+				MessageFormat.format(PDTConstants.FAILED_TO_SELECT_FIELD_OPTIONS_ON_GENERAL_INFO_PAGE,
+						CoreConstants.FAIL));			
+		
+	}
+	
+	@Then("^he should be navigated to \"([^\"]*)\" page having \"([^\"]*)\" based on \"([^\"]*)\" selection$")
+	public void he_should_be_navigated_to_page_having_based_on_selection(String expectedPageTitle, String expectedLeftNavigationTitle, String pointsBasedFlexSelection) throws Throwable {
+		
+		Assert.assertTrue(generalInfoPage.verifyPageNavigation(pointsBasedFlexSelection,expectedPageTitle,expectedLeftNavigationTitle,flexPolicySetupPage,pdtPolicyBenefitsCategoriesPage),
+				MessageFormat.format(PDTConstants.FAILED_TO_VERIFY_USER_NAVIGATION_PAST_GENERAL_INFORMATION,
+						CoreConstants.FAIL));	
 	    
-		Assert.assertFalse(generalInfoPage.verifyFieldExist(pointsBasedFlexPolicyFeild),
-				MessageFormat.format(PDTConstants.POINTS_BASED_FLEX_POLICY_FIELD_DISPLAYED_FOR_NON_COREFLEX_POLICY, CoreConstants.FAIL));
 	}
 
 }

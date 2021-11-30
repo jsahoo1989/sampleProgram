@@ -1619,6 +1619,13 @@ public class PDTConstants {
 	public static final String EMAIL_PASSWORD_SUBJECT = "MobilityX Password";
 	
 	////PDT CONSTANTS
+	public static final String POLICY_TYPE = "Policy Type";
+	public static final String US_DOMESTIC = "US Domestic";
+	public static final String EMPLOYEE_TYPE = "Employee Type";
+	public static final String NEW_HIRE = "New Hire";
+	public static final String HOMEOWNER_TYPE = "Homeowner Type";
+	public static final String HOMEOWNER = "Homeowner";
+	public static final String CAPPED_POLICY = "Capped Policy";	
 	public static final String CORE_FLEX_POLICY = "Core/Flex Policy";
 	public static final String BENEFIT_PACKAGE_TYPE = "Benefit Package Type";
 	public static final String POINTS_BASED_FLEX_POLICY = "Points Based Flex Policy";
@@ -1659,13 +1666,20 @@ public class PDTConstants {
 	public static final String FAILED_TO_SELECT_POLICY_FROM_POLICY_NAME_FIELD = "{0} Failed to select Policy from Policy Name Field.";
 	public static final String EXCEPTION_OCCURED_WHILE_SELECTING_POLICY = "{0} Exception occured while selecting Policy Name from the Policy dropdown. Exception ''{1}''";
 	public static final String SUCCESSFULLY_SELECTED_POLICY_FROM_POLICY_NAME_LIST = "{0} Successfully selected policy from policy name list.";
-	public static final String EXCEPTION_OCCURED_WHILE_VALIDATING_GENERAL_INFORMATION_PAGE = "{0} Exception occured while validating Client & Policy Details on General Information Page. ''{1}''";
+	public static final String EXCEPTION_OCCURED_WHILE_VALIDATING_GENERAL_INFORMATION_PAGE = "{0} Exception occured while validating Client & Policy Details on General Information Page ''{1}''";
 	public static final String SUCCESSFULLY_VERIFIED_CLIENT_AND_POLICY_DETAILS_ON_GENERAL_INFO_PAGE = "{0} Successfully verified Client & Policy Details on ''{1}'' page.";
 	public static final String FAILED_TO_VALIDATE_CLIENT_POLICY_DATA_ON_GENERAL_INFORMATION_PAGE = "{0} Failed to validate Client & Policy data on General Information Page.";
 	public static final String EXCEPTION_OCCURED_WHILE_VALIDATING_GENERAL_INFORMATION_FIELD = "{0} Exception occured while validating General Information Field - ''{1}''. Exception ''{2}''";
 	public static final String SUCCESSFULLY_VERIFIED_FIELD_AND_DEFAULT_VALUE_ON_GENERAL_INFORMATION_PAGE = "{0} Successfully verified ''{1}'' field and its default value ''{2}'' on General Information page.";
 	public static final String POINTS_BASED_FLEX_POLICY_FIELD_DISPLAYED_FOR_NON_COREFLEX_POLICY = "{0} Points based flex Policy Field is displayed for Non CoreFlex Policy.";
-	public static final String SUCCESSFULLY_VERIFIED_FIELD_NOT_DISPLAYED_ON_GENERAL_INFORMATION_PAGE = "{0} Successfully verified ''{1}'' Field is displayed on General Information Page.";
+	public static final String SUCCESSFULLY_VERIFIED_FIELD_NOT_DISPLAYED_ON_GENERAL_INFORMATION_PAGE = "{0} Successfully verified ''{1}'' Field is NOT displayed on General Information Page.";
 	public static final String FAILED_TO_VALIDATE_COREFLEX_POLICY_FIELD_ON_GENERAL_INFO_PAGE = "{0} Failed to validate CoreFlex Policy Field on General Information Page.";
 	public static final String FAILED_TO_VALIDATE_BENEFIT_PACKAGE_TYPE_FIELD_ON_GENERAL_INFO_PAGE = "{0} Failed to validate Benefit Package Type Field on General Information Page.";
+	public static final String COREFLEX_POLICY_FIELD = "Core/Flex Policy";
+	public static final String EXCEPTION_OCCURED_WHILE_SELECTING_GENERAL_INFORMATION_FIELD = "{0} Exception occured while selecting ''{1}'' field on General information page.''{2}''";
+	public static final String SUCCESSFULLY_SELECTED_OPTION_FOR_FIELD_ON_GENERAL_INFORMATION_PAGE = "{0} Successfully selected ''{1}'' option for ''{2}'' field on General Information page.";
+	public static final String FAILED_TO_SELECT_FIELD_OPTIONS_ON_GENERAL_INFO_PAGE = "{0} Failed to select field options on General Information Page.";
+	public static final String FAILED_TO_VERIFY_USER_NAVIGATION_PAST_GENERAL_INFORMATION = "{0} Failed to verify user navigation past General Information Page.";
+	public static final String EXCEPTION_OCCURED_WHILE_VALIDATING_PAGE_NAVIGATION_PAST_GENERAL_INFO = "{0} Exception occured while validating Navigation past general information page.''{1}''";
+	public static final String SUCCESSFULLY_NAVIGATED_TO_PAGE_PAST_GENERAL_INFORMATION = "{0} Successfully navigated to ''{1}'' from General Information Page.";
 }

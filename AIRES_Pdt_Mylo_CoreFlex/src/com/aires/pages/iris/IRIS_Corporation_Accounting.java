@@ -141,15 +141,23 @@ public class IRIS_Corporation_Accounting extends BasePage {
 
 	}
 
-	private void searchPolicyNameInPolicyTable(Table table, String columnName, String policyName,
+	private void searchPolicyNameInPolicyTable(Table table, String columnName, String policyNameValue,
 			String checkboxSelection) throws GeneralLeanFtException {
+		
+		String policyName = policyNameValue;
+		
+		if(policyName.contains("(#")) {
+			String[] splittedPolicyName = policyNameValue.split("\\(");
+			policyName = splittedPolicyName[0].trim();
+		}
 
 		for (int rowCount = 0; rowCount < table.getRows().size(); rowCount++) {
-
-			if (table.getCell(rowCount, "Policy").getValue().toString().contains(policyName)) {
+			
+			if (policyName.equals(table.getCell(rowCount, "Policy").getValue().toString())) {
 				performCoreFlexCheckboxSelection(table, rowCount, columnName, policyName, checkboxSelection);
 				break;
 			}
+			
 		}
 
 	}
@@ -176,10 +184,10 @@ public class IRIS_Corporation_Accounting extends BasePage {
 
 	private void uncheckCoreFlexEnabledCheckbox(Table table, int rowCount, String columnName, String policyName)
 			throws GeneralLeanFtException {
-		checkOperationPerformed = false;
+		uncheckOperationPerformed = false;
 		if ((table.getCell(rowCount, columnName).getValue().toString()).equals("1.0")) {
 			table.getCell(rowCount, columnName).click();
-			checkOperationPerformed = true;
+			uncheckOperationPerformed = true;
 			Log.info(MessageFormat.format(IRISConstants.SUCCESSFULLY_UNCHECKED_COREFLEX_ENABLED_COLUMN_FOR_THE_POLICY,
 					CoreConstants.PASS, columnName, policyName, IRISConstants.ACCOUNTING));
 			Reporter.addStepLog(
@@ -197,10 +205,10 @@ public class IRIS_Corporation_Accounting extends BasePage {
 
 	private void checkCoreFlexEnabledCheckbox(Table table, int rowCount, String columnName, String policyName)
 			throws GeneralLeanFtException {
-		uncheckOperationPerformed = false;
+		checkOperationPerformed = false;
 		if ((table.getCell(rowCount, columnName).getValue().toString()).equals("0.0")) {
 			table.getCell(rowCount, columnName).click();
-			uncheckOperationPerformed = true;
+			checkOperationPerformed = true;
 			Log.info(MessageFormat.format(IRISConstants.SUCCESSFULLY_CHECKED_COREFLEX_ENABLED_COLUMN_FOR_THE_POLICY,
 					CoreConstants.PASS, columnName, policyName, IRISConstants.ACCOUNTING));
 			Reporter.addStepLog(
@@ -249,7 +257,7 @@ public class IRIS_Corporation_Accounting extends BasePage {
 								IRIS_PageMaster.getDialogObject(_IRIS, "Save confirmation"), "Save & Continue"),
 						"Save & Continue");
 
-				Log.info(IRISConstants.VERIFIED_SAVED_CONFIRMATION);
+				Log.info(MessageFormat.format(IRISConstants.VERIFIED_SAVED_CONFIRMATION, CoreConstants.PASS));
 				Reporter.addStepLog(
 						MessageFormat.format(IRISConstants.VERIFIED_SAVED_CONFIRMATION, CoreConstants.PASS));
 
@@ -288,7 +296,7 @@ public class IRIS_Corporation_Accounting extends BasePage {
 			if (IRIS_PageMaster.getDialogObject(_IRIS, "Saved!").isVisible()) {
 				Helpers.clickButton(IRIS_PageMaster
 						.getButtonObjectFromLabel(IRIS_PageMaster.getDialogObject(_IRIS, "Saved!"), "OK"), "OK");
-				Log.info(IRISConstants.VERIFIED_OK_CONFIRMATION);
+				Log.info(MessageFormat.format(IRISConstants.VERIFIED_OK_CONFIRMATION, CoreConstants.PASS));
 				Reporter.addStepLog(MessageFormat.format(IRISConstants.VERIFIED_OK_CONFIRMATION, CoreConstants.PASS));
 
 			}

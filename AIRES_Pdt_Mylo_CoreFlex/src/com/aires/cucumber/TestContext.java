@@ -18,6 +18,7 @@
 package com.aires.cucumber;
 
 import com.aires.managers.IrisPageManager;
+import com.aires.managers.PageObjectManager_CoreFlex;
 import com.aires.managers.PageObjectManager_Mylo;
 import com.aires.managers.PageObjectManager_Pdt;
 import com.aires.managers.WebDriverManager;
@@ -27,6 +28,7 @@ public class TestContext {
 	private WebDriverManager _webDriverManager;
 	private PageObjectManager_Pdt _pageObjectManagerPDT;
 	private PageObjectManager_Mylo _pageObjectManagerMylo;
+	private PageObjectManager_CoreFlex _pageObjectManagerCoreFlex;
 	private BasePage _basePage;
 	private IrisPageManager _irisPageManager;
 	private String browserTitle;
@@ -42,6 +44,7 @@ public class TestContext {
 			_webDriverManager = new WebDriverManager();
 			_pageObjectManagerPDT = new PageObjectManager_Pdt(_webDriverManager.getDriver());
 			_pageObjectManagerMylo = new PageObjectManager_Mylo(_webDriverManager.getDriver());
+			_pageObjectManagerCoreFlex = new PageObjectManager_CoreFlex(_webDriverManager.getDriver());
 		}
 
 	}
@@ -52,6 +55,10 @@ public class TestContext {
 
 	public PageObjectManager_Pdt getPageObjectManager() {
 		return _pageObjectManagerPDT;
+	}
+	
+	public PageObjectManager_CoreFlex getCoreFlexPageObjectManager() {
+		return _pageObjectManagerCoreFlex;
 	}
 
 	public PageObjectManager_Mylo getMyloPageObjectManager() {

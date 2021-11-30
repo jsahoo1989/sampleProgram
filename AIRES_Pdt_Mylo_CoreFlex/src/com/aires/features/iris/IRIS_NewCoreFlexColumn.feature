@@ -10,12 +10,10 @@ Feature: Validate the functionality of new CoreFlex Column in IRIS Corporation -
     And he has 'Checked/Unchecked' "CoreFleX Enabled" checkbox for following Policy in 'Policy table' of "Accounting" tab
       | PolicyName        | CoreFleXEnabledCheckboxSelection |
       | AOL Digital Media | Checked                          |
-      | AOL Publishing    | Unchecked                        |
     When he clicks on 'Save' button
     Then selection of the 'Checked/Unchecked' "CoreFleX Enabled" checkbox performed above should be maintained for "49211" corporation
       | PolicyName        | CoreFleXEnabledCheckboxSelection |
       | AOL Digital Media | Checked                          |
-      | AOL Publishing    | Unchecked                        |
     
     
  

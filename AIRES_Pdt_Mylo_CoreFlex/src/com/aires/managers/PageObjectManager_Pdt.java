@@ -22,6 +22,7 @@ import org.openqa.selenium.WebDriver;
 import com.aires.pages.pdt.PDT_AddNewPolicyPage;
 import com.aires.pages.pdt.PDT_GeneralInformationPage;
 import com.aires.pages.pdt.PDT_LoginPage;
+import com.aires.pages.pdt.PDT_PolicyBenefitsCategoriesPage;
 import com.aires.pages.pdt.PDT_ViewPolicyPage;
 
 public class PageObjectManager_Pdt {
@@ -31,6 +32,7 @@ public class PageObjectManager_Pdt {
 	private PDT_ViewPolicyPage _viewPolicyPage;
 	private PDT_AddNewPolicyPage _addNewPolicyPage;
 	private PDT_GeneralInformationPage _generalInfoPage;
+	private PDT_PolicyBenefitsCategoriesPage _policyBenefitsCategoriesPage;
 
 	public PageObjectManager_Pdt(WebDriver driver) {
 		this._driver = driver;
@@ -50,6 +52,10 @@ public class PageObjectManager_Pdt {
 	
 	public PDT_GeneralInformationPage getGeneralInformationPage() {
 		return (_generalInfoPage == null) ? _generalInfoPage = new PDT_GeneralInformationPage(_driver) : _generalInfoPage;
+	}
+	
+	public PDT_PolicyBenefitsCategoriesPage getPolicyBenefitsCategoriesPage() {
+		return (_policyBenefitsCategoriesPage == null) ? _policyBenefitsCategoriesPage = new PDT_PolicyBenefitsCategoriesPage(_driver) : _policyBenefitsCategoriesPage;
 	}
 	
 }

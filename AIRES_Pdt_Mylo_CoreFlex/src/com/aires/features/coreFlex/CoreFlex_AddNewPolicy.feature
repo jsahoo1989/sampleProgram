@@ -3,7 +3,7 @@ Feature: Validate the functionality of Add New Policy
   Background: Login to  Policy Digitization Tool (PDT) application
     Given he has logged into 'Aires Policy Tool' application as a "Client Service Manager" user
 
-  @CF-25 @CoreFlex-PolicyUpdate-Sprint1 @ClientIDValidDataCheck
+  @CF-25 @Regression
   Scenario Outline: CoreFlex - Verify behavior of ClientID field for Valid data
     Given he has navigated to "Add New Policy Form" menu from left navigation of 'Aires Policy Tool' homepage
     When he enters valid <ClientID> in 'Client ID' dropdown list
@@ -19,7 +19,7 @@ Feature: Validate the functionality of Add New Policy
       | AIR      |
       | Equifax  |
 
-  @CF-25 @CoreFlex-PolicyUpdate-Sprint1 @ClientIDInvalidDataCheck
+  @CF-25 @Regression
   Scenario Outline: CoreFlex - Verify behavior of ClientID field for Invalid data
 
     Given he has navigated to "Add New Policy Form" menu from left navigation of 'Aires Policy Tool' homepage

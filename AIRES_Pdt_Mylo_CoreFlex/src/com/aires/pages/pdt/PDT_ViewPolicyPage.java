@@ -74,6 +74,11 @@ public class PDT_ViewPolicyPage extends Base {
 	// Search Button
 	@FindBy(how = How.CSS, using = "a.clear_filter")
 	private WebElement _clearFilter;
+	
+	//Add new Policy Form link
+	@FindBy(how = How.XPATH, using = "//p[text()='Add New Policy Form']")
+	private WebElement _lnkAddNewPolicyForm;
+	
 
 	final By _listPolicyNameByLocator = By.cssSelector("h5.text-info.info-pname");
 	final By _listClientNameByLocator = By.cssSelector("h6.info-pclient");
@@ -102,6 +107,9 @@ public class PDT_ViewPolicyPage extends Base {
 			break;
 		case PDTConstants.CLEAR_FILTER:
 			CoreFunctions.highlightElementAndClick(driver, _clearFilter, PDTConstants.LOGOUT);
+			break;
+		case PDTConstants.ADD_NEW_POLICY_FORM:
+			CoreFunctions.highlightElementAndClick(driver, _lnkAddNewPolicyForm, PDTConstants.ADD_NEW_POLICY_FORM);
 			break;
 		default:
 			Assert.fail(MessageFormat.format(PDTConstants.ELEMENT_NOT_FOUND, elementName));

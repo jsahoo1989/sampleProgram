@@ -710,8 +710,7 @@ public class PDTConstants {
 	public static final String VERIFIED_CLIENT_ID_ON_LIST_OF_CLIENT_TABLE = "{0} Successfully verified ''{1}'' Client Id in List Of Client table";
 	public static final String VERIFIED_IMPERSONATE_TILE_NOT_DISPLAYED = "{0} Verified that ''{1}'' tile is not displayed on MobilityX dashboard page";
 	public static final String FAIL_TO_CLICK_ELEMENT_ON_RELONET_PAGE = "{0} Fail to Click ''{1}'' element on Relonet page";
-	public static final String CLIENT_ADMINISTRATION = "Client Administration";
-	public static final String CLIENT_NAME = "Client Name";
+	public static final String CLIENT_ADMINISTRATION = "Client Administration";	
 	public static final String CLIENT_NAME_HEADER = "AES Corporation*";
 	public static final String MAILING_LIST_TAB = "Mailing List";
 	public static final String CLIENT_ADMIN_LIST_TAB = "Client Admin List";
@@ -1359,7 +1358,7 @@ public class PDTConstants {
 	public static final String SERVICE_REGION_TILE = "Service Region Tile";
 
 	// Client Admin
-	public static final String CLIENT_ID = "Client Id";
+	
 	public static final String PHYSICAL_ADDRESS = "Physical Address";
 	public static final String BILLING_ADDRESS = "Billing Address";
 	public static final String CLIENT_HIERARCHY = "Client Hierarchy";
@@ -1641,8 +1640,69 @@ public class PDTConstants {
 	public static final String FAIL_TO_VERIFY_POLICY_NAME_ON_PAGE = "{0}Failed to verify Policy name ''{1}'' in search result on ''{2}'' page.";
 	public static final String VERIFIED_CLIENT_ID_COMPANY_NAME = "{0}Verfied Client id :- ''{1}'' and Company name :- ''{2}'' is displayed in search result on ''{3}'' page.";
 	public static final String FAIL_TO_VERIFY_CLIENT_ID_COMPANY_NAME = "{0}Failed to verify Client id :- ''{1}'' and Company name :- ''{2}'' in search result on ''{3}'' page.";
-	public static final String ELEMENT_NOT_FOUND = "''{0}'' element not found.";
+	public static final String ELEMENT_NOT_FOUND = "''{0}'' Element not found.";
 	public static final String INVALID_CREDENTIALS_ENTERED = "Invalid login credentials are entered.";
-
-
+	public static final String ADD_NEW_POLICY_FORM = "Add New Policy Form";
+	public static final String FAILED_TO_VERIFY_POLICY_NAME_FIELD_FOR_VALID_CLIENTID ="{0} Failed to verify Policy Name Dropdown field for valid ClientID.";
+	public static final String EXCEPTION_OCCURED_WHILE_VALIDATING_POLICY_NAME_LIST = "{0} Exception Occured while validating Policy Name Dropdown List. ''{1}''";
+	public static final String SUCCESSFULLY_DISPLAYED_POLICIES_IN_POLICY_LIST ="{0} Successfully displayed Policies in Policy Name List.";
+	public static final String INCORRECT_CLIENT_DISPLAYED_FOR_ENTERED_CLIENTID = "{0} Incorrect Client ''{1}'' displayed in dropdown result for entered ClientID ''{2}''.";
+	public static final String ERROR_POP_UP_DISPLAYED_FOR_VALID_CLIENTID = "{0} Error Pop-Up displayed for Valid ClientID. Error Message - ''{1}''";
+	public static final String FAILED_TO_VERIFY_VALID_CLIENT_ID_DROPDOWN_OPTIONS = "{0} Failed to verify valid Client ID dropdown option values.";
+	public static final String FAILED_TO_VERIFY_INVALID_CLIENT_ID_DROPDOWN_OPTIONS = "{0} Failed to verify invalid Client ID dropdown option values.";
+	public static final String CLIENT_OPTIONS_NOT_DISPLAYED_FOR_VALID_CLIENTID = "{0} Client options not displayed for valid client ID - ''{1}''.";
+	public static final String EXCEPTION_OCCURED_WHILE_VALIDATING_CLIENT_OPTIONS_FOR_VALID_CLIENTID = "{0} Exception occured while validating client options for valid client ID. ''{1}''";
+	public static final String SUCCESSFULLY_VERIFIED_CLIENT_OPTIONS_FOR_VALID_CLIENTID = "{0} Successfully verified client options for valid client ID - ''{1}''";
+	public static final String SUCCESSFULLY_VERIFIED_CLIENT_OPTIONS_FOR_INVALID_CLIENTID = "{0} Successfully verified client options for Invalid client ID - ''{1}''";
+	public static final String EXCEPTION_OCCURED_WHILE_VALIDATING_INVALID_CLIENT_ERROR_POPUP = "{0} Exception occured while validating Invalid-ClientID Popup. ''{1}''";
+	public static final String RECORD_DOES_NOT_EXIST = "Record does not exist.";
+	public static final String POLICY_NAME_FIELD_DISPLAYED_FOR_INVALID_CLIENT = "{0} Policy Name field displayed for Invalid Client ''{1}''.";
+	public static final String POLICY_NAME_FIELD_NOT_DISPLAYED_FOR_INVALID_CLIENT = "{0} Policy Name field not displayed for Invalid Client ''{1}''.";
+	public static final String EXCEPTION_OCCURED_WHILE_VALIDATING_POLICY_NAME_FIELD = "{0} Exception occured while validating Policy Name Field. Exception - ''{1}''";
+	public static final String FAILED_TO_SELECT_POLICY_FROM_POLICY_NAME_FIELD = "{0} Failed to select Policy from Policy Name Field.";
+	public static final String EXCEPTION_OCCURED_WHILE_SELECTING_POLICY = "{0} Exception occured while selecting Policy Name from the Policy dropdown. Exception ''{1}''";
+	public static final String SUCCESSFULLY_SELECTED_POLICY_FROM_POLICY_NAME_LIST = "{0} Successfully selected policy from policy name list.";
+	public static final String EXCEPTION_OCCURED_WHILE_VALIDATING_GENERAL_INFORMATION_PAGE = "{0} Exception occured while validating Client & Policy Details on General Information Page. ''{1}''";
+	public static final String SUCCESSFULLY_VERIFIED_CLIENT_AND_POLICY_DETAILS_ON_GENERAL_INFO_PAGE = "{0} Successfully verified Client & Policy Details on ''{1}'' page.";
+	public static final String FAILED_TO_VALIDATE_CLIENT_POLICY_DATA_ON_GENERAL_INFORMATION_PAGE = "{0} Failed to validate Client & Policy data on General Information Page.";
+	public static final String EXCEPTION_OCCURED_WHILE_VALIDATING_GENERAL_INFORMATION_FIELD = "{0} Exception occured while validating General Information Field - ''{1}''. Exception ''{2}''";
+	public static final String SUCCESSFULLY_VERIFIED_FIELD_AND_DEFAULT_VALUE_ON_GENERAL_INFORMATION_PAGE = "{0} Successfully verified ''{1}'' field and its default value ''{2}'' on General Information page.";
+	public static final String POINTS_BASED_FLEX_POLICY_FIELD_DISPLAYED_FOR_NON_COREFLEX_POLICY = "{0} Points based flex Policy Field is displayed for Non CoreFlex Policy.";
+	public static final String SUCCESSFULLY_VERIFIED_FIELD_NOT_DISPLAYED_ON_GENERAL_INFORMATION_PAGE = "{0} Successfully verified ''{1}'' Field is displayed on General Information Page.";
+	public static final String FAILED_TO_VALIDATE_COREFLEX_POLICY_FIELD_ON_GENERAL_INFO_PAGE = "{0} Failed to validate CoreFlex Policy Field on General Information Page.";
+	public static final String FAILED_TO_VALIDATE_BENEFIT_PACKAGE_TYPE_FIELD_ON_GENERAL_INFO_PAGE = "{0} Failed to validate Benefit Package Type Field on General Information Page.";
+	public static final String CORE_FLEX_POLICY = "Core/Flex Policy";
+	public static final String BENEFIT_PACKAGE_TYPE = "Benefit Package Type";
+	public static final String POINTS_BASED_FLEX_POLICY = "Points Based Flex Policy";
+	public static final String ERROR_POP_UP_DISPLAYED_FOR_CLIENTID = "{0} Error Pop-Up displayed for ClientID:- ''{1}''. Error Message - ''{2}''";
+	public static final String CORPORATION_POLICY_DOES_NOT_EXIST = "{0} Corporation Policy does not exist for ClientID:- ''{1}''.";
+	public static final String CLIENT_ID = "Client Id";
+	public static final String POLICY_NAME = "Policy Name";
+	public static final String VERIFIED_DEFAULT_COREFLEX_POLICY = "{0} Verified default selected value for Core/Flex Policy is :-''{1}'' on ''{2}'' page";
+	public static final String FAILED_TO_VERIFY_DEFAULT_COREFLEX_POLICY = "{0} Failed to verify default selected value for Core/Flex Policy on ''{1}'' page. Expected selected value:-''{2}''. Actual selected value:- ''{3}''";
+	public static final String VERIFIED_BENEFIT_PACKAGE_TYPE = "{0} Verified Benefit Package type options:-''{1}''";
+	public static final String FAILED_TO_VERIFY_BENEFIT_PACKAGE_TPE = "{0} Failed to verify Benefit Package type options. Expected Benefit Package type options:-''{1}''. Actual Benefit Package type options:- ''{2}''";
+	public static final String VERIFIED_CLIENT_DETAILS = "{0} Verified Client id:-''{1}'' & Client name:-''{2}'' on General Information page.";
+	public static final String FAILED_TO_VERIFY_CLIENT_DETAILS = "{0} Failed to verify client details on General Information page. Expected Client id:-''{1}'', Expected Client name:-''{2}''. Actual Client id:-''{3}'', Actual Client name:-''{4}''";
+	public static final String VERIFIED_POLICY_NAME = "{0} Verified Policy name:-''{1}'' on General Information page.";
+	public static final String FAILED_TO_VERIFY_POLICY_NAME = "{0} Failed to verify Policy name on General Information page. Expected Policy name:-''{1}''. Actual Policy name:-''{2}''";
+	public static final String POLICY_BENEFIT_CATEGORIES = "Policy Benefits Categories";
+	public static final String POLICY_TYPE = "Policy Type";
+	public static final String EMPLOYEE_TYPE = "Employee Type";
+	public static final String HOMEOWNER_TYPE = "Homeowner Type";
+	public static final String VERIFY_DISPLAY_OF_BENEFIT_CATEGORY = "{0} Verified {1} enabled benefit categories are displayed on ''{2}'' page.";
+	public static final String BENEFIT_CATEGORIES_NOT_DISPLAYED = "{0} Benefit categories are not displayed on ''{2}'' page.";
+	public static final String CLIENT_NAME = "Client Name";
+	public static final String CANDIDATE_SELECTION = "Candidate Selection";
+	public static final String PRE_ACCEPTANCE_TRIP_TRANSPORTATION = "Pre-Acceptance Trip Transportation";
+	public static final String PRE_ACCEPTANCE_TRIP_LODGING = "Pre-Acceptance Trip Lodging";
+	public static final String PRE_ACCEPTANCE_TRIP_MEALS = "Pre-Acceptance Trip Meals";
+	public static final String STATE_DISPLAY = "Display";
+	public static final String STATE_HIDDEN = "Hidden";
+	public static final String STATE_NOT_FOUND = "''{0}'' State not found.";
+	public static final String VERIFIED_FORM_IS_DISPLAYED = "{0}Verfied ''{1}'' form is displayed on ''{2}'' page.";
+	public static final String VERIFIED_FORM_IS_NOT_DISPLAYED = "{0} ''{1}'' form is not displayed on ''{2}'' page.";
+	public static final String VERIFIED_FORM_IS_HIDDEN = "{0}Verfied ''{1}'' form is hidden on ''{2}'' page.";
+	public static final String VERIFIED_FORM_IS_NOT_HIDDEN = "{0} ''{1}'' form is not hidden on ''{2}'' page.";
+	public static final String NO_ITEMS_FOUND = "No items found";
 }

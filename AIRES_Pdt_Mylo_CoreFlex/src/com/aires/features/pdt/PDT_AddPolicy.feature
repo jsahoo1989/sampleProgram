@@ -5,111 +5,41 @@ Feature: Add new Policy form with Benefit Categories
     Given he is logged into Policy App application with below credentials
       | userName | password |
       | kbrian   | kbrian   |
+  
+  @Sprint-14 @PDT-Regression
+  Scenario: Verify Core/Flex policy drop down should display as "No" on General Information section for selected PDT policy
+    Given he is on "Add New Policy Form" page after clicking link "Add New Policy Form" from left menu navigation on "View/Edit Policy Form" page
+    When he clicks on "Next" button after selecting below Client, Policy information on "Add New Policy Form" page
+      | ClientId | ClientName                    | PolicyName                 |
+      |     7403 | Dow Chemical Company (Global) | Valued Relocation (# 9533) |
+    Then by default "No" option should be selected for "Core/Flex policy" drop down on "General Information" page
+    And "Benefit Package Type" drop down should display below options
+      | Bundle     |
+      | A la carte |
 
-  #/*******PDT-48********/
-  Scenario: Add new Policy form with Pre-Acceptance Services as Benefit Category
-    Given he is on "General Information" section of "Policy Benefit" page after selecting below information for creating a new policy
-      | Client Id | Client Name               | Policy Name                     |
-      |     50270 | American Eagle Outfitters | International Lump Sum (# 9805) |
-    And he has provided mandatory information on "General Information" section as per the below option selected for "Expense Management" client
-      | Expense Management Client |
-      | No                        |
-    And he has clicked on "Next" buton after selecting below service under "Policy Benefit Categories" section
-      | Pre-Acceptance Services |
-    When he clicks on "SUBMIT" button after entering mandatory information for all the below selected services
+		@Sprint-14 @PDT-Regression
+    Scenario: PDT - Verify Policy Benefit Categories are displayed after adding a new Policy
+    Given he is on "Add New Policy Form" page after clicking link "Add New Policy Form" from left menu navigation on "View/Edit Policy Form" page
+    And he has clicked on "Next" button after selecting below Client, Policy information on "Add New Policy Form" page
+      | ClientId | ClientName                    | PolicyName                 |
+      |     7403 | Dow Chemical Company (Global) | Valued Relocation (# 9533) |
+    When he clicks on "Next" button after selecting below information for form fields on "General Information" page
+      | PolicyType    | EmployeeType                   | HomeownerType                  | BenefitPackageType | CappedPolicy     | ExpenseManagementClient |
+      | International | Both - benefits differ by type | Both - benefits differ by type | Bundle             | Partially Capped | No                      |
+    Then benefit categories should be displayed on "Policy Benefit Category" page
+
+		@Sprint-14 @PDT-Regression
+    Scenario: PDT - Validate that sub benefit form should display and hide after marking subbenefit as checked or unchecked
+    Given he is on "Add New Policy Form" page after clicking link "Add New Policy Form" from left menu navigation on "View/Edit Policy Form" page
+    And he has clicked on "Next" button after selecting below Client, Policy information on "Add New Policy Form" page
+      | ClientId | ClientName                    | PolicyName                 |
+      |     7403 | Dow Chemical Company (Global) | Valued Relocation (# 9533) |
+    And he has selected below information for form fields on "General Information" page followed by selection of "Pre-Acceptance Services" as Benefit Category on "Policy Benefit Category" page
+      | PolicyType    | EmployeeType                   | HomeownerType                  | BenefitPackageType | CappedPolicy     | ExpenseManagementClient |
+      | International | Both - benefits differ by type | Both - benefits differ by type | Bundle             | Partially Capped | No                      |
+    And sub benefit category form appears after selecting below categories on "Pre-Acceptance Services" page
       | Candidate Selection | Pre-Acceptance Trip Transportation | Pre-Acceptance Trip Lodging | Pre-Acceptance Trip Meals |
-    Then success message "Data saved successfully" shoud be displayed
-    And newly created Policy should be displayed under "View/Edit Policy Form" page
-
-  Scenario: Save the new Pre-Acceptance Benefit Category in Draft mode
-    Given he is on "General Information" section of "Policy Benefit" page after selecting below information for creating a new policy
-      | Client Id | Client Name               | Policy Name                     |
-      |     50270 | American Eagle Outfitters | International Lump Sum (# 9805) |
-    And he has provided mandatory information on "General Information" section as per the below option selected for "Expense Management" client
-      | Expense Management Client |
-      | No                        |
-    And he has clicked on "Next" buton after selecting below service under "Policy Benefit Categories" section
-      | Pre-Acceptance Services |
-    When he clicks on "SAVE AS DRAFT" button after entering mandatory information for all the below selected services
+    When he deselects the below sub benefit category  on "Pre-Acceptance Services" page
       | Candidate Selection | Pre-Acceptance Trip Transportation | Pre-Acceptance Trip Lodging | Pre-Acceptance Trip Meals |
-    Then success message "Data saved successfully" shoud be displayed
-    And newly created Policy should be displayed under "View/Edit Policy Form" page in "Draft" status
-
-  Scenario: Verify user is able to view already saved benefit
-    Given he is on "View/Edit Policy Form" page after creating a new Policy Benefit with below details
-      | Client Id | Client Name               | Policy Name                     | Benefit Categories      | Service                                                 |
-      |     50270 | American Eagle Outfitters | International Lump Sum (# 9805) | Pre-Acceptance Services | Candidate Selection, Pre-Acceptance Trip Transportation |
-    #   And he has searched the newly created policy on "View/Edit Policy Form" page
-    #   When he clicks on policy name in search results on "View/Edit Policy Form" page
-    When he clicks on policy name in search results on "View/Edit Policy Form" page after searching the newly created policy
-    Then Policy Benefit data should be displayed in below sections
-      | General Information | Benefit Categories | Service Section |
-
-  Scenario: Verify user is able to update already saved benefit
-    Given he is on "View/Edit Policy Form" page after creating a new Policy Benefit with below details
-      | Client Id | Client Name               | Policy Name                     | Benefit Categories      | Service                                                 |
-      |     50270 | American Eagle Outfitters | International Lump Sum (# 9805) | Pre-Acceptance Services | Candidate Selection, Pre-Acceptance Trip Transportation |
-    #    And he has searched the newly created policy on "View/Edit Policy Form" page
-    #    And he has clicked on policy name in search results on "View/Edit Policy Form" page
-    And he clicks on policy name in search results on "View/Edit Policy Form" page after searching the newly created policy
-    When he updates the field value information in below mentioned sections after clicking on "SUBMIT" button
-      | Section Name        | Field Name           | Field Value   |
-      | General Information | Policy Type          | International |
-      | General Information | Benefit Package Type | Core/Flex     |
-      | Candidate Selection | Gross-up             | No            |
-      | Candidate Selection | Reimbursed by        | Client        |
-    Then success message "Data saved successfully" shoud be displayed
-    
-    #/*******PDT-60********/
-
-  Scenario: Verify Policies are displayed in descending order on View/Edit Policy Form Page
-    Given he is on "ViewPolicy" page
-    Then policies are displayed in desc order by policy_benefits_config_id
-
-  Scenario: Verify search by client name on View/Edit Policy Form Page
-    Given he is on "View/Edit Policy Forms" page
-    And has entered below Client name in the "Client Name" field
-      | Client Name      |
-      | Urban Outfitters |
-    When the user clicks "Search" button
-    Then below policies for the client name under the current logged in user will be displayed in desc order by policy_benefits_config_id
-      | Policy Name                    | Company Name           | Client Id | Policy Type   |
-      | Home Office Relocation Policy  | Urban Outfitters, Inc. |     51769 | International |
-      | Canada Field Relocation Policy | Urban Outfitters, Inc. |     51769 | International |
-
-  Scenario: Verify search by client id on View/Edit Policy Form Page
-    Given he is on "View/Edit Policy Forms" page
-    And has entered below Client id in the "Client Id" field
-      | Client Id |
-      |     51769 |
-    When the user clicks "Search" button
-    Then below policies for the client id under the current logged in user will be displayed in desc order by policy_benefits_config_id
-      | Policy Name                    | Company Name           | Client Id | Policy Type   |
-      | Home Office Relocation Policy  | Urban Outfitters, Inc. |     51769 | International |
-      | Canada Field Relocation Policy | Urban Outfitters, Inc. |     51769 | International |
-
-  Scenario: Verify search by Policy name on View/Edit Policy Form Page
-    Given he is on "View/Edit Policy Forms" page
-    And has entered below Policy name in the "Policy Name" field
-      | Policy name                    |
-      | Canada Field Relocation Policy |
-    When the user clicks "Search" button
-    Then below policies for the policy name under the current logged in user will be displayed in desc order by policy_benefits_config_id
-      | Canada Field Relocation Policy | Urban Outfitters, Inc. | 51769 | International |
-
-  Scenario: Verify search operation on View/Edit Policy Form Page
-    Given he is on "View/Edit Policy Forms" page
-    Then he should be able to verify Policy data on "View/Edit Policy Forms" page after performing below SearchBy operations
-      | SearchBy    | SearchText                     | PolicyName                                                   | ClientId | CompanyName            | Policy Type   |
-      | Policy Name | Canada Field Relocation Policy | Canada Field Relocation Policy                               |    51769 | Urban Outfitters, Inc. | International |
-      | Client Id   |                          51769 | Canada Field Relocation Policy_Home Office Relocation Policy |    51769 | Urban Outfitters, Inc. | International |
-      | Client Name | Urban Outfitters, Inc.         | Canada Field Relocation Policy_Home Office Relocation Policy |    51769 | Urban Outfitters, Inc. | International |
-
-	#/***************PDT-79***************************/
-  Scenario: Verify edit/update operation on View/Edit Policy Form Page after searching Policy by name
-    Given he has searched below Policy name in the "Policy Name" field
-      | Policy name                    |
-      | Canada Field Relocation Policy |
-    And he has clicked on "Edit" icon for above policy
-    When he updates below information for policy
-    Then the updated information should get saved.
+    Then below sub benefit category form should disappear from  "Pre-Acceptance Services" page
+      | Candidate Selection | Pre-Acceptance Trip Transportation | Pre-Acceptance Trip Lodging | Pre-Acceptance Trip Meals |

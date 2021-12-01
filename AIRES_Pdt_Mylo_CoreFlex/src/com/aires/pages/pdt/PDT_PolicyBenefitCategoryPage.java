@@ -1,0 +1,97 @@
+package com.aires.pages.pdt;
+
+import java.text.MessageFormat;
+import java.util.List;
+
+import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.WebElement;
+import org.openqa.selenium.support.FindBy;
+import org.openqa.selenium.support.How;
+import org.testng.Assert;
+
+import com.aires.businessrules.Base;
+import com.aires.businessrules.CoreFunctions;
+import com.aires.businessrules.constants.CoreConstants;
+import com.aires.businessrules.constants.PDTConstants;
+import com.vimalselvam.cucumber.listener.Reporter;
+
+public class PDT_PolicyBenefitCategoryPage extends Base {
+	
+	public PDT_PolicyBenefitCategoryPage(WebDriver driver) {
+		super(driver);
+	}
+	
+	@FindBy(how = How.XPATH, using = "//label[contains(string(),'Policy Type:')]/following-sibling::label")
+	private WebElement _txtPolicyType;
+	
+	@FindBy(how = How.XPATH, using = "//label[contains(string(),'Employee Type:')]/following-sibling::label")
+	private WebElement _txtEmployeeType;
+	
+	@FindBy(how = How.XPATH, using = "//label[contains(string(),'Homeowner Type:')]/following-sibling::label")
+	private WebElement _txtHomeOwnerType;
+	
+	@FindBy(how = How.CSS, using = "div.card-header > h4.card-title")
+	private WebElement _headingPolicyBenefitCategory;
+	
+	@FindBy(how = How.CSS, using = "input[type='checkbox'][class*='ng-valid']:not(input[disabled])")
+	private List<WebElement> _chkBoxPolicyBenefitCategory;
+	
+	@FindBy(how = How.CSS, using = "label.form-check-label.cbx-label")
+	private List<WebElement> _lblChkBoxPolicyBenefitCategory;
+	
+	
+	@FindBy(how = How.CSS, using = "button.btn-next")
+	private WebElement _btnNext;
+		
+	public String getElementText(String elementName) {
+		String elementText = null;
+		switch (elementName) {
+		case PDTConstants.HEADING:
+			elementText = _headingPolicyBenefitCategory.getText();
+			break;
+		case PDTConstants.POLICY_TYPE:
+			elementText = _txtPolicyType.getText();
+			break;
+		case PDTConstants.EMPLOYEE_TYPE:
+			elementText = _txtEmployeeType.getText();
+			break;
+		case PDTConstants.HOMEOWNER_TYPE:
+			elementText = _txtHomeOwnerType.getText();
+			break;
+		default:
+			Assert.fail(MessageFormat.format(PDTConstants.ELEMENT_NOT_FOUND, CoreConstants.FAIL));
+		}
+		return elementText;
+	}
+	
+	public boolean verifyPolicyBenefitCategoryHeading(String pageName) {		
+		CoreFunctions.explicitWaitTillElementVisibility(driver, _headingPolicyBenefitCategory, _headingPolicyBenefitCategory.getText());
+		if (_headingPolicyBenefitCategory.getText().equalsIgnoreCase(PDTConstants.POLICY_BENEFIT_CATEGORIES)) {
+			CoreFunctions.highlightObject(driver, _headingPolicyBenefitCategory);
+			Reporter.addStepLog(MessageFormat.format(PDTConstants.VERIFIED_HEADING_ON_PAGE, CoreConstants.PASS,
+					_headingPolicyBenefitCategory.getText(), pageName));
+			return true;
+		}
+		Reporter.addStepLog(MessageFormat.format(PDTConstants.FAILED_TO_VERIFY_HEADING_ON_PAGE, CoreConstants.FAIL,
+				pageName, PDTConstants.POLICY_BENEFIT_CATEGORIES, _headingPolicyBenefitCategory.getText()));
+		return false;
+	}
+	
+	
+	public boolean verifyPolicyBenefitCategoriesAreDisplayed(String pageName) {
+		if(_chkBoxPolicyBenefitCategory.size() > 0) {
+			Reporter.addStepLog(MessageFormat.format(PDTConstants.VERIFY_DISPLAY_OF_BENEFIT_CATEGORY, CoreConstants.PASS,
+					_chkBoxPolicyBenefitCategory.size(), pageName));
+			return true;
+		}
+		return false;
+	}
+	
+	public void selectPolicyBenefitCategory(String benefitCategoryName) {
+		CoreFunctions.selectItemInListByText(driver, _lblChkBoxPolicyBenefitCategory, benefitCategoryName, true);
+		CoreFunctions.click(driver, _btnNext, _btnNext.getText());
+	}
+	
+	
+	
+}

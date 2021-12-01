@@ -40,6 +40,7 @@ import java.util.List;
 import java.util.Properties;
 import java.util.Random;
 import java.util.Set;
+import java.util.stream.Collectors;
 
 import org.openqa.selenium.Alert;
 import org.openqa.selenium.By;
@@ -484,14 +485,18 @@ public class CoreFunctions {
 	}
 
 	public static void selectItemInListByText(WebDriver driver, List<WebElement> WebElementList, String searchText) {
-
+		boolean itemSearched = false;
 		try {
 			for (WebElement row : WebElementList) {
 				Log.info("The Actual Item Name is :" + row.getText());
 				if (row.getText().contains(searchText)) {
+					itemSearched = true;
 					CoreFunctions.clickUsingJS(driver, row, row.getText());
 					break;
 				}
+			}
+			if(!itemSearched) {
+				Assert.fail("Searched item:-"+searchText+"does not exist in list");
 			}
 
 		} catch (Exception e) {
@@ -502,16 +507,19 @@ public class CoreFunctions {
 
 	public static void selectItemInListByText(WebDriver driver, List<WebElement> WebElementList, String searchText,
 			boolean reporter) {
-
+			boolean itemSearched = false;
 		try {
 			for (WebElement row : WebElementList) {
 				Log.info("The Actual Item Name is :" + row.getText());
 				if (row.getText().contains(searchText)) {
+					itemSearched = true;
 					clickRowInResult(driver, row, reporter, searchText);
 					break;
 				}
 			}
-
+			if(!itemSearched) {
+				Assert.fail("Searched item:-"+searchText+"does not exist in list");
+			}
 		} catch (Exception e) {
 			Assert.fail("Could not select item from list");
 			e.printStackTrace();
@@ -1482,5 +1490,11 @@ public class CoreFunctions {
 		Actions action = new Actions(driver);
 		action.moveToElement(element).build().perform();
 	}
-
+	
+	public static List<String> getElementTextAndStoreInList(WebDriver driver,
+			List<WebElement> elementList) {
+		
+		return (elementList.stream().map(x -> x.getText()).collect(Collectors.toList()));
+	}
+	
 }

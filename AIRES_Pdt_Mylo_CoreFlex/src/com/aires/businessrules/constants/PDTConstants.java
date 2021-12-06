@@ -1535,7 +1535,7 @@ public class PDTConstants {
 	public static final String SPRINGBOARD_PASSWORD = "Sb_password";
 	public static final String NON_NG_92265_CLIENT = "92265";
 	public static final String NEW_TRANSFER_ASSIGNMENT = "A new transfer or assignment";
-	public static final String œNITIATION_FOR = "Initiation for {0} (Pending Approval)";
+	public static final String √èNITIATION_FOR = "Initiation for {0} (Pending Approval)";
 	public static final String AUTHORIZATION_WORKFLOW = "Authorization Workflow";
 //	public static final String FAIL_TO_VERIFY_AIR_SHIPMENT_COST = "{0}Failed to verify Air Shipment cost.";
 //	public static final String FAIL_TO_VERIFY_SEA_SHIPMENT_COST = "{0}Failed to verify Sea Shipment cost.";
@@ -1603,7 +1603,6 @@ public class PDTConstants {
 	public static final String FAILED_TO_CREATE_DELEGATE = "{0}Failed to create delegate.";
 	public static final String GM_INTERNATIONAL_AUTH_FORM_TEMPLATE = "International Authorization Form";
 	public static final String FILE_ID_ASSIST = "583898";
-
 	public static final String DELEGATE_EMAIL_SENDER = "securelogin@aires.com";
 	public static final String DELEGATE_PASSWORD = "Delegate Password";
 	public static final String NEW_DELEGATE_PASSWORD = "Relonetng1";
@@ -1646,6 +1645,7 @@ public class PDTConstants {
 	public static final String SUCCESSFULLY_LOGGED_IN_TO_APPLICATION = "{0} User Successfully logged in to Aires Policy Tool application.";
 	public static final String POLICIES_ARE_DISPLAYED = "{0} Verified policies are displayed on ''{1}'' page.";
 	public static final String POLICIES_ARE_NOT_DISPLAYED = "{0} Verified policies are not displayed on ''{1}'' page.";
+  
 	public static final String ADD_NEW_POLICY_FORM = "Add New Policy Form";
 	public static final String FAILED_TO_VERIFY_POLICY_NAME_FIELD_FOR_VALID_CLIENTID ="{0} Failed to verify Policy Name Dropdown field for valid ClientID.";
 	public static final String EXCEPTION_OCCURED_WHILE_VALIDATING_POLICY_NAME_LIST = "{0} Exception Occured while validating Policy Name Dropdown List. ''{1}''";
@@ -1682,4 +1682,13 @@ public class PDTConstants {
 	public static final String FAILED_TO_VERIFY_USER_NAVIGATION_PAST_GENERAL_INFORMATION = "{0} Failed to verify user navigation past General Information Page.";
 	public static final String EXCEPTION_OCCURED_WHILE_VALIDATING_PAGE_NAVIGATION_PAST_GENERAL_INFO = "{0} Exception occured while validating Navigation past general information page.''{1}''";
 	public static final String SUCCESSFULLY_NAVIGATED_TO_PAGE_PAST_GENERAL_INFORMATION = "{0} Successfully navigated to ''{1}'' from General Information Page.";
+
+	public static final String VIEW_POLICY = "View Policy";
+	public static final String CLEAR_FILTER = "Clear Filter";
+	public static final String VERIFIED_POLICY_NAME_ON_PAGE = "{0}Verfied Policy name ''{1}'' is displayed in search result on ''{2}'' page.";
+	public static final String FAIL_TO_VERIFY_POLICY_NAME_ON_PAGE = "{0}Failed to verify Policy name ''{1}'' in search result on ''{2}'' page.";
+	public static final String VERIFIED_CLIENT_ID_COMPANY_NAME = "{0}Verfied Client id :- ''{1}'' and Company name :- ''{2}'' is displayed in search result on ''{3}'' page.";
+	public static final String FAIL_TO_VERIFY_CLIENT_ID_COMPANY_NAME = "{0}Failed to verify Client id :- ''{1}'' and Company name :- ''{2}'' in search result on ''{3}'' page.";
+	public static final String ELEMENT_NOT_FOUND = "''{0}'' element not found.";
+	public static final String INVALID_CREDENTIALS_ENTERED = "Invalid login credentials are entered.";
 }

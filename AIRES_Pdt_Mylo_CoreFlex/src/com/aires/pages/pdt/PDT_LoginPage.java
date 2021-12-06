@@ -9,6 +9,7 @@ import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.How;
 import org.testng.Assert;
+import org.testng.asserts.SoftAssert;
 
 import com.aires.businessrules.Base;
 import com.aires.businessrules.CoreFunctions;
@@ -62,11 +63,8 @@ public class PDT_LoginPage extends Base {
 
 	public void openApplication() {
 		Log.info(FileReaderManager.getInstance().getConfigReader().getPDTApplicationUrl());
-		CoreFunctions.waitForBrowserToLoad(driver);
-		Log.info("Inside openApplication");
+		CoreFunctions.waitForBrowserToLoad(driver);		
 		VerifyAIRESLogo();
-		// CoreFunctions.explicitWaitTillElementBecomesClickable(driver, _btnLogin,
-		// _btnLogin.getText());
 	}
 
 	public void enterLoginCredentials(String userName, String password) {
@@ -81,14 +79,12 @@ public class PDT_LoginPage extends Base {
 	}
 
 	public void clickLoginBtn() {
-		// CoreFunctions.explicitWaitTillElementBecomesClickable(driver, _btnLogin,
-		// _btnLogin.getText());
 		CoreFunctions.click(driver, _btnLogin, _btnLogin.getText());
 	}
 	
 	public void verifyLoginCredentials() {
-		if (CoreFunctions.isElementByLocatorExist(driver, _btnLoginByLocator, 5)) {
-			Assert.fail("Invalid login credentials are entered.");
+		if (CoreFunctions.isElementByLocatorExist(driver, _btnLoginByLocator, 1)) {
+			Assert.fail(PDTConstants.INVALID_CREDENTIALS_ENTERED);
 		}
 	}
 

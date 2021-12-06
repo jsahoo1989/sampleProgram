@@ -123,16 +123,7 @@ public class PDT_AddNewPolicyPage extends Base {
 	}
 
 	public boolean verifyAddNewPolicyHeading(String pageName) {		
-		CoreFunctions.explicitWaitTillElementVisibility(driver, _headingAddNewPolicyForm, _headingAddNewPolicyForm.getText());
-		if (_headingAddNewPolicyForm.getText().equalsIgnoreCase(PDTConstants.ADD_NEW_POLICY_FORM)) {
-			CoreFunctions.highlightObject(driver, _headingAddNewPolicyForm);
-			Reporter.addStepLog(MessageFormat.format(PDTConstants.VERIFIED_HEADING_ON_PAGE, CoreConstants.PASS,
-					_headingAddNewPolicyForm.getText(), pageName));
-			return true;
-		}
-		Reporter.addStepLog(MessageFormat.format(PDTConstants.FAILED_TO_VERIFY_HEADING_ON_PAGE, CoreConstants.FAIL,
-				pageName, PDTConstants.ADD_NEW_POLICY_FORM, _headingAddNewPolicyForm.getText()));
-		return false;
+		return CoreFunctions.verifyElementOnPage(driver, _headingAddNewPolicyForm, PDTConstants.heading, PDTConstants.ADD_NEW_POLICY_FORM, pageName, true);
 	}
 
 	public void enterClientID(String inputValue) {
@@ -404,10 +395,7 @@ public class PDT_AddNewPolicyPage extends Base {
 	}
 	
 	public boolean checkErrorPopUpExistsForClientId(List<Map<String, String>> clientPolicyInfo) {
-		if(CoreFunctions.isElementExist(driver, _popUpErrorMessage, 3) && CoreFunctions.getElementText(driver, _popUpErrorMessage).equals(PDTConstants.RECORD_DOES_NOT_EXIST)) {
-			return true;
-		}
-		return false;
+		return (CoreFunctions.isElementExist(driver, _popUpErrorMessage, 3) && CoreFunctions.getElementText(driver, _popUpErrorMessage).equals(PDTConstants.RECORD_DOES_NOT_EXIST));
 	}
 	
 

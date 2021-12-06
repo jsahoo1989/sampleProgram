@@ -385,18 +385,6 @@ public class PDT_GeneralInformationPage extends Base {
 		return false;
 	}
 	
-	/*public String getClientId() {
-		return _textClientID.getText().trim();
-	}
-	
-	public String getClientName() {
-		return _textClientName.getText().trim();
-	}
-	
-	public String getPolicyName() {		
-		return _headerPolicyInfo.getText().split(":")[1].trim();		
-	}*/
-	
 	public String getElementText(String elementName) {
 		String elementText = null;
 		switch (elementName) {
@@ -429,21 +417,26 @@ public class PDT_GeneralInformationPage extends Base {
 
 	public void enterGeneralInformationFields(DataTable generalInfoTable) {
 		List<Map<String, String>> generalInfo = generalInfoTable.asMaps(String.class, String.class);
-		CoreFunctions.clickElement(driver, _drpDwnPolicyType);
-		CoreFunctions.selectItemInListByText(driver, _drpDwnPolicyTypeOptions, generalInfo.get(0).get("PolicyType"), true);
-		CoreFunctions.clickElement(driver, _drpDwnEmployeeType);
-		setPolicyType(generalInfo.get(0).get("PolicyType"));
-		CoreFunctions.selectItemInListByText(driver, _drpDwnEmployeeTypeOptions, generalInfo.get(0).get("EmployeeType"), true);
-		CoreFunctions.clickElement(driver, _drpDwnHomeOwnerType);
-		setEmployeeType(generalInfo.get(0).get("EmployeeType"));
-		CoreFunctions.selectItemInListByText(driver, _drpDwnHomeOwnerTypeOptions, generalInfo.get(0).get("HomeownerType"), true);
-		setHomeOwnerType(generalInfo.get(0).get("HomeownerType"));
-		CoreFunctions.clickElement(driver, _selectBenefitPackageType);
-		CoreFunctions.selectItemInListByText(driver, _selectBenefitPackageTypeOptions, generalInfo.get(0).get("BenefitPackageType"), true);
-		CoreFunctions.clickElement(driver, _drpDwnCappedPolicy);
-		CoreFunctions.selectItemInListByText(driver, _drpDwnCappedPolicyOptions, generalInfo.get(0).get("CappedPolicy"), true);
-		CoreFunctions.explicitWaitTillElementListClickable(driver, _radioBtnExpenseManagementClient);
-		CoreFunctions.selectItemInListByText(driver, _radioBtnExpenseManagementClient, generalInfo.get(0).get("ExpenseManagementClient"), true);
-		CoreFunctions.click(driver, _btnNext, _btnNext.getText());
+		try {
+			CoreFunctions.clickElement(driver, _drpDwnPolicyType);
+			CoreFunctions.selectItemInListByText(driver, _drpDwnPolicyTypeOptions, generalInfo.get(0).get("PolicyType"), true);
+			CoreFunctions.clickElement(driver, _drpDwnEmployeeType);
+			setPolicyType(generalInfo.get(0).get("PolicyType"));
+			CoreFunctions.selectItemInListByText(driver, _drpDwnEmployeeTypeOptions, generalInfo.get(0).get("EmployeeType"), true);
+			CoreFunctions.clickElement(driver, _drpDwnHomeOwnerType);
+			setEmployeeType(generalInfo.get(0).get("EmployeeType"));
+			CoreFunctions.selectItemInListByText(driver, _drpDwnHomeOwnerTypeOptions, generalInfo.get(0).get("HomeownerType"), true);
+			setHomeOwnerType(generalInfo.get(0).get("HomeownerType"));
+			CoreFunctions.clickElement(driver, _selectBenefitPackageType);
+			CoreFunctions.selectItemInListByText(driver, _selectBenefitPackageTypeOptions, generalInfo.get(0).get("BenefitPackageType"), true);
+			CoreFunctions.clickElement(driver, _drpDwnCappedPolicy);
+			CoreFunctions.selectItemInListByText(driver, _drpDwnCappedPolicyOptions, generalInfo.get(0).get("CappedPolicy"), true);
+			CoreFunctions.explicitWaitTillElementListClickable(driver, _radioBtnExpenseManagementClient);
+			CoreFunctions.selectItemInListByText(driver, _radioBtnExpenseManagementClient, generalInfo.get(0).get("ExpenseManagementClient"), true);
+			CoreFunctions.click(driver, _btnNext, _btnNext.getText());			
+		} catch(Exception e) {
+			Assert.fail(PDTConstants.FAILED_TO_FILL_GENERAL_INFO_FORM);
+		}
+
 	}
 }

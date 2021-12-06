@@ -65,16 +65,7 @@ public class PDT_PolicyBenefitCategoryPage extends Base {
 	}
 	
 	public boolean verifyPolicyBenefitCategoryHeading(String pageName) {		
-		CoreFunctions.explicitWaitTillElementVisibility(driver, _headingPolicyBenefitCategory, _headingPolicyBenefitCategory.getText());
-		if (_headingPolicyBenefitCategory.getText().equalsIgnoreCase(PDTConstants.POLICY_BENEFIT_CATEGORIES)) {
-			CoreFunctions.highlightObject(driver, _headingPolicyBenefitCategory);
-			Reporter.addStepLog(MessageFormat.format(PDTConstants.VERIFIED_HEADING_ON_PAGE, CoreConstants.PASS,
-					_headingPolicyBenefitCategory.getText(), pageName));
-			return true;
-		}
-		Reporter.addStepLog(MessageFormat.format(PDTConstants.FAILED_TO_VERIFY_HEADING_ON_PAGE, CoreConstants.FAIL,
-				pageName, PDTConstants.POLICY_BENEFIT_CATEGORIES, _headingPolicyBenefitCategory.getText()));
-		return false;
+		return CoreFunctions.verifyElementOnPage(driver, _headingPolicyBenefitCategory, PDTConstants.heading, PDTConstants.POLICY_BENEFIT_CATEGORIES, pageName, true);
 	}
 	
 	

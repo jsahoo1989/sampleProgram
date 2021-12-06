@@ -936,18 +936,16 @@ public class CoreFunctions {
 			String elementVal, String pageName, boolean displayMsgInReport) {
 		try {
 			CoreFunctions.explicitWaitTillElementVisibility(driver, element, elementName);
-			Log.info("Actual element val ==" + element.getText().trim());
-			Log.info("Expected element val ==" + elementVal);
 			if (element.getText().trim().equals(elementVal) && displayMsgInReport) {
 				Reporter.addStepLog(MessageFormat.format(PDTConstants.VERIFY_ELEMENT_VALUE_ON_PAGE,
 						CoreConstants.PASS, elementName, elementVal, pageName));
 				CoreFunctions.highlightObject(driver, element);
+				return true;
 			} else if (element.getText().trim().equals(elementVal) && !displayMsgInReport) {
 				CoreFunctions.highlightObject(driver, element);
-			} else {
-				return false;
+				return true;
 			}
-			return element.getText().equals(elementVal);
+			return false;
 		} catch (Exception e) {
 			return false;
 		}

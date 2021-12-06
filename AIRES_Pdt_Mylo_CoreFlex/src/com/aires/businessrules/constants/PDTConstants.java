@@ -423,7 +423,6 @@ public class PDTConstants {
 	public static final String FAILED_TO_VERIFY_REPORT_ARCHIVE_SORTING = "{0} Failed to Verify ''{1}'' ''{2}'' is ''{3}''.";
 	public static final String UPLOAD_REPORT_RESULTS = "UploadReportResults";
 	public static final String VERIFIED_TAB_TITLE = "{0}Verified ''{1}'' tab title on {2} page.";
-	//public static final String VERIFIED_HEADING_ON_PAGE = "{0}Verified ''{1}'' heading on {2} page.";
 	public static final String DOCUMENT_NOT_FOUND = "{0}Document ''{1}'' not found in ''{2}'' {3}.";
 	public static final String DOCUMENT_NOT_FOUND_IN_SECTION = "Document ''{1}'' not found in ''{2}'' {3}.";
 	public static final String DOCUMENT_ALREADY_MARKED_AS_FAVOURITES = "{0}Document ''{1}'' is already marked as {2} in ''{3}'' {4}.";
@@ -971,13 +970,6 @@ public class PDTConstants {
 	public static final String INVOICE_DOCUMENT_DISPLAYED_SPRINGBOARD = "{0} ''{1}'' invoice document is successfully displayed on ''{2}'' page.";
 	public static final String INVOICE_DOCUMENT_NOT_DISPLAYED_SPRINGBOARD = "{0} ''{1}'' invoice document NOT displayed on ''{2}''";
 	public static final String ERROR_OCCURED_WHILE_VALIDATING_INVOICE_DOCUMENT_ON_SPRINGBOARD = "{0} ERROR occured while validating ''{1}'' partner invoice document on ''{2}'' page.";
-	
-	
-	
-	
-	
-	
-	
 
 	// Json File path
 	public static final String JSON_SB_EXPENSE_REIMBURSEMENT_DATA = "Springboard_ExpenseReimbursementData.json";
@@ -986,14 +978,11 @@ public class PDTConstants {
 	public static final String JSON_ASSIGNMENT_COST_ESTIMATE_DATA = "IRIS_Assignment_CostEstimatorData.json";
 	public static final String JSON_MOBILITYX_DASHBOARD_BSC_DATA = "MobilityX_Dashboard_BscData.json";
 	public static final String JSON_SB_SERVICES_DETAILS_DATA = "Springboard_ServicesData.json";
-
 	public static final String TOTAL_TIME_TAKEN_BY_GIVEN = "<b>Total time taken by 'Given' statement is : {0} Seconds </b>";
 	public static final String TOTAL_TIME_TAKEN_BY_WHEN = "<b>Total time taken by 'When' statement is : {0} Seconds </b>";
 	public static final String TOTAL_TIME_TAKEN_BY_THEN = "<b>Total time taken by 'Then' statement is : {0} Seconds </b>";
 	public static final String TOTAL_TIME_TAKEN_BY_AND = "<b>Total time taken by 'And' statement is : {0} Seconds </b>";
-	public static final String VERIFY_ELEMENT_VALUE_ON_PAGE = "{0}Verified ''{1}'' :- ''{2}'' on ''{3}'' page.";
 	public static final String FAIL_TO_VERIFY_ELEMENT_VALUE_ON_PAGE = "{0}Failed to verify ''{1}'' on ''{3}'' page.<br/> Expected ''{1}'' :- ''{2}''. <br/>Actual ''{1}'' displayed on budget estimate page :- ''{4}''";
-	public static final String FAIL_TO_VERIFY_ELEMENT_VAL_ON_PAGE = "{0}Failed to verify ''{1}'' on ''{3}'' page.<br/> Expected ''{1}'' :- ''{2}''. <br/>Actual ''{1}'' :- ''{4}'' on ''{3}'' Page.";
 	public static final String JOB_TITLE = "Job title";
 	public static final String SEARCH_BY = "Search By ''{0}'' :- ''{1}''";
 
@@ -1057,7 +1046,6 @@ public class PDTConstants {
 	public static final String COST_ESTIMATE_REVIEW_NOT_DROPOFF = "{0}Cost estimate review for transferee ''{1}'' is not dropped off from Task list page.";
 	public static final String VERIFIED_COST_EST_TILE_NOT_DISPLAYED = "{0}Verified Cost estimate tile is not displayed on Dashboard home page.";
 	public static final String VERIFIED_COST_EST_TILE_DISPLAYED = "{0}Verified Cost estimate tile is displayed on Dashboard home page.";
-
 	public static final String VERIFIED_COST_EST_COUNT_REDUCES = "{0}Verified pending Cost estimate count on dashboard page reduces from ''{1}'' to ''{2}'' .";
 	public static final String MULTIPLE_TASK_DOES_NOT_EXIST = "{0}Multiple tasks for Cost review estimates does not exist in Task to do section/Task List page.";
 	public static final String SUBMIT_MY_RESPONSE = "submitMyResponse";
@@ -1357,8 +1345,7 @@ public class PDTConstants {
 	public static final String PHONE_NUMBER = "Phone number";
 	public static final String SERVICE_REGION_TILE = "Service Region Tile";
 
-	// Client Admin
-	
+	// Client Admin	
 	public static final String PHYSICAL_ADDRESS = "Physical Address";
 	public static final String BILLING_ADDRESS = "Billing Address";
 	public static final String CLIENT_HIERARCHY = "Client Hierarchy";
@@ -1705,4 +1692,8 @@ public class PDTConstants {
 	public static final String VERIFIED_FORM_IS_HIDDEN = "{0}Verfied ''{1}'' form is hidden on ''{2}'' page.";
 	public static final String VERIFIED_FORM_IS_NOT_HIDDEN = "{0} ''{1}'' form is not hidden on ''{2}'' page.";
 	public static final String NO_ITEMS_FOUND = "No items found";
+	public static final String VERIFY_ELEMENT_VALUE_ON_PAGE = "{0}Verified ''{1}'' :- ''{2}'' on ''{3}'' page.";
+	public static final String FAIL_TO_VERIFY_ELEMENT_VAL_ON_PAGE = "{0}Failed to verify ''{1}'' :- ''{2}'' on ''{3}'' page.<br/> Expected ''{1}'' :- ''{2}''. <br/>Actual ''{1}'' :- ''{4}''.";
+	public static final String heading = "heading";
+	public static final String FAILED_TO_FILL_GENERAL_INFO_FORM = "Failed to fill General Information form";
 }

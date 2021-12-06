@@ -78,21 +78,6 @@ public class PDT_PreAcceptanceService extends Base{
 		return elementText;
 	}
 	
-	public boolean verifyFormIsDisplayed(String formName, String stateToCheck, String pageName) {
-		boolean result = false;
-		switch(stateToCheck) {
-		case PDTConstants.STATE_DISPLAY:
-			result = verifyFormIsDisplayed(formName, getElementByName(formName), pageName);
-			break;
-		case PDTConstants.STATE_HIDDEN:
-			result = verifyFormIsHidden(formName, getElementByName(formName), pageName);
-			break;
-		default:
-			Assert.fail(MessageFormat.format(PDTConstants.STATE_NOT_FOUND, CoreConstants.FAIL));
-		}	
-		return result;
-	}
-	
 	public boolean verifyFormIsDisplayed(String formName, WebElement element, String pageName) {
 		if(element.isDisplayed()) {
 			Reporter.addStepLog(MessageFormat.format(PDTConstants.VERIFIED_FORM_IS_DISPLAYED, CoreConstants.PASS,
@@ -114,15 +99,7 @@ public class PDT_PreAcceptanceService extends Base{
 	public boolean verifySubCategoryHeading(String pageName) {			
 		CoreFunctions.waitHandler(3);
 		CoreFunctions.explicitWaitTillElementVisibility(driver, _subCategoryHeading, _subCategoryHeading.getText());
-		if (_subCategoryHeading.getText().equalsIgnoreCase(pageName)) {
-			CoreFunctions.highlightObject(driver, _subCategoryHeading);
-			Reporter.addStepLog(MessageFormat.format(PDTConstants.VERIFIED_HEADING_ON_PAGE, CoreConstants.PASS,
-					_subCategoryHeading.getText(), pageName));
-			return true;
-		}
-		Reporter.addStepLog(MessageFormat.format(PDTConstants.FAILED_TO_VERIFY_HEADING_ON_PAGE, CoreConstants.FAIL,
-				pageName, pageName, _subCategoryHeading.getText()));
-		return false;
+		return CoreFunctions.verifyElementOnPage(driver, _subCategoryHeading, PDTConstants.heading, pageName, pageName, true);
 	}
 	
 	public void selectSubBenefitAndVerifyFormIsDisplayed(DataTable subBenefitTable, String pageName) {		

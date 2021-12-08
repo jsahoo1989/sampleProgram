@@ -74,6 +74,11 @@ public class PDT_ViewPolicyPage extends Base {
 	// Search Button
 	@FindBy(how = How.CSS, using = "a.clear_filter")
 	private WebElement _clearFilter;
+	
+	//Add new Policy Form link
+	@FindBy(how = How.XPATH, using = "//p[text()='Add New Policy Form']")
+	private WebElement _lnkAddNewPolicyForm;
+	
 
 	final By _listPolicyNameByLocator = By.cssSelector("h5.text-info.info-pname");
 	final By _listClientNameByLocator = By.cssSelector("h6.info-pclient");
@@ -103,6 +108,9 @@ public class PDT_ViewPolicyPage extends Base {
 		case PDTConstants.CLEAR_FILTER:
 			CoreFunctions.highlightElementAndClick(driver, _clearFilter, PDTConstants.LOGOUT);
 			break;
+		case PDTConstants.ADD_NEW_POLICY_FORM:
+			CoreFunctions.highlightElementAndClick(driver, _lnkAddNewPolicyForm, PDTConstants.ADD_NEW_POLICY_FORM);
+			break;
 		default:
 			Assert.fail(MessageFormat.format(PDTConstants.ELEMENT_NOT_FOUND, elementName));
 		}
@@ -127,15 +135,7 @@ public class PDT_ViewPolicyPage extends Base {
 
 	public Boolean verifyViewPolicyHeading(String pageName) {		
 		CoreFunctions.explicitWaitTillElementInVisibilityCustomTime(driver, _progressBar, 3);
-		if (_headingViewEditPolicyForm.getText().equalsIgnoreCase(PDTConstants.VIEW_EDIT_POLICY_FORMS)) {
-			CoreFunctions.highlightObject(driver, _headingViewEditPolicyForm);
-			Reporter.addStepLog(MessageFormat.format(PDTConstants.VERIFIED_HEADING_ON_PAGE, CoreConstants.PASS,
-					_headingViewEditPolicyForm.getText(), pageName));
-			return true;
-		}
-		Reporter.addStepLog(MessageFormat.format(PDTConstants.FAILED_TO_VERIFY_HEADING_ON_PAGE, CoreConstants.FAIL,
-				pageName, PDTConstants.VIEW_EDIT_POLICY_FORMS, _headingViewEditPolicyForm.getText()));
-		return false;
+		return CoreFunctions.verifyElementOnPage(driver, _headingViewEditPolicyForm, PDTConstants.heading, PDTConstants.VIEW_EDIT_POLICY_FORMS, pageName, true);
 	}
 
 	public boolean verifyPoliciesAreDisplayed(String pageName) {

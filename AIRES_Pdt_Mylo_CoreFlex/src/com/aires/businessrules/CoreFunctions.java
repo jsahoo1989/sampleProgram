@@ -40,6 +40,7 @@ import java.util.List;
 import java.util.Properties;
 import java.util.Random;
 import java.util.Set;
+import java.util.stream.Collectors;
 
 import org.openqa.selenium.Alert;
 import org.openqa.selenium.By;
@@ -484,14 +485,18 @@ public class CoreFunctions {
 	}
 
 	public static void selectItemInListByText(WebDriver driver, List<WebElement> WebElementList, String searchText) {
-
+		boolean itemSearched = false;
 		try {
 			for (WebElement row : WebElementList) {
 				Log.info("The Actual Item Name is :" + row.getText());
 				if (row.getText().contains(searchText)) {
+					itemSearched = true;
 					CoreFunctions.clickUsingJS(driver, row, row.getText());
 					break;
 				}
+			}
+			if(!itemSearched) {
+				Assert.fail("Searched item:-"+searchText+"does not exist in list");
 			}
 
 		} catch (Exception e) {
@@ -502,16 +507,19 @@ public class CoreFunctions {
 
 	public static void selectItemInListByText(WebDriver driver, List<WebElement> WebElementList, String searchText,
 			boolean reporter) {
-
+			boolean itemSearched = false;
 		try {
 			for (WebElement row : WebElementList) {
 				Log.info("The Actual Item Name is :" + row.getText());
 				if (row.getText().contains(searchText)) {
+					itemSearched = true;
 					clickRowInResult(driver, row, reporter, searchText);
 					break;
 				}
 			}
-
+			if(!itemSearched) {
+				Assert.fail("Searched item:-"+searchText+"does not exist in list");
+			}
 		} catch (Exception e) {
 			Assert.fail("Could not select item from list");
 			e.printStackTrace();
@@ -928,18 +936,16 @@ public class CoreFunctions {
 			String elementVal, String pageName, boolean displayMsgInReport) {
 		try {
 			CoreFunctions.explicitWaitTillElementVisibility(driver, element, elementName);
-			Log.info("Actual element val ==" + element.getText().trim());
-			Log.info("Expected element val ==" + elementVal);
 			if (element.getText().trim().equals(elementVal) && displayMsgInReport) {
 				Reporter.addStepLog(MessageFormat.format(PDTConstants.VERIFY_ELEMENT_VALUE_ON_PAGE,
 						CoreConstants.PASS, elementName, elementVal, pageName));
 				CoreFunctions.highlightObject(driver, element);
+				return true;
 			} else if (element.getText().trim().equals(elementVal) && !displayMsgInReport) {
 				CoreFunctions.highlightObject(driver, element);
-			} else {
-				return false;
+				return true;
 			}
-			return element.getText().equals(elementVal);
+			return false;
 		} catch (Exception e) {
 			return false;
 		}
@@ -1482,5 +1488,30 @@ public class CoreFunctions {
 		Actions action = new Actions(driver);
 		action.moveToElement(element).build().perform();
 	}
-
+	
+	public static List<String> getElementTextAndStoreInList(WebDriver driver,
+			List<WebElement> elementList) {
+		
+		return (elementList.stream().map(x -> x.getText()).collect(Collectors.toList()));
+	}
+	
+	public static void selectItemInListByText(WebDriver driver, List<WebElement> WebElementList, String searchText, String dropDownName, String fieldType,
+			boolean reporter) {
+			boolean itemSearched = false;
+		try {
+			for (WebElement row : WebElementList) {				
+				if (row.getText().contains(searchText)) {
+					itemSearched = true;
+					CoreFunctions.clickWithoutReporting(driver, row, searchText);
+					Reporter.addStepLog(MessageFormat.format(PDTConstants.VERIFY_VALUE_SELECTED_FROM_FIELD, CoreConstants.PASS, dropDownName, fieldType, searchText));
+					break;
+				}
+			}
+			if(!itemSearched) {
+				Assert.fail("Searched item:-"+searchText+"does not exist in "+dropDownName+" drop down list.");
+			}
+		} catch (Exception e) {
+			Assert.fail(MessageFormat.format(PDTConstants.FAIL_TO_SELECT_VALUE_FROM_FIELD, CoreConstants.FAIL, searchText, dropDownName, fieldType ));
+		}
+	}
 }

@@ -6,7 +6,7 @@ Feature: Add new Policy form with Benefit Categories
       | userName | password |
       | kbrian   | kbrian   |
 
-  @Sprint-14 @PDT-Regression @drop
+  @Sprint-14 @PDT-Regression @drop-1
   Scenario: Verify Core/Flex policy drop down should display as "No" on General Information section for selected PDT policy
     Given he is on the "Add New Policy" page after clicking on the link "Add New Policy Form" displayed under the left navigation menu on the 'View Policy' page
     When he clicks on the 'Next' button after selecting below information on the 'Add New Policy' page
@@ -17,7 +17,7 @@ Feature: Add new Policy form with Benefit Categories
       | Bundle     |
       | A la carte |
 
-  @Sprint-14 @PDT-Regression @general
+  @Sprint-14 @PDT-Regression @drop-2
   Scenario: PDT - Verify Policy Benefit Categories are displayed on the 'Policy Benefits' page while adding a new Policy
     Given he is on the "Add New Policy" page after clicking on the link "Add New Policy Form" displayed under the left navigation menu on the 'View Policy' page
     And he has clicked on the 'Next' button after selecting below information on the 'Add New Policy' page
@@ -28,7 +28,7 @@ Feature: Add new Policy form with Benefit Categories
       | International | Both - benefits differ by type | Both - benefits differ by type | Bundle             | Partially Capped | No                      |
     Then all the available benefit categories should be displayed on the "Policy Benefits" page
 
-  @Sprint-14 @PDT-Regression @subbenefit
+  @Sprint-14 @PDT-Regression
   Scenario: PDT - Validate that sub benefit form should show & hide after selecting sub benefit checkbox as checked or unchecked
     Given he is on the "Add New Policy" page after clicking on the link "Add New Policy Form" displayed under the left navigation menu on the 'View Policy' page
     And he has clicked on the 'Next' button after selecting below information on the 'Add New Policy' page

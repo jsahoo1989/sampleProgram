@@ -135,15 +135,7 @@ public class PDT_ViewPolicyPage extends Base {
 
 	public Boolean verifyViewPolicyHeading(String pageName) {		
 		CoreFunctions.explicitWaitTillElementInVisibilityCustomTime(driver, _progressBar, 3);
-		if (_headingViewEditPolicyForm.getText().equalsIgnoreCase(PDTConstants.VIEW_EDIT_POLICY_FORMS)) {
-			CoreFunctions.highlightObject(driver, _headingViewEditPolicyForm);
-			Reporter.addStepLog(MessageFormat.format(PDTConstants.VERIFIED_HEADING_ON_PAGE, CoreConstants.PASS,
-					_headingViewEditPolicyForm.getText(), pageName));
-			return true;
-		}
-		Reporter.addStepLog(MessageFormat.format(PDTConstants.FAILED_TO_VERIFY_HEADING_ON_PAGE, CoreConstants.FAIL,
-				pageName, PDTConstants.VIEW_EDIT_POLICY_FORMS, _headingViewEditPolicyForm.getText()));
-		return false;
+		return CoreFunctions.verifyElementOnPage(driver, _headingViewEditPolicyForm, PDTConstants.heading, PDTConstants.VIEW_EDIT_POLICY_FORMS, pageName, true);
 	}
 
 	public boolean verifyPoliciesAreDisplayed(String pageName) {

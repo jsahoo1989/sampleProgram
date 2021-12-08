@@ -1495,4 +1495,23 @@ public class CoreFunctions {
 		return (elementList.stream().map(x -> x.getText()).collect(Collectors.toList()));
 	}
 	
+	public static void selectItemInListByText(WebDriver driver, List<WebElement> WebElementList, String searchText, String dropDownName, String fieldType,
+			boolean reporter) {
+			boolean itemSearched = false;
+		try {
+			for (WebElement row : WebElementList) {				
+				if (row.getText().contains(searchText)) {
+					itemSearched = true;
+					CoreFunctions.clickWithoutReporting(driver, row, searchText);
+					Reporter.addStepLog(MessageFormat.format(PDTConstants.VERIFY_VALUE_SELECTED_FROM_FIELD, CoreConstants.PASS, dropDownName, fieldType, searchText));
+					break;
+				}
+			}
+			if(!itemSearched) {
+				Assert.fail("Searched item:-"+searchText+"does not exist in "+dropDownName+" drop down list.");
+			}
+		} catch (Exception e) {
+			Assert.fail(MessageFormat.format(PDTConstants.FAIL_TO_SELECT_VALUE_FROM_FIELD, CoreConstants.FAIL, searchText, dropDownName, fieldType ));
+		}
+	}
 }

@@ -76,6 +76,9 @@ public class PDT_AddNewPolicyPage extends Base {
 	
 	@FindBy(how = How.XPATH, using = "//label[contains(string(),'Policy Name')]/following-sibling::ng-select//input")
 	private WebElement _inputPolicyName;
+	
+	@FindBy(how = How.XPATH, using = "//label[text()='Policy Name']")
+	private WebElement _lblPolicyName;
 
 	final By _buttonNextByLocator = By.cssSelector("button.btn-next");
 	/************************************************************************/
@@ -383,7 +386,7 @@ public class PDT_AddNewPolicyPage extends Base {
 		CoreFunctions.clickElement(driver, _selectPolicyName);
 		CoreFunctions.clearAndSetText(driver, _inputPolicyName, PDTConstants.POLICY_NAME, clientPolicyInfo.get(0).get("PolicyName"));
 		if(_optionsPolicyName.size() > 0 && !_optionsPolicyName.get(0).getText().equalsIgnoreCase(PDTConstants.NO_ITEMS_FOUND)) {			
-			CoreFunctions.selectItemInListByText(driver, _optionsPolicyName, clientPolicyInfo.get(0).get("PolicyName"), true);
+			CoreFunctions.selectItemInListByText(driver, _optionsPolicyName, clientPolicyInfo.get(0).get("PolicyName"), _lblPolicyName.getText(), PDTConstants.DROP_DOWN, true);
 			setPolicyName(clientPolicyInfo.get(0).get("PolicyName"));
 		} else if(checkErrorPopUpExistsForPolicy(clientPolicyInfo)) {			
 			Assert.fail(MessageFormat.format(PDTConstants.CORPORATION_POLICY_DOES_NOT_EXIST,
@@ -418,6 +421,7 @@ public class PDT_AddNewPolicyPage extends Base {
 					setClientId(clientId);
 					setClientName(clientName);
 					clientFound = true;
+					Reporter.addStepLog(MessageFormat.format(PDTConstants.VERIFY_VALUE_SELECTED_FROM_DROPDWON, CoreConstants.PASS, PDTConstants.CLIENT_NAME, clientName));
 					break;
 				}
 			}

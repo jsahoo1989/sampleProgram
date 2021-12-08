@@ -42,7 +42,7 @@ public class PDT_AddNewPolicy_Steps {
 	@Given("^he is on the \"([^\"]*)\" page after clicking on the link \"([^\"]*)\" displayed under the left navigation menu on the 'View Policy' page$")
 	public void he_is_on_the_Add_New_Policy_page_after_clicking_on_the_link_displayed_under_the_left_navigation_menu_on_the_View_Policy_page(String pageName, String addNewPolicyLink) {
 		viewPolicyPage.clickElementOfPage(addNewPolicyLink);		
-		Assert.assertTrue(addNewPolicyPage.verifyAddNewPolicyHeading(PDTConstants.ADD_NEW_POLICY_FORM),
+		Assert.assertTrue(addNewPolicyPage.verifyAddNewPolicyHeading(pageName),
 				MessageFormat.format(PDTConstants.FAIL_TO_VERIFY_ELEMENT_VAL_ON_PAGE, CoreConstants.FAIL, PDTConstants.heading, PDTConstants.ADD_NEW_POLICY_FORM,
 						pageName, PDTConstants.ADD_NEW_POLICY_FORM, addNewPolicyPage.getElementText(PDTConstants.HEADING)));
 	}

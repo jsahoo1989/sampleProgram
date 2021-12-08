@@ -38,11 +38,10 @@ public class PDT_ViewPolicy_Steps {
 		loginPage.openApplication();
 		List<Map<String, String>> loginInfo = loginData.asMaps(String.class, String.class);
 		loginPage.enterLoginCredentials(loginInfo.get(0).get("userName"), loginInfo.get(0).get("password"));
-		loginPage.clickLoginBtn();
-		//loginPage.verifyLoginCredentials();
+		loginPage.clickLoginBtn();		
 		Assert.assertTrue(viewPolicyPage.verifyViewPolicyHeading(PDTConstants.VIEW_POLICY),
-				MessageFormat.format(PDTConstants.FAILED_TO_VERIFY_HEADING_ON_PAGE, CoreConstants.FAIL, PDTConstants.VIEW_POLICY,
-						PDTConstants.VIEW_EDIT_POLICY_FORMS, viewPolicyPage.getElementText(PDTConstants.HEADING)));
+				MessageFormat.format(PDTConstants.FAIL_TO_VERIFY_ELEMENT_VAL_ON_PAGE, CoreConstants.FAIL, PDTConstants.heading, PDTConstants.VIEW_EDIT_POLICY_FORMS, PDTConstants.VIEW_POLICY,
+						viewPolicyPage.getElementText(PDTConstants.HEADING)));
 		
 		Assert.assertTrue(viewPolicyPage.verifyUserlogin(loginInfo.get(0).get("userName"), PDTConstants.VIEW_POLICY),
 				MessageFormat.format(PDTConstants.FAILED_TO_VERIFY_USERNAME, CoreConstants.FAIL, PDTConstants.VIEW_POLICY,
@@ -51,9 +50,9 @@ public class PDT_ViewPolicy_Steps {
 
 	@Given("^he is on \"([^\"]*)\" page$")
 	public void he_is_on_page(String pageName) {
-		Assert.assertTrue(viewPolicyPage.verifyViewPolicyHeading(PDTConstants.VIEW_POLICY),
-				MessageFormat.format(PDTConstants.FAILED_TO_VERIFY_HEADING_ON_PAGE, CoreConstants.FAIL, PDTConstants.VIEW_POLICY,
-						PDTConstants.VIEW_EDIT_POLICY_FORMS, viewPolicyPage.getElementText(PDTConstants.HEADING)));
+		Assert.assertTrue(viewPolicyPage.verifyViewPolicyHeading(pageName),
+				MessageFormat.format(PDTConstants.FAIL_TO_VERIFY_ELEMENT_VAL_ON_PAGE, CoreConstants.FAIL, PDTConstants.heading, PDTConstants.VIEW_EDIT_POLICY_FORMS, PDTConstants.VIEW_POLICY,
+						viewPolicyPage.getElementText(PDTConstants.HEADING)));
 	}
 
 	@Then("^he should be able to verify Policy data on \"([^\"]*)\" page after performing below SearchBy operations$")

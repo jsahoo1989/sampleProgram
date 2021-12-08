@@ -1386,8 +1386,6 @@ public class PDTConstants {
 	public static final String VERIFIED_ACCESS_TYPE_UPDATED_ON_PAGE = "{0}Verified ''{1}'' is updated on ''{2}'' page";
 	public static final String FAIL_TO_VERIFY_ACCESS_TYPE_UPDATED_ON_PAGE = "{0}Fail to verify ''{1}'' is updated on ''{2}'' page";
 	public static final String BTN_ADD = "ADD";
-	public static final String VERIFY_VALUE_SELECTED_FROM_DROPDWON = "{0}Verified value selected from ''{1}'' drop down is : ''{2}''";
-	public static final String FAIL_TO_SELECT_VALUE_FROM_DROPDOWN = "{0}Fail to select value ''{1}'' from dropdown ''{2}''";
 	public static final String NEW_USER_CREATED = "{0}New user ''{1}'' created successfully.";
 	public static final String USER_DATA_SAVED = "User data has been saved.";
 	public static final String VERIFIED_ACCESS_TYPE_NOT_UPDATED_ON_PAGE = "{0}Verified ''{1}'' is not updated on ''{2}'' page";
@@ -1695,5 +1693,11 @@ public class PDTConstants {
 	public static final String VERIFY_ELEMENT_VALUE_ON_PAGE = "{0}Verified ''{1}'' :- ''{2}'' on ''{3}'' page.";
 	public static final String FAIL_TO_VERIFY_ELEMENT_VAL_ON_PAGE = "{0}Failed to verify ''{1}'' :- ''{2}'' on ''{3}'' page.<br/> Expected ''{1}'' :- ''{2}''. <br/>Actual ''{1}'' :- ''{4}''.";
 	public static final String heading = "heading";
-	public static final String FAILED_TO_FILL_GENERAL_INFO_FORM = "Failed to fill General Information form";
+	public static final String FAILED_TO_FILL_GENERAL_INFO_FORM = "Failed to fill General Information form";	
+	public static final String VERIFY_VALUE_SELECTED_FROM_DROPDWON = "{0}Verified value selected from ''{1}'' drop down is : ''{2}''";
+	public static final String FAIL_TO_SELECT_VALUE_FROM_DROPDOWN = "{0}Fail to select value ''{1}'' from dropdown ''{2}''";
+	public static final String VERIFY_VALUE_SELECTED_FROM_FIELD = "{0}Verified value selected from ''{1}'' {2} is : ''{3}''";
+	public static final String FAIL_TO_SELECT_VALUE_FROM_FIELD = "{0}Fail to select value ''{1}'' from ''{2}'' {3}";
+	public static final String DROP_DOWN = "drop down";
+	public static final String RADIO_BUTTON_LIST = "radio button list";
 }

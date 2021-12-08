@@ -114,6 +114,24 @@ public class PDT_GeneralInformationPage extends Base {
 	@FindBy(how = How.CSS, using = "button.btn-next")
 	private WebElement _btnNext;
 	
+	@FindBy(how = How.XPATH, using = "//label[text()='Policy Type']")
+	private WebElement _lblPolicyType;
+	
+	@FindBy(how = How.XPATH, using = "//label[text()='Employee Type']")
+	private WebElement _lblEmployeeType;
+	
+	@FindBy(how = How.XPATH, using = "//label[text()='Homeowner Type']")
+	private WebElement _lblHomeOwnerType;
+	
+	@FindBy(how = How.XPATH, using = "//label[text()='Benefit Package Type']")
+	private WebElement _lblBenefitPackageType;
+	
+	@FindBy(how = How.XPATH, using = "//label[text()='Capped Policy?']")
+	private WebElement _lblCappedPolicy;
+	
+	@FindBy(how = How.XPATH, using = "//label[text()='Expense Management Client']")
+	private WebElement _lblExpenseMgmtClient;
+	
 	private String policyType, employeeType, homeOwnerType;
 	
 	/*********************************************************************/
@@ -419,20 +437,20 @@ public class PDT_GeneralInformationPage extends Base {
 		List<Map<String, String>> generalInfo = generalInfoTable.asMaps(String.class, String.class);
 		try {
 			CoreFunctions.clickElement(driver, _drpDwnPolicyType);
-			CoreFunctions.selectItemInListByText(driver, _drpDwnPolicyTypeOptions, generalInfo.get(0).get("PolicyType"), true);
+			CoreFunctions.selectItemInListByText(driver, _drpDwnPolicyTypeOptions, generalInfo.get(0).get("PolicyType"), _lblPolicyType.getText(), PDTConstants.DROP_DOWN, true);
 			CoreFunctions.clickElement(driver, _drpDwnEmployeeType);
 			setPolicyType(generalInfo.get(0).get("PolicyType"));
-			CoreFunctions.selectItemInListByText(driver, _drpDwnEmployeeTypeOptions, generalInfo.get(0).get("EmployeeType"), true);
+			CoreFunctions.selectItemInListByText(driver, _drpDwnEmployeeTypeOptions, generalInfo.get(0).get("EmployeeType"), _lblEmployeeType.getText(), PDTConstants.DROP_DOWN, true);
 			CoreFunctions.clickElement(driver, _drpDwnHomeOwnerType);
 			setEmployeeType(generalInfo.get(0).get("EmployeeType"));
-			CoreFunctions.selectItemInListByText(driver, _drpDwnHomeOwnerTypeOptions, generalInfo.get(0).get("HomeownerType"), true);
+			CoreFunctions.selectItemInListByText(driver, _drpDwnHomeOwnerTypeOptions, generalInfo.get(0).get("HomeownerType"), _lblHomeOwnerType.getText(), PDTConstants.DROP_DOWN, true);
 			setHomeOwnerType(generalInfo.get(0).get("HomeownerType"));
 			CoreFunctions.clickElement(driver, _selectBenefitPackageType);
-			CoreFunctions.selectItemInListByText(driver, _selectBenefitPackageTypeOptions, generalInfo.get(0).get("BenefitPackageType"), true);
+			CoreFunctions.selectItemInListByText(driver, _selectBenefitPackageTypeOptions, generalInfo.get(0).get("BenefitPackageType"), _lblBenefitPackageType.getText(), PDTConstants.DROP_DOWN,true);
 			CoreFunctions.clickElement(driver, _drpDwnCappedPolicy);
-			CoreFunctions.selectItemInListByText(driver, _drpDwnCappedPolicyOptions, generalInfo.get(0).get("CappedPolicy"), true);
+			CoreFunctions.selectItemInListByText(driver, _drpDwnCappedPolicyOptions, generalInfo.get(0).get("CappedPolicy"), _lblCappedPolicy.getText(), PDTConstants.DROP_DOWN, true);
 			CoreFunctions.explicitWaitTillElementListClickable(driver, _radioBtnExpenseManagementClient);
-			CoreFunctions.selectItemInListByText(driver, _radioBtnExpenseManagementClient, generalInfo.get(0).get("ExpenseManagementClient"), true);
+			CoreFunctions.selectItemInListByText(driver, _radioBtnExpenseManagementClient, generalInfo.get(0).get("ExpenseManagementClient"), _lblExpenseMgmtClient.getText(), PDTConstants.RADIO_BUTTON_LIST, true);
 			CoreFunctions.click(driver, _btnNext, _btnNext.getText());			
 		} catch(Exception e) {
 			Assert.fail(PDTConstants.FAILED_TO_FILL_GENERAL_INFO_FORM);

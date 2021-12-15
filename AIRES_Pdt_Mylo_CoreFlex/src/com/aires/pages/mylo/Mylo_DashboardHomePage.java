@@ -1,5 +1,7 @@
 package com.aires.pages.mylo;
 
+import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 import org.openqa.selenium.By;
@@ -10,7 +12,9 @@ import org.openqa.selenium.support.How;
 import org.testng.Assert;
 
 import com.aires.businessrules.Base;
+import com.aires.businessrules.BusinessFunctions;
 import com.aires.businessrules.CoreFunctions;
+import com.aires.businessrules.constants.MYLOConstants;
 import com.aires.utilities.Log;
 
 import cucumber.api.DataTable;
@@ -26,10 +30,6 @@ public class Mylo_DashboardHomePage extends Base {
 	@FindBy(how = How.XPATH, using = "//*[@id='user-profile']//span[2]")
 	private WebElement _userProfile;
 	
-	
-	@FindBy(how = How.XPATH, using = "//*[contains(text(),'Good Morning')]")
-	private WebElement _goodMorning;
-	
 	@FindBy(how = How.XPATH, using = "//div[@class='secondmenu']")
 	private WebElement _hamburgerMenu;
 	
@@ -42,12 +42,44 @@ public class Mylo_DashboardHomePage extends Base {
 	@FindBy(how = How.XPATH, using = "//div[@class='container']")
 	private List<WebElement> _selectQueryParameterRows;
 	
+	@FindBy(how = How.XPATH, using = "//button[@class='query-btn']")
+	private List<WebElement> _selectQueryParameterButtons;
+	
 	@FindBy(how = How.XPATH, using = "//button[@class='close-button']")
 	private WebElement _closeButton;
 	
+	@FindBy(how = How.XPATH, using = "//*[@role='option']/span")
+	private List<WebElement> _selectOptions;
+	
+	@FindBy(how = How.XPATH, using = "//tbody[@class='scrollbody']//following::label")
+	private List<WebElement> _fileParameterList;
+	
+	@FindBy(how = How.XPATH, using = "//tbody[@class='scrollbody']/tr")
+	private List<WebElement> _fileParameterRows;
+	
+	@FindBy(how = How.XPATH, using = "//button[text()='Execute']")
+	private WebElement _executeButton;
+	
+	
+	@FindBy(how = How.XPATH, using = "//button[text()='OK']")
+	private WebElement _okButton;
+	
+	@FindBy(how = How.XPATH, using = "//div[@role='dialog']//h1")
+	private WebElement _popUpMessage;
+	
+	@FindBy(how = How.XPATH, using = "//tbody[@class='scrollbody']/a/tr")
+	private List<WebElement> _queryResultRows;
+	
+	@FindBy(how = How.XPATH, using = "//table[@class='table']/descendant::th")
+	private List<WebElement> _queryResultColHeaders;
+	
+	@FindBy(how = How.XPATH, using = "//h1")
+	private WebElement _headerText;
 	
 	final By _selectQueryoptions = By.xpath("./button");
-	
+	final By _fileParameterOptions = By.xpath(".//following-sibling::label");
+	final By _queryResultColumns = By.xpath("./td");
+	final By _dropdownSections = By.xpath(".//parent::div/ng-select");
 	
 
 	public boolean verifyUserName(String userName) {
@@ -63,14 +95,20 @@ public class Mylo_DashboardHomePage extends Base {
 			return false;
 	}
 	
-	public void clickOptionsFromMainMenu(String option) {
+	public void clickOptionFromMainMenu(String option) {
 		CoreFunctions.explicitWaitTillElementListVisibility(driver, _firstMenuOptions);
 		CoreFunctions.selectItemInListByText(driver, _firstMenuOptions, option);
 	}
 	
 	public void closePopUp() {
+		CoreFunctions.waitHandler(5);
 		CoreFunctions.explicitWaitTillElementVisibility(driver, _closeButton, _closeButton.getText(), 10L);
 		CoreFunctions.highlightElementAndClick(driver, _closeButton, _closeButton.getText());
+	}
+	
+	public void clickExecuteButton() {
+		CoreFunctions.explicitWaitTillElementVisibility(driver, _executeButton, _executeButton.getText(), 10L);
+		CoreFunctions.highlightElementAndClick(driver, _executeButton, _executeButton.getText());
 	}
 	
 	public boolean clickHamburgerMenu() {
@@ -95,9 +133,97 @@ public class Mylo_DashboardHomePage extends Base {
 			for (int i = 0; i < _selectQueryParameterRows.size(); i++) {
 				List<WebElement> allOptions = CoreFunctions.getElementsByLocator(driver,
 						_selectQueryParameterRows.get(i), _selectQueryoptions);
+				String[] parameterOptions = data.raw().get(i+1).get(1).split(",");
 				for (int j = 0; j < allOptions.size(); j++) {
-					Assert.assertEquals(allOptions.get(j).getText(), data.raw().get(i).get(j + 1));
+					Assert.assertEquals(allOptions.get(j).getText(), parameterOptions[j]);
 				}
+			}
+		} catch (Exception e) {
+			return false;
+		}
+		return true;
+	}
+	
+	public void selectParameterFromQueryScreen(String parameter) {
+		CoreFunctions.explicitWaitTillElementListVisibility(driver, _selectQueryParameterButtons);
+		CoreFunctions.selectItemInListByText(driver, _selectQueryParameterButtons, parameter);
+	}
+	
+	public boolean verifyFileParameterOptions(DataTable data) {
+		try {
+			for (int i = 0; i < _fileParameterRows.size(); i++) {
+				List<WebElement> allOptions = CoreFunctions.getElementsByLocator(driver,
+						_fileParameterRows.get(i), _fileParameterOptions);
+				String[] parameterOptions = data.raw().get(i+1).get(1).split(",");
+				for (int j = 0; j < allOptions.size(); j++) {
+					Assert.assertEquals(allOptions.get(j).getText(), parameterOptions[j]);
+				}
+			}
+		} catch (Exception e) {
+			return false;
+		}
+		return true;
+	}
+	
+	
+	
+	public void selectOptionsForFileParameters(String option, String optionValue) {
+		CoreFunctions.explicitWaitTillElementListVisibility(driver, _fileParameterList);
+		//CoreFunctions.selectItemInListByText(driver, _fileParameterList, option);
+		WebElement getOptionElement = CoreFunctions.returnItemInListByText(driver, _fileParameterList, option);
+		if(option.contains("Status")||option.contains("Office")||option.contains("Country")||option.contains("State")) {	
+			List<WebElement> dropdowns = CoreFunctions.getElementsByLocator(driver,
+					getOptionElement, _dropdownSections);
+			CoreFunctions.highlightElementAndClick(driver, dropdowns.get(0), dropdowns.get(0).getText());
+			CoreFunctions.explicitWaitTillElementListVisibility(driver, _selectOptions);
+			CoreFunctions.selectItemInListByText(driver, _selectOptions, optionValue);
+		}
+		else {
+		CoreFunctions.sendKeysUsingAction(driver, getOptionElement, optionValue);
+		}
+	}
+	
+	public boolean verifyPopUpMessage(String message) {
+		try {
+			clickExecuteButton();
+			CoreFunctions.waitForBrowserToLoad(driver);
+			CoreFunctions.explicitWaitTillElementVisibility(driver, _popUpMessage, _popUpMessage.getText());
+			Assert.assertEquals(_popUpMessage.getText(), message, MYLOConstants.INCORRECT_MESSAGE);
+			CoreFunctions.click(driver, _okButton, _okButton.getText());
+		} catch (Exception e) {
+			return false;
+		}
+		return true;
+
+	}
+	
+	public void resetFileParameters() {
+		closePopUp();
+		clickOptionFromMainMenu("Assignment");
+		selectParameterFromQueryScreen("File");
+	}
+	
+	public boolean verifyQueryResults(String colName, String colValue) {
+		try {
+			CoreFunctions.waitHandler(6);
+			CoreFunctions.explicitWaitTillElementVisibility(driver, _headerText, _headerText.getText());
+			Assert.assertEquals(_headerText.getText(),
+					MYLOConstants.QUERY_RESULT_HEADER_TEXT);
+			int index = BusinessFunctions.returnindexItemFromListUsingText(driver, _queryResultColHeaders, colName);
+			List<WebElement> allValueElements = new ArrayList<>();
+			List<Integer> fileIDs = new ArrayList<>();
+			for (int i = 0; i < _queryResultRows.size(); i++) {
+				allValueElements = CoreFunctions.getElementsByLocator(driver, _queryResultRows.get(i),
+						_queryResultColumns);
+				if (!(colName.equalsIgnoreCase(MYLOConstants.FILE_ID)))
+					Assert.assertEquals(allValueElements.get(index).getText(), colValue);
+				else
+					fileIDs.add(Integer.parseInt(allValueElements.get(index).getText()));
+			}
+			if (!(fileIDs.isEmpty())) {
+				List<Integer> copyFileIDs = new ArrayList<>(fileIDs);
+				Collections.sort(copyFileIDs);
+				Assert.assertTrue(fileIDs.equals(copyFileIDs), MYLOConstants.INCORRECT_FILEID_SORTING);
 			}
 		} catch (Exception e) {
 			return false;

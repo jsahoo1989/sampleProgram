@@ -552,13 +552,13 @@ public class BusinessFunctions {
 		}
 	}
 
-	public static int returnindexItemFromListUsingAttribute(WebDriver driver, List<WebElement> WebElementList,
-			String itemName, String attribute) {
+	public static int returnindexItemFromListUsingText(WebDriver driver, List<WebElement> WebElementList,
+			String itemName) {
 		CoreFunctions.waitHandler(3);
 		try {
 			for (WebElement row : WebElementList) {
-				Log.info("The Actual Item Name is :" + row.getAttribute(attribute));
-				if (row.getAttribute(attribute).equals(itemName)) {
+				Log.info("The Actual Item Name is :" + row.getText());
+				if (row.getText().equals(itemName)) {
 					return WebElementList.indexOf(row);
 				}
 			}

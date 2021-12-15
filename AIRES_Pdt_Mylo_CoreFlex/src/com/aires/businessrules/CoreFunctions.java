@@ -485,6 +485,7 @@ public class CoreFunctions {
 
 	public static void selectItemInListByText(WebDriver driver, List<WebElement> WebElementList, String searchText) {
 
+		System.out.println("Size of Option List is : " + WebElementList.size() );
 		try {
 			for (WebElement row : WebElementList) {
 				Log.info("The Actual Item Name is :" + row.getText());
@@ -498,6 +499,23 @@ public class CoreFunctions {
 			Assert.fail("Could not select item from list");
 			e.printStackTrace();
 		}
+	}
+	
+	public static WebElement returnItemInListByText(WebDriver driver, List<WebElement> WebElementList, String searchText) {
+
+		try {
+			for (WebElement row : WebElementList) {
+				Log.info("The Actual Item Name is :" + row.getText());
+				if (row.getText().contains(searchText)) {
+					return row;
+				}
+			}
+
+		} catch (Exception e) {
+			Assert.fail("Could not select item from list");
+			e.printStackTrace();
+		}
+		return null;
 	}
 
 	public static void selectItemInListByText(WebDriver driver, List<WebElement> WebElementList, String searchText,

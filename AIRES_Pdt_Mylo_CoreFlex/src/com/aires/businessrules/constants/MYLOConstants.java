@@ -4,6 +4,28 @@ public class MYLOConstants {
 	public static final String APPLICATION_LAUNCHED_AND_LOGO_DISPLAYED = "MYLO Logo is displayed on Mylo Application";
 	public static final String APPLICATION_FAILED_TO_LAUNCH = "Mylo application is not launched successfully";
 	public static final String MYLOLOGO_TEXT = "MyloLogo";
+	public static final String USER_PROFILE_NAME = "mxsso!";
+	public static final String  INCORRECT_QUERY_PARAMETERS= "Incorrect Select Query Parameters";
+	public static final String HAMBURGER_MENU_NOT_APPEARING = "Hamburger Menu Not Appearing";
+	public static final String FILE_ID = "File ID";
+	public static final String CLIENT_ID = "Client ID";
+	public static final String STATUS = "Status";
+	public static final String ORIGIN_COUNTRY = "Origin Country";
+	public static final String DESTINATION_COUNTRY = "Destination Country";
+	public static final String ORIGIN = "Origin";
+	public static final String DESTINATION = "Destination";
+	public static final String STATUS_VALUE = "ACTV";
+	public static final String COUNTRY_NAME = "USA";
+	public static final String INCORRECT_FILEID_SORTING = "File IDs are not in ascending order";
+	public static final String QUERY_RESULT_HEADER_TEXT = "Please select a file from your query results below or run a new query.";
+	public static final String INCORRECT_MESSAGE = "Incorrect Message";
+	
+	
+	
+	
+	
+	
+	
 	
 	public static String URI_ADDRESS = "ws://localhost:5095";
 	public static String IRIS_EXECUTABLE_PATH = "C:\\iris_ng\\IRIS.exe";
@@ -32,13 +54,11 @@ public class MYLOConstants {
 	public static final String PASSWORD = "Password";
 	public static final String BUTTON_LOGIN = "Login";
 	public static final String LOGIN_TO_IRIS = "Login to IRIS application with valid credentials:-";
-	public static final String FILE_ID = "FileId";
 	public static final String BTN_EXECUTE = "Execute";
 	public static final String QUERY_FILE_MENU = "Query->File menu";
 	public static final String ATTACH_MENU = "Attach";
 	public static final String VIEW_ALL_MENU = "View-All";
 	public static final String status = "Status";
-	public static final String CLIENT_ID = "ClientId";
 	public static final String BUTTON_OK = "OK";
 	public static final String QUERY_FILE_ID = "Query a File/AssignmentId";
 	public static final String QUERY_BY_STATUS_AND_CLIENT_ID = "Query By Status & ClientId";

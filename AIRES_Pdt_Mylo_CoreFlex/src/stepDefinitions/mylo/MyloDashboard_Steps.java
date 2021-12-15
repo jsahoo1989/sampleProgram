@@ -2,9 +2,12 @@ package stepDefinitions.mylo;
 
 import org.testng.Assert;
 
+import com.aires.businessrules.constants.MYLOConstants;
 import com.aires.cucumber.TestContext;
+import com.aires.managers.FileReaderManager;
 import com.aires.pages.mylo.Mylo_DashboardHomePage;
 import com.aires.pages.mylo.Mylo_LoginPage;
+import com.aires.testdatatypes.mylo.Mylo_LoginData;
 
 import cucumber.api.DataTable;
 import cucumber.api.java.en.Given;
@@ -15,6 +18,9 @@ public class MyloDashboard_Steps {
 	TestContext testContext;
 	Mylo_LoginPage loginPage;
 	Mylo_DashboardHomePage myloDashboardPage;
+	
+	Mylo_LoginData loginData = FileReaderManager.getInstance().getMyloJsonReader()
+			.getloginDetailsByUserProfileName(MYLOConstants.USER_PROFILE_NAME);
 
 	public MyloDashboard_Steps(TestContext context) {
 		testContext = context;
@@ -26,36 +32,77 @@ public class MyloDashboard_Steps {
 	public void he_has_logged_into_Mylo_application() throws Throwable {
 		loginPage.openApplication();
 		loginPage.switchWindow();
-		loginPage.enterUserEmailAndPasswordForMylo("mxssodev5@corp.aires.com", "AiresSSOTestPW2021!");
+		loginPage.enterUserEmailAndPasswordForMylo(loginData.MyloUserName, loginData.MyloPassword);
 		loginPage.clickSignIn();
 		
 	}
 	
 	@Given("^he is on Mylo Dashboard Home page$")
 	public void he_is_on_Mylo_Dashboard_Home_page() throws Throwable {
-		Assert.assertTrue(myloDashboardPage.verifyUserName("mxsso!"));
+		Assert.assertTrue(myloDashboardPage.verifyUserName(loginData.MyloProfileName));
 	}
-
-	@When("^he clicks on the Assignment option in the Mylo Menu on the sidebar$")
-	public void he_clicks_on_the_Assignment_option_in_the_Mylo_Menu_on_the_sidebar() throws Throwable {
-		myloDashboardPage.clickOptionsFromMainMenu("Assignment");
+	
+	@When("^he clicks on the \"([^\"]*)\" option in the Mylo Menu on the sidebar$")
+	public void he_clicks_on_the_option_in_the_Mylo_Menu_on_the_sidebar(String option) throws Throwable {
+		myloDashboardPage.clickOptionFromMainMenu(option);
 	}
 
 	@Then("^the Select Query Type screen should display with the given parameters$")
 	public void the_Select_Query_Type_screen_should_display_with_the_given_parameters(DataTable data) throws Throwable {
-		Assert.assertTrue(myloDashboardPage.verifySelectQueryOptions(data),"Incorrect Select Query Parameters");
+		Assert.assertTrue(myloDashboardPage.verifySelectQueryOptions(data),MYLOConstants.INCORRECT_QUERY_PARAMETERS);
 	}
 	
 	@Given("^he clicks on Hamburger Menu after closing the Assignment option$")
 	public void he_clicks_on_Hamburger_Menu_after_closing_the_Assignment_option() throws Throwable {
 	   myloDashboardPage.closePopUp();
-	   Assert.assertTrue(myloDashboardPage.clickHamburgerMenu(), "Hamburger Menu Not Appearing");
+	   Assert.assertTrue(myloDashboardPage.clickHamburgerMenu(), MYLOConstants.HAMBURGER_MENU_NOT_APPEARING);
 	   
 	}
 
 	@When("^he clicks on \"([^\"]*)\" Option in the Hamburger Menu$")
 	public void he_clicks_on_Option_in_the_Hamburger_Menu(String options) throws Throwable {
 	   myloDashboardPage.selectOptionsFromHamburgerMenu(options);
+	}
+	
+	@Given("^he selects \"([^\"]*)\" section after clicking on \"([^\"]*)\" option in the Mylo Menu on the sidebar$")
+	public void he_selects_section_after_clicking_on_option_in_the_Mylo_Menu_on_the_sidebar(String parameter, String mainMenuOption) throws Throwable {
+		myloDashboardPage.clickOptionFromMainMenu(mainMenuOption);
+		myloDashboardPage.selectParameterFromQueryScreen(parameter);
+	}
+
+	@Given("^Select Parameter popup should display with given parameters$")
+	public void select_Parameter_popup_should_display_with_given_parameters(DataTable data) throws Throwable {
+		Assert.assertTrue(myloDashboardPage.verifyFileParameterOptions(data));
+	    
+	}
+
+	@Given("^Message \"([^\"]*)\" is displayed after clicking on Execute button$")
+	public void message_is_displayed_after_clicking_on_Execute_button(String message) throws Throwable {
+		Assert.assertTrue(myloDashboardPage.verifyPopUpMessage(message));
+	}
+
+	@Given("^Message \"([^\"]*)\" is displayed after clicking on Execute button with invalid File ID \"([^\"]*)\"$")
+	public void message_is_displayed_after_clicking_on_Execute_button_with_invalid_File_ID(String message, String fileID) throws Throwable {
+		myloDashboardPage.selectOptionsForFileParameters(MYLOConstants.FILE_ID, fileID);
+		Assert.assertTrue(myloDashboardPage.verifyPopUpMessage(message));
+	}
+	
+	@When("^he clicks on Execute button after entering valid Client Id \"([^\"]*)\", Status \"([^\"]*)\", Origin Country \"([^\"]*)\" and Destination Country \"([^\"]*)\"$")
+	public void he_clicks_on_Execute_button_after_entering_valid_Client_Id_Status_Origin_Country_and_Destination_Country(String clientID, String status, String orgCountry, String destCountry) throws Throwable {
+		myloDashboardPage.resetFileParameters();
+		myloDashboardPage.selectOptionsForFileParameters(MYLOConstants.CLIENT_ID, clientID);
+		myloDashboardPage.selectOptionsForFileParameters(MYLOConstants.STATUS, status);
+		myloDashboardPage.selectOptionsForFileParameters(MYLOConstants.ORIGIN_COUNTRY, orgCountry);
+		myloDashboardPage.selectOptionsForFileParameters(MYLOConstants.DESTINATION_COUNTRY, destCountry);
+		myloDashboardPage.clickExecuteButton();
+	}
+
+	@Then("^Query results should appear based on the parameter provided sorted by File ID$")
+	public void query_results_should_appear_based_on_the_parameter_provided_sorted_by_File_ID() throws Throwable {
+		Assert.assertTrue(myloDashboardPage.verifyQueryResults(MYLOConstants.STATUS, MYLOConstants.STATUS_VALUE));
+		Assert.assertTrue(myloDashboardPage.verifyQueryResults(MYLOConstants.ORIGIN, MYLOConstants.COUNTRY_NAME));
+		Assert.assertTrue(myloDashboardPage.verifyQueryResults(MYLOConstants.DESTINATION, MYLOConstants.COUNTRY_NAME));
+		Assert.assertTrue(myloDashboardPage.verifyQueryResults(MYLOConstants.FILE_ID, ""),MYLOConstants.INCORRECT_FILEID_SORTING);
 	}
 
 }

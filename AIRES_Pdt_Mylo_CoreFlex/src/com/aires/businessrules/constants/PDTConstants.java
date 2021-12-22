@@ -589,10 +589,6 @@ public class PDTConstants {
 	public static final String ADVANCED_SEARCH_HEADING = "Advanced Search heading";
 	public static final String VERIFIED_ADVANCE_SEARCHED = "{0}Verified ''{1}'' heading on ''{2}'' page";
 	public static final String FAIL_TO_VERIFY_ADVANCE_SEARCH_HEADING = "{0}Failed to verify ''{1}'' heading on ''{2}'' page";
-	public static final String VERIFIED_ELEMENT_ON_PAGE = "{0}Verified ''{1}'' on ''{2}'' page";
-	public static final String VERIFIED_FORM_FIELD_ON_PAGE = "{0}Verified ''{1}'' ''{2}'' on {3} page";
-	public static final String FAIL_TO_VERIFY_ELEMENT_ON_PAGE = "{0}Failed to verify ''{1}'' on ''{2}'' page";
-	public static final String FAILED_TO_VERIFY_FORM_FIELD_ON_PAGE = "{0}Failed to verify ''{1}'' ''{2}'' on ''{3}'' page";
 	public static final String DROPDOWN = "drop Down";
 	public static final String TEXTBOX = "textBox";
 	public static final String BUTTON = "button";
@@ -1155,204 +1151,8 @@ public class PDTConstants {
 	public static final String TEXT_IN_CHRONOLOGICAL_ORDER = "In chronological order ...";
 	public static final String ACTIVE_LIST_NOT_DISPLAYED = "Active Task List is Displayed";
 
-	// Budgeting tool
-	public static final String EDIT = "Edit";
-	public static final String SERVICE = "Update Service";
-	public static final String SAVE = "Save";
-	public static final String CURRENCY_UPDATE = "Currency";
-	public static final String DELETE_EXPENSE = "Delete";
-	public static final String BUDGET_TOOL = "Budgeting Tool";
-	public static final String EDIT_BUDGET = "Edit";
-	public static final String CONTRIBUTE_AMOUNT = "Contribute Amount";
-	public static final String TOTAL_BUDGET = "Total Budget";
-	public static final String TOTAL_BUDGET_WITH_CURRENCY_SYMBOL = "Total Budget with currency Symbol";
-	public static final String SPENT_BUDGET = "Spent Budget";
-	public static final String REMAINING_BUDGET = "Remaining Budget";
-	public static final String TYPE = "Type";
-
-	// IMB filters
-	public static final String FILTERS = "Filters";
-	public static final String ADD_FILTERS_OPTION = "Add Filters Option";
-	public static final String FILTERS_OPTION = "Filter Option";
-	public static final String FILTER_CRITERIA = "Filter Criteria";
-	public static final String APPLY = "Apply";
-	public static final String DELETE_FILTER_OPTION = "Delete";
-	public static final String REMOVE_FILTERS = "Remove Filters";
-	public static final String SAVE_SUBMIT_BUTTON = "Save/submit";
-
-	// View all active employees
-	public static final String VERIFIED_FILTER_NOT_PRESENT = "{0} Verified ''{1}'' filter is not present in dropdown";
-	public static final String VERIFIED_FILTER_PRESENT = "{0} Verified ''{1}'' filter is present in dropdown";
-	public static final String VERIFIED_FILTER_VALUES = "{0} Verified ''{1}'' is present on page";
-	public static final String FILTER_NAME = "Filter-1";
-	public static final String SAVE_THIS_VIEW = "Save this View";
-	public static final String UNSAVED_VIEW = "Unsaved view";
-	public static final String CANCEL = "Cancel";
-	public static final String VERIFIED_MANAGEINITATION_COLUMN_NAME = "{0} Verified that ''{1}'' Column is not displayed on Manage Initiation page";
-
-	// Filter
-	public static final String REQUIRED = "Required";
-
-	public static final String MOBILITYX_HOME_PAGE = "MobilityX Home";
-	public static final String MOBILITYJOURNEY_HOME_PAGE = "MobilityJourney Home";
-	public static final String VIEW_ALL_INITIATION = "View all initiations";
-	public static final String VERIFY_USER_LOGGEDIN_SUCCESSFULLY = "{0} Verified that ''{1}'' user is able to login successfully.";
-	public static final String TRANSFEREE = "Transferee";
-
-	// reset Empname
-	public static final String RESETICON = "Reset Employee Name";
-	public static final String INITIATION_NOT_EXIST = "There are no initiations that meet these search criteria";
-
-	// BUDGET
-	public static final String VERIFIED_BUDGET_INFORMATION = "{0} Verified that ''{1}'' is displayed in budget excel sheet";
-
-	// Manage Initiation
-	public static final String[] FILTER_OPTION_DROPDOWN_VALUE = { "Aires Instructions", "Auth Form Status",
-			"Collab Last Action", "Cost Estimate Status", "Division", "GM Assessment", "Policy", "Policy Documents" };
-	public static final String[] FILTER_OPTION_DATE_VALUE = { "Aires Instructions Last Updated",
-			"Auth Form Last Updated", "Collaboration Last Updated", "Cost Estimate Last Updated", "Initiation Date",
-			"Policy Documents Updated On" };
-	public static final String[] FILTER_OPTION_TEXTFIELD = { "Aires Instructions Updated By", "Auth Form Updated By",
-			"Collab Updated By", "Cost Estimate Last Updated By", "Contributor", "Destination", "Employee Name",
-			"Hiring Manager", "Initiated By", "Origin" };
-	public static final String FILTER_OPTION = "Filter Option";
-	public static final String REVIEW_APPROVERS = "Review approvers";
-	public static final String VERIFIED_COUNT_AFTER_REMOVE_FILTER = "{0} Verified that after removing filter, Active Initaition Count is reset and it is same as before apply filter.";
-	public static final String VERIFIED_COUNT_AFTER_APPLY_FILTER = "{0} Verified that after apply filter, Active Initaition Count is not same as before apply filter.";
-	public static final String FILTERED_COLUMN_EXIST = "{0} Verified filtered column ''{1}'' is exist";
-	public static final String COMPANY_LOGO_UPLOADED = "{0} Verified logo is uploaded for Company";
-	public static final String COMPANY_LOGO_NOT_UPLOADED = "{0} Failed to upload Company logo";
-	public static final String LINK_REMOVE = "Remove";
-	public static final String COMPANY_LOGO_REMOVED = "{0} Verified Company logo is removed.";
-	public static final String COMPANY_LOGO_NOT_REMOVED = "{0} Failed to remove Company logo.";
-	public static final String CHOOSE_FILE_BTN = "Choose File button";
-	public static final String COMPANY_LOGO = "Company Logo";
-	public static final String HIDDEN_COLUMN = "Hidden Columns";
-	public static final String VISIBLE_COLUMNS = "Visible columns";
-	public static final String INITIATION_MANAGEMENT_DATA = "Initiation Management Data";
-	public static final String VERIFIED_COLUMN_EXIST = "{0} Verified ''{1}'' exists on ''{2}''";
-	public static final String FAIL_TO_VERIFY_COLUMN_EXIST = "{0} Fail to verify ''{1}'' exists on ''{2}''";
-
-	// Quries
-	public static final String UPDATE_DEFAULTAUTH_DB_YES_CONFIG = "update cpadba.auth_form_definition afd set afd.non_linear_ce_flow_ind = 'Y' where afd.definition_name like 'Default Auth Form' and afd.company_id = 92265";
-	public static final String UPDATE_DEFAULTAUTH_DB_NO_CONFIG = "update cpadba.auth_form_definition afd set afd.non_linear_ce_flow_ind = 'N' where afd.definition_name like 'Default Auth Form' and afd.company_id = 92265";
-	public static final String BUDGET_DETAILS_MATCH_WITH_EXCEL_MESSAGE = "{0} Successfully verified that the Budget Estimates match with the downloaded excel {1}:  ";
-	public static final String BUDGET_DETAILS_NOT_MATCH_WITH_EXCEL_MESSAGE = "{0} Failed to verify that the Budget Estimates is not matched with the downloaded excel {1}:  ";
-	public static final String UPDATE_BSCTEMPLATE_DB_NO_CONFIG = "update cpadba.auth_form_definition afd set afd.non_linear_ce_flow_ind = 'N' where afd.definition_name like 'BSC-International Authorization Form' and afd.company_id = 92265";
-	public static final String UPDATE_BSCTEMPLATE_DB_YES_CONFIG = "update cpadba.auth_form_definition afd set afd.non_linear_ce_flow_ind = 'Y' where afd.definition_name like 'BSC-International Authorization Form' and afd.company_id = 92265";
-	public static final String DATABASE_TEST_URL = "jdbc:oracle:thin:isisdba/iristestisisdba@corptesvl300.corp.aires.com:1521:IRISTEST";
-	public static final String BSC_INTERNATIONAL = "BSC-International";
-	public static final String DEFAULT_AUTH_FORM = "Default Auth Form";
-	public static final String COST_ESTIMATE_REQUEST = "Cost Estimate Request";
-	public static final String FAILED_TO_VERIFY_TRANSFEREE_WITH_TEMPLATE = "{0} Failed to verify Transferee with Template ''{1}''";
-	public static final String VERIFY_TRANSFEREE_WITH_TEMPLATE = "{0} Verify that Transferee with Template ''{1}''";
-	public static final String MY_PROFILE = "My Profile";
-	public static final String BSC_INTERNATIONAL_AUTH_FORM = "BSC-International Authorization Form";
-	public static final String UPDATE_INTERNATIONAL_AUTH_FORM_BSC_DB_YES_CONFIG = "update cpadba.auth_form_definition afd set afd.non_linear_ce_flow_ind = 'Y' where afd.definition_name like 'International Authorization Form' and afd.company_id = 13951";
-	public static final String UPDATE_DOMESTIC_AUTH_FORM_BSC_DB_NO_CONFIG = "update cpadba.auth_form_definition afd set afd.non_linear_ce_flow_ind = 'N' where afd.definition_name like 'Domestic Authorization Form' and afd.company_id = 13951";
-	public static final String UPDATE_INTERNATIONAL_AUTH_FORM_BSC_DB_NO_CONFIG = "update cpadba.auth_form_definition afd set afd.non_linear_ce_flow_ind = 'N' where afd.definition_name like 'International Authorization Form' and afd.company_id = 13951";
-	public static final String UPDATE_DOMESTIC_AUTH_FORM_BSC_DB_YES_CONFIG = "update cpadba.auth_form_definition afd set afd.non_linear_ce_flow_ind = 'Y' where afd.definition_name like 'Domestic Authorization Form' and afd.company_id = 13951";
-	public static final String DOMESTIC_AUTH_FORM = "Domestic Authorization Form";
-	public static final String INTERNATIONAL_AUTH_FORM = "International Authorization Form";
-
-	// reset Password
-	public static final String RESETPASSWORD = "Reset Password";
-	// Partner portal
-	public static final String VERIFIED_LOGOUT = "{0} Successfully Verified that user is ''{1}'' from partner portal";
-	public static final String FAILED_TO_VERIFY_LOGOUT = "{0} Failed to verify that user is ''{1}'' from partner portal";
-	public static final String VERIFY_PASSWORD_CHANGE = "{0} Verify that Your Password has been successfully changed! from ''{1}'' to ''{2}''";
-	public static final String FAILED_TO_VERIFY_VERIFY_PASSWORD_CHANGE = "{0} Failed to Verify that Your Password has been successfully changed! from ''{1}'' to ''{2}''";
-	public static final String MANAGE_MY_PASSWORD = "Manage My Password";
-	public static final String PARTNER_PORTAL_HOME = "Partner Portal home";
-	public static final String WEBSITE = "Website";
-	public static final String COMPANY_BIO = "Company Bio";
-	public static final String FRANCHISE_DROPDOWN = "franchise(household goods only)";
-	public static final String COMPANY_HIERARCHY_DROPDOWN = "CompanyHierarchy";
-	public static final String WELCOME_TO_PARTNER_PORTAL_HOME = "Welcome to the Aires Partner Portal";
-	
-	public static final String PARTNER_PASSWORD_CHANGED_SUCCESSFULLY = "Your Password has been successfully changed!";
-	public static final String COMPANY_INFO = "Company Info";
-	public static final String COMPANY_INFO_MAIN_TAB = "companyInfoMainPage";
-	public static final String MAIN = "Main";
-	public static final String VIDEO_GUIDE_LINK = "video guide";
-	public static final String EXIT_TO_WELCOME_PAGE = "Exit to Welcome Page";
-	public static final String FLASH_PLAYER_PAGE_PARA = "The Camtasia Studio video content presented here requires JavaScript to be enabled and the latest version of the Adobe Flash Player.";
-	public static final String FLASH_PLAYER_PARA = "The Camtasia Studio video content presented here\n requires JavaScript to be enabled and the\n latest version of the Adobe Flash Player.";
-	public static final String VERIFIED_PARA_IN_FLASH_PLAYER_PAGE = "{0}Verified ''{1}'' paragraph on Adobe Flash Player page.";
-	public static final String FAILTO_VERIFIED_PARA_IN_FLASH_PLAYER = "{0}Fail to verify ''{1}'' paragraph on Adobe Flash Player page.";
-	public static final String PARTNER_USER_GUIDE = "Partner User Guide";
-	public static final String VERIFIED_NAVIGATED_TO_PAGE_AND_TITLE_EXIST = "{0} Verified that user is navigated to ''{1}'' page and title ''{2}'' is also exist";
-	public static final String TABLE_OF_CONTENT = "Table Of Content";
-	public static final String MANAGE_MY_SECURITY_QUESTION = "Manage My Security Questions";
-	public static final String TEST = "Test";
-	public static final String VERIFY_DATA_UPDATED = "{0} Verified that ''{1}'' data has been updated.";
-	public static final String FAILED_TO_UPDATE_DATA = "{0} Failed to update ''{1}'' data.";
-	public static final String INNER_HTML = "innerHTML";
-	public static final String OUTER_HTML = "outerHTML";
-	public static final String DISABLED = "disabled";
-	public static final String SELECTED = "selected";
-	public static final String VERIFY_ELEMENT_ON_PAGE = "{0} Verified element ''{1}'' is present on ''{2}'' page";
-	public static final String LINK_USER_GUIDE = "User's Guide";
-	public static final String DOT_COM = ".com";
-	public static final String WWW = "WWW.";
-	public static final String DEFAULT = "Default";
-	public static final String ACTIVE_INITIATION_EMPLOYEE_NAME = "EMPLOYEE NAME";
-	public static final String ACTIVE_INITIATION_POLICY = "POLICY";
-	public static final String DEFAULT_VIEW = "DEFAULT";
-	public static final String VERIFIED_NO_SORTING = "{0}Verified column name ''{1}'' is not sorted in any order.";
-	public static final String GREY_COLOR = "#707070";
-	public static final String DEFAULT_SORTING = "defaultSorting";
-	public static final String DESCENDING_SORTING = "sortingDesc";
-	public static final String ASCENDING_SORTING = "sortingAsc";
-	public static final String VERIFIED_SORTING_NOT_APPLIED_ON_UNSORTED_COLUMN = "{0}Verified sorting is not applied on ''{1}'' column.";
-	public static final String FAILED_TO_VERIFY_SORTING_NOT_APPLIED_ON_UNSORTED_COLUMN = "{0}Fail to verify sorting is not applied on ''{1}'' column.";
-	public static final String VERIFIED_SORTING = "{0}Verified column name ''{1}'' is sorted in ''{2}'' order.";
-	public static final String APPLY_COLUMNS = "Apply Columns";
-	public static final String MOVE_FROM_HIDDEN_COLUMNS = "Hidden";
-	public static final String REMOVE_FROM_VISIBLE_COLUMNS = "Visible";
-	public static final String DOWNLOAD_AS_EXCEL = "Download As Excel";
-	public static final String AUTH_FORM_STATUS = "AUTH FORM STATUS";
-	public static final String COST_ESTIMATE_STATUS = "COST ESTIMATE STATUS";
-	public static final String HIRING_MANAGER = "HIRING MANAGER";
-	public static final String INITIATION_DATE = "INITIATION DATE";
-	public static final String ORIGIN_COLUMN = "ORIGIN";
-	public static final String DESTINATION_COLUMN = "DESTINATION";
-	public static final String DIVISION = "DIVISION";
-	public static final String INITIATED_BY = "INITIATED BY";
-	public static final String VERIFIED_SORTING_APPLIED_ON_SORTED_COLUMNS = "{0}Verified sorting is applied for column names is sorted on  page.";
-	public static final String VERIFIED_EMPL_FOUND = "{0}Verified employee ''{1}'' is found in ''{2}'' list page.";
-	public static final String EMPL_NOT_FOUND = "{0}Failed to search employee ''{1}'' in ''{2}'' list page.";
-	public static final String CLOSE_ICON = "Close icon";
-	public static final String REFRESH_ICON = "Refresh icon";
-	public static final String AUTH_FORM_STATUS_TEXT = "Auth Form Status";
-	public static final String VERIFIED_SEARCH_RESULT_ROW = "{0}Verified ''{1}'' :- ''{2}'' in row {3} of search result.";
-	public static final String FAIL_TO_VERIFY_SEARCH_RESULT_ROW = "{0}Failed to verify ''{1}'' :- ''{2}'' in row {3} of search result.";
-	public static final String VERIFIED_SAVED_VIEWS_LOADED = "{0}Saved views are loaded and displayed in dropdown.";
-	public static final String FAILED_TO_LOAD_SAVED_VIEWS = "{0}Failed to load saved view in dropdown.";
-	public static final String SAVED_VIEWS = "Saved views";
-	public static final String VERIFIED_SAVED_VIEWS_NOT_LOADED = "{0}Verified saved views are not loaded in dropdown.";
-	public static final String VERIFIED_COL_DATA = "{0}Verified ''{1}'' column contains data ''{2}''";
-	public static final String FAIL_TO_VERIFY_COL_DATA = "{0}Fail to verify ''{1}'' column contains data ''{2}''";
-	public static final String FAIL_VERIFY_COL_HEADING = "{0}Fail to Verify column heading ''{1}'' on ''{2}'' page";
-
 	public static final int CUSTOM_TIME = 60;
 	public static final int CUSTOM_TIME_BUDGET = 540;
-	public static final String STREET_ONE = "Street1";
-	public static final String STREET_TWO = "Street2";
-	public static final String STATE = "State";
-	public static final String ZIP = "Zip";
-	public static final String COUNTRY = "Country";
-	public static final String PHONE_NUMBER = "Phone number";
-	public static final String SERVICE_REGION_TILE = "Service Region Tile";
-
-	// Client Admin	
-	public static final String PHYSICAL_ADDRESS = "Physical Address";
-	public static final String BILLING_ADDRESS = "Billing Address";
-	public static final String CLIENT_HIERARCHY = "Client Hierarchy";
-	public static final String CLIENT_DETAILS = "Client Details";
-	public static final String RIGHT = "Right";
-	public static final String LEFT = "Left";
-	public static final String VERIFY_CHILD_HIERARCHY_OF_CLIENT_ON_PAGE = "{0}Verified child ''{1}'' of client hierarchy ''{2}'' on ''{3}'' page.";
 
 	public static final String ADD_OPERATION = "Add";
 	public static final String REMOVE_OPERATION = "Remove";
@@ -1518,85 +1318,10 @@ public class PDTConstants {
 	public static final String SPRINGBOARD_USER_NAME = "Sb_userName";
 	public static final String SPRINGBOARD_PASSWORD = "Sb_password";
 	public static final String NON_NG_92265_CLIENT = "92265";
-	public static final String NEW_TRANSFER_ASSIGNMENT = "A new transfer or assignment";
-	public static final String ÏNITIATION_FOR = "Initiation for {0} (Pending Approval)";
-	public static final String AUTHORIZATION_WORKFLOW = "Authorization Workflow";
-//	public static final String FAIL_TO_VERIFY_AIR_SHIPMENT_COST = "{0}Failed to verify Air Shipment cost.";
-//	public static final String FAIL_TO_VERIFY_SEA_SHIPMENT_COST = "{0}Failed to verify Sea Shipment cost.";
-//	public static final String FAIL_TO_VERIFY_SEA_SURFACE_TEMP_STORAGE_COST = "{0}Failed to verify Sea Surface Temporary Storage cost.";
-	public static final String FAIL_TO_VERIFY_BUDGET_COST = "{0}Failed to verify {1}.";
-	public static final String AIR_SHIPMENT_COST = "Air Shipment cost";
-	public static final String SEA_SHIPMENT_COST = "Sea Shipment cost";
-	public static final String NEW_ACTIVE_MOBILITY_JOURNEY_DEATILS_TAB = "New and Active Mobility Journey Details";
-	public static final String EXCEL = "Excel";
-	public static final String PDF = "Pdf";
-	public static final String SURFACE_SHIPMENT_COST = "Surface Shipment cost";
-	public static final String SEA_SURFACE_TEMP_STORAGE_COST = "Sea/Surface temporary storage cost";
-	public static final String PENDING_COUNT_REDUCED_FOR_TILE = "{0}Pending count reduced for tile {1}";
-	public static final String TILE_NOT_PRESENT_BUT_TASK_REDUCED_IN_TODO_SECTION = "{0}Tile ''{1}'' not present on Dashboard page but task count reduced in To do section of task page";
-	public static final String PENDING_COUNT_NOT_REDUCE_FOR_TILE = "{0}Pending count not reduced for tile {1}";
-	public static final String REQUESTED_BY_CLIENT_FOR_TRANSFEREE = "Requested by {0} for {}";
-	public static final String SINGLE = "Single";
-	public static final String MARRIED = "Married";
-	public static final String FILE_NOT_EXISTS = "{0} File not exist";
-	public static final String AUTH_FORM_GENRATED_EXCEL_FILE = "workbook.xls";
-	public static final String PERMANENT_STORAGE_COST = "Permanent storage cost";
-	public static final String REVIEW_CONTRIBUTORS = "Review contributors";
-	public static final String SAVED_ON = "Saved on";
-	public static final String ALL_CHANGES_SAVED = "All changes saved";
-	public static final String CANCEl_ROUTING = "Cancel routing";
-	public static final String WHAT_NEXT = "What's next...";
-	public static final String AUTH_FORM_STATUS_INFO_WITH_AIRES = "Info with Aires";
-	public static final String COST_ESTIMATE_STATUS_RETURNED_BY_AIRES = "Returned by Aires";
-	public static final String AUTHORIZATION_HOME = "Authorization Home";
-	public static final String VERIFIED_STATUS_HYPERLINKED_WITH_TAB = "{0} Verified that ''{1}'' are hyperlinked with ''{2}'' tab";
-	public static final String FAIL_TO_VERIFY_STATUS_HYPERLINK_WITH_TAB = "{0} Fail to verify that ''{1}'' are hyperlink with ''{2}'' tab";
-	public static final String VERIFIED_TAX_VALUE = "{0} Verified Tax value is not null. Tax displayed on Budget page is ''{1}''";
-	public static final String FAIL_TO_VERIFY_TAX_VALUE = "{0} Failed to verify Tax on Budget Estimate page.";
-	public static final String TAX_ASSUMPTIONS = "Tax Assumptions";
-	public static final String MERCER_ASSUMPTIONS = "Allowance Assumptions from Mercer";
-	public static final String VERIFIED_CHECKBOX = "{0}Verified ''{1}'' check box is checked";
-	public static final String CHECKBOX_NOT_CHECKED = "{0}Checkbox ''{0}'' is not checked";
-	public static final String TEMPLATE_RULEBASED_WORKFLOW = "Rule_Based_Workflow - Manual";
-	public static final String ASSIST_LAUNCHED_AND_LOGO_DISPLAYED = "{0}Verified ASSIST Logo is displayed on Application";
-	public static final String ASSIST_LOGO_NOT_DISPLAYED = "{0}ASSIST Logo is not dispalyed and application failed to launch ";
-	public static final String ASSIST = "Assist";
-	public static final String USER_DISPLAYED_IN_ASSIST = "{0}Verified User name is is displayed as {1} on Assist Home Page";
-	public static final String BTN_CREATE = "Create";
-	public static final String COMPANY_NAME = "Company name";
-	public static final String ITEMIZE_EXPENSES = "Itemize Expenses";
-	public static final String TEXT_DONE = "DONE";
-	public static final String MISCELLANEOUS_RELO_ALLOWANCE = "Miscellaneous Relocation Allowance";
-	public static final String WARNING_MSG = "Your employer requires you to maintain original receipts in your possession for 1 year for government audit purposes.";
-	public static final String WARNING = "Warning";
-	public static final String REQUEST_DATE = "Request Date";
-	public static final String UPLOADED_FILE_NAME = "Uploaded File Name";
-	public static final String UPLOADED_FILE_DESC = "Uploaded File description";
-	public static final String UPLOADED_FILE_DATE = "Uploaded File date";
-	public static final String UPLOADED_FILE_EXPENSE_CATEGORY = "Uploaded File Expense Category";
-	public static final String EMPLOYEE_CERTIFICATION = "Employee Certification";
-	public static final String EMPLOYEE_CERTIFICATION_MSG = "I hereby certify that all expenditures listed hereon are true and correct and are appropriate for reimbursement in accordance with applicable written Corporate and Sector Policies and Procedures.";
-	public static final String ASSIGNMENT_ID = "Assignment Id";
-	public static final String EMAC_HEADING = "EMAC - Expense Processing Tool";
-	public static final String EMAC_HOME_PAGE = "EMAC - Home Page";
-	public static final String STATUS_APPROVED = "Approved";
-	public static final String TRACING_PROMPT = "Tracing Prompt";
-	public static final String NEW_DELEGATE = "NEW DELEGATE";
-	public static final String DELEGATE_CREATION_MESSAGE = "Got it! This delegate access has been successfully created.";
-	public static final String DELEGATE_CREATED_SUCCESSFULLY = "{0}Verified delegate:-''{1}'' access has been created successfully.";
-	public static final String FAILED_TO_CREATE_DELEGATE = "{0}Failed to create delegate.";
-	public static final String GM_INTERNATIONAL_AUTH_FORM_TEMPLATE = "International Authorization Form";
-	public static final String FILE_ID_ASSIST = "583898";
+	
 	public static final String DELEGATE_EMAIL_SENDER = "securelogin@aires.com";
 	public static final String DELEGATE_PASSWORD = "Delegate Password";
 	public static final String NEW_DELEGATE_PASSWORD = "Relonetng1";
-	public static final String DELEGATE_HEADER_MSG = "You are logged in as {0} acting as a delegate on behalf of {1}";
-	public static final String MESSAGE = "message";
-	public static final String BANKING = "Banking";
-	public static final String YEAR_END_TAX = "Year End Tax";
-	public static final String USER_PROFILE = "User Profile";
-	public static final String DELEGATE_USER_HAS_ACCESS_TO_PAGE = "{0}Verified delegate user:- ''{1}'' has acces to ''{2}'' page.";
-	public static final String DELEGATE_USER_DO_NOT_HAVE_ACCESS_TO_PAGE = "{0}Verified delegate user:- ''{1}'' does not have access to ''{2}''";
 	public static final String VERIFIED_OPTION_CHOSEN_FOR_RADIO_BTN = "{0}Verified option clicked for ''{1}'' is ''{2}''";
 	public static final String EMAIL_USERNAME_SUBJECT = "MobilityX Username";
 	public static final String EMAIL_PASSWORD_SUBJECT = "MobilityX Password";
@@ -1700,4 +1425,21 @@ public class PDTConstants {
 	public static final String FAIL_TO_SELECT_VALUE_FROM_FIELD = "{0}Fail to select value ''{1}'' from ''{2}'' {3}";
 	public static final String DROP_DOWN = "drop down";
 	public static final String RADIO_BUTTON_LIST = "radio button list";
+	public static final String CHECK_BOX = "check box";
+	public static final String GROSS_UP = "Gross-up";
+	public static final String REIMBURSED_BY = "Reimbursed By";
+	public static final String REIMBURSED_BY_OTHER = "Reimbursed By(Other)";
+	public static final String COMMENT = "Comment";
+	public static final String VERIFIED_DROP_DOWN_MULTISELECT = "{0}Verified drop down ''{1}'' is a multiselect drop down and optons selected are:- ''{2}''";
+	public static final String DETAIL = "Detail";
+	public static final String VERIFIED_SUCCESS_MSG = "{0}Verified success message is displayes as ''{1}'' on ''{2}'' page.";
+	public static final String FAILED_TO_VERIFY_SUCCESS_MSG = "{0}Failed to verify success message ''{1}'' on ''{2}'' page.";
+	public static final String VERIFIED_ELEMENT_ON_PAGE = "{0}Verified ''{1}'' on ''{2}'' page";
+	public static final String FAIL_TO_VERIFY_ELEMENT_ON_PAGE = "{0}Failed to verify ''{1}'' on ''{2}'' page";
+	public static final String VERIFIED_ELEMENT_DISPLAYED_ON_PAGE = "{0}Verified ''{1}'' :- ''{2}'' is displayed on ''{3}'' page";
+	public static final String FAILED_TO_VERIFY_ELEMENT_DISPLAYED_ON_PAGE = "{0}Failed to verify ''{1}'' :- ''{2}'' on ''{3}'' page. Expected ''{1}'' :- ''{2}''. Actual policy name ''{1}'' :- {4}";
+	public static final String CURRENCY = "Currency";
+	public static final String FLAT_AMT = "Flat Amount";
+	public static final String OTHER_TRAVEL_POLICY = "Other - see travel policy";
+	public static final String FLAT_AMT_PER_NIGHT = "Flat Amount/Night";
 }

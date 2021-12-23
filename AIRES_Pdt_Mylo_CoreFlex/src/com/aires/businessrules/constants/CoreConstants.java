@@ -37,4 +37,12 @@ public class CoreConstants {
 	public static final String VALUE_AT_PERFORMANCE = "@Performance";
 	public static final String IS_DISPLAYED_ON = " is displayed on ";
 	public static final String FAILED_TO_VERFY = "Failed To Verify ";
+	public static final String ACTUAL_ITEM_NAME_IS = "The Actual Item Name is :";
+	public static final String PARTNER_TAB = "Partner";
+	public static final String EDITOR_NAME = "Name";
+	public static final String VERIFIED_MESSAGE_ON_DIALOG = "{0}Verified message ''{1}'' on dialog ''{2}''";
+	public static final String VERIFY_TAB_EXISTS = "''{0}'' Tab was clicked and verified successfully";
+	public static final String VERIFIED_FIELD_ON_TAB = "{0}Verified ''{1}'':-''{2}'' on ''{3}'' tab";
+	public static final String FILE_NOT_DOWNLOADED_MESSAGE = "{0} The {1} file was not downloaded successfully:  ";
+	public static final String FILE_SUCCESSFULLY_DOWNLOADED_MESSAGE = "{0} The {1} file was downloaded successfully:  ";
 }

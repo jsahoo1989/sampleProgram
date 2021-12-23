@@ -351,6 +351,13 @@ public class CoreFunctions {
 			wait.until(ExpectedConditions.visibilityOf(ele));
 		}
 	}
+	
+	public static void explicitWaitTillElementListVisibilityWithTime(WebDriver driver, List<WebElement> Element,long time) {
+		WebDriverWait wait = new WebDriverWait(driver, time);
+		for (WebElement ele : Element) {
+			wait.until(ExpectedConditions.visibilityOf(ele));
+		}
+	}
 
 	public static void explicitWaitTillElementStaleness(WebDriver driver, WebElement element) {
 		WebDriverWait wait = new WebDriverWait(driver, 30);
@@ -488,7 +495,7 @@ public class CoreFunctions {
 		boolean itemSearched = false;
 		try {
 			for (WebElement row : WebElementList) {
-				Log.info("The Actual Item Name is :" + row.getText());
+				Log.info(CoreConstants.ACTUAL_ITEM_NAME_IS + row.getText());
 				if (row.getText().contains(searchText)) {
 					itemSearched = true;
 					CoreFunctions.clickUsingJS(driver, row, row.getText());
@@ -498,11 +505,23 @@ public class CoreFunctions {
 			if(!itemSearched) {
 				Assert.fail("Searched item:-"+searchText+"does not exist in list");
 			}
-
 		} catch (Exception e) {
 			Assert.fail("Could not select item from list");
-			e.printStackTrace();
 		}
+	}
+	
+	public static WebElement returnItemInListByText(WebDriver driver, List<WebElement> WebElementList, String searchText) {
+		try {
+			for (WebElement row : WebElementList) {
+				Log.info(CoreConstants.ACTUAL_ITEM_NAME_IS + row.getText());
+				if (row.getText().contains(searchText)) {
+					return row;
+				}
+			}
+		} catch (Exception e) {
+			Assert.fail("Could not select item from list");
+		}
+		return null;
 	}
 
 	public static void selectItemInListByText(WebDriver driver, List<WebElement> WebElementList, String searchText,
@@ -510,7 +529,7 @@ public class CoreFunctions {
 			boolean itemSearched = false;
 		try {
 			for (WebElement row : WebElementList) {
-				Log.info("The Actual Item Name is :" + row.getText());
+				Log.info(CoreConstants.ACTUAL_ITEM_NAME_IS + row.getText());
 				if (row.getText().contains(searchText)) {
 					itemSearched = true;
 					clickRowInResult(driver, row, reporter, searchText);
@@ -723,7 +742,7 @@ public class CoreFunctions {
 			waitTillElementVisibleWithCustomTime(driver, element, time);
 			if (element.isDisplayed()) {
 				Reporter.addStepLog(
-						CoreConstants.PASS + MessageFormat.format(MYLOConstants.VERIFY_TAB_EXISTS, pageName));
+						CoreConstants.PASS + MessageFormat.format(CoreConstants.VERIFY_TAB_EXISTS, pageName));
 				CoreFunctions.highlightObject(driver, element);
 				return true;
 			} else {
@@ -738,13 +757,13 @@ public class CoreFunctions {
 		String _documentNameFirst = documentName.split("\\.")[0];
 		String _downloadedFileFirst = getLatestFilefromDirectory().getName().split("\\.")[0];
 		if (!_downloadedFileFirst.contains(_documentNameFirst)) {
-			Reporter.addStepLog(CoreConstants.FAIL + MYLOConstants.FILE_NOT_DOENLOADED_MESSAGE + documentName);
-			Log.info(MYLOConstants.FILE_NOT_DOENLOADED_MESSAGE + documentName);
+			Reporter.addStepLog(CoreConstants.FAIL + CoreConstants.FILE_NOT_DOWNLOADED_MESSAGE + documentName);
+			Log.info(CoreConstants.FILE_NOT_DOWNLOADED_MESSAGE + documentName);
 			return false;
 		} else {
 			Assert.assertTrue(_downloadedFileFirst.contains(_documentNameFirst), "Document was not downloaded");
-			Reporter.addStepLog(CoreConstants.PASS + MYLOConstants.FILE_SUCCESSFULLY_DOWNLOADED_MESSAGE + documentName);
-			Log.info(MYLOConstants.FILE_SUCCESSFULLY_DOWNLOADED_MESSAGE + documentName);
+			Reporter.addStepLog(CoreConstants.PASS + CoreConstants.FILE_SUCCESSFULLY_DOWNLOADED_MESSAGE + documentName);
+			Log.info(CoreConstants.FILE_SUCCESSFULLY_DOWNLOADED_MESSAGE + documentName);
 			return true;
 		}
 	}
@@ -771,7 +790,7 @@ public class CoreFunctions {
 		boolean exists = false;
 		try {
 			for (WebElement row : WebElementList) {
-				Log.info("The Actual Item Name is :" + row.getText());
+				Log.info(CoreConstants.ACTUAL_ITEM_NAME_IS + row.getText());
 				if (row.getText().contains(searchText)) {
 					exists = true;
 					CoreFunctions.highlightObject(driver, row);
@@ -782,7 +801,6 @@ public class CoreFunctions {
 
 		} catch (Exception e) {
 			Assert.fail("Could not search item " + searchText + " from list");
-			e.printStackTrace();
 		}
 		return exists;
 	}
@@ -1102,7 +1120,6 @@ public class CoreFunctions {
 	public static void handleAlert(WebDriver driver) {
 		if (isAlertPresent(driver)) {
 			Alert alert = driver.switchTo().alert();
-			System.out.println(alert.getText());
 			alert.accept();
 		}
 	}

@@ -27,6 +27,10 @@ public class Mylo_DashboardHomePage extends Base {
 		super(driver);
 	}
 	
+	
+	@FindBy(how = How.XPATH, using = "//*[contains(@class,'mat-dialog-container')]")
+	private WebElement _popupModal;
+	
 	@FindBy(how = How.XPATH, using = "//*[@id='user-profile']//span[2]")
 	private WebElement _userProfile;
 
@@ -97,7 +101,8 @@ public class Mylo_DashboardHomePage extends Base {
 	}
 
 	public void closePopUp() {
-		CoreFunctions.waitHandler(5);
+		//CoreFunctions.waitHandler(5);
+		CoreFunctions.explicitWaitTillElementVisibility(driver, _popupModal, _popupModal.getText(), 10L);
 		CoreFunctions.explicitWaitTillElementVisibility(driver, _closeButton, _closeButton.getText(), 10L);
 		CoreFunctions.highlightElementAndClick(driver, _closeButton, _closeButton.getText());
 	}

@@ -23,19 +23,14 @@ import java.io.FileReader;
 import java.io.IOException;
 import java.util.Arrays;
 import java.util.List;
-
 import com.aires.businessrules.constants.CoreConstants;
 import com.aires.managers.FileReaderManager;
 import com.aires.testdatatypes.mylo.Mylo_LoginData;
-import com.aires.testdatatypes.pdt.PDT_LoginData;
 import com.google.gson.Gson;
-
-
 
 public class JsonDataReader_Mylo {
 	private final String _loginDataFilePath = FileReaderManager.getInstance().getConfigReader()
-			.getTestDataResourcePath() + "mylo/Mylo_LoginData.json";
-	
+			.getTestDataResourcePath() + "mylo/Mylo_LoginData.json";	
 	private List<Mylo_LoginData> _loginDataList;
 	
 	public JsonDataReader_Mylo() {

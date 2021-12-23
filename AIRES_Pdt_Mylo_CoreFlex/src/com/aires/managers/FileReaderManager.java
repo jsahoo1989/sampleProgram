@@ -22,7 +22,6 @@ import com.aires.dataProviders.JsonDataReader_Mylo;
 import com.aires.dataProviders.JsonDataReader_Pdt;
 
 public class FileReaderManager {
-
 	private static FileReaderManager fileReaderManager = new FileReaderManager();
 	private static ConfigFileReader configFileReader;
 	private static JsonDataReader_Pdt jsonDataReader;

@@ -220,15 +220,14 @@ public class PDT_ViewPolicyPage extends Base {
 		try {
 			CoreFunctions.explicitWaitTillElementInVisibilityCustomTime(driver, _progressBar, 5);
 			CoreFunctions.isElementByLocatorExist(driver, _listPolicyNameByLocator, 20);
-			//CoreFunctions.waitForBrowserToLoad(driver);
 			if (_listPolicyName.stream().anyMatch(t -> t.getText().toLowerCase().equalsIgnoreCase(policyName))) {
 				Reporter.addStepLog(MessageFormat.format(PDTConstants.VERIFIED_ELEMENT_DISPLAYED_ON_PAGE, CoreConstants.PASS,
 						PDTConstants.POLICY_NAME, policyName, pageName));
 				return true;
 			}
-
 		} catch(Exception e) {
-			
+			DbFunctions.deletePolicyByPolicyId(addNewPolicyPage.getPolicyId());
+			Assert.fail("Failed to search Policy:-"+policyName);
 		}
 		DbFunctions.deletePolicyByPolicyId(addNewPolicyPage.getPolicyId());
 		return false;

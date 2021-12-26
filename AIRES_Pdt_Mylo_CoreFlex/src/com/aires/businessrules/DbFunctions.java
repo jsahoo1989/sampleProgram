@@ -45,8 +45,6 @@ public class DbFunctions {
 	
 	public static void deletePolicyByPolicyId(int policyId) {
 		Connection connection = null;
-		
-
 		try {
 			DriverManager.registerDriver(new oracle.jdbc.OracleDriver());
 			connection = DriverManager.getConnection(
@@ -56,9 +54,7 @@ public class DbFunctions {
 			
 			callableStatement.setInt(1, policyId);
 			callableStatement.execute();
-		} catch (Exception ex) {
-			Log.info(CoreConstants.ERROR+ex.getMessage());
-			Log.info(CoreConstants.ERROR+ex);
+		} catch (Exception ex) {					
 			Assert.fail(CoreConstants.ERROR + "Fail to call procedure");
 		} finally {
 			try {
@@ -66,7 +62,7 @@ public class DbFunctions {
 					connection.close();
 				}
 			}catch (Exception ex){
-				ex.printStackTrace();
+				Assert.fail(CoreConstants.ERROR + "Fail to close connection");
 			}
 		}
 	}

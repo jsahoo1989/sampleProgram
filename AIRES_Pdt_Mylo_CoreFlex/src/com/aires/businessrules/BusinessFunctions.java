@@ -481,41 +481,6 @@ public class BusinessFunctions {
 		return isExists;
 	}
 
-	public static int calculateCarRentalRates(int noOfTrips, int dailyRates, int weeklyRates, int monthlyRates,
-			int daysRemaining, int week, int month) {
-		Log.info("noOfTrips==" + noOfTrips);
-		Log.info("dailyRates==" + dailyRates);
-		Log.info("weeklyRates==" + weeklyRates);
-		Log.info("monthlyRates==" + monthlyRates);
-		Log.info("daysRemaining==" + daysRemaining);
-		Log.info("week==" + week);
-		Log.info("month==" + month);
-		return noOfTrips * ((dailyRates * daysRemaining) + (weeklyRates * week) + (monthlyRates * month));
-	}
-
-	public static double calculateAirFareRates(String tripType, int noOfTrips, int rate, int noOfAdults,
-			int noOfChildren) {
-		double airFareCost = 0;
-		try {
-			switch (tripType) {
-			case PDTConstants.ROUND_TRIP:
-				airFareCost = noOfTrips * ((noOfAdults * rate) + (noOfChildren * rate));
-				break;
-			case PDTConstants.ONE_WAY:
-				airFareCost = noOfTrips * 0.75 * ((noOfAdults * rate) + (noOfChildren * rate));
-				break;
-			default:
-				Assert.fail(PDTConstants.TRIP_NOT_FOUND);
-			}
-
-		} catch (Exception ex) {
-			Log.info(CoreConstants.ERROR + ex.getMessage());
-			Log.info(CoreConstants.ERROR + ex.getStackTrace());
-			Assert.fail(CoreConstants.ERROR + PDTConstants.FAIL_CALC_AIR_FARE_RATE);
-		}
-		return airFareCost;
-	}
-
 	public static String setMoneyFormat(double amount) {
 		DecimalFormat df = new DecimalFormat("0.00");
 		df.setRoundingMode(RoundingMode.UP);

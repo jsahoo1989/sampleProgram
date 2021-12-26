@@ -134,8 +134,6 @@ public class PDT_GeneralInformationPage extends Base {
 	private WebElement _lblExpenseMgmtClient;
 	
 	private String policyType, employeeType, homeOwnerType, benefitPackageType, cappedPolicy, expenseMgmt;
-	
-	/*********************************************************************/
 
 	public boolean validateGeneralInfo(String pageName, DataTable dataTable, String selectedPolicyName) {
 

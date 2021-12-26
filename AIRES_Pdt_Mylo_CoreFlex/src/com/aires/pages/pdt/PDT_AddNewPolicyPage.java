@@ -446,7 +446,4 @@ public class PDT_AddNewPolicyPage extends Base {
 			Assert.fail("Failed to search client :-"+clientName+"( "+clientId+" )");
 		}		
 	}
-		
-
-
 }

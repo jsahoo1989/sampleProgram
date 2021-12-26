@@ -1516,7 +1516,6 @@ public class CoreFunctions {
 	}
 
 	public static void explicitWaitTillElementListVisibilityCustomTime(WebDriver driver, List<WebElement> Element, int time) {
-		waitHandler(1);
 		WebDriverWait wait = new WebDriverWait(driver, time);
 		for (WebElement ele : Element) {
 			wait.until(ExpectedConditions.visibilityOf(ele));

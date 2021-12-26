@@ -48,7 +48,7 @@ public class PDT_GeneralInfo_Steps {
 	}
 	
 	@When("^he clicks on the 'Next' button after entering mandatory information on 'General Information' page$")
-	public void he_clicks_on_the_Next_button_after_entering_mandatory_information_on_General_Information_page() throws Throwable {
+	public void he_clicks_on_the_Next_button_after_entering_mandatory_information_on_General_Information_page() {
 		generalInfoPage.explicitWaitForGeneralInfoHeading();
 		
 		Assert.assertTrue(generalInfoPage.verifyClientDetails(addNewPolicyPage.getClientId(), addNewPolicyPage.getClientName()),

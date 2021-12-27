@@ -16,28 +16,31 @@
  ***********************************Header End*********************************************************************************/
 
 package com.aires.dataProviders;
-
 import java.io.BufferedReader;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
 import java.util.Arrays;
 import java.util.List;
-
 import com.aires.businessrules.constants.CoreConstants;
 import com.aires.managers.FileReaderManager;
 import com.aires.testdatatypes.pdt.PDT_LoginData;
+import com.aires.testdatatypes.pdt.PDT_PreAcceptanceServiceBenefit;
 import com.google.gson.Gson;
 
 public class JsonDataReader_Pdt {
 	
 	private final String _loginDataFilePath = FileReaderManager.getInstance().getConfigReader()
 			.getTestDataResourcePath() + "pdt/PDT_LoginData.json";
+	private final String _PreAcceptanceServiceFilePath = FileReaderManager.getInstance().getConfigReader()
+			.getTestDataResourcePath() + "pdt/PDT_PreAcceptanceServiceBenefit.json";
 	
 	private List<PDT_LoginData> _loginDataList;
+	private List<PDT_PreAcceptanceServiceBenefit> _preAcceptanceServicelist;
 	
 	public JsonDataReader_Pdt() {
 		_loginDataList = getUserData();
+		_preAcceptanceServicelist = getPreAcceptanceData();
 	}
 	
 	private List<PDT_LoginData> getUserData() {
@@ -58,8 +61,30 @@ public class JsonDataReader_Pdt {
 		}
 	}
 	
+	private List<PDT_PreAcceptanceServiceBenefit> getPreAcceptanceData() {
+		Gson gson = new Gson();
+		BufferedReader bufferReader = null;
+		try {
+			bufferReader = new BufferedReader(new FileReader(_PreAcceptanceServiceFilePath));
+			PDT_PreAcceptanceServiceBenefit[] preAcceptanceService = gson.fromJson(bufferReader, PDT_PreAcceptanceServiceBenefit[].class);
+			return Arrays.asList(preAcceptanceService);
+		} catch (FileNotFoundException e) {
+			throw new RuntimeException(CoreConstants.JSON_FILE_NOT_FOUND_AT_PATH + _PreAcceptanceServiceFilePath);
+		} finally {
+			try {
+				if (bufferReader != null)
+					bufferReader.close();
+			} catch (IOException ignore) {
+			}
+		}
+	}
+	
 	public final PDT_LoginData getloginDetailsByUserFirstName(String userFirstName) {
 		return _loginDataList.stream().filter(x -> x.firstName.equalsIgnoreCase(userFirstName)).findAny().get();
+	}
+	
+	public final PDT_PreAcceptanceServiceBenefit getPreAcceptanceDataList(String policyBenefit) {
+		return _preAcceptanceServicelist.stream().filter(x -> x.benefitName.equalsIgnoreCase(policyBenefit)).findAny().get();
 	}
 	
 

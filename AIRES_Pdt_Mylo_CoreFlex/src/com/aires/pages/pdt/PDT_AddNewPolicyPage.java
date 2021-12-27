@@ -79,6 +79,10 @@ public class PDT_AddNewPolicyPage extends Base {
 	
 	@FindBy(how = How.XPATH, using = "//label[text()='Policy Name']")
 	private WebElement _lblPolicyName;
+	
+	@FindBy(how = How.CSS, using = "div.ng-option-disabled")
+	private WebElement _policyLoader;
+	
 
 	final By _buttonNextByLocator = By.cssSelector("button.btn-next");
 	/************************************************************************/
@@ -86,6 +90,7 @@ public class PDT_AddNewPolicyPage extends Base {
 	public static String selectedPolicyName;
 	
 	private String clientId, clientName, policyName;
+	private int policyId;
 	
 	public void setClientId(String cId) {
 		clientId = cId;
@@ -109,6 +114,14 @@ public class PDT_AddNewPolicyPage extends Base {
 	
 	public String getPolicyName() {
 		return policyName;
+	}
+	
+	public void setPolicyId(int pId) {
+		policyId = pId;		
+	}
+	
+	public int getPolicyId() {
+		return policyId;
 	}
 	
 	public String getElementText(String elementName) {
@@ -371,6 +384,7 @@ public class PDT_AddNewPolicyPage extends Base {
 	
 	public void selectClient(List<Map<String, String>> clientPolicyInfo) {
 		CoreFunctions.clearAndSetText(driver, _inputClientID, PDTConstants.CLIENT_ID, clientPolicyInfo.get(0).get("ClientId"));
+		CoreFunctions.explicitWaitTillElementListVisibilityCustomTime(driver, _optionsClientID, 70);
 		if(_optionsClientID.size() > 0 && !_optionsClientID.get(0).getText().equalsIgnoreCase(PDTConstants.NO_ITEMS_FOUND) ) {			
 			selectClientFromClientDropDown(clientPolicyInfo.get(0).get("ClientId"), clientPolicyInfo.get(0).get("ClientName"));
 		} else if(checkErrorPopUpExistsForClientId(clientPolicyInfo)) {
@@ -383,11 +397,14 @@ public class PDT_AddNewPolicyPage extends Base {
 		}
 	}
 	public void selectPolicy(List<Map<String, String>> clientPolicyInfo) {
-		CoreFunctions.clickElement(driver, _selectPolicyName);
+		String policyId;
+		CoreFunctions.clickElement(driver, _selectPolicyName);		
 		CoreFunctions.clearAndSetText(driver, _inputPolicyName, PDTConstants.POLICY_NAME, clientPolicyInfo.get(0).get("PolicyName"));
 		if(_optionsPolicyName.size() > 0 && !_optionsPolicyName.get(0).getText().equalsIgnoreCase(PDTConstants.NO_ITEMS_FOUND)) {			
 			CoreFunctions.selectItemInListByText(driver, _optionsPolicyName, clientPolicyInfo.get(0).get("PolicyName"), _lblPolicyName.getText(), PDTConstants.DROP_DOWN, true);
 			setPolicyName(clientPolicyInfo.get(0).get("PolicyName"));
+			policyId = clientPolicyInfo.get(0).get("PolicyName").split("#")[1].trim();
+			setPolicyId(Integer.parseInt(policyId.substring(0, policyId.length()-1)));
 		} else if(checkErrorPopUpExistsForPolicy(clientPolicyInfo)) {			
 			Assert.fail(MessageFormat.format(PDTConstants.CORPORATION_POLICY_DOES_NOT_EXIST,
 					CoreConstants.FAIL, clientPolicyInfo.get(0).get("ClientId")));
@@ -429,6 +446,4 @@ public class PDT_AddNewPolicyPage extends Base {
 			Assert.fail("Failed to search client :-"+clientName+"( "+clientId+" )");
 		}		
 	}
-	
-
 }

@@ -250,7 +250,7 @@ public class CoreFunctions {
 				flag = true;
 			} else {
 				flag = false;
-				Reporter.addStepLog(MessageFormat.format(CoreConstants.VRFIED_ELE_PAGE, CoreConstants.FAIL, name));
+				Reporter.addStepLog(MessageFormat.format(CoreConstants.VRFIED_ELE_NOT_ON_PAGE, CoreConstants.FAIL, name));
 			}
 		} catch (NoSuchElementException e) {
 			Log.info(CoreConstants.VRFIED_THAT + name + CoreConstants.ELE_NOT_PRESNT);
@@ -1512,23 +1512,30 @@ public class CoreFunctions {
 		return (elementList.stream().map(x -> x.getText()).collect(Collectors.toList()));
 	}
 	
-	public static void selectItemInListByText(WebDriver driver, List<WebElement> WebElementList, String searchText, String dropDownName, String fieldType,
+	public static void selectItemInListByText(WebDriver driver, List<WebElement> WebElementList, String searchText, String fieldName, String fieldType,
 			boolean reporter) {
 			boolean itemSearched = false;
 		try {
-			for (WebElement row : WebElementList) {				
+			for (WebElement row : WebElementList) {
 				if (row.getText().contains(searchText)) {
 					itemSearched = true;
 					CoreFunctions.clickWithoutReporting(driver, row, searchText);
-					Reporter.addStepLog(MessageFormat.format(PDTConstants.VERIFY_VALUE_SELECTED_FROM_FIELD, CoreConstants.PASS, dropDownName, fieldType, searchText));
+					Reporter.addStepLog(MessageFormat.format(PDTConstants.VERIFY_VALUE_SELECTED_FROM_FIELD, CoreConstants.PASS, fieldName, fieldType, searchText));
 					break;
 				}
 			}
 			if(!itemSearched) {
-				Assert.fail("Searched item:-"+searchText+"does not exist in "+dropDownName+" drop down list.");
+				Assert.fail("Searched item:-"+searchText+"does not exist in "+fieldName+" list.");
 			}
 		} catch (Exception e) {
-			Assert.fail(MessageFormat.format(PDTConstants.FAIL_TO_SELECT_VALUE_FROM_FIELD, CoreConstants.FAIL, searchText, dropDownName, fieldType ));
+			Assert.fail(MessageFormat.format(PDTConstants.FAIL_TO_SELECT_VALUE_FROM_FIELD, CoreConstants.FAIL, searchText, fieldName, fieldType ));
+		}
+	}
+
+	public static void explicitWaitTillElementListVisibilityCustomTime(WebDriver driver, List<WebElement> Element, int time) {
+		WebDriverWait wait = new WebDriverWait(driver, time);
+		for (WebElement ele : Element) {
+			wait.until(ExpectedConditions.visibilityOf(ele));
 		}
 	}
 }

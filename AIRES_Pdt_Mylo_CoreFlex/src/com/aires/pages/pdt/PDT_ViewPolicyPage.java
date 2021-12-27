@@ -13,6 +13,7 @@ import org.testng.Assert;
 
 import com.aires.businessrules.Base;
 import com.aires.businessrules.CoreFunctions;
+import com.aires.businessrules.DbFunctions;
 import com.aires.businessrules.constants.CoreConstants;
 import com.aires.businessrules.constants.PDTConstants;
 import com.aires.utilities.Log;
@@ -213,5 +214,26 @@ public class PDT_ViewPolicyPage extends Base {
 			performSearchOperation(policyData.get(i), pageName);
 			clickElementOfPage(PDTConstants.CLEAR_FILTER);
 		}
+	}
+	
+	public boolean searchAndVerifyPolicy(String policyName, String pageName, PDT_AddNewPolicyPage addNewPolicyPage) {
+		try {
+			CoreFunctions.explicitWaitTillElementInVisibilityCustomTime(driver, _progressBar, 5);
+			CoreFunctions.isElementByLocatorExist(driver, _listPolicyNameByLocator, 20);
+			if (_listPolicyName.stream().anyMatch(t -> t.getText().toLowerCase().equalsIgnoreCase(policyName))) {
+				Reporter.addStepLog(MessageFormat.format(PDTConstants.VERIFIED_ELEMENT_DISPLAYED_ON_PAGE, CoreConstants.PASS,
+						PDTConstants.POLICY_NAME, policyName, pageName));
+				return true;
+			}
+		} catch(Exception e) {
+			DbFunctions.deletePolicyByPolicyId(addNewPolicyPage.getPolicyId());
+			Assert.fail("Failed to search Policy:-"+policyName);
+		}
+		DbFunctions.deletePolicyByPolicyId(addNewPolicyPage.getPolicyId());
+		return false;
+	}
+	
+	public List<String> getPolicyList(){
+		return CoreFunctions.getElementTextAndStoreInList(driver, _listPolicyName);
 	}
 }

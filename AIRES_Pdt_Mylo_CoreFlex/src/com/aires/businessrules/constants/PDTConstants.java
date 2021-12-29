@@ -229,6 +229,8 @@ public class PDTConstants {
 	public static final String FLAT_AMT = "Flat Amount";
 	public static final String OTHER_TRAVEL_POLICY = "Other - see travel policy";
 	public static final String FLAT_AMT_PER_NIGHT = "Flat Amount/Night";
+	public static final String VERFIED_TAB_DISPLAYED = "{0}Verified tab:-''{1}'' is displayed under ''{2}'' sub-benefit form on ''{3}''.";
+	public static final String VERFIED_TAB_NOT_DISPLAYED = "{0}Verified tab:-''{1}'' is not displayed under ''{2}'' sub-benefit form on ''{3}''.";
 	//Immigration
 	public static final String IMMIGRATION_FEES = "Immigration Fees";
 	public static final String IMMIGRATION_TRAVEL = "Immigration Travel";

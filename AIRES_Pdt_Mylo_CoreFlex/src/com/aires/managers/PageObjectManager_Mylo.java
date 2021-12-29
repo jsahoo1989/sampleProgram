@@ -19,7 +19,7 @@ package com.aires.managers;
 
 import org.openqa.selenium.WebDriver;
 
-import com.aires.pages.mylo.Mylo_AssignmentPage;
+//import com.aires.pages.mylo.Mylo_AssignmentPage;
 import com.aires.pages.mylo.Mylo_DashboardHomePage;
 import com.aires.pages.mylo.Mylo_LoginPage;
 
@@ -29,7 +29,7 @@ public class PageObjectManager_Mylo {
 	private WebDriver _driver;
 	private Mylo_LoginPage _loginPage;
 	private Mylo_DashboardHomePage _dashboardHomePage;
-	private Mylo_AssignmentPage _assignmentPage;
+	//private Mylo_AssignmentPage _assignmentPage;
 
 	public PageObjectManager_Mylo(WebDriver driver) {
 		this._driver = driver;
@@ -44,8 +44,8 @@ public class PageObjectManager_Mylo {
 				: _dashboardHomePage;
 	}
 	
-	public Mylo_AssignmentPage getAssignmentPage() {
+	/*public Mylo_AssignmentPage getAssignmentPage() {
 		return (_assignmentPage == null) ? _assignmentPage = new Mylo_AssignmentPage(_driver)
 				: _assignmentPage;
-	}
+	}*/
 }

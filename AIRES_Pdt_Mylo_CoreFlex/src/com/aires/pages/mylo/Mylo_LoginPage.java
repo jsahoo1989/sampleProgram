@@ -36,6 +36,15 @@ public class Mylo_LoginPage extends Base {
 	
 	@FindBy(how = How.XPATH, using = "//input[contains(@id,'idSIButton')]")
 	private WebElement _staySignedInYes;
+	
+	@FindBy(how = How.XPATH, using = "//div[@class='profile-img']/a/img")
+	private WebElement _userProfileImg;
+	
+	@FindBy(how = How.XPATH, using = "//img[@class='tile-img']")
+	private WebElement _logoutUserImg;
+	
+	@FindBy(how = How.XPATH, using = "//div[text()='Use another account']")
+	private WebElement _anotherAccount;
 
 	public void openApplication() throws InterruptedException {
 		Log.info(FileReaderManager.getInstance().getConfigReader().getMyloApplicationUrl());
@@ -54,8 +63,11 @@ public class Mylo_LoginPage extends Base {
 	public void clickSignIn() {
 		CoreFunctions.explicitWaitTillElementBecomesClickable(driver, _submit, _submit.getAttribute("value"));
 		CoreFunctions.click(driver, _submit, _submit.getAttribute("value"));
-		CoreFunctions.explicitWaitTillElementVisibility(driver, _staySignedInYes, _staySignedInYes.getAttribute("value"),10);
-		CoreFunctions.click(driver, _staySignedInYes, _staySignedInYes.getAttribute("value"));
+		if (CoreFunctions.isElementExist(driver, _staySignedInYes, 5)) {
+			CoreFunctions.explicitWaitTillElementVisibility(driver, _staySignedInYes,
+					_staySignedInYes.getAttribute("value"), 10);
+			CoreFunctions.click(driver, _staySignedInYes, _staySignedInYes.getAttribute("value"));
+		}
 		CoreFunctions.switchToParentWindow(driver);
 	}
 
@@ -86,6 +98,18 @@ public class Mylo_LoginPage extends Base {
 			}
 		}
 		return false;
+	}
+	
+	public void logout() {
+		CoreFunctions.explicitWaitTillElementVisibility(driver, _userProfileImg, _userProfileImg.getText());
+		CoreFunctions.click(driver, _userProfileImg, _userProfileImg.getText());
+		CoreFunctions.explicitWaitTillElementVisibility(driver, _logoutUserImg, _logoutUserImg.getText());
+		CoreFunctions.click(driver, _logoutUserImg, _logoutUserImg.getText());
+	}
+	
+	public void clickAnotherAccount() {
+		CoreFunctions.explicitWaitTillElementVisibility(driver, _anotherAccount, _anotherAccount.getText());
+		CoreFunctions.click(driver, _anotherAccount, _anotherAccount.getText());
 	}
 
 }

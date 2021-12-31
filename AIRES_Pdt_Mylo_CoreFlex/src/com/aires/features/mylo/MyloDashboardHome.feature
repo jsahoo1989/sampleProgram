@@ -2,12 +2,12 @@ Feature: Validate the functionality of Mylo Dashboard Home page
   I want to test the  functionlity of Mylo Dashboard Home page
 
 Background: Login to  Mylo application
-    Given he has logged into the 'Mylo' application
+    Given user has logged into the 'Mylo' application
     
-@IRIS-582 @Mylo
+@IRIS-582 @Mylo-Regression
 Scenario Outline: Mylo-Validate Select Query parameters from Assignment Options
-Given he is on Mylo Dashboard Home page
-When he clicks on the "<SectionType>" "<SubSection>" option in the Mylo Menu on the sidebar
+Given user is on Mylo Dashboard Home page
+When user clicks on the "<SectionType>" "<SubSection>" option in the Mylo Menu on the sidebar
 Then the Select Query Type screen should display with the given parameters
 |Row Number  |Parameters                                        |
 | First Row  |File,My File,My Active Files,My Unbilled          |
@@ -18,10 +18,10 @@ Examples:
      	| Assignment  |       None |
      	| Hamburger	  |	     Query |
 
-@IRIS-666 @Mylo
+@IRIS-666 @Mylo-Regression
 Scenario: Mylo-Validate the functionality for Search Results in Query UI screen
-Given he is on Mylo Dashboard Home page
-And he selects "File" section after clicking on "Assignment" option in the Mylo Menu on the sidebar
+Given user is on Mylo Dashboard Home page
+And user selects "File" section after clicking on "Assignment" option in the Mylo Menu on the sidebar
 And Select Parameter popup should display with given parameters
 |Row Number  |Parameters           |
 | First Row  |File ID,Status,Office|
@@ -30,5 +30,5 @@ And Select Parameter popup should display with given parameters
 | Fourth Row |Destination City,Destination Country,Destination State|
 And Message "Please input a query parameter." is displayed after clicking on Execute button
 And Message "No such file found" is displayed after clicking on Execute button with invalid File ID "1234"
-When he clicks on Execute button after entering valid Client Id "49211", Status "Active", Origin Country "USA" and Destination Country "USA"
+When user clicks on Execute button after entering valid Client Id "49211", Status "Active", Origin Country "USA" and Destination Country "USA"
 Then Query results should appear based on the parameter provided sorted by File ID

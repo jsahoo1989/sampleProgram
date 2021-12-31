@@ -22,10 +22,22 @@ public class MYLOConstants {
 	public static final String ADD_BUTTON = "Add";
 	public static final String SAVE_BUTTON = "Save";
 	public static final String CANCEL_BUTTON = "Cancel";
+	public static final String NO_BUTTON = "No";
+	public static final String YES_BUTTON = "Yes";
 	public static final String OFFICE = "Office";
 	public static final String COUNTRY = "Country";
 	public static final String STATE = "State";
 	public static final String ASSIGNMENT = "Assignment";
 	public static final String FILE = "File";
 	public static final String HAMBURGER = "Hamburger";
+	public static final String RANDOM = "Random";
+	public static final String ACTIVE = "Active";
+	public static final String USER_WITH_RESOURCE15 = "With Resource15";
+	public static final String USER_WITHOUT_RESOURCE15 = "Without Resource15";
+	public static final String SUMMARY = "Summary";
+	public static final String NAME = "name";
+	public static final String VALUE = "value";
+	public static final String MYLO_READONLY = "mylo-readonly";
+	public static final String CLASS = "class";
+
 }

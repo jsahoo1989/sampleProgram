@@ -58,5 +58,4 @@ public class JsonDataReader_Mylo {
 	public final Mylo_LoginData getloginDetailsByUserProfileName(String userProfileName) {
 		return _loginDataList.stream().filter(x -> x.MyloProfileName.equalsIgnoreCase(userProfileName)).findAny().get();
 	}
-
 }

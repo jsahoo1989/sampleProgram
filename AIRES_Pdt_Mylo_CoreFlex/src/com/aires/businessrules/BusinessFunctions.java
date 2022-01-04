@@ -50,6 +50,7 @@ import org.openqa.selenium.support.ui.Select;
 import org.testng.Assert;
 
 import com.aires.businessrules.constants.PDTConstants;
+import com.aires.pages.pdt.PDT_AddNewPolicyPage;
 import com.aires.businessrules.constants.CoreConstants;
 import com.aires.businessrules.constants.MYLOConstants;
 import com.aires.utilities.EmailUtil;
@@ -610,5 +611,19 @@ public class BusinessFunctions {
 			Assert.fail(CoreConstants.ERROR + PDTConstants.UNABLE_TO_SORT_LIST);
 		}
 		return listToBeSorted;
+	}
+	
+	public static void verifyReimbursedByOtherTextBoxIsDisplayed(WebDriver driver, PDT_AddNewPolicyPage addNewPolicyPage, String jsonReimbursedBy, WebElement element, String jsonReimbursedByOther, String SubBenefitFormName) {
+		try {
+			if (jsonReimbursedBy.equalsIgnoreCase(PDTConstants.OTHER) && CoreFunctions.isElementExist(driver, element, 1)) {
+				Reporter.addStepLog(MessageFormat.format(PDTConstants.VERIFIED_FIELD_DISPLAYED, CoreConstants.PASS, PDTConstants.REIMBURSED_BY_OTHER, SubBenefitFormName));
+				CoreFunctions.clearAndSetText(driver, element,
+						PDTConstants.REIMBURSED_BY_OTHER,
+						jsonReimbursedByOther);
+			}
+		} catch(Exception e) {
+			DbFunctions.deletePolicyByPolicyId(addNewPolicyPage.getPolicyId());			
+			Assert.fail(MessageFormat.format(PDTConstants.FAILED_TO_FILL_FIELD, PDTConstants.REIMBURSED_BY_OTHER, SubBenefitFormName));
+		}
 	}
 }

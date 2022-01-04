@@ -29,7 +29,8 @@ public class PageObjectManager_Mylo {
 	private WebDriver _driver;
 	private Mylo_LoginPage _loginPage;
 	private Mylo_DashboardHomePage _dashboardHomePage;
-	//private Mylo_AssignmentPage _assignmentPage;
+	//Commented below code as page is not committed in main branch.
+	//private Mylo_AssignmentPage _assignmentPage; 
 
 	public PageObjectManager_Mylo(WebDriver driver) {
 		this._driver = driver;
@@ -44,7 +45,8 @@ public class PageObjectManager_Mylo {
 				: _dashboardHomePage;
 	}
 	
-	/*public Mylo_AssignmentPage getAssignmentPage() {
+	/*Commented below code as page is not committed in main branch.
+	 * public Mylo_AssignmentPage getAssignmentPage() {
 		return (_assignmentPage == null) ? _assignmentPage = new Mylo_AssignmentPage(_driver)
 				: _assignmentPage;
 	}*/

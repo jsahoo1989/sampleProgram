@@ -3,20 +3,16 @@ package com.aires.pages.pdt;
 import java.text.MessageFormat;
 import java.util.List;
 import java.util.Map;
-
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.How;
 import org.testng.Assert;
-
 import com.aires.businessrules.Base;
 import com.aires.businessrules.CoreFunctions;
 import com.aires.businessrules.DbFunctions;
 import com.aires.businessrules.constants.CoreConstants;
 import com.aires.businessrules.constants.PDTConstants;
-import com.aires.cucumber.TestContext;
-import com.aires.utilities.Log;
 import com.vimalselvam.cucumber.listener.Reporter;
 import cucumber.api.DataTable;
 import stepDefinitions.pdt.PDT_SharedSubBenefit_Steps;
@@ -142,7 +138,6 @@ public class PDT_SharedSubBenefitPage extends Base {
 	
 	public void iterateAndSelectSubBenefits(String pageName, DataTable subBenefitTable,
 			PDT_AddNewPolicyPage addNewPolicyPage, PDT_SharedSubBenefit_Steps objStep) {
-		//CoreFunctions.waitHandler(3);
 		CoreFunctions.explicitWaitForElementTextPresent(driver, _txtSubBenefitName, pageName, 3);
 		List<String> subBenefits = subBenefitTable.asList(String.class);
 		CoreFunctions.explicitWaitTillElementListClickable(driver, _subBenefitCategories);
@@ -184,11 +179,11 @@ public class PDT_SharedSubBenefitPage extends Base {
 			break;
 		case PDTConstants.IMMIGRATION_FEES:
 			expandSubBenefitIfCollapsed(getElementByName(PDTConstants.IMMIGRATION_FEES));
-			subBenefitSteps.getImmigrationPage().fillImmigrationFeesForm(addNewPolicyPage);
+			subBenefitSteps.getImmigrationPage().fillImmigrationFeesForm(addNewPolicyPage, PDTConstants.IMMIGRATION_FEES);
 			break;
 		case PDTConstants.IMMIGRATION_TRAVEL:
 			expandSubBenefitIfCollapsed(getElementByName(PDTConstants.IMMIGRATION_TRAVEL));
-			subBenefitSteps.getImmigrationPage().fillImmigrationTravelForm(addNewPolicyPage);
+			subBenefitSteps.getImmigrationPage().fillImmigrationTravelForm(addNewPolicyPage, PDTConstants.IMMIGRATION_TRAVEL);
 			break;
 		default:
 			Assert.fail(MessageFormat.format(PDTConstants.ELEMENT_NOT_FOUND, CoreConstants.FAIL));
@@ -196,8 +191,13 @@ public class PDT_SharedSubBenefitPage extends Base {
 	}
 
 	public void expandSubBenefitIfCollapsed(WebElement subBenefitForm) {
-		if (subBenefitForm.getAttribute("class").equalsIgnoreCase("collapsed"))
-			CoreFunctions.clickElement(driver, subBenefitForm);
+		try {
+			if (subBenefitForm.getAttribute("class").equalsIgnoreCase("collapsed")) {
+				CoreFunctions.clickElement(driver, subBenefitForm);
+			}
+		}catch(Exception e) {
+			Assert.fail("Failed to expand sub benefit form:-"+subBenefitForm.getText());
+		}
 	}
 	
 	public void selectEmpTypeForSubBenefit(String subBenefit) {

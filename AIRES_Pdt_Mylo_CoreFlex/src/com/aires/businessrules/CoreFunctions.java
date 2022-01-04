@@ -505,10 +505,10 @@ public class CoreFunctions {
 				}
 			}
 			if (!itemSearched) {
-				Assert.fail("Searched item:-" + searchText + "does not exist in list");
+				Assert.fail(MessageFormat.format(PDTConstants.SEARCHED_ITEM_NOT_IN_LIST, searchText));
 			}
 		} catch (Exception e) {
-			Assert.fail("Could not select item from list");
+			Assert.fail(PDTConstants.COULD_NOT_SELECT_ITEM_FROM_LIST);
 		}
 	}
 
@@ -522,7 +522,7 @@ public class CoreFunctions {
 				}
 			}
 		} catch (Exception e) {
-			Assert.fail("Could not select item from list");
+			Assert.fail(PDTConstants.COULD_NOT_SELECT_ITEM_FROM_LIST);
 		}
 		return null;
 	}
@@ -540,10 +540,10 @@ public class CoreFunctions {
 				}
 			}
 			if (!itemSearched) {
-				Assert.fail("Searched item:-" + searchText + "does not exist in list");
+				Assert.fail(MessageFormat.format(PDTConstants.SEARCHED_ITEM_NOT_IN_LIST, searchText));
 			}
 		} catch (Exception e) {
-			Assert.fail("Could not select item from list");
+			Assert.fail(PDTConstants.COULD_NOT_SELECT_ITEM_FROM_LIST);
 			e.printStackTrace();
 		}
 	}

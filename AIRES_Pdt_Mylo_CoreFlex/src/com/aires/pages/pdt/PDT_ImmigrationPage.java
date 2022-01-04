@@ -2,23 +2,21 @@ package com.aires.pages.pdt;
 
 import java.text.MessageFormat;
 import java.util.List;
-
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.How;
 import org.testng.Assert;
-
 import com.aires.businessrules.Base;
+import com.aires.businessrules.BusinessFunctions;
 import com.aires.businessrules.CoreFunctions;
 import com.aires.businessrules.DbFunctions;
 import com.aires.businessrules.constants.CoreConstants;
 import com.aires.businessrules.constants.PDTConstants;
 import com.aires.managers.FileReaderManager;
 import com.aires.testdatatypes.pdt.PDT_ImmigrationBenefit;
+import com.aires.utilities.Log;
 import com.vimalselvam.cucumber.listener.Reporter;
-
-import cucumber.api.DataTable;
 
 public class PDT_ImmigrationPage extends Base {
 	public PDT_ImmigrationPage(WebDriver driver) {
@@ -141,51 +139,7 @@ public class PDT_ImmigrationPage extends Base {
 		return element;
 	}
 	
-	public boolean verifyFormIsDisplayed(String formName, WebElement element, String pageName) {
-		if (element.isDisplayed()) {
-			Reporter.addStepLog(MessageFormat.format(PDTConstants.VERIFIED_FORM_IS_DISPLAYED, CoreConstants.PASS,
-					formName, pageName));
-			return true;
-		}
-		return false;
-	}
-	
-	public void expandSubBenefitIfCollapsed(WebElement subBenefitForm) {
-		if (subBenefitForm.getAttribute("class").equalsIgnoreCase("collapsed")) {
-			CoreFunctions.clickElement(driver, subBenefitForm);
-		}
-	}
-	
-	public void iterateAndSelectImmigrationSubBenefits(String pageName, DataTable subBenefitTable,
-			PDT_AddNewPolicyPage addNewPolicyPage) {
-		CoreFunctions.waitHandler(3);
-		List<String> subBenefits = subBenefitTable.asList(String.class);
-		CoreFunctions.explicitWaitTillElementListClickable(driver, _subBenefitCategories);
-		for (String subBenefit : subBenefits) {
-			CoreFunctions.selectItemInListByText(driver, _subBenefitCategories, subBenefit, true);
-			Assert.assertTrue(verifyFormIsDisplayed(subBenefit, getElementByName(subBenefit), pageName),
-					MessageFormat.format(PDTConstants.VERIFIED_FORM_IS_NOT_DISPLAYED, subBenefit, pageName));
-			fillPreAcceptanceSubBenefit(subBenefit, addNewPolicyPage);
-		}
-		CoreFunctions.click(driver, _btnSaveAndContinue, _btnSaveAndContinue.getText());
-	}
-	
-	public void fillPreAcceptanceSubBenefit(String subBenefit, PDT_AddNewPolicyPage addNewPolicyPage) {
-		switch (subBenefit) {
-		case PDTConstants.IMMIGRATION_FEES:
-			expandSubBenefitIfCollapsed(getElementByName(PDTConstants.IMMIGRATION_FEES));
-			fillImmigrationFeesForm(addNewPolicyPage);
-			break;
-		case PDTConstants.IMMIGRATION_TRAVEL:
-			expandSubBenefitIfCollapsed(getElementByName(PDTConstants.IMMIGRATION_TRAVEL));
-			fillImmigrationTravelForm(addNewPolicyPage);
-			break;
-		default:
-			Assert.fail(MessageFormat.format(PDTConstants.ELEMENT_NOT_FOUND, CoreConstants.FAIL));
-		}
-	}
-	
-	public void fillImmigrationFeesForm(PDT_AddNewPolicyPage addNewPolicyPage) {
+	public void fillImmigrationFeesForm(PDT_AddNewPolicyPage addNewPolicyPage, String subBenefitFormName) {
 		try {
 			CoreFunctions.explicitWaitTillElementVisibility(driver, _drpDownAuthorizedFees, _lblAuthorizedFeesCode.getText());
 			CoreFunctions.clickElement(driver, _drpDownAuthorizedFees);
@@ -195,11 +149,11 @@ public class PDT_ImmigrationPage extends Base {
 					+ _drpDownAuthorizedFeesOptions
 							.get(CoreFunctions.getRandomNumber(0, _drpDownAuthorizedFeesOptions.size() - 1))
 							.getText();
+			Log.info("Authorized fee options="+randAuthorizedFeeOption);
 			String[] transportationType = randAuthorizedFeeOption.split(",");
-			for (int i = 0; i < transportationType.length; i++) {
+			for (int i = 0; i < transportationType.length; i++) {				
 				CoreFunctions.selectItemInListByText(driver, _drpDownAuthorizedFeesOptions,
-						transportationType[i].trim(), _lblAuthorizedFeesCode.getText(), PDTConstants.DROP_DOWN, true);
-				CoreFunctions.clickElement(driver, _drpDownAuthorizedFees);
+						transportationType[i].trim(), _lblAuthorizedFeesCode.getText(), PDTConstants.DROP_DOWN, true);			
 			}
 
 			if (_drpDownAuthorizedFeesSelected.size() > 1) {
@@ -216,19 +170,31 @@ public class PDT_ImmigrationPage extends Base {
 			CoreFunctions.selectItemInListByText(driver, _radioBtnImmigrationFees,
 					immigrationBenefitData.immigrationFees.reimbursedBy, PDTConstants.REIMBURSED_BY,
 					PDTConstants.RADIO_BUTTON_LIST, true);
-			if (immigrationBenefitData.immigrationFees.reimbursedBy.equalsIgnoreCase(PDTConstants.OTHER)) {
-				CoreFunctions.clearAndSetText(driver, _txtBoxImmigrationFeesReimbursedByOther,
-						PDTConstants.REIMBURSED_BY_OTHER,
-						immigrationBenefitData.immigrationFees.reimbursedByOther);
-			}			
+
+			BusinessFunctions.verifyReimbursedByOtherTextBoxIsDisplayed(driver, addNewPolicyPage, immigrationBenefitData.immigrationFees.reimbursedBy, _txtBoxImmigrationFeesReimbursedByOther, immigrationBenefitData.immigrationFees.reimbursedByOther, subBenefitFormName);
 		} catch (Exception e) {
-			DbFunctions.deletePolicyByPolicyId(addNewPolicyPage.getPolicyId());
-			e.printStackTrace();
+			DbFunctions.deletePolicyByPolicyId(addNewPolicyPage.getPolicyId());			
 			Assert.fail("Failed to fill Immigration Fees form");
 		}
 	}
 	
-	public void selectNoOfTrips(PDT_AddNewPolicyPage addNewPolicyPage) {
+	public void verifyOtherNumberOfTripsTextBoxIsDisplayed(PDT_AddNewPolicyPage addNewPolicyPage, String SubBenefitFormName) {
+		try {
+			if (CoreFunctions.getElementTextAndStoreInList(driver, _drpDownNoOfTripsSelectedOption)
+					.toString().contains(PDTConstants.OTHER) && CoreFunctions.isElementExist(driver, _txtBoxNoOfTripsOther, 1)) {
+				Reporter.addStepLog(MessageFormat.format(PDTConstants.VERIFIED_FIELD_DISPLAYED, CoreConstants.PASS, _lblOtherNoOfTrips.getText(), SubBenefitFormName));
+				CoreFunctions.clickElement(driver, _txtBoxNoOfTripsOther);
+				CoreFunctions.clearAndSetText(driver, _txtBoxNoOfTripsOther, _lblOtherNoOfTrips.getText(),
+						immigrationBenefitData.immigrationTravel.otherNumberOfTrips);
+			}
+		}catch(Exception e) {
+			DbFunctions.deletePolicyByPolicyId(addNewPolicyPage.getPolicyId());			
+			Assert.fail(MessageFormat.format(PDTConstants.FAILED_TO_FILL_FIELD, _lblOtherNoOfTrips.getText(), SubBenefitFormName));
+		}
+
+	}
+	
+	public void selectNoOfTrips(PDT_AddNewPolicyPage addNewPolicyPage, String SubBenefitFormName) {
 		try {
 			CoreFunctions.clickElement(driver, _drpDownNoOfTrips);
 			String randNumberOfTrips = _drpDownNoOfTripsOptions
@@ -247,23 +213,17 @@ public class PDT_ImmigrationPage extends Base {
 								.toString()));
 			}
 			setNumberOfTrips(randNumberOfTrips);
-			if (CoreFunctions.getElementTextAndStoreInList(driver, _drpDownNoOfTripsSelectedOption)
-					.toString().contains(PDTConstants.OTHER)) {
-				CoreFunctions.clickElement(driver, _txtBoxNoOfTripsOther);
-				CoreFunctions.clearAndSetText(driver, _txtBoxNoOfTripsOther, _lblOtherNoOfTrips.getText(),
-						immigrationBenefitData.immigrationTravel.otherNumberOfTrips);
-			}
+			verifyOtherNumberOfTripsTextBoxIsDisplayed(addNewPolicyPage, SubBenefitFormName);
 		} catch (Exception e) {
-			DbFunctions.deletePolicyByPolicyId(addNewPolicyPage.getPolicyId());
-			e.printStackTrace();
+			DbFunctions.deletePolicyByPolicyId(addNewPolicyPage.getPolicyId());			
 			Assert.fail("Failed to select Number of Trips");
 		}
 	}
 	
-	public void fillImmigrationTravelForm(PDT_AddNewPolicyPage addNewPolicyPage) {
+	public void fillImmigrationTravelForm(PDT_AddNewPolicyPage addNewPolicyPage, String subBenefitFormName) {
 		try {
 			CoreFunctions.explicitWaitTillElementVisibility(driver, _drpDownNoOfTrips, _lblNoOfTrips.getText());
-			selectNoOfTrips(addNewPolicyPage);
+			selectNoOfTrips(addNewPolicyPage , subBenefitFormName);
 			CoreFunctions.clickElement(driver, _drpDownAccompanyingFamilyMember);
 
 			String randAccompanyingFamilMember = _drpDownAccompanyingFamilyMemberOptions
@@ -279,23 +239,13 @@ public class PDT_ImmigrationPage extends Base {
 			CoreFunctions.selectItemInListByText(driver, _radioBtnImmigrationTravel,
 					immigrationBenefitData.immigrationTravel.reimbursedBy, PDTConstants.REIMBURSED_BY,
 					PDTConstants.RADIO_BUTTON_LIST, true);
-			if (immigrationBenefitData.immigrationTravel.reimbursedBy.equalsIgnoreCase(PDTConstants.OTHER)) {
-				CoreFunctions.clearAndSetText(driver, _txtBoxImmigrationTravelReimbursedByOther,
-						PDTConstants.REIMBURSED_BY_OTHER,
-						immigrationBenefitData.immigrationTravel.reimbursedByOther);
-				
-			}
+			BusinessFunctions.verifyReimbursedByOtherTextBoxIsDisplayed(driver, addNewPolicyPage, immigrationBenefitData.immigrationTravel.reimbursedBy, _txtBoxImmigrationTravelReimbursedByOther, immigrationBenefitData.immigrationTravel.reimbursedByOther, subBenefitFormName);
 			CoreFunctions.clearAndSetText(driver, _txtAreaImmigrationComment, PDTConstants.COMMENT,
 					immigrationBenefitData.immigrationTravel.comment);
 		} catch (Exception e) {
-			DbFunctions.deletePolicyByPolicyId(addNewPolicyPage.getPolicyId());
-			e.printStackTrace();
+			DbFunctions.deletePolicyByPolicyId(addNewPolicyPage.getPolicyId());			
 			Assert.fail("Failed to fill Immigration Travel form");
 		}
 	}
-	
-	
-	
-	
 	
 }

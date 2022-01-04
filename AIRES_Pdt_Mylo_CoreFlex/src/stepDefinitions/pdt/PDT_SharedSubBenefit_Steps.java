@@ -50,8 +50,8 @@ public class PDT_SharedSubBenefit_Steps {
 		subBenefitPage.iterateAndSelectSubBenefits(preAcceptanceServicePg, subBenefitTable, addNewPolicyPage, objStep);
 	}
 
-	@Then("^success message \"([^\"]*)\" shoud be displayed on \"([^\"]*)\" page$")
-	public void success_message_shoud_be_displayed_on_page(String successMsg, String pageName) {
+	@Then("^success message \"([^\"]*)\" should be displayed on the \"([^\"]*)\" page$")
+	public void success_message_should_be_displayed_on_the_page(String successMsg, String pageName) {
 		Assert.assertTrue(preAcceptanceServicePage.verifySaveSuccessMessage(successMsg, pageName, addNewPolicyPage), MessageFormat
 				.format(PDTConstants.FAILED_TO_VERIFY_SUCCESS_MSG, CoreConstants.FAIL, successMsg, pageName));
 	}
@@ -64,8 +64,8 @@ public class PDT_SharedSubBenefit_Steps {
 		DbFunctions.deletePolicyByPolicyId(addNewPolicyPage.getPolicyId());
 	}
 	
-	@When("^he selects 'Benefit differs for Employee type', 'Benfit differs for Homeowner type' for below Sub benefits on \"([^\"]*)\" page$")
-	public void he_selects_Benefit_differs_for_Employee_type_Benfit_differs_for_Homeowner_type_for_below_Sub_benefits_on_page(String pageName, DataTable subBenefitTable) {
+	@When("^he selects 'Benefit differs for Employee type', 'Benefit differs for Homeowner type' for below Sub benefits on \"([^\"]*)\" page$")
+	public void he_selects_Benefit_differs_for_Employee_type_Benefit_differs_for_Homeowner_type_for_below_Sub_benefits_on_page(String pageName, DataTable subBenefitTable) {
 		subBenefitPage.selectEmployeeTypeHomeOwnerTypeForSubBenefit(pageName, addNewPolicyPage, subBenefitTable);
 	}
 

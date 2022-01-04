@@ -241,4 +241,8 @@ public class PDTConstants {
 	public static final String HOUR = "Hour";
 	public static final String MINUTES = "Minutes";
 	public static final String SECONDS = "Seconds";
+	public static final String VERIFIED_FIELD_DISPLAYED = "{0}Verified ''{1}'' text box is displayed for ''{2}'' sub benefit form.";
+	public static final String FAILED_TO_FILL_FIELD = "{0}Failed to fill value in ''{1}'' textbox for ''{2}'' sub benefit form.";
+	public static final String SEARCHED_ITEM_NOT_IN_LIST = "Searched item ''{0}'' does not exist in list.";
+	public static final String COULD_NOT_SELECT_ITEM_FROM_LIST = "Could not select item from list";
 }

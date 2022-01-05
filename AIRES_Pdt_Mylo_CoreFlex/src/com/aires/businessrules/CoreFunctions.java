@@ -526,6 +526,19 @@ public class CoreFunctions {
 		}
 		return null;
 	}
+	
+
+	public static LinkedHashMap<String, String> returnMapFromBothLists(WebDriver driver, List<WebElement> roleNames, List<WebElement> memberNames) {
+		LinkedHashMap<String, String> mp = new LinkedHashMap<String, String>();
+		try {
+			for (int i=0;i<roleNames.size();i++) {
+				mp.put(roleNames.get(i).getAttribute(CoreConstants.VALUE), memberNames.get(i).getAttribute(CoreConstants.VALUE));
+			}
+		} catch (Exception e) {
+			Assert.fail(CoreConstants.COULD_NOT_FIND_ITEM);
+		}
+		return mp;
+	}
 
 	public static void selectItemInListByText(WebDriver driver, List<WebElement> WebElementList, String searchText,
 			boolean reporter) {
@@ -1558,5 +1571,9 @@ public class CoreFunctions {
 			Assert.fail(MessageFormat.format(PDTConstants.COULD_NOT_SEARCH_ITEM_FROM_LIST, searchText));
 		}
 		return exists;
+  }
+	
+	public static String getRandomElementValueFromList(WebDriver driver, List<WebElement> WebElementList) {
+		return WebElementList.get(getRandomNumber(0, WebElementList.size()-1)).getText();
 	}
 }

@@ -22,10 +22,32 @@ public class MYLOConstants {
 	public static final String ADD_BUTTON = "Add";
 	public static final String SAVE_BUTTON = "Save";
 	public static final String CANCEL_BUTTON = "Cancel";
+	public static final String NO_BUTTON = "No";
+	public static final String YES_BUTTON = "Yes";
 	public static final String OFFICE = "Office";
 	public static final String COUNTRY = "Country";
 	public static final String STATE = "State";
 	public static final String ASSIGNMENT = "Assignment";
 	public static final String FILE = "File";
 	public static final String HAMBURGER = "Hamburger";
+	public static final String RANDOM = "Random";
+	public static final String ACTIVE = "Active";
+	public static final String USER_WITH_RESOURCE15 = "With Resource15";
+	public static final String USER_WITHOUT_RESOURCE15 = "Without Resource15";
+	public static final String SUMMARY = "Summary";
+	public static final String NAME = "name";
+	public static final String VALUE = "value";
+	public static final String MYLO_READONLY = "mylo-readonly";
+	public static final String CLASS = "class";
+	public static final String ROLE_NAME = "Role Name";
+	public static final String MEMBER_NAME = "Member Name";
+	public static final String AIRES_FILE_TEAM = "Aires File Team";
+	public static final String TAB_NOT_ACTIVE = "tab is not active";
+	public static final String ROW_ADDED = "Row has been added";
+	public static final String ROW_DIDNOT_UPDATED = "Row did not update";
+	public static final String EXISTING_TEAM_MEMBER_APPEARING_IN_DROPDOWN = "Existing Team member appearing in the dropdown";
+	public static final String EXPECTED_POPUP_MESSAGE = "Expected Popup message: ";
+	public static final String RECORDS_NOT_READONLY="All records are not readonly";
+	public static final String INVALID_ROLE_ACCESS_FOR="Invalid Role access for";
+
 }

@@ -31,6 +31,13 @@ public class CoreConstants {
 	public static final String ALPHABET = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ";
 	public static final String JSON_FILE_NOT_FOUND_AT_PATH = "Json file not found at path : ";
 	public static final String TAG_VALUE = "@Pre-Prod";
+	public static final String VALUE="value";
+	public static final String COULD_NOT_FIND_ITEM ="Could not find item from list";
+	public static final String VERIFY_ELEMENT_VALUE_ON_SECTION = "{0}Verified ''{1}'' :- ''{2}'' on ''{3}'' section.";
+	public static final String FAIL_TO_VERIFY_ELEMENT_ON_DROPDOWN = "{0}Failed to verify ''{1}'' :- ''{2}'' on ''{3}'' page.";
+	public static final String FAIL_TO_VERIFY_UPDATED_ROW = "{0}Failed to verify updated row for ''{1}'' on ''{2}'' page.";
+	public static final String VRYFD_UPDATED_ROW = "{0}Verified updated row for ''{1}'' on ''{2}'' page.";
+	public static final String DIDNOT_MATCHED="Did not matched";
 	//Tag Values
 	public static final String VALUE_AT_PRE_PROD = "@Pre-Prod";
 	public static final String VALUE_AT_POST_PROD = "@Post-Prod";

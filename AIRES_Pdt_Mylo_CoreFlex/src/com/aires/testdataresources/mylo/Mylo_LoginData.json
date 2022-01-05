@@ -2,6 +2,7 @@
 	{
 		"MyloProfileName": "mxsso!",
 		"MyloUserName": "mxssodev5@corp.aires.com",
-		"MyloPassword": "AiresDevSSOTest$"
+		"MyloPassword": "AiresDevSSOTest$",
+		"MyloWithOutResource15UserName": "mxssodev9@corp.aires.com"
 	}
 ]

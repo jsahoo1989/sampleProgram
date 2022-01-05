@@ -22,15 +22,14 @@ import com.aires.utilities.Log;
 import cucumber.api.DataTable;
 
 public class Mylo_DashboardHomePage extends Base {
-	
+
 	public Mylo_DashboardHomePage(WebDriver driver) {
 		super(driver);
 	}
-	
-	
+
 	@FindBy(how = How.XPATH, using = "//*[contains(@class,'mat-dialog-container')]")
 	private WebElement _popupModal;
-	
+
 	@FindBy(how = How.XPATH, using = "//*[@id='user-profile']//span[2]")
 	private WebElement _userProfile;
 
@@ -101,7 +100,6 @@ public class Mylo_DashboardHomePage extends Base {
 	}
 
 	public void closePopUp() {
-		//CoreFunctions.waitHandler(5);
 		CoreFunctions.explicitWaitTillElementVisibility(driver, _popupModal, _popupModal.getText(), 10L);
 		CoreFunctions.explicitWaitTillElementVisibility(driver, _closeButton, _closeButton.getText(), 10L);
 		CoreFunctions.highlightElementAndClick(driver, _closeButton, _closeButton.getText());
@@ -175,8 +173,7 @@ public class Mylo_DashboardHomePage extends Base {
 		WebElement getOptionElement = CoreFunctions.returnItemInListByText(driver, _fileParameterList, option);
 		if (option.contains(MYLOConstants.STATUS) || option.contains(MYLOConstants.OFFICE)
 				|| option.contains(MYLOConstants.COUNTRY) || option.contains(MYLOConstants.STATE)) {
-			WebElement dropdowns = CoreFunctions.getElementByLocator(driver, getOptionElement,
-					_dropdownSections);
+			WebElement dropdowns = CoreFunctions.getElementByLocator(driver, getOptionElement, _dropdownSections);
 			CoreFunctions.highlightElementAndClick(driver, dropdowns, dropdowns.getText());
 			CoreFunctions.explicitWaitTillElementListVisibility(driver, _selectOptions);
 			CoreFunctions.selectItemInListByText(driver, _selectOptions, optionValue);

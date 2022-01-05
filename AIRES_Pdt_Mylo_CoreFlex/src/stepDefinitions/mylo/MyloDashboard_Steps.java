@@ -31,7 +31,6 @@ public class MyloDashboard_Steps {
 	@Given("^he has logged into the 'Mylo' application$")
 	public void he_has_logged_into_the_Mylo_application() throws Throwable {
 		loginPage.openApplication();
-		loginPage.switchWindow();
 		loginPage.enterUserEmailAndPasswordForMylo(loginData.MyloUserName, loginData.MyloPassword);
 		loginPage.clickSignIn();
 
@@ -83,8 +82,8 @@ public class MyloDashboard_Steps {
 		Assert.assertTrue(myloDashboardPage.verifyPopUpMessage(message));
 	}
 
-	@When("^he clicks on Execute button after entering valid Client Id \"([^\"]*)\", Status \"([^\"]*)\", Origin Country \"([^\"]*)\" and Destination Country \"([^\"]*)\"$")
-	public void he_clicks_on_Execute_button_after_entering_valid_Client_Id_Status_Origin_Country_and_Destination_Country(
+	@When("^user clicks on Execute button after entering valid Client Id \"([^\"]*)\", Status \"([^\"]*)\", Origin Country \"([^\"]*)\" and Destination Country \"([^\"]*)\"$")
+	public void user_clicks_on_Execute_button_after_entering_valid_Client_Id_Status_Origin_Country_and_Destination_Country(
 			String clientID, String status, String orgCountry, String destCountry) {
 		myloDashboardPage.resetFileParameters();
 		myloDashboardPage.selectOptionsForFileParameters(MYLOConstants.CLIENT_ID, clientID);

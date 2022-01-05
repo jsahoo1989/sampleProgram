@@ -803,7 +803,7 @@ public class CoreFunctions {
 			}
 
 		} catch (Exception e) {
-			Assert.fail("Could not search item " + searchText + " from list");
+			Assert.fail(MessageFormat.format(PDTConstants.COULD_NOT_SEARCH_ITEM_FROM_LIST, searchText));
 		}
 		return exists;
 	}
@@ -1555,7 +1555,7 @@ public class CoreFunctions {
 			}
 
 		} catch (Exception e) {
-			Assert.fail("Could not search item " + searchText + " from list");
+			Assert.fail(MessageFormat.format(PDTConstants.COULD_NOT_SEARCH_ITEM_FROM_LIST, searchText));
 		}
 		return exists;
 	}

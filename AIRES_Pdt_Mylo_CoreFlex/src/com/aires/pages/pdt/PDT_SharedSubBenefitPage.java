@@ -1,8 +1,12 @@
 package com.aires.pages.pdt;
 
 import java.text.MessageFormat;
+import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.stream.Collectors;
+
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
@@ -13,6 +17,7 @@ import com.aires.businessrules.CoreFunctions;
 import com.aires.businessrules.DbFunctions;
 import com.aires.businessrules.constants.CoreConstants;
 import com.aires.businessrules.constants.PDTConstants;
+import com.aires.utilities.Log;
 import com.vimalselvam.cucumber.listener.Reporter;
 import cucumber.api.DataTable;
 import stepDefinitions.pdt.PDT_SharedSubBenefit_Steps;
@@ -87,6 +92,7 @@ public class PDT_SharedSubBenefitPage extends Base {
 
 	@FindBy(how = How.CSS, using = "div#collapseFour div.mat-tab-label-content")
 	private List<WebElement> _tabOnPreAcceptanceTripMeals;
+	HashMap<String, Boolean> resultMapForTabNameNotMatch = new HashMap<>();	
 	
 	public WebElement getElementByName(String elementName) {
 		WebElement element = null;
@@ -192,9 +198,8 @@ public class PDT_SharedSubBenefitPage extends Base {
 
 	public void expandSubBenefitIfCollapsed(WebElement subBenefitForm) {
 		try {
-			if (subBenefitForm.getAttribute("class").equalsIgnoreCase("collapsed")) {
-				CoreFunctions.clickElement(driver, subBenefitForm);
-			}
+			if (subBenefitForm.getAttribute("class").equalsIgnoreCase("collapsed"))
+				CoreFunctions.clickElement(driver, subBenefitForm);			
 		}catch(Exception e) {
 			Assert.fail("Failed to expand sub benefit form:-"+subBenefitForm.getText());
 		}
@@ -276,7 +281,7 @@ public class PDT_SharedSubBenefitPage extends Base {
 
 	public void checkEmpType(String benefitDifferForEmpType, String subBenefitName, String pageName,
 			PDT_AddNewPolicyPage addNewPolicyPage) {
-		try {
+		try {			
 			if (benefitDifferForEmpType.equalsIgnoreCase(PDTConstants.YES)) {
 				selectEmpTypeForSubBenefit(subBenefitName);
 			}
@@ -306,10 +311,10 @@ public class PDT_SharedSubBenefitPage extends Base {
 		try {
 			CoreFunctions.explicitWaitForElementTextPresent(driver, _txtSubBenefitName, pageName, 3);
 			for (int i = 0; i < subBenefits.size(); i++) {
-				selectSubBenefit(subBenefits.get(i).get("SubBenefit"), pageName, addNewPolicyPage);
-				checkEmpType(subBenefits.get(i).get("Benfit_differs_for_Employee_type"),
+				selectSubBenefit(subBenefits.get(i).get("SubBenefit"), pageName, addNewPolicyPage);					
+				checkEmpType(subBenefits.get(i).get("Benefit_differs_for_Employee_type"),
 						subBenefits.get(i).get("SubBenefit"), pageName, addNewPolicyPage);
-				checkHomeType(subBenefits.get(i).get("Benfit_differs_for_Home_Owner_type"),
+				checkHomeType(subBenefits.get(i).get("Benefit_differs_for_Home_Owner_type"),
 						subBenefits.get(i).get("SubBenefit"), pageName, addNewPolicyPage);
 			}
 		} catch (Exception e) {
@@ -319,34 +324,58 @@ public class PDT_SharedSubBenefitPage extends Base {
 	}
 
 	
-	public void iterateSubBenefitForTabs(String pageName, PDT_AddNewPolicyPage addNewPolicyPage,
+	public boolean	iterateSubBenefitForTabs(String pageName, PDT_AddNewPolicyPage addNewPolicyPage,
 			DataTable subBenefitTable) {
 		List<Map<String, String>> subBenefits = subBenefitTable.asMaps(String.class, String.class);
+		HashMap<String, Boolean> resultMap = new HashMap<String, Boolean>();
 		try {
 			CoreFunctions.explicitWaitForElementTextPresent(driver, _txtSubBenefitName, pageName, 3);
 			for (int i = 0; i < subBenefits.size(); i++) {
 				expandSubBenefitIfCollapsed(getElementByName(subBenefits.get(i).get("SubBenefit")));
-				verifyTabName(subBenefits.get(i).get("SubBenefit"), subBenefits.get(i).get("Tabs"),
-								getTabListByName(subBenefits.get(i).get("SubBenefit")), addNewPolicyPage, pageName);
+				resultMap.putAll(verifyTabName(subBenefits.get(i).get("SubBenefit"), subBenefits.get(i).get("Tabs"),
+						getTabListByName(subBenefits.get(i).get("SubBenefit")), addNewPolicyPage, pageName));
 			}
+			resultMapForTabNameNotMatch = getFilterMapWhereTabNameNotMatch(subBenefits.size(), resultMap);
 		} catch (Exception e) {
 			DbFunctions.deletePolicyByPolicyId(addNewPolicyPage.getPolicyId());
 		} finally {
 			DbFunctions.deletePolicyByPolicyId(addNewPolicyPage.getPolicyId());
-		}	
+		}
+		return resultMapForTabNameNotMatch.isEmpty();
+	}
+	
+	public String getTabNameNotMatch(String pageName) {
+		String str = "";
+	     for(Map.Entry m: resultMapForTabNameNotMatch.entrySet()) {	    	
+	    	 String[] tabName =   m.getKey().toString().split("_");
+	    	 str+=MessageFormat.format(PDTConstants.VERFIED_TAB_NOT_DISPLAYED, CoreConstants.FAIL, tabName[1], tabName[0], pageName);
+	     }	    
+	     return str;
 	}
 
-	public void verifyTabName(String subBenefit, String tabNameString, List<WebElement> tabList,
+	public HashMap<String, Boolean> getFilterMapWhereTabNameNotMatch(int countOfSubBenefits, HashMap<String, Boolean> resultMap){
+		Map<String, Boolean> filteredMap = new HashMap<>();
+			filteredMap = resultMap.entrySet()
+			        .stream().filter(x->x.getValue().equals(false))
+			        .collect(Collectors.toMap(Map.Entry::getKey, Map.Entry::getValue));
+		return (HashMap<String, Boolean>) filteredMap;
+	}
+	
+	public HashMap<String, Boolean> verifyTabName(String subBenefit, String tabNameString, List<WebElement> tabList,
 			PDT_AddNewPolicyPage addNewPolicyPage, String pageName) {		
+		HashMap<String, Boolean> map = new HashMap<>();	
 		String[] tabNameArr = tabNameString.split(",");
 		for (int i = 0; i < tabNameArr.length; i++) {
 			if (CoreFunctions.searchElementExistsInListByTextIgnoreCase(driver, tabList, tabNameArr[i].trim())) {
 				Reporter.addStepLog(MessageFormat.format(PDTConstants.VERFIED_TAB_DISPLAYED, CoreConstants.PASS,
 						tabNameArr[i].trim(), subBenefit, pageName));
-				
-			} else				
-				Assert.fail(MessageFormat.format(PDTConstants.VERFIED_TAB_NOT_DISPLAYED, CoreConstants.FAIL,
+				map.put(subBenefit+"_"+tabNameArr[i].trim(), true);
+			} else {
+				map.put(subBenefit+"_"+tabNameArr[i].trim(), false);
+				Reporter.addStepLog(MessageFormat.format(PDTConstants.VERFIED_TAB_NOT_DISPLAYED, CoreConstants.FAIL,
 						tabNameArr[i].trim(), subBenefit, pageName));
-		}		
+			}
+		}
+		return map;	
 	}
 }

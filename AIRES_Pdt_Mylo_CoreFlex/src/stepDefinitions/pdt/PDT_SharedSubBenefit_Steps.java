@@ -71,6 +71,6 @@ public class PDT_SharedSubBenefit_Steps {
 
 	@Then("^below Tabs should appear in Sub benefit form on \"([^\"]*)\" page$")
 	public void below_Tabs_should_appear_in_Sub_benefit_form_on_page(String pageName, DataTable subBenefitTable) {
-		subBenefitPage.iterateSubBenefitForTabs(pageName, addNewPolicyPage, subBenefitTable);		
+		Assert.assertTrue(subBenefitPage.iterateSubBenefitForTabs(pageName, addNewPolicyPage, subBenefitTable), subBenefitPage.getTabNameNotMatch(pageName));		
 	}
 }

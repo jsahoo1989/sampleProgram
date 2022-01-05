@@ -64,7 +64,7 @@ Feature: Add new Policy form with Benefit Categories
     Then success message "Data submitted successfully" should be displayed on the "Policy Benefit" page
     And newly created Policy should be displayed under "View Policy" page
 
-  @Sprint-16 @PDT-Regression
+  @Sprint-16 @PDT-Regression @tab
   Scenario: PDT - Validate the display of tabs on Sub benefits form depending upon the selection/deselection of Benefit differs for Employee type, Benefit differs for Homeowner types
     Given he is on the "Add New Policy Form" page after clicking on the link "Add New Policy Form" displayed under the left navigation menu on the 'View Policy' page
     And he has clicked on the 'Next' button after selecting below information on the 'Add New Policy' page
@@ -80,6 +80,6 @@ Feature: Add new Policy form with Benefit Categories
       | Pre-Acceptance Trip Lodging        | Yes                              | Yes                                |
     Then below Tabs should appear in Sub benefit form on "Pre-Acceptance Services" page
       | SubBenefit                         | Benefit_differs_for_Employee_type | Benefit_differs_for_Home_Owner_type | Tabs                                                                                             |
-      | Candidate Selection                | Yes                              | No                                 | Current Employee, New Hire                                                                       |
-      | Pre-Acceptance Trip Transportation | No                               | Yes                                | Home Owner, Renter                                                                               |
-      | Pre-Acceptance Trip Lodging        | Yes                              | Yes                                | Current Employee - HomeOwner, Current Employee - Renter, New Hire - HomeOwner, New Hire - Renter |
+      | Candidate Selection                | Yes                              | No                                 | Current Employees, New Hire                                                                       |
+      | Pre-Acceptance Trip Transportation | No                               | Yes                                | Home Owner, Renters                                                                               |
+      | Pre-Acceptance Trip Lodging        | Yes                              | Yes                                | Current Employee - HomeOwner, Current Employee - Renters, New Hire - HomeOwner, New Hire - Renter |

@@ -1,5 +1,6 @@
 package com.aires.pages.mylo;
 
+import java.text.MessageFormat;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.LinkedHashMap;
@@ -15,7 +16,9 @@ import org.testng.Assert;
 
 import com.aires.businessrules.Base;
 import com.aires.businessrules.CoreFunctions;
+import com.aires.businessrules.constants.CoreConstants;
 import com.aires.businessrules.constants.MYLOConstants;
+import com.vimalselvam.cucumber.listener.Reporter;
 
 public class Mylo_AssignmentPage extends Base {
 
@@ -38,10 +41,10 @@ public class Mylo_AssignmentPage extends Base {
 	@FindBy(how = How.XPATH, using = "//div[contains(@class,'navlist__container')]/li/a")
 	private List<WebElement> _assignmentSubMenus;
 
-	@FindBy(how = How.XPATH, using = "//*[text()='Role']//preceding-sibling::ng-select")
+	@FindBy(how = How.XPATH, using = "//label[text()='Role']//preceding-sibling::ng-select")
 	private WebElement _roleSelectButtton;
 
-	@FindBy(how = How.XPATH, using = "//*[text()='Name']//preceding-sibling::ng-select")
+	@FindBy(how = How.XPATH, using = "//label[text()='Name']//preceding-sibling::ng-select")
 	private WebElement _memberNameSelectButtton;
 
 	@FindBy(how = How.XPATH, using = "//h1[text()='Aires File Team']/parent::td/following-sibling::td/button")
@@ -111,26 +114,50 @@ public class Mylo_AssignmentPage extends Base {
 				roleName);
 	}
 
+	public boolean verifyRoleAccessFromUserType(String userType, String roleName) {
+		try {
+			if (userType.equals(MYLOConstants.USER_WITHOUT_RESOURCE15))
+				Assert.assertFalse(verifyRoleInDropdown(roleName));
+			else
+				Assert.assertTrue(verifyRoleInDropdown(roleName));
+		} catch (Exception e) {
+			return false;
+		}
+		return true;
+	}
+
 	public boolean verifyRoleInDropdown(String roleName) {
 		try {
 			CoreFunctions.click(driver, _roleSelectButtton, _roleSelectButtton.getAttribute(MYLOConstants.NAME));
 			List<WebElement> optionsList = CoreFunctions.getElementListByLocator(driver, _dropdownOptions);
 			return CoreFunctions.searchElementExistsInListByText(driver, optionsList, roleName);
 		} catch (Exception e) {
+			Reporter.addStepLog(MessageFormat.format(CoreConstants.FAIL_TO_VERIFY_ELEMENT_ON_DROPDOWN,
+					CoreConstants.FAIL, roleName, MYLOConstants.ROLE_NAME));
 			return false;
 		}
 	}
 
 	public void addTeamMember(String memberName) {
-		CoreFunctions.click(driver, _memberNameSelectButtton,
-				_memberNameSelectButtton.getAttribute(MYLOConstants.NAME));
-		List<WebElement> optionsList = CoreFunctions.getElementListByLocator(driver, _dropdownOptions);
-		if (memberName != MYLOConstants.RANDOM)
-			CoreFunctions.selectItemInListByText(driver, optionsList, memberName);
-		else {
-			updatedTeamMember = CoreFunctions.getRandomElementValueFromList(driver, optionsList);
-			CoreFunctions.selectItemInListByText(driver, optionsList, updatedTeamMember);
+		try {
+			CoreFunctions.click(driver, _memberNameSelectButtton,
+					_memberNameSelectButtton.getAttribute(MYLOConstants.NAME));
+			List<WebElement> optionsList = CoreFunctions.getElementListByLocator(driver, _dropdownOptions);
+			if (memberName != MYLOConstants.RANDOM) {
+				CoreFunctions.selectItemInListByText(driver, optionsList, memberName);
+				Reporter.addStepLog(MessageFormat.format(CoreConstants.VERIFY_ELEMENT_VALUE_ON_SECTION,
+						CoreConstants.PASS, MYLOConstants.ROLE_NAME, memberName, MYLOConstants.AIRES_FILE_TEAM));
+			} else {
+				updatedTeamMember = CoreFunctions.getRandomElementValueFromList(driver, optionsList);
+				CoreFunctions.selectItemInListByText(driver, optionsList, updatedTeamMember);
+				Reporter.addStepLog(MessageFormat.format(CoreConstants.VERIFY_ELEMENT_VALUE_ON_SECTION,
+						CoreConstants.PASS, MYLOConstants.ROLE_NAME, updatedTeamMember, MYLOConstants.AIRES_FILE_TEAM));
+			}
+		} catch (Exception e) {
+			Reporter.addStepLog(MessageFormat.format(CoreConstants.FAIL_TO_VERIFY_ELEMENT_ON_DROPDOWN,
+					CoreConstants.FAIL, memberName, MYLOConstants.MEMBER_NAME));
 		}
+
 	}
 
 	public boolean verifyExistingTeamMemberInDropdown(String roleName) {
@@ -141,6 +168,8 @@ public class Mylo_AssignmentPage extends Base {
 			return CoreFunctions.searchElementExistsInListByText(driver, optionsList,
 					airesFileTeamExistingMembers.get(roleName));
 		} catch (Exception e) {
+			Reporter.addStepLog(MessageFormat.format(CoreConstants.FAIL_TO_VERIFY_ELEMENT_ON_DROPDOWN,
+					CoreConstants.FAIL, airesFileTeamExistingMembers.get(roleName), MYLOConstants.MEMBER_NAME));
 			return false;
 		}
 	}
@@ -174,8 +203,14 @@ public class Mylo_AssignmentPage extends Base {
 		if (allTeamMembers.get(allRoleNames.indexOf(roleName)).trim().equals(updatedTeamMember)
 				&& allStartDates.get(allRoleNames.indexOf(roleName)).trim().equals(currentDate)
 				&& allEndDates.get(allRoleNames.indexOf(roleName)).trim().equals(MYLOConstants.ACTIVE)
-				&& allEndDates.get(allRoleNames.lastIndexOf(roleName)).trim().equals(currentDate))
+				&& allEndDates.get(allRoleNames.lastIndexOf(roleName)).trim().equals(currentDate)) {
+
+			Reporter.addStepLog(MessageFormat.format(CoreConstants.VRYFD_UPDATED_ROW, CoreConstants.PASS, roleName,
+					MYLOConstants.AIRES_FILE_TEAM));
 			return true;
+		}
+		Reporter.addStepLog(MessageFormat.format(CoreConstants.FAIL_TO_VERIFY_UPDATED_ROW, CoreConstants.FAIL, roleName,
+				MYLOConstants.AIRES_FILE_TEAM));
 		return false;
 	}
 

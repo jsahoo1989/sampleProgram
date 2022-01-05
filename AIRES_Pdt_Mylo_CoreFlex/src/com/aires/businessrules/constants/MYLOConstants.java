@@ -39,5 +39,15 @@ public class MYLOConstants {
 	public static final String VALUE = "value";
 	public static final String MYLO_READONLY = "mylo-readonly";
 	public static final String CLASS = "class";
+	public static final String ROLE_NAME = "Role Name";
+	public static final String MEMBER_NAME = "Member Name";
+	public static final String AIRES_FILE_TEAM = "Aires File Team";
+	public static final String TAB_NOT_ACTIVE = "tab is not active";
+	public static final String ROW_ADDED = "Row has been added";
+	public static final String ROW_DIDNOT_UPDATED = "Row did not update";
+	public static final String EXISTING_TEAM_MEMBER_APPEARING_IN_DROPDOWN = "Existing Team member appearing in the dropdown";
+	public static final String EXPECTED_POPUP_MESSAGE = "Expected Popup message: ";
+	public static final String RECORDS_NOT_READONLY="All records are not readonly";
+	public static final String INVALID_ROLE_ACCESS_FOR="Invalid Role access for";
 
 }

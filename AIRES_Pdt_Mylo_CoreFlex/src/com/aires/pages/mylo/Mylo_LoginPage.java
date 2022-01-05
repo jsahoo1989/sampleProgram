@@ -1,7 +1,5 @@
 package com.aires.pages.mylo;
 
-import java.util.Set;
-
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
@@ -13,6 +11,7 @@ import com.aires.businessrules.CoreFunctions;
 import com.aires.businessrules.constants.CoreConstants;
 import com.aires.businessrules.constants.MYLOConstants;
 import com.aires.managers.FileReaderManager;
+import com.aires.testdatatypes.mylo.Mylo_LoginData;
 import com.aires.utilities.Log;
 import com.gargoylesoftware.htmlunit.ElementNotFoundException;
 
@@ -45,11 +44,15 @@ public class Mylo_LoginPage extends Base {
 	
 	@FindBy(how = How.XPATH, using = "//div[text()='Use another account']")
 	private WebElement _anotherAccount;
+	
+	Mylo_LoginData loginData = FileReaderManager.getInstance().getMyloJsonReader()
+			.getloginDetailsByUserProfileName(MYLOConstants.USER_PROFILE_NAME);
 
 	public void openApplication() throws InterruptedException {
 		Log.info(FileReaderManager.getInstance().getConfigReader().getMyloApplicationUrl());
 		CoreFunctions.waitForBrowserToLoad(driver);
 		VerifyMYLOLogo();
+		CoreFunctions.switchToNewTab(driver);
 	}
 
 	public void VerifyMYLOLogo() {
@@ -81,23 +84,7 @@ public class Mylo_LoginPage extends Base {
 					_txt_Password.getAttribute("name"));
 			CoreFunctions.clearAndSetText(driver, _txt_Password, _txt_Password.getAttribute("name"), password);
 		} catch (ElementNotFoundException e) {
-			e.printStackTrace();
 		}
-	}
-
-	public boolean switchWindow() {
-		String currentWindow = driver.getWindowHandle();
-		Set<String> handles = driver.getWindowHandles();
-		System.out.println(handles.size());
-		for (String actualWin : handles) {
-			if (!actualWin.equalsIgnoreCase(currentWindow)) {
-				driver.switchTo().window(actualWin);
-				Log.info(driver.getTitle());
-				Log.info(driver.getCurrentUrl());
-				return true;
-			}
-		}
-		return false;
 	}
 	
 	public void logout() {
@@ -110,6 +97,17 @@ public class Mylo_LoginPage extends Base {
 	public void clickAnotherAccount() {
 		CoreFunctions.explicitWaitTillElementVisibility(driver, _anotherAccount, _anotherAccount.getText());
 		CoreFunctions.click(driver, _anotherAccount, _anotherAccount.getText());
+	}
+	
+	public void loginWithUser(String userType) throws InterruptedException {
+		if (userType.equals(MYLOConstants.USER_WITHOUT_RESOURCE15)) {
+			logout();
+			openApplication();
+			CoreFunctions.explicitWaitTillElementVisibility(driver, _anotherAccount, _anotherAccount.getText());
+			CoreFunctions.click(driver, _anotherAccount, _anotherAccount.getText());
+			enterUserEmailAndPasswordForMylo(loginData.MyloWithOutResource15UserName, loginData.MyloPassword);
+			clickSignIn();			
+		}
 	}
 
 }

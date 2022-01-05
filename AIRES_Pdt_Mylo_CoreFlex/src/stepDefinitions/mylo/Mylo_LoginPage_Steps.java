@@ -21,19 +21,18 @@ public class Mylo_LoginPage_Steps {
 		myloDashboardPage = testContext.getMyloPageObjectManager().getDashboardHomePage();
 	}
 
-	@Given("^user is on Mylo login page$")
-	public void user_is_on_Mylo_login_page() throws Throwable {
+	@Given("^he is on the Mylo login page$")
+	public void he_is_on_the_Mylo_login_page() throws Throwable {
 		loginPage.openApplication();
 	}
 
-	@Given("^user enter \"([^\"]*)\" and \"([^\"]*)\" in username and password field$")
-	public void user_enter_and_in_username_and_password_field(String userEmail, String password) {
-		loginPage.switchWindow();
+	@Given("^he has entered \"([^\"]*)\" and \"([^\"]*)\" in username and password field$")
+	public void he_has_entered_and_in_username_and_password_field(String userEmail, String password) {
 		loginPage.enterUserEmailAndPasswordForMylo(userEmail, password);
 	}
 
-	@When("^user clicks on Sign in button$")
-	public void user_clicks_on_Sign_In_button() {
+	@When("^he clicks on Sign in button$")
+	public void he_clicks_on_Sign_In_button() {
 		loginPage.clickSignIn();
 	}
 

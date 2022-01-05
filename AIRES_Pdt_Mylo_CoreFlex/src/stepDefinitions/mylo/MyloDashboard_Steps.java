@@ -28,22 +28,21 @@ public class MyloDashboard_Steps {
 		myloDashboardPage = testContext.getMyloPageObjectManager().getDashboardHomePage();
 	}
 
-	@Given("^user has logged into the 'Mylo' application$")
-	public void user_has_logged_into_the_Mylo_application() throws Throwable {
+	@Given("^he has logged into the 'Mylo' application$")
+	public void he_has_logged_into_the_Mylo_application() throws Throwable {
 		loginPage.openApplication();
-		loginPage.switchWindow();
 		loginPage.enterUserEmailAndPasswordForMylo(loginData.MyloUserName, loginData.MyloPassword);
 		loginPage.clickSignIn();
 
 	}
 
-	@Given("^user is on Mylo Dashboard Home page$")
-	public void user_is_on_Mylo_Dashboard_Home_page() {
+	@Given("^he is on Mylo Dashboard Home page$")
+	public void he_is_on_Mylo_Dashboard_Home_page() {
 		Assert.assertTrue(myloDashboardPage.verifyUserName(loginData.MyloProfileName));
 	}
 
-	@When("^user clicks on the \"([^\"]*)\" \"([^\"]*)\" option in the Mylo Menu on the sidebar$")
-	public void user_clicks_on_the_option_in_the_Mylo_Menu_on_the_sidebar(String section, String subSection) {
+	@When("^he clicks on the \"([^\"]*)\" \"([^\"]*)\" option in the Mylo Menu on the sidebar$")
+	public void he_clicks_on_the_option_in_the_Mylo_Menu_on_the_sidebar(String section, String subSection) {
 		if (section.equals(MYLOConstants.HAMBURGER)) {
 			myloDashboardPage.clickOptionFromMainMenu(MYLOConstants.ASSIGNMENT);
 			myloDashboardPage.closePopUp();
@@ -58,8 +57,8 @@ public class MyloDashboard_Steps {
 		Assert.assertTrue(myloDashboardPage.verifySelectQueryOptions(data), MYLOConstants.INCORRECT_QUERY_PARAMETERS);
 	}
 
-	@Given("^user selects \"([^\"]*)\" section after clicking on \"([^\"]*)\" option in the Mylo Menu on the sidebar$")
-	public void user_selects_section_after_clicking_on_option_in_the_Mylo_Menu_on_the_sidebar(String parameter,
+	@Given("^he selects \"([^\"]*)\" section after clicking on \"([^\"]*)\" option in the Mylo Menu on the sidebar$")
+	public void he_selects_section_after_clicking_on_option_in_the_Mylo_Menu_on_the_sidebar(String parameter,
 			String mainMenuOption) {
 		myloDashboardPage.clickOptionFromMainMenu(mainMenuOption);
 		myloDashboardPage.selectParameterFromQueryScreen(parameter);

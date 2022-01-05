@@ -2,12 +2,12 @@ Feature: Validate the functionality of Mylo Dashboard Home page
   I want to test the  functionlity of Mylo Dashboard Home page
 
 Background: Login to  Mylo application
-    Given user has logged into the 'Mylo' application
+    Given he has logged into the 'Mylo' application
     
 @IRIS-582 @Mylo-Regression
 Scenario Outline: Mylo-Validate Select Query parameters from Assignment Options
-Given user is on Mylo Dashboard Home page
-When user clicks on the "<SectionType>" "<SubSection>" option in the Mylo Menu on the sidebar
+Given he is on Mylo Dashboard Home page
+When he clicks on the "<SectionType>" "<SubSection>" option in the Mylo Menu on the sidebar
 Then the Select Query Type screen should display with the given parameters
 |Row Number  |Parameters                                        |
 | First Row  |File,My File,My Active Files,My Unbilled          |
@@ -20,8 +20,8 @@ Examples:
 
 @IRIS-666 @Mylo-Regression
 Scenario: Mylo-Validate the functionality for Search Results in Query UI screen
-Given user is on Mylo Dashboard Home page
-And user selects "File" section after clicking on "Assignment" option in the Mylo Menu on the sidebar
+Given he is on Mylo Dashboard Home page
+And he selects "File" section after clicking on "Assignment" option in the Mylo Menu on the sidebar
 And Select Parameter popup should display with given parameters
 |Row Number  |Parameters           |
 | First Row  |File ID,Status,Office|

@@ -529,10 +529,10 @@ public class CoreFunctions {
 		LinkedHashMap<String, String> mp = new LinkedHashMap<String, String>();
 		try {
 			for (int i=0;i<roleNames.size();i++) {
-				mp.put(roleNames.get(i).getAttribute("value"), memberNames.get(i).getAttribute("value"));
+				mp.put(roleNames.get(i).getAttribute(CoreConstants.VALUE), memberNames.get(i).getAttribute(CoreConstants.VALUE));
 			}
 		} catch (Exception e) {
-			Assert.fail("Could not find item from list");
+			Assert.fail(CoreConstants.COULD_NOT_FIND_ITEM);
 		}
 		return mp;
 	}

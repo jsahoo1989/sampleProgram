@@ -78,4 +78,22 @@ public class PDT_GeneralInfo_Steps {
 						PDTConstants.heading, policyBenefitCategoryPage.getElementText(PDTConstants.HEADING)));
 		policyBenefitCategoryPage.selectPolicyBenefitCategory(benefitCategory);
 	}
+	
+	@Given("^he has selected below information for form fields on 'General Information' page followed by selection of \"([^\"]*)\" as Benefit Category on \"([^\"]*)\" page$")
+	public void he_has_selected_below_information_for_form_fields_on_General_Information_page_followed_by_selection_of_as_Benefit_Category_on_page(String benefitCategory, String pageName, DataTable generalInfoTable) {
+		generalInfoPage.explicitWaitForGeneralInfoHeading();
+		
+		Assert.assertTrue(generalInfoPage.verifyClientDetails(addNewPolicyPage.getClientId(), addNewPolicyPage.getClientName()),
+				MessageFormat.format(PDTConstants.FAILED_TO_VERIFY_CLIENT_DETAILS, CoreConstants.FAIL, addNewPolicyPage.getClientId(), addNewPolicyPage.getClientName(),
+						generalInfoPage.getElementText(PDTConstants.CLIENT_ID), generalInfoPage.getElementText(PDTConstants.CLIENT_NAME)));
+		
+		Assert.assertTrue(generalInfoPage.verifyPolicyName(addNewPolicyPage.getPolicyName()),
+				MessageFormat.format(PDTConstants.FAILED_TO_VERIFY_POLICY_NAME, CoreConstants.FAIL, addNewPolicyPage.getPolicyName(), generalInfoPage.getElementText(PDTConstants.POLICY_NAME)));
+		
+		generalInfoPage.enterGeneralInformationFields(generalInfoTable);
+		Assert.assertTrue(policyBenefitCategoryPage.verifyPolicyBenefitCategoryHeading(pageName),
+				MessageFormat.format(PDTConstants.FAIL_TO_VERIFY_ELEMENT_VAL_ON_PAGE, CoreConstants.FAIL, PDTConstants.heading, PDTConstants.POLICY_BENEFIT_CATEGORIES, pageName, PDTConstants.POLICY_BENEFIT_CATEGORIES,
+						PDTConstants.heading, policyBenefitCategoryPage.getElementText(PDTConstants.HEADING)));
+		policyBenefitCategoryPage.selectPolicyBenefitCategory(benefitCategory);
+	}
 }

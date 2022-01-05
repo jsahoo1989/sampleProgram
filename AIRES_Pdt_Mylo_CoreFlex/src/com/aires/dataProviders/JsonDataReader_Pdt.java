@@ -22,8 +22,10 @@ import java.io.FileReader;
 import java.io.IOException;
 import java.util.Arrays;
 import java.util.List;
+
 import com.aires.businessrules.constants.CoreConstants;
 import com.aires.managers.FileReaderManager;
+import com.aires.testdatatypes.pdt.PDT_ImmigrationBenefit;
 import com.aires.testdatatypes.pdt.PDT_LoginData;
 import com.aires.testdatatypes.pdt.PDT_PreAcceptanceServiceBenefit;
 import com.google.gson.Gson;
@@ -34,13 +36,17 @@ public class JsonDataReader_Pdt {
 			.getTestDataResourcePath() + "pdt/PDT_LoginData.json";
 	private final String _PreAcceptanceServiceFilePath = FileReaderManager.getInstance().getConfigReader()
 			.getTestDataResourcePath() + "pdt/PDT_PreAcceptanceServiceBenefit.json";
+	private final String _ImmigrationFilePath = FileReaderManager.getInstance().getConfigReader()
+			.getTestDataResourcePath() + "pdt/PDT_ImmigrationBenefit.json";
 	
 	private List<PDT_LoginData> _loginDataList;
 	private List<PDT_PreAcceptanceServiceBenefit> _preAcceptanceServicelist;
+	private List<PDT_ImmigrationBenefit> _immigrationList;
 	
 	public JsonDataReader_Pdt() {
 		_loginDataList = getUserData();
 		_preAcceptanceServicelist = getPreAcceptanceData();
+		_immigrationList = getImmigrationData();
 	}
 	
 	private List<PDT_LoginData> getUserData() {
@@ -79,12 +85,34 @@ public class JsonDataReader_Pdt {
 		}
 	}
 	
+	private List<PDT_ImmigrationBenefit> getImmigrationData() {
+		Gson gson = new Gson();
+		BufferedReader bufferReader = null;
+		try {
+			bufferReader = new BufferedReader(new FileReader(_ImmigrationFilePath));
+			PDT_ImmigrationBenefit[] immigration = gson.fromJson(bufferReader, PDT_ImmigrationBenefit[].class);
+			return Arrays.asList(immigration);
+		} catch (FileNotFoundException e) {
+			throw new RuntimeException(CoreConstants.JSON_FILE_NOT_FOUND_AT_PATH + _ImmigrationFilePath);
+		} finally {
+			try {
+				if (bufferReader != null)
+					bufferReader.close();
+			} catch (IOException ignore) {
+			}
+		}
+	}
+	
 	public final PDT_LoginData getloginDetailsByUserFirstName(String userFirstName) {
 		return _loginDataList.stream().filter(x -> x.firstName.equalsIgnoreCase(userFirstName)).findAny().get();
 	}
 	
 	public final PDT_PreAcceptanceServiceBenefit getPreAcceptanceDataList(String policyBenefit) {
 		return _preAcceptanceServicelist.stream().filter(x -> x.benefitName.equalsIgnoreCase(policyBenefit)).findAny().get();
+	}
+	
+	public final PDT_ImmigrationBenefit getImmigrationDataList(String policyBenefit) {
+		return _immigrationList.stream().filter(x -> x.benefitName.equalsIgnoreCase(policyBenefit)).findAny().get();
 	}
 	
 

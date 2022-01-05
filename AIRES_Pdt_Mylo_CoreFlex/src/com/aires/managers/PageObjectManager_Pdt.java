@@ -21,9 +21,11 @@ import org.openqa.selenium.WebDriver;
 
 import com.aires.pages.pdt.PDT_AddNewPolicyPage;
 import com.aires.pages.pdt.PDT_GeneralInformationPage;
+import com.aires.pages.pdt.PDT_ImmigrationPage;
 import com.aires.pages.pdt.PDT_LoginPage;
 import com.aires.pages.pdt.PDT_PolicyBenefitCategoryPage;
 import com.aires.pages.pdt.PDT_PreAcceptanceService;
+import com.aires.pages.pdt.PDT_SharedSubBenefitPage;
 import com.aires.pages.pdt.PDT_ViewPolicyPage;
 
 public class PageObjectManager_Pdt {
@@ -35,6 +37,8 @@ public class PageObjectManager_Pdt {
 	private PDT_GeneralInformationPage _generalInfoPage;
 	private PDT_PolicyBenefitCategoryPage _policyBenefitCategoryPage;
 	private PDT_PreAcceptanceService _pdtPreAcceptanceServicePage;
+	private PDT_ImmigrationPage _pdtImmigrationPage;
+	private PDT_SharedSubBenefitPage _sharedSubBenefitPage;
 
 	public PageObjectManager_Pdt(WebDriver driver) {
 		this._driver = driver;
@@ -62,5 +66,13 @@ public class PageObjectManager_Pdt {
 	
 	public PDT_PreAcceptanceService getPreAcceptanceServicePage() {
 		return (_pdtPreAcceptanceServicePage == null) ? _pdtPreAcceptanceServicePage = new PDT_PreAcceptanceService(_driver) : _pdtPreAcceptanceServicePage;
+	}
+	
+	public PDT_ImmigrationPage getImmigrationPage() {
+		return (_pdtImmigrationPage == null) ? _pdtImmigrationPage = new PDT_ImmigrationPage(_driver) : _pdtImmigrationPage;
+	}
+	
+	public PDT_SharedSubBenefitPage getSharedSubBenefitPage() {
+		return (_sharedSubBenefitPage == null) ? _sharedSubBenefitPage = new PDT_SharedSubBenefitPage(_driver) : _sharedSubBenefitPage;
 	}
 }

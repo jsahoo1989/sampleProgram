@@ -1,7 +1,11 @@
 package com.aires.pages.pdt;
 
 import java.text.MessageFormat;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
@@ -17,6 +21,7 @@ import com.aires.businessrules.constants.CoreConstants;
 import com.aires.businessrules.constants.PDTConstants;
 import com.aires.managers.FileReaderManager;
 import com.aires.testdatatypes.pdt.PDT_PreAcceptanceServiceBenefit;
+import com.aires.utilities.Log;
 import com.vimalselvam.cucumber.listener.Reporter;
 
 import cucumber.api.DataTable;
@@ -236,6 +241,45 @@ public class PDT_PreAcceptanceService extends Base {
 	@FindBy(how = How.XPATH, using = "//label[text()='Max Amount - Children (if applicable)']")
 	private WebElement _lblMaxAmtChildren;
 
+	@FindBy(how = How.XPATH, using = "//input[contains(@formcontrolname, 'candidateSelectionEmpTypeInd')]/parent::label")
+	private WebElement _lblCandidateSelEmpType;
+
+	@FindBy(how = How.XPATH, using = "//input[contains(@formcontrolname, 'candidateSelectionHomeTypeInd')]/parent::label")
+	private WebElement _lblCandidateSelHomeOwnerType;
+
+	@FindBy(how = How.XPATH, using = "//input[contains(@formcontrolname, 'tripTransportationEmpTypeInd')]/parent::label")
+	private WebElement _lblPreAcceptTripTransportEmpType;
+
+	@FindBy(how = How.XPATH, using = "//input[contains(@formcontrolname, 'tripTransportationHomeTypeInd')]/parent::label")
+	private WebElement _lblPreAcceptTripTransportHomeOwnerType;
+
+	@FindBy(how = How.XPATH, using = "//input[contains(@formcontrolname, 'tripLodgingEmpTypeInd')]/parent::label")
+	private WebElement _lblPreAcceptTripLodgingEmpType;
+
+	@FindBy(how = How.XPATH, using = "//input[contains(@formcontrolname, 'tripLodgingHomeTypeInd')]/parent::label")
+	private WebElement _lblPreAcceptTripLodgingHomeOwnerType;
+
+	@FindBy(how = How.XPATH, using = "//input[contains(@formcontrolname, 'tripMealsEmpTypeInd')]/parent::label")
+	private WebElement _lblPreAcceptTripMealEmpType;
+
+	@FindBy(how = How.XPATH, using = "//input[contains(@formcontrolname, 'tripMealsHomeTypeInd')]/parent::label")
+	private WebElement _lblPreAcceptTripMealHomeOwnerType;
+
+	@FindBy(how = How.CSS, using = "div.pcard-header > h4.card-title")
+	private WebElement _txtSubBenefitName;
+
+	@FindBy(how = How.CSS, using = "div#collapseOne div.mat-tab-label-content")
+	private List<WebElement> _tabOnCandidateSelectionForm;
+
+	@FindBy(how = How.CSS, using = "div#collapseTwo div.mat-tab-label-content")
+	private List<WebElement> _tabOnPreAcceptanceTripTransportation;
+
+	@FindBy(how = How.CSS, using = "div#collapseThree div.mat-tab-label-content")
+	private List<WebElement> _tabOnPreAcceptanceTripLodging;
+
+	@FindBy(how = How.CSS, using = "div#collapseFour div.mat-tab-label-content")
+	private List<WebElement> _tabOnPreAcceptanceTripMeals;
+
 	final By _subBenefitCategoriesLocator = By.cssSelector("div.form-check > label.form-check-label");
 
 	PDT_PreAcceptanceServiceBenefit preAcceptanceSubBenefitData = FileReaderManager.getInstance().getJsonReader()
@@ -358,43 +402,6 @@ public class PDT_PreAcceptanceService extends Base {
 		}
 	}
 
-	public void iterateAndSelectPreAcceptanceSubBenefits(String pageName, DataTable subBenefitTable,
-			PDT_AddNewPolicyPage addNewPolicyPage) {
-		CoreFunctions.waitHandler(3);
-		List<String> subBenefits = subBenefitTable.asList(String.class);
-		CoreFunctions.explicitWaitTillElementListClickable(driver, _subBenefitCategories);
-		for (String subBenefit : subBenefits) {
-			CoreFunctions.selectItemInListByText(driver, _subBenefitCategories, subBenefit, true);
-			Assert.assertTrue(verifyFormIsDisplayed(subBenefit, getElementByName(subBenefit), pageName),
-					MessageFormat.format(PDTConstants.VERIFIED_FORM_IS_NOT_DISPLAYED, subBenefit, pageName));
-			fillPreAcceptanceSubBenefit(subBenefit, addNewPolicyPage);
-		}
-		CoreFunctions.click(driver, _btnSaveAndContinue, _btnSaveAndContinue.getText());
-	}
-
-	public void fillPreAcceptanceSubBenefit(String subBenefit, PDT_AddNewPolicyPage addNewPolicyPage) {
-		switch (subBenefit) {
-		case PDTConstants.CANDIDATE_SELECTION:
-			expandSubBenefitIfCollapsed(getElementByName(PDTConstants.CANDIDATE_SELECTION));
-			fillCandidateSelection(addNewPolicyPage);
-			break;
-		case PDTConstants.PRE_ACCEPTANCE_TRIP_TRANSPORTATION:
-			expandSubBenefitIfCollapsed(getElementByName(PDTConstants.PRE_ACCEPTANCE_TRIP_TRANSPORTATION));
-			fillPreAcceptanceTripTransportation(addNewPolicyPage);
-			break;
-		case PDTConstants.PRE_ACCEPTANCE_TRIP_LODGING:
-			expandSubBenefitIfCollapsed(getElementByName(PDTConstants.PRE_ACCEPTANCE_TRIP_LODGING));
-			fillPreAcceptanceTripLodging(addNewPolicyPage);
-			break;
-		case PDTConstants.PRE_ACCEPTANCE_TRIP_MEALS:
-			expandSubBenefitIfCollapsed(getElementByName(PDTConstants.PRE_ACCEPTANCE_TRIP_MEALS));
-			fillPreAcceptanceTripMeals(addNewPolicyPage);
-			break;
-		default:
-			Assert.fail(MessageFormat.format(PDTConstants.ELEMENT_NOT_FOUND, CoreConstants.FAIL));
-		}
-	}
-
 	public void expandSubBenefitIfCollapsed(WebElement subBenefitForm) {
 		if (subBenefitForm.getAttribute("class").equalsIgnoreCase("collapsed"))
 			CoreFunctions.clickElement(driver, subBenefitForm);
@@ -421,7 +428,7 @@ public class PDT_PreAcceptanceService extends Base {
 			Assert.fail("Failed to fill Candidate Selection form");
 		}
 	}
-	
+
 	public void selectRandomTransportTypeOption(PDT_AddNewPolicyPage addNewPolicyPage) {
 		try {
 			CoreFunctions.clickElement(driver, _drpDownTransportationType);
@@ -435,6 +442,7 @@ public class PDT_PreAcceptanceService extends Base {
 			for (int i = 0; i < transportationType.length; i++) {
 				CoreFunctions.selectItemInListByText(driver, _drpDownTransportationTypeOptions,
 						transportationType[i].trim(), _lblTransportationType.getText(), PDTConstants.DROP_DOWN, true);
+				CoreFunctions.clickElement(driver, _drpDownTransportationType);
 			}
 
 			if (_drpDownTransportationTypeMultiSelectOptions.size() > 1) {
@@ -450,8 +458,8 @@ public class PDT_PreAcceptanceService extends Base {
 				CoreFunctions.clickElement(driver, _txtBoxTransportationTypeOther);
 				CoreFunctions.clearAndSetText(driver, _txtBoxTransportationTypeOther, _lblTransportationOther.getText(),
 						preAcceptanceSubBenefitData.preAcceptanceTripTransportation.transportationTypeOther);
-			}			
-		} catch(Exception e) {
+			}
+		} catch (Exception e) {
 			DbFunctions.deletePolicyByPolicyId(addNewPolicyPage.getPolicyId());
 			Assert.fail("Failed to select multiple options from Transportation type drop down.");
 		}
@@ -479,6 +487,7 @@ public class PDT_PreAcceptanceService extends Base {
 					randAccompanyingFamilMember, _lblAccompanyingFamilyMember.getText(), PDTConstants.DROP_DOWN, true);
 			setAccompanyingFamilyMember(randAccompanyingFamilMember);
 
+			CoreFunctions.explicitWaitTillElementListClickable(driver, _radioBtnPreTripTransport);
 			CoreFunctions.selectItemInListByText(driver, _radioBtnPreTripTransport,
 					preAcceptanceSubBenefitData.preAcceptanceTripTransportation.grossUp, PDTConstants.GROSS_UP,
 					PDTConstants.RADIO_BUTTON_LIST, true);
@@ -520,6 +529,7 @@ public class PDT_PreAcceptanceService extends Base {
 						preAcceptanceSubBenefitData.preAcceptanceTripLodging.currencyCode, _lblCurrency.getText(),
 						PDTConstants.DROP_DOWN, true);
 			}
+			CoreFunctions.explicitWaitTillElementListClickable(driver, _radioBtnPreTripLodging);
 			CoreFunctions.selectItemInListByText(driver, _radioBtnPreTripLodging,
 					preAcceptanceSubBenefitData.preAcceptanceTripLodging.grossUp, PDTConstants.GROSS_UP,
 					PDTConstants.RADIO_BUTTON_LIST, true);
@@ -560,6 +570,7 @@ public class PDT_PreAcceptanceService extends Base {
 			setMaxAmtPreAcceptTripMeals(randMaxAmtTripMeals);
 			checkIfFlatAmtIsSelected(addNewPolicyPage);
 
+			CoreFunctions.explicitWaitTillElementListClickable(driver, _radioBtnPreAcceptanceTripMeals);
 			CoreFunctions.selectItemInListByText(driver, _radioBtnPreAcceptanceTripMeals,
 					preAcceptanceSubBenefitData.preAcceptanceTripMeals.grossUp, PDTConstants.GROSS_UP,
 					PDTConstants.RADIO_BUTTON_LIST, true);

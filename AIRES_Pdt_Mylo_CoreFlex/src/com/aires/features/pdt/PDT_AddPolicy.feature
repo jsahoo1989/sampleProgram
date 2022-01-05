@@ -41,7 +41,7 @@ Feature: Add new Policy form with Benefit Categories
       | Candidate Selection | Pre-Acceptance Trip Transportation | Pre-Acceptance Trip Lodging | Pre-Acceptance Trip Meals |
 
   @Sprint-15 @PDT-Regression
-  Scenario: PDT - Add new Policy form with Pre-Acceptance Services as Benefit Category
+  Scenario: PDT - Add new Policy form using Pre-Acceptance Services as Benefit Category including their sub benefit categories
     Given he is on the "Add New Policy" page after clicking on the link "Add New Policy Form" displayed under the left navigation menu on the 'View Policy' page
     And he has clicked on the 'Next' button after selecting below information on the 'Add New Policy' page
       | ClientId | ClientName                    | PolicyName                  |
@@ -49,5 +49,37 @@ Feature: Add new Policy form with Benefit Categories
     And he has entered mandatory information on 'General Information' page followed by selection of "Pre-Acceptance Services" as Benefit Category on "Policy Benefit" page
     When he clicks on 'SUBMIT' button after entering mandatory information for all the below selected sub benefits on "Pre-Acceptance Services" page
       | Candidate Selection | Pre-Acceptance Trip Transportation | Pre-Acceptance Trip Lodging | Pre-Acceptance Trip Meals |
-    Then success message "Data submitted successfully" shoud be displayed on "Policy Benefit" page
+    Then success message "Data submitted successfully" should be displayed on the "Policy Benefit" page
     And newly created Policy should be displayed under "View Policy" page
+
+  @Sprint-16 @PDT-Regression @imigration
+  Scenario: PDT - Add new Policy form using Immigration as Benefit Category including their sub benefit categories
+    Given he is on the "Add New Policy" page after clicking on the link "Add New Policy Form" displayed under the left navigation menu on the 'View Policy' page
+    And he has clicked on the 'Next' button after selecting below information on the 'Add New Policy' page
+      | ClientId | ClientName                    | PolicyName                  |
+      |     7403 | Dow Chemical Company (Global) | hDCC Repatriation (# 14724) |
+    And he has entered mandatory information on 'General Information' page followed by selection of "Immigration" as Benefit Category on "Policy Benefit" page
+    When he clicks on 'SUBMIT' button after entering mandatory information for all the below selected sub benefits on "Immigration" page
+      | Immigration Fees | Immigration Travel |
+    Then success message "Data submitted successfully" should be displayed on the "Policy Benefit" page
+    And newly created Policy should be displayed under "View Policy" page
+
+  @Sprint-16 @PDT-Regression @tab
+  Scenario: PDT - Validate the display of tabs on Sub benefits form depending upon the selection/deselection of Benefit differs for Employee type, Benefit differs for Homeowner types
+    Given he is on the "Add New Policy Form" page after clicking on the link "Add New Policy Form" displayed under the left navigation menu on the 'View Policy' page
+    And he has clicked on the 'Next' button after selecting below information on the 'Add New Policy' page
+      | ClientId | ClientName                    | PolicyName                  |
+      |     7403 | Dow Chemical Company (Global) | hDCC Repatriation (# 14724) |
+    And he has selected below information for form fields on 'General Information' page followed by selection of "Pre-Acceptance Services" as Benefit Category on "Policy Benefit" page
+      | PolicyType    | EmployeeType                   | HomeownerType                  | BenefitPackageType | CappedPolicy     | ExpenseManagementClient |
+      | International | Both - benefits differ by type | Both - benefits differ by type | Bundle             | Partially Capped | No                      |
+    When he selects 'Benefit differs for Employee type', 'Benefit differs for Homeowner type' for below Sub benefits on "Pre-Acceptance Services" page
+      | SubBenefit                         | Benefit_differs_for_Employee_type | Benefit_differs_for_Home_Owner_type |
+      | Candidate Selection                | Yes                              | No                                 |
+      | Pre-Acceptance Trip Transportation | No                               | Yes                                |
+      | Pre-Acceptance Trip Lodging        | Yes                              | Yes                                |
+    Then below Tabs should appear in Sub benefit form on "Pre-Acceptance Services" page
+      | SubBenefit                         | Benefit_differs_for_Employee_type | Benefit_differs_for_Home_Owner_type | Tabs                                                                                             |
+      | Candidate Selection                | Yes                              | No                                 | Current Employees, New Hire                                                                       |
+      | Pre-Acceptance Trip Transportation | No                               | Yes                                | Home Owner, Renters                                                                               |
+      | Pre-Acceptance Trip Lodging        | Yes                              | Yes                                | Current Employee - HomeOwner, Current Employee - Renters, New Hire - HomeOwner, New Hire - Renter |

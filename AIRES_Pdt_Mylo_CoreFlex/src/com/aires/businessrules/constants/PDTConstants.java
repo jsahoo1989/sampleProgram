@@ -229,6 +229,8 @@ public class PDTConstants {
 	public static final String FLAT_AMT = "Flat Amount";
 	public static final String OTHER_TRAVEL_POLICY = "Other - see travel policy";
 	public static final String FLAT_AMT_PER_NIGHT = "Flat Amount/Night";
+	public static final String VERFIED_TAB_DISPLAYED = "{0}Verified tab:-''{1}'' is displayed under ''{2}'' sub-benefit form on ''{3}''.";
+	public static final String VERFIED_TAB_NOT_DISPLAYED = "<b>{0}</b>Tab:-''{1}'' is not displayed under ''{2}'' sub-benefit form on ''{3}''.<br/>";
 	//Immigration
 	public static final String IMMIGRATION_FEES = "Immigration Fees";
 	public static final String IMMIGRATION_TRAVEL = "Immigration Travel";
@@ -239,4 +241,9 @@ public class PDTConstants {
 	public static final String HOUR = "Hour";
 	public static final String MINUTES = "Minutes";
 	public static final String SECONDS = "Seconds";
+	public static final String VERIFIED_FIELD_DISPLAYED = "{0}Verified ''{1}'' text box is displayed for ''{2}'' sub benefit form.";
+	public static final String FAILED_TO_FILL_FIELD = "{0}Failed to fill value in ''{1}'' textbox for ''{2}'' sub benefit form.";
+	public static final String SEARCHED_ITEM_NOT_IN_LIST = "Searched item ''{0}'' does not exist in list.";
+	public static final String COULD_NOT_SELECT_ITEM_FROM_LIST = "Could not select item from list";
+	public static final String COULD_NOT_SEARCH_ITEM_FROM_LIST = "Could not search item :- ''{1}'' from list.";
 }

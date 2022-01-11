@@ -54,7 +54,8 @@ public class DbFunctions {
 			
 			callableStatement.setInt(1, policyId);
 			callableStatement.execute();
-		} catch (Exception ex) {					
+		} catch (Exception ex) {
+			ex.printStackTrace();
 			Assert.fail(CoreConstants.ERROR + "Fail to call procedure");
 		} finally {
 			try {

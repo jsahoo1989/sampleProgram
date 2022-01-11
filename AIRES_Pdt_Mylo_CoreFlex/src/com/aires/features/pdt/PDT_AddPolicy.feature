@@ -40,7 +40,7 @@ Feature: Add new Policy form with Benefit Categories
     Then below sub benefit categories form should disappear from  "Pre-Acceptance Services" page
       | Candidate Selection | Pre-Acceptance Trip Transportation | Pre-Acceptance Trip Lodging | Pre-Acceptance Trip Meals |
 
-  @Sprint-15 @PDT-Regression
+  @Sprint-15 @PDT-Regression @pre
   Scenario: PDT - Add new Policy form using Pre-Acceptance Services as Benefit Category including their sub benefit categories
     Given he is on the "Add New Policy" page after clicking on the link "Add New Policy Form" displayed under the left navigation menu on the 'View Policy' page
     And he has clicked on the 'Next' button after selecting below information on the 'Add New Policy' page
@@ -75,11 +75,47 @@ Feature: Add new Policy form with Benefit Categories
       | International | Both - benefits differ by type | Both - benefits differ by type | Bundle             | Partially Capped | No                      |
     When he selects 'Benefit differs for Employee type', 'Benefit differs for Homeowner type' for below Sub benefits on "Pre-Acceptance Services" page
       | SubBenefit                         | Benefit_differs_for_Employee_type | Benefit_differs_for_Home_Owner_type |
-      | Candidate Selection                | Yes                              | No                                 |
-      | Pre-Acceptance Trip Transportation | No                               | Yes                                |
-      | Pre-Acceptance Trip Lodging        | Yes                              | Yes                                |
+      | Candidate Selection                | Yes                               | No                                  |
+      | Pre-Acceptance Trip Transportation | No                                | Yes                                 |
+      | Pre-Acceptance Trip Lodging        | Yes                               | Yes                                 |
     Then below Tabs should appear in Sub benefit form on "Pre-Acceptance Services" page
       | SubBenefit                         | Benefit_differs_for_Employee_type | Benefit_differs_for_Home_Owner_type | Tabs                                                                                             |
-      | Candidate Selection                | Yes                              | No                                 | Current Employees, New Hire                                                                       |
-      | Pre-Acceptance Trip Transportation | No                               | Yes                                | Home Owner, Renters                                                                               |
-      | Pre-Acceptance Trip Lodging        | Yes                              | Yes                                | Current Employee - HomeOwner, Current Employee - Renters, New Hire - HomeOwner, New Hire - Renter |
+      | Candidate Selection                | Yes                               | No                                  | Current Employee, New Hire                                                                       |
+      | Pre-Acceptance Trip Transportation | No                                | Yes                                 | Home Owner, Renter                                                                               |
+      | Pre-Acceptance Trip Lodging        | Yes                               | Yes                                 | Current Employee - HomeOwner, Current Employee - Renter, New Hire - HomeOwner, New Hire - Renter |
+
+  @Sprint-17 @PDT-Regression @house
+  Scenario: PDT - Add new Policy form using House Hunting Trip as Benefit Category including their sub benefit categories
+    Given he is on the "Add New Policy" page after clicking on the link "Add New Policy Form" displayed under the left navigation menu on the 'View Policy' page
+    And he has clicked on the 'Next' button after selecting below information on the 'Add New Policy' page
+      | ClientId | ClientName                    | PolicyName                  |
+      |     7403 | Dow Chemical Company (Global) | hDCC Repatriation (# 14724) |
+    And he has entered mandatory information on 'General Information' page followed by selection of "House Hunting Trip" as Benefit Category on "Policy Benefit" page
+    When he clicks on 'SUBMIT' button after entering mandatory information for all the below selected sub benefits on "House Hunting Trip" page
+      | House Hunting Trip Transportation | House Hunting Trip Lodging | House Hunting Trip Meals |
+    Then success message "Data submitted successfully" should be displayed on the "Policy Benefit" page
+    And newly created Policy should be displayed under "View Policy" page
+    
+  @Sprint-17 @PDT-Regression @lang @PDT-384
+  Scenario: PDT - Add new Policy form using Language Training as Benefit Category including their sub benefit categories
+    Given he is on the "Add New Policy" page after clicking on the link "Add New Policy Form" displayed under the left navigation menu on the 'View Policy' page
+    And he has clicked on the 'Next' button after selecting below information on the 'Add New Policy' page
+      | ClientId | ClientName                    | PolicyName                  |
+      |     7403 | Dow Chemical Company (Global) | hDCC Repatriation (# 14724) |
+    And he has entered mandatory information on 'General Information' page followed by selection of "Language Training" as Benefit Category on "Policy Benefit" page
+    When he clicks on 'SUBMIT' button after entering mandatory information for all the below selected sub benefits on "Language Training" page
+      | Language Training Employee | Language Training Family |
+    Then success message "Data submitted successfully" should be displayed on the "Policy Benefit" page
+    And newly created Policy should be displayed under "View Policy" page
+    
+   @Sprint-17 @PDT-Regression @cult @PDT-385
+  Scenario: PDT - Add new Policy form using Cultural Training as Benefit Category including their sub benefit categories
+    Given he is on the "Add New Policy" page after clicking on the link "Add New Policy Form" displayed under the left navigation menu on the 'View Policy' page
+    And he has clicked on the 'Next' button after selecting below information on the 'Add New Policy' page
+      | ClientId | ClientName                    | PolicyName                  |
+      |     7403 | Dow Chemical Company (Global) | hDCC Repatriation (# 14724) |
+    And he has entered mandatory information on 'General Information' page followed by selection of "Cultural Training" as Benefit Category on "Policy Benefit" page
+    When he clicks on 'SUBMIT' button after entering mandatory information for all the below selected sub benefits on "Cultural Training" page
+      | Cultural Training Employee | Cultural Training Family |
+    Then success message "Data submitted successfully" should be displayed on the "Policy Benefit" page
+    And newly created Policy should be displayed under "View Policy" page   

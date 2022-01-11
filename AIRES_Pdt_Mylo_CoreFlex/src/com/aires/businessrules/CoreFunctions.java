@@ -1576,4 +1576,14 @@ public class CoreFunctions {
 	public static String getRandomElementValueFromList(WebDriver driver, List<WebElement> WebElementList) {
 		return WebElementList.get(getRandomNumber(0, WebElementList.size()-1)).getText();
 	}
+	
+	public static String getRandomAndUniqueMultipleSelectDropDownOptions(List<WebElement> dropDown) {
+		int randomIndex, temp;		
+		randomIndex = CoreFunctions.getRandomNumber(0, dropDown.size() - 1);
+		temp = CoreFunctions.getRandomNumber(0, dropDown.size() - 1);
+		while(temp == randomIndex) {
+			temp = CoreFunctions.getRandomNumber(0, dropDown.size() - 1);
+		}
+		return dropDown.get(randomIndex).getText() + ", "+dropDown.get(temp).getText();
+	}
 }

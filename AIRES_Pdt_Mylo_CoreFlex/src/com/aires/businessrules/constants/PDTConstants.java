@@ -224,13 +224,15 @@ public class PDTConstants {
 	public static final String VERIFIED_ELEMENT_ON_PAGE = "{0}Verified ''{1}'' on ''{2}'' page";
 	public static final String FAIL_TO_VERIFY_ELEMENT_ON_PAGE = "{0}Failed to verify ''{1}'' on ''{2}'' page";
 	public static final String VERIFIED_ELEMENT_DISPLAYED_ON_PAGE = "{0}Verified ''{1}'' :- ''{2}'' is displayed on ''{3}'' page";
-	public static final String FAILED_TO_VERIFY_ELEMENT_DISPLAYED_ON_PAGE = "{0}Failed to verify ''{1}'' :- ''{2}'' on ''{3}'' page. Expected ''{1}'' :- ''{2}''. Actual policy name ''{1}'' :- {4}";
+	public static final String FAILED_TO_VERIFY_ELEMENT_DISPLAYED_ON_PAGE = "{0}Failed to verify ''{1}'' :- ''{2}'' on ''{3}'' page. Expected ''{1}'' :- ''{2}''. Actual ''{1}'' :- ''{4}''.";
 	public static final String CURRENCY = "Currency";
 	public static final String FLAT_AMT = "Flat Amount";
 	public static final String OTHER_TRAVEL_POLICY = "Other - see travel policy";
 	public static final String FLAT_AMT_PER_NIGHT = "Flat Amount/Night";
 	public static final String VERFIED_TAB_DISPLAYED = "{0}Verified tab:-''{1}'' is displayed under ''{2}'' sub-benefit form on ''{3}''.";
 	public static final String VERFIED_TAB_NOT_DISPLAYED = "<b>{0}</b>Tab:-''{1}'' is not displayed under ''{2}'' sub-benefit form on ''{3}''.<br/>";
+	public static final String VERIFIED_SUB_BENEFITS_DISPLAYED = "{0}Verified sub-benefit categories:-''{1}'' are displayed on ''{2}'' page.";
+	public static final String FAILED_TO_VERIFY_SUB_BENEFITS = "{0}Failed to verify sub-benefit categories on ''{1}'' page. Expected sub-benefit categories:-''{2}''. Actual sub-benefit categories displayed on page:-''{3}''";
 	//Immigration
 	public static final String IMMIGRATION_FEES = "Immigration Fees";
 	public static final String IMMIGRATION_TRAVEL = "Immigration Travel";
@@ -241,9 +243,23 @@ public class PDTConstants {
 	public static final String HOUR = "Hour";
 	public static final String MINUTES = "Minutes";
 	public static final String SECONDS = "Seconds";
-	public static final String VERIFIED_FIELD_DISPLAYED = "{0}Verified ''{1}'' text box is displayed for ''{2}'' sub benefit form.";
+	public static final String VERIFIED_TEXT_BOX_FIELD_DISPLAYED = "{0}Verified ''{1}'' text box is displayed for ''{2}'' sub benefit form.";
+	public static final String VERIFIED_DROP_DWN_FIELD_DISPLAYED = "{0}Verified ''{1}'' drop down is displayed for ''{2}'' sub benefit form.";
 	public static final String FAILED_TO_FILL_FIELD = "{0}Failed to fill value in ''{1}'' textbox for ''{2}'' sub benefit form.";
 	public static final String SEARCHED_ITEM_NOT_IN_LIST = "Searched item ''{0}'' does not exist in list.";
 	public static final String COULD_NOT_SELECT_ITEM_FROM_LIST = "Could not select item from list";
 	public static final String COULD_NOT_SEARCH_ITEM_FROM_LIST = "Could not search item :- ''{1}'' from list.";
+	public static final String POLICY_BENEFIT_CATEGORY = "Policy Benefit Category";
+	//houseHunting Trip
+	public static final String HOUSE_HUNTING_TRIP_TRANSPORTATION = "House Hunting Trip Transportation";
+	public static final String HOUSE_HUNTING_TRIP_LODGING = "House Hunting Trip Lodging";
+	public static final String HOUSE_HUNTING_TRIP_MEALS = "House Hunting Trip Meals";
+	//language Training
+	public static final String LANGUAGE_TRAINING_EMPLOYEE = "Language Training Employee";
+	public static final String LANGUAGE_TRAINING_FAMILY = "Language Training Family";
+	//cultural Training
+	public static final String CULTURAL_TRAINING_EMPLOYEE = "Cultural Training Employee";
+	public static final String CULTURAL_TRAINING_FAMILY = "Cultural Training Family";
+	
+	
 }

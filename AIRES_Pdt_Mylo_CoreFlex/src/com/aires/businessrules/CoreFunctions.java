@@ -346,6 +346,14 @@ public class CoreFunctions {
 		}
 	}
 
+	public static void explicitWaitTillElementListVisibilityWithTime(WebDriver driver, List<WebElement> Element,
+			long time) {
+		WebDriverWait wait = new WebDriverWait(driver, time);
+		for (WebElement ele : Element) {
+			wait.until(ExpectedConditions.visibilityOf(ele));
+		}
+	}
+
 	public static void explicitWaitTillElementStaleness(WebDriver driver, WebElement element) {
 		WebDriverWait wait = new WebDriverWait(driver, 30);
 		wait.until(ExpectedConditions.stalenessOf(element));
@@ -479,36 +487,70 @@ public class CoreFunctions {
 	}
 
 	public static void selectItemInListByText(WebDriver driver, List<WebElement> WebElementList, String searchText) {
-
+		boolean itemSearched = false;
 		try {
 			for (WebElement row : WebElementList) {
-				Log.info("The Actual Item Name is :" + row.getText());
+				Log.info(CoreConstants.ACTUAL_ITEM_NAME_IS + row.getText());
 				if (row.getText().contains(searchText)) {
+					itemSearched = true;
 					CoreFunctions.clickUsingJS(driver, row, row.getText());
 					break;
 				}
 			}
-
+			if (!itemSearched) {
+				Assert.fail(MessageFormat.format(PDTConstants.SEARCHED_ITEM_NOT_IN_LIST, searchText));
+			}
 		} catch (Exception e) {
-			Assert.fail("Could not select item from list");
-			e.printStackTrace();
+			Assert.fail(PDTConstants.COULD_NOT_SELECT_ITEM_FROM_LIST);
 		}
+	}
+
+	public static WebElement returnItemInListByText(WebDriver driver, List<WebElement> WebElementList,
+			String searchText) {
+		try {
+			for (WebElement row : WebElementList) {
+				Log.info(CoreConstants.ACTUAL_ITEM_NAME_IS + row.getText());
+				if (row.getText().contains(searchText)) {
+					return row;
+				}
+			}
+		} catch (Exception e) {
+			Assert.fail(PDTConstants.COULD_NOT_SELECT_ITEM_FROM_LIST);
+		}
+		return null;
+	}
+
+	public static LinkedHashMap<String, String> returnMapFromBothLists(WebDriver driver, List<WebElement> roleNames,
+			List<WebElement> memberNames) {
+		LinkedHashMap<String, String> mp = new LinkedHashMap<String, String>();
+		try {
+			for (int i = 0; i < roleNames.size(); i++) {
+				mp.put(roleNames.get(i).getAttribute(CoreConstants.VALUE),
+						memberNames.get(i).getAttribute(CoreConstants.VALUE));
+			}
+		} catch (Exception e) {
+			Assert.fail(CoreConstants.COULD_NOT_FIND_ITEM);
+		}
+		return mp;
 	}
 
 	public static void selectItemInListByText(WebDriver driver, List<WebElement> WebElementList, String searchText,
 			boolean reporter) {
-
+		boolean itemSearched = false;
 		try {
 			for (WebElement row : WebElementList) {
-				Log.info("The Actual Item Name is :" + row.getText());
+				Log.info(CoreConstants.ACTUAL_ITEM_NAME_IS + row.getText());
 				if (row.getText().contains(searchText)) {
+					itemSearched = true;
 					clickRowInResult(driver, row, reporter, searchText);
 					break;
 				}
 			}
-
+			if (!itemSearched) {
+				Assert.fail(MessageFormat.format(PDTConstants.SEARCHED_ITEM_NOT_IN_LIST, searchText));
+			}
 		} catch (Exception e) {
-			Assert.fail("Could not select item from list");
+			Assert.fail(PDTConstants.COULD_NOT_SELECT_ITEM_FROM_LIST);
 			e.printStackTrace();
 		}
 	}
@@ -598,8 +640,12 @@ public class CoreFunctions {
 			element.clear();
 			highlightObject(driver, element);
 			element.sendKeys(textToEnter);
-			Reporter.addStepLog(CoreConstants.PASS
-					+ MessageFormat.format(CoreConstants.VRFYD_TXT_CLR_VAL, elementName, textToEnter));
+			if (elementName.equalsIgnoreCase("password"))
+				Reporter.addStepLog(CoreConstants.PASS
+						+ MessageFormat.format(CoreConstants.VRFYD_TXT_CLR_VAL, elementName, "xxxxxx"));
+			else
+				Reporter.addStepLog(CoreConstants.PASS
+						+ MessageFormat.format(CoreConstants.VRFYD_TXT_CLR_VAL, elementName, textToEnter));
 		} catch (Exception e) {
 			Log.info(MessageFormat.format(CoreConstants.FAILED_TXT_CLR_VAL, elementName));
 			Reporter.addStepLog(MessageFormat.format(CoreConstants.FAILED_TXT_CLR_VAL, elementName));
@@ -706,7 +752,7 @@ public class CoreFunctions {
 			waitTillElementVisibleWithCustomTime(driver, element, time);
 			if (element.isDisplayed()) {
 				Reporter.addStepLog(
-						CoreConstants.PASS + MessageFormat.format(MYLOConstants.VERIFY_TAB_EXISTS, pageName));
+						CoreConstants.PASS + MessageFormat.format(CoreConstants.VERIFY_TAB_EXISTS, pageName));
 				CoreFunctions.highlightObject(driver, element);
 				return true;
 			} else {
@@ -721,12 +767,12 @@ public class CoreFunctions {
 		String _documentNameFirst = documentName.split("\\.")[0];
 		String _downloadedFileFirst = getLatestFilefromDirectory().getName().split("\\.")[0];
 		if (!_downloadedFileFirst.contains(_documentNameFirst)) {
-			Reporter.addStepLog(CoreConstants.FAIL + MYLOConstants.FILE_NOT_DOENLOADED_MESSAGE + documentName);
+			Reporter.addStepLog(CoreConstants.FAIL + CoreConstants.FILE_NOT_DOWNLOADED_MESSAGE + documentName);
 			Log.info(MYLOConstants.FILE_NOT_DOENLOADED_MESSAGE + documentName);
 			return false;
 		} else {
 			Assert.assertTrue(_downloadedFileFirst.contains(_documentNameFirst), "Document was not downloaded");
-			Reporter.addStepLog(CoreConstants.PASS + MYLOConstants.FILE_SUCCESSFULLY_DOWNLOADED_MESSAGE + documentName);
+			Reporter.addStepLog(CoreConstants.PASS + CoreConstants.FILE_SUCCESSFULLY_DOWNLOADED_MESSAGE + documentName);
 			Log.info(MYLOConstants.FILE_SUCCESSFULLY_DOWNLOADED_MESSAGE + documentName);
 			return true;
 		}
@@ -754,7 +800,7 @@ public class CoreFunctions {
 		boolean exists = false;
 		try {
 			for (WebElement row : WebElementList) {
-				Log.info("The Actual Item Name is :" + row.getText());
+				Log.info(CoreConstants.ACTUAL_ITEM_NAME_IS + row.getText());
 				if (row.getText().contains(searchText)) {
 					exists = true;
 					CoreFunctions.highlightObject(driver, row);
@@ -764,7 +810,7 @@ public class CoreFunctions {
 			}
 
 		} catch (Exception e) {
-			Assert.fail("Could not search item " + searchText + " from list");
+			Assert.fail(MessageFormat.format(PDTConstants.COULD_NOT_SEARCH_ITEM_FROM_LIST, searchText));
 			e.printStackTrace();
 		}
 		return exists;
@@ -919,18 +965,16 @@ public class CoreFunctions {
 			String elementVal, String pageName, boolean displayMsgInReport) {
 		try {
 			CoreFunctions.explicitWaitTillElementVisibility(driver, element, elementName);
-			Log.info("Actual element val ==" + element.getText().trim());
-			Log.info("Expected element val ==" + elementVal);
 			if (element.getText().trim().equals(elementVal) && displayMsgInReport) {
 				Reporter.addStepLog(MessageFormat.format(PDTConstants.VERIFY_ELEMENT_VALUE_ON_PAGE, CoreConstants.PASS,
 						elementName, elementVal, pageName));
 				CoreFunctions.highlightObject(driver, element);
+				return true;
 			} else if (element.getText().trim().equals(elementVal) && !displayMsgInReport) {
 				CoreFunctions.highlightObject(driver, element);
-			} else {
-				return false;
+				return true;
 			}
-			return element.getText().equals(elementVal);
+			return false;
 		} catch (Exception e) {
 			return false;
 		}
@@ -1463,6 +1507,28 @@ public class CoreFunctions {
 		return (elementList.stream().map(x -> x.getText()).collect(Collectors.toList()));
 	}
 
+	public static void selectItemInListByText(WebDriver driver, List<WebElement> WebElementList, String searchText,
+			String fieldName, String fieldType, boolean reporter) {
+		boolean itemSearched = false;
+		try {
+			for (WebElement row : WebElementList) {
+				if (row.getText().contains(searchText)) {
+					itemSearched = true;
+					CoreFunctions.clickWithoutReporting(driver, row, searchText);
+					Reporter.addStepLog(MessageFormat.format(PDTConstants.VERIFY_VALUE_SELECTED_FROM_FIELD,
+							CoreConstants.PASS, fieldName, fieldType, searchText));
+					break;
+				}
+			}
+			if (!itemSearched) {
+				Assert.fail("Searched item:-" + searchText + "does not exist in " + fieldName + " list.");
+			}
+		} catch (Exception e) {
+			Assert.fail(MessageFormat.format(PDTConstants.FAIL_TO_SELECT_VALUE_FROM_FIELD, CoreConstants.FAIL,
+					searchText, fieldName, fieldType));
+		}
+	}
+
 	public static WebElement getElementFromListByText(List<WebElement> elementList, String text) {
 		try {
 			for (WebElement element : elementList) {
@@ -1476,6 +1542,37 @@ public class CoreFunctions {
 			e.printStackTrace();
 		}
 		return null;
+	}
+
+	public static void explicitWaitTillElementListVisibilityCustomTime(WebDriver driver, List<WebElement> Element,
+			int time) {
+		WebDriverWait wait = new WebDriverWait(driver, time);
+		for (WebElement ele : Element) {
+			wait.until(ExpectedConditions.visibilityOf(ele));
+		}
+	}
+
+	public static boolean searchElementExistsInListByTextIgnoreCase(WebDriver driver, List<WebElement> WebElementList,
+			String searchText) {
+		boolean exists = false;
+		try {
+			for (WebElement row : WebElementList) {
+				Log.info(CoreConstants.ACTUAL_ITEM_NAME_IS + row.getText());
+				if (row.getText().equalsIgnoreCase(searchText)) {
+					exists = true;
+					CoreFunctions.highlightObject(driver, row);
+					break;
+				}
+			}
+
+		} catch (Exception e) {
+			Assert.fail(MessageFormat.format(PDTConstants.COULD_NOT_SEARCH_ITEM_FROM_LIST, searchText));
+		}
+		return exists;
+	}
+
+	public static String getRandomElementValueFromList(WebDriver driver, List<WebElement> WebElementList) {
+		return WebElementList.get(getRandomNumber(0, WebElementList.size() - 1)).getText();
 	}
 
 	public static String generateRandomNumberInGivenRange(int startingRange, int endingRange) {

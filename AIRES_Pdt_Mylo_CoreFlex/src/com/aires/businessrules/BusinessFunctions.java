@@ -50,8 +50,8 @@ import org.openqa.selenium.support.ui.Select;
 import org.testng.Assert;
 
 import com.aires.businessrules.constants.CoreConstants;
-import com.aires.businessrules.constants.MYLOConstants;
 import com.aires.businessrules.constants.PDTConstants;
+import com.aires.pages.pdt.PDT_AddNewPolicyPage;
 import com.aires.utilities.EmailUtil;
 import com.aires.utilities.Log;
 import com.aires.utilities.getWindowText;
@@ -67,8 +67,7 @@ import com.vimalselvam.cucumber.listener.Reporter;
 
 public class BusinessFunctions {
 	private static String windowTitle;
-	private static Editor editor;
-	private static Window windowName;	
+	private static Editor editor;	
 	public static int count = 0;
 	static Logger LOG = Logger.getLogger(BusinessFunctions.class);
 	public static String userNameValue, passwordValue;
@@ -83,7 +82,7 @@ public class BusinessFunctions {
 		CoreFunctions.waitForBrowserToLoad(driver);
 		CoreFunctions.waitHandler(3);
 		for (WebElement row : WebElementList) {
-			Log.info("The Actual Item Name is :" + row.getText());
+			Log.info(CoreConstants.ACTUAL_ITEM_NAME_IS + row.getText());
 			if (row.getText().equals(itemName)) {
 				CoreFunctions.clickUsingJS(driver, row, itemName);
 				Reporter.addStepLog(CoreConstants.PASS + row.getText() + PDTConstants.IS_CLICKED);
@@ -135,7 +134,7 @@ public class BusinessFunctions {
 			String itemName, String attributeValue) {
 		CoreFunctions.waitHandler(2);
 		for (WebElement row : WebElementList) {
-			Log.info("The Actual Item Name is :" + row.getText());
+			Log.info(CoreConstants.ACTUAL_ITEM_NAME_IS + row.getText());
 			if (row.getAttribute(attributeValue).equals(itemName)) {
 				Reporter.addStepLog(CoreConstants.PASS + row.getAttribute(attributeValue) + PDTConstants.IS_CLICKED);
 				CoreFunctions.click(driver, row, itemName);
@@ -153,7 +152,7 @@ public class BusinessFunctions {
 		System.out.println("inside radio as per label text");
 		System.out.println("count--" + WebElementList_Label.size());
 		for (WebElement row : WebElementList_Label) {
-			Log.info("The Actual Item Name is :" + row.getText());
+			Log.info(CoreConstants.ACTUAL_ITEM_NAME_IS + row.getText());
 			if ((row.getText().trim()).equals(labelName)) {
 				CoreFunctions.click(driver, row, labelName);
 				Reporter.addStepLog(CoreConstants.PASS + row.getText() + PDTConstants.IS_CLICKED);
@@ -168,7 +167,7 @@ public class BusinessFunctions {
 		System.out.println("inside radio as per label text");
 		System.out.println("count--" + WebElementList_Label.size());
 		for (WebElement row : WebElementList_Label) {
-			Log.info("The Actual Item Name is :" + row.getText());
+			Log.info(CoreConstants.ACTUAL_ITEM_NAME_IS + row.getText());
 			if (row.getText().equals(labelName)) {
 				CoreFunctions.clickElement(driver, row);
 				Reporter.addStepLog(MessageFormat.format(PDTConstants.VERIFIED_OPTION_CHOSEN_FOR_RADIO_BTN,
@@ -184,7 +183,7 @@ public class BusinessFunctions {
 		System.out.println("inside radio as per label text");
 		System.out.println("count--" + WebElementList_Label.size());
 		for (WebElement row : WebElementList_Label) {
-			Log.info("The Actual Item Name is :" + row.getText());
+			Log.info(CoreConstants.ACTUAL_ITEM_NAME_IS + row.getText());
 			if (row.getText().equals(labelName)) {
 				CoreFunctions.highlightObject(driver, row);
 				CoreFunctions.click(driver, row, labelName);
@@ -223,12 +222,12 @@ public class BusinessFunctions {
 		editor = window.describe(Editor.class, new EditorDescription.Builder().attachedText("Name*").build());
 		if (editor.getText().equalsIgnoreCase(expectedCompanyName)) {
 			isExists = true;
-			Reporter.addStepLog(CoreConstants.PASS + MYLOConstants.PARTNER_TAB + MYLOConstants.EDITOR_NAME
+			Reporter.addStepLog(CoreConstants.PASS + CoreConstants.PARTNER_TAB + CoreConstants.EDITOR_NAME
 					+ CoreConstants.IS_DISPLAYED_AS + editor.getText());
 		} else {
-			Reporter.addStepLog(CoreConstants.FAIL + MYLOConstants.PARTNER_TAB + MYLOConstants.EDITOR_NAME
+			Reporter.addStepLog(CoreConstants.FAIL + CoreConstants.PARTNER_TAB + CoreConstants.EDITOR_NAME
 					+ PDTConstants.IS_NOT_DISPLAYED);
-			Assert.fail(MYLOConstants.PARTNER_TAB + MYLOConstants.EDITOR_NAME + PDTConstants.IS_NOT_DISPLAYED);
+			Assert.fail(CoreConstants.PARTNER_TAB + CoreConstants.EDITOR_NAME + PDTConstants.IS_NOT_DISPLAYED);
 		}
 		return isExists;
 	}
@@ -242,7 +241,7 @@ public class BusinessFunctions {
 	public static void selectCheckBoxAsPerLabelText(WebDriver driver, WebElement WebElementList_Label,
 			String labelName) {
 		CoreFunctions.waitHandler(2);
-		Log.info("The Actual Item Name is :" + WebElementList_Label.getText());
+		Log.info(CoreConstants.ACTUAL_ITEM_NAME_IS + WebElementList_Label.getText());
 		if (WebElementList_Label.getText().equals(labelName)) {
 			CoreFunctions.click(driver, WebElementList_Label, labelName);
 			Reporter.addStepLog(CoreConstants.PASS + WebElementList_Label.getText() + PDTConstants.IS_CLICKED);
@@ -302,7 +301,7 @@ public class BusinessFunctions {
 	public static boolean verifyMsgOnDialog(Dialog dialog, String msg, String dialogName)
 			throws GeneralLeanFtException {
 		if (dialog.getVisibleText().contains(msg)) {
-			Reporter.addStepLog(MessageFormat.format(MYLOConstants.VERIFIED_MESSAGE_ON_DIALOG, CoreConstants.PASS, msg,
+			Reporter.addStepLog(MessageFormat.format(CoreConstants.VERIFIED_MESSAGE_ON_DIALOG, CoreConstants.PASS, msg,
 					dialogName));
 		}
 		return dialog.getVisibleText().contains(msg);
@@ -320,7 +319,7 @@ public class BusinessFunctions {
 	public static boolean verifyTextEditorValueInIris(Editor editorObj, String editorName, String editorVal,
 			String tabName) throws GeneralLeanFtException {
 		if (editorObj.getText().equals(editorVal))
-			Reporter.addStepLog(MessageFormat.format(MYLOConstants.VERIFIED_FIELD_ON_TAB, CoreConstants.PASS,
+			Reporter.addStepLog(MessageFormat.format(CoreConstants.VERIFIED_FIELD_ON_TAB, CoreConstants.PASS,
 					editorName, editorVal, tabName));
 
 		return editorObj.getText().equals(editorVal);
@@ -341,7 +340,7 @@ public class BusinessFunctions {
 		CoreFunctions.waitForBrowserToLoad(driver);
 		CoreFunctions.waitHandler(3);
 		for (WebElement row : WebElementList) {
-			Log.info("The Actual Item Name is :" + row.getText());
+			Log.info(CoreConstants.ACTUAL_ITEM_NAME_IS + row.getText());
 			if (row.getText().equals(itemName)) {
 				CoreFunctions.clickUsingJS(driver, row, itemName);
 				Reporter.addStepLog(CoreConstants.PASS + row.getText() + PDTConstants.IS_CLICKED);
@@ -481,41 +480,6 @@ public class BusinessFunctions {
 		return isExists;
 	}
 
-	public static int calculateCarRentalRates(int noOfTrips, int dailyRates, int weeklyRates, int monthlyRates,
-			int daysRemaining, int week, int month) {
-		Log.info("noOfTrips==" + noOfTrips);
-		Log.info("dailyRates==" + dailyRates);
-		Log.info("weeklyRates==" + weeklyRates);
-		Log.info("monthlyRates==" + monthlyRates);
-		Log.info("daysRemaining==" + daysRemaining);
-		Log.info("week==" + week);
-		Log.info("month==" + month);
-		return noOfTrips * ((dailyRates * daysRemaining) + (weeklyRates * week) + (monthlyRates * month));
-	}
-
-	public static double calculateAirFareRates(String tripType, int noOfTrips, int rate, int noOfAdults,
-			int noOfChildren) {
-		double airFareCost = 0;
-		try {
-			switch (tripType) {
-			case PDTConstants.ROUND_TRIP:
-				airFareCost = noOfTrips * ((noOfAdults * rate) + (noOfChildren * rate));
-				break;
-			case PDTConstants.ONE_WAY:
-				airFareCost = noOfTrips * 0.75 * ((noOfAdults * rate) + (noOfChildren * rate));
-				break;
-			default:
-				Assert.fail(PDTConstants.TRIP_NOT_FOUND);
-			}
-
-		} catch (Exception ex) {
-			Log.info(CoreConstants.ERROR + ex.getMessage());
-			Log.info(CoreConstants.ERROR + ex.getStackTrace());
-			Assert.fail(CoreConstants.ERROR + PDTConstants.FAIL_CALC_AIR_FARE_RATE);
-		}
-		return airFareCost;
-	}
-
 	public static String setMoneyFormat(double amount) {
 		DecimalFormat df = new DecimalFormat("0.00");
 		df.setRoundingMode(RoundingMode.UP);
@@ -543,7 +507,7 @@ public class BusinessFunctions {
 	public static void selectItemFromListUsingTextAndDoubleClick(WebDriver driver, List<WebElement> WebElementList,
 			String itemName) {
 		for (WebElement element : WebElementList) {
-			Log.info("The Actual Item Name is :" + element.getText());
+			Log.info(CoreConstants.ACTUAL_ITEM_NAME_IS + element.getText());
 			if (element.getText().contains(itemName) && CoreFunctions.verifyElementPresentOnPage(element, itemName)) {
 				CoreFunctions.highlightObject(driver, element);
 				Actions act = new Actions(driver);
@@ -552,15 +516,13 @@ public class BusinessFunctions {
 		}
 	}
 
-	public static int returnindexItemFromListUsingAttribute(WebDriver driver, List<WebElement> WebElementList,
-			String itemName, String attribute) {
-		CoreFunctions.waitHandler(3);
+	public static int returnindexItemFromListUsingText(WebDriver driver, List<WebElement> WebElementList,
+			String itemName) {
 		try {
 			for (WebElement row : WebElementList) {
-				Log.info("The Actual Item Name is :" + row.getAttribute(attribute));
-				if (row.getAttribute(attribute).equals(itemName)) {
+				Log.info(CoreConstants.ACTUAL_ITEM_NAME_IS + row.getText());
+				if (row.getText().equals(itemName))
 					return WebElementList.indexOf(row);
-				}
 			}
 		} catch (ElementNotFoundException e) {
 			e.printStackTrace();
@@ -571,7 +533,7 @@ public class BusinessFunctions {
 	public static void clickItemFromListUsingText(WebDriver driver, List<WebElement> WebElementList, String itemName) {
 		CoreFunctions.waitHandler(8);
 		for (WebElement row : WebElementList) {
-			Log.info("The Actual Item Name is :" + row.getText());
+			Log.info(CoreConstants.ACTUAL_ITEM_NAME_IS + row.getText());
 			if (row.getText().equals(itemName)) {
 				CoreFunctions.click(driver, row, row.getText());
 				Reporter.addStepLog(CoreConstants.PASS + row.getText() + PDTConstants.IS_CLICKED);
@@ -589,7 +551,7 @@ public class BusinessFunctions {
 	public static WebElement returnReportNameIfContainsInList(WebDriver driver, List<WebElement> _elementList,
 			String itemName) {
 		for (WebElement element : _elementList) {
-			Log.info("The Actual Item Name is :" + element.getText());
+			Log.info(CoreConstants.ACTUAL_ITEM_NAME_IS + element.getText());
 			System.out.println("Substring Report Name " + element.getText().substring(0, element.getText().indexOf('.')));
 			if (itemName.contains(element.getText().substring(0, element.getText().indexOf('.')))) {
 				return element;
@@ -601,7 +563,7 @@ public class BusinessFunctions {
 	public static WebElement returnItemIfContainsInList(WebDriver driver, List<WebElement> _elementList,
 			String itemName) {
 		for (WebElement element : _elementList) {
-			Log.info("The Actual Item Name is :" + element.getText());
+			Log.info(CoreConstants.ACTUAL_ITEM_NAME_IS + element.getText());
 			if (element.getText().contains(itemName)) {
 				return element;
 			}
@@ -624,29 +586,37 @@ public class BusinessFunctions {
 	}
 
 	public static List<String> sortList(List<String> listToBeSorted, String sortingOrder) {
-
 		try {
 			Comparator<String> c = null;
-
 			switch (sortingOrder) {
-
 			case PDTConstants.DESCENDING:
 				c = (I1, I2) -> (I2.compareTo(I1));
 				break;
-
 			case PDTConstants.ASCENDING:
 				c = (I1, I2) -> (I1.compareTo(I2));
 				break;
-
 			default:
 				Assert.fail(PDTConstants.INVALID_SORT_OPERATION);
 			}
 			Collections.sort(listToBeSorted, c);
-
 		} catch (Exception ex) {
 			Log.info(CoreConstants.ERROR + ex.getMessage());
 			Assert.fail(CoreConstants.ERROR + PDTConstants.UNABLE_TO_SORT_LIST);
 		}
 		return listToBeSorted;
+	}
+	
+	public static void verifyReimbursedByOtherTextBoxIsDisplayed(WebDriver driver, PDT_AddNewPolicyPage addNewPolicyPage, String jsonReimbursedBy, WebElement element, String jsonReimbursedByOther, String SubBenefitFormName) {
+		try {
+			if (jsonReimbursedBy.equalsIgnoreCase(PDTConstants.OTHER) && CoreFunctions.isElementExist(driver, element, 1)) {
+				Reporter.addStepLog(MessageFormat.format(PDTConstants.VERIFIED_FIELD_DISPLAYED, CoreConstants.PASS, PDTConstants.REIMBURSED_BY_OTHER, SubBenefitFormName));
+				CoreFunctions.clearAndSetText(driver, element,
+						PDTConstants.REIMBURSED_BY_OTHER,
+						jsonReimbursedByOther);
+			}
+		} catch(Exception e) {
+			DbFunctions.deletePolicyByPolicyId(addNewPolicyPage.getPolicyId());			
+			Assert.fail(MessageFormat.format(PDTConstants.FAILED_TO_FILL_FIELD, PDTConstants.REIMBURSED_BY_OTHER, SubBenefitFormName));
+		}
 	}
 }

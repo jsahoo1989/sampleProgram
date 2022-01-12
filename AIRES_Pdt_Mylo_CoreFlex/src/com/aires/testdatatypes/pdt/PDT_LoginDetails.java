@@ -5,7 +5,6 @@ public class PDT_LoginDetails {
 	
 	public String application;
 	public MxTransferee mxTransferee;
-	public SpringboardTransferee springboardTransferee;
 	public UserIRISTestQA userIRISTestQA;
 	public UserIRISTestDEV userIRISTestDEV;
 	public UserIRISProd userIRISProd;
@@ -15,7 +14,6 @@ public class PDT_LoginDetails {
 		public String password;
 		public String firstName;
 		public String lastName;
-
 	}
 
 	public class MxLinkedTransferee {
@@ -23,14 +21,6 @@ public class PDT_LoginDetails {
 		public String password;
 		public String firstName;
 		public String lastName;
-	}
-
-	public class SpringboardTransferee {
-		public String userName;
-		public String password;
-		public String firstName;
-		public String lastName;
-
 	}
 
 	public class UserIRISTestQA {
@@ -53,5 +43,4 @@ public class PDT_LoginDetails {
 		public String firstName;
 		public String lastName;
 	}
-
 }

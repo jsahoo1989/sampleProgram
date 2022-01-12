@@ -11,11 +11,7 @@ import com.aires.businessrules.constants.CoreConstants;
 import com.aires.businessrules.constants.IRISConstants;
 import com.aires.iris.helpers.Helpers;
 import com.aires.pages.iris.basepage.BasePage;
-import com.aires.utilities.Log;
 import com.hp.lft.sdk.GeneralLeanFtException;
-import com.hp.lft.sdk.java.Button;
-import com.hp.lft.sdk.java.Editor;
-import com.hp.lft.sdk.java.EditorDescription;
 import com.hp.lft.sdk.java.Table;
 import com.vimalselvam.cucumber.listener.Reporter;
 
@@ -23,22 +19,22 @@ import cucumber.api.DataTable;
 
 public class IRIS_Corporation_Accounting extends BasePage {
 
-	private String windowTitle;
-	private boolean _isExists = false;
-
 	public IRIS_Corporation_Accounting() throws Exception {
 		super();
 	}
 
-	private Editor editor;
-	private Button button;
-	private Editor nameEditor = _IRIS.describe(Editor.class,
-			new EditorDescription.Builder().attachedText("Name*").build());
-	private boolean checkOperationPerformed = false;
-	private boolean uncheckOperationPerformed = false;
+	private static boolean isCheckboxSelectionAlreadyPerformed = false;
+
+	public static boolean getCheckboxSelectionAlreadyPerformedStatus() {
+		return isCheckboxSelectionAlreadyPerformed;
+	}
+
+	public static void setCheckboxSelectionAlreadyPerformedStatus(boolean alreadyPerformed) {
+		isCheckboxSelectionAlreadyPerformed = alreadyPerformed;
+	}
 
 	/**
-	 * Verify Overview tab title.
+	 * Verify Accounting tab title.
 	 * 
 	 * @return
 	 * @throws GeneralLeanFtException
@@ -53,9 +49,7 @@ public class IRIS_Corporation_Accounting extends BasePage {
 				return true;
 			}
 		} catch (Exception e) {
-			Log.info(CoreConstants.ERROR + e.getStackTrace());
-			Assert.fail("Failed to verify Overview tab");
-
+			Assert.fail(IRISConstants.FAILED_TO_VERIFY_ACCOUNTING_TAB);
 		}
 		return false;
 	}
@@ -69,370 +63,333 @@ public class IRIS_Corporation_Accounting extends BasePage {
 	 */
 	public boolean verifyPolicyTableColumn(String searchColumnName) throws Exception {
 
+		boolean _isExists = false;
 		_isExists = Helpers.searchJTableColumn(
 				(IRIS_PageMaster.getTableObject(_IRIS, "com.aires.iris.view.corporation.accounting.PolicyPanel$1")),
 				searchColumnName);
-
 		if (_isExists) {
-			Log.info(MessageFormat.format(IRISConstants.VERIFIED_TABLE_COLUMN_NAME, CoreConstants.PASS,
-					searchColumnName, IRISConstants.ACCOUNTING));
 			Reporter.addStepLog(MessageFormat.format(IRISConstants.VERIFIED_TABLE_COLUMN_NAME, CoreConstants.PASS,
 					searchColumnName, IRISConstants.ACCOUNTING));
 		}
 		return _isExists;
 	}
 
+	/**
+	 * Overloaded method to Perform selection of CoreFlex Enabled Checkbox for the
+	 * specified Policies.
+	 * 
+	 * @param columnName
+	 * @param dataTable
+	 */
 	public void performCoreFlexCheckboxSelectionForPolicy(String columnName, DataTable dataTable) {
-
-		List<Map<String, String>> policyData = dataTable.asMaps(String.class, String.class);
-		int counter = 0;
-
 		try {
-
-			while (counter < policyData.size()) {
-
-				String policyName = policyData.get(counter).get(IRISConstants.POLICY_NAME_COLUMN);
-				String checkboxSelection = policyData.get(counter).get(IRISConstants.COREFLEX_CHECKBOX_SELECTION);
-
-				coreFlexCheckboxSelection(
-						(IRIS_PageMaster.getTableObject(_IRIS,
-								"com.aires.iris.view.corporation.accounting.PolicyPanel$1")),
-						columnName, policyName, checkboxSelection);
-
-				counter++;
+			List<Map<String, String>> policyData = dataTable.asMaps(String.class, String.class);
+			for (int i = 0; i < policyData.size(); i++) {
+				Table table = IRIS_PageMaster.getTableObject(_IRIS,
+						"com.aires.iris.view.corporation.accounting.PolicyPanel$1");
+				table.waitUntilVisible();
+				if (table.getRows().size() > 0 & table.getColumnHeaders().contains(columnName)) {
+					searchPolicyNameInPolicyTable(table, columnName,
+							policyData.get(i).get(IRISConstants.POLICY_NAME_COLUMN),
+							policyData.get(i).get(IRISConstants.COREFLEX_CHECKBOX_SELECTION));
+				} else {
+					Assert.fail(IRISConstants.COLUMN_NAME_NOT_FOUND);
+				}
 			}
 		} catch (Exception e) {
-			e.printStackTrace();
+			Reporter.addStepLog(MessageFormat.format(
+					IRISConstants.EXCEPTION_OCCURED_WHILE_SEARCHING_POLICY_NAME_AND_COREFLEX_ENABLED_COLUMNS_IN_POLICY_TABLE_OF_ACCOUNTING_TAB,
+					CoreConstants.FAIL, e.getMessage()));
 		}
-
-	}
-
-	public void performCoreFlexCheckboxSelectionForPolicy(String columnName, String checkboxSelection,
-			String policyName) {
-		try {
-
-			coreFlexCheckboxSelection(
-					(IRIS_PageMaster.getTableObject(_IRIS, "com.aires.iris.view.corporation.accounting.PolicyPanel$1")),
-					columnName, policyName, checkboxSelection);
-
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
-
 	}
 
 	/**
-	 * Select CoreFlex Enabled Column for a Policy
+	 * Overloaded method to Perform selection of CoreFlex Enabled Checkbox for the
+	 * specified Policy.
 	 * 
-	 * @param tableObject
 	 * @param columnName
-	 * @throws Exception
+	 * @param checkboxSelection
+	 * @param policyName
 	 */
-	private void coreFlexCheckboxSelection(Table table, String columnName, String policyName, String checkboxSelection)
-			throws Exception {
-
-		table.waitUntilVisible();
-
-		if (table.getRows().size() > 0 & table.getColumnHeaders().contains(columnName)) {
-			searchPolicyNameInPolicyTable(table, columnName, policyName, checkboxSelection);
-		} else {
-			Assert.fail(IRISConstants.COLUMN_NAME_NOT_FOUND);
-		}
-
-	}
-
-	private void searchPolicyNameInPolicyTable(Table table, String columnName, String policyNameValue,
-			String checkboxSelection) throws GeneralLeanFtException {
-		
-		String policyName = policyNameValue;
-		
-		if(policyName.contains("(#")) {
-			String[] splittedPolicyName = policyNameValue.split("\\(");
-			policyName = splittedPolicyName[0].trim();
-		}
-
-		for (int rowCount = 0; rowCount < table.getRows().size(); rowCount++) {
-			
-			if (policyName.equals(table.getCell(rowCount, "Policy").getValue().toString())) {
-				performCoreFlexCheckboxSelection(table, rowCount, columnName, policyName, checkboxSelection);
-				break;
+	public void performCoreFlexCheckboxSelectionForPolicy(String columnName, String checkboxSelection,
+			String policyName) {
+		try {
+			Table table = IRIS_PageMaster.getTableObject(_IRIS,
+					"com.aires.iris.view.corporation.accounting.PolicyPanel$1");
+			table.waitUntilVisible();
+			if (table.getRows().size() > 0 & table.getColumnHeaders().contains(columnName)) {
+				searchPolicyNameInPolicyTable(table, columnName, policyName, checkboxSelection);
+			} else {
+				Assert.fail(IRISConstants.COLUMN_NAME_NOT_FOUND);
 			}
-			
+		} catch (Exception e) {
+			Reporter.addStepLog(MessageFormat.format(
+					IRISConstants.EXCEPTION_OCCURED_WHILE_SEARCHING_POLICY_NAME_AND_COREFLEX_ENABLED_COLUMNS_IN_POLICY_TABLE_OF_ACCOUNTING_TAB,
+					CoreConstants.FAIL, e.getMessage()));
 		}
-
 	}
 
-	private void performCoreFlexCheckboxSelection(Table table, int rowCount, String columnName, String policyName,
+	/**
+	 * Method to search Policy name in Policy Table
+	 * 
+	 * @param table
+	 * @param columnName
+	 * @param policyName
+	 * @param checkboxSelection
+	 * @throws GeneralLeanFtException
+	 */
+	private void searchPolicyNameInPolicyTable(Table table, String columnName, String policyName,
 			String checkboxSelection) throws GeneralLeanFtException {
+		try {
+			for (int rowCount = 0; rowCount < table.getRows().size(); rowCount++) {
+				if (policyName.equals(table.getCell(rowCount, "Policy").getValue().toString())) {
+					performCoreFlexCheckboxSelectionBasedOnUserInput(table, rowCount, columnName, policyName,
+							checkboxSelection);
+					break;
+				}
+			}
+		} catch (Exception e) {
+			Reporter.addStepLog(MessageFormat.format(
+					IRISConstants.EXCEPTION_OCCURED_WHILE_SEARCHING_REQUIRED_POLICY_IN_POLICY_TABLE_OF_ACCOUNTING_TAB,
+					CoreConstants.FAIL, e.getMessage()));
+		}
+	}
 
+	/**
+	 * Method to perform checkbox Selection based on User Input/Requirement -
+	 * Checked or Unchecked
+	 * 
+	 * @param table
+	 * @param rowCount
+	 * @param columnName
+	 * @param policyName
+	 * @param checkboxSelection
+	 * @throws GeneralLeanFtException
+	 */
+	private void performCoreFlexCheckboxSelectionBasedOnUserInput(Table table, int rowCount, String columnName,
+			String policyName, String checkboxSelection) throws GeneralLeanFtException {
 		switch (checkboxSelection) {
-
 		case IRISConstants.CHECKED:
 			checkCoreFlexEnabledCheckbox(table, rowCount, columnName, policyName);
 			break;
-
 		case IRISConstants.UNCHECKED:
 			uncheckCoreFlexEnabledCheckbox(table, rowCount, columnName, policyName);
 			break;
-
 		default:
 			Assert.fail(IRISConstants.NO_VALID_SELECTION);
-
 		}
-
 	}
 
+	/**
+	 * Method to uncheck CoreFlex Enabled Checkbox if checked and ignore if already
+	 * unchecked.
+	 * 
+	 * @param table
+	 * @param rowCount
+	 * @param columnName
+	 * @param policyName
+	 * @throws GeneralLeanFtException
+	 */
 	private void uncheckCoreFlexEnabledCheckbox(Table table, int rowCount, String columnName, String policyName)
 			throws GeneralLeanFtException {
-		uncheckOperationPerformed = false;
+		setCheckboxSelectionAlreadyPerformedStatus(false);
 		if ((table.getCell(rowCount, columnName).getValue().toString()).equals("1.0")) {
 			table.getCell(rowCount, columnName).click();
-			uncheckOperationPerformed = true;
-			Log.info(MessageFormat.format(IRISConstants.SUCCESSFULLY_UNCHECKED_COREFLEX_ENABLED_COLUMN_FOR_THE_POLICY,
-					CoreConstants.PASS, columnName, policyName, IRISConstants.ACCOUNTING));
 			Reporter.addStepLog(
 					MessageFormat.format(IRISConstants.SUCCESSFULLY_UNCHECKED_COREFLEX_ENABLED_COLUMN_FOR_THE_POLICY,
 							CoreConstants.PASS, columnName, policyName, IRISConstants.ACCOUNTING));
 		} else if ((table.getCell(rowCount, columnName).getValue().toString()).equals("0.0")) {
-			Log.info(MessageFormat.format(IRISConstants.COREFLEX_ENABLED_COLUMN_ALREADY_UNCHECKED_FOR_THE_POLICY,
-					CoreConstants.PASS, columnName, policyName, IRISConstants.ACCOUNTING));
+			setCheckboxSelectionAlreadyPerformedStatus(true);
 			Reporter.addStepLog(
 					MessageFormat.format(IRISConstants.COREFLEX_ENABLED_COLUMN_ALREADY_UNCHECKED_FOR_THE_POLICY,
 							CoreConstants.PASS, columnName, policyName, IRISConstants.ACCOUNTING));
 		}
-
 	}
 
+	/**
+	 * Method to check CoreFlex Enabled Checkbox if unchecked and ignore if already
+	 * checked.
+	 * 
+	 * @param table
+	 * @param rowCount
+	 * @param columnName
+	 * @param policyName
+	 * @throws GeneralLeanFtException
+	 */
 	private void checkCoreFlexEnabledCheckbox(Table table, int rowCount, String columnName, String policyName)
 			throws GeneralLeanFtException {
-		checkOperationPerformed = false;
+		setCheckboxSelectionAlreadyPerformedStatus(false);
 		if ((table.getCell(rowCount, columnName).getValue().toString()).equals("0.0")) {
 			table.getCell(rowCount, columnName).click();
-			checkOperationPerformed = true;
-			Log.info(MessageFormat.format(IRISConstants.SUCCESSFULLY_CHECKED_COREFLEX_ENABLED_COLUMN_FOR_THE_POLICY,
-					CoreConstants.PASS, columnName, policyName, IRISConstants.ACCOUNTING));
 			Reporter.addStepLog(
 					MessageFormat.format(IRISConstants.SUCCESSFULLY_CHECKED_COREFLEX_ENABLED_COLUMN_FOR_THE_POLICY,
 							CoreConstants.PASS, columnName, policyName, IRISConstants.ACCOUNTING));
 		} else if ((table.getCell(rowCount, columnName).getValue().toString()).equals("1.0")) {
-			Log.info(MessageFormat.format(IRISConstants.COREFLEX_ENABLED_COLUMN_ALREADY_CHECKED_FOR_THE_POLICY,
-					CoreConstants.PASS, columnName, policyName, IRISConstants.ACCOUNTING));
+			setCheckboxSelectionAlreadyPerformedStatus(true);
 			Reporter.addStepLog(
 					MessageFormat.format(IRISConstants.COREFLEX_ENABLED_COLUMN_ALREADY_CHECKED_FOR_THE_POLICY,
 							CoreConstants.PASS, columnName, policyName, IRISConstants.ACCOUNTING));
 		}
-
 	}
 
+	/**
+	 * Method to click on Save button and accept all the confirmation dialog box
+	 */
 	public void clickOnSaveBtn() {
 		try {
-			IRIS_PageMaster.getButtonObjectFromLabel(_IRIS, "Save").waitUntilEnabled();
-			Helpers.clickButton(IRIS_PageMaster.getButtonObjectFromLabel(_IRIS, "Save"),
-					IRIS_PageMaster.getButtonObjectFromLabel(_IRIS, "Save").getLabel());
-			Log.info("Save Button Clicked.");
-			Reporter.addStepLog(MessageFormat.format(IRISConstants.VERIFIED_BUTTON_CLICKED, CoreConstants.PASS,
-					IRIS_PageMaster.getButtonObjectFromLabel(_IRIS, "Save").getLabel()));
+			if (!getCheckboxSelectionAlreadyPerformedStatus()) {
+				CoreFunctions.waitHandler(1);
+				IRIS_PageMaster.getButtonObjectFromLabel(_IRIS, "Save").waitUntilEnabled();
+				Helpers.clickButton(IRIS_PageMaster.getButtonObjectFromLabel(_IRIS, "Save"),
+						IRIS_PageMaster.getButtonObjectFromLabel(_IRIS, "Save").getLabel());
+				Reporter.addStepLog(MessageFormat.format(IRISConstants.VERIFIED_BUTTON_CLICKED, CoreConstants.PASS,
+						IRIS_PageMaster.getButtonObjectFromLabel(_IRIS, "Save").getLabel()));
+				acceptSaveConfirmation();
+			}
 		} catch (Exception e) {
-			e.printStackTrace();
+			Reporter.addStepLog(MessageFormat.format(
+					IRISConstants.EXCEPTION_OCCURED_WHILE_SAVING_COREFLEX_CHECKBOX_SELECTION_IN_POLICY_TABLE_OF_ACCOUNTING_TAB,
+					CoreConstants.FAIL, e.getMessage()));
 		}
-
 	}
 
-	public void saveConfirmation() throws GeneralLeanFtException, Exception {
-
-		if (checkOperationPerformed || uncheckOperationPerformed) {
-			acceptSaveConfirmation();
-			acceptSaveDialog();
-		}
-
-	}
-
+	/**
+	 * Method to accept all dialog boxes appearing after saving the policy table
+	 * selections
+	 * 
+	 * @throws GeneralLeanFtException
+	 * @throws Exception
+	 */
 	private void acceptSaveConfirmation() throws GeneralLeanFtException, Exception {
-
-		try {
-			CoreFunctions.waitHandler(1);
-			if (IRIS_PageMaster.getDialogObject(_IRIS, "Save confirmation").isVisible()) {
-				Helpers.clickButton(
-						IRIS_PageMaster.getButtonObjectFromLabel(
-								IRIS_PageMaster.getDialogObject(_IRIS, "Save confirmation"), "Save & Continue"),
-						"Save & Continue");
-
-				Log.info(MessageFormat.format(IRISConstants.VERIFIED_SAVED_CONFIRMATION, CoreConstants.PASS));
-				Reporter.addStepLog(
-						MessageFormat.format(IRISConstants.VERIFIED_SAVED_CONFIRMATION, CoreConstants.PASS));
-
-				acceptDialog();
-
-			} else {
-				Assert.fail(IRISConstants.SAVE_CONFIRMATION_DIALOG_NOT_VISIBLE);
-			}
-		} catch (Exception e) {
-
+		CoreFunctions.waitHandler(1);
+		if (IRIS_PageMaster.getDialogObject(_IRIS, "Saved").isVisible()) {
+			Helpers.clickButton(
+					IRIS_PageMaster.getButtonObjectFromLabel(IRIS_PageMaster.getDialogObject(_IRIS, "Saved"), "OK"),
+					"OK");
+			Reporter.addStepLog(MessageFormat.format(IRISConstants.VERIFIED_OK_CONFIRMATION, CoreConstants.PASS));
 		}
-
 	}
 
-	public void acceptSaveDialog() throws Exception {
-
-		try {
-
-			if (IRIS_PageMaster.getDialogObject(_IRIS, "Saved").isVisible()) {
-				Helpers.clickButton(
-						IRIS_PageMaster.getButtonObjectFromLabel(IRIS_PageMaster.getDialogObject(_IRIS, "Saved"), "OK"),
-						"OK");
-				Log.info(IRISConstants.VERIFIED_OK_CONFIRMATION);
-				Reporter.addStepLog(MessageFormat.format(IRISConstants.VERIFIED_OK_CONFIRMATION, CoreConstants.PASS));
-
-			}
-		} catch (Exception e) {
-
-		}
-
-	}
-
-	public void acceptDialog() {
-		try {
-			CoreFunctions.waitHandler(1);
-			if (IRIS_PageMaster.getDialogObject(_IRIS, "Saved!").isVisible()) {
-				Helpers.clickButton(IRIS_PageMaster
-						.getButtonObjectFromLabel(IRIS_PageMaster.getDialogObject(_IRIS, "Saved!"), "OK"), "OK");
-				Log.info(MessageFormat.format(IRISConstants.VERIFIED_OK_CONFIRMATION, CoreConstants.PASS));
-				Reporter.addStepLog(MessageFormat.format(IRISConstants.VERIFIED_OK_CONFIRMATION, CoreConstants.PASS));
-
-			}
-		} catch (Exception e) {
-
-		}
-
-	}
-
+	/**
+	 * Method to verify CoreFlex Checkbox selection is maintained for Policies -
+	 * CoreFlex Checked/Unchecked earlier
+	 * 
+	 * @param columnName
+	 * @param dataTable
+	 * @return
+	 */
 	public boolean verifyCoreFlexCheckboxSelectionForPolicy(String columnName, DataTable dataTable) {
-
 		boolean isCoreFlexSelectionCorrect = false;
 		List<Map<String, String>> policyData = dataTable.asMaps(String.class, String.class);
-		int counter = 0;
-
 		try {
-
-			while (counter < policyData.size()) {
-
-				String policyName = policyData.get(counter).get(IRISConstants.POLICY_NAME_COLUMN);
-				String checkboxSelection = policyData.get(counter).get(IRISConstants.COREFLEX_CHECKBOX_SELECTION);
-
-				isCoreFlexSelectionCorrect = verifyCoreFlexCheckboxSelection(
-						(IRIS_PageMaster.getTableObject(_IRIS,
-								"com.aires.iris.view.corporation.accounting.PolicyPanel$1")),
-						columnName, policyName, checkboxSelection);
-
-				counter++;
+			Table table = IRIS_PageMaster.getTableObject(_IRIS,
+					"com.aires.iris.view.corporation.accounting.PolicyPanel$1");
+			table.waitUntilVisible();
+			for (int i = 0; i < policyData.size(); i++) {
+				if (table.getRows().size() > 0 & table.getColumnHeaders().contains(columnName)) {
+					isCoreFlexSelectionCorrect = verifyPolicyNameInPolicyTable(table, columnName,
+							policyData.get(i).get(IRISConstants.POLICY_NAME_COLUMN),
+							policyData.get(i).get(IRISConstants.COREFLEX_CHECKBOX_SELECTION));
+					if (!isCoreFlexSelectionCorrect)
+						return false;
+				} else {
+					Assert.fail(IRISConstants.COLUMN_NAME_NOT_FOUND);
+				}
 			}
 		} catch (Exception e) {
-			e.printStackTrace();
-		}
 
+		}
 		return isCoreFlexSelectionCorrect;
-
 	}
 
-	private boolean verifyCoreFlexCheckboxSelection(Table table, String columnName, String policyName,
-			String checkboxSelection) throws GeneralLeanFtException {
-
-		boolean isPolicyPresentInTable = false;
-		table.waitUntilVisible();
-
-		if (table.getRows().size() > 0 & table.getColumnHeaders().contains(columnName)) {
-			isPolicyPresentInTable = verifyPolicyNameInPolicyTable(table, columnName, policyName, checkboxSelection);
-		} else {
-			Assert.fail(IRISConstants.COLUMN_NAME_NOT_FOUND);
-		}
-
-		return isPolicyPresentInTable;
-
-	}
-
+	/**
+	 * Method to verify Policy Name in Policy Table
+	 * 
+	 * @param table
+	 * @param columnName
+	 * @param policyName
+	 * @param checkboxSelection
+	 * @return
+	 * @throws GeneralLeanFtException
+	 */
 	private boolean verifyPolicyNameInPolicyTable(Table table, String columnName, String policyName,
 			String checkboxSelection) throws GeneralLeanFtException {
-
-		boolean isVerified = false;
-
 		for (int rowCount = 0; rowCount < table.getRows().size(); rowCount++) {
-
-			if (table.getCell(rowCount, "Policy").getValue().toString().contains(policyName)) {
-				isVerified = verifyCheckboxSelection(table, rowCount, columnName, policyName, checkboxSelection);
-				break;
-			}
+			if (table.getCell(rowCount, "Policy").getValue().toString().contains(policyName))
+				return verifyCheckboxSelection(table, rowCount, columnName, policyName, checkboxSelection);
 		}
-		return isVerified;
+		return false;
 	}
 
+	/**
+	 * Method to call checked/unchecked verification method based on User selection
+	 * 
+	 * @param table
+	 * @param rowCount
+	 * @param columnName
+	 * @param policyName
+	 * @param checkboxSelection
+	 * @return
+	 * @throws GeneralLeanFtException
+	 */
 	private boolean verifyCheckboxSelection(Table table, int rowCount, String columnName, String policyName,
 			String checkboxSelection) throws GeneralLeanFtException {
-
-		boolean isSelectionVerified = false;
-
 		switch (checkboxSelection) {
-
 		case IRISConstants.CHECKED:
-			isSelectionVerified = verifyCheckCoreFlexEnabledCheckbox(table, rowCount, columnName, policyName);
-			break;
-
+			return verifyCoreFlexEnabledCheckboxIsChecked(table, rowCount, columnName, policyName);
 		case IRISConstants.UNCHECKED:
-			isSelectionVerified = verifyUncheckCoreFlexEnabledCheckbox(table, rowCount, columnName, policyName);
-			break;
-
+			return verifyCoreFlexEnabledCheckboxIsUnchecked(table, rowCount, columnName, policyName);
 		default:
 			Assert.fail(IRISConstants.NO_VALID_SELECTION);
-
 		}
-
-		return isSelectionVerified;
-
+		return false;
 	}
 
-	private boolean verifyCheckCoreFlexEnabledCheckbox(Table table, int rowCount, String columnName, String policyName)
-			throws GeneralLeanFtException {
-
-		boolean isCheckedVerified = false;
-
+	/**
+	 * Method to verify whether user checked selection is maintained or not
+	 * 
+	 * @param table
+	 * @param rowCount
+	 * @param columnName
+	 * @param policyName
+	 * @return
+	 * @throws GeneralLeanFtException
+	 */
+	private boolean verifyCoreFlexEnabledCheckboxIsChecked(Table table, int rowCount, String columnName,
+			String policyName) throws GeneralLeanFtException {
 		if ((table.getCell(rowCount, columnName).getValue().toString()).equals("1.0")) {
-			isCheckedVerified = true;
-			Log.info(MessageFormat.format(
-					IRISConstants.SUCCESSFULLY_VERIFIED_COREFLEX_ENABLED_COLUMN_IS_CHECKED_FOR_THE_POLICY,
-					CoreConstants.PASS, columnName, policyName, IRISConstants.ACCOUNTING));
 			Reporter.addStepLog(MessageFormat.format(
 					IRISConstants.SUCCESSFULLY_VERIFIED_COREFLEX_ENABLED_COLUMN_IS_CHECKED_FOR_THE_POLICY,
 					CoreConstants.PASS, columnName, policyName, IRISConstants.ACCOUNTING));
+			return true;
 		} else if ((table.getCell(rowCount, columnName).getValue().toString()).equals("0.0")) {
-			Log.info(MessageFormat.format(IRISConstants.COREFLEX_ENABLED_COLUMN_NOT_CHECKED_FOR_THE_POLICY,
-					CoreConstants.FAIL, columnName, policyName, IRISConstants.ACCOUNTING));
 			Reporter.addStepLog(MessageFormat.format(IRISConstants.COREFLEX_ENABLED_COLUMN_NOT_CHECKED_FOR_THE_POLICY,
 					CoreConstants.FAIL, columnName, policyName, IRISConstants.ACCOUNTING));
 		}
-
-		return isCheckedVerified;
+		return false;
 	}
 
-	private boolean verifyUncheckCoreFlexEnabledCheckbox(Table table, int rowCount, String columnName,
+	/**
+	 * Method to verify whether user unchecked selection is maintained or not
+	 * 
+	 * @param table
+	 * @param rowCount
+	 * @param columnName
+	 * @param policyName
+	 * @return
+	 * @throws GeneralLeanFtException
+	 */
+	private boolean verifyCoreFlexEnabledCheckboxIsUnchecked(Table table, int rowCount, String columnName,
 			String policyName) throws GeneralLeanFtException {
-
-		boolean isUncheckedVerified = false;
-
 		if ((table.getCell(rowCount, columnName).getValue().toString()).equals("0.0")) {
-			isUncheckedVerified = true;
-			Log.info(MessageFormat.format(
-					IRISConstants.SUCCESSFULLY_VERIFIED_COREFLEX_ENABLED_COLUMN_IS_UNCHECKED_FOR_THE_POLICY,
-					CoreConstants.PASS, columnName, policyName, IRISConstants.ACCOUNTING));
 			Reporter.addStepLog(MessageFormat.format(
 					IRISConstants.SUCCESSFULLY_VERIFIED_COREFLEX_ENABLED_COLUMN_IS_UNCHECKED_FOR_THE_POLICY,
 					CoreConstants.PASS, columnName, policyName, IRISConstants.ACCOUNTING));
+			return true;
 		} else if ((table.getCell(rowCount, columnName).getValue().toString()).equals("1.0")) {
-			Log.info(MessageFormat.format(IRISConstants.COREFLEX_ENABLED_COLUMN_NOT_UNCHECKED_FOR_THE_POLICY,
-					CoreConstants.FAIL, columnName, policyName, IRISConstants.ACCOUNTING));
 			Reporter.addStepLog(MessageFormat.format(IRISConstants.COREFLEX_ENABLED_COLUMN_NOT_UNCHECKED_FOR_THE_POLICY,
 					CoreConstants.FAIL, columnName, policyName, IRISConstants.ACCOUNTING));
 		}
-
-		return isUncheckedVerified;
+		return false;
 	}
-
 }

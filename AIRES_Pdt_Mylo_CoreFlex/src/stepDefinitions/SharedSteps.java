@@ -23,8 +23,8 @@ public class SharedSteps {
 		}
 	}
 
-	@Given("^he has logged into IRIS application as \"([^\"]*)\" user$")
-	public void he_ha_logged_into_iris_application_as_something_user(String userName) throws Throwable {
+	@Given("^he is logged into IRIS application as \"([^\"]*)\" user$")
+	public void he_is_logged_into_iris_application_as_something_user(String userName) throws Throwable {
 		_loginDetails = FileReaderManager.getInstance().getJsonReader().getLoginByApplication("IRIS");
 		testContext.getIrisPageManager().irisLoginPage = new IRIS_LoginPage();
 		testContext.getIrisPageManager().irisLoginPage.getIRISLoginAsPerEnvt(_loginDetails);

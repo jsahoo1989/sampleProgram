@@ -11,6 +11,7 @@ import org.testng.Assert;
 
 import com.aires.businessrules.Base;
 import com.aires.businessrules.CoreFunctions;
+import com.aires.businessrules.constants.COREFLEXConstants;
 import com.aires.businessrules.constants.CoreConstants;
 import com.aires.businessrules.constants.PDTConstants;
 import com.aires.utilities.Log;
@@ -72,13 +73,20 @@ public class PDT_AddNewPolicyPage extends Base {
 	@FindBy(how = How.XPATH, using = "//i[contains(text(),'exit_to_app')]")
 	private WebElement _buttonLogout;
 
+	// Back Button
+	@FindBy(how = How.CSS, using = "button[class*='btn-back']")
+	private WebElement _buttonBack;
+
+	// Exit Button
+	@FindBy(how = How.CSS, using = "button[class='btn-exit']")
+	private WebElement _buttonExit;
+
 	/************************************************************************/
 
 	public static String selectedPolicyName;
 
 	public String getElementText(String elementName) {
 		String elementText = null;
-
 		switch (elementName) {
 		case PDTConstants.HEADING:
 			elementText = _headingAddNewPolicyForm.getText();
@@ -87,65 +95,75 @@ public class PDT_AddNewPolicyPage extends Base {
 			Assert.fail("Element not found");
 		}
 		return elementText;
-
 	}
 
+	/**
+	 * Generic Method to Click on an Element on a Page.
+	 * @param elementName
+	 */
+	public void clickElementOfPage(String elementName) {
+		try {
+			switch (elementName) {
+			case PDTConstants.LOGOUT:
+				CoreFunctions.clickElement(driver, _buttonLogout);
+				break;
+			case PDTConstants.NEXT:
+				CoreFunctions.clickElement(driver, _buttonNext);
+				CoreFunctions.explicitWaitTillElementInVisibility(driver, _progressBar);
+				break;
+			case PDTConstants.BACK:
+				CoreFunctions.clickElement(driver, _buttonBack);
+				CoreFunctions.explicitWaitTillElementInVisibility(driver, _progressBar);
+				break;
+			case PDTConstants.EXIT:
+				CoreFunctions.clickElement(driver, _buttonExit);
+				break;
+			default:
+				Assert.fail(PDTConstants.INVALID_ELEMENT);
+			}
+		} catch (Exception e) {
+			Reporter.addStepLog(
+					MessageFormat.format(COREFLEXConstants.EXCEPTION_OCCURED_WHILE_CLICKING_ON_AN_ELEMENT_OF_PAGE,
+							CoreConstants.FAIL, elementName, e.getMessage()));
+			throw new RuntimeException(e);
+		}
+	}
+
+	/**
+	 * Method to Verify AddNewPolicy Heading
+	 * @param pageName
+	 * @return
+	 */
 	public boolean verifyAddNewPolicyHeading(String pageName) {
 		CoreFunctions.explicitWaitTillElementInVisibility(driver, _progressBar);
 		if (_headingAddNewPolicyForm.getText().equalsIgnoreCase(PDTConstants.ADD_NEW_POLICY_FORM)) {
 			CoreFunctions.highlightObject(driver, _headingAddNewPolicyForm);
 			Reporter.addStepLog(MessageFormat.format(PDTConstants.VERIFIED_HEADING_ON_PAGE, CoreConstants.PASS,
 					_headingAddNewPolicyForm.getText(), pageName));
-			Log.info("Verified Heading");
 			return true;
 		}
-		Log.info("Failed to verify Heading");
 		Reporter.addStepLog(MessageFormat.format(PDTConstants.FAILED_TO_VERIFY_HEADING_ON_PAGE, CoreConstants.FAIL,
 				pageName, PDTConstants.ADD_NEW_POLICY_FORM, _headingAddNewPolicyForm.getText()));
 		return false;
 	}
 
+	/**
+	 * Method to enter value in ClientID field
+	 * @param inputValue
+	 */
 	public void enterClientID(String inputValue) {
 		CoreFunctions.clearAndSetText(driver, _inputClientID, inputValue);
 	}
 
-	public boolean verifyValidClientIDResult(String inputValue) {
-
-		boolean isResultValid = false;
-
-		try {
-			if (_optionsClientID.size() > 0) {
-				isResultValid = verifyClientIDOptions(inputValue);
-				CoreFunctions.clickElement(driver, _optionClientID);
-
-			} else {
-				Reporter.addStepLog(MessageFormat.format(PDTConstants.CLIENT_OPTIONS_NOT_DISPLAYED_FOR_VALID_CLIENTID,
-						CoreConstants.FAIL, inputValue));
-			}
-
-		} catch (Exception e) {
-			Reporter.addStepLog(MessageFormat.format(
-					PDTConstants.EXCEPTION_OCCURED_WHILE_VALIDATING_CLIENT_OPTIONS_FOR_VALID_CLIENTID,
-					CoreConstants.FAIL, e.getMessage()));
-		}
-
-		if (isResultValid) {
-			Reporter.addStepLog(
-					MessageFormat.format(PDTConstants.SUCCESSFULLY_VERIFIED_CLIENT_OPTIONS_FOR_VALID_CLIENTID,
-							CoreConstants.PASS, inputValue));
-		}
-
-		return isResultValid;
-	}
-
-	private boolean verifyClientIDOptions(String inputValue) {
-
+	/**
+	 * Method to Verify Client ID dropdown options with ID & Name 
+	 * @param inputValue
+	 * @return
+	 */
+	private boolean verifyClientIDDropDownOptions(String inputValue) {
 		boolean isOptionsValid = false;
-
 		for (WebElement element : _optionsClientID) {
-
 			String[] resultString = element.getText().split("#");
-
 			if ((element.getText().startsWith(resultString[0].trim()))
 					|| (element.getText().startsWith(resultString[1].trim()))) {
 				isOptionsValid = true;
@@ -155,186 +173,157 @@ public class PDT_AddNewPolicyPage extends Base {
 				break;
 			}
 		}
-
 		return isOptionsValid;
-
 	}
 
-	public boolean verifyInvalidClientIDResult(String inputValue) {
-
-		boolean clientIDResultDisplayed = false;
-
+	/**
+	 * Method to fetch & return first available policy option
+	 * 
+	 * @return
+	 */
+	public String getFirstAvailablePolicyOption() {
 		try {
-
-			if (CoreFunctions.getElementText(driver, _popUpErrorMessage).equals(PDTConstants.RECORD_DOES_NOT_EXIST)) {
-				clientIDResultDisplayed = true;
-				CoreFunctions.clickElement(driver, _buttonPopUpErrorOk);
-				Reporter.addStepLog(
-						MessageFormat.format(PDTConstants.SUCCESSFULLY_VERIFIED_CLIENT_OPTIONS_FOR_INVALID_CLIENTID,
-								CoreConstants.PASS, inputValue));
-			}
-
-		} catch (Exception e) {
-			Reporter.addStepLog(
-					MessageFormat.format(PDTConstants.EXCEPTION_OCCURED_WHILE_VALIDATING_INVALID_CLIENT_ERROR_POPUP,
-							CoreConstants.FAIL, e.getMessage()));
-		}
-
-		return clientIDResultDisplayed;
-
-	}
-
-	public boolean validatePolicyNameList() {
-
-		boolean isPolicyListDisplayed = false;
-
-		try {
-			if (CoreFunctions.isElementExist(driver, _selectPolicyName, 5)) {
-				CoreFunctions.clickElement(driver, _selectPolicyName);
-				isPolicyListDisplayed = verifyPoliciesAreDisplayed();
-				return true;
-			} else if (CoreFunctions.isElementExist(driver, _popUpError, 2)) {
-				Reporter.addStepLog(MessageFormat.format(PDTConstants.ERROR_POP_UP_DISPLAYED_FOR_VALID_CLIENTID,
-						CoreConstants.FAIL, CoreFunctions.getElementText(driver, _popUpErrorMessage)));
-				return false;
-			}
-		} catch (Exception e) {
-
-			Reporter.addStepLog(MessageFormat.format(PDTConstants.EXCEPTION_OCCURED_WHILE_VALIDATING_POLICY_NAME_LIST,
-					CoreConstants.FAIL, e.getMessage()));
-		}
-
-		if (isPolicyListDisplayed) {
-			Reporter.addStepLog(MessageFormat.format(PDTConstants.SUCCESSFULLY_DISPLAYED_POLICIES_IN_POLICY_LIST,
-					CoreConstants.PASS));
-		}
-
-		return isPolicyListDisplayed;
-
-	}
-
-	private boolean verifyPoliciesAreDisplayed() {
-
-		if (_optionsPolicyName.size() > 0) {
-			Reporter.addStepLog(MessageFormat.format(PDTConstants.POLICIES_ARE_DISPLAYED, CoreConstants.PASS,
-					PDTConstants.ADD_NEW_POLICY_FORM));
-			Log.info("Policies are displayed");
-			return true;
-		}
-		Log.info("Policies are not displayed");
-		return false;
-	}
-
-	public boolean isPolicyNameDisplayed(String inputValue) {
-
-		boolean isPolicyNameFieldDisplayed = false;
-
-		try {
-
-			if (CoreFunctions.isElementExist(driver, _selectPolicyName, 5)) {
-
-				Reporter.addStepLog(MessageFormat.format(PDTConstants.POLICY_NAME_FIELD_DISPLAYED_FOR_INVALID_CLIENT,
-						CoreConstants.FAIL, inputValue));
-				isPolicyNameFieldDisplayed = true;
-			}
-
-		} catch (Exception e) {
-			Reporter.addStepLog(MessageFormat.format(PDTConstants.EXCEPTION_OCCURED_WHILE_VALIDATING_POLICY_NAME_FIELD,
-					CoreConstants.FAIL, e.getMessage()));
-		}
-
-		if (!isPolicyNameFieldDisplayed) {
-			Reporter.addStepLog(MessageFormat.format(PDTConstants.POLICY_NAME_FIELD_NOT_DISPLAYED_FOR_INVALID_CLIENT,
-					CoreConstants.PASS, inputValue));
-		}
-
-		return isPolicyNameFieldDisplayed;
-
-	}
-
-	public boolean selectPolicy() {
-
-		boolean isPolicySelected = false;
-
-		try {
-
-			if (CoreFunctions.isElementExist(driver, _selectPolicyName, 5)) {
-				CoreFunctions.clickElement(driver, _selectPolicyName);
-				isPolicySelected = selectAnyPolicy();
-			} else if (CoreFunctions.isElementExist(driver, _popUpError, 2)) {
-				Reporter.addStepLog(MessageFormat.format(PDTConstants.ERROR_POP_UP_DISPLAYED_FOR_VALID_CLIENTID,
-						CoreConstants.FAIL, CoreFunctions.getElementText(driver, _popUpErrorMessage)));
-
-			}
-		} catch (Exception e) {
-			Reporter.addStepLog(MessageFormat.format(PDTConstants.EXCEPTION_OCCURED_WHILE_VALIDATING_POLICY_NAME_LIST,
-					CoreConstants.FAIL, e.getMessage()));
-		}
-
-		if (isPolicySelected) {
-			Reporter.addStepLog(MessageFormat.format(PDTConstants.SUCCESSFULLY_SELECTED_POLICY_FROM_POLICY_NAME_LIST,
-					CoreConstants.PASS));
-		}
-
-		return isPolicySelected;
-
-	}
-
-	private boolean selectAnyPolicy() {
-
-		try {
+			CoreFunctions.clickElement(driver, _selectPolicyName);
 			CoreFunctions.explicitWaitTillElementListVisibility(driver, _optionsPolicyName);
-			selectedPolicyName = _optionsPolicyName.get(0).getText();
-			CoreFunctions.selectItemInListByText(driver, _optionsPolicyName, selectedPolicyName);
-			return true;
+			setSelectedPolicyName(_optionsPolicyName.get(0).getText());
+			return getSelectedPolicyName();
 		} catch (Exception e) {
 			Reporter.addStepLog(MessageFormat.format(PDTConstants.EXCEPTION_OCCURED_WHILE_SELECTING_POLICY,
 					CoreConstants.FAIL, e.getMessage()));
 		}
-		return false;
-
+		return null;
 	}
 
+	/**
+	 * Getter Method to return Selected Policy Name
+	 * 
+	 * @return
+	 */
 	public String getSelectedPolicyName() {
 		return selectedPolicyName;
-
 	}
 
-	public void clickNext() {
-		CoreFunctions.clickElement(driver, _buttonNext);
+	/**
+	 * Setter method to trim Policy ID and set Policy Name
+	 * 
+	 * @param policyName
+	 */
+	public void setSelectedPolicyName(String policyName) {
+		if (policyName.contains("(#")) {
+			String[] splittedPolicyName = policyName.split("\\(");
+			policyName = splittedPolicyName[0].trim();
+		}
+		selectedPolicyName = policyName;
 	}
 
-	public void clickLogout() {
-		CoreFunctions.clickElement(driver, _buttonLogout);
-	}
-
-	public boolean selectVerifiedPolicy() {
-
-		boolean isPolicySelected = false;
-
+	/**
+	 * Method to select a policy based on provided Policy Name
+	 * 
+	 * @param policyName
+	 * @return
+	 */
+	public boolean selectAPolicy(String policyName) {
 		try {
-
 			if (CoreFunctions.isElementExist(driver, _selectPolicyName, 5)) {
 				CoreFunctions.clickElement(driver, _selectPolicyName);
-				CoreFunctions.selectItemInListByText(driver, _optionsPolicyName, selectedPolicyName);
-				isPolicySelected = true;
+				CoreFunctions.selectItemInListByText(driver, _optionsPolicyName, policyName,true);
+				return true;
 			} else if (CoreFunctions.isElementExist(driver, _popUpError, 2)) {
 				Reporter.addStepLog(MessageFormat.format(PDTConstants.ERROR_POP_UP_DISPLAYED_FOR_VALID_CLIENTID,
 						CoreConstants.FAIL, CoreFunctions.getElementText(driver, _popUpErrorMessage)));
-
 			}
 		} catch (Exception e) {
-			Reporter.addStepLog(MessageFormat.format(PDTConstants.EXCEPTION_OCCURED_WHILE_VALIDATING_POLICY_NAME_LIST,
+			Reporter.addStepLog(MessageFormat.format(PDTConstants.EXCEPTION_OCCURED_WHILE_VALIDATING_POLICY_NAME_FIELD,
 					CoreConstants.FAIL, e.getMessage()));
 		}
-
-		if (isPolicySelected) {
-			Reporter.addStepLog(MessageFormat.format(PDTConstants.SUCCESSFULLY_SELECTED_POLICY_FROM_POLICY_NAME_LIST,
-					CoreConstants.PASS));
-		}
-
-		return isPolicySelected;
-
+		return false;
 	}
 
+	/**
+	 * Method to verify Policy name is displayed or not based on Valid/Invalid
+	 * ClientID input
+	 * 
+	 * @param fieldName
+	 * @param dataValidity
+	 * @param clientID
+	 * @return
+	 */
+	public boolean verifyPolicyNameField(String fieldName, String dataValidity, String clientID) {
+		try {
+			switch (dataValidity) {
+			case PDTConstants.VALID:
+				verifyAndClickValidClientIDResult(clientID);
+				if (CoreFunctions.isElementExist(driver, _selectPolicyName, 5)) {
+					Reporter.addStepLog(MessageFormat.format(PDTConstants.SUCCESSFULLY_DISPLAYED_POLICY_NAME_FIELD,
+							CoreConstants.PASS, clientID));
+					acceptPoliciesNotAvailablePopUpDialogIfExist(clientID);
+					return true;
+				}
+				break;
+			case PDTConstants.INVALID:
+				CoreFunctions.explicitWaitTillElementVisibility(driver, _popUpErrorMessage,
+						PDTConstants.RECORD_DOES_NOT_EXIST);
+				if (CoreFunctions.getElementText(driver, _popUpErrorMessage)
+						.equals(PDTConstants.RECORD_DOES_NOT_EXIST)) {
+					CoreFunctions.clickElement(driver, _buttonPopUpErrorOk);
+					Reporter.addStepLog(MessageFormat.format(
+							PDTConstants.SUCCESSFULLY_DISPLAYED_RECORD_DOES_NOT_EXIST_ERROR_POP_UP_FOR_INVALID_CLIENTID,
+							CoreConstants.PASS, CoreFunctions.getElementText(driver, _popUpErrorMessage), clientID));
+					return true;
+				}
+				break;
+			default:
+				Assert.fail(PDTConstants.INVALID_OPTION);
+			}
+		} catch (Exception e) {
+			Reporter.addStepLog(MessageFormat.format(PDTConstants.EXCEPTION_OCCURED_WHILE_VALIDATING_POLICY_NAME_FIELD,
+					CoreConstants.FAIL, e.getMessage()));
+		}
+		return false;
+	}
+
+	/**
+	 * Method to validate 'CORPORATION_POLICY_DOES_NOT_EXIST' pop-up message if
+	 * Policies are not available for Valid ClientID
+	 * 
+	 * @param clientID
+	 */
+	private void acceptPoliciesNotAvailablePopUpDialogIfExist(String clientID) {
+		if (CoreFunctions.isElementExist(driver, _popUpErrorMessage, 1)) {
+			if (CoreFunctions.getElementText(driver, _popUpErrorMessage)
+					.equals(PDTConstants.CORPORATION_POLICY_DOES_NOT_EXIST)) {
+				CoreFunctions.clickElement(driver, _buttonPopUpErrorOk);
+				Reporter.addStepLog(MessageFormat.format(
+						PDTConstants.CORPORATION_POLICIES_NOT_AVAILABLE_FOR_VALID_CLIENTID, CoreConstants.PASS,
+						CoreFunctions.getElementText(driver, _popUpErrorMessage), clientID));
+			}
+		}
+	}
+
+	/**
+	 * Method to verify and click Client ID Option for valid Client
+	 * 
+	 * @param inputValue
+	 * @return
+	 */
+	public boolean verifyAndClickValidClientIDResult(String inputValue) {
+		try {
+			if ((_optionsClientID.size() > 0) && (verifyClientIDDropDownOptions(inputValue))) {
+				Reporter.addStepLog(
+						MessageFormat.format(PDTConstants.SUCCESSFULLY_VERIFIED_CLIENT_OPTIONS_FOR_VALID_CLIENTID,
+								CoreConstants.PASS, inputValue));
+				CoreFunctions.clickElement(driver, _optionClientID);
+				return true;
+			} else {
+				Reporter.addStepLog(MessageFormat.format(PDTConstants.CLIENT_OPTIONS_NOT_DISPLAYED_FOR_VALID_CLIENTID,
+						CoreConstants.FAIL, inputValue));
+				return false;
+			}
+		} catch (Exception e) {
+			Reporter.addStepLog(MessageFormat.format(
+					PDTConstants.EXCEPTION_OCCURED_WHILE_VALIDATING_CLIENT_OPTIONS_FOR_VALID_CLIENTID,
+					CoreConstants.FAIL, e.getMessage()));
+		}
+		return false;
+	}
 }

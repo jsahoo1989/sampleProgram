@@ -1,5 +1,6 @@
 package com.aires.utilities;
 
+import com.aires.businessrules.constants.CoreConstants;
 import com.aires.businessrules.constants.PDTConstants;
 
 public class TestMail_Utility {
@@ -30,7 +31,7 @@ public class TestMail_Utility {
            /* String startTag = "<font style=\"padding-left:5px;\" size=\"3\" face=\"Arial\" color=\"#424143\"><b>";
             String endTag = "</b></font>";
             String result = EmailUtil.searchEmailAndReturnResult(host, userName, pwd, expFrom, expEmailSubject, startTag, endTag);*/
-            String result = EmailUtil.searchEmailAndReturnResult(host, userName, pwd, expFrom, expEmailSubject, PDTConstants.USER_NAME);
+            String result = EmailUtil.searchEmailAndReturnResult(host, userName, pwd, expFrom, expEmailSubject, CoreConstants.USER_NAME);
             
             System.out.println("in main script result=="+result);
             
@@ -38,7 +39,7 @@ public class TestMail_Utility {
             String endTagPass = "</b></font>";
             
             String resultPassword = EmailUtil.searchEmailAndReturnResult(host, userName, pwd, expFrom, "Aires Springboard Password", startTagPass, endTagPass);*/
-            String resultPassword = EmailUtil.searchEmailAndReturnResult(host, userName, pwd, expFrom, "Aires Springboard Password", PDTConstants.PASSWORD);
+            String resultPassword = EmailUtil.searchEmailAndReturnResult(host, userName, pwd, expFrom, "Aires Springboard Password", CoreConstants.PASSWORD);
             System.out.println("in main script result=="+resultPassword);
     }
 }

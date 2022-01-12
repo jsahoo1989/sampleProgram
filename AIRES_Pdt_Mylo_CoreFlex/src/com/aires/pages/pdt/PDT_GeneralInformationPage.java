@@ -1,6 +1,7 @@
 package com.aires.pages.pdt;
 
 import java.text.MessageFormat;
+import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
 
@@ -12,10 +13,10 @@ import org.testng.Assert;
 
 import com.aires.businessrules.Base;
 import com.aires.businessrules.CoreFunctions;
+import com.aires.businessrules.constants.COREFLEXConstants;
 import com.aires.businessrules.constants.CoreConstants;
 import com.aires.businessrules.constants.PDTConstants;
 import com.aires.pages.coreflex.CoreFlex_FlexPolicySetupPage;
-import com.aires.utilities.Log;
 import com.vimalselvam.cucumber.listener.Reporter;
 
 import cucumber.api.DataTable;
@@ -28,8 +29,28 @@ public class PDT_GeneralInformationPage extends Base {
 
 	/****************** Page Objects *************************************/
 
+	// Next Button
+	@FindBy(how = How.CSS, using = "button[class*='btn-next']")
+	private WebElement _buttonNext;
+
+	// Back Button
+	@FindBy(how = How.CSS, using = "button[class*='btn-back']")
+	private WebElement _buttonBack;
+
+	// Exit Button
+	@FindBy(how = How.CSS, using = "button[class='btn-exit']")
+	private WebElement _buttonExit;
+
+	// Logout Button
+	@FindBy(how = How.XPATH, using = "//i[contains(text(),'exit_to_app')]")
+	private WebElement _buttonLogout;
+
+	// Progress Bar
+	@FindBy(how = How.CSS, using = "div.ngx-progress-bar.ngx-progress-bar-ltr")
+	private WebElement _progressBar;
+
 	// Add New Policy Forms
-	@FindBy(how = How.XPATH, using = "//ul[@class='nav']//i[contains(text(),'pending_actions')]/following-sibling::p[contains(text(),'General Information')]")
+	@FindBy(how = How.XPATH, using = "//ul[@class='nav']//i/following-sibling::p[contains(text(),'General Information')]")
 	private WebElement _leftNavGeneralInfo;
 
 	// General Information Header
@@ -118,444 +139,370 @@ public class PDT_GeneralInformationPage extends Base {
 
 	/*********************************************************************/
 
-	public boolean validateGeneralInfo(String pageName, DataTable dataTable, String selectedPolicyName) {
-
-		boolean isGeneralInfoValid = false;
-		boolean leftNavigationVerified, clientPolicyDetailsVerified = false;
-
+	/**
+	 * Generic Method to Click on an Element on a Page.
+	 * 
+	 * @param elementName
+	 */
+	public void clickElementOfPage(String elementName) {
 		try {
-			leftNavigationVerified = verifyLeftNavigationMenu(pageName);
-			clientPolicyDetailsVerified = verifyClientPolicyDetails(pageName, dataTable, selectedPolicyName);
-			isGeneralInfoValid = leftNavigationVerified && clientPolicyDetailsVerified;
+			switch (elementName) {
+			case PDTConstants.LOGOUT:
+				CoreFunctions.clickElement(driver, _buttonLogout);
+				break;
+			case PDTConstants.NEXT:
+				CoreFunctions.clickElement(driver, _buttonNext);
+				CoreFunctions.explicitWaitTillElementInVisibility(driver, _progressBar);
+				break;
+			case PDTConstants.BACK:
+				CoreFunctions.clickElement(driver, _buttonBack);
+				CoreFunctions.explicitWaitTillElementInVisibility(driver, _progressBar);
+				break;
+			case PDTConstants.EXIT:
+				CoreFunctions.clickElement(driver, _buttonExit);
+				break;
+			default:
+				Assert.fail(PDTConstants.INVALID_ELEMENT);
+			}
 		} catch (Exception e) {
-			Log.info(e.getMessage());
+			Reporter.addStepLog(
+					MessageFormat.format(COREFLEXConstants.EXCEPTION_OCCURED_WHILE_CLICKING_ON_AN_ELEMENT_OF_PAGE,
+							CoreConstants.FAIL, elementName, e.getMessage()));
+			throw new RuntimeException(e);
+		}
+	}
+
+	/**
+	 * Method to validate ClientID, Policy Name & Left Navigation Menu of General
+	 * Information page.
+	 * 
+	 * @param pageName
+	 * @param expectedClientID
+	 * @param selectedPolicyName
+	 * @return
+	 */
+	public boolean validateClientAndPolicyDetailsOnGeneralInfo(String pageName, String expectedClientID,
+			String selectedPolicyName) {
+
+		boolean isGeneralInfoDetailsValid = false;
+		try {
+			CoreFunctions.explicitWaitTillElementVisibility(driver, _headerGeneralInfo,
+					PDTConstants.GENERAL_INFORMATION);
+			isGeneralInfoDetailsValid = verifyLeftNavigationMenu(pageName)
+					&& (verifyPolicyNameOnGeneralInfo(selectedPolicyName)
+							&& verifyClientDetailsOnGenaralInfo(expectedClientID));
+		} catch (Exception e) {
 			Reporter.addStepLog(
 					MessageFormat.format(PDTConstants.EXCEPTION_OCCURED_WHILE_VALIDATING_GENERAL_INFORMATION_PAGE,
 							CoreConstants.FAIL, e.getMessage()));
 		}
-
-		if (isGeneralInfoValid) {
+		if (isGeneralInfoDetailsValid) {
 			Reporter.addStepLog(MessageFormat.format(
 					PDTConstants.SUCCESSFULLY_VERIFIED_CLIENT_AND_POLICY_DETAILS_ON_GENERAL_INFO_PAGE,
 					CoreConstants.PASS, pageName));
 		}
+		return isGeneralInfoDetailsValid;
 
-		return isGeneralInfoValid;
-
-	}
-
-	private boolean verifyClientPolicyDetails(String pageName, DataTable dataTable, String selectedPolicyName) {
-
-		List<Map<String, String>> clientInfo = dataTable.asMaps(String.class, String.class);
-		String expectedClientID = clientInfo.get(0).get("ClientID");
-		String expectedClientName = clientInfo.get(0).get("ClientName");
-
-		CoreFunctions.explicitWaitTillElementVisibility(driver, _headerGeneralInfo, PDTConstants.GENERAL_INFORMATION);
-
-		boolean isPolicyNameCorrect = verifyPolicyNameOnGeneralInfo(selectedPolicyName);
-		boolean isClientDetailsCorrect = verifyClientDetailsOnGenaralInfo(expectedClientID, expectedClientName);
-
-		return (isPolicyNameCorrect && isClientDetailsCorrect);
 	}
 
 	public boolean verifyClientPolicyDetails(String clientID, String selectedPolicyName) {
-
 		CoreFunctions.explicitWaitTillElementVisibility(driver, _headerGeneralInfo, PDTConstants.GENERAL_INFORMATION);
-
-		boolean isPolicyNameCorrect = verifyPolicyNameOnGeneralInfo(selectedPolicyName);
-		boolean isClientDetailsCorrect = verifyClientDetailsOnGenaralInfo(clientID);
-
-		return (isPolicyNameCorrect && isClientDetailsCorrect);
-
+		return (verifyPolicyNameOnGeneralInfo(selectedPolicyName) && verifyClientDetailsOnGenaralInfo(clientID));
 	}
 
 	private boolean verifyClientDetailsOnGenaralInfo(String expectedClientID) {
-		if ((CoreFunctions.getElementText(driver, _textClientID).equals(expectedClientID))) {
-			return true;
-		} else
-			return false;
-	}
-
-	private boolean verifyClientDetailsOnGenaralInfo(String expectedClientID, String expectedClientName) {
-
-		if ((CoreFunctions.getElementText(driver, _textClientName).equals(expectedClientName))
-				&& (CoreFunctions.getElementText(driver, _textClientID).equals(expectedClientID))) {
-			return true;
-		} else
-			return false;
-
+		return (CoreFunctions.getElementText(driver, _textClientID).equals(expectedClientID)) ? true : false;
 	}
 
 	private boolean verifyPolicyNameOnGeneralInfo(String selectedPolicyName) {
-
 		String[] expectedPolicyName = ((CoreFunctions.getElementText(driver, _headerPolicyInfo)).split(":"));
-
-		if (selectedPolicyName.contains(expectedPolicyName[1].trim()))
-			return true;
-		else
-			return false;
+		return (selectedPolicyName.contains(expectedPolicyName[1].trim())) ? true : false;
 	}
 
 	private boolean verifyLeftNavigationMenu(String pageName) {
-
 		return (CoreFunctions.isElementExist(driver, _leftNavGeneralInfo, 5) ? true : false);
-
 	}
 
-	public boolean verifyGeneralInfoField(String fieldName, String defaultValue) {
-
+	/**
+	 * Method to verify General Information Field Default Value
+	 * 
+	 * @param fieldName
+	 * @param expectedDefaultValue
+	 * @return
+	 */
+	public boolean verifyGeneralInfoFieldDefaultValue(String fieldName, String expectedDefaultValue) {
 		boolean isFieldVerified = false;
-
 		try {
-
 			switch (fieldName) {
-
 			case PDTConstants.CORE_FLEX_POLICY:
-				isFieldVerified = verifyCoreFlexPolicyField(defaultValue);
+				if ((CoreFunctions.isElementExist(driver, _selectCoreFlexPolicy, 2))
+						&& (CoreFunctions.getElementText(driver, _selectCoreFlexPolicyDefaultValue))
+								.equals(expectedDefaultValue))
+					isFieldVerified = true;
 				break;
-
-			case PDTConstants.BENEFIT_PACKAGE_TYPE:
-				isFieldVerified = verifyBenefitPackageTypeField(defaultValue);
-				break;
-
-			case PDTConstants.POINTS_BASED_FLEX_POLICY:
-				isFieldVerified = verifyPointsBasedFlexPolicyField(defaultValue);
-				break;
-
 			default:
-				Assert.fail("Field not found");
-
+				Reporter.addStepLog(MessageFormat.format(PDTConstants.INVALID_GENERAL_INFORMATION_FIELD,
+						CoreConstants.FAIL, fieldName));
+				return false;
 			}
-
 		} catch (Exception e) {
-			Reporter.addStepLog(
-					MessageFormat.format(PDTConstants.EXCEPTION_OCCURED_WHILE_VALIDATING_GENERAL_INFORMATION_FIELD,
-							CoreConstants.FAIL, fieldName, e.getMessage()));
+			Reporter.addStepLog(MessageFormat.format(
+					PDTConstants.EXCEPTION_OCCURED_WHILE_VALIDATING_GENERAL_INFORMATION_FIELD_DEFAULT_VALUES,
+					CoreConstants.FAIL, fieldName, expectedDefaultValue, e.getMessage()));
 		}
-
 		if (isFieldVerified) {
 			Reporter.addStepLog(MessageFormat.format(
 					PDTConstants.SUCCESSFULLY_VERIFIED_FIELD_AND_DEFAULT_VALUE_ON_GENERAL_INFORMATION_PAGE,
-					CoreConstants.PASS, fieldName, defaultValue));
+					CoreConstants.PASS, fieldName, expectedDefaultValue));
 		}
-
 		return isFieldVerified;
-
 	}
 
-	public boolean verifyGeneralInfoField(String fieldName, String defaultValue, DataTable dataTable) {
+	/**
+	 * Method to verify field visibility and field options on General Information
+	 * Page.
+	 * 
+	 * @param fieldName
+	 * @param fieldVisibility
+	 * @param fieldOptions
+	 * @param coreFlexPolicyFieldValue
+	 * @return
+	 */
+	public boolean verifyFieldVisibilityAndOptionsOnGeneralInfoPage(String fieldName, String expectedFieldVisibility,
+			String expectedFieldOptions, String coreFlexPolicyFieldValue) {
 
+		boolean isFieldVisibilityVerified, isFieldSelectOptionsVerified = false;
 		boolean isFieldVerified = false;
-		boolean isFieldDefaultValueVerified, isFieldSelectOptionsVerified = false;
 
 		try {
-
-			switch (fieldName) {
-
-			case PDTConstants.CORE_FLEX_POLICY:
-				isFieldVerified = verifyCoreFlexPolicyField(defaultValue);
-				break;
-
-			case PDTConstants.BENEFIT_PACKAGE_TYPE:
-				isFieldDefaultValueVerified = verifyBenefitPackageTypeField(defaultValue);
-				isFieldSelectOptionsVerified = verifyBenefitPackageTypeOptions(dataTable);
-				isFieldVerified = isFieldDefaultValueVerified && isFieldSelectOptionsVerified;
-				break;
-
-			case PDTConstants.POINTS_BASED_FLEX_POLICY:
-				isFieldDefaultValueVerified = verifyPointsBasedFlexPolicyField(defaultValue);
-				isFieldSelectOptionsVerified = verifyPointsBasedFlexPolicyOptions(dataTable);
-				isFieldVerified = isFieldDefaultValueVerified && isFieldSelectOptionsVerified;
-				break;
-
-			default:
-				Assert.fail("Field not found");
-
-			}
-
+			isFieldVisibilityVerified = verifyFieldVisibilityBasedOnCoreFlexPolicyFieldValue(fieldName,
+					coreFlexPolicyFieldValue, expectedFieldVisibility);
+			isFieldSelectOptionsVerified = verifyFieldOptions(fieldName, coreFlexPolicyFieldValue,
+					expectedFieldOptions);
+			isFieldVerified = isFieldVisibilityVerified & isFieldSelectOptionsVerified;
 		} catch (Exception e) {
-			Reporter.addStepLog(
-					MessageFormat.format(PDTConstants.EXCEPTION_OCCURED_WHILE_VALIDATING_GENERAL_INFORMATION_FIELD,
-							CoreConstants.FAIL, fieldName, e.getMessage()));
+			Reporter.addStepLog(MessageFormat.format(
+					PDTConstants.EXCEPTION_OCCURED_WHILE_VALIDATING_FIELD_VISIBILITY_AND_OPTIONS_OF_GENERAL_INFORMATION_FIELD,
+					CoreConstants.FAIL, fieldName, e.getMessage()));
 		}
-
 		if (isFieldVerified) {
 			Reporter.addStepLog(MessageFormat.format(
-					PDTConstants.SUCCESSFULLY_VERIFIED_FIELD_AND_DEFAULT_VALUE_ON_GENERAL_INFORMATION_PAGE,
-					CoreConstants.PASS, fieldName, defaultValue));
-		}
-
-		return isFieldVerified;
-
-	}
-
-	private boolean verifyPointsBasedFlexPolicyOptions(DataTable dataTable) {
-
-		CoreFunctions.clickElement(driver, _selectPointsBasedFlexPolicy);
-
-		List<String> expectedOptions = dataTable.asList(String.class);
-		List<String> actualOptions = CoreFunctions.getElementTextAndStoreInList(driver,
-				_selectPointsBasedFlexPolicyOptions);
-
-		System.out.println("Expected Options : " + expectedOptions);
-		System.out.println("Actual Options : " + actualOptions);
-
-		return actualOptions.equals(expectedOptions) ? true : false;
-	}
-
-	private boolean verifyPointsBasedFlexPolicyField(String expectedDefaultValue) {
-
-		if ((CoreFunctions.isElementExist(driver, _selectPointsBasedFlexPolicy, 2))) {
-			return true;
-		} else {
-			return false;
-		}
-	}
-
-	private boolean verifyBenefitPackageTypeOptions(DataTable dataTable) {
-
-		CoreFunctions.clickElement(driver, _selectBenefitPackageType);
-
-		List<String> expectedOptions = dataTable.asList(String.class);
-		List<String> actualOptions = CoreFunctions.getElementTextAndStoreInList(driver,
-				_selectBenefitPackageTypeOptions);
-
-		System.out.println("Expected Options : " + expectedOptions);
-		System.out.println("Actual Options : " + actualOptions);
-
-		return actualOptions.equals(expectedOptions) ? true : false;
-	}
-
-	private boolean verifyBenefitPackageTypeField(String expectedDefaultValue) {
-
-		if ((CoreFunctions.isElementExist(driver, _selectBenefitPackageType, 2))
-				&& getActualDefaultValue().equals(expectedDefaultValue)) {
-
-			return true;
-		} else {
-			return false;
-		}
-
-	}
-
-	private String getActualDefaultValue() {
-
-		String defaultValue;
-
-		if (CoreFunctions.isElementExist(driver, _selectBenefitPackageTypeDefaultValue, 2))
-			defaultValue = CoreFunctions.getElementText(driver, _selectBenefitPackageTypeDefaultValue);
-		else
-			defaultValue = CoreFunctions.getElementText(driver, _selectBenefitPackageTypeSelection);
-
-		return defaultValue;
-	}
-
-	private boolean verifyCoreFlexPolicyField(String expectedDefaultValue) {
-
-		if ((CoreFunctions.isElementExist(driver, _selectCoreFlexPolicy, 2))
-				&& (CoreFunctions.getElementText(driver, _selectCoreFlexPolicyDefaultValue))
-						.equals(expectedDefaultValue)) {
-
-			return true;
-		} else {
-			return false;
-		}
-	}
-
-	public boolean verifyFieldExist(String fieldName) {
-
-		boolean isFieldExist = false;
-
-		try {
-
-			isFieldExist = CoreFunctions.isElementExist(driver, _selectPointsBasedFlexPolicy, 2);
-
-		} catch (Exception e) {
-
-			Reporter.addStepLog(
-					MessageFormat.format(PDTConstants.EXCEPTION_OCCURED_WHILE_VALIDATING_GENERAL_INFORMATION_FIELD,
-							CoreConstants.FAIL, fieldName, e.getMessage()));
-
-		}
-
-		if (!isFieldExist) {
-			Reporter.addStepLog(MessageFormat.format(
-					PDTConstants.SUCCESSFULLY_VERIFIED_FIELD_NOT_DISPLAYED_ON_GENERAL_INFORMATION_PAGE,
+					PDTConstants.SUCCESSFULLY_VERIFIED_VISBILITY_AND_OPTIONS_OF_FIELD_ON_GENERAL_INFORMATION_PAGE,
 					CoreConstants.PASS, fieldName));
 		}
-
-		return isFieldExist;
+		return isFieldVerified;
 	}
 
-	public boolean selectFieldOption(String fieldName, String fieldSelection) {
+	/**
+	 * Method to verify general information field visibility based on CoreFlex
+	 * Policy Field - Y/N Option
+	 * 
+	 * @param fieldName
+	 * @param coreFlexPolicyFieldValue
+	 * @param expectedFieldVisibility
+	 * @return
+	 */
+	private boolean verifyFieldVisibilityBasedOnCoreFlexPolicyFieldValue(String fieldName,
+			String coreFlexPolicyFieldValue, String expectedFieldVisibility) {
 
-		boolean isFieldSelected = false;
+		boolean fieldVisibility = false;
 
-		try {
+		switch (fieldName) {
+		case PDTConstants.BENEFIT_PACKAGE_TYPE:
+			fieldVisibility = CoreFunctions.isElementExist(driver, _selectBenefitPackageType, 5);
+			break;
+		case PDTConstants.POINTS_BASED_FLEX_POLICY:
+			fieldVisibility = CoreFunctions.isElementExist(driver, _selectPointsBasedFlexPolicy, 5);
+			break;
+		default:
+			Reporter.addStepLog(
+					MessageFormat.format(PDTConstants.INVALID_FIELD_NAME_OPTION, CoreConstants.FAIL, fieldName));
+			return false;
+		}
 
-			switch (fieldName) {
-
-			case PDTConstants.POLICY_TYPE:
-				isFieldSelected = selectPolicyTypeField(fieldSelection);
-				break;
-
-			case PDTConstants.EMPLOYEE_TYPE:
-				isFieldSelected = selectEmployeeTypeField(fieldSelection);
-				break;
-
-			case PDTConstants.HOMEOWNER_TYPE:
-				isFieldSelected = selectHomeownerTypeField(fieldSelection);
-				break;
-
-			case PDTConstants.CAPPED_POLICY:
-				isFieldSelected = selectCappedPolicyField(fieldSelection);
-				break;
-
-			case PDTConstants.BENEFIT_PACKAGE_TYPE:
-				isFieldSelected = selectBenefitPackageTypeField(fieldSelection);
-				break;
-
-			case PDTConstants.POINTS_BASED_FLEX_POLICY:
-				isFieldSelected = selectPointsBasedFlexPolicyField(fieldSelection);
-				break;
-
-			default:
-				Assert.fail("Field not found");
-
+		switch (coreFlexPolicyFieldValue) {
+		case PDTConstants.YES:
+			if (fieldName.equals(PDTConstants.BENEFIT_PACKAGE_TYPE)) {
+				return fieldVisibility ? false : true;
+			} else if (fieldName.equals(PDTConstants.POINTS_BASED_FLEX_POLICY)) {
+				return fieldVisibility ? true : false;
 			}
+			break;
+		case PDTConstants.NO:
+			if (fieldName.equals(PDTConstants.BENEFIT_PACKAGE_TYPE)) {
+				return fieldVisibility ? true : false;
+			} else if (fieldName.equals(PDTConstants.POINTS_BASED_FLEX_POLICY)) {
+				return fieldVisibility ? false : true;
+			}
+			break;
+		default:
+			Reporter.addStepLog(MessageFormat.format(PDTConstants.INVALID_COREFLEX_POLICY_FIELD_OPTION,
+					CoreConstants.FAIL, coreFlexPolicyFieldValue));
+			return false;
+		}
+		return false;
+	}
 
+	/**
+	 * Method to verify General Information Field Options
+	 * 
+	 * @param fieldName
+	 * @param coreFlexPolicyFieldValue
+	 * @param expectedFieldOptions
+	 * @return
+	 */
+	private boolean verifyFieldOptions(String fieldName, String coreFlexPolicyFieldValue, String expectedFieldOptions) {
+		List<String> actualOptions = null;
+
+		switch (coreFlexPolicyFieldValue) {
+		case PDTConstants.YES:
+			if (fieldName.equals(PDTConstants.BENEFIT_PACKAGE_TYPE)
+					&& !(CoreFunctions.isElementExist(driver, _selectBenefitPackageType, 5))) {
+				return true;
+			} else if (fieldName.equals(PDTConstants.BENEFIT_PACKAGE_TYPE)
+					&& (CoreFunctions.isElementExist(driver, _selectBenefitPackageType, 5))) {
+				return false;
+			} else if (fieldName.equals(PDTConstants.POINTS_BASED_FLEX_POLICY)
+					&& !(CoreFunctions.isElementExist(driver, _selectPointsBasedFlexPolicy, 5))) {
+				return false;
+			} else if (fieldName.equals(PDTConstants.POINTS_BASED_FLEX_POLICY)
+					&& (CoreFunctions.isElementExist(driver, _selectPointsBasedFlexPolicy, 5))) {
+				CoreFunctions.clickElement(driver, _selectPointsBasedFlexPolicy);
+				actualOptions = CoreFunctions.getElementTextAndStoreInList(driver, _selectPointsBasedFlexPolicyOptions);
+				return actualOptions.equals(Arrays.asList(expectedFieldOptions.split(","))) ? true : false;
+			}
+		case PDTConstants.NO:
+			if (fieldName.equals(PDTConstants.BENEFIT_PACKAGE_TYPE)
+					&& (CoreFunctions.isElementExist(driver, _selectBenefitPackageType, 5))) {
+				CoreFunctions.clickElement(driver, _selectBenefitPackageType);
+				actualOptions = CoreFunctions.getElementTextAndStoreInList(driver, _selectBenefitPackageTypeOptions);
+				return actualOptions.equals(Arrays.asList(expectedFieldOptions.split(","))) ? true : false;
+			} else if (fieldName.equals(PDTConstants.BENEFIT_PACKAGE_TYPE)
+					&& !(CoreFunctions.isElementExist(driver, _selectBenefitPackageType, 5))) {
+				return false;
+			} else if (fieldName.equals(PDTConstants.POINTS_BASED_FLEX_POLICY)
+					&& !(CoreFunctions.isElementExist(driver, _selectPointsBasedFlexPolicy, 5))) {
+				return true;
+			} else if (fieldName.equals(PDTConstants.POINTS_BASED_FLEX_POLICY)
+					&& (CoreFunctions.isElementExist(driver, _selectPointsBasedFlexPolicy, 5))) {
+				return false;
+			}
+		default:
+			Reporter.addStepLog(MessageFormat.format(PDTConstants.INVALID_COREFLEX_POLICY_FIELD_OPTION,
+					CoreConstants.FAIL, coreFlexPolicyFieldValue));
+			return false;
+		}
+	}
+
+	/**
+	 * Method to select field name option on General Information Page.
+	 * 
+	 * @param fieldName
+	 * @param fieldSelection
+	 * @return
+	 */
+	public boolean selectFieldOption(String fieldName, String fieldSelection) {
+		boolean isFieldOptionSelected = false;
+		try {
+			switch (fieldName) {
+			case PDTConstants.POLICY_TYPE:
+				CoreFunctions.clickElement(driver, _selectPolicyType);
+				CoreFunctions.selectItemInListByText(driver, _selectPolicyTypeOptions, fieldSelection,true);
+				isFieldOptionSelected = true;
+				break;
+			case PDTConstants.EMPLOYEE_TYPE:
+				CoreFunctions.clickElement(driver, _selectEmployeeType);
+				CoreFunctions.selectItemInListByText(driver, _selectEmployeeTypeOptions, fieldSelection,true);
+				isFieldOptionSelected = true;
+				break;
+			case PDTConstants.HOMEOWNER_TYPE:
+				CoreFunctions.clickElement(driver, _selectHomeownerType);
+				CoreFunctions.selectItemInListByText(driver, _selectHomeownerTypeOptions, fieldSelection,true);
+				isFieldOptionSelected = true;
+				break;
+			case PDTConstants.CAPPED_POLICY:
+				CoreFunctions.clickElement(driver, _selectCappedPolicyType);
+				CoreFunctions.selectItemInListByText(driver, _selectCappedPolicyTypeOptions, fieldSelection,true);
+				isFieldOptionSelected = true;
+				break;
+			case PDTConstants.BENEFIT_PACKAGE_TYPE:
+				CoreFunctions.clickElement(driver, _selectBenefitPackageType);
+				CoreFunctions.selectItemInListByText(driver, _selectBenefitPackageTypeOptions, fieldSelection,true);
+				isFieldOptionSelected = true;
+				break;
+			case PDTConstants.POINTS_BASED_FLEX_POLICY:
+				CoreFunctions.clickElement(driver, _selectPointsBasedFlexPolicy);
+				CoreFunctions.selectItemInListByText(driver, _selectPointsBasedFlexPolicyOptions, fieldSelection,true);
+				isFieldOptionSelected = true;
+				break;
+			default:
+				Reporter.addStepLog(
+						MessageFormat.format(PDTConstants.INVALID_FIELD_NAME_OPTION, CoreConstants.FAIL, fieldName));
+				return false;
+			}
 		} catch (Exception e) {
 			Reporter.addStepLog(
 					MessageFormat.format(PDTConstants.EXCEPTION_OCCURED_WHILE_SELECTING_GENERAL_INFORMATION_FIELD,
 							CoreConstants.FAIL, fieldName, e.getMessage()));
 		}
-
-		if (isFieldSelected) {
-			Reporter.addStepLog(MessageFormat.format(
-					PDTConstants.SUCCESSFULLY_SELECTED_OPTION_FOR_FIELD_ON_GENERAL_INFORMATION_PAGE, CoreConstants.PASS,
-					fieldSelection, fieldName));
-		}
-
-		return isFieldSelected;
-
+		return isFieldOptionSelected;
 	}
 
-	private boolean selectCappedPolicyField(String fieldSelection) {
-		if (CoreFunctions.isElementExist(driver, _selectCappedPolicyType, 5)) {
-			CoreFunctions.clickElement(driver, _selectCappedPolicyType);
-			CoreFunctions.selectItemInListByText(driver, _selectCappedPolicyTypeOptions, fieldSelection);
-			return true;
-		} else
-			return false;
-	}
-
-	private boolean selectHomeownerTypeField(String fieldSelection) {
-		if (CoreFunctions.isElementExist(driver, _selectHomeownerType, 5)) {
-			CoreFunctions.clickElement(driver, _selectHomeownerType);
-			CoreFunctions.selectItemInListByText(driver, _selectHomeownerTypeOptions, fieldSelection);
-			return true;
-		} else
-			return false;
-	}
-
-	private boolean selectEmployeeTypeField(String fieldSelection) {
-		if (CoreFunctions.isElementExist(driver, _selectEmployeeType, 5)) {
-			CoreFunctions.clickElement(driver, _selectEmployeeType);
-			CoreFunctions.selectItemInListByText(driver, _selectEmployeeTypeOptions, fieldSelection);
-			return true;
-		} else
-			return false;
-	}
-
-	private boolean selectPolicyTypeField(String fieldSelection) {
-		if (CoreFunctions.isElementExist(driver, _selectPolicyType, 5)) {
-			CoreFunctions.clickElement(driver, _selectPolicyType);
-			CoreFunctions.selectItemInListByText(driver, _selectPolicyTypeOptions, fieldSelection);
-			return true;
-		} else
-			return false;
-	}
-
-	private boolean selectPointsBasedFlexPolicyField(String fieldSelection) {
-		if (CoreFunctions.isElementExist(driver, _selectPointsBasedFlexPolicy, 5)) {
-			CoreFunctions.clickElement(driver, _selectPointsBasedFlexPolicy);
-			CoreFunctions.selectItemInListByText(driver, _selectPointsBasedFlexPolicyOptions, fieldSelection);
-			return true;
-		} else
-			return false;
-	}
-
-	private boolean selectBenefitPackageTypeField(String fieldSelection) {
-
-		if (CoreFunctions.isElementExist(driver, _selectBenefitPackageType, 5)) {
-			CoreFunctions.clickElement(driver, _selectBenefitPackageType);
-			CoreFunctions.selectItemInListByText(driver, _selectBenefitPackageTypeOptions, fieldSelection);
-			return true;
-		} else
-			return false;
-
-	}
-
-	public void selectOtherMandatoryFields() {
-
-		selectFieldOption(PDTConstants.POLICY_TYPE, PDTConstants.US_DOMESTIC);
-		selectFieldOption(PDTConstants.EMPLOYEE_TYPE, PDTConstants.NEW_HIRE);
-		selectFieldOption(PDTConstants.HOMEOWNER_TYPE, PDTConstants.HOMEOWNER);
-		selectFieldOption(PDTConstants.CAPPED_POLICY, PDTConstants.YES);
+	/**
+	 * Method to fill all other Mandatory fields of General Information Page.
+	 * 
+	 * @param dataTable
+	 */
+	public void fillOtherMandatoryFields(DataTable dataTable) {
+		List<Map<String, String>> dataMap = dataTable.asMaps(String.class, String.class);
+		selectFieldOption(PDTConstants.POLICY_TYPE, dataMap.get(0).get("PolicyType"));
+		selectFieldOption(PDTConstants.EMPLOYEE_TYPE, dataMap.get(0).get("EmployeeType"));
+		selectFieldOption(PDTConstants.HOMEOWNER_TYPE, dataMap.get(0).get("HomeownerType"));
+		selectFieldOption(PDTConstants.CAPPED_POLICY, dataMap.get(0).get("CappedPolicy"));
 		CoreFunctions.clickElement(driver, _radioExpenseManagementNoOption);
-
 	}
 
+	/**
+	 * Method to verify Page Navigation past General Information Page based on
+	 * PointsBasedFlexPolicy - Yes/No Option
+	 * 
+	 * @param pointsBasedFlexSelection
+	 * @param expectedPageTitle
+	 * @param expectedLeftNavigationTitle
+	 * @param flexPolicySetupPage
+	 * @param pdtPolicyBenefitsCategoriesPage
+	 * @return
+	 */
 	public boolean verifyPageNavigation(String pointsBasedFlexSelection, String expectedPageTitle,
 			String expectedLeftNavigationTitle, CoreFlex_FlexPolicySetupPage flexPolicySetupPage,
 			PDT_PolicyBenefitsCategoriesPage pdtPolicyBenefitsCategoriesPage) {
 
 		boolean isNavigationCorrect = false;
 		String actualPageTitle, actualLeftNavigationTitle;
-
 		try {
-
 			if (pointsBasedFlexSelection.equals("Yes")) {
 				actualPageTitle = flexPolicySetupPage.getPageHeaderTitle();
 				actualLeftNavigationTitle = flexPolicySetupPage.getLeftNavigationPageTitle();
-				isNavigationCorrect = validatePageNavigation(actualPageTitle, actualLeftNavigationTitle,
-						expectedPageTitle,expectedLeftNavigationTitle);
+				isNavigationCorrect = ((actualPageTitle.equals(expectedPageTitle))
+						&& (actualLeftNavigationTitle.equals(expectedLeftNavigationTitle))) ? true : false;
 				Reporter.addStepLog(
 						MessageFormat.format(PDTConstants.SUCCESSFULLY_NAVIGATED_TO_PAGE_PAST_GENERAL_INFORMATION,
 								CoreConstants.PASS, actualPageTitle));
-
 			} else if (pointsBasedFlexSelection.equals("No")) {
 				actualPageTitle = pdtPolicyBenefitsCategoriesPage.getPageHeaderTitle();
 				actualLeftNavigationTitle = pdtPolicyBenefitsCategoriesPage.getLeftNavigationPageTitle();
-				isNavigationCorrect = validatePageNavigation(actualPageTitle, actualLeftNavigationTitle,
-						expectedPageTitle,expectedLeftNavigationTitle);
+				isNavigationCorrect = ((actualPageTitle.equals(expectedPageTitle))
+						&& (actualLeftNavigationTitle.equals(expectedLeftNavigationTitle))) ? true : false;
 				Reporter.addStepLog(
 						MessageFormat.format(PDTConstants.SUCCESSFULLY_NAVIGATED_TO_PAGE_PAST_GENERAL_INFORMATION,
 								CoreConstants.PASS, actualPageTitle));
 			}
 
 		} catch (Exception e) {
-
 			Reporter.addStepLog(MessageFormat.format(
 					PDTConstants.EXCEPTION_OCCURED_WHILE_VALIDATING_PAGE_NAVIGATION_PAST_GENERAL_INFO,
 					CoreConstants.FAIL, e.getMessage()));
-
 		}
 		return isNavigationCorrect;
 	}
-
-	private boolean validatePageNavigation(String actualPageTitle, String actualLeftNavigationTitle,
-			String expectedPageTitle, String expectedLeftNavigationTitle) {
-
-		System.out.println("Actual Page Title : " + actualPageTitle);		
-		System.out.println("Expected Title : " + expectedPageTitle);
-		System.out.println("Actual Left Navigation Title : " + actualLeftNavigationTitle);
-		System.out.println("Expected Left Navigation Title : " + expectedLeftNavigationTitle);
-
-		if ((actualPageTitle.equals(expectedPageTitle)) && (actualLeftNavigationTitle.equals(expectedLeftNavigationTitle)))
-			return true;
-		else
-			return false;
-	}
-
 }

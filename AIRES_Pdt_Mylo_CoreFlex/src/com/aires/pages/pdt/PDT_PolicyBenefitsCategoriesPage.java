@@ -25,7 +25,7 @@ public class PDT_PolicyBenefitsCategoriesPage extends Base {
 	private WebElement _headerPage;
 
 	// Policy Benefits Categories Left Navigation
-	@FindBy(how = How.XPATH, using = "//ul[@class='nav']//li[@class='disabled nav-item active']//p")
+	@FindBy(how = How.XPATH, using = "//ul[@class='nav']//a[contains(@class,'nav-link disabled')]//p")
 	private WebElement _leftNavigationTitle;
 
 	/*********************************************************************/
@@ -37,7 +37,6 @@ public class PDT_PolicyBenefitsCategoriesPage extends Base {
 	}
 
 	public String getLeftNavigationPageTitle() {
-
 		return CoreFunctions.getElementText(driver, _leftNavigationTitle);
 	}
 	

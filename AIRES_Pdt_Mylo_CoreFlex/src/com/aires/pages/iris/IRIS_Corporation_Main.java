@@ -1,7 +1,3 @@
-/**
- * @author srana
- *
- */
 package com.aires.pages.iris;
 
 import java.text.MessageFormat;
@@ -10,7 +6,6 @@ import java.util.Map;
 
 import org.testng.Assert;
 
-import com.aires.businessrules.BusinessFunctions;
 import com.aires.businessrules.CoreFunctions;
 import com.aires.businessrules.constants.CoreConstants;
 import com.aires.businessrules.constants.IRISConstants;
@@ -43,9 +38,6 @@ import com.hp.lft.sdk.java.UiObjectDescription;
 import com.hp.lft.sdk.java.Window;
 import com.hp.lft.sdk.java.WindowDescription;
 import com.vimalselvam.cucumber.listener.Reporter;
-
-import cucumber.api.DataTable;
-import freemarker.core._ParserConfigurationWithInheritedFormat;
 
 public class IRIS_Corporation_Main extends BasePage {
 	private String windowTitle;
@@ -90,10 +82,6 @@ public class IRIS_Corporation_Main extends BasePage {
 	private TabControl jTabbedPaneTabControl;
 	private boolean _isExists = false;
 	private boolean _printReportMsg = true;
-
-	private String _irisUploadPageTitle = "IRIS Upload Page";
-
-
 
 	public Editor getEditorByName(String editorName) {
 		switch (editorName) {
@@ -196,13 +184,12 @@ public class IRIS_Corporation_Main extends BasePage {
 		Thread.sleep(1000);
 		switchToCorporationModule(moduleName);
 	}
-	
-	
+
 	public void selectCorporation(String moduleName) throws Exception {
 		_IRIS = getIRISWindow();
-		Thread.sleep(2000);		
+		Thread.sleep(2000);
 		System.out.println(moduleName);
-		IRIS_PageMaster.getTabControlObject(_IRIS,0).select(moduleName);			
+		IRIS_PageMaster.getTabControlObject(_IRIS, 0).select(moduleName);
 	}
 
 	public void switchToCorporationModule(String moduleName) throws Exception {
@@ -352,8 +339,14 @@ public class IRIS_Corporation_Main extends BasePage {
 		HashMap<String, Boolean> editorResultMap = new HashMap<String, Boolean>();
 		for (@SuppressWarnings("rawtypes")
 		Map.Entry m : editorMap.entrySet()) {
-			_isExists = BusinessFunctions.verifyTextEditorValueInIris(getElementByName(m.getKey().toString()),
-					m.getKey().toString(), m.getValue().toString(), tabName);
+
+			_isExists = Helpers.searchAndVerifySelectedItemInList((List) getElementByName(m.getKey().toString()),
+					m.getValue().toString());
+
+			if (_isExists)
+				Reporter.addStepLog(MessageFormat.format(IRISConstants.VERIFIED_FIELD_ON_TAB, CoreConstants.PASS,
+						(List) getElementByName(m.getKey().toString()), m.getValue().toString(), tabName));
+
 			editorResultMap.put(m.getKey().toString(), _isExists);
 		}
 		return editorResultMap;
@@ -364,8 +357,12 @@ public class IRIS_Corporation_Main extends BasePage {
 		HashMap<String, Boolean> dropDownResultMap = new HashMap<String, Boolean>();
 		for (@SuppressWarnings("rawtypes")
 		Map.Entry m : dropDownMap.entrySet()) {
-			_isExists = BusinessFunctions.verifyDropDownValueInIris(getElementByListName(m.getKey().toString()),
-					m.getKey().toString(), m.getValue().toString(), tabName);
+			_isExists = Helpers.searchAndVerifySelectedItemInList((List) getElementByName(m.getKey().toString()),
+					m.getValue().toString());
+
+			if (_isExists)
+				Reporter.addStepLog(MessageFormat.format(IRISConstants.VERIFIED_FIELD_ON_TAB, CoreConstants.PASS,
+						(List) getElementByName(m.getKey().toString()), m.getValue().toString(), tabName));
 			dropDownResultMap.put(m.getKey().toString(), _isExists);
 		}
 		return dropDownResultMap;
@@ -430,5 +427,4 @@ public class IRIS_Corporation_Main extends BasePage {
 		}
 	}
 
-	
 }

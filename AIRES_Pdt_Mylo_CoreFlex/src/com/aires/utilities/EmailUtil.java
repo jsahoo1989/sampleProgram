@@ -216,7 +216,7 @@ public class EmailUtil {
 						try {
 							Thread.sleep(1000);
 						} catch (InterruptedException e1) {
-							// TODO Auto-generated catch block
+							
 							e1.printStackTrace();
 						}
 					}
@@ -229,10 +229,10 @@ public class EmailUtil {
 			}
 
 		} catch (NoSuchProviderException e) {
-			// TODO Auto-generated catch block
+			
 			e.printStackTrace();
 		} catch (MessagingException e) {
-			// TODO Auto-generated catch block
+			
 			e.printStackTrace();
 		}
 		return path1;
@@ -272,57 +272,13 @@ public class EmailUtil {
 
 	public static String[] getStartEndTagFromEmail(String infoToExtractFromMail) {
 		switch (infoToExtractFromMail) {
-		case PDTConstants.USER_NAME:
+		case CoreConstants.USER_NAME:
 			_searchTag[0] = "<font style=\"padding-left:5px;\" size=\"3\" face=\"Arial\" color=\"#424143\"><b>";
 			_searchTag[1] = "</b></font>";
 			break;
-		case PDTConstants.PASSWORD:
+		case CoreConstants.PASSWORD:
 			_searchTag[0] = "Your temporary password is <b>";
 			_searchTag[1] = "</b></font>";
-			break;
-		case PDTConstants.SUBMIT_MY_RESPONSE:
-			_searchTag[0] = "href=";
-			_searchTag[1] = "><img alt=\"Submit My Response\"";
-			break;
-		case PDTConstants.SUBMIT_MY_RESPONSE_NG:
-			_searchTag[0] = "<a href=\"";
-			_searchTag[1] = "\"><img alt=\"Submit My Response\"";
-			break;
-		case PDTConstants.SEND_COMMENT_TO_CONTRIBUTOR:
-			_searchTag[0] = "<a href=\"";
-			_searchTag[1] = "\"><img alt=\"Send Comments To Contributor\"";
-			break;
-		case PDTConstants.TRANSFEREE_USER_NAME:
-			_searchTag[0] = "<strong>Username</strong>";
-			_searchTag[1] = "</p>";
-			break;
-		case PDTConstants.TRANSFEREE_PASSWORD:
-			_searchTag[0] = "</span></b><span style=\"font-family:century gothic, Helvetica, Calibri, Roboto;\">";
-			_searchTag[1] = "</span>";
-			break;
-		case PDTConstants.SPRINGBOARD_USER_NAME:
-			_searchTag[0] = "<font style=\"padding-left:5px;\" size=\"3\" face=\"Arial\" color=\"#424143\"><b>";
-			_searchTag[1] = "</b></font>";
-			break;
-		case PDTConstants.SPRINGBOARD_PASSWORD:
-			_searchTag[0] = "Your temporary password is <b>";
-			_searchTag[1] = "</b></font>";
-			break;
-		case PDTConstants.DELEGATE_PASSWORD:
-			_searchTag[0] = "</span></b><span style=\"font-family: &quot;century gothic&quot;, Helvetica, Calibri, Roboto, serif, EmojiFont;\">";
-			_searchTag[1] = "</span>";
-			break;
-		case PDTConstants.QUOTE_ACKNOWLEDGED_BY:
-			_searchTag[0] = "<i>";
-			_searchTag[1] = "</i>";
-			break;
-		case PDTConstants.QUOTE_ADDED_RECEIVED:
-			_searchTag[0] = "<font color=\"white\" face=\"arial,helvetica,sans-serif\" size=\"5\">";
-			_searchTag[1] = "</font>";
-			break;
-		case PDTConstants.INVOICE_DETAILS:
-			_searchTag[0] = "<font color=\"white\" face=\"arial,helvetica,sans-serif\" size=\"5\">";
-			_searchTag[1] = "</font>";
 			break;
 		default:
 			Assert.fail("Information not found");

@@ -46,7 +46,6 @@ public class TestContext {
 			_pageObjectManagerMylo = new PageObjectManager_Mylo(_webDriverManager.getDriver());
 			_pageObjectManagerCoreFlex = new PageObjectManager_CoreFlex(_webDriverManager.getDriver());
 		}
-
 	}
 
 	public WebDriverManager getWebDriverManager() {
@@ -72,5 +71,4 @@ public class TestContext {
 	public IrisPageManager getIrisPageManager() {
 		return _irisPageManager;
 	}
-
 }

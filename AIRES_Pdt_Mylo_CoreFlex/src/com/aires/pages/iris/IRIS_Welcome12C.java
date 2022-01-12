@@ -1,8 +1,3 @@
-/**
- * @author srana
- *
- */
-
 package com.aires.pages.iris;
 
 import java.text.MessageFormat;
@@ -40,21 +35,13 @@ public class IRIS_Welcome12C extends BasePage {
 			IRIS_PageMaster.getButtonObjectFromLabel(_IRIS, "Globe_32").waitUntilEnabled();
 			Helpers.clickButton(IRIS_PageMaster.getButtonObjectFromLabel(_IRIS, "Globe_32"), moduleName);
 			break;
-		case (IRISConstants.DOCUMENTS_TAB):
-			IRIS_PageMaster.getButtonObjectFromLabel(_IRIS, "report_32").waitUntilEnabled();
-			Helpers.clickButton(IRIS_PageMaster.getButtonObjectFromLabel(_IRIS, "report_32"), moduleName);
-			break;
-		case (IRISConstants.ASSIST_TAB):
-			Helpers.clickButton(IRIS_PageMaster.getButtonObjectFromLabel(_IRIS, "iristoassit"), moduleName);
-			break;
 		case (IRISConstants.EXIT_TAB):
 			IRIS_PageMaster.getButtonObjectFromLabel(_IRIS, "exit_32").waitUntilEnabled();
 			Helpers.clickButton(IRIS_PageMaster.getButtonObjectFromLabel(_IRIS, "exit_32"), moduleName);
 			break;
 		default:
 			Assert.fail(IRISConstants.ELEMENT_NOT_FOUND);
-		}
-		
+		}		
 	}
 
 	public void maximizeWindow() throws GeneralLeanFtException {

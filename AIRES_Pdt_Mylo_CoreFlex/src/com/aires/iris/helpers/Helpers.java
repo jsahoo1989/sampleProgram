@@ -2,16 +2,17 @@ package com.aires.iris.helpers;
 
 import java.sql.Timestamp;
 import java.util.Enumeration;
+
 import javax.swing.JTree;
 import javax.swing.tree.DefaultMutableTreeNode;
 import javax.swing.tree.DefaultTreeModel;
 import javax.swing.tree.TreeNode;
 import javax.swing.tree.TreePath;
+
 import org.testng.Assert;
 
 import com.aires.businessrules.constants.IRISConstants;
 import com.aires.utilities.Log;
-import com.hp.lft.sdk.Desktop;
 import com.hp.lft.sdk.GeneralLeanFtException;
 import com.hp.lft.sdk.java.Button;
 import com.hp.lft.sdk.java.ButtonDescription;
@@ -25,10 +26,8 @@ import com.hp.lft.sdk.java.Menu;
 import com.hp.lft.sdk.java.RadioButton;
 import com.hp.lft.sdk.java.TabControl;
 import com.hp.lft.sdk.java.Table;
-import com.hp.lft.sdk.java.TableDescription;
 import com.hp.lft.sdk.java.TreeView;
 import com.hp.lft.sdk.java.Window;
-import com.hp.lft.sdk.java.WindowDescription;
 
 public class Helpers {
 
@@ -45,7 +44,6 @@ public class Helpers {
 		} catch (GeneralLeanFtException e) {
 			e.printStackTrace();
 		}
-
 	}
 
 	public static void clickButton(Button button, String elementName) {
@@ -82,7 +80,6 @@ public class Helpers {
 		} catch (GeneralLeanFtException e) {
 			e.printStackTrace();
 		}
-
 	}
 
 	public static void selectMenu(Menu menuName, String elementName) throws Exception {
@@ -92,7 +89,6 @@ public class Helpers {
 		} catch (GeneralLeanFtException e) {
 			e.printStackTrace();
 		}
-
 	}
 
 	public static void setTableCellValue(Table table, int rowCount, String columnName, String value)
@@ -115,7 +111,6 @@ public class Helpers {
 	}
 
 	public static void selectTreeNode(JTree tree, String nodeName) {
-
 		_searchNode = searchNode(_treeRoot, nodeName);
 		if (_searchNode != null) {
 			TreeNode[] nodes = ((DefaultTreeModel) tree.getModel()).getPathToRoot(_searchNode);
@@ -124,15 +119,14 @@ public class Helpers {
 			tree.setSelectionPath(tpath);
 		}
 	}
-
+	
+	@SuppressWarnings("rawtypes")
 	public static DefaultMutableTreeNode searchNode(TreeNode root, String nodeName) {
-		DefaultMutableTreeNode node = null;
+		DefaultMutableTreeNode node = null;		
 		Enumeration enumeration = _searchNode.breadthFirstEnumeration();
 		while (enumeration.hasMoreElements()) {
-
 			node = (DefaultMutableTreeNode) enumeration.nextElement();
 			if (nodeName.equals(node.getUserObject().toString())) {
-
 				return node;
 			}
 		}
@@ -175,7 +169,6 @@ public class Helpers {
 		} catch (GeneralLeanFtException e) {
 			e.printStackTrace();
 		}
-
 	}
 
 	/**
@@ -308,15 +301,9 @@ public class Helpers {
 		oKButton.click();
 	}
 
-	public static void printColumnHeaders(Table tableObject) throws GeneralLeanFtException {
-		
-		System.out.println(tableObject.getRows().size());
-		
+	public static void printColumnHeaders(Table tableObject) throws GeneralLeanFtException {		
 		for(int i=0; i<tableObject.getColumnHeaders().size();i++) {
 			System.out.println(tableObject.getColumnHeaders().get(i));
 		}
-		
-		
-		
 	}
 }

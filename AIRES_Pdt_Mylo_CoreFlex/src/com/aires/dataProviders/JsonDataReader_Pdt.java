@@ -89,7 +89,4 @@ public class JsonDataReader_Pdt {
 	public final PDT_LoginDetails getLoginByApplication(String applicationName) {
 		return _loginDetailsList.stream().filter(x -> x.application.equalsIgnoreCase(applicationName)).findAny().get();
 	}
-
-	
-
 }

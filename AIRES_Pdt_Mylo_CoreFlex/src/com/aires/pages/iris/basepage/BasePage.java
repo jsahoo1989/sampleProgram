@@ -6,7 +6,6 @@
 package com.aires.pages.iris.basepage;
 
 import java.io.BufferedReader;
-import java.io.IOException;
 import java.io.InputStreamReader;
 import java.lang.management.ManagementFactory;
 import java.lang.management.RuntimeMXBean;
@@ -165,9 +164,6 @@ public class BasePage {
 	public void cleanIrisProcesses() throws Exception {
 		killExistingBrowsers();
 		closeIRISApplication();
-//		if (getIRISProcess().isAlive()) {
-//			closeIRISApplication();
-//		}
 	}
 
 	public String getWindowTitle() throws Exception {
@@ -206,12 +202,10 @@ public class BasePage {
 
 	public void getPIDAndKillProces() throws Exception {
 		RuntimeMXBean bean = ManagementFactory.getRuntimeMXBean();
-
 		// Get name representing the running Java virtual machine. It returns something
 		// like 6460@AURORA. Where the value before the @ symbol is the PID.
 		String _jvmName = bean.getName();
 		Log.info("JVM Name = " + _jvmName);
-
 		// Extract the PID by splitting the string returned by the bean.getName() method.
 		long _jvmPID = Long.valueOf(_jvmName.split("@")[0]);
 		Log.info("JVM PID = " + _jvmPID);

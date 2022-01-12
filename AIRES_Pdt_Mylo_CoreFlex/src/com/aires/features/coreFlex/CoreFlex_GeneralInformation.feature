@@ -1,56 +1,40 @@
 Feature: Validate the functionality of General Information Page for CoreFlex and Non-CoreFlex Policies
 
   Background: Login to  Policy Digitization Tool (PDT) application
-    Given he has logged into 'Aires Policy Tool' application as a "Client Service Manager" user
+    Given he is logged into 'Aires Policy Tool' application as a "Client Service Manager" user
 
-  @CF-28 @CoreFlex-PolicyUpdate-Sprint1 @GeneralInfoCheckForCoreFlexEnabledPolicy
-  Scenario: CoreFlex - Verify CoreFlex related updates are displayed on 'General Information' page for CoreFlex Enabled Policy
-    Given he has selected a policy for "49211" Client on "Add New Policy Form" page of 'Aires Policy Tool' Application
-    And he has saved the record after "Checked" "CoreFleX Enabled" checkbox for the policy selected above in 'Policy table' of "Accounting" tab from "Corporation" module of "49211" corporation
-    And he had selected the same policy for "49211" Client after logging out and logging in again to 'Aires Policy Tool' application as a "Client Service Manager" user
+  @CF-28 @CoreFlex-PolicyUpdate-Sprint1
+  Scenario Outline: CoreFlex - Verify CoreFlex related updates are displayed on the 'General Information' page for the CoreFlex policy, displayed as enabled on the Accounting tab of Corporation module in Iris Application
+    Given he is on the "Add New Policy" page after clicking on the link "Add New Policy Form" displayed under the left navigation menu on the 'View Policy' page
+    And he has selected a policy for Client "<ClientID>"
+    And he has searched the corporation "<ClientID>" on the "Corporation" tab after login to the IRIS application
+    And he has saved the information on the "Accounting" tab after selecting the "CoreFleX Enabled" checkbox as "<CheckboxSelection>" for the selected policy in Aires Policy tool
+    And he has selected the same policy for the "<ClientID>" Client on the "Add new Policy" page after logging in again to the 'Aires Policy Tool' application
     When he clicks on 'Next' button
-    Then user should be navigated to the "General Information" page of the selected Client Policy
-      | ClientID | ClientName                   |
-      |    49211 | AIRES-CIS-DEMO&'TEST(CLIENT) |
-    And "Core/Flex Policy" field should be displayed as "Yes" in read-only mode
-      | - |
-    And "Benefit Package Type" dropdown field should be displayed having following options with default selection as "Core/Flex"
-      | Core/Flex |
-    And "Points Based Flex Policy" dropdown field should be displayed having following options with default selection as "Please Select"
-      | Yes |
-      | No  |
-      
-      
-  @CF-28 @CoreFlex-PolicyUpdate-Sprint1 @GeneralInfoCheckForNonCoreFlexPolicy
-  Scenario: CoreFlex - Verify CoreFlex related updates are not displayed on 'General Information' page for Non CoreFlex Policy
-    Given he has selected a policy for "49211" Client on "Add New Policy Form" page of 'Aires Policy Tool' Application
-    And he has saved the record after "Unchecked" "CoreFleX Enabled" checkbox for the policy selected above in 'Policy table' of "Accounting" tab from "Corporation" module of "49211" corporation
-    And he had selected the same policy for "49211" Client after logging out and logging in again to 'Aires Policy Tool' application as a "Client Service Manager" user
-    When he clicks on 'Next' button
-    Then user should be navigated to the "General Information" page of the selected Client Policy
-      | ClientID | ClientName                   |
-      |    49211 | AIRES-CIS-DEMO&'TEST(CLIENT) |
-    And "Core/Flex Policy" field should be displayed as "No" in read-only mode
-    | - |
-    And "Benefit Package Type" dropdown field should be displayed having following options with default selection as "Please Select"
-      | Bundle                    |
-      | A la carte                |
-    And "Points Based Flex Policy" dropdown field should not be displayed
-    
-    
-   @CF-28 @CoreFlex-PolicyUpdate-Sprint1 @FlexPolicyWorkflowCheck
-  Scenario Outline: CoreFlex - Verify user navigation past General Information page, when CoreFlex Enabled Policy with PointsBasedFlexPolicy Y/N is selected
-    Given he has navigated to "General Information" page after selecting a "<CoreFlexEnabled>" policy for "<ClientID>" Client on "Add New Policy Form" page of 'Aires Policy Tool' Application
-    And he has saved the record after "Checked" "CoreFleX Enabled" checkbox for the policy selected above in 'Policy table' of "Accounting" tab from "Corporation" module of "49211" corporation
+    Then "General Information" page should be displayed having "Core/Flex Policy" field value as "<CoreFlexFieldValue>" for "<ClientID>" Client
+    And "Points Based Flex Policy" field visibility "<PointsBasedFlexPolicyFieldDisplayed>" having "<PointsBasedFlexPolicyFieldOptions>" dropdown options should depend on CoreFlexFieldValue "<CoreFlexFieldValue>"
+    And "Benefit Package Type" field visibility "<BenefitPackageTypeFieldDisplayed>" having "<BenefitPackageTypeFieldOptions>" dropdown options should depend on CoreFlexFieldValue "<CoreFlexFieldValue>"
+
+    Examples: 
+      | ClientID | CheckboxSelection | CoreFlexFieldValue | PointsBasedFlexPolicyFieldDisplayed | PointsBasedFlexPolicyFieldOptions | BenefitPackageTypeFieldDisplayed | BenefitPackageTypeFieldOptions |
+      |    70165 | Checked           | Yes                | Yes                                 | Yes,No                            | No                               |                                |
+      |    70165 | Unchecked         | No                 | No                                  |                                   | Yes                              | Bundle,A la carte              |
+
+   @CF-28 @CoreFlex-PolicyUpdate-Sprint1
+  Scenario Outline: CoreFlex - Verify user navigation to Flex Policy Setup(CoreFlex)/Policy Benefits Categories page depending upon the option selected for "Points Based Flex Policy" field on General Information page.
+    Given he is on the "Add New Policy" page after clicking on the link "Add New Policy Form" displayed under the left navigation menu on the 'View Policy' page
+    And he has selected a policy for Client "<ClientID>"
+    And he has searched the corporation "<ClientID>" on the "Corporation" tab after login to the IRIS application
+    And he has saved the information on the "Accounting" tab after selecting the "CoreFleX Enabled" checkbox as "Checked" for the selected policy in Aires Policy tool
+    And he has selected the same policy for the "<ClientID>" Client on the "Add new Policy" page after logging in again to the 'Aires Policy Tool' application
+    And he has clicked on 'Next' button
     And he has selected "<PointsBasedFlexPolicy>" option for "Points Based Flex Policy" dropdown field of "<CoreFlexEnabled>" Policy after filling all other mandatory fields on "General Information" page for "<ClientID>" Client
+    | PolicyType  | EmployeeType     | HomeownerType | CappedPolicy | ExpenseManagementClient |
+    | US Domestic | Current Employee | Homeowner     | No           | No                      |
     When he clicks on 'Next' button
     Then he should be navigated to "<ExpectedPageTitle>" page having "<ExpectedLeftNavigationTitle>" based on "<PointsBasedFlexPolicy>" selection
 
     Examples: 
       | ClientID | CoreFlexEnabled | PointsBasedFlexPolicy | ExpectedPageTitle          | ExpectedLeftNavigationTitle  |
-      |    49211 | Yes             | Yes                   | Flex Policy Setup          | Flex Policy Setup            |
-      |    49211 | Yes             | No                    | Policy Benefits Categories | Policy Benefits / Categories |
-
-    
-    
-   
+      |    70165 | Yes             | Yes                   | Flex Policy Setup          | Flex Policy Setup            |
+      |    70165 | Yes             | No                    | Policy Benefits Categories | Policy Benefits Categories   |  

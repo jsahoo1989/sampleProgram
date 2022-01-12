@@ -49,11 +49,9 @@ import org.openqa.selenium.interactions.Actions;
 import org.openqa.selenium.support.ui.Select;
 import org.testng.Assert;
 
-import com.aires.businessrules.constants.PDTConstants;
-import com.aires.iris.helpers.Helpers;
 import com.aires.businessrules.constants.CoreConstants;
-import com.aires.businessrules.constants.IRISConstants;
 import com.aires.businessrules.constants.MYLOConstants;
+import com.aires.businessrules.constants.PDTConstants;
 import com.aires.utilities.EmailUtil;
 import com.aires.utilities.Log;
 import com.aires.utilities.getWindowText;
@@ -156,7 +154,7 @@ public class BusinessFunctions {
 		System.out.println("count--" + WebElementList_Label.size());
 		for (WebElement row : WebElementList_Label) {
 			Log.info("The Actual Item Name is :" + row.getText());
-			if (row.getText().equals(labelName)) {
+			if ((row.getText().trim()).equals(labelName)) {
 				CoreFunctions.click(driver, row, labelName);
 				Reporter.addStepLog(CoreConstants.PASS + row.getText() + PDTConstants.IS_CLICKED);
 				break;
@@ -552,24 +550,6 @@ public class BusinessFunctions {
 				act.moveToElement(element).doubleClick().build().perform();
 			}
 		}
-	}
-	
-	/**
-	 * Verify Dropdown value in IRIS application.
-	 * 
-	 * @param drpDwnName
-	 * @param drpDwnVal
-	 * @param tabName
-	 * @return
-	 * @throws GeneralLeanFtException
-	 */
-	public static boolean verifyDropDownValueInIris(com.hp.lft.sdk.java.List drpDwnObj, String drpDwnName,
-			String drpDwnVal, String tabName) throws GeneralLeanFtException {
-		if (Helpers.searchAndVerifySelectedItemInList(drpDwnObj, drpDwnVal))
-			Reporter.addStepLog(MessageFormat.format(IRISConstants.VERIFIED_FIELD_ON_TAB, CoreConstants.PASS,
-					drpDwnName, drpDwnVal, tabName));
-
-		return Helpers.searchAndVerifySelectedItemInList(drpDwnObj, drpDwnVal);
 	}
 
 	public static int returnindexItemFromListUsingAttribute(WebDriver driver, List<WebElement> WebElementList,

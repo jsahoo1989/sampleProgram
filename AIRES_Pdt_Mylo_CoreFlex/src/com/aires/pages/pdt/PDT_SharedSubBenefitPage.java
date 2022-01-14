@@ -112,8 +112,7 @@ public class PDT_SharedSubBenefitPage extends Base {
 	private WebElement _formLangTrainingEmployee;
 	
 	@FindBy(how = How.CSS, using = "a[href='#collapseTwo']")
-	private WebElement _formLangTrainingFamily;
-	
+	private WebElement _formLangTrainingFamily;	
 	
 	HashMap<String, Boolean> resultMapForTabNameNotMatch = new HashMap<>();
 

@@ -250,6 +250,7 @@ public class PDTConstants {
 	public static final String COULD_NOT_SELECT_ITEM_FROM_LIST = "Could not select item from list";
 	public static final String COULD_NOT_SEARCH_ITEM_FROM_LIST = "Could not search item :- ''{1}'' from list.";
 	public static final String POLICY_BENEFIT_CATEGORY = "Policy Benefit Category";
+	public static final String FAILED_TO_FILL_SUB_BENEFIT_FORM = "{0} Failed to fill ''{1}'' form";
 	//houseHunting Trip
 	public static final String HOUSE_HUNTING_TRIP_TRANSPORTATION = "House Hunting Trip Transportation";
 	public static final String HOUSE_HUNTING_TRIP_LODGING = "House Hunting Trip Lodging";
@@ -260,6 +261,11 @@ public class PDTConstants {
 	//cultural Training
 	public static final String CULTURAL_TRAINING_EMPLOYEE = "Cultural Training Employee";
 	public static final String CULTURAL_TRAINING_FAMILY = "Cultural Training Family";
+	//Db Constants
+	public static final String DATABASE_CONNECTION = "Database connection";
+	public static final String FAIL_TO_CALL_PROC = "Fail to call procedure";
+	public static final String FAIL_TO_CLOSE_CONNECTION = "Fail to close connection";
+	
 	
 	
 }

@@ -133,7 +133,7 @@ public class PDT_CulturalTrainingPage extends Base {
 					culturalTrainingBenefitData.culturalTrainingEmployee.comments);
 		} catch (Exception e) {
 			DbFunctions.deletePolicyByPolicyId(addNewPolicyPage.getPolicyId());
-			Assert.fail("Failed to fill Cultural Training Employee form.");
+			Assert.fail(MessageFormat.format(PDTConstants.FAILED_TO_FILL_SUB_BENEFIT_FORM, CoreConstants.FAIL, PDTConstants.CULTURAL_TRAINING_EMPLOYEE));
 		}
 	}
 	
@@ -171,7 +171,7 @@ public class PDT_CulturalTrainingPage extends Base {
 					culturalTrainingBenefitData.culturalTrainingFamily.comments);
 		} catch (Exception e) {
 			DbFunctions.deletePolicyByPolicyId(addNewPolicyPage.getPolicyId());
-			Assert.fail("Failed to fill Cultural Training Family form.");
+			Assert.fail(MessageFormat.format(PDTConstants.FAILED_TO_FILL_SUB_BENEFIT_FORM, CoreConstants.FAIL, PDTConstants.CULTURAL_TRAINING_FAMILY));
 		}
 	}
 }

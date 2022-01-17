@@ -143,13 +143,7 @@ public class PDT_ImmigrationPage extends Base {
 		try {
 			CoreFunctions.explicitWaitTillElementVisibility(driver, _drpDownAuthorizedFees, _lblAuthorizedFeesCode.getText());
 			CoreFunctions.clickElement(driver, _drpDownAuthorizedFees);
-			String randAuthorizedFeeOption = _drpDownAuthorizedFeesOptions
-					.get(CoreFunctions.getRandomNumber(0, _drpDownAuthorizedFeesOptions.size() - 1)).getText()
-					+ ", "
-					+ _drpDownAuthorizedFeesOptions
-							.get(CoreFunctions.getRandomNumber(0, _drpDownAuthorizedFeesOptions.size() - 1))
-							.getText();
-			Log.info("Authorized fee options="+randAuthorizedFeeOption);
+			String randAuthorizedFeeOption = CoreFunctions.getRandomAndUniqueMultipleSelectDropDownOptions(_drpDownAuthorizedFeesOptions);
 			String[] transportationType = randAuthorizedFeeOption.split(",");
 			for (int i = 0; i < transportationType.length; i++) {				
 				CoreFunctions.selectItemInListByText(driver, _drpDownAuthorizedFeesOptions,
@@ -182,7 +176,7 @@ public class PDT_ImmigrationPage extends Base {
 		try {
 			if (CoreFunctions.getElementTextAndStoreInList(driver, _drpDownNoOfTripsSelectedOption)
 					.toString().contains(PDTConstants.OTHER) && CoreFunctions.isElementExist(driver, _txtBoxNoOfTripsOther, 1)) {
-				Reporter.addStepLog(MessageFormat.format(PDTConstants.VERIFIED_FIELD_DISPLAYED, CoreConstants.PASS, _lblOtherNoOfTrips.getText(), SubBenefitFormName));
+				Reporter.addStepLog(MessageFormat.format(PDTConstants.VERIFIED_TEXT_BOX_FIELD_DISPLAYED, CoreConstants.PASS, _lblOtherNoOfTrips.getText(), SubBenefitFormName));
 				CoreFunctions.clickElement(driver, _txtBoxNoOfTripsOther);
 				CoreFunctions.clearAndSetText(driver, _txtBoxNoOfTripsOther, _lblOtherNoOfTrips.getText(),
 						immigrationBenefitData.immigrationTravel.otherNumberOfTrips);

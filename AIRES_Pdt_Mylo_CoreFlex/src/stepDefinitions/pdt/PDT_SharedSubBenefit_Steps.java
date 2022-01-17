@@ -1,6 +1,7 @@
 package stepDefinitions.pdt;
 
 import java.text.MessageFormat;
+import java.util.List;
 
 import org.testng.Assert;
 
@@ -9,7 +10,10 @@ import com.aires.businessrules.constants.CoreConstants;
 import com.aires.businessrules.constants.PDTConstants;
 import com.aires.cucumber.TestContext;
 import com.aires.pages.pdt.PDT_AddNewPolicyPage;
+import com.aires.pages.pdt.PDT_CulturalTrainingPage;
+import com.aires.pages.pdt.PDT_HouseHuntingTripPage;
 import com.aires.pages.pdt.PDT_ImmigrationPage;
+import com.aires.pages.pdt.PDT_LanguageTrainingPage;
 import com.aires.pages.pdt.PDT_PreAcceptanceService;
 import com.aires.pages.pdt.PDT_SharedSubBenefitPage;
 import com.aires.pages.pdt.PDT_ViewPolicyPage;
@@ -25,7 +29,10 @@ public class PDT_SharedSubBenefit_Steps {
 	private PDT_PreAcceptanceService preAcceptanceServicePage;
 	private PDT_SharedSubBenefitPage subBenefitPage;
 	private PDT_ImmigrationPage immigrationPage;
-
+	private PDT_HouseHuntingTripPage houseHuntingTripPage;
+	private PDT_LanguageTrainingPage languageTrainingPage;
+	private PDT_CulturalTrainingPage culturalTrainingPage;
+	
 	public PDT_SharedSubBenefit_Steps(TestContext context) {
 		testContext = context;
 		viewPolicyPage = testContext.getPageObjectManager().getViewPolicyPage();
@@ -33,6 +40,9 @@ public class PDT_SharedSubBenefit_Steps {
 		preAcceptanceServicePage = testContext.getPageObjectManager().getPreAcceptanceServicePage();
 		subBenefitPage = testContext.getPageObjectManager().getSharedSubBenefitPage();
 		immigrationPage = testContext.getPageObjectManager().getImmigrationPage();
+		houseHuntingTripPage = testContext.getPageObjectManager().getHouseHuntingTripPage();
+		languageTrainingPage = testContext.getPageObjectManager().getLanguageTrainingPage();
+		culturalTrainingPage = testContext.getPageObjectManager().getCulturalTrainingPage();
 	}
 	
 	public PDT_PreAcceptanceService getPreAcceptServicePage() {
@@ -43,11 +53,26 @@ public class PDT_SharedSubBenefit_Steps {
 		return immigrationPage;
 	}
 	
+	public PDT_HouseHuntingTripPage getHouseHuntingTripPage() {
+		return houseHuntingTripPage;
+	}
+	
+	public PDT_LanguageTrainingPage getLanguageTrainingPage() {
+		return languageTrainingPage;
+	}
+	
+	public PDT_CulturalTrainingPage getCulturalTrainingPage() {
+		return culturalTrainingPage;
+	}
+	
 	@When("^he clicks on 'SUBMIT' button after entering mandatory information for all the below selected sub benefits on \"([^\"]*)\" page$")
 	public void he_clicks_on_SUBMIT_button_after_entering_mandatory_information_for_all_the_below_selected_sub_benefits_on_page(
-			String preAcceptanceServicePg, DataTable subBenefitTable) {
+			String policyBenefitPgName, DataTable subBenefitTable) {
 		PDT_SharedSubBenefit_Steps objStep = new PDT_SharedSubBenefit_Steps(testContext);
-		subBenefitPage.iterateAndSelectSubBenefits(preAcceptanceServicePg, subBenefitTable, addNewPolicyPage, objStep);
+		List<String> subBenefits = subBenefitTable.asList(String.class);
+		subBenefitPage.verifySelectedPolicyBenefitCategoryName(policyBenefitPgName);
+		subBenefitPage.verifySubBenefitCategoriesAreDisplayed(subBenefits, policyBenefitPgName);
+		subBenefitPage.iterateAndSelectSubBenefits(policyBenefitPgName, subBenefits, addNewPolicyPage, objStep);
 	}
 
 	@Then("^success message \"([^\"]*)\" should be displayed on the \"([^\"]*)\" page$")

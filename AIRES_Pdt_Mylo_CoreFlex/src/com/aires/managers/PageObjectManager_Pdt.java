@@ -20,8 +20,11 @@ package com.aires.managers;
 import org.openqa.selenium.WebDriver;
 
 import com.aires.pages.pdt.PDT_AddNewPolicyPage;
+import com.aires.pages.pdt.PDT_CulturalTrainingPage;
 import com.aires.pages.pdt.PDT_GeneralInformationPage;
+import com.aires.pages.pdt.PDT_HouseHuntingTripPage;
 import com.aires.pages.pdt.PDT_ImmigrationPage;
+import com.aires.pages.pdt.PDT_LanguageTrainingPage;
 import com.aires.pages.pdt.PDT_LoginPage;
 import com.aires.pages.pdt.PDT_PolicyBenefitCategoryPage;
 import com.aires.pages.pdt.PDT_PreAcceptanceService;
@@ -39,7 +42,10 @@ public class PageObjectManager_Pdt {
 	private PDT_PreAcceptanceService _pdtPreAcceptanceServicePage;
 	private PDT_ImmigrationPage _pdtImmigrationPage;
 	private PDT_SharedSubBenefitPage _sharedSubBenefitPage;
-
+	private PDT_HouseHuntingTripPage _houseHuntingTripPage;
+	private PDT_LanguageTrainingPage _languageTrainingPage;
+	private PDT_CulturalTrainingPage _culturalTrainingPage;
+	
 	public PageObjectManager_Pdt(WebDriver driver) {
 		this._driver = driver;
 	}
@@ -74,5 +80,17 @@ public class PageObjectManager_Pdt {
 	
 	public PDT_SharedSubBenefitPage getSharedSubBenefitPage() {
 		return (_sharedSubBenefitPage == null) ? _sharedSubBenefitPage = new PDT_SharedSubBenefitPage(_driver) : _sharedSubBenefitPage;
+	}
+	
+	public PDT_HouseHuntingTripPage getHouseHuntingTripPage() {
+		return (_houseHuntingTripPage == null ) ? _houseHuntingTripPage = new PDT_HouseHuntingTripPage(_driver) : _houseHuntingTripPage;
+	}
+	
+	public PDT_LanguageTrainingPage getLanguageTrainingPage() {
+		return (_languageTrainingPage == null ) ? _languageTrainingPage = new PDT_LanguageTrainingPage(_driver) : _languageTrainingPage;
+	}
+	
+	public PDT_CulturalTrainingPage getCulturalTrainingPage() {
+		return (_culturalTrainingPage == null ) ? _culturalTrainingPage = new PDT_CulturalTrainingPage(_driver) : _culturalTrainingPage;
 	}
 }

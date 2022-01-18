@@ -59,9 +59,8 @@ import org.openqa.selenium.support.ui.Select;
 import org.openqa.selenium.support.ui.WebDriverWait;
 import org.testng.Assert;
 
-import com.aires.businessrules.constants.PDTConstants;
 import com.aires.businessrules.constants.CoreConstants;
-import com.aires.businessrules.constants.MYLOConstants;
+import com.aires.businessrules.constants.PDTConstants;
 import com.aires.utilities.Log;
 import com.vimalselvam.cucumber.listener.Reporter;
 
@@ -246,7 +245,8 @@ public class CoreFunctions {
 				flag = true;
 			} else {
 				flag = false;
-				Reporter.addStepLog(MessageFormat.format(CoreConstants.VRFIED_ELE_PAGE, CoreConstants.FAIL, name));
+				Reporter.addStepLog(
+						MessageFormat.format(CoreConstants.VRFIED_ELE_NOT_ON_PAGE, CoreConstants.FAIL, name));
 			}
 		} catch (NoSuchElementException e) {
 			Log.info(CoreConstants.VRFIED_THAT + name + CoreConstants.ELE_NOT_PRESNT);
@@ -520,6 +520,7 @@ public class CoreFunctions {
 		return null;
 	}
 
+
 	public static LinkedHashMap<String, String> returnMapFromBothLists(WebDriver driver, List<WebElement> roleNames,
 			List<WebElement> memberNames) {
 		LinkedHashMap<String, String> mp = new LinkedHashMap<String, String>();
@@ -768,12 +769,12 @@ public class CoreFunctions {
 		String _downloadedFileFirst = getLatestFilefromDirectory().getName().split("\\.")[0];
 		if (!_downloadedFileFirst.contains(_documentNameFirst)) {
 			Reporter.addStepLog(CoreConstants.FAIL + CoreConstants.FILE_NOT_DOWNLOADED_MESSAGE + documentName);
-			Log.info(MYLOConstants.FILE_NOT_DOENLOADED_MESSAGE + documentName);
+			Log.info(CoreConstants.FILE_NOT_DOWNLOADED_MESSAGE + documentName);
 			return false;
 		} else {
 			Assert.assertTrue(_downloadedFileFirst.contains(_documentNameFirst), "Document was not downloaded");
 			Reporter.addStepLog(CoreConstants.PASS + CoreConstants.FILE_SUCCESSFULLY_DOWNLOADED_MESSAGE + documentName);
-			Log.info(MYLOConstants.FILE_SUCCESSFULLY_DOWNLOADED_MESSAGE + documentName);
+			Log.info(CoreConstants.FILE_SUCCESSFULLY_DOWNLOADED_MESSAGE + documentName);
 			return true;
 		}
 	}
@@ -811,7 +812,6 @@ public class CoreFunctions {
 
 		} catch (Exception e) {
 			Assert.fail(MessageFormat.format(PDTConstants.COULD_NOT_SEARCH_ITEM_FROM_LIST, searchText));
-			e.printStackTrace();
 		}
 		return exists;
 	}
@@ -1129,7 +1129,6 @@ public class CoreFunctions {
 	public static void handleAlert(WebDriver driver) {
 		if (isAlertPresent(driver)) {
 			Alert alert = driver.switchTo().alert();
-			System.out.println(alert.getText());
 			alert.accept();
 		}
 	}
@@ -1503,8 +1502,34 @@ public class CoreFunctions {
 		}
 	}
 
+	public static void moveToElement(WebDriver driver, WebElement element) {
+		Actions action = new Actions(driver);
+		action.moveToElement(element).build().perform();
+
+	}
+
 	public static List<String> getElementTextAndStoreInList(WebDriver driver, List<WebElement> elementList) {
 		return (elementList.stream().map(x -> x.getText()).collect(Collectors.toList()));
+	}
+
+	
+	public static WebElement getElementFromListByText(List<WebElement> elementList, String text) {
+		try {
+			for (WebElement element : elementList) {
+				if (element.getText().contains(text)) {
+					Log.info("Element found in the List by Text :" + element.getText());
+					return element;
+				}
+			}
+		} catch (Exception e) {
+			Assert.fail("Element with the text " + text + " not found in the list.");
+			e.printStackTrace();
+		}
+		return null;
+	}
+
+	public static String generateRandomNumberInGivenRange(int startingRange, int endingRange) {
+		return String.valueOf(startingRange + (int) (Math.random() * ((endingRange - startingRange) + 1)));
 	}
 
 	public static void selectItemInListByText(WebDriver driver, List<WebElement> WebElementList, String searchText,
@@ -1527,21 +1552,6 @@ public class CoreFunctions {
 			Assert.fail(MessageFormat.format(PDTConstants.FAIL_TO_SELECT_VALUE_FROM_FIELD, CoreConstants.FAIL,
 					searchText, fieldName, fieldType));
 		}
-	}
-
-	public static WebElement getElementFromListByText(List<WebElement> elementList, String text) {
-		try {
-			for (WebElement element : elementList) {
-				if (element.getText().contains(text)) {
-					Log.info("Element found in the List by Text :" + element.getText());
-					return element;
-				}
-			}
-		} catch (Exception e) {
-			Assert.fail("Element with the text " + text + " not found in the list.");
-			e.printStackTrace();
-		}
-		return null;
 	}
 
 	public static void explicitWaitTillElementListVisibilityCustomTime(WebDriver driver, List<WebElement> Element,
@@ -1569,13 +1579,19 @@ public class CoreFunctions {
 			Assert.fail(MessageFormat.format(PDTConstants.COULD_NOT_SEARCH_ITEM_FROM_LIST, searchText));
 		}
 		return exists;
-	}
-
+  }
+	
 	public static String getRandomElementValueFromList(WebDriver driver, List<WebElement> WebElementList) {
-		return WebElementList.get(getRandomNumber(0, WebElementList.size() - 1)).getText();
+		return WebElementList.get(getRandomNumber(0, WebElementList.size()-1)).getText();
 	}
-
-	public static String generateRandomNumberInGivenRange(int startingRange, int endingRange) {
-		return String.valueOf(startingRange + (int) (Math.random() * ((endingRange - startingRange) + 1)));
+	
+	public static String getRandomAndUniqueMultipleSelectDropDownOptions(List<WebElement> dropDown) {
+		int randomIndex, temp;		
+		randomIndex = CoreFunctions.getRandomNumber(0, dropDown.size() - 1);
+		temp = CoreFunctions.getRandomNumber(0, dropDown.size() - 1);
+		while(temp == randomIndex) {
+			temp = CoreFunctions.getRandomNumber(0, dropDown.size() - 1);
+		}
+		return dropDown.get(randomIndex).getText() + ", "+dropDown.get(temp).getText();
 	}
 }

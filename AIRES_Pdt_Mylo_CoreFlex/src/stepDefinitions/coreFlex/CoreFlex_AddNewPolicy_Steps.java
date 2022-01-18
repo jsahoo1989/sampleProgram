@@ -4,16 +4,9 @@ import java.text.MessageFormat;
 
 import org.testng.Assert;
 
-import com.aires.businessrules.constants.COREFLEXConstants;
 import com.aires.businessrules.constants.CoreConstants;
-import com.aires.businessrules.constants.IRISConstants;
 import com.aires.businessrules.constants.PDTConstants;
 import com.aires.cucumber.TestContext;
-import com.aires.managers.FileReaderManager;
-import com.aires.pages.iris.IRIS_Corporation_Accounting;
-import com.aires.pages.iris.IRIS_Corporation_Main;
-import com.aires.pages.iris.IRIS_LoginPage;
-import com.aires.pages.iris.IRIS_Welcome12C;
 import com.aires.pages.pdt.PDT_AddNewPolicyPage;
 import com.aires.pages.pdt.PDT_LoginPage;
 import com.aires.pages.pdt.PDT_ViewPolicyPage;

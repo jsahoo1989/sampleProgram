@@ -41,7 +41,7 @@ public class CoreFlex_SharedSteps {
 		viewPolicyPage = testContext.getPageObjectManager().getViewPolicyPage();
 		addNewPolicyPage = testContext.getPageObjectManager().getAddNewPolicyPage();
 		loginPage = testContext.getPageObjectManager().getLoginPage();
-		generalInfoPage = testContext.getPageObjectManager().getGeneralInformationPage();
+		generalInfoPage = testContext.getPageObjectManager().getGeneralInfoPage();
 		flexPolicySetupPage = testContext.getCoreFlexPageObjectManager().getFlexPolicySetupPage();
 //		coreFlexPolicyBenefitsCategoriesPage = testContext.getCoreFlexPageObjectManager().getCoreFlexPolicyBenefitsCategoriesPage();
 //		coreFlexCustomBundlesPage = testContext.getCoreFlexPageObjectManager().getCoreFlexCustomBundlesPage();

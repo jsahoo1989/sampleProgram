@@ -19,7 +19,7 @@ import com.aires.pages.iris.IRIS_Welcome12C;
 import com.aires.pages.pdt.PDT_AddNewPolicyPage;
 import com.aires.pages.pdt.PDT_GeneralInformationPage;
 import com.aires.pages.pdt.PDT_LoginPage;
-import com.aires.pages.pdt.PDT_PolicyBenefitsCategoriesPage;
+import com.aires.pages.pdt.PDT_PolicyBenefitCategoryPage;
 import com.aires.pages.pdt.PDT_ViewPolicyPage;
 import com.aires.testdatatypes.pdt.PDT_LoginDetails;
 
@@ -35,7 +35,7 @@ public class CoreFlex_GeneralInformation_Steps {
 	private PDT_AddNewPolicyPage addNewPolicyPage;
 	private PDT_GeneralInformationPage generalInfoPage;
 	private CoreFlex_FlexPolicySetupPage flexPolicySetupPage;
-	private PDT_PolicyBenefitsCategoriesPage pdtPolicyBenefitsCategoriesPage;
+	private PDT_PolicyBenefitCategoryPage pdtPolicyBenefitCategoryPage;
 	private PDT_LoginDetails _loginDetails = null;
 
 	public CoreFlex_GeneralInformation_Steps(TestContext context) {
@@ -43,9 +43,9 @@ public class CoreFlex_GeneralInformation_Steps {
 		loginPage = testContext.getPageObjectManager().getLoginPage();
 		viewPolicyPage = testContext.getPageObjectManager().getViewPolicyPage();
 		addNewPolicyPage = testContext.getPageObjectManager().getAddNewPolicyPage();
-		generalInfoPage = testContext.getPageObjectManager().getGeneralInformationPage();
+		generalInfoPage = testContext.getPageObjectManager().getGeneralInfoPage();
 		flexPolicySetupPage = testContext.getCoreFlexPageObjectManager().getFlexPolicySetupPage();
-		pdtPolicyBenefitsCategoriesPage = testContext.getPageObjectManager().getPolicyBenefitsCategoriesPage();
+		pdtPolicyBenefitCategoryPage = testContext.getPageObjectManager().getpolicyBenefitCategoryPage();
 	}
 
 	@Then("^user should be navigated to the \"([^\"]*)\" page of the selected Client Policy$")
@@ -155,7 +155,7 @@ public class CoreFlex_GeneralInformation_Steps {
 			String expectedLeftNavigationTitle, String pointsBasedFlexSelection) throws Throwable {
 		Assert.assertTrue(
 				generalInfoPage.verifyPageNavigation(pointsBasedFlexSelection, expectedPageTitle,
-						expectedLeftNavigationTitle, flexPolicySetupPage, pdtPolicyBenefitsCategoriesPage),
+						expectedLeftNavigationTitle, flexPolicySetupPage, pdtPolicyBenefitCategoryPage),
 				MessageFormat.format(PDTConstants.FAILED_TO_VERIFY_USER_NAVIGATION_PAST_GENERAL_INFORMATION,
 						CoreConstants.FAIL));
 	}	

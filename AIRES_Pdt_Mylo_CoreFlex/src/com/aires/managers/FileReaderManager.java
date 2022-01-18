@@ -19,14 +19,16 @@ package com.aires.managers;
 
 import com.aires.dataProviders.ConfigFileReader;
 import com.aires.dataProviders.JsonDataReader_CoreFlex;
+import com.aires.dataProviders.JsonDataReader_Mylo;
+
 import com.aires.dataProviders.JsonDataReader_Pdt;
 
 public class FileReaderManager {
-
 	private static FileReaderManager fileReaderManager = new FileReaderManager();
 	private static ConfigFileReader configFileReader;
 	private static JsonDataReader_Pdt jsonDataReader;
 	private static JsonDataReader_CoreFlex jsonDataReaderCoreFlex;
+	private static JsonDataReader_Mylo MylojsonDataReader;
 
 	private FileReaderManager() {
 	}
@@ -34,16 +36,20 @@ public class FileReaderManager {
 	public static FileReaderManager getInstance() {
 		return fileReaderManager;
 	}
-
-	public ConfigFileReader getConfigReader() {
-		return (configFileReader == null) ? new ConfigFileReader() : configFileReader;
-	}
-
-	public JsonDataReader_Pdt getJsonReader() {
-		return (jsonDataReader == null) ? new JsonDataReader_Pdt() : jsonDataReader;
-	}
-
+	
 	public JsonDataReader_CoreFlex getCoreFlexJsonReader() {
 		return (jsonDataReaderCoreFlex == null) ? new JsonDataReader_CoreFlex() : jsonDataReaderCoreFlex;
+	}
+	
+	 public ConfigFileReader getConfigReader() {
+		 return (configFileReader == null) ? new ConfigFileReader() : configFileReader;
+	 }
+	 
+	 public JsonDataReader_Pdt getJsonReader(){
+		 return (jsonDataReader == null) ? new JsonDataReader_Pdt() : jsonDataReader;
+	 }
+		 
+  	public JsonDataReader_Mylo getMyloJsonReader(){
+		 return (jsonDataReader == null) ? new JsonDataReader_Mylo() : MylojsonDataReader;
 	}
 }

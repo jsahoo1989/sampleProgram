@@ -3,7 +3,7 @@ Feature: Validate the functionality of General Information Page for CoreFlex and
   Background: Login to  Policy Digitization Tool (PDT) application
     Given he is logged into 'Aires Policy Tool' application as a "Client Service Manager" user
 
-  @CF-28 @CoreFlex-PolicyUpdate-Sprint1
+  @CF-28 @CoreFlex-PolicyUpdate-Sprint1 
   Scenario Outline: CoreFlex - Verify CoreFlex related updates are displayed on the 'General Information' page for the CoreFlex policy, displayed as enabled on the Accounting tab of Corporation module in Iris Application
     Given he is on the "Add New Policy" page after clicking on the link "Add New Policy Form" displayed under the left navigation menu on the 'View Policy' page
     And he has selected a policy for Client "<ClientID>"
@@ -17,8 +17,8 @@ Feature: Validate the functionality of General Information Page for CoreFlex and
 
     Examples: 
       | ClientID | CheckboxSelection | CoreFlexFieldValue | PointsBasedFlexPolicyFieldDisplayed | PointsBasedFlexPolicyFieldOptions | BenefitPackageTypeFieldDisplayed | BenefitPackageTypeFieldOptions |
-      |    70165 | Checked           | Yes                | Yes                                 | Yes,No                            | No                               |                                |
-      |    70165 | Unchecked         | No                 | No                                  |                                   | Yes                              | Bundle,A la carte              |
+      |    94940 | Checked           | Yes                | Yes                                 | Yes,No                            | No                               |                                |
+      |    94940 | Unchecked         | No                 | No                                  |                                   | Yes                              | Bundle,A la carte              |
 
    @CF-28 @CoreFlex-PolicyUpdate-Sprint1
   Scenario Outline: CoreFlex - Verify user navigation to Flex Policy Setup(CoreFlex)/Policy Benefits Categories page depending upon the option selected for "Points Based Flex Policy" field on General Information page.
@@ -36,5 +36,5 @@ Feature: Validate the functionality of General Information Page for CoreFlex and
 
     Examples: 
       | ClientID | CoreFlexEnabled | PointsBasedFlexPolicy | ExpectedPageTitle          | ExpectedLeftNavigationTitle  |
-      |    70165 | Yes             | Yes                   | Flex Policy Setup          | Flex Policy Setup            |
-      |    70165 | Yes             | No                    | Policy Benefits Categories | Policy Benefits Categories   |  
+      |    94940 | Yes             | Yes                   | Flex Policy Setup          | Flex Policy Setup            |
+      |    94940 | Yes             | No                    | Policy Benefits Categories | Policy Benefits Categories   |  

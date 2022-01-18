@@ -283,6 +283,26 @@ public class PDTConstants {
 	public static final String INVALID_FIELD_NAME_OPTION = "{0} Invalid Field Name Option - ''{1}''";
 	public static final String INVALID_COREFLEX_POLICY_FIELD_OPTION = "{0} Invalid CoreFlex Policy Field Option - ''{1}''";
 	public static final String EXCEPTION_OCCURED_WHILE_VALIDATING_GENERAL_INFORMATION_FIELD_DEFAULT_VALUES = "{0} Exception occured while validating General Information Page Fields Default Values. Field Name : ''{1}'' | Expected Default Value : ''{2}''. Exception : ''{3}''  ";
-	public static final String INVALID_ELEMENT = "Invalid Element. Please check Element name and try again.";
-
+	public static final String INVALID_ELEMENT = "Invalid Element. Please check Element name and try again.";	
+	public static final String VERIFIED_SUB_BENEFITS_DISPLAYED = "{0}Verified sub-benefit categories:-''{1}'' are displayed on ''{2}'' page.";
+	public static final String FAILED_TO_VERIFY_SUB_BENEFITS = "{0}Failed to verify sub-benefit categories on ''{1}'' page. Expected sub-benefit categories:-''{2}''. Actual sub-benefit categories displayed on page:-''{3}''";
+	//Immigration	
+	public static final String VERIFIED_TEXT_BOX_FIELD_DISPLAYED = "{0}Verified ''{1}'' text box is displayed for ''{2}'' sub benefit form.";
+	public static final String VERIFIED_DROP_DWN_FIELD_DISPLAYED = "{0}Verified ''{1}'' drop down is displayed for ''{2}'' sub benefit form.";	
+	public static final String POLICY_BENEFIT_CATEGORY = "Policy Benefit Category";
+	public static final String FAILED_TO_FILL_SUB_BENEFIT_FORM = "{0} Failed to fill ''{1}'' form";
+	//houseHunting Trip
+	public static final String HOUSE_HUNTING_TRIP_TRANSPORTATION = "House Hunting Trip Transportation";
+	public static final String HOUSE_HUNTING_TRIP_LODGING = "House Hunting Trip Lodging";
+	public static final String HOUSE_HUNTING_TRIP_MEALS = "House Hunting Trip Meals";
+	//language Training
+	public static final String LANGUAGE_TRAINING_EMPLOYEE = "Language Training Employee";
+	public static final String LANGUAGE_TRAINING_FAMILY = "Language Training Family";
+	//cultural Training
+	public static final String CULTURAL_TRAINING_EMPLOYEE = "Cultural Training Employee";
+	public static final String CULTURAL_TRAINING_FAMILY = "Cultural Training Family";
+	//Db Constants
+	public static final String DATABASE_CONNECTION = "Database connection";
+	public static final String FAIL_TO_CALL_PROC = "Fail to call procedure";
+	public static final String FAIL_TO_CLOSE_CONNECTION = "Fail to close connection";
 }

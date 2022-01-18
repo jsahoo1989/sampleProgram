@@ -148,7 +148,7 @@ public class Hooks {
 		if (scenario.getName().contains("IRIS")) {
 			testContext.getBasePage().cleanIrisProcesses();
 		} else {
-			// testContext.getWebDriverManager().closeDriver();
+			testContext.getWebDriverManager().closeDriver();
 		}
 		Runtime.getRuntime().gc();
 	}

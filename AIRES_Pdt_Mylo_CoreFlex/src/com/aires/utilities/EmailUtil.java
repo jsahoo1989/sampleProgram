@@ -280,6 +280,14 @@ public class EmailUtil {
 			_searchTag[0] = "Your temporary password is <b>";
 			_searchTag[1] = "</b></font>";
 			break;
+		case PDTConstants.TRANSFEREE_USER_NAME:
+			_searchTag[0] = "<strong>Username</strong>";
+			_searchTag[1] = "</p>";
+			break;
+		case PDTConstants.TRANSFEREE_PASSWORD:
+			_searchTag[0] = "</span></b><span style=\"font-family:century gothic, Helvetica, Calibri, Roboto;\">";
+			_searchTag[1] = "</span>";
+			break;
 		default:
 			Assert.fail("Information not found");
 		}

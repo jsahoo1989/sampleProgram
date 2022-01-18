@@ -3,9 +3,7 @@ package com.aires.businessrules;
 import java.sql.CallableStatement;
 import java.sql.Connection;
 import java.sql.DriverManager;
-
 import org.testng.Assert;
-
 import com.aires.businessrules.constants.CoreConstants;
 import com.aires.businessrules.constants.DbQueries;
 import com.aires.businessrules.constants.PDTConstants;
@@ -30,7 +28,7 @@ public class DbFunctions {
 			dbURL = "jdbc:oracle:thin:isisdba/iristestisisdba@corpprdl200.corp.aires.com:1521:IRIS";
 			break;
 		default:
-			Assert.fail("Database connection" + PDTConstants.NOT_EXIST);
+			Assert.fail(PDTConstants.DATABASE_CONNECTION + PDTConstants.NOT_EXIST);
 		}
 		return dbURL;
 	}

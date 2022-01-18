@@ -81,7 +81,7 @@ public class BasePage {
 		int port = 0;
 		//String userName = System.getProperty("user.name").toLowerCase();
 		String computerName = InetAddress.getLocalHost().getHostName();
-		if (computerName.equalsIgnoreCase("corpprdvw270") || _userName.equalsIgnoreCase("vmallah"))
+		if (computerName.equalsIgnoreCase("corpprdvw270") || _userName.equalsIgnoreCase("srana"))
 			return 5095;
 		switch (_userName) {
 		case "rsharma":
@@ -103,7 +103,7 @@ public class BasePage {
 			port = 5097;
 			break;
 		case "vmallah":
-			port = 5095;
+			port = 5093;
 			break;
 		default:
 			Log.info("No Port Assigned");

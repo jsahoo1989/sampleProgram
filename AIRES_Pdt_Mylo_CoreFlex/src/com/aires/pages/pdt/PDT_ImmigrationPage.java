@@ -2,11 +2,13 @@ package com.aires.pages.pdt;
 
 import java.text.MessageFormat;
 import java.util.List;
+
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.How;
 import org.testng.Assert;
+
 import com.aires.businessrules.Base;
 import com.aires.businessrules.BusinessFunctions;
 import com.aires.businessrules.CoreFunctions;
@@ -15,7 +17,6 @@ import com.aires.businessrules.constants.CoreConstants;
 import com.aires.businessrules.constants.PDTConstants;
 import com.aires.managers.FileReaderManager;
 import com.aires.testdatatypes.pdt.PDT_ImmigrationBenefit;
-import com.aires.utilities.Log;
 import com.vimalselvam.cucumber.listener.Reporter;
 
 public class PDT_ImmigrationPage extends Base {
@@ -185,7 +186,6 @@ public class PDT_ImmigrationPage extends Base {
 			DbFunctions.deletePolicyByPolicyId(addNewPolicyPage.getPolicyId());			
 			Assert.fail(MessageFormat.format(PDTConstants.FAILED_TO_FILL_FIELD, _lblOtherNoOfTrips.getText(), SubBenefitFormName));
 		}
-
 	}
 	
 	public void selectNoOfTrips(PDT_AddNewPolicyPage addNewPolicyPage, String SubBenefitFormName) {

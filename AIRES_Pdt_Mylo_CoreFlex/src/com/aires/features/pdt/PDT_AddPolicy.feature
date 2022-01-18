@@ -118,4 +118,6 @@ Feature: Add new Policy form with Benefit Categories
     When he clicks on 'SUBMIT' button after entering mandatory information for all the below selected sub benefits on "Cultural Training" page
       | Cultural Training Employee | Cultural Training Family |
     Then success message "Data submitted successfully" should be displayed on the "Policy Benefit" page
-    And newly created Policy should be displayed under "View Policy" page   
+    And newly created Policy should be displayed under "View Policy" page
+    
+      

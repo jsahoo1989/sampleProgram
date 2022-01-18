@@ -1603,6 +1603,7 @@ public class CoreFunctions {
 		}
 		return false;
   }
+  
 	public static String getRandomAndUniqueMultipleSelectDropDownOptions(List<WebElement> dropDown) {
 		int randomIndex, temp;		
 		randomIndex = CoreFunctions.getRandomNumber(0, dropDown.size() - 1);

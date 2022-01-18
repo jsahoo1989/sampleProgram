@@ -49,5 +49,4 @@ public class MYLOConstants {
 	public static final String EXPECTED_POPUP_MESSAGE = "Expected Popup message: ";
 	public static final String RECORDS_NOT_READONLY="All records are not readonly";
 	public static final String INVALID_ROLE_ACCESS_FOR="Invalid Role access for";
-
 }

@@ -83,3 +83,39 @@ Feature: Add new Policy form with Benefit Categories
       | Candidate Selection                | Yes                              | No                                 | Current Employees, New Hire                                                                       |
       | Pre-Acceptance Trip Transportation | No                               | Yes                                | Home Owner, Renters                                                                               |
       | Pre-Acceptance Trip Lodging        | Yes                              | Yes                                | Current Employee - HomeOwner, Current Employee - Renters, New Hire - HomeOwner, New Hire - Renter |
+
+  @Sprint-17 @PDT-Regression @house
+  Scenario: PDT - Add new Policy form using House Hunting Trip as Benefit Category including their sub benefit categories
+    Given he is on the "Add New Policy" page after clicking on the link "Add New Policy Form" displayed under the left navigation menu on the 'View Policy' page
+    And he has clicked on the 'Next' button after selecting below information on the 'Add New Policy' page
+      | ClientId | ClientName                    | PolicyName                  |
+      |     7403 | Dow Chemical Company (Global) | hDCC Repatriation (# 14724) |
+    And he has entered mandatory information on 'General Information' page followed by selection of "House Hunting Trip" as Benefit Category on "Policy Benefit" page
+    When he clicks on 'SUBMIT' button after entering mandatory information for all the below selected sub benefits on "House Hunting Trip" page
+      | House Hunting Trip Transportation | House Hunting Trip Lodging | House Hunting Trip Meals |
+    Then success message "Data submitted successfully" should be displayed on the "Policy Benefit" page
+    And newly created Policy should be displayed under "View Policy" page
+    
+  @Sprint-17 @PDT-Regression @lang @PDT-384
+  Scenario: PDT - Add new Policy form using Language Training as Benefit Category including their sub benefit categories
+    Given he is on the "Add New Policy" page after clicking on the link "Add New Policy Form" displayed under the left navigation menu on the 'View Policy' page
+    And he has clicked on the 'Next' button after selecting below information on the 'Add New Policy' page
+      | ClientId | ClientName                    | PolicyName                  |
+      |     7403 | Dow Chemical Company (Global) | hDCC Repatriation (# 14724) |
+    And he has entered mandatory information on 'General Information' page followed by selection of "Language Training" as Benefit Category on "Policy Benefit" page
+    When he clicks on 'SUBMIT' button after entering mandatory information for all the below selected sub benefits on "Language Training" page
+      | Language Training Employee | Language Training Family |
+    Then success message "Data submitted successfully" should be displayed on the "Policy Benefit" page
+    And newly created Policy should be displayed under "View Policy" page
+    
+   @Sprint-17 @PDT-Regression @cult @PDT-385
+  Scenario: PDT - Add new Policy form using Cultural Training as Benefit Category including their sub benefit categories
+    Given he is on the "Add New Policy" page after clicking on the link "Add New Policy Form" displayed under the left navigation menu on the 'View Policy' page
+    And he has clicked on the 'Next' button after selecting below information on the 'Add New Policy' page
+      | ClientId | ClientName                    | PolicyName                  |
+      |     7403 | Dow Chemical Company (Global) | hDCC Repatriation (# 14724) |
+    And he has entered mandatory information on 'General Information' page followed by selection of "Cultural Training" as Benefit Category on "Policy Benefit" page
+    When he clicks on 'SUBMIT' button after entering mandatory information for all the below selected sub benefits on "Cultural Training" page
+      | Cultural Training Employee | Cultural Training Family |
+    Then success message "Data submitted successfully" should be displayed on the "Policy Benefit" page
+    And newly created Policy should be displayed under "View Policy" page

@@ -49,9 +49,9 @@ import org.openqa.selenium.interactions.Actions;
 import org.openqa.selenium.support.ui.Select;
 import org.testng.Assert;
 
+import com.aires.businessrules.constants.CoreConstants;
 import com.aires.businessrules.constants.PDTConstants;
 import com.aires.pages.pdt.PDT_AddNewPolicyPage;
-import com.aires.businessrules.constants.CoreConstants;
 import com.aires.utilities.EmailUtil;
 import com.aires.utilities.Log;
 import com.aires.utilities.getWindowText;
@@ -153,7 +153,7 @@ public class BusinessFunctions {
 		System.out.println("count--" + WebElementList_Label.size());
 		for (WebElement row : WebElementList_Label) {
 			Log.info(CoreConstants.ACTUAL_ITEM_NAME_IS + row.getText());
-			if (row.getText().equals(labelName)) {
+			if ((row.getText().trim()).equals(labelName)) {
 				CoreFunctions.click(driver, row, labelName);
 				Reporter.addStepLog(CoreConstants.PASS + row.getText() + PDTConstants.IS_CLICKED);
 				break;
@@ -507,7 +507,7 @@ public class BusinessFunctions {
 	public static void selectItemFromListUsingTextAndDoubleClick(WebDriver driver, List<WebElement> WebElementList,
 			String itemName) {
 		for (WebElement element : WebElementList) {
-			Log.info("The Actual Item Name is :" + element.getText());
+			Log.info(CoreConstants.ACTUAL_ITEM_NAME_IS + element.getText());
 			if (element.getText().contains(itemName) && CoreFunctions.verifyElementPresentOnPage(element, itemName)) {
 				CoreFunctions.highlightObject(driver, element);
 				Actions act = new Actions(driver);
@@ -586,25 +586,19 @@ public class BusinessFunctions {
 	}
 
 	public static List<String> sortList(List<String> listToBeSorted, String sortingOrder) {
-
 		try {
 			Comparator<String> c = null;
-
 			switch (sortingOrder) {
-
 			case PDTConstants.DESCENDING:
 				c = (I1, I2) -> (I2.compareTo(I1));
 				break;
-
 			case PDTConstants.ASCENDING:
 				c = (I1, I2) -> (I1.compareTo(I2));
 				break;
-
 			default:
 				Assert.fail(PDTConstants.INVALID_SORT_OPERATION);
 			}
 			Collections.sort(listToBeSorted, c);
-
 		} catch (Exception ex) {
 			Log.info(CoreConstants.ERROR + ex.getMessage());
 			Assert.fail(CoreConstants.ERROR + PDTConstants.UNABLE_TO_SORT_LIST);

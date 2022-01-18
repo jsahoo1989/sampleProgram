@@ -49,6 +49,7 @@ public class MYLOConstants {
 	public static final String ROLE_NAME = "Role Name";
 	public static final String MEMBER_NAME = "Member Name";
 	public static final String AIRES_FILE_TEAM = "Aires File Team";
+	public static final String AIRES_FILE_INFORMATION = "Aires File Information";
 	public static final String TAB_NOT_ACTIVE = "tab is not active";
 	public static final String ROW_ADDED = "Row has been added";
 	public static final String ROW_DIDNOT_UPDATED = "Row did not update";
@@ -61,6 +62,8 @@ public class MYLOConstants {
 	public static final String JOURNEY_TYPE="Journey Type";
 	public static final String HOMESTATUS="Homestatus";
 	public static final String ENTER_CORRECT_FIELD_NAME="Please enter correct field name";
+	public static final String ENTER_CORRECT_SCENARIO_TYPE="Please enter correct scenario type";
+	public static final String ENTER_CORRECT_ELEMENT_NAME="Please enter correct element name";
 	public static final String ENTER_CORRECT_BUTTON_NAME="Please enter correct button name";
 	public static final String SUCCESS_MESSAGE="Success Message";
 	public static final String FILE_INFO_SUCCESS_MESSAGE= "Your changes have been successfully saved!";
@@ -72,4 +75,13 @@ public class MYLOConstants {
 	public static final String CANCELED = "Canceled";
 	public static final String CLOSED = "Closed";
 	public static final String RELOCATION_POLICY = "Relocation Policy";
+	public static final String RANDOM_VALUE_UPDATED_ON_SECTION = "{0}Random value ''{1}'' is updated for :- ''{2}'' in ''{3}'' section on ''{4}'' page";
+	public static final String VALUE_UPDATED_ON_SECTION = "{0} Value: ''{1}'' is updated for :- ''{2}'' in ''{3}'' section on ''{4}'' page";
+	public static final String FIELD_NAME_VALUE_DISPLAYED = "{0} FieldName- ''{1}'' value is displayed as :- ''{2}'' in ''{3}'' section on ''{4}'' page";
+	public static final String FILE_ID_DATA_UPDATION="611072";
+	public static final String INCORRECT_FIELD_VALUES_IN_FILEINFO="Incorrect value displayed for FileID,ClientID and PolicyType on FileInformation section on Mylo Assignment page";
+	public static final String ADDITIONAL_FIELDS_FILEINFO_NOT_DISPLAYED="Additional Fields not getting displayed in File Information section on Assignment Page";
+	public static final String MISMATCH_VALUE="Mismatch value for";
+	public static final String INHERITED_FILE="inheritedFile";
+	public static final String CHECKBOX_NOT_SELECTED="Checkbox is not selected";
 }

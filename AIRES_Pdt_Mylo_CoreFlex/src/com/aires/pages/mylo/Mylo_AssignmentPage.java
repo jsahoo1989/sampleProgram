@@ -21,6 +21,7 @@ import com.aires.businessrules.constants.CoreConstants;
 import com.aires.businessrules.constants.MYLOConstants;
 import com.aires.managers.FileReaderManager;
 import com.aires.testdatatypes.mylo.MyloAssignmentDetails;
+import com.aires.utilities.Log;
 import com.vimalselvam.cucumber.listener.Reporter;
 
 public class Mylo_AssignmentPage extends Base {
@@ -124,7 +125,7 @@ public class Mylo_AssignmentPage extends Base {
 
 	@FindBy(how = How.XPATH, using = "//button[text()='OK']")
 	private WebElement _fileInfoSuccessOkbutton;
-	
+
 	int noOfAiresFileTeamMember;
 	String updatedTeamMember;
 	LinkedHashMap<String, String> airesFileTeamExistingMembers = new LinkedHashMap<String, String>();
@@ -318,6 +319,7 @@ public class Mylo_AssignmentPage extends Base {
 			CoreFunctions.click(driver, _fileInfoSuccessOkbutton, _fileInfoSuccessOkbutton.getText());
 			break;
 		default:
+			Reporter.addStepLog(CoreConstants.FAIL + MYLOConstants.ENTER_CORRECT_BUTTON_NAME);
 			Assert.fail(MYLOConstants.ENTER_CORRECT_BUTTON_NAME);
 		}
 	}
@@ -357,40 +359,42 @@ public class Mylo_AssignmentPage extends Base {
 			CoreFunctions.explicitWaitTillElementVisibility(driver, airesFileInfoFieldsMap.get(fieldName),
 					airesFileInfoFieldsMap.get(fieldName).getText());
 		} catch (Exception e) {
+			Reporter.addStepLog(CoreConstants.FAIL + MYLOConstants.ENTER_CORRECT_FIELD_NAME);
 			Assert.fail(MYLOConstants.ENTER_CORRECT_FIELD_NAME);
 		}
+		Reporter.addStepLog(MessageFormat.format(MYLOConstants.FIELD_NAME_VALUE_DISPLAYED, CoreConstants.PASS,
+				fieldName, airesFileInfoFieldsMap.get(fieldName).getText(), MYLOConstants.AIRES_FILE_INFORMATION, MYLOConstants.ASSIGNMENT));
 		return airesFileInfoFieldsMap.get(fieldName).getText();
 	}
 
 	public void verifyFileInfoFieldsForScenarioType(String scenarioType, String fieldName) throws InterruptedException {
 		if (scenarioType.equals(MYLOConstants.USER_WITHOUT_RESOURCE300096))
-			Assert.assertFalse(verifyFileInfoButtonsEnabled(fieldName));
-		else if (scenarioType.equals(MYLOConstants.USER_WITH_RESOURCE300096))
-			Assert.assertTrue(verifyFileInfoButtonsEnabled(fieldName));
-		else if ((scenarioType.equals(MYLOConstants.AIRESSH_PROVIDER)||(scenarioType.equals(MYLOConstants.NOT_AFFINITY_ENABLED))))
-			Assert.assertTrue(verifyFileInfoFieldsReadOnly(fieldName));
-		else if (scenarioType.equals(MYLOConstants.NOT_AIRESSH_PROVIDER)||(scenarioType.equals(MYLOConstants.AFFINITY_ENABLED)))
 			Assert.assertFalse(verifyFileInfoFieldsReadOnly(fieldName));
+		else if (scenarioType.equals(MYLOConstants.USER_WITH_RESOURCE300096))
+			Assert.assertTrue(verifyFileInfoFieldsReadOnly(fieldName));
+		else if ((scenarioType.equals(MYLOConstants.AIRESSH_PROVIDER)
+				|| (scenarioType.equals(MYLOConstants.NOT_AFFINITY_ENABLED))))
+			Assert.assertTrue(verifyFileInfoFieldsReadOnly(fieldName));
+		else if (scenarioType.equals(MYLOConstants.NOT_AIRESSH_PROVIDER)
+				|| (scenarioType.equals(MYLOConstants.AFFINITY_ENABLED)))
+			Assert.assertFalse(verifyFileInfoFieldsReadOnly(fieldName));
+		else {
+			Reporter.addStepLog(CoreConstants.FAIL + MYLOConstants.ENTER_CORRECT_SCENARIO_TYPE);
+			Assert.fail(MYLOConstants.ENTER_CORRECT_SCENARIO_TYPE);
+		}
 	}
 
-	public boolean verifyFileInfoButtonsEnabled(String elementName) {
-		switch (elementName) {
-		case MYLOConstants.EDIT_BUTTON:
-			return CoreFunctions.isElementVisible(_fileInfoEditButton);
-		default:
-			Assert.fail(MYLOConstants.ENTER_CORRECT_FIELD_NAME);
-		}
-		return false;
-	}
-	
 	public boolean verifyFileInfoFieldsReadOnly(String elementName) {
 		switch (elementName) {
 		case MYLOConstants.POLICY_TYPE:
-			return CoreFunctions.isElementPresent(driver, _fileInfoPolicyTypeDropdownReadOnly, 2);
+			return CoreFunctions.isElementPresent(driver, _fileInfoPolicyTypeDropdownReadOnly,2, MYLOConstants.POLICY_TYPE);
 		case MYLOConstants.OFFICE:
-			return CoreFunctions.isElementPresent(driver, _fileInfoOfficeDropdownReadOnly, 2);
+			return CoreFunctions.isElementPresent(driver, _fileInfoOfficeDropdownReadOnly,2, MYLOConstants.OFFICE);
+		case MYLOConstants.EDIT_BUTTON:
+			return CoreFunctions.isElementVisible(_fileInfoEditButton);
 		default:
-			Assert.fail(MYLOConstants.ENTER_CORRECT_FIELD_NAME);
+			Reporter.addStepLog(CoreConstants.FAIL + MYLOConstants.ENTER_CORRECT_ELEMENT_NAME);
+			Assert.fail(MYLOConstants.ENTER_CORRECT_ELEMENT_NAME);
 		}
 		return false;
 	}
@@ -438,22 +442,21 @@ public class Mylo_AssignmentPage extends Base {
 		List<WebElement> allOptions = CoreFunctions.getElementListByLocator(driver, _dropdownOptions);
 		if (fieldValue.equals(MYLOConstants.RANDOM)) {
 			selectedText = selectRandomDropdownOptions(fieldName, allOptions);
+			Reporter.addStepLog(MessageFormat.format(MYLOConstants.RANDOM_VALUE_UPDATED_ON_SECTION, CoreConstants.PASS,
+					selectedText, fieldName, MYLOConstants.AIRES_FILE_INFORMATION, MYLOConstants.ASSIGNMENT));
 		} else {
 			if (fieldValue != airesFileInfoFieldsMap.get(fieldName).getText())
 				selectedText = CoreFunctions.returnItemInListByText(driver, allOptions, fieldValue).getText();
 			CoreFunctions.clickElement(driver, CoreFunctions.returnItemInListByText(driver, allOptions, fieldValue));
+			Reporter.addStepLog(MessageFormat.format(MYLOConstants.VALUE_UPDATED_ON_SECTION, CoreConstants.PASS,
+					selectedText, fieldName, MYLOConstants.AIRES_FILE_INFORMATION, MYLOConstants.ASSIGNMENT));
 		}
 		return selectedText;
 	}
 
 	public void updateFileInfoFields(String fieldName, String fieldValue) {
-		try {
-			CoreFunctions.click(driver, airesFileInfoFieldsMap.get(fieldName),
-					airesFileInfoFieldsMap.get(fieldName).getText());
-			
-		} catch (Exception e) {
-			Assert.fail(MYLOConstants.ENTER_CORRECT_FIELD_NAME);
-		}
+		CoreFunctions.click(driver, airesFileInfoFieldsMap.get(fieldName),
+				airesFileInfoFieldsMap.get(fieldName).getText());
 		switch (fieldName) {
 		case MYLOConstants.POLICY_TYPE:
 			updatedPolicyType = selectDropdownOptionsAndReturnText(fieldName, fieldValue);

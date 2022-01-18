@@ -36,9 +36,9 @@ public class MyloAssignmentFileInformation_Steps {
 	@Given("^he views the File Information section where File ID, Client ID & Name, Policy Type are hard coded with color \"([^\"]*)\"$")
 	public void he_views_the_File_Information_section_where_File_ID_Client_ID_Name_Policy_Type_are_hard_coded_with_color(
 			String arg1) throws Throwable {
-		Assert.assertTrue(myloAssignmentPage.verifyFileInfoDisplayedFields("611072",
+		Assert.assertTrue(myloAssignmentPage.verifyFileInfoDisplayedFields(MYLOConstants.FILE_ID_DATA_UPDATION,
 				assignmentDetails.activeAssignment.clientID + "-" + assignmentDetails.activeAssignment.clientName,
-				assignmentDetails.activeAssignment.policyType));
+				assignmentDetails.activeAssignment.policyType),MYLOConstants.INCORRECT_FIELD_VALUES_IN_FILEINFO);
 	}
 
 	@When("^he clicks on the \"([^\"]*)\" under file information$")
@@ -48,13 +48,13 @@ public class MyloAssignmentFileInformation_Steps {
 
 	@Then("^the file information will expand to display additional fields$")
 	public void the_file_information_will_expand_to_display_additional_fields() {
-		Assert.assertTrue(myloAssignmentPage.verifyFileInfoAdditionalFieldsDisplayed());
+		Assert.assertTrue(myloAssignmentPage.verifyFileInfoAdditionalFieldsDisplayed(),MYLOConstants.ADDITIONAL_FIELDS_FILEINFO_NOT_DISPLAYED);
 	}
 
 	@Given("^\"([^\"]*)\" of the file is not \"([^\"]*)\" or \"([^\"]*)\"$")
 	public void of_the_file_is_not_or(String fieldName, String statusName1, String statusName2) {
-		Assert.assertNotEquals(myloAssignmentPage.getFileInfoFieldValue(fieldName), statusName1);
-		Assert.assertNotEquals(myloAssignmentPage.getFileInfoFieldValue(fieldName), statusName2);
+		Assert.assertNotEquals(myloAssignmentPage.getFileInfoFieldValue(fieldName), statusName1,MYLOConstants.MISMATCH_VALUE + fieldName);
+		Assert.assertNotEquals(myloAssignmentPage.getFileInfoFieldValue(fieldName), statusName2,MYLOConstants.MISMATCH_VALUE + fieldName);
 	}
 
 	@Then("^\"([^\"]*)\" button will be enabled for Resource(\\d+) or disabled for Without Resource(\\d+) depending on \"([^\"]*)\"$")
@@ -71,7 +71,7 @@ public class MyloAssignmentFileInformation_Steps {
 		myloAssignmentPage.updateFileInfoFields(MYLOConstants.POLICY_TYPE, MYLOConstants.RANDOM);
 		myloAssignmentPage.updateFileInfoFields(MYLOConstants.JOURNEY_TYPE, MYLOConstants.RANDOM);
 		myloAssignmentPage.updateFileInfoFields(MYLOConstants.HOMESTATUS, MYLOConstants.RANDOM);
-		myloAssignmentPage.clickCheckBoxOnAiresFileInfoSection("inheritedFile");
+		myloAssignmentPage.clickCheckBoxOnAiresFileInfoSection(MYLOConstants.INHERITED_FILE);
 	}
 
 	@When("^he clicks on \"([^\"]*)\" button in file information section$")
@@ -87,9 +87,9 @@ public class MyloAssignmentFileInformation_Steps {
 		Assert.assertTrue(myloAssignmentPage.verifyFileInfoUpdatedFields(MYLOConstants.POLICY_TYPE));
 		Assert.assertTrue(myloAssignmentPage.verifyFileInfoUpdatedFields(MYLOConstants.JOURNEY_TYPE));
 		Assert.assertTrue(myloAssignmentPage.verifyFileInfoUpdatedFields(MYLOConstants.HOMESTATUS));
-		Assert.assertTrue(myloAssignmentPage.verifyFileInfoCheckboxSelected("inheritedFile"));
+		Assert.assertTrue(myloAssignmentPage.verifyFileInfoCheckboxSelected(MYLOConstants.INHERITED_FILE));
 		myloAssignmentPage.clickButtonOnAiresFileInformationSection(MYLOConstants.EDIT_BUTTON);
-		myloAssignmentPage.clickCheckBoxOnAiresFileInfoSection("inheritedFile");
+		myloAssignmentPage.clickCheckBoxOnAiresFileInfoSection(MYLOConstants.INHERITED_FILE);
 		myloAssignmentPage.clickButtonOnAiresFileInformationSection(MYLOConstants.SAVE_BUTTON);
 		Assert.assertTrue(myloAssignmentPage.verifyMessage(MYLOConstants.SUCCESS_MESSAGE));
 		myloAssignmentPage.clickButtonOnAiresFileInformationSection(MYLOConstants.OK_BUTTON);
@@ -102,7 +102,7 @@ public class MyloAssignmentFileInformation_Steps {
 
 	@Then("^\"([^\"]*)\" button will be disabled for both CLSD and CNCD status$")
 	public void button_will_be_disabled_for_both_CLSD_and_CNCD_status(String buttonName) {
-		Assert.assertFalse(myloAssignmentPage.verifyFileInfoButtonsEnabled(buttonName));
+		Assert.assertFalse(myloAssignmentPage.verifyFileInfoFieldsReadOnly(buttonName));
 	}
 	
 	@Given("^he is on Mylo Assignment Summary page for file ID with \"([^\"]*)\"$")
@@ -125,7 +125,7 @@ public class MyloAssignmentFileInformation_Steps {
 	@Given("^he verifies the \"([^\"]*)\" checkbox to be unchecked after clicking on \"([^\"]*)\" under file information$")
 	public void he_verifies_the_checkbox_to_be_unchecked_after_clicking_on_under_file_information(String checkBoxName, String buttonName){
 		myloAssignmentPage.clickButtonOnAiresFileInformationSection(buttonName);
-		Assert.assertFalse(myloAssignmentPage.verifyFileInfoCheckboxSelected(checkBoxName));
+		Assert.assertFalse(myloAssignmentPage.verifyFileInfoCheckboxSelected(checkBoxName),MYLOConstants.CHECKBOX_NOT_SELECTED);
 	}
 
 	@When("^he has updated the policy type to a \"([^\"]*)\" policy after clicking on \"([^\"]*)\" button$")
@@ -136,7 +136,7 @@ public class MyloAssignmentFileInformation_Steps {
 
 	@Then("^the \"([^\"]*)\" checkbox should be checked$")
 	public void the_checkbox_should_be_checked(String checkBoxName) {
-		Assert.assertTrue(myloAssignmentPage.verifyFileInfoCheckboxSelected(checkBoxName));
+		Assert.assertTrue(myloAssignmentPage.verifyFileInfoCheckboxSelected(checkBoxName),MYLOConstants.CHECKBOX_NOT_SELECTED);
 	}
 
 }

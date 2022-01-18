@@ -82,7 +82,7 @@ public class Mylo_LoginPage extends Base {
 			CoreFunctions.clickUsingJS(driver, _submit, _submit.getAttribute("value"));
 			CoreFunctions.explicitWaitTillElementVisibility(driver, _txt_Password,
 					_txt_Password.getAttribute("name"));
-			CoreFunctions.clearAndSetText(driver, _txt_Password, _txt_Password.getAttribute("name"), password);
+			CoreFunctions.clearAndSetText(driver, _txt_Password, "password", password);
 		} catch (ElementNotFoundException e) {
 		}
 	}

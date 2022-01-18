@@ -1591,12 +1591,15 @@ public class CoreFunctions {
 	        return false;
 	    }
 	}
-	public static boolean isElementPresent(WebDriver driver, By locator, long time) {
+	public static boolean isElementPresent(WebDriver driver, By locator, long time, String name) {
 		try {
 			WebDriverWait wait = new WebDriverWait(driver, time);
 			wait.until(ExpectedConditions.presenceOfElementLocated(locator));
+			Reporter.addStepLog(MessageFormat.format(CoreConstants.VRFIED_ELE_PAGE, CoreConstants.PASS, name));
 			return true;
 		} catch (Exception e) {
+			Reporter.addStepLog(
+					MessageFormat.format(CoreConstants.VRFIED_ELE_NOT_ON_PAGE, CoreConstants.FAIL,name ));
 		}
 		return false;
 	}

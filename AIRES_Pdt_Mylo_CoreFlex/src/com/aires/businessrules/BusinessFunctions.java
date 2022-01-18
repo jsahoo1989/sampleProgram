@@ -52,7 +52,6 @@ import org.testng.Assert;
 import com.aires.businessrules.constants.PDTConstants;
 import com.aires.pages.pdt.PDT_AddNewPolicyPage;
 import com.aires.businessrules.constants.CoreConstants;
-import com.aires.businessrules.constants.MYLOConstants;
 import com.aires.utilities.EmailUtil;
 import com.aires.utilities.Log;
 import com.aires.utilities.getWindowText;

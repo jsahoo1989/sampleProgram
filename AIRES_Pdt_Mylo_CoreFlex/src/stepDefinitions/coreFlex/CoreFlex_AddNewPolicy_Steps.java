@@ -1,66 +1,35 @@
 package stepDefinitions.coreFlex;
 
-import java.text.MessageFormat;
-
-import org.testng.Assert;
-
-import com.aires.businessrules.constants.CoreConstants;
-import com.aires.businessrules.constants.PDTConstants;
-import com.aires.cucumber.TestContext;
-import com.aires.pages.pdt.PDT_AddNewPolicyPage;
-import com.aires.pages.pdt.PDT_LoginPage;
-import com.aires.pages.pdt.PDT_ViewPolicyPage;
-import com.aires.testdatatypes.pdt.PDT_LoginDetails;
-
 import cucumber.api.java.en.Given;
 import cucumber.api.java.en.Then;
 import cucumber.api.java.en.When;
 
 public class CoreFlex_AddNewPolicy_Steps {
-
-	private TestContext testContext;
-	private PDT_ViewPolicyPage viewPolicyPage;
-	private PDT_AddNewPolicyPage addNewPolicyPage;
-	private PDT_LoginDetails _loginDetails;
-	private PDT_LoginPage loginPage;
-
-	public CoreFlex_AddNewPolicy_Steps(TestContext context) {
-		testContext = context;
-		viewPolicyPage = testContext.getPageObjectManager().getViewPolicyPage();
-		addNewPolicyPage = testContext.getPageObjectManager().getAddNewPolicyPage();
-		loginPage = testContext.getPageObjectManager().getLoginPage();
-	}
-
-	@When("^he enters the following 'Valid/Invalid' \"([^\"]*)\" value for the Client ID field$")
-	public void he_enters_the_following_Valid_Invalid_value_for_the_Client_ID_field(String inputValue)
-			throws Throwable {
-		addNewPolicyPage.enterClientID(inputValue);
-	}	
-
-	@Then("^\"([^\"]*)\" drop-down field Visibility/Invisiblity should depend on the entered \"([^\"]*)\" \"([^\"]*)\" value$")
-	public void drop_down_field_Visibility_Invisiblity_should_depend_on_the_entered_value(String fieldName,
-			String dataValidity, String clientID) throws Throwable {
-		Assert.assertTrue(addNewPolicyPage.verifyPolicyNameField(fieldName, dataValidity, clientID), MessageFormat
-				.format(PDTConstants.FAILED_TO_VERIFY_POLICY_NAME_FIELD_FOR_ENTERED_CLIENTID, CoreConstants.FAIL));
-	}
-
-	@Given("^he has entered a valid 'ClientID' \"([^\"]*)\" in dropdown input field$")
-	public void he_has_entered_a_valid_ClientID_in__dropdown_input_field(String clientID) throws Throwable {
-		addNewPolicyPage.enterClientID(clientID);
-		Assert.assertTrue(addNewPolicyPage.verifyAndClickValidClientIDResult(clientID), MessageFormat
-				.format(PDTConstants.FAILED_TO_VERIFY_VALID_CLIENT_ID_DROPDOWN_OPTIONS, CoreConstants.FAIL));
-	}
-
-	@Given("^he has selected a policy from 'Policy Name' dropdown list$")
-	public void he_has_selected_a_policy_from_Policy_Name_dropdown_list() throws Throwable {
-		Assert.assertTrue(addNewPolicyPage.selectAPolicy(addNewPolicyPage.getFirstAvailablePolicyOption()),
-				MessageFormat.format(PDTConstants.FAILED_TO_SELECT_POLICY_FROM_POLICY_NAME_FIELD, CoreConstants.FAIL));
-	}
-
-	@When("^he clicks on 'Next' button$")
-	public void he_clicks_on_Next_button() throws Throwable {
-		addNewPolicyPage.clickElementOfPage(PDTConstants.NEXT);
-	}
 	
-	
+	@Given("^he has navigated to \"([^\"]*)\" menu from left navigation of 'Aires Policy Tool' homepage$")
+	public void he_has_navigated_to_menu_from_left_navigation_of_Aires_Policy_Tool_homepage(String arg1) throws Throwable {
+	    
+	}
+
+	@When("^he enters <FieldValue> value in 'Client ID' dropdown list$")
+	public void he_enters_FieldValue_value_in_Client_ID_dropdown_list() throws Throwable {
+	    
+	}
+
+	@Then("^'Policy Name' dropdown list should be displayed having all the policies tied to entered \"([^\"]*)\" Client ID/Name$")
+	public void policy_Name_dropdown_list_should_be_displayed_having_all_the_policies_tied_to_entered_Client_ID_Name(String arg1) throws Throwable {
+	    
+	}
+
+	@Then("^\"([^\"]*)\" text should be displayed in dropdown list followed by 'Record does not exist'Error popup for \"([^\"]*)\" Client ID/Name$")
+	public void text_should_be_displayed_in_dropdown_list_followed_by_Record_does_not_exist_Error_popup_for_Client_ID_Name(String arg1, String arg2) throws Throwable {
+	    
+	}
+
+	@Then("^'Policy Name' dropdown list should not be displayed for \"([^\"]*)\" Client ID/Name$")
+	public void policy_Name_dropdown_list_should_not_be_displayed_for_Client_ID_Name(String arg1) throws Throwable {
+	   
+	}
+
+
 }

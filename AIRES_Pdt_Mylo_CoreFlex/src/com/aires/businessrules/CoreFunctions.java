@@ -59,8 +59,9 @@ import org.openqa.selenium.support.ui.Select;
 import org.openqa.selenium.support.ui.WebDriverWait;
 import org.testng.Assert;
 
-import com.aires.businessrules.constants.CoreConstants;
 import com.aires.businessrules.constants.PDTConstants;
+import com.aires.businessrules.constants.CoreConstants;
+import com.aires.businessrules.constants.MYLOConstants;
 import com.aires.utilities.Log;
 import com.vimalselvam.cucumber.listener.Reporter;
 
@@ -162,13 +163,17 @@ public class CoreFunctions {
 	}
 
 	public static String getElementText(WebDriver driver, WebElement Element) {
+		Log.info("Getting Element Text");
 		String text = "";
 		try {
 			text = Element.getText().trim();
 			highlightObject(driver, Element);
+			Log.info(CoreConstants.TXT_ACTUAL + CoreConstants.IS_DISPLAYED_AS + text);
 			Reporter.addStepLog(CoreConstants.PASS + CoreConstants.TXT_ACTUAL + CoreConstants.IS_DISPLAYED_AS + text);
 		} catch (Exception e) {
+			Log.info("Could not get text");
 			Reporter.addStepLog("Could not get element text");
+			e.printStackTrace();
 		}
 		return text;
 	}
@@ -300,7 +305,7 @@ public class CoreFunctions {
 		explicitWaitTillElementBecomesClickable(driver, Element, name);
 		Log.info("Clicking using JS on: " + name);
 		try {
-			CoreFunctions.waitHandler(2);
+			CoreFunctions.waitHandler(5);
 			JavascriptExecutor executor = (JavascriptExecutor) driver;
 			executor.executeScript("arguments[0].click();", Element);
 			Log.info("Pass: " + name + " :is clicked");
@@ -329,8 +334,10 @@ public class CoreFunctions {
 	public static String extractIntValue(String str) {
 		// Replacing every non-digit number with a space(" ")
 		str = str.replaceAll("[^\\d]", " ");
+
 		// Remove extra spaces from the beginning and the ending of the string
 		str = str.trim();
+
 		// Replace all the consecutive white spaces with a single space
 		str = str.replaceAll(" +", " ");
 		if (str.equals(""))
@@ -519,15 +526,13 @@ public class CoreFunctions {
 		}
 		return null;
 	}
+	
 
-
-	public static LinkedHashMap<String, String> returnMapFromBothLists(WebDriver driver, List<WebElement> roleNames,
-			List<WebElement> memberNames) {
+	public static LinkedHashMap<String, String> returnMapFromBothLists(WebDriver driver, List<WebElement> roleNames, List<WebElement> memberNames) {
 		LinkedHashMap<String, String> mp = new LinkedHashMap<String, String>();
 		try {
-			for (int i = 0; i < roleNames.size(); i++) {
-				mp.put(roleNames.get(i).getAttribute(CoreConstants.VALUE),
-						memberNames.get(i).getAttribute(CoreConstants.VALUE));
+			for (int i=0;i<roleNames.size();i++) {
+				mp.put(roleNames.get(i).getAttribute(CoreConstants.VALUE), memberNames.get(i).getAttribute(CoreConstants.VALUE));
 			}
 		} catch (Exception e) {
 			Assert.fail(CoreConstants.COULD_NOT_FIND_ITEM);
@@ -701,7 +706,7 @@ public class CoreFunctions {
 				element.click();
 			}
 			Reporter.addStepLog(
-					CoreConstants.PASS + MessageFormat.format(CoreConstants.VERIFIEDCHECKBOX_IS_CLICKED, name));
+					CoreConstants.PASS + MessageFormat.format(PDTConstants.VERIFIEDCHECKBOX_IS_CLICKED, name));
 		} catch (Exception e) {
 			Log.info(MessageFormat.format(CoreConstants.FAILD_CLCK_ELE, name));
 			Assert.fail(MessageFormat.format(CoreConstants.FAILD_CLCK_ELE, name));
@@ -1038,6 +1043,7 @@ public class CoreFunctions {
 				.executeScript("return document.readyState").equals("complete"));
 		JavascriptExecutor js = (JavascriptExecutor) driver;
 		js.executeScript("return((window.jQuery != null) && (jQuery.active === 0))").equals("true");
+
 	}
 
 	public static WebElement explicitWaitTillVisiblityAndReturnElement(WebDriver driver, By locator) {
@@ -1089,7 +1095,7 @@ public class CoreFunctions {
 	public static boolean verifyTextEditorValue(WebDriver driver, WebElement element, String textValue,
 			String textFieldName) {
 		if (element.getText().contains(textValue)) {
-			Reporter.addStepLog(MessageFormat.format(CoreConstants.VERIFY_TEXT_IN_TEXTFIELD, CoreConstants.PASS,
+			Reporter.addStepLog(MessageFormat.format(PDTConstants.VERIFY_TEXT_IN_TEXTFIELD, CoreConstants.PASS,
 					textValue, textFieldName));
 			CoreFunctions.highlightObject(driver, element);
 		}
@@ -1151,11 +1157,13 @@ public class CoreFunctions {
 	public static void scrollHorizontalLeftUsigActions(WebDriver driver) {
 		Actions act = new Actions(driver);
 		act.sendKeys(Keys.ARROW_LEFT).build().perform();
+
 	}
 
 	public static void scrollDownUsigActions(WebDriver driver) {
 		Actions act = new Actions(driver);
 		act.sendKeys(Keys.DOWN).build().perform();
+
 	}
 
 	public static void scrollRightUsingJs(WebDriver driver) {
@@ -1180,6 +1188,7 @@ public class CoreFunctions {
 	}
 
 	public static void clearAndSetTextUsingLocator(WebDriver driver, By locator, String textToEnter) {
+		WebDriverWait wait = new WebDriverWait(driver, 30);
 		WebElement element = getElementByLocator(driver, locator);
 		try {
 			element.clear();
@@ -1214,6 +1223,7 @@ public class CoreFunctions {
 
 	public static void selectValueFromDropdownUsingLocator(WebDriver driver, By locatorKey, String drpdwnValue) {
 		try {
+
 			if (isElementByLocatorExist(driver, locatorKey, 35)) {
 				Log.info("Element found:-" + drpdwnValue);
 				WebElement element = driver.findElement(locatorKey);
@@ -1221,11 +1231,12 @@ public class CoreFunctions {
 				String drpDwnName = dropDown.getOptions().get(0).getText();
 				dropDown.selectByVisibleText(drpdwnValue);
 				if (element.getAttribute("title").equalsIgnoreCase(drpdwnValue))
-					Reporter.addStepLog(MessageFormat.format(CoreConstants.VERIFY_VALUE_SELECTED_FROM_DROPDWON,
+					Reporter.addStepLog(MessageFormat.format(PDTConstants.VERIFY_VALUE_SELECTED_FROM_DROPDWON,
 							CoreConstants.PASS, drpDwnName, drpdwnValue));
 				else
-					Reporter.addStepLog(MessageFormat.format(CoreConstants.FAIL_TO_SELECT_VALUE_FROM_DROPDOWN,
+					Reporter.addStepLog(MessageFormat.format(PDTConstants.FAIL_TO_SELECT_VALUE_FROM_DROPDOWN,
 							CoreConstants.FAIL, drpdwnValue, drpDwnName));
+
 			}
 		} catch (Exception ex) {
 			Log.info(CoreConstants.ERROR + ex);
@@ -1238,11 +1249,11 @@ public class CoreFunctions {
 			CoreFunctions.explicitWaitTillElementVisibility(driver, element, elementName);
 			if (element.isDisplayed() && element.getText().trim().equals(elementName)) {
 				CoreFunctions.highlightObject(driver, element);
-				Reporter.addStepLog(MessageFormat.format(CoreConstants.VERIFIED_ELEMENT_ON_PAGE, CoreConstants.PASS,
+				Reporter.addStepLog(MessageFormat.format(PDTConstants.VERIFIED_ELEMENT_ON_PAGE, CoreConstants.PASS,
 						elementName, pageName));
 				return true;
 			} else {
-				Reporter.addStepLog(MessageFormat.format(CoreConstants.FAIL_TO_VERIFY_ELEMENT_ON_PAGE,
+				Reporter.addStepLog(MessageFormat.format(PDTConstants.FAIL_TO_VERIFY_ELEMENT_ON_PAGE,
 						CoreConstants.FAIL, elementName, pageName));
 				return false;
 			}
@@ -1500,36 +1511,17 @@ public class CoreFunctions {
 			Reporter.addStepLog(MessageFormat.format(CoreConstants.FAILED_TXT_CLR_VAL, elementLabel));
 			e.printStackTrace();
 		}
+
 	}
 
 	public static void moveToElement(WebDriver driver, WebElement element) {
 		Actions action = new Actions(driver);
 		action.moveToElement(element).build().perform();
-
 	}
 
 	public static List<String> getElementTextAndStoreInList(WebDriver driver, List<WebElement> elementList) {
+
 		return (elementList.stream().map(x -> x.getText()).collect(Collectors.toList()));
-	}
-
-	
-	public static WebElement getElementFromListByText(List<WebElement> elementList, String text) {
-		try {
-			for (WebElement element : elementList) {
-				if (element.getText().contains(text)) {
-					Log.info("Element found in the List by Text :" + element.getText());
-					return element;
-				}
-			}
-		} catch (Exception e) {
-			Assert.fail("Element with the text " + text + " not found in the list.");
-			e.printStackTrace();
-		}
-		return null;
-	}
-
-	public static String generateRandomNumberInGivenRange(int startingRange, int endingRange) {
-		return String.valueOf(startingRange + (int) (Math.random() * ((endingRange - startingRange) + 1)));
 	}
 
 	public static void selectItemInListByText(WebDriver driver, List<WebElement> WebElementList, String searchText,

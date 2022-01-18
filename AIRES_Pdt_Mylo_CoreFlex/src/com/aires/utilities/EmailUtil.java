@@ -216,7 +216,7 @@ public class EmailUtil {
 						try {
 							Thread.sleep(1000);
 						} catch (InterruptedException e1) {
-							
+							// TODO Auto-generated catch block
 							e1.printStackTrace();
 						}
 					}
@@ -229,10 +229,10 @@ public class EmailUtil {
 			}
 
 		} catch (NoSuchProviderException e) {
-			
+			// TODO Auto-generated catch block
 			e.printStackTrace();
 		} catch (MessagingException e) {
-			
+			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 		return path1;
@@ -272,11 +272,11 @@ public class EmailUtil {
 
 	public static String[] getStartEndTagFromEmail(String infoToExtractFromMail) {
 		switch (infoToExtractFromMail) {
-		case CoreConstants.USER_NAME:
+		case PDTConstants.USER_NAME:
 			_searchTag[0] = "<font style=\"padding-left:5px;\" size=\"3\" face=\"Arial\" color=\"#424143\"><b>";
 			_searchTag[1] = "</b></font>";
 			break;
-		case CoreConstants.PASSWORD:
+		case PDTConstants.PASSWORD:
 			_searchTag[0] = "Your temporary password is <b>";
 			_searchTag[1] = "</b></font>";
 			break;

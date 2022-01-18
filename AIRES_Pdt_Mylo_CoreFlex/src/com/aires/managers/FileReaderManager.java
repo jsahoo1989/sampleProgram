@@ -18,29 +18,22 @@
 package com.aires.managers;
 
 import com.aires.dataProviders.ConfigFileReader;
-import com.aires.dataProviders.JsonDataReader_CoreFlex;
 import com.aires.dataProviders.JsonDataReader_Mylo;
-
 import com.aires.dataProviders.JsonDataReader_Pdt;
 
 public class FileReaderManager {
 	private static FileReaderManager fileReaderManager = new FileReaderManager();
 	private static ConfigFileReader configFileReader;
 	private static JsonDataReader_Pdt jsonDataReader;
-	private static JsonDataReader_CoreFlex jsonDataReaderCoreFlex;
 	private static JsonDataReader_Mylo MylojsonDataReader;
 
 	private FileReaderManager() {
 	}
 
-	public static FileReaderManager getInstance() {
-		return fileReaderManager;
-	}
-	
-	public JsonDataReader_CoreFlex getCoreFlexJsonReader() {
-		return (jsonDataReaderCoreFlex == null) ? new JsonDataReader_CoreFlex() : jsonDataReaderCoreFlex;
-	}
-	
+	 public static FileReaderManager getInstance( ) {
+	      return fileReaderManager;
+	 }
+
 	 public ConfigFileReader getConfigReader() {
 		 return (configFileReader == null) ? new ConfigFileReader() : configFileReader;
 	 }

@@ -5,4 +5,5 @@ public class Mylo_LoginData {
 	public String MyloUserName;
 	public String MyloPassword;
 	public String MyloWithOutResource15UserName;
+	public String MyloWithOutResource300096UserName;
 }

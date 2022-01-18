@@ -626,4 +626,36 @@ public class BusinessFunctions {
 			Assert.fail(MessageFormat.format(PDTConstants.FAILED_TO_FILL_FIELD, PDTConstants.REIMBURSED_BY_OTHER, SubBenefitFormName));
 		}
 	}
+	
+	public static int returnindexItemFromListUsingAttribute(WebDriver driver, List<WebElement> WebElementList,
+			String itemName, String attribute) {
+		CoreFunctions.waitHandler(3);
+		try {
+			for (WebElement row : WebElementList) {
+				Log.info("The Actual Item Name is :" + row.getAttribute(attribute));
+				if (row.getAttribute(attribute).equals(itemName)) {
+					return WebElementList.indexOf(row);
+				}
+			}
+		} catch (ElementNotFoundException e) {
+			e.printStackTrace();
+		}
+		return -1;
+	}
+	
+	public static WebElement returnItemFromListUsingAttribute(WebDriver driver, List<WebElement> WebElementList,
+			String itemName, String attribute) {
+		CoreFunctions.waitHandler(3);
+		try {
+			for (WebElement row : WebElementList) {
+				Log.info("The Actual Item Name is :" + row.getAttribute(attribute));
+				if (row.getAttribute(attribute).equals(itemName)) {
+					return row;
+				}
+			}
+		} catch (ElementNotFoundException e) {
+			e.printStackTrace();
+		}
+		return null;
+	}
 }

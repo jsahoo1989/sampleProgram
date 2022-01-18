@@ -99,13 +99,22 @@ public class Mylo_LoginPage extends Base {
 		CoreFunctions.click(driver, _anotherAccount, _anotherAccount.getText());
 	}
 	
-	public void loginWithUser(String userType) throws InterruptedException {
+	public void logoutAndloginAnotherAccount() throws InterruptedException{
+		logout();
+		openApplication();
+		CoreFunctions.explicitWaitTillElementVisibility(driver, _anotherAccount, _anotherAccount.getText());
+		CoreFunctions.click(driver, _anotherAccount, _anotherAccount.getText());
+	}
+	
+	public void loginWithUser(String userType) throws InterruptedException  {
 		if (userType.equals(MYLOConstants.USER_WITHOUT_RESOURCE15)) {
-			logout();
-			openApplication();
-			CoreFunctions.explicitWaitTillElementVisibility(driver, _anotherAccount, _anotherAccount.getText());
-			CoreFunctions.click(driver, _anotherAccount, _anotherAccount.getText());
+			logoutAndloginAnotherAccount();
 			enterUserEmailAndPasswordForMylo(loginData.MyloWithOutResource15UserName, loginData.MyloPassword);
+			clickSignIn();			
+		}
+		else if (userType.equals(MYLOConstants.USER_WITHOUT_RESOURCE300096)) {
+			logoutAndloginAnotherAccount();
+			enterUserEmailAndPasswordForMylo(loginData.MyloWithOutResource300096UserName, loginData.MyloPassword);
 			clickSignIn();			
 		}
 	}

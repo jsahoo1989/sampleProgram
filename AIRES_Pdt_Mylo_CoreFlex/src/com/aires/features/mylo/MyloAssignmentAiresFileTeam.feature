@@ -4,7 +4,7 @@ Feature: Validate the functionality of Mylo Assignment Aires File Team section
 Background: Login to  Mylo application
     Given he has logged into the 'Mylo' application
   
-@IRIS-687 @Mylo-Regression
+@IRIS-687 @Mylo-Regression 
 Scenario Outline: Mylo-Validate No Option for Replacement of Mylo Assignment Aires File Team member
 Given he is on Mylo Assignment Summary page for file ID "611072"
 And he selects "<Role>" with random team member from the dropdown after clicking on "Add" button
@@ -29,7 +29,7 @@ When he clicks on "Yes" button in AiresFileTeam
 Then new row should be added for "EMAC" with updated team member, End Date to current date
 And all the values are readonly in the AiresFileTeam grid
 
- @IRIS-687 @Mylo-Regression
+ @IRIS-687 @Mylo-Regression 
 Scenario Outline: Mylo-Validate Sales Option Availability With Respect to Resource Id of MyloUsers
 Given he has logged into the Mylo application with mentioned userType "<UserType>" 
 And he selects "File" section after clicking on "Assignment" option in the Mylo Menu on the sidebar
@@ -40,4 +40,3 @@ Examples:
 |UserType          |
 |With Resource15   |
 |Without Resource15|
-

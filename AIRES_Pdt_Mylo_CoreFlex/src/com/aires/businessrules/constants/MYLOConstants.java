@@ -9,6 +9,7 @@ public class MYLOConstants {
 	public static final String HAMBURGER_MENU_NOT_APPEARING = "Hamburger Menu Not Appearing";
 	public static final String FILE_ID = "File ID";
 	public static final String CLIENT_ID = "Client ID";
+	public static final String CLIENT_NAME = "Client name";
 	public static final String STATUS = "Status";
 	public static final String ORIGIN_COUNTRY = "Origin Country";
 	public static final String DESTINATION_COUNTRY = "Destination Country";
@@ -20,10 +21,13 @@ public class MYLOConstants {
 	public static final String QUERY_RESULT_HEADER_TEXT = "Please select a file from your query results below or run a new query.";
 	public static final String INCORRECT_MESSAGE = "Incorrect Message";
 	public static final String ADD_BUTTON = "Add";
+	public static final String EDIT_BUTTON = "Edit";
 	public static final String SAVE_BUTTON = "Save";
 	public static final String CANCEL_BUTTON = "Cancel";
 	public static final String NO_BUTTON = "No";
 	public static final String YES_BUTTON = "Yes";
+	public static final String OK_BUTTON = "Ok";
+	public static final String DETAILS_CARROT_BUTTON = "Details Carrot";
 	public static final String OFFICE = "Office";
 	public static final String COUNTRY = "Country";
 	public static final String STATE = "State";
@@ -34,6 +38,9 @@ public class MYLOConstants {
 	public static final String ACTIVE = "Active";
 	public static final String USER_WITH_RESOURCE15 = "With Resource15";
 	public static final String USER_WITHOUT_RESOURCE15 = "Without Resource15";
+	public static final String USER_WITH_RESOURCE300096 = "With Resource300096";
+	public static final String USER_WITHOUT_RESOURCE300096 = "Without Resource300096";
+	public static final String WITH_RESOURCE15 = "With Resource15";
 	public static final String SUMMARY = "Summary";
 	public static final String NAME = "name";
 	public static final String VALUE = "value";
@@ -49,5 +56,20 @@ public class MYLOConstants {
 	public static final String EXPECTED_POPUP_MESSAGE = "Expected Popup message: ";
 	public static final String RECORDS_NOT_READONLY="All records are not readonly";
 	public static final String INVALID_ROLE_ACCESS_FOR="Invalid Role access for";
-
+	public static final String POLICY_TYPE="Policy Type";
+	public static final String TRANSFER_TYPE="Transfer Type";
+	public static final String JOURNEY_TYPE="Journey Type";
+	public static final String HOMESTATUS="Homestatus";
+	public static final String ENTER_CORRECT_FIELD_NAME="Please enter correct field name";
+	public static final String ENTER_CORRECT_BUTTON_NAME="Please enter correct button name";
+	public static final String SUCCESS_MESSAGE="Success Message";
+	public static final String FILE_INFO_SUCCESS_MESSAGE= "Your changes have been successfully saved!";
+	public static final String IRIS = "IRIS";
+	public static final String AFFINITY_ENABLED = "AffinityEnabled";
+	public static final String NOT_AFFINITY_ENABLED = "NotAffinityEnabled";
+	public static final String AIRESSH_PROVIDER = "AIRESSH";
+	public static final String NOT_AIRESSH_PROVIDER = "NOTAIRESSH";
+	public static final String CANCELED = "Canceled";
+	public static final String CLOSED = "Closed";
+	public static final String RELOCATION_POLICY = "Relocation Policy";
 }

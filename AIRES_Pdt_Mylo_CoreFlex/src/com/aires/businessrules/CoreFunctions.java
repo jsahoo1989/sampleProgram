@@ -1576,4 +1576,28 @@ public class CoreFunctions {
 	public static String getRandomElementValueFromList(WebDriver driver, List<WebElement> WebElementList) {
 		return WebElementList.get(getRandomNumber(0, WebElementList.size()-1)).getText();
 	}
+	
+	public static boolean isClickable(WebDriver driver, WebElement Element, String name)      
+	{
+		Log.info("waiting for " + name + " to be clickable");
+	    try
+	    {
+	        WebDriverWait wait = new WebDriverWait(driver, 5);
+	        wait.until(ExpectedConditions.elementToBeClickable(Element));
+	        return true;
+	    }
+	    catch (Exception e)
+	    {
+	        return false;
+	    }
+	}
+	public static boolean isElementPresent(WebDriver driver, By locator, long time) {
+		try {
+			WebDriverWait wait = new WebDriverWait(driver, time);
+			wait.until(ExpectedConditions.presenceOfElementLocated(locator));
+			return true;
+		} catch (Exception e) {
+		}
+		return false;
+	}
 }

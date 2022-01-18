@@ -1,0 +1,85 @@
+[
+	{
+		"application": "IRIS",
+		"activeAssignment": {
+			"fileID": "611072",
+			"clientID": "92265",
+			"clientName": "MobilityX Inc.",
+			"status": "Active",
+			"policyType": "Domestic Policy",
+			"provider": "AIRES",
+			"journeyType": "Intern",
+			"office": "CRO"
+		},
+		"affinityEnabled": {
+			"fileID": "549316",
+			"clientID": "96512",
+			"clientName": "Affinity - AIRES-CIS-DEMO&'TEST(CLIENT)",
+			"status": "Booked",
+			"policyType": "20487",
+			"provider": "AIRESIBO",
+			"journeyType": "Non-Relo",
+			"office": "CORP"
+		},
+			"affinityNotEnabled": {
+			"fileID": "323209",
+			"clientID": "96512",
+			"clientName": "Affinity - AIRES-CIS-DEMO&'TEST(CLIENT)",
+			"status": "Booked",
+			"policyType": "20487",
+			"provider": "AIRESIBO",
+			"journeyType": "Non-Relo",
+			"office": "CORP"
+		},
+		"airesshProvider": {
+			"fileID": "323419",
+			"clientID": "49212",
+			"clientName": "Test Client",
+			"status": "Active",
+			"policyType": "Domestic",
+			"provider": "AIRESSH",
+			"journeyType": "Long-Term",
+			"office": "CRO"
+		},
+		"notairesshProvider": {
+			"fileID": "547198",
+			"clientID": "1148",
+			"clientName": "Ericsson, Inc.",
+			"status": "Active",
+			"policyType": "FNLH  Foreign National Local Hire",
+			"provider": "AIRES",
+			"journeyType": "Permanent",
+			"office": "GCRO"
+		},
+		"canceledFile": {
+			"fileID": "7",
+			"clientID": "44501",
+			"clientName": "Vastera",
+			"status": "Canceled",
+			"policyType": "Executive",
+			"provider": "AI",
+			"journeyType": "Permanent",
+			"office": "CRO"
+		},
+		"closedFile": {
+			"fileID": "208973",
+			"clientID": "49076",
+			"clientName": "Electric Boat - Puget Sound",
+			"status": "Closed",
+			"policyType": "SSGN B - Renter (Non-Homeowner)",
+			"provider": "AI",
+			"journeyType": "Permanent",
+			"office": "NERO"
+		},
+		"relocationPolicyType": {
+			"fileID": "611086",
+			"clientID": "92265",
+			"clientName": "MobilityX Inc.",
+			"status": "Booked",
+			"policyType": "LOng Term Assignment",
+			"provider": "AIRES",
+			"journeyType": "Long Term",
+			"office": "CRO"
+		}
+	}
+]

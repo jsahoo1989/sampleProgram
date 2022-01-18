@@ -13,7 +13,7 @@ Feature: Login to Policy App Application
       | userName |
       | AKARNS   |
 
-  @pdtLogin @PDT-Regression
+  @pdtLogin
   Scenario Outline: PDT - Login to Policy Digitization Application
     Given he is on Policy App login page
     And he enters "<userName>" and "<password>" in username and password field
@@ -27,7 +27,7 @@ Feature: Login to Policy App Application
       | akarns   | akarns   |
       | spant    | spant    |
       
- @viewPolicyList @PDT-Regression
+ @viewPolicyList
   Scenario: PDT - View Policy List after login
     Given he is on Policy App login page
     And he enters below login credentials in Username, Password fields

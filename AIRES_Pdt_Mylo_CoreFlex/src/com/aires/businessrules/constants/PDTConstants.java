@@ -59,7 +59,7 @@ public class PDTConstants {
 	public static final String TRANSFEREE_FIRST_NAME = "Transferee_firstName";
 	public static final String TRANSFEREE_LAST_NAME = "Transferee_lastName";
 	public static final String FIRST_NAME = "firstName";
-	public static final String LAST_NAME = "lastName";
+	public static final String LAST_NAME = "lastName";	
 	public static final String ASCENDING = "Ascending";
 	public static final String DESCENDING = "Descending";
 	public static final String SORTED = "Sorted";
@@ -71,15 +71,15 @@ public class PDTConstants {
 	public static final String YES = "Yes";
 	public static final String NO = "No";
 	public static final String INVALID_FILE = "InvalidFile";
-	public static final String OTHER = "Other";
-	public static final String GENERAL_INFORMATION = "General Information";
+	public static final String OTHER = "Other";	
+	public static final String GENERAL_INFORMATION = "General Information";	
 	public static final String VERIFY_VALUE_SELECTED_IN_DROPDWON = "{0}Verified value selected from ''{1}'' drop down is : ''{2}''";
 	public static final String VERIFY_VALUE_IN_DROPDOWN = "{0}Verified value ''{1}'' is present in dropdown";
 	public static final String VERIFY_VALUE_IN_TEXTFIELD = "{0}Verified value ''{1}'' is present in Text Field";
 	public static final String FAIL_TO_VERIFY_VALUE_IN_DROPDOWN = "{0}Fail to verified value ''{1}'' is present in dropdown";
 	public static final String FAIL_TO_VERIFY_VALUE_IN_TEXTFIELD = "{0}Fail to verified value ''{1}'' is present in Text Field";
 	public static final String FAIL_TO_SELECT_VALUE_IN_DROPDOWN = "{0}Fail to select value ''{1}'' from ''{2}'' dropdown";
-	public static final String HOST = "outlook.office365.com";
+	public static final String HOST ="outlook.office365.com";	
 	public static final String HOST_EMAIL_DOMAIN = "outlook.office365.com";
 	public static final String EMAIL_USERNAME = "airesautomation@aires.com";
 	public static final String EMAIL_PWD = "FebMarch2019!";
@@ -112,8 +112,8 @@ public class PDTConstants {
 	public static final String VERIFIED_OPTION_CHOSEN_FOR_RADIO_BTN = "{0}Verified option clicked for ''{1}'' is ''{2}''";
 	public static final String EMAIL_USERNAME_SUBJECT = "MobilityX Username";
 	public static final String EMAIL_PASSWORD_SUBJECT = "MobilityX Password";
-
-	//// PDT CONSTANTS
+	
+	////PDT CONSTANTS
 	public static final String VERIFIED_USERNAME_IS_DISPLAYED = "{0}Verified username is displayed as ''{1}'' on ''{2}'' page.";
 	public static final String FAILED_TO_VERIFY_USERNAME = "{0}Failed to match username on ''{1}'' page. Expected username:- ''{2}''. Actual username displayed:- ''{3}''";
 	public static final String VIEW_EDIT_POLICY_FORMS = "View/Edit Policy Forms";
@@ -140,9 +140,9 @@ public class PDTConstants {
 	public static final String ELEMENT_NOT_FOUND = "''{0}'' Element not found.";
 	public static final String INVALID_CREDENTIALS_ENTERED = "Invalid login credentials are entered.";
 	public static final String ADD_NEW_POLICY_FORM = "Add New Policy Form";
-	public static final String FAILED_TO_VERIFY_POLICY_NAME_FIELD_FOR_VALID_CLIENTID = "{0} Failed to verify Policy Name Dropdown field for valid ClientID.";
+	public static final String FAILED_TO_VERIFY_POLICY_NAME_FIELD_FOR_VALID_CLIENTID ="{0} Failed to verify Policy Name Dropdown field for valid ClientID.";
 	public static final String EXCEPTION_OCCURED_WHILE_VALIDATING_POLICY_NAME_LIST = "{0} Exception Occured while validating Policy Name Dropdown List. ''{1}''";
-	public static final String SUCCESSFULLY_DISPLAYED_POLICIES_IN_POLICY_LIST = "{0} Successfully displayed Policies in Policy Name List.";
+	public static final String SUCCESSFULLY_DISPLAYED_POLICIES_IN_POLICY_LIST ="{0} Successfully displayed Policies in Policy Name List.";
 	public static final String INCORRECT_CLIENT_DISPLAYED_FOR_ENTERED_CLIENTID = "{0} Incorrect Client ''{1}'' displayed in dropdown result for entered ClientID ''{2}''.";
 	public static final String ERROR_POP_UP_DISPLAYED_FOR_VALID_CLIENTID = "{0} Error Pop-Up displayed for Valid ClientID. Error Message - ''{1}''";
 	public static final String FAILED_TO_VERIFY_VALID_CLIENT_ID_DROPDOWN_OPTIONS = "{0} Failed to verify valid Client ID dropdown option values.";
@@ -187,7 +187,6 @@ public class PDTConstants {
 	public static final String POLICY_TYPE = "Policy Type";
 	public static final String EMPLOYEE_TYPE = "Employee Type";
 	public static final String HOMEOWNER_TYPE = "Homeowner Type";
-	public static final String CAPPED_POLICY = "Capped Policy";
 	public static final String VERIFY_DISPLAY_OF_BENEFIT_CATEGORY = "{0} Verified {1} enabled benefit categories are displayed on ''{2}'' page.";
 	public static final String BENEFIT_CATEGORIES_NOT_DISPLAYED = "{0} Benefit categories are not displayed on ''{2}'' page.";
 	public static final String CLIENT_NAME = "Client Name";
@@ -206,7 +205,7 @@ public class PDTConstants {
 	public static final String VERIFY_ELEMENT_VALUE_ON_PAGE = "{0}Verified ''{1}'' :- ''{2}'' on ''{3}'' page.";
 	public static final String FAIL_TO_VERIFY_ELEMENT_VAL_ON_PAGE = "{0}Failed to verify ''{1}'' :- ''{2}'' on ''{3}'' page.<br/> Expected ''{1}'' :- ''{2}''. <br/>Actual ''{1}'' :- ''{4}''.";
 	public static final String heading = "heading";
-	public static final String FAILED_TO_FILL_GENERAL_INFO_FORM = "Failed to fill General Information form";
+	public static final String FAILED_TO_FILL_GENERAL_INFO_FORM = "Failed to fill General Information form";	
 	public static final String VERIFY_VALUE_SELECTED_FROM_DROPDWON = "{0}Verified value selected from ''{1}'' drop down is : ''{2}''";
 	public static final String FAIL_TO_SELECT_VALUE_FROM_DROPDOWN = "{0}Fail to select value ''{1}'' from dropdown ''{2}''";
 	public static final String VERIFY_VALUE_SELECTED_FROM_FIELD = "{0}Verified value selected from ''{1}'' {2} is : ''{3}''";
@@ -225,14 +224,16 @@ public class PDTConstants {
 	public static final String VERIFIED_ELEMENT_ON_PAGE = "{0}Verified ''{1}'' on ''{2}'' page";
 	public static final String FAIL_TO_VERIFY_ELEMENT_ON_PAGE = "{0}Failed to verify ''{1}'' on ''{2}'' page";
 	public static final String VERIFIED_ELEMENT_DISPLAYED_ON_PAGE = "{0}Verified ''{1}'' :- ''{2}'' is displayed on ''{3}'' page";
-	public static final String FAILED_TO_VERIFY_ELEMENT_DISPLAYED_ON_PAGE = "{0}Failed to verify ''{1}'' :- ''{2}'' on ''{3}'' page. Expected ''{1}'' :- ''{2}''. Actual policy name ''{1}'' :- {4}";
+	public static final String FAILED_TO_VERIFY_ELEMENT_DISPLAYED_ON_PAGE = "{0}Failed to verify ''{1}'' :- ''{2}'' on ''{3}'' page. Expected ''{1}'' :- ''{2}''. Actual ''{1}'' :- ''{4}''.";
 	public static final String CURRENCY = "Currency";
 	public static final String FLAT_AMT = "Flat Amount";
 	public static final String OTHER_TRAVEL_POLICY = "Other - see travel policy";
 	public static final String FLAT_AMT_PER_NIGHT = "Flat Amount/Night";
 	public static final String VERFIED_TAB_DISPLAYED = "{0}Verified tab:-''{1}'' is displayed under ''{2}'' sub-benefit form on ''{3}''.";
 	public static final String VERFIED_TAB_NOT_DISPLAYED = "<b>{0}</b>Tab:-''{1}'' is not displayed under ''{2}'' sub-benefit form on ''{3}''.<br/>";
-	// Immigration
+	public static final String VERIFIED_SUB_BENEFITS_DISPLAYED = "{0}Verified sub-benefit categories:-''{1}'' are displayed on ''{2}'' page.";
+	public static final String FAILED_TO_VERIFY_SUB_BENEFITS = "{0}Failed to verify sub-benefit categories on ''{1}'' page. Expected sub-benefit categories:-''{2}''. Actual sub-benefit categories displayed on page:-''{3}''";
+	//Immigration
 	public static final String IMMIGRATION_FEES = "Immigration Fees";
 	public static final String IMMIGRATION_TRAVEL = "Immigration Travel";
 	public static final String VERIFIED_EMPL_HEADING_POPUP = "{0}Verified ''{1}'' heading on popup window.";
@@ -242,53 +243,12 @@ public class PDTConstants {
 	public static final String HOUR = "Hour";
 	public static final String MINUTES = "Minutes";
 	public static final String SECONDS = "Seconds";
-	public static final String VERIFIED_FIELD_DISPLAYED = "{0}Verified ''{1}'' text box is displayed for ''{2}'' sub benefit form.";
+	public static final String VERIFIED_TEXT_BOX_FIELD_DISPLAYED = "{0}Verified ''{1}'' text box is displayed for ''{2}'' sub benefit form.";
+	public static final String VERIFIED_DROP_DWN_FIELD_DISPLAYED = "{0}Verified ''{1}'' drop down is displayed for ''{2}'' sub benefit form.";
 	public static final String FAILED_TO_FILL_FIELD = "{0}Failed to fill value in ''{1}'' textbox for ''{2}'' sub benefit form.";
 	public static final String SEARCHED_ITEM_NOT_IN_LIST = "Searched item ''{0}'' does not exist in list.";
 	public static final String COULD_NOT_SELECT_ITEM_FROM_LIST = "Could not select item from list";
 	public static final String COULD_NOT_SEARCH_ITEM_FROM_LIST = "Could not search item :- ''{1}'' from list.";
-	// Constants Used in DB Functions
-	public static final String SQL_QUERY_FAILED = "SQL Query Failed";
-	public static final String FAIL_CALL_PROC_GET_COUNTRY_REGION = "Failed to call procedure get_country_region";
-	public static final String FAIL_CALL_PROC_GET_AIR_SHIPMENT_COST = "Failed to call procedure getAirShipmentCost";
-	public static final String FAIL_CALL_PROC_GET_SEA_SHIPMENT_COST = "Failed to call procedure getSeaShipmentCost";
-	public static final String FAIL_CALL_PROC_GET_SURFACE_SHIPMENT_COST = "Failed to call procedure getSurfaceShipmentCost";
-	public static final String FAIL_CALL_PROC_GET_TEMP_STORAGE_COST = "Failed to call procedure getTemporaryStorageCost";
-	// Constants Used in ConfigFileReader
-	public static final String ACTIVITY = "Activity";
-	public static final String ACTIVITY_HISTORY = "Activity History";
-	public static final String MY_REPORTS_TAB = "My Reports";
-	public static final String MY_FAVORITES = "My Favorites";
-	public static final String NEXT = "Next";
-	public static final String BACK = "Back";
-	public static final String EXIT = "Exit";
-	public static final String FAILED_TO_VERIFY_POLICY_NAME_FIELD_FOR_ENTERED_CLIENTID = "{0} Failed to verify Policy Name Dropdown field for entered ClientID.";
-	public static final String EXCEPTION_OCCURED_WHILE_VALIDATING_FIELD_VISIBILITY_AND_OPTIONS_OF_GENERAL_INFORMATION_FIELD = "{0} Exception occured while validating ''{1}'' field visibility and options on General Information Page. Exception ''{2}''";
-	public static final String SUCCESSFULLY_VERIFIED_VISBILITY_AND_OPTIONS_OF_FIELD_ON_GENERAL_INFORMATION_PAGE = "{0} Successfully verified ''{1}'' field visibility and options on General Information Page.";
-	public static final String COREFLEX_POLICY_FIELD = "Core/Flex Policy";
-	public static final String EXCEPTION_OCCURED_WHILE_SELECTING_GENERAL_INFORMATION_FIELD = "{0} Exception occured while selecting ''{1}'' field on General information page.''{2}''";
-	public static final String SUCCESSFULLY_SELECTED_OPTION_FOR_FIELD_ON_GENERAL_INFORMATION_PAGE = "{0} Successfully selected ''{1}'' option for ''{2}'' field on General Information page.";
-	public static final String FAILED_TO_SELECT_FIELD_OPTIONS_ON_GENERAL_INFO_PAGE = "{0} Failed to select field options on General Information Page.";
-	public static final String FAILED_TO_VERIFY_USER_NAVIGATION_PAST_GENERAL_INFORMATION = "{0} Failed to verify user navigation past General Information Page.";
-	public static final String EXCEPTION_OCCURED_WHILE_VALIDATING_PAGE_NAVIGATION_PAST_GENERAL_INFO = "{0} Exception occured while validating Navigation past general information page.''{1}''";
-	public static final String SUCCESSFULLY_NAVIGATED_TO_PAGE_PAST_GENERAL_INFORMATION = "{0} Successfully navigated to ''{1}'' from General Information Page.";
-	public static final String VALID = "Valid";
-	public static final String INVALID = "Invalid";
-	public static final String INVALID_OPTION = "Invalid Option";
-	public static final String SUCCESSFULLY_DISPLAYED_POLICY_NAME_FIELD = "{0} Successfully displayed Policy Name Field for entered Client ''{1}''.";
-	public static final String SUCCESSFULLY_DISPLAYED_RECORD_DOES_NOT_EXIST_ERROR_POP_UP_FOR_INVALID_CLIENTID = "{0}''{1}'' error pop up message displayed for Invalid Client ''{2}''.";
-	public static final String CORPORATION_POLICIES_NOT_AVAILABLE_FOR_VALID_CLIENTID = "{0} Corporation policies not available for valid client ''{2}''. Successfully displayed ''{1}'' message.";
-	public static final String LOGIN_USER_TYPE_NOT_VALID = "{0} Login User type - ''{1}'' is not valid. Please check the usertype and try again.";
-	public static final String INVALID_GENERAL_INFORMATION_FIELD = "{0} Invalid General Information Field - ''{1}''";
-	public static final String INVALID_FIELD_NAME_OPTION = "{0} Invalid Field Name Option - ''{1}''";
-	public static final String INVALID_COREFLEX_POLICY_FIELD_OPTION = "{0} Invalid CoreFlex Policy Field Option - ''{1}''";
-	public static final String EXCEPTION_OCCURED_WHILE_VALIDATING_GENERAL_INFORMATION_FIELD_DEFAULT_VALUES = "{0} Exception occured while validating General Information Page Fields Default Values. Field Name : ''{1}'' | Expected Default Value : ''{2}''. Exception : ''{3}''  ";
-	public static final String INVALID_ELEMENT = "Invalid Element. Please check Element name and try again.";	
-	public static final String VERIFIED_SUB_BENEFITS_DISPLAYED = "{0}Verified sub-benefit categories:-''{1}'' are displayed on ''{2}'' page.";
-	public static final String FAILED_TO_VERIFY_SUB_BENEFITS = "{0}Failed to verify sub-benefit categories on ''{1}'' page. Expected sub-benefit categories:-''{2}''. Actual sub-benefit categories displayed on page:-''{3}''";
-	//Immigration	
-	public static final String VERIFIED_TEXT_BOX_FIELD_DISPLAYED = "{0}Verified ''{1}'' text box is displayed for ''{2}'' sub benefit form.";
-	public static final String VERIFIED_DROP_DWN_FIELD_DISPLAYED = "{0}Verified ''{1}'' drop down is displayed for ''{2}'' sub benefit form.";	
 	public static final String POLICY_BENEFIT_CATEGORY = "Policy Benefit Category";
 	public static final String FAILED_TO_FILL_SUB_BENEFIT_FORM = "{0} Failed to fill ''{1}'' form";
 	//houseHunting Trip
@@ -305,4 +265,7 @@ public class PDTConstants {
 	public static final String DATABASE_CONNECTION = "Database connection";
 	public static final String FAIL_TO_CALL_PROC = "Fail to call procedure";
 	public static final String FAIL_TO_CLOSE_CONNECTION = "Fail to close connection";
+	
+	
+	
 }

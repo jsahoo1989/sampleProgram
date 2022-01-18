@@ -45,15 +45,16 @@ public class DbFunctions {
 			
 			callableStatement.setInt(1, policyId);
 			callableStatement.execute();
-		} catch (Exception ex) {					
-			Assert.fail(CoreConstants.ERROR + "Fail to call procedure");
+		} catch (Exception ex) {
+			ex.printStackTrace();
+			Assert.fail(CoreConstants.ERROR + PDTConstants.FAIL_TO_CALL_PROC);
 		} finally {
 			try {
 				if(connection != null) {
 					connection.close();
 				}
 			}catch (Exception ex){
-				Assert.fail(CoreConstants.ERROR + "Fail to close connection");
+				Assert.fail(CoreConstants.ERROR + PDTConstants.FAIL_TO_CLOSE_CONNECTION);
 			}
 		}
 	}

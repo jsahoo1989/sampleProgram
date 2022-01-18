@@ -1,0 +1,20 @@
+[
+	{
+		"benefitName": "Immigration",
+		"immigrationFees": {
+		"authorizedFees": "Medical Exams for Family, Immunizations for Family",
+		"grossUp": "Yes",
+		"reimbursedBy": "Other",
+		"reimbursedByOther": "Reimbursed by other"
+		},
+		"immigrationTravel": {
+		"numberOfTrips": "2",
+		"otherNumberOfTrips" : "otherTrip",
+		"accompanyingFamilyMembers" : "Transferee + Family",
+		"grossUp": "Yes",
+		"reimbursedBy": "Aires",
+		"reimbursedByOther": "Reimbursed by other",
+		"comment": "Immigration Travel comment"		
+		}
+	}
+]

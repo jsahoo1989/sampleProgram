@@ -20,16 +20,10 @@
 
 package stepDefinitions;
 
-import java.awt.Rectangle;
-import java.awt.Robot;
-import java.awt.Toolkit;
-import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
 import java.lang.reflect.Field;
 import java.util.ArrayList;
-
-import javax.imageio.ImageIO;
 
 import org.apache.commons.lang3.reflect.FieldUtils;
 import org.openqa.selenium.OutputType;
@@ -62,11 +56,8 @@ public class Hooks {
 	public void BeforeSteps(Scenario scenario) throws Exception {
 		scenarioName = scenario;
 		Reporter.assignAuthor("AIRES - Automation - By : " + System.getProperty("user.name"));
-		testContext.initializeWebManager(scenario.getName().contains("IRIS"));
-		if (scenario.getName().contains("IRIS")) {
-			testContext.getBasePage().invokeIrisApplication();
-			testContext.getBasePage().killExistingBrowsers();
-		} else if (scenario.getName().contains("PDT")) {
+		testContext.initializeWebManager();
+		if (scenario.getName().contains("PDT")) {
 			Log.info(FileReaderManager.getInstance().getConfigReader().getPDTApplicationUrl());
 			testContext.getWebDriverManager().getDriver().navigate()
 					.to(FileReaderManager.getInstance().getConfigReader().getPDTApplicationUrl());
@@ -74,31 +65,13 @@ public class Hooks {
 			Log.info(FileReaderManager.getInstance().getConfigReader().getMyloApplicationUrl());
 			testContext.getWebDriverManager().getDriver().navigate()
 					.to(FileReaderManager.getInstance().getConfigReader().getMyloApplicationUrl());
-		} else if (scenario.getName().contains("CoreFlex")) {
-			Log.info(FileReaderManager.getInstance().getConfigReader().getCoreFlexApplicationUrl());
-			testContext.getWebDriverManager().getDriver().navigate()
-					.to(FileReaderManager.getInstance().getConfigReader().getCoreFlexApplicationUrl());
 		}
 	}
 
 	@After(order = 2)
 	public void afterScenario(Scenario scenario) throws Exception {
 		String screenshotName = scenario.getName().replaceAll(" ", "_");
-		if (scenario.isFailed() && scenario.getName().contains("IRIS")) {
-			String screenshotPath = System.getProperty("user.dir") + "/IRISScreenShots/" + screenshotName + ".png";
-			File fileObj = new File(screenshotPath);
-			Rectangle screen = new Rectangle(Toolkit.getDefaultToolkit().getScreenSize());
-			BufferedImage capture = new Robot().createScreenCapture(screen);
-			testResult = 5;
-			try {
-				ImageIO.write(capture, "png", fileObj);
-			}
-
-			catch (IOException e) {
-				e.printStackTrace();
-			}
-			Reporter.addScreenCaptureFromPath(screenshotPath.toString());
-		} else if (scenario.isFailed()) {
+		if (scenario.isFailed()) {
 			Reporter.addStepLog(Status.FAIL + " : Please refer failed screen shot attached here.");
 			testResult = 5;
 			try {
@@ -128,28 +101,22 @@ public class Hooks {
 		}
 	}
 
-	/*
-	 * @After(order = 1) public void updateResultInTestRail(Scenario scenario) { //
-	 * String Case_ID = //
-	 * CoreFunctions.extractIntValue(scenario.getSourceTagNames().toString());
-	 * String Case_ID =
-	 * BusinessFunctions.getTestRailIdAsPerEnvt(CoreConstants.TAG_VALUE,
-	 * scenario.getSourceTagNames().toString()); Log.info(Case_ID); String
-	 * testrailRunName =
-	 * (CoreFunctions.getPropertyFromConfig("SniffSuite_TestRunId"));
-	 * TestRail.addResultForTestCase(Case_ID, testResult, testrailRunName,
-	 * AiresConstants.TEST_RAIL_URL, AiresConstants.testRailUseriD,
-	 * AiresConstants.testRailPassword, logError(scenario));
-	 * Runtime.getRuntime().gc(); }
-	 */
+/*	@After(order = 1)
+	public void updateResultInTestRail(Scenario scenario) {
+		// String Case_ID =
+		// CoreFunctions.extractIntValue(scenario.getSourceTagNames().toString());
+		String Case_ID = BusinessFunctions.getTestRailIdAsPerEnvt(CoreConstants.TAG_VALUE,
+				scenario.getSourceTagNames().toString());
+		Log.info(Case_ID);
+		String testrailRunName = (CoreFunctions.getPropertyFromConfig("SniffSuite_TestRunId"));
+		TestRail.addResultForTestCase(Case_ID, testResult, testrailRunName, AiresConstants.TEST_RAIL_URL,
+				AiresConstants.testRailUseriD, AiresConstants.testRailPassword, logError(scenario));
+		Runtime.getRuntime().gc();
+	}*/
 
 	@After(order = 0)
 	public void AfterSteps(Scenario scenario) throws Exception {
-		if (scenario.getName().contains("IRIS")) {
-			testContext.getBasePage().cleanIrisProcesses();
-		} else {
-			testContext.getWebDriverManager().closeDriver();
-		}
+		testContext.getWebDriverManager().closeDriver();
 		Runtime.getRuntime().gc();
 	}
 

@@ -6,11 +6,11 @@ Feature: Validate the functionality of View Policy page
       | userName | password |
       | kbrian   | kbrian   |
 
-  @search
-  Scenario: PDT - Verify search operation on View/Edit Policy Form Page
-    Given he is on "View/Edit Policy" page
-    Then he should be able to verify Policy data on "View/Edit Policy Forms" page after performing below SearchBy operations
-      | SearchBy    | SearchText                     | ClientId | CompanyName            |
-      | Policy      | Canada Field Relocation Policy |    51769 | Urban Outfitters, Inc. |
-      | Client Id   |                          51769 |    51769 | Urban Outfitters, Inc. |
-      | Client Name | Dow Chemical Company           |     7403 | Dow Chemical Company   |
+  @Sprint-14 @PDT-Regression @search
+  Scenario: PDT - Verify search operation on View Policy Page
+    Given he is on "View Policy" page
+    Then he should be able to verify Policy data on "View Policy" page after performing below SearchBy operations
+      | SearchBy    | SearchText                     | ClientId | CompanyName                   |
+      | Policy      | Canada Field Relocation Policy |    51769 | Urban Outfitters, Inc.        |
+      | Client Id   |                          51769 |    51769 | Urban Outfitters, Inc.        |
+      | Client Name | Dow Chemical Company (Global)  |     7403 | Dow Chemical Company (Global) |

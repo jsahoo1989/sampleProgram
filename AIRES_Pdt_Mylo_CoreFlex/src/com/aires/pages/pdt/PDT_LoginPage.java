@@ -9,6 +9,7 @@ import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.How;
 import org.testng.Assert;
+import org.testng.asserts.SoftAssert;
 
 import com.aires.businessrules.Base;
 import com.aires.businessrules.CoreFunctions;
@@ -62,11 +63,8 @@ public class PDT_LoginPage extends Base {
 
 	public void openApplication() {
 		Log.info(FileReaderManager.getInstance().getConfigReader().getPDTApplicationUrl());
-		CoreFunctions.waitForBrowserToLoad(driver);
-		Log.info("Inside openApplication");
+		CoreFunctions.waitForBrowserToLoad(driver);		
 		VerifyAIRESLogo();
-		// CoreFunctions.explicitWaitTillElementBecomesClickable(driver, _btnLogin,
-		// _btnLogin.getText());
 	}
 
 	public void enterLoginCredentials(String userName, String password) {
@@ -81,21 +79,22 @@ public class PDT_LoginPage extends Base {
 	}
 
 	public void clickLoginBtn() {
-		// CoreFunctions.explicitWaitTillElementBecomesClickable(driver, _btnLogin,
-		// _btnLogin.getText());
 		CoreFunctions.click(driver, _btnLogin, _btnLogin.getText());
 	}
 	
 	public void verifyLoginCredentials() {
-		if (CoreFunctions.isElementByLocatorExist(driver, _btnLoginByLocator, 5)) {
-			Assert.fail("Invalid login credentials are entered.");
+		if (CoreFunctions.isElementByLocatorExist(driver, _btnLoginByLocator, 1)) {
+			Assert.fail(PDTConstants.INVALID_CREDENTIALS_ENTERED);
 		}
 	}
 
-	public boolean loginByUserType(String userType, PDT_ViewPolicyPage viewPolicyPage) {		
-		boolean isSuccessfullyLoggedIn = false;		
+	public boolean loginByUserType(String userType, PDT_ViewPolicyPage viewPolicyPage) {
+		
+		boolean isSuccessfullyLoggedIn = false;
+		
 		try {
 			openApplication();
+
 			switch (userType) {
 			case PDTConstants.CSM:
 				enterLoginCredentials(loginData.CSMUserName, loginData.CSMPassword);
@@ -104,18 +103,20 @@ public class PDT_LoginPage extends Base {
 						PDTConstants.VIEW_POLICY_PAGE);
 				break;
 			default:
-				Reporter.addStepLog(MessageFormat.format(PDTConstants.LOGIN_USER_TYPE_NOT_VALID,
-						CoreConstants.FAIL,userType));
-				return false;
+				Assert.fail(PDTConstants.TEXT_NOT_FOUND);
 			}
+
 		} catch (Exception e) {
 			Reporter.addStepLog(MessageFormat.format(PDTConstants.EXCEPTION_OCCURED_WHILE_LOGGING_TO_APPLICATION,
 					CoreConstants.FAIL,e.getMessage()));
-		}		
+		}
+		
 		if(isSuccessfullyLoggedIn) {
 			Reporter.addStepLog(MessageFormat.format(PDTConstants.SUCCESSFULLY_LOGGED_IN_TO_APPLICATION,
 					CoreConstants.PASS));
 		}
+
 		return isSuccessfullyLoggedIn;
+
 	}
 }

@@ -615,7 +615,7 @@ public class BusinessFunctions {
 	public static void verifyReimbursedByOtherTextBoxIsDisplayed(WebDriver driver, PDT_AddNewPolicyPage addNewPolicyPage, String jsonReimbursedBy, WebElement element, String jsonReimbursedByOther, String SubBenefitFormName) {
 		try {
 			if (jsonReimbursedBy.equalsIgnoreCase(PDTConstants.OTHER) && CoreFunctions.isElementExist(driver, element, 1)) {
-				Reporter.addStepLog(MessageFormat.format(PDTConstants.VERIFIED_FIELD_DISPLAYED, CoreConstants.PASS, PDTConstants.REIMBURSED_BY_OTHER, SubBenefitFormName));
+				Reporter.addStepLog(MessageFormat.format(PDTConstants.VERIFIED_TEXT_BOX_FIELD_DISPLAYED, CoreConstants.PASS, PDTConstants.REIMBURSED_BY_OTHER, SubBenefitFormName));
 				CoreFunctions.clearAndSetText(driver, element,
 						PDTConstants.REIMBURSED_BY_OTHER,
 						jsonReimbursedByOther);

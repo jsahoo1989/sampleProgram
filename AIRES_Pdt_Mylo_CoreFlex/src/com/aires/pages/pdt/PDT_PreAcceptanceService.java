@@ -15,6 +15,7 @@ import org.openqa.selenium.support.How;
 import org.testng.Assert;
 
 import com.aires.businessrules.Base;
+import com.aires.businessrules.BusinessFunctions;
 import com.aires.businessrules.CoreFunctions;
 import com.aires.businessrules.DbFunctions;
 import com.aires.businessrules.constants.CoreConstants;
@@ -102,6 +103,9 @@ public class PDT_PreAcceptanceService extends Base {
 
 	@FindBy(how = How.CSS, using = "ng-select[formcontrolname='maxAmountPerNightCode'] span.ng-option-label")
 	private List<WebElement> _drpDownMaxAmtOptions;
+
+	@FindBy(how = How.CSS, using = "ng-select[formcontrolname='maxAmountPerNightCode'] span.ng-value-label")
+	private WebElement _drpDownMaxAmtSelectedOption;
 
 	@FindBy(how = How.CSS, using = "input[formcontrolname='flatAmountPerNight']")
 	private WebElement _txtBoxFlatAmtPerNight;
@@ -402,12 +406,7 @@ public class PDT_PreAcceptanceService extends Base {
 		}
 	}
 
-	public void expandSubBenefitIfCollapsed(WebElement subBenefitForm) {
-		if (subBenefitForm.getAttribute("class").equalsIgnoreCase("collapsed"))
-			CoreFunctions.clickElement(driver, subBenefitForm);
-	}
-
-	public void fillCandidateSelection(PDT_AddNewPolicyPage addNewPolicyPage) {
+	public void fillCandidateSelection(PDT_AddNewPolicyPage addNewPolicyPage, String subBenefitFormName) {
 		try {
 			CoreFunctions.explicitWaitTillElementListClickable(driver, _radioBtnCandidateSelection);
 			CoreFunctions.selectItemInListByText(driver, _radioBtnCandidateSelection,
@@ -416,11 +415,11 @@ public class PDT_PreAcceptanceService extends Base {
 			CoreFunctions.selectItemInListByText(driver, _radioBtnCandidateSelection,
 					preAcceptanceSubBenefitData.candidateSelection.reimbursedBy, PDTConstants.REIMBURSED_BY,
 					PDTConstants.RADIO_BUTTON_LIST, true);
-			if (preAcceptanceSubBenefitData.candidateSelection.reimbursedBy.equalsIgnoreCase(PDTConstants.OTHER)) {
-				CoreFunctions.clearAndSetText(driver, _txtBoxCandidateSelReimbursedByOther,
-						PDTConstants.REIMBURSED_BY_OTHER,
-						preAcceptanceSubBenefitData.candidateSelection.reimbursedByOther);
-			}
+
+			BusinessFunctions.verifyReimbursedByOtherTextBoxIsDisplayed(driver, addNewPolicyPage,
+					preAcceptanceSubBenefitData.candidateSelection.reimbursedBy, _txtBoxCandidateSelReimbursedByOther,
+					preAcceptanceSubBenefitData.candidateSelection.reimbursedByOther, subBenefitFormName);
+
 			CoreFunctions.clearAndSetText(driver, _txtAreaCandidateSelComment, PDTConstants.COMMENT,
 					preAcceptanceSubBenefitData.candidateSelection.comment);
 		} catch (Exception e) {
@@ -432,17 +431,11 @@ public class PDT_PreAcceptanceService extends Base {
 	public void selectRandomTransportTypeOption(PDT_AddNewPolicyPage addNewPolicyPage) {
 		try {
 			CoreFunctions.clickElement(driver, _drpDownTransportationType);
-			String randTransportTypeOption = _drpDownTransportationTypeOptions
-					.get(CoreFunctions.getRandomNumber(0, _drpDownTransportationTypeOptions.size() - 1)).getText()
-					+ ", "
-					+ _drpDownTransportationTypeOptions
-							.get(CoreFunctions.getRandomNumber(0, _drpDownTransportationTypeOptions.size() - 1))
-							.getText();
+			String randTransportTypeOption = CoreFunctions.getRandomAndUniqueMultipleSelectDropDownOptions(_drpDownTransportationTypeOptions);
 			String[] transportationType = randTransportTypeOption.split(",");
 			for (int i = 0; i < transportationType.length; i++) {
 				CoreFunctions.selectItemInListByText(driver, _drpDownTransportationTypeOptions,
 						transportationType[i].trim(), _lblTransportationType.getText(), PDTConstants.DROP_DOWN, true);
-				CoreFunctions.clickElement(driver, _drpDownTransportationType);
 			}
 
 			if (_drpDownTransportationTypeMultiSelectOptions.size() > 1) {
@@ -465,7 +458,7 @@ public class PDT_PreAcceptanceService extends Base {
 		}
 	}
 
-	public void fillPreAcceptanceTripTransportation(PDT_AddNewPolicyPage addNewPolicyPage) {
+	public void fillPreAcceptanceTripTransportation(PDT_AddNewPolicyPage addNewPolicyPage, String subBenefitFormName) {
 		try {
 			CoreFunctions.explicitWaitTillElementVisibility(driver, _txtBoxNumOfTrips, _lblNoOfTrips.getText());
 			CoreFunctions.clearAndSetText(driver, _txtBoxNumOfTrips, _lblNoOfTrips.getText(),
@@ -494,12 +487,12 @@ public class PDT_PreAcceptanceService extends Base {
 			CoreFunctions.selectItemInListByText(driver, _radioBtnPreTripTransport,
 					preAcceptanceSubBenefitData.preAcceptanceTripTransportation.reimbursedBy,
 					PDTConstants.REIMBURSED_BY, PDTConstants.RADIO_BUTTON_LIST, true);
-			if (preAcceptanceSubBenefitData.preAcceptanceTripTransportation.reimbursedBy
-					.equalsIgnoreCase(PDTConstants.OTHER)) {
-				CoreFunctions.clearAndSetText(driver, _txtBoxPreTripTransportReimbursedByOther,
-						PDTConstants.REIMBURSED_BY_OTHER,
-						preAcceptanceSubBenefitData.preAcceptanceTripTransportation.reimbursedByOther);
-			}
+
+			BusinessFunctions.verifyReimbursedByOtherTextBoxIsDisplayed(driver, addNewPolicyPage,
+					preAcceptanceSubBenefitData.preAcceptanceTripTransportation.reimbursedBy,
+					_txtBoxPreTripTransportReimbursedByOther,
+					preAcceptanceSubBenefitData.preAcceptanceTripTransportation.reimbursedByOther, subBenefitFormName);
+
 			CoreFunctions.clearAndSetText(driver, _txtAreaPreTripTransportComment, PDTConstants.COMMENT,
 					preAcceptanceSubBenefitData.preAcceptanceTripTransportation.comment);
 		} catch (Exception e) {
@@ -508,7 +501,30 @@ public class PDT_PreAcceptanceService extends Base {
 		}
 	}
 
-	public void fillPreAcceptanceTripLodging(PDT_AddNewPolicyPage addNewPolicyPage) {
+	public void verifyAndFillFlatAmtPerNightTextBoxAndCurrencyDrpDown(PDT_AddNewPolicyPage addNewPolicyPage,
+			String subBenefitFormName) {
+		try {
+			if (_drpDownMaxAmtSelectedOption.getText().equalsIgnoreCase(PDTConstants.FLAT_AMT_PER_NIGHT)
+					&& CoreFunctions.isElementExist(driver, _txtBoxNumOfNightsPerTrip, 1)
+							& CoreFunctions.isElementExist(driver, _drpDownCurrencyCode, 1)) {
+				Reporter.addStepLog(MessageFormat.format(PDTConstants.VERIFIED_TEXT_BOX_FIELD_DISPLAYED,
+						CoreConstants.PASS, PDTConstants.FLAT_AMT_PER_NIGHT, subBenefitFormName));
+				Reporter.addStepLog(MessageFormat.format(PDTConstants.VERIFIED_DROP_DWN_FIELD_DISPLAYED,
+						CoreConstants.PASS, PDTConstants.CURRENCY, subBenefitFormName));
+				CoreFunctions.clearAndSetText(driver, _txtBoxFlatAmtPerNight, _lblFlatAmount.getText(),
+						preAcceptanceSubBenefitData.preAcceptanceTripLodging.flatAmtPerNight);
+				CoreFunctions.clickElement(driver, _drpDownCurrencyCode);
+				CoreFunctions.selectItemInListByText(driver, _drpDownCurrencyCodeOptions,
+						preAcceptanceSubBenefitData.preAcceptanceTripLodging.currencyCode, _lblCurrency.getText(),
+						PDTConstants.DROP_DOWN, true);
+			}
+		} catch (Exception e) {
+			DbFunctions.deletePolicyByPolicyId(addNewPolicyPage.getPolicyId());
+			Assert.fail("Failed to fill value in Flat Amount Per Night and currency drop down field.");
+		}
+	}
+
+	public void fillPreAcceptanceTripLodging(PDT_AddNewPolicyPage addNewPolicyPage, String subBenefitFormName) {
 		try {
 			CoreFunctions.explicitWaitTillElementVisibility(driver, _txtBoxNumOfNightsPerTrip,
 					_lblNumOfNightsPerTrip.getText());
@@ -520,15 +536,8 @@ public class PDT_PreAcceptanceService extends Base {
 			CoreFunctions.selectItemInListByText(driver, _drpDownMaxAmtOptions, randMaxAmtOptions, _lblMaxAmt.getText(),
 					PDTConstants.DROP_DOWN, true);
 			setMaxAmtPreAcceptTripLodging(randMaxAmtOptions);
+			verifyAndFillFlatAmtPerNightTextBoxAndCurrencyDrpDown(addNewPolicyPage, subBenefitFormName);
 
-			if (randMaxAmtOptions.equalsIgnoreCase(PDTConstants.FLAT_AMT_PER_NIGHT)) {
-				CoreFunctions.clearAndSetText(driver, _txtBoxFlatAmtPerNight, _lblFlatAmount.getText(),
-						preAcceptanceSubBenefitData.preAcceptanceTripLodging.flatAmtPerNight);
-				CoreFunctions.clickElement(driver, _drpDownCurrencyCode);
-				CoreFunctions.selectItemInListByText(driver, _drpDownCurrencyCodeOptions,
-						preAcceptanceSubBenefitData.preAcceptanceTripLodging.currencyCode, _lblCurrency.getText(),
-						PDTConstants.DROP_DOWN, true);
-			}
 			CoreFunctions.explicitWaitTillElementListClickable(driver, _radioBtnPreTripLodging);
 			CoreFunctions.selectItemInListByText(driver, _radioBtnPreTripLodging,
 					preAcceptanceSubBenefitData.preAcceptanceTripLodging.grossUp, PDTConstants.GROSS_UP,
@@ -536,12 +545,12 @@ public class PDT_PreAcceptanceService extends Base {
 			CoreFunctions.selectItemInListByText(driver, _radioBtnPreTripLodging,
 					preAcceptanceSubBenefitData.preAcceptanceTripLodging.reimbursedBy, PDTConstants.REIMBURSED_BY,
 					PDTConstants.RADIO_BUTTON_LIST, true);
-			if (preAcceptanceSubBenefitData.preAcceptanceTripLodging.reimbursedBy
-					.equalsIgnoreCase(PDTConstants.OTHER)) {
-				CoreFunctions.clearAndSetText(driver, _txtBoxPreTripLodgingReimbursedByOther,
-						PDTConstants.REIMBURSED_BY_OTHER,
-						preAcceptanceSubBenefitData.preAcceptanceTripLodging.reimbursedByOther);
-			}
+
+			BusinessFunctions.verifyReimbursedByOtherTextBoxIsDisplayed(driver, addNewPolicyPage,
+					preAcceptanceSubBenefitData.preAcceptanceTripLodging.reimbursedBy,
+					_txtBoxPreTripLodgingReimbursedByOther,
+					preAcceptanceSubBenefitData.preAcceptanceTripLodging.reimbursedByOther, subBenefitFormName);
+
 			CoreFunctions.clearAndSetText(driver, _txtAreaPreTripLodgingComment, PDTConstants.COMMENT,
 					preAcceptanceSubBenefitData.preAcceptanceTripLodging.comment);
 		} catch (Exception e) {
@@ -551,7 +560,7 @@ public class PDT_PreAcceptanceService extends Base {
 
 	}
 
-	public void fillPreAcceptanceTripMeals(PDT_AddNewPolicyPage addNewPolicyPage) {
+	public void fillPreAcceptanceTripMeals(PDT_AddNewPolicyPage addNewPolicyPage, String subBenefitFormName) {
 		try {
 			CoreFunctions.explicitWaitTillElementVisibility(driver, _txtBoxNumOfDaysPerMeal,
 					_lblNumOfDayPerMeal.getText());
@@ -568,7 +577,7 @@ public class PDT_PreAcceptanceService extends Base {
 					_lblMaxAmtPreAcceptanceTripMeals.getText(), PDTConstants.DROP_DOWN, true);
 			CoreFunctions.clickElement(driver, _drpDownMaxAmount);
 			setMaxAmtPreAcceptTripMeals(randMaxAmtTripMeals);
-			checkIfFlatAmtIsSelected(addNewPolicyPage);
+			checkIfFlatAmtIsSelected(addNewPolicyPage, subBenefitFormName);
 
 			CoreFunctions.explicitWaitTillElementListClickable(driver, _radioBtnPreAcceptanceTripMeals);
 			CoreFunctions.selectItemInListByText(driver, _radioBtnPreAcceptanceTripMeals,
@@ -577,11 +586,12 @@ public class PDT_PreAcceptanceService extends Base {
 			CoreFunctions.selectItemInListByText(driver, _radioBtnPreAcceptanceTripMeals,
 					preAcceptanceSubBenefitData.preAcceptanceTripMeals.reimbursedBy, PDTConstants.REIMBURSED_BY,
 					PDTConstants.RADIO_BUTTON_LIST, true);
-			if (preAcceptanceSubBenefitData.preAcceptanceTripMeals.reimbursedBy.equalsIgnoreCase(PDTConstants.OTHER)) {
-				CoreFunctions.clearAndSetText(driver, _txtBoxPreTripMealReimbursedByOther,
-						PDTConstants.REIMBURSED_BY_OTHER,
-						preAcceptanceSubBenefitData.preAcceptanceTripMeals.reimbursedByOther);
-			}
+
+			BusinessFunctions.verifyReimbursedByOtherTextBoxIsDisplayed(driver, addNewPolicyPage,
+					preAcceptanceSubBenefitData.preAcceptanceTripMeals.reimbursedBy,
+					_txtBoxPreTripMealReimbursedByOther,
+					preAcceptanceSubBenefitData.preAcceptanceTripMeals.reimbursedByOther, subBenefitFormName);
+
 			CoreFunctions.clearAndSetText(driver, _txtAreaPreTripMealComment, PDTConstants.COMMENT,
 					preAcceptanceSubBenefitData.preAcceptanceTripMeals.comment);
 		} catch (Exception e) {
@@ -590,59 +600,76 @@ public class PDT_PreAcceptanceService extends Base {
 		}
 	}
 
-	public void checkIfFlatAmtIsSelected(PDT_AddNewPolicyPage addNewPolicyPage) {
+	public void checkIfFlatAmtIsSelected(PDT_AddNewPolicyPage addNewPolicyPage, String subBenefitFormName) {
 		if (_drpDownMaxAmountSelectedVal.getText().equalsIgnoreCase(PDTConstants.FLAT_AMT)) {
-			verifyAndFillTransfereeMealInfo(addNewPolicyPage);
-			verifyAndFillAdultMealInfo(addNewPolicyPage);
-			verifyAndFillChildMealInfo(addNewPolicyPage);
+			verifyAndFillTransfereeMealInfo(addNewPolicyPage, subBenefitFormName);
+			verifyAndFillAdultMealInfo(addNewPolicyPage, subBenefitFormName);
+			verifyAndFillChildMealInfo(addNewPolicyPage, subBenefitFormName);
 		}
 	}
 
-	public void verifyAndFillTransfereeMealInfo(PDT_AddNewPolicyPage addNewPolicyPage) {
+	public void verifyAndFillTransfereeMealInfo(PDT_AddNewPolicyPage addNewPolicyPage, String subBenefitFormName) {
 		try {
-			CoreFunctions.clearAndSetText(driver, _txtBoxMaxAmtTransferee, _lblMaxAmtTransferee.getText(),
-					preAcceptanceSubBenefitData.preAcceptanceTripMeals.maxAmtTransferee);
-			CoreFunctions.selectItemInListByText(driver, _radioDetailTransfereeCode,
-					preAcceptanceSubBenefitData.preAcceptanceTripMeals.maxAmtTransfereeDetail, PDTConstants.DETAIL,
-					PDTConstants.RADIO_BUTTON_LIST, true);
-			CoreFunctions.clickElement(driver, _drpDownTransfereeCurrency);
-			CoreFunctions.selectItemInListByText(driver, _drpDownTransfereeCurrencyOptions,
-					preAcceptanceSubBenefitData.preAcceptanceTripMeals.maxAmtTransfereeCurrency, PDTConstants.CURRENCY,
-					PDTConstants.DROP_DOWN, true);
+			if (CoreFunctions.isElementExist(driver, _txtBoxMaxAmtTransferee, 1)
+					& CoreFunctions.isElementExist(driver, _drpDownTransfereeCurrency, 1)) {
+				Reporter.addStepLog(MessageFormat.format(PDTConstants.VERIFIED_TEXT_BOX_FIELD_DISPLAYED,
+						CoreConstants.PASS, _lblMaxAmtTransferee.getText(), subBenefitFormName));
+				Reporter.addStepLog(MessageFormat.format(PDTConstants.VERIFIED_DROP_DWN_FIELD_DISPLAYED,
+						CoreConstants.PASS, PDTConstants.CURRENCY, subBenefitFormName));
+				CoreFunctions.clearAndSetText(driver, _txtBoxMaxAmtTransferee, _lblMaxAmtTransferee.getText(),
+						preAcceptanceSubBenefitData.preAcceptanceTripMeals.maxAmtTransferee);
+				CoreFunctions.selectItemInListByText(driver, _radioDetailTransfereeCode,
+						preAcceptanceSubBenefitData.preAcceptanceTripMeals.maxAmtTransfereeDetail, PDTConstants.DETAIL,
+						PDTConstants.RADIO_BUTTON_LIST, true);
+				CoreFunctions.clickElement(driver, _drpDownTransfereeCurrency);
+				CoreFunctions.selectItemInListByText(driver, _drpDownTransfereeCurrencyOptions,
+						preAcceptanceSubBenefitData.preAcceptanceTripMeals.maxAmtTransfereeCurrency,
+						PDTConstants.CURRENCY, PDTConstants.DROP_DOWN, true);
+			}
 		} catch (Exception e) {
 			DbFunctions.deletePolicyByPolicyId(addNewPolicyPage.getPolicyId());
 			Assert.fail("Failed to fill Transferee Info on  Pre Acceptance Trip Meals form.");
 		}
 	}
 
-	public void verifyAndFillAdultMealInfo(PDT_AddNewPolicyPage addNewPolicyPage) {
+	public void verifyAndFillAdultMealInfo(PDT_AddNewPolicyPage addNewPolicyPage, String subBenefitFormName) {
 		try {
-			CoreFunctions.clearAndSetText(driver, _txtBoxMaxAmtAdult, _lblMaxAmtOtherAdults.getText(),
-					preAcceptanceSubBenefitData.preAcceptanceTripMeals.maxAmtAdult);
-			CoreFunctions.selectItemInListByText(driver, _radioDetailAdult,
-					preAcceptanceSubBenefitData.preAcceptanceTripMeals.maxAmtAdultDetail, PDTConstants.DETAIL,
-					PDTConstants.RADIO_BUTTON_LIST, true);
-			CoreFunctions.clickElement(driver, _drpDownAdultCurrency);
-			CoreFunctions.selectItemInListByText(driver, _drpDownAdultCurrencyOptions,
-					preAcceptanceSubBenefitData.preAcceptanceTripMeals.maxAmtAdultCurrency, PDTConstants.CURRENCY,
-					PDTConstants.DROP_DOWN, true);
+			if (CoreFunctions.isElementExist(driver, _txtBoxMaxAmtAdult, 1)
+					& CoreFunctions.isElementExist(driver, _drpDownAdultCurrency, 1)) {
+				Reporter.addStepLog(MessageFormat.format(PDTConstants.VERIFIED_TEXT_BOX_FIELD_DISPLAYED,
+						CoreConstants.PASS, _lblMaxAmtOtherAdults.getText(), subBenefitFormName));
+				Reporter.addStepLog(MessageFormat.format(PDTConstants.VERIFIED_DROP_DWN_FIELD_DISPLAYED,
+						CoreConstants.PASS, PDTConstants.CURRENCY, subBenefitFormName));
+				CoreFunctions.clearAndSetText(driver, _txtBoxMaxAmtAdult, _lblMaxAmtOtherAdults.getText(),
+						preAcceptanceSubBenefitData.preAcceptanceTripMeals.maxAmtAdult);
+				CoreFunctions.selectItemInListByText(driver, _radioDetailAdult,
+						preAcceptanceSubBenefitData.preAcceptanceTripMeals.maxAmtAdultDetail, PDTConstants.DETAIL,
+						PDTConstants.RADIO_BUTTON_LIST, true);
+				CoreFunctions.clickElement(driver, _drpDownAdultCurrency);
+				CoreFunctions.selectItemInListByText(driver, _drpDownAdultCurrencyOptions,
+						preAcceptanceSubBenefitData.preAcceptanceTripMeals.maxAmtAdultCurrency, PDTConstants.CURRENCY,
+						PDTConstants.DROP_DOWN, true);
+			}
 		} catch (Exception e) {
 			DbFunctions.deletePolicyByPolicyId(addNewPolicyPage.getPolicyId());
 			Assert.fail("Failed to fill Adult meal Info on  Pre Acceptance Trip Meals form.");
 		}
 	}
 
-	public void verifyAndFillChildMealInfo(PDT_AddNewPolicyPage addNewPolicyPage) {
+	public void verifyAndFillChildMealInfo(PDT_AddNewPolicyPage addNewPolicyPage, String subBenefitFormName) {
 		try {
-			CoreFunctions.clearAndSetText(driver, _txtBoxMaxAmtChild, _lblMaxAmtChildren.getText(),
-					preAcceptanceSubBenefitData.preAcceptanceTripMeals.maxAmtChild);
-			CoreFunctions.selectItemInListByText(driver, _radioDetailChild,
-					preAcceptanceSubBenefitData.preAcceptanceTripMeals.maxAmtChildDetail, PDTConstants.DETAIL,
-					PDTConstants.RADIO_BUTTON_LIST, true);
-			CoreFunctions.clickElement(driver, _drpDownCurrencyCodeChild);
-			CoreFunctions.selectItemInListByText(driver, _drpDownCurrencyCodeChildOptions,
-					preAcceptanceSubBenefitData.preAcceptanceTripMeals.maxAmtChildCurrency, PDTConstants.CURRENCY,
-					PDTConstants.DROP_DOWN, true);
+			if (CoreFunctions.isElementExist(driver, _txtBoxMaxAmtChild, 1)
+					& CoreFunctions.isElementExist(driver, _drpDownCurrencyCodeChild, 1)) {
+				CoreFunctions.clearAndSetText(driver, _txtBoxMaxAmtChild, _lblMaxAmtChildren.getText(),
+						preAcceptanceSubBenefitData.preAcceptanceTripMeals.maxAmtChild);
+				CoreFunctions.selectItemInListByText(driver, _radioDetailChild,
+						preAcceptanceSubBenefitData.preAcceptanceTripMeals.maxAmtChildDetail, PDTConstants.DETAIL,
+						PDTConstants.RADIO_BUTTON_LIST, true);
+				CoreFunctions.clickElement(driver, _drpDownCurrencyCodeChild);
+				CoreFunctions.selectItemInListByText(driver, _drpDownCurrencyCodeChildOptions,
+						preAcceptanceSubBenefitData.preAcceptanceTripMeals.maxAmtChildCurrency, PDTConstants.CURRENCY,
+						PDTConstants.DROP_DOWN, true);
+			}
 		} catch (Exception e) {
 			DbFunctions.deletePolicyByPolicyId(addNewPolicyPage.getPolicyId());
 			Assert.fail("Failed to fill Child Info Info on  Pre Acceptance Trip Meals form.");

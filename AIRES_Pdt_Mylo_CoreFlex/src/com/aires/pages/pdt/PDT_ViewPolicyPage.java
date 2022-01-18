@@ -107,7 +107,7 @@ public class PDT_ViewPolicyPage extends Base {
 			CoreFunctions.highlightElementAndClick(driver, _logout, PDTConstants.LOGOUT);
 			break;
 		case PDTConstants.CLEAR_FILTER:
-			CoreFunctions.highlightElementAndClick(driver, _clearFilter, PDTConstants.LOGOUT);
+			CoreFunctions.highlightElementAndClick(driver, _clearFilter, PDTConstants.CLEAR_FILTER);
 			break;
 		case PDTConstants.ADD_NEW_POLICY_FORM:
 			CoreFunctions.highlightElementAndClick(driver, _lnkAddNewPolicyForm, PDTConstants.ADD_NEW_POLICY_FORM);
@@ -179,7 +179,7 @@ public class PDT_ViewPolicyPage extends Base {
 	}
 
 	public boolean verifyClientIdAndCompanyName(String clientId, String companyName, String pageName) {
-		CoreFunctions.isElementByLocatorExist(driver, _listClientNameByLocator, 25);
+		CoreFunctions.isElementByLocatorExist(driver, _listClientNameByLocator, 30);
 		CoreFunctions.waitForBrowserToLoad(driver);
 		if (_listClientName.stream().allMatch(t -> t.getText().contains(clientId))
 				&& _listClientName.stream().allMatch(t -> t.getText().toString().contains(companyName.toString()))) {

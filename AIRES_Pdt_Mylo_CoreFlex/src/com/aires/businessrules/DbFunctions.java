@@ -3,19 +3,10 @@ package com.aires.businessrules;
 import java.sql.CallableStatement;
 import java.sql.Connection;
 import java.sql.DriverManager;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.Statement;
-import java.sql.Types;
-import java.util.LinkedHashMap;
-
 import org.testng.Assert;
-
-import com.aires.businessrules.constants.PDTConstants;
 import com.aires.businessrules.constants.CoreConstants;
 import com.aires.businessrules.constants.DbQueries;
-import com.aires.utilities.Log;
-import com.vimalselvam.cucumber.listener.Reporter;
+import com.aires.businessrules.constants.PDTConstants;
 
 public class DbFunctions {
 	public static String getDBConnectionStringAsPerEnvt(String envt) {
@@ -37,7 +28,7 @@ public class DbFunctions {
 			dbURL = "jdbc:oracle:thin:isisdba/iristestisisdba@corpprdl200.corp.aires.com:1521:IRIS";
 			break;
 		default:
-			Assert.fail("Database connection" + PDTConstants.NOT_EXIST);
+			Assert.fail(PDTConstants.DATABASE_CONNECTION + PDTConstants.NOT_EXIST);
 		}
 		return dbURL;
 	}
@@ -54,15 +45,16 @@ public class DbFunctions {
 			
 			callableStatement.setInt(1, policyId);
 			callableStatement.execute();
-		} catch (Exception ex) {					
-			Assert.fail(CoreConstants.ERROR + "Fail to call procedure");
+		} catch (Exception ex) {
+			ex.printStackTrace();
+			Assert.fail(CoreConstants.ERROR + PDTConstants.FAIL_TO_CALL_PROC);
 		} finally {
 			try {
 				if(connection != null) {
 					connection.close();
 				}
 			}catch (Exception ex){
-				Assert.fail(CoreConstants.ERROR + "Fail to close connection");
+				Assert.fail(CoreConstants.ERROR + PDTConstants.FAIL_TO_CLOSE_CONNECTION);
 			}
 		}
 	}

@@ -1,0 +1,21 @@
+[
+	{
+		"benefitName": "Cultural Training",
+		"culturalTrainingEmployee": {
+		"numberOfDays": "2",
+		"otherNumberOfDays": "5",
+		"grossUp": "Yes",
+		"reimbursedBy": "Other",
+		"reimbursedByOther": "Reimbursed by other",
+		"comments": "Comments for Cultural Training Employee."
+		},
+		"culturalTrainingFamily": {
+		"numberOfDays": "2",
+		"otherNumberOfDays": "10",
+		"grossUp": "Yes",
+		"reimbursedBy": "Aires",
+		"reimbursedByOther": "Reimbursed by other",
+		"comments": "Comments for Cultural Training Family."		
+		}
+	}
+]

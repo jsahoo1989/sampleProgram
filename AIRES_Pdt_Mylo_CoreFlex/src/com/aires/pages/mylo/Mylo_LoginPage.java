@@ -82,7 +82,7 @@ public class Mylo_LoginPage extends Base {
 			CoreFunctions.clickUsingJS(driver, _submit, _submit.getAttribute("value"));
 			CoreFunctions.explicitWaitTillElementVisibility(driver, _txt_Password,
 					_txt_Password.getAttribute("name"));
-			CoreFunctions.clearAndSetText(driver, _txt_Password, _txt_Password.getAttribute("name"), password);
+			CoreFunctions.clearAndSetText(driver, _txt_Password, _txt_Password.getAttribute("type"), password);
 		} catch (ElementNotFoundException e) {
 		}
 	}
@@ -100,7 +100,7 @@ public class Mylo_LoginPage extends Base {
 	}
 	
 	public void loginWithUser(String userType) throws InterruptedException {
-		if (userType.equals(MYLOConstants.USER_WITHOUT_RESOURCE15)) {
+		if (userType.equals(MYLOConstants.USER_WITHOUT_RESOURCE15)||userType.equals(MYLOConstants.USER_WITHOUT_RESOURCE300096)) {
 			logout();
 			openApplication();
 			CoreFunctions.explicitWaitTillElementVisibility(driver, _anotherAccount, _anotherAccount.getText());

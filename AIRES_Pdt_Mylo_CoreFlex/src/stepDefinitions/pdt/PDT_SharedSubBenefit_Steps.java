@@ -11,6 +11,7 @@ import com.aires.businessrules.constants.PDTConstants;
 import com.aires.cucumber.TestContext;
 import com.aires.pages.pdt.PDT_AddNewPolicyPage;
 import com.aires.pages.pdt.PDT_CulturalTrainingPage;
+import com.aires.pages.pdt.PDT_FinalMovePage;
 import com.aires.pages.pdt.PDT_HouseHuntingTripPage;
 import com.aires.pages.pdt.PDT_ImmigrationPage;
 import com.aires.pages.pdt.PDT_LanguageTrainingPage;
@@ -32,6 +33,7 @@ public class PDT_SharedSubBenefit_Steps {
 	private PDT_HouseHuntingTripPage houseHuntingTripPage;
 	private PDT_LanguageTrainingPage languageTrainingPage;
 	private PDT_CulturalTrainingPage culturalTrainingPage;
+	private PDT_FinalMovePage finalMovePage;
 	
 	public PDT_SharedSubBenefit_Steps(TestContext context) {
 		testContext = context;
@@ -43,6 +45,7 @@ public class PDT_SharedSubBenefit_Steps {
 		houseHuntingTripPage = testContext.getPageObjectManager().getHouseHuntingTripPage();
 		languageTrainingPage = testContext.getPageObjectManager().getLanguageTrainingPage();
 		culturalTrainingPage = testContext.getPageObjectManager().getCulturalTrainingPage();
+		finalMovePage = testContext.getPageObjectManager().getFinalMovePage();
 	}
 	
 	public PDT_PreAcceptanceService getPreAcceptServicePage() {
@@ -63,6 +66,10 @@ public class PDT_SharedSubBenefit_Steps {
 	
 	public PDT_CulturalTrainingPage getCulturalTrainingPage() {
 		return culturalTrainingPage;
+	}
+	
+	public PDT_FinalMovePage getFinalMovePage() {
+		return finalMovePage;
 	}
 	
 	@When("^he clicks on 'SUBMIT' button after entering mandatory information for all the below selected sub benefits on \"([^\"]*)\" page$")

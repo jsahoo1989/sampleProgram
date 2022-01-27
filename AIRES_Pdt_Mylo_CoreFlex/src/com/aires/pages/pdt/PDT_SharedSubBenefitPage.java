@@ -114,6 +114,15 @@ public class PDT_SharedSubBenefitPage extends Base {
 	@FindBy(how = How.CSS, using = "a[href='#collapseTwo']")
 	private WebElement _formLangTrainingFamily;	
 	
+	@FindBy(how = How.CSS, using = "a[href='#collapseOne1']")
+	private WebElement _formFinalMoveTransportation;
+	
+	@FindBy(how = How.CSS, using = "a[href='#collapseTwo']")
+	private WebElement _formFinalMoveLodging;
+	
+	@FindBy(how = How.CSS, using = "a[href='#collapseThree']")
+	private WebElement _formFinalMoveMeals;	
+	
 	HashMap<String, Boolean> resultMapForTabNameNotMatch = new HashMap<>();
 
 	public WebElement getElementByName(String elementName) {
@@ -157,6 +166,15 @@ public class PDT_SharedSubBenefitPage extends Base {
 			break;
 		case PDTConstants.CULTURAL_TRAINING_FAMILY:
 			element = _formCulturalTrainingFamily;
+			break;
+		case PDTConstants.FINAL_MOVE_TRANSPORTATION:
+			element = _formFinalMoveTransportation;
+			break;
+		case PDTConstants.FINAL_MOVE_LODGING:
+			element = _formFinalMoveLodging;
+			break;
+		case PDTConstants.FINAL_MOVE_MEALS:
+			element = _formFinalMoveMeals;
 			break;
 		default:
 			Assert.fail(MessageFormat.format(PDTConstants.ELEMENT_NOT_FOUND, CoreConstants.FAIL));
@@ -270,6 +288,21 @@ public class PDT_SharedSubBenefitPage extends Base {
 			expandSubBenefitIfCollapsed(getElementByName(PDTConstants.CULTURAL_TRAINING_FAMILY));
 			subBenefitSteps.getCulturalTrainingPage().fillCulturalTrainingFamily(addNewPolicyPage,
 					PDTConstants.CULTURAL_TRAINING_FAMILY);
+			break;
+		case PDTConstants.FINAL_MOVE_TRANSPORTATION:
+			expandSubBenefitIfCollapsed(getElementByName(PDTConstants.FINAL_MOVE_TRANSPORTATION));			
+			subBenefitSteps.getFinalMovePage().fillFinalMoveTransportationForm(addNewPolicyPage,
+					PDTConstants.FINAL_MOVE_TRANSPORTATION);
+			break;
+		case PDTConstants.FINAL_MOVE_LODGING:
+			expandSubBenefitIfCollapsed(getElementByName(PDTConstants.FINAL_MOVE_LODGING));
+			subBenefitSteps.getFinalMovePage().fillFinalMoveLodgingForm(addNewPolicyPage,
+					PDTConstants.FINAL_MOVE_LODGING);
+			break;
+		case PDTConstants.FINAL_MOVE_MEALS:
+			expandSubBenefitIfCollapsed(getElementByName(PDTConstants.FINAL_MOVE_MEALS));
+			subBenefitSteps.getFinalMovePage().fillFinalMoveMealForm(addNewPolicyPage,
+					PDTConstants.FINAL_MOVE_MEALS);
 			break;
 		default:
 			Assert.fail(MessageFormat.format(PDTConstants.ELEMENT_NOT_FOUND, CoreConstants.FAIL));

@@ -27,6 +27,7 @@ import java.util.List;
 import com.aires.businessrules.constants.CoreConstants;
 import com.aires.managers.FileReaderManager;
 import com.aires.testdatatypes.pdt.PDT_CulturalTrainingBenefit;
+import com.aires.testdatatypes.pdt.PDT_FinalMoveBenefit;
 import com.aires.testdatatypes.pdt.PDT_HouseHuntingTripBenefit;
 import com.aires.testdatatypes.pdt.PDT_ImmigrationBenefit;
 import com.aires.testdatatypes.pdt.PDT_LanguageTrainingBenefit;
@@ -49,19 +50,19 @@ public class JsonDataReader_Pdt {
 			.getTestDataResourcePath() + "pdt/PDT_LanguageTrainingBenefit.json";
 	private final String _CulturalTrainingFilePath = FileReaderManager.getInstance().getConfigReader()
 			.getTestDataResourcePath() + "pdt/PDT_CulturalTrainingBenefit.json";
-
+	private final String _FinalMoveFilePath = FileReaderManager.getInstance().getConfigReader()
+			.getTestDataResourcePath() + "pdt/PDT_FinalMove.json";
 	private final String _loginDetailsFilePath = FileReaderManager.getInstance().getConfigReader()
 			.getTestDataResourcePath() + "pdt/PDT_LoginDetails.json";
 
 	private List<PDT_LoginData> _loginDataList;
-
 	private List<PDT_LoginDetails> _loginDetailsList;
-
 	private List<PDT_PreAcceptanceServiceBenefit> _preAcceptanceServicelist;
 	private List<PDT_ImmigrationBenefit> _immigrationList;
 	private List<PDT_HouseHuntingTripBenefit> _houseHuntingTripList;
 	private List<PDT_LanguageTrainingBenefit> _languageTrainingList;
 	private List<PDT_CulturalTrainingBenefit> _culturalTrainingList;
+	private List<PDT_FinalMoveBenefit> _finalMoveList;
 
 	public JsonDataReader_Pdt() {
 		_loginDataList = getUserData();
@@ -71,6 +72,7 @@ public class JsonDataReader_Pdt {
 		_houseHuntingTripList = getHouseHuntingTripData();
 		_languageTrainingList = getLanguageTrainingData();
 		_culturalTrainingList = getCulturalTrainingData();
+		_finalMoveList = getFinalMoveData();
 	}
 
 	private List<PDT_LoginData> getUserData() {
@@ -201,6 +203,24 @@ public class JsonDataReader_Pdt {
 			}
 		}		
 	}
+	
+	private List<PDT_FinalMoveBenefit> getFinalMoveData(){
+		Gson gson = new Gson();
+		BufferedReader bufferReader = null;
+		try {
+			bufferReader = new BufferedReader(new FileReader(_FinalMoveFilePath));
+			PDT_FinalMoveBenefit[] finalMove = gson.fromJson(bufferReader, PDT_FinalMoveBenefit[].class);
+			return Arrays.asList(finalMove);
+		} catch (FileNotFoundException e) {
+			throw new RuntimeException(CoreConstants.JSON_FILE_NOT_FOUND_AT_PATH + _FinalMoveFilePath);
+		} finally {
+			try {
+				if (bufferReader != null)
+					bufferReader.close();
+			} catch (IOException ignore) {
+			}
+		}		
+	}
 
 	public final PDT_LoginData getloginDetailsByUserFirstName(String userFirstName) {
 		return _loginDataList.stream().filter(x -> x.firstName.equalsIgnoreCase(userFirstName)).findAny().get();
@@ -231,5 +251,9 @@ public class JsonDataReader_Pdt {
 
 	public final PDT_CulturalTrainingBenefit getCulturalTrainingDataList(String policyBenefit) {
 		return _culturalTrainingList.stream().filter(x -> x.benefitName.equalsIgnoreCase(policyBenefit)).findAny().get();
+	}
+	
+	public final PDT_FinalMoveBenefit getFinalMoveDataList(String policyBenefit) {
+		return _finalMoveList.stream().filter(x -> x.benefitName.equalsIgnoreCase(policyBenefit)).findAny().get();
 	}
 }

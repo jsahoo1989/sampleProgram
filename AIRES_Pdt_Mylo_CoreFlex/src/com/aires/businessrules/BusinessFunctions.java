@@ -650,5 +650,22 @@ public class BusinessFunctions {
 			e.printStackTrace();
 		}
 		return null;
+
+	public static String selectAndReturnRandomValueFromDropDown(WebDriver driver, PDT_AddNewPolicyPage addNewPolicyPage,
+			String subBenefitFormName, WebElement _drpDownElement, List<WebElement> _drpDownElementOptions,
+			WebElement _drpDownElementSelected, WebElement _lblDropDown) {
+		String randValue = null;
+		try {
+			CoreFunctions.clickElement(driver, _drpDownElement);
+			randValue = _drpDownElementOptions.get(CoreFunctions.getRandomNumber(0, _drpDownElementOptions.size() - 1))
+					.getText();
+			CoreFunctions.selectItemInListByText(driver, _drpDownElementOptions, randValue, _lblDropDown.getText(),
+					PDTConstants.DROP_DOWN, true);
+		} catch (Exception e) {
+			DbFunctions.deletePolicyByPolicyId(addNewPolicyPage.getPolicyId());
+			Assert.fail(MessageFormat.format(PDTConstants.FAIL_TO_SELECT_VALUE_FROM_FIELD, CoreConstants.FAIL,
+					randValue, _lblDropDown.getText(), PDTConstants.DROP_DOWN));
+		}
+		return randValue;
 	}
 }

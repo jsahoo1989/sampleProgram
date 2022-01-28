@@ -1,0 +1,45 @@
+[
+	{
+		"benefitName": "Final Move",
+		"finalMoveTransportation": {			
+			"transportationType": "Mileage, Other - see travel policy",			
+			"minMileageEconomyAir": "100",
+			"minMileageBusinessAir": "200",
+			"accompanyingFamilyMember": "Transferee + Spouse/Partner Only",
+			"grossUp": "Yes",
+			"reimbursedBy": "Aires",
+			"reimbursedByOther": "Reimbursed by other",
+			"comment": "Final Move Transportation comment"			
+		},
+		"finalMoveLodging": {
+			"duration": "3",
+			"numberOfNights": "3",
+			"maxAmount": "Flat Amount/Night",
+			"flatAmountPerNight": "100",
+			"currency": "U.S. Dollar",
+			"grossUp": "No",
+			"reimbursedBy": "Client",
+			"reimbursedByOther": "Reimbursed by other",
+			"comment": "Final Move Trip Lodging comment"
+		},
+		"finalMoveMeals": {
+			"numberOfDaysForMeal": "Set # of nights",
+			"numberOfDays": "3",
+			"type": "Allowance",
+			"maxAmount": "Flat Amount",			
+			"maxAmtTransferee": "100",
+			"maxAmtTransfereeDetail": "Per Day",
+			"maxAmtTransfereeCurrency": "U.S. Dollar",
+			"maxAmtAdult": "100",
+			"maxAmtAdultDetail": "Total",
+			"maxAmtAdultCurrency": "U.S. Dollar",
+			"maxAmtChildren": "50",
+			"maxAmtChildrenDetail": "Per Day",
+			"maxAmtChildrenCurrency": "U.S. Dollar",
+			"grossUp": "No",
+			"reimbursedBy": "Client",
+			"reimbursedByOther": "Reimbursed by other",
+			"comment": "Final Move Trip Meal comment"
+		}
+	}
+]

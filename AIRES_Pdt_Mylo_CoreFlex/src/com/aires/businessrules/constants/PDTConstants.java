@@ -305,4 +305,16 @@ public class PDTConstants {
 	public static final String DATABASE_CONNECTION = "Database connection";
 	public static final String FAIL_TO_CALL_PROC = "Fail to call procedure";
 	public static final String FAIL_TO_CLOSE_CONNECTION = "Fail to close connection";
+	//FinalMove
+	public static final String FINAL_MOVE_TRANSPORTATION = "Final Move Transportation";
+	public static final String FINAL_MOVE_LODGING = "Final Move Lodging";
+	public static final String FINAL_MOVE_MEALS = "Final Move Meals";
+	public static final String SET_OF_NIGHTS = "Set # of nights";
+	public static final String FAILED_TO_FILL_INFO = "{0}Failed to fill ''{1}'' on ''{2}'' form.";
+	public static final String TRANSFEREE_INFO = "Transferee info";
+	public static final String ADULT_INFO = "Adult info";
+	public static final String CHILDREN_INFO = "Children info";
+	public static final String FAILED_TO_FILL_VALUE_IN_TEXTBOX = "{0}Failed to fill value in ''{1}'' text box on ''{2}'' form.";
+	public static final String FAILED_TO_SELECT_MULTIPLE_OPTIONS = "{0}Failed to select multiple options from ''{1}'' drop down on ''{2}'' form.";
+	public static final String FAILED_TO_FILL_FIELD_VALUES = "Failed to fill value in Flat Amount Per Night and currency drop down fields.";
 }

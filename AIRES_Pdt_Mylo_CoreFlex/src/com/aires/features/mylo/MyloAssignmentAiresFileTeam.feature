@@ -40,4 +40,3 @@ Examples:
 |UserType          |
 |With Resource15   |
 |Without Resource15|
-

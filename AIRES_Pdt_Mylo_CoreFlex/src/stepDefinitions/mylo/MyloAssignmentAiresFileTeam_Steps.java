@@ -101,7 +101,7 @@ public class MyloAssignmentAiresFileTeam_Steps {
 
 	@Then("^new row should be added for \"([^\"]*)\" with updated team member, End Date to current date$")
 	public void new_row_should_be_added_for_with_updated_team_member_End_Date_to_current_date(String roleName) {
-		Assert.assertTrue(myloAssignmentPage.verifyUpdatedRow(roleName), MYLOConstants.ROW_DIDNOT_UPDATED);
+		Assert.assertTrue(myloAssignmentPage.verifyUpdatedRowAiresFileTeamSection(roleName), MYLOConstants.ROW_DIDNOT_UPDATED);
 	}
 
 	@Given("^all the values are readonly in the AiresFileTeam grid$")
@@ -114,6 +114,7 @@ public class MyloAssignmentAiresFileTeam_Steps {
 			throws InterruptedException {
 		Assert.assertTrue(myloDashboardPage.verifyUserName(loginData.MyloProfileName));
 		loginPage.loginWithUser(userType);
+		Assert.assertTrue(myloDashboardPage.verifyUserName(loginData.MyloProfileName));
 	}
 
 	@When("^he clicks on role dropdown after clicking on \"([^\"]*)\" button$")

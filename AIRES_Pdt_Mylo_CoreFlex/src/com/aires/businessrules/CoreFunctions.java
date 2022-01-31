@@ -1594,4 +1594,20 @@ public class CoreFunctions {
 		}
 		return dropDown.get(randomIndex).getText() + ", "+dropDown.get(temp).getText();
 	}
+	
+	public static boolean isElementPresent(WebDriver driver, By locator, long time, String name) {
+		try {
+			WebDriverWait wait = new WebDriverWait(driver, time);
+			wait.until(ExpectedConditions.presenceOfElementLocated(locator));
+			Reporter.addStepLog(MessageFormat.format(CoreConstants.VRFIED_ELE_PAGE, CoreConstants.PASS, name));
+			return true;
+		} catch (Exception e) {
+			Reporter.addStepLog(
+					MessageFormat.format(CoreConstants.VRFIED_ELE_NOT_ON_PAGE, CoreConstants.FAIL,name ));
+		}
+		return false;
+  }
+	public static String getElementCSSProperty(WebDriver driver,WebElement element,String cssProperty) {
+		return element.getCssValue(cssProperty);
+	}
 }

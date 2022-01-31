@@ -1,5 +1,6 @@
 package com.aires.pages.mylo;
 
+import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
@@ -45,6 +46,8 @@ public class Mylo_LoginPage extends Base {
 	@FindBy(how = How.XPATH, using = "//div[text()='Use another account']")
 	private WebElement _anotherAccount;
 	
+	final By _loginImg = By.xpath("//img[contains(@src,'login-with-office-365.jpg')]");
+	
 	Mylo_LoginData loginData = FileReaderManager.getInstance().getMyloJsonReader()
 			.getloginDetailsByUserProfileName(MYLOConstants.USER_PROFILE_NAME);
 
@@ -72,6 +75,8 @@ public class Mylo_LoginPage extends Base {
 			CoreFunctions.click(driver, _staySignedInYes, _staySignedInYes.getAttribute("value"));
 		}
 		CoreFunctions.switchToParentWindow(driver);
+		if(CoreFunctions.isElementPresent(driver, _loginImg, 5, MYLOConstants.LOGIN_BUTTON))
+			CoreFunctions.click(driver, CoreFunctions.getElementByLocator(driver,_loginImg), MYLOConstants.LOGIN_BUTTON);
 	}
 
 	public void enterUserEmailAndPasswordForMylo(String userName, String password) {
@@ -88,10 +93,10 @@ public class Mylo_LoginPage extends Base {
 	}
 	
 	public void logout() {
-		CoreFunctions.explicitWaitTillElementVisibility(driver, _userProfileImg, _userProfileImg.getText());
-		CoreFunctions.click(driver, _userProfileImg, _userProfileImg.getText());
+		CoreFunctions.explicitWaitTillElementVisibility(driver, _userProfileImg, MYLOConstants.USER_PROFILE_IMAGE);
+		CoreFunctions.click(driver, _userProfileImg, MYLOConstants.USER_PROFILE_IMAGE);
 		CoreFunctions.explicitWaitTillElementVisibility(driver, _logoutUserImg, _logoutUserImg.getText());
-		CoreFunctions.click(driver, _logoutUserImg, _logoutUserImg.getText());
+		CoreFunctions.click(driver, _logoutUserImg, MYLOConstants.LOGOUT_IMAGE);
 	}
 	
 	public void clickAnotherAccount() {
@@ -106,7 +111,7 @@ public class Mylo_LoginPage extends Base {
 			CoreFunctions.explicitWaitTillElementVisibility(driver, _anotherAccount, _anotherAccount.getText());
 			CoreFunctions.click(driver, _anotherAccount, _anotherAccount.getText());
 			enterUserEmailAndPasswordForMylo(loginData.MyloWithOutResource15UserName, loginData.MyloPassword);
-			clickSignIn();			
+			clickSignIn();	
 		}
 	}
 

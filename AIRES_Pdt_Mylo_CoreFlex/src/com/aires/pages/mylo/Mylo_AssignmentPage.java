@@ -124,7 +124,10 @@ public class Mylo_AssignmentPage extends Base {
 
 	@FindBy(how = How.XPATH, using = "//button[text()='OK']")
 	private WebElement _fileInfoSuccessOkbutton;
-
+	
+	@FindBy(how = How.XPATH, using = "//ng-select[@name='policyType']")
+	private WebElement _fileInfoPolicyTypeBgColor;
+	
 	int noOfAiresFileTeamMember;
 	String updatedTeamMember;
 	LinkedHashMap<String, String> airesFileTeamExistingMembers = new LinkedHashMap<String, String>();
@@ -288,7 +291,6 @@ public class Mylo_AssignmentPage extends Base {
 	public boolean verifyPopUpMessage(String msg) {
 		try {
 			CoreFunctions.explicitWaitTillElementVisibility(driver, _popUpMessage, _popUpMessage.getText());
-			System.out.println(_popUpMessage.getText());
 			Assert.assertEquals(_popUpMessage.getText(), msg);
 		} catch (Throwable e) {
 			return false;
@@ -413,11 +415,39 @@ public class Mylo_AssignmentPage extends Base {
 					MYLOConstants.ASSIGNMENT));
 			return true;
 		}
-		Reporter.addStepLog(MessageFormat.format(MYLOConstants.FIELD_VALUE_NOT_DISPLAYED, CoreConstants.FAIL,
-				_fileInfoFileId.getAttribute(MYLOConstants.NAME), fileID, MYLOConstants.AIRES_FILE_INFORMATION,
-				MYLOConstants.ASSIGNMENT));
 		return false;
 	}
+	
+	
+	/**
+	 * @param fieldName
+	 * @param propertyType
+	 * @param expectedValue
+	 * @return
+	 * Verifying CSS Property Value of Elements available in any section
+	 */
+	public boolean verifyElementCSSValue(String fieldName, String propertyType, String expectedValue) {
+			String code = null;
+			switch (fieldName) {
+			case MYLOConstants.POLICY_TYPE:
+				code=CoreFunctions.getElementCSSProperty(driver, _fileInfoPolicyTypeBgColor, propertyType);
+				break;
+			case MYLOConstants.FILE_ID:
+				code=CoreFunctions.getElementCSSProperty(driver, _fileInfoFileId, propertyType);
+				break;
+			case MYLOConstants.CLIENT_ID:
+				code=CoreFunctions.getElementCSSProperty(driver, _fileInfoClientId, propertyType);
+				break;
+			default:
+				Reporter.addStepLog(CoreConstants.FAIL + MYLOConstants.ENTER_CORRECT_FIELD_NAME);
+				Assert.fail(MYLOConstants.ENTER_CORRECT_FIELD_NAME);
+			}
+			if(code.equals(expectedValue))
+				return true;
+			return false;
+	}
+	
+
 
 	/**
 	 * Mapping the AiresFileInformation WebElements with associated fields
@@ -468,6 +498,7 @@ public class Mylo_AssignmentPage extends Base {
 		Reporter.addStepLog(MessageFormat.format(MYLOConstants.FIELD_NAME_VALUE_DISPLAYED, CoreConstants.PASS,
 				fieldName, airesFileInfoFieldsMap.get(fieldName).getText(), MYLOConstants.AIRES_FILE_INFORMATION,
 				MYLOConstants.ASSIGNMENT));
+		System.out.println(airesFileInfoFieldsMap.get(fieldName).getText());
 		return airesFileInfoFieldsMap.get(fieldName).getText();
 	}
 
@@ -478,17 +509,18 @@ public class Mylo_AssignmentPage extends Base {
 	 * Verifying Fields ReadOnly status for different Users and Different File Type on Aires File Information section
 	 */
 	public void verifyFileInfoFieldsForScenarioType(String scenarioType, String fieldName) throws InterruptedException {
-		if (scenarioType.equals(MYLOConstants.USER_WITHOUT_RESOURCE300096))
+		switch (scenarioType) {
+		case MYLOConstants.USER_WITHOUT_RESOURCE300096:
+		case MYLOConstants.NOT_AIRESSH_PROVIDER:
+		case MYLOConstants.AFFINITY_ENABLED:
 			Assert.assertFalse(verifyFileInfoFieldsReadOnly(fieldName));
-		else if (scenarioType.equals(MYLOConstants.USER_WITH_RESOURCE300096))
+			break;
+		case MYLOConstants.USER_WITH_RESOURCE300096:
+		case MYLOConstants.AIRESSH_PROVIDER:
+		case MYLOConstants.NOT_AFFINITY_ENABLED:
 			Assert.assertTrue(verifyFileInfoFieldsReadOnly(fieldName));
-		else if ((scenarioType.equals(MYLOConstants.AIRESSH_PROVIDER)
-				|| (scenarioType.equals(MYLOConstants.NOT_AFFINITY_ENABLED))))
-			Assert.assertTrue(verifyFileInfoFieldsReadOnly(fieldName));
-		else if (scenarioType.equals(MYLOConstants.NOT_AIRESSH_PROVIDER)
-				|| (scenarioType.equals(MYLOConstants.AFFINITY_ENABLED)))
-			Assert.assertFalse(verifyFileInfoFieldsReadOnly(fieldName));
-		else {
+			break;
+		default:
 			Reporter.addStepLog(CoreConstants.FAIL + MYLOConstants.ENTER_CORRECT_SCENARIO_TYPE);
 			Assert.fail(MYLOConstants.ENTER_CORRECT_SCENARIO_TYPE);
 		}
@@ -503,9 +535,9 @@ public class Mylo_AssignmentPage extends Base {
 		switch (fieldName) {
 		case MYLOConstants.POLICY_TYPE:
 			return CoreFunctions.isElementPresent(driver, _fileInfoPolicyTypeDropdownReadOnly, 2,
-					MYLOConstants.POLICY_TYPE);
+					MYLOConstants.POLICY_TYPE_READONLY);
 		case MYLOConstants.OFFICE:
-			return CoreFunctions.isElementPresent(driver, _fileInfoOfficeDropdownReadOnly, 2, MYLOConstants.OFFICE);
+			return CoreFunctions.isElementPresent(driver, _fileInfoOfficeDropdownReadOnly, 2, MYLOConstants.OFFICE_READONLY);
 		case MYLOConstants.EDIT_BUTTON:
 			return CoreFunctions.isElementVisible(_fileInfoEditButton);
 		default:
@@ -571,7 +603,7 @@ public class Mylo_AssignmentPage extends Base {
 		WebElement element = null;
 		String selectedText;
 		do {
-			element = (fieldName.equals(MYLOConstants.POLICY_TYPE)) ? options.get(CoreFunctions.getRandomNumber(2, 4))
+			element = (fieldName.equals(MYLOConstants.POLICY_TYPE )||fieldName.equals(MYLOConstants.JOURNEY_TYPE)) ? options.get(CoreFunctions.getRandomNumber(2, 4))
 					: options.get(CoreFunctions.getRandomNumber(1, options.size()));
 			selectedText = element.getText();
 		} while (element.getText() == airesFileInfoFieldsMap.get(fieldName).getText());
@@ -651,6 +683,8 @@ public class Mylo_AssignmentPage extends Base {
 	 */
 	public void verifyFileInfoFieldsOnClickedButton(String buttonName) {
 		if (buttonName.equals(MYLOConstants.CANCEL_BUTTON)) {
+			CoreFunctions.explicitWaitTillElementVisibility(driver,_fileInfoEditButton, _fileInfoEditButton.getText(), 5);
+			clickButtonOnAiresFileInformationSection(MYLOConstants.EDIT_BUTTON);
 			Assert.assertFalse(verifyFileInfoUpdatedFields(MYLOConstants.JOURNEY_TYPE));
 			Assert.assertFalse(verifyFileInfoUpdatedFields(MYLOConstants.HOMESTATUS));
 			Assert.assertFalse(verifyFileInfoCheckboxSelected(MYLOConstants.INHERITED_FILE));
@@ -663,12 +697,22 @@ public class Mylo_AssignmentPage extends Base {
 			Assert.assertTrue(verifyFileInfoUpdatedFields(MYLOConstants.JOURNEY_TYPE));
 			Assert.assertTrue(verifyFileInfoUpdatedFields(MYLOConstants.HOMESTATUS));
 			Assert.assertTrue(verifyFileInfoCheckboxSelected(MYLOConstants.INHERITED_FILE));
-			clickButtonOnAiresFileInformationSection(MYLOConstants.EDIT_BUTTON);
-			clickCheckBoxOnAiresFileInfoSection(MYLOConstants.INHERITED_FILE);
-			clickButtonOnAiresFileInformationSection(MYLOConstants.SAVE_BUTTON);
-			Assert.assertTrue(verifyMessage(MYLOConstants.SUCCESS_MESSAGE));
-			clickButtonOnAiresFileInformationSection(MYLOConstants.OK_BUTTON);
+			resetFileInfoField();
 		}
+	}
+	
+	/**
+	 * Resetting File Information fields to earlier values
+	 */
+	public void resetFileInfoField() {
+		clickButtonOnAiresFileInformationSection(MYLOConstants.EDIT_BUTTON);
+		updateFileInfoFields(MYLOConstants.POLICY_TYPE, MYLOConstants.POLICY_TYPE_VALUE);
+		updateFileInfoFields(MYLOConstants.JOURNEY_TYPE, MYLOConstants.JOURNEY_TYPE_VALUE);
+		updateFileInfoFields(MYLOConstants.HOMESTATUS, MYLOConstants.HOMESTATUS_VALUE);
+		clickCheckBoxOnAiresFileInfoSection(MYLOConstants.INHERITED_FILE);
+		clickButtonOnAiresFileInformationSection(MYLOConstants.SAVE_BUTTON);
+		Assert.assertTrue(verifyMessage(MYLOConstants.SUCCESS_MESSAGE));
+		clickButtonOnAiresFileInformationSection(MYLOConstants.OK_BUTTON);
 	}
 
 	/**
@@ -693,6 +737,7 @@ public class Mylo_AssignmentPage extends Base {
 		}
 		return false;
 	}
+	
 
 	/**
 	 * @param messageType

@@ -67,7 +67,7 @@ import com.vimalselvam.cucumber.listener.Reporter;
 
 public class BusinessFunctions {
 	private static String windowTitle;
-	private static Editor editor;	
+	private static Editor editor;
 	public static int count = 0;
 	static Logger LOG = Logger.getLogger(BusinessFunctions.class);
 	public static String userNameValue, passwordValue;
@@ -207,11 +207,11 @@ public class BusinessFunctions {
 		String elementName = element.getAttribute("title");
 		dropDown.selectByVisibleText(drpdwnValue);
 		if (element.getAttribute("title").equalsIgnoreCase(drpdwnValue))
-			Reporter.addStepLog(MessageFormat.format(PDTConstants.VERIFY_VALUE_SELECTED_IN_DROPDWON,
-					CoreConstants.PASS, elementName, drpdwnValue));
+			Reporter.addStepLog(MessageFormat.format(PDTConstants.VERIFY_VALUE_SELECTED_IN_DROPDWON, CoreConstants.PASS,
+					elementName, drpdwnValue));
 		else
-			Reporter.addStepLog(MessageFormat.format(PDTConstants.FAIL_TO_SELECT_VALUE_IN_DROPDOWN,
-					CoreConstants.FAIL, drpdwnValue, elementName));
+			Reporter.addStepLog(MessageFormat.format(PDTConstants.FAIL_TO_SELECT_VALUE_IN_DROPDOWN, CoreConstants.FAIL,
+					drpdwnValue, elementName));
 	}
 
 	public static Boolean verifyCompanyNameAfterSearch(String expectedCompanyName) throws Exception {
@@ -355,8 +355,8 @@ public class BusinessFunctions {
 					MessageFormat.format(PDTConstants.VERIFY_VALUE_IN_DROPDOWN, CoreConstants.PASS, drpdwnValue));
 			return true;
 		} else {
-			Reporter.addStepLog(MessageFormat.format(PDTConstants.FAIL_TO_VERIFY_VALUE_IN_DROPDOWN,
-					CoreConstants.FAIL, drpdwnValue));
+			Reporter.addStepLog(MessageFormat.format(PDTConstants.FAIL_TO_VERIFY_VALUE_IN_DROPDOWN, CoreConstants.FAIL,
+					drpdwnValue));
 			return false;
 		}
 	}
@@ -368,8 +368,8 @@ public class BusinessFunctions {
 			CoreFunctions.highlightObject(driver, element);
 			return true;
 		} else {
-			Reporter.addStepLog(MessageFormat.format(PDTConstants.FAIL_TO_VERIFY_VALUE_IN_TEXTFIELD,
-					CoreConstants.FAIL, drpdwnValue));
+			Reporter.addStepLog(MessageFormat.format(PDTConstants.FAIL_TO_VERIFY_VALUE_IN_TEXTFIELD, CoreConstants.FAIL,
+					drpdwnValue));
 			return false;
 		}
 	}
@@ -380,11 +380,11 @@ public class BusinessFunctions {
 		Log.info("elementName=" + elementName);
 		dropDown.selectByValue(drpdwnValue);
 		if (element.getAttribute("value").equalsIgnoreCase(drpdwnValue))
-			Reporter.addStepLog(MessageFormat.format(PDTConstants.VERIFY_VALUE_SELECTED_IN_DROPDWON,
-					CoreConstants.PASS, elementName, drpdwnValue));
+			Reporter.addStepLog(MessageFormat.format(PDTConstants.VERIFY_VALUE_SELECTED_IN_DROPDWON, CoreConstants.PASS,
+					elementName, drpdwnValue));
 		else
-			Reporter.addStepLog(MessageFormat.format(PDTConstants.FAIL_TO_SELECT_VALUE_IN_DROPDOWN,
-					CoreConstants.FAIL, drpdwnValue, elementName));
+			Reporter.addStepLog(MessageFormat.format(PDTConstants.FAIL_TO_SELECT_VALUE_IN_DROPDOWN, CoreConstants.FAIL,
+					drpdwnValue, elementName));
 	}
 
 	public static void updateQuery(String url, String query) {
@@ -552,14 +552,15 @@ public class BusinessFunctions {
 			String itemName) {
 		for (WebElement element : _elementList) {
 			Log.info(CoreConstants.ACTUAL_ITEM_NAME_IS + element.getText());
-			System.out.println("Substring Report Name " + element.getText().substring(0, element.getText().indexOf('.')));
+			System.out
+					.println("Substring Report Name " + element.getText().substring(0, element.getText().indexOf('.')));
 			if (itemName.contains(element.getText().substring(0, element.getText().indexOf('.')))) {
 				return element;
 			}
 		}
 		return null;
 	}
-	
+
 	public static WebElement returnItemIfContainsInList(WebDriver driver, List<WebElement> _elementList,
 			String itemName) {
 		for (WebElement element : _elementList) {
@@ -570,15 +571,15 @@ public class BusinessFunctions {
 		}
 		return null;
 	}
-	
+
 	public static String selectRandomValueFormDropDown(WebDriver driver, List<WebElement> dropDownList) {
 		WebElement selectedOption = dropDownList.get(ThreadLocalRandom.current().nextInt(1, dropDownList.size()));
 		selectedOption.click();
 		return selectedOption.getText();
-		}
+	}
 
 	public static boolean compareList(List<String> actualList, List<String> expectedList) {
-		if (actualList.equals(expectedList)) {			
+		if (actualList.equals(expectedList)) {
 			return true;
 		} else {
 			return false;
@@ -605,24 +606,26 @@ public class BusinessFunctions {
 		}
 		return listToBeSorted;
 	}
-	
-	public static void verifyReimbursedByOtherTextBoxIsDisplayed(WebDriver driver, PDT_AddNewPolicyPage addNewPolicyPage, String jsonReimbursedBy, WebElement element, String jsonReimbursedByOther, String SubBenefitFormName) {
+
+	public static void verifyReimbursedByOtherTextBoxIsDisplayed(WebDriver driver,
+			PDT_AddNewPolicyPage addNewPolicyPage, String jsonReimbursedBy, WebElement element,
+			String jsonReimbursedByOther, String SubBenefitFormName) {
 		try {
-			if (jsonReimbursedBy.equalsIgnoreCase(PDTConstants.OTHER) && CoreFunctions.isElementExist(driver, element, 1)) {
-				Reporter.addStepLog(MessageFormat.format(PDTConstants.VERIFIED_TEXT_BOX_FIELD_DISPLAYED, CoreConstants.PASS, PDTConstants.REIMBURSED_BY_OTHER, SubBenefitFormName));
-				CoreFunctions.clearAndSetText(driver, element,
-						PDTConstants.REIMBURSED_BY_OTHER,
-						jsonReimbursedByOther);
+			if (jsonReimbursedBy.equalsIgnoreCase(PDTConstants.OTHER)
+					&& CoreFunctions.isElementExist(driver, element, 1)) {
+				Reporter.addStepLog(MessageFormat.format(PDTConstants.VERIFIED_TEXT_BOX_FIELD_DISPLAYED,
+						CoreConstants.PASS, PDTConstants.REIMBURSED_BY_OTHER, SubBenefitFormName));
+				CoreFunctions.clearAndSetText(driver, element, PDTConstants.REIMBURSED_BY_OTHER, jsonReimbursedByOther);
 			}
-		} catch(Exception e) {
-			DbFunctions.deletePolicyByPolicyId(addNewPolicyPage.getPolicyId());			
-			Assert.fail(MessageFormat.format(PDTConstants.FAILED_TO_FILL_FIELD, PDTConstants.REIMBURSED_BY_OTHER, SubBenefitFormName));
+		} catch (Exception e) {
+			DbFunctions.deletePolicyByPolicyId(addNewPolicyPage.getPolicyId());
+			Assert.fail(MessageFormat.format(PDTConstants.FAILED_TO_FILL_FIELD, PDTConstants.REIMBURSED_BY_OTHER,
+					SubBenefitFormName));
 		}
 	}
-	
+
 	public static int returnindexItemFromListUsingAttribute(WebDriver driver, List<WebElement> WebElementList,
 			String itemName, String attribute) {
-		CoreFunctions.waitHandler(3);
 		try {
 			for (WebElement row : WebElementList) {
 				Log.info("The Actual Item Name is :" + row.getAttribute(attribute));
@@ -631,11 +634,10 @@ public class BusinessFunctions {
 				}
 			}
 		} catch (ElementNotFoundException e) {
-			e.printStackTrace();
 		}
 		return -1;
 	}
-	
+
 	public static WebElement returnItemFromListUsingAttribute(WebDriver driver, List<WebElement> WebElementList,
 			String itemName, String attribute) {
 		CoreFunctions.waitHandler(3);
@@ -650,6 +652,7 @@ public class BusinessFunctions {
 			e.printStackTrace();
 		}
 		return null;
+	}
 
 	public static String selectAndReturnRandomValueFromDropDown(WebDriver driver, PDT_AddNewPolicyPage addNewPolicyPage,
 			String subBenefitFormName, WebElement _drpDownElement, List<WebElement> _drpDownElementOptions,

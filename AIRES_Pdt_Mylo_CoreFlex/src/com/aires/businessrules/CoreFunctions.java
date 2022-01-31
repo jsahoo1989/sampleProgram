@@ -1607,4 +1607,7 @@ public class CoreFunctions {
 		}
 		return false;
   }
+	public static String getElementCSSProperty(WebDriver driver,WebElement element,String cssProperty) {
+		return element.getCssValue(cssProperty);
+	}
 }

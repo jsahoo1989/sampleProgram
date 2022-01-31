@@ -4,6 +4,10 @@ public class MYLOConstants {
 	public static final String APPLICATION_LAUNCHED_AND_LOGO_DISPLAYED = "MYLO Logo is displayed on Mylo Application";
 	public static final String APPLICATION_FAILED_TO_LAUNCH = "Mylo application is not launched successfully";
 	public static final String MYLOLOGO_TEXT = "MyloLogo";
+	public static final String LOGIN_BUTTON = "Login Button";
+	public static final String USER_PROFILE_IMAGE = "User Profile Image";
+	public static final String LOGOUT_IMAGE = "Logout Image";
+	public static final String OTHER="Other";
 	public static final String USER_PROFILE_NAME = "mxsso!";
 	public static final String INCORRECT_QUERY_PARAMETERS= "Incorrect Select Query Parameters";
 	public static final String HAMBURGER_MENU_NOT_APPEARING = "Hamburger Menu Not Appearing";
@@ -29,6 +33,7 @@ public class MYLOConstants {
 	public static final String OK_BUTTON = "Ok";
 	public static final String DETAILS_CARROT_BUTTON = "Details Carrot";
 	public static final String OFFICE = "Office";
+	public static final String OFFICE_READONLY = "Office Read Only field";
 	public static final String COUNTRY = "Country";
 	public static final String STATE = "State";
 	public static final String ASSIGNMENT = "Assignment";
@@ -58,9 +63,13 @@ public class MYLOConstants {
 	public static final String RECORDS_NOT_READONLY="All records are not readonly";
 	public static final String INVALID_ROLE_ACCESS_FOR="Invalid Role access for";
 	public static final String POLICY_TYPE="Policy Type";
+	public static final String POLICY_TYPE_READONLY="Policy Type Read Only Field";
+	public static final String POLICY_TYPE_VALUE="Extended Business Trip";
 	public static final String TRANSFER_TYPE="Transfer Type";
 	public static final String JOURNEY_TYPE="Journey Type";
+	public static final String JOURNEY_TYPE_VALUE="Short-Term EE Only";
 	public static final String HOMESTATUS="Homestatus";
+	public static final String HOMESTATUS_VALUE="Rent";
 	public static final String ENTER_CORRECT_FIELD_NAME="Please enter correct field name";
 	public static final String ENTER_CORRECT_SCENARIO_TYPE="Please enter correct scenario type";
 	public static final String ENTER_CORRECT_ELEMENT_NAME="Please enter correct element name";
@@ -81,7 +90,7 @@ public class MYLOConstants {
 	public static final String RANDOM_VALUE_UPDATED_ON_SECTION = "{0}Random value ''{1}'' is updated for :- ''{2}'' in ''{3}'' section on ''{4}'' page";
 	public static final String VALUE_UPDATED_ON_SECTION = "{0} Value: ''{1}'' is updated for :- ''{2}'' in ''{3}'' section on ''{4}'' page";
 	public static final String FIELD_NAME_VALUE_DISPLAYED = "{0} FieldName- ''{1}'' value is displayed as :- ''{2}'' in ''{3}'' section on ''{4}'' page";
-	public static final String FIELD_VALUE_NOT_DISPLAYED = "{0} FieldName- ''{1}'' value is not displayed as :- ''{2}'' in ''{3}'' section on ''{4}'' page";
+	public static final String FIELD_VALUE_CSSPROPERTY_DISPLAYED = "{0} FieldName- ''{1}'' property:-''{2}'' code is displayed as :- ''{3}'' in ''{4}'' section on ''{5}'' page";
 	public static final String FILE_ID_DATA_UPDATION="611072";
 	public static final String INCORRECT_FIELD_VALUES_IN_FILEINFO="Incorrect value displayed for FileID,ClientID and PolicyType on FileInformation section on Mylo Assignment page";
 	public static final String ADDITIONAL_FIELDS_FILEINFO_NOT_DISPLAYED="Additional Fields not getting displayed in File Information section on Assignment Page";

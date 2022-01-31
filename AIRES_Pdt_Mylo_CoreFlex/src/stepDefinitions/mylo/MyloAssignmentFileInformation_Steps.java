@@ -1,6 +1,7 @@
 package stepDefinitions.mylo;
 
 import java.util.Date;
+import java.util.List;
 
 import org.testng.Assert;
 
@@ -9,20 +10,20 @@ import com.aires.cucumber.TestContext;
 import com.aires.managers.FileReaderManager;
 import com.aires.pages.mylo.Mylo_AssignmentPage;
 import com.aires.pages.mylo.Mylo_DashboardHomePage;
-import com.aires.pages.mylo.Mylo_LoginPage;
 import com.aires.testdatatypes.mylo.MyloAssignmentDetails;
 import com.aires.testdatatypes.mylo.Mylo_LoginData;
 import com.vimalselvam.cucumber.listener.Reporter;
 
+import cucumber.api.DataTable;
 import cucumber.api.java.en.Given;
 import cucumber.api.java.en.Then;
 import cucumber.api.java.en.When;
 
 public class MyloAssignmentFileInformation_Steps {
-	TestContext testContext;
-	Mylo_LoginPage loginPage;
-	Mylo_DashboardHomePage myloDashboardPage;
-	Mylo_AssignmentPage myloAssignmentPage;
+	private TestContext testContext;
+	//private Mylo_LoginPage loginPage;
+	private Mylo_DashboardHomePage myloDashboardPage;
+	private Mylo_AssignmentPage myloAssignmentPage;
 
 	Mylo_LoginData loginData = FileReaderManager.getInstance().getMyloJsonReader()
 			.getloginDetailsByUserProfileName(MYLOConstants.USER_PROFILE_NAME);
@@ -31,14 +32,13 @@ public class MyloAssignmentFileInformation_Steps {
 
 	public MyloAssignmentFileInformation_Steps(TestContext context) {
 		testContext = context;
-		loginPage = testContext.getMyloPageObjectManager().getLoginPage();
+		//loginPage = testContext.getMyloPageObjectManager().getLoginPage();
 		myloDashboardPage = testContext.getMyloPageObjectManager().getDashboardHomePage();
 		myloAssignmentPage = testContext.getMyloPageObjectManager().getAssignmentPage();
 	}
-
-	@Given("^he views the File Information section where File ID, Client ID & Name, Policy Type are hard coded with color \"([^\"]*)\"$")
-	public void he_views_the_File_Information_section_where_File_ID_Client_ID_Name_Policy_Type_are_hard_coded_with_color(
-			String arg1) {
+	
+	@Given("^he views the File Information section where \"([^\"]*)\", \"([^\"]*)\", \"([^\"]*)\" are hard coded with background color \"([^\"]*)\"$")
+	public void he_views_the_File_Information_section_where_are_hard_coded_with_background_color(String fieldName1, String fieldName2, String fieldName3, String colorCode) {
 		MYLOConstants.TIME_BEFORE_ACTION = new Date().getTime();
 		Assert.assertTrue(
 				myloAssignmentPage.verifyFileInfoDisplayedFields(MYLOConstants.FILE_ID_DATA_UPDATION,
@@ -46,13 +46,16 @@ public class MyloAssignmentFileInformation_Steps {
 								+ assignmentDetails.activeAssignment.clientName,
 						assignmentDetails.activeAssignment.policyType),
 				MYLOConstants.INCORRECT_FIELD_VALUES_IN_FILEINFO);
+		Assert.assertTrue(myloAssignmentPage.verifyElementCSSValue(fieldName1, "background-color", colorCode));
+		Assert.assertTrue(myloAssignmentPage.verifyElementCSSValue(fieldName2, "background-color", colorCode));
+		Assert.assertTrue(myloAssignmentPage.verifyElementCSSValue(fieldName3, "background-color", colorCode));
 		MYLOConstants.TIME_AFTER_ACTION = new Date().getTime();
 		Reporter.addStepLog("<b>Total time taken by <i>'When'</i> statement is :"
 				+ (MYLOConstants.TIME_AFTER_ACTION - MYLOConstants.TIME_BEFORE_ACTION) / 1000 + " Seconds </b>");
 	}
 
-	@When("^he clicks on the \"([^\"]*)\" under file information$")
-	public void he_clicks_on_the_under_file_information(String buttonName) {
+	@When("^he clicks on the button \"([^\"]*)\" under the file information section$")
+	public void he_clicks_on_the_button_under_the_file_information_section(String buttonName) {
 		MYLOConstants.TIME_BEFORE_ACTION = new Date().getTime();
 		myloAssignmentPage.clickButtonOnAiresFileInformationSection(buttonName);
 		MYLOConstants.TIME_AFTER_ACTION = new Date().getTime();
@@ -60,8 +63,8 @@ public class MyloAssignmentFileInformation_Steps {
 				+ (MYLOConstants.TIME_AFTER_ACTION - MYLOConstants.TIME_BEFORE_ACTION) / 1000 + " Seconds </b>");
 	}
 
-	@Then("^the file information will expand to display additional fields$")
-	public void the_file_information_will_expand_to_display_additional_fields() {
+	@Then("^the file information should expand to display additional fields$")
+	public void the_file_information_should_expand_to_display_additional_fields() {
 		MYLOConstants.TIME_BEFORE_ACTION = new Date().getTime();
 		Assert.assertTrue(myloAssignmentPage.verifyFileInfoAdditionalFieldsDisplayed(),
 				MYLOConstants.ADDITIONAL_FIELDS_FILEINFO_NOT_DISPLAYED);
@@ -73,10 +76,9 @@ public class MyloAssignmentFileInformation_Steps {
 	@Given("^\"([^\"]*)\" of the file is not \"([^\"]*)\" or \"([^\"]*)\"$")
 	public void of_the_file_is_not_or(String fieldName, String statusName1, String statusName2) {
 		MYLOConstants.TIME_BEFORE_ACTION = new Date().getTime();
-		Assert.assertNotEquals(myloAssignmentPage.getFileInfoFieldValue(fieldName), statusName1,
-				MYLOConstants.MISMATCH_VALUE + fieldName);
-		Assert.assertNotEquals(myloAssignmentPage.getFileInfoFieldValue(fieldName), statusName2,
-				MYLOConstants.MISMATCH_VALUE + fieldName);
+		String statusDisplayed = myloAssignmentPage.getFileInfoFieldValue(fieldName);
+		Assert.assertNotEquals(statusDisplayed, statusName1, MYLOConstants.MISMATCH_VALUE + fieldName);
+		Assert.assertNotEquals(statusDisplayed, statusName2, MYLOConstants.MISMATCH_VALUE + fieldName);
 		MYLOConstants.TIME_AFTER_ACTION = new Date().getTime();
 		Reporter.addStepLog("<b>Total time taken by <i>'When'</i> statement is :"
 				+ (MYLOConstants.TIME_AFTER_ACTION - MYLOConstants.TIME_BEFORE_ACTION) / 1000 + " Seconds </b>");
@@ -100,7 +102,7 @@ public class MyloAssignmentFileInformation_Steps {
 		myloAssignmentPage.clickButtonOnAiresFileInformationSection(buttonName);
 		myloAssignmentPage.updateFileInfoFields(MYLOConstants.POLICY_TYPE, MYLOConstants.RANDOM);
 		myloAssignmentPage.updateFileInfoFields(MYLOConstants.JOURNEY_TYPE, MYLOConstants.RANDOM);
-		myloAssignmentPage.updateFileInfoFields(MYLOConstants.HOMESTATUS, MYLOConstants.RANDOM);
+		myloAssignmentPage.updateFileInfoFields(MYLOConstants.HOMESTATUS, MYLOConstants.OTHER);
 		myloAssignmentPage.clickCheckBoxOnAiresFileInfoSection(MYLOConstants.INHERITED_FILE);
 		MYLOConstants.TIME_AFTER_ACTION = new Date().getTime();
 		Reporter.addStepLog("<b>Total time taken by <i>'When'</i> statement is :"
@@ -253,8 +255,8 @@ public class MyloAssignmentFileInformation_Steps {
 				+ (MYLOConstants.TIME_AFTER_ACTION - MYLOConstants.TIME_BEFORE_ACTION) / 1000 + " Seconds </b>");
 	}
 
-	@Then("^\"([^\"]*)\" checkbox is automatically unchecked after he unchecks the \"([^\"]*)\" box$")
-	public void checkbox_is_automatically_unchecked_after_he_unchecks_the_box(String checkBoxName2,
+	@Then("^\"([^\"]*)\" checkbox should automatically unchecked after he unchecks the \"([^\"]*)\" box$")
+	public void checkbox_should_automatically_unchecked_after_he_unchecks_the_box(String checkBoxName2,
 			String checkBoxName1) {
 		MYLOConstants.TIME_BEFORE_ACTION = new Date().getTime();
 		myloAssignmentPage.clickCheckBoxOnAiresFileInfoSection(checkBoxName1);
@@ -334,6 +336,17 @@ public class MyloAssignmentFileInformation_Steps {
 	public void should_display_in_the_list_of_values_of_the_dropdown(String listValue, String fieldName) {
 		MYLOConstants.TIME_BEFORE_ACTION = new Date().getTime();
 		Assert.assertTrue(myloAssignmentPage.verifyFileInfoDropDownValues(fieldName, listValue));
+		MYLOConstants.TIME_AFTER_ACTION = new Date().getTime();
+		Reporter.addStepLog("<b>Total time taken by <i>'When'</i> statement is :"
+				+ (MYLOConstants.TIME_AFTER_ACTION - MYLOConstants.TIME_BEFORE_ACTION) / 1000 + " Seconds </b>");
+	}
+	
+	@Then("^\"([^\"]*)\" should display in the list of values of the mentioned dropdown fields$")
+	public void should_display_in_the_list_of_values_of_the_mentioned_dropdown_fields(String listValue, DataTable fields) {
+		MYLOConstants.TIME_BEFORE_ACTION = new Date().getTime();	
+		for (String fieldName  : fields.raw().get(0)) {
+			Assert.assertTrue(myloAssignmentPage.verifyFileInfoDropDownValues(fieldName, listValue));		
+		}	
 		MYLOConstants.TIME_AFTER_ACTION = new Date().getTime();
 		Reporter.addStepLog("<b>Total time taken by <i>'When'</i> statement is :"
 				+ (MYLOConstants.TIME_AFTER_ACTION - MYLOConstants.TIME_BEFORE_ACTION) / 1000 + " Seconds </b>");

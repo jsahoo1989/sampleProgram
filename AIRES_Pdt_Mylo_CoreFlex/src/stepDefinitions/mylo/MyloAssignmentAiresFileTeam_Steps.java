@@ -114,6 +114,7 @@ public class MyloAssignmentAiresFileTeam_Steps {
 			throws InterruptedException {
 		Assert.assertTrue(myloDashboardPage.verifyUserName(loginData.MyloProfileName));
 		loginPage.loginWithUser(userType);
+		Assert.assertTrue(myloDashboardPage.verifyUserName(loginData.MyloProfileName));
 	}
 
 	@When("^he clicks on role dropdown after clicking on \"([^\"]*)\" button$")

@@ -1,0 +1,45 @@
+[
+	{
+		"benefitName": "Home Leave",
+		"homeLeaveTransportation": {
+			"transferNumberOfTrips": "5",
+			"assignmentNumberOfTrips": "10",
+			"frequencyTrip": "Monthly",
+			"frequencyTripOther": "Twice in week",
+			"transportationType": "Mileage, Other - see travel policy",
+			"transportationTypeOther": "Car",
+			"minMileageEconomyAir": "1000",
+			"minMileageBusinessAir": "2000",
+			"accompanyingFamilyMember": "Transferee + Spouse/Partner Only",
+			"grossUp": "Yes",
+			"reimbursedBy": "Aires",
+			"reimbursedByOther": "Reimbursed by other",
+			"comment": "Home Leave Transportation comment"
+		},
+		"homeLeaveLodging": {
+			"durationInDays": "3",
+			"grossUp": "No",
+			"reimbursedBy": "Client",
+			"reimbursedByOther": "Reimbursed by other",
+			"comment": "Home Leave Lodging comment"
+		},
+		"homeLeaveMeals": {
+			"numberOfDaysPerMeal": "3",
+			"type": "Allowance",
+			"maxAmount": "Flat Amount",
+			"maxAmtTransferee": "100",
+			"maxAmtTransfereeDetail": "Per Day",
+			"maxAmtTransfereeCurrency": "U.S. Dollar",
+			"maxAmtAdult": "200",
+			"maxAmtAdultDetail": "Total",
+			"maxAmtAdultCurrency": "U.S. Dollar",
+			"maxAmtChild": "50",
+			"maxAmtChildDetail": "Per Day",
+			"maxAmtChildCurrency": "U.S. Dollar",
+			"grossUp": "No",
+			"reimbursedBy": "Client",
+			"reimbursedByOther": "Reimbursed by other",
+			"comment": "Home Leave Meal comment"
+		}
+	}
+]

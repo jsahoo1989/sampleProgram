@@ -647,7 +647,10 @@ public class CoreFunctions {
 			else
 				Reporter.addStepLog(CoreConstants.PASS
 						+ MessageFormat.format(CoreConstants.VRFYD_TXT_CLR_VAL, elementName, textToEnter));
-		} catch (Exception e) {
+		} catch (NoSuchElementException e) {
+			Assert.fail(MessageFormat.format(PDTConstants.ELEMENT_NOT_FOUND, elementName));
+		}
+		catch (Exception e) {
 			Log.info(MessageFormat.format(CoreConstants.FAILED_TXT_CLR_VAL, elementName));
 			Reporter.addStepLog(MessageFormat.format(CoreConstants.FAILED_TXT_CLR_VAL, elementName));
 			e.printStackTrace();
@@ -1609,5 +1612,15 @@ public class CoreFunctions {
   }
 	public static String getElementCSSProperty(WebDriver driver,WebElement element,String cssProperty) {
 		return element.getCssValue(cssProperty);
+	}
+	public static boolean isElementListExist(WebDriver driver, List<WebElement> element, long time) {
+		try {
+			WebDriverWait wait = new WebDriverWait(driver, time);
+			wait.until(ExpectedConditions.visibilityOfAllElements(element));
+			return true;
+		} catch (Exception e) {
+		}
+		return false;
+
 	}
 }

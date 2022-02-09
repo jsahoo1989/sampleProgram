@@ -180,7 +180,7 @@ public class PDT_HouseHuntingTripPage extends Base {
 	@FindBy(how = How.XPATH, using = "//label[text()='Number of Nights per Trip']")
 	private WebElement _lblNumOfNightsPerTrip;
 
-	@FindBy(how = How.XPATH, using = "//label[text()='Max. Amount (if applicable)']")
+	@FindBy(how = How.XPATH, using = "//app-trip-lodging//label[contains(text(), 'Max. Amount')]")
 	private WebElement _lblMaxAmt;
 
 	@FindBy(how = How.XPATH, using = "//label[text()='Flat Amount/Night']")
@@ -207,16 +207,16 @@ public class PDT_HouseHuntingTripPage extends Base {
 	@FindBy(how = How.CSS, using = "button.swal2-confirm.swal2-styled")
 	private WebElement _btnOkOnSuccessPopUp;
 	
-	@FindBy(how = How.XPATH, using = "//label[text()='Max. Amount (if applicable)']")
+	@FindBy(how = How.XPATH, using = "//app-trip-meals//label[contains(text(), 'Max. Amount')]")
 	private WebElement _lblMaxAmtHouseHuntingTripMeals;
 
-	@FindBy(how = How.XPATH, using = "//label[text()='Max Amount - Transferee (if applicable)']")
+	@FindBy(how = How.XPATH, using = "//app-trip-meals//label[contains(text(), 'Max Amount - Transferee')]")
 	private WebElement _lblMaxAmtTransferee;
 
-	@FindBy(how = How.XPATH, using = "//label[text()='Max Amount - Other Adults (if applicable)']")
+	@FindBy(how = How.XPATH, using = "//app-trip-meals//label[contains(text(), 'Max Amount - Other Adults')]")
 	private WebElement _lblMaxAmtOtherAdults;
 
-	@FindBy(how = How.XPATH, using = "//label[text()='Max Amount - Children (if applicable)']")
+	@FindBy(how = How.XPATH, using = "//app-trip-meals//label[contains(text(), 'Max Amount - Children')]")
 	private WebElement _lblMaxAmtChildren;
 
 	PDT_HouseHuntingTripBenefit houseHuntingTripBenefitData = FileReaderManager.getInstance().getJsonReader()

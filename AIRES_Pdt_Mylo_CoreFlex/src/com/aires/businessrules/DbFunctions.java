@@ -19,13 +19,15 @@ public class DbFunctions {
 			dbURL = "jdbc:oracle:thin:isisdba/irisdevisisdba@corptesvl300.corp.aires.com:1521:IRISDEV";
 			break;
 		case "test":
-			dbURL = "jdbc:oracle:thin:isisdba/irisqaisisdba@corpqavl300.corp.aires.com:1521:IRISQA";
-			//dbURL = "jdbc:oracle:thin:isisdba/iristestisisdba@corptesvl300.corp.aires.com:1521:IRISTEST";
+			dbURL = "jdbc:oracle:thin:policydba/testpo@corptesvl300.corp.aires.com:1521:IRISTEST";
 			break;
 		case "prod":
 			// For Production Envt. - Change username/Password & verify DB connection
 			// details
 			dbURL = "jdbc:oracle:thin:isisdba/iristestisisdba@corpprdl200.corp.aires.com:1521:IRIS";
+			break;
+		case "uat":
+			dbURL = "jdbc:oracle:thin:policydba/uatpo@corpqavl300.corp.aires.com:1521:IRISUAT";
 			break;
 		default:
 			Assert.fail(PDTConstants.DATABASE_CONNECTION + PDTConstants.NOT_EXIST);
@@ -45,7 +47,7 @@ public class DbFunctions {
 			
 			callableStatement.setInt(1, policyId);
 			callableStatement.execute();
-		} catch (Exception ex) {					
+		} catch (Exception ex) {
 			Assert.fail(CoreConstants.ERROR + "Fail to call procedure");
 		} finally {
 			try {

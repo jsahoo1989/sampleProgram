@@ -183,7 +183,7 @@ public class PDTConstants {
 	public static final String FAILED_TO_VERIFY_CLIENT_DETAILS = "{0} Failed to verify client details on General Information page. Expected Client id:-''{1}'', Expected Client name:-''{2}''. Actual Client id:-''{3}'', Actual Client name:-''{4}''";
 	public static final String VERIFIED_POLICY_NAME = "{0} Verified Policy name:-''{1}'' on General Information page.";
 	public static final String FAILED_TO_VERIFY_POLICY_NAME = "{0} Failed to verify Policy name on General Information page. Expected Policy name:-''{1}''. Actual Policy name:-''{2}''";
-	public static final String POLICY_BENEFIT_CATEGORIES = "Policy Benefits Categories";
+	public static final String POLICY_BENEFIT_CATEGORIES = "Policy Benefit Categories";
 	public static final String POLICY_TYPE = "Policy Type";
 	public static final String EMPLOYEE_TYPE = "Employee Type";
 	public static final String HOMEOWNER_TYPE = "Homeowner Type";
@@ -317,4 +317,22 @@ public class PDTConstants {
 	public static final String FAILED_TO_FILL_VALUE_IN_TEXTBOX = "{0}Failed to fill value in ''{1}'' text box on ''{2}'' form.";
 	public static final String FAILED_TO_SELECT_MULTIPLE_OPTIONS = "{0}Failed to select multiple options from ''{1}'' drop down on ''{2}'' form.";
 	public static final String FAILED_TO_FILL_FIELD_VALUES = "Failed to fill value in Flat Amount Per Night and currency drop down fields.";
+	//Home Leave
+	public static final String HOME_LEAVE_TRANSPORTATION = "Home Leave Transportation";
+	public static final String HOME_LEAVE_LODGING = "Home Leave Lodging";
+	public static final String HOME_LEAVE_MEALS = "Home Leave Meals";	
+	public static final String TRANSFER = "Transfer";
+	public static final String ASSIGNMENT = "Assignment";
+	public static final String TRANSFER_NUMTRIPS_NOT_DISPLAYED = "Transfer - Number of Trips textbox field is not displayed";
+	public static final String ASSIGNMENT_NUMTRIPS_NOT_DISPLAYED = "Assignment - Number of Trips textbox field is not displayed";
+	public static final String ASSIGNMENT_FREQTRIPS_NOT_DISPLAYED = "Assignment - Frequency of Trips drop down field is not displayed";
+	public static final String OTHER_TEXTBOX_NOT_DISPLAYED = "Other text box field is not displayed";
+	//Temporary Living
+	public static final String TEMPORARY_LIVING_TRANSPORTATION = "Temporary Living Transportation";
+	public static final String TEMPORARY_LIVING_LODGING = "Temporary Living Lodging";
+	public static final String TEMPORARY_LIVING_MEALS = "Temporary Living Meals";
+	public static final String VERIFIED_RADIO_BTN_DISPLAYED = "{0}Verified ''{1}'' radio button is displayed for ''{2}'' sub benefit form.";;
+	public static final String MISSING_SAVE_AND_SUBMIT_BTN = "Missing Save & Submit button.";
+	public static final String FAILED_TO_CLICK_ON_SAVE_AND_SUBMIT_BTN = "Failed to click on Save & Submit button.";
+	
 }

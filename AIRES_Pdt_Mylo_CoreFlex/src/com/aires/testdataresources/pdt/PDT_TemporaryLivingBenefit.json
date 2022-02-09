@@ -1,0 +1,43 @@
+[
+	{
+		"benefitName": "Temporary Living",
+		"temporaryLivingLodging": {
+			"durationInDays": "3",
+			"maxAmount": "Flat Amount",
+			"flatAmount": "100",
+			"detail": "Monthly",
+			"currencyCode": "U.S. Dollar",
+			"grossUp": "No",
+			"reimbursedBy": "Client",
+			"reimbursedByOther": "Reimbursed by other",
+			"comment": "Temporary Living Lodging comment"
+		},
+		"temporaryLivingMeals": {
+			"durationInDays": "5",
+			"type": "Actual Cost",
+			"maxAmount": "Flat Amount",
+			"maxAmtTransferee": "200",
+			"maxAmtTransfereeDetail": "Per Month",
+			"maxAmtTransfereeCurrency": "U.S. Dollar",
+			"maxAmtAdult": "200",
+			"maxAmtAdultDetail": "Total",
+			"maxAmtAdultCurrency": "U.S. Dollar",
+			"maxAmtChild": "100",
+			"maxAmtChildDetail": "Per Day",
+			"maxAmtChildCurrency": "U.S. Dollar",
+			"grossUp": "Yes",
+			"reimbursedBy": "Other",
+			"reimbursedByOther": "Reimbursed by other",
+			"comment": "Temporary Living Meals comment"
+		},
+		"temporaryLivingTransportation": {
+			"durationInDays": "3",
+			"transportationType": "Rental Car, Public Transport",
+			"transportationTypeOther": "Luxury Bus",
+			"grossUp": "No",
+			"reimbursedBy": "Client",
+			"reimbursedByOther": "Reimbursed by other",
+			"comment": "Temporary Living Transportation comment"
+		}
+	}
+]

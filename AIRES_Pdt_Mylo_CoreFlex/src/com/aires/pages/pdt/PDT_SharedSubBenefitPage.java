@@ -2,10 +2,12 @@ package com.aires.pages.pdt;
 
 import java.text.MessageFormat;
 import java.util.HashMap;
+import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
 
+import org.openqa.selenium.NoSuchElementException;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
@@ -31,25 +33,19 @@ public class PDT_SharedSubBenefitPage extends Base {
 	private List<WebElement> _subBenefitCategories;
 
 	@FindBy(how = How.CSS, using = "a[href='#collapseOne']")
-	private WebElement _formCandidateSelection;
+	private WebElement _lnkFormCollapseOne;
 
 	@FindBy(how = How.CSS, using = "a[href='#collapseTwo']")
-	private WebElement _formPreAcceptanceTripTransportation;
+	private WebElement _lnkFormCollapseTwo;
 
 	@FindBy(how = How.CSS, using = "a[href='#collapseThree']")
-	private WebElement _formPreAcceptanceTripLodging;
+	private WebElement _lnkFormCollapseThree;
 
 	@FindBy(how = How.CSS, using = "a[href='#collapseFour']")
-	private WebElement _formPreAcceptanceTripMeals;
+	private WebElement _lnkFormCollapseFour;
 
 	@FindBy(how = How.CSS, using = "div.card-header-info > h4.card-title")
 	private WebElement _benefitCategoryName;
-
-	@FindBy(how = How.CSS, using = "a[href='#collapseOne']")
-	private WebElement _formImmigrationFees;
-
-	@FindBy(how = How.CSS, using = "a[href='#collapseTwo']")
-	private WebElement _formImmigrationTravel;
 
 	@FindBy(how = How.CSS, using = "button.btn-next[type='submit']")
 	private WebElement _btnSaveAndContinue;
@@ -94,92 +90,13 @@ public class PDT_SharedSubBenefitPage extends Base {
 	private List<WebElement> _tabOnPreAcceptanceTripMeals;
 	
 	@FindBy(how = How.CSS, using = "a[href='#collapseOne1']")
-	private WebElement _formHouseHuntingTripTransportation;
-	
-	@FindBy(how = How.CSS, using = "a[href='#collapseTwo']")
-	private WebElement _formHouseHuntingTripLodging;
-	
-	@FindBy(how = How.CSS, using = "a[href='#collapseThree']")
-	private WebElement _formHouseHuntingTripMeals;
-	
-	@FindBy(how = How.CSS, using = "a[href='#collapseOne1']")
-	private WebElement _formCulturalTrainingEmployee;
-	
-	@FindBy(how = How.CSS, using = "a[href='#collapseTwo']")
-	private WebElement _formCulturalTrainingFamily;
-	
-	@FindBy(how = How.CSS, using = "a[href='#collapseOne1']")
-	private WebElement _formLangTrainingEmployee;
-	
-	@FindBy(how = How.CSS, using = "a[href='#collapseTwo']")
-	private WebElement _formLangTrainingFamily;	
-	
-	@FindBy(how = How.CSS, using = "a[href='#collapseOne1']")
-	private WebElement _formFinalMoveTransportation;
-	
-	@FindBy(how = How.CSS, using = "a[href='#collapseTwo']")
-	private WebElement _formFinalMoveLodging;
-	
-	@FindBy(how = How.CSS, using = "a[href='#collapseThree']")
-	private WebElement _formFinalMoveMeals;	
+	private WebElement _lnkFormCollapseFive;
 	
 	HashMap<String, Boolean> resultMapForTabNameNotMatch = new HashMap<>();
+	LinkedHashMap<String, WebElement> formMap= new LinkedHashMap<String, WebElement>();
 
 	public WebElement getElementByName(String elementName) {
-		WebElement element = null;
-		switch (elementName) {
-		case PDTConstants.CANDIDATE_SELECTION:
-			element = _formCandidateSelection;
-			break;
-		case PDTConstants.PRE_ACCEPTANCE_TRIP_TRANSPORTATION:
-			element = _formPreAcceptanceTripTransportation;
-			break;
-		case PDTConstants.PRE_ACCEPTANCE_TRIP_LODGING:
-			element = _formPreAcceptanceTripLodging;
-			break;
-		case PDTConstants.PRE_ACCEPTANCE_TRIP_MEALS:
-			element = _formPreAcceptanceTripMeals;
-			break;
-		case PDTConstants.IMMIGRATION_FEES:
-			element = _formImmigrationFees;
-			break;
-		case PDTConstants.IMMIGRATION_TRAVEL:
-			element = _formImmigrationTravel;
-			break;
-		case PDTConstants.HOUSE_HUNTING_TRIP_TRANSPORTATION:
-			element = _formHouseHuntingTripTransportation;
-			break;
-		case PDTConstants.HOUSE_HUNTING_TRIP_LODGING:
-			element = _formHouseHuntingTripLodging;
-			break;
-		case PDTConstants.HOUSE_HUNTING_TRIP_MEALS:
-			element = _formHouseHuntingTripMeals;
-			break;
-		case PDTConstants.LANGUAGE_TRAINING_EMPLOYEE:
-			element = _formLangTrainingEmployee;
-			break;
-		case PDTConstants.LANGUAGE_TRAINING_FAMILY:
-			element = _formLangTrainingFamily;
-			break;
-		case PDTConstants.CULTURAL_TRAINING_EMPLOYEE:
-			element = _formCulturalTrainingEmployee;
-			break;
-		case PDTConstants.CULTURAL_TRAINING_FAMILY:
-			element = _formCulturalTrainingFamily;
-			break;
-		case PDTConstants.FINAL_MOVE_TRANSPORTATION:
-			element = _formFinalMoveTransportation;
-			break;
-		case PDTConstants.FINAL_MOVE_LODGING:
-			element = _formFinalMoveLodging;
-			break;
-		case PDTConstants.FINAL_MOVE_MEALS:
-			element = _formFinalMoveMeals;
-			break;
-		default:
-			Assert.fail(MessageFormat.format(PDTConstants.ELEMENT_NOT_FOUND, CoreConstants.FAIL));
-		}
-		return element;
+		return formMap.get(elementName);
 	}
 
 	public List<WebElement> getTabListByName(String elementName) {
@@ -205,15 +122,25 @@ public class PDT_SharedSubBenefitPage extends Base {
 
 	public void iterateAndSelectSubBenefits(String pageName, List<String> subBenefits,
 			PDT_AddNewPolicyPage addNewPolicyPage, PDT_SharedSubBenefit_Steps objStep) {
-//		CoreFunctions.explicitWaitForElementTextPresent(driver, _txtSubBenefitName, pageName, 3);
 		CoreFunctions.explicitWaitTillElementListClickable(driver, _subBenefitCategories);
+		populateFormHeaderElement();
 		for (String subBenefit : subBenefits) {
 			CoreFunctions.selectItemInListByText(driver, _subBenefitCategories, subBenefit, true);
 			Assert.assertTrue(verifyFormIsDisplayed(subBenefit, getElementByName(subBenefit), pageName),
 					MessageFormat.format(PDTConstants.VERIFIED_FORM_IS_NOT_DISPLAYED, subBenefit, pageName));
 			fillSubBenefitForm(subBenefit, addNewPolicyPage, objStep);
 		}
-		CoreFunctions.click(driver, _btnSaveAndContinue, _btnSaveAndContinue.getText());
+		try {
+			CoreFunctions.click(driver, _btnSaveAndContinue, _btnSaveAndContinue.getText());
+		} catch (NoSuchElementException e) {
+			DbFunctions.deletePolicyByPolicyId(addNewPolicyPage.getPolicyId());
+			Assert.fail(PDTConstants.MISSING_SAVE_AND_SUBMIT_BTN);
+	    } 
+		catch (Exception e) {
+			DbFunctions.deletePolicyByPolicyId(addNewPolicyPage.getPolicyId());
+			Assert.fail(PDTConstants.FAILED_TO_CLICK_ON_SAVE_AND_SUBMIT_BTN);
+		}
+		
 	}
 
 	public boolean verifyFormIsDisplayed(String formName, WebElement element, String pageName) {
@@ -227,82 +154,91 @@ public class PDT_SharedSubBenefitPage extends Base {
 
 	public void fillSubBenefitForm(String subBenefit, PDT_AddNewPolicyPage addNewPolicyPage,
 			PDT_SharedSubBenefit_Steps subBenefitSteps) {
+		expandSubBenefitIfCollapsed(getElementByName(subBenefit));
 		switch (subBenefit) {
 		case PDTConstants.CANDIDATE_SELECTION:
-			expandSubBenefitIfCollapsed(getElementByName(PDTConstants.CANDIDATE_SELECTION));
 			subBenefitSteps.getPreAcceptServicePage().fillCandidateSelection(addNewPolicyPage, PDTConstants.CANDIDATE_SELECTION);
 			break;
 		case PDTConstants.PRE_ACCEPTANCE_TRIP_TRANSPORTATION:
-			expandSubBenefitIfCollapsed(getElementByName(PDTConstants.PRE_ACCEPTANCE_TRIP_TRANSPORTATION));
 			subBenefitSteps.getPreAcceptServicePage().fillPreAcceptanceTripTransportation(addNewPolicyPage, PDTConstants.PRE_ACCEPTANCE_TRIP_TRANSPORTATION);
 			break;
 		case PDTConstants.PRE_ACCEPTANCE_TRIP_LODGING:
-			expandSubBenefitIfCollapsed(getElementByName(PDTConstants.PRE_ACCEPTANCE_TRIP_LODGING));
 			subBenefitSteps.getPreAcceptServicePage().fillPreAcceptanceTripLodging(addNewPolicyPage, PDTConstants.PRE_ACCEPTANCE_TRIP_LODGING);
 			break;
 		case PDTConstants.PRE_ACCEPTANCE_TRIP_MEALS:
-			expandSubBenefitIfCollapsed(getElementByName(PDTConstants.PRE_ACCEPTANCE_TRIP_MEALS));
 			subBenefitSteps.getPreAcceptServicePage().fillPreAcceptanceTripMeals(addNewPolicyPage, PDTConstants.PRE_ACCEPTANCE_TRIP_MEALS);
 			break;
 		case PDTConstants.IMMIGRATION_FEES:
-			expandSubBenefitIfCollapsed(getElementByName(PDTConstants.IMMIGRATION_FEES));
 			subBenefitSteps.getImmigrationPage().fillImmigrationFeesForm(addNewPolicyPage,
 					PDTConstants.IMMIGRATION_FEES);
 			break;
 		case PDTConstants.IMMIGRATION_TRAVEL:
-			expandSubBenefitIfCollapsed(getElementByName(PDTConstants.IMMIGRATION_TRAVEL));
 			subBenefitSteps.getImmigrationPage().fillImmigrationTravelForm(addNewPolicyPage,
 					PDTConstants.IMMIGRATION_TRAVEL);
 			break;
 		case PDTConstants.HOUSE_HUNTING_TRIP_TRANSPORTATION:
-			expandSubBenefitIfCollapsed(getElementByName(PDTConstants.HOUSE_HUNTING_TRIP_TRANSPORTATION));
 			subBenefitSteps.getHouseHuntingTripPage().fillHouseHuntingTripTransportationForm(addNewPolicyPage,
 					PDTConstants.HOUSE_HUNTING_TRIP_TRANSPORTATION);
 			break;
 		case PDTConstants.HOUSE_HUNTING_TRIP_LODGING:
-			expandSubBenefitIfCollapsed(getElementByName(PDTConstants.HOUSE_HUNTING_TRIP_LODGING));
 			subBenefitSteps.getHouseHuntingTripPage().fillHouseHuntingTripLodgingForm(addNewPolicyPage,
 					PDTConstants.HOUSE_HUNTING_TRIP_LODGING);
 			break;		
 		case PDTConstants.HOUSE_HUNTING_TRIP_MEALS:
-			expandSubBenefitIfCollapsed(getElementByName(PDTConstants.HOUSE_HUNTING_TRIP_MEALS));
 			subBenefitSteps.getHouseHuntingTripPage().fillHouseHuntingTripMealForm(addNewPolicyPage,
 					PDTConstants.HOUSE_HUNTING_TRIP_MEALS);
 			break;
 		case PDTConstants.LANGUAGE_TRAINING_EMPLOYEE:
-			expandSubBenefitIfCollapsed(getElementByName(PDTConstants.LANGUAGE_TRAINING_EMPLOYEE));
 			subBenefitSteps.getLanguageTrainingPage().fillLanguageTrainingEmployee(addNewPolicyPage,
 					PDTConstants.LANGUAGE_TRAINING_EMPLOYEE);
 			break;
 		case PDTConstants.LANGUAGE_TRAINING_FAMILY:
-			expandSubBenefitIfCollapsed(getElementByName(PDTConstants.LANGUAGE_TRAINING_FAMILY));
 			subBenefitSteps.getLanguageTrainingPage().fillLanguageTrainingFamily(addNewPolicyPage,
 					PDTConstants.LANGUAGE_TRAINING_FAMILY);
 			break;
 		case PDTConstants.CULTURAL_TRAINING_EMPLOYEE:
-			expandSubBenefitIfCollapsed(getElementByName(PDTConstants.CULTURAL_TRAINING_EMPLOYEE));
 			subBenefitSteps.getCulturalTrainingPage().fillCulturalTrainingEmployee(addNewPolicyPage,
 					PDTConstants.CULTURAL_TRAINING_EMPLOYEE);
 			break;
 		case PDTConstants.CULTURAL_TRAINING_FAMILY:
-			expandSubBenefitIfCollapsed(getElementByName(PDTConstants.CULTURAL_TRAINING_FAMILY));
 			subBenefitSteps.getCulturalTrainingPage().fillCulturalTrainingFamily(addNewPolicyPage,
 					PDTConstants.CULTURAL_TRAINING_FAMILY);
 			break;
 		case PDTConstants.FINAL_MOVE_TRANSPORTATION:
-			expandSubBenefitIfCollapsed(getElementByName(PDTConstants.FINAL_MOVE_TRANSPORTATION));			
 			subBenefitSteps.getFinalMovePage().fillFinalMoveTransportationForm(addNewPolicyPage,
 					PDTConstants.FINAL_MOVE_TRANSPORTATION);
 			break;
 		case PDTConstants.FINAL_MOVE_LODGING:
-			expandSubBenefitIfCollapsed(getElementByName(PDTConstants.FINAL_MOVE_LODGING));
 			subBenefitSteps.getFinalMovePage().fillFinalMoveLodgingForm(addNewPolicyPage,
 					PDTConstants.FINAL_MOVE_LODGING);
 			break;
 		case PDTConstants.FINAL_MOVE_MEALS:
-			expandSubBenefitIfCollapsed(getElementByName(PDTConstants.FINAL_MOVE_MEALS));
 			subBenefitSteps.getFinalMovePage().fillFinalMoveMealForm(addNewPolicyPage,
 					PDTConstants.FINAL_MOVE_MEALS);
+			break;
+		case PDTConstants.HOME_LEAVE_TRANSPORTATION:
+			subBenefitSteps.getHomeLeavePage().fillHomeLeaveTransportationForm(addNewPolicyPage,
+					PDTConstants.HOME_LEAVE_TRANSPORTATION, subBenefitSteps.getGeneralInfoPage().getTracingSet());
+			break;
+		case PDTConstants.HOME_LEAVE_LODGING:
+			subBenefitSteps.getHomeLeavePage().fillHomeLeaveLodgingForm(addNewPolicyPage,
+					PDTConstants.HOME_LEAVE_LODGING);
+			break;
+		case PDTConstants.HOME_LEAVE_MEALS:
+			subBenefitSteps.getHomeLeavePage().fillHomeLeaveMealForm(addNewPolicyPage,
+					PDTConstants.HOME_LEAVE_MEALS);
+			break;
+		case PDTConstants.TEMPORARY_LIVING_TRANSPORTATION:			
+			subBenefitSteps.getTemporaryLivingPage().fillTemporaryLivingTransportationForm(addNewPolicyPage,
+					PDTConstants.TEMPORARY_LIVING_TRANSPORTATION);
+			break;
+		case PDTConstants.TEMPORARY_LIVING_LODGING:			
+			subBenefitSteps.getTemporaryLivingPage().fillTemporaryLivingLodgingForm(addNewPolicyPage,
+					PDTConstants.TEMPORARY_LIVING_LODGING);
+			break;
+		case PDTConstants.TEMPORARY_LIVING_MEALS:			
+			subBenefitSteps.getTemporaryLivingPage().fillTemporaryLivingMealsForm(addNewPolicyPage,
+					PDTConstants.TEMPORARY_LIVING_MEALS);
 			break;
 		default:
 			Assert.fail(MessageFormat.format(PDTConstants.ELEMENT_NOT_FOUND, CoreConstants.FAIL));
@@ -509,5 +445,30 @@ public class PDT_SharedSubBenefitPage extends Base {
 				true))
 			Reporter.addStepLog(MessageFormat.format(PDTConstants.FAIL_TO_VERIFY_ELEMENT_VAL_ON_PAGE, CoreConstants.FAIL,
 					PDTConstants.POLICY_BENEFIT_CATEGORY, pageName, pageName, _benefitCategoryName.getText()));
+	}
+	
+	public void populateFormHeaderElement() {
+		formMap.put(PDTConstants.CANDIDATE_SELECTION, _lnkFormCollapseOne);
+		formMap.put(PDTConstants.PRE_ACCEPTANCE_TRIP_TRANSPORTATION, _lnkFormCollapseTwo);
+		formMap.put(PDTConstants.PRE_ACCEPTANCE_TRIP_LODGING, _lnkFormCollapseThree);
+		formMap.put(PDTConstants.PRE_ACCEPTANCE_TRIP_MEALS, _lnkFormCollapseFour);
+		formMap.put(PDTConstants.IMMIGRATION_FEES, _lnkFormCollapseOne);
+		formMap.put(PDTConstants.IMMIGRATION_TRAVEL, _lnkFormCollapseTwo);
+		formMap.put(PDTConstants.HOUSE_HUNTING_TRIP_TRANSPORTATION, _lnkFormCollapseFive);
+		formMap.put(PDTConstants.HOUSE_HUNTING_TRIP_LODGING, _lnkFormCollapseTwo);
+		formMap.put(PDTConstants.HOUSE_HUNTING_TRIP_MEALS, _lnkFormCollapseThree);
+		formMap.put(PDTConstants.LANGUAGE_TRAINING_EMPLOYEE, _lnkFormCollapseFive);
+		formMap.put(PDTConstants.LANGUAGE_TRAINING_FAMILY, _lnkFormCollapseTwo);
+		formMap.put(PDTConstants.CULTURAL_TRAINING_EMPLOYEE, _lnkFormCollapseFive);
+		formMap.put(PDTConstants.CULTURAL_TRAINING_FAMILY, _lnkFormCollapseTwo);
+		formMap.put(PDTConstants.FINAL_MOVE_TRANSPORTATION, _lnkFormCollapseFive);
+		formMap.put(PDTConstants.FINAL_MOVE_LODGING, _lnkFormCollapseTwo);
+		formMap.put(PDTConstants.FINAL_MOVE_MEALS, _lnkFormCollapseThree);
+		formMap.put(PDTConstants.HOME_LEAVE_TRANSPORTATION, _lnkFormCollapseFive);
+		formMap.put(PDTConstants.HOME_LEAVE_LODGING, _lnkFormCollapseTwo);
+		formMap.put(PDTConstants.HOME_LEAVE_MEALS, _lnkFormCollapseThree);
+		formMap.put(PDTConstants.TEMPORARY_LIVING_LODGING, _lnkFormCollapseFive);
+		formMap.put(PDTConstants.TEMPORARY_LIVING_MEALS, _lnkFormCollapseTwo);
+		formMap.put(PDTConstants.TEMPORARY_LIVING_TRANSPORTATION, _lnkFormCollapseThree);
 	}
 }

@@ -113,7 +113,7 @@ public class PDT_GeneralInformationPage extends Base {
 	@FindBy(how = How.CSS, using = "button.btn-next")
 	private WebElement _btnNext;
 
-	@FindBy(how = How.XPATH, using = "//label[text()='Policy Type']")
+	@FindBy(how = How.XPATH, using = "//label[text()='Policy Geographic Scope']")
 	private WebElement _lblPolicyType;
 
 	@FindBy(how = How.XPATH, using = "//label[text()='Employee Type']")

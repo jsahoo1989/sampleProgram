@@ -327,6 +327,10 @@ public class PDTConstants {
 	public static final String ASSIGNMENT_NUMTRIPS_NOT_DISPLAYED = "Assignment - Number of Trips textbox field is not displayed";
 	public static final String ASSIGNMENT_FREQTRIPS_NOT_DISPLAYED = "Assignment - Frequency of Trips drop down field is not displayed";
 	public static final String OTHER_TEXTBOX_NOT_DISPLAYED = "Other text box field is not displayed";
+	public static final String INVALID_TRACINGSET = "Option ''{0}'' is invalid Tracing set.";
+	public static final String FAILED_TO_VERIFY_OTHER_TEXT_BOX = "Failed to verify other textbox"; 
+	public static final String FAILED_TO_VERIFY_FLAT_AMT = "Failed to verify Flat amount option for Max Amount";
+	public static final String WEB_ELEMENT_NOT_FOUND_ON_PAGE = "{0}Web element ''{1}'' not found on page.";
 	//Temporary Living
 	public static final String TEMPORARY_LIVING_TRANSPORTATION = "Temporary Living Transportation";
 	public static final String TEMPORARY_LIVING_LODGING = "Temporary Living Lodging";

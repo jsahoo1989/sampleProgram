@@ -24,70 +24,70 @@ public class PDT_HomeLeavePage extends Base {
 	public PDT_HomeLeavePage(WebDriver driver) {
 		super(driver);
 	}
-	
+
 	@FindBy(how = How.XPATH, using = "//label[text()='TRANSFER - Number of Trips']")
 	private WebElement _lblTransferNumOfTrips;
-	
+
 	@FindBy(how = How.CSS, using = "input[formcontrolname='transferTrip']")
-	private WebElement _txtBoxTransferNumOfTrips;	
-	
+	private WebElement _txtBoxTransferNumOfTrips;
+
 	@FindBy(how = How.XPATH, using = "//label[contains(text(),'ASSIGNMENT - Number of Trips')]")
 	private WebElement _lblAssignmentNumOfTrips;
-	
+
 	@FindBy(how = How.CSS, using = "input[formcontrolname='assignmentTrip']")
 	private WebElement _txtBoxAssignmentTrip;
-	
+
 	@FindBy(how = How.XPATH, using = "//label[contains(text(),'ASSIGNMENT - Frequency of Trips')]")
 	private WebElement _lblFrequencyOfTrips;
-	
+
 	@FindBy(how = How.CSS, using = "ng-select[formcontrolname='assignmentFreqOfTripCode']")
 	private WebElement _drpDownFrequencyOfTrip;
-	
+
 	@FindBy(how = How.CSS, using = "ng-select[formcontrolname='assignmentFreqOfTripCode'] span.ng-option-label.ng-star-inserted")
 	private List<WebElement> _drpDownFrequencyOfTripOptions;
-	
+
 	@FindBy(how = How.CSS, using = "ng-select[formcontrolname='assignmentFreqOfTripCode'] span.ng-value-label.ng-star-inserted")
 	private WebElement _drpDownFrequencyOfTripOptionsSelected;
-	
+
 	@FindBy(how = How.CSS, using = "input[formcontrolname='assignmentFreqOfTripOther']")
 	private WebElement _txtBoxFrequencyOfTripOther;
-	
+
 	@FindBy(how = How.XPATH, using = "//label[text()='Transportation Type']")
 	private WebElement _lblTransportationType;
-	
+
 	@FindBy(how = How.CSS, using = "ng-select[formcontrolname='homeLeaveTransportTypeList']")
 	private WebElement _drpDownTransportationType;
-	
+
 	@FindBy(how = How.CSS, using = "ng-select[formcontrolname='homeLeaveTransportTypeList'] span.ng-option-label.ng-star-inserted")
 	private List<WebElement> _drpDownTransportationTypeOptions;
-	
+
 	@FindBy(how = How.CSS, using = "ng-select[formcontrolname='homeLeaveTransportTypeList'] span.ng-value-label")
 	private List<WebElement> _drpDownTransportationTypeMultiSelectOptions;
-	
+
 	@FindBy(how = How.XPATH, using = "//label[contains(text(),'Min. Mileage for Economy Air Travel')]")
 	private WebElement _lblMinMileageEconomyAir;
-	
+
 	@FindBy(how = How.CSS, using = "input[formcontrolname='economyMinMileage']")
 	private WebElement _txtBoxMinMileageEconomy;
-	
+
 	@FindBy(how = How.XPATH, using = "//label[contains(text(),'Min. Mileage for Business Air Travel')]")
 	private WebElement _lblMinMileageBusiness;
-	
+
 	@FindBy(how = How.CSS, using = "input[formcontrolname='businessMinMileage']")
 	private WebElement _txtBoxMinMileageBusiness;
-	
+
 	@FindBy(how = How.XPATH, using = "//label[contains(text(),'Accompanying Family Members')]")
 	private WebElement _lblAccompFamilyMember;
-	
+
 	@FindBy(how = How.CSS, using = "ng-select[formcontrolname='accompanyingFamilyMemberCode']")
 	private WebElement _drpDownAccompFamilyMember;
-	
+
 	@FindBy(how = How.CSS, using = "ng-select[formcontrolname='accompanyingFamilyMemberCode'] span.ng-option-label.ng-star-inserted")
 	private List<WebElement> _drpDownAccompFamilyMemberOptions;
-	
+
 	@FindBy(how = How.CSS, using = "ng-select[formcontrolname='accompanyingFamilyMemberCode'] span.ng-value-label.ng-star-inserted")
 	private WebElement _drpDownAccompFamilyMemberOptionSelected;
-		
+
 	@FindBy(how = How.CSS, using = "app-transporation label.form-check-label")
 	private List<WebElement> _radioBtnHomeLeaveTransportation;
 
@@ -96,13 +96,13 @@ public class PDT_HomeLeavePage extends Base {
 
 	@FindBy(how = How.CSS, using = "app-transporation textArea[formcontrolname='benefitComment']")
 	private WebElement _txtAreaHomeLeaveTransportComment;
-	
+
 	@FindBy(how = How.XPATH, using = "//label[contains(text(),'Duration (Days)')]")
-	private WebElement _lblDurationInDays;	
-	
+	private WebElement _lblDurationInDays;
+
 	@FindBy(how = How.CSS, using = "app-lodging input[formcontrolname='numOfDays']")
 	private WebElement _txtBoxDurationInDays;
-	
+
 	@FindBy(how = How.CSS, using = "app-lodging label.form-check-label")
 	private List<WebElement> _radioBtnHomeLeaveLodging;
 
@@ -111,50 +111,50 @@ public class PDT_HomeLeavePage extends Base {
 
 	@FindBy(how = How.CSS, using = "app-lodging textArea[formcontrolname='benefitComment']")
 	private WebElement _txtAreaHomeLeaveLodgingComment;
-	
-	//Home Leave Meals	
+
+	// Home Leave Meals
 	@FindBy(how = How.XPATH, using = "//label[contains(text(),'Duration Number of Days for Meals')]")
-	private WebElement _lblNumOfDaysForMeals;	
-	
+	private WebElement _lblNumOfDaysForMeals;
+
 	@FindBy(how = How.CSS, using = "app-meals input[formcontrolname='numOfDays']")
 	private WebElement _txtBoxHomeNumOfDaysForMeals;
-	
-	@FindBy(how = How.XPATH, using = "//label[contains(text(),'Type')]")
+
+	@FindBy(how = How.XPATH, using = "//label[text()='Type']")
 	private WebElement _lblType;
-	
+
 	@FindBy(how = How.XPATH, using = "//label[contains(text(),'Max. Amount')]")
 	private WebElement _lblMaxAmount;
-	
+
 	@FindBy(how = How.CSS, using = "ng-select[formcontrolname='maxAmountCode']")
 	private WebElement _drpDownMaxAmtMeals;
-	
+
 	@FindBy(how = How.CSS, using = "ng-select[formcontrolname='maxAmountCode'] span.ng-option-label")
 	private List<WebElement> _drpDownMaxAmtMealsOptions;
-	
+
 	@FindBy(how = How.CSS, using = "ng-select[formcontrolname='maxAmountCode'] span.ng-value-label")
 	private WebElement _drpDownMaxAmtMealsOptionsSelected;
-	
+
 	@FindBy(how = How.XPATH, using = "//label[contains(text(),'Max Amount - Transferee')]")
 	private WebElement _lblMaxAmtTransferee;
-	
+
 	@FindBy(how = How.CSS, using = "input[formcontrolname='maxAmountEe']")
 	private WebElement _txtBoxMaxAmtTransferee;
-	
+
 	@FindBy(how = How.XPATH, using = "//input[@formcontrolname='detailEeCode']/parent::label[contains(@class,'form-check-label')]")
 	private List<WebElement> _radioDetailTransfereeCode;
 
 	@FindBy(how = How.CSS, using = "ng-select[formcontrolname='currencyCodeEe']")
 	private WebElement _drpDownTransfereeCurrency;
-	
+
 	@FindBy(how = How.CSS, using = "ng-select[formcontrolname='currencyCodeEe'] span.ng-option-label")
 	private List<WebElement> _drpDownTransfereeCurrencyOptions;
 
 	@FindBy(how = How.CSS, using = "ng-select[formcontrolname='currencyCodeEe'] span.ng-value-label")
 	private WebElement _drpDownTransfereeCurrencyOptionSelected;
-	
+
 	@FindBy(how = How.XPATH, using = "//label[contains(text(),'Max Amount - Other Adults')]")
 	private WebElement _lblMaxAmtOtherAdults;
-	
+
 	@FindBy(how = How.CSS, using = "input[formcontrolname='maxAmountAdult']")
 	private WebElement _txtBoxMaxAmtAdult;
 
@@ -163,16 +163,16 @@ public class PDT_HomeLeavePage extends Base {
 
 	@FindBy(how = How.CSS, using = "ng-select[formcontrolname='currencyCodeAdult']")
 	private WebElement _drpDownAdultCurrency;
-	
+
 	@FindBy(how = How.CSS, using = "ng-select[formcontrolname='currencyCodeAdult'] span.ng-option-label")
 	private List<WebElement> _drpDownAdultCurrencyOptions;
 
 	@FindBy(how = How.CSS, using = "ng-select[formcontrolname='currencyCodeAdult'] span.ng-value-label")
 	private WebElement _drpDownAdultCurrencyOptionSelected;
-	
+
 	@FindBy(how = How.XPATH, using = "//label[contains(text(),'Max Amount - Children')]")
 	private WebElement _lblMaxAmtChildren;
-	
+
 	@FindBy(how = How.CSS, using = "input[formcontrolname='maxAmountChild']")
 	private WebElement _txtBoxMaxAmtChild;
 
@@ -186,8 +186,8 @@ public class PDT_HomeLeavePage extends Base {
 	private List<WebElement> _drpDownCurrencyCodeChildOptions;
 
 	@FindBy(how = How.CSS, using = "ng-select[formcontrolname='currencyCodeChild'] span.ng-value-label")
-	private WebElement _drpDownCurrencyCodeChildOptionSelected;	
-	
+	private WebElement _drpDownCurrencyCodeChildOptionSelected;
+
 	@FindBy(how = How.CSS, using = "app-meals label.form-check-label")
 	private List<WebElement> _radioBtnHomeLeaveMeals;
 
@@ -196,20 +196,20 @@ public class PDT_HomeLeavePage extends Base {
 
 	@FindBy(how = How.CSS, using = "app-meals textArea[formcontrolname='benefitComment']")
 	private WebElement _txtAreaHomeLeaveMealsComment;
-	
+
 	PDT_HomeLeaveBenefit homeLeaveBenefitData = FileReaderManager.getInstance().getJsonReader()
 			.getHomeLeaveDataList("Home Leave");
-	
+
 	private String transportType, accompanyingFamilyMemeber, maxAmtHomeLeaveMeals, frequencyOfTrips;
 
 	public void setTransportType(String transType) {
-	transportType = transType;
+		transportType = transType;
 	}
-	
+
 	public String getTransportType() {
 		return transportType;
 	}
-	
+
 	public void setAccompanyingFamilyMember(String accFamilyMem) {
 		accompanyingFamilyMemeber = accFamilyMem;
 	}
@@ -217,7 +217,7 @@ public class PDT_HomeLeavePage extends Base {
 	public String getAccompanyingFamilyMember() {
 		return accompanyingFamilyMemeber;
 	}
-	
+
 	public void setMaxAmtHomeLeaveMeals(String maxAmt) {
 		maxAmtHomeLeaveMeals = maxAmt;
 	}
@@ -225,7 +225,7 @@ public class PDT_HomeLeavePage extends Base {
 	public String getMaxAmtHomeLeaveMeals() {
 		return maxAmtHomeLeaveMeals;
 	}
-	
+
 	public void setFrequencyOfTrips(String freqTrips) {
 		frequencyOfTrips = freqTrips;
 	}
@@ -233,7 +233,7 @@ public class PDT_HomeLeavePage extends Base {
 	public String getFrequencyOfTrips() {
 		return frequencyOfTrips;
 	}
-	
+
 	public void selectRandomTransportTypeOption(PDT_AddNewPolicyPage addNewPolicyPage, String subBenefitFormName) {
 		try {
 			CoreFunctions.clickElement(driver, _drpDownTransportationType);
@@ -253,70 +253,74 @@ public class PDT_HomeLeavePage extends Base {
 			setTransportType(randTransportTypeOption);
 		} catch (Exception e) {
 			DbFunctions.deletePolicyByPolicyId(addNewPolicyPage.getPolicyId());
-			Assert.fail(MessageFormat.format(PDTConstants.FAILED_TO_SELECT_MULTIPLE_OPTIONS, CoreConstants.FAIL, _lblTransportationType.getText(), subBenefitFormName));
+			Assert.fail(MessageFormat.format(PDTConstants.FAILED_TO_SELECT_MULTIPLE_OPTIONS, CoreConstants.FAIL,
+					_lblTransportationType.getText(), subBenefitFormName));
 		}
 	}
-	
-	public void verifyAndFillTransferNumberOfTrips(PDT_AddNewPolicyPage addNewPolicyPage,
-			String subBenefitFormName) {
-		if(CoreFunctions.isElementExist(driver, _txtBoxTransferNumOfTrips, 1)) {
-			Reporter.addStepLog(MessageFormat.format(PDTConstants.VERIFIED_TEXT_BOX_FIELD_DISPLAYED,
-					CoreConstants.PASS, _lblTransferNumOfTrips.getText(), subBenefitFormName));
+
+	public void verifyAndFillTransferNumberOfTrips(PDT_AddNewPolicyPage addNewPolicyPage, String subBenefitFormName) {
+		if (CoreFunctions.isElementExist(driver, _txtBoxTransferNumOfTrips, 1)) {
+			Reporter.addStepLog(MessageFormat.format(PDTConstants.VERIFIED_TEXT_BOX_FIELD_DISPLAYED, CoreConstants.PASS,
+					_lblTransferNumOfTrips.getText(), subBenefitFormName));
 			CoreFunctions.clearAndSetText(driver, _txtBoxTransferNumOfTrips, _lblTransferNumOfTrips.getText(),
 					homeLeaveBenefitData.homeLeaveTransportation.transferNumberOfTrips);
 		} else {
 			DbFunctions.deletePolicyByPolicyId(addNewPolicyPage.getPolicyId());
 			Assert.fail(PDTConstants.TRANSFER_NUMTRIPS_NOT_DISPLAYED);
 		}
-		
+
 	}
-	
-	public void verifyAndFillAssignmentNumberOfTrips(PDT_AddNewPolicyPage addNewPolicyPage,
-			String subBenefitFormName) {
-		if(CoreFunctions.isElementExist(driver, _txtBoxAssignmentTrip, 1)) {
-			Reporter.addStepLog(MessageFormat.format(PDTConstants.VERIFIED_TEXT_BOX_FIELD_DISPLAYED,
-					CoreConstants.PASS, _lblAssignmentNumOfTrips.getText(), subBenefitFormName));
+
+	public void verifyAndFillAssignmentNumberOfTrips(PDT_AddNewPolicyPage addNewPolicyPage, String subBenefitFormName) {
+		if (CoreFunctions.isElementExist(driver, _txtBoxAssignmentTrip, 1)) {
+			Reporter.addStepLog(MessageFormat.format(PDTConstants.VERIFIED_TEXT_BOX_FIELD_DISPLAYED, CoreConstants.PASS,
+					_lblAssignmentNumOfTrips.getText(), subBenefitFormName));
 			CoreFunctions.clearAndSetText(driver, _txtBoxAssignmentTrip, _lblAssignmentNumOfTrips.getText(),
 					homeLeaveBenefitData.homeLeaveTransportation.assignmentNumberOfTrips);
 		} else {
 			DbFunctions.deletePolicyByPolicyId(addNewPolicyPage.getPolicyId());
 			Assert.fail(PDTConstants.ASSIGNMENT_NUMTRIPS_NOT_DISPLAYED);
-		}		
+		}
 	}
-	
-	public void verifyAndSelectFrequencyOfTrips(PDT_AddNewPolicyPage addNewPolicyPage,
-			String subBenefitFormName) {
-		if(CoreFunctions.isElementExist(driver, _drpDownFrequencyOfTrip, 1)) {
-			Reporter.addStepLog(MessageFormat.format(PDTConstants.VERIFIED_DROP_DWN_FIELD_DISPLAYED,
-					CoreConstants.PASS, _lblFrequencyOfTrips.getText(), subBenefitFormName));
-			String randFrequencyOfTrips = BusinessFunctions.selectAndReturnRandomValueFromDropDown(driver, addNewPolicyPage, subBenefitFormName,
-					_drpDownFrequencyOfTrip, _drpDownFrequencyOfTripOptions,
+
+	public void verifyAndSelectFrequencyOfTrips(PDT_AddNewPolicyPage addNewPolicyPage, String subBenefitFormName) {
+		if (CoreFunctions.isElementExist(driver, _drpDownFrequencyOfTrip, 1)) {
+			Reporter.addStepLog(MessageFormat.format(PDTConstants.VERIFIED_DROP_DWN_FIELD_DISPLAYED, CoreConstants.PASS,
+					_lblFrequencyOfTrips.getText(), subBenefitFormName));
+			String randFrequencyOfTrips = BusinessFunctions.selectAndReturnRandomValueFromDropDown(driver,
+					addNewPolicyPage, subBenefitFormName, _drpDownFrequencyOfTrip, _drpDownFrequencyOfTripOptions,
 					_drpDownFrequencyOfTripOptionsSelected, _lblFrequencyOfTrips);
 			setFrequencyOfTrips(randFrequencyOfTrips);
-			verifyAndFillOtherFreq(addNewPolicyPage, subBenefitFormName);
-			
+			verifyAndFillOtherFreq(addNewPolicyPage, subBenefitFormName, randFrequencyOfTrips);
 		} else {
 			DbFunctions.deletePolicyByPolicyId(addNewPolicyPage.getPolicyId());
 			Assert.fail(PDTConstants.ASSIGNMENT_FREQTRIPS_NOT_DISPLAYED);
-		}		
-	}
-	
-	public void verifyAndFillOtherFreq(PDT_AddNewPolicyPage addNewPolicyPage,
-			String subBenefitFormName) {
-		if(_drpDownFrequencyOfTripOptionsSelected.getText().equalsIgnoreCase(PDTConstants.OTHER) && CoreFunctions.isElementExist(driver, _txtBoxFrequencyOfTripOther, 1)) {
-			Reporter.addStepLog(MessageFormat.format(PDTConstants.VERIFIED_TEXT_BOX_FIELD_DISPLAYED,
-					CoreConstants.PASS, PDTConstants.OTHER, subBenefitFormName));
-			CoreFunctions.clearAndSetText(driver, _txtBoxFrequencyOfTripOther, PDTConstants.OTHER,
-					homeLeaveBenefitData.homeLeaveTransportation.frequencyTripOther);
-		} else if(_drpDownFrequencyOfTripOptionsSelected.getText().equalsIgnoreCase(PDTConstants.OTHER) && !CoreFunctions.isElementExist(driver, _txtBoxFrequencyOfTripOther, 1)) {
-			DbFunctions.deletePolicyByPolicyId(addNewPolicyPage.getPolicyId());
-			Assert.fail(PDTConstants.OTHER_TEXTBOX_NOT_DISPLAYED);
 		}
 	}
-	
+
+	public void verifyAndFillOtherFreq(PDT_AddNewPolicyPage addNewPolicyPage, String subBenefitFormName,
+			String randFrequencyOfTrips) {
+		try {
+			if (_drpDownFrequencyOfTripOptionsSelected.getText().equalsIgnoreCase(PDTConstants.OTHER)
+					&& CoreFunctions.isElementExist(driver, _txtBoxFrequencyOfTripOther, 1)) {
+				Reporter.addStepLog(MessageFormat.format(PDTConstants.VERIFIED_TEXT_BOX_FIELD_DISPLAYED,
+						CoreConstants.PASS, PDTConstants.OTHER, subBenefitFormName));
+				CoreFunctions.clearAndSetText(driver, _txtBoxFrequencyOfTripOther, PDTConstants.OTHER,
+						homeLeaveBenefitData.homeLeaveTransportation.frequencyTripOther);
+			} else if (_drpDownFrequencyOfTripOptionsSelected.getText().equalsIgnoreCase(PDTConstants.OTHER)
+					&& !CoreFunctions.isElementExist(driver, _txtBoxFrequencyOfTripOther, 1)) {
+				DbFunctions.deletePolicyByPolicyId(addNewPolicyPage.getPolicyId());
+				Assert.fail(PDTConstants.OTHER_TEXTBOX_NOT_DISPLAYED);
+			}
+		} catch (Exception e) {
+			DbFunctions.deletePolicyByPolicyId(addNewPolicyPage.getPolicyId());
+			Assert.fail(PDTConstants.FAILED_TO_VERIFY_OTHER_TEXT_BOX);
+		}
+	}
+
 	public void verifyAndFillNumberOfTripsBasedOnTracingSetValue(PDT_AddNewPolicyPage addNewPolicyPage,
 			String subBenefitFormName, String tracingSetVal) {
-		switch(tracingSetVal) {
+		switch (tracingSetVal) {
 		case PDTConstants.TRANSFER:
 			verifyAndFillTransferNumberOfTrips(addNewPolicyPage, subBenefitFormName);
 			break;
@@ -324,25 +328,25 @@ public class PDT_HomeLeavePage extends Base {
 			verifyAndFillAssignmentNumberOfTrips(addNewPolicyPage, subBenefitFormName);
 			verifyAndSelectFrequencyOfTrips(addNewPolicyPage, subBenefitFormName);
 			break;
+		default:
+			Assert.fail(MessageFormat.format(PDTConstants.INVALID_TRACINGSET, tracingSetVal));
 		}
 	}
-	
-	public void fillHomeLeaveTransportationForm(PDT_AddNewPolicyPage addNewPolicyPage,
-			String subBenefitFormName, String tracingSet) {
+
+	public void fillHomeLeaveTransportationForm(PDT_AddNewPolicyPage addNewPolicyPage, String subBenefitFormName,
+			String tracingSet) {
 		try {
 			CoreFunctions.explicitWaitTillElementVisibility(driver, _lblTransportationType,
 					_lblTransportationType.getText());
-			Log.info("Tracing set="+tracingSet);
 			verifyAndFillNumberOfTripsBasedOnTracingSetValue(addNewPolicyPage, subBenefitFormName, tracingSet);
 			selectRandomTransportTypeOption(addNewPolicyPage, subBenefitFormName);
 			CoreFunctions.clickElement(driver, _txtBoxMinMileageEconomy);
 			CoreFunctions.clearAndSetText(driver, _txtBoxMinMileageEconomy, _lblMinMileageEconomyAir.getText(),
 					homeLeaveBenefitData.homeLeaveTransportation.minMileageEconomyAir);
-			CoreFunctions.clearAndSetText(driver, _txtBoxMinMileageBusiness,
-					_lblMinMileageBusiness.getText(),
+			CoreFunctions.clearAndSetText(driver, _txtBoxMinMileageBusiness, _lblMinMileageBusiness.getText(),
 					homeLeaveBenefitData.homeLeaveTransportation.minMileageBusinessAir);
-			String randAccompanyingFamilMember = BusinessFunctions.selectAndReturnRandomValueFromDropDown(driver, addNewPolicyPage, subBenefitFormName,
-					_drpDownAccompFamilyMember, _drpDownAccompFamilyMemberOptions,
+			String randAccompanyingFamilMember = BusinessFunctions.selectAndReturnRandomValueFromDropDown(driver,
+					addNewPolicyPage, subBenefitFormName, _drpDownAccompFamilyMember, _drpDownAccompFamilyMemberOptions,
 					_drpDownAccompFamilyMemberOptionSelected, _lblAccompFamilyMember);
 			setAccompanyingFamilyMember(randAccompanyingFamilMember);
 			CoreFunctions.explicitWaitTillElementListClickable(driver, _radioBtnHomeLeaveTransportation);
@@ -360,16 +364,18 @@ public class PDT_HomeLeavePage extends Base {
 					homeLeaveBenefitData.homeLeaveTransportation.comment);
 		} catch (Exception e) {
 			DbFunctions.deletePolicyByPolicyId(addNewPolicyPage.getPolicyId());
-			Assert.fail(MessageFormat.format(PDTConstants.FAILED_TO_FILL_SUB_BENEFIT_FORM, CoreConstants.FAIL, subBenefitFormName));
+			Assert.fail(MessageFormat.format(PDTConstants.FAILED_TO_FILL_SUB_BENEFIT_FORM, CoreConstants.FAIL,
+					subBenefitFormName));
 		}
 	}
-	
+
 	public void fillHomeLeaveLodgingForm(PDT_AddNewPolicyPage addNewPolicyPage, String subBenefitFormName) {
 		try {
-			CoreFunctions.explicitWaitTillElementVisibility(driver, _txtBoxDurationInDays, _lblDurationInDays.getText());
+			CoreFunctions.explicitWaitTillElementVisibility(driver, _txtBoxDurationInDays,
+					_lblDurationInDays.getText());
 			CoreFunctions.clearAndSetText(driver, _txtBoxDurationInDays, _lblDurationInDays.getText(),
 					homeLeaveBenefitData.homeLeaveLodging.durationInDays);
-			
+
 			CoreFunctions.explicitWaitTillElementListClickable(driver, _radioBtnHomeLeaveLodging);
 			CoreFunctions.selectItemInListByText(driver, _radioBtnHomeLeaveLodging,
 					homeLeaveBenefitData.homeLeaveLodging.grossUp, PDTConstants.GROSS_UP,
@@ -378,22 +384,27 @@ public class PDT_HomeLeavePage extends Base {
 					homeLeaveBenefitData.homeLeaveLodging.reimbursedBy, PDTConstants.REIMBURSED_BY,
 					PDTConstants.RADIO_BUTTON_LIST, true);
 			BusinessFunctions.verifyReimbursedByOtherTextBoxIsDisplayed(driver, addNewPolicyPage,
-					homeLeaveBenefitData.homeLeaveLodging.reimbursedBy,
-					_txtBoxHomeLeaveLodgingReimbursedByOther,
+					homeLeaveBenefitData.homeLeaveLodging.reimbursedBy, _txtBoxHomeLeaveLodgingReimbursedByOther,
 					homeLeaveBenefitData.homeLeaveLodging.reimbursedByOther, subBenefitFormName);
 			CoreFunctions.clearAndSetText(driver, _txtAreaHomeLeaveLodgingComment, PDTConstants.COMMENT,
 					homeLeaveBenefitData.homeLeaveLodging.comment);
 		} catch (Exception e) {
 			DbFunctions.deletePolicyByPolicyId(addNewPolicyPage.getPolicyId());
-			Assert.fail(MessageFormat.format(PDTConstants.FAILED_TO_FILL_SUB_BENEFIT_FORM, CoreConstants.FAIL, subBenefitFormName));
+			Assert.fail(MessageFormat.format(PDTConstants.FAILED_TO_FILL_SUB_BENEFIT_FORM, CoreConstants.FAIL,
+					subBenefitFormName));
 		}
 	}
-	
+
 	public void checkIfFlatAmtIsSelected(PDT_AddNewPolicyPage addNewPolicyPage, String subBenefitFormName) {
-		if (_drpDownMaxAmtMealsOptionsSelected.getText().equalsIgnoreCase(PDTConstants.FLAT_AMT)) {
-			verifyAndFillTransfereeMealInfo(addNewPolicyPage, subBenefitFormName);
-			verifyAndFillAdultMealInfo(addNewPolicyPage, subBenefitFormName);
-			verifyAndFillChildMealInfo(addNewPolicyPage, subBenefitFormName);
+		try {
+			if (_drpDownMaxAmtMealsOptionsSelected.getText().equalsIgnoreCase(PDTConstants.FLAT_AMT)) {
+				verifyAndFillTransfereeMealInfo(addNewPolicyPage, subBenefitFormName);
+				verifyAndFillAdultMealInfo(addNewPolicyPage, subBenefitFormName);
+				verifyAndFillChildMealInfo(addNewPolicyPage, subBenefitFormName);
+			}
+		} catch (Exception e) {
+			DbFunctions.deletePolicyByPolicyId(addNewPolicyPage.getPolicyId());
+			Assert.fail(PDTConstants.FAILED_TO_VERIFY_FLAT_AMT);
 		}
 	}
 
@@ -412,12 +423,13 @@ public class PDT_HomeLeavePage extends Base {
 						PDTConstants.RADIO_BUTTON_LIST, true);
 				CoreFunctions.clickElement(driver, _drpDownTransfereeCurrency);
 				CoreFunctions.selectItemInListByText(driver, _drpDownTransfereeCurrencyOptions,
-						homeLeaveBenefitData.homeLeaveMeals.maxAmtTransfereeCurrency,
-						PDTConstants.CURRENCY, PDTConstants.DROP_DOWN, true);
+						homeLeaveBenefitData.homeLeaveMeals.maxAmtTransfereeCurrency, PDTConstants.CURRENCY,
+						PDTConstants.DROP_DOWN, true);
 			}
 		} catch (Exception e) {
-			DbFunctions.deletePolicyByPolicyId(addNewPolicyPage.getPolicyId());			
-			Assert.fail(MessageFormat.format(PDTConstants.FAILED_TO_FILL_INFO, CoreConstants.FAIL, PDTConstants.TRANSFEREE_INFO, subBenefitFormName));
+			DbFunctions.deletePolicyByPolicyId(addNewPolicyPage.getPolicyId());
+			Assert.fail(MessageFormat.format(PDTConstants.FAILED_TO_FILL_INFO, CoreConstants.FAIL,
+					PDTConstants.TRANSFEREE_INFO, subBenefitFormName));
 		}
 	}
 
@@ -441,7 +453,8 @@ public class PDT_HomeLeavePage extends Base {
 			}
 		} catch (Exception e) {
 			DbFunctions.deletePolicyByPolicyId(addNewPolicyPage.getPolicyId());
-			Assert.fail(MessageFormat.format(PDTConstants.FAILED_TO_FILL_INFO, CoreConstants.FAIL, PDTConstants.ADULT_INFO, subBenefitFormName));
+			Assert.fail(MessageFormat.format(PDTConstants.FAILED_TO_FILL_INFO, CoreConstants.FAIL,
+					PDTConstants.ADULT_INFO, subBenefitFormName));
 		}
 	}
 
@@ -465,48 +478,46 @@ public class PDT_HomeLeavePage extends Base {
 			}
 		} catch (Exception e) {
 			DbFunctions.deletePolicyByPolicyId(addNewPolicyPage.getPolicyId());
-			Assert.fail(MessageFormat.format(PDTConstants.FAILED_TO_FILL_INFO, CoreConstants.FAIL, PDTConstants.CHILDREN_INFO, subBenefitFormName));
+			Assert.fail(MessageFormat.format(PDTConstants.FAILED_TO_FILL_INFO, CoreConstants.FAIL,
+					PDTConstants.CHILDREN_INFO, subBenefitFormName));
 		}
 	}
-	
+
 	public void fillHomeLeaveMealForm(PDT_AddNewPolicyPage addNewPolicyPage, String subBenefitFormName) {
 		try {
-			CoreFunctions.explicitWaitTillElementVisibility(driver, _txtBoxHomeNumOfDaysForMeals,  _lblNumOfDaysForMeals.getText());
-			CoreFunctions.clearAndSetText(driver, _txtBoxHomeNumOfDaysForMeals, PDTConstants.COMMENT,
+			CoreFunctions.explicitWaitTillElementVisibility(driver, _txtBoxHomeNumOfDaysForMeals,
+					_lblNumOfDaysForMeals.getText());
+			CoreFunctions.clearAndSetText(driver, _txtBoxHomeNumOfDaysForMeals, _lblNumOfDaysForMeals.getText(),
 					homeLeaveBenefitData.homeLeaveMeals.numberOfDaysPerMeal);
 			CoreFunctions.explicitWaitTillElementListClickable(driver, _radioBtnHomeLeaveMeals);
 			CoreFunctions.selectItemInListByText(driver, _radioBtnHomeLeaveMeals,
-					homeLeaveBenefitData.homeLeaveMeals.type, _lblType.getText(),
-					PDTConstants.RADIO_BUTTON_LIST, true);
-			
-	
-			
-			String maxAmt = BusinessFunctions.selectAndReturnRandomValueFromDropDown(driver, addNewPolicyPage, subBenefitFormName,
-					_drpDownMaxAmtMeals, _drpDownMaxAmtMealsOptions,
+					homeLeaveBenefitData.homeLeaveMeals.type, _lblType.getText(), PDTConstants.RADIO_BUTTON_LIST, true);
+
+			String maxAmt = BusinessFunctions.selectAndReturnRandomValueFromDropDown(driver, addNewPolicyPage,
+					subBenefitFormName, _drpDownMaxAmtMeals, _drpDownMaxAmtMealsOptions,
 					_drpDownMaxAmtMealsOptionsSelected, _lblMaxAmount);
 			setMaxAmtHomeLeaveMeals(maxAmt);
 			checkIfFlatAmtIsSelected(addNewPolicyPage, subBenefitFormName);
-			
+
 			CoreFunctions.selectItemInListByText(driver, _radioBtnHomeLeaveMeals,
-					homeLeaveBenefitData.homeLeaveMeals.grossUp, PDTConstants.GROSS_UP,
-					PDTConstants.RADIO_BUTTON_LIST, true);
+					homeLeaveBenefitData.homeLeaveMeals.grossUp, PDTConstants.GROSS_UP, PDTConstants.RADIO_BUTTON_LIST,
+					true);
 			CoreFunctions.selectItemInListByText(driver, _radioBtnHomeLeaveMeals,
 					homeLeaveBenefitData.homeLeaveMeals.reimbursedBy, PDTConstants.REIMBURSED_BY,
 					PDTConstants.RADIO_BUTTON_LIST, true);
 
 			BusinessFunctions.verifyReimbursedByOtherTextBoxIsDisplayed(driver, addNewPolicyPage,
-					homeLeaveBenefitData.homeLeaveMeals.reimbursedBy,
-					_txtBoxHomeLeaveMealsReimbursedByOther,
+					homeLeaveBenefitData.homeLeaveMeals.reimbursedBy, _txtBoxHomeLeaveMealsReimbursedByOther,
 					homeLeaveBenefitData.homeLeaveMeals.reimbursedByOther, subBenefitFormName);
 
 			CoreFunctions.clearAndSetText(driver, _txtAreaHomeLeaveMealsComment, PDTConstants.COMMENT,
 					homeLeaveBenefitData.homeLeaveMeals.comment);
 
-		} catch (Exception e) {			
+		} catch (Exception e) {
 			DbFunctions.deletePolicyByPolicyId(addNewPolicyPage.getPolicyId());
-			Assert.fail(MessageFormat.format(PDTConstants.FAILED_TO_FILL_SUB_BENEFIT_FORM, CoreConstants.FAIL, subBenefitFormName));
+			Assert.fail(MessageFormat.format(PDTConstants.FAILED_TO_FILL_SUB_BENEFIT_FORM, CoreConstants.FAIL,
+					subBenefitFormName));
 		}
 	}
-	
 
 }

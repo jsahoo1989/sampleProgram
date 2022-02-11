@@ -206,10 +206,10 @@ public class PDT_PreAcceptanceService extends Base {
 	@FindBy(how = How.XPATH, using = "//label[text()='Number of Nights per Trip']")
 	private WebElement _lblNumOfNightsPerTrip;
 
-	@FindBy(how = How.XPATH, using = "//label[text()='Max Amount (if applicable)']")
+	@FindBy(how = How.XPATH, using = "//app-pre-trip-lodging//label[contains(text(), 'Max Amount')]")
 	private WebElement _lblMaxAmt;
 
-	@FindBy(how = How.XPATH, using = "//label[text()='Flat Amount/Night (if applicable)']")
+	@FindBy(how = How.XPATH, using = "//app-pre-trip-lodging//label[contains(text(), 'Flat Amount/Night')]")
 	private WebElement _lblFlatAmount;
 
 	@FindBy(how = How.XPATH, using = "//label[text()='Currency']")
@@ -233,16 +233,16 @@ public class PDT_PreAcceptanceService extends Base {
 	@FindBy(how = How.CSS, using = "button.swal2-confirm.swal2-styled")
 	private WebElement _btnOkOnSuccessPopUp;
 
-	@FindBy(how = How.XPATH, using = "//label[text()='Max. Amount (if applicable)']")
+	@FindBy(how = How.XPATH, using = "//app-pre-trip-meals//label[contains(text(), 'Max. Amount')]")
 	private WebElement _lblMaxAmtPreAcceptanceTripMeals;
 
-	@FindBy(how = How.XPATH, using = "//label[text()='Max Amount - Transferee (if applicable)']")
+	@FindBy(how = How.XPATH, using = "//app-pre-trip-meals//label[contains(text(), 'Max Amount - Transferee')]")
 	private WebElement _lblMaxAmtTransferee;
 
-	@FindBy(how = How.XPATH, using = "//label[text()='Max Amount - Other Adults (if applicable)']")
+	@FindBy(how = How.XPATH, using = "//app-pre-trip-meals//label[contains(text(), 'Other Adults')]")
 	private WebElement _lblMaxAmtOtherAdults;
 
-	@FindBy(how = How.XPATH, using = "//label[text()='Max Amount - Children (if applicable)']")
+	@FindBy(how = How.XPATH, using = "//app-pre-trip-meals//label[contains(text(), 'Max Amount - Children')]")
 	private WebElement _lblMaxAmtChildren;
 
 	@FindBy(how = How.XPATH, using = "//input[contains(@formcontrolname, 'candidateSelectionEmpTypeInd')]/parent::label")
@@ -283,6 +283,10 @@ public class PDT_PreAcceptanceService extends Base {
 
 	@FindBy(how = How.CSS, using = "div#collapseFour div.mat-tab-label-content")
 	private List<WebElement> _tabOnPreAcceptanceTripMeals;
+	
+	// Progress Bar
+	@FindBy(how = How.CSS, using = "div.ngx-progress-bar.ngx-progress-bar-ltr")
+	private WebElement _progressBar;
 
 	final By _subBenefitCategoriesLocator = By.cssSelector("div.form-check > label.form-check-label");
 
@@ -678,6 +682,7 @@ public class PDT_PreAcceptanceService extends Base {
 
 	public boolean verifySaveSuccessMessage(String msg, String pageName, PDT_AddNewPolicyPage addNewPolicyPage) {
 		try {
+			CoreFunctions.explicitWaitTillElementInVisibilityCustomTime(driver, _progressBar, 5);
 			if (CoreFunctions.isElementExist(driver, _successPopUp, 5) && _successMsg.getText().equalsIgnoreCase(msg)) {
 				Reporter.addStepLog(MessageFormat.format(PDTConstants.VERIFIED_SUCCESS_MSG, CoreConstants.PASS,
 						_successMsg.getText(), pageName));

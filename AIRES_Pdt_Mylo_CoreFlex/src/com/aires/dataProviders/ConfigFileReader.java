@@ -115,6 +115,8 @@ public class ConfigFileReader {
 			return properties.getProperty("pdtProdURL");
 		else if (properties.getProperty("envt").equalsIgnoreCase("Dev"))
 			return properties.getProperty("pdtDevURL");
+		else if (properties.getProperty("envt").equalsIgnoreCase("Uat"))
+			return properties.getProperty("pdtUatURL");
 		else
 			throw new RuntimeException(
 					"Application Url not specified in the Configuration.properties file for the Key:url");

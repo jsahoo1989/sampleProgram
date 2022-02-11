@@ -616,8 +616,7 @@ public class CoreFunctions {
 		try {
 			highlightObject(driver, Element);
 			Element.click();
-		} catch (Exception e) {
-			e.printStackTrace();
+		} catch (Exception e) {			
 			Assert.fail(MessageFormat.format(CoreConstants.FAILD_CLCK_ELE, Element));
 		}
 	}
@@ -647,7 +646,10 @@ public class CoreFunctions {
 			else
 				Reporter.addStepLog(CoreConstants.PASS
 						+ MessageFormat.format(CoreConstants.VRFYD_TXT_CLR_VAL, elementName, textToEnter));
-		} catch (Exception e) {
+		} catch (NoSuchElementException e) {
+			Assert.fail(MessageFormat.format(PDTConstants.WEB_ELEMENT_NOT_FOUND_ON_PAGE, CoreConstants.FAIL, elementName));
+		}
+		catch (Exception e) {
 			Log.info(MessageFormat.format(CoreConstants.FAILED_TXT_CLR_VAL, elementName));
 			Reporter.addStepLog(MessageFormat.format(CoreConstants.FAILED_TXT_CLR_VAL, elementName));
 			e.printStackTrace();
@@ -1548,7 +1550,10 @@ public class CoreFunctions {
 			if (!itemSearched) {
 				Assert.fail("Searched item:-" + searchText + "does not exist in " + fieldName + " list.");
 			}
-		} catch (Exception e) {
+		}catch (NoSuchElementException e) {
+			Assert.fail(MessageFormat.format(PDTConstants.WEB_ELEMENT_NOT_FOUND_ON_PAGE, CoreConstants.FAIL, fieldName));
+		}		
+		catch (Exception e) {
 			Assert.fail(MessageFormat.format(PDTConstants.FAIL_TO_SELECT_VALUE_FROM_FIELD, CoreConstants.FAIL,
 					searchText, fieldName, fieldType));
 		}
@@ -1609,5 +1614,15 @@ public class CoreFunctions {
   }
 	public static String getElementCSSProperty(WebDriver driver,WebElement element,String cssProperty) {
 		return element.getCssValue(cssProperty);
+	}
+	public static boolean isElementListExist(WebDriver driver, List<WebElement> element, long time) {
+		try {
+			WebDriverWait wait = new WebDriverWait(driver, time);
+			wait.until(ExpectedConditions.visibilityOfAllElements(element));
+			return true;
+		} catch (Exception e) {
+		}
+		return false;
+
 	}
 }

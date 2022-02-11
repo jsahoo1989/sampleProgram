@@ -74,8 +74,7 @@ public class PDT_GeneralInfo_Steps {
 		
 		generalInfoPage.enterGeneralInformationFields();
 		Assert.assertTrue(policyBenefitCategoryPage.verifyPolicyBenefitCategoryHeading(policyBenefitPage),
-				MessageFormat.format(PDTConstants.FAIL_TO_VERIFY_ELEMENT_VAL_ON_PAGE, CoreConstants.FAIL, PDTConstants.heading, PDTConstants.POLICY_BENEFIT_CATEGORIES, policyBenefitPage, PDTConstants.POLICY_BENEFIT_CATEGORIES,
-						PDTConstants.heading, policyBenefitCategoryPage.getElementText(PDTConstants.HEADING)));
+				MessageFormat.format(PDTConstants.FAIL_TO_VERIFY_ELEMENT_VAL_ON_PAGE, CoreConstants.FAIL, PDTConstants.heading, PDTConstants.POLICY_BENEFIT_CATEGORIES, policyBenefitPage, policyBenefitCategoryPage.getElementText(PDTConstants.HEADING)));
 		policyBenefitCategoryPage.selectPolicyBenefitCategory(benefitCategory);
 	}
 	

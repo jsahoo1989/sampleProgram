@@ -113,7 +113,7 @@ public class PDT_GeneralInformationPage extends Base {
 	@FindBy(how = How.CSS, using = "button.btn-next")
 	private WebElement _btnNext;
 
-	@FindBy(how = How.XPATH, using = "//label[text()='Policy Type']")
+	@FindBy(how = How.XPATH, using = "//label[text()='Policy Geographic Scope']")
 	private WebElement _lblPolicyType;
 
 	@FindBy(how = How.XPATH, using = "//label[text()='Employee Type']")
@@ -186,10 +186,13 @@ public class PDT_GeneralInformationPage extends Base {
 	// Expense Management Client Radio Button No Selection
 	@FindBy(how = How.XPATH, using = "//label[@class='form-check-label'][contains(string(),'No')]")
 	private WebElement _radioExpenseManagementNoOption;
-
+	
+	@FindBy(how = How.XPATH, using = "//ng-select[@formcontrolname='tracingSet']//span[@class='ng-value-label']")
+	private WebElement _drpDownTracingSetSelectedVal;
+	
 	/*****************************************************************************************************/
 
-	private String policyType, employeeType, homeOwnerType, benefitPackageType, cappedPolicy, expenseMgmt;
+	private String policyType, employeeType, homeOwnerType, benefitPackageType, cappedPolicy, expenseMgmt, tracingPrompt;
 
 	public boolean validateGeneralInfo(String pageName, DataTable dataTable, String selectedPolicyName) {
 
@@ -502,9 +505,18 @@ public class PDT_GeneralInformationPage extends Base {
 	public String getExpenseMgmt() {
 		return expenseMgmt;
 	}
+	
+	public String getTracingSet() {
+		return tracingPrompt;
+	}
+	
+	public void setTracingPrompt() {		
+		tracingPrompt = _drpDownTracingSetSelectedVal.getText();
+	}
 
 	public void enterGeneralInformationFields() {
 		try {
+			setTracingPrompt();
 			CoreFunctions.clickElement(driver, _drpDwnPolicyType);
 			String randPolicyType = _drpDwnPolicyTypeOptions
 					.get(CoreFunctions.getRandomNumber(0, _drpDwnPolicyTypeOptions.size() - 1)).getText();

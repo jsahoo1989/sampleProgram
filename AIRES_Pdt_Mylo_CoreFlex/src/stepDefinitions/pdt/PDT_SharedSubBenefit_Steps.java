@@ -12,11 +12,14 @@ import com.aires.cucumber.TestContext;
 import com.aires.pages.pdt.PDT_AddNewPolicyPage;
 import com.aires.pages.pdt.PDT_CulturalTrainingPage;
 import com.aires.pages.pdt.PDT_FinalMovePage;
+import com.aires.pages.pdt.PDT_GeneralInformationPage;
+import com.aires.pages.pdt.PDT_HomeLeavePage;
 import com.aires.pages.pdt.PDT_HouseHuntingTripPage;
 import com.aires.pages.pdt.PDT_ImmigrationPage;
 import com.aires.pages.pdt.PDT_LanguageTrainingPage;
 import com.aires.pages.pdt.PDT_PreAcceptanceService;
 import com.aires.pages.pdt.PDT_SharedSubBenefitPage;
+import com.aires.pages.pdt.PDT_TemporaryLivingPage;
 import com.aires.pages.pdt.PDT_ViewPolicyPage;
 
 import cucumber.api.DataTable;
@@ -34,6 +37,9 @@ public class PDT_SharedSubBenefit_Steps {
 	private PDT_LanguageTrainingPage languageTrainingPage;
 	private PDT_CulturalTrainingPage culturalTrainingPage;
 	private PDT_FinalMovePage finalMovePage;
+	private PDT_HomeLeavePage homeLeavePage;
+	private PDT_TemporaryLivingPage temporaryLivingPage;
+	private PDT_GeneralInformationPage generalInfoPage;
 	
 	public PDT_SharedSubBenefit_Steps(TestContext context) {
 		testContext = context;
@@ -46,6 +52,9 @@ public class PDT_SharedSubBenefit_Steps {
 		languageTrainingPage = testContext.getPageObjectManager().getLanguageTrainingPage();
 		culturalTrainingPage = testContext.getPageObjectManager().getCulturalTrainingPage();
 		finalMovePage = testContext.getPageObjectManager().getFinalMovePage();
+		homeLeavePage = testContext.getPageObjectManager().getHomeLeavePage();
+		temporaryLivingPage = testContext.getPageObjectManager().getTemporaryLivingPage();
+		generalInfoPage = testContext.getPageObjectManager().getGeneralInfoPage();
 	}
 	
 	public PDT_PreAcceptanceService getPreAcceptServicePage() {
@@ -72,6 +81,18 @@ public class PDT_SharedSubBenefit_Steps {
 		return finalMovePage;
 	}
 	
+	public PDT_HomeLeavePage getHomeLeavePage() {
+		return homeLeavePage;
+	}
+	
+	public PDT_TemporaryLivingPage getTemporaryLivingPage() {
+		return temporaryLivingPage;
+	}
+	
+	public PDT_GeneralInformationPage getGeneralInfoPage() {
+		return generalInfoPage;
+	}
+	
 	@When("^he clicks on 'SUBMIT' button after entering mandatory information for all the below selected sub benefits on \"([^\"]*)\" page$")
 	public void he_clicks_on_SUBMIT_button_after_entering_mandatory_information_for_all_the_below_selected_sub_benefits_on_page(
 			String policyBenefitPgName, DataTable subBenefitTable) {
@@ -90,7 +111,7 @@ public class PDT_SharedSubBenefit_Steps {
 
 	@Then("^newly created Policy should be displayed under \"([^\"]*)\" page$")
 	public void newly_created_Policy_should_be_displayed_under_page(String pageName) {		
-		Assert.assertTrue(viewPolicyPage.searchAndVerifyPolicy(addNewPolicyPage.getPolicyName().split("\\(")[0].trim(), pageName, addNewPolicyPage),
+		Assert.assertTrue(viewPolicyPage.searchAndVerifyPolicy(addNewPolicyPage.getPolicyName().split("\\(#")[0].trim(), pageName, addNewPolicyPage),
 				MessageFormat.format(PDTConstants.FAILED_TO_VERIFY_ELEMENT_DISPLAYED_ON_PAGE, CoreConstants.FAIL, PDTConstants.POLICY_NAME,
 						addNewPolicyPage.getPolicyName(), pageName, viewPolicyPage.getPolicyList()));
 		DbFunctions.deletePolicyByPolicyId(addNewPolicyPage.getPolicyId());

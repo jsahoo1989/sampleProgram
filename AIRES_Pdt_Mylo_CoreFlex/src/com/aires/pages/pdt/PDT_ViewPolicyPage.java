@@ -192,8 +192,7 @@ public class PDT_ViewPolicyPage extends Base {
 	}
 
 	public boolean verifyClientIdAndCompanyName(String clientId, String companyName, String pageName) {
-		CoreFunctions.isElementByLocatorExist(driver, _listClientNameByLocator, 30);
-		CoreFunctions.waitForBrowserToLoad(driver);
+		CoreFunctions.explicitWaitTillElementListVisibility(driver, _listClientName);
 		if (_listClientName.stream().allMatch(t -> t.getText().contains(clientId))
 				&& _listClientName.stream().allMatch(t -> t.getText().toString().contains(companyName.toString()))) {
 			_listClientName.stream().forEach(t -> {
@@ -208,8 +207,7 @@ public class PDT_ViewPolicyPage extends Base {
 	}
 
 	public boolean verifyPolicyName(String policyName, String pageName) {
-		CoreFunctions.isElementByLocatorExist(driver, _listPolicyNameByLocator, 20);
-		CoreFunctions.waitForBrowserToLoad(driver);
+		CoreFunctions.explicitWaitTillElementListVisibility(driver, _listClientName);
 		if (_listPolicyName.stream().allMatch(t -> t.getText().toLowerCase().equalsIgnoreCase(policyName))) {
 			_listPolicyName.stream().forEach(t -> {
 				CoreFunctions.moveToElement(driver, t);

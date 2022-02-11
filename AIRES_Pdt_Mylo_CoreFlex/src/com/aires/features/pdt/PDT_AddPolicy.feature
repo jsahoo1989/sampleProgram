@@ -1,3 +1,4 @@
+@spant
 Feature: Add new Policy form with Benefit Categories
   Validate the functionality of Add new Policy form
 
@@ -6,7 +7,7 @@ Feature: Add new Policy form with Benefit Categories
       | userName | password |
       | kbrian   | kbrian   |
 
-  @Sprint-14 @PDT-Regression
+  @Sprint-14 @PDT-Regression @core
   Scenario: Verify Core/Flex policy drop down should display as "No" on General Information section for selected PDT policy
     Given he is on the "Add New Policy" page after clicking on the link "Add New Policy Form" displayed under the left navigation menu on the 'View Policy' page
     When he clicks on the 'Next' button after selecting below information on the 'Add New Policy' page
@@ -49,7 +50,7 @@ Feature: Add new Policy form with Benefit Categories
     And he has entered mandatory information on 'General Information' page followed by selection of "Pre-Acceptance Services" as Benefit Category on "Policy Benefit" page
     When he clicks on 'SUBMIT' button after entering mandatory information for all the below selected sub benefits on "Pre-Acceptance Services" page
       | Candidate Selection | Pre-Acceptance Trip Transportation | Pre-Acceptance Trip Lodging | Pre-Acceptance Trip Meals |
-    Then success message "Data submitted successfully" should be displayed on the "Policy Benefit" page
+    Then success message "Policy saved and submitted" should be displayed on the "Policy Benefit" page
     And newly created Policy should be displayed under "View Policy" page
 
   @Sprint-16 @PDT-Regression @imigration
@@ -61,7 +62,7 @@ Feature: Add new Policy form with Benefit Categories
     And he has entered mandatory information on 'General Information' page followed by selection of "Immigration" as Benefit Category on "Policy Benefit" page
     When he clicks on 'SUBMIT' button after entering mandatory information for all the below selected sub benefits on "Immigration" page
       | Immigration Fees | Immigration Travel |
-    Then success message "Data submitted successfully" should be displayed on the "Policy Benefit" page
+    Then success message "Policy saved and submitted" should be displayed on the "Policy Benefit" page
     And newly created Policy should be displayed under "View Policy" page
 
   @Sprint-16 @PDT-Regression @tab
@@ -93,7 +94,7 @@ Feature: Add new Policy form with Benefit Categories
     And he has entered mandatory information on 'General Information' page followed by selection of "House Hunting Trip" as Benefit Category on "Policy Benefit" page
     When he clicks on 'SUBMIT' button after entering mandatory information for all the below selected sub benefits on "House Hunting Trip" page
       | House Hunting Trip Transportation | House Hunting Trip Lodging | House Hunting Trip Meals |
-    Then success message "Data submitted successfully" should be displayed on the "Policy Benefit" page
+    Then success message "Policy saved and submitted" should be displayed on the "Policy Benefit" page
     And newly created Policy should be displayed under "View Policy" page
 
   @Sprint-17 @PDT-Regression @lang @PDT-384
@@ -105,7 +106,7 @@ Feature: Add new Policy form with Benefit Categories
     And he has entered mandatory information on 'General Information' page followed by selection of "Language Training" as Benefit Category on "Policy Benefit" page
     When he clicks on 'SUBMIT' button after entering mandatory information for all the below selected sub benefits on "Language Training" page
       | Language Training Employee | Language Training Family |
-    Then success message "Data submitted successfully" should be displayed on the "Policy Benefit" page
+    Then success message "Policy saved and submitted" should be displayed on the "Policy Benefit" page
     And newly created Policy should be displayed under "View Policy" page
 
   @Sprint-17 @PDT-Regression @cult @PDT-385
@@ -117,7 +118,7 @@ Feature: Add new Policy form with Benefit Categories
     And he has entered mandatory information on 'General Information' page followed by selection of "Cultural Training" as Benefit Category on "Policy Benefit" page
     When he clicks on 'SUBMIT' button after entering mandatory information for all the below selected sub benefits on "Cultural Training" page
       | Cultural Training Employee | Cultural Training Family |
-    Then success message "Data submitted successfully" should be displayed on the "Policy Benefit" page
+    Then success message "Policy saved and submitted" should be displayed on the "Policy Benefit" page
     And newly created Policy should be displayed under "View Policy" page
 
   @Sprint-18 @PDT-Regression @final @PDT-429
@@ -129,5 +130,29 @@ Feature: Add new Policy form with Benefit Categories
     And he has entered mandatory information on 'General Information' page followed by selection of "Final Move" as Benefit Category on "Policy Benefit" page
     When he clicks on 'SUBMIT' button after entering mandatory information for all the below selected sub benefits on "Final Move" page
       | Final Move Transportation | Final Move Lodging | Final Move Meals |
-    Then success message "Data submitted successfully" should be displayed on the "Policy Benefit" page
+    Then success message "Policy saved and submitted" should be displayed on the "Policy Benefit" page
+    And newly created Policy should be displayed under "View Policy" page
+
+  @Sprint-19 @PDT-Regression @home @PDT-546
+  Scenario: PDT - Add new Policy form using Home Leave as Benefit Category including their sub benefit categories
+    Given he is on the "Add New Policy" page after clicking on the link "Add New Policy Form" displayed under the left navigation menu on the 'View Policy' page
+    And he has clicked on the 'Next' button after selecting below information on the 'Add New Policy' page
+      | ClientId | ClientName                    | PolicyName                  |
+      |     7403 | Dow Chemical Company (Global) | hDCC Repatriation (# 14724) |
+    And he has entered mandatory information on 'General Information' page followed by selection of "Home Leave" as Benefit Category on "Policy Benefit" page
+    When he clicks on 'SUBMIT' button after entering mandatory information for all the below selected sub benefits on "Home Leave" page
+      | Home Leave Transportation | Home Leave Lodging | Home Leave Meals |
+    Then success message "Policy saved and submitted" should be displayed on the "Policy Benefit" page
+    And newly created Policy should be displayed under "View Policy" page
+
+  @Sprint-19 @PDT-Regression @temp @PDT-547
+  Scenario: PDT - Add new Policy form using Temporary Living as Benefit Category including their sub benefit categories
+    Given he is on the "Add New Policy" page after clicking on the link "Add New Policy Form" displayed under the left navigation menu on the 'View Policy' page
+    And he has clicked on the 'Next' button after selecting below information on the 'Add New Policy' page
+      | ClientId | ClientName                    | PolicyName                  |
+      |     7403 | Dow Chemical Company (Global) | hDCC Repatriation (# 14724) |
+    And he has entered mandatory information on 'General Information' page followed by selection of "Temporary Living" as Benefit Category on "Policy Benefit" page
+    When he clicks on 'SUBMIT' button after entering mandatory information for all the below selected sub benefits on "Temporary Living" page
+      | Temporary Living Lodging | Temporary Living Meals | Temporary Living Transportation |
+    Then success message "Policy saved and submitted" should be displayed on the "Policy Benefit" page
     And newly created Policy should be displayed under "View Policy" page

@@ -23,6 +23,7 @@ import com.aires.pages.pdt.PDT_AddNewPolicyPage;
 import com.aires.pages.pdt.PDT_CulturalTrainingPage;
 import com.aires.pages.pdt.PDT_FinalMovePage;
 import com.aires.pages.pdt.PDT_GeneralInformationPage;
+import com.aires.pages.pdt.PDT_HomeLeavePage;
 import com.aires.pages.pdt.PDT_HouseHuntingTripPage;
 import com.aires.pages.pdt.PDT_ImmigrationPage;
 import com.aires.pages.pdt.PDT_LanguageTrainingPage;
@@ -30,6 +31,7 @@ import com.aires.pages.pdt.PDT_LoginPage;
 import com.aires.pages.pdt.PDT_PolicyBenefitCategoryPage;
 import com.aires.pages.pdt.PDT_PreAcceptanceService;
 import com.aires.pages.pdt.PDT_SharedSubBenefitPage;
+import com.aires.pages.pdt.PDT_TemporaryLivingPage;
 import com.aires.pages.pdt.PDT_ViewPolicyPage;
 
 public class PageObjectManager_Pdt {
@@ -47,6 +49,8 @@ public class PageObjectManager_Pdt {
 	private PDT_LanguageTrainingPage _languageTrainingPage;
 	private PDT_CulturalTrainingPage _culturalTrainingPage;
 	private PDT_FinalMovePage _finalMovePage;
+	private PDT_HomeLeavePage _homeLeavePage;
+	private PDT_TemporaryLivingPage _temporaryLivingPage;
 	
 	public PageObjectManager_Pdt(WebDriver driver) {
 		this._driver = driver;
@@ -98,5 +102,13 @@ public class PageObjectManager_Pdt {
 	
 	public PDT_FinalMovePage getFinalMovePage() {
 		return (_finalMovePage == null ) ? _finalMovePage = new PDT_FinalMovePage(_driver) : _finalMovePage;
+	}
+	
+	public PDT_HomeLeavePage getHomeLeavePage() {
+		return (_homeLeavePage == null ) ? _homeLeavePage = new PDT_HomeLeavePage(_driver) : _homeLeavePage;
+	}
+	
+	public PDT_TemporaryLivingPage getTemporaryLivingPage() {
+		return (_temporaryLivingPage == null ) ? _temporaryLivingPage = new PDT_TemporaryLivingPage(_driver) : _temporaryLivingPage;
 	}
 }

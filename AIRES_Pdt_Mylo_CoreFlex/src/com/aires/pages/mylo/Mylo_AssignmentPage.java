@@ -1,10 +1,13 @@
 package com.aires.pages.mylo;
 
 import java.text.MessageFormat;
+import java.text.ParseException;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
+import java.util.ArrayList;
 import java.util.LinkedHashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.stream.Collectors;
 
 import org.openqa.selenium.By;
@@ -21,7 +24,12 @@ import com.aires.businessrules.constants.CoreConstants;
 import com.aires.businessrules.constants.MYLOConstants;
 import com.aires.managers.FileReaderManager;
 import com.aires.testdatatypes.mylo.MyloAssignmentDetails;
+import com.aires.testdatatypes.mylo.MyloCAStates;
+import com.aires.testdatatypes.mylo.MyloIndiaStates;
+import com.aires.testdatatypes.mylo.MyloUSStates;
 import com.vimalselvam.cucumber.listener.Reporter;
+
+import cucumber.api.DataTable;
 
 public class Mylo_AssignmentPage extends Base {
 
@@ -40,9 +48,6 @@ public class Mylo_AssignmentPage extends Base {
 
 	@FindBy(how = How.CSS, using = "input[id='empFunctionCode']")
 	private List<WebElement> _airesFileTeamRoleName;
-
-	@FindBy(how = How.XPATH, using = "//div[contains(@class,'navlist__container')]/li/a")
-	private List<WebElement> _assignmentSubMenus;
 
 	@FindBy(how = How.XPATH, using = "//label[text()='Role']//preceding-sibling::ng-select")
 	private WebElement _roleSelectButtton;
@@ -70,6 +75,15 @@ public class Mylo_AssignmentPage extends Base {
 
 	@FindBy(how = How.XPATH, using = "//button[text()='Yes']")
 	private WebElement _YesButton;
+	
+	@FindBy(how = How.XPATH, using = "//button[text()=' Save ']")
+	private WebElement _SaveButton;
+	
+	@FindBy(how = How.XPATH, using = "//span[text()='Save']")
+	private WebElement _otherAddressSaveButton;
+	
+	@FindBy(how = How.XPATH, using = "//button[text()=' Cancel ']")
+	private WebElement _CancelButton;
 
 	@FindBy(how = How.CSS, using = "input[placeholder='FILE ID']")
 	private WebElement _fileInfoFileId;
@@ -123,34 +137,191 @@ public class Mylo_AssignmentPage extends Base {
 	private WebElement _fileInfoSuccessMessage;
 
 	@FindBy(how = How.XPATH, using = "//button[text()='OK']")
-	private WebElement _fileInfoSuccessOkbutton;
+	private WebElement _Okbutton;
 	
 	@FindBy(how = How.XPATH, using = "//ng-select[@name='policyType']")
 	private WebElement _fileInfoPolicyTypeBgColor;
+	
+	// *************** Other Adddresses section ***********************//
+	
+	@FindBy(how = How.XPATH, using = "//a[text()='Add Mailing Address']//preceding-sibling::img")
+	private WebElement _addMailAddressBtn;
+	
+	@FindBy(how = How.XPATH, using = "//a[text()='Add Temporary Address']//preceding-sibling::img")
+	private WebElement _addTempAddressBtn;
+	
+	@FindBy(how = How.XPATH, using = "//ng-select[@name='popupcountry']")
+	private WebElement _countryDropdown;
+	
+	@FindBy(how = How.XPATH, using = "//h1[@class='popupheader']//following::ng-select[@name='state']")
+	private WebElement _stateDropdown;
+	
+	@FindBy(how = How.XPATH, using = "//h1[@class='popupheader']//following::ng-select[@name='state']//following-sibling::label")
+	private WebElement _stateFieldName;
+	
+	@FindBy(how = How.XPATH, using = "//h1[@class='popupheader']//following::input[@formcontrolname='stateProvince']")
+	private WebElement _stateFieldTextType;
+	
+	@FindBy(how = How.XPATH, using = "//app-address[@id='temporaryAddress']//ng-select[@name='country']")
+	private WebElement _tempAddressCountryDropdown;
+	
+	@FindBy(how = How.XPATH, using = "//app-address[@id='mailingAddress']//ng-select[@name='country']")
+	private WebElement _mailAddressCountryDropdown;
+	
+	@FindBy(how = How.XPATH, using = "//app-address[@id='temporaryAddress']//ng-select[@name='state']")
+	private WebElement _tempAddressStateDropdown;
+	
+	@FindBy(how = How.XPATH, using = "//app-address[@id='temporaryAddress']//input[@name='state']")
+	private WebElement _tempAddressStateTextField;
+	
+	@FindBy(how = How.XPATH, using = "//app-address[@id='mailingAddress']//ng-select[@name='state']")
+	private WebElement _mailAddressStateDropdown;
+	
+	@FindBy(how = How.XPATH, using = "//app-address[@id='mailingAddress']//input[@name='state']")
+	private WebElement _mailAddressStateTextField;
+
+	@FindBy(how = How.XPATH, using = "//app-address[@id='temporaryAddress']//ng-select[@name='type']")
+	private WebElement _tempAddressTypeDropdown;
+	
+	@FindBy(how = How.XPATH, using = "//app-address[@id='mailingAddress']//ng-select[@name='type']")
+	private WebElement _mailAddressTypeDropdown;
+	
+	@FindBy(how = How.XPATH, using = "//app-address[@id='temporaryAddress']//input[@id='city']")
+	private WebElement _tempAddressCityValue;
+	
+	@FindBy(how = How.XPATH, using = "//app-address[@id='mailingAddress']//input[@id='city']")
+	private WebElement _mailAddressCityValue;
+	
+	@FindBy(how = How.XPATH, using = "//app-address[@id='mailingAddress']//ng-select[@name='country']//descendant::span[contains(@class,'ng-value-label')]")
+	private WebElement _mailAddressCountryValue;
+	
+	@FindBy(how = How.XPATH, using = "//app-address[@id='temporaryAddress']//ng-select[@name='country']//descendant::span[contains(@class,'ng-value-label')]")
+	private WebElement _tempAddressCountryValue;
+	
+	@FindBy(how = How.XPATH, using = "//app-address[@id='mailingAddress']//ng-select[@name='state']//descendant::span[contains(@class,'ng-value-label')]")
+	private WebElement _mailAddressStateDropDownValue;
+	
+	@FindBy(how = How.XPATH, using = "//app-address[@id='temporaryAddress']//ng-select[@name='state']//descendant::span[contains(@class,'ng-value-label')]")
+	private WebElement _tempAddressStateDropdownValue;
+	
+	@FindBy(how = How.XPATH, using = "//app-address[@id='temporaryAddress']//input[@id='zipCode']")
+	private WebElement _tempAddressZipCodeValue;
+	
+	@FindBy(how = How.XPATH, using = "//app-address[@id='mailingAddress']//input[@id='zipCode']")
+	private WebElement _mailAddressZipCodeValue;
+
+	@FindBy(how = How.XPATH, using = "//app-address[@id='temporaryAddress']//input[@id='state']")
+	private WebElement _tempAddressStateValue;
+	
+	@FindBy(how = How.XPATH, using = "//app-address[@id='temporaryAddress']//input[@id='address1']")
+	private WebElement _tempAddress1Value;
+	
+	@FindBy(how = How.XPATH, using = "//app-address[@id='temporaryAddress']//input[@id='address2']")
+	private WebElement _tempAddress2Value;
+	
+	@FindBy(how = How.XPATH, using = "//app-address[@id='temporaryAddress']//input[@id='comment']")
+	private WebElement _tempAddressCommentsValue;
+	
+	@FindBy(how = How.XPATH, using = "//app-address[@id='temporaryAddress']//input[@id='fromDate']")
+	private WebElement _tempAddressFromDateValue;
+	
+	@FindBy(how = How.XPATH, using = "//app-address[@id='mailingAddress']//input[@id='state']")
+	private WebElement _mailAddressStateValue;
+	
+	@FindBy(how = How.XPATH, using = "//app-address[@id='mailingAddress']//input[@id='address1']")
+	private WebElement _mailAddress1Value;
+	
+	@FindBy(how = How.XPATH, using = "//app-address[@id='mailingAddress']//input[@id='address2']")
+	private WebElement _mailAddress2Value;
+	
+	@FindBy(how = How.XPATH, using = "//app-address[@id='mailingAddress']//input[@id='comment']")
+	private WebElement _mailAddressCommentsValue;
+
+	@FindBy(how = How.XPATH, using = "//app-address[@id='mailingAddress']//input[@id='fromDate']")
+	private WebElement _mailAddressFromDateValue;
+	
+	@FindBy(how = How.CSS, using = "input[id='popupcity']")
+	private WebElement _otherAddressaddCityValue;
+	
+	@FindBy(how = How.CSS, using = "input[id='popupfromDate']")
+	private WebElement _otherAddressaddFromDateValue;
+	
+	@FindBy(how = How.CSS, using = "input[id='popupzipCode']")
+	private WebElement _otherAddressaddZipCodeValue;
+	
+	@FindBy(how = How.CSS, using = "input[id='popupcomment']")
+	private WebElement _otherAddressaddCommentValue;
+	
+	@FindBy(how = How.CSS, using = "input[id='state']")
+	private WebElement _otherAddressaddStateValue;
+
+	@FindBy(how = How.XPATH, using = "//input[@id='state']//following-sibling::label")
+	private WebElement _otherAddressStateLabelName;
+	
+	@FindBy(how = How.CSS, using = "input[id='popupaddress1']")
+	private WebElement _otherAddressaddAddress1Value;
+	
+	@FindBy(how = How.CSS, using = "input[id='popupaddress2']")
+	private WebElement _otherAddressaddAddress2Value;
+	
+	@FindBy(how = How.CSS, using = "input[id='popupfromDate']")
+	private WebElement _otherAddressaddAddressFromDateValue;
+	
+	@FindBy(how = How.XPATH, using = "//button[@aria-controls='collapsetemporaryAddress']")
+	private WebElement _tempAddressDropdown;
+	
+	@FindBy(how = How.XPATH, using = "//button[@aria-controls='collapsemailingAddress']")
+	private WebElement _mailAddressDropdown;
+	
+	@FindBy(how = How.XPATH, using = "//span[text()='Delete']")
+	private WebElement _DeleteButton;
+	
+	@FindBy(how = How.XPATH, using = "//app-address[@id='temporaryAddress']//span[text()='Edit']")
+	private WebElement _tempEditButton;
+	
+	@FindBy(how = How.XPATH, using = "//app-address[@id='mailingAddress']//span[text()='Edit']")
+	private WebElement _mailEditButton;
+	
+	@FindBy(how = How.XPATH, using = "//h2[text()='Success']//following::div[@id='swal2-content']")
+	private WebElement _successMessage;
+	
 	
 	int noOfAiresFileTeamMember;
 	String updatedTeamMember;
 	LinkedHashMap<String, String> airesFileTeamExistingMembers = new LinkedHashMap<String, String>();
 	LinkedHashMap<String, WebElement> airesFileInfoFieldsMap = new LinkedHashMap<String, WebElement>();
+	List<WebElement> countryList = new ArrayList<WebElement>();
+	List<WebElement> typeDropDownList = new ArrayList<WebElement>();
+	List<WebElement> stateList = new ArrayList<WebElement>();
 
 	final By _dropdownOptions = By.xpath("//div[@role='option']/span");
 	final By _fileInfoOfficeDropdownReadOnly = By.xpath("//ng-select[@name='office']//descendant::input[@disabled='']");
 	final By _fileInfoPolicyTypeDropdownReadOnly = By.xpath("//ng-select[@name='policyType']//input[@disabled]");
+	final By _assignmentSubMenus = By.xpath("//div[contains(@class,'navlist__container')]/li/a");
 
 	MyloAssignmentDetails assignmentDetails = FileReaderManager.getInstance().getMyloJsonReader()
 			.getAssignmentDetailsByApplication(MYLOConstants.IRIS);
-
+	
+	
 	String updatedPolicyType, updatedTaxTreatment, updatedOffice, updatedJourneyType, updatedTransferType,
 			updatedHomeStatus;
 	String updatedFileInfoCheckboxSelected;
+	String updatedTempAddressCityValue,updatedMailAddressCityValue;
+	String updatedTempAddressZipCodeValue,updatedMailAddressZipCodeValue;
+	String updatedTempAddressCommentsValue,updatedMailAddressCommentsValue;
+	String updatedTempAddressStateValue,updatedMailAddressStateValue;
+	String updatedTempAddress1Value,updatedMailAddress1Value;
+	String updatedTempAddress2Value,updatedMailAddress2Value;
+	String updatedTempAddressFromDateValue,updatedMailAddressFromDateValue;
 
 	/**
 	 * @param option 
 	 * Click Different tabs in Assignment page
 	 */
 	public void clickAssignmentTabs(String option) {
-		CoreFunctions.explicitWaitTillElementListVisibility(driver, _assignmentSubMenus);
-		CoreFunctions.selectItemInListByText(driver, _assignmentSubMenus, option);
+		List<WebElement> subTabs = CoreFunctions.getElementListByLocator(driver, _assignmentSubMenus);
+		CoreFunctions.explicitWaitTillElementListVisibility(driver, subTabs);
+		CoreFunctions.selectItemInListByText(driver, subTabs, option);
 	}
 
 	/**
@@ -159,11 +330,11 @@ public class Mylo_AssignmentPage extends Base {
 	 * Verify Active tab in Assignment page
 	 */
 	public boolean verifyActiveTab(String tabName) {
-		CoreFunctions.explicitWaitTillElementListVisibility(driver, _assignmentSubMenus);
+		List<WebElement> subTabs = CoreFunctions.getElementListByLocator(driver, _assignmentSubMenus);
 		noOfAiresFileTeamMember = _noOfAddedAiresFileTeamMember.size();
 		airesFileTeamExistingMembers = CoreFunctions.returnMapFromBothLists(driver, _airesFileTeamRoleName,
 				_airesFileTeamMemberName);
-		WebElement tabElement = CoreFunctions.returnItemInListByText(driver, _assignmentSubMenus, tabName);
+		WebElement tabElement = CoreFunctions.returnItemInListByText(driver, subTabs, tabName);
 		return (tabElement.getAttribute("class").contains("active")) ? true : false;
 	}
 
@@ -380,9 +551,9 @@ public class Mylo_AssignmentPage extends Base {
 			mapFileInfoWebElementFields();
 			break;
 		case MYLOConstants.OK_BUTTON:
-			CoreFunctions.explicitWaitTillElementVisibility(driver, _fileInfoSuccessOkbutton,
-					_fileInfoSuccessOkbutton.getText());
-			CoreFunctions.click(driver, _fileInfoSuccessOkbutton, _fileInfoSuccessOkbutton.getText());
+			CoreFunctions.explicitWaitTillElementVisibility(driver, _Okbutton,
+					_Okbutton.getText());
+			CoreFunctions.click(driver, _Okbutton, _Okbutton.getText());
 			break;
 		case MYLOConstants.NO_BUTTON:
 			CoreFunctions.click(driver, _NoButton, _NoButton.getText());
@@ -752,6 +923,7 @@ public class Mylo_AssignmentPage extends Base {
 			Assert.fail(MYLOConstants.ENTER_CORRECT_FIELD_NAME);
 		}
 		return false;
+		
 
 	}
 
@@ -820,5 +992,671 @@ public class Mylo_AssignmentPage extends Base {
 		return fileInfoDetailsmap.get(requiredField);
 
 	}
+	
+	// *************** Other Addresses Section***********************//
+	
+	/**
+	 * @param elementName
+	 * Click different fields on Other Address section
+	 */
+	public void clickElementOnOtherAddressesSection(String elementName) {
+		switch (elementName) {
+		case MYLOConstants.MAILING_ADDRESS:
+			CoreFunctions.explicitWaitTillElementVisibility(driver, _addMailAddressBtn, MYLOConstants.MAILING_ADDRESS);
+			CoreFunctions.explicitWaitTillElementBecomesClickable(driver, _addMailAddressBtn,
+					MYLOConstants.MAILING_ADDRESS);
+			CoreFunctions.click(driver, _addMailAddressBtn, MYLOConstants.MAILING_ADDRESS);
+			break;
+		case MYLOConstants.TEMPORARY_ADDRESS:
+			CoreFunctions.explicitWaitTillElementVisibility(driver, _addTempAddressBtn,
+					MYLOConstants.TEMPORARY_ADDRESS);
+			CoreFunctions.explicitWaitTillElementBecomesClickable(driver, _addTempAddressBtn,
+					MYLOConstants.TEMPORARY_ADDRESS);
+			CoreFunctions.click(driver, _addTempAddressBtn, MYLOConstants.TEMPORARY_ADDRESS);
+			break;
+		case MYLOConstants.COUNTRY:
+			CoreFunctions.explicitWaitTillElementVisibility(driver, _countryDropdown, MYLOConstants.COUNTRY);
+			CoreFunctions.click(driver, _countryDropdown, MYLOConstants.COUNTRY);
+			countryList = CoreFunctions.getElementListByLocator(driver, _dropdownOptions);
+			break;
+		case MYLOConstants.STATE:
+			CoreFunctions.explicitWaitTillElementVisibility(driver, _stateDropdown, MYLOConstants.STATE);
+			CoreFunctions.click(driver, _stateDropdown, MYLOConstants.STATE);
+			stateList = CoreFunctions.getElementListByLocator(driver, _dropdownOptions);
+			break;
+		case MYLOConstants.CITY:
+			CoreFunctions.explicitWaitTillElementVisibility(driver, _otherAddressaddCityValue, MYLOConstants.CITY);
+			CoreFunctions.click(driver, _otherAddressaddCityValue, MYLOConstants.CITY);
+			break;
+		case MYLOConstants.SAVE_BUTTON:
+			CoreFunctions.explicitWaitTillElementVisibility(driver, _SaveButton, MYLOConstants.SAVE_BUTTON);
+			CoreFunctions.click(driver, _SaveButton, MYLOConstants.SAVE_BUTTON);
+			break;
+		case MYLOConstants.OTHER_ADDRESS_SAVE_BUTTON:
+			CoreFunctions.explicitWaitTillElementVisibility(driver, _otherAddressSaveButton, MYLOConstants.SAVE_BUTTON);
+			CoreFunctions.click(driver, _otherAddressSaveButton, MYLOConstants.SAVE_BUTTON);
+			break;
+		case MYLOConstants.OK_BUTTON:
+			CoreFunctions.explicitWaitTillElementVisibility(driver, _Okbutton, MYLOConstants.OK_BUTTON);
+			CoreFunctions.explicitWaitTillElementBecomesClickable(driver, _Okbutton, MYLOConstants.OK_BUTTON);
+			CoreFunctions.click(driver, _Okbutton, _Okbutton.getText());
+			break;
+		case MYLOConstants.TEMP_EDIT_BUTTON:
+			CoreFunctions.explicitWaitTillElementVisibility(driver, _tempEditButton, MYLOConstants.TEMP_EDIT_BUTTON);
+			CoreFunctions.explicitWaitTillElementBecomesClickable(driver, _tempEditButton,
+					MYLOConstants.TEMP_EDIT_BUTTON);
+			CoreFunctions.click(driver, _tempEditButton, _tempEditButton.getText());
+			break;
+		case MYLOConstants.MAIL_EDIT_BUTTON:
+			CoreFunctions.explicitWaitTillElementVisibility(driver, _mailEditButton, MYLOConstants.MAIL_EDIT_BUTTON);
+			CoreFunctions.explicitWaitTillElementBecomesClickable(driver, _mailEditButton,
+					MYLOConstants.MAIL_EDIT_BUTTON);
+			CoreFunctions.click(driver, _mailEditButton, _mailEditButton.getText());
+			break;
+		case MYLOConstants.TEMP_ADDRESS_COUNTRY:
+			CoreFunctions.explicitWaitTillElementVisibility(driver, _tempAddressCountryDropdown,
+					MYLOConstants.TEMP_ADDRESS_COUNTRY);
+			CoreFunctions.click(driver, _tempAddressCountryDropdown, MYLOConstants.TEMP_ADDRESS_COUNTRY);
+			countryList = CoreFunctions.getElementListByLocator(driver, _dropdownOptions);
+			break;
+		case MYLOConstants.MAIl_ADDRESS_COUNTRY:
+			CoreFunctions.explicitWaitTillElementVisibility(driver, _mailAddressCountryDropdown,
+					MYLOConstants.MAIl_ADDRESS_COUNTRY);
+			CoreFunctions.click(driver, _mailAddressCountryDropdown, MYLOConstants.MAIl_ADDRESS_COUNTRY);
+			countryList = CoreFunctions.getElementListByLocator(driver, _dropdownOptions);
+			break;
+		case MYLOConstants.TEMP_ADDRESS_STATE:
+			CoreFunctions.explicitWaitTillElementVisibility(driver, _tempAddressStateDropdown,
+					MYLOConstants.TEMP_ADDRESS_STATE);
+			CoreFunctions.click(driver, _tempAddressStateDropdown, MYLOConstants.TEMP_ADDRESS_STATE);
+			stateList = CoreFunctions.getElementListByLocator(driver, _dropdownOptions);
+			break;
+		case MYLOConstants.MAIL_ADDRESS_STATE:
+			CoreFunctions.explicitWaitTillElementVisibility(driver, _mailAddressStateDropdown,
+					MYLOConstants.MAIL_ADDRESS_STATE);
+			CoreFunctions.click(driver, _mailAddressStateDropdown, MYLOConstants.MAIL_ADDRESS_STATE);
+			stateList = CoreFunctions.getElementListByLocator(driver, _dropdownOptions);
+			break;
+		case MYLOConstants.TEMP_ADDRESS_TYPE:
+			CoreFunctions.explicitWaitTillElementVisibility(driver, _tempAddressTypeDropdown,
+					MYLOConstants.TEMP_ADDRESS_TYPE);
+			CoreFunctions.click(driver, _tempAddressTypeDropdown, MYLOConstants.TEMP_ADDRESS_TYPE);
+			typeDropDownList = CoreFunctions.getElementListByLocator(driver, _dropdownOptions);
+			break;
+		case MYLOConstants.MAIl_ADDRESS_TYPE:
+			CoreFunctions.explicitWaitTillElementVisibility(driver, _mailAddressTypeDropdown,
+					MYLOConstants.MAIl_ADDRESS_TYPE);
+			CoreFunctions.click(driver, _mailAddressTypeDropdown, MYLOConstants.MAIl_ADDRESS_TYPE);
+			typeDropDownList = CoreFunctions.getElementListByLocator(driver, _dropdownOptions);
+			break;
+		case MYLOConstants.TEMPORARY_ADDRESS_DROPDOWN:
+			CoreFunctions.explicitWaitTillElementVisibility(driver, _tempAddressDropdown,
+					_tempAddressDropdown.getText());
+			CoreFunctions.click(driver, _tempAddressDropdown, _tempAddressDropdown.getText());
+			break;
+		case MYLOConstants.MAILING_ADDRESS_DROPDOWN:
+			CoreFunctions.explicitWaitTillElementVisibility(driver, _mailAddressDropdown,
+					_mailAddressDropdown.getText());
+			CoreFunctions.click(driver, _mailAddressDropdown, _mailAddressDropdown.getText());
+			break;
+		case MYLOConstants.DELETE_BUTTON:
+			CoreFunctions.explicitWaitTillElementVisibility(driver, _DeleteButton, _DeleteButton.getText());
+			CoreFunctions.click(driver, _DeleteButton, _DeleteButton.getText());
+			break;
+		case MYLOConstants.YES_BUTTON:
+			CoreFunctions.explicitWaitTillElementVisibility(driver, _YesButton, _YesButton.getText());
+			CoreFunctions.click(driver, _YesButton, _YesButton.getText());
+			break;
+		default:
+			Reporter.addStepLog(CoreConstants.FAIL + MYLOConstants.ENTER_CORRECT_FIELD_NAME);
+			Assert.fail(MYLOConstants.ENTER_CORRECT_FIELD_NAME);
+		}
+	}
+	
+	/**
+	 * @param countryName
+	 * @return
+	 * Verify first Country displayed in the dropdown
+	 */
+	public boolean verifyFirstCountry(String countryName) {
+		return (countryList.get(1).getText().equals(countryName));
+	}
+	
+	/**
+	 * @param listContent
+	 * @return
+	 * Verify options available in Type dropdown
+	 */
+	public boolean verifyTypeDropwnList(String listContent) {
+		return CoreFunctions.searchElementExistsInListByTextIgnoreCase(driver, typeDropDownList, listContent);
+	}
+	
+	/**
+	 * @param fieldName
+	 * @return
+	 * Get the Label of passed field
+	 */
+	public String verifyOtherAddressFieldLabel(String fieldName) {
+		switch (fieldName) {
+		case MYLOConstants.STATE:
+		case MYLOConstants.TEMP_ADDRESS_STATE:
+		case MYLOConstants.MAIL_ADDRESS_STATE:
+			return CoreFunctions.getElementText(driver, _otherAddressStateLabelName);
+		}
+		return null;
+	}
+	
+	/**
+	 * @param dropDownName
+	 * @return
+	 * Verify DropdownList order for passed field name
+	 */
+	public boolean verifyDropdownListAlphabeticalOrder(String dropDownName) {
+		switch (dropDownName) {
+		case MYLOConstants.COUNTRY:		
+			List<String> countryText = countryList.stream().map(x -> x.getText()).collect(Collectors.toList());
+			List<String> copyCountryList = new ArrayList<String>(countryText);
+			copyCountryList.remove("Select One");
+			copyCountryList.remove("USA");
+			return CoreFunctions.verifyListOrder(copyCountryList,MYLOConstants.ASCENDING);
+		default:
+			Reporter.addStepLog(CoreConstants.FAIL + MYLOConstants.ENTER_CORRECT_FIELD_NAME);
+			Assert.fail(MYLOConstants.ENTER_CORRECT_FIELD_NAME);
+		}
+		return false;
+	}
+	
+	/**
+	 * @param fieldName
+	 * @param fieldValue
+	 * Set the value of passed parameter
+	 */
+	public void setFieldValueOnOtherAddressesSection(String fieldName, String fieldValue) {
+		switch (fieldName) {
+		case MYLOConstants.COUNTRY:
+			if (fieldValue.equals(MYLOConstants.RANDOM)) {
+				List<String> valuesToIgnore = new ArrayList<String>();
+				valuesToIgnore.add("USA");
+				valuesToIgnore.add("INDIA");
+				valuesToIgnore.add("CANADA");
+				CoreFunctions.selectMatchingItemInListByText(driver, countryList,
+						CoreFunctions.getRandomOutOfSelectedElementValueFromList(driver, countryList, valuesToIgnore));
+			} else
+				CoreFunctions.selectMatchingItemInListByText(driver, countryList, fieldValue);
+			break;
+		case MYLOConstants.STATE:
+			CoreFunctions.explicitWaitTillElementListVisibility(driver, stateList);
+			if (fieldValue.equals(MYLOConstants.RANDOM))
+				CoreFunctions.selectItemInListByText(driver, stateList,
+						CoreFunctions.getRandomElementValueFromList(driver, stateList));
+			else
+				CoreFunctions.selectItemInListByText(driver, stateList, fieldValue);
+			break;
+		case MYLOConstants.TEMP_ADDRESS_TYPE:
+			CoreFunctions.explicitWaitTillElementListVisibility(driver, typeDropDownList);
+			if (fieldValue.equals(MYLOConstants.RANDOM))
+				CoreFunctions.selectItemInListByText(driver, typeDropDownList,
+						CoreFunctions.getRandomElementValueFromList(driver, typeDropDownList));
+			else
+				CoreFunctions.selectItemInListByText(driver, typeDropDownList, fieldValue);
+			break;
+		case MYLOConstants.MAIl_ADDRESS_TYPE:
+			CoreFunctions.explicitWaitTillElementListVisibility(driver, typeDropDownList);
+			if (fieldValue.equals(MYLOConstants.RANDOM))
+				CoreFunctions.selectItemInListByText(driver, typeDropDownList,
+						CoreFunctions.getRandomElementValueFromList(driver, typeDropDownList));
+			else
+				CoreFunctions.selectItemInListByText(driver, typeDropDownList, fieldValue);
+			break;
+		case MYLOConstants.TEMP_ADDRESS_CITY:
+			try {
+				updatedTempAddressCityValue = CoreFunctions.generateRandomCharOfLength(Integer.parseInt(fieldValue));
+				CoreFunctions.clearAndSetText(driver, _otherAddressaddCityValue, updatedTempAddressCityValue);
+			} catch (NumberFormatException e) {
+				if (fieldValue.equals(MYLOConstants.SPECIAL_CHARACTERS_STRING)) {
+					updatedTempAddressCityValue = CoreFunctions.generateRandomCharWithSpecialCharactersOfLength(4, 2);
+					CoreFunctions.clearAndSetText(driver, _otherAddressaddCityValue, updatedTempAddressCityValue);
+				} else {
+					CoreFunctions.clearAndSetText(driver, _otherAddressaddCityValue, fieldValue);
+					updatedTempAddressCityValue = fieldValue;
+				}
+			}
+			break;
+		case MYLOConstants.MAIL_ADDRESS_CITY:
+			try {
+				updatedMailAddressCityValue = CoreFunctions.generateRandomCharOfLength(Integer.parseInt(fieldValue));
+				CoreFunctions.clearAndSetText(driver, _otherAddressaddCityValue, updatedMailAddressCityValue);
 
+			} catch (NumberFormatException e) {
+				if (fieldValue.equals(MYLOConstants.SPECIAL_CHARACTERS_STRING)) {
+					updatedMailAddressCityValue = CoreFunctions.generateRandomCharWithSpecialCharactersOfLength(4, 2);
+					CoreFunctions.clearAndSetText(driver, _otherAddressaddCityValue, updatedMailAddressCityValue);
+				} else {
+					CoreFunctions.clearAndSetText(driver, _otherAddressaddCityValue, fieldValue);
+					updatedMailAddressCityValue = fieldValue;
+				}
+			}
+			break;
+		case MYLOConstants.TEMP_ADDRESS_ZIPCODE:
+			try {
+				if (Integer.parseInt(fieldValue) < 100) {
+					updatedTempAddressZipCodeValue = CoreFunctions
+							.generateRandomCharOfLength(Integer.parseInt(fieldValue));
+					CoreFunctions.clearAndSetText(driver, _otherAddressaddZipCodeValue, updatedTempAddressZipCodeValue);
+				} else {
+					CoreFunctions.clearAndSetText(driver, _otherAddressaddZipCodeValue, fieldValue);
+					updatedTempAddressZipCodeValue = fieldValue;
+				}
+			} catch (NumberFormatException e) {
+				if (fieldValue.equals(MYLOConstants.SPECIAL_CHARACTERS_STRING)) {
+					updatedTempAddressZipCodeValue = CoreFunctions.generateRandomCharWithSpecialCharactersOfLength(4,
+							2);
+					CoreFunctions.clearAndSetText(driver, _otherAddressaddZipCodeValue, updatedTempAddressZipCodeValue);
+				} else {
+					CoreFunctions.clearAndSetText(driver, _otherAddressaddZipCodeValue, fieldValue);
+					updatedTempAddressZipCodeValue = fieldValue;
+				}
+			}
+			break;
+		case MYLOConstants.MAIL_ADDRESS_ZIPCODE:
+			try {
+				if (Integer.parseInt(fieldValue) < 100) {
+					updatedMailAddressZipCodeValue = CoreFunctions
+							.generateRandomCharOfLength(Integer.parseInt(fieldValue));
+					CoreFunctions.clearAndSetText(driver, _otherAddressaddZipCodeValue, updatedMailAddressZipCodeValue);
+				} else {
+					CoreFunctions.clearAndSetText(driver, _otherAddressaddZipCodeValue, fieldValue);
+					updatedMailAddressZipCodeValue = fieldValue;
+				}
+			} catch (NumberFormatException e) {
+				if (fieldValue.equals(MYLOConstants.SPECIAL_CHARACTERS_STRING)) {
+					updatedMailAddressZipCodeValue = CoreFunctions.generateRandomCharWithSpecialCharactersOfLength(4,
+							2);
+					CoreFunctions.clearAndSetText(driver, _otherAddressaddZipCodeValue, updatedMailAddressZipCodeValue);
+				} else {
+					CoreFunctions.clearAndSetText(driver, _otherAddressaddZipCodeValue, fieldValue);
+					updatedMailAddressZipCodeValue = fieldValue;
+				}
+			}
+			break;
+		case MYLOConstants.TEMP_ADDRESS_STATE:
+			try {
+				updatedTempAddressStateValue = CoreFunctions.generateRandomCharOfLength(Integer.parseInt(fieldValue));
+				CoreFunctions.clearAndSetText(driver, _otherAddressaddStateValue, updatedTempAddressStateValue);
+			} catch (NumberFormatException e) {
+				if (fieldValue.equals(MYLOConstants.SPECIAL_CHARACTERS_STRING)) {
+					updatedTempAddressStateValue = CoreFunctions.generateRandomCharWithSpecialCharactersOfLength(4, 2);
+					CoreFunctions.clearAndSetText(driver, _otherAddressaddStateValue, updatedTempAddressStateValue);
+				} else {
+					CoreFunctions.clearAndSetText(driver, _otherAddressaddStateValue, fieldValue);
+					updatedTempAddressStateValue = fieldValue;
+				}
+			}
+			break;
+		case MYLOConstants.MAIL_ADDRESS_STATE:
+			try {
+				updatedMailAddressStateValue = CoreFunctions.generateRandomCharOfLength(Integer.parseInt(fieldValue));
+				CoreFunctions.clearAndSetText(driver, _otherAddressaddStateValue, updatedMailAddressStateValue);
+
+			} catch (NumberFormatException e) {
+				if (fieldValue.equals(MYLOConstants.SPECIAL_CHARACTERS_STRING)) {
+					updatedMailAddressStateValue = CoreFunctions.generateRandomCharWithSpecialCharactersOfLength(4, 2);
+					CoreFunctions.clearAndSetText(driver, _otherAddressaddStateValue, updatedMailAddressStateValue);
+				} else {
+					CoreFunctions.clearAndSetText(driver, _otherAddressaddStateValue, fieldValue);
+					updatedMailAddressStateValue = fieldValue;
+				}
+			}
+			break;
+		case MYLOConstants.TEMP_ADDRESS_ADDRESS1:
+			try {
+				updatedTempAddress1Value = CoreFunctions.generateRandomCharOfLength(Integer.parseInt(fieldValue));
+				CoreFunctions.clearAndSetText(driver, _otherAddressaddAddress1Value, updatedTempAddress1Value);
+			} catch (NumberFormatException e) {
+				if (fieldValue.equals(MYLOConstants.SPECIAL_CHARACTERS_STRING)) {
+					updatedTempAddress1Value = CoreFunctions.generateRandomCharWithSpecialCharactersOfLength(4, 2);
+					CoreFunctions.clearAndSetText(driver, _otherAddressaddAddress1Value, updatedTempAddress1Value);
+				} else {
+					CoreFunctions.clearAndSetText(driver, _otherAddressaddAddress1Value, fieldValue);
+					updatedTempAddress1Value = fieldValue;
+				}
+			}
+			break;
+		case MYLOConstants.MAIL_ADDRESS_ADDRESS1:
+			try {
+				updatedMailAddress1Value = CoreFunctions.generateRandomCharOfLength(Integer.parseInt(fieldValue));
+				CoreFunctions.clearAndSetText(driver, _otherAddressaddAddress1Value, updatedMailAddress1Value);
+
+			} catch (NumberFormatException e) {
+				if (fieldValue.equals(MYLOConstants.SPECIAL_CHARACTERS_STRING)) {
+					updatedMailAddress1Value = CoreFunctions.generateRandomCharWithSpecialCharactersOfLength(4, 2);
+					CoreFunctions.clearAndSetText(driver, _otherAddressaddAddress1Value, updatedMailAddress1Value);
+				} else {
+					CoreFunctions.clearAndSetText(driver, _otherAddressaddAddress1Value, fieldValue);
+					updatedMailAddress1Value = fieldValue;
+				}
+			}
+			break;
+		case MYLOConstants.TEMP_ADDRESS_ADDRESS2:
+			try {
+				updatedTempAddress2Value = CoreFunctions.generateRandomCharOfLength(Integer.parseInt(fieldValue));
+				CoreFunctions.clearAndSetText(driver, _otherAddressaddAddress2Value, updatedTempAddress2Value);
+			} catch (NumberFormatException e) {
+				if (fieldValue.equals(MYLOConstants.SPECIAL_CHARACTERS_STRING)) {
+					updatedTempAddress2Value = CoreFunctions.generateRandomCharWithSpecialCharactersOfLength(4, 2);
+					CoreFunctions.clearAndSetText(driver, _otherAddressaddAddress2Value, updatedTempAddress2Value);
+				} else {
+					CoreFunctions.clearAndSetText(driver, _otherAddressaddAddress2Value, fieldValue);
+					updatedTempAddress2Value = fieldValue;
+				}
+			}
+			break;
+		case MYLOConstants.MAIL_ADDRESS_ADDRESS2:
+			try {
+				updatedMailAddress2Value = CoreFunctions.generateRandomCharOfLength(Integer.parseInt(fieldValue));
+				CoreFunctions.clearAndSetText(driver, _otherAddressaddAddress2Value, updatedMailAddress2Value);
+
+			} catch (NumberFormatException e) {
+				if (fieldValue.equals(MYLOConstants.SPECIAL_CHARACTERS_STRING)) {
+					updatedMailAddress2Value = CoreFunctions.generateRandomCharWithSpecialCharactersOfLength(4, 2);
+					CoreFunctions.clearAndSetText(driver, _otherAddressaddAddress2Value, updatedMailAddress2Value);
+				} else {
+					CoreFunctions.clearAndSetText(driver, _otherAddressaddAddress2Value, fieldValue);
+					updatedMailAddress2Value = fieldValue;
+				}
+			}
+			break;
+		case MYLOConstants.TEMP_ADDRESS_COMMENTS:
+			if (fieldValue.equals(MYLOConstants.SPECIAL_CHARACTERS_STRING)) {
+				updatedTempAddressCommentsValue = CoreFunctions.generateRandomCharWithSpecialCharactersOfLength(4, 2);
+				CoreFunctions.clearAndSetText(driver, _otherAddressaddCommentValue, updatedTempAddressCommentsValue);
+			} else {
+				CoreFunctions.clearAndSetText(driver, _otherAddressaddCommentValue, fieldValue);
+				updatedTempAddressCommentsValue = fieldValue;
+			}
+			break;
+		case MYLOConstants.MAIL_ADDRESS_COMMENTS:
+			if (fieldValue.equals(MYLOConstants.SPECIAL_CHARACTERS_STRING)) {
+				updatedMailAddressCommentsValue = CoreFunctions.generateRandomCharWithSpecialCharactersOfLength(4, 2);
+				CoreFunctions.clearAndSetText(driver, _otherAddressaddCommentValue, updatedMailAddressCommentsValue);
+			} else {
+				CoreFunctions.clearAndSetText(driver, _otherAddressaddCommentValue, fieldValue);
+				updatedMailAddressCommentsValue = fieldValue;
+			}
+			break;
+		case MYLOConstants.TEMP_ADDRESS_FROMDATE:
+			if (fieldValue.equals("current")) {
+				fieldValue = CoreFunctions.getCurrentDateAsGivenFormat("MM/dd/yyyy");
+			}
+			CoreFunctions.clearAndSetText(driver, _otherAddressaddAddressFromDateValue, fieldValue);
+			updatedTempAddressFromDateValue = fieldValue;
+			break;
+		case MYLOConstants.MAIL_ADDRESS_FROMDATE:
+			if (fieldValue.equals("current")) {
+				fieldValue = CoreFunctions.getCurrentDateAsGivenFormat("MM/dd/yyyy");
+			}
+			CoreFunctions.clearAndSetText(driver, _otherAddressaddAddressFromDateValue, fieldValue);
+			updatedMailAddressFromDateValue = fieldValue;
+			break;
+		default:
+			Reporter.addStepLog(CoreConstants.FAIL + MYLOConstants.ENTER_CORRECT_FIELD_NAME);
+			Assert.fail(MYLOConstants.ENTER_CORRECT_FIELD_NAME);
+		}
+	}
+	
+	/**
+	 * @param fieldName
+	 * @return
+	 * Verify field availability for Other Address section
+	 */
+	public boolean verifyOtherAddressFieldAvailability(String fieldName) {
+		switch (fieldName) {
+		case MYLOConstants.STATE:
+			return CoreFunctions.isElementExist(driver, _stateFieldTextType, 5);
+		case MYLOConstants.TEMP_ADDRESS_STATE:
+			return CoreFunctions.isElementExist(driver, _tempAddressStateTextField, 5);
+		case MYLOConstants.MAIL_ADDRESS_STATE:
+			return CoreFunctions.isElementExist(driver, _mailAddressStateTextField, 5);
+		case MYLOConstants.TEMPORARY_ADDRESS_DROPDOWN:
+			return CoreFunctions.isElementExist(driver, _tempAddressDropdown, 5);
+		case MYLOConstants.MAILING_ADDRESS_DROPDOWN:
+			return CoreFunctions.isElementExist(driver, _mailAddressDropdown, 5);
+		default:
+			Reporter.addStepLog(CoreConstants.FAIL + MYLOConstants.ENTER_CORRECT_FIELD_NAME);
+			Assert.fail(MYLOConstants.ENTER_CORRECT_FIELD_NAME);
+		}
+		return false;
+	}
+	
+	/**
+	 * @param fieldName
+	 * @return
+	 * Verify whether field values got updated
+	 */
+	public boolean verifyUpdatedFieldValueOtherAddress(String fieldName) {
+		switch (fieldName) {
+		case MYLOConstants.TEMP_ADDRESS_CITY:
+			return (getFieldValueAddressOnOtherAddressesSection(fieldName).equals(updatedTempAddressCityValue));
+		case MYLOConstants.MAIL_ADDRESS_CITY:
+			return (getFieldValueAddressOnOtherAddressesSection(fieldName).equals(updatedMailAddressCityValue));
+		case MYLOConstants.TEMP_ADDRESS_ZIPCODE:
+			return (getFieldValueAddressOnOtherAddressesSection(fieldName).equals(updatedTempAddressZipCodeValue));
+		case MYLOConstants.MAIL_ADDRESS_ZIPCODE:
+			return (getFieldValueAddressOnOtherAddressesSection(fieldName).equals(updatedMailAddressZipCodeValue));
+		case MYLOConstants.TEMP_ADDRESS_STATE:
+			return (getFieldValueAddressOnOtherAddressesSection(fieldName).equals(updatedTempAddressStateValue));
+		case MYLOConstants.MAIL_ADDRESS_STATE:
+			return (getFieldValueAddressOnOtherAddressesSection(fieldName).equals(updatedMailAddressStateValue));
+		case MYLOConstants.TEMP_ADDRESS_ADDRESS1:
+			return (getFieldValueAddressOnOtherAddressesSection(fieldName).equals(updatedTempAddress1Value));
+		case MYLOConstants.MAIL_ADDRESS_ADDRESS1:
+			return (getFieldValueAddressOnOtherAddressesSection(fieldName).equals(updatedMailAddress1Value));
+		case MYLOConstants.TEMP_ADDRESS_ADDRESS2:
+			return (getFieldValueAddressOnOtherAddressesSection(fieldName).equals(updatedTempAddress2Value));
+		case MYLOConstants.MAIL_ADDRESS_ADDRESS2:
+			return (getFieldValueAddressOnOtherAddressesSection(fieldName).equals(updatedMailAddress2Value));
+		case MYLOConstants.TEMP_ADDRESS_FROMDATE:
+			return (getFieldValueAddressOnOtherAddressesSection(fieldName).equals(updatedTempAddressFromDateValue));
+		case MYLOConstants.MAIL_ADDRESS_FROMDATE:
+			return (getFieldValueAddressOnOtherAddressesSection(fieldName).equals(updatedMailAddressFromDateValue));
+		default:
+			Reporter.addStepLog(CoreConstants.FAIL + MYLOConstants.ENTER_CORRECT_FIELD_NAME);
+			Assert.fail(MYLOConstants.ENTER_CORRECT_FIELD_NAME);
+		}
+		return false;		
+	}
+	
+	/**
+	 * @param fieldName
+	 * @return
+	 * get the field value present on Other Address section
+	 */
+	public String getFieldValueAddressOnOtherAddressesSection(String fieldName) {
+		switch (fieldName) {
+		case MYLOConstants.TEMP_ADDRESS_COUNTRY:
+			CoreFunctions.explicitWaitTillElementVisibility(driver, _tempAddressCountryValue, MYLOConstants.TEMP_ADDRESS_COUNTRY);
+			return CoreFunctions.getElementText(driver,_tempAddressCountryValue);
+		case MYLOConstants.MAIl_ADDRESS_COUNTRY:
+			CoreFunctions.explicitWaitTillElementVisibility(driver, _mailAddressCountryValue, MYLOConstants.MAIl_ADDRESS_COUNTRY);
+			return CoreFunctions.getElementText(driver,_mailAddressCountryValue);
+		case MYLOConstants.TEMP_ADDRESS_STATE_DROPDOWN:
+			CoreFunctions.explicitWaitTillElementVisibility(driver, _tempAddressStateDropdownValue, MYLOConstants.TEMP_ADDRESS_STATE_DROPDOWN);
+			return CoreFunctions.getElementText(driver,_tempAddressStateDropdownValue);
+		case MYLOConstants.MAIL_ADDRESS_STATE_DROPDOWN:
+			CoreFunctions.explicitWaitTillElementVisibility(driver, _mailAddressStateDropDownValue, MYLOConstants.MAIL_ADDRESS_STATE_DROPDOWN);
+			return CoreFunctions.getElementText(driver,_mailAddressStateDropDownValue);
+		case MYLOConstants.TEMP_ADDRESS_CITY:
+			CoreFunctions.explicitWaitTillElementVisibility(driver, _tempAddressCityValue, MYLOConstants.TEMP_ADDRESS_CITY);
+			return CoreFunctions.getAttributeText( _tempAddressCityValue,MYLOConstants.VALUE);
+		case MYLOConstants.MAIL_ADDRESS_CITY:
+			CoreFunctions.explicitWaitTillElementVisibility(driver, _mailAddressCityValue, MYLOConstants.MAIL_ADDRESS_CITY);
+			return CoreFunctions.getAttributeText(_mailAddressCityValue, MYLOConstants.VALUE);
+		case MYLOConstants.TEMP_ADDRESS_ZIPCODE:
+			CoreFunctions.explicitWaitTillElementVisibility(driver, _tempAddressZipCodeValue, MYLOConstants.TEMP_ADDRESS_ZIPCODE);
+			return CoreFunctions.getAttributeText( _tempAddressZipCodeValue,MYLOConstants.VALUE);
+		case MYLOConstants.MAIL_ADDRESS_ZIPCODE:
+			CoreFunctions.explicitWaitTillElementVisibility(driver, _mailAddressZipCodeValue, MYLOConstants.MAIL_ADDRESS_ZIPCODE);
+			return CoreFunctions.getAttributeText(_mailAddressZipCodeValue, MYLOConstants.VALUE);
+		case MYLOConstants.TEMP_ADDRESS_STATE:
+			CoreFunctions.explicitWaitTillElementVisibility(driver, _tempAddressStateValue, MYLOConstants.TEMP_ADDRESS_STATE);
+			return CoreFunctions.getAttributeText( _tempAddressStateValue,MYLOConstants.VALUE);
+		case MYLOConstants.MAIL_ADDRESS_STATE:
+			CoreFunctions.explicitWaitTillElementVisibility(driver, _mailAddressStateValue, MYLOConstants.MAIL_ADDRESS_STATE);
+			return CoreFunctions.getAttributeText(_mailAddressStateValue, MYLOConstants.VALUE);
+		case MYLOConstants.TEMP_ADDRESS_ADDRESS1:
+			CoreFunctions.explicitWaitTillElementVisibility(driver, _tempAddress1Value, MYLOConstants.TEMP_ADDRESS_ADDRESS1);
+			return CoreFunctions.getAttributeText( _tempAddress1Value,MYLOConstants.VALUE);
+		case MYLOConstants.MAIL_ADDRESS_ADDRESS1:
+			CoreFunctions.explicitWaitTillElementVisibility(driver, _mailAddress1Value, MYLOConstants.MAIL_ADDRESS_ADDRESS1);
+			return CoreFunctions.getAttributeText(_mailAddress1Value, MYLOConstants.VALUE);
+		case MYLOConstants.TEMP_ADDRESS_ADDRESS2:
+			CoreFunctions.explicitWaitTillElementVisibility(driver, _tempAddress2Value, MYLOConstants.TEMP_ADDRESS_ADDRESS2);
+			return CoreFunctions.getAttributeText( _tempAddress2Value,MYLOConstants.VALUE);
+		case MYLOConstants.MAIL_ADDRESS_ADDRESS2:
+			CoreFunctions.explicitWaitTillElementVisibility(driver, _mailAddress2Value, MYLOConstants.MAIL_ADDRESS_ADDRESS2);
+			return CoreFunctions.getAttributeText(_mailAddress2Value, MYLOConstants.VALUE);
+		case MYLOConstants.TEMP_ADDRESS_COMMENTS:
+			CoreFunctions.explicitWaitTillElementVisibility(driver, _tempAddressCommentsValue, MYLOConstants.TEMP_ADDRESS_COMMENTS);
+			return CoreFunctions.getAttributeText( _tempAddressCommentsValue,MYLOConstants.VALUE);
+		case MYLOConstants.MAIL_ADDRESS_COMMENTS:
+			CoreFunctions.explicitWaitTillElementVisibility(driver, _mailAddressCommentsValue, MYLOConstants.MAIL_ADDRESS_COMMENTS);
+			return CoreFunctions.getAttributeText(_mailAddressCommentsValue, MYLOConstants.VALUE);
+		case MYLOConstants.TEMP_ADDRESS_FROMDATE:
+			String tempdateValue = null;
+			CoreFunctions.explicitWaitTillElementVisibility(driver, _tempAddressFromDateValue, MYLOConstants.MAIL_ADDRESS_FROMDATE);
+			try {
+				tempdateValue=CoreFunctions.getStringDateInFormat(CoreFunctions.getAttributeText(_tempAddressFromDateValue, MYLOConstants.VALUE), "dd MMM yyyy", "MM/dd/yyyy");
+			} catch (ParseException e) {
+			}
+			return tempdateValue;
+		case MYLOConstants.MAIL_ADDRESS_FROMDATE:
+			String dateValue = null;
+			CoreFunctions.explicitWaitTillElementVisibility(driver, _mailAddressFromDateValue, MYLOConstants.MAIL_ADDRESS_FROMDATE);			
+			try {
+				dateValue=CoreFunctions.getStringDateInFormat(CoreFunctions.getAttributeText(_mailAddressFromDateValue, MYLOConstants.VALUE), "dd MMM yyyy", "MM/dd/yyyy");
+			} catch (ParseException e) {
+			}
+			return dateValue;
+		default:
+			Reporter.addStepLog(CoreConstants.FAIL + MYLOConstants.ENTER_CORRECT_FIELD_NAME);
+			Assert.fail(MYLOConstants.ENTER_CORRECT_FIELD_NAME);
+		}
+		return fieldName;
+	}
+	
+	/**
+	 * @param sectionType
+	 * @param table
+	 * @return
+	 * Verify fieldValues on Different sections on Other Address
+	 */
+	public boolean verifyOtherAddressFieldValues(String sectionType, DataTable table) {
+		java.util.List<Map<String, String>> data = table.asMaps(String.class, String.class);
+		try {
+			if (sectionType.equals(MYLOConstants.MAILING_ADDRESS_DROPDOWN)) {
+				Assert.assertEquals(getFieldValueAddressOnOtherAddressesSection(MYLOConstants.MAIl_ADDRESS_COUNTRY),
+						data.get(0).get(MYLOConstants.COUNTRY));
+				Assert.assertEquals(getFieldValueAddressOnOtherAddressesSection(MYLOConstants.MAIL_ADDRESS_ADDRESS1),
+						data.get(0).get(MYLOConstants.MAIL_ADDRESS_ADDRESS1));
+				Assert.assertEquals(getFieldValueAddressOnOtherAddressesSection(MYLOConstants.MAIL_ADDRESS_ADDRESS2),
+						data.get(0).get(MYLOConstants.MAIL_ADDRESS_ADDRESS2));
+				Assert.assertEquals(
+						getFieldValueAddressOnOtherAddressesSection(MYLOConstants.MAIL_ADDRESS_STATE_DROPDOWN),
+						data.get(0).get(MYLOConstants.MAIL_ADDRESS_STATE_DROPDOWN));
+				Assert.assertEquals(getFieldValueAddressOnOtherAddressesSection(MYLOConstants.MAIL_ADDRESS_CITY),
+						data.get(0).get(MYLOConstants.MAIL_ADDRESS_CITY));
+				Assert.assertEquals(getFieldValueAddressOnOtherAddressesSection(MYLOConstants.MAIL_ADDRESS_ZIPCODE),
+						data.get(0).get(MYLOConstants.MAIL_ADDRESS_ZIPCODE));
+				Assert.assertEquals(getFieldValueAddressOnOtherAddressesSection(MYLOConstants.MAIL_ADDRESS_FROMDATE),
+						data.get(0).get(MYLOConstants.MAIL_ADDRESS_FROMDATE));
+				Assert.assertEquals(getFieldValueAddressOnOtherAddressesSection(MYLOConstants.MAIL_ADDRESS_COMMENTS),
+						data.get(0).get(MYLOConstants.MAIL_ADDRESS_COMMENTS));
+			} else if (sectionType.equals(MYLOConstants.TEMPORARY_ADDRESS_DROPDOWN)) {
+				Assert.assertEquals(getFieldValueAddressOnOtherAddressesSection(MYLOConstants.TEMP_ADDRESS_COUNTRY),
+						data.get(0).get(MYLOConstants.COUNTRY));
+				Assert.assertEquals(getFieldValueAddressOnOtherAddressesSection(MYLOConstants.TEMP_ADDRESS_ADDRESS1),
+						data.get(0).get(MYLOConstants.TEMP_ADDRESS_ADDRESS1));
+				Assert.assertEquals(getFieldValueAddressOnOtherAddressesSection(MYLOConstants.TEMP_ADDRESS_ADDRESS2),
+						data.get(0).get(MYLOConstants.TEMP_ADDRESS_ADDRESS2));
+				Assert.assertEquals(
+						getFieldValueAddressOnOtherAddressesSection(MYLOConstants.TEMP_ADDRESS_STATE_DROPDOWN),
+						data.get(0).get(MYLOConstants.TEMP_ADDRESS_STATE_DROPDOWN));
+				Assert.assertEquals(getFieldValueAddressOnOtherAddressesSection(MYLOConstants.TEMP_ADDRESS_CITY),
+						data.get(0).get(MYLOConstants.TEMP_ADDRESS_CITY));
+				Assert.assertEquals(getFieldValueAddressOnOtherAddressesSection(MYLOConstants.TEMP_ADDRESS_ZIPCODE),
+						data.get(0).get(MYLOConstants.TEMP_ADDRESS_ZIPCODE));
+				Assert.assertEquals(getFieldValueAddressOnOtherAddressesSection(MYLOConstants.TEMP_ADDRESS_FROMDATE),
+						data.get(0).get(MYLOConstants.TEMP_ADDRESS_FROMDATE));
+				Assert.assertEquals(getFieldValueAddressOnOtherAddressesSection(MYLOConstants.TEMP_ADDRESS_COMMENTS),
+						data.get(0).get(MYLOConstants.TEMP_ADDRESS_COMMENTS));
+			}
+			return true;
+		} catch (Exception e) {
+			return false;
+		}
+	}
+	
+	
+	/**
+	 * @param countryName
+	 * @return
+	 * get state list from json of corresponding country passed as a parameter
+	 */
+	public List<String> getMyoStatesByCountry(String countryName) {
+		List<String> stateNames = new ArrayList<String>();
+		switch (countryName) {
+		case MYLOConstants.USA_STATE:
+			List<MyloUSStates> myloUSStates = FileReaderManager.getInstance().getMyloJsonReader().getMyloUSStates();
+			for (MyloUSStates myloUSStates2 : myloUSStates) {
+				stateNames.add(myloUSStates2.value);
+			}
+			break;
+
+		case MYLOConstants.CANADA_STATE:
+			List<MyloCAStates> myloCAStates = FileReaderManager.getInstance().getMyloJsonReader().getMyloCAStates();
+			for (MyloCAStates myloCAStates2 : myloCAStates) {
+				stateNames.add(myloCAStates2.value);
+			}
+			break;
+		case MYLOConstants.INDIA_STATE:
+			List<MyloIndiaStates> myloIndiaStates = FileReaderManager.getInstance().getMyloJsonReader()
+					.getMyloIndiaStates();
+			stateNames.addAll(myloIndiaStates.stream().map(x -> x.value).collect(Collectors.toList()));
+			break;
+
+		default:
+			Reporter.addStepLog(CoreConstants.FAIL + MYLOConstants.ENTER_CORRECT_FIELD_NAME);
+			Assert.fail(MYLOConstants.ENTER_CORRECT_FIELD_NAME);
+		}
+		return stateNames;
+
+	}
+		
+	
+	/**
+	 * @param countryName
+	 * @return
+	 * verify whether state belongs to corresponding country or not in Other address section
+	 */
+	public boolean verifyStateListWithCountry(String countryName) {
+		List<String> stateText = stateList.stream().map(x -> x.getText()).collect(Collectors.toList());
+		List<String> copyStateList = new ArrayList<String>(stateText);
+		copyStateList.remove("Select One");
+		return copyStateList.equals(getMyoStatesByCountry(countryName));
+	}
+	
+	/**
+	 * @param msg
+	 * @return
+	 * Verify success message on Other Address section
+	 */
+	public boolean verifySuccessMessage(String msg) {
+		try {
+			CoreFunctions.explicitWaitTillElementVisibility(driver, _successMessage, _successMessage.getText());
+			Assert.assertEquals(_successMessage.getText(), msg);
+		} catch (Throwable e) {
+			return false;
+		}
+		return true;
+	}
 }

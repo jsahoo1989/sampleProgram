@@ -1,0 +1,142 @@
+[
+	{
+		"key": "AN",
+		"value": "Andaman and Nicobar Islands"
+	},
+	{
+		"key": "AP",
+		"value": "Andhra Pradesh"
+	},
+	{
+		"key": "AR",
+		"value": "Arunachal Pradesh"
+	},
+	{
+		"key": "AS",
+		"value": "Assam"
+	},
+	{
+		"key": "BE",
+		"value": "Benguluru"
+	},
+	{
+		"key": "BR",
+		"value": "Bihar"
+	},
+	{
+		"key": "CH",
+		"value": "Chandigarh"
+	},
+	{
+		"key": "CT",
+		"value": "Chhattisgarh"
+	},
+	{
+		"key": "DL",
+		"value": "Delhi"
+	},
+	{
+		"key": "GA",
+		"value": "Goa"
+	},
+	{
+		"key": "GJ",
+		"value": "Gujarat"
+	},
+	{
+		"key": "HP",
+		"value": "Himachal Pradesh"
+	},
+	{
+		"key": "HR",
+		"value": "Haryana"
+	},
+	{
+		"key": "IN",
+		"value": "India"
+	},
+	{
+		"key": "JH",
+		"value": "Jharkhand"
+	},
+	{
+		"key": "JK",
+		"value": "Jammu and Kashmir"
+	},
+	{
+		"key": "KA",
+		"value": "Karnataka"
+	},
+	{
+		"key": "KL",
+		"value": "Kerala"
+	},
+	{
+		"key": "KO",
+		"value": "Kolkata"
+	},
+	{
+		"key": "MH",
+		"value": "Maharashtra"
+	},
+	{
+		"key": "ML",
+		"value": "Meghalaya"
+	},
+	{
+		"key": "MM",
+		"value": "Manipur"
+	},
+	{
+		"key": "MP",
+		"value": "Madhya Pradesh"
+	},
+	{
+		"key": "MZ",
+		"value": "Mizoram"
+	},
+	{
+		"key": "OR",
+		"value": "Orissa"
+	},
+	{
+		"key": "PB",
+		"value": "Punjab"
+	},
+	{
+		"key": "PY",
+		"value": "Pondicherry"
+	},
+	{
+		"key": "RJ",
+		"value": "Rajasthan"
+	},
+	{
+		"key": "SK",
+		"value": "Sikkim"
+	},
+	{
+		"key": "TN",
+		"value": "Tamil Nadu"
+	},
+	{
+		"key": "TR",
+		"value": "Tripura"
+	},
+	{
+		"key": "TS",
+		"value": "Telangana"
+	},
+	{
+		"key": "UL",
+		"value": "Uttaranchal"
+	},
+	{
+		"key": "UP",
+		"value": "Uttar Pradesh"
+	},
+	{
+		"key": "WB",
+		"value": "West Bengal"
+	}
+]

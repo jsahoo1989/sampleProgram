@@ -150,6 +150,9 @@ public class MYLOConstants {
 	public static final String STATES_APPEARING_DOESNOT_BELONG = "States appearing in the dropdown doesn't belong to the country";
 	public static final String STATE_FIELD_EDITABLE = "State Field Editable";
 	public static final String LABEL_IS_NOT_UPDATED = "Label is not updated to";
+	public static final String ONLY_CHARACTERS = "Only Characters";
+	public static final String QUERY_FILE = "Query File";
+	public static final String CLOSE_BUTTON = "Close";
 	public static long TIME_BEFORE_ACTION;
 	public static long TIME_AFTER_ACTION;
 }

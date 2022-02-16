@@ -1628,45 +1628,27 @@ public class CoreFunctions {
 		return false;
 
 	}
-	public static String generateRandomCharOfLength(int length) {	
-		String reqWord = new String();	
-		Random rnd = new Random();	
-		for (int i = 0; i < length; i++) {	
-			char reqChar = CoreConstants.ALPHABET.charAt(rnd.nextInt(CoreConstants.ALPHABET.length()));	
-			reqWord = reqWord + Character.toString(reqChar);	
-		}	
-		return reqWord;	
+
+	public static String generateRandomCharOfLength(int charlength, String type, int specCharLength) {
+		String reqWord = new String();
+		String reqSplChar = new String();
+		Random rnd = new Random();
+		for (int i = 0; i < charlength; i++) {
+			char reqChar = CoreConstants.ALPHABET.charAt(rnd.nextInt(CoreConstants.ALPHABET.length()));
+			reqWord = reqWord + Character.toString(reqChar);
+		}
+		switch (type) {
+		case MYLOConstants.SPECIAL_CHARACTERS_STRING:
+			for (int i = 0; i < specCharLength; i++) {
+				char specialChar = CoreConstants.SPECIAL_CHARACTERS
+						.charAt(rnd.nextInt(CoreConstants.SPECIAL_CHARACTERS.length()));
+				reqWord = reqWord + Character.toString(specialChar);
+			}
+			break;
+		}
+		return reqWord;
 	}	
-		
-	public static String generateRandomCharWithSpecialCharactersOfLength(int charLength, int specCharLength) {	
-		String reqWord = new String();	
-		Random rnd = new Random();	
-		String reqChar = generateRandomCharOfLength(charLength);	
-		for (int i = 0; i < specCharLength; i++) {	
-			char specialChar = CoreConstants.SPECIAL_CHARACTERS.charAt(rnd.nextInt(CoreConstants.SPECIAL_CHARACTERS.length()));	
-			reqWord = reqWord + Character.toString(specialChar) ;	
-		}	
-		return reqChar+reqWord;	
-	}
-	public static void selectMatchingItemInListByText(WebDriver driver, List<WebElement> WebElementList,	
-			String searchText) {	
-		boolean itemSearched = false;	
-		try {	
-			for (WebElement row : WebElementList) {	
-				Log.info(CoreConstants.ACTUAL_ITEM_NAME_IS + row.getText());	
-				if (row.getText().equalsIgnoreCase(searchText)) {	
-					itemSearched = true;	
-					CoreFunctions.clickUsingJS(driver, row, row.getText());	
-					break;	
-				}	
-			}	
-			if (!itemSearched) {	
-				Assert.fail(MessageFormat.format(PDTConstants.SEARCHED_ITEM_NOT_IN_LIST, searchText));	
-			}	
-		} catch (Exception e) {	
-			Assert.fail(PDTConstants.COULD_NOT_SELECT_ITEM_FROM_LIST);	
-		}	
-	}
+
 	public static String getRandomOutOfSelectedElementValueFromList(WebDriver driver, List<WebElement> WebElementList,	
 			List<String> valuesToIgnore) {	
 		String selectedValue;	

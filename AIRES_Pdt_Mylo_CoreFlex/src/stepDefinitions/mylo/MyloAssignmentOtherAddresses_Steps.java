@@ -41,6 +41,7 @@ public class MyloAssignmentOtherAddresses_Steps {
 		MYLOConstants.TIME_BEFORE_ACTION = new Date().getTime();
 		myloDashboardPage.verifyUserName(MYLOConstants.USER_PROFILE_NAME);
 		myloDashboardPage.clickOptionFromMainMenu(MYLOConstants.ASSIGNMENT);
+		myloDashboardPage.selectOptionsFromAssignmentMenu(MYLOConstants.QUERY_FILE);
 		myloDashboardPage.selectParameterFromQueryScreen(MYLOConstants.FILE);
 		myloDashboardPage.selectOptionsForFileParameters(MYLOConstants.FILE_ID, fileID);
 		myloDashboardPage.clickExecuteButton();
@@ -148,8 +149,8 @@ public class MyloAssignmentOtherAddresses_Steps {
 	public void a_warning_message_should_display_as_after_clicking_on_button(String msg, String buttonName) {
 		MYLOConstants.TIME_BEFORE_ACTION = new Date().getTime();
 		myloAssignmentPage.clickElementOnOtherAddressesSection(buttonName);
-		Assert.assertTrue(myloAssignmentPage.verifyPopUpMessage(msg));
-		myloAssignmentPage.clickElementOnOtherAddressesSection(MYLOConstants.OK_BUTTON);
+		Assert.assertTrue(myloAssignmentPage.verifyAlertMessage(msg));
+		myloAssignmentPage.clickElementOnOtherAddressesSection(MYLOConstants.CLOSE_BUTTON);
 		MYLOConstants.TIME_AFTER_ACTION = new Date().getTime();
 		Reporter.addStepLog("<b>Total time taken by <i>'When'</i> statement is :"
 				+ (MYLOConstants.TIME_AFTER_ACTION - MYLOConstants.TIME_BEFORE_ACTION) / 1000 + " Seconds </b>");
@@ -213,8 +214,8 @@ public class MyloAssignmentOtherAddresses_Steps {
 		MYLOConstants.TIME_BEFORE_ACTION = new Date().getTime();
 		myloAssignmentPage.clickElementOnOtherAddressesSection(buttonName);
 		myloAssignmentPage.clickElementOnOtherAddressesSection(MYLOConstants.YES_BUTTON);
-		Assert.assertTrue(myloAssignmentPage.verifySuccessMessage(MYLOConstants.DELETE_SUCCESS_MESSAGE));
-		myloAssignmentPage.clickElementOnOtherAddressesSection(MYLOConstants.OK_BUTTON);
+		Assert.assertTrue(myloAssignmentPage.verifyAlertMessage(MYLOConstants.DELETE_SUCCESS_MESSAGE));
+
 		MYLOConstants.TIME_AFTER_ACTION = new Date().getTime();
 		Reporter.addStepLog("<b>Total time taken by <i>'When'</i> statement is :"
 				+ (MYLOConstants.TIME_AFTER_ACTION - MYLOConstants.TIME_BEFORE_ACTION) / 1000 + " Seconds </b>");
@@ -284,7 +285,6 @@ public class MyloAssignmentOtherAddresses_Steps {
 		myloAssignmentPage.setFieldValueOnOtherAddressesSection(MYLOConstants.TEMP_ADDRESS_FROMDATE, data.get(0).get(MYLOConstants.TEMP_ADDRESS_FROMDATE));
 		myloAssignmentPage.setFieldValueOnOtherAddressesSection(MYLOConstants.TEMP_ADDRESS_COMMENTS, data.get(0).get(MYLOConstants.TEMP_ADDRESS_COMMENTS));
 		myloAssignmentPage.clickElementOnOtherAddressesSection(buttonName);
-		myloAssignmentPage.clickElementOnOtherAddressesSection(MYLOConstants.OK_BUTTON);
 		MYLOConstants.TIME_AFTER_ACTION = new Date().getTime();
 		Reporter.addStepLog("<b>Total time taken by <i>'When'</i> statement is :"
 				+ (MYLOConstants.TIME_AFTER_ACTION - MYLOConstants.TIME_BEFORE_ACTION) / 1000 + " Seconds </b>");
@@ -354,7 +354,6 @@ public class MyloAssignmentOtherAddresses_Steps {
 		MYLOConstants.TIME_BEFORE_ACTION = new Date().getTime();
 		myloAssignmentPage.setFieldValueOnOtherAddressesSection(fieldName, fieldValue);
 		myloAssignmentPage.clickElementOnOtherAddressesSection(buttonName);
-		myloAssignmentPage.clickElementOnOtherAddressesSection(MYLOConstants.OK_BUTTON);
 		MYLOConstants.TIME_AFTER_ACTION = new Date().getTime();
 		Reporter.addStepLog("<b>Total time taken by <i>'When'</i> statement is :"
 				+ (MYLOConstants.TIME_AFTER_ACTION - MYLOConstants.TIME_BEFORE_ACTION) / 1000 + " Seconds </b>");
@@ -411,7 +410,6 @@ public class MyloAssignmentOtherAddresses_Steps {
 		myloAssignmentPage.clickElementOnOtherAddressesSection(fieldName);
 		myloAssignmentPage.setFieldValueOnOtherAddressesSection(fieldName, fieldValue);
 		myloAssignmentPage.clickElementOnOtherAddressesSection(MYLOConstants.OTHER_ADDRESS_SAVE_BUTTON);
-		myloAssignmentPage.clickElementOnOtherAddressesSection(MYLOConstants.OK_BUTTON);
 		Assert.assertTrue(myloAssignmentPage.verifyOtherAddressFieldAvailability(sectionType2));
 		Assert.assertFalse(myloAssignmentPage.verifyOtherAddressFieldAvailability(sectionType1));
 		MYLOConstants.TIME_AFTER_ACTION = new Date().getTime();

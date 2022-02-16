@@ -58,9 +58,6 @@ public class JsonDataReader_Mylo {
 		_CAStatesList=getCAStates();
 		_IndiaStatesList=getIndiaStates();
 	}
-	
-	
-
 	private List<Mylo_LoginData> getUserData() {
 		Gson gson = new Gson();
 		BufferedReader bufferReader = null;

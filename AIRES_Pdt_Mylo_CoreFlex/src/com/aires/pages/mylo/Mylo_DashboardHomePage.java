@@ -77,6 +77,10 @@ public class Mylo_DashboardHomePage extends Base {
 
 	@FindBy(how = How.XPATH, using = "//h1")
 	private WebElement _headerText;
+	
+	@FindBy(how = How.CSS, using = "button[class='btn btn-primary modal-md-blue-btn']")
+	private List<WebElement> _assignmentOptions;
+			
 
 	final By _selectQueryoptions = By.xpath("./button");
 	final By _fileParameterOptions = By.xpath(".//following-sibling::label");
@@ -124,6 +128,11 @@ public class Mylo_DashboardHomePage extends Base {
 	public void selectOptionsFromHamburgerMenu(String optionToBeSelected) {
 		CoreFunctions.explicitWaitTillElementListVisibility(driver, _hamburgerMenuOptions);
 		CoreFunctions.selectItemInListByText(driver, _hamburgerMenuOptions, optionToBeSelected);
+	}
+	
+	public void selectOptionsFromAssignmentMenu(String optionToBeSelected) {
+		CoreFunctions.explicitWaitTillElementListVisibility(driver, _assignmentOptions);
+		CoreFunctions.selectItemInListByText(driver, _assignmentOptions, optionToBeSelected);
 	}
 
 	public boolean verifySelectQueryOptions(DataTable data) {

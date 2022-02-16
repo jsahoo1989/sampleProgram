@@ -137,7 +137,7 @@ Given he clicks on "Mailing address" under Other Addresses section after navigat
 And he selects any "State" after selecting "USA" as "Country"
 And he enters a "Mailing address City" less than or equal to 25 characters 
 And he enters a "Mailing address address1" less than 5 characters
-And a warning message should display as "Street1 minimum length is 5 characters!" after clicking on "Save" button
+And a warning message should display as "Address1 minimum length is 5 characters!" after clicking on "Save" button
 And he enters a "Mailing address address1" less than or equal to 35 characters 
 When he enters a "Mailing address ZipCode" less than 5 characters
 Then a warning message should display as "Zip Code should be at least of 5 characters for USA!" after clicking on "Save" button
@@ -164,7 +164,7 @@ Examples:
 |Mailing address   |mailing|
 |Temporary address |temporary|
 
-@IRIS-830 @Mylo-Regression
+@IRIS-8301 @Mylo-Regression
 Scenario:  Mylo-Validate Saved Data and Type Dropdown selection for both Mailing and Temporary Address on Mylo Assignment page under Other Addresses section 
 Given he clicks on "Temporary address" under Other Addresses section after navigating to Assignment Page for file ID "611127"
 And he clicks on "Save" button after entering below details in "Temporary address" section

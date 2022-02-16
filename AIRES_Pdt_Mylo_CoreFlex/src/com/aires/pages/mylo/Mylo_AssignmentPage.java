@@ -144,22 +144,22 @@ public class Mylo_AssignmentPage extends Base {
 	
 	// *************** Other Adddresses section ***********************//
 	
-	@FindBy(how = How.XPATH, using = "//a[text()='Add Mailing Address']//preceding-sibling::img")
+	@FindBy(how = How.XPATH, using = "//a[text()='Add Mailing Address']/preceding-sibling::img")
 	private WebElement _addMailAddressBtn;
 	
-	@FindBy(how = How.XPATH, using = "//a[text()='Add Temporary Address']//preceding-sibling::img")
+	@FindBy(how = How.XPATH, using = "//a[text()='Add Temporary Address']/preceding-sibling::img")
 	private WebElement _addTempAddressBtn;
 	
 	@FindBy(how = How.XPATH, using = "//ng-select[@name='popupcountry']")
 	private WebElement _countryDropdown;
 	
-	@FindBy(how = How.XPATH, using = "//h1[@class='popupheader']//following::ng-select[@name='state']")
+	@FindBy(how = How.XPATH, using = "//h1[@class='popupheader']/following::ng-select[@name='state']")
 	private WebElement _stateDropdown;
 	
-	@FindBy(how = How.XPATH, using = "//h1[@class='popupheader']//following::ng-select[@name='state']//following-sibling::label")
+	@FindBy(how = How.XPATH, using = "//h1[@class='popupheader']/following::ng-select[@name='state']//following-sibling::label")
 	private WebElement _stateFieldName;
 	
-	@FindBy(how = How.XPATH, using = "//h1[@class='popupheader']//following::input[@formcontrolname='stateProvince']")
+	@FindBy(how = How.XPATH, using = "//h1[@class='popupheader']/following::input[@formcontrolname='stateProvince']")
 	private WebElement _stateFieldTextType;
 	
 	@FindBy(how = How.XPATH, using = "//app-address[@id='temporaryAddress']//ng-select[@name='country']")
@@ -284,6 +284,12 @@ public class Mylo_AssignmentPage extends Base {
 	
 	@FindBy(how = How.XPATH, using = "//h2[text()='Success']//following::div[@id='swal2-content']")
 	private WebElement _successMessage;
+	
+	@FindBy(how = How.CSS, using = "div[role='alert']")
+	private WebElement _alertMessage;
+
+	@FindBy(how = How.XPATH, using = "//button[contains(@class,'toast-close-btn')]")
+	private WebElement _closeBtn;
 	
 	
 	int noOfAiresFileTeamMember;
@@ -1041,6 +1047,11 @@ public class Mylo_AssignmentPage extends Base {
 			CoreFunctions.explicitWaitTillElementBecomesClickable(driver, _Okbutton, MYLOConstants.OK_BUTTON);
 			CoreFunctions.click(driver, _Okbutton, _Okbutton.getText());
 			break;
+		case MYLOConstants.CLOSE_BUTTON:
+			CoreFunctions.isElementVisible(_closeBtn);
+			CoreFunctions.highlightObject(driver, _closeBtn);
+			CoreFunctions.sendKeysUsingAction(driver, _closeBtn, _closeBtn.getText());
+			break;
 		case MYLOConstants.TEMP_EDIT_BUTTON:
 			CoreFunctions.explicitWaitTillElementVisibility(driver, _tempEditButton, MYLOConstants.TEMP_EDIT_BUTTON);
 			CoreFunctions.explicitWaitTillElementBecomesClickable(driver, _tempEditButton,
@@ -1069,12 +1080,14 @@ public class Mylo_AssignmentPage extends Base {
 			CoreFunctions.explicitWaitTillElementVisibility(driver, _tempAddressStateDropdown,
 					MYLOConstants.TEMP_ADDRESS_STATE);
 			CoreFunctions.click(driver, _tempAddressStateDropdown, MYLOConstants.TEMP_ADDRESS_STATE);
+			CoreFunctions.highlightObject(driver, _tempAddressStateDropdown);
 			stateList = CoreFunctions.getElementListByLocator(driver, _dropdownOptions);
 			break;
 		case MYLOConstants.MAIL_ADDRESS_STATE:
 			CoreFunctions.explicitWaitTillElementVisibility(driver, _mailAddressStateDropdown,
 					MYLOConstants.MAIL_ADDRESS_STATE);
 			CoreFunctions.click(driver, _mailAddressStateDropdown, MYLOConstants.MAIL_ADDRESS_STATE);
+			CoreFunctions.highlightObject(driver, _mailAddressStateDropdown);
 			stateList = CoreFunctions.getElementListByLocator(driver, _dropdownOptions);
 			break;
 		case MYLOConstants.TEMP_ADDRESS_TYPE:
@@ -1179,10 +1192,10 @@ public class Mylo_AssignmentPage extends Base {
 				valuesToIgnore.add("USA");
 				valuesToIgnore.add("INDIA");
 				valuesToIgnore.add("CANADA");
-				CoreFunctions.selectMatchingItemInListByText(driver, countryList,
+				BusinessFunctions.selectItemFromListUsingText(driver, countryList,
 						CoreFunctions.getRandomOutOfSelectedElementValueFromList(driver, countryList, valuesToIgnore));
 			} else
-				CoreFunctions.selectMatchingItemInListByText(driver, countryList, fieldValue);
+				BusinessFunctions.selectItemFromListUsingText(driver, countryList, fieldValue);
 			break;
 		case MYLOConstants.STATE:
 			CoreFunctions.explicitWaitTillElementListVisibility(driver, stateList);
@@ -1210,11 +1223,11 @@ public class Mylo_AssignmentPage extends Base {
 			break;
 		case MYLOConstants.TEMP_ADDRESS_CITY:
 			try {
-				updatedTempAddressCityValue = CoreFunctions.generateRandomCharOfLength(Integer.parseInt(fieldValue));
+				updatedTempAddressCityValue = CoreFunctions.generateRandomCharOfLength(Integer.parseInt(fieldValue),MYLOConstants.ONLY_CHARACTERS,0);
 				CoreFunctions.clearAndSetText(driver, _otherAddressaddCityValue, updatedTempAddressCityValue);
 			} catch (NumberFormatException e) {
 				if (fieldValue.equals(MYLOConstants.SPECIAL_CHARACTERS_STRING)) {
-					updatedTempAddressCityValue = CoreFunctions.generateRandomCharWithSpecialCharactersOfLength(4, 2);
+					updatedTempAddressCityValue = CoreFunctions.generateRandomCharOfLength(4,MYLOConstants.SPECIAL_CHARACTERS_STRING, 2);
 					CoreFunctions.clearAndSetText(driver, _otherAddressaddCityValue, updatedTempAddressCityValue);
 				} else {
 					CoreFunctions.clearAndSetText(driver, _otherAddressaddCityValue, fieldValue);
@@ -1224,12 +1237,12 @@ public class Mylo_AssignmentPage extends Base {
 			break;
 		case MYLOConstants.MAIL_ADDRESS_CITY:
 			try {
-				updatedMailAddressCityValue = CoreFunctions.generateRandomCharOfLength(Integer.parseInt(fieldValue));
+				updatedMailAddressCityValue = CoreFunctions.generateRandomCharOfLength(Integer.parseInt(fieldValue),MYLOConstants.ONLY_CHARACTERS,0);
 				CoreFunctions.clearAndSetText(driver, _otherAddressaddCityValue, updatedMailAddressCityValue);
 
 			} catch (NumberFormatException e) {
 				if (fieldValue.equals(MYLOConstants.SPECIAL_CHARACTERS_STRING)) {
-					updatedMailAddressCityValue = CoreFunctions.generateRandomCharWithSpecialCharactersOfLength(4, 2);
+					updatedMailAddressCityValue = CoreFunctions.generateRandomCharOfLength(4,MYLOConstants.SPECIAL_CHARACTERS_STRING, 2);
 					CoreFunctions.clearAndSetText(driver, _otherAddressaddCityValue, updatedMailAddressCityValue);
 				} else {
 					CoreFunctions.clearAndSetText(driver, _otherAddressaddCityValue, fieldValue);
@@ -1241,7 +1254,7 @@ public class Mylo_AssignmentPage extends Base {
 			try {
 				if (Integer.parseInt(fieldValue) < 100) {
 					updatedTempAddressZipCodeValue = CoreFunctions
-							.generateRandomCharOfLength(Integer.parseInt(fieldValue));
+							.generateRandomCharOfLength(Integer.parseInt(fieldValue),MYLOConstants.ONLY_CHARACTERS,0);
 					CoreFunctions.clearAndSetText(driver, _otherAddressaddZipCodeValue, updatedTempAddressZipCodeValue);
 				} else {
 					CoreFunctions.clearAndSetText(driver, _otherAddressaddZipCodeValue, fieldValue);
@@ -1249,7 +1262,8 @@ public class Mylo_AssignmentPage extends Base {
 				}
 			} catch (NumberFormatException e) {
 				if (fieldValue.equals(MYLOConstants.SPECIAL_CHARACTERS_STRING)) {
-					updatedTempAddressZipCodeValue = CoreFunctions.generateRandomCharWithSpecialCharactersOfLength(4,
+					updatedTempAddressZipCodeValue = CoreFunctions.generateRandomCharOfLength(4,
+							MYLOConstants.SPECIAL_CHARACTERS_STRING,	
 							2);
 					CoreFunctions.clearAndSetText(driver, _otherAddressaddZipCodeValue, updatedTempAddressZipCodeValue);
 				} else {
@@ -1262,7 +1276,7 @@ public class Mylo_AssignmentPage extends Base {
 			try {
 				if (Integer.parseInt(fieldValue) < 100) {
 					updatedMailAddressZipCodeValue = CoreFunctions
-							.generateRandomCharOfLength(Integer.parseInt(fieldValue));
+							.generateRandomCharOfLength(Integer.parseInt(fieldValue),MYLOConstants.ONLY_CHARACTERS,0);
 					CoreFunctions.clearAndSetText(driver, _otherAddressaddZipCodeValue, updatedMailAddressZipCodeValue);
 				} else {
 					CoreFunctions.clearAndSetText(driver, _otherAddressaddZipCodeValue, fieldValue);
@@ -1270,8 +1284,8 @@ public class Mylo_AssignmentPage extends Base {
 				}
 			} catch (NumberFormatException e) {
 				if (fieldValue.equals(MYLOConstants.SPECIAL_CHARACTERS_STRING)) {
-					updatedMailAddressZipCodeValue = CoreFunctions.generateRandomCharWithSpecialCharactersOfLength(4,
-							2);
+					updatedMailAddressZipCodeValue = CoreFunctions.generateRandomCharOfLength(4,
+							MYLOConstants.SPECIAL_CHARACTERS_STRING,2);
 					CoreFunctions.clearAndSetText(driver, _otherAddressaddZipCodeValue, updatedMailAddressZipCodeValue);
 				} else {
 					CoreFunctions.clearAndSetText(driver, _otherAddressaddZipCodeValue, fieldValue);
@@ -1281,11 +1295,11 @@ public class Mylo_AssignmentPage extends Base {
 			break;
 		case MYLOConstants.TEMP_ADDRESS_STATE:
 			try {
-				updatedTempAddressStateValue = CoreFunctions.generateRandomCharOfLength(Integer.parseInt(fieldValue));
+				updatedTempAddressStateValue = CoreFunctions.generateRandomCharOfLength(Integer.parseInt(fieldValue),MYLOConstants.ONLY_CHARACTERS,0);
 				CoreFunctions.clearAndSetText(driver, _otherAddressaddStateValue, updatedTempAddressStateValue);
 			} catch (NumberFormatException e) {
 				if (fieldValue.equals(MYLOConstants.SPECIAL_CHARACTERS_STRING)) {
-					updatedTempAddressStateValue = CoreFunctions.generateRandomCharWithSpecialCharactersOfLength(4, 2);
+					updatedTempAddressStateValue = CoreFunctions.generateRandomCharOfLength(4, MYLOConstants.SPECIAL_CHARACTERS_STRING,2);
 					CoreFunctions.clearAndSetText(driver, _otherAddressaddStateValue, updatedTempAddressStateValue);
 				} else {
 					CoreFunctions.clearAndSetText(driver, _otherAddressaddStateValue, fieldValue);
@@ -1295,12 +1309,12 @@ public class Mylo_AssignmentPage extends Base {
 			break;
 		case MYLOConstants.MAIL_ADDRESS_STATE:
 			try {
-				updatedMailAddressStateValue = CoreFunctions.generateRandomCharOfLength(Integer.parseInt(fieldValue));
+				updatedMailAddressStateValue = CoreFunctions.generateRandomCharOfLength(Integer.parseInt(fieldValue),MYLOConstants.ONLY_CHARACTERS,0);
 				CoreFunctions.clearAndSetText(driver, _otherAddressaddStateValue, updatedMailAddressStateValue);
 
 			} catch (NumberFormatException e) {
 				if (fieldValue.equals(MYLOConstants.SPECIAL_CHARACTERS_STRING)) {
-					updatedMailAddressStateValue = CoreFunctions.generateRandomCharWithSpecialCharactersOfLength(4, 2);
+					updatedMailAddressStateValue = CoreFunctions.generateRandomCharOfLength(4,MYLOConstants.SPECIAL_CHARACTERS_STRING, 2);
 					CoreFunctions.clearAndSetText(driver, _otherAddressaddStateValue, updatedMailAddressStateValue);
 				} else {
 					CoreFunctions.clearAndSetText(driver, _otherAddressaddStateValue, fieldValue);
@@ -1310,11 +1324,11 @@ public class Mylo_AssignmentPage extends Base {
 			break;
 		case MYLOConstants.TEMP_ADDRESS_ADDRESS1:
 			try {
-				updatedTempAddress1Value = CoreFunctions.generateRandomCharOfLength(Integer.parseInt(fieldValue));
+				updatedTempAddress1Value = CoreFunctions.generateRandomCharOfLength(Integer.parseInt(fieldValue),MYLOConstants.ONLY_CHARACTERS,0);
 				CoreFunctions.clearAndSetText(driver, _otherAddressaddAddress1Value, updatedTempAddress1Value);
 			} catch (NumberFormatException e) {
 				if (fieldValue.equals(MYLOConstants.SPECIAL_CHARACTERS_STRING)) {
-					updatedTempAddress1Value = CoreFunctions.generateRandomCharWithSpecialCharactersOfLength(4, 2);
+					updatedTempAddress1Value = CoreFunctions.generateRandomCharOfLength(4,MYLOConstants.SPECIAL_CHARACTERS_STRING, 2);
 					CoreFunctions.clearAndSetText(driver, _otherAddressaddAddress1Value, updatedTempAddress1Value);
 				} else {
 					CoreFunctions.clearAndSetText(driver, _otherAddressaddAddress1Value, fieldValue);
@@ -1324,12 +1338,11 @@ public class Mylo_AssignmentPage extends Base {
 			break;
 		case MYLOConstants.MAIL_ADDRESS_ADDRESS1:
 			try {
-				updatedMailAddress1Value = CoreFunctions.generateRandomCharOfLength(Integer.parseInt(fieldValue));
+				updatedMailAddress1Value = CoreFunctions.generateRandomCharOfLength(Integer.parseInt(fieldValue),MYLOConstants.ONLY_CHARACTERS,0);
 				CoreFunctions.clearAndSetText(driver, _otherAddressaddAddress1Value, updatedMailAddress1Value);
-
 			} catch (NumberFormatException e) {
 				if (fieldValue.equals(MYLOConstants.SPECIAL_CHARACTERS_STRING)) {
-					updatedMailAddress1Value = CoreFunctions.generateRandomCharWithSpecialCharactersOfLength(4, 2);
+					updatedMailAddress1Value = CoreFunctions.generateRandomCharOfLength(4,MYLOConstants.SPECIAL_CHARACTERS_STRING, 2);
 					CoreFunctions.clearAndSetText(driver, _otherAddressaddAddress1Value, updatedMailAddress1Value);
 				} else {
 					CoreFunctions.clearAndSetText(driver, _otherAddressaddAddress1Value, fieldValue);
@@ -1339,11 +1352,11 @@ public class Mylo_AssignmentPage extends Base {
 			break;
 		case MYLOConstants.TEMP_ADDRESS_ADDRESS2:
 			try {
-				updatedTempAddress2Value = CoreFunctions.generateRandomCharOfLength(Integer.parseInt(fieldValue));
+				updatedTempAddress2Value = CoreFunctions.generateRandomCharOfLength(Integer.parseInt(fieldValue),MYLOConstants.ONLY_CHARACTERS,0);
 				CoreFunctions.clearAndSetText(driver, _otherAddressaddAddress2Value, updatedTempAddress2Value);
 			} catch (NumberFormatException e) {
 				if (fieldValue.equals(MYLOConstants.SPECIAL_CHARACTERS_STRING)) {
-					updatedTempAddress2Value = CoreFunctions.generateRandomCharWithSpecialCharactersOfLength(4, 2);
+					updatedTempAddress2Value = CoreFunctions.generateRandomCharOfLength(4,MYLOConstants.SPECIAL_CHARACTERS_STRING, 2);
 					CoreFunctions.clearAndSetText(driver, _otherAddressaddAddress2Value, updatedTempAddress2Value);
 				} else {
 					CoreFunctions.clearAndSetText(driver, _otherAddressaddAddress2Value, fieldValue);
@@ -1353,12 +1366,12 @@ public class Mylo_AssignmentPage extends Base {
 			break;
 		case MYLOConstants.MAIL_ADDRESS_ADDRESS2:
 			try {
-				updatedMailAddress2Value = CoreFunctions.generateRandomCharOfLength(Integer.parseInt(fieldValue));
+				updatedMailAddress2Value = CoreFunctions.generateRandomCharOfLength(Integer.parseInt(fieldValue),MYLOConstants.ONLY_CHARACTERS,0);
 				CoreFunctions.clearAndSetText(driver, _otherAddressaddAddress2Value, updatedMailAddress2Value);
 
 			} catch (NumberFormatException e) {
 				if (fieldValue.equals(MYLOConstants.SPECIAL_CHARACTERS_STRING)) {
-					updatedMailAddress2Value = CoreFunctions.generateRandomCharWithSpecialCharactersOfLength(4, 2);
+					updatedMailAddress2Value = CoreFunctions.generateRandomCharOfLength(4,MYLOConstants.SPECIAL_CHARACTERS_STRING, 2);
 					CoreFunctions.clearAndSetText(driver, _otherAddressaddAddress2Value, updatedMailAddress2Value);
 				} else {
 					CoreFunctions.clearAndSetText(driver, _otherAddressaddAddress2Value, fieldValue);
@@ -1368,7 +1381,7 @@ public class Mylo_AssignmentPage extends Base {
 			break;
 		case MYLOConstants.TEMP_ADDRESS_COMMENTS:
 			if (fieldValue.equals(MYLOConstants.SPECIAL_CHARACTERS_STRING)) {
-				updatedTempAddressCommentsValue = CoreFunctions.generateRandomCharWithSpecialCharactersOfLength(4, 2);
+				updatedTempAddressCommentsValue = CoreFunctions.generateRandomCharOfLength(4,MYLOConstants.SPECIAL_CHARACTERS_STRING, 2);
 				CoreFunctions.clearAndSetText(driver, _otherAddressaddCommentValue, updatedTempAddressCommentsValue);
 			} else {
 				CoreFunctions.clearAndSetText(driver, _otherAddressaddCommentValue, fieldValue);
@@ -1377,7 +1390,8 @@ public class Mylo_AssignmentPage extends Base {
 			break;
 		case MYLOConstants.MAIL_ADDRESS_COMMENTS:
 			if (fieldValue.equals(MYLOConstants.SPECIAL_CHARACTERS_STRING)) {
-				updatedMailAddressCommentsValue = CoreFunctions.generateRandomCharWithSpecialCharactersOfLength(4, 2);
+				updatedMailAddressCommentsValue = CoreFunctions.generateRandomCharOfLength(4,MYLOConstants.SPECIAL_CHARACTERS_STRING
+						,2);
 				CoreFunctions.clearAndSetText(driver, _otherAddressaddCommentValue, updatedMailAddressCommentsValue);
 			} else {
 				CoreFunctions.clearAndSetText(driver, _otherAddressaddCommentValue, fieldValue);
@@ -1475,55 +1489,72 @@ public class Mylo_AssignmentPage extends Base {
 		switch (fieldName) {
 		case MYLOConstants.TEMP_ADDRESS_COUNTRY:
 			CoreFunctions.explicitWaitTillElementVisibility(driver, _tempAddressCountryValue, MYLOConstants.TEMP_ADDRESS_COUNTRY);
+			CoreFunctions.highlightObject(driver, _tempAddressCountryValue);
 			return CoreFunctions.getElementText(driver,_tempAddressCountryValue);
 		case MYLOConstants.MAIl_ADDRESS_COUNTRY:
 			CoreFunctions.explicitWaitTillElementVisibility(driver, _mailAddressCountryValue, MYLOConstants.MAIl_ADDRESS_COUNTRY);
+			CoreFunctions.highlightObject(driver, _mailAddressCountryValue);
 			return CoreFunctions.getElementText(driver,_mailAddressCountryValue);
 		case MYLOConstants.TEMP_ADDRESS_STATE_DROPDOWN:
 			CoreFunctions.explicitWaitTillElementVisibility(driver, _tempAddressStateDropdownValue, MYLOConstants.TEMP_ADDRESS_STATE_DROPDOWN);
+			CoreFunctions.highlightObject(driver, _tempAddressStateDropdownValue);
 			return CoreFunctions.getElementText(driver,_tempAddressStateDropdownValue);
 		case MYLOConstants.MAIL_ADDRESS_STATE_DROPDOWN:
 			CoreFunctions.explicitWaitTillElementVisibility(driver, _mailAddressStateDropDownValue, MYLOConstants.MAIL_ADDRESS_STATE_DROPDOWN);
+			CoreFunctions.highlightObject(driver, _mailAddressStateDropDownValue);
 			return CoreFunctions.getElementText(driver,_mailAddressStateDropDownValue);
 		case MYLOConstants.TEMP_ADDRESS_CITY:
 			CoreFunctions.explicitWaitTillElementVisibility(driver, _tempAddressCityValue, MYLOConstants.TEMP_ADDRESS_CITY);
+			CoreFunctions.highlightObject(driver, _tempAddressCityValue);
 			return CoreFunctions.getAttributeText( _tempAddressCityValue,MYLOConstants.VALUE);
 		case MYLOConstants.MAIL_ADDRESS_CITY:
 			CoreFunctions.explicitWaitTillElementVisibility(driver, _mailAddressCityValue, MYLOConstants.MAIL_ADDRESS_CITY);
+			CoreFunctions.highlightObject(driver, _tempAddressCountryValue);
 			return CoreFunctions.getAttributeText(_mailAddressCityValue, MYLOConstants.VALUE);
 		case MYLOConstants.TEMP_ADDRESS_ZIPCODE:
 			CoreFunctions.explicitWaitTillElementVisibility(driver, _tempAddressZipCodeValue, MYLOConstants.TEMP_ADDRESS_ZIPCODE);
+			CoreFunctions.highlightObject(driver, _tempAddressZipCodeValue);
 			return CoreFunctions.getAttributeText( _tempAddressZipCodeValue,MYLOConstants.VALUE);
 		case MYLOConstants.MAIL_ADDRESS_ZIPCODE:
 			CoreFunctions.explicitWaitTillElementVisibility(driver, _mailAddressZipCodeValue, MYLOConstants.MAIL_ADDRESS_ZIPCODE);
+			CoreFunctions.highlightObject(driver, _mailAddressZipCodeValue);
 			return CoreFunctions.getAttributeText(_mailAddressZipCodeValue, MYLOConstants.VALUE);
 		case MYLOConstants.TEMP_ADDRESS_STATE:
 			CoreFunctions.explicitWaitTillElementVisibility(driver, _tempAddressStateValue, MYLOConstants.TEMP_ADDRESS_STATE);
+			CoreFunctions.highlightObject(driver, _tempAddressStateValue);
 			return CoreFunctions.getAttributeText( _tempAddressStateValue,MYLOConstants.VALUE);
 		case MYLOConstants.MAIL_ADDRESS_STATE:
 			CoreFunctions.explicitWaitTillElementVisibility(driver, _mailAddressStateValue, MYLOConstants.MAIL_ADDRESS_STATE);
+			CoreFunctions.highlightObject(driver, _mailAddressStateValue);
 			return CoreFunctions.getAttributeText(_mailAddressStateValue, MYLOConstants.VALUE);
 		case MYLOConstants.TEMP_ADDRESS_ADDRESS1:
 			CoreFunctions.explicitWaitTillElementVisibility(driver, _tempAddress1Value, MYLOConstants.TEMP_ADDRESS_ADDRESS1);
+			CoreFunctions.highlightObject(driver, _tempAddress1Value);
 			return CoreFunctions.getAttributeText( _tempAddress1Value,MYLOConstants.VALUE);
 		case MYLOConstants.MAIL_ADDRESS_ADDRESS1:
 			CoreFunctions.explicitWaitTillElementVisibility(driver, _mailAddress1Value, MYLOConstants.MAIL_ADDRESS_ADDRESS1);
+			CoreFunctions.highlightObject(driver, _mailAddress1Value);
 			return CoreFunctions.getAttributeText(_mailAddress1Value, MYLOConstants.VALUE);
 		case MYLOConstants.TEMP_ADDRESS_ADDRESS2:
 			CoreFunctions.explicitWaitTillElementVisibility(driver, _tempAddress2Value, MYLOConstants.TEMP_ADDRESS_ADDRESS2);
+			CoreFunctions.highlightObject(driver, _tempAddress2Value);
 			return CoreFunctions.getAttributeText( _tempAddress2Value,MYLOConstants.VALUE);
 		case MYLOConstants.MAIL_ADDRESS_ADDRESS2:
 			CoreFunctions.explicitWaitTillElementVisibility(driver, _mailAddress2Value, MYLOConstants.MAIL_ADDRESS_ADDRESS2);
+			CoreFunctions.highlightObject(driver, _mailAddress2Value);
 			return CoreFunctions.getAttributeText(_mailAddress2Value, MYLOConstants.VALUE);
 		case MYLOConstants.TEMP_ADDRESS_COMMENTS:
 			CoreFunctions.explicitWaitTillElementVisibility(driver, _tempAddressCommentsValue, MYLOConstants.TEMP_ADDRESS_COMMENTS);
+			CoreFunctions.highlightObject(driver, _tempAddressCommentsValue);
 			return CoreFunctions.getAttributeText( _tempAddressCommentsValue,MYLOConstants.VALUE);
 		case MYLOConstants.MAIL_ADDRESS_COMMENTS:
 			CoreFunctions.explicitWaitTillElementVisibility(driver, _mailAddressCommentsValue, MYLOConstants.MAIL_ADDRESS_COMMENTS);
+			CoreFunctions.highlightObject(driver, _mailAddressCommentsValue);
 			return CoreFunctions.getAttributeText(_mailAddressCommentsValue, MYLOConstants.VALUE);
 		case MYLOConstants.TEMP_ADDRESS_FROMDATE:
 			String tempdateValue = null;
 			CoreFunctions.explicitWaitTillElementVisibility(driver, _tempAddressFromDateValue, MYLOConstants.MAIL_ADDRESS_FROMDATE);
+			CoreFunctions.highlightObject(driver, _tempAddressFromDateValue);
 			try {
 				tempdateValue=CoreFunctions.getStringDateInFormat(CoreFunctions.getAttributeText(_tempAddressFromDateValue, MYLOConstants.VALUE), "dd MMM yyyy", "MM/dd/yyyy");
 			} catch (ParseException e) {
@@ -1531,7 +1562,8 @@ public class Mylo_AssignmentPage extends Base {
 			return tempdateValue;
 		case MYLOConstants.MAIL_ADDRESS_FROMDATE:
 			String dateValue = null;
-			CoreFunctions.explicitWaitTillElementVisibility(driver, _mailAddressFromDateValue, MYLOConstants.MAIL_ADDRESS_FROMDATE);			
+			CoreFunctions.explicitWaitTillElementVisibility(driver, _mailAddressFromDateValue, MYLOConstants.MAIL_ADDRESS_FROMDATE);	
+			CoreFunctions.highlightObject(driver, _mailAddressFromDateValue);
 			try {
 				dateValue=CoreFunctions.getStringDateInFormat(CoreFunctions.getAttributeText(_mailAddressFromDateValue, MYLOConstants.VALUE), "dd MMM yyyy", "MM/dd/yyyy");
 			} catch (ParseException e) {
@@ -1654,6 +1686,17 @@ public class Mylo_AssignmentPage extends Base {
 		try {
 			CoreFunctions.explicitWaitTillElementVisibility(driver, _successMessage, _successMessage.getText());
 			Assert.assertEquals(_successMessage.getText(), msg);
+		} catch (Throwable e) {
+			return false;
+		}
+		return true;
+	}
+	
+	public boolean verifyAlertMessage(String msg) {
+		try {
+			CoreFunctions.isElementVisible(_alertMessage);
+			System.out.println(_alertMessage.getText());
+			Assert.assertEquals(_alertMessage.getText(), msg);
 		} catch (Throwable e) {
 			return false;
 		}

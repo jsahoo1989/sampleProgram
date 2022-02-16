@@ -1,0 +1,237 @@
+[
+	{
+		"key": "AK",
+		"value": "Alaska"
+	},
+	{
+		"key": "AL",
+		"value": "Alabama"
+	},
+	{
+		"key": "AR",
+		"value": "Arkansas"
+	},
+	{
+		"value": "American Samoa"
+		
+	},
+	{
+		"value": "Arizona"
+		
+	},
+	{
+		"value": "California"
+		
+	},
+	{
+		"value": "Colorado"
+		
+	},
+	{
+		"value": "Connecticut"
+		
+	},
+	{
+		"value": "District of Columbia"
+		
+	},
+	{
+		"value": "Delaware"
+		
+	},
+	{
+		"value": "Florida"
+		
+	},
+	{
+		"value": "Federated States of Micronesia"
+		
+	},
+	{
+		"value": "Georgia"
+		
+	},
+	{
+		"value": "Guam"
+		
+	},
+	{
+		"value": "Hawaii"
+		
+	},
+	{
+		"value": "Iowa"
+		
+	},
+	{
+		"value": "Idaho"
+		
+	},
+	{
+		"value": "Illinois"
+		
+	},
+	{
+		"value": "Indiana"
+		
+	},
+	{
+		"value": "Kansas"
+		
+	},
+	{
+		"value": "Kentucky"
+		
+	},
+	{
+		"value": "Louisiana"
+		
+	},
+	{
+		"value": "Massachusetts"
+		
+	},
+	{
+		"value": "Maryland"
+		
+	},
+	{
+		"value": "Maine"
+		
+	},
+	{
+		"value": "Marshall Islands"
+		
+	},
+	{
+		"value": "Michigan"
+		
+	},
+	{
+		"value": "Minnesota"
+		
+	},
+	{
+		"value": "Missouri"
+		
+	},
+	{
+		"value": "Northern Mariana Islands"
+		
+	},
+	{
+		"value": "Mississippi"
+		
+	},
+	{
+		"value": "Montana"
+		
+	},
+	{
+		"value": "North Carolina"
+		
+	},
+	{
+		"value": "North Dakota"
+		
+	},
+	{
+		"value": "Nebraska"
+		
+	},
+	{
+		"value": "New Hampshire"
+		
+	},
+	{
+		"value": "New Jersey"
+		
+	},
+	{
+		"value": "New Mexico"
+		
+	},
+	{
+		"value": "Nevada"
+		
+	},
+	{
+		"value": "New York"
+		
+	},
+	{
+		"value": "Ohio"
+		
+	},
+	{
+		"value": "Oklahoma"
+		
+	},
+	{
+		"value": "Oregon"
+		
+	},
+	{
+		"value": "Pennsylvania"
+		
+	},
+	{
+		"value": "Puerto Rico"
+		
+	},
+	{
+		"value": "Palau"
+		
+	},
+	{
+		"value": "Rhode Island"
+		
+	},
+	{
+		"value": "South Carolina"
+		
+	},
+	{
+		"value": "South Dakota"
+		
+	},
+	{
+		"value": "Tennessee"
+		
+	},
+	{
+		"value": "Texas"
+		
+	},
+	{
+		"value": "Utah"
+		
+	},
+	{
+		"value": "Virginia"
+		
+	},
+	{
+		"value": "Virgin Islands"
+		
+	},
+	{
+		"value": "Vermont"
+		
+	},
+	{
+		"value": "Washington"
+		
+	},
+	{
+		"value": "Wisconsin"
+		
+	},
+	{
+		"value": "West Virginia"
+		
+	},
+	{
+		"key": "WY","value":"Wyoming"
+	}
+]

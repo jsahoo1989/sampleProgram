@@ -1,5 +1,7 @@
 package stepDefinitions.mylo;
 
+import java.util.Date;
+
 import org.testng.Assert;
 
 import com.aires.businessrules.constants.MYLOConstants;
@@ -8,6 +10,7 @@ import com.aires.managers.FileReaderManager;
 import com.aires.pages.mylo.Mylo_DashboardHomePage;
 import com.aires.pages.mylo.Mylo_LoginPage;
 import com.aires.testdatatypes.mylo.Mylo_LoginData;
+import com.vimalselvam.cucumber.listener.Reporter;
 
 import cucumber.api.DataTable;
 import cucumber.api.java.en.Given;
@@ -30,10 +33,13 @@ public class MyloDashboard_Steps {
 
 	@Given("^he has logged into the 'Mylo' application$")
 	public void he_has_logged_into_the_Mylo_application() throws Throwable {
+		MYLOConstants.TIME_BEFORE_ACTION = new Date().getTime();
 		loginPage.openApplication();
 		loginPage.enterUserEmailAndPasswordForMylo(loginData.MyloUserName, loginData.MyloPassword);
 		loginPage.clickSignIn();
-
+		MYLOConstants.TIME_AFTER_ACTION = new Date().getTime();
+		Reporter.addStepLog("<b>Total time taken by <i>'When'</i> statement is :"
+				+ (MYLOConstants.TIME_AFTER_ACTION - MYLOConstants.TIME_BEFORE_ACTION) / 1000 + " Seconds </b>");
 	}
 
 	@Given("^he is on Mylo Dashboard Home page$")

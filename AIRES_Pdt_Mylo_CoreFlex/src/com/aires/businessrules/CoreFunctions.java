@@ -25,6 +25,7 @@ import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.text.MessageFormat;
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.time.Duration;
 import java.time.LocalDate;
@@ -33,6 +34,7 @@ import java.time.format.DateTimeFormatter;
 import java.time.temporal.ChronoUnit;
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.Collections;
 import java.util.Date;
 import java.util.GregorianCalendar;
 import java.util.LinkedHashMap;
@@ -60,6 +62,7 @@ import org.openqa.selenium.support.ui.WebDriverWait;
 import org.testng.Assert;
 
 import com.aires.businessrules.constants.CoreConstants;
+import com.aires.businessrules.constants.MYLOConstants;
 import com.aires.businessrules.constants.PDTConstants;
 import com.aires.utilities.Log;
 import com.vimalselvam.cucumber.listener.Reporter;
@@ -1625,4 +1628,56 @@ public class CoreFunctions {
 		return false;
 
 	}
+
+	public static String generateRandomCharOfLength(int charlength, String type, int specCharLength) {
+		String reqWord = new String();
+		String reqSplChar = new String();
+		Random rnd = new Random();
+		for (int i = 0; i < charlength; i++) {
+			char reqChar = CoreConstants.ALPHABET.charAt(rnd.nextInt(CoreConstants.ALPHABET.length()));
+			reqWord = reqWord + Character.toString(reqChar);
+		}
+		switch (type) {
+		case MYLOConstants.SPECIAL_CHARACTERS_STRING:
+			for (int i = 0; i < specCharLength; i++) {
+				char specialChar = CoreConstants.SPECIAL_CHARACTERS
+						.charAt(rnd.nextInt(CoreConstants.SPECIAL_CHARACTERS.length()));
+				reqWord = reqWord + Character.toString(specialChar);
+			}
+			break;
+		}
+		return reqWord;
+	}	
+
+	public static String getRandomOutOfSelectedElementValueFromList(WebDriver driver, List<WebElement> WebElementList,	
+			List<String> valuesToIgnore) {	
+		String selectedValue;	
+		do {	
+			selectedValue = WebElementList.get(getRandomNumber(0, WebElementList.size() - 1)).getText();	
+		} while (valuesToIgnore.contains(valuesToIgnore));	
+		return selectedValue;	
+	}	
+	public static boolean verifyListOrder(List<String> lists, String order) {	
+		List<String> copyText = new ArrayList<String>(lists);	
+		Collections.sort(copyText);	
+		if (order.equals(MYLOConstants.ASCENDING))	
+			return (lists.equals(copyText));	
+		else if (order.equals(MYLOConstants.DESCENDING)) {	
+			Collections.reverse(copyText);	
+			return (lists.equals(copyText));	
+		}	
+		return false;	
+	}	
+		
+	public static String getStringDateInFormat(String value,String givenFormat,String expectedFormat) throws ParseException {	
+		String dateValue = null;	
+		SimpleDateFormat formatter=new SimpleDateFormat(givenFormat);	
+		SimpleDateFormat sdf = new SimpleDateFormat(expectedFormat);	
+		try {	
+			dateValue = sdf.format(formatter.parse(value));	
+		} catch (ParseException e) {	
+		}	
+		return dateValue;	
+	}
+
 }

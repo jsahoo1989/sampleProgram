@@ -13,7 +13,6 @@ import org.testng.Assert;
 
 import com.aires.businessrules.Base;
 import com.aires.businessrules.CoreFunctions;
-import com.aires.businessrules.DbFunctions;
 import com.aires.businessrules.constants.CoreConstants;
 import com.aires.businessrules.constants.PDTConstants;
 import com.aires.utilities.Log;
@@ -237,10 +236,8 @@ public class PDT_ViewPolicyPage extends Base {
 				return true;
 			}
 		} catch (Exception e) {
-			DbFunctions.deletePolicyByPolicyId(addNewPolicyPage.getPolicyId());
 			Assert.fail("Failed to search Policy:-" + policyName);
 		}
-		DbFunctions.deletePolicyByPolicyId(addNewPolicyPage.getPolicyId());
 		return false;
 	}
 

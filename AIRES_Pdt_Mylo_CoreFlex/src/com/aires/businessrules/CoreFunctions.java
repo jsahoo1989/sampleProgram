@@ -1542,7 +1542,7 @@ public class CoreFunctions {
 		boolean itemSearched = false;
 		try {
 			for (WebElement row : WebElementList) {
-				if (row.getText().contains(searchText)) {
+				if (row.getText().trim().equalsIgnoreCase(searchText)) {
 					itemSearched = true;
 					CoreFunctions.clickWithoutReporting(driver, row, searchText);
 					Reporter.addStepLog(MessageFormat.format(PDTConstants.VERIFY_VALUE_SELECTED_FROM_FIELD,

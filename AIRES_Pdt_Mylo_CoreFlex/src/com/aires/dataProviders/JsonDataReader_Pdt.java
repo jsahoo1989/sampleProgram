@@ -27,6 +27,7 @@ import java.util.List;
 import com.aires.businessrules.constants.CoreConstants;
 import com.aires.managers.FileReaderManager;
 import com.aires.testdatatypes.pdt.PDT_CulturalTrainingBenefit;
+import com.aires.testdatatypes.pdt.PDT_DestinationServicesBenefit;
 import com.aires.testdatatypes.pdt.PDT_FinalMoveBenefit;
 import com.aires.testdatatypes.pdt.PDT_HomeLeaveBenefit;
 import com.aires.testdatatypes.pdt.PDT_HouseHuntingTripBenefit;
@@ -60,6 +61,8 @@ public class JsonDataReader_Pdt {
 			.getTestDataResourcePath() + "pdt/PDT_HomeLeaveBenefit.json";
 	private final String _TemporaryLivingFilePath = FileReaderManager.getInstance().getConfigReader()
 			.getTestDataResourcePath() + "pdt/PDT_TemporaryLivingBenefit.json";
+	private final String _DestinationServicesFilePath = FileReaderManager.getInstance().getConfigReader()
+			.getTestDataResourcePath() + "pdt/PDT_DestinationServicesBenefit.json";
 
 	private List<PDT_LoginData> _loginDataList;
 	private List<PDT_LoginDetails> _loginDetailsList;
@@ -71,6 +74,7 @@ public class JsonDataReader_Pdt {
 	private List<PDT_FinalMoveBenefit> _finalMoveList;
 	private List<PDT_HomeLeaveBenefit> _homeLeaveList;
 	private List<PDT_TemporaryLivingBenefit> _temporaryLivingList;
+	private List<PDT_DestinationServicesBenefit> _destinationServicesList;
 
 	public JsonDataReader_Pdt() {
 		_loginDataList = getUserData();
@@ -83,6 +87,7 @@ public class JsonDataReader_Pdt {
 		_finalMoveList = getFinalMoveData();
 		_homeLeaveList = getHomeLeaveData();
 		_temporaryLivingList = getTemporaryLivingData();
+		_destinationServicesList = getDestinationServicesData();
 	}
 
 	private List<PDT_LoginData> getUserData() {
@@ -237,8 +242,8 @@ public class JsonDataReader_Pdt {
 		BufferedReader bufferReader = null;
 		try {
 			bufferReader = new BufferedReader(new FileReader(_HomeLeaveFilePath));
-			PDT_HomeLeaveBenefit[] finalMove = gson.fromJson(bufferReader, PDT_HomeLeaveBenefit[].class);
-			return Arrays.asList(finalMove);
+			PDT_HomeLeaveBenefit[] homeLeave = gson.fromJson(bufferReader, PDT_HomeLeaveBenefit[].class);
+			return Arrays.asList(homeLeave);
 		} catch (FileNotFoundException e) {
 			throw new RuntimeException(CoreConstants.JSON_FILE_NOT_FOUND_AT_PATH + _HomeLeaveFilePath);
 		} finally {
@@ -255,8 +260,8 @@ public class JsonDataReader_Pdt {
 		BufferedReader bufferReader = null;
 		try {
 			bufferReader = new BufferedReader(new FileReader(_TemporaryLivingFilePath));
-			PDT_TemporaryLivingBenefit[] finalMove = gson.fromJson(bufferReader, PDT_TemporaryLivingBenefit[].class);
-			return Arrays.asList(finalMove);
+			PDT_TemporaryLivingBenefit[] tempLiving = gson.fromJson(bufferReader, PDT_TemporaryLivingBenefit[].class);
+			return Arrays.asList(tempLiving);
 		} catch (FileNotFoundException e) {
 			throw new RuntimeException(CoreConstants.JSON_FILE_NOT_FOUND_AT_PATH + _TemporaryLivingFilePath);
 		} finally {
@@ -266,7 +271,25 @@ public class JsonDataReader_Pdt {
 			} catch (IOException ignore) {
 			}
 		}		
-	}	
+	}
+	
+	private List<PDT_DestinationServicesBenefit> getDestinationServicesData(){
+		Gson gson = new Gson();
+		BufferedReader bufferReader = null;
+		try {
+			bufferReader = new BufferedReader(new FileReader(_DestinationServicesFilePath));
+			PDT_DestinationServicesBenefit[] destinationServices = gson.fromJson(bufferReader, PDT_DestinationServicesBenefit[].class);
+			return Arrays.asList(destinationServices);
+		} catch (FileNotFoundException e) {
+			throw new RuntimeException(CoreConstants.JSON_FILE_NOT_FOUND_AT_PATH + _DestinationServicesFilePath);
+		} finally {
+			try {
+				if (bufferReader != null)
+					bufferReader.close();
+			} catch (IOException ignore) {
+			}
+		}		
+	}
 
 	public final PDT_LoginData getloginDetailsByUserFirstName(String userFirstName) {
 		return _loginDataList.stream().filter(x -> x.firstName.equalsIgnoreCase(userFirstName)).findAny().get();
@@ -309,5 +332,9 @@ public class JsonDataReader_Pdt {
 	
 	public final PDT_TemporaryLivingBenefit getTemporaryLivingDataList(String policyBenefit) {
 		return _temporaryLivingList.stream().filter(x -> x.benefitName.equalsIgnoreCase(policyBenefit)).findAny().get();
+	}
+	
+	public final PDT_DestinationServicesBenefit getDestinationServicesDataList(String policyBenefit) {
+		return _destinationServicesList.stream().filter(x -> x.benefitName.equalsIgnoreCase(policyBenefit)).findAny().get();
 	}
 }

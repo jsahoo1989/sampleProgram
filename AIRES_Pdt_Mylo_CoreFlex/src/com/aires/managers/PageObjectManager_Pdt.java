@@ -21,6 +21,7 @@ import org.openqa.selenium.WebDriver;
 
 import com.aires.pages.pdt.PDT_AddNewPolicyPage;
 import com.aires.pages.pdt.PDT_CulturalTrainingPage;
+import com.aires.pages.pdt.PDT_DestinationServicesPage;
 import com.aires.pages.pdt.PDT_FinalMovePage;
 import com.aires.pages.pdt.PDT_GeneralInformationPage;
 import com.aires.pages.pdt.PDT_HomeLeavePage;
@@ -51,6 +52,7 @@ public class PageObjectManager_Pdt {
 	private PDT_FinalMovePage _finalMovePage;
 	private PDT_HomeLeavePage _homeLeavePage;
 	private PDT_TemporaryLivingPage _temporaryLivingPage;
+	private PDT_DestinationServicesPage _destinationServicesPage;
 	
 	public PageObjectManager_Pdt(WebDriver driver) {
 		this._driver = driver;
@@ -111,4 +113,10 @@ public class PageObjectManager_Pdt {
 	public PDT_TemporaryLivingPage getTemporaryLivingPage() {
 		return (_temporaryLivingPage == null ) ? _temporaryLivingPage = new PDT_TemporaryLivingPage(_driver) : _temporaryLivingPage;
 	}
+	
+	public PDT_DestinationServicesPage getDestinationServicesPage() {
+		return (_destinationServicesPage == null ) ? _destinationServicesPage = new PDT_DestinationServicesPage(_driver) : _destinationServicesPage;
+	}
+	
+	
 }

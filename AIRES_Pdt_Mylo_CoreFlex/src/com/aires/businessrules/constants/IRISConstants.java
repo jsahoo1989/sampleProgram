@@ -5,7 +5,7 @@ public class IRISConstants {
 	public static String URI_ADDRESS = "ws://localhost:5095";
 	// public static String IRIS_EXECUTABLE_PATH = "C:\\iris_ng\\IRIS.exe";
 	public static String IRIS_EXECUTABLE_PATH = "\\\\corpprdvw589\\rdev\\IRIS_Builds\\IRIS_DEV_CORE_FLEX\\IRIS_debug.exe";
-	public static String IRIS_EXECUTABLE_PATH_QA = "C:\\IRIS_NG_12C_QA\\IRIS_debug.exe";
+	public static String IRIS_EXECUTABLE_PATH_QA = "\\\\corpprdvw589\\rdev\\IRIS_Builds\\IRIS_Statler_QA\\IRIS.exe";
 	// IRIS Helpers.java
 	public static final String FAILED_TO_LOAD_TEXT = "Failed to load :-";
 	public static final String AIRES_DOMAIN = "@aires.com";
@@ -75,4 +75,7 @@ public class IRISConstants {
 	public static final String EXCEPTION_OCCURED_WHILE_SEARCHING_REQUIRED_POLICY_IN_POLICY_TABLE_OF_ACCOUNTING_TAB = "{0} Exception occured while searching required policy in policy table of Accounting tab. Exception - ''{1}''";
 	public static final String VERIFIED_BUTTON_CLICKED = "{0}Verified ''{1}'' button is clicked.";
 	public static final String EXCEPTION_OCCURED_WHILE_SAVING_COREFLEX_CHECKBOX_SELECTION_IN_POLICY_TABLE_OF_ACCOUNTING_TAB = "{0} Exception occured while saving CoreFlex checkbox selection in Policy Table of Accounting Tab. Exception - ''{1}''.";
+	public static final String AUTO_TEST_POLICY = "AutoTestPolicy";
+	public static final String VERIFIED_NEWLY_ADDED_POLICY_NAME = "{0}Verified newly added policy name is:- ''{1}''";
+	public static final String FAILED_TO_FIND_POLICY = "{0}Failed to find Policy:-''{1}'' in policy table";
 }

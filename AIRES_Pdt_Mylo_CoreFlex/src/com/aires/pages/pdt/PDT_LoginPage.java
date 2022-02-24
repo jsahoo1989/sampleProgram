@@ -11,11 +11,12 @@ import org.openqa.selenium.support.How;
 import org.testng.Assert;
 
 import com.aires.businessrules.Base;
+import com.aires.businessrules.BusinessFunctions;
 import com.aires.businessrules.CoreFunctions;
 import com.aires.businessrules.constants.CoreConstants;
 import com.aires.businessrules.constants.PDTConstants;
 import com.aires.managers.FileReaderManager;
-import com.aires.testdatatypes.pdt.PDT_LoginData;
+import com.aires.testdatatypes.pdt.PDT_LoginDetails;
 import com.aires.utilities.Log;
 import com.gargoylesoftware.htmlunit.ElementNotFoundException;
 import com.vimalselvam.cucumber.listener.Reporter;
@@ -45,8 +46,7 @@ public class PDT_LoginPage extends Base {
 	@FindBy(how = How.XPATH, using = "//h1[text()='Aires Policy Tool']")
 	private WebElement _txtAiresPolicyTool;
 
-	PDT_LoginData loginData = FileReaderManager.getInstance().getJsonReader()
-			.getloginDetailsByUserFirstName(PDTConstants.USER_FIRST_NAME);
+	private PDT_LoginDetails _loginDetailsApplication = FileReaderManager.getInstance().getJsonReader().getLoginByApplication(CoreFunctions.getPropertyFromConfig("application").toLowerCase());
 
 	final By _imgAIRESLogoByLocator = By.cssSelector("img[src='assets/img/aires.png']");
 	final By _btnLoginByLocator = By.cssSelector("button[type='submit']");
@@ -65,8 +65,6 @@ public class PDT_LoginPage extends Base {
 		CoreFunctions.waitForBrowserToLoad(driver);
 		Log.info("Inside openApplication");
 		VerifyAIRESLogo();
-		// CoreFunctions.explicitWaitTillElementBecomesClickable(driver, _btnLogin,
-		// _btnLogin.getText());
 	}
 
 	public void enterLoginCredentials(String userName, String password) {
@@ -98,9 +96,12 @@ public class PDT_LoginPage extends Base {
 			openApplication();
 			switch (userType) {
 			case PDTConstants.CSM:
-				enterLoginCredentials(loginData.CSMUserName, loginData.CSMPassword);
+				//enterLoginCredentials(loginData.CSMUserName, loginData.CSMPassword);
+				enterLoginCredentials(BusinessFunctions.getCSMCredentials(_loginDetailsApplication)[0], BusinessFunctions.getCSMCredentials(_loginDetailsApplication)[1]);
 				clickLoginBtn();
-				isSuccessfullyLoggedIn = viewPolicyPage.verifyUserlogin(loginData.CSMFullName,
+				/*isSuccessfullyLoggedIn = viewPolicyPage.verifyUserlogin(loginData.CSMFullName,
+						PDTConstants.VIEW_POLICY_PAGE);*/
+				isSuccessfullyLoggedIn = viewPolicyPage.verifyUserlogin(BusinessFunctions.getCSMCredentials(_loginDetailsApplication)[0],
 						PDTConstants.VIEW_POLICY_PAGE);
 				break;
 			default:

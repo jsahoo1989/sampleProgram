@@ -2,15 +2,16 @@ package com.aires.pages.pdt;
 
 import java.text.MessageFormat;
 import java.util.List;
+
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.How;
 import org.testng.Assert;
+
 import com.aires.businessrules.Base;
 import com.aires.businessrules.BusinessFunctions;
 import com.aires.businessrules.CoreFunctions;
-import com.aires.businessrules.DbFunctions;
 import com.aires.businessrules.constants.CoreConstants;
 import com.aires.businessrules.constants.PDTConstants;
 import com.aires.managers.FileReaderManager;
@@ -34,13 +35,13 @@ public class PDT_FinalMovePage extends Base {
 	@FindBy(how = How.CSS, using = "ng-select[formcontrolname='finalMoveTransportTypeList'] span.ng-value-label")
 	private List<WebElement> _drpDownTransportationTypeMultiSelectOptions;
 
-	@FindBy(how = How.XPATH, using = "//label[text()='Min. Mileage for Economy Air Travel (if applicable)']")
+	@FindBy(how = How.XPATH, using = "//label[text()='Min. Mileage for Economy Air Travel ']")
 	private WebElement _lblMinMileageForEconomyAirTravel;
 
 	@FindBy(how = How.CSS, using = "input[formcontrolname='minMileageEconomy']")
 	private WebElement _txtBoxMinMileageEconomy;
 
-	@FindBy(how = How.XPATH, using = "//label[text()='Min. Mileage for Business Air Travel (if applicable)']")
+	@FindBy(how = How.XPATH, using = "//label[text()='Min. Mileage for Business Air Travel ']")
 	private WebElement _lblMinMileageForBusinessAirTravel;
 
 	@FindBy(how = How.CSS, using = "input[formcontrolname='minMileageBusiness']")
@@ -85,7 +86,7 @@ public class PDT_FinalMovePage extends Base {
 	@FindBy(how = How.CSS, using = "input[formcontrolname='numOfNight']")
 	private WebElement _txtBoxNumberOfNights;
 
-	@FindBy(how = How.XPATH, using = "//label[text()='Max. Amount (if applicable)']")
+	@FindBy(how = How.XPATH, using = "//label[text()='Max. Amount ']")
 	private WebElement _lblMaxAmt;
 
 	@FindBy(how = How.CSS, using = "ng-select[formcontrolname='maxAmountCode']")
@@ -149,7 +150,7 @@ public class PDT_FinalMovePage extends Base {
 	@FindBy(how = How.CSS, using = "#collapseThree label.form-check-label")
 	private List<WebElement> _radioBtnHouseHuntingTripMeals;
 	
-	@FindBy(how = How.XPATH, using = "//*[@id='collapseThree']//label[text()='Max. Amount (if applicable)']")
+	@FindBy(how = How.XPATH, using = "//*[@id='collapseThree']//label[text()='Max. Amount ']")
 	private WebElement _lblMaxAmtFinalMoveMeals;
 
 	@FindBy(how = How.CSS, using = "#collapseThree ng-select[formcontrolname='maxAmountCode']")
@@ -293,7 +294,6 @@ public class PDT_FinalMovePage extends Base {
 			}
 			setTransportType(randTransportTypeOption);
 		} catch (Exception e) {
-			DbFunctions.deletePolicyByPolicyId(addNewPolicyPage.getPolicyId());
 			Assert.fail(MessageFormat.format(PDTConstants.FAILED_TO_SELECT_MULTIPLE_OPTIONS, CoreConstants.FAIL, _lblTransportationType.getText(), subBenefitFormName));
 		}
 	}
@@ -328,8 +328,7 @@ public class PDT_FinalMovePage extends Base {
 			CoreFunctions.clearAndSetText(driver, _txtAreaFinalMoveTransportComment, PDTConstants.COMMENT,
 					finalMoveBenefitData.finalMoveTransportation.comment);
 		} catch (Exception e) {
-			DbFunctions.deletePolicyByPolicyId(addNewPolicyPage.getPolicyId());
-			Assert.fail(MessageFormat.format(PDTConstants.FAILED_TO_FILL_SUB_BENEFIT_FORM, CoreConstants.FAIL, subBenefitFormName));
+			Assert.fail(MessageFormat.format(PDTConstants.EXCEPTION_OCCURED_FILL_SUBBENEFIT_FORM, CoreConstants.FAIL, subBenefitFormName));
 		}
 	}
 
@@ -352,7 +351,6 @@ public class PDT_FinalMovePage extends Base {
 						true);
 			}
 		} catch (Exception e) {
-			DbFunctions.deletePolicyByPolicyId(addNewPolicyPage.getPolicyId());
 			Assert.fail(PDTConstants.FAILED_TO_FILL_FIELD_VALUES);
 		}
 	}
@@ -368,7 +366,6 @@ public class PDT_FinalMovePage extends Base {
 						finalMoveBenefitData.finalMoveLodging.numberOfNights);
 			}
 		} catch (Exception e) {
-			DbFunctions.deletePolicyByPolicyId(addNewPolicyPage.getPolicyId());
 			Assert.fail(MessageFormat.format(PDTConstants.FAILED_TO_FILL_VALUE_IN_TEXTBOX, CoreConstants.FAIL, _lblNumberOfNights.getText(), subBenefitFormName));
 		}
 	}
@@ -384,7 +381,6 @@ public class PDT_FinalMovePage extends Base {
 						finalMoveBenefitData.finalMoveMeals.numberOfDays);
 			}
 		} catch (Exception e) {
-			DbFunctions.deletePolicyByPolicyId(addNewPolicyPage.getPolicyId());
 			Assert.fail(MessageFormat.format(PDTConstants.FAILED_TO_FILL_VALUE_IN_TEXTBOX, CoreConstants.FAIL, _lblNumOfDays.getText(), subBenefitFormName));
 		}
 	}
@@ -416,8 +412,7 @@ public class PDT_FinalMovePage extends Base {
 			CoreFunctions.clearAndSetText(driver, _txtAreaFinalMoveLodgingComment, PDTConstants.COMMENT,
 					finalMoveBenefitData.finalMoveLodging.comment);
 		} catch (Exception e) {
-			DbFunctions.deletePolicyByPolicyId(addNewPolicyPage.getPolicyId());
-			Assert.fail(MessageFormat.format(PDTConstants.FAILED_TO_FILL_SUB_BENEFIT_FORM, CoreConstants.FAIL, subBenefitFormName));
+			Assert.fail(MessageFormat.format(PDTConstants.EXCEPTION_OCCURED_FILL_SUBBENEFIT_FORM, CoreConstants.FAIL, subBenefitFormName));
 		}
 	}
 	
@@ -448,7 +443,6 @@ public class PDT_FinalMovePage extends Base {
 						PDTConstants.CURRENCY, PDTConstants.DROP_DOWN, true);
 			}
 		} catch (Exception e) {
-			DbFunctions.deletePolicyByPolicyId(addNewPolicyPage.getPolicyId());			
 			Assert.fail(MessageFormat.format(PDTConstants.FAILED_TO_FILL_INFO, CoreConstants.FAIL, PDTConstants.TRANSFEREE_INFO, subBenefitFormName));
 		}
 	}
@@ -472,7 +466,6 @@ public class PDT_FinalMovePage extends Base {
 						PDTConstants.DROP_DOWN, true);
 			}
 		} catch (Exception e) {
-			DbFunctions.deletePolicyByPolicyId(addNewPolicyPage.getPolicyId());
 			Assert.fail(MessageFormat.format(PDTConstants.FAILED_TO_FILL_INFO, CoreConstants.FAIL, PDTConstants.ADULT_INFO, subBenefitFormName));
 		}
 	}
@@ -496,7 +489,6 @@ public class PDT_FinalMovePage extends Base {
 						PDTConstants.DROP_DOWN, true);
 			}
 		} catch (Exception e) {
-			DbFunctions.deletePolicyByPolicyId(addNewPolicyPage.getPolicyId());
 			Assert.fail(MessageFormat.format(PDTConstants.FAILED_TO_FILL_INFO, CoreConstants.FAIL, PDTConstants.CHILDREN_INFO, subBenefitFormName));
 		}
 	}
@@ -534,9 +526,8 @@ public class PDT_FinalMovePage extends Base {
 			CoreFunctions.clearAndSetText(driver, _txtAreaFinalMoveMealComment, PDTConstants.COMMENT,
 					finalMoveBenefitData.finalMoveMeals.comment);
 
-		} catch (Exception e) {			
-			DbFunctions.deletePolicyByPolicyId(addNewPolicyPage.getPolicyId());
-			Assert.fail(MessageFormat.format(PDTConstants.FAILED_TO_FILL_SUB_BENEFIT_FORM, CoreConstants.FAIL, subBenefitFormName));
+		} catch (Exception e) {
+			Assert.fail(MessageFormat.format(PDTConstants.EXCEPTION_OCCURED_FILL_SUBBENEFIT_FORM, CoreConstants.FAIL, subBenefitFormName));
 		}
 	}
 }

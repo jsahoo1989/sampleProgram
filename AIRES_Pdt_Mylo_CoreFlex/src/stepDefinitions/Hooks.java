@@ -35,6 +35,7 @@ import org.apache.commons.lang3.reflect.FieldUtils;
 import org.openqa.selenium.OutputType;
 import org.openqa.selenium.TakesScreenshot;
 
+import com.aires.businessrules.DbFunctions;
 import com.aires.cucumber.TestContext;
 import com.aires.managers.FileReaderManager;
 import com.aires.utilities.Log;
@@ -98,6 +99,28 @@ public class Hooks {
 				e.printStackTrace();
 			}
 			Reporter.addScreenCaptureFromPath(screenshotPath.toString());
+		} else if (scenario.isFailed() && scenario.getName().contains("PDT") && testContext.getPageObjectManager().getAddNewPolicyPage().getPolicyId() != null) {
+			Reporter.addStepLog(Status.FAIL + " : Please refer failed screen shot attached here.");
+			testResult = 5;
+			try {
+				// Takes a screenshot from the driver and save it to the specified location
+				File sourcePath = ((TakesScreenshot) testContext.getWebDriverManager().getDriver())
+						.getScreenshotAs(OutputType.FILE);
+
+				// Building up the destination path for the screenshot to save
+				// Also make sure to create a folder 'Failed_Screenshots' with in the project
+				// hierarchy
+				File destinationPath = new File(
+						System.getProperty("user.dir") + "/Failed_Screenshots/" + screenshotName + ".png");
+
+				// Copy taken screenshot from source location to destination location
+				Files.copy(sourcePath, destinationPath);
+
+				// Attach the specified screenshot to the test
+				Reporter.addScreenCaptureFromPath(destinationPath.toString());
+				DbFunctions.deletePolicyByPolicyId(testContext.getPageObjectManager().getAddNewPolicyPage().getPolicyId());
+			} catch (IOException e) {
+			}
 		} else if (scenario.isFailed()) {
 			Reporter.addStepLog(Status.FAIL + " : Please refer failed screen shot attached here.");
 			testResult = 5;

@@ -11,6 +11,7 @@ import com.aires.businessrules.constants.PDTConstants;
 import com.aires.cucumber.TestContext;
 import com.aires.pages.pdt.PDT_AddNewPolicyPage;
 import com.aires.pages.pdt.PDT_CulturalTrainingPage;
+import com.aires.pages.pdt.PDT_DestinationServicesPage;
 import com.aires.pages.pdt.PDT_FinalMovePage;
 import com.aires.pages.pdt.PDT_GeneralInformationPage;
 import com.aires.pages.pdt.PDT_HomeLeavePage;
@@ -40,6 +41,7 @@ public class PDT_SharedSubBenefit_Steps {
 	private PDT_HomeLeavePage homeLeavePage;
 	private PDT_TemporaryLivingPage temporaryLivingPage;
 	private PDT_GeneralInformationPage generalInfoPage;
+	private PDT_DestinationServicesPage destinationServicesPage;
 	
 	public PDT_SharedSubBenefit_Steps(TestContext context) {
 		testContext = context;
@@ -55,6 +57,7 @@ public class PDT_SharedSubBenefit_Steps {
 		homeLeavePage = testContext.getPageObjectManager().getHomeLeavePage();
 		temporaryLivingPage = testContext.getPageObjectManager().getTemporaryLivingPage();
 		generalInfoPage = testContext.getPageObjectManager().getGeneralInfoPage();
+		destinationServicesPage = testContext.getPageObjectManager().getDestinationServicesPage();
 	}
 	
 	public PDT_PreAcceptanceService getPreAcceptServicePage() {
@@ -93,6 +96,10 @@ public class PDT_SharedSubBenefit_Steps {
 		return generalInfoPage;
 	}
 	
+	public PDT_DestinationServicesPage getDestinationServicePage() {
+		return destinationServicesPage;
+	}
+	
 	@When("^he clicks on 'SUBMIT' button after entering mandatory information for all the below selected sub benefits on \"([^\"]*)\" page$")
 	public void he_clicks_on_SUBMIT_button_after_entering_mandatory_information_for_all_the_below_selected_sub_benefits_on_page(
 			String policyBenefitPgName, DataTable subBenefitTable) {
@@ -125,5 +132,6 @@ public class PDT_SharedSubBenefit_Steps {
 	@Then("^below Tabs should appear in Sub benefit form on \"([^\"]*)\" page$")
 	public void below_Tabs_should_appear_in_Sub_benefit_form_on_page(String pageName, DataTable subBenefitTable) {
 		Assert.assertTrue(subBenefitPage.iterateSubBenefitForTabs(pageName, addNewPolicyPage, subBenefitTable), subBenefitPage.getTabNameNotMatch(pageName));		
+		DbFunctions.deletePolicyByPolicyId(addNewPolicyPage.getPolicyId());
 	}
 }

@@ -1,0 +1,85 @@
+[
+	{
+		"benefitName": "Destination Services",
+		"airPortPickup": {
+			"grossUp": "Yes",
+			"reimbursedBy": "Aires",
+			"reimbursedByOther": "Reimbursed by other",
+			"comment": "Air Port Pickup comment"
+		},
+		"areaTour": {
+			"durationInDays": "3",
+			"grossUp": "No",
+			"reimbursedBy": "Client",
+			"reimbursedByOther": "Reimbursed by other",
+			"comment": "Area Tour comment"
+		},
+		"autoRentalDuringAssignment": {
+			"carType": "Full-Size",
+			"carTypeOther": "Mercedes",
+			"grossUp": "No",
+			"reimbursedBy": "other",
+			"reimbursedByOther": "Reimbursed by other",
+			"comment": "Auto Rental During Assignment comment"
+		},
+		"conciergeServices": {
+			"grossUp": "No",
+			"reimbursedBy": "other",
+			"reimbursedByOther": "Reimbursed by other",
+			"comment": "Concierge Services comment"
+		},
+		"departureServices": {
+			"numberOfDays": "Other",
+			"other": "15",
+			"grossUp": "No",
+			"reimbursedBy": "other",
+			"reimbursedByOther": "Reimbursed by other",
+			"comment": "Departure Services comment"
+		},
+		"furnitureRental": {
+			"duration": "3 Months",
+			"durationOther": "6 Months",
+			"grossUp": "Yes",
+			"reimbursedBy": "other",
+			"reimbursedByOther": "Reimbursed by other",
+			"comment": "Furniture Rental comment"
+		},
+		"reimbursementOfMemberShipDues": {
+			"grossUp": "Yes",
+			"reimbursedBy": "Aires",
+			"reimbursedByOther": "Reimbursed by other",
+			"comment": "Reimbursement of Membership dues comment"
+		},
+		"schoolSearch": {
+			"durationInDays": "12",
+			"grossUp": "Yes",
+			"reimbursedBy": "Aires",
+			"reimbursedByOther": "Reimbursed by other",
+			"comment": "School Search comment"
+		},
+		"settlingInServices": {
+			"durationInDays": "12",
+			"grossUp": "No",
+			"reimbursedBy": "Other",
+			"reimbursedByOther": "Reimbursed by other",
+			"comment": "Settling in Services comment"
+		},
+		"transitionAssistanceProgram": {
+			"durationInDays": "12",
+			"maxAmount": "30",
+			"currency": "U.S. Dollar",
+			"grossUp": "No",
+			"reimbursedBy": "Other",
+			"reimbursedByOther": "Reimbursed by other",
+			"comment": "Transition Assistance Program comment"
+		},
+		"tutionAndEducation": {			
+			"maxAmount": "30",
+			"currency": "U.S. Dollar",
+			"grossUp": "Yes",
+			"reimbursedBy": "Other",
+			"reimbursedByOther": "Reimbursed by other",
+			"comment": "Tution and Education comment"
+		}
+	}
+]

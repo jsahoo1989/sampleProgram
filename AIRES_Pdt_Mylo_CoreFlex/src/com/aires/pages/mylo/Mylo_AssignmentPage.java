@@ -1,7 +1,6 @@
 package com.aires.pages.mylo;
 
 import java.text.MessageFormat;
-import java.text.ParseException;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
@@ -9,14 +8,13 @@ import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
-
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
+import org.openqa.selenium.support.Color;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.How;
 import org.testng.Assert;
-
 import com.aires.businessrules.Base;
 import com.aires.businessrules.BusinessFunctions;
 import com.aires.businessrules.CoreFunctions;
@@ -28,7 +26,6 @@ import com.aires.testdatatypes.mylo.MyloCAStates;
 import com.aires.testdatatypes.mylo.MyloIndiaStates;
 import com.aires.testdatatypes.mylo.MyloUSStates;
 import com.vimalselvam.cucumber.listener.Reporter;
-
 import cucumber.api.DataTable;
 
 public class Mylo_AssignmentPage extends Base {
@@ -162,6 +159,9 @@ public class Mylo_AssignmentPage extends Base {
 	@FindBy(how = How.XPATH, using = "//h1[@class='popupheader']/following::input[@formcontrolname='stateProvince']")
 	private WebElement _stateFieldTextType;
 	
+	@FindBy(how = How.CSS, using = "h1[class='popupheader']")
+	private WebElement _popUpHeader;
+	
 	@FindBy(how = How.XPATH, using = "//app-address[@id='temporaryAddress']//ng-select[@name='country']")
 	private WebElement _tempAddressCountryDropdown;
 	
@@ -252,7 +252,7 @@ public class Mylo_AssignmentPage extends Base {
 	@FindBy(how = How.CSS, using = "input[id='popupcomment']")
 	private WebElement _otherAddressaddCommentValue;
 	
-	@FindBy(how = How.CSS, using = "input[id='state']")
+	@FindBy(how = How.CSS, using = "input[name='popupstate']")
 	private WebElement _otherAddressaddStateValue;
 
 	@FindBy(how = How.XPATH, using = "//input[@id='state']//following-sibling::label")
@@ -291,11 +291,11 @@ public class Mylo_AssignmentPage extends Base {
 	@FindBy(how = How.XPATH, using = "//button[contains(@class,'toast-close-btn')]")
 	private WebElement _closeBtn;
 	
-	
 	int noOfAiresFileTeamMember;
-	String updatedTeamMember;
 	LinkedHashMap<String, String> airesFileTeamExistingMembers = new LinkedHashMap<String, String>();
 	LinkedHashMap<String, WebElement> airesFileInfoFieldsMap = new LinkedHashMap<String, WebElement>();
+	LinkedHashMap<String, WebElement> otherAdressFieldValueMap = new LinkedHashMap<String, WebElement>();
+	LinkedHashMap<String, String> otherAdressvalidFieldValueMap = new LinkedHashMap<String, String>();
 	List<WebElement> countryList = new ArrayList<WebElement>();
 	List<WebElement> typeDropDownList = new ArrayList<WebElement>();
 	List<WebElement> stateList = new ArrayList<WebElement>();
@@ -308,17 +308,12 @@ public class Mylo_AssignmentPage extends Base {
 	MyloAssignmentDetails assignmentDetails = FileReaderManager.getInstance().getMyloJsonReader()
 			.getAssignmentDetailsByApplication(MYLOConstants.IRIS);
 	
-	
-	String updatedPolicyType, updatedTaxTreatment, updatedOffice, updatedJourneyType, updatedTransferType,
-			updatedHomeStatus;
-	String updatedFileInfoCheckboxSelected;
-	String updatedTempAddressCityValue,updatedMailAddressCityValue;
-	String updatedTempAddressZipCodeValue,updatedMailAddressZipCodeValue;
-	String updatedTempAddressCommentsValue,updatedMailAddressCommentsValue;
-	String updatedTempAddressStateValue,updatedMailAddressStateValue;
-	String updatedTempAddress1Value,updatedMailAddress1Value;
-	String updatedTempAddress2Value,updatedMailAddress2Value;
-	String updatedTempAddressFromDateValue,updatedMailAddressFromDateValue;
+	String updatedTeamMember, updatedPolicyType, updatedTaxTreatment, updatedOffice, updatedJourneyType, updatedTransferType,
+	updatedHomeStatus, updatedFileInfoCheckboxSelected, updatedTempAddressCityValue,
+	updatedMailAddressCityValue, updatedTempAddressZipCodeValue, updatedMailAddressZipCodeValue,
+	updatedTempAddressCommentsValue, updatedMailAddressCommentsValue, updatedTempAddressStateValue,
+	updatedMailAddressStateValue, updatedTempAddress1Value, updatedMailAddress1Value, updatedTempAddress2Value,
+	updatedMailAddress2Value, updatedTempAddressFromDateValue, updatedMailAddressFromDateValue,updatedCountryValue;
 
 	/**
 	 * @param option 
@@ -624,8 +619,6 @@ public class Mylo_AssignmentPage extends Base {
 			return false;
 	}
 	
-
-
 	/**
 	 * Mapping the AiresFileInformation WebElements with associated fields
 	 */
@@ -675,7 +668,6 @@ public class Mylo_AssignmentPage extends Base {
 		Reporter.addStepLog(MessageFormat.format(MYLOConstants.FIELD_NAME_VALUE_DISPLAYED, CoreConstants.PASS,
 				fieldName, airesFileInfoFieldsMap.get(fieldName).getText(), MYLOConstants.AIRES_FILE_INFORMATION,
 				MYLOConstants.ASSIGNMENT));
-		System.out.println(airesFileInfoFieldsMap.get(fieldName).getText());
 		return airesFileInfoFieldsMap.get(fieldName).getText();
 	}
 
@@ -1011,14 +1003,18 @@ public class Mylo_AssignmentPage extends Base {
 			CoreFunctions.explicitWaitTillElementVisibility(driver, _addMailAddressBtn, MYLOConstants.MAILING_ADDRESS);
 			CoreFunctions.explicitWaitTillElementBecomesClickable(driver, _addMailAddressBtn,
 					MYLOConstants.MAILING_ADDRESS);
-			CoreFunctions.click(driver, _addMailAddressBtn, MYLOConstants.MAILING_ADDRESS);
+			CoreFunctions.click(driver, _addMailAddressBtn, MYLOConstants.ADD_MAILING_ADDRESS);
+			CoreFunctions.highlightObject(driver, _popUpHeader);
+			Assert.assertEquals(MYLOConstants.ADD_MAILING_ADDRESS, _popUpHeader.getText());
 			break;
 		case MYLOConstants.TEMPORARY_ADDRESS:
 			CoreFunctions.explicitWaitTillElementVisibility(driver, _addTempAddressBtn,
 					MYLOConstants.TEMPORARY_ADDRESS);
 			CoreFunctions.explicitWaitTillElementBecomesClickable(driver, _addTempAddressBtn,
 					MYLOConstants.TEMPORARY_ADDRESS);
-			CoreFunctions.click(driver, _addTempAddressBtn, MYLOConstants.TEMPORARY_ADDRESS);
+			CoreFunctions.click(driver, _addTempAddressBtn, MYLOConstants.ADD_TEMPORARY_ADDRESS);
+			CoreFunctions.highlightObject(driver, _popUpHeader);
+			Assert.assertEquals(MYLOConstants.ADD_TEMPORARY_ADDRESS, _popUpHeader.getText());
 			break;
 		case MYLOConstants.COUNTRY:
 			CoreFunctions.explicitWaitTillElementVisibility(driver, _countryDropdown, MYLOConstants.COUNTRY);
@@ -1030,13 +1026,15 @@ public class Mylo_AssignmentPage extends Base {
 			CoreFunctions.click(driver, _stateDropdown, MYLOConstants.STATE);
 			stateList = CoreFunctions.getElementListByLocator(driver, _dropdownOptions);
 			break;
-		case MYLOConstants.CITY:
-			CoreFunctions.explicitWaitTillElementVisibility(driver, _otherAddressaddCityValue, MYLOConstants.CITY);
-			CoreFunctions.click(driver, _otherAddressaddCityValue, MYLOConstants.CITY);
-			break;
 		case MYLOConstants.SAVE_BUTTON:
 			CoreFunctions.explicitWaitTillElementVisibility(driver, _SaveButton, MYLOConstants.SAVE_BUTTON);
-			CoreFunctions.click(driver, _SaveButton, MYLOConstants.SAVE_BUTTON);
+			CoreFunctions.clickUsingJS(driver, _SaveButton, MYLOConstants.SAVE_BUTTON);
+			CoreFunctions.waitForBrowserToLoad(driver);
+			break;
+		case MYLOConstants.CANCEL_BUTTON:
+			CoreFunctions.explicitWaitTillElementVisibility(driver, _CancelButton, MYLOConstants.CANCEL_BUTTON);
+			CoreFunctions.clickUsingJS(driver, _CancelButton, MYLOConstants.CANCEL_BUTTON);
+			CoreFunctions.waitForBrowserToLoad(driver);
 			break;
 		case MYLOConstants.OTHER_ADDRESS_SAVE_BUTTON:
 			CoreFunctions.explicitWaitTillElementVisibility(driver, _otherAddressSaveButton, MYLOConstants.SAVE_BUTTON);
@@ -1070,10 +1068,10 @@ public class Mylo_AssignmentPage extends Base {
 			CoreFunctions.click(driver, _tempAddressCountryDropdown, MYLOConstants.TEMP_ADDRESS_COUNTRY);
 			countryList = CoreFunctions.getElementListByLocator(driver, _dropdownOptions);
 			break;
-		case MYLOConstants.MAIl_ADDRESS_COUNTRY:
+		case MYLOConstants.MAIL_ADDRESS_COUNTRY:
 			CoreFunctions.explicitWaitTillElementVisibility(driver, _mailAddressCountryDropdown,
-					MYLOConstants.MAIl_ADDRESS_COUNTRY);
-			CoreFunctions.click(driver, _mailAddressCountryDropdown, MYLOConstants.MAIl_ADDRESS_COUNTRY);
+					MYLOConstants.MAIL_ADDRESS_COUNTRY);
+			CoreFunctions.click(driver, _mailAddressCountryDropdown, MYLOConstants.MAIL_ADDRESS_COUNTRY);
 			countryList = CoreFunctions.getElementListByLocator(driver, _dropdownOptions);
 			break;
 		case MYLOConstants.TEMP_ADDRESS_STATE:
@@ -1103,14 +1101,15 @@ public class Mylo_AssignmentPage extends Base {
 			typeDropDownList = CoreFunctions.getElementListByLocator(driver, _dropdownOptions);
 			break;
 		case MYLOConstants.TEMPORARY_ADDRESS_DROPDOWN:
-			CoreFunctions.explicitWaitTillElementVisibility(driver, _tempAddressDropdown,
-					_tempAddressDropdown.getText());
-			CoreFunctions.click(driver, _tempAddressDropdown, _tempAddressDropdown.getText());
+			CoreFunctions.explicitWaitTillElementVisibility(driver,_tempAddressDropdown, MYLOConstants.TEMPORARY_ADDRESS_DROPDOWN);
+			CoreFunctions.scrollClickUsingJS(driver, _tempAddressDropdown, MYLOConstants.TEMPORARY_ADDRESS_DROPDOWN);
+			mapOtherAddresssWebElementFields();
 			break;
 		case MYLOConstants.MAILING_ADDRESS_DROPDOWN:
 			CoreFunctions.explicitWaitTillElementVisibility(driver, _mailAddressDropdown,
-					_mailAddressDropdown.getText());
-			CoreFunctions.click(driver, _mailAddressDropdown, _mailAddressDropdown.getText());
+					MYLOConstants.MAILING_ADDRESS_DROPDOWN);
+			CoreFunctions.scrollClickUsingJS(driver, _mailAddressDropdown, MYLOConstants.MAILING_ADDRESS_DROPDOWN);
+			mapOtherAddresssWebElementFields();
 			break;
 		case MYLOConstants.DELETE_BUTTON:
 			CoreFunctions.explicitWaitTillElementVisibility(driver, _DeleteButton, _DeleteButton.getText());
@@ -1150,13 +1149,18 @@ public class Mylo_AssignmentPage extends Base {
 	 * Get the Label of passed field
 	 */
 	public String verifyOtherAddressFieldLabel(String fieldName) {
+		String valueToBeReturned=null;
 		switch (fieldName) {
 		case MYLOConstants.STATE:
 		case MYLOConstants.TEMP_ADDRESS_STATE:
 		case MYLOConstants.MAIL_ADDRESS_STATE:
-			return CoreFunctions.getElementText(driver, _otherAddressStateLabelName);
+			valueToBeReturned= CoreFunctions.getElementText(driver, _otherAddressStateLabelName);
+			break;
+		default:
+			Reporter.addStepLog(CoreConstants.FAIL + MYLOConstants.ENTER_CORRECT_FIELD_NAME);
+			Assert.fail(MYLOConstants.ENTER_CORRECT_FIELD_NAME);
 		}
-		return null;
+		return valueToBeReturned;
 	}
 	
 	/**
@@ -1164,19 +1168,187 @@ public class Mylo_AssignmentPage extends Base {
 	 * @return
 	 * Verify DropdownList order for passed field name
 	 */
-	public boolean verifyDropdownListAlphabeticalOrder(String dropDownName) {
+	public boolean verifyDropdownListOrder(String dropDownName) {
 		switch (dropDownName) {
 		case MYLOConstants.COUNTRY:		
 			List<String> countryText = countryList.stream().map(x -> x.getText()).collect(Collectors.toList());
 			List<String> copyCountryList = new ArrayList<String>(countryText);
-			copyCountryList.remove("Select One");
-			copyCountryList.remove("USA");
+			copyCountryList.remove(MYLOConstants.SELECT_ONE);
+			copyCountryList.remove(MYLOConstants.USA_STATE);
 			return CoreFunctions.verifyListOrder(copyCountryList,MYLOConstants.ASCENDING);
 		default:
 			Reporter.addStepLog(CoreConstants.FAIL + MYLOConstants.ENTER_CORRECT_FIELD_NAME);
 			Assert.fail(MYLOConstants.ENTER_CORRECT_FIELD_NAME);
 		}
 		return false;
+	}
+	
+	/**
+	 * @param fieldValue
+	 * Set the value of Country dropdown on Other Address section
+	 */
+	public void setOtherAddressCountry(String fieldValue) {
+		if (fieldValue.equals(MYLOConstants.RANDOM)) {
+			List<String> valuesToIgnore = new ArrayList<String>();
+			valuesToIgnore.add(MYLOConstants.USA_STATE);
+			valuesToIgnore.add(MYLOConstants.INDIA_STATE);
+			valuesToIgnore.add(MYLOConstants.CANADA_STATE);
+			valuesToIgnore.add(MYLOConstants.SELECT_ONE);
+			updatedCountryValue = CoreFunctions.getRandomOutOfSelectedElementValueFromList(driver, countryList, valuesToIgnore);
+			BusinessFunctions.selectItemFromListUsingText(driver, countryList,
+					updatedCountryValue);
+		} else {
+			updatedCountryValue=fieldValue;
+			BusinessFunctions.selectItemFromListUsingText(driver, countryList, fieldValue);
+		}
+	}
+	
+	/**
+	 * @param fieldValue
+	 * Set the value of State field on Other Address section
+	 */
+	public void setOtherAddressState(String fieldValue) {
+		if (fieldValue.equals(MYLOConstants.RANDOM)) {
+			List<String> valuesToIgnore = new ArrayList<String>();
+			valuesToIgnore.add("Select One");
+			BusinessFunctions.selectItemFromListUsingText(driver, stateList,
+					CoreFunctions.getRandomOutOfSelectedElementValueFromList(driver, stateList, valuesToIgnore));
+		} else
+			CoreFunctions.selectItemInListByText(driver, stateList, fieldValue);
+	}
+	
+	/**
+	 * @param fieldValue
+	 * Set the value of Type Dropdown on Other Address section
+	 */
+	public void setOtherAddressTypeDropdown(String fieldValue) {
+		CoreFunctions.explicitWaitTillElementListVisibility(driver, typeDropDownList);
+		if (fieldValue.equals(MYLOConstants.RANDOM))
+			CoreFunctions.selectItemInListByText(driver, typeDropDownList,
+					CoreFunctions.getRandomElementValueFromList(driver, typeDropDownList));
+		else
+			CoreFunctions.selectItemInListByText(driver, typeDropDownList, fieldValue);
+	}
+	
+	/**
+	 * @param fieldValue
+	 * @return
+	 * Set the value of City field on Other Address section
+	 */
+	public String setOtherAddressCity(String fieldValue) {
+		String updatedValue;
+		try {
+			updatedValue = CoreFunctions.generateRandomCharOfLength(Integer.parseInt(fieldValue),
+					MYLOConstants.ONLY_CHARACTERS, 0);
+		} catch (NumberFormatException e) {
+			updatedValue = (fieldValue.equals(MYLOConstants.SPECIAL_CHARACTERS_STRING))
+					? CoreFunctions.generateRandomCharOfLength(4, MYLOConstants.SPECIAL_CHARACTERS_STRING, 2)
+					: fieldValue;
+		}
+		CoreFunctions.clearAndSetText(driver, _otherAddressaddCityValue, updatedValue);
+		return updatedValue;
+	}
+	
+	/**
+	 * @param fieldValue
+	 * @return
+	 * Set the value of ZipCode on Other Address section
+	 */
+	public String setOtherAddressZipCode(String fieldValue) {
+		String updatedZipCodeValue;
+		try {
+			updatedZipCodeValue = (Integer.parseInt(fieldValue) < 100) ? CoreFunctions.generateRandomCharOfLength(
+					Integer.parseInt(fieldValue), MYLOConstants.ONLY_CHARACTERS, 0) : fieldValue;
+		} catch (NumberFormatException e) {
+			updatedZipCodeValue = (fieldValue.equals(MYLOConstants.SPECIAL_CHARACTERS_STRING))
+					? CoreFunctions.generateRandomCharOfLength(4, MYLOConstants.SPECIAL_CHARACTERS_STRING, 2)
+					: fieldValue;
+		}
+		CoreFunctions.clearAndSetText(driver, _otherAddressaddZipCodeValue, updatedZipCodeValue);
+		return updatedZipCodeValue;
+	}
+	
+	/**
+	 * @param fieldValue
+	 * @return
+	 * Set the value of State Field on Other Address section	
+	 */
+	public String setOtherAddressStateTextField(String fieldValue) {
+		String updatedStateValue = null;
+		try {
+			updatedStateValue = CoreFunctions.generateRandomCharOfLength(Integer.parseInt(fieldValue),
+					MYLOConstants.ONLY_CHARACTERS, 0);
+		} catch (NumberFormatException e) {
+			updatedStateValue = (fieldValue.equals(MYLOConstants.SPECIAL_CHARACTERS_STRING))
+					? CoreFunctions.generateRandomCharOfLength(4, MYLOConstants.SPECIAL_CHARACTERS_STRING, 2)
+					: fieldValue;
+		}
+		CoreFunctions.clearAndSetText(driver, _otherAddressaddStateValue, updatedStateValue);
+		return updatedStateValue;
+	}
+	
+	/**
+	 * @param fieldValue
+	 * @return
+	 * Set the value of Address1 on Other Address section
+	 */
+	public String setOtherAddressAddress1(String fieldValue) {
+		String updatedAddress1 = null;
+		try {
+			updatedAddress1 = CoreFunctions.generateRandomCharOfLength(Integer.parseInt(fieldValue),
+					MYLOConstants.ONLY_CHARACTERS, 0);
+		} catch (NumberFormatException e) {
+			updatedAddress1 = (fieldValue.equals(MYLOConstants.SPECIAL_CHARACTERS_STRING))
+					? CoreFunctions.generateRandomCharOfLength(4, MYLOConstants.SPECIAL_CHARACTERS_STRING, 2)
+					: fieldValue;
+		}
+		CoreFunctions.clearAndSetText(driver, _otherAddressaddAddress1Value, updatedAddress1);
+		return updatedAddress1;
+	}
+	
+	/**
+	 * @param fieldValue
+	 * @return
+	 * Set the value of Address2 on Other Address section
+	 */
+	public String setOtherAddressAddress2(String fieldValue) {
+		String updatedAddress2 = null;
+		try {
+			updatedAddress2 = CoreFunctions.generateRandomCharOfLength(Integer.parseInt(fieldValue),
+					MYLOConstants.ONLY_CHARACTERS, 0);
+		} catch (NumberFormatException e) {
+			updatedAddress2 = (fieldValue.equals(MYLOConstants.SPECIAL_CHARACTERS_STRING))
+					? CoreFunctions.generateRandomCharOfLength(4, MYLOConstants.SPECIAL_CHARACTERS_STRING, 2)
+					: fieldValue;
+		}
+		CoreFunctions.clearAndSetText(driver, _otherAddressaddAddress2Value, updatedAddress2);
+		return updatedAddress2;
+	}
+	
+	/**
+	 * @param fieldValue
+	 * @return
+	 * Set the value of Comments on Other Address section
+	 */
+	public String setOtherAddressComments(String fieldValue) {
+		String updatedComments = (fieldValue.equals(MYLOConstants.SPECIAL_CHARACTERS_STRING))
+				? CoreFunctions.generateRandomCharOfLength(4,MYLOConstants.SPECIAL_CHARACTERS_STRING, 2)
+				: fieldValue;
+		CoreFunctions.clearAndSetText(driver, _otherAddressaddCommentValue, updatedComments);
+		return updatedComments;
+	}
+	
+	/**
+	 * @param fieldValue
+	 * @return
+	 * Set the value of From Date on Other Address section
+	 */
+	public String setOtherAddressFromDate(String fieldValue) {
+		String updatedFromDate = (fieldValue.equals("current"))
+				? CoreFunctions.getCurrentDateAsGivenFormat("MM/dd/yyyy")
+				: fieldValue;
+		CoreFunctions.clearAndSetText(driver, _otherAddressaddAddressFromDateValue, updatedFromDate);
+		return updatedFromDate;
 	}
 	
 	/**
@@ -1187,230 +1359,67 @@ public class Mylo_AssignmentPage extends Base {
 	public void setFieldValueOnOtherAddressesSection(String fieldName, String fieldValue) {
 		switch (fieldName) {
 		case MYLOConstants.COUNTRY:
-			if (fieldValue.equals(MYLOConstants.RANDOM)) {
-				List<String> valuesToIgnore = new ArrayList<String>();
-				valuesToIgnore.add("USA");
-				valuesToIgnore.add("INDIA");
-				valuesToIgnore.add("CANADA");
-				BusinessFunctions.selectItemFromListUsingText(driver, countryList,
-						CoreFunctions.getRandomOutOfSelectedElementValueFromList(driver, countryList, valuesToIgnore));
-			} else
-				BusinessFunctions.selectItemFromListUsingText(driver, countryList, fieldValue);
+			setOtherAddressCountry(fieldValue);
 			break;
 		case MYLOConstants.STATE:
-			CoreFunctions.explicitWaitTillElementListVisibility(driver, stateList);
-			if (fieldValue.equals(MYLOConstants.RANDOM))
-				CoreFunctions.selectItemInListByText(driver, stateList,
-						CoreFunctions.getRandomElementValueFromList(driver, stateList));
-			else
-				CoreFunctions.selectItemInListByText(driver, stateList, fieldValue);
+			setOtherAddressState(fieldValue);
 			break;
+		case MYLOConstants.STATE_TEXT_FIELD:
+			clickElementOnOtherAddressesSection(MYLOConstants.COUNTRY);
+			setOtherAddressCountry(MYLOConstants.RANDOM);
+			setOtherAddressStateTextField(fieldValue);
+			break;		
 		case MYLOConstants.TEMP_ADDRESS_TYPE:
-			CoreFunctions.explicitWaitTillElementListVisibility(driver, typeDropDownList);
-			if (fieldValue.equals(MYLOConstants.RANDOM))
-				CoreFunctions.selectItemInListByText(driver, typeDropDownList,
-						CoreFunctions.getRandomElementValueFromList(driver, typeDropDownList));
-			else
-				CoreFunctions.selectItemInListByText(driver, typeDropDownList, fieldValue);
-			break;
 		case MYLOConstants.MAIl_ADDRESS_TYPE:
-			CoreFunctions.explicitWaitTillElementListVisibility(driver, typeDropDownList);
-			if (fieldValue.equals(MYLOConstants.RANDOM))
-				CoreFunctions.selectItemInListByText(driver, typeDropDownList,
-						CoreFunctions.getRandomElementValueFromList(driver, typeDropDownList));
-			else
-				CoreFunctions.selectItemInListByText(driver, typeDropDownList, fieldValue);
+			setOtherAddressTypeDropdown(fieldValue);
 			break;
 		case MYLOConstants.TEMP_ADDRESS_CITY:
-			try {
-				updatedTempAddressCityValue = CoreFunctions.generateRandomCharOfLength(Integer.parseInt(fieldValue),MYLOConstants.ONLY_CHARACTERS,0);
-				CoreFunctions.clearAndSetText(driver, _otherAddressaddCityValue, updatedTempAddressCityValue);
-			} catch (NumberFormatException e) {
-				if (fieldValue.equals(MYLOConstants.SPECIAL_CHARACTERS_STRING)) {
-					updatedTempAddressCityValue = CoreFunctions.generateRandomCharOfLength(4,MYLOConstants.SPECIAL_CHARACTERS_STRING, 2);
-					CoreFunctions.clearAndSetText(driver, _otherAddressaddCityValue, updatedTempAddressCityValue);
-				} else {
-					CoreFunctions.clearAndSetText(driver, _otherAddressaddCityValue, fieldValue);
-					updatedTempAddressCityValue = fieldValue;
-				}
-			}
+		case MYLOConstants.CITY:
+			updatedTempAddressCityValue = setOtherAddressCity(fieldValue);
 			break;
 		case MYLOConstants.MAIL_ADDRESS_CITY:
-			try {
-				updatedMailAddressCityValue = CoreFunctions.generateRandomCharOfLength(Integer.parseInt(fieldValue),MYLOConstants.ONLY_CHARACTERS,0);
-				CoreFunctions.clearAndSetText(driver, _otherAddressaddCityValue, updatedMailAddressCityValue);
-
-			} catch (NumberFormatException e) {
-				if (fieldValue.equals(MYLOConstants.SPECIAL_CHARACTERS_STRING)) {
-					updatedMailAddressCityValue = CoreFunctions.generateRandomCharOfLength(4,MYLOConstants.SPECIAL_CHARACTERS_STRING, 2);
-					CoreFunctions.clearAndSetText(driver, _otherAddressaddCityValue, updatedMailAddressCityValue);
-				} else {
-					CoreFunctions.clearAndSetText(driver, _otherAddressaddCityValue, fieldValue);
-					updatedMailAddressCityValue = fieldValue;
-				}
-			}
+			updatedMailAddressCityValue = setOtherAddressCity(fieldValue);
 			break;
 		case MYLOConstants.TEMP_ADDRESS_ZIPCODE:
-			try {
-				if (Integer.parseInt(fieldValue) < 100) {
-					updatedTempAddressZipCodeValue = CoreFunctions
-							.generateRandomCharOfLength(Integer.parseInt(fieldValue),MYLOConstants.ONLY_CHARACTERS,0);
-					CoreFunctions.clearAndSetText(driver, _otherAddressaddZipCodeValue, updatedTempAddressZipCodeValue);
-				} else {
-					CoreFunctions.clearAndSetText(driver, _otherAddressaddZipCodeValue, fieldValue);
-					updatedTempAddressZipCodeValue = fieldValue;
-				}
-			} catch (NumberFormatException e) {
-				if (fieldValue.equals(MYLOConstants.SPECIAL_CHARACTERS_STRING)) {
-					updatedTempAddressZipCodeValue = CoreFunctions.generateRandomCharOfLength(4,
-							MYLOConstants.SPECIAL_CHARACTERS_STRING,	
-							2);
-					CoreFunctions.clearAndSetText(driver, _otherAddressaddZipCodeValue, updatedTempAddressZipCodeValue);
-				} else {
-					CoreFunctions.clearAndSetText(driver, _otherAddressaddZipCodeValue, fieldValue);
-					updatedTempAddressZipCodeValue = fieldValue;
-				}
-			}
+		case MYLOConstants.ZIPCODE:
+			updatedTempAddressZipCodeValue = setOtherAddressZipCode(fieldValue);
 			break;
 		case MYLOConstants.MAIL_ADDRESS_ZIPCODE:
-			try {
-				if (Integer.parseInt(fieldValue) < 100) {
-					updatedMailAddressZipCodeValue = CoreFunctions
-							.generateRandomCharOfLength(Integer.parseInt(fieldValue),MYLOConstants.ONLY_CHARACTERS,0);
-					CoreFunctions.clearAndSetText(driver, _otherAddressaddZipCodeValue, updatedMailAddressZipCodeValue);
-				} else {
-					CoreFunctions.clearAndSetText(driver, _otherAddressaddZipCodeValue, fieldValue);
-					updatedMailAddressZipCodeValue = fieldValue;
-				}
-			} catch (NumberFormatException e) {
-				if (fieldValue.equals(MYLOConstants.SPECIAL_CHARACTERS_STRING)) {
-					updatedMailAddressZipCodeValue = CoreFunctions.generateRandomCharOfLength(4,
-							MYLOConstants.SPECIAL_CHARACTERS_STRING,2);
-					CoreFunctions.clearAndSetText(driver, _otherAddressaddZipCodeValue, updatedMailAddressZipCodeValue);
-				} else {
-					CoreFunctions.clearAndSetText(driver, _otherAddressaddZipCodeValue, fieldValue);
-					updatedMailAddressZipCodeValue = fieldValue;
-				}
-			}
+			updatedMailAddressZipCodeValue = setOtherAddressZipCode(fieldValue);
 			break;
 		case MYLOConstants.TEMP_ADDRESS_STATE:
-			try {
-				updatedTempAddressStateValue = CoreFunctions.generateRandomCharOfLength(Integer.parseInt(fieldValue),MYLOConstants.ONLY_CHARACTERS,0);
-				CoreFunctions.clearAndSetText(driver, _otherAddressaddStateValue, updatedTempAddressStateValue);
-			} catch (NumberFormatException e) {
-				if (fieldValue.equals(MYLOConstants.SPECIAL_CHARACTERS_STRING)) {
-					updatedTempAddressStateValue = CoreFunctions.generateRandomCharOfLength(4, MYLOConstants.SPECIAL_CHARACTERS_STRING,2);
-					CoreFunctions.clearAndSetText(driver, _otherAddressaddStateValue, updatedTempAddressStateValue);
-				} else {
-					CoreFunctions.clearAndSetText(driver, _otherAddressaddStateValue, fieldValue);
-					updatedTempAddressStateValue = fieldValue;
-				}
-			}
+			updatedTempAddressStateValue = setOtherAddressStateTextField(fieldValue);
 			break;
 		case MYLOConstants.MAIL_ADDRESS_STATE:
-			try {
-				updatedMailAddressStateValue = CoreFunctions.generateRandomCharOfLength(Integer.parseInt(fieldValue),MYLOConstants.ONLY_CHARACTERS,0);
-				CoreFunctions.clearAndSetText(driver, _otherAddressaddStateValue, updatedMailAddressStateValue);
-
-			} catch (NumberFormatException e) {
-				if (fieldValue.equals(MYLOConstants.SPECIAL_CHARACTERS_STRING)) {
-					updatedMailAddressStateValue = CoreFunctions.generateRandomCharOfLength(4,MYLOConstants.SPECIAL_CHARACTERS_STRING, 2);
-					CoreFunctions.clearAndSetText(driver, _otherAddressaddStateValue, updatedMailAddressStateValue);
-				} else {
-					CoreFunctions.clearAndSetText(driver, _otherAddressaddStateValue, fieldValue);
-					updatedMailAddressStateValue = fieldValue;
-				}
-			}
+			updatedMailAddressStateValue = setOtherAddressStateTextField(fieldValue);
 			break;
 		case MYLOConstants.TEMP_ADDRESS_ADDRESS1:
-			try {
-				updatedTempAddress1Value = CoreFunctions.generateRandomCharOfLength(Integer.parseInt(fieldValue),MYLOConstants.ONLY_CHARACTERS,0);
-				CoreFunctions.clearAndSetText(driver, _otherAddressaddAddress1Value, updatedTempAddress1Value);
-			} catch (NumberFormatException e) {
-				if (fieldValue.equals(MYLOConstants.SPECIAL_CHARACTERS_STRING)) {
-					updatedTempAddress1Value = CoreFunctions.generateRandomCharOfLength(4,MYLOConstants.SPECIAL_CHARACTERS_STRING, 2);
-					CoreFunctions.clearAndSetText(driver, _otherAddressaddAddress1Value, updatedTempAddress1Value);
-				} else {
-					CoreFunctions.clearAndSetText(driver, _otherAddressaddAddress1Value, fieldValue);
-					updatedTempAddress1Value = fieldValue;
-				}
-			}
+		case MYLOConstants.ADDRESS1:
+			updatedTempAddress1Value = setOtherAddressAddress1(fieldValue);
 			break;
 		case MYLOConstants.MAIL_ADDRESS_ADDRESS1:
-			try {
-				updatedMailAddress1Value = CoreFunctions.generateRandomCharOfLength(Integer.parseInt(fieldValue),MYLOConstants.ONLY_CHARACTERS,0);
-				CoreFunctions.clearAndSetText(driver, _otherAddressaddAddress1Value, updatedMailAddress1Value);
-			} catch (NumberFormatException e) {
-				if (fieldValue.equals(MYLOConstants.SPECIAL_CHARACTERS_STRING)) {
-					updatedMailAddress1Value = CoreFunctions.generateRandomCharOfLength(4,MYLOConstants.SPECIAL_CHARACTERS_STRING, 2);
-					CoreFunctions.clearAndSetText(driver, _otherAddressaddAddress1Value, updatedMailAddress1Value);
-				} else {
-					CoreFunctions.clearAndSetText(driver, _otherAddressaddAddress1Value, fieldValue);
-					updatedMailAddress1Value = fieldValue;
-				}
-			}
+			updatedMailAddress1Value = setOtherAddressAddress1(fieldValue);
 			break;
 		case MYLOConstants.TEMP_ADDRESS_ADDRESS2:
-			try {
-				updatedTempAddress2Value = CoreFunctions.generateRandomCharOfLength(Integer.parseInt(fieldValue),MYLOConstants.ONLY_CHARACTERS,0);
-				CoreFunctions.clearAndSetText(driver, _otherAddressaddAddress2Value, updatedTempAddress2Value);
-			} catch (NumberFormatException e) {
-				if (fieldValue.equals(MYLOConstants.SPECIAL_CHARACTERS_STRING)) {
-					updatedTempAddress2Value = CoreFunctions.generateRandomCharOfLength(4,MYLOConstants.SPECIAL_CHARACTERS_STRING, 2);
-					CoreFunctions.clearAndSetText(driver, _otherAddressaddAddress2Value, updatedTempAddress2Value);
-				} else {
-					CoreFunctions.clearAndSetText(driver, _otherAddressaddAddress2Value, fieldValue);
-					updatedTempAddress2Value = fieldValue;
-				}
-			}
+		case MYLOConstants.ADDRESS2:
+			updatedTempAddress2Value = setOtherAddressAddress2(fieldValue);
 			break;
 		case MYLOConstants.MAIL_ADDRESS_ADDRESS2:
-			try {
-				updatedMailAddress2Value = CoreFunctions.generateRandomCharOfLength(Integer.parseInt(fieldValue),MYLOConstants.ONLY_CHARACTERS,0);
-				CoreFunctions.clearAndSetText(driver, _otherAddressaddAddress2Value, updatedMailAddress2Value);
-
-			} catch (NumberFormatException e) {
-				if (fieldValue.equals(MYLOConstants.SPECIAL_CHARACTERS_STRING)) {
-					updatedMailAddress2Value = CoreFunctions.generateRandomCharOfLength(4,MYLOConstants.SPECIAL_CHARACTERS_STRING, 2);
-					CoreFunctions.clearAndSetText(driver, _otherAddressaddAddress2Value, updatedMailAddress2Value);
-				} else {
-					CoreFunctions.clearAndSetText(driver, _otherAddressaddAddress2Value, fieldValue);
-					updatedMailAddress2Value = fieldValue;
-				}
-			}
+			updatedMailAddress2Value = setOtherAddressAddress2(fieldValue);
 			break;
 		case MYLOConstants.TEMP_ADDRESS_COMMENTS:
-			if (fieldValue.equals(MYLOConstants.SPECIAL_CHARACTERS_STRING)) {
-				updatedTempAddressCommentsValue = CoreFunctions.generateRandomCharOfLength(4,MYLOConstants.SPECIAL_CHARACTERS_STRING, 2);
-				CoreFunctions.clearAndSetText(driver, _otherAddressaddCommentValue, updatedTempAddressCommentsValue);
-			} else {
-				CoreFunctions.clearAndSetText(driver, _otherAddressaddCommentValue, fieldValue);
-				updatedTempAddressCommentsValue = fieldValue;
-			}
+		case MYLOConstants.COMMENTS:
+			updatedTempAddressCommentsValue = setOtherAddressComments(fieldValue);
 			break;
 		case MYLOConstants.MAIL_ADDRESS_COMMENTS:
-			if (fieldValue.equals(MYLOConstants.SPECIAL_CHARACTERS_STRING)) {
-				updatedMailAddressCommentsValue = CoreFunctions.generateRandomCharOfLength(4,MYLOConstants.SPECIAL_CHARACTERS_STRING
-						,2);
-				CoreFunctions.clearAndSetText(driver, _otherAddressaddCommentValue, updatedMailAddressCommentsValue);
-			} else {
-				CoreFunctions.clearAndSetText(driver, _otherAddressaddCommentValue, fieldValue);
-				updatedMailAddressCommentsValue = fieldValue;
-			}
+			updatedMailAddressCommentsValue = setOtherAddressComments(fieldValue);
 			break;
 		case MYLOConstants.TEMP_ADDRESS_FROMDATE:
-			if (fieldValue.equals("current")) {
-				fieldValue = CoreFunctions.getCurrentDateAsGivenFormat("MM/dd/yyyy");
-			}
-			CoreFunctions.clearAndSetText(driver, _otherAddressaddAddressFromDateValue, fieldValue);
-			updatedTempAddressFromDateValue = fieldValue;
+		case MYLOConstants.FROMDATE:
+			updatedTempAddressFromDateValue = setOtherAddressFromDate(fieldValue);
 			break;
 		case MYLOConstants.MAIL_ADDRESS_FROMDATE:
-			if (fieldValue.equals("current")) {
-				fieldValue = CoreFunctions.getCurrentDateAsGivenFormat("MM/dd/yyyy");
-			}
-			CoreFunctions.clearAndSetText(driver, _otherAddressaddAddressFromDateValue, fieldValue);
-			updatedMailAddressFromDateValue = fieldValue;
+			updatedMailAddressFromDateValue = setOtherAddressFromDate(fieldValue);
 			break;
 		default:
 			Reporter.addStepLog(CoreConstants.FAIL + MYLOConstants.ENTER_CORRECT_FIELD_NAME);
@@ -1424,22 +1433,28 @@ public class Mylo_AssignmentPage extends Base {
 	 * Verify field availability for Other Address section
 	 */
 	public boolean verifyOtherAddressFieldAvailability(String fieldName) {
+		boolean flag=false;
 		switch (fieldName) {
 		case MYLOConstants.STATE:
-			return CoreFunctions.isElementExist(driver, _stateFieldTextType, 5);
+			flag= CoreFunctions.isElementExist(driver, _stateFieldTextType, 5);
+			break;
 		case MYLOConstants.TEMP_ADDRESS_STATE:
-			return CoreFunctions.isElementExist(driver, _tempAddressStateTextField, 5);
+			flag= CoreFunctions.isElementExist(driver, _tempAddressStateTextField, 5);
+			break;
 		case MYLOConstants.MAIL_ADDRESS_STATE:
-			return CoreFunctions.isElementExist(driver, _mailAddressStateTextField, 5);
+			flag= CoreFunctions.isElementExist(driver, _mailAddressStateTextField, 5);
+			break;
 		case MYLOConstants.TEMPORARY_ADDRESS_DROPDOWN:
-			return CoreFunctions.isElementExist(driver, _tempAddressDropdown, 5);
+			flag= CoreFunctions.isElementExist(driver, _tempAddressDropdown, 5);
+			break;
 		case MYLOConstants.MAILING_ADDRESS_DROPDOWN:
-			return CoreFunctions.isElementExist(driver, _mailAddressDropdown, 5);
+			flag= CoreFunctions.isElementExist(driver, _mailAddressDropdown, 5);
+			break;
 		default:
 			Reporter.addStepLog(CoreConstants.FAIL + MYLOConstants.ENTER_CORRECT_FIELD_NAME);
 			Assert.fail(MYLOConstants.ENTER_CORRECT_FIELD_NAME);
 		}
-		return false;
+		return flag;
 	}
 	
 	/**
@@ -1448,207 +1463,154 @@ public class Mylo_AssignmentPage extends Base {
 	 * Verify whether field values got updated
 	 */
 	public boolean verifyUpdatedFieldValueOtherAddress(String fieldName) {
+		boolean flag = false;
 		switch (fieldName) {
+		case MYLOConstants.COUNTRY:
+		case MYLOConstants.TEMP_ADDRESS_COUNTRY:
+		case MYLOConstants.MAIL_ADDRESS_COUNTRY:
+			flag = (getFieldValueOtherAddressesSection(fieldName).equals(updatedCountryValue));
+			break;
 		case MYLOConstants.TEMP_ADDRESS_CITY:
-			return (getFieldValueAddressOnOtherAddressesSection(fieldName).equals(updatedTempAddressCityValue));
+			flag = (getFieldValueOtherAddressesSection(fieldName).equals(updatedTempAddressCityValue));
+			break;
 		case MYLOConstants.MAIL_ADDRESS_CITY:
-			return (getFieldValueAddressOnOtherAddressesSection(fieldName).equals(updatedMailAddressCityValue));
+			flag = (getFieldValueOtherAddressesSection(fieldName).equals(updatedMailAddressCityValue));
+			break;
 		case MYLOConstants.TEMP_ADDRESS_ZIPCODE:
-			return (getFieldValueAddressOnOtherAddressesSection(fieldName).equals(updatedTempAddressZipCodeValue));
+			flag = (getFieldValueOtherAddressesSection(fieldName).equals(updatedTempAddressZipCodeValue));
+			break;
 		case MYLOConstants.MAIL_ADDRESS_ZIPCODE:
-			return (getFieldValueAddressOnOtherAddressesSection(fieldName).equals(updatedMailAddressZipCodeValue));
+			flag = (getFieldValueOtherAddressesSection(fieldName).equals(updatedMailAddressZipCodeValue));
+			break;
 		case MYLOConstants.TEMP_ADDRESS_STATE:
-			return (getFieldValueAddressOnOtherAddressesSection(fieldName).equals(updatedTempAddressStateValue));
+			flag = (getFieldValueOtherAddressesSection(fieldName).equals(updatedTempAddressStateValue));
+			break;
 		case MYLOConstants.MAIL_ADDRESS_STATE:
-			return (getFieldValueAddressOnOtherAddressesSection(fieldName).equals(updatedMailAddressStateValue));
+			flag = (getFieldValueOtherAddressesSection(fieldName).equals(updatedMailAddressStateValue));
+			break;
 		case MYLOConstants.TEMP_ADDRESS_ADDRESS1:
-			return (getFieldValueAddressOnOtherAddressesSection(fieldName).equals(updatedTempAddress1Value));
+			flag = (getFieldValueOtherAddressesSection(fieldName).equals(updatedTempAddress1Value));
+			break;
 		case MYLOConstants.MAIL_ADDRESS_ADDRESS1:
-			return (getFieldValueAddressOnOtherAddressesSection(fieldName).equals(updatedMailAddress1Value));
+			flag = (getFieldValueOtherAddressesSection(fieldName).equals(updatedMailAddress1Value));
+			break;
 		case MYLOConstants.TEMP_ADDRESS_ADDRESS2:
-			return (getFieldValueAddressOnOtherAddressesSection(fieldName).equals(updatedTempAddress2Value));
+			flag = (getFieldValueOtherAddressesSection(fieldName).equals(updatedTempAddress2Value));
+			break;
 		case MYLOConstants.MAIL_ADDRESS_ADDRESS2:
-			return (getFieldValueAddressOnOtherAddressesSection(fieldName).equals(updatedMailAddress2Value));
+			flag = (getFieldValueOtherAddressesSection(fieldName).equals(updatedMailAddress2Value));
+			break;
 		case MYLOConstants.TEMP_ADDRESS_FROMDATE:
-			return (getFieldValueAddressOnOtherAddressesSection(fieldName).equals(updatedTempAddressFromDateValue));
+			flag = (getFieldValueOtherAddressesSection(fieldName).equals(updatedTempAddressFromDateValue));
+			break;
 		case MYLOConstants.MAIL_ADDRESS_FROMDATE:
-			return (getFieldValueAddressOnOtherAddressesSection(fieldName).equals(updatedMailAddressFromDateValue));
+			flag = (getFieldValueOtherAddressesSection(fieldName).equals(updatedMailAddressFromDateValue));
+			break;
 		default:
 			Reporter.addStepLog(CoreConstants.FAIL + MYLOConstants.ENTER_CORRECT_FIELD_NAME);
 			Assert.fail(MYLOConstants.ENTER_CORRECT_FIELD_NAME);
 		}
-		return false;		
+
+		if (flag)
+			Reporter.addStepLog(
+					MessageFormat.format(MYLOConstants.VERIFIED_VALUE_SUCCESSFULLY_SAVED, CoreConstants.PASS,
+							getFieldValueOtherAddressesSection(fieldName), fieldName, MYLOConstants.OTHER_ADDRESS));
+		else
+			Reporter.addStepLog(MessageFormat.format(MYLOConstants.FAILED_TO_VERIFY_UPDATED_VALUE, CoreConstants.FAIL,
+					fieldName, MYLOConstants.OTHER_ADDRESS));
+		return flag;
+	}
+	
+	/**
+	 * Mapping the Other Address WebElements with associated fields
+	 */
+	public void mapOtherAddresssWebElementFields() {
+		otherAdressFieldValueMap.put(MYLOConstants.TEMP_ADDRESS_COUNTRY, _tempAddressCountryValue);
+		otherAdressFieldValueMap.put(MYLOConstants.MAIL_ADDRESS_COUNTRY, _mailAddressCountryValue);
+		otherAdressFieldValueMap.put(MYLOConstants.TEMP_ADDRESS_STATE_DROPDOWN, _tempAddressStateDropdownValue);
+		otherAdressFieldValueMap.put(MYLOConstants.MAIL_ADDRESS_STATE_DROPDOWN, _mailAddressStateDropDownValue);
+		otherAdressFieldValueMap.put(MYLOConstants.TEMP_ADDRESS_CITY, _tempAddressCityValue);
+		otherAdressFieldValueMap.put(MYLOConstants.MAIL_ADDRESS_CITY, _mailAddressCityValue);
+		otherAdressFieldValueMap.put(MYLOConstants.TEMP_ADDRESS_ZIPCODE, _tempAddressZipCodeValue);
+		otherAdressFieldValueMap.put(MYLOConstants.MAIL_ADDRESS_ZIPCODE, _mailAddressZipCodeValue);
+		otherAdressFieldValueMap.put(MYLOConstants.TEMP_ADDRESS_STATE, _tempAddressStateValue);
+		otherAdressFieldValueMap.put(MYLOConstants.MAIL_ADDRESS_STATE, _mailAddressStateValue);
+		otherAdressFieldValueMap.put(MYLOConstants.TEMP_ADDRESS_ADDRESS1, _tempAddress1Value);
+		otherAdressFieldValueMap.put(MYLOConstants.MAIL_ADDRESS_ADDRESS1, _mailAddress1Value);
+		otherAdressFieldValueMap.put(MYLOConstants.TEMP_ADDRESS_ADDRESS2, _tempAddress2Value);
+		otherAdressFieldValueMap.put(MYLOConstants.MAIL_ADDRESS_ADDRESS2, _mailAddress2Value);
+		otherAdressFieldValueMap.put(MYLOConstants.TEMP_ADDRESS_COMMENTS, _tempAddressCommentsValue);
+		otherAdressFieldValueMap.put(MYLOConstants.MAIL_ADDRESS_COMMENTS, _mailAddressCommentsValue);
+		otherAdressFieldValueMap.put(MYLOConstants.TEMP_ADDRESS_FROMDATE, _tempAddressFromDateValue);
+		otherAdressFieldValueMap.put(MYLOConstants.MAIL_ADDRESS_FROMDATE, _mailAddressFromDateValue);
 	}
 	
 	/**
 	 * @param fieldName
 	 * @return
-	 * get the field value present on Other Address section
+	 *  Get the values of different fields on Other Address section
 	 */
-	public String getFieldValueAddressOnOtherAddressesSection(String fieldName) {
+	public String getFieldValueOtherAddressesSection(String fieldName) {
+		String valueToBeReturned = null;
+		WebElement fieldElement = otherAdressFieldValueMap.get(fieldName);
 		switch (fieldName) {
 		case MYLOConstants.TEMP_ADDRESS_COUNTRY:
-			CoreFunctions.explicitWaitTillElementVisibility(driver, _tempAddressCountryValue, MYLOConstants.TEMP_ADDRESS_COUNTRY);
-			CoreFunctions.highlightObject(driver, _tempAddressCountryValue);
-			return CoreFunctions.getElementText(driver,_tempAddressCountryValue);
-		case MYLOConstants.MAIl_ADDRESS_COUNTRY:
-			CoreFunctions.explicitWaitTillElementVisibility(driver, _mailAddressCountryValue, MYLOConstants.MAIl_ADDRESS_COUNTRY);
-			CoreFunctions.highlightObject(driver, _mailAddressCountryValue);
-			return CoreFunctions.getElementText(driver,_mailAddressCountryValue);
+		case MYLOConstants.MAIL_ADDRESS_COUNTRY:
 		case MYLOConstants.TEMP_ADDRESS_STATE_DROPDOWN:
-			CoreFunctions.explicitWaitTillElementVisibility(driver, _tempAddressStateDropdownValue, MYLOConstants.TEMP_ADDRESS_STATE_DROPDOWN);
-			CoreFunctions.highlightObject(driver, _tempAddressStateDropdownValue);
-			return CoreFunctions.getElementText(driver,_tempAddressStateDropdownValue);
 		case MYLOConstants.MAIL_ADDRESS_STATE_DROPDOWN:
-			CoreFunctions.explicitWaitTillElementVisibility(driver, _mailAddressStateDropDownValue, MYLOConstants.MAIL_ADDRESS_STATE_DROPDOWN);
-			CoreFunctions.highlightObject(driver, _mailAddressStateDropDownValue);
-			return CoreFunctions.getElementText(driver,_mailAddressStateDropDownValue);
+			CoreFunctions.explicitWaitTillElementVisibility(driver, fieldElement, fieldElement.getText());
+			CoreFunctions.highlightObject(driver, fieldElement);
+			valueToBeReturned = CoreFunctions.getElementText(driver, fieldElement);
+			break;
 		case MYLOConstants.TEMP_ADDRESS_CITY:
-			CoreFunctions.explicitWaitTillElementVisibility(driver, _tempAddressCityValue, MYLOConstants.TEMP_ADDRESS_CITY);
-			CoreFunctions.highlightObject(driver, _tempAddressCityValue);
-			return CoreFunctions.getAttributeText( _tempAddressCityValue,MYLOConstants.VALUE);
 		case MYLOConstants.MAIL_ADDRESS_CITY:
-			CoreFunctions.explicitWaitTillElementVisibility(driver, _mailAddressCityValue, MYLOConstants.MAIL_ADDRESS_CITY);
-			CoreFunctions.highlightObject(driver, _tempAddressCountryValue);
-			return CoreFunctions.getAttributeText(_mailAddressCityValue, MYLOConstants.VALUE);
 		case MYLOConstants.TEMP_ADDRESS_ZIPCODE:
-			CoreFunctions.explicitWaitTillElementVisibility(driver, _tempAddressZipCodeValue, MYLOConstants.TEMP_ADDRESS_ZIPCODE);
-			CoreFunctions.highlightObject(driver, _tempAddressZipCodeValue);
-			return CoreFunctions.getAttributeText( _tempAddressZipCodeValue,MYLOConstants.VALUE);
 		case MYLOConstants.MAIL_ADDRESS_ZIPCODE:
-			CoreFunctions.explicitWaitTillElementVisibility(driver, _mailAddressZipCodeValue, MYLOConstants.MAIL_ADDRESS_ZIPCODE);
-			CoreFunctions.highlightObject(driver, _mailAddressZipCodeValue);
-			return CoreFunctions.getAttributeText(_mailAddressZipCodeValue, MYLOConstants.VALUE);
 		case MYLOConstants.TEMP_ADDRESS_STATE:
-			CoreFunctions.explicitWaitTillElementVisibility(driver, _tempAddressStateValue, MYLOConstants.TEMP_ADDRESS_STATE);
-			CoreFunctions.highlightObject(driver, _tempAddressStateValue);
-			return CoreFunctions.getAttributeText( _tempAddressStateValue,MYLOConstants.VALUE);
 		case MYLOConstants.MAIL_ADDRESS_STATE:
-			CoreFunctions.explicitWaitTillElementVisibility(driver, _mailAddressStateValue, MYLOConstants.MAIL_ADDRESS_STATE);
-			CoreFunctions.highlightObject(driver, _mailAddressStateValue);
-			return CoreFunctions.getAttributeText(_mailAddressStateValue, MYLOConstants.VALUE);
 		case MYLOConstants.TEMP_ADDRESS_ADDRESS1:
-			CoreFunctions.explicitWaitTillElementVisibility(driver, _tempAddress1Value, MYLOConstants.TEMP_ADDRESS_ADDRESS1);
-			CoreFunctions.highlightObject(driver, _tempAddress1Value);
-			return CoreFunctions.getAttributeText( _tempAddress1Value,MYLOConstants.VALUE);
 		case MYLOConstants.MAIL_ADDRESS_ADDRESS1:
-			CoreFunctions.explicitWaitTillElementVisibility(driver, _mailAddress1Value, MYLOConstants.MAIL_ADDRESS_ADDRESS1);
-			CoreFunctions.highlightObject(driver, _mailAddress1Value);
-			return CoreFunctions.getAttributeText(_mailAddress1Value, MYLOConstants.VALUE);
 		case MYLOConstants.TEMP_ADDRESS_ADDRESS2:
-			CoreFunctions.explicitWaitTillElementVisibility(driver, _tempAddress2Value, MYLOConstants.TEMP_ADDRESS_ADDRESS2);
-			CoreFunctions.highlightObject(driver, _tempAddress2Value);
-			return CoreFunctions.getAttributeText( _tempAddress2Value,MYLOConstants.VALUE);
 		case MYLOConstants.MAIL_ADDRESS_ADDRESS2:
-			CoreFunctions.explicitWaitTillElementVisibility(driver, _mailAddress2Value, MYLOConstants.MAIL_ADDRESS_ADDRESS2);
-			CoreFunctions.highlightObject(driver, _mailAddress2Value);
-			return CoreFunctions.getAttributeText(_mailAddress2Value, MYLOConstants.VALUE);
 		case MYLOConstants.TEMP_ADDRESS_COMMENTS:
-			CoreFunctions.explicitWaitTillElementVisibility(driver, _tempAddressCommentsValue, MYLOConstants.TEMP_ADDRESS_COMMENTS);
-			CoreFunctions.highlightObject(driver, _tempAddressCommentsValue);
-			return CoreFunctions.getAttributeText( _tempAddressCommentsValue,MYLOConstants.VALUE);
 		case MYLOConstants.MAIL_ADDRESS_COMMENTS:
-			CoreFunctions.explicitWaitTillElementVisibility(driver, _mailAddressCommentsValue, MYLOConstants.MAIL_ADDRESS_COMMENTS);
-			CoreFunctions.highlightObject(driver, _mailAddressCommentsValue);
-			return CoreFunctions.getAttributeText(_mailAddressCommentsValue, MYLOConstants.VALUE);
+			CoreFunctions.explicitWaitTillElementVisibility(driver, fieldElement,
+					fieldElement.getAttribute(MYLOConstants.VALUE));
+			CoreFunctions.highlightObject(driver, fieldElement);
+			valueToBeReturned = CoreFunctions.getAttributeText(fieldElement, MYLOConstants.VALUE);
+			break;
 		case MYLOConstants.TEMP_ADDRESS_FROMDATE:
-			String tempdateValue = null;
-			CoreFunctions.explicitWaitTillElementVisibility(driver, _tempAddressFromDateValue, MYLOConstants.MAIL_ADDRESS_FROMDATE);
-			CoreFunctions.highlightObject(driver, _tempAddressFromDateValue);
-			try {
-				tempdateValue=CoreFunctions.getStringDateInFormat(CoreFunctions.getAttributeText(_tempAddressFromDateValue, MYLOConstants.VALUE), "dd MMM yyyy", "MM/dd/yyyy");
-			} catch (ParseException e) {
-			}
-			return tempdateValue;
 		case MYLOConstants.MAIL_ADDRESS_FROMDATE:
-			String dateValue = null;
-			CoreFunctions.explicitWaitTillElementVisibility(driver, _mailAddressFromDateValue, MYLOConstants.MAIL_ADDRESS_FROMDATE);	
-			CoreFunctions.highlightObject(driver, _mailAddressFromDateValue);
-			try {
-				dateValue=CoreFunctions.getStringDateInFormat(CoreFunctions.getAttributeText(_mailAddressFromDateValue, MYLOConstants.VALUE), "dd MMM yyyy", "MM/dd/yyyy");
-			} catch (ParseException e) {
-			}
-			return dateValue;
+			CoreFunctions.explicitWaitTillElementVisibility(driver, fieldElement,
+					fieldElement.getAttribute(MYLOConstants.VALUE));
+			CoreFunctions.highlightObject(driver, fieldElement);
+			valueToBeReturned = CoreFunctions.getStringDateInFormat(
+					CoreFunctions.getAttributeText(fieldElement, MYLOConstants.VALUE), "dd MMM yyyy",
+					"MM/dd/yyyy");
+			break;
 		default:
 			Reporter.addStepLog(CoreConstants.FAIL + MYLOConstants.ENTER_CORRECT_FIELD_NAME);
 			Assert.fail(MYLOConstants.ENTER_CORRECT_FIELD_NAME);
 		}
-		return fieldName;
+		return valueToBeReturned;
 	}
-	
-	/**
-	 * @param sectionType
-	 * @param table
-	 * @return
-	 * Verify fieldValues on Different sections on Other Address
-	 */
-	public boolean verifyOtherAddressFieldValues(String sectionType, DataTable table) {
-		java.util.List<Map<String, String>> data = table.asMaps(String.class, String.class);
-		try {
-			if (sectionType.equals(MYLOConstants.MAILING_ADDRESS_DROPDOWN)) {
-				Assert.assertEquals(getFieldValueAddressOnOtherAddressesSection(MYLOConstants.MAIl_ADDRESS_COUNTRY),
-						data.get(0).get(MYLOConstants.COUNTRY));
-				Assert.assertEquals(getFieldValueAddressOnOtherAddressesSection(MYLOConstants.MAIL_ADDRESS_ADDRESS1),
-						data.get(0).get(MYLOConstants.MAIL_ADDRESS_ADDRESS1));
-				Assert.assertEquals(getFieldValueAddressOnOtherAddressesSection(MYLOConstants.MAIL_ADDRESS_ADDRESS2),
-						data.get(0).get(MYLOConstants.MAIL_ADDRESS_ADDRESS2));
-				Assert.assertEquals(
-						getFieldValueAddressOnOtherAddressesSection(MYLOConstants.MAIL_ADDRESS_STATE_DROPDOWN),
-						data.get(0).get(MYLOConstants.MAIL_ADDRESS_STATE_DROPDOWN));
-				Assert.assertEquals(getFieldValueAddressOnOtherAddressesSection(MYLOConstants.MAIL_ADDRESS_CITY),
-						data.get(0).get(MYLOConstants.MAIL_ADDRESS_CITY));
-				Assert.assertEquals(getFieldValueAddressOnOtherAddressesSection(MYLOConstants.MAIL_ADDRESS_ZIPCODE),
-						data.get(0).get(MYLOConstants.MAIL_ADDRESS_ZIPCODE));
-				Assert.assertEquals(getFieldValueAddressOnOtherAddressesSection(MYLOConstants.MAIL_ADDRESS_FROMDATE),
-						data.get(0).get(MYLOConstants.MAIL_ADDRESS_FROMDATE));
-				Assert.assertEquals(getFieldValueAddressOnOtherAddressesSection(MYLOConstants.MAIL_ADDRESS_COMMENTS),
-						data.get(0).get(MYLOConstants.MAIL_ADDRESS_COMMENTS));
-			} else if (sectionType.equals(MYLOConstants.TEMPORARY_ADDRESS_DROPDOWN)) {
-				Assert.assertEquals(getFieldValueAddressOnOtherAddressesSection(MYLOConstants.TEMP_ADDRESS_COUNTRY),
-						data.get(0).get(MYLOConstants.COUNTRY));
-				Assert.assertEquals(getFieldValueAddressOnOtherAddressesSection(MYLOConstants.TEMP_ADDRESS_ADDRESS1),
-						data.get(0).get(MYLOConstants.TEMP_ADDRESS_ADDRESS1));
-				Assert.assertEquals(getFieldValueAddressOnOtherAddressesSection(MYLOConstants.TEMP_ADDRESS_ADDRESS2),
-						data.get(0).get(MYLOConstants.TEMP_ADDRESS_ADDRESS2));
-				Assert.assertEquals(
-						getFieldValueAddressOnOtherAddressesSection(MYLOConstants.TEMP_ADDRESS_STATE_DROPDOWN),
-						data.get(0).get(MYLOConstants.TEMP_ADDRESS_STATE_DROPDOWN));
-				Assert.assertEquals(getFieldValueAddressOnOtherAddressesSection(MYLOConstants.TEMP_ADDRESS_CITY),
-						data.get(0).get(MYLOConstants.TEMP_ADDRESS_CITY));
-				Assert.assertEquals(getFieldValueAddressOnOtherAddressesSection(MYLOConstants.TEMP_ADDRESS_ZIPCODE),
-						data.get(0).get(MYLOConstants.TEMP_ADDRESS_ZIPCODE));
-				Assert.assertEquals(getFieldValueAddressOnOtherAddressesSection(MYLOConstants.TEMP_ADDRESS_FROMDATE),
-						data.get(0).get(MYLOConstants.TEMP_ADDRESS_FROMDATE));
-				Assert.assertEquals(getFieldValueAddressOnOtherAddressesSection(MYLOConstants.TEMP_ADDRESS_COMMENTS),
-						data.get(0).get(MYLOConstants.TEMP_ADDRESS_COMMENTS));
-			}
-			return true;
-		} catch (Exception e) {
-			return false;
-		}
-	}
-	
 	
 	/**
 	 * @param countryName
 	 * @return
 	 * get state list from json of corresponding country passed as a parameter
 	 */
-	public List<String> getMyoStatesByCountry(String countryName) {
+	public List<String> getMyloStatesByCountry(String countryName) {
 		List<String> stateNames = new ArrayList<String>();
 		switch (countryName) {
 		case MYLOConstants.USA_STATE:
 			List<MyloUSStates> myloUSStates = FileReaderManager.getInstance().getMyloJsonReader().getMyloUSStates();
-			for (MyloUSStates myloUSStates2 : myloUSStates) {
-				stateNames.add(myloUSStates2.value);
-			}
+			stateNames.addAll(myloUSStates.stream().map(x -> x.value).collect(Collectors.toList()));
 			break;
 
 		case MYLOConstants.CANADA_STATE:
 			List<MyloCAStates> myloCAStates = FileReaderManager.getInstance().getMyloJsonReader().getMyloCAStates();
-			for (MyloCAStates myloCAStates2 : myloCAStates) {
-				stateNames.add(myloCAStates2.value);
-			}
+			stateNames.addAll(myloCAStates.stream().map(x -> x.value).collect(Collectors.toList()));
 			break;
 		case MYLOConstants.INDIA_STATE:
 			List<MyloIndiaStates> myloIndiaStates = FileReaderManager.getInstance().getMyloJsonReader()
@@ -1657,8 +1619,8 @@ public class Mylo_AssignmentPage extends Base {
 			break;
 
 		default:
-			Reporter.addStepLog(CoreConstants.FAIL + MYLOConstants.ENTER_CORRECT_FIELD_NAME);
-			Assert.fail(MYLOConstants.ENTER_CORRECT_FIELD_NAME);
+			Reporter.addStepLog(CoreConstants.FAIL + MYLOConstants.ENTER_CORRECT_COUNTRY_NAME);
+			Assert.fail(MYLOConstants.ENTER_CORRECT_COUNTRY_NAME);
 		}
 		return stateNames;
 
@@ -1674,32 +1636,367 @@ public class Mylo_AssignmentPage extends Base {
 		List<String> stateText = stateList.stream().map(x -> x.getText()).collect(Collectors.toList());
 		List<String> copyStateList = new ArrayList<String>(stateText);
 		copyStateList.remove("Select One");
-		return copyStateList.equals(getMyoStatesByCountry(countryName));
+		return copyStateList.equals(getMyloStatesByCountry(countryName));
 	}
 	
 	/**
 	 * @param msg
 	 * @return
-	 * Verify success message on Other Address section
+	 * Verify all the Alert Messages
 	 */
-	public boolean verifySuccessMessage(String msg) {
-		try {
-			CoreFunctions.explicitWaitTillElementVisibility(driver, _successMessage, _successMessage.getText());
-			Assert.assertEquals(_successMessage.getText(), msg);
-		} catch (Throwable e) {
-			return false;
-		}
-		return true;
-	}
-	
 	public boolean verifyAlertMessage(String msg) {
+		boolean flag = false;
 		try {
 			CoreFunctions.isElementVisible(_alertMessage);
-			System.out.println(_alertMessage.getText());
-			Assert.assertEquals(_alertMessage.getText(), msg);
-		} catch (Throwable e) {
+			CoreFunctions.highlightObject(driver, _alertMessage);
+			flag = (_alertMessage.getText().equals(msg));
+		} catch (Exception e) {
+			Reporter.addStepLog(MessageFormat.format(CoreConstants.FAIL_TO_VERIFY_ELEMENT_ON_PAGE, CoreConstants.FAIL,
+					MYLOConstants.ALERT_MESSAGE, MYLOConstants.OTHER_ADDRESS));
+		}
+
+		if (flag)
+			Reporter.addStepLog(MessageFormat.format(MYLOConstants.VERIFIED_ALERT_MESSAGE_DISPLAYED, CoreConstants.PASS,
+					msg, MYLOConstants.OTHER_ADDRESS));
+		else
+			Reporter.addStepLog(MessageFormat.format(MYLOConstants.EXPECTED_MESSAGE_DISPLAYED, CoreConstants.FAIL, msg,
+					_alertMessage.getText(), MYLOConstants.OTHER_ADDRESS));
+		return flag;
+	}
+	
+	/**
+	 * @param msg
+	 * @return
+	 * Verify all the Alert Messages
+	 */
+	public boolean verifyFieldErrorBackground(String fieldName) {
+		boolean flag = false;
+		String hexColorValue = null;
+		switch (fieldName) {
+		case MYLOConstants.COUNTRY:
+			CoreFunctions.explicitWaitTillElementVisibility(driver, _countryDropdown, MYLOConstants.COUNTRY);
+			hexColorValue = Color.fromString(_countryDropdown.getCssValue(MYLOConstants.BORDER_COLOR)).asHex();
+			flag = (CoreFunctions.getAttributeText(_countryDropdown, MYLOConstants.CLASS).contains(MYLOConstants.ERROR_BORDER)
+					&& hexColorValue.equals(MYLOConstants.RED_COLOR_HEXCODE));
+			break;
+		case MYLOConstants.STATE:
+			CoreFunctions.explicitWaitTillElementVisibility(driver, _stateDropdown, MYLOConstants.STATE);
+			hexColorValue = Color.fromString(_stateDropdown.getCssValue(MYLOConstants.BORDER_COLOR)).asHex();
+			flag = (CoreFunctions.getAttributeText(_stateDropdown, MYLOConstants.CLASS).contains(MYLOConstants.ERROR_BORDER)
+					&& hexColorValue.equals(MYLOConstants.RED_COLOR_HEXCODE));
+			break;
+		case MYLOConstants.STATE_TEXT_FIELD:
+			CoreFunctions.explicitWaitTillElementVisibility(driver, _otherAddressaddStateValue,
+					MYLOConstants.STATE_TEXT_FIELD);
+			hexColorValue = Color.fromString(_otherAddressaddStateValue.getCssValue(MYLOConstants.BORDER_COLOR)).asHex();
+			flag = (CoreFunctions.getAttributeText(_otherAddressaddStateValue, MYLOConstants.CLASS).contains(MYLOConstants.ERROR_BORDER)
+					&& hexColorValue.equals(MYLOConstants.RED_COLOR_HEXCODE));
+			break;
+		case MYLOConstants.CITY:
+			CoreFunctions.explicitWaitTillElementVisibility(driver, _otherAddressaddCityValue, MYLOConstants.CITY);
+			hexColorValue = Color.fromString(_otherAddressaddCityValue.getCssValue(MYLOConstants.BORDER_COLOR)).asHex();
+			flag = (CoreFunctions.getAttributeText(_otherAddressaddCityValue, MYLOConstants.CLASS).contains(MYLOConstants.ERROR_BORDER)
+					&& hexColorValue.equals(MYLOConstants.RED_COLOR_HEXCODE));
+			CoreFunctions.highlightObject(driver, _otherAddressaddCityValue);
+			break;
+		case MYLOConstants.ZIPCODE:
+			CoreFunctions.explicitWaitTillElementVisibility(driver, _otherAddressaddZipCodeValue,
+					MYLOConstants.ZIPCODE);
+			hexColorValue = Color.fromString(_otherAddressaddZipCodeValue.getCssValue(MYLOConstants.BORDER_COLOR)).asHex();
+			flag = (CoreFunctions.getAttributeText(_otherAddressaddZipCodeValue, MYLOConstants.CLASS).contains(MYLOConstants.ERROR_BORDER)
+					&& hexColorValue.equals(MYLOConstants.RED_COLOR_HEXCODE));
+			CoreFunctions.highlightObject(driver, _otherAddressaddZipCodeValue);
+			break;
+		case MYLOConstants.ADDRESS1:
+			CoreFunctions.explicitWaitTillElementVisibility(driver, _otherAddressaddAddress1Value,
+					MYLOConstants.ADDRESS1);
+			hexColorValue = Color.fromString(_otherAddressaddAddress1Value.getCssValue(MYLOConstants.BORDER_COLOR)).asHex();
+			flag = (CoreFunctions.getAttributeText(_otherAddressaddAddress1Value, MYLOConstants.CLASS).contains(MYLOConstants.ERROR_BORDER)
+					&& hexColorValue.equals(MYLOConstants.RED_COLOR_HEXCODE));
+			CoreFunctions.highlightObject(driver, _otherAddressaddAddress1Value);
+			break;
+		case MYLOConstants.ADDRESS2:
+			CoreFunctions.explicitWaitTillElementVisibility(driver, _otherAddressaddAddress2Value,
+					MYLOConstants.ADDRESS2);
+			hexColorValue = Color.fromString(_otherAddressaddAddress2Value.getCssValue(MYLOConstants.BORDER_COLOR)).asHex();
+			flag = (CoreFunctions.getAttributeText(_otherAddressaddAddress2Value, MYLOConstants.CLASS).contains(MYLOConstants.ERROR_BORDER)
+					&& hexColorValue.equals(MYLOConstants.RED_COLOR_HEXCODE));
+			CoreFunctions.highlightObject(driver, _otherAddressaddAddress2Value);
+			break;
+		case MYLOConstants.FROMDATE:
+			CoreFunctions.explicitWaitTillElementVisibility(driver, _otherAddressaddFromDateValue,
+					MYLOConstants.FROMDATE);
+			hexColorValue = Color.fromString(_otherAddressaddFromDateValue.getCssValue(MYLOConstants.BORDER_COLOR)).asHex();
+			flag = (CoreFunctions.getAttributeText(_otherAddressaddFromDateValue, MYLOConstants.CLASS).contains(MYLOConstants.ERROR_BORDER)
+					&& hexColorValue.equals(MYLOConstants.RED_COLOR_HEXCODE));
+			CoreFunctions.highlightObject(driver, _otherAddressaddFromDateValue);
+			break;
+		case MYLOConstants.COMMENTS:
+			CoreFunctions.explicitWaitTillElementVisibility(driver, _otherAddressaddCommentValue,
+					MYLOConstants.COMMENTS);
+			hexColorValue = Color.fromString(_otherAddressaddCommentValue.getCssValue(MYLOConstants.BORDER_COLOR)).asHex();
+			flag = (CoreFunctions.getAttributeText(_otherAddressaddCommentValue, MYLOConstants.CLASS).contains(MYLOConstants.ERROR_BORDER)
+					&& hexColorValue.equals(MYLOConstants.RED_COLOR_HEXCODE));
+			CoreFunctions.highlightObject(driver, _otherAddressaddCommentValue);
+			break;
+		default:
+			Reporter.addStepLog(CoreConstants.FAIL + MYLOConstants.ENTER_CORRECT_FIELD_NAME);
+			Assert.fail(MYLOConstants.ENTER_CORRECT_FIELD_NAME);
+		}
+
+		if (flag)
+			Reporter.addStepLog(MessageFormat.format(MYLOConstants.VERIFIED_FIELD_HIGHLIGHTED, CoreConstants.PASS,
+					fieldName, MYLOConstants.OTHER_ADDRESS));
+		else
+			Reporter.addStepLog(MessageFormat.format(MYLOConstants.VERIFIED_FIELD_NOT_HIGHLIGHTED, CoreConstants.FAIL,
+					fieldName, MYLOConstants.OTHER_ADDRESS));
+
+		return flag;
+	}
+	
+	
+	/**
+	 * @param sectionType
+	 * @param countryName
+	 * @param stateName
+	 * @param cityName
+	 * Set above mandatory fields on Other Address section
+	 */
+	public void setOtherAddressMandatoryFields(String sectionType,String countryName, String stateName,String cityName) {
+		clickElementOnOtherAddressesSection(MYLOConstants.COUNTRY);
+		setOtherAddressCountry(countryName);
+		setOtherAddressStateField(sectionType, stateName);
+		setOtherAddressCity(cityName);
+	}
+	
+	/**
+	 * @param sectionType
+	 * @param table
+	 * Verify Toast messages of other Fields on Other Address section
+	 */
+	public void verifyOtherAddressSectionToastMessages(String sectionType,DataTable table) {
+		setOtherAddressMandatoryFields(sectionType,MYLOConstants.USA_STATE, MYLOConstants.RANDOM, MYLOConstants.CITY_VALUE);
+		java.util.List<Map<String, String>> data = table.asMaps(String.class, String.class);
+		for (int i = 0; i < data.size(); i++) {
+			String fieldName = data.get(i).get(MYLOConstants.FIELD_NAME);
+			String fieldValue = data.get(i).get(MYLOConstants.FIELD_VALUE);
+			setFieldValueOnOtherAddressesSection(fieldName, fieldValue);
+			clickElementOnOtherAddressesSection(MYLOConstants.SAVE_BUTTON);
+			Assert.assertTrue(verifyAlertMessage(data.get(i).get(MYLOConstants.MESSAGE)));
+			Assert.assertTrue(verifyFieldErrorBackground(fieldName));
+			clickElementOnOtherAddressesSection(MYLOConstants.CLOSE_BUTTON);
+			mapOtherAddresssValidFieldValue();
+			setFieldValueOnOtherAddressesSection(fieldName, otherAdressvalidFieldValueMap.get(fieldName));
+		}
+	}
+	
+	/**
+	 * @param sectionType
+	 * @param table
+	 * Verify Toast messages of Mandatory fields on Other Address section
+	 */
+	public void verifyMandatoryFieldsToastMessagesOtherAddress(String sectionType,DataTable table) {
+		java.util.List<Map<String, String>> data = table.asMaps(String.class, String.class);
+		for (int i = 0; i < data.size(); i++) {
+			setOtherAddressMandatoryFields(sectionType, data.get(i).get(MYLOConstants.COUNTRY),
+					data.get(i).get(MYLOConstants.STATE), data.get(i).get(MYLOConstants.CITY));
+			clickElementOnOtherAddressesSection(MYLOConstants.SAVE_BUTTON);
+			Assert.assertTrue(verifyAlertMessage(data.get(i).get(MYLOConstants.MESSAGE)));
+			clickElementOnOtherAddressesSection(MYLOConstants.CLOSE_BUTTON);
+		}
+	}
+	
+	/**
+	 * @param sectionType
+	 * @param stateValue
+	 * Set State Field on Other Address section
+	 */
+	public void setOtherAddressStateField(String sectionType,String stateValue) {
+		if (verifyOtherAddressFieldAvailability(MYLOConstants.STATE)
+				&& sectionType.equals(MYLOConstants.MAILING_ADDRESS))
+			updatedMailAddressStateValue = setOtherAddressStateTextField(stateValue);
+		else if (verifyOtherAddressFieldAvailability(MYLOConstants.STATE)
+				&& sectionType.equals(MYLOConstants.TEMPORARY_ADDRESS))
+			updatedTempAddressStateValue = setOtherAddressStateTextField(stateValue);
+		else {
+			clickElementOnOtherAddressesSection(MYLOConstants.STATE);
+			setFieldValueOnOtherAddressesSection(MYLOConstants.STATE, stateValue);
+		}
+	}
+	
+	/**
+	 * @param sectionType
+	 * @param table
+	 * Set Mandatory Field Values on Other Address section
+	 */
+	public void setMandatoryFieldValuesOtherAddressSection(String sectionType,DataTable table) {
+		java.util.List<Map<String, String>> data = table.asMaps(String.class, String.class);
+		if (sectionType.equals(MYLOConstants.MAILING_ADDRESS)) {
+			clickElementOnOtherAddressesSection(MYLOConstants.COUNTRY);
+			setFieldValueOnOtherAddressesSection(MYLOConstants.COUNTRY, data.get(0).get(MYLOConstants.COUNTRY));
+			setFieldValueOnOtherAddressesSection(MYLOConstants.MAIL_ADDRESS_CITY,
+					data.get(0).get(MYLOConstants.MAIL_ADDRESS_CITY));
+			setOtherAddressStateField(MYLOConstants.MAILING_ADDRESS,data.get(0).get(MYLOConstants.STATE));
+		}
+		else if (sectionType.equals(MYLOConstants.TEMPORARY_ADDRESS)) {
+			clickElementOnOtherAddressesSection(MYLOConstants.COUNTRY);
+			setFieldValueOnOtherAddressesSection(MYLOConstants.COUNTRY, data.get(0).get(MYLOConstants.COUNTRY));
+			setFieldValueOnOtherAddressesSection(MYLOConstants.TEMP_ADDRESS_CITY,
+					data.get(0).get(MYLOConstants.TEMP_ADDRESS_CITY));
+			setOtherAddressStateField(MYLOConstants.TEMPORARY_ADDRESS,data.get(0).get(MYLOConstants.STATE));
+		}
+	}
+	
+	/**
+	 * @param table
+	 * Set Field Value on Other Address section
+	 */
+	public void setFieldValueOtherAddressSection(DataTable table) {
+		java.util.List<Map<String, String>> data = table.asMaps(String.class, String.class);
+		if (data.get(0).get("SectionType").equals(MYLOConstants.MAILING_ADDRESS)) {
+			clickElementOnOtherAddressesSection(MYLOConstants.COUNTRY);
+			setFieldValueOnOtherAddressesSection(MYLOConstants.COUNTRY, data.get(0).get(MYLOConstants.COUNTRY));
+			setFieldValueOnOtherAddressesSection(MYLOConstants.MAIL_ADDRESS_CITY,
+					data.get(0).get(MYLOConstants.MAIL_ADDRESS_CITY));
+			setOtherAddressStateField(MYLOConstants.MAILING_ADDRESS,data.get(0).get(MYLOConstants.STATE));
+			setFieldValueOnOtherAddressesSection(MYLOConstants.MAIL_ADDRESS_ZIPCODE,
+					data.get(0).get(MYLOConstants.MAIL_ADDRESS_ZIPCODE));
+			setFieldValueOnOtherAddressesSection(MYLOConstants.MAIL_ADDRESS_FROMDATE,
+					data.get(0).get(MYLOConstants.MAIL_ADDRESS_FROMDATE));
+			setFieldValueOnOtherAddressesSection(MYLOConstants.MAIL_ADDRESS_ADDRESS1,
+					data.get(0).get(MYLOConstants.MAIL_ADDRESS_ADDRESS1));
+			setFieldValueOnOtherAddressesSection(MYLOConstants.MAIL_ADDRESS_ADDRESS2,
+					data.get(0).get(MYLOConstants.MAIL_ADDRESS_ADDRESS2));
+		}
+		else if (data.get(0).get("SectionType").equals(MYLOConstants.TEMPORARY_ADDRESS)) {
+			clickElementOnOtherAddressesSection(MYLOConstants.COUNTRY);
+			setFieldValueOnOtherAddressesSection(MYLOConstants.COUNTRY, data.get(0).get(MYLOConstants.COUNTRY));
+			setFieldValueOnOtherAddressesSection(MYLOConstants.TEMP_ADDRESS_CITY,
+					data.get(0).get(MYLOConstants.TEMP_ADDRESS_CITY));
+			setOtherAddressStateField(MYLOConstants.TEMPORARY_ADDRESS,data.get(0).get(MYLOConstants.STATE));
+			setFieldValueOnOtherAddressesSection(MYLOConstants.TEMP_ADDRESS_ZIPCODE,
+					data.get(0).get(MYLOConstants.TEMP_ADDRESS_ZIPCODE));
+			setFieldValueOnOtherAddressesSection(MYLOConstants.TEMP_ADDRESS_FROMDATE,
+					data.get(0).get(MYLOConstants.TEMP_ADDRESS_FROMDATE));
+			setFieldValueOnOtherAddressesSection(MYLOConstants.TEMP_ADDRESS_ADDRESS1,
+					data.get(0).get(MYLOConstants.TEMP_ADDRESS_ADDRESS1));
+			setFieldValueOnOtherAddressesSection(MYLOConstants.TEMP_ADDRESS_ADDRESS2,
+					data.get(0).get(MYLOConstants.TEMP_ADDRESS_ADDRESS2));
+		}
+	}
+	
+	/**
+	 * @param sectionType
+	 * @param table
+	 * Verify updated field values
+	 * @return
+	 */
+	public boolean verifyFieldValuesOtherAddress(String sectionType, DataTable table) {
+		java.util.List<Map<String, String>> data = table.asMaps(String.class, String.class);
+		try {
+			if (sectionType.equals(MYLOConstants.MAILING_ADDRESS_DROPDOWN)) {
+				Assert.assertEquals(getFieldValueOtherAddressesSection(MYLOConstants.MAIL_ADDRESS_COUNTRY),
+						data.get(0).get(MYLOConstants.COUNTRY));
+				Assert.assertEquals(getFieldValueOtherAddressesSection(MYLOConstants.MAIL_ADDRESS_CITY),
+						data.get(0).get(MYLOConstants.MAIL_ADDRESS_CITY));
+				Assert.assertEquals(
+						getFieldValueOtherAddressesSection(MYLOConstants.MAIL_ADDRESS_STATE_DROPDOWN),
+						data.get(0).get(MYLOConstants.STATE));
+				Assert.assertEquals(getFieldValueOtherAddressesSection(MYLOConstants.MAIL_ADDRESS_ZIPCODE),
+						data.get(0).get(MYLOConstants.MAIL_ADDRESS_ZIPCODE));
+				Assert.assertEquals(getFieldValueOtherAddressesSection(MYLOConstants.MAIL_ADDRESS_FROMDATE),
+						data.get(0).get(MYLOConstants.MAIL_ADDRESS_FROMDATE));
+				Assert.assertEquals(getFieldValueOtherAddressesSection(MYLOConstants.MAIL_ADDRESS_ADDRESS1),
+						data.get(0).get(MYLOConstants.MAIL_ADDRESS_ADDRESS1));
+				Assert.assertEquals(getFieldValueOtherAddressesSection(MYLOConstants.MAIL_ADDRESS_ADDRESS2),
+						data.get(0).get(MYLOConstants.MAIL_ADDRESS_ADDRESS2));
+			} else if (sectionType.equals(MYLOConstants.TEMPORARY_ADDRESS_DROPDOWN)) {
+				Assert.assertEquals(getFieldValueOtherAddressesSection(MYLOConstants.TEMP_ADDRESS_COUNTRY),
+						data.get(0).get(MYLOConstants.COUNTRY));
+				Assert.assertEquals(
+						getFieldValueOtherAddressesSection(MYLOConstants.TEMP_ADDRESS_STATE_DROPDOWN),
+						data.get(0).get(MYLOConstants.STATE));
+				Assert.assertEquals(getFieldValueOtherAddressesSection(MYLOConstants.TEMP_ADDRESS_CITY),
+						data.get(0).get(MYLOConstants.TEMP_ADDRESS_CITY));
+				Assert.assertEquals(getFieldValueOtherAddressesSection(MYLOConstants.TEMP_ADDRESS_ZIPCODE),
+						data.get(0).get(MYLOConstants.TEMP_ADDRESS_ZIPCODE));
+				Assert.assertEquals(getFieldValueOtherAddressesSection(MYLOConstants.TEMP_ADDRESS_FROMDATE),
+						data.get(0).get(MYLOConstants.TEMP_ADDRESS_FROMDATE));
+				Assert.assertEquals(getFieldValueOtherAddressesSection(MYLOConstants.TEMP_ADDRESS_ADDRESS1),
+						data.get(0).get(MYLOConstants.TEMP_ADDRESS_ADDRESS1));
+				Assert.assertEquals(getFieldValueOtherAddressesSection(MYLOConstants.TEMP_ADDRESS_ADDRESS2),
+						data.get(0).get(MYLOConstants.TEMP_ADDRESS_ADDRESS2));
+			}
+			return true;
+		} catch (Exception e) {
 			return false;
 		}
-		return true;
+	}
+	
+	
+	/**
+	 * @param sectionType
+	 * @param table
+	 * Verify toast message for Special Characters
+	 */
+	public void verifySpecialCharactersToastMessage(String sectionType, DataTable table) {
+		setOtherAddressMandatoryFields(sectionType, MYLOConstants.USA_STATE, MYLOConstants.RANDOM,
+				MYLOConstants.CITY_VALUE);
+		java.util.List<Map<String, String>> data = table.asMaps(String.class, String.class);
+		for (int i = 0; i < data.size(); i++) {
+			String fieldName=data.get(i).get(MYLOConstants.FIELD_NAME);
+			setFieldValueOnOtherAddressesSection(fieldName,
+					MYLOConstants.SPECIAL_CHARACTERS_STRING);
+			clickElementOnOtherAddressesSection(MYLOConstants.SAVE_BUTTON);
+			if (sectionType.equals(MYLOConstants.MAILING_ADDRESS))
+				Assert.assertTrue(verifyAlertMessage(data.get(i).get(MYLOConstants.MESSAGE) + MYLOConstants.SPACE
+						+ MYLOConstants.MAILING_ADDRESS.toLowerCase() + MYLOConstants.DOT));
+			else
+				Assert.assertTrue(verifyAlertMessage(data.get(i).get(MYLOConstants.MESSAGE) + MYLOConstants.SPACE
+						+ MYLOConstants.TEMPORARY_ADDRESS.toLowerCase() + MYLOConstants.DOT));
+			clickElementOnOtherAddressesSection(MYLOConstants.CLOSE_BUTTON);
+			mapOtherAddresssValidFieldValue();
+			setFieldValueOnOtherAddressesSection(fieldName, otherAdressvalidFieldValueMap.get(fieldName));
+		}
+	}
+	
+	/**
+	 * @param sectionType
+	 * @param table
+	 * Enter special characters in different fields on Other Address section
+	 */
+	public void setSpecialCharacters(String sectionType,DataTable table) {
+		if(sectionType.equals(MYLOConstants.TEMPORARY_ADDRESS)) {
+			clickElementOnOtherAddressesSection(MYLOConstants.CANCEL_BUTTON);
+			clickElementOnOtherAddressesSection(MYLOConstants.TEMPORARY_ADDRESS);
+		}
+		verifySpecialCharactersToastMessage(sectionType, table);
+	}
+	
+	/**
+	 * @param sectionType
+	 * @param table
+	 * Verify values updated or not on Other Address section
+	 */
+	public void verifyOtherAddressUpdatedFieldValues(String sectionType,DataTable table) {
+		java.util.List<Map<String, String>> data = table.asMaps(String.class, String.class);
+		for (int i = 0; i < data.size(); i++) {
+			String fieldName = data.get(i).get(MYLOConstants.FIELD_NAME);
+			Assert.assertTrue(verifyUpdatedFieldValueOtherAddress(fieldName));
+		}	
+	}
+	
+	/**
+	 * Map FieldName with Values
+	 */
+	public void mapOtherAddresssValidFieldValue() {
+		otherAdressvalidFieldValueMap.put(MYLOConstants.CITY, MYLOConstants.CITY_VALUE);
+		otherAdressvalidFieldValueMap.put(MYLOConstants.ZIPCODE, MYLOConstants.ZIPCODE_VALUE);
+		otherAdressvalidFieldValueMap.put(MYLOConstants.COMMENTS, MYLOConstants.COMMENTS_VALUE);
+		otherAdressvalidFieldValueMap.put(MYLOConstants.ADDRESS1, MYLOConstants.ADDRESS1_VALUE);
+		otherAdressvalidFieldValueMap.put(MYLOConstants.ADDRESS2, MYLOConstants.ADDRESS2_VALUE);
+		otherAdressvalidFieldValueMap.put(MYLOConstants.STATE_TEXT_FIELD, MYLOConstants.STATE_VALUE);
+		otherAdressvalidFieldValueMap.put(MYLOConstants.FROMDATE, MYLOConstants.CURRENT);
+		
 	}
 }

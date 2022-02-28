@@ -85,6 +85,7 @@ public class MYLOConstants {
 	public static final String HOMESTATUS="Homestatus";
 	public static final String HOMESTATUS_VALUE="Rent";
 	public static final String ENTER_CORRECT_FIELD_NAME="Please enter correct field name";
+	public static final String ENTER_CORRECT_COUNTRY_NAME="Please enter correct country name";
 	public static final String ENTER_CORRECT_SCENARIO_TYPE="Please enter correct scenario type";
 	public static final String ENTER_CORRECT_ELEMENT_NAME="Please enter correct element name";
 	public static final String ENTER_CORRECT_BUTTON_NAME="Please enter correct button name";
@@ -102,11 +103,20 @@ public class MYLOConstants {
 	public static final String DOMESTIC_POLICY = "Domestic Policy";
 	public static final String ACTIVE_ASSIGNMENT = "Active Assignment";
 	public static final String RANDOM_VALUE_UPDATED_ON_SECTION = "{0}Random value ''{1}'' is updated for :- ''{2}'' in ''{3}'' section on ''{4}'' page";
-	public static final String VERIFIED_COUNTRY_PRESENT = "{0}Verified ''{1}'' country is present as the first country in ''{2}'' under ''{4}'' section";
-	public static final String VERIFIED_STATE_FREE_TEXT_FIELD = "{0}Verified that Free Text Field ia appearing as State field ''{1}'' section";
-	public static final String VERIFIED_STATES_APPEARING= "{0}Verified States appearing in the dropdown belongs to ''{1}'' country selected in ''{2}'' under ''{3}'' section";
-	public static final String VERIFIED_COUNTRIES_PRESENT = "{0}Verified countries present in ''{1}'' dropdown are in ascending order under ''{2}'' section";
-	public static final String VERIFIED_FIELD_LABEL_UPDATED = "{0}Verified that ''{1}'' field label is updated to  ''21}'' under ''{3}'' section";
+	public static final String VERIFIED_COUNTRY_PRESENT = "{0}Verified ''{1}'' country is present as the first country in ''{2}'' under ''{3}'' section";
+	public static final String VERIFIED_STATE_FREE_TEXT_FIELD = "{0}Verified that State field is appearing as Free Text Field on  ''{1}'' section";
+	public static final String VERIFIED_ALERT_MESSAGE_DISPLAYED = "{0}Verified Alert message is displayed as ''{1}''  on  ''{2}'' section";
+	public static final String VERIFIED_FIELD_HIGHLIGHTED = "{0}Verified ''{1}'' field is highlighted with Red background on  ''{2}'' section";
+	public static final String VERIFIED_FIELD_NOT_HIGHLIGHTED = "{0}Verified ''{1}'' field is not highlighted with Red background on  ''{2}'' section";
+	public static final String EXPECTED_MESSAGE_DISPLAYED = "{0}Expected message to be displayed as:  ''{1}''  but found:  ''{2}'' on ''{3}'' section";
+	public static final String VERIFIED_VALUE_SUCCESSFULLY_SAVED = "{0}Verified Value  ''{1}'' is successfully saved for ''{2}'' field on  ''{3}'' section";
+	public static final String FAILED_TO_VERIFY_UPDATED_VALUE = "{0}Failed to Verify Update Value for ''{1}'' field on  ''{2}'' section";
+	public static final String VERIFIED_STATES_APPEARING= "{0}Verified States appearing in the dropdown belongs to ''{1}'' country under ''{2}'' section";
+	public static final String VERIFIED_COUNTRIES_PRESENT = "{0}Verified countries present in ''{1}'' section are in ascending order under ''{2}'' section";
+	public static final String VERIFIED_DROPDOWN_VALUE_APPEARING = "{0}Verified DropDown value ''{1}'' is appearing under ''{2}'' dropdown on ''{3}'' section";
+	public static final String VERIFIED_FIELD_LABEL_UPDATED = "{0}Verified that ''{1}'' field label is updated to  ''{2}'' under ''{3}'' section";
+	public static final String VERIFIED_DATA_AVAILABLE = "{0}Verified that data available under ''{1}'' on ''{2}'' section";
+	public static final String VERIFIED_DATA_NOT_AVAILABLE = "{0}Verified that data not available under ''{1}'' on ''{2}'' section";
 	public static final String VALUE_UPDATED_ON_SECTION = "{0} Value: ''{1}'' is updated for :- ''{2}'' in ''{3}'' section on ''{4}'' page";
 	public static final String FIELD_NAME_VALUE_DISPLAYED = "{0} FieldName- ''{1}'' value is displayed as :- ''{2}'' in ''{3}'' section on ''{4}'' page";
 	public static final String FIELD_VALUE_CSSPROPERTY_DISPLAYED = "{0} FieldName- ''{1}'' property:-''{2}'' code is displayed as :- ''{3}'' in ''{4}'' section on ''{5}'' page";
@@ -131,7 +141,7 @@ public class MYLOConstants {
 	public static final String TEMP_ADDRESS_ADDRESS1 = "Temporary address address1";
 	public static final String TEMP_ADDRESS_ADDRESS2 = "Temporary address address2";
 	public static final String TEMP_ADDRESS_FROMDATE = "Temporary address FromDate";
-	public static final String MAIl_ADDRESS_COUNTRY = "Mailing address Country";
+	public static final String MAIL_ADDRESS_COUNTRY = "Mailing address Country";
 	public static final String MAIl_ADDRESS_TYPE = "Mailing address Type";
 	public static final String MAIL_ADDRESS_CITY = "Mailing address City";
 	public static final String MAIL_ADDRESS_ZIPCODE = "Mailing address ZipCode";
@@ -145,6 +155,7 @@ public class MYLOConstants {
 	public static final String USA_STATE = "USA";
 	public static final String CANADA_STATE = "CANADA";
 	public static final String INDIA_STATE = "INDIA";
+	public static final String SELECT_ONE="Select One";
 	public static final String DELETE_SUCCESS_MESSAGE = "The address has been deleted successfully!";
 	public static final String COUNTRY_DROPDOWN_NOT_IN_ASCENDING_ORDER = "Countries appearing in Country Dropdown are not in ascending order";
 	public static final String STATES_APPEARING_DOESNOT_BELONG = "States appearing in the dropdown doesn't belong to the country";
@@ -153,6 +164,37 @@ public class MYLOConstants {
 	public static final String ONLY_CHARACTERS = "Only Characters";
 	public static final String QUERY_FILE = "Query File";
 	public static final String CLOSE_BUTTON = "Close";
+	public static final CharSequence ERROR_BORDER = "error_border";
+	public static final String ZIPCODE = "Zip Code";
+	public static final String ADDRESS1 = "address1";
+	public static final String ADDRESS2 = "address2";
+	public static final String ADD_MAILING_ADDRESS = "Add Mailing Address";
+	public static final String ADD_TEMPORARY_ADDRESS = "Add Temporary Address";
+	public static final Object ALERT_MESSAGE = "Alert Message";
+	public static final String FROMDATE = "FromDate";
+	public static final String COMMENTS = "Comments";
+	public static final String CITY_VALUE = "Warsaw";
+	public static final String FIELD_NAME = "Field Name";
+	public static final String FIELD_VALUE = "Field Value";
+	public static final String MESSAGE = "Message";
+	public static final String VALID_TEXT = "Valid Text";
+	public static final String STATE_TEXT_FIELD = "State Text Field";
+	public static final String MAILING="Mailing";
+	public static final String TEMPORARY="Temporary";
+	public static final String CITY_ALASKA="Alaska";
+	public static final String OTHER_ADDDRESS_SAVED_MESSAGE = "Your changes have been successfully saved.";
+	public static final String DOT = ".";
+	public static final String SPACE = " ";
+	public static final String ZIPCODE_VALUE = "65355";
+	public static final String COMMENTS_VALUE = "Test Automation Comments";
+	public static final String ADDRESS1_VALUE = "362 Ridgewood Dr";
+	public static final String ADDRESS2_VALUE = "PO BOX 1";
+	public static final String STATE_VALUE = "Hawaii";
+	public static final String CURRENT = "current";
+	public static final String RED_COLOR_HEXCODE="#f37474";
+	public static final String BORDER_COLOR="border-color";
+	
+	
 	public static long TIME_BEFORE_ACTION;
 	public static long TIME_AFTER_ACTION;
 }

@@ -86,7 +86,6 @@ public class BusinessFunctions {
 			Log.info(CoreConstants.ACTUAL_ITEM_NAME_IS + row.getText());
 			if (row.getText().equals(itemName)) {
 				CoreFunctions.clickUsingJS(driver, row, itemName);
-				Reporter.addStepLog(CoreConstants.PASS + itemName + PDTConstants.IS_CLICKED);
 				break;
 			}
 		}

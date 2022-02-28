@@ -1669,7 +1669,7 @@ public class CoreFunctions {
 		return false;	
 	}	
 		
-	public static String getStringDateInFormat(String value,String givenFormat,String expectedFormat) throws ParseException {	
+	public static String getStringDateInFormat(String value,String givenFormat,String expectedFormat) {
 		String dateValue = null;	
 		SimpleDateFormat formatter=new SimpleDateFormat(givenFormat);	
 		SimpleDateFormat sdf = new SimpleDateFormat(expectedFormat);	

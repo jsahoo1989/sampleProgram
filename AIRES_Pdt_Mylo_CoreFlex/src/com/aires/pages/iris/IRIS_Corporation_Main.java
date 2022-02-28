@@ -176,10 +176,9 @@ public class IRIS_Corporation_Main extends BasePage {
 	public void selectCorporationModules(String moduleName) throws Exception {
 		_IRIS = getIRISWindow();
 		_IRIS.maximize();
-		Thread.sleep(2000);
 		jTabbedPaneTabControl = _IRIS.describe(TabControl.class,
 				new TabControlDescription.Builder().nativeClass("javax.swing.JTabbedPane").index(0).build());
-		System.out.println(moduleName);
+		jTabbedPaneTabControl.waitUntilEnabled();
 		jTabbedPaneTabControl.select(moduleName);
 		Thread.sleep(1000);
 		switchToCorporationModule(moduleName);

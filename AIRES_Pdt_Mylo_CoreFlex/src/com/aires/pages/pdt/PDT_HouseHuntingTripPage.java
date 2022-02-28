@@ -12,7 +12,6 @@ import org.testng.Assert;
 import com.aires.businessrules.Base;
 import com.aires.businessrules.BusinessFunctions;
 import com.aires.businessrules.CoreFunctions;
-import com.aires.businessrules.DbFunctions;
 import com.aires.businessrules.constants.CoreConstants;
 import com.aires.businessrules.constants.PDTConstants;
 import com.aires.managers.FileReaderManager;
@@ -168,10 +167,10 @@ public class PDT_HouseHuntingTripPage extends Base {
 	@FindBy(how = How.XPATH, using = "//label[text()='Transportation Other']")
 	private WebElement _lblTransportationOther;
 
-	@FindBy(how = How.XPATH, using = "//label[text()='Min. Mileage for Economy Air Travel (if applicable)']")
+	@FindBy(how = How.XPATH, using = "//label[text()='Min. Mileage for Economy Air Travel ']")
 	private WebElement _lblMinMileageForEconomyAirTravel;
 
-	@FindBy(how = How.XPATH, using = "//label[text()='Min. Mileage for Business Air Travel (if applicable)']")
+	@FindBy(how = How.XPATH, using = "//label[text()='Min. Mileage for Business Air Travel ']")
 	private WebElement _lblMinMileageForBusinessAirTravel;
 
 	@FindBy(how = How.XPATH, using = "//label[text()='Accompanying Family Members']")
@@ -257,7 +256,7 @@ public class PDT_HouseHuntingTripPage extends Base {
 	}
 
 
-	public void selectRandomTransportTypeOption(PDT_AddNewPolicyPage addNewPolicyPage) {
+	public void selectRandomTransportTypeOption(PDT_AddNewPolicyPage addNewPolicyPage, String subBenefitFormName) {
 		try {
 			CoreFunctions.clickElement(driver, _drpDownTransportationType);
 			String randTransportTypeOption = CoreFunctions.getRandomAndUniqueMultipleSelectDropDownOptions(_drpDownTransportationTypeOptions);			
@@ -275,8 +274,7 @@ public class PDT_HouseHuntingTripPage extends Base {
 			}
 			setTransportType(randTransportTypeOption);
 		} catch (Exception e) {
-			DbFunctions.deletePolicyByPolicyId(addNewPolicyPage.getPolicyId());
-			Assert.fail("Failed to select multiple options from Transportation type drop down.");
+			Assert.fail(MessageFormat.format(PDTConstants.FAILED_TO_SELECT_MULTIPLE_OPTIONS, CoreConstants.FAIL, _lblTransportationType.getText(), subBenefitFormName));			
 		}
 	}
 
@@ -287,7 +285,7 @@ public class PDT_HouseHuntingTripPage extends Base {
 			CoreFunctions.clearAndSetText(driver, _txtBoxNumOfTrips, _lblNoOfTrips.getText(),
 					houseHuntingTripBenefitData.houseHuntingTripTransportation.numberOfTrips);
 
-			selectRandomTransportTypeOption(addNewPolicyPage);
+			selectRandomTransportTypeOption(addNewPolicyPage, subBenefitFormName);
 			CoreFunctions.clickElement(driver, _txtBoxMinMileageEconomy);
 			CoreFunctions.clearAndSetText(driver, _txtBoxMinMileageEconomy, _lblMinMileageForEconomyAirTravel.getText(),
 					houseHuntingTripBenefitData.houseHuntingTripTransportation.minMileageEconomyAir);
@@ -318,8 +316,7 @@ public class PDT_HouseHuntingTripPage extends Base {
 			CoreFunctions.clearAndSetText(driver, _txtAreaHouseHuntingTripTransportComment, PDTConstants.COMMENT,
 					houseHuntingTripBenefitData.houseHuntingTripTransportation.comment);
 		} catch (Exception e) {			
-			DbFunctions.deletePolicyByPolicyId(addNewPolicyPage.getPolicyId());
-			Assert.fail("Failed to fill House Hunting Trip Transportation form");
+			Assert.fail(MessageFormat.format(PDTConstants.EXCEPTION_OCCURED_FILL_SUBBENEFIT_FORM, CoreConstants.FAIL, subBenefitFormName));
 		}
 	}
 
@@ -342,8 +339,7 @@ public class PDT_HouseHuntingTripPage extends Base {
 						PDTConstants.DROP_DOWN, true);
 			}
 		} catch (Exception e) {
-			DbFunctions.deletePolicyByPolicyId(addNewPolicyPage.getPolicyId());
-			Assert.fail("Failed to fill value in Flat Amount Per Night and currency drop down field.");
+			Assert.fail(PDTConstants.FAILED_TO_FILL_FIELD_VALUES);
 		}
 	}
 
@@ -378,8 +374,7 @@ public class PDT_HouseHuntingTripPage extends Base {
 			CoreFunctions.clearAndSetText(driver, _txtAreaHouseHuntingTripLodgingComment, PDTConstants.COMMENT,
 					houseHuntingTripBenefitData.houseHuntingTripLodging.comment);
 		} catch (Exception e) {			
-			DbFunctions.deletePolicyByPolicyId(addNewPolicyPage.getPolicyId());
-			Assert.fail("Failed to fill House Hunting Trip Lodging form");
+			Assert.fail(MessageFormat.format(PDTConstants.EXCEPTION_OCCURED_FILL_SUBBENEFIT_FORM, CoreConstants.FAIL, subBenefitFormName));
 		}
 
 	}
@@ -411,8 +406,7 @@ public class PDT_HouseHuntingTripPage extends Base {
 						PDTConstants.CURRENCY, PDTConstants.DROP_DOWN, true);
 			}
 		} catch (Exception e) {
-			DbFunctions.deletePolicyByPolicyId(addNewPolicyPage.getPolicyId());
-			Assert.fail("Failed to fill Transferee Info on  House Hunting Trip Meals form.");
+			Assert.fail(MessageFormat.format(PDTConstants.EXCEPTION_OCCURED_FILL_SUBBENEFIT_FORM, CoreConstants.FAIL, subBenefitFormName));
 		}
 	}
 
@@ -435,8 +429,7 @@ public class PDT_HouseHuntingTripPage extends Base {
 						PDTConstants.DROP_DOWN, true);
 			}
 		} catch (Exception e) {
-			DbFunctions.deletePolicyByPolicyId(addNewPolicyPage.getPolicyId());
-			Assert.fail("Failed to fill Adult meal Info on  House Hunting Trip Meals form.");
+			Assert.fail(MessageFormat.format(PDTConstants.EXCEPTION_OCCURED_FILL_SUBBENEFIT_FORM, CoreConstants.FAIL, subBenefitFormName));
 		}
 	}
 
@@ -459,8 +452,7 @@ public class PDT_HouseHuntingTripPage extends Base {
 						PDTConstants.DROP_DOWN, true);
 			}
 		} catch (Exception e) {
-			DbFunctions.deletePolicyByPolicyId(addNewPolicyPage.getPolicyId());
-			Assert.fail("Failed to fill Child Info on  House Hunting Trip Meals form.");
+			Assert.fail(MessageFormat.format(PDTConstants.EXCEPTION_OCCURED_FILL_SUBBENEFIT_FORM, CoreConstants.FAIL, subBenefitFormName));
 		}
 	}
 
@@ -499,8 +491,7 @@ public class PDT_HouseHuntingTripPage extends Base {
 					houseHuntingTripBenefitData.houseHuntingTripMeals.comment);
 
 		} catch (Exception e) {
-			DbFunctions.deletePolicyByPolicyId(addNewPolicyPage.getPolicyId());
-			Assert.fail("Failed to fill House Hunting Trip Meal form");
+			Assert.fail(MessageFormat.format(PDTConstants.EXCEPTION_OCCURED_FILL_SUBBENEFIT_FORM, CoreConstants.FAIL, subBenefitFormName));
 		}
 	}
 

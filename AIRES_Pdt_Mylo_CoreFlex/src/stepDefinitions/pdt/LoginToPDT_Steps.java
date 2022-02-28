@@ -72,10 +72,8 @@ public class LoginToPDT_Steps {
 
 	@Given("^he is logged into 'Aires Policy Tool' application as a \"([^\"]*)\" user$")
 	public void he_is_logged_into_Aires_Policy_Tool_application_as_a_user(String userType) throws Throwable {
-			
 		Assert.assertTrue(loginPage.loginByUserType(userType, viewPolicyPage),
 				MessageFormat.format(PDTConstants.FAILED_TO_VERIFY_LOGGED_IN_USER, CoreConstants.FAIL));
-		
 	}
 
 	@Given("^he enters \"([^\"]*)\" and \"([^\"]*)\" in username and password field$")

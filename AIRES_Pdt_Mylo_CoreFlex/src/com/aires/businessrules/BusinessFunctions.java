@@ -52,6 +52,7 @@ import org.testng.Assert;
 import com.aires.businessrules.constants.CoreConstants;
 import com.aires.businessrules.constants.PDTConstants;
 import com.aires.pages.pdt.PDT_AddNewPolicyPage;
+import com.aires.testdatatypes.pdt.PDT_LoginDetails;
 import com.aires.utilities.EmailUtil;
 import com.aires.utilities.Log;
 import com.aires.utilities.getWindowText;
@@ -618,7 +619,6 @@ public class BusinessFunctions {
 				CoreFunctions.clearAndSetText(driver, element, PDTConstants.REIMBURSED_BY_OTHER, jsonReimbursedByOther);
 			}
 		} catch (Exception e) {
-			DbFunctions.deletePolicyByPolicyId(addNewPolicyPage.getPolicyId());
 			Assert.fail(MessageFormat.format(PDTConstants.FAILED_TO_FILL_FIELD, PDTConstants.REIMBURSED_BY_OTHER,
 					SubBenefitFormName));
 		}
@@ -665,10 +665,122 @@ public class BusinessFunctions {
 			CoreFunctions.selectItemInListByText(driver, _drpDownElementOptions, randValue, _lblDropDown.getText(),
 					PDTConstants.DROP_DOWN, true);
 		} catch (Exception e) {
-			DbFunctions.deletePolicyByPolicyId(addNewPolicyPage.getPolicyId());
 			Assert.fail(MessageFormat.format(PDTConstants.FAIL_TO_SELECT_VALUE_FROM_FIELD, CoreConstants.FAIL,
 					randValue, _lblDropDown.getText(), PDTConstants.DROP_DOWN));
 		}
 		return randValue;
+	}
+	
+	public static String getClientIdFromJson(PDT_LoginDetails _loginDetailsApplication) {
+		String clientId = null;
+		switch(CoreFunctions.getPropertyFromConfig("envt").toLowerCase()) {
+		case CoreConstants.ENVT_DEV:
+			clientId = _loginDetailsApplication.dev.clientId;
+			break;
+		case CoreConstants.ENVT_QA:
+			clientId = _loginDetailsApplication.qa.clientId;
+			break;
+		case CoreConstants.ENVT_TEST:
+			clientId = _loginDetailsApplication.preProd.clientId;
+			break;
+		case CoreConstants.ENVT_UAT:
+			clientId = _loginDetailsApplication.uat.clientId;
+			break;
+		case CoreConstants.ENVT_PROD:
+			clientId = _loginDetailsApplication.prod.clientId;
+			break;
+		}
+		return clientId;
+	}
+	
+	public static String getClientNameFromJson(PDT_LoginDetails _loginDetailsApplication) {
+		String clientName = null;
+		switch(CoreFunctions.getPropertyFromConfig("envt").toLowerCase()) {
+		case CoreConstants.ENVT_DEV:
+			clientName = _loginDetailsApplication.dev.clientName;
+			break;
+		case CoreConstants.ENVT_QA:
+			clientName = _loginDetailsApplication.qa.clientName;
+			break;
+		case CoreConstants.ENVT_TEST:
+			clientName = _loginDetailsApplication.preProd.clientName;
+			break;
+		case CoreConstants.ENVT_UAT:
+			clientName = _loginDetailsApplication.uat.clientName;
+			break;
+		case CoreConstants.ENVT_PROD:
+			clientName = _loginDetailsApplication.prod.clientName;
+			break;
+		}
+		return clientName;
+	}
+	
+	public static String[] getCSMCredentials(PDT_LoginDetails _loginDetailsApplication) {
+		String csmCredentials[] = new String[2];
+		switch(CoreFunctions.getPropertyFromConfig("envt").toLowerCase()) {
+		case CoreConstants.ENVT_DEV:
+			csmCredentials[0] = _loginDetailsApplication.dev.csmUserName;
+			csmCredentials[1] = _loginDetailsApplication.dev.csmPassword;
+			break;
+		case CoreConstants.ENVT_QA:
+			csmCredentials[0] = _loginDetailsApplication.qa.csmUserName;
+			csmCredentials[1] = _loginDetailsApplication.qa.csmPassword;
+			break;
+		case CoreConstants.ENVT_TEST:
+			csmCredentials[0] = _loginDetailsApplication.preProd.csmUserName;
+			csmCredentials[1] = _loginDetailsApplication.preProd.csmPassword;
+			break;
+		case CoreConstants.ENVT_UAT:
+			csmCredentials[0] = _loginDetailsApplication.uat.csmUserName;
+			csmCredentials[1] = _loginDetailsApplication.uat.csmPassword;
+			break;
+		case CoreConstants.ENVT_PROD:
+			csmCredentials[0] = _loginDetailsApplication.prod.csmUserName;
+			csmCredentials[1] = _loginDetailsApplication.prod.csmPassword;
+			break;
+		}
+		return csmCredentials;
+	}
+	
+	public static String getPolicyNameFromJson(PDT_LoginDetails _loginDetailsApplication) {
+		String policyName = null;
+		switch(CoreFunctions.getPropertyFromConfig("envt").toLowerCase()) {
+		case CoreConstants.ENVT_DEV:
+			policyName = _loginDetailsApplication.dev.policy;			
+			break;
+		case CoreConstants.ENVT_QA:
+			policyName = _loginDetailsApplication.qa.policy;
+			break;
+		case CoreConstants.ENVT_TEST:
+			policyName = _loginDetailsApplication.preProd.policy;
+			break;
+		case CoreConstants.ENVT_UAT:
+			policyName = _loginDetailsApplication.uat.policy;
+			break;
+		case CoreConstants.ENVT_PROD:
+			policyName = _loginDetailsApplication.prod.policy;
+			break;
+		}
+		return policyName;
+	}
+	
+	public static void verifyAndFillOtherTextBoxForSubBenefitForm(WebDriver driver,
+			PDT_AddNewPolicyPage addNewPolicyPage, String subBenefitFormName, WebElement drpDown, String lblDrpDown,
+			WebElement otherTextBox, WebElement lblOtherTextBox, String otherTextBoxVal) {
+		try {
+			if (drpDown.getText().equalsIgnoreCase(PDTConstants.OTHER)
+					&& CoreFunctions.isElementExist(driver, otherTextBox, 1)) {
+				Reporter.addStepLog(MessageFormat.format(PDTConstants.VERIFIED_TEXT_BOX_FIELD_DISPLAYED_FOR_DRPDOWN,
+						CoreConstants.PASS, lblOtherTextBox.getText(), lblDrpDown, subBenefitFormName));
+				CoreFunctions.clearAndSetText(driver, otherTextBox, PDTConstants.OTHER, otherTextBoxVal);
+			} else if (drpDown.getText().equalsIgnoreCase(PDTConstants.OTHER)
+					&& !CoreFunctions.isElementExist(driver, otherTextBox, 1)) {				
+				Assert.fail(MessageFormat.format(PDTConstants.OTHER_TEXTBOX_NOT_DISPLAYED, CoreConstants.FAIL,
+						PDTConstants.OTHER, lblDrpDown, subBenefitFormName));
+			}
+		} catch (Exception e) {			
+			Assert.fail(MessageFormat.format(PDTConstants.EXCEPTION_OCCURED_VERIFY_OTHER_TEXT_BOX, CoreConstants.FAIL,
+					PDTConstants.OTHER, lblDrpDown, subBenefitFormName));
+		}
 	}
 }

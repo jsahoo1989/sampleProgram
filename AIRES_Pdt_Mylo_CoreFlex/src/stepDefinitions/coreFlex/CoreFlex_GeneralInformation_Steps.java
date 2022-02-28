@@ -6,6 +6,7 @@ import java.util.Map;
 
 import org.testng.Assert;
 
+import com.aires.businessrules.CoreFunctions;
 import com.aires.businessrules.constants.COREFLEXConstants;
 import com.aires.businessrules.constants.CoreConstants;
 import com.aires.businessrules.constants.PDTConstants;
@@ -72,7 +73,8 @@ public class CoreFlex_GeneralInformation_Steps {
 	public void he_has_searched_the_corporation_on_the_tab_after_login_to_the_IRIS_application(String clientID,
 			String tabName) throws Throwable {
 		testContext.getBasePage().invokeIrisApplication();
-		_loginDetails = FileReaderManager.getInstance().getJsonReader().getLoginByApplication("IRIS");
+		//_loginDetails = FileReaderManager.getInstance().getJsonReader().getLoginByApplication("IRIS");
+		_loginDetails = FileReaderManager.getInstance().getJsonReader().getLoginByApplication(CoreFunctions.getPropertyFromConfig("application").toLowerCase());
 		testContext.getIrisPageManager().irisLoginPage = new IRIS_LoginPage();
 		testContext.getIrisPageManager().irisLoginPage.getIRISLoginAsPerEnvt(_loginDetails);
 		testContext.getIrisPageManager().irisWelcome12C = new IRIS_Welcome12C();

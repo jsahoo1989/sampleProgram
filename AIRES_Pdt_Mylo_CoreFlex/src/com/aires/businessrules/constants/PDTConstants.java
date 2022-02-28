@@ -288,6 +288,7 @@ public class PDTConstants {
 	public static final String FAILED_TO_VERIFY_SUB_BENEFITS = "{0}Failed to verify sub-benefit categories on ''{1}'' page. Expected sub-benefit categories:-''{2}''. Actual sub-benefit categories displayed on page:-''{3}''";
 	//Immigration	
 	public static final String VERIFIED_TEXT_BOX_FIELD_DISPLAYED = "{0}Verified ''{1}'' text box is displayed for ''{2}'' sub benefit form.";
+	public static final String VERIFIED_TEXT_BOX_FIELD_DISPLAYED_FOR_DRPDOWN = "{0}Verified ''{1}'' text box is displayed for ''{2}'' in ''{3}'' sub benefit form.";
 	public static final String VERIFIED_DROP_DWN_FIELD_DISPLAYED = "{0}Verified ''{1}'' drop down is displayed for ''{2}'' sub benefit form.";	
 	public static final String POLICY_BENEFIT_CATEGORY = "Policy Benefit Category";
 	public static final String FAILED_TO_FILL_SUB_BENEFIT_FORM = "{0} Failed to fill ''{1}'' form";
@@ -326,9 +327,9 @@ public class PDTConstants {
 	public static final String TRANSFER_NUMTRIPS_NOT_DISPLAYED = "Transfer - Number of Trips textbox field is not displayed";
 	public static final String ASSIGNMENT_NUMTRIPS_NOT_DISPLAYED = "Assignment - Number of Trips textbox field is not displayed";
 	public static final String ASSIGNMENT_FREQTRIPS_NOT_DISPLAYED = "Assignment - Frequency of Trips drop down field is not displayed";
-	public static final String OTHER_TEXTBOX_NOT_DISPLAYED = "Other text box field is not displayed";
+	public static final String OTHER_TEXTBOX_NOT_DISPLAYED = "{0} ''{1}'' text box field is not displayed for ''{2}'' in ''{3}'' sub benefit form";
 	public static final String INVALID_TRACINGSET = "Option ''{0}'' is invalid Tracing set.";
-	public static final String FAILED_TO_VERIFY_OTHER_TEXT_BOX = "Failed to verify other textbox"; 
+	public static final String EXCEPTION_OCCURED_VERIFY_OTHER_TEXT_BOX = "{0} Exception occurred while verifying ''{1}'' textbox for ''{2}'' in ''{3}'' sub benefit form"; 
 	public static final String FAILED_TO_VERIFY_FLAT_AMT = "Failed to verify Flat amount option for Max Amount";
 	public static final String WEB_ELEMENT_NOT_FOUND_ON_PAGE = "{0}Web element ''{1}'' not found on page.";
 	//Temporary Living
@@ -338,5 +339,20 @@ public class PDTConstants {
 	public static final String VERIFIED_RADIO_BTN_DISPLAYED = "{0}Verified ''{1}'' radio button is displayed for ''{2}'' sub benefit form.";;
 	public static final String MISSING_SAVE_AND_SUBMIT_BTN = "Missing Save & Submit button.";
 	public static final String FAILED_TO_CLICK_ON_SAVE_AND_SUBMIT_BTN = "Failed to click on Save & Submit button.";
-	
+	public static final String POLICY_DOES_NOT_EXIST = "{0} Corporation Policy :- ''{1}'' does not exist in Policy drop down for ClientID:- ''{2}''.";
+	public static final String VERIFIED_POLICY_DISPLAYED = "{0}Verified Policy:-''{1}'' is displayed in Policy drop down";
+	public static final String VERIFIED_POLICY_NOT_DISPLAYED = "{0}Verified Policy:-''{1}'' is not displayed in Policy drop down";
+	//Destination Services
+	public static final String AIRPORT_PICKUP = "Airport Pickup";
+	public static final String AREA_TOUR = "Area Tour";
+	public static final String AUTO_RENTAL_DURING_ASSIGNMENT = "Auto Rental During Assignment";
+	public static final String CONCIERGE_SERVICES = "Concierge Services";
+	public static final String DEPARTURE_SERVICES = "Departure Services";
+	public static final String FURNITURE_RENTAL = "Furniture Rental";
+	public static final String REIMBURSEMENT_OF_MEMEBERSHIP_DUES = "Reimbursement of Membership Dues";
+	public static final String SCHOOL_SEARCH = "School Search";
+	public static final String SETTLING_IN_SERVICES = "Settling In Services";
+	public static final String TRANSITION_ASSISTANCE_PROGRAM = "Transition Assistance Program";
+	public static final String TUTION_AND_EDUCATION = "Tuition and Education";
+	public static final String EXCEPTION_OCCURED_FILL_SUBBENEFIT_FORM = "{0} Exception occurred while filling data for ''{1}'' sub-benefit form.";
 }

@@ -12,11 +12,9 @@ import org.testng.Assert;
 import com.aires.businessrules.Base;
 import com.aires.businessrules.BusinessFunctions;
 import com.aires.businessrules.CoreFunctions;
-import com.aires.businessrules.DbFunctions;
 import com.aires.businessrules.constants.CoreConstants;
 import com.aires.businessrules.constants.PDTConstants;
 import com.aires.managers.FileReaderManager;
-import com.aires.testdatatypes.pdt.PDT_HomeLeaveBenefit;
 import com.aires.testdatatypes.pdt.PDT_TemporaryLivingBenefit;
 import com.vimalselvam.cucumber.listener.Reporter;
 
@@ -231,7 +229,6 @@ public class PDT_TemporaryLivingPage extends Base {
 						tempLivingBenefitData.temporaryLivingLodging.flatAmount);
 			}
 		} catch (Exception e) {
-			DbFunctions.deletePolicyByPolicyId(addNewPolicyPage.getPolicyId());			
 			Assert.fail(MessageFormat.format(PDTConstants.FAILED_TO_FILL_INFO, CoreConstants.FAIL, PDTConstants.CURRENCY, subBenefitFormName));
 		}
 	}
@@ -246,7 +243,6 @@ public class PDT_TemporaryLivingPage extends Base {
 						PDTConstants.RADIO_BUTTON_LIST, true);
 			}
 		} catch (Exception e) {
-			DbFunctions.deletePolicyByPolicyId(addNewPolicyPage.getPolicyId());			
 			Assert.fail(MessageFormat.format(PDTConstants.FAILED_TO_FILL_INFO, CoreConstants.FAIL, PDTConstants.DETAIL, subBenefitFormName));
 		}
 	}
@@ -262,7 +258,6 @@ public class PDT_TemporaryLivingPage extends Base {
 						PDTConstants.CURRENCY, PDTConstants.DROP_DOWN, true);
 			}
 		} catch (Exception e) {
-			DbFunctions.deletePolicyByPolicyId(addNewPolicyPage.getPolicyId());			
 			Assert.fail(MessageFormat.format(PDTConstants.FAILED_TO_FILL_INFO, CoreConstants.FAIL, PDTConstants.FLAT_AMT, subBenefitFormName));
 		}
 	}
@@ -294,7 +289,6 @@ public class PDT_TemporaryLivingPage extends Base {
 						PDTConstants.CURRENCY, PDTConstants.DROP_DOWN, true);
 			}
 		} catch (Exception e) {
-			DbFunctions.deletePolicyByPolicyId(addNewPolicyPage.getPolicyId());			
 			Assert.fail(MessageFormat.format(PDTConstants.FAILED_TO_FILL_INFO, CoreConstants.FAIL, PDTConstants.TRANSFEREE_INFO, subBenefitFormName));
 		}
 	}
@@ -318,7 +312,6 @@ public class PDT_TemporaryLivingPage extends Base {
 						PDTConstants.DROP_DOWN, true);
 			}
 		} catch (Exception e) {
-			DbFunctions.deletePolicyByPolicyId(addNewPolicyPage.getPolicyId());
 			Assert.fail(MessageFormat.format(PDTConstants.FAILED_TO_FILL_INFO, CoreConstants.FAIL, PDTConstants.ADULT_INFO, subBenefitFormName));
 		}
 	}
@@ -342,7 +335,6 @@ public class PDT_TemporaryLivingPage extends Base {
 						PDTConstants.DROP_DOWN, true);
 			}
 		} catch (Exception e) {
-			DbFunctions.deletePolicyByPolicyId(addNewPolicyPage.getPolicyId());
 			Assert.fail(MessageFormat.format(PDTConstants.FAILED_TO_FILL_INFO, CoreConstants.FAIL, PDTConstants.CHILDREN_INFO, subBenefitFormName));
 		}
 	}
@@ -372,8 +364,7 @@ public class PDT_TemporaryLivingPage extends Base {
 			CoreFunctions.clearAndSetText(driver, _txtAreaTempLivingLodgingComment, PDTConstants.COMMENT,
 					tempLivingBenefitData.temporaryLivingLodging.comment);
 		} catch (Exception e) {
-			DbFunctions.deletePolicyByPolicyId(addNewPolicyPage.getPolicyId());
-			Assert.fail(MessageFormat.format(PDTConstants.FAILED_TO_FILL_SUB_BENEFIT_FORM, CoreConstants.FAIL, subBenefitFormName));
+			Assert.fail(MessageFormat.format(PDTConstants.EXCEPTION_OCCURED_FILL_SUBBENEFIT_FORM, CoreConstants.FAIL, subBenefitFormName));
 		}
 	}
 	
@@ -406,9 +397,7 @@ public class PDT_TemporaryLivingPage extends Base {
 			CoreFunctions.clearAndSetText(driver, _txtAreaTempLivingMealsComment, PDTConstants.COMMENT,
 					tempLivingBenefitData.temporaryLivingMeals.comment);
 		} catch (Exception e) {
-			DbFunctions.deletePolicyByPolicyId(addNewPolicyPage.getPolicyId());
-			Assert.fail(MessageFormat.format(PDTConstants.FAILED_TO_FILL_SUB_BENEFIT_FORM, CoreConstants.FAIL,
-					subBenefitFormName));
+			Assert.fail(MessageFormat.format(PDTConstants.EXCEPTION_OCCURED_FILL_SUBBENEFIT_FORM, CoreConstants.FAIL, subBenefitFormName));
 		}
 	}
 	
@@ -429,14 +418,13 @@ public class PDT_TemporaryLivingPage extends Base {
 								.toString()));
 			}
 			setTransportType(randTransportTypeOption);
-			if (_drpDownTransportationTypeMultiSelectOptions.contains("Other") && CoreFunctions.isElementExist(driver, _txtBoxTransportationTypeOther, 1)) {
+			if (_drpDownTransportationTypeMultiSelectOptions.contains(PDTConstants.OTHER) && CoreFunctions.isElementExist(driver, _txtBoxTransportationTypeOther, 1)) {
 				Reporter.addStepLog(MessageFormat.format(PDTConstants.VERIFIED_TEXT_BOX_FIELD_DISPLAYED,
 						CoreConstants.PASS, PDTConstants.OTHER, subBenefitFormName));
 				CoreFunctions.clearAndSetText(driver, _txtBoxTransportationTypeOther, PDTConstants.OTHER,
 						tempLivingBenefitData.temporaryLivingTransportation.transportationTypeOther);
 			}
 		} catch (Exception e) {
-			DbFunctions.deletePolicyByPolicyId(addNewPolicyPage.getPolicyId());
 			Assert.fail(MessageFormat.format(PDTConstants.FAILED_TO_SELECT_MULTIPLE_OPTIONS, CoreConstants.FAIL, _lblTransportationType.getText(), subBenefitFormName));
 		}
 	}
@@ -463,9 +451,7 @@ public class PDT_TemporaryLivingPage extends Base {
 			CoreFunctions.clearAndSetText(driver, _txtAreaTempLivingTransportationComment, PDTConstants.COMMENT,
 					tempLivingBenefitData.temporaryLivingTransportation.comment);
 		} catch (Exception e) {
-			DbFunctions.deletePolicyByPolicyId(addNewPolicyPage.getPolicyId());
-			Assert.fail(MessageFormat.format(PDTConstants.FAILED_TO_FILL_SUB_BENEFIT_FORM, CoreConstants.FAIL,
-					subBenefitFormName));
+			Assert.fail(MessageFormat.format(PDTConstants.EXCEPTION_OCCURED_FILL_SUBBENEFIT_FORM, CoreConstants.FAIL, subBenefitFormName));
 		}
 	}
 }

@@ -9,6 +9,7 @@ import org.testng.Assert;
 import com.aires.businessrules.CoreFunctions;
 import com.aires.businessrules.constants.CoreConstants;
 import com.aires.businessrules.constants.IRISConstants;
+import com.aires.businessrules.constants.PDTConstants;
 import com.aires.iris.helpers.Helpers;
 import com.aires.pages.iris.basepage.BasePage;
 import com.hp.lft.sdk.GeneralLeanFtException;
@@ -391,5 +392,42 @@ public class IRIS_Corporation_Accounting extends BasePage {
 					CoreConstants.FAIL, columnName, policyName, IRISConstants.ACCOUNTING));
 		}
 		return false;
+	}
+	
+	public void addPolicy() throws GeneralLeanFtException, Exception {
+		Helpers.clickButton(IRIS_PageMaster.getButtonObject(_IRIS, "Add", 0), IRIS_PageMaster.getButtonObject(_IRIS, "Add", 0).getAttachedText());
+		Table policyTable = IRIS_PageMaster.getTableObject(_IRIS,
+				"com.aires.iris.view.corporation.accounting.PolicyPanel$1");
+		String policyName = IRISConstants.AUTO_TEST_POLICY+CoreFunctions.generateRandomString(5);
+		policyTable.getCell(policyTable.getRows().size()-1, PDTConstants.POLICY).setValue(policyName);
+		policyTable.getCell(policyTable.getRows().size()-1, "Tax Assistance Policy").setValue("No w/h No GUP|None");
+		policyTable.getCell(policyTable.getRows().size()-1, "Tracing Set").setValue("Transfer");
+		Helpers.clickButton(IRIS_PageMaster.getButtonObject(_IRIS, "Save"), IRIS_PageMaster.getButtonObject(_IRIS, "Save").getAttachedText());
+		Reporter.addStepLog(MessageFormat.format(IRISConstants.VERIFIED_BUTTON_CLICKED, CoreConstants.PASS,
+				IRIS_PageMaster.getButtonObjectFromLabel(_IRIS, "Save").getLabel()));
+		acceptSaveConfirmation();
+		searchAndVerifyNewlyAddedPolicyNameInPolicyTable(policyTable, PDTConstants.POLICY, policyName);
+	}
+	
+	private void searchAndVerifyNewlyAddedPolicyNameInPolicyTable(Table table, String columnName, String policyName) throws GeneralLeanFtException {
+		try {
+			boolean policyFound = false;
+			for (int rowCount = 0; rowCount < table.getRows().size(); rowCount++) {
+				if (policyName.equals(table.getCell(rowCount, "Policy").getValue().toString())) {
+					Reporter.addStepLog(MessageFormat.format(IRISConstants.VERIFIED_NEWLY_ADDED_POLICY_NAME, CoreConstants.PASS,
+							policyName));
+					policyFound = true;
+					CoreFunctions.writeToPropertiesFile("pdtPolicyName", policyName);
+					break;
+				}
+			}
+			if(!policyFound) {
+				Assert.fail(MessageFormat.format(IRISConstants.FAILED_TO_FIND_POLICY, CoreConstants.FAIL, policyName));
+			}
+		} catch (Exception e) {
+			Reporter.addStepLog(MessageFormat.format(
+					IRISConstants.EXCEPTION_OCCURED_WHILE_SEARCHING_REQUIRED_POLICY_IN_POLICY_TABLE_OF_ACCOUNTING_TAB,
+					CoreConstants.FAIL, e.getMessage()));
+		}
 	}
 }

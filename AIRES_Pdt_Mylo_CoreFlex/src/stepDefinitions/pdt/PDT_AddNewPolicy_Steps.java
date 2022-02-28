@@ -28,4 +28,11 @@ public class PDT_AddNewPolicy_Steps {
 		List<Map<String, String>> clientPolicyInfo = clientPolicyData.asMaps(String.class, String.class);
 		addNewPolicyPage.enterClientPolicyDetails(clientPolicyInfo);
 	}
+	
+	@When("^he clicks on the 'Next' button after selecting client, policy information on the 'Add New Policy' page$")
+	@Given("^he has clicked on the 'Next' button after selecting client, policy information on the 'Add New Policy' page$")	
+	public void he_clicks_on_the_Next_button_after_selecting_below_information_on_the_Add_New_Policy_page() {
+		//List<Map<String, String>> clientPolicyInfo = clientPolicyData.asMaps(String.class, String.class);
+		addNewPolicyPage.enterClientPolicyDetails();
+	}
 }

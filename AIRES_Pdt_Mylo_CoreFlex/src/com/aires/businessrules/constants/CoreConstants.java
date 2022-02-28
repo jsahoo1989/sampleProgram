@@ -63,4 +63,13 @@ public class CoreConstants {
 	// Constants Used in EmailUtil
 	public static final String USER_NAME = "userName";
 	public static final String PASSWORD = "password";
+	public static final String APP_PDT = "pdt";
+	public static final String APP_COREFLEX = "coreflex";
+	public static final String INVALID_APPLICATION = "Invalid Application:-''{0}''";
+	public static final String ENVT_DEV = "dev";
+	public static final String ENVT_QA = "qa";
+	public static final String ENVT_UAT = "uat";
+	public static final String ENVT_TEST = "test";
+	public static final String ENVT_PROD = "prod";
+	public static final String INVALID_ENVIRONMENT = "Invalid Environment:-''{1}''";
 }

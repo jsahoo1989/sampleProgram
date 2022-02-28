@@ -12,7 +12,6 @@ import org.testng.Assert;
 import com.aires.businessrules.Base;
 import com.aires.businessrules.BusinessFunctions;
 import com.aires.businessrules.CoreFunctions;
-import com.aires.businessrules.DbFunctions;
 import com.aires.businessrules.constants.CoreConstants;
 import com.aires.businessrules.constants.PDTConstants;
 import com.aires.managers.FileReaderManager;
@@ -168,8 +167,7 @@ public class PDT_ImmigrationPage extends Base {
 
 			BusinessFunctions.verifyReimbursedByOtherTextBoxIsDisplayed(driver, addNewPolicyPage, immigrationBenefitData.immigrationFees.reimbursedBy, _txtBoxImmigrationFeesReimbursedByOther, immigrationBenefitData.immigrationFees.reimbursedByOther, subBenefitFormName);
 		} catch (Exception e) {
-			DbFunctions.deletePolicyByPolicyId(addNewPolicyPage.getPolicyId());			
-			Assert.fail("Failed to fill Immigration Fees form");
+			Assert.fail(MessageFormat.format(PDTConstants.EXCEPTION_OCCURED_FILL_SUBBENEFIT_FORM, CoreConstants.FAIL, subBenefitFormName));
 		}
 	}
 	
@@ -183,12 +181,11 @@ public class PDT_ImmigrationPage extends Base {
 						immigrationBenefitData.immigrationTravel.otherNumberOfTrips);
 			}
 		}catch(Exception e) {
-			DbFunctions.deletePolicyByPolicyId(addNewPolicyPage.getPolicyId());			
 			Assert.fail(MessageFormat.format(PDTConstants.FAILED_TO_FILL_FIELD, _lblOtherNoOfTrips.getText(), SubBenefitFormName));
 		}
 	}
 	
-	public void selectNoOfTrips(PDT_AddNewPolicyPage addNewPolicyPage, String SubBenefitFormName) {
+	public void selectNoOfTrips(PDT_AddNewPolicyPage addNewPolicyPage, String subBenefitFormName) {
 		try {
 			CoreFunctions.clickElement(driver, _drpDownNoOfTrips);
 			String randNumberOfTrips = _drpDownNoOfTripsOptions
@@ -207,10 +204,9 @@ public class PDT_ImmigrationPage extends Base {
 								.toString()));
 			}
 			setNumberOfTrips(randNumberOfTrips);
-			verifyOtherNumberOfTripsTextBoxIsDisplayed(addNewPolicyPage, SubBenefitFormName);
+			verifyOtherNumberOfTripsTextBoxIsDisplayed(addNewPolicyPage, subBenefitFormName);
 		} catch (Exception e) {
-			DbFunctions.deletePolicyByPolicyId(addNewPolicyPage.getPolicyId());			
-			Assert.fail("Failed to select Number of Trips");
+			Assert.fail(MessageFormat.format(PDTConstants.FAILED_TO_SELECT_MULTIPLE_OPTIONS, CoreConstants.FAIL, _lblNoOfTrips.getText(), subBenefitFormName));
 		}
 	}
 	
@@ -237,8 +233,7 @@ public class PDT_ImmigrationPage extends Base {
 			CoreFunctions.clearAndSetText(driver, _txtAreaImmigrationComment, PDTConstants.COMMENT,
 					immigrationBenefitData.immigrationTravel.comment);
 		} catch (Exception e) {
-			DbFunctions.deletePolicyByPolicyId(addNewPolicyPage.getPolicyId());			
-			Assert.fail("Failed to fill Immigration Travel form");
+			Assert.fail(MessageFormat.format(PDTConstants.EXCEPTION_OCCURED_FILL_SUBBENEFIT_FORM, CoreConstants.FAIL, subBenefitFormName));
 		}
 	}
 	

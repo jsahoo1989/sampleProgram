@@ -12,12 +12,10 @@ import org.testng.Assert;
 import com.aires.businessrules.Base;
 import com.aires.businessrules.BusinessFunctions;
 import com.aires.businessrules.CoreFunctions;
-import com.aires.businessrules.DbFunctions;
 import com.aires.businessrules.constants.CoreConstants;
 import com.aires.businessrules.constants.PDTConstants;
 import com.aires.managers.FileReaderManager;
 import com.aires.testdatatypes.pdt.PDT_HomeLeaveBenefit;
-import com.aires.utilities.Log;
 import com.vimalselvam.cucumber.listener.Reporter;
 
 public class PDT_HomeLeavePage extends Base {
@@ -252,7 +250,6 @@ public class PDT_HomeLeavePage extends Base {
 			}
 			setTransportType(randTransportTypeOption);
 		} catch (Exception e) {
-			DbFunctions.deletePolicyByPolicyId(addNewPolicyPage.getPolicyId());
 			Assert.fail(MessageFormat.format(PDTConstants.FAILED_TO_SELECT_MULTIPLE_OPTIONS, CoreConstants.FAIL,
 					_lblTransportationType.getText(), subBenefitFormName));
 		}
@@ -265,7 +262,6 @@ public class PDT_HomeLeavePage extends Base {
 			CoreFunctions.clearAndSetText(driver, _txtBoxTransferNumOfTrips, _lblTransferNumOfTrips.getText(),
 					homeLeaveBenefitData.homeLeaveTransportation.transferNumberOfTrips);
 		} else {
-			DbFunctions.deletePolicyByPolicyId(addNewPolicyPage.getPolicyId());
 			Assert.fail(PDTConstants.TRANSFER_NUMTRIPS_NOT_DISPLAYED);
 		}
 
@@ -278,7 +274,6 @@ public class PDT_HomeLeavePage extends Base {
 			CoreFunctions.clearAndSetText(driver, _txtBoxAssignmentTrip, _lblAssignmentNumOfTrips.getText(),
 					homeLeaveBenefitData.homeLeaveTransportation.assignmentNumberOfTrips);
 		} else {
-			DbFunctions.deletePolicyByPolicyId(addNewPolicyPage.getPolicyId());
 			Assert.fail(PDTConstants.ASSIGNMENT_NUMTRIPS_NOT_DISPLAYED);
 		}
 	}
@@ -293,7 +288,6 @@ public class PDT_HomeLeavePage extends Base {
 			setFrequencyOfTrips(randFrequencyOfTrips);
 			verifyAndFillOtherFreq(addNewPolicyPage, subBenefitFormName, randFrequencyOfTrips);
 		} else {
-			DbFunctions.deletePolicyByPolicyId(addNewPolicyPage.getPolicyId());
 			Assert.fail(PDTConstants.ASSIGNMENT_FREQTRIPS_NOT_DISPLAYED);
 		}
 	}
@@ -303,18 +297,16 @@ public class PDT_HomeLeavePage extends Base {
 		try {
 			if (_drpDownFrequencyOfTripOptionsSelected.getText().equalsIgnoreCase(PDTConstants.OTHER)
 					&& CoreFunctions.isElementExist(driver, _txtBoxFrequencyOfTripOther, 1)) {
-				Reporter.addStepLog(MessageFormat.format(PDTConstants.VERIFIED_TEXT_BOX_FIELD_DISPLAYED,
-						CoreConstants.PASS, PDTConstants.OTHER, subBenefitFormName));
+				Reporter.addStepLog(MessageFormat.format(PDTConstants.VERIFIED_TEXT_BOX_FIELD_DISPLAYED_FOR_DRPDOWN,
+						CoreConstants.PASS, PDTConstants.OTHER, _lblFrequencyOfTrips.getText(), subBenefitFormName));
 				CoreFunctions.clearAndSetText(driver, _txtBoxFrequencyOfTripOther, PDTConstants.OTHER,
 						homeLeaveBenefitData.homeLeaveTransportation.frequencyTripOther);
 			} else if (_drpDownFrequencyOfTripOptionsSelected.getText().equalsIgnoreCase(PDTConstants.OTHER)
 					&& !CoreFunctions.isElementExist(driver, _txtBoxFrequencyOfTripOther, 1)) {
-				DbFunctions.deletePolicyByPolicyId(addNewPolicyPage.getPolicyId());
-				Assert.fail(PDTConstants.OTHER_TEXTBOX_NOT_DISPLAYED);
+				Assert.fail(MessageFormat.format(PDTConstants.OTHER_TEXTBOX_NOT_DISPLAYED, CoreConstants.FAIL, PDTConstants.OTHER, _lblFrequencyOfTrips.getText(), subBenefitFormName));
 			}
 		} catch (Exception e) {
-			DbFunctions.deletePolicyByPolicyId(addNewPolicyPage.getPolicyId());
-			Assert.fail(PDTConstants.FAILED_TO_VERIFY_OTHER_TEXT_BOX);
+			Assert.fail(MessageFormat.format(PDTConstants.EXCEPTION_OCCURED_VERIFY_OTHER_TEXT_BOX, CoreConstants.FAIL, PDTConstants.OTHER, _lblFrequencyOfTrips.getText(), subBenefitFormName));
 		}
 	}
 
@@ -363,9 +355,7 @@ public class PDT_HomeLeavePage extends Base {
 			CoreFunctions.clearAndSetText(driver, _txtAreaHomeLeaveTransportComment, PDTConstants.COMMENT,
 					homeLeaveBenefitData.homeLeaveTransportation.comment);
 		} catch (Exception e) {
-			DbFunctions.deletePolicyByPolicyId(addNewPolicyPage.getPolicyId());
-			Assert.fail(MessageFormat.format(PDTConstants.FAILED_TO_FILL_SUB_BENEFIT_FORM, CoreConstants.FAIL,
-					subBenefitFormName));
+			Assert.fail(MessageFormat.format(PDTConstants.EXCEPTION_OCCURED_FILL_SUBBENEFIT_FORM, CoreConstants.FAIL, subBenefitFormName));
 		}
 	}
 
@@ -389,9 +379,7 @@ public class PDT_HomeLeavePage extends Base {
 			CoreFunctions.clearAndSetText(driver, _txtAreaHomeLeaveLodgingComment, PDTConstants.COMMENT,
 					homeLeaveBenefitData.homeLeaveLodging.comment);
 		} catch (Exception e) {
-			DbFunctions.deletePolicyByPolicyId(addNewPolicyPage.getPolicyId());
-			Assert.fail(MessageFormat.format(PDTConstants.FAILED_TO_FILL_SUB_BENEFIT_FORM, CoreConstants.FAIL,
-					subBenefitFormName));
+			Assert.fail(MessageFormat.format(PDTConstants.EXCEPTION_OCCURED_FILL_SUBBENEFIT_FORM, CoreConstants.FAIL, subBenefitFormName));
 		}
 	}
 
@@ -403,7 +391,6 @@ public class PDT_HomeLeavePage extends Base {
 				verifyAndFillChildMealInfo(addNewPolicyPage, subBenefitFormName);
 			}
 		} catch (Exception e) {
-			DbFunctions.deletePolicyByPolicyId(addNewPolicyPage.getPolicyId());
 			Assert.fail(PDTConstants.FAILED_TO_VERIFY_FLAT_AMT);
 		}
 	}
@@ -427,7 +414,6 @@ public class PDT_HomeLeavePage extends Base {
 						PDTConstants.DROP_DOWN, true);
 			}
 		} catch (Exception e) {
-			DbFunctions.deletePolicyByPolicyId(addNewPolicyPage.getPolicyId());
 			Assert.fail(MessageFormat.format(PDTConstants.FAILED_TO_FILL_INFO, CoreConstants.FAIL,
 					PDTConstants.TRANSFEREE_INFO, subBenefitFormName));
 		}
@@ -452,7 +438,6 @@ public class PDT_HomeLeavePage extends Base {
 						PDTConstants.DROP_DOWN, true);
 			}
 		} catch (Exception e) {
-			DbFunctions.deletePolicyByPolicyId(addNewPolicyPage.getPolicyId());
 			Assert.fail(MessageFormat.format(PDTConstants.FAILED_TO_FILL_INFO, CoreConstants.FAIL,
 					PDTConstants.ADULT_INFO, subBenefitFormName));
 		}
@@ -477,7 +462,6 @@ public class PDT_HomeLeavePage extends Base {
 						PDTConstants.DROP_DOWN, true);
 			}
 		} catch (Exception e) {
-			DbFunctions.deletePolicyByPolicyId(addNewPolicyPage.getPolicyId());
 			Assert.fail(MessageFormat.format(PDTConstants.FAILED_TO_FILL_INFO, CoreConstants.FAIL,
 					PDTConstants.CHILDREN_INFO, subBenefitFormName));
 		}
@@ -514,9 +498,7 @@ public class PDT_HomeLeavePage extends Base {
 					homeLeaveBenefitData.homeLeaveMeals.comment);
 
 		} catch (Exception e) {
-			DbFunctions.deletePolicyByPolicyId(addNewPolicyPage.getPolicyId());
-			Assert.fail(MessageFormat.format(PDTConstants.FAILED_TO_FILL_SUB_BENEFIT_FORM, CoreConstants.FAIL,
-					subBenefitFormName));
+			Assert.fail(MessageFormat.format(PDTConstants.EXCEPTION_OCCURED_FILL_SUBBENEFIT_FORM, CoreConstants.FAIL, subBenefitFormName));
 		}
 	}
 

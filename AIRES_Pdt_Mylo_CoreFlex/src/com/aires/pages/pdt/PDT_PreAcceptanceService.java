@@ -1,11 +1,7 @@
 package com.aires.pages.pdt;
 
 import java.text.MessageFormat;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
@@ -17,12 +13,10 @@ import org.testng.Assert;
 import com.aires.businessrules.Base;
 import com.aires.businessrules.BusinessFunctions;
 import com.aires.businessrules.CoreFunctions;
-import com.aires.businessrules.DbFunctions;
 import com.aires.businessrules.constants.CoreConstants;
 import com.aires.businessrules.constants.PDTConstants;
 import com.aires.managers.FileReaderManager;
 import com.aires.testdatatypes.pdt.PDT_PreAcceptanceServiceBenefit;
-import com.aires.utilities.Log;
 import com.vimalselvam.cucumber.listener.Reporter;
 
 import cucumber.api.DataTable;
@@ -194,10 +188,10 @@ public class PDT_PreAcceptanceService extends Base {
 	@FindBy(how = How.XPATH, using = "//label[text()='Transportation Other']")
 	private WebElement _lblTransportationOther;
 
-	@FindBy(how = How.XPATH, using = "//label[text()='Min. Mileage for Economy Air Travel (if applicable)']")
+	@FindBy(how = How.XPATH, using = "//label[text()='Min. Mileage for Economy Air Travel ']")
 	private WebElement _lblMinMileageForEconomyAirTravel;
 
-	@FindBy(how = How.XPATH, using = "//label[text()='Min. Mileage for Business Air Travel (if applicable)']")
+	@FindBy(how = How.XPATH, using = "//label[text()='Min. Mileage for Business Air Travel ']")
 	private WebElement _lblMinMileageForBusinessAirTravel;
 
 	@FindBy(how = How.XPATH, using = "//label[text()='Accompanying Family Member']")
@@ -427,12 +421,11 @@ public class PDT_PreAcceptanceService extends Base {
 			CoreFunctions.clearAndSetText(driver, _txtAreaCandidateSelComment, PDTConstants.COMMENT,
 					preAcceptanceSubBenefitData.candidateSelection.comment);
 		} catch (Exception e) {
-			DbFunctions.deletePolicyByPolicyId(addNewPolicyPage.getPolicyId());
-			Assert.fail("Failed to fill Candidate Selection form");
+			Assert.fail(MessageFormat.format(PDTConstants.EXCEPTION_OCCURED_FILL_SUBBENEFIT_FORM, CoreConstants.FAIL, subBenefitFormName));
 		}
 	}
 
-	public void selectRandomTransportTypeOption(PDT_AddNewPolicyPage addNewPolicyPage) {
+	public void selectRandomTransportTypeOption(PDT_AddNewPolicyPage addNewPolicyPage, String subBenefitFormName) {
 		try {
 			CoreFunctions.clickElement(driver, _drpDownTransportationType);
 			String randTransportTypeOption = CoreFunctions.getRandomAndUniqueMultipleSelectDropDownOptions(_drpDownTransportationTypeOptions);
@@ -457,8 +450,7 @@ public class PDT_PreAcceptanceService extends Base {
 						preAcceptanceSubBenefitData.preAcceptanceTripTransportation.transportationTypeOther);
 			}
 		} catch (Exception e) {
-			DbFunctions.deletePolicyByPolicyId(addNewPolicyPage.getPolicyId());
-			Assert.fail("Failed to select multiple options from Transportation type drop down.");
+			Assert.fail(MessageFormat.format(PDTConstants.FAILED_TO_SELECT_MULTIPLE_OPTIONS, CoreConstants.FAIL, _lblTransportationType.getText(), subBenefitFormName));
 		}
 	}
 
@@ -468,7 +460,7 @@ public class PDT_PreAcceptanceService extends Base {
 			CoreFunctions.clearAndSetText(driver, _txtBoxNumOfTrips, _lblNoOfTrips.getText(),
 					preAcceptanceSubBenefitData.preAcceptanceTripTransportation.numberOfTrips);
 
-			selectRandomTransportTypeOption(addNewPolicyPage);
+			selectRandomTransportTypeOption(addNewPolicyPage, subBenefitFormName);
 			CoreFunctions.clickElement(driver, _txtBoxMinMileageEconomy);
 			CoreFunctions.clearAndSetText(driver, _txtBoxMinMileageEconomy, _lblMinMileageForEconomyAirTravel.getText(),
 					preAcceptanceSubBenefitData.preAcceptanceTripTransportation.minMileageEconomyAir);
@@ -500,8 +492,7 @@ public class PDT_PreAcceptanceService extends Base {
 			CoreFunctions.clearAndSetText(driver, _txtAreaPreTripTransportComment, PDTConstants.COMMENT,
 					preAcceptanceSubBenefitData.preAcceptanceTripTransportation.comment);
 		} catch (Exception e) {
-			DbFunctions.deletePolicyByPolicyId(addNewPolicyPage.getPolicyId());
-			Assert.fail("Failed to fill Pre Acceptance Trip Transportation form");
+			Assert.fail(MessageFormat.format(PDTConstants.EXCEPTION_OCCURED_FILL_SUBBENEFIT_FORM, CoreConstants.FAIL, subBenefitFormName));
 		}
 	}
 
@@ -523,8 +514,7 @@ public class PDT_PreAcceptanceService extends Base {
 						PDTConstants.DROP_DOWN, true);
 			}
 		} catch (Exception e) {
-			DbFunctions.deletePolicyByPolicyId(addNewPolicyPage.getPolicyId());
-			Assert.fail("Failed to fill value in Flat Amount Per Night and currency drop down field.");
+			Assert.fail(PDTConstants.FAILED_TO_FILL_FIELD_VALUES);
 		}
 	}
 
@@ -558,8 +548,7 @@ public class PDT_PreAcceptanceService extends Base {
 			CoreFunctions.clearAndSetText(driver, _txtAreaPreTripLodgingComment, PDTConstants.COMMENT,
 					preAcceptanceSubBenefitData.preAcceptanceTripLodging.comment);
 		} catch (Exception e) {
-			DbFunctions.deletePolicyByPolicyId(addNewPolicyPage.getPolicyId());
-			Assert.fail("Failed to fill Pre Acceptance Trip Lodging form.");
+			Assert.fail(MessageFormat.format(PDTConstants.EXCEPTION_OCCURED_FILL_SUBBENEFIT_FORM, CoreConstants.FAIL, subBenefitFormName));
 		}
 
 	}
@@ -599,8 +588,7 @@ public class PDT_PreAcceptanceService extends Base {
 			CoreFunctions.clearAndSetText(driver, _txtAreaPreTripMealComment, PDTConstants.COMMENT,
 					preAcceptanceSubBenefitData.preAcceptanceTripMeals.comment);
 		} catch (Exception e) {
-			DbFunctions.deletePolicyByPolicyId(addNewPolicyPage.getPolicyId());
-			Assert.fail("Failed to fill Pre Acceptance Trip Meals form.");
+			Assert.fail(MessageFormat.format(PDTConstants.EXCEPTION_OCCURED_FILL_SUBBENEFIT_FORM, CoreConstants.FAIL, subBenefitFormName));
 		}
 	}
 
@@ -631,8 +619,7 @@ public class PDT_PreAcceptanceService extends Base {
 						PDTConstants.CURRENCY, PDTConstants.DROP_DOWN, true);
 			}
 		} catch (Exception e) {
-			DbFunctions.deletePolicyByPolicyId(addNewPolicyPage.getPolicyId());
-			Assert.fail("Failed to fill Transferee Info on  Pre Acceptance Trip Meals form.");
+			Assert.fail(MessageFormat.format(PDTConstants.FAILED_TO_FILL_INFO, CoreConstants.FAIL, PDTConstants.TRANSFEREE_INFO, subBenefitFormName));
 		}
 	}
 
@@ -655,8 +642,7 @@ public class PDT_PreAcceptanceService extends Base {
 						PDTConstants.DROP_DOWN, true);
 			}
 		} catch (Exception e) {
-			DbFunctions.deletePolicyByPolicyId(addNewPolicyPage.getPolicyId());
-			Assert.fail("Failed to fill Adult meal Info on  Pre Acceptance Trip Meals form.");
+			Assert.fail(MessageFormat.format(PDTConstants.FAILED_TO_FILL_INFO, CoreConstants.FAIL, PDTConstants.ADULT_INFO, subBenefitFormName));
 		}
 	}
 
@@ -675,8 +661,7 @@ public class PDT_PreAcceptanceService extends Base {
 						PDTConstants.DROP_DOWN, true);
 			}
 		} catch (Exception e) {
-			DbFunctions.deletePolicyByPolicyId(addNewPolicyPage.getPolicyId());
-			Assert.fail("Failed to fill Child Info Info on  Pre Acceptance Trip Meals form.");
+			Assert.fail(MessageFormat.format(PDTConstants.FAILED_TO_FILL_INFO, CoreConstants.FAIL, PDTConstants.CHILDREN_INFO, subBenefitFormName));
 		}
 	}
 
@@ -690,7 +675,7 @@ public class PDT_PreAcceptanceService extends Base {
 				return true;
 			}
 		} catch (Exception e) {
-			DbFunctions.deletePolicyByPolicyId(addNewPolicyPage.getPolicyId());
+			Assert.fail(MessageFormat.format(PDTConstants.FAILED_TO_VERIFY_SUCCESS_MSG, CoreConstants.FAIL, msg, pageName));
 		}
 		return false;
 	}

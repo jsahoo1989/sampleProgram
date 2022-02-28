@@ -1,37 +1,139 @@
-[{
-		"application": "MobilityX",
-		"mxTransferee": {
-			"userName": "ANortje_558751",
-			"password": "Relonetng1",
-			"firstName": "Anrich",
-			"lastName": "Nortje"
-		},
-		"mxLinkedTransferee": {
-			"userName": "Shreshtha.gupta22@gmail.com",
-			"password": "Password1",
-			"firstName": "Shreshtha",
-			"lastName": "Gupta"
-		}		
-	},
+[
 	{
-		"application": "IRIS",
-		"userIRISTestQA": {
-			"userName": "ckitts",
-			"password": "ck",
+		"application": "PDT",
+		"qa": {
+			"irisUserName": "BBENEDU",
+			"irisPassword": "qabb",
+			"irisDatabase": "Qa",
+			"irisBuildPath": "\\\\corpprdvw589\\rdev\\IRIS_Builds\\IRIS_Statler_QA\\IRIS.exe",
 			"firstName": "Chere",
-			"lastName": "kitts"
+			"lastName": "kitts",
+			"clientId": "7403",
+			"clientName": "Dow Chemical Company (Global)",
+			"csmUserName": "kbrian",
+			"csmPassword": "kbrian",
+			"policy": "hDCC Repatriation (# 14724)"
 		},
-		"userIRISTestDEV": {
-			"userName": "vkamins",
-			"password": "vk",
+		"dev": {
+			"irisUserName": "BBENEDU",
+			"irisPassword": "devbb",
+			"irisDatabase": "Dev",
+			"irisBuildPath": "\\\\corpprdvw589\\rdev\\IRIS_Builds\\IRIS_Statler_QA\\IRIS.exe",
 			"firstName": "Vladimir",
-			"lastName": "Kaminsky"
+			"lastName": "Kaminsky",
+			"clientId": "7403",
+			"clientName": "Dow Chemical Company (Global)",
+			"csmUserName": "kbrian",
+			"csmPassword": "kbrian",
+			"policy": "hDCC Repatriation (# 14724)"
 		},
-		"userIRISProd": {
-			"userName": "testemacmgr",
-			"password": "testte",
+		"prod": {
+			"irisUserName": "BBENEDU",
+			"irisPassword": "prodbb",
+			"irisDatabase": "IRIS",
+			"irisBuildPath": "\\\\corpprdvw589\\rdev\\IRIS_Builds\\IRIS_Statler_QA\\IRIS.exe",
 			"firstName": "Chere",
-			"lastName": "kitts"
+			"lastName": "kitts",
+			"clientId": "49214",
+			"clientName": "Sandbox, Inc (# 49214)",
+			"csmUserName": "LDESANZ",
+			"csmPassword": "LDESANZ",
+			"policy": "hDCC Repatriation (# 14724)"
+		},
+		"preProd": {
+			"irisUserName": "BBENEDU",
+			"irisPassword": "testbb",
+			"irisDatabase": "Training",
+			"irisBuildPath": "\\\\corpprdvw589\\rdev\\IRIS_Builds\\IRIS_PROD\\IRIS.exe",
+			"firstName": "Chere",
+			"lastName": "kitts",
+			"clientId": "7311",
+			"clientName": "GAP, Inc. Headquarters",
+			"csmUserName": "ckitts",
+			"csmPassword": "ckitts",
+			"policy": "hDCC Repatriation (# 14724)"
+		},
+		"uat": {
+			"irisUserName": "BBENEDU",
+			"irisPassword": "uatbb",
+			"irisDatabase": "Uat",
+			"irisBuildPath": "\\\\corpprdvw589\\rdev\\IRIS_Builds\\IRIS_UAT_MYLO\\IRIS.exe",
+			"firstName": "Chere",
+			"lastName": "kitts",
+			"clientId": "7311",
+			"clientName": "GAP, Inc. Headquarters",
+			"csmUserName": "ckitts",
+			"csmPassword": "ckitts",
+			"policy": "Long-Term Assignment Policy (# 12472)"
+		}
+	},
+	
+	{
+		"application": "CoreFlex",
+		"qa": {
+			"irisUserName": "vkamins",
+			"irisPassword": "fndevvk",
+			"irisDatabase": "FnDEV",
+			"irisBuildPath": "\\\\corpprdvw589\\rdev\\IRIS_Builds\\IRIS_FnDEV_CORE_FLEX\\IRIS.exe",
+			"firstName": "Chere",
+			"lastName": "kitts",
+			"clientId": "7403",
+			"clientName": "Dow Chemical Company (Global)",
+			"csmUserName": "AKARNS",
+			"csmPassword": "AKARNS",
+			"policy": "hDCC Repatriation (# 14724)"
+		},
+		"dev": {
+			"irisUserName": "vkamins",
+			"irisPassword": "fndevvk",
+			"irisDatabase": "FnDEV",
+			"irisBuildPath": "\\\\corpprdvw589\\rdev\\IRIS_Builds\\IRIS_FnDEV_CORE_FLEX\\IRIS.exe",
+			"firstName": "Chere",
+			"lastName": "kitts",
+			"clientId": "7403",
+			"clientName": "Dow Chemical Company (Global)",
+			"csmUserName": "AKARNS",
+			"csmPassword": "AKARNS",
+			"policy": "hDCC Repatriation (# 14724)"
+		},
+		"prod": {
+			"irisUserName": "vkamins",
+			"irisPassword": "fndevvk",
+			"irisDatabase": "FnDEV",
+			"irisBuildPath": "\\\\corpprdvw589\\rdev\\IRIS_Builds\\IRIS_FnDEV_CORE_FLEX\\IRIS.exe",
+			"firstName": "Chere",
+			"lastName": "kitts",
+			"clientId": "7403",
+			"clientName": "Dow Chemical Company (Global)",
+			"csmUserName": "AKARNS",
+			"csmPassword": "AKARNS",
+			"policy": "hDCC Repatriation (# 14724)"
+		},
+		"preProd": {
+			"irisUserName": "vkamins",
+			"irisPassword": "fndevvk",
+			"irisDatabase": "FnDEV",
+			"irisBuildPath": "\\\\corpprdvw589\\rdev\\IRIS_Builds\\IRIS_FnDEV_CORE_FLEX\\IRIS.exe",
+			"firstName": "Chere",
+			"lastName": "kitts",
+			"clientId": "7403",
+			"clientName": "Dow Chemical Company (Global)",
+			"csmUserName": "AKARNS",
+			"csmPassword": "AKARNS",
+			"policy": "hDCC Repatriation (# 14724)"
+		},
+		"uat": {
+			"irisUserName": "vkamins",
+			"irisPassword": "fndevvk",
+			"irisDatabase": "FnDEV",
+			"irisBuildPath": "\\\\corpprdvw589\\rdev\\IRIS_Builds\\IRIS_FnDEV_CORE_FLEX\\IRIS.exe",
+			"firstName": "Chere",
+			"lastName": "kitts",
+			"clientId": "7403",
+			"clientName": "Dow Chemical Company (Global)",
+			"csmUserName": "AKARNS",
+			"csmPassword": "AKARNS",
+			"policy": "hDCC Repatriation (# 14724)"
 		}
 	}
 ]

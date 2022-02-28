@@ -1,5 +1,6 @@
 package com.aires.pages.pdt;
 
+import java.text.MessageFormat;
 import java.util.List;
 
 import org.openqa.selenium.WebDriver;
@@ -11,11 +12,10 @@ import org.testng.Assert;
 import com.aires.businessrules.Base;
 import com.aires.businessrules.BusinessFunctions;
 import com.aires.businessrules.CoreFunctions;
-import com.aires.businessrules.DbFunctions;
+import com.aires.businessrules.constants.CoreConstants;
 import com.aires.businessrules.constants.PDTConstants;
 import com.aires.managers.FileReaderManager;
 import com.aires.testdatatypes.pdt.PDT_LanguageTrainingBenefit;
-import com.aires.utilities.Log;
 
 public class PDT_LanguageTrainingPage extends Base {
 
@@ -53,10 +53,10 @@ public class PDT_LanguageTrainingPage extends Base {
 	@FindBy(how = How.CSS, using = "#collapseTwo textarea[formcontrolname='benefitComment']")
 	private WebElement _txtAreaCommentForLangTrainingFamily;
 
-	@FindBy(how = How.XPATH, using = "//label[text()='Max. Number of Hours']")
+	@FindBy(how = How.XPATH, using = "//label[text()='Max. Number of Hours per Person ']")
 	private WebElement _lblMaxNumOfHoursPerPerson;
 
-	@FindBy(how = How.XPATH, using = "//label[text()='Max. Number of Hours per Family (if applicable)']")
+	@FindBy(how = How.XPATH, using = "//label[text()='Max. Number of Hours per Family ']")
 	private WebElement _lblMaxNumOfHoursPerFamily;
 
 	PDT_LanguageTrainingBenefit languageTrainingBenefitData = FileReaderManager.getInstance().getJsonReader()
@@ -84,8 +84,7 @@ public class PDT_LanguageTrainingPage extends Base {
 			CoreFunctions.clearAndSetText(driver, _txtAreaCommentForLangTrainingEmp, PDTConstants.COMMENT,
 					languageTrainingBenefitData.languageTrainingEmployee.comments);
 		} catch (Exception e) {			
-			DbFunctions.deletePolicyByPolicyId(addNewPolicyPage.getPolicyId());
-			Assert.fail("Failed to fill Language Training Employee form.");
+			Assert.fail(MessageFormat.format(PDTConstants.EXCEPTION_OCCURED_FILL_SUBBENEFIT_FORM, CoreConstants.FAIL, subBenefitFormName));			
 		}
 	}
 
@@ -113,9 +112,8 @@ public class PDT_LanguageTrainingPage extends Base {
 					languageTrainingBenefitData.languageTrainingFamily.reimbursedByOther, subBenefitFormName);
 			CoreFunctions.clearAndSetText(driver, _txtAreaCommentForLangTrainingFamily, PDTConstants.COMMENT,
 					languageTrainingBenefitData.languageTrainingFamily.comments);
-		} catch (Exception e) {			
-			DbFunctions.deletePolicyByPolicyId(addNewPolicyPage.getPolicyId());
-			Assert.fail("Failed to fill Language Training Family form.");
+		} catch (Exception e) {
+			Assert.fail(MessageFormat.format(PDTConstants.EXCEPTION_OCCURED_FILL_SUBBENEFIT_FORM, CoreConstants.FAIL, subBenefitFormName));
 		}
 	}
 }

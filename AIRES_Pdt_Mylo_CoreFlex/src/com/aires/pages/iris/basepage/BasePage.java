@@ -11,9 +11,17 @@ import java.lang.management.ManagementFactory;
 import java.lang.management.RuntimeMXBean;
 import java.net.InetAddress;
 import java.net.URI;
+import java.text.MessageFormat;
 import java.util.ArrayList;
+import java.util.LinkedHashMap;
+
+import org.testng.Assert;
+
 import com.aires.businessrules.CoreFunctions;
+import com.aires.businessrules.constants.CoreConstants;
 import com.aires.businessrules.constants.IRISConstants;
+import com.aires.managers.FileReaderManager;
+import com.aires.testdatatypes.pdt.PDT_LoginDetails;
 import com.aires.utilities.Log;
 import com.aires.utilities.getWindowText;
 import com.hp.lft.sdk.Desktop;
@@ -43,6 +51,8 @@ public class BasePage {
 	private static String _getAllLFTTasksRunning = "tasklist /fo table /nh /fi \"Imagename eq LFTRuntime.exe\" /v";
 	private static String _userName = System.getProperty("user.name").toLowerCase();
 	private static String _processName_uftRuntimeEngine = "LFTRuntime.exe";
+	private PDT_LoginDetails _loginDetails;
+	LinkedHashMap<String, Integer> userPortMap= new LinkedHashMap<String, Integer>();
 	
 	public BasePage() throws Exception {
 		Thread.sleep(2000);
@@ -55,9 +65,10 @@ public class BasePage {
 		_IRIS = Desktop.describe(Window.class, new WindowDescription.Builder().title(_windowTitle).build());
 	}
 
-	public void invokeIrisApplication() throws Exception {
+	public void invokeIrisApplication() throws Exception {		
 		getPIDAndKillProces();
-		CoreFunctions.waitHandler(2);		
+		CoreFunctions.waitHandler(2);
+		allocateUFTPortToUsers();
 		runLFTEngineAsPerStatus();
 		CoreFunctions.waitHandler(3);
 		ModifiableSDKConfiguration config = new ModifiableSDKConfiguration();
@@ -65,9 +76,7 @@ public class BasePage {
 		Log.info("Port Assigned to " + _userName + " is : " + portNumber);
 		config.setServerAddress(new URI("ws://localhost:" + portNumber));
 		SDK.init(config);
-		_path = CoreFunctions.getPropertyFromConfig("envt").equalsIgnoreCase("QA")
-				? IRISConstants.IRIS_EXECUTABLE_PATH_QA
-				: IRISConstants.IRIS_EXECUTABLE_PATH;
+		_path = getIrisPathForApplication(CoreFunctions.getPropertyFromConfig("application").toLowerCase());
 		_process = Runtime.getRuntime().exec(_path);
 		_windowTitle = getWindowText.getActiveWindowText();
 		while (!_windowTitle.contains("Login")) {
@@ -83,32 +92,8 @@ public class BasePage {
 		String computerName = InetAddress.getLocalHost().getHostName();
 		if (computerName.equalsIgnoreCase("corpprdvw270") || _userName.equalsIgnoreCase("srana"))
 			return 5095;
-		switch (_userName) {
-		case "rsharma":
-			port = 5096;
-			break;
-		case "spant":
-			port = 5095;
-			break;
-		case "srana":
-			port = 5099;
-			break;
-		case "npant":
-			port = 5092;
-			break;
-		case "pkashyap":
-			port = 5093;
-			break;
-		case "pdash":
-			port = 5097;
-			break;
-		case "vmallah":
-			port = 5093;
-			break;
-		default:
-			Log.info("No Port Assigned");
-		}
-		return port;
+		else
+			return userPortMap.get(_userName);
 	}
 
 	public Window getIRISWindowAfterLogin() throws Exception {
@@ -238,5 +223,77 @@ public class BasePage {
 			Log.info("UFT Developer Runtime Engine is not running..\nStarting the Runtime engine now...");
 			Runtime.getRuntime().exec("C:\\Program Files (x86)\\Micro Focus\\UFT Developer\\bin\\leanft.bat start");
 		}
+	}
+	
+	public String getIrisPathForApplication(String appName) {
+		String irisBuildPath = null;		
+		switch(appName) {
+		case CoreConstants.APP_PDT:
+			_loginDetails = FileReaderManager.getInstance().getJsonReader().getLoginByApplication(CoreConstants.APP_PDT);
+			irisBuildPath = getIRISPathAsPerEnvtForPDT(_loginDetails, CoreFunctions.getPropertyFromConfig("envt").toLowerCase());
+			break;
+		case CoreConstants.APP_COREFLEX:
+			_loginDetails = FileReaderManager.getInstance().getJsonReader().getLoginByApplication(CoreConstants.APP_COREFLEX);
+			irisBuildPath = getIRISPathAsPerEnvtForCoreFlex(_loginDetails);
+			break;	
+		default:
+			Assert.fail(MessageFormat.format(CoreConstants.INVALID_APPLICATION, CoreFunctions.getPropertyFromConfig("application")));
+		}
+		return irisBuildPath;
+	}
+	
+	public String getIRISPathAsPerEnvtForPDT(PDT_LoginDetails _loginDetails, String appEnv) {
+		String irisBuildPath = null;		
+		switch(appEnv) {
+		case CoreConstants.ENVT_DEV:
+			irisBuildPath = _loginDetails.dev.irisBuildPath;
+			break;
+		case CoreConstants.ENVT_QA:
+			irisBuildPath = _loginDetails.qa.irisBuildPath;
+			break;
+		case CoreConstants.ENVT_UAT:
+			irisBuildPath = _loginDetails.uat.irisBuildPath;
+			break;
+		case CoreConstants.ENVT_TEST:
+			irisBuildPath = _loginDetails.preProd.irisBuildPath;
+			break;
+		case CoreConstants.ENVT_PROD:
+			irisBuildPath = _loginDetails.prod.irisBuildPath;
+			break;
+		default:
+			Assert.fail(MessageFormat.format(CoreConstants.INVALID_ENVIRONMENT, CoreFunctions.getPropertyFromConfig("application")));
+		}
+		return irisBuildPath;
+	}
+	
+	public String getIRISPathAsPerEnvtForCoreFlex(PDT_LoginDetails _loginDetails) {
+		String irisBuildPath = null;		
+		switch(CoreFunctions.getPropertyFromConfig("envt").toLowerCase()) {
+		case CoreConstants.ENVT_DEV:
+			irisBuildPath = _loginDetails.dev.irisBuildPath;
+			break;
+		case CoreConstants.ENVT_QA:
+			irisBuildPath = _loginDetails.qa.irisBuildPath;
+			break;
+		case CoreConstants.ENVT_UAT:
+			irisBuildPath = _loginDetails.uat.irisBuildPath;
+			break;
+		case CoreConstants.ENVT_TEST:
+			irisBuildPath = _loginDetails.preProd.irisBuildPath;
+			break;
+		case CoreConstants.ENVT_PROD:
+			irisBuildPath = _loginDetails.prod.irisBuildPath;
+			break;
+		default:
+			Assert.fail(MessageFormat.format(CoreConstants.INVALID_ENVIRONMENT, CoreFunctions.getPropertyFromConfig("application")));
+		}
+		return irisBuildPath;
+	}
+	
+	public void allocateUFTPortToUsers() {
+		userPortMap.put("spant", 5088);
+		userPortMap.put("rsharma", 5096);
+		userPortMap.put("pdash", 5097);
+		userPortMap.put("vmallah", 5091);
 	}
 }

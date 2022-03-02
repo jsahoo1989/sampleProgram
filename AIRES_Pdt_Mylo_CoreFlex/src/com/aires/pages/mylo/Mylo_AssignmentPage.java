@@ -55,7 +55,7 @@ public class Mylo_AssignmentPage extends Base {
 	@FindBy(how = How.XPATH, using = "//h1[text()='Aires File Team']/parent::td/following-sibling::td/button")
 	private WebElement _airesFileTeamAddButton;
 
-	@FindBy(how = How.XPATH, using = "//h1[text()='Aires File Team']/parent::td/following-sibling::td/button[text()='Save']")
+	@FindBy(how = How.XPATH, using = "//h1[text()='Aires File Team']/parent::td/following-sibling::td//descendant::i[@class='icon-FloppyDisk_Open save_section']")
 	private WebElement _airesFileTeamSaveButton;
 
 	@FindBy(how = How.XPATH, using = "//h1[text()='Aires File Team']/following::tbody[1]/tr")
@@ -370,6 +370,7 @@ public class Mylo_AssignmentPage extends Base {
 	 * Add Role By Name on Aires File Team section
 	 */
 	public void addRole(String roleName) {
+		CoreFunctions.explicitWaitTillElementBecomesClickable(driver, _roleSelectButtton, _roleSelectButtton.getAttribute(MYLOConstants.NAME));
 		CoreFunctions.click(driver, _roleSelectButtton, _roleSelectButtton.getAttribute(MYLOConstants.NAME));
 		CoreFunctions.selectItemInListByText(driver, CoreFunctions.getElementListByLocator(driver, _dropdownOptions),
 				roleName);
@@ -1169,18 +1170,19 @@ public class Mylo_AssignmentPage extends Base {
 	 * Verify DropdownList order for passed field name
 	 */
 	public boolean verifyDropdownListOrder(String dropDownName) {
+		boolean flag = false;
 		switch (dropDownName) {
-		case MYLOConstants.COUNTRY:		
+		case MYLOConstants.COUNTRY:
 			List<String> countryText = countryList.stream().map(x -> x.getText()).collect(Collectors.toList());
 			List<String> copyCountryList = new ArrayList<String>(countryText);
 			copyCountryList.remove(MYLOConstants.SELECT_ONE);
 			copyCountryList.remove(MYLOConstants.USA_STATE);
-			return CoreFunctions.verifyListOrder(copyCountryList,MYLOConstants.ASCENDING);
+			flag = CoreFunctions.verifyListOrder(copyCountryList, MYLOConstants.ASCENDING);
 		default:
 			Reporter.addStepLog(CoreConstants.FAIL + MYLOConstants.ENTER_CORRECT_FIELD_NAME);
 			Assert.fail(MYLOConstants.ENTER_CORRECT_FIELD_NAME);
 		}
-		return false;
+		return flag;
 	}
 	
 	/**
@@ -1896,36 +1898,36 @@ public class Mylo_AssignmentPage extends Base {
 		try {
 			if (sectionType.equals(MYLOConstants.MAILING_ADDRESS_DROPDOWN)) {
 				Assert.assertEquals(getFieldValueOtherAddressesSection(MYLOConstants.MAIL_ADDRESS_COUNTRY),
-						data.get(0).get(MYLOConstants.COUNTRY));
+						data.get(0).get(MYLOConstants.COUNTRY),MYLOConstants.COUNTRY + MYLOConstants.VALUE_NOT_UPDATED);
 				Assert.assertEquals(getFieldValueOtherAddressesSection(MYLOConstants.MAIL_ADDRESS_CITY),
-						data.get(0).get(MYLOConstants.MAIL_ADDRESS_CITY));
+						data.get(0).get(MYLOConstants.MAIL_ADDRESS_CITY),MYLOConstants.MAIL_ADDRESS_CITY + MYLOConstants.VALUE_NOT_UPDATED);
 				Assert.assertEquals(
 						getFieldValueOtherAddressesSection(MYLOConstants.MAIL_ADDRESS_STATE_DROPDOWN),
-						data.get(0).get(MYLOConstants.STATE));
+						data.get(0).get(MYLOConstants.STATE),MYLOConstants.STATE + MYLOConstants.VALUE_NOT_UPDATED);
 				Assert.assertEquals(getFieldValueOtherAddressesSection(MYLOConstants.MAIL_ADDRESS_ZIPCODE),
-						data.get(0).get(MYLOConstants.MAIL_ADDRESS_ZIPCODE));
+						data.get(0).get(MYLOConstants.MAIL_ADDRESS_ZIPCODE),MYLOConstants.MAIL_ADDRESS_ZIPCODE + MYLOConstants.VALUE_NOT_UPDATED);
 				Assert.assertEquals(getFieldValueOtherAddressesSection(MYLOConstants.MAIL_ADDRESS_FROMDATE),
-						data.get(0).get(MYLOConstants.MAIL_ADDRESS_FROMDATE));
+						data.get(0).get(MYLOConstants.MAIL_ADDRESS_FROMDATE),MYLOConstants.MAIL_ADDRESS_FROMDATE + MYLOConstants.VALUE_NOT_UPDATED);
 				Assert.assertEquals(getFieldValueOtherAddressesSection(MYLOConstants.MAIL_ADDRESS_ADDRESS1),
-						data.get(0).get(MYLOConstants.MAIL_ADDRESS_ADDRESS1));
+						data.get(0).get(MYLOConstants.MAIL_ADDRESS_ADDRESS1),MYLOConstants.MAIL_ADDRESS_ADDRESS1 + MYLOConstants.VALUE_NOT_UPDATED);
 				Assert.assertEquals(getFieldValueOtherAddressesSection(MYLOConstants.MAIL_ADDRESS_ADDRESS2),
-						data.get(0).get(MYLOConstants.MAIL_ADDRESS_ADDRESS2));
+						data.get(0).get(MYLOConstants.MAIL_ADDRESS_ADDRESS2),MYLOConstants.MAIL_ADDRESS_ADDRESS2 + MYLOConstants.VALUE_NOT_UPDATED);
 			} else if (sectionType.equals(MYLOConstants.TEMPORARY_ADDRESS_DROPDOWN)) {
 				Assert.assertEquals(getFieldValueOtherAddressesSection(MYLOConstants.TEMP_ADDRESS_COUNTRY),
-						data.get(0).get(MYLOConstants.COUNTRY));
+						data.get(0).get(MYLOConstants.COUNTRY),MYLOConstants.COUNTRY + MYLOConstants.VALUE_NOT_UPDATED);
 				Assert.assertEquals(
 						getFieldValueOtherAddressesSection(MYLOConstants.TEMP_ADDRESS_STATE_DROPDOWN),
-						data.get(0).get(MYLOConstants.STATE));
+						data.get(0).get(MYLOConstants.STATE),MYLOConstants.STATE + MYLOConstants.VALUE_NOT_UPDATED);
 				Assert.assertEquals(getFieldValueOtherAddressesSection(MYLOConstants.TEMP_ADDRESS_CITY),
-						data.get(0).get(MYLOConstants.TEMP_ADDRESS_CITY));
+						data.get(0).get(MYLOConstants.TEMP_ADDRESS_CITY),MYLOConstants.TEMP_ADDRESS_CITY + MYLOConstants.VALUE_NOT_UPDATED);
 				Assert.assertEquals(getFieldValueOtherAddressesSection(MYLOConstants.TEMP_ADDRESS_ZIPCODE),
-						data.get(0).get(MYLOConstants.TEMP_ADDRESS_ZIPCODE));
+						data.get(0).get(MYLOConstants.TEMP_ADDRESS_ZIPCODE),MYLOConstants.TEMP_ADDRESS_ZIPCODE + MYLOConstants.VALUE_NOT_UPDATED);
 				Assert.assertEquals(getFieldValueOtherAddressesSection(MYLOConstants.TEMP_ADDRESS_FROMDATE),
-						data.get(0).get(MYLOConstants.TEMP_ADDRESS_FROMDATE));
+						data.get(0).get(MYLOConstants.TEMP_ADDRESS_FROMDATE),MYLOConstants.TEMP_ADDRESS_FROMDATE + MYLOConstants.VALUE_NOT_UPDATED);
 				Assert.assertEquals(getFieldValueOtherAddressesSection(MYLOConstants.TEMP_ADDRESS_ADDRESS1),
-						data.get(0).get(MYLOConstants.TEMP_ADDRESS_ADDRESS1));
+						data.get(0).get(MYLOConstants.TEMP_ADDRESS_ADDRESS1),MYLOConstants.TEMP_ADDRESS_ADDRESS1 + MYLOConstants.VALUE_NOT_UPDATED);
 				Assert.assertEquals(getFieldValueOtherAddressesSection(MYLOConstants.TEMP_ADDRESS_ADDRESS2),
-						data.get(0).get(MYLOConstants.TEMP_ADDRESS_ADDRESS2));
+						data.get(0).get(MYLOConstants.TEMP_ADDRESS_ADDRESS2),MYLOConstants.TEMP_ADDRESS_ADDRESS2 + MYLOConstants.VALUE_NOT_UPDATED);
 			}
 			return true;
 		} catch (Exception e) {

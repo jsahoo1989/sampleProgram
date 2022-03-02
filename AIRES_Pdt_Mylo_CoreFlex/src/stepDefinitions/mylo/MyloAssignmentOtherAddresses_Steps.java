@@ -14,7 +14,6 @@ import com.aires.pages.mylo.Mylo_AssignmentPage;
 import com.aires.pages.mylo.Mylo_DashboardHomePage;
 import com.aires.pages.mylo.Mylo_LoginPage;
 import com.aires.testdatatypes.mylo.Mylo_LoginData;
-import com.aires.utilities.CustomHardAssertion;
 import com.vimalselvam.cucumber.listener.Reporter;
 import cucumber.api.DataTable;
 import cucumber.api.java.en.Given;
@@ -27,7 +26,6 @@ public class MyloAssignmentOtherAddresses_Steps {
 	Mylo_LoginPage loginPage;
 	Mylo_DashboardHomePage myloDashboardPage;
 	Mylo_AssignmentPage myloAssignmentPage;
-	CustomHardAssertion customAssert;
 
 	Mylo_LoginData loginData = FileReaderManager.getInstance().getMyloJsonReader()
 			.getloginDetailsByUserProfileName(MYLOConstants.USER_PROFILE_NAME);
@@ -37,7 +35,6 @@ public class MyloAssignmentOtherAddresses_Steps {
 		loginPage = testContext.getMyloPageObjectManager().getLoginPage();
 		myloDashboardPage = testContext.getMyloPageObjectManager().getDashboardHomePage();
 		myloAssignmentPage = testContext.getMyloPageObjectManager().getAssignmentPage();
-		customAssert = new CustomHardAssertion();
 	}
 	
 	/**********************************************/

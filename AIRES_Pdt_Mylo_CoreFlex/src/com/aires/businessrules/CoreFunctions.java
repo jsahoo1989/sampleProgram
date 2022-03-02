@@ -496,6 +496,7 @@ public class CoreFunctions {
 				Log.info(CoreConstants.ACTUAL_ITEM_NAME_IS + row.getText());
 				if (row.getText().contains(searchText)) {
 					itemSearched = true;
+					CoreFunctions.highlightObject(driver, row);
 					CoreFunctions.clickUsingJS(driver, row, row.getText());
 					break;
 				}

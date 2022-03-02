@@ -193,8 +193,9 @@ public class MYLOConstants {
 	public static final String CURRENT = "current";
 	public static final String RED_COLOR_HEXCODE="#f37474";
 	public static final String BORDER_COLOR="border-color";
-	
-	
+	public static final String ASSIGNMENT_QUERYTYPE_HEADER="Please select a query type to search for a file.";
+	public static final String ASSIGNMENT_PARAMETERTYPE_HEADER="Please select parameters for your query.";
+	public static final String VALUE_NOT_UPDATED = " Value is not updated";
 	public static long TIME_BEFORE_ACTION;
 	public static long TIME_AFTER_ACTION;
 }

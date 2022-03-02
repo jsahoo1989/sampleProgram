@@ -38,7 +38,7 @@ public class MyloDashboard_Steps {
 		loginPage.enterUserEmailAndPasswordForMylo(loginData.MyloUserName, loginData.MyloPassword);
 		loginPage.clickSignIn();
 		MYLOConstants.TIME_AFTER_ACTION = new Date().getTime();
-		Reporter.addStepLog("<b>Total time taken by <i>'When'</i> statement is :"
+		Reporter.addStepLog("<b>Total time taken by <i>'Given'</i> statement is :"
 				+ (MYLOConstants.TIME_AFTER_ACTION - MYLOConstants.TIME_BEFORE_ACTION) / 1000 + " Seconds </b>");
 	}
 

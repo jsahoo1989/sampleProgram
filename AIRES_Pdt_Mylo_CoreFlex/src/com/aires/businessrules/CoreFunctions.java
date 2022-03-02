@@ -496,6 +496,7 @@ public class CoreFunctions {
 				Log.info(CoreConstants.ACTUAL_ITEM_NAME_IS + row.getText());
 				if (row.getText().contains(searchText)) {
 					itemSearched = true;
+					CoreFunctions.highlightObject(driver, row);
 					CoreFunctions.clickUsingJS(driver, row, row.getText());
 					break;
 				}
@@ -1669,7 +1670,7 @@ public class CoreFunctions {
 		return false;	
 	}	
 		
-	public static String getStringDateInFormat(String value,String givenFormat,String expectedFormat) throws ParseException {	
+	public static String getStringDateInFormat(String value,String givenFormat,String expectedFormat) {
 		String dateValue = null;	
 		SimpleDateFormat formatter=new SimpleDateFormat(givenFormat);	
 		SimpleDateFormat sdf = new SimpleDateFormat(expectedFormat);	

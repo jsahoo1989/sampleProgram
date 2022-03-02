@@ -182,8 +182,6 @@ public class Mylo_DashboardHomePage extends Base {
 		WebElement getOptionElement = CoreFunctions.returnItemInListByText(driver, _fileParameterList, option);
 		if (option.contains(MYLOConstants.STATUS) || option.contains(MYLOConstants.OFFICE)
 				|| option.contains(MYLOConstants.COUNTRY) || option.contains(MYLOConstants.STATE)) {
-			WebElement dropdowns = CoreFunctions.getElementByLocator(driver, getOptionElement, _dropdownSections);
-			CoreFunctions.highlightElementAndClick(driver, dropdowns, dropdowns.getText());
 			CoreFunctions.explicitWaitTillElementListVisibility(driver, _selectOptions);
 			CoreFunctions.selectItemInListByText(driver, _selectOptions, optionValue);
 		} else {

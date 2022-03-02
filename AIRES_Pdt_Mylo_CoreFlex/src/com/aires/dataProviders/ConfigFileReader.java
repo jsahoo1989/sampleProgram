@@ -123,8 +123,8 @@ public class ConfigFileReader {
 	}
 	
 	public String getMyloApplicationUrl() {
-		if (properties.getProperty("envt").equalsIgnoreCase("Test"))
-			return properties.getProperty("myloTestURL");
+		if (properties.getProperty("envt").equalsIgnoreCase("uat"))
+			return properties.getProperty("myloUATURL");
 		else
 			throw new RuntimeException(
 					"Application Url not specified in the Configuration.properties file for the Key:url");

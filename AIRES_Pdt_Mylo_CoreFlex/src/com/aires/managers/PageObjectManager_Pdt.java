@@ -20,8 +20,11 @@ package com.aires.managers;
 import org.openqa.selenium.WebDriver;
 
 import com.aires.pages.pdt.PDT_AddNewPolicyPage;
+import com.aires.pages.pdt.PDT_AssignmentHousingPage;
+import com.aires.pages.pdt.PDT_CompensationServicesPage;
 import com.aires.pages.pdt.PDT_CulturalTrainingPage;
 import com.aires.pages.pdt.PDT_DestinationServicesPage;
+import com.aires.pages.pdt.PDT_DuplicateHousingPage;
 import com.aires.pages.pdt.PDT_FinalMovePage;
 import com.aires.pages.pdt.PDT_GeneralInformationPage;
 import com.aires.pages.pdt.PDT_HomeLeavePage;
@@ -31,6 +34,7 @@ import com.aires.pages.pdt.PDT_LanguageTrainingPage;
 import com.aires.pages.pdt.PDT_LoginPage;
 import com.aires.pages.pdt.PDT_PolicyBenefitCategoryPage;
 import com.aires.pages.pdt.PDT_PreAcceptanceService;
+import com.aires.pages.pdt.PDT_RentalAssistancePage;
 import com.aires.pages.pdt.PDT_SharedSubBenefitPage;
 import com.aires.pages.pdt.PDT_TemporaryLivingPage;
 import com.aires.pages.pdt.PDT_ViewPolicyPage;
@@ -53,6 +57,10 @@ public class PageObjectManager_Pdt {
 	private PDT_HomeLeavePage _homeLeavePage;
 	private PDT_TemporaryLivingPage _temporaryLivingPage;
 	private PDT_DestinationServicesPage _destinationServicesPage;
+	private PDT_RentalAssistancePage _rentalAssistancePage;
+	private PDT_AssignmentHousingPage _assignmentHousingPage;
+	private PDT_CompensationServicesPage _compensationServicesPage;
+	private PDT_DuplicateHousingPage _duplicateHousingPage;
 	
 	public PageObjectManager_Pdt(WebDriver driver) {
 		this._driver = driver;
@@ -118,5 +126,19 @@ public class PageObjectManager_Pdt {
 		return (_destinationServicesPage == null ) ? _destinationServicesPage = new PDT_DestinationServicesPage(_driver) : _destinationServicesPage;
 	}
 	
+	public PDT_AssignmentHousingPage getAssignmentHousingPage() {
+		return (_assignmentHousingPage == null ) ? _assignmentHousingPage = new PDT_AssignmentHousingPage(_driver) : _assignmentHousingPage;
+	}
 	
+	public PDT_RentalAssistancePage getRentalAssistancePage() {
+		return (_rentalAssistancePage == null ) ? _rentalAssistancePage = new PDT_RentalAssistancePage(_driver) : _rentalAssistancePage;
+	}
+	
+	public PDT_CompensationServicesPage getCompensationServicesPage() {
+		return (_compensationServicesPage == null ) ? _compensationServicesPage = new PDT_CompensationServicesPage(_driver) : _compensationServicesPage;
+	}
+	
+	public PDT_DuplicateHousingPage getDuplicateHousingPage() {
+		return (_duplicateHousingPage == null ) ? _duplicateHousingPage = new PDT_DuplicateHousingPage(_driver) : _duplicateHousingPage;
+	}
 }

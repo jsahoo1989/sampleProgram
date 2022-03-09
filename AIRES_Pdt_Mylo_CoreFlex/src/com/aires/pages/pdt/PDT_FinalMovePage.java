@@ -213,13 +213,13 @@ public class PDT_FinalMovePage extends Base {
 	@FindBy(how = How.CSS, using = "app-final-meals textarea[formcontrolname='benefitComment']")
 	private WebElement _txtAreaFinalMoveMealComment;
 	
-	@FindBy(how = How.XPATH, using = "//label[text()='Max Amount Transferee (if applicable)']")
+	@FindBy(how = How.XPATH, using = "//input[@formcontrolname='maxAmountEe']/preceding-sibling::label")
 	private WebElement _lblMaxAmtTransferee;
 
-	@FindBy(how = How.XPATH, using = "//label[text()='Max Amount Other Adults (if applicable)']")
+	@FindBy(how = How.XPATH, using = "//input[@formcontrolname='maxAmountAdult']/preceding-sibling::label")
 	private WebElement _lblMaxAmtOtherAdults;
 
-	@FindBy(how = How.XPATH, using = "//label[text()='Max Amount Children (if applicable)']")
+	@FindBy(how = How.XPATH, using = "//input[@formcontrolname='maxAmountChild']/preceding-sibling::label")
 	private WebElement _lblMaxAmtChildren;
 
 	PDT_FinalMoveBenefit finalMoveBenefitData = FileReaderManager.getInstance().getJsonReader()

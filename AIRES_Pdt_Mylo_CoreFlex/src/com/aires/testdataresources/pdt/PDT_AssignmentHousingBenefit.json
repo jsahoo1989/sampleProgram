@@ -1,0 +1,25 @@
+[
+	{
+		"benefitName": "Assignment Housing",
+		"assignmentHousing": {			
+			"maxAmount": "100",			
+			"detail": "Per Month",
+			"currency": "U.S. Dollar",			
+			"grossUp": "No",
+			"reimbursedBy": "Aires",
+			"reimbursedByOther": "Reimbursed by other",
+			"comment": "Assignment Housing comment"			
+		},
+		"securityDeposit": {
+			"reimbursedBy": "Other",
+			"reimbursedByOther": "Reimbursed by other",
+			"comment": "Security Deposit comment"	
+		},
+		"finderFees": {
+			"grossUp": "Yes",
+			"reimbursedBy": "Client",
+			"reimbursedByOther": "Reimbursed by other",
+			"comment": "Finder's fees comment"			
+		}
+	}
+]

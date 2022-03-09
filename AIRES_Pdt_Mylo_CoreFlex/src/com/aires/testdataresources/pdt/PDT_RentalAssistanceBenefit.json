@@ -1,0 +1,21 @@
+[
+	{
+		"benefitName": "Rental Assistance",
+		"rentalTour": {			
+			"duration": "Other",			
+			"durationOther": "100",
+			"grossUp": "Yes",
+			"reimbursedBy": "Aires",
+			"reimbursedByOther": "Reimbursed by other",
+			"comment": "Rental Assistance comment"			
+		},
+		"finderFees": {
+			"maxAmount": "2000",
+			"currency": "U.S. Dollar",
+			"grossUp": "Yes",
+			"reimbursedBy": "Aires",
+			"reimbursedByOther": "Reimbursed by other",
+			"comment": "Finder Fees comment"					
+		}
+	}
+]

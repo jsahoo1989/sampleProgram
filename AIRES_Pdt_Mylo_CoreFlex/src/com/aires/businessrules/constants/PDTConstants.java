@@ -355,4 +355,18 @@ public class PDTConstants {
 	public static final String TRANSITION_ASSISTANCE_PROGRAM = "Transition Assistance Program";
 	public static final String TUTION_AND_EDUCATION = "Tuition and Education";
 	public static final String EXCEPTION_OCCURED_FILL_SUBBENEFIT_FORM = "{0} Exception occurred while filling data for ''{1}'' sub-benefit form.";
+	public static final String RENTAL_TOUR = "Rental Tour";
+	public static final String FINDER_FEES = "Finder's Fee";
+	public static final String LETTER_OF_ASSIGNMENT = "Letter of Assignment";
+	public static final String COST_ESTIMATE_WITH_TAX = "Cost Estimate with Tax";
+	public static final String COST_ESTIMATE_WITHOUT_TAX = "Cost Estimate without Tax";
+	public static final String BALANCE_SHEET = "Balance Sheets";
+	public static final String ALLOWANCE_UPDATES = "Allowance Updates (no balance sheet)";
+	public static final String GLOBAL_DATA_COLLECTION = "Global Data Collection";
+	public static final String PAYROLL_INSTRUCTIONS = "Payroll Instructions";
+	public static final String ASSIGNMENT_HOUSING = "Assignment Housing";
+	public static final String SECURITY_DEPOSIT = "Security Deposit";
+	public static final String ASSIGNMENT_FINDER_FEES = "Finder's Fee";
+	public static final String ASSIGNMENT_HOUSING_COMPANY_SPONSORED = "Assignment Housing (Company Sponsored)";
+	public static final String ERR_MSG = "{0}Caught error popup with message:- ''{1}'' on ''{2}''";
 }

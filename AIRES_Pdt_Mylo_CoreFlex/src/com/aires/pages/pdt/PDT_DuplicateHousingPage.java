@@ -16,7 +16,6 @@ import com.aires.businessrules.constants.CoreConstants;
 import com.aires.businessrules.constants.PDTConstants;
 import com.aires.managers.FileReaderManager;
 import com.aires.testdatatypes.pdt.PDT_DuplicateHousingBenefit;
-import com.aires.testdatatypes.pdt.PDT_RentalAssistanceBenefit;
 
 public class PDT_DuplicateHousingPage extends Base {
 	public PDT_DuplicateHousingPage(WebDriver driver) {
@@ -59,6 +58,10 @@ public class PDT_DuplicateHousingPage extends Base {
 	
 	public void setDuration(String durationSelected) {
 		duration = durationSelected;
+	}
+	
+	public String getDuration() {
+		return duration;
 	}
 	
 	public void fillDuplicateHousingForm(PDT_AddNewPolicyPage addNewPolicyPage, String subBenefitFormName) {

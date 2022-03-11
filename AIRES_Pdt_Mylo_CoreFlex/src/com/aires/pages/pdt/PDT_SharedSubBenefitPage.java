@@ -531,7 +531,7 @@ public class PDT_SharedSubBenefitPage extends Base {
 
 	public String getTabNameNotMatch(String pageName) {
 		String str = "";
-		for (Map.Entry m : resultMapForTabNameNotMatch.entrySet()) {
+		for (@SuppressWarnings("rawtypes") Map.Entry m : resultMapForTabNameNotMatch.entrySet()) {
 			String[] tabName = m.getKey().toString().split("_");
 			str += MessageFormat.format(PDTConstants.VERFIED_TAB_NOT_DISPLAYED, CoreConstants.FAIL, tabName[1],
 					tabName[0], pageName);

@@ -258,22 +258,22 @@ public class CoreFunctions {
 	}
 
 	public static void explicitWaitTillElementBecomesClickable(WebDriver driver, WebElement Element, String name) {
-		Log.info("waiting for " + name + " to be clickable");
-		WebDriverWait wait = new WebDriverWait(driver, 60);
+		Log.info("waiting for " + name + " to be clickable");		
+		WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(60));		
 		wait.until(ExpectedConditions.elementToBeClickable(Element));
 		Log.info("Pass: " + name + " is clickable");
 	}
 
 	public static void explicitWaitTillElementVisibility(WebDriver driver, WebElement Element, String name) {
-		Log.info("waiting for " + name + " to display");
-		WebDriverWait wait = new WebDriverWait(driver, 60L);
+		Log.info("waiting for " + name + " to display");		
+		WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(60));
 		wait.until(ExpectedConditions.visibilityOf(Element));
 		Log.info("Pass: " + name + " is displayed");
 	}
 
 	public static void explicitWaitTillElementVisibility(WebDriver driver, WebElement Element, String name, long time) {
-		Log.info("waiting for " + name + " to display");
-		WebDriverWait wait = new WebDriverWait(driver, time);
+		Log.info("waiting for " + name + " to display");		
+		WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(time));
 		wait.until(ExpectedConditions.visibilityOf(Element));
 		Log.info("Pass: " + name + " is displayed");
 	}
@@ -318,7 +318,7 @@ public class CoreFunctions {
 	public static void setElementText(WebDriver driver, WebElement Element, String text) {
 		Log.info("Setting Element Text");
 		try {
-			WebDriverWait wait = new WebDriverWait(driver, 40);
+			WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(40));
 			wait.until(ExpectedConditions.elementToBeClickable(Element));
 			Element.clear();
 			Element.sendKeys(text);
@@ -342,8 +342,8 @@ public class CoreFunctions {
 	}
 
 	public static void explicitWaitTillElementListVisibility(WebDriver driver, List<WebElement> Element) {
-		waitHandler(1);
-		WebDriverWait wait = new WebDriverWait(driver, 25);
+		waitHandler(1);		
+		WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(25));
 		for (WebElement ele : Element) {
 			wait.until(ExpectedConditions.visibilityOf(ele));
 		}
@@ -351,47 +351,47 @@ public class CoreFunctions {
 
 	public static void explicitWaitTillElementListVisibilityWithTime(WebDriver driver, List<WebElement> Element,
 			long time) {
-		WebDriverWait wait = new WebDriverWait(driver, time);
+		WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(time));
 		for (WebElement ele : Element) {
 			wait.until(ExpectedConditions.visibilityOf(ele));
 		}
 	}
 
-	public static void explicitWaitTillElementStaleness(WebDriver driver, WebElement element) {
-		WebDriverWait wait = new WebDriverWait(driver, 30);
+	public static void explicitWaitTillElementStaleness(WebDriver driver, WebElement element) {		
+		WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(30));
 		wait.until(ExpectedConditions.stalenessOf(element));
 	}
 
 	public static WebElement explicitWaitAndReturnElement(WebDriver driver, WebElement element) {
-		WebDriverWait wait = new WebDriverWait(driver, 30);
+		WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(30));
 		wait.until(ExpectedConditions.visibilityOf(element));
 		return element;
 	}
 
 	public static void waitTillElementVisibleWithCustomTime(WebDriver driver, WebElement element, int time) {
-		WebDriverWait wait = new WebDriverWait(driver, time);
+		WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(time));
 		wait.until(ExpectedConditions.visibilityOf(element));
 	}
 
 	public static void explicitWaitForElementTextPresent(WebDriver driver, WebElement element, String text, long time) {
-		WebDriverWait wait = new WebDriverWait(driver, time);
+		WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(time));
 		wait.until(ExpectedConditions.textToBePresentInElement(element, text));
 	}
 
 	public static void explicitWaitTillElementInVisibility(WebDriver driver, WebElement Element) {
-		WebDriverWait wait = new WebDriverWait(driver, 30);
+		WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(30));
 		wait.until(ExpectedConditions.invisibilityOf(Element));
 
 	}
 
 	public static void explicitWaitTillElementInVisibilityCustomTime(WebDriver driver, WebElement Element, int time) {
-		WebDriverWait wait = new WebDriverWait(driver, time);
+		WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(time));
 		wait.until(ExpectedConditions.invisibilityOf(Element));
 
 	}
 
 	public static void explicitWaitTillElementListClickable(WebDriver driver, List<WebElement> Element) {
-		WebDriverWait wait = new WebDriverWait(driver, 25);
+		WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(25));
 		for (WebElement ele : Element) {
 			wait.until(ExpectedConditions.elementToBeClickable(ele));
 		}
@@ -399,7 +399,7 @@ public class CoreFunctions {
 
 	public static boolean isElementByLocatorClickable(WebDriver driver, By locatorKey, int time) {
 		try {
-			WebDriverWait wait = new WebDriverWait(driver, time);
+			WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(time));
 			wait.until(ExpectedConditions.visibilityOfElementLocated(locatorKey));
 			return true;
 		} catch (Exception e) {
@@ -411,7 +411,7 @@ public class CoreFunctions {
 		Log.info("Clearing " + name + " text field");
 		Reporter.addStepLog("Clearing " + name + " text field");
 		try {
-			WebDriverWait wait = new WebDriverWait(driver, 40);
+			WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(40));
 			wait.until(ExpectedConditions.elementToBeClickable(Element));
 			Element.clear();
 			Reporter.addStepLog("Pass: Text Field " + name + " has been cleared");
@@ -584,13 +584,13 @@ public class CoreFunctions {
 	}
 
 	public static void explicitWaitWithLocatorTillElementDisappears(WebDriver driver, By byElement) {
-		WebDriverWait wait = new WebDriverWait(driver, 40);
+		WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(40));
 		wait.until(ExpectedConditions.invisibilityOfElementLocated(byElement));
 	}
 
 	public static boolean isElementByLocatorExist(WebDriver driver, By locatorKey, long time) {
 		try {
-			WebDriverWait wait = new WebDriverWait(driver, time);
+			WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(time));
 			wait.until(ExpectedConditions.visibilityOfElementLocated(locatorKey));
 			return true;
 		} catch (Exception e) {
@@ -600,7 +600,7 @@ public class CoreFunctions {
 
 	public static boolean isElementExist(WebDriver driver, WebElement element, long time) {
 		try {
-			WebDriverWait wait = new WebDriverWait(driver, time);
+			WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(time));
 			wait.until(ExpectedConditions.visibilityOf(element));
 			return true;
 		} catch (Exception e) {
@@ -626,12 +626,12 @@ public class CoreFunctions {
 	}
 
 	public static void waitTillElementClickable(WebDriver driver, WebElement element, long time) {
-		WebDriverWait wait = new WebDriverWait(driver, time);
+		WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(time));
 		wait.until(ExpectedConditions.elementToBeClickable(element));
 	}
 
 	public static void waitUntilLoaderLoads(WebDriver driver) {
-		WebDriverWait wait = new WebDriverWait(driver, 40);
+		WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(40));
 		WebElement element = explicitWaitAndReturnElement(driver,
 				driver.findElement(By.cssSelector("div[class='AFBlockingGlassPane']")));
 		wait.until(ExpectedConditions.visibilityOf(element));
@@ -905,7 +905,7 @@ public class CoreFunctions {
 
 	public static WebElement getElementByLocator(WebDriver driver, By locatorKey) {
 		try {
-			WebDriverWait wait = new WebDriverWait(driver, 30);
+			WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(30));
 			wait.until(ExpectedConditions.visibilityOfElementLocated(locatorKey));
 			return driver.findElement(locatorKey);
 		} catch (Exception e) {
@@ -915,7 +915,7 @@ public class CoreFunctions {
 
 	public static WebElement getElementByLocator(WebDriver driver, WebElement parentElement, By locatorKey) {
 		try {
-			WebDriverWait wait = new WebDriverWait(driver, 30);
+			WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(30));
 			WebElement childElement = parentElement.findElement(locatorKey);
 			wait.until(ExpectedConditions.visibilityOf(childElement));
 			return childElement;
@@ -926,7 +926,7 @@ public class CoreFunctions {
 
 	public static List<WebElement> getElementListByLocator(WebDriver driver, By locatorKey) {
 		try {
-			WebDriverWait wait = new WebDriverWait(driver, 30);
+			WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(30));
 			wait.until(ExpectedConditions.visibilityOfElementLocated(locatorKey));
 			return driver.findElements(locatorKey);
 		} catch (Exception e) {
@@ -987,7 +987,7 @@ public class CoreFunctions {
 	}
 
 	public static List<WebElement> explicitWaitAndReturnElementList(WebDriver driver, By locator) {
-		WebDriverWait wait = new WebDriverWait(driver, 30);
+		WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(30));
 		wait.until(ExpectedConditions.visibilityOfAllElementsLocatedBy(locator));
 		return driver.findElements(locator);
 	}
@@ -1030,7 +1030,7 @@ public class CoreFunctions {
 	public static void waitUntilPleaseWaitLoaderExist(WebDriver driver) {
 
 		WebElement element = getElementByLocator(driver, By.cssSelector("span[id='busyStateMessage']"));
-		WebDriverWait wait = new WebDriverWait(driver, 60);
+		WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(60));
 		if (element.getCssValue("cursor").equalsIgnoreCase("auto")) {
 			wait.until(d -> element.getCssValue("cursor") == "wait");
 			wait.until(d -> element.getCssValue("cursor") == "auto");
@@ -1040,14 +1040,14 @@ public class CoreFunctions {
 	}
 
 	public static void waitUntilBrowserReady(WebDriver driver) {
-		new WebDriverWait(driver, 30).until((ExpectedCondition<Boolean>) wd -> ((JavascriptExecutor) wd)
+		new WebDriverWait(driver, Duration.ofSeconds(30)).until((ExpectedCondition<Boolean>) wd -> ((JavascriptExecutor) wd)
 				.executeScript("return document.readyState").equals("complete"));
 		JavascriptExecutor js = (JavascriptExecutor) driver;
 		js.executeScript("return((window.jQuery != null) && (jQuery.active === 0))").equals("true");
 	}
 
 	public static WebElement explicitWaitTillVisiblityAndReturnElement(WebDriver driver, By locator) {
-		WebDriverWait wait = new WebDriverWait(driver, 30);
+		WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(30));
 		wait.until(ExpectedConditions.visibilityOfElementLocated(locator));
 		return driver.findElement(locator);
 	}
@@ -1114,7 +1114,7 @@ public class CoreFunctions {
 
 	public static boolean highlightAndclickOnByLocator(WebDriver driver, By locatorKey, int time) {
 		try {
-			WebDriverWait wait = new WebDriverWait(driver, time);
+			WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(time));
 			wait.until(ExpectedConditions.visibilityOfElementLocated(locatorKey));
 			WebElement element = driver.findElement(locatorKey);
 			highlightObject(driver, element);
@@ -1126,7 +1126,7 @@ public class CoreFunctions {
 	}
 
 	public static void explicitWaitTillListElementStaleness(WebDriver driver, List<WebElement> elementList) {
-		WebDriverWait wait = new WebDriverWait(driver, 30);
+		WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(30));
 		for (WebElement elementText : elementList) {
 			wait.until(ExpectedConditions.refreshed(ExpectedConditions.stalenessOf(elementText)));
 		}
@@ -1175,7 +1175,7 @@ public class CoreFunctions {
 	}
 
 	public static void explicitWaitWithLocatorTillElementAppears(WebDriver driver, By byElement) {
-		WebDriverWait wait = new WebDriverWait(driver, 40);
+		WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(40));
 		wait.until(ExpectedConditions.visibilityOfElementLocated(byElement));
 	}
 
@@ -1307,7 +1307,7 @@ public class CoreFunctions {
 	}
 
 	public static void waitUntilBrowserReadyWithCustomTime(WebDriver driver, int customTime) {
-		new WebDriverWait(driver, customTime).until((ExpectedCondition<Boolean>) wd -> ((JavascriptExecutor) wd)
+		new WebDriverWait(driver, Duration.ofSeconds(customTime)).until((ExpectedCondition<Boolean>) wd -> ((JavascriptExecutor) wd)
 				.executeScript("return document.readyState").equals("complete"));
 		JavascriptExecutor js = (JavascriptExecutor) driver;
 		js.executeScript("return((window.jQuery != null) && (jQuery.active === 0))").equals("true");
@@ -1344,7 +1344,7 @@ public class CoreFunctions {
 	}
 
 	public static List<WebElement> waitAndReturnListUntilElementsVisible(WebDriver driver, List<WebElement> Element) {
-		WebDriverWait wait = new WebDriverWait(driver, 25);
+		WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(25));
 		for (WebElement ele : Element) {
 			wait.until(ExpectedConditions.visibilityOf(ele));
 		}
@@ -1460,7 +1460,7 @@ public class CoreFunctions {
 	public static void clickAndSetElementTextUsingJS(WebDriver driver, WebElement element, String text) {
 		Log.info("Setting Element Text");
 		try {
-			WebDriverWait wait = new WebDriverWait(driver, 40);
+			WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(40));
 			wait.until(ExpectedConditions.elementToBeClickable(element));
 			JavascriptExecutor executor = (JavascriptExecutor) driver;
 			executor.executeScript("arguments[0].setAttribute('style', arguments[1]);", element,
@@ -1476,7 +1476,7 @@ public class CoreFunctions {
 
 	public static List<WebElement> getElementsByLocator(WebDriver driver, WebElement parentElement, By locatorKey) {
 		try {
-			WebDriverWait wait = new WebDriverWait(driver, 30);
+			WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(30));
 			List<WebElement> childElements = parentElement.findElements(locatorKey);
 			wait.until(ExpectedConditions.visibilityOfAllElements(childElements));
 			return childElements;
@@ -1565,7 +1565,7 @@ public class CoreFunctions {
 
 	public static void explicitWaitTillElementListVisibilityCustomTime(WebDriver driver, List<WebElement> Element,
 			int time) {
-		WebDriverWait wait = new WebDriverWait(driver, time);
+		WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(time));
 		for (WebElement ele : Element) {
 			wait.until(ExpectedConditions.visibilityOf(ele));
 		}
@@ -1606,7 +1606,7 @@ public class CoreFunctions {
 	
 	public static boolean isElementPresent(WebDriver driver, By locator, long time, String name) {
 		try {
-			WebDriverWait wait = new WebDriverWait(driver, time);
+			WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(time));
 			wait.until(ExpectedConditions.presenceOfElementLocated(locator));
 			Reporter.addStepLog(MessageFormat.format(CoreConstants.VRFIED_ELE_PAGE, CoreConstants.PASS, name));
 			return true;
@@ -1621,7 +1621,7 @@ public class CoreFunctions {
 	}
 	public static boolean isElementListExist(WebDriver driver, List<WebElement> element, long time) {
 		try {
-			WebDriverWait wait = new WebDriverWait(driver, time);
+			WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(time));
 			wait.until(ExpectedConditions.visibilityOfAllElements(element));
 			return true;
 		} catch (Exception e) {
@@ -1632,7 +1632,6 @@ public class CoreFunctions {
 
 	public static String generateRandomCharOfLength(int charlength, String type, int specCharLength) {
 		String reqWord = new String();
-		String reqSplChar = new String();
 		Random rnd = new Random();
 		for (int i = 0; i < charlength; i++) {
 			char reqChar = CoreConstants.ALPHABET.charAt(rnd.nextInt(CoreConstants.ALPHABET.length()));

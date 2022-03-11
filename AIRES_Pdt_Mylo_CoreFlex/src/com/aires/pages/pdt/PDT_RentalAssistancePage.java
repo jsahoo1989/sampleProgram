@@ -15,7 +15,6 @@ import com.aires.businessrules.CoreFunctions;
 import com.aires.businessrules.constants.CoreConstants;
 import com.aires.businessrules.constants.PDTConstants;
 import com.aires.managers.FileReaderManager;
-import com.aires.testdatatypes.pdt.PDT_DestinationServicesBenefit;
 import com.aires.testdatatypes.pdt.PDT_RentalAssistanceBenefit;
 
 public class PDT_RentalAssistancePage extends Base {
@@ -81,6 +80,10 @@ public class PDT_RentalAssistancePage extends Base {
 	
 	public void setDuration(String durationSelected) {
 		duration = durationSelected;
+	}
+	
+	public String  getDuration() {
+		return duration;
 	}
 	
 	public void fillRentalTourForm(PDT_AddNewPolicyPage addNewPolicyPage, String subBenefitFormName) {

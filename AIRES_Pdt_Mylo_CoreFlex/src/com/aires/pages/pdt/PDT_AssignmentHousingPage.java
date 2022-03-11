@@ -16,7 +16,6 @@ import com.aires.businessrules.constants.CoreConstants;
 import com.aires.businessrules.constants.PDTConstants;
 import com.aires.managers.FileReaderManager;
 import com.aires.testdatatypes.pdt.PDT_AssignmentHousingBenefit;
-import com.aires.testdatatypes.pdt.PDT_RentalAssistanceBenefit;
 
 public class PDT_AssignmentHousingPage extends Base {
 	public PDT_AssignmentHousingPage(WebDriver driver) {
@@ -104,12 +103,10 @@ public class PDT_AssignmentHousingPage extends Base {
 	
 	public void fillSecurityDepositForm(PDT_AddNewPolicyPage addNewPolicyPage, String subBenefitFormName) {
 		try {
-			
 			CoreFunctions.explicitWaitTillElementListClickable(driver, _radioBtnSecurityDeposit);
 			CoreFunctions.selectItemInListByText(driver, _radioBtnSecurityDeposit,
 					assignmentHousingBenefitData.securityDeposit.reimbursedBy, PDTConstants.REIMBURSED_BY,
 					PDTConstants.RADIO_BUTTON_LIST, true);
-
 			BusinessFunctions.verifyReimbursedByOtherTextBoxIsDisplayed(driver, addNewPolicyPage,
 					assignmentHousingBenefitData.securityDeposit.reimbursedBy, _txtBoxSecurityDepositReimbursedByOther,
 					assignmentHousingBenefitData.securityDeposit.reimbursedByOther, subBenefitFormName);

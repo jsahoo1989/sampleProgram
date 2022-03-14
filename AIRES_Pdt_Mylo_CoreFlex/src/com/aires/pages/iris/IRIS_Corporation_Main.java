@@ -179,6 +179,7 @@ public class IRIS_Corporation_Main extends BasePage {
 		jTabbedPaneTabControl = _IRIS.describe(TabControl.class,
 				new TabControlDescription.Builder().nativeClass("javax.swing.JTabbedPane").index(0).build());
 		jTabbedPaneTabControl.waitUntilEnabled();
+		Thread.sleep(3000);
 		jTabbedPaneTabControl.select(moduleName);
 		Thread.sleep(1000);
 		switchToCorporationModule(moduleName);
@@ -260,7 +261,7 @@ public class IRIS_Corporation_Main extends BasePage {
 					new UiObjectDescription.Builder().attachedText("Policy")
 							.nativeClass("com.aires.iris.view.corporation.accounting.PolicyPanel").build());
 			Assert.assertTrue(policyPanelUiObject.exists());
-			Reporter.addStepLog(Status.PASS + " " + moduleName + " was clicked and verified successfully");
+			Reporter.addStepLog(CoreConstants.PASS + "" + moduleName + " was clicked and verified successfully");
 			break;
 		case "Billing Matrix":
 			Label billingCurrencyStLabel = _IRIS.describe(Label.class,

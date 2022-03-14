@@ -1,0 +1,15 @@
+{
+	"accountType": "Check",
+	"currency": "U.S. Dollar",
+	"accountHoldersName": "account_name",
+	"mailingAddress": {
+		"address1": "address1",
+		"address2": "address2",
+		"city": "city",
+		"state": "American Samoa",
+		"province": "province",
+		"postalCode": "10014",
+		"country": "USA",
+		"accountClosingDate": "16 Feb 2023"
+	}
+}

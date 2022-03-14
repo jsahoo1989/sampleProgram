@@ -52,8 +52,8 @@ public class BasePage {
 	private static String _userName = System.getProperty("user.name").toLowerCase();
 	private static String _processName_uftRuntimeEngine = "LFTRuntime.exe";
 	private PDT_LoginDetails _loginDetails;
-	LinkedHashMap<String, Integer> userPortMap= new LinkedHashMap<String, Integer>();
-	
+	LinkedHashMap<String, Integer> userPortMap = new LinkedHashMap<String, Integer>();
+
 	public BasePage() throws Exception {
 		Thread.sleep(2000);
 		_windowTitle = getWindowText.getActiveWindowText();
@@ -65,7 +65,7 @@ public class BasePage {
 		_IRIS = Desktop.describe(Window.class, new WindowDescription.Builder().title(_windowTitle).build());
 	}
 
-	public void invokeIrisApplication() throws Exception {		
+	public void invokeIrisApplication() throws Exception {
 		getPIDAndKillProces();
 		CoreFunctions.waitHandler(2);
 		allocateUFTPortToUsers();
@@ -88,7 +88,7 @@ public class BasePage {
 
 	public int getPortNumberAsPerUserName() throws Exception {
 		int port = 0;
-		//String userName = System.getProperty("user.name").toLowerCase();
+		// String userName = System.getProperty("user.name").toLowerCase();
 		String computerName = InetAddress.getLocalHost().getHostName();
 		if (computerName.equalsIgnoreCase("corpprdvw270") || _userName.equalsIgnoreCase("srana"))
 			return 5095;
@@ -127,10 +127,10 @@ public class BasePage {
 	public void killExistingBrowsers() throws GeneralLeanFtException {
 		_browser = getIrisInvokedBrowsers();
 		if (_browser.length > 0) {
-			for(Browser browser : _browser) {
+			for (Browser browser : _browser) {
 				browser.close();
 			}
-			//_browser[0].closeAllTabs();
+			// _browser[0].closeAllTabs();
 			_browser = null;
 		}
 	}
@@ -138,7 +138,7 @@ public class BasePage {
 	public void closeIRISApplication() throws Exception {
 		Thread.sleep(2000);
 		_IRIS = Desktop.describe(Window.class, new WindowDescription.Builder().title("Welcome - 12C").build());
-		if(_IRIS.exists() && _IRIS.isVisible()) {
+		if (_IRIS.exists() && _IRIS.isVisible()) {
 			_IRIS.describe(Button.class, new ButtonDescription.Builder().label("exit_32").build()).click();
 		}
 		Thread.sleep(2000);
@@ -160,7 +160,7 @@ public class BasePage {
 		BufferedReader reader = new BufferedReader(new InputStreamReader(_process.getInputStream()));
 		String line;
 		while ((line = reader.readLine()) != null) {
-			//Log.info(line);	//for debugging purpose
+			// Log.info(line); //for debugging purpose
 			if (line.contains(processName)) {
 				// Need to implement logic in this manner as PID can be 3, 4, 5 digits and
 				// substring function sometime didn't work
@@ -191,7 +191,8 @@ public class BasePage {
 		// like 6460@AURORA. Where the value before the @ symbol is the PID.
 		String _jvmName = bean.getName();
 		Log.info("JVM Name = " + _jvmName);
-		// Extract the PID by splitting the string returned by the bean.getName() method.
+		// Extract the PID by splitting the string returned by the bean.getName()
+		// method.
 		long _jvmPID = Long.valueOf(_jvmName.split("@")[0]);
 		Log.info("JVM PID = " + _jvmPID);
 		_servicePID = getPIDAsPerServiceName(_processName);
@@ -199,52 +200,56 @@ public class BasePage {
 			killProcess(_servicePID, _jvmPID);
 		}
 	}
-	
+
 	public boolean getRunningStatus_LFTRuntimeEngine(String processName) {
 		try {
 			_process = Runtime.getRuntime().exec(_getAllLFTTasksRunning);
 			BufferedReader reader = new BufferedReader(new InputStreamReader(_process.getInputStream()));
 			String line;
 			while ((line = reader.readLine()) != null) {
-				//Log.info(line);
+				// Log.info(line);
 				if (line.contains(processName) && line.contains(_userName))
 					return true;
 			}
-		}catch(Exception e) {
-			Log.info("Error Message : "+e);
+		} catch (Exception e) {
+			Log.info("Error Message : " + e);
 		}
 		return false;
 	}
-	
+
 	public void runLFTEngineAsPerStatus() throws Exception {
-		if(getRunningStatus_LFTRuntimeEngine(_processName_uftRuntimeEngine))
-			Log.info("UFT Developer Runtime is Up and Running for User Name: "+_userName);
+		if (getRunningStatus_LFTRuntimeEngine(_processName_uftRuntimeEngine))
+			Log.info("UFT Developer Runtime is Up and Running for User Name: " + _userName);
 		else {
 			Log.info("UFT Developer Runtime Engine is not running..\nStarting the Runtime engine now...");
 			Runtime.getRuntime().exec("C:\\Program Files (x86)\\Micro Focus\\UFT Developer\\bin\\leanft.bat start");
 		}
 	}
-	
+
 	public String getIrisPathForApplication(String appName) {
-		String irisBuildPath = null;		
-		switch(appName) {
+		String irisBuildPath = null;
+		switch (appName) {
 		case CoreConstants.APP_PDT:
-			_loginDetails = FileReaderManager.getInstance().getJsonReader().getLoginByApplication(CoreConstants.APP_PDT);
-			irisBuildPath = getIRISPathAsPerEnvtForPDT(_loginDetails, CoreFunctions.getPropertyFromConfig("envt").toLowerCase());
+			_loginDetails = FileReaderManager.getInstance().getJsonReader()
+					.getLoginByApplication(CoreConstants.APP_PDT);
+			irisBuildPath = getIRISPathAsPerEnvtForPDT(_loginDetails,
+					CoreFunctions.getPropertyFromConfig("envt").toLowerCase());
 			break;
 		case CoreConstants.APP_COREFLEX:
-			_loginDetails = FileReaderManager.getInstance().getJsonReader().getLoginByApplication(CoreConstants.APP_COREFLEX);
+			_loginDetails = FileReaderManager.getInstance().getJsonReader()
+					.getLoginByApplication(CoreConstants.APP_COREFLEX);
 			irisBuildPath = getIRISPathAsPerEnvtForCoreFlex(_loginDetails);
-			break;	
+			break;
 		default:
-			Assert.fail(MessageFormat.format(CoreConstants.INVALID_APPLICATION, CoreFunctions.getPropertyFromConfig("application")));
+			Assert.fail(MessageFormat.format(CoreConstants.INVALID_APPLICATION,
+					CoreFunctions.getPropertyFromConfig("application")));
 		}
 		return irisBuildPath;
 	}
-	
+
 	public String getIRISPathAsPerEnvtForPDT(PDT_LoginDetails _loginDetails, String appEnv) {
-		String irisBuildPath = null;		
-		switch(appEnv) {
+		String irisBuildPath = null;
+		switch (appEnv) {
 		case CoreConstants.ENVT_DEV:
 			irisBuildPath = _loginDetails.dev.irisBuildPath;
 			break;
@@ -261,14 +266,15 @@ public class BasePage {
 			irisBuildPath = _loginDetails.prod.irisBuildPath;
 			break;
 		default:
-			Assert.fail(MessageFormat.format(CoreConstants.INVALID_ENVIRONMENT, CoreFunctions.getPropertyFromConfig("application")));
+			Assert.fail(MessageFormat.format(CoreConstants.INVALID_ENVIRONMENT,
+					CoreFunctions.getPropertyFromConfig("application")));
 		}
 		return irisBuildPath;
 	}
-	
+
 	public String getIRISPathAsPerEnvtForCoreFlex(PDT_LoginDetails _loginDetails) {
-		String irisBuildPath = null;		
-		switch(CoreFunctions.getPropertyFromConfig("envt").toLowerCase()) {
+		String irisBuildPath = null;
+		switch (CoreFunctions.getPropertyFromConfig("envt").toLowerCase()) {
 		case CoreConstants.ENVT_DEV:
 			irisBuildPath = _loginDetails.dev.irisBuildPath;
 			break;
@@ -285,11 +291,12 @@ public class BasePage {
 			irisBuildPath = _loginDetails.prod.irisBuildPath;
 			break;
 		default:
-			Assert.fail(MessageFormat.format(CoreConstants.INVALID_ENVIRONMENT, CoreFunctions.getPropertyFromConfig("application")));
+			Assert.fail(MessageFormat.format(CoreConstants.INVALID_ENVIRONMENT,
+					CoreFunctions.getPropertyFromConfig("application")));
 		}
 		return irisBuildPath;
 	}
-	
+
 	public void allocateUFTPortToUsers() {
 		userPortMap.put("spant", 5088);
 		userPortMap.put("rsharma", 5096);

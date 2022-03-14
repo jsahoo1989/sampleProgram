@@ -12,7 +12,9 @@ import org.openqa.selenium.support.How;
 import org.testng.Assert;
 
 import com.aires.businessrules.Base;
+import com.aires.businessrules.BusinessFunctions;
 import com.aires.businessrules.CoreFunctions;
+import com.aires.businessrules.constants.COREFLEXConstants;
 import com.aires.businessrules.constants.CoreConstants;
 import com.aires.businessrules.constants.PDTConstants;
 import com.aires.utilities.Log;
@@ -82,6 +84,10 @@ public class PDT_ViewPolicyPage extends Base {
 	// Add new Policy Form link
 	@FindBy(how = How.XPATH, using = "//p[text()='Add New Policy Form']")
 	private WebElement _lnkAddNewPolicyForm;
+
+	// Policies Status List
+	@FindBy(how = How.XPATH, using = "//strong[contains(text(),'Policy Status')]/parent::h6")
+	private List<WebElement> _listPolicyStatus;
 
 	final By _listPolicyNameByLocator = By.cssSelector("h5.text-info.info-pname");
 	final By _listClientNameByLocator = By.cssSelector("h6.info-pclient");
@@ -243,6 +249,35 @@ public class PDT_ViewPolicyPage extends Base {
 
 	public List<String> getPolicyList() {
 		return CoreFunctions.getElementTextAndStoreInList(driver, _listPolicyName);
+	}
+
+	public boolean verifySubmittedPolicyStatus(String selectedPolicyName, String expectedPolicyStatus) {
+		boolean isSubmittedPolicyStatusVerified = false;
+		String[] actualPolicyStatus = null;
+		try {
+			int index = BusinessFunctions.returnindexItemFromListUsingText(driver, _listPolicyName, selectedPolicyName);
+			CoreFunctions.highlightObject(driver,
+					CoreFunctions.getElementFromListByText(_listPolicyName, selectedPolicyName));
+			String actualPolicyStatusList = _listPolicyStatus.get(index).getText();
+			actualPolicyStatus = actualPolicyStatusList.split(":");
+			isSubmittedPolicyStatusVerified = (actualPolicyStatus[1].trim()).equals(expectedPolicyStatus);
+			CoreFunctions.highlightObject(driver,
+					CoreFunctions.getElementFromListByText(_listPolicyStatus, (actualPolicyStatus[1].trim())));
+		} catch (Exception e) {
+			Reporter.addStepLog(MessageFormat.format(
+					COREFLEXConstants.EXCEPTION_OCCURED_WHILE_VALIDATING_POLICY_STATUS_ON_VIEW_EDIT_POLICY_FORMS_PAGE,
+					CoreConstants.FAIL, e.getMessage()));
+		}
+		if (isSubmittedPolicyStatusVerified) {
+			Reporter.addStepLog(MessageFormat.format(
+					COREFLEXConstants.SUCCESSFULLY_VERIFIED_POLICY_STATUS_ON_VIEW_EDIT_POLICY_FORMS_PAGE,
+					CoreConstants.PASS, expectedPolicyStatus, selectedPolicyName));
+		} else {
+			Reporter.addStepLog(MessageFormat.format(
+					COREFLEXConstants.FAILED_TO_VERIFY_POLICY_STATUS_ON_VIEW_EDIT_POLICY_FORMS_PAGE, CoreConstants.FAIL,
+					expectedPolicyStatus, actualPolicyStatus[1].trim()));
+		}
+		return isSubmittedPolicyStatusVerified;
 	}
 
 }

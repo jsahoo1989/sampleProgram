@@ -15,6 +15,8 @@ import com.aires.businessrules.CoreFunctions;
 import com.aires.businessrules.constants.COREFLEXConstants;
 import com.aires.businessrules.constants.CoreConstants;
 import com.aires.businessrules.constants.PDTConstants;
+import com.aires.managers.FileReaderManager;
+import com.aires.testdatatypes.coreflex.CoreFlex_PolicySetupPagesData;
 import com.vimalselvam.cucumber.listener.Reporter;
 
 import cucumber.api.DataTable;
@@ -71,6 +73,14 @@ public class CoreFlex_FlexPolicySetupPage extends Base {
 	@FindBy(how = How.XPATH, using = "//ng-select[@formcontrolname='flexSetupTypeCode']/descendant::div[@role='option']/span")
 	private List<WebElement> _selectFlexSetupTypeOptions;
 
+	// Lock The Benefits Points Selection Select Field
+	@FindBy(how = How.CSS, using = "ng-select[formcontrolname='benefitLockCode']")
+	private WebElement _selectLockBenefitsPointsSelection;
+
+	// ock The Benefits Points Selection Select Options
+	@FindBy(how = How.XPATH, using = "//ng-select[@formcontrolname='benefitLockCode']/descendant::div[@role='option']/span")
+	private List<WebElement> _selectLockBenefitsPointsSelectionOptions;
+
 	// Total Points Available Input Field
 	@FindBy(how = How.CSS, using = "input[formcontrolname='staticPoints']")
 	private WebElement _inputTotalPointsAvailable;
@@ -81,7 +91,7 @@ public class CoreFlex_FlexPolicySetupPage extends Base {
 
 	// After Relocation Only Section
 	@FindBy(how = How.CSS, using = "label[class='cashout'] > p")
-	private List<WebElement> _sectionCashoutAvailiblity;
+	private List<WebElement> _sectionCashoutAvailability;
 
 	// Flex Allowance Type
 	@FindBy(how = How.XPATH, using = "//input[@formcontrolname='allowanceTypeCode']/parent::label")
@@ -98,11 +108,51 @@ public class CoreFlex_FlexPolicySetupPage extends Base {
 	// Max Portion Cashout (%) Input Field
 	@FindBy(how = How.ID, using = "inputMargin")
 	private WebElement _inputMarginPortion;
-	
+
 	// Point Exchange Rate Input Field
 	@FindBy(how = How.CSS, using = "input[formcontrolname='pointExchangeRate']")
 	private WebElement _inputPointExchangeRate;
-	
+
+	// Benefits Expiration Tracing Prompt Select Field
+	@FindBy(how = How.CSS, using = "ng-select[formcontrolname='benefitExpTracingPrompt']")
+	private WebElement _selectBenefitExpirationTracingPrompt;
+
+	// Benefits Expiration Tracing Prompt Select Field Options
+	@FindBy(how = How.XPATH, using = "//ng-select[@formcontrolname='benefitExpTracingPrompt']//div[@role='option']/span")
+	private List<WebElement> _selectBenefitExpirationTracingPromptOptions;
+
+	// Benefits Expiration Date Select Field
+	@FindBy(how = How.CSS, using = "ng-select[formcontrolname='benefitExpDateCode']")
+	private WebElement _selectBenefitExpirationDate;
+
+	// Benefits Expiration Date Select Field Options
+	@FindBy(how = How.XPATH, using = "//ng-select[@formcontrolname='benefitExpDateCode']//div[@role='option']/span")
+	private List<WebElement> _selectBenefitExpirationDateOptions;
+
+	// Total Points Available Validation Message
+	@FindBy(how = How.XPATH, using = "//input[@formcontrolname='staticPoints']/parent::div/div[@class='input-error']/div")
+	private WebElement _validationMessageTotalPointsAvailable;
+
+	// Points Exchange Rate Validation Message
+	@FindBy(how = How.XPATH, using = "//input[@formcontrolname='pointExchangeRate']/ancestor::div/div[@class='input-error']/div/div")
+	private WebElement _validationMessagePointsExchangeRate;
+
+	// Max Portion CashOut Validation Message
+	@FindBy(how = How.XPATH, using = "//input[@formcontrolname='maxPortionPercentage']/parent::span/parent::div//div[contains(@class,'input-error')]/div")
+	private WebElement _validationMessageMaxPortionCashout;
+
+	// Error PopUp Ok Button
+	@FindBy(how = How.CSS, using = "button[class*='swal2-confirm']")
+	private WebElement _buttonOKErrorDialog;
+
+	// Error PopUp Text
+	@FindBy(how = How.XPATH, using = "//div[@id='swal2-content'][contains(text(),'Please fill the required field(s).')]")
+	private WebElement _textErrorDialog;
+
+	/*********************************************************************/
+
+	CoreFlex_PolicySetupPagesData policySetupPageData = FileReaderManager.getInstance().getCoreFlexJsonReader()
+			.getPolicySetupPagesDataList(COREFLEXConstants.POLICY_SETUP);
 
 	/*********************************************************************/
 
@@ -161,6 +211,9 @@ public class CoreFlex_FlexPolicySetupPage extends Base {
 			case PDTConstants.EXIT:
 				CoreFunctions.clickElement(driver, _buttonExit);
 				break;
+			case PDTConstants.OK:
+				CoreFunctions.clickElement(driver, _buttonOKErrorDialog);
+				break;
 			default:
 				Assert.fail(COREFLEXConstants.INVALID_ELEMENT);
 			}
@@ -188,9 +241,9 @@ public class CoreFlex_FlexPolicySetupPage extends Base {
 				CoreFunctions.selectItemInListByText(driver, _leftNavigationTitleList,
 						COREFLEXConstants.FLEX_POLICY_SETUP);
 				break;
-			case COREFLEXConstants.POLICY_BENEFITS_CATEGORIES:
+			case COREFLEXConstants.POLICY_BENEFIT_CATEGORIES:
 				CoreFunctions.selectItemInListByText(driver, _leftNavigationTitleList,
-						COREFLEXConstants.POLICY_BENEFITS_CATEGORIES);
+						COREFLEXConstants.POLICY_BENEFIT_CATEGORIES);
 				break;
 			case COREFLEXConstants.BENEFIT_SUMMARY:
 				CoreFunctions.selectItemInListByText(driver, _leftNavigationTitleList,
@@ -232,6 +285,17 @@ public class CoreFlex_FlexPolicySetupPage extends Base {
 
 		List<List<String>> dataList = dataTable.asLists(String.class);
 		String fieldName, fieldSelection;
+		BusinessFunctions.selectRadioAsPerLabelText(driver, _radioFlexAllowanceType,
+				policySetupPageData.flexPolicySetupPage.flexAllowanceType);
+		CoreFunctions.clickElement(driver, _selectLockBenefitsPointsSelection);
+		CoreFunctions.selectItemInListByText(driver, _selectLockBenefitsPointsSelectionOptions,
+				policySetupPageData.flexPolicySetupPage.lockTheBenefitsPointsSelection, true);
+		CoreFunctions.clickElement(driver, _selectBenefitExpirationTracingPrompt);
+		CoreFunctions.selectItemInListByText(driver, _selectBenefitExpirationTracingPromptOptions,
+				policySetupPageData.flexPolicySetupPage.benefitsExpirationTracingPrompt, true);
+		CoreFunctions.clickElement(driver, _selectBenefitExpirationDate);
+		CoreFunctions.selectItemInListByText(driver, _selectBenefitExpirationDateOptions,
+				policySetupPageData.flexPolicySetupPage.benefitsExpirationDate, true);
 
 		for (int i = 0; i < dataList.get(0).size(); i++) {
 			fieldName = dataList.get(0).get(i);
@@ -239,6 +303,13 @@ public class CoreFlex_FlexPolicySetupPage extends Base {
 			performPageFieldSelection(fieldName, fieldSelection);
 		}
 
+		checkFieldValidation(COREFLEXConstants.TOTAL_POINTS_AVAILABLE, "ABCD");
+		checkFieldValidation(COREFLEXConstants.TOTAL_POINTS_AVAILABLE, "#$%");
+		checkFieldValidation(COREFLEXConstants.TOTAL_POINTS_AVAILABLE, "50 Points");
+
+		CoreFunctions.clearAndSetTextUsingKeys(driver, _inputTotalPointsAvailable,
+				policySetupPageData.flexPolicySetupPage.StaticFixedTotalPointsAvailable,
+				COREFLEXConstants.TOTAL_POINTS_AVAILABLE);
 	}
 
 	/**
@@ -252,22 +323,41 @@ public class CoreFlex_FlexPolicySetupPage extends Base {
 		try {
 			switch (fieldName) {
 			case COREFLEXConstants.FLEX_ALLOWANCE_TYPE:
-				BusinessFunctions.selectRadioAsPerLabelText(driver, _radioFlexAllowanceType, fieldSelectionInput.trim());
+				BusinessFunctions.selectRadioAsPerLabelText(driver, _radioFlexAllowanceType,
+						fieldSelectionInput.trim());
 				break;
 			case COREFLEXConstants.PERSON_RESPONSIBLE_FOR_BENEFIT_SELECTION:
 				BusinessFunctions.selectRadioAsPerLabelText(driver, _radioPersonResponsibleForBenefitSelection,
 						fieldSelectionInput.trim());
 				break;
+			case COREFLEXConstants.LOCK_THE_BENEFITS_POINTS_SELECTION:
+				CoreFunctions.clickElement(driver, _selectLockBenefitsPointsSelection);
+				CoreFunctions.selectItemInListByText(driver, _selectLockBenefitsPointsSelectionOptions,
+						fieldSelectionInput, true, fieldName);
+				break;
+			case COREFLEXConstants.BENEFIT_EXPIRATION_TRACING_PROMPT:
+				CoreFunctions.clickElement(driver, _selectBenefitExpirationTracingPrompt);
+				CoreFunctions.selectItemInListByText(driver, _selectBenefitExpirationTracingPromptOptions,
+						fieldSelectionInput, true, fieldName);
+				break;
+			case COREFLEXConstants.BENEFIT_EXPIRATION_DATE:
+				CoreFunctions.clickElement(driver, _selectBenefitExpirationDate);
+				CoreFunctions.selectItemInListByText(driver, _selectBenefitExpirationDateOptions, fieldSelectionInput,
+						true, fieldName);
+				break;
 			case COREFLEXConstants.FLEX_SETUP_TYPE:
 				CoreFunctions.clickElement(driver, _selectFlexSetupType);
-				CoreFunctions.selectItemInListByText(driver, _selectFlexSetupTypeOptions, fieldSelectionInput, true);
+				CoreFunctions.selectItemInListByText(driver, _selectFlexSetupTypeOptions, fieldSelectionInput, true,
+						fieldName);
 				break;
 			case COREFLEXConstants.TOTAL_POINTS_AVAILABLE:
 				CoreFunctions.setElementText(driver, _inputTotalPointsAvailable, fieldSelectionInput);
 				break;
-			case COREFLEXConstants.CASHOUT_AVAILIBLITY:
-				CoreFunctions.selectItemInListByText(driver, _sectionCashoutAvailiblity, fieldSelectionInput, true);
-				fillCashoutAvailiblityDetails(fieldSelectionInput);
+			case COREFLEXConstants.CASHOUT_AVAILABILITY:
+				CoreFunctions.selectItemInListByText(driver, _sectionCashoutAvailability, fieldSelectionInput, true,
+						fieldName);
+				fillCashoutAvailabilityDetails(fieldSelectionInput);
+				CoreFunctions.writeToPropertiesFile("PolicyCashoutType", fieldSelectionInput);
 				break;
 			default:
 				Assert.fail(COREFLEXConstants.INVALID_ELEMENT);
@@ -280,17 +370,23 @@ public class CoreFlex_FlexPolicySetupPage extends Base {
 		}
 	}
 
-	private void fillCashoutAvailiblityDetails(String cashOutAvaiblityType) {
+	private void fillCashoutAvailabilityDetails(String cashOutAvaiblityType) {
 
 		try {
 			switch (cashOutAvaiblityType) {
 			case COREFLEXConstants.PORTION_CASHOUT:
 			case COREFLEXConstants.AFTER_RELOCATION_ONLY:
-				CoreFunctions.clearAndSetText(driver, _inputCustomCashoutName, CoreFunctions.generateRandomString(8));
-				CoreFunctions.set(driver, _inputMarginPortion, CoreFunctions.generateRandomNumberInGivenRange(1,100));
-				CoreFunctions.clearAndSetText(driver, _inputPointExchangeRate, CoreFunctions.generateRandomNumberInGivenRange(1,100));
+				CoreFunctions.clearAndSetTextUsingKeys(driver, _inputCustomCashoutName,
+						policySetupPageData.flexPolicySetupPage.customCashoutBenefitName,
+						COREFLEXConstants.CUSTOM_CASHOUT_NAME);
+				CoreFunctions.clearAndSetTextUsingKeys(driver, _inputMarginPortion,
+						policySetupPageData.flexPolicySetupPage.maxPortionCashoutPercent,
+						COREFLEXConstants.MAX_PORTION_CASHOUT);
+				CoreFunctions.clearAndSetTextUsingKeys(driver, _inputPointExchangeRate,
+						policySetupPageData.flexPolicySetupPage.pointExchangeRate,
+						COREFLEXConstants.POINT_EXCHANGE_RATE);
 				break;
-			case COREFLEXConstants.CASHOUT_NOT_AUTHORIZED:				
+			case COREFLEXConstants.CASHOUT_NOT_AUTHORIZED:
 				break;
 			default:
 				Assert.fail(COREFLEXConstants.INVALID_ELEMENT);
@@ -301,6 +397,84 @@ public class CoreFlex_FlexPolicySetupPage extends Base {
 							CoreConstants.FAIL, cashOutAvaiblityType, e.getMessage()));
 			throw new RuntimeException(e.getMessage());
 		}
+	}
+
+	public void verifyNumericRangeFieldsValidation() {
+		try {
+			CoreFunctions.clickElement(driver, _selectFlexSetupType);
+			CoreFunctions.selectItemInListByText(driver, _selectFlexSetupTypeOptions, COREFLEXConstants.STATIC_FIXED,
+					true);
+			checkFieldValidation(COREFLEXConstants.TOTAL_POINTS_AVAILABLE, "0.24");
+			checkFieldValidation(COREFLEXConstants.TOTAL_POINTS_AVAILABLE, "0.50");
+			checkFieldValidation(COREFLEXConstants.TOTAL_POINTS_AVAILABLE, "100.25");
+			checkFieldValidation(COREFLEXConstants.TOTAL_POINTS_AVAILABLE, "999.5");
+			checkFieldValidation(COREFLEXConstants.TOTAL_POINTS_AVAILABLE, "1001");
+			CoreFunctions.selectItemInListByText(driver, _sectionCashoutAvailability, COREFLEXConstants.PORTION_CASHOUT,
+					true);
+			checkFieldValidation(COREFLEXConstants.POINT_EXCHANGE_RATE, "0.24");
+			checkFieldValidation(COREFLEXConstants.POINT_EXCHANGE_RATE, "0.50");
+			checkFieldValidation(COREFLEXConstants.POINT_EXCHANGE_RATE, "100.25");
+			checkFieldValidation(COREFLEXConstants.POINT_EXCHANGE_RATE, "999.5");
+			checkFieldValidation(COREFLEXConstants.POINT_EXCHANGE_RATE, "1001");
+			checkFieldValidation(COREFLEXConstants.MAX_PORTION_CASHOUT, "0.99");
+			checkFieldValidation(COREFLEXConstants.MAX_PORTION_CASHOUT, "1");
+			checkFieldValidation(COREFLEXConstants.MAX_PORTION_CASHOUT, "50.3");
+			checkFieldValidation(COREFLEXConstants.MAX_PORTION_CASHOUT, "100");
+			checkFieldValidation(COREFLEXConstants.MAX_PORTION_CASHOUT, "100.01");
+		} catch (Exception e) {
+			Reporter.addStepLog(MessageFormat.format(
+					COREFLEXConstants.EXCEPTION_OCCURED_WHILE_VERIFYING_FIELDS_VALIDATIONS_ON_FLEX_PLANNING_TOOL_PAGE,
+					CoreConstants.FAIL, e.getMessage()));
+		}
+	}
+
+	public void checkFieldValidation(String fieldName, String inputValue) {
+		boolean isValidationMessageDisplayed = false;
+		String validationMessage = "";
+		switch (fieldName) {
+		case COREFLEXConstants.TOTAL_POINTS_AVAILABLE:
+			CoreFunctions.clearAndSetTextUsingKeys(driver, _inputTotalPointsAvailable, inputValue, fieldName);
+			clickElementOfPage(PDTConstants.NEXT);
+			acceptErrorDialogIfDisplayed();
+			if (CoreFunctions.isElementExist(driver, _validationMessageTotalPointsAvailable, 5)) {
+				isValidationMessageDisplayed = CoreFunctions
+						.getElementText(driver, _validationMessageTotalPointsAvailable)
+						.equals(COREFLEXConstants.POINT_FIVE_TO_NINE_NINE_NINE_POINT_FIVE_RANGE_NEW_MESSAGE);
+				BusinessFunctions.checkValidationBasedOnInput(isValidationMessageDisplayed, fieldName, inputValue);
+			} else if (CoreFunctions.getElementText(driver, _headerPage)
+					.equals(COREFLEXConstants.POLICY_BENEFIT_CATEGORIES)) {
+				Assert.fail(
+						MessageFormat.format(COREFLEXConstants.USER_NAVIGATION_TO_POLICY_BENEFITS_CATEGORIES_INVALID,
+								CoreConstants.FAIL, fieldName, inputValue));
+			}
+			break;
+		case COREFLEXConstants.POINT_EXCHANGE_RATE:
+			CoreFunctions.clearAndSetTextUsingKeys(driver, _inputPointExchangeRate, inputValue, fieldName);
+			clickElementOfPage(PDTConstants.NEXT);
+			acceptErrorDialogIfDisplayed();
+			if (CoreFunctions.isElementExist(driver, _validationMessagePointsExchangeRate, 5))
+				isValidationMessageDisplayed = CoreFunctions
+						.getElementText(driver, _validationMessagePointsExchangeRate)
+						.equals(COREFLEXConstants.POINT_FIVE_TO_NINE_NINE_NINE_POINT_FIVE_RANGE_OLD_MESSAGE);
+			BusinessFunctions.checkValidationBasedOnInput(isValidationMessageDisplayed, fieldName, inputValue);
+			break;
+		case COREFLEXConstants.MAX_PORTION_CASHOUT:
+			CoreFunctions.clearAndSetTextUsingKeys(driver, _inputMarginPortion, inputValue, fieldName);
+			clickElementOfPage(PDTConstants.NEXT);
+			acceptErrorDialogIfDisplayed();
+			if (CoreFunctions.isElementExist(driver, _validationMessageMaxPortionCashout, 5))
+				validationMessage = CoreFunctions.getElementText(driver, _validationMessageMaxPortionCashout);
+			BusinessFunctions.checkValidationBasedOnInput(validationMessage, fieldName, inputValue);
+			break;
+		default:
+			Assert.fail(COREFLEXConstants.INVALID_OPTION);
+		}
+
+	}
+
+	private void acceptErrorDialogIfDisplayed() {
+		if (CoreFunctions.isElementExist(driver, _textErrorDialog, 2))
+			clickElementOfPage(PDTConstants.OK);
 	}
 
 }

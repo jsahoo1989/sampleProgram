@@ -1,0 +1,351 @@
+package com.aires.pages.coreflex;
+
+import java.text.MessageFormat;
+import java.util.List;
+
+import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.WebElement;
+import org.openqa.selenium.support.FindBy;
+import org.openqa.selenium.support.How;
+import org.testng.Assert;
+
+import com.aires.businessrules.Base;
+import com.aires.businessrules.BusinessFunctions;
+import com.aires.businessrules.CoreFunctions;
+import com.aires.businessrules.constants.COREFLEXConstants;
+import com.aires.businessrules.constants.CoreConstants;
+import com.aires.businessrules.constants.PDTConstants;
+import com.aires.managers.FileReaderManager;
+import com.aires.testdatatypes.coreflex.Benefit;
+import com.aires.testdatatypes.coreflex.CoreFlex_AllowancesBenefitsData;
+import com.aires.testdatatypes.coreflex.CoreFlex_HousingBenefitsData;
+import com.aires.testdatatypes.coreflex.FlexBenefit;
+import com.aires.testdatatypes.coreflex.OtherBenefit;
+import com.vimalselvam.cucumber.listener.Reporter;
+
+public class CoreFlex_BenefitSummaryPage extends Base {
+
+	public CoreFlex_BenefitSummaryPage(WebDriver driver) {
+		super(driver);
+	}
+
+	/****************** Page Objects *************************************/
+
+	// Save & Continue Button
+	@FindBy(how = How.XPATH, using = "//button[contains(text(),'Continue')]")
+	private WebElement _buttonContinue;
+
+	// Save & Continue Button
+	@FindBy(how = How.XPATH, using = "//button[contains(text(),'SAVE & CONTINUE')]")
+	private WebElement _buttonSaveAndContinue;
+
+	// Back Button
+	@FindBy(how = How.CSS, using = "button[class*='btn-back']")
+	private WebElement _buttonBack;
+
+	// Exit Button
+	@FindBy(how = How.CSS, using = "button[class*='btn-exit']")
+	private WebElement _buttonExit;
+
+	// Logout Button
+	@FindBy(how = How.XPATH, using = "//i[contains(text(),'exit_to_app')]")
+	private WebElement _buttonLogout;
+
+	// Progress Bar
+	@FindBy(how = How.CSS, using = "div.ngx-progress-bar.ngx-progress-bar-ltr")
+	private WebElement _progressBar;
+
+	// Policy Header
+	@FindBy(how = How.CSS, using = "h4[class='card-title'] > b")
+	private WebElement _headerPolicyInfo;
+
+	// Page Header
+	@FindBy(how = How.CSS, using = "div[class*='pcard-header'] > h4[class='card-title']")
+	private WebElement _headerPage;
+
+	// Left Navigation Active Tile
+	@FindBy(how = How.XPATH, using = "//ul[@class='nav']/li[contains(@class,'nav-item active')]//p")
+	private WebElement _leftNavigationTitleActive;
+
+	// Left Navigation Completed Sections
+	@FindBy(how = How.XPATH, using = "//ul[@class='nav']//li[contains(@class,'nav-item')]//p")
+	private List<WebElement> _leftNavigationTitleList;
+
+	// Added Benefit Group List
+	@FindBy(how = How.CSS, using = "label[class*='benefit-group']")
+	private List<WebElement> _textAddedBenefitGroupList;
+
+	// Added Benefit Name List
+	@FindBy(how = How.CSS, using = "a[class*='headingBenefit']")
+	private List<WebElement> _textAddedBenefitNameList;
+
+	// Benefit Expand Icon
+	@FindBy(how = How.CSS, using = "a[class*='collapsed']")
+	private List<WebElement> _iconBenefitExpandList;
+
+	// Collapsed SubBenefit List
+	@FindBy(how = How.XPATH, using = "//div[@class='collapse show']//label[@class='d-flex collapsed']")
+	private List<WebElement> _subBenefitList;
+
+	// Benefits Points List
+	@FindBy(how = How.CSS, using = "p[class*='pointText']")
+	private List<WebElement> _benefitsPointsList;
+
+	/*********************************************************************/
+
+	CoreFlex_HousingBenefitsData housingBenefitData = FileReaderManager.getInstance().getCoreFlexJsonReader()
+			.getHousingBenefitDataList(COREFLEXConstants.DUPLICATE_HOUSING);
+
+	CoreFlex_AllowancesBenefitsData lumpSumBenefitData = FileReaderManager.getInstance().getCoreFlexJsonReader()
+			.getLifeStyleBenefitDataList(COREFLEXConstants.LUMP_SUM);
+
+	public static final List<Benefit> coreBenefits = FileReaderManager.getInstance().getCoreFlexJsonReader()
+			.getMXTransfereeCoreBenefitDetails();
+
+	public static final List<FlexBenefit> flexBenefits = FileReaderManager.getInstance().getCoreFlexJsonReader()
+			.getMXTransfereeFlexBenefitDetails();
+
+	public static final List<OtherBenefit> otherBenefits = FileReaderManager.getInstance().getCoreFlexJsonReader()
+			.getMXTransfereeOtherBenefitDetails();
+
+	/*********************************************************************/
+
+	/*********************************************************************/
+
+	/**
+	 * Method to get Navigated Page Header.
+	 * 
+	 * @return
+	 */
+	public String getPageHeaderTitle() {
+		try {
+			CoreFunctions.explicitWaitTillElementVisibility(driver, _headerPage, COREFLEXConstants.BENEFIT_SUMMARY);
+			return CoreFunctions.getElementText(driver, _headerPage);
+		} catch (Exception e) {
+			Reporter.addStepLog(
+					MessageFormat.format(COREFLEXConstants.EXCEPTION_OCCURED_WHILE_FETCHING_PAGE_HEADER_TITLE,
+							CoreConstants.FAIL, e.getMessage()));
+		}
+		return null;
+	}
+
+	/**
+	 * Method to get currently active Left Navigation Menu.
+	 * 
+	 * @return
+	 */
+	public String getLeftNavigationPageTitle() {
+		try {
+			return CoreFunctions.getElementText(driver, _leftNavigationTitleActive);
+		} catch (Exception e) {
+			Reporter.addStepLog(
+					MessageFormat.format(COREFLEXConstants.EXCEPTION_OCCURED_WHILE_FETCHING_LEFT_NAVIGATION_TITLE,
+							CoreConstants.FAIL, e.getMessage()));
+		}
+		return null;
+	}
+
+	/**
+	 * Generic Method to Click on an Element on a Page.
+	 * 
+	 * @param elementName
+	 */
+	public void clickElementOfPage(String elementName) {
+		try {
+			switch (elementName) {
+			case COREFLEXConstants.LOGOUT:
+				CoreFunctions.clickElement(driver, _buttonLogout);
+				break;
+			case COREFLEXConstants.SAVE_AND_CONTINUE:
+				CoreFunctions.clickElement(driver, _buttonSaveAndContinue);
+				CoreFunctions.explicitWaitTillElementInVisibility(driver, _progressBar);
+				break;
+			case COREFLEXConstants.CONTINUE:
+				CoreFunctions.clickElement(driver, _buttonContinue);
+				CoreFunctions.explicitWaitTillElementInVisibility(driver, _progressBar);
+				break;
+			case COREFLEXConstants.BACK:
+				CoreFunctions.clickElement(driver, _buttonBack);
+				CoreFunctions.explicitWaitTillElementInVisibility(driver, _progressBar);
+				break;
+			case COREFLEXConstants.EXIT:
+				CoreFunctions.clickElement(driver, _buttonExit);
+				break;
+			default:
+				Assert.fail(COREFLEXConstants.INVALID_ELEMENT);
+			}
+		} catch (Exception e) {
+			Reporter.addStepLog(
+					MessageFormat.format(COREFLEXConstants.EXCEPTION_OCCURED_WHILE_CLICKING_ON_AN_ELEMENT_OF_PAGE,
+							CoreConstants.FAIL, elementName, e.getMessage()));
+			throw new RuntimeException(e);
+		}
+	}
+
+	/**
+	 * Generic method to click on an Left Navigation Menu.
+	 * 
+	 * @param elementName
+	 */
+	public void clickLeftNavigationMenuOfPage(String elementName) {
+		try {
+			switch (elementName) {
+			case COREFLEXConstants.GENERAL_INFORMATION:
+				CoreFunctions.selectItemInListByText(driver, _leftNavigationTitleList,
+						COREFLEXConstants.GENERAL_INFORMATION);
+				break;
+			case COREFLEXConstants.FLEX_POLICY_SETUP:
+				CoreFunctions.selectItemInListByText(driver, _leftNavigationTitleList,
+						COREFLEXConstants.FLEX_POLICY_SETUP);
+				break;
+			case COREFLEXConstants.POLICY_BENEFIT_CATEGORIES:
+				CoreFunctions.selectItemInListByText(driver, _leftNavigationTitleList,
+						COREFLEXConstants.POLICY_BENEFIT_CATEGORIES);
+				break;
+			case COREFLEXConstants.DUPLICATE_HOUSING:
+				CoreFunctions.selectItemInListByText(driver, _leftNavigationTitleList,
+						COREFLEXConstants.DUPLICATE_HOUSING);
+				break;
+			case COREFLEXConstants.LUMP_SUM:
+				CoreFunctions.selectItemInListByText(driver, _leftNavigationTitleList, COREFLEXConstants.LUMP_SUM);
+				break;
+			case COREFLEXConstants.BENEFIT_SUMMARY:
+				CoreFunctions.selectItemInListByText(driver, _leftNavigationTitleList,
+						COREFLEXConstants.BENEFIT_SUMMARY);
+				break;
+			case COREFLEXConstants.CUSTOM_BUNDLES:
+				CoreFunctions.selectItemInListByText(driver, _leftNavigationTitleList,
+						COREFLEXConstants.CUSTOM_BUNDLES);
+				break;
+			default:
+				Assert.fail(PDTConstants.INVALID_ELEMENT);
+			}
+		} catch (Exception e) {
+			Reporter.addStepLog(MessageFormat.format(
+					COREFLEXConstants.EXCEPTION_OCCURED_WHILE_CLICKING_ON_LEFTNAVIGATION_ELEMENT_OF_PAGE,
+					CoreConstants.FAIL, elementName, e.getMessage()));
+			throw new RuntimeException(e);
+
+		}
+	}
+
+	/**
+	 * Method to verify navigated Page Header Title and Left Navigation
+	 * 
+	 * @param expectedPageName
+	 * @return
+	 */
+	public boolean verifyPageNavigation(String expectedPageName) {
+		return (getPageHeaderTitle().equals(expectedPageName))
+				& (getLeftNavigationPageTitle().equals(COREFLEXConstants.BENEFIT_SUMMARY));
+	}
+
+	/**
+	 * Method to iterate and verify Added Benefits & SubBenefits on Benefit Summary
+	 * page
+	 * 
+	 * @param dataTable
+	 */
+	public boolean iterateAndVerifyBenefitSummaryDetails(String policyType) {
+		boolean isBenefitSummaryVerified = false;
+
+		try {
+			isBenefitSummaryVerified = iterateAndVerifyFlexBenefitsSummaryDetails()
+					&& iterateAndVerifyOtherBenefitsSummaryDetails();
+
+		} catch (Exception e) {
+			Reporter.addStepLog(MessageFormat.format(
+					COREFLEXConstants.EXCEPTION_OCCURED_WHILE_VALIDATING_BENEFIT_CATEGORIES_AND_TYPE_ON_BENEFIT_SUMMARY_PAGE,
+					CoreConstants.FAIL, e.getMessage()));
+		}
+		if (isBenefitSummaryVerified) {
+			Reporter.addStepLog(MessageFormat.format(
+					COREFLEXConstants.SUCCESSFULLY_VERIFIED_BENEFIT_CATEGORIES_AND_TYPE_ON_BENEFIT_SUMMARY_PAGE,
+					CoreConstants.PASS));
+		}
+		return isBenefitSummaryVerified;
+	}
+
+	private boolean iterateAndVerifyOtherBenefitsSummaryDetails() {
+		boolean isOtherBenefitSummaryVerified = false;
+		boolean benefitCategoryVerified, benefitTypeVerified, benefitPointsVerified;
+		try {
+			for (OtherBenefit benefitList : otherBenefits) {
+				for (Benefit benefit : benefitList.getBenefits()) {
+					String expectedBenefitCategory = benefitList.getCategory();
+					String expectedBenefitName = benefit.getBenefitDisplayName();
+					String expectedbenefitPoints = benefit.getPoints();
+					int indexBenefit = BusinessFunctions.returnindexItemFromListUsingText(driver,
+							_textAddedBenefitNameList, expectedBenefitName);
+					int indexCategory = BusinessFunctions.returnindexItemFromListUsingText(driver,
+							_textAddedBenefitGroupList, expectedBenefitCategory, true);
+					String actualBenefitCategory = _textAddedBenefitGroupList.get(indexCategory).getText();
+					String actualBenefitName = _textAddedBenefitNameList.get(indexBenefit).getText();
+					String actualBenefitPoints = _benefitsPointsList.get(indexBenefit).getText();
+
+					benefitCategoryVerified = actualBenefitCategory.contains(expectedBenefitCategory);
+					benefitTypeVerified = actualBenefitName.equals(expectedBenefitName);
+					benefitPointsVerified = actualBenefitPoints.equals(expectedbenefitPoints);
+					isOtherBenefitSummaryVerified = benefitCategoryVerified & benefitTypeVerified
+							& benefitPointsVerified;
+					if (!isOtherBenefitSummaryVerified) {
+						break;
+					}
+				}
+			}
+		} catch (Exception e) {
+			Reporter.addStepLog(MessageFormat.format(
+					COREFLEXConstants.EXCEPTION_OCCURED_WHILE_VALIDATING_OTHER_BENEFIT_CATEGORIES_AND_TYPE_ON_BENEFIT_SUMMARY_PAGE,
+					CoreConstants.FAIL, e.getMessage()));
+		}
+
+		if (isOtherBenefitSummaryVerified) {
+			Reporter.addStepLog(MessageFormat.format(
+					COREFLEXConstants.SUCCESSFULLY_VERIFIED_OTHER_BENEFIT_CATEGORIES_AND_TYPE_ON_BENEFIT_SUMMARY_PAGE,
+					CoreConstants.PASS));
+		}
+		return isOtherBenefitSummaryVerified;
+	}
+
+	private boolean iterateAndVerifyFlexBenefitsSummaryDetails() {
+		boolean isFlexBenefitSummaryVerified = false;
+		boolean benefitCategoryVerified, benefitTypeVerified, benefitPointsVerified;
+		try {
+			for (FlexBenefit benefitList : flexBenefits) {
+				for (Benefit benefit : benefitList.getBenefits()) {
+					String expectedBenefitCategory = benefitList.getCategory();
+					String expectedBenefitName = benefit.getBenefitDisplayName();
+					String expectedbenefitPoints = benefit.getPoints();
+					int indexBenefit = BusinessFunctions.returnindexItemFromListUsingText(driver,
+							_textAddedBenefitNameList, expectedBenefitName);
+					int indexCategory = BusinessFunctions.returnindexItemFromListUsingText(driver,
+							_textAddedBenefitGroupList, expectedBenefitCategory, true);
+					String actualBenefitCategory = _textAddedBenefitGroupList.get(indexCategory).getText();
+					String actualBenefitName = _textAddedBenefitNameList.get(indexBenefit).getText();
+					String actualBenefitPoints = _benefitsPointsList.get(indexBenefit).getText();
+
+					benefitCategoryVerified = actualBenefitCategory.contains(expectedBenefitCategory);
+					benefitTypeVerified = actualBenefitName.equals(expectedBenefitName);
+					benefitPointsVerified = actualBenefitPoints.equals(expectedbenefitPoints);
+					isFlexBenefitSummaryVerified = benefitCategoryVerified & benefitTypeVerified
+							& benefitPointsVerified;
+					if (!isFlexBenefitSummaryVerified) {
+						break;
+					}
+				}
+			}
+		} catch (Exception e) {
+			Reporter.addStepLog(MessageFormat.format(
+					COREFLEXConstants.EXCEPTION_OCCURED_WHILE_VALIDATING_FLEX_BENEFIT_CATEGORIES_AND_TYPE_ON_BENEFIT_SUMMARY_PAGE,
+					CoreConstants.FAIL, e.getMessage()));
+		}
+
+		if (isFlexBenefitSummaryVerified) {
+			Reporter.addStepLog(MessageFormat.format(
+					COREFLEXConstants.SUCCESSFULLY_VERIFIED_FLEX_BENEFIT_CATEGORIES_AND_TYPE_ON_BENEFIT_SUMMARY_PAGE,
+					CoreConstants.PASS));
+		}
+		return isFlexBenefitSummaryVerified;
+	}
+
+}

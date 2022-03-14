@@ -281,12 +281,12 @@ public class EmailUtil {
 			_searchTag[1] = "</b></font>";
 			break;
 		case PDTConstants.TRANSFEREE_USER_NAME:
-			_searchTag[0] = "<strong>Username</strong>";
-			_searchTag[1] = "</p>";
+			_searchTag[0] = "<strong>Username</strong>\r\n\t\t\t\t\t\t\t\t\t\t:";
+			_searchTag[1] = "</span>\r\n</p>";
 			break;
 		case PDTConstants.TRANSFEREE_PASSWORD:
 			_searchTag[0] = "</span></b><span style=\"font-family:century gothic, Helvetica, Calibri, Roboto;\">";
-			_searchTag[1] = "</span>";
+			_searchTag[1] = "</span>\r\n</p>";
 			break;
 		default:
 			Assert.fail("Information not found");

@@ -48,7 +48,7 @@ import org.openqa.selenium.WebElement;
 import org.openqa.selenium.interactions.Actions;
 import org.openqa.selenium.support.ui.Select;
 import org.testng.Assert;
-
+import com.aires.businessrules.constants.COREFLEXConstants;
 import com.aires.businessrules.constants.CoreConstants;
 import com.aires.businessrules.constants.PDTConstants;
 import com.aires.pages.pdt.PDT_AddNewPolicyPage;
@@ -86,6 +86,7 @@ public class BusinessFunctions {
 			Log.info(CoreConstants.ACTUAL_ITEM_NAME_IS + row.getText());
 			if (row.getText().equals(itemName)) {
 				CoreFunctions.clickUsingJS(driver, row, itemName);
+				Reporter.addStepLog(CoreConstants.PASS + row.getText() + PDTConstants.IS_CLICKED);
 				break;
 			}
 		}
@@ -780,6 +781,109 @@ public class BusinessFunctions {
 		} catch (Exception e) {			
 			Assert.fail(MessageFormat.format(PDTConstants.EXCEPTION_OCCURED_VERIFY_OTHER_TEXT_BOX, CoreConstants.FAIL,
 					PDTConstants.OTHER, lblDrpDown, subBenefitFormName));
+		}
+	}
+	
+	public static void selectValueFromListUsingIndex(List<WebElement> listWebElement, int index) {
+		listWebElement.get(index).click();
+	}
+	
+	public static int returnindexItemFromListUsingText(WebDriver driver, List<WebElement> WebElementList,
+			String itemName, boolean flag) {
+		try {
+			for (WebElement row : WebElementList) {
+				Log.info(CoreConstants.ACTUAL_ITEM_NAME_IS + row.getText());
+				if ((row.getText().trim()).contains(itemName))
+					return WebElementList.indexOf(row);
+			}
+		} catch (ElementNotFoundException e) {
+			e.printStackTrace();
+		}
+		return -1;
+	}
+	
+	public static void checkValidationBasedOnInput(boolean isValidationMessageDisplayed, String fieldName,
+			String inputValue) {
+
+		try {
+			if ((Double.parseDouble(inputValue) < 0.5 || Double.parseDouble(inputValue) > 999.5)
+					&& isValidationMessageDisplayed) {
+				Reporter.addStepLog(MessageFormat.format(
+						COREFLEXConstants.SUCCESSFULLY_VERIFIED_VALIDATIONS_ON_FLEX_PLANNING_TOOL_PAGE,
+						CoreConstants.PASS, COREFLEXConstants.POINT_FIVE_TO_NINE_NINE_NINE_POINT_FIVE_RANGE, inputValue,
+						fieldName));
+			} else if ((Double.parseDouble(inputValue) < 0.5 || Double.parseDouble(inputValue) > 999.5)
+					&& !isValidationMessageDisplayed) {
+				Reporter.addStepLog(MessageFormat.format(
+						COREFLEXConstants.VALIDATION_MESSAGE_NOT_DISPLAYED_FOR_INVALID_RANGE_ON_FLEX_PLANNING_TOOL_PAGE,
+						CoreConstants.FAIL, COREFLEXConstants.POINT_FIVE_TO_NINE_NINE_NINE_POINT_FIVE_RANGE, inputValue,
+						fieldName));
+				throw new RuntimeException(MessageFormat.format(
+						COREFLEXConstants.VALIDATION_MESSAGE_NOT_DISPLAYED_FOR_INVALID_RANGE_ON_FLEX_PLANNING_TOOL_PAGE,
+						CoreConstants.FAIL, COREFLEXConstants.POINT_FIVE_TO_NINE_NINE_NINE_POINT_FIVE_RANGE, inputValue,
+						fieldName));
+			} else if ((Double.parseDouble(inputValue) >= 0.5 || Double.parseDouble(inputValue) <= 999.5)
+					&& !isValidationMessageDisplayed) {
+				Reporter.addStepLog(MessageFormat.format(
+						COREFLEXConstants.SUCCESSFULLY_VERIFIED_VALIDATION_MESSAGE_NOT_DISPLAYED_ON_FLEX_PLANNING_TOOL_PAGE,
+						CoreConstants.PASS, COREFLEXConstants.POINT_FIVE_TO_NINE_NINE_NINE_POINT_FIVE_RANGE, inputValue,
+						fieldName));
+			} else if ((Double.parseDouble(inputValue) >= 0.5 || Double.parseDouble(inputValue) <= 999.5)
+					&& isValidationMessageDisplayed) {
+				Reporter.addStepLog(MessageFormat.format(
+						COREFLEXConstants.VALIDATION_MESSAGE_DISPLAYED_FOR_VALID_RANGE_ON_FLEX_PLANNING_TOOL_PAGE,
+						CoreConstants.FAIL, COREFLEXConstants.POINT_FIVE_TO_NINE_NINE_NINE_POINT_FIVE_RANGE, inputValue,
+						fieldName));
+				throw new RuntimeException(MessageFormat.format(
+						COREFLEXConstants.VALIDATION_MESSAGE_DISPLAYED_FOR_VALID_RANGE_ON_FLEX_PLANNING_TOOL_PAGE,
+						CoreConstants.FAIL, COREFLEXConstants.POINT_FIVE_TO_NINE_NINE_NINE_POINT_FIVE_RANGE, inputValue,
+						fieldName));
+			}
+		} catch (NumberFormatException e) {
+			if (isValidationMessageDisplayed) {
+				Reporter.addStepLog(MessageFormat.format(
+						COREFLEXConstants.SUCCESSFULLY_VERIFIED_VALIDATIONS_ON_FLEX_PLANNING_TOOL_PAGE,
+						CoreConstants.PASS, COREFLEXConstants.POINT_FIVE_TO_NINE_NINE_NINE_POINT_FIVE_RANGE, inputValue,
+						fieldName));
+			} else {
+				Reporter.addStepLog(MessageFormat.format(
+						COREFLEXConstants.VALIDATION_MESSAGE_NOT_DISPLAYED_FOR_NON_NUMERIC_INVALID_VALUE_ON_FLEX_PLANNING_TOOL_PAGE,
+						CoreConstants.FAIL, COREFLEXConstants.POINT_FIVE_TO_NINE_NINE_NINE_POINT_FIVE_RANGE, inputValue,
+						fieldName));
+				throw new RuntimeException(MessageFormat.format(
+						COREFLEXConstants.VALIDATION_MESSAGE_NOT_DISPLAYED_FOR_NON_NUMERIC_INVALID_VALUE_ON_FLEX_PLANNING_TOOL_PAGE,
+						CoreConstants.FAIL, COREFLEXConstants.POINT_FIVE_TO_NINE_NINE_NINE_POINT_FIVE_RANGE, inputValue,
+						fieldName));
+			}
+		}
+	}
+
+	public static void checkValidationBasedOnInput(String validationMessage, String fieldName, String inputValue) {
+
+		if ((Double.parseDouble(inputValue) <= 0.99)
+				&& validationMessage.equals(COREFLEXConstants.FIELD_VALUE_CANNOT_BE_LESS_THAN_ONE)) {
+			Reporter.addStepLog(
+					MessageFormat.format(COREFLEXConstants.SUCCESSFULLY_VERIFIED_VALIDATIONS_ON_FLEX_PLANNING_TOOL_PAGE,
+							CoreConstants.PASS, validationMessage, inputValue, fieldName));
+		} else if ((Double.parseDouble(inputValue) > 100)
+				&& validationMessage.equals(COREFLEXConstants.FIELD_VALUE_CANNOT_BE_GREATER_THAN_HUNDRED)) {
+			Reporter.addStepLog(
+					MessageFormat.format(COREFLEXConstants.SUCCESSFULLY_VERIFIED_VALIDATIONS_ON_FLEX_PLANNING_TOOL_PAGE,
+							CoreConstants.PASS, validationMessage, inputValue, fieldName));
+		} else if ((Double.parseDouble(inputValue) >= 1) && (Double.parseDouble(inputValue) <= 100)
+				&& ((validationMessage.isEmpty()))) {
+			Reporter.addStepLog(MessageFormat.format(
+					COREFLEXConstants.SUCCESSFULLY_VERIFIED_VALIDATION_MESSAGE_NOT_DISPLAYED_ON_FLEX_PLANNING_TOOL_PAGE,
+					CoreConstants.PASS, validationMessage, inputValue, fieldName));
+		} else if ((Double.parseDouble(inputValue) >= 1) && (Double.parseDouble(inputValue) <= 100)
+				&& ((validationMessage.equals(COREFLEXConstants.FIELD_VALUE_CANNOT_BE_LESS_THAN_ONE))
+						|| (validationMessage.equals(COREFLEXConstants.FIELD_VALUE_CANNOT_BE_GREATER_THAN_HUNDRED)))) {
+			Reporter.addStepLog(MessageFormat.format(
+					COREFLEXConstants.VALIDATION_MESSAGE_DISPLAYED_FOR_VALID_RANGE_ON_FLEX_PLANNING_TOOL_PAGE,
+					CoreConstants.FAIL, validationMessage, inputValue, fieldName));
+			throw new RuntimeException(MessageFormat.format(
+					COREFLEXConstants.VALIDATION_MESSAGE_DISPLAYED_FOR_VALID_RANGE_ON_FLEX_PLANNING_TOOL_PAGE,
+					CoreConstants.FAIL, validationMessage, inputValue, fieldName));
 		}
 	}
 }

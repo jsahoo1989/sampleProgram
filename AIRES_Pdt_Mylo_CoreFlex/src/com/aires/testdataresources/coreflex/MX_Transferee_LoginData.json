@@ -1,0 +1,16 @@
+[
+	{
+		"firstName": "Test",
+		"lastName": "Six",
+		"userName": "92265TestSix",
+		"password": "relonetng",  
+		"mxTransfereeFirstName": "Rekha",
+		"mxTransfereeLastName": "QA",
+		"mxTransfereeUserName": "0011079057@aires.com",
+		"mxTransfereePassword": "Relonetng1",
+		"firstName_Prod": "Test",
+		"lastName_Prod": "One",
+		"userName_Prod": "92265TestOne",
+		"password_Prod": "relonetng"
+	}
+]

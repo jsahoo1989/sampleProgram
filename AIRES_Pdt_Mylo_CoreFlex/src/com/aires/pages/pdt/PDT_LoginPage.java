@@ -61,7 +61,7 @@ public class PDT_LoginPage extends Base {
 	}
 
 	public void openApplication() {
-		Log.info(FileReaderManager.getInstance().getConfigReader().getPDTApplicationUrl());
+		//Log.info(FileReaderManager.getInstance().getConfigReader().getPDTApplicationUrl());
 		CoreFunctions.waitForBrowserToLoad(driver);
 		Log.info("Inside openApplication");
 		VerifyAIRESLogo();
@@ -96,11 +96,8 @@ public class PDT_LoginPage extends Base {
 			openApplication();
 			switch (userType) {
 			case PDTConstants.CSM:
-				//enterLoginCredentials(loginData.CSMUserName, loginData.CSMPassword);
 				enterLoginCredentials(BusinessFunctions.getCSMCredentials(_loginDetailsApplication)[0], BusinessFunctions.getCSMCredentials(_loginDetailsApplication)[1]);
 				clickLoginBtn();
-				/*isSuccessfullyLoggedIn = viewPolicyPage.verifyUserlogin(loginData.CSMFullName,
-						PDTConstants.VIEW_POLICY_PAGE);*/
 				isSuccessfullyLoggedIn = viewPolicyPage.verifyUserlogin(BusinessFunctions.getCSMCredentials(_loginDetailsApplication)[0],
 						PDTConstants.VIEW_POLICY_PAGE);
 				break;

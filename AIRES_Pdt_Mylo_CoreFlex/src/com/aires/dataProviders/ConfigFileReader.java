@@ -22,20 +22,15 @@ import java.io.BufferedReader;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
-import java.util.HashMap;
-import java.util.Map;
 import java.util.Properties;
 
-import com.aires.businessrules.CoreFunctions;
-import com.aires.businessrules.constants.PDTConstants;
 import com.aires.enums.DriverType;
 import com.aires.enums.EnvironmentType;
-import com.aires.utilities.Log;
 
 public class ConfigFileReader {
 	private Properties properties;
 	private final String propertyFilePath = System.getProperty("user.dir") + "\\Configs\\Config.properties";
-	private static String _url = null;
+//	private static String _url = null;
 
 	public ConfigFileReader() {
 		BufferedReader reader;
@@ -130,15 +125,43 @@ public class ConfigFileReader {
 					"Application Url not specified in the Configuration.properties file for the Key:url");
 	}
 	
-	public String getCoreFlexApplicationUrl() {
-		if (properties.getProperty("envt").equalsIgnoreCase("Test"))
-			return properties.getProperty("coreFlexTestURL");
+	public String getCoreFlexPolicySetupApplicationUrl() {
+		if (properties.getProperty("envt").equalsIgnoreCase("UAT"))
+			return properties.getProperty("coreFlexPolicySetupUatUrl");
 		else if (properties.getProperty("envt").equalsIgnoreCase("QA"))
-			return properties.getProperty("coreFlexQaURL");
+			return properties.getProperty("coreFlexPolicySetupQaUrl");
 		else if (properties.getProperty("envt").equalsIgnoreCase("Prod"))
-			return properties.getProperty("coreFlexProdURL");
+			return properties.getProperty("coreFlexPolicySetupProdUrl");
 		else if (properties.getProperty("envt").equalsIgnoreCase("Dev"))
-			return properties.getProperty("coreFlexDevURL");
+			return properties.getProperty("coreFlexPolicySetupDevUrl");
+		else
+			throw new RuntimeException(
+					"Application Url not specified in the Configuration.properties file for the Key:url");
+	}
+	
+	public String getCoreFlexTransfereeSubmissionsApplicationUrl() {
+		if (properties.getProperty("envt").equalsIgnoreCase("Test"))
+			return properties.getProperty("coreFlexTransfereeSubmissionsTestUrl");
+		else if (properties.getProperty("envt").equalsIgnoreCase("QA"))
+			return properties.getProperty("coreFlexTransfereeSubmissionsQaUrl");
+		else if (properties.getProperty("envt").equalsIgnoreCase("Prod"))
+			return properties.getProperty("coreFlexTransfereeSubmissionsProdUrl");
+		else if (properties.getProperty("envt").equalsIgnoreCase("Dev"))
+			return properties.getProperty("coreFlexTransfereeSubmissionsDevUrl");
+		else
+			throw new RuntimeException(
+					"Application Url not specified in the Configuration.properties file for the Key:url");
+	}
+	
+	public String getMobilityXUrl() {
+		if (properties.getProperty("envt").equalsIgnoreCase("UAT"))
+			return properties.getProperty("mxTransfereeUatURL");
+		else if (properties.getProperty("envt").equalsIgnoreCase("QA"))
+			return properties.getProperty("mxTransfereeQaURL");
+		else if (properties.getProperty("envt").equalsIgnoreCase("Prod"))
+			return properties.getProperty("mxTransfereeProdURL");
+		else if (properties.getProperty("envt").equalsIgnoreCase("Dev"))
+			return properties.getProperty("mxTransfereeDevURL");
 		else
 			throw new RuntimeException(
 					"Application Url not specified in the Configuration.properties file for the Key:url");

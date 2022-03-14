@@ -1,0 +1,20 @@
+[
+	{
+		"application": "Transferee Submissions",
+		"loginUserDEV": {
+			"userName": "mxssodev5@corp.aires.com",
+			"password": "AiresDevSSOTest$",
+			"fullName": "mxsso dev5"
+		},
+		"loginUserQA": {
+			"userName": "test",
+			"password": "test",
+			"fullName": "test"
+		},
+		"loginUserUAT": {
+			"userName": "test",
+			"password": "test",
+			"fullName": "test"
+		}
+	}
+]

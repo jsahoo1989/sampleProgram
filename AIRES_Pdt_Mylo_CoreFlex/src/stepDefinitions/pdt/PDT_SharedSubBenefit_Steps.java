@@ -10,8 +10,11 @@ import com.aires.businessrules.constants.CoreConstants;
 import com.aires.businessrules.constants.PDTConstants;
 import com.aires.cucumber.TestContext;
 import com.aires.pages.pdt.PDT_AddNewPolicyPage;
+import com.aires.pages.pdt.PDT_AssignmentHousingPage;
+import com.aires.pages.pdt.PDT_CompensationServicesPage;
 import com.aires.pages.pdt.PDT_CulturalTrainingPage;
 import com.aires.pages.pdt.PDT_DestinationServicesPage;
+import com.aires.pages.pdt.PDT_DuplicateHousingPage;
 import com.aires.pages.pdt.PDT_FinalMovePage;
 import com.aires.pages.pdt.PDT_GeneralInformationPage;
 import com.aires.pages.pdt.PDT_HomeLeavePage;
@@ -19,6 +22,7 @@ import com.aires.pages.pdt.PDT_HouseHuntingTripPage;
 import com.aires.pages.pdt.PDT_ImmigrationPage;
 import com.aires.pages.pdt.PDT_LanguageTrainingPage;
 import com.aires.pages.pdt.PDT_PreAcceptanceService;
+import com.aires.pages.pdt.PDT_RentalAssistancePage;
 import com.aires.pages.pdt.PDT_SharedSubBenefitPage;
 import com.aires.pages.pdt.PDT_TemporaryLivingPage;
 import com.aires.pages.pdt.PDT_ViewPolicyPage;
@@ -42,6 +46,10 @@ public class PDT_SharedSubBenefit_Steps {
 	private PDT_TemporaryLivingPage temporaryLivingPage;
 	private PDT_GeneralInformationPage generalInfoPage;
 	private PDT_DestinationServicesPage destinationServicesPage;
+	private PDT_RentalAssistancePage rentalAssistancePage;
+	private PDT_CompensationServicesPage compensationServicesPage;
+	private PDT_AssignmentHousingPage assignmentHousingPage;
+	private PDT_DuplicateHousingPage duplicateHousingPage;
 	
 	public PDT_SharedSubBenefit_Steps(TestContext context) {
 		testContext = context;
@@ -58,6 +66,10 @@ public class PDT_SharedSubBenefit_Steps {
 		temporaryLivingPage = testContext.getPageObjectManager().getTemporaryLivingPage();
 		generalInfoPage = testContext.getPageObjectManager().getGeneralInfoPage();
 		destinationServicesPage = testContext.getPageObjectManager().getDestinationServicesPage();
+		rentalAssistancePage = testContext.getPageObjectManager().getRentalAssistancePage();
+		compensationServicesPage = testContext.getPageObjectManager().getCompensationServicesPage();
+		assignmentHousingPage = testContext.getPageObjectManager().getAssignmentHousingPage();
+		duplicateHousingPage = testContext.getPageObjectManager().getDuplicateHousingPage();
 	}
 	
 	public PDT_PreAcceptanceService getPreAcceptServicePage() {
@@ -100,6 +112,22 @@ public class PDT_SharedSubBenefit_Steps {
 		return destinationServicesPage;
 	}
 	
+	public PDT_RentalAssistancePage getRentalAssistancePage() {
+		return rentalAssistancePage;
+	}
+	
+	public PDT_CompensationServicesPage getCompensationServicesPage() {
+		return compensationServicesPage;
+	}
+	
+	public PDT_AssignmentHousingPage getAssignmentHousingPage() {
+		return assignmentHousingPage;
+	}
+	
+	public PDT_DuplicateHousingPage getDuplicateHousingPage() {
+		return duplicateHousingPage;
+	}
+	
 	@When("^he clicks on 'SUBMIT' button after entering mandatory information for all the below selected sub benefits on \"([^\"]*)\" page$")
 	public void he_clicks_on_SUBMIT_button_after_entering_mandatory_information_for_all_the_below_selected_sub_benefits_on_page(
 			String policyBenefitPgName, DataTable subBenefitTable) {
@@ -112,12 +140,13 @@ public class PDT_SharedSubBenefit_Steps {
 
 	@Then("^success message \"([^\"]*)\" should be displayed on the \"([^\"]*)\" page$")
 	public void success_message_should_be_displayed_on_the_page(String successMsg, String pageName) {
-		Assert.assertTrue(preAcceptanceServicePage.verifySaveSuccessMessage(successMsg, pageName, addNewPolicyPage), MessageFormat
+		Assert.assertTrue(subBenefitPage.verifySaveSuccessMessage(successMsg, pageName, addNewPolicyPage), MessageFormat
 				.format(PDTConstants.FAILED_TO_VERIFY_SUCCESS_MSG, CoreConstants.FAIL, successMsg, pageName));
 	}
 
-	@Then("^newly created Policy should be displayed under \"([^\"]*)\" page$")
-	public void newly_created_Policy_should_be_displayed_under_page(String pageName) {		
+	@Then("^newly created Policy should be displayed under \"([^\"]*)\" page after clicking on 'EXIT' button$")
+	public void newly_created_Policy_should_be_displayed_under_page_after_clicking_on_EXIT_button(String pageName) {
+		subBenefitPage.exitFromPolicyBenefitPage();
 		Assert.assertTrue(viewPolicyPage.searchAndVerifyPolicy(addNewPolicyPage.getPolicyName().split("\\(#")[0].trim(), pageName, addNewPolicyPage),
 				MessageFormat.format(PDTConstants.FAILED_TO_VERIFY_ELEMENT_DISPLAYED_ON_PAGE, CoreConstants.FAIL, PDTConstants.POLICY_NAME,
 						addNewPolicyPage.getPolicyName(), pageName, viewPolicyPage.getPolicyList()));
@@ -133,5 +162,11 @@ public class PDT_SharedSubBenefit_Steps {
 	public void below_Tabs_should_appear_in_Sub_benefit_form_on_page(String pageName, DataTable subBenefitTable) {
 		Assert.assertTrue(subBenefitPage.iterateSubBenefitForTabs(pageName, addNewPolicyPage, subBenefitTable), subBenefitPage.getTabNameNotMatch(pageName));		
 		DbFunctions.deletePolicyByPolicyId(addNewPolicyPage.getPolicyId());
+	}
+	
+	@When("^he clicks on 'SUBMIT' button after entering mandatory information on \"([^\"]*)\" page$")
+	public void he_clicks_on_SUBMIT_button_after_entering_mandatory_information_on_page(String pageName) throws Throwable {
+		subBenefitPage.verifySelectedPolicyBenefitCategoryName(pageName);
+		duplicateHousingPage.fillDuplicateHousingForm(addNewPolicyPage, pageName);
 	}
 }

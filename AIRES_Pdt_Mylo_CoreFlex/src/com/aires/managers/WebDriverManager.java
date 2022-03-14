@@ -158,8 +158,8 @@ public class WebDriverManager {
 		// System.setProperty(EDGE_DRIVER_PROPERTY,
 		// FileReaderManager.getInstance().getConfigReader().getEdgeDriverPath());
 		io.github.bonigarcia.wdm.WebDriverManager.edgedriver().setup();
-		EdgeOptions options = new EdgeOptions();
-		options.setPageLoadStrategy("normal");
+		EdgeOptions options = new EdgeOptions();		
+		options.setPageLoadStrategy(PageLoadStrategy.NORMAL);
 		driver = new EdgeDriver(options);
 	}
 

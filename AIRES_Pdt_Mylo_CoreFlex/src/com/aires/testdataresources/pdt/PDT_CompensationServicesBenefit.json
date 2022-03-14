@@ -1,0 +1,26 @@
+[
+	{
+		"benefitName": "Compensation Services",
+		"letterOfAssignment": {			
+			"comment": "Letter of Assignment comment."		
+		},
+		"costEstimateWithTax": {			
+			"comment": "Cost Estimate With Tax comment."		
+		},
+		"costEstimateWithoutTax": {			
+			"comment": "Cost Estimate Without Tax comment."		
+		},
+		"balanceSheet": {			
+			"comment": "Balance sheet comment."		
+		},
+		"allowanceUpdates": {			
+			"comment": "Allowance Updates comment."		
+		},
+		"globalDataCollection": {			
+			"comment": "Global Data Collections comment."		
+		},
+		"payrollInstructions": {			
+			"comment": "Payroll Instructions comment."		
+		}
+	}
+]

@@ -261,4 +261,12 @@ public class COREFLEXConstants {
 	public static final String SUCCESSFULLY_VERIFIED_OTHER_BENEFIT_DETAILS_ON_FLEX_PLANNING_TOOL_PAGE = "{0}Successfully verified Other Benefit Details on Flex Planning Tool page of MXTransferee application.";
 	public static final String EXCEPTION_OCCURED_WHILE_VALIDATING_FLEX_BENEFIT_DETAILS_ON_FLEX_PLANNING_TOOL_PAGE = "{0}Exception occured while validating Flex Benefits on Flex Planning Tool page of MXTransferee application. Exception : ''{1}''.";
 	public static final String SUCCESSFULLY_VERIFIED_FLEX_BENEFIT_DETAILS_ON_FLEX_PLANNING_TOOL_PAGE = "{0}Successfully verified Flex Benefit Details on Flex Planning Tool page of MXTransferee application.";
+	public static final String EXCEPTION_OCCURED_WHILE_VALIDATING_SELECTED_FLEX_BENEFIT_DETAILS_ON_MY_BENEFITS_PAGE = "{0}Exception occured while validating selected Flex Benefits Details On My Benefits Page. Exception : ''{1}''.";
+	public static final String EXCEPTION_OCCURED_WHILE_VALIDATING_SELECTED_OTHER_BENEFIT_DETAILS_ON_MY_BENEFITS_PAGE = "{0}Exception occured while validating selected Other Benefits Details On My Benefits Page. Exception : ''{1}''.";
+	public static final String SUCCESSFULLY_VERIFIED_SELECTED_FLEX_BENEFIT_DETAILS_ON_MY_BENEFITS_PAGE = "{0}Successfully verified selected Flex Benefit details on My Benefits Page.";
+	public static final String SUCCESSFULLY_VERIFIED_SELECTED_OTHER_BENEFIT_DETAILS_ON_MY_BENEFITS_PAGE = "{0}Successfully verified selected Other Benefit details on My Benefits Page.";
+	public static final String EXCEPTION_OCCURED_WHILE_VALIDATING_SELECTED_FLEX_BENEFIT_DETAILS_ON_SUBMISSION_CONFIRMATION_DIALOG = "{0}Exception occured while validating selected Flex Benefits Details On Submission Confirmation Dialog. Exception : ''{1}''.";
+	public static final String EXCEPTION_OCCURED_WHILE_VALIDATING_SELECTED_OTHER_BENEFIT_DETAILS_ON_SUBMISSION_CONFIRMATION_DIALOG = "{0}Exception occured while validating selected Other Benefits Details On Submission Confirmation Dialog. Exception : ''{1}''.";
+	public static final String SUCCESSFULLY_VERIFIED_SELECTED_FLEX_BENEFIT_DETAILS_ON_SUBMISSION_CONFIRMATION_DIALOG = "{0}Successfully verified selected Flex Benefit details On Submission Confirmation Dialog.";
+	public static final String SUCCESSFULLY_VERIFIED_SELECTED_OTHER_BENEFIT_DETAILS_ON_SUBMISSION_CONFIRMATION_DIALOG = "{0}Successfully verified selected Other Benefit details On Submission Confirmation Dialog.";
 }

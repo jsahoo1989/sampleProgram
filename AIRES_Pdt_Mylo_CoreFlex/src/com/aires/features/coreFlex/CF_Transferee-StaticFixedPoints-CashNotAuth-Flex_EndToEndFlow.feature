@@ -1,6 +1,6 @@
 Feature: Validate the CoreFlex End-To-End Business Test Flow(Policy Setup, MXTransferee, MSPEC) for Flex_Transferee_StaticFixedPoints_CashoutNotAuthorized Policy selection
 
-@PolicySetupFlow @Flex-CashNotAuth_PF @TestWF1
+@PolicySetupFlow @Flex-CashNotAuth_PF @TestWF
 Scenario: CoreFlex - Setting up a New CoreFlex policy in 'Policy Digitization Tool' application 
 	Given he has setup a new "Flex" Type Policy with following selection in 'Policy Digitization Tool (PDT)' application 
 		| Person Responsible For Benefit Selection | Flex Setup Type | Cashout Availability   |

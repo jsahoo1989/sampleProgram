@@ -14,9 +14,11 @@ import com.aires.businessrules.CoreFunctions;
 import com.aires.businessrules.constants.COREFLEXConstants;
 import com.aires.businessrules.constants.CoreConstants;
 import com.aires.businessrules.constants.MobilityXConstants;
+import com.aires.businessrules.constants.PDTConstants;
 import com.aires.managers.FileReaderManager;
 import com.aires.testdatatypes.coreflex.CoreFlex_PolicySetupPagesData;
 import com.aires.testdatatypes.coreflex.MX_Transferee_AccountSetupDetails;
+import com.aires.utilities.EmailUtil;
 import com.aires.utilities.Log;
 import com.vimalselvam.cucumber.listener.Reporter;
 
@@ -292,6 +294,9 @@ public class MX_Transferee_JourneyHomePage extends Base {
 			spentPointsAfterBenefitSubmission = Double.parseDouble(actualSubmittedSpentAndTotalPoints[0]);
 			if (spentPointsAfterBenefitSubmission == MX_Transferee_FlexPlanningTool_Page.totalSelectedPoints) {
 				CoreFunctions.clickElement(driver, _poinBalance_tooltip);
+				CoreFunctions.explicitWaitTillElementVisibility(driver, _poinBalance_tooltip_content, MobilityXConstants.TRANSFEREE_JOURNEY_TOOLTIP);
+				System.out.println("ActualMessage : "+CoreFunctions.getElementText(driver, _poinBalance_tooltip_content));
+				System.out.println("ExpectedMessage : "+pointBalanceDetails());
 				isSubmittedSpentPointsValid = CoreFunctions.getElementText(driver, _poinBalance_tooltip_content)
 						.equals(pointBalanceDetails());
 				CoreFunctions.clickElement(driver, _close_tootip);
@@ -321,8 +326,6 @@ public class MX_Transferee_JourneyHomePage extends Base {
 		double remaining = Double.parseDouble(total) - Double.parseDouble(consumed);
 		DecimalFormat format = new DecimalFormat();
 		format.setDecimalSeparatorAlwaysShown(false);
-		System.out.println(MobilityXConstants.POINT_BALANCE_DETAILS.replace("used_points", consumed).replace("total_points", total)
-				.replace("current_balance", format.format(remaining)));
 		return MobilityXConstants.POINT_BALANCE_DETAILS.replace("used_points", consumed).replace("total_points", total)
 				.replace("current_balance", format.format(remaining));
 	}
@@ -403,4 +406,41 @@ public class MX_Transferee_JourneyHomePage extends Base {
 		}
 		return isSetupPageDisplayed;
 	}
+
+	public boolean verifyBenefitSubmissionEmail() {
+		try {
+			// Reading Transferee Username and Password from email and writing to the Config
+			// Properties File
+			String host = "outlook.office365.com";
+			// Enter Your Email ID
+			String userName = "airesautomation@aires.com";
+			// Enter your email outlook password
+			String pwd = CoreConstants.AUTO_EMAIL_PWD;
+			// Enter expected From complete email address
+			String expFromUserName = "testrelonet@aires.com";
+			// Enter expected email subject
+			String expEmailSubject = "Mobility Flex Benefit(s) Submission";
+			String actualResultSubmissionDetails = EmailUtil.searchEmailAndReturnResult(host, userName, pwd, expFromUserName, expEmailSubject,
+					MobilityXConstants.FLEX_BENEFIT_SUBMISSION);
+			actualResultSubmissionDetails = actualResultSubmissionDetails.replace("<span>", "").replace("</span>", "").replace("\r\n", "").trim();
+			System.out.println("EmailResult : "+actualResultSubmissionDetails);
+			System.out.println("ActuaResult : "+submittedPointsEmailMessage());
+			Reporter.addStepLog(CoreConstants.PASS
+					+ "Successfully verified Mobility Flex Benefit(s) Submission Email.");			
+			return actualResultSubmissionDetails.equals(submittedPointsEmailMessage());
+		}catch(Exception e) {
+			Reporter.addStepLog(
+					MessageFormat.format(COREFLEXConstants.EXCEPTION_OCCURED_WHILE_READING_CREDENTIALS_FROM_EMAIL,
+							CoreConstants.FAIL, e.getMessage()));
+		}		
+		return false;
+	}
+
+	private String submittedPointsEmailMessage() {
+		String total = policySetupPageData.flexPolicySetupPage.StaticFixedTotalPointsAvailable;
+		double remaining = MX_Transferee_MyBenefitsBundlePage.availablePointsAfterSubmission;
+		double consumed = Double.parseDouble(policySetupPageData.flexPolicySetupPage.StaticFixedTotalPointsAvailable)-remaining;		
+		return MobilityXConstants.FLEX_BENEFITS_SUBMISSION_MESSAGE.replace("used_points", String.valueOf(consumed)).replace("total_points", total)
+				.replace("current_balance", String.valueOf(remaining));
+	}	
 }

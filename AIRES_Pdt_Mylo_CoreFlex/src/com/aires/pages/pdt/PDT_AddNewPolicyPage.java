@@ -791,10 +791,12 @@ public class PDT_AddNewPolicyPage extends Base {
 
 				if (_optionsClientID.get(i).getText().contains("49211")
 						|| _optionsClientID.get(i).getText().contains("13951")
-						|| _optionsClientID.get(i).getText().contains("97402"))
+						|| _optionsClientID.get(i).getText().contains("97402")
+						|| _optionsClientID.get(i).getText().contains("94941"))
 					continue;
 				else {
 					CoreFunctions.clickElement(driver, _optionsClientID.get(i));
+					CoreFunctions.explicitWaitTillElementInVisibility(driver, _progressBar);
 					if (CoreFunctions.isElementExist(driver, _policyNameDefaultText, 2)) {
 						CoreFunctions.clickElement(driver, _inputClientID);
 						continue;

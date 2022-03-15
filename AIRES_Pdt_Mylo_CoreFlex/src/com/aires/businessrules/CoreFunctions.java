@@ -1732,7 +1732,7 @@ public class CoreFunctions {
 		String text = "";
 		try {
 			text = Element.findElement(subElementLocator).getText().trim();
-			highlightObject(driver, Element);
+//			highlightObject(driver, Element);
 			Reporter.addStepLog(CoreConstants.PASS + CoreConstants.TXT_ACTUAL + CoreConstants.IS_DISPLAYED_AS + text);
 		} catch (Exception e) {
 			Reporter.addStepLog("Could not get element text");
@@ -1810,6 +1810,16 @@ public class CoreFunctions {
 		try {
 			result = list.get(index).getText();
 			highlightObject(driver, list.get(index));
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return result;
+	}
+	
+	public static String getItemsFromListByIndexWithoutHighlight(WebDriver driver, List<WebElement> list, int index) {
+		String result = null;
+		try {
+			result = list.get(index).getText();
 		} catch (Exception e) {
 			e.printStackTrace();
 		}

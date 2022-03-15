@@ -28,6 +28,7 @@ import org.testng.Assert;
 import com.aires.businessrules.CoreFunctions;
 import com.aires.businessrules.constants.PDTConstants;
 import com.aires.businessrules.constants.CoreConstants;
+import com.aires.businessrules.constants.MobilityXConstants;
 import com.vimalselvam.cucumber.listener.Reporter;
 
 public class EmailUtil {
@@ -288,6 +289,10 @@ public class EmailUtil {
 			_searchTag[0] = "</span></b><span style=\"font-family:century gothic, Helvetica, Calibri, Roboto;\">";
 			_searchTag[1] = "</span>\r\n</p>";
 			break;
+		case MobilityXConstants.FLEX_BENEFIT_SUBMISSION:
+			_searchTag[0] = "journey!<br><br>\r\n<p>";
+			_searchTag[1] = "<br><br>\r\n\r\nYour Aires";
+			break;
 		default:
 			Assert.fail("Information not found");
 		}
@@ -337,8 +342,6 @@ public class EmailUtil {
 					Log.info("searchTag[0]==" + _searchTag[0]);
 					Log.info("searchTag[1]==" + _searchTag[1]);
 					searchText = StringUtils.substringBetween(messageText, _searchTag[0], _searchTag[1]);
-					// searchText = StringUtils.substringBetween(messageText, "href=\"", "\"><font
-					// color");
 					break;
 				}
 			}

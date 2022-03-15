@@ -162,4 +162,19 @@ public class MobilityXConstants {
 	public static final String CASHOUT_NOT_AUTHORIZED = "Cashout Not Authorized";
 	public static final String AFTER_RELOCATION_ONLY = "After Relocation Only";
 	public static final String SUCCESSFULLY_VERIFIED_CUSTOM_BUNDLE_NAME_LIST_AND_POINTS = "{0}Successfully verified Custom/Suggested Bundle(s) Name, List & Points Details on Suggested Bundles Page.";
+	public static final String SUCCESSFULLY_VERIFIED_CUSTOM_BUNDLE_SELECT_THIS_BUTTON_IS_DISABLED = "{0}Successfully verified Custom Bundle SelectThis button is disabled, when summation of all Benefits Points : ''{1}'' is greater than Total Available Points : ''{2}''.";
+	public static final String CUSTOM_BUNDLE_SELECT_THIS_BUTTON_IS_ENABLED_FOR_CALCULATED_TOTALPOINTS_GREATER_THAN_TOTALAVAILABLEPOINTS = "{0}Custom Bundle SelectThis button is Enabled for Calculated TotalPoints : ''{1}'' greater than Total Available Points : ''{2}''.";
+	public static final String CUSTOM_BUNDLE_SELECT_THIS_BUTTON_IS_ENABLED_FOR_CALCULATED_TOTALPOINTS_EQUAL_TO_TOTALAVAILABLEPOINTS = "{0}Custom Bundle SelectThis button is Enabled for Calculated TotalPoints : ''{1}'' EqualTo Total Available Points : ''{2}''.";
+	public static final String CUSTOM_BUNDLE_SELECT_THIS_BUTTON_IS_DISABLED_FOR_CALCULATED_TOTALPOINTS_EQUAL_TO_TOTALAVAILABLEPOINTS = "{0}Custom Bundle SelectThis button is Disabled for Calculated TotalPoints : ''{1}'' EqualTo Total Available Points : ''{2}''.";
+	public static final String CUSTOM_BUNDLE_SELECT_THIS_BUTTON_IS_DISABLED_FOR_CALCULATED_TOTALPOINTS_GREATER_THAN_TOTALAVAILABLEPOINTS = "{0}Custom Bundle SelectThis button is Disabled for Calculated TotalPoints : ''{1}'' greater than Total Available Points : ''{2}''.";
+	public static final String CUSTOM_BUNDLE_SELECT_THIS_BUTTON_IS_ENABLED_FOR_CALCULATED_TOTALPOINTS_LESS_THAN_TOTALAVAILABLEPOINTS = "{0}Custom Bundle SelectThis button is Enabled for Calculated TotalPoints : ''{1}'' less than Total Available Points : ''{2}''.";
+	public static final String CUSTOM_BUNDLE_SELECT_THIS_BUTTON_IS_DISABLED_FOR_CALCULATED_TOTALPOINTS_LESS_THAN_TOTALAVAILABLEPOINTS = "{0}Custom Bundle SelectThis button is Disabled for Calculated TotalPoints : ''{1}'' less than Total Available Points : ''{2}''.";
+	public static final String BACK_TO_BENEFITS_LIST = "Back to benefits list";
+	public static final String SUBMIT_MY_BUNDLE = "Submit My Bundle";
+	public static final String SUCCESSFULLY_DISPLAYED_SUBMITTED_BENEFIT_SECTION_IN_MY_BENEFIT_BUNDLE_PAGE = "{0}Successfully displayed Submitted Benefits section in My Benefit Bundle page.";
+	public static final String SUBMITTED_BENEFIT_SECTION_NOT_DISPLAYED_IN_MY_BENEFIT_BUNDLE_PAGE = "{0}Submitted Benefits section NOT displayed in My Benefit Bundle page.";
+	public static final String DELETE = "Delete";
+	public static final String TRANSFEREE_JOURNEY_TOOLTIP = "Transferee Journey ToolTip";
+	public static final String FLEX_BENEFIT_SUBMISSION = "Flex Benefit Submission";
+	public static final String FLEX_BENEFITS_SUBMISSION_MESSAGE = "The attached document outlines the mobility flex benefit(s) that you have submitted. You have used used_points point(s) of yourtotal_points-point allowance. Your current point balance is current_balance point(s).";
 }

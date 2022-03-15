@@ -41,6 +41,7 @@
 					"points": "22.5",
 					"subBenefits": "Lump Sum",
 					"multipleBenefitSelection": "No",
+					"numberOfBenefitSelected": 1,
 					"selectBenefitOnFPTPage": false
 				}
 			]
@@ -55,7 +56,7 @@
 					"benefitDisplayName": "Automated Other Housing Benefit Display Name",
 					"benefitAmount": "Automated Allowance Amount 23 of payments",
 					"benefitDesc": "Automated Other Housing Benefit Long Description. Setting up a CoreFlex Policy to be consumed by Client/Transferee to select Desired Benefits and track/Manage Points.",
-					"points": "455.5",
+					"points": "155.5",
 					"multipleBenefitSelection": "Yes",
 					"numberOfBenefitSelected": 2,
 					"selectBenefitOnFPTPage": false,

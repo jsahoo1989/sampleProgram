@@ -4,6 +4,7 @@ import java.text.MessageFormat;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
@@ -25,6 +26,8 @@ import com.aires.testdatatypes.mylo.MyloAssignmentDetails;
 import com.aires.testdatatypes.mylo.MyloCAStates;
 import com.aires.testdatatypes.mylo.MyloIndiaStates;
 import com.aires.testdatatypes.mylo.MyloUSStates;
+import com.aires.testdatatypes.mylo.Mylo_AssignmentShipmentDetails;
+import com.aires.testdatatypes.mylo.Mylo_Assignment_HistoryDetails_UAT;
 import com.vimalselvam.cucumber.listener.Reporter;
 import cucumber.api.DataTable;
 
@@ -291,6 +294,44 @@ public class Mylo_AssignmentPage extends Base {
 	@FindBy(how = How.XPATH, using = "//button[contains(@class,'toast-close-btn')]")
 	private WebElement _closeBtn;
 	
+	// *************** History section ***********************//
+
+	@FindBy(how = How.XPATH, using = "//div[@class='gallery']/figure/descendant::p[@class='history-address']")
+	private List<WebElement> _historyCardDropdownAddress;
+	
+	@FindBy(how = How.XPATH, using = "//div[@class='gallery']/figure/descendant::span")
+	private List<WebElement> _historyCardDropdownFileIdClient;
+	
+	@FindBy(how = How.XPATH, using = "//div[@class='gallery']/figure/descendant::h3")
+	private List<WebElement> _historyCardDropdownTransferreName;
+		
+	@FindBy(how = How.XPATH, using = "//div[@class='historyusertitle text-truncate']")
+	private List<WebElement> _historyCardDisplayedAddress;
+	
+	@FindBy(how = How.XPATH, using = "//div[@class='historyrole text-truncate']/span")
+	private List<WebElement> _historyCardDisplayedFileIdClient;
+	
+	@FindBy(how = How.CSS, using = "div[class='historyfiletitle text-truncate']")
+	private List<WebElement> _historyCardDisplayedTransferreName;
+	
+	@FindBy(how = How.XPATH, using = "//div[contains(@class,'historycard')]")
+	private WebElement _historyCardSection;
+	
+	@FindBy(how = How.XPATH, using = "//button[@id='closedesc']")
+	private List<WebElement> _historyCardCloseBtn;
+	
+	@FindBy(how = How.XPATH, using = "//div[@class='history']/following-sibling::button[@id='closedesc']")
+	private WebElement _historyCardDropdown;
+	
+	@FindBy(how = How.XPATH, using = "//canvas[@data-id='canvas']/following-sibling::input")
+	private WebElement __webSwingSection;
+	
+	@FindBy(how = How.CSS, using = "div[class='sk-three-strings']")
+	private WebElement _spinner;
+	
+	@FindBy(how = How.XPATH, using = "//a[text()=' Shipment ']//following-sibling::ul/li/a")
+	private List<WebElement> _shipmentDropdownValues;
+			
 	int noOfAiresFileTeamMember;
 	LinkedHashMap<String, String> airesFileTeamExistingMembers = new LinkedHashMap<String, String>();
 	LinkedHashMap<String, WebElement> airesFileInfoFieldsMap = new LinkedHashMap<String, WebElement>();
@@ -299,14 +340,18 @@ public class Mylo_AssignmentPage extends Base {
 	List<WebElement> countryList = new ArrayList<WebElement>();
 	List<WebElement> typeDropDownList = new ArrayList<WebElement>();
 	List<WebElement> stateList = new ArrayList<WebElement>();
+	List<String> historyfileIds = new ArrayList<String>();
+	List<String> historyDetails = new ArrayList<String>();
 
 	final By _dropdownOptions = By.xpath("//div[@role='option']/span");
 	final By _fileInfoOfficeDropdownReadOnly = By.xpath("//ng-select[@name='office']//descendant::input[@disabled='']");
 	final By _fileInfoPolicyTypeDropdownReadOnly = By.xpath("//ng-select[@name='policyType']//input[@disabled]");
-	final By _assignmentSubMenus = By.xpath("//div[contains(@class,'navlist__container')]/li/a");
+	final By _assignmentSubMenus = By.xpath("//div[contains(@class,'navlist__container')]/li/descendant::a");
 
 	MyloAssignmentDetails assignmentDetails = FileReaderManager.getInstance().getMyloJsonReader()
 			.getAssignmentDetailsByApplication(MYLOConstants.IRIS);
+	Mylo_AssignmentShipmentDetails assignmentShipmentDetails = FileReaderManager.getInstance().getMyloJsonReader()
+			.getAssignmentShipmentDetailsByEnv(CoreFunctions.getPropertyFromConfig("envt"));
 	
 	String updatedTeamMember, updatedPolicyType, updatedTaxTreatment, updatedOffice, updatedJourneyType, updatedTransferType,
 	updatedHomeStatus, updatedFileInfoCheckboxSelected, updatedTempAddressCityValue,
@@ -321,7 +366,6 @@ public class Mylo_AssignmentPage extends Base {
 	 */
 	public void clickAssignmentTabs(String option) {
 		List<WebElement> subTabs = CoreFunctions.getElementListByLocator(driver, _assignmentSubMenus);
-		CoreFunctions.explicitWaitTillElementListVisibility(driver, subTabs);
 		CoreFunctions.selectItemInListByText(driver, subTabs, option);
 	}
 
@@ -1178,6 +1222,7 @@ public class Mylo_AssignmentPage extends Base {
 			copyCountryList.remove(MYLOConstants.SELECT_ONE);
 			copyCountryList.remove(MYLOConstants.USA_STATE);
 			flag = CoreFunctions.verifyListOrder(copyCountryList, MYLOConstants.ASCENDING);
+			break;
 		default:
 			Reporter.addStepLog(CoreConstants.FAIL + MYLOConstants.ENTER_CORRECT_FIELD_NAME);
 			Assert.fail(MYLOConstants.ENTER_CORRECT_FIELD_NAME);
@@ -1232,12 +1277,7 @@ public class Mylo_AssignmentPage extends Base {
 			CoreFunctions.selectItemInListByText(driver, typeDropDownList, fieldValue);
 	}
 	
-	/**
-	 * @param fieldValue
-	 * @return
-	 * Set the value of City field on Other Address section
-	 */
-	public String setOtherAddressCity(String fieldValue) {
+	public String setFieldOtherAddress(WebElement element, String fieldValue) {
 		String updatedValue;
 		try {
 			updatedValue = CoreFunctions.generateRandomCharOfLength(Integer.parseInt(fieldValue),
@@ -1247,7 +1287,7 @@ public class Mylo_AssignmentPage extends Base {
 					? CoreFunctions.generateRandomCharOfLength(4, MYLOConstants.SPECIAL_CHARACTERS_STRING, 2)
 					: fieldValue;
 		}
-		CoreFunctions.clearAndSetText(driver, _otherAddressaddCityValue, updatedValue);
+		CoreFunctions.clearAndSetText(driver, element, updatedValue);
 		return updatedValue;
 	}
 	
@@ -1270,75 +1310,6 @@ public class Mylo_AssignmentPage extends Base {
 		return updatedZipCodeValue;
 	}
 	
-	/**
-	 * @param fieldValue
-	 * @return
-	 * Set the value of State Field on Other Address section	
-	 */
-	public String setOtherAddressStateTextField(String fieldValue) {
-		String updatedStateValue = null;
-		try {
-			updatedStateValue = CoreFunctions.generateRandomCharOfLength(Integer.parseInt(fieldValue),
-					MYLOConstants.ONLY_CHARACTERS, 0);
-		} catch (NumberFormatException e) {
-			updatedStateValue = (fieldValue.equals(MYLOConstants.SPECIAL_CHARACTERS_STRING))
-					? CoreFunctions.generateRandomCharOfLength(4, MYLOConstants.SPECIAL_CHARACTERS_STRING, 2)
-					: fieldValue;
-		}
-		CoreFunctions.clearAndSetText(driver, _otherAddressaddStateValue, updatedStateValue);
-		return updatedStateValue;
-	}
-	
-	/**
-	 * @param fieldValue
-	 * @return
-	 * Set the value of Address1 on Other Address section
-	 */
-	public String setOtherAddressAddress1(String fieldValue) {
-		String updatedAddress1 = null;
-		try {
-			updatedAddress1 = CoreFunctions.generateRandomCharOfLength(Integer.parseInt(fieldValue),
-					MYLOConstants.ONLY_CHARACTERS, 0);
-		} catch (NumberFormatException e) {
-			updatedAddress1 = (fieldValue.equals(MYLOConstants.SPECIAL_CHARACTERS_STRING))
-					? CoreFunctions.generateRandomCharOfLength(4, MYLOConstants.SPECIAL_CHARACTERS_STRING, 2)
-					: fieldValue;
-		}
-		CoreFunctions.clearAndSetText(driver, _otherAddressaddAddress1Value, updatedAddress1);
-		return updatedAddress1;
-	}
-	
-	/**
-	 * @param fieldValue
-	 * @return
-	 * Set the value of Address2 on Other Address section
-	 */
-	public String setOtherAddressAddress2(String fieldValue) {
-		String updatedAddress2 = null;
-		try {
-			updatedAddress2 = CoreFunctions.generateRandomCharOfLength(Integer.parseInt(fieldValue),
-					MYLOConstants.ONLY_CHARACTERS, 0);
-		} catch (NumberFormatException e) {
-			updatedAddress2 = (fieldValue.equals(MYLOConstants.SPECIAL_CHARACTERS_STRING))
-					? CoreFunctions.generateRandomCharOfLength(4, MYLOConstants.SPECIAL_CHARACTERS_STRING, 2)
-					: fieldValue;
-		}
-		CoreFunctions.clearAndSetText(driver, _otherAddressaddAddress2Value, updatedAddress2);
-		return updatedAddress2;
-	}
-	
-	/**
-	 * @param fieldValue
-	 * @return
-	 * Set the value of Comments on Other Address section
-	 */
-	public String setOtherAddressComments(String fieldValue) {
-		String updatedComments = (fieldValue.equals(MYLOConstants.SPECIAL_CHARACTERS_STRING))
-				? CoreFunctions.generateRandomCharOfLength(4,MYLOConstants.SPECIAL_CHARACTERS_STRING, 2)
-				: fieldValue;
-		CoreFunctions.clearAndSetText(driver, _otherAddressaddCommentValue, updatedComments);
-		return updatedComments;
-	}
 	
 	/**
 	 * @param fieldValue
@@ -1369,7 +1340,7 @@ public class Mylo_AssignmentPage extends Base {
 		case MYLOConstants.STATE_TEXT_FIELD:
 			clickElementOnOtherAddressesSection(MYLOConstants.COUNTRY);
 			setOtherAddressCountry(MYLOConstants.RANDOM);
-			setOtherAddressStateTextField(fieldValue);
+			setFieldOtherAddress(_otherAddressaddStateValue, fieldValue);
 			break;		
 		case MYLOConstants.TEMP_ADDRESS_TYPE:
 		case MYLOConstants.MAIl_ADDRESS_TYPE:
@@ -1377,10 +1348,10 @@ public class Mylo_AssignmentPage extends Base {
 			break;
 		case MYLOConstants.TEMP_ADDRESS_CITY:
 		case MYLOConstants.CITY:
-			updatedTempAddressCityValue = setOtherAddressCity(fieldValue);
+			updatedTempAddressCityValue = setFieldOtherAddress(_otherAddressaddCityValue, fieldValue);
 			break;
 		case MYLOConstants.MAIL_ADDRESS_CITY:
-			updatedMailAddressCityValue = setOtherAddressCity(fieldValue);
+			updatedMailAddressCityValue = setFieldOtherAddress(_otherAddressaddCityValue, fieldValue);
 			break;
 		case MYLOConstants.TEMP_ADDRESS_ZIPCODE:
 		case MYLOConstants.ZIPCODE:
@@ -1390,31 +1361,31 @@ public class Mylo_AssignmentPage extends Base {
 			updatedMailAddressZipCodeValue = setOtherAddressZipCode(fieldValue);
 			break;
 		case MYLOConstants.TEMP_ADDRESS_STATE:
-			updatedTempAddressStateValue = setOtherAddressStateTextField(fieldValue);
+			updatedTempAddressStateValue = setFieldOtherAddress(_otherAddressaddStateValue, fieldValue);;
 			break;
 		case MYLOConstants.MAIL_ADDRESS_STATE:
-			updatedMailAddressStateValue = setOtherAddressStateTextField(fieldValue);
+			updatedMailAddressStateValue = setFieldOtherAddress(_otherAddressaddStateValue, fieldValue);;
 			break;
 		case MYLOConstants.TEMP_ADDRESS_ADDRESS1:
 		case MYLOConstants.ADDRESS1:
-			updatedTempAddress1Value = setOtherAddressAddress1(fieldValue);
+			updatedTempAddress1Value = setFieldOtherAddress(_otherAddressaddAddress1Value, fieldValue);
 			break;
 		case MYLOConstants.MAIL_ADDRESS_ADDRESS1:
-			updatedMailAddress1Value = setOtherAddressAddress1(fieldValue);
+			updatedMailAddress1Value = setFieldOtherAddress(_otherAddressaddAddress1Value, fieldValue);
 			break;
 		case MYLOConstants.TEMP_ADDRESS_ADDRESS2:
 		case MYLOConstants.ADDRESS2:
-			updatedTempAddress2Value = setOtherAddressAddress2(fieldValue);
+			updatedTempAddress2Value =setFieldOtherAddress(_otherAddressaddAddress2Value, fieldValue);
 			break;
 		case MYLOConstants.MAIL_ADDRESS_ADDRESS2:
-			updatedMailAddress2Value = setOtherAddressAddress2(fieldValue);
+			updatedMailAddress2Value = setFieldOtherAddress(_otherAddressaddAddress2Value, fieldValue);
 			break;
 		case MYLOConstants.TEMP_ADDRESS_COMMENTS:
 		case MYLOConstants.COMMENTS:
-			updatedTempAddressCommentsValue = setOtherAddressComments(fieldValue);
+			updatedTempAddressCommentsValue = setFieldOtherAddress(_otherAddressaddCommentValue, fieldValue);
 			break;
 		case MYLOConstants.MAIL_ADDRESS_COMMENTS:
-			updatedMailAddressCommentsValue = setOtherAddressComments(fieldValue);
+			updatedMailAddressCommentsValue = setFieldOtherAddress(_otherAddressaddCommentValue, fieldValue);
 			break;
 		case MYLOConstants.TEMP_ADDRESS_FROMDATE:
 		case MYLOConstants.FROMDATE:
@@ -1667,79 +1638,54 @@ public class Mylo_AssignmentPage extends Base {
 	}
 	
 	/**
+	 * @param fieldName
+	 * @param element
+	 * @return
+	 */
+	public boolean verifyFieldBorderRedColor(String fieldName, WebElement element) {
+		boolean flag = false;
+		CoreFunctions.explicitWaitTillElementVisibility(driver, element, fieldName);
+		String hexColorValue = Color.fromString(element.getCssValue(MYLOConstants.BORDER_COLOR)).asHex();
+		flag = (CoreFunctions.getAttributeText(element, MYLOConstants.CLASS)
+				.contains(MYLOConstants.ERROR_BORDER) && hexColorValue.equals(MYLOConstants.RED_COLOR_HEXCODE));
+		return flag;
+
+	}
+	
+	/**
 	 * @param msg
 	 * @return
 	 * Verify all the Alert Messages
 	 */
 	public boolean verifyFieldErrorBackground(String fieldName) {
 		boolean flag = false;
-		String hexColorValue = null;
 		switch (fieldName) {
 		case MYLOConstants.COUNTRY:
-			CoreFunctions.explicitWaitTillElementVisibility(driver, _countryDropdown, MYLOConstants.COUNTRY);
-			hexColorValue = Color.fromString(_countryDropdown.getCssValue(MYLOConstants.BORDER_COLOR)).asHex();
-			flag = (CoreFunctions.getAttributeText(_countryDropdown, MYLOConstants.CLASS).contains(MYLOConstants.ERROR_BORDER)
-					&& hexColorValue.equals(MYLOConstants.RED_COLOR_HEXCODE));
+			flag=verifyFieldBorderRedColor(fieldName, _countryDropdown);
 			break;
 		case MYLOConstants.STATE:
-			CoreFunctions.explicitWaitTillElementVisibility(driver, _stateDropdown, MYLOConstants.STATE);
-			hexColorValue = Color.fromString(_stateDropdown.getCssValue(MYLOConstants.BORDER_COLOR)).asHex();
-			flag = (CoreFunctions.getAttributeText(_stateDropdown, MYLOConstants.CLASS).contains(MYLOConstants.ERROR_BORDER)
-					&& hexColorValue.equals(MYLOConstants.RED_COLOR_HEXCODE));
+			flag=verifyFieldBorderRedColor(fieldName, _stateDropdown);
 			break;
 		case MYLOConstants.STATE_TEXT_FIELD:
-			CoreFunctions.explicitWaitTillElementVisibility(driver, _otherAddressaddStateValue,
-					MYLOConstants.STATE_TEXT_FIELD);
-			hexColorValue = Color.fromString(_otherAddressaddStateValue.getCssValue(MYLOConstants.BORDER_COLOR)).asHex();
-			flag = (CoreFunctions.getAttributeText(_otherAddressaddStateValue, MYLOConstants.CLASS).contains(MYLOConstants.ERROR_BORDER)
-					&& hexColorValue.equals(MYLOConstants.RED_COLOR_HEXCODE));
+			flag=verifyFieldBorderRedColor(fieldName, _otherAddressaddStateValue);
 			break;
 		case MYLOConstants.CITY:
-			CoreFunctions.explicitWaitTillElementVisibility(driver, _otherAddressaddCityValue, MYLOConstants.CITY);
-			hexColorValue = Color.fromString(_otherAddressaddCityValue.getCssValue(MYLOConstants.BORDER_COLOR)).asHex();
-			flag = (CoreFunctions.getAttributeText(_otherAddressaddCityValue, MYLOConstants.CLASS).contains(MYLOConstants.ERROR_BORDER)
-					&& hexColorValue.equals(MYLOConstants.RED_COLOR_HEXCODE));
-			CoreFunctions.highlightObject(driver, _otherAddressaddCityValue);
+			flag=verifyFieldBorderRedColor(fieldName, _otherAddressaddCityValue);
 			break;
 		case MYLOConstants.ZIPCODE:
-			CoreFunctions.explicitWaitTillElementVisibility(driver, _otherAddressaddZipCodeValue,
-					MYLOConstants.ZIPCODE);
-			hexColorValue = Color.fromString(_otherAddressaddZipCodeValue.getCssValue(MYLOConstants.BORDER_COLOR)).asHex();
-			flag = (CoreFunctions.getAttributeText(_otherAddressaddZipCodeValue, MYLOConstants.CLASS).contains(MYLOConstants.ERROR_BORDER)
-					&& hexColorValue.equals(MYLOConstants.RED_COLOR_HEXCODE));
-			CoreFunctions.highlightObject(driver, _otherAddressaddZipCodeValue);
+			flag=verifyFieldBorderRedColor(fieldName, _otherAddressaddZipCodeValue);
 			break;
 		case MYLOConstants.ADDRESS1:
-			CoreFunctions.explicitWaitTillElementVisibility(driver, _otherAddressaddAddress1Value,
-					MYLOConstants.ADDRESS1);
-			hexColorValue = Color.fromString(_otherAddressaddAddress1Value.getCssValue(MYLOConstants.BORDER_COLOR)).asHex();
-			flag = (CoreFunctions.getAttributeText(_otherAddressaddAddress1Value, MYLOConstants.CLASS).contains(MYLOConstants.ERROR_BORDER)
-					&& hexColorValue.equals(MYLOConstants.RED_COLOR_HEXCODE));
-			CoreFunctions.highlightObject(driver, _otherAddressaddAddress1Value);
+			flag=verifyFieldBorderRedColor(fieldName, _otherAddressaddAddress1Value);
 			break;
 		case MYLOConstants.ADDRESS2:
-			CoreFunctions.explicitWaitTillElementVisibility(driver, _otherAddressaddAddress2Value,
-					MYLOConstants.ADDRESS2);
-			hexColorValue = Color.fromString(_otherAddressaddAddress2Value.getCssValue(MYLOConstants.BORDER_COLOR)).asHex();
-			flag = (CoreFunctions.getAttributeText(_otherAddressaddAddress2Value, MYLOConstants.CLASS).contains(MYLOConstants.ERROR_BORDER)
-					&& hexColorValue.equals(MYLOConstants.RED_COLOR_HEXCODE));
-			CoreFunctions.highlightObject(driver, _otherAddressaddAddress2Value);
+			flag=verifyFieldBorderRedColor(fieldName, _otherAddressaddAddress2Value);
 			break;
 		case MYLOConstants.FROMDATE:
-			CoreFunctions.explicitWaitTillElementVisibility(driver, _otherAddressaddFromDateValue,
-					MYLOConstants.FROMDATE);
-			hexColorValue = Color.fromString(_otherAddressaddFromDateValue.getCssValue(MYLOConstants.BORDER_COLOR)).asHex();
-			flag = (CoreFunctions.getAttributeText(_otherAddressaddFromDateValue, MYLOConstants.CLASS).contains(MYLOConstants.ERROR_BORDER)
-					&& hexColorValue.equals(MYLOConstants.RED_COLOR_HEXCODE));
-			CoreFunctions.highlightObject(driver, _otherAddressaddFromDateValue);
+			flag=verifyFieldBorderRedColor(fieldName, _otherAddressaddFromDateValue);
 			break;
 		case MYLOConstants.COMMENTS:
-			CoreFunctions.explicitWaitTillElementVisibility(driver, _otherAddressaddCommentValue,
-					MYLOConstants.COMMENTS);
-			hexColorValue = Color.fromString(_otherAddressaddCommentValue.getCssValue(MYLOConstants.BORDER_COLOR)).asHex();
-			flag = (CoreFunctions.getAttributeText(_otherAddressaddCommentValue, MYLOConstants.CLASS).contains(MYLOConstants.ERROR_BORDER)
-					&& hexColorValue.equals(MYLOConstants.RED_COLOR_HEXCODE));
-			CoreFunctions.highlightObject(driver, _otherAddressaddCommentValue);
+			flag=verifyFieldBorderRedColor(fieldName, _otherAddressaddCommentValue);
 			break;
 		default:
 			Reporter.addStepLog(CoreConstants.FAIL + MYLOConstants.ENTER_CORRECT_FIELD_NAME);
@@ -1768,7 +1714,7 @@ public class Mylo_AssignmentPage extends Base {
 		clickElementOnOtherAddressesSection(MYLOConstants.COUNTRY);
 		setOtherAddressCountry(countryName);
 		setOtherAddressStateField(sectionType, stateName);
-		setOtherAddressCity(cityName);
+		setFieldOtherAddress(_otherAddressaddCityValue, cityName) ;
 	}
 	
 	/**
@@ -1816,10 +1762,10 @@ public class Mylo_AssignmentPage extends Base {
 	public void setOtherAddressStateField(String sectionType,String stateValue) {
 		if (verifyOtherAddressFieldAvailability(MYLOConstants.STATE)
 				&& sectionType.equals(MYLOConstants.MAILING_ADDRESS))
-			updatedMailAddressStateValue = setOtherAddressStateTextField(stateValue);
+			updatedMailAddressStateValue = setFieldOtherAddress(_otherAddressaddStateValue, stateValue);
 		else if (verifyOtherAddressFieldAvailability(MYLOConstants.STATE)
 				&& sectionType.equals(MYLOConstants.TEMPORARY_ADDRESS))
-			updatedTempAddressStateValue = setOtherAddressStateTextField(stateValue);
+			updatedTempAddressStateValue = setFieldOtherAddress(_otherAddressaddStateValue, stateValue);
 		else {
 			clickElementOnOtherAddressesSection(MYLOConstants.STATE);
 			setFieldValueOnOtherAddressesSection(MYLOConstants.STATE, stateValue);
@@ -1998,7 +1944,165 @@ public class Mylo_AssignmentPage extends Base {
 		otherAdressvalidFieldValueMap.put(MYLOConstants.ADDRESS1, MYLOConstants.ADDRESS1_VALUE);
 		otherAdressvalidFieldValueMap.put(MYLOConstants.ADDRESS2, MYLOConstants.ADDRESS2_VALUE);
 		otherAdressvalidFieldValueMap.put(MYLOConstants.STATE_TEXT_FIELD, MYLOConstants.STATE_VALUE);
-		otherAdressvalidFieldValueMap.put(MYLOConstants.FROMDATE, MYLOConstants.CURRENT);
-		
+		otherAdressvalidFieldValueMap.put(MYLOConstants.FROMDATE, MYLOConstants.CURRENT);		
 	}
+	
+	// *************** History Cards***********************//
+	
+	public void clickElementHistoryCardSection(String elementName) {
+		switch (elementName) {
+		case MYLOConstants.HistoryCardDropdown:
+			CoreFunctions.clickUsingJS(driver, _historyCardDropdown, MYLOConstants.HistoryCardDropdown);
+			break;
+		case MYLOConstants.CloseHistoryCard:
+			CoreFunctions.clickUsingJS(driver, _historyCardCloseBtn.get(0), _historyCardCloseBtn.get(0).getAttribute("aria-label"));
+			break;
+		default:
+			Reporter.addStepLog(CoreConstants.FAIL + MYLOConstants.ENTER_CORRECT_ELEMENT_NAME);
+			Assert.fail(MYLOConstants.ENTER_CORRECT_ELEMENT_NAME);
+		}
+	}
+		
+	public boolean verifyHistoryDetails(List<Map<String, String>> data) {
+		boolean flag = true;
+		for (int i = 0; i < data.size(); i++) {
+			if (!(CoreFunctions.getElementText(driver, _historyCardDisplayedTransferreName.get(i))
+					.equals(data.get(i).get("Transferee Name"))
+					&& CoreFunctions.getElementText(driver, _historyCardDisplayedFileIdClient.get(i))
+							.equals(data.get(i).get("FileId & Client Name"))
+					&& CoreFunctions.getElementText(driver, _historyCardDisplayedAddress.get(i))
+							.equals(data.get(i).get("Origin & Destination Address")))) {
+				flag = false;
+			}
+		}
+		return flag;
+	}
+	
+	public void refreshPage() {
+		CoreFunctions.refreshPage(driver);
+	}
+	
+	public void deleteHistoryCard(int totalCount) {	
+	    int historyCardNo = CoreFunctions.getRandomNumber(0, 2);
+		CoreFunctions.clickUsingJS(driver, _historyCardCloseBtn.get(historyCardNo), _historyCardCloseBtn.get(historyCardNo).getAttribute("aria-label"));
+		historyDetails.remove(totalCount-historyCardNo-2);
+	}
+	
+	public boolean verifyHistoryCardPresent() {	
+		return CoreFunctions.isElementExist(driver, _historyCardSection, 5);
+	}
+	
+	/**
+	 * @param countryName
+	 * @return
+	 * get Mylo Assignment HistoryDetails from json of corresponding country passed as a parameter
+	 */
+	public List<String> getMyloHistoryDetailsByEnv() {
+		String env = CoreFunctions.getPropertyFromConfig("envt");
+		switch (env) {
+		case MYLOConstants.UAT:
+			List<Mylo_Assignment_HistoryDetails_UAT> myloUATHistoryDetails = FileReaderManager.getInstance().getMyloJsonReader().getMyloAssignmentUATHistoryDetails();
+			historyfileIds.addAll(myloUATHistoryDetails.stream().map(x -> x.fileId).collect(Collectors.toList()));
+			historyDetails.addAll(myloUATHistoryDetails.stream().map(x -> x.historyDetails).collect(Collectors.toList()));
+			break;
+		default:
+			Reporter.addStepLog(CoreConstants.FAIL + MYLOConstants.ENTER_CORRECT_COUNTRY_NAME);
+			Assert.fail(MYLOConstants.ENTER_CORRECT_COUNTRY_NAME);
+		}
+		return historyfileIds;
+	}
+	
+	public boolean verifyHistoryCardDetailsDisplayed(int count) {
+		boolean flag = true;
+		for (int i =0; i <3; i++) {
+			count--;
+			String[] details = historyDetails.get(count).split(";");
+			if (!(CoreFunctions.getElementText(driver, _historyCardDisplayedTransferreName.get(i)).equals(details[0].trim())
+					&& CoreFunctions.getElementText(driver, _historyCardDisplayedFileIdClient.get(i)).equals(details[1].trim())
+					&& CoreFunctions.getElementText(driver, _historyCardDisplayedAddress.get(i)).equals(details[2].trim()))) {
+				flag = false;
+			}
+		}
+		return flag;
+	}
+	
+	public boolean verifyHistoryCardDetailsDropdown(int count) {
+		boolean flag = true;
+		for (int i =0; i <_historyCardDropdownTransferreName.size(); i++) {
+			count--;
+			String[] details = historyDetails.get(count).split(";");
+			CoreFunctions.scrollTillElementVisible(driver, _historyCardDropdownTransferreName.get(i), _historyCardDropdownTransferreName.get(i).getText());
+			CoreFunctions.scrollTillElementVisible(driver, _historyCardDropdownFileIdClient.get(i), _historyCardDropdownFileIdClient.get(i).getText());
+			CoreFunctions.scrollTillElementVisible(driver, _historyCardDropdownAddress.get(i), _historyCardDropdownAddress.get(i).getText());
+			if (!(CoreFunctions.getElementText(driver, _historyCardDropdownTransferreName.get(i)).equals(details[0].trim())
+					&& CoreFunctions.getElementText(driver, _historyCardDropdownFileIdClient.get(i)).equals(details[1].trim())
+					&& CoreFunctions.getElementText(driver, _historyCardDropdownAddress.get(i)).equals(details[2].trim()))) {
+				flag = false;
+			}
+		}
+		return flag;
+	}
+	
+	public String getFileDetailsByShipmentServices(String shipmentStatus, String requiredField ) {
+		HashMap<String, String> shipmentFileDetailsmap = new HashMap<String, String>();
+		switch (shipmentStatus) {
+		case MYLOConstants.NO_SHIPMENT:
+			shipmentFileDetailsmap.put(MYLOConstants.FILE_ID, assignmentShipmentDetails.noShipment.fileID);
+			shipmentFileDetailsmap.put(MYLOConstants.SHIPMENT_DETAILS, assignmentShipmentDetails.noShipment.shipmentDetails);
+			break;
+		case MYLOConstants.ONE_SHIPMENT:
+			shipmentFileDetailsmap.put(MYLOConstants.FILE_ID, assignmentShipmentDetails.oneShipment.fileID);
+			shipmentFileDetailsmap.put(MYLOConstants.SHIPMENT_DETAILS, assignmentShipmentDetails.oneShipment.shipmentDetails);
+			break;
+		case MYLOConstants.TWO_SHIPMENT:
+			shipmentFileDetailsmap.put(MYLOConstants.FILE_ID, assignmentShipmentDetails.twoShipment.fileID);
+			shipmentFileDetailsmap.put(MYLOConstants.SHIPMENT_DETAILS, assignmentShipmentDetails.twoShipment.shipmentDetails);
+			break;
+		case MYLOConstants.MULTIPLE_SHIPMENT:
+			shipmentFileDetailsmap.put(MYLOConstants.FILE_ID, assignmentShipmentDetails.multipleShipment.fileID);
+			shipmentFileDetailsmap.put(MYLOConstants.SHIPMENT_DETAILS, assignmentShipmentDetails.multipleShipment.shipmentDetails);
+			break;
+		
+		default:
+			Assert.fail(MYLOConstants.ENTER_CORRECT_STATUS);
+		}
+		return shipmentFileDetailsmap.get(requiredField);
+
+	}
+	
+	public String getAssignmentTabsBgColor(String option) {
+		List<WebElement> subTabs = CoreFunctions.getElementListByLocator(driver, _assignmentSubMenus);
+		CoreFunctions.explicitWaitTillElementListVisibility(driver, subTabs);
+		WebElement tabElement = CoreFunctions.returnItemInListByText(driver, subTabs, option);
+		CoreFunctions.explicitWaitTillElementVisibility(driver, tabElement, tabElement.getText());
+		String hexColorValue = Color.fromString(tabElement.getCssValue(MYLOConstants.BACKGROUND_COLOR)).asHex();
+		return hexColorValue;
+	}
+	
+	public String getAssignmentTabsHoverMessage(String option) {
+		List<WebElement> subTabs = CoreFunctions.getElementListByLocator(driver, _assignmentSubMenus);
+		CoreFunctions.explicitWaitTillElementListVisibility(driver, subTabs);
+		WebElement tabElement = CoreFunctions.returnItemInListByText(driver, subTabs, option);
+		CoreFunctions.explicitWaitTillElementVisibility(driver, tabElement, tabElement.getText());
+		CoreFunctions.hover(driver, tabElement);
+		return tabElement.getAttribute(MYLOConstants.TITLE);
+	}
+	
+	public boolean verifyShipmentSectionDisplayed() {
+		CoreFunctions.explicitWaitTillElementInVisibilityCustomTime(driver, _spinner, 180);
+		return CoreFunctions.verifyElementPresentOnPage(__webSwingSection, MYLOConstants.SHIPMENT_WEBSWING);	
+	}
+	
+	public boolean verifyShipmentDropdown(String shipmentStatus) {
+		boolean flag = true;
+		String[] shipmentDetail = getFileDetailsByShipmentServices(shipmentStatus, MYLOConstants.SHIPMENT_DETAILS)
+				.split(";");
+		for (int i = 0; i < _shipmentDropdownValues.size(); i++) {
+			if (!(CoreFunctions.getElementText(driver, _shipmentDropdownValues.get(i))
+					.equals(shipmentDetail[i].trim())))
+				flag = false;
+		}
+		return flag;
+	}
+	
 }

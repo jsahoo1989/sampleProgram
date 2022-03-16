@@ -29,6 +29,8 @@ import com.aires.testdatatypes.mylo.MyloAssignmentDetails;
 import com.aires.testdatatypes.mylo.MyloCAStates;
 import com.aires.testdatatypes.mylo.MyloIndiaStates;
 import com.aires.testdatatypes.mylo.MyloUSStates;
+import com.aires.testdatatypes.mylo.Mylo_AssignmentShipmentDetails;
+import com.aires.testdatatypes.mylo.Mylo_Assignment_HistoryDetails_UAT;
 import com.aires.testdatatypes.mylo.Mylo_LoginData;
 import com.google.gson.Gson;
 
@@ -38,25 +40,32 @@ public class JsonDataReader_Mylo {
 	
 	private final String _AssignmentDetailsFilePath = FileReaderManager.getInstance().getConfigReader()
 			.getTestDataResourcePath() + "mylo/Mylo_AssignmentDetais.json";
-	
+	private final String _AssignmentDetailsShipmentFilePath = FileReaderManager.getInstance().getConfigReader()
+			.getTestDataResourcePath() + "mylo/Mylo_AssignmentShipmentDetails.json";
 	private final String _MyloUSStatesFilePath = FileReaderManager.getInstance().getConfigReader()
 			.getTestDataResourcePath() + "mylo/Mylo_USStates.json";
 	private final String _MyloCAStatesFilePath = FileReaderManager.getInstance().getConfigReader()
 			.getTestDataResourcePath() + "mylo/Mylo_CAStates.json";
 	private final String _MyloIndiaStatesFilePath = FileReaderManager.getInstance().getConfigReader()
 			.getTestDataResourcePath() + "mylo/Mylo_IndiaStates.json";
+	private final String _MyloHistoryDetailsUATFilePath = FileReaderManager.getInstance().getConfigReader()
+			.getTestDataResourcePath() + "mylo/Mylo_Assignment_HistoryDetails_UAT.json";
 	private List<Mylo_LoginData> _loginDataList;
 	private List<MyloAssignmentDetails> _assignmentDetailsList;
+	private List<Mylo_AssignmentShipmentDetails> _assignmentShipmentDetailsList;
 	private List<MyloUSStates> _USStatesList;
 	private List<MyloCAStates> _CAStatesList;
 	private List<MyloIndiaStates> _IndiaStatesList;
+	private List<Mylo_Assignment_HistoryDetails_UAT> _myloAssignHistoryDet_UAT;
 	
 	public JsonDataReader_Mylo() {
 		_loginDataList = getUserData();
 		_assignmentDetailsList = getAssignmentDetails();
+		_assignmentShipmentDetailsList = getAssignmentShipmentDetails();
 		_USStatesList=getUSStates();
 		_CAStatesList=getCAStates();
 		_IndiaStatesList=getIndiaStates();
+		_myloAssignHistoryDet_UAT = getMyloHistoryDetails_UAT();
 	}
 	private List<Mylo_LoginData> getUserData() {
 		Gson gson = new Gson();
@@ -94,6 +103,24 @@ public class JsonDataReader_Mylo {
 		}
 	}
 	
+	private List<Mylo_AssignmentShipmentDetails> getAssignmentShipmentDetails() {
+		Gson gson = new Gson();
+		BufferedReader bufferReader = null;
+		try {
+			bufferReader = new BufferedReader(new FileReader(_AssignmentDetailsShipmentFilePath));
+			Mylo_AssignmentShipmentDetails[] application = gson.fromJson(bufferReader, Mylo_AssignmentShipmentDetails[].class);
+			return Arrays.asList(application);
+		} catch (FileNotFoundException e) {
+			throw new RuntimeException(CoreConstants.JSON_FILE_NOT_FOUND_AT_PATH + _AssignmentDetailsShipmentFilePath);
+		} finally {
+			try {
+				if (bufferReader != null)
+					bufferReader.close();
+			} catch (IOException ignore) {
+			}
+		}
+	}
+	
 	private List<MyloUSStates> getUSStates() {
 		Gson gson = new Gson();
 		BufferedReader bufferReader = null;
@@ -102,7 +129,7 @@ public class JsonDataReader_Mylo {
 			MyloUSStates[] application = gson.fromJson(bufferReader, MyloUSStates[].class);
 			return Arrays.asList(application);
 		} catch (FileNotFoundException e) {
-			throw new RuntimeException(CoreConstants.JSON_FILE_NOT_FOUND_AT_PATH + _AssignmentDetailsFilePath);
+			throw new RuntimeException(CoreConstants.JSON_FILE_NOT_FOUND_AT_PATH + _MyloUSStatesFilePath);
 		} finally {
 			try {
 				if (bufferReader != null)
@@ -120,7 +147,7 @@ public class JsonDataReader_Mylo {
 			MyloCAStates[] application = gson.fromJson(bufferReader, MyloCAStates[].class);
 			return Arrays.asList(application);
 		} catch (FileNotFoundException e) {
-			throw new RuntimeException(CoreConstants.JSON_FILE_NOT_FOUND_AT_PATH + _AssignmentDetailsFilePath);
+			throw new RuntimeException(CoreConstants.JSON_FILE_NOT_FOUND_AT_PATH + _MyloCAStatesFilePath);
 		} finally {
 			try {
 				if (bufferReader != null)
@@ -138,7 +165,25 @@ public class JsonDataReader_Mylo {
 			MyloIndiaStates[] application = gson.fromJson(bufferReader, MyloIndiaStates[].class);
 			return Arrays.asList(application);
 		} catch (FileNotFoundException e) {
-			throw new RuntimeException(CoreConstants.JSON_FILE_NOT_FOUND_AT_PATH + _AssignmentDetailsFilePath);
+			throw new RuntimeException(CoreConstants.JSON_FILE_NOT_FOUND_AT_PATH + _MyloIndiaStatesFilePath);
+		} finally {
+			try {
+				if (bufferReader != null)
+					bufferReader.close();
+			} catch (IOException ignore) {
+			}
+		}
+	}
+	
+	private List<Mylo_Assignment_HistoryDetails_UAT> getMyloHistoryDetails_UAT() {
+		Gson gson = new Gson();
+		BufferedReader bufferReader = null;
+		try {
+			bufferReader = new BufferedReader(new FileReader(_MyloHistoryDetailsUATFilePath));
+			Mylo_Assignment_HistoryDetails_UAT[] application = gson.fromJson(bufferReader, Mylo_Assignment_HistoryDetails_UAT[].class);
+			return Arrays.asList(application);
+		} catch (FileNotFoundException e) {
+			throw new RuntimeException(CoreConstants.JSON_FILE_NOT_FOUND_AT_PATH + _MyloHistoryDetailsUATFilePath);
 		} finally {
 			try {
 				if (bufferReader != null)
@@ -156,6 +201,10 @@ public class JsonDataReader_Mylo {
 		return _assignmentDetailsList.stream().filter(x -> x.application.equalsIgnoreCase(applicationName)).findAny().get();
 	}
 	
+	public final Mylo_AssignmentShipmentDetails getAssignmentShipmentDetailsByEnv(String envName) {
+		return _assignmentShipmentDetailsList.stream().filter(x -> x.environment.equalsIgnoreCase(envName)).findAny().get();
+	}
+	
 	public final List<MyloUSStates> getMyloUSStates() {
 		return _USStatesList;
 	}
@@ -164,5 +213,8 @@ public class JsonDataReader_Mylo {
 	}
 	public final List<MyloIndiaStates> getMyloIndiaStates() {
 		return _IndiaStatesList;
+	}
+	public final List<Mylo_Assignment_HistoryDetails_UAT> getMyloAssignmentUATHistoryDetails() {
+		return _myloAssignHistoryDet_UAT;
 	}
 }

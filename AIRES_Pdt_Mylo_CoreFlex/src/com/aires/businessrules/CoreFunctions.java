@@ -1679,5 +1679,21 @@ public class CoreFunctions {
 		}	
 		return dateValue;	
 	}
+	
+	public static void refreshPage(WebDriver driver) {
+		driver.navigate().refresh();
+	}
+	
+	public static void scrollTillElementVisible(WebDriver driver, WebElement Element, String name) {
+		try {
+			JavascriptExecutor executor = (JavascriptExecutor) driver;
+			executor.executeScript("arguments[0].scrollIntoView(true);", Element);
+			Log.info("Pass: " + name + " :is Visible");
+			Reporter.addStepLog(MessageFormat.format(CoreConstants.VRFIED_ELE_PAGE,CoreConstants.PASS, name));
+		} catch (Exception e) {
+			Log.info("Fail:Could not find: " + name);
+			Assert.fail(MessageFormat.format(CoreConstants.FAIL_TO_VERIFY_ELEMENT_ON_PAGE, Element));
+		}
+	}
 
 }

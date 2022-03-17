@@ -220,6 +220,7 @@ public class MYLOConstants {
 	public static final String MISMATCH_HEADERTEXT = "Mismatach Header Text";
 	public static final String ASSIGNMENT_OPTIONS_HEADER = "Please Select an Option";
 	public static final String HISTORYCARD_NOTPRESENT = "History Card is not present";
+	public static final String HISTORYCARD_IS_PRESENT = "History Card is present";
 	public static final String HISTORYCARD_PRESENT = "{0}History Card is present on top of ''{1}'' page";
 	public static final String HISTORYCARD_NOT_PRESENT = "{0}History Card is not present on top of ''{1}'' page";
 	public static long TIME_BEFORE_ACTION;

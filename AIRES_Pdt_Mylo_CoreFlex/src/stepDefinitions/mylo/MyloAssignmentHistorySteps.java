@@ -65,9 +65,8 @@ public class MyloAssignmentHistorySteps {
 	@Then("^the history card should continue to display after he refreshes the current session$")
 	public void the_history_card_should_continue_to_display_after_he_refreshes_the_current_session(){
 		MYLOConstants.TIME_BEFORE_ACTION = new Date().getTime();
-		myloAssignmentPage.refreshPage();
+		myloAssignmentPage.pageRefresh();
 		Assert.assertTrue(myloAssignmentPage.verifyHistoryCardPresent(),MYLOConstants.HISTORYCARD_NOTPRESENT);
-		Reporter.addStepLog(MessageFormat.format(MYLOConstants.HISTORYCARD_PRESENT, CoreConstants.PASS, MYLOConstants.ASSIGNMENT));
 		MYLOConstants.TIME_AFTER_ACTION = new Date().getTime();
 		Reporter.addStepLog("<b>Total time taken by <i>'And'</i> statement is :"
 				+ (MYLOConstants.TIME_AFTER_ACTION - MYLOConstants.TIME_BEFORE_ACTION) / 1000 + " Seconds </b>");
@@ -77,8 +76,7 @@ public class MyloAssignmentHistorySteps {
 	public void the_history_card_should_no_longer_display_at_the_top_of_the_page_after_he_clicks_on_X(){
 		MYLOConstants.TIME_BEFORE_ACTION = new Date().getTime();
 		myloAssignmentPage.clickElementHistoryCardSection(MYLOConstants.CloseHistoryCard);
-		Assert.assertFalse(myloAssignmentPage.verifyHistoryCardPresent());
-		Reporter.addStepLog(MessageFormat.format(MYLOConstants.HISTORYCARD_NOT_PRESENT, CoreConstants.PASS, MYLOConstants.ASSIGNMENT));
+		Assert.assertFalse(myloAssignmentPage.verifyHistoryCardPresent(),MYLOConstants.HISTORYCARD_IS_PRESENT);
 		MYLOConstants.TIME_AFTER_ACTION = new Date().getTime();
 		Reporter.addStepLog("<b>Total time taken by <i>'And'</i> statement is :"
 				+ (MYLOConstants.TIME_AFTER_ACTION - MYLOConstants.TIME_BEFORE_ACTION) / 1000 + " Seconds </b>");
@@ -141,7 +139,6 @@ public class MyloAssignmentHistorySteps {
 		myloDashboardPage.selectOptionsForFileParameters(MYLOConstants.FILE_ID, fileId);
 		Reporter.addStepLog(MessageFormat.format(MYLOConstants.FILE_ID_ENTERED, CoreConstants.PASS, fileId));
 		myloDashboardPage.clickExecuteButton();
-		Reporter.addStepLog(MessageFormat.format(MYLOConstants.HISTORYCARD_NOT_PRESENT, CoreConstants.PASS, MYLOConstants.ASSIGNMENT));
 		Assert.assertFalse(myloAssignmentPage.verifyHistoryCardPresent());
 		MYLOConstants.TIME_AFTER_ACTION = new Date().getTime();
 		Reporter.addStepLog("<b>Total time taken by <i>'When'</i> statement is :"

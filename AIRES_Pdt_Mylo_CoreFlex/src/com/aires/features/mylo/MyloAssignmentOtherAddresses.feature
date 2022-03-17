@@ -112,7 +112,7 @@ And Saved data should get deleted after clicking on "Delete" button under "Tempo
 
 @IRIS-830 @Mylo-Regression
 Scenario:  Mylo-Validate Warning Messages for Mandatory fields of Mailing Address on Mylo Assignment page under Other Addresses section 
-Given he is on "Mailing address" section after clicking on 'Add' link displayed in left panel under "Other Address" section for file ID "611090"
+Given he is on "Mailing address" section after clicking on 'Add' link displayed in left panel under "Other Address" section for file ID "482352"
 And he enters below invalid data combination for mandatory fields for "Mailing address" section
 |Country   |State     |City |Message                                               | 
 |USA       |Alaska    |     |You need to fill in the city field in Mailing address!|
@@ -138,8 +138,6 @@ And he enters below invalid data combination for mandatory fields for "Temporary
 |USA       |Alaska    |     |You need to fill in the city field in Temporary address!|
 |Select One|60        |25   |You need to select a country in Temporary address!      |
 |INDIA     |Select One|25   |You need to select a state in Property address!         |
-#|CANADA    |Select One|25   |Please enter province for CANADA!                      |
-#|USA       |Select One|25   |Please select state for USA!                           |
 When he enters below valid data for mandatory fields for "Temporary address" section
 |Country   |State                     |Temporary address City |                              
 |Random    |60        		          |25                   |

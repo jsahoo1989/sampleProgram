@@ -296,16 +296,16 @@ public class Mylo_AssignmentPage extends Base {
 	
 	// *************** History section ***********************//
 
-	@FindBy(how = How.XPATH, using = "//div[@class='gallery']/figure/descendant::p[@class='history-address']")
+	@FindBy(how = How.CSS, using = "p[class='history-address']")
 	private List<WebElement> _historyCardDropdownAddress;
 	
-	@FindBy(how = How.XPATH, using = "//div[@class='gallery']/figure/descendant::span")
+	@FindBy(how = How.CSS, using = "span[class='history-id']")
 	private List<WebElement> _historyCardDropdownFileIdClient;
 	
-	@FindBy(how = How.XPATH, using = "//div[@class='gallery']/figure/descendant::h3")
+	@FindBy(how = How.XPATH, using = "//figcaption/h3")
 	private List<WebElement> _historyCardDropdownTransferreName;
 		
-	@FindBy(how = How.XPATH, using = "//div[@class='historyusertitle text-truncate']")
+	@FindBy(how = How.CSS, using = "div[class='historyusertitle text-truncate']")
 	private List<WebElement> _historyCardDisplayedAddress;
 	
 	@FindBy(how = How.XPATH, using = "//div[@class='historyrole text-truncate']/span")
@@ -317,10 +317,10 @@ public class Mylo_AssignmentPage extends Base {
 	@FindBy(how = How.XPATH, using = "//div[contains(@class,'historycard')]")
 	private WebElement _historyCardSection;
 	
-	@FindBy(how = How.XPATH, using = "//button[@id='closedesc']")
+	@FindBy(how = How.CSS, using = "button[id='closedesc']")
 	private List<WebElement> _historyCardCloseBtn;
 	
-	@FindBy(how = How.XPATH, using = "//div[@class='history']/following-sibling::button[@id='closedesc']")
+	@FindBy(how = How.CSS, using = "button[aria-controls='collapseHistory']")
 	private WebElement _historyCardDropdown;
 	
 	@FindBy(how = How.XPATH, using = "//canvas[@data-id='canvas']/following-sibling::input")
@@ -329,7 +329,7 @@ public class Mylo_AssignmentPage extends Base {
 	@FindBy(how = How.CSS, using = "div[class='sk-three-strings']")
 	private WebElement _spinner;
 	
-	@FindBy(how = How.XPATH, using = "//a[text()=' Shipment ']//following-sibling::ul/li/a")
+	@FindBy(how = How.CSS, using = "a[class='dropdown-item']")
 	private List<WebElement> _shipmentDropdownValues;
 			
 	int noOfAiresFileTeamMember;
@@ -1649,7 +1649,6 @@ public class Mylo_AssignmentPage extends Base {
 		flag = (CoreFunctions.getAttributeText(element, MYLOConstants.CLASS)
 				.contains(MYLOConstants.ERROR_BORDER) && hexColorValue.equals(MYLOConstants.RED_COLOR_HEXCODE));
 		return flag;
-
 	}
 	
 	/**
@@ -1978,7 +1977,7 @@ public class Mylo_AssignmentPage extends Base {
 		return flag;
 	}
 	
-	public void refreshPage() {
+	public void pageRefresh() {
 		CoreFunctions.refreshPage(driver);
 	}
 	
@@ -1989,7 +1988,12 @@ public class Mylo_AssignmentPage extends Base {
 	}
 	
 	public boolean verifyHistoryCardPresent() {	
-		return CoreFunctions.isElementExist(driver, _historyCardSection, 5);
+		boolean flag =CoreFunctions.isElementExist(driver, _historyCardSection, 5); 
+		if(flag)
+			Reporter.addStepLog(MessageFormat.format(MYLOConstants.HISTORYCARD_PRESENT, CoreConstants.PASS, MYLOConstants.ASSIGNMENT));
+		else
+			Reporter.addStepLog(MessageFormat.format(MYLOConstants.HISTORYCARD_NOT_PRESENT, CoreConstants.PASS, MYLOConstants.ASSIGNMENT));
+		return flag;
 	}
 	
 	/**
@@ -2031,9 +2035,9 @@ public class Mylo_AssignmentPage extends Base {
 		for (int i =0; i <_historyCardDropdownTransferreName.size(); i++) {
 			count--;
 			String[] details = historyDetails.get(count).split(";");
-			CoreFunctions.scrollTillElementVisible(driver, _historyCardDropdownTransferreName.get(i), _historyCardDropdownTransferreName.get(i).getText());
-			CoreFunctions.scrollTillElementVisible(driver, _historyCardDropdownFileIdClient.get(i), _historyCardDropdownFileIdClient.get(i).getText());
-			CoreFunctions.scrollTillElementVisible(driver, _historyCardDropdownAddress.get(i), _historyCardDropdownAddress.get(i).getText());
+			CoreFunctions.scrollToElementUsingJavaScript(driver, _historyCardDropdownTransferreName.get(i), _historyCardDropdownTransferreName.get(i).getText());
+			CoreFunctions.scrollToElementUsingJavaScript(driver, _historyCardDropdownFileIdClient.get(i), _historyCardDropdownFileIdClient.get(i).getText());
+			CoreFunctions.scrollToElementUsingJavaScript(driver, _historyCardDropdownAddress.get(i), _historyCardDropdownAddress.get(i).getText());
 			if (!(CoreFunctions.getElementText(driver, _historyCardDropdownTransferreName.get(i)).equals(details[0].trim())
 					&& CoreFunctions.getElementText(driver, _historyCardDropdownFileIdClient.get(i)).equals(details[1].trim())
 					&& CoreFunctions.getElementText(driver, _historyCardDropdownAddress.get(i)).equals(details[2].trim()))) {

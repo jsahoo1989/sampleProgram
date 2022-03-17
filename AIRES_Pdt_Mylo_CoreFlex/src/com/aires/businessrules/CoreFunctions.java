@@ -1684,7 +1684,7 @@ public class CoreFunctions {
 		driver.navigate().refresh();
 	}
 	
-	public static void scrollTillElementVisible(WebDriver driver, WebElement Element, String name) {
+	public static void scrollToElementUsingJavaScript(WebDriver driver, WebElement Element, String name) {
 		try {
 			JavascriptExecutor executor = (JavascriptExecutor) driver;
 			executor.executeScript("arguments[0].scrollIntoView(true);", Element);

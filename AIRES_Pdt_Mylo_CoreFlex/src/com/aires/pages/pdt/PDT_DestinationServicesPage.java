@@ -248,7 +248,7 @@ public class PDT_DestinationServicesPage extends Base {
 		carType = carTypeSelected;
 	}
 
-	public String getFrequencyOfTrips() {
+	public String getCarType() {
 		return carType;
 	}
 

@@ -369,4 +369,23 @@ public class PDTConstants {
 	public static final String ASSIGNMENT_FINDER_FEES = "Finder's Fee";
 	public static final String ASSIGNMENT_HOUSING_COMPANY_SPONSORED = "Assignment Housing (Company Sponsored)";
 	public static final String ERR_MSG = "{0}Caught error popup with message:- ''{1}'' on ''{2}''";
+	//one Time Payment
+	public static final String MISC_RELOCATION_ALLOWANCE = "Miscellaneous Relocation Allowance";
+	public static final String LUMP_SUM = "Lump Sum";
+	public static final String LEASE_BREAK = "Lease Break";
+	public static final String APPLIANCE_ALLOWANCE = "Appliance Allowance";
+	public static final String AUTO_REGISTRATION_COSTS = "Auto Registration Costs";
+	public static final String AUTO_LOSS_ON_SALE = "Auto Loss on Sale";
+	public static final String OTHER_ONE_TIME_PAYMENT = "Other One-Time Payment";
+	public static final String NumOfWeeksBeforeStartTransferDate = "# of weeks before start/transfer date";
+	public static final String VERIFIED_DRP_DOWN_FIELD_DISPLAYED_FOR_OPTION = "{0}Verified ''{1}'' drop down is displayed for ''{2}'' option selected for ''{3}'' in ''{4}'' sub benefit form.";
+	public static final String INDICATE_NUM_OF_WEEKS_BEFORE = "Indicate # of weeks before start/transfer date";
+	public static final String INDICATE_NUM_OF_WEEKS_BEFORE_NOT_DISPLAYED = "{0} ''{1}'' drop down is not displayed for ''{2}'' option selected for ''{3}'' in ''{4}'' sub benefit form.";
+	public static final String MAX_AMOUNT = "Max. Amount";
+	public static final String FREQUENCY = "Frequency";
+	public static final String FAILED_TO_VERIFY_AND_FILL_DROP_DOWN = "{0} Failed to verify and fill drop down '''{1}'' in ''{2}'' sub benefit form.";
+	public static final String FAILED_TO_VERIFY_AND_FILL_TEXTBOX = "{0} Failed to verify and fill text box '''{1}'' in ''{2}'' sub benefit form.";
+	public static final String FAILED_TO_VERIFY_AND_SELECT_DRP_DOWN = "{0} Failed to verify and select value ''1'' from ''{2}'' drop down in ''{3}'' sub benefit form.";
+	
+	
 }

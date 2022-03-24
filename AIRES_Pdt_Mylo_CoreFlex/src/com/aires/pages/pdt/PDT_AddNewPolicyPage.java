@@ -448,6 +448,7 @@ public class PDT_AddNewPolicyPage extends Base {
 	
 	public void selectPolicy(PDT_LoginDetails _loginDetailsApplication) {
 		String policyId;
+		CoreFunctions.explicitWaitTillElementInVisibilityCustomTime(driver, _progressBar, 5);
 		String policyFromJson = BusinessFunctions.getPolicyNameFromJson(_loginDetailsApplication);
 		String clientIdFromJson = BusinessFunctions.getClientIdFromJson(_loginDetailsApplication);
 		CoreFunctions.clickElement(driver, _selectPolicyName);

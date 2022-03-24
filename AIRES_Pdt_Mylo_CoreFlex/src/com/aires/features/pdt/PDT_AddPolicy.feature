@@ -58,8 +58,8 @@ Feature: Add new Policy form with Benefit Categories
     Given he is on the "Add New Policy Form" page after clicking on the link "Add New Policy Form" displayed under the left navigation menu on the 'View Policy' page
     And he has clicked on the 'Next' button after selecting client, policy information on the 'Add New Policy' page
     And he has selected below information for form fields on 'General Information' page followed by selection of "Pre-Acceptance Services" as Benefit Category on "Policy Benefit" page
-      | PolicyType    | EmployeeType                   | HomeownerType                  | BenefitPackageType | CappedPolicy     | ExpenseManagementClient |
-      | International | Both - benefits differ by type | Both - benefits differ by type | Bundle             | Partially Capped | No                      |
+      | PolicyType    | EmployeeType                                          | HomeownerType                                | BenefitPackageType | CappedPolicy     | ExpenseManagementClient |
+      | International | Current Employee + New Hire - benefits differ by type | Homeowner + Renter - benefits differ by type | Bundle             | Partially Capped | No                      |
     When he selects 'Benefit differs for Employee type', 'Benefit differs for Homeowner type' for below Sub benefits on "Pre-Acceptance Services" page
       | SubBenefit                         | Benefit_differs_for_Employee_type | Benefit_differs_for_Home_Owner_type |
       | Candidate Selection                | Yes                               | No                                  |
@@ -140,7 +140,7 @@ Feature: Add new Policy form with Benefit Categories
       | Airport Pickup | Area Tour | Auto Rental During Assignment | Concierge Services | Departure Services | Furniture Rental | Reimbursement of Membership Dues | School Search | Settling In Services | Transition Assistance Program | Tuition and Education |
     Then success message "Policy saved and submitted" should be displayed on the "Policy Benefit" page
     And newly created Policy should be displayed under "View Policy" page after clicking on 'EXIT' button
-    
+
   @Sprint-21 @PDT-Regression @rental @PDT-548
   Scenario: PDT - Add new Policy form using Rental Assistance as Benefit Category including their sub benefit categories
     Given he is on the "Add New Policy" page after clicking on the link "Add New Policy Form" displayed under the left navigation menu on the 'View Policy' page
@@ -150,8 +150,8 @@ Feature: Add new Policy form with Benefit Categories
       | Rental Tour | Finder's Fee |
     Then success message "Policy saved and submitted" should be displayed on the "Policy Benefit" page
     And newly created Policy should be displayed under "View Policy" page after clicking on 'EXIT' button
-    
-   @Sprint-21 @PDT-Regression @compensation @PDT-587
+
+  @Sprint-21 @PDT-Regression @compensation @PDT-587
   Scenario: PDT - Add new Policy form using Compensation Services as Benefit Category including their sub benefit categories
     Given he is on the "Add New Policy" page after clicking on the link "Add New Policy Form" displayed under the left navigation menu on the 'View Policy' page
     And he has clicked on the 'Next' button after selecting client, policy information on the 'Add New Policy' page
@@ -170,12 +170,22 @@ Feature: Add new Policy form with Benefit Categories
       | Assignment Housing | Security Deposit | Finder's Fee |
     Then success message "Policy saved and submitted" should be displayed on the "Policy Benefit" page
     And newly created Policy should be displayed under "View Policy" page after clicking on 'EXIT' button
-    
+
   @Sprint-21 @PDT-Regression @duplicateHousing @PDT-588
-  Scenario: PDT - Add new Policy form using Duplicate Housing as Benefit Category including their sub benefit categories
+  Scenario: PDT - Add new Policy form using Duplicate Housing as Benefit Category
     Given he is on the "Add New Policy" page after clicking on the link "Add New Policy Form" displayed under the left navigation menu on the 'View Policy' page
     And he has clicked on the 'Next' button after selecting client, policy information on the 'Add New Policy' page
     And he has entered mandatory information on 'General Information' page followed by selection of "Duplicate Housing" as Benefit Category on "Policy Benefit" page
-    When he clicks on 'SUBMIT' button after entering mandatory information on "Duplicate Housing" page      
+    When he clicks on 'SUBMIT' button after entering mandatory information on "Duplicate Housing" page
+    Then success message "Policy saved and submitted" should be displayed on the "Policy Benefit" page
+    And newly created Policy should be displayed under "View Policy" page after clicking on 'EXIT' button
+
+  @Sprint-22 @PDT-Regression @payments @PDT-544 @PDT-703
+  Scenario: PDT - Add new Policy form using One Time Payments and Reimbursements as Benefit Category including their sub benefit categories
+    Given he is on the "Add New Policy" page after clicking on the link "Add New Policy Form" displayed under the left navigation menu on the 'View Policy' page
+    And he has clicked on the 'Next' button after selecting client, policy information on the 'Add New Policy' page
+    And he has entered mandatory information on 'General Information' page followed by selection of "One-Time Payments/Reimbursements" as Benefit Category on "Policy Benefit" page
+    When he clicks on 'SUBMIT' button after entering mandatory information for all the below selected sub benefits on "One-Time Payments/Reimbursements" page
+      | Miscellaneous Relocation Allowance | Lump Sum | Lease Break | Appliance Allowance | Auto Registration Costs | Auto Loss on Sale | Other One-Time Payment |
     Then success message "Policy saved and submitted" should be displayed on the "Policy Benefit" page
     And newly created Policy should be displayed under "View Policy" page after clicking on 'EXIT' button

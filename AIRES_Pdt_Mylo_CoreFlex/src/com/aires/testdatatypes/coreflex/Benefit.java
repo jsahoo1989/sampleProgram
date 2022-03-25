@@ -13,6 +13,7 @@ public class Benefit {
 	private String grossUp;
 	private String reimbursedBy;
 	private String comment;
+	private boolean deleteBenefitOnMBBPage;	
 
 	public Benefit(String benefitDisplayName, String benefitAmount, String benefitDesc) {
 		this.benefitDisplayName = benefitDisplayName;
@@ -163,6 +164,14 @@ public class Benefit {
 
 	public void setSelectBenefitOnFPTPage(boolean selectBenefitOnFPTPage) {
 		this.selectBenefitOnFPTPage = selectBenefitOnFPTPage;
+	}
+	
+	public boolean getDeleteBenefitOnMBBPage() {
+		return deleteBenefitOnMBBPage;
+	}
+
+	public void setDeleteBenefitOnMBBPage(boolean deleteBenefitOnMBBPage) {
+		this.deleteBenefitOnMBBPage = deleteBenefitOnMBBPage;
 	}
 
 	@Override

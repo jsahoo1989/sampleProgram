@@ -96,8 +96,8 @@ public class CF_Transferee_StaticFixedPoints_CashNotAuth_Flex_EndToEndFlow_Steps
 	public void he_has_created_a_payment_account_to_credit_portion_cashout_amount() {
 		Assert.assertTrue(mxTransfereeJourneyHomePage.setUpPaymentAccount(),
 				MobilityXConstants.FAILED_TO_SETUP_PAYMENT_ACCOUNT);
-	}
-
+	}	
+	
 	@Then("^submitted benefit details should be displayed under 'Submitted Benefits' section of 'My Benefits Bundle' page$")
 	public void submitted_benefit_details_should_be_displayed_under_Submitted_Benefits_section_of_my_benefits_bundle_page() {
 		CoreConstants.TIME_BEFORE_ACTION = new Date().getTime();

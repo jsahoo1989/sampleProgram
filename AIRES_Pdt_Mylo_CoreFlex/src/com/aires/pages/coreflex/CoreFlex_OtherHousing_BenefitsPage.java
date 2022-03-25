@@ -290,7 +290,7 @@ public class CoreFlex_OtherHousing_BenefitsPage extends Base {
 		int counter = 1;
 		System.out.println(_addedBenefitList.size());
 		if (_addedBenefitList.size() == 10) {
-			BusinessFunctions.selectValueFromListUsingIndex(_deleteBenefitButtonList, counter);
+			BusinessFunctions.selectValueFromListUsingIndex(driver, _deleteBenefitButtonList, counter);
 			CoreFunctions.clickElement(driver, _deleteBenefitButtonYesOption);
 			CoreFunctions.waitHandler(1);
 			if (CoreFunctions.isElementExist(driver, _buttonAddAnotherBenefit, 3)) {
@@ -306,10 +306,8 @@ public class CoreFlex_OtherHousing_BenefitsPage extends Base {
 						CoreConstants.FAIL));
 			}
 		}
-
 		while (counter < _deleteBenefitButtonList.size()) {
-
-			BusinessFunctions.selectValueFromListUsingIndex(_deleteBenefitButtonList, counter);
+			BusinessFunctions.selectValueFromListUsingIndex(driver, _deleteBenefitButtonList, counter);
 			CoreFunctions.clickElement(driver, _deleteBenefitButtonYesOption);
 			CoreFunctions.waitHandler(1);
 		}

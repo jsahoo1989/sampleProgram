@@ -20,7 +20,6 @@ import com.aires.testdatatypes.coreflex.Benefit;
 import com.aires.testdatatypes.coreflex.CoreFlex_AllowancesBenefitsData;
 import com.aires.testdatatypes.coreflex.CoreFlex_HousingBenefitsData;
 import com.aires.testdatatypes.coreflex.FlexBenefit;
-import com.aires.testdatatypes.coreflex.OtherBenefit;
 import com.vimalselvam.cucumber.listener.Reporter;
 
 public class CoreFlex_BenefitSummaryPage extends Base {
@@ -103,10 +102,7 @@ public class CoreFlex_BenefitSummaryPage extends Base {
 			.getMXTransfereeCoreBenefitDetails();
 
 	public static final List<FlexBenefit> flexBenefits = FileReaderManager.getInstance().getCoreFlexJsonReader()
-			.getMXTransfereeFlexBenefitDetails();
-
-	public static final List<OtherBenefit> otherBenefits = FileReaderManager.getInstance().getCoreFlexJsonReader()
-			.getMXTransfereeOtherBenefitDetails();
+			.getMXTransfereeFlexBenefitData();
 
 	/*********************************************************************/
 
@@ -247,88 +243,33 @@ public class CoreFlex_BenefitSummaryPage extends Base {
 	 * @param dataTable
 	 */
 	public boolean iterateAndVerifyBenefitSummaryDetails(String policyType) {
-		boolean isBenefitSummaryVerified = false;
-
 		try {
-			isBenefitSummaryVerified = iterateAndVerifyFlexBenefitsSummaryDetails()
-					&& iterateAndVerifyOtherBenefitsSummaryDetails();
-
+			if (iterateAndVerifyFlexBenefitsSummaryDetails()) {
+				Reporter.addStepLog(MessageFormat.format(
+						COREFLEXConstants.SUCCESSFULLY_VERIFIED_BENEFIT_CATEGORIES_AND_TYPE_ON_BENEFIT_SUMMARY_PAGE,
+						CoreConstants.PASS));
+				return true;
+			}
 		} catch (Exception e) {
 			Reporter.addStepLog(MessageFormat.format(
 					COREFLEXConstants.EXCEPTION_OCCURED_WHILE_VALIDATING_BENEFIT_CATEGORIES_AND_TYPE_ON_BENEFIT_SUMMARY_PAGE,
 					CoreConstants.FAIL, e.getMessage()));
 		}
-		if (isBenefitSummaryVerified) {
-			Reporter.addStepLog(MessageFormat.format(
-					COREFLEXConstants.SUCCESSFULLY_VERIFIED_BENEFIT_CATEGORIES_AND_TYPE_ON_BENEFIT_SUMMARY_PAGE,
-					CoreConstants.PASS));
-		}
-		return isBenefitSummaryVerified;
-	}
-
-	private boolean iterateAndVerifyOtherBenefitsSummaryDetails() {
-		boolean isOtherBenefitSummaryVerified = false;
-		boolean benefitCategoryVerified, benefitTypeVerified, benefitPointsVerified;
-		try {
-			for (OtherBenefit benefitList : otherBenefits) {
-				for (Benefit benefit : benefitList.getBenefits()) {
-					String expectedBenefitCategory = benefitList.getCategory();
-					String expectedBenefitName = benefit.getBenefitDisplayName();
-					String expectedbenefitPoints = benefit.getPoints();
-					int indexBenefit = BusinessFunctions.returnindexItemFromListUsingText(driver,
-							_textAddedBenefitNameList, expectedBenefitName);
-					int indexCategory = BusinessFunctions.returnindexItemFromListUsingText(driver,
-							_textAddedBenefitGroupList, expectedBenefitCategory, true);
-					String actualBenefitCategory = _textAddedBenefitGroupList.get(indexCategory).getText();
-					String actualBenefitName = _textAddedBenefitNameList.get(indexBenefit).getText();
-					String actualBenefitPoints = _benefitsPointsList.get(indexBenefit).getText();
-
-					benefitCategoryVerified = actualBenefitCategory.contains(expectedBenefitCategory);
-					benefitTypeVerified = actualBenefitName.equals(expectedBenefitName);
-					benefitPointsVerified = actualBenefitPoints.equals(expectedbenefitPoints);
-					isOtherBenefitSummaryVerified = benefitCategoryVerified & benefitTypeVerified
-							& benefitPointsVerified;
-					if (!isOtherBenefitSummaryVerified) {
-						break;
-					}
-				}
-			}
-		} catch (Exception e) {
-			Reporter.addStepLog(MessageFormat.format(
-					COREFLEXConstants.EXCEPTION_OCCURED_WHILE_VALIDATING_OTHER_BENEFIT_CATEGORIES_AND_TYPE_ON_BENEFIT_SUMMARY_PAGE,
-					CoreConstants.FAIL, e.getMessage()));
-		}
-
-		if (isOtherBenefitSummaryVerified) {
-			Reporter.addStepLog(MessageFormat.format(
-					COREFLEXConstants.SUCCESSFULLY_VERIFIED_OTHER_BENEFIT_CATEGORIES_AND_TYPE_ON_BENEFIT_SUMMARY_PAGE,
-					CoreConstants.PASS));
-		}
-		return isOtherBenefitSummaryVerified;
+		return false;
 	}
 
 	private boolean iterateAndVerifyFlexBenefitsSummaryDetails() {
 		boolean isFlexBenefitSummaryVerified = false;
-		boolean benefitCategoryVerified, benefitTypeVerified, benefitPointsVerified;
 		try {
 			for (FlexBenefit benefitList : flexBenefits) {
 				for (Benefit benefit : benefitList.getBenefits()) {
-					String expectedBenefitCategory = benefitList.getCategory();
-					String expectedBenefitName = benefit.getBenefitDisplayName();
-					String expectedbenefitPoints = benefit.getPoints();
 					int indexBenefit = BusinessFunctions.returnindexItemFromListUsingText(driver,
-							_textAddedBenefitNameList, expectedBenefitName);
+							_textAddedBenefitNameList, benefit.getBenefitDisplayName());
 					int indexCategory = BusinessFunctions.returnindexItemFromListUsingText(driver,
-							_textAddedBenefitGroupList, expectedBenefitCategory, true);
-					String actualBenefitCategory = _textAddedBenefitGroupList.get(indexCategory).getText();
-					String actualBenefitName = _textAddedBenefitNameList.get(indexBenefit).getText();
-					String actualBenefitPoints = _benefitsPointsList.get(indexBenefit).getText();
-
-					benefitCategoryVerified = actualBenefitCategory.contains(expectedBenefitCategory);
-					benefitTypeVerified = actualBenefitName.equals(expectedBenefitName);
-					benefitPointsVerified = actualBenefitPoints.equals(expectedbenefitPoints);
-					isFlexBenefitSummaryVerified = benefitCategoryVerified & benefitTypeVerified
-							& benefitPointsVerified;
+							_textAddedBenefitGroupList, benefitList.getCategory(), true);
+					isFlexBenefitSummaryVerified = (CoreFunctions
+							.getItemsFromListByIndex(driver, _textAddedBenefitGroupList, indexCategory, true)
+							.contains(benefitList.getCategory())) && verifyBenefitSummaryDetails(indexBenefit, benefit);
 					if (!isFlexBenefitSummaryVerified) {
 						break;
 					}
@@ -346,6 +287,13 @@ public class CoreFlex_BenefitSummaryPage extends Base {
 					CoreConstants.PASS));
 		}
 		return isFlexBenefitSummaryVerified;
+	}
+
+	private boolean verifyBenefitSummaryDetails(int indexBenefit, Benefit benefit) {
+		return (CoreFunctions.getItemsFromListByIndex(driver, _textAddedBenefitNameList, indexBenefit, true)
+				.equals(benefit.getBenefitDisplayName()))
+				&& ((CoreFunctions.getItemsFromListByIndex(driver, _benefitsPointsList, indexBenefit, true))
+						.equals(benefit.getPoints()));
 	}
 
 }

@@ -19,7 +19,6 @@ import com.aires.managers.FileReaderManager;
 import com.aires.testdatatypes.coreflex.Benefit;
 import com.aires.testdatatypes.coreflex.CoreFlex_PolicySetupPagesData;
 import com.aires.testdatatypes.coreflex.FlexBenefit;
-import com.aires.testdatatypes.coreflex.OtherBenefit;
 import com.vimalselvam.cucumber.listener.Reporter;
 
 public class CoreFlex_CustomBundlesPage extends Base {
@@ -124,10 +123,7 @@ public class CoreFlex_CustomBundlesPage extends Base {
 			.getMXTransfereeCoreBenefitDetails();
 
 	public static final List<FlexBenefit> flexBenefits = FileReaderManager.getInstance().getCoreFlexJsonReader()
-			.getMXTransfereeFlexBenefitDetails();
-
-	public static final List<OtherBenefit> otherBenefits = FileReaderManager.getInstance().getCoreFlexJsonReader()
-			.getMXTransfereeOtherBenefitDetails();
+			.getMXTransfereeFlexBenefitData();
 
 	CoreFlex_PolicySetupPagesData policySetupPageData = FileReaderManager.getInstance().getCoreFlexJsonReader()
 			.getPolicySetupPagesDataList(COREFLEXConstants.POLICY_SETUP);
@@ -371,11 +367,6 @@ public class CoreFlex_CustomBundlesPage extends Base {
 		List<String> benefitNameList = new ArrayList<String>();
 		if (policyType.equals(COREFLEXConstants.FLEX) || policyType.equals(COREFLEXConstants.BOTH)) {
 			for (FlexBenefit benefit : flexBenefits) {
-				for (Benefit ben : benefit.getBenefits()) {
-					benefitNameList.add(ben.getBenefitType());
-				}
-			}
-			for (OtherBenefit benefit : otherBenefits) {
 				for (Benefit ben : benefit.getBenefits()) {
 					benefitNameList.add(ben.getBenefitType());
 				}

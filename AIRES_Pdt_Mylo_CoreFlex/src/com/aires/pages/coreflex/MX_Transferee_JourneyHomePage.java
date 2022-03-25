@@ -14,7 +14,6 @@ import com.aires.businessrules.CoreFunctions;
 import com.aires.businessrules.constants.COREFLEXConstants;
 import com.aires.businessrules.constants.CoreConstants;
 import com.aires.businessrules.constants.MobilityXConstants;
-import com.aires.businessrules.constants.PDTConstants;
 import com.aires.managers.FileReaderManager;
 import com.aires.testdatatypes.coreflex.CoreFlex_PolicySetupPagesData;
 import com.aires.testdatatypes.coreflex.MX_Transferee_AccountSetupDetails;
@@ -103,6 +102,9 @@ public class MX_Transferee_JourneyHomePage extends Base {
 
 	@FindBy(how = How.CSS, using = "div[title='Submit'] > a")
 	private WebElement _btn_submit;
+	
+	@FindBy(how = How.CSS, using = "div[class='growl-message']")
+	private WebElement _successGrowlMessage;	
 
 	@FindBy(how = How.CSS, using = "input[id*='chkacdid']")
 	private WebElement _accountClosingDate;
@@ -147,6 +149,7 @@ public class MX_Transferee_JourneyHomePage extends Base {
 	public boolean navigateToFlexPlanningToolPage() {
 		boolean isNavigatedToFPTpage = false;
 		try {
+			CoreFunctions.explicitWaitTillElementBecomesClickable(driver, _linkManageMyPoints, MobilityXConstants.MANAGE_MY_POINTS);
 			if (CoreFunctions.isElementExist(driver, _linkManageMyPoints, 10)) {
 				CoreFunctions.clickUsingJS(driver, _linkManageMyPoints, MobilityXConstants.MANAGE_MY_POINTS);
 				isNavigatedToFPTpage = true;
@@ -165,8 +168,7 @@ public class MX_Transferee_JourneyHomePage extends Base {
 
 	public void handle_Cookie_AfterLogin() {
 		CoreFunctions.waitForBrowserToLoad(driver);
-		CoreFunctions.waitHandler(4);
-		if (CoreFunctions.isElementExist(driver, _btn_OkOnSiteCookieAfterLogin, 5)) {
+		if (CoreFunctions.isElementExist(driver, _btn_OkOnSiteCookieAfterLogin, 15)) {
 			HandleCookiePopUp(_btn_OkOnSiteCookieAfterLogin);
 		}
 	}
@@ -294,9 +296,11 @@ public class MX_Transferee_JourneyHomePage extends Base {
 			spentPointsAfterBenefitSubmission = Double.parseDouble(actualSubmittedSpentAndTotalPoints[0]);
 			if (spentPointsAfterBenefitSubmission == MX_Transferee_FlexPlanningTool_Page.totalSelectedPoints) {
 				CoreFunctions.clickElement(driver, _poinBalance_tooltip);
-				CoreFunctions.explicitWaitTillElementVisibility(driver, _poinBalance_tooltip_content, MobilityXConstants.TRANSFEREE_JOURNEY_TOOLTIP);
-				System.out.println("ActualMessage : "+CoreFunctions.getElementText(driver, _poinBalance_tooltip_content));
-				System.out.println("ExpectedMessage : "+pointBalanceDetails());
+				CoreFunctions.explicitWaitTillElementVisibility(driver, _poinBalance_tooltip_content,
+						MobilityXConstants.TRANSFEREE_JOURNEY_TOOLTIP);
+				System.out.println(
+						"ActualMessage : " + CoreFunctions.getElementText(driver, _poinBalance_tooltip_content));
+				System.out.println("ExpectedMessage : " + pointBalanceDetails());
 				isSubmittedSpentPointsValid = CoreFunctions.getElementText(driver, _poinBalance_tooltip_content)
 						.equals(pointBalanceDetails());
 				CoreFunctions.clickElement(driver, _close_tootip);
@@ -339,11 +343,17 @@ public class MX_Transferee_JourneyHomePage extends Base {
 	}
 
 	public boolean setUpPaymentAccount() {
-		return proceedToAccountSetupPage() && selectAccountType() && setupAccountAndSave();
+		try {
+			return proceedToAccountSetupPage() && selectAccountType() && setupAccountAndSave();
+		} catch (Exception e) {
+			Reporter.addStepLog(
+					MessageFormat.format(MobilityXConstants.EXCEPTION_OCCURED_WHILE_SETTING_UP_USER_ACCOUNT_DETAILS,
+							CoreConstants.FAIL, e.getMessage()));
+		}
+		return false;
 	}
 
 	private boolean setupAccountAndSave() {
-		boolean isSetupDone = false;
 		try {
 			CoreFunctions.selectByVisibleText(driver, _select_currency, accountDetails.currency);
 			CoreFunctions.clearAndSetText(driver, _accountHolderName, accountDetails.accountHoldersName);
@@ -357,54 +367,47 @@ public class MX_Transferee_JourneyHomePage extends Base {
 			CoreFunctions.clearAndSetText(driver, _accountClosingDate,
 					accountDetails.mailingAddress.accountClosingDate);
 			CoreFunctions.clickElement(driver, _btn_submit);
+			CoreFunctions.explicitWaitTillElementVisibility(driver, _successGrowlMessage, MobilityXConstants.SAVED_SUCCESSFUL_GROWL_MESSAGE);
+			CoreFunctions.explicitWaitTillElementInVisibility(driver, _successGrowlMessage);
 			CoreFunctions.clickElement(driver, _btn_save);
-			CoreFunctions.waitHandler(5);
 			CoreFunctions.clickElement(driver, _link_backToMobilityJourney);
-			isSetupDone = true;
+			Reporter.addStepLog(
+					MessageFormat.format(MobilityXConstants.SUCCESSFULLY_ADDED_PAYMENT_ACCOUNT, CoreConstants.PASS));
+			return true;
 		} catch (Exception e) {
 			Reporter.addStepLog(MessageFormat.format(MobilityXConstants.PAYMENT_ACCOUNT_SETUP_FAILED,
 					CoreConstants.FAIL, e.getMessage()));
 		}
-		if (isSetupDone) {
-			Reporter.addStepLog(
-					MessageFormat.format(MobilityXConstants.SUCCESSFULLY_ADDED_PAYMENT_ACCOUNT, CoreConstants.PASS));
-		}
-		return isSetupDone;
+		return false;
 	}
 
 	private boolean selectAccountType() {
-		boolean isAccountSelected = false;
 		try {
 			CoreFunctions.selectByVisibleText(driver, _select_accountType, accountDetails.accountType);
 			CoreFunctions.clickElement(driver, _btn_continue);
-			isAccountSelected = true;
+			Reporter.addStepLog(
+					MessageFormat.format(MobilityXConstants.SUCCESSFULLY_SELECTED_ACCOUNT_TYPE, CoreConstants.PASS));
+			return true;
 		} catch (Exception e) {
 			Reporter.addStepLog(MessageFormat.format(MobilityXConstants.FAILED_TO_SELECT_ACCOUNT_TYPE,
 					CoreConstants.FAIL, e.getMessage()));
 		}
-		if (isAccountSelected) {
-			Reporter.addStepLog(
-					MessageFormat.format(MobilityXConstants.SUCCESSFULLY_SELECTED_ACCOUNT_TYPE, CoreConstants.PASS));
-		}
-		return isAccountSelected;
+		return false;
 	}
 
 	private boolean proceedToAccountSetupPage() {
-		boolean isSetupPageDisplayed = false;
 		try {
 			CoreFunctions.clickElement(driver, _link_transferee_dropdown);
 			CoreFunctions.clickElement(driver, _optionBanking);
 			CoreFunctions.clickElement(driver, _link_addPaymentAccount);
-			isSetupPageDisplayed = true;
+			Reporter.addStepLog(MessageFormat.format(MobilityXConstants.ACCOUNT_SETUP_PAGE_IS_DISPLAYED_SUCCESSFULLY,
+					CoreConstants.PASS));
+			return true;
 		} catch (Exception e) {
 			Reporter.addStepLog(MessageFormat.format(MobilityXConstants.FAILED_TO_LOAD_ACCOUNT_SETUP_FORM,
 					CoreConstants.FAIL, e.getMessage()));
 		}
-		if (isSetupPageDisplayed) {
-			Reporter.addStepLog(MessageFormat.format(MobilityXConstants.ACCOUNT_SETUP_PAGE_IS_DISPLAYED_SUCCESSFULLY,
-					CoreConstants.PASS));
-		}
-		return isSetupPageDisplayed;
+		return false;
 	}
 
 	public boolean verifyBenefitSubmissionEmail() {
@@ -420,27 +423,32 @@ public class MX_Transferee_JourneyHomePage extends Base {
 			String expFromUserName = "testrelonet@aires.com";
 			// Enter expected email subject
 			String expEmailSubject = "Mobility Flex Benefit(s) Submission";
-			String actualResultSubmissionDetails = EmailUtil.searchEmailAndReturnResult(host, userName, pwd, expFromUserName, expEmailSubject,
-					MobilityXConstants.FLEX_BENEFIT_SUBMISSION);
-			actualResultSubmissionDetails = actualResultSubmissionDetails.replace("<span>", "").replace("</span>", "").replace("\r\n", "").trim();
-			System.out.println("EmailResult : "+actualResultSubmissionDetails);
-			System.out.println("ActuaResult : "+submittedPointsEmailMessage());
-			Reporter.addStepLog(CoreConstants.PASS
-					+ "Successfully verified Mobility Flex Benefit(s) Submission Email.");			
+			String actualResultSubmissionDetails = EmailUtil.searchEmailAndReturnResult(host, userName, pwd,
+					expFromUserName, expEmailSubject, MobilityXConstants.FLEX_BENEFIT_SUBMISSION);
+			actualResultSubmissionDetails = actualResultSubmissionDetails.replace("<span>", "").replace("</span>", "")
+					.replace("\r\n", "").trim();
+			System.out.println("EmailResult : " + actualResultSubmissionDetails);
+			System.out.println("ActuaResult : " + submittedPointsEmailMessage());
+			Reporter.addStepLog(
+					CoreConstants.PASS + "Successfully verified Mobility Flex Benefit(s) Submission Email.");
 			return actualResultSubmissionDetails.equals(submittedPointsEmailMessage());
-		}catch(Exception e) {
+		} catch (Exception e) {
 			Reporter.addStepLog(
 					MessageFormat.format(COREFLEXConstants.EXCEPTION_OCCURED_WHILE_READING_CREDENTIALS_FROM_EMAIL,
 							CoreConstants.FAIL, e.getMessage()));
-		}		
+		}
 		return false;
 	}
 
 	private String submittedPointsEmailMessage() {
+		DecimalFormat format = new DecimalFormat();
+		format.setDecimalSeparatorAlwaysShown(false);
 		String total = policySetupPageData.flexPolicySetupPage.StaticFixedTotalPointsAvailable;
 		double remaining = MX_Transferee_MyBenefitsBundlePage.availablePointsAfterSubmission;
-		double consumed = Double.parseDouble(policySetupPageData.flexPolicySetupPage.StaticFixedTotalPointsAvailable)-remaining;		
-		return MobilityXConstants.FLEX_BENEFITS_SUBMISSION_MESSAGE.replace("used_points", String.valueOf(consumed)).replace("total_points", total)
-				.replace("current_balance", String.valueOf(remaining));
-	}	
+		double consumed = Double.parseDouble(policySetupPageData.flexPolicySetupPage.StaticFixedTotalPointsAvailable)
+				- remaining;
+		return MobilityXConstants.FLEX_BENEFITS_SUBMISSION_MESSAGE
+				.replace("used_points", String.valueOf(format.format(consumed))).replace("total_points", total)
+				.replace("current_balance", String.valueOf(format.format(remaining)));
+	}
 }

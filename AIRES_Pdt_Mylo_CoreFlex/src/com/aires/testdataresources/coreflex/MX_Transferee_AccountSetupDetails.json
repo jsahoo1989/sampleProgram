@@ -1,13 +1,13 @@
 {
 	"accountType": "Check",
 	"currency": "U.S. Dollar",
-	"accountHoldersName": "account_name",
+	"accountHoldersName": "TestAutomationUser",
 	"mailingAddress": {
-		"address1": "address1",
-		"address2": "address2",
-		"city": "city",
-		"state": "American Samoa",
-		"province": "province",
+		"address1": "177A Bleecker Street",
+		"address2": "5th Avenue",
+		"city": "New York City",
+		"state": "New York",
+		"province": "NY",
 		"postalCode": "10014",
 		"country": "USA",
 		"accountClosingDate": "16 Feb 2023"

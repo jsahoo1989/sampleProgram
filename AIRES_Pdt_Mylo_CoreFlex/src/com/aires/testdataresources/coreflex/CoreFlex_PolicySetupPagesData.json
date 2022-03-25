@@ -9,7 +9,7 @@
 		},
 		"flexPolicySetupPage": {
 			"flexAllowanceType": "Point Allowance",
-			"lockTheBenefitsPointsSelection": "After initial selection",
+			"lockTheBenefitsPointsSelection": "Not Applicable",
 			"benefitsExpirationTracingPrompt": "First Contact Date",
 			"benefitsExpirationDate": "First Contact Date + 6 Month",
 			"StaticFixedTotalPointsAvailable": "500",

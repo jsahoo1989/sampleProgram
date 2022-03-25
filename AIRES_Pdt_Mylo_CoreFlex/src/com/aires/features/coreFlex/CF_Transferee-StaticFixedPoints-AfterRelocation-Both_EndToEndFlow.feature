@@ -3,10 +3,10 @@ Feature: Validate the CoreFlex Policy Flow for Both_Transferee_StaticFixedPoints
 @PolicySetupFlow @Both-AfterRelocationOnly_PF
   Scenario: CoreFlex - Setting up a New CoreFlex policy in 'Policy Digitization Tool' application
     Given he has setup a new "Both" Type Policy with following selection in 'Policy Digitization Tool (PDT)' application
-      | Person Responsible For Benefit Selection | Flex Setup Type | Cashout Availiblity    |
+      | Person Responsible For Benefit Selection | Flex Setup Type | Cashout Availability   |
       | Transferee                               | Static/Fixed    | After Relocation Only  |
     When he clicks on "SUBMIT" button on "Custom Bundles" page 
-	Then a success dialog should be displayed for Successfuly Submitted Policy
+	Then a success dialog should be displayed for Successfully Submitted Policy
 	And Policy Status should be displayed as "Submit" on "View/Edit Policy Forms" page
 		
 #@FlexPolicy-Transferee-Static-FixedPoints-CashNotAuthorized @Both-AfterRelocationOnly	

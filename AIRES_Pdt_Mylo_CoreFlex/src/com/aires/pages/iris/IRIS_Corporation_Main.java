@@ -179,10 +179,9 @@ public class IRIS_Corporation_Main extends BasePage {
 		Thread.sleep(3000);
 		jTabbedPaneTabControl = _IRIS.describe(TabControl.class,
 				new TabControlDescription.Builder().nativeClass("javax.swing.JTabbedPane").index(0).build());
-		jTabbedPaneTabControl.waitUntilEnabled();
-		Thread.sleep(3000);
+		System.out.println(moduleName);	
 		jTabbedPaneTabControl.select(moduleName);
-		Thread.sleep(1000);
+		Thread.sleep(2000);
 		switchToCorporationModule(moduleName);
 	}
 

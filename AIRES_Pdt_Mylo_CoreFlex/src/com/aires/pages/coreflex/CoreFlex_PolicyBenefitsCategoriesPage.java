@@ -19,7 +19,6 @@ import com.aires.managers.FileReaderManager;
 import com.aires.testdatatypes.coreflex.Benefit;
 import com.aires.testdatatypes.coreflex.CoreFlex_PolicySetupPagesData;
 import com.aires.testdatatypes.coreflex.FlexBenefit;
-import com.aires.testdatatypes.coreflex.OtherBenefit;
 import com.vimalselvam.cucumber.listener.Reporter;
 
 public class CoreFlex_PolicyBenefitsCategoriesPage extends Base {
@@ -150,12 +149,9 @@ public class CoreFlex_PolicyBenefitsCategoriesPage extends Base {
 
 	public static final List<Benefit> coreBenefits = FileReaderManager.getInstance().getCoreFlexJsonReader()
 			.getMXTransfereeCoreBenefitDetails();
-
+	
 	public static final List<FlexBenefit> flexBenefits = FileReaderManager.getInstance().getCoreFlexJsonReader()
-			.getMXTransfereeFlexBenefitDetails();
-
-	public static final List<OtherBenefit> otherBenefits = FileReaderManager.getInstance().getCoreFlexJsonReader()
-			.getMXTransfereeOtherBenefitDetails();
+			.getMXTransfereeFlexBenefitData();
 
 	CoreFlex_PolicySetupPagesData policySetupPageData = FileReaderManager.getInstance().getCoreFlexJsonReader()
 			.getPolicySetupPagesDataList(COREFLEXConstants.POLICY_SETUP);
@@ -317,7 +313,7 @@ public class CoreFlex_PolicyBenefitsCategoriesPage extends Base {
 	 */
 	public boolean selectBenefits(String policyType) {
 		try {
-			// expandAllBenefitCategories();
+			 expandAllBenefitCategories();
 			// Method to select Provided benefit from the List
 			List<String> benefitList = getBenefitList(policyType);
 			for (String benefit : benefitList) {
@@ -344,11 +340,6 @@ public class CoreFlex_PolicyBenefitsCategoriesPage extends Base {
 		List<String> benefitNameList = new ArrayList<String>();
 		if (policyType.equals(COREFLEXConstants.FLEX) || policyType.equals(COREFLEXConstants.BOTH)) {
 			for (FlexBenefit benefit : flexBenefits) {
-				for (Benefit ben : benefit.getBenefits()) {
-					benefitNameList.add(ben.getBenefitType());
-				}
-			}
-			for (OtherBenefit benefit : otherBenefits) {
 				for (Benefit ben : benefit.getBenefits()) {
 					benefitNameList.add(ben.getBenefitType());
 				}
@@ -396,17 +387,11 @@ public class CoreFlex_PolicyBenefitsCategoriesPage extends Base {
 			CoreFlex_DuplicateHousing_BenefitsPage coreFlexDuplicateHousingBenefitsPage,
 			CoreFlex_LumpSum_BenefitsPage coreFlexLumpSumBenefitsPage,
 			CoreFlex_OtherHousing_BenefitsPage coreFlexOtherHousingBenefitsPage) {
-
-		boolean isBenefitSuccessfullySelectedAndFilled = false;
-		boolean isFlexBenefitsSuccessfullyFilled = false, isOtherBenefitsSuccessfullyFilled = false;
+		boolean isBenefitSuccessfullySelectedAndFilled=false;
 		try {
-
 			if (policyType.equals(COREFLEXConstants.FLEX) || policyType.equals(COREFLEXConstants.BOTH)) {
-				isOtherBenefitsSuccessfullyFilled = fillOtherBenefitDetails(coreFlexOtherHousingBenefitsPage);
-				isFlexBenefitsSuccessfullyFilled = fillFlexBenefitDetails(policyType,
-						coreFlexDuplicateHousingBenefitsPage, coreFlexLumpSumBenefitsPage);
-				isBenefitSuccessfullySelectedAndFilled = isFlexBenefitsSuccessfullyFilled
-						&& isOtherBenefitsSuccessfullyFilled;
+				isBenefitSuccessfullySelectedAndFilled = fillFlexBenefitDetails(policyType,
+						coreFlexDuplicateHousingBenefitsPage, coreFlexLumpSumBenefitsPage,coreFlexOtherHousingBenefitsPage);
 			}
 		} catch (Exception e) {
 			Reporter.addStepLog(
@@ -421,58 +406,14 @@ public class CoreFlex_PolicyBenefitsCategoriesPage extends Base {
 		return isBenefitSuccessfullySelectedAndFilled;
 	}
 
-	private boolean fillOtherBenefitDetails(CoreFlex_OtherHousing_BenefitsPage coreFlexOtherHousingBenefitsPage) {
-
-		boolean isOtherBenefitSuccessfullySelectedAndFilled = false;
-		try {
-			String benefitName, benefitDisplayName, flexPoints, multipleBenefitSelection, benefitAllowanceAmount,
-					benefitDescription, benefitComment, grossUp, reimbursedBy;
-			for (OtherBenefit benefitList : otherBenefits) {
-				for (Benefit benefit : benefitList.getBenefits()) {
-					benefitName = benefit.getBenefitType();
-					benefitDisplayName = benefit.getBenefitDisplayName();
-					multipleBenefitSelection = benefit.getMultipleBenefitSelection();
-					flexPoints = benefit.getPoints();
-					benefitAllowanceAmount = benefit.getBenefitAmount();
-					benefitDescription = benefit.getBenefitDesc();
-					benefitComment = benefit.getComment();
-					grossUp = benefit.getGrossUp();
-					reimbursedBy = benefit.getReimbursedBy();
-
-					clickLeftNavigationMenuOfPage(benefitName);
-					switch (benefitName) {
-					case COREFLEXConstants.OTHER_HOUSING_BENEFIT:
-						coreFlexOtherHousingBenefitsPage.verifyNumericRangeFieldsValidation();
-						coreFlexOtherHousingBenefitsPage.selectAndFillBenefitsDetails(benefitDisplayName, flexPoints,
-								multipleBenefitSelection, benefitAllowanceAmount, benefitDescription, benefitComment,
-								grossUp, reimbursedBy);
-						break;
-					default:
-						Assert.fail(PDTConstants.INVALID_ELEMENT);
-					}
-					isOtherBenefitSuccessfullySelectedAndFilled = true;
-				}
-			}
-		} catch (Exception e) {
-			Reporter.addStepLog(MessageFormat.format(
-					COREFLEXConstants.EXCEPTION_OCCURED_WHILE_SELECTING_AND_FILLING_ADDED_OTHER_BENEFITS,
-					CoreConstants.FAIL, e.getMessage()));
-		}
-		if (isOtherBenefitSuccessfullySelectedAndFilled) {
-			Reporter.addStepLog(MessageFormat.format(
-					COREFLEXConstants.SUCCESSFULLY_SELECTED_AND_FILLED_ADDED_OTHER_BENEFITS, CoreConstants.PASS));
-		}
-		return isOtherBenefitSuccessfullySelectedAndFilled;
-
-	}
 
 	private boolean fillFlexBenefitDetails(String policyType,
 			CoreFlex_DuplicateHousing_BenefitsPage coreFlexDuplicateHousingBenefitsPage,
-			CoreFlex_LumpSum_BenefitsPage coreFlexLumpSumBenefitsPage) {
+			CoreFlex_LumpSum_BenefitsPage coreFlexLumpSumBenefitsPage,CoreFlex_OtherHousing_BenefitsPage coreFlexOtherHousingBenefitsPage) {
 		boolean isFlexBenefitSuccessfullySelectedAndFilled = false;
 		try {
 			String benefitName, subBenefitNames, benefitPolicyType, multipleBenefitSelection, flexPoints,
-					benefitDisplayName, benefitAllowanceAmount, benefitDescription;
+					benefitDisplayName, benefitAllowanceAmount, benefitDescription,benefitComment, grossUp, reimbursedBy;
 			for (FlexBenefit benefitList : flexBenefits) {
 				for (Benefit benefit : benefitList.getBenefits()) {
 					benefitName = benefit.getBenefitType();
@@ -483,6 +424,9 @@ public class CoreFlex_PolicyBenefitsCategoriesPage extends Base {
 					flexPoints = benefit.getPoints();
 					benefitAllowanceAmount = benefit.getBenefitAmount();
 					benefitDescription = benefit.getBenefitDesc();
+					benefitComment = benefit.getComment();
+					grossUp = benefit.getGrossUp();
+					reimbursedBy = benefit.getReimbursedBy();
 
 					clickLeftNavigationMenuOfPage(benefitName);
 					switch (benefitName) {
@@ -495,6 +439,12 @@ public class CoreFlex_PolicyBenefitsCategoriesPage extends Base {
 						coreFlexLumpSumBenefitsPage.selectAndFillBenefitsAndSubBenefitDetails(benefitPolicyType,
 								subBenefitNames, multipleBenefitSelection, flexPoints, benefitDisplayName,
 								benefitAllowanceAmount, benefitDescription);
+						break;
+					case COREFLEXConstants.OTHER_HOUSING_BENEFIT:
+						coreFlexOtherHousingBenefitsPage.verifyNumericRangeFieldsValidation();
+						coreFlexOtherHousingBenefitsPage.selectAndFillBenefitsDetails(benefitDisplayName, flexPoints,
+								multipleBenefitSelection, benefitAllowanceAmount, benefitDescription, benefitComment,
+								grossUp, reimbursedBy);
 						break;
 					default:
 						Assert.fail(PDTConstants.INVALID_ELEMENT);

@@ -269,4 +269,21 @@ public class COREFLEXConstants {
 	public static final String EXCEPTION_OCCURED_WHILE_VALIDATING_SELECTED_OTHER_BENEFIT_DETAILS_ON_SUBMISSION_CONFIRMATION_DIALOG = "{0}Exception occured while validating selected Other Benefits Details On Submission Confirmation Dialog. Exception : ''{1}''.";
 	public static final String SUCCESSFULLY_VERIFIED_SELECTED_FLEX_BENEFIT_DETAILS_ON_SUBMISSION_CONFIRMATION_DIALOG = "{0}Successfully verified selected Flex Benefit details On Submission Confirmation Dialog.";
 	public static final String SUCCESSFULLY_VERIFIED_SELECTED_OTHER_BENEFIT_DETAILS_ON_SUBMISSION_CONFIRMATION_DIALOG = "{0}Successfully verified selected Other Benefit details On Submission Confirmation Dialog.";
+	public static final String SUCCESSFULLY_CLICKED_DELETE_BUTTON_IN_SUBMITTED_BENEFITS_SECTION = "{0}Successfully clicked on Delete button of ''{1}'' - Submitted Benefits.";
+	public static final String EXCEPTION_OCCURED_WHILE_DELETING_SUBMITTED_BENEFIT = "{0}Exception occured while deleting submitted benefit. Exception - ''{1}''.";
+	public static final String EXCEPTION_OCCURED_WHILE_VALIDATING_DELETED_FLEX_BENEFIT_DETAILS_ON_SUBMISSION_CONFIRMATION_DIALOG = "{0}Exception occured while validating Deleted Flex Benefits Details On Submission Confirmation Dialog. Exception : ''{1}''.";
+	public static final String SUCCESSFULLY_VERIFIED_DELETED_FLEX_BENEFIT_DETAILS_ON_SUBMISSION_CONFIRMATION_DIALOG = "{0}Successfully verified deleted Flex Benefit details On Submission Confirmation Dialog.";
+	public static final String EXCEPTION_OCCURED_WHILE_VALIDATING_DELETED_OTHER_BENEFIT_DETAILS_ON_SUBMISSION_CONFIRMATION_DIALOG = "{0}Exception occured while validating Deleted Other Benefits Details On Submission Confirmation Dialog. Exception : ''{1}''.";
+	public static final String SUCCESSFULLY_VERIFIED_DELETED_OTHER_BENEFIT_DETAILS_ON_SUBMISSION_CONFIRMATION_DIALOG = "{0}Successfully verified deleted Other Benefit details On Submission Confirmation Dialog.";
+	public static final String EXCEPTION_OCCURED_WHILE_VALIDATING_DELETE_REQUEST_SENT_SUCCESS_GROWL_MESSAGE = "{0}Exception occured while validating delete request sent success growl message. Exception : ''{1}''.";	
+	public static final String EXCEPTION_OCCURED_WHILE_VALIDATING_DELETED_OTHER_BENEFIT_STATUS_UNDER_SUBMITTED_BENEFITS_SECTION_OF_MBB_PAGE = "{0}Exception occured while valiating deleted flex benefit status under submitted benefits section of My Benefit Bundle Page.Exception : ''{1}''.";
+	public static final String SUCCESSFULLY_VERIFIED_DELETED_OTHER_BENEFIT_STATUS_UNDER_SUBMITTED_BENEFITS_SECTION_OF_MBB_PAGE = "{0}Successfully verified deleted flex benefit status under submitted benefits section of My Benefit Bundle Page.";
+	public static final String SUCCESSFULLY_VERIFIED_PORTION_CASHOUT_FUNCTIONALITY_ON_FLEX_PLANNING_TOOL_PAGE = "{0}Successfully verified Portion Cashout functionality on Flex Planning Tool Page.";
+	public static final String SUCCESSFULLY_VERIFIED_DEFAULT_PORTION_CASHOUT_DETAILS_ON_FLEX_PLANNING_TOOL_PAGE = "{0}Successfully verified Default Portion Cashout Details on Flex Planning Tool Page.";
+	public static final String EXCEPTION_OCCURED_WHILE_VERIFYING_PORTION_CASHOUT_ON_PREVIEW_TRANSFEREE_PAGE = "{0}Exception occured while verifying Portion Cashout Details on Preview Transferee Page. Exception : ''{1}''.";
+	public static final String SUCCESSFULLY_VERIFIED_PORTION_CASHOUT_ON_PREVIEW_TRANSFEREE_PAGE = "{0}Successfully verified Portion Cashout details on Preview Transferee Page.";
+	public static final String EXCEPTION_OCCURED_WHILE_VALIDATING_PORTION_CASHOUT_DETAILS_UNDER_MY_BENEFIT_BUNDLE_SECTION_OF_MBB_PAGE = "{0}Exception occured while validating Portion Cashout Details under My Benefit bundle section of MBB page. Exception : ''{1}''.";
+	public static final String EXCEPTION_OCCURED_WHILE_DELETING_SUBMITTED_BENEFIT_AND_CASHOUT_OF_MBB_PAGE = "{0}Exception occured while Deleting submitted Cashout and Benefit on MBB page. Exception : ''{1}''.";
+	public static final String EXCEPTION_OCCURED_WHILE_DELETING_SUBMITTED_CASHOUT_OF_MBB_PAGE = "{0}Exception occured while Deleting submitted Cashout on MBB page. Exception : ''{1}''.";
+	public static final String EXCEPTION_OCCURED_WHILE_DELETING_SUBMITTED_BENEFIT_OF_MBB_PAGE = "{0}Exception occured while Deleting submitted Benefit on MBB page. Exception : ''{1}''.";
 }

@@ -50,6 +50,7 @@ import org.openqa.selenium.support.ui.Select;
 import org.testng.Assert;
 import com.aires.businessrules.constants.COREFLEXConstants;
 import com.aires.businessrules.constants.CoreConstants;
+import com.aires.businessrules.constants.MobilityXConstants;
 import com.aires.businessrules.constants.PDTConstants;
 import com.aires.pages.pdt.PDT_AddNewPolicyPage;
 import com.aires.testdatatypes.pdt.PDT_LoginDetails;
@@ -784,8 +785,15 @@ public class BusinessFunctions {
 		}
 	}
 	
-	public static void selectValueFromListUsingIndex(List<WebElement> listWebElement, int index) {
+	public static void selectValueFromListUsingIndex(WebDriver driver, List<WebElement> listWebElement, int index) {
+		try {
+		CoreFunctions.explicitWaitTillElementListClickable(driver, listWebElement);
 		listWebElement.get(index).click();
+		CoreFunctions.waitHandler(3);		
+		}catch (Exception e) {
+			Assert.fail(MessageFormat.format(MobilityXConstants.EXCEPTION_OCCURED_WHILE_CLICKING_ON_ELEMENT_FROM_LIST, CoreConstants.FAIL,
+					e.getMessage(),listWebElement.get(index).getText()));
+		}
 	}
 	
 	public static int returnindexItemFromListUsingText(WebDriver driver, List<WebElement> WebElementList,
@@ -886,4 +894,5 @@ public class BusinessFunctions {
 					CoreConstants.FAIL, validationMessage, inputValue, fieldName));
 		}
 	}
+
 }

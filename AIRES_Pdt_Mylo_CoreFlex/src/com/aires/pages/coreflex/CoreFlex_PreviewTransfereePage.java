@@ -21,7 +21,6 @@ import com.aires.managers.FileReaderManager;
 import com.aires.testdatatypes.coreflex.Benefit;
 import com.aires.testdatatypes.coreflex.CoreFlex_PolicySetupPagesData;
 import com.aires.testdatatypes.coreflex.FlexBenefit;
-import com.aires.testdatatypes.coreflex.OtherBenefit;
 import com.vimalselvam.cucumber.listener.Reporter;
 
 public class CoreFlex_PreviewTransfereePage extends Base {
@@ -113,10 +112,7 @@ public class CoreFlex_PreviewTransfereePage extends Base {
 			.getMXTransfereeCoreBenefitDetails();
 
 	public static final List<FlexBenefit> flexBenefits = FileReaderManager.getInstance().getCoreFlexJsonReader()
-			.getMXTransfereeFlexBenefitDetails();
-
-	public static final List<OtherBenefit> otherBenefits = FileReaderManager.getInstance().getCoreFlexJsonReader()
-			.getMXTransfereeOtherBenefitDetails();
+			.getMXTransfereeFlexBenefitData();
 
 	CoreFlex_PolicySetupPagesData policySetupPageData = FileReaderManager.getInstance().getCoreFlexJsonReader()
 			.getPolicySetupPagesDataList(COREFLEXConstants.POLICY_SETUP);
@@ -199,12 +195,12 @@ public class CoreFlex_PreviewTransfereePage extends Base {
 			}
 		} catch (Exception e) {
 			Reporter.addStepLog(MessageFormat.format(
-					MobilityXConstants.EXCEPTION_OCCURED_WHILE_VALIDATING_AND_SELECTING_PORTION_CASHOUT_ON_FLEX_PLANNING_TOOL_PAGE,
+					COREFLEXConstants.EXCEPTION_OCCURED_WHILE_VERIFYING_PORTION_CASHOUT_ON_PREVIEW_TRANSFEREE_PAGE,
 					CoreConstants.FAIL, e.getMessage()));
 		}
 		if (isPortionCashoutVerified) {
 			Reporter.addStepLog(MessageFormat.format(
-					MobilityXConstants.SUCCESSFULLY_VERIFIED_AND_SELECTED_PORTION_CASHOUT_ON_FLEX_PLANNING_TOOL_PAGE,
+					COREFLEXConstants.SUCCESSFULLY_VERIFIED_PORTION_CASHOUT_ON_PREVIEW_TRANSFEREE_PAGE,
 					CoreConstants.PASS));
 		}
 		return isPortionCashoutVerified;
@@ -213,99 +209,34 @@ public class CoreFlex_PreviewTransfereePage extends Base {
 	public boolean verifyBenefitDetailsOnPreviewTransfereePage(String policyType) {
 		switch (policyType) {
 		case COREFLEXConstants.FLEX:
-			return verifyFlexBenefitsDetails() && verifyOtherBenefitsDetails();
+			return verifyFlexBenefitsDetails();
 		case COREFLEXConstants.CORE:
 			return verifyCoreBenefitName();
 		case COREFLEXConstants.BOTH:
-			return verifyCoreBenefitName() && verifyFlexBenefitsDetails() && verifyOtherBenefitsDetails();
+			return verifyCoreBenefitName() && verifyFlexBenefitsDetails();
 		default:
 			Assert.fail(COREFLEXConstants.INVALID_OPTION);
 		}
 		return false;
 	}
 
-	private boolean verifyOtherBenefitsDetails() {
-		boolean isOtherBenefitPreviewVerified = false;
-		boolean benefitCategoryVerified, benefitTypeVerified, benefitPointsVerified, benefitAllowanceAmountVerified,
-				benefitDescVerified;
-		try {
-			for (OtherBenefit benefitList : otherBenefits) {
-				for (Benefit benefit : benefitList.getBenefits()) {
-					String expectedBenefitCategory = benefitList.getCategory();
-					String expectedBenefitName = benefit.getBenefitDisplayName();
-					String expectedbenefitPoints = benefit.getPoints();
-					String expectedAllowanceAmount = benefit.getBenefitAmount();
-					String expectedBenefitDescription = benefit.getBenefitDesc();
-					int indexBenefit = BusinessFunctions.returnindexItemFromListUsingText(driver,
-							_textAddedBenefitNameList, expectedBenefitName);
-					int indexCategory = BusinessFunctions.returnindexItemFromListUsingText(driver,
-							_textAddedBenefitGroupList, expectedBenefitCategory, true);
-					String actualBenefitCategory = _textAddedBenefitGroupList.get(indexCategory).getText();
-					String actualBenefitName = _textAddedBenefitNameList.get(indexBenefit).getText();
-					String actualBenefitPoints = _benefitsPointsList.get(indexBenefit).getText();
-					String actualAllowanceAmount = _allowanceAmountList.get(indexBenefit).getText();
-					String actualBenefitDesc = _benefitDescList.get(indexBenefit).getText();
-
-					benefitCategoryVerified = actualBenefitCategory.contains(expectedBenefitCategory);
-					benefitTypeVerified = actualBenefitName.equals(expectedBenefitName);
-					benefitPointsVerified = actualBenefitPoints.equals(expectedbenefitPoints);
-					benefitAllowanceAmountVerified = actualAllowanceAmount.equals(expectedAllowanceAmount);
-					benefitDescVerified = actualBenefitDesc.equals(expectedBenefitDescription);
-
-					isOtherBenefitPreviewVerified = benefitCategoryVerified & benefitTypeVerified
-							& benefitPointsVerified & benefitAllowanceAmountVerified & benefitDescVerified;
-					if (!isOtherBenefitPreviewVerified) {
-						break;
-					}
-				}
-			}
-		} catch (Exception e) {
-			Reporter.addStepLog(MessageFormat.format(
-					COREFLEXConstants.EXCEPTION_OCCURED_WHILE_VALIDATING_OTHER_BENEFIT_DETAILS_ON_PREVIEW_TRANSFEREE_PAGE,
-					CoreConstants.FAIL, e.getMessage()));
-		}
-
-		if (isOtherBenefitPreviewVerified) {
-			Reporter.addStepLog(MessageFormat.format(
-					COREFLEXConstants.SUCCESSFULLY_VERIFIED_OTHER_BENEFIT_DETAILS_ON_PREVIEW_TRANSFEREE_PAGE,
-					CoreConstants.PASS));
-		}
-		return isOtherBenefitPreviewVerified;
-	}
-
+	
 	private boolean verifyFlexBenefitsDetails() {
 		boolean isFlexBenefitPreviewVerified = false;
-		boolean benefitCategoryVerified, benefitTypeVerified, benefitPointsVerified, benefitAllowanceAmountVerified,
-				benefitDescVerified;
 		try {
 			for (WebElement element : _moreLinkBenefitDesc) {
 				CoreFunctions.clickElement(driver, element);
 			}
-			for (FlexBenefit benefitList : flexBenefits) {
-				for (Benefit benefit : benefitList.getBenefits()) {
-					String expectedBenefitCategory = benefitList.getCategory();
-					String expectedBenefitName = benefit.getBenefitDisplayName();
-					String expectedbenefitPoints = benefit.getPoints();
-					String expectedAllowanceAmount = benefit.getBenefitAmount();
-					String expectedBenefitDescription = benefit.getBenefitDesc();
+			for (FlexBenefit benefitList : flexBenefits) {				
+				for (Benefit benefit : benefitList.getBenefits()) {					
 					int indexBenefit = BusinessFunctions.returnindexItemFromListUsingText(driver,
-							_textAddedBenefitNameList, expectedBenefitName);
+							_textAddedBenefitNameList, benefit.getBenefitDisplayName());
 					int indexCategory = BusinessFunctions.returnindexItemFromListUsingText(driver,
-							_textAddedBenefitGroupList, expectedBenefitCategory, true);
-					String actualBenefitCategory = _textAddedBenefitGroupList.get(indexCategory).getText();
-					String actualBenefitName = _textAddedBenefitNameList.get(indexBenefit).getText();
-					String actualBenefitPoints = _benefitsPointsList.get(indexBenefit).getText();
-					String actualAllowanceAmount = _allowanceAmountList.get(indexBenefit).getText();
-					String actualBenefitDesc = _benefitDescList.get(indexBenefit).getText();
-
-					benefitCategoryVerified = actualBenefitCategory.contains(expectedBenefitCategory);
-					benefitTypeVerified = actualBenefitName.equals(expectedBenefitName);
-					benefitPointsVerified = actualBenefitPoints.equals(expectedbenefitPoints);
-					benefitAllowanceAmountVerified = actualAllowanceAmount.equals(expectedAllowanceAmount);
-					benefitDescVerified = actualBenefitDesc.equals(expectedBenefitDescription);
-
-					isFlexBenefitPreviewVerified = benefitCategoryVerified & benefitTypeVerified & benefitPointsVerified
-							& benefitAllowanceAmountVerified & benefitDescVerified;
+							_textAddedBenefitGroupList, benefitList.getCategory(), true);				
+					isFlexBenefitPreviewVerified = (CoreFunctions
+							.getItemsFromListByIndex(driver, _textAddedBenefitGroupList, indexCategory, true)
+							.equals(benefitList.getCategory()))
+							&& verifyFlexPlanningToolBenefitDetails(indexBenefit, benefit);					
 					if (!isFlexBenefitPreviewVerified) {
 						break;
 					}
@@ -324,6 +255,17 @@ public class CoreFlex_PreviewTransfereePage extends Base {
 		}
 		return isFlexBenefitPreviewVerified;
 	}
+	
+	private boolean verifyFlexPlanningToolBenefitDetails(int indexBenefit, Benefit benefit) {
+		return (CoreFunctions.getItemsFromListByIndex(driver, _textAddedBenefitNameList, indexBenefit, true)
+				.equals(benefit.getBenefitDisplayName()))
+				&& (CoreFunctions.getItemsFromListByIndex(driver, _allowanceAmountList, indexBenefit, true)
+						.equals(benefit.getBenefitAmount()))
+				&& ((CoreFunctions.getItemsFromListByIndex(driver, _benefitDescList, indexBenefit, true))
+						.equals(benefit.getBenefitDesc()))
+				&& ((CoreFunctions.getItemsFromListByIndex(driver, _benefitsPointsList, indexBenefit, true))
+						.equals(benefit.getPoints()));
+	}
 
 	public boolean verifyCashOutContent(double cashoutPoints) {
 		return Objects.equals(CoreFunctions.getElementText(driver, _textCashOutName),
@@ -337,8 +279,9 @@ public class CoreFlex_PreviewTransfereePage extends Base {
 	}
 
 	public boolean verifyPreviewTransfereeExperience(String policyType) {
-		return isPreviewTransfereePageDisplayed() && verifyTracingPromptText()
+		return isPreviewTransfereePageDisplayed() 
 				&& verifyBenefitDetailsOnPreviewTransfereePage(policyType) && validatePortionCashOutSection();
+//		&& verifyTracingPromptText()
 	}
 
 	private boolean verifyTracingPromptText() {

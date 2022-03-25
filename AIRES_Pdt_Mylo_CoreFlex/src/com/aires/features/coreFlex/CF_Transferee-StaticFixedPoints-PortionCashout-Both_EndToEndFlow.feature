@@ -3,30 +3,31 @@ Feature: Validate the CoreFlex Policy Flow for Both_Transferee_StaticFixedPoints
 @PolicySetupFlow @Both-PortionCashout_PF
 Scenario: CoreFlex - Setting up a New CoreFlex policy in 'Policy Digitization Tool' application
     Given he has setup a new "Both" Type Policy with following selection in 'Policy Digitization Tool (PDT)' application
-      | Person Responsible For Benefit Selection | Flex Setup Type | Cashout Availiblity    |
+      | Person Responsible For Benefit Selection | Flex Setup Type | Cashout Availability   |
       | Transferee                               | Static/Fixed    |  Portion Cashout       |
 	When he clicks on "SUBMIT" button on "Custom Bundles" page 
-	Then a success dialog should be displayed for Successfuly Submitted Policy
+	Then a success dialog should be displayed for Successfully Submitted Policy
 	And Policy Status should be displayed as "Submit" on "View/Edit Policy Forms" page
 		
-#@FlexPolicy-Transferee-Static-FixedPoints-CashNotAuthorized @Both-PortionCashout 		
-#Scenario: IRIS - Creating and Actualizing a new Transferee in IRIS Apllication for Policy Created in 'Policy Digitization Tool' 
-#	Given he has Created and Actualized a 'New' Transferee in 'Assignment' module of IRIS Application
-#	When he clicks on the "Yes" button of "Send Credentials" dialog having message "Do you want to email ReloNet login credentials to the transferee?" 
-#	Then username, password email of newly created 'Assignment' should be sent to the provided email address 
-#	
-#@FlexPolicy-Transferee-Static-FixedPoints-CashNotAuthorized @Both-PortionCashout
-#Scenario: MXTransferee - Selecting & Submitting benefits available in configured policy and Tracking Available/Used Benefits Points
-#	Given he has logged into 'MobilityX' application with the newly created 'Transferee' user
-##    And he has clicked on "No thanks, I prefer to do this later" link on the 'Welcome' Pop-up displayed on "Mobility Journey Home" page
-#    And he has clicked on "Manage My Points" floating button after validating 'Assignment-Policy' details on "Mobility Journey Home" page
-#    And he has navigated to "FleX Planning Tool" page with configured "Both" Type Policy-Benefits details
-#    And he has clicked on "Next" floating button after selecting following Benefits on "FleX Planning Tool" page
-#    And he has navigated to "My Benefits Bundle" page having all the benefits listed down under 'Selected Benefits' section along with Quantity and Total Points in Editable mode
-#    And he has clicked on "Review and Submit" button on "My Benefits Bundle" page
-#    And he has clicked on "Yes - submit my bundle" after entering 'Transferee' name in 'Type your name to confirm' field and reviewing the selected benefits displayed on "Submit Bundle Confirmation" pop-up page in Non-Editable mode
-#    When he has clicks on "OK - Let Me See My Benefits!" button of Submission success pop-up box 
-#	Then he should be navigated to "Mobility Journey Home" page having updated Assignment Points details
+@MXTransfereeFlow @Both-PortionCashout
+Scenario: MXTransferee - Submitting benefits & Portion Cashout available in configured policy and Tracking Available_Used Benefits Points
+    Given he has logged into 'MobilityX' application after creating a new 'Transferee' through IRIS application for policy setup in 'Policy Digitization Tool'
+    And he has validated 'Assignment-Policy' details after selecting below option displayed on 'Welcome' dialog
+      | WelcomeDialogSelection               |
+      | No thanks, I prefer to do this later |
+    And he has navigated to "FleX Planning Tool" page with below Policy-Benefit type after clicking on 'Manage my Points' button on "Mobility Journey Home" page
+      | PolicyType |
+      | Both       |
+    And he has navigated to "My Benefits Bundle" page after selecting required benefits and PortionCashout on "FleX Planning Tool" page
+    And he has clicked on "Review and Submit" button after validating all the benefit details listed under 'Selected Benefits' section on "My Benefits Bundle" page
+    And he has clicked on "Yes - submit my bundle" button after entering Transferee name on "Submit Bundle Confirmation" dialog
+    And he has clicked on "OK - Let Me See My Benefits!" button displayed on 'Success Flex' dialog
+    And he has verified submitted points details on 'Mobility Journey Home' and 'Flex Planning Tool' page
+    And he has verified submitted benefit details under 'Submitted Benefits' section of 'My Benefits Bundle' page
+    And he has clicked on "Delete" button for a benefit under 'Submitted Benefits' section
+    When he confirms 'Remove Benefit Selection' dialog by entering username and clicking on "Yes-request to delete these benefits"
+    Then 'Delete Request Sent' growl message should be displayed on 'My Benefit Bundle' page
+    And 'Status' of the deleted benefit should be displayed as "Delete Request Pending" under 'Submitted Benefits' section of 'My Benefit Bundle' page
 #
 #@FlexPolicy-Transferee-Static-FixedPoints-CashNotAuthorized	@Both-PortionCashout
 #Scenario: TransfereeSubmissions - Verifying_Approving_Denying submissions made by Transferee for the Client(s) assigned to PPC User

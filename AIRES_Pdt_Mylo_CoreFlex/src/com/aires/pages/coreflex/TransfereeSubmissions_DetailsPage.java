@@ -100,7 +100,7 @@ public class TransfereeSubmissions_DetailsPage extends Base {
 			.getMXTransfereeCoreBenefitDetails();
 
 	public static final List<FlexBenefit> flexBenefits = FileReaderManager.getInstance().getCoreFlexJsonReader()
-			.getMXTransfereeFlexBenefitDetails();
+			.getMXTransfereeFlexBenefitData();
 
 	/**********************************************************************/
 

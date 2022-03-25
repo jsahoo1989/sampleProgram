@@ -80,4 +80,8 @@ public class CoreConstants {
 	public static long TIME_BEFORE_ACTION;
 	public static long TIME_AFTER_ACTION;
 	public static final String TOTAL_TIME_TAKEN_BY_GIVEN = "<b>Total time taken by 'Given' statement is : {0} Seconds </b>";
+	public static final String VAL_ACTUAL = "Actual Value : ";
+	public static final String VAL_EXPECTED = "Expected Value : ";
+	public static final String SCROLLED_TO_ELEMENT = "Successfully scrolled to Element : ''{0}''.";
+	public static final String FAILED_TO_SCROLL_TO_ELEMENT = "Failed to scroll to Element : ''{0}''.";
 }

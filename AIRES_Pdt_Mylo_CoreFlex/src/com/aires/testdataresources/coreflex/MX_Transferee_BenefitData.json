@@ -1,0 +1,73 @@
+{
+	"coreBenefits": [
+		{
+			"benefitType": "Duplicate Housing",
+			"benefitDisplayName": "Automated Duplicate Housing Display Name",
+			"benefitAmount": "1 of payments",
+			"benefitDesc": "Automated Duplicate Housing Benefit Long Description. Setting up a CoreFlex Policy to be consumed by Client/Transferee to select Desired Benefits and track/Manage Points."
+		},
+		{
+			"benefitType": "Lump Sum",
+			"benefitDisplayName": "Automated Lump Sum Display Name",
+			"benefitAmount": "Flat Amount , INR, # of weeks before start transfer",
+			"benefitDesc": "Automated Lump Sum Benefit Long Description. Setting up a CoreFlex Policy to be consumed by Client/Transferee to select Desired Benefits and track/Manage Points."
+		}
+	],
+	"flexBenefits": [
+		{
+			"category": "Housing",
+			"benefits": [
+				{
+					"benefitType": "Duplicate Housing",
+					"benefitDisplayName": "Automated Duplicate Housing Display Name",
+					"benefitAmount": "23 of payments",
+					"benefitDesc": "Automated Duplicate Housing Benefit Long Description. Setting up a CoreFlex Policy to be consumed by Client/Transferee to select Desired Benefits and track/Manage Points.",
+					"points": "50",
+					"subBenefits": "Duplicate Housing",
+					"multipleBenefitSelection": "Yes",
+					"numberOfBenefitSelected": 2,
+					"selectBenefitOnFPTPage": true,
+					"deleteBenefitOnMBBPage":true,
+					"grossUp":"Yes",
+					"reimbursedBy":"Aires",
+					"comment":"Test Duplicate Housing Benefit Comment"
+				},
+				{
+					"benefitType": "Other Housing Benefit",
+					"benefitDisplayName": "Automated Other Housing Benefit Display Name",
+					"benefitAmount": "Automated Allowance Amount 23 of payments",
+					"benefitDesc": "Automated Other Housing Benefit Long Description. Setting up a CoreFlex Policy to be consumed by Client/Transferee to select Desired Benefits and track/Manage Points.",
+					"points": "200",
+					"subBenefits": "",
+					"multipleBenefitSelection": "Yes",
+					"numberOfBenefitSelected": 1,
+					"selectBenefitOnFPTPage": true,
+					"deleteBenefitOnMBBPage":false,
+					"grossUp":"Yes",
+					"reimbursedBy":"Aires",
+					"comment":"Test Other Housing Benefit Comment"
+				}
+			]
+		},
+		{
+			"category": "Allowances",
+			"benefits": [
+				{
+					"benefitType": "Lump Sum",
+					"benefitDisplayName": "Automated Lump Sum Display Name",
+					"benefitAmount": "Flat Amount , U.S Dollar, # of weeks before start transfer",
+					"benefitDesc": "Automated Lump Sum Benefit Long Description. Setting up a CoreFlex Policy to be consumed by Client/Transferee to select Desired Benefits and track/Manage Points.",
+					"points": "22.5",
+					"subBenefits": "Lump Sum",
+					"multipleBenefitSelection": "No",
+					"numberOfBenefitSelected": 1,
+					"selectBenefitOnFPTPage": false,
+					"deleteBenefitOnMBBPage":false,
+					"grossUp":"Yes",
+					"reimbursedBy":"Aires",
+					"comment":"Test Lump Sum Benefit Comment"
+				}
+			]
+		}
+	]
+}

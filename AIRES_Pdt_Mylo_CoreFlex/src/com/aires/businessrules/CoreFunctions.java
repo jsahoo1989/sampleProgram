@@ -64,6 +64,7 @@ import org.testng.Assert;
 
 import com.aires.businessrules.constants.CoreConstants;
 import com.aires.businessrules.constants.MYLOConstants;
+import com.aires.businessrules.constants.MobilityXConstants;
 import com.aires.businessrules.constants.PDTConstants;
 import com.aires.utilities.Log;
 import com.vimalselvam.cucumber.listener.Reporter;
@@ -170,7 +171,7 @@ public class CoreFunctions {
 		try {
 			text = Element.getText().trim();
 			highlightObject(driver, Element);
-			Reporter.addStepLog(CoreConstants.PASS + CoreConstants.TXT_ACTUAL + CoreConstants.IS_DISPLAYED_AS + text);
+//			Reporter.addStepLog(CoreConstants.PASS + CoreConstants.TXT_ACTUAL + CoreConstants.IS_DISPLAYED_AS + text);
 		} catch (Exception e) {
 			Reporter.addStepLog("Could not get element text");
 		}
@@ -267,7 +268,7 @@ public class CoreFunctions {
 
 	public static void explicitWaitTillElementVisibility(WebDriver driver, WebElement Element, String name) {
 		Log.info("waiting for " + name + " to display");
-		WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(60));
+		WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(20));
 		wait.until(ExpectedConditions.visibilityOf(Element));
 		Log.info("Pass: " + name + " is displayed");
 	}
@@ -1805,25 +1806,50 @@ public class CoreFunctions {
 		return exists;
 	}
 
-	public static String getItemsFromListByIndex(WebDriver driver, List<WebElement> list, int index) {
+	public static String getItemsFromListByIndex(WebDriver driver, List<WebElement> list, int index,
+			boolean highlightObject) {
 		String result = null;
 		try {
 			result = list.get(index).getText();
-			highlightObject(driver, list.get(index));
+			if (highlightObject) {
+				highlightObject(driver, list.get(index));
+			}
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
 		return result;
 	}
-	
-	public static String getItemsFromListByIndexWithoutHighlight(WebDriver driver, List<WebElement> list, int index) {
-		String result = null;
-		try {
-			result = list.get(index).getText();
-		} catch (Exception e) {
-			e.printStackTrace();
+
+	public static void verifyText(String actualText, String expectedText, String fieldName) {
+		if (actualText.equalsIgnoreCase(expectedText))
+			Reporter.addStepLog(
+					CoreConstants.PASS + MobilityXConstants.VERIFIED_FIELD_TEXT + fieldName + " : " + expectedText);
+		else {
+			Reporter.addStepLog(CoreConstants.FAIL + MobilityXConstants.FAILED_TO_VERIFY + fieldName + " | "
+					+ CoreConstants.VAL_ACTUAL + actualText + " " + CoreConstants.VAL_EXPECTED + expectedText);
+			Assert.fail("Failed to verify the fields "+ fieldName +" Text: Actual Text = " + actualText + " | Expected Text = " + expectedText);
 		}
-		return result;
+	}
+
+	public static void verifyValue(Double actualValue, Double expectedValue, String fieldName) {
+		if (actualValue.equals(expectedValue))
+			Reporter.addStepLog(
+					CoreConstants.PASS + MobilityXConstants.VERIFIED_FIELD_TEXT + fieldName + " : " + expectedValue);
+		else {
+			Reporter.addStepLog(CoreConstants.FAIL + MobilityXConstants.FAILED_TO_VERIFY + fieldName + " | "
+					+ CoreConstants.VAL_ACTUAL + actualValue + " " + CoreConstants.VAL_EXPECTED + expectedValue);
+			Assert.fail("Failed to verify the fields "+ fieldName +" Text: Actual Text = " + actualValue + " | Expected Text = " + expectedValue);
+		}
+	}
+	
+	public static void scrollToElementUsingJS(WebDriver driver, WebElement Element, String name) {
+		try {
+			JavascriptExecutor executor = (JavascriptExecutor) driver;
+			executor.executeScript("arguments[0].scrollIntoView(true);", Element);
+			Reporter.addStepLog(CoreConstants.PASS + MessageFormat.format(CoreConstants.SCROLLED_TO_ELEMENT, name));
+		} catch (Exception e) {
+			Assert.fail(MessageFormat.format(CoreConstants.FAILED_TO_SCROLL_TO_ELEMENT, name));
+		}
 	}
 
 }

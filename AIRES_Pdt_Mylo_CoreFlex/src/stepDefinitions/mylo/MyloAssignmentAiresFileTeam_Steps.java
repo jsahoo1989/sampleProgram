@@ -8,10 +8,15 @@ import com.aires.pages.mylo.Mylo_AssignmentPage;
 import com.aires.pages.mylo.Mylo_DashboardHomePage;
 import com.aires.pages.mylo.Mylo_LoginPage;
 import com.aires.testdatatypes.mylo.Mylo_LoginData;
+import com.vimalselvam.cucumber.listener.Reporter;
 
 import cucumber.api.java.en.Given;
 import cucumber.api.java.en.Then;
 import cucumber.api.java.en.When;
+
+import java.text.MessageFormat;
+import java.util.Date;
+
 import org.testng.Assert;
 
 public class MyloAssignmentAiresFileTeam_Steps {
@@ -38,12 +43,18 @@ public class MyloAssignmentAiresFileTeam_Steps {
 
 	@Given("^he is on Mylo Assignment Summary page for file ID \"([^\"]*)\"$")
 	public void he_is_on_Mylo_Assignment_Summary_page_for_file_ID(String fileID) {
+		MYLOConstants.TIME_BEFORE_ACTION = new Date().getTime();
 		myloDashboardPage.clickOptionFromMainMenu(MYLOConstants.ASSIGNMENT);
+		myloDashboardPage.selectOptionsFromAssignmentMenu(MYLOConstants.QUERY_FILE);
 		myloDashboardPage.selectParameterFromQueryScreen(MYLOConstants.FILE);
 		myloDashboardPage.selectOptionsForFileParameters(MYLOConstants.FILE_ID, fileID);
+		Reporter.addStepLog(MessageFormat.format(MYLOConstants.FILE_ID_ENTERED, CoreConstants.PASS, fileID));
 		myloDashboardPage.clickExecuteButton();
 		Assert.assertTrue(myloAssignmentPage.verifyActiveTab(MYLOConstants.SUMMARY),
 				MYLOConstants.SUMMARY + MYLOConstants.TAB_NOT_ACTIVE);
+		MYLOConstants.TIME_AFTER_ACTION = new Date().getTime();
+		Reporter.addStepLog("<b>Total time taken by <i>'Given'</i> statement is :"
+				+ (MYLOConstants.TIME_AFTER_ACTION - MYLOConstants.TIME_BEFORE_ACTION) / 1000 + " Seconds </b>");
 	}
 
 	@Given("^he selects \"([^\"]*)\" with random team member from the dropdown after clicking on \"([^\"]*)\" button$")

@@ -46,6 +46,9 @@ public class Mylo_LoginPage extends Base {
 	@FindBy(how = How.XPATH, using = "//div[text()='Use another account']")
 	private WebElement _anotherAccount;
 	
+	@FindBy(how = How.CSS, using = "div[class='sk-three-strings']")
+	private WebElement _spinner;
+	
 	final By _loginImg = By.xpath("//img[contains(@src,'login-with-office-365.jpg')]");
 	
 	Mylo_LoginData loginData = FileReaderManager.getInstance().getMyloJsonReader()
@@ -77,6 +80,7 @@ public class Mylo_LoginPage extends Base {
 		CoreFunctions.switchToParentWindow(driver);
 		if(CoreFunctions.isElementPresent(driver, _loginImg, 5, MYLOConstants.LOGIN_BUTTON))
 			CoreFunctions.click(driver, CoreFunctions.getElementByLocator(driver,_loginImg), MYLOConstants.LOGIN_BUTTON);
+		CoreFunctions.explicitWaitTillElementInVisibilityCustomTime(driver, _spinner, 10);
 	}
 
 	public void enterUserEmailAndPasswordForMylo(String userName, String password) {
@@ -105,14 +109,17 @@ public class Mylo_LoginPage extends Base {
 	}
 	
 	public void loginWithUser(String userType) throws InterruptedException {
+		logout();
+		openApplication();
+		CoreFunctions.explicitWaitTillElementVisibility(driver, _anotherAccount, _anotherAccount.getText());
+		CoreFunctions.click(driver, _anotherAccount, _anotherAccount.getText());
 		if (userType.equals(MYLOConstants.USER_WITHOUT_RESOURCE15)||userType.equals(MYLOConstants.USER_WITHOUT_RESOURCE300096)) {
-			logout();
-			openApplication();
-			CoreFunctions.explicitWaitTillElementVisibility(driver, _anotherAccount, _anotherAccount.getText());
-			CoreFunctions.click(driver, _anotherAccount, _anotherAccount.getText());
-			enterUserEmailAndPasswordForMylo(loginData.MyloWithOutResource15UserName, loginData.MyloPassword);
-			clickSignIn();	
+			enterUserEmailAndPasswordForMylo(loginData.MyloWithOutResource15UserName, loginData.MyloPassword);	
 		}
+		else {
+			enterUserEmailAndPasswordForMylo(loginData.MyloUserName, loginData.MyloPassword);	
+		}
+		clickSignIn();
 	}
 
 }

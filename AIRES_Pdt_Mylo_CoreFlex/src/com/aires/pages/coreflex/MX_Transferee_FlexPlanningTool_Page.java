@@ -436,6 +436,9 @@ public class MX_Transferee_FlexPlanningTool_Page extends Base {
 							.equals(MobilityXConstants.AFTER_RELOCATION_ONLY))) {
 				isPortionCashoutSelected = selectPointsForCashout(cashoutPoints * 0.15);
 			}
+			else if((CoreFunctions.getPropertyFromConfig("PolicyCashoutType").equals(MobilityXConstants.CASHOUT_NOT_AUTHORIZED))) {
+				return true;
+			}
 		} catch (Exception e) {
 			Reporter.addStepLog(MessageFormat.format(
 					MobilityXConstants.EXCEPTION_OCCURED_WHILE_SELECTING_PORTION_CASHOUT_ON_FLEX_PLANNING_TOOL_PAGE,

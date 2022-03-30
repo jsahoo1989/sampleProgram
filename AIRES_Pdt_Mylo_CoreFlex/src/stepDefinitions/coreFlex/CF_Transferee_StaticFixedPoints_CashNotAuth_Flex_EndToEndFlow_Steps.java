@@ -60,25 +60,10 @@ public class CF_Transferee_StaticFixedPoints_CashNotAuth_Flex_EndToEndFlow_Steps
 		CoreConstants.TIME_AFTER_ACTION = new Date().getTime();
 		Reporter.addStepLog(MessageFormat.format(CoreConstants.TOTAL_TIME_TAKEN_BY_GIVEN,
 				(CoreConstants.TIME_AFTER_ACTION - CoreConstants.TIME_BEFORE_ACTION) / 1000));
-	}
+	}	
 
-	@Given("^he has navigated to \"([^\"]*)\" page having record of Bundle submitted by the transferee$")
-	public void he_has_navigated_to_page_having_record_of_Bundle_submitted_by_the_transferee(String pageName)
-			throws Throwable {
-		Assert.assertTrue(transfereeSubmissionsDashboardHomePage.verifyTransfereeBundleSubmissionDetails(),
-				MessageFormat.format(
-						COREFLEXConstants.FAILED_TO_VERIFY_TRANSFEREE_SUBMISSION_DETAILS_ON_DASHBOARD_HOME_PAGE,
-						CoreConstants.FAIL));
-	}
-
-	@When("^he clicks on \"([^\"]*)\" button for Bundle submitted by the transferee on \"([^\"]*)\" page$")
-	public void he_clicks_on_button_for_Bundle_submitted_by_the_transferee_on_page(String btnName, String pageName)
-			throws Throwable {
-		transfereeSubmissionsDashboardHomePage.clickElementOfPage(btnName);
-	}
-
-	@Then("^he should be navigated to \"([^\"]*)\" page having list of benefits submmited in the bundle along with Quantity, Benefits Points, Added Comments, Remaining Points$")
-	public void he_should_be_navigated_to_page_having_list_of_benefits_submmited_in_the_bundle_along_with_Quantity_Benefits_Points_Added_Comments_Remaining_Points(
+	@Then("^he should be navigated to \"([^\"]*)\" page having list of submitted benefits details$")
+	public void he_should_be_navigated_to_page_having_list_of_submitted_benefits_details(
 			String pageName) throws Throwable {
 		transfereeSubmissionsDetailsPage = _pageObjectManagerCoreFlex.getTransfereeSubmissionsDetailsPage();
 		Assert.assertTrue(transfereeSubmissionsDetailsPage.verifiyPageNavigation(pageName),

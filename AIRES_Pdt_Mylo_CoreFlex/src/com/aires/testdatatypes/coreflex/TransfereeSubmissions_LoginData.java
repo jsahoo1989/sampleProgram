@@ -1,26 +1,32 @@
 package com.aires.testdatatypes.coreflex;
 
-
 public class TransfereeSubmissions_LoginData {
-	
+
 	public String application;
-	public LoginUserDEV loginUserDEV;
-	public LoginUserQA loginUserQA;
-	public LoginUserUAT loginUserUAT;
+	public Dev dev;
+	public Qa qa;
+	public Uat uat;
+	public Prod prod;
 
-	public class LoginUserDEV {
+	public class Dev {
 		public String userName;
 		public String password;
 		public String fullName;
 	}
 
-	public class LoginUserQA {
+	public class Qa {
 		public String userName;
 		public String password;
 		public String fullName;
 	}
-	
-	public class LoginUserUAT {
+
+	public class Uat {
+		public String userName;
+		public String password;
+		public String fullName;
+	}
+
+	public class Prod {
 		public String userName;
 		public String password;
 		public String fullName;

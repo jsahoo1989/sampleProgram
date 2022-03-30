@@ -1,20 +1,25 @@
 [
 	{
 		"application": "Transferee Submissions",
-		"loginUserDEV": {
+		"dev": {
 			"userName": "mxssodev5@corp.aires.com",
 			"password": "AiresDevSSOTest$",
 			"fullName": "mxsso dev5"
 		},
-		"loginUserQA": {
-			"userName": "test",
-			"password": "test",
-			"fullName": "test"
+		"qa": {
+			"userName": "mxssodev5@corp.aires.com",
+			"password": "AiresDevSSOTest$",
+			"fullName": "mxsso dev5"
 		},
-		"loginUserUAT": {
-			"userName": "test",
-			"password": "test",
-			"fullName": "test"
+		"uat": {
+			"userName": "mxssodev5@corp.aires.com",
+			"password": "AiresDevSSOTest$",
+			"fullName": "mxsso dev5"
+		},
+		"prod": {
+			"userName": "mxssodev5@corp.aires.com",
+			"password": "AiresDevSSOTest$",
+			"fullName": "mxsso dev5"
 		}
 	}
 ]

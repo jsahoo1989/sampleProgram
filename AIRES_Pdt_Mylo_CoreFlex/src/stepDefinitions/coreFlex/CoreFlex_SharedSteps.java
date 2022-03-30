@@ -437,8 +437,8 @@ public class CoreFlex_SharedSteps {
 //		mxTransfereeJourneyHomePage.progressOrSkipMobilityJourneyHomePage(action.get(0).get("WelcomeDialogSelection"));
 		Assert.assertTrue(mxTransfereeJourneyHomePage.verifyAssignmentAndPolicyDetails(), MessageFormat.format(
 				MobilityXConstants.ASSIGNMENT_DETAILS_NOT_MATCHED_ON_MOBILITY_JOURNEY_HOME_PAGE, CoreConstants.FAIL));
-//		Assert.assertTrue(mxTransfereeJourneyHomePage.setUpPaymentAccount(), MessageFormat.format(
-//				MobilityXConstants.FAILED_TO_SETUP_PAYMENT_ACCOUNT, CoreConstants.FAIL));
+		Assert.assertTrue(mxTransfereeJourneyHomePage.setUpPaymentAccount(), MessageFormat.format(
+				MobilityXConstants.FAILED_TO_SETUP_PAYMENT_ACCOUNT, CoreConstants.FAIL));
 		Assert.assertTrue(mxTransfereeJourneyHomePage.navigateToFlexPlanningToolPage(), MessageFormat
 				.format(MobilityXConstants.FAILED_TO_NAVIGATE_TO_FLEX_PLANNING_TOOL_PAGE, CoreConstants.FAIL));
 		CoreConstants.TIME_AFTER_ACTION = new Date().getTime();
@@ -462,9 +462,9 @@ public class CoreFlex_SharedSteps {
 				MessageFormat.format(
 						MobilityXConstants.BENEFIT_DETAILS_ON_FLEX_PLANNING_TOOL_PAGE_OF_MXTRANSFEREE_NOT_MATCHED_WITH_BENEFITS_DETAILS_SET_IN_PDT,
 						CoreConstants.FAIL));
-//		Assert.assertTrue(mxTransfereeFlexPlanningToolPage.verifySuggestedBundlesDetails(), MessageFormat.format(
-//				MobilityXConstants.CUSTOM_BUNDLE_DETAILS_NOT_MATCHED_ON_SUGGESTED_BUNDLES_PAGE, CoreConstants.FAIL));
-//		mxTransfereeFlexPlanningToolPage.clickElementOfPage(MobilityXConstants.BACK_TO_BENEFITS_LIST);
+		Assert.assertTrue(mxTransfereeFlexPlanningToolPage.verifySuggestedBundlesDetails(), MessageFormat.format(
+				MobilityXConstants.CUSTOM_BUNDLE_DETAILS_NOT_MATCHED_ON_SUGGESTED_BUNDLES_PAGE, CoreConstants.FAIL));
+		mxTransfereeFlexPlanningToolPage.clickElementOfPage(MobilityXConstants.BACK_TO_BENEFITS_LIST);
 		CoreConstants.TIME_AFTER_ACTION = new Date().getTime();
 		Reporter.addStepLog("<b>Total time taken by <i>'Given'</i> statement is :"
 				+ (CoreConstants.TIME_AFTER_ACTION - CoreConstants.TIME_BEFORE_ACTION) / 1000 + " Seconds </b>");
@@ -567,6 +567,21 @@ public class CoreFlex_SharedSteps {
 		CoreConstants.TIME_AFTER_ACTION = new Date().getTime();
 		Reporter.addStepLog("<b>Total time taken by <i>'Given'</i> statement is :"
 				+ (CoreConstants.TIME_AFTER_ACTION - CoreConstants.TIME_BEFORE_ACTION) / 1000 + " Seconds </b>");
+	}
+	
+	@Given("^he has navigated to \"([^\"]*)\" page having record of Bundle submitted by the transferee$")
+	public void he_has_navigated_to_page_having_record_of_Bundle_submitted_by_the_transferee(String pageName)
+			throws Throwable {
+		Assert.assertTrue(transfereeSubmissionsDashboardHomePage.verifyTransfereeBundleSubmissionDetails(),
+				MessageFormat.format(
+						COREFLEXConstants.FAILED_TO_VERIFY_TRANSFEREE_SUBMISSION_DETAILS_ON_DASHBOARD_HOME_PAGE,
+						CoreConstants.FAIL));
+	}
+	
+	@When("^he clicks on \"([^\"]*)\" button for Bundle submitted by the transferee on \"([^\"]*)\" page$")
+	public void he_clicks_on_button_for_Bundle_submitted_by_the_transferee_on_page(String btnName, String pageName)
+			throws Throwable {
+		transfereeSubmissionsDashboardHomePage.clickElementOfPage(btnName);
 	}
 	
 	@Given("^he has verified submitted benefit details under 'Submitted Benefits' section of 'My Benefits Bundle' page$")

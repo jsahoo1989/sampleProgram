@@ -62,9 +62,9 @@ public class TransfereeSubmissions_LoginPage extends Base {
 
 	/**********************************************************************/
 
-	TransfereeSubmissions_LoginData loginData = FileReaderManager.getInstance().getCoreFlexJsonReader()
+	private TransfereeSubmissions_LoginData _transfereeSubmissionLoginData = FileReaderManager.getInstance().getCoreFlexJsonReader()
 			.getTransfereeSubmissionLoginDataList(COREFLEXConstants.TRANSFEREE_SUBMISSIONS);
-
+	
 	/**********************************************************************/
 
 	public void VerifyAIRESLogo() {
@@ -118,9 +118,9 @@ public class TransfereeSubmissions_LoginPage extends Base {
 		try {
 			switch (userType) {
 			case COREFLEXConstants.MSPEC_PPC:
-				enterUserEmailAndPassword(loginData.loginUserDEV.userName, loginData.loginUserDEV.password);
+				enterUserEmailAndPassword(getCSMCredentials(_transfereeSubmissionLoginData)[0], getCSMCredentials(_transfereeSubmissionLoginData)[1]);
 				clickSignIn();
-				isSuccessfullyLoggedIn = dashboardHomePage.verifyUserlogin(loginData.loginUserDEV.fullName,
+				isSuccessfullyLoggedIn = dashboardHomePage.verifyUserlogin(getCSMUserName(_transfereeSubmissionLoginData),
 						COREFLEXConstants.TRANSFEREE_SUBMISSIONS_DASHBOARD_HOME_PAGE);
 				break;
 			default:
@@ -137,5 +137,47 @@ public class TransfereeSubmissions_LoginPage extends Base {
 					MessageFormat.format(COREFLEXConstants.SUCCESSFULLY_LOGGED_IN_TO_APPLICATION, CoreConstants.PASS));
 		}
 		return isSuccessfullyLoggedIn;
+	}
+	
+	private String getCSMUserName(TransfereeSubmissions_LoginData _transfereeSubmissionLoginData2) {
+		String csmUserFullName = null;
+		switch(CoreFunctions.getPropertyFromConfig("envt").toLowerCase()) {
+		case CoreConstants.ENVT_DEV:
+			csmUserFullName = _transfereeSubmissionLoginData.dev.fullName;
+			break;
+		case CoreConstants.ENVT_QA:
+			csmUserFullName = _transfereeSubmissionLoginData.qa.fullName;
+			break;
+		case CoreConstants.ENVT_UAT:
+			csmUserFullName = _transfereeSubmissionLoginData.uat.fullName;
+			break;
+		case CoreConstants.ENVT_PROD:
+			csmUserFullName = _transfereeSubmissionLoginData.prod.fullName;
+			break;
+		}
+		return csmUserFullName;
+	}
+
+	private String[] getCSMCredentials(TransfereeSubmissions_LoginData _transfereeSubmissionLoginData) {
+		String csmCredentials[] = new String[2];
+		switch(CoreFunctions.getPropertyFromConfig("envt").toLowerCase()) {
+		case CoreConstants.ENVT_DEV:
+			csmCredentials[0] = _transfereeSubmissionLoginData.dev.userName;
+			csmCredentials[1] = _transfereeSubmissionLoginData.dev.password;
+			break;
+		case CoreConstants.ENVT_QA:
+			csmCredentials[0] = _transfereeSubmissionLoginData.qa.userName;
+			csmCredentials[1] = _transfereeSubmissionLoginData.qa.password;
+			break;
+		case CoreConstants.ENVT_UAT:
+			csmCredentials[0] = _transfereeSubmissionLoginData.uat.userName;
+			csmCredentials[1] = _transfereeSubmissionLoginData.uat.password;
+			break;
+		case CoreConstants.ENVT_PROD:
+			csmCredentials[0] = _transfereeSubmissionLoginData.prod.userName;
+			csmCredentials[1] = _transfereeSubmissionLoginData.prod.password;
+			break;
+		}
+		return csmCredentials;
 	}
 }

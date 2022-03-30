@@ -278,7 +278,6 @@ public class COREFLEXConstants {
 	public static final String EXCEPTION_OCCURED_WHILE_VALIDATING_DELETE_REQUEST_SENT_SUCCESS_GROWL_MESSAGE = "{0}Exception occured while validating delete request sent success growl message. Exception : ''{1}''.";	
 	public static final String EXCEPTION_OCCURED_WHILE_VALIDATING_DELETED_OTHER_BENEFIT_STATUS_UNDER_SUBMITTED_BENEFITS_SECTION_OF_MBB_PAGE = "{0}Exception occured while valiating deleted flex benefit status under submitted benefits section of My Benefit Bundle Page.Exception : ''{1}''.";
 	public static final String SUCCESSFULLY_VERIFIED_DELETED_OTHER_BENEFIT_STATUS_UNDER_SUBMITTED_BENEFITS_SECTION_OF_MBB_PAGE = "{0}Successfully verified deleted flex benefit status under submitted benefits section of My Benefit Bundle Page.";
-	public static final String SUCCESSFULLY_VERIFIED_PORTION_CASHOUT_FUNCTIONALITY_ON_FLEX_PLANNING_TOOL_PAGE = "{0}Successfully verified Portion Cashout functionality on Flex Planning Tool Page.";
 	public static final String SUCCESSFULLY_VERIFIED_DEFAULT_PORTION_CASHOUT_DETAILS_ON_FLEX_PLANNING_TOOL_PAGE = "{0}Successfully verified Default Portion Cashout Details on Flex Planning Tool Page.";
 	public static final String EXCEPTION_OCCURED_WHILE_VERIFYING_PORTION_CASHOUT_ON_PREVIEW_TRANSFEREE_PAGE = "{0}Exception occured while verifying Portion Cashout Details on Preview Transferee Page. Exception : ''{1}''.";
 	public static final String SUCCESSFULLY_VERIFIED_PORTION_CASHOUT_ON_PREVIEW_TRANSFEREE_PAGE = "{0}Successfully verified Portion Cashout details on Preview Transferee Page.";

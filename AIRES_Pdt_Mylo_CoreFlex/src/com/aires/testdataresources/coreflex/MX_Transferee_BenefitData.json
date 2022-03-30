@@ -2,15 +2,15 @@
 	"coreBenefits": [
 		{
 			"benefitType": "Duplicate Housing",
-			"benefitDisplayName": "Automated Duplicate Housing Display Name",
-			"benefitAmount": "1 of payments",
-			"benefitDesc": "Automated Duplicate Housing Benefit Long Description. Setting up a CoreFlex Policy to be consumed by Client/Transferee to select Desired Benefits and track/Manage Points."
+			"benefitDisplayName": "Automated Core Type Duplicate Housing Display Name",
+			"benefitAmount": "Core Type payments $23",
+			"benefitDesc": "Automated Core Duplicate Housing Benefit Long Description. Setting up a CoreFlex Policy to be consumed by Client/Transferee to select Desired Benefits and track/Manage Points."
 		},
 		{
 			"benefitType": "Lump Sum",
-			"benefitDisplayName": "Automated Lump Sum Display Name",
-			"benefitAmount": "Flat Amount , INR, # of weeks before start transfer",
-			"benefitDesc": "Automated Lump Sum Benefit Long Description. Setting up a CoreFlex Policy to be consumed by Client/Transferee to select Desired Benefits and track/Manage Points."
+			"benefitDisplayName": "Automated Core Type Lump Sum Display Name",
+			"benefitAmount": "Core Type Flat Amount , INR, # of weeks before start transfer",
+			"benefitDesc": "Automated Core Lump Sum Benefit Long Description. Setting up a CoreFlex Policy to be consumed by Client/Transferee to select Desired Benefits and track/Manage Points."
 		}
 	],
 	"flexBenefits": [
@@ -19,9 +19,9 @@
 			"benefits": [
 				{
 					"benefitType": "Duplicate Housing",
-					"benefitDisplayName": "Automated Duplicate Housing Display Name",
-					"benefitAmount": "23 of payments",
-					"benefitDesc": "Automated Duplicate Housing Benefit Long Description. Setting up a CoreFlex Policy to be consumed by Client/Transferee to select Desired Benefits and track/Manage Points.",
+					"benefitDisplayName": "Automated Flex Duplicate Housing Display Name",
+					"benefitAmount": "23 of payments - Flex Type",
+					"benefitDesc": "Automated Flex Duplicate Housing Benefit Long Description. Setting up a CoreFlex Policy to be consumed by Client/Transferee to select Desired Benefits and track/Manage Points.",
 					"points": "50",
 					"subBenefits": "Duplicate Housing",
 					"multipleBenefitSelection": "Yes",
@@ -30,7 +30,7 @@
 					"deleteBenefitOnMBBPage":true,
 					"grossUp":"Yes",
 					"reimbursedBy":"Aires",
-					"comment":"Test Duplicate Housing Benefit Comment"
+					"comment":"Test Flex Duplicate Housing Benefit Comment"
 				},
 				{
 					"benefitType": "Other Housing Benefit",
@@ -54,9 +54,9 @@
 			"benefits": [
 				{
 					"benefitType": "Lump Sum",
-					"benefitDisplayName": "Automated Lump Sum Display Name",
-					"benefitAmount": "Flat Amount , U.S Dollar, # of weeks before start transfer",
-					"benefitDesc": "Automated Lump Sum Benefit Long Description. Setting up a CoreFlex Policy to be consumed by Client/Transferee to select Desired Benefits and track/Manage Points.",
+					"benefitDisplayName": "Automated Flex Lump Sum Display Name",
+					"benefitAmount": "Flex Type Flat Amount , U.S Dollar, # of weeks before start transfer",
+					"benefitDesc": "Automated Flex Lump Sum Benefit Long Description. Setting up a CoreFlex Policy to be consumed by Client/Transferee to select Desired Benefits and track/Manage Points.",
 					"points": "22.5",
 					"subBenefits": "Lump Sum",
 					"multipleBenefitSelection": "No",
@@ -65,7 +65,7 @@
 					"deleteBenefitOnMBBPage":false,
 					"grossUp":"Yes",
 					"reimbursedBy":"Aires",
-					"comment":"Test Lump Sum Benefit Comment"
+					"comment":"Test Flex Lump Sum Benefit Comment"
 				}
 			]
 		}

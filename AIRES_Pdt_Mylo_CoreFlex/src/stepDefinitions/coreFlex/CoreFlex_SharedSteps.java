@@ -457,11 +457,11 @@ public class CoreFlex_SharedSteps {
 				MessageFormat.format(
 						MobilityXConstants.FAILED_TO_VALIDATE_AVAILABLE_POINTS_MESSAGE_ON_FLEX_PLANNING_TOOL_PAGE,
 						CoreConstants.FAIL));
-//		Assert.assertTrue(
-//				mxTransfereeFlexPlanningToolPage.verifyBenefitDetailsOnFPT(policTypeMap.get(0).get("PolicyType")),
-//				MessageFormat.format(
-//						MobilityXConstants.BENEFIT_DETAILS_ON_FLEX_PLANNING_TOOL_PAGE_OF_MXTRANSFEREE_NOT_MATCHED_WITH_BENEFITS_DETAILS_SET_IN_PDT,
-//						CoreConstants.FAIL));
+		Assert.assertTrue(
+				mxTransfereeFlexPlanningToolPage.verifyBenefitDetailsOnFPT(policTypeMap.get(0).get("PolicyType")),
+				MessageFormat.format(
+						MobilityXConstants.BENEFIT_DETAILS_ON_FLEX_PLANNING_TOOL_PAGE_OF_MXTRANSFEREE_NOT_MATCHED_WITH_BENEFITS_DETAILS_SET_IN_PDT,
+						CoreConstants.FAIL));
 //		Assert.assertTrue(mxTransfereeFlexPlanningToolPage.verifySuggestedBundlesDetails(), MessageFormat.format(
 //				MobilityXConstants.CUSTOM_BUNDLE_DETAILS_NOT_MATCHED_ON_SUGGESTED_BUNDLES_PAGE, CoreConstants.FAIL));
 //		mxTransfereeFlexPlanningToolPage.clickElementOfPage(MobilityXConstants.BACK_TO_BENEFITS_LIST);

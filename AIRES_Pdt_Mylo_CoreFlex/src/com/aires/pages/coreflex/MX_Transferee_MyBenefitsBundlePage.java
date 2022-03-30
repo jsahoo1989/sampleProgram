@@ -667,18 +667,20 @@ public class MX_Transferee_MyBenefitsBundlePage extends Base {
 		return isFlexBenefitDeleteStatus;
 	}
 
-	private boolean verifyDeleteBenefitStatus(int indexBenefit, Benefit benefit) {
+	private boolean verifyDeleteBenefitStatus(int indexBenefit, Benefit benefit) {	
+		
 		return (CoreFunctions.getItemsFromListByIndex(driver, _textSubmittedBenefitNameList, indexBenefit, true)
 				.equals(benefit.getBenefitDisplayName()))
 				&& (CoreFunctions.getItemsFromListByIndex(driver, _textSubmittedAllowanceAmountList, indexBenefit, true)
 						.equals(benefit.getBenefitAmount()))
 				&& (CoreFunctions.getItemsFromListByIndex(driver, _textSubmittedBenefitQuantityList, indexBenefit, true)
 						.equals(String.valueOf(benefit.getNumberOfBenefitSelected())))
-				&& ((CoreFunctions.getItemsFromListByIndex(driver, _textSubmittedBenefitsPointsList, indexBenefit, true)
-						.replace("pts", "").trim())
-								.equals(String.valueOf(Double.parseDouble(benefit.getPoints())
+				&& ((Double.parseDouble((CoreFunctions
+						.getItemsFromListByIndex(driver, _textSubmittedBenefitsPointsList, indexBenefit, true)
+						.replace("pts", "")
+						.trim())))==(Double.parseDouble(benefit.getPoints())
 										* (Integer.parseInt(CoreFunctions.getItemsFromListByIndex(driver,
-												_textSubmittedBenefitQuantityList, indexBenefit, true))))))
+												_textSubmittedBenefitQuantityList, indexBenefit, true)))))
 				&& CoreFunctions.getItemsFromListByIndex(driver, _buttonDeleteSubmittedBenefitList, indexBenefit, true)
 						.equals(MobilityXConstants.UNDO)
 				&& CoreFunctions.getItemsFromListByIndex(driver, _benefitStatus, indexBenefit, true)

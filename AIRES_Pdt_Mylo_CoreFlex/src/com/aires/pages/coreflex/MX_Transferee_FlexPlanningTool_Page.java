@@ -434,7 +434,7 @@ public class MX_Transferee_FlexPlanningTool_Page extends Base {
 			if ((CoreFunctions.getPropertyFromConfig("PolicyCashoutType").equals(MobilityXConstants.PORTION_CASHOUT))
 					|| (CoreFunctions.getPropertyFromConfig("PolicyCashoutType")
 							.equals(MobilityXConstants.AFTER_RELOCATION_ONLY))) {
-				isPortionCashoutSelected = selectPointsForCashout(cashoutPoints*0.15);
+				isPortionCashoutSelected = selectPointsForCashout(cashoutPoints * 0.15);
 			}
 		} catch (Exception e) {
 			Reporter.addStepLog(MessageFormat.format(
@@ -493,7 +493,8 @@ public class MX_Transferee_FlexPlanningTool_Page extends Base {
 	}
 
 	public boolean selectPointsForCashout(double cashoutPoints) {
-		CoreFunctions.clearAndSetTextUsingKeys(driver, _input_cashOutValue, String.valueOf(cashoutPoints),MobilityXConstants.CASHOUT_INPUT_FIELD);		
+		CoreFunctions.clearAndSetTextUsingKeys(driver, _input_cashOutValue, String.valueOf(cashoutPoints),
+				MobilityXConstants.CASHOUT_INPUT_FIELD);
 		CoreFunctions.clickElement(driver, _buttonSelectThisCashoutPoints);
 		CoreFunctions.explicitWaitTillElementVisibility(driver, _buttonSelectedCashoutPoints,
 				MobilityXConstants.CASHOUT_SELECTED);
@@ -633,8 +634,15 @@ public class MX_Transferee_FlexPlanningTool_Page extends Base {
 	}
 
 	public boolean verifySubmittedPointsDetails() {
-		return verifyPostSubmissionPointsBalanceSection() && verifyPointBalanceTooltipContent()
-				&& validatePointsAfterSubmissionAndClickOnNext();
+		try {
+			return verifyPostSubmissionPointsBalanceSection() && verifyPointBalanceTooltipContent()
+					&& validatePointsAfterSubmissionAndClickOnNext();
+		} catch (Exception e) {
+			Reporter.addStepLog(MessageFormat.format(
+					MobilityXConstants.FAILED_TO_VERIFY_UPADTED_POINT_BALANCE_ON_FLEX_PLANNING_TOOL_PAGE,
+					CoreConstants.FAIL, e.getMessage()));
+		}
+		return false;
 	}
 
 	private boolean validatePointsAfterSubmissionAndClickOnNext() {
@@ -790,7 +798,7 @@ public class MX_Transferee_FlexPlanningTool_Page extends Base {
 						&& verifyCashoutContentBySelectingPointsEqualToMaxPortionCashoutPercent()
 						&& verifyCashoutContentBySelectingPointsMoreThanMaxPortionCashoutPercent()
 						&& verifyCashoutContentBySelectingAllBenefitPoints()
-						&& selectAllAvailablePointsForCashoutAndVerify() && verifyEnteredCustomPortionCashoutValue()
+						&& selectAllAvailablePointsForCashoutAndVerify() && verifyEnteredCustomPortionCashoutValue(cashoutPoints * 0.25)
 						&& verifyCashoutDetailsWithEnteredCustomPortionCashoutAndMinBenefitValue()
 						&& verifyCashoutDetailsWithEnteredCustomPortionCashoutAndMaxBenefitValue()
 						&& deselectSelectedCashoutAndBenefits();
@@ -809,7 +817,7 @@ public class MX_Transferee_FlexPlanningTool_Page extends Base {
 		}
 		if (isPortionCashoutVerified & flag) {
 			Reporter.addStepLog(MessageFormat.format(
-					COREFLEXConstants.SUCCESSFULLY_VERIFIED_PORTION_CASHOUT_FUNCTIONALITY_ON_FLEX_PLANNING_TOOL_PAGE,
+					MobilityXConstants.SUCCESSFULLY_VERIFIED_PORTION_CASHOUT_FUNCTIONALITY_ON_FLEX_PLANNING_TOOL_PAGE,
 					CoreConstants.PASS));
 		}
 		return isPortionCashoutVerified;
@@ -1110,13 +1118,13 @@ public class MX_Transferee_FlexPlanningTool_Page extends Base {
 		}
 	}
 
-	private boolean verifyEnteredCustomPortionCashoutValue() {
+	private boolean verifyEnteredCustomPortionCashoutValue(double customCashoutPoints ) {
 		boolean isPortionCashoutVerified = false;
 		try {
 			CoreFunctions.clickElement(driver, _buttonSelectedCashoutPoints);
 			CoreFunctions.explicitWaitTillElementBecomesClickable(driver, _buttonSelectThisCashoutPoints,
 					MobilityXConstants.SELECT_CASHOUT);
-			CoreFunctions.clearAndSetTextUsingKeys(driver, _inputCashoutPoints, String.valueOf(cashoutPoints * 0.25),
+			CoreFunctions.clearAndSetTextUsingKeys(driver, _inputCashoutPoints, String.valueOf(customCashoutPoints),
 					MobilityXConstants.CASHOUT_INPUT_FIELD);
 			double totalPointsAvailableForCashout = Double
 					.parseDouble(CoreFunctions.getAttributeText(_inputCashoutPoints, "value"));
@@ -1236,5 +1244,37 @@ public class MX_Transferee_FlexPlanningTool_Page extends Base {
 		}
 		return false;
 	}
+	
+	public boolean verifyPortionCashOutPostSubmissionOnFPT() {
+		boolean isPortionCashoutVerified = false, flag = false;
+		try {
+			if ((CoreFunctions.getPropertyFromConfig("PolicyCashoutType").equals(MobilityXConstants.PORTION_CASHOUT))
+					|| (CoreFunctions.getPropertyFromConfig("PolicyCashoutType")
+							.equals(MobilityXConstants.AFTER_RELOCATION_ONLY))) {
+				isPortionCashoutVerified = verifyInitialCashOutContent(true)
+						&& verifyCashoutContentBySelectingPointsLessThanMaxPortionCashoutPercent()
+						&& selectAllAvailablePointsForCashoutAndVerify() && verifyEnteredCustomPortionCashoutValue(cashoutPoints * 0.20)
+						&& deselectSelectedCashoutAndBenefits();
+				flag = true;
+			} else if (CoreFunctions.getPropertyFromConfig("PolicyCashoutType")
+					.equals(MobilityXConstants.CASHOUT_NOT_AUTHORIZED)) {
+				isPortionCashoutVerified = true;
+				flag = false;
+			} else {
+				return false;
+			}
+		} catch (Exception e) {
+			Reporter.addStepLog(MessageFormat.format(
+					MobilityXConstants.EXCEPTION_OCCURED_WHILE_VERIFYING_POST_SUBMISSION_CASHOUT_DETAILS_ON_FLEX_PLANNING_TOOL_PAGE,
+					CoreConstants.FAIL, e.getMessage()));
+		}
+		if (isPortionCashoutVerified & flag) {
+			Reporter.addStepLog(MessageFormat.format(
+					MobilityXConstants.SUCCESSFULLY_VERIFIED_POST_SUBMISSION_PORTION_CASHOUT_FUNCTIONALITY_ON_FLEX_PLANNING_TOOL_PAGE,
+					CoreConstants.PASS));
+		}
+		return isPortionCashoutVerified;
+	}
+
 
 }

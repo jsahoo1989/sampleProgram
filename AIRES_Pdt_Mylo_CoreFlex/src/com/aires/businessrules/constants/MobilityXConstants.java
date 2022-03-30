@@ -247,4 +247,8 @@ public class MobilityXConstants {
 	public static final String SUCCESSFULLY_VERIFIED_DELETED_FLEX_BENEFIT_STATUS_UNDER_SUBMITTED_BENEFITS_SECTION_OF_MBB_PAGE = "{0}Successfully verified deleted flex benefit status under submitted benefits section of My Benefit Bundle Page.";
 	public static final String EXCEPTION_OCCURED_WHILE_VALIDATING_DELETED_CASHOUT_STATUS_UNDER_SUBMITTED_BENEFITS_SECTION_OF_MBB_PAGE = "{0}Exception occured while valiating deleted Cashout status under submitted benefits section of My Benefit Bundle Page.Exception : ''{1}''.";
 	public static final String SUCCESSFULLY_VERIFIED_DELETED_CASHOUT_STATUS_UNDER_SUBMITTED_BENEFITS_SECTION_OF_MBB_PAGE = "{0}Successfully verified deleted Cashout status under submitted benefits section of My Benefit Bundle Page.";
+	public static final String POST_SUBMISSION_PORTION_CASHOUT_DETAILS_NOT_MATCHED_ON_FLEX_PLANNING_TOOL_PAGE = "{0}Post-Submission Portion Cashout details NOT matched on Flex Planning Tool page.";
+	public static final String EXCEPTION_OCCURED_WHILE_VERIFYING_POST_SUBMISSION_CASHOUT_DETAILS_ON_FLEX_PLANNING_TOOL_PAGE = "{0}Exception occured while verifying Post Submission - Cashout Details on Flex Planning Tool Page. Exception : ''{1}''.";
+	public static final String SUCCESSFULLY_VERIFIED_PORTION_CASHOUT_FUNCTIONALITY_ON_FLEX_PLANNING_TOOL_PAGE = "{0}Successfully verified Portion Cashout functionality on Flex Planning Tool Page.";
+	public static final String SUCCESSFULLY_VERIFIED_POST_SUBMISSION_PORTION_CASHOUT_FUNCTIONALITY_ON_FLEX_PLANNING_TOOL_PAGE = "{0}Successfully verified Post Submission Portion Cashout functionality on Flex Planning Tool Page.";
 }

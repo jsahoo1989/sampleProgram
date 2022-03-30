@@ -18,6 +18,7 @@ import com.aires.businessrules.constants.COREFLEXConstants;
 import com.aires.businessrules.constants.CoreConstants;
 import com.aires.businessrules.constants.PDTConstants;
 import com.aires.managers.FileReaderManager;
+import com.aires.testdatatypes.coreflex.Benefit;
 import com.aires.testdatatypes.coreflex.CoreFlex_HousingBenefitsData;
 import com.vimalselvam.cucumber.listener.Reporter;
 
@@ -153,6 +154,9 @@ public class CoreFlex_DuplicateHousing_BenefitsPage extends Base {
 
 	CoreFlex_HousingBenefitsData housingBenefitData = FileReaderManager.getInstance().getCoreFlexJsonReader()
 			.getHousingBenefitDataList(COREFLEXConstants.DUPLICATE_HOUSING);
+	
+	public static final List<Benefit> coreBenefits = FileReaderManager.getInstance().getCoreFlexJsonReader()
+			.getMXTransfereeCoreBenefitDetails();
 
 	/*********************************************************************/
 
@@ -411,11 +415,13 @@ public class CoreFlex_DuplicateHousing_BenefitsPage extends Base {
 	 */
 	private void selectBenefitTypeAndFillMandatoryFields(String benefitType, String multipleBenefitSelection,
 			String flexPoints, String benefitDisplayName, String benefitAllowanceAmount, String benefitDescription) {
+		Benefit duplicateHosuingBenefit = coreBenefits.stream()
+				.filter(b -> b.getBenefitType().equals(COREFLEXConstants.DUPLICATE_HOUSING)).findAny().orElse(null);
 		switch (benefitType) {
 		case COREFLEXConstants.CORE:
 			CoreFunctions.clickElement(driver, _textCore);
-			fillManadatoryDetails(benefitType, multipleBenefitSelection, benefitDisplayName, benefitAllowanceAmount,
-					benefitDescription);
+			fillManadatoryDetails(benefitType, multipleBenefitSelection, duplicateHosuingBenefit.getBenefitDisplayName(), duplicateHosuingBenefit.getBenefitAmount(),
+					duplicateHosuingBenefit.getBenefitDesc());
 			break;
 		case COREFLEXConstants.FLEX:
 			CoreFunctions.clickElement(driver, _textFlex);
@@ -426,8 +432,8 @@ public class CoreFlex_DuplicateHousing_BenefitsPage extends Base {
 			break;
 		case COREFLEXConstants.CORE_BENEFITS:
 			CoreFunctions.clickElement(driver, _textCoreBenefits);
-			fillManadatoryDetails(benefitType, multipleBenefitSelection, benefitDisplayName, benefitAllowanceAmount,
-					benefitDescription);
+			fillManadatoryDetails(benefitType, multipleBenefitSelection, duplicateHosuingBenefit.getBenefitDisplayName(), duplicateHosuingBenefit.getBenefitAmount(),
+					duplicateHosuingBenefit.getBenefitDesc());
 			break;
 		case COREFLEXConstants.FLEX_BENEFITS:
 			CoreFunctions.clickElement(driver, _textFlexBenefits);

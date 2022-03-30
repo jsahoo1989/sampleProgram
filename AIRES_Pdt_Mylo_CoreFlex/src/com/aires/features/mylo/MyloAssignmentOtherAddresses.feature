@@ -20,7 +20,7 @@ And corresponding States and Territories is displayed in the 'State/Territory' d
 When he enters "Random" "Country" besides India, US or Canada
 Then "State" field should be a free text field with label as "State/Province"
 
-@IRIS-830 @Mylo-Regression @MyloDemo
+@IRIS-830 @Mylo-Regression
 Scenario:  Mylo-Validate Save functionality and Warning Messages for City, ZipCode, Address1,Address2,State and FromDate field for Mailing Address on Mylo Assignment page under Other Addresses section 
 Given he is on "Mailing address" section after clicking on 'Add' link displayed in left panel under "Other Address" section for file ID "323419"
 And he enters below invalid data for mentioned fields with other mandatory data being provided for "Mailing address" section
@@ -64,7 +64,7 @@ Then below fieldValues should be successfully saved under "Temporary address Dro
 |Temporary address|USA    |Soldotna              |Alaska|99669                    |12/08/2021                |362 Ridgewood Dr          |PO BOX 1                  |
 And Saved data should get deleted after clicking on "Delete" button under "Temporary address Dropdown" section
 
-@IRIS-830 @Mylo-Regression @MyloDemo2
+@IRIS-830 @Mylo-Regression
 Scenario:  Mylo-Validate Warning Messages for all fields with SpecialCharacters for both Mailing and Temporary Address on Mylo Assignment page under Other Addresses section 
 Given he is on "Mailing address" section after clicking on 'Add' link displayed in left panel under "Other Address" section for file ID "611085"
 Then messages corresponding to below fields should be displayed after entering "specialCharacters" along with the mandatory data for both "Mailing address", "Temporary address" section 
@@ -112,7 +112,7 @@ And Saved data should get deleted after clicking on "Delete" button under "Tempo
 
 @IRIS-830 @Mylo-Regression
 Scenario:  Mylo-Validate Warning Messages for Mandatory fields of Mailing Address on Mylo Assignment page under Other Addresses section 
-Given he is on "Mailing address" section after clicking on 'Add' link displayed in left panel under "Other Address" section for file ID "611090"
+Given he is on "Mailing address" section after clicking on 'Add' link displayed in left panel under "Other Address" section for file ID "482352"
 And he enters below invalid data combination for mandatory fields for "Mailing address" section
 |Country   |State     |City |Message                                               | 
 |USA       |Alaska    |     |You need to fill in the city field in Mailing address!|
@@ -138,8 +138,6 @@ And he enters below invalid data combination for mandatory fields for "Temporary
 |USA       |Alaska    |     |You need to fill in the city field in Temporary address!|
 |Select One|60        |25   |You need to select a country in Temporary address!      |
 |INDIA     |Select One|25   |You need to select a state in Property address!         |
-#|CANADA    |Select One|25   |Please enter province for CANADA!                      |
-#|USA       |Select One|25   |Please select state for USA!                           |
 When he enters below valid data for mandatory fields for "Temporary address" section
 |Country   |State                     |Temporary address City |                              
 |Random    |60        		          |25                   |

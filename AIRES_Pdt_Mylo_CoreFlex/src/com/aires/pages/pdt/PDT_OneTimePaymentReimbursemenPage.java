@@ -663,7 +663,7 @@ public class PDT_OneTimePaymentReimbursemenPage extends Base {
 					_lblLumpSumFrequencyOther, oneTimePaymentBenefitData.lumpSum.otherFrequency);
 		}
 
-			/////// Select when to make payment for lump sum.
+			// Select when to make payment for lump sum.
 			String randWhenToMakePaymentLumpSum = BusinessFunctions.selectAndReturnRandomValueFromDropDown(driver,
 					addNewPolicyPage, subBenefitFormName, _drpDownLumpSumWhenToMakePayment,
 					_drpDownLumpSumWhenToMakePaymentOptions, _drpDownLumpSumWhenToMakePaymentOptionsSelected,
@@ -710,7 +710,7 @@ public class PDT_OneTimePaymentReimbursemenPage extends Base {
 
 		CoreFunctions.selectItemInListByText(driver, _radioBtnLeaseBreak, oneTimePaymentBenefitData.leaseBreak.grossUp,
 				PDTConstants.GROSS_UP, PDTConstants.RADIO_BUTTON_LIST, true);
-		/////
+		
 		CoreFunctions.clearAndSetText(driver, _txtBoxLeaseBreakMaxAmount, _lblLeaseBreakMaxAmount.getText(),
 				oneTimePaymentBenefitData.leaseBreak.maxAmount);
 		CoreFunctions.clickElement(driver, _drpDownLeaseBreakCurrency);
@@ -724,7 +724,7 @@ public class PDT_OneTimePaymentReimbursemenPage extends Base {
 				_drpDownLeaseBreakFrequencyOptionsSelected, _lblLeaseBreakFrequency.getText(),
 				_txtBoxLeaseBreakOtherFrequency, _lblLeaseBreakFrequencyOther,
 				oneTimePaymentBenefitData.leaseBreak.otherFrequency);
-		///////
+		
 		CoreFunctions.selectItemInListByText(driver, _radioBtnLeaseBreak,
 				oneTimePaymentBenefitData.leaseBreak.reimbursedBy, PDTConstants.REIMBURSED_BY,
 				PDTConstants.RADIO_BUTTON_LIST, true);

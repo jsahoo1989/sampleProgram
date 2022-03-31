@@ -409,14 +409,14 @@ public class PDT_AddNewPolicyPage extends Base {
 	}
 	
 	public void selectClient(PDT_LoginDetails _loginDetailsApplication) {
-		String clientIdFromJson = BusinessFunctions.getClientIdFromJson(_loginDetailsApplication);
+		String clientIdFromJson = BusinessFunctions.getClientAndPolicyDetails(_loginDetailsApplication)[0];
 		CoreFunctions.clearAndSetText(driver, _inputClientID, PDTConstants.CLIENT_ID,
 				clientIdFromJson);
 		CoreFunctions.explicitWaitTillElementListVisibilityCustomTime(driver, _optionsClientID, 70);
 		if (_optionsClientID.size() > 0
 				&& !_optionsClientID.get(0).getText().equalsIgnoreCase(PDTConstants.NO_ITEMS_FOUND)) {
 			selectClientFromClientDropDown(clientIdFromJson,
-					BusinessFunctions.getClientNameFromJson(_loginDetailsApplication));
+					BusinessFunctions.getClientAndPolicyDetails(_loginDetailsApplication)[1]);
 		} else if (checkErrorPopUpExistsForClientId()) {
 			String errorMsg = _popUpErrorMessage.getText();
 			CoreFunctions.clickElement(driver, _buttonPopUpErrorOk);
@@ -449,8 +449,8 @@ public class PDT_AddNewPolicyPage extends Base {
 	public void selectPolicy(PDT_LoginDetails _loginDetailsApplication) {
 		String policyId;
 		CoreFunctions.explicitWaitTillElementInVisibilityCustomTime(driver, _progressBar, 5);
-		String policyFromJson = BusinessFunctions.getPolicyNameFromJson(_loginDetailsApplication);
-		String clientIdFromJson = BusinessFunctions.getClientIdFromJson(_loginDetailsApplication);
+		String policyFromJson = BusinessFunctions.getClientAndPolicyDetails(_loginDetailsApplication)[2];
+		String clientIdFromJson = BusinessFunctions.getClientAndPolicyDetails(_loginDetailsApplication)[0];
 		CoreFunctions.clickElement(driver, _selectPolicyName);
 		CoreFunctions.clearAndSetText(driver, _inputPolicyName, PDTConstants.POLICY_NAME,
 				policyFromJson);
@@ -744,7 +744,7 @@ public class PDT_AddNewPolicyPage extends Base {
 	
 	public void selectPolicyName(String policyName) {
 		String policyId;
-		String clientIdFromJson = BusinessFunctions.getClientIdFromJson(_loginDetailsApplication);
+		String clientIdFromJson = BusinessFunctions.getClientAndPolicyDetails(_loginDetailsApplication)[0];
 		CoreFunctions.clickElement(driver, _selectPolicyName);
 		CoreFunctions.clearAndSetText(driver, _inputPolicyName, PDTConstants.POLICY_NAME,
 				policyName);

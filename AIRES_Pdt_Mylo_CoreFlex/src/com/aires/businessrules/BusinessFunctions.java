@@ -670,48 +670,36 @@ public class BusinessFunctions {
 		return randValue;
 	}
 
-	public static String getClientIdFromJson(PDT_LoginDetails _loginDetailsApplication) {
-		String clientId = null;
+	public static String[] getClientAndPolicyDetails(PDT_LoginDetails _loginDetailsApplication) {
+		String clientAndPolicyDetailsArr[] = new String[3];
 		switch (CoreFunctions.getPropertyFromConfig("envt").toLowerCase()) {
 		case CoreConstants.ENVT_DEV:
-			clientId = _loginDetailsApplication.dev.clientId;
+			clientAndPolicyDetailsArr[0] = _loginDetailsApplication.dev.clientId;
+			clientAndPolicyDetailsArr[1] = _loginDetailsApplication.dev.clientName;
+			clientAndPolicyDetailsArr[2] = _loginDetailsApplication.dev.policy;
 			break;
 		case CoreConstants.ENVT_QA:
-			clientId = _loginDetailsApplication.qa.clientId;
+			clientAndPolicyDetailsArr[0] = _loginDetailsApplication.qa.clientId;
+			clientAndPolicyDetailsArr[1] = _loginDetailsApplication.qa.clientName;
+			clientAndPolicyDetailsArr[2] = _loginDetailsApplication.qa.policy;
 			break;
 		case CoreConstants.ENVT_TEST:
-			clientId = _loginDetailsApplication.preProd.clientId;
+			clientAndPolicyDetailsArr[0] = _loginDetailsApplication.preProd.clientId;
+			clientAndPolicyDetailsArr[1] = _loginDetailsApplication.preProd.clientName;
+			clientAndPolicyDetailsArr[2] = _loginDetailsApplication.preProd.policy;
 			break;
 		case CoreConstants.ENVT_UAT:
-			clientId = _loginDetailsApplication.uat.clientId;
+			clientAndPolicyDetailsArr[0] = _loginDetailsApplication.uat.clientId;
+			clientAndPolicyDetailsArr[1] = _loginDetailsApplication.uat.clientName;
+			clientAndPolicyDetailsArr[2] = _loginDetailsApplication.uat.policy;
 			break;
 		case CoreConstants.ENVT_PROD:
-			clientId = _loginDetailsApplication.prod.clientId;
+			clientAndPolicyDetailsArr[0] = _loginDetailsApplication.prod.clientId;
+			clientAndPolicyDetailsArr[1] = _loginDetailsApplication.prod.clientName;
+			clientAndPolicyDetailsArr[2] = _loginDetailsApplication.prod.policy;
 			break;
 		}
-		return clientId;
-	}
-
-	public static String getClientNameFromJson(PDT_LoginDetails _loginDetailsApplication) {
-		String clientName = null;
-		switch (CoreFunctions.getPropertyFromConfig("envt").toLowerCase()) {
-		case CoreConstants.ENVT_DEV:
-			clientName = _loginDetailsApplication.dev.clientName;
-			break;
-		case CoreConstants.ENVT_QA:
-			clientName = _loginDetailsApplication.qa.clientName;
-			break;
-		case CoreConstants.ENVT_TEST:
-			clientName = _loginDetailsApplication.preProd.clientName;
-			break;
-		case CoreConstants.ENVT_UAT:
-			clientName = _loginDetailsApplication.uat.clientName;
-			break;
-		case CoreConstants.ENVT_PROD:
-			clientName = _loginDetailsApplication.prod.clientName;
-			break;
-		}
-		return clientName;
+		return clientAndPolicyDetailsArr;
 	}
 
 	public static String[] getCSMCredentials(PDT_LoginDetails _loginDetailsApplication) {
@@ -739,28 +727,6 @@ public class BusinessFunctions {
 			break;
 		}
 		return csmCredentials;
-	}
-
-	public static String getPolicyNameFromJson(PDT_LoginDetails _loginDetailsApplication) {
-		String policyName = null;
-		switch (CoreFunctions.getPropertyFromConfig("envt").toLowerCase()) {
-		case CoreConstants.ENVT_DEV:
-			policyName = _loginDetailsApplication.dev.policy;
-			break;
-		case CoreConstants.ENVT_QA:
-			policyName = _loginDetailsApplication.qa.policy;
-			break;
-		case CoreConstants.ENVT_TEST:
-			policyName = _loginDetailsApplication.preProd.policy;
-			break;
-		case CoreConstants.ENVT_UAT:
-			policyName = _loginDetailsApplication.uat.policy;
-			break;
-		case CoreConstants.ENVT_PROD:
-			policyName = _loginDetailsApplication.prod.policy;
-			break;
-		}
-		return policyName;
 	}
 
 	public static void verifyAndFillOtherTextBoxForSubBenefitForm(WebDriver driver,

@@ -141,7 +141,7 @@ public class COREFLEXConstants {
 	public static final String SUCCESSFULLY_SELECTED_AND_FILLED_ADDED_FLEX_BENEFITS = "{0}Successfully selected and filled all the added FLEX Benefits";
 	public static final String SUCCESSFULLY_SELECTED_AND_FILLED_ADDED_OTHER_BENEFITS = "{0}Successfully selected and filled all the added Other Benefits";
 	public static final String FAILED_TO_SELECT_AND_FILL_ADDED_BENEFITS = "{0}Failed to select and fill added benefits.";
-	public static final String POLICY_SUBMIT_STATUS_MESSAGE = "Success | The PolicyName Has Been Saved Successfully.";
+	public static final String POLICY_SUBMIT_STATUS_MESSAGE = "Success | The PolicyName FleX setup has been saved!";
 	public static final String LOCK_THE_BENEFITS_POINTS_SELECTION = "Lock the benefits points selection";
 	public static final String POLICY_BENEFITS_BENEFIT_SUMMARY = "Policy Benefits / Benefit Summary";
 	public static final String BENEFIT_EXPIRATION_TRACING_PROMPT = "Benefits Expiration Tracing Prompt";
@@ -275,7 +275,7 @@ public class COREFLEXConstants {
 	public static final String SUCCESSFULLY_VERIFIED_DELETED_FLEX_BENEFIT_DETAILS_ON_SUBMISSION_CONFIRMATION_DIALOG = "{0}Successfully verified deleted Flex Benefit details On Submission Confirmation Dialog.";
 	public static final String EXCEPTION_OCCURED_WHILE_VALIDATING_DELETED_OTHER_BENEFIT_DETAILS_ON_SUBMISSION_CONFIRMATION_DIALOG = "{0}Exception occured while validating Deleted Other Benefits Details On Submission Confirmation Dialog. Exception : ''{1}''.";
 	public static final String SUCCESSFULLY_VERIFIED_DELETED_OTHER_BENEFIT_DETAILS_ON_SUBMISSION_CONFIRMATION_DIALOG = "{0}Successfully verified deleted Other Benefit details On Submission Confirmation Dialog.";
-	public static final String EXCEPTION_OCCURED_WHILE_VALIDATING_DELETE_REQUEST_SENT_SUCCESS_GROWL_MESSAGE = "{0}Exception occured while validating delete request sent success growl message. Exception : ''{1}''.";	
+	public static final String EXCEPTION_OCCURED_WHILE_VALIDATING_DELETE_REQUEST_SENT_SUCCESS_GROWL_MESSAGE = "{0}Exception occured while validating delete request sent success growl message. Exception : ''{1}''.";
 	public static final String EXCEPTION_OCCURED_WHILE_VALIDATING_DELETED_OTHER_BENEFIT_STATUS_UNDER_SUBMITTED_BENEFITS_SECTION_OF_MBB_PAGE = "{0}Exception occured while valiating deleted flex benefit status under submitted benefits section of My Benefit Bundle Page.Exception : ''{1}''.";
 	public static final String SUCCESSFULLY_VERIFIED_DELETED_OTHER_BENEFIT_STATUS_UNDER_SUBMITTED_BENEFITS_SECTION_OF_MBB_PAGE = "{0}Successfully verified deleted flex benefit status under submitted benefits section of My Benefit Bundle Page.";
 	public static final String SUCCESSFULLY_VERIFIED_DEFAULT_PORTION_CASHOUT_DETAILS_ON_FLEX_PLANNING_TOOL_PAGE = "{0}Successfully verified Default Portion Cashout Details on Flex Planning Tool Page.";
@@ -298,4 +298,16 @@ public class COREFLEXConstants {
 	public static final String SUBMITTED_BENEFIT_STATUS = "Submitted Benefit Status";
 	public static final String SUBMITTED_BENEFIT_SELECTED_QUANTITY = "Submitted Benefit Selected Quantity";
 	public static final String PAYMENT_OPTION = "Payment Option";
+	public static final String SUBMITTED_BENEFIT_TRACING_SET_MESSAGE = "Submitted Benefit Tracing Set Message";
+	public static final String EXPENSE_REIMBURSEMENT = "Expense Reimbursement";
+	public static final String REIMBURSEMENT_TRACING = "Benefit requires expense form.";
+	public static final String ALLOWANCE_TRACING = "Benefit requires EERF to be sent to EMAC.";
+	public static final String ALLOWANCE_CASHOUT = "Allowance/Cashout";
+	public static final String SUBMITTED_BENEFIT_POINTS = "Submitted Benefits Points";
+	public static final String SUBMITTED_BENEFIT_COMMENT = "Submitted Benefit Comment";
+	public static final String POLICY_SUBMIT_STATUS_AND_MESSAGE_NOT_MATCHED_ON_CUSTOM_BUNDLES_PAGE = "{0}Policy Submit Status and Message NOT matched on Custom Bundles Page. Expected : ''{1}'' | Actual : ''{2}''.";
+	public static final String DELETE_REQUEST_PENDING = "Delete Request Pending";
+	public static final String DELETE_REQUEST_PENDING_STATUS = "Delete Request Pending Status";
+	public static final String RESOLVE = "Resolve";
+	public static final String DELETE_REQUEST_RESOLVE_BUTTON = "Delete Request Resolve Button";
 }

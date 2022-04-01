@@ -475,9 +475,9 @@ public class CoreFlex_DuplicateHousing_BenefitsPage extends Base {
 		if (((benefitType.equals(COREFLEXConstants.FLEX_BENEFITS)) || (benefitType.equals(COREFLEXConstants.FLEX)))
 				& (multipleBenefitSelection.equals(COREFLEXConstants.YES))) {
 			CoreFunctions.clickElement(driver, _inputMultiAddBenefit);
-		}
-		CoreFunctions.selectItemInListByText(driver, _radioBenefitMandatoryButtons, paymentOption, true,
-				COREFLEXConstants.PAYMENT_OPTION);
+			CoreFunctions.selectItemInListByText(driver, _radioBenefitMandatoryButtons, paymentOption, true,
+					COREFLEXConstants.PAYMENT_OPTION);
+		}		
 		CoreFunctions.clearAndSetTextUsingKeys(driver, _inputBenefitName, benefitDisplayName,
 				COREFLEXConstants.BENEFIT_DISPLAY_NAME);
 		CoreFunctions.clearAndSetTextUsingKeys(driver, _textAreaAllowanceAmountMessage, benefitAllowanceAmount,

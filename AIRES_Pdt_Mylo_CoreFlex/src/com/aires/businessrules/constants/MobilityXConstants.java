@@ -252,4 +252,5 @@ public class MobilityXConstants {
 	public static final String SUCCESSFULLY_VERIFIED_PORTION_CASHOUT_FUNCTIONALITY_ON_FLEX_PLANNING_TOOL_PAGE = "{0}Successfully verified Portion Cashout functionality on Flex Planning Tool Page.";
 	public static final String SUCCESSFULLY_VERIFIED_POST_SUBMISSION_PORTION_CASHOUT_FUNCTIONALITY_ON_FLEX_PLANNING_TOOL_PAGE = "{0}Successfully verified Post Submission Portion Cashout functionality on Flex Planning Tool Page.";
 	public static final String EXCEPTION_OCCURED_WHILE_RETURNING_INDEX_ITEM_FROM_LIST_USING_TEXT = "{0}Exception occured while returning index item from list using text. Exception : ''{1}''.";
+	public static final String TRANSFEREE_JOURNEY_POINTS_LINK = "Transferee Journey Points Link";
 }

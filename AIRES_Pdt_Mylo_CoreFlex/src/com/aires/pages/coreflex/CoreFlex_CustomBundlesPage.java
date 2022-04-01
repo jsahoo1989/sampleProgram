@@ -283,14 +283,15 @@ public class CoreFlex_CustomBundlesPage extends Base {
 	public boolean verifyPolicySubmitStatus(String submitStatusMessage, String policyName) {
 		boolean isPolicySubmitStatusVerified = false;
 		boolean isSubmitStatusVerified, isSubmitMessageVerified;
-		String actualSubmitMessage = null;
+		String actualSubmitMessage = null, expectedSubmitMessage = null;
 		try {			
 			String[] expectedSubmitStatusMessage = submitStatusMessage.split("\\|");
 			isSubmitStatusVerified = (expectedSubmitStatusMessage[0].trim())
 					.equalsIgnoreCase(CoreFunctions.getElementText(driver, _popUpTextSubmitStatus));
 			expectedSubmitStatusMessage[1] = expectedSubmitStatusMessage[1].replace("PolicyName", policyName);
 			actualSubmitMessage = CoreFunctions.getElementText(driver, _popUpTextSubmitMessage);
-			isSubmitMessageVerified = (expectedSubmitStatusMessage[1].trim())
+			expectedSubmitMessage = expectedSubmitStatusMessage[1].trim();
+			isSubmitMessageVerified = (expectedSubmitMessage)
 					.equalsIgnoreCase(actualSubmitMessage);
 			isPolicySubmitStatusVerified = isSubmitStatusVerified & isSubmitMessageVerified;
 		} catch (Exception e) {
@@ -302,6 +303,11 @@ public class CoreFlex_CustomBundlesPage extends Base {
 			Reporter.addStepLog(MessageFormat.format(
 					COREFLEXConstants.SUCCESSFULLY_VERIFIED_POLICY_SUBMIT_STATUS_AND_MESSAGE_ON_CUSTOM_BUNDLES_PAGE,
 					CoreConstants.PASS, actualSubmitMessage));
+		}
+		else {
+			Reporter.addStepLog(MessageFormat.format(
+					COREFLEXConstants.POLICY_SUBMIT_STATUS_AND_MESSAGE_NOT_MATCHED_ON_CUSTOM_BUNDLES_PAGE,
+					CoreConstants.FAIL,expectedSubmitMessage, actualSubmitMessage));
 		}
 		return isPolicySubmitStatusVerified;
 	}

@@ -161,6 +161,8 @@ public class MX_Transferee_MyBenefitsBundlePage extends Base {
 	public static final List<FlexBenefit> flexBenefits = FileReaderManager.getInstance().getCoreFlexJsonReader()
 			.getMXTransfereeFlexBenefitData();
 
+	public static boolean benefitDeletedFlag;
+	
 	/*********************************************************************/
 
 	public boolean isMyBundlePageDisplayed() {
@@ -648,6 +650,7 @@ public class MX_Transferee_MyBenefitsBundlePage extends Base {
 							return false;
 						} else {
 							flag = true;
+							benefitDeletedFlag = true;
 						}
 					} else {
 						isFlexBenefitDeleteStatus = true;

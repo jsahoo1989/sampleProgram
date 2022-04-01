@@ -146,7 +146,7 @@ public class CoreFlex_FlexPolicySetupPage extends Base {
 	private WebElement _buttonOKErrorDialog;
 
 	// Error PopUp Text
-	@FindBy(how = How.XPATH, using = "//div[@id='swal2-content'][contains(text(),'Please fill the required field(s).')]")
+	@FindBy(how = How.XPATH, using = "//div[@id='swal2-content'][contains(text(),'Please complete the required field(s)')]")
 	private WebElement _textErrorDialog;
 
 	/*********************************************************************/

@@ -102,9 +102,9 @@ public class MX_Transferee_JourneyHomePage extends Base {
 
 	@FindBy(how = How.CSS, using = "div[title='Submit'] > a")
 	private WebElement _btn_submit;
-	
+
 	@FindBy(how = How.CSS, using = "div[class='growl-message']")
-	private WebElement _successGrowlMessage;	
+	private WebElement _successGrowlMessage;
 
 	@FindBy(how = How.CSS, using = "input[id*='chkacdid']")
 	private WebElement _accountClosingDate;
@@ -149,7 +149,8 @@ public class MX_Transferee_JourneyHomePage extends Base {
 	public boolean navigateToFlexPlanningToolPage() {
 		boolean isNavigatedToFPTpage = false;
 		try {
-			CoreFunctions.explicitWaitTillElementBecomesClickable(driver, _linkManageMyPoints, MobilityXConstants.MANAGE_MY_POINTS);
+			CoreFunctions.explicitWaitTillElementBecomesClickable(driver, _linkManageMyPoints,
+					MobilityXConstants.MANAGE_MY_POINTS);
 			if (CoreFunctions.isElementExist(driver, _linkManageMyPoints, 10)) {
 				CoreFunctions.clickUsingJS(driver, _linkManageMyPoints, MobilityXConstants.MANAGE_MY_POINTS);
 				isNavigatedToFPTpage = true;
@@ -290,6 +291,8 @@ public class MX_Transferee_JourneyHomePage extends Base {
 		boolean isSubmittedSpentPointsValid = false;
 		double spentPointsAfterBenefitSubmission = 0;
 		try {
+			CoreFunctions.explicitWaitTillElementBecomesClickable(driver, _textInitialSpentAndTotalPoints,
+					MobilityXConstants.TRANSFEREE_JOURNEY_POINTS_LINK);
 			String spentPointsAfterBenefitSubmissionWithText[] = CoreFunctions
 					.getElementText(driver, _textInitialSpentAndTotalPoints).split(" ");
 			String actualSubmittedSpentAndTotalPoints[] = spentPointsAfterBenefitSubmissionWithText[0].split("/");
@@ -298,9 +301,6 @@ public class MX_Transferee_JourneyHomePage extends Base {
 				CoreFunctions.clickElement(driver, _poinBalance_tooltip);
 				CoreFunctions.explicitWaitTillElementVisibility(driver, _poinBalance_tooltip_content,
 						MobilityXConstants.TRANSFEREE_JOURNEY_TOOLTIP);
-				System.out.println(
-						"ActualMessage : " + CoreFunctions.getElementText(driver, _poinBalance_tooltip_content));
-				System.out.println("ExpectedMessage : " + pointBalanceDetails());
 				isSubmittedSpentPointsValid = CoreFunctions.getElementText(driver, _poinBalance_tooltip_content)
 						.equals(pointBalanceDetails());
 				CoreFunctions.clickElement(driver, _close_tootip);
@@ -367,7 +367,8 @@ public class MX_Transferee_JourneyHomePage extends Base {
 			CoreFunctions.clearAndSetText(driver, _accountClosingDate,
 					accountDetails.mailingAddress.accountClosingDate);
 			CoreFunctions.clickElement(driver, _btn_submit);
-			CoreFunctions.explicitWaitTillElementVisibility(driver, _successGrowlMessage, MobilityXConstants.SAVED_SUCCESSFUL_GROWL_MESSAGE);
+			CoreFunctions.explicitWaitTillElementVisibility(driver, _successGrowlMessage,
+					MobilityXConstants.SAVED_SUCCESSFUL_GROWL_MESSAGE);
 			CoreFunctions.explicitWaitTillElementInVisibility(driver, _successGrowlMessage);
 			CoreFunctions.clickElement(driver, _btn_save);
 			CoreFunctions.clickElement(driver, _link_backToMobilityJourney);
@@ -427,8 +428,6 @@ public class MX_Transferee_JourneyHomePage extends Base {
 					expFromUserName, expEmailSubject, MobilityXConstants.FLEX_BENEFIT_SUBMISSION);
 			actualResultSubmissionDetails = actualResultSubmissionDetails.replace("<span>", "").replace("</span>", "")
 					.replace("\r\n", "").trim();
-			System.out.println("EmailResult : " + actualResultSubmissionDetails);
-			System.out.println("ActuaResult : " + submittedPointsEmailMessage());
 			Reporter.addStepLog(
 					CoreConstants.PASS + "Successfully verified Mobility Flex Benefit(s) Submission Email.");
 			return actualResultSubmissionDetails.equals(submittedPointsEmailMessage());

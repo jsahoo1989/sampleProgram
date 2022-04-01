@@ -10,9 +10,11 @@ import org.openqa.selenium.support.How;
 import org.testng.Assert;
 
 import com.aires.businessrules.Base;
+import com.aires.businessrules.BusinessFunctions;
 import com.aires.businessrules.CoreFunctions;
 import com.aires.businessrules.constants.COREFLEXConstants;
 import com.aires.businessrules.constants.CoreConstants;
+import com.aires.businessrules.constants.MobilityXConstants;
 import com.aires.managers.FileReaderManager;
 import com.aires.testdatatypes.coreflex.Benefit;
 import com.aires.testdatatypes.coreflex.CoreFlex_PolicySetupPagesData;
@@ -72,7 +74,7 @@ public class TransfereeSubmissions_DetailsPage extends Base {
 	private List<WebElement> _submittedBenefitAllowanceAmountList;
 
 	// Submitted Benefit Points List
-	@FindBy(how = How.CSS, using = "mat-cell[class*='column-Points'] > span[class*='ng-star-inserted']")
+	@FindBy(how = How.XPATH, using = "//mat-cell[contains(@class,'column-Points')]//span[contains(@class,'ng-star-inserted')] | //mat-cell//span[@class='mat-checkbox-label']")
 	private List<WebElement> _submittedBenefitPointsList;
 
 	// Submitted Benefit Request Sent Date List
@@ -84,7 +86,7 @@ public class TransfereeSubmissions_DetailsPage extends Base {
 	private List<WebElement> _submittedBenefitStatusList;
 
 	// Submitted Benefit Show Comments List
-	@FindBy(how = How.CSS, using = "mat-cell[class*='Status'] > span[class*='BlueText']")
+	@FindBy(how = How.XPATH, using = "//span[contains(text(),'Show Comments')]")
 	private List<WebElement> _submittedBenefitShowCommentsList;
 
 	// Submitted Benefit Quantity List
@@ -94,6 +96,14 @@ public class TransfereeSubmissions_DetailsPage extends Base {
 	// Expense Reimbursement Tracing Prompt List
 	@FindBy(how = How.XPATH, using = "//div[contains(@class,'tblBenefits')]//img[contains(@class,'Warning')]/following-sibling::span")
 	private List<WebElement> _reimbursementAllowanceTracingList;
+
+	// Comments Benefit List
+	@FindBy(how = How.XPATH, using = "//div[contains(@class,'mat-column-Benefit')][not(contains(@style,'background-color'))]")
+	private List<WebElement> _submittedBenefitComments;
+
+	// Resolve Button
+	@FindBy(how = How.CSS, using = "button[class*='resolve_default']")
+	private List<WebElement> _buttonResolveDeleteRequest;
 
 	/**********************************************************************/
 
@@ -188,13 +198,13 @@ public class TransfereeSubmissions_DetailsPage extends Base {
 
 	public boolean verifySubmittedBenefitsDetails() {
 		boolean isSubmittedBenefitStatusMatched = false;
-		try {			
+		try {
 			for (FlexBenefit benefitList : flexBenefits) {
 				for (Benefit benefit : benefitList.getBenefits()) {
 					isSubmittedBenefitStatusMatched = verifyBenefitDetails(benefit);
 				}
-				if(!isSubmittedBenefitStatusMatched)
-				break;
+				if (!isSubmittedBenefitStatusMatched)
+					break;
 			}
 		} catch (Exception e) {
 			Reporter.addStepLog(MessageFormat.format(
@@ -206,8 +216,7 @@ public class TransfereeSubmissions_DetailsPage extends Base {
 					COREFLEXConstants.SUCCESSFULLY_VALIDATED_SUBMITTED_BENEFITS_DETAILS_ON_SUBMISSION_DETAILS_PAGE,
 					CoreConstants.PASS));
 			return true;
-		}
-		else 
+		} else
 			return false;
 	}
 
@@ -222,17 +231,39 @@ public class TransfereeSubmissions_DetailsPage extends Base {
 							benefit.getBenefitDisplayName(), COREFLEXConstants.SUBMITTED_BENEFIT_NAME);
 					CoreFunctions.verifyText(driver, _submittedBenefitAllowanceAmountList.get(index),
 							benefit.getBenefitAmount(), COREFLEXConstants.SUBMITTED_BENEFIT_ALLOWANCE_AMOUNT);
+					String expectedPaymentOption = benefit.getPayments().equals(COREFLEXConstants.EXPENSE_REIMBURSEMENT)
+							? COREFLEXConstants.REIMBURSEMENT_TRACING
+							: (benefit.getPayments().equals(COREFLEXConstants.ALLOWANCE_CASHOUT))
+									? COREFLEXConstants.ALLOWANCE_TRACING
+									: null;
+					CoreFunctions.verifyText(driver, _reimbursementAllowanceTracingList.get(index),
+							expectedPaymentOption, COREFLEXConstants.SUBMITTED_BENEFIT_TRACING_SET_MESSAGE);
 					CoreFunctions.verifyValue(
-							Double.parseDouble(_submittedBenefitPointsList.get(index).getText().replace("pts", "")),
-							Double.parseDouble(benefit.getPoints()),
-							COREFLEXConstants.SUBMITTED_BENEFIT_ALLOWANCE_AMOUNT);
-					CoreFunctions.verifyText(driver, _submittedBenefitStatusList.get(index),
-							COREFLEXConstants.SUBMITTED, COREFLEXConstants.SUBMITTED_BENEFIT_STATUS);
+							Double.parseDouble(
+									_submittedBenefitPointsList.get(index).getText().replace("pts", "").trim()),
+							(Double.parseDouble(benefit.getPoints()) * benefit.getNumberOfBenefitSelected()),
+							COREFLEXConstants.SUBMITTED_BENEFIT_POINTS);
+					CoreFunctions.highlightObject(driver, _submittedBenefitPointsList.get(index));
+					if (MX_Transferee_MyBenefitsBundlePage.benefitDeletedFlag && benefit.getDeleteBenefitOnMBBPage()) {
+						CoreFunctions.verifyText(driver, _submittedBenefitStatusList.get(index),
+								COREFLEXConstants.DELETE_REQUEST_PENDING,
+								COREFLEXConstants.DELETE_REQUEST_PENDING_STATUS);
+						CoreFunctions.verifyText(driver, _buttonResolveDeleteRequest.get(index),
+								COREFLEXConstants.RESOLVE,
+								COREFLEXConstants.DELETE_REQUEST_RESOLVE_BUTTON);						
+					} else {
+						CoreFunctions.verifyText(driver, _submittedBenefitStatusList.get(index),
+								COREFLEXConstants.SUBMITTED, COREFLEXConstants.SUBMITTED_BENEFIT_STATUS);
+					}
 					CoreFunctions.verifyText(driver, _submittedBenefitQuantityList.get(index),
 							String.valueOf(benefit.getNumberOfBenefitSelected()),
 							COREFLEXConstants.SUBMITTED_BENEFIT_SELECTED_QUANTITY);
+					BusinessFunctions.selectValueFromListUsingIndex(driver, _submittedBenefitShowCommentsList, index);
+					CoreFunctions.verifyText(driver, _submittedBenefitComments.get(index),
+							MobilityXConstants.SUBMIT_BENEFITS_OPTIONAL_NOTES,
+							COREFLEXConstants.SUBMITTED_BENEFIT_COMMENT);
 					return true;
-				} 
+				}
 			}
 		} catch (Exception e) {
 			Reporter.addStepLog(MessageFormat.format(

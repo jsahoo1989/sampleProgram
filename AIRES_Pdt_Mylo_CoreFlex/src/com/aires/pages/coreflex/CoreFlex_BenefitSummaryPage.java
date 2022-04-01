@@ -1,7 +1,9 @@
 package com.aires.pages.coreflex;
 
 import java.text.MessageFormat;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
@@ -105,7 +107,7 @@ public class CoreFlex_BenefitSummaryPage extends Base {
 			.getMXTransfereeFlexBenefitData();
 
 	/*********************************************************************/
-
+	
 	/*********************************************************************/
 
 	/**

@@ -186,11 +186,15 @@ public class CoreFlex_LumpSum_BenefitsPage extends Base {
 	@FindBy(how = How.XPATH, using = "//input[@formcontrolname='flexPoints']/following-sibling::div[contains(@class,'input-error')]/div")
 	private WebElement _validationMessageFlexPoints;
 
+	// Payments Radio Selection
+	@FindBy(how = How.XPATH, using = "//div[@class='container']//label[@class='form-check-label']")
+	private List<WebElement> _radioBenefitMandatoryButtons;
+
 	/*********************************************************************/
 
 	CoreFlex_AllowancesBenefitsData lumpSumBenefitData = FileReaderManager.getInstance().getCoreFlexJsonReader()
 			.getLifeStyleBenefitDataList(COREFLEXConstants.LUMP_SUM);
-	
+
 	public static final List<Benefit> coreBenefits = FileReaderManager.getInstance().getCoreFlexJsonReader()
 			.getMXTransfereeCoreBenefitDetails();
 
@@ -319,20 +323,20 @@ public class CoreFlex_LumpSum_BenefitsPage extends Base {
 	 */
 	public void selectAndFillBenefitsAndSubBenefitDetails(String benefitType, String subBenefitNames,
 			String multipleBenefitSelection, String flexPoints, String benefitDisplayName,
-			String benefitAllowanceAmount, String benefitDescription) {
+			String benefitAllowanceAmount, String benefitDescription, String paymentOption) {
 
 		if (benefitType.equals(COREFLEXConstants.BOTH)) {
 			selectBenefitTypeAndFillMandatoryFields(benefitType, multipleBenefitSelection, flexPoints,
-					benefitDisplayName, benefitAllowanceAmount, benefitDescription);
+					benefitDisplayName, benefitAllowanceAmount, benefitDescription, paymentOption);
 			selectBenefitTypeAndFillMandatoryFields(COREFLEXConstants.CORE_BENEFITS, multipleBenefitSelection,
-					flexPoints, benefitDisplayName, benefitAllowanceAmount, benefitDescription);
+					flexPoints, benefitDisplayName, benefitAllowanceAmount, benefitDescription, paymentOption);
 			selectSubBenefitsAndFillMandatoryFields(subBenefitNames);
 			selectBenefitTypeAndFillMandatoryFields(COREFLEXConstants.FLEX_BENEFITS, multipleBenefitSelection,
-					flexPoints, benefitDisplayName, benefitAllowanceAmount, benefitDescription);
+					flexPoints, benefitDisplayName, benefitAllowanceAmount, benefitDescription, paymentOption);
 			selectSubBenefitsAndFillMandatoryFields(subBenefitNames);
 		} else {
 			selectBenefitTypeAndFillMandatoryFields(benefitType, multipleBenefitSelection, flexPoints,
-					benefitDisplayName, benefitAllowanceAmount, benefitDescription);
+					benefitDisplayName, benefitAllowanceAmount, benefitDescription, paymentOption);
 			selectSubBenefitsAndFillMandatoryFields(subBenefitNames);
 		}
 		clickElementOfPage(COREFLEXConstants.SAVE_AND_CONTINUE);
@@ -471,14 +475,15 @@ public class CoreFlex_LumpSum_BenefitsPage extends Base {
 	 * @param benefitName
 	 */
 	private void selectBenefitTypeAndFillMandatoryFields(String benefitType, String multipleBenefitSelection,
-			String flexPoints, String benefitDisplayName, String benefitAllowanceAmount, String benefitDescription) {
+			String flexPoints, String benefitDisplayName, String benefitAllowanceAmount, String benefitDescription,
+			String paymentOption) {
 		Benefit lumpSumBenefit = coreBenefits.stream()
 				.filter(b -> b.getBenefitType().equals(COREFLEXConstants.LUMP_SUM)).findAny().orElse(null);
 		switch (benefitType) {
 		case COREFLEXConstants.CORE:
 			CoreFunctions.clickElement(driver, _textCore);
-			fillManadatoryDetails(benefitType, multipleBenefitSelection, lumpSumBenefit.getBenefitDisplayName(), lumpSumBenefit.getBenefitAmount(),
-					lumpSumBenefit.getBenefitDesc());
+			fillManadatoryDetails(benefitType, multipleBenefitSelection, lumpSumBenefit.getBenefitDisplayName(),
+					lumpSumBenefit.getBenefitAmount(), lumpSumBenefit.getBenefitDesc(), paymentOption);
 			break;
 		case COREFLEXConstants.FLEX:
 			CoreFunctions.clickElement(driver, _textFlex);
@@ -486,12 +491,12 @@ public class CoreFlex_LumpSum_BenefitsPage extends Base {
 			CoreFunctions.clearAndSetTextUsingKeys(driver, _inputFlexPoints, flexPoints,
 					COREFLEXConstants.FLEX_POINTS_VALUE);
 			fillManadatoryDetails(benefitType, multipleBenefitSelection, benefitDisplayName, benefitAllowanceAmount,
-					benefitDescription);
+					benefitDescription, paymentOption);
 			break;
 		case COREFLEXConstants.CORE_BENEFITS:
 			CoreFunctions.clickElement(driver, _textCoreBenefits);
-			fillManadatoryDetails(benefitType, multipleBenefitSelection, lumpSumBenefit.getBenefitDisplayName(), lumpSumBenefit.getBenefitAmount(),
-					lumpSumBenefit.getBenefitDesc());
+			fillManadatoryDetails(benefitType, multipleBenefitSelection, lumpSumBenefit.getBenefitDisplayName(),
+					lumpSumBenefit.getBenefitAmount(), lumpSumBenefit.getBenefitDesc(), paymentOption);
 			break;
 		case COREFLEXConstants.FLEX_BENEFITS:
 			CoreFunctions.clickElement(driver, _textFlexBenefits);
@@ -499,7 +504,7 @@ public class CoreFlex_LumpSum_BenefitsPage extends Base {
 			CoreFunctions.clearAndSetTextUsingKeys(driver, _inputFlexPoints, flexPoints,
 					COREFLEXConstants.FLEX_POINTS_VALUE);
 			fillManadatoryDetails(benefitType, multipleBenefitSelection, benefitDisplayName, benefitAllowanceAmount,
-					benefitDescription);
+					benefitDescription, paymentOption);
 			break;
 		case COREFLEXConstants.BOTH:
 			CoreFunctions.clickElement(driver, _textBoth);
@@ -519,12 +524,14 @@ public class CoreFlex_LumpSum_BenefitsPage extends Base {
 	 * @param benefitName
 	 */
 	private void fillManadatoryDetails(String benefitType, String multipleBenefitSelection, String benefitDisplayName,
-			String benefitAllowanceAmount, String benefitDescription) {
+			String benefitAllowanceAmount, String benefitDescription, String paymentOption) {
 
 		if (((benefitType.equals(COREFLEXConstants.FLEX_BENEFITS)) || (benefitType.equals(COREFLEXConstants.FLEX)))
 				& (multipleBenefitSelection.equals(COREFLEXConstants.YES))) {
 			CoreFunctions.clickElement(driver, _inputMultiAddBenefit);
 		}
+		CoreFunctions.selectItemInListByText(driver, _radioBenefitMandatoryButtons, paymentOption, true,
+				COREFLEXConstants.PAYMENT_OPTION);
 		CoreFunctions.clearAndSetTextUsingKeys(driver, _inputBenefitName, benefitDisplayName,
 				COREFLEXConstants.BENEFIT_DISPLAY_NAME);
 		CoreFunctions.clearAndSetTextUsingKeys(driver, _textAreaAllowanceAmountMessage, benefitAllowanceAmount,

@@ -150,11 +150,15 @@ public class CoreFlex_DuplicateHousing_BenefitsPage extends Base {
 	@FindBy(how = How.XPATH, using = "//input[@formcontrolname='flexPoints']/following-sibling::div[contains(@class,'input-error')]/div")
 	private WebElement _validationMessageFlexPoints;
 
+	// Payments Radio Selection
+	@FindBy(how = How.XPATH, using = "//div[@class='container']//label[@class='form-check-label']")
+	private List<WebElement> _radioBenefitMandatoryButtons;
+
 	/*********************************************************************/
 
 	CoreFlex_HousingBenefitsData housingBenefitData = FileReaderManager.getInstance().getCoreFlexJsonReader()
 			.getHousingBenefitDataList(COREFLEXConstants.DUPLICATE_HOUSING);
-	
+
 	public static final List<Benefit> coreBenefits = FileReaderManager.getInstance().getCoreFlexJsonReader()
 			.getMXTransfereeCoreBenefitDetails();
 
@@ -280,19 +284,19 @@ public class CoreFlex_DuplicateHousing_BenefitsPage extends Base {
 	 */
 	public void selectAndFillBenefitsAndSubBenefitDetails(String benefitType, String subBenefitNames,
 			String multipleBenefitSelection, String flexPoints, String benefitDisplayName,
-			String benefitAllowanceAmount, String benefitDescription) {
+			String benefitAllowanceAmount, String benefitDescription, String paymentOption) {
 		if (benefitType.equals(COREFLEXConstants.BOTH)) {
 			selectBenefitTypeAndFillMandatoryFields(benefitType, multipleBenefitSelection, flexPoints,
-					benefitDisplayName, benefitAllowanceAmount, benefitDescription);
+					benefitDisplayName, benefitAllowanceAmount, benefitDescription, paymentOption);
 			selectBenefitTypeAndFillMandatoryFields(COREFLEXConstants.CORE_BENEFITS, multipleBenefitSelection,
-					flexPoints, benefitDisplayName, benefitAllowanceAmount, benefitDescription);
+					flexPoints, benefitDisplayName, benefitAllowanceAmount, benefitDescription, paymentOption);
 			selectSubBenefitsAndFillMandatoryFields(subBenefitNames);
 			selectBenefitTypeAndFillMandatoryFields(COREFLEXConstants.FLEX_BENEFITS, multipleBenefitSelection,
-					flexPoints, benefitDisplayName, benefitAllowanceAmount, benefitDescription);
+					flexPoints, benefitDisplayName, benefitAllowanceAmount, benefitDescription, paymentOption);
 			selectSubBenefitsAndFillMandatoryFields(subBenefitNames);
 		} else {
 			selectBenefitTypeAndFillMandatoryFields(benefitType, multipleBenefitSelection, flexPoints,
-					benefitDisplayName, benefitAllowanceAmount, benefitDescription);
+					benefitDisplayName, benefitAllowanceAmount, benefitDescription, paymentOption);
 			selectSubBenefitsAndFillMandatoryFields(subBenefitNames);
 		}
 		clickElementOfPage(COREFLEXConstants.SAVE_AND_CONTINUE);
@@ -354,10 +358,10 @@ public class CoreFlex_DuplicateHousing_BenefitsPage extends Base {
 		try {
 			CoreFunctions.clickElement(driver, _selectDuration);
 			CoreFunctions.selectItemInListByText(driver, _selectDurationOptions,
-					housingBenefitData.duplicateHousing.duration, true,COREFLEXConstants.DURATION);
+					housingBenefitData.duplicateHousing.duration, true, COREFLEXConstants.DURATION);
 			if (housingBenefitData.duplicateHousing.duration.equalsIgnoreCase(COREFLEXConstants.OTHER)) {
 				CoreFunctions.clearAndSetTextUsingKeys(driver, _inputDurationOther,
-						housingBenefitData.duplicateHousing.durationOther,COREFLEXConstants.DURATION_OTHER);
+						housingBenefitData.duplicateHousing.durationOther, COREFLEXConstants.DURATION_OTHER);
 			}
 			CoreFunctions.selectItemInListByText(driver, _radioBtnCandidateSelection,
 					housingBenefitData.duplicateHousing.grossUp, true, COREFLEXConstants.GROSS_UP);
@@ -367,7 +371,8 @@ public class CoreFlex_DuplicateHousing_BenefitsPage extends Base {
 				CoreFunctions.clearAndSetTextUsingKeys(driver, _inputReimbursedBy,
 						housingBenefitData.duplicateHousing.reimbursedByOther, COREFLEXConstants.REIMBURSED_BY_OTHER);
 			}
-			CoreFunctions.clearAndSetTextUsingKeys(driver, _txtAreaComment, housingBenefitData.duplicateHousing.comment, COREFLEXConstants.COMMENT);
+			CoreFunctions.clearAndSetTextUsingKeys(driver, _txtAreaComment, housingBenefitData.duplicateHousing.comment,
+					COREFLEXConstants.COMMENT);
 		} catch (Exception e) {
 			Assert.fail(COREFLEXConstants.FAILED_TO_FILL_DUPLICATE_HOUSING_SUB_BENEFITS_FORM);
 		}
@@ -414,33 +419,38 @@ public class CoreFlex_DuplicateHousing_BenefitsPage extends Base {
 	 * @param benefitDescription2
 	 */
 	private void selectBenefitTypeAndFillMandatoryFields(String benefitType, String multipleBenefitSelection,
-			String flexPoints, String benefitDisplayName, String benefitAllowanceAmount, String benefitDescription) {
+			String flexPoints, String benefitDisplayName, String benefitAllowanceAmount, String benefitDescription,
+			String paymentOption) {
 		Benefit duplicateHosuingBenefit = coreBenefits.stream()
 				.filter(b -> b.getBenefitType().equals(COREFLEXConstants.DUPLICATE_HOUSING)).findAny().orElse(null);
 		switch (benefitType) {
 		case COREFLEXConstants.CORE:
 			CoreFunctions.clickElement(driver, _textCore);
-			fillManadatoryDetails(benefitType, multipleBenefitSelection, duplicateHosuingBenefit.getBenefitDisplayName(), duplicateHosuingBenefit.getBenefitAmount(),
-					duplicateHosuingBenefit.getBenefitDesc());
+			fillManadatoryDetails(benefitType, multipleBenefitSelection,
+					duplicateHosuingBenefit.getBenefitDisplayName(), duplicateHosuingBenefit.getBenefitAmount(),
+					duplicateHosuingBenefit.getBenefitDesc(), paymentOption);
 			break;
 		case COREFLEXConstants.FLEX:
 			CoreFunctions.clickElement(driver, _textFlex);
 			verifyNumericRangeFieldsValidation();
-			CoreFunctions.clearAndSetTextUsingKeys(driver, _inputFlexPoints, flexPoints,COREFLEXConstants.FLEX_POINTS_VALUE);
+			CoreFunctions.clearAndSetTextUsingKeys(driver, _inputFlexPoints, flexPoints,
+					COREFLEXConstants.FLEX_POINTS_VALUE);
 			fillManadatoryDetails(benefitType, multipleBenefitSelection, benefitDisplayName, benefitAllowanceAmount,
-					benefitDescription);
+					benefitDescription, paymentOption);
 			break;
 		case COREFLEXConstants.CORE_BENEFITS:
 			CoreFunctions.clickElement(driver, _textCoreBenefits);
-			fillManadatoryDetails(benefitType, multipleBenefitSelection, duplicateHosuingBenefit.getBenefitDisplayName(), duplicateHosuingBenefit.getBenefitAmount(),
-					duplicateHosuingBenefit.getBenefitDesc());
+			fillManadatoryDetails(benefitType, multipleBenefitSelection,
+					duplicateHosuingBenefit.getBenefitDisplayName(), duplicateHosuingBenefit.getBenefitAmount(),
+					duplicateHosuingBenefit.getBenefitDesc(), paymentOption);
 			break;
 		case COREFLEXConstants.FLEX_BENEFITS:
 			CoreFunctions.clickElement(driver, _textFlexBenefits);
 			verifyNumericRangeFieldsValidation();
-			CoreFunctions.clearAndSetTextUsingKeys(driver, _inputFlexPoints, flexPoints,COREFLEXConstants.FLEX_POINTS_VALUE);
+			CoreFunctions.clearAndSetTextUsingKeys(driver, _inputFlexPoints, flexPoints,
+					COREFLEXConstants.FLEX_POINTS_VALUE);
 			fillManadatoryDetails(benefitType, multipleBenefitSelection, benefitDisplayName, benefitAllowanceAmount,
-					benefitDescription);
+					benefitDescription, paymentOption);
 			break;
 		case COREFLEXConstants.BOTH:
 			CoreFunctions.clickElement(driver, _textBoth);
@@ -460,22 +470,28 @@ public class CoreFlex_DuplicateHousing_BenefitsPage extends Base {
 	 * @param benefitDescription2
 	 */
 	private void fillManadatoryDetails(String benefitType, String multipleBenefitSelection, String benefitDisplayName,
-			String benefitAllowanceAmount, String benefitDescription) {
+			String benefitAllowanceAmount, String benefitDescription, String paymentOption) {
 
 		if (((benefitType.equals(COREFLEXConstants.FLEX_BENEFITS)) || (benefitType.equals(COREFLEXConstants.FLEX)))
 				& (multipleBenefitSelection.equals(COREFLEXConstants.YES))) {
 			CoreFunctions.clickElement(driver, _inputMultiAddBenefit);
 		}
-		CoreFunctions.clearAndSetTextUsingKeys(driver, _inputBenefitName, benefitDisplayName,COREFLEXConstants.BENEFIT_DISPLAY_NAME);
-		CoreFunctions.clearAndSetTextUsingKeys(driver, _textAreaAllowanceAmountMessage, benefitAllowanceAmount,COREFLEXConstants.ALLOWANCE_AMOUNT_MESSAGE);
-		CoreFunctions.clearAndSetTextUsingKeys(driver, _textAreaBenefitLongDescription, benefitDescription,COREFLEXConstants.BENEFIT_LONG_DESCRIPTION);
+		CoreFunctions.selectItemInListByText(driver, _radioBenefitMandatoryButtons, paymentOption, true,
+				COREFLEXConstants.PAYMENT_OPTION);
+		CoreFunctions.clearAndSetTextUsingKeys(driver, _inputBenefitName, benefitDisplayName,
+				COREFLEXConstants.BENEFIT_DISPLAY_NAME);
+		CoreFunctions.clearAndSetTextUsingKeys(driver, _textAreaAllowanceAmountMessage, benefitAllowanceAmount,
+				COREFLEXConstants.ALLOWANCE_AMOUNT_MESSAGE);
+		CoreFunctions.clearAndSetTextUsingKeys(driver, _textAreaBenefitLongDescription, benefitDescription,
+				COREFLEXConstants.BENEFIT_LONG_DESCRIPTION);
 	}
 
 	public void checkFieldValidation(String fieldName, String inputValue) {
 		boolean isValidationMessageDisplayed = false;
 		switch (fieldName) {
 		case COREFLEXConstants.FLEX_POINT_VALUE:
-			CoreFunctions.clearAndSetTextUsingKeys(driver, _inputFlexPoints, inputValue,COREFLEXConstants.FLEX_POINTS_VALUE);
+			CoreFunctions.clearAndSetTextUsingKeys(driver, _inputFlexPoints, inputValue,
+					COREFLEXConstants.FLEX_POINTS_VALUE);
 			clickElementOfPage(COREFLEXConstants.SAVE_AND_CONTINUE);
 			clickElementOfPage(PDTConstants.OK);
 			if (CoreFunctions.isElementExist(driver, _validationMessageFlexPoints, 5))
@@ -487,7 +503,7 @@ public class CoreFlex_DuplicateHousing_BenefitsPage extends Base {
 			Assert.fail(COREFLEXConstants.INVALID_OPTION);
 		}
 	}
-	
+
 	public void verifyNumericRangeFieldsValidation() {
 		try {
 			checkFieldValidation(COREFLEXConstants.FLEX_POINT_VALUE, "0.24");

@@ -1727,40 +1727,7 @@ public class CoreFunctions {
 		} else {
 			CoreFunctions.clickWithoutReporting(driver, row, searchText);
 		}
-	}
-
-	public static String getSubElementText(WebDriver driver, WebElement Element, By subElementLocator) {
-		String text = "";
-		try {
-			text = Element.findElement(subElementLocator).getText().trim();
-//			highlightObject(driver, Element);
-			Reporter.addStepLog(CoreConstants.PASS + CoreConstants.TXT_ACTUAL + CoreConstants.IS_DISPLAYED_AS + text);
-		} catch (Exception e) {
-			Reporter.addStepLog("Could not get element text");
-		}
-		return text;
-	}
-
-	public static void clickSubElement(WebDriver driver, WebElement ancestor, By childLocator) {
-		WebElement element = ancestor.findElement(childLocator);
-		waitTillElementClickable(driver, element, 30);
-		try {
-			highlightObject(driver, element);
-			element.click();
-		} catch (Exception e) {
-			e.printStackTrace();
-			Assert.fail(MessageFormat.format(CoreConstants.FAILD_CLCK_ELE, element));
-		}
-	}
-
-	public static void waitForElementToBeReinitialized(WebDriver driver, WebElement element, int duration) {
-		WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(3));
-		try {
-			wait.until(ExpectedConditions.refreshed(ExpectedConditions.stalenessOf(element)));
-		} catch (TimeoutException exception) {
-			Log.info("Element Reinitialized");
-		}
-	}
+	}	
 
 	public static WebElement findSubElement(WebElement ancestor, By childLocator) {
 		return ancestor.findElement(childLocator);
@@ -1830,6 +1797,20 @@ public class CoreFunctions {
 			Assert.fail("Failed to verify the fields "+ fieldName +" Text: Actual Text = " + actualText + " | Expected Text = " + expectedText);
 		}
 	}
+	
+	public static void verifyText(WebDriver driver, WebElement element, String expectedText, String fieldName) {
+		String actualText = element.getText().trim();
+		if (actualText.equalsIgnoreCase(expectedText)) {
+			highlightObject(driver, element);
+			Reporter.addStepLog(
+					CoreConstants.PASS + MobilityXConstants.VERIFIED_FIELD_TEXT + fieldName + " : " + expectedText);
+		}
+		else {
+			Reporter.addStepLog(CoreConstants.FAIL + MobilityXConstants.FAILED_TO_VERIFY + fieldName + " | "
+					+ CoreConstants.VAL_ACTUAL + actualText + " " + CoreConstants.VAL_EXPECTED + expectedText);
+			Assert.fail("Failed to verify the fields "+ fieldName +" Text: Actual Text = " + actualText + " | Expected Text = " + expectedText);
+		}
+	}
 
 	public static void verifyValue(Double actualValue, Double expectedValue, String fieldName) {
 		if (actualValue.equals(expectedValue))
@@ -1841,6 +1822,22 @@ public class CoreFunctions {
 			Assert.fail("Failed to verify the fields "+ fieldName +" Text: Actual Text = " + actualValue + " | Expected Text = " + expectedValue);
 		}
 	}
+	
+	public static void verifyValue(WebDriver driver, WebElement element, Double expectedValue, String fieldName) {
+		Double actualValue = Double.parseDouble(element.getText().trim());
+		if (actualValue.equals(expectedValue)) {
+			highlightObject(driver, element);
+			Reporter.addStepLog(
+					CoreConstants.PASS + MobilityXConstants.VERIFIED_FIELD_TEXT + fieldName + " : " + expectedValue);
+		}
+		else {
+			Reporter.addStepLog(CoreConstants.FAIL + MobilityXConstants.FAILED_TO_VERIFY + fieldName + " | "
+					+ CoreConstants.VAL_ACTUAL + actualValue + " " + CoreConstants.VAL_EXPECTED + expectedValue);
+			Assert.fail("Failed to verify the fields "+ fieldName +" Text: Actual Text = " + actualValue + " | Expected Text = " + expectedValue);
+		}
+	}
+	
+	
 	
 	public static void scrollToElementUsingJS(WebDriver driver, WebElement Element, String name) {
 		try {

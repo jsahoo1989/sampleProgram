@@ -192,8 +192,8 @@ public class COREFLEXConstants {
 	public static final String POINT_FIVE_TO_NINE_NINE_NINE_POINT_FIVE_RANGE_OLD_MESSAGE = "Field value must be between 0.5 and 999.5";
 	public static final String SUCCESSFULLY_VERIFIED_VALIDATIONS_ON_FLEX_PLANNING_TOOL_PAGE = "{0}Successfully verified validation message ''{1}'' is displayed for entered value : ''{2}'' in ''{3}'' field.";
 	public static final String SUCCESSFULLY_VERIFIED_VALIDATION_MESSAGE_NOT_DISPLAYED_ON_FLEX_PLANNING_TOOL_PAGE = "{0}Successfully verified validation message ''{1}'' is NOT displayed for entered value : ''{2}'' in ''{3}'' field.";
-	public static final String VALIDATION_MESSAGE_DISPLAYED_FOR_VALID_RANGE_ON_FLEX_PLANNING_TOOL_PAGE = "{0}Validation message ''{1}' displayed for ''{3}'' field for Valid value ''{2}''.";
-	public static final String VALIDATION_MESSAGE_NOT_DISPLAYED_FOR_INVALID_RANGE_ON_FLEX_PLANNING_TOOL_PAGE = "{0}Validation message ''{1}'' NOT displayed for ''{3}'' field having ''{2}'' value.";
+	public static final String VALIDATION_MESSAGE_DISPLAYED_FOR_VALID_RANGE = "{0}Validation message ''{1}' displayed for ''{3}'' field for Valid value ''{2}''.";
+	public static final String VALIDATION_MESSAGE_NOT_DISPLAYED_FOR_INVALID_RANGE = "{0}Validation message ''{1}'' NOT displayed for ''{3}'' field having ''{2}'' value.";
 	public static final String POINT_EXCHANGE_RATE = "Point Exchange Rate";
 	public static final String MAX_PORTION_CASHOUT = "Max Portion Cashout";
 	public static final String FIELD_VALUE_CANNOT_BE_LESS_THAN_ONE = "Field value can not be less than 1";
@@ -255,7 +255,7 @@ public class COREFLEXConstants {
 	public static final String WHEN_TO_MAKE_PAYMENT_TEXT = "When to Make Payment";
 	public static final String INDICATE_NUMBER_OF_WEEKS = "Indicate # of weeks before start/transfer date";
 	public static final String USER_NAVIGATION_TO_POLICY_BENEFITS_CATEGORIES_INVALID = "{0}User is incorrectly Navigated to Policy Benefits categories Page. User should be blocked on Flex Policy Setup Page for ''{1}'' field - Invalid Input Value : ''{2}''. ";
-	public static final String VALIDATION_MESSAGE_NOT_DISPLAYED_FOR_NON_NUMERIC_INVALID_VALUE_ON_FLEX_PLANNING_TOOL_PAGE = "{0}Validation message ''{1}'' NOT displayed for ''{3}'' field having ''{2}'' Non Numeric value.";
+	public static final String VALIDATION_MESSAGE_NOT_DISPLAYED_FOR_NON_NUMERIC_INVALID_VALUE = "{0}Validation message ''{1}'' NOT displayed for ''{3}'' field having ''{2}'' Non Numeric value.";
 	public static final String FAILED_TO_VERIFY_POLICY_CATEGORIES_BENEFITS_AND_ORDER_ON_POLICY_BENEFITS_CATEGORIES_PAGE = "{0}Failed to verify Policy Benefits Categories, Benefits & its Order on Policy Benefits Categories Page.";
 	public static final String EXCEPTION_OCCURED_WHILE_VALIDATING_OTHER_BENEFIT_DETAILS_ON_FLEX_PLANNING_TOOL_PAGE = "{0}Exception occured while validating Other Benefits on Flex Planning Tool page of MXTransferee application. Exception : ''{1}''.";
 	public static final String SUCCESSFULLY_VERIFIED_OTHER_BENEFIT_DETAILS_ON_FLEX_PLANNING_TOOL_PAGE = "{0}Successfully verified Other Benefit Details on Flex Planning Tool page of MXTransferee application.";
@@ -285,4 +285,17 @@ public class COREFLEXConstants {
 	public static final String EXCEPTION_OCCURED_WHILE_DELETING_SUBMITTED_BENEFIT_AND_CASHOUT_OF_MBB_PAGE = "{0}Exception occured while Deleting submitted Cashout and Benefit on MBB page. Exception : ''{1}''.";
 	public static final String EXCEPTION_OCCURED_WHILE_DELETING_SUBMITTED_CASHOUT_OF_MBB_PAGE = "{0}Exception occured while Deleting submitted Cashout on MBB page. Exception : ''{1}''.";
 	public static final String EXCEPTION_OCCURED_WHILE_DELETING_SUBMITTED_BENEFIT_OF_MBB_PAGE = "{0}Exception occured while Deleting submitted Benefit on MBB page. Exception : ''{1}''.";
+	public static final String TRANSFEREE_NAME = "Transferee Name";
+	public static final String TRANSFEREE_FILE_ID = "Transferee File ID";
+	public static final String POINTS = "Points";
+	public static final String ALLOWANCE = "Allowance";
+	public static final String CORPORATION_NAME = "Corporation Name";
+	public static final String POINTS_SPENT = "Points Spent";
+	public static final String TOTAL_POINTS = "Total Points";
+	public static final String POINTS_BALANCE = "Points Balance";
+	public static final String SUBMITTED_BENEFIT_NAME = "Submitted Benefit Name";
+	public static final String SUBMITTED_BENEFIT_ALLOWANCE_AMOUNT = "Submitted Benefit Allowance Amount";
+	public static final String SUBMITTED_BENEFIT_STATUS = "Submitted Benefit Status";
+	public static final String SUBMITTED_BENEFIT_SELECTED_QUANTITY = "Submitted Benefit Selected Quantity";
+	public static final String PAYMENT_OPTION = "Payment Option";
 }

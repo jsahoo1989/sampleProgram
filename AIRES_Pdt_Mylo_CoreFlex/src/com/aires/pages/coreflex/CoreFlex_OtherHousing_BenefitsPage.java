@@ -136,6 +136,10 @@ public class CoreFlex_OtherHousing_BenefitsPage extends Base {
 	@FindBy(how = How.XPATH, using = "//input[@formcontrolname='flexPoints']/following-sibling::div[contains(@class,'input-error')]/div")
 	private WebElement _validationMessageFlexPoints;
 
+	// Payments Radio Selection
+	@FindBy(how = How.XPATH, using = "//div[@class='form-group required']//label[@class='form-check-label']")
+	private List<WebElement> _radioBenefitMandatoryButtons;
+
 	/*********************************************************************/
 
 	CoreFlex_PolicySetupPagesData policySetupPageData = FileReaderManager.getInstance().getCoreFlexJsonReader()
@@ -265,15 +269,22 @@ public class CoreFlex_OtherHousing_BenefitsPage extends Base {
 	 */
 	public void selectAndFillBenefitsDetails(String benefitDisplayName, String flexPoints,
 			String multipleBenefitSelection, String benefitAllowanceAmount, String benefitDescription,
-			String benefitComment, String grossUp, String reimbursedBy) {
+			String benefitComment, String grossUp, String reimbursedBy, String paymentOption) {
 
-		CoreFunctions.clearAndSetTextUsingKeys(driver, _inputBenefitName, benefitDisplayName,COREFLEXConstants.BENEFIT_DISPLAY_NAME);
-		CoreFunctions.clearAndSetTextUsingKeys(driver, _inputPointValue, flexPoints,COREFLEXConstants.FLEX_POINTS_VALUE);
+		CoreFunctions.clearAndSetTextUsingKeys(driver, _inputBenefitName, benefitDisplayName,
+				COREFLEXConstants.BENEFIT_DISPLAY_NAME);
+		CoreFunctions.clearAndSetTextUsingKeys(driver, _inputPointValue, flexPoints,
+				COREFLEXConstants.FLEX_POINTS_VALUE);
+		CoreFunctions.selectItemInListByText(driver, _radioBenefitMandatoryButtons, paymentOption, true,
+				COREFLEXConstants.PAYMENT_OPTION);
 		if (multipleBenefitSelection.equals(COREFLEXConstants.YES))
 			CoreFunctions.clickElement(driver, _inputMultiAddBenefit);
-		CoreFunctions.clearAndSetTextUsingKeys(driver, _textAreaAllowanceAmountMessage, benefitAllowanceAmount,COREFLEXConstants.ALLOWANCE_AMOUNT_MESSAGE);
-		CoreFunctions.clearAndSetTextUsingKeys(driver, _textAreaBenefitLongDescription, benefitDescription,COREFLEXConstants.BENEFIT_LONG_DESCRIPTION);
-		CoreFunctions.clearAndSetTextUsingKeys(driver, _textAreaBenefitComment, benefitComment,COREFLEXConstants.BENEFIT_COMMENT);
+		CoreFunctions.clearAndSetTextUsingKeys(driver, _textAreaAllowanceAmountMessage, benefitAllowanceAmount,
+				COREFLEXConstants.ALLOWANCE_AMOUNT_MESSAGE);
+		CoreFunctions.clearAndSetTextUsingKeys(driver, _textAreaBenefitLongDescription, benefitDescription,
+				COREFLEXConstants.BENEFIT_LONG_DESCRIPTION);
+		CoreFunctions.clearAndSetTextUsingKeys(driver, _textAreaBenefitComment, benefitComment,
+				COREFLEXConstants.BENEFIT_COMMENT);
 		CoreFunctions.selectItemInListByText(driver, _radioButtonGrossUp, grossUp, true);
 		CoreFunctions.selectItemInListByText(driver, _radioButtonReimbursedBy, reimbursedBy, true);
 		verifyUpdatedBenefitTitle(benefitDisplayName);
@@ -361,7 +372,8 @@ public class CoreFlex_OtherHousing_BenefitsPage extends Base {
 		boolean isValidationMessageDisplayed = false;
 		switch (fieldName) {
 		case COREFLEXConstants.FLEX_POINT_VALUE:
-			CoreFunctions.clearAndSetTextUsingKeys(driver, _inputPointValue, inputValue,COREFLEXConstants.FLEX_POINTS_VALUE);
+			CoreFunctions.clearAndSetTextUsingKeys(driver, _inputPointValue, inputValue,
+					COREFLEXConstants.FLEX_POINTS_VALUE);
 			clickElementOfPage(COREFLEXConstants.SAVE_AND_CONTINUE);
 			clickElementOfPage(PDTConstants.OK);
 			if (CoreFunctions.isElementExist(driver, _validationMessageFlexPoints, 5))

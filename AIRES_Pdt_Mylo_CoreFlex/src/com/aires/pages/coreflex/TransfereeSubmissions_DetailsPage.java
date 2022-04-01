@@ -64,11 +64,11 @@ public class TransfereeSubmissions_DetailsPage extends Base {
 	private WebElement _textPointsSpent;
 
 	// Submitted Benefit List
-	@FindBy(how = How.CSS, using = "mat-cell[class*='column-Benefit'] > span[class*='BlackText']")
-	private List<WebElement> _submittedBenefitList;
+	@FindBy(how = How.XPATH, using = "//div[contains(@class,'tblBenefits')]//mat-cell[contains(@class,'column-Benefit')]/span[not(contains(@class,'ng-star-inserted'))]")
+	private List<WebElement> _submittedBenefitNameList;
 
 	// Submitted Benefit Allowance Amount List
-	@FindBy(how = How.CSS, using = "mat-cell[class*='column-Benefit'] > span[class*='ng-star-inserted']")
+	@FindBy(how = How.XPATH, using = "//div[contains(@class,'tblBenefits')]//mat-cell[contains(@class,'column-Benefit')]/span[contains(@class,'ng-star-inserted')][contains(@class,'BlackText')]")
 	private List<WebElement> _submittedBenefitAllowanceAmountList;
 
 	// Submitted Benefit Points List
@@ -80,7 +80,7 @@ public class TransfereeSubmissions_DetailsPage extends Base {
 	private List<WebElement> _submittedBenefitRequestedSentDateList;
 
 	// Submitted Benefit Status List
-	@FindBy(how = How.CSS, using = "mat-cell[class*='Status'] > span > span")
+	@FindBy(how = How.XPATH, using = "//div[contains(@class,'tblBenefits')]//mat-cell[contains(@class,'Status')]/span/span")
 	private List<WebElement> _submittedBenefitStatusList;
 
 	// Submitted Benefit Show Comments List
@@ -88,8 +88,12 @@ public class TransfereeSubmissions_DetailsPage extends Base {
 	private List<WebElement> _submittedBenefitShowCommentsList;
 
 	// Submitted Benefit Quantity List
-	@FindBy(how = How.CSS, using = "mat-cell[class*='mat-column-Quantity']")
+	@FindBy(how = How.XPATH, using = "//div[contains(@class,'tblBenefits')]//mat-cell[contains(@class,'mat-column-Quantity')]")
 	private List<WebElement> _submittedBenefitQuantityList;
+
+	// Expense Reimbursement Tracing Prompt List
+	@FindBy(how = How.XPATH, using = "//div[contains(@class,'tblBenefits')]//img[contains(@class,'Warning')]/following-sibling::span")
+	private List<WebElement> _reimbursementAllowanceTracingList;
 
 	/**********************************************************************/
 
@@ -101,6 +105,8 @@ public class TransfereeSubmissions_DetailsPage extends Base {
 
 	public static final List<FlexBenefit> flexBenefits = FileReaderManager.getInstance().getCoreFlexJsonReader()
 			.getMXTransfereeFlexBenefitData();
+
+	static int benefitCount;
 
 	/**********************************************************************/
 
@@ -149,92 +155,91 @@ public class TransfereeSubmissions_DetailsPage extends Base {
 	}
 
 	public boolean verifyTransfereeAndPointsDetails() {
-
-		boolean isTransfereeAndPointsDetailsValidated = false;
 		try {
-			String expectedTransfereeName = CoreFunctions.getPropertyFromConfig("Transferee_firstName") + " "
-					+ CoreFunctions.getPropertyFromConfig("Transferee_lastName");
-			String expectedCorporationName = CoreFunctions.getPropertyFromConfig("Assignment_ClientName");
-
-			/****************** From MXTransferee application ****************/
-
-			String expectedPointsSpent = String.valueOf(MX_Transferee_FlexPlanningTool_Page.totalSelectedPoints);
-			String expectedTotalPoints = policySetupPageData.flexPolicySetupPage.StaticFixedTotalPointsAvailable;
-			String expectedPointsBalance = String
-					.valueOf(Double.parseDouble(expectedTotalPoints) - Double.parseDouble(expectedPointsSpent));
-
-			/***************************************************************/
-
-			String actualTransfereeName = CoreFunctions.getElementText(driver, _textTransfereeName).trim();
-			String actualCorporationName = CoreFunctions.getElementText(driver, _textCorporationName).trim();
+			CoreFunctions.verifyText(driver, _textTransfereeName,
+					CoreFunctions.getPropertyFromConfig("Transferee_firstName") + " "
+							+ CoreFunctions.getPropertyFromConfig("Transferee_lastName"),
+					COREFLEXConstants.TRANSFEREE_NAME);
+			CoreFunctions.verifyText(driver, _textCorporationName,
+					CoreFunctions.getPropertyFromConfig("Assignment_ClientName"), COREFLEXConstants.CORPORATION_NAME);
 			String actualPointsSpent[] = CoreFunctions.getElementText(driver, _textPointsSpent).trim().split("of");
-			String actualPointsBalance = CoreFunctions.getElementText(driver, _textPointsBalance).trim();
-			String actualTotalPoints = CoreFunctions.getElementText(driver, _textTotalPoints).replace("/", "").trim();
-
-			isTransfereeAndPointsDetailsValidated = ((actualTransfereeName.equals(expectedTransfereeName))
-					& (actualCorporationName.equals(expectedCorporationName))
-					& ((actualPointsSpent[0].trim()).equals(expectedPointsSpent))
-					& (actualPointsBalance.equals(expectedPointsBalance))
-					& (actualTotalPoints.equals(expectedTotalPoints)));
-
-			if (!isTransfereeAndPointsDetailsValidated)
-				return false;
-
+			CoreFunctions.verifyValue(Double.parseDouble(actualPointsSpent[0].trim()),
+					MX_Transferee_FlexPlanningTool_Page.totalSelectedPoints, COREFLEXConstants.POINTS_SPENT);
+			CoreFunctions.highlightObject(driver, _textPointsSpent);
+			CoreFunctions.verifyValue(driver, _textPointsBalance,
+					MX_Transferee_MyBenefitsBundlePage.availablePointsAfterSubmission,
+					COREFLEXConstants.POINTS_BALANCE);
+			CoreFunctions.verifyValue(
+					Double.parseDouble(CoreFunctions.getElementText(driver, _textTotalPoints).replace("/", "").trim()),
+					Double.parseDouble(policySetupPageData.flexPolicySetupPage.StaticFixedTotalPointsAvailable),
+					COREFLEXConstants.TOTAL_POINTS);
+			CoreFunctions.highlightObject(driver, _textTotalPoints);
+			Reporter.addStepLog(MessageFormat.format(
+					COREFLEXConstants.SUCCESSFULLY_VALIDATED_TRANSFEREE_SUBMISSION_DETAILS_ON_DASHBOARD_HOME_PAGE,
+					CoreConstants.PASS));
+			return true;
 		} catch (Exception e) {
 			Reporter.addStepLog(MessageFormat.format(
 					COREFLEXConstants.EXCEPTION_OCCURED_WHILE_VALIDATING_TRANSFEREE_SUBMISSION_DETAILS_ON_DASHBOARD_HOME_PAGE,
 					CoreConstants.FAIL, e.getMessage()));
 		}
-		if (isTransfereeAndPointsDetailsValidated) {
-			Reporter.addStepLog(MessageFormat.format(
-					COREFLEXConstants.SUCCESSFULLY_VALIDATED_TRANSFEREE_SUBMISSION_DETAILS_ON_DASHBOARD_HOME_PAGE,
-					CoreConstants.PASS));
-		}
-		return isTransfereeAndPointsDetailsValidated;
+		return false;
 	}
 
 	public boolean verifySubmittedBenefitsDetails() {
-		int count = 0;
 		boolean isSubmittedBenefitStatusMatched = false;
-
-		try {
+		try {			
 			for (FlexBenefit benefitList : flexBenefits) {
 				for (Benefit benefit : benefitList.getBenefits()) {
-					for (int index = 0; index < _submittedBenefitList.size(); index++) {
-						WebElement submittedBenefit = _submittedBenefitList.get(index);
-						if (CoreFunctions.getElementText(driver, submittedBenefit).equals(benefit.getBenefitType())
-								& (benefit.getSelectBenefitOnFPTPage())) {
-							count += 1;
-							String actualBenefitName = _submittedBenefitList.get(index).getText();
-							String actualBenefitPoints = _submittedBenefitPointsList.get(index).getText();
-							String actualAllowanceAmountMessage = _submittedBenefitAllowanceAmountList.get(index)
-									.getText();
-							String actualSubmitStatus = _submittedBenefitStatusList.get(index).getText();
-							String actualBenefitQuantity = _submittedBenefitQuantityList.get(index).getText();
-
-							isSubmittedBenefitStatusMatched = (actualBenefitName.equals(benefit.getBenefitType()))
-									& (actualBenefitPoints.equals(benefit.getPoints()))
-									& (actualAllowanceAmountMessage.equals(benefit.getBenefitAmount()))
-									& (actualSubmitStatus.equals(COREFLEXConstants.SUBMITTED)) & (actualBenefitQuantity
-											.equals(String.valueOf(benefit.getNumberOfBenefitSelected())));
-
-							if (!isSubmittedBenefitStatusMatched)
-								break;
-						}
-
-					}
+					isSubmittedBenefitStatusMatched = verifyBenefitDetails(benefit);
 				}
+				if(!isSubmittedBenefitStatusMatched)
+				break;
 			}
 		} catch (Exception e) {
 			Reporter.addStepLog(MessageFormat.format(
 					COREFLEXConstants.EXCEPTION_OCCURED_WHILE_VALIDATING_SUBMITTED_BENEFITS_DETAILS_ON_SUBMISSION_DETAILS_PAGE,
 					CoreConstants.FAIL, e.getMessage()));
 		}
-		if (isSubmittedBenefitStatusMatched & (_submittedBenefitList.size() == count)) {
+		if (isSubmittedBenefitStatusMatched & (_submittedBenefitNameList.size() == benefitCount)) {
 			Reporter.addStepLog(MessageFormat.format(
 					COREFLEXConstants.SUCCESSFULLY_VALIDATED_SUBMITTED_BENEFITS_DETAILS_ON_SUBMISSION_DETAILS_PAGE,
 					CoreConstants.PASS));
-		}		
-		return isSubmittedBenefitStatusMatched;
+			return true;
+		}
+		else 
+			return false;
+	}
+
+	private boolean verifyBenefitDetails(Benefit benefit) {
+		try {
+			for (int index = 0; index < _submittedBenefitNameList.size(); index++) {
+				WebElement submittedBenefit = _submittedBenefitNameList.get(index);
+				if (CoreFunctions.getElementText(driver, submittedBenefit).equals(benefit.getBenefitDisplayName())
+						& (benefit.getSelectBenefitOnFPTPage())) {
+					benefitCount += 1;
+					CoreFunctions.verifyText(driver, _submittedBenefitNameList.get(index),
+							benefit.getBenefitDisplayName(), COREFLEXConstants.SUBMITTED_BENEFIT_NAME);
+					CoreFunctions.verifyText(driver, _submittedBenefitAllowanceAmountList.get(index),
+							benefit.getBenefitAmount(), COREFLEXConstants.SUBMITTED_BENEFIT_ALLOWANCE_AMOUNT);
+					CoreFunctions.verifyValue(
+							Double.parseDouble(_submittedBenefitPointsList.get(index).getText().replace("pts", "")),
+							Double.parseDouble(benefit.getPoints()),
+							COREFLEXConstants.SUBMITTED_BENEFIT_ALLOWANCE_AMOUNT);
+					CoreFunctions.verifyText(driver, _submittedBenefitStatusList.get(index),
+							COREFLEXConstants.SUBMITTED, COREFLEXConstants.SUBMITTED_BENEFIT_STATUS);
+					CoreFunctions.verifyText(driver, _submittedBenefitQuantityList.get(index),
+							String.valueOf(benefit.getNumberOfBenefitSelected()),
+							COREFLEXConstants.SUBMITTED_BENEFIT_SELECTED_QUANTITY);
+					return true;
+				} 
+			}
+		} catch (Exception e) {
+			Reporter.addStepLog(MessageFormat.format(
+					COREFLEXConstants.EXCEPTION_OCCURED_WHILE_VALIDATING_SUBMITTED_BENEFITS_DETAILS_ON_SUBMISSION_DETAILS_PAGE,
+					CoreConstants.FAIL, e.getMessage()));
+			return false;
+		}
+		return true;
 	}
 }

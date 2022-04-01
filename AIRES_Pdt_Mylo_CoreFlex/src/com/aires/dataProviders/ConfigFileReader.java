@@ -140,8 +140,8 @@ public class ConfigFileReader {
 	}
 	
 	public String getCoreFlexTransfereeSubmissionsApplicationUrl() {
-		if (properties.getProperty("envt").equalsIgnoreCase("Test"))
-			return properties.getProperty("coreFlexTransfereeSubmissionsTestUrl");
+		if (properties.getProperty("envt").equalsIgnoreCase("UAT"))
+			return properties.getProperty("coreFlexTransfereeSubmissionsUatUrl");
 		else if (properties.getProperty("envt").equalsIgnoreCase("QA"))
 			return properties.getProperty("coreFlexTransfereeSubmissionsQaUrl");
 		else if (properties.getProperty("envt").equalsIgnoreCase("Prod"))

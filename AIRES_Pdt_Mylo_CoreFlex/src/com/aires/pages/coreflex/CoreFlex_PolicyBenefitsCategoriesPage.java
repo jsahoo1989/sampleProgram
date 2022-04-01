@@ -149,7 +149,7 @@ public class CoreFlex_PolicyBenefitsCategoriesPage extends Base {
 
 	public static final List<Benefit> coreBenefits = FileReaderManager.getInstance().getCoreFlexJsonReader()
 			.getMXTransfereeCoreBenefitDetails();
-	
+
 	public static final List<FlexBenefit> flexBenefits = FileReaderManager.getInstance().getCoreFlexJsonReader()
 			.getMXTransfereeFlexBenefitData();
 
@@ -313,7 +313,7 @@ public class CoreFlex_PolicyBenefitsCategoriesPage extends Base {
 	 */
 	public boolean selectBenefits(String policyType) {
 		try {
-			 expandAllBenefitCategories();
+			expandAllBenefitCategories();
 			// Method to select Provided benefit from the List
 			List<String> benefitList = getBenefitList(policyType);
 			for (String benefit : benefitList) {
@@ -387,11 +387,12 @@ public class CoreFlex_PolicyBenefitsCategoriesPage extends Base {
 			CoreFlex_DuplicateHousing_BenefitsPage coreFlexDuplicateHousingBenefitsPage,
 			CoreFlex_LumpSum_BenefitsPage coreFlexLumpSumBenefitsPage,
 			CoreFlex_OtherHousing_BenefitsPage coreFlexOtherHousingBenefitsPage) {
-		boolean isBenefitSuccessfullySelectedAndFilled=false;
+		boolean isBenefitSuccessfullySelectedAndFilled = false;
 		try {
 			if (policyType.equals(COREFLEXConstants.FLEX) || policyType.equals(COREFLEXConstants.BOTH)) {
 				isBenefitSuccessfullySelectedAndFilled = fillFlexBenefitDetails(policyType,
-						coreFlexDuplicateHousingBenefitsPage, coreFlexLumpSumBenefitsPage,coreFlexOtherHousingBenefitsPage);
+						coreFlexDuplicateHousingBenefitsPage, coreFlexLumpSumBenefitsPage,
+						coreFlexOtherHousingBenefitsPage);
 			}
 		} catch (Exception e) {
 			Reporter.addStepLog(
@@ -406,14 +407,15 @@ public class CoreFlex_PolicyBenefitsCategoriesPage extends Base {
 		return isBenefitSuccessfullySelectedAndFilled;
 	}
 
-
 	private boolean fillFlexBenefitDetails(String policyType,
 			CoreFlex_DuplicateHousing_BenefitsPage coreFlexDuplicateHousingBenefitsPage,
-			CoreFlex_LumpSum_BenefitsPage coreFlexLumpSumBenefitsPage,CoreFlex_OtherHousing_BenefitsPage coreFlexOtherHousingBenefitsPage) {
+			CoreFlex_LumpSum_BenefitsPage coreFlexLumpSumBenefitsPage,
+			CoreFlex_OtherHousing_BenefitsPage coreFlexOtherHousingBenefitsPage) {
 		boolean isFlexBenefitSuccessfullySelectedAndFilled = false;
 		try {
 			String benefitName, subBenefitNames, benefitPolicyType, multipleBenefitSelection, flexPoints,
-					benefitDisplayName, benefitAllowanceAmount, benefitDescription,benefitComment, grossUp, reimbursedBy;
+					benefitDisplayName, benefitAllowanceAmount, benefitDescription, benefitComment, grossUp,
+					reimbursedBy, paymentOption;
 			for (FlexBenefit benefitList : flexBenefits) {
 				for (Benefit benefit : benefitList.getBenefits()) {
 					benefitName = benefit.getBenefitType();
@@ -427,24 +429,25 @@ public class CoreFlex_PolicyBenefitsCategoriesPage extends Base {
 					benefitComment = benefit.getComment();
 					grossUp = benefit.getGrossUp();
 					reimbursedBy = benefit.getReimbursedBy();
+					paymentOption = benefit.getPayments();
 
 					clickLeftNavigationMenuOfPage(benefitName);
 					switch (benefitName) {
 					case COREFLEXConstants.DUPLICATE_HOUSING:
 						coreFlexDuplicateHousingBenefitsPage.selectAndFillBenefitsAndSubBenefitDetails(
 								benefitPolicyType, subBenefitNames, multipleBenefitSelection, flexPoints,
-								benefitDisplayName, benefitAllowanceAmount, benefitDescription);
+								benefitDisplayName, benefitAllowanceAmount, benefitDescription,paymentOption);
 						break;
 					case COREFLEXConstants.LUMP_SUM:
 						coreFlexLumpSumBenefitsPage.selectAndFillBenefitsAndSubBenefitDetails(benefitPolicyType,
 								subBenefitNames, multipleBenefitSelection, flexPoints, benefitDisplayName,
-								benefitAllowanceAmount, benefitDescription);
+								benefitAllowanceAmount, benefitDescription,paymentOption);
 						break;
 					case COREFLEXConstants.OTHER_HOUSING_BENEFIT:
 						coreFlexOtherHousingBenefitsPage.verifyNumericRangeFieldsValidation();
 						coreFlexOtherHousingBenefitsPage.selectAndFillBenefitsDetails(benefitDisplayName, flexPoints,
 								multipleBenefitSelection, benefitAllowanceAmount, benefitDescription, benefitComment,
-								grossUp, reimbursedBy);
+								grossUp, reimbursedBy,paymentOption);
 						break;
 					default:
 						Assert.fail(PDTConstants.INVALID_ELEMENT);

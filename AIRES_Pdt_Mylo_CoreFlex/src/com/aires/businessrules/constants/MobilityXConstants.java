@@ -16,7 +16,7 @@ public class MobilityXConstants {
 	public static final String MANAGE_MY_POINTS_BUTTON_NOT_EXIST = "Manage my points button not displayed";
 	public static final String FLEX_PLANNING_TOOL_PAGE_NOT_DISPLAYED = "{0} Flex planning tool page is not displayed";
 	public static final String POINT_BALANCE_NOT_DISPLAYED_ON_FLEX_PLANNING_TOOL_PAGE = "Point balace is not displayed on flex planning tool page";
-	public static final String POINT_BALANCE_DETAILS = "You have used used_points of your total_points-point allowance . Your current point balance is current_balance . When you select FleX benefits below, they will be added to your Bundle, but they won't be deducted from your balance until you confirm and submit your choices to Aires.";
+	public static final String POINT_BALANCE_DETAILS = "You have used used_points of your total_points-point allowance. Your current point balance is current_balance. When you select FleX benefits below, they will be added to your Bundle, but they won't be deducted from your balance until you confirm and submit your choices to Aires.";
 	public static final String POINT_BALANCE_DETAILS_FPT = "You have used used_points of your total_points-point allowance. Your current point balance is current_balance. When you select your benefits below, they will be added to your Bundle, but they won't be deducted from your balance until you confirm and submit your choices to Aires.";
 	public static final String POINT_BALANCE_DATA_NOT_MATCHED_ON_FLEX_PLANNING_TOOL_PAGE = "Point balance tool tip details not matched on flex planning tool page";
 	public static final String BENEFIT_NOT_LISTED_ON_FLEX_PLANNING_TOOL_PAGE = "Opted benefit not listed on flex planning tool page";
@@ -251,4 +251,5 @@ public class MobilityXConstants {
 	public static final String EXCEPTION_OCCURED_WHILE_VERIFYING_POST_SUBMISSION_CASHOUT_DETAILS_ON_FLEX_PLANNING_TOOL_PAGE = "{0}Exception occured while verifying Post Submission - Cashout Details on Flex Planning Tool Page. Exception : ''{1}''.";
 	public static final String SUCCESSFULLY_VERIFIED_PORTION_CASHOUT_FUNCTIONALITY_ON_FLEX_PLANNING_TOOL_PAGE = "{0}Successfully verified Portion Cashout functionality on Flex Planning Tool Page.";
 	public static final String SUCCESSFULLY_VERIFIED_POST_SUBMISSION_PORTION_CASHOUT_FUNCTIONALITY_ON_FLEX_PLANNING_TOOL_PAGE = "{0}Successfully verified Post Submission Portion Cashout functionality on Flex Planning Tool Page.";
+	public static final String EXCEPTION_OCCURED_WHILE_RETURNING_INDEX_ITEM_FROM_LIST_USING_TEXT = "{0}Exception occured while returning index item from list using text. Exception : ''{1}''.";
 }

@@ -14,7 +14,8 @@ import com.aires.businessrules.BusinessFunctions;
 import com.aires.businessrules.CoreFunctions;
 import com.aires.businessrules.constants.COREFLEXConstants;
 import com.aires.businessrules.constants.CoreConstants;
-import com.aires.utilities.Log;
+import com.aires.managers.FileReaderManager;
+import com.aires.testdatatypes.coreflex.CoreFlex_PolicySetupPagesData;
 import com.vimalselvam.cucumber.listener.Reporter;
 
 public class TransfereeSubmissions_DashboardHomePage extends Base {
@@ -30,7 +31,7 @@ public class TransfereeSubmissions_DashboardHomePage extends Base {
 	private WebElement _userName;
 
 	// Transferee Submissions Logo Title
-	@FindBy(how = How.CSS, using = "div[class='logo-title'] > a[class='simple-text']")
+	@FindBy(how = How.CSS, using = "div[class='logo-title'] > span[class='simple-text']")
 	private WebElement _txtApplicationTitle;
 
 	// Transferee Name List
@@ -55,7 +56,7 @@ public class TransfereeSubmissions_DashboardHomePage extends Base {
 
 	// Total Points List
 	@FindBy(how = How.CSS, using = "span[class='Total-Points']")
-	private List<WebElement> _TotalPointsList;
+	private List<WebElement> _totalPointsList;
 
 	// Submitted Date List
 	@FindBy(how = How.XPATH, using = "//span[@class='Points-Spent']//ancestor::div[contains(@class,'d-flex')]/following-sibling::div/span[@class='normalText']")
@@ -72,15 +73,22 @@ public class TransfereeSubmissions_DashboardHomePage extends Base {
 	// Dashboard Transferee Submissions Records List
 	@FindBy(how = How.CSS, using = "div[class*='row bgColor ng-star-inserted']")
 	private List<WebElement> _dashboardRecordsList;
-	
+
 	// Progress Bar
-		@FindBy(how = How.CSS, using = "div.ngx-progress-bar.ngx-progress-bar-ltr")
-		private WebElement _progressBar;
+	@FindBy(how = How.CSS, using = "div.ngx-progress-bar.ngx-progress-bar-ltr")
+	private WebElement _progressBar;
+
+	// AIRES Flex Logo Image
+	@FindBy(how = How.CSS, using = "img[src='assets/img/AiresFleXLogo.png']")
+	private WebElement _imgAIRESFlexLogo;
 
 	/**********************************************************************/
 
+	CoreFlex_PolicySetupPagesData policySetupPageData = FileReaderManager.getInstance().getCoreFlexJsonReader()
+			.getPolicySetupPagesDataList(COREFLEXConstants.POLICY_SETUP);
+
 	/**********************************************************************/
-	
+
 	/**
 	 * Generic Method to Click on an Element on a Page.
 	 * 
@@ -90,11 +98,11 @@ public class TransfereeSubmissions_DashboardHomePage extends Base {
 		try {
 			switch (elementName) {
 			case COREFLEXConstants.REVIEW:
-			case COREFLEXConstants.OPEN:	
-				int index = BusinessFunctions.returnindexItemFromListUsingText(driver, _transfereeNameList,
+			case COREFLEXConstants.OPEN:
+				int indexTransferee = BusinessFunctions.returnindexItemFromListUsingText(driver, _transfereeNameList, true,
 						CoreFunctions.getPropertyFromConfig("Transferee_firstName") + " "
 								+ CoreFunctions.getPropertyFromConfig("Transferee_lastName"));
-				CoreFunctions.clickElement(driver, _reviewOpenButtonList.get(index));
+				CoreFunctions.clickElement(driver, _reviewOpenButtonList.get(indexTransferee));
 				CoreFunctions.explicitWaitTillElementInVisibility(driver, _progressBar);
 				break;
 			case COREFLEXConstants.SEARCH:
@@ -112,14 +120,17 @@ public class TransfereeSubmissions_DashboardHomePage extends Base {
 	}
 
 	public boolean verifyUserlogin(String userName, String pageName) {
+		CoreFunctions.explicitWaitTillElementInVisibility(driver, _progressBar);
 		CoreFunctions.waitHandler(4);
-		CoreFunctions.explicitWaitTillElementVisibility(driver, _txtApplicationTitle, COREFLEXConstants.TRANSFEREE_SUBMISSIONS, 5);
-		if ((getUserName().equalsIgnoreCase(userName)) && (CoreFunctions.getElementText(driver, _txtApplicationTitle)
-				.equals(COREFLEXConstants.TRANSFEREE_SUBMISSIONS))) {
+		CoreFunctions.explicitWaitTillElementVisibility(driver, _txtApplicationTitle,
+				COREFLEXConstants.TRANSFEREE_SUBMISSIONS, 5);
+		if ((getUserName().equalsIgnoreCase(userName))
+				&& (CoreFunctions.getElementText(driver, _txtApplicationTitle)
+						.equals(COREFLEXConstants.TRANSFEREE_SUBMISSIONS))
+				&& CoreFunctions.isElementExist(driver, _imgAIRESFlexLogo, 2)) {			
 			CoreFunctions.highlightObject(driver, _userName);
 			Reporter.addStepLog(MessageFormat.format(COREFLEXConstants.VERIFIED_USERNAME_IS_DISPLAYED,
 					CoreConstants.PASS, userName, pageName));
-			Log.info("Verified username");
 			return true;
 		}
 		Reporter.addStepLog(MessageFormat.format(COREFLEXConstants.FAILED_TO_VERIFY_USERNAME, CoreConstants.FAIL,
@@ -129,58 +140,56 @@ public class TransfereeSubmissions_DashboardHomePage extends Base {
 
 	public String getUserName() {
 		CoreFunctions.explicitWaitTillElementBecomesClickable(driver, _userName, COREFLEXConstants.USERNAME);
-		System.out.println(_userName.getText().trim());
 		return _userName.getText().trim();
 	}
 
 	public boolean verifyTransfereeBundleSubmissionDetails() {
-
-		boolean isTransfereeBundleDetailsValidated = false;
-		int index = 0;
+		int indexTransferee = 0;
 		try {
-			String expectedTransfereeName = CoreFunctions.getPropertyFromConfig("Transferee_firstName") + " "
-					+ CoreFunctions.getPropertyFromConfig("Transferee_lastName");
-			String expectedCorporationName = CoreFunctions.getPropertyFromConfig("Assignment_ClientName");			
-			
-			/***********To Be Passed From MXTransferee application***********/
-			String expectedAllowanceType = "POINTS";
-			String expectedPointsSpent = "175";
-			String expectedTotalPoints = "500";
-			String expectedSubmittedDate = "Feb 8, 2022";
-			/***************************************************************/
-			
-			index = BusinessFunctions.returnindexItemFromListUsingText(driver, _transfereeNameList,
+			indexTransferee = BusinessFunctions.returnindexItemFromListUsingText(driver, _transfereeNameList, true,
 					CoreFunctions.getPropertyFromConfig("Transferee_firstName") + " "
 							+ CoreFunctions.getPropertyFromConfig("Transferee_lastName"));
-			String actualTransfereeName = _transfereeNameList.get(index).getText().trim();
-			String actualCorporationName = _corporationNameList.get(index).getText().trim();
-			String actualAllowanceType = _allowanceTypeList.get(index).getText().trim();
-			String actualPointsSpent = _pointsSpentList.get(index).getText().trim();
-			String actualTotalPoints = _TotalPointsList.get(index).getText().replace("/", "").trim();
-			String actualSubmittedDate = _submittedDateList.get(index).getText().trim();
+			if (verifyTransfereeBundleDetailsOnDashboard(indexTransferee)) {
+				Reporter.addStepLog(MessageFormat.format(
+						COREFLEXConstants.SUCCESSFULLY_VALIDATED_TRANSFEREE_SUBMISSION_DETAILS_ON_DASHBOARD_HOME_PAGE,
+						CoreConstants.PASS));
+				return true;
+			}
+		} catch (Exception e) {
+			Reporter.addStepLog(MessageFormat.format(
+					COREFLEXConstants.EXCEPTION_OCCURED_WHILE_VALIDATING_TRANSFEREE_SUBMISSION_DETAILS_ON_DASHBOARD_HOME_PAGE,
+					CoreConstants.FAIL, e.getMessage()));
+		}
+		return false;
+	}
 
-			isTransfereeBundleDetailsValidated = ((actualTransfereeName.equals(expectedTransfereeName))
-					& (actualCorporationName.equals(expectedCorporationName))
-					& (actualAllowanceType.equals(expectedAllowanceType))
-					& (actualPointsSpent.equals(expectedPointsSpent)) & (actualTotalPoints.equals(expectedTotalPoints))
-					& (actualSubmittedDate.equals(expectedSubmittedDate)));
-			
-			if(!isTransfereeBundleDetailsValidated)
-				return false;
+	private boolean verifyTransfereeBundleDetailsOnDashboard(int indexTransferee) {
+		try {
+			CoreFunctions.verifyText(driver,_transfereeNameList.get(indexTransferee),
+					CoreFunctions.getPropertyFromConfig("Transferee_firstName") + " "
+							+ CoreFunctions.getPropertyFromConfig("Transferee_lastName"),
+					COREFLEXConstants.TRANSFEREE_NAME);
+			String[] fileNumber = _transfereeFileNumberList.get(indexTransferee).getText().split("#");
+			CoreFunctions.verifyText(fileNumber[1].trim(), CoreFunctions.getPropertyFromConfig("Assignment_FileID"),
+					COREFLEXConstants.TRANSFEREE_FILE_ID);
+			CoreFunctions.verifyText(driver,_corporationNameList.get(indexTransferee),
+					CoreFunctions.getPropertyFromConfig("Assignment_ClientName"), COREFLEXConstants.CORPORATION_NAME);
+			CoreFunctions.verifyText(driver,_allowanceTypeList.get(indexTransferee), COREFLEXConstants.POINTS,
+					COREFLEXConstants.ALLOWANCE);
+			CoreFunctions.verifyValue(driver,_pointsSpentList.get(indexTransferee),
+					MX_Transferee_FlexPlanningTool_Page.totalSelectedPoints, COREFLEXConstants.POINTS_SPENT);
+			CoreFunctions.verifyValue(Double.parseDouble(_totalPointsList.get(indexTransferee).getText().replace("/", "").trim()),
+					Double.parseDouble(policySetupPageData.flexPolicySetupPage.StaticFixedTotalPointsAvailable),
+					COREFLEXConstants.TOTAL_POINTS);
+			CoreFunctions.highlightObject(driver, _totalPointsList.get(indexTransferee));
+			return true;
 
 		} catch (Exception e) {
 			Reporter.addStepLog(MessageFormat.format(
 					COREFLEXConstants.EXCEPTION_OCCURED_WHILE_VALIDATING_TRANSFEREE_SUBMISSION_DETAILS_ON_DASHBOARD_HOME_PAGE,
 					CoreConstants.FAIL, e.getMessage()));
 		}
-		if (isTransfereeBundleDetailsValidated) {
-			Reporter.addStepLog(MessageFormat.format(
-					COREFLEXConstants.SUCCESSFULLY_VALIDATED_TRANSFEREE_SUBMISSION_DETAILS_ON_DASHBOARD_HOME_PAGE,
-					CoreConstants.PASS));			
-		}
-		return isTransfereeBundleDetailsValidated;
+		return false;
 	}
-	
-	
 
 }

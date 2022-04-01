@@ -3,22 +3,22 @@
 		"application": "Transferee Submissions",
 		"dev": {
 			"userName": "mxssodev5@corp.aires.com",
-			"password": "AiresDevSSOTest$",
+			"password": "F74#jd*187_NB",
 			"fullName": "mxsso dev5"
 		},
 		"qa": {
 			"userName": "mxssodev5@corp.aires.com",
-			"password": "AiresDevSSOTest$",
+			"password": "F74#jd*187_NB",
 			"fullName": "mxsso dev5"
 		},
 		"uat": {
 			"userName": "mxssodev5@corp.aires.com",
-			"password": "AiresDevSSOTest$",
+			"password": "F74#jd*187_NB",
 			"fullName": "mxsso dev5"
 		},
 		"prod": {
 			"userName": "mxssodev5@corp.aires.com",
-			"password": "AiresDevSSOTest$",
+			"password": "F74#jd*187_NB",
 			"fullName": "mxsso dev5"
 		}
 	}

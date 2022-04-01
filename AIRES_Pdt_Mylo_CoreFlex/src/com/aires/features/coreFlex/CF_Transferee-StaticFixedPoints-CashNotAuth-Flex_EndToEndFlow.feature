@@ -26,7 +26,7 @@ Scenario: MXTransferee - Selecting & Submitting benefits available in configured
     And submitted benefit details should be displayed under 'Submitted Benefits' section of 'My Benefits Bundle' page
     And 'Mobility Flex Benefit(s) Submission' email should be generated for the submitted benefit bundle 
 	
-@TransfereeSubmissionFlow @Flex-CashNotAuth 
+@TransfereeSubmissionFlow @Flex-CashNotAuth_234 
 Scenario: TransfereeSubmissions - Verifying_Approving_Denying submissions made by Transferee for the Client(s) assigned to PPC User 
 	Given he has logged into 'Transferee Submissions' application as a "MSPEC/PPC" user 
 	And he has navigated to "Transferee Submissions Dashboard" page having record of Bundle submitted by the transferee 

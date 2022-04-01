@@ -30,7 +30,8 @@
 					"deleteBenefitOnMBBPage":true,
 					"grossUp":"Yes",
 					"reimbursedBy":"Aires",
-					"comment":"Test Flex Duplicate Housing Benefit Comment"
+					"comment":"Test Flex Duplicate Housing Benefit Comment",
+					"payments":"Expense Reimbursement"
 				},
 				{
 					"benefitType": "Other Housing Benefit",
@@ -45,7 +46,8 @@
 					"deleteBenefitOnMBBPage":false,
 					"grossUp":"Yes",
 					"reimbursedBy":"Aires",
-					"comment":"Test Other Housing Benefit Comment"
+					"comment":"Test Other Housing Benefit Comment",
+					"payments":"Expense Reimbursement"
 				}
 			]
 		},
@@ -65,7 +67,8 @@
 					"deleteBenefitOnMBBPage":false,
 					"grossUp":"Yes",
 					"reimbursedBy":"Aires",
-					"comment":"Test Flex Lump Sum Benefit Comment"
+					"comment":"Test Flex Lump Sum Benefit Comment",
+					"payments":"Allowance/Cashout"
 				}
 			]
 		}

@@ -65,7 +65,6 @@ public class CF_Transferee_StaticFixedPoints_CashNotAuth_Flex_EndToEndFlow_Steps
 	@Then("^he should be navigated to \"([^\"]*)\" page having list of submitted benefits details$")
 	public void he_should_be_navigated_to_page_having_list_of_submitted_benefits_details(
 			String pageName) throws Throwable {
-		transfereeSubmissionsDetailsPage = _pageObjectManagerCoreFlex.getTransfereeSubmissionsDetailsPage();
 		Assert.assertTrue(transfereeSubmissionsDetailsPage.verifiyPageNavigation(pageName),
 				MessageFormat.format(COREFLEXConstants.FAILED_TO_NAVIGATE_TO_TRANSFEREE_SUBMISSIONS_DETAILS_PAGE,
 						CoreConstants.FAIL, pageName));

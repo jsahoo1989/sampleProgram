@@ -54,6 +54,7 @@ import org.openqa.selenium.StaleElementReferenceException;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.interactions.Actions;
+import static org.openqa.selenium.support.locators.RelativeLocator.*;
 import org.openqa.selenium.support.ui.ExpectedCondition;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.FluentWait;
@@ -1680,6 +1681,10 @@ public class CoreFunctions {
 		return dateValue;	
 	}
 	
+	public static WebElement getLabelOfElement(WebDriver driver, By baseElement) {
+		return driver.findElement((with(By.tagName("label"))).above(baseElement));
+	}
+	
 	public static void refreshPage(WebDriver driver) {
 		driver.navigate().refresh();
 	}
@@ -1694,6 +1699,7 @@ public class CoreFunctions {
 			Log.info("Fail:Could not find: " + name);
 			Assert.fail(MessageFormat.format(CoreConstants.FAIL_TO_VERIFY_ELEMENT_ON_PAGE, Element));
 		}
+
 	}
 
 }

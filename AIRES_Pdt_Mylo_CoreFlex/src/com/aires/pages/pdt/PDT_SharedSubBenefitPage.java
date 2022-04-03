@@ -383,6 +383,27 @@ public class PDT_SharedSubBenefitPage extends Base {
 		/*case PDTConstants.ASSIGNMENT_FINDER_FEES:
 			subBenefitSteps.getAssignmentHousingPage().fillSecurityDepositForm(addNewPolicyPage, PDTConstants.SECURITY_DEPOSIT);
 			break;*/
+		case PDTConstants.MISC_RELOCATION_ALLOWANCE:
+			subBenefitSteps.getOneTimePaymentPage().fillMiscRelocationAllowance(addNewPolicyPage, PDTConstants.MISC_RELOCATION_ALLOWANCE);
+			break;
+		case PDTConstants.LUMP_SUM:
+			subBenefitSteps.getOneTimePaymentPage().fillLumpSum(addNewPolicyPage, PDTConstants.LUMP_SUM);
+			break;
+		case PDTConstants.LEASE_BREAK:
+			subBenefitSteps.getOneTimePaymentPage().fillLeaseBreak(addNewPolicyPage, PDTConstants.LEASE_BREAK);
+			break;
+		case PDTConstants.APPLIANCE_ALLOWANCE:
+			subBenefitSteps.getOneTimePaymentPage().fillApplAllowance(addNewPolicyPage, PDTConstants.APPLIANCE_ALLOWANCE);
+			break;
+		case PDTConstants.AUTO_REGISTRATION_COSTS:
+			subBenefitSteps.getOneTimePaymentPage().fillAutoRegistrationCost(addNewPolicyPage, PDTConstants.AUTO_REGISTRATION_COSTS);
+			break;
+		case PDTConstants.AUTO_LOSS_ON_SALE:
+			subBenefitSteps.getOneTimePaymentPage().fillAutoLossOnSale(addNewPolicyPage, PDTConstants.AUTO_LOSS_ON_SALE);
+			break;
+		case PDTConstants.OTHER_ONE_TIME_PAYMENT:
+			subBenefitSteps.getOneTimePaymentPage().fillOtherOneTimePayment(addNewPolicyPage, PDTConstants.OTHER_ONE_TIME_PAYMENT);
+			break;
 		default:
 			Assert.fail(MessageFormat.format(PDTConstants.ELEMENT_NOT_FOUND, CoreConstants.FAIL));
 		}
@@ -577,6 +598,10 @@ public class PDT_SharedSubBenefitPage extends Base {
 	}
 	
 	public void verifySelectedPolicyBenefitCategoryName(String pageName) {
+		CoreFunctions.explicitWaitTillElementInVisibilityCustomTime(driver, _progressBar, 5);
+		if(pageName.equalsIgnoreCase("One-Time Payments/Reimbursements")) {
+			return;
+		}
 		CoreFunctions.explicitWaitForElementTextPresent(driver, _benefitCategoryName, pageName, 3);		
 		if(!CoreFunctions.verifyElementOnPage(driver, _benefitCategoryName, PDTConstants.POLICY_BENEFIT_CATEGORY, pageName, pageName,
 				true))
@@ -629,7 +654,13 @@ public class PDT_SharedSubBenefitPage extends Base {
 		formMap.put(PDTConstants.PAYROLL_INSTRUCTIONS, _lnkFormCollapseSeven);
 		formMap.put(PDTConstants.ASSIGNMENT_HOUSING, _lnkFormCollapseFive);
 		formMap.put(PDTConstants.SECURITY_DEPOSIT, _lnkFormCollapseTwo);
-		//formMap.put(PDTConstants.ASSIGNMENT_FINDER_FEES, _lnkFormCollapseThree);
+		formMap.put(PDTConstants.MISC_RELOCATION_ALLOWANCE, _lnkFormCollapseOne);
+		formMap.put(PDTConstants.LUMP_SUM, _lnkFormCollapseTwo);
+		formMap.put(PDTConstants.LEASE_BREAK, _lnkFormCollapseThree);
+		formMap.put(PDTConstants.APPLIANCE_ALLOWANCE, _lnkFormCollapseFour);
+		formMap.put(PDTConstants.AUTO_REGISTRATION_COSTS, _lnkFormCollapse5);
+		formMap.put(PDTConstants.AUTO_LOSS_ON_SALE, _lnkFormCollapseSix);
+		formMap.put(PDTConstants.OTHER_ONE_TIME_PAYMENT, _lnkFormCollapseSeven);
 	}
 	
 	public void exitFromPolicyBenefitPage() {

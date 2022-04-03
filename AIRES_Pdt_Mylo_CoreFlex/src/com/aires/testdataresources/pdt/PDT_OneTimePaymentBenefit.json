@@ -1,0 +1,85 @@
+[
+	{
+		"benefitName": "One Time Payments and Reimbursements",
+		"miscReloAllowance": {
+			"calculationMethod": "1 week salary",
+			"otherCalculationMethod": "2 months salary",
+			"maxAmount": "1000",
+			"currency": "U.S. Dollar",
+			"frequency": "Annually",
+			"whenToMakePayment": "# of weeks before start/transfer date",
+			"indicateNumOfWeeksBefore": "Other",
+			"otherNumOfWeeksBefore": "6 weeks",
+			"otherPaymentTime": "10 weeks",			
+			"grossUp": "No",
+			"reimbursedBy": "Other",
+			"reimbursedByOther": "Reimbursed By Other",
+			"comment": "Misc. Relocation Allowance comment"
+		},
+		"lumpSum": {
+			"calculationMethod": "Flat Amount",
+			"otherCalculationMethod": "Other Calculation Method for Lump Sum",
+			"maxAmount": "10000",
+			"currency": "U.S. Dollar",
+			"frequency": "Other",
+			"otherFrequency": "Other Frequency for Lump Sum",
+			"whenToMakePayment": "# of weeks before start/transfer date",
+			"indicateNumOfWeeksBefore": "Other",
+			"otherNumOfWeeksBefore": "10 weeks",
+			"grossUp": "Yes",
+			"reimbursedBy": "Aires",
+			"reimbursedByOther": "Reimbursed By Other",
+			"comment": "Lump Sum comment"			
+		},
+		"leaseBreak": {
+			"maxNumOfMonths": "Other",
+			"otherMaxNumOfMonths": "15",
+			"maxAmount": "200000",
+			"currency": "U.S. Dollar",
+			"frequency": "Monthly",
+			"otherFrequency": "Other Frequency for Lease Break",
+			"grossUp": "Yes",
+			"reimbursedBy": "Client",
+			"reimbursedByOther": "Reimbursed By Other",
+			"comment": "Lease Break comment"			
+		},
+		"applAllowance": {
+			"maxAmount": "3000",
+			"currency": "U.S. Dollar",
+			"frequency": "Quarterly",			
+			"grossUp": "No",
+			"reimbursedBy": "Client",
+			"reimbursedByOther": "Reimbursed By Other for Appliance Allowance",
+			"comment": "Appliance Allowance comment"
+		},
+		"autoRegCost": {
+			"maxAmount": "5000",
+			"currency": "U.S. Dollar",
+			"frequency": "Annually",			
+			"grossUp": "Yes",
+			"reimbursedBy": "Other",
+			"reimbursedByOther": "Reimbursed By Other for Auto Registration Cost",
+			"comment": "Auto Registration cost comment"
+		},
+		"autoLossOnSale": {
+			"maxNumOfAutos": "Other",
+			"otherMaxNumOfAutos": "10",
+			"maxAmtPerAuto": "500",
+			"currency": "U.S. Dollar",
+			"grossUp": "Yes",
+			"reimbursedBy": "Other",
+			"reimbursedByOther": "Reimbursed By Other for Auto Loss on Sale",
+			"comment": "Auto Loss on Sale comment"
+		},
+		"otherOneTimePayment": {
+			"paymentDesc": "Cash Payment",
+			"maxAmount": "100000",
+			"currency": "U.S. Dollar",
+			"frequency": "Annually",			
+			"grossUp": "Yes",
+			"reimbursedBy": "Client",
+			"reimbursedByOther": "Reimbursed By Other for other One Time Payment",
+			"comment": "Auto Registration cost comment"
+		}
+	}
+]

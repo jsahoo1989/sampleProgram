@@ -669,54 +669,42 @@ public class BusinessFunctions {
 		}
 		return randValue;
 	}
-	
-	public static String getClientIdFromJson(PDT_LoginDetails _loginDetailsApplication) {
-		String clientId = null;
-		switch(CoreFunctions.getPropertyFromConfig("envt").toLowerCase()) {
+
+	public static String[] getClientAndPolicyDetails(PDT_LoginDetails _loginDetailsApplication) {
+		String clientAndPolicyDetailsArr[] = new String[3];
+		switch (CoreFunctions.getPropertyFromConfig("envt").toLowerCase()) {
 		case CoreConstants.ENVT_DEV:
-			clientId = _loginDetailsApplication.dev.clientId;
+			clientAndPolicyDetailsArr[0] = _loginDetailsApplication.dev.clientId;
+			clientAndPolicyDetailsArr[1] = _loginDetailsApplication.dev.clientName;
+			clientAndPolicyDetailsArr[2] = _loginDetailsApplication.dev.policy;
 			break;
 		case CoreConstants.ENVT_QA:
-			clientId = _loginDetailsApplication.qa.clientId;
+			clientAndPolicyDetailsArr[0] = _loginDetailsApplication.qa.clientId;
+			clientAndPolicyDetailsArr[1] = _loginDetailsApplication.qa.clientName;
+			clientAndPolicyDetailsArr[2] = _loginDetailsApplication.qa.policy;
 			break;
 		case CoreConstants.ENVT_TEST:
-			clientId = _loginDetailsApplication.preProd.clientId;
+			clientAndPolicyDetailsArr[0] = _loginDetailsApplication.preProd.clientId;
+			clientAndPolicyDetailsArr[1] = _loginDetailsApplication.preProd.clientName;
+			clientAndPolicyDetailsArr[2] = _loginDetailsApplication.preProd.policy;
 			break;
 		case CoreConstants.ENVT_UAT:
-			clientId = _loginDetailsApplication.uat.clientId;
+			clientAndPolicyDetailsArr[0] = _loginDetailsApplication.uat.clientId;
+			clientAndPolicyDetailsArr[1] = _loginDetailsApplication.uat.clientName;
+			clientAndPolicyDetailsArr[2] = _loginDetailsApplication.uat.policy;
 			break;
 		case CoreConstants.ENVT_PROD:
-			clientId = _loginDetailsApplication.prod.clientId;
+			clientAndPolicyDetailsArr[0] = _loginDetailsApplication.prod.clientId;
+			clientAndPolicyDetailsArr[1] = _loginDetailsApplication.prod.clientName;
+			clientAndPolicyDetailsArr[2] = _loginDetailsApplication.prod.policy;
 			break;
 		}
-		return clientId;
+		return clientAndPolicyDetailsArr;
 	}
-	
-	public static String getClientNameFromJson(PDT_LoginDetails _loginDetailsApplication) {
-		String clientName = null;
-		switch(CoreFunctions.getPropertyFromConfig("envt").toLowerCase()) {
-		case CoreConstants.ENVT_DEV:
-			clientName = _loginDetailsApplication.dev.clientName;
-			break;
-		case CoreConstants.ENVT_QA:
-			clientName = _loginDetailsApplication.qa.clientName;
-			break;
-		case CoreConstants.ENVT_TEST:
-			clientName = _loginDetailsApplication.preProd.clientName;
-			break;
-		case CoreConstants.ENVT_UAT:
-			clientName = _loginDetailsApplication.uat.clientName;
-			break;
-		case CoreConstants.ENVT_PROD:
-			clientName = _loginDetailsApplication.prod.clientName;
-			break;
-		}
-		return clientName;
-	}
-	
+
 	public static String[] getCSMCredentials(PDT_LoginDetails _loginDetailsApplication) {
 		String csmCredentials[] = new String[2];
-		switch(CoreFunctions.getPropertyFromConfig("envt").toLowerCase()) {
+		switch (CoreFunctions.getPropertyFromConfig("envt").toLowerCase()) {
 		case CoreConstants.ENVT_DEV:
 			csmCredentials[0] = _loginDetailsApplication.dev.csmUserName;
 			csmCredentials[1] = _loginDetailsApplication.dev.csmPassword;
@@ -740,29 +728,7 @@ public class BusinessFunctions {
 		}
 		return csmCredentials;
 	}
-	
-	public static String getPolicyNameFromJson(PDT_LoginDetails _loginDetailsApplication) {
-		String policyName = null;
-		switch(CoreFunctions.getPropertyFromConfig("envt").toLowerCase()) {
-		case CoreConstants.ENVT_DEV:
-			policyName = _loginDetailsApplication.dev.policy;			
-			break;
-		case CoreConstants.ENVT_QA:
-			policyName = _loginDetailsApplication.qa.policy;
-			break;
-		case CoreConstants.ENVT_TEST:
-			policyName = _loginDetailsApplication.preProd.policy;
-			break;
-		case CoreConstants.ENVT_UAT:
-			policyName = _loginDetailsApplication.uat.policy;
-			break;
-		case CoreConstants.ENVT_PROD:
-			policyName = _loginDetailsApplication.prod.policy;
-			break;
-		}
-		return policyName;
-	}
-	
+
 	public static void verifyAndFillOtherTextBoxForSubBenefitForm(WebDriver driver,
 			PDT_AddNewPolicyPage addNewPolicyPage, String subBenefitFormName, WebElement drpDown, String lblDrpDown,
 			WebElement otherTextBox, WebElement lblOtherTextBox, String otherTextBoxVal) {
@@ -773,13 +739,79 @@ public class BusinessFunctions {
 						CoreConstants.PASS, lblOtherTextBox.getText(), lblDrpDown, subBenefitFormName));
 				CoreFunctions.clearAndSetText(driver, otherTextBox, PDTConstants.OTHER, otherTextBoxVal);
 			} else if (drpDown.getText().equalsIgnoreCase(PDTConstants.OTHER)
-					&& !CoreFunctions.isElementExist(driver, otherTextBox, 1)) {				
+					&& !CoreFunctions.isElementExist(driver, otherTextBox, 1)) {
 				Assert.fail(MessageFormat.format(PDTConstants.OTHER_TEXTBOX_NOT_DISPLAYED, CoreConstants.FAIL,
 						PDTConstants.OTHER, lblDrpDown, subBenefitFormName));
 			}
-		} catch (Exception e) {			
+		} catch (Exception e) {
 			Assert.fail(MessageFormat.format(PDTConstants.EXCEPTION_OCCURED_VERIFY_OTHER_TEXT_BOX, CoreConstants.FAIL,
 					PDTConstants.OTHER, lblDrpDown, subBenefitFormName));
 		}
+	}
+
+	public static boolean verifyDisplayOfIndicateNumOfWeeksBefore(WebDriver driver,
+			PDT_AddNewPolicyPage addNewPolicyPage, String subBenefitFormName, WebElement drpDown, String lblDrpDown,
+			WebElement drpDownIndicateNumOfWeeksBefore) {
+		try {
+			if (drpDown.getText().equalsIgnoreCase(PDTConstants.NumOfWeeksBeforeStartTransferDate)
+					&& CoreFunctions.isElementExist(driver, drpDownIndicateNumOfWeeksBefore, 1)) {
+				Reporter.addStepLog(MessageFormat.format(PDTConstants.VERIFIED_DRP_DOWN_FIELD_DISPLAYED_FOR_OPTION,
+						CoreConstants.PASS, PDTConstants.INDICATE_NUM_OF_WEEKS_BEFORE,
+						PDTConstants.NumOfWeeksBeforeStartTransferDate, lblDrpDown, subBenefitFormName));
+				return true;
+
+			} else if (drpDown.getText().equalsIgnoreCase(PDTConstants.NumOfWeeksBeforeStartTransferDate)
+					&& !CoreFunctions.isElementExist(driver, drpDownIndicateNumOfWeeksBefore, 1)) {
+				Assert.fail(MessageFormat.format(PDTConstants.INDICATE_NUM_OF_WEEKS_BEFORE_NOT_DISPLAYED,
+						CoreConstants.FAIL, PDTConstants.INDICATE_NUM_OF_WEEKS_BEFORE,
+						PDTConstants.NumOfWeeksBeforeStartTransferDate, lblDrpDown, subBenefitFormName));
+				return false;
+			}
+		} catch (Exception e) {
+			Assert.fail(MessageFormat.format(PDTConstants.FAILED_TO_VERIFY_AND_FILL_DROP_DOWN, CoreConstants.FAIL,
+					PDTConstants.INDICATE_NUM_OF_WEEKS_BEFORE, subBenefitFormName));
+		}
+		return false;
+	}
+
+	public static void verifyTextBoxIsDisplayedAndEnterTextBoxVal(WebDriver driver,
+			PDT_AddNewPolicyPage addNewPolicyPage, String subBenefitFormName, WebElement element, String lblElement,
+			String expectedElementLabel, String elementVal) {
+		try {
+			if (lblElement.equalsIgnoreCase(expectedElementLabel) && CoreFunctions.isElementExist(driver, element, 1)) {
+				Reporter.addStepLog(MessageFormat.format(PDTConstants.VERIFIED_TEXT_BOX_FIELD_DISPLAYED,
+						CoreConstants.PASS, lblElement, subBenefitFormName));
+				CoreFunctions.clearAndSetText(driver, element, lblElement, elementVal);
+			} else {
+				Assert.fail(MessageFormat.format(PDTConstants.FAILED_TO_VERIFY_AND_FILL_TEXTBOX, CoreConstants.FAIL,
+						lblElement, subBenefitFormName));
+			}
+		} catch (Exception e) {
+			Assert.fail(MessageFormat.format(PDTConstants.FAILED_TO_VERIFY_AND_FILL_TEXTBOX, CoreConstants.FAIL,
+					lblElement, subBenefitFormName));
+		}
+	}
+
+	public static void verifyDrpDownIsDisplayedAndSelectDropDownVal(WebDriver driver,
+			PDT_AddNewPolicyPage addNewPolicyPage, String subBenefitFormName, WebElement drpDownElement,
+			List<WebElement> drpDownElementOptions, String lblDropDown, String expectedDrpDownLabel,
+			String drpDownVal) {
+		try {
+			if (CoreFunctions.isElementExist(driver, drpDownElement, 1)
+					&& lblDropDown.equalsIgnoreCase(expectedDrpDownLabel)) {
+				Reporter.addStepLog(MessageFormat.format(PDTConstants.VERIFIED_DROP_DWN_FIELD_DISPLAYED,
+						CoreConstants.PASS, lblDropDown, subBenefitFormName));
+				CoreFunctions.clickElement(driver, drpDownElement);
+				CoreFunctions.selectItemInListByText(driver, drpDownElementOptions, drpDownVal, lblDropDown,
+						PDTConstants.DROP_DOWN, true);
+			} else {
+				Assert.fail(MessageFormat.format(PDTConstants.FAILED_TO_VERIFY_AND_SELECT_DRP_DOWN, CoreConstants.FAIL,
+						drpDownVal, lblDropDown, subBenefitFormName));
+			}
+		} catch (Exception e) {
+			Assert.fail(MessageFormat.format(PDTConstants.FAILED_TO_VERIFY_AND_SELECT_DRP_DOWN, CoreConstants.FAIL,
+					drpDownVal, lblDropDown, subBenefitFormName));
+		}
+
 	}
 }

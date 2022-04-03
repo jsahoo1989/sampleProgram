@@ -35,13 +35,13 @@ public class PDT_FinalMovePage extends Base {
 	@FindBy(how = How.CSS, using = "ng-select[formcontrolname='finalMoveTransportTypeList'] span.ng-value-label")
 	private List<WebElement> _drpDownTransportationTypeMultiSelectOptions;
 
-	@FindBy(how = How.XPATH, using = "//label[text()='Min. Mileage for Economy Air Travel ']")
+	@FindBy(how = How.XPATH, using = "//input[@formcontrolname='minMileageEconomy']/preceding-sibling::label")
 	private WebElement _lblMinMileageForEconomyAirTravel;
 
 	@FindBy(how = How.CSS, using = "input[formcontrolname='minMileageEconomy']")
 	private WebElement _txtBoxMinMileageEconomy;
 
-	@FindBy(how = How.XPATH, using = "//label[text()='Min. Mileage for Business Air Travel ']")
+	@FindBy(how = How.XPATH, using = "//input[@formcontrolname='minMileageBusiness']/preceding-sibling::label")
 	private WebElement _lblMinMileageForBusinessAirTravel;
 
 	@FindBy(how = How.CSS, using = "input[formcontrolname='minMileageBusiness']")

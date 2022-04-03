@@ -32,6 +32,7 @@ import com.aires.pages.pdt.PDT_HouseHuntingTripPage;
 import com.aires.pages.pdt.PDT_ImmigrationPage;
 import com.aires.pages.pdt.PDT_LanguageTrainingPage;
 import com.aires.pages.pdt.PDT_LoginPage;
+import com.aires.pages.pdt.PDT_OneTimePaymentReimbursemenPage;
 import com.aires.pages.pdt.PDT_PolicyBenefitCategoryPage;
 import com.aires.pages.pdt.PDT_PreAcceptanceService;
 import com.aires.pages.pdt.PDT_RentalAssistancePage;
@@ -61,6 +62,7 @@ public class PageObjectManager_Pdt {
 	private PDT_AssignmentHousingPage _assignmentHousingPage;
 	private PDT_CompensationServicesPage _compensationServicesPage;
 	private PDT_DuplicateHousingPage _duplicateHousingPage;
+	private PDT_OneTimePaymentReimbursemenPage _oneTimePaymentPage;
 	
 	public PageObjectManager_Pdt(WebDriver driver) {
 		this._driver = driver;
@@ -140,5 +142,9 @@ public class PageObjectManager_Pdt {
 	
 	public PDT_DuplicateHousingPage getDuplicateHousingPage() {
 		return (_duplicateHousingPage == null ) ? _duplicateHousingPage = new PDT_DuplicateHousingPage(_driver) : _duplicateHousingPage;
+	}
+	
+	public PDT_OneTimePaymentReimbursemenPage getOneTimePaymentPage() {
+		return (_oneTimePaymentPage == null ) ? _oneTimePaymentPage = new PDT_OneTimePaymentReimbursemenPage(_driver) : _oneTimePaymentPage;
 	}
 }

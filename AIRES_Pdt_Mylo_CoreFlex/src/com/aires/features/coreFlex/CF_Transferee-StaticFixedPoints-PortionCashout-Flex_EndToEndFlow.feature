@@ -1,6 +1,6 @@
 Feature: Validate the CoreFlex Policy Flow for Flex_Transferee_StaticFixedPoints_PortionCashout selection
 
-@PolicySetupFlow @Flex-PortionCashout
+@PolicySetupFlow @Flex-PortionCashout_123
   Scenario: CoreFlex - Setting up a New CoreFlex policy in 'Policy Digitization Tool' application
     Given he has setup a new "Flex" Type Policy with following selection in 'Policy Digitization Tool (PDT)' application
       | Person Responsible For Benefit Selection | Flex Setup Type | Cashout Availability   |

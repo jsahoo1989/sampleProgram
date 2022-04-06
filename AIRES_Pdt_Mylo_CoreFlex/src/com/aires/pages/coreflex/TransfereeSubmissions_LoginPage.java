@@ -134,7 +134,7 @@ public class TransfereeSubmissions_LoginPage extends Base {
 		}
 		if (isSuccessfullyLoggedIn) {
 			Reporter.addStepLog(
-					MessageFormat.format(COREFLEXConstants.SUCCESSFULLY_LOGGED_IN_TO_APPLICATION, CoreConstants.PASS));
+					MessageFormat.format(COREFLEXConstants.SUCCESSFULLY_LOGGED_INTO_TRANSFEREE_SUBMISSIONS_APPLICATION, CoreConstants.PASS));
 		}
 		return isSuccessfullyLoggedIn;
 	}

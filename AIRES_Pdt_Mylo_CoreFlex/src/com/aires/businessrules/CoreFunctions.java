@@ -383,13 +383,11 @@ public class CoreFunctions {
 	public static void explicitWaitTillElementInVisibility(WebDriver driver, WebElement Element) {
 		WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(30));
 		wait.until(ExpectedConditions.invisibilityOf(Element));
-
 	}
 
 	public static void explicitWaitTillElementInVisibilityCustomTime(WebDriver driver, WebElement Element, int time) {
 		WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(time));
 		wait.until(ExpectedConditions.invisibilityOf(Element));
-
 	}
 
 	public static void explicitWaitTillElementListClickable(WebDriver driver, List<WebElement> Element) {

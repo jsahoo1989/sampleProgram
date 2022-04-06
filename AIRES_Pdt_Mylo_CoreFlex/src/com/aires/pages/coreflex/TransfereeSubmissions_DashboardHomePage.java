@@ -14,6 +14,7 @@ import com.aires.businessrules.BusinessFunctions;
 import com.aires.businessrules.CoreFunctions;
 import com.aires.businessrules.constants.COREFLEXConstants;
 import com.aires.businessrules.constants.CoreConstants;
+import com.aires.businessrules.constants.MobilityXConstants;
 import com.aires.managers.FileReaderManager;
 import com.aires.testdatatypes.coreflex.CoreFlex_PolicySetupPagesData;
 import com.vimalselvam.cucumber.listener.Reporter;
@@ -99,11 +100,14 @@ public class TransfereeSubmissions_DashboardHomePage extends Base {
 			switch (elementName) {
 			case COREFLEXConstants.REVIEW:
 			case COREFLEXConstants.OPEN:
-				int indexTransferee = BusinessFunctions.returnindexItemFromListUsingText(driver, _transfereeNameList, true,
-						CoreFunctions.getPropertyFromConfig("Transferee_firstName") + " "
+				int indexTransferee = BusinessFunctions.returnindexItemFromListUsingText(driver, _transfereeNameList,
+						true, CoreFunctions.getPropertyFromConfig("Transferee_firstName") + " "
 								+ CoreFunctions.getPropertyFromConfig("Transferee_lastName"));
 				CoreFunctions.clickElement(driver, _reviewOpenButtonList.get(indexTransferee));
 				CoreFunctions.explicitWaitTillElementInVisibility(driver, _progressBar);
+				Reporter.addStepLog(MessageFormat.format(
+						MobilityXConstants.SUCCESSFULLY_CLICKED_ON_REVIEW_BUTTON_FOR_BUNDLE_SUBMITTED_BY_TRANSFEREE,
+						CoreConstants.PASS));
 				break;
 			case COREFLEXConstants.SEARCH:
 				CoreFunctions.clickElement(driver, _searchIcon);
@@ -121,13 +125,13 @@ public class TransfereeSubmissions_DashboardHomePage extends Base {
 
 	public boolean verifyUserlogin(String userName, String pageName) {
 		CoreFunctions.explicitWaitTillElementInVisibility(driver, _progressBar);
-		CoreFunctions.waitHandler(4);
+		CoreFunctions.waitHandler(5);
 		CoreFunctions.explicitWaitTillElementVisibility(driver, _txtApplicationTitle,
-				COREFLEXConstants.TRANSFEREE_SUBMISSIONS, 5);
+				COREFLEXConstants.TRANSFEREE_SUBMISSIONS, 20);
 		if ((getUserName().equalsIgnoreCase(userName))
 				&& (CoreFunctions.getElementText(driver, _txtApplicationTitle)
 						.equals(COREFLEXConstants.TRANSFEREE_SUBMISSIONS))
-				&& CoreFunctions.isElementExist(driver, _imgAIRESFlexLogo, 2)) {			
+				&& CoreFunctions.isElementExist(driver, _imgAIRESFlexLogo, 2)) {
 			CoreFunctions.highlightObject(driver, _userName);
 			Reporter.addStepLog(MessageFormat.format(COREFLEXConstants.VERIFIED_USERNAME_IS_DISPLAYED,
 					CoreConstants.PASS, userName, pageName));
@@ -165,20 +169,22 @@ public class TransfereeSubmissions_DashboardHomePage extends Base {
 
 	private boolean verifyTransfereeBundleDetailsOnDashboard(int indexTransferee) {
 		try {
-			CoreFunctions.verifyText(driver,_transfereeNameList.get(indexTransferee),
+			CoreFunctions.explicitWaitTillElementListVisibility(driver, _transfereeNameList);
+			CoreFunctions.verifyText(driver, _transfereeNameList.get(indexTransferee),
 					CoreFunctions.getPropertyFromConfig("Transferee_firstName") + " "
 							+ CoreFunctions.getPropertyFromConfig("Transferee_lastName"),
 					COREFLEXConstants.TRANSFEREE_NAME);
 			String[] fileNumber = _transfereeFileNumberList.get(indexTransferee).getText().split("#");
 			CoreFunctions.verifyText(fileNumber[1].trim(), CoreFunctions.getPropertyFromConfig("Assignment_FileID"),
 					COREFLEXConstants.TRANSFEREE_FILE_ID);
-			CoreFunctions.verifyText(driver,_corporationNameList.get(indexTransferee),
+			CoreFunctions.verifyText(driver, _corporationNameList.get(indexTransferee),
 					CoreFunctions.getPropertyFromConfig("Assignment_ClientName"), COREFLEXConstants.CORPORATION_NAME);
-			CoreFunctions.verifyText(driver,_allowanceTypeList.get(indexTransferee), COREFLEXConstants.POINTS,
+			CoreFunctions.verifyText(driver, _allowanceTypeList.get(indexTransferee), COREFLEXConstants.POINTS,
 					COREFLEXConstants.ALLOWANCE);
-			CoreFunctions.verifyValue(driver,_pointsSpentList.get(indexTransferee),
+			CoreFunctions.verifyValue(driver, _pointsSpentList.get(indexTransferee),
 					MX_Transferee_FlexPlanningTool_Page.totalSelectedPoints, COREFLEXConstants.POINTS_SPENT);
-			CoreFunctions.verifyValue(Double.parseDouble(_totalPointsList.get(indexTransferee).getText().replace("/", "").trim()),
+			CoreFunctions.verifyValue(
+					Double.parseDouble(_totalPointsList.get(indexTransferee).getText().replace("/", "").trim()),
 					Double.parseDouble(policySetupPageData.flexPolicySetupPage.StaticFixedTotalPointsAvailable),
 					COREFLEXConstants.TOTAL_POINTS);
 			CoreFunctions.highlightObject(driver, _totalPointsList.get(indexTransferee));

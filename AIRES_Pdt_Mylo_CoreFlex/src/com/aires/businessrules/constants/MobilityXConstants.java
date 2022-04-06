@@ -48,7 +48,7 @@ public class MobilityXConstants {
 	public static final String EXCEPTION_OCCURED_WHILE_REVIEWING_SELECTED_BENEFITS_ON_MY_BUNDLE_PAGE = "{0} Exception occured while reviewing selected benefit details on My Bundle Page. Exception - ''{1}''.";
 	public static final String SUCCESSFULLY_REVIEWED_AND_CONFIRMED_BENEFIT_SUBMISSION = "{0}Successsfully reviewd and confirmed benefit submission";
 	public static final String FAILED_TO_REVIEW_AND_CONFIRM_BENEFIT_BENEFIT_SUBMISSION = "Failed to review and confirm benefit submission";
-	public static final String SUBMISSION_SUCCESS_POPUP_DISPLAYED = "{0}Submission success popup is displyed";
+	public static final String SUBMISSION_SUCCESS_POPUP_DISPLAYED = "{0}Successfully displayed Submission Success Popup.";
 	public static final String FAILED_TO_VERIFY_SELECTED_BENEFITS_ON_MY_BUNDLE_PAGE = "{0}Failed to verify selected benefits on My Bundles page under Selected Benefits Section.";
 	public static final String ASSIGNMENT_DETAILS_NOT_MATCHED_ON_MOBILITY_JOURNEY_HOME_PAGE = "{0}Assignement & Policy Details NOT matched on Mobility Journey Home page.";
 	public static final String ASSIGNMENT_DETAILS_MATCHED_ON_MOBILITY_JOURNEY_HOME_PAGE = "{0}Assignement & Policy details matched on Mobility Journey Home page.";
@@ -58,6 +58,7 @@ public class MobilityXConstants {
 	public static final String POINTS_CONSUMED_TEXT = "This action will use points_used/total_points of your points balance.";
 	public static final String POINTS_AND_BENEFIT_DETAILS_NOT_MATCHED_ON_SUBMIT_BUNDLE_POPUP = "{0}Points & Benefits details not matched on submit bundle popup";
 	public static final String SUBMITTED_POINTS_DETAILS_NOT_MATCHED_ON_JOURNEY_HOME_PAGE = "{0}Submitted Points details not matched on MXTransferee Journey Home page";
+	public static final String REMAINING_AVAILABLE_POINTS_DETAILS_NOT_MATCHED_ON_JOURNEY_HOME_PAGE = "{0}Remaining and Available Points details not matched on MXTransferee Journey Home page";
 	public static final String SUBMITTED_POINTS_DETAILS_NOT_MATCHED_ON_FLEX_PLANNING_TOOL_PAGE = "{0}Submitted Points details not matched on MXTransferee Flex Planning Tool page";
 	public static final String EXCEPTION_OCCURED_WHILE_VALIDATING_ASSIGNEMENT_AND_SUBMITTED_POINTS_DETAILS = "{0}Exception occured while validating Assignment & Submitted Points details on Transferee Journey Home Page. Exception : ''{1}''.";
 	public static final String SUCCESSFULLY_VALIDATED_ASSIGNEMENT_AND_SUBMITTED_POINTS_DETAILS_ON_TRANSFEREE_JOURNEY_HOME_PAGE = "{0}Successfully validated Assignment & Submitted Points details on Transferee Journey Home Page.";
@@ -253,4 +254,9 @@ public class MobilityXConstants {
 	public static final String SUCCESSFULLY_VERIFIED_POST_SUBMISSION_PORTION_CASHOUT_FUNCTIONALITY_ON_FLEX_PLANNING_TOOL_PAGE = "{0}Successfully verified Post Submission Portion Cashout functionality on Flex Planning Tool Page.";
 	public static final String EXCEPTION_OCCURED_WHILE_RETURNING_INDEX_ITEM_FROM_LIST_USING_TEXT = "{0}Exception occured while returning index item from list using text. Exception : ''{1}''.";
 	public static final String TRANSFEREE_JOURNEY_POINTS_LINK = "Transferee Journey Points Link";
+	public static final String DELETE_ACTION_COMPLETED = "The action has been completed. approvedDeletedPoints points have been returned to the transferee.";
+	public static final String DELETE_REQUEST_APPROVED = "Delete Request Approved";
+	public static final String DELETE_REQUEST_APPROVED_BENEFIT_POINT_MESSAGE = "We have approved your delete request(s) for       benefit_name for  delete_request_points points";
+	public static final String DELETE_REQUEST_REMAINING_POINTS_TO_USE_MESSAGE = "Those points have been returned to your point balance. You now have  current_balance points to use.";
+	public static final String SUCCESSFULLY_CLICKED_ON_REVIEW_BUTTON_FOR_BUNDLE_SUBMITTED_BY_TRANSFEREE = "{0}Successfully clicked on 'Review' button for bundle submitted by Transferee.";
 }

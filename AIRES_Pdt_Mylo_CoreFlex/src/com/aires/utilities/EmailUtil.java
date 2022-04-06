@@ -217,7 +217,7 @@ public class EmailUtil {
 						try {
 							Thread.sleep(1000);
 						} catch (InterruptedException e1) {
-							
+
 							e1.printStackTrace();
 						}
 					}
@@ -230,10 +230,10 @@ public class EmailUtil {
 			}
 
 		} catch (NoSuchProviderException e) {
-			
+
 			e.printStackTrace();
 		} catch (MessagingException e) {
-			
+
 			e.printStackTrace();
 		}
 		return path1;
@@ -292,6 +292,10 @@ public class EmailUtil {
 		case MobilityXConstants.FLEX_BENEFIT_SUBMISSION:
 			_searchTag[0] = "journey!<br><br>\r\n<p>";
 			_searchTag[1] = "<br><br>\r\n\r\nYour Aires";
+			break;
+		case MobilityXConstants.DELETE_REQUEST_APPROVED:
+			_searchTag[0] = "Hello";
+			_searchTag[1] = "Please use the link below to login";
 			break;
 		default:
 			Assert.fail("Information not found");
@@ -394,8 +398,8 @@ public class EmailUtil {
 					Thread.sleep(2000);
 					count = count + 1;
 					if (count == 30) {
-						Reporter.addStepLog(MessageFormat.format(
-								PDTConstants.VEIRFY_CONTIRBUTOR_NOT_RECEIVED_NOTIFICATION, CoreConstants.FAIL));
+						Reporter.addStepLog(MessageFormat
+								.format(PDTConstants.VEIRFY_CONTIRBUTOR_NOT_RECEIVED_NOTIFICATION, CoreConstants.FAIL));
 						Assert.fail("Unable to find email within 1 minute");
 					}
 				}

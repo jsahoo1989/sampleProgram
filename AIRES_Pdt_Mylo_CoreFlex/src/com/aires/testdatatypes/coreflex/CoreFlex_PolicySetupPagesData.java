@@ -9,6 +9,7 @@ public class CoreFlex_PolicySetupPagesData {
 	public FlexPolicySetupPage flexPolicySetupPage;
 	public CustomBundlesPage customBundlesPage;
 	public PolicyBenefitsCategories policyBenefitsCategories;
+	public TransfereeSubmissionsDetails transfereeSubmissionsDetails;
 	
 	public class GeneralInformationPage{
 		public String policyType;
@@ -30,6 +31,10 @@ public class CoreFlex_PolicySetupPagesData {
 	
 	public class CustomBundlesPage{
 		public String customBundleName;
+	}
+	
+	public class TransfereeSubmissionsDetails{
+		public String requestDialogComment;
 	}
 	
 	public class PolicyBenefitsCategories{

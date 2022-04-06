@@ -504,8 +504,10 @@ public class CoreFlex_SharedSteps {
 	public void he_has_clicked_on_button_displayed_on_Success_Flex_dialog(String button) throws Throwable {
 		CoreConstants.TIME_BEFORE_ACTION = new Date().getTime();
 		mxTransfereeMyBenefitsBundlePage.viewSubmittedBenefits();
+		Assert.assertTrue(mxTransfereeJourneyHomePage.verifyBenefitSubmissionEmail(), MessageFormat
+				.format(MobilityXConstants.FAILED_TO_READ_USER_CREDENTIALS_FROM_GENERATED_EMAIL, CoreConstants.FAIL));
 		CoreConstants.TIME_AFTER_ACTION = new Date().getTime();
-		Reporter.addStepLog("<b>Total time taken by <i>'When'</i> statement is :"
+		Reporter.addStepLog("<b>Total time taken by <i>'Given'</i> statement is :"
 				+ (CoreConstants.TIME_AFTER_ACTION - CoreConstants.TIME_BEFORE_ACTION) / 1000 + " Seconds </b>");
 	}	
 	
@@ -533,7 +535,7 @@ public class CoreFlex_SharedSteps {
 				MessageFormat.format(MobilityXConstants.SUBMITTED_POINTS_DETAILS_NOT_MATCHED_ON_FLEX_PLANNING_TOOL_PAGE,
 						CoreConstants.FAIL));
 		CoreConstants.TIME_AFTER_ACTION = new Date().getTime();
-		Reporter.addStepLog("<b>Total time taken by <i>'Then'</i> statement is :"
+		Reporter.addStepLog("<b>Total time taken by <i>'Given'</i> statement is :"
 				+ (CoreConstants.TIME_AFTER_ACTION - CoreConstants.TIME_BEFORE_ACTION) / 1000 + " Seconds </b>");
 	}
 	
@@ -572,16 +574,24 @@ public class CoreFlex_SharedSteps {
 	@Given("^he has navigated to \"([^\"]*)\" page having record of Bundle submitted by the transferee$")
 	public void he_has_navigated_to_page_having_record_of_Bundle_submitted_by_the_transferee(String pageName)
 			throws Throwable {
+		CoreConstants.TIME_BEFORE_ACTION = new Date().getTime();
 		Assert.assertTrue(transfereeSubmissionsDashboardHomePage.verifyTransfereeBundleSubmissionDetails(),
 				MessageFormat.format(
 						COREFLEXConstants.FAILED_TO_VERIFY_TRANSFEREE_SUBMISSION_DETAILS_ON_DASHBOARD_HOME_PAGE,
 						CoreConstants.FAIL));
+		CoreConstants.TIME_AFTER_ACTION = new Date().getTime();
+		Reporter.addStepLog("<b>Total time taken by <i>'Given'</i> statement is :"
+				+ (CoreConstants.TIME_AFTER_ACTION - CoreConstants.TIME_BEFORE_ACTION) / 1000 + " Seconds </b>");
 	}
 	
 	@When("^he clicks on \"([^\"]*)\" button for Bundle submitted by the transferee on \"([^\"]*)\" page$")
 	public void he_clicks_on_button_for_Bundle_submitted_by_the_transferee_on_page(String btnName, String pageName)
 			throws Throwable {
+		CoreConstants.TIME_BEFORE_ACTION = new Date().getTime();
 		transfereeSubmissionsDashboardHomePage.clickElementOfPage(btnName);
+		CoreConstants.TIME_AFTER_ACTION = new Date().getTime();
+		Reporter.addStepLog("<b>Total time taken by <i>'When'</i> statement is :"
+				+ (CoreConstants.TIME_AFTER_ACTION - CoreConstants.TIME_BEFORE_ACTION) / 1000 + " Seconds </b>");
 	}
 	
 	@Given("^he has verified submitted benefit details under 'Submitted Benefits' section of 'My Benefits Bundle' page$")
@@ -590,7 +600,7 @@ public class CoreFlex_SharedSteps {
 		Assert.assertTrue(mxTransfereeMyBenefitsBundlePage.validateSubmittedBenefitDetails(),
 				MobilityXConstants.SUBMITTED_BENEFIT_DETAILS_NOT_MATCHED);
 		CoreConstants.TIME_AFTER_ACTION = new Date().getTime();
-		Reporter.addStepLog("<b>Total time taken by <i>'Then'</i> statement is :"
+		Reporter.addStepLog("<b>Total time taken by <i>'Given'</i> statement is :"
 				+ (CoreConstants.TIME_AFTER_ACTION - CoreConstants.TIME_BEFORE_ACTION) / 1000 + " Seconds </b>");
 	}	
 

@@ -32,6 +32,13 @@ Scenario: MXTransferee - Selecting & Submitting benefits available in configured
 @TransfereeSubmissionFlow @Both-CashNotAuth_555 
 Scenario: TransfereeSubmissions - Verifying_Approving_Denying submissions made by Transferee for the Client(s) assigned to PPC User 
 	Given he has logged into 'Transferee Submissions' application as a "MSPEC/PPC" user 
-	And he has navigated to "Transferee Submissions Dashboard" page having record of Bundle submitted by the transferee 
-	When he clicks on "Review" button for Bundle submitted by the transferee on "Transferee Submissions Dashboard" page 
-	Then he should be navigated to "Transferee Submission Details" page having list of submitted benefits details
+	And he has navigated to "Transferee Submissions Dashboard" page having record of Bundle submitted by the transferee  
+	And he has clicked on "Review" button for Bundle submitted by the transferee on "Transferee Submissions Dashboard" page	
+	And he has navigated to "Transferee Submission Details" page having list of submitted benefits details
+	And he has clicked on "Resolve" button for 'Delete Request Pending' request of the Transferee
+	When he confirms the "Approve Request" after verifying 'Delete Request Pending' benefit request details and adding comments on 'Requests' dialog
+	Then 'Action Completed' growl message should be displayed on "Transferee Submission Details" page
+	And 'Delete Request Pending' benefit request should be removed from 'Transferee Submission Details' list
+	And benefit point details should be updated on 'MXTransferee' application based on approved 'Delete Request' on Transferee Submission
+	
+	

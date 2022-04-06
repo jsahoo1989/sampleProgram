@@ -20,6 +20,9 @@
 		"customBundlesPage": {
 			"customBundleName": "TestCustomBundleName"
 		},
+		"transfereeSubmissionsDetails": {
+			"requestDialogComment": "Automated Request Dialog Comment"
+		},
 		"policyBenefitsCategories": {
 			"benefitsCategories": [
 				"Housing",

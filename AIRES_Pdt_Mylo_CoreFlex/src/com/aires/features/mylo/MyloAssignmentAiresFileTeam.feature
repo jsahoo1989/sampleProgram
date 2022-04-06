@@ -32,7 +32,7 @@ And all the values are readonly in the AiresFileTeam grid
  @IRIS-687 @Mylo-Regression
 Scenario Outline: Mylo-Validate Sales Option Availability With Respect to Resource Id of MyloUsers
 Given he has logged into the Mylo application with mentioned userType "<UserType>" 
-And he selects "File" section after clicking on "Assignment" option in the Mylo Menu on the sidebar
+And he selects "File" section after clicking on "Journey" option in the Mylo Menu on the sidebar
 And he views Summary Tab under Assignment after clicking on Execute button with FileID "611070"
 When he clicks on role dropdown after clicking on "Add" button
 Then "SALES" role options availability should depends on the type of Users "<UserType>" logged in  

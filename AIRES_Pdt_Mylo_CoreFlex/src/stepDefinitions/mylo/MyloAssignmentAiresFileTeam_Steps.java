@@ -44,7 +44,7 @@ public class MyloAssignmentAiresFileTeam_Steps {
 	@Given("^he is on Mylo Assignment Summary page for file ID \"([^\"]*)\"$")
 	public void he_is_on_Mylo_Assignment_Summary_page_for_file_ID(String fileID) {
 		MYLOConstants.TIME_BEFORE_ACTION = new Date().getTime();
-		myloDashboardPage.clickOptionFromMainMenu(MYLOConstants.ASSIGNMENT);
+		myloDashboardPage.clickOptionFromMainMenu(MYLOConstants.JOURNEY);
 		myloDashboardPage.selectOptionsFromAssignmentMenu(MYLOConstants.QUERY_FILE);
 		myloDashboardPage.selectParameterFromQueryScreen(MYLOConstants.FILE);
 		myloDashboardPage.selectOptionsForFileParameters(MYLOConstants.FILE_ID, fileID);
@@ -123,9 +123,9 @@ public class MyloAssignmentAiresFileTeam_Steps {
 	@Given("^he has logged into the Mylo application with mentioned userType \"([^\"]*)\"$")
 	public void he_has_logged_into_the_Mylo_application_with_mentioned_userType(String userType)
 			throws InterruptedException {
-		Assert.assertTrue(myloDashboardPage.verifyUserName(loginData.MyloProfileName));
+		//Assert.assertTrue(myloDashboardPage.verifyUserName(loginData.MyloProfileName));
 		loginPage.loginWithUser(userType);
-		Assert.assertTrue(myloDashboardPage.verifyUserName(loginData.MyloProfileName));
+		//Assert.assertTrue(myloDashboardPage.verifyUserName(loginData.MyloProfileName));
 	}
 
 	@When("^he clicks on role dropdown after clicking on \"([^\"]*)\" button$")

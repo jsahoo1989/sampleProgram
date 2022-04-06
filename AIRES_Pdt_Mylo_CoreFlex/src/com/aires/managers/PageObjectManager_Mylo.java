@@ -23,6 +23,7 @@ import com.aires.pages.mylo.Mylo_AssignmentPage;
 //import com.aires.pages.mylo.Mylo_AssignmentPage;
 import com.aires.pages.mylo.Mylo_DashboardHomePage;
 import com.aires.pages.mylo.Mylo_LoginPage;
+import com.aires.pages.mylo.Mylo_RestApiRequest;
 
 
 public class PageObjectManager_Mylo {
@@ -31,6 +32,7 @@ public class PageObjectManager_Mylo {
 	private Mylo_LoginPage _loginPage;
 	private Mylo_DashboardHomePage _dashboardHomePage;
 	private Mylo_AssignmentPage _assignmentPage; 
+	private Mylo_RestApiRequest _restApiRequest;
 
 	public PageObjectManager_Mylo(WebDriver driver) {
 		this._driver = driver;
@@ -50,4 +52,9 @@ public class PageObjectManager_Mylo {
 		return (_assignmentPage == null) ? _assignmentPage = new Mylo_AssignmentPage(_driver)
 				: _assignmentPage;
 	}
+	 
+	 public Mylo_RestApiRequest getRestApiRequest() {
+			return (_restApiRequest == null) ? _restApiRequest = new Mylo_RestApiRequest(_driver)
+					: _restApiRequest;
+		}
 }

@@ -38,7 +38,7 @@ public class MyloAssignmentShipmentTab_Steps {
 	public void he_is_on_Mylo_Assignment_Summary_page_for_file_with_subservices(String shipmentStatus) {
 		MYLOConstants.TIME_BEFORE_ACTION = new Date().getTime();
 		myloDashboardPage.verifyUserName(MYLOConstants.USER_PROFILE_NAME);
-		myloDashboardPage.clickOptionFromMainMenu(MYLOConstants.ASSIGNMENT);
+		myloDashboardPage.clickOptionFromMainMenu(MYLOConstants.JOURNEY);
 		myloDashboardPage.selectOptionsFromAssignmentMenu(MYLOConstants.QUERY_FILE);
 		myloDashboardPage.selectParameterFromQueryScreen(MYLOConstants.FILE);
 		String fileID = myloAssignmentPage.getFileDetailsByShipmentServices(shipmentStatus, MYLOConstants.FILE_ID);
@@ -72,7 +72,7 @@ public class MyloAssignmentShipmentTab_Steps {
 	public void he_clicks_on_tab_after_navigating_to_Mylo_Assignment_Summary_page_for_file_with_subservice(
 			String tabName, String shipmentStatus) {
 		MYLOConstants.TIME_BEFORE_ACTION = new Date().getTime();
-		myloDashboardPage.clickOptionFromMainMenu(MYLOConstants.ASSIGNMENT);
+		myloDashboardPage.clickOptionFromMainMenu(MYLOConstants.JOURNEY);
 		myloDashboardPage.selectOptionsFromAssignmentMenu(MYLOConstants.QUERY_FILE);
 		myloDashboardPage.selectParameterFromQueryScreen(MYLOConstants.FILE);
 		String fileID = myloAssignmentPage.getFileDetailsByShipmentServices(shipmentStatus, MYLOConstants.FILE_ID);

@@ -52,7 +52,7 @@
 			"office": "GCRO"
 		},
 		"canceledFile": {
-			"fileID": "7",
+			"fileID": "12",
 			"clientID": "44501",
 			"clientName": "Vastera",
 			"status": "Canceled",
@@ -100,6 +100,16 @@
 			"provider": "AIRES",
 			"journeyType": "Long-Term",
 			"office": "CRO"
-		}
+		},
+		"closedFileIdentDoc": {
+			"fileID": "91003",
+			"clientID": "13606",
+			"clientName": "Orange Business Services (France Telecom)",
+			"status": "Closed",
+			"policyType": "",
+			"provider": "AIRES",
+			"journeyType": "",
+			"office": "CRO"
+		}		
 	}
 ]

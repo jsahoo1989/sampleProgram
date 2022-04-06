@@ -50,6 +50,7 @@ public class MYLOConstants {
 	public static final String COUNTRY_DROPDOWN = "Country Dropdown";
 	public static final String STATE = "State";
 	public static final String ASSIGNMENT = "Assignment";
+	public static final String JOURNEY = "Journey";
 	public static final String FILE = "File";
 	public static final String HAMBURGER = "Hamburger";
 	public static final String RANDOM = "Random";
@@ -59,6 +60,7 @@ public class MYLOConstants {
 	public static final String USER_WITHOUT_RESOURCE15 = "Without Resource15";
 	public static final String USER_WITH_RESOURCE300096 = "With Resource300096";
 	public static final String USER_WITHOUT_RESOURCE300096 = "Without Resource300096";
+	public static final String USER_WITHOUT_RESOURCE300140 = "Without Resource300140";
 	public static final String WITH_RESOURCE15 = "With Resource15";
 	public static final String SUMMARY = "Summary";
 	public static final String NAME = "name";
@@ -98,6 +100,7 @@ public class MYLOConstants {
 	public static final String NOT_AIRESSH_PROVIDER = "NOTAIRESSH";
 	public static final String CANCELED = "Canceled";
 	public static final String CLOSED = "Closed";
+	public static final String CLOSED_IDENTITYDOC = "Closed Identity Doc";
 	public static final String RELOCATION_POLICY = "Relocation Policy";
 	public static final String LUMP_SUM_PLAN_POLICY = "Lump Sum Plan Policy";
 	public static final String DOMESTIC_POLICY = "Domestic Policy";
@@ -106,6 +109,7 @@ public class MYLOConstants {
 	public static final String VERIFIED_COUNTRY_PRESENT = "{0}Verified ''{1}'' country is present as the first country in ''{2}'' under ''{3}'' section";
 	public static final String VERIFIED_STATE_FREE_TEXT_FIELD = "{0}Verified that State field is appearing as Free Text Field on  ''{1}'' section";
 	public static final String VERIFIED_ALERT_MESSAGE_DISPLAYED = "{0}Verified Alert message is displayed as ''{1}''  on  ''{2}'' section";
+	public static final String VERIFIED_POPUP_MESSAGE_DISPLAYED = "{0}Verified Pop up message is displayed as ''{1}''  on  ''{2}'' section";
 	public static final String VERIFIED_FIELD_HIGHLIGHTED = "{0}Verified ''{1}'' field is highlighted with Red background on  ''{2}'' section";
 	public static final String VERIFIED_FIELD_NOT_HIGHLIGHTED = "{0}Verified ''{1}'' field is not highlighted with Red background on  ''{2}'' section";
 	public static final String EXPECTED_MESSAGE_DISPLAYED = "{0}Expected message to be displayed as:  ''{1}''  but found:  ''{2}'' on ''{3}'' section";
@@ -194,7 +198,7 @@ public class MYLOConstants {
 	public static final String RED_COLOR_HEXCODE="#f37474";
 	public static final String BORDER_COLOR="border-color";
 	public static final String BACKGROUND_COLOR="background-color";
-	public static final String ASSIGNMENT_QUERYTYPE_HEADER="Please select a query type to search for a file.";
+	public static final String ASSIGNMENT_QUERYTYPE_HEADER="Please Select a Query Type to Search for a User File";
 	public static final String ASSIGNMENT_PARAMETERTYPE_HEADER="Please select parameters for your query.";
 	public static final String VALUE_NOT_UPDATED = " Value is not updated";
 	public static final String QA = "qa";
@@ -223,6 +227,33 @@ public class MYLOConstants {
 	public static final String HISTORYCARD_IS_PRESENT = "History Card is present";
 	public static final String HISTORYCARD_PRESENT = "{0}History Card is present on top of ''{1}'' page";
 	public static final String HISTORYCARD_NOT_PRESENT = "{0}History Card is not present on top of ''{1}'' page";
+	public static final String IDENTIFICATION_AND_DOCUMENTATION="Identification & Documentation";
+	public static final String IDENTITY_TYPE_DROPDOWN = "Identity Type";
+	public static final String NUMBER = "Number";
+	public static final String IDENTITY_TYPE = "IdentityType";
+	public static final String BUTTON_ENABLED = "{0} ''{1}'' button is enabled for ''{2}'' section on ''{3}'' page";
+	public static final String BUTTON_DISABLED = "{0} ''{1}'' button is disabled for ''{2}'' section on ''{3}'' page";
+	public static final String VERIFIED_ELEMENT_DISPLAYED_IDENTDOC_SECTION = "{0}Verified Type is displayed as ''{1}'' , Number is displayed as ''{2}'' and FromDate is displayed as ''{3}'' on Identification & Documentation section";
+	public static final String EXPECTED_FIELD_VALUE_NOTDISPLAYED="Expected Field Value is not displayed";
+	
+	public static final String FIELD_NAME_EXIST_IN_RESPONSE="{0}FieldName: ''{1}''  exists in Response";
+	public static final String PRIMARY_CONTACT_CARD_OBJECT="primaryContactCardObject";
+	public static final String ASSIGNMENT_EMPLOYEE_RESPONSE_LIST="assignmentEmployeeResponseList";
+	public static final String GET="GET";
+	public static final String POST="POST";
+	public static final String MYLO_ASSIGNMENT_BASEURI="https://corpuatvl204.aires.com:9015/aires-assignment-api";
+	public static final String CREATE_ASSIGNMENT_API_ENDPOINT="/assignment/new-assignment";
+	public static final String CREATE_NEW_ASSIGNMENT="Create New Assignment";
+	public static final String GET_ASSIGNMENT="Get Assignment";
+	public static final String GET_ASSIGNMENT_API_ENDPOINT="/assignment/";
+	public static final String ENTER_CORRECT_HTTPMETHOD_NAME="Please enter correct HttpMethod name";
+
+	
+	
+	
+
+	
+	
 	public static long TIME_BEFORE_ACTION;
 	public static long TIME_AFTER_ACTION;
 }

@@ -13,6 +13,7 @@ public class MyloAssignmentDetails {
 	public RelocationPolicyType relocationPolicyType;
 	public LumpSumpPlanPolicyType lumpSumpPlanPolicyType;
 	public DomesticPolicyType domesticPolicyType;
+	public ClosedFileIdentDoc closedFileIdentDoc;
 	
 
 	public class ActiveAssignment {
@@ -115,7 +116,14 @@ public class MyloAssignmentDetails {
 		public String journeyType;
 		public String office;
 	}
-	
-	
-
+	public class ClosedFileIdentDoc {
+		public String fileID;
+		public String clientID;
+		public String clientName;
+		public String status;
+		public String policyType;
+		public String provider;
+		public String journeyType;
+		public String office;
+	}
 }

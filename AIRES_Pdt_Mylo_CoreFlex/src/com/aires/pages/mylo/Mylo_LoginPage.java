@@ -113,7 +113,7 @@ public class Mylo_LoginPage extends Base {
 		openApplication();
 		CoreFunctions.explicitWaitTillElementVisibility(driver, _anotherAccount, _anotherAccount.getText());
 		CoreFunctions.click(driver, _anotherAccount, _anotherAccount.getText());
-		if (userType.equals(MYLOConstants.USER_WITHOUT_RESOURCE15)||userType.equals(MYLOConstants.USER_WITHOUT_RESOURCE300096)) {
+		if (userType.equals(MYLOConstants.USER_WITHOUT_RESOURCE15)||userType.equals(MYLOConstants.USER_WITHOUT_RESOURCE300096)||userType.equals(MYLOConstants.USER_WITHOUT_RESOURCE300140)) {
 			enterUserEmailAndPasswordForMylo(loginData.MyloWithOutResource15UserName, loginData.MyloPassword);	
 		}
 		else {

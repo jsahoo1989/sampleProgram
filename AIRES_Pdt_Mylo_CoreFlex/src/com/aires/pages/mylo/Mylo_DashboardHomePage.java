@@ -45,7 +45,7 @@ public class Mylo_DashboardHomePage extends Base {
 	@FindBy(how = How.CSS, using = "div[class='container']")
 	private List<WebElement> _selectQueryParameterRows;
 
-	@FindBy(how = How.CSS, using = "button[class='query-btn']")
+	@FindBy(how = How.CSS, using = "button[class='btn btn-primary modal-md-blue-btn']")
 	private List<WebElement> _selectQueryParameterButtons;
 
 	@FindBy(how = How.CSS, using = "button[class='close-button']")
@@ -54,7 +54,7 @@ public class Mylo_DashboardHomePage extends Base {
 	@FindBy(how = How.XPATH, using = "//*[@role='option']/span")
 	private List<WebElement> _selectOptions;
 
-	@FindBy(how = How.XPATH, using = "//h1[@class='popupheader']//following::label")
+	@FindBy(how = How.XPATH, using = "//h5[@class='modal-title']//following::label")
 	private List<WebElement> _fileParameterList;
 	
 	@FindBy(how = How.CSS, using = "h1[class='popupheader']")
@@ -145,8 +145,8 @@ public class Mylo_DashboardHomePage extends Base {
 	public void selectOptionsFromAssignmentMenu(String optionToBeSelected) {
 		CoreFunctions.explicitWaitTillElementListVisibility(driver, _assignmentOptions);
 		CoreFunctions.selectItemInListByText(driver, _assignmentOptions, optionToBeSelected);
-		CoreFunctions.highlightObject(driver, _queryTypeHeader);
-		Assert.assertEquals(_queryTypeHeader.getText(), MYLOConstants.ASSIGNMENT_QUERYTYPE_HEADER, MYLOConstants.MISMATCH_HEADERTEXT);
+		CoreFunctions.highlightObject(driver, _assignmentOptionHeader);
+		Assert.assertEquals(_assignmentOptionHeader.getText(), MYLOConstants.ASSIGNMENT_QUERYTYPE_HEADER, MYLOConstants.MISMATCH_HEADERTEXT);
 	}
 	
 	
@@ -172,8 +172,9 @@ public class Mylo_DashboardHomePage extends Base {
 	public void selectParameterFromQueryScreen(String parameter) {
 		CoreFunctions.explicitWaitTillElementListVisibility(driver, _selectQueryParameterButtons);
 		CoreFunctions.selectItemInListByText(driver, _selectQueryParameterButtons, parameter);
-		CoreFunctions.highlightObject(driver, _queryTypeHeader);
-		Assert.assertEquals(_queryTypeHeader.getText(), MYLOConstants.ASSIGNMENT_PARAMETERTYPE_HEADER, MYLOConstants.MISMATCH_HEADERTEXT);
+		CoreFunctions.highlightObject(driver, _assignmentOptionHeader);
+		Assert.assertEquals(_assignmentOptionHeader.getText(), MYLOConstants.ASSIGNMENT_PARAMETERTYPE_HEADER, MYLOConstants.MISMATCH_HEADERTEXT);
+		CoreFunctions.explicitWaitTillElementInVisibilityCustomTime(driver, _spinner, 10);
 	}
 
 	public boolean verifyFileParameterOptions(DataTable data) {

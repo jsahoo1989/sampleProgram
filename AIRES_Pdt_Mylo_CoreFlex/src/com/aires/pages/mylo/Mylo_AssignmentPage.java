@@ -57,8 +57,11 @@ public class Mylo_AssignmentPage extends Base {
 
 	@FindBy(how = How.XPATH, using = "//h1[text()='Aires File Team']/parent::td/following-sibling::td/button")
 	private WebElement _airesFileTeamAddButton;
-
-	@FindBy(how = How.XPATH, using = "//h1[text()='Aires File Team']/parent::td/following-sibling::td//descendant::i[@class='icon-FloppyDisk_Open save_section']")
+	
+	@FindBy(how = How.XPATH, using = "//i[@class='icon-XCircle_Open']/parent::button")
+	private WebElement _airesFileTeamCancelButton;
+	
+	@FindBy(how = How.XPATH, using = "//i[@class='icon-FloppyDisk_Open']")
 	private WebElement _airesFileTeamSaveButton;
 
 	@FindBy(how = How.XPATH, using = "//h1[text()='Aires File Team']/following::tbody[1]/tr")
@@ -331,6 +334,53 @@ public class Mylo_AssignmentPage extends Base {
 	
 	@FindBy(how = How.CSS, using = "a[class='dropdown-item']")
 	private List<WebElement> _shipmentDropdownValues;
+	
+	// *************** Identification & Documentation section ***********************//
+	
+	@FindBy(how = How.XPATH, using = "//app-aires-identification/descendant::label[text()='Add']/parent::button")
+	private WebElement _identDocAddIcon;
+	
+	@FindBy(how = How.XPATH, using = "//app-aires-identification/descendant::label[text()='Edit']/parent::button")
+	private WebElement _identDocEditIcon;
+	
+	@FindBy(how = How.XPATH, using = "//app-aires-identification/descendant::label[text()='Save']/parent::button")
+	private WebElement _identDocSaveIcon;
+	
+	@FindBy(how = How.XPATH, using = "//app-aires-identification/descendant::label[text()='Cancel']/parent::button")
+	private WebElement _identDocCancelIcon;
+	
+	@FindBy(how = How.XPATH, using = "//app-identification-detail/tbody/tr")
+	private WebElement _noOfRowsIdentDocDetails;
+	
+	@FindBy(how = How.XPATH, using = "//ng-select[contains(@id,'IDType')]//descendant::span[@class='ng-arrow-wrapper']")
+	private WebElement _identDocTypeDropdowns;
+	
+	@FindBy(how = How.XPATH, using = "//ng-select[contains(@id,'IDCountry')]")
+	private WebElement _identDocCountryDropdowns;
+	
+	@FindBy(how = How.XPATH, using = "//input[contains(@id,'IDNumber')]")
+	private List<WebElement> _identDocNumbers;
+	
+	@FindBy(how = How.XPATH, using = "//input[contains(@id,'fromDate')]")
+	private List<WebElement> _identDocFromDates;
+	
+	@FindBy(how = How.XPATH, using = "//label[text()='Remove']//parent::button")
+	private List<WebElement> _identDocDeleteIcon;	
+	
+	@FindBy(how = How.XPATH, using = "//ng-select[contains(@id,'IDType')]//span[contains(@class,'ng-value-label')]")
+	private List<WebElement> _identDocTypeValuesSelected;
+	
+	@FindBy(how = How.XPATH, using = "//ng-select[contains(@id,'IDCountry')]/descendant::span[@class='ng-value-label']")
+	private List<WebElement> _identDocCountryValuesSelected;
+	
+	@FindBy(how = How.XPATH, using = "//a[contains(@class,'idlist__item')]")
+	private List<WebElement> _identDocTransferreFamilyMembersName;
+	
+	@FindBy(how = How.XPATH, using = "//tr[@class='tablehead']//h1")
+	private List<WebElement> _assignmentSectionHeaders;
+	
+	@FindBy(how = How.CSS, using = "h1[id='purple_bubble_name']")
+	private WebElement _transfereeNameHeader;
 			
 	int noOfAiresFileTeamMember;
 	LinkedHashMap<String, String> airesFileTeamExistingMembers = new LinkedHashMap<String, String>();
@@ -338,6 +388,7 @@ public class Mylo_AssignmentPage extends Base {
 	LinkedHashMap<String, WebElement> otherAdressFieldValueMap = new LinkedHashMap<String, WebElement>();
 	LinkedHashMap<String, String> otherAdressvalidFieldValueMap = new LinkedHashMap<String, String>();
 	List<WebElement> countryList = new ArrayList<WebElement>();
+	List<WebElement> identityTypeList = new ArrayList<WebElement>();
 	List<WebElement> typeDropDownList = new ArrayList<WebElement>();
 	List<WebElement> stateList = new ArrayList<WebElement>();
 	List<String> historyfileIds = new ArrayList<String>();
@@ -358,7 +409,7 @@ public class Mylo_AssignmentPage extends Base {
 	updatedMailAddressCityValue, updatedTempAddressZipCodeValue, updatedMailAddressZipCodeValue,
 	updatedTempAddressCommentsValue, updatedMailAddressCommentsValue, updatedTempAddressStateValue,
 	updatedMailAddressStateValue, updatedTempAddress1Value, updatedMailAddress1Value, updatedTempAddress2Value,
-	updatedMailAddress2Value, updatedTempAddressFromDateValue, updatedMailAddressFromDateValue,updatedCountryValue;
+	updatedMailAddress2Value, updatedTempAddressFromDateValue, updatedMailAddressFromDateValue,updatedCountryValue,updatedTypeValue,updatedNoValue,updatedFromDate;
 
 	/**
 	 * @param option 
@@ -392,10 +443,10 @@ public class Mylo_AssignmentPage extends Base {
 	public void clickButtonOnAiresFileTeamSection(String buttonName) {
 		switch (buttonName) {
 		case MYLOConstants.ADD_BUTTON:
-			CoreFunctions.click(driver, _airesFileTeamAddButton, _airesFileTeamAddButton.getText());
+			CoreFunctions.click(driver, _airesFileTeamAddButton, MYLOConstants.ADD_BUTTON);
 			break;
 		case MYLOConstants.CANCEL_BUTTON:
-			CoreFunctions.click(driver, _airesFileTeamAddButton, _airesFileTeamAddButton.getText());
+			CoreFunctions.click(driver, _airesFileTeamCancelButton, MYLOConstants.CANCEL_BUTTON);
 			break;
 		case MYLOConstants.SAVE_BUTTON:
 			CoreFunctions.click(driver, _airesFileTeamSaveButton, _airesFileTeamSaveButton.getText());
@@ -506,13 +557,23 @@ public class Mylo_AssignmentPage extends Base {
 	 * Verifying the Warning Message Text on Aires File Team section
 	 */
 	public boolean verifyPopUpMessage(String msg) {
+		boolean flag=false;
 		try {
 			CoreFunctions.explicitWaitTillElementVisibility(driver, _popUpMessage, _popUpMessage.getText());
-			Assert.assertEquals(_popUpMessage.getText(), msg);
-		} catch (Throwable e) {
-			return false;
+			CoreFunctions.highlightObject(driver, _popUpMessage);
+			flag=(_popUpMessage.getText().equals(msg));
 		}
-		return true;
+		catch (Exception e) {
+			Reporter.addStepLog(MessageFormat.format(CoreConstants.FAIL_TO_VERIFY_ELEMENT_ON_PAGE, CoreConstants.FAIL,
+					MYLOConstants.EXPECTED_POPUP_MESSAGE, MYLOConstants.ASSIGNMENT));
+		}
+		if (flag)
+			Reporter.addStepLog(MessageFormat.format(MYLOConstants.VERIFIED_POPUP_MESSAGE_DISPLAYED, CoreConstants.PASS,
+					msg, MYLOConstants.ASSIGNMENT));
+		else
+			Reporter.addStepLog(MessageFormat.format(MYLOConstants.EXPECTED_MESSAGE_DISPLAYED, CoreConstants.FAIL, msg,
+					_popUpMessage.getText(), MYLOConstants.ASSIGNMENT));
+		return flag;
 	}
 
 	/**
@@ -539,11 +600,14 @@ public class Mylo_AssignmentPage extends Base {
 				.collect(Collectors.toList());
 		List<String> allEndDates = _airesFileTeamEndDates.stream().map(x -> x.getAttribute(MYLOConstants.VALUE))
 				.collect(Collectors.toList());
-		String currentDate = DateTimeFormatter.ofPattern("MM/dd/yyyy").format(LocalDate.now());
+		String currentDate = DateTimeFormatter.ofPattern("MM/dd/yyyy").format(LocalDate.now());		
+		String expectedDateFormat= CoreFunctions.getStringDateInFormat(currentDate, "MM/dd/yyyy",
+				"dd MMM yyyy");
+		
 		if (allTeamMembers.get(allRoleNames.indexOf(roleName)).trim().equals(updatedTeamMember)
-				&& allStartDates.get(allRoleNames.indexOf(roleName)).trim().equals(currentDate)
+				&& allStartDates.get(allRoleNames.indexOf(roleName)).trim().equals(expectedDateFormat)
 				&& allEndDates.get(allRoleNames.indexOf(roleName)).trim().equals(MYLOConstants.ACTIVE)
-				&& allEndDates.get(allRoleNames.lastIndexOf(roleName)).trim().equals(currentDate)) {
+				&& allEndDates.get(allRoleNames.lastIndexOf(roleName)).trim().equals(expectedDateFormat)) {
 
 			Reporter.addStepLog(MessageFormat.format(CoreConstants.VRYFD_UPDATED_ROW, CoreConstants.PASS, roleName,
 					MYLOConstants.AIRES_FILE_TEAM));
@@ -1028,6 +1092,11 @@ public class Mylo_AssignmentPage extends Base {
 			fileInfoDetailsmap.put(MYLOConstants.FILE_ID, assignmentDetails.activeAssignment.fileID);
 			fileInfoDetailsmap.put(MYLOConstants.CLIENT_ID, assignmentDetails.activeAssignment.clientID);
 			fileInfoDetailsmap.put(MYLOConstants.CLIENT_NAME, assignmentDetails.activeAssignment.clientName);
+			break;
+		case MYLOConstants.CLOSED_IDENTITYDOC:
+			fileInfoDetailsmap.put(MYLOConstants.FILE_ID, assignmentDetails.closedFileIdentDoc.fileID);
+			fileInfoDetailsmap.put(MYLOConstants.CLIENT_ID, assignmentDetails.closedFileIdentDoc.clientID);
+			fileInfoDetailsmap.put(MYLOConstants.CLIENT_NAME, assignmentDetails.closedFileIdentDoc.clientName);
 			break;
 		default:
 			Assert.fail(MYLOConstants.ENTER_CORRECT_FIELD_NAME);
@@ -2076,7 +2145,7 @@ public class Mylo_AssignmentPage extends Base {
 	
 	public String getAssignmentTabsBgColor(String option) {
 		List<WebElement> subTabs = CoreFunctions.getElementListByLocator(driver, _assignmentSubMenus);
-		CoreFunctions.explicitWaitTillElementListVisibility(driver, subTabs);
+		//CoreFunctions.explicitWaitTillElementListVisibility(driver, subTabs);
 		WebElement tabElement = CoreFunctions.returnItemInListByText(driver, subTabs, option);
 		CoreFunctions.explicitWaitTillElementVisibility(driver, tabElement, tabElement.getText());
 		String hexColorValue = Color.fromString(tabElement.getCssValue(MYLOConstants.BACKGROUND_COLOR)).asHex();
@@ -2109,4 +2178,251 @@ public class Mylo_AssignmentPage extends Base {
 		return flag;
 	}
 	
+	// *************** Identification & Documentation section ***********************//
+	
+	/**
+	 * @param buttonName
+	 * @return
+	 * verify enability oof Buttons in Identification & Documentation section
+	 */
+	public boolean verifyIdentDocButtonDisplayed(String buttonName) {
+		boolean flag = false;
+		switch (buttonName) {
+		case MYLOConstants.ADD_BUTTON:
+			CoreFunctions.highlightObject(driver, _identDocAddIcon);
+			flag = CoreFunctions.isElementVisible(_identDocAddIcon);
+			break;
+		case MYLOConstants.EDIT_BUTTON:
+			CoreFunctions.highlightObject(driver, _identDocEditIcon);
+			flag = CoreFunctions.isElementVisible(_identDocEditIcon);
+			break;
+		case MYLOConstants.SAVE_BUTTON:
+			CoreFunctions.highlightObject(driver, _identDocSaveIcon);
+			flag = CoreFunctions.isElementVisible(_identDocSaveIcon);
+			break;
+		default:
+			Reporter.addStepLog(CoreConstants.FAIL + MYLOConstants.ENTER_CORRECT_BUTTON_NAME);
+			Assert.fail(MYLOConstants.ENTER_CORRECT_BUTTON_NAME);
+		}
+		if (flag)
+			Reporter.addStepLog(MessageFormat.format(MYLOConstants.BUTTON_ENABLED, CoreConstants.PASS,
+					buttonName,MYLOConstants.IDENTIFICATION_AND_DOCUMENTATION,MYLOConstants.ASSIGNMENT));
+		else
+			Reporter.addStepLog(MessageFormat.format(MYLOConstants.BUTTON_DISABLED, CoreConstants.PASS,
+					buttonName,MYLOConstants.IDENTIFICATION_AND_DOCUMENTATION,MYLOConstants.ASSIGNMENT));
+		return flag;
+	}
+	
+	/**
+	 * @param sectionName
+	 * Highlight Section Header
+	 */
+	public void highlightSectionHeader(String sectionName) {	
+		CoreFunctions.highlightObject(driver, _transfereeNameHeader);
+		WebElement requiredElement = CoreFunctions.returnItemInListByText(driver, _assignmentSectionHeaders, sectionName);
+		CoreFunctions.scrollToElementUsingJavaScript(driver, requiredElement, sectionName);
+		CoreFunctions.highlightObject(driver, requiredElement);
+	}
+	
+	/**
+	 * @param index
+	 * Select Transferee/Family details
+	 */
+	public void selectIdentDocTransfereeDetails(int index) {	
+		CoreFunctions.highlightObject(driver, _identDocTransferreFamilyMembersName.get(index));
+		CoreFunctions.click(driver, _identDocTransferreFamilyMembersName.get(index), _identDocTransferreFamilyMembersName.get(index).getText());
+	}
+	
+	/**
+	 * @param buttonName
+	 * Click button on Identification & Documentation section
+	 * 
+	 */
+	public void clickButtonOnIentificationAndDocumentationSection(String buttonName) {
+		switch (buttonName) {
+		case MYLOConstants.ADD_BUTTON:
+			CoreFunctions.click(driver, _identDocAddIcon, MYLOConstants.ADD_BUTTON);
+			break;
+		case MYLOConstants.CANCEL_BUTTON:
+			CoreFunctions.click(driver, _identDocCancelIcon, MYLOConstants.CANCEL_BUTTON);
+			break;
+		case MYLOConstants.SAVE_BUTTON:
+			CoreFunctions.click(driver, _identDocSaveIcon, MYLOConstants.SAVE_BUTTON);
+			break;
+		case MYLOConstants.EDIT_BUTTON:
+			CoreFunctions.click(driver, _identDocEditIcon, _NoButton.getText());
+			break;
+		case MYLOConstants.YES_BUTTON:
+			CoreFunctions.click(driver, _YesButton, _YesButton.getText());
+			break;
+		case MYLOConstants.NO_BUTTON:
+			CoreFunctions.click(driver, _NoButton, _NoButton.getText());
+			break;
+		case MYLOConstants.CLOSE_BUTTON:
+			CoreFunctions.isElementVisible(_closeBtn);
+			CoreFunctions.highlightObject(driver, _closeBtn);
+			CoreFunctions.sendKeysUsingAction(driver, _closeBtn, MYLOConstants.CLOSE_BUTTON);
+			break;
+		case MYLOConstants.IDENTITY_TYPE_DROPDOWN:
+			CoreFunctions.highlightObject(driver, _identDocTypeDropdowns);
+			CoreFunctions.click(driver, _identDocTypeDropdowns, MYLOConstants.IDENTITY_TYPE_DROPDOWN);
+			CoreFunctions.explicitWaitTillElementVisibility(driver, _identDocTypeDropdowns, MYLOConstants.IDENTITY_TYPE_DROPDOWN);
+			identityTypeList = CoreFunctions.getElementListByLocator(driver, _dropdownOptions);
+			break;
+		case MYLOConstants.COUNTRY:
+			CoreFunctions.click(driver, _identDocCountryDropdowns, _identDocCountryDropdowns.getText());
+			CoreFunctions.explicitWaitTillElementVisibility(driver, _identDocCountryDropdowns, MYLOConstants.COUNTRY);
+			CoreFunctions.click(driver, _identDocCountryDropdowns, MYLOConstants.COUNTRY);
+			countryList = CoreFunctions.getElementListByLocator(driver, _dropdownOptions);
+			break;
+		default:
+			Reporter.addStepLog(CoreConstants.FAIL + MYLOConstants.ENTER_CORRECT_ELEMENT_NAME);
+			Assert.fail(MYLOConstants.ENTER_CORRECT_ELEMENT_NAME);
+		}
+	}
+	
+	/**
+	 * @param fieldValue
+	 * Set Type value on Identification & Documentation section
+	 */
+	public void setIdentityDocMembersTypeValue(String fieldValue) {
+		if (fieldValue.equals(MYLOConstants.RANDOM)) {
+			List<String> valuesToIgnore = new ArrayList<String>();
+			valuesToIgnore.add(MYLOConstants.SELECT_ONE);
+			updatedTypeValue = CoreFunctions.getRandomOutOfSelectedElementValueFromList(driver, identityTypeList, valuesToIgnore);
+			BusinessFunctions.selectItemFromListUsingText(driver, identityTypeList,
+					updatedTypeValue);
+		} else {
+			updatedTypeValue=fieldValue;
+			BusinessFunctions.selectItemFromListUsingText(driver, identityTypeList, fieldValue);
+		}
+	}
+	
+	
+	/**
+	 * @param fieldValue
+	 * Set Country Value on Identification & Documentation section
+	 */
+	public void setIdentityDocMembersCountryValue(String fieldValue) {
+		if (fieldValue.equals(MYLOConstants.RANDOM)) {
+			List<String> valuesToIgnore = new ArrayList<String>();
+			valuesToIgnore.add(MYLOConstants.SELECT_ONE);
+			updatedCountryValue = CoreFunctions.getRandomOutOfSelectedElementValueFromList(driver, countryList, valuesToIgnore);
+			BusinessFunctions.selectItemFromListUsingText(driver, countryList,
+					updatedCountryValue);
+		} else {
+			updatedCountryValue=fieldValue;
+			BusinessFunctions.selectItemFromListUsingText(driver, countryList, fieldValue);
+		}
+	}
+	
+	/**
+	 * @param fieldValue
+	 * @param index
+	 * @return
+	 */
+	public String setIdentityDocMembersFromDateValue(String fieldValue, int index) {
+		updatedFromDate = (fieldValue.equals("current"))
+				? CoreFunctions.getCurrentDateAsGivenFormat("MM/dd/yyyy")
+				: fieldValue;
+		if (updatedFromDate == "")
+			CoreFunctions.clearTextField(driver, _identDocFromDates.get(index), MYLOConstants.FROMDATE);
+		else
+			CoreFunctions.clearAndSetText(driver, _identDocFromDates.get(index), updatedFromDate);
+		return updatedFromDate;
+	}
+	
+	public String setIdentityDocMembersNumberValue(String fieldValue, int index) {
+		try {
+			updatedNoValue = CoreFunctions.generateRandomString(Integer.parseInt(fieldValue));
+			CoreFunctions.clearAndSetText(driver, _identDocNumbers.get(index), updatedNoValue);
+		} catch (NumberFormatException e) {
+			updatedNoValue = fieldValue;
+			if (updatedNoValue == "")
+				CoreFunctions.clearTextField(driver, _identDocNumbers.get(index), MYLOConstants.NUMBER);
+			else
+				CoreFunctions.clearAndSetText(driver, _identDocNumbers.get(index), updatedNoValue);
+		}
+		return updatedNoValue;
+	}
+	
+	public void setIdentDocMembersMandatoryFields(String typeValue, String number,String fromDate) {
+		clickButtonOnIentificationAndDocumentationSection(MYLOConstants.IDENTITY_TYPE_DROPDOWN);
+		setIdentityDocMembersTypeValue(typeValue);
+		setIdentityDocMembersNumberValue(number,0);
+		setIdentityDocMembersFromDateValue(fromDate,0) ;
+	}
+	
+	public void verifyMandatoryFieldsToastMessagesIdentDocSection(DataTable table) {
+		java.util.List<Map<String, String>> data = table.asMaps(String.class, String.class);
+		for (int i = 0; i < data.size(); i++) {
+			setIdentDocMembersMandatoryFields(data.get(i).get(MYLOConstants.IDENTITY_TYPE),
+					data.get(i).get(MYLOConstants.NUMBER), data.get(i).get(MYLOConstants.FROMDATE));
+			clickButtonOnIentificationAndDocumentationSection(MYLOConstants.SAVE_BUTTON);
+			Assert.assertTrue(verifyAlertMessage(data.get(i).get(MYLOConstants.MESSAGE)));
+			clickButtonOnIentificationAndDocumentationSection(MYLOConstants.CLOSE_BUTTON);
+			clickButtonOnIentificationAndDocumentationSection(MYLOConstants.CANCEL_BUTTON);
+			clickButtonOnIentificationAndDocumentationSection(MYLOConstants.YES_BUTTON);
+			verifyActiveTab(MYLOConstants.SUMMARY);
+			highlightSectionHeader(MYLOConstants.IDENTIFICATION_AND_DOCUMENTATION);
+			CoreFunctions.highlightObject(driver, _identDocAddIcon);
+			clickButtonOnIentificationAndDocumentationSection(MYLOConstants.ADD_BUTTON);
+			
+		}
+	}
+	
+	public String getFieldValuesIdentificationAndDocumentationSection(String fieldName, int index) {
+		String requiredValue = null;
+		switch (fieldName) {
+		case MYLOConstants.IDENTITY_TYPE:
+			CoreFunctions.explicitWaitTillElementVisibility(driver, _identDocTypeValuesSelected.get(index), MYLOConstants.IDENTITY_TYPE);
+			requiredValue = CoreFunctions.getElementText(driver, _identDocTypeValuesSelected.get(index));
+			break;
+		case MYLOConstants.NUMBER:
+			CoreFunctions.explicitWaitTillElementVisibility(driver, _identDocNumbers.get(index), MYLOConstants.NUMBER);
+			requiredValue = CoreFunctions.getAttributeText(_identDocNumbers.get(index), CoreConstants.VALUE);
+			break;
+		case MYLOConstants.FROMDATE:
+			CoreFunctions.explicitWaitTillElementVisibility(driver, _identDocFromDates.get(index), MYLOConstants.FROMDATE);
+			requiredValue = CoreFunctions.getAttributeText(_identDocFromDates.get(index), CoreConstants.VALUE);
+			break;
+		default:
+			Reporter.addStepLog(CoreConstants.FAIL + MYLOConstants.ENTER_CORRECT_ELEMENT_NAME);
+			Assert.fail(MYLOConstants.ENTER_CORRECT_ELEMENT_NAME);
+		}
+		return requiredValue;
+	}
+	
+	public boolean verifyMandatoryFieldValuesIdentificationAndDocumentationSection(int index) {
+		boolean flag = false;
+		String updatedDate = CoreFunctions.getStringDateInFormat(
+				getFieldValuesIdentificationAndDocumentationSection(MYLOConstants.FROMDATE, index), "dd MMM yyyy",
+				"MM/dd/yyyy");
+		if (getFieldValuesIdentificationAndDocumentationSection(MYLOConstants.IDENTITY_TYPE, index)
+				.contentEquals(updatedTypeValue)
+				&& getFieldValuesIdentificationAndDocumentationSection(MYLOConstants.NUMBER, index)
+						.contentEquals(updatedNoValue)
+				&& updatedDate.contentEquals(updatedFromDate)) {
+			flag = true;
+			Reporter.addStepLog(MessageFormat.format(MYLOConstants.VERIFIED_ELEMENT_DISPLAYED_IDENTDOC_SECTION,
+					CoreConstants.PASS, updatedTypeValue, updatedNoValue, updatedFromDate,
+					MYLOConstants.IDENTIFICATION_AND_DOCUMENTATION));
+		} else
+			Reporter.addStepLog(CoreConstants.FAIL + MYLOConstants.EXPECTED_FIELD_VALUE_NOTDISPLAYED);
+		return flag;
+	}
+	
+	public boolean verifyMandatoryFieldInitialValuesIdentificationAndDocumentationSection(int index) {
+		boolean flag=false;
+		if(getFieldValuesIdentificationAndDocumentationSection(MYLOConstants.IDENTITY_TYPE,index).contentEquals("Select One")&&
+				getFieldValuesIdentificationAndDocumentationSection(MYLOConstants.NUMBER,index).contentEquals("")&&
+				getFieldValuesIdentificationAndDocumentationSection(MYLOConstants.FROMDATE,index).contentEquals("")) {
+			flag=true;
+		Reporter.addStepLog(MessageFormat.format(MYLOConstants.VERIFIED_ELEMENT_DISPLAYED_IDENTDOC_SECTION,
+				CoreConstants.PASS, updatedTypeValue, updatedNoValue, updatedFromDate,
+				MYLOConstants.IDENTIFICATION_AND_DOCUMENTATION));
+	} else
+		Reporter.addStepLog(CoreConstants.FAIL + MYLOConstants.EXPECTED_FIELD_VALUE_NOTDISPLAYED);
+	return flag;
+	}
 }

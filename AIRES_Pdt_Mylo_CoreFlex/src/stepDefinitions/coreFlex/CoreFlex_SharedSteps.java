@@ -244,12 +244,12 @@ public class CoreFlex_SharedSteps {
 
 		// Setting up a CoreFlex Enabled Policy
 		addNewPolicyPage.clickElementOfPage(PDTConstants.NEXT);
-//		Assert.assertTrue(
-//				generalInfoPage.validateClientAndPolicyDetailsOnGeneralInfo(COREFLEXConstants.GENERAL_INFORMATION_PAGE,
-//						CoreFunctions.getPropertyFromConfig("Policy_ClientID"),
-//						CoreFunctions.getPropertyFromConfig("Assignment_Policy")),
-//				MessageFormat.format(PDTConstants.FAILED_TO_VALIDATE_CLIENT_POLICY_DATA_ON_GENERAL_INFORMATION_PAGE,
-//						CoreConstants.FAIL));
+		Assert.assertTrue(
+				generalInfoPage.validateClientAndPolicyDetailsOnGeneralInfo(COREFLEXConstants.GENERAL_INFORMATION_PAGE,
+						CoreFunctions.getPropertyFromConfig("Policy_ClientID"),
+						CoreFunctions.getPropertyFromConfig("Assignment_Policy")),
+				MessageFormat.format(PDTConstants.FAILED_TO_VALIDATE_CLIENT_POLICY_DATA_ON_GENERAL_INFORMATION_PAGE,
+						CoreConstants.FAIL));
 //		Assert.assertTrue(
 //				generalInfoPage.verifyGeneralInfoFieldDefaultValue(PDTConstants.POLICY_STATUS, PDTConstants.DRAFT),
 //				MessageFormat.format(PDTConstants.FAILED_TO_VERIFY_DEFAULT_VALUE_OF_GENERAL_INFORMATION_PAGE_FIELD,

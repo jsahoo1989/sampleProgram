@@ -297,6 +297,10 @@ public class EmailUtil {
 			_searchTag[0] = "Hello";
 			_searchTag[1] = "Please use the link below to login";
 			break;
+		case MobilityXConstants.DELETE_REQUEST_DENIED:
+			_searchTag[0] = "Hello";
+			_searchTag[1] = "using the link below to log";
+			break;
 		default:
 			Assert.fail("Information not found");
 		}

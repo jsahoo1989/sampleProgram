@@ -162,8 +162,8 @@ public class CF_Transferee_StaticFixedPoints_CashNotAuth_Both_EndToEndFlow_Steps
 				MessageFormat.format(
 						COREFLEXConstants.FAILED_TO_VERIFY_ACTION_COMPLETED_GROWL_MESSAGE_ON_TRANSFEREE_SUBMISSION_DETAILS_PAGE,
 						CoreConstants.FAIL));
-		Assert.assertTrue(transfereeSubmissionsDetailsPage.verifyBenefitDeleteRequestApprovedEmail(), MessageFormat
-				.format(MobilityXConstants.FAILED_TO_READ_USER_CREDENTIALS_FROM_GENERATED_EMAIL, CoreConstants.FAIL));
+//		Assert.assertTrue(transfereeSubmissionsDetailsPage.verifyBenefitDeleteRequestEmail(actionPerformed), MessageFormat
+//				.format(MobilityXConstants.FAILED_TO_READ_USER_CREDENTIALS_FROM_GENERATED_EMAIL, CoreConstants.FAIL));
 		CoreConstants.TIME_AFTER_ACTION = new Date().getTime();
 		Reporter.addStepLog("<b>Total time taken by <i>'When'</i> statement is :"
 				+ (CoreConstants.TIME_AFTER_ACTION - CoreConstants.TIME_BEFORE_ACTION) / 1000 + " Seconds </b>");

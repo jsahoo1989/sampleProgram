@@ -353,4 +353,5 @@ public class COREFLEXConstants {
 	public static final String SUCCESS = "Success";
 	public static final String SUCCESSFULLY_VERIFIED_BENEFITS_CATEGORIES_AND_SELECTABLE_BENEFITS_NAMES_AND_DISPLAY_ORDER_ON_POLICY_BENEFITS_CATEGORIES_PAGE = "{0}Successfully verified Benefits Categories, Selectable Benefit Names & Display order on Policy Benefits Categories Page.";
 	public static final String EXCEPTION_OCCURED_WHILE_VALIDATING_BENEFITS_CATEGORIES_AND_SELECTABLE_BENEFITS_NAMES_AND_DISPLAY_ORDER_ON_POLICY_BENEFITS_CATEGORIES_PAGE = "{0}Exception occured while validating Benefits Categories, Selectable Benefit Names & Display order on Policy Benefits Categories Page. Exception : ''{1}''.";
+	public static final String EXCEPTION_OCCURED_WHILE_READING_APPROVED_DELETE_REQUEST_EMAIL = "{0}Exception occured while reading Approved Delete Request Email. Exception : ''{1}''.";
 }

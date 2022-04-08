@@ -1037,6 +1037,7 @@ public class MX_Transferee_MyBenefitsBundlePage extends Base {
 			isDeleteButtonDisabled = Boolean.valueOf(CoreFunctions.getAttributeText(_buttonDeleteBenefitList.get(indexBenefit), "aria-disabled"));
 			CoreFunctions.moveToElement(driver, _buttonDeleteBenefitList.get(indexBenefit));
 			isDeleteHoverTextVerified = CoreFunctions.isElementExist(driver, _disabledDeleteButtonHoverText, 5);
+			CoreFunctions.highlightObject(driver, _disabledDeleteButtonHoverText);
 			if(isDeleteButtonDisabled && isDeleteHoverTextVerified){
 				Reporter.addStepLog(MessageFormat.format(
 						COREFLEXConstants.SUCCESSFULLY_VERIFIED_DELETE_BUTTON_IS_DISABLED_AND_DISABLED_DELETE_HOVER_TEXT_POST_DELETE_REQUEST_DENIED_BY_MSPEC_PPC_USER,

@@ -692,6 +692,8 @@ public class PDT_GeneralInformationPage extends Base {
 			Reporter.addStepLog(MessageFormat.format(
 					PDTConstants.SUCCESSFULLY_VERIFIED_CLIENT_AND_POLICY_DETAILS_ON_GENERAL_INFO_PAGE,
 					CoreConstants.PASS, pageName));
+			CoreFunctions.writeToPropertiesFile("Assignment_ClientName", CoreFunctions.getElementText(driver, _textClientName));
+			
 		}
 		return isGeneralInfoDetailsValid;
 

@@ -259,4 +259,7 @@ public class MobilityXConstants {
 	public static final String DELETE_REQUEST_APPROVED_BENEFIT_POINT_MESSAGE = "We have approved your delete request(s) for       benefit_name for  delete_request_points points";
 	public static final String DELETE_REQUEST_REMAINING_POINTS_TO_USE_MESSAGE = "Those points have been returned to your point balance. You now have  current_balance points to use.";
 	public static final String SUCCESSFULLY_CLICKED_ON_REVIEW_BUTTON_FOR_BUNDLE_SUBMITTED_BY_TRANSFEREE = "{0}Successfully clicked on 'Review' button for bundle submitted by Transferee.";
+	public static final String DELETE_REQUEST_DENIED = "Delete Request Denied";
+	public static final String DELETE_REQUEST_DENIED_BENEFIT_POINT_MESSAGE = "We have reviewed your delete request(s) and are unable to approve your request below   benefit_name for  delete_request_points points";
+	public static final String DENIED_DELETE_REQUEST_REMAINING_POINTS_TO_USE_MESSAGE = "You now have current_balance/total_points points to use.";
 }

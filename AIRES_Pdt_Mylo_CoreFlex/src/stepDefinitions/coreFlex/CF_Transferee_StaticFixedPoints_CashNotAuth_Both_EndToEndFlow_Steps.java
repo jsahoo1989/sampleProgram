@@ -13,7 +13,6 @@ import com.aires.businessrules.constants.CoreConstants;
 import com.aires.businessrules.constants.MobilityXConstants;
 import com.aires.cucumber.TestContext;
 import com.aires.managers.FileReaderManager;
-import com.aires.managers.PageObjectManager_CoreFlex;
 import com.aires.pages.coreflex.MX_Transferee_FlexPlanningTool_Page;
 import com.aires.pages.coreflex.MX_Transferee_JourneyHomePage;
 import com.aires.pages.coreflex.MX_Transferee_LoginPage;
@@ -29,7 +28,6 @@ import cucumber.api.java.en.When;
 public class CF_Transferee_StaticFixedPoints_CashNotAuth_Both_EndToEndFlow_Steps {
 
 	private TestContext testContext;
-	private PageObjectManager_CoreFlex _pageObjectManagerCoreFlex;
 	private TransfereeSubmissions_DashboardHomePage transfereeSubmissionsDashboardHomePage;
 	private TransfereeSubmissions_DetailsPage transfereeSubmissionsDetailsPage;
 
@@ -156,10 +154,11 @@ public class CF_Transferee_StaticFixedPoints_CashNotAuth_Both_EndToEndFlow_Steps
 				+ (CoreConstants.TIME_AFTER_ACTION - CoreConstants.TIME_BEFORE_ACTION) / 1000 + " Seconds </b>");
 	}
 
-	@When("^'Action Completed' growl message should be displayed on \"([^\"]*)\" page$")
-	public void Action_Completed_growl_message_should_be_displayed_on_page(String pageName) throws Throwable {
+	@When("^'Action Completed' growl message for \"([^\"]*)\" should be displayed on \"([^\"]*)\" page$")
+	public void Action_Completed_growl_message_for_should_be_displayed_on_page(String actionPerformed, String pageName)
+			throws Throwable {
 		CoreConstants.TIME_BEFORE_ACTION = new Date().getTime();
-		Assert.assertTrue(transfereeSubmissionsDetailsPage.verifyApprovedRequestActionCompletedMessage(pageName),
+		Assert.assertTrue(transfereeSubmissionsDetailsPage.verifyActionCompletedMessage(actionPerformed, pageName),
 				MessageFormat.format(
 						COREFLEXConstants.FAILED_TO_VERIFY_ACTION_COMPLETED_GROWL_MESSAGE_ON_TRANSFEREE_SUBMISSION_DETAILS_PAGE,
 						CoreConstants.FAIL));
@@ -176,16 +175,28 @@ public class CF_Transferee_StaticFixedPoints_CashNotAuth_Both_EndToEndFlow_Steps
 		CoreConstants.TIME_BEFORE_ACTION = new Date().getTime();
 		Assert.assertTrue(transfereeSubmissionsDetailsPage.verifyApprovedDeleteRequestRemovedFromList(),
 				MessageFormat.format(
-						COREFLEXConstants.FAILED_TO_VERIFY_APPROVED_DELETE_REQUEST_REMOVED_FROM_TRANSFEREE_SUBMISSION_DETAILS_PAGE,
+						COREFLEXConstants.FAILED_TO_VERIFY_BENEFITS_DETAILS_POST_APPROVE_DELETE_BENEFIT_REQUEST_OPERATION_ON_TRANSFEREE_SUBMISSIONS_DETAILS_PAGE,
 						CoreConstants.FAIL));
 		CoreConstants.TIME_AFTER_ACTION = new Date().getTime();
 		Reporter.addStepLog("<b>Total time taken by <i>'Then'</i> statement is :"
 				+ (CoreConstants.TIME_AFTER_ACTION - CoreConstants.TIME_BEFORE_ACTION) / 1000 + " Seconds </b>");
 	}
 
-	@Then("^benefit point details should be updated on 'MXTransferee' application based on approved 'Delete Request' on Transferee Submission$")
-	public void benefit_point_details_should_be_updated_on_MXTransferee_application_based_on_approved_Delete_Request_on_Transferee_Submission()
+	@Then("^'Delete Request Pending' benefit request status should be updated to 'Submitted' in 'Transferee Submission Details' list$")
+	public void delete_Request_Pending_benefit_request_status_should_be_updated_to_Submitted_in_Transferee_Submission_Details_list()
 			throws Throwable {
+		CoreConstants.TIME_BEFORE_ACTION = new Date().getTime();
+		Assert.assertTrue(transfereeSubmissionsDetailsPage.verifySubmittedBenefitsDetails(), MessageFormat.format(
+				COREFLEXConstants.FAILED_TO_VERIFY_DENY_DELETE_REQUEST_UPDATED_TO_SUBMITTED_IN_TRANSFEREE_SUBMISSION_DETAILS_PAGE,
+				CoreConstants.FAIL));
+		CoreConstants.TIME_AFTER_ACTION = new Date().getTime();
+		Reporter.addStepLog("<b>Total time taken by <i>'Then'</i> statement is :"
+				+ (CoreConstants.TIME_AFTER_ACTION - CoreConstants.TIME_BEFORE_ACTION) / 1000 + " Seconds </b>");
+	}
+
+	@Then("^benefit details should be updated on 'MXTransferee' application based on \"([^\"]*)\" 'Delete Request' on Transferee Submission$")
+	public void benefit_details_should_be_updated_on_MXTransferee_application_based_on_Delete_Request_on_Transferee_Submission(
+			String actionPerformed) throws Throwable {
 		CoreConstants.TIME_BEFORE_ACTION = new Date().getTime();
 		testContext.getWebDriverManager().getDriver().navigate()
 				.to(FileReaderManager.getInstance().getConfigReader().getMobilityXUrl());
@@ -195,8 +206,10 @@ public class CF_Transferee_StaticFixedPoints_CashNotAuth_Both_EndToEndFlow_Steps
 		mxTransfereeLoginPage.clickSignIn();
 		mxTransfereeJourneyHomePage.handle_Cookie_AfterLogin();
 		mxTransfereeJourneyHomePage.handle_points_expiry_reminder_popup();
-		Assert.assertTrue(mxTransfereeJourneyHomePage.verifySubmittedPointsDetails(), MessageFormat.format(
-				MobilityXConstants.REMAINING_AVAILABLE_POINTS_DETAILS_NOT_MATCHED_ON_JOURNEY_HOME_PAGE, CoreConstants.FAIL));
+		Assert.assertTrue(mxTransfereeJourneyHomePage.verifySubmittedPointsDetails(),
+				MessageFormat.format(
+						MobilityXConstants.REMAINING_AVAILABLE_POINTS_DETAILS_NOT_MATCHED_ON_JOURNEY_HOME_PAGE,
+						CoreConstants.FAIL));
 		mxTransfereeJourneyHomePage.navigateToFlexPlanningToolPage();
 		Assert.assertTrue(mxTransfereeFlexPlanningToolPage.verifyAvailablePointsMessageAfterSubmission(),
 				MessageFormat.format(
@@ -205,11 +218,11 @@ public class CF_Transferee_StaticFixedPoints_CashNotAuth_Both_EndToEndFlow_Steps
 		Assert.assertTrue(mxTransfereeFlexPlanningToolPage.verifySubmittedPointsDetails(),
 				MessageFormat.format(MobilityXConstants.SUBMITTED_POINTS_DETAILS_NOT_MATCHED_ON_FLEX_PLANNING_TOOL_PAGE,
 						CoreConstants.FAIL));
-		Assert.assertTrue(mxTransfereeMyBenefitsBundlePage.verifySubmittedFlexBenefitsDetailsPostDeleteRequestApprovalOnMBBPage(),
-				MobilityXConstants.SUBMITTED_BENEFIT_DETAILS_NOT_MATCHED);
+		Assert.assertTrue(mxTransfereeMyBenefitsBundlePage.validateSubmittedBenefitDetailsPostDeleteRequestOperation(
+				actionPerformed), MobilityXConstants.SUBMITTED_BENEFIT_DETAILS_NOT_MATCHED);
 		CoreConstants.TIME_AFTER_ACTION = new Date().getTime();
 		Reporter.addStepLog("<b>Total time taken by <i>'Then'</i> statement is :"
-				+ (CoreConstants.TIME_AFTER_ACTION - CoreConstants.TIME_BEFORE_ACTION) / 1000 + " Seconds </b>");	
+				+ (CoreConstants.TIME_AFTER_ACTION - CoreConstants.TIME_BEFORE_ACTION) / 1000 + " Seconds </b>");
 	}
 
 }

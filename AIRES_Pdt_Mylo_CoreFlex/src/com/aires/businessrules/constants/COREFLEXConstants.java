@@ -142,6 +142,7 @@ public class COREFLEXConstants {
 	public static final String SUCCESSFULLY_SELECTED_AND_FILLED_ADDED_OTHER_BENEFITS = "{0}Successfully selected and filled all the added Other Benefits";
 	public static final String FAILED_TO_SELECT_AND_FILL_ADDED_BENEFITS = "{0}Failed to select and fill added benefits.";
 	public static final String POLICY_SUBMIT_STATUS_MESSAGE = "Success | The PolicyName FleX setup has been saved!";
+	public static final String POLICY_SUBMIT_STATUS_MESSAGE_UAT = "Success | The PolicyName Has Been Saved Successfully.";
 	public static final String LOCK_THE_BENEFITS_POINTS_SELECTION = "Lock the benefits points selection";
 	public static final String POLICY_BENEFITS_BENEFIT_SUMMARY = "Policy Benefits / Benefit Summary";
 	public static final String BENEFIT_EXPIRATION_TRACING_PROMPT = "Benefits Expiration Tracing Prompt";
@@ -335,4 +336,18 @@ public class COREFLEXConstants {
 	public static final String SUCCESSFULLY_VERIFIED_SELECTED_FLEX_BENEFIT_DETAILS_ON_MY_BENEFITS_PAGE_POST_DELETE_REQUEST_APPROVAL = "{0}Successfully verified selected Flex Benefit details on My Benefits Page Post Delete Request Approval.";
 	public static final String SUCCESSFULLY_DISPLAYED_DELETE_REQUEST_SENT_GROWL_MESSAGE = "{0}Successfully displayed 'Delete Request Sent' growl message on My Benefit Bundle Page.";
 	public static final String SUCCESSFULLY_LOGGED_INTO_TRANSFEREE_SUBMISSIONS_APPLICATION = "{0}User Successfully logged in to TransfereeSubmissions/MSPEC-PPC application.";
+	public static final String EXCEPTION_OCCURED_WHILE_VERIFYING_GROWL_MESSAGE_AFTER_ARRPOVING_DELETE_REQUEST_ACTION = "{0}Exception occured while verifying growl message after Approving delete request action on ''{2}''. Exception : ''{1}''.";
+	public static final String EXCEPTION_OCCURED_WHILE_VERIFYING_GROWL_MESSAGE_AFTER_DENYING_DELETE_REQUEST_ACTION = "{0}Exception occured while verifying growl message after Denying delete request action on ''{2}''. Exception : ''{1}''.";
+	public static final String DENY_REQUEST = "Deny Request";
+	public static final String ACTION_COMPLETED_MESSAGE = "The action has been completed.";
+	public static final String SUCCESSFULLY_VERIFIED_APPROVED_GROWL_ACTION_COMPLETED_MESSAGE_ON_TRANSFEREE_SUBMISSION_DETAILS_PAGE = "{0}Successfully verified Approved Request Growl action completed message ''{1}'' on transferee submission details page.";
+	public static final String SUCCESSFULLY_VERIFIED_DENY_GROWL_ACTION_COMPLETED_MESSAGE_ON_TRANSFEREE_SUBMISSION_DETAILS_PAGE = "{0}Successfully verified Deny Request Growl action completed message ''{1}'' on transferee submission details page.";
+	public static final String TRACING_EXPECTED_MESSAGE = "Actualize Tracing, FleX – Review transferee submission";
+	public static final String FAILED_TO_VERIFY_DENY_DELETE_REQUEST_UPDATED_TO_SUBMITTED_IN_TRANSFEREE_SUBMISSION_DETAILS_PAGE = "{0}Failed to verify denied delete request status updated to 'Submitted' in transferee submission details page.";
+	public static final String FAILED_TO_VERIFY_BENEFITS_DETAILS_POST_DENY_DELETE_BENEFIT_REQUEST_OPERATION_ON_TRANSFEREE_SUBMISSIONS_DETAILS_PAGE = "{0}Failed to verify Benefit details post delete benefit request operation on Transferee Submissions Details Page.";
+	public static final String SUCCESSFULLY_VALIDATED_SUBMITTED_BENEFITS_DETAILS_ON_SUBMISSION_DETAILS_PAGE_POST_DENYING_DELETE_BENEFIT_REQUEST = "{0}Successfully validated Submitted Benefits Details Post Denying Benefit Delete Request on Transferee Submission Details page.";
+	public static final String DENIED = "Denied";
+	public static final String APPROVED = "Approved";
+	public static final String SUCCESSFULLY_VERIFIED_DELETE_BUTTON_IS_DISABLED_AND_DISABLED_DELETE_HOVER_TEXT_POST_DELETE_REQUEST_DENIED_BY_MSPEC_PPC_USER = "{0}Successfully verified delete button is disabled & disabled delete button hover text post delete request is denied by MSPEC-PPC user.";
+	public static final String FAILED_TO_VERIFY_BENEFITS_DETAILS_POST_APPROVE_DELETE_BENEFIT_REQUEST_OPERATION_ON_TRANSFEREE_SUBMISSIONS_DETAILS_PAGE = "{0}Failed to verify Benefit details post Approve delete benefit request operation on Transferee Submissions Details Page.";
 }

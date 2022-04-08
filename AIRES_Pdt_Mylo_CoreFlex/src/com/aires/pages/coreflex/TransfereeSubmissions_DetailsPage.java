@@ -6,6 +6,8 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 import org.apache.commons.math3.random.CorrelatedRandomVectorGenerator;
+import org.openqa.selenium.By;
+import org.openqa.selenium.NoSuchElementException;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
@@ -97,8 +99,14 @@ public class TransfereeSubmissions_DetailsPage extends Base {
 	@FindBy(how = How.XPATH, using = "//div[contains(@class,'tblBenefits')]//mat-cell[contains(@class,'mat-column-Quantity')]")
 	private List<WebElement> _submittedBenefitQuantityList;
 
+	// Expense Reimbursement Tracing Prompt Symbol List
+	@FindBy(how = How.XPATH, using = "//div[contains(@class,'tblBenefits')]//span[contains(@class,'GrayText ')]/preceding-sibling::img[contains(@class,'Warning')]")
+	private List<WebElement> _reimbursementAllowanceTracingSymbolList;
+
+	By tracingPromptIcon = By.xpath(".//preceding-sibling::img[contains(@class,'Warning')]");
+
 	// Expense Reimbursement Tracing Prompt List
-	@FindBy(how = How.XPATH, using = "//div[contains(@class,'tblBenefits')]//img[contains(@class,'Warning')]/following-sibling::span")
+	@FindBy(how = How.XPATH, using = "//div[contains(@class,'tblBenefits')]//span[contains(@class,'GrayText')]")
 	private List<WebElement> _reimbursementAllowanceTracingList;
 
 	// Comments Benefit List
@@ -142,7 +150,7 @@ public class TransfereeSubmissions_DetailsPage extends Base {
 	private WebElement _requestDialogApproveRadioButton;
 
 	// Request Dialog Deny Radio Button
-	@FindBy(how = How.CSS, using = "div[class='deny']")
+	@FindBy(how = How.CSS, using = "div[class*='deny'] > div > label")
 	private WebElement _requestDialogDenyRadioButton;
 
 	// Request Dialog Confirm Button
@@ -161,6 +169,10 @@ public class TransfereeSubmissions_DetailsPage extends Base {
 	@FindBy(how = How.XPATH, using = "//div[contains(@class,'alert-success')]//span")
 	private WebElement _requestCompletedGrowlMessage;
 
+	// Tracing text message
+	@FindBy(how = How.XPATH, using = "//span[contains(@class,'deleteRequest')]/following-sibling::span[not(contains(@class,'points'))]")
+	private WebElement _tracingTextMessage;
+
 	/**********************************************************************/
 
 	CoreFlex_PolicySetupPagesData policySetupPageData = FileReaderManager.getInstance().getCoreFlexJsonReader()
@@ -176,6 +188,7 @@ public class TransfereeSubmissions_DetailsPage extends Base {
 	static double approvedDeleteRequestTotalPoints;
 	static boolean isDeleteRequestApproved;
 	static String approvedDeleteRequestBenefitName;
+	static boolean isDeleteRequestDenied;
 
 	/**********************************************************************/
 
@@ -217,6 +230,10 @@ public class TransfereeSubmissions_DetailsPage extends Base {
 				break;
 			case COREFLEXConstants.APPROVE_REQUEST:
 				CoreFunctions.clickElement(driver, _requestDialogApproveRadioButton);
+				CoreFunctions.clickElement(driver, _requestDialogConfirmButton);
+				break;
+			case COREFLEXConstants.DENY_REQUEST:
+				CoreFunctions.clickElement(driver, _requestDialogDenyRadioButton);
 				CoreFunctions.clickElement(driver, _requestDialogConfirmButton);
 				break;
 			default:
@@ -277,7 +294,14 @@ public class TransfereeSubmissions_DetailsPage extends Base {
 					COREFLEXConstants.EXCEPTION_OCCURED_WHILE_VALIDATING_SUBMITTED_BENEFITS_DETAILS_ON_SUBMISSION_DETAILS_PAGE,
 					CoreConstants.FAIL, e.getMessage()));
 		}
-		if (isSubmittedBenefitStatusMatched & (_submittedBenefitNameList.size() == benefitCount)) {
+		if (isSubmittedBenefitStatusMatched & (_submittedBenefitNameList.size() == benefitCount)
+				&& isDeleteRequestDenied) {
+			Reporter.addStepLog(MessageFormat.format(
+					COREFLEXConstants.SUCCESSFULLY_VALIDATED_SUBMITTED_BENEFITS_DETAILS_ON_SUBMISSION_DETAILS_PAGE_POST_DENYING_DELETE_BENEFIT_REQUEST,
+					CoreConstants.PASS));
+			return true;
+		} else if (isSubmittedBenefitStatusMatched & (_submittedBenefitNameList.size() == benefitCount)
+				&& !(isDeleteRequestDenied)) {
 			Reporter.addStepLog(MessageFormat.format(
 					COREFLEXConstants.SUCCESSFULLY_VALIDATED_SUBMITTED_BENEFITS_DETAILS_ON_SUBMISSION_DETAILS_PAGE,
 					CoreConstants.PASS));
@@ -297,20 +321,14 @@ public class TransfereeSubmissions_DetailsPage extends Base {
 							benefit.getBenefitDisplayName(), COREFLEXConstants.SUBMITTED_BENEFIT_NAME);
 					CoreFunctions.verifyText(driver, _submittedBenefitAllowanceAmountList.get(index),
 							benefit.getBenefitAmount(), COREFLEXConstants.SUBMITTED_BENEFIT_ALLOWANCE_AMOUNT);
-					String expectedPaymentOption = benefit.getPayments().equals(COREFLEXConstants.EXPENSE_REIMBURSEMENT)
-							? COREFLEXConstants.REIMBURSEMENT_TRACING
-							: (benefit.getPayments().equals(COREFLEXConstants.ALLOWANCE_CASHOUT))
-									? COREFLEXConstants.ALLOWANCE_TRACING
-									: null;
-					CoreFunctions.verifyText(driver, _reimbursementAllowanceTracingList.get(index),
-							expectedPaymentOption, COREFLEXConstants.SUBMITTED_BENEFIT_TRACING_SET_MESSAGE);
 					CoreFunctions.verifyValue(
 							Double.parseDouble(
 									_submittedBenefitPointsList.get(index).getText().replace("pts", "").trim()),
 							(Double.parseDouble(benefit.getPoints()) * benefit.getNumberOfBenefitSelected()),
 							COREFLEXConstants.SUBMITTED_BENEFIT_POINTS);
 					CoreFunctions.highlightObject(driver, _submittedBenefitPointsList.get(index));
-					if (MX_Transferee_MyBenefitsBundlePage.benefitDeletedFlag && benefit.getDeleteBenefitOnMBBPage()) {
+					if (MX_Transferee_MyBenefitsBundlePage.benefitDeletedFlag && benefit.getDeleteBenefitOnMBBPage()
+							&& !(isDeleteRequestDenied)) {
 						CoreFunctions.verifyText(driver, _submittedBenefitStatusList.get(index),
 								COREFLEXConstants.DELETE_REQUEST_PENDING,
 								COREFLEXConstants.DELETE_REQUEST_PENDING_STATUS);
@@ -323,6 +341,11 @@ public class TransfereeSubmissions_DetailsPage extends Base {
 					CoreFunctions.verifyText(driver, _submittedBenefitQuantityList.get(index),
 							String.valueOf(benefit.getNumberOfBenefitSelected()),
 							COREFLEXConstants.SUBMITTED_BENEFIT_SELECTED_QUANTITY);
+					if (verifyExpenseAllowanceTracing(benefit.getPayments(), index)) {
+						continue;
+					} else {
+						return false;
+					}
 				}
 			}
 		} catch (Exception e) {
@@ -332,6 +355,30 @@ public class TransfereeSubmissions_DetailsPage extends Base {
 			return false;
 		}
 		return true;
+	}
+
+	private boolean verifyExpenseAllowanceTracing(String payments, int index) {
+		if (payments.equals(COREFLEXConstants.EXPENSE_REIMBURSEMENT)) {
+			CoreFunctions.verifyText(driver, _reimbursementAllowanceTracingList.get(index),
+					COREFLEXConstants.REIMBURSEMENT_TRACING, COREFLEXConstants.SUBMITTED_BENEFIT_TRACING_SET_MESSAGE);
+			try {
+				WebElement allowanceTracingIcon = CoreFunctions
+						.findSubElement(_reimbursementAllowanceTracingList.get(index), tracingPromptIcon);
+				return CoreFunctions.isElementExist(driver, allowanceTracingIcon, 2);
+			} catch (NoSuchElementException e) {
+				return true;
+			}
+		} else if (payments.equals(COREFLEXConstants.ALLOWANCE_CASHOUT)) {
+			CoreFunctions.verifyText(driver, _reimbursementAllowanceTracingList.get(index),
+					COREFLEXConstants.ALLOWANCE_TRACING, COREFLEXConstants.SUBMITTED_BENEFIT_TRACING_SET_MESSAGE);
+			WebElement allowanceTracingIcon = CoreFunctions
+					.findSubElement(_reimbursementAllowanceTracingList.get(index), tracingPromptIcon);
+			CoreFunctions.highlightObject(driver, allowanceTracingIcon);
+			CoreFunctions.verifyText(CoreFunctions.getElementText(driver, _tracingTextMessage),
+					COREFLEXConstants.TRACING_EXPECTED_MESSAGE);
+			return CoreFunctions.isElementExist(driver, allowanceTracingIcon, 2);
+		}
+		return false;
 	}
 
 	private void resolveDeleteRequestPending() {
@@ -411,7 +458,42 @@ public class TransfereeSubmissions_DetailsPage extends Base {
 		return false;
 	}
 
-	public boolean verifyApprovedRequestActionCompletedMessage(String pageName) {
+	public boolean verifyActionCompletedMessage(String actionPerformed, String pageName) {
+		boolean isActionCompletedMessageVerified = false;
+		try {
+			if (actionPerformed.equals(COREFLEXConstants.APPROVE_REQUEST)) {
+				isActionCompletedMessageVerified = verifyApprovedRequestActionCompletedMessage(pageName);
+			} else if (actionPerformed.equals(COREFLEXConstants.DENY_REQUEST)) {
+				isActionCompletedMessageVerified = verifyDenyRequestActionCompletedMessage(pageName);
+			}
+		} catch (Exception e) {
+			Reporter.addStepLog(MessageFormat.format(
+					COREFLEXConstants.EXCEPTION_OCCURED_WHILE_VERIFYING_GROWL_MESSAGE_AFTER_PERFORMING_DELETE_REQUEST_ACTION,
+					CoreConstants.FAIL, e.getMessage(), pageName));
+		}
+		return isActionCompletedMessageVerified;
+	}
+
+	private boolean verifyDenyRequestActionCompletedMessage(String pageName) {
+		try {
+			CoreFunctions.explicitWaitTillElementVisibility(driver, _requestCompletedGrowlMessage,
+					COREFLEXConstants.REQUEST_ACTION_COMPLETED_GROWL);
+			CoreFunctions.verifyText(driver, _requestCompletedGrowlMessage, COREFLEXConstants.ACTION_COMPLETED_MESSAGE,
+					COREFLEXConstants.REQUEST_ACTION_COMPLETED_GROWL);
+			Reporter.addStepLog(MessageFormat.format(
+					COREFLEXConstants.SUCCESSFULLY_VERIFIED_DENY_GROWL_ACTION_COMPLETED_MESSAGE_ON_TRANSFEREE_SUBMISSION_DETAILS_PAGE,
+					CoreConstants.PASS, COREFLEXConstants.ACTION_COMPLETED_MESSAGE));
+			isDeleteRequestDenied = true;
+			return true;
+		} catch (Exception e) {
+			Reporter.addStepLog(MessageFormat.format(
+					COREFLEXConstants.EXCEPTION_OCCURED_WHILE_VERIFYING_GROWL_MESSAGE_AFTER_DENYING_DELETE_REQUEST_ACTION,
+					CoreConstants.FAIL, e.getMessage(), pageName));
+		}
+		return false;
+	}
+
+	private boolean verifyApprovedRequestActionCompletedMessage(String pageName) {
 		try {
 			DecimalFormat format = new DecimalFormat();
 			format.setDecimalSeparatorAlwaysShown(false);
@@ -422,7 +504,7 @@ public class TransfereeSubmissions_DetailsPage extends Base {
 			CoreFunctions.verifyText(driver, _requestCompletedGrowlMessage, expectedGrowlMessage,
 					COREFLEXConstants.REQUEST_ACTION_COMPLETED_GROWL);
 			Reporter.addStepLog(MessageFormat.format(
-					COREFLEXConstants.SUCCESSFULLY_VERIFIED_GROWL_ACTION_COMPLETED_MESSAGE_ON_TRANSFEREE_SUBMISSION_DETAILS_PAGE,
+					COREFLEXConstants.SUCCESSFULLY_VERIFIED_APPROVED_GROWL_ACTION_COMPLETED_MESSAGE_ON_TRANSFEREE_SUBMISSION_DETAILS_PAGE,
 					CoreConstants.PASS, expectedGrowlMessage));
 			MX_Transferee_FlexPlanningTool_Page.totalSelectedPoints -= approvedDeleteRequestTotalPoints;
 			MX_Transferee_MyBenefitsBundlePage.availablePointsAfterSubmission += approvedDeleteRequestTotalPoints;
@@ -430,35 +512,10 @@ public class TransfereeSubmissions_DetailsPage extends Base {
 			return true;
 		} catch (Exception e) {
 			Reporter.addStepLog(MessageFormat.format(
-					COREFLEXConstants.EXCEPTION_OCCURED_WHILE_VERIFYING_GROWL_MESSAGE_AFTER_PERFORMING_DELETE_REQUEST_ACTION,
+					COREFLEXConstants.EXCEPTION_OCCURED_WHILE_VERIFYING_GROWL_MESSAGE_AFTER_ARRPOVING_DELETE_REQUEST_ACTION,
 					CoreConstants.FAIL, e.getMessage(), pageName));
 		}
 		return false;
-	}
-
-	public boolean verifyApprovedDeleteRequestRemovedFromList() {
-		try {
-			for (FlexBenefit benefitList : flexBenefits) {
-				for (Benefit benefit : benefitList.getBenefits()) {
-					for (int index = 0; index < _submittedBenefitNameList.size(); index++) {
-						if ((benefit.getDeleteBenefitOnMBBPage())
-								& CoreFunctions.getElementText(driver, _submittedBenefitNameList.get(index))
-										.equals(benefit.getBenefitDisplayName())) {
-							return false;
-						}
-					}
-				}
-			}
-		} catch (Exception e) {
-			Reporter.addStepLog(MessageFormat.format(
-					COREFLEXConstants.EXCEPTION_OCCURED_WHILE_VERIFYING_DELETE_BENEFIT_REQUEST_REMOVED_ON_SUBMISSION_DETAILS_PAGE,
-					CoreConstants.FAIL, e.getMessage()));
-			return false;
-		}
-		Reporter.addStepLog(MessageFormat.format(
-				COREFLEXConstants.SUCCESSFULLY_REMOVED_APPROVED_DELETE_BENEFIT_REQUEST_FROM_TRANSFEREE_SUBMISSIONS_DETAILS_LIST,
-				CoreConstants.PASS));
-		return true;
 	}
 
 	public boolean verifyBenefitDeleteRequestApprovedEmail() {
@@ -495,29 +552,56 @@ public class TransfereeSubmissions_DetailsPage extends Base {
 		String emailContent[] = actualResultSubmissionDetails.split(",");
 		String actualUserName = emailContent[0];
 		String actualEmailContentBenefitDetails[] = emailContent[1].split("</ul>");
-		String deleteApprovedBenefitPointDetails[] = actualEmailContentBenefitDetails[0].replace("<ul>", "").replace("<li>", "")
-				.replace("</ul>", "").split("</li>");
-		String actualDeleteApprovedBenefitPointText = deleteApprovedBenefitPointDetails[0].trim();	
+		String deleteApprovedBenefitPointDetails[] = actualEmailContentBenefitDetails[0].replace("<ul>", "")
+				.replace("<li>", "").replace("</ul>", "").split("</li>");
+		String actualDeleteApprovedBenefitPointText = deleteApprovedBenefitPointDetails[0].trim();
 		String actualDeleteCommentText = deleteApprovedBenefitPointDetails[1].replace("</li>", "").trim();
 		String actualRemainingPointsText = actualEmailContentBenefitDetails[2].trim();
 		CoreFunctions.verifyText(actualUserName, CoreFunctions.getPropertyFromConfig("Transferee_firstName"));
-		CoreFunctions.verifyText(actualDeleteApprovedBenefitPointText,getExpectedDeleteApprovedBenefitPointText());
-		CoreFunctions.verifyText(actualDeleteCommentText,COREFLEXConstants.REQUESTS_DIALOG_COMMENT);
-		CoreFunctions.verifyText(actualRemainingPointsText,getExpectedRemainingPointsToUseText());
+		CoreFunctions.verifyText(actualDeleteApprovedBenefitPointText, getExpectedDeleteApprovedBenefitPointText());
+		CoreFunctions.verifyText(actualDeleteCommentText, COREFLEXConstants.REQUESTS_DIALOG_COMMENT);
+		CoreFunctions.verifyText(actualRemainingPointsText, getExpectedRemainingPointsToUseText());
 		return true;
 	}
 
 	private String getExpectedDeleteApprovedBenefitPointText() {
 		DecimalFormat format = new DecimalFormat();
 		format.setDecimalSeparatorAlwaysShown(false);
-		return MobilityXConstants.DELETE_REQUEST_APPROVED_BENEFIT_POINT_MESSAGE.replace("benefit_name", approvedDeleteRequestBenefitName)
+		return MobilityXConstants.DELETE_REQUEST_APPROVED_BENEFIT_POINT_MESSAGE
+				.replace("benefit_name", approvedDeleteRequestBenefitName)
 				.replace("delete_request_points", String.valueOf(format.format(approvedDeleteRequestTotalPoints)));
 	}
 
 	private String getExpectedRemainingPointsToUseText() {
 		DecimalFormat format = new DecimalFormat();
 		format.setDecimalSeparatorAlwaysShown(false);
-		return MobilityXConstants.DELETE_REQUEST_REMAINING_POINTS_TO_USE_MESSAGE
-				.replace("current_balance", String.valueOf(format.format(MX_Transferee_MyBenefitsBundlePage.availablePointsAfterSubmission)));
+		return MobilityXConstants.DELETE_REQUEST_REMAINING_POINTS_TO_USE_MESSAGE.replace("current_balance",
+				String.valueOf(format.format(MX_Transferee_MyBenefitsBundlePage.availablePointsAfterSubmission)));
 	}
+	
+	public boolean verifyApprovedDeleteRequestRemovedFromList() {
+		try {
+			for (FlexBenefit benefitList : flexBenefits) {
+				for (Benefit benefit : benefitList.getBenefits()) {
+					for (int index = 0; index < _submittedBenefitNameList.size(); index++) {
+						if ((benefit.getDeleteBenefitOnMBBPage())
+								& CoreFunctions.getElementText(driver, _submittedBenefitNameList.get(index))
+										.equals(benefit.getBenefitDisplayName())) {
+							return false;
+						}
+					}
+				}
+			}
+		} catch (Exception e) {
+			Reporter.addStepLog(MessageFormat.format(
+					COREFLEXConstants.EXCEPTION_OCCURED_WHILE_VERIFYING_DELETE_BENEFIT_REQUEST_REMOVED_ON_SUBMISSION_DETAILS_PAGE,
+					CoreConstants.FAIL, e.getMessage()));
+			return false;
+		}
+		Reporter.addStepLog(MessageFormat.format(
+				COREFLEXConstants.SUCCESSFULLY_REMOVED_APPROVED_DELETE_BENEFIT_REQUEST_FROM_TRANSFEREE_SUBMISSIONS_DETAILS_LIST,
+				CoreConstants.PASS));
+		return true;
+	}
+
 }

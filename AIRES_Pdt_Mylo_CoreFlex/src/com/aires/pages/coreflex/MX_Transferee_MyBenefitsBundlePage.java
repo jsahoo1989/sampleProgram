@@ -115,6 +115,12 @@ public class MX_Transferee_MyBenefitsBundlePage extends Base {
 	@FindBy(how = How.XPATH, using = "//div[contains(@id,'Benefit')]//a[contains(@class,'BorderButton')]/span")
 	private List<WebElement> _buttonDeleteSubmittedBenefitList;
 
+	@FindBy(how = How.XPATH, using = "//div[contains(@id,'Benefit')]//a[contains(@class,'BorderButton')]")
+	private List<WebElement> _buttonDeleteBenefitList;
+
+	@FindBy(how = How.XPATH, using = "//span[contains(text(),'Unable to delete benefit. Please see comments for more information.')]")
+	private WebElement _disabledDeleteButtonHoverText;
+
 	@FindBy(how = How.XPATH, using = "//div[contains(@id,'mainSubmittedBenefits')]//span[@class='RXAiresSeaglass RXCFBigText']")
 	private List<WebElement> _textSubmittedBenefitsPoints;
 
@@ -612,10 +618,10 @@ public class MX_Transferee_MyBenefitsBundlePage extends Base {
 
 	public boolean verifyRemoveBenefitRequestSuccessMessage() {
 		try {
-			if(CoreFunctions.isElementExist(driver, _beleteBenefitSentGrowlMessage, 5)) {
-				Reporter.addStepLog(MessageFormat.format(
-						COREFLEXConstants.SUCCESSFULLY_DISPLAYED_DELETE_REQUEST_SENT_GROWL_MESSAGE,
-						CoreConstants.PASS));
+			if (CoreFunctions.isElementExist(driver, _beleteBenefitSentGrowlMessage, 5)) {
+				Reporter.addStepLog(
+						MessageFormat.format(COREFLEXConstants.SUCCESSFULLY_DISPLAYED_DELETE_REQUEST_SENT_GROWL_MESSAGE,
+								CoreConstants.PASS));
 				return true;
 			}
 		} catch (Exception e) {
@@ -941,12 +947,12 @@ public class MX_Transferee_MyBenefitsBundlePage extends Base {
 		return isCashoutDeletedStatusVerified;
 	}
 
-	public boolean validateSubmittedBenefitDetailsPostDeleteRequestApproval() {
+	public boolean validateSubmittedBenefitDetailsPostDeleteRequestOperation(String actionPerformed) {
 		boolean isBenefitsAndPointsMatched = false, isSubmittedBenefitDetailsVerified = false;
 		try {
 			isSubmittedBenefitDetailsVerified = verifySubmittedBenefitsSectionHeader()
 					&& verifySubmittedCashoutDetailsOnMBBPage()
-					&& verifySubmittedFlexBenefitsDetailsPostDeleteRequestApprovalOnMBBPage();
+					&& verifySubmittedBenefitsDetailsPostDeleteRequestOperationOnMBBPage(actionPerformed);
 			isBenefitsAndPointsMatched = isSubmittedBenefitDetailsVerified
 					&& ((Double.parseDouble(CoreFunctions.getItemsFromListByIndex(driver, _textSubmittedBenefitsPoints,
 							0, true))) == MX_Transferee_FlexPlanningTool_Page.totalSelectedPoints)
@@ -964,7 +970,33 @@ public class MX_Transferee_MyBenefitsBundlePage extends Base {
 		return isBenefitsAndPointsMatched;
 	}
 
-	public boolean verifySubmittedFlexBenefitsDetailsPostDeleteRequestApprovalOnMBBPage() {
+	public boolean verifySubmittedBenefitsDetailsPostDeleteRequestOperationOnMBBPage(String actionPerformed) {
+		boolean isSubmittedFlexBenefitDetailsOnMBBVerified = false;
+		try {
+			switch (actionPerformed) {
+			case COREFLEXConstants.APPROVED:
+				isSubmittedFlexBenefitDetailsOnMBBVerified = verifySubmittedBenefitDetailsPostApprovedDeleteRequest();
+				break;
+			case COREFLEXConstants.DENIED:
+				isSubmittedFlexBenefitDetailsOnMBBVerified = verifySubmittedBenefitDetailsPostDeniedDeleteRequest();
+				break;
+			default:
+				Assert.fail(COREFLEXConstants.INVALID_OPTION);
+			}
+		} catch (Exception e) {
+			Reporter.addStepLog(MessageFormat.format(
+					COREFLEXConstants.EXCEPTION_OCCURED_WHILE_VALIDATING_SELECTED_FLEX_BENEFIT_DETAILS_ON_MY_BENEFITS_PAGE,
+					CoreConstants.FAIL, e.getMessage()));
+		}
+		if (isSubmittedFlexBenefitDetailsOnMBBVerified) {
+			Reporter.addStepLog(MessageFormat.format(
+					COREFLEXConstants.SUCCESSFULLY_VERIFIED_SELECTED_FLEX_BENEFIT_DETAILS_ON_MY_BENEFITS_PAGE,
+					CoreConstants.PASS));
+		}
+		return isSubmittedFlexBenefitDetailsOnMBBVerified;
+	}
+
+	private boolean verifySubmittedBenefitDetailsPostDeniedDeleteRequest() {
 		boolean isSubmittedFlexBenefitDetailsOnMBBVerified = false;
 		boolean flag = false;
 		try {
@@ -972,12 +1004,65 @@ public class MX_Transferee_MyBenefitsBundlePage extends Base {
 				for (Benefit benefit : benefitList.getBenefits()) {
 					if (benefit.getSelectBenefitOnFPTPage()) {
 						int indexBenefit = BusinessFunctions.returnindexItemFromListUsingText(driver,
-								_textSubmittedBenefitNameList, benefit.getBenefitDisplayName());						
+								_textSubmittedBenefitNameList, benefit.getBenefitDisplayName());
+						isSubmittedFlexBenefitDetailsOnMBBVerified = verifySubmittedBenefitDetailsOnMBB(indexBenefit,
+								benefit) && verifyDeniedBenefitRequestDeleteButtonDisabled(indexBenefit, benefit);
+						if (!isSubmittedFlexBenefitDetailsOnMBBVerified) {
+							return false;
+						} else {
+							flag = true;
+						}
+					} else {
+						isSubmittedFlexBenefitDetailsOnMBBVerified = true;
+					}
+				}
+			}
+		} catch (Exception e) {
+			Reporter.addStepLog(MessageFormat.format(
+					COREFLEXConstants.EXCEPTION_OCCURED_WHILE_VALIDATING_SELECTED_FLEX_BENEFIT_DETAILS_ON_MY_BENEFITS_PAGE_POST_DELETE_REQUEST_APPROVAL,
+					CoreConstants.FAIL, e.getMessage()));
+		}
+		if (isSubmittedFlexBenefitDetailsOnMBBVerified & flag) {
+			Reporter.addStepLog(MessageFormat.format(
+					COREFLEXConstants.SUCCESSFULLY_VERIFIED_SELECTED_FLEX_BENEFIT_DETAILS_ON_MY_BENEFITS_PAGE_POST_DELETE_REQUEST_APPROVAL,
+					CoreConstants.PASS));
+		}
+		return isSubmittedFlexBenefitDetailsOnMBBVerified;
+	}
+
+	private boolean verifyDeniedBenefitRequestDeleteButtonDisabled(int indexBenefit, Benefit benefit) {
+		boolean isDeleteButtonDisabled = false;
+		boolean isDeleteHoverTextVerified = false;
+		if(benefit.getDeleteBenefitOnMBBPage()) {			
+			isDeleteButtonDisabled = Boolean.valueOf(CoreFunctions.getAttributeText(_buttonDeleteBenefitList.get(indexBenefit), "aria-disabled"));
+			CoreFunctions.moveToElement(driver, _buttonDeleteBenefitList.get(indexBenefit));
+			isDeleteHoverTextVerified = CoreFunctions.isElementExist(driver, _disabledDeleteButtonHoverText, 5);
+			if(isDeleteButtonDisabled && isDeleteHoverTextVerified){
+				Reporter.addStepLog(MessageFormat.format(
+						COREFLEXConstants.SUCCESSFULLY_VERIFIED_DELETE_BUTTON_IS_DISABLED_AND_DISABLED_DELETE_HOVER_TEXT_POST_DELETE_REQUEST_DENIED_BY_MSPEC_PPC_USER,
+						CoreConstants.PASS));
+				return true;
+			}
+			else
+			return false;
+		}
+		return true;
+	}
+
+	private boolean verifySubmittedBenefitDetailsPostApprovedDeleteRequest() {
+		boolean isSubmittedFlexBenefitDetailsOnMBBVerified = false;
+		boolean flag = false;
+		try {
+			for (FlexBenefit benefitList : flexBenefits) {
+				for (Benefit benefit : benefitList.getBenefits()) {
+					if (benefit.getSelectBenefitOnFPTPage()) {
+						int indexBenefit = BusinessFunctions.returnindexItemFromListUsingText(driver,
+								_textSubmittedBenefitNameList, benefit.getBenefitDisplayName());
 						if (indexBenefit == -1)
 							continue;
 						else if (verifyApprovedDeleteRequestBenefitOnMBB(indexBenefit, benefit))
 							return false;
-						
+
 						isSubmittedFlexBenefitDetailsOnMBBVerified = verifySubmittedBenefitDetailsOnMBB(indexBenefit,
 								benefit);
 						if (!isSubmittedFlexBenefitDetailsOnMBBVerified) {
@@ -1011,7 +1096,6 @@ public class MX_Transferee_MyBenefitsBundlePage extends Base {
 			return true;
 		} else
 			return false;
-
 	}
 
 }

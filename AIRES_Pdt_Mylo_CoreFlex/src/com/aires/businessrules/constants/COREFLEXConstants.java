@@ -141,8 +141,8 @@ public class COREFLEXConstants {
 	public static final String SUCCESSFULLY_SELECTED_AND_FILLED_ADDED_FLEX_BENEFITS = "{0}Successfully selected and filled all the added FLEX Benefits";
 	public static final String SUCCESSFULLY_SELECTED_AND_FILLED_ADDED_OTHER_BENEFITS = "{0}Successfully selected and filled all the added Other Benefits";
 	public static final String FAILED_TO_SELECT_AND_FILL_ADDED_BENEFITS = "{0}Failed to select and fill added benefits.";
-	public static final String POLICY_SUBMIT_STATUS_MESSAGE = "Success | The PolicyName FleX setup has been saved!";
-	public static final String POLICY_SUBMIT_STATUS_MESSAGE_UAT = "Success | The PolicyName Has Been Saved Successfully.";
+	public static final String POLICY_SUBMIT_STATUS_MESSAGE = "The PolicyName FleX setup has been saved!";
+	public static final String POLICY_SUBMIT_STATUS_MESSAGE_UAT = "The PolicyName Has Been Saved Successfully.";
 	public static final String LOCK_THE_BENEFITS_POINTS_SELECTION = "Lock the benefits points selection";
 	public static final String POLICY_BENEFITS_BENEFIT_SUMMARY = "Policy Benefits / Benefit Summary";
 	public static final String BENEFIT_EXPIRATION_TRACING_PROMPT = "Benefits Expiration Tracing Prompt";
@@ -350,4 +350,7 @@ public class COREFLEXConstants {
 	public static final String APPROVED = "Approved";
 	public static final String SUCCESSFULLY_VERIFIED_DELETE_BUTTON_IS_DISABLED_AND_DISABLED_DELETE_HOVER_TEXT_POST_DELETE_REQUEST_DENIED_BY_MSPEC_PPC_USER = "{0}Successfully verified delete button is disabled & disabled delete button hover text post delete request is denied by MSPEC-PPC user.";
 	public static final String FAILED_TO_VERIFY_BENEFITS_DETAILS_POST_APPROVE_DELETE_BENEFIT_REQUEST_OPERATION_ON_TRANSFEREE_SUBMISSIONS_DETAILS_PAGE = "{0}Failed to verify Benefit details post Approve delete benefit request operation on Transferee Submissions Details Page.";
+	public static final String SUCCESS = "Success";
+	public static final String SUCCESSFULLY_VERIFIED_BENEFITS_CATEGORIES_AND_SELECTABLE_BENEFITS_NAMES_AND_DISPLAY_ORDER_ON_POLICY_BENEFITS_CATEGORIES_PAGE = "{0}Successfully verified Benefits Categories, Selectable Benefit Names & Display order on Policy Benefits Categories Page.";
+	public static final String EXCEPTION_OCCURED_WHILE_VALIDATING_BENEFITS_CATEGORIES_AND_SELECTABLE_BENEFITS_NAMES_AND_DISPLAY_ORDER_ON_POLICY_BENEFITS_CATEGORIES_PAGE = "{0}Exception occured while validating Benefits Categories, Selectable Benefit Names & Display order on Policy Benefits Categories Page. Exception : ''{1}''.";
 }

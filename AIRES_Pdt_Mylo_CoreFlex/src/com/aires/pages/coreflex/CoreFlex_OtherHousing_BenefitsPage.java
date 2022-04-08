@@ -148,23 +148,16 @@ public class CoreFlex_OtherHousing_BenefitsPage extends Base {
 	/*********************************************************************/
 
 	/**
-	 * Method to get Navigated Page Header.
+	 * Method to verify navigated Page Header Title
 	 * 
+	 * @param expectedPageName
 	 * @return
 	 */
-	public String getPageHeaderTitle() {
-		try {
-			CoreFunctions.explicitWaitTillElementVisibility(driver, _headerPage,
-					COREFLEXConstants.OTHER_HOUSING_BENEFIT);
-			return CoreFunctions.getElementText(driver, _headerPage);
-		} catch (Exception e) {
-			Reporter.addStepLog(
-					MessageFormat.format(COREFLEXConstants.EXCEPTION_OCCURED_WHILE_FETCHING_PAGE_HEADER_TITLE,
-							CoreConstants.FAIL, e.getMessage()));
-		}
-		return null;
+	public boolean verifyPageNavigation(String expectedPageName) {
+		return CoreFunctions.verifyElementOnPage(driver, _headerPage, COREFLEXConstants.OTHER_HOUSING_BENEFIT,
+				expectedPageName, expectedPageName, true);
 	}
-
+	
 	/**
 	 * Generic Method to Click on an Element on a Page.
 	 * 
@@ -246,16 +239,6 @@ public class CoreFlex_OtherHousing_BenefitsPage extends Base {
 	}
 
 	/**
-	 * Method to verify navigated Page Header Title
-	 * 
-	 * @param expectedPageName
-	 * @return
-	 */
-	public boolean verifyPageNavigation(String expectedPageName) {
-		return (getPageHeaderTitle().equals(expectedPageName));
-	}
-
-	/**
 	 * Method to call select Benefit Type and fill all mandatory fields
 	 * 
 	 * @param benefitDisplayName
@@ -299,29 +282,37 @@ public class CoreFlex_OtherHousing_BenefitsPage extends Base {
 
 	private void deleteAdditionalAddedBenefits() {
 		int counter = 1;
-		System.out.println(_addedBenefitList.size());
 		if (_addedBenefitList.size() == 10) {
 			BusinessFunctions.selectValueFromListUsingIndex(driver, _deleteBenefitButtonList, counter);
 			CoreFunctions.clickElement(driver, _deleteBenefitButtonYesOption);
 			CoreFunctions.waitHandler(1);
-			if (CoreFunctions.isElementExist(driver, _buttonAddAnotherBenefit, 3)) {
-				Reporter.addStepLog(MessageFormat.format(
-						COREFLEXConstants.SUCCESSFULLY_VALIDATED_ADD_ANOTHER_BENEFIT_BUTTON_DISPLAYED_AFTER_10TH_BENEFIT_IS_DELETED,
-						CoreConstants.PASS));
-			} else {
-				Reporter.addStepLog(MessageFormat.format(
-						COREFLEXConstants.ADD_ANOTHER_BENEFIT_BUTTON_NOT_DISPLAYED_AFTER_10TH_BENEFIT_IS_DELETED,
-						CoreConstants.FAIL));
-				Assert.fail(MessageFormat.format(
-						COREFLEXConstants.ADD_ANOTHER_BENEFIT_BUTTON_NOT_DISPLAYED_AFTER_10TH_BENEFIT_IS_DELETED,
-						CoreConstants.FAIL));
-			}
+			verifyAddAnotherBenefitButtonIsDisplayed();			
 		}
+		deleteBenefits();		
+	}
+
+	private void deleteBenefits() {
+		int counter = 1;
 		while (counter < _deleteBenefitButtonList.size()) {
 			BusinessFunctions.selectValueFromListUsingIndex(driver, _deleteBenefitButtonList, counter);
 			CoreFunctions.clickElement(driver, _deleteBenefitButtonYesOption);
 			CoreFunctions.waitHandler(1);
-		}
+		}		
+	}
+
+	private void verifyAddAnotherBenefitButtonIsDisplayed() {
+		if (CoreFunctions.isElementExist(driver, _buttonAddAnotherBenefit, 3)) {
+			Reporter.addStepLog(MessageFormat.format(
+					COREFLEXConstants.SUCCESSFULLY_VALIDATED_ADD_ANOTHER_BENEFIT_BUTTON_DISPLAYED_AFTER_10TH_BENEFIT_IS_DELETED,
+					CoreConstants.PASS));
+		} else {
+			Reporter.addStepLog(MessageFormat.format(
+					COREFLEXConstants.ADD_ANOTHER_BENEFIT_BUTTON_NOT_DISPLAYED_AFTER_10TH_BENEFIT_IS_DELETED,
+					CoreConstants.FAIL));
+			Assert.fail(MessageFormat.format(
+					COREFLEXConstants.ADD_ANOTHER_BENEFIT_BUTTON_NOT_DISPLAYED_AFTER_10TH_BENEFIT_IS_DELETED,
+					CoreConstants.FAIL));
+		}		
 	}
 
 	private void verifyAddAnotherBenefitLimit() {

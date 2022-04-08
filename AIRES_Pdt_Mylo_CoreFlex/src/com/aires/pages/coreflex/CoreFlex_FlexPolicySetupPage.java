@@ -157,20 +157,14 @@ public class CoreFlex_FlexPolicySetupPage extends Base {
 	/*********************************************************************/
 
 	/**
-	 * Method to get Navigated Page Header.
+	 * Method to verify navigated Page Header Title
 	 * 
+	 * @param expectedPageName
 	 * @return
 	 */
-	public String getPageHeaderTitle() {
-		try {
-			CoreFunctions.explicitWaitTillElementVisibility(driver, _headerPage, COREFLEXConstants.FLEX_POLICY_SETUP);
-			return CoreFunctions.getElementText(driver, _headerPage);
-		} catch (Exception e) {
-			Reporter.addStepLog(
-					MessageFormat.format(COREFLEXConstants.EXCEPTION_OCCURED_WHILE_FETCHING_PAGE_HEADER_TITLE,
-							CoreConstants.FAIL, e.getMessage()));
-		}
-		return null;
+	public boolean verifyPageNavigation(String expectedPageName) {
+		return CoreFunctions.verifyElementOnPage(driver, _headerPage, COREFLEXConstants.FLEX_POLICY_SETUP,
+				expectedPageName, expectedPageName, true);
 	}
 
 	/**
@@ -188,6 +182,24 @@ public class CoreFlex_FlexPolicySetupPage extends Base {
 		}
 		return null;
 	}
+	
+	/**
+	 * Method to get Navigated Page Header.
+	 * 
+	 * @return
+	 */
+	public String getPageHeaderTitle() {
+		try {
+			CoreFunctions.explicitWaitTillElementVisibility(driver, _headerPage, COREFLEXConstants.FLEX_POLICY_SETUP);
+			return CoreFunctions.getElementText(driver, _headerPage);
+		} catch (Exception e) {
+			Reporter.addStepLog(
+					MessageFormat.format(COREFLEXConstants.EXCEPTION_OCCURED_WHILE_FETCHING_PAGE_HEADER_TITLE,
+							CoreConstants.FAIL, e.getMessage()));
+		}
+		return null;
+	}
+
 
 	/**
 	 * Generic Method to Click on an Element on a Page.
@@ -266,17 +278,6 @@ public class CoreFlex_FlexPolicySetupPage extends Base {
 	}
 
 	/**
-	 * Method to verify navigated Page Header Title and Left Navigation
-	 * 
-	 * @param expectedPageName
-	 * @return
-	 */
-	public boolean verifyPageNavigation(String expectedPageName) {
-		return (getPageHeaderTitle().equals(expectedPageName))
-				& (getLeftNavigationPageTitle().equals(expectedPageName));
-	}
-
-	/**
 	 * Method to select FlexPolicySetup page fields based on values provided
 	 * 
 	 * @param dataTable
@@ -303,9 +304,9 @@ public class CoreFlex_FlexPolicySetupPage extends Base {
 			performPageFieldSelection(fieldName, fieldSelection);
 		}
 
-		checkFieldValidation(COREFLEXConstants.TOTAL_POINTS_AVAILABLE, "ABCD");
-		checkFieldValidation(COREFLEXConstants.TOTAL_POINTS_AVAILABLE, "#$%");
-		checkFieldValidation(COREFLEXConstants.TOTAL_POINTS_AVAILABLE, "50 Points");
+//		checkFieldValidation(COREFLEXConstants.TOTAL_POINTS_AVAILABLE, "ABCD");
+//		checkFieldValidation(COREFLEXConstants.TOTAL_POINTS_AVAILABLE, "#$%");
+//		checkFieldValidation(COREFLEXConstants.TOTAL_POINTS_AVAILABLE, "50 Points");
 
 		CoreFunctions.clearAndSetTextUsingKeys(driver, _inputTotalPointsAvailable,
 				policySetupPageData.flexPolicySetupPage.StaticFixedTotalPointsAvailable,
@@ -429,47 +430,55 @@ public class CoreFlex_FlexPolicySetupPage extends Base {
 	}
 
 	public void checkFieldValidation(String fieldName, String inputValue) {
-		boolean isValidationMessageDisplayed = false;
-		String validationMessage = "";
 		switch (fieldName) {
 		case COREFLEXConstants.TOTAL_POINTS_AVAILABLE:
 			CoreFunctions.clearAndSetTextUsingKeys(driver, _inputTotalPointsAvailable, inputValue, fieldName);
 			clickElementOfPage(PDTConstants.NEXT);
-			acceptErrorDialogIfDisplayed();
-			if (CoreFunctions.isElementExist(driver, _validationMessageTotalPointsAvailable, 5)) {
-				isValidationMessageDisplayed = CoreFunctions
-						.getElementText(driver, _validationMessageTotalPointsAvailable)
-						.equals(COREFLEXConstants.POINT_FIVE_TO_NINE_NINE_NINE_POINT_FIVE_RANGE_NEW_MESSAGE);
-				BusinessFunctions.checkValidationBasedOnInput(isValidationMessageDisplayed, fieldName, inputValue);
-			} else if (CoreFunctions.getElementText(driver, _headerPage)
-					.equals(COREFLEXConstants.POLICY_BENEFIT_CATEGORIES)) {
-				Assert.fail(
-						MessageFormat.format(COREFLEXConstants.USER_NAVIGATION_TO_POLICY_BENEFITS_CATEGORIES_INVALID,
-								CoreConstants.FAIL, fieldName, inputValue));
-			}
+			validateTotalPointsAvailableField(fieldName, inputValue);
 			break;
 		case COREFLEXConstants.POINT_EXCHANGE_RATE:
 			CoreFunctions.clearAndSetTextUsingKeys(driver, _inputPointExchangeRate, inputValue, fieldName);
 			clickElementOfPage(PDTConstants.NEXT);
-			acceptErrorDialogIfDisplayed();
-			if (CoreFunctions.isElementExist(driver, _validationMessagePointsExchangeRate, 5))
-				isValidationMessageDisplayed = CoreFunctions
-						.getElementText(driver, _validationMessagePointsExchangeRate)
-						.equals(COREFLEXConstants.POINT_FIVE_TO_NINE_NINE_NINE_POINT_FIVE_RANGE_OLD_MESSAGE);
-			BusinessFunctions.checkValidationBasedOnInput(isValidationMessageDisplayed, fieldName, inputValue);
+			validatePointsExchangeRateField(fieldName, inputValue);
 			break;
 		case COREFLEXConstants.MAX_PORTION_CASHOUT:
 			CoreFunctions.clearAndSetTextUsingKeys(driver, _inputMarginPortion, inputValue, fieldName);
 			clickElementOfPage(PDTConstants.NEXT);
-			acceptErrorDialogIfDisplayed();
-			if (CoreFunctions.isElementExist(driver, _validationMessageMaxPortionCashout, 5))
-				validationMessage = CoreFunctions.getElementText(driver, _validationMessageMaxPortionCashout);
-			BusinessFunctions.checkValidationBasedOnInput(validationMessage, fieldName, inputValue);
+			validateMaxPortionCashoutField(fieldName, inputValue);
 			break;
 		default:
 			Assert.fail(COREFLEXConstants.INVALID_OPTION);
 		}
+	}
 
+	private void validateMaxPortionCashoutField(String fieldName, String inputValue) {
+		acceptErrorDialogIfDisplayed();
+		if (CoreFunctions.isElementExist(driver, _validationMessageMaxPortionCashout, 5))
+			BusinessFunctions.checkValidationBasedOnInput(
+					CoreFunctions.getElementText(driver, _validationMessageMaxPortionCashout), fieldName, inputValue);
+	}
+
+	private void validatePointsExchangeRateField(String fieldName, String inputValue) {
+		acceptErrorDialogIfDisplayed();
+		if (CoreFunctions.isElementExist(driver, _validationMessagePointsExchangeRate, 5))
+			BusinessFunctions.checkValidationBasedOnInput(
+					CoreFunctions.getElementText(driver, _validationMessagePointsExchangeRate)
+							.equals(COREFLEXConstants.POINT_FIVE_TO_NINE_NINE_NINE_POINT_FIVE_RANGE_OLD_MESSAGE),
+					fieldName, inputValue);
+	}
+
+	private void validateTotalPointsAvailableField(String fieldName, String inputValue) {
+		acceptErrorDialogIfDisplayed();
+		if (CoreFunctions.isElementExist(driver, _validationMessageTotalPointsAvailable, 5)) {
+			BusinessFunctions.checkValidationBasedOnInput(
+					CoreFunctions.getElementText(driver, _validationMessageTotalPointsAvailable)
+							.equals(COREFLEXConstants.POINT_FIVE_TO_NINE_NINE_NINE_POINT_FIVE_RANGE_NEW_MESSAGE),
+					fieldName, inputValue);
+		} else if (CoreFunctions.getElementText(driver, _headerPage)
+				.equals(COREFLEXConstants.POLICY_BENEFIT_CATEGORIES)) {
+			Assert.fail(MessageFormat.format(COREFLEXConstants.USER_NAVIGATION_TO_POLICY_BENEFITS_CATEGORIES_INVALID,
+					CoreConstants.FAIL, fieldName, inputValue));
+		}
 	}
 
 	private void acceptErrorDialogIfDisplayed() {

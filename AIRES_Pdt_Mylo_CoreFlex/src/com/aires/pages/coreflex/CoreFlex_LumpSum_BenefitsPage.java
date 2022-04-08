@@ -201,22 +201,16 @@ public class CoreFlex_LumpSum_BenefitsPage extends Base {
 	/*********************************************************************/
 
 	/**
-	 * Method to get Navigated Page Header.
+	 * Method to verify navigated Page Header Title
 	 * 
+	 * @param expectedPageName
 	 * @return
 	 */
-	public String getPageHeaderTitle() {
-		try {
-			CoreFunctions.explicitWaitTillElementVisibility(driver, _headerPage, COREFLEXConstants.LUMP_SUM);
-			return CoreFunctions.getElementText(driver, _headerPage);
-		} catch (Exception e) {
-			Reporter.addStepLog(
-					MessageFormat.format(COREFLEXConstants.EXCEPTION_OCCURED_WHILE_FETCHING_PAGE_HEADER_TITLE,
-							CoreConstants.FAIL, e.getMessage()));
-		}
-		return null;
+	public boolean verifyPageNavigation(String expectedPageName) {
+		return CoreFunctions.verifyElementOnPage(driver, _headerPage, COREFLEXConstants.LUMP_SUM,
+				expectedPageName, expectedPageName, true);
 	}
-
+	
 	/**
 	 * Generic Method to Click on an Element on a Page.
 	 * 
@@ -298,16 +292,6 @@ public class CoreFlex_LumpSum_BenefitsPage extends Base {
 			throw new RuntimeException(e);
 
 		}
-	}
-
-	/**
-	 * Method to verify navigated Page Header Title
-	 * 
-	 * @param expectedPageName
-	 * @return
-	 */
-	public boolean verifyPageNavigation(String expectedPageName) {
-		return (getPageHeaderTitle().equals(expectedPageName));
 	}
 
 	/**
@@ -487,7 +471,7 @@ public class CoreFlex_LumpSum_BenefitsPage extends Base {
 			break;
 		case COREFLEXConstants.FLEX:
 			CoreFunctions.clickElement(driver, _textFlex);
-			verifyNumericRangeFieldsValidation();
+//			verifyNumericRangeFieldsValidation();
 			CoreFunctions.clearAndSetTextUsingKeys(driver, _inputFlexPoints, flexPoints,
 					COREFLEXConstants.FLEX_POINTS_VALUE);
 			fillManadatoryDetails(benefitType, multipleBenefitSelection, benefitDisplayName, benefitAllowanceAmount,
@@ -500,7 +484,7 @@ public class CoreFlex_LumpSum_BenefitsPage extends Base {
 			break;
 		case COREFLEXConstants.FLEX_BENEFITS:
 			CoreFunctions.clickElement(driver, _textFlexBenefits);
-			verifyNumericRangeFieldsValidation();
+//			verifyNumericRangeFieldsValidation();
 			CoreFunctions.clearAndSetTextUsingKeys(driver, _inputFlexPoints, flexPoints,
 					COREFLEXConstants.FLEX_POINTS_VALUE);
 			fillManadatoryDetails(benefitType, multipleBenefitSelection, benefitDisplayName, benefitAllowanceAmount,

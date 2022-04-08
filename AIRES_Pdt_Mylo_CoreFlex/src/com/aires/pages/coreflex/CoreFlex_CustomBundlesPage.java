@@ -131,22 +131,16 @@ public class CoreFlex_CustomBundlesPage extends Base {
 	/*********************************************************************/
 
 	/**
-	 * Method to get Navigated Page Header.
+	 * Method to verify navigated Page Header Title
 	 * 
+	 * @param expectedPageName
 	 * @return
 	 */
-	public String getPageHeaderTitle() {
-		try {
-			CoreFunctions.explicitWaitTillElementVisibility(driver, _headerPage, COREFLEXConstants.CUSTOM_BUNDLES);
-			return CoreFunctions.getElementText(driver, _headerPage);
-		} catch (Exception e) {
-			Reporter.addStepLog(
-					MessageFormat.format(COREFLEXConstants.EXCEPTION_OCCURED_WHILE_FETCHING_PAGE_HEADER_TITLE,
-							CoreConstants.FAIL, e.getMessage()));
-		}
-		return null;
+	public boolean verifyPageNavigation(String expectedPageName) {
+		return CoreFunctions.verifyElementOnPage(driver, _headerPage, COREFLEXConstants.CUSTOM_BUNDLES,
+				expectedPageName, expectedPageName, true);
 	}
-
+	
 	/**
 	 * Method to get currently active Left Navigation Menu.
 	 * 
@@ -195,7 +189,7 @@ public class CoreFlex_CustomBundlesPage extends Base {
 				break;
 			case COREFLEXConstants.PREVIEW_TRANSFEREE_EXPERIENCE:
 				CoreFunctions.clickElement(driver, _buttonPreviewTransfereeExp);
-				CoreFunctions.explicitWaitTillElementInVisibility(driver, _progressBar);				
+				CoreFunctions.explicitWaitTillElementInVisibility(driver, _progressBar);
 				break;
 			case COREFLEXConstants.BACK:
 				CoreFunctions.clickElement(driver, _buttonBack);
@@ -263,37 +257,20 @@ public class CoreFlex_CustomBundlesPage extends Base {
 	}
 
 	/**
-	 * Method to verify navigated Page Header Title and Left Navigation
-	 * 
-	 * @param expectedPageName
-	 * @return
-	 */
-	public boolean verifyPageNavigation(String expectedPageName) {
-		return (getPageHeaderTitle().equals(expectedPageName))
-				& (getLeftNavigationPageTitle().equals(expectedPageName));
-	}
-
-	/**
 	 * Method to Verify Policy Submit status and Message
 	 * 
 	 * @param submitStatusMessage
 	 * @param policyName
 	 * @return
 	 */
-	public boolean verifyPolicySubmitStatus(String submitStatusMessage, String policyName) {
-		boolean isPolicySubmitStatusVerified = false;
-		boolean isSubmitStatusVerified, isSubmitMessageVerified;
-		String actualSubmitMessage = null, expectedSubmitMessage = null;
-		try {			
-			String[] expectedSubmitStatusMessage = submitStatusMessage.split("\\|");
-			isSubmitStatusVerified = (expectedSubmitStatusMessage[0].trim())
-					.equalsIgnoreCase(CoreFunctions.getElementText(driver, _popUpTextSubmitStatus));
-			expectedSubmitStatusMessage[1] = expectedSubmitStatusMessage[1].replace("PolicyName", policyName);
+	public boolean verifyPolicySubmitStatus(String expectedSubmitStatusMessage, String policyName) {
+		boolean isPolicySubmitStatusVerified = false, isSubmitMessageVerified;
+		String actualSubmitMessage = null;
+		try {
 			actualSubmitMessage = CoreFunctions.getElementText(driver, _popUpTextSubmitMessage);
-			expectedSubmitMessage = expectedSubmitStatusMessage[1].trim();
-			isSubmitMessageVerified = (expectedSubmitMessage)
-					.equalsIgnoreCase(actualSubmitMessage);
-			isPolicySubmitStatusVerified = isSubmitStatusVerified & isSubmitMessageVerified;
+			isSubmitMessageVerified = (expectedSubmitStatusMessage.replace("PolicyName", policyName)).equalsIgnoreCase(actualSubmitMessage);
+			isPolicySubmitStatusVerified = CoreFunctions.getElementText(driver, _popUpTextSubmitStatus)
+			.equals(COREFLEXConstants.SUCCESS) && isSubmitMessageVerified;
 		} catch (Exception e) {
 			Reporter.addStepLog(MessageFormat.format(
 					COREFLEXConstants.EXCEPTION_OCCURED_WHILE_VALIDATING_POLICY_SUBMIT_STATUS_AND_MESSAGE_ON_CUSTOM_BUNDLES_PAGE,
@@ -303,11 +280,10 @@ public class CoreFlex_CustomBundlesPage extends Base {
 			Reporter.addStepLog(MessageFormat.format(
 					COREFLEXConstants.SUCCESSFULLY_VERIFIED_POLICY_SUBMIT_STATUS_AND_MESSAGE_ON_CUSTOM_BUNDLES_PAGE,
 					CoreConstants.PASS, actualSubmitMessage));
-		}
-		else {
+		} else {
 			Reporter.addStepLog(MessageFormat.format(
 					COREFLEXConstants.POLICY_SUBMIT_STATUS_AND_MESSAGE_NOT_MATCHED_ON_CUSTOM_BUNDLES_PAGE,
-					CoreConstants.FAIL,expectedSubmitMessage, actualSubmitMessage));
+					CoreConstants.FAIL, expectedSubmitStatusMessage, actualSubmitMessage));
 		}
 		return isPolicySubmitStatusVerified;
 	}
@@ -323,7 +299,6 @@ public class CoreFlex_CustomBundlesPage extends Base {
 	 */
 	public boolean iterateAndAddNewCustomBundle(String addNewCustomBundleButton, String policyType,
 			String saveCustomBundleButton) {
-		boolean isCustomBundleCreated = false;
 		try {
 			List<String> bundleBenefitList = getBenefitList(policyType);
 			if (policyType.equals(COREFLEXConstants.CORE)) {
@@ -332,19 +307,19 @@ public class CoreFlex_CustomBundlesPage extends Base {
 				return true;
 			}
 			clickElementOfPage(addNewCustomBundleButton);
-			isCustomBundleCreated = createNewCustomBundle(policySetupPageData.customBundlesPage.customBundleName,
-					bundleBenefitList, saveCustomBundleButton);
+			if(createNewCustomBundle(policySetupPageData.customBundlesPage.customBundleName,
+					bundleBenefitList, saveCustomBundleButton)){
+				Reporter.addStepLog(MessageFormat.format(
+						COREFLEXConstants.SUCCESSFULLY_ADDED_A_NEW_CUSTOM_BUNDLE_ON_CUSTOM_BUNDLES_PAGE, CoreConstants.PASS,
+						policySetupPageData.customBundlesPage.customBundleName));
+				return true;
+			}
 		} catch (Exception e) {
 			Reporter.addStepLog(MessageFormat.format(
 					COREFLEXConstants.EXCEPTION_OCCURED_WHILE_ADDING_A_NEW_CUSTOM_BUNDLE_ON_CUSTOM_BUNDLES_PAGE,
 					CoreConstants.FAIL, e.getMessage()));
 		}
-		if (isCustomBundleCreated) {
-			Reporter.addStepLog(MessageFormat.format(
-					COREFLEXConstants.SUCCESSFULLY_ADDED_A_NEW_CUSTOM_BUNDLE_ON_CUSTOM_BUNDLES_PAGE, CoreConstants.PASS,
-					policySetupPageData.customBundlesPage.customBundleName));
-		}
-		return isCustomBundleCreated;
+		return false;
 	}
 
 	/**

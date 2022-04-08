@@ -159,21 +159,14 @@ public class CoreFlex_PolicyBenefitsCategoriesPage extends Base {
 	/*********************************************************************/
 
 	/**
-	 * Method to get Navigated Page Header.
+	 * Method to verify navigated Page Header Title
 	 * 
+	 * @param expectedPageName
 	 * @return
 	 */
-	public String getPageHeaderTitle() {
-		try {
-			CoreFunctions.explicitWaitTillElementVisibility(driver, _headerPage,
-					COREFLEXConstants.POLICY_BENEFIT_CATEGORIES);
-			return CoreFunctions.getElementText(driver, _headerPage);
-		} catch (Exception e) {
-			Reporter.addStepLog(
-					MessageFormat.format(COREFLEXConstants.EXCEPTION_OCCURED_WHILE_FETCHING_PAGE_HEADER_TITLE,
-							CoreConstants.FAIL, e.getMessage()));
-		}
-		return null;
+	public boolean verifyPageNavigation(String expectedPageName) {
+		return CoreFunctions.verifyElementOnPage(driver, _headerPage, COREFLEXConstants.POLICY_BENEFIT_CATEGORIES,
+				expectedPageName, expectedPageName, true);
 	}
 
 	/**
@@ -190,16 +183,6 @@ public class CoreFlex_PolicyBenefitsCategoriesPage extends Base {
 							CoreConstants.FAIL, e.getMessage()));
 		}
 		return null;
-	}
-
-	/**
-	 * Method to verify navigated Page Header Title
-	 * 
-	 * @param expectedPageName
-	 * @return
-	 */
-	public boolean verifyPageNavigation(String expectedPageName) {
-		return (getPageHeaderTitle().equals(expectedPageName));
 	}
 
 	/**
@@ -296,13 +279,6 @@ public class CoreFlex_PolicyBenefitsCategoriesPage extends Base {
 					COREFLEXConstants.EXCEPTION_OCCURED_WHILE_CLICKING_ON_LEFTNAVIGATION_ELEMENT_OF_PAGE,
 					CoreConstants.FAIL, elementName, e.getMessage()));
 		}
-
-//		if (CoreFunctions.isElementExist(driver, _popUpUnsavedChanges, 5)) {
-//			CoreFunctions.clickElement(driver, _popUpUnsavedChangesOkButton);
-//			clickElementOfPage(COREFLEXConstants.SAVE_AND_CONTINUE);
-//			clickLeftNavigationMenuOfPage(elementName);			
-//		}
-
 	}
 
 	/**
@@ -329,7 +305,6 @@ public class CoreFlex_PolicyBenefitsCategoriesPage extends Base {
 	}
 
 	private void expandAllBenefitCategories() {
-		// Method to Click on all Show More Links on Benefits Page
 		for (WebElement element : _linkShowMoreList) {
 			CoreFunctions.clickElement(driver, element);
 		}
@@ -413,41 +388,28 @@ public class CoreFlex_PolicyBenefitsCategoriesPage extends Base {
 			CoreFlex_OtherHousing_BenefitsPage coreFlexOtherHousingBenefitsPage) {
 		boolean isFlexBenefitSuccessfullySelectedAndFilled = false;
 		try {
-			String benefitName, subBenefitNames, benefitPolicyType, multipleBenefitSelection, flexPoints,
-					benefitDisplayName, benefitAllowanceAmount, benefitDescription, benefitComment, grossUp,
-					reimbursedBy, paymentOption;
 			for (FlexBenefit benefitList : flexBenefits) {
 				for (Benefit benefit : benefitList.getBenefits()) {
-					benefitName = benefit.getBenefitType();
-					benefitDisplayName = benefit.getBenefitDisplayName();
-					subBenefitNames = benefit.getSubBenefits();
-					benefitPolicyType = policyType;
-					multipleBenefitSelection = benefit.getMultipleBenefitSelection();
-					flexPoints = benefit.getPoints();
-					benefitAllowanceAmount = benefit.getBenefitAmount();
-					benefitDescription = benefit.getBenefitDesc();
-					benefitComment = benefit.getComment();
-					grossUp = benefit.getGrossUp();
-					reimbursedBy = benefit.getReimbursedBy();
-					paymentOption = benefit.getPayments();
-
-					clickLeftNavigationMenuOfPage(benefitName);
-					switch (benefitName) {
+					clickLeftNavigationMenuOfPage(benefit.getBenefitType());
+					switch (benefit.getBenefitType()) {
 					case COREFLEXConstants.DUPLICATE_HOUSING:
-						coreFlexDuplicateHousingBenefitsPage.selectAndFillBenefitsAndSubBenefitDetails(
-								benefitPolicyType, subBenefitNames, multipleBenefitSelection, flexPoints,
-								benefitDisplayName, benefitAllowanceAmount, benefitDescription,paymentOption);
+						coreFlexDuplicateHousingBenefitsPage.selectAndFillBenefitsAndSubBenefitDetails(policyType,
+								benefit.getSubBenefits(), benefit.getMultipleBenefitSelection(), benefit.getPoints(),
+								benefit.getBenefitDisplayName(), benefit.getBenefitAmount(), benefit.getBenefitDesc(),
+								benefit.getPayments());
 						break;
 					case COREFLEXConstants.LUMP_SUM:
-						coreFlexLumpSumBenefitsPage.selectAndFillBenefitsAndSubBenefitDetails(benefitPolicyType,
-								subBenefitNames, multipleBenefitSelection, flexPoints, benefitDisplayName,
-								benefitAllowanceAmount, benefitDescription,paymentOption);
+						coreFlexLumpSumBenefitsPage.selectAndFillBenefitsAndSubBenefitDetails(policyType,
+								benefit.getSubBenefits(), benefit.getMultipleBenefitSelection(), benefit.getPoints(),
+								benefit.getBenefitDisplayName(), benefit.getBenefitAmount(), benefit.getBenefitDesc(),
+								benefit.getPayments());
 						break;
 					case COREFLEXConstants.OTHER_HOUSING_BENEFIT:
-						coreFlexOtherHousingBenefitsPage.verifyNumericRangeFieldsValidation();
-						coreFlexOtherHousingBenefitsPage.selectAndFillBenefitsDetails(benefitDisplayName, flexPoints,
-								multipleBenefitSelection, benefitAllowanceAmount, benefitDescription, benefitComment,
-								grossUp, reimbursedBy,paymentOption);
+//						coreFlexOtherHousingBenefitsPage.verifyNumericRangeFieldsValidation();
+						coreFlexOtherHousingBenefitsPage.selectAndFillBenefitsDetails(benefit.getBenefitDisplayName(),
+								benefit.getPoints(), benefit.getMultipleBenefitSelection(), benefit.getBenefitAmount(),
+								benefit.getBenefitDesc(), benefit.getComment(), benefit.getGrossUp(),
+								benefit.getReimbursedBy(), benefit.getPayments());
 						break;
 					default:
 						Assert.fail(PDTConstants.INVALID_ELEMENT);
@@ -488,14 +450,28 @@ public class CoreFlex_PolicyBenefitsCategoriesPage extends Base {
 	}
 
 	private boolean verifySelectableBenefitsAndDisplayOrder() {
+		try {
+			CoreFunctions.clickElement(driver, _toggleButtonSelectAll);
+			List<String> actualBenefitCategoryList = CoreFunctions.getElementTextAndStoreInList(driver,
+					_allBenefitsHeading);
+			if ((actualBenefitCategoryList.equals(policySetupPageData.policyBenefitsCategories.benefitsCategories))
+					&& verifySelectableBenefitsDisplayOrder(actualBenefitCategoryList)) {
+				Reporter.addStepLog(MessageFormat.format(
+						COREFLEXConstants.SUCCESSFULLY_VERIFIED_BENEFITS_CATEGORIES_AND_SELECTABLE_BENEFITS_NAMES_AND_DISPLAY_ORDER_ON_POLICY_BENEFITS_CATEGORIES_PAGE,
+						CoreConstants.PASS));
+				return true;
+			}
+		} catch (Exception e) {
+			Reporter.addStepLog(MessageFormat.format(
+					COREFLEXConstants.EXCEPTION_OCCURED_WHILE_VALIDATING_BENEFITS_CATEGORIES_AND_SELECTABLE_BENEFITS_NAMES_AND_DISPLAY_ORDER_ON_POLICY_BENEFITS_CATEGORIES_PAGE,
+					CoreConstants.FAIL, e.getMessage()));
+		}
+		return false;
 
-		boolean isCategoryNamesAndOrderVerified = false, isBenefitsNamesAndOrderVerified = false;
-		CoreFunctions.clickElement(driver, _toggleButtonSelectAll);
-		List<String> actualBenefitCategoryList = CoreFunctions.getElementTextAndStoreInList(driver,
-				_allBenefitsHeading);
-		isCategoryNamesAndOrderVerified = (actualBenefitCategoryList
-				.equals(policySetupPageData.policyBenefitsCategories.benefitsCategories));
+	}
 
+	private boolean verifySelectableBenefitsDisplayOrder(List<String> actualBenefitCategoryList) {
+		boolean isBenefitsNamesAndOrderVerified = false;
 		for (String benefitCategory : actualBenefitCategoryList) {
 			isBenefitsNamesAndOrderVerified = false;
 			switch (benefitCategory) {
@@ -538,7 +514,7 @@ public class CoreFlex_PolicyBenefitsCategoriesPage extends Base {
 				break;
 			}
 		}
-		return isCategoryNamesAndOrderVerified && isBenefitsNamesAndOrderVerified;
+		return isBenefitsNamesAndOrderVerified;
 	}
 
 	private void verifyDefaultToggleSelection() {

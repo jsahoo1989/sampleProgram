@@ -1,9 +1,7 @@
 package com.aires.pages.coreflex;
 
 import java.text.MessageFormat;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
@@ -107,26 +105,18 @@ public class CoreFlex_BenefitSummaryPage extends Base {
 			.getMXTransfereeFlexBenefitData();
 
 	/*********************************************************************/
-	
-	/*********************************************************************/
 
 	/**
-	 * Method to get Navigated Page Header.
+	 * Method to verify navigated Page Header Title
 	 * 
+	 * @param expectedPageName
 	 * @return
 	 */
-	public String getPageHeaderTitle() {
-		try {
-			CoreFunctions.explicitWaitTillElementVisibility(driver, _headerPage, COREFLEXConstants.BENEFIT_SUMMARY);
-			return CoreFunctions.getElementText(driver, _headerPage);
-		} catch (Exception e) {
-			Reporter.addStepLog(
-					MessageFormat.format(COREFLEXConstants.EXCEPTION_OCCURED_WHILE_FETCHING_PAGE_HEADER_TITLE,
-							CoreConstants.FAIL, e.getMessage()));
-		}
-		return null;
+	public boolean verifyPageNavigation(String expectedPageName) {
+		return CoreFunctions.verifyElementOnPage(driver, _headerPage, COREFLEXConstants.BENEFIT_SUMMARY,
+				expectedPageName, expectedPageName, true);
 	}
-
+	
 	/**
 	 * Method to get currently active Left Navigation Menu.
 	 * 
@@ -227,16 +217,7 @@ public class CoreFlex_BenefitSummaryPage extends Base {
 		}
 	}
 
-	/**
-	 * Method to verify navigated Page Header Title and Left Navigation
-	 * 
-	 * @param expectedPageName
-	 * @return
-	 */
-	public boolean verifyPageNavigation(String expectedPageName) {
-		return (getPageHeaderTitle().equals(expectedPageName))
-				& (getLeftNavigationPageTitle().equals(COREFLEXConstants.BENEFIT_SUMMARY));
-	}
+	
 
 	/**
 	 * Method to iterate and verify Added Benefits & SubBenefits on Benefit Summary

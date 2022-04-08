@@ -51,8 +51,8 @@ public class PDT_Iris_Corporation_Step {
 		switch (moduleName) {
 		case IRISConstants.CORPORATION_MODULE:
 			testContext.getIrisPageManager().irisCorporationMain = new IRIS_Corporation_Main();			
-			Log.info("pdtClientId="+BusinessFunctions.getClientIdFromJson(_loginDetailsApplication));
-			testContext.getIrisPageManager().irisCorporationMain.queryCorporation(BusinessFunctions.getClientIdFromJson(_loginDetailsApplication));
+			Log.info("pdtClientId="+BusinessFunctions.getClientAndPolicyDetails(_loginDetailsApplication)[0]);
+			testContext.getIrisPageManager().irisCorporationMain.queryCorporation(BusinessFunctions.getClientAndPolicyDetails(_loginDetailsApplication)[0]);
 			break;
 		default:
 			Assert.fail(IRISConstants.PAGE_NOT_FOUND);
@@ -95,7 +95,7 @@ public class PDT_Iris_Corporation_Step {
 		Assert.assertTrue(addNewPolicyPage.verifyAddNewPolicyHeading(pageName),
 				MessageFormat.format(PDTConstants.FAILED_TO_VERIFY_HEADING_ON_PAGE, CoreConstants.FAIL, pageName,
 						PDTConstants.ADD_NEW_POLICY_FORM, addNewPolicyPage.getElementText(PDTConstants.HEADING)));
-		addNewPolicyPage.selectClient(BusinessFunctions.getClientIdFromJson(_loginDetailsApplication), BusinessFunctions.getClientNameFromJson(_loginDetailsApplication));
+		addNewPolicyPage.selectClient(BusinessFunctions.getClientAndPolicyDetails(_loginDetailsApplication)[0], BusinessFunctions.getClientAndPolicyDetails(_loginDetailsApplication)[1]);
 		
 	}
 

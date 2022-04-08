@@ -21,6 +21,7 @@ import com.aires.pages.pdt.PDT_HomeLeavePage;
 import com.aires.pages.pdt.PDT_HouseHuntingTripPage;
 import com.aires.pages.pdt.PDT_ImmigrationPage;
 import com.aires.pages.pdt.PDT_LanguageTrainingPage;
+import com.aires.pages.pdt.PDT_OneTimePaymentReimbursemenPage;
 import com.aires.pages.pdt.PDT_PreAcceptanceService;
 import com.aires.pages.pdt.PDT_RentalAssistancePage;
 import com.aires.pages.pdt.PDT_SharedSubBenefitPage;
@@ -50,6 +51,7 @@ public class PDT_SharedSubBenefit_Steps {
 	private PDT_CompensationServicesPage compensationServicesPage;
 	private PDT_AssignmentHousingPage assignmentHousingPage;
 	private PDT_DuplicateHousingPage duplicateHousingPage;
+	private PDT_OneTimePaymentReimbursemenPage oneTimePaymentPage;
 	
 	public PDT_SharedSubBenefit_Steps(TestContext context) {
 		testContext = context;
@@ -70,6 +72,7 @@ public class PDT_SharedSubBenefit_Steps {
 		compensationServicesPage = testContext.getPageObjectManager().getCompensationServicesPage();
 		assignmentHousingPage = testContext.getPageObjectManager().getAssignmentHousingPage();
 		duplicateHousingPage = testContext.getPageObjectManager().getDuplicateHousingPage();
+		oneTimePaymentPage = testContext.getPageObjectManager().getOneTimePaymentPage();
 	}
 	
 	public PDT_PreAcceptanceService getPreAcceptServicePage() {
@@ -126,6 +129,10 @@ public class PDT_SharedSubBenefit_Steps {
 	
 	public PDT_DuplicateHousingPage getDuplicateHousingPage() {
 		return duplicateHousingPage;
+	}
+	
+	public PDT_OneTimePaymentReimbursemenPage getOneTimePaymentPage() {
+		return oneTimePaymentPage;
 	}
 	
 	@When("^he clicks on 'SUBMIT' button after entering mandatory information for all the below selected sub benefits on \"([^\"]*)\" page$")

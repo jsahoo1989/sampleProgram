@@ -53,6 +53,10 @@ public class PDT_PolicyBenefitCategoryPage extends Base {
 
 	@FindBy(how = How.CSS, using = "button.btn-next")
 	private WebElement _btnNext;
+	
+	// Progress Bar
+	@FindBy(how = How.CSS, using = "div.ngx-progress-bar.ngx-progress-bar-ltr")
+	private WebElement _progressBar;
 
 	public String getElementText(String elementName) {
 		String elementText = null;
@@ -92,6 +96,7 @@ public class PDT_PolicyBenefitCategoryPage extends Base {
 	public void selectPolicyBenefitCategory(String benefitCategoryName) {
 		CoreFunctions.selectItemInListByText(driver, _lblChkBoxPolicyBenefitCategory, benefitCategoryName, true);
 		CoreFunctions.click(driver, _btnNext, _btnNext.getText());
+		CoreFunctions.explicitWaitTillElementInVisibilityCustomTime(driver, _progressBar, 5);
 	}
 	
 	public String getPageHeaderTitle() {

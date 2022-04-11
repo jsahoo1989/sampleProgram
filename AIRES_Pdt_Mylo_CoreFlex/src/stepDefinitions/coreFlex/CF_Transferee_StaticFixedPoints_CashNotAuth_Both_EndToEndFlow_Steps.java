@@ -19,6 +19,7 @@ import com.aires.pages.coreflex.MX_Transferee_LoginPage;
 import com.aires.pages.coreflex.MX_Transferee_MyBenefitsBundlePage;
 import com.aires.pages.coreflex.TransfereeSubmissions_DashboardHomePage;
 import com.aires.pages.coreflex.TransfereeSubmissions_DetailsPage;
+import com.aires.pages.coreflex.TransfereeSubmissions_LoginPage;
 import com.vimalselvam.cucumber.listener.Reporter;
 
 import cucumber.api.java.en.Given;
@@ -35,6 +36,7 @@ public class CF_Transferee_StaticFixedPoints_CashNotAuth_Both_EndToEndFlow_Steps
 	private MX_Transferee_FlexPlanningTool_Page mxTransfereeFlexPlanningToolPage;
 	private MX_Transferee_MyBenefitsBundlePage mxTransfereeMyBenefitsBundlePage;
 	private MX_Transferee_LoginPage mxTransfereeLoginPage;
+	private TransfereeSubmissions_LoginPage transfereeSubmissionsLoginPage;
 
 	public static List<Map<String, String>> selectedBenefitDetails;
 
@@ -50,13 +52,14 @@ public class CF_Transferee_StaticFixedPoints_CashNotAuth_Both_EndToEndFlow_Steps
 		transfereeSubmissionsDetailsPage = testContext.getCoreFlexPageObjectManager()
 				.getTransfereeSubmissionsDetailsPage();
 		mxTransfereeLoginPage = testContext.getCoreFlexPageObjectManager().getMXTransfereeLoginPage();
+		transfereeSubmissionsLoginPage = testContext.getCoreFlexPageObjectManager().getTransfereeSubmissionsLoginPage();
 	}
 
 	@Given("^he has clicked on \"([^\"]*)\" button for a benefit under 'Submitted Benefits' section$")
-	public void he_has_clicked_on_button_for_a_benefit_under_Submitted_Benefits_section(String buttonName)
+	public void he_has_clicked_on_button_for_a_benefit_under_Submitted_Benefits_section(String action)
 			throws Throwable {
 		CoreConstants.TIME_BEFORE_ACTION = new Date().getTime();
-		Assert.assertTrue(mxTransfereeMyBenefitsBundlePage.deleteSubmittedBenefit(),
+		Assert.assertTrue(mxTransfereeMyBenefitsBundlePage.performSubmittedBenefitAction(action),
 				MessageFormat.format(MobilityXConstants.FAILED_TO_DELETE_SUBMITTED_BENEFIT, CoreConstants.FAIL));
 		CoreConstants.TIME_AFTER_ACTION = new Date().getTime();
 		Reporter.addStepLog("<b>Total time taken by <i>'Given'</i> statement is :"
@@ -220,6 +223,74 @@ public class CF_Transferee_StaticFixedPoints_CashNotAuth_Both_EndToEndFlow_Steps
 						CoreConstants.FAIL));
 		Assert.assertTrue(mxTransfereeMyBenefitsBundlePage.validateSubmittedBenefitDetailsPostDeleteRequestOperation(
 				actionPerformed), MobilityXConstants.SUBMITTED_BENEFIT_DETAILS_NOT_MATCHED);
+		CoreConstants.TIME_AFTER_ACTION = new Date().getTime();
+		Reporter.addStepLog("<b>Total time taken by <i>'Then'</i> statement is :"
+				+ (CoreConstants.TIME_AFTER_ACTION - CoreConstants.TIME_BEFORE_ACTION) / 1000 + " Seconds </b>");
+	}
+
+	@When("^he clicks on \"([^\"]*)\" button for the deleted benefit under 'Submitted Benefits' section of 'MXTransferee' application$")
+	public void he_clicks_on_button_for_the_deleted_benefit_under_Submitted_Benefits_section_of_MXTransferee_application(
+			String action) throws Throwable {
+
+		CoreConstants.TIME_BEFORE_ACTION = new Date().getTime();
+		testContext.getWebDriverManager().getDriver().navigate()
+				.to(FileReaderManager.getInstance().getConfigReader().getMobilityXUrl());
+		mxTransfereeLoginPage.enterUsernameAndPasswordForMobilityX(
+				CoreFunctions.getPropertyFromConfig("Transferee_UserNameInEMail"),
+				CoreFunctions.getPropertyFromConfig("Transferee_PasswordInEMail"));
+		mxTransfereeLoginPage.clickSignIn();
+		mxTransfereeJourneyHomePage.handle_Cookie_AfterLogin();
+		mxTransfereeJourneyHomePage.handle_points_expiry_reminder_popup();
+		Assert.assertTrue(mxTransfereeJourneyHomePage.verifySubmittedPointsDetails(),
+				MessageFormat.format(
+						MobilityXConstants.REMAINING_AVAILABLE_POINTS_DETAILS_NOT_MATCHED_ON_JOURNEY_HOME_PAGE,
+						CoreConstants.FAIL));
+		mxTransfereeJourneyHomePage.navigateToFlexPlanningToolPage();		
+		Assert.assertTrue(mxTransfereeFlexPlanningToolPage.verifyAvailablePointsMessageAfterSubmission(),
+				MessageFormat.format(
+						MobilityXConstants.FAILED_TO_VALIDATE_AVAILABLE_POINTS_MESSAGE_ON_FLEX_PLANNING_TOOL_PAGE,
+						CoreConstants.FAIL));
+		Assert.assertTrue(mxTransfereeFlexPlanningToolPage.verifySubmittedPointsDetails(),
+				MessageFormat.format(MobilityXConstants.SUBMITTED_POINTS_DETAILS_NOT_MATCHED_ON_FLEX_PLANNING_TOOL_PAGE,
+						CoreConstants.FAIL));
+		Assert.assertTrue(mxTransfereeMyBenefitsBundlePage.performSubmittedBenefitAction(action),
+				MessageFormat.format(MobilityXConstants.FAILED_TO_UNDO_DELETED_BENEFIT, CoreConstants.FAIL));
+		CoreConstants.TIME_AFTER_ACTION = new Date().getTime();
+		Reporter.addStepLog("<b>Total time taken by <i>'When'</i> statement is :"
+				+ (CoreConstants.TIME_AFTER_ACTION - CoreConstants.TIME_BEFORE_ACTION) / 1000 + " Seconds </b>");
+	}
+
+	@Then("^'Undo Request Completed' growl message should be displayed on 'My Benefits Bundle' page$")
+	public void undo_Request_Completed_growl_message_should_be_displayed_on_My_Benefits_Bundle_page() throws Throwable {
+		CoreConstants.TIME_BEFORE_ACTION = new Date().getTime();
+		Assert.assertTrue(mxTransfereeMyBenefitsBundlePage.verifyUndoSuccessMessage(),
+				MessageFormat.format(MobilityXConstants.FAILED_TO_VERIFY_UNDO_SUCCESS_MESSAGE, CoreConstants.FAIL));
+		CoreConstants.TIME_AFTER_ACTION = new Date().getTime();
+		Reporter.addStepLog("<b>Total time taken by <i>'Then'</i> statement is :"
+				+ (CoreConstants.TIME_AFTER_ACTION - CoreConstants.TIME_BEFORE_ACTION) / 1000 + " Seconds </b>");
+	}
+
+	@Then("^'Delete Request Pending' benefit status should be updated to 'View Payments' in 'Submitted Benefits' list on 'My Benefits Bundle' page$")
+	public void delete_Request_Pending_benefit_status_should_be_updated_to_View_Payments_in_Submitted_Benefits_list_on_My_Benefits_Bundle_page()
+			throws Throwable {
+		CoreConstants.TIME_BEFORE_ACTION = new Date().getTime();
+		Assert.assertTrue(mxTransfereeMyBenefitsBundlePage.validateSubmittedBenefitDetails(),
+				MobilityXConstants.SUBMITTED_BENEFIT_DETAILS_NOT_MATCHED);
+		CoreConstants.TIME_AFTER_ACTION = new Date().getTime();
+		Reporter.addStepLog("<b>Total time taken by <i>'Given'</i> statement is :"
+				+ (CoreConstants.TIME_AFTER_ACTION - CoreConstants.TIME_BEFORE_ACTION) / 1000 + " Seconds </b>");
+	}
+	
+	@Then("^'Delete Request Pending' benefit request status should be updated to 'Submitted' in 'Transferee Submission Details' list of 'Transferee Submissions' application$")
+	public void delete_Request_Pending_benefit_request_status_should_be_updated_to_Submitted_in_Transferee_Submission_Details_list_of_Transferee_Submissions_application()
+			throws Throwable {
+		CoreConstants.TIME_BEFORE_ACTION = new Date().getTime();
+		testContext.getWebDriverManager().getDriver().navigate()
+		.to(FileReaderManager.getInstance().getConfigReader().getCoreFlexTransfereeSubmissionsApplicationUrl());
+		transfereeSubmissionsDashboardHomePage.clickElementOfPage(COREFLEXConstants.REVIEW);
+		Assert.assertTrue(transfereeSubmissionsDetailsPage.verifySubmittedBenefitsDetails(), MessageFormat.format(
+				COREFLEXConstants.FAILED_TO_VERIFY_DENY_DELETE_REQUEST_UPDATED_TO_SUBMITTED_IN_TRANSFEREE_SUBMISSION_DETAILS_PAGE,
+				CoreConstants.FAIL));
 		CoreConstants.TIME_AFTER_ACTION = new Date().getTime();
 		Reporter.addStepLog("<b>Total time taken by <i>'Then'</i> statement is :"
 				+ (CoreConstants.TIME_AFTER_ACTION - CoreConstants.TIME_BEFORE_ACTION) / 1000 + " Seconds </b>");

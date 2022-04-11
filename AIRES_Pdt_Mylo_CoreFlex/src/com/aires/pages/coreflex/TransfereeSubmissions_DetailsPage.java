@@ -325,17 +325,7 @@ public class TransfereeSubmissions_DetailsPage extends Base {
 							(Double.parseDouble(benefit.getPoints()) * benefit.getNumberOfBenefitSelected()),
 							COREFLEXConstants.SUBMITTED_BENEFIT_POINTS);
 					CoreFunctions.highlightObject(driver, _submittedBenefitPointsList.get(index));
-					if (MX_Transferee_MyBenefitsBundlePage.benefitDeletedFlag && benefit.getDeleteBenefitOnMBBPage()
-							&& !(isDeleteRequestDenied)) {
-						CoreFunctions.verifyText(driver, _submittedBenefitStatusList.get(index),
-								COREFLEXConstants.DELETE_REQUEST_PENDING,
-								COREFLEXConstants.DELETE_REQUEST_PENDING_STATUS);
-						CoreFunctions.verifyText(driver, _buttonResolveDeleteRequest.get(index),
-								COREFLEXConstants.RESOLVE, COREFLEXConstants.DELETE_REQUEST_RESOLVE_BUTTON);
-					} else {
-						CoreFunctions.verifyText(driver, _submittedBenefitStatusList.get(index),
-								COREFLEXConstants.SUBMITTED, COREFLEXConstants.SUBMITTED_BENEFIT_STATUS);
-					}
+					verifyBenefitStatus(benefit,index);					
 					CoreFunctions.verifyText(driver, _submittedBenefitQuantityList.get(index),
 							String.valueOf(benefit.getNumberOfBenefitSelected()),
 							COREFLEXConstants.SUBMITTED_BENEFIT_SELECTED_QUANTITY);
@@ -353,6 +343,20 @@ public class TransfereeSubmissions_DetailsPage extends Base {
 			return false;
 		}
 		return true;
+	}
+
+	private void verifyBenefitStatus(Benefit benefit, int index) {
+		if (MX_Transferee_MyBenefitsBundlePage.benefitDeletedFlag && benefit.getDeleteBenefitOnMBBPage()
+				&& !(isDeleteRequestDenied) && !(MX_Transferee_MyBenefitsBundlePage.undoDeletedBenefitFlag)) {
+			CoreFunctions.verifyText(driver, _submittedBenefitStatusList.get(index),
+					COREFLEXConstants.DELETE_REQUEST_PENDING,
+					COREFLEXConstants.DELETE_REQUEST_PENDING_STATUS);
+			CoreFunctions.verifyText(driver, _buttonResolveDeleteRequest.get(index),
+					COREFLEXConstants.RESOLVE, COREFLEXConstants.DELETE_REQUEST_RESOLVE_BUTTON);
+		} else {
+			CoreFunctions.verifyText(driver, _submittedBenefitStatusList.get(index),
+					COREFLEXConstants.SUBMITTED, COREFLEXConstants.SUBMITTED_BENEFIT_STATUS);
+		}		
 	}
 
 	private boolean verifyExpenseAllowanceTracing(String payments, int index) {

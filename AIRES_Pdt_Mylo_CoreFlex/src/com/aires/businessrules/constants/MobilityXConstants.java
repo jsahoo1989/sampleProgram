@@ -262,4 +262,7 @@ public class MobilityXConstants {
 	public static final String DELETE_REQUEST_DENIED = "Delete Request Denied";
 	public static final String DELETE_REQUEST_DENIED_BENEFIT_POINT_MESSAGE = "We have reviewed your delete request(s) and are unable to approve your request below   benefit_name for  delete_request_points points";
 	public static final String DENIED_DELETE_REQUEST_REMAINING_POINTS_TO_USE_MESSAGE = "You now have current_balance/total_points points to use.";
+	public static final String FAILED_TO_UNDO_DELETED_BENEFIT = "{0}Failed to undo deleted benefit.";
+	public static final String FAILED_TO_VERIFY_UNDO_SUCCESS_MESSAGE = "{0}Failed to verify Undo Success Message.";
+	public static final String VIEW_PAYMENTS = "View Payments";
 }

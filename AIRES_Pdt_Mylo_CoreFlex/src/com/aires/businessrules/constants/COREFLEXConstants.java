@@ -354,4 +354,9 @@ public class COREFLEXConstants {
 	public static final String SUCCESSFULLY_VERIFIED_BENEFITS_CATEGORIES_AND_SELECTABLE_BENEFITS_NAMES_AND_DISPLAY_ORDER_ON_POLICY_BENEFITS_CATEGORIES_PAGE = "{0}Successfully verified Benefits Categories, Selectable Benefit Names & Display order on Policy Benefits Categories Page.";
 	public static final String EXCEPTION_OCCURED_WHILE_VALIDATING_BENEFITS_CATEGORIES_AND_SELECTABLE_BENEFITS_NAMES_AND_DISPLAY_ORDER_ON_POLICY_BENEFITS_CATEGORIES_PAGE = "{0}Exception occured while validating Benefits Categories, Selectable Benefit Names & Display order on Policy Benefits Categories Page. Exception : ''{1}''.";
 	public static final String EXCEPTION_OCCURED_WHILE_READING_APPROVED_DELETE_REQUEST_EMAIL = "{0}Exception occured while reading Approved Delete Request Email. Exception : ''{1}''.";
+	public static final String SUCCESSFULLY_CLICKED_UNDO_BUTTON_FOR_DELETED_BENEFIT_ON_MBB_PAGE = "{0}Successfully clicked on Undo button for Deleted Benefit ''{1}'' on MBB page.";
+	public static final String FAILED_TO_DISPLAY_UNDO_BUTTON_FOR_DELETED_BENEFIT_IN_SUBMITTED_BENEFITS_SECTION = "{0}Failed to display Undo button for Delete Benefit - ''{1}'' under Submitted Benefits List.";
+	public static final String SUCCESSFULLY_DISPLAYED_GROWL_MESSAGE_FOR_DELETED_BENEFIT_IN_SUBMITTED_BENEFITS_SECTION = "{0}Successfully displayed Growl Message for deleted benefit - ''{1}'' on My Benefit Bundle Page.";
+	public static final String UNDO_SUCCESS_GROWL_MESSAGE_NOT_DISPLAYED_AFTER_UNDO_OPERATION_ON_MBB_PAGE = "{0}Undo Success growl message not displayed after undo operation on My Benefit Bundles Page.";
+	public static final String SUCCESSFULLY_DISPLAYED_UNDO_SUCCESS_GROWL_MESSAGE_ON_MBB_PAGE = "{0}Successfully displayed 'Undo Success' Growl message on MBB page.";
 }

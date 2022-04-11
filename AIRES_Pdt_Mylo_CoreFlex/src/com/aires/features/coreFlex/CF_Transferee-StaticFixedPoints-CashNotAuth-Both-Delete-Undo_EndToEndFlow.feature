@@ -35,8 +35,7 @@ Scenario: TransfereeSubmissions - Verifying_Approving_Denying submissions made b
 	And he has navigated to "Transferee Submissions Dashboard" page having record of Bundle submitted by the transferee  
 	And he has clicked on "Review" button for Bundle submitted by the transferee on "Transferee Submissions Dashboard" page	
 	And he has navigated to "Transferee Submission Details" page having list of submitted benefits details
-	And he has clicked on "Resolve" button for 'Delete Request Pending' request of the Transferee
-	When he confirms the "Approve Request" after verifying 'Delete Request Pending' benefit request details and adding comments on 'Requests' dialog
-	Then 'Action Completed' growl message for "Approve Request" should be displayed on "Transferee Submission Details" page
-	And 'Delete Request Pending' benefit request status should be updated to 'Submitted' in 'Transferee Submission Details' list
-	And benefit details should be updated on 'MXTransferee' application based on "Approved" 'Delete Request' on Transferee Submission
+	When he clicks on "Undo" button for the deleted benefit under 'Submitted Benefits' section of 'MXTransferee' application
+	Then 'Undo Request Completed' growl message should be displayed on 'My Benefits Bundle' page
+	And 'Delete Request Pending' benefit status should be updated to 'View Payments' in 'Submitted Benefits' list on 'My Benefits Bundle' page
+	And 'Delete Request Pending' benefit request status should be updated to 'Submitted' in 'Transferee Submission Details' list of 'Transferee Submissions' application

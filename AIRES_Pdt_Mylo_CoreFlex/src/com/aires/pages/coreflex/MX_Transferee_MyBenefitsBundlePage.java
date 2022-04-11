@@ -127,6 +127,9 @@ public class MX_Transferee_MyBenefitsBundlePage extends Base {
 	@FindBy(how = How.XPATH, using = "//span[contains(text(),'Are you sure you want to remove this benefit selection?')]")
 	private WebElement _removeBenefitDialog;
 
+	@FindBy(how = How.XPATH, using = "//div[@class='growl-message'][contains(string(),'Your undo request is completed.')]")
+	private WebElement _undoBenefitSuccessGrowlMessage;
+
 	@FindBy(how = How.CSS, using = "span[class='RXCFText RXCFMineShaft']")
 	private WebElement _removeBenefitDialogText;
 
@@ -170,6 +173,7 @@ public class MX_Transferee_MyBenefitsBundlePage extends Base {
 			.getMXTransfereeFlexBenefitData();
 
 	public static boolean benefitDeletedFlag;
+	public static boolean undoDeletedBenefitFlag;
 
 	/*********************************************************************/
 
@@ -505,20 +509,72 @@ public class MX_Transferee_MyBenefitsBundlePage extends Base {
 						.replace("pts", "").trim()))) == ((Double.parseDouble(benefit.getPoints()))
 								* (Integer.parseInt(CoreFunctions.getItemsFromListByIndex(driver,
 										_textSubmittedBenefitQuantityList, indexBenefit, true))))
+								&& CoreFunctions.getItemsFromListByIndex(driver, _benefitStatus, indexBenefit, true)
+								.equals(MobilityXConstants.VIEW_PAYMENTS)
 						&& CoreFunctions
 								.getItemsFromListByIndex(driver, _buttonDeleteSubmittedBenefitList, indexBenefit, true)
 								.equals(MobilityXConstants.DELETE));
 	}
 
-	public boolean deleteSubmittedBenefit() {
+	public boolean performSubmittedBenefitAction(String action) {
 		try {
-			return deleteSubmittedFlexBenefit();
+			switch (action) {
+			case MobilityXConstants.DELETE:
+				return deleteSubmittedFlexBenefit();
+			case MobilityXConstants.UNDO:
+				return undoDeletedFlexBenefit();
+			default:
+				Assert.fail(COREFLEXConstants.INVALID_OPTION);
+			}
+
 		} catch (Exception e) {
 			Reporter.addStepLog(
 					MessageFormat.format(COREFLEXConstants.EXCEPTION_OCCURED_WHILE_DELETING_SUBMITTED_BENEFIT,
 							CoreConstants.FAIL, e.getMessage()));
 		}
 		return false;
+	}
+
+	private boolean undoDeletedFlexBenefit() {
+		boolean isDeletedBenefitUndo = false;
+		for (FlexBenefit benefitList : flexBenefits) {
+			for (Benefit benefit : benefitList.getBenefits()) {
+				isDeletedBenefitUndo = undoDeletedBenefit(benefit);
+			}
+			if (!isDeletedBenefitUndo) {
+				break;
+			}
+		}
+		return isDeletedBenefitUndo;
+	}
+
+	private boolean undoDeletedBenefit(Benefit benefit) {
+		if (benefit.getSelectBenefitOnFPTPage() && benefit.getDeleteBenefitOnMBBPage()) {
+			int indexBenefit = BusinessFunctions.returnindexItemFromListUsingText(driver, _textSubmittedBenefitNameList,
+					benefit.getBenefitDisplayName());
+			return verifyAndClickUndoButton(benefit, indexBenefit);
+		} else if (!benefit.getDeleteBenefitOnMBBPage()) {
+			return true;
+		}
+		return false;
+	}
+
+	private boolean verifyAndClickUndoButton(Benefit benefit, int indexBenefit) {
+		if (CoreFunctions.getElementText(driver, _buttonDeleteSubmittedBenefitList.get(indexBenefit))
+				.equals(MobilityXConstants.UNDO)) {
+			BusinessFunctions.selectValueFromListUsingIndex(driver, _buttonDeleteSubmittedBenefitList, indexBenefit);
+			Reporter.addStepLog(MessageFormat.format(
+					COREFLEXConstants.SUCCESSFULLY_CLICKED_UNDO_BUTTON_FOR_DELETED_BENEFIT_ON_MBB_PAGE,
+					CoreConstants.PASS, benefit.getBenefitDisplayName()));
+			undoDeletedBenefitFlag = true;
+			return true;
+
+		} else {
+			Reporter.addStepLog(MessageFormat.format(
+					COREFLEXConstants.FAILED_TO_DISPLAY_UNDO_BUTTON_FOR_DELETED_BENEFIT_IN_SUBMITTED_BENEFITS_SECTION,
+					CoreConstants.FAIL, benefit.getBenefitDisplayName()));
+			return false;
+		}
 	}
 
 	private boolean deleteSubmittedFlexBenefit() {
@@ -1033,19 +1089,19 @@ public class MX_Transferee_MyBenefitsBundlePage extends Base {
 	private boolean verifyDeniedBenefitRequestDeleteButtonDisabled(int indexBenefit, Benefit benefit) {
 		boolean isDeleteButtonDisabled = false;
 		boolean isDeleteHoverTextVerified = false;
-		if(benefit.getDeleteBenefitOnMBBPage()) {			
-			isDeleteButtonDisabled = Boolean.valueOf(CoreFunctions.getAttributeText(_buttonDeleteBenefitList.get(indexBenefit), "aria-disabled"));
+		if (benefit.getDeleteBenefitOnMBBPage()) {
+			isDeleteButtonDisabled = Boolean.valueOf(
+					CoreFunctions.getAttributeText(_buttonDeleteBenefitList.get(indexBenefit), "aria-disabled"));
 			CoreFunctions.moveToElement(driver, _buttonDeleteBenefitList.get(indexBenefit));
 			isDeleteHoverTextVerified = CoreFunctions.isElementExist(driver, _disabledDeleteButtonHoverText, 5);
 			CoreFunctions.highlightObject(driver, _disabledDeleteButtonHoverText);
-			if(isDeleteButtonDisabled && isDeleteHoverTextVerified){
+			if (isDeleteButtonDisabled && isDeleteHoverTextVerified) {
 				Reporter.addStepLog(MessageFormat.format(
 						COREFLEXConstants.SUCCESSFULLY_VERIFIED_DELETE_BUTTON_IS_DISABLED_AND_DISABLED_DELETE_HOVER_TEXT_POST_DELETE_REQUEST_DENIED_BY_MSPEC_PPC_USER,
 						CoreConstants.PASS));
 				return true;
-			}
-			else
-			return false;
+			} else
+				return false;
 		}
 		return true;
 	}
@@ -1097,6 +1153,38 @@ public class MX_Transferee_MyBenefitsBundlePage extends Base {
 			return true;
 		} else
 			return false;
+	}
+
+	public boolean verifyUndoSuccessMessage() {
+		if (CoreFunctions.isElementExist(driver, _undoBenefitSuccessGrowlMessage, 5)) {
+			Reporter.addStepLog(MessageFormat.format(
+					COREFLEXConstants.SUCCESSFULLY_DISPLAYED_UNDO_SUCCESS_GROWL_MESSAGE_ON_MBB_PAGE,
+					CoreConstants.PASS));
+			return true;
+		} else {
+			Reporter.addStepLog(MessageFormat.format(
+					COREFLEXConstants.UNDO_SUCCESS_GROWL_MESSAGE_NOT_DISPLAYED_AFTER_UNDO_OPERATION_ON_MBB_PAGE,
+					CoreConstants.FAIL));
+			return false;
+		}
+	}
+
+	public boolean verifySubmittedBenefitStatus() {
+		boolean isStatusVerifed = false;
+		try {
+			isStatusVerifed = verifyFlexBenefitsDeleteStatus();
+			if (isStatusVerifed) {
+				Reporter.addStepLog(MessageFormat.format(
+						MobilityXConstants.SUCCESSFULLY_VERIFIED_DELETE_REQUEST_STATUS_UNDER_SUBMITTED_BENEFITS_SECTION_ON_MBB_PAGE,
+						CoreConstants.PASS));
+			}
+
+		} catch (Exception e) {
+			Reporter.addStepLog(MessageFormat.format(
+					MobilityXConstants.EXCEPTION_OCCURED_WHILE_VALIDATING_DELETE_REQUEST_STATUS_UNDER_SUBMITTED_BENEFITS_SECTION_ON_MBB_PAGE,
+					CoreConstants.FAIL, e.getMessage()));
+		}
+		return isStatusVerifed;
 	}
 
 }

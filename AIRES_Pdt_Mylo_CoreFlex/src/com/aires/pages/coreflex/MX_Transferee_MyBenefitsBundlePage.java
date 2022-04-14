@@ -662,7 +662,7 @@ public class MX_Transferee_MyBenefitsBundlePage extends Base {
 
 	private boolean validateRemoveBenefitInfoText() {
 		return CoreFunctions.getElementText(driver, _removeBenefitDialogText)
-				.equals(MobilityXConstants.REMOVE_BENEFIT_DIALOG_INFO_TEXT);
+				.equalsIgnoreCase(MobilityXConstants.REMOVE_BENEFIT_DIALOG_INFO_TEXT);
 	}
 
 	public void reviewAndConfirmRemoveBenefitSubmission(String optionalNotes, String transfereeName,
@@ -837,6 +837,8 @@ public class MX_Transferee_MyBenefitsBundlePage extends Base {
 								.getItemsFromListByIndex(driver, _textSubmittedBenefitsPointsList, indexCashout, true)
 								.replace("pts", "")
 								.trim()))) == (MX_Transferee_FlexPlanningTool_Page.selectedCashoutPoints))
+						&& CoreFunctions.getItemsFromListByIndex(driver, _benefitStatus, indexCashout, true)
+						.equals(MobilityXConstants.VIEW_PAYMENTS)
 						&& (CoreFunctions
 								.getItemsFromListByIndex(driver, _buttonDeleteSubmittedBenefitList, indexCashout, true)
 								.equals(MobilityXConstants.DELETE)));

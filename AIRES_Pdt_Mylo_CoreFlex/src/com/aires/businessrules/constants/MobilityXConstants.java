@@ -66,8 +66,8 @@ public class MobilityXConstants {
 	public static final String FAILED_TO_UPDATE_SUBMITTED_BENEFIT_POINTS_ON_TRANSFEREE_JOURNEY_PAGE = "{0}Submitted Benefit Points not updated on Transferee Journey Home Page. Expected Spent Points : ''{1}'' | Actual Spent Points Displayed : ''{2}''.";
 	public static final String FAILED_TO_VERIFY_SUBMITTED_BENEFITS_ON_MY_BUNDLE_PAGE = "{0}Failed to verify submitted benefits on my bundle page. Exception : ''{1}''.";
 	public static final String SUCCESSFULLY_VERIFIED_SUBMITTED_BENEFITS_ON_MY_BUNDLE_PAGE = "{0}Successfully verified submitted benefits on my bundle page";
-	public static final String CASHOUT_SUGGESTION_TEXT = "If you do not need any additional benefits, you may cash out your remaining points by selecting the text box below to receive payment to your bank account. You'll be offered the full sum of your remaining points, but you can opt to cash out less if you want.";
-	public static final String HOW_MANY_POINTS_WOULD_YOU_LIKE_TO_CASH_OUT = "How many points would you like to cash out?";
+	public static final String CASHOUT_SUGGESTION_TEXT = "If you do not need any additional benefits, you may cashout your remaining points by selecting the block below to receive payment to your bank account.";
+	public static final String HOW_MANY_POINTS_WOULD_YOU_LIKE_TO_CASH_OUT = "How many points would you like to cashout?";
 	public static final String PORTION_CASHOUT = "Portion Cashout";
 	public static final String SUGGESTED_BUNDLES = "Suggested Bundles";
 	public static final String FAILED_TO_VERIFY_CUSTOM_BUNDLE_DETAILS = "{0}Failed to verify custom bundle details. Exception - ''{1}''";

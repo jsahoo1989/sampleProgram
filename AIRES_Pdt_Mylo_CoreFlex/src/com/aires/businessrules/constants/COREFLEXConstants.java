@@ -320,6 +320,7 @@ public class COREFLEXConstants {
 	public static final String REQUEST_DIALOG_DELETE_REQUEST_PENDING_STATUS = "Request Dialog Delete Request Pending Status";
 	public static final String REQUEST_DIALOG_BENEFIT_SELECTED_QUANTITY = "Request Dialog Benefit Selected Quantity";
 	public static final String EXCEPTION_OCCURED_WHILE_VERIFYING_DELETE_REQUEST_BENEFIT_DETAILS_ON_REQUEST_DIALOG = "{0}Exception occured while verifying delete request benefit details on request dialog. Exception : ''{1}''.";
+	public static final String EXCEPTION_OCCURED_WHILE_VERIFYING_DELETE_REQUEST_DETAILS_ON_REQUEST_DIALOG = "{0}Exception occured while verifying delete request details on request dialog. Exception : ''{1}''.";
 	public static final String APPROVE_REQUEST = "Approve Request";
 	public static final String REQUESTS_DIALOG = "Requests Dialog";
 	public static final String FAILED_TO_VERIFY_ACTION_COMPLETED_GROWL_MESSAGE_ON_TRANSFEREE_SUBMISSION_DETAILS_PAGE = "{0}Failed to verify Action Completed growl message on Transferee Submissions details page.";
@@ -359,4 +360,16 @@ public class COREFLEXConstants {
 	public static final String SUCCESSFULLY_DISPLAYED_GROWL_MESSAGE_FOR_DELETED_BENEFIT_IN_SUBMITTED_BENEFITS_SECTION = "{0}Successfully displayed Growl Message for deleted benefit - ''{1}'' on My Benefit Bundle Page.";
 	public static final String UNDO_SUCCESS_GROWL_MESSAGE_NOT_DISPLAYED_AFTER_UNDO_OPERATION_ON_MBB_PAGE = "{0}Undo Success growl message not displayed after undo operation on My Benefit Bundles Page.";
 	public static final String SUCCESSFULLY_DISPLAYED_UNDO_SUCCESS_GROWL_MESSAGE_ON_MBB_PAGE = "{0}Successfully displayed 'Undo Success' Growl message on MBB page.";
+	public static final String EXCEPTION_OCCURED_WHILE_VALIDATING_SUBMITTED_CASHOUT_DETAILS_ON_SUBMISSION_DETAILS_PAGE = "{0}Exception occured while validating Submitted Cashout Details on submission details page. Exception : ''{1}''.";
+	public static final String SUCCESSFULLY_VALIDATED_SUBMITTED_CASHOUT_DETAILS_ON_SUBMISSION_DETAILS_PAGE = "{0}Successfully validated Submitted Cashout Details on Transferee Submission Details page.";
+	public static final String SUBMITTED_CASHOUT_NAME = "Submitted Cashout Name";
+	public static final String SUBMITTED_CASHOUT_ALLOWANCE_AMOUNT = "Submitted Cashout Allowance Amount";
+	public static final String TRANSFEREE_CASHOUT_ALLOWANCE_TEXT = "Transferee received currency $cashout_value to their account Via reim_type";
+	public static final String FAILED_TO_VERIFY_NAVIGATION_TO_TRANSFEREE_PREVIEW_PAGE = "{0}Failed to verify Navigation to Transferee Preview Page.";
+	public static final String CHECK_ALL = "Check All";
+	public static final String RESOLVE_MULTIPLE = "Resolve Multiple";
+	public static final String SUCCESSFULLY_VERIFIED_CASHOUT_DETAILS_ON_REQUEST_DIALOG = "{0}Successfully verified Cashout Details on Request Dialog.";
+	public static final String SUCCESSFULLY_VERIFIED_BENEFIT_DETAILS_ON_REQUEST_DIALOG = "{0}Successfully verified Benefit Details on Request Dialog.";
+	public static final String EXCEPTION_OCCURED_WHILE_VERIFYING_DELETE_REQUEST_CASHOUT_DETAILS_ON_REQUEST_DIALOG = "{0}Exception occured while verifying delete request Cashout details on request dialog. Exception : ''{1}''.";
+	public static final String APPROVE_ALL = "Approve All";
 }

@@ -2,7 +2,7 @@
 	{
 		"benefitName": "Duplicate Housing",
 		"duplicateHousing": {
-			"duration" : "other",
+			"duration" : "Other",
 			"durationOther" : "10",
 			"grossUp": "Partially Gross-Up",
 			"reimbursedBy": "Other",

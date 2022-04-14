@@ -643,8 +643,7 @@ public class PDT_GeneralInformationPage extends Base {
 				CoreFunctions.clickElement(driver, _buttonLogout);
 				break;
 			case PDTConstants.NEXT:
-				CoreFunctions.clickElement(driver, _buttonNext);
-				CoreFunctions.explicitWaitTillElementInVisibility(driver, _progressBar);
+				CoreFunctions.clickElement(driver, _buttonNext);				
 				break;
 			case PDTConstants.BACK:
 				CoreFunctions.clickElement(driver, _buttonBack);
@@ -1059,6 +1058,18 @@ public class PDT_GeneralInformationPage extends Base {
 		selectFieldOption(PDTConstants.HOMEOWNER_TYPE, policySetupPageData.generalInformationPage.homeownerType);
 		selectFieldOption(PDTConstants.CAPPED_POLICY, policySetupPageData.generalInformationPage.cappedPolicy);
 		CoreFunctions.clickElement(driver, _radioExpenseManagementNoOption);
+	}
+	
+	/**
+	 * Method to verify navigated Page Header Title
+	 * 
+	 * @param expectedPageName
+	 * @return
+	 */
+	public boolean verifyPageNavigation(String expectedPageName) {
+		CoreFunctions.explicitWaitTillElementInVisibility(driver, _progressBar);
+		return CoreFunctions.verifyElementOnPage(driver, _headerGeneralInfo, COREFLEXConstants.GENERAL_INFORMATION,
+				expectedPageName, expectedPageName, true);
 	}
 
 }

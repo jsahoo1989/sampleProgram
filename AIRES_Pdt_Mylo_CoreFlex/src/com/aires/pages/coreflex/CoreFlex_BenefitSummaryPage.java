@@ -149,8 +149,7 @@ public class CoreFlex_BenefitSummaryPage extends Base {
 				CoreFunctions.explicitWaitTillElementInVisibility(driver, _progressBar);
 				break;
 			case COREFLEXConstants.CONTINUE:
-				CoreFunctions.clickElement(driver, _buttonContinue);
-				CoreFunctions.explicitWaitTillElementInVisibility(driver, _progressBar);
+				CoreFunctions.clickElement(driver, _buttonContinue);				
 				break;
 			case COREFLEXConstants.BACK:
 				CoreFunctions.clickElement(driver, _buttonBack);

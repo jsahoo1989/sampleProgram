@@ -79,8 +79,9 @@
 			"lastName": "Kaminsky",
 			"clientId": "7403",
 			"clientName": "Dow Chemical Company (Global)",
-			"csmUserName": "AKARNS",
-			"csmPassword": "AKARNS",
+			"csmUserName": "mxssodev5@corp.aires.com",
+			"csmPassword": "F74#jd*187_NB",
+			"csmUserFirstName":"MXSSO DEV5",
 			"policy": "hDCC Repatriation (# 14724)"
 		},
 		"dev": {
@@ -92,8 +93,9 @@
 			"lastName": "kitts",
 			"clientId": "7403",
 			"clientName": "Dow Chemical Company (Global)",
-			"csmUserName": "AKARNS",
-			"csmPassword": "AKARNS",
+			"csmUserName": "mxssodev5@corp.aires.com",
+			"csmPassword": "F74#jd*187_NB",
+			"csmUserFirstName":"MXSSO DEV5",
 			"policy": "hDCC Repatriation (# 14724)"
 		},
 		"prod": {
@@ -105,8 +107,9 @@
 			"lastName": "kitts",
 			"clientId": "7403",
 			"clientName": "Dow Chemical Company (Global)",
-			"csmUserName": "AKARNS",
-			"csmPassword": "AKARNS",
+			"csmUserName": "mxssodev5@corp.aires.com",
+			"csmPassword": "F74#jd*187_NB",
+			"csmUserFirstName":"MXSSO DEV5",
 			"policy": "hDCC Repatriation (# 14724)"
 		},
 		"preProd": {
@@ -118,8 +121,9 @@
 			"lastName": "kitts",
 			"clientId": "7403",
 			"clientName": "Dow Chemical Company (Global)",
-			"csmUserName": "AKARNS",
-			"csmPassword": "AKARNS",
+			"csmUserName": "mxssodev5@corp.aires.com",
+			"csmPassword": "F74#jd*187_NB",
+			"csmUserFirstName":"MXSSO DEV5",
 			"policy": "hDCC Repatriation (# 14724)"
 		},
 		"uat": {
@@ -131,8 +135,9 @@
 			"lastName": "Kaminsky",
 			"clientId": "7403",
 			"clientName": "Dow Chemical Company (Global)",
-			"csmUserName": "AKARNS",
-			"csmPassword": "AKARNS",
+			"csmUserName": "mxssodev5@corp.aires.com",
+			"csmPassword": "F74#jd*187_NB",
+			"csmUserFirstName":"MXSSO DEV5",
 			"policy": "hDCC Repatriation (# 14724)"
 		}
 	}

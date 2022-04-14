@@ -137,6 +137,7 @@ public class CoreFlex_CustomBundlesPage extends Base {
 	 * @return
 	 */
 	public boolean verifyPageNavigation(String expectedPageName) {
+		CoreFunctions.explicitWaitTillElementInVisibility(driver, _progressBar);
 		return CoreFunctions.verifyElementOnPage(driver, _headerPage, COREFLEXConstants.CUSTOM_BUNDLES,
 				expectedPageName, expectedPageName, true);
 	}
@@ -173,8 +174,7 @@ public class CoreFlex_CustomBundlesPage extends Base {
 				CoreFunctions.explicitWaitTillElementInVisibility(driver, _progressBar);
 				break;
 			case COREFLEXConstants.SUBMIT:
-				CoreFunctions.clickElement(driver, _buttonSubmit);
-				CoreFunctions.explicitWaitTillElementInVisibility(driver, _progressBar);
+				CoreFunctions.clickElement(driver, _buttonSubmit);				
 				break;
 			case COREFLEXConstants.ADD_NEW_CUSTOM_BUNDLE:
 				CoreFunctions.clickElement(driver, _buttonAddNewCustomBundle);
@@ -188,8 +188,7 @@ public class CoreFlex_CustomBundlesPage extends Base {
 				CoreFunctions.explicitWaitTillElementInVisibility(driver, _progressBar);
 				break;
 			case COREFLEXConstants.PREVIEW_TRANSFEREE_EXPERIENCE:
-				CoreFunctions.clickElement(driver, _buttonPreviewTransfereeExp);
-				CoreFunctions.explicitWaitTillElementInVisibility(driver, _progressBar);
+				CoreFunctions.clickElement(driver, _buttonPreviewTransfereeExp);				
 				break;
 			case COREFLEXConstants.BACK:
 				CoreFunctions.clickElement(driver, _buttonBack);
@@ -267,6 +266,7 @@ public class CoreFlex_CustomBundlesPage extends Base {
 		boolean isPolicySubmitStatusVerified = false, isSubmitMessageVerified;
 		String actualSubmitMessage = null;
 		try {
+			CoreFunctions.explicitWaitTillElementInVisibility(driver, _progressBar);
 			actualSubmitMessage = CoreFunctions.getElementText(driver, _popUpTextSubmitMessage);
 			isSubmitMessageVerified = (expectedSubmitStatusMessage.replace("PolicyName", policyName)).equalsIgnoreCase(actualSubmitMessage);
 			isPolicySubmitStatusVerified = CoreFunctions.getElementText(driver, _popUpTextSubmitStatus)

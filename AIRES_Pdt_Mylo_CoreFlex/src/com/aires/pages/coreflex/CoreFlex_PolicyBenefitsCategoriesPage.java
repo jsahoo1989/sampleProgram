@@ -165,6 +165,7 @@ public class CoreFlex_PolicyBenefitsCategoriesPage extends Base {
 	 * @return
 	 */
 	public boolean verifyPageNavigation(String expectedPageName) {
+		CoreFunctions.explicitWaitTillElementInVisibility(driver, _progressBar);
 		return CoreFunctions.verifyElementOnPage(driver, _headerPage, COREFLEXConstants.POLICY_BENEFIT_CATEGORIES,
 				expectedPageName, expectedPageName, true);
 	}
@@ -201,8 +202,7 @@ public class CoreFlex_PolicyBenefitsCategoriesPage extends Base {
 				CoreFunctions.explicitWaitTillElementInVisibility(driver, _progressBar);
 				break;
 			case PDTConstants.NEXT:
-				CoreFunctions.clickElement(driver, _buttonNext);
-				CoreFunctions.explicitWaitTillElementInVisibility(driver, _progressBar);
+				CoreFunctions.clickElement(driver, _buttonNext);				
 				break;
 			case PDTConstants.SELECT_ALL:
 				CoreFunctions.clickElement(driver, _toggleButtonSelectAll);
@@ -331,6 +331,7 @@ public class CoreFlex_PolicyBenefitsCategoriesPage extends Base {
 	 * @return
 	 */
 	public boolean verifyBenefitsDisplayedOnLeftNavigation(String policyType) {
+		CoreFunctions.explicitWaitTillElementInVisibility(driver, _progressBar);
 		boolean isBenefitsAddedVerifiedOnLeftNavigation = false;
 		try {
 			List<String> benefitList = getBenefitList(policyType);
@@ -405,7 +406,7 @@ public class CoreFlex_PolicyBenefitsCategoriesPage extends Base {
 								benefit.getPayments());
 						break;
 					case COREFLEXConstants.OTHER_HOUSING_BENEFIT:
-//						coreFlexOtherHousingBenefitsPage.verifyNumericRangeFieldsValidation();
+						coreFlexOtherHousingBenefitsPage.verifyNumericRangeFieldsValidation();
 						coreFlexOtherHousingBenefitsPage.selectAndFillBenefitsDetails(benefit.getBenefitDisplayName(),
 								benefit.getPoints(), benefit.getMultipleBenefitSelection(), benefit.getBenefitAmount(),
 								benefit.getBenefitDesc(), benefit.getComment(), benefit.getGrossUp(),

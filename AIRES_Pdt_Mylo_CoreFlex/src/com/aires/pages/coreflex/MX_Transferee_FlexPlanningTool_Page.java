@@ -277,8 +277,18 @@ public class MX_Transferee_FlexPlanningTool_Page extends Base {
 	public static double totalPointsOnPolicy;
 	public static double cashoutPoints;
 	public static double selectedCashoutPoints;
+	
+	public static String reimAccountType;  	
 
 	/*********************************************************************/
+	
+	public static String getReimAccountType() {
+		return reimAccountType;
+	}
+
+	public static void setReimAccountType(String reimAccountType) {
+		MX_Transferee_FlexPlanningTool_Page.reimAccountType = reimAccountType;
+	}
 
 	public boolean isFlexPlanningToolHomePageDisplayed() {
 		CoreFunctions.explicitWaitTillElementVisibility(driver, flexHomePageTitle,
@@ -448,6 +458,7 @@ public class MX_Transferee_FlexPlanningTool_Page extends Base {
 			Reporter.addStepLog(MessageFormat.format(
 					MobilityXConstants.SUCCESSFULLY_SELECTED_PORTION_CASHOUT_ON_FLEX_PLANNING_TOOL_PAGE,
 					CoreConstants.PASS));
+			setReimAccountType(CoreFunctions.getAttributeText(_selectSelectAccount, "title"));
 		}
 		return isPortionCashoutSelected;
 	}
@@ -1056,6 +1067,7 @@ public class MX_Transferee_FlexPlanningTool_Page extends Base {
 						: (remainingPoints - selectedBenefitPoints);
 				selectedCashoutPoints = expectedCashOutPoints;
 			}
+			CoreFunctions.waitHandler(3);
 			CoreFunctions.verifyValue(
 					Double.parseDouble(CoreFunctions.getElementText(driver, _text_pointsAvailableForCashOut)),
 					expectedCashOutPoints, MobilityXConstants.POINTS_AVAILABLE_FOR_CASHOUT);

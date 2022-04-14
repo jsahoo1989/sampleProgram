@@ -253,4 +253,13 @@ public class ConfigFileReader {
 			throw new RuntimeException(
 					"Report Config Path not specified in the Configuration.properties file for the Key:reportConfigPath");
 	}
+	
+	public String getNameOfCurrentLaunchedApplication() {
+		String appName = properties.getProperty("application");
+		if (appName != null)
+			return appName;
+		else
+			throw new RuntimeException(
+					"Application Name not specified in the Configuration.properties file for the Key:url");
+	}
 }

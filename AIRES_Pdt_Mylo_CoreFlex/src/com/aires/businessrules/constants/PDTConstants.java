@@ -407,4 +407,6 @@ public class PDTConstants {
 	public static final String FAILED_TO_VERIFY_DEFAULT_VALUE_OF_GENERAL_INFORMATION_PAGE_FIELD = "{0}Failed to verify default value of ''{1}'' field of General Information Page.";
 	public static final String SUCCESSFULLY_VERIFIED_CAPPED_AND_POINTS_BASED_FLEX_POLICY_ERROR_POPUP_ON_GENERAL_INFORMATION_PAGE = "{0}Successfully verified Capped & Points Based Flex Policy Conditional Checks error pop up on General Information Page.";
 	public static final String FAILED_TO_VERIFY_CAPPED_AND_POINTS_BASED_FLEX_POLICY_CONDITIONAL_CHECKS_ERROR_POP_UP_ON_GENRAL_INFORMATION_PAGE = "{0}Failed to verify Capped & Points Based Flex Policy Conditional Checks error pop up on General Information Page.";
+	public static final String FAILED_TO_NAVIGATE_TO_COREFLEX_BLUE_PRINT_APPLICATION_LOGIN_PAGE = "{0}Failed to navigate to Coreflex Blue Print application Login Page.";
+	public static final String FAILED_TO_NAVIGATE_TO_COREFLEX_GENERAL_INFORMATION_PAGE = "{0}Failed to navigate to CoreFlex General Information Page.";
 }

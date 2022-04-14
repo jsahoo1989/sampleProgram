@@ -187,7 +187,7 @@ public class MX_Transferee_JourneyHomePage extends Base {
 	}
 
 	public void handle_points_expiry_reminder_popup() {
-		if (CoreFunctions.isElementExist(driver, _link_remindLater, 5)) {
+		if (CoreFunctions.isElementExist(driver, _link_remindLater, 2)) {
 			if (CoreFunctions.verifyElementPresentOnPage(_link_remindLater, MobilityXConstants.REMIND_LATER)) {
 				CoreFunctions.click(driver, _link_remindLater, MobilityXConstants.REMIND_LATER);
 				Log.info(MobilityXConstants.VERIFIED + MobilityXConstants.REMINDER_POPUP

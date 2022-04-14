@@ -120,6 +120,7 @@ public class CoreFlex_PreviewTransfereePage extends Base {
 	/*********************************************************************/
 
 	public boolean isPreviewTransfereePageDisplayed() {
+		CoreFunctions.explicitWaitTillElementInVisibility(driver, _progressBar);
 		CoreFunctions.explicitWaitTillElementVisibility(driver, _buttonCloseTransfereePreviewPage,
 				COREFLEXConstants.CLOSE_TRANSFEREE_PREVIEW);
 		return (CoreFunctions.getElementText(driver, _buttonCloseTransfereePreviewPage)
@@ -279,9 +280,7 @@ public class CoreFlex_PreviewTransfereePage extends Base {
 	}
 
 	public boolean verifyPreviewTransfereeExperience(String policyType) {
-		return isPreviewTransfereePageDisplayed() 
-				&& verifyBenefitDetailsOnPreviewTransfereePage(policyType) && validatePortionCashOutSection();
-//		&& verifyTracingPromptText()
+		return verifyBenefitDetailsOnPreviewTransfereePage(policyType) && validatePortionCashOutSection();
 	}
 
 	private boolean verifyTracingPromptText() {

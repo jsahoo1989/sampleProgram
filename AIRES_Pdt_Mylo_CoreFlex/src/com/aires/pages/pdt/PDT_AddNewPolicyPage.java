@@ -164,6 +164,7 @@ public class PDT_AddNewPolicyPage extends Base {
 	}
 
 	public boolean verifyAddNewPolicyHeading(String pageName) {
+		CoreFunctions.explicitWaitTillElementInVisibility(driver, _progressBar);
 		return CoreFunctions.verifyElementOnPage(driver, _headingAddNewPolicyForm, PDTConstants.heading,
 				PDTConstants.ADD_NEW_POLICY_FORM, pageName, true);
 	}
@@ -545,8 +546,7 @@ public class PDT_AddNewPolicyPage extends Base {
 				CoreFunctions.clickElement(driver, _buttonLogout);
 				break;
 			case PDTConstants.NEXT:
-				CoreFunctions.clickElement(driver, _buttonNext);
-				CoreFunctions.explicitWaitTillElementInVisibility(driver, _progressBar);
+				CoreFunctions.clickElement(driver, _buttonNext);				
 				break;
 			case PDTConstants.BACK:
 				CoreFunctions.clickElement(driver, _buttonBack);

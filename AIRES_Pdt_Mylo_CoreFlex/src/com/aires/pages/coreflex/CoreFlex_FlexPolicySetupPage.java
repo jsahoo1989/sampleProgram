@@ -163,6 +163,7 @@ public class CoreFlex_FlexPolicySetupPage extends Base {
 	 * @return
 	 */
 	public boolean verifyPageNavigation(String expectedPageName) {
+		CoreFunctions.explicitWaitTillElementInVisibility(driver, _progressBar);
 		return CoreFunctions.verifyElementOnPage(driver, _headerPage, COREFLEXConstants.FLEX_POLICY_SETUP,
 				expectedPageName, expectedPageName, true);
 	}
@@ -213,8 +214,7 @@ public class CoreFlex_FlexPolicySetupPage extends Base {
 				CoreFunctions.clickElement(driver, _buttonLogout);
 				break;
 			case PDTConstants.NEXT:
-				CoreFunctions.clickElement(driver, _buttonNext);
-				CoreFunctions.explicitWaitTillElementInVisibility(driver, _progressBar);
+				CoreFunctions.clickElement(driver, _buttonNext);				
 				break;
 			case PDTConstants.BACK:
 				CoreFunctions.clickElement(driver, _buttonBack);
@@ -304,9 +304,9 @@ public class CoreFlex_FlexPolicySetupPage extends Base {
 			performPageFieldSelection(fieldName, fieldSelection);
 		}
 
-//		checkFieldValidation(COREFLEXConstants.TOTAL_POINTS_AVAILABLE, "ABCD");
-//		checkFieldValidation(COREFLEXConstants.TOTAL_POINTS_AVAILABLE, "#$%");
-//		checkFieldValidation(COREFLEXConstants.TOTAL_POINTS_AVAILABLE, "50 Points");
+		checkFieldValidation(COREFLEXConstants.TOTAL_POINTS_AVAILABLE, "ABCD");
+		checkFieldValidation(COREFLEXConstants.TOTAL_POINTS_AVAILABLE, "#$%");
+		checkFieldValidation(COREFLEXConstants.TOTAL_POINTS_AVAILABLE, "50 Points");
 
 		CoreFunctions.clearAndSetTextUsingKeys(driver, _inputTotalPointsAvailable,
 				policySetupPageData.flexPolicySetupPage.StaticFixedTotalPointsAvailable,

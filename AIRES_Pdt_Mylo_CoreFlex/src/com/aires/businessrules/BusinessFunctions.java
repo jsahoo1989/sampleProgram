@@ -706,27 +706,32 @@ public class BusinessFunctions {
 	}
 
 	public static String[] getCSMCredentials(PDT_LoginDetails _loginDetailsApplication) {
-		String csmCredentials[] = new String[2];
+		String csmCredentials[] = new String[3];
 		switch (CoreFunctions.getPropertyFromConfig("envt").toLowerCase()) {
 		case CoreConstants.ENVT_DEV:
 			csmCredentials[0] = _loginDetailsApplication.dev.csmUserName;
 			csmCredentials[1] = _loginDetailsApplication.dev.csmPassword;
+			csmCredentials[2] = _loginDetailsApplication.dev.csmUserFirstName;
 			break;
 		case CoreConstants.ENVT_QA:
 			csmCredentials[0] = _loginDetailsApplication.qa.csmUserName;
 			csmCredentials[1] = _loginDetailsApplication.qa.csmPassword;
+			csmCredentials[2] = _loginDetailsApplication.qa.csmUserFirstName;
 			break;
 		case CoreConstants.ENVT_TEST:
 			csmCredentials[0] = _loginDetailsApplication.preProd.csmUserName;
 			csmCredentials[1] = _loginDetailsApplication.preProd.csmPassword;
+			csmCredentials[2] = _loginDetailsApplication.preProd.csmUserFirstName;
 			break;
 		case CoreConstants.ENVT_UAT:
 			csmCredentials[0] = _loginDetailsApplication.uat.csmUserName;
 			csmCredentials[1] = _loginDetailsApplication.uat.csmPassword;
+			csmCredentials[2] = _loginDetailsApplication.uat.csmUserFirstName;
 			break;
 		case CoreConstants.ENVT_PROD:
 			csmCredentials[0] = _loginDetailsApplication.prod.csmUserName;
 			csmCredentials[1] = _loginDetailsApplication.prod.csmPassword;
+			csmCredentials[2] = _loginDetailsApplication.prod.csmUserFirstName;
 			break;
 		}
 		return csmCredentials;
@@ -756,7 +761,7 @@ public class BusinessFunctions {
 		try {
 		CoreFunctions.explicitWaitTillElementListClickable(driver, listWebElement);
 		listWebElement.get(index).click();
-		CoreFunctions.waitHandler(3);		
+		CoreFunctions.waitHandler(5);		
 		}catch (Exception e) {
 			Assert.fail(MessageFormat.format(MobilityXConstants.EXCEPTION_OCCURED_WHILE_CLICKING_ON_ELEMENT_FROM_LIST, CoreConstants.FAIL,
 					e.getMessage(),listWebElement.get(index).getText()));

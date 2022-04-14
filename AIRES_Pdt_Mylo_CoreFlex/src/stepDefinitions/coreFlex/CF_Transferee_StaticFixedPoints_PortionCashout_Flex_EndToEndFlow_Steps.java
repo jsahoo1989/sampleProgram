@@ -8,6 +8,7 @@ import java.util.Map;
 import org.testng.Assert;
 
 import com.aires.businessrules.CoreFunctions;
+import com.aires.businessrules.constants.COREFLEXConstants;
 import com.aires.businessrules.constants.CoreConstants;
 import com.aires.businessrules.constants.MobilityXConstants;
 import com.aires.cucumber.TestContext;
@@ -68,8 +69,10 @@ public class CF_Transferee_StaticFixedPoints_PortionCashout_Flex_EndToEndFlow_St
 	public void he_has_clicked_on_button_after_validating_all_the_benefit_and_Cashout_details_listed_under_Selected_Benefits_section_on_page(
 			String reviewAndSubmitButton, String pageName) throws Throwable {
 		CoreConstants.TIME_BEFORE_ACTION = new Date().getTime();
-		Assert.assertTrue(mxTransfereeMyBenefitsBundlePage.verifySelectedPortionCashoutDetails(), MessageFormat
-				.format(MobilityXConstants.FAILED_TO_VERIFY_SELECTED_PORTION_CASHOUT_DETAILS_ON_MY_BUNDLE_PAGE, CoreConstants.FAIL));
+		Assert.assertTrue(mxTransfereeMyBenefitsBundlePage.verifySelectedPortionCashoutDetails(),
+				MessageFormat.format(
+						MobilityXConstants.FAILED_TO_VERIFY_SELECTED_PORTION_CASHOUT_DETAILS_ON_MY_BUNDLE_PAGE,
+						CoreConstants.FAIL));
 		Assert.assertTrue(mxTransfereeMyBenefitsBundlePage.verifySelectedBenefitDetails(), MessageFormat
 				.format(MobilityXConstants.FAILED_TO_VERIFY_SELECTED_BENEFITS_ON_MY_BUNDLE_PAGE, CoreConstants.FAIL));
 		mxTransfereeMyBenefitsBundlePage.clickReviewAndSubmit();
@@ -77,29 +80,44 @@ public class CF_Transferee_StaticFixedPoints_PortionCashout_Flex_EndToEndFlow_St
 		Reporter.addStepLog("<b>Total time taken by <i>'Given'</i> statement is :"
 				+ (CoreConstants.TIME_AFTER_ACTION - CoreConstants.TIME_BEFORE_ACTION) / 1000 + " Seconds </b>");
 	}
-	
 
 	@When("^he 'Delete' submitted Benefit_Cashout and confirms 'Remove Benefit Selection' dialog by entering username and clicking on \"([^\"]*)\"$")
-	public void he_Delete_submited_Benefit_Cashout_and_confirms_Remove_Benefit_Selection_dialog_by_entering_username_and_clicking_on(String buttonName)
-			throws Throwable {
+	public void he_Delete_submited_Benefit_Cashout_and_confirms_Remove_Benefit_Selection_dialog_by_entering_username_and_clicking_on(
+			String buttonName) throws Throwable {
 		CoreConstants.TIME_BEFORE_ACTION = new Date().getTime();
 		Assert.assertTrue(mxTransfereeMyBenefitsBundlePage.deleteSubmittedBenefitAndCashout(buttonName), MessageFormat
-				.format(MobilityXConstants.FAILED_TO_DELETE_SUBMITTED_BENEFIT_AND_CASHOUT, CoreConstants.FAIL));		
+				.format(MobilityXConstants.FAILED_TO_DELETE_SUBMITTED_BENEFIT_AND_CASHOUT, CoreConstants.FAIL));
 		CoreConstants.TIME_AFTER_ACTION = new Date().getTime();
 		Reporter.addStepLog("<b>Total time taken by <i>'When'</i> statement is :"
 				+ (CoreConstants.TIME_AFTER_ACTION - CoreConstants.TIME_BEFORE_ACTION) / 1000 + " Seconds </b>");
 	}
-	
+
 	@Then("^'Status' of the deleted benefit_cashout should be displayed as \"([^\"]*)\" under 'Submitted Benefits' section of 'My Benefit Bundle' page$")
 	public void status_of_the_deleted_benefit_cashout_should_be_displayed_as_under_Submitted_Benefits_section_of_My_Benefit_Bundle_page(
 			String arg1) throws Throwable {
-		CoreConstants.TIME_BEFORE_ACTION = new Date().getTime();		
+		CoreConstants.TIME_BEFORE_ACTION = new Date().getTime();
 		Assert.assertTrue(mxTransfereeMyBenefitsBundlePage.verifyDeletedBenefitCashoutStatus(), MessageFormat
-				.format(MobilityXConstants.FAILED_TO_VERIFY_DELETED_BENEFIT_AND_CASHOUT_STATUS, CoreConstants.FAIL));		
+				.format(MobilityXConstants.FAILED_TO_VERIFY_DELETED_BENEFIT_AND_CASHOUT_STATUS, CoreConstants.FAIL));
 		CoreConstants.TIME_AFTER_ACTION = new Date().getTime();
 		Reporter.addStepLog("<b>Total time taken by <i>'Then'</i> statement is :"
 				+ (CoreConstants.TIME_AFTER_ACTION - CoreConstants.TIME_BEFORE_ACTION) / 1000 + " Seconds </b>");
+	}
 
+	@Given("^he has clicked on \"([^\"]*)\" followed by \"([^\"]*)\" button to resolve multiple 'Delete Request Pending' request of the Transferee$")
+	public void he_has_clicked_on_followed_by_button_to_resolve_multiple_Delete_Request_Pending_request_of_the_Transferee(
+			String checkAllButton, String resolveMultipleButton) throws Throwable {
+		transfereeSubmissionsDetailsPage.clickElementOfPage(checkAllButton);
+		transfereeSubmissionsDetailsPage.clickElementOfPage(resolveMultipleButton);
+	}
+	
+	@When("^he confirms request by selecting \"([^\"]*)\" option after verifying 'Delete Request Pending' benefit request details on 'Requests' dialog$")
+	public void he_confirms_request_by_selecting_option_after_verifying_Delete_Request_Pending_benefit_request_details_on_Requests_dialog(
+			String action) throws Throwable {
+		Assert.assertTrue(transfereeSubmissionsDetailsPage.verifyBenefitDetailsOnRequestsDialog(),
+				MessageFormat.format(
+						COREFLEXConstants.FAILED_TO_VERIFY_DELETE_REQUEST_BENEFIT_DETAILS_ON_REQUESTS_DIALOG,
+						CoreConstants.FAIL));
+		transfereeSubmissionsDetailsPage.clickElementOfPage(action);		
 	}
 
 }

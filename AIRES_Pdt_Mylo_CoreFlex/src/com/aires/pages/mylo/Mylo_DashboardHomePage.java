@@ -60,6 +60,9 @@ public class Mylo_DashboardHomePage extends Base {
 	@FindBy(how = How.CSS, using = "h1[class='popupheader']")
 	private WebElement _queryTypeHeader;
 	
+	@FindBy(how = How.CSS, using = "h1[class='errortext']")
+	private WebElement _errorText;
+	
 	@FindBy(how = How.CSS, using = "h5[class='modal-title']")
 	private WebElement _assignmentOptionHeader;
 
@@ -74,6 +77,9 @@ public class Mylo_DashboardHomePage extends Base {
 
 	@FindBy(how = How.XPATH, using = "//button[text()='OK']")
 	private WebElement _okButton;
+	
+	@FindBy(how = How.XPATH, using = "//button[text()='Ok']")
+	private WebElement _popUpOkButton;
 
 	@FindBy(how = How.XPATH, using = "//div[@role='dialog']//h1")
 	private WebElement _popUpMessage;
@@ -124,6 +130,7 @@ public class Mylo_DashboardHomePage extends Base {
 		CoreFunctions.explicitWaitTillElementVisibility(driver, _executeButton, _executeButton.getText(), 10L);
 		CoreFunctions.highlightElementAndClick(driver, _executeButton, _executeButton.getText());
 		CoreFunctions.explicitWaitTillElementInVisibilityCustomTime(driver, _spinner, 10);
+		
 	}
 
 	public boolean clickHamburgerMenu() {
@@ -259,12 +266,20 @@ public class Mylo_DashboardHomePage extends Base {
 	
 	public void executeDifferentFileIds(int count, List<String> fileIds) {
 		for (int i = 0; i < count; i++) {
-			clickOptionFromMainMenu(MYLOConstants.ASSIGNMENT);
+			clickOptionFromMainMenu(MYLOConstants.JOURNEY);
 			selectOptionsFromAssignmentMenu(MYLOConstants.QUERY_FILE);
 			selectParameterFromQueryScreen(MYLOConstants.FILE);
 			selectOptionsForFileParameters(MYLOConstants.FILE_ID, fileIds.get(i));
 			clickExecuteButton();
+			clickOKInPopUpWindow();
 		}
+	}
+	
+	public void clickOKInPopUpWindow() {
+		if (CoreFunctions.isElementExist(driver, _errorText, 10)) {
+			CoreFunctions.highlightObject(driver, _errorText);
+			CoreFunctions.click(driver, _popUpOkButton, MYLOConstants.OK_BUTTON);
+	}
 	}
 
 }

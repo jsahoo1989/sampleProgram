@@ -108,7 +108,7 @@ public class MYLOConstants {
 	public static final String RANDOM_VALUE_UPDATED_ON_SECTION = "{0}Random value ''{1}'' is updated for :- ''{2}'' in ''{3}'' section on ''{4}'' page";
 	public static final String VERIFIED_COUNTRY_PRESENT = "{0}Verified ''{1}'' country is present as the first country in ''{2}'' under ''{3}'' section";
 	public static final String VERIFIED_STATE_FREE_TEXT_FIELD = "{0}Verified that State field is appearing as Free Text Field on  ''{1}'' section";
-	public static final String VERIFIED_ALERT_MESSAGE_DISPLAYED = "{0}Verified Alert message is displayed as ''{1}''  on  ''{2}'' section";
+	public static final String VERIFIED_ALERT_MESSAGE_DISPLAYED = "{0}Verified Alert message is displayed as ''{1}''  on  ''{2}'' page";
 	public static final String VERIFIED_POPUP_MESSAGE_DISPLAYED = "{0}Verified Pop up message is displayed as ''{1}''  on  ''{2}'' section";
 	public static final String VERIFIED_FIELD_HIGHLIGHTED = "{0}Verified ''{1}'' field is highlighted with Red background on  ''{2}'' section";
 	public static final String VERIFIED_FIELD_NOT_HIGHLIGHTED = "{0}Verified ''{1}'' field is not highlighted with Red background on  ''{2}'' section";
@@ -174,7 +174,7 @@ public class MYLOConstants {
 	public static final String ADDRESS2 = "address2";
 	public static final String ADD_MAILING_ADDRESS = "Add Mailing Address";
 	public static final String ADD_TEMPORARY_ADDRESS = "Add Temporary Address";
-	public static final Object ALERT_MESSAGE = "Alert Message";
+	public static final String ALERT_MESSAGE = "Alert Message";
 	public static final String FROMDATE = "FromDate";
 	public static final String COMMENTS = "Comments";
 	public static final String CITY_VALUE = "Warsaw";
@@ -232,9 +232,14 @@ public class MYLOConstants {
 	public static final String NUMBER = "Number";
 	public static final String IDENTITY_TYPE = "IdentityType";
 	public static final String BUTTON_ENABLED = "{0} ''{1}'' button is enabled for ''{2}'' section on ''{3}'' page";
+	public static final String BUTTON_PRESENT = "{0} ''{1}'' button is present for ''{2}'' section on ''{3}'' page";
+	public static final String TOAST_MESSAGE_PRESENT = "{0} Toast message is present for ''{1}'' section on ''{2}'' page";
+	public static final String TOAST_MESSAGE_NOT_PRESENT = "{0} Toast message is not present for ''{1}'' section on ''{2}'' page";
 	public static final String BUTTON_DISABLED = "{0} ''{1}'' button is disabled for ''{2}'' section on ''{3}'' page";
+	public static final String BUTTON_NOT_PRESENT = "{0} ''{1}'' button is not present for ''{2}'' section on ''{3}'' page";
 	public static final String VERIFIED_ELEMENT_DISPLAYED_IDENTDOC_SECTION = "{0}Verified Type is displayed as ''{1}'' , Number is displayed as ''{2}'' and FromDate is displayed as ''{3}'' on Identification & Documentation section";
 	public static final String EXPECTED_FIELD_VALUE_NOTDISPLAYED="Expected Field Value is not displayed";
+	public static final String TODATE = "ToDate";
 	
 	public static final String FIELD_NAME_EXIST_IN_RESPONSE="{0}FieldName: ''{1}''  exists in Response";
 	public static final String PRIMARY_CONTACT_CARD_OBJECT="primaryContactCardObject";
@@ -247,12 +252,15 @@ public class MYLOConstants {
 	public static final String GET_ASSIGNMENT="Get Assignment";
 	public static final String GET_ASSIGNMENT_API_ENDPOINT="/assignment/";
 	public static final String ENTER_CORRECT_HTTPMETHOD_NAME="Please enter correct HttpMethod name";
-
-	
-	
-	
-
-	
+	public static final Object ROW = "Row";
+	public static final String REMOVE_BUTTON = "Remove";
+	public static final String TRANSFEREE_WITH_FAMILY_MEMBER = "Transferee With Family Member";
+	public static final String TRANSFEREE_WITH_OTHER_FAMILY_MEMBERS = "Transferee With Other Family Members";
+	public static final String SUCCESSFULLY_REMOVED="Successfully Removed";
+	public static final String IDENTDOC_TYPE="Cedula";
+	public static final String IDENTDOC_NUMBER="Cedula";
+	public static final String IDENTDOC_COUNTRY="USA";
+	public static final String IDENTDOC_TODATE="Cedula";
 	
 	public static long TIME_BEFORE_ACTION;
 	public static long TIME_AFTER_ACTION;

@@ -110,6 +110,26 @@
 			"provider": "AIRES",
 			"journeyType": "",
 			"office": "CRO"
-		}		
+		},
+		"transfereeWithFamily": {
+			"fileID": "575015",
+			"clientID": "49212",
+			"clientName": "Test Client",
+			"status": "Active",
+			"policyType": "Domestic Non Custom",
+			"provider": "AIRESSH",
+			"journeyType": "Long-Term",
+			"office": "CRO"
+		}		,
+		"transfereeWithOtherFamilyMembers": {
+			"fileID": "590662",
+			"clientID": "92265",
+			"clientName": "MobilityX Inc.",
+			"status": "Active",
+			"policyType": "Domestic Policy",
+			"provider": "AIRES",
+			"journeyType": "Commuter",
+			"office": "CRO"
+		}
 	}
 ]

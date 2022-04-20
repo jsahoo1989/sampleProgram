@@ -100,9 +100,7 @@ public class TransfereeSubmissions_LoginPage extends Base {
 					_staySignedInYes.getAttribute("value"), 10);
 			CoreFunctions.click(driver, _staySignedInYes, _staySignedInYes.getAttribute("value"));
 		}
-		CoreFunctions.switchToParentWindow(driver);
-		if (CoreFunctions.isElementExist(driver, _spinner, 5))
-			CoreFunctions.explicitWaitTillElementInVisibilityCustomTime(driver, _spinner, 30);
+		CoreFunctions.switchToParentWindow(driver);		
 	}
 	
 	
@@ -149,7 +147,7 @@ public class TransfereeSubmissions_LoginPage extends Base {
 		return isSuccessfullyLoggedIn;
 	}
 	
-	private String getCSMUserName(TransfereeSubmissions_LoginData _transfereeSubmissionLoginData2) {
+	public String getCSMUserName(TransfereeSubmissions_LoginData _transfereeSubmissionLoginData2) {
 		String csmUserFullName = null;
 		switch(CoreFunctions.getPropertyFromConfig("envt").toLowerCase()) {
 		case CoreConstants.ENVT_DEV:

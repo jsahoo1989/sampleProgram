@@ -127,6 +127,8 @@ public class TransfereeSubmissions_DashboardHomePage extends Base {
 	}
 
 	public boolean verifyUserlogin(String userName, String pageName) {
+		if (CoreFunctions.isElementExist(driver, _spinner, 5))
+			CoreFunctions.explicitWaitTillElementInVisibilityCustomTime(driver, _spinner, 30);
 		CoreFunctions.explicitWaitTillElementVisibility(driver, _txtApplicationTitle,
 				COREFLEXConstants.TRANSFEREE_SUBMISSIONS, 20);
 		if ((getUserName().equalsIgnoreCase(userName))

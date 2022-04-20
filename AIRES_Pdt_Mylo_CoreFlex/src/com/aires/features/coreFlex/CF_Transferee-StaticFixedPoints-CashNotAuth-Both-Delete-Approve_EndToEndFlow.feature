@@ -39,4 +39,4 @@ Scenario: TransfereeSubmissions - Verifying_Approving_Denying submissions made b
 	When he confirms the "Approve Request" after verifying 'Delete Request Pending' benefit request details and adding comments on 'Requests' dialog
 	Then 'Action Completed' growl message for "Approve Request" should be displayed on "Transferee Submission Details" page
 	And 'Delete Request Pending' benefit request should be removed from 'Transferee Submission Details' list
-	And benefit details should be updated on 'MXTransferee' application based on "Approved" 'Delete Request' on Transferee Submission
+	And benefit details should be updated in 'MXTransferee' application based on "Approved" 'Delete Request' on Transferee Submission

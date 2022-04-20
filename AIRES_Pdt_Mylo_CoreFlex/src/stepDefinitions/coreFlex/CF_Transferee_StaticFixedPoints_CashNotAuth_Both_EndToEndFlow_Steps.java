@@ -20,6 +20,7 @@ import com.aires.pages.coreflex.MX_Transferee_MyBenefitsBundlePage;
 import com.aires.pages.coreflex.TransfereeSubmissions_DashboardHomePage;
 import com.aires.pages.coreflex.TransfereeSubmissions_DetailsPage;
 import com.aires.pages.coreflex.TransfereeSubmissions_LoginPage;
+import com.aires.testdatatypes.coreflex.TransfereeSubmissions_LoginData;
 import com.vimalselvam.cucumber.listener.Reporter;
 
 import cucumber.api.java.en.Given;
@@ -54,6 +55,9 @@ public class CF_Transferee_StaticFixedPoints_CashNotAuth_Both_EndToEndFlow_Steps
 		mxTransfereeLoginPage = testContext.getCoreFlexPageObjectManager().getMXTransfereeLoginPage();
 		transfereeSubmissionsLoginPage = testContext.getCoreFlexPageObjectManager().getTransfereeSubmissionsLoginPage();
 	}
+
+	private TransfereeSubmissions_LoginData _transfereeSubmissionLoginData = FileReaderManager.getInstance()
+			.getCoreFlexJsonReader().getTransfereeSubmissionLoginDataList(COREFLEXConstants.TRANSFEREE_SUBMISSIONS);
 
 	@Given("^he has clicked on \"([^\"]*)\" button for a benefit under 'Submitted Benefits' section$")
 	public void he_has_clicked_on_button_for_a_benefit_under_Submitted_Benefits_section(String action)
@@ -245,7 +249,7 @@ public class CF_Transferee_StaticFixedPoints_CashNotAuth_Both_EndToEndFlow_Steps
 				MessageFormat.format(
 						MobilityXConstants.REMAINING_AVAILABLE_POINTS_DETAILS_NOT_MATCHED_ON_JOURNEY_HOME_PAGE,
 						CoreConstants.FAIL));
-		mxTransfereeJourneyHomePage.navigateToFlexPlanningToolPage();		
+		mxTransfereeJourneyHomePage.navigateToFlexPlanningToolPage();
 		Assert.assertTrue(mxTransfereeFlexPlanningToolPage.verifyAvailablePointsMessageAfterSubmission(),
 				MessageFormat.format(
 						MobilityXConstants.FAILED_TO_VALIDATE_AVAILABLE_POINTS_MESSAGE_ON_FLEX_PLANNING_TOOL_PAGE,
@@ -280,13 +284,19 @@ public class CF_Transferee_StaticFixedPoints_CashNotAuth_Both_EndToEndFlow_Steps
 		Reporter.addStepLog("<b>Total time taken by <i>'Then'</i> statement is :"
 				+ (CoreConstants.TIME_AFTER_ACTION - CoreConstants.TIME_BEFORE_ACTION) / 1000 + " Seconds </b>");
 	}
-	
+
 	@Then("^'Delete Request Pending' benefit request status should be updated to 'Submitted' in 'Transferee Submission Details' list of 'Transferee Submissions' application$")
 	public void delete_Request_Pending_benefit_request_status_should_be_updated_to_Submitted_in_Transferee_Submission_Details_list_of_Transferee_Submissions_application()
 			throws Throwable {
 		CoreConstants.TIME_BEFORE_ACTION = new Date().getTime();
 		testContext.getWebDriverManager().getDriver().navigate()
-		.to(FileReaderManager.getInstance().getConfigReader().getCoreFlexTransfereeSubmissionsApplicationUrl());
+				.to(FileReaderManager.getInstance().getConfigReader().getCoreFlexTransfereeSubmissionsApplicationUrl());
+		Assert.assertTrue(
+				transfereeSubmissionsDashboardHomePage.verifyUserlogin(
+						transfereeSubmissionsLoginPage.getCSMUserName(_transfereeSubmissionLoginData),
+						COREFLEXConstants.TRANSFEREE_SUBMISSIONS_DASHBOARD_HOME_PAGE),
+				MessageFormat.format(COREFLEXConstants.FAILED_TO_NAVIGATE_TO_TRANSFEREE_SUBMISSIONS_DASHBOARD_HOME_PAGE,
+						CoreConstants.FAIL));
 		transfereeSubmissionsDashboardHomePage.clickElementOfPage(COREFLEXConstants.REVIEW);
 		Assert.assertTrue(transfereeSubmissionsDetailsPage.verifySubmittedBenefitsDetails(), MessageFormat.format(
 				COREFLEXConstants.FAILED_TO_VERIFY_DENY_DELETE_REQUEST_UPDATED_TO_SUBMITTED_IN_TRANSFEREE_SUBMISSION_DETAILS_PAGE,

@@ -364,7 +364,7 @@ public class COREFLEXConstants {
 	public static final String SUCCESSFULLY_VALIDATED_SUBMITTED_CASHOUT_DETAILS_ON_SUBMISSION_DETAILS_PAGE = "{0}Successfully validated Submitted Cashout Details on Transferee Submission Details page.";
 	public static final String SUBMITTED_CASHOUT_NAME = "Submitted Cashout Name";
 	public static final String SUBMITTED_CASHOUT_ALLOWANCE_AMOUNT = "Submitted Cashout Allowance Amount";
-	public static final String TRANSFEREE_CASHOUT_ALLOWANCE_TEXT = "Transferee received currency $cashout_value to their account Via reim_type";
+	public static final String TRANSFEREE_CASHOUT_ALLOWANCE_TEXT = "Transferee will receive currency $cashout_value to their account Via reim_type";
 	public static final String FAILED_TO_VERIFY_NAVIGATION_TO_TRANSFEREE_PREVIEW_PAGE = "{0}Failed to verify Navigation to Transferee Preview Page.";
 	public static final String CHECK_ALL = "Check All";
 	public static final String RESOLVE_MULTIPLE = "Resolve Multiple";
@@ -372,4 +372,10 @@ public class COREFLEXConstants {
 	public static final String SUCCESSFULLY_VERIFIED_BENEFIT_DETAILS_ON_REQUEST_DIALOG = "{0}Successfully verified Benefit Details on Request Dialog.";
 	public static final String EXCEPTION_OCCURED_WHILE_VERIFYING_DELETE_REQUEST_CASHOUT_DETAILS_ON_REQUEST_DIALOG = "{0}Exception occured while verifying delete request Cashout details on request dialog. Exception : ''{1}''.";
 	public static final String APPROVE_ALL = "Approve All";
+	public static final String SUCCESSFULLY_CLICKED_ON_SUBMIT_BUTTON_ON_CUSTOM_BUNDLES_PAGE = "{0}Successfully clicked on Submit button on Custom Bundles Page.";
+	public static final String VIEW_EDIT_POLICY = "View Edit Policy";
+	public static final String VIEW_EDIT_POLICY_FORMS = "View/Edit Policy Forms";
+	public static final String FAILED_TO_VERIFY_USER_NAVIGATION_TO_VIEW_EDIT_POLICY_PAGE = "{0}Failed to verify user navigation to View/Edit Policy Forms page.";
+	public static final String EXCEPTION_OCCURED_WHILE_VALIDATING_CASHOUT_DETAILS_POST_APPROVED_DELETE_REQUEST_ON_MBB_PAGE = "{0}Exception occured while validating cashout details post Approved Delete Request under Submitted Section of MBB Page. Exception : ''{1}''.";
+	public static final String SUCCESSFULLY_VERIFIED_CASHOUT_DETAILS_NOT_DISPLAYED_UNDER_SUBMITTED_BENEFITS_POST_APPROVED_DELETE_REQUEST_ON_MBB_PAGE = "{0}Successfully verified cashout details not displayed under submitted benefits post Approved Delete Request on My Benefits Bundles page.";
 }

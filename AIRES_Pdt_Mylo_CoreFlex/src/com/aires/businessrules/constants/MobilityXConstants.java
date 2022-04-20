@@ -265,4 +265,7 @@ public class MobilityXConstants {
 	public static final String FAILED_TO_UNDO_DELETED_BENEFIT = "{0}Failed to undo deleted benefit.";
 	public static final String FAILED_TO_VERIFY_UNDO_SUCCESS_MESSAGE = "{0}Failed to verify Undo Success Message.";
 	public static final String VIEW_PAYMENTS = "View Payments";
+	public static final String CASHOUT_SUGGESTION_TEXT_PREVIEW_TRANSFEREE = "If you do not need any additional benefits, you may cash out your remaining points by selecting the text box below to receive payment to your bank account. You'll be offered the full sum of your remaining points, but you can opt to cash out less if you want.";
+	public static final String PLUS_BUTTON = "Plus Button";
+	public static final String BENEFIT_CASHOUT_DETAILS_NOT_MATCHED_ON_MBB_PAGE = "{0}Benefit/Cashout Details not matched on My Benefit Bundle page.";
 }

@@ -280,4 +280,17 @@ public class PDT_ViewPolicyPage extends Base {
 		return isSubmittedPolicyStatusVerified;
 	}
 
+	/**
+	 * Method to verify navigated Page Header Title
+	 * 
+	 * @param expectedPageName
+	 * @return
+	 */
+	public boolean verifyPageNavigation(String expectedPageName) {
+		CoreFunctions.explicitWaitTillElementInVisibility(driver, _progressBar);
+		return CoreFunctions.verifyElementOnPage(driver, _headingViewEditPolicyForm, COREFLEXConstants.VIEW_EDIT_POLICY,
+				expectedPageName, expectedPageName, true);
+	}
+	
+
 }

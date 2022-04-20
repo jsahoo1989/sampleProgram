@@ -277,11 +277,11 @@ public class MX_Transferee_FlexPlanningTool_Page extends Base {
 	public static double totalPointsOnPolicy;
 	public static double cashoutPoints;
 	public static double selectedCashoutPoints;
-	
-	public static String reimAccountType;  	
+
+	public static String reimAccountType;
 
 	/*********************************************************************/
-	
+
 	public static String getReimAccountType() {
 		return reimAccountType;
 	}
@@ -445,8 +445,8 @@ public class MX_Transferee_FlexPlanningTool_Page extends Base {
 					|| (CoreFunctions.getPropertyFromConfig("PolicyCashoutType")
 							.equals(MobilityXConstants.AFTER_RELOCATION_ONLY))) {
 				isPortionCashoutSelected = selectPointsForCashout(cashoutPoints * 0.15);
-			}
-			else if((CoreFunctions.getPropertyFromConfig("PolicyCashoutType").equals(MobilityXConstants.CASHOUT_NOT_AUTHORIZED))) {
+			} else if ((CoreFunctions.getPropertyFromConfig("PolicyCashoutType")
+					.equals(MobilityXConstants.CASHOUT_NOT_AUTHORIZED))) {
 				return true;
 			}
 		} catch (Exception e) {
@@ -775,6 +775,7 @@ public class MX_Transferee_FlexPlanningTool_Page extends Base {
 	private boolean performFlexBenefitSelection(Benefit benefit, int indexBenefit, int indexCategory) {
 		boolean isBenefitSelected = false;
 		try {
+			CoreFunctions.scrollToElementUsingJS(driver, flexHomePageTitle, MobilityXConstants.FLEX_PLANNING_TOOL);
 			double points = Double.parseDouble(benefit.getPoints());
 			if ((benefit.getMultipleBenefitSelection()).equals("Yes")) {
 				CoreFunctions.explicitWaitTillElementBecomesClickable(driver, _buttonSelectThisBenefit,
@@ -812,7 +813,8 @@ public class MX_Transferee_FlexPlanningTool_Page extends Base {
 						&& verifyCashoutContentBySelectingPointsEqualToMaxPortionCashoutPercent()
 						&& verifyCashoutContentBySelectingPointsMoreThanMaxPortionCashoutPercent()
 						&& verifyCashoutContentBySelectingAllBenefitPoints()
-						&& selectAllAvailablePointsForCashoutAndVerify() && verifyEnteredCustomPortionCashoutValue(cashoutPoints * 0.25)
+						&& selectAllAvailablePointsForCashoutAndVerify()
+						&& verifyEnteredCustomPortionCashoutValue(cashoutPoints * 0.25)
 						&& verifyCashoutDetailsWithEnteredCustomPortionCashoutAndMinBenefitValue()
 						&& verifyCashoutDetailsWithEnteredCustomPortionCashoutAndMaxBenefitValue()
 						&& deselectSelectedCashoutAndBenefits();
@@ -1012,6 +1014,8 @@ public class MX_Transferee_FlexPlanningTool_Page extends Base {
 							selectedBenefitPoints, false, 0);
 					int indexBenefit = BusinessFunctions.returnindexItemFromListUsingText(driver,
 							_textAddedBenefitNameList, duplicateHosuingBenefit.getBenefitDisplayName());
+					CoreFunctions.scrollToElementUsingJS(driver, flexHomePageTitle,
+							MobilityXConstants.FLEX_PLANNING_TOOL);
 					BusinessFunctions.selectValueFromListUsingIndex(driver, _buttonPlusBenefit, indexBenefit);
 					CoreFunctions.explicitWaitTillElementListVisibility(driver, _buttonSelected);
 				}
@@ -1133,7 +1137,7 @@ public class MX_Transferee_FlexPlanningTool_Page extends Base {
 		}
 	}
 
-	private boolean verifyEnteredCustomPortionCashoutValue(double customCashoutPoints ) {
+	private boolean verifyEnteredCustomPortionCashoutValue(double customCashoutPoints) {
 		boolean isPortionCashoutVerified = false;
 		try {
 			CoreFunctions.clickElement(driver, _buttonSelectedCashoutPoints);
@@ -1259,7 +1263,7 @@ public class MX_Transferee_FlexPlanningTool_Page extends Base {
 		}
 		return false;
 	}
-	
+
 	public boolean verifyPortionCashOutPostSubmissionOnFPT() {
 		boolean isPortionCashoutVerified = false, flag = false;
 		try {
@@ -1268,7 +1272,8 @@ public class MX_Transferee_FlexPlanningTool_Page extends Base {
 							.equals(MobilityXConstants.AFTER_RELOCATION_ONLY))) {
 				isPortionCashoutVerified = verifyInitialCashOutContent(true)
 						&& verifyCashoutContentBySelectingPointsLessThanMaxPortionCashoutPercent()
-						&& selectAllAvailablePointsForCashoutAndVerify() && verifyEnteredCustomPortionCashoutValue(cashoutPoints * 0.20)
+						&& selectAllAvailablePointsForCashoutAndVerify()
+						&& verifyEnteredCustomPortionCashoutValue(cashoutPoints * 0.20)
 						&& deselectSelectedCashoutAndBenefits();
 				flag = true;
 			} else if (CoreFunctions.getPropertyFromConfig("PolicyCashoutType")
@@ -1290,6 +1295,5 @@ public class MX_Transferee_FlexPlanningTool_Page extends Base {
 		}
 		return isPortionCashoutVerified;
 	}
-
 
 }

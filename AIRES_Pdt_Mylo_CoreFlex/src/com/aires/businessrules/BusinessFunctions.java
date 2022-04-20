@@ -759,7 +759,7 @@ public class BusinessFunctions {
 	
 	public static void selectValueFromListUsingIndex(WebDriver driver, List<WebElement> listWebElement, int index) {
 		try {
-		CoreFunctions.explicitWaitTillElementListClickable(driver, listWebElement);
+		CoreFunctions.explicitWaitTillElementListClickable(driver, listWebElement);		
 		listWebElement.get(index).click();
 		CoreFunctions.waitHandler(5);		
 		}catch (Exception e) {

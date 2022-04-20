@@ -82,6 +82,9 @@ public class TransfereeSubmissions_DashboardHomePage extends Base {
 	// AIRES Flex Logo Image
 	@FindBy(how = How.CSS, using = "img[src='assets/img/AiresFleXLogo.png']")
 	private WebElement _imgAIRESFlexLogo;
+	
+	@FindBy(how = How.CSS, using = "div[class='sk-three-strings']")
+	private WebElement _spinner;
 
 	/**********************************************************************/
 
@@ -124,8 +127,6 @@ public class TransfereeSubmissions_DashboardHomePage extends Base {
 	}
 
 	public boolean verifyUserlogin(String userName, String pageName) {
-		CoreFunctions.explicitWaitTillElementInVisibility(driver, _progressBar);
-		CoreFunctions.waitHandler(5);
 		CoreFunctions.explicitWaitTillElementVisibility(driver, _txtApplicationTitle,
 				COREFLEXConstants.TRANSFEREE_SUBMISSIONS, 20);
 		if ((getUserName().equalsIgnoreCase(userName))

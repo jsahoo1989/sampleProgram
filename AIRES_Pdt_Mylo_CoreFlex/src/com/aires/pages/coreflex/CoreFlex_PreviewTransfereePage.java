@@ -272,7 +272,7 @@ public class CoreFlex_PreviewTransfereePage extends Base {
 		return Objects.equals(CoreFunctions.getElementText(driver, _textCashOutName),
 				policySetupPageData.flexPolicySetupPage.customCashoutBenefitName)
 				&& Objects.equals(CoreFunctions.getElementText(driver, _textCashOutSuggestion),
-						MobilityXConstants.CASHOUT_SUGGESTION_TEXT)
+						MobilityXConstants.CASHOUT_SUGGESTION_TEXT_PREVIEW_TRANSFEREE)
 				&& Objects.equals(
 						Double.parseDouble(CoreFunctions.getElementText(driver, _textPointsAvailableForCashOut)),
 						(cashoutPoints))

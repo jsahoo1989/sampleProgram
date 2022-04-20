@@ -28,7 +28,7 @@ Scenario: MXTransferee - Submitting benefits & Portion Cashout available in conf
     Then 'Status' of the deleted benefit_cashout should be displayed as "Delete Request Pending" under 'Submitted Benefits' section of 'My Benefit Bundle' page
 
 @TransfereeSubmissionFlow @Flex-PortionCashout_ApproveAllRequest_MX
-Scenario: TransfereeSubmissions - Verifying ApproveAll Delete request functionality for submissions made by Transferee for the Client(s) assigned to PPC User 
+Scenario: TransfereeSubmissions - Verifying ApproveAll Delete request functionality for submissions made by Transferee for the Client assigned to PPC User 
 	Given he has logged into 'Transferee Submissions' application as a "MSPEC/PPC" user 
 	And he has navigated to "Transferee Submissions Dashboard" page having record of Bundle submitted by the transferee  
 	And he has clicked on "Review" button for Bundle submitted by the transferee on "Transferee Submissions Dashboard" page	
@@ -37,4 +37,4 @@ Scenario: TransfereeSubmissions - Verifying ApproveAll Delete request functional
 	When he confirms request by selecting "Approve All" option after verifying 'Delete Request Pending' benefit request details on 'Requests' dialog
 	Then 'Action Completed' growl message for "Approve Request" should be displayed on "Transferee Submission Details" page
 	And 'Delete Request Pending' benefit request should be removed from 'Transferee Submission Details' list
-	And benefit details should be updated on 'MXTransferee' application based on "Approved" 'Delete Request' on Transferee Submission
+	And benefit details should be updated in 'MXTransferee' application based on "Approved" 'Delete Request' on Transferee Submission

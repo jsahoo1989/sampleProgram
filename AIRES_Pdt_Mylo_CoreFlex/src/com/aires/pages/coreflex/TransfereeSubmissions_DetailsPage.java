@@ -103,6 +103,9 @@ public class TransfereeSubmissions_DetailsPage extends Base {
 
 	By tracingPromptIcon = By.xpath(".//preceding-sibling::img[contains(@class,'Warning')]");
 
+	By allowanceAmountMessage = By
+			.xpath(".//following-sibling::span[contains(@class,'ng-star-inserted')][contains(@class,'BlackText')]");
+
 	// Expense Reimbursement Tracing Prompt List
 	@FindBy(how = How.XPATH, using = "//div[contains(@class,'tblBenefits')]//span[contains(@class,'GrayText')]")
 	private List<WebElement> _reimbursementAllowanceTracingList;
@@ -144,7 +147,7 @@ public class TransfereeSubmissions_DetailsPage extends Base {
 	private WebElement _requestDialogCommentBox;
 
 	// Request Dialog Approve Radio Button
-	@FindBy(how = How.CSS, using = "div[class*='approve']")
+	@FindBy(how = How.CSS, using = "div[class*='approve'] > div > label")
 	private WebElement _requestDialogApproveRadioButton;
 
 	// Request Dialog Deny Radio Button
@@ -367,8 +370,6 @@ public class TransfereeSubmissions_DetailsPage extends Base {
 				CoreFunctions.verifyText(driver, _submittedBenefitNameList.get(indexCashout),
 						policySetupPageData.flexPolicySetupPage.customCashoutBenefitName,
 						COREFLEXConstants.SUBMITTED_CASHOUT_NAME);
-//				CoreFunctions.verifyText(driver, _submittedBenefitAllowanceAmountList.get(indexCashout),
-//						getCashoutAllowanceAmountText(), COREFLEXConstants.SUBMITTED_CASHOUT_ALLOWANCE_AMOUNT);
 				CoreFunctions.verifyValue(
 						Double.parseDouble(
 								_submittedBenefitPointsList.get(indexCashout).getText().replace("pts", "").trim()),
@@ -401,13 +402,12 @@ public class TransfereeSubmissions_DetailsPage extends Base {
 	}
 
 	private String getCashoutAllowanceAmountText() {
+		DecimalFormat format = new DecimalFormat();
+		format.setMinimumFractionDigits(2);
 		String reimAccountType[] = MX_Transferee_FlexPlanningTool_Page.getReimAccountType().split("-");
 		String currency[] = reimAccountType[1].split("\\(");
-		System.out.println((COREFLEXConstants.TRANSFEREE_CASHOUT_ALLOWANCE_TEXT).replace("currency", currency[0].trim())
-				.replace("cashout_value", String.valueOf(MX_Transferee_FlexPlanningTool_Page.selectedCashoutPoints))
-				.replace("reim_type", reimAccountType[0].trim()));
 		return (COREFLEXConstants.TRANSFEREE_CASHOUT_ALLOWANCE_TEXT).replace("currency", currency[0].trim())
-				.replace("cashout_value", String.valueOf(MX_Transferee_FlexPlanningTool_Page.selectedCashoutPoints))
+				.replace("cashout_value", format.format(MX_Transferee_FlexPlanningTool_Page.selectedCashoutPoints))
 				.replace("reim_type", reimAccountType[0].trim());
 	}
 
@@ -420,8 +420,10 @@ public class TransfereeSubmissions_DetailsPage extends Base {
 					benefitCount += 1;
 					CoreFunctions.verifyText(driver, _submittedBenefitNameList.get(index),
 							benefit.getBenefitDisplayName(), COREFLEXConstants.SUBMITTED_BENEFIT_NAME);
-					CoreFunctions.verifyText(driver, _submittedBenefitAllowanceAmountList.get(index),
-							benefit.getBenefitAmount(), COREFLEXConstants.SUBMITTED_BENEFIT_ALLOWANCE_AMOUNT);
+					WebElement allowanceAmount = CoreFunctions.findSubElement(_submittedBenefitNameList.get(index),
+							allowanceAmountMessage);
+					CoreFunctions.verifyText(driver, allowanceAmount, benefit.getBenefitAmount(),
+							COREFLEXConstants.SUBMITTED_BENEFIT_ALLOWANCE_AMOUNT);
 					CoreFunctions.verifyValue(
 							Double.parseDouble(
 									_submittedBenefitPointsList.get(index).getText().replace("pts", "").trim()),
@@ -530,7 +532,7 @@ public class TransfereeSubmissions_DetailsPage extends Base {
 			if ((CoreFunctions.getPropertyFromConfig("PolicyCashoutType").equals(MobilityXConstants.PORTION_CASHOUT))
 					|| (CoreFunctions.getPropertyFromConfig("PolicyCashoutType")
 							.equals(MobilityXConstants.AFTER_RELOCATION_ONLY))) {
-				 isCashoutDetailsVerified = iterateRequestDialogListAndVerifyCashout();
+				isCashoutDetailsVerified = iterateRequestDialogListAndVerifyCashout();
 			} else if (CoreFunctions.getPropertyFromConfig("PolicyCashoutType")
 					.equals(MobilityXConstants.CASHOUT_NOT_AUTHORIZED)) {
 				return true;
@@ -546,8 +548,7 @@ public class TransfereeSubmissions_DetailsPage extends Base {
 		}
 		if (isCashoutDetailsVerified) {
 			Reporter.addStepLog(MessageFormat.format(
-					COREFLEXConstants.SUCCESSFULLY_VERIFIED_CASHOUT_DETAILS_ON_REQUEST_DIALOG,
-					CoreConstants.PASS));
+					COREFLEXConstants.SUCCESSFULLY_VERIFIED_CASHOUT_DETAILS_ON_REQUEST_DIALOG, CoreConstants.PASS));
 		}
 		return isCashoutDetailsVerified;
 	}
@@ -555,7 +556,8 @@ public class TransfereeSubmissions_DetailsPage extends Base {
 	private boolean iterateRequestDialogListAndVerifyCashout() {
 		for (WebElement element : _requestDialogBenefitNameList) {
 			if (element.getText().equals(policySetupPageData.flexPolicySetupPage.customCashoutBenefitName)) {
-				int indexCashout = BusinessFunctions.returnindexItemFromListUsingText(driver, _requestDialogBenefitNameList,
+				int indexCashout = BusinessFunctions.returnindexItemFromListUsingText(driver,
+						_requestDialogBenefitNameList,
 						policySetupPageData.flexPolicySetupPage.customCashoutBenefitName);
 				CoreFunctions.verifyText(driver, _requestDialogBenefitNameList.get(indexCashout),
 						policySetupPageData.flexPolicySetupPage.customCashoutBenefitName,
@@ -567,8 +569,12 @@ public class TransfereeSubmissions_DetailsPage extends Base {
 								_requestDialogPointsList.get(indexCashout).getText().replace("pts", "").trim()),
 						MX_Transferee_FlexPlanningTool_Page.selectedCashoutPoints,
 						COREFLEXConstants.SUBMITTED_BENEFIT_POINTS);
+				deleteRequestTotalPoints += Double.parseDouble(
+						_requestDialogPointsList.get(indexCashout).getText().replace("pts", "").trim());
 				CoreFunctions.highlightObject(driver, _requestDialogPointsList.get(indexCashout));
-				verifyCashoutStatus(indexCashout);
+				CoreFunctions.verifyText(driver, _requestDialogStatusList.get(indexCashout),
+						COREFLEXConstants.DELETE_REQUEST_PENDING, COREFLEXConstants.DELETE_REQUEST_PENDING_STATUS);
+				return true;
 			}
 		}
 		return false;
@@ -623,8 +629,7 @@ public class TransfereeSubmissions_DetailsPage extends Base {
 		}
 		if (isBenefitDetailsVerified) {
 			Reporter.addStepLog(MessageFormat.format(
-					COREFLEXConstants.SUCCESSFULLY_VERIFIED_BENEFIT_DETAILS_ON_REQUEST_DIALOG,
-					CoreConstants.PASS));
+					COREFLEXConstants.SUCCESSFULLY_VERIFIED_BENEFIT_DETAILS_ON_REQUEST_DIALOG, CoreConstants.PASS));
 		}
 		return isBenefitDetailsVerified;
 	}

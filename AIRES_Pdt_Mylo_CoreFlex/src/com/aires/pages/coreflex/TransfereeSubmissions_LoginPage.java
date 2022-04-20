@@ -59,6 +59,9 @@ public class TransfereeSubmissions_LoginPage extends Base {
 	// Progress Bar
 	@FindBy(how = How.CSS, using = "div.ngx-progress-bar.ngx-progress-bar-ltr")
 	private WebElement _progressBar;
+	
+	@FindBy(how = How.CSS, using = "div[class='sk-three-strings']")
+	private WebElement _spinner;
 
 	/**********************************************************************/
 
@@ -79,7 +82,8 @@ public class TransfereeSubmissions_LoginPage extends Base {
 	public void openApplication() {
 		Log.info(FileReaderManager.getInstance().getConfigReader().getCoreFlexTransfereeSubmissionsApplicationUrl());
 		CoreFunctions.waitForBrowserToLoad(driver);
-		VerifyAIRESLogo();
+//		VerifyAIRESLogo();
+		CoreFunctions.switchToNewTab(driver);
 	}
 
 	public void verifyLoginCredentials() {
@@ -87,16 +91,21 @@ public class TransfereeSubmissions_LoginPage extends Base {
 			Assert.fail("Invalid login credentials are entered.");
 		}
 	}
-
+	
 	public void clickSignIn() {
-		CoreFunctions.explicitWaitTillElementBecomesClickable(driver, _buttonSignIn,
-				_buttonSignIn.getAttribute("value"));
-		CoreFunctions.clickElement(driver, _buttonSignIn);
-		if (CoreFunctions.isElementExist(driver, _staySignedInYes, 10)) {
+		CoreFunctions.explicitWaitTillElementBecomesClickable(driver, _buttonSignIn, _buttonSignIn.getAttribute("value"));
+		CoreFunctions.click(driver, _buttonSignIn, _buttonSignIn.getAttribute("value"));
+		if (CoreFunctions.isElementExist(driver, _staySignedInYes, 5)) {
+			CoreFunctions.explicitWaitTillElementVisibility(driver, _staySignedInYes,
+					_staySignedInYes.getAttribute("value"), 10);
 			CoreFunctions.click(driver, _staySignedInYes, _staySignedInYes.getAttribute("value"));
 		}
-		CoreFunctions.explicitWaitTillElementInVisibility(driver, _progressBar);
+		CoreFunctions.switchToParentWindow(driver);
+		if (CoreFunctions.isElementExist(driver, _spinner, 5))
+			CoreFunctions.explicitWaitTillElementInVisibilityCustomTime(driver, _spinner, 30);
 	}
+	
+	
 
 	public void enterUserEmailAndPassword(String userName, String password) {
 		try {
@@ -116,6 +125,7 @@ public class TransfereeSubmissions_LoginPage extends Base {
 	public boolean loginByUserType(String userType, TransfereeSubmissions_DashboardHomePage dashboardHomePage) {
 		boolean isSuccessfullyLoggedIn = false;
 		try {
+			openApplication();
 			switch (userType) {
 			case COREFLEXConstants.MSPEC_PPC:
 				enterUserEmailAndPassword(getCSMCredentials(_transfereeSubmissionLoginData)[0], getCSMCredentials(_transfereeSubmissionLoginData)[1]);

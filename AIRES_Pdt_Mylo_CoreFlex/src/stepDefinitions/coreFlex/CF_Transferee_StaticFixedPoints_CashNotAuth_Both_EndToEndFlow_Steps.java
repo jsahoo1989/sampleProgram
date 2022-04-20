@@ -197,8 +197,8 @@ public class CF_Transferee_StaticFixedPoints_CashNotAuth_Both_EndToEndFlow_Steps
 				+ (CoreConstants.TIME_AFTER_ACTION - CoreConstants.TIME_BEFORE_ACTION) / 1000 + " Seconds </b>");
 	}
 
-	@Then("^benefit details should be updated on 'MXTransferee' application based on \"([^\"]*)\" 'Delete Request' on Transferee Submission$")
-	public void benefit_details_should_be_updated_on_MXTransferee_application_based_on_Delete_Request_on_Transferee_Submission(
+	@Then("^benefit details should be updated in 'MXTransferee' application based on \"([^\"]*)\" 'Delete Request' on Transferee Submission$")
+	public void benefit_details_should_be_updated_in_MXTransferee_application_based_on_Delete_Request_on_Transferee_Submission(
 			String actionPerformed) throws Throwable {
 		CoreConstants.TIME_BEFORE_ACTION = new Date().getTime();
 		testContext.getWebDriverManager().getDriver().navigate()
@@ -222,7 +222,7 @@ public class CF_Transferee_StaticFixedPoints_CashNotAuth_Both_EndToEndFlow_Steps
 				MessageFormat.format(MobilityXConstants.SUBMITTED_POINTS_DETAILS_NOT_MATCHED_ON_FLEX_PLANNING_TOOL_PAGE,
 						CoreConstants.FAIL));
 		Assert.assertTrue(mxTransfereeMyBenefitsBundlePage.validateSubmittedBenefitDetailsPostDeleteRequestOperation(
-				actionPerformed), MobilityXConstants.SUBMITTED_BENEFIT_DETAILS_NOT_MATCHED);
+				actionPerformed), MobilityXConstants.BENEFIT_CASHOUT_DETAILS_NOT_MATCHED_ON_MBB_PAGE);
 		CoreConstants.TIME_AFTER_ACTION = new Date().getTime();
 		Reporter.addStepLog("<b>Total time taken by <i>'Then'</i> statement is :"
 				+ (CoreConstants.TIME_AFTER_ACTION - CoreConstants.TIME_BEFORE_ACTION) / 1000 + " Seconds </b>");

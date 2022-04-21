@@ -121,10 +121,11 @@ public class PDT_ViewPolicyPage extends Base {
 
 	public String getUserName() {
 		String userArray[] = _userName.getText().split("\n");
-		return userArray[1];
+		return userArray[1].trim();
 	}
 
 	public Boolean verifyUserlogin(String userName, String pageName) {
+		CoreFunctions.explicitWaitTillElementInVisibilityCustomTime(driver, _progressBar, 5);
 		if (getUserName().equalsIgnoreCase(userName)) {
 			CoreFunctions.highlightObject(driver, _userName);
 			Reporter.addStepLog(MessageFormat.format(PDTConstants.VERIFIED_USERNAME_IS_DISPLAYED, CoreConstants.PASS,

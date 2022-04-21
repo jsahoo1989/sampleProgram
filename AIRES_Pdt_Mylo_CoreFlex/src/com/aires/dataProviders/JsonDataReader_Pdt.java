@@ -33,13 +33,16 @@ import com.aires.testdatatypes.pdt.PDT_DestinationServicesBenefit;
 import com.aires.testdatatypes.pdt.PDT_DuplicateHousingBenefit;
 import com.aires.testdatatypes.pdt.PDT_FinalMoveBenefit;
 import com.aires.testdatatypes.pdt.PDT_HomeLeaveBenefit;
+import com.aires.testdatatypes.pdt.PDT_HomePurchaseBenefit;
 import com.aires.testdatatypes.pdt.PDT_HouseHuntingTripBenefit;
 import com.aires.testdatatypes.pdt.PDT_ImmigrationBenefit;
 import com.aires.testdatatypes.pdt.PDT_LanguageTrainingBenefit;
 import com.aires.testdatatypes.pdt.PDT_LoginData;
 import com.aires.testdatatypes.pdt.PDT_LoginDetails;
 import com.aires.testdatatypes.pdt.PDT_OneTimePaymentBenefit;
+import com.aires.testdatatypes.pdt.PDT_OngoingPaymentReimbursementBenefit;
 import com.aires.testdatatypes.pdt.PDT_PreAcceptanceServiceBenefit;
+import com.aires.testdatatypes.pdt.PDT_PropertyManagementBenefit;
 import com.aires.testdatatypes.pdt.PDT_RentalAssistanceBenefit;
 import com.aires.testdatatypes.pdt.PDT_TemporaryLivingBenefit;
 import com.google.gson.Gson;
@@ -78,6 +81,12 @@ public class JsonDataReader_Pdt {
 			.getTestDataResourcePath() + "pdt/PDT_AssignmentHousingBenefit.json";
 	private final String _OneTimePaymentFilePath = FileReaderManager.getInstance().getConfigReader()
 			.getTestDataResourcePath() + "pdt/PDT_OneTimePaymentBenefit.json";
+	private final String _OngoingPaymentReimbursementFilePath = FileReaderManager.getInstance().getConfigReader()
+			.getTestDataResourcePath() + "pdt/PDT_OngoingPaymentReimbursementBenefit.json";
+	private final String _PropertyManagementFilePath = FileReaderManager.getInstance().getConfigReader()
+			.getTestDataResourcePath() + "pdt/PDT_PropertyManagementBenefit.json";
+	private final String _HomePurchaseFilePath = FileReaderManager.getInstance().getConfigReader()
+			.getTestDataResourcePath() + "pdt/PDT_HomePurchaseBenefit.json";
 
 	private List<PDT_LoginData> _loginDataList;
 	private List<PDT_LoginDetails> _loginDetailsList;
@@ -95,6 +104,9 @@ public class JsonDataReader_Pdt {
 	private List<PDT_DuplicateHousingBenefit> _duplicateHousingList;
 	private List<PDT_AssignmentHousingBenefit> _assignmentHousingList;
 	private List<PDT_OneTimePaymentBenefit> _oneTimePaymentList;
+	private List<PDT_OngoingPaymentReimbursementBenefit> _ongoingPaymentReimbursementList;
+	private List<PDT_PropertyManagementBenefit> _propertyManagementList;
+	private List<PDT_HomePurchaseBenefit> _homePurchaseList;
 
 	public JsonDataReader_Pdt() {
 		_loginDataList = getUserData();
@@ -113,6 +125,9 @@ public class JsonDataReader_Pdt {
 		_duplicateHousingList = getDuplicateHousingData();
 		_assignmentHousingList = getAssignmentHousingData();
 		_oneTimePaymentList = getOneTimePaymentData();
+		_ongoingPaymentReimbursementList = getOngoingPaymentReimbursementData();
+		_propertyManagementList = getPropertyManagementData();
+		_homePurchaseList = getHomePurchaseData();
 	}
 
 	private List<PDT_LoginData> getUserData() {
@@ -387,6 +402,24 @@ public class JsonDataReader_Pdt {
 			}
 		}		
 	}
+	
+	private List<PDT_OngoingPaymentReimbursementBenefit> getOngoingPaymentReimbursementData(){
+		Gson gson = new Gson();
+		BufferedReader bufferReader = null;
+		try {
+			bufferReader = new BufferedReader(new FileReader(_OngoingPaymentReimbursementFilePath));
+			PDT_OngoingPaymentReimbursementBenefit[] oneTimePayment = gson.fromJson(bufferReader, PDT_OngoingPaymentReimbursementBenefit[].class);
+			return Arrays.asList(oneTimePayment);
+		} catch (FileNotFoundException e) {
+			throw new RuntimeException(CoreConstants.JSON_FILE_NOT_FOUND_AT_PATH + _OngoingPaymentReimbursementFilePath);
+		} finally {
+			try {
+				if (bufferReader != null)
+					bufferReader.close();
+			} catch (IOException ignore) {
+			}
+		}		
+	}
 
 	private List<PDT_AssignmentHousingBenefit> getAssignmentHousingData(){
 		Gson gson = new Gson();
@@ -397,6 +430,42 @@ public class JsonDataReader_Pdt {
 			return Arrays.asList(assignmentHousing);
 		} catch (FileNotFoundException e) {
 			throw new RuntimeException(CoreConstants.JSON_FILE_NOT_FOUND_AT_PATH + _AssignmentHousingFilePath);
+		} finally {
+			try {
+				if (bufferReader != null)
+					bufferReader.close();
+			} catch (IOException ignore) {
+			}
+		}		
+	}
+	
+	private List<PDT_PropertyManagementBenefit> getPropertyManagementData(){
+		Gson gson = new Gson();
+		BufferedReader bufferReader = null;
+		try {
+			bufferReader = new BufferedReader(new FileReader(_PropertyManagementFilePath));
+			PDT_PropertyManagementBenefit[] propertyManagement = gson.fromJson(bufferReader, PDT_PropertyManagementBenefit[].class);
+			return Arrays.asList(propertyManagement);
+		} catch (FileNotFoundException e) {
+			throw new RuntimeException(CoreConstants.JSON_FILE_NOT_FOUND_AT_PATH + _PropertyManagementFilePath);
+		} finally {
+			try {
+				if (bufferReader != null)
+					bufferReader.close();
+			} catch (IOException ignore) {
+			}
+		}		
+	}
+	
+	private List<PDT_HomePurchaseBenefit> getHomePurchaseData(){
+		Gson gson = new Gson();
+		BufferedReader bufferReader = null;
+		try {
+			bufferReader = new BufferedReader(new FileReader(_HomePurchaseFilePath));
+			PDT_HomePurchaseBenefit[] homePurchaseBenefit = gson.fromJson(bufferReader, PDT_HomePurchaseBenefit[].class);
+			return Arrays.asList(homePurchaseBenefit);
+		} catch (FileNotFoundException e) {
+			throw new RuntimeException(CoreConstants.JSON_FILE_NOT_FOUND_AT_PATH + _HomePurchaseFilePath);
 		} finally {
 			try {
 				if (bufferReader != null)
@@ -471,5 +540,17 @@ public class JsonDataReader_Pdt {
 	
 	public final PDT_OneTimePaymentBenefit getOneTimePaymentBenefitDataList(String policyBenefit) {
 		return _oneTimePaymentList.stream().filter(x -> x.benefitName.equalsIgnoreCase(policyBenefit)).findAny().get();
+	}
+	
+	public final PDT_OngoingPaymentReimbursementBenefit getOngoingPaymentReimbursementDataList(String policyBenefit) {
+		return _ongoingPaymentReimbursementList.stream().filter(x -> x.benefitName.equalsIgnoreCase(policyBenefit)).findAny().get();
+	}
+	
+	public final PDT_PropertyManagementBenefit getPropertyManagementDataList(String policyBenefit) {
+		return _propertyManagementList.stream().filter(x -> x.benefitName.equalsIgnoreCase(policyBenefit)).findAny().get();
+	}
+	
+	public final PDT_HomePurchaseBenefit getHomePurchaseDataList(String policyBenefit) {
+		return _homePurchaseList.stream().filter(x -> x.benefitName.equalsIgnoreCase(policyBenefit)).findAny().get();
 	}
 }

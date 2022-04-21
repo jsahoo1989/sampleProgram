@@ -159,6 +159,39 @@ public class PDT_SharedSubBenefitPage extends Base {
 	
 	@FindBy(how = How.CSS, using = "div[id='swal2-content']")
 	private WebElement _errMsg;
+	
+	@FindBy(how = How.CSS, using = "a[href='#collapse8']")
+	private WebElement _lnkFormCollapseEight;
+	
+	@FindBy(how = How.CSS, using = "a[href='#collapse9']")
+	private WebElement _lnkFormCollapseNine;
+	
+	@FindBy(how = How.CSS, using = "a[href='#collapse10']")
+	private WebElement _lnkFormCollapseTen;
+	
+	@FindBy(how = How.CSS, using = "a[href='#collapse11']")
+	private WebElement _lnkFormCollapseEleven;
+	
+	@FindBy(how = How.CSS, using = "a[href='#collapse12']")
+	private WebElement _lnkFormCollapseTwelve;
+	
+	@FindBy(how = How.CSS, using = "a[href='#collapse13']")
+	private WebElement _lnkFormCollapseThirteen;
+	
+	@FindBy(how = How.CSS, using = "a[href='#collapse14']")
+	private WebElement _lnkFormCollapseFourteen;
+	
+	@FindBy(how = How.CSS, using = "a[href='#collapse15']")
+	private WebElement _lnkFormCollapseFifteen;
+	
+	@FindBy(how = How.CSS, using = "a[href='#collapse16']")
+	private WebElement _lnkFormCollapseSixteen;
+	
+	@FindBy(how = How.CSS, using = "a[href='#collapse17']")
+	private WebElement _lnkFormCollapseSeventeen;
+	
+	@FindBy(how = How.CSS, using = "a[href='#collapse18']")
+	private WebElement _lnkFormCollapseEightteen;
 
 	HashMap<String, Boolean> resultMapForTabNameNotMatch = new HashMap<>();
 	LinkedHashMap<String, WebElement> formMap= new LinkedHashMap<String, WebElement>();
@@ -224,7 +257,8 @@ public class PDT_SharedSubBenefitPage extends Base {
 
 	public void fillSubBenefitForm(String subBenefit, PDT_AddNewPolicyPage addNewPolicyPage,
 			PDT_SharedSubBenefit_Steps subBenefitSteps, String pageName) {
-		expandSubBenefitIfCollapsed(getElementByName(pageName, subBenefit));
+		if(!pageName.equalsIgnoreCase(PDTConstants.DUPLICATE_HOUSING) && !pageName.equalsIgnoreCase(PDTConstants.PROPERTY_MANAGEMENT))
+			expandSubBenefitIfCollapsed(getElementByName(pageName, subBenefit));
 		if(pageName.equalsIgnoreCase(PDTConstants.ASSIGNMENT_HOUSING_COMPANY_SPONSORED) && subBenefit.equalsIgnoreCase(PDTConstants.ASSIGNMENT_FINDER_FEES)) {
 			subBenefitSteps.getAssignmentHousingPage().fillAssignmentFinderFeesForm(addNewPolicyPage, PDTConstants.ASSIGNMENT_FINDER_FEES);
 			return;
@@ -403,6 +437,84 @@ public class PDT_SharedSubBenefitPage extends Base {
 			break;
 		case PDTConstants.OTHER_ONE_TIME_PAYMENT:
 			subBenefitSteps.getOneTimePaymentPage().fillOtherOneTimePayment(addNewPolicyPage, PDTConstants.OTHER_ONE_TIME_PAYMENT);
+			break;
+		case PDTConstants.COLA:
+			subBenefitSteps.getOngoingPaymentReimbursementPage().fillCola(addNewPolicyPage, PDTConstants.COLA);
+			break;
+		case PDTConstants.PER_DIEM:
+			subBenefitSteps.getOngoingPaymentReimbursementPage().fillPerDiem(addNewPolicyPage, PDTConstants.PER_DIEM);
+			break;
+		case PDTConstants.MOBILITY_PREMIUM:
+			subBenefitSteps.getOngoingPaymentReimbursementPage().fillMobilityPremium(addNewPolicyPage, PDTConstants.MOBILITY_PREMIUM);
+			break;
+		case PDTConstants.TRANSPORTATION_ALLOWANCE:
+			subBenefitSteps.getOngoingPaymentReimbursementPage().fillTransportationAllowance(addNewPolicyPage, PDTConstants.TRANSPORTATION_ALLOWANCE);
+			break;
+		case PDTConstants.HOUSING_ALLOWANCE:
+			subBenefitSteps.getOngoingPaymentReimbursementPage().fillHousingAllowance(addNewPolicyPage, PDTConstants.HOUSING_ALLOWANCE);
+			break;
+		case PDTConstants.HOME_MAINTENANCE_ALLOWANCE:
+			subBenefitSteps.getOngoingPaymentReimbursementPage().fillHomeMaintenanceAllowance(addNewPolicyPage, PDTConstants.HOME_MAINTENANCE_ALLOWANCE);
+			break;
+		case PDTConstants.FURNITURE_ALLOWANCE:
+			subBenefitSteps.getOngoingPaymentReimbursementPage().fillFurnitureAllowance(addNewPolicyPage, PDTConstants.FURNITURE_ALLOWANCE);
+			break;
+		case PDTConstants.HARDSHIP_ALLOWANCE:
+			subBenefitSteps.getOngoingPaymentReimbursementPage().fillHardshipAllowance(addNewPolicyPage, PDTConstants.HARDSHIP_ALLOWANCE);
+			break;
+		case PDTConstants.BANKING_ALLOWANCE:
+			subBenefitSteps.getOngoingPaymentReimbursementPage().fillBankingAllowance(addNewPolicyPage, PDTConstants.BANKING_ALLOWANCE);
+			break;
+		case PDTConstants.AT_SEA_ALLOWANCE:
+			subBenefitSteps.getOngoingPaymentReimbursementPage().fillAtSeaAllowance(addNewPolicyPage, PDTConstants.AT_SEA_ALLOWANCE);
+			break;
+		case PDTConstants.COMMUTER_ALLOWANCE:
+			subBenefitSteps.getOngoingPaymentReimbursementPage().fillCommuterAllowance(addNewPolicyPage, PDTConstants.COMMUTER_ALLOWANCE);
+			break;
+		case PDTConstants.DIFFERENTIAL_ALLOWANCE:
+			subBenefitSteps.getOngoingPaymentReimbursementPage().fillDifferentialAllowance(addNewPolicyPage, PDTConstants.DIFFERENTIAL_ALLOWANCE);
+			break;
+		case PDTConstants.GOODS_AND_SERVICES_ALLOWANCE:
+			subBenefitSteps.getOngoingPaymentReimbursementPage().fillGoodsAndServicesAllowance(addNewPolicyPage, PDTConstants.GOODS_AND_SERVICES_ALLOWANCE);
+			break;
+		case PDTConstants.HOME_LEAVE_ALLOWANCE:
+			subBenefitSteps.getOngoingPaymentReimbursementPage().fillHomeLeaveAllowance(addNewPolicyPage, PDTConstants.HOME_LEAVE_ALLOWANCE);
+			break;
+		case PDTConstants.HOME_RETENTION_ALLOWANCE:
+			subBenefitSteps.getOngoingPaymentReimbursementPage().fillHomeRetentionAllowance(addNewPolicyPage, PDTConstants.HOME_RETENTION_ALLOWANCE);
+			break;
+		case PDTConstants.HOUSEKEEPING_ALLOWANCE:
+			subBenefitSteps.getOngoingPaymentReimbursementPage().fillHouseKeepingAllowance(addNewPolicyPage, PDTConstants.HOUSEKEEPING_ALLOWANCE);
+			break;
+		case PDTConstants.UTILITY_ALLOWANCE:
+			subBenefitSteps.getOngoingPaymentReimbursementPage().fillUtilityAllowance(addNewPolicyPage, PDTConstants.UTILITY_ALLOWANCE);
+			break;
+		case PDTConstants.OTHER_ONGOING_ALLOWANCE:
+			subBenefitSteps.getOngoingPaymentReimbursementPage().fillOtherOngoingAllowance(addNewPolicyPage, PDTConstants.OTHER_ONGOING_ALLOWANCE);
+			break;
+		case PDTConstants.DUPLICATE_HOUSING:
+			subBenefitSteps.getDuplicateHousingPage().fillDuplicateHousingForm(addNewPolicyPage, PDTConstants.DUPLICATE_HOUSING);
+			break;
+		case PDTConstants.PROPERTY_MANAGEMENT:
+			subBenefitSteps.getPropertyManagementPage().fillPropertyManagementForm(addNewPolicyPage, PDTConstants.PROPERTY_MANAGEMENT);
+			break;
+		case PDTConstants.HOME_PURCHASE_CLOSING_COSTS:
+			subBenefitSteps.getHomePurchasePage().fillHomePurchaseClosingCostForm(addNewPolicyPage, PDTConstants.HOME_PURCHASE_CLOSING_COSTS);
+			break;
+		case PDTConstants.HOME_PURCHASE_POINTS:
+			subBenefitSteps.getHomePurchasePage().fillHomePurchasePointsForm(addNewPolicyPage, PDTConstants.HOME_PURCHASE_POINTS);
+			break;
+		case PDTConstants.HOME_PURCHASE_INSPECTIONS:
+			subBenefitSteps.getHomePurchasePage().fillHomePurchaseInspectionForm(addNewPolicyPage, PDTConstants.HOME_PURCHASE_INSPECTIONS);
+			break;
+		case PDTConstants.HOME_PURCHASE_BONUS:
+			subBenefitSteps.getHomePurchasePage().fillHomePurchaseBonusForm(addNewPolicyPage, PDTConstants.HOME_PURCHASE_BONUS);
+			break;
+		case PDTConstants.MORTGAGE_DIFFERENTIALS:
+			subBenefitSteps.getHomePurchasePage().fillMortgageDifferentialForm(addNewPolicyPage, PDTConstants.MORTGAGE_DIFFERENTIALS);
+			break;
+		case PDTConstants.MORTGAGE_SUBSIDY:
+			subBenefitSteps.getHomePurchasePage().fillMortgageSubsidyForm(addNewPolicyPage, PDTConstants.MORTGAGE_SUBSIDY);
 			break;
 		default:
 			Assert.fail(MessageFormat.format(PDTConstants.ELEMENT_NOT_FOUND, CoreConstants.FAIL));
@@ -599,7 +711,7 @@ public class PDT_SharedSubBenefitPage extends Base {
 	
 	public void verifySelectedPolicyBenefitCategoryName(String pageName) {
 		CoreFunctions.explicitWaitTillElementInVisibilityCustomTime(driver, _progressBar, 5);
-		if(pageName.equalsIgnoreCase("One-Time Payments/Reimbursements")) {
+		if(pageName.equalsIgnoreCase("One-Time Payments/Reimbursements") || pageName.equalsIgnoreCase("Ongoing Payments/Reimbursements")) {
 			return;
 		}
 		CoreFunctions.explicitWaitForElementTextPresent(driver, _benefitCategoryName, pageName, 3);		
@@ -661,6 +773,31 @@ public class PDT_SharedSubBenefitPage extends Base {
 		formMap.put(PDTConstants.AUTO_REGISTRATION_COSTS, _lnkFormCollapse5);
 		formMap.put(PDTConstants.AUTO_LOSS_ON_SALE, _lnkFormCollapseSix);
 		formMap.put(PDTConstants.OTHER_ONE_TIME_PAYMENT, _lnkFormCollapseSeven);
+		formMap.put(PDTConstants.COLA, _lnkFormCollapseOne);
+		formMap.put(PDTConstants.PER_DIEM, _lnkFormCollapseTwo);
+		formMap.put(PDTConstants.MOBILITY_PREMIUM, _lnkFormCollapseThree);
+		formMap.put(PDTConstants.TRANSPORTATION_ALLOWANCE, _lnkFormCollapseFour);
+		formMap.put(PDTConstants.HOUSING_ALLOWANCE, _lnkFormCollapse5);
+		formMap.put(PDTConstants.HOME_MAINTENANCE_ALLOWANCE, _lnkFormCollapseSix);
+		formMap.put(PDTConstants.FURNITURE_ALLOWANCE, _lnkFormCollapseSeven);
+		formMap.put(PDTConstants.HARDSHIP_ALLOWANCE, _lnkFormCollapseEight);
+		formMap.put(PDTConstants.BANKING_ALLOWANCE, _lnkFormCollapseNine);
+		formMap.put(PDTConstants.AT_SEA_ALLOWANCE, _lnkFormCollapseTen);
+		formMap.put(PDTConstants.COMMUTER_ALLOWANCE, _lnkFormCollapseEleven);
+		formMap.put(PDTConstants.DIFFERENTIAL_ALLOWANCE, _lnkFormCollapseTwelve);
+		formMap.put(PDTConstants.GOODS_AND_SERVICES_ALLOWANCE, _lnkFormCollapseThirteen);
+		formMap.put(PDTConstants.HOME_LEAVE_ALLOWANCE, _lnkFormCollapseFourteen);
+		formMap.put(PDTConstants.HOME_RETENTION_ALLOWANCE, _lnkFormCollapseFifteen);
+		formMap.put(PDTConstants.HOUSEKEEPING_ALLOWANCE, _lnkFormCollapseSixteen);
+		formMap.put(PDTConstants.UTILITY_ALLOWANCE, _lnkFormCollapseSeventeen);
+		formMap.put(PDTConstants.OTHER_ONGOING_ALLOWANCE, _lnkFormCollapseEightteen);
+		formMap.put(PDTConstants.HOME_PURCHASE_CLOSING_COSTS, _lnkFormCollapseFive);
+		formMap.put(PDTConstants.HOME_PURCHASE_POINTS, _lnkFormCollapseTwo);
+		formMap.put(PDTConstants.HOME_PURCHASE_INSPECTIONS, _lnkFormCollapseThree);
+		formMap.put(PDTConstants.HOME_PURCHASE_BONUS, _lnkFormCollapseFour);
+		formMap.put(PDTConstants.MORTGAGE_DIFFERENTIALS, _lnkFormCollapse5);
+		formMap.put(PDTConstants.MORTGAGE_SUBSIDY, _lnkFormCollapseSix);
+		
 	}
 	
 	public void exitFromPolicyBenefitPage() {
@@ -672,7 +809,7 @@ public class PDT_SharedSubBenefitPage extends Base {
 	
 	public boolean verifySaveSuccessMessage(String msg, String pageName, PDT_AddNewPolicyPage addNewPolicyPage) {
 		try {
-			CoreFunctions.explicitWaitTillElementInVisibilityCustomTime(driver, _progressBar, 5);
+			CoreFunctions.explicitWaitTillElementInVisibilityCustomTime(driver, _progressBar, 7);
 			if (CoreFunctions.isElementExist(driver, _successPopUp, 5) && _successMsg.getText().equalsIgnoreCase(msg)) {
 				Reporter.addStepLog(MessageFormat.format(PDTConstants.VERIFIED_SUCCESS_MSG, CoreConstants.PASS,
 						_successMsg.getText(), pageName));

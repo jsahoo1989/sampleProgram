@@ -347,7 +347,7 @@ public class PDT_TemporaryLivingPage extends Base {
 			
 			String maxAmt = BusinessFunctions.selectAndReturnRandomValueFromDropDown(driver, addNewPolicyPage, subBenefitFormName,
 					_drpDownMaxAmtLodging, _drpDownMaxAmtLodgingOptions,
-					_drpDownMaxAmtLodgingOptionsSelected, _lblMaxAmtLodging);
+					_drpDownMaxAmtLodgingOptionsSelected, _lblMaxAmtLodging.getText());
 			setMaxAmtTempLivingLodging(maxAmt);
 			checkIfFlatAmtIsSelectedForLodging(addNewPolicyPage, subBenefitFormName);
 			CoreFunctions.explicitWaitTillElementListClickable(driver, _radioBtnTempLivingLodging);
@@ -378,7 +378,7 @@ public class PDT_TemporaryLivingPage extends Base {
 					true);
 			String maxAmt = BusinessFunctions.selectAndReturnRandomValueFromDropDown(driver, addNewPolicyPage,
 					subBenefitFormName, _drpDownMaxAmtMeals, _drpDownMaxAmtMealsOptions,
-					_drpDownMaxAmtMealsOptionsSelected, _lblMaxAmtMeals);
+					_drpDownMaxAmtMealsOptionsSelected, _lblMaxAmtMeals.getText());
 			setMaxAmtTempLivingMeals(maxAmt);
 			checkIfFlatAmtIsSelected(addNewPolicyPage, subBenefitFormName);
 			

@@ -19,6 +19,7 @@ package com.aires.managers;
 
 import org.openqa.selenium.WebDriver;
 
+import com.aires.pages.PDT_Mylo_CoreFlex_Common_LoginPage;
 import com.aires.pages.pdt.PDT_AddNewPolicyPage;
 import com.aires.pages.pdt.PDT_AssignmentHousingPage;
 import com.aires.pages.pdt.PDT_CompensationServicesPage;
@@ -28,13 +29,16 @@ import com.aires.pages.pdt.PDT_DuplicateHousingPage;
 import com.aires.pages.pdt.PDT_FinalMovePage;
 import com.aires.pages.pdt.PDT_GeneralInformationPage;
 import com.aires.pages.pdt.PDT_HomeLeavePage;
+import com.aires.pages.pdt.PDT_HomePurchasePage;
 import com.aires.pages.pdt.PDT_HouseHuntingTripPage;
 import com.aires.pages.pdt.PDT_ImmigrationPage;
 import com.aires.pages.pdt.PDT_LanguageTrainingPage;
 import com.aires.pages.pdt.PDT_LoginPage;
 import com.aires.pages.pdt.PDT_OneTimePaymentReimbursemenPage;
+import com.aires.pages.pdt.PDT_OngoingPaymentReimbursementPage;
 import com.aires.pages.pdt.PDT_PolicyBenefitCategoryPage;
 import com.aires.pages.pdt.PDT_PreAcceptanceService;
+import com.aires.pages.pdt.PDT_PropertyManagementPage;
 import com.aires.pages.pdt.PDT_RentalAssistancePage;
 import com.aires.pages.pdt.PDT_SharedSubBenefitPage;
 import com.aires.pages.pdt.PDT_TemporaryLivingPage;
@@ -63,6 +67,10 @@ public class PageObjectManager_Pdt {
 	private PDT_CompensationServicesPage _compensationServicesPage;
 	private PDT_DuplicateHousingPage _duplicateHousingPage;
 	private PDT_OneTimePaymentReimbursemenPage _oneTimePaymentPage;
+	private PDT_OngoingPaymentReimbursementPage _ongoingPaymentReimbursementPage;
+	private PDT_Mylo_CoreFlex_Common_LoginPage _commonLoginPage;
+	private PDT_PropertyManagementPage _propertyManagementPage;
+	private PDT_HomePurchasePage _homePurchasePage;
 	
 	public PageObjectManager_Pdt(WebDriver driver) {
 		this._driver = driver;
@@ -146,5 +154,21 @@ public class PageObjectManager_Pdt {
 	
 	public PDT_OneTimePaymentReimbursemenPage getOneTimePaymentPage() {
 		return (_oneTimePaymentPage == null ) ? _oneTimePaymentPage = new PDT_OneTimePaymentReimbursemenPage(_driver) : _oneTimePaymentPage;
+	}
+	
+	public PDT_OngoingPaymentReimbursementPage getOngoingPaymentReimbursementPage() {
+		return (_ongoingPaymentReimbursementPage == null ) ? _ongoingPaymentReimbursementPage = new PDT_OngoingPaymentReimbursementPage(_driver) : _ongoingPaymentReimbursementPage;
+	}
+	
+	public PDT_Mylo_CoreFlex_Common_LoginPage getCommonLoginPage() {
+		return (_commonLoginPage == null ) ? _commonLoginPage = new PDT_Mylo_CoreFlex_Common_LoginPage(_driver) : _commonLoginPage;
+	}
+	
+	public PDT_PropertyManagementPage getPropertyManagementPage() {
+		return (_propertyManagementPage == null ) ? _propertyManagementPage = new PDT_PropertyManagementPage(_driver) : _propertyManagementPage;
+	}
+	
+	public PDT_HomePurchasePage getHomePurchasePage() {
+		return (_homePurchasePage == null ) ? _homePurchasePage = new PDT_HomePurchasePage(_driver) : _homePurchasePage;
 	}
 }

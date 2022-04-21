@@ -92,11 +92,11 @@ public class PDT_RentalAssistancePage extends Base {
 					_lblDurationLodging.getText());
 			String randDuration = BusinessFunctions.selectAndReturnRandomValueFromDropDown(driver, addNewPolicyPage,
 					subBenefitFormName, _drpDownDurationLodging, _drpDownDurationLodgingOptions, _drpDownDurationLodgingOptionsSelected,
-					_lblDurationLodging);
+					_lblDurationLodging.getText());
 			setDuration(randDuration);
 			BusinessFunctions.verifyAndFillOtherTextBoxForSubBenefitForm(driver, addNewPolicyPage, subBenefitFormName,
 					_drpDownDurationLodgingOptionsSelected, _lblDurationLodging.getText(), _txtBoxDurationOther,
-					_lblDurationOther, subBenefitFormName);
+					PDTConstants.DURATION_OTHER, subBenefitFormName);
 			
 			CoreFunctions.explicitWaitTillElementListClickable(driver, _radioBtnRentalTour);
 			CoreFunctions.selectItemInListByText(driver, _radioBtnRentalTour,

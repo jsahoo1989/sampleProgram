@@ -654,18 +654,18 @@ public class BusinessFunctions {
 	}
 
 	public static String selectAndReturnRandomValueFromDropDown(WebDriver driver, PDT_AddNewPolicyPage addNewPolicyPage,
-			String subBenefitFormName, WebElement _drpDownElement, List<WebElement> _drpDownElementOptions,
-			WebElement _drpDownElementSelected, WebElement _lblDropDown) {
+			String subBenefitFormName, WebElement drpDownElement, List<WebElement> drpDownElementOptions,
+			WebElement drpDownElementSelected, String lblDropDown) {
 		String randValue = null;
 		try {
-			CoreFunctions.clickElement(driver, _drpDownElement);
-			randValue = _drpDownElementOptions.get(CoreFunctions.getRandomNumber(0, _drpDownElementOptions.size() - 1))
+			CoreFunctions.clickElement(driver, drpDownElement);
+			randValue = drpDownElementOptions.get(CoreFunctions.getRandomNumber(0, drpDownElementOptions.size() - 1))
 					.getText();
-			CoreFunctions.selectItemInListByText(driver, _drpDownElementOptions, randValue, _lblDropDown.getText(),
+			CoreFunctions.selectItemInListByText(driver, drpDownElementOptions, randValue, lblDropDown,
 					PDTConstants.DROP_DOWN, true);
 		} catch (Exception e) {
 			Assert.fail(MessageFormat.format(PDTConstants.FAIL_TO_SELECT_VALUE_FROM_FIELD, CoreConstants.FAIL,
-					randValue, _lblDropDown.getText(), PDTConstants.DROP_DOWN));
+					randValue, lblDropDown, PDTConstants.DROP_DOWN));
 		}
 		return randValue;
 	}
@@ -703,27 +703,32 @@ public class BusinessFunctions {
 	}
 
 	public static String[] getCSMCredentials(PDT_LoginDetails _loginDetailsApplication) {
-		String csmCredentials[] = new String[2];
+		String csmCredentials[] = new String[3];
 		switch (CoreFunctions.getPropertyFromConfig("envt").toLowerCase()) {
 		case CoreConstants.ENVT_DEV:
 			csmCredentials[0] = _loginDetailsApplication.dev.csmUserName;
 			csmCredentials[1] = _loginDetailsApplication.dev.csmPassword;
+			csmCredentials[2] = _loginDetailsApplication.dev.firstName+ " " + _loginDetailsApplication.dev.lastName;
 			break;
 		case CoreConstants.ENVT_QA:
 			csmCredentials[0] = _loginDetailsApplication.qa.csmUserName;
 			csmCredentials[1] = _loginDetailsApplication.qa.csmPassword;
+			csmCredentials[2] = _loginDetailsApplication.qa.firstName+ " " + _loginDetailsApplication.qa.lastName;
 			break;
 		case CoreConstants.ENVT_TEST:
 			csmCredentials[0] = _loginDetailsApplication.preProd.csmUserName;
 			csmCredentials[1] = _loginDetailsApplication.preProd.csmPassword;
+			csmCredentials[2] = _loginDetailsApplication.preProd.firstName+ " " + _loginDetailsApplication.preProd.lastName;
 			break;
 		case CoreConstants.ENVT_UAT:
 			csmCredentials[0] = _loginDetailsApplication.uat.csmUserName;
 			csmCredentials[1] = _loginDetailsApplication.uat.csmPassword;
+			csmCredentials[2] = _loginDetailsApplication.uat.firstName+ " " + _loginDetailsApplication.uat.lastName;
 			break;
 		case CoreConstants.ENVT_PROD:
 			csmCredentials[0] = _loginDetailsApplication.prod.csmUserName;
 			csmCredentials[1] = _loginDetailsApplication.prod.csmPassword;
+			csmCredentials[2] = _loginDetailsApplication.prod.firstName+ " " + _loginDetailsApplication.prod.lastName;
 			break;
 		}
 		return csmCredentials;
@@ -731,12 +736,12 @@ public class BusinessFunctions {
 
 	public static void verifyAndFillOtherTextBoxForSubBenefitForm(WebDriver driver,
 			PDT_AddNewPolicyPage addNewPolicyPage, String subBenefitFormName, WebElement drpDown, String lblDrpDown,
-			WebElement otherTextBox, WebElement lblOtherTextBox, String otherTextBoxVal) {
+			WebElement otherTextBox, String lblOtherTextBox, String otherTextBoxVal) {
 		try {
 			if (drpDown.getText().equalsIgnoreCase(PDTConstants.OTHER)
 					&& CoreFunctions.isElementExist(driver, otherTextBox, 1)) {
 				Reporter.addStepLog(MessageFormat.format(PDTConstants.VERIFIED_TEXT_BOX_FIELD_DISPLAYED_FOR_DRPDOWN,
-						CoreConstants.PASS, lblOtherTextBox.getText(), lblDrpDown, subBenefitFormName));
+						CoreConstants.PASS, lblOtherTextBox, lblDrpDown, subBenefitFormName));
 				CoreFunctions.clearAndSetText(driver, otherTextBox, PDTConstants.OTHER, otherTextBoxVal);
 			} else if (drpDown.getText().equalsIgnoreCase(PDTConstants.OTHER)
 					&& !CoreFunctions.isElementExist(driver, otherTextBox, 1)) {
@@ -812,6 +817,30 @@ public class BusinessFunctions {
 			Assert.fail(MessageFormat.format(PDTConstants.FAILED_TO_VERIFY_AND_SELECT_DRP_DOWN, CoreConstants.FAIL,
 					drpDownVal, lblDropDown, subBenefitFormName));
 		}
-
+	}
+	
+	public static String selectAndReturnRandomValueFromList(WebDriver driver, PDT_AddNewPolicyPage addNewPolicyPage,
+			String subBenefitFormName, List<WebElement> webElementList, String labelText) {
+		String randValue = null;
+		try {			
+			randValue = webElementList.get(CoreFunctions.getRandomNumber(0, webElementList.size() - 1))
+					.getText();
+			CoreFunctions.selectItemInListByText(driver, webElementList, randValue, labelText,
+					PDTConstants.RADIO_BUTTON_LIST, true);
+		} catch (Exception e) {
+			Assert.fail(MessageFormat.format(PDTConstants.FAIL_TO_SELECT_VALUE_FROM_FIELD, CoreConstants.FAIL,
+					randValue, labelText, PDTConstants.RADIO_BUTTON_LIST));
+		}
+		return randValue.trim();
+	}
+	
+	
+	public static boolean verifyDefaultOptionIsSelectedInDrpDown(String selectedOptionText, String expectedOption, String lblDrpDown) {
+		if(selectedOptionText.equalsIgnoreCase(expectedOption)) {
+			Reporter.addStepLog(MessageFormat.format(PDTConstants.VERIFIED_DEFAULT_OPTION_SELECTED,
+					CoreConstants.PASS, expectedOption, lblDrpDown));
+			return true;
+		} 
+		return false;
 	}
 }

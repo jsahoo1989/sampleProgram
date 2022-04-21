@@ -5,7 +5,7 @@ Feature: Add new Policy form with Benefit Categories
   Background: Login to  Policy Digitization Tool (PDT) application
     Given he is logged into 'Aires Policy Tool' application as a "Client Service Manager" user
 
-  @Sprint-14 @PDT-Regression
+  @Sprint-14 @PDT-Regression @test
   Scenario: Verify Core/Flex policy drop down should display as "No" on General Information section for selected PDT policy
     Given he is on the "Add New Policy" page after clicking on the link "Add New Policy Form" displayed under the left navigation menu on the 'View Policy' page
     When he clicks on the 'Next' button after selecting client, policy information on the 'Add New Policy' page
@@ -189,3 +189,32 @@ Feature: Add new Policy form with Benefit Categories
       | Miscellaneous Relocation Allowance | Lump Sum | Lease Break | Appliance Allowance | Auto Registration Costs | Auto Loss on Sale | Other One-Time Payment |
     Then success message "Policy saved and submitted" should be displayed on the "Policy Benefit" page
     And newly created Policy should be displayed under "View Policy" page after clicking on 'EXIT' button
+
+  @Sprint-23 @PDT-Regression @ongoing @PDT-735 @PDT-736
+  Scenario: PDT - Add new Policy form using Ongoing Payments and Reimbursements as Benefit Category including their sub benefit categories
+    Given he is on the "Add New Policy" page after clicking on the link "Add New Policy Form" displayed under the left navigation menu on the 'View Policy' page
+    And he has clicked on the 'Next' button after selecting client, policy information on the 'Add New Policy' page
+    And he has entered mandatory information on 'General Information' page followed by selection of "Ongoing Payments/Reimbursements" as Benefit Category on "Policy Benefit" page
+    When he clicks on 'SUBMIT' button after entering mandatory information for all the below selected sub benefits on "Ongoing Payments/Reimbursements" page
+      | COLA | Per Diem | Mobility Premium | Transportation Allowance | Housing Allowance | Home Maintenance Allowance | Furniture Allowance | Hardship Allowance | Banking Allowance | At Sea Allowance | Commuter Allowance | Differential Allowance | Goods & Services Allowance | Home Leave Allowance |Home Retention Allowance | Housekeeping Allowance | Utility Allowance | Other Ongoing Allowance |
+    Then success message "Policy saved and submitted" should be displayed on the "Policy Benefit" page
+    And newly created Policy should be displayed under "View Policy" page after clicking on 'EXIT' button    
+    
+   @Sprint-24 @PDT-Regression @property @PDT-509
+  Scenario: PDT - Add new Policy form using Property Management as Benefit Category
+    Given he is on the "Add New Policy" page after clicking on the link "Add New Policy Form" displayed under the left navigation menu on the 'View Policy' page
+    And he has clicked on the 'Next' button after selecting client, policy information on the 'Add New Policy' page
+    And he has entered mandatory information on 'General Information' page followed by selection of "Property Management" as Benefit Category on "Policy Benefit" page
+    When he clicks on 'SUBMIT' button after entering mandatory information on "Property Management" page
+    Then success message "Policy saved and submitted" should be displayed on the "Policy Benefit" page
+    And newly created Policy should be displayed under "View Policy" page after clicking on 'EXIT' button
+    
+  @Sprint-24 @PDT-Regression @homePurchase @PDT-734
+  Scenario: PDT - Add new Policy form using Ongoing Payments and Reimbursements as Benefit Category including their sub benefit categories
+    Given he is on the "Add New Policy" page after clicking on the link "Add New Policy Form" displayed under the left navigation menu on the 'View Policy' page
+    And he has clicked on the 'Next' button after selecting client, policy information on the 'Add New Policy' page
+    And he has entered mandatory information on 'General Information' page followed by selection of "Home Purchase" as Benefit Category on "Policy Benefit" page
+    When he clicks on 'SUBMIT' button after entering mandatory information for all the below selected sub benefits on "Home Purchase" page
+      | Home Purchase Closing Costs | Home Purchase Points | Home Purchase Inspections | Home Purchase Bonus | Mortgage Differentials | Mortgage Subsidy |
+    Then success message "Policy saved and submitted" should be displayed on the "Policy Benefit" page
+    And newly created Policy should be displayed under "View Policy" page after clicking on 'EXIT' button 

@@ -6,25 +6,25 @@
 			"irisPassword": "qabb",
 			"irisDatabase": "Qa",
 			"irisBuildPath": "\\\\corpprdvw589\\rdev\\IRIS_Builds\\IRIS_Statler_QA\\IRIS.exe",
-			"firstName": "Chere",
-			"lastName": "kitts",
-			"clientId": "7403",
-			"clientName": "Dow Chemical Company (Global)",
-			"csmUserName": "kbrian",
-			"csmPassword": "kbrian",
-			"policy": "hDCC Repatriation (# 14724)"
+			"firstName": "mxsso",
+			"lastName": "dev5",
+			"clientId": "49211",
+			"clientName": "AIRES-CIS-DEMO&'TEST(CLIENT)",
+			"csmUserName": "mxssodev5@corp.aires.com",
+			"csmPassword": "F74#jd*187_NB",
+			"policy": "Frequent Business Traveler (# 14614)"
 		},
 		"dev": {
 			"irisUserName": "BBENEDU",
 			"irisPassword": "devbb",
 			"irisDatabase": "Dev",
 			"irisBuildPath": "\\\\corpprdvw589\\rdev\\IRIS_Builds\\IRIS_Statler_QA\\IRIS.exe",
-			"firstName": "Vladimir",
-			"lastName": "Kaminsky",
+			"firstName": "mxsso",
+			"lastName": "dev5",
 			"clientId": "7403",
 			"clientName": "Dow Chemical Company (Global)",
-			"csmUserName": "kbrian",
-			"csmPassword": "kbrian",
+			"csmUserName": "mxssodev5@corp.aires.com",
+			"csmPassword": "F74#jd*187_NB",
 			"policy": "hDCC Repatriation (# 14724)"
 		},
 		"prod": {
@@ -51,20 +51,20 @@
 			"clientName": "GAP, Inc. Headquarters",
 			"csmUserName": "ckitts",
 			"csmPassword": "ckitts",
-			"policy": "hDCC Repatriation (# 14724)"
+			"policy": "Long-Term Assignment Policy (# 12472)"
 		},
 		"uat": {
 			"irisUserName": "BBENEDU",
 			"irisPassword": "uatbb",
 			"irisDatabase": "Uat",
 			"irisBuildPath": "\\\\corpprdvw589\\rdev\\IRIS_Builds\\IRIS_UAT_MYLO\\IRIS.exe",
-			"firstName": "Chere",
-			"lastName": "kitts",
-			"clientId": "7311",
-			"clientName": "GAP, Inc. Headquarters",
-			"csmUserName": "ckitts",
-			"csmPassword": "ckitts",
-			"policy": "Long-Term Assignment Policy (# 12472)"
+			"firstName": "mxsso",
+			"lastName": "dev5",
+			"clientId": "7403",
+			"clientName": "Dow Chemical Company (Global)",
+			"csmUserName": "mxssodev5@corp.aires.com",
+			"csmPassword": "F74#jd*187_NB",
+			"policy": "hDCC Repatriation (# 14724)"
 		}
 	},
 	

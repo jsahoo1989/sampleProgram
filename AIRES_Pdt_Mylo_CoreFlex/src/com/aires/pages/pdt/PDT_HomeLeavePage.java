@@ -284,7 +284,7 @@ public class PDT_HomeLeavePage extends Base {
 					_lblFrequencyOfTrips.getText(), subBenefitFormName));
 			String randFrequencyOfTrips = BusinessFunctions.selectAndReturnRandomValueFromDropDown(driver,
 					addNewPolicyPage, subBenefitFormName, _drpDownFrequencyOfTrip, _drpDownFrequencyOfTripOptions,
-					_drpDownFrequencyOfTripOptionsSelected, _lblFrequencyOfTrips);
+					_drpDownFrequencyOfTripOptionsSelected, _lblFrequencyOfTrips.getText());
 			setFrequencyOfTrips(randFrequencyOfTrips);
 			verifyAndFillOtherFreq(addNewPolicyPage, subBenefitFormName, randFrequencyOfTrips);
 		} else {
@@ -339,7 +339,7 @@ public class PDT_HomeLeavePage extends Base {
 					homeLeaveBenefitData.homeLeaveTransportation.minMileageBusinessAir);
 			String randAccompanyingFamilMember = BusinessFunctions.selectAndReturnRandomValueFromDropDown(driver,
 					addNewPolicyPage, subBenefitFormName, _drpDownAccompFamilyMember, _drpDownAccompFamilyMemberOptions,
-					_drpDownAccompFamilyMemberOptionSelected, _lblAccompFamilyMember);
+					_drpDownAccompFamilyMemberOptionSelected, _lblAccompFamilyMember.getText());
 			setAccompanyingFamilyMember(randAccompanyingFamilMember);
 			CoreFunctions.explicitWaitTillElementListClickable(driver, _radioBtnHomeLeaveTransportation);
 			CoreFunctions.selectItemInListByText(driver, _radioBtnHomeLeaveTransportation,
@@ -479,7 +479,7 @@ public class PDT_HomeLeavePage extends Base {
 
 			String maxAmt = BusinessFunctions.selectAndReturnRandomValueFromDropDown(driver, addNewPolicyPage,
 					subBenefitFormName, _drpDownMaxAmtMeals, _drpDownMaxAmtMealsOptions,
-					_drpDownMaxAmtMealsOptionsSelected, _lblMaxAmount);
+					_drpDownMaxAmtMealsOptionsSelected, _lblMaxAmount.getText());
 			setMaxAmtHomeLeaveMeals(maxAmt);
 			checkIfFlatAmtIsSelected(addNewPolicyPage, subBenefitFormName);
 

@@ -18,11 +18,14 @@ import com.aires.pages.pdt.PDT_DuplicateHousingPage;
 import com.aires.pages.pdt.PDT_FinalMovePage;
 import com.aires.pages.pdt.PDT_GeneralInformationPage;
 import com.aires.pages.pdt.PDT_HomeLeavePage;
+import com.aires.pages.pdt.PDT_HomePurchasePage;
 import com.aires.pages.pdt.PDT_HouseHuntingTripPage;
 import com.aires.pages.pdt.PDT_ImmigrationPage;
 import com.aires.pages.pdt.PDT_LanguageTrainingPage;
 import com.aires.pages.pdt.PDT_OneTimePaymentReimbursemenPage;
+import com.aires.pages.pdt.PDT_OngoingPaymentReimbursementPage;
 import com.aires.pages.pdt.PDT_PreAcceptanceService;
+import com.aires.pages.pdt.PDT_PropertyManagementPage;
 import com.aires.pages.pdt.PDT_RentalAssistancePage;
 import com.aires.pages.pdt.PDT_SharedSubBenefitPage;
 import com.aires.pages.pdt.PDT_TemporaryLivingPage;
@@ -52,6 +55,9 @@ public class PDT_SharedSubBenefit_Steps {
 	private PDT_AssignmentHousingPage assignmentHousingPage;
 	private PDT_DuplicateHousingPage duplicateHousingPage;
 	private PDT_OneTimePaymentReimbursemenPage oneTimePaymentPage;
+	private PDT_OngoingPaymentReimbursementPage ongoingPaymentReimbursementPage;
+	private PDT_PropertyManagementPage propertyManagementPage;
+	private PDT_HomePurchasePage homePurchasePage;
 	
 	public PDT_SharedSubBenefit_Steps(TestContext context) {
 		testContext = context;
@@ -73,6 +79,9 @@ public class PDT_SharedSubBenefit_Steps {
 		assignmentHousingPage = testContext.getPageObjectManager().getAssignmentHousingPage();
 		duplicateHousingPage = testContext.getPageObjectManager().getDuplicateHousingPage();
 		oneTimePaymentPage = testContext.getPageObjectManager().getOneTimePaymentPage();
+		ongoingPaymentReimbursementPage = testContext.getPageObjectManager().getOngoingPaymentReimbursementPage();
+		propertyManagementPage = testContext.getPageObjectManager().getPropertyManagementPage();
+		homePurchasePage = testContext.getPageObjectManager().getHomePurchasePage();
 	}
 	
 	public PDT_PreAcceptanceService getPreAcceptServicePage() {
@@ -135,6 +144,19 @@ public class PDT_SharedSubBenefit_Steps {
 		return oneTimePaymentPage;
 	}
 	
+	public PDT_OngoingPaymentReimbursementPage getOngoingPaymentReimbursementPage() {
+		return ongoingPaymentReimbursementPage;
+	}
+	
+	public PDT_PropertyManagementPage getPropertyManagementPage() {
+		return propertyManagementPage;
+	}
+	
+	public PDT_HomePurchasePage getHomePurchasePage() {
+		return homePurchasePage;
+	}
+	
+	
 	@When("^he clicks on 'SUBMIT' button after entering mandatory information for all the below selected sub benefits on \"([^\"]*)\" page$")
 	public void he_clicks_on_SUBMIT_button_after_entering_mandatory_information_for_all_the_below_selected_sub_benefits_on_page(
 			String policyBenefitPgName, DataTable subBenefitTable) {
@@ -174,6 +196,7 @@ public class PDT_SharedSubBenefit_Steps {
 	@When("^he clicks on 'SUBMIT' button after entering mandatory information on \"([^\"]*)\" page$")
 	public void he_clicks_on_SUBMIT_button_after_entering_mandatory_information_on_page(String pageName) throws Throwable {
 		subBenefitPage.verifySelectedPolicyBenefitCategoryName(pageName);
-		duplicateHousingPage.fillDuplicateHousingForm(addNewPolicyPage, pageName);
+		PDT_SharedSubBenefit_Steps objStep = new PDT_SharedSubBenefit_Steps(testContext);
+		subBenefitPage.fillSubBenefitForm(pageName, addNewPolicyPage, objStep, pageName);
 	}
 }

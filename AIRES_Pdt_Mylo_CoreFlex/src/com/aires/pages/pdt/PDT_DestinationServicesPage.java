@@ -321,11 +321,11 @@ public class PDT_DestinationServicesPage extends Base {
 
 			String randCarType = BusinessFunctions.selectAndReturnRandomValueFromDropDown(driver, addNewPolicyPage,
 					subBenefitFormName, _drpDownCarType, _drpDownCarTypeOptions, _drpDownCarTypeOptionSelected,
-					_lblCarType);
+					_lblCarType.getText());
 			setCarType(randCarType);
 			BusinessFunctions.verifyAndFillOtherTextBoxForSubBenefitForm(driver, addNewPolicyPage, subBenefitFormName,
 					_drpDownCarTypeOptionSelected, _lblCarType.getText(), _txtBoxCarTypeOther,
-					_lblCarTypeOther, subBenefitFormName);
+					PDTConstants.CAR_TYPE_OTHER, subBenefitFormName);
 
 			CoreFunctions.explicitWaitTillElementListClickable(driver, _radioBtnAutoRental);
 			CoreFunctions.selectItemInListByText(driver, _radioBtnAutoRental,
@@ -374,10 +374,10 @@ public class PDT_DestinationServicesPage extends Base {
 
 			String randNoOfDays = BusinessFunctions.selectAndReturnRandomValueFromDropDown(driver, addNewPolicyPage,
 					subBenefitFormName, _drpDownNoOfDays, _drpDownNoOfDaysOptions, _drpDownNoOfDaysOptionSelected,
-					_lblNoOfDays);
+					_lblNoOfDays.getText());
 			setNoOfDaysForDepartureServices(randNoOfDays);
 			BusinessFunctions.verifyAndFillOtherTextBoxForSubBenefitForm(driver, addNewPolicyPage, subBenefitFormName,
-					_drpDownNoOfDaysOptionSelected, _lblNoOfDays.getText(), _txtBoxNoOfDaysOther, _lblNoOfDaysOther,
+					_drpDownNoOfDaysOptionSelected, _lblNoOfDays.getText(), _txtBoxNoOfDaysOther, PDTConstants.OTHER,
 					destinationServicesBenefitData.departureServices.other);
 
 			CoreFunctions.explicitWaitTillElementListClickable(driver, _radioBtnDepartureServices);
@@ -405,10 +405,10 @@ public class PDT_DestinationServicesPage extends Base {
 
 			String randDuration = BusinessFunctions.selectAndReturnRandomValueFromDropDown(driver, addNewPolicyPage,
 					subBenefitFormName, _drpDownDuration, _drpDownDurationOptions, _drpDownDurationOptionSelected,
-					_lblDuration);
+					_lblDuration.getText());
 			setDurationForFurntiureRental(randDuration);
 			BusinessFunctions.verifyAndFillOtherTextBoxForSubBenefitForm(driver, addNewPolicyPage, subBenefitFormName,
-					_drpDownDurationOptionSelected, _lblDuration.getText(), _txtBoxDurationOther, _lblDurationOther,
+					_drpDownDurationOptionSelected, _lblDuration.getText(), _txtBoxDurationOther, PDTConstants.OTHER,
 					destinationServicesBenefitData.furnitureRental.durationOther);
 
 			CoreFunctions.explicitWaitTillElementListClickable(driver, _radioBtnFurnitureRental);

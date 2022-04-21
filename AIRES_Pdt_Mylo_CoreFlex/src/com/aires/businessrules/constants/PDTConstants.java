@@ -214,7 +214,7 @@ public class PDTConstants {
 	public static final String DROP_DOWN = "drop down";
 	public static final String RADIO_BUTTON_LIST = "radio button list";
 	public static final String CHECK_BOX = "check box";
-	public static final String GROSS_UP = "Gross-up";
+	public static final String GROSS_UP = "Gross-Up";
 	public static final String REIMBURSED_BY = "Reimbursed By";
 	public static final String REIMBURSED_BY_OTHER = "Reimbursed By(Other)";
 	public static final String COMMENT = "Comment";
@@ -386,6 +386,46 @@ public class PDTConstants {
 	public static final String FAILED_TO_VERIFY_AND_FILL_DROP_DOWN = "{0} Failed to verify and fill drop down '''{1}'' in ''{2}'' sub benefit form.";
 	public static final String FAILED_TO_VERIFY_AND_FILL_TEXTBOX = "{0} Failed to verify and fill text box '''{1}'' in ''{2}'' sub benefit form.";
 	public static final String FAILED_TO_VERIFY_AND_SELECT_DRP_DOWN = "{0} Failed to verify and select value ''1'' from ''{2}'' drop down in ''{3}'' sub benefit form.";
+	//Ongoing Payments and Reimburesement
+	public static final String COLA = "COLA";
+	public static final String PER_DIEM = "Per Diem";
+	public static final String MOBILITY_PREMIUM = "Mobility Premium";
+	public static final String TRANSPORTATION_ALLOWANCE = "Transportation Allowance";
+	public static final String HOUSING_ALLOWANCE = "Housing Allowance";
+	public static final String HOME_MAINTENANCE_ALLOWANCE = "Home Maintenance Allowance";
+	public static final String FURNITURE_ALLOWANCE = "Furniture Allowance";
+	public static final String HARDSHIP_ALLOWANCE = "Hardship Allowance";
+	public static final String BANKING_ALLOWANCE = "Banking Allowance";
+	public static final String AT_SEA_ALLOWANCE = "At Sea Allowance";
+	public static final String COMMUTER_ALLOWANCE = "Commuter Allowance";
+	public static final String DIFFERENTIAL_ALLOWANCE = "Differential Allowance";
+	public static final String GOODS_AND_SERVICES_ALLOWANCE = "Goods & Services Allowance";
+	public static final String HOME_LEAVE_ALLOWANCE = "Home Leave Allowance";
+	public static final String HOME_RETENTION_ALLOWANCE = "Home Retention Allowance";
+	public static final String HOUSEKEEPING_ALLOWANCE = "Housekeeping Allowance";
+	public static final String UTILITY_ALLOWANCE = "Utility Allowance";
+	public static final String OTHER_ONGOING_ALLOWANCE = "Other Ongoing Allowance";
+	public static final String CALCULATION_METHOD = "Calculation Method";
+	public static final String OTHER_CALCULATION_METHOD = "Other Calculation Method";
+	public static final String OTHER_FREQUENCY = "Other Frequency";
+	public static final String TYPE = "Type";
+	public static final String MONTHLY = "Monthly";
+	public static final String VERIFIED_DEFAULT_OPTION_SELECTED = "{0} Verified by default ''{1}'' option is selected for ''{2}'' drop down";
+	public static final String VERIFIED_DEFAULT_OPTION_NOT_SELECTED = "{0} Verified by default ''{1}'' option is not selected for ''{2}'' drop down";
+	public static final String PROPERTY_MANAGEMENT = "Property Management";
+	public static final String DUPLICATE_HOUSING = "Duplicate Housing";
+	public static final String DURATION_OTHER = "Duration Other";
+	public static final String CAR_TYPE_OTHER = "Car Type Other";
+	public static final String OTHER_PAYMENT_TIME = "Other Payment Time";
 	
-	
+	//Home Purchase
+	public static final String HOME_PURCHASE_CLOSING_COSTS = "Home Purchase Closing Costs";
+	public static final String HOME_PURCHASE_POINTS = "Home Purchase Points";
+	public static final String HOME_PURCHASE_INSPECTIONS = "Home Purchase Inspections";
+	public static final String HOME_PURCHASE_BONUS = "Home Purchase Bonus";
+	public static final String MORTGAGE_DIFFERENTIALS = "Mortgage Differentials";
+	public static final String MORTGAGE_SUBSIDY = "Mortgage Subsidy";
+	public static final String EXCEPTION_OCCURED_SELECT_AIRES_PREFERRED_LENDERS = "{0} Exception occurred while selecting Aires Preferred Lenders data for ''{1}'' sub-benefit form.";
+	public static final String CHECK_BOX_LIST = "Check Box List";
+	public static final String DEFAULT_CURRENCY = "U.S. Dollar";
 }

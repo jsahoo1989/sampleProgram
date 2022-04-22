@@ -8,12 +8,14 @@ import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.How;
+import org.testng.Assert;
 
 import com.aires.businessrules.Base;
 import com.aires.businessrules.CoreFunctions;
 import com.aires.businessrules.constants.COREFLEXConstants;
 import com.aires.businessrules.constants.CoreConstants;
 import com.aires.businessrules.constants.MobilityXConstants;
+import com.aires.businessrules.constants.PDTConstants;
 import com.aires.managers.FileReaderManager;
 import com.aires.testdatatypes.coreflex.CoreFlex_PolicySetupPagesData;
 import com.aires.testdatatypes.coreflex.MX_Transferee_AccountSetupDetails;
@@ -146,25 +148,26 @@ public class MX_Transferee_JourneyHomePage extends Base {
 
 	/*********************************************************************/
 
-	public boolean navigateToFlexPlanningToolPage() {
-		boolean isNavigatedToFPTpage = false;
+	
+	public void clickElementOfPage(String elementName) {
+		switch (elementName) {
+		case MobilityXConstants.MANAGE_MY_POINTS:
+			CoreFunctions.clickUsingJS(driver, _linkManageMyPoints, MobilityXConstants.MANAGE_MY_POINTS);
+			break;
+		default:
+			Assert.fail(COREFLEXConstants.INVALID_ELEMENT);
+		}
+	}
+	
+	public boolean verifyUserNavigationToJourneyHomePage() {
 		try {
-			CoreFunctions.explicitWaitTillElementBecomesClickable(driver, _linkManageMyPoints,
-					MobilityXConstants.MANAGE_MY_POINTS);
-			if (CoreFunctions.isElementExist(driver, _linkManageMyPoints, 10)) {
-				CoreFunctions.clickUsingJS(driver, _linkManageMyPoints, MobilityXConstants.MANAGE_MY_POINTS);
-				isNavigatedToFPTpage = true;
-			}
-		} catch (Exception e) {
+			return CoreFunctions.isElementExist(driver, _linkManageMyPoints, 5);
+		}catch (Exception e) {
 			Reporter.addStepLog(MessageFormat.format(
-					MobilityXConstants.EXCEPTION_OCCURED_WHILE_NAVIGATING_TO_FLEX_PLANNING_TOOL_PAGE,
+					MobilityXConstants.EXCEPTION_OCCURED_WHILE_VALIDATING_USER_NAVIGATION_TO_MOBILITYX_JOURNEY_HOME_PAGE,
 					CoreConstants.FAIL, e.getMessage()));
-		}
-		if (isNavigatedToFPTpage) {
-			Reporter.addStepLog(MessageFormat
-					.format(MobilityXConstants.SUCCESSFULLY_NAVIGATED_TO_FLEX_PLANNING_TOOL_PAGE, CoreConstants.PASS));
-		}
-		return isNavigatedToFPTpage;
+			return false;
+		}		
 	}
 
 	public void handle_Cookie_AfterLogin() {

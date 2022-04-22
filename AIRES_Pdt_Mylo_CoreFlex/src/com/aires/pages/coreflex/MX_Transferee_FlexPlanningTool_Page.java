@@ -521,8 +521,7 @@ public class MX_Transferee_FlexPlanningTool_Page extends Base {
 		boolean isCustomBundleHeaderDetailsVerified = false, isCustomBundleBenefitListVerified = false,
 				customBundleMatched = false;
 		boolean isCustomBundleTotalPointsMatched = false;
-		try {
-			CoreFunctions.clickElement(driver, _link_suggestedOptions);
+		try {			
 			CoreFunctions.explicitWaitTillElementVisibility(driver, _text_suggestedBundles,
 					MobilityXConstants.SUGGESTED_BUNDLES);
 			isCustomBundleHeaderDetailsVerified = ((CoreFunctions.getElementText(driver, _text_suggestedBundles))
@@ -543,6 +542,16 @@ public class MX_Transferee_FlexPlanningTool_Page extends Base {
 					MobilityXConstants.SUCCESSFULLY_VERIFIED_CUSTOM_BUNDLE_NAME_LIST_AND_POINTS, CoreConstants.PASS));
 		}
 		return customBundleMatched;
+	}
+	
+	public boolean verifyUserNavigationToSuggestedBundlesPage() {
+		try {
+			return CoreFunctions.isElementExist(driver, _text_suggestedBundles, 5);			
+		}catch (Exception e) {
+			Reporter.addStepLog(MessageFormat.format(MobilityXConstants.EXCEPTION_OCCURED_WHILE_NAVIGATING_TO_SUGGESTED_BUNDLES_PAGE,
+					CoreConstants.FAIL, e.getMessage()));
+			return false;
+		}
 	}
 
 	private boolean verifyCustomBundlePointsDetails() {
@@ -684,7 +693,6 @@ public class MX_Transferee_FlexPlanningTool_Page extends Base {
 	public boolean verifyAvailablePointsMessageAfterSubmission() {
 		DecimalFormat format = new DecimalFormat();
 		format.setDecimalSeparatorAlwaysShown(false);
-		isFlexPlanningToolHomePageDisplayed();
 		return CoreFunctions.getElementText(driver, _textTotalPointBalance)
 				.contains(MobilityXConstants.AVAILABLE_POINTS_TEXT.replace("available_points",
 						format.format((MX_Transferee_MyBenefitsBundlePage.availablePointsAfterSubmission))));
@@ -737,6 +745,9 @@ public class MX_Transferee_FlexPlanningTool_Page extends Base {
 			switch (elementName) {
 			case MobilityXConstants.BACK_TO_BENEFITS_LIST:
 				CoreFunctions.clickElement(driver, _link_backToBenefitList);
+				break;
+			case MobilityXConstants.SUGGESTED_OPTIONS_LINK:
+				CoreFunctions.clickElement(driver, _link_suggestedOptions);
 				break;
 			default:
 				Assert.fail(COREFLEXConstants.INVALID_ELEMENT);
@@ -1295,5 +1306,7 @@ public class MX_Transferee_FlexPlanningTool_Page extends Base {
 		}
 		return isPortionCashoutVerified;
 	}
+
+	
 
 }

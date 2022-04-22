@@ -82,7 +82,7 @@ public class TransfereeSubmissions_DashboardHomePage extends Base {
 	// AIRES Flex Logo Image
 	@FindBy(how = How.CSS, using = "img[src='assets/img/AiresFleXLogo.png']")
 	private WebElement _imgAIRESFlexLogo;
-	
+
 	@FindBy(how = How.CSS, using = "div[class='sk-three-strings']")
 	private WebElement _spinner;
 
@@ -126,7 +126,20 @@ public class TransfereeSubmissions_DashboardHomePage extends Base {
 		}
 	}
 
-	public boolean verifyUserlogin(String userName, String pageName) {
+	public boolean verifyUserNavigationToDashboardPage() {
+		try {
+			if (CoreFunctions.isElementExist(driver, _spinner, 5))
+				CoreFunctions.explicitWaitTillElementInVisibilityCustomTime(driver, _spinner, 10);
+			return CoreFunctions.isElementExist(driver, _txtApplicationTitle, 5);
+		} catch (Exception e) {
+			Reporter.addStepLog(MessageFormat.format(
+					COREFLEXConstants.EXCEPTION_OCCURED_WHILE_NAVIGATING_TO_TRANSFEREE_SUBMISSIONS_DASHBOARD_PAGE,
+					CoreConstants.FAIL, e.getMessage()));
+			return false;
+		}
+	}
+
+	public boolean verifyUserLogin(String userName, String pageName) {
 		if (CoreFunctions.isElementExist(driver, _spinner, 5))
 			CoreFunctions.explicitWaitTillElementInVisibilityCustomTime(driver, _spinner, 30);
 		CoreFunctions.explicitWaitTillElementVisibility(driver, _txtApplicationTitle,

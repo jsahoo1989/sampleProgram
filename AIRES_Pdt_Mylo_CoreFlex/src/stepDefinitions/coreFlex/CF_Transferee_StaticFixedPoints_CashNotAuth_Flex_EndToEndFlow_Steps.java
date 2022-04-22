@@ -51,15 +51,15 @@ public class CF_Transferee_StaticFixedPoints_CashNotAuth_Flex_EndToEndFlow_Steps
 
 	@Given("^he has navigated to \"([^\"]*)\" page after selecting required benefits on \"([^\"]*)\" page$")
 	public void he_has_navigated_to_page_after_selecting_required_benefits_on_page(String navigatedPage,
-			String sourcePage) throws Throwable {
-		CoreConstants.TIME_BEFORE_ACTION = new Date().getTime();
+			String sourcePage) throws Throwable {		
 		Assert.assertTrue(mxTransfereeFlexPlanningToolPage.selectBenefitsAndProceedToReviewAndSubmit(), MessageFormat
 				.format(MobilityXConstants.FAILED_TO_SELECT_BENEFITS_AND_PROCEED_TO_REVIEW_PAGE, CoreConstants.FAIL));
+		CoreConstants.TIME_BEFORE_ACTION = new Date().getTime();
 		Assert.assertTrue(mxTransfereeMyBenefitsBundlePage.isMyBundlePageDisplayed(),
 				MessageFormat.format(MobilityXConstants.FAILED_TO_DISPLAY_MY_BENEFIT_BUNDLE_PAGE, CoreConstants.FAIL));
 		CoreConstants.TIME_AFTER_ACTION = new Date().getTime();
-		Reporter.addStepLog(MessageFormat.format(CoreConstants.TOTAL_TIME_TAKEN_BY_GIVEN,
-				(CoreConstants.TIME_AFTER_ACTION - CoreConstants.TIME_BEFORE_ACTION) / 1000));
+		Reporter.addStepLog("<b>Total time taken to navigate to <i>My Benefits Bundle</i> page is :"
+				+ (CoreConstants.TIME_AFTER_ACTION - CoreConstants.TIME_BEFORE_ACTION) / 1000 + " Seconds </b>");
 	}	
 
 	@Then("^he should be navigated to \"([^\"]*)\" page having list of submitted benefits details$")
@@ -68,6 +68,9 @@ public class CF_Transferee_StaticFixedPoints_CashNotAuth_Flex_EndToEndFlow_Steps
 		Assert.assertTrue(transfereeSubmissionsDetailsPage.verifiyPageNavigation(pageName),
 				MessageFormat.format(COREFLEXConstants.FAILED_TO_NAVIGATE_TO_TRANSFEREE_SUBMISSIONS_DETAILS_PAGE,
 						CoreConstants.FAIL, pageName));
+		CoreConstants.TIME_AFTER_ACTION = new Date().getTime();
+		Reporter.addStepLog("<b>Total time taken to navigate to <i>Transferee Submissions Detail</i> page is :"
+				+ (CoreConstants.TIME_AFTER_ACTION - CoreConstants.TIME_BEFORE_ACTION) / 1000 + " Seconds </b>");
 		Assert.assertTrue(transfereeSubmissionsDetailsPage.verifyTransfereeAndPointsDetails(), MessageFormat.format(
 				COREFLEXConstants.FAILED_TO_VERIFY_TRANSFEREE_AND_POINTS_DETAILS_ON_TRANSFEREE_SUBMISSIONS_DETAILS_PAGE,
 				CoreConstants.FAIL));
@@ -84,22 +87,14 @@ public class CF_Transferee_StaticFixedPoints_CashNotAuth_Flex_EndToEndFlow_Steps
 	
 	@Then("^submitted benefit details should be displayed under 'Submitted Benefits' section of 'My Benefits Bundle' page$")
 	public void submitted_benefit_details_should_be_displayed_under_Submitted_Benefits_section_of_my_benefits_bundle_page() {
-		CoreConstants.TIME_BEFORE_ACTION = new Date().getTime();
 		Assert.assertTrue(mxTransfereeMyBenefitsBundlePage.validateSubmittedBenefitDetails(),
 				MobilityXConstants.SUBMITTED_BENEFIT_DETAILS_NOT_MATCHED);
-		CoreConstants.TIME_AFTER_ACTION = new Date().getTime();
-		Reporter.addStepLog("<b>Total time taken by <i>'Then'</i> statement is :"
-				+ (CoreConstants.TIME_AFTER_ACTION - CoreConstants.TIME_BEFORE_ACTION) / 1000 + " Seconds </b>");
 	}
 	
 	@Then("^'Mobility Flex Benefit\\(s\\) Submission' email should be generated for the submitted benefit bundle$")
 	public void mobility_Flex_Benefit_s_Submission_email_should_be_generated_for_the_submitted_benefit_bundle() throws Throwable {
-		CoreConstants.TIME_BEFORE_ACTION = new Date().getTime();
 		Assert.assertTrue(mxTransfereeJourneyHomePage.verifyBenefitSubmissionEmail(), MessageFormat
 				.format(MobilityXConstants.FAILED_TO_READ_USER_CREDENTIALS_FROM_GENERATED_EMAIL, CoreConstants.FAIL));
-		CoreConstants.TIME_AFTER_ACTION = new Date().getTime();
-		Reporter.addStepLog("<b>Total time taken by <i>'Then'</i> statement is :"
-				+ (CoreConstants.TIME_AFTER_ACTION - CoreConstants.TIME_BEFORE_ACTION) / 1000 + " Seconds </b>");
 	}
 
 	@Then("^point balance details should be upadted on \"([^\"]*)\" page$")

@@ -1,6 +1,6 @@
 Feature: Validate the CoreFlex End-To-End Business Test Flow(Policy Setup, MXTransferee, MSPEC) for Both_Transferee_StaticFixedPoints_CashoutNotAuthorized_Delete_Approve selection
 
-@PolicySetupFlow @Both-CashNotAuth_ApproveRequest_PF
+@Both-CashNotAuth_ApproveRequest_PF
   Scenario: CoreFlex - Setting up a New CoreFlex policy in 'Policy Digitization Tool' application
     Given he has setup a new "Both" Type Policy with following selection in 'Policy Digitization Tool (PDT)' application
       | Person Responsible For Benefit Selection | Flex Setup Type | Cashout Availability   |

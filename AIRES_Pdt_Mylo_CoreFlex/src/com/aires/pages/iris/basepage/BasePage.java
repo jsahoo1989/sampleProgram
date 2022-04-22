@@ -1,8 +1,3 @@
-/**
- * @author srana
- *
- */
-
 package com.aires.pages.iris.basepage;
 
 import java.io.BufferedReader;
@@ -87,7 +82,7 @@ public class BasePage {
 	}
 
 	public int getPortNumberAsPerUserName() throws Exception {
-		int port = 0;
+//		int port = 0;
 		// String userName = System.getProperty("user.name").toLowerCase();
 		String computerName = InetAddress.getLocalHost().getHostName();
 		if (computerName.equalsIgnoreCase("corpprdvw270") || _userName.equalsIgnoreCase("srana"))
@@ -302,5 +297,21 @@ public class BasePage {
 		userPortMap.put("rsharma", 5096);
 		userPortMap.put("pdash", 5097);
 		userPortMap.put("vmallah", 5091);
+	}
+	
+	public void reLaunchIrisToAvoidFreezingIssue() throws Exception {
+		ModifiableSDKConfiguration config = new ModifiableSDKConfiguration();
+		int portNumber = getPortNumberAsPerUserName();
+		config.setServerAddress(new URI("ws://localhost:" + portNumber));
+		SDK.init(config);
+		String _path = getIrisPathForApplication(CoreFunctions.getPropertyFromConfig("application").toLowerCase());
+		Runtime.getRuntime().exec(_path);
+		String _windowTitle = getWindowText.getActiveWindowText();
+		while (!_windowTitle.contains("Login")) {
+			CoreFunctions.waitHandler(2);
+			_windowTitle = getWindowText.getActiveWindowText();
+		}
+		Desktop.describe(Window.class, new WindowDescription.Builder().title(_windowTitle).build());
+
 	}
 }

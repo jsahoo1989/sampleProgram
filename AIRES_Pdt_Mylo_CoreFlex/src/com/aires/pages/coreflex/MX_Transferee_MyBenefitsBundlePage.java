@@ -197,6 +197,17 @@ public class MX_Transferee_MyBenefitsBundlePage extends Base {
 				MessageFormat.format(MobilityXConstants.SUBMISSION_SUCCESS_POPUP_DISPLAYED, CoreConstants.PASS));
 	}
 
+	public boolean isBenefitSubmittedPopUpDisplayed() {
+		try {
+			return CoreFunctions.isElementExist(driver, _btn_seeBenefits, 5);
+		} catch (Exception e) {
+			Reporter.addStepLog(MessageFormat.format(
+					MobilityXConstants.EXCEPTION_OCCURED_WHILE_VALIDATING_SUBMISSION_SUCCESS_POPUP,
+					CoreConstants.FAIL, e.getMessage()));
+			return false;
+		}
+	}
+
 	public void reviewAndConfirmBenefitSubmission(String optionalNotes, String transfereeName, String buttonName) {
 		CoreFunctions.setElementText(driver, input_transfereeName, transfereeName);
 		CoreFunctions.setElementText(driver, optionalComments, optionalNotes);

@@ -259,6 +259,10 @@ public class TransfereeSubmissions_DetailsPage extends Base {
 				CoreFunctions.clickElement(driver, _requestDialogDenyRadioButton);
 				CoreFunctions.clickElement(driver, _requestDialogConfirmButton);
 				break;
+			case COREFLEXConstants.DENY_ALL:
+				CoreFunctions.clickElement(driver, _requestDialogDenyRadioButton);
+				CoreFunctions.clickElement(driver, _requestDialogConfirmButton);
+				break;
 			default:
 				Assert.fail(COREFLEXConstants.INVALID_ELEMENT);
 			}
@@ -501,8 +505,6 @@ public class TransfereeSubmissions_DetailsPage extends Base {
 							Reporter.addStepLog(MessageFormat.format(
 									COREFLEXConstants.SUCCESSFULLY_CLICKED_ON_RESOLVE_BUTTON_ON_SUBMISSION_DETAILS_PAGE,
 									CoreConstants.PASS, benefit.getBenefitDisplayName()));
-							CoreFunctions.explicitWaitTillElementVisibility(driver, _requestDialogHeading,
-									COREFLEXConstants.REQUESTS_DIALOG);
 						}
 					}
 				}
@@ -569,8 +571,8 @@ public class TransfereeSubmissions_DetailsPage extends Base {
 								_requestDialogPointsList.get(indexCashout).getText().replace("pts", "").trim()),
 						MX_Transferee_FlexPlanningTool_Page.selectedCashoutPoints,
 						COREFLEXConstants.SUBMITTED_BENEFIT_POINTS);
-				deleteRequestTotalPoints += Double.parseDouble(
-						_requestDialogPointsList.get(indexCashout).getText().replace("pts", "").trim());
+				deleteRequestTotalPoints += Double
+						.parseDouble(_requestDialogPointsList.get(indexCashout).getText().replace("pts", "").trim());
 				CoreFunctions.highlightObject(driver, _requestDialogPointsList.get(indexCashout));
 				CoreFunctions.verifyText(driver, _requestDialogStatusList.get(indexCashout),
 						COREFLEXConstants.DELETE_REQUEST_PENDING, COREFLEXConstants.DELETE_REQUEST_PENDING_STATUS);
@@ -856,4 +858,14 @@ public class TransfereeSubmissions_DetailsPage extends Base {
 								.format(policySetupPageData.flexPolicySetupPage.StaticFixedTotalPointsAvailable))));
 	}
 
+	public boolean verifyRequestsDialogDisplayed() {
+		try {
+			return CoreFunctions.isElementExist(driver, _requestDialogHeading, 5);
+		} catch (Exception e) {
+			Reporter.addStepLog(MessageFormat.format(
+					MobilityXConstants.EXCEPTION_OCCURED_WHILE_VALIDATING_REQUEST_DIALOG_ON_TRANSFEREE_SUBMISSIONS_DETAILS_PAGE,
+					CoreConstants.FAIL, e.getMessage()));
+			return false;
+		}
+	}
 }

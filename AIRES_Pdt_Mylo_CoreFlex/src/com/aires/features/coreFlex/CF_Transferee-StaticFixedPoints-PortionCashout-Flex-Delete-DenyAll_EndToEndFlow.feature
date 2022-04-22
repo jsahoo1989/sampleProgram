@@ -1,6 +1,6 @@
-Feature: Validate the CoreFlex End-To-End Business Test Flow(Policy Setup, MXTransferee, MSPEC) for Flex_Transferee_StaticFixedPoints_PortionCashout_Delete_ApproveAll selection
+Feature: Validate the CoreFlex End-To-End Business Test Flow(Policy Setup, MXTransferee, MSPEC) for Flex_Transferee_StaticFixedPoints_PortionCashout_Delete_DenyAll selection
 
-@PolicySetupFlow @Flex-PortionCashout_ApproveAllRequest_PF @End-To_End_Flex-PortionCashout_ApproveAllRequest
+@PolicySetupFlow @Flex-PortionCashout_DenyAllRequest_PF @End-To_End_Flex-PortionCashout_ApproveAllRequest
   Scenario: CoreFlex - Setting up a New CoreFlex policy in 'Policy Digitization Tool' application
     Given he has setup a new "Flex" Type Policy with following selection in 'Policy Digitization Tool (PDT)' application
       | Person Responsible For Benefit Selection | Flex Setup Type | Cashout Availability   |
@@ -9,7 +9,7 @@ Feature: Validate the CoreFlex End-To-End Business Test Flow(Policy Setup, MXTra
 	Then a success dialog should be displayed for Successfully Submitted Policy
 	And Policy Status should be displayed as "Submit" on "View/Edit Policy Forms" page
 		
-@MXTransfereeFlow @Flex-PortionCashout_ApproveAllRequest_MX @End-To_End_Flex-PortionCashout_ApproveAllRequest
+@MXTransfereeFlow @Flex-PortionCashout_DenyAllRequest_MX @End-To_End_Flex-PortionCashout_ApproveAllRequest
 Scenario: MXTransferee - Submitting benefits & Portion Cashout available in configured policy and Tracking Available_Used Benefits Points
     Given he has logged into 'MobilityX' application after creating a new 'Transferee' through IRIS application for policy setup in 'Policy Digitization Tool'
     And he has validated 'Assignment-Policy' details after selecting below option displayed on 'Welcome' dialog
@@ -27,14 +27,14 @@ Scenario: MXTransferee - Submitting benefits & Portion Cashout available in conf
     When he 'Delete' submitted Benefit_Cashout and confirms 'Remove Benefit Selection' dialog by entering username and clicking on "Yes-request to delete these benefits"   
     Then 'Status' of the deleted benefit_cashout should be displayed as "Delete Request Pending" under 'Submitted Benefits' section of 'My Benefit Bundle' page
 
-@TransfereeSubmissionFlow @Flex-PortionCashout_ApproveAllRequest_MX @End-To_End_Flex-PortionCashout_ApproveAllRequest
+@TransfereeSubmissionFlow @Flex-PortionCashout_DenyAllRequest_MX @End-To_End_Flex-PortionCashout_ApproveAllRequest
 Scenario: TransfereeSubmissions - Verifying ApproveAll Delete request functionality for submissions made by Transferee for the Client assigned to PPC User 
 	Given he has logged into 'Transferee Submissions' application as a "MSPEC/PPC" user 
 	And he has navigated to "Transferee Submissions Dashboard" page having record of Bundle submitted by the transferee  
 	And he has clicked on "Review" button for Bundle submitted by the transferee on "Transferee Submissions Dashboard" page	
 	And he has navigated to "Transferee Submission Details" page having list of submitted benefits details
 	And he has clicked on "Check All" followed by "Resolve Multiple" button to resolve multiple 'Delete Request Pending' request of the Transferee
-	When he confirms request by selecting "Approve All" option after verifying 'Delete Request Pending' benefit request details on 'Requests' dialog
-	Then 'Action Completed' growl message for "Approve Request" should be displayed on "Transferee Submission Details" page
-	And 'Delete Request Pending' benefit request should be removed from 'Transferee Submission Details' list
-	And benefit details should be updated in 'MXTransferee' application based on "Approved" 'Delete Request' on Transferee Submission
+	When he confirms request by selecting "Deny All" option after verifying 'Delete Request Pending' benefit request details on 'Requests' dialog
+	Then 'Action Completed' growl message for "Deny Request" should be displayed on "Transferee Submission Details" page
+	And 'Delete Request Pending' benefit request status should be updated to 'Submitted' in 'Transferee Submission Details' list
+#	And benefit details should be updated in 'MXTransferee' application based on "Denied" 'Delete Request' on Transferee Submission

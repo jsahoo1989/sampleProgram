@@ -378,4 +378,12 @@ public class COREFLEXConstants {
 	public static final String FAILED_TO_VERIFY_USER_NAVIGATION_TO_VIEW_EDIT_POLICY_PAGE = "{0}Failed to verify user navigation to View/Edit Policy Forms page.";
 	public static final String EXCEPTION_OCCURED_WHILE_VALIDATING_CASHOUT_DETAILS_POST_APPROVED_DELETE_REQUEST_ON_MBB_PAGE = "{0}Exception occured while validating cashout details post Approved Delete Request under Submitted Section of MBB Page. Exception : ''{1}''.";
 	public static final String SUCCESSFULLY_VERIFIED_CASHOUT_DETAILS_NOT_DISPLAYED_UNDER_SUBMITTED_BENEFITS_POST_APPROVED_DELETE_REQUEST_ON_MBB_PAGE = "{0}Successfully verified cashout details not displayed under submitted benefits post Approved Delete Request on My Benefits Bundles page.";
+	public static final String EXCEPTION_OCCURED_WHILE_NAVIGATING_TO_MOBILITYX_LOGIN_PAGE = "{0}Exception occured while navigating to MobilityX Login Page. Exception : ''{1}''.";
+	public static final String FAILED_TO_NAVIGATE_TO_MOBILITYX_LOGIN_PAGE = "{0}Failed to navigate to MobilityX Login Page.";
+	public static final String EXCEPTION_OCCURED_WHILE_NAVIGATING_TO_TRANSFEREE_SUBMISSIONS_LOGIN_PAGE = "{0}Exception occured while navigating to Transferee Submissions Login page. Exception : ''{1}''.";
+	public static final String FAILED_TO_LOGIN_INTO_TRANSFEREE_SUBMISSIONS_APPLICATION = "{0}Failed to login into Transferee Submissions application.";
+	public static final String EXCEPTION_OCCURED_WHILE_NAVIGATING_TO_TRANSFEREE_SUBMISSIONS_DASHBOARD_PAGE = "{0}Exception occured while navigating to Transferee Submissions Dashboard Page. Exception : ''{1}''.";
+	public static final String FAILED_TO_VERIFY_USER_DETAILS_ON_DASHBOARD_HOME_PAGE = "{0}Failed to verify User Details on Transferee Submissions Dashboard Home Page.";
+	public static final String FAILED_TO_VERIFY_REQUESTS_DIALOG_ON_TRANSFEREE_SUBMISSIONS_DETAILS_PAGE = "{0}Failed to verify Requests Dialog on Transferee Submissions Details page.";
+	public static final String DENY_ALL = "Deny All";
 }

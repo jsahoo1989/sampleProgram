@@ -55,6 +55,12 @@ public class MX_Transferee_LoginPage extends Base {
 		super(driver);
 	}
 
+	/*********************************************************************************************************/
+
+	// Next Button
+	@FindBy(how = How.XPATH, using = "//span[@class='RXBiggerTextMuted'][contains(text(),'Sign in')]")
+	private WebElement _textSignIn;
+
 	// AIRES Logo Image
 	@FindBy(how = How.CSS, using = "img[id*='logoicon']")
 	private WebElement _imageAIRESLogo;
@@ -95,8 +101,26 @@ public class MX_Transferee_LoginPage extends Base {
 	private static String _loginValue[] = new String[4];
 	Boolean isExists = false;
 
+	/**************************************************************************************************************/
+
 	MX_Transferee_LoginData loginData = FileReaderManager.getInstance().getCoreFlexJsonReader()
 			.getloginDetailsByUserFirstName(COREFLEXConstants.USER_FIRST_NAME);
+
+	/**************************************************************************************************************/
+
+	/**
+	 * Method to verify navigated Page
+	 */
+	public boolean verifyPageNavigation() {
+		try {
+			return CoreFunctions.isElementExist(driver, _textSignIn, 5);
+		} catch (Exception e) {
+			Reporter.addStepLog(
+					MessageFormat.format(COREFLEXConstants.EXCEPTION_OCCURED_WHILE_NAVIGATING_TO_MOBILITYX_LOGIN_PAGE,
+							CoreConstants.FAIL, e.getMessage()));
+		}
+		return false;
+	}
 
 	// Methods
 	public void VerifyAIRESLogo() {
@@ -297,8 +321,8 @@ public class MX_Transferee_LoginPage extends Base {
 			String expFromUserName = "test_csm@aires.com";
 			// Enter expected email subject
 			String expEmailSubject = "MobilityX Username";
-			String resultUserName = EmailUtil.searchEmailAndReturnResult(host, userName, pwd, expFromUserName, expEmailSubject,
-					PDTConstants.TRANSFEREE_USER_NAME);
+			String resultUserName = EmailUtil.searchEmailAndReturnResult(host, userName, pwd, expFromUserName,
+					expEmailSubject, PDTConstants.TRANSFEREE_USER_NAME);
 			String userName_InEmail = resultUserName.trim();
 			String expFromPwd = "testrelonet@aires.com";
 			String expEmailSubjectPwd = "MobilityX Password";
@@ -310,12 +334,12 @@ public class MX_Transferee_LoginPage extends Base {
 					+ "UserName & Password Successfully received in Email for User : " + userName_InEmail);
 			return true;
 
-		}catch(Exception e) {
+		} catch (Exception e) {
 			Reporter.addStepLog(
 					MessageFormat.format(COREFLEXConstants.EXCEPTION_OCCURED_WHILE_READING_CREDENTIALS_FROM_EMAIL,
 							CoreConstants.FAIL, e.getMessage()));
 		}
-		
+
 		return false;
 	}
 

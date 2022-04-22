@@ -64,7 +64,7 @@ public class CF_Transferee_StaticFixedPoints_PortionCashout_Both_EndToEndFlow_St
 	public void he_has_verified_submitted_points_details_along_with_Post_Submission_Portion_Cashout_details_on_Flex_Planning_Tool_page()
 			throws Throwable {
 		CoreConstants.TIME_BEFORE_ACTION = new Date().getTime();
-		mxTransfereeJourneyHomePage.navigateToFlexPlanningToolPage();
+		mxTransfereeJourneyHomePage.clickElementOfPage(MobilityXConstants.MANAGE_MY_POINTS);
 		Assert.assertTrue(mxTransfereeFlexPlanningToolPage.verifyAvailablePointsMessageAfterSubmission(),
 				MessageFormat.format(
 						MobilityXConstants.FAILED_TO_VALIDATE_AVAILABLE_POINTS_MESSAGE_ON_FLEX_PLANNING_TOOL_PAGE,

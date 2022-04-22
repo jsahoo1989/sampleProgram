@@ -69,6 +69,21 @@ public class TransfereeSubmissions_LoginPage extends Base {
 			.getTransfereeSubmissionLoginDataList(COREFLEXConstants.TRANSFEREE_SUBMISSIONS);
 	
 	/**********************************************************************/
+	
+	/**
+	 * Method to verify navigated Page
+	 */
+	public boolean verifyPageNavigation() {
+		try {
+			openApplication();
+			return CoreFunctions.isElementExist(driver, _inputUserEmail, 5);
+		} catch (Exception e) {
+			Reporter.addStepLog(
+					MessageFormat.format(COREFLEXConstants.EXCEPTION_OCCURED_WHILE_NAVIGATING_TO_TRANSFEREE_SUBMISSIONS_LOGIN_PAGE,
+							CoreConstants.FAIL, e.getMessage()));
+		}
+		return false;
+	}
 
 	public void VerifyAIRESLogo() {
 		CoreFunctions.explicitWaitTillElementVisibility(driver, _imgAIRESLogo, COREFLEXConstants.AIRESLOGO_TEXT);
@@ -120,17 +135,13 @@ public class TransfereeSubmissions_LoginPage extends Base {
 		}
 	}
 
-	public boolean loginByUserType(String userType, TransfereeSubmissions_DashboardHomePage dashboardHomePage) {
-		boolean isSuccessfullyLoggedIn = false;
-		try {
-			openApplication();
+	public boolean loginByUserType(String userType) {
+		try {			
 			switch (userType) {
 			case COREFLEXConstants.MSPEC_PPC:
 				enterUserEmailAndPassword(getCSMCredentials(_transfereeSubmissionLoginData)[0], getCSMCredentials(_transfereeSubmissionLoginData)[1]);
 				clickSignIn();
-				isSuccessfullyLoggedIn = dashboardHomePage.verifyUserlogin(getCSMUserName(_transfereeSubmissionLoginData),
-						COREFLEXConstants.TRANSFEREE_SUBMISSIONS_DASHBOARD_HOME_PAGE);
-				break;
+				return true;
 			default:
 				Reporter.addStepLog(MessageFormat.format(COREFLEXConstants.LOGIN_USER_TYPE_NOT_VALID,
 						CoreConstants.FAIL, userType));
@@ -139,12 +150,9 @@ public class TransfereeSubmissions_LoginPage extends Base {
 		} catch (Exception e) {
 			Reporter.addStepLog(MessageFormat.format(COREFLEXConstants.EXCEPTION_OCCURED_WHILE_LOGGING_TO_APPLICATION,
 					CoreConstants.FAIL, e.getMessage()));
+			return false;
 		}
-		if (isSuccessfullyLoggedIn) {
-			Reporter.addStepLog(
-					MessageFormat.format(COREFLEXConstants.SUCCESSFULLY_LOGGED_INTO_TRANSFEREE_SUBMISSIONS_APPLICATION, CoreConstants.PASS));
-		}
-		return isSuccessfullyLoggedIn;
+		
 	}
 	
 	public String getCSMUserName(TransfereeSubmissions_LoginData _transfereeSubmissionLoginData2) {

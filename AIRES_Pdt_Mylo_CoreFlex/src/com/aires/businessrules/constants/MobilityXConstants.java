@@ -265,7 +265,15 @@ public class MobilityXConstants {
 	public static final String FAILED_TO_UNDO_DELETED_BENEFIT = "{0}Failed to undo deleted benefit.";
 	public static final String FAILED_TO_VERIFY_UNDO_SUCCESS_MESSAGE = "{0}Failed to verify Undo Success Message.";
 	public static final String VIEW_PAYMENTS = "View Payments";
-	public static final String CASHOUT_SUGGESTION_TEXT_PREVIEW_TRANSFEREE = "If you do not need any additional benefits, you may cash out your remaining points by selecting the text box below to receive payment to your bank account. You'll be offered the full sum of your remaining points, but you can opt to cash out less if you want.";
+	public static final String CASHOUT_SUGGESTION_TEXT_PREVIEW_TRANSFEREE = "If you do not need any additional benefits, you may cashout your remaining points by selecting the text box below to receive payment to your bank account. You'll be offered the full sum of your remaining points, but you can opt to cashout less if you want.";
 	public static final String PLUS_BUTTON = "Plus Button";
 	public static final String BENEFIT_CASHOUT_DETAILS_NOT_MATCHED_ON_MBB_PAGE = "{0}Benefit/Cashout Details not matched on My Benefit Bundle page.";
+	public static final String SUGGESTED_OPTIONS_LINK = "Suggested Options";
+	public static final String FAILED_TO_NAVIGATE_TO_SUGGESTED_BUNDLES_PAGE = "{0}Failed to navigate to Suggested Bundles page.";
+	public static final String EXCEPTION_OCCURED_WHILE_NAVIGATING_TO_SUGGESTED_BUNDLES_PAGE = "{0}Exception occured while navigating to suggested bundles page. Exception : ''{1}''.";
+	public static final String EXCEPTION_OCCURED_WHILE_VALIDATING_SUBMISSION_SUCCESS_POPUP = "{0}Exception occured while validating submission success pop-up dialog. Exception : ''{1}''.";
+	public static final String FAILED_TO_VERIFY_SUBMITTED_BENEFITS_SUCCESS_FLEX_DIALOG = "{0}Failed to verify submitted benefits success flex dialog.";
+	public static final String EXCEPTION_OCCURED_WHILE_VALIDATING_USER_NAVIGATION_TO_MOBILITYX_JOURNEY_HOME_PAGE = "{0}Exception occured while validating user navigation to MobilityX Journey Home Page. Exception : ''{1}''.";
+	public static final String FALIED_TO_VALIDATE_USER_NAVIGATION_TO_MOBILITYX_JOURNEY_HOME_PAGE_AFTER_BENEFIT_SUBMISSION = "{0}Failed to validate user navigation to MobilityX Journey Home page after Benefit Submission.";
+	public static final String EXCEPTION_OCCURED_WHILE_VALIDATING_REQUEST_DIALOG_ON_TRANSFEREE_SUBMISSIONS_DETAILS_PAGE = "{0}Exception occured while validating Requests Dialog on Transferee Submissions Details Page. Exception : ''{1}''.";
 }

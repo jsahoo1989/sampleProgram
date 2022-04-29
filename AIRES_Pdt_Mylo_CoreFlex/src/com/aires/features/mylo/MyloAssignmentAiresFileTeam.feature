@@ -4,9 +4,9 @@ Feature: Validate the functionality of Mylo Assignment Aires File Team section
 Background: Login to  Mylo application
     Given he has logged into the 'Mylo' application
   
-@IRIS-687 @Mylo-Regression
+@IRIS-6871 @Mylo-Regression
 Scenario Outline: Mylo-Validate No Option for Replacement of Mylo Assignment Aires File Team member
-Given he is on Mylo Assignment Summary page for file ID "611072"
+Given he is on Mylo Assignment Summary page for file ID "626307"
 And he selects "<Role>" with random team member from the dropdown after clicking on "Add" button
 And row is not updated in the 'Aires File Team' section after clicking on "Cancel" button
 And he did not find the existing team member for specified "<Role>" in the dropdown section after clicking on "Add" button
@@ -22,7 +22,7 @@ Examples:
 
 @IRIS-687 @Mylo-Regression
 Scenario:  Mylo-Validate Yes Option for Replacement of Mylo Assignment Aires File Team member
-Given he is on Mylo Assignment Summary page for file ID "611073"
+Given he is on Mylo Assignment Summary page for file ID "626307"
 And he selects "Emac" as role in the dropdown section after clicking on "Add" button
 And pop up should appear with the message "A current EMAC already exists for this assignment. Do you want to replace this EMAC?" after clicking "Save" button on selecting different team member with "EMAC"
 When he clicks on "Yes" button in AiresFileTeam
@@ -38,5 +38,5 @@ When he clicks on role dropdown after clicking on "Add" button
 Then "SALES" role options availability should depends on the type of Users "<UserType>" logged in  
 Examples:
 |UserType          |
-|With Resource15   |
 |Without Resource15|
+|With Resource15   |

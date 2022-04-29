@@ -19,6 +19,7 @@ package com.aires.managers;
 
 import org.openqa.selenium.WebDriver;
 
+import com.aires.pages.mylo.MyloAssignment_TransfereeFamilyPage;
 import com.aires.pages.mylo.Mylo_AssignmentPage;
 //import com.aires.pages.mylo.Mylo_AssignmentPage;
 import com.aires.pages.mylo.Mylo_DashboardHomePage;
@@ -32,6 +33,7 @@ public class PageObjectManager_Mylo {
 	private Mylo_LoginPage _loginPage;
 	private Mylo_DashboardHomePage _dashboardHomePage;
 	private Mylo_AssignmentPage _assignmentPage; 
+	private MyloAssignment_TransfereeFamilyPage _assignmentTransfereePage;
 	private Mylo_RestApiRequest _restApiRequest;
 
 	public PageObjectManager_Mylo(WebDriver driver) {
@@ -56,5 +58,9 @@ public class PageObjectManager_Mylo {
 	 public Mylo_RestApiRequest getRestApiRequest() {
 			return (_restApiRequest == null) ? _restApiRequest = new Mylo_RestApiRequest(_driver)
 					: _restApiRequest;
+		}
+	 public MyloAssignment_TransfereeFamilyPage getAssignmentTransfereePage() {
+			return (_assignmentTransfereePage == null) ? _assignmentTransfereePage = new MyloAssignment_TransfereeFamilyPage(_driver)
+					: _assignmentTransfereePage;
 		}
 }

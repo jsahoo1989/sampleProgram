@@ -5,6 +5,7 @@ import java.util.List;
 
 import org.testng.Assert;
 
+import com.aires.businessrules.CoreFunctions;
 import com.aires.businessrules.constants.MYLOConstants;
 import com.aires.cucumber.TestContext;
 import com.aires.managers.FileReaderManager;
@@ -40,11 +41,26 @@ public class MyloAssignmentFileInformation_Steps {
 	@Given("^he views the File Information section where \"([^\"]*)\", \"([^\"]*)\", \"([^\"]*)\" are hard coded with background color \"([^\"]*)\"$")
 	public void he_views_the_File_Information_section_where_are_hard_coded_with_background_color(String fieldName1, String fieldName2, String fieldName3, String colorCode) {
 		MYLOConstants.TIME_BEFORE_ACTION = new Date().getTime();
+		String environment=CoreFunctions.getPropertyFromConfig("envt");
+		String fileID = null,clientID = null,clientName = null,policyType = null;
+		if(environment.equals(MYLOConstants.UAT)) {
+			clientID = assignmentDetails.activeAssignment.clientID;
+			clientName=assignmentDetails.activeAssignment.clientName;
+			policyType=assignmentDetails.activeAssignment.policyType;
+			fileID=assignmentDetails.activeAssignment.fileID;
+		}	
+		else if(environment.equals(MYLOConstants.RELONETQA4)) {
+			clientID = assignmentDetails.activeAssignment_relonetqa4.clientID;
+			clientName=assignmentDetails.activeAssignment_relonetqa4.clientName;
+			policyType=assignmentDetails.activeAssignment_relonetqa4.policyType;
+			fileID=assignmentDetails.activeAssignment_relonetqa4.fileID;
+		}
+		
 		Assert.assertTrue(
-				myloAssignmentPage.verifyFileInfoDisplayedFields(MYLOConstants.FILE_ID_DATA_UPDATION,
-						assignmentDetails.activeAssignment.clientID + "-"
-								+ assignmentDetails.activeAssignment.clientName,
-						assignmentDetails.activeAssignment.policyType),
+				myloAssignmentPage.verifyFileInfoDisplayedFields(fileID,
+						clientID + "-"
+								+ clientName,
+								policyType),
 				MYLOConstants.INCORRECT_FIELD_VALUES_IN_FILEINFO);
 		Assert.assertTrue(myloAssignmentPage.verifyElementCSSValue(fieldName1, "background-color", colorCode));
 		Assert.assertTrue(myloAssignmentPage.verifyElementCSSValue(fieldName2, "background-color", colorCode));
@@ -101,8 +117,8 @@ public class MyloAssignmentFileInformation_Steps {
 				MYLOConstants.ADDITIONAL_FIELDS_FILEINFO_NOT_DISPLAYED);
 		myloAssignmentPage.clickButtonOnAiresFileInformationSection(buttonName);
 		myloAssignmentPage.updateFileInfoFields(MYLOConstants.POLICY_TYPE, MYLOConstants.RANDOM);
-		myloAssignmentPage.updateFileInfoFields(MYLOConstants.JOURNEY_TYPE, MYLOConstants.RANDOM);
-		myloAssignmentPage.updateFileInfoFields(MYLOConstants.HOMESTATUS, MYLOConstants.OTHER);
+		myloAssignmentPage.updateFileInfoFields(MYLOConstants.JOURNEY_TYPE, MYLOConstants.JOURNEY_TYPE2_VALUE);
+		myloAssignmentPage.updateFileInfoFields(MYLOConstants.HOMESTATUS, MYLOConstants.HOMESTATUS2_VALUE);
 		myloAssignmentPage.clickCheckBoxOnAiresFileInfoSection(MYLOConstants.INHERITED_FILE);
 		MYLOConstants.TIME_AFTER_ACTION = new Date().getTime();
 		Reporter.addStepLog("<b>Total time taken by <i>'When'</i> statement is :"
@@ -141,12 +157,13 @@ public class MyloAssignmentFileInformation_Steps {
 	public void he_is_on_Mylo_Assignment_Summary_page_for_file_ID_with(String fileType) {
 		MYLOConstants.TIME_BEFORE_ACTION = new Date().getTime();
 		String fileId = myloAssignmentPage.getFileDetailsDataByFieldAndStatus(fileType, MYLOConstants.FILE_ID);
-		myloDashboardPage.clickOptionFromMainMenu(MYLOConstants.ASSIGNMENT);
+		myloDashboardPage.clickOptionFromMainMenu(MYLOConstants.JOURNEY);
+		myloDashboardPage.selectOptionsFromAssignmentMenu(MYLOConstants.QUERY_FILE);
 		myloDashboardPage.selectParameterFromQueryScreen(MYLOConstants.FILE);
 		myloDashboardPage.selectOptionsForFileParameters(MYLOConstants.FILE_ID, fileId);
 		myloDashboardPage.clickExecuteButton();
-		Assert.assertTrue(myloAssignmentPage.verifyActiveTab(MYLOConstants.SUMMARY),
-				MYLOConstants.SUMMARY + MYLOConstants.TAB_NOT_ACTIVE);
+		//Assert.assertTrue(myloAssignmentPage.verifyActiveTab(MYLOConstants.SUMMARY),
+			//	MYLOConstants.SUMMARY + MYLOConstants.TAB_NOT_ACTIVE);
 		MYLOConstants.TIME_AFTER_ACTION = new Date().getTime();
 		Reporter.addStepLog("<b>Total time taken by <i>'When'</i> statement is :"
 				+ (MYLOConstants.TIME_AFTER_ACTION - MYLOConstants.TIME_BEFORE_ACTION) / 1000 + " Seconds </b>");
@@ -229,8 +246,8 @@ public class MyloAssignmentFileInformation_Steps {
 	public void a_warning_message_displayed_after_he_selects_check_box(String msg, String checkBoxName) {
 		MYLOConstants.TIME_BEFORE_ACTION = new Date().getTime();
 		myloAssignmentPage.clickCheckBoxOnAiresFileInfoSection(checkBoxName);
-		Assert.assertTrue(myloAssignmentPage.verifyPopUpMessage(msg));
-		myloAssignmentPage.clickButtonOnAiresFileInformationSection(MYLOConstants.OK_BUTTON);
+		Assert.assertTrue(myloAssignmentPage.verifyAlertMessage(msg));
+		//myloAssignmentPage.clickButtonOnAiresFileInformationSection(MYLOConstants.OK_BUTTON);
 		Assert.assertTrue(myloAssignmentPage.verifyFileInfoCheckboxSelected(checkBoxName));
 		MYLOConstants.TIME_AFTER_ACTION = new Date().getTime();
 		Reporter.addStepLog("<b>Total time taken by <i>'When'</i> statement is :"

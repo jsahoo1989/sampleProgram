@@ -29,7 +29,7 @@ public class CoreConstants {
 	public static final String TXT_ACTUAL = "Actual Text : ";
 	public static final String TXT_EXPECTED = "Expected Text : ";
 	public static final String ALPHABET = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ";
-	public static final String SPECIAL_CHARACTERS = "^^\\\\<>";
+	public static final String SPECIAL_CHARACTERS = "^^<>";
 	public static final String JSON_FILE_NOT_FOUND_AT_PATH = "Json file not found at path : ";
 	public static final String TAG_VALUE = "@Pre-Prod";
 	public static final String VALUE = "value";
@@ -72,4 +72,5 @@ public class CoreConstants {
 	public static final String ENVT_TEST = "test";
 	public static final String ENVT_PROD = "prod";
 	public static final String INVALID_ENVIRONMENT = "Invalid Environment:-''{1}''";
+	public static final String SQL_QUERY_FAILED = "SQL Query Failed";
 }

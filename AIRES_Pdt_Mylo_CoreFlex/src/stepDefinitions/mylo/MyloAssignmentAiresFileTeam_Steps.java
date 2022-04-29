@@ -50,8 +50,8 @@ public class MyloAssignmentAiresFileTeam_Steps {
 		myloDashboardPage.selectOptionsForFileParameters(MYLOConstants.FILE_ID, fileID);
 		Reporter.addStepLog(MessageFormat.format(MYLOConstants.FILE_ID_ENTERED, CoreConstants.PASS, fileID));
 		myloDashboardPage.clickExecuteButton();
-		Assert.assertTrue(myloAssignmentPage.verifyActiveTab(MYLOConstants.SUMMARY),
-				MYLOConstants.SUMMARY + MYLOConstants.TAB_NOT_ACTIVE);
+		//Assert.assertTrue(myloAssignmentPage.verifyActiveTab(MYLOConstants.SUMMARY),
+			//	MYLOConstants.SUMMARY + MYLOConstants.TAB_NOT_ACTIVE);
 		MYLOConstants.TIME_AFTER_ACTION = new Date().getTime();
 		Reporter.addStepLog("<b>Total time taken by <i>'Given'</i> statement is :"
 				+ (MYLOConstants.TIME_AFTER_ACTION - MYLOConstants.TIME_BEFORE_ACTION) / 1000 + " Seconds </b>");
@@ -60,8 +60,8 @@ public class MyloAssignmentAiresFileTeam_Steps {
 	@Given("^he selects \"([^\"]*)\" with random team member from the dropdown after clicking on \"([^\"]*)\" button$")
 	public void he_selects_with_random_team_member_from_the_dropdown_after_clicking_on_button(String roleName,
 			String buttonName) {
-		Assert.assertTrue(myloAssignmentPage.verifyActiveTab(MYLOConstants.SUMMARY),
-				MYLOConstants.SUMMARY + MYLOConstants.TAB_NOT_ACTIVE);
+		//Assert.assertTrue(myloAssignmentPage.verifyActiveTab(MYLOConstants.SUMMARY),
+			//	MYLOConstants.SUMMARY + MYLOConstants.TAB_NOT_ACTIVE);
 		myloAssignmentPage.clickButtonOnAiresFileTeamSection(buttonName);
 		myloAssignmentPage.addRole(roleName);
 		myloAssignmentPage.addTeamMember(MYLOConstants.RANDOM);
@@ -123,7 +123,7 @@ public class MyloAssignmentAiresFileTeam_Steps {
 	@Given("^he has logged into the Mylo application with mentioned userType \"([^\"]*)\"$")
 	public void he_has_logged_into_the_Mylo_application_with_mentioned_userType(String userType)
 			throws InterruptedException {
-		//Assert.assertTrue(myloDashboardPage.verifyUserName(loginData.MyloProfileName));
+		myloDashboardPage.verifyUserName(loginData.MyloProfileName);
 		loginPage.loginWithUser(userType);
 		//Assert.assertTrue(myloDashboardPage.verifyUserName(loginData.MyloProfileName));
 	}

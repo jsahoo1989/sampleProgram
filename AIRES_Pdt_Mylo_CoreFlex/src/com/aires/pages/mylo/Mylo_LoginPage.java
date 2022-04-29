@@ -83,7 +83,8 @@ public class Mylo_LoginPage extends Base {
 		CoreFunctions.switchToParentWindow(driver);
 		CoreFunctions.explicitWaitTillElementInVisibilityCustomTime(driver, _spinner, 10);
 		while(!(CoreFunctions.isElementExist(driver, _userProfile, 6))) {
-			CoreFunctions.clickElement(driver, CoreFunctions.getElementByLocator(driver, _loginImg));
+			//CoreFunctions.clickElement(driver, CoreFunctions.getElementByLocator(driver, _loginImg));
+			CoreFunctions.hoverAndClick(driver, CoreFunctions.getElementByLocator(driver, _loginImg));
 		}	
 		CoreFunctions.explicitWaitTillElementInVisibilityCustomTime(driver, _spinner, 10);
 		CoreFunctions.highlightObject(driver, _userProfile);
@@ -103,7 +104,7 @@ public class Mylo_LoginPage extends Base {
 	}
 	
 	public void logout() {
-		CoreFunctions.explicitWaitTillElementVisibility(driver, _userProfileImg, MYLOConstants.USER_PROFILE_IMAGE);
+		CoreFunctions.explicitWaitTillElementVisibility(driver, _userProfileImg, MYLOConstants.USER_PROFILE_IMAGE,15);
 		CoreFunctions.click(driver, _userProfileImg, MYLOConstants.USER_PROFILE_IMAGE);
 		CoreFunctions.explicitWaitTillElementVisibility(driver, _logoutUserImg, _logoutUserImg.getText());
 		CoreFunctions.click(driver, _logoutUserImg, MYLOConstants.LOGOUT_IMAGE);

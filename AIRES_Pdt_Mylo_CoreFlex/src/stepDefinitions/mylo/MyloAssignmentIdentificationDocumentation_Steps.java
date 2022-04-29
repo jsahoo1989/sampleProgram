@@ -50,7 +50,7 @@ public class MyloAssignmentIdentificationDocumentation_Steps {
 		myloDashboardPage.selectOptionsForFileParameters(MYLOConstants.FILE_ID, fileID);
 		Reporter.addStepLog(MessageFormat.format(MYLOConstants.FILE_ID_ENTERED, CoreConstants.PASS, fileID));
 		myloDashboardPage.clickExecuteButton();
-		myloAssignmentPage.verifyActiveTab(MYLOConstants.SUMMARY);
+		//myloAssignmentPage.verifyActiveTab(MYLOConstants.SUMMARY);
 		MYLOConstants.TIME_AFTER_ACTION = new Date().getTime();
 		Reporter.addStepLog("<b>Total time taken by <i>'Given'</i> statement is :"
 				+ (MYLOConstants.TIME_AFTER_ACTION - MYLOConstants.TIME_BEFORE_ACTION) / 1000 + " Seconds </b>");
@@ -77,7 +77,7 @@ public class MyloAssignmentIdentificationDocumentation_Steps {
 		myloDashboardPage.selectOptionsForFileParameters(MYLOConstants.FILE_ID, fileID);
 		Reporter.addStepLog(MessageFormat.format(MYLOConstants.FILE_ID_ENTERED, CoreConstants.PASS, fileID));
 		myloDashboardPage.clickExecuteButton();
-		myloAssignmentPage.verifyActiveTab(MYLOConstants.SUMMARY);
+		//myloAssignmentPage.verifyActiveTab(MYLOConstants.SUMMARY);
 		myloAssignmentPage.highlightSectionHeader(MYLOConstants.IDENTIFICATION_AND_DOCUMENTATION);
 		MYLOConstants.TIME_AFTER_ACTION = new Date().getTime();
 		Reporter.addStepLog("<b>Total time taken by <i>'When'</i> statement is :"
@@ -104,7 +104,7 @@ public class MyloAssignmentIdentificationDocumentation_Steps {
 		myloDashboardPage.selectOptionsForFileParameters(MYLOConstants.FILE_ID, fileID);
 		Reporter.addStepLog(MessageFormat.format(MYLOConstants.FILE_ID_ENTERED, CoreConstants.PASS, fileID));
 		myloDashboardPage.clickExecuteButton();
-		myloAssignmentPage.verifyActiveTab(MYLOConstants.SUMMARY);
+		//myloAssignmentPage.verifyActiveTab(MYLOConstants.SUMMARY);
 		MYLOConstants.TIME_AFTER_ACTION = new Date().getTime();
 		Reporter.addStepLog("<b>Total time taken by <i>'Given'</i> statement is :"
 				+ (MYLOConstants.TIME_AFTER_ACTION - MYLOConstants.TIME_BEFORE_ACTION) / 1000 + " Seconds </b>");
@@ -186,7 +186,7 @@ public class MyloAssignmentIdentificationDocumentation_Steps {
 	@Then("^identification record should not get updated as well as data should get reset to the initial values\\.$")
 	public void identification_record_should_not_get_updated_as_well_as_data_should_get_reset_to_the_initial_values() {
 		MYLOConstants.TIME_BEFORE_ACTION = new Date().getTime();
-		Assert.assertTrue(myloAssignmentPage.verifyActiveTab(MYLOConstants.SUMMARY));
+		//Assert.assertTrue(myloAssignmentPage.verifyActiveTab(MYLOConstants.SUMMARY));
 		myloAssignmentPage.highlightSectionHeader(MYLOConstants.IDENTIFICATION_AND_DOCUMENTATION);
 		myloAssignmentPage.clickButtonOnIentificationAndDocumentationSection(MYLOConstants.ADD_BUTTON);
 		Assert.assertTrue(myloAssignmentPage.verifyMandatoryFieldInitialValuesIdentificationAndDocumentationSection(0));
@@ -206,7 +206,7 @@ public class MyloAssignmentIdentificationDocumentation_Steps {
 		myloDashboardPage.selectOptionsForFileParameters(MYLOConstants.FILE_ID, fileID);
 		Reporter.addStepLog(MessageFormat.format(MYLOConstants.FILE_ID_ENTERED, CoreConstants.PASS, fileID));
 		myloDashboardPage.clickExecuteButton();
-		myloAssignmentPage.verifyActiveTab(MYLOConstants.SUMMARY);
+		//myloAssignmentPage.verifyActiveTab(MYLOConstants.SUMMARY);
 		myloAssignmentPage.highlightSectionHeader(MYLOConstants.IDENTIFICATION_AND_DOCUMENTATION);
 		Assert.assertFalse(myloAssignmentPage.verifyIdentDocButtonDisplayed(button2));
 		MYLOConstants.TIME_AFTER_ACTION = new Date().getTime();
@@ -226,7 +226,7 @@ public class MyloAssignmentIdentificationDocumentation_Steps {
 		myloDashboardPage.selectOptionsForFileParameters(MYLOConstants.FILE_ID, fileID);
 		Reporter.addStepLog(MessageFormat.format(MYLOConstants.FILE_ID_ENTERED, CoreConstants.PASS, fileID));
 		myloDashboardPage.clickExecuteButton();
-		myloAssignmentPage.verifyActiveTab(MYLOConstants.SUMMARY);
+	//	myloAssignmentPage.verifyActiveTab(MYLOConstants.SUMMARY);
 		myloAssignmentPage.highlightSectionHeader(MYLOConstants.IDENTIFICATION_AND_DOCUMENTATION);
 		MYLOConstants.TIME_AFTER_ACTION = new Date().getTime();
 		Reporter.addStepLog("<b>Total time taken by <i>'When'</i> statement is :"
@@ -323,7 +323,7 @@ public class MyloAssignmentIdentificationDocumentation_Steps {
 		myloAssignmentPage.highlightSectionHeader(section);
 		myloAssignmentPage.clickButtonOnIentificationAndDocumentationSection(buttonName);
 		myloAssignmentPage.clickElementOnIdentificationAndDocumentationSection(fieldName, 0);
-		//Assert.assertTrue(myloAssignmentPage.verifyIdentityTypeValuesList());
+		Assert.assertTrue(myloAssignmentPage.verifyIdentityTypeValuesListFromDB());
 		MYLOConstants.TIME_AFTER_ACTION = new Date().getTime();
 		Reporter.addStepLog("<b>Total time taken by <i>'And'</i> statement is :"
 				+ (MYLOConstants.TIME_AFTER_ACTION - MYLOConstants.TIME_BEFORE_ACTION) / 1000 + " Seconds </b>");
@@ -343,7 +343,7 @@ public class MyloAssignmentIdentificationDocumentation_Steps {
 			String countryName) {
 		MYLOConstants.TIME_BEFORE_ACTION = new Date().getTime();
 		Assert.assertTrue(myloAssignmentPage.verifyFirstCountry(countryName),
-				CoreConstants.FAILED_TO_VERFY + countryName + MYLOConstants.AS_FIRST_COUNTRY);
+			CoreConstants.FAILED_TO_VERFY + countryName + MYLOConstants.AS_FIRST_COUNTRY);
 		Reporter.addStepLog(MessageFormat.format(MYLOConstants.VERIFIED_COUNTRY_PRESENT, CoreConstants.PASS,
 				MYLOConstants.USA_STATE, MYLOConstants.COUNTRY_DROPDOWN,
 				MYLOConstants.IDENTIFICATION_AND_DOCUMENTATION));

@@ -47,7 +47,7 @@ public class MyloAssignmentOtherAddresses_Steps {
 		myloDashboardPage.selectParameterFromQueryScreen(MYLOConstants.FILE);
 		myloDashboardPage.selectOptionsForFileParameters(MYLOConstants.FILE_ID, fileID);
 		myloDashboardPage.clickExecuteButton();
-		myloAssignmentPage.verifyActiveTab(MYLOConstants.SUMMARY);
+		//myloAssignmentPage.verifyActiveTab(MYLOConstants.SUMMARY);
 		myloAssignmentPage.clickElementOnOtherAddressesSection(sectionType);
 		MYLOConstants.TIME_AFTER_ACTION = new Date().getTime();
 		Reporter.addStepLog("<b>Total time taken by <i>'Given'</i> statement is :"
@@ -202,7 +202,7 @@ public class MyloAssignmentOtherAddresses_Steps {
 		myloDashboardPage.selectParameterFromQueryScreen(MYLOConstants.FILE);
 		myloDashboardPage.selectOptionsForFileParameters(MYLOConstants.FILE_ID, fileID);
 		myloDashboardPage.clickExecuteButton();
-		myloAssignmentPage.verifyActiveTab(MYLOConstants.SUMMARY);
+		//myloAssignmentPage.verifyActiveTab(MYLOConstants.SUMMARY);
 		myloAssignmentPage.clickElementOnOtherAddressesSection(sectionType);
 		myloAssignmentPage.setFieldValueOtherAddressSection(table);
 		myloAssignmentPage.clickElementOnOtherAddressesSection(MYLOConstants.SAVE_BUTTON);

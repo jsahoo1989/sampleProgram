@@ -531,6 +531,8 @@ public class CoreFunctions {
 		LinkedHashMap<String, String> mp = new LinkedHashMap<String, String>();
 		try {
 			for (int i = 0; i < roleNames.size(); i++) {
+				if(mp.containsKey(roleNames.get(i).getAttribute(CoreConstants.VALUE)))
+					continue;
 				mp.put(roleNames.get(i).getAttribute(CoreConstants.VALUE),
 						memberNames.get(i).getAttribute(CoreConstants.VALUE));
 			}
@@ -1699,7 +1701,27 @@ public class CoreFunctions {
 			Log.info("Fail:Could not find: " + name);
 			Assert.fail(MessageFormat.format(CoreConstants.FAIL_TO_VERIFY_ELEMENT_ON_PAGE, Element));
 		}
-
+	}
+	
+	public static String setDifferentFieldsForMylo(WebDriver driver,WebElement element, String fieldName, String fieldValue) {
+		String updatedValue;
+		try {
+			updatedValue = generateRandomCharOfLength(Integer.parseInt(fieldValue),
+					MYLOConstants.ONLY_CHARACTERS, 0);
+		} catch (NumberFormatException e) {
+			updatedValue = (fieldValue.equals(MYLOConstants.SPECIAL_CHARACTERS_STRING))
+					? generateRandomCharOfLength(4, MYLOConstants.SPECIAL_CHARACTERS_STRING, 2)
+					: (fieldValue.equals(""))?setBlankField(driver,element):fieldValue;
+		}
+		clearAndSetText(driver, element, updatedValue);
+		return updatedValue;
+	}
+	
+	public static String setBlankField(WebDriver driver,WebElement element) {
+			clickElement(driver, element);
+			element.sendKeys(Keys.chord(Keys.CONTROL, "a"));
+			element.sendKeys(Keys.BACK_SPACE);
+			return MYLOConstants.BLANK;
 	}
 
 }

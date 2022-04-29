@@ -7,7 +7,7 @@ Background: Login to  Mylo application
 @IRIS-731 @Mylo-Regression
 Scenario Outline:  Mylo-Validate Edit Option availability and additional fields displayed for Mylo Assignment File Information section with different UserTypes
 Given he has logged into the Mylo application with mentioned userType "<UserType>" 
-And he is on Mylo Assignment Summary page for file ID "611072" 
+And he is on Mylo Assignment Summary page for file ID with "Active Assignment" 
 And he views the File Information section where "File ID", "Client ID", "Policy Type" are hard coded with background color "rgba(211, 191, 250, 1)"
 When he clicks on the button "Details Carrot" under the file information section
 Then the file information should expand to display additional fields
@@ -39,7 +39,7 @@ Then "Status" of the file should be "<FileStatus>"
 And "Edit" button will be disabled for both CLSD and CNCD status
 Examples:
 |FileStatus|
-|Closed    |
+#|Closed    |
 |Canceled  |
 
 @IRIS-731 @Mylo-Regression
@@ -49,8 +49,8 @@ When he clicks on "Edit" button after he clicks on the "Details Carrot" under fi
 Then "<FieldName>" dropdown should display as read only for "<FileType>"
 Examples:
 |FieldName  |FileType          |
-|Policy Type|AffinityEnabled   |
-|Policy Type|NotAffinityEnabled|
+#|Policy Type|AffinityEnabled   |
+#|Policy Type|NotAffinityEnabled|
 |Office     |AIRESSH           |
 |Office     |NOTAIRESSH        |
 
@@ -73,7 +73,7 @@ Then a warning message should display as "The office on file does not match the 
 
 @IRIS-776 @Mylo-Regression
 Scenario:  Mylo-Validate warning message for confidential checkbox selection and automatic selection/deselection for evip and vip checkbox in Mylo Assignment File Information section
-Given he is on Mylo Assignment Summary page for file ID "611072"
+Given he is on Mylo Assignment Summary page for file ID with "Active Assignment"
 And he clicks on "Edit" button after he clicks on the "Details Carrot" under file information
 And a warning message "By checking this box, this transferee will not be included in any reports (with the exception of billing/payroll reports)." displayed after he selects "confidential" check box
 When he selects "evip" checkbox under file information

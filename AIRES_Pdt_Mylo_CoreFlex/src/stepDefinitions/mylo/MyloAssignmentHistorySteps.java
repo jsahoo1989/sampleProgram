@@ -40,7 +40,7 @@ public class MyloAssignmentHistorySteps {
 	@When("^he queries another file for file ID \"([^\"]*)\"$")
 	public void he_queries_another_file_for_file_ID(String fileID) {
 		MYLOConstants.TIME_BEFORE_ACTION = new Date().getTime();
-		myloDashboardPage.clickOptionFromMainMenu(MYLOConstants.ASSIGNMENT);
+		myloDashboardPage.clickOptionFromMainMenu(MYLOConstants.JOURNEY);
 		myloDashboardPage.selectOptionsFromAssignmentMenu(MYLOConstants.QUERY_FILE);
 		myloDashboardPage.selectParameterFromQueryScreen(MYLOConstants.FILE);
 		myloDashboardPage.selectOptionsForFileParameters(MYLOConstants.FILE_ID, fileID);
@@ -133,7 +133,7 @@ public class MyloAssignmentHistorySteps {
 		loginPage.loginWithUser(MYLOConstants.USER_WITH_RESOURCE15);
 		String fileId = myloAssignmentPage.getFileDetailsDataByFieldAndStatus("Active Assignment",
 				MYLOConstants.FILE_ID);
-		myloDashboardPage.clickOptionFromMainMenu(MYLOConstants.ASSIGNMENT);
+		myloDashboardPage.clickOptionFromMainMenu(MYLOConstants.JOURNEY);
 		myloDashboardPage.selectOptionsFromAssignmentMenu(MYLOConstants.QUERY_FILE);
 		myloDashboardPage.selectParameterFromQueryScreen(MYLOConstants.FILE);
 		myloDashboardPage.selectOptionsForFileParameters(MYLOConstants.FILE_ID, fileId);

@@ -8,5 +8,5 @@ Feature: Login to Mylo Application
     When he clicks on Sign in button
     Then he should successfuly redirected onto the Dashboard home page of Mylo Application with "<userName>" getting displayed
     Examples: 
-      | userEmail                | password            | userName |
-      | mxssodev5@corp.aires.com | AiresDevSSOTest$    |  mxsso!  |
+      | userEmail                | password            | userName   |
+      | mxssodev5@corp.aires.com |  F74#jd*187_NB      |  mxsso!    |

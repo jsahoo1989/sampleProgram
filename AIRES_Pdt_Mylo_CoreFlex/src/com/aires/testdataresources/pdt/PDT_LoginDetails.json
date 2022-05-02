@@ -75,12 +75,13 @@
 			"irisPassword": "fndevvk",
 			"irisDatabase": "FnDEV",
 			"irisBuildPath": "\\\\corpprdvw589\\rdev\\IRIS_Builds\\IRIS_FnDEV_CORE_FLEX\\IRIS.exe",
-			"firstName": "Chere",
-			"lastName": "kitts",
+			"firstName": "Vladimir",
+			"lastName": "Kaminsky",
 			"clientId": "7403",
 			"clientName": "Dow Chemical Company (Global)",
-			"csmUserName": "AKARNS",
-			"csmPassword": "AKARNS",
+			"csmUserName": "mxssodev5@corp.aires.com",
+			"csmPassword": "F74#jd*187_NB",
+			"csmUserFirstName":"MXSSO DEV5",
 			"policy": "hDCC Repatriation (# 14724)"
 		},
 		"dev": {
@@ -92,8 +93,9 @@
 			"lastName": "kitts",
 			"clientId": "7403",
 			"clientName": "Dow Chemical Company (Global)",
-			"csmUserName": "AKARNS",
-			"csmPassword": "AKARNS",
+			"csmUserName": "mxssodev5@corp.aires.com",
+			"csmPassword": "F74#jd*187_NB",
+			"csmUserFirstName":"MXSSO DEV5",
 			"policy": "hDCC Repatriation (# 14724)"
 		},
 		"prod": {
@@ -105,8 +107,9 @@
 			"lastName": "kitts",
 			"clientId": "7403",
 			"clientName": "Dow Chemical Company (Global)",
-			"csmUserName": "AKARNS",
-			"csmPassword": "AKARNS",
+			"csmUserName": "mxssodev5@corp.aires.com",
+			"csmPassword": "F74#jd*187_NB",
+			"csmUserFirstName":"MXSSO DEV5",
 			"policy": "hDCC Repatriation (# 14724)"
 		},
 		"preProd": {
@@ -118,21 +121,23 @@
 			"lastName": "kitts",
 			"clientId": "7403",
 			"clientName": "Dow Chemical Company (Global)",
-			"csmUserName": "AKARNS",
-			"csmPassword": "AKARNS",
+			"csmUserName": "mxssodev5@corp.aires.com",
+			"csmPassword": "F74#jd*187_NB",
+			"csmUserFirstName":"MXSSO DEV5",
 			"policy": "hDCC Repatriation (# 14724)"
 		},
 		"uat": {
 			"irisUserName": "vkamins",
-			"irisPassword": "fndevvk",
-			"irisDatabase": "FnDEV",
-			"irisBuildPath": "\\\\corpprdvw589\\rdev\\IRIS_Builds\\IRIS_FnDEV_CORE_FLEX\\IRIS.exe",
-			"firstName": "Chere",
-			"lastName": "kitts",
+			"irisPassword": "uatvk",
+			"irisDatabase": "UAT",
+			"irisBuildPath": "\\\\corpprdvw589\\rdev\\IRIS_Builds\\IRIS_CoreFleX_UAT\\IRIS.exe",
+			"firstName": "Vladimir",
+			"lastName": "Kaminsky",
 			"clientId": "7403",
 			"clientName": "Dow Chemical Company (Global)",
-			"csmUserName": "AKARNS",
-			"csmPassword": "AKARNS",
+			"csmUserName": "mxssodev5@corp.aires.com",
+			"csmPassword": "F74#jd*187_NB",
+			"csmUserFirstName":"MXSSO DEV5",
 			"policy": "hDCC Repatriation (# 14724)"
 		}
 	}

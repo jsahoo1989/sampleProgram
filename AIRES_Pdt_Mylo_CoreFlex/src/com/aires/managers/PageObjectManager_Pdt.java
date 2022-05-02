@@ -19,6 +19,7 @@ package com.aires.managers;
 
 import org.openqa.selenium.WebDriver;
 
+import com.aires.pages.coreflex.CoreFlex_BluePrint_LoginPage;
 import com.aires.pages.pdt.PDT_AddNewPolicyPage;
 import com.aires.pages.pdt.PDT_AssignmentHousingPage;
 import com.aires.pages.pdt.PDT_CompensationServicesPage;
@@ -63,6 +64,7 @@ public class PageObjectManager_Pdt {
 	private PDT_CompensationServicesPage _compensationServicesPage;
 	private PDT_DuplicateHousingPage _duplicateHousingPage;
 	private PDT_OneTimePaymentReimbursemenPage _oneTimePaymentPage;
+	private CoreFlex_BluePrint_LoginPage _bluePrintCFLoginPage;
 	
 	public PageObjectManager_Pdt(WebDriver driver) {
 		this._driver = driver;
@@ -146,5 +148,9 @@ public class PageObjectManager_Pdt {
 	
 	public PDT_OneTimePaymentReimbursemenPage getOneTimePaymentPage() {
 		return (_oneTimePaymentPage == null ) ? _oneTimePaymentPage = new PDT_OneTimePaymentReimbursemenPage(_driver) : _oneTimePaymentPage;
+	}
+	
+	public CoreFlex_BluePrint_LoginPage getBluePrintCoreFlexLoginPage() {
+		return (_bluePrintCFLoginPage == null ) ? _bluePrintCFLoginPage = new CoreFlex_BluePrint_LoginPage(_driver) : _bluePrintCFLoginPage;
 	}
 }

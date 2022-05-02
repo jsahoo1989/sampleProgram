@@ -28,6 +28,7 @@ import org.testng.Assert;
 import com.aires.businessrules.CoreFunctions;
 import com.aires.businessrules.constants.PDTConstants;
 import com.aires.businessrules.constants.CoreConstants;
+import com.aires.businessrules.constants.MobilityXConstants;
 import com.vimalselvam.cucumber.listener.Reporter;
 
 public class EmailUtil {
@@ -216,7 +217,7 @@ public class EmailUtil {
 						try {
 							Thread.sleep(1000);
 						} catch (InterruptedException e1) {
-							
+
 							e1.printStackTrace();
 						}
 					}
@@ -229,10 +230,10 @@ public class EmailUtil {
 			}
 
 		} catch (NoSuchProviderException e) {
-			
+
 			e.printStackTrace();
 		} catch (MessagingException e) {
-			
+
 			e.printStackTrace();
 		}
 		return path1;
@@ -281,12 +282,24 @@ public class EmailUtil {
 			_searchTag[1] = "</b></font>";
 			break;
 		case PDTConstants.TRANSFEREE_USER_NAME:
-			_searchTag[0] = "<strong>Username</strong>";
-			_searchTag[1] = "</p>";
+			_searchTag[0] = "<strong>Username</strong>\r\n\t\t\t\t\t\t\t\t\t\t:";
+			_searchTag[1] = "</span>\r\n</p>";
 			break;
 		case PDTConstants.TRANSFEREE_PASSWORD:
 			_searchTag[0] = "</span></b><span style=\"font-family:century gothic, Helvetica, Calibri, Roboto;\">";
-			_searchTag[1] = "</span>";
+			_searchTag[1] = "</span>\r\n</p>";
+			break;
+		case MobilityXConstants.FLEX_BENEFIT_SUBMISSION:
+			_searchTag[0] = "journey!<br><br>\r\n<p>";
+			_searchTag[1] = "<br><br>\r\n\r\nYour Aires";
+			break;
+		case MobilityXConstants.DELETE_REQUEST_APPROVED:
+			_searchTag[0] = "Hello";
+			_searchTag[1] = "Please use the link below to login";
+			break;
+		case MobilityXConstants.DELETE_REQUEST_DENIED:
+			_searchTag[0] = "Hello";
+			_searchTag[1] = "using the link below to log";
 			break;
 		default:
 			Assert.fail("Information not found");
@@ -337,8 +350,6 @@ public class EmailUtil {
 					Log.info("searchTag[0]==" + _searchTag[0]);
 					Log.info("searchTag[1]==" + _searchTag[1]);
 					searchText = StringUtils.substringBetween(messageText, _searchTag[0], _searchTag[1]);
-					// searchText = StringUtils.substringBetween(messageText, "href=\"", "\"><font
-					// color");
 					break;
 				}
 			}
@@ -391,8 +402,8 @@ public class EmailUtil {
 					Thread.sleep(2000);
 					count = count + 1;
 					if (count == 30) {
-						Reporter.addStepLog(MessageFormat.format(
-								PDTConstants.VEIRFY_CONTIRBUTOR_NOT_RECEIVED_NOTIFICATION, CoreConstants.FAIL));
+						Reporter.addStepLog(MessageFormat
+								.format(PDTConstants.VEIRFY_CONTIRBUTOR_NOT_RECEIVED_NOTIFICATION, CoreConstants.FAIL));
 						Assert.fail("Unable to find email within 1 minute");
 					}
 				}

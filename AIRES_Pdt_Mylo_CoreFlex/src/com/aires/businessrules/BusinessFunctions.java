@@ -48,8 +48,9 @@ import org.openqa.selenium.WebElement;
 import org.openqa.selenium.interactions.Actions;
 import org.openqa.selenium.support.ui.Select;
 import org.testng.Assert;
-
+import com.aires.businessrules.constants.COREFLEXConstants;
 import com.aires.businessrules.constants.CoreConstants;
+import com.aires.businessrules.constants.MobilityXConstants;
 import com.aires.businessrules.constants.PDTConstants;
 import com.aires.pages.pdt.PDT_AddNewPolicyPage;
 import com.aires.testdatatypes.pdt.PDT_LoginDetails;
@@ -86,6 +87,7 @@ public class BusinessFunctions {
 			Log.info(CoreConstants.ACTUAL_ITEM_NAME_IS + row.getText());
 			if (row.getText().equals(itemName)) {
 				CoreFunctions.clickUsingJS(driver, row, itemName);
+				Reporter.addStepLog(CoreConstants.PASS + row.getText() + PDTConstants.IS_CLICKED);
 				break;
 			}
 		}
@@ -521,8 +523,9 @@ public class BusinessFunctions {
 		try {
 			for (WebElement row : WebElementList) {
 				Log.info(CoreConstants.ACTUAL_ITEM_NAME_IS + row.getText());
-				if (row.getText().equals(itemName))
+				if (row.getText().equals(itemName)) {
 					return WebElementList.indexOf(row);
+				}
 			}
 		} catch (ElementNotFoundException e) {
 			e.printStackTrace();
@@ -703,27 +706,32 @@ public class BusinessFunctions {
 	}
 
 	public static String[] getCSMCredentials(PDT_LoginDetails _loginDetailsApplication) {
-		String csmCredentials[] = new String[2];
+		String csmCredentials[] = new String[3];
 		switch (CoreFunctions.getPropertyFromConfig("envt").toLowerCase()) {
 		case CoreConstants.ENVT_DEV:
 			csmCredentials[0] = _loginDetailsApplication.dev.csmUserName;
 			csmCredentials[1] = _loginDetailsApplication.dev.csmPassword;
+			csmCredentials[2] = _loginDetailsApplication.dev.csmUserFirstName;
 			break;
 		case CoreConstants.ENVT_QA:
 			csmCredentials[0] = _loginDetailsApplication.qa.csmUserName;
 			csmCredentials[1] = _loginDetailsApplication.qa.csmPassword;
+			csmCredentials[2] = _loginDetailsApplication.qa.csmUserFirstName;
 			break;
 		case CoreConstants.ENVT_TEST:
 			csmCredentials[0] = _loginDetailsApplication.preProd.csmUserName;
 			csmCredentials[1] = _loginDetailsApplication.preProd.csmPassword;
+			csmCredentials[2] = _loginDetailsApplication.preProd.csmUserFirstName;
 			break;
 		case CoreConstants.ENVT_UAT:
 			csmCredentials[0] = _loginDetailsApplication.uat.csmUserName;
 			csmCredentials[1] = _loginDetailsApplication.uat.csmPassword;
+			csmCredentials[2] = _loginDetailsApplication.uat.csmUserFirstName;
 			break;
 		case CoreConstants.ENVT_PROD:
 			csmCredentials[0] = _loginDetailsApplication.prod.csmUserName;
 			csmCredentials[1] = _loginDetailsApplication.prod.csmPassword;
+			csmCredentials[2] = _loginDetailsApplication.prod.csmUserFirstName;
 			break;
 		}
 		return csmCredentials;
@@ -747,6 +755,134 @@ public class BusinessFunctions {
 			Assert.fail(MessageFormat.format(PDTConstants.EXCEPTION_OCCURED_VERIFY_OTHER_TEXT_BOX, CoreConstants.FAIL,
 					PDTConstants.OTHER, lblDrpDown, subBenefitFormName));
 		}
+	}
+	
+	public static void selectValueFromListUsingIndex(WebDriver driver, List<WebElement> listWebElement, int index) {
+		try {
+		CoreFunctions.explicitWaitTillElementListClickable(driver, listWebElement);		
+		listWebElement.get(index).click();
+		CoreFunctions.waitHandler(5);		
+		}catch (Exception e) {
+			Assert.fail(MessageFormat.format(MobilityXConstants.EXCEPTION_OCCURED_WHILE_CLICKING_ON_ELEMENT_FROM_LIST, CoreConstants.FAIL,
+					e.getMessage(),listWebElement.get(index).getText()));
+		}
+	}
+	
+	public static int returnindexItemFromListUsingText(WebDriver driver, List<WebElement> WebElementList,
+			String itemName, boolean flag) {
+		try {
+			for (WebElement row : WebElementList) {
+				Log.info(CoreConstants.ACTUAL_ITEM_NAME_IS + row.getText());
+				if ((row.getText().trim()).contains(itemName))
+					return WebElementList.indexOf(row);
+			}
+		} catch (ElementNotFoundException e) {
+			Assert.fail(MessageFormat.format(MobilityXConstants.EXCEPTION_OCCURED_WHILE_RETURNING_INDEX_ITEM_FROM_LIST_USING_TEXT, CoreConstants.FAIL,
+					e.getMessage()));
+		}
+		return -1;
+	}
+	
+	public static void checkValidationBasedOnInput(boolean isValidationMessageDisplayed, String fieldName,
+			String inputValue) {
+
+		try {
+			if ((Double.parseDouble(inputValue) < 0.5 || Double.parseDouble(inputValue) > 999.5)
+					&& isValidationMessageDisplayed) {
+				Reporter.addStepLog(MessageFormat.format(
+						COREFLEXConstants.SUCCESSFULLY_VERIFIED_VALIDATIONS_ON_FLEX_PLANNING_TOOL_PAGE,
+						CoreConstants.PASS, COREFLEXConstants.POINT_FIVE_TO_NINE_NINE_NINE_POINT_FIVE_RANGE, inputValue,
+						fieldName));
+			} else if ((Double.parseDouble(inputValue) < 0.5 || Double.parseDouble(inputValue) > 999.5)
+					&& !isValidationMessageDisplayed) {
+				Reporter.addStepLog(MessageFormat.format(
+						COREFLEXConstants.VALIDATION_MESSAGE_NOT_DISPLAYED_FOR_INVALID_RANGE,
+						CoreConstants.FAIL, COREFLEXConstants.POINT_FIVE_TO_NINE_NINE_NINE_POINT_FIVE_RANGE, inputValue,
+						fieldName));
+				throw new RuntimeException(MessageFormat.format(
+						COREFLEXConstants.VALIDATION_MESSAGE_NOT_DISPLAYED_FOR_INVALID_RANGE,
+						CoreConstants.FAIL, COREFLEXConstants.POINT_FIVE_TO_NINE_NINE_NINE_POINT_FIVE_RANGE, inputValue,
+						fieldName));
+			} else if ((Double.parseDouble(inputValue) >= 0.5 || Double.parseDouble(inputValue) <= 999.5)
+					&& !isValidationMessageDisplayed) {
+				Reporter.addStepLog(MessageFormat.format(
+						COREFLEXConstants.SUCCESSFULLY_VERIFIED_VALIDATION_MESSAGE_NOT_DISPLAYED_ON_FLEX_PLANNING_TOOL_PAGE,
+						CoreConstants.PASS, COREFLEXConstants.POINT_FIVE_TO_NINE_NINE_NINE_POINT_FIVE_RANGE, inputValue,
+						fieldName));
+			} else if ((Double.parseDouble(inputValue) >= 0.5 || Double.parseDouble(inputValue) <= 999.5)
+					&& isValidationMessageDisplayed) {
+				Reporter.addStepLog(MessageFormat.format(
+						COREFLEXConstants.VALIDATION_MESSAGE_DISPLAYED_FOR_VALID_RANGE,
+						CoreConstants.FAIL, COREFLEXConstants.POINT_FIVE_TO_NINE_NINE_NINE_POINT_FIVE_RANGE, inputValue,
+						fieldName));
+				throw new RuntimeException(MessageFormat.format(
+						COREFLEXConstants.VALIDATION_MESSAGE_DISPLAYED_FOR_VALID_RANGE,
+						CoreConstants.FAIL, COREFLEXConstants.POINT_FIVE_TO_NINE_NINE_NINE_POINT_FIVE_RANGE, inputValue,
+						fieldName));
+			}
+		} catch (NumberFormatException e) {
+			if (isValidationMessageDisplayed) {
+				Reporter.addStepLog(MessageFormat.format(
+						COREFLEXConstants.SUCCESSFULLY_VERIFIED_VALIDATIONS_ON_FLEX_PLANNING_TOOL_PAGE,
+						CoreConstants.PASS, COREFLEXConstants.POINT_FIVE_TO_NINE_NINE_NINE_POINT_FIVE_RANGE, inputValue,
+						fieldName));
+			} else {
+				Reporter.addStepLog(MessageFormat.format(
+						COREFLEXConstants.VALIDATION_MESSAGE_NOT_DISPLAYED_FOR_NON_NUMERIC_INVALID_VALUE,
+						CoreConstants.FAIL, COREFLEXConstants.POINT_FIVE_TO_NINE_NINE_NINE_POINT_FIVE_RANGE, inputValue,
+						fieldName));
+				throw new RuntimeException(MessageFormat.format(
+						COREFLEXConstants.VALIDATION_MESSAGE_NOT_DISPLAYED_FOR_NON_NUMERIC_INVALID_VALUE,
+						CoreConstants.FAIL, COREFLEXConstants.POINT_FIVE_TO_NINE_NINE_NINE_POINT_FIVE_RANGE, inputValue,
+						fieldName));
+			}
+		}
+	}
+
+	public static void checkValidationBasedOnInput(String validationMessage, String fieldName, String inputValue) {
+
+		if ((Double.parseDouble(inputValue) <= 0.99)
+				&& validationMessage.equals(COREFLEXConstants.FIELD_VALUE_CANNOT_BE_LESS_THAN_ONE)) {
+			Reporter.addStepLog(
+					MessageFormat.format(COREFLEXConstants.SUCCESSFULLY_VERIFIED_VALIDATIONS_ON_FLEX_PLANNING_TOOL_PAGE,
+							CoreConstants.PASS, validationMessage, inputValue, fieldName));
+		} else if ((Double.parseDouble(inputValue) > 100)
+				&& validationMessage.equals(COREFLEXConstants.FIELD_VALUE_CANNOT_BE_GREATER_THAN_HUNDRED)) {
+			Reporter.addStepLog(
+					MessageFormat.format(COREFLEXConstants.SUCCESSFULLY_VERIFIED_VALIDATIONS_ON_FLEX_PLANNING_TOOL_PAGE,
+							CoreConstants.PASS, validationMessage, inputValue, fieldName));
+		} else if ((Double.parseDouble(inputValue) >= 1) && (Double.parseDouble(inputValue) <= 100)
+				&& ((validationMessage.isEmpty()))) {
+			Reporter.addStepLog(MessageFormat.format(
+					COREFLEXConstants.SUCCESSFULLY_VERIFIED_VALIDATION_MESSAGE_NOT_DISPLAYED_ON_FLEX_PLANNING_TOOL_PAGE,
+					CoreConstants.PASS, validationMessage, inputValue, fieldName));
+		} else if ((Double.parseDouble(inputValue) >= 1) && (Double.parseDouble(inputValue) <= 100)
+				&& ((validationMessage.equals(COREFLEXConstants.FIELD_VALUE_CANNOT_BE_LESS_THAN_ONE))
+						|| (validationMessage.equals(COREFLEXConstants.FIELD_VALUE_CANNOT_BE_GREATER_THAN_HUNDRED)))) {
+			Reporter.addStepLog(MessageFormat.format(
+					COREFLEXConstants.VALIDATION_MESSAGE_DISPLAYED_FOR_VALID_RANGE,
+					CoreConstants.FAIL, validationMessage, inputValue, fieldName));
+			throw new RuntimeException(MessageFormat.format(
+					COREFLEXConstants.VALIDATION_MESSAGE_DISPLAYED_FOR_VALID_RANGE,
+					CoreConstants.FAIL, validationMessage, inputValue, fieldName));
+		}
+	}
+	
+	
+	public static int returnindexItemFromListUsingText(WebDriver driver, List<WebElement> WebElementList,boolean flag,
+			String itemName) {
+		try {
+			for (WebElement row : WebElementList) {
+				Log.info(CoreConstants.ACTUAL_ITEM_NAME_IS + row.getText());
+				if (row.getText().equalsIgnoreCase(itemName)) {
+					CoreFunctions.highlightObject(driver, row);
+					return WebElementList.indexOf(row);
+				}
+			}
+		} catch (ElementNotFoundException e) {
+			e.printStackTrace();
+		}
+		return -1;
 	}
 
 	public static boolean verifyDisplayOfIndicateNumOfWeeksBefore(WebDriver driver,
@@ -814,4 +950,5 @@ public class BusinessFunctions {
 		}
 
 	}
+
 }

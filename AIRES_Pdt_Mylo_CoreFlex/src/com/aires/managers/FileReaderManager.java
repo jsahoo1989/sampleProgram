@@ -19,6 +19,7 @@ package com.aires.managers;
 
 import com.aires.dataProviders.ConfigFileReader;
 import com.aires.dataProviders.JsonDataReader_CoreFlex;
+import com.aires.dataProviders.JsonDataReader_Iris;
 import com.aires.dataProviders.JsonDataReader_Mylo;
 
 import com.aires.dataProviders.JsonDataReader_Pdt;
@@ -29,6 +30,7 @@ public class FileReaderManager {
 	private static JsonDataReader_Pdt jsonDataReader;
 	private static JsonDataReader_CoreFlex jsonDataReaderCoreFlex;
 	private static JsonDataReader_Mylo MylojsonDataReader;
+	private static JsonDataReader_Iris jsonDataReaderIris;
 
 	private FileReaderManager() {
 	}
@@ -51,5 +53,9 @@ public class FileReaderManager {
 		 
   	public JsonDataReader_Mylo getMyloJsonReader(){
 		 return (jsonDataReader == null) ? new JsonDataReader_Mylo() : MylojsonDataReader;
+	}
+  	
+  	public JsonDataReader_Iris getIrisJsonReader() {
+		return (jsonDataReaderIris == null) ? new JsonDataReader_Iris() : jsonDataReaderIris;
 	}
 }

@@ -1,0 +1,68 @@
+[
+	{
+		"tabName": "Overview",
+		"file": {
+			"type": "Long-Term",
+			"office": "CRO",
+			"springboardPolicy": "Lump Sum as Component",
+			"sprinboardUserClientID": "92265"
+		},
+		"clientContact": {
+			"fName": "Rahul",
+			"lName": "Sharma",
+			"prefix": "Mr.",
+			"Gen": "M",
+			"email": "rsharma@aires.com"
+		},
+		"clientAnother_Contact": {
+			"fName": "Raj",
+			"lName": "Aryan"
+		},
+		"airesFileTeamHistory": {
+			"functionEMAC": "EMAC",
+			"empNameEMAC": "EMAC Temp",
+			"functionMSPEC": "MSPEC",
+			"empNameMSPEC": "Aaron Rosier",
+			"functionPPC": "PPC",
+			"empNamePPC": "mxsso dev5"
+		},
+		"originAddress": {
+			"street1": "1000 Test Lane Drive",
+			"city": "Newark",
+			"zip": "10030",
+			"state": "NY",
+			"country": "USA"
+		},
+		"destinationAddress": {
+			"street1": "100 park lane drive",
+			"city": "Pittsburgh",
+			"zip": "15275",
+			"state": "PA",
+			"country": "USA"
+		},
+		"authorization": {
+			"type": "Emp #",
+			"number": "AiresAuto"
+		},
+		"file_AnotherClient": {
+			"clientID": "49211",
+			"policy": "Domestic"
+		}
+	},
+	{
+		"tabName": "Transferee & Family",
+		"firstName": "AutoCoreFlex",
+		"lastName": "TestCoreFlex",
+		"basicInformation": {
+			"transferType": "Transfer",
+			"citizenship": "USA",
+			"emailAddress": "pdash@aires.com",
+			"type": "Employee Work",
+			"description": "Test Email Address",
+			"springboardEmailAddress": "airesautomation@aires.com"
+		},
+		"miscInformation": {
+			"homeStat": "Rent"
+		}
+	}
+]

@@ -7,7 +7,7 @@ Feature: Validate the CoreFlex Policy Flow for Flex_Transferee_StaticFixedPoints
       | Transferee                               | Static/Fixed    |  Portion Cashout       |
  	When he clicks on "SUBMIT" button on "Custom Bundles" page 
 	Then a success dialog should be displayed for Successfully Submitted Policy
-	And Policy Status should be displayed as "Submit" on "View/Edit Policy Forms" page
+	And Policy Status should be displayed as "Submitted" on "View/Edit Policy Forms" page
 		
 @MXTransfereeFlow @Flex-PortionCashout
 Scenario: MXTransferee - Submitting benefits & Portion Cashout available in configured policy and Tracking Available_Used Benefits Points

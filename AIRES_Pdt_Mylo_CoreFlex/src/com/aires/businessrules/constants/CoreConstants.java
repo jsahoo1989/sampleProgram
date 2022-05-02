@@ -77,8 +77,8 @@ public class CoreConstants {
 	public static final String NOT_EXIST = "not exists";
 	// CoreFlex Policy Setup Constants
 	public static final String VRFIED_ELE_CLICKED = "Verified that ''{1}'' element value - ''{0}'' is clicked successfully";
-	public static long TIME_BEFORE_ACTION;
-	public static long TIME_AFTER_ACTION;
+	public static double TIME_BEFORE_ACTION;
+	public static double TIME_AFTER_ACTION;
 	public static final String TOTAL_TIME_TAKEN_BY_GIVEN = "<b>Total time taken by 'Given' statement is : {0} Seconds </b>";
 	public static final String VAL_ACTUAL = "Actual Value : ";
 	public static final String VAL_EXPECTED = "Expected Value : ";

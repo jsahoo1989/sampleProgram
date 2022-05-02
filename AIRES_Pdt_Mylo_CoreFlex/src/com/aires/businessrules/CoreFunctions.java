@@ -24,6 +24,7 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Paths;
+import java.text.DecimalFormat;
 import java.text.MessageFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -1867,6 +1868,12 @@ public class CoreFunctions {
 			Assert.fail(MessageFormat.format(CoreConstants.FAIL_TO_VERIFY_ELEMENT_ON_PAGE, Element));
 		}
 
+	}
+
+	public static String calculatePageLoadTime(double tIME_BEFORE_ACTION, double tIME_AFTER_ACTION) {
+		DecimalFormat format = new DecimalFormat();
+		format.setMaximumFractionDigits(2);
+		return format.format((tIME_BEFORE_ACTION - tIME_AFTER_ACTION) / 1000);
 	}
 
 }

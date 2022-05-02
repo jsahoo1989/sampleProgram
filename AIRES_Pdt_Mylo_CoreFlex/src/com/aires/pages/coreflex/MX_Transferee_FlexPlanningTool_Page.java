@@ -26,6 +26,7 @@ import com.aires.testdatatypes.coreflex.Benefit;
 import com.aires.testdatatypes.coreflex.CoreFlex_PolicySetupPagesData;
 import com.aires.testdatatypes.coreflex.FlexBenefit;
 import com.aires.testdatatypes.coreflex.MX_Transferee_AccountSetupDetails;
+import com.aires.utilities.Log;
 import com.vimalselvam.cucumber.listener.Reporter;
 
 public class MX_Transferee_FlexPlanningTool_Page extends Base {
@@ -358,6 +359,8 @@ public class MX_Transferee_FlexPlanningTool_Page extends Base {
 
 	public boolean verifyPointBalanceTooltipContent() {
 		CoreFunctions.clickElement(driver, pointBalance_tooltip);
+		Log.info( CoreFunctions.getElementText(driver, pointBalance_tooltip_content));
+		Log.info(pointBalanceDetails());
 		return CoreFunctions.getElementText(driver, pointBalance_tooltip_content).equals(pointBalanceDetails());
 	}
 
@@ -367,7 +370,7 @@ public class MX_Transferee_FlexPlanningTool_Page extends Base {
 		double consumed = Double.parseDouble(total) - Double.parseDouble(remaining);
 		DecimalFormat format = new DecimalFormat();
 		format.setDecimalSeparatorAlwaysShown(false);
-		return MobilityXConstants.POINT_BALANCE_DETAILS_FPT.replace("used_points", format.format(consumed))
+		return MobilityXConstants.POINT_BALANCE_DETAILS.replace("used_points", format.format(consumed))
 				.replace("total_points", total).replace("current_balance", remaining);
 	}
 

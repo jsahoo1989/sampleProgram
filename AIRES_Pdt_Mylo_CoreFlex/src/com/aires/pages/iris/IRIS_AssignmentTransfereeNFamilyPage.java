@@ -135,7 +135,7 @@ public class IRIS_AssignmentTransfereeNFamilyPage extends BasePage {
 		return _isExists;
 	}
 
-	public void addNewTransfereeDetails(IRIS_AssignmentData transfereeData) throws Exception {		
+	public void addNewTransfereeDetails(IRIS_AssignmentData transfereeData) throws Exception {
 		addTransfereeFirstAndLastName(transfereeData);
 		Assert.assertTrue(verifyTransfereeNameAdded(), IRISConstants.TRANSFEREE_FIRST_AND_LAST_NAME_NOT_ADDED_TEXT);
 		addBasicInformationDetails(transfereeData.basicInformation);
@@ -143,15 +143,14 @@ public class IRIS_AssignmentTransfereeNFamilyPage extends BasePage {
 		System.out.println(_IRIS.getTitle());
 		try {
 			CoreFunctions.waitHandler(5);
-			clickSaveButton();			
-			if (IRIS_PageMaster.getDialogObject(_IRIS, "Confirmation").waitUntilExists()) {				
-				clickNoButton();				
+			clickSaveButton();
+			if (IRIS_PageMaster.getDialogObject(_IRIS, "Confirmation").waitUntilExists()) {
+				clickNoButton();
 			}
 		} catch (AWTException e) {
 		}
 	}
 
-	
 	public void addNewTransfereeDetailsForSpringboardUser(IRIS_AssignmentData transfereeData) throws Exception {
 		addTransfereeFirstAndLastName(transfereeData);
 		Assert.assertTrue(verifyTransfereeNameAdded(), IRISConstants.TRANSFEREE_FIRST_AND_LAST_NAME_NOT_ADDED_TEXT);
@@ -214,8 +213,10 @@ public class IRIS_AssignmentTransfereeNFamilyPage extends BasePage {
 	}
 
 	public void addBasicInformationDetails(BasicInformation basicInfo) throws Exception {
-		/*_transfereeEmail = basicInfo.emailAddress + CoreFunctions.generateRandomNumberAsGivenLength(6)
-				+ "@mailinator.com";*/
+		/*
+		 * _transfereeEmail = basicInfo.emailAddress +
+		 * CoreFunctions.generateRandomNumberAsGivenLength(6) + "@mailinator.com";
+		 */
 		_transfereeEmail = "airesautomation@aires.com";
 		try {
 			IRIS_PageMaster.getListObject(_IRIS, "Transfer Type").waitUntilEnabled();
@@ -293,11 +294,10 @@ public class IRIS_AssignmentTransfereeNFamilyPage extends BasePage {
 	public void clickSaveButton() throws Exception {
 		try {
 			IRIS_PageMaster.getButtonObjectFromLabel(_IRIS, "Save").waitUntilEnabled();
-			Helpers.clickButton(IRIS_PageMaster.getButtonObjectFromLabel(_IRIS, "Save"),
-					IRISConstants.SAVE_BUTTON);
+			Helpers.clickButton(IRIS_PageMaster.getButtonObjectFromLabel(_IRIS, "Save"), IRISConstants.SAVE_BUTTON);
 		} catch (GeneralLeanFtException e) {
 			Log.info(CoreConstants.FAIL);
-			e.printStackTrace();					
+			e.printStackTrace();
 			Assert.fail("Failed to Click on 'Save' Button");
 		}
 	}
@@ -367,11 +367,14 @@ public class IRIS_AssignmentTransfereeNFamilyPage extends BasePage {
 
 	public boolean saveTransferee(String savedMessageText) throws Exception {
 		try {
-					
+			_newTransfereeWindowTitle = MessageFormat.format(IRISConstants.CLIENT_SEPECIFIC_TRANSFEREE_TITLE,
+					CoreFunctions.getPropertyFromConfig("Assignment_FileID"), _fName, _lName,
+					CoreFunctions.getPropertyFromConfig("Assignment_ClientName"));
+
 			Log.info("New Transferee Window Title : " + _newTransfereeWindowTitle);
-			_transfereeNewWindow = IRIS_PageMaster.getWindowObject(_newTransfereeWindowTitle);
-			Dialog saveSucceededDialog = _transfereeNewWindow.describe(Dialog.class,
-					new DialogDescription.Builder().title("Saved").build());
+			_IRIS = IRIS_PageMaster.getWindowObject(_newTransfereeWindowTitle);
+			Dialog saveSucceededDialog =  IRIS_PageMaster.getDialogObject(_IRIS, "Saved");
+			saveSucceededDialog.waitUntilVisible();
 			Button saveSucceedoKButton = saveSucceededDialog.describe(Button.class,
 					new ButtonDescription.Builder().label("OK").build());
 			Helpers.clickButton(saveSucceedoKButton, saveSucceedoKButton.getLabel());
@@ -591,12 +594,12 @@ public class IRIS_AssignmentTransfereeNFamilyPage extends BasePage {
 	public void addNewTransfereeDetailsWithExstingEmailID(IRIS_AssignmentData transfereeData) throws Exception {
 		addTransfereeFirstAndLastName(transfereeData);
 		Assert.assertTrue(verifyTransfereeNameAdded(), IRISConstants.TRANSFEREE_FIRST_AND_LAST_NAME_NOT_ADDED_TEXT);
-		addBasicInformationDetails(transfereeData.basicInformation);		
+		addBasicInformationDetails(transfereeData.basicInformation);
 		addMiscInfoDetails(transfereeData.miscInformation);
-		try {			
-			clickSaveButton();			
-			if (IRIS_PageMaster.getDialogObject(_IRIS, "Confirmation").waitUntilExists()) {				
-				clickNoButton();				
+		try {
+			clickSaveButton();
+			if (IRIS_PageMaster.getDialogObject(_IRIS, "Confirmation").waitUntilExists()) {
+				clickNoButton();
 			}
 		} catch (AWTException e) {
 		}

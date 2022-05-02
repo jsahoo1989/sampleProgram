@@ -75,6 +75,8 @@ public class IRIS_AssignmentOverviewPage extends BasePage {
 	 * @throws GeneralLeanFtException
 	 */
 	public boolean verifyOverviewTab() throws GeneralLeanFtException {
+		file12CWindow.waitUntilVisible();
+		_IRIS = file12CWindow;
 		_IRIS.maximize();
 		try {
 			CoreFunctions.waitHandler(10);
@@ -98,6 +100,10 @@ public class IRIS_AssignmentOverviewPage extends BasePage {
 	 */
 	public void queryFile(String fileNumber) {
 		try {
+			file12CWindow.waitUntilVisible();
+			_IRIS = file12CWindow;
+			_IRIS.maximize();
+			
 			IRIS_PageMaster.getMenuObject(IRIS_PageMaster.getMenuObject(_IRIS, "Query"), "File").waitUntilEnabled();
 			Helpers.selectMenu(IRIS_PageMaster.getMenuObject(IRIS_PageMaster.getMenuObject(_IRIS, "Query"), "File"),
 					IRIS_PageMaster.getMenuObject(IRIS_PageMaster.getMenuObject(_IRIS, "Query"), "File").getLabel());
@@ -400,17 +406,18 @@ public class IRIS_AssignmentOverviewPage extends BasePage {
 			if (clickCount == 0) {
 				Helpers.clickButton(IRIS_PageMaster.getButtonObjectFromLabel(_IRIS, "Save"),
 						IRIS_PageMaster.getButtonObjectFromLabel(_IRIS, "Save").getAttachedText());
-				//acceptWarningDialogIfDisplayed();
-				verifySaveSucceedDialog();
+				// acceptWarningDialogIfDisplayed();
+//				verifySaveSucceedDialog();
 			} else {
 				Button saveButtonAfterFileCreation = IRIS_PageMaster.getButtonObjectFromLabel(Desktop.describe(
 						Window.class, new WindowDescription.Builder().title(_savedAssignmentTitle).build()), "Save");
 				Helpers.clickButton(saveButtonAfterFileCreation, saveButtonAfterFileCreation.getAttachedText());
-				verifySaveSucceedDialog();
+//				verifySaveSucceedDialog();
 			}
 			_assignmentWindow = IRIS_PageMaster.getWindowObject("File - 12C "
 					+ CoreFunctions.getPropertyFromConfig("Assignment_FileID") + " - Aires LLC Agreement in place.");
 			Dialog saveSucceededDialog = IRIS_PageMaster.getDialogObject(_assignmentWindow, "Save succeeded");
+			saveSucceededDialog.waitUntilVisible();
 			Button saveSucceedoKButton = IRIS_PageMaster.getButtonObjectFromLabel(saveSucceededDialog, "OK");
 			Helpers.clickButton(saveSucceedoKButton, saveSucceedoKButton.getAttachedText());
 

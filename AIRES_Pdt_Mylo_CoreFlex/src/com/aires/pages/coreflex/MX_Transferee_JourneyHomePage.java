@@ -148,7 +148,6 @@ public class MX_Transferee_JourneyHomePage extends Base {
 
 	/*********************************************************************/
 
-	
 	public void clickElementOfPage(String elementName) {
 		switch (elementName) {
 		case MobilityXConstants.MANAGE_MY_POINTS:
@@ -158,16 +157,16 @@ public class MX_Transferee_JourneyHomePage extends Base {
 			Assert.fail(COREFLEXConstants.INVALID_ELEMENT);
 		}
 	}
-	
+
 	public boolean verifyUserNavigationToJourneyHomePage() {
 		try {
 			return CoreFunctions.isElementExist(driver, _linkManageMyPoints, 5);
-		}catch (Exception e) {
+		} catch (Exception e) {
 			Reporter.addStepLog(MessageFormat.format(
 					MobilityXConstants.EXCEPTION_OCCURED_WHILE_VALIDATING_USER_NAVIGATION_TO_MOBILITYX_JOURNEY_HOME_PAGE,
 					CoreConstants.FAIL, e.getMessage()));
 			return false;
-		}		
+		}
 	}
 
 	public void handle_Cookie_AfterLogin() {
@@ -269,7 +268,11 @@ public class MX_Transferee_JourneyHomePage extends Base {
 	}
 
 	private boolean verifyAssignmentDetails(String actualClientName, String actualFileId, String actualTransfereeName) {
-
+		Log.info(CoreFunctions.getPropertyFromConfig("Assignment_ClientName").equals(actualClientName) + "");
+		Log.info(CoreFunctions.getPropertyFromConfig("Assignment_FileID").equals(actualFileId) + "");
+		Log.info((CoreFunctions.getPropertyFromConfig("Transferee_firstName") + " "
+				+ CoreFunctions.getPropertyFromConfig("Transferee_lastName"))+":"+(actualTransfereeName) + "");
+		
 		boolean isAssignmentClientDetailsMatched = (CoreFunctions.getPropertyFromConfig("Assignment_ClientName").equals(
 				actualClientName) & CoreFunctions.getPropertyFromConfig("Assignment_FileID").equals(actualFileId)
 				& (CoreFunctions.getPropertyFromConfig("Transferee_firstName") + " "

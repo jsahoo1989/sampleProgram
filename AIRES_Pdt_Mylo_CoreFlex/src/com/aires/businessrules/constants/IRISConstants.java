@@ -271,6 +271,7 @@ public class IRISConstants {
 	public static final String TRANSFEREE_TITLE_TO_APPEND_SERVICE = "File - 12C {0}  for {1} {2} of MobilityX Inc. - Aires LLC Agreement in place.";
 	public static final String NG_TRANSFEREE_TITLE_TO_APPEND = "File - 12C {0}  for  {1} {2} of Northrop Grumman-One Source Accounting - Aires LLC Agreement in place.";
 	public static final String TRANSFEREE_TITLE = "File - 12C {0}  for  {1} {2} of AIRES-CIS-DEMO&";
+	public static final String CLIENT_SEPECIFIC_TRANSFEREE_TITLE = "File - 12C {0}  for  {1} {2} of {3} - Aires LLC Agreement in place.";
 	public static final String TRANSFEREE_TITLE_SERVICE = "File - 12C {0}  for {1} {2} of AIRES-CIS-DEMO&";
 	public static final String TRANSFEREE_TITLE_SERVICE_CLIENT_92265 = "File - 12C {0}  for {1} {2} of MobilityX Inc. - Aires LLC Agreement in place.";
 	public static final String TRANSFEREE_POLICY = "TEST(CLIENT) - Aires India Branch Office Agreement in place.";

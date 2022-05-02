@@ -1,3 +1,4 @@
+@e2e
 Feature: Validate the CoreFlex End-To-End Business Test Flow(Policy Setup, MXTransferee, MSPEC) for Both_Transferee_StaticFixedPoints_CashoutNotAuthorized_Delete_Approve selection
 
 @Both-CashNotAuth_ApproveRequest_PF
@@ -7,7 +8,7 @@ Feature: Validate the CoreFlex End-To-End Business Test Flow(Policy Setup, MXTra
       | Transferee                               | Static/Fixed    | Cashout Not Authorized |
  	When he clicks on "SUBMIT" button on "Custom Bundles" page 
 	Then a success dialog should be displayed for Successfully Submitted Policy
-	And Policy Status should be displayed as "Submit" on "View/Edit Policy Forms" page
+	And Policy Status should be displayed as "Submitted" on "View/Edit Policy Forms" page
 		
 @MXTransfereeFlow @Both-CashNotAuth_ApproveRequest_MX
 Scenario: MXTransferee - Selecting & Submitting benefits available in configured policy and Tracking Available_Used Benefits Points

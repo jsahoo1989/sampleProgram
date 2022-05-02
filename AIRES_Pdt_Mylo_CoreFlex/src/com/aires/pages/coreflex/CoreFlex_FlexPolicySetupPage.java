@@ -304,9 +304,9 @@ public class CoreFlex_FlexPolicySetupPage extends Base {
 			performPageFieldSelection(fieldName, fieldSelection);
 		}
 
-		checkFieldValidation(COREFLEXConstants.TOTAL_POINTS_AVAILABLE, "ABCD");
-		checkFieldValidation(COREFLEXConstants.TOTAL_POINTS_AVAILABLE, "#$%");
-		checkFieldValidation(COREFLEXConstants.TOTAL_POINTS_AVAILABLE, "50 Points");
+//		checkFieldValidation(COREFLEXConstants.TOTAL_POINTS_AVAILABLE, "ABCD");
+//		checkFieldValidation(COREFLEXConstants.TOTAL_POINTS_AVAILABLE, "#$%");
+//		checkFieldValidation(COREFLEXConstants.TOTAL_POINTS_AVAILABLE, "50 Points");
 
 		CoreFunctions.clearAndSetTextUsingKeys(driver, _inputTotalPointsAvailable,
 				policySetupPageData.flexPolicySetupPage.StaticFixedTotalPointsAvailable,

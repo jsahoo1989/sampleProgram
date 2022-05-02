@@ -7,7 +7,7 @@ Scenario: CoreFlex - Setting up a New CoreFlex policy in 'Policy Digitization To
       | Transferee                               | Static/Fixed    |  Portion Cashout       |
 	When he clicks on "SUBMIT" button on "Custom Bundles" page 
 	Then a success dialog should be displayed for Successfully Submitted Policy
-	And Policy Status should be displayed as "Submit" on "View/Edit Policy Forms" page
+	And Policy Status should be displayed as "Submitted" on "View/Edit Policy Forms" page
 		
 @MXTransfereeFlow @Both-PortionCashout_Test234
 Scenario: MXTransferee - Submitting benefits & Portion Cashout available in configured policy and Tracking Available_Used Benefits Points

@@ -192,6 +192,8 @@ public class CF_Transferee_StaticFixedPoints_CashNotAuth_Both_EndToEndFlow_Steps
 						MobilityXConstants.REMAINING_AVAILABLE_POINTS_DETAILS_NOT_MATCHED_ON_JOURNEY_HOME_PAGE,
 						CoreConstants.FAIL));
 		mxTransfereeJourneyHomePage.clickElementOfPage(MobilityXConstants.MANAGE_MY_POINTS);
+		Assert.assertTrue(mxTransfereeFlexPlanningToolPage.isFlexPlanningToolHomePageDisplayed(),
+				MessageFormat.format(MobilityXConstants.FLEX_PLANNING_TOOL_PAGE_NOT_DISPLAYED, CoreConstants.FAIL));
 		Assert.assertTrue(mxTransfereeFlexPlanningToolPage.verifyAvailablePointsMessageAfterSubmission(),
 				MessageFormat.format(
 						MobilityXConstants.FAILED_TO_VALIDATE_AVAILABLE_POINTS_MESSAGE_ON_FLEX_PLANNING_TOOL_PAGE,

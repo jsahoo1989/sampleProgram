@@ -308,7 +308,7 @@ public class BasePage {
 		Runtime.getRuntime().exec(_path);
 		String _windowTitle = getWindowText.getActiveWindowText();
 		while (!_windowTitle.contains("Login")) {
-			CoreFunctions.waitHandler(2);
+			CoreFunctions.waitHandler(5);
 			_windowTitle = getWindowText.getActiveWindowText();
 		}
 		Desktop.describe(Window.class, new WindowDescription.Builder().title(_windowTitle).build());

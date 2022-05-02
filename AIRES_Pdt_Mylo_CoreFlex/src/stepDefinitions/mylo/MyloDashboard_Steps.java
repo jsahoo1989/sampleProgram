@@ -7,6 +7,7 @@ import org.testng.Assert;
 import com.aires.businessrules.constants.MYLOConstants;
 import com.aires.cucumber.TestContext;
 import com.aires.managers.FileReaderManager;
+import com.aires.pages.mylo.Mylo_AssignmentPage;
 import com.aires.pages.mylo.Mylo_DashboardHomePage;
 import com.aires.pages.mylo.Mylo_LoginPage;
 import com.aires.testdatatypes.mylo.Mylo_LoginData;
@@ -21,6 +22,7 @@ public class MyloDashboard_Steps {
 	TestContext testContext;
 	Mylo_LoginPage loginPage;
 	Mylo_DashboardHomePage myloDashboardPage;
+	Mylo_AssignmentPage myloAssignmentPage;
 
 	Mylo_LoginData loginData = FileReaderManager.getInstance().getMyloJsonReader()
 			.getloginDetailsByUserProfileName(MYLOConstants.USER_PROFILE_NAME);
@@ -29,6 +31,7 @@ public class MyloDashboard_Steps {
 		testContext = context;
 		loginPage = testContext.getMyloPageObjectManager().getLoginPage();
 		myloDashboardPage = testContext.getMyloPageObjectManager().getDashboardHomePage();
+		myloAssignmentPage = testContext.getMyloPageObjectManager().getAssignmentPage();
 	}
 
 	@Given("^he has logged into the 'Mylo' application$")
@@ -37,6 +40,7 @@ public class MyloDashboard_Steps {
 		loginPage.openApplication();
 		loginPage.enterUserEmailAndPasswordForMylo(loginData.MyloUserName, loginData.MyloPassword);
 		loginPage.clickSignIn();
+		myloDashboardPage.verifyUserName(loginData.MyloProfileName);
 		MYLOConstants.TIME_AFTER_ACTION = new Date().getTime();
 		Reporter.addStepLog("<b>Total time taken by <i>'Given'</i> statement is :"
 				+ (MYLOConstants.TIME_AFTER_ACTION - MYLOConstants.TIME_BEFORE_ACTION) / 1000 + " Seconds </b>");
@@ -44,18 +48,20 @@ public class MyloDashboard_Steps {
 
 	@Given("^he is on Mylo Dashboard Home page$")
 	public void he_is_on_Mylo_Dashboard_Home_page() {
-		Assert.assertTrue(myloDashboardPage.verifyUserName(loginData.MyloProfileName));
+		myloDashboardPage.verifyUserName(loginData.MyloProfileName);
 	}
 
 	@When("^he clicks on the \"([^\"]*)\" \"([^\"]*)\" option in the Mylo Menu on the sidebar$")
 	public void he_clicks_on_the_option_in_the_Mylo_Menu_on_the_sidebar(String section, String subSection) {
 		if (section.equals(MYLOConstants.HAMBURGER)) {
-			myloDashboardPage.clickOptionFromMainMenu(MYLOConstants.ASSIGNMENT);
+			myloDashboardPage.clickOptionFromMainMenu(MYLOConstants.JOURNEY);
 			myloDashboardPage.closePopUp();
 			Assert.assertTrue(myloDashboardPage.clickHamburgerMenu(), MYLOConstants.HAMBURGER_MENU_NOT_APPEARING);
 			myloDashboardPage.selectOptionsFromHamburgerMenu(subSection);
-		} else
+		} else {
 			myloDashboardPage.clickOptionFromMainMenu(section);
+			myloDashboardPage.selectOptionsFromAssignmentMenu(MYLOConstants.QUERY_FILE);
+		}
 	}
 
 	@Then("^the Select Query Type screen should display with the given parameters$")
@@ -67,6 +73,7 @@ public class MyloDashboard_Steps {
 	public void he_selects_section_after_clicking_on_option_in_the_Mylo_Menu_on_the_sidebar(String parameter,
 			String mainMenuOption) {
 		myloDashboardPage.clickOptionFromMainMenu(mainMenuOption);
+		myloDashboardPage.selectOptionsFromAssignmentMenu(MYLOConstants.QUERY_FILE);
 		myloDashboardPage.selectParameterFromQueryScreen(parameter);
 	}
 
@@ -78,7 +85,14 @@ public class MyloDashboard_Steps {
 
 	@Given("^Message \"([^\"]*)\" is displayed after clicking on Execute button$")
 	public void message_is_displayed_after_clicking_on_Execute_button(String message) {
+		myloDashboardPage.clickExecuteButton();
 		Assert.assertTrue(myloDashboardPage.verifyPopUpMessage(message));
+	}
+	
+	@Given("^alert message \"([^\"]*)\" is displayed after clicking on Execute button$")
+	public void alert_message_is_displayed_after_clicking_on_Execute_button(String message) {
+		myloDashboardPage.clickExecuteButton();
+		Assert.assertTrue(myloAssignmentPage.verifyAlertMessage(message));
 	}
 
 	@Given("^Message \"([^\"]*)\" is displayed after clicking on Execute button with invalid File ID \"([^\"]*)\"$")

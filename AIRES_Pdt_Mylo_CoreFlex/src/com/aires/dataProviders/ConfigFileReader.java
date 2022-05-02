@@ -120,6 +120,8 @@ public class ConfigFileReader {
 	public String getMyloApplicationUrl() {
 		if (properties.getProperty("envt").equalsIgnoreCase("uat"))
 			return properties.getProperty("myloUATURL");
+		else if (properties.getProperty("envt").equalsIgnoreCase("relonetqa4"))
+			return properties.getProperty("myloRelonetQA4URL");
 		else
 			throw new RuntimeException(
 					"Application Url not specified in the Configuration.properties file for the Key:url");

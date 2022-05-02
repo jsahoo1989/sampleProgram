@@ -3,6 +3,7 @@ package com.aires.pages.mylo;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
+import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -36,7 +37,7 @@ public class Mylo_DashboardHomePage extends Base {
 	@FindBy(how = How.CSS, using = "div[class='secondmenu']")
 	private WebElement _hamburgerMenu;
 
-	@FindBy(how = How.XPATH, using = "//nav[@class='menu']/a")
+	@FindBy(how = How.XPATH, using = "//ul[@class='menu-list']/li/a")
 	private List<WebElement> _hamburgerMenuOptions;
 
 	@FindBy(how = How.XPATH, using = "//div[@class='firstmenu']/ul/li/a")
@@ -45,20 +46,26 @@ public class Mylo_DashboardHomePage extends Base {
 	@FindBy(how = How.CSS, using = "div[class='container']")
 	private List<WebElement> _selectQueryParameterRows;
 
-	@FindBy(how = How.CSS, using = "button[class='query-btn']")
+	@FindBy(how = How.CSS, using = "button[class='btn btn-primary modal-md-blue-btn']")
 	private List<WebElement> _selectQueryParameterButtons;
+	
+	@FindBy(how = How.CSS, using = "span[class='ng-arrow-wrapper']")
+	private List<WebElement> _parameterDropdownList;
 
-	@FindBy(how = How.CSS, using = "button[class='close-button']")
+	@FindBy(how = How.CSS, using = "button[class='btn-close']")
 	private WebElement _closeButton;
 
 	@FindBy(how = How.XPATH, using = "//*[@role='option']/span")
 	private List<WebElement> _selectOptions;
 
-	@FindBy(how = How.XPATH, using = "//h1[@class='popupheader']//following::label")
+	@FindBy(how = How.XPATH, using = "//h5[@class='modal-title']//following::label")
 	private List<WebElement> _fileParameterList;
 	
 	@FindBy(how = How.CSS, using = "h1[class='popupheader']")
 	private WebElement _queryTypeHeader;
+	
+	@FindBy(how = How.CSS, using = "h1[class='errortext']")
+	private WebElement _errorText;
 	
 	@FindBy(how = How.CSS, using = "h5[class='modal-title']")
 	private WebElement _assignmentOptionHeader;
@@ -74,27 +81,37 @@ public class Mylo_DashboardHomePage extends Base {
 
 	@FindBy(how = How.XPATH, using = "//button[text()='OK']")
 	private WebElement _okButton;
+	
+	@FindBy(how = How.XPATH, using = "//button[text()='Ok']")
+	private WebElement _popUpOkButton;
 
 	@FindBy(how = How.XPATH, using = "//div[@role='dialog']//h1")
 	private WebElement _popUpMessage;
 
-	@FindBy(how = How.XPATH, using = "//tbody[@class='scrollbody']/a/tr")
+	@FindBy(how = How.XPATH, using = "//ul[@class='even ng-star-inserted']")
 	private List<WebElement> _queryResultRows;
 
-	@FindBy(how = How.XPATH, using = "//table[@class='table']/descendant::th")
+	@FindBy(how = How.XPATH, using = "//ul[@class='mylo-grid-header']/li")
 	private List<WebElement> _queryResultColHeaders;
 
-	@FindBy(how = How.XPATH, using = "//h1")
+	@FindBy(how = How.XPATH, using = "//h5")
 	private WebElement _headerText;
 	
 	@FindBy(how = How.CSS, using = "button[class='btn btn-primary modal-md-blue-btn']")
 	private List<WebElement> _assignmentOptions;
+	
+	@FindBy(how = How.XPATH, using = "//div[contains(@class,'mylo-errorpopup')]")
+	private WebElement _myloErrorPopUp;
+	
+	@FindBy(how = How.XPATH, using = "//button[text()='Ok']")
+	private WebElement _OKButtonPopUp;
 			
 
 	final By _selectQueryoptions = By.xpath("./button");
 	final By _fileParameterOptions = By.xpath(".//following-sibling::label");
-	final By _queryResultColumns = By.xpath("./td");
+	final By _queryResultColumns = By.xpath("./li");
 	final By _dropdownSections = By.xpath(".//parent::div/ng-select");
+	LinkedHashMap<String, Integer> parameterDropdownFieldsMap = new LinkedHashMap<String, Integer>();
 
 	public boolean verifyUserName(String userName) {
 		CoreFunctions.waitForBrowserToLoad(driver);
@@ -110,8 +127,8 @@ public class Mylo_DashboardHomePage extends Base {
 	public void clickOptionFromMainMenu(String option) {
 		CoreFunctions.explicitWaitTillElementListVisibility(driver, _firstMenuOptions);
 		CoreFunctions.selectItemInListByText(driver, _firstMenuOptions, option);
-		CoreFunctions.highlightObject(driver, _assignmentOptionHeader);
-		Assert.assertEquals(_assignmentOptionHeader.getText(), MYLOConstants.ASSIGNMENT_OPTIONS_HEADER, MYLOConstants.MISMATCH_HEADERTEXT);
+		//CoreFunctions.highlightObject(driver, _assignmentOptionHeader);
+		//Assert.assertEquals(_assignmentOptionHeader.getText(), MYLOConstants.ASSIGNMENT_OPTIONS_HEADER, MYLOConstants.MISMATCH_HEADERTEXT);
 	}
 
 	public void closePopUp() {
@@ -121,9 +138,14 @@ public class Mylo_DashboardHomePage extends Base {
 	}
 
 	public void clickExecuteButton() {
-		CoreFunctions.explicitWaitTillElementVisibility(driver, _executeButton, _executeButton.getText(), 10L);
+		CoreFunctions.explicitWaitTillElementVisibility(driver, _executeButton, _executeButton.getText(), 20L);
 		CoreFunctions.highlightElementAndClick(driver, _executeButton, _executeButton.getText());
-		CoreFunctions.explicitWaitTillElementInVisibilityCustomTime(driver, _spinner, 10);
+		CoreFunctions.explicitWaitTillElementInVisibilityCustomTime(driver, _spinner, 60);
+		if (CoreFunctions.isElementExist(driver, _myloErrorPopUp, 5) &&
+				CoreFunctions.isElementExist(driver, _OKButtonPopUp, 5)) {			
+			CoreFunctions.clickElement(driver, _OKButtonPopUp);
+			CoreFunctions.explicitWaitTillElementInVisibilityCustomTime(driver, _spinner, 60);
+		}
 	}
 
 	public boolean clickHamburgerMenu() {
@@ -143,10 +165,10 @@ public class Mylo_DashboardHomePage extends Base {
 	}
 	
 	public void selectOptionsFromAssignmentMenu(String optionToBeSelected) {
-		CoreFunctions.explicitWaitTillElementListVisibility(driver, _assignmentOptions);
+		CoreFunctions.explicitWaitTillElementListVisibilityCustomTime(driver, _assignmentOptions,60);
 		CoreFunctions.selectItemInListByText(driver, _assignmentOptions, optionToBeSelected);
-		CoreFunctions.highlightObject(driver, _queryTypeHeader);
-		Assert.assertEquals(_queryTypeHeader.getText(), MYLOConstants.ASSIGNMENT_QUERYTYPE_HEADER, MYLOConstants.MISMATCH_HEADERTEXT);
+		CoreFunctions.highlightObject(driver, _assignmentOptionHeader);
+		Assert.assertEquals(_assignmentOptionHeader.getText(), MYLOConstants.ASSIGNMENT_QUERYTYPE_HEADER, MYLOConstants.MISMATCH_HEADERTEXT);
 	}
 	
 	
@@ -172,8 +194,9 @@ public class Mylo_DashboardHomePage extends Base {
 	public void selectParameterFromQueryScreen(String parameter) {
 		CoreFunctions.explicitWaitTillElementListVisibility(driver, _selectQueryParameterButtons);
 		CoreFunctions.selectItemInListByText(driver, _selectQueryParameterButtons, parameter);
-		CoreFunctions.highlightObject(driver, _queryTypeHeader);
-		Assert.assertEquals(_queryTypeHeader.getText(), MYLOConstants.ASSIGNMENT_PARAMETERTYPE_HEADER, MYLOConstants.MISMATCH_HEADERTEXT);
+		CoreFunctions.highlightObject(driver, _assignmentOptionHeader);
+		Assert.assertEquals(_assignmentOptionHeader.getText(), MYLOConstants.ASSIGNMENT_PARAMETERTYPE_HEADER, MYLOConstants.MISMATCH_HEADERTEXT);
+		CoreFunctions.explicitWaitTillElementInVisibilityCustomTime(driver, _spinner, 10);
 	}
 
 	public boolean verifyFileParameterOptions(DataTable data) {
@@ -194,12 +217,23 @@ public class Mylo_DashboardHomePage extends Base {
 		}
 		return true;
 	}
+	
+	public void mapParameterDropdownFields() {
+		parameterDropdownFieldsMap.put(MYLOConstants.STATUS, 0);
+		parameterDropdownFieldsMap.put(MYLOConstants.OFFICE, 1);
+		parameterDropdownFieldsMap.put(MYLOConstants.ORIGIN_COUNTRY, 2);
+		//parameterDropdownFieldsMap.put(MYLOConstants.ORIGIN_STATE, 3);
+		parameterDropdownFieldsMap.put(MYLOConstants.DESTINATION_COUNTRY, 4);
+		//parameterDropdownFieldsMap.put(MYLOConstants.DESTINATION_STATE, 5);
+	}
 
 	public void selectOptionsForFileParameters(String option, String optionValue) {
 		CoreFunctions.explicitWaitTillElementListVisibility(driver, _fileParameterList);
 		WebElement getOptionElement = CoreFunctions.returnItemInListByText(driver, _fileParameterList, option);
 		if (option.contains(MYLOConstants.STATUS) || option.contains(MYLOConstants.OFFICE)
 				|| option.contains(MYLOConstants.COUNTRY) || option.contains(MYLOConstants.STATE)) {
+			mapParameterDropdownFields();
+			CoreFunctions.click(driver, _parameterDropdownList.get(parameterDropdownFieldsMap.get(option)), option);
 			CoreFunctions.explicitWaitTillElementListVisibility(driver, _selectOptions);
 			CoreFunctions.selectItemInListByText(driver, _selectOptions, optionValue);
 		} else {
@@ -223,7 +257,8 @@ public class Mylo_DashboardHomePage extends Base {
 
 	public void resetFileParameters() {
 		closePopUp();
-		clickOptionFromMainMenu(MYLOConstants.ASSIGNMENT);
+		clickOptionFromMainMenu(MYLOConstants.JOURNEY);
+		selectOptionsFromAssignmentMenu(MYLOConstants.QUERY_FILE);
 		selectParameterFromQueryScreen(MYLOConstants.FILE);
 	}
 
@@ -258,12 +293,20 @@ public class Mylo_DashboardHomePage extends Base {
 	
 	public void executeDifferentFileIds(int count, List<String> fileIds) {
 		for (int i = 0; i < count; i++) {
-			clickOptionFromMainMenu(MYLOConstants.ASSIGNMENT);
+			clickOptionFromMainMenu(MYLOConstants.JOURNEY);
 			selectOptionsFromAssignmentMenu(MYLOConstants.QUERY_FILE);
 			selectParameterFromQueryScreen(MYLOConstants.FILE);
 			selectOptionsForFileParameters(MYLOConstants.FILE_ID, fileIds.get(i));
 			clickExecuteButton();
+			//clickOKInPopUpWindow();
 		}
+	}
+	
+	public void clickOKInPopUpWindow() {
+		if (CoreFunctions.isElementExist(driver, _errorText, 10)) {
+			CoreFunctions.highlightObject(driver, _errorText);
+			CoreFunctions.click(driver, _popUpOkButton, MYLOConstants.OK_BUTTON);
+	}
 	}
 
 }

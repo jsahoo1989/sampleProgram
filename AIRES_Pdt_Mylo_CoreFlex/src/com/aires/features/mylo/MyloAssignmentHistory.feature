@@ -4,13 +4,13 @@ Feature: Validate the functionality of Mylo Assignment History section
 Background: Login to the Mylo application
     Given he has logged into the 'Mylo' application
    
-@IRIS-9921 @Mylo-Regression @214504 @214508 @214510
+@IRIS-992 @Mylo-Regression @214504 @214508 @214510
 Scenario:  Mylo-Validate History Card appearing for Searching Multiple FileIds on Mylo Assignment page in the current session
 Given he is on Mylo Assignment Summary page for file ID "482350" 
 When he queries another file for file ID "611085"
 Then the prior file info should be displayed in the history card at the top of the page with the following data:
 |Transferee Name|FileId & Client Name   |Origin & Destination Address|
-|Virginia Woolf |482350 (MobilityX Inc.)|test, CA to test, AL        |
+|Unchus Slaughter |482350 (MobilityX Inc.)|Sussex, UK to Munich, DE|
 And the history card should continue to display after he refreshes the current session
 And the history card should no longer display at the top of the page after he clicks on X 
 

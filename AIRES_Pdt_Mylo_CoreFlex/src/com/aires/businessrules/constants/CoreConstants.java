@@ -29,7 +29,7 @@ public class CoreConstants {
 	public static final String TXT_ACTUAL = "Actual Text : ";
 	public static final String TXT_EXPECTED = "Expected Text : ";
 	public static final String ALPHABET = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ";
-	public static final String SPECIAL_CHARACTERS = "^^\\\\<>";
+	public static final String SPECIAL_CHARACTERS = "^^<>";
 	public static final String JSON_FILE_NOT_FOUND_AT_PATH = "Json file not found at path : ";
 	public static final String TAG_VALUE = "@Pre-Prod";
 	public static final String VALUE = "value";
@@ -75,6 +75,7 @@ public class CoreConstants {
 	public static final String SUCCESS_MESSAGE_TEXT = "Success Message";
 	public static final String AUTO_EMAIL_PWD = "Aut0Mati0nT34mNov";
 	public static final String NOT_EXIST = "not exists";
+  
 	// CoreFlex Policy Setup Constants
 	public static final String VRFIED_ELE_CLICKED = "Verified that ''{1}'' element value - ''{0}'' is clicked successfully";
 	public static double TIME_BEFORE_ACTION;
@@ -84,4 +85,5 @@ public class CoreConstants {
 	public static final String VAL_EXPECTED = "Expected Value : ";
 	public static final String SCROLLED_TO_ELEMENT = "Successfully scrolled to Element : ''{0}''.";
 	public static final String FAILED_TO_SCROLL_TO_ELEMENT = "Failed to scroll to Element : ''{0}''.";
+	public static final String SQL_QUERY_FAILED = "SQL Query Failed";
 }

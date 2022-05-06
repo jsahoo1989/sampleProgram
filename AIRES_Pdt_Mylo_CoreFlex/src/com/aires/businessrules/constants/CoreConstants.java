@@ -60,6 +60,7 @@ public class CoreConstants {
 	public static final String FAIL_TO_SELECT_VALUE_FROM_DROPDOWN = "{0}Fail to select value ''{1}'' from dropdown ''{2}''";
 	public static final String VERIFIED_ELEMENT_ON_PAGE = "{0}Verified ''{1}'' on ''{2}'' page";
 	public static final String FAIL_TO_VERIFY_ELEMENT_ON_PAGE = "{0}Failed to verify ''{1}'' on ''{2}'' page";
+	public static final String FAIL_TO_VERIFY_ELEMENT_ON_SECTION = "{0}Failed to verify ''{1}'' on ''{2}'' section";
 	// Constants Used in EmailUtil
 	public static final String USER_NAME = "userName";
 	public static final String PASSWORD = "password";

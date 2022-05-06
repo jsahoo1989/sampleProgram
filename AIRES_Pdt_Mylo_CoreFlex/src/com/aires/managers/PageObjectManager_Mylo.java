@@ -19,12 +19,11 @@ package com.aires.managers;
 
 import org.openqa.selenium.WebDriver;
 
-import com.aires.pages.mylo.MyloAssignment_TransfereeFamilyPage;
+import com.aires.pages.mylo.MyloJourneyPage_TransfereeSection;
 import com.aires.pages.mylo.Mylo_AssignmentPage;
 //import com.aires.pages.mylo.Mylo_AssignmentPage;
 import com.aires.pages.mylo.Mylo_DashboardHomePage;
 import com.aires.pages.mylo.Mylo_LoginPage;
-import com.aires.pages.mylo.Mylo_RestApiRequest;
 
 
 public class PageObjectManager_Mylo {
@@ -33,8 +32,8 @@ public class PageObjectManager_Mylo {
 	private Mylo_LoginPage _loginPage;
 	private Mylo_DashboardHomePage _dashboardHomePage;
 	private Mylo_AssignmentPage _assignmentPage; 
-	private MyloAssignment_TransfereeFamilyPage _assignmentTransfereePage;
-	private Mylo_RestApiRequest _restApiRequest;
+	private MyloJourneyPage_TransfereeSection _journeyTransfereeSection;
+	//private Mylo_RestApiRequest _restApiRequest;
 
 	public PageObjectManager_Mylo(WebDriver driver) {
 		this._driver = driver;
@@ -55,12 +54,12 @@ public class PageObjectManager_Mylo {
 				: _assignmentPage;
 	}
 	 
-	 public Mylo_RestApiRequest getRestApiRequest() {
+	/* public Mylo_RestApiRequest getRestApiRequest() {
 			return (_restApiRequest == null) ? _restApiRequest = new Mylo_RestApiRequest(_driver)
 					: _restApiRequest;
-		}
-	 public MyloAssignment_TransfereeFamilyPage getAssignmentTransfereePage() {
-			return (_assignmentTransfereePage == null) ? _assignmentTransfereePage = new MyloAssignment_TransfereeFamilyPage(_driver)
-					: _assignmentTransfereePage;
+		}*/
+	 public MyloJourneyPage_TransfereeSection getJourneyPageTransfereeSection() {
+			return (_journeyTransfereeSection == null) ? _journeyTransfereeSection = new MyloJourneyPage_TransfereeSection(_driver)
+					: _journeyTransfereeSection;
 		}
 }

@@ -2,13 +2,13 @@
 	{
 		"application": "IRIS",
 		"activeAssignment": {
-			"fileID": "611072",
-			"clientID": "92265",
-			"clientName": "MobilityX Inc.",
-			"status": "Active",
+			"fileID": "639028",
+			"clientID": "49226",
+			"clientName": "Aires QA Automation Client",
+			"status": "Booked",
 			"policyType": "Domestic Policy",
-			"provider": "AIRES",
-			"journeyType": "Intern",
+			"provider": "AI",
+			"journeyType": "Long-Term",
 			"office": "CRO"
 		},
 		"activeAssignment_relonetqa4": {
@@ -170,7 +170,7 @@
 			"provider": "AIRESSH",
 			"journeyType": "Long-Term",
 			"office": "CRO"
-		}		,
+		},
 		"transfereeWithOtherFamilyMembers": {
 			"fileID": "590662",
 			"clientID": "92265",
@@ -179,6 +179,16 @@
 			"policyType": "Domestic Policy",
 			"provider": "AIRES",
 			"journeyType": "Commuter",
+			"office": "CRO"
+		},
+		"transfereeAllData": {
+			"fileID": "611072",
+			"clientID": "92265",
+			"clientName": "MobilityX Inc.",
+			"status": "Active",
+			"policyType": "Domestic Policy",
+			"provider": "Aires",
+			"journeyType": "Long-Term",
 			"office": "CRO"
 		}
 	}

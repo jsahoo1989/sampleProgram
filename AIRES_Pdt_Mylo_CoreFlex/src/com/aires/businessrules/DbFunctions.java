@@ -134,9 +134,9 @@ public class DbFunctions {
 		myloQueryStatementMap.put(MYLOConstants.MARITAL_STATUS, DbQueries.QUERY_GET_MARITAL_STATUS_DROPDOWNLIST);
 		myloQueryStatementMap.put(MYLOConstants.PRONOUNS, DbQueries.QUERY_GET_PRONOUNS_DROPDOWNLIST);
 		myloQueryStatementMap.put(MYLOConstants.CITIZENSHIP, DbQueries.QUERY_GET_COUNTRY_DROPDOWNLIST);
-		myloQueryStatementMap.put(MYLOConstants.EMAIL_TYPE, DbQueries.QUERY_GET_EMAIL_TYPE_DROPDOWNLIST);
-		myloQueryStatementMap.put(MYLOConstants.PHONE_TYPE, DbQueries.QUERY_GET_PHONE_TYPE_DROPDOWNLIST);
-		myloQueryStatementMap.put(MYLOConstants.ORIGIN_DEST, DbQueries.QUERY_GET_LOCATION_TYPE_DROPDOWNLIST);
+		myloQueryStatementMap.put(MYLOConstants.TRANSFEREE_EMAIL_TYPE, DbQueries.QUERY_GET_EMAIL_TYPE_DROPDOWNLIST);
+		myloQueryStatementMap.put(MYLOConstants.TRANSFEREE_PHONE_TYPE, DbQueries.QUERY_GET_PHONE_TYPE_DROPDOWNLIST);
+		myloQueryStatementMap.put(MYLOConstants.TRANSFEREE_ORGDEST, DbQueries.QUERY_GET_LOCATION_TYPE_DROPDOWNLIST);
 		
 	}
 	
@@ -144,9 +144,9 @@ public class DbFunctions {
 		myloQTableColumnFields.put(MYLOConstants.MARITAL_STATUS, MYLOConstants.MARITAL_STATUS_COLUMN);
 		myloQTableColumnFields.put(MYLOConstants.PRONOUNS, MYLOConstants.PRONOUN_COLUMN);
 		myloQTableColumnFields.put(MYLOConstants.CITIZENSHIP, MYLOConstants.COUNTRY_COLUMN);
-		myloQTableColumnFields.put(MYLOConstants.EMAIL_TYPE, MYLOConstants.EMAIL_TYPE_COLUMN);
-		myloQTableColumnFields.put(MYLOConstants.PHONE_TYPE, MYLOConstants.PHONE_TYPE_COLUMN);
-		myloQTableColumnFields.put(MYLOConstants.ORIGIN_DEST, MYLOConstants.LOCATION_TYPE_COLUMN);
+		myloQTableColumnFields.put(MYLOConstants.TRANSFEREE_EMAIL_TYPE, MYLOConstants.EMAIL_TYPE_COLUMN);
+		myloQTableColumnFields.put(MYLOConstants.TRANSFEREE_PHONE_TYPE, MYLOConstants.PHONE_TYPE_COLUMN);
+		myloQTableColumnFields.put(MYLOConstants.TRANSFEREE_ORGDEST, MYLOConstants.LOCATION_TYPE_COLUMN);
 		
 	}
 	

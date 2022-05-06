@@ -84,10 +84,11 @@ public class BusinessFunctions {
 		CoreFunctions.waitForBrowserToLoad(driver);
 		CoreFunctions.waitHandler(3);
 		for (WebElement row : WebElementList) {
-			Log.info(CoreConstants.ACTUAL_ITEM_NAME_IS + row.getText());
+			String text=row.getText();
+			Log.info(CoreConstants.ACTUAL_ITEM_NAME_IS + text);
 			if (row.getText().equals(itemName)) {
 				CoreFunctions.clickUsingJS(driver, row, itemName);
-				Reporter.addStepLog(CoreConstants.PASS + row.getText() + PDTConstants.IS_CLICKED);
+				Reporter.addStepLog(CoreConstants.PASS + text + PDTConstants.IS_CLICKED);
 				break;
 			}
 		}

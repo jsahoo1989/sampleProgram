@@ -103,7 +103,7 @@ public class Mylo_DashboardHomePage extends Base {
 	@FindBy(how = How.XPATH, using = "//div[contains(@class,'mylo-errorpopup')]")
 	private WebElement _myloErrorPopUp;
 	
-	@FindBy(how = How.XPATH, using = "//button[text()='Ok']")
+	@FindBy(how = How.XPATH, using = "//button[text()='OK']")
 	private WebElement _OKButtonPopUp;
 			
 
@@ -115,20 +115,25 @@ public class Mylo_DashboardHomePage extends Base {
 
 	public boolean verifyUserName(String userName) {
 		CoreFunctions.waitForBrowserToLoad(driver);
-		CoreFunctions.waitHandler(6);
 		Log.info("userName is : " + _userProfile.getText());
 		CoreFunctions.highlightObject(driver, _userProfile);
-		if (CoreFunctions.isElementExist(driver, _userProfile, 10) && userName.equals(_userProfile.getText())) {
-			return true;
-		} else
-			return false;
+		if(_userProfile.getText().length()>2) {
+			clickOptionFromMainMenu(MYLOConstants.HOME);
+			CoreFunctions.explicitWaitTillElementInVisibilityCustomTime(driver, _spinner, 60);
+		}
+		boolean flag = userName.equals(_userProfile.getText());
+		return flag;
 	}
 
 	public void clickOptionFromMainMenu(String option) {
 		CoreFunctions.explicitWaitTillElementListVisibility(driver, _firstMenuOptions);
 		CoreFunctions.selectItemInListByText(driver, _firstMenuOptions, option);
-		//CoreFunctions.highlightObject(driver, _assignmentOptionHeader);
-		//Assert.assertEquals(_assignmentOptionHeader.getText(), MYLOConstants.ASSIGNMENT_OPTIONS_HEADER, MYLOConstants.MISMATCH_HEADERTEXT);
+	}
+	
+	public boolean verifyJourneyHeaderText() {
+		CoreFunctions.highlightObject(driver, _assignmentOptionHeader);
+		boolean flag = (_assignmentOptionHeader.getText().equals(MYLOConstants.ASSIGNMENT_OPTIONS_HEADER));
+		return flag;
 	}
 
 	public void closePopUp() {

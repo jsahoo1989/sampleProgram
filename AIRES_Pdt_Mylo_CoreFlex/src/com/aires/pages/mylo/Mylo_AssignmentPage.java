@@ -1135,6 +1135,11 @@ public class Mylo_AssignmentPage extends Base {
 			fileInfoDetailsmap.put(MYLOConstants.CLIENT_ID, assignmentDetails.transfereeWithOtherFamilyMembers.clientID);
 			fileInfoDetailsmap.put(MYLOConstants.CLIENT_NAME, assignmentDetails.transfereeWithOtherFamilyMembers.clientName);
 			break;
+		case MYLOConstants.TRANSFEREE_ALLDATA:
+			fileInfoDetailsmap.put(MYLOConstants.FILE_ID, assignmentDetails.transfereeAllData.fileID);
+			fileInfoDetailsmap.put(MYLOConstants.CLIENT_ID, assignmentDetails.transfereeAllData.clientID);
+			fileInfoDetailsmap.put(MYLOConstants.CLIENT_NAME, assignmentDetails.transfereeAllData.clientName);
+			break;
 		default:
 			Assert.fail(MYLOConstants.ENTER_CORRECT_FIELD_NAME);
 		}

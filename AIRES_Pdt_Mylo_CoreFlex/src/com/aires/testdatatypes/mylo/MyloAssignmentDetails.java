@@ -21,6 +21,7 @@ public class MyloAssignmentDetails {
 	public ClosedFileIdentDocRelonetQA4 closedFileIdentDocrelonetqa4;
 	public TransfereeWithFamily transfereeWithFamily;
 	public TransfereeWithOtherFamilyMembers transfereeWithOtherFamilyMembers;
+	public TransfereeAllData transfereeAllData;
 
 	public class ActiveAssignment {
 		public String fileID;
@@ -219,4 +220,14 @@ public class MyloAssignmentDetails {
 		public String journeyType;
 		public String office;
 	}
+	public class TransfereeAllData {
+		public String fileID;
+		public String clientID;
+		public String clientName;
+		public String status;
+		public String policyType;
+		public String provider;
+		public String journeyType;
+		public String office;
+	}	
 }

@@ -1060,11 +1060,11 @@ public class CoreFunctions {
 		return count + 1;
 	}
 
-	public static void hoverAndClick(WebDriver driver, WebElement element) {
+	public static void hoverAndClick(WebDriver driver, WebElement element,String name) {
 		Actions action = new Actions(driver);
 		action.moveToElement(element).doubleClick().build().perform();
 		Reporter.addStepLog(CoreConstants.PASS
-				+ MessageFormat.format(CoreConstants.VRFIED_ELE_CLCKED, element.getAttribute("title")));
+				+ MessageFormat.format(CoreConstants.VRFIED_ELE_CLCKED, name));
 	}
 
 	public static void scrollClickUsingJS(WebDriver driver, WebElement Element, String name) {
@@ -1874,22 +1874,39 @@ public class CoreFunctions {
 	public static String setDifferentFieldsForMylo(WebDriver driver,WebElement element, String fieldName, String fieldValue) {
 		String updatedValue;
 		try {
-			updatedValue = generateRandomCharOfLength(Integer.parseInt(fieldValue),
-					MYLOConstants.ONLY_CHARACTERS, 0);
+			updatedValue = (Integer.parseInt(fieldValue)>200)
+					? fieldValue
+					: generateRandomCharOfLength(Integer.parseInt(fieldValue),
+							MYLOConstants.ONLY_CHARACTERS, 0);
+			
 		} catch (NumberFormatException e) {
 			updatedValue = (fieldValue.equals(MYLOConstants.SPECIAL_CHARACTERS_STRING))
 					? generateRandomCharOfLength(4, MYLOConstants.SPECIAL_CHARACTERS_STRING, 2)
-					: (fieldValue.equals(""))?setBlankField(driver,element):fieldValue;
+					: (fieldValue.equals(""))?setBlankField(driver,element,fieldName):fieldValue;
 		}
 		clearAndSetText(driver, element, updatedValue);
 		return updatedValue;
 	}
 	
-	public static String setBlankField(WebDriver driver,WebElement element) {
+	public static String setBlankField(WebDriver driver,WebElement element,String fieldName) {
 			clickElement(driver, element);
 			element.sendKeys(Keys.chord(Keys.CONTROL, "a"));
 			element.sendKeys(Keys.BACK_SPACE);
 			return MYLOConstants.BLANK;
+	}
+	
+	public static String setDifferentDropDownFieldsForMylo(WebDriver driver,String fieldValue,List<WebElement> optionList) {
+		String updatedValue=null;
+			if (fieldValue.equals(MYLOConstants.RANDOM)) {
+				optionList.remove(0);
+				updatedValue = CoreFunctions.getRandomElementValueFromList(driver, optionList);
+				BusinessFunctions.selectItemFromListUsingText(driver, optionList,
+						updatedValue);
+			} else {
+				updatedValue=fieldValue;
+				BusinessFunctions.selectItemFromListUsingText(driver, optionList, fieldValue);
+			} 
+			return updatedValue;
 	}
 
 	public static String calculatePageLoadTime(double tIME_BEFORE_ACTION, double tIME_AFTER_ACTION) {

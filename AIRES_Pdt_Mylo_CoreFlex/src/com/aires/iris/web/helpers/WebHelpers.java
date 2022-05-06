@@ -1,16 +1,7 @@
 package com.aires.iris.web.helpers;
 
-import java.text.MessageFormat;
-
-import org.openqa.selenium.JavascriptExecutor;
-import org.openqa.selenium.WebDriver;
-import org.testng.Assert;
-
-import com.aires.businessrules.constants.CoreConstants;
 import com.aires.utilities.Log;
 import com.hp.lft.sdk.GeneralLeanFtException;
-import com.hp.lft.sdk.java.Table;
-import com.hp.lft.sdk.web.Browser;
 import com.hp.lft.sdk.web.Button;
 import com.hp.lft.sdk.web.CheckBox;
 import com.hp.lft.sdk.web.EditField;
@@ -19,7 +10,6 @@ import com.hp.lft.sdk.web.Link;
 import com.hp.lft.sdk.web.ListBox;
 import com.hp.lft.sdk.web.RadioGroup;
 import com.hp.lft.sdk.web.WebElement;
-import com.vimalselvam.cucumber.listener.Reporter;
 
 public class WebHelpers {
 	

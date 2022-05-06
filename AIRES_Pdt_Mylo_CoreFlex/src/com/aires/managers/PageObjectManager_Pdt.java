@@ -18,8 +18,8 @@
 package com.aires.managers;
 
 import org.openqa.selenium.WebDriver;
-
 import com.aires.pages.PDT_Mylo_CoreFlex_Common_LoginPage;
+import com.aires.pages.coreflex.CoreFlex_BluePrint_LoginPage;
 import com.aires.pages.pdt.PDT_AddNewPolicyPage;
 import com.aires.pages.pdt.PDT_AssignmentHousingPage;
 import com.aires.pages.pdt.PDT_CompensationServicesPage;
@@ -71,6 +71,7 @@ public class PageObjectManager_Pdt {
 	private PDT_Mylo_CoreFlex_Common_LoginPage _commonLoginPage;
 	private PDT_PropertyManagementPage _propertyManagementPage;
 	private PDT_HomePurchasePage _homePurchasePage;
+	private CoreFlex_BluePrint_LoginPage _bluePrintCFLoginPage;
 	
 	public PageObjectManager_Pdt(WebDriver driver) {
 		this._driver = driver;
@@ -170,5 +171,8 @@ public class PageObjectManager_Pdt {
 	
 	public PDT_HomePurchasePage getHomePurchasePage() {
 		return (_homePurchasePage == null ) ? _homePurchasePage = new PDT_HomePurchasePage(_driver) : _homePurchasePage;
+
+	public CoreFlex_BluePrint_LoginPage getBluePrintCoreFlexLoginPage() {
+		return (_bluePrintCFLoginPage == null ) ? _bluePrintCFLoginPage = new CoreFlex_BluePrint_LoginPage(_driver) : _bluePrintCFLoginPage;
 	}
 }

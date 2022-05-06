@@ -283,30 +283,30 @@ public class PDTConstants {
 	public static final String INVALID_FIELD_NAME_OPTION = "{0} Invalid Field Name Option - ''{1}''";
 	public static final String INVALID_COREFLEX_POLICY_FIELD_OPTION = "{0} Invalid CoreFlex Policy Field Option - ''{1}''";
 	public static final String EXCEPTION_OCCURED_WHILE_VALIDATING_GENERAL_INFORMATION_FIELD_DEFAULT_VALUES = "{0} Exception occured while validating General Information Page Fields Default Values. Field Name : ''{1}'' | Expected Default Value : ''{2}''. Exception : ''{3}''  ";
-	public static final String INVALID_ELEMENT = "Invalid Element. Please check Element name and try again.";	
+	public static final String INVALID_ELEMENT = "Invalid Element. Please check Element name and try again.";
 	public static final String VERIFIED_SUB_BENEFITS_DISPLAYED = "{0}Verified sub-benefit categories:-''{1}'' are displayed on ''{2}'' page.";
 	public static final String FAILED_TO_VERIFY_SUB_BENEFITS = "{0}Failed to verify sub-benefit categories on ''{1}'' page. Expected sub-benefit categories:-''{2}''. Actual sub-benefit categories displayed on page:-''{3}''";
-	//Immigration	
+	// Immigration
 	public static final String VERIFIED_TEXT_BOX_FIELD_DISPLAYED = "{0}Verified ''{1}'' text box is displayed for ''{2}'' sub benefit form.";
 	public static final String VERIFIED_TEXT_BOX_FIELD_DISPLAYED_FOR_DRPDOWN = "{0}Verified ''{1}'' text box is displayed for ''{2}'' in ''{3}'' sub benefit form.";
-	public static final String VERIFIED_DROP_DWN_FIELD_DISPLAYED = "{0}Verified ''{1}'' drop down is displayed for ''{2}'' sub benefit form.";	
+	public static final String VERIFIED_DROP_DWN_FIELD_DISPLAYED = "{0}Verified ''{1}'' drop down is displayed for ''{2}'' sub benefit form.";
 	public static final String POLICY_BENEFIT_CATEGORY = "Policy Benefit Category";
 	public static final String FAILED_TO_FILL_SUB_BENEFIT_FORM = "{0} Failed to fill ''{1}'' form";
-	//houseHunting Trip
+	// houseHunting Trip
 	public static final String HOUSE_HUNTING_TRIP_TRANSPORTATION = "House Hunting Trip Transportation";
 	public static final String HOUSE_HUNTING_TRIP_LODGING = "House Hunting Trip Lodging";
 	public static final String HOUSE_HUNTING_TRIP_MEALS = "House Hunting Trip Meals";
-	//language Training
+	// language Training
 	public static final String LANGUAGE_TRAINING_EMPLOYEE = "Language Training Employee";
 	public static final String LANGUAGE_TRAINING_FAMILY = "Language Training Family";
-	//cultural Training
+	// cultural Training
 	public static final String CULTURAL_TRAINING_EMPLOYEE = "Cultural Training Employee";
 	public static final String CULTURAL_TRAINING_FAMILY = "Cultural Training Family";
-	//Db Constants
+	// Db Constants
 	public static final String DATABASE_CONNECTION = "Database connection";
 	public static final String FAIL_TO_CALL_PROC = "Fail to call procedure";
 	public static final String FAIL_TO_CLOSE_CONNECTION = "Fail to close connection";
-	//FinalMove
+	// FinalMove
 	public static final String FINAL_MOVE_TRANSPORTATION = "Final Move Transportation";
 	public static final String FINAL_MOVE_LODGING = "Final Move Lodging";
 	public static final String FINAL_MOVE_MEALS = "Final Move Meals";
@@ -318,10 +318,10 @@ public class PDTConstants {
 	public static final String FAILED_TO_FILL_VALUE_IN_TEXTBOX = "{0}Failed to fill value in ''{1}'' text box on ''{2}'' form.";
 	public static final String FAILED_TO_SELECT_MULTIPLE_OPTIONS = "{0}Failed to select multiple options from ''{1}'' drop down on ''{2}'' form.";
 	public static final String FAILED_TO_FILL_FIELD_VALUES = "Failed to fill value in Flat Amount Per Night and currency drop down fields.";
-	//Home Leave
+	// Home Leave
 	public static final String HOME_LEAVE_TRANSPORTATION = "Home Leave Transportation";
 	public static final String HOME_LEAVE_LODGING = "Home Leave Lodging";
-	public static final String HOME_LEAVE_MEALS = "Home Leave Meals";	
+	public static final String HOME_LEAVE_MEALS = "Home Leave Meals";
 	public static final String TRANSFER = "Transfer";
 	public static final String ASSIGNMENT = "Assignment";
 	public static final String TRANSFER_NUMTRIPS_NOT_DISPLAYED = "Transfer - Number of Trips textbox field is not displayed";
@@ -329,10 +329,10 @@ public class PDTConstants {
 	public static final String ASSIGNMENT_FREQTRIPS_NOT_DISPLAYED = "Assignment - Frequency of Trips drop down field is not displayed";
 	public static final String OTHER_TEXTBOX_NOT_DISPLAYED = "{0} ''{1}'' text box field is not displayed for ''{2}'' in ''{3}'' sub benefit form";
 	public static final String INVALID_TRACINGSET = "Option ''{0}'' is invalid Tracing set.";
-	public static final String EXCEPTION_OCCURED_VERIFY_OTHER_TEXT_BOX = "{0} Exception occurred while verifying ''{1}'' textbox for ''{2}'' in ''{3}'' sub benefit form"; 
+	public static final String EXCEPTION_OCCURED_VERIFY_OTHER_TEXT_BOX = "{0} Exception occurred while verifying ''{1}'' textbox for ''{2}'' in ''{3}'' sub benefit form";
 	public static final String FAILED_TO_VERIFY_FLAT_AMT = "Failed to verify Flat amount option for Max Amount";
 	public static final String WEB_ELEMENT_NOT_FOUND_ON_PAGE = "{0}Web element ''{1}'' not found on page.";
-	//Temporary Living
+	// Temporary Living
 	public static final String TEMPORARY_LIVING_TRANSPORTATION = "Temporary Living Transportation";
 	public static final String TEMPORARY_LIVING_LODGING = "Temporary Living Lodging";
 	public static final String TEMPORARY_LIVING_MEALS = "Temporary Living Meals";
@@ -342,7 +342,7 @@ public class PDTConstants {
 	public static final String POLICY_DOES_NOT_EXIST = "{0} Corporation Policy :- ''{1}'' does not exist in Policy drop down for ClientID:- ''{2}''.";
 	public static final String VERIFIED_POLICY_DISPLAYED = "{0}Verified Policy:-''{1}'' is displayed in Policy drop down";
 	public static final String VERIFIED_POLICY_NOT_DISPLAYED = "{0}Verified Policy:-''{1}'' is not displayed in Policy drop down";
-	//Destination Services
+	// Destination Services
 	public static final String AIRPORT_PICKUP = "Airport Pickup";
 	public static final String AREA_TOUR = "Area Tour";
 	public static final String AUTO_RENTAL_DURING_ASSIGNMENT = "Auto Rental During Assignment";
@@ -428,4 +428,28 @@ public class PDTConstants {
 	public static final String EXCEPTION_OCCURED_SELECT_AIRES_PREFERRED_LENDERS = "{0} Exception occurred while selecting Aires Preferred Lenders data for ''{1}'' sub-benefit form.";
 	public static final String CHECK_BOX_LIST = "Check Box List";
 	public static final String DEFAULT_CURRENCY = "U.S. Dollar";
+
+	// Add New Policy
+	public static final String EXCEPTION_OCCURED_WHILE_SELECTING_CLIENTID = "{0}Exception occured while selecting ClientID. Exception : ''{1}''.";
+	public static final String FAILED_TO_SELECT_CLIENTID_FROM_CLIENTID_FIELD = "{0}Failed to select ClientID from ClientID Field.";
+	public static final String COREFLEX_ENABLED = "CoreFleX Enabled";
+	// NewValidationChecks
+	public static final String TRACING_SET = "Tracing Set";
+	public static final String POLICY_STATUS = "Policy Status";
+	public static final String DRAFT = "Draft";
+	public static final String PARTIALLY_CAPPED = "Partially Capped";
+	public static final String FAILED_TO_VERIFY_COREFLEX_RELATED_FIELDS_ON_GENERAL_INFO_PAGE = "{0}Failed to verify coreflex related fields on General Information Page.";
+	public static final String POINTS_BASED_FLEX_POLICY_OPTIONS = "Yes,No";
+	public static final String CAPPED_POINTS_ERROR_DIALOG_TEXT = "You may only select either Capped Policy or Points Based Flex Policy. In order to select either one, please unselect the other if not already done so.";
+	public static final String ERROR_DIALOG_NOT_DISPLAYED = "Capped Policy / Points Based Flex Policy Validation Error dialog not displayed.";
+	public static final String OK = "OK";
+	public static final String SELECT_ALL = "Select All";
+	public static final String DESELECT_ALL = "Deseelct All";
+	public static final String POLICY_BENEFITS_CATEGORIES = "Policy Benefits Categories";
+	public static final String EXCEPTION_OCCURED_WHILE_VALIDATING_CAPPED_AND_POINTS_BASED_FLEX_POLICY_ERROR_POPUP_ON_GENERAL_INFO = "{0}Exception occured while validating Capped and Points based Flex Policy Error Popup on General Information Page. Exception : ''{1}''.";
+	public static final String FAILED_TO_VERIFY_DEFAULT_VALUE_OF_GENERAL_INFORMATION_PAGE_FIELD = "{0}Failed to verify default value of ''{1}'' field of General Information Page.";
+	public static final String SUCCESSFULLY_VERIFIED_CAPPED_AND_POINTS_BASED_FLEX_POLICY_ERROR_POPUP_ON_GENERAL_INFORMATION_PAGE = "{0}Successfully verified Capped & Points Based Flex Policy Conditional Checks error pop up on General Information Page.";
+	public static final String FAILED_TO_VERIFY_CAPPED_AND_POINTS_BASED_FLEX_POLICY_CONDITIONAL_CHECKS_ERROR_POP_UP_ON_GENRAL_INFORMATION_PAGE = "{0}Failed to verify Capped & Points Based Flex Policy Conditional Checks error pop up on General Information Page.";
+	public static final String FAILED_TO_NAVIGATE_TO_COREFLEX_BLUE_PRINT_APPLICATION_LOGIN_PAGE = "{0}Failed to navigate to Coreflex Blue Print application Login Page.";
+	public static final String FAILED_TO_NAVIGATE_TO_COREFLEX_GENERAL_INFORMATION_PAGE = "{0}Failed to navigate to CoreFlex General Information Page.";
 }

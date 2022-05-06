@@ -76,9 +76,17 @@ public class Hooks {
 			testContext.getWebDriverManager().getDriver().navigate()
 					.to(FileReaderManager.getInstance().getConfigReader().getMyloApplicationUrl());
 		} else if (scenario.getName().contains("CoreFlex")) {
-			Log.info(FileReaderManager.getInstance().getConfigReader().getCoreFlexApplicationUrl());
+			Log.info(FileReaderManager.getInstance().getConfigReader().getCoreFlexPolicySetupApplicationUrl());
 			testContext.getWebDriverManager().getDriver().navigate()
-					.to(FileReaderManager.getInstance().getConfigReader().getCoreFlexApplicationUrl());
+					.to(FileReaderManager.getInstance().getConfigReader().getCoreFlexPolicySetupApplicationUrl());
+		}else if (scenario.getName().contains("MXTransferee")) {
+			Log.info(FileReaderManager.getInstance().getConfigReader().getMobilityXUrl());
+			testContext.getWebDriverManager().getDriver().navigate()
+					.to(FileReaderManager.getInstance().getConfigReader().getMobilityXUrl());
+		}		else if (scenario.getName().contains("TransfereeSubmissions")) {
+			Log.info(FileReaderManager.getInstance().getConfigReader().getCoreFlexTransfereeSubmissionsApplicationUrl());
+			testContext.getWebDriverManager().getDriver().navigate()
+					.to(FileReaderManager.getInstance().getConfigReader().getCoreFlexTransfereeSubmissionsApplicationUrl());
 		}
 	}
 

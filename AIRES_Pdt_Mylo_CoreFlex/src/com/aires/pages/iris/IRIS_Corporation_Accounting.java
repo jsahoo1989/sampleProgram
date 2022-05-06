@@ -146,6 +146,7 @@ public class IRIS_Corporation_Accounting extends BasePage {
 				if (policyName.equals(table.getCell(rowCount, "Policy").getValue().toString())) {
 					performCoreFlexCheckboxSelectionBasedOnUserInput(table, rowCount, columnName, policyName,
 							checkboxSelection);
+					CoreFunctions.writeToPropertiesFile("Policy_TracingSet", (table.getCell(rowCount, "Tracing Set").getValue().toString()));
 					break;
 				}
 			}
@@ -179,6 +180,7 @@ public class IRIS_Corporation_Accounting extends BasePage {
 		default:
 			Assert.fail(IRISConstants.NO_VALID_SELECTION);
 		}
+		
 	}
 
 	/**
@@ -393,6 +395,7 @@ public class IRIS_Corporation_Accounting extends BasePage {
 		}
 		return false;
 	}
+
 	
 	public void addPolicy() throws GeneralLeanFtException, Exception {
 		Helpers.clickButton(IRIS_PageMaster.getButtonObject(_IRIS, "Add", 0), IRIS_PageMaster.getButtonObject(_IRIS, "Add", 0).getAttachedText());

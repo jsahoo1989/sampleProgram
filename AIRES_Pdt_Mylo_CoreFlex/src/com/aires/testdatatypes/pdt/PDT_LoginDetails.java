@@ -69,6 +69,7 @@ public class PDT_LoginDetails {
 		public String clientName;
 		public String csmUserName;
 		public String csmPassword;
+		public String csmUserFirstName;
 		public String policy;
 	}
 
@@ -83,6 +84,7 @@ public class PDT_LoginDetails {
 		public String clientName;
 		public String csmUserName;
 		public String csmPassword;
+		public String csmUserFirstName;
 		public String policy;
 	}
 	
@@ -97,6 +99,7 @@ public class PDT_LoginDetails {
 		public String clientName;
 		public String csmUserName;
 		public String csmPassword;
+		public String csmUserFirstName;
 		public String policy;
 	}
 	
@@ -111,6 +114,7 @@ public class PDT_LoginDetails {
 		public String clientName;
 		public String csmUserName;
 		public String csmPassword;
+		public String csmUserFirstName;
 		public String policy;
 	}
 	
@@ -125,6 +129,7 @@ public class PDT_LoginDetails {
 		public String clientName;
 		public String csmUserName;
 		public String csmPassword;
+		public String csmUserFirstName;
 		public String policy;
 	}
 }

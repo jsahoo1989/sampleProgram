@@ -4,12 +4,14 @@ import java.text.MessageFormat;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
 import org.openqa.selenium.By;
+import org.openqa.selenium.Keys;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.Color;
@@ -19,6 +21,7 @@ import org.testng.Assert;
 import com.aires.businessrules.Base;
 import com.aires.businessrules.BusinessFunctions;
 import com.aires.businessrules.CoreFunctions;
+import com.aires.businessrules.DbFunctions;
 import com.aires.businessrules.constants.CoreConstants;
 import com.aires.businessrules.constants.MYLOConstants;
 import com.aires.managers.FileReaderManager;
@@ -57,8 +60,11 @@ public class Mylo_AssignmentPage extends Base {
 
 	@FindBy(how = How.XPATH, using = "//h1[text()='Aires File Team']/parent::td/following-sibling::td/button")
 	private WebElement _airesFileTeamAddButton;
-
-	@FindBy(how = How.XPATH, using = "//h1[text()='Aires File Team']/parent::td/following-sibling::td//descendant::i[@class='icon-FloppyDisk_Open save_section']")
+	
+	@FindBy(how = How.XPATH, using = "//i[@class='icon-XCircle_Open']/parent::button")
+	private WebElement _airesFileTeamCancelButton;
+	
+	@FindBy(how = How.XPATH, using = "//i[@class='icon-FloppyDisk_Open']")
 	private WebElement _airesFileTeamSaveButton;
 
 	@FindBy(how = How.XPATH, using = "//h1[text()='Aires File Team']/following::tbody[1]/tr")
@@ -76,13 +82,13 @@ public class Mylo_AssignmentPage extends Base {
 	@FindBy(how = How.XPATH, using = "//button[text()='Yes']")
 	private WebElement _YesButton;
 	
-	@FindBy(how = How.XPATH, using = "//button[text()=' Save ']")
+	@FindBy(how = How.XPATH, using = "//button[text()='Save']")
 	private WebElement _SaveButton;
 	
 	@FindBy(how = How.XPATH, using = "//span[text()='Save']")
 	private WebElement _otherAddressSaveButton;
 	
-	@FindBy(how = How.XPATH, using = "//button[text()=' Cancel ']")
+	@FindBy(how = How.XPATH, using = "//button[text()='Cancel']")
 	private WebElement _CancelButton;
 
 	@FindBy(how = How.CSS, using = "input[placeholder='FILE ID']")
@@ -121,13 +127,13 @@ public class Mylo_AssignmentPage extends Base {
 	@FindBy(how = How.XPATH, using = "//button[text()=' File Information ']//following::div[@id='collapseOne']//input[@type='checkbox']")
 	private List<WebElement> _fileInfoCheckBoxText;
 
-	@FindBy(how = How.XPATH, using = "//button[text()=' File Information ']//following::button[text()='Save']")
+	@FindBy(how = How.XPATH, using = "//i[@class='icon-FloppyDisk_Open save_section']")
 	private WebElement _fileInfoSaveButton;
 
-	@FindBy(how = How.XPATH, using = "//button[text()=' File Information ']//following::button[text()='Cancel']")
+	@FindBy(how = How.XPATH, using = "//i[@class='icon-XCircle_Open close_section']/parent::button")
 	private WebElement _fileInfoCancelButton;
 
-	@FindBy(how = How.XPATH, using = "//button[text()=' File Information ']//following::div[@id='collapseOne']//descendant::button[text()='Edit']")
+	@FindBy(how = How.XPATH, using = "//button[text()=' File Information ']//following::div[@id='collapseOne']//descendant::button")
 	private WebElement _fileInfoEditButton;
 
 	@FindBy(how = How.XPATH, using = "//ng-select[@name='taxTreatment']")
@@ -144,26 +150,29 @@ public class Mylo_AssignmentPage extends Base {
 	
 	// *************** Other Adddresses section ***********************//
 	
-	@FindBy(how = How.XPATH, using = "//a[text()='Add Mailing Address']/preceding-sibling::img")
+	@FindBy(how = How.XPATH, using = "//a[text()='Add Mailing Address']/preceding-sibling::i")
 	private WebElement _addMailAddressBtn;
 	
-	@FindBy(how = How.XPATH, using = "//a[text()='Add Temporary Address']/preceding-sibling::img")
+	@FindBy(how = How.XPATH, using = "//a[text()='Add Temporary Address']/preceding-sibling::i")
 	private WebElement _addTempAddressBtn;
 	
 	@FindBy(how = How.XPATH, using = "//ng-select[@name='popupcountry']")
 	private WebElement _countryDropdown;
 	
-	@FindBy(how = How.XPATH, using = "//h1[@class='popupheader']/following::ng-select[@name='state']")
+	@FindBy(how = How.XPATH, using = "//h5[@class='modal-title']/following::ng-select[@name='state']")
 	private WebElement _stateDropdown;
 	
-	@FindBy(how = How.XPATH, using = "//h1[@class='popupheader']/following::ng-select[@name='state']//following-sibling::label")
+	@FindBy(how = How.XPATH, using = "//h5[@class='modal-title']/following::ng-select[@name='state']//following-sibling::label")
 	private WebElement _stateFieldName;
 	
-	@FindBy(how = How.XPATH, using = "//h1[@class='popupheader']/following::input[@formcontrolname='stateProvince']")
+	@FindBy(how = How.XPATH, using = "//h5[@class='modal-title']/following::input[@formcontrolname='stateProvince']")
 	private WebElement _stateFieldTextType;
 	
 	@FindBy(how = How.CSS, using = "h1[class='popupheader']")
 	private WebElement _popUpHeader;
+	
+	@FindBy(how = How.CSS, using = "h5[class='modal-title']")
+	private WebElement _modalTitle;
 	
 	@FindBy(how = How.XPATH, using = "//app-address[@id='temporaryAddress']//ng-select[@name='country']")
 	private WebElement _tempAddressCountryDropdown;
@@ -331,6 +340,68 @@ public class Mylo_AssignmentPage extends Base {
 	
 	@FindBy(how = How.CSS, using = "a[class='dropdown-item']")
 	private List<WebElement> _shipmentDropdownValues;
+	
+	// *************** Identification & Documentation section ***********************//
+	
+	@FindBy(how = How.XPATH, using = "//app-aires-identification/descendant::label[text()='Add']/parent::button")
+	private WebElement _identDocAddIcon;
+	
+	@FindBy(how = How.XPATH, using = "//app-aires-identification/descendant::label[text()='Edit']/parent::button")
+	private WebElement _identDocEditIcon;
+	
+	@FindBy(how = How.XPATH, using = "//app-aires-identification/descendant::label[text()='Save']/parent::button")
+	private WebElement _identDocSaveIcon;
+	
+	@FindBy(how = How.XPATH, using = "//app-aires-identification/descendant::label[text()='Cancel']/parent::button")
+	private WebElement _identDocCancelIcon;
+	
+	@FindBy(how = How.XPATH, using = "//app-identification-detail/tbody/tr")
+	private WebElement _noOfRowsIdentDocDetails;
+	
+	@FindBy(how = How.XPATH, using = "//ng-select[contains(@id,'IDType')]//descendant::span[@class='ng-arrow-wrapper']")
+	private List<WebElement> _identDocTypeDropdowns;
+	
+	@FindBy(how = How.XPATH, using = "//ng-select[contains(@id,'IDCountry')]")
+	private List<WebElement> _identDocCountryDropdowns;
+	
+	@FindBy(how = How.XPATH, using = "//input[contains(@id,'IDNumber')]")
+	private List<WebElement> _identDocNumbers;
+	
+	@FindBy(how = How.XPATH, using = "//input[contains(@id,'fromDate')]")
+	private List<WebElement> _identDocFromDates;
+	
+	@FindBy(how = How.XPATH, using = "//input[contains(@id,'toDate')]")
+	private List<WebElement> _identDocToDates;
+	
+	@FindBy(how = How.XPATH, using = "//label[text()='Remove']//parent::button")
+	private List<WebElement> _identDocDeleteIcon;	
+	
+	@FindBy(how = How.XPATH, using = "//ng-select[contains(@id,'IDType')]//span[contains(@class,'ng-value-label')]")
+	private List<WebElement> _identDocTypeValuesSelected;
+	
+	@FindBy(how = How.XPATH, using = "//ng-select[contains(@id,'IDCountry')]/descendant::span[contains(@class,'ng-value-label')]")
+	private List<WebElement> _identDocCountryValuesSelected;
+	
+	@FindBy(how = How.XPATH, using = "//a[contains(@class,'idlist__item')]")
+	private List<WebElement> _identDocTransferreFamilyMembersName;
+	
+	@FindBy(how = How.XPATH, using = "//tr[@class='tablehead']//h1")
+	private List<WebElement> _assignmentSectionHeaders;
+	
+	@FindBy(how = How.CSS, using = "h1[id='purple_bubble_name']")
+	private WebElement _transfereeNameHeader;
+	
+	@FindBy(how = How.CSS, using = "div[role='alert']")
+	private List<WebElement> _alertMessageList;
+	
+	@FindBy(how = How.XPATH, using = "//div[contains(@class,'toast-error')]")
+	private List<WebElement> _alertMessageListBackColour;
+	
+	@FindBy(how = How.XPATH, using = "//ng-select[contains(@id,'IDType')]")
+	private List<WebElement> _identDocTypeBackColour;
+	
+	@FindBy(how = How.XPATH, using = "//label[text()='Remove']/preceding-sibling::i")
+	private List<WebElement> _removeButton;
 			
 	int noOfAiresFileTeamMember;
 	LinkedHashMap<String, String> airesFileTeamExistingMembers = new LinkedHashMap<String, String>();
@@ -338,10 +409,16 @@ public class Mylo_AssignmentPage extends Base {
 	LinkedHashMap<String, WebElement> otherAdressFieldValueMap = new LinkedHashMap<String, WebElement>();
 	LinkedHashMap<String, String> otherAdressvalidFieldValueMap = new LinkedHashMap<String, String>();
 	List<WebElement> countryList = new ArrayList<WebElement>();
+	List<WebElement> identityTypeList = new ArrayList<WebElement>();
 	List<WebElement> typeDropDownList = new ArrayList<WebElement>();
 	List<WebElement> stateList = new ArrayList<WebElement>();
 	List<String> historyfileIds = new ArrayList<String>();
 	List<String> historyDetails = new ArrayList<String>();
+	List<String> identDocTypeValues = new ArrayList<String>();
+	List<String> identDocCountryValues = new ArrayList<String>();
+	List<String> identDocNumberValues = new ArrayList<String>();
+	List<String> identDocFromDateValues = new ArrayList<String>();
+	List<String> identDocToDateValues = new ArrayList<String>();
 
 	final By _dropdownOptions = By.xpath("//div[@role='option']/span");
 	final By _fileInfoOfficeDropdownReadOnly = By.xpath("//ng-select[@name='office']//descendant::input[@disabled='']");
@@ -358,7 +435,7 @@ public class Mylo_AssignmentPage extends Base {
 	updatedMailAddressCityValue, updatedTempAddressZipCodeValue, updatedMailAddressZipCodeValue,
 	updatedTempAddressCommentsValue, updatedMailAddressCommentsValue, updatedTempAddressStateValue,
 	updatedMailAddressStateValue, updatedTempAddress1Value, updatedMailAddress1Value, updatedTempAddress2Value,
-	updatedMailAddress2Value, updatedTempAddressFromDateValue, updatedMailAddressFromDateValue,updatedCountryValue;
+	updatedMailAddress2Value, updatedTempAddressFromDateValue, updatedMailAddressFromDateValue,updatedCountryValue,updatedTypeValue,updatedNoValue,updatedFromDate,updatedToDate;
 
 	/**
 	 * @param option 
@@ -376,9 +453,6 @@ public class Mylo_AssignmentPage extends Base {
 	 */
 	public boolean verifyActiveTab(String tabName) {
 		List<WebElement> subTabs = CoreFunctions.getElementListByLocator(driver, _assignmentSubMenus);
-		noOfAiresFileTeamMember = _noOfAddedAiresFileTeamMember.size();
-		airesFileTeamExistingMembers = CoreFunctions.returnMapFromBothLists(driver, _airesFileTeamRoleName,
-				_airesFileTeamMemberName);
 		WebElement tabElement = CoreFunctions.returnItemInListByText(driver, subTabs, tabName);
 		return (tabElement.getAttribute("class").contains("active")) ? true : false;
 	}
@@ -392,10 +466,13 @@ public class Mylo_AssignmentPage extends Base {
 	public void clickButtonOnAiresFileTeamSection(String buttonName) {
 		switch (buttonName) {
 		case MYLOConstants.ADD_BUTTON:
-			CoreFunctions.click(driver, _airesFileTeamAddButton, _airesFileTeamAddButton.getText());
+			noOfAiresFileTeamMember = _noOfAddedAiresFileTeamMember.size();
+			airesFileTeamExistingMembers = CoreFunctions.returnMapFromBothLists(driver, _airesFileTeamRoleName,
+					_airesFileTeamMemberName);
+			CoreFunctions.click(driver, _airesFileTeamAddButton, MYLOConstants.ADD_BUTTON);
 			break;
 		case MYLOConstants.CANCEL_BUTTON:
-			CoreFunctions.click(driver, _airesFileTeamAddButton, _airesFileTeamAddButton.getText());
+			CoreFunctions.click(driver, _airesFileTeamCancelButton, MYLOConstants.CANCEL_BUTTON);
 			break;
 		case MYLOConstants.SAVE_BUTTON:
 			CoreFunctions.click(driver, _airesFileTeamSaveButton, _airesFileTeamSaveButton.getText());
@@ -506,13 +583,23 @@ public class Mylo_AssignmentPage extends Base {
 	 * Verifying the Warning Message Text on Aires File Team section
 	 */
 	public boolean verifyPopUpMessage(String msg) {
+		boolean flag=false;
 		try {
 			CoreFunctions.explicitWaitTillElementVisibility(driver, _popUpMessage, _popUpMessage.getText());
-			Assert.assertEquals(_popUpMessage.getText(), msg);
-		} catch (Throwable e) {
-			return false;
+			CoreFunctions.highlightObject(driver, _popUpMessage);
+			flag=(_popUpMessage.getText().equals(msg));
 		}
-		return true;
+		catch (Exception e) {
+			Reporter.addStepLog(MessageFormat.format(CoreConstants.FAIL_TO_VERIFY_ELEMENT_ON_PAGE, CoreConstants.FAIL,
+					MYLOConstants.EXPECTED_POPUP_MESSAGE, MYLOConstants.ASSIGNMENT));
+		}
+		if (flag)
+			Reporter.addStepLog(MessageFormat.format(MYLOConstants.VERIFIED_POPUP_MESSAGE_DISPLAYED, CoreConstants.PASS,
+					msg, MYLOConstants.ASSIGNMENT));
+		else
+			Reporter.addStepLog(MessageFormat.format(MYLOConstants.EXPECTED_MESSAGE_DISPLAYED, CoreConstants.FAIL, msg,
+					_popUpMessage.getText(), MYLOConstants.ASSIGNMENT));
+		return flag;
 	}
 
 	/**
@@ -539,11 +626,14 @@ public class Mylo_AssignmentPage extends Base {
 				.collect(Collectors.toList());
 		List<String> allEndDates = _airesFileTeamEndDates.stream().map(x -> x.getAttribute(MYLOConstants.VALUE))
 				.collect(Collectors.toList());
-		String currentDate = DateTimeFormatter.ofPattern("MM/dd/yyyy").format(LocalDate.now());
+		String currentDate = DateTimeFormatter.ofPattern("MM/dd/yyyy").format(LocalDate.now());		
+		String expectedDateFormat= CoreFunctions.getStringDateInFormat(currentDate, "MM/dd/yyyy",
+				"dd MMM yyyy");
+		
 		if (allTeamMembers.get(allRoleNames.indexOf(roleName)).trim().equals(updatedTeamMember)
-				&& allStartDates.get(allRoleNames.indexOf(roleName)).trim().equals(currentDate)
+				&& allStartDates.get(allRoleNames.indexOf(roleName)).trim().equals(expectedDateFormat)
 				&& allEndDates.get(allRoleNames.indexOf(roleName)).trim().equals(MYLOConstants.ACTIVE)
-				&& allEndDates.get(allRoleNames.lastIndexOf(roleName)).trim().equals(currentDate)) {
+				&& allEndDates.get(allRoleNames.lastIndexOf(roleName)).trim().equals(expectedDateFormat)) {
 
 			Reporter.addStepLog(MessageFormat.format(CoreConstants.VRYFD_UPDATED_ROW, CoreConstants.PASS, roleName,
 					MYLOConstants.AIRES_FILE_TEAM));
@@ -583,6 +673,7 @@ public class Mylo_AssignmentPage extends Base {
 		case MYLOConstants.CANCEL_BUTTON:
 			CoreFunctions.explicitWaitTillElementVisibility(driver, _fileInfoCancelButton,
 					_fileInfoCancelButton.getText());
+			CoreFunctions.scrollVerticallyDownByGivenPixle(driver, 20);
 			CoreFunctions.click(driver, _fileInfoCancelButton, _fileInfoCancelButton.getText());
 			CoreFunctions.explicitWaitTillElementVisibility(driver, _fileInfoEditButton, _fileInfoEditButton.getText());
 			break;
@@ -689,7 +780,7 @@ public class Mylo_AssignmentPage extends Base {
 			Reporter.addStepLog(MessageFormat.format(CoreConstants.VRFIED_ELE_PAGE, CoreConstants.PASS, _fileInfoTaxTreatmentSection.getText()));
 			Reporter.addStepLog(MessageFormat.format(CoreConstants.VRFIED_ELE_PAGE, CoreConstants.PASS, _fileInfoStatus.getText()));
 			Reporter.addStepLog(MessageFormat.format(CoreConstants.VRFIED_ELE_PAGE, CoreConstants.PASS, _fileInfoProvider.getText()));
-			Reporter.addStepLog(MessageFormat.format(CoreConstants.VRFIED_ELE_PAGE, CoreConstants.PASS, _fileInfoEditButton.getText()));
+			Reporter.addStepLog(MessageFormat.format(CoreConstants.VRFIED_ELE_PAGE, CoreConstants.PASS, MYLOConstants.EDIT_BUTTON));
 			return true;
 		}
 		Reporter.addStepLog(
@@ -905,8 +996,8 @@ public class Mylo_AssignmentPage extends Base {
 		}
 
 		else if (buttonName.equals(MYLOConstants.SAVE_BUTTON)) {
-			Assert.assertTrue(verifyMessage(MYLOConstants.SUCCESS_MESSAGE));
-			clickButtonOnAiresFileInformationSection(MYLOConstants.OK_BUTTON);
+			//Assert.assertTrue(verifyMessage(MYLOConstants.SUCCESS_MESSAGE));
+			//clickButtonOnAiresFileInformationSection(MYLOConstants.OK_BUTTON);
 			Assert.assertTrue(verifyFileInfoUpdatedFields(MYLOConstants.POLICY_TYPE));
 			Assert.assertTrue(verifyFileInfoUpdatedFields(MYLOConstants.JOURNEY_TYPE));
 			Assert.assertTrue(verifyFileInfoUpdatedFields(MYLOConstants.HOMESTATUS));
@@ -925,8 +1016,8 @@ public class Mylo_AssignmentPage extends Base {
 		updateFileInfoFields(MYLOConstants.HOMESTATUS, MYLOConstants.HOMESTATUS_VALUE);
 		clickCheckBoxOnAiresFileInfoSection(MYLOConstants.INHERITED_FILE);
 		clickButtonOnAiresFileInformationSection(MYLOConstants.SAVE_BUTTON);
-		Assert.assertTrue(verifyMessage(MYLOConstants.SUCCESS_MESSAGE));
-		clickButtonOnAiresFileInformationSection(MYLOConstants.OK_BUTTON);
+		//Assert.assertTrue(verifyMessage(MYLOConstants.SUCCESS_MESSAGE));
+		//clickButtonOnAiresFileInformationSection(MYLOConstants.OK_BUTTON);
 	}
 
 	/**
@@ -1010,30 +1101,125 @@ public class Mylo_AssignmentPage extends Base {
 			fileInfoDetailsmap.put(MYLOConstants.CLIENT_NAME, assignmentDetails.closedFile.clientName);
 			break;
 		case MYLOConstants.RELOCATION_POLICY:
-			fileInfoDetailsmap.put(MYLOConstants.FILE_ID, assignmentDetails.relocationPolicyType.fileID);
+			fileInfoDetailsmap.put(MYLOConstants.FILE_ID, getTestDataRelocationTypeFileId());
 			fileInfoDetailsmap.put(MYLOConstants.CLIENT_ID, assignmentDetails.relocationPolicyType.clientID);
 			fileInfoDetailsmap.put(MYLOConstants.CLIENT_NAME, assignmentDetails.relocationPolicyType.clientName);
 			break;
 		case MYLOConstants.LUMP_SUM_PLAN_POLICY:
-			fileInfoDetailsmap.put(MYLOConstants.FILE_ID, assignmentDetails.lumpSumpPlanPolicyType.fileID);
+			fileInfoDetailsmap.put(MYLOConstants.FILE_ID, getTestDataLumpSumTypeFileId());
 			fileInfoDetailsmap.put(MYLOConstants.CLIENT_ID, assignmentDetails.lumpSumpPlanPolicyType.clientID);
 			fileInfoDetailsmap.put(MYLOConstants.CLIENT_NAME, assignmentDetails.lumpSumpPlanPolicyType.clientName);
 			break;
 		case MYLOConstants.DOMESTIC_POLICY:
-			fileInfoDetailsmap.put(MYLOConstants.FILE_ID, assignmentDetails.domesticPolicyType.fileID);
+			fileInfoDetailsmap.put(MYLOConstants.FILE_ID, getTestDataDomesticTypeFileId());
 			fileInfoDetailsmap.put(MYLOConstants.CLIENT_ID, assignmentDetails.domesticPolicyType.clientID);
 			fileInfoDetailsmap.put(MYLOConstants.CLIENT_NAME, assignmentDetails.domesticPolicyType.clientName);
 			break;
 		case MYLOConstants.ACTIVE_ASSIGNMENT:
-			fileInfoDetailsmap.put(MYLOConstants.FILE_ID, assignmentDetails.activeAssignment.fileID);
+			fileInfoDetailsmap.put(MYLOConstants.FILE_ID, getTestDataActiveFileId());
 			fileInfoDetailsmap.put(MYLOConstants.CLIENT_ID, assignmentDetails.activeAssignment.clientID);
 			fileInfoDetailsmap.put(MYLOConstants.CLIENT_NAME, assignmentDetails.activeAssignment.clientName);
+			break;
+		case MYLOConstants.CLOSED_IDENTITYDOC:
+			fileInfoDetailsmap.put(MYLOConstants.FILE_ID, getTestDataClosedIdentityDocFileId());
+			fileInfoDetailsmap.put(MYLOConstants.CLIENT_ID, assignmentDetails.closedFileIdentDoc.clientID);
+			fileInfoDetailsmap.put(MYLOConstants.CLIENT_NAME, assignmentDetails.closedFileIdentDoc.clientName);
+			break;
+		case MYLOConstants.TRANSFEREE_WITH_FAMILY_MEMBER:
+			fileInfoDetailsmap.put(MYLOConstants.FILE_ID, assignmentDetails.transfereeWithFamily.fileID);
+			fileInfoDetailsmap.put(MYLOConstants.CLIENT_ID, assignmentDetails.transfereeWithFamily.clientID);
+			fileInfoDetailsmap.put(MYLOConstants.CLIENT_NAME, assignmentDetails.transfereeWithFamily.clientName);
+			break;
+		case MYLOConstants.TRANSFEREE_WITH_OTHER_FAMILY_MEMBERS:
+			fileInfoDetailsmap.put(MYLOConstants.FILE_ID, assignmentDetails.transfereeWithOtherFamilyMembers.fileID);
+			fileInfoDetailsmap.put(MYLOConstants.CLIENT_ID, assignmentDetails.transfereeWithOtherFamilyMembers.clientID);
+			fileInfoDetailsmap.put(MYLOConstants.CLIENT_NAME, assignmentDetails.transfereeWithOtherFamilyMembers.clientName);
 			break;
 		default:
 			Assert.fail(MYLOConstants.ENTER_CORRECT_FIELD_NAME);
 		}
 		return fileInfoDetailsmap.get(requiredField);
 
+	}
+	
+	public String getTestDataActiveFileId() {
+		String environment = CoreFunctions.getPropertyFromConfig("envt");
+		String fileID = null;
+		switch(environment) {
+		case MYLOConstants.UAT:
+			fileID = assignmentDetails.activeAssignment.fileID;
+			break;
+		case MYLOConstants.RELONETQA4:
+			fileID = assignmentDetails.activeAssignment_relonetqa4.fileID;
+			break;
+		default:
+			Assert.fail(MYLOConstants.ENTER_CORRECT_FIELD_NAME);	
+		}
+		return fileID;
+	}
+	
+	public String getTestDataClosedIdentityDocFileId() {
+		String environment = CoreFunctions.getPropertyFromConfig("envt");
+		String fileID = null;
+		switch(environment) {
+		case MYLOConstants.UAT:
+			fileID = assignmentDetails.closedFileIdentDoc.fileID;
+			break;
+		case MYLOConstants.RELONETQA4:
+			fileID = assignmentDetails.closedFileIdentDocrelonetqa4.fileID;
+			break;
+		default:
+			Assert.fail(MYLOConstants.ENTER_CORRECT_FIELD_NAME);	
+		}
+		return fileID;
+	}
+	
+	public String getTestDataRelocationTypeFileId() {
+		String environment = CoreFunctions.getPropertyFromConfig("envt");
+		String fileID = null;
+		switch(environment) {
+		case MYLOConstants.UAT:
+			fileID = assignmentDetails.relocationPolicyType.fileID;
+			break;
+		case MYLOConstants.RELONETQA4:
+			fileID = assignmentDetails.relocationPolicyTyperelonetqa4.fileID;
+			break;
+		default:
+			Assert.fail(MYLOConstants.ENTER_CORRECT_FIELD_NAME);	
+		}
+		return fileID;
+	}
+	
+	public String getTestDataLumpSumTypeFileId() {
+		String environment = CoreFunctions.getPropertyFromConfig("envt");
+		String fileID = null;
+		switch(environment) {
+		case MYLOConstants.UAT:
+			fileID = assignmentDetails.lumpSumpPlanPolicyType.fileID;
+			break;
+		case MYLOConstants.RELONETQA4:
+			fileID = assignmentDetails.lumpSumpPlanPolicyTyperelonetqa4.fileID;
+			break;
+		default:
+			Assert.fail(MYLOConstants.ENTER_CORRECT_FIELD_NAME);	
+		}
+		return fileID;
+	}
+	
+	public String getTestDataDomesticTypeFileId() {
+		String environment = CoreFunctions.getPropertyFromConfig("envt");
+		String fileID = null;
+		switch(environment) {
+		case MYLOConstants.UAT:
+			fileID = assignmentDetails.domesticPolicyType.fileID;
+			break;
+		case MYLOConstants.RELONETQA4:
+			fileID = assignmentDetails.domesticPolicyTyperelonetqa4.fileID;
+			break;
+		default:
+			Assert.fail(MYLOConstants.ENTER_CORRECT_FIELD_NAME);	
+		}
+		return fileID;
 	}
 	
 	// *************** Other Addresses Section***********************//
@@ -1049,8 +1235,8 @@ public class Mylo_AssignmentPage extends Base {
 			CoreFunctions.explicitWaitTillElementBecomesClickable(driver, _addMailAddressBtn,
 					MYLOConstants.MAILING_ADDRESS);
 			CoreFunctions.click(driver, _addMailAddressBtn, MYLOConstants.ADD_MAILING_ADDRESS);
-			CoreFunctions.highlightObject(driver, _popUpHeader);
-			Assert.assertEquals(MYLOConstants.ADD_MAILING_ADDRESS, _popUpHeader.getText());
+			CoreFunctions.highlightObject(driver, _modalTitle);
+			Assert.assertEquals(MYLOConstants.ADD_MAILING_ADDRESS, _modalTitle.getText());
 			break;
 		case MYLOConstants.TEMPORARY_ADDRESS:
 			CoreFunctions.explicitWaitTillElementVisibility(driver, _addTempAddressBtn,
@@ -1058,8 +1244,8 @@ public class Mylo_AssignmentPage extends Base {
 			CoreFunctions.explicitWaitTillElementBecomesClickable(driver, _addTempAddressBtn,
 					MYLOConstants.TEMPORARY_ADDRESS);
 			CoreFunctions.click(driver, _addTempAddressBtn, MYLOConstants.ADD_TEMPORARY_ADDRESS);
-			CoreFunctions.highlightObject(driver, _popUpHeader);
-			Assert.assertEquals(MYLOConstants.ADD_TEMPORARY_ADDRESS, _popUpHeader.getText());
+			CoreFunctions.highlightObject(driver, _modalTitle);
+			Assert.assertEquals(MYLOConstants.ADD_TEMPORARY_ADDRESS, _modalTitle.getText());
 			break;
 		case MYLOConstants.COUNTRY:
 			CoreFunctions.explicitWaitTillElementVisibility(driver, _countryDropdown, MYLOConstants.COUNTRY);
@@ -1622,6 +1808,7 @@ public class Mylo_AssignmentPage extends Base {
 		try {
 			CoreFunctions.isElementVisible(_alertMessage);
 			CoreFunctions.highlightObject(driver, _alertMessage);
+			System.out.println(_alertMessage.getText());
 			flag = (_alertMessage.getText().equals(msg));
 		} catch (Exception e) {
 			Reporter.addStepLog(MessageFormat.format(CoreConstants.FAIL_TO_VERIFY_ELEMENT_ON_PAGE, CoreConstants.FAIL,
@@ -1646,8 +1833,7 @@ public class Mylo_AssignmentPage extends Base {
 		boolean flag = false;
 		CoreFunctions.explicitWaitTillElementVisibility(driver, element, fieldName);
 		String hexColorValue = Color.fromString(element.getCssValue(MYLOConstants.BORDER_COLOR)).asHex();
-		flag = (CoreFunctions.getAttributeText(element, MYLOConstants.CLASS)
-				.contains(MYLOConstants.ERROR_BORDER) && hexColorValue.equals(MYLOConstants.RED_COLOR_HEXCODE));
+		flag = (hexColorValue.equals(MYLOConstants.RED_COLOR_HEXCODE));
 		return flag;
 	}
 	
@@ -2005,6 +2191,7 @@ public class Mylo_AssignmentPage extends Base {
 		String env = CoreFunctions.getPropertyFromConfig("envt");
 		switch (env) {
 		case MYLOConstants.UAT:
+		case MYLOConstants.RELONETQA4:
 			List<Mylo_Assignment_HistoryDetails_UAT> myloUATHistoryDetails = FileReaderManager.getInstance().getMyloJsonReader().getMyloAssignmentUATHistoryDetails();
 			historyfileIds.addAll(myloUATHistoryDetails.stream().map(x -> x.fileId).collect(Collectors.toList()));
 			historyDetails.addAll(myloUATHistoryDetails.stream().map(x -> x.historyDetails).collect(Collectors.toList()));
@@ -2016,6 +2203,11 @@ public class Mylo_AssignmentPage extends Base {
 		return historyfileIds;
 	}
 	
+	/**
+	 * @param count
+	 * @return
+	 * Verify History Card Details displayed like Transferre Name,FileId,ClientName,Address
+	 */
 	public boolean verifyHistoryCardDetailsDisplayed(int count) {
 		boolean flag = true;
 		for (int i =0; i <3; i++) {
@@ -2030,6 +2222,11 @@ public class Mylo_AssignmentPage extends Base {
 		return flag;
 	}
 	
+	/**
+	 * @param count
+	 * @return
+	 * Verify History Card Details displayed like Transferre Name,FileId,ClientName,Address in the History Dropdown section
+	 */
 	public boolean verifyHistoryCardDetailsDropdown(int count) {
 		boolean flag = true;
 		for (int i =0; i <_historyCardDropdownTransferreName.size(); i++) {
@@ -2047,6 +2244,12 @@ public class Mylo_AssignmentPage extends Base {
 		return flag;
 	}
 	
+	/**
+	 * @param shipmentStatus
+	 * @param requiredField
+	 * @return
+	 * Get FileDetails Related to Shipment Services
+	 */
 	public String getFileDetailsByShipmentServices(String shipmentStatus, String requiredField ) {
 		HashMap<String, String> shipmentFileDetailsmap = new HashMap<String, String>();
 		switch (shipmentStatus) {
@@ -2074,15 +2277,24 @@ public class Mylo_AssignmentPage extends Base {
 
 	}
 	
+	/**
+	 * @param option
+	 * @return
+	 * Get Background Color of Different Assignment Tabs
+	 */
 	public String getAssignmentTabsBgColor(String option) {
 		List<WebElement> subTabs = CoreFunctions.getElementListByLocator(driver, _assignmentSubMenus);
-		CoreFunctions.explicitWaitTillElementListVisibility(driver, subTabs);
 		WebElement tabElement = CoreFunctions.returnItemInListByText(driver, subTabs, option);
 		CoreFunctions.explicitWaitTillElementVisibility(driver, tabElement, tabElement.getText());
 		String hexColorValue = Color.fromString(tabElement.getCssValue(MYLOConstants.BACKGROUND_COLOR)).asHex();
 		return hexColorValue;
 	}
 	
+	/**
+	 * @param option
+	 * @return
+	 * Get Hover Message on Mentioned Assignment Tab
+	 */
 	public String getAssignmentTabsHoverMessage(String option) {
 		List<WebElement> subTabs = CoreFunctions.getElementListByLocator(driver, _assignmentSubMenus);
 		CoreFunctions.explicitWaitTillElementListVisibility(driver, subTabs);
@@ -2092,11 +2304,20 @@ public class Mylo_AssignmentPage extends Base {
 		return tabElement.getAttribute(MYLOConstants.TITLE);
 	}
 	
+	/**
+	 * @return
+	 * Verify Shipment Section Availability
+	 */
 	public boolean verifyShipmentSectionDisplayed() {
 		CoreFunctions.explicitWaitTillElementInVisibilityCustomTime(driver, _spinner, 180);
 		return CoreFunctions.verifyElementPresentOnPage(__webSwingSection, MYLOConstants.SHIPMENT_WEBSWING);	
 	}
 	
+	/**
+	 * @param shipmentStatus
+	 * @return
+	 * Verify Available Shipment Services in the Shipment Dropdown tab
+	 */
 	public boolean verifyShipmentDropdown(String shipmentStatus) {
 		boolean flag = true;
 		String[] shipmentDetail = getFileDetailsByShipmentServices(shipmentStatus, MYLOConstants.SHIPMENT_DETAILS)
@@ -2109,4 +2330,588 @@ public class Mylo_AssignmentPage extends Base {
 		return flag;
 	}
 	
+	// *************** Identification & Documentation section ***********************//
+	
+	/**
+	 * @param buttonName
+	 * @return
+	 * verify enability of Buttons in Identification & Documentation section
+	 */
+	public boolean verifyIdentDocButtonDisplayed(String buttonName) {
+		boolean flag = false;
+		switch (buttonName) {
+		case MYLOConstants.ADD_BUTTON:
+			flag = CoreFunctions.isElementVisible(_identDocAddIcon);
+			break;
+		case MYLOConstants.EDIT_BUTTON:
+			flag = CoreFunctions.isElementVisible(_identDocEditIcon);
+			break;
+		case MYLOConstants.SAVE_BUTTON:
+			flag = CoreFunctions.isElementVisible(_identDocSaveIcon);
+			break;
+		default:
+			Reporter.addStepLog(CoreConstants.FAIL + MYLOConstants.ENTER_CORRECT_BUTTON_NAME);
+			Assert.fail(MYLOConstants.ENTER_CORRECT_BUTTON_NAME);
+		}
+		if (flag)
+			Reporter.addStepLog(MessageFormat.format(MYLOConstants.BUTTON_ENABLED, CoreConstants.PASS,
+					buttonName,MYLOConstants.IDENTIFICATION_AND_DOCUMENTATION,MYLOConstants.ASSIGNMENT));
+		else
+			Reporter.addStepLog(MessageFormat.format(MYLOConstants.BUTTON_DISABLED, CoreConstants.PASS,
+					buttonName,MYLOConstants.IDENTIFICATION_AND_DOCUMENTATION,MYLOConstants.ASSIGNMENT));
+		return flag;
+	}
+	
+	/**
+	 * @param sectionName
+	 * Highlight Section Header
+	 */
+	public void highlightSectionHeader(String sectionName) {	
+		CoreFunctions.highlightObject(driver, _transfereeNameHeader);
+		CoreFunctions.explicitWaitTillElementInVisibilityCustomTime(driver, _spinner, 180);
+		WebElement requiredElement = CoreFunctions.returnItemInListByText(driver, _assignmentSectionHeaders, sectionName);
+		CoreFunctions.scrollToElementUsingJavaScript(driver, requiredElement, sectionName);
+		CoreFunctions.highlightObject(driver, requiredElement);
+	}
+	
+	/**
+	 * @param index
+	 * Select Transferee/Family details
+	 */
+	public void selectIdentDocTransfereeDetails(int index) {	
+		CoreFunctions.highlightObject(driver, _identDocTransferreFamilyMembersName.get(index));
+		CoreFunctions.click(driver, _identDocTransferreFamilyMembersName.get(index), _identDocTransferreFamilyMembersName.get(index).getText());
+	}
+	
+	/**
+	 * @param buttonName
+	 * Click button on Identification & Documentation section
+	 * 
+	 */
+	public void clickButtonOnIentificationAndDocumentationSection(String buttonName) {
+		switch (buttonName) {
+		case MYLOConstants.ADD_BUTTON:
+			CoreFunctions.click(driver, _identDocAddIcon, MYLOConstants.ADD_BUTTON);
+			break;
+		case MYLOConstants.CANCEL_BUTTON:
+			CoreFunctions.click(driver, _identDocCancelIcon, MYLOConstants.CANCEL_BUTTON);
+			break;
+		case MYLOConstants.SAVE_BUTTON:
+			CoreFunctions.click(driver, _identDocSaveIcon, MYLOConstants.SAVE_BUTTON);
+			CoreFunctions.explicitWaitTillElementInVisibilityCustomTime(driver, _spinner, 180);
+			break;
+		case MYLOConstants.EDIT_BUTTON:
+			CoreFunctions.explicitWaitTillElementVisibility(driver, _identDocEditIcon, _identDocEditIcon.getText());
+			CoreFunctions.click(driver, _identDocEditIcon,  MYLOConstants.EDIT_BUTTON);
+			break;
+		case MYLOConstants.YES_BUTTON:
+			CoreFunctions.click(driver, _YesButton, _YesButton.getText());
+			break;
+		case MYLOConstants.NO_BUTTON:
+			CoreFunctions.click(driver, _NoButton, _NoButton.getText());
+			break;
+		case MYLOConstants.CLOSE_BUTTON:
+			CoreFunctions.isElementVisible(_closeBtn);
+			CoreFunctions.highlightObject(driver, _closeBtn);
+			CoreFunctions.sendKeysUsingAction(driver, _closeBtn, _closeBtn.getText());
+			break;
+		case MYLOConstants.REMOVE_BUTTON:
+			CoreFunctions.click(driver, _removeButton.get(0), MYLOConstants.REMOVE_BUTTON);
+			break;
+		default:
+			Reporter.addStepLog(CoreConstants.FAIL + MYLOConstants.ENTER_CORRECT_ELEMENT_NAME);
+			Assert.fail(MYLOConstants.ENTER_CORRECT_ELEMENT_NAME);
+		}
+	}
+	
+	/**
+	 * @param elementName
+	 * @param index
+	 * Click Different Elements on IdentificationAndDocumentation section
+	 */
+	public void clickElementOnIdentificationAndDocumentationSection(String elementName,int index) {
+		switch (elementName) {
+		case MYLOConstants.IDENTITY_TYPE_DROPDOWN:
+			CoreFunctions.highlightObject(driver, _identDocTypeDropdowns.get(index));
+			CoreFunctions.click(driver, _identDocTypeDropdowns.get(index), MYLOConstants.IDENTITY_TYPE_DROPDOWN);
+			CoreFunctions.explicitWaitTillElementVisibility(driver, _identDocTypeDropdowns.get(index), MYLOConstants.IDENTITY_TYPE_DROPDOWN);
+			identityTypeList = CoreFunctions.getElementListByLocator(driver, _dropdownOptions);
+			break;
+		case MYLOConstants.COUNTRY:
+			CoreFunctions.explicitWaitTillElementVisibility(driver, _identDocCountryDropdowns.get(index), MYLOConstants.COUNTRY);
+			CoreFunctions.click(driver, _identDocCountryDropdowns.get(index), MYLOConstants.COUNTRY);
+			countryList = CoreFunctions.getElementListByLocator(driver, _dropdownOptions);
+			break;
+		case MYLOConstants.REMOVE_BUTTON:
+			CoreFunctions.click(driver, _removeButton.get(index), MYLOConstants.REMOVE_BUTTON);
+			identDocTypeValues.remove(index);
+			identDocNumberValues.remove(index);
+			identDocToDateValues.remove(index);
+			identDocFromDateValues.remove(index);
+			break;
+		default:
+			Reporter.addStepLog(CoreConstants.FAIL + MYLOConstants.ENTER_CORRECT_ELEMENT_NAME);
+			Assert.fail(MYLOConstants.ENTER_CORRECT_ELEMENT_NAME);
+		}
+	}
+	
+	/**
+	 * @param fieldValue
+	 * Set Type value on Identification & Documentation section
+	 */
+	public String setIdentityDocMembersTypeValue(String fieldValue) {
+		if (fieldValue.equals(MYLOConstants.RANDOM)) {
+			List<String> valuesToIgnore = new ArrayList<String>();
+			valuesToIgnore.add(MYLOConstants.SELECT_ONE);
+			updatedTypeValue = CoreFunctions.getRandomOutOfSelectedElementValueFromList(driver, identityTypeList, valuesToIgnore);
+			BusinessFunctions.selectItemFromListUsingText(driver, identityTypeList,
+					updatedTypeValue);
+		} else {
+			updatedTypeValue=fieldValue;
+			BusinessFunctions.selectItemFromListUsingText(driver, identityTypeList, fieldValue);
+		}
+		
+		return updatedTypeValue;
+	}
+	
+	public boolean verifyIdentityTypeValuesListFromDB() {
+		boolean flag = false;	
+		List<String> identityTypeListFromUI = identityTypeList.stream().map(x -> x.getText())
+				.collect(Collectors.toList());
+		identityTypeListFromUI.remove(MYLOConstants.SELECT_ONE);
+		List<String> identTypeOptionsFromDB = DbFunctions.getIdentTypeOptionsFromDB();
+		flag = identityTypeListFromUI.equals(identTypeOptionsFromDB);
+		return flag;
+	}
+	
+	
+	/**
+	 * @param fieldValue
+	 * Set Country Value on Identification & Documentation section
+	 */
+	public String setIdentityDocMembersCountryValue(String fieldValue) {
+		if (fieldValue.equals(MYLOConstants.RANDOM)) {
+			List<String> valuesToIgnore = new ArrayList<String>();
+			valuesToIgnore.add(MYLOConstants.SELECT_ONE);
+			updatedCountryValue = CoreFunctions.getRandomOutOfSelectedElementValueFromList(driver, countryList, valuesToIgnore);
+			BusinessFunctions.selectItemFromListUsingText(driver, countryList,
+					updatedCountryValue);
+		} else {
+			updatedCountryValue=fieldValue;
+			BusinessFunctions.selectItemFromListUsingText(driver, countryList, fieldValue);
+		}	
+		return updatedCountryValue;
+	}
+	
+	/**
+	 * @param fieldValue
+	 * @param index
+	 * @return
+	 * Set From Date Value in Identification & Documentation section
+	 */
+	public String setIdentityDocMembersFromDateValue(String fieldValue, int index) {
+		updatedFromDate = (fieldValue.equals(MYLOConstants.CURRENT))
+				? CoreFunctions.getCurrentDateAsGivenFormat("MM/dd/yyyy")
+				: fieldValue;
+		if (updatedFromDate == "") {
+			//CoreFunctions.clearTextField(driver, _identDocFromDates.get(index), MYLOConstants.FROMDATE);
+			CoreFunctions.click(driver, _identDocFromDates.get(index), MYLOConstants.FROMDATE);
+			_identDocFromDates.get(index).sendKeys(Keys.chord(Keys.CONTROL, "a"));
+			_identDocFromDates.get(index).sendKeys(Keys.BACK_SPACE);
+	}
+		else
+			CoreFunctions.clearAndSetText(driver, _identDocFromDates.get(index), updatedFromDate);
+		return updatedFromDate;
+	}
+	
+	/**
+	 * @param fieldValue
+	 * @param index
+	 * @return
+	 * Set To Date Value in Identification & Documentation section
+	 */
+	public String setIdentityDocMembersToDateValue(String fieldValue, int index) {
+		updatedToDate = (fieldValue.equals(MYLOConstants.CURRENT))
+				? CoreFunctions.getCurrentDateAsGivenFormat("MM/dd/yyyy")
+				: fieldValue;
+		if (updatedToDate == "")
+			CoreFunctions.clearTextField(driver, _identDocToDates.get(index), MYLOConstants.FROMDATE);
+		else
+			CoreFunctions.clearAndSetText(driver, _identDocToDates.get(index), updatedToDate);
+		return updatedToDate;
+	}
+	
+	/**
+	 * @param fieldValue
+	 * @param index
+	 * @return
+	 * Set Number Value in Identification & Documentation section
+	 */
+	public String setIdentityDocMembersNumberValue(String fieldValue, int index) {
+		try {
+			updatedNoValue = CoreFunctions.generateRandomString(Integer.parseInt(fieldValue));
+			CoreFunctions.clearAndSetText(driver, _identDocNumbers.get(index), updatedNoValue);
+		} catch (NumberFormatException e) {
+			updatedNoValue = fieldValue;
+			if (updatedNoValue == "") {
+				CoreFunctions.click(driver, _identDocNumbers.get(index), MYLOConstants.NUMBER);
+			_identDocNumbers.get(index).sendKeys(Keys.chord(Keys.CONTROL, "a"));
+			_identDocNumbers.get(index).sendKeys(Keys.BACK_SPACE);
+			}
+			else
+				CoreFunctions.clearAndSetText(driver, _identDocNumbers.get(index), updatedNoValue);
+		}
+		return updatedNoValue;
+	}
+	
+	/**
+	 * @param typeValue
+	 * @param number
+	 * @param fromDate
+	 * Set Mandatory Field Values of Identification & Documentation section
+	 */
+	public void setIdentDocMembersMandatoryFields(String typeValue, String number,String fromDate) {
+		clickElementOnIdentificationAndDocumentationSection(MYLOConstants.IDENTITY_TYPE_DROPDOWN,0);
+		setIdentityDocMembersTypeValue(typeValue);
+		setIdentityDocMembersNumberValue(number,0);
+		setIdentityDocMembersFromDateValue(fromDate,0) ;
+	}
+	
+	/**
+	 * @param table
+	 * Verifying the values of mandatory fields of Identification & Documentation section
+	 */
+	public void verifyMandatoryFieldsToastMessagesIdentDocSection(DataTable table) {
+		java.util.List<Map<String, String>> data = table.asMaps(String.class, String.class);
+		for (int i = 0; i < data.size(); i++) {
+			setIdentDocMembersMandatoryFields(data.get(i).get(MYLOConstants.IDENTITY_TYPE),
+					data.get(i).get(MYLOConstants.NUMBER), data.get(i).get(MYLOConstants.FROMDATE));
+			clickButtonOnIentificationAndDocumentationSection(MYLOConstants.SAVE_BUTTON);
+			Assert.assertTrue(verifyAlertMessage(data.get(i).get(MYLOConstants.MESSAGE)));
+			clickButtonOnIentificationAndDocumentationSection(MYLOConstants.CLOSE_BUTTON);
+			clickButtonOnIentificationAndDocumentationSection(MYLOConstants.CANCEL_BUTTON);
+			clickButtonOnIentificationAndDocumentationSection(MYLOConstants.YES_BUTTON);
+			//verifyActiveTab(MYLOConstants.SUMMARY);
+			highlightSectionHeader(MYLOConstants.IDENTIFICATION_AND_DOCUMENTATION);
+			CoreFunctions.highlightObject(driver, _identDocAddIcon);
+			clickButtonOnIentificationAndDocumentationSection(MYLOConstants.ADD_BUTTON);
+		}
+	}
+	
+	/**
+	 * @param table
+	 * Set Different Field Values for Multiple rows of Identification & Documentation section
+	 */
+	public void setIdentDocMultipleRowFieldValues(DataTable table) {
+		java.util.List<Map<String, String>> data = table.asMaps(String.class, String.class);
+		for (int i = 0; i < data.size(); i++) {
+			clickButtonOnIentificationAndDocumentationSection(MYLOConstants.ADD_BUTTON);
+			clickElementOnIdentificationAndDocumentationSection(MYLOConstants.IDENTITY_TYPE_DROPDOWN,0);
+			identDocTypeValues.add(setIdentityDocMembersTypeValue(data.get(i).get(MYLOConstants.IDENTITY_TYPE)));
+			clickElementOnIdentificationAndDocumentationSection(MYLOConstants.COUNTRY,0);
+			identDocCountryValues.add(setIdentityDocMembersCountryValue(data.get(i).get(MYLOConstants.COUNTRY)));
+			identDocNumberValues.add(setIdentityDocMembersNumberValue(data.get(i).get(MYLOConstants.NUMBER),0));
+			identDocFromDateValues.add(setIdentityDocMembersFromDateValue(data.get(i).get(MYLOConstants.FROMDATE),0)) ;
+			identDocToDateValues.add(setIdentityDocMembersToDateValue(data.get(i).get(MYLOConstants.TODATE),0)) ;
+		}
+	}
+	
+	/**
+	 * @param table
+	 * Update Different Field Values for Multiple Rows of Identification & Documentation section
+	 */
+	public void updateIdentDocMultipleRowFieldValues(DataTable table) {
+		java.util.List<Map<String, String>> data = table.asMaps(String.class, String.class);
+		for (int i = 0; i < data.size(); i++) {
+			int row=Integer.parseInt(data.get(i).get(MYLOConstants.ROW))-1;
+			clickElementOnIdentificationAndDocumentationSection(MYLOConstants.IDENTITY_TYPE_DROPDOWN,row);
+			identDocTypeValues.set(row,setIdentityDocMembersTypeValue(data.get(i).get(MYLOConstants.IDENTITY_TYPE)));
+			clickElementOnIdentificationAndDocumentationSection(MYLOConstants.COUNTRY,row);
+			identDocCountryValues.set(row,setIdentityDocMembersCountryValue(data.get(i).get(MYLOConstants.COUNTRY)));
+			identDocNumberValues.set(row,setIdentityDocMembersNumberValue(data.get(i).get(MYLOConstants.NUMBER),row));
+			identDocFromDateValues.set(row,setIdentityDocMembersFromDateValue(data.get(i).get(MYLOConstants.FROMDATE),row)) ;
+			identDocToDateValues.set(row,setIdentityDocMembersToDateValue(data.get(i).get(MYLOConstants.TODATE),row)) ;
+		}
+	}
+	
+	/**
+	 * @param fieldName
+	 * @param index
+	 * @return
+	 * Get Different Field Value for specific records of Identification & Documentation section
+	 */
+	public String getFieldValuesIdentificationAndDocumentationSection(String fieldName, int index) {
+		String requiredValue = null;
+		switch (fieldName) {
+		case MYLOConstants.IDENTITY_TYPE:
+			CoreFunctions.explicitWaitTillElementVisibility(driver, _identDocTypeValuesSelected.get(index), MYLOConstants.IDENTITY_TYPE);
+			requiredValue = CoreFunctions.getElementText(driver, _identDocTypeValuesSelected.get(index));
+			break;
+		case MYLOConstants.NUMBER:
+			CoreFunctions.explicitWaitTillElementVisibility(driver, _identDocNumbers.get(index), MYLOConstants.NUMBER);
+			requiredValue = CoreFunctions.getAttributeText(_identDocNumbers.get(index), CoreConstants.VALUE);
+			break;
+		case MYLOConstants.FROMDATE:
+			CoreFunctions.explicitWaitTillElementVisibility(driver, _identDocFromDates.get(index), MYLOConstants.FROMDATE);
+			requiredValue = CoreFunctions.getAttributeText(_identDocFromDates.get(index), CoreConstants.VALUE);
+			break;
+		case MYLOConstants.TODATE:
+			CoreFunctions.explicitWaitTillElementVisibility(driver, _identDocToDates.get(index), MYLOConstants.TODATE);
+			requiredValue = CoreFunctions.getAttributeText(_identDocToDates.get(index), CoreConstants.VALUE);
+			break;
+		case MYLOConstants.COUNTRY:
+			CoreFunctions.explicitWaitTillElementVisibility(driver, _identDocCountryValuesSelected.get(index), MYLOConstants.COUNTRY);
+			requiredValue = CoreFunctions.getElementText(driver,_identDocCountryValuesSelected.get(index));
+			break;
+		default:
+			Reporter.addStepLog(CoreConstants.FAIL + MYLOConstants.ENTER_CORRECT_ELEMENT_NAME);
+			Assert.fail(MYLOConstants.ENTER_CORRECT_ELEMENT_NAME);
+		}
+		return requiredValue;
+	}
+	
+	/**
+	 * @param index
+	 * @return
+	 * Verify Mandatory Field Values for Specified rows of of Identification & Documentation section
+	 */
+	public boolean verifyMandatoryFieldValuesIdentificationAndDocumentationSection(int index) {
+		boolean flag = false;
+		String updatedDate = CoreFunctions.getStringDateInFormat(
+				getFieldValuesIdentificationAndDocumentationSection(MYLOConstants.FROMDATE, index), "dd MMM yyyy",
+				"MM/dd/yyyy");
+		if (getFieldValuesIdentificationAndDocumentationSection(MYLOConstants.IDENTITY_TYPE, index)
+				.equals(updatedTypeValue)
+				&& getFieldValuesIdentificationAndDocumentationSection(MYLOConstants.NUMBER, index)
+						.equals(updatedNoValue)
+				&& updatedDate.equals(updatedFromDate)) {
+			flag = true;
+			Reporter.addStepLog(MessageFormat.format(MYLOConstants.VERIFIED_ELEMENT_DISPLAYED_IDENTDOC_SECTION,
+					CoreConstants.PASS, updatedTypeValue, updatedNoValue, updatedFromDate,
+					MYLOConstants.IDENTIFICATION_AND_DOCUMENTATION));
+		} else
+			Reporter.addStepLog(CoreConstants.FAIL + MYLOConstants.EXPECTED_FIELD_VALUE_NOTDISPLAYED);
+		return flag;
+	}
+	
+	/**
+	 * @param index
+	 * @return
+	 * Verify Mandatory Field Initial Values for Specified rows of Identification & Documentation section
+	 */
+	public boolean verifyMandatoryFieldInitialValuesIdentificationAndDocumentationSection(int index) {
+		boolean flag=false;
+		if(getFieldValuesIdentificationAndDocumentationSection(MYLOConstants.IDENTITY_TYPE,index).contentEquals("Select One")&&
+				getFieldValuesIdentificationAndDocumentationSection(MYLOConstants.NUMBER,index).contentEquals("")&&
+				getFieldValuesIdentificationAndDocumentationSection(MYLOConstants.FROMDATE,index).contentEquals("")) {
+			flag=true;
+		Reporter.addStepLog(MessageFormat.format(MYLOConstants.VERIFIED_ELEMENT_DISPLAYED_IDENTDOC_SECTION,
+				CoreConstants.PASS, updatedTypeValue, updatedNoValue, updatedFromDate,
+				MYLOConstants.IDENTIFICATION_AND_DOCUMENTATION));
+	} else
+		Reporter.addStepLog(CoreConstants.FAIL + MYLOConstants.EXPECTED_FIELD_VALUE_NOTDISPLAYED);
+	return flag;
+	}
+	
+	/**
+	 * Reverse List order of Type,Number,FromDate and ToDate of Identification & Documentation section
+	 */
+	public void reverseidentDocList() {
+		Collections.reverse(identDocTypeValues);
+		Collections.reverse(identDocNumberValues);
+		Collections.reverse(identDocFromDateValues);
+		Collections.reverse(identDocToDateValues);
+		Collections.reverse(identDocCountryValues);
+	}
+	
+	/**
+	 * @return
+	 * Verify Different FieldValues for Multiple Rows of Identification & Documentation section
+	 */
+	public boolean verifyMultipleRowsFieldValuesIdentDocSection() {
+		boolean flag = true;	
+		for(int i=0;i<_identDocTypeDropdowns.size();i++) {
+		String updatedFromDate = CoreFunctions.getStringDateInFormat(
+				getFieldValuesIdentificationAndDocumentationSection(MYLOConstants.FROMDATE, i), "dd MMM yyyy",
+				"MM/dd/yyyy");
+		String updatedToDate = CoreFunctions.getStringDateInFormat(
+				getFieldValuesIdentificationAndDocumentationSection(MYLOConstants.TODATE, i), "dd MMM yyyy",
+				"MM/dd/yyyy");
+		if (!(getFieldValuesIdentificationAndDocumentationSection(MYLOConstants.IDENTITY_TYPE, i)
+				.equals(identDocTypeValues.get(i))
+				&& getFieldValuesIdentificationAndDocumentationSection(MYLOConstants.COUNTRY, i)
+				.equals(identDocCountryValues.get(i))
+				&& getFieldValuesIdentificationAndDocumentationSection(MYLOConstants.NUMBER, i)
+						.equals(identDocNumberValues.get(i))
+				&& updatedFromDate.equals(identDocFromDateValues.get(i))
+				&& updatedToDate.equals(identDocToDateValues.get(i)))) {
+			flag = false;
+			Reporter.addStepLog(CoreConstants.FAIL + MYLOConstants.EXPECTED_FIELD_VALUE_NOTDISPLAYED);
+			break;
+		} else
+			Reporter.addStepLog(MessageFormat.format(MYLOConstants.VERIFIED_ELEMENT_DISPLAYED_IDENTDOC_SECTION,
+					CoreConstants.PASS, updatedTypeValue, updatedNoValue, updatedFromDate,
+					MYLOConstants.IDENTIFICATION_AND_DOCUMENTATION));		
+	}
+		return flag;
+	}
+	
+	/**
+	 * @param msg
+	 * @param index
+	 * @return
+	 * Verify Multiple Toast Messages appearing simultaneously
+	 */
+	public boolean verifyAlertMessageList(String msg,int index) {
+		boolean flag = false;
+		try {
+			CoreFunctions.isElementListExist(driver, _alertMessageList,5);
+			CoreFunctions.highlightObject(driver, _alertMessageList.get(index));
+			System.out.println(_alertMessageList.get(index).getText());
+			flag = (_alertMessageList.get(index).getText().equals(msg));
+		} catch (Exception e) {
+			Reporter.addStepLog(MessageFormat.format(CoreConstants.FAIL_TO_VERIFY_ELEMENT_ON_PAGE, CoreConstants.FAIL,
+					MYLOConstants.ALERT_MESSAGE, MYLOConstants.ASSIGNMENT));
+		}
+
+		if (flag)
+			Reporter.addStepLog(MessageFormat.format(MYLOConstants.VERIFIED_ALERT_MESSAGE_DISPLAYED, CoreConstants.PASS,
+					msg, MYLOConstants.ASSIGNMENT));
+		else
+			Reporter.addStepLog(MessageFormat.format(MYLOConstants.EXPECTED_MESSAGE_DISPLAYED, CoreConstants.FAIL, msg,
+					_alertMessage.getText(), MYLOConstants.ASSIGNMENT));
+		return flag;
+	}
+	
+	/**
+	 * @param fieldName
+	 * @param index
+	 * @return
+	 * Verify Background is Red Colour for Different Fields for which error messages appearing of Identification & Documentation section
+	 */
+	public boolean verifyIdentDocFieldErrorBackground(String fieldName, int index) {
+		boolean flag = false;
+		switch (fieldName) {
+		case MYLOConstants.COUNTRY:
+			flag=verifyFieldBorderRedColor(fieldName, _identDocCountryDropdowns.get(index));
+			break;	
+		case MYLOConstants.IDENTITY_TYPE:
+			flag=verifyFieldBorderRedColor(fieldName, _identDocTypeBackColour.get(index));
+			break;
+		case MYLOConstants.NUMBER:
+			flag=verifyFieldBorderRedColor(fieldName, _identDocNumbers.get(index));
+			break;
+		case MYLOConstants.FROMDATE:
+			flag=verifyFieldBorderRedColor(fieldName, _identDocFromDates.get(index));
+			break;
+		case MYLOConstants.TODATE:
+			flag=verifyFieldBorderRedColor(fieldName, _identDocToDates.get(index));
+			break;	
+		case MYLOConstants.ALERT_MESSAGE:
+			flag=verifyFieldBackgroundRedColor(fieldName, _alertMessageListBackColour.get(index));
+			break;	
+			
+		default:
+			Reporter.addStepLog(CoreConstants.FAIL + MYLOConstants.ENTER_CORRECT_FIELD_NAME);
+			Assert.fail(MYLOConstants.ENTER_CORRECT_FIELD_NAME);
+		}
+
+		if (flag)
+			Reporter.addStepLog(MessageFormat.format(MYLOConstants.VERIFIED_FIELD_HIGHLIGHTED, CoreConstants.PASS,
+					fieldName, MYLOConstants.IDENTIFICATION_AND_DOCUMENTATION));
+		else
+			Reporter.addStepLog(MessageFormat.format(MYLOConstants.VERIFIED_FIELD_NOT_HIGHLIGHTED, CoreConstants.FAIL,
+					fieldName, MYLOConstants.IDENTIFICATION_AND_DOCUMENTATION));
+
+		return flag;
+	}
+	
+	/**
+	 * @param fieldName
+	 * @param element
+	 * @return
+	 * Verfiied Background is Red Color
+	 * 
+	 */
+	public boolean verifyFieldBackgroundRedColor(String fieldName, WebElement element) {
+		boolean flag = false;
+		CoreFunctions.explicitWaitTillElementVisibility(driver, element, fieldName);
+		String hexColorValue = Color.fromString(element.getCssValue(MYLOConstants.BACKGROUND_COLOR)).asHex();
+		flag = (hexColorValue.equals(MYLOConstants.RED_COLOR_HEXCODE));
+		return flag;
+	}
+	
+	/**
+	 * @return
+	 * Verify Toast message is present or not
+	 */
+	public boolean verifyAlertMessagesPresent() {
+		boolean flag;
+		flag =CoreFunctions.isElementListExist(driver, _alertMessageList,5);	
+		
+		if(flag)
+			Reporter.addStepLog(MessageFormat.format(MYLOConstants.TOAST_MESSAGE_PRESENT, CoreConstants.PASS,
+					MYLOConstants.IDENTIFICATION_AND_DOCUMENTATION,MYLOConstants.ASSIGNMENT));
+		else
+			Reporter.addStepLog(MessageFormat.format(MYLOConstants.TOAST_MESSAGE_NOT_PRESENT, CoreConstants.PASS,
+					MYLOConstants.IDENTIFICATION_AND_DOCUMENTATION,MYLOConstants.ASSIGNMENT));
+		return flag;
+	}
+	
+	/**
+	 * @param buttonName
+	 * @return
+	 * Verify Buttons present on Identification & Documentation section
+	 */
+	public boolean verifyIdentDocButtonPresent(String buttonName) {
+		boolean flag=false;
+		switch (buttonName) {
+		case MYLOConstants.ADD_BUTTON:
+			flag = CoreFunctions.isElementExist(driver, _identDocAddIcon, 5);
+			break;
+		case MYLOConstants.EDIT_BUTTON:
+			flag = CoreFunctions.isElementExist(driver,_identDocEditIcon,5);
+			break;
+		case MYLOConstants.SAVE_BUTTON:
+			flag = CoreFunctions.isElementExist(driver,_identDocSaveIcon,5);
+			break;
+		default:
+			Reporter.addStepLog(CoreConstants.FAIL + MYLOConstants.ENTER_CORRECT_BUTTON_NAME);
+			Assert.fail(MYLOConstants.ENTER_CORRECT_BUTTON_NAME);
+		}
+		if (flag)
+			Reporter.addStepLog(MessageFormat.format(MYLOConstants.BUTTON_PRESENT, CoreConstants.PASS,
+					buttonName,MYLOConstants.IDENTIFICATION_AND_DOCUMENTATION,MYLOConstants.ASSIGNMENT));
+		else
+			Reporter.addStepLog(MessageFormat.format(MYLOConstants.BUTTON_NOT_PRESENT, CoreConstants.PASS,
+					buttonName,MYLOConstants.IDENTIFICATION_AND_DOCUMENTATION,MYLOConstants.ASSIGNMENT));
+		return flag;
+	}
+	
+	/**
+	 * @return
+	 * Verfied Data Appearing in Different Fields on Identification & Documentation section
+	 */
+	public boolean verifyRowsFieldValuesIdentDocSection() {
+		boolean flag = true;	
+		String updatedFromDate = CoreFunctions.getStringDateInFormat(
+				getFieldValuesIdentificationAndDocumentationSection(MYLOConstants.FROMDATE, 0), "dd MMM yyyy",
+				"MM/dd/yyyy");
+		String updatedToDate = CoreFunctions.getStringDateInFormat(
+				getFieldValuesIdentificationAndDocumentationSection(MYLOConstants.TODATE, 0), "dd MMM yyyy",
+				"MM/dd/yyyy");
+		if (!(getFieldValuesIdentificationAndDocumentationSection(MYLOConstants.IDENTITY_TYPE, 0)
+				.equals(MYLOConstants.IDENTDOC_TYPE)
+				&& getFieldValuesIdentificationAndDocumentationSection(MYLOConstants.COUNTRY, 0)
+				.equals(MYLOConstants.IDENTDOC_COUNTRY)
+				&& updatedFromDate.equals(MYLOConstants.IDENTDOC_FROMDATE)
+				&& updatedToDate.equals(MYLOConstants.IDENTDOC_TODATE))) {
+			flag = false;
+			Reporter.addStepLog(CoreConstants.FAIL + MYLOConstants.EXPECTED_FIELD_VALUE_NOTDISPLAYED);
+		} else
+			Reporter.addStepLog(MessageFormat.format(MYLOConstants.VERIFIED_ELEMENT_DISPLAYED_IDENTDOC_SECTION,
+					CoreConstants.PASS, "Cedula", "USA", updatedFromDate,
+					MYLOConstants.IDENTIFICATION_AND_DOCUMENTATION));		
+		return flag;
+	}
 }

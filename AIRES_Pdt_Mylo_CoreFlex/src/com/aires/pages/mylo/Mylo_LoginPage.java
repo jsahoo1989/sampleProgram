@@ -49,6 +49,9 @@ public class Mylo_LoginPage extends Base {
 	@FindBy(how = How.CSS, using = "div[class='sk-three-strings']")
 	private WebElement _spinner;
 	
+	@FindBy(how = How.CSS, using = "div[id='user-profile']")
+	private WebElement _userProfile;
+	
 	final By _loginImg = By.xpath("//img[contains(@src,'login-with-office-365.jpg')]");
 	
 	Mylo_LoginData loginData = FileReaderManager.getInstance().getMyloJsonReader()
@@ -78,9 +81,13 @@ public class Mylo_LoginPage extends Base {
 			CoreFunctions.click(driver, _staySignedInYes, _staySignedInYes.getAttribute("value"));
 		}
 		CoreFunctions.switchToParentWindow(driver);
-		if(CoreFunctions.isElementPresent(driver, _loginImg, 5, MYLOConstants.LOGIN_BUTTON))
-			CoreFunctions.click(driver, CoreFunctions.getElementByLocator(driver,_loginImg), MYLOConstants.LOGIN_BUTTON);
 		CoreFunctions.explicitWaitTillElementInVisibilityCustomTime(driver, _spinner, 10);
+		while(!(CoreFunctions.isElementExist(driver, _userProfile, 6))) {
+			//CoreFunctions.clickElement(driver, CoreFunctions.getElementByLocator(driver, _loginImg));
+			CoreFunctions.hoverAndClick(driver, CoreFunctions.getElementByLocator(driver, _loginImg));
+		}	
+		CoreFunctions.explicitWaitTillElementInVisibilityCustomTime(driver, _spinner, 10);
+		CoreFunctions.highlightObject(driver, _userProfile);
 	}
 
 	public void enterUserEmailAndPasswordForMylo(String userName, String password) {
@@ -97,7 +104,7 @@ public class Mylo_LoginPage extends Base {
 	}
 	
 	public void logout() {
-		CoreFunctions.explicitWaitTillElementVisibility(driver, _userProfileImg, MYLOConstants.USER_PROFILE_IMAGE);
+		CoreFunctions.explicitWaitTillElementVisibility(driver, _userProfileImg, MYLOConstants.USER_PROFILE_IMAGE,15);
 		CoreFunctions.click(driver, _userProfileImg, MYLOConstants.USER_PROFILE_IMAGE);
 		CoreFunctions.explicitWaitTillElementVisibility(driver, _logoutUserImg, _logoutUserImg.getText());
 		CoreFunctions.click(driver, _logoutUserImg, MYLOConstants.LOGOUT_IMAGE);
@@ -113,7 +120,7 @@ public class Mylo_LoginPage extends Base {
 		openApplication();
 		CoreFunctions.explicitWaitTillElementVisibility(driver, _anotherAccount, _anotherAccount.getText());
 		CoreFunctions.click(driver, _anotherAccount, _anotherAccount.getText());
-		if (userType.equals(MYLOConstants.USER_WITHOUT_RESOURCE15)||userType.equals(MYLOConstants.USER_WITHOUT_RESOURCE300096)) {
+		if (userType.equals(MYLOConstants.USER_WITHOUT_RESOURCE15)||userType.equals(MYLOConstants.USER_WITHOUT_RESOURCE300096)||userType.equals(MYLOConstants.USER_WITHOUT_RESOURCE300140)) {
 			enterUserEmailAndPasswordForMylo(loginData.MyloWithOutResource15UserName, loginData.MyloPassword);	
 		}
 		else {

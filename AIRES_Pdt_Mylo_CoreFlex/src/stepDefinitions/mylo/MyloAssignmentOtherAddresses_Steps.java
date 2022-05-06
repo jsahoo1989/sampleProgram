@@ -42,12 +42,12 @@ public class MyloAssignmentOtherAddresses_Steps {
 	public void he_is_on_section_after_clicking_on_Add_link_displayed_in_left_panel_under_section_for_file_ID(String sectionType, String section, String fileID) {
 		MYLOConstants.TIME_BEFORE_ACTION = new Date().getTime();
 		myloDashboardPage.verifyUserName(MYLOConstants.USER_PROFILE_NAME);
-		myloDashboardPage.clickOptionFromMainMenu(MYLOConstants.ASSIGNMENT);
+		myloDashboardPage.clickOptionFromMainMenu(MYLOConstants.JOURNEY);
 		myloDashboardPage.selectOptionsFromAssignmentMenu(MYLOConstants.QUERY_FILE);
 		myloDashboardPage.selectParameterFromQueryScreen(MYLOConstants.FILE);
 		myloDashboardPage.selectOptionsForFileParameters(MYLOConstants.FILE_ID, fileID);
 		myloDashboardPage.clickExecuteButton();
-		myloAssignmentPage.verifyActiveTab(MYLOConstants.SUMMARY);
+		//myloAssignmentPage.verifyActiveTab(MYLOConstants.SUMMARY);
 		myloAssignmentPage.clickElementOnOtherAddressesSection(sectionType);
 		MYLOConstants.TIME_AFTER_ACTION = new Date().getTime();
 		Reporter.addStepLog("<b>Total time taken by <i>'Given'</i> statement is :"
@@ -197,12 +197,12 @@ public class MyloAssignmentOtherAddresses_Steps {
 	public void he_has_saved_below_data_on_under_Other_Addresses_section_after_navigating_to_Assignment_Page_for_file_ID(String sectionType, String fileID, DataTable table){
 		MYLOConstants.TIME_BEFORE_ACTION = new Date().getTime();
 		myloDashboardPage.verifyUserName(MYLOConstants.USER_PROFILE_NAME);
-		myloDashboardPage.clickOptionFromMainMenu(MYLOConstants.ASSIGNMENT);
+		myloDashboardPage.clickOptionFromMainMenu(MYLOConstants.JOURNEY);
 		myloDashboardPage.selectOptionsFromAssignmentMenu(MYLOConstants.QUERY_FILE);
 		myloDashboardPage.selectParameterFromQueryScreen(MYLOConstants.FILE);
 		myloDashboardPage.selectOptionsForFileParameters(MYLOConstants.FILE_ID, fileID);
 		myloDashboardPage.clickExecuteButton();
-		myloAssignmentPage.verifyActiveTab(MYLOConstants.SUMMARY);
+		//myloAssignmentPage.verifyActiveTab(MYLOConstants.SUMMARY);
 		myloAssignmentPage.clickElementOnOtherAddressesSection(sectionType);
 		myloAssignmentPage.setFieldValueOtherAddressSection(table);
 		myloAssignmentPage.clickElementOnOtherAddressesSection(MYLOConstants.SAVE_BUTTON);

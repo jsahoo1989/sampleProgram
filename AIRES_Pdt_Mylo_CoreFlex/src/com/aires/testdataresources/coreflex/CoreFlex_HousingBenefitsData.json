@@ -1,0 +1,17 @@
+[
+	{
+		"benefitName": "Duplicate Housing",
+		"duplicateHousing": {
+			"duration" : "Other",
+			"durationOther" : "10",
+			"grossUp": "Partially Gross-Up",
+			"reimbursedBy": "Other",
+			"reimbursedByOther": "Reimbursed by other",
+			"comment": "Duplicate Housing comment",
+			"flexPoints":"75",
+			"benefitName":"Duplicate Housing",
+			"allowanceAmountMessage":"Automated Duplicate Housing Allowance Amount Message",
+			"benefitLongDescription":"Automated Duplicate Housing Benefit Long Description Messsage for Policy Setup in Policy Digitization Tool (PDT) to be consumed by MX Transferee."
+		}			
+	}
+]

@@ -1,0 +1,25 @@
+[
+	{
+		"benefitName": "Language Training",
+		"languageTrainingEmployee": {
+			"maxNumberOfHours" : "10",
+			"selfLearningTool" : "Yes",
+			"maxAmount" : "10000",
+			"grossUp": "No",
+			"reimbursedBy": "Other",
+			"reimbursedByOther": "Reimbursed by other",
+			"comment": "Language Training Employee comment",
+			"flexPoints":"150"
+		},
+		"languageTrainingFamily": {
+			"maxNumberOfHoursPerPerson" : "15",
+			"maxNumberOfHoursPerFamily" : "65",
+			"selfLearningTool" : "Yes",
+			"maxAmount" : "670000",
+			"grossUp": "No",
+			"reimbursedBy": "Other",
+			"reimbursedByOther": "Reimbursed by other",
+			"comment": "Language Training Family comment"
+		}				
+	}
+]

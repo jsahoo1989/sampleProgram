@@ -62,7 +62,7 @@ public class PDT_LoginPage extends Base {
 	}
 
 	public void openApplication() {
-		Log.info(FileReaderManager.getInstance().getConfigReader().getPDTApplicationUrl());
+		//Log.info(FileReaderManager.getInstance().getConfigReader().getPDTApplicationUrl());
 		CoreFunctions.waitForBrowserToLoad(driver);
 		Log.info("Inside openApplication");
 		VerifyAIRESLogo();
@@ -94,10 +94,11 @@ public class PDT_LoginPage extends Base {
 		try {
 			openApplication();
 			switch (userType) {
-			case PDTConstants.CSM:				
+			case PDTConstants.CSM:
 				enterLoginCredentials(BusinessFunctions.getCSMCredentials(_loginDetailsApplication)[0], BusinessFunctions.getCSMCredentials(_loginDetailsApplication)[1]);
-				isSuccessfullyLoggedIn = viewPolicyPage.verifyUserlogin(BusinessFunctions.getCSMCredentials(_loginDetailsApplication)[2],
-						PDTConstants.VIEW_POLICY_PAGE);
+				clickLoginBtn();
+				isSuccessfullyLoggedIn = viewPolicyPage.verifyUserlogin(BusinessFunctions.getCSMCredentials(_loginDetailsApplication)[0],
+				PDTConstants.VIEW_POLICY_PAGE);
 				break;
 			default:
 				Reporter.addStepLog(MessageFormat.format(PDTConstants.LOGIN_USER_TYPE_NOT_VALID,

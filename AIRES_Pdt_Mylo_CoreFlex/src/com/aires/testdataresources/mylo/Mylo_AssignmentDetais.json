@@ -11,6 +11,16 @@
 			"journeyType": "Intern",
 			"office": "CRO"
 		},
+		"activeAssignment_relonetqa4": {
+			"fileID": "626307",
+			"clientID": "92265",
+			"clientName": "MobilityX Inc.",
+			"status": "Active",
+			"policyType": "Domestic Policy",
+			"provider": "AI",
+			"journeyType": "Intern",
+			"office": "CRO"
+		},
 		"affinityEnabled": {
 			"fileID": "549316",
 			"clientID": "96512",
@@ -81,11 +91,31 @@
 			"journeyType": "Long Term",
 			"office": "CRO"
 		},
+		"relocationPolicyTyperelonetqa4": {
+			"fileID": "517323",
+			"clientID": "92265",
+			"clientName": "MobilityX Inc.",
+			"status": "Active",
+			"policyType": "International Long Term Assignment",
+			"provider": "AIRES",
+			"journeyType": "Long Term",
+			"office": "CRO"
+		},
 		"lumpSumpPlanPolicyType": {
 			"fileID": "611090",
 			"clientID": "92265",
 			"clientName": "MobilityX Inc.",
 			"status": "Booked",
+			"policyType": "Lump Sum Plan",
+			"provider": "AIRES",
+			"journeyType": "Long Term",
+			"office": "CRO"
+		},
+		"lumpSumpPlanPolicyTyperelonetqa4": {
+			"fileID": "541274",
+			"clientID": "92265",
+			"clientName": "MobilityX Inc.",
+			"status": "Active",
 			"policyType": "Lump Sum Plan",
 			"provider": "AIRES",
 			"journeyType": "Long Term",
@@ -99,6 +129,56 @@
 			"policyType": "Domestic Policy",
 			"provider": "AIRES",
 			"journeyType": "Long-Term",
+			"office": "CRO"
+		},
+		"domesticPolicyTyperelonetqa4": {
+			"fileID": "485545",
+			"clientID": "92265",
+			"clientName": "MobilityX Inc.",
+			"status": "Active",
+			"policyType": "Domestic Policy",
+			"provider": "AIRES",
+			"journeyType": "Permanent",
+			"office": "CRO"
+		},
+		"closedFileIdentDoc": {
+			"fileID": "91003",
+			"clientID": "13606",
+			"clientName": "Orange Business Services (France Telecom)",
+			"status": "Closed",
+			"policyType": "",
+			"provider": "AIRES",
+			"journeyType": "",
+			"office": "CRO"
+		},
+		"closedFileIdentDocrelonetqa4": {
+			"fileID": "94803",
+			"clientID": "1201",
+			"clientName": "International Paper Company",
+			"status": "Cancelled",
+			"policyType": "",
+			"provider": "AI",
+			"journeyType": "",
+			"office": "CRO"
+		},
+		"transfereeWithFamily": {
+			"fileID": "575015",
+			"clientID": "49212",
+			"clientName": "Test Client",
+			"status": "Active",
+			"policyType": "Domestic Non Custom",
+			"provider": "AIRESSH",
+			"journeyType": "Long-Term",
+			"office": "CRO"
+		}		,
+		"transfereeWithOtherFamilyMembers": {
+			"fileID": "590662",
+			"clientID": "92265",
+			"clientName": "MobilityX Inc.",
+			"status": "Active",
+			"policyType": "Domestic Policy",
+			"provider": "AIRES",
+			"journeyType": "Commuter",
 			"office": "CRO"
 		}
 	}

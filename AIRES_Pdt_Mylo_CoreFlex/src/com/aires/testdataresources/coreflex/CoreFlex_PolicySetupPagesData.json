@@ -1,0 +1,91 @@
+[
+	{
+		"application": "Policy Setup",
+		"generalInformationPage": {
+			"policyType": "US Domestic",
+			"employeeType": "Current Employee",
+			"homeownerType": "Homeowner",
+			"cappedPolicy": "No"
+		},
+		"flexPolicySetupPage": {
+			"flexAllowanceType": "Point Allowance",
+			"lockTheBenefitsPointsSelection": "Not Applicable",
+			"benefitsExpirationTracingPrompt": "First Contact Date",
+			"benefitsExpirationDate": "First Contact Date + 6 Month",
+			"StaticFixedTotalPointsAvailable": "500",
+			"customCashoutBenefitName": "TestCustomCashoutBenefit",
+			"maxPortionCashoutPercent": "50",
+			"pointExchangeRate": "1"
+		},
+		"customBundlesPage": {
+			"customBundleName": "TestCustomBundleName"
+		},
+		"transfereeSubmissionsDetails": {
+			"requestDialogComment": "Automated Request Dialog Comment"
+		},
+		"policyBenefitsCategories": {
+			"benefitsCategories": [
+				"Housing",
+				"Moving",
+				"Settling In",
+				"Lifestyle",
+				"Allowances"
+			],
+			"housingSelectableBenefits": [
+				"Lease Break Reimbursement",
+				"Home Purchase",
+				"House Hunting Trip",
+				"Temporary Living",
+				"Rental Assistance",
+				"Home Sale BVO",
+				"Duplicate Housing",
+				"Mortgage Differential",
+				"Other Housing Benefit"
+			],
+			"movingSelectableBenefits": [
+				"Air Shipment",
+				"Auto Shipment",
+				"Sea/Surface Shipment",
+				"Inland Shipment",
+				"Final Move",
+				"Pet Shipment",
+				"Permanent Storage",
+				"Immigration",
+				"Home Leave",
+				"Other Moving Benefit"
+			],
+			"settlingInSelectableBenefits": [
+				"Cultural Training",
+				"Language Training",
+				"Airport Pickup",
+				"Area Tour",
+				"School Search",
+				"Family Transition Assistance",
+				"Pre-Acceptance Services",
+				"Tuition and Education Assistance",
+				"Furniture Rental",
+				"Auto Loss on Sale / Lease Cancellation",
+				"Concierge Services",
+				"Other Settling In Benefit"
+			],
+			"lifeStyleSelectableBenefits": [
+				"Transportation Services Gift Card Reimbursement",
+				"Meal Prep Delivery Service Gift Card Reimbursement",
+				"Meal Delivery Service Gift Card Reimbursement",
+				"Other One Time Payment",
+				"Other Lifestyle Benefit"
+			],
+			"allowancesSelectableBenefits": [
+				"Lump Sum",
+				"Miscellaneous Relocation Allowance",
+				"Housing Allowance/Reimbursement",
+				"Furniture Allowance/Reimbursement",
+				"Assignment Housing (Company Sponsored)",
+				"Transportation Allowance/Reimbursement",
+				"Other Ongoing Allowance/Reimbursement",
+				"Cost of Living Allowance (COLA)",
+				"Other Allowance Benefit"
+			]
+		}
+	}
+]

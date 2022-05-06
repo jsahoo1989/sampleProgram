@@ -15,20 +15,20 @@ Then the Select Query Type screen should display with the given parameters
 | Third Row  |Shipment,PO Number,History                        |
 Examples:
 		| SectionType | SubSection |
-     	| Assignment  |       None |
+     	| Journey     |       None |
      	| Hamburger	  |	     Query |
 
 @IRIS-666 @Mylo-Regression
 Scenario: Mylo-Validate the functionality for Search Results in Query UI screen
 Given he is on Mylo Dashboard Home page
-And he selects "File" section after clicking on "Assignment" option in the Mylo Menu on the sidebar
+And he selects "File" section after clicking on "Journey" option in the Mylo Menu on the sidebar
 And Select Parameter popup should display with given parameters
 |Row Number  |Parameters           |
 | First Row  |File ID,Status,Office|
 | Second Row |Client ID,Client Name|
 | Third Row  |Origin City,Origin Country,Origin State|
 | Fourth Row |Destination City,Destination Country,Destination State|
-And Message "Please input a query parameter." is displayed after clicking on Execute button
+And alert message "Please input a query parameter." is displayed after clicking on Execute button
 And Message "No such file found" is displayed after clicking on Execute button with invalid File ID "1234"
 When user clicks on Execute button after entering valid Client Id "49211", Status "Active", Origin Country "USA" and Destination Country "USA"
 Then Query results should appear based on the parameter provided sorted by File ID

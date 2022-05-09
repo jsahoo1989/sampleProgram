@@ -673,7 +673,7 @@ public class MX_Transferee_MyBenefitsBundlePage extends Base {
 
 	private boolean validateRemoveBenefitInfoText() {
 		return CoreFunctions.getElementText(driver, _removeBenefitDialogText)
-				.equalsIgnoreCase(MobilityXConstants.REMOVE_BENEFIT_DIALOG_INFO_TEXT);
+				.equals(MobilityXConstants.REMOVE_BENEFIT_DIALOG_INFO_TEXT);
 	}
 
 	public void reviewAndConfirmRemoveBenefitSubmission(String optionalNotes, String transfereeName,

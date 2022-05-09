@@ -1895,7 +1895,7 @@ public class CoreFunctions {
 	public static String calculatePageLoadTime(double tIME_BEFORE_ACTION, double tIME_AFTER_ACTION) {
 		DecimalFormat format = new DecimalFormat();
 		format.setMaximumFractionDigits(2);
-		return format.format((tIME_BEFORE_ACTION - tIME_AFTER_ACTION) / 1000);
+		return format.format((tIME_AFTER_ACTION - tIME_BEFORE_ACTION) / 1000);
 	}
 
 }

@@ -1,7 +1,6 @@
-@e2e
 Feature: Validate the CoreFlex End-To-End Business Test Flow(Policy Setup, MXTransferee, MSPEC) for Both_Transferee_StaticFixedPoints_CashoutNotAuthorized_Delete_Approve selection
 
-@Both-CashNotAuth_ApproveRequest_PF
+@Both-CashNotAuth_ApproveRequest_PF @End-To-End-Flow_Both-CashNotAuth_ApproveRequest
   Scenario: CoreFlex - Setting up a New CoreFlex policy in 'Policy Digitization Tool' application
     Given he has setup a new "Both" Type Policy with following selection in 'Policy Digitization Tool (PDT)' application
       | Person Responsible For Benefit Selection | Flex Setup Type | Cashout Availability   |
@@ -10,7 +9,7 @@ Feature: Validate the CoreFlex End-To-End Business Test Flow(Policy Setup, MXTra
 	Then a success dialog should be displayed for Successfully Submitted Policy
 	And Policy Status should be displayed as "Submitted" on "View/Edit Policy Forms" page
 		
-@MXTransfereeFlow @Both-CashNotAuth_ApproveRequest_MX
+@Both-CashNotAuth_ApproveRequest_MX @End-To-End-Flow_Both-CashNotAuth_ApproveRequest
 Scenario: MXTransferee - Selecting & Submitting benefits available in configured policy and Tracking Available_Used Benefits Points
     Given he has logged into 'MobilityX' application after creating a new 'Transferee' through IRIS application for policy setup in 'Policy Digitization Tool'
     And he has validated 'Assignment-Policy' details after selecting below option displayed on 'Welcome' dialog
@@ -30,7 +29,7 @@ Scenario: MXTransferee - Selecting & Submitting benefits available in configured
     Then 'Delete Request Sent' growl message should be displayed on 'My Benefit Bundle' page
     And 'Status' of the deleted benefit should be displayed as "Delete Request Pending" under 'Submitted Benefits' section of 'My Benefit Bundle' page
 
-@TransfereeSubmissionFlow @Both-CashNotAuth_ApproveRequest_MX
+@Both-CashNotAuth_ApproveRequest_MX1 @End-To-End-Flow_Both-CashNotAuth_ApproveRequest
 Scenario: TransfereeSubmissions - Verifying_Approving_Denying submissions made by Transferee for the Client(s) assigned to PPC User 
 	Given he has logged into 'Transferee Submissions' application as a "MSPEC/PPC" user 
 	And he has navigated to "Transferee Submissions Dashboard" page having record of Bundle submitted by the transferee  
@@ -39,5 +38,6 @@ Scenario: TransfereeSubmissions - Verifying_Approving_Denying submissions made b
 	And he has clicked on "Resolve" button for 'Delete Request Pending' request of the Transferee
 	When he confirms the "Approve Request" after verifying 'Delete Request Pending' benefit request details and adding comments on 'Requests' dialog
 	Then 'Action Completed' growl message for "Approve Request" should be displayed on "Transferee Submission Details" page
+	And points should be updated in 'Points Balance' section for the "Approved" delete request on "Transferee Submission Details" page
 	And 'Delete Request Pending' benefit request should be removed from 'Transferee Submission Details' list
 	And benefit details should be updated in 'MXTransferee' application based on "Approved" 'Delete Request' on Transferee Submission

@@ -386,4 +386,25 @@ public class COREFLEXConstants {
 	public static final String FAILED_TO_VERIFY_USER_DETAILS_ON_DASHBOARD_HOME_PAGE = "{0}Failed to verify User Details on Transferee Submissions Dashboard Home Page.";
 	public static final String FAILED_TO_VERIFY_REQUESTS_DIALOG_ON_TRANSFEREE_SUBMISSIONS_DETAILS_PAGE = "{0}Failed to verify Requests Dialog on Transferee Submissions Details page.";
 	public static final String DENY_ALL = "Deny All";
+	public static final String FAILED_TO_VERIFY_BENEFIT_EXPIRATION_AND_LOCK_BENEFITS_TOOLTIP_ON_FLEX_POLICY_SETUP_PAGE = "{0}Failed to verify Benefit Expiration and Lock Benefits Tooltip on Flex Policy Setup Page.";
+	public static final String EXCEPTION_OCCURED_WHILE_VERIFYING_BENEFIT_EXPIRATION_AND_LOCK_BENEFITS_TOOLTIP_TEXT_ON_FLEX_PLANNING_TOOL_PAGE = "{0}Exception occured while verifying Benefit Expiration & Lock Benefits Tooltip Text on Flex Planning Tool Page. Exception : ''{1}''.";
+	public static final String LOCK_THE_BENEFITS_TOOLTIP_TEXT = "This is the date the benefits will be locked and the transferee is no longer able to submit benefits after this date. The Cashout points benefit will still be available if selected for this policy.";
+	public static final String LOCK_THE_BENEFITS = "Lock the benefits/points selection - Tooltip Text";
+	public static final String BENEFIT_EXPIRATION = "Benefits Expiration Tracing Prompt - Tooltip Text";
+	public static final String BENEFIT_EXPIRATION_TOOLTIP_TEXT = "This is the date the benefits expire and any remaining points for the transferee will become unavailable.";
+	public static final String CASHOUT_POINT_CONVERSION = "Cashout Point Conversion";
+	public static final String EXCEPTION_OCCURED_WHILE_VERIFYING_FLEX_POINTS_FIELD_VALIDATION_ON_OTHER_HOUSING_BENEFITS_PAGE = "{0}Exception occured while verifying Flex Points Field validation on Other Housing Benefits Page. Exception : ''{1}''.";
+	public static final String EXCEPTION_OCCURED_WHILE_VERIFYING_FIELD_TEXT_UPDATES_ON_OTHER_HOUSING_BENEFITS_PAGE = "{0}Exception occured while verifying Field Text Updates on Other Housing Benefits Page. Exception : ''{1}''.";
+	public static final String EXPENSE_REIMBURSEMENT_INSTRUCTIONS = "Expense Reimbursement Instructions";
+	public static final String EXPENSE_REIMBURSEMENT_INSTRUCTIONS_TEXT = "Expense Reimbursement Instructions (Transferee Viewable in Mobility Journey)";
+	public static final String AIRES_MANAGED_SERVICE = "Aires Managed Service";
+	public static final String EXCEPTION_OCCURED_WHILE_VERIFYING_REQUIRED_FIELD_VALIDATION_ON_DUPLICATE_HOUSING_BENEFITS_PAGE = "{0}Exception occured while verifying Required Field validation on Duplicate Housing Benefits Page. Exception : ''{1}''.";
+	public static final String REQUIRED_FIELD_MESSAGE_DISPLAYED = "{0}Required field validation message displayed for ''{1}'' field.";
+	public static final String REQUIRED_FIELD_MESSAGE_NOT_DISPLAYED = "{0}Required field validation message NOT displayed for ''{1}'' field.";
+	public static final String FAILED_TO_VERIFY_POINTS_DETAILS_POST_APPROVED_DELETE_REQUEST_ON_TRANSFEREE_SUBMISSIONS_DETAILS_PAGE = "{0}Failed to verify Points Details post approved delete request on Transferee Submissions Details Page.";
+	public static final String SUCCESSFULLY_VALIDATED_POINTS_BALANCE_DETAILS_ON_TRANSFEREE_SUBMISSIONS_DETAILS_PAGE = "{0}Successfully validated Points Balance Details on ''{1}'' page.";
+	public static final String POINTS_BALANCE_TOOLTIP_TEXT = "Points Balance Tooltip Text";
+	public static final String EXPECTED_POINT_SPENT_TOOLTIP_TEXT = "The transferee has used used_points of their total_points point allowance.";
+	public static final String EXPECTED_POINT_BALANCE_TOOLTIP_TEXT = "Transferee's current point balance is remaining_points.";
+	public static final String FAILED_TO_VERIFY_POINTS_DETAILS_POST_DENIED_DELETE_REQUEST_ON_TRANSFEREE_SUBMISSIONS_DETAILS_PAGE = "{0}Failed to verify Points Details post denied delete request on Transferee Submissions Details Page.";
 }

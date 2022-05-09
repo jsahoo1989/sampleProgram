@@ -407,6 +407,7 @@ public class CoreFlex_PolicyBenefitsCategoriesPage extends Base {
 						break;
 					case COREFLEXConstants.OTHER_HOUSING_BENEFIT:
 						coreFlexOtherHousingBenefitsPage.verifyNumericRangeFieldsValidation();
+						coreFlexOtherHousingBenefitsPage.verifyFieldTextUpdates();
 						coreFlexOtherHousingBenefitsPage.selectAndFillBenefitsDetails(benefit.getBenefitDisplayName(),
 								benefit.getPoints(), benefit.getMultipleBenefitSelection(), benefit.getBenefitAmount(),
 								benefit.getBenefitDesc(), benefit.getComment(), benefit.getGrossUp(),

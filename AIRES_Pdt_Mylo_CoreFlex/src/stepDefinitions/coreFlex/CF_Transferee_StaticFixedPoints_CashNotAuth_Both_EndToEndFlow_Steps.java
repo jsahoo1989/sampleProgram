@@ -167,6 +167,8 @@ public class CF_Transferee_StaticFixedPoints_CashNotAuth_Both_EndToEndFlow_Steps
 						COREFLEXConstants.FAILED_TO_VERIFY_BENEFITS_DETAILS_POST_APPROVE_DELETE_BENEFIT_REQUEST_OPERATION_ON_TRANSFEREE_SUBMISSIONS_DETAILS_PAGE,
 						CoreConstants.FAIL));
 	}
+	
+	
 
 	@Then("^'Delete Request Pending' benefit request status should be updated to 'Submitted' in 'Transferee Submission Details' list$")
 	public void delete_Request_Pending_benefit_request_status_should_be_updated_to_Submitted_in_Transferee_Submission_Details_list()

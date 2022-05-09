@@ -190,6 +190,10 @@ public class CoreFlex_LumpSum_BenefitsPage extends Base {
 	@FindBy(how = How.XPATH, using = "//div[@class='container']//label[@class='form-check-label']")
 	private List<WebElement> _radioBenefitMandatoryButtons;
 
+	// Aires Managed Services field required Text
+	@FindBy(how = How.XPATH, using = "//label[contains(text(),'Aires Managed Service')]/following-sibling::div/div[contains(@class,'input-error')]")
+	private WebElement _errorTextAiresManagedServicesRequiredField;
+
 	/*********************************************************************/
 
 	CoreFlex_AllowancesBenefitsData lumpSumBenefitData = FileReaderManager.getInstance().getCoreFlexJsonReader()
@@ -207,10 +211,10 @@ public class CoreFlex_LumpSum_BenefitsPage extends Base {
 	 * @return
 	 */
 	public boolean verifyPageNavigation(String expectedPageName) {
-		return CoreFunctions.verifyElementOnPage(driver, _headerPage, COREFLEXConstants.LUMP_SUM,
-				expectedPageName, expectedPageName, true);
+		return CoreFunctions.verifyElementOnPage(driver, _headerPage, COREFLEXConstants.LUMP_SUM, expectedPageName,
+				expectedPageName, true);
 	}
-	
+
 	/**
 	 * Generic Method to Click on an Element on a Page.
 	 * 
@@ -515,7 +519,7 @@ public class CoreFlex_LumpSum_BenefitsPage extends Base {
 			CoreFunctions.clickElement(driver, _inputMultiAddBenefit);
 			CoreFunctions.selectItemInListByText(driver, _radioBenefitMandatoryButtons, paymentOption, true,
 					COREFLEXConstants.PAYMENT_OPTION);
-		}		
+		}
 		CoreFunctions.clearAndSetTextUsingKeys(driver, _inputBenefitName, benefitDisplayName,
 				COREFLEXConstants.BENEFIT_DISPLAY_NAME);
 		CoreFunctions.clearAndSetTextUsingKeys(driver, _textAreaAllowanceAmountMessage, benefitAllowanceAmount,
@@ -549,11 +553,37 @@ public class CoreFlex_LumpSum_BenefitsPage extends Base {
 			checkFieldValidation(COREFLEXConstants.FLEX_POINT_VALUE, "100.25");
 			checkFieldValidation(COREFLEXConstants.FLEX_POINT_VALUE, "999.5");
 			checkFieldValidation(COREFLEXConstants.FLEX_POINT_VALUE, "1001");
+			checkRequiredFieldValidation(COREFLEXConstants.AIRES_MANAGED_SERVICE);
 		} catch (Exception e) {
 			Reporter.addStepLog(MessageFormat.format(
 					COREFLEXConstants.EXCEPTION_OCCURED_WHILE_VERIFYING_FLEX_POINTS_FIELD_VALIDATION_ON_LUMP_SUM_BENEFITS_PAGE,
 					CoreConstants.FAIL, e.getMessage()));
 		}
+	}
+
+	private void checkRequiredFieldValidation(String fieldName) {
+		try {
+			switch (fieldName) {
+			case COREFLEXConstants.AIRES_MANAGED_SERVICE:
+				if (CoreFunctions.isElementExist(driver, _errorTextAiresManagedServicesRequiredField, 5)) {
+					Reporter.addStepLog(MessageFormat.format(COREFLEXConstants.REQUIRED_FIELD_MESSAGE_DISPLAYED,
+							CoreConstants.FAIL, fieldName));
+					throw new RuntimeException(MessageFormat.format(COREFLEXConstants.REQUIRED_FIELD_MESSAGE_DISPLAYED,
+							CoreConstants.FAIL, fieldName));
+				} else {
+					Reporter.addStepLog(MessageFormat.format(COREFLEXConstants.REQUIRED_FIELD_MESSAGE_NOT_DISPLAYED,
+							CoreConstants.PASS, fieldName));
+				}
+				break;
+			default:
+				Assert.fail(COREFLEXConstants.INVALID_OPTION);
+			}
+		} catch (Exception e) {
+			Reporter.addStepLog(MessageFormat.format(
+					COREFLEXConstants.EXCEPTION_OCCURED_WHILE_VERIFYING_REQUIRED_FIELD_VALIDATION_ON_DUPLICATE_HOUSING_BENEFITS_PAGE,
+					CoreConstants.FAIL, e.getMessage()));
+		}
+
 	}
 
 }

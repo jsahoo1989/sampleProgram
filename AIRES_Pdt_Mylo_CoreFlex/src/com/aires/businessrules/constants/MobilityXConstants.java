@@ -180,7 +180,7 @@ public class MobilityXConstants {
 	public static final String FLEX_BENEFITS_SUBMISSION_MESSAGE = "The attached document outlines the mobility flex benefit(s) that you have submitted. You have used used_points point(s) of yourtotal_points-point allowance. Your current point balance is current_balance point(s).";
 	public static final String FAILED_TO_DELETE_SUBMITTED_BENEFIT = "{0}Failed to delete submitted benefit.";
 	public static final String REMOVE_BENEFIT_SELECTION_POPUP_NOT_DISPLAYED = "{0}Remove Benefit Selection popup not displayed";
-	public static final String REMOVE_BENEFIT_DIALOG_INFO_TEXT = "Your request will be sent to your Aires representative for review. Benefits and services that have started or are completed may not be eligible for change, but we'll let you know as soon as possible!";
+	public static final String REMOVE_BENEFIT_DIALOG_INFO_TEXT = "Your request will be sent to your Aires Representative for review. Benefits and services that have started or are completed may not be eligible for change, but we'll let you know as soon as possible!";
 	public static final String DELETE_BENEFIT_REQUEST_SENT_MESSAGE_NOT_DISPLAYED = "{0}Delete benefit request sent message is not displayed.";
 	public static final String FAILED_TO_VERIFY_DELETED_BENEFIT_STATUS = "{0}Failed to verify deleted benefit status.";
 	public static final String SUCCESSFULLY_VERIFIED_DELETE_REQUEST_STATUS_UNDER_SUBMITTED_BENEFITS_SECTION_ON_MBB_PAGE = "{0}Successfully verified delete request status under Submitted Benefits section for Delete Benefits under Submitted Benefits section of My Benefit Bundle Page.";

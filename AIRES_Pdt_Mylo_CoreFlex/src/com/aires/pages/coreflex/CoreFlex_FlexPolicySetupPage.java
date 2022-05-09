@@ -109,9 +109,13 @@ public class CoreFlex_FlexPolicySetupPage extends Base {
 	@FindBy(how = How.ID, using = "inputMargin")
 	private WebElement _inputMarginPortion;
 
-	// Point Exchange Rate Input Field
+	// Cashout Point Conversion Input Field
 	@FindBy(how = How.CSS, using = "input[formcontrolname='pointExchangeRate']")
-	private WebElement _inputPointExchangeRate;
+	private WebElement _inputCashoutPointConversion;
+
+	// Cashout Point Conversion Field Text
+	@FindBy(how = How.XPATH, using = "//input[@formcontrolname='pointExchangeRate']/ancestor::div[@class='d-flex']/preceding-sibling::div/label")
+	private WebElement _textCashoutPointConversion;
 
 	// Benefits Expiration Tracing Prompt Select Field
 	@FindBy(how = How.CSS, using = "ng-select[formcontrolname='benefitExpTracingPrompt']")
@@ -144,6 +148,14 @@ public class CoreFlex_FlexPolicySetupPage extends Base {
 	// Error PopUp Ok Button
 	@FindBy(how = How.CSS, using = "button[class*='swal2-confirm']")
 	private WebElement _buttonOKErrorDialog;
+
+	// Lock The Benefits ToolTip
+	@FindBy(how = How.XPATH, using = "//label[contains(text(),'Lock the benefits')]/following-sibling::i")
+	private WebElement _toolTipLockTheBenefits;
+
+	// Benefits Expiration ToolTip
+	@FindBy(how = How.XPATH, using = "//label[contains(text(),'Benefits Expiration')]/following-sibling::i")
+	private WebElement _toolTipBenefitsExpiration;
 
 	// Error PopUp Text
 	@FindBy(how = How.XPATH, using = "//div[@id='swal2-content'][contains(text(),'Please complete the required field(s)')]")
@@ -183,7 +195,7 @@ public class CoreFlex_FlexPolicySetupPage extends Base {
 		}
 		return null;
 	}
-	
+
 	/**
 	 * Method to get Navigated Page Header.
 	 * 
@@ -201,7 +213,6 @@ public class CoreFlex_FlexPolicySetupPage extends Base {
 		return null;
 	}
 
-
 	/**
 	 * Generic Method to Click on an Element on a Page.
 	 * 
@@ -214,7 +225,7 @@ public class CoreFlex_FlexPolicySetupPage extends Base {
 				CoreFunctions.clickElement(driver, _buttonLogout);
 				break;
 			case PDTConstants.NEXT:
-				CoreFunctions.clickElement(driver, _buttonNext);				
+				CoreFunctions.clickElement(driver, _buttonNext);
 				break;
 			case PDTConstants.BACK:
 				CoreFunctions.clickElement(driver, _buttonBack);
@@ -383,9 +394,11 @@ public class CoreFlex_FlexPolicySetupPage extends Base {
 				CoreFunctions.clearAndSetTextUsingKeys(driver, _inputMarginPortion,
 						policySetupPageData.flexPolicySetupPage.maxPortionCashoutPercent,
 						COREFLEXConstants.MAX_PORTION_CASHOUT);
-				CoreFunctions.clearAndSetTextUsingKeys(driver, _inputPointExchangeRate,
+				CoreFunctions.verifyText(driver, _textCashoutPointConversion,
+						COREFLEXConstants.CASHOUT_POINT_CONVERSION, COREFLEXConstants.CASHOUT_POINT_CONVERSION);
+				CoreFunctions.clearAndSetTextUsingKeys(driver, _inputCashoutPointConversion,
 						policySetupPageData.flexPolicySetupPage.pointExchangeRate,
-						COREFLEXConstants.POINT_EXCHANGE_RATE);
+						COREFLEXConstants.CASHOUT_POINT_CONVERSION);
 				break;
 			case COREFLEXConstants.CASHOUT_NOT_AUTHORIZED:
 				break;
@@ -437,7 +450,7 @@ public class CoreFlex_FlexPolicySetupPage extends Base {
 			validateTotalPointsAvailableField(fieldName, inputValue);
 			break;
 		case COREFLEXConstants.POINT_EXCHANGE_RATE:
-			CoreFunctions.clearAndSetTextUsingKeys(driver, _inputPointExchangeRate, inputValue, fieldName);
+			CoreFunctions.clearAndSetTextUsingKeys(driver, _inputCashoutPointConversion, inputValue, fieldName);
 			clickElementOfPage(PDTConstants.NEXT);
 			validatePointsExchangeRateField(fieldName, inputValue);
 			break;
@@ -484,6 +497,23 @@ public class CoreFlex_FlexPolicySetupPage extends Base {
 	private void acceptErrorDialogIfDisplayed() {
 		if (CoreFunctions.isElementExist(driver, _textErrorDialog, 2))
 			clickElementOfPage(PDTConstants.OK);
+	}
+
+	public boolean verifyBenfitExpirationLockBenefitTooltip() {
+		try {
+			CoreFunctions.clickElement(driver, _toolTipLockTheBenefits);
+			CoreFunctions.verifyText(CoreFunctions.getAttributeText(_toolTipLockTheBenefits, "mattooltip"),
+					COREFLEXConstants.LOCK_THE_BENEFITS_TOOLTIP_TEXT, COREFLEXConstants.LOCK_THE_BENEFITS);
+			CoreFunctions.clickElement(driver, _toolTipBenefitsExpiration);
+			CoreFunctions.verifyText(CoreFunctions.getAttributeText(_toolTipBenefitsExpiration, "mattooltip"),
+					COREFLEXConstants.BENEFIT_EXPIRATION_TOOLTIP_TEXT, COREFLEXConstants.BENEFIT_EXPIRATION);
+			return true;
+		} catch (Exception e) {
+			Reporter.addStepLog(MessageFormat.format(
+					COREFLEXConstants.EXCEPTION_OCCURED_WHILE_VERIFYING_BENEFIT_EXPIRATION_AND_LOCK_BENEFITS_TOOLTIP_TEXT_ON_FLEX_PLANNING_TOOL_PAGE,
+					CoreConstants.FAIL, e.getMessage()));
+			return false;
+		}
 	}
 
 }

@@ -140,6 +140,10 @@ public class CoreFlex_OtherHousing_BenefitsPage extends Base {
 	@FindBy(how = How.XPATH, using = "//div[@class='form-group required']//label[@class='form-check-label']")
 	private List<WebElement> _radioBenefitMandatoryButtons;
 
+	// Expense Reimbursement Instructions Field
+	@FindBy(how = How.XPATH, using = "//textarea[@formcontrolname='howItWorks']/preceding-sibling::label")
+	private WebElement _textExpenseReimInstructions;
+
 	/*********************************************************************/
 
 	CoreFlex_PolicySetupPagesData policySetupPageData = FileReaderManager.getInstance().getCoreFlexJsonReader()
@@ -157,7 +161,7 @@ public class CoreFlex_OtherHousing_BenefitsPage extends Base {
 		return CoreFunctions.verifyElementOnPage(driver, _headerPage, COREFLEXConstants.OTHER_HOUSING_BENEFIT,
 				expectedPageName, expectedPageName, true);
 	}
-	
+
 	/**
 	 * Generic Method to Click on an Element on a Page.
 	 * 
@@ -286,9 +290,9 @@ public class CoreFlex_OtherHousing_BenefitsPage extends Base {
 			BusinessFunctions.selectValueFromListUsingIndex(driver, _deleteBenefitButtonList, counter);
 			CoreFunctions.clickElement(driver, _deleteBenefitButtonYesOption);
 			CoreFunctions.waitHandler(1);
-			verifyAddAnotherBenefitButtonIsDisplayed();			
+			verifyAddAnotherBenefitButtonIsDisplayed();
 		}
-		deleteBenefits();		
+		deleteBenefits();
 	}
 
 	private void deleteBenefits() {
@@ -297,7 +301,7 @@ public class CoreFlex_OtherHousing_BenefitsPage extends Base {
 			BusinessFunctions.selectValueFromListUsingIndex(driver, _deleteBenefitButtonList, counter);
 			CoreFunctions.clickElement(driver, _deleteBenefitButtonYesOption);
 			CoreFunctions.waitHandler(1);
-		}		
+		}
 	}
 
 	private void verifyAddAnotherBenefitButtonIsDisplayed() {
@@ -312,7 +316,7 @@ public class CoreFlex_OtherHousing_BenefitsPage extends Base {
 			Assert.fail(MessageFormat.format(
 					COREFLEXConstants.ADD_ANOTHER_BENEFIT_BUTTON_NOT_DISPLAYED_AFTER_10TH_BENEFIT_IS_DELETED,
 					CoreConstants.FAIL));
-		}		
+		}
 	}
 
 	private void verifyAddAnotherBenefitLimit() {
@@ -386,8 +390,22 @@ public class CoreFlex_OtherHousing_BenefitsPage extends Base {
 			checkFieldValidation(COREFLEXConstants.FLEX_POINT_VALUE, "1001");
 		} catch (Exception e) {
 			Reporter.addStepLog(MessageFormat.format(
-					COREFLEXConstants.EXCEPTION_OCCURED_WHILE_VERIFYING_FLEX_POINTS_FIELD_VALIDATION_ON_DUPLICATE_HOUSING_BENEFITS_PAGE,
+					COREFLEXConstants.EXCEPTION_OCCURED_WHILE_VERIFYING_FLEX_POINTS_FIELD_VALIDATION_ON_OTHER_HOUSING_BENEFITS_PAGE,
 					CoreConstants.FAIL, e.getMessage()));
 		}
+	}
+
+	public void verifyFieldTextUpdates() {
+		try {
+			CoreFunctions.verifyText(driver, _textExpenseReimInstructions,
+					COREFLEXConstants.EXPENSE_REIMBURSEMENT_INSTRUCTIONS_TEXT,
+					COREFLEXConstants.EXPENSE_REIMBURSEMENT_INSTRUCTIONS);
+
+		} catch (Exception e) {
+			Reporter.addStepLog(MessageFormat.format(
+					COREFLEXConstants.EXCEPTION_OCCURED_WHILE_VERIFYING_FIELD_TEXT_UPDATES_ON_OTHER_HOUSING_BENEFITS_PAGE,
+					CoreConstants.FAIL, e.getMessage()));
+		}
+
 	}
 }

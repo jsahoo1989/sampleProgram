@@ -28,6 +28,7 @@ import java.io.File;
 import java.io.IOException;
 import java.lang.reflect.Field;
 import java.util.ArrayList;
+import java.util.Date;
 
 import javax.imageio.ImageIO;
 
@@ -36,6 +37,7 @@ import org.openqa.selenium.OutputType;
 import org.openqa.selenium.TakesScreenshot;
 
 import com.aires.businessrules.DbFunctions;
+import com.aires.businessrules.constants.CoreConstants;
 import com.aires.cucumber.TestContext;
 import com.aires.managers.FileReaderManager;
 import com.aires.utilities.Log;
@@ -76,14 +78,17 @@ public class Hooks {
 			testContext.getWebDriverManager().getDriver().navigate()
 					.to(FileReaderManager.getInstance().getConfigReader().getMyloApplicationUrl());
 		} else if (scenario.getName().contains("CoreFlex")) {
+			CoreConstants.TIME_BEFORE_ACTION = new Date().getTime();
 			Log.info(FileReaderManager.getInstance().getConfigReader().getCoreFlexPolicySetupApplicationUrl());
 			testContext.getWebDriverManager().getDriver().navigate()
 					.to(FileReaderManager.getInstance().getConfigReader().getCoreFlexPolicySetupApplicationUrl());
 		}else if (scenario.getName().contains("MXTransferee")) {
+			CoreConstants.TIME_BEFORE_ACTION = new Date().getTime();
 			Log.info(FileReaderManager.getInstance().getConfigReader().getMobilityXUrl());
 			testContext.getWebDriverManager().getDriver().navigate()
 					.to(FileReaderManager.getInstance().getConfigReader().getMobilityXUrl());
 		}		else if (scenario.getName().contains("TransfereeSubmissions")) {
+			CoreConstants.TIME_BEFORE_ACTION = new Date().getTime();
 			Log.info(FileReaderManager.getInstance().getConfigReader().getCoreFlexTransfereeSubmissionsApplicationUrl());
 			testContext.getWebDriverManager().getDriver().navigate()
 					.to(FileReaderManager.getInstance().getConfigReader().getCoreFlexTransfereeSubmissionsApplicationUrl());

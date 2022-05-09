@@ -182,6 +182,14 @@ public class TransfereeSubmissions_DetailsPage extends Base {
 	@FindBy(how = How.XPATH, using = "//button[contains(text(),'Resolve Multiple')]")
 	private WebElement _resolveMultipleButton;
 
+	// Point Spent ToolTip Text
+	@FindBy(how = How.CSS, using = "div[class*='popper'] > span[class*='pointTooltip']")
+	private WebElement _tooltipSpentPoints;
+
+	// Point Balance ToolTip Text
+	@FindBy(how = How.CSS, using = "div[class*='popper'] > span[class*='greenColor']")
+	private WebElement _tooltipBalancePoints;
+
 	/**********************************************************************/
 
 	CoreFlex_PolicySetupPagesData policySetupPageData = FileReaderManager.getInstance().getCoreFlexJsonReader()
@@ -297,6 +305,44 @@ public class TransfereeSubmissions_DetailsPage extends Base {
 			Reporter.addStepLog(MessageFormat.format(
 					COREFLEXConstants.SUCCESSFULLY_VALIDATED_TRANSFEREE_SUBMISSION_DETAILS_ON_DASHBOARD_HOME_PAGE,
 					CoreConstants.PASS));
+			return true;
+		} catch (Exception e) {
+			Reporter.addStepLog(MessageFormat.format(
+					COREFLEXConstants.EXCEPTION_OCCURED_WHILE_VALIDATING_TRANSFEREE_SUBMISSION_DETAILS_ON_DASHBOARD_HOME_PAGE,
+					CoreConstants.FAIL, e.getMessage()));
+		}
+		return false;
+	}
+
+	public boolean verifyPointBalancePostDeleteRequestAction(String action,String pageName) {
+		try {
+			String actualPointsSpent[] = CoreFunctions.getElementText(driver, _textPointsSpent).trim().split("of");
+			CoreFunctions.verifyValue(Double.parseDouble(actualPointsSpent[0].trim()),
+					MX_Transferee_FlexPlanningTool_Page.totalSelectedPoints, COREFLEXConstants.POINTS_SPENT);
+			CoreFunctions.highlightObject(driver, _textPointsSpent);
+			CoreFunctions.verifyValue(driver, _textPointsBalance,
+					MX_Transferee_MyBenefitsBundlePage.availablePointsAfterSubmission,
+					COREFLEXConstants.POINTS_BALANCE);
+			CoreFunctions.verifyValue(
+					Double.parseDouble(CoreFunctions.getElementText(driver, _textTotalPoints).replace("/", "").trim()),
+					Double.parseDouble(policySetupPageData.flexPolicySetupPage.StaticFixedTotalPointsAvailable),
+					COREFLEXConstants.TOTAL_POINTS);
+			CoreFunctions.highlightObject(driver, _textTotalPoints);
+			CoreFunctions.clickElement(driver, _textPointsSpent);
+			DecimalFormat format = new DecimalFormat();
+			format.setDecimalSeparatorAlwaysShown(false);
+			CoreFunctions.verifyText(driver, _tooltipSpentPoints, COREFLEXConstants.EXPECTED_POINT_SPENT_TOOLTIP_TEXT
+					.replace("used_points", format.format(MX_Transferee_FlexPlanningTool_Page.totalSelectedPoints))
+					.replace("total_points", policySetupPageData.flexPolicySetupPage.StaticFixedTotalPointsAvailable),
+					COREFLEXConstants.POINTS_BALANCE_TOOLTIP_TEXT);
+			CoreFunctions.verifyText(driver, _tooltipBalancePoints,
+					COREFLEXConstants.EXPECTED_POINT_BALANCE_TOOLTIP_TEXT.replace("remaining_points",
+							format.format(MX_Transferee_MyBenefitsBundlePage.availablePointsAfterSubmission)),
+					COREFLEXConstants.POINTS_BALANCE_TOOLTIP_TEXT);
+			Reporter.addStepLog(MessageFormat.format(
+					COREFLEXConstants.SUCCESSFULLY_VALIDATED_POINTS_BALANCE_DETAILS_ON_TRANSFEREE_SUBMISSIONS_DETAILS_PAGE,
+					CoreConstants.PASS, pageName));
+
 			return true;
 		} catch (Exception e) {
 			Reporter.addStepLog(MessageFormat.format(

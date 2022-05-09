@@ -1,4 +1,3 @@
-@e2e
 Feature: Validate the CoreFlex End-To-End Business Test Flow(Policy Setup, MXTransferee, MSPEC) for Flex_Transferee_StaticFixedPoints_PortionCashout_Delete_DenyAll selection
 
 @Flex-PortionCashout_DenyAllRequest_PF @End-To_End
@@ -38,4 +37,4 @@ Scenario: TransfereeSubmissions - Verifying ApproveAll Delete request functional
 	When he confirms request by selecting "Deny All" option after verifying 'Delete Request Pending' benefit request details on 'Requests' dialog
 	Then 'Action Completed' growl message for "Deny Request" should be displayed on "Transferee Submission Details" page
 	And 'Delete Request Pending' benefit request status should be updated to 'Submitted' in 'Transferee Submission Details' list
-#	And benefit details should be updated in 'MXTransferee' application based on "Denied" 'Delete Request' on Transferee Submission
+	And benefit details should be updated in 'MXTransferee' application based on "Denied" 'Delete Request' on Transferee Submission

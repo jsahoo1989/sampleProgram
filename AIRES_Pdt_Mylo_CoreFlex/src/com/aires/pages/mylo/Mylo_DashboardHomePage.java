@@ -100,10 +100,13 @@ public class Mylo_DashboardHomePage extends Base {
 	@FindBy(how = How.CSS, using = "button[class='btn btn-primary modal-md-blue-btn']")
 	private List<WebElement> _assignmentOptions;
 	
+	@FindBy(how = How.CSS, using = "mat-dialog-container[role='dialog']")
+	private WebElement _dialogBox;
+	
 	@FindBy(how = How.XPATH, using = "//div[contains(@class,'mylo-errorpopup')]")
 	private WebElement _myloErrorPopUp;
 	
-	@FindBy(how = How.XPATH, using = "//button[text()='OK']")
+	@FindBy(how = How.XPATH, using = "//button[contains(@class,'swal2-confirm btn btn-primary smallbutton margintop')]")
 	private WebElement _OKButtonPopUp;
 			
 
@@ -115,9 +118,11 @@ public class Mylo_DashboardHomePage extends Base {
 
 	public boolean verifyUserName(String userName) {
 		CoreFunctions.waitForBrowserToLoad(driver);
+		CoreFunctions.explicitWaitTillElementVisibility(driver, _userProfile, _userProfile.getText());
 		Log.info("userName is : " + _userProfile.getText());
 		CoreFunctions.highlightObject(driver, _userProfile);
-		if(_userProfile.getText().length()>2) {
+		System.out.println(_userProfile.getText().length());
+		if(!(_userProfile.getText().length()>2)) {
 			clickOptionFromMainMenu(MYLOConstants.HOME);
 			CoreFunctions.explicitWaitTillElementInVisibilityCustomTime(driver, _spinner, 60);
 		}
@@ -126,6 +131,7 @@ public class Mylo_DashboardHomePage extends Base {
 	}
 
 	public void clickOptionFromMainMenu(String option) {
+		CoreFunctions.explicitWaitTillElementInVisibilityCustomTime(driver, _spinner, 60);
 		CoreFunctions.explicitWaitTillElementListVisibility(driver, _firstMenuOptions);
 		CoreFunctions.selectItemInListByText(driver, _firstMenuOptions, option);
 	}
@@ -170,6 +176,8 @@ public class Mylo_DashboardHomePage extends Base {
 	}
 	
 	public void selectOptionsFromAssignmentMenu(String optionToBeSelected) {
+		CoreFunctions.explicitWaitTillElementInVisibilityCustomTime(driver, _spinner, 60);
+		CoreFunctions.explicitWaitTillElementVisibility(driver, _dialogBox, _dialogBox.getText(), 60);
 		CoreFunctions.explicitWaitTillElementListVisibilityCustomTime(driver, _assignmentOptions,60);
 		CoreFunctions.selectItemInListByText(driver, _assignmentOptions, optionToBeSelected);
 		CoreFunctions.highlightObject(driver, _assignmentOptionHeader);
@@ -252,7 +260,7 @@ public class Mylo_DashboardHomePage extends Base {
 			CoreFunctions.waitForBrowserToLoad(driver);
 			CoreFunctions.explicitWaitTillElementVisibility(driver, _popUpMessage, _popUpMessage.getText());
 			Assert.assertEquals(_popUpMessage.getText(), message, MYLOConstants.INCORRECT_MESSAGE);
-			CoreFunctions.click(driver, _okButton, _okButton.getText());
+			//CoreFunctions.click(driver, _okButton, _okButton.getText());
 		} catch (Exception e) {
 			return false;
 		}

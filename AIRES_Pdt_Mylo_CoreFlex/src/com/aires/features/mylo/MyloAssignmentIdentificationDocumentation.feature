@@ -65,14 +65,14 @@ When he clicks on "Save" button after entering below invalid ToDate data for mul
 |2  |Random             |Canada  |   15     |04/01/2022|03/02/2022|
 Then "Invalid To Date!" message should get displayed for multiple records
 
-@IRIS-12251 @217057 @217058 @Mylo-Regression @DryRun4
+@IRIS-1225 @217057 @217058 @Mylo-Regression @DryRun4
 Scenario:  Mylo-Validate Country and IdentityType dropdown options of Identification & Documentation section on Mylo Assignment page
 Given he is on Mylo Assignment Summary page for file ID with "Active Assignment" data
 And he cicks on "Identity Type" field to match the values appearing inside the dropdown with the database after clicking on "Add" icon of "Identification & Documentation" section
 When he clicks on "Country" dropdown field
 Then dropdown should display "USA" as the first country with remaining countries in alphabetical order
 
-@IRIS-12251 @217064 @Mylo-Regression
+@IRIS-1225 @217064 @Mylo-Regression
 Scenario:  Mylo-Validate Toast Messages for Mandatory Fields and Colour of the tab associated with the field for newly added records of Identification & Documentation section on Mylo Assignment page
 Given he is on Mylo Assignment Summary page for file ID with "Active Assignment" data
 And below toast messages are displayed after clicking on "Save" button without filling mandatory fields of "Identification & Documentation" section
@@ -99,7 +99,7 @@ And Below data is restored for given transferee of "Identification & Documentati
 |Row|IdentityType       |Country    |Number    |FromDate  |ToDate    | 
 |1  |Cedula             |Random     |   10     |01/01/2022|current   |
 
-@IRIS-12251 @217061 @217062 @217063 @Mylo-Regression
+@IRIS-1225 @217061 @217062 @217063 @Mylo-Regression
 Scenario:  Mylo-Validate Remove functionality for existing records of Identification & Documentation section on Mylo Assignment page
 Given he is on Mylo Assignment Summary page for file ID with "Transferee With Other Family Members" data
 And he has clicked on the tab for the family member which has Identification data in "Identification & Documentation" section

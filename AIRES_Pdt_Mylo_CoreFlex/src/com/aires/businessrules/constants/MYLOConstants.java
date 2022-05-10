@@ -80,13 +80,13 @@ public class MYLOConstants {
 	public static final String INVALID_ROLE_ACCESS_FOR="Invalid Role access for";
 	public static final String POLICY_TYPE="Policy Type";
 	public static final String POLICY_TYPE_READONLY="Policy Type Read Only Field";
-	public static final String POLICY_TYPE_VALUE="New Hire";
+	public static final String POLICY_TYPE_VALUE="Long Term Assignment";
 	public static final String TRANSFER_TYPE="Transfer Type";
 	public static final String JOURNEY_TYPE="Journey Type";
 	public static final String JOURNEY_TYPE_VALUE="Short-Term EE Only";
 	public static final String JOURNEY_TYPE2_VALUE="Intern";
 	public static final String HOMESTATUS="Homestatus";
-	public static final String HOMESTATUS_VALUE="Rent";
+	public static final String HOMESTATUS_VALUE="Other";
 	public static final String HOMESTATUS2_VALUE="Own";
 	public static final String ENTER_CORRECT_FIELD_NAME="Please enter correct field name";
 	public static final String ENTER_CORRECT_SECTION_NAME="Please enter correct section name";

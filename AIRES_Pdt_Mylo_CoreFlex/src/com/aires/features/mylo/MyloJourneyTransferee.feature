@@ -5,7 +5,7 @@ Background: Login to  Mylo application
     Given he has logged into the 'Mylo' application
 
 
-@IRIS-12831
+@IRIS-1283
 Scenario:  Mylo-Validate CheckBox selection of Phone and Email Field under Transferee section on Mylo Journey page
 #Given he is on "Transferee" section after clicking on "Transferee Dropdown arrow" displayed in right panel under "Transferee and Family" section for "Transferee All Data" fileID
 And transferee detail section has below corresponding field and values

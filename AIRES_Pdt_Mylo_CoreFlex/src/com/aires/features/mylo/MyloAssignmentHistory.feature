@@ -10,7 +10,7 @@ Given he is on Mylo Assignment Summary page for file ID "482350"
 When he queries another file for file ID "611085"
 Then the prior file info should be displayed in the history card at the top of the page with the following data:
 |Transferee Name|FileId & Client Name   |Origin & Destination Address|
-|Unchus Slaughter |482350 (MobilityX Inc.)|Sussex, UK to Munich, DE|
+|Virginia Woolf |482350 (AIRES-CIS-DEMO&'TEST(CLIENT))|chennai, IN to test, CA|
 And the history card should continue to display after he refreshes the current session
 And the history card should no longer display at the top of the page after he clicks on X 
 
@@ -31,7 +31,7 @@ When he queries another file for file ID "611085"
 Then the most recent file should be added in the first position at the top with last 17th file being removed from the History dropdown 
 And remaining cards should shift one space towards the most recent for 22 recent files
 
-@IRIS-992 @Mylo-Regression @214507 @214509
+@IRIS-9921 @Mylo-Regression @214507 @214509
 Scenario:  Mylo-Validate maximum 17 History Card appearing in the History dropdown and last file being added upon deletion of 1 History Card in the History section on Mylo Assignment page in the current session
 Given he is on Mylo Assignment Summary page with 22 recent files 
 And 3 most recent assignment history cards should display at the top of the page with 17 card available in the dropdown of History card for 22 recent files

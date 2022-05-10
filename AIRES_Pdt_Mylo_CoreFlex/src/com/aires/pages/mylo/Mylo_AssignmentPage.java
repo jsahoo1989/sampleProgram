@@ -85,7 +85,7 @@ public class Mylo_AssignmentPage extends Base {
 	@FindBy(how = How.XPATH, using = "//button[text()='Save']")
 	private WebElement _SaveButton;
 	
-	@FindBy(how = How.XPATH, using = "//span[text()='Save']")
+	@FindBy(how = How.CSS, using = "i[class='icon-FloppyDisk_Open save_section']")
 	private WebElement _otherAddressSaveButton;
 	
 	@FindBy(how = How.XPATH, using = "//button[text()='Cancel']")
@@ -100,7 +100,7 @@ public class Mylo_AssignmentPage extends Base {
 	@FindBy(how = How.XPATH, using = "//ng-select[@name='policyType']//span[contains(@class,'ng-value-label')]")
 	private WebElement _fileInfoPolicyType;
 
-	@FindBy(how = How.XPATH, using = "//button[text()=' File Information ']/span")
+	@FindBy(how = How.XPATH, using = "//app-aires-file-information/descendant::span[text()='Details']")
 	private WebElement _fileInfoDetailsCarrot;
 
 	@FindBy(how = How.XPATH, using = "//ng-select[@name='status']//span[contains(@class,'ng-value-label')]")
@@ -121,10 +121,10 @@ public class Mylo_AssignmentPage extends Base {
 	@FindBy(how = How.XPATH, using = "//ng-select[@name='homeStatus']//span[contains(@class,'ng-value-label')]")
 	private WebElement _fileInfoHomeStatus;
 
-	@FindBy(how = How.XPATH, using = "//button[text()=' File Information ']//following::div[@id='collapseOne']//span[@class='form-check-sign']")
+	@FindBy(how = How.CSS, using = "app-aires-file-information  span[class='form-check-sign']")
 	private List<WebElement> _fileInfoCheckboxes;
 
-	@FindBy(how = How.XPATH, using = "//button[text()=' File Information ']//following::div[@id='collapseOne']//input[@type='checkbox']")
+	@FindBy(how = How.CSS, using = "app-aires-file-information input[type='checkbox']")
 	private List<WebElement> _fileInfoCheckBoxText;
 
 	@FindBy(how = How.XPATH, using = "//i[@class='icon-FloppyDisk_Open save_section']")
@@ -133,7 +133,7 @@ public class Mylo_AssignmentPage extends Base {
 	@FindBy(how = How.XPATH, using = "//i[@class='icon-XCircle_Open close_section']/parent::button")
 	private WebElement _fileInfoCancelButton;
 
-	@FindBy(how = How.XPATH, using = "//button[text()=' File Information ']//following::div[@id='collapseOne']//descendant::button")
+	@FindBy(how = How.CSS, using = "app-aires-file-information button[class='action-icon-right-panel']")
 	private WebElement _fileInfoEditButton;
 
 	@FindBy(how = How.XPATH, using = "//ng-select[@name='taxTreatment']")
@@ -288,10 +288,13 @@ public class Mylo_AssignmentPage extends Base {
 	@FindBy(how = How.XPATH, using = "//span[text()='Delete']")
 	private WebElement _DeleteButton;
 	
-	@FindBy(how = How.XPATH, using = "//app-address[@id='temporaryAddress']//span[text()='Edit']")
+	@FindBy(how = How.CSS, using = "app-address i[class='icon-Trash_Open Trash_icon']")
+	private WebElement _addressDeleteButton;
+	
+	@FindBy(how = How.CSS, using = "app-address[id='temporaryAddress'] i[class='icon-Pencil_Open']")
 	private WebElement _tempEditButton;
 	
-	@FindBy(how = How.XPATH, using = "//app-address[@id='mailingAddress']//span[text()='Edit']")
+	@FindBy(how = How.CSS, using = "app-address[id='mailingAddress'] i[class='icon-Pencil_Open']")
 	private WebElement _mailEditButton;
 	
 	@FindBy(how = How.XPATH, using = "//h2[text()='Success']//following::div[@id='swal2-content']")
@@ -402,6 +405,12 @@ public class Mylo_AssignmentPage extends Base {
 	
 	@FindBy(how = How.XPATH, using = "//label[text()='Remove']/preceding-sibling::i")
 	private List<WebElement> _removeButton;
+	
+	@FindBy(how = How.XPATH, using = "//div[contains(@class,'mylo-errorpopup')]")
+	private WebElement _myloErrorPopUp;
+	
+	@FindBy(how = How.XPATH, using = "//button[contains(@class,'swal2-confirm btn btn-primary smallbutton margintop')]")
+	private WebElement _OKButtonPopUp;
 			
 	int noOfAiresFileTeamMember;
 	LinkedHashMap<String, String> airesFileTeamExistingMembers = new LinkedHashMap<String, String>();
@@ -678,8 +687,8 @@ public class Mylo_AssignmentPage extends Base {
 			CoreFunctions.explicitWaitTillElementVisibility(driver, _fileInfoEditButton, _fileInfoEditButton.getText());
 			break;
 		case MYLOConstants.SAVE_BUTTON:
-			CoreFunctions.explicitWaitTillElementVisibility(driver, _fileInfoSaveButton, _fileInfoSaveButton.getText());
-			CoreFunctions.click(driver, _fileInfoSaveButton, _fileInfoSaveButton.getText());
+			CoreFunctions.explicitWaitTillElementVisibility(driver, _fileInfoSaveButton, buttonName);
+			CoreFunctions.click(driver, _fileInfoSaveButton, buttonName);
 			break;
 		case MYLOConstants.DETAILS_CARROT_BUTTON:
 			CoreFunctions.explicitWaitTillElementVisibility(driver, _fileInfoDetailsCarrot,
@@ -1010,14 +1019,21 @@ public class Mylo_AssignmentPage extends Base {
 	 * Resetting File Information fields to earlier values
 	 */
 	public void resetFileInfoField() {
+		if (CoreFunctions.isElementExist(driver, _myloErrorPopUp, 5)
+				&& CoreFunctions.isElementExist(driver, _OKButtonPopUp, 5)) {
+			CoreFunctions.clickElement(driver, _OKButtonPopUp);
+			CoreFunctions.explicitWaitTillElementInVisibilityCustomTime(driver, _spinner, 60);
+		}
 		clickButtonOnAiresFileInformationSection(MYLOConstants.EDIT_BUTTON);
 		updateFileInfoFields(MYLOConstants.POLICY_TYPE, MYLOConstants.POLICY_TYPE_VALUE);
 		updateFileInfoFields(MYLOConstants.JOURNEY_TYPE, MYLOConstants.JOURNEY_TYPE_VALUE);
+		// CoreFunctions.scrollToElementUsingJS(driver, _fileInfoOffice,
+		// MYLOConstants.OFFICE);
 		updateFileInfoFields(MYLOConstants.HOMESTATUS, MYLOConstants.HOMESTATUS_VALUE);
 		clickCheckBoxOnAiresFileInfoSection(MYLOConstants.INHERITED_FILE);
 		clickButtonOnAiresFileInformationSection(MYLOConstants.SAVE_BUTTON);
-		//Assert.assertTrue(verifyMessage(MYLOConstants.SUCCESS_MESSAGE));
-		//clickButtonOnAiresFileInformationSection(MYLOConstants.OK_BUTTON);
+		// Assert.assertTrue(verifyMessage(MYLOConstants.SUCCESS_MESSAGE));
+		// clickButtonOnAiresFileInformationSection(MYLOConstants.OK_BUTTON);
 	}
 
 	/**
@@ -1348,8 +1364,8 @@ public class Mylo_AssignmentPage extends Base {
 			mapOtherAddresssWebElementFields();
 			break;
 		case MYLOConstants.DELETE_BUTTON:
-			CoreFunctions.explicitWaitTillElementVisibility(driver, _DeleteButton, _DeleteButton.getText());
-			CoreFunctions.click(driver, _DeleteButton, _DeleteButton.getText());
+			CoreFunctions.explicitWaitTillElementVisibility(driver, _addressDeleteButton, elementName);
+			CoreFunctions.click(driver, _addressDeleteButton, elementName);
 			break;
 		case MYLOConstants.YES_BUTTON:
 			CoreFunctions.explicitWaitTillElementVisibility(driver, _YesButton, _YesButton.getText());
@@ -2243,6 +2259,11 @@ public class Mylo_AssignmentPage extends Base {
 			if (!(CoreFunctions.getElementText(driver, _historyCardDropdownTransferreName.get(i)).equals(details[0].trim())
 					&& CoreFunctions.getElementText(driver, _historyCardDropdownFileIdClient.get(i)).equals(details[1].trim())
 					&& CoreFunctions.getElementText(driver, _historyCardDropdownAddress.get(i)).equals(details[2].trim()))) {
+				
+				System.out.println(CoreFunctions.getElementText(driver, _historyCardDropdownTransferreName.get(i)) + "-------" + details[0].trim());
+				System.out.println(CoreFunctions.getElementText(driver, _historyCardDropdownFileIdClient.get(i))+ "-------" + details[0].trim());
+				System.out.println(CoreFunctions.getElementText(driver, _historyCardDropdownAddress.get(i))+ "-------" + details[0].trim());
+				
 				flag = false;
 			}
 		}
@@ -2918,5 +2939,23 @@ public class Mylo_AssignmentPage extends Base {
 					CoreConstants.PASS, "Cedula", "USA", updatedFromDate,
 					MYLOConstants.IDENTIFICATION_AND_DOCUMENTATION));		
 		return flag;
+	}
+	
+	/**
+	 * Click on Close Icon of Toast Message
+	 */
+	public void clickToastMesssgeCloseIcon() {
+		if (CoreFunctions.isElementVisible(_closeBtn)) {
+			CoreFunctions.highlightObject(driver, _closeBtn);
+			CoreFunctions.sendKeysUsingAction(driver, _closeBtn, MYLOConstants.CLOSE_BUTTON);
+		}
+	}
+	
+	public void clickPopUpOkButton() {
+		if (CoreFunctions.isElementExist(driver, _myloErrorPopUp, 5)
+				&& CoreFunctions.isElementExist(driver, _OKButtonPopUp, 5)) {
+			CoreFunctions.clickElement(driver, _OKButtonPopUp);
+			CoreFunctions.explicitWaitTillElementInVisibilityCustomTime(driver, _spinner, 60);
+		}
 	}
 }

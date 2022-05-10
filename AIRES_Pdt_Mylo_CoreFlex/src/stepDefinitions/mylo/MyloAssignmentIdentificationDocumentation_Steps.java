@@ -206,7 +206,6 @@ public class MyloAssignmentIdentificationDocumentation_Steps {
 		myloDashboardPage.selectOptionsForFileParameters(MYLOConstants.FILE_ID, fileID);
 		Reporter.addStepLog(MessageFormat.format(MYLOConstants.FILE_ID_ENTERED, CoreConstants.PASS, fileID));
 		myloDashboardPage.clickExecuteButton();
-		//myloAssignmentPage.verifyActiveTab(MYLOConstants.SUMMARY);
 		myloAssignmentPage.highlightSectionHeader(MYLOConstants.IDENTIFICATION_AND_DOCUMENTATION);
 		Assert.assertFalse(myloAssignmentPage.verifyIdentDocButtonDisplayed(button2));
 		MYLOConstants.TIME_AFTER_ACTION = new Date().getTime();

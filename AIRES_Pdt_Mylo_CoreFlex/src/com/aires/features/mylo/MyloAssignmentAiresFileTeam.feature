@@ -4,7 +4,7 @@ Feature: Validate the functionality of Mylo Assignment Aires File Team section
 Background: Login to  Mylo application
     Given he has logged into the 'Mylo' application
   
-@IRIS-6871 @Mylo-Regression
+@IRIS-687 @Mylo-Regression
 Scenario Outline: Mylo-Validate No Option for Replacement of Mylo Assignment Aires File Team member
 Given he is on Mylo Assignment Summary page for file ID "626307"
 And he selects "<Role>" with random team member from the dropdown after clicking on "Add" button

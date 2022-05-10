@@ -7,6 +7,7 @@ import org.testng.Assert;
 import com.aires.businessrules.constants.MYLOConstants;
 import com.aires.cucumber.TestContext;
 import com.aires.managers.FileReaderManager;
+import com.aires.pages.mylo.MyloJourneyPage_TransfereeSection;
 import com.aires.pages.mylo.Mylo_AssignmentPage;
 import com.aires.pages.mylo.Mylo_DashboardHomePage;
 import com.aires.pages.mylo.Mylo_LoginPage;
@@ -23,6 +24,7 @@ public class MyloDashboard_Steps {
 	Mylo_LoginPage loginPage;
 	Mylo_DashboardHomePage myloDashboardPage;
 	Mylo_AssignmentPage myloAssignmentPage;
+	MyloJourneyPage_TransfereeSection myloJourneyPageTransfereeSection;
 
 	Mylo_LoginData loginData = FileReaderManager.getInstance().getMyloJsonReader()
 			.getloginDetailsByUserProfileName(MYLOConstants.USER_PROFILE_NAME);

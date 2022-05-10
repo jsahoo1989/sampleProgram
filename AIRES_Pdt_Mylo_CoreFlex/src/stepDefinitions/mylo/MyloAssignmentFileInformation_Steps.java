@@ -245,6 +245,7 @@ public class MyloAssignmentFileInformation_Steps {
 	@Given("^a warning message \"([^\"]*)\" displayed after he selects \"([^\"]*)\" check box$")
 	public void a_warning_message_displayed_after_he_selects_check_box(String msg, String checkBoxName) {
 		MYLOConstants.TIME_BEFORE_ACTION = new Date().getTime();
+		myloAssignmentPage.clickToastMesssgeCloseIcon();
 		myloAssignmentPage.clickCheckBoxOnAiresFileInfoSection(checkBoxName);
 		Assert.assertTrue(myloAssignmentPage.verifyAlertMessage(msg));
 		//myloAssignmentPage.clickButtonOnAiresFileInformationSection(MYLOConstants.OK_BUTTON);

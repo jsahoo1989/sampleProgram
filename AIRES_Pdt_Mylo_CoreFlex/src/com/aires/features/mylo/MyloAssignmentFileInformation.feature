@@ -4,7 +4,7 @@ Feature: Validate the functionality of Mylo Assignment File Information section
 Background: Login to  Mylo application
     Given he has logged into the 'Mylo' application
    
-@IRIS-731 @Mylo-Regression
+@IRIS-7311 @Mylo-Regression
 Scenario Outline:  Mylo-Validate Edit Option availability and additional fields displayed for Mylo Assignment File Information section with different UserTypes
 Given he has logged into the Mylo application with mentioned userType "<UserType>" 
 And he is on Mylo Assignment Summary page for file ID with "Active Assignment" 
@@ -39,7 +39,7 @@ Then "Status" of the file should be "<FileStatus>"
 And "Edit" button will be disabled for both CLSD and CNCD status
 Examples:
 |FileStatus|
-#|Closed    |
+|Closed    |
 |Canceled  |
 
 @IRIS-731 @Mylo-Regression
@@ -49,8 +49,8 @@ When he clicks on "Edit" button after he clicks on the "Details Carrot" under fi
 Then "<FieldName>" dropdown should display as read only for "<FileType>"
 Examples:
 |FieldName  |FileType          |
-#|Policy Type|AffinityEnabled   |
-#|Policy Type|NotAffinityEnabled|
+|Policy Type|AffinityEnabled   |
+|Policy Type|NotAffinityEnabled|
 |Office     |AIRESSH           |
 |Office     |NOTAIRESSH        |
 

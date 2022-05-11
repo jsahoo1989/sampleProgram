@@ -1,6 +1,6 @@
 Feature: Validate the CoreFlex End-To-End Business Test Flow(Policy Setup, MXTransferee, MSPEC) for Flex_Transferee_StaticFixedPoints_PortionCashout_Delete_DenyAll selection
 
-@Flex-PortionCashout_DenyAllRequest_PF @End-To_End
+@End-To_End @Flex-PortionCashout_DenyAllRequest_PF @Flex-PortionCashout_DenyAllRequest_End_To_End
   Scenario: CoreFlex - Setting up a New CoreFlex policy in 'Policy Digitization Tool' application
     Given he has setup a new "Flex" Type Policy with following selection in 'Policy Digitization Tool (PDT)' application
       | Person Responsible For Benefit Selection | Flex Setup Type | Cashout Availability   |
@@ -9,7 +9,7 @@ Feature: Validate the CoreFlex End-To-End Business Test Flow(Policy Setup, MXTra
 	Then a success dialog should be displayed for Successfully Submitted Policy
 	And Policy Status should be displayed as "Submitted" on "View/Edit Policy Forms" page
 		
-@Flex-PortionCashout_DenyAllRequest_MX @End-To_End
+@End-To_End @Flex-PortionCashout_DenyAllRequest_MX @Flex-PortionCashout_DenyAllRequest_End_To_End
 Scenario: MXTransferee - Submitting benefits & Portion Cashout available in configured policy and Tracking Available_Used Benefits Points
     Given he has logged into 'MobilityX' application after creating a new 'Transferee' through IRIS application for policy setup in 'Policy Digitization Tool'
     And he has validated 'Assignment-Policy' details after selecting below option displayed on 'Welcome' dialog
@@ -27,7 +27,7 @@ Scenario: MXTransferee - Submitting benefits & Portion Cashout available in conf
     When he 'Delete' submitted Benefit_Cashout and confirms 'Remove Benefit Selection' dialog by entering username and clicking on "Yes-request to delete these benefits"   
     Then 'Status' of the deleted benefit_cashout should be displayed as "Delete Request Pending" under 'Submitted Benefits' section of 'My Benefit Bundle' page
 
-@Flex-PortionCashout_DenyAllRequest_MX @End-To_End
+@End-To_End @Flex-PortionCashout_DenyAllRequest_MX @Flex-PortionCashout_DenyAllRequest_End_To_End
 Scenario: TransfereeSubmissions - Verifying ApproveAll Delete request functionality for submissions made by Transferee for the Client assigned to PPC User 
 	Given he has logged into 'Transferee Submissions' application as a "MSPEC/PPC" user 
 	And he has navigated to "Transferee Submissions Dashboard" page having record of Bundle submitted by the transferee  

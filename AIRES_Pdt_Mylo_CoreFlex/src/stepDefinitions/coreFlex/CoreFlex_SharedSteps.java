@@ -20,6 +20,7 @@ import com.aires.pages.coreflex.CoreFlex_BluePrint_LoginPage;
 import com.aires.pages.coreflex.CoreFlex_CustomBundlesPage;
 import com.aires.pages.coreflex.CoreFlex_DuplicateHousing_BenefitsPage;
 import com.aires.pages.coreflex.CoreFlex_FlexPolicySetupPage;
+import com.aires.pages.coreflex.CoreFlex_LanguageTraining_BenefitsPage;
 import com.aires.pages.coreflex.CoreFlex_LumpSum_BenefitsPage;
 import com.aires.pages.coreflex.CoreFlex_OtherHousing_BenefitsPage;
 import com.aires.pages.coreflex.CoreFlex_PolicyBenefitsCategoriesPage;
@@ -77,6 +78,7 @@ public class CoreFlex_SharedSteps {
 	private CoreFlex_PreviewTransfereePage coreFlexTransfereePreviewPage;
 	private CoreFlex_BluePrint_LoginPage bluePrintCFLoginPage;
 	private TransfereeSubmissions_DetailsPage transfereeSubmissionsDetailsPage;
+	private CoreFlex_LanguageTraining_BenefitsPage coreFlexLanguageTrainingBenefitsPage;
 
 	private MX_Transferee_MyProfilePage mxTransfereeMyProfilePage;
 	int _initialTableRowCount = 0;
@@ -112,6 +114,8 @@ public class CoreFlex_SharedSteps {
 		bluePrintCFLoginPage = testContext.getPageObjectManager().getBluePrintCoreFlexLoginPage();
 		transfereeSubmissionsDetailsPage = testContext.getCoreFlexPageObjectManager()
 				.getTransfereeSubmissionsDetailsPage();
+		coreFlexLanguageTrainingBenefitsPage = testContext.getCoreFlexPageObjectManager()
+				.getCoreFlexLanguageTrainingBenefitsPage();
 	}
 
 	/**********************************************************************/
@@ -324,8 +328,8 @@ public class CoreFlex_SharedSteps {
 		Assert.assertTrue(flexPolicySetupPage.verifyBenfitExpirationLockBenefitTooltip(), MessageFormat.format(
 				COREFLEXConstants.FAILED_TO_VERIFY_BENEFIT_EXPIRATION_AND_LOCK_BENEFITS_TOOLTIP_ON_FLEX_POLICY_SETUP_PAGE,
 				CoreConstants.FAIL));
-		flexPolicySetupPage.verifyNumericRangeFieldsValidation();
-		flexPolicySetupPage.selectFlexPolicySetupPageFields(dataTable);		
+//		flexPolicySetupPage.verifyNumericRangeFieldsValidation();
+		flexPolicySetupPage.selectFlexPolicySetupPageFields(dataTable);
 		flexPolicySetupPage.clickElementOfPage(PDTConstants.NEXT);
 
 		CoreConstants.TIME_BEFORE_ACTION = new Date().getTime();
@@ -438,6 +442,7 @@ public class CoreFlex_SharedSteps {
 		Reporter.addStepLog("<b>Total time taken to navigate to <i>Blueprint - View/Edit Policy Forms</i> page is :"
 				+ CoreFunctions.calculatePageLoadTime(CoreConstants.TIME_BEFORE_ACTION, CoreConstants.TIME_AFTER_ACTION)
 				+ " Seconds </b>");
+		viewPolicyPage.clickElementOfPage(PDTConstants.CLEAR_FILTER);
 		Assert.assertTrue(viewPolicyPage.verifySubmittedPolicyStatus(addNewPolicyPage.getSelectedPolicyName(), status),
 				MessageFormat.format(
 						COREFLEXConstants.FAILED_TO_VERIFY_SUBMITTED_POLICY_STATUS_ON_VIEW_EDIT_POLICY_FORMS_PAGE,
@@ -490,6 +495,8 @@ public class CoreFlex_SharedSteps {
 				testContext.getIrisPageManager().irisAssignmentTransfereeAndFamilyPage
 						.saveTransferee(IRISConstants.NEW_TRANSFEREE_CREATED_SUCCESS_MSG),
 				IRISConstants.NEW_TRANSFEREE_CREATED_SUCCESS_MSG + " Message " + IRISConstants.IS_NOT_DISPLAYED);
+		testContext.getIrisPageManager().irisAssignmentTransfereeAndFamilyPage.addTransfereeIdentityDetails();
+		
 		testContext.getBasePage().cleanIrisProcesses();
 		testContext.getBasePage().reLaunchIrisToAvoidFreezingIssue();
 		testContext.getIrisPageManager().irisLoginPage = new IRIS_LoginPage();
@@ -498,6 +505,7 @@ public class CoreFlex_SharedSteps {
 		testContext.getIrisPageManager().irisWelcome12C.selectWelcomeWindowModule(IRISConstants.ASSIGNMENT_TAB);
 		testContext.getIrisPageManager().irisAssignmentOverviewPage
 				.queryFile(CoreFunctions.getPropertyFromConfig("Assignment_FileID"));
+		testContext.getIrisPageManager().irisAssignmentOverviewPage.acceptFailedImageLoadDialog();
 		testContext.getIrisPageManager().irisAssignmentOverviewPage.switchTab(IRISConstants.ACTIVITY_FINANCE_TAB);
 		testContext.getIrisPageManager().irisActivityAndFinancePage = new IRIS_ActivityAndFinancePage();
 		Assert.assertTrue(testContext.getIrisPageManager().irisActivityAndFinancePage.verifyActivityAndFinanceTab(),
@@ -510,7 +518,7 @@ public class CoreFlex_SharedSteps {
 		testContext.getIrisPageManager().irisActivityAndFinancePage.clickOnSaveBtn();
 		testContext.getIrisPageManager().irisActivityAndFinancePage.sendLoginCredentials(IRISConstants.YES,
 				IRISConstants.SEND_CREDENTIALS, IRISConstants.SEND_USER_LOGIN_MSG);
-
+		testContext.getIrisPageManager().irisActivityAndFinancePage.acceptIdentityChallengeQuestionDialog();
 		Assert.assertTrue(
 				testContext.getIrisPageManager().irisActivityAndFinancePage
 						.relonetCredentialsSent(IRISConstants.SUCCESS_MSG, IRISConstants.MESSAGE_DIALOG),
@@ -744,19 +752,38 @@ public class CoreFlex_SharedSteps {
 		Assert.assertTrue(mxTransfereeMyBenefitsBundlePage.validateSubmittedBenefitDetails(),
 				MobilityXConstants.SUBMITTED_BENEFIT_DETAILS_NOT_MATCHED);
 	}
-	
+
 	@Then("^points should be updated in 'Points Balance' section for the \"([^\"]*)\" delete request on \"([^\"]*)\" page$")
-	public void points_should_be_updated_in_Points_Balance_section_for_the_delete_request_on_page(String action, String pageName) throws Throwable {
-		Assert.assertTrue(transfereeSubmissionsDetailsPage.verifyPointBalancePostDeleteRequestAction(action,pageName), MessageFormat.format(
-				COREFLEXConstants.FAILED_TO_VERIFY_POINTS_DETAILS_POST_APPROVED_DELETE_REQUEST_ON_TRANSFEREE_SUBMISSIONS_DETAILS_PAGE,
-				CoreConstants.FAIL));
+	public void points_should_be_updated_in_Points_Balance_section_for_the_delete_request_on_page(String action,
+			String pageName) throws Throwable {
+		Assert.assertTrue(transfereeSubmissionsDetailsPage.verifyPointBalancePostDeleteRequestAction(action, pageName),
+				MessageFormat.format(
+						COREFLEXConstants.FAILED_TO_VERIFY_POINTS_DETAILS_POST_APPROVED_DELETE_REQUEST_ON_TRANSFEREE_SUBMISSIONS_DETAILS_PAGE,
+						CoreConstants.FAIL));
 	}
-	
+
 	@Then("^points should not be updated in 'Points Balance' section for the \"([^\"]*)\" delete request on \"([^\"]*)\" page$")
-	public void points_should_not_be_updated_in_Points_Balance_section_for_the_delete_request_on_page(String action, String pageName) throws Throwable {
-		Assert.assertTrue(transfereeSubmissionsDetailsPage.verifyPointBalancePostDeleteRequestAction(action,pageName), MessageFormat.format(
-				COREFLEXConstants.FAILED_TO_VERIFY_POINTS_DETAILS_POST_DENIED_DELETE_REQUEST_ON_TRANSFEREE_SUBMISSIONS_DETAILS_PAGE,
-				CoreConstants.FAIL));
+	public void points_should_not_be_updated_in_Points_Balance_section_for_the_delete_request_on_page(String action,
+			String pageName) throws Throwable {
+		Assert.assertTrue(transfereeSubmissionsDetailsPage.verifyPointBalancePostDeleteRequestAction(action, pageName),
+				MessageFormat.format(
+						COREFLEXConstants.FAILED_TO_VERIFY_POINTS_DETAILS_POST_DENIED_DELETE_REQUEST_ON_TRANSFEREE_SUBMISSIONS_DETAILS_PAGE,
+						CoreConstants.FAIL));
+	}
+
+	@Given("^he has navigated to 'Custom Bundles' page after setting-up following Benefit/SubBenefits of \"([^\"]*)\" type for Mobility Journey Card setup$")
+	public void he_has_navigated_to_Custom_Bundles_page_after_setting_up_following_Benefit_SubBenefits_of_type_for_Mobility_Journey_Card_setup(
+			String benefitType, DataTable dataTable) throws Throwable {
+		List<Map<String, String>> benefitMap = dataTable.asMaps(String.class, String.class);
+		coreFlexLanguageTrainingBenefitsPage.clickLeftNavigationMenuOfPage(COREFLEXConstants.POLICY_BENEFIT_CATEGORIES);
+		coreFlexPolicyBenefitsCategoriesPage.selectBenefit(benefitMap.get(0).get("BenefitName"));
+		coreFlexPolicyBenefitsCategoriesPage.clickElementOfPage(PDTConstants.NEXT);
+		Assert.assertTrue(
+				coreFlexPolicyBenefitsCategoriesPage.selectAndFillAddedBenefits(benefitType,
+						benefitMap.get(0).get("BenefitName"), benefitMap.get(0).get("SubBenefits"),
+						coreFlexLanguageTrainingBenefitsPage),
+				MessageFormat.format(COREFLEXConstants.FAILED_TO_SELECT_AND_FILL_ADDED_BENEFITS, CoreConstants.FAIL));
+		coreFlexBenefitSummaryPage.clickElementOfPage(COREFLEXConstants.CONTINUE);
 	}
 
 }

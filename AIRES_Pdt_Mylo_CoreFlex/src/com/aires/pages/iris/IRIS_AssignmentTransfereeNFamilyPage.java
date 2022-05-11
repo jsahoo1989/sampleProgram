@@ -151,6 +151,20 @@ public class IRIS_AssignmentTransfereeNFamilyPage extends BasePage {
 		}
 	}
 
+	public void addTransfereeIdentityDetails() {
+		try {
+			CoreFunctions.waitHandler(3);
+			addIdentityChallengeInfo();
+			clickSaveButton();
+			Dialog saveSucceededDialog = IRIS_PageMaster.getDialogObject(_IRIS, "Saved");
+			saveSucceededDialog.waitUntilVisible();
+			Button saveSucceedoKButton = saveSucceededDialog.describe(Button.class,
+					new ButtonDescription.Builder().label("OK").build());
+			Helpers.clickButton(saveSucceedoKButton, saveSucceedoKButton.getLabel());
+		} catch (Exception e) {
+		}
+	}
+
 	public void addNewTransfereeDetailsForSpringboardUser(IRIS_AssignmentData transfereeData) throws Exception {
 		addTransfereeFirstAndLastName(transfereeData);
 		Assert.assertTrue(verifyTransfereeNameAdded(), IRISConstants.TRANSFEREE_FIRST_AND_LAST_NAME_NOT_ADDED_TEXT);
@@ -373,7 +387,7 @@ public class IRIS_AssignmentTransfereeNFamilyPage extends BasePage {
 
 			Log.info("New Transferee Window Title : " + _newTransfereeWindowTitle);
 			_IRIS = IRIS_PageMaster.getWindowObject(_newTransfereeWindowTitle);
-			Dialog saveSucceededDialog =  IRIS_PageMaster.getDialogObject(_IRIS, "Saved");
+			Dialog saveSucceededDialog = IRIS_PageMaster.getDialogObject(_IRIS, "Saved");
 			saveSucceededDialog.waitUntilVisible();
 			Button saveSucceedoKButton = saveSucceededDialog.describe(Button.class,
 					new ButtonDescription.Builder().label("OK").build());

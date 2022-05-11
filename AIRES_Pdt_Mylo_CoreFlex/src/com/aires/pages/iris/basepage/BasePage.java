@@ -282,6 +282,9 @@ public class BasePage {
 		case CoreConstants.ENVT_TEST:
 			irisBuildPath = _loginDetails.preProd.irisBuildPath;
 			break;
+		case CoreConstants.ENVT_PREPROD:
+			irisBuildPath = _loginDetails.preProd.irisBuildPath;
+			break;
 		case CoreConstants.ENVT_PROD:
 			irisBuildPath = _loginDetails.prod.irisBuildPath;
 			break;

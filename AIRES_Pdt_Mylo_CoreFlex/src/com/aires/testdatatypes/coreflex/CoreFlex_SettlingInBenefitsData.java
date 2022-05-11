@@ -5,6 +5,7 @@ public class CoreFlex_SettlingInBenefitsData {
 	public String benefitName;
 	public LanguageTrainingEmployee languageTrainingEmployee;
 	public LanguageTrainingFamily languageTrainingFamily;
+	public BenefitDetails benefitDetails;
 	
 	public class LanguageTrainingEmployee{
 		public String maxNumberOfHours;
@@ -13,8 +14,7 @@ public class CoreFlex_SettlingInBenefitsData {
 		public String grossUp;
 		public String reimbursedBy;
 		public String reimbursedByOther;
-		public String comment;
-		public String flexPoints;
+		public String comment;		
 	}	
 	public class LanguageTrainingFamily{
 		public String maxNumberOfHoursPerPerson;
@@ -25,5 +25,13 @@ public class CoreFlex_SettlingInBenefitsData {
 		public String reimbursedBy;
 		public String reimbursedByOther;
 		public String comment;
+	}
+	
+	public class BenefitDetails{
+		public String benefitDisplayName;
+		public String allowanceAmountMessage;
+		public String benefitLongDescription;
+		public String flexPoints;
+		public String airesManagedService;
 	}
 }

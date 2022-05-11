@@ -1,6 +1,6 @@
 Feature: Validate the CoreFlex Policy Flow for Both_Transferee_StaticFixedPoints_CashoutNotAuthorized selection
 
-@PolicySetupFlow @Both-CashNotAuth_123
+@Both-CashNotAuth 
   Scenario: CoreFlex - Setting up a New CoreFlex policy in 'Policy Digitization Tool' application
     Given he has setup a new "Both" Type Policy with following selection in 'Policy Digitization Tool (PDT)' application
       | Person Responsible For Benefit Selection | Flex Setup Type | Cashout Availability   |
@@ -9,7 +9,7 @@ Feature: Validate the CoreFlex Policy Flow for Both_Transferee_StaticFixedPoints
 	Then a success dialog should be displayed for Successfully Submitted Policy
 	And Policy Status should be displayed as "Submit" on "View/Edit Policy Forms" page
 		
-@MXTransfereeFlow @Both-CashNotAuth_555
+@MXTransfereeFlow @Both-CashNotAuth
 Scenario: MXTransferee - Selecting & Submitting benefits available in configured policy and Tracking Available_Used Benefits Points
     Given he has logged into 'MobilityX' application after creating a new 'Transferee' through IRIS application for policy setup in 'Policy Digitization Tool'
     And he has validated 'Assignment-Policy' details after selecting below option displayed on 'Welcome' dialog

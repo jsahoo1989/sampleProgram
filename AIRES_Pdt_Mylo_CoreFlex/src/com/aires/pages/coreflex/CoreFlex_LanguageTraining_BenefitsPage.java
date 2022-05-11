@@ -114,7 +114,7 @@ public class CoreFlex_LanguageTraining_BenefitsPage extends Base {
 
 	// Max Number of Hours Per Family Input Field
 	@FindBy(how = How.XPATH, using = "//div[@class='collapse show']//input[@formcontrolname='maxNumOfHours']")
-	private WebElement _inputMaxNumOfHours;	
+	private WebElement _inputMaxNumOfHours;
 
 	// Max Number of Hours Per Person Input Field
 	@FindBy(how = How.CSS, using = "input[formcontrolname='numHoursPerPerson']")
@@ -144,6 +144,10 @@ public class CoreFlex_LanguageTraining_BenefitsPage extends Base {
 	@FindBy(how = How.XPATH, using = "//div[@class='collapse show']//input[@formcontrolname='languageMaxAmount']")
 	private WebElement _inputMaxAmount;
 
+	// Aires Managed Service Radio Button
+	@FindBy(how = How.CSS, using = "div[class*='form-check-radio'] > label[class*='form-check']")
+	private List<WebElement> _radioAiresManagedService;
+
 	/*********************************************************************/
 
 	CoreFlex_SettlingInBenefitsData languageTrainingBenefitData = FileReaderManager.getInstance()
@@ -152,20 +156,14 @@ public class CoreFlex_LanguageTraining_BenefitsPage extends Base {
 	/*********************************************************************/
 
 	/**
-	 * Method to get Navigated Page Header.
+	 * Method to verify navigated Page Header Title
 	 * 
+	 * @param expectedPageName
 	 * @return
 	 */
-	public String getPageHeaderTitle() {
-		try {
-			CoreFunctions.explicitWaitTillElementVisibility(driver, _headerPage, COREFLEXConstants.LANGUAGE_TRAINING);
-			return CoreFunctions.getElementText(driver, _headerPage);
-		} catch (Exception e) {
-			Reporter.addStepLog(
-					MessageFormat.format(COREFLEXConstants.EXCEPTION_OCCURED_WHILE_FETCHING_PAGE_HEADER_TITLE,
-							CoreConstants.FAIL, e.getMessage()));
-		}
-		return null;
+	public boolean verifyPageNavigation(String expectedPageName) {
+		return CoreFunctions.verifyElementOnPage(driver, _headerPage, COREFLEXConstants.DUPLICATE_HOUSING,
+				expectedPageName, expectedPageName, true);
 	}
 
 	/**
@@ -242,16 +240,6 @@ public class CoreFlex_LanguageTraining_BenefitsPage extends Base {
 	}
 
 	/**
-	 * Method to verify navigated Page Header Title
-	 * 
-	 * @param expectedPageName
-	 * @return
-	 */
-	public boolean verifyPageNavigation(String expectedPageName) {
-		return (getPageHeaderTitle().equals(expectedPageName));
-	}
-
-	/**
 	 * Method to call select Benefit Type and Sub Benefits, fill all mandatory
 	 * fields methods
 	 * 
@@ -259,13 +247,13 @@ public class CoreFlex_LanguageTraining_BenefitsPage extends Base {
 	 * @param subBenefitNames
 	 */
 	public void selectAndFillBenefitsAndSubBenefitDetails(String benefitType, String subBenefitNames) {
-		selectBenefitTypeAndFillMandatoryFields(benefitType);
 		if (benefitType.equals(COREFLEXConstants.BOTH)) {
 			selectBenefitTypeAndFillMandatoryFields(COREFLEXConstants.CORE_BENEFITS);
 			selectSubBenefitsAndFillMandatoryFields(subBenefitNames);
 			selectBenefitTypeAndFillMandatoryFields(COREFLEXConstants.FLEX_BENEFITS);
 			selectSubBenefitsAndFillMandatoryFields(subBenefitNames);
 		} else {
+			selectBenefitTypeAndFillMandatoryFields(benefitType);
 			selectSubBenefitsAndFillMandatoryFields(subBenefitNames);
 		}
 		clickElementOfPage(COREFLEXConstants.SAVE_AND_CONTINUE);
@@ -416,8 +404,8 @@ public class CoreFlex_LanguageTraining_BenefitsPage extends Base {
 			break;
 		case COREFLEXConstants.FLEX:
 			CoreFunctions.clickElement(driver, _textFlex);
-			CoreFunctions.clearAndSetText(driver, _inputFlexPoints,
-					languageTrainingBenefitData.languageTrainingEmployee.flexPoints);
+			CoreFunctions.clearAndSetTextUsingKeys(driver, _inputFlexPoints,
+					languageTrainingBenefitData.benefitDetails.flexPoints, COREFLEXConstants.FLEX_POINTS_VALUE);
 			fillManadatoryDetails();
 			break;
 		case COREFLEXConstants.CORE_BENEFITS:
@@ -426,8 +414,8 @@ public class CoreFlex_LanguageTraining_BenefitsPage extends Base {
 			break;
 		case COREFLEXConstants.FLEX_BENEFITS:
 			CoreFunctions.clickElement(driver, _textFlexBenefits);
-			CoreFunctions.clearAndSetText(driver, _inputFlexPoints,
-					languageTrainingBenefitData.languageTrainingEmployee.flexPoints);
+			CoreFunctions.clearAndSetTextUsingKeys(driver, _inputFlexPoints,
+					languageTrainingBenefitData.benefitDetails.flexPoints, COREFLEXConstants.FLEX_POINTS_VALUE);
 			fillManadatoryDetails();
 			break;
 		case COREFLEXConstants.BOTH:
@@ -442,10 +430,16 @@ public class CoreFlex_LanguageTraining_BenefitsPage extends Base {
 	 * Method to fill Default Mandatory Fields of Benefit
 	 */
 	private void fillManadatoryDetails() {
-		CoreFunctions.clearAndSetText(driver, _inputBenefitName, COREFLEXConstants.LANGUAGE_TRAINING);
-		CoreFunctions.clearAndSetText(driver, _textAreaAllowanceAmountMessage,
-				COREFLEXConstants.LANGUAGE_TRAINING + COREFLEXConstants.ALLOWANCE_AMOUNT_MESSAGE);
-		CoreFunctions.clearAndSetText(driver, _textAreaBenefitLongDescription,
-				COREFLEXConstants.LANGUAGE_TRAINING + COREFLEXConstants.BENEFIT_LONG_DESCRIPTION);
+		CoreFunctions.clearAndSetTextUsingKeys(driver, _inputBenefitName,
+				languageTrainingBenefitData.benefitDetails.benefitDisplayName, COREFLEXConstants.BENEFIT_DISPLAY_NAME);
+		CoreFunctions.clearAndSetTextUsingKeys(driver, _textAreaAllowanceAmountMessage,
+				languageTrainingBenefitData.benefitDetails.allowanceAmountMessage,
+				COREFLEXConstants.ALLOWANCE_AMOUNT_MESSAGE);
+		CoreFunctions.clearAndSetTextUsingKeys(driver, _textAreaBenefitLongDescription,
+				languageTrainingBenefitData.benefitDetails.benefitLongDescription,
+				COREFLEXConstants.BENEFIT_LONG_DESCRIPTION);
+		CoreFunctions.selectItemInListByText(driver, _radioAiresManagedService,
+				languageTrainingBenefitData.benefitDetails.airesManagedService, true,
+				COREFLEXConstants.AIRES_MANAGED_SERVICE);
 	}
 }

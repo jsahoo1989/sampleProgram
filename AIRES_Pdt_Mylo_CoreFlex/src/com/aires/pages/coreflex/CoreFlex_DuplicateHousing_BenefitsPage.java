@@ -420,7 +420,7 @@ public class CoreFlex_DuplicateHousing_BenefitsPage extends Base {
 			break;
 		case COREFLEXConstants.FLEX:
 			CoreFunctions.clickElement(driver, _textFlex);
-			verifyNumericRangeFieldsValidation();
+//			verifyNumericRangeFieldsValidation();
 			CoreFunctions.clearAndSetTextUsingKeys(driver, _inputFlexPoints, flexPoints,
 					COREFLEXConstants.FLEX_POINTS_VALUE);
 			fillManadatoryDetails(benefitType, multipleBenefitSelection, benefitDisplayName, benefitAllowanceAmount,
@@ -434,7 +434,7 @@ public class CoreFlex_DuplicateHousing_BenefitsPage extends Base {
 			break;
 		case COREFLEXConstants.FLEX_BENEFITS:
 			CoreFunctions.clickElement(driver, _textFlexBenefits);
-			verifyNumericRangeFieldsValidation();
+//			verifyNumericRangeFieldsValidation();
 			CoreFunctions.clearAndSetTextUsingKeys(driver, _inputFlexPoints, flexPoints,
 					COREFLEXConstants.FLEX_POINTS_VALUE);
 			fillManadatoryDetails(benefitType, multipleBenefitSelection, benefitDisplayName, benefitAllowanceAmount,

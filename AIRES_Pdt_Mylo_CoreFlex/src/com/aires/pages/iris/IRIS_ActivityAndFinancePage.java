@@ -8,6 +8,7 @@ import java.text.MessageFormat;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
+import org.apache.logging.log4j.core.Core;
 import org.testng.Assert;
 
 import com.aires.businessrules.BusinessFunctions;
@@ -122,40 +123,39 @@ public class IRIS_ActivityAndFinancePage extends BasePage {
 		return actDateStatus;
 	}
 
-	public  boolean verifyRowsInActivitySection(String service, String subServ, String activity, String updby) throws GeneralLeanFtException, Exception
-	{String msgToDisplay;
+	public boolean verifyRowsInActivitySection(String service, String subServ, String activity, String updby)
+			throws GeneralLeanFtException, Exception {
+		String msgToDisplay;
 		String serviceText = getActDateForTracingPrompt(
-				IRIS_PageMaster.getTableObject(_IRIS,
-						"IRIS.Presentation.assignment.activityFinance.ActivityPanel$1"),
+				IRIS_PageMaster.getTableObject(_IRIS, "IRIS.Presentation.assignment.activityFinance.ActivityPanel$1"),
 				IRISConstants.ACTIVITY, IRISConstants.PAYMENT_DATE, service);
-		msgToDisplay= "\n"+service + ": "+ serviceText;
-		
+		msgToDisplay = "\n" + service + ": " + serviceText;
+
 		String subServText = getActDateForTracingPrompt(
-				IRIS_PageMaster.getTableObject(_IRIS,
-						"IRIS.Presentation.assignment.activityFinance.ActivityPanel$1"),
+				IRIS_PageMaster.getTableObject(_IRIS, "IRIS.Presentation.assignment.activityFinance.ActivityPanel$1"),
 				IRISConstants.ACTIVITY, IRISConstants.PAYMENT_DATE, subServ);
-		msgToDisplay +="\n"+ subServ + ": "+ subServText;
-		
+		msgToDisplay += "\n" + subServ + ": " + subServText;
+
 		String activityText = getActDateForTracingPrompt(
-				IRIS_PageMaster.getTableObject(_IRIS,
-						"IRIS.Presentation.assignment.activityFinance.ActivityPanel$1"),
+				IRIS_PageMaster.getTableObject(_IRIS, "IRIS.Presentation.assignment.activityFinance.ActivityPanel$1"),
 				IRISConstants.ACTIVITY, IRISConstants.PAYMENT_DATE, activity);
-		msgToDisplay +="\n"+ activity + ": "+ activityText;
-		
+		msgToDisplay += "\n" + activity + ": " + activityText;
+
 		String updbyText = getActDateForTracingPrompt(
-				IRIS_PageMaster.getTableObject(_IRIS,
-						"IRIS.Presentation.assignment.activityFinance.ActivityPanel$1"),
+				IRIS_PageMaster.getTableObject(_IRIS, "IRIS.Presentation.assignment.activityFinance.ActivityPanel$1"),
 				IRISConstants.ACTIVITY, IRISConstants.PAYMENT_DATE, updby);
-		msgToDisplay +="\n"+ updby + ": "+ updbyText;
-		if(serviceText.equalsIgnoreCase(IRISConstants.SERVICE_ACT) && updbyText.equalsIgnoreCase(CoreFunctions.getPropertyFromConfig(IRISConstants.UPD_BY)) && activityText.equalsIgnoreCase(IRISConstants.PAYMENT_DATE))
-		{
-			
-			Reporter.addStepLog(MessageFormat.format(IRISConstants.FOLLOWING_ROWS_VERIFIED,
-					CoreConstants.PASS, msgToDisplay ));
+		msgToDisplay += "\n" + updby + ": " + updbyText;
+		if (serviceText.equalsIgnoreCase(IRISConstants.SERVICE_ACT)
+				&& updbyText.equalsIgnoreCase(CoreFunctions.getPropertyFromConfig(IRISConstants.UPD_BY))
+				&& activityText.equalsIgnoreCase(IRISConstants.PAYMENT_DATE)) {
+
+			Reporter.addStepLog(
+					MessageFormat.format(IRISConstants.FOLLOWING_ROWS_VERIFIED, CoreConstants.PASS, msgToDisplay));
 			return true;
 		}
 		return false;
 	}
+
 	/**
 	 * Verify dates exist for either of below tracing prompts a. Make first contact
 	 * with transferee/family. b. **Perform needs assessment with transferee
@@ -298,36 +298,35 @@ public class IRIS_ActivityAndFinancePage extends BasePage {
 							.nativeClass("com.aires.iris.calendar.JDayChooser$1").build());
 					Helpers.clickButton(button, button.getLabel());
 					Reporter.addStepLog(MessageFormat.format(IRISConstants.VERIFIED_ENTERED_ACT_DATE,
-							CoreConstants.PASS, actDateColumn ,actDateVal, tracingPrompt));
+							CoreConstants.PASS, actDateColumn, actDateVal, tracingPrompt));
 				}
 				break;
 			}
 		}
 	}
 
-	
+	public void clickBtnConfirmationDialog(String btnName, String dialogName) throws Exception {
+		try {
+			IRIS_PageMaster.getDialogObject(_IRIS, "Confirmation").waitUntilVisible();
+			CoreFunctions.waitHandler(3);
+			if (IRIS_PageMaster.getDialogObject(_IRIS, "Confirmation").isVisible()) {
+				Helpers.clickButton(
+						IRIS_PageMaster.getButtonObjectFromLabel(IRIS_PageMaster.getDialogObject(_IRIS, "Confirmation"),
+								"No"),
+						IRIS_PageMaster
+								.getButtonObjectFromLabel(IRIS_PageMaster.getDialogObject(_IRIS, "Confirmation"), "No")
+								.getLabel());
+				Reporter.addStepLog(MessageFormat.format(IRISConstants.VERIFIED_CLICKED_ON_BUTTON, CoreConstants.PASS,
+						btnName, dialogName));
 
-
-public void clickBtnConfirmationDialog(String btnName, String dialogName) throws Exception {
-	try {
-		IRIS_PageMaster.getDialogObject(_IRIS, "Confirmation").waitUntilVisible();
-		CoreFunctions.waitHandler(3);
-		if (IRIS_PageMaster.getDialogObject(_IRIS, "Confirmation").isVisible()) {
-			Helpers.clickButton(
-					IRIS_PageMaster.getButtonObjectFromLabel(
-							IRIS_PageMaster.getDialogObject(_IRIS, "Confirmation"), "No"),
-					IRIS_PageMaster.getButtonObjectFromLabel(
-							IRIS_PageMaster.getDialogObject(_IRIS, "Confirmation"), "No").getLabel());
-			Reporter.addStepLog(MessageFormat.format(IRISConstants.VERIFIED_CLICKED_ON_BUTTON, CoreConstants.PASS,
-					btnName, dialogName));
-
-		} else {
-			Assert.fail(IRISConstants.CONFIRMATION_DIALOG_NOT_VISIBLE);
+			} else {
+				Assert.fail(IRISConstants.CONFIRMATION_DIALOG_NOT_VISIBLE);
+			}
+		} catch (GeneralLeanFtException e) {
+			e.printStackTrace();
 		}
-	} catch (GeneralLeanFtException e) {
-		e.printStackTrace();
 	}
-}
+
 	/**
 	 * Send credentials to the transferee and save information.
 	 * 
@@ -388,6 +387,32 @@ public void clickBtnConfirmationDialog(String btnName, String dialogName) throws
 			Assert.fail(IRISConstants.CREDENTIALS_NOT_SENT);
 		}
 		return messageVerified;
+	}
+
+	/**
+	 * Accept Identity Challenge Question dialog
+	 * 
+	 * @param message
+	 * @param dialogName
+	 * @throws GeneralLeanFtException
+	 */
+	public void acceptIdentityChallengeQuestionDialog() {
+		CoreFunctions.waitHandler(3);
+		try {
+			if (IRIS_PageMaster.getDialogObject(_IRIS, "Identity Challenge Question").isVisible()) {
+				Helpers.clickButton(
+						IRIS_PageMaster.getButtonObjectFromLabel(
+								IRIS_PageMaster.getDialogObject(_IRIS, "Identity Challenge Question"), "Yes"),
+						IRIS_PageMaster
+								.getButtonObjectFromLabel(
+										IRIS_PageMaster.getDialogObject(_IRIS, "Identity Challenge Question"), "Yes")
+								.getLabel());
+				Reporter.addStepLog(MessageFormat.format(IRISConstants.VERIFIED_DIALOG_ACCEPTED, CoreConstants.PASS,
+						IRISConstants.BUTTON_YES));
+			}
+		} catch (Exception e) {
+
+		}
 	}
 
 	public boolean relonetCredentialsSentForNewTransferee(String message, String dialogName) throws Exception {
@@ -649,13 +674,19 @@ public void clickBtnConfirmationDialog(String btnName, String dialogName) throws
 		robot.keyPress(KeyEvent.VK_ENTER);
 		robot.keyRelease(KeyEvent.VK_ENTER);
 	}
-	
+
 	public void verifySaveSuccessfulMsg() throws GeneralLeanFtException, Exception {
 		if (IRIS_PageMaster.getDialogObject(_IRIS, "Saved").isVisible()
 				&& BusinessFunctions.verifyMsgOnDialog(IRIS_PageMaster.getDialogObject(_IRIS, "Saved"),
 						IRISConstants.MESSAGE_SAVESUCCESSFULL, IRISConstants.SAVED_TEXT)) {
 			Dialog actFinanceSavedDialog = IRIS_PageMaster.getDialogObject(_IRIS, "Saved");
-			Helpers.clickButton(IRIS_PageMaster.getButtonObject(actFinanceSavedDialog, "OK", "javax.swing.plaf.basic.BasicOptionPaneUI$ButtonFactory$ConstrainedButton"), IRIS_PageMaster.getButtonObject(actFinanceSavedDialog, "OK", "javax.swing.plaf.basic.BasicOptionPaneUI$ButtonFactory$ConstrainedButton").getLabel());
+			Helpers.clickButton(
+					IRIS_PageMaster.getButtonObject(actFinanceSavedDialog, "OK",
+							"javax.swing.plaf.basic.BasicOptionPaneUI$ButtonFactory$ConstrainedButton"),
+					IRIS_PageMaster
+							.getButtonObject(actFinanceSavedDialog, "OK",
+									"javax.swing.plaf.basic.BasicOptionPaneUI$ButtonFactory$ConstrainedButton")
+							.getLabel());
 		} else {
 			Assert.fail("Failed to verify save successful message.");
 		}

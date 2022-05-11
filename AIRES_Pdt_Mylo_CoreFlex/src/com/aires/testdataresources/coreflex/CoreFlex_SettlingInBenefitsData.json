@@ -1,25 +1,31 @@
 [
 	{
 		"benefitName": "Language Training",
+		"benefitDetails": {
+			"benefitDisplayName": "Language Training Benefit Custom Name",
+			"allowanceAmountMessage": "Max 4 hours or Self Learning App/Subscription up to 1000$",
+			"benefitLongDescription": "The training to assist in learning the language in new location.  The employee and dependent family members may not speak the language of the country of assignment and will be provided training in the business language of the new location by a service provider. Training may be provided before departure and/or upon arrival in the new country through a Language Training provider.  This training may be online or per person.",
+			"flexPoints": "25",
+			"airesManagedService":"Yes"
+		},
 		"languageTrainingEmployee": {
-			"maxNumberOfHours" : "10",
-			"selfLearningTool" : "Yes",
-			"maxAmount" : "10000",
+			"maxNumberOfHours": "10",
+			"selfLearningTool": "Yes",
+			"maxAmount": "10000",
 			"grossUp": "No",
 			"reimbursedBy": "Other",
 			"reimbursedByOther": "Reimbursed by other",
-			"comment": "Language Training Employee comment",
-			"flexPoints":"150"
+			"comment": "Language Training Employee comment"			
 		},
 		"languageTrainingFamily": {
-			"maxNumberOfHoursPerPerson" : "15",
-			"maxNumberOfHoursPerFamily" : "65",
-			"selfLearningTool" : "Yes",
-			"maxAmount" : "670000",
+			"maxNumberOfHoursPerPerson": "15",
+			"maxNumberOfHoursPerFamily": "65",
+			"selfLearningTool": "Yes",
+			"maxAmount": "670000",
 			"grossUp": "No",
 			"reimbursedBy": "Other",
 			"reimbursedByOther": "Reimbursed by other",
 			"comment": "Language Training Family comment"
-		}				
+		}
 	}
 ]

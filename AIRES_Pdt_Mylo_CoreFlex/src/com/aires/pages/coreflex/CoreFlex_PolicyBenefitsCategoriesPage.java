@@ -21,6 +21,8 @@ import com.aires.testdatatypes.coreflex.CoreFlex_PolicySetupPagesData;
 import com.aires.testdatatypes.coreflex.FlexBenefit;
 import com.vimalselvam.cucumber.listener.Reporter;
 
+import cucumber.api.DataTable;
+
 public class CoreFlex_PolicyBenefitsCategoriesPage extends Base {
 
 	public CoreFlex_PolicyBenefitsCategoriesPage(WebDriver driver) {
@@ -202,7 +204,7 @@ public class CoreFlex_PolicyBenefitsCategoriesPage extends Base {
 				CoreFunctions.explicitWaitTillElementInVisibility(driver, _progressBar);
 				break;
 			case PDTConstants.NEXT:
-				CoreFunctions.clickElement(driver, _buttonNext);				
+				CoreFunctions.clickElement(driver, _buttonNext);
 				break;
 			case PDTConstants.SELECT_ALL:
 				CoreFunctions.clickElement(driver, _toggleButtonSelectAll);
@@ -295,6 +297,25 @@ public class CoreFlex_PolicyBenefitsCategoriesPage extends Base {
 			for (String benefit : benefitList) {
 				CoreFunctions.selectItemInListByText(driver, _allBenefitsList, benefit, true);
 			}
+		} catch (Exception e) {
+			Reporter.addStepLog(
+					MessageFormat.format(COREFLEXConstants.EXCEPTION_OCCURED_WHILE_SELECTING_BENEFITS_ON_PAGE,
+							CoreConstants.FAIL, e.getMessage()));
+			return false;
+		}
+		return true;
+	}
+
+	/**
+	 * Method to select specified Benefit Name (If Not Already Checked)
+	 * 
+	 * @param policyType
+	 * @return
+	 */
+	public boolean selectBenefit(String benefitName) {
+		try {
+			expandAllBenefitCategories();
+			CoreFunctions.selectItemInListByText(driver, _allBenefitsList, benefitName, true);
 		} catch (Exception e) {
 			Reporter.addStepLog(
 					MessageFormat.format(COREFLEXConstants.EXCEPTION_OCCURED_WHILE_SELECTING_BENEFITS_ON_PAGE,
@@ -406,7 +427,7 @@ public class CoreFlex_PolicyBenefitsCategoriesPage extends Base {
 								benefit.getPayments());
 						break;
 					case COREFLEXConstants.OTHER_HOUSING_BENEFIT:
-						coreFlexOtherHousingBenefitsPage.verifyNumericRangeFieldsValidation();
+//						coreFlexOtherHousingBenefitsPage.verifyNumericRangeFieldsValidation();
 						coreFlexOtherHousingBenefitsPage.verifyFieldTextUpdates();
 						coreFlexOtherHousingBenefitsPage.selectAndFillBenefitsDetails(benefit.getBenefitDisplayName(),
 								benefit.getPoints(), benefit.getMultipleBenefitSelection(), benefit.getBenefitAmount(),
@@ -527,5 +548,54 @@ public class CoreFlex_PolicyBenefitsCategoriesPage extends Base {
 		} else if (CoreFunctions.isElementExist(driver, _toggleButtonDeselectAll, 3)) {
 			Assert.fail(COREFLEXConstants.INCORRECT_DEFAULT_POLICY_CATEGORIES_TOGGLE_SELECTION);
 		}
+	}
+
+	public boolean selectAndFillAddedBenefits(String benefitType, String benefitName, String subBenefitNames,
+			CoreFlex_LanguageTraining_BenefitsPage coreFlexLanguageTrainingBenefitsPage) {
+		CoreFunctions.explicitWaitTillElementInVisibility(driver, _progressBar);
+		boolean isBenefitSuccessfullySelectedAndFilled = false;
+		try {
+			if (benefitType.equals(COREFLEXConstants.FLEX) || benefitType.equals(COREFLEXConstants.BOTH)) {
+				isBenefitSuccessfullySelectedAndFilled = fillCardBenefitDetails(benefitType, benefitName,
+						subBenefitNames, coreFlexLanguageTrainingBenefitsPage);
+			}
+		} catch (Exception e) {
+			Reporter.addStepLog(
+					MessageFormat.format(COREFLEXConstants.EXCEPTION_OCCURED_WHILE_SELECTING_AND_FILLING_ADDED_BENEFITS,
+							CoreConstants.FAIL, e.getMessage()));
+		}
+		if (isBenefitSuccessfullySelectedAndFilled) {
+			Reporter.addStepLog(MessageFormat.format(COREFLEXConstants.SUCCESSFULLY_SELECTED_AND_FILLED_ADDED_BENEFITS,
+					CoreConstants.PASS));
+			clickLeftNavigationMenuOfPage(COREFLEXConstants.BENEFIT_SUMMARY);
+		}
+		return isBenefitSuccessfullySelectedAndFilled;
+	}
+
+	private boolean fillCardBenefitDetails(String benefitType, String benefitName, String subBenefitNames,
+			CoreFlex_LanguageTraining_BenefitsPage coreFlexLanguageTrainingBenefitsPage) {
+		boolean isBenefitSuccessfullySelectedAndFilled = false;
+		try {
+			clickLeftNavigationMenuOfPage(benefitName);
+			switch (benefitName) {
+			case COREFLEXConstants.LANGUAGE_TRAINING:
+				coreFlexLanguageTrainingBenefitsPage.selectAndFillBenefitsAndSubBenefitDetails(benefitType,
+						subBenefitNames);
+				isBenefitSuccessfullySelectedAndFilled = true;
+				break;
+			default:
+				Assert.fail(PDTConstants.INVALID_ELEMENT);
+			}
+
+		} catch (Exception e) {
+			Reporter.addStepLog(MessageFormat.format(
+					COREFLEXConstants.EXCEPTION_OCCURED_WHILE_SELECTING_AND_FILLING_ADDED_FLEX_BENEFITS,
+					CoreConstants.FAIL, e.getMessage()));
+		}
+		if (isBenefitSuccessfullySelectedAndFilled) {
+			Reporter.addStepLog(MessageFormat.format(
+					COREFLEXConstants.SUCCESSFULLY_SELECTED_AND_FILLED_ADDED_FLEX_BENEFITS, CoreConstants.PASS));
+		}
+		return isBenefitSuccessfullySelectedAndFilled;
 	}
 }

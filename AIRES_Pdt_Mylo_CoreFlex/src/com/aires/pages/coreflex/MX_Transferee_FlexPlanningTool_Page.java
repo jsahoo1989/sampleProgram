@@ -788,10 +788,10 @@ public class MX_Transferee_FlexPlanningTool_Page extends Base {
 
 	private boolean performFlexBenefitSelection(Benefit benefit, int indexBenefit, int indexCategory) {
 		boolean isBenefitSelected = false;
-		try {
+		try {	
 			CoreFunctions.scrollToElementUsingJS(driver, flexHomePageTitle, MobilityXConstants.FLEX_PLANNING_TOOL);
 			double points = Double.parseDouble(benefit.getPoints());
-			if ((benefit.getMultipleBenefitSelection()).equals("Yes")) {
+			if ((benefit.getMultipleBenefitSelection()).equals("Yes")) {				
 				CoreFunctions.explicitWaitTillElementBecomesClickable(driver, _buttonSelectThisBenefit,
 						MobilityXConstants.SELECT_THIS);
 				BusinessFunctions.selectValueFromListUsingIndex(driver, _buttonSelectThis, indexBenefit);

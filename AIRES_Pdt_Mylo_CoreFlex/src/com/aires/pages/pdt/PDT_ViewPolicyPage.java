@@ -255,6 +255,7 @@ public class PDT_ViewPolicyPage extends Base {
 		boolean isSubmittedPolicyStatusVerified = false;
 		String[] actualPolicyStatus = null;
 		try {
+			CoreFunctions.explicitWaitTillElementInVisibility(driver, _progressBar);
 			int index = BusinessFunctions.returnindexItemFromListUsingText(driver, _listPolicyName, selectedPolicyName);
 			CoreFunctions.highlightObject(driver,
 					CoreFunctions.getElementFromListByText(_listPolicyName, selectedPolicyName));

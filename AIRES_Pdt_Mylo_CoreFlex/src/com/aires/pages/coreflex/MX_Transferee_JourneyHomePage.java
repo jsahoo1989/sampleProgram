@@ -11,6 +11,7 @@ import org.openqa.selenium.support.How;
 import org.testng.Assert;
 
 import com.aires.businessrules.Base;
+import com.aires.businessrules.BusinessFunctions;
 import com.aires.businessrules.CoreFunctions;
 import com.aires.businessrules.constants.COREFLEXConstants;
 import com.aires.businessrules.constants.CoreConstants;
@@ -82,7 +83,7 @@ public class MX_Transferee_JourneyHomePage extends Base {
 	private WebElement _close_tootip;
 
 	@FindBy(how = How.XPATH, using = "//a[contains(.,'Hi')]/parent::td")
-	private WebElement _link_transferee_dropdown;
+	private WebElement _link_transferee_dropdown;		
 
 	@FindBy(how = How.XPATH, using = "//span[text()='Banking']")
 	private WebElement _optionBanking;
@@ -137,6 +138,15 @@ public class MX_Transferee_JourneyHomePage extends Base {
 
 	@FindBy(how = How.XPATH, using = "//span[text()='Back to mobility journey']")
 	private WebElement _link_backToMobilityJourney;
+	
+	@FindBy(how = How.CSS, using = "iframe[class*='appcues-tooltip-container']")
+	private WebElement _tooltipIFrame;	
+	
+	@FindBy(how = How.CSS, using = "div[class*='appcues-actions-right'] > a")
+	private WebElement _tooltipIFrameNextButton;
+	
+	@FindBy(how = How.CSS, using = "div[class='appcues-actions-left'] > small")
+	private WebElement _tooltipIFrameHideLink;
 
 	/*********************************************************************/
 
@@ -215,11 +225,30 @@ public class MX_Transferee_JourneyHomePage extends Base {
 	public void routeToFlexPlanningTool() {
 		CoreFunctions.clickElement(driver, _btn_proceedToFlexTool);
 	}
+	
+	public void switchToTooltipIFrameAndPerformAction(String action, int time) {
+		if (CoreFunctions.isElementExist(driver, _tooltipIFrame, time)) {
+			driver.switchTo().frame(_tooltipIFrame);
+			switch (action) {
+			case MobilityXConstants.NEXT:
+				CoreFunctions.clickElement(driver, _tooltipIFrameNextButton);
+				break;
+			case MobilityXConstants.HIDE:
+				CoreFunctions.clickElement(driver, _tooltipIFrameHideLink);
+				break;
+			default:
+				Assert.fail(MobilityXConstants.NO_ELEMENT_FOUND);
+				break;
+			}
+			driver.switchTo().defaultContent();
+		}
+	}
 
 	public boolean verifyAssignmentAndPolicyDetails() {
 		boolean isAssignmentClientDetailsMatched = false, isPolicyPointsDetailsMatched = false;
 		boolean isDetailsMatched = false;
 		try {
+			switchToTooltipIFrameAndPerformAction(MobilityXConstants.HIDE,10);
 			String actualClientName = CoreFunctions.getElementText(driver, _textClientName);
 			String actualTransfereeName = CoreFunctions.getElementText(driver, _textTransfereeUserNameTitle);
 			String actualpolicyAndFileId = CoreFunctions.getElementText(driver, _textPolicyFileID);
@@ -403,7 +432,7 @@ public class MX_Transferee_JourneyHomePage extends Base {
 	}
 
 	private boolean proceedToAccountSetupPage() {
-		try {
+		try {			
 			CoreFunctions.clickElement(driver, _link_transferee_dropdown);
 			CoreFunctions.clickElement(driver, _optionBanking);
 			CoreFunctions.clickElement(driver, _link_addPaymentAccount);

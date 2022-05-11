@@ -103,7 +103,7 @@ public class IRIS_AssignmentOverviewPage extends BasePage {
 			file12CWindow.waitUntilVisible();
 			_IRIS = file12CWindow;
 			_IRIS.maximize();
-			
+
 			IRIS_PageMaster.getMenuObject(IRIS_PageMaster.getMenuObject(_IRIS, "Query"), "File").waitUntilEnabled();
 			Helpers.selectMenu(IRIS_PageMaster.getMenuObject(IRIS_PageMaster.getMenuObject(_IRIS, "Query"), "File"),
 					IRIS_PageMaster.getMenuObject(IRIS_PageMaster.getMenuObject(_IRIS, "Query"), "File").getLabel());
@@ -1204,5 +1204,23 @@ public class IRIS_AssignmentOverviewPage extends BasePage {
 			e.printStackTrace();
 		}
 
+	}
+
+	public void acceptFailedImageLoadDialog() {
+		try {
+			CoreFunctions.waitHandler(3);
+			_isExists = (IRIS_PageMaster.getDialogObject(_IRIS, "Failed").isVisible());
+			if (_isExists) {
+				Helpers.clickButton(
+						IRIS_PageMaster.getDialogObject(_IRIS, "Failed").describe(Button.class,
+								new ButtonDescription.Builder().label("OK").build()),
+						IRIS_PageMaster.getDialogObject(_IRIS, "Failed")
+								.describe(Button.class, new ButtonDescription.Builder().label("OK").build())
+								.getLabel());
+			}
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 	}
 }

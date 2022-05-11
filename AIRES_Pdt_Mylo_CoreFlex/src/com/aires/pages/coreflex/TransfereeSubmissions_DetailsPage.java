@@ -107,7 +107,7 @@ public class TransfereeSubmissions_DetailsPage extends Base {
 			.xpath(".//following-sibling::span[contains(@class,'ng-star-inserted')][contains(@class,'BlackText')]");
 
 	// Expense Reimbursement Tracing Prompt List
-	@FindBy(how = How.XPATH, using = "//div[contains(@class,'tblBenefits')]//span[contains(@class,'GrayText')]")
+	@FindBy(how = How.XPATH, using = "//div[contains(@class,'tblBenefits')]//span[contains(@class,'GrayText')][not(contains(text(),'to their account Via Check'))]")
 	private List<WebElement> _reimbursementAllowanceTracingList;
 
 	// Comments Benefit List
@@ -328,7 +328,7 @@ public class TransfereeSubmissions_DetailsPage extends Base {
 					Double.parseDouble(policySetupPageData.flexPolicySetupPage.StaticFixedTotalPointsAvailable),
 					COREFLEXConstants.TOTAL_POINTS);
 			CoreFunctions.highlightObject(driver, _textTotalPoints);
-			CoreFunctions.clickElement(driver, _textPointsSpent);
+			CoreFunctions.clickElement(driver, _textPointsBalance);
 			DecimalFormat format = new DecimalFormat();
 			format.setDecimalSeparatorAlwaysShown(false);
 			CoreFunctions.verifyText(driver, _tooltipSpentPoints, COREFLEXConstants.EXPECTED_POINT_SPENT_TOOLTIP_TEXT

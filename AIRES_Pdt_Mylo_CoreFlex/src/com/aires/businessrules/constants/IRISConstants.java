@@ -471,4 +471,6 @@ public class IRISConstants {
 	public static final String AUTO_TEST_POLICY = "AutoTestPolicy";
 	public static final String VERIFIED_NEWLY_ADDED_POLICY_NAME = "{0}Verified newly added policy name is:- ''{1}''";
 	public static final String FAILED_TO_FIND_POLICY = "{0}Failed to find Policy:-''{1}'' in policy table";
+	public static final Object BUTTON_YES = "Yes";
+	public static final String VERIFIED_DIALOG_ACCEPTED = "{0} Verified Identity Dialog accepted with ''{1}'' option.";
 }

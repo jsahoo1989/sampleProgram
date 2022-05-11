@@ -167,6 +167,9 @@ public class TransfereeSubmissions_LoginPage extends Base {
 		case CoreConstants.ENVT_UAT:
 			csmUserFullName = _transfereeSubmissionLoginData.uat.fullName;
 			break;
+		case CoreConstants.ENVT_PREPROD:
+			csmUserFullName = _transfereeSubmissionLoginData.preprod.fullName;
+			break;
 		case CoreConstants.ENVT_PROD:
 			csmUserFullName = _transfereeSubmissionLoginData.prod.fullName;
 			break;
@@ -188,6 +191,10 @@ public class TransfereeSubmissions_LoginPage extends Base {
 		case CoreConstants.ENVT_UAT:
 			csmCredentials[0] = _transfereeSubmissionLoginData.uat.userName;
 			csmCredentials[1] = _transfereeSubmissionLoginData.uat.password;
+			break;
+		case CoreConstants.ENVT_PREPROD:
+			csmCredentials[0] = _transfereeSubmissionLoginData.preprod.userName;
+			csmCredentials[1] = _transfereeSubmissionLoginData.preprod.password;
 			break;
 		case CoreConstants.ENVT_PROD:
 			csmCredentials[0] = _transfereeSubmissionLoginData.prod.userName;

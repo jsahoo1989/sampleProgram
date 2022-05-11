@@ -86,4 +86,5 @@ public class CoreConstants {
 	public static final String SCROLLED_TO_ELEMENT = "Successfully scrolled to Element : ''{0}''.";
 	public static final String FAILED_TO_SCROLL_TO_ELEMENT = "Failed to scroll to Element : ''{0}''.";
 	public static final String SQL_QUERY_FAILED = "SQL Query Failed";
+	public static final String ENVT_PREPROD = "preprod";
 }

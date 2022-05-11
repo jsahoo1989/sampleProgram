@@ -16,6 +16,11 @@
 			"password": "F74#jd*187_NB",
 			"fullName": "mxsso dev5"
 		},
+		"preprod": {
+			"userName": "mxssodev5@corp.aires.com",
+			"password": "F74#jd*187_NB",
+			"fullName": "mxsso dev5"
+		},
 		"prod": {
 			"userName": "mxssodev5@corp.aires.com",
 			"password": "F74#jd*187_NB",

@@ -723,6 +723,11 @@ public class BusinessFunctions {
 			csmCredentials[1] = _loginDetailsApplication.preProd.csmPassword;
 			csmCredentials[2] = _loginDetailsApplication.preProd.csmUserFirstName;
 			break;
+		case CoreConstants.ENVT_PREPROD:
+			csmCredentials[0] = _loginDetailsApplication.preProd.csmUserName;
+			csmCredentials[1] = _loginDetailsApplication.preProd.csmPassword;
+			csmCredentials[2] = _loginDetailsApplication.preProd.csmUserFirstName;
+			break;
 		case CoreConstants.ENVT_UAT:
 			csmCredentials[0] = _loginDetailsApplication.uat.csmUserName;
 			csmCredentials[1] = _loginDetailsApplication.uat.csmPassword;

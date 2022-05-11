@@ -1,7 +1,6 @@
-@e2e
 Feature: Validate the CoreFlex End-To-End Business Test Flow(Policy Setup, MXTransferee, MSPEC) for Flex_Transferee_StaticFixedPoints_CashoutNotAuthorized Policy selection
 
-@Flex-CashNotAuth_PF @End-to-End_Flex_CashNotAuth
+@End-To_End @Flex-CashNotAuth_PF @End-to-End_Flex_CashNotAuth
 Scenario: CoreFlex - Setting up a New CoreFlex policy in 'Policy Digitization Tool' application 
 	Given he has setup a new "Flex" Type Policy with following selection in 'Policy Digitization Tool (PDT)' application 
 		| Person Responsible For Benefit Selection | Flex Setup Type | Cashout Availability   |
@@ -10,7 +9,7 @@ Scenario: CoreFlex - Setting up a New CoreFlex policy in 'Policy Digitization To
 	Then a success dialog should be displayed for Successfully Submitted Policy
 	And Policy Status should be displayed as "Submitted" on "View/Edit Policy Forms" page
 	
-@Flex-CashNotAuth_MX @End-to-End_Flex_CashNotAuth
+@End-To_End @Flex-CashNotAuth_MX @End-to-End_Flex_CashNotAuth
 Scenario: MXTransferee - Selecting & Submitting benefits available in configured policy and Tracking Available_Used Benefits Points
     Given he has logged into 'MobilityX' application after creating a new 'Transferee' through IRIS application for policy setup in 'Policy Digitization Tool'
     And he has validated 'Assignment-Policy' details after selecting below option displayed on 'Welcome' dialog
@@ -27,7 +26,7 @@ Scenario: MXTransferee - Selecting & Submitting benefits available in configured
     And submitted benefit details should be displayed under 'Submitted Benefits' section of 'My Benefits Bundle' page
     And 'Mobility Flex Benefit(s) Submission' email should be generated for the submitted benefit bundle 
 	
-@Flex-CashNotAuth_MX @End-to-End_Flex_CashNotAuth
+@End-To_End @Flex-CashNotAuth_MX @End-to-End_Flex_CashNotAuth
 Scenario: TransfereeSubmissions - Verifying_Approving_Denying submissions made by Transferee for the Client(s) assigned to PPC User 
 	Given he has logged into 'Transferee Submissions' application as a "MSPEC/PPC" user 
 	And he has navigated to "Transferee Submissions Dashboard" page having record of Bundle submitted by the transferee 

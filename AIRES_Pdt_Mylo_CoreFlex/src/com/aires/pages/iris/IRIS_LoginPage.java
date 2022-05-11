@@ -113,6 +113,11 @@ public class IRIS_LoginPage extends BasePage {
 			_password = loginDataApp.preProd.irisPassword;
 			_database = loginDataApp.preProd.irisDatabase;
 			break;
+		case CoreConstants.ENVT_PREPROD:
+			_userName = loginDataApp.preProd.irisUserName;			
+			_password = loginDataApp.preProd.irisPassword;
+			_database = loginDataApp.preProd.irisDatabase;
+			break;
 		case CoreConstants.ENVT_PROD:
 			_userName = loginDataApp.prod.irisUserName;			
 			_password = loginDataApp.prod.irisPassword;

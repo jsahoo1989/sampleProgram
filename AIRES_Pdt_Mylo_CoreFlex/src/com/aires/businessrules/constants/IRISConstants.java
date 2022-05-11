@@ -473,4 +473,6 @@ public class IRISConstants {
 	public static final String FAILED_TO_FIND_POLICY = "{0}Failed to find Policy:-''{1}'' in policy table";
 	public static final Object BUTTON_YES = "Yes";
 	public static final String VERIFIED_DIALOG_ACCEPTED = "{0} Verified Identity Dialog accepted with ''{1}'' option.";
+	public static final String ADD_BUTTON = "Add";
+	public static final String FAILED_TO_ADD_SUB_SERVICE = "Failed to add Sub-service";
 }

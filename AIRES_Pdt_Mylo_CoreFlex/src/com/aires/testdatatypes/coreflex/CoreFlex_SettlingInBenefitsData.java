@@ -33,5 +33,8 @@ public class CoreFlex_SettlingInBenefitsData {
 		public String benefitLongDescription;
 		public String flexPoints;
 		public String airesManagedService;
+		public String benefitCategory;
+		public String multipleBenefitSelection;
+		public int numberOfBenefitSelected;
 	}
 }

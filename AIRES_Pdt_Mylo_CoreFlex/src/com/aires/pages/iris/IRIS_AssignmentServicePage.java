@@ -219,6 +219,16 @@ public class IRIS_AssignmentServicePage extends BasePage {
 			e.printStackTrace();
 		}
 	}
+	
+	public void clickOnAddSubServiceButton() {
+		try {
+			Helpers.clickButton(IRIS_PageMaster.getButtonObject(_IRIS, IRISConstants.ADD_BUTTON, 2),
+					IRIS_PageMaster.getButtonObject(_IRIS, IRISConstants.ADD_BUTTON, 2).getAttachedText());
+		} catch (Exception e) {
+			Assert.fail(IRISConstants.FAILED_TO_ADD_SUB_SERVICE);
+		}
+	}
+
 
 	public int addSubService(String sectionName, DataTable subServiceData) {
 		try {
@@ -226,8 +236,9 @@ public class IRIS_AssignmentServicePage extends BasePage {
 			_tableName = getTableName(sectionName);
 			_tableName.waitUntilVisible();
 			rowCount = Helpers.getTableRowCount(_tableName);
-			_tableName.getCell(rowCount - 1, data.get(0).get(0).toString()).setValue(data.get(1).get(0).toString());
 			_tableName.getCell(rowCount - 1, data.get(0).get(1).toString()).setValue(data.get(1).get(1).toString());
+			_tableName.getCell(rowCount - 1, data.get(0).get(2).toString()).setValue(data.get(1).get(2).toString());
+			_tableName.getCell(rowCount - 1, data.get(0).get(3).toString()).setValue(data.get(1).get(3).toString());
 		} catch (Exception e) {
 			e.printStackTrace();
 		}

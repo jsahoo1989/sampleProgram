@@ -407,4 +407,5 @@ public class COREFLEXConstants {
 	public static final String EXPECTED_POINT_SPENT_TOOLTIP_TEXT = "The transferee has used used_points of their total_points point allowance.";
 	public static final String EXPECTED_POINT_BALANCE_TOOLTIP_TEXT = "Transferee's current point balance is remaining_points.";
 	public static final String FAILED_TO_VERIFY_POINTS_DETAILS_POST_DENIED_DELETE_REQUEST_ON_TRANSFEREE_SUBMISSIONS_DETAILS_PAGE = "{0}Failed to verify Points Details post denied delete request on Transferee Submissions Details Page.";
+	public static final String EXCEPTION_OCCURED_WHILE_VERIFYING_FLEX_BENEFIT_CARD = "{0}Exception occured while verifying Flex Benefit card on Mobility Journey Home Page. Exception : ''{1}''.";
 }

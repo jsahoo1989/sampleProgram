@@ -27,7 +27,6 @@ import com.aires.testdatatypes.iris.IRIS_AssignmentData.File;
 import com.aires.testdatatypes.iris.IRIS_AssignmentData.OriginAddress;
 import com.aires.utilities.Log;
 import com.aires.utilities.getWindowText;
-import com.hp.lft.sdk.CheckedState;
 import com.hp.lft.sdk.Desktop;
 import com.hp.lft.sdk.GeneralLeanFtException;
 import com.hp.lft.sdk.java.Button;
@@ -334,7 +333,9 @@ public class IRIS_AssignmentOverviewPage extends BasePage {
 		// addAuthorizationInfo(overviewData.authorization);
 		deleteAiresFileTeamHistoryDetails(IRISConstants.FUNCTION_PPC);
 		saveAssignment(1);
-		addAiresFileTeamHistoryDetails(IRISConstants.FUNCTION_PPC, overviewData.airesFileTeamHistory);
+		addAiresFileTeamHistoryDetails(IRISConstants.FUNCTION_PPC, overviewData.airesFileTeamHistory);		
+		saveAssignment(1);
+		addAiresFileTeamHistoryDetails(IRISConstants.FUNCTION_MSPEC, overviewData.airesFileTeamHistory);
 		saveAssignment(1);
 	}
 

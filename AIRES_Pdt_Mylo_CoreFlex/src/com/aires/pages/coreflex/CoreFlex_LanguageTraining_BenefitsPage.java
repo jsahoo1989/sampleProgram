@@ -148,6 +148,10 @@ public class CoreFlex_LanguageTraining_BenefitsPage extends Base {
 	@FindBy(how = How.CSS, using = "div[class*='form-check-radio'] > label[class*='form-check']")
 	private List<WebElement> _radioAiresManagedService;
 
+	// Benefit can be selected more than once Checkbox
+	@FindBy(how = How.XPATH, using = "//input[@id='multiAddInd']/parent::label")
+	private WebElement _inputMultiAddBenefit;
+
 	/*********************************************************************/
 
 	CoreFlex_SettlingInBenefitsData languageTrainingBenefitData = FileReaderManager.getInstance()
@@ -441,5 +445,8 @@ public class CoreFlex_LanguageTraining_BenefitsPage extends Base {
 		CoreFunctions.selectItemInListByText(driver, _radioAiresManagedService,
 				languageTrainingBenefitData.benefitDetails.airesManagedService, true,
 				COREFLEXConstants.AIRES_MANAGED_SERVICE);
+		if (languageTrainingBenefitData.benefitDetails.multipleBenefitSelection.equals(COREFLEXConstants.YES)) {
+			CoreFunctions.clickElement(driver, _inputMultiAddBenefit);
+		}
 	}
 }

@@ -4,9 +4,12 @@
 		"benefitDetails": {
 			"benefitDisplayName": "Language Training Benefit Custom Name",
 			"allowanceAmountMessage": "Max 4 hours or Self Learning App/Subscription up to 1000$",
-			"benefitLongDescription": "The training to assist in learning the language in new location.  The employee and dependent family members may not speak the language of the country of assignment and will be provided training in the business language of the new location by a service provider. Training may be provided before departure and/or upon arrival in the new country through a Language Training provider.  This training may be online or per person.",
+			"benefitLongDescription": "The training to assist in learning the language in new location.",
 			"flexPoints": "25",
-			"airesManagedService":"Yes"
+			"airesManagedService":"Yes",
+			"benefitCategory":"Settling In",
+			"multipleBenefitSelection":"Yes",
+			"numberOfBenefitSelected":1
 		},
 		"languageTrainingEmployee": {
 			"maxNumberOfHours": "10",

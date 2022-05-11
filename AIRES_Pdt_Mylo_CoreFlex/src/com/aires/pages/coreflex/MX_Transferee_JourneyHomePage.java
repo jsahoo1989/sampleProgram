@@ -11,14 +11,13 @@ import org.openqa.selenium.support.How;
 import org.testng.Assert;
 
 import com.aires.businessrules.Base;
-import com.aires.businessrules.BusinessFunctions;
 import com.aires.businessrules.CoreFunctions;
 import com.aires.businessrules.constants.COREFLEXConstants;
 import com.aires.businessrules.constants.CoreConstants;
 import com.aires.businessrules.constants.MobilityXConstants;
-import com.aires.businessrules.constants.PDTConstants;
 import com.aires.managers.FileReaderManager;
 import com.aires.testdatatypes.coreflex.CoreFlex_PolicySetupPagesData;
+import com.aires.testdatatypes.coreflex.CoreFlex_SettlingInBenefitsData;
 import com.aires.testdatatypes.coreflex.MX_Transferee_AccountSetupDetails;
 import com.aires.utilities.EmailUtil;
 import com.aires.utilities.Log;
@@ -83,7 +82,7 @@ public class MX_Transferee_JourneyHomePage extends Base {
 	private WebElement _close_tootip;
 
 	@FindBy(how = How.XPATH, using = "//a[contains(.,'Hi')]/parent::td")
-	private WebElement _link_transferee_dropdown;		
+	private WebElement _link_transferee_dropdown;
 
 	@FindBy(how = How.XPATH, using = "//span[text()='Banking']")
 	private WebElement _optionBanking;
@@ -138,15 +137,39 @@ public class MX_Transferee_JourneyHomePage extends Base {
 
 	@FindBy(how = How.XPATH, using = "//span[text()='Back to mobility journey']")
 	private WebElement _link_backToMobilityJourney;
-	
+
 	@FindBy(how = How.CSS, using = "iframe[class*='appcues-tooltip-container']")
-	private WebElement _tooltipIFrame;	
-	
+	private WebElement _tooltipIFrame;
+
 	@FindBy(how = How.CSS, using = "div[class*='appcues-actions-right'] > a")
 	private WebElement _tooltipIFrameNextButton;
-	
+
 	@FindBy(how = How.CSS, using = "div[class='appcues-actions-left'] > small")
 	private WebElement _tooltipIFrameHideLink;
+
+	@FindBy(how = How.XPATH, using = "//div[contains(@id,'cfcardstatus')]//span[contains(text(),'There are no services set up yet.')]")
+	private WebElement _serviceNotSetupCFCard;
+
+	@FindBy(how = How.XPATH, using = "//div[contains(@id,'cfcardstatus')]//span[contains(@class,'RCFXMJHeadingText')]")
+	private WebElement flexCardBenefitDisplayName;
+
+	@FindBy(how = How.XPATH, using = "//div[contains(@id,'cfcardstatus')]//span[contains(@class,'RCFXMJSubHeadingText')]")
+	private WebElement flexCardAmountAllowanceText;
+
+	@FindBy(how = How.XPATH, using = "//div[contains(@id,'cfcardstatus')]//div[contains(@class,'RXCFCircle')]//span")
+	private WebElement flexCardNumberOfBenefitSelected;
+
+	@FindBy(how = How.XPATH, using = "//div[contains(@id,'cfcardstatus')]//table[contains(@class,'RXRightIconPanel')]//span")
+	private WebElement flexCardStatus;
+
+	@FindBy(how = How.XPATH, using = "//div[contains(@id,'cfcardstatus')]//span[contains(@class,'icon-help')]")
+	private WebElement flexCardLongDescIcon;
+
+	@FindBy(how = How.XPATH, using = "//div[contains(@id,'cfcardstatus')]//div[contains(@class,'RXFlexBeneftsMjTooltiptext')]//span[contains(@class,'RXWrappedText')]")
+	private WebElement flexCardLongDesc;
+
+	@FindBy(how = How.XPATH, using = "//div[contains(@id,'cfcardstatus')]//a[contains(@class,'RXCFGreenCardSmallRoundedButton ')]//span[@class='RXWhite']")
+	private WebElement flexCardManageBenefitButton;
 
 	/*********************************************************************/
 
@@ -155,6 +178,9 @@ public class MX_Transferee_JourneyHomePage extends Base {
 
 	MX_Transferee_AccountSetupDetails accountDetails = FileReaderManager.getInstance().getCoreFlexJsonReader()
 			.getMxTransfereeAccountSetupDetails();
+
+	CoreFlex_SettlingInBenefitsData languageTrainingBenefitData = FileReaderManager.getInstance()
+			.getCoreFlexJsonReader().getSettlingInBenefitDataList(COREFLEXConstants.LANGUAGE_TRAINING);
 
 	/*********************************************************************/
 
@@ -225,7 +251,7 @@ public class MX_Transferee_JourneyHomePage extends Base {
 	public void routeToFlexPlanningTool() {
 		CoreFunctions.clickElement(driver, _btn_proceedToFlexTool);
 	}
-	
+
 	public void switchToTooltipIFrameAndPerformAction(String action, int time) {
 		if (CoreFunctions.isElementExist(driver, _tooltipIFrame, time)) {
 			driver.switchTo().frame(_tooltipIFrame);
@@ -248,7 +274,7 @@ public class MX_Transferee_JourneyHomePage extends Base {
 		boolean isAssignmentClientDetailsMatched = false, isPolicyPointsDetailsMatched = false;
 		boolean isDetailsMatched = false;
 		try {
-			switchToTooltipIFrameAndPerformAction(MobilityXConstants.HIDE,10);
+			switchToTooltipIFrameAndPerformAction(MobilityXConstants.HIDE, 10);
 			String actualClientName = CoreFunctions.getElementText(driver, _textClientName);
 			String actualTransfereeName = CoreFunctions.getElementText(driver, _textTransfereeUserNameTitle);
 			String actualpolicyAndFileId = CoreFunctions.getElementText(driver, _textPolicyFileID);
@@ -300,8 +326,8 @@ public class MX_Transferee_JourneyHomePage extends Base {
 		Log.info(CoreFunctions.getPropertyFromConfig("Assignment_ClientName").equals(actualClientName) + "");
 		Log.info(CoreFunctions.getPropertyFromConfig("Assignment_FileID").equals(actualFileId) + "");
 		Log.info((CoreFunctions.getPropertyFromConfig("Transferee_firstName") + " "
-				+ CoreFunctions.getPropertyFromConfig("Transferee_lastName"))+":"+(actualTransfereeName) + "");
-		
+				+ CoreFunctions.getPropertyFromConfig("Transferee_lastName")) + ":" + (actualTransfereeName) + "");
+
 		boolean isAssignmentClientDetailsMatched = (CoreFunctions.getPropertyFromConfig("Assignment_ClientName").equals(
 				actualClientName) & CoreFunctions.getPropertyFromConfig("Assignment_FileID").equals(actualFileId)
 				& (CoreFunctions.getPropertyFromConfig("Transferee_firstName") + " "
@@ -432,7 +458,7 @@ public class MX_Transferee_JourneyHomePage extends Base {
 	}
 
 	private boolean proceedToAccountSetupPage() {
-		try {			
+		try {
 			CoreFunctions.clickElement(driver, _link_transferee_dropdown);
 			CoreFunctions.clickElement(driver, _optionBanking);
 			CoreFunctions.clickElement(driver, _link_addPaymentAccount);
@@ -484,5 +510,55 @@ public class MX_Transferee_JourneyHomePage extends Base {
 		return MobilityXConstants.FLEX_BENEFITS_SUBMISSION_MESSAGE
 				.replace("used_points", String.valueOf(format.format(consumed))).replace("total_points", total)
 				.replace("current_balance", String.valueOf(format.format(remaining)));
+	}
+
+	public boolean verifyAiresManagedBenefitCardNotDisplayed() {
+		return CoreFunctions.isElementExist(driver, _serviceNotSetupCFCard, 5);
+	}
+
+	public boolean isFlexBenefitCardVerified(String cardBenefitName, String expectedStatus) {
+		boolean isFlexBenefitCardVerified = false;
+		try {
+			switch (cardBenefitName) {
+			case MobilityXConstants.LANGUAGE_TRAINING:
+				isFlexBenefitCardVerified = verifyFlexBenefitCardDetails(expectedStatus);
+				break;
+			default:
+				Assert.fail(COREFLEXConstants.INVALID_OPTION);
+			}
+		} catch (Exception e) {
+			Reporter.addStepLog(
+					MessageFormat.format(COREFLEXConstants.EXCEPTION_OCCURED_WHILE_VERIFYING_FLEX_BENEFIT_CARD,
+							CoreConstants.FAIL, e.getMessage()));
+		}
+		return isFlexBenefitCardVerified;
+	}
+
+	private boolean verifyFlexBenefitCardDetails(String expectedStatus) {
+		try {
+			CoreFunctions.verifyText(driver, flexCardBenefitDisplayName,
+					languageTrainingBenefitData.benefitDetails.benefitDisplayName,
+					MobilityXConstants.FLEX_CARD_BENEFIT_DISPLAY_NAME);
+			CoreFunctions.verifyText(driver, flexCardAmountAllowanceText,
+					languageTrainingBenefitData.benefitDetails.allowanceAmountMessage,
+					MobilityXConstants.FLEX_CARD_BENEFIT_ALLOWANCE_AMOUNT);
+			CoreFunctions.verifyText(driver, flexCardNumberOfBenefitSelected,
+					String.valueOf(languageTrainingBenefitData.benefitDetails.numberOfBenefitSelected),
+					MobilityXConstants.FLEX_CARD_NUMBER_OF_BENEFIT_SELECTED);
+			CoreFunctions.verifyText(driver, flexCardStatus, expectedStatus, MobilityXConstants.FLEX_CARD_STATUS);
+			CoreFunctions.clickElement(driver, flexCardLongDescIcon);
+			CoreFunctions.verifyText(driver, flexCardLongDesc,
+					languageTrainingBenefitData.benefitDetails.benefitLongDescription,
+					MobilityXConstants.FLEX_CARD_BENEFIT_LONG_DESCRIPTION);
+			CoreFunctions.verifyText(driver, flexCardManageBenefitButton,
+					MobilityXConstants.MANAGE_THIS_BENEFIT,
+					MobilityXConstants.FLEX_CARD_MANAGE_THIS_BENEFIT_BUTTON);			
+			return true;
+		} catch (Exception e) {
+			Reporter.addStepLog(
+					MessageFormat.format(COREFLEXConstants.EXCEPTION_OCCURED_WHILE_VERIFYING_FLEX_BENEFIT_CARD,
+							CoreConstants.FAIL, e.getMessage()));
+			return false;
+		}
 	}
 }

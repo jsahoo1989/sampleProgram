@@ -276,4 +276,16 @@ public class MobilityXConstants {
 	public static final String EXCEPTION_OCCURED_WHILE_VALIDATING_USER_NAVIGATION_TO_MOBILITYX_JOURNEY_HOME_PAGE = "{0}Exception occured while validating user navigation to MobilityX Journey Home Page. Exception : ''{1}''.";
 	public static final String FALIED_TO_VALIDATE_USER_NAVIGATION_TO_MOBILITYX_JOURNEY_HOME_PAGE_AFTER_BENEFIT_SUBMISSION = "{0}Failed to validate user navigation to MobilityX Journey Home page after Benefit Submission.";
 	public static final String EXCEPTION_OCCURED_WHILE_VALIDATING_REQUEST_DIALOG_ON_TRANSFEREE_SUBMISSIONS_DETAILS_PAGE = "{0}Exception occured while validating Requests Dialog on Transferee Submissions Details Page. Exception : ''{1}''.";
+	public static final String AIRES_MANAGED_BENEFIT_CARD_DISPLAYED_ON_MOBILITY_JOURNEY_PAGE = "{0}Aires Managed Benefit Card displayed_on Mobility Journey Page before its service is created.";
+	public static final String FAILED_TO_VERIFY_FLEX_BENEFIT_CARD = "{0}Failed to verify ''{1}'' Flex Benefit card on ''{2}'' page.";
+	public static final String LANGUAGE_TRAINING = "Language Training";
+	public static final String FLEX_CARD_BENEFIT_DISPLAY_NAME = "Flex Card Benefit Display Name";
+	public static final String FLEX_CARD_BENEFIT_ALLOWANCE_AMOUNT = "Flex Card Benefit Allowance Amount";
+	public static final String FLEX_CARD_NUMBER_OF_BENEFIT_SELECTED = "Flex Card Number Of Benefit Selected";
+	public static final String FLEX_CARD_STATUS = "Flex Card Status";
+	public static final String FLEX_CARD_BENEFIT_LONG_DESCRIPTION = "Flex Card Benefit Long Description";
+	public static final String MANAGE_THIS_BENEFIT = "Manage this Benefit";
+	public static final String FLEX_CARD_MANAGE_THIS_BENEFIT_BUTTON = "Flex Card Manage this Benefit Button";
+	public static final String BACK_TO_MOBILITY_JOURNEY = "Back to mobility journey";
+	
 }

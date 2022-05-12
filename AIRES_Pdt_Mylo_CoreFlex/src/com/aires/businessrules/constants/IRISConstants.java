@@ -475,4 +475,9 @@ public class IRISConstants {
 	public static final String VERIFIED_DIALOG_ACCEPTED = "{0} Verified Identity Dialog accepted with ''{1}'' option.";
 	public static final String ADD_BUTTON = "Add";
 	public static final String FAILED_TO_ADD_SUB_SERVICE = "Failed to add Sub-service";
+	public static final String CLIENT_SPECIFIC_TRANSFEREE_TITLE_TO_APPEND_WITH_REDUCED_SPACE = "File - 12C {0}  for {1} {2} of {3} - Aires LLC Agreement in place.";
+	public static final String SUB_SERVICE_TITLE_WITH_ID = "Sub-Service ID: {0}; File ID: {1}; {2} {3} of {4} #{5}";
+	public static final String SUCCESSFULLY_SELECTED_SUB_SERVICE_ACTIVITIES = "{1} Successfully selected sub-service activities";
+	public static final String FAILED_TO_SELECT_SUB_SERVICE_ACTIVITIES = "{0} Failed to select sub-service activities. Exception is - ''{1}''";
+	public static final String FAILED_TO_ASSIGN_SUB_SERVICE_TASKS_TO_TRANSFEREE = "Failed to assign sub service tasks to transferee";
 }

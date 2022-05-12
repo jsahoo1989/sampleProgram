@@ -436,6 +436,7 @@ public class MX_Transferee_FlexPlanningTool_Page extends Base {
 
 	public boolean selectBenefitsAndProceedToReviewAndSubmit() {
 		boolean benefitsSelectedSuccessfully = false;
+		totalSelectedPoints = 0;
 		try {
 			benefitsSelectedSuccessfully = selectFlexBenefitsonFPT() && selectPortionCashOutOnFPT()
 					&& validatePointsAndClickOnNext();

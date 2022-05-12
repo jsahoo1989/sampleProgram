@@ -205,6 +205,7 @@ public class CF_Transferee_StaticFixedPoints_CashNotAuth_Both_EndToEndFlow_Steps
 						CoreConstants.FAIL));
 		Assert.assertTrue(mxTransfereeMyBenefitsBundlePage.validateSubmittedBenefitDetailsPostDeleteRequestOperation(
 				actionPerformed), MobilityXConstants.BENEFIT_CASHOUT_DETAILS_NOT_MATCHED_ON_MBB_PAGE);
+		
 	}
 
 	@When("^he clicks on \"([^\"]*)\" button for the deleted benefit under 'Submitted Benefits' section of 'MXTransferee' application$")

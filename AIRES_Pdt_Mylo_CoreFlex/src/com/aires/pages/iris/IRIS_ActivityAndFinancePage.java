@@ -81,6 +81,7 @@ public class IRIS_ActivityAndFinancePage extends BasePage {
 	private static int _rowCount = 0;
 	private static String _partnerID = null;
 	private static int _compID = 0;
+	private String subServiceId;
 
 	/**
 	 * Verify dates exist for either of below tracing prompts a. Make first contact
@@ -465,11 +466,13 @@ public class IRIS_ActivityAndFinancePage extends BasePage {
 	}
 
 	public void selectServiceAndSubService(DataTable table) {
-		try {
+		try {		
 			java.util.List<java.util.List<String>> data = table.raw();
+			String subServiceText = "#"+CoreFunctions.getPropertyFromConfig("Assignment_subServiceID")+" - "+data.get(1).get(1);
+			System.out.println("SubService Selection Text : "+subServiceText);
 			Helpers.selectFromList(IRIS_PageMaster.getListObject(_IRIS, "Service"), data.get(1).get(0),
 					IRIS_PageMaster.getListObject(_IRIS, "Service").getAttachedText());
-			Helpers.selectFromList(IRIS_PageMaster.getListObject(_IRIS, "Sub-Service"), data.get(1).get(1),
+			Helpers.selectFromList(IRIS_PageMaster.getListObject(_IRIS, "Sub-Service"), subServiceText,
 					IRIS_PageMaster.getListObject(_IRIS, "Sub-Service").getAttachedText());
 			Reporter.addStepLog(MessageFormat.format(IRISConstants.VERIFIED_SERVICE_SELECTED, CoreConstants.PASS,
 					data.get(1).get(0), data.get(1).get(1)));
@@ -690,5 +693,28 @@ public class IRIS_ActivityAndFinancePage extends BasePage {
 		} else {
 			Assert.fail("Failed to verify save successful message.");
 		}
+	}
+
+	public int addParticipant(DataTable subServiceData) {
+		try {
+			java.util.List<java.util.List<String>> data = subServiceData.raw();
+			_subServiceTable.waitUntilVisible();
+			_rowCount = Helpers.getTableRowCount(_subServiceTable);
+			_subServiceTable.getCell(_rowCount - 1, data.get(0).get(2).toString())
+					.setValue(data.get(1).get(2).toString());
+			_subServiceTable.getCell(_rowCount - 1, data.get(0).get(3).toString())
+					.setValue(data.get(1).get(3).toString());
+			if (_subServiceTable.getCell(_rowCount - 1, data.get(0).get(4).toString()).getValue()
+					.equals(data.get(1).get(4).toString()))
+				Reporter.addStepLog(CoreConstants.PASS + CoreConstants.VRFIED_THAT
+						+ MessageFormat.format(IRISConstants.COMPANY_NAME_DISPLAYED_FOR_COMP_ID,
+								data.get(1).get(3).toString(), data.get(1).get(4).toString()));
+			else
+				Reporter.addStepLog(CoreConstants.FAIL + MessageFormat
+						.format(IRISConstants.COMPANY_NAME_NOT_DISPLAYED_FOR_COMP_ID, data.get(1).get(3).toString()));
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return _rowCount;
 	}
 }

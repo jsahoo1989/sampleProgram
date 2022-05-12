@@ -41,6 +41,19 @@ public class IRIS_AssignmentServicePage extends BasePage {
 	private static int serviceID = 0;
 	private static int rowCount = 0;
 	private String _serviceWindowTitle = null;
+	private String subServiceId;
+
+
+	public void setSubServiceId(String sectionName) {
+		try {
+			subServiceId = String
+					.valueOf(new Double(IRIS_PageMaster.getTableObjectWithIndex(_IRIS, "javax.swing.JTable", 1)
+					.getCell(0, IRISConstants.ID_TEXT).getValue().toString()).intValue());
+					CoreFunctions.writeToPropertiesFile("Assignment_subServiceID", subServiceId);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+	}
 
 	// Methods
 	public boolean verifyServiceTab() throws Exception {
@@ -127,15 +140,18 @@ public class IRIS_AssignmentServicePage extends BasePage {
 	public void clickSaveButton() throws Exception {
 		Helpers.clickButton(IRIS_PageMaster.getButtonObjectFromLabel(_IRIS, "Save"),
 				IRIS_PageMaster.getButtonObjectFromLabel(_IRIS, "Save").getLabel());
-		if(!IRIS_PageMaster.getDialogObject(_IRIS, "Saved").exists()) {
+		if (!IRIS_PageMaster.getDialogObject(_IRIS, "Saved").exists()) {
 			String _newTransfereeWindowTitle = MessageFormat.format(IRISConstants.TRANSFEREE_TITLE_TO_APPEND_SERVICE,
-					CoreFunctions.getPropertyFromConfig("Assignment_FileID"), CoreFunctions.getPropertyFromConfig("Transferee_firstName"), CoreFunctions.getPropertyFromConfig("Transferee_lastName"));
+					CoreFunctions.getPropertyFromConfig("Assignment_FileID"),
+					CoreFunctions.getPropertyFromConfig("Transferee_firstName"),
+					CoreFunctions.getPropertyFromConfig("Transferee_lastName"));
 			_IRIS = IRIS_PageMaster.getWindowObject(_newTransfereeWindowTitle);
-		}		
+		}
 		try {
 			Helpers.clickButton(
 					IRIS_PageMaster.getButtonObjectFromLabel(IRIS_PageMaster.getDialogObject(_IRIS, "Saved"), "OK"),
-					IRIS_PageMaster.getButtonObjectFromLabel(IRIS_PageMaster.getDialogObject(_IRIS, "Saved"), "OK").getLabel());
+					IRIS_PageMaster.getButtonObjectFromLabel(IRIS_PageMaster.getDialogObject(_IRIS, "Saved"), "OK")
+							.getLabel());
 		} catch (GeneralLeanFtException e) {
 			e.printStackTrace();
 			Assert.fail("Failed to click Ok Button");
@@ -144,17 +160,21 @@ public class IRIS_AssignmentServicePage extends BasePage {
 
 	public void clickSaveButtonWithTitleChange() throws Exception {
 		try {
-			Log.info("window title in clickSaveButtonWithTitleChang=="+getIRISWindow().getTitle());
+			Log.info("window title in clickSaveButtonWithTitleChang==" + getIRISWindow().getTitle());
 			Helpers.clickButton(IRIS_PageMaster.getButtonObjectFromLabel(_IRIS, "Save"),
 					IRIS_PageMaster.getButtonObjectFromLabel(_IRIS, "Save").getLabel());
 
 			String _newTransfereeWindowTitle = MessageFormat.format(IRISConstants.TRANSFEREE_TITLE_TO_APPEND_SERVICE,
-					CoreFunctions.getPropertyFromConfig("Assignment_FileID"), CoreFunctions.getPropertyFromConfig("Transferee_firstName"), CoreFunctions.getPropertyFromConfig("Transferee_lastName"));
+					CoreFunctions.getPropertyFromConfig("Assignment_FileID"),
+					CoreFunctions.getPropertyFromConfig("Transferee_firstName"),
+					CoreFunctions.getPropertyFromConfig("Transferee_lastName"));
 			_IRIS = IRIS_PageMaster.getWindowObject(_newTransfereeWindowTitle);
-			IRIS_PageMaster.getButtonObjectFromLabel(IRIS_PageMaster.getDialogObject(_IRIS, "Saved"), "OK").waitUntilEnabled();
+			IRIS_PageMaster.getButtonObjectFromLabel(IRIS_PageMaster.getDialogObject(_IRIS, "Saved"), "OK")
+					.waitUntilEnabled();
 			Helpers.clickButton(
 					IRIS_PageMaster.getButtonObjectFromLabel(IRIS_PageMaster.getDialogObject(_IRIS, "Saved"), "OK"),
-					IRIS_PageMaster.getButtonObjectFromLabel(IRIS_PageMaster.getDialogObject(_IRIS, "Saved"), "OK").getLabel());
+					IRIS_PageMaster.getButtonObjectFromLabel(IRIS_PageMaster.getDialogObject(_IRIS, "Saved"), "OK")
+							.getLabel());
 			Log.info("Ok button clicked.");
 		} catch (GeneralLeanFtException e) {
 			e.printStackTrace();
@@ -219,7 +239,7 @@ public class IRIS_AssignmentServicePage extends BasePage {
 			e.printStackTrace();
 		}
 	}
-	
+
 	public void clickOnAddSubServiceButton() {
 		try {
 			Helpers.clickButton(IRIS_PageMaster.getButtonObject(_IRIS, IRISConstants.ADD_BUTTON, 2),
@@ -228,7 +248,6 @@ public class IRIS_AssignmentServicePage extends BasePage {
 			Assert.fail(IRISConstants.FAILED_TO_ADD_SUB_SERVICE);
 		}
 	}
-
 
 	public int addSubService(String sectionName, DataTable subServiceData) {
 		try {
@@ -274,9 +293,9 @@ public class IRIS_AssignmentServicePage extends BasePage {
 			_subServicejTable.waitUntilVisible();
 			rowCount = Helpers.getTableRowCount(_subServicejTable);
 			_subServicejTable.getCell(rowCount - 1, data.get(0).get(0).toString())
-			.setValue(data.get(1).get(0).toString());
+					.setValue(data.get(1).get(0).toString());
 			_subServicejTable.getCell(rowCount - 1, data.get(0).get(1).toString())
-			.setValue(data.get(1).get(1).toString());
+					.setValue(data.get(1).get(1).toString());
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
@@ -289,13 +308,12 @@ public class IRIS_AssignmentServicePage extends BasePage {
 			Helpers.clickButton(
 					IRIS_PageMaster.getButtonObjectFromLabel(IRIS_PageMaster.getDialogObject(_IRIS, "Saved"), "OK"),
 					IRIS_PageMaster.getButtonObjectFromLabel(IRIS_PageMaster.getDialogObject(_IRIS, "Saved"), "OK")
-					.getLabel());
+							.getLabel());
 			Reporter.addStepLog(MessageFormat.format(IRISConstants.VERIFY_MESSAGE_DISPLAYED_ON_SERVICE_TAB,
 					CoreConstants.PASS, message));
 		}
 		return _isExists;
 	}
-
 
 	// Method need to be deleted as it is using Robot Class
 	public boolean verify_SaveSuccessMsg_ForPA_ForClient_92265(String message) throws Exception {
@@ -311,14 +329,14 @@ public class IRIS_AssignmentServicePage extends BasePage {
 			Dialog savedDialog = _IRIS.describe(Dialog.class, new DialogDescription.Builder().title("Saved").build());
 			Button oKButton = savedDialog.describe(Button.class, new ButtonDescription.Builder().label("OK").build());
 
-			Robot robot = new Robot(); 
+			Robot robot = new Robot();
 			robot.setAutoDelay(250);
-			robot.keyPress(KeyEvent.VK_ENTER); 
+			robot.keyPress(KeyEvent.VK_ENTER);
 			robot.keyRelease(KeyEvent.VK_ENTER);
 
 			_isExists = true;
 			CoreFunctions.waitHandler(5);
-			//Helpers.clickButton(oKButton, oKButton.getLabel());
+			// Helpers.clickButton(oKButton, oKButton.getLabel());
 			Reporter.addStepLog(MessageFormat.format(IRISConstants.VERIFY_MESSAGE_DISPLAYED_ON_SERVICE_TAB,
 					CoreConstants.PASS, message));
 			return true;
@@ -406,5 +424,49 @@ public class IRIS_AssignmentServicePage extends BasePage {
 	public void selectService(String sectionName) throws GeneralLeanFtException, Exception {
 		Helpers.selectTableRow(getTableName(sectionName), Helpers.getTableRowCount(getTableName(sectionName)) - 1);
 	}
+
+	public void viewAndSelectSubServiceActivity(DataTable tasks) {
+		try {
+			String assignmentWindowTitle = MessageFormat.format(
+					IRISConstants.CLIENT_SPECIFIC_TRANSFEREE_TITLE_TO_APPEND_WITH_REDUCED_SPACE,
+					CoreFunctions.getPropertyFromConfig("Assignment_FileID"),
+					CoreFunctions.getPropertyFromConfig("Transferee_firstName"),
+					CoreFunctions.getPropertyFromConfig("Transferee_lastName"),
+					CoreFunctions.getPropertyFromConfig("Assignment_ClientName"));
+
+			_IRIS = IRIS_PageMaster.getWindowObject(assignmentWindowTitle);
+
+			subServiceId = String
+					.valueOf(new Double(IRIS_PageMaster.getTableObjectWithIndex(_IRIS, "javax.swing.JTable", 1)
+							.getCell(0, IRISConstants.ID_TEXT).getValue().toString()).intValue());
+			CoreFunctions.writeToPropertiesFile("Assignment_subServiceID", subServiceId);
+
+			String subServiceWindow = MessageFormat.format(IRISConstants.SUB_SERVICE_TITLE_WITH_ID, subServiceId,
+					CoreFunctions.getPropertyFromConfig("Assignment_FileID"),
+					CoreFunctions.getPropertyFromConfig("Transferee_firstName"),
+					CoreFunctions.getPropertyFromConfig("Transferee_lastName"),
+					CoreFunctions.getPropertyFromConfig("Assignment_ClientName"),
+					CoreFunctions.getPropertyFromConfig("Assignment_ClientID"));
+
+			_IRIS = IRIS_PageMaster.getWindowObject(subServiceWindow);
+
+			IRIS_PageMaster.getTabControlObject(_IRIS, "javax.swing.JTabbedPane", 0)
+					.select(IRISConstants.ACTIVITY_FINANCE_TAB);
+
+			Helpers.selectTableRow(IRIS_PageMaster.getTableObject(_IRIS,
+					"com.aires.iris.shipment.activityfinance.ActivityFinancePanel$3"), 1);
+
+//			activateShipmentSubService(_IRIS);
+//			enterEstimatedDateForTask(_IRIS, tasks);
+			Reporter.addStepLog(MessageFormat.format(IRISConstants.SUCCESSFULLY_SELECTED_SUB_SERVICE_ACTIVITIES,
+					CoreConstants.PASS));
+		} catch (Exception e) {
+			Reporter.addStepLog(MessageFormat.format(IRISConstants.FAILED_TO_SELECT_SUB_SERVICE_ACTIVITIES,
+					CoreConstants.FAIL, e.getMessage()));
+			Assert.fail(IRISConstants.FAILED_TO_ASSIGN_SUB_SERVICE_TASKS_TO_TRANSFEREE);
+		}
+	}
+	
+	
 
 }

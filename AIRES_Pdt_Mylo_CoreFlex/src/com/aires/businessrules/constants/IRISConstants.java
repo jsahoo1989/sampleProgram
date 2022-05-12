@@ -480,4 +480,5 @@ public class IRISConstants {
 	public static final String SUCCESSFULLY_SELECTED_SUB_SERVICE_ACTIVITIES = "{1} Successfully selected sub-service activities";
 	public static final String FAILED_TO_SELECT_SUB_SERVICE_ACTIVITIES = "{0} Failed to select sub-service activities. Exception is - ''{1}''";
 	public static final String FAILED_TO_ASSIGN_SUB_SERVICE_TASKS_TO_TRANSFEREE = "Failed to assign sub service tasks to transferee";
+	public static final String EST_DATE = "Est Date";
 }

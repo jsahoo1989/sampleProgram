@@ -287,5 +287,8 @@ public class MobilityXConstants {
 	public static final String MANAGE_THIS_BENEFIT = "Manage this Benefit";
 	public static final String FLEX_CARD_MANAGE_THIS_BENEFIT_BUTTON = "Flex Card Manage this Benefit Button";
 	public static final String BACK_TO_MOBILITY_JOURNEY = "Back to mobility journey";
+	public static final String STARTING_SOON = "Starting Soon";
+	public static final String BEGIN_TRAINING = "Begin Training";
+	public static final String TRAINING_COMPLETE = "Training Complete";
 	
 }

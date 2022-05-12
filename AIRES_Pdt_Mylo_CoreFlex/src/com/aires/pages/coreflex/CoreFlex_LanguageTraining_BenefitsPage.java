@@ -252,6 +252,7 @@ public class CoreFlex_LanguageTraining_BenefitsPage extends Base {
 	 */
 	public void selectAndFillBenefitsAndSubBenefitDetails(String benefitType, String subBenefitNames) {
 		if (benefitType.equals(COREFLEXConstants.BOTH)) {
+			CoreFunctions.clickElement(driver, _textBoth);
 			selectBenefitTypeAndFillMandatoryFields(COREFLEXConstants.CORE_BENEFITS);
 			selectSubBenefitsAndFillMandatoryFields(subBenefitNames);
 			selectBenefitTypeAndFillMandatoryFields(COREFLEXConstants.FLEX_BENEFITS);
@@ -404,23 +405,23 @@ public class CoreFlex_LanguageTraining_BenefitsPage extends Base {
 		switch (benefitType) {
 		case COREFLEXConstants.CORE:
 			CoreFunctions.clickElement(driver, _textCore);
-			fillManadatoryDetails();
+			fillManadatoryDetails(benefitType);
 			break;
 		case COREFLEXConstants.FLEX:
 			CoreFunctions.clickElement(driver, _textFlex);
 			CoreFunctions.clearAndSetTextUsingKeys(driver, _inputFlexPoints,
 					languageTrainingBenefitData.benefitDetails.flexPoints, COREFLEXConstants.FLEX_POINTS_VALUE);
-			fillManadatoryDetails();
+			fillManadatoryDetails(benefitType);
 			break;
 		case COREFLEXConstants.CORE_BENEFITS:
 			CoreFunctions.clickElement(driver, _textCoreBenefits);
-			fillManadatoryDetails();
+			fillManadatoryDetails(benefitType);
 			break;
 		case COREFLEXConstants.FLEX_BENEFITS:
 			CoreFunctions.clickElement(driver, _textFlexBenefits);
 			CoreFunctions.clearAndSetTextUsingKeys(driver, _inputFlexPoints,
 					languageTrainingBenefitData.benefitDetails.flexPoints, COREFLEXConstants.FLEX_POINTS_VALUE);
-			fillManadatoryDetails();
+			fillManadatoryDetails(benefitType);
 			break;
 		case COREFLEXConstants.BOTH:
 			CoreFunctions.clickElement(driver, _textBoth);
@@ -432,8 +433,9 @@ public class CoreFlex_LanguageTraining_BenefitsPage extends Base {
 
 	/**
 	 * Method to fill Default Mandatory Fields of Benefit
+	 * @param benefitType 
 	 */
-	private void fillManadatoryDetails() {
+	private void fillManadatoryDetails(String benefitType) {
 		CoreFunctions.clearAndSetTextUsingKeys(driver, _inputBenefitName,
 				languageTrainingBenefitData.benefitDetails.benefitDisplayName, COREFLEXConstants.BENEFIT_DISPLAY_NAME);
 		CoreFunctions.clearAndSetTextUsingKeys(driver, _textAreaAllowanceAmountMessage,
@@ -441,11 +443,12 @@ public class CoreFlex_LanguageTraining_BenefitsPage extends Base {
 				COREFLEXConstants.ALLOWANCE_AMOUNT_MESSAGE);
 		CoreFunctions.clearAndSetTextUsingKeys(driver, _textAreaBenefitLongDescription,
 				languageTrainingBenefitData.benefitDetails.benefitLongDescription,
-				COREFLEXConstants.BENEFIT_LONG_DESCRIPTION);
-		CoreFunctions.selectItemInListByText(driver, _radioAiresManagedService,
-				languageTrainingBenefitData.benefitDetails.airesManagedService, true,
-				COREFLEXConstants.AIRES_MANAGED_SERVICE);
-		if (languageTrainingBenefitData.benefitDetails.multipleBenefitSelection.equals(COREFLEXConstants.YES)) {
+				COREFLEXConstants.BENEFIT_LONG_DESCRIPTION);				
+		if (((benefitType.equals(COREFLEXConstants.FLEX_BENEFITS)) || (benefitType.equals(COREFLEXConstants.FLEX)))
+				& (languageTrainingBenefitData.benefitDetails.multipleBenefitSelection.equals(COREFLEXConstants.YES))) {
+			CoreFunctions.selectItemInListByText(driver, _radioAiresManagedService,
+					languageTrainingBenefitData.benefitDetails.airesManagedService, true,
+					COREFLEXConstants.AIRES_MANAGED_SERVICE);
 			CoreFunctions.clickElement(driver, _inputMultiAddBenefit);
 		}
 	}

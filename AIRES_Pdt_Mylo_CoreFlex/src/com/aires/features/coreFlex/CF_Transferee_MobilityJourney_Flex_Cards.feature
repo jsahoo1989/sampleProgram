@@ -32,11 +32,11 @@ Feature: Validate the Mobility Journey Cards Functionality of Flex Benefit Type
 	And he has added a new participant in 'Activity & Finance' tab for the created service
 	| Service              | Sub-Service                   | Function           | Comp ID | Company                      |
 	| Language Training    | (ACTV) Flex Language Training | Language Agent     | 49211   | AIRES-CIS-DEMO&'TEST(CLIENT) |
-#    And he has provided the "Est. Date" for below tracing prompt after clicking on the "Activity & Finance" tab of Language Training sub-service
-#      | tracingPrompt                   |
-#      | Start Date of Language Training |
-#    And he has verified "Language Training" card status updated to "In Progress" under 'Service Monitoring' section of "Mobility Journey Home" page
-#    When he has provides the "Est. Date" for below tracing prompt after clicking on the "Activity & Finance" tab of Language Training sub-service
-#      | tracingPrompt                 |
-#      | End Date of Language Training |
-#     Then "Language Training" card status should be updated to "Completed" under 'Service Monitoring' section of "Mobility Journey Home" page
+    And he has provided the "Est Date" for below tracing prompt after clicking on the "Activity & Finance" tab of Language Training sub-service
+      | tracingPrompt                   |
+      | Start Date of Language Training |
+    And he has verified "Language Training" card status updated to "Begin Training" under 'Service Monitoring' section of "Mobility Journey Home" page
+    When he has provides the "Est Date" for below tracing prompt after clicking on the "Activity & Finance" tab of Language Training sub-service
+      | tracingPrompt                 |
+      | End Date of Language Training |
+     Then "Language Training" card status should be updated to "Training Complete" under 'Service Monitoring' section of "Mobility Journey Home" page

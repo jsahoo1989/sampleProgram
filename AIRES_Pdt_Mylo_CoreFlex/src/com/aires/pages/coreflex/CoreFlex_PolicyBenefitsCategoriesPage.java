@@ -21,8 +21,6 @@ import com.aires.testdatatypes.coreflex.CoreFlex_PolicySetupPagesData;
 import com.aires.testdatatypes.coreflex.FlexBenefit;
 import com.vimalselvam.cucumber.listener.Reporter;
 
-import cucumber.api.DataTable;
-
 public class CoreFlex_PolicyBenefitsCategoriesPage extends Base {
 
 	public CoreFlex_PolicyBenefitsCategoriesPage(WebDriver driver) {
@@ -314,6 +312,7 @@ public class CoreFlex_PolicyBenefitsCategoriesPage extends Base {
 	 */
 	public boolean selectBenefit(String benefitName) {
 		try {
+			CoreFunctions.explicitWaitTillElementInVisibility(driver, _progressBar);
 			expandAllBenefitCategories();
 			CoreFunctions.selectItemInListByText(driver, _allBenefitsList, benefitName, true);
 		} catch (Exception e) {

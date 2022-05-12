@@ -424,49 +424,5 @@ public class IRIS_AssignmentServicePage extends BasePage {
 	public void selectService(String sectionName) throws GeneralLeanFtException, Exception {
 		Helpers.selectTableRow(getTableName(sectionName), Helpers.getTableRowCount(getTableName(sectionName)) - 1);
 	}
-
-	public void viewAndSelectSubServiceActivity(DataTable tasks) {
-		try {
-			String assignmentWindowTitle = MessageFormat.format(
-					IRISConstants.CLIENT_SPECIFIC_TRANSFEREE_TITLE_TO_APPEND_WITH_REDUCED_SPACE,
-					CoreFunctions.getPropertyFromConfig("Assignment_FileID"),
-					CoreFunctions.getPropertyFromConfig("Transferee_firstName"),
-					CoreFunctions.getPropertyFromConfig("Transferee_lastName"),
-					CoreFunctions.getPropertyFromConfig("Assignment_ClientName"));
-
-			_IRIS = IRIS_PageMaster.getWindowObject(assignmentWindowTitle);
-
-			subServiceId = String
-					.valueOf(new Double(IRIS_PageMaster.getTableObjectWithIndex(_IRIS, "javax.swing.JTable", 1)
-							.getCell(0, IRISConstants.ID_TEXT).getValue().toString()).intValue());
-			CoreFunctions.writeToPropertiesFile("Assignment_subServiceID", subServiceId);
-
-			String subServiceWindow = MessageFormat.format(IRISConstants.SUB_SERVICE_TITLE_WITH_ID, subServiceId,
-					CoreFunctions.getPropertyFromConfig("Assignment_FileID"),
-					CoreFunctions.getPropertyFromConfig("Transferee_firstName"),
-					CoreFunctions.getPropertyFromConfig("Transferee_lastName"),
-					CoreFunctions.getPropertyFromConfig("Assignment_ClientName"),
-					CoreFunctions.getPropertyFromConfig("Assignment_ClientID"));
-
-			_IRIS = IRIS_PageMaster.getWindowObject(subServiceWindow);
-
-			IRIS_PageMaster.getTabControlObject(_IRIS, "javax.swing.JTabbedPane", 0)
-					.select(IRISConstants.ACTIVITY_FINANCE_TAB);
-
-			Helpers.selectTableRow(IRIS_PageMaster.getTableObject(_IRIS,
-					"com.aires.iris.shipment.activityfinance.ActivityFinancePanel$3"), 1);
-
-//			activateShipmentSubService(_IRIS);
-//			enterEstimatedDateForTask(_IRIS, tasks);
-			Reporter.addStepLog(MessageFormat.format(IRISConstants.SUCCESSFULLY_SELECTED_SUB_SERVICE_ACTIVITIES,
-					CoreConstants.PASS));
-		} catch (Exception e) {
-			Reporter.addStepLog(MessageFormat.format(IRISConstants.FAILED_TO_SELECT_SUB_SERVICE_ACTIVITIES,
-					CoreConstants.FAIL, e.getMessage()));
-			Assert.fail(IRISConstants.FAILED_TO_ASSIGN_SUB_SERVICE_TASKS_TO_TRANSFEREE);
-		}
-	}
 	
-	
-
 }

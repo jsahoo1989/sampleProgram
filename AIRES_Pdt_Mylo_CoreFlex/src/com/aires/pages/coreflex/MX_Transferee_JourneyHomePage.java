@@ -159,8 +159,8 @@ public class MX_Transferee_JourneyHomePage extends Base {
 	@FindBy(how = How.XPATH, using = "//div[contains(@id,'cfcardstatus')]//div[contains(@class,'RXCFCircle')]//span")
 	private WebElement flexCardNumberOfBenefitSelected;
 
-	@FindBy(how = How.XPATH, using = "//div[contains(@id,'cfcardstatus')]//table[contains(@class,'RXRightIconPanel')]//span")
-	private WebElement flexCardStatus;
+	@FindBy(how = How.XPATH, using = "//div[contains(@id,'cfcardstatus')]//table[contains(@class,'RXRightIconPanel')]//span[contains(text(),'Starting Soon')]")
+	private WebElement flexCardStartingSoonStatus;
 
 	@FindBy(how = How.XPATH, using = "//div[contains(@id,'cfcardstatus')]//span[contains(@class,'icon-help')]")
 	private WebElement flexCardLongDescIcon;
@@ -170,6 +170,9 @@ public class MX_Transferee_JourneyHomePage extends Base {
 
 	@FindBy(how = How.XPATH, using = "//div[contains(@id,'cfcardstatus')]//a[contains(@class,'RXCFGreenCardSmallRoundedButton ')]//span[@class='RXWhite']")
 	private WebElement flexCardManageBenefitButton;
+
+	@FindBy(how = How.XPATH, using = "//div[contains(@id,'cfcardstatus')]//span[contains(@class,'RXSmallerLink RXBold')][contains(text(),'Begin training')]")
+	private WebElement flexCardBeginProgressStatus;
 
 	/*********************************************************************/
 
@@ -519,22 +522,64 @@ public class MX_Transferee_JourneyHomePage extends Base {
 	public boolean isFlexBenefitCardVerified(String cardBenefitName, String expectedStatus) {
 		boolean isFlexBenefitCardVerified = false;
 		try {
-			switch (cardBenefitName) {
-			case MobilityXConstants.LANGUAGE_TRAINING:
-				isFlexBenefitCardVerified = verifyFlexBenefitCardDetails(expectedStatus);
+			switch (expectedStatus) {
+			case MobilityXConstants.STARTING_SOON:
+				isFlexBenefitCardVerified = verifyFlexBenefitCardDetails()
+						&& verifyFlexBenefitCardStatusBeforeActualization(expectedStatus);
+				break;
+			case MobilityXConstants.BEGIN_TRAINING:
+				isFlexBenefitCardVerified = verifyFlexBenefitCardDetails()
+						&& verifyFlexBenefitCardStatusAfterActualization(expectedStatus);
+				break;
+			case MobilityXConstants.TRAINING_COMPLETE:
+				isFlexBenefitCardVerified = verifyFlexBenefitCardDetails()
+						&& verifyFlexBenefitCardStatusAfterActualization(expectedStatus);
 				break;
 			default:
 				Assert.fail(COREFLEXConstants.INVALID_OPTION);
 			}
 		} catch (Exception e) {
 			Reporter.addStepLog(
-					MessageFormat.format(COREFLEXConstants.EXCEPTION_OCCURED_WHILE_VERIFYING_FLEX_BENEFIT_CARD,
+					MessageFormat.format(COREFLEXConstants.EXCEPTION_OCCURED_WHILE_VERIFYING_FLEX_BENEFIT_CARD_DETAILS,
 							CoreConstants.FAIL, e.getMessage()));
 		}
 		return isFlexBenefitCardVerified;
 	}
 
-	private boolean verifyFlexBenefitCardDetails(String expectedStatus) {
+	private boolean verifyFlexBenefitCardStatusAfterActualization(String expectedStatus) {
+		try {
+			if( CoreFunctions.isElementExist(driver, flexCardBeginProgressStatus, 3)
+					&& (!CoreFunctions.isElementExist(driver, flexCardStartingSoonStatus, 3))) {
+				Reporter.addStepLog(
+						MessageFormat.format(COREFLEXConstants.SUCCESSFULLY_VERIFIED_FLEX_BENEFIT_CARD_STATUS,
+								CoreConstants.PASS,expectedStatus));
+				return true;
+			}
+		} catch (Exception e) {
+			Reporter.addStepLog(
+					MessageFormat.format(COREFLEXConstants.EXCEPTION_OCCURED_WHILE_VERIFYING_FLEX_BENEFIT_CARD_STATUS,
+							CoreConstants.FAIL, e.getMessage()));			
+		}
+		return false;
+	}
+
+	private boolean verifyFlexBenefitCardStatusBeforeActualization(String expectedStatus) {
+		try {
+			if(CoreFunctions.isElementExist(driver, flexCardStartingSoonStatus, 3)){
+				Reporter.addStepLog(
+						MessageFormat.format(COREFLEXConstants.SUCCESSFULLY_VERIFIED_FLEX_BENEFIT_CARD_STATUS,
+								CoreConstants.PASS,expectedStatus));
+				return true;
+			}
+		} catch (Exception e) {
+			Reporter.addStepLog(
+					MessageFormat.format(COREFLEXConstants.EXCEPTION_OCCURED_WHILE_VERIFYING_FLEX_BENEFIT_CARD_STATUS,
+							CoreConstants.FAIL, e.getMessage()));
+		}
+		return false;
+	}
+
+	private boolean verifyFlexBenefitCardDetails() {
 		try {
 			CoreFunctions.verifyText(driver, flexCardBenefitDisplayName,
 					languageTrainingBenefitData.benefitDetails.benefitDisplayName,
@@ -545,18 +590,16 @@ public class MX_Transferee_JourneyHomePage extends Base {
 			CoreFunctions.verifyText(driver, flexCardNumberOfBenefitSelected,
 					String.valueOf(languageTrainingBenefitData.benefitDetails.numberOfBenefitSelected),
 					MobilityXConstants.FLEX_CARD_NUMBER_OF_BENEFIT_SELECTED);
-			CoreFunctions.verifyText(driver, flexCardStatus, expectedStatus, MobilityXConstants.FLEX_CARD_STATUS);
-			CoreFunctions.clickElement(driver, flexCardLongDescIcon);
+			CoreFunctions.moveToElement(driver, flexCardLongDescIcon);
 			CoreFunctions.verifyText(driver, flexCardLongDesc,
 					languageTrainingBenefitData.benefitDetails.benefitLongDescription,
 					MobilityXConstants.FLEX_CARD_BENEFIT_LONG_DESCRIPTION);
-			CoreFunctions.verifyText(driver, flexCardManageBenefitButton,
-					MobilityXConstants.MANAGE_THIS_BENEFIT,
-					MobilityXConstants.FLEX_CARD_MANAGE_THIS_BENEFIT_BUTTON);			
+			CoreFunctions.verifyText(driver, flexCardManageBenefitButton, MobilityXConstants.MANAGE_THIS_BENEFIT,
+					MobilityXConstants.FLEX_CARD_MANAGE_THIS_BENEFIT_BUTTON);
 			return true;
 		} catch (Exception e) {
 			Reporter.addStepLog(
-					MessageFormat.format(COREFLEXConstants.EXCEPTION_OCCURED_WHILE_VERIFYING_FLEX_BENEFIT_CARD,
+					MessageFormat.format(COREFLEXConstants.EXCEPTION_OCCURED_WHILE_VERIFYING_FLEX_BENEFIT_CARD_DETAILS,
 							CoreConstants.FAIL, e.getMessage()));
 			return false;
 		}

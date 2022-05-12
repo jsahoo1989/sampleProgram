@@ -197,33 +197,71 @@ public class CF_Transferee_MobilityJourney_Flex_Cards_Steps {
 				.verifyNewTableRowAdded(_initialTableRowCount), IRISConstants.NEW_ROW_NOT_ADDED);
 		testContext.getIrisPageManager().irisActivityAndFinancePage.addParticipant(dataTable);
 		testContext.getIrisPageManager().irisActivityAndFinancePage.clickOnSaveBtn();
-		Assert.assertTrue(testContext.getIrisPageManager().irisAssignmentServicePage
-				.verify_SaveSuccessMsg_ForPA_ForClient_92265(IRISConstants.MESSAGE_SAVESUCCESSFULL),
-				IRISConstants.message + IRISConstants.IS_NOT_DISPLAYED);
+		testContext.getIrisPageManager().irisActivityAndFinancePage.verifySaveSuccessfulMsg();
 	}
 
 	@Given("^he has provided the \"([^\"]*)\" for below tracing prompt after clicking on the \"([^\"]*)\" tab of Language Training sub-service$")
 	public void he_has_provided_the_for_below_tracing_prompt_after_clicking_on_the_tab_of_Language_Training_sub_service(
-			String tracingColumn, String tabName, DataTable tasks) throws Throwable {
-		testContext.getIrisPageManager().irisAssignmentServicePage.viewAndSelectSubServiceActivity(tasks);
+			String tracingColumn, String tabName, DataTable dataTable) throws Throwable {
+		List<Map<String, String>> tracingPrompt = dataTable.asMaps(String.class, String.class);
+		CoreFunctions.waitHandler(3);
+		testContext.getIrisPageManager().irisActivityAndFinancePage.actualizeTracingPrompt(IRISConstants.EST_DATE,
+				IRISConstants.ACTIVITY,tracingPrompt.get(0).get("tracingPrompt"));
+		testContext.getIrisPageManager().irisActivityAndFinancePage.clickOnSaveBtn();
+		testContext.getIrisPageManager().irisActivityAndFinancePage.verifySaveSuccessfulMsg();
+		testContext.getBasePage().cleanIrisProcesses();
 	}
 
 	@Given("^he has verified \"([^\"]*)\" card status updated to \"([^\"]*)\" under 'Service Monitoring' section of \"([^\"]*)\" page$")
-	public void he_has_verified_card_status_updated_to_under_Service_Monitoring_section_of_page(String arg1,
-			String arg2, String arg3) throws Throwable {
-
+	public void he_has_verified_card_status_updated_to_under_Service_Monitoring_section_of_page(String cardBenefitName,
+			String expectedStatus, String pageName) throws Throwable {
+		mxTransfereeJourneyHomePage.clickElementOfPage(MobilityXConstants.MANAGE_MY_POINTS);
+		Assert.assertTrue(mxTransfereeFlexPlanningToolPage.isFlexPlanningToolHomePageDisplayed(),
+				MessageFormat.format(MobilityXConstants.FLEX_PLANNING_TOOL_PAGE_NOT_DISPLAYED, CoreConstants.FAIL));
+		mxTransfereeFlexPlanningToolPage.clickElementOfPage(MobilityXConstants.BACK_TO_MOBILITY_JOURNEY);
+		Assert.assertTrue(mxTransfereeJourneyHomePage.isFlexBenefitCardVerified(cardBenefitName, expectedStatus),
+				MessageFormat.format(MobilityXConstants.FAILED_TO_VERIFY_FLEX_BENEFIT_CARD, CoreConstants.FAIL,
+						cardBenefitName, pageName));
 	}
 
 	@When("^he has provides the \"([^\"]*)\" for below tracing prompt after clicking on the \"([^\"]*)\" tab of Language Training sub-service$")
 	public void he_has_provides_the_for_below_tracing_prompt_after_clicking_on_the_tab_of_Language_Training_sub_service(
-			String arg1, String arg2, DataTable arg3) throws Throwable {
-
+			String tracingColumn, String tabName, DataTable dataTable) throws Throwable {
+		List<Map<String, String>> tracingPrompt = dataTable.asMaps(String.class, String.class);
+		testContext.getBasePage().invokeIrisApplication();
+		testContext.getBasePage().killExistingBrowsers();
+		testContext.getIrisPageManager().irisLoginPage = new IRIS_LoginPage();
+		testContext.getIrisPageManager().irisLoginPage.getIRISLoginAsPerEnvt(_loginDetailsApplication);
+		testContext.getIrisPageManager().irisWelcome12C = new IRIS_Welcome12C();
+		testContext.getIrisPageManager().irisWelcome12C.selectWelcomeWindowModule(IRISConstants.ASSIGNMENT_TAB);
+		testContext.getIrisPageManager().irisAssignmentOverviewPage = new IRIS_AssignmentOverviewPage();
+		Assert.assertTrue(testContext.getIrisPageManager().irisAssignmentOverviewPage.verifyOverviewTab(), MessageFormat
+				.format(IRISConstants.FAIL_TO_VERIFY_CURRENT_TAB, CoreConstants.FAIL, IRISConstants.OVERVIEW));
+		testContext.getIrisPageManager().irisAssignmentOverviewPage
+				.queryFile(CoreFunctions.getPropertyFromConfig("Assignment_FileID"));
+		testContext.getIrisPageManager().irisAssignmentOverviewPage.switchTab(IRISConstants.ACTIVITY_FINANCE_TAB);
+		testContext.getIrisPageManager().irisActivityAndFinancePage = new IRIS_ActivityAndFinancePage();
+		Assert.assertTrue(testContext.getIrisPageManager().irisActivityAndFinancePage.verifyActivityAndFinanceTab(),
+				MessageFormat.format(IRISConstants.FAIL_TO_VERIFY_CURRENT_TAB, CoreConstants.FAIL,
+						IRISConstants.ACTIVITY_AND_FINANCE));
+		testContext.getIrisPageManager().irisActivityAndFinancePage.displayActivityTable();
+		testContext.getIrisPageManager().irisActivityAndFinancePage.actualizeTracingPrompt(IRISConstants.EST_DATE,
+				IRISConstants.ACTIVITY,tracingPrompt.get(0).get("tracingPrompt"));
+		testContext.getIrisPageManager().irisActivityAndFinancePage.clickOnSaveBtn();
+		testContext.getIrisPageManager().irisActivityAndFinancePage.verifySaveSuccessfulMsg();
+		testContext.getBasePage().cleanIrisProcesses();
 	}
 
 	@Then("^\"([^\"]*)\" card status should be updated to \"([^\"]*)\" under 'Service Monitoring' section of \"([^\"]*)\" page$")
-	public void card_status_should_be_updated_to_under_Service_Monitoring_section_of_page(String arg1, String arg2,
-			String arg3) throws Throwable {
-
+	public void card_status_should_be_updated_to_under_Service_Monitoring_section_of_page(String cardBenefitName,
+			String expectedStatus, String pageName) throws Throwable {
+		mxTransfereeJourneyHomePage.clickElementOfPage(MobilityXConstants.MANAGE_MY_POINTS);
+		Assert.assertTrue(mxTransfereeFlexPlanningToolPage.isFlexPlanningToolHomePageDisplayed(),
+				MessageFormat.format(MobilityXConstants.FLEX_PLANNING_TOOL_PAGE_NOT_DISPLAYED, CoreConstants.FAIL));
+		mxTransfereeFlexPlanningToolPage.clickElementOfPage(MobilityXConstants.BACK_TO_MOBILITY_JOURNEY);
+		Assert.assertTrue(mxTransfereeJourneyHomePage.isFlexBenefitCardVerified(cardBenefitName, expectedStatus),
+				MessageFormat.format(MobilityXConstants.FAILED_TO_VERIFY_FLEX_BENEFIT_CARD, CoreConstants.FAIL,
+						cardBenefitName, pageName));
 	}
 
 }

@@ -550,10 +550,11 @@ public class CoreFlex_PolicyBenefitsCategoriesPage extends Base {
 	}
 
 	public boolean selectAndFillAddedBenefits(String benefitType, String benefitName, String subBenefitNames,
-			CoreFlex_LanguageTraining_BenefitsPage coreFlexLanguageTrainingBenefitsPage) {
-		CoreFunctions.explicitWaitTillElementInVisibility(driver, _progressBar);
+			CoreFlex_LanguageTraining_BenefitsPage coreFlexLanguageTrainingBenefitsPage) {		
 		boolean isBenefitSuccessfullySelectedAndFilled = false;
 		try {
+			CoreFunctions.explicitWaitTillElementInVisibility(driver, _progressBar);
+			CoreFunctions.waitHandler(3);
 			if (benefitType.equals(COREFLEXConstants.FLEX) || benefitType.equals(COREFLEXConstants.BOTH)) {
 				isBenefitSuccessfullySelectedAndFilled = fillCardBenefitDetails(benefitType, benefitName,
 						subBenefitNames, coreFlexLanguageTrainingBenefitsPage);

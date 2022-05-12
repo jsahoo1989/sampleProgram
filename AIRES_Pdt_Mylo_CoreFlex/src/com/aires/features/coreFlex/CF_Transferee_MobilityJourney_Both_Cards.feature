@@ -5,7 +5,7 @@ Feature: Validate the Mobility Journey Cards Functionality of Both(Core+Flex) Be
     Given he has setup a new "Both" Type Policy with following selection in 'Policy Digitization Tool (PDT)' application
       | Person Responsible For Benefit Selection | Flex Setup Type | Cashout Availability   |
       | Transferee                               | Static/Fixed    | Cashout Not Authorized |
-    And he has navigated to 'Custom Bundles' page after setting-up following Benefit/SubBenefits of "Flex" type for Mobility Journey Card setup
+    And he has navigated to 'Custom Bundles' page after setting-up following Benefit/SubBenefits of "Both" type for Mobility Journey Card setup
       | BenefitName       | SubBenefits                                         |
       | Language Training | Language Training Employee;Language Training Family |
     When he clicks on "SUBMIT" button on "Custom Bundles" page
@@ -27,7 +27,7 @@ Feature: Validate the Mobility Journey Cards Functionality of Both(Core+Flex) Be
     And he has verified 'Aires Managed' benefit card not added under 'Service Monitoring' section of "Mobility Journey Home" page
     And he has created a Service and SubService for following 'Aires Managed' benefit in Services tab of IRIS application
       | Service           | Type              | Name                       | Core/Flex |
-      | Language Training | Language Training | Flex Language Training     | Flex      |
+      | Language Training | Language Training | Flex Language Training     | Both      |
     And he has verified "Language Training" card having "Starting Soon" status displayed under 'Service Monitoring' section of "Mobility Journey Home" page
 	And he has added a new participant in 'Activity & Finance' tab for the created service
 	| Service              | Sub-Service                   | Function           | Comp ID | Company                      |

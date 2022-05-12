@@ -106,7 +106,10 @@ public class CoreFlex_LanguageTraining_BenefitsPage extends Base {
 
 	// SubBenefit - Collapsable Menu 1
 	@FindBy(how = How.XPATH, using = "//h5[contains(text(),'Language Training Employee')]/ancestor::a[contains(@href,'collapse')]")
-	private WebElement _formLanguageTrainingEmployee;
+	private WebElement _formLanguageTrainingEmployee;	
+	
+	@FindBy(how = How.XPATH, using = "//h5[contains(text(),'Language Training Employee')]")
+	private WebElement _headerLanguageTrainingEmployee;
 
 	// SubBenefit - Collapsable Menu 2
 	@FindBy(how = How.XPATH, using = "//h5[contains(text(),'Language Training Family')]/ancestor::a[contains(@href,'collapse')]")
@@ -254,12 +257,12 @@ public class CoreFlex_LanguageTraining_BenefitsPage extends Base {
 		if (benefitType.equals(COREFLEXConstants.BOTH)) {
 			CoreFunctions.clickElement(driver, _textBoth);
 			selectBenefitTypeAndFillMandatoryFields(COREFLEXConstants.CORE_BENEFITS);
-			selectSubBenefitsAndFillMandatoryFields(subBenefitNames);
+			selectSubBenefitsAndFillMandatoryFields(subBenefitNames,COREFLEXConstants.CORE_BENEFITS);
 			selectBenefitTypeAndFillMandatoryFields(COREFLEXConstants.FLEX_BENEFITS);
-			selectSubBenefitsAndFillMandatoryFields(subBenefitNames);
+			selectSubBenefitsAndFillMandatoryFields(subBenefitNames,COREFLEXConstants.FLEX_BENEFITS);
 		} else {
 			selectBenefitTypeAndFillMandatoryFields(benefitType);
-			selectSubBenefitsAndFillMandatoryFields(subBenefitNames);
+			selectSubBenefitsAndFillMandatoryFields(subBenefitNames,benefitType);
 		}
 		clickElementOfPage(COREFLEXConstants.SAVE_AND_CONTINUE);
 	}
@@ -269,8 +272,9 @@ public class CoreFlex_LanguageTraining_BenefitsPage extends Base {
 	 * section fields
 	 * 
 	 * @param subBenefitNames
+	 * @param benefitType 
 	 */
-	private void selectSubBenefitsAndFillMandatoryFields(String subBenefitNames) {
+	private void selectSubBenefitsAndFillMandatoryFields(String subBenefitNames, String benefitType) {
 
 		List<String> subBenefitNamesList = new ArrayList<String>();
 		if (subBenefitNames.contains(";"))
@@ -281,7 +285,7 @@ public class CoreFlex_LanguageTraining_BenefitsPage extends Base {
 		for (String subBenefit : subBenefitNamesList) {
 			CoreFunctions.selectItemInListByText(driver, _subBenefitList, subBenefit.trim(), true);
 			if (CoreFunctions.isElementExist(driver, getElementByName(subBenefit.trim()), 5)) {
-				fillSubBenefit(subBenefit.trim());
+				fillSubBenefit(subBenefit.trim(),benefitType);
 			} else {
 				Reporter.addStepLog(MessageFormat.format(COREFLEXConstants.SUB_BENEFIT_FORM_NOT_DISPLAYED,
 						CoreConstants.FAIL, subBenefit, COREFLEXConstants.DUPLICATE_HOUSING_BENEFITS_PAGE));
@@ -295,11 +299,15 @@ public class CoreFlex_LanguageTraining_BenefitsPage extends Base {
 	 * Method to Expand and call FillSubBenefit method
 	 * 
 	 * @param subBenefit
+	 * @param benefitType 
 	 */
-	private void fillSubBenefit(String subBenefit) {
+	private void fillSubBenefit(String subBenefit, String benefitType) {
 		switch (subBenefit) {
 		case COREFLEXConstants.LANGUAGE_TRAINING_EMPLOYEE:
 			expandSubBenefitIfCollapsed(getElementByName(COREFLEXConstants.LANGUAGE_TRAINING_EMPLOYEE));
+			if(benefitType.equals(COREFLEXConstants.FLEX_BENEFITS)) {
+				CoreFunctions.clickElement(driver, _headerLanguageTrainingEmployee);
+			}
 			fillLanguageTrainingEmployeeSubBenefitForm();
 			break;
 		case COREFLEXConstants.LANGUAGE_TRAINING_FAMILY:

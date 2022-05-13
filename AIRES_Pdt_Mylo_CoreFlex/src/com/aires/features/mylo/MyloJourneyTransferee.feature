@@ -4,15 +4,14 @@ Feature: Validate the functionality of Mylo Journey Transferee section
 Background: Login to  Mylo application
     Given he has logged into the 'Mylo' application
 
-
-@IRIS-1283
+@IRIS-1283 @Mylo-Regression
 Scenario:  Mylo-Validate CheckBox selection of Phone and Email Field under Transferee section on Mylo Journey page
-#Given he is on "Transferee" section after clicking on "Transferee Dropdown arrow" displayed in right panel under "Transferee and Family" section for "Transferee All Data" fileID
+Given he is on "Transferee" section after clicking on "Transferee Dropdown arrow" displayed in right panel under "Transferee and Family" section for "Transferee All Data" fileID
 And transferee detail section has below corresponding field and values
 |TransfereeFirstName|TransfereeLastName |TransfereeMiddleName |TransfereeSufix|TransfereeGrade|TransfereeTitle|TransfereeMaidenName|TransfereePreferredName|Marital Status|Citizenship|Gender|
 |AutoMyloqwer       |TestMyloqwer       |MiddleMyloqwer       |SuffixMyloqwer |GradeMyloqwer  |TitleMyloqwer  |MaidenMyloqwer      |PreferredMyloqwer      |Single        |USA        |Male|
 And message "Nonbinary, Intersex or Gender-Nonconforming" is displayed after he hovers on "X" in Gender dropdown field
-When he clicks on "Save" button after entering "" invalid date in "Date of Birth" field
+When he clicks on "Save" button after entering "02/31/2022" invalid date in "Date of Birth" field
 Then toast message "Invalid birthdate!" should be displayed with "Date of Birth" box highlighted
 
 @IRIS-1283 @217085 @217086 @217090 @Mylo-Regression
@@ -34,8 +33,7 @@ Then list of values displayed in the dropdown for below fields should match with
 |Transferee Phone Type    |
 |Transferee OrgDest Type   |
 #|Citizenship  |
-
-   
+  
 @IRIS-1283 @217091 @217094 @Mylo-Regression
 Scenario:  Mylo-Validate Toast Messages for Mandatory fields of Transferee under Transferee and Family section on Mylo Assignment page
 Given he is on "Transferee" section after clicking on "Transferee Dropdown arrow" displayed in right panel under "Transferee and Family" section for "Active Assignment" fileID
@@ -63,6 +61,7 @@ Then messages corresponding to below fields should be displayed after entering "
 |TransfereeGrade     |Tag Scripts are not allowed in grade      |
 |TransfereeTitle     |Tag Scripts are not allowed in title      |
 |TransfereeMaidenName|Tag Scripts are not allowed in maiden name|
+|TransfereePreferredName|Tag Scripts are not allowed in preferred name|
 
 @IRIS-1283 @217092 @217095 @217097 @217101 @217103 @217105 @217107 @Mylo-Regression
 Scenario:  Mylo-Validate Boundary Conditions for Character Limit validations for different Transferee fields under Transferee and Family section on Mylo Journey page 
@@ -129,6 +128,3 @@ And transferee already has a "Transferee Phone number" as preferred number with 
 When he checks the preferred box for another number after clicking on "Transferee Add Phone" button
 Then previous selected preferred checkbox for "Transferee Phone number" should be cleared with latest selected preferred box AS-IS
 And previous selected preferred checkbox for "Transferee Email Address" should be cleared with latest selected preferred box AS-IS after he checks the preferred box for another email on clicking "Transferee Add Email" button
-
-
-

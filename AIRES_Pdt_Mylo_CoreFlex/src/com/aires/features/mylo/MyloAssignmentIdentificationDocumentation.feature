@@ -46,7 +46,7 @@ Scenario:  Mylo-Validate Save and Update functionality for Multiple Rows of Iden
 Given he is on Mylo Assignment Summary page for file ID with "Active Assignment" data
 And message "Your changes have been successfully saved." is displayed after clicking on "Save" button with below valid data for multiple rows of "Identification & Documentation" section
 |Row|IdentityType       |Country |Number    |FromDate  |ToDate    | 
-|1  |Random             |USA     |   12     |04/03/2022|current   |
+|1  |Drivers License    |USA     |   12     |04/03/2022|current   |
 |2  |Cedula             |Canada  |   15     |04/01/2022|04/02/2022|
 |3  |Diplomatic Passport|Random  |   10      |03/03/2022|03/04/2022|
 When he clicks on "Edit" button after verifying the saved values
@@ -84,7 +84,7 @@ And the color of the tab associated with that record matches the toast messages 
 When he clicks on "Remove" icon to delete the record of "Identification & Documentation" section
 Then the toast messages should get deleted with tab color for the associated record should be restored back to its state for "Identification & Documentation" section
 
-@IRIS-12251 @217055 @217056 @217065 @Mylo-Regression
+@IRIS-1225 @217055 @217056 @217065 @Mylo-Regression
 Scenario:  Mylo-Validate Toast Messages for Mandatory Fields and Colour of the tab associated with the field for existing records of Identification & Documentation section on Mylo Assignment page
 Given he is on Mylo Assignment Summary page for file ID with "Transferee With Family Member" data
 And below toast messages are displayed by clicking on "Save" button after removing mandatory fields for existing data of "Identification & Documentation" section

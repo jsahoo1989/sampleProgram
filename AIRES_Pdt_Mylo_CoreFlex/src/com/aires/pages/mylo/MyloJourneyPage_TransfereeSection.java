@@ -29,19 +29,19 @@ public class MyloJourneyPage_TransfereeSection extends Base {
 		super(driver);
 	}
 
-	@FindBy(how = How.XPATH, using = "//button[text()=' Transferee & Family ']/span")
+	@FindBy(how = How.CSS, using = "app-transferee-family button span")
 	private WebElement _transfereeFamilyDetailsButton;
 
 	@FindBy(how = How.CSS, using = "button[aria-controls='collapsechildOne']")
 	private WebElement _expandTransfereeSection;
 
-	@FindBy(how = How.XPATH, using = "//app-transferee-family/descendant::button[@aria-controls='collapseTwo']")
+	@FindBy(how = How.CSS, using = "app-transferee-family button[aria-controls='collapseTwo']")
 	private WebElement _transfereeAndFamilySection;
 
-	@FindBy(how = How.XPATH, using = "//h2[contains(@class,'accchildhead')]")
+	@FindBy(how = How.CSS, using = "h2[class*='accchildhead']")
 	private List<WebElement> _transfereeAndFamilySectionHeaders;
 
-	@FindBy(how = How.XPATH, using = "//app-transferee/descendant::i[@class='icon-Pencil_Open']")
+	@FindBy(how = How.CSS, using = "app-transferee i[class='icon-Pencil_Open']")
 	private WebElement _transfereeEditButton;
 
 	@FindBy(how = How.ID, using = "T_firstname")
@@ -65,6 +65,9 @@ public class MyloJourneyPage_TransfereeSection extends Base {
 	@FindBy(how = How.ID, using = "T_Title")
 	private WebElement _transfereeTitle;
 	
+	@FindBy(how = How.ID, using = "T_DOB")
+	private WebElement _transfereeDateOfBirth;
+	
 	@FindBy(how = How.ID, using = "T_MaidenName")
 	private WebElement _transfereeMaidenName;
 	
@@ -80,7 +83,7 @@ public class MyloJourneyPage_TransfereeSection extends Base {
 	@FindBy(how = How.CSS, using = "ng-select[name='T_marritalstatus']")
 	private WebElement _transfereeMaritalStatusDropdown;
 	
-	@FindBy(how = How.CSS, using = "//ng-select[@name='T_marritalstatus']/descendant::span[@class='ng-value-label ng-star-inserted']")
+	@FindBy(how = How.CSS, using = "ng-select[name='T_marritalstatus'] span[class='ng-value-label ng-star-inserted']")
 	private WebElement _transfereeMaritalStatusDropdownValue;
 
 	@FindBy(how = How.CSS, using = "ng-select[name='T_Pronouns']")
@@ -89,13 +92,13 @@ public class MyloJourneyPage_TransfereeSection extends Base {
 	@FindBy(how = How.CSS, using = "ng-select[name='T_Citizenship']")
 	private WebElement _transfereeCitizenshipDropdown;
 	
-	@FindBy(how = How.CSS, using = "//ng-select[@name='T_Citizenship']/descendant::span[@class='ng-value-label ng-star-inserted']")
+	@FindBy(how = How.CSS, using = "ng-select[name='T_Citizenship'] span[class='ng-value-label ng-star-inserted']")
 	private WebElement _transfereeCitizenshipDropdownValue;
 	
 	@FindBy(how = How.CSS, using = "ng-select[name='P_Gender']")
 	private WebElement _transfereeGenderDropDown;
 	
-	@FindBy(how = How.CSS, using = "//ng-select[@name='P_Gender']/descendant::span[@class='ng-value-label ng-star-inserted']")
+	@FindBy(how = How.CSS, using = "ng-select[name='P_Gender'] span[class='ng-value-label ng-star-inserted']")
 	private WebElement _transfereeGenderDropDownValue;
 
 	@FindBy(how = How.CSS, using = "ng-select[name='T_Type2']")
@@ -107,13 +110,13 @@ public class MyloJourneyPage_TransfereeSection extends Base {
 	@FindBy(how = How.CSS, using = "ng-select[name='P_Orig']")
 	private List<WebElement> _transfereePhoneOrgDestDropdown;
 
-	@FindBy(how = How.XPATH, using = "//ng-select[@name='P_Orig']/descendant::span[@class='ng-value-label ng-star-inserted']")
+	@FindBy(how = How.CSS, using = "ng-select[name='P_Orig'] span[class='ng-value-label ng-star-inserted']")
 	private List<WebElement> _transfereePhoneOrgDestDropdownValue;
 
-	@FindBy(how = How.XPATH, using = "//ng-select[@name='P_Type']/descendant::span[@class='ng-value-label ng-star-inserted']")
+	@FindBy(how = How.CSS, using = "ng-select[name='P_Type'] span[class='ng-value-label ng-star-inserted']")
 	private List<WebElement> _transfereePhoneTypeDropdownValue;
 
-	@FindBy(how = How.XPATH, using = "//ng-select[@name='T_Type2']/descendant::span[@class='ng-value-label ng-star-inserted']")
+	@FindBy(how = How.CSS, using = "ng-select[name='T_Type2'] span[class='ng-value-label ng-star-inserted']")
 	private List<WebElement> _transfereeEmailTypeDropdownValue;
 
 	@FindBy(how = How.CSS, using = "div[role='alert']")
@@ -122,7 +125,7 @@ public class MyloJourneyPage_TransfereeSection extends Base {
 	@FindBy(how = How.CSS, using = "i[class='icon-FloppyDisk_Open']")
 	private WebElement _transfereeSaveBtn;
 
-	@FindBy(how = How.XPATH, using = "//button[contains(@class,'toast-close-btn')]")
+	@FindBy(how = How.CSS, using = "button[class*='toast-close-btn']")
 	private WebElement _closeBtn;
 
 	@FindBy(how = How.CSS, using = "i[class='icon-Trash_Open trashimg']")
@@ -137,22 +140,24 @@ public class MyloJourneyPage_TransfereeSection extends Base {
 	@FindBy(how = How.XPATH, using = "//a[text()=' Add Email ']")
 	private WebElement _transfereeAddEmail;
 
-	@FindBy(how = How.XPATH, using = "//button[text()='Yes']")
+	@FindBy(how = How.CSS, using = "button[class*='swal2-confirm btn']")
 	private WebElement _YesButton;
 
 	@FindBy(how = How.CSS, using = "input[id='P_Preferred']")
 	private List<WebElement> _transfereePhonePreferred;
 
-	@FindBy(how = How.XPATH, using = "//input[@id='P_Preferred']/following-sibling::span")
+	@FindBy(how = How.CSS, using = "input[id='P_Preferred']+span")
 	private List<WebElement> _transfereePhonePreferredSelect;
 
 	@FindBy(how = How.CSS, using = "input[id='T_Preferred2']")
 	private List<WebElement> _transfereeEmailPreferred;
 
-	@FindBy(how = How.XPATH, using = "//input[@id='T_Preferred2']/following-sibling::span")
+	@FindBy(how = How.CSS, using = "input[id='T_Preferred2']+ span")
 	private List<WebElement> _transfereeEmailPreferredSelect;
 
-	final By _dropdownOptions = By.xpath("//div[@role='option']/span");
+	final By _dropdownOptions = By.cssSelector("div[role='option']>span");
+	final By _genderDropdownOptions = By.cssSelector("div[role='option']>div");
+	
 
 	List<String> maritalStatusOption = new ArrayList<String>();
 	List<String> pronounOption = new ArrayList<String>();
@@ -179,6 +184,7 @@ public class MyloJourneyPage_TransfereeSection extends Base {
 		transfereeWebElementsMap.put(MYLOConstants.TRANSFEREE_GRADE, _transfereeGrade);
 		transfereeWebElementsMap.put(MYLOConstants.TRANSFEREE_MAIDEN_NAME, _transfereeMaidenName);
 		transfereeWebElementsMap.put(MYLOConstants.TRANSFEREE_TITLE, _transfereeTitle);
+		transfereeWebElementsMap.put(MYLOConstants.DATEOFBIRTH, _transfereeDateOfBirth);
 		transfereeWebElementsMap.put(MYLOConstants.TRANSFEREE_PREFERREDNAME, _transfereePreferredName);
 		transfereeWebElementsMap.put(MYLOConstants.MARITAL_STATUS, _transfereeMaritalStatusDropdownValue);
 		transfereeWebElementsMap.put(MYLOConstants.CITIZENSHIP, _transfereeCitizenshipDropdownValue);
@@ -269,7 +275,15 @@ public class MyloJourneyPage_TransfereeSection extends Base {
 	 */
 	public void scrollToTransfereeElement(String elementName) {
 		mapTransfereeWebElementFields();
-		CoreFunctions.scrollToElementUsingJavaScript(driver, transfereeWebElementsMap.get(elementName), elementName);
+		try {
+			CoreFunctions.scrollToElementUsingJavaScript(driver, transfereeWebElementsMap.get(elementName),
+					elementName);
+		} catch (Exception e) {
+			Reporter.addStepLog(MessageFormat.format(CoreConstants.FAIL_TO_VERIFY_ELEMENT_ON_SECTION,
+					CoreConstants.FAIL, elementName, MYLOConstants.TRANSFEREE));
+			Assert.fail(MessageFormat.format(CoreConstants.FAIL_TO_VERIFY_ELEMENT_ON_SECTION, CoreConstants.FAIL,
+					elementName, MYLOConstants.TRANSFEREE));
+		}
 	}
 
 	/**
@@ -280,8 +294,8 @@ public class MyloJourneyPage_TransfereeSection extends Base {
 		mapTransfereeWebElementFields();
 		try {
 			WebElement element = transfereeWebElementsMap.get(fieldName);
-			CoreFunctions.explicitWaitTillElementVisibility(driver, element, fieldName);
 			CoreFunctions.explicitWaitTillElementInVisibilityCustomTime(driver, _spinner, 180);
+			CoreFunctions.explicitWaitTillElementVisibility(driver, element, fieldName);
 			CoreFunctions.highlightElementAndClick(driver, element, fieldName);
 		} catch (Exception e) {
 			Reporter.addStepLog(MessageFormat.format(CoreConstants.FAIL_TO_VERIFY_ELEMENT_ON_SECTION,
@@ -412,10 +426,17 @@ public class MyloJourneyPage_TransfereeSection extends Base {
 	 */
 	public void setDifferentDropDownFields(String fieldName, String fieldValue) {
 		String updatedValue = null;
-		List<WebElement> optionList = CoreFunctions.getElementListByLocator(driver, _dropdownOptions);
-		updatedValue = CoreFunctions.setDifferentDropDownFieldsForMylo(driver, fieldValue, optionList);
-		transfereeUpdatedDropdownFieldValuesMap.put(fieldName, updatedValue);
-		transfereeUpdatedFieldValuesMap.put(fieldName, updatedValue);
+		try {
+			List<WebElement> optionList = CoreFunctions.getElementListByLocator(driver, _dropdownOptions);
+			updatedValue = CoreFunctions.setDifferentDropDownFieldsForMylo(driver, fieldValue, optionList);
+			transfereeUpdatedDropdownFieldValuesMap.put(fieldName, updatedValue);
+			transfereeUpdatedFieldValuesMap.put(fieldName, updatedValue);
+		} catch (Exception e) {
+			Reporter.addStepLog(MessageFormat.format(CoreConstants.FAIL_TO_VERIFY_ELEMENT_ON_SECTION,
+					CoreConstants.FAIL, fieldName, MYLOConstants.TRANSFEREE));
+			Assert.fail(MessageFormat.format(CoreConstants.FAIL_TO_VERIFY_ELEMENT_ON_SECTION, CoreConstants.FAIL,
+					fieldName, MYLOConstants.TRANSFEREE));
+		}
 	}
 
 	/**
@@ -807,7 +828,7 @@ public class MyloJourneyPage_TransfereeSection extends Base {
 			CoreFunctions.highlightObject(driver, _alertMessage);
 			flag = (_alertMessage.getText().equals(msg));
 		} catch (Exception e) {
-			Reporter.addStepLog(MessageFormat.format(CoreConstants.FAIL_TO_VERIFY_ELEMENT_ON_PAGE, CoreConstants.FAIL,
+			Reporter.addStepLog(MessageFormat.format(CoreConstants.FAIL_TO_VERIFY_ELEMENT_ON_SECTION, CoreConstants.FAIL,
 					MYLOConstants.ALERT_MESSAGE, sectionType));
 		}
 		if (flag)
@@ -859,9 +880,17 @@ public class MyloJourneyPage_TransfereeSection extends Base {
 	 * Check whether Preferred checkbox is selected for Transferee Phone/Email section
 	 */
 	public boolean isPreferredChecked(String section, int index, String number) {
-		boolean flag = (section.equals(MYLOConstants.TRANSFEREE_PHONE_NUMBER))
-				? _transfereePhonePreferred.get(index).isSelected()
-				: _transfereeEmailPreferred.get(index).isSelected();
+		boolean flag=false;
+		try {
+			flag = (section.equals(MYLOConstants.TRANSFEREE_PHONE_NUMBER))
+					? _transfereePhonePreferred.get(index).isSelected()
+					: _transfereeEmailPreferred.get(index).isSelected();
+		} catch (Exception e) {
+			Reporter.addStepLog(MessageFormat.format(CoreConstants.FAIL_TO_VERIFY_ELEMENT_ON_SECTION,
+					CoreConstants.FAIL, section, MYLOConstants.TRANSFEREE));
+			Assert.fail(MessageFormat.format(CoreConstants.FAIL_TO_VERIFY_ELEMENT_ON_SECTION, CoreConstants.FAIL,
+					section, MYLOConstants.TRANSFEREE));
+		}
 		if (flag)
 			Reporter.addStepLog(MessageFormat.format(MYLOConstants.VERIFIED_CHECKBOX_SELECTED, CoreConstants.PASS,
 					number, MYLOConstants.PREFERRED, section, MYLOConstants.TRANSFEREE));
@@ -882,5 +911,53 @@ public class MyloJourneyPage_TransfereeSection extends Base {
 			flag = (verifyTransfereeFieldsUpdatedValue(data.get(i).get(MYLOConstants.FIELD_NAME)));
 		}
 		return flag;
+	}
+	
+	/**
+	 * @param fieldName
+	 * @param fieldValue
+	 * @return
+	 * Verify Existing Values on Different fields in Transferee section
+	 */
+	public boolean verifyExistingValuesInTransfereeSection(String fieldName, String fieldValue) {
+		boolean flag = false;
+		flag = (fieldValue.contentEquals(getTransfereeFields(fieldName)));
+		if (flag)
+			Reporter.addStepLog(MessageFormat.format(MYLOConstants.VERIFY_UPDATED_FIELD_VALUE, CoreConstants.PASS,
+					fieldName, fieldValue, MYLOConstants.TRANSFEREE));
+		else
+			Reporter.addStepLog(MessageFormat.format(MYLOConstants.FAILED_TO_VERIFY_UPDATED_VALUE, CoreConstants.FAIL,
+					fieldName, MYLOConstants.TRANSFEREE));
+		return flag;
+
+	}
+	
+	/**
+	 * @param msg
+	 * @return
+	 * Verify Hover Message for Gender X
+	 */
+	public boolean getGenderXHoverMessage(String msg) {
+		boolean flag = false;
+		try {
+			clickFieldsOnTransfereeSection(MYLOConstants.GENDER);
+			List<WebElement> genderOptions = CoreFunctions.getElementListByLocator(driver, _genderDropdownOptions);
+			WebElement genderXWebElement = CoreFunctions.returnItemInListByText(driver, genderOptions, MYLOConstants.GENDER_X);
+			CoreFunctions.hover(driver, genderXWebElement);
+			flag = genderXWebElement.getAttribute(MYLOConstants.TITLE).equals(msg);
+		} catch (Exception e) {
+			Reporter.addStepLog(MessageFormat.format(MYLOConstants.FAIL_TO_VERIFY_HOVER_MESSAGE_ON_SECTION,
+					CoreConstants.FAIL, msg, MYLOConstants.TRANSFEREE));
+			Assert.fail(MessageFormat.format(MYLOConstants.FAIL_TO_VERIFY_HOVER_MESSAGE_ON_SECTION, CoreConstants.FAIL,
+					msg, MYLOConstants.TRANSFEREE));
+		}
+		if (flag)
+			Reporter.addStepLog(MessageFormat.format(MYLOConstants.VERIFIED_HOVER_MESSAGE_DISPLAYED, CoreConstants.PASS,
+					msg, MYLOConstants.TRANSFEREE));
+		else
+			Reporter.addStepLog(MessageFormat.format(MYLOConstants.VERIFIED_HOVER_MESSAGE_NOT_DISPLAYED, CoreConstants.FAIL,
+					msg, MYLOConstants.TRANSFEREE));
+		return flag;
+
 	}
 }

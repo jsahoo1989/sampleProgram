@@ -691,6 +691,7 @@ public class Mylo_AssignmentPage extends Base {
 			CoreFunctions.click(driver, _fileInfoSaveButton, buttonName);
 			break;
 		case MYLOConstants.DETAILS_CARROT_BUTTON:
+			CoreFunctions.explicitWaitTillElementInVisibilityCustomTime(driver, _spinner, 60);
 			CoreFunctions.explicitWaitTillElementVisibility(driver, _fileInfoDetailsCarrot,
 					_fileInfoDetailsCarrot.getText());
 			CoreFunctions.click(driver, _fileInfoDetailsCarrot, _fileInfoDetailsCarrot.getText());
@@ -1312,7 +1313,7 @@ public class Mylo_AssignmentPage extends Base {
 			CoreFunctions.explicitWaitTillElementVisibility(driver, _mailEditButton, MYLOConstants.MAIL_EDIT_BUTTON);
 			CoreFunctions.explicitWaitTillElementBecomesClickable(driver, _mailEditButton,
 					MYLOConstants.MAIL_EDIT_BUTTON);
-			CoreFunctions.click(driver, _mailEditButton, _mailEditButton.getText());
+			CoreFunctions.click(driver, _mailEditButton, elementName);
 			break;
 		case MYLOConstants.TEMP_ADDRESS_COUNTRY:
 			CoreFunctions.explicitWaitTillElementVisibility(driver, _tempAddressCountryDropdown,
@@ -1447,7 +1448,7 @@ public class Mylo_AssignmentPage extends Base {
 			valuesToIgnore.add(MYLOConstants.USA_STATE);
 			valuesToIgnore.add(MYLOConstants.INDIA_STATE);
 			valuesToIgnore.add(MYLOConstants.CANADA_STATE);
-			valuesToIgnore.add(MYLOConstants.SELECT_ONE);
+			countryList.remove(0);
 			updatedCountryValue = CoreFunctions.getRandomOutOfSelectedElementValueFromList(driver, countryList, valuesToIgnore);
 			BusinessFunctions.selectItemFromListUsingText(driver, countryList,
 					updatedCountryValue);
@@ -2046,6 +2047,7 @@ public class Mylo_AssignmentPage extends Base {
 	 * @return
 	 */
 	public boolean verifyFieldValuesOtherAddress(String sectionType, DataTable table) {
+		CoreFunctions.explicitWaitTillElementInVisibilityCustomTime(driver, _spinner, 180);
 		java.util.List<Map<String, String>> data = table.asMaps(String.class, String.class);
 		try {
 			if (sectionType.equals(MYLOConstants.MAILING_ADDRESS_DROPDOWN)) {
@@ -2054,7 +2056,7 @@ public class Mylo_AssignmentPage extends Base {
 				Assert.assertEquals(getFieldValueOtherAddressesSection(MYLOConstants.MAIL_ADDRESS_CITY),
 						data.get(0).get(MYLOConstants.MAIL_ADDRESS_CITY),MYLOConstants.MAIL_ADDRESS_CITY + MYLOConstants.VALUE_NOT_UPDATED);
 				Assert.assertEquals(
-						getFieldValueOtherAddressesSection(MYLOConstants.MAIL_ADDRESS_STATE_DROPDOWN),
+					getFieldValueOtherAddressesSection(MYLOConstants.MAIL_ADDRESS_STATE_DROPDOWN),
 						data.get(0).get(MYLOConstants.STATE),MYLOConstants.STATE + MYLOConstants.VALUE_NOT_UPDATED);
 				Assert.assertEquals(getFieldValueOtherAddressesSection(MYLOConstants.MAIL_ADDRESS_ZIPCODE),
 						data.get(0).get(MYLOConstants.MAIL_ADDRESS_ZIPCODE),MYLOConstants.MAIL_ADDRESS_ZIPCODE + MYLOConstants.VALUE_NOT_UPDATED);
@@ -2418,13 +2420,14 @@ public class Mylo_AssignmentPage extends Base {
 		switch (buttonName) {
 		case MYLOConstants.ADD_BUTTON:
 			CoreFunctions.click(driver, _identDocAddIcon, MYLOConstants.ADD_BUTTON);
+			CoreFunctions.explicitWaitTillElementListVisibilityCustomTime(driver, _identDocTypeDropdowns, 10);		
 			break;
 		case MYLOConstants.CANCEL_BUTTON:
 			CoreFunctions.click(driver, _identDocCancelIcon, MYLOConstants.CANCEL_BUTTON);
 			break;
 		case MYLOConstants.SAVE_BUTTON:
 			CoreFunctions.click(driver, _identDocSaveIcon, MYLOConstants.SAVE_BUTTON);
-			CoreFunctions.explicitWaitTillElementInVisibilityCustomTime(driver, _spinner, 180);
+			CoreFunctions.explicitWaitTillElementInVisibilityCustomTime(driver, _spinner, 200);
 			break;
 		case MYLOConstants.EDIT_BUTTON:
 			CoreFunctions.explicitWaitTillElementVisibility(driver, _identDocEditIcon, _identDocEditIcon.getText());
@@ -2432,6 +2435,7 @@ public class Mylo_AssignmentPage extends Base {
 			break;
 		case MYLOConstants.YES_BUTTON:
 			CoreFunctions.click(driver, _YesButton, _YesButton.getText());
+			CoreFunctions.explicitWaitTillElementInVisibilityCustomTime(driver, _spinner, 180);
 			break;
 		case MYLOConstants.NO_BUTTON:
 			CoreFunctions.click(driver, _NoButton, _NoButton.getText());
@@ -2487,9 +2491,8 @@ public class Mylo_AssignmentPage extends Base {
 	 */
 	public String setIdentityDocMembersTypeValue(String fieldValue) {
 		if (fieldValue.equals(MYLOConstants.RANDOM)) {
-			List<String> valuesToIgnore = new ArrayList<String>();
-			valuesToIgnore.add(MYLOConstants.SELECT_ONE);
-			updatedTypeValue = CoreFunctions.getRandomOutOfSelectedElementValueFromList(driver, identityTypeList, valuesToIgnore);
+			identityTypeList.remove(0);
+			updatedTypeValue = CoreFunctions.getRandomElementValueFromList(driver, identityTypeList);
 			BusinessFunctions.selectItemFromListUsingText(driver, identityTypeList,
 					updatedTypeValue);
 		} else {
@@ -2517,9 +2520,8 @@ public class Mylo_AssignmentPage extends Base {
 	 */
 	public String setIdentityDocMembersCountryValue(String fieldValue) {
 		if (fieldValue.equals(MYLOConstants.RANDOM)) {
-			List<String> valuesToIgnore = new ArrayList<String>();
-			valuesToIgnore.add(MYLOConstants.SELECT_ONE);
-			updatedCountryValue = CoreFunctions.getRandomOutOfSelectedElementValueFromList(driver, countryList, valuesToIgnore);
+			countryList.remove(0);
+			updatedCountryValue = CoreFunctions.getRandomElementValueFromList(driver, countryList);
 			BusinessFunctions.selectItemFromListUsingText(driver, countryList,
 					updatedCountryValue);
 		} else {
@@ -2945,7 +2947,7 @@ public class Mylo_AssignmentPage extends Base {
 	 * Click on Close Icon of Toast Message
 	 */
 	public void clickToastMesssgeCloseIcon() {
-		if (CoreFunctions.isElementVisible(_closeBtn)) {
+		if (CoreFunctions.isElementExist(driver,_closeBtn,5)) {
 			CoreFunctions.highlightObject(driver, _closeBtn);
 			CoreFunctions.sendKeysUsingAction(driver, _closeBtn, MYLOConstants.CLOSE_BUTTON);
 		}

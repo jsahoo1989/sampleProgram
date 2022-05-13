@@ -403,10 +403,10 @@ public class MyloAssignmentIdentificationDocumentation_Steps {
 			String arg1) {
 		MYLOConstants.TIME_BEFORE_ACTION = new Date().getTime();
 		myloAssignmentPage.clickButtonOnIentificationAndDocumentationSection(MYLOConstants.ADD_BUTTON);
-		Assert.assertFalse(myloAssignmentPage.verifyAlertMessagesPresent());
 		Assert.assertFalse(myloAssignmentPage.verifyIdentDocFieldErrorBackground(MYLOConstants.FROMDATE, 0));
 		Assert.assertFalse(myloAssignmentPage.verifyIdentDocFieldErrorBackground(MYLOConstants.NUMBER, 0));
 		Assert.assertFalse(myloAssignmentPage.verifyIdentDocFieldErrorBackground(MYLOConstants.IDENTITY_TYPE, 0));
+		Assert.assertFalse(myloAssignmentPage.verifyAlertMessagesPresent());
 		myloAssignmentPage.clickButtonOnIentificationAndDocumentationSection(MYLOConstants.CANCEL_BUTTON);
 		myloAssignmentPage.clickButtonOnIentificationAndDocumentationSection(MYLOConstants.YES_BUTTON);
 		MYLOConstants.TIME_AFTER_ACTION = new Date().getTime();

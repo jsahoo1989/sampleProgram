@@ -1,4 +1,4 @@
-package com.aires.pages.mylo;
+/*package com.aires.pages.mylo;
 
 import java.text.MessageFormat;
 import java.util.HashMap;
@@ -142,3 +142,4 @@ public class Mylo_RestApiRequest extends Base {
 		return flag;
 	}
 }
+*/

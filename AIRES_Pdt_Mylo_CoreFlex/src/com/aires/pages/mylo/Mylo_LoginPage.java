@@ -53,6 +53,7 @@ public class Mylo_LoginPage extends Base {
 	private WebElement _userProfile;
 	
 	final By _loginImg = By.xpath("//img[contains(@src,'login-with-office-365.jpg')]");
+	final By _password = By.cssSelector("input[type='password']");
 	
 	Mylo_LoginData loginData = FileReaderManager.getInstance().getMyloJsonReader()
 			.getloginDetailsByUserProfileName(MYLOConstants.USER_PROFILE_NAME);
@@ -90,16 +91,13 @@ public class Mylo_LoginPage extends Base {
 	}
 
 	public void enterUserEmailAndPasswordForMylo(String userName, String password) {
-		try {
 			CoreFunctions.explicitWaitTillElementVisibility(driver, _txt_UserEmail,
 					_txt_UserEmail.getAttribute("placeholder"));
 			CoreFunctions.clearAndSetText(driver, _txt_UserEmail, _txt_UserEmail.getAttribute("placeholder"), userName);
 			CoreFunctions.clickUsingJS(driver, _submit, _submit.getAttribute("value"));
-			CoreFunctions.explicitWaitTillElementVisibility(driver, _txt_Password,
-					_txt_Password.getAttribute("name"));
-			CoreFunctions.clearAndSetText(driver, _txt_Password, _txt_Password.getAttribute("type"), password);
-		} catch (ElementNotFoundException e) {
-		}
+			CoreFunctions.explicitWaitTillElementInVisibilityCustomTime(driver, _spinner, 10);
+			WebElement _pswd = CoreFunctions.getElementByLocator(driver, _password);
+			CoreFunctions.clearAndSetText(driver, _txt_Password, _pswd.getAttribute("type"), password);
 	}
 	
 	public void logout() {

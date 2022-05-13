@@ -4,7 +4,7 @@ Feature: Validate the functionality of Mylo Assignment File Information section
 Background: Login to  Mylo application
     Given he has logged into the 'Mylo' application
    
-@IRIS-7311 @Mylo-Regression
+@IRIS-731 @Mylo-Regression
 Scenario Outline:  Mylo-Validate Edit Option availability and additional fields displayed for Mylo Assignment File Information section with different UserTypes
 Given he has logged into the Mylo application with mentioned userType "<UserType>" 
 And he is on Mylo Assignment Summary page for file ID with "Active Assignment" 

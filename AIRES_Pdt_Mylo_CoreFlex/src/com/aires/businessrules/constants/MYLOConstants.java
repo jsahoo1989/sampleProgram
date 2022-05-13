@@ -224,7 +224,8 @@ public class MYLOConstants {
 	public static final String FILE_ID_ENTERED = "{0}File id entered is : ''{1}'' ";
 	public static final String VERIFIED_TAB_BG_COLOR = "{0}Verified Background color of ''{1}'' tab is ''{2}'' on ''{3}'' page";
 	public static final Object GREY_COLOR = "Grey";
-	public static final String VERIFIED_HOVER_MESSAGE_DISPLAYED = "{0}Verified Hover message is displayed as ''{1}''  on  ''{2}'' page";
+	public static final String VERIFIED_HOVER_MESSAGE_DISPLAYED = "{0}Verified Hover message is displayed as ''{1}''  on  ''{2}'' section";
+	public static final String VERIFIED_HOVER_MESSAGE_NOT_DISPLAYED = "{0}Verified Hover message is not displayed as ''{1}''  on  ''{2}'' section";
 	public static final String FAILED_VERIFY_HOVER_MESSAGE = "Failed to verify Hover message";
 	public static final String MISMATCH_HEADERTEXT = "Mismatach Header Text";
 	public static final String ASSIGNMENT_OPTIONS_HEADER = "Please Select an Option";
@@ -321,8 +322,11 @@ public class MYLOConstants {
 	public static final String SECOND = "Second";
 	public static final String HOME = "Home";
 	public static final String GENDER = "Gender";
-	public static final String TRANSFEREE_PREFERREDNAME = "TransfereeMaidenName";
-	
+	public static final String TRANSFEREE_PREFERREDNAME = "TransfereePreferredName";
+	public static final String FAIL_TO_VERIFY_HOVER_MESSAGE_ON_SECTION = "{0}Failed to verify hover message: ''{1}'' for Gender X on ''{2}'' section";
+	public static final String DATEOFBIRTH = "Date of Birth";
+	public static final String GENDER_X = "X";
+	public static final Object EXCLAMATION = "!";
 	
 	public static long TIME_BEFORE_ACTION;
 	public static long TIME_AFTER_ACTION;

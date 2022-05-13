@@ -121,8 +121,7 @@ public class Mylo_DashboardHomePage extends Base {
 		CoreFunctions.explicitWaitTillElementVisibility(driver, _userProfile, _userProfile.getText());
 		Log.info("userName is : " + _userProfile.getText());
 		CoreFunctions.highlightObject(driver, _userProfile);
-		System.out.println(_userProfile.getText().length());
-		if(!(_userProfile.getText().length()>2)) {
+		if(!(_userProfile.getText().equals(MYLOConstants.EXCLAMATION))) {
 			clickOptionFromMainMenu(MYLOConstants.HOME);
 			CoreFunctions.explicitWaitTillElementInVisibilityCustomTime(driver, _spinner, 60);
 		}
@@ -235,9 +234,7 @@ public class Mylo_DashboardHomePage extends Base {
 		parameterDropdownFieldsMap.put(MYLOConstants.STATUS, 0);
 		parameterDropdownFieldsMap.put(MYLOConstants.OFFICE, 1);
 		parameterDropdownFieldsMap.put(MYLOConstants.ORIGIN_COUNTRY, 2);
-		//parameterDropdownFieldsMap.put(MYLOConstants.ORIGIN_STATE, 3);
 		parameterDropdownFieldsMap.put(MYLOConstants.DESTINATION_COUNTRY, 4);
-		//parameterDropdownFieldsMap.put(MYLOConstants.DESTINATION_STATE, 5);
 	}
 
 	public void selectOptionsForFileParameters(String option, String optionValue) {
@@ -311,7 +308,6 @@ public class Mylo_DashboardHomePage extends Base {
 			selectParameterFromQueryScreen(MYLOConstants.FILE);
 			selectOptionsForFileParameters(MYLOConstants.FILE_ID, fileIds.get(i));
 			clickExecuteButton();
-			//clickOKInPopUpWindow();
 		}
 	}
 	

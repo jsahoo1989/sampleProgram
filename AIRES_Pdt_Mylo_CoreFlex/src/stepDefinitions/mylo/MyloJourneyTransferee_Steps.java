@@ -2,6 +2,7 @@ package stepDefinitions.mylo;
 
 import java.text.MessageFormat;
 import java.util.Date;
+import java.util.List;
 import java.util.Map;
 import org.testng.Assert;
 import com.aires.businessrules.constants.CoreConstants;
@@ -41,9 +42,7 @@ public class MyloJourneyTransferee_Steps {
 	public void he_is_on_section_after_clicking_on_displayed_in_right_panel_under_section_for_fileID(
 			String sectionHeader1, String expandSection, String sectionHeader, String fileType) {
 		MYLOConstants.TIME_BEFORE_ACTION = new Date().getTime();
-		myloDashboardPage.verifyUserName(MYLOConstants.USER_PROFILE_NAME);
 		myloDashboardPage.clickOptionFromMainMenu(MYLOConstants.JOURNEY);
-		Assert.assertTrue(myloDashboardPage.verifyJourneyHeaderText(),MYLOConstants.MISMATCH_HEADERTEXT);
 		myloDashboardPage.selectOptionsFromAssignmentMenu(MYLOConstants.QUERY_FILE);
 		myloDashboardPage.selectParameterFromQueryScreen(MYLOConstants.FILE);
 		String fileID = myloAssignmentPage.getFileDetailsDataByFieldAndStatus(fileType, MYLOConstants.FILE_ID);
@@ -289,23 +288,40 @@ public class MyloJourneyTransferee_Steps {
 	
 	@Given("^transferee detail section has below corresponding field and values$")
 	public void transferee_detail_section_has_below_corresponding_field_and_values(DataTable table){
-	    
+		MYLOConstants.TIME_BEFORE_ACTION = new Date().getTime();
+		List<List<String>> dataList = table.asLists(String.class);
+		for(int i=0;i<dataList.get(0).size();i++) {
+			Assert.assertTrue(myloJourneyPageTransfereeSection.verifyExistingValuesInTransfereeSection(dataList.get(0).get(i), dataList.get(1).get(i)));
+		}
+		Reporter.addStepLog("<b>Total time taken by <i>'And'</i> statement is :"
+				+ (MYLOConstants.TIME_AFTER_ACTION - MYLOConstants.TIME_BEFORE_ACTION) / 1000 + " Seconds </b>");
 	}
 
 	@Given("^message \"([^\"]*)\" is displayed after he hovers on \"([^\"]*)\" in Gender dropdown field$")
-	public void message_is_displayed_after_he_hovers_on_in_Gender_dropdown_field(String arg1, String arg2) {
+	public void message_is_displayed_after_he_hovers_on_in_Gender_dropdown_field(String msg, String arg2) {
+		MYLOConstants.TIME_BEFORE_ACTION = new Date().getTime();
 		myloJourneyPageTransfereeSection.highlightSectionHeader(MYLOConstants.TRANSFEREE);
 		myloJourneyPageTransfereeSection.clickFieldsOnTransfereeSection(MYLOConstants.EDIT_BUTTON);
+		Assert.assertTrue(myloJourneyPageTransfereeSection.getGenderXHoverMessage(msg));
+		Reporter.addStepLog("<b>Total time taken by <i>'And'</i> statement is :"
+				+ (MYLOConstants.TIME_AFTER_ACTION - MYLOConstants.TIME_BEFORE_ACTION) / 1000 + " Seconds </b>");
 	}
 
 	@When("^he clicks on \"([^\"]*)\" button after entering \"([^\"]*)\" invalid date in \"([^\"]*)\" field$")
-	public void he_clicks_on_button_after_entering_invalid_date_in_field(String arg1, String arg2, String arg3) {
-	    
+	public void he_clicks_on_button_after_entering_invalid_date_in_field(String buttonName, String fieldValue, String fieldName) {
+		MYLOConstants.TIME_BEFORE_ACTION = new Date().getTime();
+		myloJourneyPageTransfereeSection.setTransfereeFields(fieldName, fieldValue);
+		myloJourneyPageTransfereeSection.clickTransfereeSaveButton();
+		Reporter.addStepLog("<b>Total time taken by <i>'When'</i> statement is :"
+				+ (MYLOConstants.TIME_AFTER_ACTION - MYLOConstants.TIME_BEFORE_ACTION) / 1000 + " Seconds </b>");
 	}
 
 	@Then("^toast message \"([^\"]*)\" should be displayed with \"([^\"]*)\" box highlighted$")
-	public void toast_message_should_be_displayed_with_box_highlighted(String arg1, String arg2){
-	   
+	public void toast_message_should_be_displayed_with_box_highlighted(String msg, String section){
+		MYLOConstants.TIME_BEFORE_ACTION = new Date().getTime();
+		Assert.assertTrue(myloJourneyPageTransfereeSection.verifyToastMessage(msg, MYLOConstants.TRANSFEREE));
+		Reporter.addStepLog("<b>Total time taken by <i>'Then'</i> statement is :"
+				+ (MYLOConstants.TIME_AFTER_ACTION - MYLOConstants.TIME_BEFORE_ACTION) / 1000 + " Seconds </b>");
 	}
 
 }

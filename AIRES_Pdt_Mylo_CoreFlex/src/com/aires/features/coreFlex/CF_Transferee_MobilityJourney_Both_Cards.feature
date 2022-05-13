@@ -28,15 +28,15 @@ Feature: Validate the Mobility Journey Cards Functionality of Both(Core+Flex) Be
     And he has created a Service and SubService for following 'Aires Managed' benefit in Services tab of IRIS application
       | Service           | Type              | Name                       | Core/Flex |
       | Language Training | Language Training | Flex Language Training     | Both      |
-    And he has verified "Language Training" card having "Starting Soon" status displayed under 'Service Monitoring' section of "Mobility Journey Home" page
+    And he has verified "Language Training" Flex and Core card having "Starting Soon" status displayed under 'Service Monitoring' section of "Mobility Journey Home" page
 	And he has added a new participant in 'Activity & Finance' tab for the created service
 	| Service              | Sub-Service                   | Function           | Comp ID | Company                      |
 	| Language Training    | (ACTV) Flex Language Training | Language Agent     | 49211   | AIRES-CIS-DEMO&'TEST(CLIENT) |
     And he has provided the "Est Date" for below tracing prompt after clicking on the "Activity & Finance" tab of Language Training sub-service
       | tracingPrompt                   |
       | Start Date of Language Training |
-    And he has verified "Language Training" card status updated to "Begin Training" under 'Service Monitoring' section of "Mobility Journey Home" page
+    And he has verified "Language Training" Flex and Core card status updated to "Begin Training" under 'Service Monitoring' section of "Mobility Journey Home" page
     When he has provides the "Est Date" for below tracing prompt after clicking on the "Activity & Finance" tab of Language Training sub-service
       | tracingPrompt                 |
       | End Date of Language Training |
-     Then "Language Training" card status should be updated to "Training Complete" under 'Service Monitoring' section of "Mobility Journey Home" page
+     Then "Language Training" Flex and Core card status should be updated to "Training Complete" under 'Service Monitoring' section of "Mobility Journey Home" page

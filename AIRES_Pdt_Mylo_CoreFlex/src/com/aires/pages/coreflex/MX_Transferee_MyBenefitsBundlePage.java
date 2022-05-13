@@ -1259,7 +1259,7 @@ public class MX_Transferee_MyBenefitsBundlePage extends Base {
 		boolean isFlexAiresManagedBenefitDetailsOnMMBVerified = false;
 		try {
 			int indexBenefit = BusinessFunctions.returnindexItemFromListUsingText(driver, _textAddedBenefitNameList,
-					languageTrainingBenefitData.benefitDetails.benefitDisplayName);
+					languageTrainingBenefitData.flexBenefitDetails.benefitDisplayName);
 			isFlexAiresManagedBenefitDetailsOnMMBVerified = verifyMyBenefitBundlesAiresManagedBenefitDetails(
 					indexBenefit);
 
@@ -1278,14 +1278,14 @@ public class MX_Transferee_MyBenefitsBundlePage extends Base {
 
 	private boolean verifyMyBenefitBundlesAiresManagedBenefitDetails(int indexBenefit) {
 		return (CoreFunctions.getItemsFromListByIndex(driver, _textAddedBenefitNameList, indexBenefit, true)
-				.equals(languageTrainingBenefitData.benefitDetails.benefitDisplayName))
+				.equals(languageTrainingBenefitData.flexBenefitDetails.benefitDisplayName))
 				&& (CoreFunctions.getItemsFromListByIndex(driver, _allowanceAmountList, indexBenefit, true)
-						.equals(languageTrainingBenefitData.benefitDetails.allowanceAmountMessage))
+						.equals(languageTrainingBenefitData.flexBenefitDetails.allowanceAmountMessage))
 				&& (CoreFunctions.getItemsFromListByIndex(driver, _benefitQuantityList, indexBenefit, true)
-						.equals(String.valueOf(languageTrainingBenefitData.benefitDetails.numberOfBenefitSelected)))
+						.equals(String.valueOf(languageTrainingBenefitData.flexBenefitDetails.numberOfBenefitSelected)))
 				&& ((Double.parseDouble((CoreFunctions
 						.getItemsFromListByIndex(driver, _benefitsPointsList, indexBenefit, true).replace("pts", "")
-						.trim()))) == ((Double.parseDouble(languageTrainingBenefitData.benefitDetails.flexPoints))
+						.trim()))) == ((Double.parseDouble(languageTrainingBenefitData.flexBenefitDetails.flexPoints))
 								* (Integer.parseInt(CoreFunctions.getItemsFromListByIndex(driver, _benefitQuantityList,
 										indexBenefit, true)))));
 	}
@@ -1312,7 +1312,7 @@ public class MX_Transferee_MyBenefitsBundlePage extends Base {
 		boolean isFlexAiresManagedBenefitDetailsOnFTPVerified = false;
 		try {
 			int indexBenefit = BusinessFunctions.returnindexItemFromListUsingText(driver, _textAddedBenefitNameList,
-					languageTrainingBenefitData.benefitDetails.benefitDisplayName);
+					languageTrainingBenefitData.flexBenefitDetails.benefitDisplayName);
 			isFlexAiresManagedBenefitDetailsOnFTPVerified = verifySelectedAiresManagedBenefitDetailsOnConfirmationDialog(
 					indexBenefit);
 
@@ -1331,14 +1331,14 @@ public class MX_Transferee_MyBenefitsBundlePage extends Base {
 	
 	private boolean verifySelectedAiresManagedBenefitDetailsOnConfirmationDialog(int indexBenefit) {
 		return (CoreFunctions.getItemsFromListByIndex(driver, _confirmationDialogBenefitName, indexBenefit, false)
-				.equals(languageTrainingBenefitData.benefitDetails.benefitDisplayName))
+				.equals(languageTrainingBenefitData.flexBenefitDetails.benefitDisplayName))
 				&& (CoreFunctions
 						.getItemsFromListByIndex(driver, _confirmationDialogAmountAllowanceMessage, indexBenefit, false)
-						.equals(languageTrainingBenefitData.benefitDetails.allowanceAmountMessage))
+						.equals(languageTrainingBenefitData.flexBenefitDetails.allowanceAmountMessage))
 				&& (CoreFunctions.getItemsFromListByIndex(driver, _confirmationDialogBenefitSelectionQuantity,
-						indexBenefit, false).equals(String.valueOf(languageTrainingBenefitData.benefitDetails.numberOfBenefitSelected)))
+						indexBenefit, false).equals(String.valueOf(languageTrainingBenefitData.flexBenefitDetails.numberOfBenefitSelected)))
 				&& ((Double.parseDouble((CoreFunctions.getItemsFromListByIndex(driver, _confirmationDialogBenefitPoint,
-						indexBenefit, false)))) == ((Double.parseDouble(languageTrainingBenefitData.benefitDetails.flexPoints))
+						indexBenefit, false)))) == ((Double.parseDouble(languageTrainingBenefitData.flexBenefitDetails.flexPoints))
 								* (Integer.parseInt(CoreFunctions.getItemsFromListByIndex(driver,
 										_confirmationDialogBenefitSelectionQuantity, indexBenefit, false)))));
 	}

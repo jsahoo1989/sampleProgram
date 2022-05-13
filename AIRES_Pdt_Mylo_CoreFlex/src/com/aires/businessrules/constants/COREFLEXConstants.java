@@ -408,6 +408,11 @@ public class COREFLEXConstants {
 	public static final String EXPECTED_POINT_BALANCE_TOOLTIP_TEXT = "Transferee's current point balance is remaining_points.";
 	public static final String FAILED_TO_VERIFY_POINTS_DETAILS_POST_DENIED_DELETE_REQUEST_ON_TRANSFEREE_SUBMISSIONS_DETAILS_PAGE = "{0}Failed to verify Points Details post denied delete request on Transferee Submissions Details Page.";
 	public static final String EXCEPTION_OCCURED_WHILE_VERIFYING_FLEX_BENEFIT_CARD_DETAILS = "{0}Exception occured while verifying Flex Benefit card Details on Mobility Journey Home Page. Exception : ''{1}''.";
+	public static final String EXCEPTION_OCCURED_WHILE_VERIFYING_CORE_BENEFIT_CARD_DETAILS = "{0}Exception occured while verifying Core Benefit card Details on Mobility Journey Home Page. Exception : ''{1}''.";
 	public static final String EXCEPTION_OCCURED_WHILE_VERIFYING_FLEX_BENEFIT_CARD_STATUS = "{0}Exception occured while verifying Flex Benefit card Status on Mobility Journey Home Page. Exception : ''{1}''.";
+	public static final String EXCEPTION_OCCURED_WHILE_VERIFYING_CORE_BENEFIT_CARD_STATUS = "{0}Exception occured while verifying Core Benefit card Status on Mobility Journey Home Page. Exception : ''{1}''.";
 	public static final String SUCCESSFULLY_VERIFIED_FLEX_BENEFIT_CARD_STATUS = "{0}Successfully verified Flex benefit Card Status - ''{1}''.";
+	public static final String SUCCESSFULLY_VERIFIED_CORE_BENEFIT_CARD_STATUS = "{0}Successfully verified Core benefit Card Status - ''{1}''.";
+	public static final String SUCCESSFULLY_VERIFIED_CORE_BENEFIT_CARD_DETAILS = "{0}Successfully verified Core benefit Card Details.";
+	public static final String SUCCESSFULLY_VERIFIED_FLEX_BENEFIT_CARD_DETAILS = "{0}Successfully verified Flex benefit Card Details.";
 }

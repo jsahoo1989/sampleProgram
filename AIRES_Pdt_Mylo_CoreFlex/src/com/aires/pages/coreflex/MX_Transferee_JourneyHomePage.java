@@ -150,29 +150,50 @@ public class MX_Transferee_JourneyHomePage extends Base {
 	@FindBy(how = How.XPATH, using = "//div[contains(@id,'cfcardstatus')]//span[contains(text(),'There are no services set up yet.')]")
 	private WebElement _serviceNotSetupCFCard;
 
-	@FindBy(how = How.XPATH, using = "//div[contains(@id,'cfcardstatus')]//span[contains(@class,'RCFXMJHeadingText')]")
+	@FindBy(how = How.XPATH, using = "//span[contains(text(),'Flex Benefits')]/ancestor::div[contains(@id,'secondItemDiv')]//span[contains(@class,'RCFXMJHeadingText')]")
 	private WebElement flexCardBenefitDisplayName;
 
-	@FindBy(how = How.XPATH, using = "//div[contains(@id,'cfcardstatus')]//span[contains(@class,'RCFXMJSubHeadingText')]")
+	@FindBy(how = How.XPATH, using = "//span[contains(text(),'Flex Benefits')]/ancestor::div[contains(@id,'secondItemDiv')]//span[contains(@class,'RCFXMJSubHeadingText')]")
 	private WebElement flexCardAmountAllowanceText;
 
-	@FindBy(how = How.XPATH, using = "//div[contains(@id,'cfcardstatus')]//div[contains(@class,'RXCFCircle')]//span")
+	@FindBy(how = How.XPATH, using = "//span[contains(text(),'Flex Benefits')]/ancestor::div[contains(@id,'secondItemDiv')]//div[contains(@class,'RXCFCircle')]//span")
 	private WebElement flexCardNumberOfBenefitSelected;
 
-	@FindBy(how = How.XPATH, using = "//div[contains(@id,'cfcardstatus')]//table[contains(@class,'RXRightIconPanel')]//span[contains(text(),'Starting Soon')]")
+	@FindBy(how = How.XPATH, using = "//span[contains(text(),'Flex Benefits')]/ancestor::div[contains(@id,'secondItemDiv')]//table[contains(@class,'RXRightIconPanel')]//span[contains(text(),'Starting Soon')]")
 	private WebElement flexCardStartingSoonStatus;
 
-	@FindBy(how = How.XPATH, using = "//div[contains(@id,'cfcardstatus')]//span[contains(@class,'icon-help')]")
+	@FindBy(how = How.XPATH, using = "//span[contains(text(),'Flex Benefits')]/ancestor::div[contains(@id,'secondItemDiv')]//span[contains(@class,'icon-help')]")
 	private WebElement flexCardLongDescIcon;
 
-	@FindBy(how = How.XPATH, using = "//div[contains(@id,'cfcardstatus')]//div[contains(@class,'RXFlexBeneftsMjTooltiptext')]//span[contains(@class,'RXWrappedText')]")
+	@FindBy(how = How.XPATH, using = "//span[contains(text(),'Flex Benefits')]/ancestor::div[contains(@id,'secondItemDiv')]//div[contains(@class,'RXFlexBeneftsMjTooltiptext')]//span[contains(@class,'RXWrappedText')]")
 	private WebElement flexCardLongDesc;
 
-	@FindBy(how = How.XPATH, using = "//div[contains(@id,'cfcardstatus')]//a[contains(@class,'RXCFGreenCardSmallRoundedButton ')]//span[@class='RXWhite']")
+	@FindBy(how = How.XPATH, using = "//span[contains(text(),'Flex Benefits')]/ancestor::div[contains(@id,'secondItemDiv')]//a[contains(@class,'RXCFGreenCardSmallRoundedButton ')]//span[@class='RXWhite']")
 	private WebElement flexCardManageBenefitButton;
 
-	@FindBy(how = How.XPATH, using = "//div[contains(@id,'cfcardstatus')]//span[contains(@class,'RXSmallerLink RXBold')][contains(text(),'Begin training')]")
+	@FindBy(how = How.XPATH, using = "//span[contains(text(),'Flex Benefits')]/ancestor::div[contains(@id,'secondItemDiv')]//span[contains(@class,'RXSmallerLink RXBold')][contains(text(),'Begin training')]")
 	private WebElement flexCardBeginProgressStatus;
+	
+	@FindBy(how = How.XPATH, using = "//span[contains(text(),'Core Benefits')]/ancestor::div[contains(@id,'firstItemDiv')]//span[contains(@class,'RCFXMJHeadingText')]")
+	private WebElement coreCardBenefitDisplayName;
+
+	@FindBy(how = How.XPATH, using = "//span[contains(text(),'Core Benefits')]/ancestor::div[contains(@id,'firstItemDiv')]//span[contains(@class,'RCFXMJSubHeadingText')]")
+	private WebElement coreCardAmountAllowanceText;
+
+	@FindBy(how = How.XPATH, using = "//span[contains(text(),'Core Benefits')]/ancestor::div[contains(@id,'firstItemDiv')]//table[contains(@class,'RXRightIconPanel')]//span[contains(text(),'Starting Soon')]")
+	private WebElement coreCardStartingSoonStatus;
+
+	@FindBy(how = How.XPATH, using = "//span[contains(text(),'Core Benefits')]/ancestor::div[contains(@id,'firstItemDiv')]//span[contains(@class,'icon-help')]")
+	private WebElement coreCardLongDescIcon;
+
+	@FindBy(how = How.XPATH, using = "//span[contains(text(),'Core Benefits')]/ancestor::div[contains(@id,'firstItemDiv')]//div[contains(@class,'RXFlexBeneftsMjTooltiptext')]//span[contains(@class,'RXWrappedText')]")
+	private WebElement coreCardLongDesc;
+
+	@FindBy(how = How.XPATH, using = "//span[contains(text(),'Core Benefits')]/ancestor::div[contains(@id,'firstItemDiv')]//a[contains(@class,'RXCFGreenCardSmallRoundedButton ')]//span[@class='RXWhite']")
+	private WebElement coreCardManageBenefitButton;
+
+	@FindBy(how = How.XPATH, using = "//span[contains(text(),'Core Benefits')]/ancestor::div[contains(@id,'firstItemDiv')]//span[contains(@class,'RXSmallerLink RXBold')][contains(text(),'Begin training')]")
+	private WebElement coreCardBeginProgressStatus;
 
 	/*********************************************************************/
 
@@ -582,20 +603,23 @@ public class MX_Transferee_JourneyHomePage extends Base {
 	private boolean verifyFlexBenefitCardDetails() {
 		try {
 			CoreFunctions.verifyText(driver, flexCardBenefitDisplayName,
-					languageTrainingBenefitData.benefitDetails.benefitDisplayName,
+					languageTrainingBenefitData.flexBenefitDetails.benefitDisplayName,
 					MobilityXConstants.FLEX_CARD_BENEFIT_DISPLAY_NAME);
 			CoreFunctions.verifyText(driver, flexCardAmountAllowanceText,
-					languageTrainingBenefitData.benefitDetails.allowanceAmountMessage,
+					languageTrainingBenefitData.flexBenefitDetails.allowanceAmountMessage,
 					MobilityXConstants.FLEX_CARD_BENEFIT_ALLOWANCE_AMOUNT);
 			CoreFunctions.verifyText(driver, flexCardNumberOfBenefitSelected,
-					String.valueOf(languageTrainingBenefitData.benefitDetails.numberOfBenefitSelected),
+					String.valueOf(languageTrainingBenefitData.flexBenefitDetails.numberOfBenefitSelected),
 					MobilityXConstants.FLEX_CARD_NUMBER_OF_BENEFIT_SELECTED);
 			CoreFunctions.moveToElement(driver, flexCardLongDescIcon);
 			CoreFunctions.verifyText(driver, flexCardLongDesc,
-					languageTrainingBenefitData.benefitDetails.benefitLongDescription,
+					languageTrainingBenefitData.flexBenefitDetails.benefitLongDescription,
 					MobilityXConstants.FLEX_CARD_BENEFIT_LONG_DESCRIPTION);
 			CoreFunctions.verifyText(driver, flexCardManageBenefitButton, MobilityXConstants.MANAGE_THIS_BENEFIT,
 					MobilityXConstants.FLEX_CARD_MANAGE_THIS_BENEFIT_BUTTON);
+			Reporter.addStepLog(
+					MessageFormat.format(COREFLEXConstants.SUCCESSFULLY_VERIFIED_FLEX_BENEFIT_CARD_DETAILS,
+							CoreConstants.PASS));
 			return true;
 		} catch (Exception e) {
 			Reporter.addStepLog(
@@ -603,5 +627,89 @@ public class MX_Transferee_JourneyHomePage extends Base {
 							CoreConstants.FAIL, e.getMessage()));
 			return false;
 		}
+	}
+
+	public boolean isCoreBenefitCardVerified(String cardBenefitName, String expectedStatus) {
+		boolean isCoreBenefitCardVerified = false;
+		try {
+			switch (expectedStatus) {
+			case MobilityXConstants.STARTING_SOON:
+				isCoreBenefitCardVerified = verifyCoreBenefitCardDetails()
+						&& verifyCoreBenefitCardStatusBeforeActualization(expectedStatus);
+				break;
+			case MobilityXConstants.BEGIN_TRAINING:
+				isCoreBenefitCardVerified = verifyCoreBenefitCardDetails()
+						&& verifyCoreBenefitCardStatusAfterActualization(expectedStatus);
+				break;
+			case MobilityXConstants.TRAINING_COMPLETE:
+				isCoreBenefitCardVerified = verifyCoreBenefitCardDetails()
+						&& verifyCoreBenefitCardStatusAfterActualization(expectedStatus);
+				break;
+			default:
+				Assert.fail(COREFLEXConstants.INVALID_OPTION);
+			}
+		} catch (Exception e) {
+			Reporter.addStepLog(
+					MessageFormat.format(COREFLEXConstants.EXCEPTION_OCCURED_WHILE_VERIFYING_FLEX_BENEFIT_CARD_DETAILS,
+							CoreConstants.FAIL, e.getMessage()));
+		}
+		return isCoreBenefitCardVerified;
+	}
+	
+	private boolean verifyCoreBenefitCardDetails() {
+		try {
+			CoreFunctions.verifyText(driver, coreCardBenefitDisplayName,
+					languageTrainingBenefitData.coreBenefitDetails.benefitDisplayName,
+					MobilityXConstants.CORE_CARD_BENEFIT_DISPLAY_NAME);
+			CoreFunctions.verifyText(driver, coreCardAmountAllowanceText,
+					languageTrainingBenefitData.coreBenefitDetails.allowanceAmountMessage,
+					MobilityXConstants.CORE_CARD_BENEFIT_ALLOWANCE_AMOUNT);
+			CoreFunctions.moveToElement(driver, coreCardLongDescIcon);
+			CoreFunctions.verifyText(driver, coreCardLongDesc,
+					languageTrainingBenefitData.coreBenefitDetails.benefitLongDescription,
+					MobilityXConstants.CORE_CARD_BENEFIT_LONG_DESCRIPTION);
+			Reporter.addStepLog(
+					MessageFormat.format(COREFLEXConstants.SUCCESSFULLY_VERIFIED_CORE_BENEFIT_CARD_DETAILS,
+							CoreConstants.PASS));
+			return true;
+		} catch (Exception e) {
+			Reporter.addStepLog(
+					MessageFormat.format(COREFLEXConstants.EXCEPTION_OCCURED_WHILE_VERIFYING_CORE_BENEFIT_CARD_DETAILS,
+							CoreConstants.FAIL, e.getMessage()));
+			return false;
+		}
+	}
+	
+	private boolean verifyCoreBenefitCardStatusAfterActualization(String expectedStatus) {
+		try {
+			if( CoreFunctions.isElementExist(driver, coreCardBeginProgressStatus, 3)
+					&& (!CoreFunctions.isElementExist(driver, coreCardStartingSoonStatus, 3))) {
+				Reporter.addStepLog(
+						MessageFormat.format(COREFLEXConstants.SUCCESSFULLY_VERIFIED_CORE_BENEFIT_CARD_STATUS,
+								CoreConstants.PASS,expectedStatus));
+				return true;
+			}
+		} catch (Exception e) {
+			Reporter.addStepLog(
+					MessageFormat.format(COREFLEXConstants.EXCEPTION_OCCURED_WHILE_VERIFYING_CORE_BENEFIT_CARD_STATUS,
+							CoreConstants.FAIL, e.getMessage()));			
+		}
+		return false;
+	}
+
+	private boolean verifyCoreBenefitCardStatusBeforeActualization(String expectedStatus) {
+		try {
+			if(CoreFunctions.isElementExist(driver, coreCardStartingSoonStatus, 3)){
+				Reporter.addStepLog(
+						MessageFormat.format(COREFLEXConstants.SUCCESSFULLY_VERIFIED_CORE_BENEFIT_CARD_STATUS,
+								CoreConstants.PASS,expectedStatus));
+				return true;
+			}
+		} catch (Exception e) {
+			Reporter.addStepLog(
+					MessageFormat.format(COREFLEXConstants.EXCEPTION_OCCURED_WHILE_VERIFYING_CORE_BENEFIT_CARD_STATUS,
+							CoreConstants.FAIL, e.getMessage()));
+		}
+		return false;
 	}
 }

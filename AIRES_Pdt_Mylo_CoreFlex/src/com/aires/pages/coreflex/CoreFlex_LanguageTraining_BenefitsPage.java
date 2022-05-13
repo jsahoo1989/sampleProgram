@@ -413,23 +413,23 @@ public class CoreFlex_LanguageTraining_BenefitsPage extends Base {
 		switch (benefitType) {
 		case COREFLEXConstants.CORE:
 			CoreFunctions.clickElement(driver, _textCore);
-			fillManadatoryDetails(benefitType);
+			fillCoreManadatoryDetails(benefitType);
 			break;
 		case COREFLEXConstants.FLEX:
 			CoreFunctions.clickElement(driver, _textFlex);
 			CoreFunctions.clearAndSetTextUsingKeys(driver, _inputFlexPoints,
-					languageTrainingBenefitData.benefitDetails.flexPoints, COREFLEXConstants.FLEX_POINTS_VALUE);
-			fillManadatoryDetails(benefitType);
+					languageTrainingBenefitData.flexBenefitDetails.flexPoints, COREFLEXConstants.FLEX_POINTS_VALUE);
+			fillFlexManadatoryDetails(benefitType);
 			break;
 		case COREFLEXConstants.CORE_BENEFITS:
 			CoreFunctions.clickElement(driver, _textCoreBenefits);
-			fillManadatoryDetails(benefitType);
+			fillCoreManadatoryDetails(benefitType);
 			break;
 		case COREFLEXConstants.FLEX_BENEFITS:
 			CoreFunctions.clickElement(driver, _textFlexBenefits);
 			CoreFunctions.clearAndSetTextUsingKeys(driver, _inputFlexPoints,
-					languageTrainingBenefitData.benefitDetails.flexPoints, COREFLEXConstants.FLEX_POINTS_VALUE);
-			fillManadatoryDetails(benefitType);
+					languageTrainingBenefitData.flexBenefitDetails.flexPoints, COREFLEXConstants.FLEX_POINTS_VALUE);
+			fillFlexManadatoryDetails(benefitType);
 			break;
 		case COREFLEXConstants.BOTH:
 			CoreFunctions.clickElement(driver, _textBoth);
@@ -439,23 +439,34 @@ public class CoreFlex_LanguageTraining_BenefitsPage extends Base {
 		}
 	}
 
-	/**
-	 * Method to fill Default Mandatory Fields of Benefit
-	 * @param benefitType 
-	 */
-	private void fillManadatoryDetails(String benefitType) {
+	private void fillCoreManadatoryDetails(String benefitType) {
 		CoreFunctions.clearAndSetTextUsingKeys(driver, _inputBenefitName,
-				languageTrainingBenefitData.benefitDetails.benefitDisplayName, COREFLEXConstants.BENEFIT_DISPLAY_NAME);
+				languageTrainingBenefitData.coreBenefitDetails.benefitDisplayName, COREFLEXConstants.BENEFIT_DISPLAY_NAME);
 		CoreFunctions.clearAndSetTextUsingKeys(driver, _textAreaAllowanceAmountMessage,
-				languageTrainingBenefitData.benefitDetails.allowanceAmountMessage,
+				languageTrainingBenefitData.coreBenefitDetails.allowanceAmountMessage,
 				COREFLEXConstants.ALLOWANCE_AMOUNT_MESSAGE);
 		CoreFunctions.clearAndSetTextUsingKeys(driver, _textAreaBenefitLongDescription,
-				languageTrainingBenefitData.benefitDetails.benefitLongDescription,
+				languageTrainingBenefitData.coreBenefitDetails.benefitLongDescription,
+				COREFLEXConstants.BENEFIT_LONG_DESCRIPTION);			
+	}
+
+	/**
+	 * Method to fill Default Mandatory Fields of Flex Benefit
+	 * @param benefitType 
+	 */
+	private void fillFlexManadatoryDetails(String benefitType) {
+		CoreFunctions.clearAndSetTextUsingKeys(driver, _inputBenefitName,
+				languageTrainingBenefitData.flexBenefitDetails.benefitDisplayName, COREFLEXConstants.BENEFIT_DISPLAY_NAME);
+		CoreFunctions.clearAndSetTextUsingKeys(driver, _textAreaAllowanceAmountMessage,
+				languageTrainingBenefitData.flexBenefitDetails.allowanceAmountMessage,
+				COREFLEXConstants.ALLOWANCE_AMOUNT_MESSAGE);
+		CoreFunctions.clearAndSetTextUsingKeys(driver, _textAreaBenefitLongDescription,
+				languageTrainingBenefitData.flexBenefitDetails.benefitLongDescription,
 				COREFLEXConstants.BENEFIT_LONG_DESCRIPTION);				
 		if (((benefitType.equals(COREFLEXConstants.FLEX_BENEFITS)) || (benefitType.equals(COREFLEXConstants.FLEX)))
-				& (languageTrainingBenefitData.benefitDetails.multipleBenefitSelection.equals(COREFLEXConstants.YES))) {
+				& (languageTrainingBenefitData.flexBenefitDetails.multipleBenefitSelection.equals(COREFLEXConstants.YES))) {
 			CoreFunctions.selectItemInListByText(driver, _radioAiresManagedService,
-					languageTrainingBenefitData.benefitDetails.airesManagedService, true,
+					languageTrainingBenefitData.flexBenefitDetails.airesManagedService, true,
 					COREFLEXConstants.AIRES_MANAGED_SERVICE);
 			CoreFunctions.clickElement(driver, _inputMultiAddBenefit);
 		}

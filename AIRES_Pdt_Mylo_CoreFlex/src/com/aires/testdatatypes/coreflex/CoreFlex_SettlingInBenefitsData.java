@@ -5,7 +5,8 @@ public class CoreFlex_SettlingInBenefitsData {
 	public String benefitName;
 	public LanguageTrainingEmployee languageTrainingEmployee;
 	public LanguageTrainingFamily languageTrainingFamily;
-	public BenefitDetails benefitDetails;
+	public FlexBenefitDetails flexBenefitDetails;
+	public CoreBenefitDetails coreBenefitDetails;
 	
 	public class LanguageTrainingEmployee{
 		public String maxNumberOfHours;
@@ -27,7 +28,7 @@ public class CoreFlex_SettlingInBenefitsData {
 		public String comment;
 	}
 	
-	public class BenefitDetails{
+	public class FlexBenefitDetails{
 		public String benefitDisplayName;
 		public String allowanceAmountMessage;
 		public String benefitLongDescription;
@@ -36,5 +37,12 @@ public class CoreFlex_SettlingInBenefitsData {
 		public String benefitCategory;
 		public String multipleBenefitSelection;
 		public int numberOfBenefitSelected;
+	}
+	
+	public class CoreBenefitDetails{
+		public String benefitDisplayName;
+		public String allowanceAmountMessage;
+		public String benefitLongDescription;
+		public String benefitCategory;
 	}
 }

@@ -1342,17 +1342,17 @@ public class MX_Transferee_FlexPlanningTool_Page extends Base {
 		boolean isAiresManagedFlexBenefitDetailsOnFTPVerified = false;
 		try {
 			int indexBenefit = BusinessFunctions.returnindexItemFromListUsingText(driver, _textAddedBenefitNameList,
-					languageTrainingBenefitData.benefitDetails.benefitDisplayName);
+					languageTrainingBenefitData.flexBenefitDetails.benefitDisplayName);
 			int indexCategory = BusinessFunctions.returnindexItemFromListUsingText(driver, _textAddedBenefitGroupList,
-					languageTrainingBenefitData.benefitDetails.benefitCategory, true);
+					languageTrainingBenefitData.flexBenefitDetails.benefitCategory, true);
 			isAiresManagedFlexBenefitDetailsOnFTPVerified = (CoreFunctions
 					.getItemsFromListByIndex(driver, _textAddedBenefitGroupList, indexCategory, true)
-					.equals(languageTrainingBenefitData.benefitDetails.benefitCategory))
+					.equals(languageTrainingBenefitData.flexBenefitDetails.benefitCategory))
 					&& verifyFlexPlanningToolAiresManagedBenefitDetails(indexBenefit,
-							languageTrainingBenefitData.benefitDetails.benefitDisplayName,
-							languageTrainingBenefitData.benefitDetails.allowanceAmountMessage,
-							languageTrainingBenefitData.benefitDetails.benefitLongDescription,
-							languageTrainingBenefitData.benefitDetails.flexPoints);
+							languageTrainingBenefitData.flexBenefitDetails.benefitDisplayName,
+							languageTrainingBenefitData.flexBenefitDetails.allowanceAmountMessage,
+							languageTrainingBenefitData.flexBenefitDetails.benefitLongDescription,
+							languageTrainingBenefitData.flexBenefitDetails.flexPoints);
 
 		} catch (Exception e) {
 			Reporter.addStepLog(MessageFormat.format(
@@ -1371,16 +1371,16 @@ public class MX_Transferee_FlexPlanningTool_Page extends Base {
 		boolean isBenefitSelected = false;
 		try {
 			int indexBenefit = BusinessFunctions.returnindexItemFromListUsingText(driver, _textAddedBenefitNameList,
-					languageTrainingBenefitData.benefitDetails.benefitDisplayName);
+					languageTrainingBenefitData.flexBenefitDetails.benefitDisplayName);
 			CoreFunctions.scrollToElementUsingJS(driver, flexHomePageTitle, MobilityXConstants.FLEX_PLANNING_TOOL);
-			double points = Double.parseDouble(languageTrainingBenefitData.benefitDetails.flexPoints);
-			if ((languageTrainingBenefitData.benefitDetails.multipleBenefitSelection).equals("Yes")) {
+			double points = Double.parseDouble(languageTrainingBenefitData.flexBenefitDetails.flexPoints);
+			if ((languageTrainingBenefitData.flexBenefitDetails.multipleBenefitSelection).equals("Yes")) {
 				CoreFunctions.explicitWaitTillElementBecomesClickable(driver, _buttonSelectThisBenefit,
 						MobilityXConstants.SELECT_THIS);
 				BusinessFunctions.selectValueFromListUsingIndex(driver, _buttonSelectThis, indexBenefit);
 				totalSelectedPoints += points;
 				isBenefitSelected = true;
-				for (int j = 1; j < languageTrainingBenefitData.benefitDetails.numberOfBenefitSelected; j++) {
+				for (int j = 1; j < languageTrainingBenefitData.flexBenefitDetails.numberOfBenefitSelected; j++) {
 					BusinessFunctions.selectValueFromListUsingIndex(driver, _buttonPlusBenefit, indexBenefit);
 					totalSelectedPoints += points;
 					isBenefitSelected = true;

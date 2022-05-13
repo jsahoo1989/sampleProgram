@@ -1,4 +1,4 @@
-Feature: Validate the CoreFlex Policy Flow for Both_Transferee_StaticFixedPoints_PortionCashout selections
+Feature: Validate the CoreFlex End-To-End Business Test Flow(BluePrint, MXTransferee,Transferee Submissions) for Both_Transferee_StaticFixedPoints_PortionCashout_Delete_ApproveAll selection
 
 @End-To_End_CoreFlex @End-To_End_Both-PortionCashout_ApproveAllRequest
 Scenario: CoreFlex - Setting up a New CoreFlex policy in 'Policy Digitization Tool' application

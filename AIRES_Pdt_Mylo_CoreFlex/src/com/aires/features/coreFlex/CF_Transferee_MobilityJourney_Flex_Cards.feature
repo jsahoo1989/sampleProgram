@@ -1,7 +1,7 @@
-Feature: Validate the Mobility Journey Cards Functionality of Flex Benefit Type
+Feature: Validate the Mobility Journey Cards Functionality of Flex Aires Managed Benefit
 
   @End-To_End_CoreFlex @Flex-Cards_PF @End-to-End_Flex_Cards
-  Scenario: CoreFlex - Setting up a New CoreFlex policy in 'Policy Digitization Tool' application
+  Scenario: CoreFlex - Setting up a New CoreFlex policy in 'Policy Digitization Tool' application with Flex type 'Aires Managed' benefit
     Given he has setup a new "Flex" Type Policy with following selection in 'Policy Digitization Tool (PDT)' application
       | Person Responsible For Benefit Selection | Flex Setup Type | Cashout Availability   |
       | Transferee                               | Static/Fixed    | Cashout Not Authorized |

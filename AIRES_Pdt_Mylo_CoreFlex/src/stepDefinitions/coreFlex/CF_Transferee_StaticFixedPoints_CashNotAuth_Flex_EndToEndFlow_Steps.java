@@ -7,15 +7,14 @@ import java.util.Map;
 
 import org.testng.Assert;
 
+import com.aires.businessrules.CoreFunctions;
 import com.aires.businessrules.constants.COREFLEXConstants;
 import com.aires.businessrules.constants.CoreConstants;
 import com.aires.businessrules.constants.MobilityXConstants;
 import com.aires.cucumber.TestContext;
-import com.aires.managers.PageObjectManager_CoreFlex;
 import com.aires.pages.coreflex.MX_Transferee_FlexPlanningTool_Page;
 import com.aires.pages.coreflex.MX_Transferee_JourneyHomePage;
 import com.aires.pages.coreflex.MX_Transferee_MyBenefitsBundlePage;
-import com.aires.pages.coreflex.TransfereeSubmissions_DashboardHomePage;
 import com.aires.pages.coreflex.TransfereeSubmissions_DetailsPage;
 import com.vimalselvam.cucumber.listener.Reporter;
 
@@ -26,10 +25,7 @@ import cucumber.api.java.en.When;
 public class CF_Transferee_StaticFixedPoints_CashNotAuth_Flex_EndToEndFlow_Steps {
 
 	private TestContext testContext;
-	private PageObjectManager_CoreFlex _pageObjectManagerCoreFlex;
-	private TransfereeSubmissions_DashboardHomePage transfereeSubmissionsDashboardHomePage;
 	private TransfereeSubmissions_DetailsPage transfereeSubmissionsDetailsPage;
-
 	private MX_Transferee_JourneyHomePage mxTransfereeJourneyHomePage;
 	private MX_Transferee_FlexPlanningTool_Page mxTransfereeFlexPlanningToolPage;
 	private MX_Transferee_MyBenefitsBundlePage mxTransfereeMyBenefitsBundlePage;
@@ -43,8 +39,6 @@ public class CF_Transferee_StaticFixedPoints_CashNotAuth_Flex_EndToEndFlow_Steps
 				.getMXTransfereeFlexPlanningToolPage();
 		mxTransfereeMyBenefitsBundlePage = testContext.getCoreFlexPageObjectManager()
 				.getMXTransfereeMyBenefitsBundlePage();
-		transfereeSubmissionsDashboardHomePage = testContext.getCoreFlexPageObjectManager()
-				.getTransfereeSubmissionsDashboardHomePage();
 		transfereeSubmissionsDetailsPage = testContext.getCoreFlexPageObjectManager()
 				.getTransfereeSubmissionsDetailsPage();
 	}
@@ -59,7 +53,8 @@ public class CF_Transferee_StaticFixedPoints_CashNotAuth_Flex_EndToEndFlow_Steps
 				MessageFormat.format(MobilityXConstants.FAILED_TO_DISPLAY_MY_BENEFIT_BUNDLE_PAGE, CoreConstants.FAIL));
 		CoreConstants.TIME_AFTER_ACTION = new Date().getTime();
 		Reporter.addStepLog("<b>Total time taken to navigate to <i>My Benefits Bundle</i> page is :"
-				+ (CoreConstants.TIME_AFTER_ACTION - CoreConstants.TIME_BEFORE_ACTION) / 1000 + " Seconds </b>");
+				+ CoreFunctions.calculatePageLoadTime(CoreConstants.TIME_BEFORE_ACTION, CoreConstants.TIME_AFTER_ACTION)
+				+ " Seconds </b>");
 	}	
 
 	@Then("^he should be navigated to \"([^\"]*)\" page having list of submitted benefits details$")
@@ -70,7 +65,8 @@ public class CF_Transferee_StaticFixedPoints_CashNotAuth_Flex_EndToEndFlow_Steps
 						CoreConstants.FAIL, pageName));
 		CoreConstants.TIME_AFTER_ACTION = new Date().getTime();
 		Reporter.addStepLog("<b>Total time taken to navigate to <i>Transferee Submissions Detail</i> page is :"
-				+ (CoreConstants.TIME_AFTER_ACTION - CoreConstants.TIME_BEFORE_ACTION) / 1000 + " Seconds </b>");
+				+ CoreFunctions.calculatePageLoadTime(CoreConstants.TIME_BEFORE_ACTION, CoreConstants.TIME_AFTER_ACTION)
+				+ " Seconds </b>");
 		Assert.assertTrue(transfereeSubmissionsDetailsPage.verifyTransfereeAndPointsDetails(), MessageFormat.format(
 				COREFLEXConstants.FAILED_TO_VERIFY_TRANSFEREE_AND_POINTS_DETAILS_ON_TRANSFEREE_SUBMISSIONS_DETAILS_PAGE,
 				CoreConstants.FAIL));

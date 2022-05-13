@@ -1,4 +1,4 @@
-Feature: Validate the CoreFlex End-To-End Business Test Flow(Policy Setup, MXTransferee, MSPEC) for Both_Transferee_StaticFixedPoints_CashoutNotAuthorized_Delete_Undo selection
+Feature: Validate the CoreFlex End-To-End Business Test Flow(BluePrint, MXTransferee,Transferee Submissions) for Both_Transferee_StaticFixedPoints_CashoutNotAuthorized_Delete_Undo selection
 
 @End-To_End_CoreFlex @Both-CashNotAuth_UndoRequest_PF @End-To-End-Flow_Both-CashNotAuth_UndoRequest
   Scenario: CoreFlex - Setting up a New CoreFlex policy in 'Policy Digitization Tool' application
@@ -10,7 +10,7 @@ Feature: Validate the CoreFlex End-To-End Business Test Flow(Policy Setup, MXTra
 	And Policy Status should be displayed as "Submitted" on "View/Edit Policy Forms" page
 		
 @End-To_End_CoreFlex @Both-CashNotAuth_UndoRequest_MX @End-To-End-Flow_Both-CashNotAuth_UndoRequest
-Scenario: MXTransferee - Selecting & Submitting benefits available in configured policy and Tracking Available_Used Benefits Points
+Scenario: MXTransferee - Selecting & Submitting benefits available in configured policy, Undo the Delete Request and Tracking Available_Used Benefits Points
     Given he has logged into 'MobilityX' application after creating a new 'Transferee' through IRIS application for policy setup in 'Policy Digitization Tool'
     And he has validated 'Assignment-Policy' details after selecting below option displayed on 'Welcome' dialog
       | WelcomeDialogSelection               |
@@ -30,7 +30,7 @@ Scenario: MXTransferee - Selecting & Submitting benefits available in configured
     And 'Status' of the deleted benefit should be displayed as "Delete Request Pending" under 'Submitted Benefits' section of 'My Benefit Bundle' page
 
 @End-To_End_CoreFlex @Both-CashNotAuth_UndoRequest_MX @End-To-End-Flow_Both-CashNotAuth_UndoRequest
-Scenario: TransfereeSubmissions - Verifying_Approving_Denying submissions made by Transferee for the Client(s) assigned to PPC User 
+Scenario: TransfereeSubmissions - Verifying Undo Delete request submissions made by Transferee for the Client(s) assigned to PPC User 
 	Given he has logged into 'Transferee Submissions' application as a "MSPEC/PPC" user 
 	And he has navigated to "Transferee Submissions Dashboard" page having record of Bundle submitted by the transferee  
 	And he has clicked on "Review" button for Bundle submitted by the transferee on "Transferee Submissions Dashboard" page	

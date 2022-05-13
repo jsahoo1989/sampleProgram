@@ -73,8 +73,9 @@ public class CF_Transferee_StaticFixedPoints_CashNotAuth_Both_EndToEndFlow_Steps
 		Assert.assertTrue(mxTransfereeMyBenefitsBundlePage.isDeleteBenefitPopupDisplayed(), MessageFormat
 				.format(MobilityXConstants.REMOVE_BENEFIT_SELECTION_POPUP_NOT_DISPLAYED, CoreConstants.FAIL));
 		CoreConstants.TIME_AFTER_ACTION = new Date().getTime();
-		Reporter.addStepLog("<b>Total time taken to navigateTo/display <i>Delete Benefit</i> dialog is :"
-				+ (CoreConstants.TIME_AFTER_ACTION - CoreConstants.TIME_BEFORE_ACTION) / 1000 + " Seconds </b>");
+		Reporter.addStepLog("<b>Total time taken to navigateTo/display <i>Delete Benefit</i> page is :"
+				+ CoreFunctions.calculatePageLoadTime(CoreConstants.TIME_BEFORE_ACTION, CoreConstants.TIME_AFTER_ACTION)
+				+ " Seconds </b>");
 		
 		Assert.assertTrue(mxTransfereeMyBenefitsBundlePage.verifyBenefitsDetailsOnRemoveBenefitDialog(),
 				MessageFormat.format(MobilityXConstants.POINTS_AND_BENEFIT_DETAILS_NOT_MATCHED_ON_SUBMIT_BUNDLE_POPUP,
@@ -111,9 +112,10 @@ public class CF_Transferee_StaticFixedPoints_CashNotAuth_Both_EndToEndFlow_Steps
 		Assert.assertTrue(transfereeSubmissionsDetailsPage.verifiyPageNavigation(pageName),
 				MessageFormat.format(COREFLEXConstants.FAILED_TO_NAVIGATE_TO_TRANSFEREE_SUBMISSIONS_DETAILS_PAGE,
 						CoreConstants.FAIL, pageName));
-		CoreConstants.TIME_AFTER_ACTION = new Date().getTime();
+		CoreConstants.TIME_AFTER_ACTION = new Date().getTime();		
 		Reporter.addStepLog("<b>Total time taken to navigate to <i>Transferee Submissions Detail</i> page is :"
-				+ (CoreConstants.TIME_AFTER_ACTION - CoreConstants.TIME_BEFORE_ACTION) / 1000 + " Seconds </b>");
+				+ CoreFunctions.calculatePageLoadTime(CoreConstants.TIME_BEFORE_ACTION, CoreConstants.TIME_AFTER_ACTION)
+				+ " Seconds </b>");
 		
 		Assert.assertTrue(transfereeSubmissionsDetailsPage.verifyTransfereeAndPointsDetails(), MessageFormat.format(
 				COREFLEXConstants.FAILED_TO_VERIFY_TRANSFEREE_AND_POINTS_DETAILS_ON_TRANSFEREE_SUBMISSIONS_DETAILS_PAGE,
@@ -137,9 +139,10 @@ public class CF_Transferee_StaticFixedPoints_CashNotAuth_Both_EndToEndFlow_Steps
 				MessageFormat.format(
 						COREFLEXConstants.FAILED_TO_VERIFY_REQUESTS_DIALOG_ON_TRANSFEREE_SUBMISSIONS_DETAILS_PAGE,
 						CoreConstants.FAIL));
-		CoreConstants.TIME_AFTER_ACTION = new Date().getTime();
+		CoreConstants.TIME_AFTER_ACTION = new Date().getTime();		
 		Reporter.addStepLog("<b>Total time taken to navigate to <i>Requests Dialog on Transferee Submission Details</i> page is :"
-				+ (CoreConstants.TIME_AFTER_ACTION - CoreConstants.TIME_BEFORE_ACTION) / 1000 + " Seconds </b>");
+				+ CoreFunctions.calculatePageLoadTime(CoreConstants.TIME_BEFORE_ACTION, CoreConstants.TIME_AFTER_ACTION)
+				+ " Seconds </b>");
 		
 		Assert.assertTrue(transfereeSubmissionsDetailsPage.verifyBenefitDetailsOnRequestsDialog(),
 				MessageFormat.format(

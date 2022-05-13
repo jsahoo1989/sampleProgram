@@ -1,4 +1,4 @@
-Feature: Validate the CoreFlex End-To-End Business Test Flow(Policy Setup, MXTransferee, MSPEC) for Flex_Transferee_StaticFixedPoints_CashoutNotAuthorized Policy selection
+Feature: Validate the CoreFlex End-To-End Business Test Flow(BluePrint, MXTransferee,Transferee Submissions) for Flex_Transferee_StaticFixedPoints_CashoutNotAuthorized Policy selection
 
 @End-To_End_CoreFlex @Flex-CashNotAuth_PF @End-to-End_Flex_CashNotAuth
 Scenario: CoreFlex - Setting up a New CoreFlex policy in 'Policy Digitization Tool' application 
@@ -27,7 +27,7 @@ Scenario: MXTransferee - Selecting & Submitting benefits available in configured
     And 'Mobility Flex Benefit(s) Submission' email should be generated for the submitted benefit bundle 
 	
 @End-To_End_CoreFlex @Flex-CashNotAuth_MX @End-to-End_Flex_CashNotAuth
-Scenario: TransfereeSubmissions - Verifying_Approving_Denying submissions made by Transferee for the Client(s) assigned to PPC User 
+Scenario: TransfereeSubmissions - Verifying submissions made by Transferee for the Client(s) assigned to PPC User 
 	Given he has logged into 'Transferee Submissions' application as a "MSPEC/PPC" user 
 	And he has navigated to "Transferee Submissions Dashboard" page having record of Bundle submitted by the transferee 
 	When he clicks on "Review" button for Bundle submitted by the transferee on "Transferee Submissions Dashboard" page 

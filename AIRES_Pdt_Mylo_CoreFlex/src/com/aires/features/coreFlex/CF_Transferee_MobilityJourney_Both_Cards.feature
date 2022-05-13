@@ -1,7 +1,7 @@
-Feature: Validate the Mobility Journey Cards Functionality of Both(Core+Flex) Benefit Type
+Feature: Validate the Mobility Journey Cards Functionality of Both(Core+Flex) Aires Managed Benefit
 
   @End-To_End_CoreFlex @Both-Cards_PF @End-to-End_Both_Cards
-  Scenario: CoreFlex - Setting up a New CoreFlex policy in 'Policy Digitization Tool' application
+  Scenario: CoreFlex - Setting up a New CoreFlex policy in 'Policy Digitization Tool' with Both type 'Aires Managed' benefit
     Given he has setup a new "Both" Type Policy with following selection in 'Policy Digitization Tool (PDT)' application
       | Person Responsible For Benefit Selection | Flex Setup Type | Cashout Availability   |
       | Transferee                               | Static/Fixed    | Cashout Not Authorized |
@@ -13,7 +13,7 @@ Feature: Validate the Mobility Journey Cards Functionality of Both(Core+Flex) Be
     And Policy Status should be displayed as "Submitted" on "View/Edit Policy Forms" page
 
   @End-To_End_CoreFlex @Both-Cards_MX @End-to-End_Both_Cards
-  Scenario: MXTransferee - Submitting a Aires Managed benefits available in configured policy and Verifying Mobility Journey Flex & Core Cards
+  Scenario: MXTransferee - Submitting a Aires Managed benefit available in configured policy and Verifying Mobility Journey Flex & Core Cards
     Given he has logged into 'MobilityX' application after creating a new 'Transferee' through IRIS application for policy setup in 'Policy Digitization Tool'
     And he has validated 'Assignment-Policy' details after selecting below option displayed on 'Welcome' dialog
       | WelcomeDialogSelection               |

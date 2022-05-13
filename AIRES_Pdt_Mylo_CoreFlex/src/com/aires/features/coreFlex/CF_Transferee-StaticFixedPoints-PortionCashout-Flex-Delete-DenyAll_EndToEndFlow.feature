@@ -1,4 +1,4 @@
-Feature: Validate the CoreFlex End-To-End Business Test Flow(Policy Setup, MXTransferee, MSPEC) for Flex_Transferee_StaticFixedPoints_PortionCashout_Delete_DenyAll selection
+Feature: Validate the CoreFlex End-To-End Business Test Flow(BluePrint, MXTransferee,Transferee Submissions) for Flex_Transferee_StaticFixedPoints_PortionCashout_Delete_DenyAll selection
 
 @End-To_End_CoreFlex @Flex-PortionCashout_DenyAllRequest_PF @Flex-PortionCashout_DenyAllRequest_End_To_End
   Scenario: CoreFlex - Setting up a New CoreFlex policy in 'Policy Digitization Tool' application
@@ -28,7 +28,7 @@ Scenario: MXTransferee - Submitting benefits & Portion Cashout available in conf
     Then 'Status' of the deleted benefit_cashout should be displayed as "Delete Request Pending" under 'Submitted Benefits' section of 'My Benefit Bundle' page
 
 @End-To_End_CoreFlex @Flex-PortionCashout_DenyAllRequest_MX @Flex-PortionCashout_DenyAllRequest_End_To_End
-Scenario: TransfereeSubmissions - Verifying ApproveAll Delete request functionality for submissions made by Transferee for the Client assigned to PPC User 
+Scenario: TransfereeSubmissions - Verifying DenyAll Delete request functionality for submissions made by Transferee for the Client assigned to PPC User 
 	Given he has logged into 'Transferee Submissions' application as a "MSPEC/PPC" user 
 	And he has navigated to "Transferee Submissions Dashboard" page having record of Bundle submitted by the transferee  
 	And he has clicked on "Review" button for Bundle submitted by the transferee on "Transferee Submissions Dashboard" page	

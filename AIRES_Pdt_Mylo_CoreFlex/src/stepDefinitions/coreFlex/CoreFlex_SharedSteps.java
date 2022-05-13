@@ -607,7 +607,6 @@ public class CoreFlex_SharedSteps {
 	@Given("^he has clicked on \"([^\"]*)\" button after entering Transferee name on \"([^\"]*)\" dialog$")
 	public void he_has_clicked_on_button_after_entering_Transferee_name_on_dialog(String buttonName,
 			String submissionDialog) throws Throwable {
-
 		Assert.assertTrue(mxTransfereeMyBenefitsBundlePage.isSubmitBundlePopupDisplayed(),
 				MessageFormat.format(MobilityXConstants.SUBMIT_BUNDLE_POPUP_NOT_DISPLAYED, CoreConstants.FAIL));
 		CoreConstants.TIME_AFTER_ACTION = new Date().getTime();

@@ -1,4 +1,4 @@
-Feature: Validate the CoreFlex End-To-End Business Test Flow(Policy Setup, MXTransferee, MSPEC) for Flex_Transferee_StaticFixedPoints_PortionCashout_Delete_ApproveAll selection
+Feature: Validate the CoreFlex End-To-End Business Test Flow(BluePrint, MXTransferee,Transferee Submissions) for Flex_Transferee_StaticFixedPoints_PortionCashout_Delete_ApproveAll selection
 
 @End-To_End_CoreFlex @Flex-PortionCashout_ApproveAllRequest_PF @End-To_End_Flex-PortionCashout_ApproveAllRequest
   Scenario: CoreFlex - Setting up a New CoreFlex policy in 'Policy Digitization Tool' application
@@ -10,7 +10,7 @@ Feature: Validate the CoreFlex End-To-End Business Test Flow(Policy Setup, MXTra
 	And Policy Status should be displayed as "Submitted" on "View/Edit Policy Forms" page
 		
 @End-To_End_CoreFlex @End-To_End_Flex-PortionCashout_ApproveAllRequest @Flex-PortionCashout_ApproveAllRequest_MX
-Scenario: MXTransferee - Submitting benefits & Portion Cashout available in configured policy and Tracking Available_Used Benefits Points
+Scenario: MXTransferee - Submitting Flex benefits & Portion Cashout available in configured policy and Tracking Available_Used Benefits Points
     Given he has logged into 'MobilityX' application after creating a new 'Transferee' through IRIS application for policy setup in 'Policy Digitization Tool'
     And he has validated 'Assignment-Policy' details after selecting below option displayed on 'Welcome' dialog
       | WelcomeDialogSelection               |
@@ -28,7 +28,7 @@ Scenario: MXTransferee - Submitting benefits & Portion Cashout available in conf
     Then 'Status' of the deleted benefit_cashout should be displayed as "Delete Request Pending" under 'Submitted Benefits' section of 'My Benefit Bundle' page
 
 @End-To_End_CoreFlex @End-To_End_Flex-PortionCashout_ApproveAllRequest @Flex-PortionCashout_ApproveAllRequest_MX
-Scenario: TransfereeSubmissions - Verifying ApproveAll Delete request functionality for submissions made by Transferee for the Client assigned to PPC User 
+Scenario: TransfereeSubmissions - Verifying ApproveAll Delete request for submissions made by Transferee for the Client assigned to PPC User 
 	Given he has logged into 'Transferee Submissions' application as a "MSPEC/PPC" user 
 	And he has navigated to "Transferee Submissions Dashboard" page having record of Bundle submitted by the transferee  
 	And he has clicked on "Review" button for Bundle submitted by the transferee on "Transferee Submissions Dashboard" page	

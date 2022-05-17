@@ -176,7 +176,7 @@ public class Mylo_DashboardHomePage extends Base {
 	
 	public void selectOptionsFromAssignmentMenu(String optionToBeSelected) {
 		CoreFunctions.explicitWaitTillElementInVisibilityCustomTime(driver, _spinner, 60);
-		CoreFunctions.explicitWaitTillElementVisibility(driver, _dialogBox, _dialogBox.getText(), 60);
+		CoreFunctions.explicitWaitTillElementVisibility(driver, _dialogBox, _dialogBox.getText(), 90);
 		CoreFunctions.explicitWaitTillElementListVisibilityCustomTime(driver, _assignmentOptions,60);
 		CoreFunctions.selectItemInListByText(driver, _assignmentOptions, optionToBeSelected);
 		CoreFunctions.highlightObject(driver, _assignmentOptionHeader);

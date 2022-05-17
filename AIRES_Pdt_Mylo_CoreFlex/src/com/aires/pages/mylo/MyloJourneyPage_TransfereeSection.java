@@ -295,7 +295,7 @@ public class MyloJourneyPage_TransfereeSection extends Base {
 		try {
 			WebElement element = transfereeWebElementsMap.get(fieldName);
 			CoreFunctions.explicitWaitTillElementInVisibilityCustomTime(driver, _spinner, 180);
-			CoreFunctions.explicitWaitTillElementVisibility(driver, element, fieldName);
+			CoreFunctions.explicitWaitTillElementVisibility(driver, element, fieldName,100);
 			CoreFunctions.highlightElementAndClick(driver, element, fieldName);
 		} catch (Exception e) {
 			Reporter.addStepLog(MessageFormat.format(CoreConstants.FAIL_TO_VERIFY_ELEMENT_ON_SECTION,

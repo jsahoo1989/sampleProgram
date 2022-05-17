@@ -406,8 +406,8 @@ public class MyloAssignmentIdentificationDocumentation_Steps {
 		Assert.assertFalse(myloAssignmentPage.verifyIdentDocFieldErrorBackground(MYLOConstants.FROMDATE, 0));
 		Assert.assertFalse(myloAssignmentPage.verifyIdentDocFieldErrorBackground(MYLOConstants.NUMBER, 0));
 		Assert.assertFalse(myloAssignmentPage.verifyIdentDocFieldErrorBackground(MYLOConstants.IDENTITY_TYPE, 0));
-		Assert.assertFalse(myloAssignmentPage.verifyAlertMessagesPresent());
 		myloAssignmentPage.clickButtonOnIentificationAndDocumentationSection(MYLOConstants.CANCEL_BUTTON);
+		Assert.assertFalse(myloAssignmentPage.verifyAlertMessagesPresent());
 		myloAssignmentPage.clickButtonOnIentificationAndDocumentationSection(MYLOConstants.YES_BUTTON);
 		MYLOConstants.TIME_AFTER_ACTION = new Date().getTime();
 		Reporter.addStepLog("<b>Total time taken by <i>'Then'</i> statement is :"

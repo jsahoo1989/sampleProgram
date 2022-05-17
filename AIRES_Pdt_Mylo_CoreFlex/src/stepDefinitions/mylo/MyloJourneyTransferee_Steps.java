@@ -171,6 +171,7 @@ public class MyloJourneyTransferee_Steps {
 			String arg1, String buttonName, DataTable table) {
 		MYLOConstants.TIME_BEFORE_ACTION = new Date().getTime();
 		myloJourneyPageTransfereeSection.clickFieldsOnTransfereeSection(MYLOConstants.EDIT_BUTTON);
+		myloJourneyPageTransfereeSection.scrollToTransfereeElement(MYLOConstants.TRANSFEREE_TITLE);
 		myloJourneyPageTransfereeSection.clickFieldsOnTransfereeSection(buttonName);
 		Assert.assertTrue(myloJourneyPageTransfereeSection
 				.verifyMandatoryFieldsToastMessagesTransfereePhoneEmailSection(table, buttonName));

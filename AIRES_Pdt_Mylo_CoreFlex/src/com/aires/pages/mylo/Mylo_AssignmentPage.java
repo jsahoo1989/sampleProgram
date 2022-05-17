@@ -500,10 +500,12 @@ public class Mylo_AssignmentPage extends Base {
 	 * Add Role By Name on Aires File Team section
 	 */
 	public void addRole(String roleName) {
-		CoreFunctions.explicitWaitTillElementBecomesClickable(driver, _roleSelectButtton, _roleSelectButtton.getAttribute(MYLOConstants.NAME));
+		CoreFunctions.explicitWaitTillElementBecomesClickable(driver, _roleSelectButtton,
+				_roleSelectButtton.getAttribute(MYLOConstants.NAME));
 		CoreFunctions.click(driver, _roleSelectButtton, _roleSelectButtton.getAttribute(MYLOConstants.NAME));
-		CoreFunctions.selectItemInListByText(driver, CoreFunctions.getElementListByLocator(driver, _dropdownOptions),
-				roleName);
+		List<WebElement> roleList = CoreFunctions.getElementListByLocator(driver, _dropdownOptions);
+		CoreFunctions.explicitWaitTillElementListVisibility(driver, roleList);
+		CoreFunctions.selectItemInListByText(driver, roleList, roleName);
 	}
 
 	/**
@@ -555,6 +557,7 @@ public class Mylo_AssignmentPage extends Base {
 				Reporter.addStepLog(MessageFormat.format(CoreConstants.VERIFY_ELEMENT_VALUE_ON_SECTION,
 						CoreConstants.PASS, MYLOConstants.ROLE_NAME, memberName, MYLOConstants.AIRES_FILE_TEAM));
 			} else {
+				optionsList.remove(0);
 				updatedTeamMember = CoreFunctions.getRandomElementValueFromList(driver, optionsList);
 				CoreFunctions.selectItemInListByText(driver, optionsList, updatedTeamMember);
 				Reporter.addStepLog(MessageFormat.format(CoreConstants.VERIFY_ELEMENT_VALUE_ON_SECTION,
@@ -1466,6 +1469,9 @@ public class Mylo_AssignmentPage extends Base {
 		if (fieldValue.equals(MYLOConstants.RANDOM)) {
 			List<String> valuesToIgnore = new ArrayList<String>();
 			valuesToIgnore.add("Select One");
+			stateList.remove(0);
+			stateList.remove(1);
+			CoreFunctions.explicitWaitTillElementListVisibilityCustomTime(driver, stateList, 60);
 			BusinessFunctions.selectItemFromListUsingText(driver, stateList,
 					CoreFunctions.getRandomOutOfSelectedElementValueFromList(driver, stateList, valuesToIgnore));
 		} else
@@ -1569,9 +1575,11 @@ public class Mylo_AssignmentPage extends Base {
 			updatedMailAddressZipCodeValue = setOtherAddressZipCode(fieldValue);
 			break;
 		case MYLOConstants.TEMP_ADDRESS_STATE:
+			CoreFunctions.explicitWaitTillElementVisibility(driver, _otherAddressaddStateValue, fieldName,60);
 			updatedTempAddressStateValue = setFieldOtherAddress(_otherAddressaddStateValue, fieldValue);;
 			break;
 		case MYLOConstants.MAIL_ADDRESS_STATE:
+			CoreFunctions.explicitWaitTillElementVisibility(driver, _otherAddressaddStateValue, fieldName,60);
 			updatedMailAddressStateValue = setFieldOtherAddress(_otherAddressaddStateValue, fieldValue);;
 			break;
 		case MYLOConstants.TEMP_ADDRESS_ADDRESS1:
@@ -2462,6 +2470,7 @@ public class Mylo_AssignmentPage extends Base {
 	public void clickElementOnIdentificationAndDocumentationSection(String elementName,int index) {
 		switch (elementName) {
 		case MYLOConstants.IDENTITY_TYPE_DROPDOWN:
+			CoreFunctions.explicitWaitTillElementListVisibility(driver, _identDocTypeDropdowns);
 			CoreFunctions.highlightObject(driver, _identDocTypeDropdowns.get(index));
 			CoreFunctions.click(driver, _identDocTypeDropdowns.get(index), MYLOConstants.IDENTITY_TYPE_DROPDOWN);
 			CoreFunctions.explicitWaitTillElementVisibility(driver, _identDocTypeDropdowns.get(index), MYLOConstants.IDENTITY_TYPE_DROPDOWN);

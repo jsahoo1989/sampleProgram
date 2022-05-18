@@ -124,10 +124,10 @@ public class PDT_CulturalTrainingPage extends Base {
 					culturalTrainingBenefitData.culturalTrainingEmployee.reimbursedBy, PDTConstants.REIMBURSED_BY,
 					PDTConstants.RADIO_BUTTON_LIST, true);
 
-			BusinessFunctions.verifyReimbursedByOtherTextBoxIsDisplayed(driver, addNewPolicyPage,
+			BusinessFunctions.verifyOtherTextBoxIsDisplayed(driver, addNewPolicyPage,
 					culturalTrainingBenefitData.culturalTrainingEmployee.reimbursedBy,
 					_txtBoxReimbursedByOtherForCultTrainingEmp,
-					culturalTrainingBenefitData.culturalTrainingEmployee.reimbursedByOther, subBenefitFormName);
+					culturalTrainingBenefitData.culturalTrainingEmployee.reimbursedByOther, subBenefitFormName, PDTConstants.REIMBURSED_BY_OTHER);
 			CoreFunctions.clearAndSetText(driver, _txtAreaCommentForCultTrainingEmp, PDTConstants.COMMENT,
 					culturalTrainingBenefitData.culturalTrainingEmployee.comments);
 		} catch (Exception e) {
@@ -161,10 +161,10 @@ public class PDT_CulturalTrainingPage extends Base {
 					culturalTrainingBenefitData.culturalTrainingFamily.reimbursedBy, PDTConstants.REIMBURSED_BY,
 					PDTConstants.RADIO_BUTTON_LIST, true);
 
-			BusinessFunctions.verifyReimbursedByOtherTextBoxIsDisplayed(driver, addNewPolicyPage,
+			BusinessFunctions.verifyOtherTextBoxIsDisplayed(driver, addNewPolicyPage,
 					culturalTrainingBenefitData.culturalTrainingFamily.reimbursedBy,
 					_txtBoxReimbursedByOtherForCultTrainingFamily,
-					culturalTrainingBenefitData.culturalTrainingFamily.reimbursedByOther, subBenefitFormName);
+					culturalTrainingBenefitData.culturalTrainingFamily.reimbursedByOther, subBenefitFormName, PDTConstants.REIMBURSED_BY_OTHER);
 			CoreFunctions.clearAndSetText(driver, _txtAreaCommentForCultTrainingFamily, PDTConstants.COMMENT,
 					culturalTrainingBenefitData.culturalTrainingFamily.comments);
 		} catch (Exception e) {

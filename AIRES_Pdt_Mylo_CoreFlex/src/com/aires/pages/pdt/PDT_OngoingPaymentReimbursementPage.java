@@ -1254,9 +1254,9 @@ public class PDT_OngoingPaymentReimbursementPage extends Base {
 				ongoingPaymentReimbursementBenefitData.cola.reimbursedBy, PDTConstants.REIMBURSED_BY,
 				PDTConstants.RADIO_BUTTON_LIST, true);
 
-		BusinessFunctions.verifyReimbursedByOtherTextBoxIsDisplayed(driver, addNewPolicyPage,
+		BusinessFunctions.verifyOtherTextBoxIsDisplayed(driver, addNewPolicyPage,
 				ongoingPaymentReimbursementBenefitData.cola.reimbursedBy, _txtBoxColaReimbursedByOther,
-				ongoingPaymentReimbursementBenefitData.cola.reimbursedByOther, subBenefitFormName);
+				ongoingPaymentReimbursementBenefitData.cola.reimbursedByOther, subBenefitFormName, PDTConstants.REIMBURSED_BY_OTHER);
 		CoreFunctions.clearAndSetText(driver, _txtAreaColaComment, PDTConstants.COMMENT,
 				ongoingPaymentReimbursementBenefitData.cola.comments);
 	}
@@ -1297,9 +1297,9 @@ public class PDT_OngoingPaymentReimbursementPage extends Base {
 				ongoingPaymentReimbursementBenefitData.perDiem.reimbursedBy, PDTConstants.REIMBURSED_BY,
 				PDTConstants.RADIO_BUTTON_LIST, true);
 
-		BusinessFunctions.verifyReimbursedByOtherTextBoxIsDisplayed(driver, addNewPolicyPage,
+		BusinessFunctions.verifyOtherTextBoxIsDisplayed(driver, addNewPolicyPage,
 				ongoingPaymentReimbursementBenefitData.perDiem.reimbursedBy, _txtBoxPerDiemReimbursedByOther,
-				ongoingPaymentReimbursementBenefitData.perDiem.reimbursedByOther, subBenefitFormName);
+				ongoingPaymentReimbursementBenefitData.perDiem.reimbursedByOther, subBenefitFormName, PDTConstants.REIMBURSED_BY_OTHER);
 		CoreFunctions.clearAndSetText(driver, _txtAreaPerDiemComment, PDTConstants.COMMENT,
 				ongoingPaymentReimbursementBenefitData.perDiem.comments);
 	}
@@ -1343,10 +1343,10 @@ public class PDT_OngoingPaymentReimbursementPage extends Base {
 				ongoingPaymentReimbursementBenefitData.mobilityPremium.reimbursedBy, PDTConstants.REIMBURSED_BY,
 				PDTConstants.RADIO_BUTTON_LIST, true);
 
-		BusinessFunctions.verifyReimbursedByOtherTextBoxIsDisplayed(driver, addNewPolicyPage,
+		BusinessFunctions.verifyOtherTextBoxIsDisplayed(driver, addNewPolicyPage,
 				ongoingPaymentReimbursementBenefitData.mobilityPremium.reimbursedBy,
 				_txtBoxMobilityPremReimbursedByOther,
-				ongoingPaymentReimbursementBenefitData.mobilityPremium.reimbursedByOther, subBenefitFormName);
+				ongoingPaymentReimbursementBenefitData.mobilityPremium.reimbursedByOther, subBenefitFormName, PDTConstants.REIMBURSED_BY_OTHER);
 		CoreFunctions.clearAndSetText(driver, _txtAreaMobilityPremComment, PDTConstants.COMMENT,
 				ongoingPaymentReimbursementBenefitData.mobilityPremium.comments);
 	}
@@ -1391,10 +1391,10 @@ public class PDT_OngoingPaymentReimbursementPage extends Base {
 				ongoingPaymentReimbursementBenefitData.transportationAllowance.reimbursedBy, PDTConstants.REIMBURSED_BY,
 				PDTConstants.RADIO_BUTTON_LIST, true);
 
-		BusinessFunctions.verifyReimbursedByOtherTextBoxIsDisplayed(driver, addNewPolicyPage,
+		BusinessFunctions.verifyOtherTextBoxIsDisplayed(driver, addNewPolicyPage,
 				ongoingPaymentReimbursementBenefitData.transportationAllowance.reimbursedBy,
 				_txtBoxTransportAllowReimbursedByOther,
-				ongoingPaymentReimbursementBenefitData.transportationAllowance.reimbursedByOther, subBenefitFormName);
+				ongoingPaymentReimbursementBenefitData.transportationAllowance.reimbursedByOther, subBenefitFormName, PDTConstants.REIMBURSED_BY_OTHER);
 		CoreFunctions.clearAndSetText(driver, _txtAreaTransportAllowComment, PDTConstants.COMMENT,
 				ongoingPaymentReimbursementBenefitData.transportationAllowance.comments);
 	}
@@ -1426,9 +1426,9 @@ public class PDT_OngoingPaymentReimbursementPage extends Base {
 		setHousingAllowPayFreq(randHousingAllowPayFreq);
 
 		BusinessFunctions.verifyAndFillOtherTextBoxForSubBenefitForm(driver, addNewPolicyPage, subBenefitFormName,
-				_drpDownTransportAllowPaymentFrequencySelectedOption, PDTConstants.FREQUENCY,
-				_txtBoxTransportAllowOtherFrequency, PDTConstants.OTHER_FREQUENCY,
-				ongoingPaymentReimbursementBenefitData.transportationAllowance.otherFrequency);
+				_drpDownHousingAllowPaymentFrequencySelectedOption, PDTConstants.FREQUENCY,
+				_txtBoxHousingAllowOtherFrequency, PDTConstants.OTHER_FREQUENCY,
+				ongoingPaymentReimbursementBenefitData.housingAllowance.otherFrequency);
 
 		CoreFunctions.selectItemInListByText(driver, _radioBtnHousingAllow,
 				ongoingPaymentReimbursementBenefitData.housingAllowance.grossUp, PDTConstants.GROSS_UP,
@@ -1438,10 +1438,10 @@ public class PDT_OngoingPaymentReimbursementPage extends Base {
 				ongoingPaymentReimbursementBenefitData.housingAllowance.reimbursedBy, PDTConstants.REIMBURSED_BY,
 				PDTConstants.RADIO_BUTTON_LIST, true);
 
-		BusinessFunctions.verifyReimbursedByOtherTextBoxIsDisplayed(driver, addNewPolicyPage,
+		BusinessFunctions.verifyOtherTextBoxIsDisplayed(driver, addNewPolicyPage,
 				ongoingPaymentReimbursementBenefitData.housingAllowance.reimbursedBy,
 				_txtBoxHousingAllowReimbursedByOther,
-				ongoingPaymentReimbursementBenefitData.housingAllowance.reimbursedByOther, subBenefitFormName);
+				ongoingPaymentReimbursementBenefitData.housingAllowance.reimbursedByOther, subBenefitFormName, PDTConstants.REIMBURSED_BY_OTHER);
 		CoreFunctions.clearAndSetText(driver, _txtAreaHousingAllowComment, PDTConstants.COMMENT,
 				ongoingPaymentReimbursementBenefitData.housingAllowance.comments);
 	}
@@ -1485,10 +1485,10 @@ public class PDT_OngoingPaymentReimbursementPage extends Base {
 				ongoingPaymentReimbursementBenefitData.homeMaintainAllowance.reimbursedBy, PDTConstants.REIMBURSED_BY,
 				PDTConstants.RADIO_BUTTON_LIST, true);
 
-		BusinessFunctions.verifyReimbursedByOtherTextBoxIsDisplayed(driver, addNewPolicyPage,
+		BusinessFunctions.verifyOtherTextBoxIsDisplayed(driver, addNewPolicyPage,
 				ongoingPaymentReimbursementBenefitData.homeMaintainAllowance.reimbursedBy,
 				_txtBoxHomeMaintAllowReimbursedByOther,
-				ongoingPaymentReimbursementBenefitData.homeMaintainAllowance.reimbursedByOther, subBenefitFormName);
+				ongoingPaymentReimbursementBenefitData.homeMaintainAllowance.reimbursedByOther, subBenefitFormName, PDTConstants.REIMBURSED_BY_OTHER);
 		CoreFunctions.clearAndSetText(driver, _txtAreaHomeMaintAllowComment, PDTConstants.COMMENT,
 				ongoingPaymentReimbursementBenefitData.homeMaintainAllowance.comments);
 	}
@@ -1531,10 +1531,10 @@ public class PDT_OngoingPaymentReimbursementPage extends Base {
 				ongoingPaymentReimbursementBenefitData.furnitureAllowance.reimbursedBy, PDTConstants.REIMBURSED_BY,
 				PDTConstants.RADIO_BUTTON_LIST, true);
 
-		BusinessFunctions.verifyReimbursedByOtherTextBoxIsDisplayed(driver, addNewPolicyPage,
+		BusinessFunctions.verifyOtherTextBoxIsDisplayed(driver, addNewPolicyPage,
 				ongoingPaymentReimbursementBenefitData.furnitureAllowance.reimbursedBy,
 				_txtBoxFurnitureAllowReimbursedByOther,
-				ongoingPaymentReimbursementBenefitData.furnitureAllowance.reimbursedByOther, subBenefitFormName);
+				ongoingPaymentReimbursementBenefitData.furnitureAllowance.reimbursedByOther, subBenefitFormName, PDTConstants.REIMBURSED_BY_OTHER);
 		CoreFunctions.clearAndSetText(driver, _txtAreaFurnitureAllowComment, PDTConstants.COMMENT,
 				ongoingPaymentReimbursementBenefitData.furnitureAllowance.comments);
 	}
@@ -1577,10 +1577,10 @@ public class PDT_OngoingPaymentReimbursementPage extends Base {
 				ongoingPaymentReimbursementBenefitData.hardshipAllowance.reimbursedBy, PDTConstants.REIMBURSED_BY,
 				PDTConstants.RADIO_BUTTON_LIST, true);
 
-		BusinessFunctions.verifyReimbursedByOtherTextBoxIsDisplayed(driver, addNewPolicyPage,
+		BusinessFunctions.verifyOtherTextBoxIsDisplayed(driver, addNewPolicyPage,
 				ongoingPaymentReimbursementBenefitData.hardshipAllowance.reimbursedBy,
 				_txtBoxHardshipAllowReimbursedByOther,
-				ongoingPaymentReimbursementBenefitData.hardshipAllowance.reimbursedByOther, subBenefitFormName);
+				ongoingPaymentReimbursementBenefitData.hardshipAllowance.reimbursedByOther, subBenefitFormName, PDTConstants.REIMBURSED_BY_OTHER);
 		CoreFunctions.clearAndSetText(driver, _txtAreaHardshipAllowComment, PDTConstants.COMMENT,
 				ongoingPaymentReimbursementBenefitData.hardshipAllowance.comments);
 	}
@@ -1623,10 +1623,10 @@ public class PDT_OngoingPaymentReimbursementPage extends Base {
 				ongoingPaymentReimbursementBenefitData.bankingAllowance.reimbursedBy, PDTConstants.REIMBURSED_BY,
 				PDTConstants.RADIO_BUTTON_LIST, true);
 
-		BusinessFunctions.verifyReimbursedByOtherTextBoxIsDisplayed(driver, addNewPolicyPage,
+		BusinessFunctions.verifyOtherTextBoxIsDisplayed(driver, addNewPolicyPage,
 				ongoingPaymentReimbursementBenefitData.bankingAllowance.reimbursedBy,
 				_txtBoxBankingAllowReimbursedByOther,
-				ongoingPaymentReimbursementBenefitData.bankingAllowance.reimbursedByOther, subBenefitFormName);
+				ongoingPaymentReimbursementBenefitData.bankingAllowance.reimbursedByOther, subBenefitFormName, PDTConstants.REIMBURSED_BY_OTHER);
 		CoreFunctions.clearAndSetText(driver, _txtAreaBankingAllowComment, PDTConstants.COMMENT,
 				ongoingPaymentReimbursementBenefitData.bankingAllowance.comments);
 	}
@@ -1668,9 +1668,9 @@ public class PDT_OngoingPaymentReimbursementPage extends Base {
 				ongoingPaymentReimbursementBenefitData.atSeaAllowanace.reimbursedBy, PDTConstants.REIMBURSED_BY,
 				PDTConstants.RADIO_BUTTON_LIST, true);
 
-		BusinessFunctions.verifyReimbursedByOtherTextBoxIsDisplayed(driver, addNewPolicyPage,
+		BusinessFunctions.verifyOtherTextBoxIsDisplayed(driver, addNewPolicyPage,
 				ongoingPaymentReimbursementBenefitData.atSeaAllowanace.reimbursedBy, _txtBoxAtSeaAllowReimbursedByOther,
-				ongoingPaymentReimbursementBenefitData.atSeaAllowanace.reimbursedByOther, subBenefitFormName);
+				ongoingPaymentReimbursementBenefitData.atSeaAllowanace.reimbursedByOther, subBenefitFormName, PDTConstants.REIMBURSED_BY_OTHER);
 		CoreFunctions.clearAndSetText(driver, _txtAreaAtSeaAllowComment, PDTConstants.COMMENT,
 				ongoingPaymentReimbursementBenefitData.atSeaAllowanace.comments);
 	}
@@ -1713,10 +1713,10 @@ public class PDT_OngoingPaymentReimbursementPage extends Base {
 				ongoingPaymentReimbursementBenefitData.commuterAllowance.reimbursedBy, PDTConstants.REIMBURSED_BY,
 				PDTConstants.RADIO_BUTTON_LIST, true);
 
-		BusinessFunctions.verifyReimbursedByOtherTextBoxIsDisplayed(driver, addNewPolicyPage,
+		BusinessFunctions.verifyOtherTextBoxIsDisplayed(driver, addNewPolicyPage,
 				ongoingPaymentReimbursementBenefitData.commuterAllowance.reimbursedBy,
 				_txtBoxCommuterAllowReimbursedByOther,
-				ongoingPaymentReimbursementBenefitData.commuterAllowance.reimbursedByOther, subBenefitFormName);
+				ongoingPaymentReimbursementBenefitData.commuterAllowance.reimbursedByOther, subBenefitFormName, PDTConstants.REIMBURSED_BY_OTHER);
 		CoreFunctions.clearAndSetText(driver, _txtAreaCommuterAllowComment, PDTConstants.COMMENT,
 				ongoingPaymentReimbursementBenefitData.commuterAllowance.comments);
 	}
@@ -1754,9 +1754,9 @@ public class PDT_OngoingPaymentReimbursementPage extends Base {
 				ongoingPaymentReimbursementBenefitData.differentialAllowance.reimbursedBy, PDTConstants.REIMBURSED_BY,
 				PDTConstants.RADIO_BUTTON_LIST, true);
 
-		BusinessFunctions.verifyReimbursedByOtherTextBoxIsDisplayed(driver, addNewPolicyPage,
+		BusinessFunctions.verifyOtherTextBoxIsDisplayed(driver, addNewPolicyPage,
 				ongoingPaymentReimbursementBenefitData.differentialAllowance.reimbursedBy, _txtBoxDiffAllowReimbursedByOther,
-				ongoingPaymentReimbursementBenefitData.differentialAllowance.reimbursedByOther, subBenefitFormName);
+				ongoingPaymentReimbursementBenefitData.differentialAllowance.reimbursedByOther, subBenefitFormName, PDTConstants.REIMBURSED_BY_OTHER);
 		CoreFunctions.clearAndSetText(driver, _txtAreaDiffAllowComment, PDTConstants.COMMENT,
 				ongoingPaymentReimbursementBenefitData.differentialAllowance.comments);
 	}
@@ -1794,9 +1794,9 @@ public class PDT_OngoingPaymentReimbursementPage extends Base {
 				ongoingPaymentReimbursementBenefitData.goodsAndServicesAllowance.reimbursedBy, PDTConstants.REIMBURSED_BY,
 				PDTConstants.RADIO_BUTTON_LIST, true);
 
-		BusinessFunctions.verifyReimbursedByOtherTextBoxIsDisplayed(driver, addNewPolicyPage,
+		BusinessFunctions.verifyOtherTextBoxIsDisplayed(driver, addNewPolicyPage,
 				ongoingPaymentReimbursementBenefitData.goodsAndServicesAllowance.reimbursedBy, _txtBoxGoodAndServicesAllowReimbursedByOther,
-				ongoingPaymentReimbursementBenefitData.goodsAndServicesAllowance.reimbursedByOther, subBenefitFormName);
+				ongoingPaymentReimbursementBenefitData.goodsAndServicesAllowance.reimbursedByOther, subBenefitFormName, PDTConstants.REIMBURSED_BY_OTHER);
 		CoreFunctions.clearAndSetText(driver, _txtAreaGoodAndServicesAllowComment, PDTConstants.COMMENT,
 				ongoingPaymentReimbursementBenefitData.goodsAndServicesAllowance.comments);
 	}
@@ -1838,9 +1838,9 @@ public class PDT_OngoingPaymentReimbursementPage extends Base {
 				ongoingPaymentReimbursementBenefitData.homeLeaveAllowance.reimbursedBy, PDTConstants.REIMBURSED_BY,
 				PDTConstants.RADIO_BUTTON_LIST, true);
 
-		BusinessFunctions.verifyReimbursedByOtherTextBoxIsDisplayed(driver, addNewPolicyPage,
+		BusinessFunctions.verifyOtherTextBoxIsDisplayed(driver, addNewPolicyPage,
 				ongoingPaymentReimbursementBenefitData.homeLeaveAllowance.reimbursedBy, _txtBoxHomeLeaveAllowReimbursedByOther,
-				ongoingPaymentReimbursementBenefitData.homeLeaveAllowance.reimbursedByOther, subBenefitFormName);
+				ongoingPaymentReimbursementBenefitData.homeLeaveAllowance.reimbursedByOther, subBenefitFormName, PDTConstants.REIMBURSED_BY_OTHER);
 		CoreFunctions.clearAndSetText(driver, _txtAreaHomeLeaveAllowComment, PDTConstants.COMMENT,
 				ongoingPaymentReimbursementBenefitData.homeLeaveAllowance.comments);
 	}
@@ -1878,9 +1878,9 @@ public class PDT_OngoingPaymentReimbursementPage extends Base {
 				ongoingPaymentReimbursementBenefitData.homeRetentionAllowance.reimbursedBy, PDTConstants.REIMBURSED_BY,
 				PDTConstants.RADIO_BUTTON_LIST, true);
 
-		BusinessFunctions.verifyReimbursedByOtherTextBoxIsDisplayed(driver, addNewPolicyPage,
+		BusinessFunctions.verifyOtherTextBoxIsDisplayed(driver, addNewPolicyPage,
 				ongoingPaymentReimbursementBenefitData.homeRetentionAllowance.reimbursedBy, _txtBoxHomeRetentionAllowReimbursedByOther,
-				ongoingPaymentReimbursementBenefitData.homeRetentionAllowance.reimbursedByOther, subBenefitFormName);
+				ongoingPaymentReimbursementBenefitData.homeRetentionAllowance.reimbursedByOther, subBenefitFormName, PDTConstants.REIMBURSED_BY_OTHER);
 		CoreFunctions.clearAndSetText(driver, _txtAreaHomeRetentionAllowComment, PDTConstants.COMMENT,
 				ongoingPaymentReimbursementBenefitData.homeRetentionAllowance.comments);
 	}
@@ -1918,9 +1918,9 @@ public class PDT_OngoingPaymentReimbursementPage extends Base {
 				ongoingPaymentReimbursementBenefitData.houseKeepingAllowance.reimbursedBy, PDTConstants.REIMBURSED_BY,
 				PDTConstants.RADIO_BUTTON_LIST, true);
 
-		BusinessFunctions.verifyReimbursedByOtherTextBoxIsDisplayed(driver, addNewPolicyPage,
+		BusinessFunctions.verifyOtherTextBoxIsDisplayed(driver, addNewPolicyPage,
 				ongoingPaymentReimbursementBenefitData.houseKeepingAllowance.reimbursedBy, _txtBoxHouseKeepingAllowReimbursedByOther,
-				ongoingPaymentReimbursementBenefitData.houseKeepingAllowance.reimbursedByOther, subBenefitFormName);
+				ongoingPaymentReimbursementBenefitData.houseKeepingAllowance.reimbursedByOther, subBenefitFormName, PDTConstants.REIMBURSED_BY_OTHER);
 		CoreFunctions.clearAndSetText(driver, _txtAreaHouseKeepingAllowComment, PDTConstants.COMMENT,
 				ongoingPaymentReimbursementBenefitData.houseKeepingAllowance.comments);
 	}
@@ -1958,9 +1958,9 @@ public class PDT_OngoingPaymentReimbursementPage extends Base {
 				ongoingPaymentReimbursementBenefitData.utilityAllowance.reimbursedBy, PDTConstants.REIMBURSED_BY,
 				PDTConstants.RADIO_BUTTON_LIST, true);
 
-		BusinessFunctions.verifyReimbursedByOtherTextBoxIsDisplayed(driver, addNewPolicyPage,
+		BusinessFunctions.verifyOtherTextBoxIsDisplayed(driver, addNewPolicyPage,
 				ongoingPaymentReimbursementBenefitData.utilityAllowance.reimbursedBy, _txtBoxUtilityAllowReimbursedByOther,
-				ongoingPaymentReimbursementBenefitData.utilityAllowance.reimbursedByOther, subBenefitFormName);
+				ongoingPaymentReimbursementBenefitData.utilityAllowance.reimbursedByOther, subBenefitFormName, PDTConstants.REIMBURSED_BY_OTHER);
 		CoreFunctions.clearAndSetText(driver, _txtAreaUtilityAllowComment, PDTConstants.COMMENT,
 				ongoingPaymentReimbursementBenefitData.utilityAllowance.comments);
 	}
@@ -2002,9 +2002,9 @@ public class PDT_OngoingPaymentReimbursementPage extends Base {
 				ongoingPaymentReimbursementBenefitData.otherOngoingAllowance.reimbursedBy, PDTConstants.REIMBURSED_BY,
 				PDTConstants.RADIO_BUTTON_LIST, true);
 
-		BusinessFunctions.verifyReimbursedByOtherTextBoxIsDisplayed(driver, addNewPolicyPage,
+		BusinessFunctions.verifyOtherTextBoxIsDisplayed(driver, addNewPolicyPage,
 				ongoingPaymentReimbursementBenefitData.otherOngoingAllowance.reimbursedBy, _txtBoxOthOngoingReimbursedByOth,
-				ongoingPaymentReimbursementBenefitData.otherOngoingAllowance.reimbursedByOther, subBenefitFormName);
+				ongoingPaymentReimbursementBenefitData.otherOngoingAllowance.reimbursedByOther, subBenefitFormName, PDTConstants.REIMBURSED_BY_OTHER);
 		CoreFunctions.clearAndSetText(driver, _txtAreaOtherOngoingComment, PDTConstants.COMMENT,
 				ongoingPaymentReimbursementBenefitData.otherOngoingAllowance.comments);
 	}

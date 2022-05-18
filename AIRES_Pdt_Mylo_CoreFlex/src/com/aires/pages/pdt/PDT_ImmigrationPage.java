@@ -165,7 +165,7 @@ public class PDT_ImmigrationPage extends Base {
 					immigrationBenefitData.immigrationFees.reimbursedBy, PDTConstants.REIMBURSED_BY,
 					PDTConstants.RADIO_BUTTON_LIST, true);
 
-			BusinessFunctions.verifyReimbursedByOtherTextBoxIsDisplayed(driver, addNewPolicyPage, immigrationBenefitData.immigrationFees.reimbursedBy, _txtBoxImmigrationFeesReimbursedByOther, immigrationBenefitData.immigrationFees.reimbursedByOther, subBenefitFormName);
+			BusinessFunctions.verifyOtherTextBoxIsDisplayed(driver, addNewPolicyPage, immigrationBenefitData.immigrationFees.reimbursedBy, _txtBoxImmigrationFeesReimbursedByOther, immigrationBenefitData.immigrationFees.reimbursedByOther, subBenefitFormName, PDTConstants.REIMBURSED_BY_OTHER);
 		} catch (Exception e) {
 			Assert.fail(MessageFormat.format(PDTConstants.EXCEPTION_OCCURED_FILL_SUBBENEFIT_FORM, CoreConstants.FAIL, subBenefitFormName));
 		}
@@ -229,7 +229,7 @@ public class PDT_ImmigrationPage extends Base {
 			CoreFunctions.selectItemInListByText(driver, _radioBtnImmigrationTravel,
 					immigrationBenefitData.immigrationTravel.reimbursedBy, PDTConstants.REIMBURSED_BY,
 					PDTConstants.RADIO_BUTTON_LIST, true);
-			BusinessFunctions.verifyReimbursedByOtherTextBoxIsDisplayed(driver, addNewPolicyPage, immigrationBenefitData.immigrationTravel.reimbursedBy, _txtBoxImmigrationTravelReimbursedByOther, immigrationBenefitData.immigrationTravel.reimbursedByOther, subBenefitFormName);
+			BusinessFunctions.verifyOtherTextBoxIsDisplayed(driver, addNewPolicyPage, immigrationBenefitData.immigrationTravel.reimbursedBy, _txtBoxImmigrationTravelReimbursedByOther, immigrationBenefitData.immigrationTravel.reimbursedByOther, subBenefitFormName, PDTConstants.REIMBURSED_BY_OTHER);
 			CoreFunctions.clearAndSetText(driver, _txtAreaImmigrationComment, PDTConstants.COMMENT,
 					immigrationBenefitData.immigrationTravel.comment);
 		} catch (Exception e) {

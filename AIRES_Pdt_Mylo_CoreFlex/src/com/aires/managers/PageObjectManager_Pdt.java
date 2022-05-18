@@ -30,6 +30,7 @@ import com.aires.pages.pdt.PDT_FinalMovePage;
 import com.aires.pages.pdt.PDT_GeneralInformationPage;
 import com.aires.pages.pdt.PDT_HomeLeavePage;
 import com.aires.pages.pdt.PDT_HomePurchasePage;
+import com.aires.pages.pdt.PDT_HouseHoldGoodsPage;
 import com.aires.pages.pdt.PDT_HouseHuntingTripPage;
 import com.aires.pages.pdt.PDT_ImmigrationPage;
 import com.aires.pages.pdt.PDT_LanguageTrainingPage;
@@ -72,6 +73,7 @@ public class PageObjectManager_Pdt {
 	private PDT_PropertyManagementPage _propertyManagementPage;
 	private PDT_HomePurchasePage _homePurchasePage;
 	private CoreFlex_BluePrint_LoginPage _bluePrintCFLoginPage;
+	private PDT_HouseHoldGoodsPage _houseHoldGoodsPage;
 	
 	public PageObjectManager_Pdt(WebDriver driver) {
 		this._driver = driver;
@@ -171,8 +173,13 @@ public class PageObjectManager_Pdt {
 	
 	public PDT_HomePurchasePage getHomePurchasePage() {
 		return (_homePurchasePage == null ) ? _homePurchasePage = new PDT_HomePurchasePage(_driver) : _homePurchasePage;
+	}
 
 	public CoreFlex_BluePrint_LoginPage getBluePrintCoreFlexLoginPage() {
 		return (_bluePrintCFLoginPage == null ) ? _bluePrintCFLoginPage = new CoreFlex_BluePrint_LoginPage(_driver) : _bluePrintCFLoginPage;
+	}
+	
+	public PDT_HouseHoldGoodsPage getHouseHoldGoodsPage() {
+		return (_houseHoldGoodsPage == null ) ? _houseHoldGoodsPage = new PDT_HouseHoldGoodsPage(_driver) : _houseHoldGoodsPage;
 	}
 }

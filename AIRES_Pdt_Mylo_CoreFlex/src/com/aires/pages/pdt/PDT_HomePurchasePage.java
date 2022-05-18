@@ -207,9 +207,9 @@ public class PDT_HomePurchasePage extends Base {
 					homePurchaseBenefitData.homePurchaseClosingCost.reimbursedBy, PDTConstants.REIMBURSED_BY,
 					PDTConstants.RADIO_BUTTON_LIST, true);
 
-			BusinessFunctions.verifyReimbursedByOtherTextBoxIsDisplayed(driver, addNewPolicyPage,
+			BusinessFunctions.verifyOtherTextBoxIsDisplayed(driver, addNewPolicyPage,
 					homePurchaseBenefitData.homePurchaseClosingCost.reimbursedBy, _txtBoxReimbursedByOtherClosingCost,
-					homePurchaseBenefitData.homePurchaseClosingCost.reimbursedByOther, subBenefitFormName);
+					homePurchaseBenefitData.homePurchaseClosingCost.reimbursedByOther, subBenefitFormName, PDTConstants.REIMBURSED_BY_OTHER);
 
 			CoreFunctions.clearAndSetText(driver, _txtAreaCommentForClosingCost, PDTConstants.COMMENT,
 					homePurchaseBenefitData.homePurchaseClosingCost.comments);
@@ -235,9 +235,9 @@ public class PDT_HomePurchasePage extends Base {
 					homePurchaseBenefitData.homePurchasePoints.reimbursedBy, PDTConstants.REIMBURSED_BY,
 					PDTConstants.RADIO_BUTTON_LIST, true);
 
-			BusinessFunctions.verifyReimbursedByOtherTextBoxIsDisplayed(driver, addNewPolicyPage,
+			BusinessFunctions.verifyOtherTextBoxIsDisplayed(driver, addNewPolicyPage,
 					homePurchaseBenefitData.homePurchasePoints.reimbursedBy, _txtBoxReimbursedByOtherHomPurPoints,
-					homePurchaseBenefitData.homePurchasePoints.reimbursedByOther, subBenefitFormName);
+					homePurchaseBenefitData.homePurchasePoints.reimbursedByOther, subBenefitFormName, PDTConstants.REIMBURSED_BY_OTHER);
 
 			CoreFunctions.clearAndSetText(driver, _txtAreaCommentHomPurPoints, PDTConstants.COMMENT,
 					homePurchaseBenefitData.homePurchasePoints.comments);
@@ -258,10 +258,10 @@ public class PDT_HomePurchasePage extends Base {
 					homePurchaseBenefitData.homePurchaseInspections.reimbursedBy, PDTConstants.REIMBURSED_BY,
 					PDTConstants.RADIO_BUTTON_LIST, true);
 
-			BusinessFunctions.verifyReimbursedByOtherTextBoxIsDisplayed(driver, addNewPolicyPage,
+			BusinessFunctions.verifyOtherTextBoxIsDisplayed(driver, addNewPolicyPage,
 					homePurchaseBenefitData.homePurchaseInspections.reimbursedBy,
 					_txtBoxReimbursedByOtherHomePurInspection,
-					homePurchaseBenefitData.homePurchaseInspections.reimbursedByOther, subBenefitFormName);
+					homePurchaseBenefitData.homePurchaseInspections.reimbursedByOther, subBenefitFormName, PDTConstants.REIMBURSED_BY_OTHER);
 
 			CoreFunctions.clearAndSetText(driver, _txtAreaCommentHomePurInspection, PDTConstants.COMMENT,
 					homePurchaseBenefitData.homePurchaseInspections.comments);
@@ -298,9 +298,9 @@ public class PDT_HomePurchasePage extends Base {
 					homePurchaseBenefitData.homePurchaseBonus.reimbursedBy, PDTConstants.REIMBURSED_BY,
 					PDTConstants.RADIO_BUTTON_LIST, true);
 
-			BusinessFunctions.verifyReimbursedByOtherTextBoxIsDisplayed(driver, addNewPolicyPage,
+			BusinessFunctions.verifyOtherTextBoxIsDisplayed(driver, addNewPolicyPage,
 					homePurchaseBenefitData.homePurchaseBonus.reimbursedBy, _txtBoxReimbursedByOtherHomePurBonus,
-					homePurchaseBenefitData.homePurchaseBonus.reimbursedByOther, subBenefitFormName);
+					homePurchaseBenefitData.homePurchaseBonus.reimbursedByOther, subBenefitFormName, PDTConstants.REIMBURSED_BY_OTHER);
 
 			CoreFunctions.clearAndSetText(driver, _txtAreaCommentHomePurBonus, PDTConstants.COMMENT,
 					homePurchaseBenefitData.homePurchaseBonus.comments);
@@ -321,9 +321,9 @@ public class PDT_HomePurchasePage extends Base {
 					homePurchaseBenefitData.mortgDiff.reimbursedBy, PDTConstants.REIMBURSED_BY,
 					PDTConstants.RADIO_BUTTON_LIST, true);
 
-			BusinessFunctions.verifyReimbursedByOtherTextBoxIsDisplayed(driver, addNewPolicyPage,
+			BusinessFunctions.verifyOtherTextBoxIsDisplayed(driver, addNewPolicyPage,
 					homePurchaseBenefitData.mortgDiff.reimbursedBy, _txtBoxReimbursedByOtherMortDiff,
-					homePurchaseBenefitData.mortgDiff.reimbursedByOther, subBenefitFormName);
+					homePurchaseBenefitData.mortgDiff.reimbursedByOther, subBenefitFormName, PDTConstants.REIMBURSED_BY_OTHER);
 
 			CoreFunctions.clearAndSetText(driver, _txtAreaCommentMortDiff, PDTConstants.COMMENT,
 					homePurchaseBenefitData.mortgDiff.comments);
@@ -344,9 +344,9 @@ public class PDT_HomePurchasePage extends Base {
 					homePurchaseBenefitData.mortgSubsidy.reimbursedBy, PDTConstants.REIMBURSED_BY,
 					PDTConstants.RADIO_BUTTON_LIST, true);
 
-			BusinessFunctions.verifyReimbursedByOtherTextBoxIsDisplayed(driver, addNewPolicyPage,
+			BusinessFunctions.verifyOtherTextBoxIsDisplayed(driver, addNewPolicyPage,
 					homePurchaseBenefitData.mortgSubsidy.reimbursedBy, _txtBoxReimbursedByOtherMortSubsidy,
-					homePurchaseBenefitData.mortgSubsidy.reimbursedByOther, subBenefitFormName);
+					homePurchaseBenefitData.mortgSubsidy.reimbursedByOther, subBenefitFormName, PDTConstants.REIMBURSED_BY_OTHER);
 
 			CoreFunctions.clearAndSetText(driver, _txtAreaCommentMortSubsidy, PDTConstants.COMMENT,
 					homePurchaseBenefitData.mortgSubsidy.comments);

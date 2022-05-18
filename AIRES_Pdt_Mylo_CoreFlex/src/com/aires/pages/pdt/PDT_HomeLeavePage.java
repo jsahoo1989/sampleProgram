@@ -348,10 +348,10 @@ public class PDT_HomeLeavePage extends Base {
 			CoreFunctions.selectItemInListByText(driver, _radioBtnHomeLeaveTransportation,
 					homeLeaveBenefitData.homeLeaveTransportation.reimbursedBy, PDTConstants.REIMBURSED_BY,
 					PDTConstants.RADIO_BUTTON_LIST, true);
-			BusinessFunctions.verifyReimbursedByOtherTextBoxIsDisplayed(driver, addNewPolicyPage,
+			BusinessFunctions.verifyOtherTextBoxIsDisplayed(driver, addNewPolicyPage,
 					homeLeaveBenefitData.homeLeaveTransportation.reimbursedBy,
 					_txtBoxHomeLeaveTransportReimbursedByOther,
-					homeLeaveBenefitData.homeLeaveTransportation.reimbursedByOther, subBenefitFormName);
+					homeLeaveBenefitData.homeLeaveTransportation.reimbursedByOther, subBenefitFormName, PDTConstants.REIMBURSED_BY_OTHER);
 			CoreFunctions.clearAndSetText(driver, _txtAreaHomeLeaveTransportComment, PDTConstants.COMMENT,
 					homeLeaveBenefitData.homeLeaveTransportation.comment);
 		} catch (Exception e) {
@@ -373,9 +373,9 @@ public class PDT_HomeLeavePage extends Base {
 			CoreFunctions.selectItemInListByText(driver, _radioBtnHomeLeaveLodging,
 					homeLeaveBenefitData.homeLeaveLodging.reimbursedBy, PDTConstants.REIMBURSED_BY,
 					PDTConstants.RADIO_BUTTON_LIST, true);
-			BusinessFunctions.verifyReimbursedByOtherTextBoxIsDisplayed(driver, addNewPolicyPage,
+			BusinessFunctions.verifyOtherTextBoxIsDisplayed(driver, addNewPolicyPage,
 					homeLeaveBenefitData.homeLeaveLodging.reimbursedBy, _txtBoxHomeLeaveLodgingReimbursedByOther,
-					homeLeaveBenefitData.homeLeaveLodging.reimbursedByOther, subBenefitFormName);
+					homeLeaveBenefitData.homeLeaveLodging.reimbursedByOther, subBenefitFormName, PDTConstants.REIMBURSED_BY_OTHER);
 			CoreFunctions.clearAndSetText(driver, _txtAreaHomeLeaveLodgingComment, PDTConstants.COMMENT,
 					homeLeaveBenefitData.homeLeaveLodging.comment);
 		} catch (Exception e) {
@@ -490,9 +490,9 @@ public class PDT_HomeLeavePage extends Base {
 					homeLeaveBenefitData.homeLeaveMeals.reimbursedBy, PDTConstants.REIMBURSED_BY,
 					PDTConstants.RADIO_BUTTON_LIST, true);
 
-			BusinessFunctions.verifyReimbursedByOtherTextBoxIsDisplayed(driver, addNewPolicyPage,
+			BusinessFunctions.verifyOtherTextBoxIsDisplayed(driver, addNewPolicyPage,
 					homeLeaveBenefitData.homeLeaveMeals.reimbursedBy, _txtBoxHomeLeaveMealsReimbursedByOther,
-					homeLeaveBenefitData.homeLeaveMeals.reimbursedByOther, subBenefitFormName);
+					homeLeaveBenefitData.homeLeaveMeals.reimbursedByOther, subBenefitFormName, PDTConstants.REIMBURSED_BY_OTHER);
 
 			CoreFunctions.clearAndSetText(driver, _txtAreaHomeLeaveMealsComment, PDTConstants.COMMENT,
 					homeLeaveBenefitData.homeLeaveMeals.comment);

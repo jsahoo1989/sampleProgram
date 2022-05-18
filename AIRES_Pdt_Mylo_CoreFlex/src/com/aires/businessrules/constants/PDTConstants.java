@@ -452,4 +452,30 @@ public class PDTConstants {
 	public static final String FAILED_TO_VERIFY_CAPPED_AND_POINTS_BASED_FLEX_POLICY_CONDITIONAL_CHECKS_ERROR_POP_UP_ON_GENRAL_INFORMATION_PAGE = "{0}Failed to verify Capped & Points Based Flex Policy Conditional Checks error pop up on General Information Page.";
 	public static final String FAILED_TO_NAVIGATE_TO_COREFLEX_BLUE_PRINT_APPLICATION_LOGIN_PAGE = "{0}Failed to navigate to Coreflex Blue Print application Login Page.";
 	public static final String FAILED_TO_NAVIGATE_TO_COREFLEX_GENERAL_INFORMATION_PAGE = "{0}Failed to navigate to CoreFlex General Information Page.";
+
+	//House Hold Goods
+	public static final String WEIGHT_CAP = "Weight Cap";
+	public static final String VOLUME_CAP = "Volume Cap";
+	public static final String UNIT_OF_WT_CAP = "Unit of Weight Cap";
+	public static final String UNIT_OF_VOL_CAP = "Unit of Volume Cap";
+	public static final String WEIGHT_CAP_IN_POUNDS = "Weight Cap in Pounds";
+	public static final String COST_CAP_IN_USD = "Cost Cap in USD";
+	public static final String AUTH_DAYS_TEMP_STORAGE_SIT = "Authorized Days in Temp Storage (SIT)";
+	public static final String INSURANCE_TYPE = "Insurance Type";
+	public static final String INSURANCE_TYPE_OTHER = "Other Insurance Type";
+	public static final String WT_VOL_FIELDS_HIDDEN = "{0}Verified Weight Volume cap fields are hidden";
+	public static final String WT_VOL_FIELDS_NOT_HIDDEN = "{0}Verified Weight Volume cap fields are not hidden";
+	public static final String WT_VOL_FIELDS_DISPLAYED = "{0}Verified Weight Volume cap fields are displayed";
+	public static final String US_DOM_VANLINE_SHIPMENT = "US Domestic Vanline Shipment";
+	public static final String AUTO_SHIPMENT = "Auto Shipment";
+	public static final String AIR_SHIPMENT = "Air Shipment";
+	public static final String SELF_MOVE = "Self Move";
+	public static final String SEA_SHIPMENT = "Sea Shipment";
+	public static final String NONUS_INLAND_SHIPMENT = "Non-US Inland Shipment";
+	public static final String PERMANENT_STORAGE = "Permanent Storage";
+	public static final String PET_SHIPMENT = "Pet Shipment";
+	public static final String DISCARD_DONATE = "Discard and Donate";
+	public static final String OTHER_INSURANCE_TYPE = "Other Insurance Type";
+	public static final String VERIFIED_ELEMENT_DISPLAYED = "{0}Verified element ''{1}'' is displayed";
+	public static final String VERIFIED_ELEMENT_HIDDEN = "{0}Verified element ''{1}'' is hidden";
 }

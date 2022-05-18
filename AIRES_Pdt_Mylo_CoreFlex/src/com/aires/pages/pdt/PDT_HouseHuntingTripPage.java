@@ -309,10 +309,10 @@ public class PDT_HouseHuntingTripPage extends Base {
 					houseHuntingTripBenefitData.houseHuntingTripTransportation.reimbursedBy, PDTConstants.REIMBURSED_BY,
 					PDTConstants.RADIO_BUTTON_LIST, true);
 
-			BusinessFunctions.verifyReimbursedByOtherTextBoxIsDisplayed(driver, addNewPolicyPage,
+			BusinessFunctions.verifyOtherTextBoxIsDisplayed(driver, addNewPolicyPage,
 					houseHuntingTripBenefitData.houseHuntingTripTransportation.reimbursedBy,
 					_txtBoxHouseHuntingTripTransportReimbursedByOther,
-					houseHuntingTripBenefitData.houseHuntingTripTransportation.reimbursedByOther, subBenefitFormName);
+					houseHuntingTripBenefitData.houseHuntingTripTransportation.reimbursedByOther, subBenefitFormName, PDTConstants.REIMBURSED_BY_OTHER);
 			CoreFunctions.clearAndSetText(driver, _txtAreaHouseHuntingTripTransportComment, PDTConstants.COMMENT,
 					houseHuntingTripBenefitData.houseHuntingTripTransportation.comment);
 		} catch (Exception e) {			
@@ -366,10 +366,10 @@ public class PDT_HouseHuntingTripPage extends Base {
 					houseHuntingTripBenefitData.houseHuntingTripLodging.reimbursedBy, PDTConstants.REIMBURSED_BY,
 					PDTConstants.RADIO_BUTTON_LIST, true);
 
-			BusinessFunctions.verifyReimbursedByOtherTextBoxIsDisplayed(driver, addNewPolicyPage,
+			BusinessFunctions.verifyOtherTextBoxIsDisplayed(driver, addNewPolicyPage,
 					houseHuntingTripBenefitData.houseHuntingTripLodging.reimbursedBy,
 					_txtBoxHouseHuntingTripLodgingReimbursedByOther,
-					houseHuntingTripBenefitData.houseHuntingTripLodging.reimbursedByOther, subBenefitFormName);
+					houseHuntingTripBenefitData.houseHuntingTripLodging.reimbursedByOther, subBenefitFormName, PDTConstants.REIMBURSED_BY_OTHER);
 
 			CoreFunctions.clearAndSetText(driver, _txtAreaHouseHuntingTripLodgingComment, PDTConstants.COMMENT,
 					houseHuntingTripBenefitData.houseHuntingTripLodging.comment);
@@ -482,10 +482,10 @@ public class PDT_HouseHuntingTripPage extends Base {
 					houseHuntingTripBenefitData.houseHuntingTripMeals.reimbursedBy, PDTConstants.REIMBURSED_BY,
 					PDTConstants.RADIO_BUTTON_LIST, true);
 
-			BusinessFunctions.verifyReimbursedByOtherTextBoxIsDisplayed(driver, addNewPolicyPage,
+			BusinessFunctions.verifyOtherTextBoxIsDisplayed(driver, addNewPolicyPage,
 					houseHuntingTripBenefitData.houseHuntingTripMeals.reimbursedBy,
 					_txtBoxHouseHuntingTripReimbursedByOther,
-					houseHuntingTripBenefitData.houseHuntingTripMeals.reimbursedByOther, subBenefitFormName);
+					houseHuntingTripBenefitData.houseHuntingTripMeals.reimbursedByOther, subBenefitFormName, PDTConstants.REIMBURSED_BY_OTHER);
 
 			CoreFunctions.clearAndSetText(driver, _txtAreaHouseHuntingTripMealComment, PDTConstants.COMMENT,
 					houseHuntingTripBenefitData.houseHuntingTripMeals.comment);

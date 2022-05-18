@@ -96,9 +96,8 @@ public class PDT_LoginPage extends Base {
 			switch (userType) {
 			case PDTConstants.CSM:
 				enterLoginCredentials(BusinessFunctions.getCSMCredentials(_loginDetailsApplication)[0], BusinessFunctions.getCSMCredentials(_loginDetailsApplication)[1]);
-				clickLoginBtn();
-				isSuccessfullyLoggedIn = viewPolicyPage.verifyUserlogin(BusinessFunctions.getCSMCredentials(_loginDetailsApplication)[0],
-				PDTConstants.VIEW_POLICY_PAGE);
+				isSuccessfullyLoggedIn = viewPolicyPage.verifyUserlogin(BusinessFunctions.getCSMCredentials(_loginDetailsApplication)[2],
+						PDTConstants.VIEW_POLICY_PAGE);
 				break;
 			default:
 				Reporter.addStepLog(MessageFormat.format(PDTConstants.LOGIN_USER_TYPE_NOT_VALID,

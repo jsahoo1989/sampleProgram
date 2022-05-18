@@ -357,10 +357,10 @@ public class PDT_TemporaryLivingPage extends Base {
 			CoreFunctions.selectItemInListByText(driver, _radioBtnTempLivingLodging,
 					tempLivingBenefitData.temporaryLivingLodging.reimbursedBy, PDTConstants.REIMBURSED_BY,
 					PDTConstants.RADIO_BUTTON_LIST, true);
-			BusinessFunctions.verifyReimbursedByOtherTextBoxIsDisplayed(driver, addNewPolicyPage,
+			BusinessFunctions.verifyOtherTextBoxIsDisplayed(driver, addNewPolicyPage,
 					tempLivingBenefitData.temporaryLivingLodging.reimbursedBy,
 					_txtBoxTempLivingLodgingReimbursedByOther,
-					tempLivingBenefitData.temporaryLivingLodging.reimbursedByOther, subBenefitFormName);
+					tempLivingBenefitData.temporaryLivingLodging.reimbursedByOther, subBenefitFormName, PDTConstants.REIMBURSED_BY_OTHER);
 			CoreFunctions.clearAndSetText(driver, _txtAreaTempLivingLodgingComment, PDTConstants.COMMENT,
 					tempLivingBenefitData.temporaryLivingLodging.comment);
 		} catch (Exception e) {
@@ -389,10 +389,10 @@ public class PDT_TemporaryLivingPage extends Base {
 					tempLivingBenefitData.temporaryLivingMeals.reimbursedBy, PDTConstants.REIMBURSED_BY,
 					PDTConstants.RADIO_BUTTON_LIST, true);
 
-			BusinessFunctions.verifyReimbursedByOtherTextBoxIsDisplayed(driver, addNewPolicyPage,
+			BusinessFunctions.verifyOtherTextBoxIsDisplayed(driver, addNewPolicyPage,
 					tempLivingBenefitData.temporaryLivingMeals.reimbursedBy,
 					_txtBoxTempLivingMealsReimbursedByOther,
-					tempLivingBenefitData.temporaryLivingMeals.reimbursedByOther, subBenefitFormName);
+					tempLivingBenefitData.temporaryLivingMeals.reimbursedByOther, subBenefitFormName, PDTConstants.REIMBURSED_BY_OTHER);
 
 			CoreFunctions.clearAndSetText(driver, _txtAreaTempLivingMealsComment, PDTConstants.COMMENT,
 					tempLivingBenefitData.temporaryLivingMeals.comment);
@@ -443,10 +443,10 @@ public class PDT_TemporaryLivingPage extends Base {
 					tempLivingBenefitData.temporaryLivingTransportation.reimbursedBy, PDTConstants.REIMBURSED_BY,
 					PDTConstants.RADIO_BUTTON_LIST, true);
 
-			BusinessFunctions.verifyReimbursedByOtherTextBoxIsDisplayed(driver, addNewPolicyPage,
+			BusinessFunctions.verifyOtherTextBoxIsDisplayed(driver, addNewPolicyPage,
 					tempLivingBenefitData.temporaryLivingTransportation.reimbursedBy,
 					_txtBoxTempLivingTransportationReimbursedByOther,
-					tempLivingBenefitData.temporaryLivingTransportation.reimbursedByOther, subBenefitFormName);
+					tempLivingBenefitData.temporaryLivingTransportation.reimbursedByOther, subBenefitFormName, PDTConstants.REIMBURSED_BY_OTHER);
 
 			CoreFunctions.clearAndSetText(driver, _txtAreaTempLivingTransportationComment, PDTConstants.COMMENT,
 					tempLivingBenefitData.temporaryLivingTransportation.comment);

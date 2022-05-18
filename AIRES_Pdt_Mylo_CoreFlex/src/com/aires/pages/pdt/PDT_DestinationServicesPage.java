@@ -279,9 +279,9 @@ public class PDT_DestinationServicesPage extends Base {
 					destinationServicesBenefitData.airPortPickup.reimbursedBy, PDTConstants.REIMBURSED_BY,
 					PDTConstants.RADIO_BUTTON_LIST, true);
 
-			BusinessFunctions.verifyReimbursedByOtherTextBoxIsDisplayed(driver, addNewPolicyPage,
+			BusinessFunctions.verifyOtherTextBoxIsDisplayed(driver, addNewPolicyPage,
 					destinationServicesBenefitData.airPortPickup.reimbursedBy, _txtBoxReimbursedByOtherForAirportPickup,
-					destinationServicesBenefitData.airPortPickup.reimbursedByOther, subBenefitFormName);
+					destinationServicesBenefitData.airPortPickup.reimbursedByOther, subBenefitFormName, PDTConstants.REIMBURSED_BY_OTHER);
 			CoreFunctions.clearAndSetText(driver, _txtAreaCommentForAirportPickup, PDTConstants.COMMENT,
 					destinationServicesBenefitData.airPortPickup.comment);
 		} catch (Exception e) {			
@@ -304,9 +304,9 @@ public class PDT_DestinationServicesPage extends Base {
 					destinationServicesBenefitData.areaTour.reimbursedBy, PDTConstants.REIMBURSED_BY,
 					PDTConstants.RADIO_BUTTON_LIST, true);
 
-			BusinessFunctions.verifyReimbursedByOtherTextBoxIsDisplayed(driver, addNewPolicyPage,
+			BusinessFunctions.verifyOtherTextBoxIsDisplayed(driver, addNewPolicyPage,
 					destinationServicesBenefitData.areaTour.reimbursedBy, _txtBoxReimbursedByOtherForAreaTour,
-					destinationServicesBenefitData.areaTour.reimbursedByOther, subBenefitFormName);
+					destinationServicesBenefitData.areaTour.reimbursedByOther, subBenefitFormName, PDTConstants.REIMBURSED_BY_OTHER);
 			CoreFunctions.clearAndSetText(driver, _txtAreaCommentForAreaTour, PDTConstants.COMMENT,
 					destinationServicesBenefitData.areaTour.comment);
 		} catch (Exception e) {
@@ -335,10 +335,10 @@ public class PDT_DestinationServicesPage extends Base {
 					destinationServicesBenefitData.autoRentalDuringAssignment.reimbursedBy, PDTConstants.REIMBURSED_BY,
 					PDTConstants.RADIO_BUTTON_LIST, true);
 
-			BusinessFunctions.verifyReimbursedByOtherTextBoxIsDisplayed(driver, addNewPolicyPage,
+			BusinessFunctions.verifyOtherTextBoxIsDisplayed(driver, addNewPolicyPage,
 					destinationServicesBenefitData.autoRentalDuringAssignment.reimbursedBy,
 					_txtBoxReimbursedByOtherForAutoRental,
-					destinationServicesBenefitData.autoRentalDuringAssignment.reimbursedByOther, subBenefitFormName);
+					destinationServicesBenefitData.autoRentalDuringAssignment.reimbursedByOther, subBenefitFormName, PDTConstants.REIMBURSED_BY_OTHER);
 			CoreFunctions.clearAndSetText(driver, _txtAreaCommentForAutoRental, PDTConstants.COMMENT,
 					destinationServicesBenefitData.autoRentalDuringAssignment.comment);
 		} catch (Exception e) {			
@@ -356,10 +356,10 @@ public class PDT_DestinationServicesPage extends Base {
 					destinationServicesBenefitData.conciergeServices.reimbursedBy, PDTConstants.REIMBURSED_BY,
 					PDTConstants.RADIO_BUTTON_LIST, true);
 
-			BusinessFunctions.verifyReimbursedByOtherTextBoxIsDisplayed(driver, addNewPolicyPage,
+			BusinessFunctions.verifyOtherTextBoxIsDisplayed(driver, addNewPolicyPage,
 					destinationServicesBenefitData.conciergeServices.reimbursedBy,
 					_txtBoxReimbursedByOtherForConciergeServices,
-					destinationServicesBenefitData.conciergeServices.reimbursedByOther, subBenefitFormName);
+					destinationServicesBenefitData.conciergeServices.reimbursedByOther, subBenefitFormName, PDTConstants.REIMBURSED_BY_OTHER);
 			CoreFunctions.clearAndSetText(driver, _txtAreaCommentForConciergeServices, PDTConstants.COMMENT,
 					destinationServicesBenefitData.conciergeServices.comment);
 		} catch (Exception e) {			
@@ -388,10 +388,10 @@ public class PDT_DestinationServicesPage extends Base {
 					destinationServicesBenefitData.departureServices.reimbursedBy, PDTConstants.REIMBURSED_BY,
 					PDTConstants.RADIO_BUTTON_LIST, true);
 
-			BusinessFunctions.verifyReimbursedByOtherTextBoxIsDisplayed(driver, addNewPolicyPage,
+			BusinessFunctions.verifyOtherTextBoxIsDisplayed(driver, addNewPolicyPage,
 					destinationServicesBenefitData.departureServices.reimbursedBy,
 					_txtBoxReimbursedByOtherForDepartureServices,
-					destinationServicesBenefitData.departureServices.reimbursedByOther, subBenefitFormName);
+					destinationServicesBenefitData.departureServices.reimbursedByOther, subBenefitFormName, PDTConstants.REIMBURSED_BY_OTHER);
 			CoreFunctions.clearAndSetText(driver, _txtAreaCommentForDepartureServices, PDTConstants.COMMENT,
 					destinationServicesBenefitData.departureServices.comment);
 		} catch (Exception e) {			
@@ -419,10 +419,10 @@ public class PDT_DestinationServicesPage extends Base {
 					destinationServicesBenefitData.furnitureRental.reimbursedBy, PDTConstants.REIMBURSED_BY,
 					PDTConstants.RADIO_BUTTON_LIST, true);
 
-			BusinessFunctions.verifyReimbursedByOtherTextBoxIsDisplayed(driver, addNewPolicyPage,
+			BusinessFunctions.verifyOtherTextBoxIsDisplayed(driver, addNewPolicyPage,
 					destinationServicesBenefitData.furnitureRental.reimbursedBy,
 					_txtBoxReimbursedByOtherFurnitureRental,
-					destinationServicesBenefitData.furnitureRental.reimbursedByOther, subBenefitFormName);
+					destinationServicesBenefitData.furnitureRental.reimbursedByOther, subBenefitFormName, PDTConstants.REIMBURSED_BY_OTHER);
 			CoreFunctions.clearAndSetText(driver, _txtAreaCommentForFurnitureRental, PDTConstants.COMMENT,
 					destinationServicesBenefitData.furnitureRental.comment);
 		} catch (Exception e) {			
@@ -440,10 +440,10 @@ public class PDT_DestinationServicesPage extends Base {
 					destinationServicesBenefitData.reimbursementOfMemberShipDues.reimbursedBy, PDTConstants.REIMBURSED_BY,
 					PDTConstants.RADIO_BUTTON_LIST, true);
 
-			BusinessFunctions.verifyReimbursedByOtherTextBoxIsDisplayed(driver, addNewPolicyPage,
+			BusinessFunctions.verifyOtherTextBoxIsDisplayed(driver, addNewPolicyPage,
 					destinationServicesBenefitData.reimbursementOfMemberShipDues.reimbursedBy,
 					_txtBoxReimbursedByOtherMemberShipDues,
-					destinationServicesBenefitData.reimbursementOfMemberShipDues.reimbursedByOther, subBenefitFormName);
+					destinationServicesBenefitData.reimbursementOfMemberShipDues.reimbursedByOther, subBenefitFormName, PDTConstants.REIMBURSED_BY_OTHER);
 			CoreFunctions.clearAndSetText(driver, _txtAreaCommentForMembershipDues, PDTConstants.COMMENT,
 					destinationServicesBenefitData.reimbursementOfMemberShipDues.comment);
 		} catch (Exception e) {			
@@ -465,9 +465,9 @@ public class PDT_DestinationServicesPage extends Base {
 					destinationServicesBenefitData.schoolSearch.reimbursedBy, PDTConstants.REIMBURSED_BY,
 					PDTConstants.RADIO_BUTTON_LIST, true);
 
-			BusinessFunctions.verifyReimbursedByOtherTextBoxIsDisplayed(driver, addNewPolicyPage,
+			BusinessFunctions.verifyOtherTextBoxIsDisplayed(driver, addNewPolicyPage,
 					destinationServicesBenefitData.schoolSearch.reimbursedBy, _txtBoxReimbursedByOtherSchoolSearch,
-					destinationServicesBenefitData.schoolSearch.reimbursedByOther, subBenefitFormName);
+					destinationServicesBenefitData.schoolSearch.reimbursedByOther, subBenefitFormName, PDTConstants.REIMBURSED_BY_OTHER);
 			CoreFunctions.clearAndSetText(driver, _txtAreaCommentForSchoolSearch, PDTConstants.COMMENT,
 					destinationServicesBenefitData.schoolSearch.comment);
 		} catch (Exception e) {			
@@ -489,9 +489,9 @@ public class PDT_DestinationServicesPage extends Base {
 					destinationServicesBenefitData.settlingInServices.reimbursedBy, PDTConstants.REIMBURSED_BY,
 					PDTConstants.RADIO_BUTTON_LIST, true);
 
-			BusinessFunctions.verifyReimbursedByOtherTextBoxIsDisplayed(driver, addNewPolicyPage,
+			BusinessFunctions.verifyOtherTextBoxIsDisplayed(driver, addNewPolicyPage,
 					destinationServicesBenefitData.settlingInServices.reimbursedBy, _txtBoxReimbursedByOtherSettlingServices,
-					destinationServicesBenefitData.settlingInServices.reimbursedByOther, subBenefitFormName);
+					destinationServicesBenefitData.settlingInServices.reimbursedByOther, subBenefitFormName, PDTConstants.REIMBURSED_BY_OTHER);
 			CoreFunctions.clearAndSetText(driver, _txtAreaCommentForSettlingServices, PDTConstants.COMMENT,
 					destinationServicesBenefitData.settlingInServices.comment);
 		} catch (Exception e) {			
@@ -520,9 +520,9 @@ public class PDT_DestinationServicesPage extends Base {
 					destinationServicesBenefitData.transitionAssistanceProgram.reimbursedBy, PDTConstants.REIMBURSED_BY,
 					PDTConstants.RADIO_BUTTON_LIST, true);
 
-			BusinessFunctions.verifyReimbursedByOtherTextBoxIsDisplayed(driver, addNewPolicyPage,
+			BusinessFunctions.verifyOtherTextBoxIsDisplayed(driver, addNewPolicyPage,
 					destinationServicesBenefitData.transitionAssistanceProgram.reimbursedBy, _txtBoxReimbursedByOtherTransitionAssistanceProg,
-					destinationServicesBenefitData.transitionAssistanceProgram.reimbursedByOther, subBenefitFormName);
+					destinationServicesBenefitData.transitionAssistanceProgram.reimbursedByOther, subBenefitFormName, PDTConstants.REIMBURSED_BY_OTHER);
 			CoreFunctions.clearAndSetText(driver, _txtAreaCommentForTransitionAssistanceProg, PDTConstants.COMMENT,
 					destinationServicesBenefitData.transitionAssistanceProgram.comment);
 		} catch (Exception e) {
@@ -549,9 +549,9 @@ public class PDT_DestinationServicesPage extends Base {
 					destinationServicesBenefitData.tutionAndEducation.reimbursedBy, PDTConstants.REIMBURSED_BY,
 					PDTConstants.RADIO_BUTTON_LIST, true);
 
-			BusinessFunctions.verifyReimbursedByOtherTextBoxIsDisplayed(driver, addNewPolicyPage,
+			BusinessFunctions.verifyOtherTextBoxIsDisplayed(driver, addNewPolicyPage,
 					destinationServicesBenefitData.tutionAndEducation.reimbursedBy, _txtBoxReimbursedByOtherTutionAndEduction,
-					destinationServicesBenefitData.tutionAndEducation.reimbursedByOther, subBenefitFormName);
+					destinationServicesBenefitData.tutionAndEducation.reimbursedByOther, subBenefitFormName, PDTConstants.REIMBURSED_BY_OTHER);
 			CoreFunctions.clearAndSetText(driver, _txtAreaCommentForTutionAndEduction, PDTConstants.COMMENT,
 					destinationServicesBenefitData.tutionAndEducation.comment);
 		} catch (Exception e) {			

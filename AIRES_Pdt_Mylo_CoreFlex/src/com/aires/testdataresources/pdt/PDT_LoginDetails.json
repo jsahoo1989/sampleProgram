@@ -8,11 +8,11 @@
 			"irisBuildPath": "\\\\corpprdvw589\\rdev\\IRIS_Builds\\IRIS_Statler_QA\\IRIS.exe",
 			"firstName": "mxsso",
 			"lastName": "dev5",
-			"clientId": "49211",
-			"clientName": "AIRES-CIS-DEMO&'TEST(CLIENT)",
+			"clientId": "7403",
+			"clientName": "Dow Chemical Company (Global)",
 			"csmUserName": "mxssodev5@corp.aires.com",
 			"csmPassword": "F74#jd*187_NB",
-			"policy": "Frequent Business Traveler (# 14614)"
+			"policy": "hDCC Repatriation (# 14724)"
 		},
 		"dev": {
 			"irisUserName": "BBENEDU",
@@ -21,11 +21,11 @@
 			"irisBuildPath": "\\\\corpprdvw589\\rdev\\IRIS_Builds\\IRIS_Statler_QA\\IRIS.exe",
 			"firstName": "mxsso",
 			"lastName": "dev5",
-			"clientId": "7403",
-			"clientName": "Dow Chemical Company (Global)",
+			"clientId": "49211",
+			"clientName": "AIRES-CIS-DEMO&'TEST(CLIENT)",
 			"csmUserName": "mxssodev5@corp.aires.com",
-			"csmPassword": "F74#jd*187_NB",
-			"policy": "hDCC Repatriation (# 14724)"
+			"csmPassword": "F74#jd*187_NB",			
+			"policy": "Frequent Business Traveler (# 14614)"
 		},
 		"prod": {
 			"irisUserName": "BBENEDU",
@@ -45,13 +45,13 @@
 			"irisPassword": "testbb",
 			"irisDatabase": "Training",
 			"irisBuildPath": "\\\\corpprdvw589\\rdev\\IRIS_Builds\\IRIS_PROD\\IRIS.exe",
-			"firstName": "Chere",
-			"lastName": "kitts",
-			"clientId": "7311",
-			"clientName": "GAP, Inc. Headquarters",
-			"csmUserName": "ckitts",
-			"csmPassword": "ckitts",
-			"policy": "Long-Term Assignment Policy (# 12472)"
+			"firstName": "mxsso",
+			"lastName": "dev5",
+			"clientId": "7403",
+			"clientName": "Dow Chemical Company (Global)",
+			"csmUserName": "mxssodev5@corp.aires.com",
+			"csmPassword": "F74#jd*187_NB",
+			"policy": "hDCC Repatriation (# 14724)"
 		},
 		"uat": {
 			"irisUserName": "BBENEDU",

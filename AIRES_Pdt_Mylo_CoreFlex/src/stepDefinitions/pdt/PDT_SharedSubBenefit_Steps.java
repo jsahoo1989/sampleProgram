@@ -1,10 +1,12 @@
 package stepDefinitions.pdt;
 
 import java.text.MessageFormat;
+import java.util.Date;
 import java.util.List;
 
 import org.testng.Assert;
 
+import com.aires.businessrules.BusinessFunctions;
 import com.aires.businessrules.DbFunctions;
 import com.aires.businessrules.constants.CoreConstants;
 import com.aires.businessrules.constants.PDTConstants;
@@ -19,6 +21,7 @@ import com.aires.pages.pdt.PDT_FinalMovePage;
 import com.aires.pages.pdt.PDT_GeneralInformationPage;
 import com.aires.pages.pdt.PDT_HomeLeavePage;
 import com.aires.pages.pdt.PDT_HomePurchasePage;
+import com.aires.pages.pdt.PDT_HouseHoldGoodsPage;
 import com.aires.pages.pdt.PDT_HouseHuntingTripPage;
 import com.aires.pages.pdt.PDT_ImmigrationPage;
 import com.aires.pages.pdt.PDT_LanguageTrainingPage;
@@ -58,6 +61,8 @@ public class PDT_SharedSubBenefit_Steps {
 	private PDT_OngoingPaymentReimbursementPage ongoingPaymentReimbursementPage;
 	private PDT_PropertyManagementPage propertyManagementPage;
 	private PDT_HomePurchasePage homePurchasePage;
+	private PDT_HouseHoldGoodsPage houseHoldGoodsPage;
+	long timeBeforeAction, timeAfterAction;
 	
 	public PDT_SharedSubBenefit_Steps(TestContext context) {
 		testContext = context;
@@ -82,6 +87,7 @@ public class PDT_SharedSubBenefit_Steps {
 		ongoingPaymentReimbursementPage = testContext.getPageObjectManager().getOngoingPaymentReimbursementPage();
 		propertyManagementPage = testContext.getPageObjectManager().getPropertyManagementPage();
 		homePurchasePage = testContext.getPageObjectManager().getHomePurchasePage();
+		houseHoldGoodsPage =  testContext.getPageObjectManager().getHouseHoldGoodsPage();
 	}
 	
 	public PDT_PreAcceptanceService getPreAcceptServicePage() {
@@ -156,6 +162,9 @@ public class PDT_SharedSubBenefit_Steps {
 		return homePurchasePage;
 	}
 	
+	public PDT_HouseHoldGoodsPage getHouseHoldGoodsPage() {
+		return houseHoldGoodsPage;
+	}
 	
 	@When("^he clicks on 'SUBMIT' button after entering mandatory information for all the below selected sub benefits on \"([^\"]*)\" page$")
 	public void he_clicks_on_SUBMIT_button_after_entering_mandatory_information_for_all_the_below_selected_sub_benefits_on_page(
@@ -175,7 +184,10 @@ public class PDT_SharedSubBenefit_Steps {
 
 	@Then("^newly created Policy should be displayed under \"([^\"]*)\" page after clicking on 'EXIT' button$")
 	public void newly_created_Policy_should_be_displayed_under_page_after_clicking_on_EXIT_button(String pageName) {
+		timeBeforeAction = new Date().getTime();
 		subBenefitPage.exitFromPolicyBenefitPage();
+		timeAfterAction = new Date().getTime();
+		BusinessFunctions.printTimeTakenByPageToLoad(timeBeforeAction, timeAfterAction, pageName);
 		Assert.assertTrue(viewPolicyPage.searchAndVerifyPolicy(addNewPolicyPage.getPolicyName().split("\\(#")[0].trim(), pageName, addNewPolicyPage),
 				MessageFormat.format(PDTConstants.FAILED_TO_VERIFY_ELEMENT_DISPLAYED_ON_PAGE, CoreConstants.FAIL, PDTConstants.POLICY_NAME,
 						addNewPolicyPage.getPolicyName(), pageName, viewPolicyPage.getPolicyList()));

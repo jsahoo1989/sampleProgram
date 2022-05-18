@@ -84,9 +84,9 @@ public class PDT_DuplicateHousingPage extends Base {
 					duplicateHousingBenefitData.reimbursedBy, PDTConstants.REIMBURSED_BY,
 					PDTConstants.RADIO_BUTTON_LIST, true);
 
-			BusinessFunctions.verifyReimbursedByOtherTextBoxIsDisplayed(driver, addNewPolicyPage,
+			BusinessFunctions.verifyOtherTextBoxIsDisplayed(driver, addNewPolicyPage,
 					duplicateHousingBenefitData.reimbursedBy, _txtBoxReimbursedByOther,
-					duplicateHousingBenefitData.reimbursedByOther, subBenefitFormName);
+					duplicateHousingBenefitData.reimbursedByOther, subBenefitFormName, PDTConstants.REIMBURSED_BY_OTHER);
 			CoreFunctions.clearAndSetText(driver, _txtAreaDuplicateHousingComment, PDTConstants.COMMENT,
 					duplicateHousingBenefitData.comments);
 			CoreFunctions.click(driver, _btnSaveAndContinue, _btnSaveAndContinue.getText());

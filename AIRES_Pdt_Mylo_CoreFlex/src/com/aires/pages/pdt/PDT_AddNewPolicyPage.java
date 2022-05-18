@@ -1,6 +1,7 @@
 package com.aires.pages.pdt;
 
 import java.text.MessageFormat;
+import java.util.Date;
 import java.util.List;
 import java.util.Map;
 
@@ -113,6 +114,7 @@ public class PDT_AddNewPolicyPage extends Base {
 
 	private String clientId, clientName, policyName;
 	private int policyId;
+	long timeBeforeAction, timeAfterAction;
 
 	public void setClientId(String cId) {
 		clientId = cId;
@@ -412,7 +414,11 @@ public class PDT_AddNewPolicyPage extends Base {
 		selectClient(_loginDetailsApplication);
 		selectPolicy(_loginDetailsApplication);
 		CoreFunctions.explicitWaitTillElementVisibility(driver, _buttonNext, "Next", 7);
+		timeBeforeAction = new Date().getTime();
 		CoreFunctions.click(driver, _buttonNext, _buttonNext.getText());
+		BusinessFunctions.fluentWaitForSpinnerToDisappear(driver, _progressBar);
+		timeAfterAction = new Date().getTime();	
+		BusinessFunctions.printTimeTakenByPageToLoad(timeBeforeAction, timeAfterAction, PDTConstants.GENERAL_INFORMATION);
 	}
 
 	public void selectClient(PDT_LoginDetails _loginDetailsApplication) {
@@ -546,7 +552,8 @@ public class PDT_AddNewPolicyPage extends Base {
 				CoreFunctions.clickElement(driver, _buttonLogout);
 				break;
 			case PDTConstants.NEXT:
-				CoreFunctions.clickElement(driver, _buttonNext);				
+				CoreFunctions.clickElement(driver, _buttonNext);	
+				CoreFunctions.explicitWaitTillElementInVisibility(driver, _progressBar);
 				break;
 			case PDTConstants.BACK:
 				CoreFunctions.clickElement(driver, _buttonBack);

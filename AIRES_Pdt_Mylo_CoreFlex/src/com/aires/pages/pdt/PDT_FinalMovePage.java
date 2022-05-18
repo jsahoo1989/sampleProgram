@@ -321,10 +321,10 @@ public class PDT_FinalMovePage extends Base {
 			CoreFunctions.selectItemInListByText(driver, _radioBtnFinalMoveTransport,
 					finalMoveBenefitData.finalMoveTransportation.reimbursedBy, PDTConstants.REIMBURSED_BY,
 					PDTConstants.RADIO_BUTTON_LIST, true);
-			BusinessFunctions.verifyReimbursedByOtherTextBoxIsDisplayed(driver, addNewPolicyPage,
+			BusinessFunctions.verifyOtherTextBoxIsDisplayed(driver, addNewPolicyPage,
 					finalMoveBenefitData.finalMoveTransportation.reimbursedBy,
 					_txtBoxFinalMoveTransportReimbursedByOther,
-					finalMoveBenefitData.finalMoveTransportation.reimbursedByOther, subBenefitFormName);
+					finalMoveBenefitData.finalMoveTransportation.reimbursedByOther, subBenefitFormName, PDTConstants.REIMBURSED_BY_OTHER);
 			CoreFunctions.clearAndSetText(driver, _txtAreaFinalMoveTransportComment, PDTConstants.COMMENT,
 					finalMoveBenefitData.finalMoveTransportation.comment);
 		} catch (Exception e) {
@@ -405,10 +405,10 @@ public class PDT_FinalMovePage extends Base {
 			CoreFunctions.selectItemInListByText(driver, _radioBtnFinalMoveLodging,
 					finalMoveBenefitData.finalMoveLodging.reimbursedBy, PDTConstants.REIMBURSED_BY,
 					PDTConstants.RADIO_BUTTON_LIST, true);
-			BusinessFunctions.verifyReimbursedByOtherTextBoxIsDisplayed(driver, addNewPolicyPage,
+			BusinessFunctions.verifyOtherTextBoxIsDisplayed(driver, addNewPolicyPage,
 					finalMoveBenefitData.finalMoveLodging.reimbursedBy,
 					_txtBoxFinalMoveLodgingReimbursedByOther,
-					finalMoveBenefitData.finalMoveLodging.reimbursedByOther, subBenefitFormName);
+					finalMoveBenefitData.finalMoveLodging.reimbursedByOther, subBenefitFormName, PDTConstants.REIMBURSED_BY_OTHER);
 			CoreFunctions.clearAndSetText(driver, _txtAreaFinalMoveLodgingComment, PDTConstants.COMMENT,
 					finalMoveBenefitData.finalMoveLodging.comment);
 		} catch (Exception e) {
@@ -518,10 +518,10 @@ public class PDT_FinalMovePage extends Base {
 					finalMoveBenefitData.finalMoveMeals.reimbursedBy, PDTConstants.REIMBURSED_BY,
 					PDTConstants.RADIO_BUTTON_LIST, true);
 
-			BusinessFunctions.verifyReimbursedByOtherTextBoxIsDisplayed(driver, addNewPolicyPage,
+			BusinessFunctions.verifyOtherTextBoxIsDisplayed(driver, addNewPolicyPage,
 					finalMoveBenefitData.finalMoveMeals.reimbursedBy,
 					_txtBoxFinalMoveMealReimbursedByOther,
-					finalMoveBenefitData.finalMoveMeals.reimbursedByOther, subBenefitFormName);
+					finalMoveBenefitData.finalMoveMeals.reimbursedByOther, subBenefitFormName, PDTConstants.REIMBURSED_BY_OTHER);
 
 			CoreFunctions.clearAndSetText(driver, _txtAreaFinalMoveMealComment, PDTConstants.COMMENT,
 					finalMoveBenefitData.finalMoveMeals.comment);

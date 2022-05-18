@@ -2,6 +2,7 @@ package com.aires.pages.pdt;
 
 import java.text.MessageFormat;
 import java.util.Arrays;
+import java.util.Date;
 import java.util.List;
 import java.util.Map;
 
@@ -12,6 +13,7 @@ import org.openqa.selenium.support.How;
 import org.testng.Assert;
 
 import com.aires.businessrules.Base;
+import com.aires.businessrules.BusinessFunctions;
 import com.aires.businessrules.CoreFunctions;
 import com.aires.businessrules.constants.COREFLEXConstants;
 import com.aires.businessrules.constants.CoreConstants;
@@ -225,6 +227,7 @@ public class PDT_GeneralInformationPage extends Base {
 
 	private String policyType, employeeType, homeOwnerType, benefitPackageType, cappedPolicy, expenseMgmt,
 			tracingPrompt;
+	long timeBeforeAction, timeAfterAction;
 
 	public boolean validateGeneralInfo(String pageName, DataTable dataTable, String selectedPolicyName) {
 
@@ -586,7 +589,11 @@ public class PDT_GeneralInformationPage extends Base {
 			CoreFunctions.explicitWaitTillElementListClickable(driver, _radioBtnExpenseManagementClient);
 			CoreFunctions.selectItemInListByText(driver, _radioBtnExpenseManagementClient, "No",
 					_lblExpenseMgmtClient.getText(), PDTConstants.RADIO_BUTTON_LIST, true);
+			timeBeforeAction = new Date().getTime();
 			CoreFunctions.click(driver, _btnNext, _btnNext.getText());
+			BusinessFunctions.fluentWaitForSpinnerToDisappear(driver, _progressBar);
+			timeAfterAction = new Date().getTime();	
+			BusinessFunctions.printTimeTakenByPageToLoad(timeBeforeAction, timeAfterAction, PDTConstants.POLICY_BENEFIT_CATEGORIES);
 		} catch (Exception e) {
 			Assert.fail(PDTConstants.FAILED_TO_FILL_GENERAL_INFO_FORM);
 		}

@@ -270,7 +270,7 @@ public class CoreFunctions {
 
 	public static void explicitWaitTillElementVisibility(WebDriver driver, WebElement Element, String name) {
 		Log.info("waiting for " + name + " to display");
-		WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(20));
+		WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(60));
 		wait.until(ExpectedConditions.visibilityOf(Element));
 		Log.info("Pass: " + name + " is displayed");
 	}

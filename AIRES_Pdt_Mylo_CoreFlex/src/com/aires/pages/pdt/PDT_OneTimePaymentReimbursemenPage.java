@@ -1,5 +1,7 @@
 package com.aires.pages.pdt;
 
+import static org.openqa.selenium.support.locators.RelativeLocator.with;
+
 import java.text.MessageFormat;
 import java.util.List;
 
@@ -10,8 +12,6 @@ import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.How;
 import org.testng.Assert;
 
-import static org.openqa.selenium.support.locators.RelativeLocator.*;
-
 import com.aires.businessrules.Base;
 import com.aires.businessrules.BusinessFunctions;
 import com.aires.businessrules.CoreFunctions;
@@ -19,7 +19,6 @@ import com.aires.businessrules.constants.CoreConstants;
 import com.aires.businessrules.constants.PDTConstants;
 import com.aires.managers.FileReaderManager;
 import com.aires.testdatatypes.pdt.PDT_OneTimePaymentBenefit;
-import com.aires.utilities.Log;
 
 public class PDT_OneTimePaymentReimbursemenPage extends Base {
 	public PDT_OneTimePaymentReimbursemenPage(WebDriver driver) {
@@ -634,9 +633,9 @@ public class PDT_OneTimePaymentReimbursemenPage extends Base {
 					oneTimePaymentBenefitData.miscReloAllowance.reimbursedBy, PDTConstants.REIMBURSED_BY,
 					PDTConstants.RADIO_BUTTON_LIST, true);
 
-			BusinessFunctions.verifyReimbursedByOtherTextBoxIsDisplayed(driver, addNewPolicyPage,
+			BusinessFunctions.verifyOtherTextBoxIsDisplayed(driver, addNewPolicyPage,
 					oneTimePaymentBenefitData.miscReloAllowance.reimbursedBy, _txtBoxReimbursedByOther,
-					oneTimePaymentBenefitData.miscReloAllowance.reimbursedByOther, subBenefitFormName);
+					oneTimePaymentBenefitData.miscReloAllowance.reimbursedByOther, subBenefitFormName, PDTConstants.REIMBURSED_BY_OTHER);
 			CoreFunctions.clearAndSetText(driver, _txtAreaMiscRelocationAllowanceComment, PDTConstants.COMMENT,
 					oneTimePaymentBenefitData.miscReloAllowance.comment);
 		} catch (Exception e) {
@@ -706,9 +705,9 @@ public class PDT_OneTimePaymentReimbursemenPage extends Base {
 					oneTimePaymentBenefitData.lumpSum.reimbursedBy, PDTConstants.REIMBURSED_BY,
 					PDTConstants.RADIO_BUTTON_LIST, true);
 
-			BusinessFunctions.verifyReimbursedByOtherTextBoxIsDisplayed(driver, addNewPolicyPage,
+			BusinessFunctions.verifyOtherTextBoxIsDisplayed(driver, addNewPolicyPage,
 					oneTimePaymentBenefitData.lumpSum.reimbursedBy, _txtBoxLumpSumReimbursedByOther,
-					oneTimePaymentBenefitData.lumpSum.reimbursedByOther, subBenefitFormName);
+					oneTimePaymentBenefitData.lumpSum.reimbursedByOther, subBenefitFormName, PDTConstants.REIMBURSED_BY_OTHER);
 			CoreFunctions.clearAndSetText(driver, _txtAreaLumpSumComment, PDTConstants.COMMENT,
 					oneTimePaymentBenefitData.lumpSum.comment);
 		} catch (Exception e) {
@@ -754,9 +753,9 @@ public class PDT_OneTimePaymentReimbursemenPage extends Base {
 					oneTimePaymentBenefitData.leaseBreak.reimbursedBy, PDTConstants.REIMBURSED_BY,
 					PDTConstants.RADIO_BUTTON_LIST, true);
 
-			BusinessFunctions.verifyReimbursedByOtherTextBoxIsDisplayed(driver, addNewPolicyPage,
+			BusinessFunctions.verifyOtherTextBoxIsDisplayed(driver, addNewPolicyPage,
 					oneTimePaymentBenefitData.leaseBreak.reimbursedBy, _txtBoxLeaseBreakReimbursedByOther,
-					oneTimePaymentBenefitData.leaseBreak.reimbursedByOther, subBenefitFormName);
+					oneTimePaymentBenefitData.leaseBreak.reimbursedByOther, subBenefitFormName, PDTConstants.REIMBURSED_BY_OTHER);
 			CoreFunctions.clearAndSetText(driver, _txtAreaLeaseBreakComment, PDTConstants.COMMENT,
 					oneTimePaymentBenefitData.leaseBreak.comment);
 		} catch (Exception e) {
@@ -795,9 +794,9 @@ public class PDT_OneTimePaymentReimbursemenPage extends Base {
 					oneTimePaymentBenefitData.applAllowance.reimbursedBy, PDTConstants.REIMBURSED_BY,
 					PDTConstants.RADIO_BUTTON_LIST, true);
 
-			BusinessFunctions.verifyReimbursedByOtherTextBoxIsDisplayed(driver, addNewPolicyPage,
+			BusinessFunctions.verifyOtherTextBoxIsDisplayed(driver, addNewPolicyPage,
 					oneTimePaymentBenefitData.applAllowance.reimbursedBy, _txtBoxApplAllowanceReimbursedByOther,
-					oneTimePaymentBenefitData.applAllowance.reimbursedByOther, subBenefitFormName);
+					oneTimePaymentBenefitData.applAllowance.reimbursedByOther, subBenefitFormName, PDTConstants.REIMBURSED_BY_OTHER);
 			CoreFunctions.clearAndSetText(driver, _txtAreaApplAllowanceComment, PDTConstants.COMMENT,
 					oneTimePaymentBenefitData.applAllowance.comment);
 		} catch (Exception e) {
@@ -828,9 +827,9 @@ public class PDT_OneTimePaymentReimbursemenPage extends Base {
 					oneTimePaymentBenefitData.autoRegCost.reimbursedBy, PDTConstants.REIMBURSED_BY,
 					PDTConstants.RADIO_BUTTON_LIST, true);
 
-			BusinessFunctions.verifyReimbursedByOtherTextBoxIsDisplayed(driver, addNewPolicyPage,
+			BusinessFunctions.verifyOtherTextBoxIsDisplayed(driver, addNewPolicyPage,
 					oneTimePaymentBenefitData.autoRegCost.reimbursedBy, _txtBoxAutoRegCostReimbursedByOther,
-					oneTimePaymentBenefitData.autoRegCost.reimbursedByOther, subBenefitFormName);
+					oneTimePaymentBenefitData.autoRegCost.reimbursedByOther, subBenefitFormName, PDTConstants.REIMBURSED_BY_OTHER);
 			CoreFunctions.clearAndSetText(driver, _txtAreaAutoRegCostComment, PDTConstants.COMMENT,
 					oneTimePaymentBenefitData.autoRegCost.comment);
 		} catch (Exception e) {
@@ -866,9 +865,9 @@ public class PDT_OneTimePaymentReimbursemenPage extends Base {
 					oneTimePaymentBenefitData.autoLossOnSale.reimbursedBy, PDTConstants.REIMBURSED_BY,
 					PDTConstants.RADIO_BUTTON_LIST, true);
 
-			BusinessFunctions.verifyReimbursedByOtherTextBoxIsDisplayed(driver, addNewPolicyPage,
+			BusinessFunctions.verifyOtherTextBoxIsDisplayed(driver, addNewPolicyPage,
 					oneTimePaymentBenefitData.autoLossOnSale.reimbursedBy, _txtBoxAutoLossOnSaleReimbursedByOther,
-					oneTimePaymentBenefitData.autoLossOnSale.reimbursedByOther, subBenefitFormName);
+					oneTimePaymentBenefitData.autoLossOnSale.reimbursedByOther, subBenefitFormName, PDTConstants.REIMBURSED_BY_OTHER);
 			CoreFunctions.clearAndSetText(driver, _txtAreaAutoLossOnSaleComment, PDTConstants.COMMENT,
 					oneTimePaymentBenefitData.autoLossOnSale.comment);
 		} catch (Exception e) {
@@ -905,10 +904,10 @@ public class PDT_OneTimePaymentReimbursemenPage extends Base {
 					oneTimePaymentBenefitData.otherOneTimePayment.reimbursedBy, PDTConstants.REIMBURSED_BY,
 					PDTConstants.RADIO_BUTTON_LIST, true);
 
-			BusinessFunctions.verifyReimbursedByOtherTextBoxIsDisplayed(driver, addNewPolicyPage,
+			BusinessFunctions.verifyOtherTextBoxIsDisplayed(driver, addNewPolicyPage,
 					oneTimePaymentBenefitData.otherOneTimePayment.reimbursedBy,
 					_txtBoxOtherOneTimePaymentReimbursedByOther,
-					oneTimePaymentBenefitData.otherOneTimePayment.reimbursedByOther, subBenefitFormName);
+					oneTimePaymentBenefitData.otherOneTimePayment.reimbursedByOther, subBenefitFormName, PDTConstants.REIMBURSED_BY_OTHER);
 			CoreFunctions.clearAndSetText(driver, _txtAreaOtherOneTimePaymentComment, PDTConstants.COMMENT,
 					oneTimePaymentBenefitData.otherOneTimePayment.comment);
 		} catch (Exception e) {

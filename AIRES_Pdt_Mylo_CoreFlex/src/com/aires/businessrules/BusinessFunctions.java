@@ -35,6 +35,7 @@ import java.sql.DriverManager;
 import java.sql.Statement;
 import java.text.DecimalFormat;
 import java.text.MessageFormat;
+import java.time.Duration;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
@@ -43,9 +44,12 @@ import java.util.concurrent.ThreadLocalRandom;
 
 import org.apache.commons.codec.binary.Base64;
 import org.apache.log4j.Logger;
+import org.openqa.selenium.NoSuchElementException;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.interactions.Actions;
+import org.openqa.selenium.support.ui.ExpectedConditions;
+import org.openqa.selenium.support.ui.FluentWait;
 import org.openqa.selenium.support.ui.Select;
 import org.testng.Assert;
 import com.aires.businessrules.constants.COREFLEXConstants;
@@ -610,18 +614,18 @@ public class BusinessFunctions {
 		return listToBeSorted;
 	}
 
-	public static void verifyReimbursedByOtherTextBoxIsDisplayed(WebDriver driver,
+	public static void verifyOtherTextBoxIsDisplayed(WebDriver driver,
 			PDT_AddNewPolicyPage addNewPolicyPage, String jsonReimbursedBy, WebElement element,
-			String jsonReimbursedByOther, String SubBenefitFormName) {
+			String jsonReimbursedByOther, String SubBenefitFormName, String lblOtherTextBox) {
 		try {
 			if (jsonReimbursedBy.equalsIgnoreCase(PDTConstants.OTHER)
 					&& CoreFunctions.isElementExist(driver, element, 1)) {
 				Reporter.addStepLog(MessageFormat.format(PDTConstants.VERIFIED_TEXT_BOX_FIELD_DISPLAYED,
-						CoreConstants.PASS, PDTConstants.REIMBURSED_BY_OTHER, SubBenefitFormName));
-				CoreFunctions.clearAndSetText(driver, element, PDTConstants.REIMBURSED_BY_OTHER, jsonReimbursedByOther);
+						CoreConstants.PASS, lblOtherTextBox, SubBenefitFormName));
+				CoreFunctions.clearAndSetText(driver, element, lblOtherTextBox, jsonReimbursedByOther);
 			}
 		} catch (Exception e) {
-			Assert.fail(MessageFormat.format(PDTConstants.FAILED_TO_FILL_FIELD, PDTConstants.REIMBURSED_BY_OTHER,
+			Assert.fail(MessageFormat.format(PDTConstants.FAILED_TO_FILL_FIELD, lblOtherTextBox,
 					SubBenefitFormName));
 		}
 	}
@@ -966,13 +970,29 @@ public class BusinessFunctions {
 	}
 	
 	
-	public static boolean verifyDefaultOptionIsSelectedInDrpDown(String selectedOptionText, String expectedOption, String lblDrpDown) {
-		if(selectedOptionText.equalsIgnoreCase(expectedOption)) {
-			Reporter.addStepLog(MessageFormat.format(PDTConstants.VERIFIED_DEFAULT_OPTION_SELECTED,
-					CoreConstants.PASS, expectedOption, lblDrpDown));
+	public static boolean verifyDefaultOptionIsSelectedInDrpDown(String selectedOptionText, String expectedOption,
+			String lblDrpDown) {
+		if (selectedOptionText.equalsIgnoreCase(expectedOption)) {
+			Reporter.addStepLog(MessageFormat.format(PDTConstants.VERIFIED_DEFAULT_OPTION_SELECTED, CoreConstants.PASS,
+					expectedOption, lblDrpDown));
 			return true;
-		} 
+		}
 		return false;
 	}
+
+	public static void fluentWaitForSpinnerToDisappear(WebDriver driver, WebElement element) {
+		FluentWait<WebDriver> wait = new FluentWait<>(driver).withTimeout(Duration.ofSeconds(60))
+				.pollingEvery(Duration.ofMillis(1000)).withMessage("Timeout occured!")
+				.ignoring(NoSuchElementException.class);
+		wait.until(ExpectedConditions.invisibilityOf(element));
+	}
+	
+	public static void printTimeTakenByPageToLoad(long timeBeforeAction, long timeAfterAction, String pageName) {
+		DecimalFormat pgToLoadformat = new DecimalFormat();
+		pgToLoadformat.setMaximumFractionDigits(3);
+		Reporter.addStepLog("<b>Time taken by "+pageName+" page to Load is :"
+				+ pgToLoadformat.format((timeAfterAction - timeBeforeAction) / 1000) + " Seconds </b>");
+	}
+
 
 }

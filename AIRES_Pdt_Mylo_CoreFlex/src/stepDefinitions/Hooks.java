@@ -35,7 +35,9 @@ import org.apache.commons.lang3.reflect.FieldUtils;
 import org.openqa.selenium.OutputType;
 import org.openqa.selenium.TakesScreenshot;
 
+import com.aires.businessrules.CoreFunctions;
 import com.aires.businessrules.DbFunctions;
+import com.aires.businessrules.constants.CoreConstants;
 import com.aires.cucumber.TestContext;
 import com.aires.managers.FileReaderManager;
 import com.aires.utilities.Log;
@@ -69,14 +71,17 @@ public class Hooks {
 			testContext.getBasePage().killExistingBrowsers();
 		} else if (scenario.getName().contains("PDT")) {
 			Log.info(FileReaderManager.getInstance().getConfigReader().getPDTApplicationUrl());
+			CoreFunctions.writeToPropertiesFile("application", CoreConstants.APP_PDT);
 			testContext.getWebDriverManager().getDriver().navigate()
 					.to(FileReaderManager.getInstance().getConfigReader().getPDTApplicationUrl());
 		} else if (scenario.getName().contains("Mylo")) {
 			Log.info(FileReaderManager.getInstance().getConfigReader().getMyloApplicationUrl());
+			CoreFunctions.writeToPropertiesFile("application", CoreConstants.APP_Mylo);
 			testContext.getWebDriverManager().getDriver().navigate()
 					.to(FileReaderManager.getInstance().getConfigReader().getMyloApplicationUrl());
 		} else if (scenario.getName().contains("CoreFlex")) {
 			Log.info(FileReaderManager.getInstance().getConfigReader().getCoreFlexPolicySetupApplicationUrl());
+			CoreFunctions.writeToPropertiesFile("application", CoreConstants.APP_COREFLEX);
 			testContext.getWebDriverManager().getDriver().navigate()
 					.to(FileReaderManager.getInstance().getConfigReader().getCoreFlexPolicySetupApplicationUrl());
 		}else if (scenario.getName().contains("MXTransferee")) {

@@ -116,6 +116,7 @@ public class PDT_ViewPolicyPage extends Base {
 			break;
 		case PDTConstants.ADD_NEW_POLICY_FORM:
 			CoreFunctions.clickElement(driver, _addNewPolicyForm);
+			BusinessFunctions.fluentWaitForSpinnerToDisappear(driver, _progressBar);
 			break;
 		case PDTConstants.CLEAR_FILTER:
 			CoreFunctions.highlightElementAndClick(driver, _clearFilter, PDTConstants.CLEAR_FILTER);
@@ -132,7 +133,9 @@ public class PDT_ViewPolicyPage extends Base {
 
 	public Boolean verifyUserlogin(String userName, String pageName) {
 		CoreFunctions.explicitWaitTillElementInVisibilityCustomTime(driver, _progressBar, 5);
-		if (getUserName().equalsIgnoreCase(userName)) {
+		Log.info("username=="+userName);
+		Log.info("getusername=="+getUserName());
+		if (getUserName().contains(userName)) {
 			CoreFunctions.highlightObject(driver, _userName);
 			Reporter.addStepLog(MessageFormat.format(PDTConstants.VERIFIED_USERNAME_IS_DISPLAYED, CoreConstants.PASS,
 					userName, pageName));
@@ -167,6 +170,7 @@ public class PDT_ViewPolicyPage extends Base {
 		case PDTConstants.CLIENT_ID:
 			CoreFunctions.clearAndSetText(driver, _inputClientId, policyDetails.get("SearchText"));
 			CoreFunctions.click(driver, _btnSearch, _btnSearch.getText());
+			BusinessFunctions.fluentWaitForSpinnerToDisappear(driver, _progressBar);
 			Assert.assertTrue(
 					verifyClientIdAndCompanyName(policyDetails.get("SearchText"), policyDetails.get("CompanyName"),
 							pageName),
@@ -176,6 +180,7 @@ public class PDT_ViewPolicyPage extends Base {
 		case PDTConstants.CLIENT_NAME:
 			CoreFunctions.clearAndSetText(driver, _inputClientName, policyDetails.get("SearchText"));
 			CoreFunctions.click(driver, _btnSearch, _btnSearch.getText());
+			BusinessFunctions.fluentWaitForSpinnerToDisappear(driver, _progressBar);
 			Assert.assertTrue(
 					verifyClientIdAndCompanyName(policyDetails.get("ClientId"), policyDetails.get("SearchText"),
 							pageName),
@@ -185,6 +190,7 @@ public class PDT_ViewPolicyPage extends Base {
 		case PDTConstants.POLICY:
 			CoreFunctions.clearAndSetText(driver, _inputPolicyName, policyDetails.get("SearchText"));
 			CoreFunctions.click(driver, _btnSearch, _btnSearch.getText());
+			BusinessFunctions.fluentWaitForSpinnerToDisappear(driver, _progressBar);
 			Assert.assertTrue(verifyPolicyName(policyDetails.get("SearchText"), pageName),
 					MessageFormat.format(PDTConstants.FAIL_TO_VERIFY_POLICY_NAME_ON_PAGE, CoreConstants.FAIL,
 							policyDetails.get("SearchText"), pageName));
@@ -235,7 +241,8 @@ public class PDT_ViewPolicyPage extends Base {
 
 	public boolean searchAndVerifyPolicy(String policyName, String pageName, PDT_AddNewPolicyPage addNewPolicyPage) {
 		try {
-			CoreFunctions.explicitWaitTillElementInVisibilityCustomTime(driver, _progressBar, 5);
+			//CoreFunctions.explicitWaitTillElementInVisibilityCustomTime(driver, _progressBar, 5);
+			BusinessFunctions.fluentWaitForSpinnerToDisappear(driver, _progressBar);
 			CoreFunctions.isElementByLocatorExist(driver, _listPolicyNameByLocator, 20);
 			if (_listPolicyName.stream().anyMatch(t -> t.getText().toLowerCase().equalsIgnoreCase(policyName))) {
 				Reporter.addStepLog(MessageFormat.format(PDTConstants.VERIFIED_ELEMENT_DISPLAYED_ON_PAGE,

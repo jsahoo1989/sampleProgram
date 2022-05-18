@@ -34,6 +34,7 @@ import com.aires.testdatatypes.pdt.PDT_DuplicateHousingBenefit;
 import com.aires.testdatatypes.pdt.PDT_FinalMoveBenefit;
 import com.aires.testdatatypes.pdt.PDT_HomeLeaveBenefit;
 import com.aires.testdatatypes.pdt.PDT_HomePurchaseBenefit;
+import com.aires.testdatatypes.pdt.PDT_HouseHoldGoodsBenefit;
 import com.aires.testdatatypes.pdt.PDT_HouseHuntingTripBenefit;
 import com.aires.testdatatypes.pdt.PDT_ImmigrationBenefit;
 import com.aires.testdatatypes.pdt.PDT_LanguageTrainingBenefit;
@@ -87,6 +88,8 @@ public class JsonDataReader_Pdt {
 			.getTestDataResourcePath() + "pdt/PDT_PropertyManagementBenefit.json";
 	private final String _HomePurchaseFilePath = FileReaderManager.getInstance().getConfigReader()
 			.getTestDataResourcePath() + "pdt/PDT_HomePurchaseBenefit.json";
+	private final String _HouseholdGoodsFilePath = FileReaderManager.getInstance().getConfigReader()
+			.getTestDataResourcePath() + "pdt/PDT_HouseHoldGoodsBenefit.json";
 
 	private List<PDT_LoginData> _loginDataList;
 	private List<PDT_LoginDetails> _loginDetailsList;
@@ -107,6 +110,7 @@ public class JsonDataReader_Pdt {
 	private List<PDT_OngoingPaymentReimbursementBenefit> _ongoingPaymentReimbursementList;
 	private List<PDT_PropertyManagementBenefit> _propertyManagementList;
 	private List<PDT_HomePurchaseBenefit> _homePurchaseList;
+	private List<PDT_HouseHoldGoodsBenefit> _houseHoldGoodsList;
 
 	public JsonDataReader_Pdt() {
 		_loginDataList = getUserData();
@@ -128,6 +132,7 @@ public class JsonDataReader_Pdt {
 		_ongoingPaymentReimbursementList = getOngoingPaymentReimbursementData();
 		_propertyManagementList = getPropertyManagementData();
 		_homePurchaseList = getHomePurchaseData();
+		_houseHoldGoodsList = getHouseHoldGoodData();
 	}
 
 	private List<PDT_LoginData> getUserData() {
@@ -475,6 +480,25 @@ public class JsonDataReader_Pdt {
 		}		
 	}
 	
+	private List<PDT_HouseHoldGoodsBenefit> getHouseHoldGoodData(){
+		Gson gson = new Gson();
+		BufferedReader bufferReader = null;
+		try {
+			bufferReader = new BufferedReader(new FileReader(_HouseholdGoodsFilePath));
+			PDT_HouseHoldGoodsBenefit[] houseHoldGoodBenefit = gson.fromJson(bufferReader, PDT_HouseHoldGoodsBenefit[].class);
+			return Arrays.asList(houseHoldGoodBenefit);
+		} catch (FileNotFoundException e) {
+			throw new RuntimeException(CoreConstants.JSON_FILE_NOT_FOUND_AT_PATH + _HouseholdGoodsFilePath);
+		} finally {
+			try {
+				if (bufferReader != null)
+					bufferReader.close();
+			} catch (IOException ignore) {
+			}
+		}		
+	}
+
+	
 	public final PDT_LoginData getloginDetailsByUserFirstName(String userFirstName) {
 		return _loginDataList.stream().filter(x -> x.firstName.equalsIgnoreCase(userFirstName)).findAny().get();
 	}
@@ -552,5 +576,9 @@ public class JsonDataReader_Pdt {
 	
 	public final PDT_HomePurchaseBenefit getHomePurchaseDataList(String policyBenefit) {
 		return _homePurchaseList.stream().filter(x -> x.benefitName.equalsIgnoreCase(policyBenefit)).findAny().get();
+	}
+	
+	public final PDT_HouseHoldGoodsBenefit getHouseHoldGoodsDataList(String policyBenefit) {
+		return _houseHoldGoodsList.stream().filter(x -> x.benefitName.equalsIgnoreCase(policyBenefit)).findAny().get();
 	}
 }

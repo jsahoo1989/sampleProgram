@@ -1,6 +1,7 @@
 package com.aires.pages;
 
 import java.text.MessageFormat;
+import java.util.Date;
 
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
@@ -59,8 +60,12 @@ public class PDT_Mylo_CoreFlex_Common_LoginPage extends Base {
 	@FindBy(how = How.XPATH, using = "//div[text()='Use another account']")
 	private WebElement _anotherAccount;
 	
+	@FindBy(how = How.CSS, using = "div.ngx-progress-bar.ngx-progress-bar-ltr")
+	private WebElement _progressBar;
+	
 	final By _loginImg = By.xpath("//img[contains(@src,'login-with-office-365')]");
 	final By _spinnerImg = By.cssSelector("div[class='sk-three-strings']");
+	long timeBeforeAction, timeAfterAction;
 	
 	Mylo_LoginData loginData = FileReaderManager.getInstance().getMyloJsonReader()
 			.getloginDetailsByUserProfileName(MYLOConstants.USER_PROFILE_NAME);
@@ -116,20 +121,19 @@ public class PDT_Mylo_CoreFlex_Common_LoginPage extends Base {
 		}
 	}
 	
-	public void clickSignIn() {
-		CoreFunctions.explicitWaitTillElementBecomesClickable(driver, _submit, _submit.getAttribute("value"));
+	public void clickSignIn() {		
 		CoreFunctions.click(driver, _submit, _submit.getAttribute("value"));
 		if (CoreFunctions.isElementExist(driver, _staySignedInYes, 5)) {
 			CoreFunctions.explicitWaitTillElementVisibility(driver, _staySignedInYes,
 					_staySignedInYes.getAttribute("value"), 10);
 			CoreFunctions.click(driver, _staySignedInYes, _staySignedInYes.getAttribute("value"));
 		}
-		CoreFunctions.switchToParentWindow(driver);
-		if(CoreFunctions.isElementPresent(driver, _spinnerImg, 5, "Spinner"))
-			CoreFunctions.explicitWaitTillElementInVisibilityCustomTime(driver, _spinner, 20);
+		CoreFunctions.switchToParentWindow(driver);		
+		if(CoreFunctions.isElementExist(driver,  _progressBar, 2))
+			BusinessFunctions.fluentWaitForSpinnerToDisappear(driver, _progressBar);			
 		else if(CoreFunctions.isElementPresent(driver, _loginImg, 5, MYLOConstants.LOGIN_BUTTON)) {
 			CoreFunctions.click(driver, CoreFunctions.getElementByLocator(driver,_loginImg), MYLOConstants.LOGIN_BUTTON);
-			CoreFunctions.explicitWaitTillElementInVisibilityCustomTime(driver, _spinner, 20);
+			BusinessFunctions.fluentWaitForSpinnerToDisappear(driver, _progressBar);			
 		}
 	}
 	
@@ -166,7 +170,10 @@ public class PDT_Mylo_CoreFlex_Common_LoginPage extends Base {
 			switch (userType) {
 			case PDTConstants.CSM:				
 				enterUserEmailAndPassword(BusinessFunctions.getCSMCredentials(_loginDetailsApplication)[0], BusinessFunctions.getCSMCredentials(_loginDetailsApplication)[1]);
+				timeBeforeAction = new Date().getTime();
 				clickSignIn();
+				timeAfterAction = new Date().getTime();
+				BusinessFunctions.printTimeTakenByPageToLoad(timeBeforeAction, timeAfterAction, PDTConstants.VIEW_POLICY_PAGE);
 				isSuccessfullyLoggedIn = viewPolicyPage.verifyUserlogin(BusinessFunctions.getCSMCredentials(_loginDetailsApplication)[2],
 						PDTConstants.VIEW_POLICY_PAGE);
 				break;

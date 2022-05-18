@@ -106,9 +106,9 @@ public class PDT_RentalAssistancePage extends Base {
 					rentalAssistanceBenefitData.rentalTour.reimbursedBy, PDTConstants.REIMBURSED_BY,
 					PDTConstants.RADIO_BUTTON_LIST, true);
 
-			BusinessFunctions.verifyReimbursedByOtherTextBoxIsDisplayed(driver, addNewPolicyPage,
+			BusinessFunctions.verifyOtherTextBoxIsDisplayed(driver, addNewPolicyPage,
 					rentalAssistanceBenefitData.rentalTour.reimbursedBy, _txtBoxRentalTourReimbursedByOther,
-					rentalAssistanceBenefitData.rentalTour.reimbursedByOther, subBenefitFormName);
+					rentalAssistanceBenefitData.rentalTour.reimbursedByOther, subBenefitFormName, PDTConstants.REIMBURSED_BY_OTHER);
 			CoreFunctions.clearAndSetText(driver, _txtAreaRentalTourComment, PDTConstants.COMMENT,
 					rentalAssistanceBenefitData.rentalTour.comment);
 		} catch (Exception e) {			
@@ -135,9 +135,9 @@ public class PDT_RentalAssistancePage extends Base {
 					rentalAssistanceBenefitData.finderFees.reimbursedBy, PDTConstants.REIMBURSED_BY,
 					PDTConstants.RADIO_BUTTON_LIST, true);
 
-			BusinessFunctions.verifyReimbursedByOtherTextBoxIsDisplayed(driver, addNewPolicyPage,
+			BusinessFunctions.verifyOtherTextBoxIsDisplayed(driver, addNewPolicyPage,
 					rentalAssistanceBenefitData.finderFees.reimbursedBy, _txtBoxFinderFeesReimbursedByOther,
-					rentalAssistanceBenefitData.finderFees.reimbursedByOther, subBenefitFormName);
+					rentalAssistanceBenefitData.finderFees.reimbursedByOther, subBenefitFormName, PDTConstants.REIMBURSED_BY_OTHER);
 			CoreFunctions.clearAndSetText(driver, _txtAreaFinderFeesComment, PDTConstants.COMMENT,
 					rentalAssistanceBenefitData.finderFees.comment);
 		} catch (Exception e) {			

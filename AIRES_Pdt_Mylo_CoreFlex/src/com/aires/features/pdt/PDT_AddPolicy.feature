@@ -196,11 +196,11 @@ Feature: Add new Policy form with Benefit Categories
     And he has clicked on the 'Next' button after selecting client, policy information on the 'Add New Policy' page
     And he has entered mandatory information on 'General Information' page followed by selection of "Ongoing Payments/Reimbursements" as Benefit Category on "Policy Benefit" page
     When he clicks on 'SUBMIT' button after entering mandatory information for all the below selected sub benefits on "Ongoing Payments/Reimbursements" page
-      | COLA | Per Diem | Mobility Premium | Transportation Allowance | Housing Allowance | Home Maintenance Allowance | Furniture Allowance | Hardship Allowance | Banking Allowance | At Sea Allowance | Commuter Allowance | Differential Allowance | Goods & Services Allowance | Home Leave Allowance |Home Retention Allowance | Housekeeping Allowance | Utility Allowance | Other Ongoing Allowance |
+      | COLA | Per Diem | Mobility Premium | Transportation Allowance | Housing Allowance | Home Maintenance Allowance | Furniture Allowance | Hardship Allowance | Banking Allowance | At Sea Allowance | Commuter Allowance | Differential Allowance | Goods & Services Allowance | Home Leave Allowance | Home Retention Allowance | Housekeeping Allowance | Utility Allowance | Other Ongoing Allowance |
     Then success message "Policy saved and submitted" should be displayed on the "Policy Benefit" page
-    And newly created Policy should be displayed under "View Policy" page after clicking on 'EXIT' button    
-    
-   @Sprint-24 @PDT-Regression @property @PDT-509
+    And newly created Policy should be displayed under "View Policy" page after clicking on 'EXIT' button
+
+  @Sprint-24 @PDT-Regression @property @PDT-509
   Scenario: PDT - Add new Policy form using Property Management as Benefit Category
     Given he is on the "Add New Policy" page after clicking on the link "Add New Policy Form" displayed under the left navigation menu on the 'View Policy' page
     And he has clicked on the 'Next' button after selecting client, policy information on the 'Add New Policy' page
@@ -208,13 +208,23 @@ Feature: Add new Policy form with Benefit Categories
     When he clicks on 'SUBMIT' button after entering mandatory information on "Property Management" page
     Then success message "Policy saved and submitted" should be displayed on the "Policy Benefit" page
     And newly created Policy should be displayed under "View Policy" page after clicking on 'EXIT' button
-    
+
   @Sprint-24 @PDT-Regression @homePurchase @PDT-734
-  Scenario: PDT - Add new Policy form using Ongoing Payments and Reimbursements as Benefit Category including their sub benefit categories
+  Scenario: PDT - Add new Policy form using Home Purchase as Benefit Category including their sub benefit categories
     Given he is on the "Add New Policy" page after clicking on the link "Add New Policy Form" displayed under the left navigation menu on the 'View Policy' page
     And he has clicked on the 'Next' button after selecting client, policy information on the 'Add New Policy' page
     And he has entered mandatory information on 'General Information' page followed by selection of "Home Purchase" as Benefit Category on "Policy Benefit" page
     When he clicks on 'SUBMIT' button after entering mandatory information for all the below selected sub benefits on "Home Purchase" page
       | Home Purchase Closing Costs | Home Purchase Points | Home Purchase Inspections | Home Purchase Bonus | Mortgage Differentials | Mortgage Subsidy |
     Then success message "Policy saved and submitted" should be displayed on the "Policy Benefit" page
-    And newly created Policy should be displayed under "View Policy" page after clicking on 'EXIT' button 
+    And newly created Policy should be displayed under "View Policy" page after clicking on 'EXIT' button
+
+	@Sprint-25 @PDT-Regression @household
+  Scenario: PDT - Add new Policy form using Household Goods as Benefit Category including their sub benefit categories
+    Given he is on the "Add New Policy" page after clicking on the link "Add New Policy Form" displayed under the left navigation menu on the 'View Policy' page
+    And he has clicked on the 'Next' button after selecting client, policy information on the 'Add New Policy' page
+    And he has entered mandatory information on 'General Information' page followed by selection of "Household Goods" as Benefit Category on "Policy Benefit" page
+    When he clicks on 'SUBMIT' button after entering mandatory information for all the below selected sub benefits on "Household Goods" page
+      | US Domestic Vanline Shipment | Auto Shipment | Air Shipment | Sea Shipment | Non-US Inland Shipment | Permanent Storage | Pet Shipment | Discard and Donate |
+    Then success message "Policy saved and submitted" should be displayed on the "Policy Benefit" page
+    And newly created Policy should be displayed under "View Policy" page after clicking on 'EXIT' button

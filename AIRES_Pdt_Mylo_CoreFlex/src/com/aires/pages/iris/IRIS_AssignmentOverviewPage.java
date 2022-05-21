@@ -1155,6 +1155,24 @@ public class IRIS_AssignmentOverviewPage extends BasePage {
 		robot.keyPress(KeyEvent.VK_ENTER);
 		robot.keyRelease(KeyEvent.VK_ENTER);
 	}
+	
+	public void setSubServiceStatus(String fileStatus) throws Exception {
+		_IRIS = getIRISWindow();
+		Menu optionsMenu = _IRIS.describe(Menu.class, new MenuDescription.Builder().label("Options").build());
+		Menu changeStatusMenu = optionsMenu.describe(Menu.class,
+				new MenuDescription.Builder().label("Change Status").build());
+		Menu changeFileStatusMenu = changeStatusMenu.describe(Menu.class,
+				new MenuDescription.Builder().label("Change Sub Service Status").build());
+		Menu activateMenu = changeFileStatusMenu.describe(Menu.class,
+				new MenuDescription.Builder().label(fileStatus).build());
+		CoreFunctions.waitHandler(2);
+		activateMenu.select();
+		CoreFunctions.waitHandler(2);
+		Robot robot = new Robot();
+		robot.setAutoDelay(250);
+		robot.keyPress(KeyEvent.VK_ENTER);
+		robot.keyRelease(KeyEvent.VK_ENTER);
+	}
 
 	public void unlinkInitiation() throws Exception {
 		try {

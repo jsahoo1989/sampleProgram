@@ -284,6 +284,8 @@ public class TransfereeSubmissions_DetailsPage extends Base {
 
 	public boolean verifyTransfereeAndPointsDetails() {
 		try {
+			isDeleteRequestDenied=false;
+			isDeleteRequestApproved = false;
 			CoreFunctions.verifyText(driver, _textTransfereeName,
 					CoreFunctions.getPropertyFromConfig("Transferee_firstName") + " "
 							+ CoreFunctions.getPropertyFromConfig("Transferee_lastName"),

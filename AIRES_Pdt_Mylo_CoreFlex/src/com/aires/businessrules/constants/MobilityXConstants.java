@@ -277,8 +277,8 @@ public class MobilityXConstants {
 	public static final String FALIED_TO_VALIDATE_USER_NAVIGATION_TO_MOBILITYX_JOURNEY_HOME_PAGE_AFTER_BENEFIT_SUBMISSION = "{0}Failed to validate user navigation to MobilityX Journey Home page after Benefit Submission.";
 	public static final String EXCEPTION_OCCURED_WHILE_VALIDATING_REQUEST_DIALOG_ON_TRANSFEREE_SUBMISSIONS_DETAILS_PAGE = "{0}Exception occured while validating Requests Dialog on Transferee Submissions Details Page. Exception : ''{1}''.";
 	public static final String AIRES_MANAGED_BENEFIT_CARD_DISPLAYED_ON_MOBILITY_JOURNEY_PAGE = "{0}Aires Managed Benefit Card displayed_on Mobility Journey Page before its service is created.";
-	public static final String FAILED_TO_VERIFY_FLEX_BENEFIT_CARD = "{0}Failed to verify ''{1}'' Flex Benefit card on ''{2}'' page.";
-	public static final String FAILED_TO_VERIFY_CORE_BENEFIT_CARD = "{0}Failed to verify ''{1}'' Core Benefit card on ''{2}'' page.";
+	public static final String FAILED_TO_VERIFY_FLEX_BENEFIT_CARD = "{0}Failed to verify Flex Benefit card on ''{1}'' page.";
+	public static final String FAILED_TO_VERIFY_CORE_BENEFIT_CARD = "{0}Failed to verify Core Benefit card on ''{1}'' page.";
 	public static final String LANGUAGE_TRAINING = "Language Training";
 	public static final String FLEX_CARD_BENEFIT_DISPLAY_NAME = "Flex Card Benefit Display Name";
 	public static final String FLEX_CARD_BENEFIT_ALLOWANCE_AMOUNT = "Flex Card Benefit Allowance Amount";
@@ -294,4 +294,17 @@ public class MobilityXConstants {
 	public static final String CORE_CARD_BENEFIT_DISPLAY_NAME = "Core Card Benefit Display Name";
 	public static final String CORE_CARD_BENEFIT_ALLOWANCE_AMOUNT = "Core Card Benefit Allowance Amount";
 	public static final String CORE_CARD_BENEFIT_LONG_DESCRIPTION = "Core Card Benefit Long Description";
+	public static final String FLEX_CARD_NUMBER_OF_BENEFIT_SELECTED_TOOLTIP_TEXT = "Submitted numberOf times";
+	public static final String FLEX_CARD_NUMBER_OF_BENEFIT_SELECTED_TOOLTIP = "FlexCard Number of Benefit Selected ToolTip";
+	public static final String SUBMITTED_AIRES_MANAGED_BENEFIT_DETAILS_NOT_MATCHED = "{0}Submitted Aires Managed benefit details not matched on ''{1}'' page.";
+	public static final String FAILED_TO_VERIFY_SUBMITTED_AIRES_MANAGED_BENEFITS_ON_MY_BUNDLE_PAGE = "{0}Failed to verify submitted Aires Managed benefit on My Benefit Bundle page. Exception : ''{1}''.";
+	public static final String SUCCESSFULLY_VERIFIED_SUBMITTED_AIRES_MANAGED_BENEFIT_ON_MY_BUNDLE_PAGE = "{0}Successfully verified submitted Aires Managed benefit on My Benefit Bundle page";
+	public static final String FAILED_TO_SELECT_AIRES_MANAGED_BENEFITS_AND_PROCEED_TO_REVIEW_PAGE = "{0}Failed to select Aires Managed benefits and proceed to review page.";
+	public static final String EXCEPTION_OCCURED_WHILE_VALIDATING_POINTS_AND_CLICKING_ON_NEXT_BUTTON_ON_FPT_PAGE = "{0}Exception occured while validating selected points and clicking on Next button on Flex Planning Tool Page. Exception : ''{1}''.";
+	public static final String POLICY_FILE_ID = "Policy File ID";
+	public static final String COMPLETE = "Complete";
+	public static final String FLEX_CARD_DISPLAYED_FOR_NOT_SUBMITTED_AIRES_MANAGED_BENEFIT = "{0}Flex card is displayed for Not-Submitted Aires Managed Benefit on ''{1}'' page.";
+	public static final String CANCELLED = "Canceled";
+	public static final String FLEX_CARD_DISPLAYED_AFTER_CHANGING_COREFLEX_TYPE_SUBSERVICE_IN_IRIS = "{0}Flex card displayed on ''{1}'' Page even after changing Core/Flex Subservice type in IRIS application.";
+	public static final String CORE_CARD_DISPLAYED_AFTER_CHANGING_COREFLEX_TYPE_SUBSERVICE_IN_IRIS = "{0}Core card displayed on ''{1}'' Page even after changing Core/Flex Subservice type in IRIS application.";
 }

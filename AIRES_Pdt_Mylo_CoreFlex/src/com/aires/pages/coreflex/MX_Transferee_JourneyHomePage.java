@@ -2,6 +2,7 @@ package com.aires.pages.coreflex;
 
 import java.text.DecimalFormat;
 import java.text.MessageFormat;
+import java.util.List;
 
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
@@ -11,13 +12,16 @@ import org.openqa.selenium.support.How;
 import org.testng.Assert;
 
 import com.aires.businessrules.Base;
+import com.aires.businessrules.BusinessFunctions;
 import com.aires.businessrules.CoreFunctions;
 import com.aires.businessrules.constants.COREFLEXConstants;
 import com.aires.businessrules.constants.CoreConstants;
 import com.aires.businessrules.constants.MobilityXConstants;
 import com.aires.managers.FileReaderManager;
+import com.aires.testdatatypes.coreflex.Benefit;
 import com.aires.testdatatypes.coreflex.CoreFlex_PolicySetupPagesData;
 import com.aires.testdatatypes.coreflex.CoreFlex_SettlingInBenefitsData;
+import com.aires.testdatatypes.coreflex.FlexBenefit;
 import com.aires.testdatatypes.coreflex.MX_Transferee_AccountSetupDetails;
 import com.aires.utilities.EmailUtil;
 import com.aires.utilities.Log;
@@ -150,44 +154,80 @@ public class MX_Transferee_JourneyHomePage extends Base {
 	@FindBy(how = How.XPATH, using = "//div[contains(@id,'cfcardstatus')]//span[contains(text(),'There are no services set up yet.')]")
 	private WebElement _serviceNotSetupCFCard;
 
+	@FindBy(how = How.XPATH, using = "//span[contains(text(),'Flex Benefits')]/ancestor::div[contains(@id,'secondItemDiv')]//div[contains(@class,'RXCFServicesMonitoringBorderPanel')]")
+	private List<WebElement> flexCardPanelList;
+
+	private By flexCardBeginTrainingStatus = By
+			.xpath(".//span[contains(@class,'RXSmallerLink RXBold')][contains(text(),'Begin training')]");
+
+	private By flexCardTrainingCompletedStatus = By
+			.xpath(".//span[contains(@class,'RXSmallerTextMuted RXBold')][contains(text(),'Training complete')]");
+
+	private By manageThisBenefitButton = By
+			.xpath(".//a[contains(@class,'RXCFGreenCardSmallRoundedButton')]//span[@class='RXWhite]");
+
+	@FindBy(how = How.XPATH, using = "//span[contains(text(),'Core Benefits')]/ancestor::div[contains(@id,'firstItemDiv')]//div[contains(@class,'RXCFServicesMonitoringBorderPanel')]")
+	private List<WebElement> coreCardPanelList;
+
+	private By coreCardBeginTrainingStatus = By
+			.xpath(".//span[contains(@class,'RXSmallerLink RXBold')][contains(text(),'Begin training')]");
+
+	private By coreCardTrainingCompletedStatus = By
+			.xpath(".//span[contains(@class,'RXSmallerTextMuted RXBold')][contains(text(),'Training complete')]");
+
 	@FindBy(how = How.XPATH, using = "//span[contains(text(),'Flex Benefits')]/ancestor::div[contains(@id,'secondItemDiv')]//span[contains(@class,'RCFXMJHeadingText')]")
-	private WebElement flexCardBenefitDisplayName;
+	private List<WebElement> flexCardBenefitDisplayName;
 
 	@FindBy(how = How.XPATH, using = "//span[contains(text(),'Flex Benefits')]/ancestor::div[contains(@id,'secondItemDiv')]//span[contains(@class,'RCFXMJSubHeadingText')]")
-	private WebElement flexCardAmountAllowanceText;
+	private List<WebElement> flexCardAmountAllowanceText;
 
 	@FindBy(how = How.XPATH, using = "//span[contains(text(),'Flex Benefits')]/ancestor::div[contains(@id,'secondItemDiv')]//div[contains(@class,'RXCFCircle')]//span")
-	private WebElement flexCardNumberOfBenefitSelected;
+	private List<WebElement> flexCardNumberOfBenefitSelected;
+
+	@FindBy(how = How.CSS, using = "div.RXFlexBeneftsPointsTooltiptext  > div > span")
+	private List<WebElement> flexCardNumberOfBenefitSelectedToolTipText;
+
+	@FindBy(how = How.XPATH, using = "//span[contains(text(),'Flex Benefits')]/ancestor::div[contains(@id,'secondItemDiv')]//table[contains(@class,'RXRightIconPanel')]//span[contains(text(),'Starting Soon')]")
+	private List<WebElement> flexCardStartingSoonStatusList;
+
+	@FindBy(how = How.XPATH, using = "//span[contains(text(),'Flex Benefits')]/ancestor::div[contains(@id,'secondItemDiv')]//table[contains(@class,'RXRightIconPanel')]//span[contains(text(),'Canceled')]")
+	private List<WebElement> flexCardCancelledStatusList;
 
 	@FindBy(how = How.XPATH, using = "//span[contains(text(),'Flex Benefits')]/ancestor::div[contains(@id,'secondItemDiv')]//table[contains(@class,'RXRightIconPanel')]//span[contains(text(),'Starting Soon')]")
 	private WebElement flexCardStartingSoonStatus;
 
 	@FindBy(how = How.XPATH, using = "//span[contains(text(),'Flex Benefits')]/ancestor::div[contains(@id,'secondItemDiv')]//span[contains(@class,'icon-help')]")
-	private WebElement flexCardLongDescIcon;
+	private List<WebElement> flexCardLongDescIcon;
 
 	@FindBy(how = How.XPATH, using = "//span[contains(text(),'Flex Benefits')]/ancestor::div[contains(@id,'secondItemDiv')]//div[contains(@class,'RXFlexBeneftsMjTooltiptext')]//span[contains(@class,'RXWrappedText')]")
-	private WebElement flexCardLongDesc;
+	private List<WebElement> flexCardLongDesc;
 
 	@FindBy(how = How.XPATH, using = "//span[contains(text(),'Flex Benefits')]/ancestor::div[contains(@id,'secondItemDiv')]//a[contains(@class,'RXCFGreenCardSmallRoundedButton ')]//span[@class='RXWhite']")
-	private WebElement flexCardManageBenefitButton;
+	private List<WebElement> flexCardManageBenefitButton;
 
-	@FindBy(how = How.XPATH, using = "//span[contains(text(),'Flex Benefits')]/ancestor::div[contains(@id,'secondItemDiv')]//span[contains(@class,'RXSmallerLink RXBold')][contains(text(),'Begin training')]")
-	private WebElement flexCardBeginProgressStatus;
-	
+	@FindBy(how = How.XPATH, using = "//span[contains(text(),'Flex Benefits')]/ancestor::div[contains(@id,'secondItemDiv')]//a[contains(@class,'RXCFGreenCardSmallRoundedButton ')]//span[@class='RXWhite']")
+	private WebElement flexCardManageThisBenefitButton;
+
 	@FindBy(how = How.XPATH, using = "//span[contains(text(),'Core Benefits')]/ancestor::div[contains(@id,'firstItemDiv')]//span[contains(@class,'RCFXMJHeadingText')]")
-	private WebElement coreCardBenefitDisplayName;
+	private List<WebElement> coreCardBenefitDisplayName;
 
 	@FindBy(how = How.XPATH, using = "//span[contains(text(),'Core Benefits')]/ancestor::div[contains(@id,'firstItemDiv')]//span[contains(@class,'RCFXMJSubHeadingText')]")
-	private WebElement coreCardAmountAllowanceText;
+	private List<WebElement> coreCardAmountAllowanceText;
+
+	@FindBy(how = How.XPATH, using = "//span[contains(text(),'Core Benefits')]/ancestor::div[contains(@id,'firstItemDiv')]//table[contains(@class,'RXRightIconPanel')]//span[contains(text(),'Starting Soon')]")
+	private List<WebElement> coreCardStartingSoonStatusList;
+
+	@FindBy(how = How.XPATH, using = "//span[contains(text(),'Core Benefits')]/ancestor::div[contains(@id,'firstItemDiv')]//table[contains(@class,'RXRightIconPanel')]//span[contains(text(),'Canceled')]")
+	private List<WebElement> coreCardCancelledStatusList;
 
 	@FindBy(how = How.XPATH, using = "//span[contains(text(),'Core Benefits')]/ancestor::div[contains(@id,'firstItemDiv')]//table[contains(@class,'RXRightIconPanel')]//span[contains(text(),'Starting Soon')]")
 	private WebElement coreCardStartingSoonStatus;
 
 	@FindBy(how = How.XPATH, using = "//span[contains(text(),'Core Benefits')]/ancestor::div[contains(@id,'firstItemDiv')]//span[contains(@class,'icon-help')]")
-	private WebElement coreCardLongDescIcon;
+	private List<WebElement> coreCardLongDescIcon;
 
 	@FindBy(how = How.XPATH, using = "//span[contains(text(),'Core Benefits')]/ancestor::div[contains(@id,'firstItemDiv')]//div[contains(@class,'RXFlexBeneftsMjTooltiptext')]//span[contains(@class,'RXWrappedText')]")
-	private WebElement coreCardLongDesc;
+	private List<WebElement> coreCardLongDesc;
 
 	@FindBy(how = How.XPATH, using = "//span[contains(text(),'Core Benefits')]/ancestor::div[contains(@id,'firstItemDiv')]//a[contains(@class,'RXCFGreenCardSmallRoundedButton ')]//span[@class='RXWhite']")
 	private WebElement coreCardManageBenefitButton;
@@ -202,6 +242,12 @@ public class MX_Transferee_JourneyHomePage extends Base {
 
 	MX_Transferee_AccountSetupDetails accountDetails = FileReaderManager.getInstance().getCoreFlexJsonReader()
 			.getMxTransfereeAccountSetupDetails();
+
+	public static final List<FlexBenefit> airesManagedFlexBenefits = FileReaderManager.getInstance()
+			.getCoreFlexJsonReader().getMXTransfereeAiresManagedFlexBenefitData();
+
+	public static final List<Benefit> airesManagedCoreBenefits = FileReaderManager.getInstance().getCoreFlexJsonReader()
+			.getMXTransfereeAiresManagedCoreBenefitData();
 
 	CoreFlex_SettlingInBenefitsData languageTrainingBenefitData = FileReaderManager.getInstance()
 			.getCoreFlexJsonReader().getSettlingInBenefitDataList(COREFLEXConstants.LANGUAGE_TRAINING);
@@ -220,7 +266,7 @@ public class MX_Transferee_JourneyHomePage extends Base {
 
 	public boolean verifyUserNavigationToJourneyHomePage() {
 		try {
-			return CoreFunctions.isElementExist(driver, _linkManageMyPoints, 5);
+			return CoreFunctions.isElementExist(driver, _linkManageMyPoints, 10);
 		} catch (Exception e) {
 			Reporter.addStepLog(MessageFormat.format(
 					MobilityXConstants.EXCEPTION_OCCURED_WHILE_VALIDATING_USER_NAVIGATION_TO_MOBILITYX_JOURNEY_HOME_PAGE,
@@ -429,7 +475,12 @@ public class MX_Transferee_JourneyHomePage extends Base {
 
 	public boolean setUpPaymentAccount() {
 		try {
-			return proceedToAccountSetupPage() && selectAccountType() && setupAccountAndSave();
+			if ((CoreFunctions.getPropertyFromConfig("PolicyCashoutType").equals(MobilityXConstants.PORTION_CASHOUT))
+					|| (CoreFunctions.getPropertyFromConfig("PolicyCashoutType")
+							.equals(MobilityXConstants.AFTER_RELOCATION_ONLY))) {
+				return proceedToAccountSetupPage() && selectAccountType() && setupAccountAndSave();
+			} else
+				return true;
 		} catch (Exception e) {
 			Reporter.addStepLog(
 					MessageFormat.format(MobilityXConstants.EXCEPTION_OCCURED_WHILE_SETTING_UP_USER_ACCOUNT_DETAILS,
@@ -537,90 +588,12 @@ public class MX_Transferee_JourneyHomePage extends Base {
 	}
 
 	public boolean verifyAiresManagedBenefitCardNotDisplayed() {
-		return CoreFunctions.isElementExist(driver, _serviceNotSetupCFCard, 5);
+		return CoreFunctions.isElementExist(driver, _serviceNotSetupCFCard, 10);
 	}
 
-	public boolean isFlexBenefitCardVerified(String cardBenefitName, String expectedStatus) {
-		boolean isFlexBenefitCardVerified = false;
+	public boolean isFlexBenefitCardVerified(String expectedStatus) {
 		try {
-			switch (expectedStatus) {
-			case MobilityXConstants.STARTING_SOON:
-				isFlexBenefitCardVerified = verifyFlexBenefitCardDetails()
-						&& verifyFlexBenefitCardStatusBeforeActualization(expectedStatus);
-				break;
-			case MobilityXConstants.BEGIN_TRAINING:
-				isFlexBenefitCardVerified = verifyFlexBenefitCardDetails()
-						&& verifyFlexBenefitCardStatusAfterActualization(expectedStatus);
-				break;
-			case MobilityXConstants.TRAINING_COMPLETE:
-				isFlexBenefitCardVerified = verifyFlexBenefitCardDetails()
-						&& verifyFlexBenefitCardStatusAfterActualization(expectedStatus);
-				break;
-			default:
-				Assert.fail(COREFLEXConstants.INVALID_OPTION);
-			}
-		} catch (Exception e) {
-			Reporter.addStepLog(
-					MessageFormat.format(COREFLEXConstants.EXCEPTION_OCCURED_WHILE_VERIFYING_FLEX_BENEFIT_CARD_DETAILS,
-							CoreConstants.FAIL, e.getMessage()));
-		}
-		return isFlexBenefitCardVerified;
-	}
-
-	private boolean verifyFlexBenefitCardStatusAfterActualization(String expectedStatus) {
-		try {
-			if( CoreFunctions.isElementExist(driver, flexCardBeginProgressStatus, 3)
-					&& (!CoreFunctions.isElementExist(driver, flexCardStartingSoonStatus, 3))) {
-				Reporter.addStepLog(
-						MessageFormat.format(COREFLEXConstants.SUCCESSFULLY_VERIFIED_FLEX_BENEFIT_CARD_STATUS,
-								CoreConstants.PASS,expectedStatus));
-				return true;
-			}
-		} catch (Exception e) {
-			Reporter.addStepLog(
-					MessageFormat.format(COREFLEXConstants.EXCEPTION_OCCURED_WHILE_VERIFYING_FLEX_BENEFIT_CARD_STATUS,
-							CoreConstants.FAIL, e.getMessage()));			
-		}
-		return false;
-	}
-
-	private boolean verifyFlexBenefitCardStatusBeforeActualization(String expectedStatus) {
-		try {
-			if(CoreFunctions.isElementExist(driver, flexCardStartingSoonStatus, 3)){
-				Reporter.addStepLog(
-						MessageFormat.format(COREFLEXConstants.SUCCESSFULLY_VERIFIED_FLEX_BENEFIT_CARD_STATUS,
-								CoreConstants.PASS,expectedStatus));
-				return true;
-			}
-		} catch (Exception e) {
-			Reporter.addStepLog(
-					MessageFormat.format(COREFLEXConstants.EXCEPTION_OCCURED_WHILE_VERIFYING_FLEX_BENEFIT_CARD_STATUS,
-							CoreConstants.FAIL, e.getMessage()));
-		}
-		return false;
-	}
-
-	private boolean verifyFlexBenefitCardDetails() {
-		try {
-			CoreFunctions.verifyText(driver, flexCardBenefitDisplayName,
-					languageTrainingBenefitData.flexBenefitDetails.benefitDisplayName,
-					MobilityXConstants.FLEX_CARD_BENEFIT_DISPLAY_NAME);
-			CoreFunctions.verifyText(driver, flexCardAmountAllowanceText,
-					languageTrainingBenefitData.flexBenefitDetails.allowanceAmountMessage,
-					MobilityXConstants.FLEX_CARD_BENEFIT_ALLOWANCE_AMOUNT);
-			CoreFunctions.verifyText(driver, flexCardNumberOfBenefitSelected,
-					String.valueOf(languageTrainingBenefitData.flexBenefitDetails.numberOfBenefitSelected),
-					MobilityXConstants.FLEX_CARD_NUMBER_OF_BENEFIT_SELECTED);
-			CoreFunctions.moveToElement(driver, flexCardLongDescIcon);
-			CoreFunctions.verifyText(driver, flexCardLongDesc,
-					languageTrainingBenefitData.flexBenefitDetails.benefitLongDescription,
-					MobilityXConstants.FLEX_CARD_BENEFIT_LONG_DESCRIPTION);
-			CoreFunctions.verifyText(driver, flexCardManageBenefitButton, MobilityXConstants.MANAGE_THIS_BENEFIT,
-					MobilityXConstants.FLEX_CARD_MANAGE_THIS_BENEFIT_BUTTON);
-			Reporter.addStepLog(
-					MessageFormat.format(COREFLEXConstants.SUCCESSFULLY_VERIFIED_FLEX_BENEFIT_CARD_DETAILS,
-							CoreConstants.PASS));
-			return true;
+			return verifyFlexBenefitCardDetails(expectedStatus);
 		} catch (Exception e) {
 			Reporter.addStepLog(
 					MessageFormat.format(COREFLEXConstants.EXCEPTION_OCCURED_WHILE_VERIFYING_FLEX_BENEFIT_CARD_DETAILS,
@@ -629,48 +602,244 @@ public class MX_Transferee_JourneyHomePage extends Base {
 		}
 	}
 
-	public boolean isCoreBenefitCardVerified(String cardBenefitName, String expectedStatus) {
-		boolean isCoreBenefitCardVerified = false;
+	private boolean verifyFlexBenefitCardStatusAfterStartDateActualization(int indexBenefitCard,
+			String expectedStatus) {
+		try {
+			if (CoreFunctions.isElementExist(driver,
+					CoreFunctions.findSubElement(flexCardPanelList.get(indexBenefitCard), flexCardBeginTrainingStatus),
+					3) && (!CoreFunctions.isElementExist(driver, flexCardStartingSoonStatus, 3))) {
+				Reporter.addStepLog(
+						MessageFormat.format(COREFLEXConstants.SUCCESSFULLY_VERIFIED_FLEX_BENEFIT_CARD_STATUS,
+								CoreConstants.PASS, expectedStatus));
+				return true;
+			}
+		} catch (Exception e) {
+			Reporter.addStepLog(
+					MessageFormat.format(COREFLEXConstants.EXCEPTION_OCCURED_WHILE_VERIFYING_FLEX_BENEFIT_CARD_STATUS,
+							CoreConstants.FAIL, e.getMessage()));
+		}
+		return false;
+	}
+
+	private boolean verifyFlexBenefitCardStatusAfterEndDateActualization(int indexBenefitCard, String expectedStatus) {
+		try {
+			if (CoreFunctions.isElementExist(driver,
+					CoreFunctions.findSubElement(flexCardPanelList.get(indexBenefitCard),
+							flexCardTrainingCompletedStatus),
+					3) && (!CoreFunctions.isElementExist(driver, flexCardStartingSoonStatus, 3))) {
+
+				Reporter.addStepLog(
+						MessageFormat.format(COREFLEXConstants.SUCCESSFULLY_VERIFIED_FLEX_BENEFIT_CARD_STATUS,
+								CoreConstants.PASS, expectedStatus));
+				return true;
+			}
+		} catch (Exception e) {
+			Reporter.addStepLog(
+					MessageFormat.format(COREFLEXConstants.EXCEPTION_OCCURED_WHILE_VERIFYING_FLEX_BENEFIT_CARD_STATUS,
+							CoreConstants.FAIL, e.getMessage()));
+		}
+		return false;
+	}
+
+	private boolean verifyFlexBenefitCardStatusBeforeActualization(int indexBenefitCard, String expectedStatus) {
+		try {
+			if (CoreFunctions.isElementExist(driver, flexCardStartingSoonStatusList.get(indexBenefitCard), 3)) {
+				CoreFunctions.highlightObject(driver, flexCardStartingSoonStatusList.get(indexBenefitCard));
+				Reporter.addStepLog(
+						MessageFormat.format(COREFLEXConstants.SUCCESSFULLY_VERIFIED_FLEX_BENEFIT_CARD_STATUS,
+								CoreConstants.PASS, expectedStatus));
+				return true;
+			}
+		} catch (Exception e) {
+			Reporter.addStepLog(
+					MessageFormat.format(COREFLEXConstants.EXCEPTION_OCCURED_WHILE_VERIFYING_FLEX_BENEFIT_CARD_STATUS,
+							CoreConstants.FAIL, e.getMessage()));
+		}
+		return false;
+	}
+
+	private boolean verifyFlexBenefitCardStatusAfterCancellation(int indexBenefitCard, String expectedStatus) {
+		try {
+			if (CoreFunctions.isElementExist(driver, flexCardCancelledStatusList.get(indexBenefitCard), 3)) {
+				CoreFunctions.highlightObject(driver, flexCardCancelledStatusList.get(indexBenefitCard));
+				Reporter.addStepLog(
+						MessageFormat.format(COREFLEXConstants.SUCCESSFULLY_VERIFIED_FLEX_BENEFIT_CARD_STATUS,
+								CoreConstants.PASS, expectedStatus));
+				return true;
+			}
+		} catch (Exception e) {
+			Reporter.addStepLog(
+					MessageFormat.format(COREFLEXConstants.EXCEPTION_OCCURED_WHILE_VERIFYING_FLEX_BENEFIT_CARD_STATUS,
+							CoreConstants.FAIL, e.getMessage()));
+		}
+		return false;
+	}
+
+	private boolean verifyFlexBenefitCardDetails(String expectedStatus) {
+		boolean isFlexCardDetailsVerified = false;
+		boolean flag = false;
+		try {
+			for (FlexBenefit benefitList : airesManagedFlexBenefits) {
+				for (Benefit benefit : benefitList.getBenefits()) {
+					if (benefit.getSelectBenefitOnFPTPage()) {
+						int indexBenefitCard = BusinessFunctions.returnindexItemFromListUsingText(driver,
+								flexCardBenefitDisplayName, benefit.getBenefitDisplayName());
+						isFlexCardDetailsVerified = verifyFlexCardDetails(indexBenefitCard, benefit)
+								&& verifyFlexCardStatus(indexBenefitCard, expectedStatus)
+								&& verifyManageThisBenefitButton(indexBenefitCard, expectedStatus);
+						if (!isFlexCardDetailsVerified) {
+							return false;
+						} else {
+							flag = true;
+						}
+					} else {
+						isFlexCardDetailsVerified = true;
+					}
+				}
+			}
+		} catch (Exception e) {
+			Reporter.addStepLog(
+					MessageFormat.format(COREFLEXConstants.EXCEPTION_OCCURED_WHILE_VERIFYING_FLEX_BENEFIT_CARD_DETAILS,
+							CoreConstants.FAIL, e.getMessage()));
+			return false;
+		}
+		if (isFlexCardDetailsVerified && flag) {
+			Reporter.addStepLog(MessageFormat.format(COREFLEXConstants.SUCCESSFULLY_VERIFIED_FLEX_BENEFIT_CARD_DETAILS,
+					CoreConstants.PASS));
+		}
+		return isFlexCardDetailsVerified;
+	}
+
+	private boolean verifyManageThisBenefitButton(int indexBenefitCard, String expectedStatus) {
+		try {
+			if ((expectedStatus.equals(MobilityXConstants.CANCELLED))
+					|| (expectedStatus.equals(MobilityXConstants.COMPLETE))) {
+				return (!CoreFunctions.isElementExist(driver, flexCardManageThisBenefitButton, 3));
+			} else {
+				CoreFunctions.verifyText(driver, flexCardManageBenefitButton.get(indexBenefitCard),
+						MobilityXConstants.MANAGE_THIS_BENEFIT,
+						MobilityXConstants.FLEX_CARD_MANAGE_THIS_BENEFIT_BUTTON);
+				return true;
+			}
+		} catch (Exception e) {
+			Reporter.addStepLog(MessageFormat.format(
+					COREFLEXConstants.EXCEPTION_OCCURED_WHILE_VERIFYING_FLEX_BENEFIT_CARD_MANAGE_THIS_BENEFIT_BUTTON,
+					CoreConstants.FAIL, e.getMessage()));
+			return false;
+		}
+
+	}
+
+	private boolean verifyFlexCardStatus(int indexBenefitCard, String expectedStatus) {
+		boolean isFlexBenefitCardStatusVerified = false;
 		try {
 			switch (expectedStatus) {
 			case MobilityXConstants.STARTING_SOON:
-				isCoreBenefitCardVerified = verifyCoreBenefitCardDetails()
-						&& verifyCoreBenefitCardStatusBeforeActualization(expectedStatus);
+				isFlexBenefitCardStatusVerified = verifyFlexBenefitCardStatusBeforeActualization(indexBenefitCard,
+						expectedStatus);
 				break;
 			case MobilityXConstants.BEGIN_TRAINING:
-				isCoreBenefitCardVerified = verifyCoreBenefitCardDetails()
-						&& verifyCoreBenefitCardStatusAfterActualization(expectedStatus);
+				isFlexBenefitCardStatusVerified = verifyFlexBenefitCardStatusAfterStartDateActualization(
+						indexBenefitCard, expectedStatus);
 				break;
 			case MobilityXConstants.TRAINING_COMPLETE:
-				isCoreBenefitCardVerified = verifyCoreBenefitCardDetails()
-						&& verifyCoreBenefitCardStatusAfterActualization(expectedStatus);
+				isFlexBenefitCardStatusVerified = verifyFlexBenefitCardStatusAfterEndDateActualization(indexBenefitCard,
+						expectedStatus);
+				break;
+			case MobilityXConstants.CANCELLED:
+				isFlexBenefitCardStatusVerified = verifyFlexBenefitCardStatusAfterCancellation(indexBenefitCard,
+						expectedStatus);
 				break;
 			default:
 				Assert.fail(COREFLEXConstants.INVALID_OPTION);
 			}
 		} catch (Exception e) {
 			Reporter.addStepLog(
-					MessageFormat.format(COREFLEXConstants.EXCEPTION_OCCURED_WHILE_VERIFYING_FLEX_BENEFIT_CARD_DETAILS,
+					MessageFormat.format(COREFLEXConstants.EXCEPTION_OCCURED_WHILE_VERIFYING_FLEX_BENEFIT_CARD_STATUS,
 							CoreConstants.FAIL, e.getMessage()));
 		}
-		return isCoreBenefitCardVerified;
+		return isFlexBenefitCardStatusVerified;
 	}
-	
-	private boolean verifyCoreBenefitCardDetails() {
+
+	private boolean verifyFlexCardDetails(int indexBenefitCard, Benefit benefit) {
 		try {
-			CoreFunctions.verifyText(driver, coreCardBenefitDisplayName,
-					languageTrainingBenefitData.coreBenefitDetails.benefitDisplayName,
-					MobilityXConstants.CORE_CARD_BENEFIT_DISPLAY_NAME);
-			CoreFunctions.verifyText(driver, coreCardAmountAllowanceText,
-					languageTrainingBenefitData.coreBenefitDetails.allowanceAmountMessage,
-					MobilityXConstants.CORE_CARD_BENEFIT_ALLOWANCE_AMOUNT);
-			CoreFunctions.moveToElement(driver, coreCardLongDescIcon);
-			CoreFunctions.verifyText(driver, coreCardLongDesc,
-					languageTrainingBenefitData.coreBenefitDetails.benefitLongDescription,
-					MobilityXConstants.CORE_CARD_BENEFIT_LONG_DESCRIPTION);
+			CoreFunctions.verifyText(driver, flexCardBenefitDisplayName.get(indexBenefitCard),
+					benefit.getBenefitDisplayName(), MobilityXConstants.FLEX_CARD_BENEFIT_DISPLAY_NAME);
+			CoreFunctions.verifyText(driver, flexCardAmountAllowanceText.get(indexBenefitCard),
+					benefit.getBenefitAmount(), MobilityXConstants.FLEX_CARD_BENEFIT_ALLOWANCE_AMOUNT);
+			CoreFunctions.verifyText(driver, flexCardNumberOfBenefitSelected.get(indexBenefitCard),
+					String.valueOf(benefit.getNumberOfBenefitSelected()),
+					MobilityXConstants.FLEX_CARD_NUMBER_OF_BENEFIT_SELECTED);
+			CoreFunctions.moveToElement(driver, flexCardNumberOfBenefitSelected.get(indexBenefitCard));
+			CoreFunctions.verifyText(driver, flexCardNumberOfBenefitSelectedToolTipText.get(indexBenefitCard),
+					MobilityXConstants.FLEX_CARD_NUMBER_OF_BENEFIT_SELECTED_TOOLTIP_TEXT.replace("numberOf",
+							String.valueOf(benefit.getNumberOfBenefitSelected())),
+					MobilityXConstants.FLEX_CARD_NUMBER_OF_BENEFIT_SELECTED_TOOLTIP);
+			CoreFunctions.moveToElement(driver, flexCardLongDescIcon.get(indexBenefitCard));
+			CoreFunctions.verifyText(driver, flexCardLongDesc.get(indexBenefitCard), benefit.getBenefitDesc(),
+					MobilityXConstants.FLEX_CARD_BENEFIT_LONG_DESCRIPTION);
+			Reporter.addStepLog(MessageFormat.format(COREFLEXConstants.SUCCESSFULLY_VERIFIED_FLEX_BENEFIT_CARD_DETAILS,
+					CoreConstants.PASS, flexCardBenefitDisplayName.get(indexBenefitCard).getText()));
+			return true;
+		} catch (Exception e) {
+			Reporter.addStepLog(MessageFormat.format(COREFLEXConstants.FAILED_TO_VERIFY_FLEX_BENEFIT_CARD_DETAILS,
+					CoreConstants.FAIL, flexCardBenefitDisplayName.get(indexBenefitCard)));
+			return false;
+		}
+	}
+
+	public boolean isCoreBenefitCardVerified(String expectedStatus) {
+		try {
+			return verifyCoreBenefitCardDetails(expectedStatus);
+		} catch (Exception e) {
 			Reporter.addStepLog(
-					MessageFormat.format(COREFLEXConstants.SUCCESSFULLY_VERIFIED_CORE_BENEFIT_CARD_DETAILS,
-							CoreConstants.PASS));
+					MessageFormat.format(COREFLEXConstants.EXCEPTION_OCCURED_WHILE_VERIFYING_CORE_BENEFIT_CARD_DETAILS,
+							CoreConstants.FAIL, e.getMessage()));
+			return false;
+		}
+	}
+
+	private boolean verifyCoreBenefitCardDetails(String expectedStatus) {
+		boolean isCoreCardDetailsVerified = false;
+		boolean flag = false;
+		try {
+			for (Benefit benefit : airesManagedCoreBenefits) {
+				int indexBenefitCard = BusinessFunctions.returnindexItemFromListUsingText(driver,
+						coreCardBenefitDisplayName, benefit.getBenefitDisplayName());
+				isCoreCardDetailsVerified = verifyCoreCardDetails(indexBenefitCard, benefit)
+						&& verifyCoreCardStatus(indexBenefitCard, expectedStatus);
+				if (!isCoreCardDetailsVerified) {
+					return false;
+				} else {
+					flag = true;
+				}
+			}
+
+		} catch (Exception e) {
+			Reporter.addStepLog(
+					MessageFormat.format(COREFLEXConstants.EXCEPTION_OCCURED_WHILE_VERIFYING_CORE_BENEFIT_CARD_DETAILS,
+							CoreConstants.FAIL, e.getMessage()));
+			return false;
+		}
+		if (isCoreCardDetailsVerified && flag) {
+			Reporter.addStepLog(MessageFormat.format(COREFLEXConstants.SUCCESSFULLY_VERIFIED_CORE_BENEFIT_CARD_DETAILS,
+					CoreConstants.PASS));
+		}
+		return isCoreCardDetailsVerified;
+	}
+
+	private boolean verifyCoreCardDetails(int indexBenefitCard, Benefit benefit) {
+		try {
+			CoreFunctions.scrollToElementUsingJS(driver, _textPolicyFileID, MobilityXConstants.POLICY_FILE_ID);
+			CoreFunctions.verifyText(driver, coreCardBenefitDisplayName.get(indexBenefitCard),
+					benefit.getBenefitDisplayName(), MobilityXConstants.CORE_CARD_BENEFIT_DISPLAY_NAME);
+			CoreFunctions.verifyText(driver, coreCardAmountAllowanceText.get(indexBenefitCard),
+					benefit.getBenefitAmount(), MobilityXConstants.CORE_CARD_BENEFIT_ALLOWANCE_AMOUNT);
+			CoreFunctions.moveToElement(driver, coreCardLongDescIcon.get(indexBenefitCard));
+			CoreFunctions.verifyText(driver, coreCardLongDesc.get(indexBenefitCard), benefit.getBenefitDesc(),
+					MobilityXConstants.CORE_CARD_BENEFIT_LONG_DESCRIPTION);
+			Reporter.addStepLog(MessageFormat.format(COREFLEXConstants.SUCCESSFULLY_VERIFIED_CORE_BENEFIT_CARD_DETAILS,
+					CoreConstants.PASS, coreCardBenefitDisplayName.get(indexBenefitCard)));
 			return true;
 		} catch (Exception e) {
 			Reporter.addStepLog(
@@ -679,30 +848,47 @@ public class MX_Transferee_JourneyHomePage extends Base {
 			return false;
 		}
 	}
-	
-	private boolean verifyCoreBenefitCardStatusAfterActualization(String expectedStatus) {
+
+	private boolean verifyCoreCardStatus(int indexBenefitCard, String expectedStatus) {
+		boolean isCoreBenefitCardStatusVerified = false;
 		try {
-			if( CoreFunctions.isElementExist(driver, coreCardBeginProgressStatus, 3)
-					&& (!CoreFunctions.isElementExist(driver, coreCardStartingSoonStatus, 3))) {
-				Reporter.addStepLog(
-						MessageFormat.format(COREFLEXConstants.SUCCESSFULLY_VERIFIED_CORE_BENEFIT_CARD_STATUS,
-								CoreConstants.PASS,expectedStatus));
-				return true;
+			switch (expectedStatus) {
+			case MobilityXConstants.STARTING_SOON:
+				isCoreBenefitCardStatusVerified = verifyCoreBenefitCardStatusBeforeActualization(indexBenefitCard,
+						expectedStatus);
+				break;
+			case MobilityXConstants.BEGIN_TRAINING:
+				isCoreBenefitCardStatusVerified = verifyCoreBenefitCardStatusAfterStartDateActualization(
+						indexBenefitCard, expectedStatus);
+				break;
+			case MobilityXConstants.TRAINING_COMPLETE:
+				isCoreBenefitCardStatusVerified = verifyCoreBenefitCardStatusAfterEndDateActualization(indexBenefitCard,
+						expectedStatus);
+				break;
+			case MobilityXConstants.CANCELLED:
+				isCoreBenefitCardStatusVerified = verifyCoreBenefitCardStatusAfterCancellation(indexBenefitCard,
+						expectedStatus);
+				break;
+			default:
+				Assert.fail(COREFLEXConstants.INVALID_OPTION);
 			}
 		} catch (Exception e) {
 			Reporter.addStepLog(
 					MessageFormat.format(COREFLEXConstants.EXCEPTION_OCCURED_WHILE_VERIFYING_CORE_BENEFIT_CARD_STATUS,
-							CoreConstants.FAIL, e.getMessage()));			
+							CoreConstants.FAIL, e.getMessage()));
 		}
-		return false;
+		return isCoreBenefitCardStatusVerified;
 	}
 
-	private boolean verifyCoreBenefitCardStatusBeforeActualization(String expectedStatus) {
+	private boolean verifyCoreBenefitCardStatusAfterStartDateActualization(int indexBenefitCard,
+			String expectedStatus) {
 		try {
-			if(CoreFunctions.isElementExist(driver, coreCardStartingSoonStatus, 3)){
+			if (CoreFunctions.isElementExist(driver,
+					CoreFunctions.findSubElement(coreCardPanelList.get(indexBenefitCard), coreCardBeginTrainingStatus),
+					3) && (!CoreFunctions.isElementExist(driver, coreCardStartingSoonStatus, 3))) {
 				Reporter.addStepLog(
 						MessageFormat.format(COREFLEXConstants.SUCCESSFULLY_VERIFIED_CORE_BENEFIT_CARD_STATUS,
-								CoreConstants.PASS,expectedStatus));
+								CoreConstants.PASS, expectedStatus));
 				return true;
 			}
 		} catch (Exception e) {
@@ -712,4 +898,138 @@ public class MX_Transferee_JourneyHomePage extends Base {
 		}
 		return false;
 	}
+
+	private boolean verifyCoreBenefitCardStatusAfterEndDateActualization(int indexBenefitCard, String expectedStatus) {
+		try {
+			if (CoreFunctions.isElementExist(driver,
+					CoreFunctions.findSubElement(coreCardPanelList.get(indexBenefitCard),
+							coreCardTrainingCompletedStatus),
+					3) && (!CoreFunctions.isElementExist(driver, coreCardStartingSoonStatus, 3))) {
+				Reporter.addStepLog(
+						MessageFormat.format(COREFLEXConstants.SUCCESSFULLY_VERIFIED_CORE_BENEFIT_CARD_STATUS,
+								CoreConstants.PASS, expectedStatus));
+				return true;
+			}
+		} catch (Exception e) {
+			Reporter.addStepLog(
+					MessageFormat.format(COREFLEXConstants.EXCEPTION_OCCURED_WHILE_VERIFYING_CORE_BENEFIT_CARD_STATUS,
+							CoreConstants.FAIL, e.getMessage()));
+		}
+		return false;
+	}
+
+	private boolean verifyCoreBenefitCardStatusBeforeActualization(int indexBenefitCard, String expectedStatus) {
+		try {
+			if (CoreFunctions.isElementExist(driver, coreCardStartingSoonStatusList.get(indexBenefitCard), 3)) {
+				CoreFunctions.highlightObject(driver, coreCardStartingSoonStatusList.get(indexBenefitCard));
+				Reporter.addStepLog(
+						MessageFormat.format(COREFLEXConstants.SUCCESSFULLY_VERIFIED_CORE_BENEFIT_CARD_STATUS,
+								CoreConstants.PASS, expectedStatus));
+				return true;
+			}
+		} catch (Exception e) {
+			Reporter.addStepLog(
+					MessageFormat.format(COREFLEXConstants.EXCEPTION_OCCURED_WHILE_VERIFYING_CORE_BENEFIT_CARD_STATUS,
+							CoreConstants.FAIL, e.getMessage()));
+		}
+		return false;
+	}
+
+	private boolean verifyCoreBenefitCardStatusAfterCancellation(int indexBenefitCard, String expectedStatus) {
+		try {
+			if (CoreFunctions.isElementExist(driver, coreCardCancelledStatusList.get(indexBenefitCard), 3)) {
+				CoreFunctions.highlightObject(driver, coreCardCancelledStatusList.get(indexBenefitCard));
+				Reporter.addStepLog(
+						MessageFormat.format(COREFLEXConstants.SUCCESSFULLY_VERIFIED_CORE_BENEFIT_CARD_STATUS,
+								CoreConstants.PASS, expectedStatus));
+				return true;
+			}
+		} catch (Exception e) {
+			Reporter.addStepLog(
+					MessageFormat.format(COREFLEXConstants.EXCEPTION_OCCURED_WHILE_VERIFYING_CORE_BENEFIT_CARD_STATUS,
+							CoreConstants.FAIL, e.getMessage()));
+		}
+		return false;
+	}
+
+	public boolean verifyFlexCardForNotSubmittedAiresManagedBenefit() {
+		try {
+			if (verifyFlexCardNotDisplayed()) {
+				Reporter.addStepLog(MessageFormat.format(
+						COREFLEXConstants.SUCCESSFULLY_VERIFIED_FLEX_BENEFIT_CARD_NOT_DISPLAYED_FOR_NOT_SUBMITTED_AIRES_MANAGED_BENEFIT,
+						CoreConstants.PASS));
+			}
+		} catch (Exception e) {
+			Reporter.addStepLog(MessageFormat.format(
+					COREFLEXConstants.EXCEPTION_OCCURED_WHILE_VERIFYING_FLEX_BENEFIT_CARD_FOR_NOT_SUBMITTED_AIRES_MANAGED_BENEFIT,
+					CoreConstants.FAIL, e.getMessage()));
+		}
+		return false;
+	}
+
+	public boolean verifyFlexCardNotDisplayedAfterUpdatingSubServiceType() {
+		try {
+			if (verifyFlexCardNotDisplayed()) {
+				Reporter.addStepLog(MessageFormat.format(
+						COREFLEXConstants.SUCCESSFULLY_VERIFIED_FLEX_BENEFIT_CARD_NOT_DISPLAYED_ON_MOBILITY_JOURNEY_PAGE_AFTER_CHANGING_COREFLEX_SUBSERVICE_TYPE_IN_IRIS_APPLICATION,
+						CoreConstants.PASS));
+				return true;
+			}
+		} catch (Exception e) {
+			Reporter.addStepLog(MessageFormat.format(
+					COREFLEXConstants.EXCEPTION_OCCURED_WHILE_VERIFYING_FLEX_BENEFIT_CARD_NOT_DISPLAYED_ON_MOBILITY_JOURNEY_PAGE_AFTER_CHANGING_COREFLEX_SUBSERVICE_TYPE_IN_IRIS_APPLICATION,
+					CoreConstants.FAIL, e.getMessage()));
+		}
+		return false;
+	}
+
+	private boolean verifyFlexCardNotDisplayed() {
+		boolean isFlexCardNotDisplayed = false;
+		for (FlexBenefit benefitList : airesManagedFlexBenefits) {
+			for (Benefit benefit : benefitList.getBenefits()) {
+				if (benefit.getSelectBenefitOnFPTPage()) {
+					int indexBenefitCard = BusinessFunctions.returnindexItemFromListUsingText(driver,
+							flexCardBenefitDisplayName, benefit.getBenefitDisplayName());
+					if (indexBenefitCard == -1) {
+						isFlexCardNotDisplayed = true;
+					} else {
+						return false;
+					}
+				}
+			}
+		}
+		return isFlexCardNotDisplayed;
+	}
+
+	public boolean verifyCoreCardNotDisplayedAfterUpdatingSubServiceType() {
+		try {
+			if (verifyCoreCardNotDisplayed()) {
+				Reporter.addStepLog(MessageFormat.format(
+						COREFLEXConstants.SUCCESSFULLY_VERIFIED_CORE_BENEFIT_CARD_NOT_DISPLAYED_ON_MOBILITY_JOURNEY_PAGE_AFTER_CHANGING_COREFLEX_SUBSERVICE_TYPE_IN_IRIS_APPLICATION,
+						CoreConstants.PASS));
+				return true;
+			}
+		} catch (Exception e) {
+			Reporter.addStepLog(MessageFormat.format(
+					COREFLEXConstants.EXCEPTION_OCCURED_WHILE_VERIFYING_CORE_BENEFIT_CARD_NOT_DISPLAYED_ON_MOBILITY_JOURNEY_PAGE_AFTER_CHANGING_COREFLEX_SUBSERVICE_TYPE_IN_IRIS_APPLICATION,
+					CoreConstants.FAIL, e.getMessage()));
+		}
+		return false;
+	}
+
+	private boolean verifyCoreCardNotDisplayed() {
+		boolean isCoreCardNotDisplayed = false;
+		for (Benefit benefit : airesManagedCoreBenefits) {
+			int indexBenefitCard = BusinessFunctions.returnindexItemFromListUsingText(driver,
+					coreCardBenefitDisplayName, benefit.getBenefitDisplayName());
+			if (indexBenefitCard == -1) {
+				isCoreCardNotDisplayed = true;
+			} else {
+				return false;
+			}
+
+		}
+		return isCoreCardNotDisplayed;
+	}
+
 }

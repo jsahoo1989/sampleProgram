@@ -422,7 +422,24 @@ public class IRIS_AssignmentServicePage extends BasePage {
 	}
 
 	public void selectService(String sectionName) throws GeneralLeanFtException, Exception {
-		Helpers.selectTableRow(getTableName(sectionName), Helpers.getTableRowCount(getTableName(sectionName)) - 1);
+		Helpers.selectTableRow(getTableName(sectionName), 0);
+		CoreFunctions.waitHandler(1);
+	}
+
+	public void selectSubService(String sectionName) throws GeneralLeanFtException, Exception {
+		Helpers.selectTableRow(getTableName(sectionName), 0);
+		CoreFunctions.waitHandler(1);
+	}
+
+	public void updateSubServiceColumnData(String sectionName, String columnName, String newSubserviceServiceType) {
+		try {
+			_tableName = getTableName(sectionName);
+			_tableName.waitUntilVisible();
+			rowCount = Helpers.getTableRowCount(_tableName);
+			_tableName.getCell(rowCount - 1, columnName).setValue(newSubserviceServiceType);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
 	}
 	
 }

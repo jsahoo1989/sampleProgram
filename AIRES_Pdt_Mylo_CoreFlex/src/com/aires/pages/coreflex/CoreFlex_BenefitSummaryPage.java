@@ -103,6 +103,9 @@ public class CoreFlex_BenefitSummaryPage extends Base {
 
 	public static final List<FlexBenefit> flexBenefits = FileReaderManager.getInstance().getCoreFlexJsonReader()
 			.getMXTransfereeFlexBenefitData();
+	
+	public static final List<FlexBenefit> airesManagedFlexBenefits = FileReaderManager.getInstance().getCoreFlexJsonReader()
+			.getMXTransfereeAiresManagedFlexBenefitData();
 
 	/*********************************************************************/
 
@@ -214,9 +217,7 @@ public class CoreFlex_BenefitSummaryPage extends Base {
 			throw new RuntimeException(e);
 
 		}
-	}
-
-	
+	}	
 
 	/**
 	 * Method to iterate and verify Added Benefits & SubBenefits on Benefit Summary
@@ -239,7 +240,7 @@ public class CoreFlex_BenefitSummaryPage extends Base {
 		}
 		return false;
 	}
-
+	
 	private boolean iterateAndVerifyFlexBenefitsSummaryDetails() {
 		boolean isFlexBenefitSummaryVerified = false;
 		try {

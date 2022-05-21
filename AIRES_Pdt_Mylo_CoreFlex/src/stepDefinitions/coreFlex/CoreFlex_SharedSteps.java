@@ -496,7 +496,7 @@ public class CoreFlex_SharedSteps {
 						.saveTransferee(IRISConstants.NEW_TRANSFEREE_CREATED_SUCCESS_MSG),
 				IRISConstants.NEW_TRANSFEREE_CREATED_SUCCESS_MSG + " Message " + IRISConstants.IS_NOT_DISPLAYED);
 		testContext.getIrisPageManager().irisAssignmentTransfereeAndFamilyPage.addTransfereeIdentityDetails();
-		
+
 		testContext.getBasePage().cleanIrisProcesses();
 		testContext.getBasePage().reLaunchIrisToAvoidFreezingIssue();
 		testContext.getIrisPageManager().irisLoginPage = new IRIS_LoginPage();
@@ -770,16 +770,14 @@ public class CoreFlex_SharedSteps {
 						CoreConstants.FAIL));
 	}
 
-	@Given("^he has navigated to 'Custom Bundles' page after setting-up following Benefit/SubBenefits of \"([^\"]*)\" type for Mobility Journey Card setup$")
-	public void he_has_navigated_to_Custom_Bundles_page_after_setting_up_following_Benefit_SubBenefits_of_type_for_Mobility_Journey_Card_setup(
-			String benefitType, DataTable dataTable) throws Throwable {
-		List<Map<String, String>> benefitMap = dataTable.asMaps(String.class, String.class);
+	@Given("^he has navigated to 'Custom Bundles' page after setting-up Aires Managed Benefit of \"([^\"]*)\" type for Mobility Journey Card setup$")
+	public void he_has_navigated_to_Custom_Bundles_page_after_setting_up_Aires_Managed_Benefit_SubBenefits_of_type_for_Mobility_Journey_Card_setup(
+			String policyType) throws Throwable {
 		coreFlexLanguageTrainingBenefitsPage.clickLeftNavigationMenuOfPage(COREFLEXConstants.POLICY_BENEFIT_CATEGORIES);
-		coreFlexPolicyBenefitsCategoriesPage.selectBenefit(benefitMap.get(0).get("BenefitName"));
+		coreFlexPolicyBenefitsCategoriesPage.selectAiresManagedBenefits(policyType);
 		coreFlexPolicyBenefitsCategoriesPage.clickElementOfPage(PDTConstants.NEXT);
 		Assert.assertTrue(
-				coreFlexPolicyBenefitsCategoriesPage.selectAndFillAddedBenefits(benefitType,
-						benefitMap.get(0).get("BenefitName"), benefitMap.get(0).get("SubBenefits"),
+				coreFlexPolicyBenefitsCategoriesPage.selectAndFillAiresManagedBenefits(policyType,
 						coreFlexLanguageTrainingBenefitsPage),
 				MessageFormat.format(COREFLEXConstants.FAILED_TO_SELECT_AND_FILL_ADDED_BENEFITS, CoreConstants.FAIL));
 		coreFlexBenefitSummaryPage.clickElementOfPage(COREFLEXConstants.CONTINUE);

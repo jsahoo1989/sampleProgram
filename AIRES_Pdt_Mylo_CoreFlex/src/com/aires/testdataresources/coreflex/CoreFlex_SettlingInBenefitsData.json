@@ -15,7 +15,7 @@
 			"airesManagedService":"Yes",
 			"benefitCategory":"Settling In",
 			"multipleBenefitSelection":"Yes",
-			"numberOfBenefitSelected":1
+			"numberOfBenefitSelected":3
 		},
 		"languageTrainingEmployee": {
 			"maxNumberOfHours": "10",

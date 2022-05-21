@@ -14,7 +14,8 @@ public class Benefit {
 	private String reimbursedBy;
 	private String comment;
 	private boolean deleteBenefitOnMBBPage;
-	private String payments;	
+	private String payments;
+	private String airesManagedService;	
 
 	public Benefit(String benefitDisplayName, String benefitAmount, String benefitDesc) {
 		this.benefitDisplayName = benefitDisplayName;
@@ -181,6 +182,14 @@ public class Benefit {
 
 	public void setPayments(String payments) {
 		this.payments = payments;
+	}
+	
+	public String getAiresManagedService() {
+		return airesManagedService;
+	}
+
+	public void setAiresManagedService(String airesManagedService) {
+		this.airesManagedService = airesManagedService;
 	}
 
 	@Override

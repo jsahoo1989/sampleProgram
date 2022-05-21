@@ -153,6 +153,12 @@ public class CoreFlex_PolicyBenefitsCategoriesPage extends Base {
 	public static final List<FlexBenefit> flexBenefits = FileReaderManager.getInstance().getCoreFlexJsonReader()
 			.getMXTransfereeFlexBenefitData();
 
+	public static final List<FlexBenefit> airesManagedFlexBenefits = FileReaderManager.getInstance()
+			.getCoreFlexJsonReader().getMXTransfereeAiresManagedFlexBenefitData();
+
+	public static final List<Benefit> airesManagedCoreBenefits = FileReaderManager.getInstance().getCoreFlexJsonReader()
+			.getMXTransfereeAiresManagedCoreBenefitData();
+
 	CoreFlex_PolicySetupPagesData policySetupPageData = FileReaderManager.getInstance().getCoreFlexJsonReader()
 			.getPolicySetupPagesDataList(COREFLEXConstants.POLICY_SETUP);
 
@@ -303,6 +309,29 @@ public class CoreFlex_PolicyBenefitsCategoriesPage extends Base {
 		}
 		return true;
 	}
+	
+	/**
+	 * Method to select specified Aires Managed Benefit Name (If Not Already Checked)
+	 * 
+	 * @param policyType
+	 * @return
+	 */
+	public boolean selectAiresManagedBenefits(String policyType) {
+		try {
+			expandAllBenefitCategories();
+			// Method to select Provided benefit from the List
+			List<String> benefitList = getAiresManagedBenefitList(policyType);
+			for (String benefit : benefitList) {
+				CoreFunctions.selectItemInListByText(driver, _allBenefitsList, benefit, true);
+			}
+		} catch (Exception e) {
+			Reporter.addStepLog(
+					MessageFormat.format(COREFLEXConstants.EXCEPTION_OCCURED_WHILE_SELECTING_AIRES_MANAGED_BENEFITS_ON_PAGE,
+							CoreConstants.FAIL, e.getMessage()));
+			return false;
+		}
+		return true;
+	}
 
 	/**
 	 * Method to select specified Benefit Name (If Not Already Checked)
@@ -335,6 +364,19 @@ public class CoreFlex_PolicyBenefitsCategoriesPage extends Base {
 		List<String> benefitNameList = new ArrayList<String>();
 		if (policyType.equals(COREFLEXConstants.FLEX) || policyType.equals(COREFLEXConstants.BOTH)) {
 			for (FlexBenefit benefit : flexBenefits) {
+				for (Benefit ben : benefit.getBenefits()) {
+					benefitNameList.add(ben.getBenefitType());
+				}
+			}
+		}
+		return benefitNameList;
+	}
+	
+	private List<String> getAiresManagedBenefitList(String policyType) {
+
+		List<String> benefitNameList = new ArrayList<String>();
+		if (policyType.equals(COREFLEXConstants.FLEX) || policyType.equals(COREFLEXConstants.BOTH)) {
+			for (FlexBenefit benefit : airesManagedFlexBenefits) {
 				for (Benefit ben : benefit.getBenefits()) {
 					benefitNameList.add(ben.getBenefitType());
 				}
@@ -549,52 +591,95 @@ public class CoreFlex_PolicyBenefitsCategoriesPage extends Base {
 		}
 	}
 
-	public boolean selectAndFillAddedBenefits(String benefitType, String benefitName, String subBenefitNames,
-			CoreFlex_LanguageTraining_BenefitsPage coreFlexLanguageTrainingBenefitsPage) {		
+	public boolean selectAndFillAiresManagedBenefits(String benefitType,
+			CoreFlex_LanguageTraining_BenefitsPage coreFlexLanguageTrainingBenefitsPage) {
 		boolean isBenefitSuccessfullySelectedAndFilled = false;
 		try {
 			CoreFunctions.explicitWaitTillElementInVisibility(driver, _progressBar);
 			CoreFunctions.waitHandler(3);
 			if (benefitType.equals(COREFLEXConstants.FLEX) || benefitType.equals(COREFLEXConstants.BOTH)) {
-				isBenefitSuccessfullySelectedAndFilled = fillCardBenefitDetails(benefitType, benefitName,
-						subBenefitNames, coreFlexLanguageTrainingBenefitsPage);
+				isBenefitSuccessfullySelectedAndFilled = fillAiresManagedCardBenefitDetails(benefitType,
+						coreFlexLanguageTrainingBenefitsPage);
+			} else if (benefitType.equals(COREFLEXConstants.CORE)) {
+				isBenefitSuccessfullySelectedAndFilled = fillAiresManagedCardCoreBenefitDetails(benefitType,
+						coreFlexLanguageTrainingBenefitsPage);
 			}
 		} catch (Exception e) {
-			Reporter.addStepLog(
-					MessageFormat.format(COREFLEXConstants.EXCEPTION_OCCURED_WHILE_SELECTING_AND_FILLING_ADDED_BENEFITS,
-							CoreConstants.FAIL, e.getMessage()));
+			Reporter.addStepLog(MessageFormat.format(
+					COREFLEXConstants.EXCEPTION_OCCURED_WHILE_SELECTING_AND_FILLING_AIRES_MANAGED_BENEFITS,
+					CoreConstants.FAIL, e.getMessage()));
 		}
 		if (isBenefitSuccessfullySelectedAndFilled) {
-			Reporter.addStepLog(MessageFormat.format(COREFLEXConstants.SUCCESSFULLY_SELECTED_AND_FILLED_ADDED_BENEFITS,
-					CoreConstants.PASS));
+			Reporter.addStepLog(MessageFormat.format(
+					COREFLEXConstants.SUCCESSFULLY_SELECTED_AND_FILLED_AIRES_MANAGED_BENEFITS, CoreConstants.PASS));
 			clickLeftNavigationMenuOfPage(COREFLEXConstants.BENEFIT_SUMMARY);
 		}
 		return isBenefitSuccessfullySelectedAndFilled;
 	}
 
-	private boolean fillCardBenefitDetails(String benefitType, String benefitName, String subBenefitNames,
+	private boolean fillAiresManagedCardBenefitDetails(String benefitType,
 			CoreFlex_LanguageTraining_BenefitsPage coreFlexLanguageTrainingBenefitsPage) {
 		boolean isBenefitSuccessfullySelectedAndFilled = false;
 		try {
-			clickLeftNavigationMenuOfPage(benefitName);
-			switch (benefitName) {
-			case COREFLEXConstants.LANGUAGE_TRAINING:
-				coreFlexLanguageTrainingBenefitsPage.selectAndFillBenefitsAndSubBenefitDetails(benefitType,
-						subBenefitNames);
-				isBenefitSuccessfullySelectedAndFilled = true;
-				break;
-			default:
-				Assert.fail(PDTConstants.INVALID_ELEMENT);
+			for (FlexBenefit benefitList : airesManagedFlexBenefits) {
+				for (Benefit benefit : benefitList.getBenefits()) {
+					clickLeftNavigationMenuOfPage(benefit.getBenefitType());
+					switch (benefit.getBenefitType()) {
+					case COREFLEXConstants.LANGUAGE_TRAINING:
+						coreFlexLanguageTrainingBenefitsPage.selectAndFillBenefitsAndSubBenefitDetails(benefitType,
+								benefit.getSubBenefits(), benefit.getMultipleBenefitSelection(), benefit.getPoints(),
+								benefit.getBenefitDisplayName(), benefit.getBenefitAmount(), benefit.getBenefitDesc(),
+								benefit.getAiresManagedService());
+						break;
+					case COREFLEXConstants.HOME_PURCHASE:
+						break;
+					default:
+						Assert.fail(PDTConstants.INVALID_ELEMENT);
+					}
+					isBenefitSuccessfullySelectedAndFilled = true;
+				}
 			}
-
 		} catch (Exception e) {
 			Reporter.addStepLog(MessageFormat.format(
-					COREFLEXConstants.EXCEPTION_OCCURED_WHILE_SELECTING_AND_FILLING_ADDED_FLEX_BENEFITS,
+					COREFLEXConstants.EXCEPTION_OCCURED_WHILE_SELECTING_AND_FILLING_AIRES_MANAGED_BENEFITS,
 					CoreConstants.FAIL, e.getMessage()));
 		}
 		if (isBenefitSuccessfullySelectedAndFilled) {
 			Reporter.addStepLog(MessageFormat.format(
-					COREFLEXConstants.SUCCESSFULLY_SELECTED_AND_FILLED_ADDED_FLEX_BENEFITS, CoreConstants.PASS));
+					COREFLEXConstants.SUCCESSFULLY_SELECTED_AND_FILLED_AIRES_MANAGED_BENEFITS, CoreConstants.PASS));
+		}
+		return isBenefitSuccessfullySelectedAndFilled;
+	}
+
+	private boolean fillAiresManagedCardCoreBenefitDetails(String benefitType,
+			CoreFlex_LanguageTraining_BenefitsPage coreFlexLanguageTrainingBenefitsPage) {
+		boolean isBenefitSuccessfullySelectedAndFilled = false;
+		try {
+			for (Benefit benefit : airesManagedCoreBenefits) {
+				clickLeftNavigationMenuOfPage(benefit.getBenefitType());
+				switch (benefit.getBenefitType()) {
+				case COREFLEXConstants.LANGUAGE_TRAINING:
+					coreFlexLanguageTrainingBenefitsPage.selectAndFillBenefitsAndSubBenefitDetails(benefitType,
+							benefit.getSubBenefits(), benefit.getMultipleBenefitSelection(), benefit.getPoints(),
+							benefit.getBenefitDisplayName(), benefit.getBenefitAmount(), benefit.getBenefitDesc(),
+							benefit.getAiresManagedService());
+					break;
+				case COREFLEXConstants.HOME_PURCHASE:
+					break;
+				default:
+					Assert.fail(PDTConstants.INVALID_ELEMENT);
+				}
+				isBenefitSuccessfullySelectedAndFilled = true;
+
+			}
+		} catch (Exception e) {
+			Reporter.addStepLog(MessageFormat.format(
+					COREFLEXConstants.EXCEPTION_OCCURED_WHILE_SELECTING_AND_FILLING_AIRES_MANAGED_BENEFITS,
+					CoreConstants.FAIL, e.getMessage()));
+		}
+		if (isBenefitSuccessfullySelectedAndFilled) {
+			Reporter.addStepLog(MessageFormat.format(
+					COREFLEXConstants.SUCCESSFULLY_SELECTED_AND_FILLED_AIRES_MANAGED_BENEFITS, CoreConstants.PASS));
 		}
 		return isBenefitSuccessfullySelectedAndFilled;
 	}

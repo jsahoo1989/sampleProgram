@@ -288,11 +288,6 @@ public class CoreFlex_DuplicateHousing_BenefitsPage extends Base {
 			selectSubBenefitsAndFillMandatoryFields(subBenefitNames);
 		}
 		clickElementOfPage(COREFLEXConstants.SAVE_AND_CONTINUE);
-
-		if (CoreFunctions.isElementExist(driver, _errorDialogPolicyBenefitsDataMissing, 3)) {
-			CoreFunctions.clickElement(driver, _errorDialogPolicyBenefitsDataMissingOKButton);
-			clickElementOfPage(PDTConstants.BACK);
-		}
 	}
 
 	/**

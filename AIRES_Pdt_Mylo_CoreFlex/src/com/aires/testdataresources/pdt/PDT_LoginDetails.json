@@ -115,8 +115,8 @@
 		"preProd": {
 			"irisUserName": "vkamins",
 			"irisPassword": "testvk",
-			"irisDatabase": "TESTS",
-			"irisBuildPath": "\\\\corpprdvw589\\rdev\\IRIS_Builds\\IRIS_PROD_NEW\\IRIS.exe",
+			"irisDatabase": "TRAINING",
+			"irisBuildPath": "\\\\corpprdvw589\\rdev\\IRIS_Builds\\IRIS_PROD\\IRIS.exe",
 			"firstName": "Chere",
 			"lastName": "kitts",
 			"clientId": "7403",

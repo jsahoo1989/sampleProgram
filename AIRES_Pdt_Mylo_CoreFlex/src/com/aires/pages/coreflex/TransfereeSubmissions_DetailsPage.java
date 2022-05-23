@@ -286,6 +286,7 @@ public class TransfereeSubmissions_DetailsPage extends Base {
 		try {
 			isDeleteRequestDenied=false;
 			isDeleteRequestApproved = false;
+			MX_Transferee_MyBenefitsBundlePage.undoDeletedBenefitFlag=false;
 			CoreFunctions.verifyText(driver, _textTransfereeName,
 					CoreFunctions.getPropertyFromConfig("Transferee_firstName") + " "
 							+ CoreFunctions.getPropertyFromConfig("Transferee_lastName"),

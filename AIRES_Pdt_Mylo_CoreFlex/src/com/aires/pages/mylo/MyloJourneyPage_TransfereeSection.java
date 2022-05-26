@@ -262,6 +262,14 @@ public class MyloJourneyPage_TransfereeSection extends Base {
 			CoreFunctions.highlightObject(driver, _transfereeAndFamilySectionHeaders.get(0));
 			flag = (_transfereeAndFamilySectionHeaders.get(0).getText().contains(MYLOConstants.TRANSFEREE_FAMILY));
 			break;
+		case MYLOConstants.PARTNER:
+			CoreFunctions.explicitWaitTillElementVisibility(driver, _transfereeAndFamilySectionHeaders.get(1),
+					sectionName);
+			CoreFunctions.scrollToElementUsingJavaScript(driver, _transfereeAndFamilySection,
+					MYLOConstants.TRANSFEREE_FAMILY);
+			CoreFunctions.highlightObject(driver, _transfereeAndFamilySectionHeaders.get(0));
+			flag = (_transfereeAndFamilySectionHeaders.get(0).getText().contains(MYLOConstants.TRANSFEREE_FAMILY));
+			break;
 		default:
 			Reporter.addStepLog(CoreConstants.FAIL + MYLOConstants.ENTER_CORRECT_SECTION_NAME);
 			Assert.fail(MYLOConstants.ENTER_CORRECT_SECTION_NAME);
@@ -505,9 +513,9 @@ public class MyloJourneyPage_TransfereeSection extends Base {
 	 */
 	public void setFieldsTransfereePhoneEmailSection(DataTable table, String buttonName) {
 		if (buttonName.equals(MYLOConstants.TRANSFEREE_ADD_PHONE))
-			setMandatoryFieldsTransfereePhoneSection(table, 1);
+			setMandatoryFieldsTransfereePhoneSection(table, 0);
 		else
-			setMandatoryFieldsTransfereeEmailSection(table, 1);
+			setMandatoryFieldsTransfereeEmailSection(table, 0);
 	}
 
 	/**
@@ -636,11 +644,11 @@ public class MyloJourneyPage_TransfereeSection extends Base {
 		java.util.List<Map<String, String>> data = table.asMaps(String.class, String.class);
 		for (int i = 0; i < data.size(); i++) {
 			setTransfereePhoneEmailFields(MYLOConstants.TRANSFEREE_PHONE_NUMBER,
-					data.get(i).get(MYLOConstants.TRANSFEREE_PHONE_NUMBER), 1);
-			clickDropdownFieldsOnTransfereeSection(MYLOConstants.TRANSFEREE_ORGDEST, 1);
+					data.get(i).get(MYLOConstants.TRANSFEREE_PHONE_NUMBER), 0);
+			clickDropdownFieldsOnTransfereeSection(MYLOConstants.TRANSFEREE_ORGDEST, 0);
 			setDifferentDropDownFields(MYLOConstants.TRANSFEREE_ORGDEST,
 					data.get(i).get(MYLOConstants.TRANSFEREE_ORGDEST));
-			clickDropdownFieldsOnTransfereeSection(MYLOConstants.TRANSFEREE_PHONE_TYPE, 1);
+			clickDropdownFieldsOnTransfereeSection(MYLOConstants.TRANSFEREE_PHONE_TYPE, 0);
 			setDifferentDropDownFields(MYLOConstants.TRANSFEREE_PHONE_TYPE,
 					data.get(i).get(MYLOConstants.TRANSFEREE_PHONE_TYPE));
 			clickTransfereeSaveButton();
@@ -659,8 +667,8 @@ public class MyloJourneyPage_TransfereeSection extends Base {
 		java.util.List<Map<String, String>> data = table.asMaps(String.class, String.class);
 		for (int i = 0; i < data.size(); i++) {
 			setTransfereePhoneEmailFields(MYLOConstants.TRANSFEREE_EMAIL_ADDRESS,
-					data.get(i).get(MYLOConstants.TRANSFEREE_EMAIL_ADDRESS), 1);
-			clickDropdownFieldsOnTransfereeSection(MYLOConstants.TRANSFEREE_EMAIL_TYPE, 1);
+					data.get(i).get(MYLOConstants.TRANSFEREE_EMAIL_ADDRESS), 0);
+			clickDropdownFieldsOnTransfereeSection(MYLOConstants.TRANSFEREE_EMAIL_TYPE, 0);
 			setDifferentDropDownFields(MYLOConstants.TRANSFEREE_EMAIL_TYPE,
 					data.get(i).get(MYLOConstants.TRANSFEREE_EMAIL_TYPE));
 			clickTransfereeSaveButton();

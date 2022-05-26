@@ -194,7 +194,7 @@ public class MyloJourneyTransferee_Steps {
 	public void values_should_be_successfully_saved_as_per_below_character_limit_set_for_different_fields_of_section_under_section(
 			String section, String arg2, DataTable table) {
 		MYLOConstants.TIME_BEFORE_ACTION = new Date().getTime();
-		int index = (section.equals(MYLOConstants.TRANSFEREE_ADD_PHONE)) ? 1 : 3;
+		int index = (section.equals(MYLOConstants.TRANSFEREE_ADD_PHONE)) ? 0 : 1;
 		Assert.assertTrue(myloJourneyPageTransfereeSection.verifyDifferentTransfereePhoneFieldsUpdatedValue(table, index));
 		MYLOConstants.TIME_AFTER_ACTION = new Date().getTime();
 		Reporter.addStepLog("<b>Total time taken by <i>'Then'</i> statement is :"
@@ -205,7 +205,7 @@ public class MyloJourneyTransferee_Steps {
 	public void values_should_be_successfully_saved_for_different_fields_under_section(String section,
 			DataTable table) {
 		MYLOConstants.TIME_BEFORE_ACTION = new Date().getTime();
-		Assert.assertTrue(myloJourneyPageTransfereeSection.verifyDifferentTransfereeEmailFieldsUpdatedValue(table, 1));
+		Assert.assertTrue(myloJourneyPageTransfereeSection.verifyDifferentTransfereeEmailFieldsUpdatedValue(table, 0));
 		MYLOConstants.TIME_AFTER_ACTION = new Date().getTime();
 		Reporter.addStepLog("<b>Total time taken by <i>'Then'</i> statement is :"
 				+ (MYLOConstants.TIME_AFTER_ACTION - MYLOConstants.TIME_BEFORE_ACTION) / 1000 + " Seconds </b>");
@@ -217,8 +217,7 @@ public class MyloJourneyTransferee_Steps {
 		MYLOConstants.TIME_BEFORE_ACTION = new Date().getTime();
 		myloJourneyPageTransfereeSection.highlightSectionHeader(MYLOConstants.TRANSFEREE);
 		myloJourneyPageTransfereeSection.clickFieldsOnTransfereeSection(MYLOConstants.EDIT_BUTTON);
-		int index = (section.equals(MYLOConstants.TRANSFEREE_ADD_PHONE)) ? 1 : 2;
-		myloJourneyPageTransfereeSection.clickDeleteIcon(index);
+		myloJourneyPageTransfereeSection.clickDeleteIcon(0);
 		if (section.equals(MYLOConstants.TRANSFEREE_ADD_PHONE))
 			myloJourneyPageTransfereeSection.clickFieldsOnTransfereeSection(MYLOConstants.YES_BUTTON);
 		MYLOConstants.TIME_AFTER_ACTION = new Date().getTime();

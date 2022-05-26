@@ -87,4 +87,52 @@ public class CoreConstants {
 	public static final String SCROLLED_TO_ELEMENT = "Successfully scrolled to Element : ''{0}''.";
 	public static final String FAILED_TO_SCROLL_TO_ELEMENT = "Failed to scroll to Element : ''{0}''.";
 	public static final String SQL_QUERY_FAILED = "SQL Query Failed";
+	
+	
+	
+	// TestRail url
+	public static final String TEST_RAIL_URL = "https://testrail.aires.com/testrail/";
+
+	// TestRail Suite and Section IDs -- AIRES
+	public static final String TEST_RUN_NAME = "AIRES_PDT_MYLO_COREFLEX_";
+	public static final String NEW_TEST_RUN_ID_CREATED_IN_TESTRAIL_AS = "New Test Run ID created in Test Rail as : ";
+	public static final String AUTOMATION_TEST_RUN = "_TestRun_";
+	public static final String EXECUTION_DONE_CLOSE_TEST_RUN_ID = "Execution Completed!! Closing the Test Run ID : ";
+
+		// TestRail ProjectName - Automation Test
+	public static final int PROJECT_ID_AIRES = 33;
+	public static final int SUITE_ID_AIRES = 663;
+	public static final int SECTION_ID_MYLO = 49911;// Execution of All BDDScenarios (@Regression)
+	public static final int SECTION_ID_COREFLEX = 49911;
+	public static final int SECTION_ID_PDT = 49911;
+
+	public static final int ASSIGN_TO_ID = 47;
+	public static final String testRailUseriD = "rsharma@aires.com";
+	public static final String testRailPassword = "December2019!";
+	public static final String MYLO = "MYLO";
+	public static final String PDT = "PDT";
+	public static final String COREFLEX = "COREFLEX";
+	public static final String MYLO_UAT = "MYLO_UAT";
+	public static final String MYLO_UAT_URL = "https://relonetuat.aires.com/mylo-app/#/login";
+	public static final String MYLO_PREPROD ="MYLO_PREPROD";
+	public static final String MYLO_PREPROD_URL ="https://blueprinttest.aires.com/mylo-app";
+	public static final String MYLO_QA = "MYLO_QA";
+	public static final String MYLO_QA_URL = "https://relonetqa4.aires.com/mylo-app/";
+	public static final String PDT_TEST = "PDT_TEST";
+	public static final String PDT_TEST_URL = "https://blueprinttest.aires.com/blueprint/";
+	public static final String PDT_QA = "PDT_QA";
+	public static final String PDT_QA_URL = "https://blueprintqa.aires.com/blueprint/";
+	public static final String PDT_PROD = "PDT_PROD";
+	public static final String PDT_PROD_URL = "https://blueprint.aires.com/blueprint/";
+	public static final String PDT_DEV = "PDT_DEV";
+	public static final String PDT_DEV_URL = "http://corpqavl204:8005/policy-digitization-app/#/login?returnUrl=%2FviewPolicy";
+	public static final String PDT_UAT = "PDT_UAT";
+	public static final String PDT_UAT_URL = "https://blueprintuat.aires.com/blueprint/";
+	public static final String COREFLEX_UAT = "COREFLEX_UAT";
+	public static final String COREFLEX_UAT_URL = "https://relonetdev3.aires.com/policy-digitization-app";
+	public static final String COREFLEX_QA = "COREFLEX_QA";
+	public static final String COREFLEX_QA_URL = "https://relonetqa3.aires.com/policy-digitization-app/#/login";
+	public static final String MXTRANSFEREE_QA = "MXTRANSFEREE_QA";
+	public static final String MXTRANSFEREE_QA_URL = "https://relonetuat2.aires.com/mobilityx/faces/jsf/Login.jsf";
+	
 }

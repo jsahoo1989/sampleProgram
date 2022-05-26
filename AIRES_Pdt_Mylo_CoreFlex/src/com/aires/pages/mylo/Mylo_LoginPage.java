@@ -59,7 +59,7 @@ public class Mylo_LoginPage extends Base {
 			.getloginDetailsByUserProfileName(MYLOConstants.USER_PROFILE_NAME);
 
 	public void openApplication() throws InterruptedException {
-		Log.info(FileReaderManager.getInstance().getConfigReader().getMyloApplicationUrl());
+		Log.info(FileReaderManager.getInstance().getConfigReader().getApplicationUrl(System.getProperty("application")));
 		CoreFunctions.waitForBrowserToLoad(driver);
 		VerifyMYLOLogo();
 		CoreFunctions.switchToNewTab(driver);

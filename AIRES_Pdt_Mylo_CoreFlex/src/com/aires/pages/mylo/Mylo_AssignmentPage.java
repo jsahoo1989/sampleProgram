@@ -30,6 +30,7 @@ import com.aires.testdatatypes.mylo.MyloCAStates;
 import com.aires.testdatatypes.mylo.MyloIndiaStates;
 import com.aires.testdatatypes.mylo.MyloUSStates;
 import com.aires.testdatatypes.mylo.Mylo_AssignmentShipmentDetails;
+import com.aires.testdatatypes.mylo.Mylo_Assignment_HistoryDetails_PREPROD;
 import com.aires.testdatatypes.mylo.Mylo_Assignment_HistoryDetails_UAT;
 import com.vimalselvam.cucumber.listener.Reporter;
 import cucumber.api.DataTable;
@@ -597,7 +598,7 @@ public class Mylo_AssignmentPage extends Base {
 	public boolean verifyPopUpMessage(String msg) {
 		boolean flag=false;
 		try {
-			CoreFunctions.explicitWaitTillElementVisibility(driver, _popUpMessage, _popUpMessage.getText());
+			CoreFunctions.explicitWaitTillElementVisibility(driver, _popUpMessage, _popUpMessage.getText(),60);
 			CoreFunctions.highlightObject(driver, _popUpMessage);
 			flag=(_popUpMessage.getText().equals(msg));
 		}
@@ -1030,6 +1031,10 @@ public class Mylo_AssignmentPage extends Base {
 		}
 		clickButtonOnAiresFileInformationSection(MYLOConstants.EDIT_BUTTON);
 		updateFileInfoFields(MYLOConstants.POLICY_TYPE, MYLOConstants.POLICY_TYPE_VALUE);
+		if(CoreFunctions.isElementExist(driver, _YesButton, 30))
+			CoreFunctions.click(driver, _YesButton, MYLOConstants.YES_BUTTON);
+		if(CoreFunctions.isElementExist(driver, _OKButtonPopUp, 30))
+			CoreFunctions.click(driver, _OKButtonPopUp, MYLOConstants.OK_BUTTON);
 		updateFileInfoFields(MYLOConstants.JOURNEY_TYPE, MYLOConstants.JOURNEY_TYPE_VALUE);
 		// CoreFunctions.scrollToElementUsingJS(driver, _fileInfoOffice,
 		// MYLOConstants.OFFICE);
@@ -1116,7 +1121,7 @@ public class Mylo_AssignmentPage extends Base {
 			fileInfoDetailsmap.put(MYLOConstants.CLIENT_NAME, assignmentDetails.canceledFile.clientName);
 			break;
 		case MYLOConstants.CLOSED:
-			fileInfoDetailsmap.put(MYLOConstants.FILE_ID, assignmentDetails.closedFile.fileID);
+			fileInfoDetailsmap.put(MYLOConstants.FILE_ID, getTestDataClosedFileId());
 			fileInfoDetailsmap.put(MYLOConstants.CLIENT_ID, assignmentDetails.closedFile.clientID);
 			fileInfoDetailsmap.put(MYLOConstants.CLIENT_NAME, assignmentDetails.closedFile.clientName);
 			break;
@@ -1156,9 +1161,14 @@ public class Mylo_AssignmentPage extends Base {
 			fileInfoDetailsmap.put(MYLOConstants.CLIENT_NAME, assignmentDetails.transfereeWithOtherFamilyMembers.clientName);
 			break;
 		case MYLOConstants.TRANSFEREE_ALLDATA:
-			fileInfoDetailsmap.put(MYLOConstants.FILE_ID, assignmentDetails.transfereeAllData.fileID);
+			fileInfoDetailsmap.put(MYLOConstants.FILE_ID, getTestDataTransfereeAllDataFileId());
 			fileInfoDetailsmap.put(MYLOConstants.CLIENT_ID, assignmentDetails.transfereeAllData.clientID);
 			fileInfoDetailsmap.put(MYLOConstants.CLIENT_NAME, assignmentDetails.transfereeAllData.clientName);
+			break;
+		case MYLOConstants.TRANSFEREEEMAILPHONE_ALLDATA:
+			fileInfoDetailsmap.put(MYLOConstants.FILE_ID, assignmentDetails.transfereeEmailPhone_preprod.fileID);
+			fileInfoDetailsmap.put(MYLOConstants.CLIENT_ID, assignmentDetails.transfereeEmailPhone_preprod.clientID);
+			fileInfoDetailsmap.put(MYLOConstants.CLIENT_NAME, assignmentDetails.transfereeEmailPhone_preprod.clientName);
 			break;
 		default:
 			Assert.fail(MYLOConstants.ENTER_CORRECT_FIELD_NAME);
@@ -1177,6 +1187,28 @@ public class Mylo_AssignmentPage extends Base {
 		case MYLOConstants.RELONETQA4:
 			fileID = assignmentDetails.activeAssignment_relonetqa4.fileID;
 			break;
+		case MYLOConstants.PREPROD:
+			fileID = assignmentDetails.activeAssignment_preprod.fileID;
+			break;
+		default:
+			Assert.fail(MYLOConstants.ENTER_CORRECT_FIELD_NAME);	
+		}
+		return fileID;
+	}
+	
+	public String getTestDataClosedFileId() {
+		String environment = CoreFunctions.getPropertyFromConfig("envt");
+		String fileID = null;
+		switch(environment) {
+		case MYLOConstants.UAT:
+			fileID = assignmentDetails.closedFile.fileID;
+			break;
+		case MYLOConstants.RELONETQA4:
+			fileID = assignmentDetails.closedFile.fileID;
+			break;
+		case MYLOConstants.PREPROD:
+			fileID = assignmentDetails.closedFile_preprod.fileID;
+			break;
 		default:
 			Assert.fail(MYLOConstants.ENTER_CORRECT_FIELD_NAME);	
 		}
@@ -1191,6 +1223,7 @@ public class Mylo_AssignmentPage extends Base {
 			fileID = assignmentDetails.closedFileIdentDoc.fileID;
 			break;
 		case MYLOConstants.RELONETQA4:
+		case MYLOConstants.PREPROD:
 			fileID = assignmentDetails.closedFileIdentDocrelonetqa4.fileID;
 			break;
 		default:
@@ -1209,6 +1242,9 @@ public class Mylo_AssignmentPage extends Base {
 		case MYLOConstants.RELONETQA4:
 			fileID = assignmentDetails.relocationPolicyTyperelonetqa4.fileID;
 			break;
+		case MYLOConstants.PREPROD:
+			fileID = assignmentDetails.relocationPolicyType_preprod.fileID;
+			break;
 		default:
 			Assert.fail(MYLOConstants.ENTER_CORRECT_FIELD_NAME);	
 		}
@@ -1223,6 +1259,7 @@ public class Mylo_AssignmentPage extends Base {
 			fileID = assignmentDetails.lumpSumpPlanPolicyType.fileID;
 			break;
 		case MYLOConstants.RELONETQA4:
+		case MYLOConstants.PREPROD:
 			fileID = assignmentDetails.lumpSumpPlanPolicyTyperelonetqa4.fileID;
 			break;
 		default:
@@ -1239,7 +1276,25 @@ public class Mylo_AssignmentPage extends Base {
 			fileID = assignmentDetails.domesticPolicyType.fileID;
 			break;
 		case MYLOConstants.RELONETQA4:
+		case MYLOConstants.PREPROD:
 			fileID = assignmentDetails.domesticPolicyTyperelonetqa4.fileID;
+			break;
+		default:
+			Assert.fail(MYLOConstants.ENTER_CORRECT_FIELD_NAME);	
+		}
+		return fileID;
+	}
+	
+	public String getTestDataTransfereeAllDataFileId() {
+		String environment = CoreFunctions.getPropertyFromConfig("envt");
+		String fileID = null;
+		switch(environment) {
+		case MYLOConstants.UAT:
+		case MYLOConstants.RELONETQA4:
+			fileID = assignmentDetails.transfereeAllData.fileID;
+			break;
+		case MYLOConstants.PREPROD:
+			fileID = assignmentDetails.transfereeAllData_preprod.fileID;
 			break;
 		default:
 			Assert.fail(MYLOConstants.ENTER_CORRECT_FIELD_NAME);	
@@ -1836,6 +1891,7 @@ public class Mylo_AssignmentPage extends Base {
 	public boolean verifyAlertMessage(String msg) {
 		boolean flag = false;
 		try {
+			CoreFunctions.explicitWaitTillElementVisibility(driver, _alertMessage, msg);
 			CoreFunctions.isElementVisible(_alertMessage);
 			CoreFunctions.highlightObject(driver, _alertMessage);
 			System.out.println(_alertMessage.getText());
@@ -2227,6 +2283,11 @@ public class Mylo_AssignmentPage extends Base {
 			historyfileIds.addAll(myloUATHistoryDetails.stream().map(x -> x.fileId).collect(Collectors.toList()));
 			historyDetails.addAll(myloUATHistoryDetails.stream().map(x -> x.historyDetails).collect(Collectors.toList()));
 			break;
+		case MYLOConstants.PREPROD:
+			List<Mylo_Assignment_HistoryDetails_PREPROD> myloPreProdHistoryDetails = FileReaderManager.getInstance().getMyloJsonReader().getMyloAssignmentPREPRODHistoryDetails();
+			historyfileIds.addAll(myloPreProdHistoryDetails.stream().map(x -> x.fileId).collect(Collectors.toList()));
+			historyDetails.addAll(myloPreProdHistoryDetails.stream().map(x -> x.historyDetails).collect(Collectors.toList()));
+			break;
 		default:
 			Reporter.addStepLog(CoreConstants.FAIL + MYLOConstants.ENTER_CORRECT_COUNTRY_NAME);
 			Assert.fail(MYLOConstants.ENTER_CORRECT_COUNTRY_NAME);
@@ -2268,11 +2329,10 @@ public class Mylo_AssignmentPage extends Base {
 			CoreFunctions.scrollToElementUsingJavaScript(driver, _historyCardDropdownAddress.get(i), _historyCardDropdownAddress.get(i).getText());
 			if (!(CoreFunctions.getElementText(driver, _historyCardDropdownTransferreName.get(i)).equals(details[0].trim())
 					&& CoreFunctions.getElementText(driver, _historyCardDropdownFileIdClient.get(i)).equals(details[1].trim())
-					&& CoreFunctions.getElementText(driver, _historyCardDropdownAddress.get(i)).equals(details[2].trim()))) {
-				
+					&& CoreFunctions.getElementText(driver, _historyCardDropdownAddress.get(i)).equals(details[2].trim()))) {	
 				System.out.println(CoreFunctions.getElementText(driver, _historyCardDropdownTransferreName.get(i)) + "-------" + details[0].trim());
-				System.out.println(CoreFunctions.getElementText(driver, _historyCardDropdownFileIdClient.get(i))+ "-------" + details[0].trim());
-				System.out.println(CoreFunctions.getElementText(driver, _historyCardDropdownAddress.get(i))+ "-------" + details[0].trim());
+				System.out.println(CoreFunctions.getElementText(driver, _historyCardDropdownFileIdClient.get(i))+ "-------" + details[1].trim());
+				System.out.println(CoreFunctions.getElementText(driver, _historyCardDropdownAddress.get(i))+ "-------" + details[2].trim());
 				
 				flag = false;
 			}

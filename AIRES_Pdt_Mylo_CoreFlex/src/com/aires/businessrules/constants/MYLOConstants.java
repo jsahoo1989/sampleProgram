@@ -80,7 +80,7 @@ public class MYLOConstants {
 	public static final String INVALID_ROLE_ACCESS_FOR="Invalid Role access for";
 	public static final String POLICY_TYPE="Policy Type";
 	public static final String POLICY_TYPE_READONLY="Policy Type Read Only Field";
-	public static final String POLICY_TYPE_VALUE="Long Term Assignment";
+	public static final String POLICY_TYPE_VALUE="International Long Term Assignment";
 	public static final String TRANSFER_TYPE="Transfer Type";
 	public static final String JOURNEY_TYPE="Journey Type";
 	public static final String JOURNEY_TYPE_VALUE="Short-Term EE Only";
@@ -327,6 +327,22 @@ public class MYLOConstants {
 	public static final String DATEOFBIRTH = "Date of Birth";
 	public static final String GENDER_X = "X";
 	public static final Object EXCLAMATION = "!";
+	public static final String TRANSFEREEEMAILPHONE_ALLDATA = "Transferee Phone Email";
+	public static final String ADD_PARTNER_LINK = "Add Partner";
+	public static final String PARTNER = "Partner";
+	public static final String RELATIONSHIP = "Relationships";
+	public static final String NEW_DESTINATION = "New Destination";
+	public static final String PARTNER_FIRSTNAME = "Partner First Name";
+	public static final String PARTNER_MIDDLENAME = "Partner Middle Name";
+	public static final String PARTNER_LASTNAME = "Partner Last Name";
+	public static final String PARTNER_SUFFIX = "Partner Suffix";
+	public static final String PARTNER_MAIDENNAME = "Partner Maiden Name";
+	public static final String PARTNER_PREFERREDNAME = "Partner Preferred Name";
+	public static final String PARTNER_AGE = "Partner Age";
+	public static final String PARTNER_DOB = "Partner Date Of Birth";
+	public static final String PARTNER_ADD_PHONE = "Partner Add phone";
+	public static final String PARTNER_ADD_EMAIL = "Partner Add email";
+	public static final String GENDER_MARKER_DESCRIPTION = "GENDER_MARKER_DESCRIPTION";
 	
 	public static long TIME_BEFORE_ACTION;
 	public static long TIME_AFTER_ACTION;

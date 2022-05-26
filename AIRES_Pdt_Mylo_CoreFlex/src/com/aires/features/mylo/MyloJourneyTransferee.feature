@@ -1,5 +1,5 @@
 Feature: Validate the functionality of Mylo Journey Transferee section
-  As a Mylo user, I want to validate the functionality for "Mylo Journey - Transferee and Family" section
+  As a Mylo user, I want to validate the functionality for "Mylo Journey - Transferee" section
 
 Background: Login to  Mylo application
     Given he has logged into the 'Mylo' application
@@ -24,12 +24,12 @@ When he clicks on below dropdown fields
 |Transferee Phone Type    |
 |Transferee OrgDest Type |
 |Citizenship   |
-|Transferee Email Type    |
+#|Transferee Email Type    |
 Then list of values displayed in the dropdown for below fields should match with the values present in respective tables on database
 |Field Name    |
 |Marital Status|
 |Pronouns      |
-|Transferee Email Type    |
+#|Transferee Email Type    |
 |Transferee Phone Type    |
 |Transferee OrgDest Type   |
 #|Citizenship  |
@@ -88,7 +88,7 @@ Then values should be successfully saved as per below character limit set for di
 
 @IRIS-1344 @217110 @217111 @217112 @217497 @Mylo-Regression
 Scenario:  Mylo-Validate Toast Messages for Mandatory fields of Phone Field under Transferee section on Mylo Journey page
-Given he is on "Transferee" section after clicking on "Transferee Dropdown arrow" displayed in right panel under "Transferee and Family" section for "Transferee All Data" fileID
+Given he is on "Transferee" section after clicking on "Transferee Dropdown arrow" displayed in right panel under "Transferee and Family" section for "Transferee Phone Email" fileID
 And messages corresponding to below fields should be displayed after entering below field values under "Transferee" section after clicking on "Transferee Add Phone" button
 |Transferee Phone number|Transferee OrgDest Type |Transferee Phone Type |Message        					| 
 |                       |Random                  |Random                |You need to fill in a phone number!|
@@ -105,7 +105,7 @@ And data for "Transferee Add Phone" field should be removed successfully after c
 
 @IRIS-1344 @217114 @217115 @217116 @217498 @Mylo-Regression
 Scenario:  Mylo-Validate Toast Messages for Mandatory fields of Email Field under Transferee section on Mylo Journey page
-Given he is on "Transferee" section after clicking on "Transferee Dropdown arrow" displayed in right panel under "Transferee and Family" section for "Transferee All Data" fileID
+Given he is on "Transferee" section after clicking on "Transferee Dropdown arrow" displayed in right panel under "Transferee and Family" section for "Transferee Phone Email" fileID
 And messages corresponding to below fields should be displayed after entering below field values under "Transferee" section after clicking on "Transferee Add Email" button
 |Transferee Email Address   |Transferee Email Type|Message        			          | 
 |                           |Random               |Please enter email address!        |

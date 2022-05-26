@@ -7,6 +7,7 @@ import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.stream.Collectors;
 
+import org.jsoup.select.Evaluator.IsEmpty;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
@@ -114,6 +115,7 @@ public class Mylo_DashboardHomePage extends Base {
 	final By _fileParameterOptions = By.xpath(".//following-sibling::label");
 	final By _queryResultColumns = By.xpath("./li");
 	final By _dropdownSections = By.xpath(".//parent::div/ng-select");
+			
 	LinkedHashMap<String, Integer> parameterDropdownFieldsMap = new LinkedHashMap<String, Integer>();
 
 	public boolean verifyUserName(String userName) {
@@ -121,10 +123,12 @@ public class Mylo_DashboardHomePage extends Base {
 		CoreFunctions.explicitWaitTillElementVisibility(driver, _userProfile, _userProfile.getText());
 		Log.info("userName is : " + _userProfile.getText());
 		CoreFunctions.highlightObject(driver, _userProfile);
-		if(!(_userProfile.getText().equals(MYLOConstants.EXCLAMATION))) {
+		/*if(!(_userProfile.getText().equals(MYLOConstants.EXCLAMATION))) {
 			clickOptionFromMainMenu(MYLOConstants.HOME);
 			CoreFunctions.explicitWaitTillElementInVisibilityCustomTime(driver, _spinner, 60);
-		}
+		}*/
+		//clickOptionFromMainMenu(MYLOConstants.HOME);
+		//CoreFunctions.explicitWaitTillElementInVisibilityCustomTime(driver, _spinner, 60);
 		boolean flag = userName.equals(_userProfile.getText());
 		return flag;
 	}
@@ -133,6 +137,10 @@ public class Mylo_DashboardHomePage extends Base {
 		CoreFunctions.explicitWaitTillElementInVisibilityCustomTime(driver, _spinner, 60);
 		CoreFunctions.explicitWaitTillElementListVisibility(driver, _firstMenuOptions);
 		CoreFunctions.selectItemInListByText(driver, _firstMenuOptions, option);
+		CoreFunctions.explicitWaitTillElementInVisibilityCustomTime(driver, _spinner, 60);
+		while(!(CoreFunctions.isElementExist(driver, _dialogBox, 60))) {
+			CoreFunctions.selectItemInListByText(driver, _firstMenuOptions, option);
+		}
 	}
 	
 	public boolean verifyJourneyHeaderText() {
@@ -142,6 +150,7 @@ public class Mylo_DashboardHomePage extends Base {
 	}
 
 	public void closePopUp() {
+		CoreFunctions.explicitWaitTillElementInVisibilityCustomTime(driver, _spinner, 60);
 		CoreFunctions.explicitWaitTillElementVisibility(driver, _popupModal, _popupModal.getText(), 10L);
 		CoreFunctions.explicitWaitTillElementVisibility(driver, _closeButton, _closeButton.getText(), 10L);
 		CoreFunctions.highlightElementAndClick(driver, _closeButton, _closeButton.getText());
@@ -150,7 +159,9 @@ public class Mylo_DashboardHomePage extends Base {
 	public void clickExecuteButton() {
 		CoreFunctions.explicitWaitTillElementVisibility(driver, _executeButton, _executeButton.getText(), 20L);
 		CoreFunctions.highlightElementAndClick(driver, _executeButton, _executeButton.getText());
+		if(CoreFunctions.isElementExist(driver, _spinner, 30)) {
 		CoreFunctions.explicitWaitTillElementInVisibilityCustomTime(driver, _spinner, 60);
+		}
 		if (CoreFunctions.isElementExist(driver, _myloErrorPopUp, 5) &&
 				CoreFunctions.isElementExist(driver, _OKButtonPopUp, 5)) {			
 			CoreFunctions.clickElement(driver, _OKButtonPopUp);
@@ -176,8 +187,8 @@ public class Mylo_DashboardHomePage extends Base {
 	
 	public void selectOptionsFromAssignmentMenu(String optionToBeSelected) {
 		CoreFunctions.explicitWaitTillElementInVisibilityCustomTime(driver, _spinner, 60);
-		CoreFunctions.explicitWaitTillElementVisibility(driver, _dialogBox, _dialogBox.getText(), 90);
-		CoreFunctions.explicitWaitTillElementListVisibilityCustomTime(driver, _assignmentOptions,60);
+		//CoreFunctions.explicitWaitTillElementVisibility(driver, _dialogBox, _dialogBox.getText(), 180);
+		CoreFunctions.explicitWaitTillElementListVisibilityCustomTime(driver, _assignmentOptions,180);
 		CoreFunctions.selectItemInListByText(driver, _assignmentOptions, optionToBeSelected);
 		CoreFunctions.highlightObject(driver, _assignmentOptionHeader);
 		Assert.assertEquals(_assignmentOptionHeader.getText(), MYLOConstants.ASSIGNMENT_QUERYTYPE_HEADER, MYLOConstants.MISMATCH_HEADERTEXT);
@@ -238,6 +249,10 @@ public class Mylo_DashboardHomePage extends Base {
 	}
 
 	public void selectOptionsForFileParameters(String option, String optionValue) {
+		
+		while(_fileParameterList.size()==0) {
+			selectParameterFromQueryScreen(MYLOConstants.FILE);
+		}
 		CoreFunctions.explicitWaitTillElementListVisibility(driver, _fileParameterList);
 		WebElement getOptionElement = CoreFunctions.returnItemInListByText(driver, _fileParameterList, option);
 		if (option.contains(MYLOConstants.STATUS) || option.contains(MYLOConstants.OFFICE)

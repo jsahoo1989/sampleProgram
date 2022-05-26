@@ -56,6 +56,13 @@ public class MyloAssignmentFileInformation_Steps {
 			fileID=assignmentDetails.activeAssignment_relonetqa4.fileID;
 		}
 		
+		else if(environment.equals(MYLOConstants.PREPROD)) {
+			clientID = assignmentDetails.activeAssignment_preprod.clientID;
+			clientName=assignmentDetails.activeAssignment_preprod.clientName;
+			policyType=assignmentDetails.activeAssignment_preprod.policyType;
+			fileID=assignmentDetails.activeAssignment_preprod.fileID;
+		}
+		
 		Assert.assertTrue(
 				myloAssignmentPage.verifyFileInfoDisplayedFields(fileID,
 						clientID + "-"

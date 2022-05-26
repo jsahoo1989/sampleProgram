@@ -5,14 +5,17 @@ public class MyloAssignmentDetails {
 	public String application;
 	public ActiveAssignment activeAssignment;
 	public ActiveAssignmentRelonetQA4 activeAssignment_relonetqa4;
+	public ActiveAssignment_preprod activeAssignment_preprod;
 	public AffinityEnabled affinityEnabled;
 	public AffinityNotEnabled affinityNotEnabled;
 	public AiresshProvider airesshProvider;
 	public NotAiresshProvider notairesshProvider;
 	public CanceledFile canceledFile;
 	public ClosedFile closedFile;
+	public ClosedFile_preprod closedFile_preprod;
 	public RelocationPolicyType relocationPolicyType;
 	public RelocationPolicyTypeRelonetQA4 relocationPolicyTyperelonetqa4;
+	public RelocationPolicyType_preprod relocationPolicyType_preprod;
 	public LumpSumpPlanPolicyType lumpSumpPlanPolicyType;
 	public LumpSumpPlanPolicyTypeRelonetQA4 lumpSumpPlanPolicyTyperelonetqa4;
 	public DomesticPolicyType domesticPolicyType;
@@ -22,6 +25,9 @@ public class MyloAssignmentDetails {
 	public TransfereeWithFamily transfereeWithFamily;
 	public TransfereeWithOtherFamilyMembers transfereeWithOtherFamilyMembers;
 	public TransfereeAllData transfereeAllData;
+	public TransfereeAllData_preprod transfereeAllData_preprod;
+	public TransfereeEmailPhone_preprod transfereeEmailPhone_preprod;
+	
 
 	public class ActiveAssignment {
 		public String fileID;
@@ -35,6 +41,17 @@ public class MyloAssignmentDetails {
 	}
 	
 	public class ActiveAssignmentRelonetQA4 {
+		public String fileID;
+		public String clientID;
+		public String clientName;
+		public String status;
+		public String policyType;
+		public String provider;
+		public String journeyType;
+		public String office;
+	}
+	
+	public class ActiveAssignment_preprod {
 		public String fileID;
 		public String clientID;
 		public String clientName;
@@ -110,6 +127,17 @@ public class MyloAssignmentDetails {
 		public String journeyType;
 		public String office;
 	}
+	
+	public class ClosedFile_preprod {
+		public String fileID;
+		public String clientID;
+		public String clientName;
+		public String status;
+		public String policyType;
+		public String provider;
+		public String journeyType;
+		public String office;
+	}
 
 	public class RelocationPolicyType {
 		public String fileID;
@@ -123,6 +151,17 @@ public class MyloAssignmentDetails {
 	}
 	
 	public class RelocationPolicyTypeRelonetQA4 {
+		public String fileID;
+		public String clientID;
+		public String clientName;
+		public String status;
+		public String policyType;
+		public String provider;
+		public String journeyType;
+		public String office;
+	}
+	
+	public class RelocationPolicyType_preprod {
 		public String fileID;
 		public String clientID;
 		public String clientName;
@@ -230,4 +269,26 @@ public class MyloAssignmentDetails {
 		public String journeyType;
 		public String office;
 	}	
+	public class TransfereeAllData_preprod {
+		public String fileID;
+		public String clientID;
+		public String clientName;
+		public String status;
+		public String policyType;
+		public String provider;
+		public String journeyType;
+		public String office;
+	}	
+	
+	public class TransfereeEmailPhone_preprod {
+		public String fileID;
+		public String clientID;
+		public String clientName;
+		public String status;
+		public String policyType;
+		public String provider;
+		public String journeyType;
+		public String office;
+	}	
+	
 }

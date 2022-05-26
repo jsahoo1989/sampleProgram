@@ -22,8 +22,12 @@ import java.io.BufferedReader;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
+import java.util.LinkedHashMap;
+import java.util.List;
 import java.util.Properties;
 
+import com.aires.businessrules.constants.CoreConstants;
+import com.aires.businessrules.constants.MYLOConstants;
 import com.aires.enums.DriverType;
 import com.aires.enums.EnvironmentType;
 
@@ -31,6 +35,7 @@ public class ConfigFileReader {
 	private Properties properties;
 	private final String propertyFilePath = System.getProperty("user.dir") + "\\Configs\\Config.properties";
 //	private static String _url = null;
+	LinkedHashMap<String, String> mapEnvURL = new LinkedHashMap<String, String>();
 
 	public ConfigFileReader() {
 		BufferedReader reader;
@@ -117,14 +122,35 @@ public class ConfigFileReader {
 					"Application Url not specified in the Configuration.properties file for the Key:url");
 	}
 	
-	public String getMyloApplicationUrl() {
-		if (properties.getProperty("envt").equalsIgnoreCase("uat"))
+	public void mapApplicationURL() {
+		mapEnvURL.put(CoreConstants.MYLO_UAT, CoreConstants.MYLO_UAT_URL);
+		mapEnvURL.put(CoreConstants.MYLO_PREPROD, CoreConstants.MYLO_PREPROD_URL);
+		mapEnvURL.put(CoreConstants.MYLO_QA, CoreConstants.MYLO_QA_URL);
+		mapEnvURL.put(CoreConstants.PDT_TEST, CoreConstants.PDT_TEST_URL);
+		mapEnvURL.put(CoreConstants.PDT_QA, CoreConstants.PDT_QA_URL);
+		mapEnvURL.put(CoreConstants.PDT_PROD, CoreConstants.PDT_PROD_URL);	
+		mapEnvURL.put(CoreConstants.PDT_DEV, CoreConstants.PDT_DEV_URL);	
+		mapEnvURL.put(CoreConstants.PDT_UAT, CoreConstants.PDT_UAT_URL);
+		mapEnvURL.put(CoreConstants.COREFLEX_UAT, CoreConstants.COREFLEX_UAT_URL);
+		mapEnvURL.put(CoreConstants.COREFLEX_QA, CoreConstants.COREFLEX_QA_URL);
+		mapEnvURL.put(CoreConstants.MXTRANSFEREE_QA, CoreConstants.MXTRANSFEREE_QA_URL);
+	}
+	
+	
+	public String getApplicationUrl(String appName) {
+		mapApplicationURL();
+		return mapEnvURL.get(appName+"_"+System.getProperty("envt"));
+		
+		//Commented Code is used for Debugging purpose in local
+		/*if (properties.getProperty("envt").equalsIgnoreCase("uat"))
 			return properties.getProperty("myloUATURL");
 		else if (properties.getProperty("envt").equalsIgnoreCase("relonetqa4"))
 			return properties.getProperty("myloRelonetQA4URL");
+		else if (properties.getProperty("envt").equalsIgnoreCase("preprod"))
+			return properties.getProperty("myloPreProdURL");
 		else
 			throw new RuntimeException(
-					"Application Url not specified in the Configuration.properties file for the Key:url");
+					"Application Url not specified in the Configuration.properties file for the Key:url");	*/
 	}
 	
 	public String getCoreFlexPolicySetupApplicationUrl() {
@@ -188,7 +214,8 @@ public class ConfigFileReader {
 	}
 
 	public DriverType getBrowser() {
-		String browserName = properties.getProperty("browser").toLowerCase();
+		//String browserName = properties.getProperty("browser").toLowerCase();
+		String browserName = System.getProperty("browser");
 		switch (browserName) {
 		case "chrome":
 			return DriverType.CHROME;

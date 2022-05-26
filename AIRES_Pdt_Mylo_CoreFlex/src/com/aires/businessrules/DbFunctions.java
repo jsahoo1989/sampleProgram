@@ -8,8 +8,6 @@ import java.sql.ResultSet;
 import java.util.ArrayList;
 import java.util.LinkedHashMap;
 import java.util.List;
-
-import org.openqa.selenium.WebElement;
 import org.testng.Assert;
 import com.aires.businessrules.constants.CoreConstants;
 import com.aires.businessrules.constants.DbQueries;
@@ -42,6 +40,10 @@ public class DbFunctions {
 		case "uat":
 			dbURL = "jdbc:oracle:thin:policydba/uatpo@corpqavl300.corp.aires.com:1521:IRISUAT";
 			break;
+		case "preprod":
+			dbURL = "jdbc:oracle:thin:isisdba/iristestisisdba@corptesvl300.corp.aires.com:1521:iristest";
+			break;
+					
 		default:
 			Assert.fail(PDTConstants.DATABASE_CONNECTION + PDTConstants.NOT_EXIST);
 		}
@@ -94,6 +96,9 @@ public class DbFunctions {
 		case "uat":
 			dbURL = "jdbc:oracle:thin:irisuser/uatir@corpqavl300.corp.aires.com:1521:irisuat";
 			break;
+		case "preprod":
+			dbURL = "jdbc:oracle:thin:irisuser/testir@corptesvl300.corp.aires.com:1521:iristest";
+			break;
 		default:
 			Assert.fail(PDTConstants.DATABASE_CONNECTION + PDTConstants.NOT_EXIST);
 		}
@@ -137,6 +142,7 @@ public class DbFunctions {
 		myloQueryStatementMap.put(MYLOConstants.TRANSFEREE_EMAIL_TYPE, DbQueries.QUERY_GET_EMAIL_TYPE_DROPDOWNLIST);
 		myloQueryStatementMap.put(MYLOConstants.TRANSFEREE_PHONE_TYPE, DbQueries.QUERY_GET_PHONE_TYPE_DROPDOWNLIST);
 		myloQueryStatementMap.put(MYLOConstants.TRANSFEREE_ORGDEST, DbQueries.QUERY_GET_LOCATION_TYPE_DROPDOWNLIST);
+		myloQueryStatementMap.put(MYLOConstants.GENDER, DbQueries.QUERY_GET_GENDER_DROPDOWNLIST);
 		
 	}
 	
@@ -147,6 +153,7 @@ public class DbFunctions {
 		myloQTableColumnFields.put(MYLOConstants.TRANSFEREE_EMAIL_TYPE, MYLOConstants.EMAIL_TYPE_COLUMN);
 		myloQTableColumnFields.put(MYLOConstants.TRANSFEREE_PHONE_TYPE, MYLOConstants.PHONE_TYPE_COLUMN);
 		myloQTableColumnFields.put(MYLOConstants.TRANSFEREE_ORGDEST, MYLOConstants.LOCATION_TYPE_COLUMN);
+		myloQTableColumnFields.put(MYLOConstants.GENDER, MYLOConstants.GENDER_MARKER_DESCRIPTION);
 		
 	}
 	

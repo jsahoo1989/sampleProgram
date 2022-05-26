@@ -23,6 +23,11 @@
 				<artifactId>maven-surefire-plugin</artifactId>
 				<version>2.19.1</version>
 				<configuration>
+					<systempropertyvariables>
+						<envt>${envt}</envt>
+						<browser>${browser}</browser>	
+						<application>${application}</application>	
+					</systempropertyvariables>
 					<suiteXmlFiles>
 						<suiteXmlFiles>${suiteName}</suiteXmlFiles>
 					</suiteXmlFiles>

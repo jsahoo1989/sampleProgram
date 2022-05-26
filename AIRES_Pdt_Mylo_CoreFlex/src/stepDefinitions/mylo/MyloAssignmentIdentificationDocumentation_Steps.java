@@ -392,7 +392,7 @@ public class MyloAssignmentIdentificationDocumentation_Steps {
 		myloAssignmentPage.clickButtonOnIentificationAndDocumentationSection(buttonName);
 		myloAssignmentPage.clickButtonOnIentificationAndDocumentationSection(MYLOConstants.YES_BUTTON);
 		myloAssignmentPage.highlightSectionHeader(section);
-		Assert.assertTrue(myloAssignmentPage.verifyAlertMessageList(MYLOConstants.SUCCESSFULLY_REMOVED, 0));
+		//Assert.assertTrue(myloAssignmentPage.verifyAlertMessageList(MYLOConstants.SUCCESSFULLY_REMOVED, 0));
 		MYLOConstants.TIME_AFTER_ACTION = new Date().getTime();
 		Reporter.addStepLog("<b>Total time taken by <i>'When'</i> statement is :"
 				+ (MYLOConstants.TIME_AFTER_ACTION - MYLOConstants.TIME_BEFORE_ACTION) / 1000 + " Seconds </b>");
@@ -406,6 +406,7 @@ public class MyloAssignmentIdentificationDocumentation_Steps {
 		Assert.assertFalse(myloAssignmentPage.verifyIdentDocFieldErrorBackground(MYLOConstants.FROMDATE, 0));
 		Assert.assertFalse(myloAssignmentPage.verifyIdentDocFieldErrorBackground(MYLOConstants.NUMBER, 0));
 		Assert.assertFalse(myloAssignmentPage.verifyIdentDocFieldErrorBackground(MYLOConstants.IDENTITY_TYPE, 0));
+		myloAssignmentPage.highlightSectionHeader(MYLOConstants.IDENTIFICATION_AND_DOCUMENTATION);
 		myloAssignmentPage.clickButtonOnIentificationAndDocumentationSection(MYLOConstants.CANCEL_BUTTON);
 		Assert.assertFalse(myloAssignmentPage.verifyAlertMessagesPresent());
 		myloAssignmentPage.clickButtonOnIentificationAndDocumentationSection(MYLOConstants.YES_BUTTON);

@@ -29,6 +29,7 @@
  ***********************************Header End*********************************************************************************/
 package com.aires.businessrules;
 
+import java.io.FileReader;
 import java.math.RoundingMode;
 import java.sql.Connection;
 import java.sql.DriverManager;
@@ -38,6 +39,7 @@ import java.text.MessageFormat;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
+import java.util.Properties;
 import java.util.Random;
 import java.util.concurrent.ThreadLocalRandom;
 
@@ -438,25 +440,28 @@ public class BusinessFunctions {
 		return value;
 	}
 
-	public static int getTestRailSectionIDAsPerEnvt() {
-		int sectionID = 0;
-		switch (CoreConstants.TAG_VALUE) {
-		case CoreConstants.VALUE_AT_PRE_PROD:
-			sectionID = 49625;
+	public static int getTestRailSectionIDAsPerApplication() {
+		int sectionID = 0;		
+		//Commented Code is for debugging purpose
+		/*String propertyFilePath = System.getProperty("user.dir") + "\\Configs\\Config.properties";
+		Properties properties = new Properties();
+		properties.load(new FileReader(propertyFilePath));
+		String applicationName=properties.getProperty("application");*/
+		String applicationName=System.getProperty("application");
+		switch (applicationName) {
+		case CoreConstants.MYLO:
+			sectionID = 49911;
 			break;
-		case CoreConstants.VALUE_AT_POST_PROD:
-			sectionID = 49638;
+		case CoreConstants.PDT:
+			sectionID = 49911;
 			break;
-		case CoreConstants.VALUE_AT_PERFORMANCE:
-			sectionID = 49809;
+		case CoreConstants.COREFLEX:
+			sectionID = 49911;
 			break;
 		default:
 			Assert.fail(CoreConstants.TAG_VALUE + PDTConstants.NOT_EXIST);
 		}
 		return sectionID;
-		// return
-		// CoreConstants.TAG_VALUE.equalsIgnoreCase(CoreConstants.VALUE_AT_PRE_PROD) ?
-		// 49625 : 49638;
 	}
 
 	public static int getRandomNumberFromList(int size) {

@@ -307,4 +307,7 @@ public class MobilityXConstants {
 	public static final String CANCELLED = "Canceled";
 	public static final String FLEX_CARD_DISPLAYED_AFTER_CHANGING_COREFLEX_TYPE_SUBSERVICE_IN_IRIS = "{0}Flex card displayed on ''{1}'' Page even after changing Core/Flex Subservice type in IRIS application.";
 	public static final String CORE_CARD_DISPLAYED_AFTER_CHANGING_COREFLEX_TYPE_SUBSERVICE_IN_IRIS = "{0}Core card displayed on ''{1}'' Page even after changing Core/Flex Subservice type in IRIS application.";
+	public static final String PRE_INITIAL_TRACING = "Pre Initial Tracing";
+	public static final String POST_INITIAL_TRACING = "Post Initial Tracing";
+	public static final String POST_END_TRACING = "Post End Tracing";
 }

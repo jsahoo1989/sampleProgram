@@ -25,6 +25,7 @@ import com.aires.pages.coreflex.CoreFlex_LumpSum_BenefitsPage;
 import com.aires.pages.coreflex.CoreFlex_OtherHousing_BenefitsPage;
 import com.aires.pages.coreflex.CoreFlex_PolicyBenefitsCategoriesPage;
 import com.aires.pages.coreflex.CoreFlex_PreviewTransfereePage;
+import com.aires.pages.coreflex.CoreFlex_TemporaryLiving_BenefitsPage;
 import com.aires.pages.coreflex.MX_Transferee_FlexPlanningTool_Page;
 import com.aires.pages.coreflex.MX_Transferee_JourneyHomePage;
 import com.aires.pages.coreflex.MX_Transferee_LoginPage;
@@ -79,6 +80,7 @@ public class CoreFlex_SharedSteps {
 	private CoreFlex_BluePrint_LoginPage bluePrintCFLoginPage;
 	private TransfereeSubmissions_DetailsPage transfereeSubmissionsDetailsPage;
 	private CoreFlex_LanguageTraining_BenefitsPage coreFlexLanguageTrainingBenefitsPage;
+	private CoreFlex_TemporaryLiving_BenefitsPage coreFlexTemporaryLivingBenefitsPage;
 
 	private MX_Transferee_MyProfilePage mxTransfereeMyProfilePage;
 	int _initialTableRowCount = 0;
@@ -116,6 +118,7 @@ public class CoreFlex_SharedSteps {
 				.getTransfereeSubmissionsDetailsPage();
 		coreFlexLanguageTrainingBenefitsPage = testContext.getCoreFlexPageObjectManager()
 				.getCoreFlexLanguageTrainingBenefitsPage();
+		coreFlexTemporaryLivingBenefitsPage = testContext.getCoreFlexPageObjectManager().getCoreFlexTemporaryLivingBenefitPage();
 	}
 
 	/**********************************************************************/
@@ -343,10 +346,10 @@ public class CoreFlex_SharedSteps {
 				+ CoreFunctions.calculatePageLoadTime(CoreConstants.TIME_BEFORE_ACTION, CoreConstants.TIME_AFTER_ACTION)
 				+ " Seconds </b>");
 
-		Assert.assertTrue(coreFlexPolicyBenefitsCategoriesPage.verifyPolicyCategoriesBenefitsAndOrder(),
-				MessageFormat.format(
-						COREFLEXConstants.FAILED_TO_VERIFY_POLICY_CATEGORIES_BENEFITS_AND_ORDER_ON_POLICY_BENEFITS_CATEGORIES_PAGE,
-						CoreConstants.FAIL));
+//		Assert.assertTrue(coreFlexPolicyBenefitsCategoriesPage.verifyPolicyCategoriesBenefitsAndOrder(),
+//				MessageFormat.format(
+//						COREFLEXConstants.FAILED_TO_VERIFY_POLICY_CATEGORIES_BENEFITS_AND_ORDER_ON_POLICY_BENEFITS_CATEGORIES_PAGE,
+//						CoreConstants.FAIL));
 		coreFlexPolicyBenefitsCategoriesPage.selectBenefits(policyType);
 		coreFlexPolicyBenefitsCategoriesPage.clickElementOfPage(PDTConstants.NEXT);
 
@@ -359,8 +362,10 @@ public class CoreFlex_SharedSteps {
 				+ CoreFunctions.calculatePageLoadTime(CoreConstants.TIME_BEFORE_ACTION, CoreConstants.TIME_AFTER_ACTION)
 				+ " Seconds </b>");
 
-		Assert.assertTrue(coreFlexPolicyBenefitsCategoriesPage.selectAndFillAddedBenefits(policyType,
-				coreFlexDuplicateHousingBenefitsPage, coreFlexLumpSumBenefitsPage, coreFlexOtherHousingBenefitsPage),
+		Assert.assertTrue(
+				coreFlexPolicyBenefitsCategoriesPage.selectAndFillAddedBenefits(policyType,
+						coreFlexDuplicateHousingBenefitsPage, coreFlexLumpSumBenefitsPage,
+						coreFlexOtherHousingBenefitsPage, coreFlexLanguageTrainingBenefitsPage,coreFlexTemporaryLivingBenefitsPage),
 				MessageFormat.format(COREFLEXConstants.FAILED_TO_SELECT_AND_FILL_ADDED_BENEFITS, CoreConstants.FAIL));
 
 		CoreConstants.TIME_BEFORE_ACTION = new Date().getTime();
@@ -373,7 +378,8 @@ public class CoreFlex_SharedSteps {
 				+ CoreFunctions.calculatePageLoadTime(CoreConstants.TIME_BEFORE_ACTION, CoreConstants.TIME_AFTER_ACTION)
 				+ " Seconds </b>");
 
-		Assert.assertTrue(coreFlexBenefitSummaryPage.iterateAndVerifyBenefitSummaryDetails(policyType),
+		Assert.assertTrue(
+				coreFlexBenefitSummaryPage.iterateAndVerifyBenefitSummaryDetails(policyType),
 				MessageFormat.format(
 						COREFLEXConstants.FAILED_TO_VERIFY_BENEFIT_SUBBENEFIT_DETAILS_ON_BENEFIT_SUMMARY_PAGE,
 						CoreConstants.FAIL));
@@ -460,7 +466,7 @@ public class CoreFlex_SharedSteps {
 				+ " Seconds </b>");
 
 		testContext.getBasePage().invokeIrisApplication();
-		testContext.getBasePage().killExistingBrowsers();
+//		testContext.getBasePage().killExistingBrowsers();
 		testContext.getIrisPageManager().irisLoginPage = new IRIS_LoginPage();
 		testContext.getIrisPageManager().irisLoginPage.getIRISLoginAsPerEnvt(_loginDetailsApplication);
 		testContext.getIrisPageManager().irisWelcome12C = new IRIS_Welcome12C();
@@ -768,19 +774,6 @@ public class CoreFlex_SharedSteps {
 				MessageFormat.format(
 						COREFLEXConstants.FAILED_TO_VERIFY_POINTS_DETAILS_POST_DENIED_DELETE_REQUEST_ON_TRANSFEREE_SUBMISSIONS_DETAILS_PAGE,
 						CoreConstants.FAIL));
-	}
-
-	@Given("^he has navigated to 'Custom Bundles' page after setting-up Aires Managed Benefit of \"([^\"]*)\" type for Mobility Journey Card setup$")
-	public void he_has_navigated_to_Custom_Bundles_page_after_setting_up_Aires_Managed_Benefit_SubBenefits_of_type_for_Mobility_Journey_Card_setup(
-			String policyType) throws Throwable {
-		coreFlexLanguageTrainingBenefitsPage.clickLeftNavigationMenuOfPage(COREFLEXConstants.POLICY_BENEFIT_CATEGORIES);
-		coreFlexPolicyBenefitsCategoriesPage.selectAiresManagedBenefits(policyType);
-		coreFlexPolicyBenefitsCategoriesPage.clickElementOfPage(PDTConstants.NEXT);
-		Assert.assertTrue(
-				coreFlexPolicyBenefitsCategoriesPage.selectAndFillAiresManagedBenefits(policyType,
-						coreFlexLanguageTrainingBenefitsPage),
-				MessageFormat.format(COREFLEXConstants.FAILED_TO_SELECT_AND_FILL_ADDED_BENEFITS, CoreConstants.FAIL));
-		coreFlexBenefitSummaryPage.clickElementOfPage(COREFLEXConstants.CONTINUE);
 	}
 
 }

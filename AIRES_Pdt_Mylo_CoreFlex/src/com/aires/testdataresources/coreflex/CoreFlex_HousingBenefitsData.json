@@ -7,11 +7,36 @@
 			"grossUp": "Partially Gross-Up",
 			"reimbursedBy": "Other",
 			"reimbursedByOther": "Reimbursed by other",
-			"comment": "Duplicate Housing comment",
-			"flexPoints":"75",
-			"benefitName":"Duplicate Housing",
-			"allowanceAmountMessage":"Automated Duplicate Housing Allowance Amount Message",
-			"benefitLongDescription":"Automated Duplicate Housing Benefit Long Description Messsage for Policy Setup in Policy Digitization Tool (PDT) to be consumed by MX Transferee."
+			"comment": "Duplicate Housing comment"
 		}			
+	},
+	{
+		"benefitName": "Temporary Living",
+		"temporaryLivingTransportation": {
+			"duration": "10",
+			"transportationType": "Rental Car",
+			"grossUp": "No",
+			"reimbursedBy": "Other",
+			"reimbursedByOther": "Reimbursed Transporation by other",
+			"comment": "Transportation comment"			
+		},
+		"temporaryLivingLodging": {
+			"duration": "11",
+			"maxAmount": "GSA Rate",
+			"grossUp": "No",
+			"reimbursedBy": "Other",
+			"reimbursedByOther": "Reimbursed Lodging by other",
+			"comment": "Lodging comment"			
+		},
+		"temporaryLivingMeals": {
+			"duration": "12",
+			"type":"Allowance",
+			"maxAmount": "DOS Rate",
+			"grossUp": "No",
+			"reimbursedBy": "Other",
+			"reimbursedByOther": "Reimbursed Meals by other",
+			"comment": "Meals comment"			
+		}
+		
 	}
 ]

@@ -5,7 +5,6 @@ Feature: Validate the Mobility Journey Cards Functionality of Flex Aires Managed
     Given he has setup a new "Flex" Type Policy with following selection in 'Policy Digitization Tool (PDT)' application
       | Person Responsible For Benefit Selection | Flex Setup Type | Cashout Availability   |
       | Transferee                               | Static/Fixed    | Cashout Not Authorized |
-    And he has navigated to 'Custom Bundles' page after setting-up Aires Managed Benefit of "Flex" type for Mobility Journey Card setup
     When he clicks on "SUBMIT" button on "Custom Bundles" page
     Then a success dialog should be displayed for Successfully Submitted Policy
     And Policy Status should be displayed as "Submitted" on "View/Edit Policy Forms" page
@@ -20,24 +19,17 @@ Feature: Validate the Mobility Journey Cards Functionality of Flex Aires Managed
     And he has navigated to "My Benefits Bundle" page after validating and selecting 'Aires Managed' benefit on "FleX Planning Tool" page
     And he has clicked on "Review and Submit" button after validating 'Aires Managed' benefit details listed under 'Selected Benefits' section on "My Benefits Bundle" page
     And he has clicked on "Yes - submit my bundle" button after entering Transferee name on "Submit Bundle Confirmation" dialog to submit 'Aires Managed' benefit
+     And he has verified submitted Aires Managed Benefit status updated to "Submitted" on "My Benefit Bundle" page
     And he has verified 'Aires Managed' benefit card not added under 'Service Monitoring' section of "Mobility Journey Home" page
-    And he has created a Service and SubService for following 'Aires Managed' benefit in Services tab of IRIS application
-      | Service           | Type              | Name                   | Core/Flex |
-      | Language Training | Language Training | Flex Language Training | Flex      |
-    And he has verified submitted Aires Managed Benefit Flex card having "Starting Soon" status displayed under 'Service Monitoring' section of "Mobility Journey Home" page
+    And he has created Service and SubService for 'Aires Managed' benefits of CoreFlex type "Flex" in Services tab of IRIS application
+    And he has verified submitted Aires Managed Benefit Flex and Core card status updated to "Starting Soon" on "Mobility Journey Home" page - "Pre Initial Tracing"
     And he has verified submitted Aires Managed Benefit status updated to "Starting Soon" on "My Benefit Bundle" page
-    And he has added a new participant in 'Activity & Finance' tab for the created service
-      | Service           | Sub-Service                   | Function       | Comp ID | Company                      |
-      | Language Training | (ACTV) Flex Language Training | Language Agent |   49211 | AIRES-CIS-DEMO&'TEST(CLIENT) |
-    And he has provided the "Est Date" for below tracing prompt after clicking on the "Activity & Finance" tab of Language Training sub-service
-      | tracingPrompt                   |
-      | Start Date of Language Training |
-    And he has verified submitted Aires Managed Benefit Flex card status updated to "Begin Training" on "Mobility Journey Home" page
+    And he has added a new participant in 'Activity & Finance' tab for all the created service
+    And he has provided "Est Date" for added services tracing prompt after clicking on the "Activity & Finance" tab of added Service
+    And he has verified submitted Aires Managed Benefit Flex and Core card status updated to "In Progress" on "Mobility Journey Home" page - "Post Initial Tracing"
     And he has verified submitted Aires Managed Benefit status updated to "In Progress" on "My Benefit Bundle" page
-    When he has provides the "Act Date" for below tracing prompt after clicking on the "Activity & Finance" tab of Language Training sub-service
-      | tracingPrompt                 |
-      | End Date of Language Training |
-    Then submitted Aires Managed Benefit Flex card status should be updated to "Training Complete" on "Mobility Journey Home" page
+    When he provides "Act Date" for added services tracing prompt after clicking on the "Activity & Finance" tab of added Service
+    Then submitted Aires Managed Benefit Flex and Core card status should be updated to "Complete" on "Mobility Journey Home" page - "Post End Tracing"
     And submitted Aires Managed Benefit status should be updated to "Complete" on "My Benefit Bundle" page
 
   @End-To_End_CoreFlex @CardsRemoved_AfterUpdatingSubservice @AllCards
@@ -50,11 +42,10 @@ Feature: Validate the Mobility Journey Cards Functionality of Flex Aires Managed
     And he has navigated to "My Benefits Bundle" page after validating and selecting 'Aires Managed' benefit on "FleX Planning Tool" page
     And he has clicked on "Review and Submit" button after validating 'Aires Managed' benefit details listed under 'Selected Benefits' section on "My Benefits Bundle" page
     And he has clicked on "Yes - submit my bundle" button after entering Transferee name on "Submit Bundle Confirmation" dialog to submit 'Aires Managed' benefit
+    And he has verified submitted Aires Managed Benefit status updated to "Submitted" on "My Benefit Bundle" page
     And he has verified 'Aires Managed' benefit card not added under 'Service Monitoring' section of "Mobility Journey Home" page
-    And he has created a Service and SubService for following 'Aires Managed' benefit in Services tab of IRIS application
-      | Service           | Type              | Name                   | Core/Flex |
-      | Language Training | Language Training | Flex Language Training | Flex      |
-    And he has verified submitted Aires Managed Benefit Flex card having "Starting Soon" status displayed under 'Service Monitoring' section of "Mobility Journey Home" page
+    And he has created Service and SubService for 'Aires Managed' benefits of CoreFlex type "Flex" in Services tab of IRIS application
+    And he has verified submitted Aires Managed Benefit Flex and Core card status updated to "Starting Soon" on "Mobility Journey Home" page - "Pre Initial Tracing"
     And he has verified submitted Aires Managed Benefit status updated to "Starting Soon" on "My Benefit Bundle" page
     When he change the SubService "Core/Flex" type of the following 'Aires Managed' benefit to "Core" on Services tab of IRIS application
       | Service           | Name                   |

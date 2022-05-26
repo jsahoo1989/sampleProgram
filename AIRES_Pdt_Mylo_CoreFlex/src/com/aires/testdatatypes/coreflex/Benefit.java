@@ -16,6 +16,82 @@ public class Benefit {
 	private boolean deleteBenefitOnMBBPage;
 	private String payments;
 	private String airesManagedService;	
+	private String irisServiceName;
+	private String irisSubserviceType;
+	private String irisSubserviceName;
+	private  String irisSubserviceID;
+	private String subServiceActivityFinance;
+	private String subServiceFunction;
+	private String compID;
+	private String company;
+	private String initialTracingPrompt;
+	private String endTracingPrompt;
+	private String postInitialTracingCardStatus;
+	private String postEndTracingCardStatus;	
+	
+	public String getPostInitialTracingCardStatus() {
+		return postInitialTracingCardStatus;
+	}
+
+	public void setPostInitialTracingCardStatus(String postInitialTracingCardStatus) {
+		this.postInitialTracingCardStatus = postInitialTracingCardStatus;
+	}
+
+	public String getPostEndTracingCardStatus() {
+		return postEndTracingCardStatus;
+	}
+
+	public void setPostEndTracingCardStatus(String postEndTracingCardStatus) {
+		this.postEndTracingCardStatus = postEndTracingCardStatus;
+	}
+
+	public String getInitialTracingPrompt() {
+		return initialTracingPrompt;
+	}
+
+	public void setInitialTracingPrompt(String initialTracingPrompt) {
+		this.initialTracingPrompt = initialTracingPrompt;
+	}
+
+	public String getEndTracingPrompt() {
+		return endTracingPrompt;
+	}
+
+	public void setEndTracingPrompt(String endTracingPrompt) {
+		this.endTracingPrompt = endTracingPrompt;
+	}
+
+	public String getSubServiceActivityFinance() {
+		return subServiceActivityFinance;
+	}
+
+	public void setSubServiceActivityFinance(String subServiceActivityFinance) {
+		this.subServiceActivityFinance = subServiceActivityFinance;
+	}
+
+	public String getSubServiceFunction() {
+		return subServiceFunction;
+	}
+
+	public void setSubServiceFunction(String subServiceFunction) {
+		this.subServiceFunction = subServiceFunction;
+	}
+
+	public String getCompID() {
+		return compID;
+	}
+
+	public void setCompID(String compID) {
+		this.compID = compID;
+	}
+
+	public String getCompany() {
+		return company;
+	}
+
+	public void setCompany(String company) {
+		this.company = company;
+	}
 
 	public Benefit(String benefitDisplayName, String benefitAmount, String benefitDesc) {
 		this.benefitDisplayName = benefitDisplayName;
@@ -190,6 +266,38 @@ public class Benefit {
 
 	public void setAiresManagedService(String airesManagedService) {
 		this.airesManagedService = airesManagedService;
+	}
+	
+	public String getIrisServiceName() {
+		return irisServiceName;
+	}
+
+	public void setIrisServiceName(String irisServiceName) {
+		this.irisServiceName = irisServiceName;
+	}
+
+	public String getIrisSubserviceType() {
+		return irisSubserviceType;
+	}
+
+	public void setIrisSubserviceType(String irisSubserviceType) {
+		this.irisSubserviceType = irisSubserviceType;
+	}
+
+	public String getIrisSubserviceName() {
+		return irisSubserviceName;
+	}
+
+	public void setIrisSubserviceName(String irisSubserviceName) {
+		this.irisSubserviceName = irisSubserviceName;
+	}
+	
+	public String getIrisSubserviceID() {
+		return irisSubserviceID;
+	}
+
+	public void setIrisSubserviceID(String irisSubserviceID) {
+		this.irisSubserviceID = irisSubserviceID;
 	}
 
 	@Override

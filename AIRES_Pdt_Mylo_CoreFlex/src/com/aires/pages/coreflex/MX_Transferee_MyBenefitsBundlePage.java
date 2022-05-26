@@ -179,9 +179,6 @@ public class MX_Transferee_MyBenefitsBundlePage extends Base {
 	public static final List<FlexBenefit> flexBenefits = FileReaderManager.getInstance().getCoreFlexJsonReader()
 			.getMXTransfereeFlexBenefitData();
 
-	public static final List<FlexBenefit> airesManagedFlexBenefits = FileReaderManager.getInstance()
-			.getCoreFlexJsonReader().getMXTransfereeAiresManagedFlexBenefitData();
-
 	CoreFlex_SettlingInBenefitsData languageTrainingBenefitData = FileReaderManager.getInstance()
 			.getCoreFlexJsonReader().getSettlingInBenefitDataList(COREFLEXConstants.LANGUAGE_TRAINING);
 
@@ -1262,72 +1259,7 @@ public class MX_Transferee_MyBenefitsBundlePage extends Base {
 		return isStatusVerifed;
 	}
 
-	public boolean verifySelectedAiresManagedBenefitDetails() {
-		boolean isBenefitsAndPointsMatached = false;
-		try {
-			isBenefitsAndPointsMatached = verifyFlexAiresManagedBenefitsDetailsOnMBBPage()
-					&& (Double.parseDouble(CoreFunctions.getElementText(driver,
-							_selectedPoints)) == MX_Transferee_FlexPlanningTool_Page.totalSelectedPoints)
-					&& ((CoreFunctions.getElementText(driver, _totalPoints))
-							.equals(policySetupPageData.flexPolicySetupPage.StaticFixedTotalPointsAvailable));
-		} catch (Exception e) {
-			Reporter.addStepLog(MessageFormat.format(
-					MobilityXConstants.EXCEPTION_OCCURED_WHILE_REVIEWING_SELECTED_BENEFITS_ON_MY_BUNDLE_PAGE,
-					CoreConstants.FAIL, e.getMessage()));
-		}
-		if (isBenefitsAndPointsMatached)
-			Reporter.addStepLog(MessageFormat.format(
-					MobilityXConstants.SUCCESSFULLY_REVIEWED_SELECTED_BENEFITS_ON_MY_BUNDLE_PAGE, CoreConstants.PASS));
-		return isBenefitsAndPointsMatached;
-	}
-
-	private boolean verifyFlexAiresManagedBenefitsDetailsOnMBBPage() {
-		boolean isFlexAiresManagedBenefitDetailsOnMMBVerified = false;
-		boolean flag = false;
-		try {
-			for (FlexBenefit benefitList : airesManagedFlexBenefits) {
-				for (Benefit benefit : benefitList.getBenefits()) {
-					if (benefit.getSelectBenefitOnFPTPage()) {
-						int indexBenefit = BusinessFunctions.returnindexItemFromListUsingText(driver,
-								_textAddedBenefitNameList, benefit.getBenefitDisplayName());
-						isFlexAiresManagedBenefitDetailsOnMMBVerified = verifyMyBenefitBundlesAiresManagedBenefitDetails(
-								indexBenefit, benefit);
-						if (!isFlexAiresManagedBenefitDetailsOnMMBVerified) {
-							return false;
-						} else {
-							flag = true;
-						}
-					} else {
-						isFlexAiresManagedBenefitDetailsOnMMBVerified = true;
-					}
-				}
-			}
-		} catch (Exception e) {
-			Reporter.addStepLog(MessageFormat.format(
-					COREFLEXConstants.EXCEPTION_OCCURED_WHILE_VALIDATING_SELECTED_AIRES_MANAGED_BENEFIT_DETAILS_ON_MY_BENEFITS_PAGE,
-					CoreConstants.FAIL, e.getMessage()));
-		}
-		if (isFlexAiresManagedBenefitDetailsOnMMBVerified && flag) {
-			Reporter.addStepLog(MessageFormat.format(
-					COREFLEXConstants.SUCCESSFULLY_VERIFIED_SELECTED_AIRES_MANAGED_BENEFIT_DETAILS_ON_MY_BENEFITS_PAGE,
-					CoreConstants.PASS));
-		}
-		return isFlexAiresManagedBenefitDetailsOnMMBVerified;
-	}
-
-	private boolean verifyMyBenefitBundlesAiresManagedBenefitDetails(int indexBenefit, Benefit benefit) {
-		return (CoreFunctions.getItemsFromListByIndex(driver, _textAddedBenefitNameList, indexBenefit, true)
-				.equals(benefit.getBenefitDisplayName()))
-				&& (CoreFunctions.getItemsFromListByIndex(driver, _allowanceAmountList, indexBenefit, true)
-						.equals(benefit.getBenefitAmount()))
-				&& (CoreFunctions.getItemsFromListByIndex(driver, _benefitQuantityList, indexBenefit, true)
-						.equals(String.valueOf(benefit.getNumberOfBenefitSelected())))
-				&& ((Double.parseDouble(
-						(CoreFunctions.getItemsFromListByIndex(driver, _benefitsPointsList, indexBenefit, true)
-								.replace("pts", "").trim()))) == ((Double.parseDouble(benefit.getPoints()))
-										* (Integer.parseInt(CoreFunctions.getItemsFromListByIndex(driver,
-												_benefitQuantityList, indexBenefit, true)))));
-	}
+	
 
 	public boolean verifyAiresManagedBenefitDetailsOnSubmissionDialog() {
 		boolean isPointsBenefitsDetailsValid = false;
@@ -1351,7 +1283,7 @@ public class MX_Transferee_MyBenefitsBundlePage extends Base {
 		boolean isAiresManagedBenefitDetailsVerified = false;
 		boolean flag = false;
 		try {
-			for (FlexBenefit benefitList : airesManagedFlexBenefits) {
+			for (FlexBenefit benefitList : flexBenefits) {
 				for (Benefit benefit : benefitList.getBenefits()) {
 					if (benefit.getSelectBenefitOnFPTPage()) {
 						int indexBenefit = BusinessFunctions.returnindexItemFromListUsingText(driver,
@@ -1409,9 +1341,9 @@ public class MX_Transferee_MyBenefitsBundlePage extends Base {
 		boolean isSubmittedAiresManagedBenefitDetailsOnMBBVerified = false;
 		boolean flag = false;
 		try {
-			for (FlexBenefit benefitList : airesManagedFlexBenefits) {
+			for (FlexBenefit benefitList : flexBenefits) {
 				for (Benefit benefit : benefitList.getBenefits()) {
-					if (benefit.getSelectBenefitOnFPTPage()) {
+					if ((benefit.getSelectBenefitOnFPTPage()) && (benefit.getAiresManagedService().equals("Yes"))) {
 						int indexBenefit = BusinessFunctions.returnindexItemFromListUsingText(driver,
 								_textSubmittedBenefitNameList, benefit.getBenefitDisplayName());
 						isSubmittedAiresManagedBenefitDetailsOnMBBVerified = verifySubmittedAiresManagedBenefitDetailsOnMBB(

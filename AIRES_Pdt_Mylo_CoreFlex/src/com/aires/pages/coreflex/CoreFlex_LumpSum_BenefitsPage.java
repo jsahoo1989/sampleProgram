@@ -171,7 +171,7 @@ public class CoreFlex_LumpSum_BenefitsPage extends Base {
 	private WebElement _inputMultiAddBenefit;
 
 	// Policy Benefits data Missing Error Dialog
-	@FindBy(how = How.XPATH, using = "//div[@id='swal2-content'][contains(text(),'Policy Benefits data missing. Please fill all the benefits.')]")
+	@FindBy(how = How.XPATH, using = "//div[@id='swal2-content'][contains(text(),'Policy Benefits data missing. Please complete all the benefits.')]")
 	private WebElement _errorDialogPolicyBenefitsDataMissing;
 
 	// Policy Benefits data Missing Error Dialog - OK Button
@@ -329,9 +329,8 @@ public class CoreFlex_LumpSum_BenefitsPage extends Base {
 		}
 		clickElementOfPage(COREFLEXConstants.SAVE_AND_CONTINUE);
 
-		if (CoreFunctions.isElementExist(driver, _errorDialogPolicyBenefitsDataMissing, 3)) {
+		if (CoreFunctions.isElementExist(driver, _errorDialogPolicyBenefitsDataMissing, 7)) {
 			CoreFunctions.clickElement(driver, _errorDialogPolicyBenefitsDataMissingOKButton);
-			clickElementOfPage(PDTConstants.BACK);
 		}
 	}
 

@@ -289,9 +289,6 @@ public class MX_Transferee_FlexPlanningTool_Page extends Base {
 	public static final List<Benefit> allBenefits = FileReaderManager.getInstance().getCoreFlexJsonReader()
 			.getAllFlexBenefitsData();
 
-	public static final List<FlexBenefit> airesManagedBenefits = FileReaderManager.getInstance().getCoreFlexJsonReader()
-			.getMXTransfereeAiresManagedFlexBenefitData();
-
 	CoreFlex_SettlingInBenefitsData languageTrainingBenefitData = FileReaderManager.getInstance()
 			.getCoreFlexJsonReader().getSettlingInBenefitDataList(COREFLEXConstants.LANGUAGE_TRAINING);
 
@@ -772,16 +769,6 @@ public class MX_Transferee_FlexPlanningTool_Page extends Base {
 						.equals(benefit.getPoints()));
 	}
 
-	private boolean verifyFlexPlanningToolAiresManagedBenefitDetails(int indexBenefit, Benefit benefit) {
-		return (CoreFunctions.getItemsFromListByIndex(driver, _textAddedBenefitNameList, indexBenefit, true)
-				.equals(benefit.getBenefitDisplayName()))
-				&& (CoreFunctions.getItemsFromListByIndex(driver, _allowanceAmountList, indexBenefit, true)
-						.equals(benefit.getBenefitAmount()))
-				&& ((CoreFunctions.getItemsFromListByIndex(driver, _benefitDescList, indexBenefit, true))
-						.equals(benefit.getBenefitDesc()))
-				&& ((CoreFunctions.getItemsFromListByIndex(driver, _benefitsPointsList, indexBenefit, true))
-						.equals(benefit.getPoints()));
-	}
 
 	public void clickElementOfPage(String elementName) {
 		try {
@@ -817,9 +804,7 @@ public class MX_Transferee_FlexPlanningTool_Page extends Base {
 				if (benefit.getSelectBenefitOnFPTPage()) {
 					int indexBenefit = BusinessFunctions.returnindexItemFromListUsingText(driver,
 							_textAddedBenefitNameList, benefit.getBenefitDisplayName());
-					int indexCategory = BusinessFunctions.returnindexItemFromListUsingText(driver,
-							_textAddedBenefitGroupList, benefitList.getCategory(), true);
-					benefitsSelectionPerformed = performFlexBenefitSelection(benefit, indexBenefit, indexCategory);
+					benefitsSelectionPerformed = performFlexBenefitSelection(benefit, indexBenefit);
 					if (!benefitsSelectionPerformed) {
 						return false;
 					} else {
@@ -833,11 +818,11 @@ public class MX_Transferee_FlexPlanningTool_Page extends Base {
 		return benefitsSelection;
 	}
 
-	private boolean performFlexBenefitSelection(Benefit benefit, int indexBenefit, int indexCategory) {
+	private boolean performFlexBenefitSelection(Benefit benefit, int indexBenefit) {
 		boolean isBenefitSelected = false;
 		try {
 			CoreFunctions.scrollToElementUsingJS(driver, flexHomePageTitle, MobilityXConstants.FLEX_PLANNING_TOOL);
-			CoreFunctions.waitHandler(2);
+			CoreFunctions.waitHandler(3);
 			double points = Double.parseDouble(benefit.getPoints());
 			if ((benefit.getMultipleBenefitSelection()).equals("Yes")) {
 				CoreFunctions.explicitWaitTillElementBecomesClickable(driver, _buttonSelectThisBenefit,
@@ -846,7 +831,7 @@ public class MX_Transferee_FlexPlanningTool_Page extends Base {
 				totalSelectedPoints += points;
 				isBenefitSelected = true;
 				for (int j = 1; j < benefit.getNumberOfBenefitSelected(); j++) {
-					CoreFunctions.waitHandler(4);
+					CoreFunctions.waitHandler(5);
 					WebElement benefitSelectPlusButton = CoreFunctions
 							.findSubElement(flexBenefits_list.get(indexBenefit), _buttonSelectPlus);
 					CoreFunctions.clickElement(driver, benefitSelectPlusButton);
@@ -1361,59 +1346,4 @@ public class MX_Transferee_FlexPlanningTool_Page extends Base {
 		return isPortionCashoutVerified;
 	}
 
-	public boolean verifyAiresManagedBenefitDetailsOnFPT() {
-		boolean isAiresManagedFlexBenefitDetailsOnFTPVerified = false;
-		try {
-			for (FlexBenefit benefitList : airesManagedBenefits) {
-				for (Benefit benefit : benefitList.getBenefits()) {
-					int indexBenefit = BusinessFunctions.returnindexItemFromListUsingText(driver,
-							_textAddedBenefitNameList, benefit.getBenefitDisplayName());
-					int indexCategory = BusinessFunctions.returnindexItemFromListUsingText(driver,
-							_textAddedBenefitGroupList, benefitList.getCategory(), true);
-
-					isAiresManagedFlexBenefitDetailsOnFTPVerified = (CoreFunctions
-							.getItemsFromListByIndex(driver, _textAddedBenefitGroupList, indexCategory, true)
-							.equals(benefitList.getCategory()))
-							&& verifyFlexPlanningToolAiresManagedBenefitDetails(indexBenefit, benefit);
-					if (!isAiresManagedFlexBenefitDetailsOnFTPVerified) {
-						break;
-					}
-				}
-			}
-
-		} catch (Exception e) {
-			Reporter.addStepLog(MessageFormat.format(
-					COREFLEXConstants.EXCEPTION_OCCURED_WHILE_VALIDATING_FLEX_BENEFIT_DETAILS_ON_FLEX_PLANNING_TOOL_PAGE,
-					CoreConstants.FAIL, e.getMessage()));
-		}
-		if (isAiresManagedFlexBenefitDetailsOnFTPVerified) {
-			Reporter.addStepLog(MessageFormat.format(
-					COREFLEXConstants.SUCCESSFULLY_VERIFIED_FLEX_BENEFIT_DETAILS_ON_FLEX_PLANNING_TOOL_PAGE,
-					CoreConstants.PASS));
-		}
-		return isAiresManagedFlexBenefitDetailsOnFTPVerified;
-	}
-
-	public boolean selectAiresManagedBenefitAndProceedToReviewAndSubmit() {
-		boolean benefitsSelection = false, benefitsSelectionPerformed = false;
-		for (FlexBenefit benefitList : airesManagedBenefits) {
-			for (Benefit benefit : benefitList.getBenefits()) {
-				if (benefit.getSelectBenefitOnFPTPage()) {
-					int indexBenefit = BusinessFunctions.returnindexItemFromListUsingText(driver,
-							_textAddedBenefitNameList, benefit.getBenefitDisplayName());
-					int indexCategory = BusinessFunctions.returnindexItemFromListUsingText(driver,
-							_textAddedBenefitGroupList, benefitList.getCategory(), true);
-					benefitsSelectionPerformed = performFlexBenefitSelection(benefit, indexBenefit, indexCategory);
-					if (!benefitsSelectionPerformed) {
-						return false;
-					} else {
-						benefitsSelection = benefitsSelectionPerformed;
-					}
-				} else {
-					benefitsSelection = true;
-				}
-			}
-		}
-		return benefitsSelection && validatePointsAndClickOnNext();
-	}
 }

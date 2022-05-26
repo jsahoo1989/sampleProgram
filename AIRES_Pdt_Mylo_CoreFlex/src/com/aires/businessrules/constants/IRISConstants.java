@@ -481,4 +481,12 @@ public class IRISConstants {
 	public static final String FAILED_TO_SELECT_SUB_SERVICE_ACTIVITIES = "{0} Failed to select sub-service activities. Exception is - ''{1}''";
 	public static final String FAILED_TO_ASSIGN_SUB_SERVICE_TASKS_TO_TRANSFEREE = "Failed to assign sub service tasks to transferee";
 	public static final String EST_DATE = "Est Date";
+	public static final String COMPANY = "Company";
+	public static final String ALL = "ALL";
+	public static final String EXCEPTION_OCCURED_WHILE_DISPLAYING_ALL_ACTIVITY_TABLE_OF_IRIS_APPLICATION = "{0}Exception occured while displaying all activity table to IRIS application. Exception : ''{1}''.";
+	public static final String EXCEPTION_OCCURED_WHILE_ADDING_SERVICE_SUBSERVICE_ON_SERVICES_TAB_OF_IRIS_APPLICATION = "{0}Exception occured while adding Service_SubService on services tab of IRIS application. Exception : ''{1}''.";
+	public static final String EXCEPTION_OCCURED_WHILE_ADDING_SUBSERVICE_ON_SERVICES_TAB_OF_IRIS_APPLICATION = "{0}Exception occured while adding ''{1}'' SubService on services tab of IRIS application. Exception : ''{2}''.";
+	public static final String EXCEPTION_OCCURED_WHILE_ADDING_PARTICIPANT_ON_ACTIVITY_AND_FINANCE_TAB_OF_IRIS_APPLICATION = "{0}Exception occured while adding participant on Activity & Finance Tab of IRIS Application. Exception : ''{1}''.";
+	public static final String EXCEPTION_OCCURED_WHILE_ACTUALIZING_ADDED_SERVICES_TRACING_PROMPT_ON_IRIS_APPLICATION = "{0}Exception occured while actualizing added services Tracing Prompt on Activity & Finance tab of IRIS application. Exception : ''{1}''.";
+	public static final String EXCEPTION_OCCURED_WHILE_CANCELLING_ADDED_SERVICES_ON_SERVICES_TAB_OF_IRIS_APPLICATION = "{0}Exception occured while cancelling added services on Services tab of IRIS application. Exception : ''{1}''.";
 }

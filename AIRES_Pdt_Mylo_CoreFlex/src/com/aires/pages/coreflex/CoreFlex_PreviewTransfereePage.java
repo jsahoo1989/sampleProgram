@@ -91,7 +91,7 @@ public class CoreFlex_PreviewTransfereePage extends Base {
 	private List<WebElement> _allowanceAmountList;
 
 	// Benefit Description List
-	@FindBy(how = How.XPATH, using = "//div[contains(@class,'d-flex')]//div[@class='BenefitDescription']")
+	@FindBy(how = How.XPATH, using = "//div[@class='BenefitDescription']")
 	private List<WebElement> _benefitDescList;
 
 	// Tracing Prompt Label
@@ -247,6 +247,7 @@ public class CoreFlex_PreviewTransfereePage extends Base {
 			Reporter.addStepLog(MessageFormat.format(
 					COREFLEXConstants.EXCEPTION_OCCURED_WHILE_VALIDATING_FLEX_BENEFIT_DETAILS_ON_PREVIEW_TRANSFEREE_PAGE,
 					CoreConstants.FAIL, e.getMessage()));
+			return false;
 		}
 
 		if (isFlexBenefitPreviewVerified) {

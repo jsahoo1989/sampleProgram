@@ -411,10 +411,10 @@ public class COREFLEXConstants {
 	public static final String EXCEPTION_OCCURED_WHILE_VERIFYING_CORE_BENEFIT_CARD_DETAILS = "{0}Exception occured while verifying Core Benefit card Details on Mobility Journey Home Page. Exception : ''{1}''.";
 	public static final String EXCEPTION_OCCURED_WHILE_VERIFYING_FLEX_BENEFIT_CARD_STATUS = "{0}Exception occured while verifying Flex Benefit card Status on Mobility Journey Home Page. Exception : ''{1}''.";
 	public static final String EXCEPTION_OCCURED_WHILE_VERIFYING_CORE_BENEFIT_CARD_STATUS = "{0}Exception occured while verifying Core Benefit card Status on Mobility Journey Home Page. Exception : ''{1}''.";
-	public static final String SUCCESSFULLY_VERIFIED_FLEX_BENEFIT_CARD_STATUS = "{0}Successfully verified Flex benefit Card Status - ''{1}''.";
-	public static final String SUCCESSFULLY_VERIFIED_CORE_BENEFIT_CARD_STATUS = "{0}Successfully verified Core benefit Card Status - ''{1}''.";
-	public static final String SUCCESSFULLY_VERIFIED_CORE_BENEFIT_CARD_DETAILS = "{0}Successfully verified ''{1}'' - Core benefit Card Details.";
-	public static final String SUCCESSFULLY_VERIFIED_FLEX_BENEFIT_CARD_DETAILS = "{0}Successfully verified ''{1}'' - Flex benefit Card Details.";
+	public static final String SUCCESSFULLY_VERIFIED_FLEX_BENEFIT_CARD_STATUS = "{0}Successfully verified ''{1}'' - Flex benefit Card Status.";
+	public static final String SUCCESSFULLY_VERIFIED_CORE_BENEFIT_CARD_STATUS = "{0}Successfully verified ''{1}'' - Core benefit Card Status.";
+	public static final String SUCCESSFULLY_VERIFIED_CORE_BENEFIT_CARD_DETAILS = "{0}Successfully verified Core benefit Card Details.";
+	public static final String SUCCESSFULLY_VERIFIED_FLEX_BENEFIT_CARD_DETAILS = "{0}Successfully verified Flex benefit Card Details.";
 	public static final String FAILED_TO_SELECT_AND_FILL_AIRES_MANAGED_BENEFITS = "{0}Failed to select and fill Aires Managed benefits.";
 	public static final String EXCEPTION_OCCURED_WHILE_SELECTING_AND_FILLING_AIRES_MANAGED_BENEFITS = "{0}Exception occured while selecting and Filling Aires Managed Benefits. Exception - ''{1}''. ";
 	public static final String SUCCESSFULLY_SELECTED_AND_FILLED_AIRES_MANAGED_BENEFITS = "{0}Successfully selected and filled Aires Managed Benefits";
@@ -438,4 +438,13 @@ public class COREFLEXConstants {
 	public static final String SUCCESSFULLY_VERIFIED_CORE_BENEFIT_CARD_NOT_DISPLAYED_ON_MOBILITY_JOURNEY_PAGE_AFTER_CHANGING_COREFLEX_SUBSERVICE_TYPE_IN_IRIS_APPLICATION = "{0}Successfully verified Core Card is not displayed on Mobility Journey page after changing Core/Flex Subservice type in IRIS application.";
 	public static final String EXCEPTION_OCCURED_WHILE_VERIFYING_FLEX_BENEFIT_CARD_NOT_DISPLAYED_ON_MOBILITY_JOURNEY_PAGE_AFTER_CHANGING_COREFLEX_SUBSERVICE_TYPE_IN_IRIS_APPLICATION = "{0}Exception occured while verifying Flex Card not displayedon Mobility Journey Page After changing coreflex subservice type in IRIS application. Exception : ''{1}''.";
 	public static final String EXCEPTION_OCCURED_WHILE_VERIFYING_CORE_BENEFIT_CARD_NOT_DISPLAYED_ON_MOBILITY_JOURNEY_PAGE_AFTER_CHANGING_COREFLEX_SUBSERVICE_TYPE_IN_IRIS_APPLICATION = "{0}Exception occured while verifying Core Card not displayedon Mobility Journey Page After changing coreflex subservice type in IRIS application. Exception : ''{1}''.";
+	public static final String AIRES_MANAGED = "Aires Managed";
+	public static final String NON_AIRES_MANAGED = "Non Aires Managed";
+	public static final String TEMPORARY_LIVING = "Temporary Living";
+	public static final Object TEMPORARY_LIVING_BENEFITS_PAGE = "Temporary Living Benefits Page";
+	public static final String TEMPORARY_LIVING_TRANSPORTATION = "Temporary Living Transportation";
+	public static final String TEMPORARY_LIVING_LODGING = "Temporary Living Lodging";
+	public static final String TEMPORARY_LIVING_MEALS = "Temporary Living Meals";
+	public static final String POLICY_FILE_ID = "Policy / File ID";
+	
 }

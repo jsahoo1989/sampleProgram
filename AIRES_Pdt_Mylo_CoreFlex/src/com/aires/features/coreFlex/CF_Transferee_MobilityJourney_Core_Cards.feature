@@ -5,7 +5,6 @@ Feature: Validate the Mobility Journey Cards Functionality of Core Aires Managed
     Given he has setup a new "Flex" Type Policy with following selection in 'Policy Digitization Tool (PDT)' application
       | Person Responsible For Benefit Selection | Flex Setup Type | Cashout Availability   |
       | Transferee                               | Static/Fixed    | Cashout Not Authorized |
-    And he has navigated to 'Custom Bundles' page after setting-up Aires Managed Benefit of "Both" type for Mobility Journey Card setup
     When he clicks on "SUBMIT" button on "Custom Bundles" page
     Then a success dialog should be displayed for Successfully Submitted Policy
     And Policy Status should be displayed as "Submitted" on "View/Edit Policy Forms" page

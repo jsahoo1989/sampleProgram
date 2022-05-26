@@ -1,22 +1,6 @@
 [
 	{
 		"benefitName": "Language Training",
-		"coreBenefitDetails": {
-			"benefitDisplayName": "Core Language Training Benefit Display Name",
-			"allowanceAmountMessage": "Core - Max 4 hours or Self Learning App/Subscription up to 1000$",
-			"benefitLongDescription": "Core training to assist in learning the language in new location.",
-			"benefitCategory":"Settling In"
-		},
-		"flexBenefitDetails": {
-			"benefitDisplayName": "Flex Language Training Benefit Display Name",
-			"allowanceAmountMessage": "Flex - Max 4 hours or Self Learning App/Subscription up to 1000$",
-			"benefitLongDescription": "Flex training to assist in learning the language in new location.",
-			"flexPoints": "25",
-			"airesManagedService":"Yes",
-			"benefitCategory":"Settling In",
-			"multipleBenefitSelection":"Yes",
-			"numberOfBenefitSelected":3
-		},
 		"languageTrainingEmployee": {
 			"maxNumberOfHours": "10",
 			"selfLearningTool": "Yes",

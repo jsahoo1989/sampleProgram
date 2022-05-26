@@ -28,6 +28,7 @@ import com.aires.pages.coreflex.CoreFlex_LumpSum_BenefitsPage;
 import com.aires.pages.coreflex.CoreFlex_OtherHousing_BenefitsPage;
 import com.aires.pages.coreflex.CoreFlex_PolicyBenefitsCategoriesPage;
 import com.aires.pages.coreflex.CoreFlex_PreviewTransfereePage;
+import com.aires.pages.coreflex.CoreFlex_TemporaryLiving_BenefitsPage;
 import com.aires.pages.coreflex.MX_Transferee_FlexPlanningTool_Page;
 import com.aires.pages.coreflex.MX_Transferee_JourneyHomePage;
 import com.aires.pages.coreflex.MX_Transferee_LoginPage;
@@ -48,6 +49,7 @@ public class PageObjectManager_CoreFlex {
 	private CoreFlex_CustomBundlesPage _coreFlexCustomBundlesPage;
 	private CoreFlex_LanguageTraining_BenefitsPage _coreFlexLanguageTrainingBenefitsPage;
 	private CoreFlex_OtherHousing_BenefitsPage _coreFlexOtherHousingBenefitsPage;
+	private CoreFlex_TemporaryLiving_BenefitsPage _coreFlexTemporaryLivingBenefitsPage;
 	private MX_Transferee_MyProfilePage _mxTransfereeMyProfilePage;
 	private MX_Transferee_LoginPage _mxTransfereeLoginPage;
 	private MX_Transferee_JourneyHomePage _mxTransfereeJourneyHomePage;
@@ -159,5 +161,11 @@ public class PageObjectManager_CoreFlex {
 		return (_coreFlexTransfereePreviewPage == null)
 				? _coreFlexTransfereePreviewPage = new CoreFlex_PreviewTransfereePage(_driver)
 				: _coreFlexTransfereePreviewPage;
+	}
+	
+	public CoreFlex_TemporaryLiving_BenefitsPage getCoreFlexTemporaryLivingBenefitPage() {
+		return (_coreFlexTemporaryLivingBenefitsPage == null)
+				? _coreFlexTemporaryLivingBenefitsPage = new CoreFlex_TemporaryLiving_BenefitsPage(_driver)
+				: _coreFlexTemporaryLivingBenefitsPage;
 	}
 }

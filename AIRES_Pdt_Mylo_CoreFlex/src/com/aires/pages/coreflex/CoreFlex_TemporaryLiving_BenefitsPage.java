@@ -18,12 +18,12 @@ import com.aires.businessrules.constants.CoreConstants;
 import com.aires.businessrules.constants.PDTConstants;
 import com.aires.managers.FileReaderManager;
 import com.aires.testdatatypes.coreflex.Benefit;
-import com.aires.testdatatypes.coreflex.CoreFlex_SettlingInBenefitsData;
+import com.aires.testdatatypes.coreflex.CoreFlex_HousingBenefitsData;
 import com.vimalselvam.cucumber.listener.Reporter;
 
-public class CoreFlex_LanguageTraining_BenefitsPage extends Base {
+public class CoreFlex_TemporaryLiving_BenefitsPage extends Base {
 
-	public CoreFlex_LanguageTraining_BenefitsPage(WebDriver driver) {
+	public CoreFlex_TemporaryLiving_BenefitsPage(WebDriver driver) {
 		super(driver);
 	}
 
@@ -106,27 +106,32 @@ public class CoreFlex_LanguageTraining_BenefitsPage extends Base {
 	private List<WebElement> _subBenefitList;
 
 	// SubBenefit - Collapsable Menu 1
-	@FindBy(how = How.XPATH, using = "//h5[contains(text(),'Language Training Employee')]/ancestor::a[contains(@href,'collapse')]")
-	private WebElement _formLanguageTrainingEmployee;
-
-	@FindBy(how = How.XPATH, using = "//h5[contains(text(),'Language Training Employee')]")
-	private WebElement _headerLanguageTrainingEmployee;
+	@FindBy(how = How.XPATH, using = "//h5[contains(text(),'Temporary Living Transportation')]/ancestor::a[contains(@href,'collapse')]")
+	private WebElement _formTempLivingTransportation;
 
 	// SubBenefit - Collapsable Menu 2
-	@FindBy(how = How.XPATH, using = "//h5[contains(text(),'Language Training Family')]/ancestor::a[contains(@href,'collapse')]")
-	private WebElement _formLanguageTrainingFamily;
+	@FindBy(how = How.XPATH, using = "//h5[contains(text(),'Temporary Living Lodging')]/ancestor::a[contains(@href,'collapse')]")
+	private WebElement _formTempLivingLodging;
 
-	// Max Number of Hours Per Family Input Field
-	@FindBy(how = How.XPATH, using = "//div[@class='collapse show']//input[@formcontrolname='maxNumOfHours']")
-	private WebElement _inputMaxNumOfHours;
+	// SubBenefit - Collapsable Menu 3
+	@FindBy(how = How.XPATH, using = "//h5[contains(text(),'Temporary Living Meals')]/ancestor::a[contains(@href,'collapse')]")
+	private WebElement _formTempLivingMeals;
 
-	// Max Number of Hours Per Person Input Field
+	// Duration Days
+	@FindBy(how = How.XPATH, using = "//div[@class='collapse show']//input[@formcontrolname='duration']")
+	private WebElement _inputDurationDays;
+
+	// Transportation Type Dropdown
+	@FindBy(how = How.XPATH, using = "//ng-select[@formcontrolname='tempLivingTransportTypeList']//div[@role='option']")
+	private List<WebElement> _selectTransportationTypeList;
+
+	// Transportation Type Field
+	@FindBy(how = How.CSS, using = "ng-select[formcontrolname='tempLivingTransportTypeList']")
+	private WebElement _selectTransportationType;
+
+	// Duration Days
 	@FindBy(how = How.CSS, using = "input[formcontrolname='numHoursPerPerson']")
 	private WebElement _inputMaxNumOfHoursPerPerson;
-
-	// Self Learning Tool - Radio Button Selection
-	@FindBy(how = How.XPATH, using = "//div[@class='collapse show']//input[@formcontrolname='selfLearningToolInd']/parent::label[@class='form-check-label']")
-	private List<WebElement> _radioBtnSelfLearningTool;
 
 	// Gross Up - Radio Button Selection
 	@FindBy(how = How.XPATH, using = "//div[@class='collapse show']//input[@formcontrolname='grossedUpInd']/parent::label[@class='form-check-label']")
@@ -136,17 +141,21 @@ public class CoreFlex_LanguageTraining_BenefitsPage extends Base {
 	@FindBy(how = How.XPATH, using = "//div[@class='collapse show']//label[@class='form-check-label']")
 	private List<WebElement> _radioBtnCandidateSelection;
 
-	// Reimbursed By Other Input
-	@FindBy(how = How.XPATH, using = "//div[@class='collapse show']//input[@formcontrolname='paidByOther']")
-	private WebElement _inputReimbursedBy;
-
 	// Comment Text Area
 	@FindBy(how = How.XPATH, using = "//div[@class='collapse show']//textarea[@formcontrolname='benefitComment']")
 	private WebElement _txtAreaComment;
 
-	// Language Max Amount
-	@FindBy(how = How.XPATH, using = "//div[@class='collapse show']//input[@formcontrolname='languageMaxAmount']")
-	private WebElement _inputMaxAmount;
+	// Reimbursed By Other Input
+	@FindBy(how = How.XPATH, using = "//div[@class='collapse show']//input[@formcontrolname='paidByOther']")
+	private WebElement _inputReimbursedBy;
+
+	// Max. Amount Dropdown
+	@FindBy(how = How.XPATH, using = "//div[@class='collapse show']//ng-select[@formcontrolname='maxAmountPerNightCode']//div[@role='option']")
+	private List<WebElement> _selectMaxAmountList;
+	
+	// Max. Amount Select Field
+	@FindBy(how = How.XPATH, using = "//div[@class='collapse show']//ng-select[@formcontrolname='maxAmountPerNightCode']")
+	private WebElement _selectMaxAmount;
 
 	// Aires Managed Service Radio Button
 	@FindBy(how = How.CSS, using = "div[class*='form-check-radio'] > label[class*='form-check']")
@@ -158,8 +167,8 @@ public class CoreFlex_LanguageTraining_BenefitsPage extends Base {
 
 	/*********************************************************************/
 
-	CoreFlex_SettlingInBenefitsData languageTrainingBenefitData = FileReaderManager.getInstance()
-			.getCoreFlexJsonReader().getSettlingInBenefitDataList(COREFLEXConstants.LANGUAGE_TRAINING);
+	CoreFlex_HousingBenefitsData housingBenefitData = FileReaderManager.getInstance().getCoreFlexJsonReader()
+			.getHousingBenefitDataList(COREFLEXConstants.TEMPORARY_LIVING);
 
 	public static final List<Benefit> coreBenefits = FileReaderManager.getInstance().getCoreFlexJsonReader()
 			.getMXTransfereeCoreBenefitDetails();
@@ -173,7 +182,7 @@ public class CoreFlex_LanguageTraining_BenefitsPage extends Base {
 	 * @return
 	 */
 	public boolean verifyPageNavigation(String expectedPageName) {
-		return CoreFunctions.verifyElementOnPage(driver, _headerPage, COREFLEXConstants.DUPLICATE_HOUSING,
+		return CoreFunctions.verifyElementOnPage(driver, _headerPage, COREFLEXConstants.TEMPORARY_LIVING,
 				expectedPageName, expectedPageName, true);
 	}
 
@@ -302,9 +311,9 @@ public class CoreFlex_LanguageTraining_BenefitsPage extends Base {
 					fillSubBenefit(subBenefit.trim(), benefitType);
 				} else {
 					Reporter.addStepLog(MessageFormat.format(COREFLEXConstants.SUB_BENEFIT_FORM_NOT_DISPLAYED,
-							CoreConstants.FAIL, subBenefit, COREFLEXConstants.LANGUAGE_TRAINING_BENEFITS_PAGE));
+							CoreConstants.FAIL, subBenefit, COREFLEXConstants.TEMPORARY_LIVING_BENEFITS_PAGE));
 					throw new RuntimeException(MessageFormat.format(COREFLEXConstants.SUB_BENEFIT_FORM_NOT_DISPLAYED,
-							CoreConstants.FAIL, subBenefit, COREFLEXConstants.LANGUAGE_TRAINING_BENEFITS_PAGE));
+							CoreConstants.FAIL, subBenefit, COREFLEXConstants.TEMPORARY_LIVING_BENEFITS_PAGE));
 				}
 			}
 		} catch (Exception e) {
@@ -322,16 +331,17 @@ public class CoreFlex_LanguageTraining_BenefitsPage extends Base {
 	 */
 	private void fillSubBenefit(String subBenefit, String benefitType) {
 		switch (subBenefit) {
-		case COREFLEXConstants.LANGUAGE_TRAINING_EMPLOYEE:
-			expandSubBenefitIfCollapsed(getElementByName(COREFLEXConstants.LANGUAGE_TRAINING_EMPLOYEE));
-			if (benefitType.equals(COREFLEXConstants.FLEX_BENEFITS)) {
-				CoreFunctions.clickElement(driver, _headerLanguageTrainingEmployee);
-			}
-			fillLanguageTrainingEmployeeSubBenefitForm();
+		case COREFLEXConstants.TEMPORARY_LIVING_TRANSPORTATION:
+			expandSubBenefitIfCollapsed(getElementByName(COREFLEXConstants.TEMPORARY_LIVING_TRANSPORTATION));
+			fillTempLivingTransportationSubBenefitForm();
 			break;
-		case COREFLEXConstants.LANGUAGE_TRAINING_FAMILY:
-			expandSubBenefitIfCollapsed(getElementByName(COREFLEXConstants.LANGUAGE_TRAINING_FAMILY));
-			fillLanguageTrainingFamilySubBenefitForm();
+		case COREFLEXConstants.TEMPORARY_LIVING_LODGING:
+			expandSubBenefitIfCollapsed(getElementByName(COREFLEXConstants.TEMPORARY_LIVING_LODGING));
+			fillTempLivingLodgingSubBenefitForm();
+			break;
+		case COREFLEXConstants.TEMPORARY_LIVING_MEALS:
+			expandSubBenefitIfCollapsed(getElementByName(COREFLEXConstants.TEMPORARY_LIVING_MEALS));
+			fillTempLivingMealsSubBenefitForm();
 			break;
 		default:
 			Assert.fail(MessageFormat.format(COREFLEXConstants.ELEMENT_NOT_FOUND, CoreConstants.FAIL));
@@ -339,56 +349,64 @@ public class CoreFlex_LanguageTraining_BenefitsPage extends Base {
 	}
 
 	/**
-	 * Method to fill Language Training Family subBenefit form
+	 * Method to fill Temporary Living Transportation SubBenefit form
 	 */
-	private void fillLanguageTrainingFamilySubBenefitForm() {
-		CoreFunctions.clearAndSetText(driver, _inputMaxNumOfHoursPerPerson,
-				languageTrainingBenefitData.languageTrainingFamily.maxNumberOfHoursPerPerson);
-		CoreFunctions.clearAndSetText(driver, _inputMaxNumOfHours,
-				languageTrainingBenefitData.languageTrainingFamily.maxNumberOfHoursPerFamily);
-		CoreFunctions.selectItemInListByText(driver, _radioBtnSelfLearningTool,
-				languageTrainingBenefitData.languageTrainingFamily.selfLearningTool, true);
-		if (languageTrainingBenefitData.languageTrainingFamily.selfLearningTool
-				.equalsIgnoreCase(COREFLEXConstants.YES)) {
-			CoreFunctions.clearAndSetText(driver, _inputMaxAmount,
-					languageTrainingBenefitData.languageTrainingFamily.maxAmount);
-		}
+	private void fillTempLivingTransportationSubBenefitForm() {
+		CoreFunctions.clearAndSetText(driver, _inputDurationDays,
+				housingBenefitData.temporaryLivingTransportation.duration);
+		CoreFunctions.clickElement(driver, _selectTransportationType);
+		CoreFunctions.selectItemInListByText(driver, _selectTransportationTypeList,
+				housingBenefitData.temporaryLivingTransportation.transportationType, true);
 		CoreFunctions.selectItemInListByText(driver, _radioBtnGrossUp,
-				languageTrainingBenefitData.languageTrainingFamily.grossUp, true);
+				housingBenefitData.temporaryLivingTransportation.grossUp, true);
 		CoreFunctions.selectItemInListByText(driver, _radioBtnCandidateSelection,
-				languageTrainingBenefitData.languageTrainingFamily.reimbursedBy, true);
-		if (languageTrainingBenefitData.languageTrainingFamily.reimbursedBy.equalsIgnoreCase(COREFLEXConstants.OTHER)) {
+				housingBenefitData.temporaryLivingTransportation.reimbursedBy, true);
+		if (housingBenefitData.temporaryLivingTransportation.reimbursedBy.equalsIgnoreCase(COREFLEXConstants.OTHER)) {
 			CoreFunctions.clearAndSetText(driver, _inputReimbursedBy,
-					languageTrainingBenefitData.languageTrainingFamily.reimbursedByOther);
+					housingBenefitData.temporaryLivingTransportation.reimbursedByOther);
 		}
 		CoreFunctions.clearAndSetText(driver, _txtAreaComment,
-				languageTrainingBenefitData.languageTrainingFamily.comment);
+				housingBenefitData.temporaryLivingTransportation.comment);
 	}
 
 	/**
-	 * Method to fill Language Training Employee subBenefit form
+	 * Method to fill Temporary Living Lodging SubBenefit form
 	 */
-	private void fillLanguageTrainingEmployeeSubBenefitForm() {
-		CoreFunctions.clearAndSetText(driver, _inputMaxNumOfHours,
-				languageTrainingBenefitData.languageTrainingEmployee.maxNumberOfHours);
-		CoreFunctions.selectItemInListByText(driver, _radioBtnSelfLearningTool,
-				languageTrainingBenefitData.languageTrainingEmployee.selfLearningTool, true);
-		if (languageTrainingBenefitData.languageTrainingEmployee.selfLearningTool
-				.equalsIgnoreCase(COREFLEXConstants.YES)) {
-			CoreFunctions.clearAndSetText(driver, _inputMaxAmount,
-					languageTrainingBenefitData.languageTrainingEmployee.maxAmount);
-		}
+	private void fillTempLivingLodgingSubBenefitForm() {
+		CoreFunctions.clearAndSetText(driver, _inputDurationDays, housingBenefitData.temporaryLivingLodging.duration);
+		CoreFunctions.clickElement(driver, _selectMaxAmount);
+		CoreFunctions.selectItemInListByText(driver, _selectMaxAmountList,
+				housingBenefitData.temporaryLivingLodging.maxAmount, true);
 		CoreFunctions.selectItemInListByText(driver, _radioBtnGrossUp,
-				languageTrainingBenefitData.languageTrainingEmployee.grossUp, true);
+				housingBenefitData.temporaryLivingLodging.grossUp, true);
 		CoreFunctions.selectItemInListByText(driver, _radioBtnCandidateSelection,
-				languageTrainingBenefitData.languageTrainingEmployee.reimbursedBy, true);
-		if (languageTrainingBenefitData.languageTrainingEmployee.reimbursedBy
-				.equalsIgnoreCase(COREFLEXConstants.OTHER)) {
+				housingBenefitData.temporaryLivingLodging.reimbursedBy, true);
+		if (housingBenefitData.temporaryLivingLodging.reimbursedBy.equalsIgnoreCase(COREFLEXConstants.OTHER)) {
 			CoreFunctions.clearAndSetText(driver, _inputReimbursedBy,
-					languageTrainingBenefitData.languageTrainingEmployee.reimbursedByOther);
+					housingBenefitData.temporaryLivingLodging.reimbursedByOther);
 		}
-		CoreFunctions.clearAndSetText(driver, _txtAreaComment,
-				languageTrainingBenefitData.languageTrainingEmployee.comment);
+		CoreFunctions.clearAndSetText(driver, _txtAreaComment, housingBenefitData.temporaryLivingLodging.comment);
+	}
+
+	/**
+	 * Method to fill Temporary Living Meals SubBenefit form
+	 */
+	private void fillTempLivingMealsSubBenefitForm() {
+		CoreFunctions.clearAndSetText(driver, _inputDurationDays, housingBenefitData.temporaryLivingMeals.duration);
+		CoreFunctions.selectItemInListByText(driver, _radioBtnCandidateSelection,
+				housingBenefitData.temporaryLivingMeals.type, true);
+		CoreFunctions.clickElement(driver, _selectMaxAmount);
+		CoreFunctions.selectItemInListByText(driver, _selectMaxAmountList,
+				housingBenefitData.temporaryLivingMeals.maxAmount, true);
+		CoreFunctions.selectItemInListByText(driver, _radioBtnGrossUp, housingBenefitData.temporaryLivingMeals.grossUp,
+				true);
+		CoreFunctions.selectItemInListByText(driver, _radioBtnCandidateSelection,
+				housingBenefitData.temporaryLivingMeals.reimbursedBy, true);
+		if (housingBenefitData.temporaryLivingMeals.reimbursedBy.equalsIgnoreCase(COREFLEXConstants.OTHER)) {
+			CoreFunctions.clearAndSetText(driver, _inputReimbursedBy,
+					housingBenefitData.temporaryLivingMeals.reimbursedByOther);
+		}
+		CoreFunctions.clearAndSetText(driver, _txtAreaComment, housingBenefitData.temporaryLivingMeals.comment);
 	}
 
 	/**
@@ -411,11 +429,14 @@ public class CoreFlex_LanguageTraining_BenefitsPage extends Base {
 	public WebElement getElementByName(String elementName) {
 		WebElement element = null;
 		switch (elementName) {
-		case COREFLEXConstants.LANGUAGE_TRAINING_EMPLOYEE:
-			element = _formLanguageTrainingEmployee;
+		case COREFLEXConstants.TEMPORARY_LIVING_TRANSPORTATION:
+			element = _formTempLivingTransportation;
 			break;
-		case COREFLEXConstants.LANGUAGE_TRAINING_FAMILY:
-			element = _formLanguageTrainingFamily;
+		case COREFLEXConstants.TEMPORARY_LIVING_LODGING:
+			element = _formTempLivingLodging;
+			break;
+		case COREFLEXConstants.TEMPORARY_LIVING_MEALS:
+			element = _formTempLivingMeals;
 			break;
 		default:
 			Assert.fail(MessageFormat.format(COREFLEXConstants.ELEMENT_NOT_FOUND, CoreConstants.FAIL));
@@ -429,21 +450,22 @@ public class CoreFlex_LanguageTraining_BenefitsPage extends Base {
 	 * @param benefitType
 	 * @param multipleBenefitSelection
 	 * @param flexPoints
-	 * @param benefitDescription
+	 * @param benefitDisplayName
 	 * @param benefitAllowanceAmount
-	 * @param benefitDescription2
+	 * @param benefitDescription
+	 * @param aireManagedService
 	 */
 	private void selectBenefitTypeAndFillMandatoryFields(String benefitType, String multipleBenefitSelection,
 			String flexPoints, String benefitDisplayName, String benefitAllowanceAmount, String benefitDescription,
 			String aireManagedService) {
-		Benefit languageTrainingBenefit = coreBenefits.stream()
-				.filter(b -> b.getBenefitType().equals(COREFLEXConstants.LANGUAGE_TRAINING)).findAny().orElse(null);
+		Benefit temporaryLivingBenefit = coreBenefits.stream()
+				.filter(b -> b.getBenefitType().equals(COREFLEXConstants.TEMPORARY_LIVING)).findAny().orElse(null);
 		switch (benefitType) {
 		case COREFLEXConstants.CORE:
 			CoreFunctions.clickElement(driver, _textCore);
-			fillManadatoryDetails(benefitType, multipleBenefitSelection,
-					languageTrainingBenefit.getBenefitDisplayName(), languageTrainingBenefit.getBenefitAmount(),
-					languageTrainingBenefit.getBenefitDesc(), aireManagedService);
+			fillManadatoryDetails(benefitType, multipleBenefitSelection, temporaryLivingBenefit.getBenefitDisplayName(),
+					temporaryLivingBenefit.getBenefitAmount(), temporaryLivingBenefit.getBenefitDesc(),
+					aireManagedService);
 			break;
 		case COREFLEXConstants.FLEX:
 			CoreFunctions.clickElement(driver, _textFlex);
@@ -454,9 +476,9 @@ public class CoreFlex_LanguageTraining_BenefitsPage extends Base {
 			break;
 		case COREFLEXConstants.CORE_BENEFITS:
 			CoreFunctions.clickElement(driver, _textCoreBenefits);
-			fillManadatoryDetails(benefitType, multipleBenefitSelection,
-					languageTrainingBenefit.getBenefitDisplayName(), languageTrainingBenefit.getBenefitAmount(),
-					languageTrainingBenefit.getBenefitDesc(), aireManagedService);
+			fillManadatoryDetails(benefitType, multipleBenefitSelection, temporaryLivingBenefit.getBenefitDisplayName(),
+					temporaryLivingBenefit.getBenefitAmount(), temporaryLivingBenefit.getBenefitDesc(),
+					aireManagedService);
 			break;
 		case COREFLEXConstants.FLEX_BENEFITS:
 			CoreFunctions.clickElement(driver, _textFlexBenefits);

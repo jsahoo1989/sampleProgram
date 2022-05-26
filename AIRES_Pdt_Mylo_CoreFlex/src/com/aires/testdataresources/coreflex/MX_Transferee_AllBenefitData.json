@@ -1,0 +1,160 @@
+{
+	"coreBenefits": [
+		{
+			"benefitType": "Duplicate Housing",
+			"benefitDisplayName": "Automated Core Type Duplicate Housing Display Name",
+			"benefitAmount": "Core Type payments $23",
+			"benefitDesc": "Automated Core Duplicate Housing Benefit Long Description. Setting up a CoreFlex Policy to be consumed by Client/Transferee to select Desired Benefits and track/Manage Points.",
+			"subBenefits": "Duplicate Housing",
+			"airesManagedService":"No"
+		},
+		{
+			"benefitType": "Lump Sum",
+			"benefitDisplayName": "Automated Core Type Lump Sum Display Name",
+			"benefitAmount": "Core Type Flat Amount , INR, # of weeks before start transfer",
+			"benefitDesc": "Automated Core Lump Sum Benefit Long Description. Setting up a CoreFlex Policy to be consumed by Client/Transferee to select Desired Benefits and track/Manage Points.",
+			"subBenefits": "Lump Sum",
+			"airesManagedService":"No"
+		},
+		{
+			"benefitType": "Language Training",
+			"benefitDisplayName": "Automated Core Type Language Training Display Name",
+			"benefitAmount": "Core - Max 4 hours or Self Learning App Subscription up to 1000$",
+			"benefitDesc": "Core training to assist in learning the language in new location.",
+			"subBenefits": "Language Training Employee;Language Training Family",
+			"airesManagedService":"Yes"
+		},
+		{
+			"benefitType": "Temporary Living",
+			"benefitDisplayName": "Automated Core Type Temporary Living Display Name",
+			"benefitAmount": "Temporary Housing in new location",
+			"benefitDesc": "Temporary Housing for the employee and family members while they wait the availability of their permanent residence.",
+			"subBenefits": "Temporary Living Transportation;Temporary Living Lodging;Temporary Living Meals",
+			"airesManagedService":"Yes"
+		}
+	],
+	"flexBenefits": [
+		{
+			"category": "Housing",
+			"benefits": [
+				{
+					"benefitType": "Duplicate Housing",
+					"benefitDisplayName": "Automated Flex Duplicate Housing Display Name",
+					"benefitAmount": "23 of payments - Flex Type",
+					"benefitDesc": "Automated Flex Duplicate Housing Benefit Long Description. Setting up a CoreFlex Policy to be consumed by Client/Transferee to select Desired Benefits and track/Manage Points.",
+					"points": "50",
+					"subBenefits": "Duplicate Housing",
+					"airesManagedService":"No",
+					"multipleBenefitSelection": "Yes",
+					"numberOfBenefitSelected": 2,
+					"selectBenefitOnFPTPage": true,
+					"deleteBenefitOnMBBPage":true,
+					"grossUp":"Yes",
+					"reimbursedBy":"Aires",
+					"comment":"Test Flex Duplicate Housing Benefit Comment",
+					"payments":"Allowance/Cashout"
+				},
+				{
+					"benefitType": "Other Housing Benefit",
+					"benefitDisplayName": "Automated Other Housing Benefit Display Name",
+					"benefitAmount": "Automated Allowance Amount 23 of payments",
+					"benefitDesc": "Automated Other Housing Benefit Long Description. Setting up a CoreFlex Policy to be consumed by Client/Transferee to select Desired Benefits and track/Manage Points.",
+					"points": "200",
+					"subBenefits": "",
+					"airesManagedService":"No",
+					"multipleBenefitSelection": "Yes",
+					"numberOfBenefitSelected": 1,
+					"selectBenefitOnFPTPage": true,
+					"deleteBenefitOnMBBPage":true,
+					"grossUp":"Yes",
+					"reimbursedBy":"Aires",
+					"comment":"Test Other Housing Benefit Comment",
+					"payments":"Expense Reimbursement"
+				},
+				{
+					"benefitType": "Temporary Living",
+					"benefitDisplayName": "Automated Flex Temporary Living Display Name",
+					"benefitAmount": "2 Nights",
+					"benefitDesc": "Temporary Housing for the employee and family members while they wait the availability of their permanent residence.",
+					"points": "10",
+					"subBenefits": "Temporary Living Transportation;Temporary Living Lodging;Temporary Living Meals",
+					"airesManagedService":"Yes",
+					"multipleBenefitSelection": "Yes",
+					"numberOfBenefitSelected": 2,
+					"selectBenefitOnFPTPage": true,
+					"deleteBenefitOnMBBPage":true,
+					"grossUp":"Yes",
+					"reimbursedBy":"Aires",
+					"comment":"Test Flex Temporary Living Benefit Comment",
+					"irisServiceName":"Destination Services",
+					"irisSubserviceType":"Temporary Housing",
+					"irisSubserviceName":"Custom Temporary Living Name",
+					"irisSubserviceID":"0",
+					"subServiceActivityFinance":"(ACTV) Custom Temporary Living Name",
+					"subServiceFunction":"Host Country Agent",
+					"compID":"49211",
+					"company":"AIRES-CIS-DEMO&'TEST(CLIENT)",
+					"initialTracingPrompt":"Move-in/check-In date",
+					"postInitialTracingCardStatus":"Move In",
+					"endTracingPrompt":"Move-out/check-out date",
+					"postEndTracingCardStatus":"Move out"		
+				}
+			]
+		},
+		{
+			"category": "Allowances",
+			"benefits": [
+				{
+					"benefitType": "Lump Sum",
+					"benefitDisplayName": "Automated Flex Lump Sum Display Name",
+					"benefitAmount": "Flex Type Flat Amount , U.S Dollar, # of weeks before start transfer",
+					"benefitDesc": "Automated Flex Lump Sum Benefit Long Description. Setting up a CoreFlex Policy to be consumed by Client/Transferee to select Desired Benefits and track/Manage Points.",
+					"points": "22.5",
+					"subBenefits": "Lump Sum",
+					"airesManagedService":"No",
+					"multipleBenefitSelection": "No",
+					"numberOfBenefitSelected": 1,
+					"selectBenefitOnFPTPage": false,
+					"deleteBenefitOnMBBPage":false,
+					"grossUp":"Yes",
+					"reimbursedBy":"Aires",
+					"comment":"Test Flex Lump Sum Benefit Comment",
+					"payments":"Allowance/Cashout"
+				}
+			]
+		},
+		{
+			"category": "Settling In",
+			"benefits": [
+				{
+					"benefitType": "Language Training",
+					"benefitDisplayName": "Automated Flex Language Training Display Name",
+					"benefitAmount": "Flex - Max 4 hours or Self Learning App Subscription up to 1000$",
+					"benefitDesc": "Flex training to assist in learning the language in new location.",
+					"points": "25",
+					"subBenefits": "Language Training Employee;Language Training Family",
+					"airesManagedService":"Yes",
+					"multipleBenefitSelection": "Yes",
+					"numberOfBenefitSelected": 3,
+					"selectBenefitOnFPTPage": true,
+					"deleteBenefitOnMBBPage":true,
+					"grossUp":"Yes",
+					"reimbursedBy":"Aires",
+					"comment":"Test Flex Language Training Aires Managed Benefit Comment",
+					"irisServiceName":"Language Training",
+					"irisSubserviceType":"Language Training",
+					"irisSubserviceName":"Custom Language Training Name",
+					"irisSubserviceID":"0",
+					"subServiceActivityFinance":"(ACTV) Custom Language Training Name",
+					"subServiceFunction":"Language Agent",
+					"compID":"49211",
+					"company":"AIRES-CIS-DEMO&'TEST(CLIENT)",
+					"initialTracingPrompt":"Start Date of Language Training",
+					"postInitialTracingCardStatus":"Begin training",
+					"endTracingPrompt":"End Date of Language Training",
+					"postEndTracingCardStatus":"Training complete"
+				}
+			]
+		}
+	]
+}

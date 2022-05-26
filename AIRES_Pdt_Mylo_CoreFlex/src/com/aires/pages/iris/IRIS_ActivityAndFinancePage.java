@@ -7,8 +7,8 @@ import java.text.Format;
 import java.text.MessageFormat;
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.List;
 
-import org.apache.logging.log4j.core.Core;
 import org.testng.Assert;
 
 import com.aires.businessrules.BusinessFunctions;
@@ -16,7 +16,10 @@ import com.aires.businessrules.CoreFunctions;
 import com.aires.businessrules.constants.CoreConstants;
 import com.aires.businessrules.constants.IRISConstants;
 import com.aires.iris.helpers.Helpers;
+import com.aires.managers.FileReaderManager;
 import com.aires.pages.iris.basepage.BasePage;
+import com.aires.testdatatypes.coreflex.Benefit;
+import com.aires.testdatatypes.coreflex.FlexBenefit;
 import com.aires.utilities.Log;
 import com.aires.utilities.getWindowText;
 import com.hp.lft.sdk.Desktop;
@@ -82,6 +85,9 @@ public class IRIS_ActivityAndFinancePage extends BasePage {
 	private static String _partnerID = null;
 	private static int _compID = 0;
 	private String subServiceId;
+
+	public static final List<FlexBenefit> flexBenefits = FileReaderManager.getInstance().getCoreFlexJsonReader()
+			.getMXTransfereeFlexBenefitData();
 
 	/**
 	 * Verify dates exist for either of below tracing prompts a. Make first contact
@@ -466,10 +472,11 @@ public class IRIS_ActivityAndFinancePage extends BasePage {
 	}
 
 	public void selectServiceAndSubService(DataTable table) {
-		try {		
+		try {
 			java.util.List<java.util.List<String>> data = table.raw();
-			String subServiceText = "#"+CoreFunctions.getPropertyFromConfig("Assignment_subServiceID")+" - "+data.get(1).get(1);
-			System.out.println("SubService Selection Text : "+subServiceText);
+			String subServiceText = "#" + CoreFunctions.getPropertyFromConfig("Assignment_subServiceID") + " - "
+					+ data.get(1).get(1);
+			System.out.println("SubService Selection Text : " + subServiceText);
 			Helpers.selectFromList(IRIS_PageMaster.getListObject(_IRIS, "Service"), data.get(1).get(0),
 					IRIS_PageMaster.getListObject(_IRIS, "Service").getAttachedText());
 			Helpers.selectFromList(IRIS_PageMaster.getListObject(_IRIS, "Sub-Service"), subServiceText,
@@ -716,5 +723,128 @@ public class IRIS_ActivityAndFinancePage extends BasePage {
 			e.printStackTrace();
 		}
 		return _rowCount;
+	}
+
+	public void selectServiceAndSubService(Benefit benefit) {
+		String subServiceText = null;
+		try {
+//			subServiceText = "#" + benefit.getIrisSubserviceID() + " - " + benefit.getSubServiceActivityFinance();
+//			System.out.println("SubService Selection Text : " + subServiceText);
+			Helpers.selectFromList(IRIS_PageMaster.getListObject(_IRIS, "Service"), benefit.getIrisServiceName(),
+					IRIS_PageMaster.getListObject(_IRIS, "Service").getAttachedText());
+//			Helpers.selectFromList(IRIS_PageMaster.getListObject(_IRIS, "Sub-Service"), subServiceText,
+//					IRIS_PageMaster.getListObject(_IRIS, "Sub-Service").getAttachedText());
+			Reporter.addStepLog(MessageFormat.format(IRISConstants.VERIFIED_SERVICE_SELECTED, CoreConstants.PASS,
+					benefit.getIrisServiceName(), subServiceText));
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+	}
+
+	public void addParticipant(Benefit benefit) {
+		try {
+			_subServiceTable.waitUntilVisible();
+			_rowCount = Helpers.getTableRowCount(_subServiceTable);
+			_subServiceTable.getCell(_rowCount - 1, "Function").setValue(benefit.getSubServiceFunction());
+			_subServiceTable.getCell(_rowCount - 1, "Sub Serv")
+					.setValue(IRIS_AssignmentServicePage.subServiceIDMap.get(benefit.getIrisServiceName()));
+			_subServiceTable.getCell(_rowCount - 1, "Comp ID").setValue(benefit.getCompID());
+			if (_subServiceTable.getCell(_rowCount - 1, IRISConstants.COMPANY).getValue().equals(benefit.getCompany()))
+				Reporter.addStepLog(CoreConstants.PASS + CoreConstants.VRFIED_THAT + MessageFormat.format(
+						IRISConstants.COMPANY_NAME_DISPLAYED_FOR_COMP_ID, benefit.getCompID(), benefit.getCompany()));
+			else
+				Reporter.addStepLog(CoreConstants.FAIL + MessageFormat
+						.format(IRISConstants.COMPANY_NAME_NOT_DISPLAYED_FOR_COMP_ID, benefit.getCompID()));
+		} catch (Exception e) {
+			Reporter.addStepLog(MessageFormat.format(
+					IRISConstants.EXCEPTION_OCCURED_WHILE_ADDING_PARTICIPANT_ON_ACTIVITY_AND_FINANCE_TAB_OF_IRIS_APPLICATION,
+					CoreConstants.FAIL, e.getMessage()));
+		}
+	}
+
+	public void selectServiceAndAddParticipant() {
+		try {
+			for (FlexBenefit benefitList : flexBenefits) {
+				for (Benefit benefit : benefitList.getBenefits()) {
+					if ((benefit.getSelectBenefitOnFPTPage()) && (benefit.getAiresManagedService().equals("Yes"))) {
+						selectServiceAndSubService(benefit);
+						displayActivityTable();
+						clickAddButton();
+						addParticipant(benefit);
+						clickOnSaveBtn();
+						verifySaveSuccessfulMsg();
+					}
+				}
+			}
+		} catch (Exception e) {
+			Reporter.addStepLog(MessageFormat.format(
+					IRISConstants.EXCEPTION_OCCURED_WHILE_ADDING_SERVICE_SUBSERVICE_ON_SERVICES_TAB_OF_IRIS_APPLICATION,
+					CoreConstants.FAIL, e.getMessage()));
+		}
+	}
+
+	/**
+	 * Actualize Services Initial Tracing Prompts.
+	 */
+	public void actualizeInitialTracingPrompt(String estDate, String activity) {
+		try {
+			for (FlexBenefit benefitList : flexBenefits) {
+				for (Benefit benefit : benefitList.getBenefits()) {
+					if ((benefit.getSelectBenefitOnFPTPage()) && (benefit.getAiresManagedService().equals("Yes"))) {
+						enterActDateForTracingPrompt(
+								IRIS_PageMaster.getTableObject(_IRIS,
+										"IRIS.Presentation.assignment.activityFinance.ActivityPanel$1"),
+								activity, benefit.getInitialTracingPrompt(), estDate);
+						clickOnSaveBtn();
+						verifySaveSuccessfulMsg();
+					}
+				}
+			}
+		} catch (Exception e) {
+			Reporter.addStepLog(MessageFormat.format(
+					IRISConstants.EXCEPTION_OCCURED_WHILE_ACTUALIZING_ADDED_SERVICES_TRACING_PROMPT_ON_IRIS_APPLICATION,
+					CoreConstants.FAIL, e.getMessage()));
+		}
+	}
+	
+	public void displayAllActivityTable() {
+		try {
+			Helpers.selectFromList(IRIS_PageMaster.getListObject(_IRIS, "Service"), IRISConstants.ALL,
+					IRIS_PageMaster.getListObject(_IRIS, "Service").getAttachedText());
+			IRIS_PageMaster.getButtonObjectFromLabel(_IRIS, "Display").waitUntilEnabled();
+			Helpers.clickButton(IRIS_PageMaster.getButtonObjectFromLabel(_IRIS, "Display"),
+					IRIS_PageMaster.getButtonObjectFromLabel(_IRIS, "Display").getLabel());
+			Reporter.addStepLog(MessageFormat.format(IRISConstants.VERIFIED_BUTTON_CLICKED, CoreConstants.PASS,
+					IRIS_PageMaster.getButtonObjectFromLabel(_IRIS, "Display").getLabel()));
+
+		} catch (Exception e) {
+			Reporter.addStepLog(MessageFormat.format(
+					IRISConstants.EXCEPTION_OCCURED_WHILE_DISPLAYING_ALL_ACTIVITY_TABLE_OF_IRIS_APPLICATION,
+					CoreConstants.FAIL, e.getMessage()));
+		}
+	}
+	
+	/**
+	 * Actualize Services End Tracing Prompts.
+	 */
+	public void actualizeEndTracingPrompt(String actDate, String activity) {
+		try {
+			for (FlexBenefit benefitList : flexBenefits) {
+				for (Benefit benefit : benefitList.getBenefits()) {
+					if ((benefit.getSelectBenefitOnFPTPage()) && (benefit.getAiresManagedService().equals("Yes"))) {
+						enterActDateForTracingPrompt(
+								IRIS_PageMaster.getTableObject(_IRIS,
+										"IRIS.Presentation.assignment.activityFinance.ActivityPanel$1"),
+								activity, benefit.getEndTracingPrompt(), actDate);
+						clickOnSaveBtn();
+						verifySaveSuccessfulMsg();
+					}
+				}
+			}
+		} catch (Exception e) {
+			Reporter.addStepLog(MessageFormat.format(
+					IRISConstants.EXCEPTION_OCCURED_WHILE_ACTUALIZING_ADDED_SERVICES_TRACING_PROMPT_ON_IRIS_APPLICATION,
+					CoreConstants.FAIL, e.getMessage()));
+		}
 	}
 }

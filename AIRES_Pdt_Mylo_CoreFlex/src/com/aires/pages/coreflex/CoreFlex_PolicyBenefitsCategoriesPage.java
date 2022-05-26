@@ -153,12 +153,6 @@ public class CoreFlex_PolicyBenefitsCategoriesPage extends Base {
 	public static final List<FlexBenefit> flexBenefits = FileReaderManager.getInstance().getCoreFlexJsonReader()
 			.getMXTransfereeFlexBenefitData();
 
-	public static final List<FlexBenefit> airesManagedFlexBenefits = FileReaderManager.getInstance()
-			.getCoreFlexJsonReader().getMXTransfereeAiresManagedFlexBenefitData();
-
-	public static final List<Benefit> airesManagedCoreBenefits = FileReaderManager.getInstance().getCoreFlexJsonReader()
-			.getMXTransfereeAiresManagedCoreBenefitData();
-
 	CoreFlex_PolicySetupPagesData policySetupPageData = FileReaderManager.getInstance().getCoreFlexJsonReader()
 			.getPolicySetupPagesDataList(COREFLEXConstants.POLICY_SETUP);
 
@@ -265,6 +259,10 @@ public class CoreFlex_PolicyBenefitsCategoriesPage extends Base {
 				CoreFunctions.selectItemInListByText(driver, _leftNavigationTitleList,
 						COREFLEXConstants.OTHER_HOUSING_BENEFIT);
 				break;
+			case COREFLEXConstants.TEMPORARY_LIVING:
+				CoreFunctions.selectItemInListByText(driver, _leftNavigationTitleList,
+						COREFLEXConstants.TEMPORARY_LIVING);
+				break;
 			case COREFLEXConstants.LANGUAGE_TRAINING:
 				CoreFunctions.selectItemInListByText(driver, _leftNavigationTitleList,
 						COREFLEXConstants.LANGUAGE_TRAINING);
@@ -309,9 +307,10 @@ public class CoreFlex_PolicyBenefitsCategoriesPage extends Base {
 		}
 		return true;
 	}
-	
+
 	/**
-	 * Method to select specified Aires Managed Benefit Name (If Not Already Checked)
+	 * Method to select specified Aires Managed Benefit Name (If Not Already
+	 * Checked)
 	 * 
 	 * @param policyType
 	 * @return
@@ -325,9 +324,9 @@ public class CoreFlex_PolicyBenefitsCategoriesPage extends Base {
 				CoreFunctions.selectItemInListByText(driver, _allBenefitsList, benefit, true);
 			}
 		} catch (Exception e) {
-			Reporter.addStepLog(
-					MessageFormat.format(COREFLEXConstants.EXCEPTION_OCCURED_WHILE_SELECTING_AIRES_MANAGED_BENEFITS_ON_PAGE,
-							CoreConstants.FAIL, e.getMessage()));
+			Reporter.addStepLog(MessageFormat.format(
+					COREFLEXConstants.EXCEPTION_OCCURED_WHILE_SELECTING_AIRES_MANAGED_BENEFITS_ON_PAGE,
+					CoreConstants.FAIL, e.getMessage()));
 			return false;
 		}
 		return true;
@@ -371,12 +370,12 @@ public class CoreFlex_PolicyBenefitsCategoriesPage extends Base {
 		}
 		return benefitNameList;
 	}
-	
+
 	private List<String> getAiresManagedBenefitList(String policyType) {
 
 		List<String> benefitNameList = new ArrayList<String>();
 		if (policyType.equals(COREFLEXConstants.FLEX) || policyType.equals(COREFLEXConstants.BOTH)) {
-			for (FlexBenefit benefit : airesManagedFlexBenefits) {
+			for (FlexBenefit benefit : flexBenefits) {
 				for (Benefit ben : benefit.getBenefits()) {
 					benefitNameList.add(ben.getBenefitType());
 				}
@@ -424,14 +423,21 @@ public class CoreFlex_PolicyBenefitsCategoriesPage extends Base {
 	public boolean selectAndFillAddedBenefits(String policyType,
 			CoreFlex_DuplicateHousing_BenefitsPage coreFlexDuplicateHousingBenefitsPage,
 			CoreFlex_LumpSum_BenefitsPage coreFlexLumpSumBenefitsPage,
-			CoreFlex_OtherHousing_BenefitsPage coreFlexOtherHousingBenefitsPage) {
+			CoreFlex_OtherHousing_BenefitsPage coreFlexOtherHousingBenefitsPage,
+			CoreFlex_LanguageTraining_BenefitsPage coreFlexLanguageTrainingBenefitsPage,
+			CoreFlex_TemporaryLiving_BenefitsPage coreFlexTemporaryLivingBenefitsPage) {
 		boolean isBenefitSuccessfullySelectedAndFilled = false;
 		try {
 			if (policyType.equals(COREFLEXConstants.FLEX) || policyType.equals(COREFLEXConstants.BOTH)) {
 				isBenefitSuccessfullySelectedAndFilled = fillFlexBenefitDetails(policyType,
 						coreFlexDuplicateHousingBenefitsPage, coreFlexLumpSumBenefitsPage,
-						coreFlexOtherHousingBenefitsPage);
+						coreFlexOtherHousingBenefitsPage, coreFlexLanguageTrainingBenefitsPage,
+						coreFlexTemporaryLivingBenefitsPage);
+			} else if (policyType.equals(COREFLEXConstants.CORE)) {
+				isBenefitSuccessfullySelectedAndFilled = fillAiresManagedCardCoreBenefitDetails(policyType,
+						coreFlexLanguageTrainingBenefitsPage);
 			}
+
 		} catch (Exception e) {
 			Reporter.addStepLog(
 					MessageFormat.format(COREFLEXConstants.EXCEPTION_OCCURED_WHILE_SELECTING_AND_FILLING_ADDED_BENEFITS,
@@ -448,7 +454,9 @@ public class CoreFlex_PolicyBenefitsCategoriesPage extends Base {
 	private boolean fillFlexBenefitDetails(String policyType,
 			CoreFlex_DuplicateHousing_BenefitsPage coreFlexDuplicateHousingBenefitsPage,
 			CoreFlex_LumpSum_BenefitsPage coreFlexLumpSumBenefitsPage,
-			CoreFlex_OtherHousing_BenefitsPage coreFlexOtherHousingBenefitsPage) {
+			CoreFlex_OtherHousing_BenefitsPage coreFlexOtherHousingBenefitsPage,
+			CoreFlex_LanguageTraining_BenefitsPage coreFlexLanguageTrainingBenefitsPage,
+			CoreFlex_TemporaryLiving_BenefitsPage coreFlexTemporaryLivingBenefitsPage) {
 		boolean isFlexBenefitSuccessfullySelectedAndFilled = false;
 		try {
 			for (FlexBenefit benefitList : flexBenefits) {
@@ -474,6 +482,18 @@ public class CoreFlex_PolicyBenefitsCategoriesPage extends Base {
 								benefit.getPoints(), benefit.getMultipleBenefitSelection(), benefit.getBenefitAmount(),
 								benefit.getBenefitDesc(), benefit.getComment(), benefit.getGrossUp(),
 								benefit.getReimbursedBy(), benefit.getPayments());
+						break;
+					case COREFLEXConstants.LANGUAGE_TRAINING:
+						coreFlexLanguageTrainingBenefitsPage.selectAndFillBenefitsAndSubBenefitDetails(policyType,
+								benefit.getSubBenefits(), benefit.getMultipleBenefitSelection(), benefit.getPoints(),
+								benefit.getBenefitDisplayName(), benefit.getBenefitAmount(), benefit.getBenefitDesc(),
+								benefit.getAiresManagedService());
+						break;
+					case COREFLEXConstants.TEMPORARY_LIVING:
+						coreFlexTemporaryLivingBenefitsPage.selectAndFillBenefitsAndSubBenefitDetails(policyType,
+								benefit.getSubBenefits(), benefit.getMultipleBenefitSelection(), benefit.getPoints(),
+								benefit.getBenefitDisplayName(), benefit.getBenefitAmount(), benefit.getBenefitDesc(),
+								benefit.getAiresManagedService());
 						break;
 					default:
 						Assert.fail(PDTConstants.INVALID_ELEMENT);
@@ -591,71 +611,11 @@ public class CoreFlex_PolicyBenefitsCategoriesPage extends Base {
 		}
 	}
 
-	public boolean selectAndFillAiresManagedBenefits(String benefitType,
-			CoreFlex_LanguageTraining_BenefitsPage coreFlexLanguageTrainingBenefitsPage) {
-		boolean isBenefitSuccessfullySelectedAndFilled = false;
-		try {
-			CoreFunctions.explicitWaitTillElementInVisibility(driver, _progressBar);
-			CoreFunctions.waitHandler(3);
-			if (benefitType.equals(COREFLEXConstants.FLEX) || benefitType.equals(COREFLEXConstants.BOTH)) {
-				isBenefitSuccessfullySelectedAndFilled = fillAiresManagedCardBenefitDetails(benefitType,
-						coreFlexLanguageTrainingBenefitsPage);
-			} else if (benefitType.equals(COREFLEXConstants.CORE)) {
-				isBenefitSuccessfullySelectedAndFilled = fillAiresManagedCardCoreBenefitDetails(benefitType,
-						coreFlexLanguageTrainingBenefitsPage);
-			}
-		} catch (Exception e) {
-			Reporter.addStepLog(MessageFormat.format(
-					COREFLEXConstants.EXCEPTION_OCCURED_WHILE_SELECTING_AND_FILLING_AIRES_MANAGED_BENEFITS,
-					CoreConstants.FAIL, e.getMessage()));
-		}
-		if (isBenefitSuccessfullySelectedAndFilled) {
-			Reporter.addStepLog(MessageFormat.format(
-					COREFLEXConstants.SUCCESSFULLY_SELECTED_AND_FILLED_AIRES_MANAGED_BENEFITS, CoreConstants.PASS));
-			clickLeftNavigationMenuOfPage(COREFLEXConstants.BENEFIT_SUMMARY);
-		}
-		return isBenefitSuccessfullySelectedAndFilled;
-	}
-
-	private boolean fillAiresManagedCardBenefitDetails(String benefitType,
-			CoreFlex_LanguageTraining_BenefitsPage coreFlexLanguageTrainingBenefitsPage) {
-		boolean isBenefitSuccessfullySelectedAndFilled = false;
-		try {
-			for (FlexBenefit benefitList : airesManagedFlexBenefits) {
-				for (Benefit benefit : benefitList.getBenefits()) {
-					clickLeftNavigationMenuOfPage(benefit.getBenefitType());
-					switch (benefit.getBenefitType()) {
-					case COREFLEXConstants.LANGUAGE_TRAINING:
-						coreFlexLanguageTrainingBenefitsPage.selectAndFillBenefitsAndSubBenefitDetails(benefitType,
-								benefit.getSubBenefits(), benefit.getMultipleBenefitSelection(), benefit.getPoints(),
-								benefit.getBenefitDisplayName(), benefit.getBenefitAmount(), benefit.getBenefitDesc(),
-								benefit.getAiresManagedService());
-						break;
-					case COREFLEXConstants.HOME_PURCHASE:
-						break;
-					default:
-						Assert.fail(PDTConstants.INVALID_ELEMENT);
-					}
-					isBenefitSuccessfullySelectedAndFilled = true;
-				}
-			}
-		} catch (Exception e) {
-			Reporter.addStepLog(MessageFormat.format(
-					COREFLEXConstants.EXCEPTION_OCCURED_WHILE_SELECTING_AND_FILLING_AIRES_MANAGED_BENEFITS,
-					CoreConstants.FAIL, e.getMessage()));
-		}
-		if (isBenefitSuccessfullySelectedAndFilled) {
-			Reporter.addStepLog(MessageFormat.format(
-					COREFLEXConstants.SUCCESSFULLY_SELECTED_AND_FILLED_AIRES_MANAGED_BENEFITS, CoreConstants.PASS));
-		}
-		return isBenefitSuccessfullySelectedAndFilled;
-	}
-
 	private boolean fillAiresManagedCardCoreBenefitDetails(String benefitType,
 			CoreFlex_LanguageTraining_BenefitsPage coreFlexLanguageTrainingBenefitsPage) {
 		boolean isBenefitSuccessfullySelectedAndFilled = false;
 		try {
-			for (Benefit benefit : airesManagedCoreBenefits) {
+			for (Benefit benefit : coreBenefits) {
 				clickLeftNavigationMenuOfPage(benefit.getBenefitType());
 				switch (benefit.getBenefitType()) {
 				case COREFLEXConstants.LANGUAGE_TRAINING:

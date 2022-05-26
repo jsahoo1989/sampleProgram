@@ -103,9 +103,6 @@ public class CoreFlex_BenefitSummaryPage extends Base {
 
 	public static final List<FlexBenefit> flexBenefits = FileReaderManager.getInstance().getCoreFlexJsonReader()
 			.getMXTransfereeFlexBenefitData();
-	
-	public static final List<FlexBenefit> airesManagedFlexBenefits = FileReaderManager.getInstance().getCoreFlexJsonReader()
-			.getMXTransfereeAiresManagedFlexBenefitData();
 
 	/*********************************************************************/
 
@@ -119,7 +116,7 @@ public class CoreFlex_BenefitSummaryPage extends Base {
 		return CoreFunctions.verifyElementOnPage(driver, _headerPage, COREFLEXConstants.BENEFIT_SUMMARY,
 				expectedPageName, expectedPageName, true);
 	}
-	
+
 	/**
 	 * Method to get currently active Left Navigation Menu.
 	 * 
@@ -152,7 +149,7 @@ public class CoreFlex_BenefitSummaryPage extends Base {
 				CoreFunctions.explicitWaitTillElementInVisibility(driver, _progressBar);
 				break;
 			case COREFLEXConstants.CONTINUE:
-				CoreFunctions.clickElement(driver, _buttonContinue);				
+				CoreFunctions.clickElement(driver, _buttonContinue);
 				break;
 			case COREFLEXConstants.BACK:
 				CoreFunctions.clickElement(driver, _buttonBack);
@@ -217,17 +214,19 @@ public class CoreFlex_BenefitSummaryPage extends Base {
 			throw new RuntimeException(e);
 
 		}
-	}	
+	}
 
 	/**
 	 * Method to iterate and verify Added Benefits & SubBenefits on Benefit Summary
 	 * page
 	 * 
+	 * @param policyType
+	 * 
 	 * @param dataTable
 	 */
 	public boolean iterateAndVerifyBenefitSummaryDetails(String policyType) {
 		try {
-			if (iterateAndVerifyFlexBenefitsSummaryDetails()) {
+			if (iterateAndVerifyBenefitsSummaryDetails()) {
 				Reporter.addStepLog(MessageFormat.format(
 						COREFLEXConstants.SUCCESSFULLY_VERIFIED_BENEFIT_CATEGORIES_AND_TYPE_ON_BENEFIT_SUMMARY_PAGE,
 						CoreConstants.PASS));
@@ -240,8 +239,8 @@ public class CoreFlex_BenefitSummaryPage extends Base {
 		}
 		return false;
 	}
-	
-	private boolean iterateAndVerifyFlexBenefitsSummaryDetails() {
+
+	private boolean iterateAndVerifyBenefitsSummaryDetails() {
 		boolean isFlexBenefitSummaryVerified = false;
 		try {
 			for (FlexBenefit benefitList : flexBenefits) {

@@ -4,6 +4,9 @@ import java.awt.AWTException;
 import java.awt.Robot;
 import java.awt.event.KeyEvent;
 import java.text.MessageFormat;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 import org.testng.Assert;
 
@@ -11,7 +14,10 @@ import com.aires.businessrules.CoreFunctions;
 import com.aires.businessrules.constants.CoreConstants;
 import com.aires.businessrules.constants.IRISConstants;
 import com.aires.iris.helpers.Helpers;
+import com.aires.managers.FileReaderManager;
 import com.aires.pages.iris.basepage.BasePage;
+import com.aires.testdatatypes.coreflex.Benefit;
+import com.aires.testdatatypes.coreflex.FlexBenefit;
 import com.aires.utilities.Log;
 import com.aires.utilities.getWindowText;
 import com.hp.lft.sdk.Desktop;
@@ -20,6 +26,8 @@ import com.hp.lft.sdk.java.Button;
 import com.hp.lft.sdk.java.ButtonDescription;
 import com.hp.lft.sdk.java.Dialog;
 import com.hp.lft.sdk.java.DialogDescription;
+import com.hp.lft.sdk.java.Menu;
+import com.hp.lft.sdk.java.MenuDescription;
 import com.hp.lft.sdk.java.Table;
 import com.hp.lft.sdk.java.TableDescription;
 import com.hp.lft.sdk.java.Window;
@@ -34,6 +42,9 @@ public class IRIS_AssignmentServicePage extends BasePage {
 		super();
 	}
 
+	public static final List<FlexBenefit> flexBenefits = FileReaderManager.getInstance().getCoreFlexJsonReader()
+			.getMXTransfereeFlexBenefitData();
+
 	private Table _tableName = null;
 	private Button _addButtonName = null;
 	private boolean _isExists = false;
@@ -42,14 +53,15 @@ public class IRIS_AssignmentServicePage extends BasePage {
 	private static int rowCount = 0;
 	private String _serviceWindowTitle = null;
 	private String subServiceId;
-
+	public static Map<String, String> subServiceIDMap;
 
 	public void setSubServiceId(String sectionName) {
 		try {
 			subServiceId = String
 					.valueOf(new Double(IRIS_PageMaster.getTableObjectWithIndex(_IRIS, "javax.swing.JTable", 1)
-					.getCell(0, IRISConstants.ID_TEXT).getValue().toString()).intValue());
-					CoreFunctions.writeToPropertiesFile("Assignment_subServiceID", subServiceId);
+							.getCell(0, IRISConstants.ID_TEXT).getValue().toString()).intValue());
+			CoreFunctions.writeToPropertiesFile("Assignment_subServiceID", subServiceId);
+
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
@@ -441,5 +453,99 @@ public class IRIS_AssignmentServicePage extends BasePage {
 			e.printStackTrace();
 		}
 	}
+
+	public void addServiceAndSubService(String coreFlexType) {
+		subServiceIDMap = new HashMap<String, String>();
+		try {
+			for (FlexBenefit benefitList : flexBenefits) {
+				for (Benefit benefit : benefitList.getBenefits()) {
+					if ((benefit.getSelectBenefitOnFPTPage()) && (benefit.getAiresManagedService().equals("Yes"))) {
+						addService(benefit.getIrisServiceName());
+						clickSaveButton();
+						clickOnAddSubServiceButton();
+						addSubService(IRISConstants.SUB_SERVICE, benefit.getIrisSubserviceType(),
+								benefit.getIrisSubserviceName(), coreFlexType);
+						clickSaveButton();
+						benefit.setIrisSubserviceID(String.valueOf(
+								new Double(IRIS_PageMaster.getTableObjectWithIndex(_IRIS, "javax.swing.JTable", 1)
+										.getCell(0, IRISConstants.ID_TEXT).getValue().toString()).intValue()));
+						System.out.println(
+								benefit.getBenefitDisplayName() + " SubserviceID : " + benefit.getIrisSubserviceID());
+						subServiceIDMap.put(benefit.getIrisServiceName(), benefit.getIrisSubserviceID());
+						CoreFunctions.waitHandler(2);
+					}
+				}
+			}
+		} catch (Exception e) {
+			Reporter.addStepLog(MessageFormat.format(
+					IRISConstants.EXCEPTION_OCCURED_WHILE_ADDING_SERVICE_SUBSERVICE_ON_SERVICES_TAB_OF_IRIS_APPLICATION,
+					CoreConstants.FAIL, e.getMessage()));
+		}
+
+	}
+
+	private void addSubService(String sectionName, String irisSubserviceType, String irisSubserviceName,
+			String coreFlexType) {
+		try {
+			_tableName = getTableName(sectionName);
+			_tableName.waitUntilVisible();
+			rowCount = Helpers.getTableRowCount(_tableName);
+			_tableName.getCell(rowCount - 1, "Type").setValue(irisSubserviceType);
+			_tableName.getCell(rowCount - 1, "Name").setValue(irisSubserviceName);
+			_tableName.getCell(rowCount - 1, "Core/Flex").setValue(coreFlexType);
+		} catch (Exception e) {
+			Reporter.addStepLog(MessageFormat.format(
+					IRISConstants.EXCEPTION_OCCURED_WHILE_ADDING_SERVICE_SUBSERVICE_ON_SERVICES_TAB_OF_IRIS_APPLICATION,
+					CoreConstants.FAIL, irisSubserviceType, e.getMessage()));
+		}
+	}
+
+	public void cancelAddedServices(String subServiceStatus) {
+		try {
+			for (FlexBenefit benefitList : flexBenefits) {
+				for (Benefit benefit : benefitList.getBenefits()) {
+					if ((benefit.getSelectBenefitOnFPTPage()) && (benefit.getAiresManagedService().equals("Yes"))) {
+						searchAndSelectAddedService(getTableName(IRISConstants.SERVICE), IRISConstants.NAME,
+								benefit.getIrisServiceName());
+						selectSubService(IRISConstants.SUB_SERVICE);
+						setSubServiceStatus(subServiceStatus);
+					}
+				}
+			}
+		} catch (Exception e) {
+			Reporter.addStepLog(MessageFormat.format(
+					IRISConstants.EXCEPTION_OCCURED_WHILE_CANCELLING_ADDED_SERVICES_ON_SERVICES_TAB_OF_IRIS_APPLICATION,
+					CoreConstants.FAIL, e.getMessage()));
+		}
+	}
+
+	private void searchAndSelectAddedService(Table table, String columnName, String irisServiceName)
+			throws GeneralLeanFtException {
+		for (int rowCount = 0; rowCount < table.getRows().size(); rowCount++) {
+			if (table.getCell(rowCount, columnName).getValue().toString().contains(irisServiceName)) {
+				Helpers.selectTableRow(table, rowCount);
+				CoreFunctions.waitHandler(1);
+				break;
+			}
+		}
+	}
 	
+	public void setSubServiceStatus(String fileStatus) throws Exception {
+		_IRIS = getIRISWindow();
+		Menu optionsMenu = _IRIS.describe(Menu.class, new MenuDescription.Builder().label("Options").build());
+		Menu changeStatusMenu = optionsMenu.describe(Menu.class,
+				new MenuDescription.Builder().label("Change Status").build());
+		Menu changeFileStatusMenu = changeStatusMenu.describe(Menu.class,
+				new MenuDescription.Builder().label("Change Sub Service Status").build());
+		Menu activateMenu = changeFileStatusMenu.describe(Menu.class,
+				new MenuDescription.Builder().label(fileStatus).build());
+		CoreFunctions.waitHandler(2);
+		activateMenu.select();
+		CoreFunctions.waitHandler(2);
+		Robot robot = new Robot();
+		robot.setAutoDelay(250);
+		robot.keyPress(KeyEvent.VK_ENTER);
+		robot.keyRelease(KeyEvent.VK_ENTER);
+	}
+
 }

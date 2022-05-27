@@ -35,10 +35,10 @@ public class PDT_TemporaryLivingPage extends Base {
 	@FindBy(how = How.CSS, using = "app-temporary-living-lodging ng-select[formcontrolname='maxAmountPerNightCode']")
 	private WebElement _drpDownMaxAmtLodging;
 	
-	@FindBy(how = How.CSS, using = "app-temporary-living-lodging ng-select[formcontrolname='maxAmountPerNightCode'] span.ng-option-label.ng-star-inserted")
+	@FindBy(how = How.CSS, using = "app-temporary-living-lodging ng-select[formcontrolname='maxAmountPerNightCode'] span.ng-option-label")
 	private List<WebElement> _drpDownMaxAmtLodgingOptions;
 	
-	@FindBy(how = How.CSS, using = "app-temporary-living-lodging ng-select[formcontrolname='maxAmountPerNightCode'] span.ng-value-label.ng-star-inserted")
+	@FindBy(how = How.CSS, using = "app-temporary-living-lodging ng-select[formcontrolname='maxAmountPerNightCode'] span.ng-value-label")
 	private WebElement _drpDownMaxAmtLodgingOptionsSelected;
 	
 	@FindBy(how = How.XPATH, using = "//app-temporary-living-lodging//label[contains(text(),'Flat Amount')]")
@@ -82,10 +82,10 @@ public class PDT_TemporaryLivingPage extends Base {
 	@FindBy(how = How.CSS, using = "app-temporary-living-meals ng-select[formcontrolname='maxAmountPerNightCode']")
 	private WebElement _drpDownMaxAmtMeals;
 	
-	@FindBy(how = How.CSS, using = "app-temporary-living-meals ng-select[formcontrolname='maxAmountPerNightCode'] span.ng-option-label.ng-star-inserted")
+	@FindBy(how = How.CSS, using = "app-temporary-living-meals ng-select[formcontrolname='maxAmountPerNightCode'] span.ng-option-label")
 	private List<WebElement> _drpDownMaxAmtMealsOptions;
 	
-	@FindBy(how = How.CSS, using = "app-temporary-living-meals ng-select[formcontrolname='maxAmountPerNightCode'] span.ng-value-label.ng-star-inserted")
+	@FindBy(how = How.CSS, using = "app-temporary-living-meals ng-select[formcontrolname='maxAmountPerNightCode'] span.ng-value-label")
 	private WebElement _drpDownMaxAmtMealsOptionsSelected;
 	
 	@FindBy(how = How.XPATH, using = "//label[contains(text(),'Max. Amount - Transferee')]")
@@ -165,10 +165,10 @@ public class PDT_TemporaryLivingPage extends Base {
 	@FindBy(how = How.CSS, using = "ng-select[formcontrolname='tempLivingTransportTypeList']")
 	private WebElement _drpDownTransportationType;
 	
-	@FindBy(how = How.CSS, using = "ng-select[formcontrolname='tempLivingTransportTypeList'] span.ng-option-label.ng-star-inserted")
+	@FindBy(how = How.CSS, using = "ng-select[formcontrolname='tempLivingTransportTypeList'] span.ng-option-label")
 	private List<WebElement> _drpDownTransportationTypeOptions;
 	
-	@FindBy(how = How.CSS, using = "ng-select[formcontrolname='tempLivingTransportTypeList'] span.ng-value-label.ng-star-inserted")
+	@FindBy(how = How.CSS, using = "ng-select[formcontrolname='tempLivingTransportTypeList'] span.ng-value-label")
 	private List<WebElement> _drpDownTransportationTypeMultiSelectOptions;
 	
 	@FindBy(how = How.CSS, using = "input[formcontrolname='tlTransportTypeOther']")
@@ -253,6 +253,7 @@ public class PDT_TemporaryLivingPage extends Base {
 				Reporter.addStepLog(MessageFormat.format(PDTConstants.VERIFIED_DROP_DWN_FIELD_DISPLAYED,
 						CoreConstants.PASS, PDTConstants.CURRENCY, subBenefitFormName));
 				CoreFunctions.clickElement(driver, _drpDownCurrency);
+				CoreFunctions.explicitWaitTillElementListClickable(driver, _drpDownCurrencyOptions);
 				CoreFunctions.selectItemInListByText(driver, _drpDownCurrencyOptions,
 						tempLivingBenefitData.temporaryLivingLodging.currencyCode,
 						PDTConstants.CURRENCY, PDTConstants.DROP_DOWN, true);

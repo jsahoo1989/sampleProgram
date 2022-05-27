@@ -17,6 +17,7 @@ import com.aires.businessrules.constants.CoreConstants;
 import com.aires.businessrules.constants.PDTConstants;
 import com.aires.managers.FileReaderManager;
 import com.aires.testdatatypes.pdt.PDT_PreAcceptanceServiceBenefit;
+import com.aires.utilities.Log;
 import com.vimalselvam.cucumber.listener.Reporter;
 
 import cucumber.api.DataTable;
@@ -131,7 +132,7 @@ public class PDT_PreAcceptanceService extends Base {
 	@FindBy(how = How.CSS, using = "ng-select[formcontrolname='maxAmountCode'] span.ng-option-label")
 	private List<WebElement> _drpDownMaxAmountOptions;
 
-	@FindBy(how = How.XPATH, using = "//ng-select[@formcontrolname='maxAmountCode']/descendant::span[@class='ng-value-label ng-star-inserted']")
+	@FindBy(how = How.XPATH, using = "//ng-select[@formcontrolname='maxAmountCode']/descendant::span[@class='ng-value-label']")
 	private WebElement _drpDownMaxAmountSelectedVal;
 
 	@FindBy(how = How.CSS, using = "input[formcontrolname='maxAmountEe']")
@@ -569,7 +570,6 @@ public class PDT_PreAcceptanceService extends Base {
 					.get(CoreFunctions.getRandomNumber(0, _drpDownMaxAmountOptions.size() - 1)).getText();
 			CoreFunctions.selectItemInListByText(driver, _drpDownMaxAmountOptions, randMaxAmtTripMeals,
 					_lblMaxAmtPreAcceptanceTripMeals.getText(), PDTConstants.DROP_DOWN, true);
-			CoreFunctions.clickElement(driver, _drpDownMaxAmount);
 			setMaxAmtPreAcceptTripMeals(randMaxAmtTripMeals);
 			checkIfFlatAmtIsSelected(addNewPolicyPage, subBenefitFormName);
 

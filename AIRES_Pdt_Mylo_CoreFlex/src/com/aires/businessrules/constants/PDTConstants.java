@@ -376,7 +376,7 @@ public class PDTConstants {
 	public static final String APPLIANCE_ALLOWANCE = "Appliance Allowance";
 	public static final String AUTO_REGISTRATION_COSTS = "Auto Registration Costs";
 	public static final String AUTO_LOSS_ON_SALE = "Auto Loss on Sale";
-	public static final String OTHER_ONE_TIME_PAYMENT = "Other One-Time Payment";
+	public static final String OTHER_ONE_TIME_PAYMENT = "Other One Time Payment";
 	public static final String NumOfWeeksBeforeStartTransferDate = "# of weeks before start/transfer date";
 	public static final String VERIFIED_DRP_DOWN_FIELD_DISPLAYED_FOR_OPTION = "{0}Verified ''{1}'' drop down is displayed for ''{2}'' option selected for ''{3}'' in ''{4}'' sub benefit form.";
 	public static final String INDICATE_NUM_OF_WEEKS_BEFORE = "Indicate # of weeks before start/transfer date";

@@ -132,14 +132,11 @@ public class PDT_ViewPolicyPage extends Base {
 	}
 
 	public Boolean verifyUserlogin(String userName, String pageName) {
-		CoreFunctions.explicitWaitTillElementInVisibilityCustomTime(driver, _progressBar, 5);
-		Log.info("username=="+userName);
-		Log.info("getusername=="+getUserName());
+		BusinessFunctions.fluentWaitForSpinnerToDisappear(driver, _progressBar);
 		if (getUserName().contains(userName)) {
 			CoreFunctions.highlightObject(driver, _userName);
 			Reporter.addStepLog(MessageFormat.format(PDTConstants.VERIFIED_USERNAME_IS_DISPLAYED, CoreConstants.PASS,
 					userName, pageName));
-			Log.info("Verified username");
 			return true;
 		}
 		Reporter.addStepLog(MessageFormat.format(PDTConstants.FAILED_TO_VERIFY_USERNAME, CoreConstants.FAIL, pageName,

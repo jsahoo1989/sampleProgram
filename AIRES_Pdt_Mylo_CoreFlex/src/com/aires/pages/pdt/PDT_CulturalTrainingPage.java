@@ -26,10 +26,10 @@ public class PDT_CulturalTrainingPage extends Base {
 	@FindBy(how = How.CSS, using = "ng-select[formcontrolname='employeeNoOfDays']")
 	private WebElement _drpDownEmployeNumOfDays;
 	
-	@FindBy(how = How.CSS, using = "ng-select[formcontrolname='employeeNoOfDays'] div.ng-option.ng-star-inserted")
+	@FindBy(how = How.CSS, using = "ng-select[formcontrolname='employeeNoOfDays'] div.ng-option")
 	private List<WebElement> _drpDownEmployeNumOfDaysOptions;
 	
-	@FindBy(how = How.CSS, using = "ng-select[formcontrolname='employeeNoOfDays'] div.ng-value.ng-star-inserted")
+	@FindBy(how = How.CSS, using = "ng-select[formcontrolname='employeeNoOfDays'] div.ng-value")
 	private WebElement _drpDownEmployeeNumOfDaysOptionSelected;
 	
 	@FindBy(how = How.CSS, using = "input[formcontrolname='employeeNoOfDaysOther']")
@@ -53,10 +53,10 @@ public class PDT_CulturalTrainingPage extends Base {
 	@FindBy(how = How.CSS, using = "ng-select[formcontrolname='familyNoOfDays']")
 	private WebElement _drpDownFamilyNumOfDays;
 	
-	@FindBy(how = How.CSS, using = "ng-select[formcontrolname='familyNoOfDays'] div.ng-option.ng-star-inserted")
+	@FindBy(how = How.CSS, using = "ng-select[formcontrolname='familyNoOfDays'] div.ng-option")
 	private List<WebElement> _drpDownFamilyNumOfDaysOptions;
 	
-	@FindBy(how = How.CSS, using = "ng-select[formcontrolname='familyNoOfDays'] div.ng-value.ng-star-inserted")
+	@FindBy(how = How.CSS, using = "ng-select[formcontrolname='familyNoOfDays'] div.ng-value")
 	private WebElement _drpDownFamilyNumOfDaysOptionSelected;
 	
 	@FindBy(how = How.CSS, using = "input[formcontrolname='familyNoOfDaysOther']")

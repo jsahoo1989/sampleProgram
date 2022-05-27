@@ -35,10 +35,10 @@ public class PDT_ImmigrationPage extends Base {
 	@FindBy(how = How.XPATH, using = "//label[text()='Fees authorized in addition to customary visa related expenses:']")
 	private WebElement _lblAuthorizedFeesCode;
 	
-	@FindBy(how = How.CSS, using = "ng-select[formcontrolname='authorizedFeeCodeList'] span.ng-option-label.ng-star-inserted")
+	@FindBy(how = How.CSS, using = "ng-select[formcontrolname='authorizedFeeCodeList'] span.ng-option-label")
 	private List<WebElement> _drpDownAuthorizedFeesOptions;
 	
-	@FindBy(how = How.CSS, using = "ng-select[formcontrolname='authorizedFeeCodeList'] span.ng-value-label.ng-star-inserted")
+	@FindBy(how = How.CSS, using = "ng-select[formcontrolname='authorizedFeeCodeList'] span.ng-value-label")
 	private List<WebElement> _drpDownAuthorizedFeesSelected;
 	
 	@FindBy(how = How.CSS, using = "#collapseOne label.form-check-label")
@@ -53,10 +53,10 @@ public class PDT_ImmigrationPage extends Base {
 	@FindBy(how = How.CSS, using = "ng-select[formcontrolname='noOfTripsCode']")
 	private WebElement _drpDownNoOfTrips;
 	
-	@FindBy(how = How.CSS, using = "ng-select[formcontrolname='noOfTripsCode'] span.ng-option-label.ng-star-inserted")
+	@FindBy(how = How.CSS, using = "ng-select[formcontrolname='noOfTripsCode'] span.ng-option-label")
 	private List<WebElement> _drpDownNoOfTripsOptions;	
 	
-	@FindBy(how = How.CSS, using = "ng-select[formcontrolname='noOfTripsCode'] span.ng-value-label.ng-star-inserted")
+	@FindBy(how = How.CSS, using = "ng-select[formcontrolname='noOfTripsCode'] span.ng-value-label")
 	private List<WebElement> _drpDownNoOfTripsSelectedOption;	
 	
 	@FindBy(how = How.XPATH, using = "//label[text()='Other Number of Trips']")
@@ -71,10 +71,10 @@ public class PDT_ImmigrationPage extends Base {
 	@FindBy(how = How.CSS, using = "ng-select[formcontrolname='accompanyingFamilyMemberCode']")
 	private WebElement _drpDownAccompanyingFamilyMember;
 	
-	@FindBy(how = How.CSS, using = "ng-select[formcontrolname='accompanyingFamilyMemberCode'] span.ng-option-label.ng-star-inserted")
+	@FindBy(how = How.CSS, using = "ng-select[formcontrolname='accompanyingFamilyMemberCode'] span.ng-option-label")
 	private List<WebElement> _drpDownAccompanyingFamilyMemberOptions;
 	
-	@FindBy(how = How.CSS, using = "ng-select[formcontrolname='accompanyingFamilyMemberCode'] span.ng-value-label.ng-star-inserted")
+	@FindBy(how = How.CSS, using = "ng-select[formcontrolname='accompanyingFamilyMemberCode'] span.ng-value-label")
 	private WebElement _drpDownAccompanyingFamilyMemberOptionSelected;
 	
 	@FindBy(how = How.CSS, using = "#collapseTwo label.form-check-label")
@@ -94,7 +94,7 @@ public class PDT_ImmigrationPage extends Base {
 
 	@FindBy(how = How.CSS, using = "div.form-check > label.form-check-label")
 	private List<WebElement> _subBenefitCategories;
-	
+
 	PDT_ImmigrationBenefit immigrationBenefitData = FileReaderManager.getInstance().getJsonReader()
 			.getImmigrationDataList("Immigration");
 	

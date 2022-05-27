@@ -56,7 +56,7 @@ public class PDT_HomeLeavePage extends Base {
 	@FindBy(how = How.CSS, using = "ng-select[formcontrolname='homeLeaveTransportTypeList']")
 	private WebElement _drpDownTransportationType;
 
-	@FindBy(how = How.CSS, using = "ng-select[formcontrolname='homeLeaveTransportTypeList'] span.ng-option-label.ng-star-inserted")
+	@FindBy(how = How.CSS, using = "ng-select[formcontrolname='homeLeaveTransportTypeList'] span.ng-option-label")
 	private List<WebElement> _drpDownTransportationTypeOptions;
 
 	@FindBy(how = How.CSS, using = "ng-select[formcontrolname='homeLeaveTransportTypeList'] span.ng-value-label")
@@ -80,10 +80,10 @@ public class PDT_HomeLeavePage extends Base {
 	@FindBy(how = How.CSS, using = "ng-select[formcontrolname='accompanyingFamilyMemberCode']")
 	private WebElement _drpDownAccompFamilyMember;
 
-	@FindBy(how = How.CSS, using = "ng-select[formcontrolname='accompanyingFamilyMemberCode'] span.ng-option-label.ng-star-inserted")
+	@FindBy(how = How.CSS, using = "ng-select[formcontrolname='accompanyingFamilyMemberCode'] span.ng-option-label")
 	private List<WebElement> _drpDownAccompFamilyMemberOptions;
 
-	@FindBy(how = How.CSS, using = "ng-select[formcontrolname='accompanyingFamilyMemberCode'] span.ng-value-label.ng-star-inserted")
+	@FindBy(how = How.CSS, using = "ng-select[formcontrolname='accompanyingFamilyMemberCode'] span.ng-value-label")
 	private WebElement _drpDownAccompFamilyMemberOptionSelected;
 
 	@FindBy(how = How.CSS, using = "app-transporation label.form-check-label")

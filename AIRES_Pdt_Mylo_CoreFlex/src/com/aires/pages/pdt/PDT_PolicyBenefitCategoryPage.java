@@ -1,6 +1,7 @@
 package com.aires.pages.pdt;
 
 import java.text.MessageFormat;
+import java.util.Date;
 import java.util.List;
 
 import org.openqa.selenium.WebDriver;
@@ -10,6 +11,7 @@ import org.openqa.selenium.support.How;
 import org.testng.Assert;
 
 import com.aires.businessrules.Base;
+import com.aires.businessrules.BusinessFunctions;
 import com.aires.businessrules.CoreFunctions;
 import com.aires.businessrules.constants.CoreConstants;
 import com.aires.businessrules.constants.PDTConstants;
@@ -57,6 +59,7 @@ public class PDT_PolicyBenefitCategoryPage extends Base {
 	// Progress Bar
 	@FindBy(how = How.CSS, using = "div.ngx-progress-bar.ngx-progress-bar-ltr")
 	private WebElement _progressBar;
+	long timeBeforeAction, timeAfterAction;
 
 	public String getElementText(String elementName) {
 		String elementText = null;
@@ -95,8 +98,11 @@ public class PDT_PolicyBenefitCategoryPage extends Base {
 
 	public void selectPolicyBenefitCategory(String benefitCategoryName) {
 		CoreFunctions.selectItemInListByText(driver, _lblChkBoxPolicyBenefitCategory, benefitCategoryName, true);
-		CoreFunctions.click(driver, _btnNext, _btnNext.getText());
-		CoreFunctions.explicitWaitTillElementInVisibilityCustomTime(driver, _progressBar, 5);
+		timeBeforeAction = new Date().getTime();
+		CoreFunctions.clickUsingJS(driver, _btnNext, _btnNext.getText());
+		BusinessFunctions.fluentWaitForSpinnerToDisappear(driver, _progressBar);
+		timeAfterAction = new Date().getTime();
+		BusinessFunctions.printTimeTakenByPageToLoad(timeBeforeAction, timeAfterAction, benefitCategoryName);
 	}
 	
 	public String getPageHeaderTitle() {

@@ -101,7 +101,7 @@ public class PDT_HouseHuntingTripPage extends Base {
 	@FindBy(how = How.CSS, using = "ng-select[formcontrolname='maxAmountCode'] span.ng-option-label")
 	private List<WebElement> _drpDownMaxAmountOptions;
 
-	@FindBy(how = How.XPATH, using = "//ng-select[@formcontrolname='maxAmountCode']/descendant::span[@class='ng-value-label ng-star-inserted']")
+	@FindBy(how = How.XPATH, using = "//ng-select[@formcontrolname='maxAmountCode']/descendant::span[@class='ng-value-label']")
 	private WebElement _drpDownMaxAmountSelectedVal;
 
 	@FindBy(how = How.CSS, using = "input[formcontrolname='maxAmountEe']")

@@ -15,6 +15,7 @@ import org.openqa.selenium.support.How;
 import org.testng.Assert;
 
 import com.aires.businessrules.Base;
+import com.aires.businessrules.BusinessFunctions;
 import com.aires.businessrules.CoreFunctions;
 import com.aires.businessrules.constants.CoreConstants;
 import com.aires.businessrules.constants.PDTConstants;
@@ -192,6 +193,12 @@ public class PDT_SharedSubBenefitPage extends Base {
 	
 	@FindBy(how = How.CSS, using = "a[href='#collapse18']")
 	private WebElement _lnkFormCollapseEightteen;
+	
+	@FindBy(how = How.CSS, using = "a[href='#collapseEight']")
+	private WebElement _lnkFormCollapse8;
+	
+	@FindBy(how = How.CSS, using = "a[href='#collapseNine']")
+	private WebElement _lnkFormCollapse9;
 
 	HashMap<String, Boolean> resultMapForTabNameNotMatch = new HashMap<>();
 	LinkedHashMap<String, WebElement> formMap= new LinkedHashMap<String, WebElement>();
@@ -230,6 +237,7 @@ public class PDT_SharedSubBenefitPage extends Base {
 		populateFormHeaderElement();
 		for (String subBenefit : subBenefits) {
 			CoreFunctions.selectItemInListByText(driver, _subBenefitCategories, subBenefit, true);
+			BusinessFunctions.fluentWaitForSpinnerToDisappear(driver, _progressBar);
 			Assert.assertTrue(verifyFormIsDisplayed(subBenefit, getElementByName(pageName, subBenefit), subBenefit, pageName),
 					MessageFormat.format(PDTConstants.VERIFIED_FORM_IS_NOT_DISPLAYED, subBenefit, pageName));
 			fillSubBenefitForm(subBenefit, addNewPolicyPage, objStep, pageName);
@@ -516,6 +524,33 @@ public class PDT_SharedSubBenefitPage extends Base {
 		case PDTConstants.MORTGAGE_SUBSIDY:
 			subBenefitSteps.getHomePurchasePage().fillMortgageSubsidyForm(addNewPolicyPage, PDTConstants.MORTGAGE_SUBSIDY);
 			break;
+		case PDTConstants.US_DOM_VANLINE_SHIPMENT:
+			subBenefitSteps.getHouseHoldGoodsPage().fillUSDomesticForm(addNewPolicyPage, PDTConstants.US_DOM_VANLINE_SHIPMENT);
+			break;
+		case PDTConstants.AUTO_SHIPMENT:
+			subBenefitSteps.getHouseHoldGoodsPage().fillAutoShipmentForm(addNewPolicyPage,PDTConstants.AUTO_SHIPMENT);
+			break;
+		case PDTConstants.SELF_MOVE:
+			subBenefitSteps.getHouseHoldGoodsPage().fillSelfMoveForm(addNewPolicyPage, PDTConstants.SELF_MOVE);
+			break;
+		case PDTConstants.AIR_SHIPMENT:
+			subBenefitSteps.getHouseHoldGoodsPage().fillAirShipmentForm(addNewPolicyPage, PDTConstants.AIR_SHIPMENT);
+			break;
+		case PDTConstants.SEA_SHIPMENT:
+			subBenefitSteps.getHouseHoldGoodsPage().fillSeaShipmentForm(addNewPolicyPage, PDTConstants.SEA_SHIPMENT);
+			break;
+		case PDTConstants.NONUS_INLAND_SHIPMENT:
+			subBenefitSteps.getHouseHoldGoodsPage().fillNonUsInlandShipmentForm(addNewPolicyPage, PDTConstants.NONUS_INLAND_SHIPMENT);
+			break;
+		case PDTConstants.PERMANENT_STORAGE:
+			subBenefitSteps.getHouseHoldGoodsPage().fillPermanentStorageForm(addNewPolicyPage, PDTConstants.PERMANENT_STORAGE);
+			break;
+		case PDTConstants.PET_SHIPMENT:
+			subBenefitSteps.getHouseHoldGoodsPage().fillPetShipmentForm(addNewPolicyPage, PDTConstants.PET_SHIPMENT);
+			break;
+		case PDTConstants.DISCARD_DONATE:
+			subBenefitSteps.getHouseHoldGoodsPage().fillDiscardDonateForm(addNewPolicyPage, PDTConstants.DISCARD_DONATE);
+			break; 
 		default:
 			Assert.fail(MessageFormat.format(PDTConstants.ELEMENT_NOT_FOUND, CoreConstants.FAIL));
 		}
@@ -535,27 +570,25 @@ public class PDT_SharedSubBenefitPage extends Base {
 		case PDTConstants.CANDIDATE_SELECTION:
 			CoreFunctions.explicitWaitTillElementBecomesClickable(driver, _lblCandidateSelEmpType,
 					_lblCandidateSelEmpType.getText() + "(" + PDTConstants.CANDIDATE_SELECTION + ")");
-			CoreFunctions.click(driver, _lblCandidateSelEmpType,
-					_lblCandidateSelEmpType.getText() + "(" + PDTConstants.CANDIDATE_SELECTION + ")");
+			CoreFunctions.clickUsingJS(driver, _lblCandidateSelEmpType, _lblCandidateSelEmpType.getText() + "(" + PDTConstants.CANDIDATE_SELECTION +
+			  ")");
 			break;
 		case PDTConstants.PRE_ACCEPTANCE_TRIP_TRANSPORTATION:
 			CoreFunctions.explicitWaitTillElementBecomesClickable(driver, _lblPreAcceptTripTransportEmpType,
 					_lblPreAcceptTripTransportEmpType.getText() + "(" + PDTConstants.PRE_ACCEPTANCE_TRIP_TRANSPORTATION
 							+ ")");
-			CoreFunctions.click(driver, _lblPreAcceptTripTransportEmpType, _lblPreAcceptTripTransportEmpType.getText()
+			CoreFunctions.clickUsingJS(driver, _lblPreAcceptTripTransportEmpType, _lblPreAcceptTripTransportEmpType.getText()
 					+ "(" + PDTConstants.PRE_ACCEPTANCE_TRIP_TRANSPORTATION + ")");
 			break;
 		case PDTConstants.PRE_ACCEPTANCE_TRIP_LODGING:
 			CoreFunctions.explicitWaitTillElementBecomesClickable(driver, _lblPreAcceptTripLodgingEmpType,
 					_lblPreAcceptTripLodgingEmpType.getText() + "(" + PDTConstants.PRE_ACCEPTANCE_TRIP_LODGING + ")");
-			CoreFunctions.click(driver, _lblPreAcceptTripLodgingEmpType,
-					_lblPreAcceptTripLodgingEmpType.getText() + "(" + PDTConstants.PRE_ACCEPTANCE_TRIP_LODGING + ")");
+			CoreFunctions.clickUsingJS(driver, _lblPreAcceptTripLodgingEmpType, _lblPreAcceptTripLodgingEmpType.getText() + "(" + PDTConstants.PRE_ACCEPTANCE_TRIP_LODGING + ")");
 			break;
 		case PDTConstants.PRE_ACCEPTANCE_TRIP_MEALS:
 			CoreFunctions.explicitWaitTillElementBecomesClickable(driver, _lblPreAcceptTripMealEmpType,
 					_lblPreAcceptTripMealEmpType.getText() + "(" + PDTConstants.PRE_ACCEPTANCE_TRIP_MEALS + ")");
-			CoreFunctions.click(driver, _lblPreAcceptTripMealEmpType,
-					_lblPreAcceptTripMealEmpType.getText() + "(" + PDTConstants.PRE_ACCEPTANCE_TRIP_MEALS + ")");
+			CoreFunctions.clickUsingJS(driver, _lblPreAcceptTripMealEmpType, _lblPreAcceptTripMealEmpType.getText() + "(" + PDTConstants.PRE_ACCEPTANCE_TRIP_MEALS + ")");
 			break;
 		}
 	}
@@ -565,30 +598,26 @@ public class PDT_SharedSubBenefitPage extends Base {
 		case PDTConstants.CANDIDATE_SELECTION:
 			CoreFunctions.explicitWaitTillElementBecomesClickable(driver, _lblCandidateSelHomeOwnerType,
 					_lblCandidateSelHomeOwnerType.getText() + "(" + PDTConstants.CANDIDATE_SELECTION + ")");
-			CoreFunctions.click(driver, _lblCandidateSelHomeOwnerType,
-					_lblCandidateSelHomeOwnerType.getText() + "(" + PDTConstants.CANDIDATE_SELECTION + ")");
+			CoreFunctions.clickUsingJS(driver, _lblCandidateSelHomeOwnerType, _lblCandidateSelHomeOwnerType.getText() + "(" + PDTConstants.CANDIDATE_SELECTION + ")");
 			break;
 		case PDTConstants.PRE_ACCEPTANCE_TRIP_TRANSPORTATION:
 			CoreFunctions.explicitWaitTillElementBecomesClickable(driver, _lblPreAcceptTripTransportHomeOwnerType,
 					_lblPreAcceptTripTransportHomeOwnerType.getText() + "("
 							+ PDTConstants.PRE_ACCEPTANCE_TRIP_TRANSPORTATION + ")");
-			CoreFunctions.click(driver, _lblPreAcceptTripTransportHomeOwnerType,
-					_lblPreAcceptTripTransportHomeOwnerType.getText() + "("
+			CoreFunctions.clickUsingJS(driver, _lblPreAcceptTripTransportHomeOwnerType, _lblPreAcceptTripTransportHomeOwnerType.getText() + "("
 							+ PDTConstants.PRE_ACCEPTANCE_TRIP_TRANSPORTATION + ")");
 			break;
 		case PDTConstants.PRE_ACCEPTANCE_TRIP_LODGING:
 			CoreFunctions.explicitWaitTillElementBecomesClickable(driver, _lblPreAcceptTripLodgingHomeOwnerType,
 					_lblPreAcceptTripLodgingHomeOwnerType.getText() + "(" + PDTConstants.PRE_ACCEPTANCE_TRIP_LODGING
 							+ ")");
-			CoreFunctions.click(driver, _lblPreAcceptTripLodgingHomeOwnerType,
-					_lblPreAcceptTripLodgingHomeOwnerType.getText() + "(" + PDTConstants.PRE_ACCEPTANCE_TRIP_LODGING
+			CoreFunctions.clickUsingJS(driver, _lblPreAcceptTripLodgingHomeOwnerType, _lblPreAcceptTripLodgingHomeOwnerType.getText() + "(" + PDTConstants.PRE_ACCEPTANCE_TRIP_LODGING
 							+ ")");
 			break;
 		case PDTConstants.PRE_ACCEPTANCE_TRIP_MEALS:
 			CoreFunctions.explicitWaitTillElementBecomesClickable(driver, _lblPreAcceptTripMealHomeOwnerType,
 					_lblPreAcceptTripMealHomeOwnerType.getText() + "(" + PDTConstants.PRE_ACCEPTANCE_TRIP_MEALS + ")");
-			CoreFunctions.click(driver, _lblPreAcceptTripMealHomeOwnerType,
-					_lblPreAcceptTripMealHomeOwnerType.getText() + "(" + PDTConstants.PRE_ACCEPTANCE_TRIP_MEALS + ")");
+			CoreFunctions.clickUsingJS(driver, _lblPreAcceptTripMealHomeOwnerType, _lblPreAcceptTripMealHomeOwnerType.getText() + "(" + PDTConstants.PRE_ACCEPTANCE_TRIP_MEALS + ")");
 			break;
 		}
 	}
@@ -797,6 +826,15 @@ public class PDT_SharedSubBenefitPage extends Base {
 		formMap.put(PDTConstants.HOME_PURCHASE_BONUS, _lnkFormCollapseFour);
 		formMap.put(PDTConstants.MORTGAGE_DIFFERENTIALS, _lnkFormCollapse5);
 		formMap.put(PDTConstants.MORTGAGE_SUBSIDY, _lnkFormCollapseSix);
+		formMap.put(PDTConstants.US_DOM_VANLINE_SHIPMENT, _lnkFormCollapseFive);
+		formMap.put(PDTConstants.AUTO_SHIPMENT, _lnkFormCollapseTwo);
+		formMap.put(PDTConstants.SELF_MOVE, _lnkFormCollapseThree);
+		formMap.put(PDTConstants.AIR_SHIPMENT, _lnkFormCollapseFour);
+		formMap.put(PDTConstants.SEA_SHIPMENT, _lnkFormCollapse5);
+		formMap.put(PDTConstants.NONUS_INLAND_SHIPMENT, _lnkFormCollapseSix);
+		formMap.put(PDTConstants.PERMANENT_STORAGE, _lnkFormCollapseSeven);
+		formMap.put(PDTConstants.PET_SHIPMENT, _lnkFormCollapse8);
+		formMap.put(PDTConstants.DISCARD_DONATE, _lnkFormCollapse9);
 		
 	}
 	

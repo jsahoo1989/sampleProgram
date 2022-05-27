@@ -191,7 +191,7 @@ public class PDT_GeneralInformationPage extends Base {
 	@FindBy(how = How.XPATH, using = "//label[@class='form-check-label'][contains(string(),'No')]")
 	private WebElement _radioExpenseManagementNoOption;
 
-	@FindBy(how = How.XPATH, using = "//ng-select[@formcontrolname='tracingSet']//span[@class='ng-value-label']")
+	@FindBy(how = How.XPATH, using = "//ng-select[@formcontrolname='tracingSet']//span[contains(@class,'ng-value-label')]")
 	private WebElement _drpDownTracingSetSelectedVal;
 
 	// Corporation Policy#
@@ -551,7 +551,8 @@ public class PDT_GeneralInformationPage extends Base {
 	public void enterGeneralInformationFields() {
 		try {
 			setTracingPrompt();
-			CoreFunctions.clickElement(driver, _drpDwnPolicyType);
+			CoreFunctions.explicitWaitTillElementListVisibility(driver, _drpDwnPolicyTypeOptions);
+			CoreFunctions.clickElement(driver, _drpDwnPolicyType);			
 			String randPolicyType = _drpDwnPolicyTypeOptions
 					.get(CoreFunctions.getRandomNumber(0, _drpDwnPolicyTypeOptions.size() - 1)).getText();
 			CoreFunctions.selectItemInListByText(driver, _drpDwnPolicyTypeOptions, randPolicyType,

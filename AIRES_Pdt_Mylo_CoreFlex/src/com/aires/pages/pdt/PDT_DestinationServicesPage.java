@@ -56,7 +56,7 @@ public class PDT_DestinationServicesPage extends Base {
 	@FindBy(how = How.CSS, using = "ng-select[formcontrolname='carTypeCode'] div.ng-option")
 	private List<WebElement> _drpDownCarTypeOptions;
 
-	@FindBy(how = How.CSS, using = "ng-select[formcontrolname='carTypeCode'] span.ng-value-label.ng-star-inserted")
+	@FindBy(how = How.CSS, using = "ng-select[formcontrolname='carTypeCode'] span.ng-value-label")
 	private WebElement _drpDownCarTypeOptionSelected;
 
 	@FindBy(how = How.XPATH, using = "//input[@formcontrolname='carTypeOther']/preceding-sibling::label")
@@ -94,7 +94,7 @@ public class PDT_DestinationServicesPage extends Base {
 	@FindBy(how = How.CSS, using = "app-departure-service ng-select[formcontrolname='noOfDayCode'] div.ng-option")
 	private List<WebElement> _drpDownNoOfDaysOptions;
 
-	@FindBy(how = How.CSS, using = "app-departure-service ng-select[formcontrolname='noOfDayCode'] span.ng-value-label.ng-star-inserted")
+	@FindBy(how = How.CSS, using = "app-departure-service ng-select[formcontrolname='noOfDayCode'] span.ng-value-label")
 	private WebElement _drpDownNoOfDaysOptionSelected;
 
 	@FindBy(how = How.XPATH, using = "//input[@formcontrolname='noOfDayOther']/preceding-sibling::label")
@@ -122,7 +122,7 @@ public class PDT_DestinationServicesPage extends Base {
 	@FindBy(how = How.CSS, using = "ng-select[formcontrolname='durationCode'] div.ng-option")
 	private List<WebElement> _drpDownDurationOptions;
 
-	@FindBy(how = How.CSS, using = "ng-select[formcontrolname='durationCode'] span.ng-value-label.ng-star-inserted")
+	@FindBy(how = How.CSS, using = "ng-select[formcontrolname='durationCode'] span.ng-value-label")
 	private WebElement _drpDownDurationOptionSelected;
 	
 	@FindBy(how = How.XPATH, using = "//input[@formcontrolname='durationOther']/preceding-sibling::label")

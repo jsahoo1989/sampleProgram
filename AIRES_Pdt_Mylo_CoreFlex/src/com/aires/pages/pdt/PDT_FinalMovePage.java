@@ -77,7 +77,7 @@ public class PDT_FinalMovePage extends Base {
 	@FindBy(how = How.CSS, using = "ng-select[formcontrolname='finalMoveDurationCode'] span.ng-option-label")
 	private List<WebElement> _drpDownDurationOptions;
 
-	@FindBy(how = How.CSS, using = "ng-select[formcontrolname='finalMoveDurationCode'] span.ng-value-label.ng-star-inserted")
+	@FindBy(how = How.CSS, using = "ng-select[formcontrolname='finalMoveDurationCode'] span.ng-value-label")
 	private WebElement _drpDownDurationOptionsSelected;
 
 	@FindBy(how = How.XPATH, using = "//label[text()='Number of Nights']")
@@ -135,7 +135,7 @@ public class PDT_FinalMovePage extends Base {
 	@FindBy(how = How.CSS, using = "#collapseThree ng-select[formcontrolname='finalMoveDurationCode'] span.ng-option-label")
 	private List<WebElement> _drpDownNumOfDaysForMealsOptions;
 
-	@FindBy(how = How.CSS, using = "#collapseThree ng-select[formcontrolname='finalMoveDurationCode'] span.ng-value-label.ng-star-inserted")
+	@FindBy(how = How.CSS, using = "#collapseThree ng-select[formcontrolname='finalMoveDurationCode'] span.ng-value-label")
 	private WebElement _drpDownNumOfDaysForMealsSelected;
 	
 	@FindBy(how = How.XPATH, using = "//label[text()='Number of Days']")
@@ -159,7 +159,7 @@ public class PDT_FinalMovePage extends Base {
 	@FindBy(how = How.CSS, using = "#collapseThree ng-select[formcontrolname='maxAmountCode'] span.ng-option-label")
 	private List<WebElement> _drpDownMaxAmountMealsOptions;
 
-	@FindBy(how = How.CSS, using = "#collapseThree ng-select[formcontrolname='maxAmountCode'] span.ng-value-label.ng-star-inserted")
+	@FindBy(how = How.CSS, using = "#collapseThree ng-select[formcontrolname='maxAmountCode'] span.ng-value-label")
 	private WebElement _drpDownMaxAmountMealsSelectedVal;
 
 	@FindBy(how = How.CSS, using = "input[formcontrolname='maxAmountEe']")

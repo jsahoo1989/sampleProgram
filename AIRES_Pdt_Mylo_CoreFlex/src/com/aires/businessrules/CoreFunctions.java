@@ -307,7 +307,6 @@ public class CoreFunctions {
 		explicitWaitTillElementBecomesClickable(driver, Element, name);
 		Log.info("Clicking using JS on: " + name);
 		try {
-			CoreFunctions.waitHandler(2);
 			JavascriptExecutor executor = (JavascriptExecutor) driver;
 			executor.executeScript("arguments[0].click();", Element);
 			Log.info("Pass: " + name + " :is clicked");
@@ -565,7 +564,7 @@ public class CoreFunctions {
 
 	public static void clickRowInResult(WebDriver driver, WebElement row, boolean reporter, String searchText) {
 		if (reporter) {
-			CoreFunctions.click(driver, row, searchText);
+			CoreFunctions.clickUsingJS(driver, row, searchText);
 		} else {
 			CoreFunctions.clickWithoutReporting(driver, row, searchText);
 		}

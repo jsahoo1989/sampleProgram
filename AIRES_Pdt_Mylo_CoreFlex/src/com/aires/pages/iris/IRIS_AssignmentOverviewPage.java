@@ -1227,7 +1227,7 @@ public class IRIS_AssignmentOverviewPage extends BasePage {
 
 	public void acceptFailedImageLoadDialog() {
 		try {
-			CoreFunctions.waitHandler(3);
+			CoreFunctions.waitHandler(1);
 			_isExists = (IRIS_PageMaster.getDialogObject(_IRIS, "Failed").isVisible());
 			if (_isExists) {
 				Helpers.clickButton(
@@ -1238,8 +1238,7 @@ public class IRIS_AssignmentOverviewPage extends BasePage {
 								.getLabel());
 			}
 		} catch (Exception e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+			
 		}
 	}
 }

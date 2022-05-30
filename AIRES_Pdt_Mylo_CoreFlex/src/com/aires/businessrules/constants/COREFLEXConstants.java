@@ -446,5 +446,14 @@ public class COREFLEXConstants {
 	public static final String TEMPORARY_LIVING_LODGING = "Temporary Living Lodging";
 	public static final String TEMPORARY_LIVING_MEALS = "Temporary Living Meals";
 	public static final String POLICY_FILE_ID = "Policy / File ID";
-	
+	public static final String EXCEPTION_OCCURED_WHILE_VALIDATING_COMPLETED_BENEFIT_DELETE_BUTTON_ON_MY_BENEFITS_PAGE = "{0}Exception occured while validating Completed Benefit - Delete Button status on My Benefit Bundle page. Exception : ''{1}''.";
+	public static final String EXCEPTION_OCCURED_WHILE_VALIDATING_CANCELED_BENEFIT_DELETE_BUTTON_ON_MY_BENEFITS_PAGE = "{0}Exception occured while validating Canceled Benefit - Delete Button status on My Benefit Bundle page. Exception : ''{1}''.";
+	public static final String SUCCESSFULLY_VERIFIED_DELETE_BUTTON_IS_DISABLED_AND_DISABLED_DELETE_HOVER_TEXT_POST_BENEFIT_STATUS_CANCELED= "{0}Successfully verified delete button is disabled & disabled delete button hover text post benefit status canceled.";
+	public static final String CULTURAL_TRAINING = "Cultural Training";
+	public static final Object CULTURAL_TRAINING_BENEFITS_PAGE = "Cultural Training Benefits Page";
+	public static final String CULTURAL_TRAINING_EMPLOYEE = "Cultural Training Employee";
+	public static final String CULTURAL_TRAINING_FAMILY = "Cultural Training Family";
+	public static final String MANAGE_THIS_BENEFIT_BUTTON_DISPLAYED_ON_FLEX_BENEFIT_CARD = "{0}Manage this Benefit button displayed in ''{1}'' Mobility Journey card. ";
+	public static final String MANAGE_THIS_BENEFIT_BUTTON_NOT_DISPLAYED_ON_FLEX_BENEFIT_CARD = "{0}Manage this Benefit button NOT displayed in ''{1}'' Mobility Journey card. ";
+	public static final String CONCIERGE_SERVICES = "Concierge Services";
 }

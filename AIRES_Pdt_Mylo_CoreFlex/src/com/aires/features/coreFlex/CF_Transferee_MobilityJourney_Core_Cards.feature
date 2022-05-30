@@ -2,7 +2,7 @@ Feature: Validate the Mobility Journey Cards Functionality of Core Aires Managed
 
   @End-To_End_CoreFlex @Core-Cards_PF @AllCards @CoreCards
   Scenario: CoreFlex - Setting up a New CoreFlex policy in 'Policy Digitization Tool' with Both type 'Aires Managed' benefit
-    Given he has setup a new "Flex" Type Policy with following selection in 'Policy Digitization Tool (PDT)' application
+    Given he has setup a new "Both" Type Policy with following selection in 'Policy Digitization Tool (PDT)' application
       | Person Responsible For Benefit Selection | Flex Setup Type | Cashout Availability   |
       | Transferee                               | Static/Fixed    | Cashout Not Authorized |
     When he clicks on "SUBMIT" button on "Custom Bundles" page
@@ -18,8 +18,6 @@ Feature: Validate the Mobility Journey Cards Functionality of Core Aires Managed
     And he has navigated to "FleX Planning Tool" after clicking on 'Manage my Points' button on "Mobility Journey Home" page
     And he has navigated to "My Benefits Bundle" page after validating and selecting 'Aires Managed' benefit on "FleX Planning Tool" page
     And he has validated 'Aires Managed' benefit details listed under 'Selected Benefits' section on "My Benefits Bundle" page
-    When he creates a Service and SubService for following 'Aires Managed' benefit in Services tab of IRIS application
-      | Service           | Type              | Name                       | Core/Flex |
-      | Language Training | Language Training | Flex Language Training     | Core      |
-    Then selected Aires Managed Benefit Core card having "Starting Soon" status should be displayed under 'Service Monitoring' section of "Mobility Journey Home" page
+    When he creates Service and SubService for 'Aires Managed' benefits of CoreFlex type "Core" in Services tab of IRIS application
+    Then selected Aires Managed Benefit Core card having "Starting Soon" status should be displayed on "Mobility Journey Home" page - "Pre Initial Tracing"
 	And Flex card should not be displayed for Selected/Not-Submitted Aires Managed Benefit on "Mobility Journey Home" page

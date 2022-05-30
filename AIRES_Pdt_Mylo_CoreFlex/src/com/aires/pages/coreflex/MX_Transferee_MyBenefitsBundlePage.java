@@ -121,9 +121,12 @@ public class MX_Transferee_MyBenefitsBundlePage extends Base {
 
 	@FindBy(how = How.XPATH, using = "//span[contains(text(),'Unable to delete benefit. Please see comments in the History section below for more information.')]")
 	private WebElement _disabledDeleteButtonHoverText;
-	
+
 	@FindBy(how = How.XPATH, using = "//span[contains(text(),'Unable to delete benefit due to completion of benefit.')]")
 	private WebElement _completedBenefitDisabledDeleteButtonHoverText;
+
+	@FindBy(how = How.XPATH, using = "//span[contains(text(),'This benefit has been canceled by your Aires Representative due to a change. There will be no points returned to you as this benefit is still being used.')]")
+	private WebElement _canceledBenefitDisabledDeleteButtonHoverText;
 
 	@FindBy(how = How.XPATH, using = "//div[contains(@id,'mainSubmittedBenefits')]//span[@class='RXAiresSeaglass RXCFBigText']")
 	private List<WebElement> _textSubmittedBenefitsPoints;
@@ -1259,8 +1262,6 @@ public class MX_Transferee_MyBenefitsBundlePage extends Base {
 		return isStatusVerifed;
 	}
 
-	
-
 	public boolean verifyAiresManagedBenefitDetailsOnSubmissionDialog() {
 		boolean isPointsBenefitsDetailsValid = false;
 		try {
@@ -1348,8 +1349,7 @@ public class MX_Transferee_MyBenefitsBundlePage extends Base {
 								_textSubmittedBenefitNameList, benefit.getBenefitDisplayName());
 						isSubmittedAiresManagedBenefitDetailsOnMBBVerified = verifySubmittedAiresManagedBenefitDetailsOnMBB(
 								indexBenefit, benefit, expectedStatus)
-								&& verifyCompletedBenefitRequestDeleteButtonDisabled(indexBenefit, benefit,
-										expectedStatus);
+								&& verifyBenefitDeleteButtonDisabled(indexBenefit, benefit, expectedStatus);
 						if (!isSubmittedAiresManagedBenefitDetailsOnMBBVerified) {
 							return false;
 						} else {
@@ -1388,31 +1388,76 @@ public class MX_Transferee_MyBenefitsBundlePage extends Base {
 										_textSubmittedBenefitQuantityList, indexBenefit, true))))
 						&& CoreFunctions.getItemsFromListByIndex(driver, _benefitStatus, indexBenefit, true)
 								.equals(expectedStatus)
-						&& expectedStatus.equalsIgnoreCase(MobilityXConstants.COMPLETE)
-								? (Boolean.valueOf(CoreFunctions
-										.getAttributeText(_buttonDeleteBenefitList.get(indexBenefit), "aria-disabled")))
-								: CoreFunctions.getItemsFromListByIndex(driver, _buttonDeleteSubmittedBenefitList,
-										indexBenefit, true).equals(MobilityXConstants.DELETE));
+						&& (expectedStatus.equalsIgnoreCase(MobilityXConstants.COMPLETE)
+								|| expectedStatus.equalsIgnoreCase(MobilityXConstants.CANCELED))
+										? (Boolean.valueOf(CoreFunctions.getAttributeText(
+												_buttonDeleteBenefitList.get(indexBenefit), "aria-disabled")))
+										: CoreFunctions.getItemsFromListByIndex(driver,
+												_buttonDeleteSubmittedBenefitList, indexBenefit, true)
+												.equals(MobilityXConstants.DELETE));
 	}
 
-	private boolean verifyCompletedBenefitRequestDeleteButtonDisabled(int indexBenefit, Benefit benefit, String expectedStatus) {
+	private boolean verifyBenefitDeleteButtonDisabled(int indexBenefit, Benefit benefit, String expectedStatus) {
+		switch (expectedStatus) {
+		case MobilityXConstants.COMPLETE:
+			return verifyCompetedBenefitDeleteButtonStatus(indexBenefit);
+		case MobilityXConstants.CANCELED:
+			return verifyCanceledBenefitDeleteButtonStatus(indexBenefit);
+		default:
+			return true;
+		}
+	}
+
+	private boolean verifyCanceledBenefitDeleteButtonStatus(int indexBenefit) {
 		boolean isDeleteButtonDisabled = false;
 		boolean isDeleteHoverTextVerified = false;
-		if (expectedStatus.equalsIgnoreCase(MobilityXConstants.COMPLETE)) {
+		try {
 			isDeleteButtonDisabled = Boolean.valueOf(
 					CoreFunctions.getAttributeText(_buttonDeleteBenefitList.get(indexBenefit), "aria-disabled"));
 			CoreFunctions.moveToElement(driver, _buttonDeleteBenefitList.get(indexBenefit));
-			isDeleteHoverTextVerified = CoreFunctions.isElementExist(driver, _completedBenefitDisabledDeleteButtonHoverText, 5);
+			isDeleteHoverTextVerified = CoreFunctions.isElementExist(driver,
+					_canceledBenefitDisabledDeleteButtonHoverText, 5);
+			CoreFunctions.highlightObject(driver, _canceledBenefitDisabledDeleteButtonHoverText);
+			if (isDeleteButtonDisabled && isDeleteHoverTextVerified) {
+				Reporter.addStepLog(MessageFormat.format(
+						COREFLEXConstants.SUCCESSFULLY_VERIFIED_DELETE_BUTTON_IS_DISABLED_AND_DISABLED_DELETE_HOVER_TEXT_POST_BENEFIT_STATUS_CANCELED,
+						CoreConstants.PASS));
+				CoreFunctions.moveToElement(driver, _textSubmittedBenefitNameList.get(indexBenefit));
+				return true;
+			} else
+				return false;
+		} catch (Exception e) {
+			Reporter.addStepLog(MessageFormat.format(
+					COREFLEXConstants.EXCEPTION_OCCURED_WHILE_VALIDATING_CANCELED_BENEFIT_DELETE_BUTTON_ON_MY_BENEFITS_PAGE,
+					CoreConstants.FAIL, e.getMessage()));
+		}
+		return false;
+	}
+
+	private boolean verifyCompetedBenefitDeleteButtonStatus(int indexBenefit) {
+		boolean isDeleteButtonDisabled = false;
+		boolean isDeleteHoverTextVerified = false;
+		try {
+			isDeleteButtonDisabled = Boolean.valueOf(
+					CoreFunctions.getAttributeText(_buttonDeleteBenefitList.get(indexBenefit), "aria-disabled"));
+			CoreFunctions.moveToElement(driver, _buttonDeleteBenefitList.get(indexBenefit));
+			isDeleteHoverTextVerified = CoreFunctions.isElementExist(driver,
+					_completedBenefitDisabledDeleteButtonHoverText, 5);
 			CoreFunctions.highlightObject(driver, _completedBenefitDisabledDeleteButtonHoverText);
 			if (isDeleteButtonDisabled && isDeleteHoverTextVerified) {
 				Reporter.addStepLog(MessageFormat.format(
 						COREFLEXConstants.SUCCESSFULLY_VERIFIED_DELETE_BUTTON_IS_DISABLED_AND_DISABLED_DELETE_HOVER_TEXT_POST_BENEFIT_STATUS_COMPLETE,
 						CoreConstants.PASS));
+				CoreFunctions.moveToElement(driver, _textSubmittedBenefitNameList.get(indexBenefit));
 				return true;
 			} else
 				return false;
+		} catch (Exception e) {
+			Reporter.addStepLog(MessageFormat.format(
+					COREFLEXConstants.EXCEPTION_OCCURED_WHILE_VALIDATING_COMPLETED_BENEFIT_DELETE_BUTTON_ON_MY_BENEFITS_PAGE,
+					CoreConstants.FAIL, e.getMessage()));
 		}
-		return true;
+		return false;
 	}
 
 }

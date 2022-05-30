@@ -304,7 +304,7 @@ public class MobilityXConstants {
 	public static final String POLICY_FILE_ID = "Policy File ID";
 	public static final String COMPLETE = "Complete";
 	public static final String FLEX_CARD_DISPLAYED_FOR_NOT_SUBMITTED_AIRES_MANAGED_BENEFIT = "{0}Flex card is displayed for Not-Submitted Aires Managed Benefit on ''{1}'' page.";
-	public static final String CANCELLED = "Canceled";
+	public static final String CANCELED = "Canceled";
 	public static final String FLEX_CARD_DISPLAYED_AFTER_CHANGING_COREFLEX_TYPE_SUBSERVICE_IN_IRIS = "{0}Flex card displayed on ''{1}'' Page even after changing Core/Flex Subservice type in IRIS application.";
 	public static final String CORE_CARD_DISPLAYED_AFTER_CHANGING_COREFLEX_TYPE_SUBSERVICE_IN_IRIS = "{0}Core card displayed on ''{1}'' Page even after changing Core/Flex Subservice type in IRIS application.";
 	public static final String PRE_INITIAL_TRACING = "Pre Initial Tracing";

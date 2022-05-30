@@ -20,6 +20,7 @@ package com.aires.managers;
 import org.openqa.selenium.WebDriver;
 
 import com.aires.pages.coreflex.CoreFlex_BenefitSummaryPage;
+import com.aires.pages.coreflex.CoreFlex_CulturalTraining_BenefitsPage;
 import com.aires.pages.coreflex.CoreFlex_CustomBundlesPage;
 import com.aires.pages.coreflex.CoreFlex_DuplicateHousing_BenefitsPage;
 import com.aires.pages.coreflex.CoreFlex_FlexPolicySetupPage;
@@ -50,6 +51,7 @@ public class PageObjectManager_CoreFlex {
 	private CoreFlex_LanguageTraining_BenefitsPage _coreFlexLanguageTrainingBenefitsPage;
 	private CoreFlex_OtherHousing_BenefitsPage _coreFlexOtherHousingBenefitsPage;
 	private CoreFlex_TemporaryLiving_BenefitsPage _coreFlexTemporaryLivingBenefitsPage;
+	private CoreFlex_CulturalTraining_BenefitsPage _coreFlexCulturalTrainingBenefitsPage;
 	private MX_Transferee_MyProfilePage _mxTransfereeMyProfilePage;
 	private MX_Transferee_LoginPage _mxTransfereeLoginPage;
 	private MX_Transferee_JourneyHomePage _mxTransfereeJourneyHomePage;
@@ -167,5 +169,11 @@ public class PageObjectManager_CoreFlex {
 		return (_coreFlexTemporaryLivingBenefitsPage == null)
 				? _coreFlexTemporaryLivingBenefitsPage = new CoreFlex_TemporaryLiving_BenefitsPage(_driver)
 				: _coreFlexTemporaryLivingBenefitsPage;
+	}
+	
+	public CoreFlex_CulturalTraining_BenefitsPage getCoreFlexCulturalTrainingBenefitsPage() {
+		return (_coreFlexCulturalTrainingBenefitsPage == null)
+				? _coreFlexCulturalTrainingBenefitsPage = new CoreFlex_CulturalTraining_BenefitsPage(_driver)
+				: _coreFlexCulturalTrainingBenefitsPage;
 	}
 }

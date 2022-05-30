@@ -32,7 +32,7 @@ Feature: Validate the Core_Flex Cards details on Mobility Journey and Aires Mana
     Then submitted Aires Managed Benefit Flex and Core card status should be updated to "Complete" on "Mobility Journey Home" page - "Post End Tracing"
     And submitted Aires Managed Benefit status should be updated to "Complete" on "My Benefit Bundle" page
 
-  @End-To_End_CoreFlex @Both-Cards_Cancelled_MX @AllCards @CardStatusChecks
+  @End-To_End_CoreFlex @Both-Cards_Cancelled_MX @AllCards @CardStatusCheck
   Scenario: MXTransferee - Verifying Flex_Core Cards details and Cancelled status of the submitted Aires Managed Benefit
     Given he has logged into 'MobilityX' application after creating a new 'Transferee' through IRIS application for policy setup in 'Policy Digitization Tool'
     And he has validated 'Assignment-Policy' details after selecting below option displayed on 'Welcome' dialog
@@ -49,4 +49,4 @@ Feature: Validate the Core_Flex Cards details on Mobility Journey and Aires Mana
     And he has verified submitted Aires Managed Benefit status updated to "Starting Soon" on "My Benefit Bundle" page
     When he change status of the 'Aires Managed' benefit SubService to "Cancel" from Services tab of IRIS application
     Then submitted Aires Managed Benefit Flex and Core card status should be updated to "Canceled" on "Mobility Journey Home" page
-    And submitted Aires Managed Benefit status should be updated to "Cancelled" on "My Benefit Bundle" page
+    And submitted Aires Managed Benefit status should be updated to "Canceled" on "My Benefit Bundle" page

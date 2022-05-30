@@ -155,13 +155,12 @@ public class CF_Transferee_MobilityJourney_Flex_Cards_Steps {
 		testContext.getBasePage().cleanIrisProcesses();
 	}
 
-	@When("^he creates a Service and SubService for following 'Aires Managed' benefit in Services tab of IRIS application$")
-	public void he_creates_a_Service_and_SubService_for_following_Aires_Managed_benefit_in_Services_tab_of_IRIS_application(
-			DataTable dataTable) throws Throwable {
+	@When("^he creates Service and SubService for 'Aires Managed' benefits of CoreFlex type \"([^\"]*)\" in Services tab of IRIS application$")
+	public void he_creates_Service_and_SubService_for_Aires_Managed_benefit_of_CoreFlex_type_in_Services_tab_of_IRIS_application(
+			String coreFlexType) throws Throwable {
 
-		List<Map<String, String>> dataMap = dataTable.asMaps(String.class, String.class);
 		testContext.getBasePage().invokeIrisApplication();
-		testContext.getBasePage().killExistingBrowsers();
+//		testContext.getBasePage().killExistingBrowsers();
 		testContext.getIrisPageManager().irisLoginPage = new IRIS_LoginPage();
 		testContext.getIrisPageManager().irisLoginPage.getIRISLoginAsPerEnvt(_loginDetailsApplication);
 		testContext.getIrisPageManager().irisWelcome12C = new IRIS_Welcome12C();
@@ -174,28 +173,11 @@ public class CF_Transferee_MobilityJourney_Flex_Cards_Steps {
 		testContext.getIrisPageManager().irisAssignmentOverviewPage.acceptFailedImageLoadDialog();
 		testContext.getIrisPageManager().irisAssignmentOverviewPage.switchTab(IRISConstants.SERVICE_TAB);
 		CoreFunctions.waitHandler(2);
-		String serviceName = dataMap.get(0).get("Service");
 		testContext.getIrisPageManager().irisAssignmentServicePage = new IRIS_AssignmentServicePage();
 		Assert.assertTrue(testContext.getIrisPageManager().irisAssignmentServicePage.verifyServiceTab(), MessageFormat
 				.format(IRISConstants.FAIL_TO_VERIFY_CURRENT_TAB, CoreConstants.FAIL, IRISConstants.SERVICE));
-		testContext.getIrisPageManager().irisAssignmentServicePage.addService(serviceName);
-		testContext.getIrisPageManager().irisAssignmentServicePage.clickSaveButton();
-		testContext.getIrisPageManager().irisAssignmentServicePage.clickOnAddSubServiceButton();
-		testContext.getIrisPageManager().irisAssignmentServicePage.addSubService(IRISConstants.SUB_SERVICE, dataTable);
-		testContext.getIrisPageManager().irisAssignmentServicePage.clickSaveButton();
-		testContext.getIrisPageManager().irisAssignmentServicePage.setSubServiceId(IRISConstants.SUB_SERVICE);
+		testContext.getIrisPageManager().irisAssignmentServicePage.addServiceAndSubService(coreFlexType);
 		testContext.getBasePage().cleanIrisProcesses();
-	}
-
-	@Given("^he has verified submitted Aires Managed Benefit Flex card having \"([^\"]*)\" status displayed under 'Service Monitoring' section of \"([^\"]*)\" page$")
-	public void he_has_verified_submitted_Aires_Managed_Benefit_Flex_card_having_status_displayed_under_Service_Monitoring_section_of_page(
-			String expectedStatus, String pageName) throws Throwable {
-		mxTransfereeJourneyHomePage.clickElementOfPage(MobilityXConstants.MANAGE_MY_POINTS);
-		Assert.assertTrue(mxTransfereeFlexPlanningToolPage.isFlexPlanningToolHomePageDisplayed(),
-				MessageFormat.format(MobilityXConstants.FLEX_PLANNING_TOOL_PAGE_NOT_DISPLAYED, CoreConstants.FAIL));
-		mxTransfereeFlexPlanningToolPage.clickElementOfPage(MobilityXConstants.BACK_TO_MOBILITY_JOURNEY);
-		Assert.assertTrue(mxTransfereeJourneyHomePage.isFlexBenefitCardVerified(expectedStatus), MessageFormat
-				.format(MobilityXConstants.FAILED_TO_VERIFY_FLEX_BENEFIT_CARD, CoreConstants.FAIL, pageName));
 	}
 
 	@Given("^he has added a new participant in 'Activity & Finance' tab for all the created service$")
@@ -219,31 +201,31 @@ public class CF_Transferee_MobilityJourney_Flex_Cards_Steps {
 				MessageFormat.format(IRISConstants.FAIL_TO_VERIFY_CURRENT_TAB, CoreConstants.FAIL,
 						IRISConstants.ACTIVITY_AND_FINANCE));
 		testContext.getIrisPageManager().irisActivityAndFinancePage.selectServiceAndAddParticipant();
+		testContext.getBasePage().cleanIrisProcesses();
 	}
 
 	@Given("^he has provided \"([^\"]*)\" for added services tracing prompt after clicking on the \"([^\"]*)\" tab of added Service$")
 	public void he_has_provided_for_added_services_tracing_prompt_after_clicking_on_the_tab_of_added_sub_service(
 			String tracingColumn, String tabName) throws Throwable {
-		CoreFunctions.waitHandler(2);
+		testContext.getBasePage().reLaunchIrisToAvoidFreezingIssue();
+		testContext.getIrisPageManager().irisLoginPage = new IRIS_LoginPage();
+		testContext.getIrisPageManager().irisLoginPage.getIRISLoginAsPerEnvt(_loginDetailsApplication);
+		testContext.getIrisPageManager().irisWelcome12C = new IRIS_Welcome12C();
+		testContext.getIrisPageManager().irisWelcome12C.selectWelcomeWindowModule(IRISConstants.ASSIGNMENT_TAB);
+		testContext.getIrisPageManager().irisAssignmentOverviewPage
+				.queryFile(CoreFunctions.getPropertyFromConfig("Assignment_FileID"));
+		testContext.getIrisPageManager().irisAssignmentOverviewPage.acceptFailedImageLoadDialog();
+		testContext.getIrisPageManager().irisAssignmentOverviewPage.switchTab(IRISConstants.ACTIVITY_FINANCE_TAB);
+		testContext.getIrisPageManager().irisActivityAndFinancePage = new IRIS_ActivityAndFinancePage();
+		Assert.assertTrue(testContext.getIrisPageManager().irisActivityAndFinancePage.verifyActivityAndFinanceTab(),
+				MessageFormat.format(IRISConstants.FAIL_TO_VERIFY_CURRENT_TAB, CoreConstants.FAIL,
+						IRISConstants.ACTIVITY_AND_FINANCE));
 		testContext.getIrisPageManager().irisActivityAndFinancePage.displayAllActivityTable();
 		testContext.getIrisPageManager().irisActivityAndFinancePage.actualizeInitialTracingPrompt(IRISConstants.EST_DATE,
 				IRISConstants.ACTIVITY);
 		testContext.getBasePage().cleanIrisProcesses();
 	}
 
-	@Given("^he has verified submitted Aires Managed Benefit Flex card status updated to \"([^\"]*)\" on \"([^\"]*)\" page$")
-	public void he_has_verified_submitted_Aires_Managed_Benefit_Flex_card_status_updated_to_on_page(
-			String expectedStatus, String pageName) throws Throwable {
-		mxTransfereeMyBenefitsBundlePage.clickElementOfPage(MobilityXConstants.BACK_TO_BENEFITS_LIST);
-		Assert.assertTrue(mxTransfereeFlexPlanningToolPage.isFlexPlanningToolHomePageDisplayed(),
-				MessageFormat.format(MobilityXConstants.FLEX_PLANNING_TOOL_PAGE_NOT_DISPLAYED, CoreConstants.FAIL));
-		mxTransfereeFlexPlanningToolPage.clickElementOfPage(MobilityXConstants.BACK_TO_MOBILITY_JOURNEY);
-		Assert.assertTrue(mxTransfereeJourneyHomePage.verifyUserNavigationToJourneyHomePage(), MessageFormat.format(
-				MobilityXConstants.FALIED_TO_VALIDATE_USER_NAVIGATION_TO_MOBILITYX_JOURNEY_HOME_PAGE_AFTER_BENEFIT_SUBMISSION,
-				CoreConstants.FAIL));
-		Assert.assertTrue(mxTransfereeJourneyHomePage.isFlexBenefitCardVerified(expectedStatus), MessageFormat
-				.format(MobilityXConstants.FAILED_TO_VERIFY_FLEX_BENEFIT_CARD, CoreConstants.FAIL, pageName));
-	}
 
 	@When("^he provides \"([^\"]*)\" for added services tracing prompt after clicking on the \"([^\"]*)\" tab of added Service$")
 	public void he_provides_for_added_Services_tracing_prompt_after_clicking_on_the_tab_of_added_sub_service(
@@ -271,25 +253,13 @@ public class CF_Transferee_MobilityJourney_Flex_Cards_Steps {
 		testContext.getBasePage().cleanIrisProcesses();
 	}
 
-	@Then("^submitted Aires Managed Benefit Flex card status should be updated to \"([^\"]*)\" on \"([^\"]*)\" page$")
-	public void submitted_Aires_Managed_Benefit_Flex_card_status_should_be_updated_to_on_page(String expectedStatus,
-			String pageName) throws Throwable {
-		mxTransfereeMyBenefitsBundlePage.clickElementOfPage(MobilityXConstants.BACK_TO_BENEFITS_LIST);
-		Assert.assertTrue(mxTransfereeFlexPlanningToolPage.isFlexPlanningToolHomePageDisplayed(),
-				MessageFormat.format(MobilityXConstants.FLEX_PLANNING_TOOL_PAGE_NOT_DISPLAYED, CoreConstants.FAIL));
-		mxTransfereeFlexPlanningToolPage.clickElementOfPage(MobilityXConstants.BACK_TO_MOBILITY_JOURNEY);
-		Assert.assertTrue(mxTransfereeJourneyHomePage.verifyUserNavigationToJourneyHomePage(), MessageFormat.format(
-				MobilityXConstants.FALIED_TO_VALIDATE_USER_NAVIGATION_TO_MOBILITYX_JOURNEY_HOME_PAGE_AFTER_BENEFIT_SUBMISSION,
-				CoreConstants.FAIL));
-		Assert.assertTrue(mxTransfereeJourneyHomePage.isFlexBenefitCardVerified(expectedStatus), MessageFormat
-				.format(MobilityXConstants.FAILED_TO_VERIFY_FLEX_BENEFIT_CARD, CoreConstants.FAIL, pageName));
-	}
+	
 
 	@When("^he change the SubService \"([^\"]*)\" type of the following 'Aires Managed' benefit to \"([^\"]*)\" on Services tab of IRIS application$")
 	public void he_change_the_SubService_type_of_the_following_Aires_Managed_benefit_to_on_Services_tab_of_IRIS_application(
-			String columnName, String newSubserviceServiceType, DataTable arg2) throws Throwable {
+			String columnName, String newSubserviceServiceType) throws Throwable {
 		testContext.getBasePage().invokeIrisApplication();
-		testContext.getBasePage().killExistingBrowsers();
+//		testContext.getBasePage().killExistingBrowsers();
 		testContext.getIrisPageManager().irisLoginPage = new IRIS_LoginPage();
 		testContext.getIrisPageManager().irisLoginPage.getIRISLoginAsPerEnvt(_loginDetailsApplication);
 		testContext.getIrisPageManager().irisWelcome12C = new IRIS_Welcome12C();
@@ -305,18 +275,14 @@ public class CF_Transferee_MobilityJourney_Flex_Cards_Steps {
 		testContext.getIrisPageManager().irisAssignmentServicePage = new IRIS_AssignmentServicePage();
 		Assert.assertTrue(testContext.getIrisPageManager().irisAssignmentServicePage.verifyServiceTab(), MessageFormat
 				.format(IRISConstants.FAIL_TO_VERIFY_CURRENT_TAB, CoreConstants.FAIL, IRISConstants.SERVICE));
-		testContext.getIrisPageManager().irisAssignmentServicePage.selectService(IRISConstants.SERVICE);
-		testContext.getIrisPageManager().irisAssignmentServicePage.selectSubService(IRISConstants.SUB_SERVICE);
-		testContext.getIrisPageManager().irisAssignmentServicePage.updateSubServiceColumnData(IRISConstants.SUB_SERVICE,
-				columnName, newSubserviceServiceType);
-		testContext.getIrisPageManager().irisAssignmentServicePage.clickSaveButton();
+		testContext.getIrisPageManager().irisAssignmentServicePage.updateAddedServices(columnName,newSubserviceServiceType);
 		testContext.getBasePage().cleanIrisProcesses();
 	}
 
-	@Then("^submitted Flex and Core Cards should not be displayed under 'Service Monitoring' section of \"([^\"]*)\" page$")
-	public void submitted_Flex_and_Core_Cards_should_not_be_displayed_under_Service_Monitoring_section_of_page(
+	@Then("^submitted Flex Cards should not be displayed under 'Service Monitoring' section of \"([^\"]*)\" page$")
+	public void submitted_Flex_Cards_should_not_be_displayed_under_Service_Monitoring_section_of_page(
 			String pageName) throws Throwable {
-		mxTransfereeMyBenefitsBundlePage.clickElementOfPage(MobilityXConstants.BACK_TO_BENEFITS_LIST);
+		mxTransfereeJourneyHomePage.clickElementOfPage(MobilityXConstants.MANAGE_MY_POINTS);
 		Assert.assertTrue(mxTransfereeFlexPlanningToolPage.isFlexPlanningToolHomePageDisplayed(),
 				MessageFormat.format(MobilityXConstants.FLEX_PLANNING_TOOL_PAGE_NOT_DISPLAYED, CoreConstants.FAIL));
 		mxTransfereeFlexPlanningToolPage.clickElementOfPage(MobilityXConstants.BACK_TO_MOBILITY_JOURNEY);
@@ -326,9 +292,9 @@ public class CF_Transferee_MobilityJourney_Flex_Cards_Steps {
 		Assert.assertTrue(mxTransfereeJourneyHomePage.verifyFlexCardNotDisplayedAfterUpdatingSubServiceType(),
 				MessageFormat.format(MobilityXConstants.FLEX_CARD_DISPLAYED_AFTER_CHANGING_COREFLEX_TYPE_SUBSERVICE_IN_IRIS,
 						CoreConstants.FAIL, pageName));
-		Assert.assertTrue(mxTransfereeJourneyHomePage.verifyCoreCardNotDisplayedAfterUpdatingSubServiceType(),
-				MessageFormat.format(MobilityXConstants.CORE_CARD_DISPLAYED_AFTER_CHANGING_COREFLEX_TYPE_SUBSERVICE_IN_IRIS,
-						CoreConstants.FAIL, pageName));
+		Assert.assertTrue(mxTransfereeJourneyHomePage.isCoreBenefitCardVerified(MobilityXConstants.PRE_INITIAL_TRACING), MessageFormat
+				.format(MobilityXConstants.FAILED_TO_VERIFY_CORE_BENEFIT_CARD, CoreConstants.FAIL, pageName));
+	
 	}
 
 }

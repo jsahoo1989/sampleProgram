@@ -55,7 +55,7 @@ public class CF_Transferee_MobilityJourney_Both_Cards_Steps {
 		Assert.assertTrue(mxTransfereeJourneyHomePage.verifyUserNavigationToJourneyHomePage(), MessageFormat.format(
 				MobilityXConstants.FALIED_TO_VALIDATE_USER_NAVIGATION_TO_MOBILITYX_JOURNEY_HOME_PAGE_AFTER_BENEFIT_SUBMISSION,
 				CoreConstants.FAIL));
-		Assert.assertTrue(mxTransfereeJourneyHomePage.isFlexBenefitCardVerified(tracingSelection), MessageFormat
+		Assert.assertTrue(mxTransfereeJourneyHomePage.isFlexBenefitCardVerified(expectedStatus,tracingSelection), MessageFormat
 				.format(MobilityXConstants.FAILED_TO_VERIFY_FLEX_BENEFIT_CARD, CoreConstants.FAIL, pageName));
 		Assert.assertTrue(mxTransfereeJourneyHomePage.isCoreBenefitCardVerified(tracingSelection), MessageFormat
 				.format(MobilityXConstants.FAILED_TO_VERIFY_CORE_BENEFIT_CARD, CoreConstants.FAIL, pageName));
@@ -84,9 +84,9 @@ public class CF_Transferee_MobilityJourney_Both_Cards_Steps {
 						CoreConstants.FAIL, pageName));
 	}
 
-	@Then("^selected Aires Managed Benefit Core card having \"([^\"]*)\" status should be displayed under 'Service Monitoring' section of \"([^\"]*)\" page$")
-	public void selected_Aires_Managed_Benefit_Core_card_having_status_should_be_displayed_under_Service_Monitoring_section_of_page(
-			String expectedStatus, String pageName) throws Throwable {
+	@Then("^selected Aires Managed Benefit Core card having \"([^\"]*)\" status should be displayed on \"([^\"]*)\" page - \"([^\"]*)\"$")
+	public void selected_Aires_Managed_Benefit_Core_card_having_status_should_be_displayed_on_page(
+			String expectedStatus, String pageName,String tracingPrompt) throws Throwable {
 		mxTransfereeMyBenefitsBundlePage.clickElementOfPage(MobilityXConstants.BACK_TO_BENEFITS_LIST);
 		Assert.assertTrue(mxTransfereeFlexPlanningToolPage.isFlexPlanningToolHomePageDisplayed(),
 				MessageFormat.format(MobilityXConstants.FLEX_PLANNING_TOOL_PAGE_NOT_DISPLAYED, CoreConstants.FAIL));
@@ -94,7 +94,7 @@ public class CF_Transferee_MobilityJourney_Both_Cards_Steps {
 		Assert.assertTrue(mxTransfereeJourneyHomePage.verifyUserNavigationToJourneyHomePage(), MessageFormat.format(
 				MobilityXConstants.FALIED_TO_VALIDATE_USER_NAVIGATION_TO_MOBILITYX_JOURNEY_HOME_PAGE_AFTER_BENEFIT_SUBMISSION,
 				CoreConstants.FAIL));
-		Assert.assertTrue(mxTransfereeJourneyHomePage.isCoreBenefitCardVerified(expectedStatus), MessageFormat
+		Assert.assertTrue(mxTransfereeJourneyHomePage.isCoreBenefitCardVerified(tracingPrompt), MessageFormat
 				.format(MobilityXConstants.FAILED_TO_VERIFY_CORE_BENEFIT_CARD, CoreConstants.FAIL, pageName));
 	}
 
@@ -106,27 +106,7 @@ public class CF_Transferee_MobilityJourney_Both_Cards_Steps {
 						CoreConstants.FAIL, pageName));
 	}
 
-	@Given("^he has verified submitted Aires Managed Benefit Flex and Core card status updated on \"([^\"]*)\" page - \"([^\"]*)\"$")
-	public void he_has_verified_submitted_Aires_Managed_Benefit_card_status_updated_on_page(String tracingSelection,
-			String pageName) throws Throwable {
-		mxTransfereeMyBenefitsBundlePage.clickElementOfPage(MobilityXConstants.BACK_TO_BENEFITS_LIST);
-		Assert.assertTrue(mxTransfereeFlexPlanningToolPage.isFlexPlanningToolHomePageDisplayed(),
-				MessageFormat.format(MobilityXConstants.FLEX_PLANNING_TOOL_PAGE_NOT_DISPLAYED, CoreConstants.FAIL));
-		mxTransfereeFlexPlanningToolPage.clickElementOfPage(MobilityXConstants.BACK_TO_MOBILITY_JOURNEY);
-		Assert.assertTrue(mxTransfereeJourneyHomePage.verifyUserNavigationToJourneyHomePage(), MessageFormat.format(
-				MobilityXConstants.FALIED_TO_VALIDATE_USER_NAVIGATION_TO_MOBILITYX_JOURNEY_HOME_PAGE_AFTER_BENEFIT_SUBMISSION,
-				CoreConstants.FAIL));
-		Assert.assertTrue(mxTransfereeJourneyHomePage.isFlexBenefitCardVerified(tracingSelection), MessageFormat
-				.format(MobilityXConstants.FAILED_TO_VERIFY_FLEX_BENEFIT_CARD, CoreConstants.FAIL, pageName));
-		Assert.assertTrue(mxTransfereeJourneyHomePage.isCoreBenefitCardVerified(tracingSelection), MessageFormat
-				.format(MobilityXConstants.FAILED_TO_VERIFY_CORE_BENEFIT_CARD, CoreConstants.FAIL, pageName));
-		mxTransfereeJourneyHomePage.clickElementOfPage(MobilityXConstants.MANAGE_MY_POINTS);
-		Assert.assertTrue(mxTransfereeFlexPlanningToolPage.isFlexPlanningToolHomePageDisplayed(),
-				MessageFormat.format(MobilityXConstants.FLEX_PLANNING_TOOL_PAGE_NOT_DISPLAYED, CoreConstants.FAIL));
-		mxTransfereeFlexPlanningToolPage.clickElementOfPage(MobilityXConstants.NEXT);
-		Assert.assertTrue(mxTransfereeMyBenefitsBundlePage.isMyBundlePageDisplayed(),
-				MessageFormat.format(MobilityXConstants.FAILED_TO_DISPLAY_MY_BENEFIT_BUNDLE_PAGE, CoreConstants.FAIL));
-	}
+	
 
 	@Given("^he has verified submitted Aires Managed Benefit status updated to \"([^\"]*)\" on \"([^\"]*)\" page$")
 	public void he_has_verified_submitted_Aires_Managed_Benefit_status_updated_to_on_page(String expectedStatus,
@@ -153,7 +133,7 @@ public class CF_Transferee_MobilityJourney_Both_Cards_Steps {
 		Assert.assertTrue(mxTransfereeJourneyHomePage.verifyUserNavigationToJourneyHomePage(), MessageFormat.format(
 				MobilityXConstants.FALIED_TO_VALIDATE_USER_NAVIGATION_TO_MOBILITYX_JOURNEY_HOME_PAGE_AFTER_BENEFIT_SUBMISSION,
 				CoreConstants.FAIL));
-		Assert.assertTrue(mxTransfereeJourneyHomePage.isFlexBenefitCardVerified(tracingSelection), MessageFormat
+		Assert.assertTrue(mxTransfereeJourneyHomePage.isFlexBenefitCardVerified(expectedStatus,tracingSelection), MessageFormat
 				.format(MobilityXConstants.FAILED_TO_VERIFY_FLEX_BENEFIT_CARD, CoreConstants.FAIL, pageName));
 		Assert.assertTrue(mxTransfereeJourneyHomePage.isCoreBenefitCardVerified(tracingSelection), MessageFormat
 				.format(MobilityXConstants.FAILED_TO_VERIFY_CORE_BENEFIT_CARD, CoreConstants.FAIL, pageName));
@@ -161,7 +141,7 @@ public class CF_Transferee_MobilityJourney_Both_Cards_Steps {
 	
 	@Then("^submitted Aires Managed Benefit Flex and Core card status should be updated to \"([^\"]*)\" on \"([^\"]*)\" page$")
 	public void submitted_Aires_Managed_Benefit_Flex_and_Core_card_status_should_be_updated_to_canceled_on_page(
-			String expectedStatus, String pageName, String tracingSelection) throws Throwable {
+			String tracingSelection, String pageName ) throws Throwable {
 		mxTransfereeJourneyHomePage.clickElementOfPage(MobilityXConstants.MANAGE_MY_POINTS);
 		Assert.assertTrue(mxTransfereeFlexPlanningToolPage.isFlexPlanningToolHomePageDisplayed(),
 				MessageFormat.format(MobilityXConstants.FLEX_PLANNING_TOOL_PAGE_NOT_DISPLAYED, CoreConstants.FAIL));
@@ -169,7 +149,7 @@ public class CF_Transferee_MobilityJourney_Both_Cards_Steps {
 		Assert.assertTrue(mxTransfereeJourneyHomePage.verifyUserNavigationToJourneyHomePage(), MessageFormat.format(
 				MobilityXConstants.FALIED_TO_VALIDATE_USER_NAVIGATION_TO_MOBILITYX_JOURNEY_HOME_PAGE_AFTER_BENEFIT_SUBMISSION,
 				CoreConstants.FAIL));
-		Assert.assertTrue(mxTransfereeJourneyHomePage.isFlexBenefitCardVerified(tracingSelection), MessageFormat
+		Assert.assertTrue(mxTransfereeJourneyHomePage.isFlexBenefitCardVerified(tracingSelection,tracingSelection), MessageFormat
 				.format(MobilityXConstants.FAILED_TO_VERIFY_FLEX_BENEFIT_CARD, CoreConstants.FAIL, pageName));
 		Assert.assertTrue(mxTransfereeJourneyHomePage.isCoreBenefitCardVerified(tracingSelection), MessageFormat
 				.format(MobilityXConstants.FAILED_TO_VERIFY_CORE_BENEFIT_CARD, CoreConstants.FAIL, pageName));

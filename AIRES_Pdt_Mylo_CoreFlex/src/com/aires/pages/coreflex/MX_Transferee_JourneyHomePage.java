@@ -162,27 +162,27 @@ public class MX_Transferee_JourneyHomePage extends Base {
 
 	private By flexCardMoveInStatus = By
 			.xpath(".//span[contains(@class,'RXSmallerLink RXBold')][contains(text(),'Move In')]");
-	
-	private By flexCardMoveOutStatus = By
-			.xpath(".//span[contains(@class,'ServicesSuccessIcon ')]/ancestor::div[contains(@class,'ServicesTrain')]//span[contains(text(),'Move out')]");
 
-	private By flexCardTrainingCompletedStatus = By
-			.xpath(".//span[contains(@class,'ServicesSuccessIcon ')]/ancestor::div[contains(@class,'ServicesTrain')]//span[contains(text(),'Training complete')]");
+	private By flexCardMoveOutStatus = By.xpath(
+			".//span[contains(@class,'ServicesSuccessIcon ')]/ancestor::div[contains(@class,'ServicesTrain')]//span[contains(text(),'Move out')]");
+
+	private By flexCardTrainingCompletedStatus = By.xpath(
+			".//span[contains(@class,'ServicesSuccessIcon ')]/ancestor::div[contains(@class,'ServicesTrain')]//span[contains(text(),'Training complete')]");
 
 	@FindBy(how = How.XPATH, using = "//span[contains(text(),'Core Benefits')]/ancestor::div[contains(@id,'firstItemDiv')]//div[contains(@class,'RXCFServicesMonitoringBorderPanel')]")
 	private List<WebElement> coreCardPanelList;
 
 	private By coreCardBeginTrainingStatus = By
 			.xpath(".//span[contains(@class,'RXSmallerLink RXBold')][contains(text(),'Begin training')]");
-	
+
 	private By coreCardMoveInStatus = By
 			.xpath(".//span[contains(@class,'RXSmallerLink RXBold')][contains(text(),'Move In')]");
-	
-	private By coreCardMoveOutStatus = By
-			.xpath(".//span[contains(@class,'ServicesSuccessIcon ')]/ancestor::div[contains(@class,'ServicesTrain')]//span[contains(text(),'Move out')]");
 
-	private By coreCardTrainingCompletedStatus = By
-			.xpath(".//span[contains(@class,'ServicesSuccessIcon ')]/ancestor::div[contains(@class,'ServicesTrain')]//span[contains(text(),'Training complete')]");
+	private By coreCardMoveOutStatus = By.xpath(
+			".//span[contains(@class,'ServicesSuccessIcon ')]/ancestor::div[contains(@class,'ServicesTrain')]//span[contains(text(),'Move out')]");
+
+	private By coreCardTrainingCompletedStatus = By.xpath(
+			".//span[contains(@class,'ServicesSuccessIcon ')]/ancestor::div[contains(@class,'ServicesTrain')]//span[contains(text(),'Training complete')]");
 
 	@FindBy(how = How.XPATH, using = "//span[contains(text(),'Flex Benefits')]/ancestor::div[contains(@id,'secondItemDiv')]//span[contains(@class,'RCFXMJHeadingText')]")
 	private List<WebElement> flexCardBenefitDisplayName;
@@ -600,9 +600,9 @@ public class MX_Transferee_JourneyHomePage extends Base {
 		return CoreFunctions.isElementExist(driver, _serviceNotSetupCFCard, 10);
 	}
 
-	public boolean isFlexBenefitCardVerified(String tracingSelection) {
+	public boolean isFlexBenefitCardVerified(String expectedStatus,String tracingSelection) {
 		try {
-			return verifyFlexBenefitCardDetails(tracingSelection);
+			return verifyFlexBenefitCardDetails(expectedStatus,tracingSelection);
 		} catch (Exception e) {
 			Reporter.addStepLog(
 					MessageFormat.format(COREFLEXConstants.EXCEPTION_OCCURED_WHILE_VERIFYING_FLEX_BENEFIT_CARD_DETAILS,
@@ -627,6 +627,12 @@ public class MX_Transferee_JourneyHomePage extends Base {
 						CoreFunctions.findSubElement(flexCardPanelList.get(indexBenefitCard), flexCardMoveInStatus), 3)
 						&& (!CoreFunctions.isElementExist(driver, flexCardStartingSoonStatus, 3)));
 				break;
+			case COREFLEXConstants.CULTURAL_TRAINING:
+				isFlexCardStatusVerified = (CoreFunctions.isElementExist(driver,
+						CoreFunctions.findSubElement(flexCardPanelList.get(indexBenefitCard),
+								flexCardBeginTrainingStatus),
+						3) && (!CoreFunctions.isElementExist(driver, flexCardStartingSoonStatus, 3)));
+				break;
 
 			default:
 				Assert.fail(COREFLEXConstants.INVALID_OPTION);
@@ -647,7 +653,8 @@ public class MX_Transferee_JourneyHomePage extends Base {
 		return isFlexCardStatusVerified;
 	}
 
-	private boolean verifyFlexBenefitCardStatusAfterEndActualization(int indexBenefitCard, String expectedStatus, Benefit benefit) {
+	private boolean verifyFlexBenefitCardStatusAfterEndActualization(int indexBenefitCard, String expectedStatus,
+			Benefit benefit) {
 		boolean isFlexCardStatusVerified = false;
 		try {
 			switch (benefit.getBenefitType()) {
@@ -661,6 +668,12 @@ public class MX_Transferee_JourneyHomePage extends Base {
 				isFlexCardStatusVerified = (CoreFunctions.isElementExist(driver,
 						CoreFunctions.findSubElement(flexCardPanelList.get(indexBenefitCard), flexCardMoveOutStatus), 3)
 						&& (!CoreFunctions.isElementExist(driver, flexCardStartingSoonStatus, 3)));
+				break;
+			case COREFLEXConstants.CULTURAL_TRAINING:
+				isFlexCardStatusVerified = (CoreFunctions.isElementExist(driver,
+						CoreFunctions.findSubElement(flexCardPanelList.get(indexBenefitCard),
+								flexCardTrainingCompletedStatus),
+						3) && (!CoreFunctions.isElementExist(driver, flexCardStartingSoonStatus, 3)));
 				break;
 
 			default:
@@ -716,7 +729,7 @@ public class MX_Transferee_JourneyHomePage extends Base {
 		return false;
 	}
 
-	private boolean verifyFlexBenefitCardDetails(String tracingSelection) {
+	private boolean verifyFlexBenefitCardDetails(String expectedStatus, String tracingSelection) {
 		boolean isFlexCardDetailsVerified = false;
 		boolean flag = false;
 		try {
@@ -727,12 +740,13 @@ public class MX_Transferee_JourneyHomePage extends Base {
 								flexCardBenefitDisplayName, benefit.getBenefitDisplayName());
 						isFlexCardDetailsVerified = verifyFlexCardDetails(indexBenefitCard, benefit)
 								&& verifyFlexCardStatus(indexBenefitCard, benefit, tracingSelection)
-								&& verifyManageThisBenefitButton(indexBenefitCard, tracingSelection);
+								&& verifyManageThisBenefitButton(indexBenefitCard, tracingSelection, expectedStatus);
 						if (!isFlexCardDetailsVerified) {
 							return false;
 						} else {
 							flag = true;
-							CoreFunctions.scrollToElementUsingJS(driver, _textPolicyFileID, COREFLEXConstants.POLICY_FILE_ID);
+							CoreFunctions.scrollToElementUsingJS(driver, _textPolicyFileID,
+									COREFLEXConstants.POLICY_FILE_ID);
 						}
 					} else {
 						isFlexCardDetailsVerified = true;
@@ -752,11 +766,11 @@ public class MX_Transferee_JourneyHomePage extends Base {
 		return isFlexCardDetailsVerified;
 	}
 
-	private boolean verifyManageThisBenefitButton(int indexBenefitCard, String tracingSelection) {
+	private boolean verifyManageThisBenefitButton(int indexBenefitCard, String tracingSelection,String expectedStatus) {
 		try {
-			if ((tracingSelection.equals(MobilityXConstants.CANCELLED))
+			if ((tracingSelection.equals(MobilityXConstants.CANCELED))
 					|| (tracingSelection.equals(MobilityXConstants.POST_END_TRACING))) {
-				return (!CoreFunctions.isElementExist(driver, flexCardManageThisBenefitButton, 3));
+				return verifyManageThisBenefitButtonNotDisplayed(expectedStatus);
 			} else {
 				CoreFunctions.verifyText(driver, flexCardManageBenefitButton.get(indexBenefitCard),
 						MobilityXConstants.MANAGE_THIS_BENEFIT,
@@ -770,6 +784,18 @@ public class MX_Transferee_JourneyHomePage extends Base {
 			return false;
 		}
 
+	}
+
+	private boolean verifyManageThisBenefitButtonNotDisplayed(String expectedStatus) {
+		if (CoreFunctions.isElementExist(driver, flexCardManageThisBenefitButton, 3)) {
+			Reporter.addStepLog(MessageFormat.format(
+					COREFLEXConstants.MANAGE_THIS_BENEFIT_BUTTON_DISPLAYED_ON_FLEX_BENEFIT_CARD, CoreConstants.FAIL,expectedStatus));
+			return false;
+		} else {
+			Reporter.addStepLog(MessageFormat.format(
+					COREFLEXConstants.MANAGE_THIS_BENEFIT_BUTTON_NOT_DISPLAYED_ON_FLEX_BENEFIT_CARD, CoreConstants.PASS,expectedStatus));
+			return true;
+		}
 	}
 
 	private boolean verifyFlexCardStatus(int indexBenefitCard, Benefit benefit, String tracingSelection) {
@@ -788,7 +814,7 @@ public class MX_Transferee_JourneyHomePage extends Base {
 				isFlexBenefitCardStatusVerified = verifyFlexBenefitCardStatusAfterEndActualization(indexBenefitCard,
 						tracingSelection, benefit);
 				break;
-			case MobilityXConstants.CANCELLED:
+			case MobilityXConstants.CANCELED:
 				isFlexBenefitCardStatusVerified = verifyFlexBenefitCardStatusAfterCancellation(indexBenefitCard,
 						tracingSelection);
 				break;
@@ -905,14 +931,14 @@ public class MX_Transferee_JourneyHomePage extends Base {
 						tracingSelection);
 				break;
 			case MobilityXConstants.POST_INITIAL_TRACING:
-				isCoreBenefitCardStatusVerified = verifyCoreBenefitCardStatusAfterInitialActualization(
-						indexBenefitCard, tracingSelection, benefit);
+				isCoreBenefitCardStatusVerified = verifyCoreBenefitCardStatusAfterInitialActualization(indexBenefitCard,
+						tracingSelection, benefit);
 				break;
 			case MobilityXConstants.POST_END_TRACING:
 				isCoreBenefitCardStatusVerified = verifyCoreBenefitCardStatusAfterEndActualization(indexBenefitCard,
-						tracingSelection,benefit);
+						tracingSelection, benefit);
 				break;
-			case MobilityXConstants.CANCELLED:
+			case MobilityXConstants.CANCELED:
 				isCoreBenefitCardStatusVerified = verifyCoreBenefitCardStatusAfterCancellation(indexBenefitCard,
 						tracingSelection);
 				break;
@@ -928,8 +954,8 @@ public class MX_Transferee_JourneyHomePage extends Base {
 		return isCoreBenefitCardStatusVerified;
 	}
 
-	private boolean verifyCoreBenefitCardStatusAfterInitialActualization(int indexBenefitCard,
-			String expectedStatus, Benefit benefit) {
+	private boolean verifyCoreBenefitCardStatusAfterInitialActualization(int indexBenefitCard, String expectedStatus,
+			Benefit benefit) {
 		boolean isCoreCardStatusVerified = false;
 		try {
 			switch (benefit.getBenefitType()) {
@@ -943,6 +969,12 @@ public class MX_Transferee_JourneyHomePage extends Base {
 				isCoreCardStatusVerified = (CoreFunctions.isElementExist(driver,
 						CoreFunctions.findSubElement(coreCardPanelList.get(indexBenefitCard), coreCardMoveInStatus), 3)
 						&& (!CoreFunctions.isElementExist(driver, coreCardStartingSoonStatus, 3)));
+				break;
+			case COREFLEXConstants.CULTURAL_TRAINING:
+				isCoreCardStatusVerified = (CoreFunctions.isElementExist(driver,
+						CoreFunctions.findSubElement(coreCardPanelList.get(indexBenefitCard),
+								coreCardBeginTrainingStatus),
+						3) && (!CoreFunctions.isElementExist(driver, coreCardStartingSoonStatus, 3)));
 				break;
 
 			default:
@@ -964,7 +996,8 @@ public class MX_Transferee_JourneyHomePage extends Base {
 		return isCoreCardStatusVerified;
 	}
 
-	private boolean verifyCoreBenefitCardStatusAfterEndActualization(int indexBenefitCard, String expectedStatus, Benefit benefit) {
+	private boolean verifyCoreBenefitCardStatusAfterEndActualization(int indexBenefitCard, String expectedStatus,
+			Benefit benefit) {
 		boolean isCoreCardStatusVerified = false;
 		try {
 			switch (benefit.getBenefitType()) {
@@ -979,7 +1012,12 @@ public class MX_Transferee_JourneyHomePage extends Base {
 						CoreFunctions.findSubElement(coreCardPanelList.get(indexBenefitCard), coreCardMoveOutStatus), 3)
 						&& (!CoreFunctions.isElementExist(driver, coreCardStartingSoonStatus, 3)));
 				break;
-
+			case COREFLEXConstants.CULTURAL_TRAINING:
+				isCoreCardStatusVerified = (CoreFunctions.isElementExist(driver,
+						CoreFunctions.findSubElement(coreCardPanelList.get(indexBenefitCard),
+								coreCardTrainingCompletedStatus),
+						3) && (!CoreFunctions.isElementExist(driver, coreCardStartingSoonStatus, 3)));
+				break;
 			default:
 				Assert.fail(COREFLEXConstants.INVALID_OPTION);
 
@@ -1039,6 +1077,7 @@ public class MX_Transferee_JourneyHomePage extends Base {
 				Reporter.addStepLog(MessageFormat.format(
 						COREFLEXConstants.SUCCESSFULLY_VERIFIED_FLEX_BENEFIT_CARD_NOT_DISPLAYED_FOR_NOT_SUBMITTED_AIRES_MANAGED_BENEFIT,
 						CoreConstants.PASS));
+				return true;
 			}
 		} catch (Exception e) {
 			Reporter.addStepLog(MessageFormat.format(

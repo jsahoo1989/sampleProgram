@@ -17,6 +17,7 @@ import com.aires.cucumber.TestContext;
 import com.aires.managers.FileReaderManager;
 import com.aires.pages.coreflex.CoreFlex_BenefitSummaryPage;
 import com.aires.pages.coreflex.CoreFlex_BluePrint_LoginPage;
+import com.aires.pages.coreflex.CoreFlex_CulturalTraining_BenefitsPage;
 import com.aires.pages.coreflex.CoreFlex_CustomBundlesPage;
 import com.aires.pages.coreflex.CoreFlex_DuplicateHousing_BenefitsPage;
 import com.aires.pages.coreflex.CoreFlex_FlexPolicySetupPage;
@@ -81,6 +82,7 @@ public class CoreFlex_SharedSteps {
 	private TransfereeSubmissions_DetailsPage transfereeSubmissionsDetailsPage;
 	private CoreFlex_LanguageTraining_BenefitsPage coreFlexLanguageTrainingBenefitsPage;
 	private CoreFlex_TemporaryLiving_BenefitsPage coreFlexTemporaryLivingBenefitsPage;
+	private CoreFlex_CulturalTraining_BenefitsPage coreFlexCulturalTrainingBenefitsPage;
 
 	private MX_Transferee_MyProfilePage mxTransfereeMyProfilePage;
 	int _initialTableRowCount = 0;
@@ -118,7 +120,10 @@ public class CoreFlex_SharedSteps {
 				.getTransfereeSubmissionsDetailsPage();
 		coreFlexLanguageTrainingBenefitsPage = testContext.getCoreFlexPageObjectManager()
 				.getCoreFlexLanguageTrainingBenefitsPage();
-		coreFlexTemporaryLivingBenefitsPage = testContext.getCoreFlexPageObjectManager().getCoreFlexTemporaryLivingBenefitPage();
+		coreFlexTemporaryLivingBenefitsPage = testContext.getCoreFlexPageObjectManager()
+				.getCoreFlexTemporaryLivingBenefitPage();
+		coreFlexCulturalTrainingBenefitsPage = testContext.getCoreFlexPageObjectManager()
+				.getCoreFlexCulturalTrainingBenefitsPage();
 	}
 
 	/**********************************************************************/
@@ -365,7 +370,8 @@ public class CoreFlex_SharedSteps {
 		Assert.assertTrue(
 				coreFlexPolicyBenefitsCategoriesPage.selectAndFillAddedBenefits(policyType,
 						coreFlexDuplicateHousingBenefitsPage, coreFlexLumpSumBenefitsPage,
-						coreFlexOtherHousingBenefitsPage, coreFlexLanguageTrainingBenefitsPage,coreFlexTemporaryLivingBenefitsPage),
+						coreFlexOtherHousingBenefitsPage, coreFlexLanguageTrainingBenefitsPage,
+						coreFlexTemporaryLivingBenefitsPage, coreFlexCulturalTrainingBenefitsPage),
 				MessageFormat.format(COREFLEXConstants.FAILED_TO_SELECT_AND_FILL_ADDED_BENEFITS, CoreConstants.FAIL));
 
 		CoreConstants.TIME_BEFORE_ACTION = new Date().getTime();
@@ -378,8 +384,7 @@ public class CoreFlex_SharedSteps {
 				+ CoreFunctions.calculatePageLoadTime(CoreConstants.TIME_BEFORE_ACTION, CoreConstants.TIME_AFTER_ACTION)
 				+ " Seconds </b>");
 
-		Assert.assertTrue(
-				coreFlexBenefitSummaryPage.iterateAndVerifyBenefitSummaryDetails(policyType),
+		Assert.assertTrue(coreFlexBenefitSummaryPage.iterateAndVerifyBenefitSummaryDetails(policyType),
 				MessageFormat.format(
 						COREFLEXConstants.FAILED_TO_VERIFY_BENEFIT_SUBBENEFIT_DETAILS_ON_BENEFIT_SUMMARY_PAGE,
 						CoreConstants.FAIL));
@@ -530,6 +535,20 @@ public class CoreFlex_SharedSteps {
 						.relonetCredentialsSent(IRISConstants.SUCCESS_MSG, IRISConstants.MESSAGE_DIALOG),
 				MessageFormat.format(IRISConstants.FAILED_TO_VERIFY_MESSAGE, CoreConstants.FAIL,
 						IRISConstants.SUCCESS_MSG));
+		testContext.getBasePage().cleanIrisProcesses();
+
+		testContext.getBasePage().invokeIrisApplication();
+		testContext.getIrisPageManager().irisLoginPage = new IRIS_LoginPage();
+		testContext.getIrisPageManager().irisLoginPage.getIRISLoginAsPerEnvt(_loginDetailsApplication);
+		testContext.getIrisPageManager().irisWelcome12C = new IRIS_Welcome12C();
+		testContext.getIrisPageManager().irisWelcome12C.selectWelcomeWindowModule(IRISConstants.ASSIGNMENT_TAB);
+		testContext.getIrisPageManager().irisAssignmentOverviewPage = new IRIS_AssignmentOverviewPage();
+		Assert.assertTrue(testContext.getIrisPageManager().irisAssignmentOverviewPage.verifyOverviewTab(), MessageFormat
+				.format(IRISConstants.FAIL_TO_VERIFY_CURRENT_TAB, CoreConstants.FAIL, IRISConstants.OVERVIEW));
+		testContext.getIrisPageManager().irisAssignmentOverviewPage
+				.queryFile(CoreFunctions.getPropertyFromConfig("Assignment_FileID"));
+//		testContext.getIrisPageManager().irisAssignmentOverviewPage.acceptFailedImageLoadDialog();
+		testContext.getIrisPageManager().irisAssignmentOverviewPage.setFileStatus(IRISConstants.ACTIVATE);
 		testContext.getBasePage().cleanIrisProcesses();
 
 		Assert.assertTrue(mxTransfereeLoginPage.readCredentialsFromMail(), MessageFormat

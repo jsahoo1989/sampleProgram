@@ -547,5 +547,26 @@ public class IRIS_AssignmentServicePage extends BasePage {
 		robot.keyPress(KeyEvent.VK_ENTER);
 		robot.keyRelease(KeyEvent.VK_ENTER);
 	}
+	
+	public void updateAddedServices(String columnName, String newSubserviceServiceType) {
+		try {
+			for (FlexBenefit benefitList : flexBenefits) {
+				for (Benefit benefit : benefitList.getBenefits()) {
+					if ((benefit.getSelectBenefitOnFPTPage()) && (benefit.getAiresManagedService().equals("Yes"))) {
+						searchAndSelectAddedService(getTableName(IRISConstants.SERVICE), IRISConstants.NAME,
+								benefit.getIrisServiceName());
+						selectSubService(IRISConstants.SUB_SERVICE);
+						updateSubServiceColumnData(IRISConstants.SUB_SERVICE,
+								columnName, newSubserviceServiceType);
+						clickSaveButton();
+					}
+				}
+			}
+		} catch (Exception e) {
+			Reporter.addStepLog(MessageFormat.format(
+					IRISConstants.EXCEPTION_OCCURED_WHILE_CANCELLING_ADDED_SERVICES_ON_SERVICES_TAB_OF_IRIS_APPLICATION,
+					CoreConstants.FAIL, e.getMessage()));
+		}
+	}
 
 }

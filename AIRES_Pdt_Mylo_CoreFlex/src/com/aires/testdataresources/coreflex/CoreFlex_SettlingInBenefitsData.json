@@ -20,5 +20,24 @@
 			"reimbursedByOther": "Reimbursed by other",
 			"comment": "Language Training Family comment"
 		}
+	},
+	{
+		"benefitName": "Cultural Training",
+		"culturalTrainingEmployee": {
+			"employeeDuration": "other",
+			"employeeOtherDuration": "3",
+			"grossUp": "No",
+			"reimbursedBy": "Other",
+			"reimbursedByOther": "Reimbursed by other",
+			"comment": "Cultural Training Employee comment"			
+		},
+		"culturalTrainingFamily": {
+			"familyDuration": "1 day",
+			"familyOtherDuration": "",
+			"grossUp": "No",
+			"reimbursedBy": "Other",
+			"reimbursedByOther": "Reimbursed by other",
+			"comment": "Cultural Training Family comment"	
+		}
 	}
 ]

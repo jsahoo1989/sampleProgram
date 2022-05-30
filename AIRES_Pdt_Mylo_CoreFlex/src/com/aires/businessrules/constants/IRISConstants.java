@@ -489,4 +489,5 @@ public class IRISConstants {
 	public static final String EXCEPTION_OCCURED_WHILE_ADDING_PARTICIPANT_ON_ACTIVITY_AND_FINANCE_TAB_OF_IRIS_APPLICATION = "{0}Exception occured while adding participant on Activity & Finance Tab of IRIS Application. Exception : ''{1}''.";
 	public static final String EXCEPTION_OCCURED_WHILE_ACTUALIZING_ADDED_SERVICES_TRACING_PROMPT_ON_IRIS_APPLICATION = "{0}Exception occured while actualizing added services Tracing Prompt on Activity & Finance tab of IRIS application. Exception : ''{1}''.";
 	public static final String EXCEPTION_OCCURED_WHILE_CANCELLING_ADDED_SERVICES_ON_SERVICES_TAB_OF_IRIS_APPLICATION = "{0}Exception occured while cancelling added services on Services tab of IRIS application. Exception : ''{1}''.";
+	public static final String ACTIVATE = "Activate";
 }

@@ -791,6 +791,8 @@ public class IRIS_ActivityAndFinancePage extends BasePage {
 			for (FlexBenefit benefitList : flexBenefits) {
 				for (Benefit benefit : benefitList.getBenefits()) {
 					if ((benefit.getSelectBenefitOnFPTPage()) && (benefit.getAiresManagedService().equals("Yes"))) {
+						selectServiceAndSubService(benefit);
+						displayActivityTable();
 						enterActDateForTracingPrompt(
 								IRIS_PageMaster.getTableObject(_IRIS,
 										"IRIS.Presentation.assignment.activityFinance.ActivityPanel$1"),
@@ -832,6 +834,8 @@ public class IRIS_ActivityAndFinancePage extends BasePage {
 			for (FlexBenefit benefitList : flexBenefits) {
 				for (Benefit benefit : benefitList.getBenefits()) {
 					if ((benefit.getSelectBenefitOnFPTPage()) && (benefit.getAiresManagedService().equals("Yes"))) {
+						selectServiceAndSubService(benefit);
+						displayActivityTable();
 						enterActDateForTracingPrompt(
 								IRIS_PageMaster.getTableObject(_IRIS,
 										"IRIS.Presentation.assignment.activityFinance.ActivityPanel$1"),

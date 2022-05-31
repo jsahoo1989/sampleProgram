@@ -310,4 +310,5 @@ public class MobilityXConstants {
 	public static final String PRE_INITIAL_TRACING = "Pre Initial Tracing";
 	public static final String POST_INITIAL_TRACING = "Post Initial Tracing";
 	public static final String POST_END_TRACING = "Post End Tracing";
+	public static final String SUBMIT_MY_BUNDLE_BUTTON = "Yes - submit my bundle";
 }

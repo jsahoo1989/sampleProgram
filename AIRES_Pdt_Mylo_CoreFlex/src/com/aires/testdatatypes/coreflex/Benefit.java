@@ -27,8 +27,17 @@ public class Benefit {
 	private String initialTracingPrompt;
 	private String endTracingPrompt;
 	private String postInitialTracingCardStatus;
-	private String postEndTracingCardStatus;	
+	private String postEndTracingCardStatus;
+	private boolean multipleBenefitSubmission;
 	
+	public boolean getMultipleBenefitSubmission() {
+		return multipleBenefitSubmission;
+	}
+
+	public void setMultipleBenefitSubmission(boolean multipleBenefitSubmission) {
+		this.multipleBenefitSubmission = multipleBenefitSubmission;
+	}
+
 	public String getPostInitialTracingCardStatus() {
 		return postInitialTracingCardStatus;
 	}

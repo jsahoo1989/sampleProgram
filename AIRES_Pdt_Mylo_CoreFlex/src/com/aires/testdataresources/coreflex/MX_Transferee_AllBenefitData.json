@@ -60,7 +60,8 @@
 					"grossUp":"Yes",
 					"reimbursedBy":"Aires",
 					"comment":"Test Flex Duplicate Housing Benefit Comment",
-					"payments":"Allowance/Cashout"
+					"payments":"Allowance/Cashout",
+					"multipleBenefitSubmission": false
 				},
 				{
 					"benefitType": "Other Housing Benefit",
@@ -72,12 +73,13 @@
 					"airesManagedService":"No",
 					"multipleBenefitSelection": "Yes",
 					"numberOfBenefitSelected": 1,
-					"selectBenefitOnFPTPage": true,
-					"deleteBenefitOnMBBPage":true,
+					"selectBenefitOnFPTPage": false,
+					"deleteBenefitOnMBBPage":false,
 					"grossUp":"Yes",
 					"reimbursedBy":"Aires",
 					"comment":"Test Other Housing Benefit Comment",
-					"payments":"Expense Reimbursement"
+					"payments":"Expense Reimbursement",
+					"multipleBenefitSubmission": false
 				},
 				{
 					"benefitType": "Temporary Living",
@@ -105,7 +107,8 @@
 					"initialTracingPrompt":"Move-in/check-In date",
 					"postInitialTracingCardStatus":"Move In",
 					"endTracingPrompt":"Move-out/check-out date",
-					"postEndTracingCardStatus":"Move out"		
+					"postEndTracingCardStatus":"Move out",
+					"multipleBenefitSubmission": true	
 				}
 			]
 		},
@@ -127,7 +130,8 @@
 					"grossUp":"Yes",
 					"reimbursedBy":"Aires",
 					"comment":"Test Flex Lump Sum Benefit Comment",
-					"payments":"Allowance/Cashout"
+					"payments":"Allowance/Cashout",
+					"multipleBenefitSubmission": false	
 				}
 			]
 		},
@@ -160,7 +164,8 @@
 					"initialTracingPrompt":"Start Date of Language Training",
 					"postInitialTracingCardStatus":"Begin training",
 					"endTracingPrompt":"End Date of Language Training",
-					"postEndTracingCardStatus":"Training complete"
+					"postEndTracingCardStatus":"Training complete",
+					"multipleBenefitSubmission": true	
 				},
 				{
 					"benefitType": "Cultural Training",
@@ -188,7 +193,8 @@
 					"initialTracingPrompt":"Cultural training start date",
 					"postInitialTracingCardStatus":"Begin training",
 					"endTracingPrompt":"Cultural training end date",
-					"postEndTracingCardStatus":"Training complete"
+					"postEndTracingCardStatus":"Training complete",
+					"multipleBenefitSubmission": false	
 				}
 			]
 		}

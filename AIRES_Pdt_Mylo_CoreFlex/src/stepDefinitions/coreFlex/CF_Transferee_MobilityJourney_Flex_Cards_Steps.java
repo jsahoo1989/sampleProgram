@@ -296,5 +296,32 @@ public class CF_Transferee_MobilityJourney_Flex_Cards_Steps {
 				.format(MobilityXConstants.FAILED_TO_VERIFY_CORE_BENEFIT_CARD, CoreConstants.FAIL, pageName));
 	
 	}
+	
+	@When("^he selects and submit 'Aires Managed' benefits again on 'My Benefit Bundles' page$")
+	public void he_selects_and_submit_Aires_Managed_benefits_again_on_My_Benefit_Bundles_page() throws Throwable {
+		mxTransfereeJourneyHomePage.clickElementOfPage(MobilityXConstants.MANAGE_MY_POINTS);
+		Assert.assertTrue(mxTransfereeFlexPlanningToolPage.isFlexPlanningToolHomePageDisplayed(),
+				MessageFormat.format(MobilityXConstants.FLEX_PLANNING_TOOL_PAGE_NOT_DISPLAYED, CoreConstants.FAIL));
+		Assert.assertTrue(mxTransfereeFlexPlanningToolPage.selectBenefitsForMultipleSubmission(),
+				MessageFormat.format(
+						MobilityXConstants.FAILED_TO_SELECT_BENEFITS_AND_PROCEED_TO_REVIEW_PAGE,
+						CoreConstants.FAIL));
+		mxTransfereeFlexPlanningToolPage.clickElementOfPage(MobilityXConstants.NEXT);
+		Assert.assertTrue(mxTransfereeMyBenefitsBundlePage.isMyBundlePageDisplayed(),
+				MessageFormat.format(MobilityXConstants.FAILED_TO_DISPLAY_MY_BENEFIT_BUNDLE_PAGE, CoreConstants.FAIL));
+		mxTransfereeMyBenefitsBundlePage.clickReviewAndSubmit();		
+		Assert.assertTrue(mxTransfereeMyBenefitsBundlePage.isSubmitBundlePopupDisplayed(),
+				MessageFormat.format(MobilityXConstants.SUBMIT_BUNDLE_POPUP_NOT_DISPLAYED, CoreConstants.FAIL));
+		mxTransfereeMyBenefitsBundlePage.reviewAndConfirmBenefitSubmission(
+				MobilityXConstants.SUBMIT_BENEFITS_OPTIONAL_NOTES,
+				CoreFunctions.getPropertyFromConfig("Transferee_firstName") + " "
+						+ CoreFunctions.getPropertyFromConfig("Transferee_lastName"),
+				MobilityXConstants.SUBMIT_MY_BUNDLE_BUTTON);	   
+	}
+
+	@Then("^multiple Flex and Core Cards for multiple submitted benefits should be displayed on \"([^\"]*)\" page$")
+	public void multiple_Flex_and_Core_Cards_for_multiple_submitted_benefits_should_be_displayed_on_page(String pageName) throws Throwable {
+	    
+	}
 
 }

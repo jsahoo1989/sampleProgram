@@ -419,23 +419,23 @@ public class BusinessFunctions {
 				element.getAttribute("title")));
 	}
 
-	public static String getTestRailIdAsPerEnvt(String tagValue, String scenarioTagName) {
+	public static String getTestRailIdAsPerApplication(String appName, String scenarioTagName) {
 		String value = null;
-		switch (tagValue) {
-		case CoreConstants.VALUE_AT_PRE_PROD:
-			value = scenarioTagName.substring(scenarioTagName.indexOf("Pre:") + 4,
-					scenarioTagName.lastIndexOf("Pre:") + 10);
+		switch (appName) {
+		case CoreConstants.MYLO:
+			value = scenarioTagName.substring(scenarioTagName.indexOf("Mylo:") + 5,
+					scenarioTagName.lastIndexOf("Mylo:") + 11);
 			break;
-		case CoreConstants.VALUE_AT_POST_PROD:
-			value = scenarioTagName.substring(scenarioTagName.indexOf("Post:") + 5,
-					scenarioTagName.lastIndexOf("Post:") + 11);
+		case CoreConstants.PDT:
+			value = scenarioTagName.substring(scenarioTagName.indexOf("Pdt:") + 4,
+					scenarioTagName.lastIndexOf("Pdt:") + 10);
 			break;
-		case CoreConstants.VALUE_AT_PERFORMANCE:
-			value = scenarioTagName.substring(scenarioTagName.indexOf("Perf:") + 5,
-					scenarioTagName.lastIndexOf("Perf:") + 11);
+		case CoreConstants.COREFLEX:
+			value = scenarioTagName.substring(scenarioTagName.indexOf("Coreflex:") + 9,
+					scenarioTagName.lastIndexOf("Coreflex:") + 15);
 			break;
 		default:
-			Assert.fail(tagValue + PDTConstants.NOT_EXIST);
+			Assert.fail(appName + PDTConstants.NOT_EXIST);
 		}
 		return value;
 	}
@@ -453,10 +453,10 @@ public class BusinessFunctions {
 			sectionID = 49911;
 			break;
 		case CoreConstants.PDT:
-			sectionID = 49911;
+			sectionID = 49817;
 			break;
 		case CoreConstants.COREFLEX:
-			sectionID = 49911;
+			sectionID = 49912;
 			break;
 		default:
 			Assert.fail(CoreConstants.TAG_VALUE + PDTConstants.NOT_EXIST);

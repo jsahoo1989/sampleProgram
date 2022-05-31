@@ -26,7 +26,7 @@ import com.aires.utilities.Log;
 import com.aires.utilities.TestRail;
 
 public class CreateTestRun_InTestRail_Test {
-	public static String testRunName = CoreConstants.TEST_RUN_NAME +CoreConstants.TAG_VALUE + CoreConstants.AUTOMATION_TEST_RUN + CoreFunctions.timeStamp;
+	public static String testRunName = CoreConstants.TEST_RUN_NAME +System.getProperty("application") + "Regression" + CoreConstants.AUTOMATION_TEST_RUN + CoreFunctions.timeStamp;
 	
 	@Test
 	public void CreateNew_TestRunID_InTestRail() {

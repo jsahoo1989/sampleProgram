@@ -4,7 +4,7 @@ Feature: Validate the functionality of Mylo Dashboard Home page
 Background: Login to  Mylo application
     Given he has logged into the 'Mylo' application
     
-@IRIS-582 @217537 @Mylo-Regression
+@IRIS-582 @Mylo:217537 @Mylo-Regression
 Scenario Outline: Mylo-Validate Select Query parameters from Assignment Options
 Given he is on Mylo Dashboard Home page
 When he clicks on the "<SectionType>" "<SubSection>" option in the Mylo Menu on the sidebar
@@ -18,7 +18,7 @@ Examples:
      	| Journey     |       None |
      	| Hamburger	  |	     Query |
 
-@IRIS-666 @217538 @Mylo-Regression
+@IRIS-666 @Mylo:217538 @Mylo-Regression
 Scenario: Mylo-Validate the functionality for Search Results in Query UI screen
 Given he is on Mylo Dashboard Home page
 And he selects "File" section after clicking on "Journey" option in the Mylo Menu on the sidebar

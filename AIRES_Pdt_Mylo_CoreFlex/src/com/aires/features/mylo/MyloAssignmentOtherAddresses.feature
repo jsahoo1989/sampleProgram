@@ -4,7 +4,7 @@ Feature: Validate the functionality of Mylo Assignment Other Addresses section
 Background: Login to  Mylo application and navigate to MyloAssignment Summart Page for given File Id
     Given he has logged into the 'Mylo' application
    
-@IRIS-830 @217500 @Mylo-Regression
+@IRIS-830 @Mylo:217500 @Mylo-Regression
 Scenario:  Mylo-Validate Country and State/Territory Dropdown field for both Mailing and Temporary Address under Other Addresses section on Mylo Journey page
 Given he is on "Mailing address" section after clicking on 'Add' link displayed in left panel under "Other Address" section for file ID "611127"
 And "USA" is the first country to be displayed with remaining countries in alphabetical order in "Country" dropdown field
@@ -12,7 +12,7 @@ And corresponding States and Territories is displayed in the 'State/Territory' d
 When he enters "Random" "Country" besides India, US or Canada
 Then "State" field should be a free text field with label as "State/Province"
 
-@IRIS-830 @217501 @Mylo-Regression
+@IRIS-830 @Mylo:217501 @Mylo-Regression
 Scenario:  Mylo-Validate Country and State/Territory Dropdown field for both Mailing and Temporary Address under Other Addresses section on Mylo Journey page 
 Given he is on "Temporary address" section after clicking on 'Add' link displayed in left panel under "Other Address" section for file ID "611127"
 And "USA" is the first country to be displayed with remaining countries in alphabetical order in "Country" dropdown field
@@ -20,7 +20,7 @@ And corresponding States and Territories is displayed in the 'State/Territory' d
 When he enters "Random" "Country" besides India, US or Canada
 Then "State" field should be a free text field with label as "State/Province"
 
-@IRIS-830 @217502 @Mylo-Regression
+@IRIS-830 @Mylo:217502 @Mylo-Regression
 Scenario:  Mylo-Validate Save functionality and Warning Messages for City, ZipCode, Address1,Address2,State and FromDate field for Mailing Address under Other Addresses section on Mylo Journey page  
 Given he is on "Mailing address" section after clicking on 'Add' link displayed in left panel under "Other Address" section for file ID "323419"
 And he enters below invalid data for mentioned fields with other mandatory data being provided for "Mailing address" section
@@ -42,7 +42,7 @@ Then below fieldValues should be successfully saved under "Mailing address Dropd
 |Mailing address|USA    |Soldotna            |Alaska|99669                  |12/08/2021              |362 Ridgewood Dr        |PO BOX 1                |
 And Saved data should get deleted after clicking on "Delete" button under "Mailing address Dropdown" section
 
-@IRIS-830 @217503 @Mylo-Regression
+@IRIS-830 @Mylo:217503 @Mylo-Regression
 Scenario:  Mylo-Validate Save functionality and Warning Messages for City, ZipCode, Address1,Address2,State and FromDate field for Temporary Address under Other Addresses section on Mylo Journey page  
 Given he is on "Temporary address" section after clicking on 'Add' link displayed in left panel under "Other Address" section for file ID "323419"
 And he enters below invalid data for mentioned fields with other mandatory data being provided for "Temporary address" section
@@ -62,7 +62,7 @@ Then below fieldValues should be successfully saved under "Temporary address Dro
 |Temporary address|USA    |Soldotna              |Alaska|99669                    |12/08/2021                |362 Ridgewood Dr          |PO BOX 1                  |
 And Saved data should get deleted after clicking on "Delete" button under "Temporary address Dropdown" section
 
-@IRIS-830 @217504 @Mylo-Regression
+@IRIS-830 @Mylo:217504 @Mylo-Regression
 Scenario:  Mylo-Validate Warning Messages for all fields with SpecialCharacters for both Mailing and Temporary Address under Other Addresses section on Mylo Journey page 
 Given he is on "Mailing address" section after clicking on 'Add' link displayed in left panel under "Other Address" section for file ID "611085"
 Then messages corresponding to below fields should be displayed after entering "specialCharacters" along with the mandatory data for both "Mailing address", "Temporary address" section 
@@ -74,7 +74,7 @@ Then messages corresponding to below fields should be displayed after entering "
 |State Text Field   |Tag Scripts are not allowed in state|
 |Comments           |Tag Scripts are not allowed in comment|
 
-@IRIS-830 @217505 @Mylo-Regression
+@IRIS-830 @Mylo:217505 @Mylo-Regression
 Scenario:  Mylo-Validate Save functionality on Boundary Conditions for City, ZipCode, Address1,Address2,State and FromDate field for Mailing Address under Other Addresses section on Mylo Journey page  
 Given he is on "Mailing address" section after clicking on 'Add' link displayed in left panel under "Other Address" section for file ID "611086"
 When he clicks on "Save" button after entering below valid data for respective fields
@@ -91,7 +91,7 @@ Then entered data for below fields should be successfully saved in "Mailing addr
 |Mailing address Country |
 And Saved data should get deleted after clicking on "Delete" button under "Mailing address Dropdown" section
 
-@IRIS-830 @217506 @Mylo-Regression 
+@IRIS-830 @Mylo:217506 @Mylo-Regression 
 Scenario:  Mylo-Validate Save functionality on Boundary Conditions for City, ZipCode, Address1,Address2,State and FromDate field for Temporary Address under Other Addresses section on Mylo Journey page  
 Given he is on "Temporary address" section after clicking on 'Add' link displayed in left panel under "Other Address" section for file ID "611086"
 When he clicks on "Save" button after entering below valid data for respective fields
@@ -108,7 +108,7 @@ Then entered data for below fields should be successfully saved in "Temporary ad
 |Temporary address Country |
 And Saved data should get deleted after clicking on "Delete" button under "Temporary address Dropdown" section
 
-@IRIS-830 @217507 @Mylo-Regression
+@IRIS-830 @Mylo:217507 @Mylo-Regression
 Scenario:  Mylo-Validate Warning Messages for Mandatory fields of Mailing Address under Other Addresses section on Mylo Journey page 
 Given he is on "Mailing address" section after clicking on 'Add' link displayed in left panel under "Other Address" section for file ID "482352"
 And he enters below invalid data combination for mandatory fields for "Mailing address" section
@@ -128,7 +128,7 @@ Then entered data for below fields should be successfully saved in "Mailing addr
 |Mailing address Country |
 And Saved data should get deleted after clicking on "Delete" button under "Mailing address Dropdown" section
 
-@IRIS-830 @217508 @Mylo-Regression
+@IRIS-830 @Mylo:217508 @Mylo-Regression
 Scenario:  Mylo-Validate Warning Messages for Mandatory fields of Temporary Address under Other Addresses section on Mylo Journey page  
 Given he is on "Temporary address" section after clicking on 'Add' link displayed in left panel under "Other Address" section for file ID "611090"
 And he enters below invalid data combination for mandatory fields for "Temporary address" section
@@ -146,7 +146,7 @@ Then entered data for below fields should be successfully saved in "Temporary ad
 |Temporary address Country |
 And Saved data should get deleted after clicking on "Delete" button under "Temporary address Dropdown" section
 
-@IRIS-830 @217509 @Mylo-Regression
+@IRIS-830 @Mylo:217509 @Mylo-Regression
 Scenario:  Mylo-Validate Saved Data and Type Dropdown selection for both Mailing and Temporary Address under Other Addresses section  on Mylo Journey page 
 Given he has saved below data on "Temporary address" under Other Addresses section after navigating to Assignment Page for file ID "611127"
 |SectionType      |Country|Temporary address City|State |Temporary address ZipCode|Temporary address FromDate|Temporary address address1|Temporary address address2|					 					  

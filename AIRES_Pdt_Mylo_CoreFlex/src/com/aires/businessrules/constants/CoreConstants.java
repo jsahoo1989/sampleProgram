@@ -94,7 +94,7 @@ public class CoreConstants {
 	public static final String TEST_RAIL_URL = "https://testrail.aires.com/testrail/";
 
 	// TestRail Suite and Section IDs -- AIRES
-	public static final String TEST_RUN_NAME = "AIRES_PDT_MYLO_COREFLEX_";
+	public static final String TEST_RUN_NAME = "AIRES_Automation_";
 	public static final String NEW_TEST_RUN_ID_CREATED_IN_TESTRAIL_AS = "New Test Run ID created in Test Rail as : ";
 	public static final String AUTOMATION_TEST_RUN = "_TestRun_";
 	public static final String EXECUTION_DONE_CLOSE_TEST_RUN_ID = "Execution Completed!! Closing the Test Run ID : ";

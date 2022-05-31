@@ -49,3 +49,23 @@ Feature: Validate the Mobility Journey Cards Functionality of Flex Aires Managed
     And he has verified submitted Aires Managed Benefit status updated to "Starting Soon" on "My Benefit Bundle" page
     When he change the SubService "Core/Flex" type of the following 'Aires Managed' benefit to "Core" on Services tab of IRIS application
     Then submitted Flex Cards should not be displayed under 'Service Monitoring' section of "Mobility Journey Home" page
+    
+    @End-To_End_CoreFlex @MultipleBenefitSubmission @AllCards
+  Scenario: MXTransferee - Verifying multiple flex cards are displayed for multiple submission of Aires Managed benefits on Mobility Journey Home page
+    Given he has logged into 'MobilityX' application after creating a new 'Transferee' through IRIS application for policy setup in 'Policy Digitization Tool'
+    And he has validated 'Assignment-Policy' details after selecting below option displayed on 'Welcome' dialog
+      | WelcomeDialogSelection               |
+      | No thanks, I prefer to do this later |
+    And he has navigated to "FleX Planning Tool" after clicking on 'Manage my Points' button on "Mobility Journey Home" page
+    And he has navigated to "My Benefits Bundle" page after validating and selecting 'Aires Managed' benefit on "FleX Planning Tool" page
+    And he has clicked on "Review and Submit" button after validating 'Aires Managed' benefit details listed under 'Selected Benefits' section on "My Benefits Bundle" page
+    And he has clicked on "Yes - submit my bundle" button after entering Transferee name on "Submit Bundle Confirmation" dialog to submit 'Aires Managed' benefit
+    And he has verified submitted Aires Managed Benefit status updated to "Submitted" on "My Benefit Bundle" page
+    And he has verified 'Aires Managed' benefit card not added under 'Service Monitoring' section of "Mobility Journey Home" page
+    And he has created Service and SubService for 'Aires Managed' benefits of CoreFlex type "Both" in Services tab of IRIS application
+    And he has verified submitted Aires Managed Benefit Flex and Core card status updated to "Starting Soon" on "Mobility Journey Home" page - "Pre Initial Tracing"
+    And he has verified submitted Aires Managed Benefit status updated to "Starting Soon" on "My Benefit Bundle" page
+    And he has Selected and Submitted multiple 'Aires Managed' benefits on 'My Benefit Bundles' page
+    When he creates additional "Both" type Subservice for submitted 'Aires Managed' benefits in Services tab of IRIS application
+    Then multiple Flex Cards with status "Starting Soon" should be displayed for multiple submission of 'Aires Managed' benefits on "Mobility Journey Home" page
+    

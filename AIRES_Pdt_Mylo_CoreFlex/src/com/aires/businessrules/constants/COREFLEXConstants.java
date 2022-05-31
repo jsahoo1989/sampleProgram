@@ -456,4 +456,6 @@ public class COREFLEXConstants {
 	public static final String MANAGE_THIS_BENEFIT_BUTTON_DISPLAYED_ON_FLEX_BENEFIT_CARD = "{0}Manage this Benefit button displayed in ''{1}'' Mobility Journey card. ";
 	public static final String MANAGE_THIS_BENEFIT_BUTTON_NOT_DISPLAYED_ON_FLEX_BENEFIT_CARD = "{0}Manage this Benefit button NOT displayed in ''{1}'' Mobility Journey card. ";
 	public static final String CONCIERGE_SERVICES = "Concierge Services";
+	public static final String EXCEPTION_OCCURED_WHILE_VERIFYING_MULTIPLE_SUBMISSION_FLEX_BENEFIT_CARD_DETAILS = "{0}Exception occured while verifying Multiple Submission Flex Benefit card Details on Mobility Journey Home Page. Exception : ''{1}''.";
+	public static final String SUCCESSFULLY_VERIFIED_MULTIPLE_SUBMISSION_FLEX_BENEFIT_CARD_DETAILS = "{0}Successfully verified Multiple Submission Flex benefit Card Details.";
 }

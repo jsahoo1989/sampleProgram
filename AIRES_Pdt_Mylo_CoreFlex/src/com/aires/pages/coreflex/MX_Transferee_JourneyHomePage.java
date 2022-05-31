@@ -2,6 +2,7 @@ package com.aires.pages.coreflex;
 
 import java.text.DecimalFormat;
 import java.text.MessageFormat;
+import java.util.ArrayList;
 import java.util.List;
 
 import org.openqa.selenium.By;
@@ -600,9 +601,9 @@ public class MX_Transferee_JourneyHomePage extends Base {
 		return CoreFunctions.isElementExist(driver, _serviceNotSetupCFCard, 10);
 	}
 
-	public boolean isFlexBenefitCardVerified(String expectedStatus,String tracingSelection) {
+	public boolean isFlexBenefitCardVerified(String expectedStatus, String tracingSelection) {
 		try {
-			return verifyFlexBenefitCardDetails(expectedStatus,tracingSelection);
+			return verifyFlexBenefitCardDetails(expectedStatus, tracingSelection);
 		} catch (Exception e) {
 			Reporter.addStepLog(
 					MessageFormat.format(COREFLEXConstants.EXCEPTION_OCCURED_WHILE_VERIFYING_FLEX_BENEFIT_CARD_DETAILS,
@@ -766,7 +767,8 @@ public class MX_Transferee_JourneyHomePage extends Base {
 		return isFlexCardDetailsVerified;
 	}
 
-	private boolean verifyManageThisBenefitButton(int indexBenefitCard, String tracingSelection,String expectedStatus) {
+	private boolean verifyManageThisBenefitButton(int indexBenefitCard, String tracingSelection,
+			String expectedStatus) {
 		try {
 			if ((tracingSelection.equals(MobilityXConstants.CANCELED))
 					|| (tracingSelection.equals(MobilityXConstants.POST_END_TRACING))) {
@@ -788,12 +790,14 @@ public class MX_Transferee_JourneyHomePage extends Base {
 
 	private boolean verifyManageThisBenefitButtonNotDisplayed(String expectedStatus) {
 		if (CoreFunctions.isElementExist(driver, flexCardManageThisBenefitButton, 3)) {
-			Reporter.addStepLog(MessageFormat.format(
-					COREFLEXConstants.MANAGE_THIS_BENEFIT_BUTTON_DISPLAYED_ON_FLEX_BENEFIT_CARD, CoreConstants.FAIL,expectedStatus));
+			Reporter.addStepLog(
+					MessageFormat.format(COREFLEXConstants.MANAGE_THIS_BENEFIT_BUTTON_DISPLAYED_ON_FLEX_BENEFIT_CARD,
+							CoreConstants.FAIL, expectedStatus));
 			return false;
 		} else {
 			Reporter.addStepLog(MessageFormat.format(
-					COREFLEXConstants.MANAGE_THIS_BENEFIT_BUTTON_NOT_DISPLAYED_ON_FLEX_BENEFIT_CARD, CoreConstants.PASS,expectedStatus));
+					COREFLEXConstants.MANAGE_THIS_BENEFIT_BUTTON_NOT_DISPLAYED_ON_FLEX_BENEFIT_CARD, CoreConstants.PASS,
+					expectedStatus));
 			return true;
 		}
 	}
@@ -1150,6 +1154,80 @@ public class MX_Transferee_JourneyHomePage extends Base {
 
 		}
 		return isCoreCardNotDisplayed;
+	}
+
+	public boolean isMultipleSubmissionFlexBenefitCardVerified(String expectedStatus, String tracingSelection) {
+		boolean isMultipleFlexCardDetailsVerified = false;
+		boolean flag = false;
+		try {
+			for (FlexBenefit benefitList : flexBenefits) {
+				for (Benefit benefit : benefitList.getBenefits()) {
+					if ((benefit.getMultipleBenefitSubmission())) {
+						int multipleSubmissionFlexCardCount = (int) flexCardBenefitDisplayName.stream()
+								.filter(x -> x.getText().equals(benefit.getBenefitDisplayName())).count();
+						if (multipleSubmissionFlexCardCount > 1) {
+							isMultipleFlexCardDetailsVerified = verifyMultipleFlexCards(benefit,
+									multipleSubmissionFlexCardCount,expectedStatus,tracingSelection);
+						}						
+						if (!isMultipleFlexCardDetailsVerified) {
+							return false;
+						} else {
+							flag = true;
+							CoreFunctions.scrollToElementUsingJS(driver, _textPolicyFileID,
+									COREFLEXConstants.POLICY_FILE_ID);
+						}
+					} else {
+						isMultipleFlexCardDetailsVerified = true;
+					}
+				}
+			}
+		} catch (Exception e) {
+			Reporter.addStepLog(
+					MessageFormat.format(COREFLEXConstants.EXCEPTION_OCCURED_WHILE_VERIFYING_MULTIPLE_SUBMISSION_FLEX_BENEFIT_CARD_DETAILS,
+							CoreConstants.FAIL, e.getMessage()));
+			return false;
+		}
+		if (isMultipleFlexCardDetailsVerified && flag) {
+			Reporter.addStepLog(MessageFormat.format(COREFLEXConstants.SUCCESSFULLY_VERIFIED_MULTIPLE_SUBMISSION_FLEX_BENEFIT_CARD_DETAILS,
+					CoreConstants.PASS));
+		}
+		return isMultipleFlexCardDetailsVerified;
+	}
+
+	private boolean verifyMultipleFlexCards(Benefit benefit, int multipleSubmissionFlexCardCount, String expectedStatus, String tracingSelection) {
+		int counter = 0;
+		boolean isMultipleFlexCardDetailsVerified = false;
+		try {		
+		List<Integer> multipleFlexCardIndex = getMultipleFlexCardIndexes(benefit);
+		while (counter < multipleSubmissionFlexCardCount) {
+			isMultipleFlexCardDetailsVerified = verifyFlexCardDetails(multipleFlexCardIndex.get(counter), benefit)
+					&& verifyFlexCardStatus(multipleFlexCardIndex.get(counter), benefit, tracingSelection)
+					&& verifyManageThisBenefitButton(multipleFlexCardIndex.get(counter), tracingSelection, expectedStatus);
+			counter++;
+			
+			if(!isMultipleFlexCardDetailsVerified)
+				return false;
+			else
+				CoreFunctions.scrollToElementUsingJS(driver, _textPolicyFileID,
+						COREFLEXConstants.POLICY_FILE_ID);
+		}
+		}catch(Exception e) {
+			Reporter.addStepLog(
+					MessageFormat.format(COREFLEXConstants.EXCEPTION_OCCURED_WHILE_VERIFYING_MULTIPLE_SUBMISSION_FLEX_BENEFIT_CARD_DETAILS,
+							CoreConstants.FAIL, e.getMessage()));
+			return false;
+		}		
+		return isMultipleFlexCardDetailsVerified;
+	}
+
+	private List<Integer> getMultipleFlexCardIndexes(Benefit benefit) {
+		List<Integer> flexCardIndexes = new ArrayList<Integer>();
+		for (WebElement element : flexCardBenefitDisplayName) {
+			if (element.getText().equals(benefit.getBenefitDisplayName())) {
+				flexCardIndexes.add(flexCardBenefitDisplayName.indexOf(element));
+			}
+		}
+		return flexCardIndexes;
 	}
 
 }

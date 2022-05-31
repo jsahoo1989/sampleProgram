@@ -469,8 +469,6 @@ public class IRIS_AssignmentServicePage extends BasePage {
 						benefit.setIrisSubserviceID(String.valueOf(
 								new Double(IRIS_PageMaster.getTableObjectWithIndex(_IRIS, "javax.swing.JTable", 1)
 										.getCell(0, IRISConstants.ID_TEXT).getValue().toString()).intValue()));
-						System.out.println(
-								benefit.getBenefitDisplayName() + " SubserviceID : " + benefit.getIrisSubserviceID());
 						subServiceIDMap.put(benefit.getIrisServiceName(), benefit.getIrisSubserviceID());
 						CoreFunctions.waitHandler(2);
 					}
@@ -479,6 +477,35 @@ public class IRIS_AssignmentServicePage extends BasePage {
 		} catch (Exception e) {
 			Reporter.addStepLog(MessageFormat.format(
 					IRISConstants.EXCEPTION_OCCURED_WHILE_ADDING_SERVICE_SUBSERVICE_ON_SERVICES_TAB_OF_IRIS_APPLICATION,
+					CoreConstants.FAIL, e.getMessage()));
+		}
+
+	}
+	
+	public void addAdditionalSubService(String coreFlexType) {
+		subServiceIDMap = new HashMap<String, String>();
+		try {
+			for (FlexBenefit benefitList : flexBenefits) {
+				for (Benefit benefit : benefitList.getBenefits()) {
+					if ((benefit.getMultipleBenefitSubmission())) {
+						searchAndSelectAddedService(getTableName(IRISConstants.SERVICE), IRISConstants.NAME,
+								benefit.getIrisServiceName());
+						clickOnAddSubServiceButton();
+						addSubService(IRISConstants.SUB_SERVICE, benefit.getIrisSubserviceType(),
+								benefit.getIrisSubserviceName(), coreFlexType);
+						clickSaveButton();
+						benefit.setIrisSubserviceID(String.valueOf(
+								new Double(IRIS_PageMaster.getTableObjectWithIndex(_IRIS, "javax.swing.JTable", 1)
+										.getCell(0, IRISConstants.ID_TEXT).getValue().toString()).intValue()));
+						subServiceIDMap.put(benefit.getIrisServiceName(), benefit.getIrisSubserviceID());
+						CoreFunctions.waitHandler(2);
+						System.out.println("SubserviceMap : "+subServiceIDMap);
+					}
+				}
+			}
+		} catch (Exception e) {
+			Reporter.addStepLog(MessageFormat.format(
+					IRISConstants.EXCEPTION_OCCURED_WHILE_ADDING_ADDITIONAL_SUBSERVICE_ON_SERVICES_TAB_OF_IRIS_APPLICATION,
 					CoreConstants.FAIL, e.getMessage()));
 		}
 

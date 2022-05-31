@@ -20,4 +20,4 @@ Feature: Validate the Mobility Journey Cards Functionality of Core Aires Managed
     And he has validated 'Aires Managed' benefit details listed under 'Selected Benefits' section on "My Benefits Bundle" page
     When he creates Service and SubService for 'Aires Managed' benefits of CoreFlex type "Core" in Services tab of IRIS application
     Then selected Aires Managed Benefit Core card having "Starting Soon" status should be displayed on "Mobility Journey Home" page - "Pre Initial Tracing"
-	And Flex card should not be displayed for Selected/Not-Submitted Aires Managed Benefit on "Mobility Journey Home" page
+	  And Flex card should not be displayed for Selected/Not-Submitted Aires Managed Benefit on "Mobility Journey Home" page

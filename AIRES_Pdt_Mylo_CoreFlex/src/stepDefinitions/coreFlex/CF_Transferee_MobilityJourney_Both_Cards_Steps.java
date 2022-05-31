@@ -110,7 +110,7 @@ public class CF_Transferee_MobilityJourney_Both_Cards_Steps {
 
 	@Given("^he has verified submitted Aires Managed Benefit status updated to \"([^\"]*)\" on \"([^\"]*)\" page$")
 	public void he_has_verified_submitted_Aires_Managed_Benefit_status_updated_to_on_page(String expectedStatus,
-			String pageName) throws Throwable {
+			String pageName) throws Throwable {		
 		Assert.assertTrue(mxTransfereeMyBenefitsBundlePage.validateSubmittedAiresManagedBenefitDetails(expectedStatus),
 				MessageFormat.format(MobilityXConstants.SUBMITTED_AIRES_MANAGED_BENEFIT_DETAILS_NOT_MATCHED,
 						CoreConstants.FAIL, pageName));

@@ -437,8 +437,12 @@ public class Mylo_AssignmentPage extends Base {
 
 	MyloAssignmentDetails assignmentDetails = FileReaderManager.getInstance().getMyloJsonReader()
 			.getAssignmentDetailsByApplication(MYLOConstants.IRIS);
+	//Commented Code is used for debugging in local
+	/*Mylo_AssignmentShipmentDetails assignmentShipmentDetails = FileReaderManager.getInstance().getMyloJsonReader()
+			.getAssignmentShipmentDetailsByEnv(CoreFunctions.getPropertyFromConfig("envt"));*/
+			
 	Mylo_AssignmentShipmentDetails assignmentShipmentDetails = FileReaderManager.getInstance().getMyloJsonReader()
-			.getAssignmentShipmentDetailsByEnv(CoreFunctions.getPropertyFromConfig("envt"));
+			.getAssignmentShipmentDetailsByEnv(System.getProperty("envt"));
 	
 	String updatedTeamMember, updatedPolicyType, updatedTaxTreatment, updatedOffice, updatedJourneyType, updatedTransferType,
 	updatedHomeStatus, updatedFileInfoCheckboxSelected, updatedTempAddressCityValue,
@@ -1169,6 +1173,16 @@ public class Mylo_AssignmentPage extends Base {
 			fileInfoDetailsmap.put(MYLOConstants.FILE_ID, assignmentDetails.transfereeEmailPhone_preprod.fileID);
 			fileInfoDetailsmap.put(MYLOConstants.CLIENT_ID, assignmentDetails.transfereeEmailPhone_preprod.clientID);
 			fileInfoDetailsmap.put(MYLOConstants.CLIENT_NAME, assignmentDetails.transfereeEmailPhone_preprod.clientName);
+			break;
+		case MYLOConstants.PARTNER_DATA:
+			fileInfoDetailsmap.put(MYLOConstants.FILE_ID, assignmentDetails.partnerData.fileID);
+			fileInfoDetailsmap.put(MYLOConstants.CLIENT_ID, assignmentDetails.partnerData.clientID);
+			fileInfoDetailsmap.put(MYLOConstants.CLIENT_NAME, assignmentDetails.partnerData.clientName);
+			break;
+		case MYLOConstants.PARTNER_ALL_DATA:
+			fileInfoDetailsmap.put(MYLOConstants.FILE_ID, assignmentDetails.partnerAllData.fileID);
+			fileInfoDetailsmap.put(MYLOConstants.CLIENT_ID, assignmentDetails.partnerAllData.clientID);
+			fileInfoDetailsmap.put(MYLOConstants.CLIENT_NAME, assignmentDetails.partnerAllData.clientName);
 			break;
 		default:
 			Assert.fail(MYLOConstants.ENTER_CORRECT_FIELD_NAME);

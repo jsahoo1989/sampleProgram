@@ -112,27 +112,17 @@ public class CoreConstants {
 	public static final String MYLO = "MYLO";
 	public static final String PDT = "PDT";
 	public static final String COREFLEX = "COREFLEX";
-	public static final String MYLO_UAT = "MYLO_UAT";
-	public static final String MYLO_UAT_URL = "https://relonetuat.aires.com/mylo-app/#/login";
-	public static final String MYLO_PREPROD ="MYLO_PREPROD";
-	public static final String MYLO_PREPROD_URL ="https://blueprinttest.aires.com/mylo-app";
-	public static final String MYLO_QA = "MYLO_QA";
-	public static final String MYLO_QA_URL = "https://relonetqa4.aires.com/mylo-app/";
-	public static final String PDT_TEST = "PDT_TEST";
-	public static final String PDT_TEST_URL = "https://blueprinttest.aires.com/blueprint/";
-	public static final String PDT_QA = "PDT_QA";
-	public static final String PDT_QA_URL = "https://blueprintqa.aires.com/blueprint/";
-	public static final String PDT_PROD = "PDT_PROD";
-	public static final String PDT_PROD_URL = "https://blueprint.aires.com/blueprint/";
-	public static final String PDT_DEV = "PDT_DEV";
-	public static final String PDT_DEV_URL = "http://corpqavl204:8005/policy-digitization-app/#/login?returnUrl=%2FviewPolicy";
-	public static final String PDT_UAT = "PDT_UAT";
-	public static final String PDT_UAT_URL = "https://blueprintuat.aires.com/blueprint/";
-	public static final String COREFLEX_UAT = "COREFLEX_UAT";
-	public static final String COREFLEX_UAT_URL = "https://relonetdev3.aires.com/policy-digitization-app";
-	public static final String COREFLEX_QA = "COREFLEX_QA";
-	public static final String COREFLEX_QA_URL = "https://relonetqa3.aires.com/policy-digitization-app/#/login";
-	public static final String MXTRANSFEREE_QA = "MXTRANSFEREE_QA";
+	public static final String MXTRANSFEREE_QA = "MXTransferee_QA";
+	public static final String MXTRANSFEREE_UAT = "MXTransferee_UAT";
+	public static final String MXTRANSFEREE_PREPROD = "MXTransferee_PREPROD";
 	public static final String MXTRANSFEREE_QA_URL = "https://relonetuat2.aires.com/mobilityx/faces/jsf/Login.jsf";
+	public static final String MXTRANSFEREE_UAT_URL ="https://relonetdev3.aires.com/mobilityx/faces/jsf/Login.jsf";
+	public static final String MXTRANSFEREE_PREPROD_URL ="https://relonettest2.aires.com/mobilityx/faces/jsf/Login.jsf";
+	public static final String TRANSMISSION_SUBMISSION_QA_URL= "https://relonetqa3.aires.com/flex-review-app";
+	public static final String TRANSMISSION_SUBMISSION_UAT_URL= "https://relonetdev3.aires.com/flex-review-app/#/viewrequest";
+	public static final String TRANSMISSION_SUBMISSION_PREPROD_URL= "https://blueprinttest.aires.com/flex-review-app/#/login";
+	public static final String TRANSMISSION_SUBMISSION_QA = "TransfereeSubmissions_QA";
+	public static final String TRANSMISSION_SUBMISSION_UAT = "TransfereeSubmissions_UAT";
+	public static final String TRANSMISSION_SUBMISSION_PREPROD = "TransfereeSubmissions_PREPROD";
 	
 }

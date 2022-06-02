@@ -70,6 +70,7 @@ public class Hooks {
 		Reporter.assignAuthor("AIRES - Automation - By : " + System.getProperty("user.name"));
 		testContext.initializeWebManager(scenario.getName().contains("IRIS"));
 		String appName=System.getProperty("application");
+		String url=System.getProperty("testURL");
 		if (scenario.getName().contains("IRIS")) {
 			testContext.getBasePage().invokeIrisApplication();
 			testContext.getBasePage().killExistingBrowsers();
@@ -80,9 +81,9 @@ public class Hooks {
 			testContext.getWebDriverManager().getDriver().navigate()
 					.to(FileReaderManager.getInstance().getConfigReader().getPDTApplicationUrl());
 		} else if (scenario.getName().contains("Mylo")) {
-			Log.info(FileReaderManager.getInstance().getConfigReader().getMyloApplicationUrl());
+			Log.info(FileReaderManager.getInstance().getConfigReader().getApplicationUrl("MYLO"));
 			testContext.getWebDriverManager().getDriver().navigate()
-					.to(FileReaderManager.getInstance().getConfigReader().getMyloApplicationUrl());
+					.to(FileReaderManager.getInstance().getConfigReader().getApplicationUrl("MYLO"));
 		} else if (scenario.getName().contains("CoreFlex")) {
 			Log.info(FileReaderManager.getInstance().getConfigReader().getCoreFlexPolicySetupApplicationUrl());
 			testContext.getWebDriverManager().getDriver().navigate()
@@ -107,18 +108,10 @@ public class Hooks {
 			testContext.getWebDriverManager().getDriver().navigate()
 					.to(FileReaderManager.getInstance().getConfigReader().getApplicationUrl("TransfereeSubmissions"));
 		}
-		
-		else if (appName.equals(CoreConstants.COREFLEX)&& scenario.getName().contains("CoreFlex")||
-				appName.equals(CoreConstants.PDT)&& scenario.getName().contains("PDT")||
-				appName.equals(CoreConstants.MYLO)&& scenario.getName().contains("Mylo")) {
-			Log.info(FileReaderManager.getInstance().getConfigReader().getApplicationUrl(System.getProperty("application")));
-			testContext.getWebDriverManager().getDriver().navigate()
-					.to(FileReaderManager.getInstance().getConfigReader().getApplicationUrl(System.getProperty("application")));
-		}
-		else{
-			Log.info("Please input the correct combination of application and tags");
-			Assert.fail("Please input the correct combination of application and tags");
-		}
+		else {
+			Log.info(url);
+			testContext.getWebDriverManager().getDriver().navigate().to(url);
+		}	
 	}
 
 	@After(order = 2)

@@ -123,17 +123,12 @@ public class ConfigFileReader {
 	}
 	
 	public void mapApplicationURL() {
-		mapEnvURL.put(CoreConstants.MYLO_UAT, CoreConstants.MYLO_UAT_URL);
-		mapEnvURL.put(CoreConstants.MYLO_PREPROD, CoreConstants.MYLO_PREPROD_URL);
-		mapEnvURL.put(CoreConstants.MYLO_QA, CoreConstants.MYLO_QA_URL);
-		mapEnvURL.put(CoreConstants.PDT_TEST, CoreConstants.PDT_TEST_URL);
-		mapEnvURL.put(CoreConstants.PDT_QA, CoreConstants.PDT_QA_URL);
-		mapEnvURL.put(CoreConstants.PDT_PROD, CoreConstants.PDT_PROD_URL);	
-		mapEnvURL.put(CoreConstants.PDT_DEV, CoreConstants.PDT_DEV_URL);	
-		mapEnvURL.put(CoreConstants.PDT_UAT, CoreConstants.PDT_UAT_URL);
-		mapEnvURL.put(CoreConstants.COREFLEX_UAT, CoreConstants.COREFLEX_UAT_URL);
-		mapEnvURL.put(CoreConstants.COREFLEX_QA, CoreConstants.COREFLEX_QA_URL);
 		mapEnvURL.put(CoreConstants.MXTRANSFEREE_QA, CoreConstants.MXTRANSFEREE_QA_URL);
+		mapEnvURL.put(CoreConstants.MXTRANSFEREE_UAT, CoreConstants.MXTRANSFEREE_UAT_URL);
+		mapEnvURL.put(CoreConstants.MXTRANSFEREE_PREPROD, CoreConstants.MXTRANSFEREE_PREPROD_URL);
+		mapEnvURL.put(CoreConstants.TRANSMISSION_SUBMISSION_QA, CoreConstants.TRANSMISSION_SUBMISSION_QA_URL);
+		mapEnvURL.put(CoreConstants.TRANSMISSION_SUBMISSION_UAT, CoreConstants.TRANSMISSION_SUBMISSION_UAT_URL);
+		mapEnvURL.put(CoreConstants.TRANSMISSION_SUBMISSION_PREPROD, CoreConstants.TRANSMISSION_SUBMISSION_PREPROD_URL);
 	}
 	
 	
@@ -229,20 +224,7 @@ public class ConfigFileReader {
 		default:
 			throw new RuntimeException(
 					"Browser Name Key value in Configuration.properties file is not matched : " + browserName);
-		}
-			
-			/*
-			if (browserName == null || browserName.equalsIgnoreCase("chrome"))
-			return DriverType.CHROME;
-		else if (browserName.equalsIgnoreCase("firefox"))
-			return DriverType.FIREFOX;
-		else if (browserName.equals("iexplorer") || browserName.equalsIgnoreCase("ie"))
-			return DriverType.INTERNETEXPLORER;
-		else if (browserName.equalsIgnoreCase("edge"))
-			return DriverType.EDGE;
-		else
-			throw new RuntimeException(
-					"Browser Name Key value in Configuration.properties is not matched : " + browserName);*/
+		}		
 	}
 
 	public EnvironmentType getEnvironment() {

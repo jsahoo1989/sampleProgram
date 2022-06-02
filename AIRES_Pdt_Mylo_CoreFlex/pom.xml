@@ -26,7 +26,8 @@
 					<systempropertyvariables>
 						<envt>${envt}</envt>
 						<browser>${browser}</browser>	
-						<application>${application}</application>	
+						<application>${application}</application>
+						<application>${testURL}</application>	
 					</systempropertyvariables>
 					<suiteXmlFiles>
 						<suiteXmlFiles>${suiteName}</suiteXmlFiles>

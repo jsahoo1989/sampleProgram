@@ -240,6 +240,26 @@
 			"provider": "Aires",
 			"journeyType": "Long-Term",
 			"office": "CRO"
+		},
+		"partnerData": {
+			"fileID": "639580",
+			"clientID": "92265",
+			"clientName": "MobilityX Inc.",
+			"status": "Booked",
+			"policyType": "Baxter Repay Test",
+			"provider": "Aires",
+			"journeyType": "Long-Term",
+			"office": "CRO"
+		},
+		"partnerAllData": {
+			"fileID": "639582",
+			"clientID": "92265",
+			"clientName": "MobilityX Inc.",
+			"status": "Booked",
+			"policyType": "Domestic Policy",
+			"provider": "Aires",
+			"journeyType": "Long-Term",
+			"office": "CRO"
 		}
 	}
 ]

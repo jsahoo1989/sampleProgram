@@ -48,9 +48,9 @@ public class MyloJourneyTransferee_Steps {
 		String fileID = myloAssignmentPage.getFileDetailsDataByFieldAndStatus(fileType, MYLOConstants.FILE_ID);
 		myloDashboardPage.selectOptionsForFileParameters(MYLOConstants.FILE_ID, fileID);
 		myloDashboardPage.clickExecuteButton();
-		myloJourneyPageTransfereeSection.highlightSectionHeader(sectionHeader);
+		myloJourneyPageTransfereeSection.verifySectionHeader(sectionHeader);
 		myloJourneyPageTransfereeSection.clickFieldsOnTransfereeSection(MYLOConstants.TRANSFEREE_FAMILY_DETAILS_BUTTON);
-		myloJourneyPageTransfereeSection.highlightSectionHeader(sectionHeader1);
+		myloJourneyPageTransfereeSection.verifySectionHeader(sectionHeader1);
 		myloJourneyPageTransfereeSection.clickFieldsOnTransfereeSection(expandSection);
 		MYLOConstants.TIME_AFTER_ACTION = new Date().getTime();
 		Reporter.addStepLog("<b>Total time taken by <i>'Given'</i> statement is :"
@@ -215,7 +215,7 @@ public class MyloJourneyTransferee_Steps {
 	public void data_for_field_should_be_removed_successfully_after_clicking_on_Delete_icon_under_section(
 			String section, String sectionType) {
 		MYLOConstants.TIME_BEFORE_ACTION = new Date().getTime();
-		myloJourneyPageTransfereeSection.highlightSectionHeader(MYLOConstants.TRANSFEREE);
+		myloJourneyPageTransfereeSection.verifySectionHeader(MYLOConstants.TRANSFEREE);
 		myloJourneyPageTransfereeSection.clickFieldsOnTransfereeSection(MYLOConstants.EDIT_BUTTON);
 		myloJourneyPageTransfereeSection.clickDeleteIcon(0);
 		if (section.equals(MYLOConstants.TRANSFEREE_ADD_PHONE))
@@ -243,7 +243,7 @@ public class MyloJourneyTransferee_Steps {
 	public void he_checks_the_preferred_box_for_another_number_after_clicking_on_button(String button)
 			throws Throwable {
 		MYLOConstants.TIME_BEFORE_ACTION = new Date().getTime();
-		myloJourneyPageTransfereeSection.highlightSectionHeader(MYLOConstants.TRANSFEREE);
+		myloJourneyPageTransfereeSection.verifySectionHeader(MYLOConstants.TRANSFEREE);
 		myloJourneyPageTransfereeSection.clickFieldsOnTransfereeSection(MYLOConstants.EDIT_BUTTON);
 		myloJourneyPageTransfereeSection.clickFieldsOnTransfereeSection(button);
 		myloJourneyPageTransfereeSection.clickDropdownFieldsOnTransfereeSection(MYLOConstants.TRANSFEREE_PHONE_PREFERRED,
@@ -300,7 +300,7 @@ public class MyloJourneyTransferee_Steps {
 	@Given("^message \"([^\"]*)\" is displayed after he hovers on \"([^\"]*)\" in Gender dropdown field$")
 	public void message_is_displayed_after_he_hovers_on_in_Gender_dropdown_field(String msg, String arg2) {
 		MYLOConstants.TIME_BEFORE_ACTION = new Date().getTime();
-		myloJourneyPageTransfereeSection.highlightSectionHeader(MYLOConstants.TRANSFEREE);
+		myloJourneyPageTransfereeSection.verifySectionHeader(MYLOConstants.TRANSFEREE);
 		myloJourneyPageTransfereeSection.clickFieldsOnTransfereeSection(MYLOConstants.EDIT_BUTTON);
 		Assert.assertTrue(myloJourneyPageTransfereeSection.getGenderXHoverMessage(msg));
 		Reporter.addStepLog("<b>Total time taken by <i>'And'</i> statement is :"

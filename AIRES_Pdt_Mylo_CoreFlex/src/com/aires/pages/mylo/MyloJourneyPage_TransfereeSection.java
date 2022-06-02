@@ -246,7 +246,7 @@ public class MyloJourneyPage_TransfereeSection extends Base {
 	 * @return
 	 * Highlight and Verify Transferee & Family Section Header Text
 	 */
-	public boolean highlightSectionHeader(String sectionName) {
+	public boolean verifySectionHeader(String sectionName) {
 		boolean flag = false;
 		switch (sectionName) {
 		case MYLOConstants.TRANSFEREE_FAMILY:
@@ -267,8 +267,8 @@ public class MyloJourneyPage_TransfereeSection extends Base {
 					sectionName);
 			CoreFunctions.scrollToElementUsingJavaScript(driver, _transfereeAndFamilySection,
 					MYLOConstants.TRANSFEREE_FAMILY);
-			CoreFunctions.highlightObject(driver, _transfereeAndFamilySectionHeaders.get(0));
-			flag = (_transfereeAndFamilySectionHeaders.get(0).getText().contains(MYLOConstants.TRANSFEREE_FAMILY));
+			CoreFunctions.highlightObject(driver, _transfereeAndFamilySectionHeaders.get(1));
+			flag = (_transfereeAndFamilySectionHeaders.get(1).getText().equals(sectionName+MYLOConstants.COLON));
 			break;
 		default:
 			Reporter.addStepLog(CoreConstants.FAIL + MYLOConstants.ENTER_CORRECT_SECTION_NAME);

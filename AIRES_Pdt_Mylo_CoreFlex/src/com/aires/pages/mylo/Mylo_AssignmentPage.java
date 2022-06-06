@@ -438,11 +438,11 @@ public class Mylo_AssignmentPage extends Base {
 	MyloAssignmentDetails assignmentDetails = FileReaderManager.getInstance().getMyloJsonReader()
 			.getAssignmentDetailsByApplication(MYLOConstants.IRIS);
 	//Commented Code is used for debugging in local
-	/*Mylo_AssignmentShipmentDetails assignmentShipmentDetails = FileReaderManager.getInstance().getMyloJsonReader()
-			.getAssignmentShipmentDetailsByEnv(CoreFunctions.getPropertyFromConfig("envt"));*/
-			
 	Mylo_AssignmentShipmentDetails assignmentShipmentDetails = FileReaderManager.getInstance().getMyloJsonReader()
-			.getAssignmentShipmentDetailsByEnv(System.getProperty("envt"));
+			.getAssignmentShipmentDetailsByEnv(CoreFunctions.getPropertyFromConfig("envt"));
+			
+	//Mylo_AssignmentShipmentDetails assignmentShipmentDetails = FileReaderManager.getInstance().getMyloJsonReader()
+		//	.getAssignmentShipmentDetailsByEnv(System.getProperty("envt"));
 	
 	String updatedTeamMember, updatedPolicyType, updatedTaxTreatment, updatedOffice, updatedJourneyType, updatedTransferType,
 	updatedHomeStatus, updatedFileInfoCheckboxSelected, updatedTempAddressCityValue,

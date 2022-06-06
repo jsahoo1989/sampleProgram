@@ -237,7 +237,7 @@ public class Mylo_DashboardHomePage extends Base {
 		while(_fileParameterList.size()==0) {
 			selectParameterFromQueryScreen(MYLOConstants.FILE);
 		}
-		CoreFunctions.explicitWaitTillElementListVisibility(driver, _fileParameterList);
+		//CoreFunctions.explicitWaitTillElementListVisibilityWithTime(driver, _fileParameterList,60);
 		WebElement getOptionElement = CoreFunctions.returnItemInListByText(driver, _fileParameterList, option);
 		if (option.contains(MYLOConstants.STATUS) || option.contains(MYLOConstants.OFFICE)
 				|| option.contains(MYLOConstants.COUNTRY) || option.contains(MYLOConstants.STATE)) {

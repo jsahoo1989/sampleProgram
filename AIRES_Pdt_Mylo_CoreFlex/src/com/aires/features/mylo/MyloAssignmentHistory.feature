@@ -10,8 +10,8 @@ Given he is on Mylo Assignment Summary page for file ID "482350"
 When he queries another file for file ID "611085"
 Then the prior file info should be displayed in the history card at the top of the page with the following data:
 |Transferee Name|FileId & Client Name   |Origin & Destination Address|
-|Unchus Slaughter |482350 (MobilityX Inc.)|Sussex, UK to Munich, DE|
-#|Virginia Woolf|482350 (AIRES-CIS-DEMO&'TEST(CLIENT))|chennai, IN to test, CA|
+#|Unchus Slaughter |482350 (MobilityX Inc.)|Sussex, UK to Munich, DE|
+|Virginia Woolf|482350 (AIRES-CIS-DEMO&'TEST(CLIENT))|Hartford, CT to test, CI|
 And the history card should continue to display after he refreshes the current session
 And the history card should no longer display at the top of the page after he clicks on X 
 

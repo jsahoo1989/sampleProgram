@@ -100,3 +100,11 @@ Then values should be successfully saved for different fields under Partner sect
 |Partner Email Address      |
 |Partner Email Type         |
 And data for "Partner Add Email" field should be removed successfully after clicking on Delete icon under Partner section
+
+@IRIS-1453 @Mylo:217499 @Mylo-Regression
+Scenario:  Mylo-Validate CheckBox selection of Phone and Email Field under Partner section on Mylo Journey page
+Given he is on Partner section after clicking on "Partner Dropdown arrow" displayed in right panel under "Transferee and Family" section for "Relocation Policy" fileID
+And partner already has a "Partner Phone number" as preferred number with "Partner Email Address" as preferred email
+When he checks the preferred box for another partner number after clicking on "Partner Add Phone" button
+Then previous selected preferred checkbox for "Partner Phone number" should be cleared with latest selected preferred box AS-IS under Partner section
+And previous selected preferred checkbox for "Partner Email Address" should be cleared with latest selected preferred box AS-IS after he checks the preferred box for another email on clicking "Partner Add Email" button under Partner section

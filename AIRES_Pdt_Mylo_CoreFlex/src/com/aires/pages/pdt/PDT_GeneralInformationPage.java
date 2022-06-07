@@ -21,6 +21,7 @@ import com.aires.businessrules.constants.PDTConstants;
 import com.aires.managers.FileReaderManager;
 import com.aires.pages.coreflex.CoreFlex_FlexPolicySetupPage;
 import com.aires.testdatatypes.coreflex.CoreFlex_PolicySetupPagesData;
+import com.aires.utilities.Log;
 import com.vimalselvam.cucumber.listener.Reporter;
 
 import cucumber.api.DataTable;
@@ -550,9 +551,9 @@ public class PDT_GeneralInformationPage extends Base {
 
 	public void enterGeneralInformationFields() {
 		try {
-			setTracingPrompt();
+			setTracingPrompt();			
+			CoreFunctions.clickElement(driver, _drpDwnPolicyType);
 			CoreFunctions.explicitWaitTillElementListVisibility(driver, _drpDwnPolicyTypeOptions);
-			CoreFunctions.clickElement(driver, _drpDwnPolicyType);			
 			String randPolicyType = _drpDwnPolicyTypeOptions
 					.get(CoreFunctions.getRandomNumber(0, _drpDwnPolicyTypeOptions.size() - 1)).getText();
 			CoreFunctions.selectItemInListByText(driver, _drpDwnPolicyTypeOptions, randPolicyType,
@@ -596,6 +597,7 @@ public class PDT_GeneralInformationPage extends Base {
 			timeAfterAction = new Date().getTime();	
 			BusinessFunctions.printTimeTakenByPageToLoad(timeBeforeAction, timeAfterAction, PDTConstants.POLICY_BENEFIT_CATEGORIES);
 		} catch (Exception e) {
+			e.printStackTrace();
 			Assert.fail(PDTConstants.FAILED_TO_FILL_GENERAL_INFO_FORM);
 		}
 
@@ -1080,4 +1082,27 @@ public class PDT_GeneralInformationPage extends Base {
 				expectedPageName, expectedPageName, true);
 	}
 
+	
+	public void navigatePolicyBenefitPage(String expectedPageName) {
+		try {
+			timeBeforeAction = new Date().getTime();			
+			CoreFunctions.clickUsingJS(driver, _btnNext, _btnNext.getText());
+			BusinessFunctions.fluentWaitForSpinnerToDisappear(driver, _progressBar);
+			timeAfterAction = new Date().getTime();	
+			BusinessFunctions.printTimeTakenByPageToLoad(timeBeforeAction, timeAfterAction, PDTConstants.POLICY_BENEFIT_CATEGORIES);	
+		} catch (Exception e) {
+			Assert.fail(MessageFormat.format(PDTConstants.FAILED_TO_NAVIGATE_TO_PAGE, PDTConstants.POLICY_BENEFIT_CATEGORIES, 
+					CoreConstants.FAIL));
+		}
+	}
+	
+	public void verifyGeneralInfoAndPolicyBenefitPage(PDT_PolicyBenefitCategoryPage policyBenefitCategoryPage) {
+		Assert.assertTrue(verifyPageNavigation(PDTConstants.GENERAL_INFORMATION),
+				MessageFormat.format(PDTConstants.FAILED_TO_NAVIGATE_TO_PAGE, PDTConstants.GENERAL_INFORMATION, 
+						CoreConstants.FAIL));
+		navigatePolicyBenefitPage(PDTConstants.POLICY_BENEFIT);
+		Assert.assertTrue(policyBenefitCategoryPage.verifyPolicyBenefitCategoryHeading(PDTConstants.POLICY_BENEFIT),
+				MessageFormat.format(PDTConstants.FAIL_TO_VERIFY_ELEMENT_VAL_ON_PAGE, CoreConstants.FAIL, PDTConstants.heading, PDTConstants.POLICY_BENEFIT_CATEGORIES, PDTConstants.POLICY_BENEFIT, policyBenefitCategoryPage.getElementText(PDTConstants.HEADING)));
+		Assert.assertTrue(policyBenefitCategoryPage.verifyIsPolicyBenefitCategoryChecked(policyBenefitCategoryPage.getBenefitCategoryName()), MessageFormat.format(PDTConstants.BENEFIT_CATEGORY_IS_NOT_SELECTED, CoreConstants.FAIL, policyBenefitCategoryPage.getBenefitCategoryName()));
+	}
 }

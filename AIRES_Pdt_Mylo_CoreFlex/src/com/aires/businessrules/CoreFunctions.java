@@ -392,7 +392,7 @@ public class CoreFunctions {
 	}
 
 	public static void explicitWaitTillElementListClickable(WebDriver driver, List<WebElement> Element) {
-		WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(25));
+		WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(90));
 		for (WebElement ele : Element) {
 			wait.until(ExpectedConditions.elementToBeClickable(ele));
 		}
@@ -618,7 +618,7 @@ public class CoreFunctions {
 	}
 
 	public static void clickElement(WebDriver driver, WebElement Element) {
-		waitTillElementClickable(driver, Element, 30);
+		waitTillElementClickable(driver, Element, 60);
 		try {
 			highlightObject(driver, Element);
 			Element.click();

@@ -13,7 +13,7 @@ Feature: Login to Policy App Application
       | userName   |
       | mxsso dev5 |
 
-  @pdtLogin @PDT-Regression
+  @PDT-Regression
   Scenario Outline: PDT - Login to Policy Digitization Application
     Given he is on Policy App login page
     And he enters "<userEmail>" and "<password>" in username and password field
@@ -25,7 +25,7 @@ Feature: Login to Policy App Application
       | userEmail                | password      | userName   | userStatus |
       | mxssodev5@corp.aires.com | F74#jd*187_NB | mxsso dev5 |    valid user        |
  
-  @viewPolicyList @PDT-Regression
+  @PDT-Regression
   Scenario: PDT - View Policy List after login
     Given he is on Policy App login page
     And he enters below login credentials in userEmail, password fields

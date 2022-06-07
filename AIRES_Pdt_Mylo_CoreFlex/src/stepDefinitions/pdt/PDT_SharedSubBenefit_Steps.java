@@ -8,6 +8,7 @@ import org.testng.Assert;
 
 import com.aires.businessrules.BusinessFunctions;
 import com.aires.businessrules.DbFunctions;
+import com.aires.businessrules.constants.COREFLEXConstants;
 import com.aires.businessrules.constants.CoreConstants;
 import com.aires.businessrules.constants.PDTConstants;
 import com.aires.cucumber.TestContext;
@@ -27,6 +28,7 @@ import com.aires.pages.pdt.PDT_ImmigrationPage;
 import com.aires.pages.pdt.PDT_LanguageTrainingPage;
 import com.aires.pages.pdt.PDT_OneTimePaymentReimbursemenPage;
 import com.aires.pages.pdt.PDT_OngoingPaymentReimbursementPage;
+import com.aires.pages.pdt.PDT_PolicyBenefitCategoryPage;
 import com.aires.pages.pdt.PDT_PreAcceptanceService;
 import com.aires.pages.pdt.PDT_PropertyManagementPage;
 import com.aires.pages.pdt.PDT_RentalAssistancePage;
@@ -35,6 +37,7 @@ import com.aires.pages.pdt.PDT_TemporaryLivingPage;
 import com.aires.pages.pdt.PDT_ViewPolicyPage;
 
 import cucumber.api.DataTable;
+import cucumber.api.java.en.And;
 import cucumber.api.java.en.Then;
 import cucumber.api.java.en.When;
 
@@ -62,6 +65,7 @@ public class PDT_SharedSubBenefit_Steps {
 	private PDT_PropertyManagementPage propertyManagementPage;
 	private PDT_HomePurchasePage homePurchasePage;
 	private PDT_HouseHoldGoodsPage houseHoldGoodsPage;
+	private PDT_PolicyBenefitCategoryPage policyBenefitCategoryPage;	
 	long timeBeforeAction, timeAfterAction;
 	
 	public PDT_SharedSubBenefit_Steps(TestContext context) {
@@ -88,6 +92,7 @@ public class PDT_SharedSubBenefit_Steps {
 		propertyManagementPage = testContext.getPageObjectManager().getPropertyManagementPage();
 		homePurchasePage = testContext.getPageObjectManager().getHomePurchasePage();
 		houseHoldGoodsPage =  testContext.getPageObjectManager().getHouseHoldGoodsPage();
+		policyBenefitCategoryPage = testContext.getPageObjectManager().getpolicyBenefitCategoryPage();
 	}
 	
 	public PDT_PreAcceptanceService getPreAcceptServicePage() {
@@ -173,7 +178,6 @@ public class PDT_SharedSubBenefit_Steps {
 		List<String> subBenefits = subBenefitTable.asList(String.class);
 		subBenefitPage.verifySelectedPolicyBenefitCategoryName(policyBenefitPgName);
 		subBenefitPage.verifySubBenefitCategoriesAreDisplayed(subBenefits, policyBenefitPgName);
-		subBenefitPage.iterateAndSelectSubBenefits(policyBenefitPgName, subBenefits, addNewPolicyPage, objStep);
 	}
 
 	@Then("^success message \"([^\"]*)\" should be displayed on the \"([^\"]*)\" page$")
@@ -210,5 +214,60 @@ public class PDT_SharedSubBenefit_Steps {
 		subBenefitPage.verifySelectedPolicyBenefitCategoryName(pageName);
 		PDT_SharedSubBenefit_Steps objStep = new PDT_SharedSubBenefit_Steps(testContext);
 		subBenefitPage.fillSubBenefitForm(pageName, addNewPolicyPage, objStep, pageName);
+	}
+	
+	@When("^he clicks on \"([^\"]*)\" button after entering mandatory information for all the below selected sub benefits on \"([^\"]*)\" page$")
+	@And("^he has clicked on \"([^\"]*)\" button after entering mandatory information for all the below selected sub benefits on \"([^\"]*)\" page$")
+	public void he_has_clicked_on_button_after_entering_mandatory_information_for_all_the_below_selected_sub_benefits_on_page(String btnName, String policyBenefitPgName, DataTable subBenefitTable) throws Throwable {
+		PDT_SharedSubBenefit_Steps objStep = new PDT_SharedSubBenefit_Steps(testContext);
+		List<String> subBenefits = subBenefitTable.asList(String.class);
+		subBenefitPage.verifySelectedPolicyBenefitCategoryName(policyBenefitPgName);
+		subBenefitPage.verifySubBenefitCategoriesAreDisplayed(subBenefits, policyBenefitPgName);
+		subBenefitPage.iterateAndSelectSubBenefits(policyBenefitPgName, subBenefits, addNewPolicyPage, objStep, btnName);
+	}
+
+	@When("^he clicks on \"([^\"]*)\" button of 'Confirmation' dialog on \"([^\"]*)\" page$")
+	public void he_clicks_on_button_of_dialog(String btnName, String pageName) throws Throwable {
+		subBenefitPage.clickOnConfirmDialogBtn(btnName);
+	}
+
+	@Then("^he should be navigated on the \"([^\"]*)\" page$")
+	public void he_should_be_navigated_on_the_page(String pageName) throws Throwable {
+		timeBeforeAction = new Date().getTime();
+		Assert.assertTrue(viewPolicyPage.verifyViewPolicyHeading(pageName), MessageFormat.format(PDTConstants.FAIL_TO_VERIFY_ELEMENT_VAL_ON_PAGE, PDTConstants.heading, PDTConstants.VIEW_EDIT_POLICY_FORMS, pageName));
+		timeAfterAction = new Date().getTime();
+		BusinessFunctions.printTimeTakenByPageToLoad(timeBeforeAction, timeAfterAction, pageName);
+	}
+
+	@Then("^Policy should not be displayed under \"([^\"]*)\" page$")
+	public void policy_should_not_be_displayed_under_page(String pageName) throws Throwable {
+		Assert.assertTrue(viewPolicyPage.searchAndVerifyPolicy(addNewPolicyPage.getPolicyName().split("\\(#")[0].trim(), pageName, addNewPolicyPage),
+				MessageFormat.format(PDTConstants.FAILED_TO_VERIFY_ELEMENT_DISPLAYED_ON_PAGE, CoreConstants.FAIL, PDTConstants.POLICY_NAME,
+						addNewPolicyPage.getPolicyName(), pageName, viewPolicyPage.getPolicyList()));
+	}
+	
+	@And("^he has navigated to \"([^\"]*)\" page after clicking on the \"([^\"]*)\" button of 'Confirmation' dialog on \"([^\"]*)\" page$")
+	public void he_has_navigated_to_page_after_clicking_on_the_button_of_Confirmation_dialog_on_page(String pageName, String btnName, String benefitPageName) throws Throwable {
+		subBenefitPage.clickOnConfirmDialogBtn(btnName);
+		timeBeforeAction = new Date().getTime();
+		Assert.assertTrue(viewPolicyPage.verifyViewPolicyHeading(pageName), MessageFormat.format(PDTConstants.FAIL_TO_VERIFY_ELEMENT_VAL_ON_PAGE, PDTConstants.heading, PDTConstants.VIEW_EDIT_POLICY_FORMS, pageName));
+		timeAfterAction = new Date().getTime();
+		BusinessFunctions.printTimeTakenByPageToLoad(timeBeforeAction, timeAfterAction, pageName);
+	}
+
+	@When("^he views the newly created policy$")
+	public void he_views_the_newly_created_policy() throws Throwable {
+		viewPolicyPage.verifySubmittedPolicyStatus(addNewPolicyPage.getPolicyName().split("\\(#")[0].trim(), PDTConstants.DRAFT);
+		viewPolicyPage.navigateToGeneralInfoPage(addNewPolicyPage.getPolicyName().split("\\(#")[0].trim(), PDTConstants.GENERAL_INFORMATION);
+		generalInfoPage.verifyGeneralInfoAndPolicyBenefitPage(policyBenefitCategoryPage);
+		policyBenefitCategoryPage.navigateToSubbenefitPage(policyBenefitCategoryPage.getBenefitCategoryName());
+	}
+
+	@Then("^information should not be saved for below sub-benefits of \"([^\"]*)\" page$")
+	public void information_should_not_be_saved_for_below_sub_benefits_of_page(String policyBenefitPgName, DataTable subBenefitTable) throws Throwable {
+		List<String> subBenefits = subBenefitTable.asList(String.class);		
+		subBenefitPage.verifySubBenefitCategoriesAreDisplayed(subBenefits, policyBenefitPgName);
+		Assert.assertTrue(subBenefitPage.verifySubBenefitCategoriesAreUnchecked(subBenefits.toString()), MessageFormat.format(PDTConstants.VERIFIED_DATA_SAVED_FOR_SUB_BENEFIT, CoreConstants.FAIL, subBenefits.toString()));
+		DbFunctions.deletePolicyByPolicyId(addNewPolicyPage.getPolicyId());
 	}
 }

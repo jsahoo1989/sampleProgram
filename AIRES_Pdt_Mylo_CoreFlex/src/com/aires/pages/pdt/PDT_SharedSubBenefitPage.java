@@ -1,6 +1,7 @@
 package com.aires.pages.pdt;
 
 import java.text.MessageFormat;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.LinkedHashMap;
 import java.util.List;
@@ -19,6 +20,7 @@ import com.aires.businessrules.BusinessFunctions;
 import com.aires.businessrules.CoreFunctions;
 import com.aires.businessrules.constants.CoreConstants;
 import com.aires.businessrules.constants.PDTConstants;
+import com.aires.utilities.Log;
 import com.vimalselvam.cucumber.listener.Reporter;
 
 import cucumber.api.DataTable;
@@ -140,7 +142,7 @@ public class PDT_SharedSubBenefitPage extends Base {
 	@FindBy(how = How.CSS, using = "button.swal2-confirm.swal2-styled")
 	private WebElement _btnOk;
 	
-	@FindBy(how = How.CSS, using = "button.btn-exit")
+	@FindBy(how = How.CSS, using = "button.btn.btn-info.btn-exit")
 	private WebElement _btnExit;
 	
 	@FindBy(how = How.CSS, using = "div.swal2-popup.swal2-modal.swal2-icon-success.swal2-show")
@@ -199,9 +201,23 @@ public class PDT_SharedSubBenefitPage extends Base {
 	
 	@FindBy(how = How.CSS, using = "a[href='#collapseNine']")
 	private WebElement _lnkFormCollapse9;
+	
+	@FindBy(how = How.CSS, using = "button.swal2-confirm")
+	private WebElement _btnOkOnConfirmationDialog;
+	
+	@FindBy(how = How.CSS, using = "button.swal2-deny")
+	private WebElement _btnCancelOnConfirmationDialog;
+	
+	@FindBy(how = How.CSS, using = "button.swal2-cancel")
+	private WebElement _btnSaveOnConfirmationDialog;
+	
+	@FindBy(how = How.CSS, using = "label.form-check-label input[type='checkbox']")
+	private List<WebElement> _chkBoxesSubBenefitCategories;
 
 	HashMap<String, Boolean> resultMapForTabNameNotMatch = new HashMap<>();
 	LinkedHashMap<String, WebElement> formMap= new LinkedHashMap<String, WebElement>();
+	LinkedHashMap<String, WebElement> buttonMap= new LinkedHashMap<String, WebElement>();
+	LinkedHashMap<String, WebElement> confirmationDialogButtonMap= new LinkedHashMap<String, WebElement>();
 
 	public WebElement getElementByName(String pageName, String elementName) {		
 		if(pageName.equalsIgnoreCase(PDTConstants.ASSIGNMENT_HOUSING_COMPANY_SPONSORED) && elementName.equalsIgnoreCase(PDTConstants.ASSIGNMENT_FINDER_FEES)) 
@@ -232,9 +248,11 @@ public class PDT_SharedSubBenefitPage extends Base {
 	}
 
 	public void iterateAndSelectSubBenefits(String pageName, List<String> subBenefits,
-			PDT_AddNewPolicyPage addNewPolicyPage, PDT_SharedSubBenefit_Steps objStep) {
+			PDT_AddNewPolicyPage addNewPolicyPage, PDT_SharedSubBenefit_Steps objStep, String btnName) {
 		CoreFunctions.explicitWaitTillElementListClickable(driver, _subBenefitCategories);
 		populateFormHeaderElement();
+		populateBtnMap();
+		populateConfirmDialogbuttonMap();
 		for (String subBenefit : subBenefits) {
 			CoreFunctions.selectItemInListByText(driver, _subBenefitCategories, subBenefit, true);
 			BusinessFunctions.fluentWaitForSpinnerToDisappear(driver, _progressBar);
@@ -243,12 +261,12 @@ public class PDT_SharedSubBenefitPage extends Base {
 			fillSubBenefitForm(subBenefit, addNewPolicyPage, objStep, pageName);
 		}
 		try {
-			CoreFunctions.click(driver, _btnSaveAndContinue, _btnSaveAndContinue.getText());
+			CoreFunctions.click(driver, buttonMap.get(btnName), btnName);
 		} catch (NoSuchElementException e) {
-			Assert.fail(PDTConstants.MISSING_SAVE_AND_SUBMIT_BTN);
+			Assert.fail(MessageFormat.format(PDTConstants.MISSING_BTN, CoreConstants.FAIL, btnName));
 	    } 
 		catch (Exception e) {
-			Assert.fail(PDTConstants.FAILED_TO_CLICK_ON_SAVE_AND_SUBMIT_BTN);
+			Assert.fail(MessageFormat.format(PDTConstants.FAILED_TO_CLICK_ON_BTN, CoreConstants.FAIL, btnName));
 		}
 		
 	}
@@ -856,6 +874,44 @@ public class PDT_SharedSubBenefitPage extends Base {
 			}
 		} catch (Exception e) {
 			Assert.fail(MessageFormat.format(PDTConstants.FAILED_TO_VERIFY_SUCCESS_MSG, CoreConstants.FAIL, msg, pageName));
+		}
+		return false;
+	}
+	
+	public void populateBtnMap() {
+		buttonMap.put(PDTConstants.PDT_BTN_SAVE_SUBMIT, _btnSaveAndContinue);
+		buttonMap.put(PDTConstants.EXIT.toUpperCase(), _btnExit);		
+	}
+	
+	public void populateConfirmDialogbuttonMap() {
+		confirmationDialogButtonMap.put(PDTConstants.OK, _btnOkOnConfirmationDialog);
+		confirmationDialogButtonMap.put(PDTConstants.CANCEL, _btnCancelOnConfirmationDialog);
+		confirmationDialogButtonMap.put(PDTConstants.SAVE, _btnSaveOnConfirmationDialog);		
+	}
+	
+	public void clickOnConfirmDialogBtn(String btnName) {
+		try {			
+			if(CoreFunctions.isElementExist(driver, _dialogconfirmation, 1))
+			CoreFunctions.click(driver, confirmationDialogButtonMap.get(btnName), btnName);
+		} catch (NoSuchElementException e) {			
+			Assert.fail(MessageFormat.format(PDTConstants.MISSING_BTN, CoreConstants.FAIL, btnName));
+	    } 
+		catch (Exception e) {
+			Assert.fail(MessageFormat.format(PDTConstants.FAILED_TO_CLICK_ON_BTN, CoreConstants.FAIL, btnName));
+		}
+	}
+	
+	public boolean verifySubBenefitCategoriesAreUnchecked(String subBenefitCategoryName) {
+		List<Boolean> resultList=new ArrayList<Boolean>();
+			for(WebElement _chBoxSubBenefit: _chkBoxesSubBenefitCategories) {
+			if(_chBoxSubBenefit.getDomProperty("checked").equals("false")) {
+				resultList.add(true);
+			}
+			
+		}
+		if(resultList.stream().allMatch(t->t.equals(true))) {
+			Reporter.addStepLog(MessageFormat.format(PDTConstants.VERIFIED_DATA_NOT_SAVED_SUB_BENEFIT, CoreConstants.PASS, subBenefitCategoryName));
+			return true;
 		}
 		return false;
 	}

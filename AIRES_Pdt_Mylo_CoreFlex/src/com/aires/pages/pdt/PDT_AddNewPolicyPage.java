@@ -426,7 +426,7 @@ public class PDT_AddNewPolicyPage extends Base {
 		String clientIdFromJson = BusinessFunctions.getClientAndPolicyDetails(_loginDetailsApplication)[0];
 		CoreFunctions.clearAndSetText(driver, _inputClientID, PDTConstants.CLIENT_ID,
 				clientIdFromJson);
-		CoreFunctions.explicitWaitTillElementListVisibilityCustomTime(driver, _optionsClientID, 70);
+		CoreFunctions.explicitWaitTillElementListVisibilityCustomTime(driver, _optionsClientID, 90);
 		CoreFunctions.explicitWaitTillElementListClickable(driver, _optionsClientID);
 		if (_optionsClientID.size() > 0
 				&& !_optionsClientID.get(0).getText().equalsIgnoreCase(PDTConstants.NO_ITEMS_FOUND)) {
@@ -462,7 +462,6 @@ public class PDT_AddNewPolicyPage extends Base {
 
 	public void selectPolicy(PDT_LoginDetails _loginDetailsApplication) {
 		String policyId;
-		//CoreFunctions.explicitWaitTillElementInVisibilityCustomTime(driver, _progressBar, 5);
 		String policyFromJson = BusinessFunctions.getClientAndPolicyDetails(_loginDetailsApplication)[2];
 		String clientIdFromJson = BusinessFunctions.getClientAndPolicyDetails(_loginDetailsApplication)[0];
 		CoreFunctions.clickElement(driver, _selectPolicyName);

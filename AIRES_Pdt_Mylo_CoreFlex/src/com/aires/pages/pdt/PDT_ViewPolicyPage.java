@@ -1,6 +1,7 @@
 package com.aires.pages.pdt;
 
 import java.text.MessageFormat;
+import java.util.Date;
 import java.util.List;
 import java.util.Map;
 
@@ -91,6 +92,7 @@ public class PDT_ViewPolicyPage extends Base {
 
 	final By _listPolicyNameByLocator = By.cssSelector("h5.text-info.info-pname");
 	final By _listClientNameByLocator = By.cssSelector("h6.info-pclient");
+	long timeBeforeAction, timeAfterAction;
 
 	public String getElementText(String elementName) {
 		String elementText = null;
@@ -115,8 +117,9 @@ public class PDT_ViewPolicyPage extends Base {
 			CoreFunctions.clickElement(driver, _logout);
 			break;
 		case PDTConstants.ADD_NEW_POLICY_FORM:
-			CoreFunctions.clickElement(driver, _addNewPolicyForm);
-			BusinessFunctions.fluentWaitForSpinnerToDisappear(driver, _progressBar);
+			CoreFunctions.clickUsingJS(driver, _addNewPolicyForm, PDTConstants.ADD_NEW_POLICY_FORM);
+			if(CoreFunctions.isElementExist(driver,  _progressBar, 4))
+				BusinessFunctions.fluentWaitForSpinnerToDisappear(driver, _progressBar);
 			break;
 		case PDTConstants.CLEAR_FILTER:
 			CoreFunctions.highlightElementAndClick(driver, _clearFilter, PDTConstants.CLEAR_FILTER);
@@ -132,7 +135,8 @@ public class PDT_ViewPolicyPage extends Base {
 	}
 
 	public Boolean verifyUserlogin(String userName, String pageName) {
-		BusinessFunctions.fluentWaitForSpinnerToDisappear(driver, _progressBar);
+		if(CoreFunctions.isElementExist(driver, _progressBar, 2))
+			BusinessFunctions.fluentWaitForSpinnerToDisappear(driver, _progressBar);
 		if (getUserName().contains(userName)) {
 			CoreFunctions.highlightObject(driver, _userName);
 			Reporter.addStepLog(MessageFormat.format(PDTConstants.VERIFIED_USERNAME_IS_DISPLAYED, CoreConstants.PASS,
@@ -145,20 +149,27 @@ public class PDT_ViewPolicyPage extends Base {
 	}
 
 	public Boolean verifyViewPolicyHeading(String pageName) {
-		CoreFunctions.explicitWaitTillElementInVisibilityCustomTime(driver, _progressBar, 3);
+		timeBeforeAction = new Date().getTime();
+		if(CoreFunctions.isElementExist(driver, _progressBar, 2))
+			BusinessFunctions.fluentWaitForSpinnerToDisappear(driver, _progressBar);
+		timeAfterAction = new Date().getTime();
+		BusinessFunctions.printTimeTakenByPageToLoad(timeBeforeAction, timeAfterAction, PDTConstants.VIEW_POLICY_PAGE);
 		return CoreFunctions.verifyElementOnPage(driver, _headingViewEditPolicyForm, PDTConstants.heading,
 				PDTConstants.VIEW_EDIT_POLICY_FORMS, pageName, true);
 	}
 
 	public boolean verifyPoliciesAreDisplayed(String pageName) {
+		timeBeforeAction = new Date().getTime();
+		if(CoreFunctions.isElementExist(driver, _progressBar, 2))
+			BusinessFunctions.fluentWaitForSpinnerToDisappear(driver, _progressBar);
+		timeAfterAction = new Date().getTime();
+		BusinessFunctions.printTimeTakenByPageToLoad(timeBeforeAction, timeAfterAction, PDTConstants.VIEW_POLICY_PAGE);
 		if (_txtPolicyName.size() > 0) {
 			Reporter.addStepLog(
 					MessageFormat.format(PDTConstants.POLICIES_ARE_DISPLAYED, CoreConstants.PASS, pageName));
-			Log.info("Policies are displayed");
 			clickElementOfPage(PDTConstants.LOGOUT);
 			return true;
 		}
-		Log.info("Policies are not displayed");
 		return false;
 	}
 
@@ -297,5 +308,16 @@ public class PDT_ViewPolicyPage extends Base {
 				expectedPageName, expectedPageName, true);
 	}
 	
-
+	public void navigateToGeneralInfoPage(String selectedPolicyName, String pageName) {
+		try {
+			timeBeforeAction = new Date().getTime();
+			CoreFunctions.clickElement(driver, CoreFunctions.getElementFromListByText(_listPolicyName, selectedPolicyName));
+			BusinessFunctions.fluentWaitForSpinnerToDisappear(driver, _progressBar);
+			timeAfterAction = new Date().getTime();
+			BusinessFunctions.printTimeTakenByPageToLoad(timeBeforeAction, timeAfterAction, pageName);
+		} catch(Exception e) {
+			Assert.fail(MessageFormat.format(PDTConstants.FAILED_TO_NAVIGATE_TO_PAGE, PDTConstants.GENERAL_INFORMATION, 
+					CoreConstants.FAIL));
+		}		
+	}
 }

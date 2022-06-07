@@ -15,6 +15,7 @@ import com.aires.businessrules.BusinessFunctions;
 import com.aires.businessrules.CoreFunctions;
 import com.aires.businessrules.constants.CoreConstants;
 import com.aires.businessrules.constants.PDTConstants;
+import com.aires.utilities.Log;
 import com.vimalselvam.cucumber.listener.Reporter;
 
 public class PDT_PolicyBenefitCategoryPage extends Base {
@@ -59,7 +60,20 @@ public class PDT_PolicyBenefitCategoryPage extends Base {
 	// Progress Bar
 	@FindBy(how = How.CSS, using = "div.ngx-progress-bar.ngx-progress-bar-ltr")
 	private WebElement _progressBar;
+	
+	@FindBy(how = How.CSS, using = "label.form-check-label.cbx-label > input")
+	private List<WebElement> _inputBenefitCategory;
+	
 	long timeBeforeAction, timeAfterAction;
+	String policyBenefitCategoryName;
+	
+	public void setBenefitCategoryName(String categoryName) {
+		policyBenefitCategoryName = categoryName;
+	}
+	
+	public String getBenefitCategoryName() {
+		return policyBenefitCategoryName; 
+	}
 
 	public String getElementText(String elementName) {
 		String elementText = null;
@@ -98,6 +112,9 @@ public class PDT_PolicyBenefitCategoryPage extends Base {
 
 	public void selectPolicyBenefitCategory(String benefitCategoryName) {
 		CoreFunctions.selectItemInListByText(driver, _lblChkBoxPolicyBenefitCategory, benefitCategoryName, true);
+		if(verifyIsPolicyBenefitCategoryChecked(benefitCategoryName)) {
+			setBenefitCategoryName(benefitCategoryName);
+		}
 		timeBeforeAction = new Date().getTime();
 		CoreFunctions.clickUsingJS(driver, _btnNext, _btnNext.getText());
 		BusinessFunctions.fluentWaitForSpinnerToDisappear(driver, _progressBar);
@@ -113,5 +130,23 @@ public class PDT_PolicyBenefitCategoryPage extends Base {
 
 	public String getLeftNavigationPageTitle() {
 		return CoreFunctions.getElementText(driver, _leftNavigationTitle);
+	}
+	
+	public boolean verifyIsPolicyBenefitCategoryChecked(String benefitCategoryName) {
+		int index = BusinessFunctions.returnindexItemFromListUsingText(driver, _lblChkBoxPolicyBenefitCategory, benefitCategoryName);		
+		Log.info("DomProperty=="+_inputBenefitCategory.get(index).getDomProperty("checked"));
+		if(_inputBenefitCategory.get(index).getAttribute("checked").equalsIgnoreCase("true")) {
+			Reporter.addStepLog(MessageFormat.format(PDTConstants.VERIFIED_BENEFIT_CATEGORY_IS_SELECTED, CoreConstants.PASS, benefitCategoryName));
+			return true;
+		}
+		return false;
+	}
+	
+	public void navigateToSubbenefitPage(String benefitCategoryName) {
+		timeBeforeAction = new Date().getTime();
+		CoreFunctions.clickUsingJS(driver, _btnNext, _btnNext.getText());
+		BusinessFunctions.fluentWaitForSpinnerToDisappear(driver, _progressBar);
+		timeAfterAction = new Date().getTime();
+		BusinessFunctions.printTimeTakenByPageToLoad(timeBeforeAction, timeAfterAction, benefitCategoryName);
 	}
 }

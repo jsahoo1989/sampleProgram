@@ -337,8 +337,8 @@ public class PDTConstants {
 	public static final String TEMPORARY_LIVING_LODGING = "Temporary Living Lodging";
 	public static final String TEMPORARY_LIVING_MEALS = "Temporary Living Meals";
 	public static final String VERIFIED_RADIO_BTN_DISPLAYED = "{0}Verified ''{1}'' radio button is displayed for ''{2}'' sub benefit form.";;
-	public static final String MISSING_SAVE_AND_SUBMIT_BTN = "Missing Save & Submit button.";
-	public static final String FAILED_TO_CLICK_ON_SAVE_AND_SUBMIT_BTN = "Failed to click on Save & Submit button.";
+	public static final String MISSING_BTN = "{0}Missing ''{1}'' button.";
+	public static final String FAILED_TO_CLICK_ON_BTN = "{0}Failed to click on ''{1}'' button.";
 	public static final String POLICY_DOES_NOT_EXIST = "{0} Corporation Policy :- ''{1}'' does not exist in Policy drop down for ClientID:- ''{2}''.";
 	public static final String VERIFIED_POLICY_DISPLAYED = "{0}Verified Policy:-''{1}'' is displayed in Policy drop down";
 	public static final String VERIFIED_POLICY_NOT_DISPLAYED = "{0}Verified Policy:-''{1}'' is not displayed in Policy drop down";
@@ -463,9 +463,9 @@ public class PDTConstants {
 	public static final String AUTH_DAYS_TEMP_STORAGE_SIT = "Authorized Days in Temp Storage (SIT)";
 	public static final String INSURANCE_TYPE = "Insurance Type";
 	public static final String INSURANCE_TYPE_OTHER = "Other Insurance Type";
-	public static final String WT_VOL_FIELDS_HIDDEN = "{0}Verified Weight Volume cap fields are hidden";
-	public static final String WT_VOL_FIELDS_NOT_HIDDEN = "{0}Verified Weight Volume cap fields are not hidden";
-	public static final String WT_VOL_FIELDS_DISPLAYED = "{0}Verified Weight Volume cap fields are displayed";
+	public static final String WT_VOL_FIELDS_HIDDEN = "{0}Verified Weight Volume cap fields are hidden for sub-benefit ''{1}''";
+	public static final String WT_VOL_FIELDS_NOT_HIDDEN = "{0}Verified Weight Volume cap fields are not hidden for sub-benefit ''{1}''";
+	public static final String WT_VOL_FIELDS_DISPLAYED = "{0}Verified Weight Volume cap fields are displayed for sub-benefit ''{1}''";
 	public static final String US_DOM_VANLINE_SHIPMENT = "US Domestic Vanline Shipment";
 	public static final String AUTO_SHIPMENT = "Auto Shipment";
 	public static final String AIR_SHIPMENT = "Air Shipment";
@@ -476,6 +476,15 @@ public class PDTConstants {
 	public static final String PET_SHIPMENT = "Pet Shipment";
 	public static final String DISCARD_DONATE = "Discard and Donate";
 	public static final String OTHER_INSURANCE_TYPE = "Other Insurance Type";
-	public static final String VERIFIED_ELEMENT_DISPLAYED = "{0}Verified element ''{1}'' is displayed";
-	public static final String VERIFIED_ELEMENT_HIDDEN = "{0}Verified element ''{1}'' is hidden";
+	public static final String VERIFIED_ELEMENT_DISPLAYED = "{0}Verified element ''{1}'' is displayed on sub-benefit form:-''{2}''";
+	public static final String VERIFIED_ELEMENT_HIDDEN = "{0}Verified element ''{1}'' is hidden on sub-benefit form:-''{2}''";
+	public static final String PDT_BTN_SAVE_SUBMIT = "SAVE & SUBMIT";
+	public static final String SAVE = "SAVE";
+	public static final String CANCEL = "CANCEL";	
+	public static final String FAILED_TO_NAVIGATE_TO_PAGE = "{0}Failed to navigate to ''{1}'' Page.";
+	public static final String POLICY_BENEFIT = "Policy Benefit";
+	public static final String VERIFIED_BENEFIT_CATEGORY_IS_SELECTED = "{0}Verified Policy Benefit Category:-''{1}'' is selected";
+	public static final String BENEFIT_CATEGORY_IS_NOT_SELECTED = "{0}Verified Policy Benefit Category:-''{1}'' is not selected";
+	public static final String VERIFIED_DATA_NOT_SAVED_SUB_BENEFIT = "{0}Verified data is not saved for SubBenefit Categories:-''{1}''";
+	public static final String VERIFIED_DATA_SAVED_FOR_SUB_BENEFIT = "{0}Verified data is saved for SubBenefit Categories:-''{1}''";
 }

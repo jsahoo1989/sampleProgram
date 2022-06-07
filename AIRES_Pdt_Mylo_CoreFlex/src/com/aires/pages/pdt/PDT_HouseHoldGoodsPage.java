@@ -2,7 +2,6 @@ package com.aires.pages.pdt;
 
 import java.text.MessageFormat;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
@@ -414,6 +413,21 @@ public class PDT_HouseHoldGoodsPage extends Base {
 	@FindBy(how = How.CSS, using = "app-discard-and-donate textarea[formcontrolname='benefitComment']")
 	private WebElement _txtAreaBenefitCommentDiscardDonate;
 
+	@FindBy(how = How.CSS, using = "app-us-domenstic-vanline-shipment input[type=text]")
+	private List<WebElement> _txtBoxUSDomVanlineWeightCostCap;
+	
+	@FindBy(how = How.CSS, using = "app-air-shipment input[type='number']")
+	private List<WebElement> _txtBoxAirShipWtVolContainer;
+	
+	@FindBy(how = How.CSS, using = "app-sea-shipment input[type='number']")
+	private List<WebElement> _txtBoxSeaShipWtVolContainer;
+	
+	@FindBy(how = How.CSS, using = "app-non-us-inland-shipment input[type='number']")
+	private List<WebElement> _txtBoxNonUsWtVolContainer;
+	
+	@FindBy(how = How.CSS, using = "app-permanant-storage input[type='number']")
+	private List<WebElement> _txtBoxPermStorageWtVolContainer;
+
 	LinkedHashMap<WebElement, String> seaWeightVolTxtBoxFieldsMap = new LinkedHashMap<WebElement, String>();
 	LinkedHashMap<WebElement, String> airWeightVolTxtBoxFieldsMap = new LinkedHashMap<WebElement, String>();
 	LinkedHashMap<WebElement, String> nonUsInlandWeightVolTxtBoxFieldsMap = new LinkedHashMap<WebElement, String>();
@@ -488,69 +502,61 @@ public class PDT_HouseHoldGoodsPage extends Base {
 		permStorWeightVolRadioBtnFieldsMap.put(_radioBtnPermUnitOfVolCap, PDTConstants.UNIT_OF_VOL_CAP);
 	}
 
-	public boolean verifyElementExistAndVisible(WebElement element, String lblElement) {
+	public boolean verifyElementExistAndVisible(WebElement element, String lblElement, String subBenefitFormName) {
 		if (CoreFunctions.isElementExist(driver, element, 1)) {
-			Reporter.addStepLog(MessageFormat.format(PDTConstants.VERIFIED_ELEMENT_DISPLAYED, CoreConstants.PASS, lblElement));
+			Reporter.addStepLog(MessageFormat.format(PDTConstants.VERIFIED_ELEMENT_DISPLAYED, CoreConstants.PASS, lblElement, subBenefitFormName));
 			return true;
 		} else {
-			Reporter.addStepLog(MessageFormat.format(PDTConstants.VERIFIED_ELEMENT_HIDDEN, CoreConstants.PASS, lblElement));
+			Reporter.addStepLog(MessageFormat.format(PDTConstants.VERIFIED_ELEMENT_HIDDEN, CoreConstants.PASS, lblElement, subBenefitFormName));
 			return false;
 		}
 	}
 
-	public boolean verifyElementListExistAndVisible(List<WebElement> element, String lblElement) {
-		if (CoreFunctions.isElementListExist(driver, element, 1)) {
-			Reporter.addStepLog(MessageFormat.format(PDTConstants.VERIFIED_ELEMENT_DISPLAYED, CoreConstants.PASS, lblElement));
+	public boolean verifyElementListExistAndVisible(List<WebElement> element, String lblElement, String subBenefitFormName) {		
+		if(element.size() > 0) {
+			Reporter.addStepLog(MessageFormat.format(PDTConstants.VERIFIED_ELEMENT_DISPLAYED, CoreConstants.PASS, lblElement, subBenefitFormName));
 			return true;
 		} else {
-			Reporter.addStepLog(MessageFormat.format(PDTConstants.VERIFIED_ELEMENT_HIDDEN, CoreConstants.PASS, lblElement));
+			Reporter.addStepLog(MessageFormat.format(PDTConstants.VERIFIED_ELEMENT_HIDDEN, CoreConstants.PASS, lblElement, subBenefitFormName));
 			return false;
 		}
 	}
 
 	public void verifyWeightVolFieldDisplayStatus(LinkedHashMap<WebElement, String> txtBoxWtVolCapMap,
-			LinkedHashMap<List<WebElement>, String> radioBtnUnitOfWtVolMap, boolean chkFieldDisplayStatus) {
+			LinkedHashMap<List<WebElement>, String> radioBtnUnitOfWtVolMap, boolean chkFieldDisplayStatus, String subBenefitFormName) {
 		List<Boolean> displayStatusWtVolTxtBox = new ArrayList<Boolean>();
 		List<Boolean> displayStatusWtVolRadioField = new ArrayList<Boolean>();
-		for (Map.Entry<WebElement, String> m : txtBoxWtVolCapMap.entrySet()) {
-			long timeBeforeAction = new Date().getTime();
-			displayStatusWtVolTxtBox.add(verifyElementExistAndVisible(m.getKey(), m.getValue()));
-			long timeAfterAction = new Date().getTime();
-			BusinessFunctions.printTimeTakenByPageToLoad(timeBeforeAction, timeAfterAction, "HHG");
-			//System.out.println(m.getKey() + " " + m.getValue());
+		for (Map.Entry<WebElement, String> m : txtBoxWtVolCapMap.entrySet()) {			
+			displayStatusWtVolTxtBox.add(verifyElementExistAndVisible(m.getKey(), m.getValue(), subBenefitFormName));
 		}
 
 		for (Map.Entry<List<WebElement>, String> m : radioBtnUnitOfWtVolMap.entrySet()) {
-			long timeBeforeAction = new Date().getTime();
-			displayStatusWtVolRadioField.add(verifyElementListExistAndVisible(m.getKey(), m.getValue()));
-			long timeAfterAction = new Date().getTime();
-			BusinessFunctions.printTimeTakenByPageToLoad(timeBeforeAction, timeAfterAction, "HHG");
-			//System.out.println(m.getKey() + " " + m.getValue());
+			displayStatusWtVolRadioField.add(verifyElementListExistAndVisible(m.getKey(), m.getValue(), subBenefitFormName));
 		}
 
 		if (chkFieldDisplayStatus)
-			printFieldsVisibleStatusInReport(displayStatusWtVolTxtBox, displayStatusWtVolRadioField);
+			printFieldsVisibleStatusInReport(displayStatusWtVolTxtBox, displayStatusWtVolRadioField, subBenefitFormName);
 		else
-			printFieldsHiddenStatusInReport(displayStatusWtVolTxtBox, displayStatusWtVolRadioField);
+			printFieldsHiddenStatusInReport(displayStatusWtVolTxtBox, displayStatusWtVolRadioField, subBenefitFormName);
 
 	}
 
 	public void printFieldsHiddenStatusInReport(List<Boolean> statusWtVolTxtBoxFieldHidden,
-			List<Boolean> statusWtVolRadioFieldHidden) {
+			List<Boolean> statusWtVolRadioFieldHidden, String subBenefitFormName) {
 		if (statusWtVolTxtBoxFieldHidden.stream().allMatch(t -> t.booleanValue() == false)
 				&& statusWtVolRadioFieldHidden.stream().allMatch(t -> t.booleanValue() == false))
-			Reporter.addStepLog(MessageFormat.format(PDTConstants.WT_VOL_FIELDS_HIDDEN, CoreConstants.PASS));
+			Reporter.addStepLog(MessageFormat.format(PDTConstants.WT_VOL_FIELDS_HIDDEN, CoreConstants.PASS, subBenefitFormName));
 		else
-			Assert.fail(MessageFormat.format(PDTConstants.WT_VOL_FIELDS_NOT_HIDDEN, CoreConstants.FAIL));
+			Assert.fail(MessageFormat.format(PDTConstants.WT_VOL_FIELDS_NOT_HIDDEN, CoreConstants.FAIL, subBenefitFormName));
 	}
 
 	public void printFieldsVisibleStatusInReport(List<Boolean> statusWtVolTxtBoxFieldHidden,
-			List<Boolean> statusWtVolRadioFieldHidden) {
+			List<Boolean> statusWtVolRadioFieldHidden, String subBenefitFormName) {
 		if (statusWtVolTxtBoxFieldHidden.stream().allMatch(t -> t.booleanValue() == true)
 				&& statusWtVolRadioFieldHidden.stream().allMatch(t -> t.booleanValue() == true))
-			Reporter.addStepLog(MessageFormat.format(PDTConstants.WT_VOL_FIELDS_DISPLAYED, CoreConstants.PASS));
+			Reporter.addStepLog(MessageFormat.format(PDTConstants.WT_VOL_FIELDS_DISPLAYED, CoreConstants.PASS, subBenefitFormName));
 		else
-			Assert.fail(MessageFormat.format(PDTConstants.WT_VOL_FIELDS_NOT_HIDDEN, CoreConstants.FAIL));
+			Assert.fail(MessageFormat.format(PDTConstants.WT_VOL_FIELDS_NOT_HIDDEN, CoreConstants.FAIL, subBenefitFormName));
 	}
 
 	public void fillUSDomesticForm(PDT_AddNewPolicyPage addNewPolicyPage, String subBenefitFormName) {
@@ -560,16 +566,17 @@ public class PDT_HouseHoldGoodsPage extends Base {
 			// Check the checkbox to hide the fields
 			CoreFunctions.click(driver, _chkBoxNoWeighCostCap, _chkBoxNoWeighCostCap.getText());
 			// verify WeightCap & CostCap fields are hidden.
-			if (verifyElementExistAndVisible(_txtBoxWeightCapInPounds, PDTConstants.WEIGHT_CAP_IN_POUNDS)
-					&& verifyElementExistAndVisible(_txtBoxCostCapInUsd, PDTConstants.COST_CAP_IN_USD)) {
-				Assert.fail(MessageFormat.format(PDTConstants.WT_VOL_FIELDS_NOT_HIDDEN, CoreConstants.FAIL));
+			if (verifyElementExistAndVisible(_txtBoxWeightCapInPounds, PDTConstants.WEIGHT_CAP_IN_POUNDS, subBenefitFormName)
+					&& verifyElementExistAndVisible(_txtBoxCostCapInUsd, PDTConstants.COST_CAP_IN_USD, subBenefitFormName)) {
+				Assert.fail(MessageFormat.format(PDTConstants.WT_VOL_FIELDS_NOT_HIDDEN, CoreConstants.FAIL, subBenefitFormName));
 			}
+				
 			// Check the checkbox to display the fields.
 			CoreFunctions.click(driver, _chkBoxNoWeighCostCap, _chkBoxNoWeighCostCap.getText());
 			// verify WeightCap & CostCap fields are displayed.
-			if (!verifyElementExistAndVisible(_txtBoxWeightCapInPounds, PDTConstants.WEIGHT_CAP_IN_POUNDS)
-					&& !verifyElementExistAndVisible(_txtBoxCostCapInUsd, PDTConstants.COST_CAP_IN_USD)) {
-				Assert.fail(MessageFormat.format(PDTConstants.WT_VOL_FIELDS_HIDDEN, CoreConstants.FAIL));
+			if (!verifyElementExistAndVisible(_txtBoxWeightCapInPounds, PDTConstants.WEIGHT_CAP_IN_POUNDS, subBenefitFormName)
+					&& !verifyElementExistAndVisible(_txtBoxCostCapInUsd, PDTConstants.COST_CAP_IN_USD, subBenefitFormName)) {
+				Assert.fail(MessageFormat.format(PDTConstants.WT_VOL_FIELDS_HIDDEN, CoreConstants.FAIL, subBenefitFormName));
 			}
 			CoreFunctions.clearAndSetText(driver, _txtBoxWeightCapInPounds, PDTConstants.WEIGHT_CAP_IN_POUNDS,
 					houseHoldGoodsBenefitData.usDomesticVanlineShipment.weightCapInPounds);
@@ -680,10 +687,12 @@ public class PDT_HouseHoldGoodsPage extends Base {
 			CoreFunctions.explicitWaitTillElementVisibility(driver, _chkBoxAirShipWeighVolCap,
 					_chkBoxAirShipWeighVolCap.getText());
 			populateAirShipHashMap();
-			CoreFunctions.click(driver, _chkBoxAirShipWeighVolCap, _chkBoxAirShipWeighVolCap.getText());			
-			verifyWeightVolFieldDisplayStatus(airWeightVolTxtBoxFieldsMap, airWeightVolRadioBtnFieldsMap, false);
 			CoreFunctions.click(driver, _chkBoxAirShipWeighVolCap, _chkBoxAirShipWeighVolCap.getText());
-			verifyWeightVolFieldDisplayStatus(airWeightVolTxtBoxFieldsMap, airWeightVolRadioBtnFieldsMap, true);
+			if(_txtBoxAirShipWtVolContainer.size() == 1)
+				verifyWeightVolFieldDisplayStatus(airWeightVolTxtBoxFieldsMap, airWeightVolRadioBtnFieldsMap, false, subBenefitFormName);
+			CoreFunctions.click(driver, _chkBoxAirShipWeighVolCap, _chkBoxAirShipWeighVolCap.getText());
+			if(_txtBoxAirShipWtVolContainer.size() > 1)
+				verifyWeightVolFieldDisplayStatus(airWeightVolTxtBoxFieldsMap, airWeightVolRadioBtnFieldsMap, true, subBenefitFormName);
 			CoreFunctions.clearAndSetText(driver, _txtBoxAirShipWeightCap, PDTConstants.WEIGHT_CAP,
 					houseHoldGoodsBenefitData.airShipment.weightCap);
 			CoreFunctions.selectItemInListByText(driver, _radioBtnAirUnitOfWeightCap,
@@ -752,10 +761,12 @@ public class PDT_HouseHoldGoodsPage extends Base {
 					_chkBoxSeaShipWeighVolCap.getText());
 
 			populateSeaShipHashMap();
-			CoreFunctions.click(driver, _chkBoxSeaShipWeighVolCap, _chkBoxSeaShipWeighVolCap.getText());			
-			verifyWeightVolFieldDisplayStatus(seaWeightVolTxtBoxFieldsMap, seaWeightVolRadioBtnFieldsMap, false);
 			CoreFunctions.click(driver, _chkBoxSeaShipWeighVolCap, _chkBoxSeaShipWeighVolCap.getText());
-			verifyWeightVolFieldDisplayStatus(seaWeightVolTxtBoxFieldsMap, seaWeightVolRadioBtnFieldsMap, true);
+			if(_txtBoxSeaShipWtVolContainer.size()==1)
+				verifyWeightVolFieldDisplayStatus(seaWeightVolTxtBoxFieldsMap, seaWeightVolRadioBtnFieldsMap, false, subBenefitFormName);
+			CoreFunctions.click(driver, _chkBoxSeaShipWeighVolCap, _chkBoxSeaShipWeighVolCap.getText());
+			if(_txtBoxSeaShipWtVolContainer.size() > 1)
+				verifyWeightVolFieldDisplayStatus(seaWeightVolTxtBoxFieldsMap, seaWeightVolRadioBtnFieldsMap, true, subBenefitFormName);
 			CoreFunctions.clearAndSetText(driver, _txtBoxSeaShipWeightCap, PDTConstants.WEIGHT_CAP,
 					houseHoldGoodsBenefitData.seaShipment.weightCap);
 			CoreFunctions.selectItemInListByText(driver, _radioBtnSeaUnitOfWeightCap,
@@ -816,12 +827,14 @@ public class PDT_HouseHoldGoodsPage extends Base {
 					_chkBoxNoNonUsWeighVolCap.getText());
 
 			populateNonUsInlandHashMap();
-			CoreFunctions.click(driver, _chkBoxNoNonUsWeighVolCap, _chkBoxNoNonUsWeighVolCap.getText());			
-			verifyWeightVolFieldDisplayStatus(nonUsInlandWeightVolTxtBoxFieldsMap,
-					nonUsInlandWeightVolRadioBtnFieldsMap, false);
 			CoreFunctions.click(driver, _chkBoxNoNonUsWeighVolCap, _chkBoxNoNonUsWeighVolCap.getText());
-			verifyWeightVolFieldDisplayStatus(nonUsInlandWeightVolTxtBoxFieldsMap,
-					nonUsInlandWeightVolRadioBtnFieldsMap, true);
+			if(_txtBoxNonUsWtVolContainer.size() == 1)
+				verifyWeightVolFieldDisplayStatus(nonUsInlandWeightVolTxtBoxFieldsMap,
+					nonUsInlandWeightVolRadioBtnFieldsMap, false, subBenefitFormName);
+			CoreFunctions.click(driver, _chkBoxNoNonUsWeighVolCap, _chkBoxNoNonUsWeighVolCap.getText());
+			if(_txtBoxNonUsWtVolContainer.size() > 1)
+				verifyWeightVolFieldDisplayStatus(nonUsInlandWeightVolTxtBoxFieldsMap,
+					nonUsInlandWeightVolRadioBtnFieldsMap, true, subBenefitFormName);
 			CoreFunctions.clearAndSetText(driver, _txtBoxNonUsWeightCap, PDTConstants.WEIGHT_CAP,
 					houseHoldGoodsBenefitData.nonUsInlandShipment.weightCap);
 			CoreFunctions.selectItemInListByText(driver, _radioBtnNonUsUnitOfWeightCap,
@@ -867,12 +880,14 @@ public class PDT_HouseHoldGoodsPage extends Base {
 					_chkBoxNoWeighVolCap.getText());
 			
 			populatePermStorageHashMap();
-			CoreFunctions.click(driver, _chkBoxNoWeighVolCap, _chkBoxNoWeighVolCap.getText());			
-			verifyWeightVolFieldDisplayStatus(permStorWeightVolTxtBoxFieldsMap, permStorWeightVolRadioBtnFieldsMap,
-					false);
+			CoreFunctions.click(driver, _chkBoxNoWeighVolCap, _chkBoxNoWeighVolCap.getText());	
+			if(_txtBoxPermStorageWtVolContainer.size() == 1)
+				verifyWeightVolFieldDisplayStatus(permStorWeightVolTxtBoxFieldsMap, permStorWeightVolRadioBtnFieldsMap,
+					false, subBenefitFormName);
 			CoreFunctions.click(driver, _chkBoxNoWeighVolCap, _chkBoxNoWeighVolCap.getText());
-			verifyWeightVolFieldDisplayStatus(permStorWeightVolTxtBoxFieldsMap, permStorWeightVolRadioBtnFieldsMap,
-					true);
+			if(_txtBoxPermStorageWtVolContainer.size() > 1)
+				verifyWeightVolFieldDisplayStatus(permStorWeightVolTxtBoxFieldsMap, permStorWeightVolRadioBtnFieldsMap,
+					true, subBenefitFormName);
 			CoreFunctions.clearAndSetText(driver, _txtBoxPermWeightCap, PDTConstants.WEIGHT_CAP,
 					houseHoldGoodsBenefitData.permStorage.weightCap);
 			CoreFunctions.selectItemInListByText(driver, _radioBtnPermUnitOfWeightCap,

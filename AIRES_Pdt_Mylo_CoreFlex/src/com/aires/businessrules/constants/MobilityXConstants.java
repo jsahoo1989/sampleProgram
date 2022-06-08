@@ -304,11 +304,16 @@ public class MobilityXConstants {
 	public static final String POLICY_FILE_ID = "Policy File ID";
 	public static final String COMPLETE = "Complete";
 	public static final String FLEX_CARD_DISPLAYED_FOR_NOT_SUBMITTED_AIRES_MANAGED_BENEFIT = "{0}Flex card is displayed for Not-Submitted Aires Managed Benefit on ''{1}'' page.";
-	public static final String CANCELED = "Canceled";
+	public static final String CANCELLED = "Cancelled";
 	public static final String FLEX_CARD_DISPLAYED_AFTER_CHANGING_COREFLEX_TYPE_SUBSERVICE_IN_IRIS = "{0}Flex card displayed on ''{1}'' Page even after changing Core/Flex Subservice type in IRIS application.";
 	public static final String CORE_CARD_DISPLAYED_AFTER_CHANGING_COREFLEX_TYPE_SUBSERVICE_IN_IRIS = "{0}Core card displayed on ''{1}'' Page even after changing Core/Flex Subservice type in IRIS application.";
 	public static final String PRE_INITIAL_TRACING = "Pre Initial Tracing";
 	public static final String POST_INITIAL_TRACING = "Post Initial Tracing";
 	public static final String POST_END_TRACING = "Post End Tracing";
 	public static final String SUBMIT_MY_BUNDLE_BUTTON = "Yes - submit my bundle";
+	public static final String EXCEPTION_OCCURED_WHILE_VALIDATING_ASSIGNMENT_AND_POLICY_DETAILS_POST_SUBMISSION_ON_MOBILITY_JOURNEY_HOME_PAGE = "{0} Exception occured while validating Assignment & Policy Details post submission On Mobility Journey Home Page. Exception : ''{1}''.";
+	public static final String SUBMITTED_POLICY_AIRES_MANAGED_BENEFIT_DETAILS_NOT_MATCHED = "{0}Submitted Policy Aires Managed benefit details not matched on ''{1}'' page.";
+	public static final String FAILED_TO_VERIFY_MULTIPLE_DATE_SUBMISSION_FLEX_BENEFIT_CARD = "{0}Failed to verify Multiple Date Submission Flex Benefit card on ''{1}'' page.";
+	public static final String CORE_CARD_DISPLAYED_ON_MOBILITY_JOURNEY_HOME_PAGE = "{0}Core card displayed on ''{1}'' page.";
+	public static final String FLEX_CARD_DISPLAYED_ON_MOBILITY_JOURNEY_HOME_PAGE = "{0}Flex card displayed on ''{1}'' page.";
 }

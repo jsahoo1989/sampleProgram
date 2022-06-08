@@ -34,12 +34,14 @@ import java.time.YearMonth;
 import java.time.format.DateTimeFormatter;
 import java.time.temporal.ChronoUnit;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Calendar;
 import java.util.Collections;
 import java.util.Date;
 import java.util.GregorianCalendar;
 import java.util.LinkedHashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.Properties;
 import java.util.Random;
 import java.util.Set;
@@ -1896,6 +1898,13 @@ public class CoreFunctions {
 		DecimalFormat format = new DecimalFormat();
 		format.setMaximumFractionDigits(2);
 		return format.format((tIME_AFTER_ACTION - tIME_BEFORE_ACTION) / 1000);
+	}
+	
+	public static Map<String, String> convertStringToMapWithStream(String mapAsString) {
+	    Map<String, String> map = Arrays.stream(mapAsString.replace("{", "").replace("}", "").split(","))
+	      .map(entry -> entry.split("="))
+	      .collect(Collectors.toMap(entry -> entry[0], entry -> entry[1]));
+	    return map;
 	}
 
 }

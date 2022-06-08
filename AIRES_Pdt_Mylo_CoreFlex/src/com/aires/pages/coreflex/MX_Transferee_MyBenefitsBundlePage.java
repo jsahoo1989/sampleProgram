@@ -2,7 +2,9 @@ package com.aires.pages.coreflex;
 
 import java.text.DecimalFormat;
 import java.text.MessageFormat;
+import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
@@ -113,6 +115,9 @@ public class MX_Transferee_MyBenefitsBundlePage extends Base {
 	@FindBy(how = How.XPATH, using = "//div[contains(@id,'SubmitBenefit')]//span[@class='RXBolder RXCFSmallText']")
 	private List<WebElement> _textSubmittedBenefitQuantityList;
 
+	@FindBy(how = How.XPATH, using = "//div[contains(@id,'SubmitBenefit')]//span[@class='RXCFSmallerItalicText RXAiresCharcoal']")
+	private List<WebElement> _textSubmittedBenefitDate;
+
 	@FindBy(how = How.XPATH, using = "//div[contains(@id,'Benefit')]//a[contains(@class,'BorderButton')]/span")
 	private List<WebElement> _buttonDeleteSubmittedBenefitList;
 
@@ -123,10 +128,10 @@ public class MX_Transferee_MyBenefitsBundlePage extends Base {
 	private WebElement _disabledDeleteButtonHoverText;
 
 	@FindBy(how = How.XPATH, using = "//span[contains(text(),'Unable to delete benefit due to completion of benefit.')]")
-	private WebElement _completedBenefitDisabledDeleteButtonHoverText;
+	private List<WebElement> _completedBenefitDisabledDeleteButtonHoverText;
 
 	@FindBy(how = How.XPATH, using = "//span[contains(text(),'This benefit has been canceled by your Aires Representative due to a change. There will be no points returned to you as this benefit is still being used.')]")
-	private WebElement _canceledBenefitDisabledDeleteButtonHoverText;
+	private List<WebElement> _canceledBenefitDisabledDeleteButtonHoverText;
 
 	@FindBy(how = How.XPATH, using = "//div[contains(@id,'mainSubmittedBenefits')]//span[@class='RXAiresSeaglass RXCFBigText']")
 	private List<WebElement> _textSubmittedBenefitsPoints;
@@ -172,6 +177,8 @@ public class MX_Transferee_MyBenefitsBundlePage extends Base {
 	public static double availablePointsAfterSubmission = 0;
 
 	public static double submittedPoints = 0;
+	
+	public static int hoverIndex = 0 ;
 
 	CoreFlex_PolicySetupPagesData policySetupPageData = FileReaderManager.getInstance().getCoreFlexJsonReader()
 			.getPolicySetupPagesDataList(COREFLEXConstants.POLICY_SETUP);
@@ -184,6 +191,9 @@ public class MX_Transferee_MyBenefitsBundlePage extends Base {
 
 	CoreFlex_SettlingInBenefitsData languageTrainingBenefitData = FileReaderManager.getInstance()
 			.getCoreFlexJsonReader().getSettlingInBenefitDataList(COREFLEXConstants.LANGUAGE_TRAINING);
+
+	Map<String, String> submittedPolicyDetails = CoreFunctions
+			.convertStringToMapWithStream(CoreFunctions.getPropertyFromConfig("CoreFlexSubmittedPolicyData"));
 
 	public static boolean benefitDeletedFlag;
 	public static boolean undoDeletedBenefitFlag;
@@ -1316,6 +1326,7 @@ public class MX_Transferee_MyBenefitsBundlePage extends Base {
 
 	public boolean validateSubmittedAiresManagedBenefitDetails(String expectedStatus) {
 		boolean isBenefitsAndPointsMatched = false, isSubmittedBenefitDetailsVerified = false;
+		hoverIndex = 0;
 		try {
 			isSubmittedBenefitDetailsVerified = verifySubmittedBenefitsSectionHeader()
 					&& verifySubmittedCashoutDetailsOnMBBPage()
@@ -1381,27 +1392,28 @@ public class MX_Transferee_MyBenefitsBundlePage extends Base {
 						.equals(benefit.getBenefitAmount()))
 				&& (CoreFunctions.getItemsFromListByIndex(driver, _textSubmittedBenefitQuantityList, indexBenefit, true)
 						.equals(String.valueOf(benefit.getNumberOfBenefitSelected())))
+				&& (CoreFunctions.getItemsFromListByIndex(driver, _textSubmittedBenefitDate, indexBenefit, true)
+						.equals(CoreFunctions.getCurrentDateAsGivenFormat("dd-MMM-yyyy")))
 				&& ((Double.parseDouble((CoreFunctions
 						.getItemsFromListByIndex(driver, _textSubmittedBenefitsPointsList, indexBenefit, true)
 						.replace("pts", "").trim()))) == ((Double.parseDouble(benefit.getPoints()))
 								* (Integer.parseInt(CoreFunctions.getItemsFromListByIndex(driver,
-										_textSubmittedBenefitQuantityList, indexBenefit, true))))
-						&& CoreFunctions.getItemsFromListByIndex(driver, _benefitStatus, indexBenefit, true)
-								.equals(expectedStatus)
-						&& (expectedStatus.equalsIgnoreCase(MobilityXConstants.COMPLETE)
-								|| expectedStatus.equalsIgnoreCase(MobilityXConstants.CANCELED))
-										? (Boolean.valueOf(CoreFunctions.getAttributeText(
-												_buttonDeleteBenefitList.get(indexBenefit), "aria-disabled")))
-										: CoreFunctions.getItemsFromListByIndex(driver,
-												_buttonDeleteSubmittedBenefitList, indexBenefit, true)
-												.equals(MobilityXConstants.DELETE));
+										_textSubmittedBenefitQuantityList, indexBenefit, true)))))
+				&& CoreFunctions.getItemsFromListByIndex(driver, _benefitStatus, indexBenefit, true)
+						.equals(expectedStatus)
+				&& ((expectedStatus.equalsIgnoreCase(MobilityXConstants.COMPLETE)
+						|| expectedStatus.equalsIgnoreCase(MobilityXConstants.CANCELLED))
+								? (Boolean.valueOf(CoreFunctions
+										.getAttributeText(_buttonDeleteBenefitList.get(indexBenefit), "aria-disabled")))
+								: CoreFunctions.getItemsFromListByIndex(driver, _buttonDeleteSubmittedBenefitList,
+										indexBenefit, true).equals(MobilityXConstants.DELETE));
 	}
 
 	private boolean verifyBenefitDeleteButtonDisabled(int indexBenefit, Benefit benefit, String expectedStatus) {
 		switch (expectedStatus) {
 		case MobilityXConstants.COMPLETE:
 			return verifyCompetedBenefitDeleteButtonStatus(indexBenefit);
-		case MobilityXConstants.CANCELED:
+		case MobilityXConstants.CANCELLED:
 			return verifyCanceledBenefitDeleteButtonStatus(indexBenefit);
 		default:
 			return true;
@@ -1416,13 +1428,14 @@ public class MX_Transferee_MyBenefitsBundlePage extends Base {
 					CoreFunctions.getAttributeText(_buttonDeleteBenefitList.get(indexBenefit), "aria-disabled"));
 			CoreFunctions.moveToElement(driver, _buttonDeleteBenefitList.get(indexBenefit));
 			isDeleteHoverTextVerified = CoreFunctions.isElementExist(driver,
-					_canceledBenefitDisabledDeleteButtonHoverText, 5);
-			CoreFunctions.highlightObject(driver, _canceledBenefitDisabledDeleteButtonHoverText);
+					_canceledBenefitDisabledDeleteButtonHoverText.get(hoverIndex), 5);
+			CoreFunctions.highlightObject(driver, _canceledBenefitDisabledDeleteButtonHoverText.get(hoverIndex));
 			if (isDeleteButtonDisabled && isDeleteHoverTextVerified) {
 				Reporter.addStepLog(MessageFormat.format(
 						COREFLEXConstants.SUCCESSFULLY_VERIFIED_DELETE_BUTTON_IS_DISABLED_AND_DISABLED_DELETE_HOVER_TEXT_POST_BENEFIT_STATUS_CANCELED,
 						CoreConstants.PASS));
 				CoreFunctions.moveToElement(driver, _textSubmittedBenefitNameList.get(indexBenefit));
+				hoverIndex++;
 				return true;
 			} else
 				return false;
@@ -1442,13 +1455,14 @@ public class MX_Transferee_MyBenefitsBundlePage extends Base {
 					CoreFunctions.getAttributeText(_buttonDeleteBenefitList.get(indexBenefit), "aria-disabled"));
 			CoreFunctions.moveToElement(driver, _buttonDeleteBenefitList.get(indexBenefit));
 			isDeleteHoverTextVerified = CoreFunctions.isElementExist(driver,
-					_completedBenefitDisabledDeleteButtonHoverText, 5);
-			CoreFunctions.highlightObject(driver, _completedBenefitDisabledDeleteButtonHoverText);
+					_completedBenefitDisabledDeleteButtonHoverText.get(hoverIndex), 5);
+			CoreFunctions.highlightObject(driver, _completedBenefitDisabledDeleteButtonHoverText.get(hoverIndex));
 			if (isDeleteButtonDisabled && isDeleteHoverTextVerified) {
 				Reporter.addStepLog(MessageFormat.format(
 						COREFLEXConstants.SUCCESSFULLY_VERIFIED_DELETE_BUTTON_IS_DISABLED_AND_DISABLED_DELETE_HOVER_TEXT_POST_BENEFIT_STATUS_COMPLETE,
 						CoreConstants.PASS));
 				CoreFunctions.moveToElement(driver, _textSubmittedBenefitNameList.get(indexBenefit));
+				hoverIndex++;
 				return true;
 			} else
 				return false;
@@ -1458,6 +1472,110 @@ public class MX_Transferee_MyBenefitsBundlePage extends Base {
 					CoreConstants.FAIL, e.getMessage()));
 		}
 		return false;
+	}
+
+	public boolean validateSubmittedPolicyAiresManagedBenefitDetails(String expectedStatus) {
+		boolean isSubmittedPolicyBenefitDetailsVerified = false, isSubmittedBenefitDisplayed = false;
+		try {
+			for (FlexBenefit benefitList : flexBenefits) {
+				for (Benefit benefit : benefitList.getBenefits()) {
+					if ((benefit.getSelectBenefitOnFPTPage()) && (benefit.getAiresManagedService().equals("Yes"))) {
+						isSubmittedPolicyBenefitDetailsVerified = verifySubmittedPolicyBenefitDetails(benefit,
+								expectedStatus);
+						if (isSubmittedPolicyBenefitDetailsVerified) {
+							isSubmittedBenefitDisplayed = true;
+						}
+					}
+
+				}
+			}
+		} catch (Exception e) {
+			Reporter.addStepLog(MessageFormat.format(
+					MobilityXConstants.FAILED_TO_VERIFY_SUBMITTED_AIRES_MANAGED_BENEFITS_ON_MY_BUNDLE_PAGE,
+					CoreConstants.FAIL, e.getMessage()));
+		}
+		if (isSubmittedPolicyBenefitDetailsVerified && isSubmittedBenefitDisplayed)
+			Reporter.addStepLog(MessageFormat.format(
+					MobilityXConstants.SUCCESSFULLY_VERIFIED_SUBMITTED_AIRES_MANAGED_BENEFIT_ON_MY_BUNDLE_PAGE,
+					CoreConstants.PASS));
+
+		return isSubmittedPolicyBenefitDetailsVerified;
+	}
+
+	private boolean verifySubmittedPolicyBenefitDetails(Benefit benefit, String expectedStatus) {
+		boolean isSubmittedPolicyBenefitDetailsVerified = false;
+		int multipleSubmissionBenefitCount = (int) _textSubmittedBenefitNameList.stream()
+				.filter(x -> x.getText().equals(benefit.getBenefitDisplayName())).count();
+		if (multipleSubmissionBenefitCount > 1) {
+			isSubmittedPolicyBenefitDetailsVerified = verifySubmittedBenefits(benefit, multipleSubmissionBenefitCount,
+					expectedStatus);
+		}
+		return isSubmittedPolicyBenefitDetailsVerified;
+
+	}
+
+	private boolean verifySubmittedBenefits(Benefit benefit, int multipleSubmissionBenefitCount,
+			String expectedStatus) {
+		int counter = 0;
+		boolean isSubmittedPolicyBenefitDetailsVerified = false;
+		try {
+			List<Integer> multipleSubmittedBenefitIndex = getMultipleSubmittedBenefitIndexes(benefit);
+			while (counter < multipleSubmissionBenefitCount) {
+				if (submittedPolicyDetails.get(" BenefitSubmittedDate").equals(CoreFunctions.getElementText(driver,
+						_textSubmittedBenefitDate.get(multipleSubmittedBenefitIndex.get(counter))))) {
+					isSubmittedPolicyBenefitDetailsVerified = verifySubmittedPolicyAiresManagedBenefitDetailsOnMBB(
+							multipleSubmittedBenefitIndex.get(counter), benefit, expectedStatus)
+							&& verifyBenefitDeleteButtonDisabled(multipleSubmittedBenefitIndex.get(counter), benefit,
+									expectedStatus);
+					if (!isSubmittedPolicyBenefitDetailsVerified) {
+						return false;
+					}
+				}
+				counter++;
+			}
+		} catch (Exception e) {
+			Reporter.addStepLog(MessageFormat.format(
+					COREFLEXConstants.EXCEPTION_OCCURED_WHILE_VERIFYING_MULTIPLE_SUBMISSION_FLEX_BENEFIT_CARD_DETAILS,
+					CoreConstants.FAIL, e.getMessage()));
+			return false;
+		}
+		return isSubmittedPolicyBenefitDetailsVerified;
+
+	}
+
+	private boolean verifySubmittedPolicyAiresManagedBenefitDetailsOnMBB(Integer indexBenefit, Benefit benefit,
+			String expectedStatus) {
+		return (CoreFunctions.getItemsFromListByIndex(driver, _textSubmittedBenefitNameList, indexBenefit, true)
+				.equals(benefit.getBenefitDisplayName()))
+				&& (CoreFunctions.getItemsFromListByIndex(driver, _textSubmittedAllowanceAmountList, indexBenefit, true)
+						.equals(benefit.getBenefitAmount()))
+				&& (CoreFunctions.getItemsFromListByIndex(driver, _textSubmittedBenefitQuantityList, indexBenefit, true)
+						.equals(String.valueOf(benefit.getNumberOfBenefitSelected())))
+				&& (CoreFunctions.getItemsFromListByIndex(driver, _textSubmittedBenefitDate, indexBenefit, true)
+						.equals(submittedPolicyDetails.get(" BenefitSubmittedDate")))
+				&& ((Double.parseDouble((CoreFunctions
+						.getItemsFromListByIndex(driver, _textSubmittedBenefitsPointsList, indexBenefit, true)
+						.replace("pts", "").trim()))) == ((Double.parseDouble(benefit.getPoints()))
+								* (Integer.parseInt(CoreFunctions.getItemsFromListByIndex(driver,
+										_textSubmittedBenefitQuantityList, indexBenefit, true)))))
+				&& CoreFunctions.getItemsFromListByIndex(driver, _benefitStatus, indexBenefit, true)
+						.equals(expectedStatus)
+				&& ((expectedStatus.equalsIgnoreCase(MobilityXConstants.COMPLETE)
+						|| expectedStatus.equalsIgnoreCase(MobilityXConstants.CANCELLED))
+								? (Boolean.valueOf(CoreFunctions
+										.getAttributeText(_buttonDeleteBenefitList.get(indexBenefit), "aria-disabled")))
+								: CoreFunctions.getItemsFromListByIndex(driver, _buttonDeleteSubmittedBenefitList,
+										indexBenefit, true).equals(MobilityXConstants.DELETE));
+	}
+
+	private List<Integer> getMultipleSubmittedBenefitIndexes(Benefit benefit) {
+		List<Integer> flexCardIndexes = new ArrayList<Integer>();
+		for (WebElement element : _textSubmittedBenefitNameList) {
+			if (element.getText().equals(benefit.getBenefitDisplayName())) {
+				flexCardIndexes.add(_textSubmittedBenefitNameList.indexOf(element));
+			}
+		}
+		return flexCardIndexes;
 	}
 
 }

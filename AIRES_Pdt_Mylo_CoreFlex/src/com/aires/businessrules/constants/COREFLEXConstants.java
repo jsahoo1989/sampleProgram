@@ -458,4 +458,7 @@ public class COREFLEXConstants {
 	public static final String CONCIERGE_SERVICES = "Concierge Services";
 	public static final String EXCEPTION_OCCURED_WHILE_VERIFYING_MULTIPLE_SUBMISSION_FLEX_BENEFIT_CARD_DETAILS = "{0}Exception occured while verifying Multiple Submission Flex Benefit card Details on Mobility Journey Home Page. Exception : ''{1}''.";
 	public static final String SUCCESSFULLY_VERIFIED_MULTIPLE_SUBMISSION_FLEX_BENEFIT_CARD_DETAILS = "{0}Successfully verified Multiple Submission Flex benefit Card Details.";
+	public static final String FIRST_SUBMITTED_POLICY_STATE_ALREADY_SAVED = "{0}First Submitted Policy State already saved in Config properties file.";
+	public static final String SUCCESSFULLY_SAVED_FIRST_SUBMITTED_POLICY_STATE_IN_CONFIG_PROPERTIES = "{0}Successfully saved first submitted policy state in config properties file.";
+	public static final String BASE_POLICY_NOT_SUBMITTED_FOR_MUTIPLE_SUBMISSION_DATE_CARD_VALIDATION = "{0}Base Policy not Submitted for Multiple Submission Date Card validation.";
 }

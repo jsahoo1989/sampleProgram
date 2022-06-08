@@ -73,7 +73,7 @@
 					"airesManagedService":"No",
 					"multipleBenefitSelection": "Yes",
 					"numberOfBenefitSelected": 1,
-					"selectBenefitOnFPTPage": false,
+					"selectBenefitOnFPTPage": true,
 					"deleteBenefitOnMBBPage":false,
 					"grossUp":"Yes",
 					"reimbursedBy":"Aires",
@@ -194,7 +194,7 @@
 					"postInitialTracingCardStatus":"Begin training",
 					"endTracingPrompt":"Cultural training end date",
 					"postEndTracingCardStatus":"Training complete",
-					"multipleBenefitSubmission": false	
+					"multipleBenefitSubmission": true	
 				}
 			]
 		}

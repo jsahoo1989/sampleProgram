@@ -416,7 +416,8 @@ public class IRISConstants {
 	public static final String VERIFIED_PARTNER_SELECTED = "{0}Verified ''{1}'' Partner is selected.";
 	public static final String VERIFIED_PARTNER_DISPLAYED = "{0}Verified ''{1}'' Partner is displayed under Select List tab.";
 	public static final String PARTNER_NAME_IQR = "IOR Global Services";
-	public static final String VERIFIED_SERVICE_SELECTED = "{0}Verified ''{1}'' Service and ''{2}'' Sub-Service is selected.";
+	public static final String VERIFIED_SERVICE_SUBSERVICE_SELECTED = "{0}Verified ''{1}'' Service and ''{2}'' Sub-Service is selected.";
+	public static final String VERIFIED_SERVICE_SELECTED = "{0}Verified ''{1}'' Service is selected.";
 	public static final String CANCEL_REQUEST_BUTTON = "Cancel Request";
 	public static final String NO_TEXT = "No";
 	public static final String SEARCH_TEXT = "Search";

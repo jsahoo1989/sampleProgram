@@ -333,7 +333,7 @@ public class IRIS_AssignmentOverviewPage extends BasePage {
 		// addAuthorizationInfo(overviewData.authorization);
 		deleteAiresFileTeamHistoryDetails(IRISConstants.FUNCTION_PPC);
 		saveAssignment(1);
-		addAiresFileTeamHistoryDetails(IRISConstants.FUNCTION_PPC, overviewData.airesFileTeamHistory);		
+		addAiresFileTeamHistoryDetails(IRISConstants.FUNCTION_PPC, overviewData.airesFileTeamHistory);
 		saveAssignment(1);
 		addAiresFileTeamHistoryDetails(IRISConstants.FUNCTION_MSPEC, overviewData.airesFileTeamHistory);
 		saveAssignment(1);
@@ -1155,7 +1155,7 @@ public class IRIS_AssignmentOverviewPage extends BasePage {
 		robot.keyPress(KeyEvent.VK_ENTER);
 		robot.keyRelease(KeyEvent.VK_ENTER);
 	}
-	
+
 	public void setSubServiceStatus(String fileStatus) throws Exception {
 		_IRIS = getIRISWindow();
 		Menu optionsMenu = _IRIS.describe(Menu.class, new MenuDescription.Builder().label("Options").build());
@@ -1226,19 +1226,20 @@ public class IRIS_AssignmentOverviewPage extends BasePage {
 	}
 
 	public void acceptFailedImageLoadDialog() {
-		try {
-			CoreFunctions.waitHandler(1);
-			_isExists = (IRIS_PageMaster.getDialogObject(_IRIS, "Failed").isVisible());
-			if (_isExists) {
-				Helpers.clickButton(
-						IRIS_PageMaster.getDialogObject(_IRIS, "Failed").describe(Button.class,
-								new ButtonDescription.Builder().label("OK").build()),
-						IRIS_PageMaster.getDialogObject(_IRIS, "Failed")
-								.describe(Button.class, new ButtonDescription.Builder().label("OK").build())
-								.getLabel());
+		if (CoreFunctions.getPropertyFromConfig("envt").equalsIgnoreCase("PreProd")
+				|| CoreFunctions.getPropertyFromConfig("envt").equalsIgnoreCase("UAT")) {
+			try {
+				_isExists = (IRIS_PageMaster.getDialogObject(_IRIS, "Failed").isVisible());
+				if (_isExists) {
+					Helpers.clickButton(
+							IRIS_PageMaster.getDialogObject(_IRIS, "Failed").describe(Button.class,
+									new ButtonDescription.Builder().label("OK").build()),
+							IRIS_PageMaster.getDialogObject(_IRIS, "Failed")
+									.describe(Button.class, new ButtonDescription.Builder().label("OK").build())
+									.getLabel());
+				}
+			} catch (Exception e) {
 			}
-		} catch (Exception e) {
-			
 		}
 	}
 }

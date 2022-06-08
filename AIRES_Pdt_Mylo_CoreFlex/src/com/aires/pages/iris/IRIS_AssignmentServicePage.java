@@ -5,6 +5,7 @@ import java.awt.Robot;
 import java.awt.event.KeyEvent;
 import java.text.MessageFormat;
 import java.util.HashMap;
+import java.util.IdentityHashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -484,6 +485,7 @@ public class IRIS_AssignmentServicePage extends BasePage {
 	
 	public void addAdditionalSubService(String coreFlexType) {
 		subServiceIDMap = new HashMap<String, String>();
+		System.out.println("Empty SubserviceMap : "+subServiceIDMap);
 		try {
 			for (FlexBenefit benefitList : flexBenefits) {
 				for (Benefit benefit : benefitList.getBenefits()) {
@@ -493,12 +495,11 @@ public class IRIS_AssignmentServicePage extends BasePage {
 						clickOnAddSubServiceButton();
 						addSubService(IRISConstants.SUB_SERVICE, benefit.getIrisSubserviceType(),
 								benefit.getIrisSubserviceName(), coreFlexType);
-						clickSaveButton();
+						clickSaveButton();							
 						benefit.setIrisSubserviceID(String.valueOf(
 								new Double(IRIS_PageMaster.getTableObjectWithIndex(_IRIS, "javax.swing.JTable", 1)
-										.getCell(0, IRISConstants.ID_TEXT).getValue().toString()).intValue()));
+										.getCell(1, IRISConstants.ID_TEXT).getValue().toString()).intValue()));
 						subServiceIDMap.put(benefit.getIrisServiceName(), benefit.getIrisSubserviceID());
-						CoreFunctions.waitHandler(2);
 						System.out.println("SubserviceMap : "+subServiceIDMap);
 					}
 				}

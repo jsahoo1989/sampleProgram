@@ -821,7 +821,7 @@ public class MX_Transferee_FlexPlanningTool_Page extends Base {
 	private boolean performFlexBenefitSelection(Benefit benefit, int indexBenefit) {
 		boolean isBenefitSelected = false;
 		try {
-			CoreFunctions.waitHandler(2);
+			CoreFunctions.waitHandler(3);
 			CoreFunctions.scrollToElementUsingJS(driver, flexHomePageTitle, MobilityXConstants.FLEX_PLANNING_TOOL);
 			CoreFunctions.waitHandler(3);
 			double points = Double.parseDouble(benefit.getPoints());

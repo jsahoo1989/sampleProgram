@@ -343,4 +343,8 @@ public class MX_Transferee_LoginPage extends Base {
 		return false;
 	}
 
+	public boolean verifyBasePolicySubmitted() {
+		return Boolean.valueOf(CoreFunctions.getPropertyFromConfig("CoreFlexMultipleSubmissionFlag"));
+	}
+
 }

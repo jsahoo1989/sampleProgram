@@ -87,7 +87,10 @@ public class MyloJourneyPage_PartnerSection extends Base {
 	private WebElement _alertMessage;
 	
 	@FindBy(how = How.CSS, using = "i[class='icon-FloppyDisk_Open']")
-	private WebElement _partnerSaveBtn;
+	private WebElement _partnerSaveIcon;
+	
+	@FindBy(how = How.XPATH, using = "//button[text()='Save']")
+	private WebElement _partnerSaveButton;
 	
 	@FindBy(how = How.CSS, using = "app-partner i[class='icon-Pencil_Open']")
 	private WebElement _partnerEditButton;
@@ -173,6 +176,7 @@ public class MyloJourneyPage_PartnerSection extends Base {
 		partnerWebElementsMap.put(MYLOConstants.EDIT_BUTTON, _partnerEditButton);
 		partnerWebElementsMap.put(MYLOConstants.PARTNER_DRODOWN_ARROW, _expandPartnerSection);
 		partnerWebElementsMap.put(MYLOConstants.YES_BUTTON, _YesButton);
+		partnerWebElementsMap.put(MYLOConstants.SAVE_BUTTON, _partnerSaveButton);
 	}
 	
 	/**
@@ -265,6 +269,9 @@ public class MyloJourneyPage_PartnerSection extends Base {
 			CoreFunctions.scrollToElementUsingJavaScript(driver, _partnerPreferredName, MYLOConstants.PARTNER_PREFERREDNAME);
 			CoreFunctions.click(driver, _partnerEmailPreferredSelect.get(index), elementName);
 			break;
+		case MYLOConstants.RELATIONSHIP:
+			CoreFunctions.click(driver, _partnerRelationship, elementName);
+			break;
 		default:
 			Reporter.addStepLog(CoreConstants.FAIL + MYLOConstants.ENTER_CORRECT_ELEMENT_NAME);
 			Assert.fail(MYLOConstants.ENTER_CORRECT_ELEMENT_NAME);
@@ -294,9 +301,9 @@ public class MyloJourneyPage_PartnerSection extends Base {
 		try {
 			CoreFunctions.scrollToElementUsingJavaScript(driver, _transfereeAndFamilySection,
 					MYLOConstants.TRANSFEREE_FAMILY);
-			CoreFunctions.explicitWaitTillElementVisibility(driver, _partnerSaveBtn, MYLOConstants.SAVE_BUTTON);
+			CoreFunctions.explicitWaitTillElementVisibility(driver, _partnerSaveIcon, MYLOConstants.SAVE_BUTTON);
 			CoreFunctions.explicitWaitTillElementInVisibilityCustomTime(driver, _spinner, 180);
-			CoreFunctions.highlightElementAndClick(driver, _partnerSaveBtn, MYLOConstants.SAVE_BUTTON);
+			CoreFunctions.highlightElementAndClick(driver, _partnerSaveIcon, MYLOConstants.SAVE_BUTTON);
 		} catch (Exception e) {
 			Reporter.addStepLog(MessageFormat.format(MYLOConstants.BUTTON_NOT_PRESENT, CoreConstants.FAIL,
 					MYLOConstants.SAVE_BUTTON, MYLOConstants.PARTNER, MYLOConstants.JOURNEY));
@@ -511,6 +518,24 @@ public class MyloJourneyPage_PartnerSection extends Base {
 					data.get(i).get(MYLOConstants.PARTNER_FIRSTNAME));
 			setPartnerFields(MYLOConstants.PARTNER_LASTNAME, data.get(i).get(MYLOConstants.PARTNER_LASTNAME));
 			clickPartnerSaveButton();
+			flag = (verifyToastMessage(data.get(i).get(MYLOConstants.MESSAGE), MYLOConstants.TRANSFEREE_FAMILY));
+		}
+		return flag;
+	}
+	
+	/**
+	 * @param table
+	 * @return
+	 * Verify Toast Messages for Mandatory Fields of Partner section
+	 */
+	public boolean verifyMandatoryToastMessageNewPartnerSection(DataTable table) {
+		boolean flag = false;
+		java.util.List<Map<String, String>> data = table.asMaps(String.class, String.class);
+		for (int i = 0; i < data.size(); i++) {
+			setPartnerFields(MYLOConstants.PARTNER_FIRSTNAME,
+					data.get(i).get(MYLOConstants.PARTNER_FIRSTNAME));
+			setPartnerFields(MYLOConstants.PARTNER_LASTNAME, data.get(i).get(MYLOConstants.PARTNER_LASTNAME));
+			clickFieldsOnPartnerSection(MYLOConstants.SAVE_BUTTON);
 			flag = (verifyToastMessage(data.get(i).get(MYLOConstants.MESSAGE), MYLOConstants.TRANSFEREE_FAMILY));
 		}
 		return flag;
@@ -807,7 +832,7 @@ public class MyloJourneyPage_PartnerSection extends Base {
 	public boolean isPreferredChecked(String section, int index, String number) {
 		boolean flag=false;
 		try {
-			flag = (section.equals(MYLOConstants.TRANSFEREE_PHONE_NUMBER))
+			flag = (section.equals(MYLOConstants.PARTNER_PHONE_NUMBER))
 					? _partnerPhonePreferred.get(index).isSelected()
 					: _partnerEmailPreferred.get(index).isSelected();
 		} catch (Exception e) {

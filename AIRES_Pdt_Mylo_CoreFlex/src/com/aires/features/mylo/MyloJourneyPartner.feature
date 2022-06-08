@@ -83,7 +83,7 @@ Then values should be successfully saved as per below character limit set for di
 |Partner Phone number   |30              |
 And data for "Partner Add Phone" field should be removed successfully after clicking on Delete icon under Partner section
 
-@IRIS-1453 @217557 @217558 @217559 @Mylo:217565 @Mylo-Regression
+@IRIS-1543 @217557 @217558 @217559 @Mylo:217565 @Mylo-Regression
 Scenario:  Mylo-Validate Toast Messages for Mandatory fields of Email Field under Partner section on Mylo Journey page
 Given he is on Partner section after clicking on "Partner Dropdown arrow" displayed in right panel under "Transferee and Family" section for "Partner All Data" fileID
 And messages corresponding to below fields should be displayed after entering below field values under Partner section after clicking on "Partner Add Email" button
@@ -101,10 +101,19 @@ Then values should be successfully saved for different fields under Partner sect
 |Partner Email Type         |
 And data for "Partner Add Email" field should be removed successfully after clicking on Delete icon under Partner section
 
-@IRIS-1453 @Mylo:217499 @Mylo-Regression
+@IRIS-1543 @217556 @Mylo:217602 @Mylo-Regression
 Scenario:  Mylo-Validate CheckBox selection of Phone and Email Field under Partner section on Mylo Journey page
 Given he is on Partner section after clicking on "Partner Dropdown arrow" displayed in right panel under "Transferee and Family" section for "Relocation Policy" fileID
 And partner already has a "Partner Phone number" as preferred number with "Partner Email Address" as preferred email
 When he checks the preferred box for another partner number after clicking on "Partner Add Phone" button
 Then previous selected preferred checkbox for "Partner Phone number" should be cleared with latest selected preferred box AS-IS under Partner section
 And previous selected preferred checkbox for "Partner Email Address" should be cleared with latest selected preferred box AS-IS after he checks the preferred box for another email on clicking "Partner Add Email" button under Partner section
+
+@IRIS-1543 @217549 @217552 @Mylo:217603 @Mylo-Regression
+Scenario:  Mylo-Validate Mandatory Message for Relationship field and Invalid birthdate under Partner section on Mylo Journey page
+Given he is on "Add Partner" section after clicking on 'Add' link displayed in right panel under "Transferee and Family" section for  "Active Assignment" fileID
+And he enters below fields under Partner section
+|PartnerFirstName   	    |PartnerLastName       |Message                                        | 
+|AutoMyloFirstNamePartner|AutoMyloLastNamePartner|You need to fill in the family member relation!|
+When he clicks on "Save" button after entering "Relationships" as "Spouse" with "02/31/3100" invalid date in "PartnerDateOfBirth" field
+Then toast message "Invalid birthdate!" should be displayed with "PartnerDateOfBirth" box highlighted under Partner section

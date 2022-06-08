@@ -24,7 +24,7 @@ Then 3 most recent assignment history cards should display at the top of the pag
 And the least recent file history card should be displayed in the dropdown after he clicks on History card
 And the history cards should no longer display at the top of the page after he relogins with same user
 
-@IRIS-9921 @214506 @Mylo:217522 @Mylo-Regression
+@IRIS-992 @214506 @Mylo:217522 @Mylo-Regression
 Scenario:  Mylo-Validate maximum 17 History Card appearing in the History dropdown and last file being removed upon addition of 1 History Card in the History section  in the current session on Mylo Journey page
 Given he is on Mylo Assignment Summary page with 21 recent files 
 And 3 most recent assignment history cards should display at the top of the page with 17 card available in the dropdown of History card for 21 recent files

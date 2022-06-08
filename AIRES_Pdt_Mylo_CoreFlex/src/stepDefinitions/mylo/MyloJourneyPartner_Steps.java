@@ -1,10 +1,12 @@
 package stepDefinitions.mylo;
 
+import java.text.MessageFormat;
 import java.util.Date;
 import java.util.Map;
 
 import org.testng.Assert;
 
+import com.aires.businessrules.constants.CoreConstants;
 import com.aires.businessrules.constants.MYLOConstants;
 import com.aires.cucumber.TestContext;
 import com.aires.managers.FileReaderManager;
@@ -13,6 +15,7 @@ import com.aires.pages.mylo.MyloJourneyPage_TransfereeSection;
 import com.aires.pages.mylo.Mylo_AssignmentPage;
 import com.aires.pages.mylo.Mylo_DashboardHomePage;
 import com.aires.pages.mylo.Mylo_LoginPage;
+import com.aires.testdatatypes.mylo.MyloCAStates;
 import com.aires.testdatatypes.mylo.Mylo_LoginData;
 import com.vimalselvam.cucumber.listener.Reporter;
 
@@ -165,6 +168,66 @@ public class MyloJourneyPartner_Steps {
 	@Then("^values should be successfully saved for different fields under Partner section$")
 	public void values_should_be_successfully_saved_for_different_fields_under_Partner_section(DataTable table) {
 		Assert.assertTrue(myloJourneyPagePartnerSection.verifyDifferentPartnerEmailFieldsUpdatedValue(table, 0));
+	}
+	
+	@Given("^partner already has a \"([^\"]*)\" as preferred number with \"([^\"]*)\" as preferred email$")
+	public void partner_already_has_a_as_preferred_number_with_as_preferred_email(String section1, String section2){
+		Assert.assertTrue(myloJourneyPagePartnerSection.isPreferredChecked(section1, 0, MYLOConstants.FIRST),
+				MessageFormat.format(MYLOConstants.VERIFIED_CHECKBOX_NOT_SELECTED, CoreConstants.FAIL,
+						MYLOConstants.FIRST, MYLOConstants.PREFERRED, section1, MYLOConstants.PARTNER));
+		Assert.assertTrue(myloJourneyPagePartnerSection.isPreferredChecked(section2, 0, MYLOConstants.FIRST),
+				MessageFormat.format(MYLOConstants.VERIFIED_CHECKBOX_NOT_SELECTED, CoreConstants.FAIL,
+						MYLOConstants.FIRST, MYLOConstants.PREFERRED, section1, MYLOConstants.PARTNER));
+	}
+
+	@When("^he checks the preferred box for another partner number after clicking on \"([^\"]*)\" button$")
+	public void he_checks_the_preferred_box_for_another_partner_number_after_clicking_on_button(String button){
+		myloJourneyPageTransfereeSection.verifySectionHeader(MYLOConstants.PARTNER);
+		myloJourneyPagePartnerSection.clickFieldsOnPartnerSection(MYLOConstants.EDIT_BUTTON);
+		myloJourneyPagePartnerSection.clickFieldsOnPartnerSection(button);
+		myloJourneyPagePartnerSection.clickDropdownFieldsOnPartnerSection(MYLOConstants.PARTNER_PHONE_PREFERRED,
+				1);
+	}
+
+	@Then("^previous selected preferred checkbox for \"([^\"]*)\" should be cleared with latest selected preferred box AS-IS under Partner section$")
+	public void previous_selected_preferred_checkbox_for_should_be_cleared_with_latest_selected_preferred_box_AS_IS_under_Partner_section(String section){
+		Assert.assertFalse(myloJourneyPagePartnerSection.isPreferredChecked(section, 0, MYLOConstants.FIRST),
+				MessageFormat.format(MYLOConstants.VERIFIED_CHECKBOX_SELECTED, CoreConstants.FAIL, MYLOConstants.FIRST,
+						MYLOConstants.PREFERRED, section, MYLOConstants.PARTNER));
+		Assert.assertTrue(myloJourneyPagePartnerSection.isPreferredChecked(section, 1, MYLOConstants.SECOND),
+				MessageFormat.format(MYLOConstants.VERIFIED_CHECKBOX_NOT_SELECTED, CoreConstants.FAIL,
+						MYLOConstants.SECOND, MYLOConstants.PREFERRED, section, MYLOConstants.PARTNER));
+	}
+
+	@Then("^previous selected preferred checkbox for \"([^\"]*)\" should be cleared with latest selected preferred box AS-IS after he checks the preferred box for another email on clicking \"([^\"]*)\" button under Partner section$")
+	public void previous_selected_preferred_checkbox_for_should_be_cleared_with_latest_selected_preferred_box_AS_IS_after_he_checks_the_preferred_box_for_another_email_on_clicking_button_under_Partner_section(String section, String button){
+		myloJourneyPagePartnerSection.clickFieldsOnPartnerSection(button);
+		myloJourneyPagePartnerSection.clickDropdownFieldsOnPartnerSection(MYLOConstants.PARTNER_EMAIL_PREFERRED,
+				1);
+		Assert.assertFalse(myloJourneyPagePartnerSection.isPreferredChecked(section, 0, MYLOConstants.FIRST),
+				MessageFormat.format(MYLOConstants.VERIFIED_CHECKBOX_SELECTED, CoreConstants.FAIL, MYLOConstants.FIRST,
+						MYLOConstants.PREFERRED, section, MYLOConstants.PARTNER));
+		Assert.assertTrue(myloJourneyPagePartnerSection.isPreferredChecked(section, 1, MYLOConstants.SECOND),
+				MessageFormat.format(MYLOConstants.VERIFIED_CHECKBOX_NOT_SELECTED, CoreConstants.FAIL,
+						MYLOConstants.SECOND, MYLOConstants.PREFERRED, section, MYLOConstants.PARTNER));
+	}
+	
+	@Given("^he enters below fields under Partner section$")
+	public void he_enters_below_fields_under_Partner_section(DataTable table) throws Throwable {
+		Assert.assertTrue(myloJourneyPagePartnerSection.verifyMandatoryToastMessageNewPartnerSection(table));
+	}
+
+	@When("^he clicks on \"([^\"]*)\" button after entering \"([^\"]*)\" as \"([^\"]*)\" with \"([^\"]*)\" invalid date in \"([^\"]*)\" field$")
+	public void he_clicks_on_button_after_entering_as_with_invalid_date_in_field(String buttonName, String fieldName, String fieldValue, String fieldValue2, String fieldName2){
+		myloJourneyPagePartnerSection.clickDropdownFieldsOnPartnerSection(fieldName, 0);
+		myloJourneyPagePartnerSection.setDifferentDropDownFields(fieldName, fieldValue);
+		myloJourneyPagePartnerSection.setPartnerFields(fieldName2, fieldValue2);
+		myloJourneyPagePartnerSection.clickFieldsOnPartnerSection(MYLOConstants.SAVE_BUTTON);
+	}
+
+	@Then("^toast message \"([^\"]*)\" should be displayed with \"([^\"]*)\" box highlighted under Partner section$")
+	public void toast_message_should_be_displayed_with_box_highlighted_under_Partner_section(String msg, String fieldName){
+		Assert.assertTrue(myloJourneyPagePartnerSection.verifyToastMessage(msg, MYLOConstants.PARTNER));
 	}
 
 }

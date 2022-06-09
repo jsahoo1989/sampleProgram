@@ -1175,12 +1175,12 @@ public class Mylo_AssignmentPage extends Base {
 			fileInfoDetailsmap.put(MYLOConstants.CLIENT_NAME, assignmentDetails.transfereeEmailPhone_preprod.clientName);
 			break;
 		case MYLOConstants.PARTNER_DATA:
-			fileInfoDetailsmap.put(MYLOConstants.FILE_ID, assignmentDetails.partnerData.fileID);
+			fileInfoDetailsmap.put(MYLOConstants.FILE_ID, getTestDataPartner());
 			fileInfoDetailsmap.put(MYLOConstants.CLIENT_ID, assignmentDetails.partnerData.clientID);
 			fileInfoDetailsmap.put(MYLOConstants.CLIENT_NAME, assignmentDetails.partnerData.clientName);
 			break;
 		case MYLOConstants.PARTNER_ALL_DATA:
-			fileInfoDetailsmap.put(MYLOConstants.FILE_ID, assignmentDetails.partnerAllData.fileID);
+			fileInfoDetailsmap.put(MYLOConstants.FILE_ID, getTestDataPartnerAllData());
 			fileInfoDetailsmap.put(MYLOConstants.CLIENT_ID, assignmentDetails.partnerAllData.clientID);
 			fileInfoDetailsmap.put(MYLOConstants.CLIENT_NAME, assignmentDetails.partnerAllData.clientName);
 			break;
@@ -1189,6 +1189,40 @@ public class Mylo_AssignmentPage extends Base {
 		}
 		return fileInfoDetailsmap.get(requiredField);
 
+	}
+	
+	public String getTestDataPartnerAllData() {
+		String environment = CoreFunctions.getPropertyFromConfig("envt");
+		String fileID = null;
+		switch(environment) {
+		case MYLOConstants.UAT:
+		case MYLOConstants.RELONETQA4:
+			fileID = assignmentDetails.partnerAllData.fileID;
+			break;
+		case MYLOConstants.PREPROD:
+			fileID = assignmentDetails.partnerAllData_preprod.fileID;
+			break;
+		default:
+			Assert.fail(MYLOConstants.ENTER_CORRECT_FIELD_NAME);	
+		}
+		return fileID;
+	}
+	
+	public String getTestDataPartner() {
+		String environment = CoreFunctions.getPropertyFromConfig("envt");
+		String fileID = null;
+		switch(environment) {
+		case MYLOConstants.UAT:
+		case MYLOConstants.RELONETQA4:
+			fileID = assignmentDetails.partnerData.fileID;
+			break;
+		case MYLOConstants.PREPROD:
+			fileID = assignmentDetails.partnerData_preprod.fileID;
+			break;
+		default:
+			Assert.fail(MYLOConstants.ENTER_CORRECT_FIELD_NAME);	
+		}
+		return fileID;
 	}
 	
 	public String getTestDataActiveFileId() {

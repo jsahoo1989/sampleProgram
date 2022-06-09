@@ -25,6 +25,7 @@ import com.aires.pages.mylo.Mylo_AssignmentPage;
 //import com.aires.pages.mylo.Mylo_AssignmentPage;
 import com.aires.pages.mylo.Mylo_DashboardHomePage;
 import com.aires.pages.mylo.Mylo_LoginPage;
+import com.aires.pages.mylo.Mylo_RestApiRequest;
 
 
 public class PageObjectManager_Mylo {
@@ -35,7 +36,7 @@ public class PageObjectManager_Mylo {
 	private Mylo_AssignmentPage _assignmentPage; 
 	private MyloJourneyPage_TransfereeSection _journeyTransfereeSection;
 	private MyloJourneyPage_PartnerSection _journeyPartnerSection;
-	//private Mylo_RestApiRequest _restApiRequest;
+	private Mylo_RestApiRequest _restApiRequest;
 
 	public PageObjectManager_Mylo(WebDriver driver) {
 		this._driver = driver;
@@ -56,10 +57,11 @@ public class PageObjectManager_Mylo {
 				: _assignmentPage;
 	}
 	 
-	/* public Mylo_RestApiRequest getRestApiRequest() {
+	public Mylo_RestApiRequest getRestApiRequest() {
 			return (_restApiRequest == null) ? _restApiRequest = new Mylo_RestApiRequest(_driver)
 					: _restApiRequest;
-		}*/
+		}
+	
 	 public MyloJourneyPage_TransfereeSection getJourneyPageTransfereeSection() {
 			return (_journeyTransfereeSection == null) ? _journeyTransfereeSection = new MyloJourneyPage_TransfereeSection(_driver)
 					: _journeyTransfereeSection;

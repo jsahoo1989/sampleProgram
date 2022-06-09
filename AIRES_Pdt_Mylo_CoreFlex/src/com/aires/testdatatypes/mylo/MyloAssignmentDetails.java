@@ -29,6 +29,8 @@ public class MyloAssignmentDetails {
 	public TransfereeEmailPhone_preprod transfereeEmailPhone_preprod;
 	public PartnerData partnerData;
 	public PartnerAllData partnerAllData;
+	public PartnerData_preprod partnerData_preprod;
+	public PartnerAllData_preprod partnerAllData_preprod;
 	
 
 	public class ActiveAssignment {
@@ -303,6 +305,18 @@ public class MyloAssignmentDetails {
 		public String journeyType;
 		public String office;
 	}
+	
+	public class PartnerData_preprod {
+		public String fileID;
+		public String clientID;
+		public String clientName;
+		public String status;
+		public String policyType;
+		public String provider;
+		public String journeyType;
+		public String office;
+	}
+	
 	public class PartnerAllData {
 		public String fileID;
 		public String clientID;
@@ -314,5 +328,14 @@ public class MyloAssignmentDetails {
 		public String office;
 	}
 	
-
+	public class PartnerAllData_preprod {
+		public String fileID;
+		public String clientID;
+		public String clientName;
+		public String status;
+		public String policyType;
+		public String provider;
+		public String journeyType;
+		public String office;
+	}
 }

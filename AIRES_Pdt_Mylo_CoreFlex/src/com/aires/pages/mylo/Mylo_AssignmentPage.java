@@ -438,12 +438,14 @@ public class Mylo_AssignmentPage extends Base {
 	MyloAssignmentDetails assignmentDetails = FileReaderManager.getInstance().getMyloJsonReader()
 			.getAssignmentDetailsByApplication(MYLOConstants.IRIS);
 	//Commented Code is used for debugging in local
-	Mylo_AssignmentShipmentDetails assignmentShipmentDetails = FileReaderManager.getInstance().getMyloJsonReader()
-			.getAssignmentShipmentDetailsByEnv(CoreFunctions.getPropertyFromConfig("envt"));
-			
 	//Mylo_AssignmentShipmentDetails assignmentShipmentDetails = FileReaderManager.getInstance().getMyloJsonReader()
-		//	.getAssignmentShipmentDetailsByEnv(System.getProperty("envt"));
+		//	.getAssignmentShipmentDetailsByEnv(CoreFunctions.getPropertyFromConfig("envt"));
+			
+	Mylo_AssignmentShipmentDetails assignmentShipmentDetails = FileReaderManager.getInstance().getMyloJsonReader()
+			.getAssignmentShipmentDetailsByEnv(System.getProperty("envt"));
 	
+	//String environment = CoreFunctions.getPropertyFromConfig("envt");
+	String environment = System.getProperty("envt");
 	String updatedTeamMember, updatedPolicyType, updatedTaxTreatment, updatedOffice, updatedJourneyType, updatedTransferType,
 	updatedHomeStatus, updatedFileInfoCheckboxSelected, updatedTempAddressCityValue,
 	updatedMailAddressCityValue, updatedTempAddressZipCodeValue, updatedMailAddressZipCodeValue,
@@ -1192,7 +1194,6 @@ public class Mylo_AssignmentPage extends Base {
 	}
 	
 	public String getTestDataPartnerAllData() {
-		String environment = CoreFunctions.getPropertyFromConfig("envt");
 		String fileID = null;
 		switch(environment) {
 		case MYLOConstants.UAT:
@@ -1209,7 +1210,6 @@ public class Mylo_AssignmentPage extends Base {
 	}
 	
 	public String getTestDataPartner() {
-		String environment = CoreFunctions.getPropertyFromConfig("envt");
 		String fileID = null;
 		switch(environment) {
 		case MYLOConstants.UAT:
@@ -1226,7 +1226,6 @@ public class Mylo_AssignmentPage extends Base {
 	}
 	
 	public String getTestDataActiveFileId() {
-		String environment = CoreFunctions.getPropertyFromConfig("envt");
 		String fileID = null;
 		switch(environment) {
 		case MYLOConstants.UAT:
@@ -1245,7 +1244,6 @@ public class Mylo_AssignmentPage extends Base {
 	}
 	
 	public String getTestDataClosedFileId() {
-		String environment = CoreFunctions.getPropertyFromConfig("envt");
 		String fileID = null;
 		switch(environment) {
 		case MYLOConstants.UAT:
@@ -1264,7 +1262,6 @@ public class Mylo_AssignmentPage extends Base {
 	}
 	
 	public String getTestDataClosedIdentityDocFileId() {
-		String environment = CoreFunctions.getPropertyFromConfig("envt");
 		String fileID = null;
 		switch(environment) {
 		case MYLOConstants.UAT:
@@ -1281,7 +1278,6 @@ public class Mylo_AssignmentPage extends Base {
 	}
 	
 	public String getTestDataRelocationTypeFileId() {
-		String environment = CoreFunctions.getPropertyFromConfig("envt");
 		String fileID = null;
 		switch(environment) {
 		case MYLOConstants.UAT:
@@ -1300,7 +1296,6 @@ public class Mylo_AssignmentPage extends Base {
 	}
 	
 	public String getTestDataLumpSumTypeFileId() {
-		String environment = CoreFunctions.getPropertyFromConfig("envt");
 		String fileID = null;
 		switch(environment) {
 		case MYLOConstants.UAT:
@@ -1317,7 +1312,6 @@ public class Mylo_AssignmentPage extends Base {
 	}
 	
 	public String getTestDataDomesticTypeFileId() {
-		String environment = CoreFunctions.getPropertyFromConfig("envt");
 		String fileID = null;
 		switch(environment) {
 		case MYLOConstants.UAT:
@@ -1334,7 +1328,6 @@ public class Mylo_AssignmentPage extends Base {
 	}
 	
 	public String getTestDataTransfereeAllDataFileId() {
-		String environment = CoreFunctions.getPropertyFromConfig("envt");
 		String fileID = null;
 		switch(environment) {
 		case MYLOConstants.UAT:

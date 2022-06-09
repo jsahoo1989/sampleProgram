@@ -205,10 +205,10 @@ public class MYLOConstants {
 	public static final String ASSIGNMENT_QUERYTYPE_HEADER="Please Select a Query Type to Search for a User File";
 	public static final String ASSIGNMENT_PARAMETERTYPE_HEADER="Please select parameters for your query.";
 	public static final String VALUE_NOT_UPDATED = " Value is not updated";
-	public static final String QA = "qa";
-	public static final String UAT = "uat";
-	public static final String RELONETQA4 = "relonetqa4";
-	public static final String PREPROD = "preprod";
+	public static final String QA = "QA";
+	public static final String UAT = "UAT";
+	public static final String RELONETQA4 = "RELONETQA4";
+	public static final String PREPROD = "PREPROD";
 	public static final String HistoryCardDropdown = "History Card Dropdown";
 	public static final String CloseHistoryCard = "Close History Card";
 	public static final String DeleteHistoryCard = "Delete History Card";

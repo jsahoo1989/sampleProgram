@@ -41,7 +41,8 @@ public class MyloAssignmentFileInformation_Steps {
 	@Given("^he views the File Information section where \"([^\"]*)\", \"([^\"]*)\", \"([^\"]*)\" are hard coded with background color \"([^\"]*)\"$")
 	public void he_views_the_File_Information_section_where_are_hard_coded_with_background_color(String fieldName1, String fieldName2, String fieldName3, String colorCode) {
 		MYLOConstants.TIME_BEFORE_ACTION = new Date().getTime();
-		String environment=CoreFunctions.getPropertyFromConfig("envt");
+		String environment=System.getProperty("envt");
+		//String environment=CoreFunctions.getPropertyFromConfig("envt");
 		String fileID = null,clientID = null,clientName = null,policyType = null;
 		if(environment.equals(MYLOConstants.UAT)) {
 			clientID = assignmentDetails.activeAssignment.clientID;

@@ -442,7 +442,7 @@ public class Mylo_AssignmentPage extends Base {
 		//	.getAssignmentShipmentDetailsByEnv(CoreFunctions.getPropertyFromConfig("envt"));
 			
 	Mylo_AssignmentShipmentDetails assignmentShipmentDetails = FileReaderManager.getInstance().getMyloJsonReader()
-			.getAssignmentShipmentDetailsByEnv(System.getProperty("envt"));
+		.getAssignmentShipmentDetailsByEnv(System.getProperty("envt"));
 	
 	//String environment = CoreFunctions.getPropertyFromConfig("envt");
 	String environment = System.getProperty("envt");
@@ -2316,8 +2316,7 @@ public class Mylo_AssignmentPage extends Base {
 	 * get Mylo Assignment HistoryDetails from json of corresponding country passed as a parameter
 	 */
 	public List<String> getMyloHistoryDetailsByEnv() {
-		String env = CoreFunctions.getPropertyFromConfig("envt");
-		switch (env) {
+		switch (environment) {
 		case MYLOConstants.UAT:
 		case MYLOConstants.RELONETQA4:
 			List<Mylo_Assignment_HistoryDetails_UAT> myloUATHistoryDetails = FileReaderManager.getInstance().getMyloJsonReader().getMyloAssignmentUATHistoryDetails();

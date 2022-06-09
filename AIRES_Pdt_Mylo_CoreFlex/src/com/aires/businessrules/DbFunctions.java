@@ -78,25 +78,25 @@ public class DbFunctions {
 	public static String getMyloDBConnectionStringAsPerEnvt(String envt) {
 		String dbURL = null;
 		switch (envt) {
-		case "relonetqa4":
+		case "RELONETQA4":
 			//dbURL = "jdbc:oracle:thin:irisuser/nextir@corptesvl300.corp.aires.com:1521:irisnext";
 			dbURL = "jdbc:oracle:thin:isisdba/irisuatisisdba@corpqavl300.corp.aires.com:1521:irisuat";
 			break;
-		case "dev":
+		case "DEV":
 			dbURL = "jdbc:oracle:thin:isisdba/irisdevisisdba@corptesvl300.corp.aires.com:1521:IRISDEV";
 			break;
-		case "test":
+		case "TEST":
 			dbURL = "jdbc:oracle:thin:policydba/testpo@corptesvl300.corp.aires.com:1521:IRISTEST";
 			break;
-		case "prod":
+		case "PROD":
 			// For Production Envt. - Change username/Password & verify DB connection
 			// details
 			dbURL = "jdbc:oracle:thin:isisdba/iristestisisdba@corpprdl200.corp.aires.com:1521:IRIS";
 			break;
-		case "uat":
+		case "UAT":
 			dbURL = "jdbc:oracle:thin:irisuser/uatir@corpqavl300.corp.aires.com:1521:irisuat";
 			break;
-		case "preprod":
+		case "PREPROD":
 			dbURL = "jdbc:oracle:thin:irisuser/testir@corptesvl300.corp.aires.com:1521:iristest";
 			break;
 		default:
@@ -111,7 +111,9 @@ public class DbFunctions {
 		try {
 			DriverManager.registerDriver(new oracle.jdbc.OracleDriver());
 			connection = DriverManager.getConnection(
-					getMyloDBConnectionStringAsPerEnvt(CoreFunctions.getPropertyFromConfig("envt").toLowerCase()));			
+					getMyloDBConnectionStringAsPerEnvt(System.getProperty("envt")));			
+			//connection = DriverManager.getConnection(
+				//	getMyloDBConnectionStringAsPerEnvt(CoreFunctions.getPropertyFromConfig("envt")));			
 			PreparedStatement pst = connection.prepareStatement(DbQueries.QUERY_GET_IDENTITY_TYPE_DROPDOWNLIST);
 			ResultSet resultset = pst.executeQuery();
 			while (resultset.next()) {
@@ -165,7 +167,9 @@ public class DbFunctions {
 		try {
 			DriverManager.registerDriver(new oracle.jdbc.OracleDriver());
 			connection = DriverManager.getConnection(
-					getMyloDBConnectionStringAsPerEnvt(CoreFunctions.getPropertyFromConfig("envt").toLowerCase()));			
+					getMyloDBConnectionStringAsPerEnvt(System.getProperty("envt")));	
+			//connection = DriverManager.getConnection(
+				//	getMyloDBConnectionStringAsPerEnvt(CoreFunctions.getPropertyFromConfig("envt")));			
 			PreparedStatement pst = connection.prepareStatement(myloQueryStatementMap.get(fieldName));
 			ResultSet resultset = pst.executeQuery();
 			while (resultset.next()) {

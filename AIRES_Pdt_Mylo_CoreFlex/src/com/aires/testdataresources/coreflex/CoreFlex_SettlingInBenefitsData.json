@@ -39,5 +39,24 @@
 			"reimbursedByOther": "Reimbursed by other",
 			"comment": "Cultural Training Family comment"	
 		}
+	},
+	{
+		"benefitName": "Concierge Services",
+		"conciergeServices": {
+			"grossUp": "Yes",
+			"reimbursedBy": "Aires",
+			"reimbursedByOther": "Reimbursed by other",
+			"comment": "Concierge Services comment"			
+		}
+	},
+	{
+		"benefitName": "Area Tour",
+		"areaTour": {
+			"durationDays": "2 Days",
+			"grossUp": "Yes",
+			"reimbursedBy": "Aires",
+			"reimbursedByOther": "Reimbursed by other",
+			"comment": "Area Tour comment"			
+		}
 	}
 ]

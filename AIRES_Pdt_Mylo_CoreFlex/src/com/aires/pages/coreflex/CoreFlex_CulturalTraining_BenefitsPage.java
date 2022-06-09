@@ -168,6 +168,14 @@ public class CoreFlex_CulturalTraining_BenefitsPage extends Base {
 	@FindBy(how = How.XPATH, using = "//input[@id='multiAddInd']/parent::label")
 	private WebElement _inputMultiAddBenefit;
 
+	// Policy Benefits data Missing Error Dialog
+	@FindBy(how = How.XPATH, using = "//div[@id='swal2-content'][contains(text(),'Policy Benefits data missing. Please complete all the benefits.')]")
+	private WebElement _errorDialogPolicyBenefitsDataMissing;
+
+	// Policy Benefits data Missing Error Dialog - OK Button
+	@FindBy(how = How.CSS, using = "button[class*='swal2-confirm']")
+	private WebElement _errorDialogPolicyBenefitsDataMissingOKButton;
+
 	/*********************************************************************/
 
 	CoreFlex_SettlingInBenefitsData culturalTrainingBenefitData = FileReaderManager.getInstance()
@@ -291,6 +299,11 @@ public class CoreFlex_CulturalTraining_BenefitsPage extends Base {
 			selectSubBenefitsAndFillMandatoryFields(subBenefitNames, benefitType);
 		}
 		clickElementOfPage(COREFLEXConstants.SAVE_AND_CONTINUE);
+		
+		if (CoreFunctions.isElementExist(driver, _errorDialogPolicyBenefitsDataMissing, 7)) {
+			CoreFunctions.clickElement(driver, _errorDialogPolicyBenefitsDataMissingOKButton);
+		}
+
 	}
 
 	/**
@@ -387,7 +400,8 @@ public class CoreFlex_CulturalTraining_BenefitsPage extends Base {
 				culturalTrainingBenefitData.culturalTrainingEmployee.grossUp, true);
 		CoreFunctions.selectItemInListByText(driver, _radioBtnCandidateSelection,
 				culturalTrainingBenefitData.culturalTrainingEmployee.reimbursedBy, true);
-		if (culturalTrainingBenefitData.culturalTrainingEmployee.reimbursedBy.equalsIgnoreCase(COREFLEXConstants.OTHER)) {
+		if (culturalTrainingBenefitData.culturalTrainingEmployee.reimbursedBy
+				.equalsIgnoreCase(COREFLEXConstants.OTHER)) {
 			CoreFunctions.clearAndSetText(driver, _inputReimbursedBy,
 					culturalTrainingBenefitData.culturalTrainingEmployee.reimbursedByOther);
 		}

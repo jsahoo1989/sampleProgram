@@ -156,6 +156,14 @@ public class CoreFlex_LanguageTraining_BenefitsPage extends Base {
 	@FindBy(how = How.XPATH, using = "//input[@id='multiAddInd']/parent::label")
 	private WebElement _inputMultiAddBenefit;
 
+	// Policy Benefits data Missing Error Dialog
+	@FindBy(how = How.XPATH, using = "//div[@id='swal2-content'][contains(text(),'Policy Benefits data missing. Please complete all the benefits.')]")
+	private WebElement _errorDialogPolicyBenefitsDataMissing;
+
+	// Policy Benefits data Missing Error Dialog - OK Button
+	@FindBy(how = How.CSS, using = "button[class*='swal2-confirm']")
+	private WebElement _errorDialogPolicyBenefitsDataMissingOKButton;
+
 	/*********************************************************************/
 
 	CoreFlex_SettlingInBenefitsData languageTrainingBenefitData = FileReaderManager.getInstance()
@@ -279,6 +287,10 @@ public class CoreFlex_LanguageTraining_BenefitsPage extends Base {
 			selectSubBenefitsAndFillMandatoryFields(subBenefitNames, benefitType);
 		}
 		clickElementOfPage(COREFLEXConstants.SAVE_AND_CONTINUE);
+
+		if (CoreFunctions.isElementExist(driver, _errorDialogPolicyBenefitsDataMissing, 7)) {
+			CoreFunctions.clickElement(driver, _errorDialogPolicyBenefitsDataMissingOKButton);
+		}
 	}
 
 	/**

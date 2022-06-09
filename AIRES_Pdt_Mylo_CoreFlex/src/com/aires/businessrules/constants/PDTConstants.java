@@ -354,7 +354,7 @@ public class PDTConstants {
 	public static final String SETTLING_IN_SERVICES = "Settling In Services";
 	public static final String TRANSITION_ASSISTANCE_PROGRAM = "Transition Assistance Program";
 	public static final String TUTION_AND_EDUCATION = "Tuition and Education";
-	public static final String EXCEPTION_OCCURED_FILL_SUBBENEFIT_FORM = "{0} Exception occurred while filling data for ''{1}'' sub-benefit form.";
+	public static final String EXCEPTION_OCCURED_FILL_SUBBENEFIT_FORM = "{0} Exception occurred while filling data for ''{1}'' sub-benefit form. Exception : ''{2}''.";
 	public static final String RENTAL_TOUR = "Rental Tour";
 	public static final String FINDER_FEES = "Finder's Fee";
 	public static final String LETTER_OF_ASSIGNMENT = "Letter of Assignment";

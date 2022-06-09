@@ -162,7 +162,7 @@ public class COREFLEXConstants {
 	public static final String CALCULATION_METHOD = "Calculation Method";
 	public static final String SUBMIT = "SUBMIT";
 	public static final String DRAFT = "Draft";
-	public static final String FAILED_TO_VERIFY_SUBMITTED_POLICY_STATUS_ON_VIEW_EDIT_POLICY_FORMS_PAGE = "{0}Failed to verify submitted policy status on View/Edit Policy Forms page.";
+	public static final String FAILED_TO_VERIFY_APPROVED_POLICY_STATUS_ON_VIEW_EDIT_POLICY_FORMS_PAGE = "{0}Failed to verify approved policy status on View/Edit Policy Forms page.";
 	public static final String EXCEPTION_OCCURED_WHILE_VALIDATING_POLICY_STATUS_ON_VIEW_EDIT_POLICY_FORMS_PAGE = "{0}Exception occured while validating Policy Status on View/Edit Policy Forms Page. Exception : ''{1}''.";
 	public static final String SUCCESSFULLY_VERIFIED_POLICY_STATUS_ON_VIEW_EDIT_POLICY_FORMS_PAGE = "{0}Successfully verified ''{1}'' status for ''{2}'' policy on View/Edit Policy Forms page.";
 	public static final String FAILED_TO_VERIFY_POLICY_STATUS_ON_VIEW_EDIT_POLICY_FORMS_PAGE = "{0}Failed to verify policy status on View/Edit Policy Forms page. Expected - ''{1}'' but found ''{2}''.";
@@ -418,7 +418,7 @@ public class COREFLEXConstants {
 	public static final String FAILED_TO_SELECT_AND_FILL_AIRES_MANAGED_BENEFITS = "{0}Failed to select and fill Aires Managed benefits.";
 	public static final String EXCEPTION_OCCURED_WHILE_SELECTING_AND_FILLING_AIRES_MANAGED_BENEFITS = "{0}Exception occured while selecting and Filling Aires Managed Benefits. Exception - ''{1}''. ";
 	public static final String SUCCESSFULLY_SELECTED_AND_FILLED_AIRES_MANAGED_BENEFITS = "{0}Successfully selected and filled Aires Managed Benefits";
-	public static final Object LANGUAGE_TRAINING_BENEFITS_PAGE = "Language Training Benefits Page";
+	public static final String LANGUAGE_TRAINING_BENEFITS_PAGE = "Language Training Benefits Page";
 	public static final String EXCEPTION_OCCURED_WHILE_VALIDATING_SELECTED_AIRES_MANAGED_BENEFIT_DETAILS_ON_MY_BENEFITS_PAGE = "{0}Exception occured while validating selected Aires Managed Benefits Details On My Benefits Page. Exception : ''{1}''.";
 	public static final String HOME_PURCHASE = "Home Purchase";
 	public static final String SUCCESSFULLY_VERIFIED_SELECTED_AIRES_MANAGED_BENEFIT_DETAILS_ON_SUBMISSION_CONFIRMATION_DIALOG = "{0}Successfully verified selected Aires Managed Benefit details On Submission Confirmation Dialog.";
@@ -441,7 +441,7 @@ public class COREFLEXConstants {
 	public static final String AIRES_MANAGED = "Aires Managed";
 	public static final String NON_AIRES_MANAGED = "Non Aires Managed";
 	public static final String TEMPORARY_LIVING = "Temporary Living";
-	public static final Object TEMPORARY_LIVING_BENEFITS_PAGE = "Temporary Living Benefits Page";
+	public static final String TEMPORARY_LIVING_BENEFITS_PAGE = "Temporary Living Benefits Page";
 	public static final String TEMPORARY_LIVING_TRANSPORTATION = "Temporary Living Transportation";
 	public static final String TEMPORARY_LIVING_LODGING = "Temporary Living Lodging";
 	public static final String TEMPORARY_LIVING_MEALS = "Temporary Living Meals";
@@ -450,7 +450,7 @@ public class COREFLEXConstants {
 	public static final String EXCEPTION_OCCURED_WHILE_VALIDATING_CANCELED_BENEFIT_DELETE_BUTTON_ON_MY_BENEFITS_PAGE = "{0}Exception occured while validating Canceled Benefit - Delete Button status on My Benefit Bundle page. Exception : ''{1}''.";
 	public static final String SUCCESSFULLY_VERIFIED_DELETE_BUTTON_IS_DISABLED_AND_DISABLED_DELETE_HOVER_TEXT_POST_BENEFIT_STATUS_CANCELED= "{0}Successfully verified delete button is disabled & disabled delete button hover text post benefit status canceled.";
 	public static final String CULTURAL_TRAINING = "Cultural Training";
-	public static final Object CULTURAL_TRAINING_BENEFITS_PAGE = "Cultural Training Benefits Page";
+	public static final String CULTURAL_TRAINING_BENEFITS_PAGE = "Cultural Training Benefits Page";
 	public static final String CULTURAL_TRAINING_EMPLOYEE = "Cultural Training Employee";
 	public static final String CULTURAL_TRAINING_FAMILY = "Cultural Training Family";
 	public static final String MANAGE_THIS_BENEFIT_BUTTON_DISPLAYED_ON_FLEX_BENEFIT_CARD = "{0}Manage this Benefit button displayed in ''{1}'' Mobility Journey card. ";
@@ -461,4 +461,29 @@ public class COREFLEXConstants {
 	public static final String FIRST_SUBMITTED_POLICY_STATE_ALREADY_SAVED = "{0}First Submitted Policy State already saved in Config properties file.";
 	public static final String SUCCESSFULLY_SAVED_FIRST_SUBMITTED_POLICY_STATE_IN_CONFIG_PROPERTIES = "{0}Successfully saved first submitted policy state in config properties file.";
 	public static final String BASE_POLICY_NOT_SUBMITTED_FOR_MUTIPLE_SUBMISSION_DATE_CARD_VALIDATION = "{0}Base Policy not Submitted for Multiple Submission Date Card validation.";
+	public static final String CONCIERGE_SERVICES_BENEFITS_PAGE = "Concierge Services Benefits Page";
+	public static final String APPROVE_POLICY = "Approve Policy";
+	public static final String SUBMIT_BUTTON_NOT_DISABLED_AFTER_POLICY_SUBMISSION_ON_CUSTOM_BUNDLES_PAGE = "{0}Submit button not disabled after policy submission on ''{1}'' page.";
+	public static final String SUBMIT_BUTTON_DISABLED_POST_POLICY_SUBMISSION_ON_CUSTOM_BUNDLES_PAGE = "{0}Submit button disabled after policy submission on BluePrint Custom Bundles page.";
+	public static final String FAILED_TO_VERIFY_APPROVE_THIS_POLICY_DIALOG = "{0}Failed to verify Approve this Policy dialog contents.";
+	public static final String EXPECTED_APPROVE_THIS_POLICY_DIALOG_HEADER = "Do you want to proceed with the approval of this policy?";
+	public static final String EXPECTED_APPROVE_THIS_POLICY_DIALOG_VERSION_TEXT = "You are approving version 1 of this policy. If approved, the policy state will change from Submitted to Active and indicates that you have reviewed the policy benefits and approve them for use.";
+	public static final String EXPECTED_APPROVE_THIS_POLICY_DIALOG_ASSIGNMENT_TEXT = "There are currently 0 Assignments or Files associated with this version of the points based CoreFlex policy in IRIS. The following option is only effective for the client of this policy if Blueprint has been enabled in IRIS Corp:";
+	public static final String SUCCESSFULLY_VERIFIED_APPROVE_THIS_POLICY_DIALOG_HEADER_VERSION_ASSIGNMENT_TEXT_AND_FIELDS = "{0}Successfully verified Approve this Policy Dialog header, version & assignment text.";
+	public static final String EXPECTED_APPROVE_THIS_POLICY_DIALOG_CHECKBOX_SELECTION = "Associate this policy with a NEW authorization in IRIS? ";
+	public static final String ASSOCIATE_THIS_POLICY = "Associate this policy with a NEW authorization in IRIS? ";
+	public static final String APPROVE = "Approve";
+	public static final String FAILED_TO_VERIFY_POLICY_STATUS_SUBMITTED_POST_POLICY_SUBMISSION_ON_CUSTOM_BUNDLES_PAGE = "{0}Failed to verify Policy Status - Submitted post Policy Submission on ''{1}'' Page.";
+	public static final String SUCCESSFULLY_VERIFIED_POLICY_STATUS_SUBMITTED_POST_POLICY_SUBMISSION_ON_CUSTOM_BUNDLES_PAGE = "{0}Successfully verified Policy Status - Submitted post policy submission on Custom Bundles Page.";
+	public static final String HOME_PURCHASE_BENEFITS_PAGE = "Home Purchase Benefits Page";
+	public static final String HOME_PURCHASE_CLOSING_COSTS = "Home Purchase Closing Costs";
+	public static final String HOME_PURCHASE_POINTS = "Home Purchase Points";
+	public static final String HOME_PURCHASE_INSPECTIONS = "Home Purchase Inspections";
+	public static final String FINAL_MOVE = "Final Move";
+	public static final String FINAL_MOVE_BENEFITS_PAGE = "Final Move Benefits Page";
+	public static final String FINAL_MOVE_TRANSPORTATION = "Final Move Transportation";
+	public static final String FINAL_MOVE_LODGING = "Final Move Lodging";
+	public static final String FINAL_MOVE_MEALS = "Final Move Meals";
+	public static final String AREA_TOUR = "Area Tour";
+	public static final String AREA_TOUR_BENEFITS_PAGE = "Area Tour Benefits Page";
 }

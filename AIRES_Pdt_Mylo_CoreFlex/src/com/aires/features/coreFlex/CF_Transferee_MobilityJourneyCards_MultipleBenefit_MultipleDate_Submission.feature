@@ -2,12 +2,13 @@ Feature: Validate the Mobility Journey Cards Functionality of Flex Aires Managed
 
   @End-To_End_CoreFlex @Flex-Cards_PF @AllCards
   Scenario: CoreFlex - Setting up a New CoreFlex policy in 'Policy Digitization Tool' application with Both type 'Aires Managed' benefit
-    Given he has setup a new "Both" Type Policy with following selection in 'Policy Digitization Tool (PDT)' application
+    Given he has submitted a new "Both" Type Policy with following selection in 'Policy Digitization Tool (PDT)' application
       | Person Responsible For Benefit Selection | Flex Setup Type | Cashout Availability   |
       | Transferee                               | Static/Fixed    | Cashout Not Authorized |
-    When he clicks on "SUBMIT" button on "Custom Bundles" page
-    Then a success dialog should be displayed for Successfully Submitted Policy
-    And Policy Status should be displayed as "Submitted" on "View/Edit Policy Forms" page
+    And he has clicked on "Approve Policy" button on "Custom Bundles" page
+    And he has selected "Associate this policy with a NEW authorization in IRIS? " option and default 'Effective from booking date' on 'Approval this Policy' dialog
+    When he clicks on "Approve" button to acknowledged 'Approve this Policy' dialog 
+    Then Policy Status should be displayed as "Active" on "View/Edit Policy Forms" page
 
   @End-To_End_CoreFlex @MultipleDateSubmission_FirstSubmission @AllCards
   Scenario: MXTransferee - Verifying Mobility Journey Both Card details for submitted Both type Aires Managed benefits  

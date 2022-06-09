@@ -1,0 +1,49 @@
+[
+	{
+		"benefitName": "Final Move",
+		"finalMoveTransportation": {			
+			"transportationType": "Mileage",
+			"minMilForEconomyAirTravel": "200",
+			"minMilForBusinessAirTravel": "100",
+			"minHrsForBusinessAirTravel": "50",
+			"minFlightTimeExclLayovers": "40",
+			"accompanyingFamilyMembers": "Transferee + Family",
+			"excessBaggageFees": "Yes",
+			"maxAmountPerPerson": "1000",
+			"grossUp": "Yes",
+			"reimbursedBy": "Aires",
+			"reimbursedByOther": "Reimbursed Final Move Transporation by other",
+			"comment": "Final Move Transportation comment"			
+		},
+		"finalMoveLodging": {
+			"duration": "Set # of nights",
+			"numberOfNights": "14",
+			"maxAmount" : "Flat Amount",
+			"flatAmountPerNight" : "200",
+			"currency": "U.S. Dollar",
+			"grossUp": "Yes",
+			"reimbursedBy": "Client",
+			"reimbursedByOther": "Reimbursed Final Move Lodging by other",
+			"comment": "Final Move Lodging comment"			
+		},
+		"finalMoveMeals": {
+			"numberOfDaysForMeal": "Set # of nights",
+			"numberOfDays": "3",
+			"type": "Allowance",
+			"maxAmount": "Flat Amount",			
+			"maxAmtTransferee": "100",
+			"maxAmtTransfereeDetail": "Per Day",
+			"maxAmtTransfereeCurrency": "U.S. Dollar",
+			"maxAmtAdult": "150",
+			"maxAmtAdultDetail": "Total",
+			"maxAmtAdultCurrency": "U.S. Dollar",
+			"maxAmtChildren": "50",
+			"maxAmtChildrenDetail": "Per Day",
+			"maxAmtChildrenCurrency": "U.S. Dollar",
+			"grossUp": "No",
+			"reimbursedBy": "Client",
+			"reimbursedByOther": "Reimbursed Final Move Meals by other",
+			"comment": "Final Move Meal comment"
+		}	
+	}
+]

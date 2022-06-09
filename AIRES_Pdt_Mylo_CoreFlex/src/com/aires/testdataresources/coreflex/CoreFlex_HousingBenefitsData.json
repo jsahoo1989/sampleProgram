@@ -36,7 +36,33 @@
 			"reimbursedBy": "Other",
 			"reimbursedByOther": "Reimbursed Meals by other",
 			"comment": "Meals comment"			
-		}
-		
+		}		
+	},
+	{
+		"benefitName": "Home Purchase",
+		"homePurchaseClosingCosts": {
+			"directBillEligible": "Yes",
+			"maxHomePurchasePrice": "20",
+			"closingCostCap": "50",
+			"currency": "U.S. Dollar",
+			"airesPrefferedLenders": "Chase",
+			"grossUp": "Yes",
+			"reimbursedBy": "Aires",
+			"reimbursedByOther": "Reimbursed Home Purchase Closing Costs by other",
+			"comment": "Home Purchase Closing Costs comment"			
+		},
+		"homePurchasePoints": {
+			"maxHomePurchasePrice": "30",
+			"grossUp": "Yes",
+			"reimbursedBy": "Client",
+			"reimbursedByOther": "Reimbursed Home Purchase Points by other",
+			"comment": "Home Purchase Points comment"			
+		},
+		"homePurchaseInspections": {
+			"grossUp": "No",
+			"reimbursedBy": "Other",
+			"reimbursedByOther": "Reimbursed Home Purchase Inspections by other",
+			"comment": "Home Purchase Inspections comment"			
+		}		
 	}
 ]

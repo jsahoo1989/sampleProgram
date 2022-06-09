@@ -21,9 +21,9 @@ import com.aires.testdatatypes.coreflex.Benefit;
 import com.aires.testdatatypes.coreflex.CoreFlex_SettlingInBenefitsData;
 import com.vimalselvam.cucumber.listener.Reporter;
 
-public class CoreFlex_ConciergeServices_BenefitsPage extends Base {
+public class CoreFlex_AreaTour_BenefitsPage extends Base {
 
-	public CoreFlex_ConciergeServices_BenefitsPage(WebDriver driver) {
+	public CoreFlex_AreaTour_BenefitsPage(WebDriver driver) {
 		super(driver);
 	}
 
@@ -106,11 +106,11 @@ public class CoreFlex_ConciergeServices_BenefitsPage extends Base {
 	private List<WebElement> _subBenefitList;
 
 	// SubBenefit - Collapsable Menu 1
-	@FindBy(how = How.XPATH, using = "//h5[contains(text(),'Concierge Services')]/ancestor::a[contains(@href,'collapse')]")
-	private WebElement _formConciergeServices;
+	@FindBy(how = How.XPATH, using = "//h5[contains(text(),'Area Tour')]/ancestor::a[contains(@href,'collapse')]")
+	private WebElement _formAreaTour;
 
-	@FindBy(how = How.XPATH, using = "//h5[contains(text(),'Concierge Services')]")
-	private WebElement _headerConciergeServices;
+	@FindBy(how = How.XPATH, using = "//h5[contains(text(),'Area Tour')]")
+	private WebElement _headerAreaTour;
 
 	// Gross Up - Radio Button Selection
 	@FindBy(how = How.XPATH, using = "//div[@class='collapse show']//input[@formcontrolname='grossedUpInd']/parent::label[@class='form-check-label']")
@@ -123,6 +123,12 @@ public class CoreFlex_ConciergeServices_BenefitsPage extends Base {
 	// Reimbursed By Other Input
 	@FindBy(how = How.XPATH, using = "//div[@class='collapse show']//input[@formcontrolname='paidByOther']")
 	private WebElement _inputReimbursedBy;
+
+	@FindBy(how = How.CSS, using = "ng-select[formcontrolname='durationCode']")
+	private WebElement _selectDurationDays;
+
+	@FindBy(how = How.CSS, using = "ng-select[formcontrolname='durationCode'] span.ng-option-label")
+	private List<WebElement> _selectDurationDaysOptions;
 
 	// Comment Text Area
 	@FindBy(how = How.XPATH, using = "//div[@class='collapse show']//textarea[@formcontrolname='benefitComment']")
@@ -146,8 +152,8 @@ public class CoreFlex_ConciergeServices_BenefitsPage extends Base {
 
 	/*********************************************************************/
 
-	CoreFlex_SettlingInBenefitsData conciergeServicesBenefitData = FileReaderManager.getInstance()
-			.getCoreFlexJsonReader().getSettlingInBenefitDataList(COREFLEXConstants.CONCIERGE_SERVICES);
+	CoreFlex_SettlingInBenefitsData areaTourBenefitData = FileReaderManager.getInstance()
+			.getCoreFlexJsonReader().getSettlingInBenefitDataList(COREFLEXConstants.AREA_TOUR);
 
 	public static final List<Benefit> coreBenefits = FileReaderManager.getInstance().getCoreFlexJsonReader()
 			.getMXTransfereeCoreBenefitDetails();
@@ -161,8 +167,8 @@ public class CoreFlex_ConciergeServices_BenefitsPage extends Base {
 	 * @return
 	 */
 	public boolean verifyPageNavigation(String expectedPageName) {
-		return CoreFunctions.verifyElementOnPage(driver, _headerPage, COREFLEXConstants.CONCIERGE_SERVICES,
-				expectedPageName, expectedPageName, true);
+		return CoreFunctions.verifyElementOnPage(driver, _headerPage, COREFLEXConstants.AREA_TOUR, expectedPageName,
+				expectedPageName, true);
 	}
 
 	/**
@@ -269,7 +275,7 @@ public class CoreFlex_ConciergeServices_BenefitsPage extends Base {
 			selectSubBenefitsAndFillMandatoryFields(subBenefitNames, benefitType);
 		}
 		clickElementOfPage(COREFLEXConstants.SAVE_AND_CONTINUE);
-		
+
 		if (CoreFunctions.isElementExist(driver, _errorDialogPolicyBenefitsDataMissing, 7)) {
 			CoreFunctions.clickElement(driver, _errorDialogPolicyBenefitsDataMissingOKButton);
 		}
@@ -296,9 +302,9 @@ public class CoreFlex_ConciergeServices_BenefitsPage extends Base {
 					fillSubBenefit(subBenefit.trim(), benefitType);
 				} else {
 					Reporter.addStepLog(MessageFormat.format(COREFLEXConstants.SUB_BENEFIT_FORM_NOT_DISPLAYED,
-							CoreConstants.FAIL, subBenefit, COREFLEXConstants.CONCIERGE_SERVICES_BENEFITS_PAGE));
+							CoreConstants.FAIL, subBenefit, COREFLEXConstants.AREA_TOUR_BENEFITS_PAGE));
 					throw new RuntimeException(MessageFormat.format(COREFLEXConstants.SUB_BENEFIT_FORM_NOT_DISPLAYED,
-							CoreConstants.FAIL, subBenefit, COREFLEXConstants.CONCIERGE_SERVICES_BENEFITS_PAGE));
+							CoreConstants.FAIL, subBenefit, COREFLEXConstants.AREA_TOUR_BENEFITS_PAGE));
 				}
 			}
 		} catch (Exception e) {
@@ -316,9 +322,12 @@ public class CoreFlex_ConciergeServices_BenefitsPage extends Base {
 	 */
 	private void fillSubBenefit(String subBenefit, String benefitType) {
 		switch (subBenefit) {
-		case COREFLEXConstants.CONCIERGE_SERVICES:
-			expandSubBenefitIfCollapsed(getElementByName(COREFLEXConstants.CONCIERGE_SERVICES));
-			fillConciergeServicesSubBenefitForm();
+		case COREFLEXConstants.AREA_TOUR:
+			expandSubBenefitIfCollapsed(getElementByName(COREFLEXConstants.AREA_TOUR));
+			if (benefitType.equals(COREFLEXConstants.FLEX_BENEFITS)) {
+				CoreFunctions.clickElement(driver, _headerAreaTour);
+			}
+			fillAreaTourSubBenefitForm(COREFLEXConstants.AREA_TOUR);
 			break;
 		default:
 			Assert.fail(MessageFormat.format(COREFLEXConstants.ELEMENT_NOT_FOUND, CoreConstants.FAIL));
@@ -326,18 +335,30 @@ public class CoreFlex_ConciergeServices_BenefitsPage extends Base {
 	}
 
 	/**
-	 * Method to fill Concierge Services subBenefit form
+	 * Method to fill Area Tour subBenefit form
+	 * 
+	 * @param subBenefitFormName
 	 */
-	private void fillConciergeServicesSubBenefitForm() {
-		CoreFunctions.clearAndSetText(driver, _txtAreaComment, conciergeServicesBenefitData.conciergeServices.comment);
-		CoreFunctions.selectItemInListByText(driver, _radioBtnGrossUp,
-				conciergeServicesBenefitData.conciergeServices.grossUp, true);
-		CoreFunctions.selectItemInListByText(driver, _radioBtnCandidateSelection,
-				conciergeServicesBenefitData.conciergeServices.reimbursedBy, true);
-		if (conciergeServicesBenefitData.conciergeServices.reimbursedBy.equalsIgnoreCase(COREFLEXConstants.OTHER)) {
-			CoreFunctions.clearAndSetText(driver, _inputReimbursedBy,
-					conciergeServicesBenefitData.conciergeServices.reimbursedByOther);
-		}		
+	private void fillAreaTourSubBenefitForm(String subBenefitFormName) {
+		try {
+			CoreFunctions.clickElement(driver, _selectDurationDays);
+			CoreFunctions.selectItemInListByText(driver, _selectDurationDaysOptions,
+					areaTourBenefitData.areaTour.durationDays, true);
+			CoreFunctions.clearAndSetText(driver, _txtAreaComment,
+					areaTourBenefitData.areaTour.comment);
+			CoreFunctions.selectItemInListByText(driver, _radioBtnGrossUp,
+					areaTourBenefitData.areaTour.grossUp, true);
+			CoreFunctions.selectItemInListByText(driver, _radioBtnCandidateSelection,
+					areaTourBenefitData.areaTour.reimbursedBy, true);
+			if (areaTourBenefitData.areaTour.reimbursedBy.equalsIgnoreCase(COREFLEXConstants.OTHER)) {
+				CoreFunctions.clearAndSetText(driver, _inputReimbursedBy,
+						areaTourBenefitData.areaTour.reimbursedByOther);
+			}
+		} catch (Exception e) {
+			Assert.fail(MessageFormat.format(PDTConstants.EXCEPTION_OCCURED_FILL_SUBBENEFIT_FORM, CoreConstants.FAIL,
+					subBenefitFormName, e.getMessage()));
+		}
+
 	}
 
 	/**
@@ -360,8 +381,8 @@ public class CoreFlex_ConciergeServices_BenefitsPage extends Base {
 	public WebElement getElementByName(String elementName) {
 		WebElement element = null;
 		switch (elementName) {
-		case COREFLEXConstants.CONCIERGE_SERVICES:
-			element = _formConciergeServices;
+		case COREFLEXConstants.AREA_TOUR:
+			element = _formAreaTour;
 			break;
 		default:
 			Assert.fail(MessageFormat.format(COREFLEXConstants.ELEMENT_NOT_FOUND, CoreConstants.FAIL));
@@ -383,14 +404,14 @@ public class CoreFlex_ConciergeServices_BenefitsPage extends Base {
 	private void selectBenefitTypeAndFillMandatoryFields(String benefitType, String multipleBenefitSelection,
 			String flexPoints, String benefitDisplayName, String benefitAllowanceAmount, String benefitDescription,
 			String aireManagedService) {
-		Benefit conciergeServicesBenefit = coreBenefits.stream()
-				.filter(b -> b.getBenefitType().equals(COREFLEXConstants.CONCIERGE_SERVICES)).findAny().orElse(null);
+		Benefit areaTourBenefit = coreBenefits.stream()
+				.filter(b -> b.getBenefitType().equals(COREFLEXConstants.AREA_TOUR)).findAny().orElse(null);
 		switch (benefitType) {
 		case COREFLEXConstants.CORE:
 			CoreFunctions.clickElement(driver, _textCore);
 			fillManadatoryDetails(benefitType, multipleBenefitSelection,
-					conciergeServicesBenefit.getBenefitDisplayName(), conciergeServicesBenefit.getBenefitAmount(),
-					conciergeServicesBenefit.getBenefitDesc(), aireManagedService);
+					areaTourBenefit.getBenefitDisplayName(), areaTourBenefit.getBenefitAmount(),
+					areaTourBenefit.getBenefitDesc(), aireManagedService);
 			break;
 		case COREFLEXConstants.FLEX:
 			CoreFunctions.clickElement(driver, _textFlex);
@@ -402,8 +423,8 @@ public class CoreFlex_ConciergeServices_BenefitsPage extends Base {
 		case COREFLEXConstants.CORE_BENEFITS:
 			CoreFunctions.clickElement(driver, _textCoreBenefits);
 			fillManadatoryDetails(benefitType, multipleBenefitSelection,
-					conciergeServicesBenefit.getBenefitDisplayName(), conciergeServicesBenefit.getBenefitAmount(),
-					conciergeServicesBenefit.getBenefitDesc(), aireManagedService);
+					areaTourBenefit.getBenefitDisplayName(), areaTourBenefit.getBenefitAmount(),
+					areaTourBenefit.getBenefitDesc(), aireManagedService);
 			break;
 		case COREFLEXConstants.FLEX_BENEFITS:
 			CoreFunctions.clickElement(driver, _textFlexBenefits);

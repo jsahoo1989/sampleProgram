@@ -33,6 +33,18 @@ public class CoreFlex_CustomBundlesPage extends Base {
 	@FindBy(how = How.XPATH, using = "//button[contains(text(),'Submit')]")
 	private WebElement _buttonSubmit;
 
+	// Disabled Submit Button
+	@FindBy(how = How.XPATH, using = "//button[contains(text(),'Submit')][@disabled]")
+	private WebElement _buttonSubmitDisabled;
+
+	// Approve Policy Button
+	@FindBy(how = How.XPATH, using = "//button/span[contains(text(),'APPROVE POLICY')]")
+	private WebElement _buttonApprovePolicy;
+
+	// Approve Button
+	@FindBy(how = How.XPATH, using = "//app-approval-policy-modal//button/span[contains(text(),'APPROVE')]")
+	private WebElement _buttonApprove;
+
 	// Save & Submit Button
 	@FindBy(how = How.XPATH, using = "//button[contains(text(),'Save & Submit')]")
 	private WebElement _buttonSaveAndSubmit;
@@ -117,6 +129,30 @@ public class CoreFlex_CustomBundlesPage extends Base {
 	@FindBy(how = How.XPATH, using = "//button[contains(text(),'Preview Transferee Experience')]")
 	private WebElement _buttonPreviewTransfereeExp;
 
+	// Approve This Policy Dialog Header
+	@FindBy(how = How.CSS, using = "div.approve-header > p")
+	private WebElement _popUpApprovePolicyHeader;
+
+	// Approve This Policy Dialog Version Text
+	@FindBy(how = How.CSS, using = "div.msg-1 > p")
+	private WebElement _popUpApprovePolicyVersionText;
+
+	// Approve This Policy Dialog Assignment Text
+	@FindBy(how = How.CSS, using = "div.msg-2 > p")
+	private WebElement _popUpApprovePolicyAssignmentText;
+
+	// Approve This Policy Checkbox Selection
+	@FindBy(how = How.CSS, using = "label.cbx-label")
+	private WebElement _popUpApprovePolicyCheckBox;
+
+	// Approve This Policy DefaultDate Selection
+	@FindBy(how = How.CSS, using = "input[formcontrolname='newAuthDate']")
+	private WebElement _popUpApprovePolicyDefaultAssignmentDate;
+
+	// Policy Status
+	@FindBy(how = How.XPATH, using = "//strong[contains(text(),'Policy Status')]/parent::label/following-sibling::label")
+	private WebElement _textPolicyStatus;
+
 	/*********************************************************************/
 
 	public static final List<Benefit> coreBenefits = FileReaderManager.getInstance().getCoreFlexJsonReader()
@@ -141,7 +177,7 @@ public class CoreFlex_CustomBundlesPage extends Base {
 		return CoreFunctions.verifyElementOnPage(driver, _headerPage, COREFLEXConstants.CUSTOM_BUNDLES,
 				expectedPageName, expectedPageName, true);
 	}
-	
+
 	/**
 	 * Method to get currently active Left Navigation Menu.
 	 * 
@@ -174,7 +210,17 @@ public class CoreFlex_CustomBundlesPage extends Base {
 				CoreFunctions.explicitWaitTillElementInVisibility(driver, _progressBar);
 				break;
 			case COREFLEXConstants.SUBMIT:
-				CoreFunctions.clickElement(driver, _buttonSubmit);				
+				CoreFunctions.clickElement(driver, _buttonSubmit);
+				break;
+			case COREFLEXConstants.APPROVE_POLICY:
+				CoreFunctions.clickElement(driver, _buttonApprovePolicy);
+				CoreFunctions.explicitWaitTillElementInVisibility(driver, _progressBar);
+				break;
+			case COREFLEXConstants.APPROVE:
+				CoreFunctions.clickElement(driver, _buttonApprove);
+				break;
+			case COREFLEXConstants.ASSOCIATE_THIS_POLICY:
+				CoreFunctions.clickElement(driver, _popUpApprovePolicyCheckBox);
 				break;
 			case COREFLEXConstants.ADD_NEW_CUSTOM_BUNDLE:
 				CoreFunctions.clickElement(driver, _buttonAddNewCustomBundle);
@@ -188,7 +234,7 @@ public class CoreFlex_CustomBundlesPage extends Base {
 				CoreFunctions.explicitWaitTillElementInVisibility(driver, _progressBar);
 				break;
 			case COREFLEXConstants.PREVIEW_TRANSFEREE_EXPERIENCE:
-				CoreFunctions.clickElement(driver, _buttonPreviewTransfereeExp);				
+				CoreFunctions.clickElement(driver, _buttonPreviewTransfereeExp);
 				break;
 			case COREFLEXConstants.BACK:
 				CoreFunctions.clickElement(driver, _buttonBack);
@@ -268,9 +314,10 @@ public class CoreFlex_CustomBundlesPage extends Base {
 		try {
 			CoreFunctions.explicitWaitTillElementInVisibility(driver, _progressBar);
 			actualSubmitMessage = CoreFunctions.getElementText(driver, _popUpTextSubmitMessage);
-			isSubmitMessageVerified = (expectedSubmitStatusMessage.replace("PolicyName", policyName)).equalsIgnoreCase(actualSubmitMessage);
+			isSubmitMessageVerified = (expectedSubmitStatusMessage.replace("PolicyName", policyName))
+					.equalsIgnoreCase(actualSubmitMessage);
 			isPolicySubmitStatusVerified = CoreFunctions.getElementText(driver, _popUpTextSubmitStatus)
-			.equals(COREFLEXConstants.SUCCESS) && isSubmitMessageVerified;
+					.equals(COREFLEXConstants.SUCCESS) && isSubmitMessageVerified;
 		} catch (Exception e) {
 			Reporter.addStepLog(MessageFormat.format(
 					COREFLEXConstants.EXCEPTION_OCCURED_WHILE_VALIDATING_POLICY_SUBMIT_STATUS_AND_MESSAGE_ON_CUSTOM_BUNDLES_PAGE,
@@ -307,11 +354,11 @@ public class CoreFlex_CustomBundlesPage extends Base {
 				return true;
 			}
 			clickElementOfPage(addNewCustomBundleButton);
-			if(createNewCustomBundle(policySetupPageData.customBundlesPage.customBundleName,
-					bundleBenefitList, saveCustomBundleButton)){
+			if (createNewCustomBundle(policySetupPageData.customBundlesPage.customBundleName, bundleBenefitList,
+					saveCustomBundleButton)) {
 				Reporter.addStepLog(MessageFormat.format(
-						COREFLEXConstants.SUCCESSFULLY_ADDED_A_NEW_CUSTOM_BUNDLE_ON_CUSTOM_BUNDLES_PAGE, CoreConstants.PASS,
-						policySetupPageData.customBundlesPage.customBundleName));
+						COREFLEXConstants.SUCCESSFULLY_ADDED_A_NEW_CUSTOM_BUNDLE_ON_CUSTOM_BUNDLES_PAGE,
+						CoreConstants.PASS, policySetupPageData.customBundlesPage.customBundleName));
 				return true;
 			}
 		} catch (Exception e) {
@@ -354,6 +401,58 @@ public class CoreFlex_CustomBundlesPage extends Base {
 			}
 		}
 		return benefitNameList;
+	}
+
+	public boolean verifySubmitButtonDisabledPostSubmission() {
+		if (CoreFunctions.isElementExist(driver, _buttonSubmitDisabled, 5)) {
+			Reporter.addStepLog(MessageFormat.format(
+					COREFLEXConstants.SUBMIT_BUTTON_DISABLED_POST_POLICY_SUBMISSION_ON_CUSTOM_BUNDLES_PAGE,
+					CoreConstants.PASS));
+			return true;
+		} else
+			return false;
+	}
+
+	public boolean verifyApproveThisPolicyDialog(String checkBoxSelection) {
+		boolean isDialogHeaderVerified, isDialogTextVerified, isDialogOptionsVerified,
+				isApproveThisPolicyDialogVerified;
+		try {
+			isDialogHeaderVerified = CoreFunctions.getElementText(driver, _popUpApprovePolicyHeader)
+					.equals(COREFLEXConstants.EXPECTED_APPROVE_THIS_POLICY_DIALOG_HEADER);
+			isDialogTextVerified = CoreFunctions.getElementText(driver, _popUpApprovePolicyVersionText)
+					.equals(COREFLEXConstants.EXPECTED_APPROVE_THIS_POLICY_DIALOG_VERSION_TEXT)
+					&& CoreFunctions.getElementText(driver, _popUpApprovePolicyAssignmentText)
+							.equals(COREFLEXConstants.EXPECTED_APPROVE_THIS_POLICY_DIALOG_ASSIGNMENT_TEXT);
+			System.out.println(
+					"Checkbox Text :" + CoreFunctions.getElementText(driver, _popUpApprovePolicyCheckBox).trim());
+			isDialogOptionsVerified = (CoreFunctions.getElementText(driver, _popUpApprovePolicyCheckBox).trim())
+					.equals(COREFLEXConstants.EXPECTED_APPROVE_THIS_POLICY_DIALOG_CHECKBOX_SELECTION.trim())
+					&& CoreFunctions.getAttributeText(_popUpApprovePolicyDefaultAssignmentDate, "min")
+							.equals(CoreFunctions.getCurrentDateAsGivenFormat("YYYY-MM-dd"));
+			isApproveThisPolicyDialogVerified = isDialogHeaderVerified && isDialogTextVerified
+					&& isDialogOptionsVerified;
+		} catch (Exception e) {
+			Reporter.addStepLog(MessageFormat.format(
+					COREFLEXConstants.EXCEPTION_OCCURED_WHILE_ADDING_A_NEW_CUSTOM_BUNDLE_ON_CUSTOM_BUNDLES_PAGE,
+					CoreConstants.FAIL, e.getMessage()));
+			return false;
+		}
+		if (isApproveThisPolicyDialogVerified) {
+			Reporter.addStepLog(MessageFormat.format(
+					COREFLEXConstants.SUCCESSFULLY_VERIFIED_APPROVE_THIS_POLICY_DIALOG_HEADER_VERSION_ASSIGNMENT_TEXT_AND_FIELDS,
+					CoreConstants.PASS));
+		}
+		return isApproveThisPolicyDialogVerified;
+	}
+
+	public boolean verifyPolicyStatusPostSubmission() {
+		if(CoreFunctions.getElementText(driver, _textPolicyStatus).equals(COREFLEXConstants.SUBMITTED)) {
+			Reporter.addStepLog(MessageFormat.format(
+					COREFLEXConstants.SUCCESSFULLY_VERIFIED_POLICY_STATUS_SUBMITTED_POST_POLICY_SUBMISSION_ON_CUSTOM_BUNDLES_PAGE,
+					CoreConstants.PASS));
+			return true;
+		}
+		else return false;
 	}
 
 }

@@ -121,7 +121,7 @@ public class CoreFlex_OtherHousing_BenefitsPage extends Base {
 	private WebElement _inputMultiAddBenefit;
 
 	// Policy Benefits data Missing Error Dialog
-	@FindBy(how = How.XPATH, using = "//div[@id='swal2-content'][contains(text(),'Policy Benefits data missing. Please fill all the benefits.')]")
+	@FindBy(how = How.XPATH, using = "//div[@id='swal2-content'][contains(text(),'Policy Benefits data missing. Please complete all the benefits.')]")
 	private WebElement _errorDialogPolicyBenefitsDataMissing;
 
 	// Policy Benefits data Missing Error Dialog - OK Button

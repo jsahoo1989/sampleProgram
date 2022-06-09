@@ -7,6 +7,8 @@ public class CoreFlex_SettlingInBenefitsData {
 	public LanguageTrainingFamily languageTrainingFamily;
 	public CulturalTrainingEmployee culturalTrainingEmployee;
 	public CulturalTrainingFamily culturalTrainingFamily;
+	public ConciergeServices conciergeServices;
+	public AreaTour areaTour;
 	
 	public class LanguageTrainingEmployee{
 		public String maxNumberOfHours;
@@ -40,6 +42,21 @@ public class CoreFlex_SettlingInBenefitsData {
 	public class CulturalTrainingFamily{
 		public String familyDuration;
 		public String familyOtherDuration;
+		public String grossUp;
+		public String reimbursedBy;
+		public String reimbursedByOther;
+		public String comment;		
+	}
+	
+	public class ConciergeServices{
+		public String grossUp;
+		public String reimbursedBy;
+		public String reimbursedByOther;
+		public String comment;		
+	}
+	
+	public class AreaTour{
+		public String durationDays;
 		public String grossUp;
 		public String reimbursedBy;
 		public String reimbursedByOther;

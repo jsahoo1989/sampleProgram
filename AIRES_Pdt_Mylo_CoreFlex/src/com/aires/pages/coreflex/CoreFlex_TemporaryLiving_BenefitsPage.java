@@ -152,7 +152,7 @@ public class CoreFlex_TemporaryLiving_BenefitsPage extends Base {
 	// Max. Amount Dropdown
 	@FindBy(how = How.XPATH, using = "//div[@class='collapse show']//ng-select[@formcontrolname='maxAmountPerNightCode']//div[@role='option']")
 	private List<WebElement> _selectMaxAmountList;
-	
+
 	// Max. Amount Select Field
 	@FindBy(how = How.XPATH, using = "//div[@class='collapse show']//ng-select[@formcontrolname='maxAmountPerNightCode']")
 	private WebElement _selectMaxAmount;
@@ -164,6 +164,14 @@ public class CoreFlex_TemporaryLiving_BenefitsPage extends Base {
 	// Benefit can be selected more than once Checkbox
 	@FindBy(how = How.XPATH, using = "//input[@id='multiAddInd']/parent::label")
 	private WebElement _inputMultiAddBenefit;
+
+	// Policy Benefits data Missing Error Dialog
+	@FindBy(how = How.XPATH, using = "//div[@id='swal2-content'][contains(text(),'Policy Benefits data missing. Please complete all the benefits.')]")
+	private WebElement _errorDialogPolicyBenefitsDataMissing;
+
+	// Policy Benefits data Missing Error Dialog - OK Button
+	@FindBy(how = How.CSS, using = "button[class*='swal2-confirm']")
+	private WebElement _errorDialogPolicyBenefitsDataMissingOKButton;
 
 	/*********************************************************************/
 
@@ -288,6 +296,10 @@ public class CoreFlex_TemporaryLiving_BenefitsPage extends Base {
 			selectSubBenefitsAndFillMandatoryFields(subBenefitNames, benefitType);
 		}
 		clickElementOfPage(COREFLEXConstants.SAVE_AND_CONTINUE);
+
+		if (CoreFunctions.isElementExist(driver, _errorDialogPolicyBenefitsDataMissing, 7)) {
+			CoreFunctions.clickElement(driver, _errorDialogPolicyBenefitsDataMissingOKButton);
+		}
 	}
 
 	/**

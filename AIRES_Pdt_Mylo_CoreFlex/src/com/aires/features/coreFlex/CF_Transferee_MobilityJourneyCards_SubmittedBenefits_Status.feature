@@ -1,13 +1,14 @@
 Feature: Validate the Core_Flex Cards details on Mobility Journey and Aires Managed Submitted Benefit status on My Benefit Bundle Page
 
-  @End-To_End_CoreFlex @Both-Cards_PF @AllCards @MJ_Card_StatusChecks
+  @End-To_End_CoreFlex @Both-Cards_PF_Card_StatusChecks @AllCards @MJ_Card_StatusChecks
   Scenario: CoreFlex - Setting up a New CoreFlex policy in 'Policy Digitization Tool' with Both type 'Aires Managed' benefit
-    Given he has setup a new "Both" Type Policy with following selection in 'Policy Digitization Tool (PDT)' application
+    Given he has submitted a new "Both" Type Policy with following selection in 'Policy Digitization Tool (PDT)' application
       | Person Responsible For Benefit Selection | Flex Setup Type | Cashout Availability   |
       | Transferee                               | Static/Fixed    | Cashout Not Authorized |
-    When he clicks on "SUBMIT" button on "Custom Bundles" page
-    Then a success dialog should be displayed for Successfully Submitted Policy
-    And Policy Status should be displayed as "Submitted" on "View/Edit Policy Forms" page
+    And he has clicked on "Approve Policy" button on "Custom Bundles" page
+    And he has selected "Associate this policy with a NEW authorization in IRIS? " option and default 'Effective from booking date' on 'Approval this Policy' dialog
+    When he clicks on "Approve" button to acknowledged 'Approve this Policy' dialog 
+    Then Policy Status should be displayed as "Active" on "View/Edit Policy Forms" page
 
   @End-To_End_CoreFlex @Both-Cards_MX @AllCards @MJ_Card_StatusChecks
   Scenario: MXTransferee - Verifying Flex_Core Cards details and (Submitted,StartingSoon,InProgress,Complete) status of the submitted Aires Managed Benefit

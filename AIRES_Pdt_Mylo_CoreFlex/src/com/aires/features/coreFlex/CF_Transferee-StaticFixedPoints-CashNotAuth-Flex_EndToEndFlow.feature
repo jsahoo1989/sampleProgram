@@ -2,12 +2,13 @@ Feature: Validate the CoreFlex End-To-End Business Test Flow(BluePrint, MXTransf
 
 @End-To_End_CoreFlex @Flex-CashNotAuth_PF @End-to-End_Flex_CashNotAuth
 Scenario: CoreFlex - Setting up a New CoreFlex policy in 'Policy Digitization Tool' application 
-	Given he has setup a new "Flex" Type Policy with following selection in 'Policy Digitization Tool (PDT)' application 
-		| Person Responsible For Benefit Selection | Flex Setup Type | Cashout Availability   |
-		| Transferee                               | Static/Fixed    | Cashout Not Authorized |
-	When he clicks on "SUBMIT" button on "Custom Bundles" page 
-	Then a success dialog should be displayed for Successfully Submitted Policy
-	And Policy Status should be displayed as "Submitted" on "View/Edit Policy Forms" page
+    Given he has submitted a new "Flex" Type Policy with following selection in 'Policy Digitization Tool (PDT)' application
+      | Person Responsible For Benefit Selection | Flex Setup Type | Cashout Availability   |
+      | Transferee                               | Static/Fixed    | Cashout Not Authorized |
+    And he has clicked on "Approve Policy" button on "Custom Bundles" page
+    And he has selected "Associate this policy with a NEW authorization in IRIS? " option and default 'Effective from booking date' on 'Approval this Policy' dialog
+    When he clicks on "Approve" button to acknowledged 'Approve this Policy' dialog 
+    Then Policy Status should be displayed as "Active" on "View/Edit Policy Forms" page
 	
 @End-To_End_CoreFlex @Flex-CashNotAuth_MX @End-to-End_Flex_CashNotAuth
 Scenario: MXTransferee - Selecting & Submitting benefits available in configured policy and Tracking Available_Used Benefits Points

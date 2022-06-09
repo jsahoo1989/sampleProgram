@@ -13,6 +13,7 @@ import com.aires.managers.FileReaderManager;
 import com.aires.testdatatypes.coreflex.Benefit;
 import com.aires.testdatatypes.coreflex.CoreFlex_AllowancesBenefitsData;
 import com.aires.testdatatypes.coreflex.CoreFlex_HousingBenefitsData;
+import com.aires.testdatatypes.coreflex.CoreFlex_MovingBenefitsData;
 import com.aires.testdatatypes.coreflex.CoreFlex_PolicySetupPagesData;
 import com.aires.testdatatypes.coreflex.CoreFlex_SettlingInBenefitsData;
 import com.aires.testdatatypes.coreflex.FlexBenefit;
@@ -52,6 +53,9 @@ public class JsonDataReader_CoreFlex {
 	private final String _mxTransfereeMyProfileFilePath = FileReaderManager.getInstance().getConfigReader()
 			.getTestDataResourcePath() + "coreflex/MX_Transferee_MyProfileData.json";
 	
+	private final String _movingBenefitsFilePath = FileReaderManager.getInstance().getConfigReader()
+			.getTestDataResourcePath() + "coreflex/CoreFlex_MovingBenefitsData.json";
+	
 	private List<CoreFlex_HousingBenefitsData> _housingBenefitslist;
 	private List<CoreFlex_AllowancesBenefitsData> _allowancesBenefitslist;
 	private List<CoreFlex_SettlingInBenefitsData> _settlingInBenefitslist;
@@ -61,6 +65,7 @@ public class JsonDataReader_CoreFlex {
 	private MX_Transferee_AccountSetupDetails _mxTransfereeAccountDetails;
 	private List<MX_Transferee_MyProfileData> _mxTransfereeMyProfileDataList;
 	private MX_Transferee_BenefitData _mxTransfereeBenefitData;
+	private List<CoreFlex_MovingBenefitsData> _movingBenefitslist;
 	
 	public JsonDataReader_CoreFlex() {
 		_housingBenefitslist = getHousingBenefitData();
@@ -72,6 +77,7 @@ public class JsonDataReader_CoreFlex {
 		_mxTransfereeAccountDetails = getAccountSetupDetails();
 		_mxTransfereeMyProfileDataList = getMXTransfereeMyProfileData();
 		_mxTransfereeBenefitData = getMXTransfereeBenefitData();
+		_movingBenefitslist = getMovingBenefitData();
 	}
 	
 	private List<CoreFlex_HousingBenefitsData> getHousingBenefitData() {
@@ -238,6 +244,24 @@ public class JsonDataReader_CoreFlex {
 			}
 		}
 	}
+	
+	private List<CoreFlex_MovingBenefitsData> getMovingBenefitData() {
+		Gson gson = new Gson();
+		BufferedReader bufferReader = null;
+		try {
+			bufferReader = new BufferedReader(new FileReader(_movingBenefitsFilePath));
+			CoreFlex_MovingBenefitsData[] movingBenefitList = gson.fromJson(bufferReader, CoreFlex_MovingBenefitsData[].class);
+			return Arrays.asList(movingBenefitList);
+		} catch (FileNotFoundException e) {
+			throw new RuntimeException(CoreConstants.JSON_FILE_NOT_FOUND_AT_PATH + _movingBenefitsFilePath);
+		} finally {
+			try {
+				if (bufferReader != null)
+					bufferReader.close();
+			} catch (IOException ignore) {
+			}
+		}
+	}
 		
 	public final CoreFlex_HousingBenefitsData getHousingBenefitDataList(String policyBenefit) {
 		return _housingBenefitslist.stream().filter(x -> x.benefitName.equalsIgnoreCase(policyBenefit)).findAny().get();
@@ -284,5 +308,9 @@ public class JsonDataReader_CoreFlex {
 		List<Benefit> benefits = new ArrayList<Benefit>();
 		_mxTransfereeBenefitData.getFlexBenefits().stream().forEach(b -> benefits.addAll(b.getBenefits()));
 		return benefits;
+	}
+	
+	public final CoreFlex_MovingBenefitsData getMovingBenefitDataList(String policyBenefit) {
+		return _movingBenefitslist.stream().filter(x -> x.benefitName.equalsIgnoreCase(policyBenefit)).findAny().get();
 	}
 }

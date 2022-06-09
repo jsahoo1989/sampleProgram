@@ -135,7 +135,7 @@ public class CoreFlex_DuplicateHousing_BenefitsPage extends Base {
 	private WebElement _inputMultiAddBenefit;
 
 	// Policy Benefits data Missing Error Dialog
-	@FindBy(how = How.XPATH, using = "//div[@id='swal2-content'][contains(text(),'Policy Benefits data missing. Please fill all the benefits.')]")
+	@FindBy(how = How.XPATH, using = "//div[@id='swal2-content'][contains(text(),'Policy Benefits data missing. Please complete all the benefits.')]")
 	private WebElement _errorDialogPolicyBenefitsDataMissing;
 
 	// Policy Benefits data Missing Error Dialog - OK Button
@@ -288,6 +288,10 @@ public class CoreFlex_DuplicateHousing_BenefitsPage extends Base {
 			selectSubBenefitsAndFillMandatoryFields(subBenefitNames);
 		}
 		clickElementOfPage(COREFLEXConstants.SAVE_AND_CONTINUE);
+
+		if (CoreFunctions.isElementExist(driver, _errorDialogPolicyBenefitsDataMissing, 7)) {
+			CoreFunctions.clickElement(driver, _errorDialogPolicyBenefitsDataMissingOKButton);
+		}
 	}
 
 	/**
@@ -506,16 +510,13 @@ public class CoreFlex_DuplicateHousing_BenefitsPage extends Base {
 		try {
 			switch (fieldName) {
 			case COREFLEXConstants.AIRES_MANAGED_SERVICE:
-				if (CoreFunctions.isElementExist(driver, _errorTextAiresManagedServicesRequiredField, 5)) {					
-					Reporter.addStepLog(MessageFormat.format(
-							COREFLEXConstants.REQUIRED_FIELD_MESSAGE_DISPLAYED,
+				if (CoreFunctions.isElementExist(driver, _errorTextAiresManagedServicesRequiredField, 5)) {
+					Reporter.addStepLog(MessageFormat.format(COREFLEXConstants.REQUIRED_FIELD_MESSAGE_DISPLAYED,
 							CoreConstants.FAIL, fieldName));
-					throw new RuntimeException(MessageFormat.format(
-							COREFLEXConstants.REQUIRED_FIELD_MESSAGE_DISPLAYED,
+					throw new RuntimeException(MessageFormat.format(COREFLEXConstants.REQUIRED_FIELD_MESSAGE_DISPLAYED,
 							CoreConstants.FAIL, fieldName));
 				} else {
-					Reporter.addStepLog(MessageFormat.format(
-							COREFLEXConstants.REQUIRED_FIELD_MESSAGE_NOT_DISPLAYED,
+					Reporter.addStepLog(MessageFormat.format(COREFLEXConstants.REQUIRED_FIELD_MESSAGE_NOT_DISPLAYED,
 							CoreConstants.PASS, fieldName));
 				}
 				break;

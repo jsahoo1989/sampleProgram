@@ -2,12 +2,13 @@ Feature: Validate the CoreFlex Policy Flow for Flex_Transferee_StaticFixedPoints
 
 @PolicySetupFlow @Flex-AfterRelocationOnly_PF
 Scenario: CoreFlex - Setting up a New CoreFlex policy in 'Policy Digitization Tool' application
-    Given he has setup a new "Flex" Type Policy with following selection in 'Policy Digitization Tool (PDT)' application
+    Given he has submitted a new "Both" Type Policy with following selection in 'Policy Digitization Tool (PDT)' application
       | Person Responsible For Benefit Selection | Flex Setup Type | Cashout Availability   |
-      | Transferee                               | Static/Fixed    | After Relocation Only  |
-    When he clicks on "SUBMIT" button on "Custom Bundles" page 
-	Then a success dialog should be displayed for Successfully Submitted Policy
-	And Policy Status should be displayed as "Submit" on "View/Edit Policy Forms" page
+      | Transferee                               | Static/Fixed    | Cashout Not Authorized |
+    And he has clicked on "Approve Policy" button on "Custom Bundles" page
+    And he has selected "Associate this policy with a NEW authorization in IRIS? " option and default 'Effective from booking date' on 'Approval this Policy' dialog
+    When he clicks on "Approve" button to acknowledged 'Approve this Policy' dialog 
+    Then Policy Status should be displayed as "Active" on "View/Edit Policy Forms" page
 		
 #@FlexPolicy-Transferee-Static-FixedPoints-CashNotAuthorized @NewFeatureFormat 		
 #Scenario: IRIS - Creating and Actualizing a new Transferee in IRIS Apllication for Policy Created in 'Policy Digitization Tool' 

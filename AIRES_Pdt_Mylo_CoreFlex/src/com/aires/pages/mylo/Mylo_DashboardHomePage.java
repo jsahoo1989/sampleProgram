@@ -252,15 +252,19 @@ public class Mylo_DashboardHomePage extends Base {
 
 	public boolean verifyPopUpMessage(String message) {
 		try {
-			clickExecuteButton();
-			CoreFunctions.waitForBrowserToLoad(driver);
-			CoreFunctions.explicitWaitTillElementVisibility(driver, _popUpMessage, _popUpMessage.getText());
-			Assert.assertEquals(_popUpMessage.getText(), message, MYLOConstants.INCORRECT_MESSAGE);
+			CoreFunctions.explicitWaitTillElementVisibility(driver, _executeButton, _executeButton.getText(), 20L);
+			CoreFunctions.highlightElementAndClick(driver, _executeButton, _executeButton.getText());
+			if (CoreFunctions.isElementExist(driver, _spinner, 30)||CoreFunctions.isElementExist(driver, _myloErrorPopUp, 5)) {
+				CoreFunctions.explicitWaitTillElementInVisibilityCustomTime(driver, _spinner, 60);
+				CoreFunctions.explicitWaitTillElementVisibility(driver, _popUpMessage, _popUpMessage.getText());
+				Assert.assertEquals(_popUpMessage.getText(), message, MYLOConstants.INCORRECT_MESSAGE);
+				CoreFunctions.clickElement(driver, _okButtonPopUp);
+				CoreFunctions.explicitWaitTillElementInVisibilityCustomTime(driver, _spinner, 60);
+			}
 		} catch (Exception e) {
 			return false;
 		}
 		return true;
-
 	}
 
 	public void resetFileParameters() {

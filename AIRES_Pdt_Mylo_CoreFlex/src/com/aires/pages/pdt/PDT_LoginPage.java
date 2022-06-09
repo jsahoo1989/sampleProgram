@@ -80,7 +80,13 @@ public class PDT_LoginPage extends Base {
 	}
 
 	public void clickLoginBtn() {
-		CoreFunctions.click(driver, _btnLogin, _btnLogin.getText());
+		try {
+			CoreFunctions.click(driver, _btnLogin, _btnLogin.getText());	
+		} catch(Exception e) {
+			Assert.fail(MessageFormat.format(PDTConstants.EXCEPTION_OCCURED_WHILE_LOGGING_TO_APPLICATION,
+					CoreConstants.FAIL,e.getMessage()));	
+		}
+		
 	}
 	
 	public void verifyLoginCredentials() {

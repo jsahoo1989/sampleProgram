@@ -8,7 +8,6 @@ import org.testng.Assert;
 
 import com.aires.businessrules.BusinessFunctions;
 import com.aires.businessrules.DbFunctions;
-import com.aires.businessrules.constants.COREFLEXConstants;
 import com.aires.businessrules.constants.CoreConstants;
 import com.aires.businessrules.constants.PDTConstants;
 import com.aires.cucumber.TestContext;
@@ -37,7 +36,7 @@ import com.aires.pages.pdt.PDT_TemporaryLivingPage;
 import com.aires.pages.pdt.PDT_ViewPolicyPage;
 
 import cucumber.api.DataTable;
-import cucumber.api.java.en.And;
+import cucumber.api.java.en.Given;
 import cucumber.api.java.en.Then;
 import cucumber.api.java.en.When;
 
@@ -217,7 +216,7 @@ public class PDT_SharedSubBenefit_Steps {
 	}
 	
 	@When("^he clicks on \"([^\"]*)\" button after entering mandatory information for all the below selected sub benefits on \"([^\"]*)\" page$")
-	@And("^he has clicked on \"([^\"]*)\" button after entering mandatory information for all the below selected sub benefits on \"([^\"]*)\" page$")
+	@Given("^he has clicked on \"([^\"]*)\" button after entering mandatory information for all the below selected sub benefits on \"([^\"]*)\" page$")
 	public void he_has_clicked_on_button_after_entering_mandatory_information_for_all_the_below_selected_sub_benefits_on_page(String btnName, String policyBenefitPgName, DataTable subBenefitTable) throws Throwable {
 		PDT_SharedSubBenefit_Steps objStep = new PDT_SharedSubBenefit_Steps(testContext);
 		List<String> subBenefits = subBenefitTable.asList(String.class);
@@ -246,7 +245,7 @@ public class PDT_SharedSubBenefit_Steps {
 						addNewPolicyPage.getPolicyName(), pageName, viewPolicyPage.getPolicyList()));
 	}
 	
-	@And("^he has navigated to \"([^\"]*)\" page after clicking on the \"([^\"]*)\" button of 'Confirmation' dialog on \"([^\"]*)\" page$")
+	@Given("^he has navigated to \"([^\"]*)\" page after clicking on the \"([^\"]*)\" button of 'Confirmation' dialog on \"([^\"]*)\" page$")
 	public void he_has_navigated_to_page_after_clicking_on_the_button_of_Confirmation_dialog_on_page(String pageName, String btnName, String benefitPageName) throws Throwable {
 		subBenefitPage.clickOnConfirmDialogBtn(btnName);
 		timeBeforeAction = new Date().getTime();

@@ -487,4 +487,8 @@ public class PDTConstants {
 	public static final String BENEFIT_CATEGORY_IS_NOT_SELECTED = "{0}Verified Policy Benefit Category:-''{1}'' is not selected";
 	public static final String VERIFIED_DATA_NOT_SAVED_SUB_BENEFIT = "{0}Verified data is not saved for SubBenefit Categories:-''{1}''";
 	public static final String VERIFIED_DATA_SAVED_FOR_SUB_BENEFIT = "{0}Verified data is saved for SubBenefit Categories:-''{1}''";
+	public static final String APPLICATION_PDT = "PDT";
+	public static final String APPLICATION_MYLO = "MYLO";
+	public static final String APPLICATION_NOT_VALID = "{0}Application ''{1}'' is not a valid application";
+	
 }

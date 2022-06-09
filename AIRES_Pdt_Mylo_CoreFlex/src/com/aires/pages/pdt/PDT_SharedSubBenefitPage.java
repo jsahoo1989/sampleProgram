@@ -864,8 +864,9 @@ public class PDT_SharedSubBenefitPage extends Base {
 	}
 	
 	public boolean verifySaveSuccessMessage(String msg, String pageName, PDT_AddNewPolicyPage addNewPolicyPage) {
-		try {
-			CoreFunctions.explicitWaitTillElementInVisibilityCustomTime(driver, _progressBar, 7);
+		try {			
+			if(CoreFunctions.isElementExist(driver, _progressBar, 7))
+				BusinessFunctions.fluentWaitForSpinnerToDisappear(driver, _progressBar);
 			if (CoreFunctions.isElementExist(driver, _successPopUp, 5) && _successMsg.getText().equalsIgnoreCase(msg)) {
 				Reporter.addStepLog(MessageFormat.format(PDTConstants.VERIFIED_SUCCESS_MSG, CoreConstants.PASS,
 						_successMsg.getText(), pageName));

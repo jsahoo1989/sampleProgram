@@ -5,7 +5,8 @@ public class IRISConstants {
 	public static String URI_ADDRESS = "ws://localhost:5095";
 	// public static String IRIS_EXECUTABLE_PATH = "C:\\iris_ng\\IRIS.exe";
 	public static String IRIS_EXECUTABLE_PATH = "\\\\corpprdvw589\\rdev\\IRIS_Builds\\IRIS_CoreFleX_UAT\\IRIS.exe";
-	public static String IRIS_EXECUTABLE_PATH_QA = "\\\\corpprdvw589\\rdev\\IRIS_Builds\\IRIS_FnDEV_CORE_FLEX\\IRIS.exe";
+	//public static String IRIS_EXECUTABLE_PATH_QA = "\\\\corpprdvw589\\rdev\\IRIS_Builds\\IRIS_FnDEV_CORE_FLEX\\IRIS.exe";
+	public static String IRIS_EXECUTABLE_PATH_QA = "\\\\corpprdvw589\\rdev\\IRIS_Builds\\IRIS_Statler_QA\\IRIS.exe";
 	public static String WINDOW_TITLE = "Window title displayed  as : ";
 	// IRIS_LoginPage.java
 	public static final String DATABASE_NAME = "Database";

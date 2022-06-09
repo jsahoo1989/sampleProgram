@@ -571,11 +571,7 @@ public class PDT_OneTimePaymentReimbursemenPage extends Base {
 
 	public void fillMiscRelocationAllowance(PDT_AddNewPolicyPage addNewPolicyPage, String subBenefitFormName) {
 		try {
-			WebElement element = driver.findElement(
-					(with(By.tagName("label"))).above(By.cssSelector("ng-select[formcontrolname='methodCode']")));
-			
 			CoreFunctions.explicitWaitTillElementListVisibility(driver, _drpDownCalculationMethodOptions);
-
 			String randCalcMethod = BusinessFunctions.selectAndReturnRandomValueFromDropDown(driver, addNewPolicyPage,
 					subBenefitFormName, _drpDownCalculationMethod, _drpDownCalculationMethodOptions,
 					_drpDownCalculationMethodSelected,
@@ -638,8 +634,7 @@ public class PDT_OneTimePaymentReimbursemenPage extends Base {
 					oneTimePaymentBenefitData.miscReloAllowance.reimbursedByOther, subBenefitFormName, PDTConstants.REIMBURSED_BY_OTHER);
 			CoreFunctions.clearAndSetText(driver, _txtAreaMiscRelocationAllowanceComment, PDTConstants.COMMENT,
 					oneTimePaymentBenefitData.miscReloAllowance.comment);
-		} catch (Exception e) {
-			e.printStackTrace();
+		} catch (Exception e) {			
 			Assert.fail(MessageFormat.format(PDTConstants.EXCEPTION_OCCURED_FILL_SUBBENEFIT_FORM, CoreConstants.FAIL,
 					subBenefitFormName));
 		}

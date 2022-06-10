@@ -51,6 +51,7 @@ public class PDT_CompensationServicesPage extends Base{
 			CoreFunctions.clearAndSetText(driver, _txtAreaLetterOfAssignmentTaxComment, PDTConstants.COMMENT,
 					compensationServicesBenefitData.letterOfAssignment.comment);
 		} catch (Exception e) {			
+			e.printStackTrace();
 			Assert.fail(MessageFormat.format(PDTConstants.EXCEPTION_OCCURED_FILL_SUBBENEFIT_FORM, CoreConstants.FAIL, subBenefitFormName));
 		}
 	}

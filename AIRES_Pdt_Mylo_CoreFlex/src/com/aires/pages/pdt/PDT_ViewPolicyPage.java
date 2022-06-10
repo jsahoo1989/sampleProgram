@@ -1,6 +1,7 @@
 package com.aires.pages.pdt;
 
 import java.text.MessageFormat;
+import java.util.Date;
 import java.util.List;
 import java.util.Map;
 
@@ -91,6 +92,7 @@ public class PDT_ViewPolicyPage extends Base {
 
 	final By _listPolicyNameByLocator = By.cssSelector("h5.text-info.info-pname");
 	final By _listClientNameByLocator = By.cssSelector("h6.info-pclient");
+	long timeBeforeAction, timeAfterAction;
 
 	public String getElementText(String elementName) {
 		String elementText = null;
@@ -115,7 +117,9 @@ public class PDT_ViewPolicyPage extends Base {
 			CoreFunctions.clickElement(driver, _logout);
 			break;
 		case PDTConstants.ADD_NEW_POLICY_FORM:
-			CoreFunctions.clickElement(driver, _addNewPolicyForm);
+			CoreFunctions.clickUsingJS(driver, _addNewPolicyForm, PDTConstants.ADD_NEW_POLICY_FORM);
+			if(CoreFunctions.isElementExist(driver,  _progressBar, 4))
+				BusinessFunctions.fluentWaitForSpinnerToDisappear(driver, _progressBar);
 			break;
 		case PDTConstants.CLEAR_FILTER:
 			CoreFunctions.highlightElementAndClick(driver, _clearFilter, PDTConstants.CLEAR_FILTER);
@@ -127,15 +131,16 @@ public class PDT_ViewPolicyPage extends Base {
 
 	public String getUserName() {
 		String userArray[] = _userName.getText().split("\n");
-		return userArray[1];
+		return userArray[1].trim();
 	}
 
 	public Boolean verifyUserlogin(String userName, String pageName) {
-		if (getUserName().equalsIgnoreCase(userName)) {
+		if(CoreFunctions.isElementExist(driver, _progressBar, 2))
+			BusinessFunctions.fluentWaitForSpinnerToDisappear(driver, _progressBar);
+		if (getUserName().contains(userName)) {
 			CoreFunctions.highlightObject(driver, _userName);
 			Reporter.addStepLog(MessageFormat.format(PDTConstants.VERIFIED_USERNAME_IS_DISPLAYED, CoreConstants.PASS,
 					userName, pageName));
-			Log.info("Verified username");
 			return true;
 		}
 		Reporter.addStepLog(MessageFormat.format(PDTConstants.FAILED_TO_VERIFY_USERNAME, CoreConstants.FAIL, pageName,
@@ -144,20 +149,27 @@ public class PDT_ViewPolicyPage extends Base {
 	}
 
 	public Boolean verifyViewPolicyHeading(String pageName) {
-		CoreFunctions.explicitWaitTillElementInVisibilityCustomTime(driver, _progressBar, 3);
+		timeBeforeAction = new Date().getTime();
+		if(CoreFunctions.isElementExist(driver, _progressBar, 2))
+			BusinessFunctions.fluentWaitForSpinnerToDisappear(driver, _progressBar);
+		timeAfterAction = new Date().getTime();
+		BusinessFunctions.printTimeTakenByPageToLoad(timeBeforeAction, timeAfterAction, PDTConstants.VIEW_POLICY_PAGE);
 		return CoreFunctions.verifyElementOnPage(driver, _headingViewEditPolicyForm, PDTConstants.heading,
 				PDTConstants.VIEW_EDIT_POLICY_FORMS, pageName, true);
 	}
 
 	public boolean verifyPoliciesAreDisplayed(String pageName) {
+		timeBeforeAction = new Date().getTime();
+		if(CoreFunctions.isElementExist(driver, _progressBar, 2))
+			BusinessFunctions.fluentWaitForSpinnerToDisappear(driver, _progressBar);
+		timeAfterAction = new Date().getTime();
+		BusinessFunctions.printTimeTakenByPageToLoad(timeBeforeAction, timeAfterAction, PDTConstants.VIEW_POLICY_PAGE);
 		if (_txtPolicyName.size() > 0) {
 			Reporter.addStepLog(
 					MessageFormat.format(PDTConstants.POLICIES_ARE_DISPLAYED, CoreConstants.PASS, pageName));
-			Log.info("Policies are displayed");
 			clickElementOfPage(PDTConstants.LOGOUT);
 			return true;
 		}
-		Log.info("Policies are not displayed");
 		return false;
 	}
 
@@ -166,6 +178,7 @@ public class PDT_ViewPolicyPage extends Base {
 		case PDTConstants.CLIENT_ID:
 			CoreFunctions.clearAndSetText(driver, _inputClientId, policyDetails.get("SearchText"));
 			CoreFunctions.click(driver, _btnSearch, _btnSearch.getText());
+			BusinessFunctions.fluentWaitForSpinnerToDisappear(driver, _progressBar);
 			Assert.assertTrue(
 					verifyClientIdAndCompanyName(policyDetails.get("SearchText"), policyDetails.get("CompanyName"),
 							pageName),
@@ -175,6 +188,7 @@ public class PDT_ViewPolicyPage extends Base {
 		case PDTConstants.CLIENT_NAME:
 			CoreFunctions.clearAndSetText(driver, _inputClientName, policyDetails.get("SearchText"));
 			CoreFunctions.click(driver, _btnSearch, _btnSearch.getText());
+			BusinessFunctions.fluentWaitForSpinnerToDisappear(driver, _progressBar);
 			Assert.assertTrue(
 					verifyClientIdAndCompanyName(policyDetails.get("ClientId"), policyDetails.get("SearchText"),
 							pageName),
@@ -184,6 +198,7 @@ public class PDT_ViewPolicyPage extends Base {
 		case PDTConstants.POLICY:
 			CoreFunctions.clearAndSetText(driver, _inputPolicyName, policyDetails.get("SearchText"));
 			CoreFunctions.click(driver, _btnSearch, _btnSearch.getText());
+			BusinessFunctions.fluentWaitForSpinnerToDisappear(driver, _progressBar);
 			Assert.assertTrue(verifyPolicyName(policyDetails.get("SearchText"), pageName),
 					MessageFormat.format(PDTConstants.FAIL_TO_VERIFY_POLICY_NAME_ON_PAGE, CoreConstants.FAIL,
 							policyDetails.get("SearchText"), pageName));
@@ -234,7 +249,8 @@ public class PDT_ViewPolicyPage extends Base {
 
 	public boolean searchAndVerifyPolicy(String policyName, String pageName, PDT_AddNewPolicyPage addNewPolicyPage) {
 		try {
-			CoreFunctions.explicitWaitTillElementInVisibilityCustomTime(driver, _progressBar, 5);
+			//CoreFunctions.explicitWaitTillElementInVisibilityCustomTime(driver, _progressBar, 5);
+			BusinessFunctions.fluentWaitForSpinnerToDisappear(driver, _progressBar);
 			CoreFunctions.isElementByLocatorExist(driver, _listPolicyNameByLocator, 20);
 			if (_listPolicyName.stream().anyMatch(t -> t.getText().toLowerCase().equalsIgnoreCase(policyName))) {
 				Reporter.addStepLog(MessageFormat.format(PDTConstants.VERIFIED_ELEMENT_DISPLAYED_ON_PAGE,
@@ -292,5 +308,16 @@ public class PDT_ViewPolicyPage extends Base {
 				expectedPageName, expectedPageName, true);
 	}
 	
-
+	public void navigateToGeneralInfoPage(String selectedPolicyName, String pageName) {
+		try {
+			timeBeforeAction = new Date().getTime();
+			CoreFunctions.clickElement(driver, CoreFunctions.getElementFromListByText(_listPolicyName, selectedPolicyName));
+			BusinessFunctions.fluentWaitForSpinnerToDisappear(driver, _progressBar);
+			timeAfterAction = new Date().getTime();
+			BusinessFunctions.printTimeTakenByPageToLoad(timeBeforeAction, timeAfterAction, pageName);
+		} catch(Exception e) {
+			Assert.fail(MessageFormat.format(PDTConstants.FAILED_TO_NAVIGATE_TO_PAGE, PDTConstants.GENERAL_INFORMATION, 
+					CoreConstants.FAIL));
+		}		
+	}
 }

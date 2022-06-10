@@ -1,0 +1,51 @@
+[
+	{
+		"benefitName": "Home Purchase",
+		"homePurchaseClosingCost": {			
+			"directBillEligible": "No",			
+			"maxPercentHomePurPrice": "100",
+			"closingCostCap": "200",
+			"currency": "U.S. Dollar",
+			"airesPreferredLenders": "Wells Fargo, Huntington, Other",
+			"airesPreferredLendersOther": "Auto test Lenders",
+			"grossUp": "Yes",
+			"reimbursedBy": "Aires",
+			"reimbursedByOther": "Reimbursed by other",
+			"comments": "Home Purchase closing cost comment"			
+		},
+		"homePurchasePoints": {
+			"maxPercentHomePurPrice": "100",
+			"grossUp": "No",
+			"reimbursedBy": "Client",
+			"reimbursedByOther": "Reimbursed by other",
+			"comments": "Home Purchase closing cost comment"	
+		},
+		"homePurchaseInspections": {
+			"grossUp": "No",
+			"reimbursedBy": "Other",
+			"reimbursedByOther": "Reimbursed by other",
+			"comments": "Home Purchase Inspection comment"	
+		},
+		"homePurchaseBonus": {
+			"maxAmount": "1000",
+			"currency": "U.S. Dollar",
+			"desirableCalculation" : "Auto test calculation",
+			"grossUp": "No",
+			"reimbursedBy": "Other",
+			"reimbursedByOther": "Reimbursed by other",
+			"comments": "Home Purchase Inspection comment"	
+		},
+		"mortgDiff": {
+			"grossUp": "Yes",
+			"reimbursedBy": "Other",
+			"reimbursedByOther": "Reimbursed by other",
+			"comments": "Mortgage Diff comment"	
+		},
+		"mortgSubsidy": {
+			"grossUp": "No",
+			"reimbursedBy": "Client",
+			"reimbursedByOther": "Reimbursed by other",
+			"comments": "Mortgage Subsidy comment"	
+		}
+	}
+]

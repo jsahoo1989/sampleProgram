@@ -70,11 +70,11 @@ public class PDT_DuplicateHousingPage extends Base {
 					_lblDuration.getText());
 			String randDuration = BusinessFunctions.selectAndReturnRandomValueFromDropDown(driver, addNewPolicyPage,
 					subBenefitFormName, _drpDownDuration, _drpDownDurationOptions, _drpDownDurationOptionsSelected,
-					_lblDuration);
+					_lblDuration.getText());
 			setDuration(randDuration);
 			BusinessFunctions.verifyAndFillOtherTextBoxForSubBenefitForm(driver, addNewPolicyPage, subBenefitFormName,
 					_drpDownDurationOptionsSelected, _lblDuration.getText(), _txtBoxDurationOther,
-					_lblDurationOther, subBenefitFormName);
+					PDTConstants.DURATION_OTHER, subBenefitFormName);
 			
 			CoreFunctions.explicitWaitTillElementListClickable(driver, _radioBtnDuplicateHousing);
 			CoreFunctions.selectItemInListByText(driver, _radioBtnDuplicateHousing,
@@ -84,13 +84,13 @@ public class PDT_DuplicateHousingPage extends Base {
 					duplicateHousingBenefitData.reimbursedBy, PDTConstants.REIMBURSED_BY,
 					PDTConstants.RADIO_BUTTON_LIST, true);
 
-			BusinessFunctions.verifyReimbursedByOtherTextBoxIsDisplayed(driver, addNewPolicyPage,
+			BusinessFunctions.verifyOtherTextBoxIsDisplayed(driver, addNewPolicyPage,
 					duplicateHousingBenefitData.reimbursedBy, _txtBoxReimbursedByOther,
-					duplicateHousingBenefitData.reimbursedByOther, subBenefitFormName);
+					duplicateHousingBenefitData.reimbursedByOther, subBenefitFormName, PDTConstants.REIMBURSED_BY_OTHER);
 			CoreFunctions.clearAndSetText(driver, _txtAreaDuplicateHousingComment, PDTConstants.COMMENT,
 					duplicateHousingBenefitData.comments);
 			CoreFunctions.click(driver, _btnSaveAndContinue, _btnSaveAndContinue.getText());
-		} catch (Exception e) {			
+		} catch (Exception e) {
 			Assert.fail(MessageFormat.format(PDTConstants.EXCEPTION_OCCURED_FILL_SUBBENEFIT_FORM, CoreConstants.FAIL, subBenefitFormName));
 		}
 	}

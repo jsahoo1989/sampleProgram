@@ -270,7 +270,7 @@ public class CoreFunctions {
 
 	public static void explicitWaitTillElementVisibility(WebDriver driver, WebElement Element, String name) {
 		Log.info("waiting for " + name + " to display");
-		WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(20));
+		WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(60));
 		wait.until(ExpectedConditions.visibilityOf(Element));
 		Log.info("Pass: " + name + " is displayed");
 	}
@@ -307,7 +307,6 @@ public class CoreFunctions {
 		explicitWaitTillElementBecomesClickable(driver, Element, name);
 		Log.info("Clicking using JS on: " + name);
 		try {
-			CoreFunctions.waitHandler(2);
 			JavascriptExecutor executor = (JavascriptExecutor) driver;
 			executor.executeScript("arguments[0].click();", Element);
 			Log.info("Pass: " + name + " :is clicked");
@@ -393,7 +392,7 @@ public class CoreFunctions {
 	}
 
 	public static void explicitWaitTillElementListClickable(WebDriver driver, List<WebElement> Element) {
-		WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(25));
+		WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(90));
 		for (WebElement ele : Element) {
 			wait.until(ExpectedConditions.elementToBeClickable(ele));
 		}
@@ -565,7 +564,7 @@ public class CoreFunctions {
 
 	public static void clickRowInResult(WebDriver driver, WebElement row, boolean reporter, String searchText) {
 		if (reporter) {
-			CoreFunctions.click(driver, row, searchText);
+			CoreFunctions.clickUsingJS(driver, row, searchText);
 		} else {
 			CoreFunctions.clickWithoutReporting(driver, row, searchText);
 		}
@@ -619,7 +618,7 @@ public class CoreFunctions {
 	}
 
 	public static void clickElement(WebDriver driver, WebElement Element) {
-		waitTillElementClickable(driver, Element, 30);
+		waitTillElementClickable(driver, Element, 60);
 		try {
 			highlightObject(driver, Element);
 			Element.click();

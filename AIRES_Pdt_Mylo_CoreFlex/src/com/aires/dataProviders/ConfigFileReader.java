@@ -257,7 +257,8 @@ public class ConfigFileReader {
 	}
 	
 	public String getNameOfCurrentLaunchedApplication() {
-		String appName = properties.getProperty("application");
+		//String appName = properties.getProperty("application");
+		String appName = System.getProperty("application");
 		if (appName != null)
 			return appName;
 		else

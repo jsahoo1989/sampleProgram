@@ -8,6 +8,7 @@ import java.util.Map;
 
 import org.testng.Assert;
 
+import com.aires.businessrules.BusinessFunctions;
 import com.aires.businessrules.CoreFunctions;
 import com.aires.businessrules.constants.COREFLEXConstants;
 import com.aires.businessrules.constants.CoreConstants;
@@ -82,6 +83,7 @@ public class CoreFlex_SharedSteps {
 	int _initialTableRowCount = 0;	
 	private PDT_LoginDetails _loginDetailsApplication = FileReaderManager.getInstance().getJsonReader()
 			.getLoginByApplication(CoreFunctions.getPropertyFromConfig("application").toLowerCase());
+	long timeBeforeAction, timeAfterAction;
 
 	public CoreFlex_SharedSteps(TestContext context) {
 		testContext = context;
@@ -122,7 +124,10 @@ public class CoreFlex_SharedSteps {
 	@Given("^he is on the \"([^\"]*)\" page after clicking on the link \"([^\"]*)\" displayed under the left navigation menu on the 'View Policy' page$")
 	public void he_is_on_the_page_after_clicking_on_the_link_displayed_under_the_left_navigation_menu_on_the_View_Policy_page(
 			String pageName, String linkName) throws Throwable {
+		timeBeforeAction = new Date().getTime();
 		viewPolicyPage.clickElementOfPage(PDTConstants.ADD_NEW_POLICY_FORM);
+		timeAfterAction = new Date().getTime();
+		BusinessFunctions.printTimeTakenByPageToLoad(timeBeforeAction, timeAfterAction, pageName);
 		Assert.assertTrue(addNewPolicyPage.verifyAddNewPolicyHeading(pageName),
 				MessageFormat.format(PDTConstants.FAILED_TO_VERIFY_HEADING_ON_PAGE, CoreConstants.FAIL, pageName,
 						PDTConstants.ADD_NEW_POLICY_FORM, addNewPolicyPage.getElementText(PDTConstants.HEADING)));

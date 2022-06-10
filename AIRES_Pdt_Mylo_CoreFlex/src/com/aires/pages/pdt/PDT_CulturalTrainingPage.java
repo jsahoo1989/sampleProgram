@@ -26,10 +26,10 @@ public class PDT_CulturalTrainingPage extends Base {
 	@FindBy(how = How.CSS, using = "ng-select[formcontrolname='employeeNoOfDays']")
 	private WebElement _drpDownEmployeNumOfDays;
 	
-	@FindBy(how = How.CSS, using = "ng-select[formcontrolname='employeeNoOfDays'] div.ng-option.ng-star-inserted")
+	@FindBy(how = How.CSS, using = "ng-select[formcontrolname='employeeNoOfDays'] div.ng-option")
 	private List<WebElement> _drpDownEmployeNumOfDaysOptions;
 	
-	@FindBy(how = How.CSS, using = "ng-select[formcontrolname='employeeNoOfDays'] div.ng-value.ng-star-inserted")
+	@FindBy(how = How.CSS, using = "ng-select[formcontrolname='employeeNoOfDays'] div.ng-value")
 	private WebElement _drpDownEmployeeNumOfDaysOptionSelected;
 	
 	@FindBy(how = How.CSS, using = "input[formcontrolname='employeeNoOfDaysOther']")
@@ -53,10 +53,10 @@ public class PDT_CulturalTrainingPage extends Base {
 	@FindBy(how = How.CSS, using = "ng-select[formcontrolname='familyNoOfDays']")
 	private WebElement _drpDownFamilyNumOfDays;
 	
-	@FindBy(how = How.CSS, using = "ng-select[formcontrolname='familyNoOfDays'] div.ng-option.ng-star-inserted")
+	@FindBy(how = How.CSS, using = "ng-select[formcontrolname='familyNoOfDays'] div.ng-option")
 	private List<WebElement> _drpDownFamilyNumOfDaysOptions;
 	
-	@FindBy(how = How.CSS, using = "ng-select[formcontrolname='familyNoOfDays'] div.ng-value.ng-star-inserted")
+	@FindBy(how = How.CSS, using = "ng-select[formcontrolname='familyNoOfDays'] div.ng-value")
 	private WebElement _drpDownFamilyNumOfDaysOptionSelected;
 	
 	@FindBy(how = How.CSS, using = "input[formcontrolname='familyNoOfDaysOther']")
@@ -124,10 +124,10 @@ public class PDT_CulturalTrainingPage extends Base {
 					culturalTrainingBenefitData.culturalTrainingEmployee.reimbursedBy, PDTConstants.REIMBURSED_BY,
 					PDTConstants.RADIO_BUTTON_LIST, true);
 
-			BusinessFunctions.verifyReimbursedByOtherTextBoxIsDisplayed(driver, addNewPolicyPage,
+			BusinessFunctions.verifyOtherTextBoxIsDisplayed(driver, addNewPolicyPage,
 					culturalTrainingBenefitData.culturalTrainingEmployee.reimbursedBy,
 					_txtBoxReimbursedByOtherForCultTrainingEmp,
-					culturalTrainingBenefitData.culturalTrainingEmployee.reimbursedByOther, subBenefitFormName);
+					culturalTrainingBenefitData.culturalTrainingEmployee.reimbursedByOther, subBenefitFormName, PDTConstants.REIMBURSED_BY_OTHER);
 			CoreFunctions.clearAndSetText(driver, _txtAreaCommentForCultTrainingEmp, PDTConstants.COMMENT,
 					culturalTrainingBenefitData.culturalTrainingEmployee.comments);
 		} catch (Exception e) {
@@ -161,10 +161,10 @@ public class PDT_CulturalTrainingPage extends Base {
 					culturalTrainingBenefitData.culturalTrainingFamily.reimbursedBy, PDTConstants.REIMBURSED_BY,
 					PDTConstants.RADIO_BUTTON_LIST, true);
 
-			BusinessFunctions.verifyReimbursedByOtherTextBoxIsDisplayed(driver, addNewPolicyPage,
+			BusinessFunctions.verifyOtherTextBoxIsDisplayed(driver, addNewPolicyPage,
 					culturalTrainingBenefitData.culturalTrainingFamily.reimbursedBy,
 					_txtBoxReimbursedByOtherForCultTrainingFamily,
-					culturalTrainingBenefitData.culturalTrainingFamily.reimbursedByOther, subBenefitFormName);
+					culturalTrainingBenefitData.culturalTrainingFamily.reimbursedByOther, subBenefitFormName, PDTConstants.REIMBURSED_BY_OTHER);
 			CoreFunctions.clearAndSetText(driver, _txtAreaCommentForCultTrainingFamily, PDTConstants.COMMENT,
 					culturalTrainingBenefitData.culturalTrainingFamily.comments);
 		} catch (Exception e) {

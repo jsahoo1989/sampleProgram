@@ -56,7 +56,7 @@ public class PDT_HomeLeavePage extends Base {
 	@FindBy(how = How.CSS, using = "ng-select[formcontrolname='homeLeaveTransportTypeList']")
 	private WebElement _drpDownTransportationType;
 
-	@FindBy(how = How.CSS, using = "ng-select[formcontrolname='homeLeaveTransportTypeList'] span.ng-option-label.ng-star-inserted")
+	@FindBy(how = How.CSS, using = "ng-select[formcontrolname='homeLeaveTransportTypeList'] span.ng-option-label")
 	private List<WebElement> _drpDownTransportationTypeOptions;
 
 	@FindBy(how = How.CSS, using = "ng-select[formcontrolname='homeLeaveTransportTypeList'] span.ng-value-label")
@@ -80,10 +80,10 @@ public class PDT_HomeLeavePage extends Base {
 	@FindBy(how = How.CSS, using = "ng-select[formcontrolname='accompanyingFamilyMemberCode']")
 	private WebElement _drpDownAccompFamilyMember;
 
-	@FindBy(how = How.CSS, using = "ng-select[formcontrolname='accompanyingFamilyMemberCode'] span.ng-option-label.ng-star-inserted")
+	@FindBy(how = How.CSS, using = "ng-select[formcontrolname='accompanyingFamilyMemberCode'] span.ng-option-label")
 	private List<WebElement> _drpDownAccompFamilyMemberOptions;
 
-	@FindBy(how = How.CSS, using = "ng-select[formcontrolname='accompanyingFamilyMemberCode'] span.ng-value-label.ng-star-inserted")
+	@FindBy(how = How.CSS, using = "ng-select[formcontrolname='accompanyingFamilyMemberCode'] span.ng-value-label")
 	private WebElement _drpDownAccompFamilyMemberOptionSelected;
 
 	@FindBy(how = How.CSS, using = "app-transporation label.form-check-label")
@@ -284,7 +284,7 @@ public class PDT_HomeLeavePage extends Base {
 					_lblFrequencyOfTrips.getText(), subBenefitFormName));
 			String randFrequencyOfTrips = BusinessFunctions.selectAndReturnRandomValueFromDropDown(driver,
 					addNewPolicyPage, subBenefitFormName, _drpDownFrequencyOfTrip, _drpDownFrequencyOfTripOptions,
-					_drpDownFrequencyOfTripOptionsSelected, _lblFrequencyOfTrips);
+					_drpDownFrequencyOfTripOptionsSelected, _lblFrequencyOfTrips.getText());
 			setFrequencyOfTrips(randFrequencyOfTrips);
 			verifyAndFillOtherFreq(addNewPolicyPage, subBenefitFormName, randFrequencyOfTrips);
 		} else {
@@ -339,7 +339,7 @@ public class PDT_HomeLeavePage extends Base {
 					homeLeaveBenefitData.homeLeaveTransportation.minMileageBusinessAir);
 			String randAccompanyingFamilMember = BusinessFunctions.selectAndReturnRandomValueFromDropDown(driver,
 					addNewPolicyPage, subBenefitFormName, _drpDownAccompFamilyMember, _drpDownAccompFamilyMemberOptions,
-					_drpDownAccompFamilyMemberOptionSelected, _lblAccompFamilyMember);
+					_drpDownAccompFamilyMemberOptionSelected, _lblAccompFamilyMember.getText());
 			setAccompanyingFamilyMember(randAccompanyingFamilMember);
 			CoreFunctions.explicitWaitTillElementListClickable(driver, _radioBtnHomeLeaveTransportation);
 			CoreFunctions.selectItemInListByText(driver, _radioBtnHomeLeaveTransportation,
@@ -348,10 +348,10 @@ public class PDT_HomeLeavePage extends Base {
 			CoreFunctions.selectItemInListByText(driver, _radioBtnHomeLeaveTransportation,
 					homeLeaveBenefitData.homeLeaveTransportation.reimbursedBy, PDTConstants.REIMBURSED_BY,
 					PDTConstants.RADIO_BUTTON_LIST, true);
-			BusinessFunctions.verifyReimbursedByOtherTextBoxIsDisplayed(driver, addNewPolicyPage,
+			BusinessFunctions.verifyOtherTextBoxIsDisplayed(driver, addNewPolicyPage,
 					homeLeaveBenefitData.homeLeaveTransportation.reimbursedBy,
 					_txtBoxHomeLeaveTransportReimbursedByOther,
-					homeLeaveBenefitData.homeLeaveTransportation.reimbursedByOther, subBenefitFormName);
+					homeLeaveBenefitData.homeLeaveTransportation.reimbursedByOther, subBenefitFormName, PDTConstants.REIMBURSED_BY_OTHER);
 			CoreFunctions.clearAndSetText(driver, _txtAreaHomeLeaveTransportComment, PDTConstants.COMMENT,
 					homeLeaveBenefitData.homeLeaveTransportation.comment);
 		} catch (Exception e) {
@@ -373,9 +373,9 @@ public class PDT_HomeLeavePage extends Base {
 			CoreFunctions.selectItemInListByText(driver, _radioBtnHomeLeaveLodging,
 					homeLeaveBenefitData.homeLeaveLodging.reimbursedBy, PDTConstants.REIMBURSED_BY,
 					PDTConstants.RADIO_BUTTON_LIST, true);
-			BusinessFunctions.verifyReimbursedByOtherTextBoxIsDisplayed(driver, addNewPolicyPage,
+			BusinessFunctions.verifyOtherTextBoxIsDisplayed(driver, addNewPolicyPage,
 					homeLeaveBenefitData.homeLeaveLodging.reimbursedBy, _txtBoxHomeLeaveLodgingReimbursedByOther,
-					homeLeaveBenefitData.homeLeaveLodging.reimbursedByOther, subBenefitFormName);
+					homeLeaveBenefitData.homeLeaveLodging.reimbursedByOther, subBenefitFormName, PDTConstants.REIMBURSED_BY_OTHER);
 			CoreFunctions.clearAndSetText(driver, _txtAreaHomeLeaveLodgingComment, PDTConstants.COMMENT,
 					homeLeaveBenefitData.homeLeaveLodging.comment);
 		} catch (Exception e) {
@@ -479,7 +479,7 @@ public class PDT_HomeLeavePage extends Base {
 
 			String maxAmt = BusinessFunctions.selectAndReturnRandomValueFromDropDown(driver, addNewPolicyPage,
 					subBenefitFormName, _drpDownMaxAmtMeals, _drpDownMaxAmtMealsOptions,
-					_drpDownMaxAmtMealsOptionsSelected, _lblMaxAmount);
+					_drpDownMaxAmtMealsOptionsSelected, _lblMaxAmount.getText());
 			setMaxAmtHomeLeaveMeals(maxAmt);
 			checkIfFlatAmtIsSelected(addNewPolicyPage, subBenefitFormName);
 
@@ -490,9 +490,9 @@ public class PDT_HomeLeavePage extends Base {
 					homeLeaveBenefitData.homeLeaveMeals.reimbursedBy, PDTConstants.REIMBURSED_BY,
 					PDTConstants.RADIO_BUTTON_LIST, true);
 
-			BusinessFunctions.verifyReimbursedByOtherTextBoxIsDisplayed(driver, addNewPolicyPage,
+			BusinessFunctions.verifyOtherTextBoxIsDisplayed(driver, addNewPolicyPage,
 					homeLeaveBenefitData.homeLeaveMeals.reimbursedBy, _txtBoxHomeLeaveMealsReimbursedByOther,
-					homeLeaveBenefitData.homeLeaveMeals.reimbursedByOther, subBenefitFormName);
+					homeLeaveBenefitData.homeLeaveMeals.reimbursedByOther, subBenefitFormName, PDTConstants.REIMBURSED_BY_OTHER);
 
 			CoreFunctions.clearAndSetText(driver, _txtAreaHomeLeaveMealsComment, PDTConstants.COMMENT,
 					homeLeaveBenefitData.homeLeaveMeals.comment);

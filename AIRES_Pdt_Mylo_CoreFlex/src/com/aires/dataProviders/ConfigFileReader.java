@@ -25,9 +25,9 @@ import java.io.IOException;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Properties;
-
 import com.aires.businessrules.constants.CoreConstants;
 import com.aires.businessrules.constants.MYLOConstants;
+import java.util.Properties;
 import com.aires.enums.DriverType;
 import com.aires.enums.EnvironmentType;
 
@@ -147,6 +147,16 @@ public class ConfigFileReader {
 			throw new RuntimeException(
 					"Application Url not specified in the Configuration.properties file for the Key:url");	*/
 	}
+
+	public String getMyloApplicationUrl() {
+		if (properties.getProperty("envt").equalsIgnoreCase("uat"))
+			return properties.getProperty("myloUATURL");
+		else if (properties.getProperty("envt").equalsIgnoreCase("relonetqa4"))
+			return properties.getProperty("myloRelonetQA4URL");
+		else
+			throw new RuntimeException(
+					"Application Url not specified in the Configuration.properties file for the Key:url");
+	}
 	
 	public String getCoreFlexPolicySetupApplicationUrl() {
 		if (properties.getProperty("envt").equalsIgnoreCase("UAT"))
@@ -225,6 +235,18 @@ public class ConfigFileReader {
 			throw new RuntimeException(
 					"Browser Name Key value in Configuration.properties file is not matched : " + browserName);
 		}		
+			/*
+			if (browserName == null || browserName.equalsIgnoreCase("chrome"))
+			return DriverType.CHROME;
+		else if (browserName.equalsIgnoreCase("firefox"))
+			return DriverType.FIREFOX;
+		else if (browserName.equals("iexplorer") || browserName.equalsIgnoreCase("ie"))
+			return DriverType.INTERNETEXPLORER;
+		else if (browserName.equalsIgnoreCase("edge"))
+			return DriverType.EDGE;
+		else
+			throw new RuntimeException(
+					"Browser Name Key value in Configuration.properties is not matched : " + browserName);*/
 	}
 
 	public EnvironmentType getEnvironment() {
@@ -266,7 +288,8 @@ public class ConfigFileReader {
 	}
 	
 	public String getNameOfCurrentLaunchedApplication() {
-		String appName = properties.getProperty("application");
+		//String appName = properties.getProperty("application");
+		String appName = System.getProperty("application");
 		if (appName != null)
 			return appName;
 		else

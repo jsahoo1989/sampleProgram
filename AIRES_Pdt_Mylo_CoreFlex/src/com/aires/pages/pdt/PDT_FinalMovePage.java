@@ -77,7 +77,7 @@ public class PDT_FinalMovePage extends Base {
 	@FindBy(how = How.CSS, using = "ng-select[formcontrolname='finalMoveDurationCode'] span.ng-option-label")
 	private List<WebElement> _drpDownDurationOptions;
 
-	@FindBy(how = How.CSS, using = "ng-select[formcontrolname='finalMoveDurationCode'] span.ng-value-label.ng-star-inserted")
+	@FindBy(how = How.CSS, using = "ng-select[formcontrolname='finalMoveDurationCode'] span.ng-value-label")
 	private WebElement _drpDownDurationOptionsSelected;
 
 	@FindBy(how = How.XPATH, using = "//label[text()='Number of Nights']")
@@ -135,7 +135,7 @@ public class PDT_FinalMovePage extends Base {
 	@FindBy(how = How.CSS, using = "#collapseThree ng-select[formcontrolname='finalMoveDurationCode'] span.ng-option-label")
 	private List<WebElement> _drpDownNumOfDaysForMealsOptions;
 
-	@FindBy(how = How.CSS, using = "#collapseThree ng-select[formcontrolname='finalMoveDurationCode'] span.ng-value-label.ng-star-inserted")
+	@FindBy(how = How.CSS, using = "#collapseThree ng-select[formcontrolname='finalMoveDurationCode'] span.ng-value-label")
 	private WebElement _drpDownNumOfDaysForMealsSelected;
 	
 	@FindBy(how = How.XPATH, using = "//label[text()='Number of Days']")
@@ -159,7 +159,7 @@ public class PDT_FinalMovePage extends Base {
 	@FindBy(how = How.CSS, using = "#collapseThree ng-select[formcontrolname='maxAmountCode'] span.ng-option-label")
 	private List<WebElement> _drpDownMaxAmountMealsOptions;
 
-	@FindBy(how = How.CSS, using = "#collapseThree ng-select[formcontrolname='maxAmountCode'] span.ng-value-label.ng-star-inserted")
+	@FindBy(how = How.CSS, using = "#collapseThree ng-select[formcontrolname='maxAmountCode'] span.ng-value-label")
 	private WebElement _drpDownMaxAmountMealsSelectedVal;
 
 	@FindBy(how = How.CSS, using = "input[formcontrolname='maxAmountEe']")
@@ -312,7 +312,7 @@ public class PDT_FinalMovePage extends Base {
 					finalMoveBenefitData.finalMoveTransportation.minMileageBusinessAir);
 			String randAccompanyingFamilMember = BusinessFunctions.selectAndReturnRandomValueFromDropDown(driver, addNewPolicyPage, subBenefitFormName,
 					_drpDownAccompanyingFamilyMemberCode, _drpDownAccompanyingFamilyMemberCodeOptions,
-					_drpDownAccompanyingFamilyMemberCodeOptionsSelected, _lblAccompanyingFamilyMember);
+					_drpDownAccompanyingFamilyMemberCodeOptionsSelected, _lblAccompanyingFamilyMember.getText());
 			setAccompanyingFamilyMember(randAccompanyingFamilMember);
 			CoreFunctions.explicitWaitTillElementListClickable(driver, _radioBtnFinalMoveTransport);
 			CoreFunctions.selectItemInListByText(driver, _radioBtnFinalMoveTransport,
@@ -321,10 +321,10 @@ public class PDT_FinalMovePage extends Base {
 			CoreFunctions.selectItemInListByText(driver, _radioBtnFinalMoveTransport,
 					finalMoveBenefitData.finalMoveTransportation.reimbursedBy, PDTConstants.REIMBURSED_BY,
 					PDTConstants.RADIO_BUTTON_LIST, true);
-			BusinessFunctions.verifyReimbursedByOtherTextBoxIsDisplayed(driver, addNewPolicyPage,
+			BusinessFunctions.verifyOtherTextBoxIsDisplayed(driver, addNewPolicyPage,
 					finalMoveBenefitData.finalMoveTransportation.reimbursedBy,
 					_txtBoxFinalMoveTransportReimbursedByOther,
-					finalMoveBenefitData.finalMoveTransportation.reimbursedByOther, subBenefitFormName);
+					finalMoveBenefitData.finalMoveTransportation.reimbursedByOther, subBenefitFormName, PDTConstants.REIMBURSED_BY_OTHER);
 			CoreFunctions.clearAndSetText(driver, _txtAreaFinalMoveTransportComment, PDTConstants.COMMENT,
 					finalMoveBenefitData.finalMoveTransportation.comment);
 		} catch (Exception e) {
@@ -390,12 +390,12 @@ public class PDT_FinalMovePage extends Base {
 			CoreFunctions.explicitWaitTillElementVisibility(driver, _drpDownDuration, _lblDuration.getText());
 			String randDuration = BusinessFunctions.selectAndReturnRandomValueFromDropDown(driver, addNewPolicyPage, subBenefitFormName,
 					_drpDownDuration, _drpDownDurationOptions,
-					_drpDownDurationOptionsSelected, _lblDuration);
+					_drpDownDurationOptionsSelected, _lblDuration.getText());
 			setDuration(randDuration);			
 			verifyAndFillNumberOfNights(addNewPolicyPage, subBenefitFormName);
 			String maxAmt = BusinessFunctions.selectAndReturnRandomValueFromDropDown(driver, addNewPolicyPage, subBenefitFormName,
 					_drpDownMaxAmt, _drpDownMaxAmtOptions,
-					_drpDownMaxAmtSelectedOption, _lblMaxAmt);
+					_drpDownMaxAmtSelectedOption, _lblMaxAmt.getText());
 			setMaxAmtFinalMoveLodging(maxAmt);
 			verifyAndFillFlatAmtPerNightTextBoxAndCurrencyDrpDown(addNewPolicyPage, subBenefitFormName);
 			CoreFunctions.explicitWaitTillElementListClickable(driver, _radioBtnFinalMoveLodging);
@@ -405,10 +405,10 @@ public class PDT_FinalMovePage extends Base {
 			CoreFunctions.selectItemInListByText(driver, _radioBtnFinalMoveLodging,
 					finalMoveBenefitData.finalMoveLodging.reimbursedBy, PDTConstants.REIMBURSED_BY,
 					PDTConstants.RADIO_BUTTON_LIST, true);
-			BusinessFunctions.verifyReimbursedByOtherTextBoxIsDisplayed(driver, addNewPolicyPage,
+			BusinessFunctions.verifyOtherTextBoxIsDisplayed(driver, addNewPolicyPage,
 					finalMoveBenefitData.finalMoveLodging.reimbursedBy,
 					_txtBoxFinalMoveLodgingReimbursedByOther,
-					finalMoveBenefitData.finalMoveLodging.reimbursedByOther, subBenefitFormName);
+					finalMoveBenefitData.finalMoveLodging.reimbursedByOther, subBenefitFormName, PDTConstants.REIMBURSED_BY_OTHER);
 			CoreFunctions.clearAndSetText(driver, _txtAreaFinalMoveLodgingComment, PDTConstants.COMMENT,
 					finalMoveBenefitData.finalMoveLodging.comment);
 		} catch (Exception e) {
@@ -498,7 +498,7 @@ public class PDT_FinalMovePage extends Base {
 			CoreFunctions.explicitWaitTillElementVisibility(driver, _drpDownNumOfDaysForMeals,  _lblNumOfDaysForMeals.getText());
 			String randNumDays = BusinessFunctions.selectAndReturnRandomValueFromDropDown(driver, addNewPolicyPage, subBenefitFormName,
 					_drpDownNumOfDaysForMeals, _drpDownNumOfDaysForMealsOptions,
-					_drpDownNumOfDaysForMealsSelected, _lblNumOfDaysForMeals);
+					_drpDownNumOfDaysForMealsSelected, _lblNumOfDaysForMeals.getText());
 			setNumberOfDaysForMeals(randNumDays);			
 			verifyAndFillNumberOfDays(addNewPolicyPage, subBenefitFormName);
 			CoreFunctions.selectItemInListByText(driver, _radioBtnHouseHuntingTripMeals,
@@ -507,7 +507,7 @@ public class PDT_FinalMovePage extends Base {
 			
 			String maxAmt = BusinessFunctions.selectAndReturnRandomValueFromDropDown(driver, addNewPolicyPage, subBenefitFormName,
 					_drpDownMaxAmountMeals, _drpDownMaxAmountMealsOptions,
-					_drpDownMaxAmountMealsSelectedVal, _lblMaxAmtFinalMoveMeals);
+					_drpDownMaxAmountMealsSelectedVal, _lblMaxAmtFinalMoveMeals.getText());
 			setMaxAmtFinalMoveMeals(maxAmt);
 			checkIfFlatAmtIsSelected(addNewPolicyPage, subBenefitFormName);
 			CoreFunctions.explicitWaitTillElementListClickable(driver, _radioBtnHouseHuntingTripMeals);
@@ -518,10 +518,10 @@ public class PDT_FinalMovePage extends Base {
 					finalMoveBenefitData.finalMoveMeals.reimbursedBy, PDTConstants.REIMBURSED_BY,
 					PDTConstants.RADIO_BUTTON_LIST, true);
 
-			BusinessFunctions.verifyReimbursedByOtherTextBoxIsDisplayed(driver, addNewPolicyPage,
+			BusinessFunctions.verifyOtherTextBoxIsDisplayed(driver, addNewPolicyPage,
 					finalMoveBenefitData.finalMoveMeals.reimbursedBy,
 					_txtBoxFinalMoveMealReimbursedByOther,
-					finalMoveBenefitData.finalMoveMeals.reimbursedByOther, subBenefitFormName);
+					finalMoveBenefitData.finalMoveMeals.reimbursedByOther, subBenefitFormName, PDTConstants.REIMBURSED_BY_OTHER);
 
 			CoreFunctions.clearAndSetText(driver, _txtAreaFinalMoveMealComment, PDTConstants.COMMENT,
 					finalMoveBenefitData.finalMoveMeals.comment);

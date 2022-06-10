@@ -10,6 +10,7 @@ import com.aires.businessrules.constants.CoreConstants;
 import com.aires.businessrules.constants.PDTConstants;
 import com.aires.cucumber.TestContext;
 import com.aires.managers.FileReaderManager;
+import com.aires.pages.PDT_Mylo_CoreFlex_Common_LoginPage;
 import com.aires.pages.pdt.PDT_LoginPage;
 import com.aires.pages.pdt.PDT_ViewPolicyPage;
 import com.aires.testdatatypes.pdt.PDT_LoginData;
@@ -24,6 +25,7 @@ public class LoginToPDT_Steps {
 	TestContext testContext;
 	PDT_LoginPage loginPage;
 	PDT_ViewPolicyPage viewPolicyPage;
+	PDT_Mylo_CoreFlex_Common_LoginPage pdtMyloCommonLoginPage;
 
 	PDT_LoginData loginData = FileReaderManager.getInstance().getJsonReader()
 			.getloginDetailsByUserFirstName(PDTConstants.USER_FIRST_NAME);
@@ -32,26 +34,24 @@ public class LoginToPDT_Steps {
 		testContext = context;
 		loginPage = testContext.getPageObjectManager().getLoginPage();
 		viewPolicyPage = testContext.getPageObjectManager().getViewPolicyPage();
+		pdtMyloCommonLoginPage = testContext.getPageObjectManager().getCommonLoginPage();
 
 	}
 
 	@Given("^he is on Policy App login page$")
 	public void he_is_on_Policy_App_login_page() throws Throwable {
-		loginPage.openApplication();
+		pdtMyloCommonLoginPage.openApplication();
 	}
 
-	@Given("^he enters below login credentials in Username, Password fields$")
+	@Given("^he enters below login credentials in userEmail, password fields$")
 	public void he_enters_below_login_credentials_in_Username_Password_fields(DataTable loginData) throws Throwable {
 		List<Map<String, String>> loginInfo = loginData.asMaps(String.class, String.class);
-		Log.info("UserName:-" + loginInfo.get(0).get("userName"));
-		Log.info("Password:-" + loginInfo.get(0).get("password"));
-		loginPage.enterLoginCredentials(loginInfo.get(0).get("userName"), loginInfo.get(0).get("password"));
+		pdtMyloCommonLoginPage.enterUserEmailAndPassword(loginInfo.get(0).get("userEmail"), loginInfo.get(0).get("password"));
 	}
 
 	@When("^he clicks on Login button$")
 	public void he_clicks_on_Login_button() throws Throwable {
-		loginPage.clickLoginBtn();
-		loginPage.verifyLoginCredentials();
+		pdtMyloCommonLoginPage.clickSignIn();
 	}
 
 	@Then("^he should be redirected to \"([^\"]*)\" page$")
@@ -72,13 +72,13 @@ public class LoginToPDT_Steps {
 
 	@Given("^he is logged into 'Aires Policy Tool' application as a \"([^\"]*)\" user$")
 	public void he_is_logged_into_Aires_Policy_Tool_application_as_a_user(String userType) throws Throwable {
-		Assert.assertTrue(loginPage.loginByUserType(userType, viewPolicyPage),
+		Assert.assertTrue(pdtMyloCommonLoginPage.loginByUserType(userType, viewPolicyPage),
 				MessageFormat.format(PDTConstants.FAILED_TO_VERIFY_LOGGED_IN_USER, CoreConstants.FAIL));
 	}
 
 	@Given("^he enters \"([^\"]*)\" and \"([^\"]*)\" in username and password field$")
-	public void he_enters_and_in_username_and_password_field(String userName, String password) throws Throwable {
-		loginPage.enterLoginCredentials(userName, password);
+	public void he_enters_and_in_username_and_password_field(String userEmail, String password) throws Throwable {
+		pdtMyloCommonLoginPage.enterUserEmailAndPassword(userEmail, password);
 	}
 
 	@Then("^below \"([^\"]*)\" should be displayed on \"([^\"]*)\" page$")

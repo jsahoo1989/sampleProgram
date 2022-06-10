@@ -1,5 +1,8 @@
 package com.aires.pages.pdt;
 
+import static org.openqa.selenium.support.locators.RelativeLocator.with;
+
+import java.text.MessageFormat;
 import java.util.List;
 
 import org.openqa.selenium.By;
@@ -7,15 +10,15 @@ import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.How;
-import static org.openqa.selenium.support.locators.RelativeLocator.*;
+import org.testng.Assert;
 
 import com.aires.businessrules.Base;
 import com.aires.businessrules.BusinessFunctions;
 import com.aires.businessrules.CoreFunctions;
+import com.aires.businessrules.constants.CoreConstants;
 import com.aires.businessrules.constants.PDTConstants;
 import com.aires.managers.FileReaderManager;
 import com.aires.testdatatypes.pdt.PDT_OneTimePaymentBenefit;
-import com.aires.utilities.Log;
 
 public class PDT_OneTimePaymentReimbursemenPage extends Base {
 	public PDT_OneTimePaymentReimbursemenPage(WebDriver driver) {
@@ -25,7 +28,7 @@ public class PDT_OneTimePaymentReimbursemenPage extends Base {
 	// Miscellaneous Relocation Allowance
 	@FindBy(how = How.XPATH, using = "//ng-select[@formcontrolname='methodCode']/preceding-sibling::label")
 	private WebElement _lblCalculationMethod;
-	
+
 	@FindBy(how = How.CSS, using = "ng-select[formcontrolname='methodCode']")
 	private WebElement _drpDownCalculationMethod;
 
@@ -37,16 +40,16 @@ public class PDT_OneTimePaymentReimbursemenPage extends Base {
 
 	@FindBy(how = How.XPATH, using = "//input[@formcontrolname='methodOther']/preceding-sibling::label")
 	private WebElement _lblOtherCalculationMethod;
-	
+
 	@FindBy(how = How.CSS, using = "input[formcontrolname='methodOther']")
 	private WebElement _txtBoxOtherCalculationMethod;
-	
+
 	@FindBy(how = How.XPATH, using = "//input[@formcontrolname='maxAmount']/preceding-sibling::label")
 	private WebElement _lblMaxAmt;
 
 	@FindBy(how = How.CSS, using = "input[formcontrolname='maxAmount']")
 	private WebElement _txtBoxMaxAmount;
-	
+
 	@FindBy(how = How.XPATH, using = "//ng-select[@formcontrolname='currencyCode']/preceding-sibling::label")
 	private WebElement _lblCurrency;
 
@@ -61,7 +64,7 @@ public class PDT_OneTimePaymentReimbursemenPage extends Base {
 
 	@FindBy(how = How.XPATH, using = "//ng-select[@formcontrolname='frequencyCode']/preceding-sibling::label")
 	private WebElement _lblFrequency;
-	
+
 	@FindBy(how = How.CSS, using = "ng-select[formcontrolname='frequencyCode']")
 	private WebElement _drpDownFrequency;
 
@@ -70,7 +73,7 @@ public class PDT_OneTimePaymentReimbursemenPage extends Base {
 
 	@FindBy(how = How.CSS, using = "ng-select[formcontrolname='frequencyCode'] span.ng-value-label")
 	private WebElement _drpDownFrequencyOptionsSelected;
-	
+
 	@FindBy(how = How.XPATH, using = "//ng-select[@formcontrolname='pmtTimeCode']/preceding-sibling::label")
 	private WebElement _lblWhenToMakePayment;
 
@@ -85,7 +88,7 @@ public class PDT_OneTimePaymentReimbursemenPage extends Base {
 
 	@FindBy(how = How.XPATH, using = "//ng-select[@formcontrolname='pmtTimeWeeksBeforeCode']/preceding-sibling::label")
 	private WebElement _lblIndicateNumOfWeeksBefore;
-	
+
 	@FindBy(how = How.CSS, using = "ng-select[formcontrolname='pmtTimeWeeksBeforeCode']")
 	private WebElement _drpDownIndicateNumOfWeeksBefore;
 
@@ -94,13 +97,13 @@ public class PDT_OneTimePaymentReimbursemenPage extends Base {
 
 	@FindBy(how = How.CSS, using = "ng-select[formcontrolname='pmtTimeWeeksBeforeCode'] span.ng-value-label")
 	private WebElement _drpDownIndicateNumOfWeeksBeforeSelected;
-	
+
 	@FindBy(how = How.XPATH, using = "//input[@formcontrolname='pmtTimeWeeksBeforeOther']/preceding-sibling::label")
 	private WebElement _lblIndicateNumOfWeeksBeforeOther;
 
 	@FindBy(how = How.CSS, using = "input[formcontrolname='pmtTimeWeeksBeforeOther']")
 	private WebElement _txtBoxIndicateNumOfWeeksBeforeOther;
-	
+
 	@FindBy(how = How.XPATH, using = "//input[@formcontrolname='pmtTimeOther']/preceding-sibling::label")
 	private WebElement _lblOtherPaymentType;
 
@@ -119,7 +122,7 @@ public class PDT_OneTimePaymentReimbursemenPage extends Base {
 	// Lump Sum
 	@FindBy(how = How.XPATH, using = "//ng-select[@formcontrolname='oneTimeCalMethodCode']/preceding-sibling::label")
 	private WebElement _lblLumpSumCalculationMethod;
-	
+
 	@FindBy(how = How.CSS, using = "ng-select[formcontrolname='oneTimeCalMethodCode']")
 	private WebElement _drpDownLumpSumCalculationMethod;
 
@@ -128,19 +131,19 @@ public class PDT_OneTimePaymentReimbursemenPage extends Base {
 
 	@FindBy(how = How.CSS, using = "ng-select[formcontrolname='oneTimeCalMethodCode'] span.ng-value-label")
 	private WebElement _drpDownLumpSumCalculationMethodSelected;
-	
+
 	@FindBy(how = How.XPATH, using = "//input[@formcontrolname='oneTimeCalMethodOther']/preceding-sibling::label")
 	private WebElement _lblLumpSumOtherCalculationMethod;
 
 	@FindBy(how = How.CSS, using = "input[formcontrolname='oneTimeCalMethodOther']")
 	private WebElement _txtBoxLumpSumOtherCalculationMethod;
-	
+
 	@FindBy(how = How.XPATH, using = "//app-lump-sum//input[@formcontrolname='maxAmount']/preceding-sibling::label")
 	private WebElement _lblLumpSumMaxAmt;
 
 	@FindBy(how = How.CSS, using = "app-lump-sum input[formcontrolname='maxAmount']")
 	private WebElement _txtBoxLumpSumMaxAmount;
-	
+
 	@FindBy(how = How.XPATH, using = "//app-lump-sum//ng-select[@formcontrolname='currencyCode']/preceding-sibling::label")
 	private WebElement _lblLumpSumCurrency;
 
@@ -152,7 +155,7 @@ public class PDT_OneTimePaymentReimbursemenPage extends Base {
 
 	@FindBy(how = How.CSS, using = "app-lump-sum ng-select[formcontrolname='currencyCode'] span.ng-value-label")
 	private WebElement _drpDownLumpSumCurrencyOptionsSelected;
-	
+
 	@FindBy(how = How.XPATH, using = "//app-lump-sum//ng-select[@formcontrolname='frequencyCode']/preceding-sibling::label")
 	private WebElement _lblLumpSumFrequency;
 
@@ -167,10 +170,10 @@ public class PDT_OneTimePaymentReimbursemenPage extends Base {
 
 	@FindBy(how = How.XPATH, using = "//app-lump-sum//input[@formcontrolname='frequencyOther']/preceding-sibling::label")
 	private WebElement _lblLumpSumFrequencyOther;
-	
+
 	@FindBy(how = How.CSS, using = "app-lump-sum input[formcontrolname='frequencyOther']")
 	private WebElement _txtBoxOtherFrequency;
-	
+
 	@FindBy(how = How.XPATH, using = "//app-lump-sum//ng-select[@formcontrolname='pmtTimeCode']/preceding-sibling::label")
 	private WebElement _lblLumpSumWhenToMakePayment;
 
@@ -185,7 +188,7 @@ public class PDT_OneTimePaymentReimbursemenPage extends Base {
 
 	@FindBy(how = How.XPATH, using = "//app-lump-sum//ng-select[@formcontrolname='pmtTimeWeeksBeforeCode']/preceding-sibling::label")
 	private WebElement _lblLumpSumIndicateNumOfWeeksBefore;
-	
+
 	@FindBy(how = How.CSS, using = "app-lump-sum ng-select[formcontrolname='pmtTimeWeeksBeforeCode']")
 	private WebElement _drpDownLumpSumIndicateNumOfWeeksBefore;
 
@@ -194,7 +197,7 @@ public class PDT_OneTimePaymentReimbursemenPage extends Base {
 
 	@FindBy(how = How.CSS, using = "app-lump-sum ng-select[formcontrolname='pmtTimeWeeksBeforeCode'] span.ng-value-label")
 	private WebElement _drpDownLumpSumIndicateNumOfWeeksBeforeSelected;
-	
+
 	@FindBy(how = How.XPATH, using = "//app-lump-sum//input[@formcontrolname='pmtTimeWeeksBeforeOther']/preceding-sibling::label")
 	private WebElement _lblLumpSumIndicateNumOfWeeksBeforeOther;
 
@@ -213,7 +216,7 @@ public class PDT_OneTimePaymentReimbursemenPage extends Base {
 	// Lease Break
 	@FindBy(how = How.XPATH, using = "//app-lease-break//ng-select[@formcontrolname='leaseBreakMaxMonthCode']/preceding-sibling::label")
 	private WebElement _lblLeaseBreakMaxNumOfMonths;
-	
+
 	@FindBy(how = How.CSS, using = "app-lease-break ng-select[formcontrolname='leaseBreakMaxMonthCode']")
 	private WebElement _drpDownLeaseBreakMaxNumOfMonths;
 
@@ -222,13 +225,13 @@ public class PDT_OneTimePaymentReimbursemenPage extends Base {
 
 	@FindBy(how = How.CSS, using = "app-lease-break ng-select[formcontrolname='leaseBreakMaxMonthCode'] span.ng-value-label")
 	private WebElement _drpDownLeaseBreakMaxNumOfMonthsOptionsSelected;
-	
+
 	@FindBy(how = How.XPATH, using = "//app-lease-break//input[@formcontrolname='maxMonthOther']/preceding-sibling::label")
 	private WebElement _lblLeaseBreakMaxNumOfMonthsOther;
 
 	@FindBy(how = How.CSS, using = "app-lease-break input[formcontrolname='maxMonthOther']")
 	private WebElement _txtBoxLeaseBreakMaxNumOfMonthsOther;
-	
+
 	@FindBy(how = How.XPATH, using = "//app-lease-break//input[@formcontrolname='maxAmount']/preceding-sibling::label")
 	private WebElement _lblLeaseBreakMaxAmount;
 
@@ -237,7 +240,7 @@ public class PDT_OneTimePaymentReimbursemenPage extends Base {
 
 	@FindBy(how = How.XPATH, using = "//app-lease-break//ng-select[@formcontrolname='currencyCode']/preceding-sibling::label")
 	private WebElement _lblLeaseBreakCurrency;
-	
+
 	@FindBy(how = How.CSS, using = "app-lease-break ng-select[formcontrolname='currencyCode']")
 	private WebElement _drpDownLeaseBreakCurrency;
 
@@ -249,7 +252,7 @@ public class PDT_OneTimePaymentReimbursemenPage extends Base {
 
 	@FindBy(how = How.XPATH, using = "//app-lease-break//ng-select[@formcontrolname='frequencyCode']/preceding-sibling::label")
 	private WebElement _lblLeaseBreakFrequency;
-	
+
 	@FindBy(how = How.CSS, using = "app-lease-break ng-select[formcontrolname='frequencyCode']")
 	private WebElement _drpDownLeaseBreakFrequency;
 
@@ -261,7 +264,7 @@ public class PDT_OneTimePaymentReimbursemenPage extends Base {
 
 	@FindBy(how = How.XPATH, using = "//app-lease-break//input[@formcontrolname='frequencyOther']/preceding-sibling::label")
 	private WebElement _lblLeaseBreakFrequencyOther;
-	
+
 	@FindBy(how = How.CSS, using = "app-lease-break input[formcontrolname='frequencyOther']")
 	private WebElement _txtBoxLeaseBreakOtherFrequency;
 
@@ -277,10 +280,10 @@ public class PDT_OneTimePaymentReimbursemenPage extends Base {
 	// Applicance Allowance
 	@FindBy(how = How.XPATH, using = "//app-appliance-allowance//input[@formcontrolname='maxAmount']/preceding-sibling::label")
 	private WebElement _lblApplAllowanceMaxAmount;
-	
+
 	@FindBy(how = How.CSS, using = "app-appliance-allowance input[formcontrolname='maxAmount']")
 	private WebElement _txtBoxApplAllowanceMaxAmount;
-	
+
 	@FindBy(how = How.XPATH, using = "//app-appliance-allowance//ng-select[@formcontrolname='currencyCode']/preceding-sibling::label")
 	private WebElement _lblApplAllowanceCurrency;
 
@@ -292,7 +295,7 @@ public class PDT_OneTimePaymentReimbursemenPage extends Base {
 
 	@FindBy(how = How.CSS, using = "app-appliance-allowance ng-select[formcontrolname='currencyCode'] span.ng-value-label")
 	private WebElement _drpDownApplAllowanceCurrencyOptionsSelected;
-	
+
 	@FindBy(how = How.XPATH, using = "//app-appliance-allowance//ng-select[@formcontrolname='frequencyCode']/preceding-sibling::label")
 	private WebElement _lblApplAllowanceFrequency;
 
@@ -317,10 +320,10 @@ public class PDT_OneTimePaymentReimbursemenPage extends Base {
 	// Auto Registration Cost
 	@FindBy(how = How.XPATH, using = "//app-auto-registration//input[@formcontrolname='maxAmount']/preceding-sibling::label")
 	private WebElement _lblAutoRegCostMaxAmount;
-	
+
 	@FindBy(how = How.CSS, using = "app-auto-registration input[formcontrolname='maxAmount']")
 	private WebElement _txtBoxAutoRegCostMaxAmount;
-	
+
 	@FindBy(how = How.XPATH, using = "//app-auto-registration//ng-select[@formcontrolname='currencyCode']/preceding-sibling::label")
 	private WebElement _lblAutoRegCostCurrency;
 
@@ -335,7 +338,7 @@ public class PDT_OneTimePaymentReimbursemenPage extends Base {
 
 	@FindBy(how = How.XPATH, using = "//app-auto-registration//ng-select[@formcontrolname='frequencyCode']/preceding-sibling::label")
 	private WebElement _lblAutoRegCostFrequency;
-	
+
 	@FindBy(how = How.CSS, using = "app-auto-registration ng-select[formcontrolname='frequencyCode']")
 	private WebElement _drpDownAutoRegCostFrequency;
 
@@ -357,7 +360,7 @@ public class PDT_OneTimePaymentReimbursemenPage extends Base {
 	// Auto Loss on Sale
 	@FindBy(how = How.XPATH, using = "//app-auto-loss-on-sale//ng-select[@formcontrolname='maxNumOfAuto']/preceding-sibling::label")
 	private WebElement _lblMaxNumOfAutos;
-	
+
 	@FindBy(how = How.CSS, using = "app-auto-loss-on-sale ng-select[formcontrolname='maxNumOfAuto']")
 	private WebElement _drpDownMaxNumOfAutos;
 
@@ -369,16 +372,16 @@ public class PDT_OneTimePaymentReimbursemenPage extends Base {
 
 	@FindBy(how = How.XPATH, using = "//input[@formcontrolname='maxNumOfAutoOther']/preceding-sibling::label")
 	private WebElement _lblMaxNumOfAutosOther;
-	
+
 	@FindBy(how = How.CSS, using = "input[formcontrolname='maxNumOfAutoOther']")
 	private WebElement _txtBoxMaxNumOfAutosOther;
 
 	@FindBy(how = How.XPATH, using = "//input[@formcontrolname='maxAmountPerAuto']/preceding-sibling::label")
 	private WebElement _lblMaxAmtPerAuto;
-	
+
 	@FindBy(how = How.CSS, using = "input[formcontrolname='maxAmountPerAuto']")
 	private WebElement _txtBoxMaxAmtPerAuto;
-	
+
 	@FindBy(how = How.XPATH, using = "//app-auto-loss-on-sale//ng-select[@formcontrolname='currencyCode']/preceding-sibling::label")
 	private WebElement _lblAutoLossOnSaleCurrency;
 
@@ -403,16 +406,16 @@ public class PDT_OneTimePaymentReimbursemenPage extends Base {
 	// Other One Time Payment
 	@FindBy(how = How.XPATH, using = "//input[@formcontrolname='pmtDesc']/preceding-sibling::label")
 	private WebElement _lblPaymentDesc;
-	
+
 	@FindBy(how = How.CSS, using = "input[formcontrolname='pmtDesc']")
 	private WebElement _txtBoxPaymentDesc;
-	
+
 	@FindBy(how = How.XPATH, using = "//app-other-onetime-payment//input[@formcontrolname='maxAmount']/preceding-sibling::label")
 	private WebElement _lblOtherOneTimePaymentMaxAmt;
 
 	@FindBy(how = How.CSS, using = "app-other-onetime-payment input[formcontrolname='maxAmount']")
 	private WebElement _txtBoxOtherOneTimePaymentMaxAmt;
-	
+
 	@FindBy(how = How.XPATH, using = "//app-other-onetime-payment//ng-select[@formcontrolname='currencyCode']/preceding-sibling::label")
 	private WebElement _lblOtherOneTimePaymentCurrency;
 
@@ -424,7 +427,7 @@ public class PDT_OneTimePaymentReimbursemenPage extends Base {
 
 	@FindBy(how = How.CSS, using = "app-other-onetime-payment ng-select[formcontrolname='currencyCode'] span.ng-value-label")
 	private WebElement _drpDownOtherOneTimePaymentCurrencyOptionsSelected;
-	
+
 	@FindBy(how = How.XPATH, using = "//app-other-onetime-payment//ng-select[@formcontrolname='frequencyCode']/preceding-sibling::label")
 	private WebElement _lblOtherOneTimePaymentFrequency;
 
@@ -451,7 +454,8 @@ public class PDT_OneTimePaymentReimbursemenPage extends Base {
 
 	private String calcMethod, freqMiscReloAllowanace, whenToMakePaymentMiscReloAllowance,
 			indicateNumOfWeeksBeforeMuscReloAllowance, calcMethodLumpSum, freqLumpSum, whenToMakePaymentLumpSum,
-			numOfWeeksForLumpSum, maxNumOfMonthsLeaseBreak, freqLeaseBreak, freqApplAllowance, freqAutoRegCost, maxNumOfAutos, freqOtherOneTimePayment;
+			numOfWeeksForLumpSum, maxNumOfMonthsLeaseBreak, freqLeaseBreak, freqApplAllowance, freqAutoRegCost,
+			maxNumOfAutos, freqOtherOneTimePayment;
 
 	public void setCalcMethod(String calcMethodSelected) {
 		calcMethod = calcMethodSelected;
@@ -540,134 +544,142 @@ public class PDT_OneTimePaymentReimbursemenPage extends Base {
 	public String getFreqApplAllowance() {
 		return freqApplAllowance;
 	}
-	
+
 	public void setFreqAutoRegCost(String freqAutoRegCostSelected) {
 		freqAutoRegCost = freqAutoRegCostSelected;
 	}
-	
+
 	public String getFreqAutoRegCost() {
 		return freqAutoRegCost;
 	}
-	
+
 	public void setMaxNumOfAutos(String maxNumOfAutosSelected) {
 		maxNumOfAutos = maxNumOfAutosSelected;
 	}
-	
+
 	public String getMaxNumOfAutos() {
 		return maxNumOfAutos;
 	}
-	
+
 	public void setFreqOtherOneTimePayment(String freqOtherOneTimePaymentSelected) {
 		freqOtherOneTimePayment = freqOtherOneTimePaymentSelected;
 	}
-	
+
 	public String getFreqOtherOneTimePayment() {
 		return freqOtherOneTimePayment;
 	}
 
 	public void fillMiscRelocationAllowance(PDT_AddNewPolicyPage addNewPolicyPage, String subBenefitFormName) {
-		WebElement element = driver.findElement((with(By.tagName("label"))).above(By.cssSelector("ng-select[formcontrolname='methodCode']")));
-		Log.info("element text=="+element.getText());
-		CoreFunctions.explicitWaitTillElementListVisibility(driver, _drpDownCalculationMethodOptions);
-
-		String randCalcMethod = BusinessFunctions.selectAndReturnRandomValueFromDropDown(driver, addNewPolicyPage,
-				subBenefitFormName, _drpDownCalculationMethod, _drpDownCalculationMethodOptions,
-				_drpDownCalculationMethodSelected,
-				CoreFunctions.getLabelOfElement(driver, By.cssSelector("ng-select[formcontrolname='methodCode']")));
-		setCalcMethod(randCalcMethod);
-		BusinessFunctions.verifyAndFillOtherTextBoxForSubBenefitForm(driver, addNewPolicyPage, subBenefitFormName,
-				_drpDownCalculationMethodSelected, _lblCalculationMethod.getText(), _txtBoxOtherCalculationMethod,
-				_lblOtherCalculationMethod, oneTimePaymentBenefitData.miscReloAllowance.otherCalculationMethod);
-		CoreFunctions.clearAndSetText(driver, _txtBoxMaxAmount, _lblMaxAmt.getText(),
-				oneTimePaymentBenefitData.miscReloAllowance.maxAmount);
-		CoreFunctions.clickElement(driver, _drpDownCurrency);
-		CoreFunctions.selectItemInListByText(driver, _drpDownCurrencyOptions,
-				oneTimePaymentBenefitData.miscReloAllowance.currency, PDTConstants.CURRENCY, PDTConstants.DROP_DOWN,
-				true);
-		String randFrequency = BusinessFunctions.selectAndReturnRandomValueFromDropDown(driver, addNewPolicyPage,
-				subBenefitFormName, _drpDownFrequency, _drpDownFrequencyOptions, _drpDownFrequencyOptionsSelected,
-				_lblFrequency);
-		setFreqMiscReloAllowanace(randFrequency);
-
-		CoreFunctions.explicitWaitTillElementListClickable(driver, _radioBtnMiscRelocationAllowance);
-		CoreFunctions.selectItemInListByText(driver, _radioBtnMiscRelocationAllowance,
-				oneTimePaymentBenefitData.miscReloAllowance.grossUp, PDTConstants.GROSS_UP,
-				PDTConstants.RADIO_BUTTON_LIST, true);
-
-		String randWhenToMakePayment = BusinessFunctions.selectAndReturnRandomValueFromDropDown(driver,
-				addNewPolicyPage, subBenefitFormName, _drpDownWhenToMakePayment, _drpDownWhenToMakePaymentOptions,
-				_drpDownWhenToMakePaymentOptionsSelected, _lblWhenToMakePayment);
-		setWhenToMakePaymentMiscReloAllowanace(randWhenToMakePayment);
-		
-		if (BusinessFunctions.verifyDisplayOfIndicateNumOfWeeksBefore(driver, addNewPolicyPage, subBenefitFormName,
-				_drpDownWhenToMakePaymentOptionsSelected, _lblWhenToMakePayment.getText(),
-				_drpDownIndicateNumOfWeeksBefore)) {
-			
-			String randIndicateNumOfWeeksFormMiscReloAllowance = BusinessFunctions
-					.selectAndReturnRandomValueFromDropDown(driver, addNewPolicyPage, subBenefitFormName,
-							_drpDownIndicateNumOfWeeksBefore, _drpDownIndicateNumOfWeeksBeforeOptions,
-							_drpDownIndicateNumOfWeeksBeforeSelected, _lblIndicateNumOfWeeksBefore);
-			
-			setNumOfWeeksForMiscReloAllowanace(randIndicateNumOfWeeksFormMiscReloAllowance);
-			
+		try {
+			CoreFunctions.explicitWaitTillElementListVisibility(driver, _drpDownCalculationMethodOptions);
+			String randCalcMethod = BusinessFunctions.selectAndReturnRandomValueFromDropDown(driver, addNewPolicyPage,
+					subBenefitFormName, _drpDownCalculationMethod, _drpDownCalculationMethodOptions,
+					_drpDownCalculationMethodSelected,
+					CoreFunctions.getLabelOfElement(driver, By.cssSelector("ng-select[formcontrolname='methodCode']"))
+							.getText());
+			setCalcMethod(randCalcMethod);
 			BusinessFunctions.verifyAndFillOtherTextBoxForSubBenefitForm(driver, addNewPolicyPage, subBenefitFormName,
-					_drpDownIndicateNumOfWeeksBeforeSelected, _lblIndicateNumOfWeeksBefore.getText(),
-					_txtBoxIndicateNumOfWeeksBeforeOther, _lblIndicateNumOfWeeksBeforeOther,
-					oneTimePaymentBenefitData.miscReloAllowance.otherNumOfWeeksBefore);
+					_drpDownCalculationMethodSelected, _lblCalculationMethod.getText(), _txtBoxOtherCalculationMethod,
+					PDTConstants.OTHER_CALCULATION_METHOD,
+					oneTimePaymentBenefitData.miscReloAllowance.otherCalculationMethod);
+			CoreFunctions.clearAndSetText(driver, _txtBoxMaxAmount, _lblMaxAmt.getText(),
+					oneTimePaymentBenefitData.miscReloAllowance.maxAmount);
+			CoreFunctions.clickElement(driver, _drpDownCurrency);
+			CoreFunctions.selectItemInListByText(driver, _drpDownCurrencyOptions,
+					oneTimePaymentBenefitData.miscReloAllowance.currency, PDTConstants.CURRENCY, PDTConstants.DROP_DOWN,
+					true);
+			String randFrequency = BusinessFunctions.selectAndReturnRandomValueFromDropDown(driver, addNewPolicyPage,
+					subBenefitFormName, _drpDownFrequency, _drpDownFrequencyOptions, _drpDownFrequencyOptionsSelected,
+					_lblFrequency.getText());
+			setFreqMiscReloAllowanace(randFrequency);
+
+			CoreFunctions.explicitWaitTillElementListClickable(driver, _radioBtnMiscRelocationAllowance);
+			CoreFunctions.selectItemInListByText(driver, _radioBtnMiscRelocationAllowance,
+					oneTimePaymentBenefitData.miscReloAllowance.grossUp, PDTConstants.GROSS_UP,
+					PDTConstants.RADIO_BUTTON_LIST, true);
+
+			String randWhenToMakePayment = BusinessFunctions.selectAndReturnRandomValueFromDropDown(driver,
+					addNewPolicyPage, subBenefitFormName, _drpDownWhenToMakePayment, _drpDownWhenToMakePaymentOptions,
+					_drpDownWhenToMakePaymentOptionsSelected, _lblWhenToMakePayment.getText());
+			setWhenToMakePaymentMiscReloAllowanace(randWhenToMakePayment);
+
+			if (BusinessFunctions.verifyDisplayOfIndicateNumOfWeeksBefore(driver, addNewPolicyPage, subBenefitFormName,
+					_drpDownWhenToMakePaymentOptionsSelected, _lblWhenToMakePayment.getText(),
+					_drpDownIndicateNumOfWeeksBefore)) {
+
+				String randIndicateNumOfWeeksFormMiscReloAllowance = BusinessFunctions
+						.selectAndReturnRandomValueFromDropDown(driver, addNewPolicyPage, subBenefitFormName,
+								_drpDownIndicateNumOfWeeksBefore, _drpDownIndicateNumOfWeeksBeforeOptions,
+								_drpDownIndicateNumOfWeeksBeforeSelected, _lblIndicateNumOfWeeksBefore.getText());
+
+				setNumOfWeeksForMiscReloAllowanace(randIndicateNumOfWeeksFormMiscReloAllowance);
+
+				BusinessFunctions.verifyAndFillOtherTextBoxForSubBenefitForm(driver, addNewPolicyPage,
+						subBenefitFormName, _drpDownIndicateNumOfWeeksBeforeSelected,
+						_lblIndicateNumOfWeeksBefore.getText(), _txtBoxIndicateNumOfWeeksBeforeOther,
+						PDTConstants.INDICATE_NUM_OF_WEEKS_BEFORE,
+						oneTimePaymentBenefitData.miscReloAllowance.otherNumOfWeeksBefore);
+			}
+
+			BusinessFunctions.verifyAndFillOtherTextBoxForSubBenefitForm(driver, addNewPolicyPage, subBenefitFormName,
+					_drpDownWhenToMakePaymentOptionsSelected, _lblWhenToMakePayment.getText(), _txtBoxOtherPaymentType,
+					PDTConstants.OTHER_PAYMENT_TIME, oneTimePaymentBenefitData.miscReloAllowance.otherPaymentTime);
+
+			CoreFunctions.selectItemInListByText(driver, _radioBtnMiscRelocationAllowance,
+					oneTimePaymentBenefitData.miscReloAllowance.reimbursedBy, PDTConstants.REIMBURSED_BY,
+					PDTConstants.RADIO_BUTTON_LIST, true);
+
+			BusinessFunctions.verifyOtherTextBoxIsDisplayed(driver, addNewPolicyPage,
+					oneTimePaymentBenefitData.miscReloAllowance.reimbursedBy, _txtBoxReimbursedByOther,
+					oneTimePaymentBenefitData.miscReloAllowance.reimbursedByOther, subBenefitFormName, PDTConstants.REIMBURSED_BY_OTHER);
+			CoreFunctions.clearAndSetText(driver, _txtAreaMiscRelocationAllowanceComment, PDTConstants.COMMENT,
+					oneTimePaymentBenefitData.miscReloAllowance.comment);
+		} catch (Exception e) {			
+			Assert.fail(MessageFormat.format(PDTConstants.EXCEPTION_OCCURED_FILL_SUBBENEFIT_FORM, CoreConstants.FAIL,
+					subBenefitFormName));
 		}
-
-		BusinessFunctions.verifyAndFillOtherTextBoxForSubBenefitForm(driver, addNewPolicyPage, subBenefitFormName,
-				_drpDownWhenToMakePaymentOptionsSelected, _lblWhenToMakePayment.getText(), _txtBoxOtherPaymentType,
-				_lblOtherPaymentType, oneTimePaymentBenefitData.miscReloAllowance.otherPaymentTime);
-
-		CoreFunctions.selectItemInListByText(driver, _radioBtnMiscRelocationAllowance,
-				oneTimePaymentBenefitData.miscReloAllowance.reimbursedBy, PDTConstants.REIMBURSED_BY,
-				PDTConstants.RADIO_BUTTON_LIST, true);
-
-		BusinessFunctions.verifyReimbursedByOtherTextBoxIsDisplayed(driver, addNewPolicyPage,
-				oneTimePaymentBenefitData.miscReloAllowance.reimbursedBy, _txtBoxReimbursedByOther,
-				oneTimePaymentBenefitData.miscReloAllowance.reimbursedByOther, subBenefitFormName);
-		CoreFunctions.clearAndSetText(driver, _txtAreaMiscRelocationAllowanceComment, PDTConstants.COMMENT,
-				oneTimePaymentBenefitData.miscReloAllowance.comment);
 	}
 
 	public void fillLumpSum(PDT_AddNewPolicyPage addNewPolicyPage, String subBenefitFormName) {
-		CoreFunctions.explicitWaitTillElementListVisibility(driver, _drpDownLumpSumCalculationMethodOptions);
-		String randCalcMethodLumpSum = BusinessFunctions.selectAndReturnRandomValueFromDropDown(driver,
-				addNewPolicyPage, subBenefitFormName, _drpDownLumpSumCalculationMethod,
-				_drpDownLumpSumCalculationMethodOptions, _drpDownLumpSumCalculationMethodSelected,
-				_lblLumpSumCalculationMethod);
-		setCalcMethodLumpSum(randCalcMethodLumpSum);
-		BusinessFunctions.verifyAndFillOtherTextBoxForSubBenefitForm(driver, addNewPolicyPage, subBenefitFormName,
-				_drpDownLumpSumCalculationMethodSelected, _lblLumpSumCalculationMethod.getText(),
-				_txtBoxLumpSumOtherCalculationMethod, _lblLumpSumOtherCalculationMethod,
-				oneTimePaymentBenefitData.lumpSum.otherCalculationMethod);
-
-		CoreFunctions.selectItemInListByText(driver, _radioBtnLumpSum, oneTimePaymentBenefitData.lumpSum.grossUp,
-				PDTConstants.GROSS_UP, PDTConstants.RADIO_BUTTON_LIST, true);
-
-		if (_drpDownLumpSumCalculationMethodSelected.getText().equalsIgnoreCase(PDTConstants.FLAT_AMT)) {
-			BusinessFunctions.verifyTextBoxIsDisplayedAndEnterTextBoxVal(driver, addNewPolicyPage, subBenefitFormName,
-					_txtBoxLumpSumMaxAmount, _lblLumpSumMaxAmt.getText(), PDTConstants.MAX_AMOUNT,
-					oneTimePaymentBenefitData.lumpSum.whenToMakePayment);
-			BusinessFunctions.verifyDrpDownIsDisplayedAndSelectDropDownVal(driver, addNewPolicyPage, subBenefitFormName,
-					_drpDownLumpSumCurrency, _drpDownLumpSumCurrencyOptions, _lblLumpSumCurrency.getText(),
-					PDTConstants.CURRENCY, oneTimePaymentBenefitData.lumpSum.currency);
-
-			String randFrequencyLumpSum = BusinessFunctions.selectAndReturnRandomValueFromDropDown(driver,
-					addNewPolicyPage, subBenefitFormName, _drpDownLumpSumFrequency, _drpDownLumpSumFrequencyOptions,
-					_drpDownLumpSumFrequencyOptionsSelected, _lblLumpSumFrequency);
-			setFreqLumpSum(randFrequencyLumpSum);
+		try {
+			CoreFunctions.explicitWaitTillElementListVisibility(driver, _drpDownLumpSumCalculationMethodOptions);
+			String randCalcMethodLumpSum = BusinessFunctions.selectAndReturnRandomValueFromDropDown(driver,
+					addNewPolicyPage, subBenefitFormName, _drpDownLumpSumCalculationMethod,
+					_drpDownLumpSumCalculationMethodOptions, _drpDownLumpSumCalculationMethodSelected,
+					_lblLumpSumCalculationMethod.getText());
+			setCalcMethodLumpSum(randCalcMethodLumpSum);
 			BusinessFunctions.verifyAndFillOtherTextBoxForSubBenefitForm(driver, addNewPolicyPage, subBenefitFormName,
-					_drpDownLumpSumFrequencyOptionsSelected, _lblLumpSumFrequency.getText(), _txtBoxOtherFrequency,
-					_lblLumpSumFrequencyOther, oneTimePaymentBenefitData.lumpSum.otherFrequency);
-		}
+					_drpDownLumpSumCalculationMethodSelected, _lblLumpSumCalculationMethod.getText(),
+					_txtBoxLumpSumOtherCalculationMethod, PDTConstants.OTHER_CALCULATION_METHOD,
+					oneTimePaymentBenefitData.lumpSum.otherCalculationMethod);
+
+			CoreFunctions.selectItemInListByText(driver, _radioBtnLumpSum, oneTimePaymentBenefitData.lumpSum.grossUp,
+					PDTConstants.GROSS_UP, PDTConstants.RADIO_BUTTON_LIST, true);
+
+			if (_drpDownLumpSumCalculationMethodSelected.getText().equalsIgnoreCase(PDTConstants.FLAT_AMT)) {
+				BusinessFunctions.verifyTextBoxIsDisplayedAndEnterTextBoxVal(driver, addNewPolicyPage,
+						subBenefitFormName, _txtBoxLumpSumMaxAmount, _lblLumpSumMaxAmt.getText(),
+						PDTConstants.MAX_AMOUNT, oneTimePaymentBenefitData.lumpSum.whenToMakePayment);
+				BusinessFunctions.verifyDrpDownIsDisplayedAndSelectDropDownVal(driver, addNewPolicyPage,
+						subBenefitFormName, _drpDownLumpSumCurrency, _drpDownLumpSumCurrencyOptions,
+						_lblLumpSumCurrency.getText(), PDTConstants.CURRENCY,
+						oneTimePaymentBenefitData.lumpSum.currency);
+
+				String randFrequencyLumpSum = BusinessFunctions.selectAndReturnRandomValueFromDropDown(driver,
+						addNewPolicyPage, subBenefitFormName, _drpDownLumpSumFrequency, _drpDownLumpSumFrequencyOptions,
+						_drpDownLumpSumFrequencyOptionsSelected, _lblLumpSumFrequency.getText());
+				setFreqLumpSum(randFrequencyLumpSum);
+				BusinessFunctions.verifyAndFillOtherTextBoxForSubBenefitForm(driver, addNewPolicyPage,
+						subBenefitFormName, _drpDownLumpSumFrequencyOptionsSelected, _lblLumpSumFrequency.getText(),
+						_txtBoxOtherFrequency, PDTConstants.OTHER_FREQUENCY,
+						oneTimePaymentBenefitData.lumpSum.otherFrequency);
+			}
 
 			// Select when to make payment for lump sum.
 			String randWhenToMakePaymentLumpSum = BusinessFunctions.selectAndReturnRandomValueFromDropDown(driver,
 					addNewPolicyPage, subBenefitFormName, _drpDownLumpSumWhenToMakePayment,
 					_drpDownLumpSumWhenToMakePaymentOptions, _drpDownLumpSumWhenToMakePaymentOptionsSelected,
-					_lblLumpSumWhenToMakePayment);
+					_lblLumpSumWhenToMakePayment.getText());
 			setWhenToMakePaymentLumpSum(randWhenToMakePaymentLumpSum);
 			if (BusinessFunctions.verifyDisplayOfIndicateNumOfWeeksBefore(driver, addNewPolicyPage, subBenefitFormName,
 					_drpDownLumpSumWhenToMakePaymentOptionsSelected, _lblLumpSumWhenToMakePayment.getText(),
@@ -675,12 +687,12 @@ public class PDT_OneTimePaymentReimbursemenPage extends Base {
 				String randIndicateNumOfWeeksLumpSum = BusinessFunctions.selectAndReturnRandomValueFromDropDown(driver,
 						addNewPolicyPage, subBenefitFormName, _drpDownLumpSumIndicateNumOfWeeksBefore,
 						_drpDownLumpSumIndicateNumOfWeeksBeforeOptions, _drpDownLumpSumIndicateNumOfWeeksBeforeSelected,
-						_lblLumpSumIndicateNumOfWeeksBefore);
+						_lblLumpSumIndicateNumOfWeeksBefore.getText());
 				setNumOfWeeksForLumpSum(randIndicateNumOfWeeksLumpSum);
 				BusinessFunctions.verifyAndFillOtherTextBoxForSubBenefitForm(driver, addNewPolicyPage,
 						subBenefitFormName, _drpDownLumpSumIndicateNumOfWeeksBeforeSelected,
 						_lblLumpSumIndicateNumOfWeeksBefore.getText(), _txtBoxLumpSumIndicateNumOfWeeksBeforeOther,
-						_lblLumpSumIndicateNumOfWeeksBeforeOther,
+						PDTConstants.OTHER,
 						oneTimePaymentBenefitData.lumpSum.otherNumOfWeeksBefore);
 			}
 
@@ -688,174 +700,215 @@ public class PDT_OneTimePaymentReimbursemenPage extends Base {
 					oneTimePaymentBenefitData.lumpSum.reimbursedBy, PDTConstants.REIMBURSED_BY,
 					PDTConstants.RADIO_BUTTON_LIST, true);
 
-			BusinessFunctions.verifyReimbursedByOtherTextBoxIsDisplayed(driver, addNewPolicyPage,
+			BusinessFunctions.verifyOtherTextBoxIsDisplayed(driver, addNewPolicyPage,
 					oneTimePaymentBenefitData.lumpSum.reimbursedBy, _txtBoxLumpSumReimbursedByOther,
-					oneTimePaymentBenefitData.lumpSum.reimbursedByOther, subBenefitFormName);
+					oneTimePaymentBenefitData.lumpSum.reimbursedByOther, subBenefitFormName, PDTConstants.REIMBURSED_BY_OTHER);
 			CoreFunctions.clearAndSetText(driver, _txtAreaLumpSumComment, PDTConstants.COMMENT,
 					oneTimePaymentBenefitData.lumpSum.comment);
+		} catch (Exception e) {
+			Assert.fail(MessageFormat.format(PDTConstants.EXCEPTION_OCCURED_FILL_SUBBENEFIT_FORM, CoreConstants.FAIL,
+					subBenefitFormName));
+		}
 
 	}
 
 	public void fillLeaseBreak(PDT_AddNewPolicyPage addNewPolicyPage, String subBenefitFormName) {
-		CoreFunctions.explicitWaitTillElementListVisibility(driver, _drpDownLeaseBreakMaxNumOfMonthsOptions);
-		String randMaxNumOfMonthsLeaseBreak = BusinessFunctions.selectAndReturnRandomValueFromDropDown(driver,
-				addNewPolicyPage, subBenefitFormName, _drpDownLeaseBreakMaxNumOfMonths,
-				_drpDownLeaseBreakMaxNumOfMonthsOptions, _drpDownLeaseBreakMaxNumOfMonthsOptionsSelected,
-				_lblLeaseBreakMaxNumOfMonths);
-		setMaxNumOfMonthsLeaseBreak(randMaxNumOfMonthsLeaseBreak);
-		BusinessFunctions.verifyAndFillOtherTextBoxForSubBenefitForm(driver, addNewPolicyPage, subBenefitFormName,
-				_drpDownLeaseBreakMaxNumOfMonthsOptionsSelected, _lblLeaseBreakMaxNumOfMonths.getText(),
-				_txtBoxLeaseBreakMaxNumOfMonthsOther, _lblLeaseBreakMaxNumOfMonthsOther,
-				oneTimePaymentBenefitData.leaseBreak.maxNumOfMonths);
+		try {
+			CoreFunctions.explicitWaitTillElementListVisibility(driver, _drpDownLeaseBreakMaxNumOfMonthsOptions);
+			String randMaxNumOfMonthsLeaseBreak = BusinessFunctions.selectAndReturnRandomValueFromDropDown(driver,
+					addNewPolicyPage, subBenefitFormName, _drpDownLeaseBreakMaxNumOfMonths,
+					_drpDownLeaseBreakMaxNumOfMonthsOptions, _drpDownLeaseBreakMaxNumOfMonthsOptionsSelected,
+					_lblLeaseBreakMaxNumOfMonths.getText());
+			setMaxNumOfMonthsLeaseBreak(randMaxNumOfMonthsLeaseBreak);
+			BusinessFunctions.verifyAndFillOtherTextBoxForSubBenefitForm(driver, addNewPolicyPage, subBenefitFormName,
+					_drpDownLeaseBreakMaxNumOfMonthsOptionsSelected, _lblLeaseBreakMaxNumOfMonths.getText(),
+					_txtBoxLeaseBreakMaxNumOfMonthsOther, PDTConstants.OTHER,
+					oneTimePaymentBenefitData.leaseBreak.maxNumOfMonths);
 
-		CoreFunctions.selectItemInListByText(driver, _radioBtnLeaseBreak, oneTimePaymentBenefitData.leaseBreak.grossUp,
-				PDTConstants.GROSS_UP, PDTConstants.RADIO_BUTTON_LIST, true);
-		
-		CoreFunctions.clearAndSetText(driver, _txtBoxLeaseBreakMaxAmount, _lblLeaseBreakMaxAmount.getText(),
-				oneTimePaymentBenefitData.leaseBreak.maxAmount);
-		CoreFunctions.clickElement(driver, _drpDownLeaseBreakCurrency);
-		CoreFunctions.selectItemInListByText(driver, _drpDownLeaseBreakCurrencyOptions,
-				oneTimePaymentBenefitData.leaseBreak.currency, PDTConstants.CURRENCY, PDTConstants.DROP_DOWN, true);
-		String randFrequencyLeaseBreak = BusinessFunctions.selectAndReturnRandomValueFromDropDown(driver,
-				addNewPolicyPage, subBenefitFormName, _drpDownLeaseBreakFrequency, _drpDownLeaseBreakFrequencyOptions,
-				_drpDownLeaseBreakFrequencyOptionsSelected, _lblLeaseBreakFrequency);
-		setFreqLeaseBreak(randFrequencyLeaseBreak);
-		BusinessFunctions.verifyAndFillOtherTextBoxForSubBenefitForm(driver, addNewPolicyPage, subBenefitFormName,
-				_drpDownLeaseBreakFrequencyOptionsSelected, _lblLeaseBreakFrequency.getText(),
-				_txtBoxLeaseBreakOtherFrequency, _lblLeaseBreakFrequencyOther,
-				oneTimePaymentBenefitData.leaseBreak.otherFrequency);
-		
-		CoreFunctions.selectItemInListByText(driver, _radioBtnLeaseBreak,
-				oneTimePaymentBenefitData.leaseBreak.reimbursedBy, PDTConstants.REIMBURSED_BY,
-				PDTConstants.RADIO_BUTTON_LIST, true);
+			CoreFunctions.selectItemInListByText(driver, _radioBtnLeaseBreak,
+					oneTimePaymentBenefitData.leaseBreak.grossUp, PDTConstants.GROSS_UP, PDTConstants.RADIO_BUTTON_LIST,
+					true);
 
-		BusinessFunctions.verifyReimbursedByOtherTextBoxIsDisplayed(driver, addNewPolicyPage,
-				oneTimePaymentBenefitData.leaseBreak.reimbursedBy, _txtBoxLeaseBreakReimbursedByOther,
-				oneTimePaymentBenefitData.leaseBreak.reimbursedByOther, subBenefitFormName);
-		CoreFunctions.clearAndSetText(driver, _txtAreaLeaseBreakComment, PDTConstants.COMMENT,
-				oneTimePaymentBenefitData.leaseBreak.comment);
+			CoreFunctions.clearAndSetText(driver, _txtBoxLeaseBreakMaxAmount, _lblLeaseBreakMaxAmount.getText(),
+					oneTimePaymentBenefitData.leaseBreak.maxAmount);
+			CoreFunctions.clickElement(driver, _drpDownLeaseBreakCurrency);
+			CoreFunctions.selectItemInListByText(driver, _drpDownLeaseBreakCurrencyOptions,
+					oneTimePaymentBenefitData.leaseBreak.currency, PDTConstants.CURRENCY, PDTConstants.DROP_DOWN, true);
+			String randFrequencyLeaseBreak = BusinessFunctions.selectAndReturnRandomValueFromDropDown(driver,
+					addNewPolicyPage, subBenefitFormName, _drpDownLeaseBreakFrequency,
+					_drpDownLeaseBreakFrequencyOptions, _drpDownLeaseBreakFrequencyOptionsSelected,
+					_lblLeaseBreakFrequency.getText());
+			setFreqLeaseBreak(randFrequencyLeaseBreak);
+			BusinessFunctions.verifyAndFillOtherTextBoxForSubBenefitForm(driver, addNewPolicyPage, subBenefitFormName,
+					_drpDownLeaseBreakFrequencyOptionsSelected, _lblLeaseBreakFrequency.getText(),
+					_txtBoxLeaseBreakOtherFrequency, PDTConstants.OTHER_FREQUENCY,
+					oneTimePaymentBenefitData.leaseBreak.otherFrequency);
+
+			CoreFunctions.selectItemInListByText(driver, _radioBtnLeaseBreak,
+					oneTimePaymentBenefitData.leaseBreak.reimbursedBy, PDTConstants.REIMBURSED_BY,
+					PDTConstants.RADIO_BUTTON_LIST, true);
+
+			BusinessFunctions.verifyOtherTextBoxIsDisplayed(driver, addNewPolicyPage,
+					oneTimePaymentBenefitData.leaseBreak.reimbursedBy, _txtBoxLeaseBreakReimbursedByOther,
+					oneTimePaymentBenefitData.leaseBreak.reimbursedByOther, subBenefitFormName, PDTConstants.REIMBURSED_BY_OTHER);
+			CoreFunctions.clearAndSetText(driver, _txtAreaLeaseBreakComment, PDTConstants.COMMENT,
+					oneTimePaymentBenefitData.leaseBreak.comment);
+		} catch (Exception e) {
+			Assert.fail(MessageFormat.format(PDTConstants.EXCEPTION_OCCURED_FILL_SUBBENEFIT_FORM, CoreConstants.FAIL,
+					subBenefitFormName));
+		}
 	}
 
 	public void fillApplAllowance(PDT_AddNewPolicyPage addNewPolicyPage, String subBenefitFormName) {
-		CoreFunctions.clearAndSetText(driver, _txtBoxApplAllowanceMaxAmount, _lblApplAllowanceMaxAmount.getText(),
-				oneTimePaymentBenefitData.applAllowance.maxAmount);
-		CoreFunctions.clickElement(driver, _drpDownApplAllowanceCurrency);
-		CoreFunctions.selectItemInListByText(driver, _drpDownApplAllowanceCurrencyOptions,
-				oneTimePaymentBenefitData.applAllowance.currency, PDTConstants.CURRENCY, PDTConstants.DROP_DOWN, true);
-		String randFrequencyApplAllowance = BusinessFunctions.selectAndReturnRandomValueFromDropDown(driver,
-				addNewPolicyPage, subBenefitFormName, _drpDownApplAllowanceFrequency,
-				_drpDownApplAllowanceFrequencyOptions, _drpDownApplAllowanceFrequencyOptionsSelected,
-				_lblApplAllowanceFrequency);
-		setFreqApplAllowance(randFrequencyApplAllowance);
-		BusinessFunctions.verifyAndFillOtherTextBoxForSubBenefitForm(driver, addNewPolicyPage, subBenefitFormName,
-				_drpDownLeaseBreakFrequencyOptionsSelected, _lblLeaseBreakFrequency.getText(),
-				_txtBoxLeaseBreakOtherFrequency, _lblLeaseBreakFrequencyOther,
-				oneTimePaymentBenefitData.leaseBreak.otherFrequency);
+		try {
+			CoreFunctions.clearAndSetText(driver, _txtBoxApplAllowanceMaxAmount, _lblApplAllowanceMaxAmount.getText(),
+					oneTimePaymentBenefitData.applAllowance.maxAmount);
+			CoreFunctions.clickElement(driver, _drpDownApplAllowanceCurrency);
+			CoreFunctions.selectItemInListByText(driver, _drpDownApplAllowanceCurrencyOptions,
+					oneTimePaymentBenefitData.applAllowance.currency, PDTConstants.CURRENCY, PDTConstants.DROP_DOWN,
+					true);
+			String randFrequencyApplAllowance = BusinessFunctions.selectAndReturnRandomValueFromDropDown(driver,
+					addNewPolicyPage, subBenefitFormName, _drpDownApplAllowanceFrequency,
+					_drpDownApplAllowanceFrequencyOptions, _drpDownApplAllowanceFrequencyOptionsSelected,
+					_lblApplAllowanceFrequency.getText());
+			setFreqApplAllowance(randFrequencyApplAllowance);
+			/*
+			 * BusinessFunctions.verifyAndFillOtherTextBoxForSubBenefitForm(driver,
+			 * addNewPolicyPage, subBenefitFormName,
+			 * _drpDownApplAllowanceFrequencyOptionsSelected,
+			 * _lblApplAllowanceFrequency.getText(), _txtBoxLeaseBreakOtherFrequency,
+			 * PDTConstants.OTHER_FREQUENCY,
+			 * oneTimePaymentBenefitData.leaseBreak.otherFrequency);
+			 */
 
-		CoreFunctions.selectItemInListByText(driver, _radioBtnApplAllowance,
-				oneTimePaymentBenefitData.applAllowance.grossUp, PDTConstants.GROSS_UP, PDTConstants.RADIO_BUTTON_LIST,
-				true);
+			CoreFunctions.selectItemInListByText(driver, _radioBtnApplAllowance,
+					oneTimePaymentBenefitData.applAllowance.grossUp, PDTConstants.GROSS_UP,
+					PDTConstants.RADIO_BUTTON_LIST, true);
 
-		CoreFunctions.selectItemInListByText(driver, _radioBtnApplAllowance,
-				oneTimePaymentBenefitData.applAllowance.reimbursedBy, PDTConstants.REIMBURSED_BY,
-				PDTConstants.RADIO_BUTTON_LIST, true);
+			CoreFunctions.selectItemInListByText(driver, _radioBtnApplAllowance,
+					oneTimePaymentBenefitData.applAllowance.reimbursedBy, PDTConstants.REIMBURSED_BY,
+					PDTConstants.RADIO_BUTTON_LIST, true);
 
-		BusinessFunctions.verifyReimbursedByOtherTextBoxIsDisplayed(driver, addNewPolicyPage,
-				oneTimePaymentBenefitData.applAllowance.reimbursedBy, _txtBoxApplAllowanceReimbursedByOther,
-				oneTimePaymentBenefitData.applAllowance.reimbursedByOther, subBenefitFormName);
-		CoreFunctions.clearAndSetText(driver, _txtAreaApplAllowanceComment, PDTConstants.COMMENT,
-				oneTimePaymentBenefitData.applAllowance.comment);
+			BusinessFunctions.verifyOtherTextBoxIsDisplayed(driver, addNewPolicyPage,
+					oneTimePaymentBenefitData.applAllowance.reimbursedBy, _txtBoxApplAllowanceReimbursedByOther,
+					oneTimePaymentBenefitData.applAllowance.reimbursedByOther, subBenefitFormName, PDTConstants.REIMBURSED_BY_OTHER);
+			CoreFunctions.clearAndSetText(driver, _txtAreaApplAllowanceComment, PDTConstants.COMMENT,
+					oneTimePaymentBenefitData.applAllowance.comment);
+		} catch (Exception e) {
+			Assert.fail(MessageFormat.format(PDTConstants.EXCEPTION_OCCURED_FILL_SUBBENEFIT_FORM, CoreConstants.FAIL,
+					subBenefitFormName));
+		}
 	}
 
 	public void fillAutoRegistrationCost(PDT_AddNewPolicyPage addNewPolicyPage, String subBenefitFormName) {
-		CoreFunctions.clearAndSetText(driver, _txtBoxAutoRegCostMaxAmount, _lblAutoRegCostMaxAmount.getText(),
-				oneTimePaymentBenefitData.autoRegCost.maxAmount);
-		CoreFunctions.clickElement(driver, _drpDownAutoRegCostCurrency);
-		CoreFunctions.selectItemInListByText(driver, _drpDownAutoRegCostCurrencyOptions,
-				oneTimePaymentBenefitData.autoRegCost.currency, PDTConstants.CURRENCY, PDTConstants.DROP_DOWN, true);
-		String randFrequencyAutoRegCost = BusinessFunctions.selectAndReturnRandomValueFromDropDown(driver,
-				addNewPolicyPage, subBenefitFormName, _drpDownAutoRegCostFrequency, _drpDownAutoRegCostFrequencyOptions,
-				_drpDownAutoRegCostFrequencyOptionsSelected, _lblAutoRegCostFrequency);
-		setFreqAutoRegCost(randFrequencyAutoRegCost);
+		try {
+			CoreFunctions.clearAndSetText(driver, _txtBoxAutoRegCostMaxAmount, _lblAutoRegCostMaxAmount.getText(),
+					oneTimePaymentBenefitData.autoRegCost.maxAmount);
+			CoreFunctions.clickElement(driver, _drpDownAutoRegCostCurrency);
+			CoreFunctions.selectItemInListByText(driver, _drpDownAutoRegCostCurrencyOptions,
+					oneTimePaymentBenefitData.autoRegCost.currency, PDTConstants.CURRENCY, PDTConstants.DROP_DOWN,
+					true);
+			String randFrequencyAutoRegCost = BusinessFunctions.selectAndReturnRandomValueFromDropDown(driver,
+					addNewPolicyPage, subBenefitFormName, _drpDownAutoRegCostFrequency,
+					_drpDownAutoRegCostFrequencyOptions, _drpDownAutoRegCostFrequencyOptionsSelected,
+					_lblAutoRegCostFrequency.getText());
+			setFreqAutoRegCost(randFrequencyAutoRegCost);
 
-		CoreFunctions.selectItemInListByText(driver, _radioBtnAutoRegCost,
-				oneTimePaymentBenefitData.autoRegCost.grossUp, PDTConstants.GROSS_UP, PDTConstants.RADIO_BUTTON_LIST,
-				true);
+			CoreFunctions.selectItemInListByText(driver, _radioBtnAutoRegCost,
+					oneTimePaymentBenefitData.autoRegCost.grossUp, PDTConstants.GROSS_UP,
+					PDTConstants.RADIO_BUTTON_LIST, true);
 
-		CoreFunctions.selectItemInListByText(driver, _radioBtnAutoRegCost,
-				oneTimePaymentBenefitData.autoRegCost.reimbursedBy, PDTConstants.REIMBURSED_BY,
-				PDTConstants.RADIO_BUTTON_LIST, true);
+			CoreFunctions.selectItemInListByText(driver, _radioBtnAutoRegCost,
+					oneTimePaymentBenefitData.autoRegCost.reimbursedBy, PDTConstants.REIMBURSED_BY,
+					PDTConstants.RADIO_BUTTON_LIST, true);
 
-		BusinessFunctions.verifyReimbursedByOtherTextBoxIsDisplayed(driver, addNewPolicyPage,
-				oneTimePaymentBenefitData.autoRegCost.reimbursedBy, _txtBoxAutoRegCostReimbursedByOther,
-				oneTimePaymentBenefitData.autoRegCost.reimbursedByOther, subBenefitFormName);
-		CoreFunctions.clearAndSetText(driver, _txtAreaAutoRegCostComment, PDTConstants.COMMENT,
-				oneTimePaymentBenefitData.autoRegCost.comment);
+			BusinessFunctions.verifyOtherTextBoxIsDisplayed(driver, addNewPolicyPage,
+					oneTimePaymentBenefitData.autoRegCost.reimbursedBy, _txtBoxAutoRegCostReimbursedByOther,
+					oneTimePaymentBenefitData.autoRegCost.reimbursedByOther, subBenefitFormName, PDTConstants.REIMBURSED_BY_OTHER);
+			CoreFunctions.clearAndSetText(driver, _txtAreaAutoRegCostComment, PDTConstants.COMMENT,
+					oneTimePaymentBenefitData.autoRegCost.comment);
+		} catch (Exception e) {
+			Assert.fail(MessageFormat.format(PDTConstants.EXCEPTION_OCCURED_FILL_SUBBENEFIT_FORM, CoreConstants.FAIL,
+					subBenefitFormName));
+		}
 	}
 
 	public void fillAutoLossOnSale(PDT_AddNewPolicyPage addNewPolicyPage, String subBenefitFormName) {
-		CoreFunctions.explicitWaitTillElementListVisibility(driver, _drpDownMaxNumOfAutosOptions);
-		String randMaxNumOfAutos = BusinessFunctions.selectAndReturnRandomValueFromDropDown(driver, addNewPolicyPage,
-				subBenefitFormName, _drpDownMaxNumOfAutos, _drpDownMaxNumOfAutosOptions,
-				_drpDownMaxNumOfAutosOptionsSelected, _lblMaxNumOfAutos);
-		setMaxNumOfAutos(randMaxNumOfAutos);
-		BusinessFunctions.verifyAndFillOtherTextBoxForSubBenefitForm(driver, addNewPolicyPage, subBenefitFormName,
-				_drpDownMaxNumOfAutosOptionsSelected, _lblMaxNumOfAutos.getText(), _txtBoxMaxNumOfAutosOther,
-				_lblMaxNumOfAutosOther, oneTimePaymentBenefitData.autoLossOnSale.otherMaxNumOfAutos);
-		
-		CoreFunctions.clearAndSetText(driver, _txtBoxMaxAmtPerAuto, _lblMaxAmtPerAuto.getText(),
-				oneTimePaymentBenefitData.autoLossOnSale.maxAmtPerAuto);
-		
-		CoreFunctions.clickElement(driver, _drpDownAutoLossOnSaleCurrency);
-		CoreFunctions.selectItemInListByText(driver, _drpDownAutoLossOnSaleCurrencyOptions,
-				oneTimePaymentBenefitData.autoLossOnSale.currency, PDTConstants.CURRENCY, PDTConstants.DROP_DOWN, true);
-		
-		CoreFunctions.selectItemInListByText(driver, _radioBtnAutoLossOnSale,
-				oneTimePaymentBenefitData.autoLossOnSale.grossUp, PDTConstants.GROSS_UP, PDTConstants.RADIO_BUTTON_LIST,
-				true);
+		try {
+			CoreFunctions.explicitWaitTillElementListVisibility(driver, _drpDownMaxNumOfAutosOptions);
+			String randMaxNumOfAutos = BusinessFunctions.selectAndReturnRandomValueFromDropDown(driver,
+					addNewPolicyPage, subBenefitFormName, _drpDownMaxNumOfAutos, _drpDownMaxNumOfAutosOptions,
+					_drpDownMaxNumOfAutosOptionsSelected, _lblMaxNumOfAutos.getText());
+			setMaxNumOfAutos(randMaxNumOfAutos);
+			BusinessFunctions.verifyAndFillOtherTextBoxForSubBenefitForm(driver, addNewPolicyPage, subBenefitFormName,
+					_drpDownMaxNumOfAutosOptionsSelected, _lblMaxNumOfAutos.getText(), _txtBoxMaxNumOfAutosOther,
+					PDTConstants.OTHER, oneTimePaymentBenefitData.autoLossOnSale.otherMaxNumOfAutos);
 
-		CoreFunctions.selectItemInListByText(driver, _radioBtnAutoLossOnSale,
-				oneTimePaymentBenefitData.autoLossOnSale.reimbursedBy, PDTConstants.REIMBURSED_BY,
-				PDTConstants.RADIO_BUTTON_LIST, true);
+			CoreFunctions.clearAndSetText(driver, _txtBoxMaxAmtPerAuto, _lblMaxAmtPerAuto.getText(),
+					oneTimePaymentBenefitData.autoLossOnSale.maxAmtPerAuto);
 
-		BusinessFunctions.verifyReimbursedByOtherTextBoxIsDisplayed(driver, addNewPolicyPage,
-				oneTimePaymentBenefitData.autoLossOnSale.reimbursedBy, _txtBoxAutoLossOnSaleReimbursedByOther,
-				oneTimePaymentBenefitData.autoLossOnSale.reimbursedByOther, subBenefitFormName);
-		CoreFunctions.clearAndSetText(driver, _txtAreaAutoLossOnSaleComment, PDTConstants.COMMENT,
-				oneTimePaymentBenefitData.autoLossOnSale.comment);
+			CoreFunctions.clickElement(driver, _drpDownAutoLossOnSaleCurrency);
+			CoreFunctions.selectItemInListByText(driver, _drpDownAutoLossOnSaleCurrencyOptions,
+					oneTimePaymentBenefitData.autoLossOnSale.currency, PDTConstants.CURRENCY, PDTConstants.DROP_DOWN,
+					true);
+
+			CoreFunctions.selectItemInListByText(driver, _radioBtnAutoLossOnSale,
+					oneTimePaymentBenefitData.autoLossOnSale.grossUp, PDTConstants.GROSS_UP,
+					PDTConstants.RADIO_BUTTON_LIST, true);
+
+			CoreFunctions.selectItemInListByText(driver, _radioBtnAutoLossOnSale,
+					oneTimePaymentBenefitData.autoLossOnSale.reimbursedBy, PDTConstants.REIMBURSED_BY,
+					PDTConstants.RADIO_BUTTON_LIST, true);
+
+			BusinessFunctions.verifyOtherTextBoxIsDisplayed(driver, addNewPolicyPage,
+					oneTimePaymentBenefitData.autoLossOnSale.reimbursedBy, _txtBoxAutoLossOnSaleReimbursedByOther,
+					oneTimePaymentBenefitData.autoLossOnSale.reimbursedByOther, subBenefitFormName, PDTConstants.REIMBURSED_BY_OTHER);
+			CoreFunctions.clearAndSetText(driver, _txtAreaAutoLossOnSaleComment, PDTConstants.COMMENT,
+					oneTimePaymentBenefitData.autoLossOnSale.comment);
+		} catch (Exception e) {
+			Assert.fail(MessageFormat.format(PDTConstants.EXCEPTION_OCCURED_FILL_SUBBENEFIT_FORM, CoreConstants.FAIL,
+					subBenefitFormName));
+		}
 	}
 
 	public void fillOtherOneTimePayment(PDT_AddNewPolicyPage addNewPolicyPage, String subBenefitFormName) {
-		CoreFunctions.clearAndSetText(driver, _txtBoxPaymentDesc, _lblPaymentDesc.getText(),
-				oneTimePaymentBenefitData.otherOneTimePayment.paymentDesc);
-		
-		CoreFunctions.clearAndSetText(driver, _txtBoxOtherOneTimePaymentMaxAmt, _lblOtherOneTimePaymentMaxAmt.getText(),
-				oneTimePaymentBenefitData.otherOneTimePayment.maxAmount);
-		
-		CoreFunctions.clickElement(driver, _drpDownOtherOneTimePaymentCurrency);
-		CoreFunctions.selectItemInListByText(driver, _drpDownOtherOneTimePaymentCurrencyOptions,
-				oneTimePaymentBenefitData.otherOneTimePayment.currency, PDTConstants.CURRENCY, PDTConstants.DROP_DOWN, true);
-		
-		String randFreqOtherOneTimePayment = BusinessFunctions.selectAndReturnRandomValueFromDropDown(driver,
-				addNewPolicyPage, subBenefitFormName, _drpDownOtherOneTimePaymentFrequency,
-				_drpDownOtherOneTimePaymentFrequencyOptions, _drpDownOtherOneTimePaymentFrequencyOptionsSelected,
-				_lblOtherOneTimePaymentFrequency);
-		
-		setFreqOtherOneTimePayment(randFreqOtherOneTimePayment);
-		
-		CoreFunctions.selectItemInListByText(driver, _radioBtnOtherOneTimePayment,
-				oneTimePaymentBenefitData.otherOneTimePayment.grossUp, PDTConstants.GROSS_UP, PDTConstants.RADIO_BUTTON_LIST,
-				true);
+		try {
+			CoreFunctions.clearAndSetText(driver, _txtBoxPaymentDesc, _lblPaymentDesc.getText(),
+					oneTimePaymentBenefitData.otherOneTimePayment.paymentDesc);
 
-		CoreFunctions.selectItemInListByText(driver, _radioBtnOtherOneTimePayment,
-				oneTimePaymentBenefitData.otherOneTimePayment.reimbursedBy, PDTConstants.REIMBURSED_BY,
-				PDTConstants.RADIO_BUTTON_LIST, true);
+			CoreFunctions.clearAndSetText(driver, _txtBoxOtherOneTimePaymentMaxAmt,
+					_lblOtherOneTimePaymentMaxAmt.getText(), oneTimePaymentBenefitData.otherOneTimePayment.maxAmount);
 
-		BusinessFunctions.verifyReimbursedByOtherTextBoxIsDisplayed(driver, addNewPolicyPage,
-				oneTimePaymentBenefitData.otherOneTimePayment.reimbursedBy, _txtBoxOtherOneTimePaymentReimbursedByOther,
-				oneTimePaymentBenefitData.otherOneTimePayment.reimbursedByOther, subBenefitFormName);
-		CoreFunctions.clearAndSetText(driver, _txtAreaOtherOneTimePaymentComment, PDTConstants.COMMENT,
-				oneTimePaymentBenefitData.otherOneTimePayment.comment);
+			CoreFunctions.clickElement(driver, _drpDownOtherOneTimePaymentCurrency);
+			CoreFunctions.selectItemInListByText(driver, _drpDownOtherOneTimePaymentCurrencyOptions,
+					oneTimePaymentBenefitData.otherOneTimePayment.currency, PDTConstants.CURRENCY,
+					PDTConstants.DROP_DOWN, true);
+
+			String randFreqOtherOneTimePayment = BusinessFunctions.selectAndReturnRandomValueFromDropDown(driver,
+					addNewPolicyPage, subBenefitFormName, _drpDownOtherOneTimePaymentFrequency,
+					_drpDownOtherOneTimePaymentFrequencyOptions, _drpDownOtherOneTimePaymentFrequencyOptionsSelected,
+					_lblOtherOneTimePaymentFrequency.getText());
+
+			setFreqOtherOneTimePayment(randFreqOtherOneTimePayment);
+
+			CoreFunctions.selectItemInListByText(driver, _radioBtnOtherOneTimePayment,
+					oneTimePaymentBenefitData.otherOneTimePayment.grossUp, PDTConstants.GROSS_UP,
+					PDTConstants.RADIO_BUTTON_LIST, true);
+
+			CoreFunctions.selectItemInListByText(driver, _radioBtnOtherOneTimePayment,
+					oneTimePaymentBenefitData.otherOneTimePayment.reimbursedBy, PDTConstants.REIMBURSED_BY,
+					PDTConstants.RADIO_BUTTON_LIST, true);
+
+			BusinessFunctions.verifyOtherTextBoxIsDisplayed(driver, addNewPolicyPage,
+					oneTimePaymentBenefitData.otherOneTimePayment.reimbursedBy,
+					_txtBoxOtherOneTimePaymentReimbursedByOther,
+					oneTimePaymentBenefitData.otherOneTimePayment.reimbursedByOther, subBenefitFormName, PDTConstants.REIMBURSED_BY_OTHER);
+			CoreFunctions.clearAndSetText(driver, _txtAreaOtherOneTimePaymentComment, PDTConstants.COMMENT,
+					oneTimePaymentBenefitData.otherOneTimePayment.comment);
+		} catch (Exception e) {
+			Assert.fail(MessageFormat.format(PDTConstants.EXCEPTION_OCCURED_FILL_SUBBENEFIT_FORM, CoreConstants.FAIL,
+					subBenefitFormName));
+		}
 	}
 
 }

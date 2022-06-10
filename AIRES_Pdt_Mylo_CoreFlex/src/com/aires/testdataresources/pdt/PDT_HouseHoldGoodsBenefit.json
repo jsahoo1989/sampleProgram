@@ -1,0 +1,122 @@
+[
+	{
+		"benefitName": "Household Goods",
+		"usDomesticVanlineShipment": {			
+			"noWeightCostCap": "true",			
+			"weightCapInPounds": "100",
+			"costCapInUsd": "2000",	
+			"authDaysInTempStorage": "10",
+			"insuranceType":"US Vanline Valuation Coverage", 	
+			"otherInsuranceType": "Other insurance for usDomesticVanlineShipment",
+			"excessValuationDueToValPaidBy": "Other",
+			"excessValuationDueToWeightPaidBy": "Other",
+			"otherExcessValPaidBy": "Other excessValuationDueToValPaidBy",
+			"otherExcessWeightPaidBy": "Other excessValuationDueToWeightPaidBy",
+			"grossUp": "No",
+			"reimbursedBy": "Aires",
+			"reimbursedByOther": "Reimbursed by other",
+			"comment": "usDomesticVanlineShipment comment"			
+		},
+		"autoShipment": {
+			"maxNumOfAutos": "20",
+			"insuranceType":"Other", 	
+			"otherInsuranceType": "Other insurance for autoShipment",
+			"shipDependOnOriginDest": "Yes",
+			"grossUp": "Yes",
+			"reimbursedBy": "Other",
+			"reimbursedByOther": "Reimbursed by other",
+			"comment": "autoShipment comment"	
+		},
+		"selfMove": {
+			"maxAmount": "1000",
+			"currency": "U.S. Dollar",
+			"grossUp": "Yes",
+			"reimbursedBy": "Client",
+			"reimbursedByOther": "Reimbursed by other",
+			"comment": "selfMove comment"			
+		},
+		"airShipment": {
+			"noWeightVolCap": "true",
+			"weightCap": "100",
+			"unitOfWeightCap": "Kg",
+			"weightCapAppliesTo": "Per Person",
+			"volCap": "200",
+			"unitOfVolCap": "cuft",
+			"volCapAppliesTo": "Total",
+			"numOfEContainers": "100",
+			"eContAppliesTo": "Per Person",
+			"numOfDContainers": "200",
+			"dContAppliesTo": "Total",
+			"numOfLDNContainers": "100",
+			"ldnContAppliesTo": "Per Person",
+			"authDaysInTempStorage": "10",
+			"insuranceType":"Other", 	
+			"otherInsuranceType": "Other insurance for airShipment",
+			"grossUp": "Yes",
+			"reimbursedBy": "Client",
+			"reimbursedByOther": "Reimbursed by other",
+			"comment": "Airshipment comment"			
+		},
+		"seaShipment": {
+			"noWeightVolCap": "true",
+			"weightCap": "1000",
+			"unitOfWeightCap": "Kg",
+			"volCap": "2000",
+			"unitOfVolCap": "cuft",
+			"containerSizeTransferee": "20 Ft Container",
+			"containerSizeTransfereePartner": "40 Ft Container",
+			"containerSizeTransfereeFamily": "40 Ft High Cube Container",
+			"authDaysInTempStorage": "10",
+			"insuranceType":"Other", 	
+			"otherInsuranceType": "Other insurance for seaShipment",
+			"grossUp": "Yes",
+			"reimbursedBy": "Client",
+			"reimbursedByOther": "Reimbursed by other",
+			"comment": "Sea Shipment comment"			
+		},
+		"nonUsInlandShipment": {
+			"noWeightVolCap": "true",
+			"weightCap": "500",
+			"unitOfWeightCap": "Kg",
+			"volCap": "250",
+			"unitOfVolCap": "cuft",
+			"authDaysInTempStorage": "5",
+			"insuranceType":"Other", 	
+			"otherInsuranceType": "Other insurance for nonUsInlandShipment",
+			"grossUp": "Yes",
+			"reimbursedBy": "Client",
+			"reimbursedByOther": "Reimbursed by other",
+			"comment": "Non Us InlandShipment comment"			
+		},
+		"permStorage": {
+			"noWeightVolCap": "true",
+			"weightCap": "50",
+			"unitOfWeightCap": "lbs",
+			"volCap": "25",
+			"unitOfVolCap": "cbm",
+			"authDaysInTempStorage": "25",
+			"insuranceType":"Other", 	
+			"otherInsuranceType": "Other insurance for Permanent Storage",
+			"grossUp": "Yes",
+			"reimbursedBy": "Other",
+			"reimbursedByOther": "Reimbursed by other",
+			"comment": "Permanent Storage comment"			
+		},
+		"petShipment": {
+			"numberOfPets": "3",
+			"maxAmount": "1000",			
+			"currency": "U.S. Dollar",
+			"detail": "Per Pet",
+			"grossUp": "Yes",
+			"reimbursedBy": "Aires",
+			"reimbursedByOther": "Reimbursed by other",
+			"comment": "Pet Shipment comment"			
+		},
+		"discardDonate": {
+			"grossUp": "Yes",
+			"reimbursedBy": "Client",
+			"reimbursedByOther": "Reimbursed by other",
+			"comment": "Discard Donate comment"			
+		}
+	}
+]

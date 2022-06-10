@@ -446,6 +446,7 @@ public class BusinessFunctions {
 		default:
 			Assert.fail(appName + PDTConstants.NOT_EXIST);
 		}
+		return value;
 	}
 	
 	public static String getTestRailIdAsPerEnvt(String tagValue, String scenarioTagName) {

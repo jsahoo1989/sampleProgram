@@ -254,7 +254,8 @@ public class Mylo_DashboardHomePage extends Base {
 		try {
 			CoreFunctions.explicitWaitTillElementVisibility(driver, _executeButton, _executeButton.getText(), 20L);
 			CoreFunctions.highlightElementAndClick(driver, _executeButton, _executeButton.getText());
-			if (CoreFunctions.isElementExist(driver, _spinner, 30)||CoreFunctions.isElementExist(driver, _myloErrorPopUp, 5)) {
+			if (CoreFunctions.isElementExist(driver, _spinner, 30)
+					|| CoreFunctions.isElementExist(driver, _myloErrorPopUp, 5)) {
 				CoreFunctions.explicitWaitTillElementInVisibilityCustomTime(driver, _spinner, 60);
 				CoreFunctions.explicitWaitTillElementVisibility(driver, _popUpMessage, _popUpMessage.getText());
 				Assert.assertEquals(_popUpMessage.getText(), message, MYLOConstants.INCORRECT_MESSAGE);

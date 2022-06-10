@@ -2367,9 +2367,9 @@ public class Mylo_AssignmentPage extends Base {
 			CoreFunctions.scrollToElementUsingJavaScript(driver, _historyCardDropdownTransferreName.get(i), _historyCardDropdownTransferreName.get(i).getText());
 			CoreFunctions.scrollToElementUsingJavaScript(driver, _historyCardDropdownFileIdClient.get(i), _historyCardDropdownFileIdClient.get(i).getText());
 			CoreFunctions.scrollToElementUsingJavaScript(driver, _historyCardDropdownAddress.get(i), _historyCardDropdownAddress.get(i).getText());
-			if (!(CoreFunctions.getElementText(driver, _historyCardDropdownTransferreName.get(i)).equals(details[0].trim())
-					&& CoreFunctions.getElementText(driver, _historyCardDropdownFileIdClient.get(i)).equals(details[1].trim())
-					&& CoreFunctions.getElementText(driver, _historyCardDropdownAddress.get(i)).equals(details[2].trim()))) {	
+			if (!(CoreFunctions.getElementText(driver, _historyCardDropdownTransferreName.get(i)).equalsIgnoreCase(details[0].trim())
+					&& CoreFunctions.getElementText(driver, _historyCardDropdownFileIdClient.get(i)).equalsIgnoreCase(details[1].trim())
+					&& CoreFunctions.getElementText(driver, _historyCardDropdownAddress.get(i)).equalsIgnoreCase(details[2].trim()))) {	
 				System.out.println(CoreFunctions.getElementText(driver, _historyCardDropdownTransferreName.get(i)) + "-------" + details[0].trim());
 				System.out.println(CoreFunctions.getElementText(driver, _historyCardDropdownFileIdClient.get(i))+ "-------" + details[1].trim());
 				System.out.println(CoreFunctions.getElementText(driver, _historyCardDropdownAddress.get(i))+ "-------" + details[2].trim());
@@ -2866,7 +2866,8 @@ public class Mylo_AssignmentPage extends Base {
 	 * Verify Different FieldValues for Multiple Rows of Identification & Documentation section
 	 */
 	public boolean verifyMultipleRowsFieldValuesIdentDocSection() {
-		boolean flag = true;	
+		boolean flag = true;
+		CoreFunctions.explicitWaitTillElementInVisibilityCustomTime(driver, _spinner, 60);
 		for(int i=0;i<_identDocTypeDropdowns.size();i++) {
 		String updatedFromDate = CoreFunctions.getStringDateInFormat(
 				getFieldValuesIdentificationAndDocumentationSection(MYLOConstants.FROMDATE, i), "dd MMM yyyy",

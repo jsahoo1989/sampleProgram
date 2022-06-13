@@ -29,21 +29,28 @@
  ***********************************Header End*********************************************************************************/
 package com.aires.businessrules;
 
+import java.io.FileReader;
 import java.math.RoundingMode;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.Statement;
 import java.text.DecimalFormat;
 import java.text.MessageFormat;
+import java.util.Collections;
+import java.util.Comparator;
+import java.util.List;
+import java.util.Properties;
 import java.time.Duration;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
 import java.util.Random;
 import java.util.concurrent.ThreadLocalRandom;
-
 import org.apache.commons.codec.binary.Base64;
 import org.apache.log4j.Logger;
+import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.WebElement;
+import org.openqa.selenium.interactions.Actions;
 import org.openqa.selenium.NoSuchElementException;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
@@ -88,10 +95,11 @@ public class BusinessFunctions {
 		CoreFunctions.waitForBrowserToLoad(driver);
 		CoreFunctions.waitHandler(3);
 		for (WebElement row : WebElementList) {
-			Log.info(CoreConstants.ACTUAL_ITEM_NAME_IS + row.getText());
+			String text=row.getText();
+			Log.info(CoreConstants.ACTUAL_ITEM_NAME_IS + text);
 			if (row.getText().equals(itemName)) {
 				CoreFunctions.clickUsingJS(driver, row, itemName);
-				Reporter.addStepLog(CoreConstants.PASS + row.getText() + PDTConstants.IS_CLICKED);
+				Reporter.addStepLog(CoreConstants.PASS + text + PDTConstants.IS_CLICKED);
 				break;
 			}
 		}
@@ -420,6 +428,27 @@ public class BusinessFunctions {
 				element.getAttribute("title")));
 	}
 
+	public static String getTestRailIdAsPerApplication(String appName, String scenarioTagName) {
+		String value = null;
+		switch (appName) {
+		case CoreConstants.MYLO:
+			value = scenarioTagName.substring(scenarioTagName.indexOf("Mylo:") + 5,
+					scenarioTagName.lastIndexOf("Mylo:") + 11);
+			break;
+		case CoreConstants.PDT:
+			value = scenarioTagName.substring(scenarioTagName.indexOf("Pdt:") + 4,
+					scenarioTagName.lastIndexOf("Pdt:") + 10);
+			break;
+		case CoreConstants.COREFLEX:
+			value = scenarioTagName.substring(scenarioTagName.indexOf("Coreflex:") + 9,
+					scenarioTagName.lastIndexOf("Coreflex:") + 15);
+			break;
+		default:
+			Assert.fail(appName + PDTConstants.NOT_EXIST);
+		}
+		return value;
+	}
+	
 	public static String getTestRailIdAsPerEnvt(String tagValue, String scenarioTagName) {
 		String value = null;
 		switch (tagValue) {
@@ -441,25 +470,28 @@ public class BusinessFunctions {
 		return value;
 	}
 
-	public static int getTestRailSectionIDAsPerEnvt() {
-		int sectionID = 0;
-		switch (CoreConstants.TAG_VALUE) {
-		case CoreConstants.VALUE_AT_PRE_PROD:
-			sectionID = 49625;
+	public static int getTestRailSectionIDAsPerApplication() {
+		int sectionID = 0;		
+		//Commented Code is for debugging purpose
+		/*String propertyFilePath = System.getProperty("user.dir") + "\\Configs\\Config.properties";
+		Properties properties = new Properties();
+		properties.load(new FileReader(propertyFilePath));
+		String applicationName=properties.getProperty("application");*/
+		String applicationName=System.getProperty("application");
+		switch (applicationName) {
+		case CoreConstants.MYLO:
+			sectionID = 49911;
 			break;
-		case CoreConstants.VALUE_AT_POST_PROD:
-			sectionID = 49638;
+		case CoreConstants.PDT:
+			sectionID = 49817;
 			break;
-		case CoreConstants.VALUE_AT_PERFORMANCE:
-			sectionID = 49809;
+		case CoreConstants.COREFLEX:
+			sectionID = 49912;
 			break;
 		default:
 			Assert.fail(CoreConstants.TAG_VALUE + PDTConstants.NOT_EXIST);
 		}
 		return sectionID;
-		// return
-		// CoreConstants.TAG_VALUE.equalsIgnoreCase(CoreConstants.VALUE_AT_PRE_PROD) ?
-		// 49625 : 49638;
 	}
 
 	public static int getRandomNumberFromList(int size) {
@@ -993,6 +1025,4 @@ public class BusinessFunctions {
 		Reporter.addStepLog("<b>Time taken by "+pageName+" page to Load is :"
 				+ pgToLoadformat.format((timeAfterAction - timeBeforeAction) / 1000) + " Seconds </b>");
 	}
-
-
 }

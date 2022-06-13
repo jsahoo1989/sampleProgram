@@ -30,6 +30,7 @@ import com.aires.testdatatypes.mylo.MyloCAStates;
 import com.aires.testdatatypes.mylo.MyloIndiaStates;
 import com.aires.testdatatypes.mylo.MyloUSStates;
 import com.aires.testdatatypes.mylo.Mylo_AssignmentShipmentDetails;
+import com.aires.testdatatypes.mylo.Mylo_Assignment_HistoryDetails_PREPROD;
 import com.aires.testdatatypes.mylo.Mylo_Assignment_HistoryDetails_UAT;
 import com.aires.testdatatypes.mylo.Mylo_LoginData;
 import com.google.gson.Gson;
@@ -50,6 +51,8 @@ public class JsonDataReader_Mylo {
 			.getTestDataResourcePath() + "mylo/Mylo_IndiaStates.json";
 	private final String _MyloHistoryDetailsUATFilePath = FileReaderManager.getInstance().getConfigReader()
 			.getTestDataResourcePath() + "mylo/Mylo_Assignment_HistoryDetails_UAT.json";
+	private final String _MyloHistoryDetailsPREPRODFilePath = FileReaderManager.getInstance().getConfigReader()
+			.getTestDataResourcePath() + "mylo/Mylo_Assignment_HistoryDetails_PREPROD.json";
 	private List<Mylo_LoginData> _loginDataList;
 	private List<MyloAssignmentDetails> _assignmentDetailsList;
 	private List<Mylo_AssignmentShipmentDetails> _assignmentShipmentDetailsList;
@@ -57,6 +60,7 @@ public class JsonDataReader_Mylo {
 	private List<MyloCAStates> _CAStatesList;
 	private List<MyloIndiaStates> _IndiaStatesList;
 	private List<Mylo_Assignment_HistoryDetails_UAT> _myloAssignHistoryDet_UAT;
+	private List<Mylo_Assignment_HistoryDetails_PREPROD> _myloAssignHistoryDet_PREPROD;
 	
 	public JsonDataReader_Mylo() {
 		_loginDataList = getUserData();
@@ -66,6 +70,7 @@ public class JsonDataReader_Mylo {
 		_CAStatesList=getCAStates();
 		_IndiaStatesList=getIndiaStates();
 		_myloAssignHistoryDet_UAT = getMyloHistoryDetails_UAT();
+		_myloAssignHistoryDet_PREPROD = getMyloHistoryDetails_PREPROD();
 	}
 	private List<Mylo_LoginData> getUserData() {
 		Gson gson = new Gson();
@@ -193,6 +198,24 @@ public class JsonDataReader_Mylo {
 		}
 	}
 	
+	private List<Mylo_Assignment_HistoryDetails_PREPROD> getMyloHistoryDetails_PREPROD() {
+		Gson gson = new Gson();
+		BufferedReader bufferReader = null;
+		try {
+			bufferReader = new BufferedReader(new FileReader(_MyloHistoryDetailsPREPRODFilePath));
+			Mylo_Assignment_HistoryDetails_PREPROD[] application = gson.fromJson(bufferReader, Mylo_Assignment_HistoryDetails_PREPROD[].class);
+			return Arrays.asList(application);
+		} catch (FileNotFoundException e) {
+			throw new RuntimeException(CoreConstants.JSON_FILE_NOT_FOUND_AT_PATH + _MyloHistoryDetailsUATFilePath);
+		} finally {
+			try {
+				if (bufferReader != null)
+					bufferReader.close();
+			} catch (IOException ignore) {
+			}
+		}
+	}
+	
 	public final Mylo_LoginData getloginDetailsByUserProfileName(String userProfileName) {
 		return _loginDataList.stream().filter(x -> x.MyloProfileName.equalsIgnoreCase(userProfileName)).findAny().get();
 	}
@@ -216,5 +239,8 @@ public class JsonDataReader_Mylo {
 	}
 	public final List<Mylo_Assignment_HistoryDetails_UAT> getMyloAssignmentUATHistoryDetails() {
 		return _myloAssignHistoryDet_UAT;
+	}
+	public final List<Mylo_Assignment_HistoryDetails_PREPROD> getMyloAssignmentPREPRODHistoryDetails() {
+		return _myloAssignHistoryDet_PREPROD;
 	}
 }

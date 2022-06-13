@@ -8,8 +8,6 @@ import java.sql.ResultSet;
 import java.util.ArrayList;
 import java.util.LinkedHashMap;
 import java.util.List;
-
-import org.openqa.selenium.WebElement;
 import org.testng.Assert;
 import com.aires.businessrules.constants.CoreConstants;
 import com.aires.businessrules.constants.DbQueries;
@@ -42,6 +40,10 @@ public class DbFunctions {
 		case "uat":
 			dbURL = "jdbc:oracle:thin:policydba/uatpo@corpqavl300.corp.aires.com:1521:IRISUAT";
 			break;
+		case "preprod":
+			dbURL = "jdbc:oracle:thin:isisdba/iristestisisdba@corptesvl300.corp.aires.com:1521:iristest";
+			break;
+					
 		default:
 			Assert.fail(PDTConstants.DATABASE_CONNECTION + PDTConstants.NOT_EXIST);
 		}
@@ -76,23 +78,26 @@ public class DbFunctions {
 	public static String getMyloDBConnectionStringAsPerEnvt(String envt) {
 		String dbURL = null;
 		switch (envt) {
-		case "relonetqa4":
+		case "RELONETQA4":
 			//dbURL = "jdbc:oracle:thin:irisuser/nextir@corptesvl300.corp.aires.com:1521:irisnext";
 			dbURL = "jdbc:oracle:thin:isisdba/irisuatisisdba@corpqavl300.corp.aires.com:1521:irisuat";
 			break;
-		case "dev":
+		case "DEV":
 			dbURL = "jdbc:oracle:thin:isisdba/irisdevisisdba@corptesvl300.corp.aires.com:1521:IRISDEV";
 			break;
-		case "test":
+		case "TEST":
 			dbURL = "jdbc:oracle:thin:policydba/testpo@corptesvl300.corp.aires.com:1521:IRISTEST";
 			break;
-		case "prod":
+		case "PROD":
 			// For Production Envt. - Change username/Password & verify DB connection
 			// details
 			dbURL = "jdbc:oracle:thin:isisdba/iristestisisdba@corpprdl200.corp.aires.com:1521:IRIS";
 			break;
-		case "uat":
-			dbURL = "jdbc:oracle:thin:isisdba/irisuatisisdba@corpqavl300.corp.aires.com:1521:irisuat";
+		case "UAT":
+			dbURL = "jdbc:oracle:thin:irisuser/uatir@corpqavl300.corp.aires.com:1521:irisuat";
+			break;
+		case "PREPROD":
+			dbURL = "jdbc:oracle:thin:irisuser/testir@corptesvl300.corp.aires.com:1521:iristest";
 			break;
 		default:
 			Assert.fail(PDTConstants.DATABASE_CONNECTION + PDTConstants.NOT_EXIST);
@@ -106,7 +111,9 @@ public class DbFunctions {
 		try {
 			DriverManager.registerDriver(new oracle.jdbc.OracleDriver());
 			connection = DriverManager.getConnection(
-					getMyloDBConnectionStringAsPerEnvt(CoreFunctions.getPropertyFromConfig("envt").toLowerCase()));			
+					getMyloDBConnectionStringAsPerEnvt(System.getProperty("envt")));			
+			//connection = DriverManager.getConnection(
+				//	getMyloDBConnectionStringAsPerEnvt(CoreFunctions.getPropertyFromConfig("envt")));			
 			PreparedStatement pst = connection.prepareStatement(DbQueries.QUERY_GET_IDENTITY_TYPE_DROPDOWNLIST);
 			ResultSet resultset = pst.executeQuery();
 			while (resultset.next()) {
@@ -134,9 +141,10 @@ public class DbFunctions {
 		myloQueryStatementMap.put(MYLOConstants.MARITAL_STATUS, DbQueries.QUERY_GET_MARITAL_STATUS_DROPDOWNLIST);
 		myloQueryStatementMap.put(MYLOConstants.PRONOUNS, DbQueries.QUERY_GET_PRONOUNS_DROPDOWNLIST);
 		myloQueryStatementMap.put(MYLOConstants.CITIZENSHIP, DbQueries.QUERY_GET_COUNTRY_DROPDOWNLIST);
-		myloQueryStatementMap.put(MYLOConstants.EMAIL_TYPE, DbQueries.QUERY_GET_EMAIL_TYPE_DROPDOWNLIST);
-		myloQueryStatementMap.put(MYLOConstants.PHONE_TYPE, DbQueries.QUERY_GET_PHONE_TYPE_DROPDOWNLIST);
-		myloQueryStatementMap.put(MYLOConstants.ORIGIN_DEST, DbQueries.QUERY_GET_LOCATION_TYPE_DROPDOWNLIST);
+		myloQueryStatementMap.put(MYLOConstants.TRANSFEREE_EMAIL_TYPE, DbQueries.QUERY_GET_TRANSFEREE_EMAIL_TYPE_DROPDOWNLIST);
+		myloQueryStatementMap.put(MYLOConstants.TRANSFEREE_PHONE_TYPE, DbQueries.QUERY_GET_PHONE_TYPE_DROPDOWNLIST);
+		myloQueryStatementMap.put(MYLOConstants.TRANSFEREE_ORGDEST, DbQueries.QUERY_GET_LOCATION_TYPE_DROPDOWNLIST);
+		myloQueryStatementMap.put(MYLOConstants.GENDER, DbQueries.QUERY_GET_GENDER_DROPDOWNLIST);
 		
 	}
 	
@@ -144,9 +152,10 @@ public class DbFunctions {
 		myloQTableColumnFields.put(MYLOConstants.MARITAL_STATUS, MYLOConstants.MARITAL_STATUS_COLUMN);
 		myloQTableColumnFields.put(MYLOConstants.PRONOUNS, MYLOConstants.PRONOUN_COLUMN);
 		myloQTableColumnFields.put(MYLOConstants.CITIZENSHIP, MYLOConstants.COUNTRY_COLUMN);
-		myloQTableColumnFields.put(MYLOConstants.EMAIL_TYPE, MYLOConstants.EMAIL_TYPE_COLUMN);
-		myloQTableColumnFields.put(MYLOConstants.PHONE_TYPE, MYLOConstants.PHONE_TYPE_COLUMN);
-		myloQTableColumnFields.put(MYLOConstants.ORIGIN_DEST, MYLOConstants.LOCATION_TYPE_COLUMN);
+		myloQTableColumnFields.put(MYLOConstants.TRANSFEREE_EMAIL_TYPE, MYLOConstants.EMAIL_TYPE_COLUMN);
+		myloQTableColumnFields.put(MYLOConstants.TRANSFEREE_PHONE_TYPE, MYLOConstants.PHONE_TYPE_COLUMN);
+		myloQTableColumnFields.put(MYLOConstants.TRANSFEREE_ORGDEST, MYLOConstants.LOCATION_TYPE_COLUMN);
+		myloQTableColumnFields.put(MYLOConstants.GENDER, MYLOConstants.GENDER_MARKER_DESCRIPTION);
 		
 	}
 	
@@ -158,7 +167,9 @@ public class DbFunctions {
 		try {
 			DriverManager.registerDriver(new oracle.jdbc.OracleDriver());
 			connection = DriverManager.getConnection(
-					getMyloDBConnectionStringAsPerEnvt(CoreFunctions.getPropertyFromConfig("envt").toLowerCase()));			
+					getMyloDBConnectionStringAsPerEnvt(System.getProperty("envt")));	
+			//connection = DriverManager.getConnection(
+				//	getMyloDBConnectionStringAsPerEnvt(CoreFunctions.getPropertyFromConfig("envt")));			
 			PreparedStatement pst = connection.prepareStatement(myloQueryStatementMap.get(fieldName));
 			ResultSet resultset = pst.executeQuery();
 			while (resultset.next()) {

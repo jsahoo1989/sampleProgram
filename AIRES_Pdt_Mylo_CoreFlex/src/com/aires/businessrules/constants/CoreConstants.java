@@ -60,6 +60,7 @@ public class CoreConstants {
 	public static final String FAIL_TO_SELECT_VALUE_FROM_DROPDOWN = "{0}Fail to select value ''{1}'' from dropdown ''{2}''";
 	public static final String VERIFIED_ELEMENT_ON_PAGE = "{0}Verified ''{1}'' on ''{2}'' page";
 	public static final String FAIL_TO_VERIFY_ELEMENT_ON_PAGE = "{0}Failed to verify ''{1}'' on ''{2}'' page";
+	public static final String FAIL_TO_VERIFY_ELEMENT_ON_SECTION = "{0}Failed to verify ''{1}'' on ''{2}'' section";
 	// Constants Used in EmailUtil
 	public static final String USER_NAME = "userName";
 	public static final String PASSWORD = "password";
@@ -87,4 +88,41 @@ public class CoreConstants {
 	public static final String SCROLLED_TO_ELEMENT = "Successfully scrolled to Element : ''{0}''.";
 	public static final String FAILED_TO_SCROLL_TO_ELEMENT = "Failed to scroll to Element : ''{0}''.";
 	public static final String SQL_QUERY_FAILED = "SQL Query Failed";
+	
+	
+	
+	// TestRail url
+	public static final String TEST_RAIL_URL = "https://testrail.aires.com/testrail/";
+
+	// TestRail Suite and Section IDs -- AIRES
+	public static final String TEST_RUN_NAME = "AIRES_Automation_";
+	public static final String NEW_TEST_RUN_ID_CREATED_IN_TESTRAIL_AS = "New Test Run ID created in Test Rail as : ";
+	public static final String AUTOMATION_TEST_RUN = "_TestRun_";
+	public static final String EXECUTION_DONE_CLOSE_TEST_RUN_ID = "Execution Completed!! Closing the Test Run ID : ";
+
+		// TestRail ProjectName - Automation Test
+	public static final int PROJECT_ID_AIRES = 33;
+	public static final int SUITE_ID_AIRES = 663;
+	public static final int SECTION_ID_MYLO = 49911;// Execution of All BDDScenarios (@Regression)
+	public static final int SECTION_ID_COREFLEX = 49911;
+	public static final int SECTION_ID_PDT = 49911;
+
+	public static final int ASSIGN_TO_ID = 47;
+	public static final String testRailUseriD = "rsharma@aires.com";
+	public static final String testRailPassword = "December2019!";
+	public static final String MYLO = "MYLO";
+	public static final String PDT = "PDT";
+	public static final String COREFLEX = "COREFLEX";
+	public static final String MXTRANSFEREE_QA = "MXTransferee_QA";
+	public static final String MXTRANSFEREE_UAT = "MXTransferee_UAT";
+	public static final String MXTRANSFEREE_PREPROD = "MXTransferee_PREPROD";
+	public static final String MXTRANSFEREE_QA_URL = "https://relonetuat2.aires.com/mobilityx/faces/jsf/Login.jsf";
+	public static final String MXTRANSFEREE_UAT_URL ="https://relonetdev3.aires.com/mobilityx/faces/jsf/Login.jsf";
+	public static final String MXTRANSFEREE_PREPROD_URL ="https://relonettest2.aires.com/mobilityx/faces/jsf/Login.jsf";
+	public static final String TRANSMISSION_SUBMISSION_QA_URL= "https://relonetqa3.aires.com/flex-review-app";
+	public static final String TRANSMISSION_SUBMISSION_UAT_URL= "https://relonetdev3.aires.com/flex-review-app/#/viewrequest";
+	public static final String TRANSMISSION_SUBMISSION_PREPROD_URL= "https://blueprinttest.aires.com/flex-review-app/#/login";
+	public static final String TRANSMISSION_SUBMISSION_QA = "TransfereeSubmissions_QA";
+	public static final String TRANSMISSION_SUBMISSION_UAT = "TransfereeSubmissions_UAT";
+	public static final String TRANSMISSION_SUBMISSION_PREPROD = "TransfereeSubmissions_PREPROD";
 }

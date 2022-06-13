@@ -21,8 +21,14 @@
 			<plugin>
 				<groupId>org.apache.maven.plugins</groupId>
 				<artifactId>maven-surefire-plugin</artifactId>
-				<version>3.0.0-M6</version>
+				<version>2.19.1</version>
 				<configuration>
+					<systempropertyvariables>
+						<envt>${envt}</envt>
+						<browser>${browser}</browser>	
+						<application>${application}</application>
+						<application>${testURL}</application>	
+					</systempropertyvariables>
 					<suiteXmlFiles>
 						<suiteXmlFiles>${suiteName}</suiteXmlFiles>
 					</suiteXmlFiles>
@@ -100,7 +106,7 @@
 		<dependency>
 			<groupId>org.testng</groupId>
 			<artifactId>testng</artifactId>
-			<version>7.5</version>
+			<version>7.5</version>			
 		</dependency>
 
 		<!-- https://mvnrepository.com/artifact/info.cukes/cucumber-picocontainer -->
@@ -277,13 +283,11 @@
 			<artifactId>okhttp</artifactId>
 			<version>3.0.0</version>
 		</dependency>
-
 		<!-- https://mvnrepository.com/artifact/io.rest-assured/rest-assured -->
 		<dependency>
 			<groupId>io.rest-assured</groupId>
 			<artifactId>rest-assured</artifactId>
 			<version>5.0.0</version>
 		</dependency>
-
 	</dependencies>
 </project>

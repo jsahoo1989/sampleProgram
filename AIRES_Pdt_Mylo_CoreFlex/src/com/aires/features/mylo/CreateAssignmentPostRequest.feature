@@ -22,4 +22,3 @@ And 201 response code is received with all field values populated in the respons
 When a "GET" call is made using "Get Assignment" service end point for above created assignment
 Then a 200 response code should be received with all assignment details fetched in the response
 And assignment fetched should match with the payload provided for the POST request
-#And fetched assignment details should match with the payload provided for the POST request

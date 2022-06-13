@@ -31,33 +31,12 @@ Feature: Validate the New Policy Versioning Workflow for ‘Active’ points based C
     
     @End-To_End_CoreFlex @CF_BluePrint_Versioning @NewVersionPolicyWorkFlowBenefitSelectionCheck
   Scenario: CoreFlex - Validating selected Benefits & Custom Bundles of New Policy version created from ‘Active’ points based CoreFlex policy that has one or more assignments/files
-    Given he has searched for 'Active' points based CoreFlex policy that has one or more assignments/files on "View/Edit Policy Forms" page
-    And he has verified that "Edit" and "Delete" icon of "V1" version of "Active" points based CoreFlex policy is disabled
-    And he has clicked on "Edit" icon of the latest "Draft" version of the searched points based CoreFlex policy
-    And he has navigated to "General Information" page of 'New Version' policy in 'Editable' mode having Policy Status displayed as "Draft"
-    And he has verified Policy and Benefits Selection performed on "Flex Policy Setup" and "Policy Benefits Categories" page
-    And he has verified 'Benefits-SubBenefits' details along with 'Custom Bundles' on the 
-   
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
+    #Given he has searched for 'Active' points based CoreFlex policy that has one or more assignments/files on "View/Edit Policy Forms" page
+    #And he has verified that "Edit" and "Delete" icon of "V1" version of "Active" points based CoreFlex policy is disabled
+    #And he has clicked on "Edit" icon of the latest "Draft" version of the searched points based CoreFlex policy
+    #And he has navigated to "General Information" page of 'New Version' policy in 'Editable' mode having Policy Status displayed as "Draft"
+    #And he has verified Policy and Benefits Selection performed on "Flex Policy Setup" and "Policy Benefits Categories" page
+    #And he has verified 'Benefits-SubBenefits' details along with 'Custom Bundles' on the 
     
     @End-To_End_CoreFlex @CF_BluePrint_Versioning_ApprovalWF @CancelPolicy
   Scenario: CoreFlex - Validating policy status is NOT updated to 'Active' on cancellation of Policy Setup Approval WorkFlow

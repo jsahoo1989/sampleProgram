@@ -100,6 +100,9 @@ public class MyloJourneyPage_TransfereeSection extends Base {
 	
 	@FindBy(how = How.CSS, using = "ng-select[name='P_Gender'] span[class='ng-value-label ng-star-inserted']")
 	private WebElement _transfereeGenderDropDownValue;
+	
+	@FindBy(how = How.CSS, using = "ng-select[name='P_Gender'] span[class='ng-arrow-wrapper']")
+	private WebElement _transfereeGenderDropDownArrow;
 
 	@FindBy(how = How.CSS, using = "ng-select[name='T_Type2']")
 	private List<WebElement> _transfereeEmailTypeDropdown;
@@ -948,7 +951,7 @@ public class MyloJourneyPage_TransfereeSection extends Base {
 	public boolean getGenderXHoverMessage(String msg) {
 		boolean flag = false;
 		try {
-			clickFieldsOnTransfereeSection(MYLOConstants.GENDER);
+			CoreFunctions.click(driver, _transfereeGenderDropDownArrow, MYLOConstants.GENDER);
 			List<WebElement> genderOptions = CoreFunctions.getElementListByLocator(driver, _genderDropdownOptions);
 			WebElement genderXWebElement = CoreFunctions.returnItemInListByText(driver, genderOptions, MYLOConstants.GENDER_X);
 			CoreFunctions.hover(driver, genderXWebElement);

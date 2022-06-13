@@ -29,6 +29,7 @@
  ***********************************Header End*********************************************************************************/
 package com.aires.businessrules;
 
+import java.io.FileReader;
 import java.math.RoundingMode;
 import java.sql.Connection;
 import java.sql.DriverManager;
@@ -38,14 +39,24 @@ import java.text.MessageFormat;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
+import java.util.Properties;
+import java.time.Duration;
+import java.util.Collections;
+import java.util.Comparator;
+import java.util.List;
 import java.util.Random;
 import java.util.concurrent.ThreadLocalRandom;
-
 import org.apache.commons.codec.binary.Base64;
 import org.apache.log4j.Logger;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.interactions.Actions;
+import org.openqa.selenium.NoSuchElementException;
+import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.WebElement;
+import org.openqa.selenium.interactions.Actions;
+import org.openqa.selenium.support.ui.ExpectedConditions;
+import org.openqa.selenium.support.ui.FluentWait;
 import org.openqa.selenium.support.ui.Select;
 import org.testng.Assert;
 import com.aires.businessrules.constants.COREFLEXConstants;
@@ -84,10 +95,11 @@ public class BusinessFunctions {
 		CoreFunctions.waitForBrowserToLoad(driver);
 		CoreFunctions.waitHandler(3);
 		for (WebElement row : WebElementList) {
-			Log.info(CoreConstants.ACTUAL_ITEM_NAME_IS + row.getText());
+			String text=row.getText();
+			Log.info(CoreConstants.ACTUAL_ITEM_NAME_IS + text);
 			if (row.getText().equals(itemName)) {
 				CoreFunctions.clickUsingJS(driver, row, itemName);
-				Reporter.addStepLog(CoreConstants.PASS + row.getText() + PDTConstants.IS_CLICKED);
+				Reporter.addStepLog(CoreConstants.PASS + text + PDTConstants.IS_CLICKED);
 				break;
 			}
 		}
@@ -416,6 +428,27 @@ public class BusinessFunctions {
 				element.getAttribute("title")));
 	}
 
+	public static String getTestRailIdAsPerApplication(String appName, String scenarioTagName) {
+		String value = null;
+		switch (appName) {
+		case CoreConstants.MYLO:
+			value = scenarioTagName.substring(scenarioTagName.indexOf("Mylo:") + 5,
+					scenarioTagName.lastIndexOf("Mylo:") + 11);
+			break;
+		case CoreConstants.PDT:
+			value = scenarioTagName.substring(scenarioTagName.indexOf("Pdt:") + 4,
+					scenarioTagName.lastIndexOf("Pdt:") + 10);
+			break;
+		case CoreConstants.COREFLEX:
+			value = scenarioTagName.substring(scenarioTagName.indexOf("Coreflex:") + 9,
+					scenarioTagName.lastIndexOf("Coreflex:") + 15);
+			break;
+		default:
+			Assert.fail(appName + PDTConstants.NOT_EXIST);
+		}
+		return value;
+	}
+	
 	public static String getTestRailIdAsPerEnvt(String tagValue, String scenarioTagName) {
 		String value = null;
 		switch (tagValue) {
@@ -437,25 +470,28 @@ public class BusinessFunctions {
 		return value;
 	}
 
-	public static int getTestRailSectionIDAsPerEnvt() {
-		int sectionID = 0;
-		switch (CoreConstants.TAG_VALUE) {
-		case CoreConstants.VALUE_AT_PRE_PROD:
-			sectionID = 49625;
+	public static int getTestRailSectionIDAsPerApplication() {
+		int sectionID = 0;		
+		//Commented Code is for debugging purpose
+		/*String propertyFilePath = System.getProperty("user.dir") + "\\Configs\\Config.properties";
+		Properties properties = new Properties();
+		properties.load(new FileReader(propertyFilePath));
+		String applicationName=properties.getProperty("application");*/
+		String applicationName=System.getProperty("application");
+		switch (applicationName) {
+		case CoreConstants.MYLO:
+			sectionID = 49911;
 			break;
-		case CoreConstants.VALUE_AT_POST_PROD:
-			sectionID = 49638;
+		case CoreConstants.PDT:
+			sectionID = 49817;
 			break;
-		case CoreConstants.VALUE_AT_PERFORMANCE:
-			sectionID = 49809;
+		case CoreConstants.COREFLEX:
+			sectionID = 49912;
 			break;
 		default:
 			Assert.fail(CoreConstants.TAG_VALUE + PDTConstants.NOT_EXIST);
 		}
 		return sectionID;
-		// return
-		// CoreConstants.TAG_VALUE.equalsIgnoreCase(CoreConstants.VALUE_AT_PRE_PROD) ?
-		// 49625 : 49638;
 	}
 
 	public static int getRandomNumberFromList(int size) {
@@ -610,18 +646,18 @@ public class BusinessFunctions {
 		return listToBeSorted;
 	}
 
-	public static void verifyReimbursedByOtherTextBoxIsDisplayed(WebDriver driver,
+	public static void verifyOtherTextBoxIsDisplayed(WebDriver driver,
 			PDT_AddNewPolicyPage addNewPolicyPage, String jsonReimbursedBy, WebElement element,
-			String jsonReimbursedByOther, String SubBenefitFormName) {
+			String jsonReimbursedByOther, String SubBenefitFormName, String lblOtherTextBox) {
 		try {
 			if (jsonReimbursedBy.equalsIgnoreCase(PDTConstants.OTHER)
 					&& CoreFunctions.isElementExist(driver, element, 1)) {
 				Reporter.addStepLog(MessageFormat.format(PDTConstants.VERIFIED_TEXT_BOX_FIELD_DISPLAYED,
-						CoreConstants.PASS, PDTConstants.REIMBURSED_BY_OTHER, SubBenefitFormName));
-				CoreFunctions.clearAndSetText(driver, element, PDTConstants.REIMBURSED_BY_OTHER, jsonReimbursedByOther);
+						CoreConstants.PASS, lblOtherTextBox, SubBenefitFormName));
+				CoreFunctions.clearAndSetText(driver, element, lblOtherTextBox, jsonReimbursedByOther);
 			}
 		} catch (Exception e) {
-			Assert.fail(MessageFormat.format(PDTConstants.FAILED_TO_FILL_FIELD, PDTConstants.REIMBURSED_BY_OTHER,
+			Assert.fail(MessageFormat.format(PDTConstants.FAILED_TO_FILL_FIELD, lblOtherTextBox,
 					SubBenefitFormName));
 		}
 	}
@@ -657,18 +693,18 @@ public class BusinessFunctions {
 	}
 
 	public static String selectAndReturnRandomValueFromDropDown(WebDriver driver, PDT_AddNewPolicyPage addNewPolicyPage,
-			String subBenefitFormName, WebElement _drpDownElement, List<WebElement> _drpDownElementOptions,
-			WebElement _drpDownElementSelected, WebElement _lblDropDown) {
+			String subBenefitFormName, WebElement drpDownElement, List<WebElement> drpDownElementOptions,
+			WebElement drpDownElementSelected, String lblDropDown) {
 		String randValue = null;
 		try {
-			CoreFunctions.clickElement(driver, _drpDownElement);
-			randValue = _drpDownElementOptions.get(CoreFunctions.getRandomNumber(0, _drpDownElementOptions.size() - 1))
+			CoreFunctions.clickElement(driver, drpDownElement);
+			randValue = drpDownElementOptions.get(CoreFunctions.getRandomNumber(0, drpDownElementOptions.size() - 1))
 					.getText();
-			CoreFunctions.selectItemInListByText(driver, _drpDownElementOptions, randValue, _lblDropDown.getText(),
+			CoreFunctions.selectItemInListByText(driver, drpDownElementOptions, randValue, lblDropDown,
 					PDTConstants.DROP_DOWN, true);
 		} catch (Exception e) {
 			Assert.fail(MessageFormat.format(PDTConstants.FAIL_TO_SELECT_VALUE_FROM_FIELD, CoreConstants.FAIL,
-					randValue, _lblDropDown.getText(), PDTConstants.DROP_DOWN));
+					randValue, lblDropDown, PDTConstants.DROP_DOWN));
 		}
 		return randValue;
 	}
@@ -711,17 +747,17 @@ public class BusinessFunctions {
 		case CoreConstants.ENVT_DEV:
 			csmCredentials[0] = _loginDetailsApplication.dev.csmUserName;
 			csmCredentials[1] = _loginDetailsApplication.dev.csmPassword;
-			csmCredentials[2] = _loginDetailsApplication.dev.csmUserFirstName;
+			csmCredentials[2] = _loginDetailsApplication.dev.firstName+ " " + _loginDetailsApplication.dev.lastName;
 			break;
 		case CoreConstants.ENVT_QA:
 			csmCredentials[0] = _loginDetailsApplication.qa.csmUserName;
 			csmCredentials[1] = _loginDetailsApplication.qa.csmPassword;
-			csmCredentials[2] = _loginDetailsApplication.qa.csmUserFirstName;
+			csmCredentials[2] = _loginDetailsApplication.qa.firstName+ " " + _loginDetailsApplication.qa.lastName;
 			break;
 		case CoreConstants.ENVT_TEST:
 			csmCredentials[0] = _loginDetailsApplication.preProd.csmUserName;
 			csmCredentials[1] = _loginDetailsApplication.preProd.csmPassword;
-			csmCredentials[2] = _loginDetailsApplication.preProd.csmUserFirstName;
+			csmCredentials[2] = _loginDetailsApplication.preProd.firstName+ " " + _loginDetailsApplication.preProd.lastName;	
 			break;
 		case CoreConstants.ENVT_PREPROD:
 			csmCredentials[0] = _loginDetailsApplication.preProd.csmUserName;
@@ -731,12 +767,12 @@ public class BusinessFunctions {
 		case CoreConstants.ENVT_UAT:
 			csmCredentials[0] = _loginDetailsApplication.uat.csmUserName;
 			csmCredentials[1] = _loginDetailsApplication.uat.csmPassword;
-			csmCredentials[2] = _loginDetailsApplication.uat.csmUserFirstName;
+			csmCredentials[2] = _loginDetailsApplication.uat.firstName+ " " + _loginDetailsApplication.uat.lastName;
 			break;
 		case CoreConstants.ENVT_PROD:
 			csmCredentials[0] = _loginDetailsApplication.prod.csmUserName;
 			csmCredentials[1] = _loginDetailsApplication.prod.csmPassword;
-			csmCredentials[2] = _loginDetailsApplication.prod.csmUserFirstName;
+			csmCredentials[2] = _loginDetailsApplication.prod.firstName+ " " + _loginDetailsApplication.prod.lastName;
 			break;
 		}
 		return csmCredentials;
@@ -744,12 +780,12 @@ public class BusinessFunctions {
 
 	public static void verifyAndFillOtherTextBoxForSubBenefitForm(WebDriver driver,
 			PDT_AddNewPolicyPage addNewPolicyPage, String subBenefitFormName, WebElement drpDown, String lblDrpDown,
-			WebElement otherTextBox, WebElement lblOtherTextBox, String otherTextBoxVal) {
+			WebElement otherTextBox, String lblOtherTextBox, String otherTextBoxVal) {
 		try {
 			if (drpDown.getText().equalsIgnoreCase(PDTConstants.OTHER)
 					&& CoreFunctions.isElementExist(driver, otherTextBox, 1)) {
 				Reporter.addStepLog(MessageFormat.format(PDTConstants.VERIFIED_TEXT_BOX_FIELD_DISPLAYED_FOR_DRPDOWN,
-						CoreConstants.PASS, lblOtherTextBox.getText(), lblDrpDown, subBenefitFormName));
+						CoreConstants.PASS, lblOtherTextBox, lblDrpDown, subBenefitFormName));
 				CoreFunctions.clearAndSetText(driver, otherTextBox, PDTConstants.OTHER, otherTextBoxVal);
 			} else if (drpDown.getText().equalsIgnoreCase(PDTConstants.OTHER)
 					&& !CoreFunctions.isElementExist(driver, otherTextBox, 1)) {
@@ -953,7 +989,45 @@ public class BusinessFunctions {
 			Assert.fail(MessageFormat.format(PDTConstants.FAILED_TO_VERIFY_AND_SELECT_DRP_DOWN, CoreConstants.FAIL,
 					drpDownVal, lblDropDown, subBenefitFormName));
 		}
-
+	}
+	
+	public static String selectAndReturnRandomValueFromList(WebDriver driver, PDT_AddNewPolicyPage addNewPolicyPage,
+			String subBenefitFormName, List<WebElement> webElementList, String labelText) {
+		String randValue = null;
+		try {			
+			randValue = webElementList.get(CoreFunctions.getRandomNumber(0, webElementList.size() - 1))
+					.getText();
+			CoreFunctions.selectItemInListByText(driver, webElementList, randValue, labelText,
+					PDTConstants.RADIO_BUTTON_LIST, true);
+		} catch (Exception e) {
+			Assert.fail(MessageFormat.format(PDTConstants.FAIL_TO_SELECT_VALUE_FROM_FIELD, CoreConstants.FAIL,
+					randValue, labelText, PDTConstants.RADIO_BUTTON_LIST));
+		}
+		return randValue.trim();
+	}
+	
+	
+	public static boolean verifyDefaultOptionIsSelectedInDrpDown(String selectedOptionText, String expectedOption,
+			String lblDrpDown) {
+		if (selectedOptionText.equalsIgnoreCase(expectedOption)) {
+			Reporter.addStepLog(MessageFormat.format(PDTConstants.VERIFIED_DEFAULT_OPTION_SELECTED, CoreConstants.PASS,
+					expectedOption, lblDrpDown));
+			return true;
+		}
+		return false;
 	}
 
+	public static void fluentWaitForSpinnerToDisappear(WebDriver driver, WebElement element) {
+		FluentWait<WebDriver> wait = new FluentWait<>(driver).withTimeout(Duration.ofSeconds(90))
+				.pollingEvery(Duration.ofMillis(1000)).withMessage("Timeout occured!")
+				.ignoring(NoSuchElementException.class);
+		wait.until(ExpectedConditions.invisibilityOf(element));
+	}
+	
+	public static void printTimeTakenByPageToLoad(long timeBeforeAction, long timeAfterAction, String pageName) {
+		DecimalFormat pgToLoadformat = new DecimalFormat();
+		pgToLoadformat.setMaximumFractionDigits(3);
+		Reporter.addStepLog("<b>Time taken by "+pageName+" page to Load is :"
+				+ pgToLoadformat.format((timeAfterAction - timeBeforeAction) / 1000) + " Seconds </b>");
+	}
 }

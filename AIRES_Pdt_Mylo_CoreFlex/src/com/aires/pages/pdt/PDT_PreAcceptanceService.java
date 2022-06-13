@@ -17,6 +17,7 @@ import com.aires.businessrules.constants.CoreConstants;
 import com.aires.businessrules.constants.PDTConstants;
 import com.aires.managers.FileReaderManager;
 import com.aires.testdatatypes.pdt.PDT_PreAcceptanceServiceBenefit;
+import com.aires.utilities.Log;
 import com.vimalselvam.cucumber.listener.Reporter;
 
 import cucumber.api.DataTable;
@@ -131,7 +132,7 @@ public class PDT_PreAcceptanceService extends Base {
 	@FindBy(how = How.CSS, using = "ng-select[formcontrolname='maxAmountCode'] span.ng-option-label")
 	private List<WebElement> _drpDownMaxAmountOptions;
 
-	@FindBy(how = How.XPATH, using = "//ng-select[@formcontrolname='maxAmountCode']/descendant::span[@class='ng-value-label ng-star-inserted']")
+	@FindBy(how = How.XPATH, using = "//ng-select[@formcontrolname='maxAmountCode']/descendant::span[@class='ng-value-label']")
 	private WebElement _drpDownMaxAmountSelectedVal;
 
 	@FindBy(how = How.CSS, using = "input[formcontrolname='maxAmountEe']")
@@ -384,6 +385,7 @@ public class PDT_PreAcceptanceService extends Base {
 		List<String> subBenefits = subBenefitTable.asList(String.class);
 		for (String subBenefit : subBenefits) {
 			CoreFunctions.selectItemInListByText(driver, _subBenefitCategories, subBenefit, true);
+			CoreFunctions.explicitWaitTillElementInVisibilityCustomTime(driver, _progressBar, 5);
 			Assert.assertTrue(verifyFormIsDisplayed(subBenefit, getElementByName(subBenefit), pageName),
 					MessageFormat.format(PDTConstants.VERIFIED_FORM_IS_NOT_DISPLAYED, subBenefit, pageName));
 		}
@@ -414,9 +416,9 @@ public class PDT_PreAcceptanceService extends Base {
 					preAcceptanceSubBenefitData.candidateSelection.reimbursedBy, PDTConstants.REIMBURSED_BY,
 					PDTConstants.RADIO_BUTTON_LIST, true);
 
-			BusinessFunctions.verifyReimbursedByOtherTextBoxIsDisplayed(driver, addNewPolicyPage,
+			BusinessFunctions.verifyOtherTextBoxIsDisplayed(driver, addNewPolicyPage,
 					preAcceptanceSubBenefitData.candidateSelection.reimbursedBy, _txtBoxCandidateSelReimbursedByOther,
-					preAcceptanceSubBenefitData.candidateSelection.reimbursedByOther, subBenefitFormName);
+					preAcceptanceSubBenefitData.candidateSelection.reimbursedByOther, subBenefitFormName, PDTConstants.REIMBURSED_BY_OTHER);
 
 			CoreFunctions.clearAndSetText(driver, _txtAreaCandidateSelComment, PDTConstants.COMMENT,
 					preAcceptanceSubBenefitData.candidateSelection.comment);
@@ -484,10 +486,10 @@ public class PDT_PreAcceptanceService extends Base {
 					preAcceptanceSubBenefitData.preAcceptanceTripTransportation.reimbursedBy,
 					PDTConstants.REIMBURSED_BY, PDTConstants.RADIO_BUTTON_LIST, true);
 
-			BusinessFunctions.verifyReimbursedByOtherTextBoxIsDisplayed(driver, addNewPolicyPage,
+			BusinessFunctions.verifyOtherTextBoxIsDisplayed(driver, addNewPolicyPage,
 					preAcceptanceSubBenefitData.preAcceptanceTripTransportation.reimbursedBy,
 					_txtBoxPreTripTransportReimbursedByOther,
-					preAcceptanceSubBenefitData.preAcceptanceTripTransportation.reimbursedByOther, subBenefitFormName);
+					preAcceptanceSubBenefitData.preAcceptanceTripTransportation.reimbursedByOther, subBenefitFormName, PDTConstants.REIMBURSED_BY_OTHER);
 
 			CoreFunctions.clearAndSetText(driver, _txtAreaPreTripTransportComment, PDTConstants.COMMENT,
 					preAcceptanceSubBenefitData.preAcceptanceTripTransportation.comment);
@@ -540,10 +542,10 @@ public class PDT_PreAcceptanceService extends Base {
 					preAcceptanceSubBenefitData.preAcceptanceTripLodging.reimbursedBy, PDTConstants.REIMBURSED_BY,
 					PDTConstants.RADIO_BUTTON_LIST, true);
 
-			BusinessFunctions.verifyReimbursedByOtherTextBoxIsDisplayed(driver, addNewPolicyPage,
+			BusinessFunctions.verifyOtherTextBoxIsDisplayed(driver, addNewPolicyPage,
 					preAcceptanceSubBenefitData.preAcceptanceTripLodging.reimbursedBy,
 					_txtBoxPreTripLodgingReimbursedByOther,
-					preAcceptanceSubBenefitData.preAcceptanceTripLodging.reimbursedByOther, subBenefitFormName);
+					preAcceptanceSubBenefitData.preAcceptanceTripLodging.reimbursedByOther, subBenefitFormName, PDTConstants.REIMBURSED_BY_OTHER);
 
 			CoreFunctions.clearAndSetText(driver, _txtAreaPreTripLodgingComment, PDTConstants.COMMENT,
 					preAcceptanceSubBenefitData.preAcceptanceTripLodging.comment);
@@ -568,7 +570,6 @@ public class PDT_PreAcceptanceService extends Base {
 					.get(CoreFunctions.getRandomNumber(0, _drpDownMaxAmountOptions.size() - 1)).getText();
 			CoreFunctions.selectItemInListByText(driver, _drpDownMaxAmountOptions, randMaxAmtTripMeals,
 					_lblMaxAmtPreAcceptanceTripMeals.getText(), PDTConstants.DROP_DOWN, true);
-			CoreFunctions.clickElement(driver, _drpDownMaxAmount);
 			setMaxAmtPreAcceptTripMeals(randMaxAmtTripMeals);
 			checkIfFlatAmtIsSelected(addNewPolicyPage, subBenefitFormName);
 
@@ -580,10 +581,10 @@ public class PDT_PreAcceptanceService extends Base {
 					preAcceptanceSubBenefitData.preAcceptanceTripMeals.reimbursedBy, PDTConstants.REIMBURSED_BY,
 					PDTConstants.RADIO_BUTTON_LIST, true);
 
-			BusinessFunctions.verifyReimbursedByOtherTextBoxIsDisplayed(driver, addNewPolicyPage,
+			BusinessFunctions.verifyOtherTextBoxIsDisplayed(driver, addNewPolicyPage,
 					preAcceptanceSubBenefitData.preAcceptanceTripMeals.reimbursedBy,
 					_txtBoxPreTripMealReimbursedByOther,
-					preAcceptanceSubBenefitData.preAcceptanceTripMeals.reimbursedByOther, subBenefitFormName);
+					preAcceptanceSubBenefitData.preAcceptanceTripMeals.reimbursedByOther, subBenefitFormName, PDTConstants.REIMBURSED_BY_OTHER);
 
 			CoreFunctions.clearAndSetText(driver, _txtAreaPreTripMealComment, PDTConstants.COMMENT,
 					preAcceptanceSubBenefitData.preAcceptanceTripMeals.comment);

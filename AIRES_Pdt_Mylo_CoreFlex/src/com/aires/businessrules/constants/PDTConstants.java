@@ -112,7 +112,6 @@ public class PDTConstants {
 	public static final String VERIFIED_OPTION_CHOSEN_FOR_RADIO_BTN = "{0}Verified option clicked for ''{1}'' is ''{2}''";
 	public static final String EMAIL_USERNAME_SUBJECT = "MobilityX Username";
 	public static final String EMAIL_PASSWORD_SUBJECT = "MobilityX Password";
-
 	//// PDT CONSTANTS
 	public static final String VERIFIED_USERNAME_IS_DISPLAYED = "{0}Verified username is displayed as ''{1}'' on ''{2}'' page.";
 	public static final String FAILED_TO_VERIFY_USERNAME = "{0}Failed to match username on ''{1}'' page. Expected username:- ''{2}''. Actual username displayed:- ''{3}''";
@@ -214,7 +213,7 @@ public class PDTConstants {
 	public static final String DROP_DOWN = "drop down";
 	public static final String RADIO_BUTTON_LIST = "radio button list";
 	public static final String CHECK_BOX = "check box";
-	public static final String GROSS_UP = "Gross-up";
+	public static final String GROSS_UP = "Gross-Up";
 	public static final String REIMBURSED_BY = "Reimbursed By";
 	public static final String REIMBURSED_BY_OTHER = "Reimbursed By(Other)";
 	public static final String COMMENT = "Comment";
@@ -339,6 +338,8 @@ public class PDTConstants {
 	public static final String VERIFIED_RADIO_BTN_DISPLAYED = "{0}Verified ''{1}'' radio button is displayed for ''{2}'' sub benefit form.";;
 	public static final String MISSING_SAVE_AND_SUBMIT_BTN = "Missing Save & Submit button.";
 	public static final String FAILED_TO_CLICK_ON_SAVE_AND_SUBMIT_BTN = "Failed to click on Save & Submit button.";
+	public static final String MISSING_BTN = "{0}Missing ''{1}'' button.";
+	public static final String FAILED_TO_CLICK_ON_BTN = "{0}Failed to click on ''{1}'' button.";
 	public static final String POLICY_DOES_NOT_EXIST = "{0} Corporation Policy :- ''{1}'' does not exist in Policy drop down for ClientID:- ''{2}''.";
 	public static final String VERIFIED_POLICY_DISPLAYED = "{0}Verified Policy:-''{1}'' is displayed in Policy drop down";
 	public static final String VERIFIED_POLICY_NOT_DISPLAYED = "{0}Verified Policy:-''{1}'' is not displayed in Policy drop down";
@@ -376,7 +377,7 @@ public class PDTConstants {
 	public static final String APPLIANCE_ALLOWANCE = "Appliance Allowance";
 	public static final String AUTO_REGISTRATION_COSTS = "Auto Registration Costs";
 	public static final String AUTO_LOSS_ON_SALE = "Auto Loss on Sale";
-	public static final String OTHER_ONE_TIME_PAYMENT = "Other One-Time Payment";
+	public static final String OTHER_ONE_TIME_PAYMENT = "Other One Time Payment";
 	public static final String NumOfWeeksBeforeStartTransferDate = "# of weeks before start/transfer date";
 	public static final String VERIFIED_DRP_DOWN_FIELD_DISPLAYED_FOR_OPTION = "{0}Verified ''{1}'' drop down is displayed for ''{2}'' option selected for ''{3}'' in ''{4}'' sub benefit form.";
 	public static final String INDICATE_NUM_OF_WEEKS_BEFORE = "Indicate # of weeks before start/transfer date";
@@ -386,6 +387,47 @@ public class PDTConstants {
 	public static final String FAILED_TO_VERIFY_AND_FILL_DROP_DOWN = "{0} Failed to verify and fill drop down '''{1}'' in ''{2}'' sub benefit form.";
 	public static final String FAILED_TO_VERIFY_AND_FILL_TEXTBOX = "{0} Failed to verify and fill text box '''{1}'' in ''{2}'' sub benefit form.";
 	public static final String FAILED_TO_VERIFY_AND_SELECT_DRP_DOWN = "{0} Failed to verify and select value ''1'' from ''{2}'' drop down in ''{3}'' sub benefit form.";
+	//Ongoing Payments and Reimburesement
+	public static final String COLA = "COLA";
+	public static final String PER_DIEM = "Per Diem";
+	public static final String MOBILITY_PREMIUM = "Mobility Premium";
+	public static final String TRANSPORTATION_ALLOWANCE = "Transportation Allowance";
+	public static final String HOUSING_ALLOWANCE = "Housing Allowance";
+	public static final String HOME_MAINTENANCE_ALLOWANCE = "Home Maintenance Allowance";
+	public static final String FURNITURE_ALLOWANCE = "Furniture Allowance";
+	public static final String HARDSHIP_ALLOWANCE = "Hardship Allowance";
+	public static final String BANKING_ALLOWANCE = "Banking Allowance";
+	public static final String AT_SEA_ALLOWANCE = "At Sea Allowance";
+	public static final String COMMUTER_ALLOWANCE = "Commuter Allowance";
+	public static final String DIFFERENTIAL_ALLOWANCE = "Differential Allowance";
+	public static final String GOODS_AND_SERVICES_ALLOWANCE = "Goods & Services Allowance";
+	public static final String HOME_LEAVE_ALLOWANCE = "Home Leave Allowance";
+	public static final String HOME_RETENTION_ALLOWANCE = "Home Retention Allowance";
+	public static final String HOUSEKEEPING_ALLOWANCE = "Housekeeping Allowance";
+	public static final String UTILITY_ALLOWANCE = "Utility Allowance";
+	public static final String OTHER_ONGOING_ALLOWANCE = "Other Ongoing Allowance";
+	public static final String CALCULATION_METHOD = "Calculation Method";
+	public static final String OTHER_CALCULATION_METHOD = "Other Calculation Method";
+	public static final String OTHER_FREQUENCY = "Other Frequency";
+	public static final String TYPE = "Type";
+	public static final String MONTHLY = "Monthly";
+	public static final String VERIFIED_DEFAULT_OPTION_SELECTED = "{0} Verified by default ''{1}'' option is selected for ''{2}'' drop down";
+	public static final String VERIFIED_DEFAULT_OPTION_NOT_SELECTED = "{0} Verified by default ''{1}'' option is not selected for ''{2}'' drop down";
+	public static final String PROPERTY_MANAGEMENT = "Property Management";
+	public static final String DUPLICATE_HOUSING = "Duplicate Housing";
+	public static final String DURATION_OTHER = "Duration Other";
+	public static final String CAR_TYPE_OTHER = "Car Type Other";
+	public static final String OTHER_PAYMENT_TIME = "Other Payment Time";	
+	//Home Purchase
+	public static final String HOME_PURCHASE_CLOSING_COSTS = "Home Purchase Closing Costs";
+	public static final String HOME_PURCHASE_POINTS = "Home Purchase Points";
+	public static final String HOME_PURCHASE_INSPECTIONS = "Home Purchase Inspections";
+	public static final String HOME_PURCHASE_BONUS = "Home Purchase Bonus";
+	public static final String MORTGAGE_DIFFERENTIALS = "Mortgage Differentials";
+	public static final String MORTGAGE_SUBSIDY = "Mortgage Subsidy";
+	public static final String EXCEPTION_OCCURED_SELECT_AIRES_PREFERRED_LENDERS = "{0} Exception occurred while selecting Aires Preferred Lenders data for ''{1}'' sub-benefit form.";
+	public static final String CHECK_BOX_LIST = "Check Box List";
+	public static final String DEFAULT_CURRENCY = "U.S. Dollar";
 	// Add New Policy
 	public static final String EXCEPTION_OCCURED_WHILE_SELECTING_CLIENTID = "{0}Exception occured while selecting ClientID. Exception : ''{1}''.";
 	public static final String FAILED_TO_SELECT_CLIENTID_FROM_CLIENTID_FIELD = "{0}Failed to select ClientID from ClientID Field.";
@@ -409,4 +451,41 @@ public class PDTConstants {
 	public static final String FAILED_TO_VERIFY_CAPPED_AND_POINTS_BASED_FLEX_POLICY_CONDITIONAL_CHECKS_ERROR_POP_UP_ON_GENRAL_INFORMATION_PAGE = "{0}Failed to verify Capped & Points Based Flex Policy Conditional Checks error pop up on General Information Page.";
 	public static final String FAILED_TO_NAVIGATE_TO_COREFLEX_BLUE_PRINT_APPLICATION_LOGIN_PAGE = "{0}Failed to navigate to Coreflex Blue Print application Login Page.";
 	public static final String FAILED_TO_NAVIGATE_TO_COREFLEX_GENERAL_INFORMATION_PAGE = "{0}Failed to navigate to CoreFlex General Information Page.";
+	//House Hold Goods
+	public static final String WEIGHT_CAP = "Weight Cap";
+	public static final String VOLUME_CAP = "Volume Cap";
+	public static final String UNIT_OF_WT_CAP = "Unit of Weight Cap";
+	public static final String UNIT_OF_VOL_CAP = "Unit of Volume Cap";
+	public static final String WEIGHT_CAP_IN_POUNDS = "Weight Cap in Pounds";
+	public static final String COST_CAP_IN_USD = "Cost Cap in USD";
+	public static final String AUTH_DAYS_TEMP_STORAGE_SIT = "Authorized Days in Temp Storage (SIT)";
+	public static final String INSURANCE_TYPE = "Insurance Type";
+	public static final String INSURANCE_TYPE_OTHER = "Other Insurance Type";
+	public static final String WT_VOL_FIELDS_HIDDEN = "{0}Verified Weight Volume cap fields are hidden for sub-benefit ''{1}''";
+	public static final String WT_VOL_FIELDS_NOT_HIDDEN = "{0}Verified Weight Volume cap fields are not hidden for sub-benefit ''{1}''";
+	public static final String WT_VOL_FIELDS_DISPLAYED = "{0}Verified Weight Volume cap fields are displayed for sub-benefit ''{1}''";
+	public static final String US_DOM_VANLINE_SHIPMENT = "US Domestic Vanline Shipment";
+	public static final String AUTO_SHIPMENT = "Auto Shipment";
+	public static final String AIR_SHIPMENT = "Air Shipment";
+	public static final String SELF_MOVE = "Self Move";
+	public static final String SEA_SHIPMENT = "Sea Shipment";
+	public static final String NONUS_INLAND_SHIPMENT = "Non-US Inland Shipment";
+	public static final String PERMANENT_STORAGE = "Permanent Storage";
+	public static final String PET_SHIPMENT = "Pet Shipment";
+	public static final String DISCARD_DONATE = "Discard and Donate";
+	public static final String OTHER_INSURANCE_TYPE = "Other Insurance Type";
+	public static final String VERIFIED_ELEMENT_DISPLAYED = "{0}Verified element ''{1}'' is displayed on sub-benefit form:-''{2}''";
+	public static final String VERIFIED_ELEMENT_HIDDEN = "{0}Verified element ''{1}'' is hidden on sub-benefit form:-''{2}''";
+	public static final String PDT_BTN_SAVE_SUBMIT = "SAVE & SUBMIT";
+	public static final String SAVE = "SAVE";
+	public static final String CANCEL = "CANCEL";	
+	public static final String FAILED_TO_NAVIGATE_TO_PAGE = "{0}Failed to navigate to ''{1}'' Page.";
+	public static final String POLICY_BENEFIT = "Policy Benefit";
+	public static final String VERIFIED_BENEFIT_CATEGORY_IS_SELECTED = "{0}Verified Policy Benefit Category:-''{1}'' is selected";
+	public static final String BENEFIT_CATEGORY_IS_NOT_SELECTED = "{0}Verified Policy Benefit Category:-''{1}'' is not selected";
+	public static final String VERIFIED_DATA_NOT_SAVED_SUB_BENEFIT = "{0}Verified data is not saved for SubBenefit Categories:-''{1}''";
+	public static final String VERIFIED_DATA_SAVED_FOR_SUB_BENEFIT = "{0}Verified data is saved for SubBenefit Categories:-''{1}''";
+	public static final String APPLICATION_PDT = "PDT";
+	public static final String APPLICATION_MYLO = "MYLO";
+	public static final String APPLICATION_NOT_VALID = "{0}Application ''{1}'' is not a valid application";
 }

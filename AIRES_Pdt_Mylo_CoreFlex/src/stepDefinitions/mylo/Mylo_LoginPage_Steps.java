@@ -39,6 +39,6 @@ public class Mylo_LoginPage_Steps {
 	@Then("^he should successfuly redirected onto the Dashboard home page of Mylo Application with \"([^\"]*)\" getting displayed$")
 	public void he_should_successfuly_redirected_onto_the_Dashboard_home_page_of_Mylo_Application_with_getting_displayed(
 			String userName) {
-		Assert.assertTrue(myloDashboardPage.verifyUserName(userName));
+		myloDashboardPage.verifyUserName(userName);
 	}
 }

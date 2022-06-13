@@ -22,8 +22,12 @@ import java.io.BufferedReader;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
+import java.util.LinkedHashMap;
+import java.util.List;
 import java.util.Properties;
-
+import com.aires.businessrules.constants.CoreConstants;
+import com.aires.businessrules.constants.MYLOConstants;
+import java.util.Properties;
 import com.aires.enums.DriverType;
 import com.aires.enums.EnvironmentType;
 
@@ -31,6 +35,7 @@ public class ConfigFileReader {
 	private Properties properties;
 	private final String propertyFilePath = System.getProperty("user.dir") + "\\Configs\\Config.properties";
 //	private static String _url = null;
+	LinkedHashMap<String, String> mapEnvURL = new LinkedHashMap<String, String>();
 
 	public ConfigFileReader() {
 		BufferedReader reader;
@@ -117,6 +122,33 @@ public class ConfigFileReader {
 					"Application Url not specified in the Configuration.properties file for the Key:url");
 	}
 	
+
+	public void mapApplicationURL() {
+		mapEnvURL.put(CoreConstants.MXTRANSFEREE_QA, CoreConstants.MXTRANSFEREE_QA_URL);
+		mapEnvURL.put(CoreConstants.MXTRANSFEREE_UAT, CoreConstants.MXTRANSFEREE_UAT_URL);
+		mapEnvURL.put(CoreConstants.MXTRANSFEREE_PREPROD, CoreConstants.MXTRANSFEREE_PREPROD_URL);
+		mapEnvURL.put(CoreConstants.TRANSMISSION_SUBMISSION_QA, CoreConstants.TRANSMISSION_SUBMISSION_QA_URL);
+		mapEnvURL.put(CoreConstants.TRANSMISSION_SUBMISSION_UAT, CoreConstants.TRANSMISSION_SUBMISSION_UAT_URL);
+		mapEnvURL.put(CoreConstants.TRANSMISSION_SUBMISSION_PREPROD, CoreConstants.TRANSMISSION_SUBMISSION_PREPROD_URL);
+	}
+	
+	
+	public String getApplicationUrl(String appName) {
+		mapApplicationURL();
+		return mapEnvURL.get(appName+"_"+System.getProperty("envt"));
+		
+		//Commented Code is used for Debugging purpose in local
+		/*if (properties.getProperty("envt").equalsIgnoreCase("uat"))
+			return properties.getProperty("myloUATURL");
+		else if (properties.getProperty("envt").equalsIgnoreCase("relonetqa4"))
+			return properties.getProperty("myloRelonetQA4URL");
+		else if (properties.getProperty("envt").equalsIgnoreCase("preprod"))
+			return properties.getProperty("myloPreProdURL");
+		else
+			throw new RuntimeException(
+					"Application Url not specified in the Configuration.properties file for the Key:url");	*/
+	}
+
 	public String getMyloApplicationUrl() {
 		if (properties.getProperty("envt").equalsIgnoreCase("uat"))
 			return properties.getProperty("myloUATURL");
@@ -132,8 +164,8 @@ public class ConfigFileReader {
 			return properties.getProperty("coreFlexPolicySetupUatUrl");
 		else if (properties.getProperty("envt").equalsIgnoreCase("QA"))
 			return properties.getProperty("coreFlexPolicySetupQaUrl");
-		else if (properties.getProperty("envt").equalsIgnoreCase("PreProd"))
-			return properties.getProperty("coreFlexPolicySetupPreProdUrl");
+		else if (properties.getProperty("envt").equalsIgnoreCase("Prod"))
+			return properties.getProperty("coreFlexPolicySetupProdUrl");
 		else if (properties.getProperty("envt").equalsIgnoreCase("Dev"))
 			return properties.getProperty("coreFlexPolicySetupDevUrl");
 		else
@@ -146,8 +178,8 @@ public class ConfigFileReader {
 			return properties.getProperty("coreFlexTransfereeSubmissionsUatUrl");
 		else if (properties.getProperty("envt").equalsIgnoreCase("QA"))
 			return properties.getProperty("coreFlexTransfereeSubmissionsQaUrl");
-		else if (properties.getProperty("envt").equalsIgnoreCase("PreProd"))
-			return properties.getProperty("coreFlexTransfereeSubmissionsPreProdUrl");
+		else if (properties.getProperty("envt").equalsIgnoreCase("Prod"))
+			return properties.getProperty("coreFlexTransfereeSubmissionsProdUrl");
 		else if (properties.getProperty("envt").equalsIgnoreCase("Dev"))
 			return properties.getProperty("coreFlexTransfereeSubmissionsDevUrl");
 		else
@@ -160,8 +192,8 @@ public class ConfigFileReader {
 			return properties.getProperty("mxTransfereeUatURL");
 		else if (properties.getProperty("envt").equalsIgnoreCase("QA"))
 			return properties.getProperty("mxTransfereeQaURL");
-		else if (properties.getProperty("envt").equalsIgnoreCase("PreProd"))
-			return properties.getProperty("mxTransfereePreProdURL");
+		else if (properties.getProperty("envt").equalsIgnoreCase("Prod"))
+			return properties.getProperty("mxTransfereeProdURL");
 		else if (properties.getProperty("envt").equalsIgnoreCase("Dev"))
 			return properties.getProperty("mxTransfereeDevURL");
 		else
@@ -188,7 +220,8 @@ public class ConfigFileReader {
 	}
 
 	public DriverType getBrowser() {
-		String browserName = properties.getProperty("browser").toLowerCase();
+		//String browserName = properties.getProperty("browser").toLowerCase();
+		String browserName = System.getProperty("browser");
 		switch (browserName) {
 		case "chrome":
 			return DriverType.CHROME;
@@ -202,8 +235,7 @@ public class ConfigFileReader {
 		default:
 			throw new RuntimeException(
 					"Browser Name Key value in Configuration.properties file is not matched : " + browserName);
-		}
-			
+		}		
 			/*
 			if (browserName == null || browserName.equalsIgnoreCase("chrome"))
 			return DriverType.CHROME;
@@ -257,7 +289,8 @@ public class ConfigFileReader {
 	}
 	
 	public String getNameOfCurrentLaunchedApplication() {
-		String appName = properties.getProperty("application");
+		//String appName = properties.getProperty("application");
+		String appName = System.getProperty("application");
 		if (appName != null)
 			return appName;
 		else

@@ -30,6 +30,7 @@ import com.aires.testdatatypes.mylo.MyloCAStates;
 import com.aires.testdatatypes.mylo.MyloIndiaStates;
 import com.aires.testdatatypes.mylo.MyloUSStates;
 import com.aires.testdatatypes.mylo.Mylo_AssignmentShipmentDetails;
+import com.aires.testdatatypes.mylo.Mylo_Assignment_HistoryDetails_PREPROD;
 import com.aires.testdatatypes.mylo.Mylo_Assignment_HistoryDetails_UAT;
 import com.vimalselvam.cucumber.listener.Reporter;
 import cucumber.api.DataTable;
@@ -85,7 +86,7 @@ public class Mylo_AssignmentPage extends Base {
 	@FindBy(how = How.XPATH, using = "//button[text()='Save']")
 	private WebElement _SaveButton;
 	
-	@FindBy(how = How.XPATH, using = "//span[text()='Save']")
+	@FindBy(how = How.CSS, using = "i[class='icon-FloppyDisk_Open save_section']")
 	private WebElement _otherAddressSaveButton;
 	
 	@FindBy(how = How.XPATH, using = "//button[text()='Cancel']")
@@ -100,7 +101,7 @@ public class Mylo_AssignmentPage extends Base {
 	@FindBy(how = How.XPATH, using = "//ng-select[@name='policyType']//span[contains(@class,'ng-value-label')]")
 	private WebElement _fileInfoPolicyType;
 
-	@FindBy(how = How.XPATH, using = "//button[text()=' File Information ']/span")
+	@FindBy(how = How.XPATH, using = "//app-aires-file-information/descendant::span[text()='Details']")
 	private WebElement _fileInfoDetailsCarrot;
 
 	@FindBy(how = How.XPATH, using = "//ng-select[@name='status']//span[contains(@class,'ng-value-label')]")
@@ -121,10 +122,10 @@ public class Mylo_AssignmentPage extends Base {
 	@FindBy(how = How.XPATH, using = "//ng-select[@name='homeStatus']//span[contains(@class,'ng-value-label')]")
 	private WebElement _fileInfoHomeStatus;
 
-	@FindBy(how = How.XPATH, using = "//button[text()=' File Information ']//following::div[@id='collapseOne']//span[@class='form-check-sign']")
+	@FindBy(how = How.CSS, using = "app-aires-file-information  span[class='form-check-sign']")
 	private List<WebElement> _fileInfoCheckboxes;
 
-	@FindBy(how = How.XPATH, using = "//button[text()=' File Information ']//following::div[@id='collapseOne']//input[@type='checkbox']")
+	@FindBy(how = How.CSS, using = "app-aires-file-information input[type='checkbox']")
 	private List<WebElement> _fileInfoCheckBoxText;
 
 	@FindBy(how = How.XPATH, using = "//i[@class='icon-FloppyDisk_Open save_section']")
@@ -133,7 +134,7 @@ public class Mylo_AssignmentPage extends Base {
 	@FindBy(how = How.XPATH, using = "//i[@class='icon-XCircle_Open close_section']/parent::button")
 	private WebElement _fileInfoCancelButton;
 
-	@FindBy(how = How.XPATH, using = "//button[text()=' File Information ']//following::div[@id='collapseOne']//descendant::button")
+	@FindBy(how = How.CSS, using = "app-aires-file-information button[class='action-icon-right-panel']")
 	private WebElement _fileInfoEditButton;
 
 	@FindBy(how = How.XPATH, using = "//ng-select[@name='taxTreatment']")
@@ -288,10 +289,13 @@ public class Mylo_AssignmentPage extends Base {
 	@FindBy(how = How.XPATH, using = "//span[text()='Delete']")
 	private WebElement _DeleteButton;
 	
-	@FindBy(how = How.XPATH, using = "//app-address[@id='temporaryAddress']//span[text()='Edit']")
+	@FindBy(how = How.CSS, using = "app-address i[class='icon-Trash_Open Trash_icon']")
+	private WebElement _addressDeleteButton;
+	
+	@FindBy(how = How.CSS, using = "app-address[id='temporaryAddress'] i[class='icon-Pencil_Open']")
 	private WebElement _tempEditButton;
 	
-	@FindBy(how = How.XPATH, using = "//app-address[@id='mailingAddress']//span[text()='Edit']")
+	@FindBy(how = How.CSS, using = "app-address[id='mailingAddress'] i[class='icon-Pencil_Open']")
 	private WebElement _mailEditButton;
 	
 	@FindBy(how = How.XPATH, using = "//h2[text()='Success']//following::div[@id='swal2-content']")
@@ -402,6 +406,12 @@ public class Mylo_AssignmentPage extends Base {
 	
 	@FindBy(how = How.XPATH, using = "//label[text()='Remove']/preceding-sibling::i")
 	private List<WebElement> _removeButton;
+	
+	@FindBy(how = How.XPATH, using = "//div[contains(@class,'mylo-errorpopup')]")
+	private WebElement _myloErrorPopUp;
+	
+	@FindBy(how = How.XPATH, using = "//button[contains(@class,'swal2-confirm btn btn-primary smallbutton margintop')]")
+	private WebElement _OKButtonPopUp;
 			
 	int noOfAiresFileTeamMember;
 	LinkedHashMap<String, String> airesFileTeamExistingMembers = new LinkedHashMap<String, String>();
@@ -427,9 +437,15 @@ public class Mylo_AssignmentPage extends Base {
 
 	MyloAssignmentDetails assignmentDetails = FileReaderManager.getInstance().getMyloJsonReader()
 			.getAssignmentDetailsByApplication(MYLOConstants.IRIS);
+	//Commented Code is used for debugging in local
+	//Mylo_AssignmentShipmentDetails assignmentShipmentDetails = FileReaderManager.getInstance().getMyloJsonReader()
+		//	.getAssignmentShipmentDetailsByEnv(CoreFunctions.getPropertyFromConfig("envt"));
+			
 	Mylo_AssignmentShipmentDetails assignmentShipmentDetails = FileReaderManager.getInstance().getMyloJsonReader()
-			.getAssignmentShipmentDetailsByEnv(CoreFunctions.getPropertyFromConfig("envt"));
+		.getAssignmentShipmentDetailsByEnv(System.getProperty("envt"));
 	
+	//String environment = CoreFunctions.getPropertyFromConfig("envt");
+	String environment = System.getProperty("envt");
 	String updatedTeamMember, updatedPolicyType, updatedTaxTreatment, updatedOffice, updatedJourneyType, updatedTransferType,
 	updatedHomeStatus, updatedFileInfoCheckboxSelected, updatedTempAddressCityValue,
 	updatedMailAddressCityValue, updatedTempAddressZipCodeValue, updatedMailAddressZipCodeValue,
@@ -491,10 +507,12 @@ public class Mylo_AssignmentPage extends Base {
 	 * Add Role By Name on Aires File Team section
 	 */
 	public void addRole(String roleName) {
-		CoreFunctions.explicitWaitTillElementBecomesClickable(driver, _roleSelectButtton, _roleSelectButtton.getAttribute(MYLOConstants.NAME));
+		CoreFunctions.explicitWaitTillElementBecomesClickable(driver, _roleSelectButtton,
+				_roleSelectButtton.getAttribute(MYLOConstants.NAME));
 		CoreFunctions.click(driver, _roleSelectButtton, _roleSelectButtton.getAttribute(MYLOConstants.NAME));
-		CoreFunctions.selectItemInListByText(driver, CoreFunctions.getElementListByLocator(driver, _dropdownOptions),
-				roleName);
+		List<WebElement> roleList = CoreFunctions.getElementListByLocator(driver, _dropdownOptions);
+		CoreFunctions.explicitWaitTillElementListVisibility(driver, roleList);
+		CoreFunctions.selectItemInListByText(driver, roleList, roleName);
 	}
 
 	/**
@@ -546,6 +564,7 @@ public class Mylo_AssignmentPage extends Base {
 				Reporter.addStepLog(MessageFormat.format(CoreConstants.VERIFY_ELEMENT_VALUE_ON_SECTION,
 						CoreConstants.PASS, MYLOConstants.ROLE_NAME, memberName, MYLOConstants.AIRES_FILE_TEAM));
 			} else {
+				optionsList.remove(0);
 				updatedTeamMember = CoreFunctions.getRandomElementValueFromList(driver, optionsList);
 				CoreFunctions.selectItemInListByText(driver, optionsList, updatedTeamMember);
 				Reporter.addStepLog(MessageFormat.format(CoreConstants.VERIFY_ELEMENT_VALUE_ON_SECTION,
@@ -585,7 +604,7 @@ public class Mylo_AssignmentPage extends Base {
 	public boolean verifyPopUpMessage(String msg) {
 		boolean flag=false;
 		try {
-			CoreFunctions.explicitWaitTillElementVisibility(driver, _popUpMessage, _popUpMessage.getText());
+			CoreFunctions.explicitWaitTillElementVisibility(driver, _popUpMessage, _popUpMessage.getText(),60);
 			CoreFunctions.highlightObject(driver, _popUpMessage);
 			flag=(_popUpMessage.getText().equals(msg));
 		}
@@ -678,10 +697,11 @@ public class Mylo_AssignmentPage extends Base {
 			CoreFunctions.explicitWaitTillElementVisibility(driver, _fileInfoEditButton, _fileInfoEditButton.getText());
 			break;
 		case MYLOConstants.SAVE_BUTTON:
-			CoreFunctions.explicitWaitTillElementVisibility(driver, _fileInfoSaveButton, _fileInfoSaveButton.getText());
-			CoreFunctions.click(driver, _fileInfoSaveButton, _fileInfoSaveButton.getText());
+			CoreFunctions.explicitWaitTillElementVisibility(driver, _fileInfoSaveButton, buttonName);
+			CoreFunctions.click(driver, _fileInfoSaveButton, buttonName);
 			break;
 		case MYLOConstants.DETAILS_CARROT_BUTTON:
+			CoreFunctions.explicitWaitTillElementInVisibilityCustomTime(driver, _spinner, 60);
 			CoreFunctions.explicitWaitTillElementVisibility(driver, _fileInfoDetailsCarrot,
 					_fileInfoDetailsCarrot.getText());
 			CoreFunctions.click(driver, _fileInfoDetailsCarrot, _fileInfoDetailsCarrot.getText());
@@ -1010,14 +1030,25 @@ public class Mylo_AssignmentPage extends Base {
 	 * Resetting File Information fields to earlier values
 	 */
 	public void resetFileInfoField() {
+		if (CoreFunctions.isElementExist(driver, _myloErrorPopUp, 5)
+				&& CoreFunctions.isElementExist(driver, _OKButtonPopUp, 5)) {
+			CoreFunctions.clickElement(driver, _OKButtonPopUp);
+			CoreFunctions.explicitWaitTillElementInVisibilityCustomTime(driver, _spinner, 60);
+		}
 		clickButtonOnAiresFileInformationSection(MYLOConstants.EDIT_BUTTON);
 		updateFileInfoFields(MYLOConstants.POLICY_TYPE, MYLOConstants.POLICY_TYPE_VALUE);
+		if(CoreFunctions.isElementExist(driver, _YesButton, 30))
+			CoreFunctions.click(driver, _YesButton, MYLOConstants.YES_BUTTON);
+		if(CoreFunctions.isElementExist(driver, _OKButtonPopUp, 30))
+			CoreFunctions.click(driver, _OKButtonPopUp, MYLOConstants.OK_BUTTON);
 		updateFileInfoFields(MYLOConstants.JOURNEY_TYPE, MYLOConstants.JOURNEY_TYPE_VALUE);
+		// CoreFunctions.scrollToElementUsingJS(driver, _fileInfoOffice,
+		// MYLOConstants.OFFICE);
 		updateFileInfoFields(MYLOConstants.HOMESTATUS, MYLOConstants.HOMESTATUS_VALUE);
 		clickCheckBoxOnAiresFileInfoSection(MYLOConstants.INHERITED_FILE);
 		clickButtonOnAiresFileInformationSection(MYLOConstants.SAVE_BUTTON);
-		//Assert.assertTrue(verifyMessage(MYLOConstants.SUCCESS_MESSAGE));
-		//clickButtonOnAiresFileInformationSection(MYLOConstants.OK_BUTTON);
+		// Assert.assertTrue(verifyMessage(MYLOConstants.SUCCESS_MESSAGE));
+		// clickButtonOnAiresFileInformationSection(MYLOConstants.OK_BUTTON);
 	}
 
 	/**
@@ -1096,7 +1127,7 @@ public class Mylo_AssignmentPage extends Base {
 			fileInfoDetailsmap.put(MYLOConstants.CLIENT_NAME, assignmentDetails.canceledFile.clientName);
 			break;
 		case MYLOConstants.CLOSED:
-			fileInfoDetailsmap.put(MYLOConstants.FILE_ID, assignmentDetails.closedFile.fileID);
+			fileInfoDetailsmap.put(MYLOConstants.FILE_ID, getTestDataClosedFileId());
 			fileInfoDetailsmap.put(MYLOConstants.CLIENT_ID, assignmentDetails.closedFile.clientID);
 			fileInfoDetailsmap.put(MYLOConstants.CLIENT_NAME, assignmentDetails.closedFile.clientName);
 			break;
@@ -1135,6 +1166,26 @@ public class Mylo_AssignmentPage extends Base {
 			fileInfoDetailsmap.put(MYLOConstants.CLIENT_ID, assignmentDetails.transfereeWithOtherFamilyMembers.clientID);
 			fileInfoDetailsmap.put(MYLOConstants.CLIENT_NAME, assignmentDetails.transfereeWithOtherFamilyMembers.clientName);
 			break;
+		case MYLOConstants.TRANSFEREE_ALLDATA:
+			fileInfoDetailsmap.put(MYLOConstants.FILE_ID, getTestDataTransfereeAllDataFileId());
+			fileInfoDetailsmap.put(MYLOConstants.CLIENT_ID, assignmentDetails.transfereeAllData.clientID);
+			fileInfoDetailsmap.put(MYLOConstants.CLIENT_NAME, assignmentDetails.transfereeAllData.clientName);
+			break;
+		case MYLOConstants.TRANSFEREEEMAILPHONE_ALLDATA:
+			fileInfoDetailsmap.put(MYLOConstants.FILE_ID, assignmentDetails.transfereeEmailPhone_preprod.fileID);
+			fileInfoDetailsmap.put(MYLOConstants.CLIENT_ID, assignmentDetails.transfereeEmailPhone_preprod.clientID);
+			fileInfoDetailsmap.put(MYLOConstants.CLIENT_NAME, assignmentDetails.transfereeEmailPhone_preprod.clientName);
+			break;
+		case MYLOConstants.PARTNER_DATA:
+			fileInfoDetailsmap.put(MYLOConstants.FILE_ID, getTestDataPartner());
+			fileInfoDetailsmap.put(MYLOConstants.CLIENT_ID, assignmentDetails.partnerData.clientID);
+			fileInfoDetailsmap.put(MYLOConstants.CLIENT_NAME, assignmentDetails.partnerData.clientName);
+			break;
+		case MYLOConstants.PARTNER_ALL_DATA:
+			fileInfoDetailsmap.put(MYLOConstants.FILE_ID, getTestDataPartnerAllData());
+			fileInfoDetailsmap.put(MYLOConstants.CLIENT_ID, assignmentDetails.partnerAllData.clientID);
+			fileInfoDetailsmap.put(MYLOConstants.CLIENT_NAME, assignmentDetails.partnerAllData.clientName);
+			break;
 		default:
 			Assert.fail(MYLOConstants.ENTER_CORRECT_FIELD_NAME);
 		}
@@ -1142,8 +1193,39 @@ public class Mylo_AssignmentPage extends Base {
 
 	}
 	
+	public String getTestDataPartnerAllData() {
+		String fileID = null;
+		switch(environment) {
+		case MYLOConstants.UAT:
+		case MYLOConstants.RELONETQA4:
+			fileID = assignmentDetails.partnerAllData.fileID;
+			break;
+		case MYLOConstants.PREPROD:
+			fileID = assignmentDetails.partnerAllData_preprod.fileID;
+			break;
+		default:
+			Assert.fail(MYLOConstants.ENTER_CORRECT_FIELD_NAME);	
+		}
+		return fileID;
+	}
+	
+	public String getTestDataPartner() {
+		String fileID = null;
+		switch(environment) {
+		case MYLOConstants.UAT:
+		case MYLOConstants.RELONETQA4:
+			fileID = assignmentDetails.partnerData.fileID;
+			break;
+		case MYLOConstants.PREPROD:
+			fileID = assignmentDetails.partnerData_preprod.fileID;
+			break;
+		default:
+			Assert.fail(MYLOConstants.ENTER_CORRECT_FIELD_NAME);	
+		}
+		return fileID;
+	}
+	
 	public String getTestDataActiveFileId() {
-		String environment = CoreFunctions.getPropertyFromConfig("envt");
 		String fileID = null;
 		switch(environment) {
 		case MYLOConstants.UAT:
@@ -1152,6 +1234,27 @@ public class Mylo_AssignmentPage extends Base {
 		case MYLOConstants.RELONETQA4:
 			fileID = assignmentDetails.activeAssignment_relonetqa4.fileID;
 			break;
+		case MYLOConstants.PREPROD:
+			fileID = assignmentDetails.activeAssignment_preprod.fileID;
+			break;
+		default:
+			Assert.fail(MYLOConstants.ENTER_CORRECT_FIELD_NAME);	
+		}
+		return fileID;
+	}
+	
+	public String getTestDataClosedFileId() {
+		String fileID = null;
+		switch(environment) {
+		case MYLOConstants.UAT:
+			fileID = assignmentDetails.closedFile.fileID;
+			break;
+		case MYLOConstants.RELONETQA4:
+			fileID = assignmentDetails.closedFile.fileID;
+			break;
+		case MYLOConstants.PREPROD:
+			fileID = assignmentDetails.closedFile_preprod.fileID;
+			break;
 		default:
 			Assert.fail(MYLOConstants.ENTER_CORRECT_FIELD_NAME);	
 		}
@@ -1159,13 +1262,13 @@ public class Mylo_AssignmentPage extends Base {
 	}
 	
 	public String getTestDataClosedIdentityDocFileId() {
-		String environment = CoreFunctions.getPropertyFromConfig("envt");
 		String fileID = null;
 		switch(environment) {
 		case MYLOConstants.UAT:
 			fileID = assignmentDetails.closedFileIdentDoc.fileID;
 			break;
 		case MYLOConstants.RELONETQA4:
+		case MYLOConstants.PREPROD:
 			fileID = assignmentDetails.closedFileIdentDocrelonetqa4.fileID;
 			break;
 		default:
@@ -1175,7 +1278,6 @@ public class Mylo_AssignmentPage extends Base {
 	}
 	
 	public String getTestDataRelocationTypeFileId() {
-		String environment = CoreFunctions.getPropertyFromConfig("envt");
 		String fileID = null;
 		switch(environment) {
 		case MYLOConstants.UAT:
@@ -1184,6 +1286,9 @@ public class Mylo_AssignmentPage extends Base {
 		case MYLOConstants.RELONETQA4:
 			fileID = assignmentDetails.relocationPolicyTyperelonetqa4.fileID;
 			break;
+		case MYLOConstants.PREPROD:
+			fileID = assignmentDetails.relocationPolicyType_preprod.fileID;
+			break;
 		default:
 			Assert.fail(MYLOConstants.ENTER_CORRECT_FIELD_NAME);	
 		}
@@ -1191,13 +1296,13 @@ public class Mylo_AssignmentPage extends Base {
 	}
 	
 	public String getTestDataLumpSumTypeFileId() {
-		String environment = CoreFunctions.getPropertyFromConfig("envt");
 		String fileID = null;
 		switch(environment) {
 		case MYLOConstants.UAT:
 			fileID = assignmentDetails.lumpSumpPlanPolicyType.fileID;
 			break;
 		case MYLOConstants.RELONETQA4:
+		case MYLOConstants.PREPROD:
 			fileID = assignmentDetails.lumpSumpPlanPolicyTyperelonetqa4.fileID;
 			break;
 		default:
@@ -1207,14 +1312,30 @@ public class Mylo_AssignmentPage extends Base {
 	}
 	
 	public String getTestDataDomesticTypeFileId() {
-		String environment = CoreFunctions.getPropertyFromConfig("envt");
 		String fileID = null;
 		switch(environment) {
 		case MYLOConstants.UAT:
 			fileID = assignmentDetails.domesticPolicyType.fileID;
 			break;
 		case MYLOConstants.RELONETQA4:
+		case MYLOConstants.PREPROD:
 			fileID = assignmentDetails.domesticPolicyTyperelonetqa4.fileID;
+			break;
+		default:
+			Assert.fail(MYLOConstants.ENTER_CORRECT_FIELD_NAME);	
+		}
+		return fileID;
+	}
+	
+	public String getTestDataTransfereeAllDataFileId() {
+		String fileID = null;
+		switch(environment) {
+		case MYLOConstants.UAT:
+		case MYLOConstants.RELONETQA4:
+			fileID = assignmentDetails.transfereeAllData.fileID;
+			break;
+		case MYLOConstants.PREPROD:
+			fileID = assignmentDetails.transfereeAllData_preprod.fileID;
 			break;
 		default:
 			Assert.fail(MYLOConstants.ENTER_CORRECT_FIELD_NAME);	
@@ -1291,7 +1412,7 @@ public class Mylo_AssignmentPage extends Base {
 			CoreFunctions.explicitWaitTillElementVisibility(driver, _mailEditButton, MYLOConstants.MAIL_EDIT_BUTTON);
 			CoreFunctions.explicitWaitTillElementBecomesClickable(driver, _mailEditButton,
 					MYLOConstants.MAIL_EDIT_BUTTON);
-			CoreFunctions.click(driver, _mailEditButton, _mailEditButton.getText());
+			CoreFunctions.click(driver, _mailEditButton, elementName);
 			break;
 		case MYLOConstants.TEMP_ADDRESS_COUNTRY:
 			CoreFunctions.explicitWaitTillElementVisibility(driver, _tempAddressCountryDropdown,
@@ -1343,8 +1464,8 @@ public class Mylo_AssignmentPage extends Base {
 			mapOtherAddresssWebElementFields();
 			break;
 		case MYLOConstants.DELETE_BUTTON:
-			CoreFunctions.explicitWaitTillElementVisibility(driver, _DeleteButton, _DeleteButton.getText());
-			CoreFunctions.click(driver, _DeleteButton, _DeleteButton.getText());
+			CoreFunctions.explicitWaitTillElementVisibility(driver, _addressDeleteButton, elementName);
+			CoreFunctions.click(driver, _addressDeleteButton, elementName);
 			break;
 		case MYLOConstants.YES_BUTTON:
 			CoreFunctions.explicitWaitTillElementVisibility(driver, _YesButton, _YesButton.getText());
@@ -1426,7 +1547,7 @@ public class Mylo_AssignmentPage extends Base {
 			valuesToIgnore.add(MYLOConstants.USA_STATE);
 			valuesToIgnore.add(MYLOConstants.INDIA_STATE);
 			valuesToIgnore.add(MYLOConstants.CANADA_STATE);
-			valuesToIgnore.add(MYLOConstants.SELECT_ONE);
+			countryList.remove(0);
 			updatedCountryValue = CoreFunctions.getRandomOutOfSelectedElementValueFromList(driver, countryList, valuesToIgnore);
 			BusinessFunctions.selectItemFromListUsingText(driver, countryList,
 					updatedCountryValue);
@@ -1444,6 +1565,9 @@ public class Mylo_AssignmentPage extends Base {
 		if (fieldValue.equals(MYLOConstants.RANDOM)) {
 			List<String> valuesToIgnore = new ArrayList<String>();
 			valuesToIgnore.add("Select One");
+			stateList.remove(0);
+			stateList.remove(1);
+			CoreFunctions.explicitWaitTillElementListVisibilityCustomTime(driver, stateList, 60);
 			BusinessFunctions.selectItemFromListUsingText(driver, stateList,
 					CoreFunctions.getRandomOutOfSelectedElementValueFromList(driver, stateList, valuesToIgnore));
 		} else
@@ -1547,9 +1671,11 @@ public class Mylo_AssignmentPage extends Base {
 			updatedMailAddressZipCodeValue = setOtherAddressZipCode(fieldValue);
 			break;
 		case MYLOConstants.TEMP_ADDRESS_STATE:
+			CoreFunctions.explicitWaitTillElementVisibility(driver, _otherAddressaddStateValue, fieldName,60);
 			updatedTempAddressStateValue = setFieldOtherAddress(_otherAddressaddStateValue, fieldValue);;
 			break;
 		case MYLOConstants.MAIL_ADDRESS_STATE:
+			CoreFunctions.explicitWaitTillElementVisibility(driver, _otherAddressaddStateValue, fieldName,60);
 			updatedMailAddressStateValue = setFieldOtherAddress(_otherAddressaddStateValue, fieldValue);;
 			break;
 		case MYLOConstants.TEMP_ADDRESS_ADDRESS1:
@@ -1806,6 +1932,7 @@ public class Mylo_AssignmentPage extends Base {
 	public boolean verifyAlertMessage(String msg) {
 		boolean flag = false;
 		try {
+			CoreFunctions.explicitWaitTillElementVisibility(driver, _alertMessage, msg);
 			CoreFunctions.isElementVisible(_alertMessage);
 			CoreFunctions.highlightObject(driver, _alertMessage);
 			System.out.println(_alertMessage.getText());
@@ -2025,6 +2152,7 @@ public class Mylo_AssignmentPage extends Base {
 	 * @return
 	 */
 	public boolean verifyFieldValuesOtherAddress(String sectionType, DataTable table) {
+		CoreFunctions.explicitWaitTillElementInVisibilityCustomTime(driver, _spinner, 180);
 		java.util.List<Map<String, String>> data = table.asMaps(String.class, String.class);
 		try {
 			if (sectionType.equals(MYLOConstants.MAILING_ADDRESS_DROPDOWN)) {
@@ -2033,7 +2161,7 @@ public class Mylo_AssignmentPage extends Base {
 				Assert.assertEquals(getFieldValueOtherAddressesSection(MYLOConstants.MAIL_ADDRESS_CITY),
 						data.get(0).get(MYLOConstants.MAIL_ADDRESS_CITY),MYLOConstants.MAIL_ADDRESS_CITY + MYLOConstants.VALUE_NOT_UPDATED);
 				Assert.assertEquals(
-						getFieldValueOtherAddressesSection(MYLOConstants.MAIL_ADDRESS_STATE_DROPDOWN),
+					getFieldValueOtherAddressesSection(MYLOConstants.MAIL_ADDRESS_STATE_DROPDOWN),
 						data.get(0).get(MYLOConstants.STATE),MYLOConstants.STATE + MYLOConstants.VALUE_NOT_UPDATED);
 				Assert.assertEquals(getFieldValueOtherAddressesSection(MYLOConstants.MAIL_ADDRESS_ZIPCODE),
 						data.get(0).get(MYLOConstants.MAIL_ADDRESS_ZIPCODE),MYLOConstants.MAIL_ADDRESS_ZIPCODE + MYLOConstants.VALUE_NOT_UPDATED);
@@ -2188,13 +2316,17 @@ public class Mylo_AssignmentPage extends Base {
 	 * get Mylo Assignment HistoryDetails from json of corresponding country passed as a parameter
 	 */
 	public List<String> getMyloHistoryDetailsByEnv() {
-		String env = CoreFunctions.getPropertyFromConfig("envt");
-		switch (env) {
+		switch (environment) {
 		case MYLOConstants.UAT:
 		case MYLOConstants.RELONETQA4:
 			List<Mylo_Assignment_HistoryDetails_UAT> myloUATHistoryDetails = FileReaderManager.getInstance().getMyloJsonReader().getMyloAssignmentUATHistoryDetails();
 			historyfileIds.addAll(myloUATHistoryDetails.stream().map(x -> x.fileId).collect(Collectors.toList()));
 			historyDetails.addAll(myloUATHistoryDetails.stream().map(x -> x.historyDetails).collect(Collectors.toList()));
+			break;
+		case MYLOConstants.PREPROD:
+			List<Mylo_Assignment_HistoryDetails_PREPROD> myloPreProdHistoryDetails = FileReaderManager.getInstance().getMyloJsonReader().getMyloAssignmentPREPRODHistoryDetails();
+			historyfileIds.addAll(myloPreProdHistoryDetails.stream().map(x -> x.fileId).collect(Collectors.toList()));
+			historyDetails.addAll(myloPreProdHistoryDetails.stream().map(x -> x.historyDetails).collect(Collectors.toList()));
 			break;
 		default:
 			Reporter.addStepLog(CoreConstants.FAIL + MYLOConstants.ENTER_CORRECT_COUNTRY_NAME);
@@ -2235,9 +2367,13 @@ public class Mylo_AssignmentPage extends Base {
 			CoreFunctions.scrollToElementUsingJavaScript(driver, _historyCardDropdownTransferreName.get(i), _historyCardDropdownTransferreName.get(i).getText());
 			CoreFunctions.scrollToElementUsingJavaScript(driver, _historyCardDropdownFileIdClient.get(i), _historyCardDropdownFileIdClient.get(i).getText());
 			CoreFunctions.scrollToElementUsingJavaScript(driver, _historyCardDropdownAddress.get(i), _historyCardDropdownAddress.get(i).getText());
-			if (!(CoreFunctions.getElementText(driver, _historyCardDropdownTransferreName.get(i)).equals(details[0].trim())
-					&& CoreFunctions.getElementText(driver, _historyCardDropdownFileIdClient.get(i)).equals(details[1].trim())
-					&& CoreFunctions.getElementText(driver, _historyCardDropdownAddress.get(i)).equals(details[2].trim()))) {
+			if (!(CoreFunctions.getElementText(driver, _historyCardDropdownTransferreName.get(i)).equalsIgnoreCase(details[0].trim())
+					&& CoreFunctions.getElementText(driver, _historyCardDropdownFileIdClient.get(i)).equalsIgnoreCase(details[1].trim())
+					&& CoreFunctions.getElementText(driver, _historyCardDropdownAddress.get(i)).equalsIgnoreCase(details[2].trim()))) {	
+				System.out.println(CoreFunctions.getElementText(driver, _historyCardDropdownTransferreName.get(i)) + "-------" + details[0].trim());
+				System.out.println(CoreFunctions.getElementText(driver, _historyCardDropdownFileIdClient.get(i))+ "-------" + details[1].trim());
+				System.out.println(CoreFunctions.getElementText(driver, _historyCardDropdownAddress.get(i))+ "-------" + details[2].trim());
+				
 				flag = false;
 			}
 		}
@@ -2392,13 +2528,14 @@ public class Mylo_AssignmentPage extends Base {
 		switch (buttonName) {
 		case MYLOConstants.ADD_BUTTON:
 			CoreFunctions.click(driver, _identDocAddIcon, MYLOConstants.ADD_BUTTON);
+			CoreFunctions.explicitWaitTillElementListVisibilityCustomTime(driver, _identDocTypeDropdowns, 10);		
 			break;
 		case MYLOConstants.CANCEL_BUTTON:
 			CoreFunctions.click(driver, _identDocCancelIcon, MYLOConstants.CANCEL_BUTTON);
 			break;
 		case MYLOConstants.SAVE_BUTTON:
 			CoreFunctions.click(driver, _identDocSaveIcon, MYLOConstants.SAVE_BUTTON);
-			CoreFunctions.explicitWaitTillElementInVisibilityCustomTime(driver, _spinner, 180);
+			CoreFunctions.explicitWaitTillElementInVisibilityCustomTime(driver, _spinner, 200);
 			break;
 		case MYLOConstants.EDIT_BUTTON:
 			CoreFunctions.explicitWaitTillElementVisibility(driver, _identDocEditIcon, _identDocEditIcon.getText());
@@ -2406,6 +2543,7 @@ public class Mylo_AssignmentPage extends Base {
 			break;
 		case MYLOConstants.YES_BUTTON:
 			CoreFunctions.click(driver, _YesButton, _YesButton.getText());
+			CoreFunctions.explicitWaitTillElementInVisibilityCustomTime(driver, _spinner, 180);
 			break;
 		case MYLOConstants.NO_BUTTON:
 			CoreFunctions.click(driver, _NoButton, _NoButton.getText());
@@ -2432,6 +2570,7 @@ public class Mylo_AssignmentPage extends Base {
 	public void clickElementOnIdentificationAndDocumentationSection(String elementName,int index) {
 		switch (elementName) {
 		case MYLOConstants.IDENTITY_TYPE_DROPDOWN:
+			CoreFunctions.explicitWaitTillElementListVisibility(driver, _identDocTypeDropdowns);
 			CoreFunctions.highlightObject(driver, _identDocTypeDropdowns.get(index));
 			CoreFunctions.click(driver, _identDocTypeDropdowns.get(index), MYLOConstants.IDENTITY_TYPE_DROPDOWN);
 			CoreFunctions.explicitWaitTillElementVisibility(driver, _identDocTypeDropdowns.get(index), MYLOConstants.IDENTITY_TYPE_DROPDOWN);
@@ -2461,9 +2600,8 @@ public class Mylo_AssignmentPage extends Base {
 	 */
 	public String setIdentityDocMembersTypeValue(String fieldValue) {
 		if (fieldValue.equals(MYLOConstants.RANDOM)) {
-			List<String> valuesToIgnore = new ArrayList<String>();
-			valuesToIgnore.add(MYLOConstants.SELECT_ONE);
-			updatedTypeValue = CoreFunctions.getRandomOutOfSelectedElementValueFromList(driver, identityTypeList, valuesToIgnore);
+			identityTypeList.remove(0);
+			updatedTypeValue = CoreFunctions.getRandomElementValueFromList(driver, identityTypeList);
 			BusinessFunctions.selectItemFromListUsingText(driver, identityTypeList,
 					updatedTypeValue);
 		} else {
@@ -2491,9 +2629,8 @@ public class Mylo_AssignmentPage extends Base {
 	 */
 	public String setIdentityDocMembersCountryValue(String fieldValue) {
 		if (fieldValue.equals(MYLOConstants.RANDOM)) {
-			List<String> valuesToIgnore = new ArrayList<String>();
-			valuesToIgnore.add(MYLOConstants.SELECT_ONE);
-			updatedCountryValue = CoreFunctions.getRandomOutOfSelectedElementValueFromList(driver, countryList, valuesToIgnore);
+			countryList.remove(0);
+			updatedCountryValue = CoreFunctions.getRandomElementValueFromList(driver, countryList);
 			BusinessFunctions.selectItemFromListUsingText(driver, countryList,
 					updatedCountryValue);
 		} else {
@@ -2729,7 +2866,8 @@ public class Mylo_AssignmentPage extends Base {
 	 * Verify Different FieldValues for Multiple Rows of Identification & Documentation section
 	 */
 	public boolean verifyMultipleRowsFieldValuesIdentDocSection() {
-		boolean flag = true;	
+		boolean flag = true;
+		CoreFunctions.explicitWaitTillElementInVisibilityCustomTime(driver, _spinner, 60);
 		for(int i=0;i<_identDocTypeDropdowns.size();i++) {
 		String updatedFromDate = CoreFunctions.getStringDateInFormat(
 				getFieldValuesIdentificationAndDocumentationSection(MYLOConstants.FROMDATE, i), "dd MMM yyyy",
@@ -2913,5 +3051,23 @@ public class Mylo_AssignmentPage extends Base {
 					CoreConstants.PASS, "Cedula", "USA", updatedFromDate,
 					MYLOConstants.IDENTIFICATION_AND_DOCUMENTATION));		
 		return flag;
+	}
+	
+	/**
+	 * Click on Close Icon of Toast Message
+	 */
+	public void clickToastMesssgeCloseIcon() {
+		if (CoreFunctions.isElementExist(driver,_closeBtn,5)) {
+			CoreFunctions.highlightObject(driver, _closeBtn);
+			CoreFunctions.sendKeysUsingAction(driver, _closeBtn, MYLOConstants.CLOSE_BUTTON);
+		}
+	}
+	
+	public void clickPopUpOkButton() {
+		if (CoreFunctions.isElementExist(driver, _myloErrorPopUp, 5)
+				&& CoreFunctions.isElementExist(driver, _OKButtonPopUp, 5)) {
+			CoreFunctions.clickElement(driver, _OKButtonPopUp);
+			CoreFunctions.explicitWaitTillElementInVisibilityCustomTime(driver, _spinner, 60);
+		}
 	}
 }

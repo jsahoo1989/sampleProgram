@@ -1,0 +1,11 @@
+[
+	{
+		"benefitName": "Property Management",
+		"calculationMethod": "Flat Amount",
+		"otherCalculationMethod": "other calc method",
+		"maxAmount": "100000",
+		"currency": "U.S. Dollar",
+		"frequency": "Annually",
+		"frequencyOther": "other Frequency"
+	}
+]

@@ -3,9 +3,8 @@ package com.aires.businessrules.constants;
 public class IRISConstants {
 	// Initial Login Credentials
 	public static String URI_ADDRESS = "ws://localhost:5095";
-	// public static String IRIS_EXECUTABLE_PATH = "C:\\iris_ng\\IRIS.exe";
 	public static String IRIS_EXECUTABLE_PATH = "\\\\corpprdvw589\\rdev\\IRIS_Builds\\IRIS_CoreFleX_UAT\\IRIS.exe";
-	public static String IRIS_EXECUTABLE_PATH_QA = "\\\\corpprdvw589\\rdev\\IRIS_Builds\\IRIS_FnDEV_CORE_FLEX\\IRIS.exe";
+	public static String IRIS_EXECUTABLE_PATH_QA = "\\\\corpprdvw589\\rdev\\IRIS_Builds\\IRIS_Statler_QA\\IRIS.exe";
 	public static String WINDOW_TITLE = "Window title displayed  as : ";
 	// IRIS_LoginPage.java
 	public static final String DATABASE_NAME = "Database";
@@ -472,7 +471,7 @@ public class IRISConstants {
 	public static final String AUTO_TEST_POLICY = "AutoTestPolicy";
 	public static final String VERIFIED_NEWLY_ADDED_POLICY_NAME = "{0}Verified newly added policy name is:- ''{1}''";
 	public static final String FAILED_TO_FIND_POLICY = "{0}Failed to find Policy:-''{1}'' in policy table";
-	public static final Object BUTTON_YES = "Yes";
+	public static final String BUTTON_YES = "Yes";
 	public static final String VERIFIED_DIALOG_ACCEPTED = "{0} Verified Identity Dialog accepted with ''{1}'' option.";
 	public static final String ADD_BUTTON = "Add";
 	public static final String FAILED_TO_ADD_SUB_SERVICE = "Failed to add Sub-service";

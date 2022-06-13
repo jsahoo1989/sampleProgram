@@ -91,9 +91,9 @@ public class PDT_AssignmentHousingPage extends Base {
 					assignmentHousingBenefitData.assignmentHousing.reimbursedBy, PDTConstants.REIMBURSED_BY,
 					PDTConstants.RADIO_BUTTON_LIST, true);
 
-			BusinessFunctions.verifyReimbursedByOtherTextBoxIsDisplayed(driver, addNewPolicyPage,
+			BusinessFunctions.verifyOtherTextBoxIsDisplayed(driver, addNewPolicyPage,
 					assignmentHousingBenefitData.assignmentHousing.reimbursedBy, _txtBoxReimbursedByOther,
-					assignmentHousingBenefitData.assignmentHousing.reimbursedByOther, subBenefitFormName);
+					assignmentHousingBenefitData.assignmentHousing.reimbursedByOther, subBenefitFormName, PDTConstants.REIMBURSED_BY_OTHER);
 			CoreFunctions.clearAndSetText(driver, _txtAreaAssignmentFeesComment, PDTConstants.COMMENT,
 					assignmentHousingBenefitData.assignmentHousing.comment);
 		} catch (Exception e) {			
@@ -107,9 +107,9 @@ public class PDT_AssignmentHousingPage extends Base {
 			CoreFunctions.selectItemInListByText(driver, _radioBtnSecurityDeposit,
 					assignmentHousingBenefitData.securityDeposit.reimbursedBy, PDTConstants.REIMBURSED_BY,
 					PDTConstants.RADIO_BUTTON_LIST, true);
-			BusinessFunctions.verifyReimbursedByOtherTextBoxIsDisplayed(driver, addNewPolicyPage,
+			BusinessFunctions.verifyOtherTextBoxIsDisplayed(driver, addNewPolicyPage,
 					assignmentHousingBenefitData.securityDeposit.reimbursedBy, _txtBoxSecurityDepositReimbursedByOther,
-					assignmentHousingBenefitData.securityDeposit.reimbursedByOther, subBenefitFormName);
+					assignmentHousingBenefitData.securityDeposit.reimbursedByOther, subBenefitFormName, PDTConstants.REIMBURSED_BY_OTHER);
 			CoreFunctions.clearAndSetText(driver, _txtAreaSecurityDepositComment, PDTConstants.COMMENT,
 					assignmentHousingBenefitData.securityDeposit.comment);
 		} catch (Exception e) {			
@@ -127,9 +127,9 @@ public class PDT_AssignmentHousingPage extends Base {
 					assignmentHousingBenefitData.finderFees.reimbursedBy, PDTConstants.REIMBURSED_BY,
 					PDTConstants.RADIO_BUTTON_LIST, true);
 
-			BusinessFunctions.verifyReimbursedByOtherTextBoxIsDisplayed(driver, addNewPolicyPage,
+			BusinessFunctions.verifyOtherTextBoxIsDisplayed(driver, addNewPolicyPage,
 					assignmentHousingBenefitData.finderFees.reimbursedBy, _txtBoxFinderFeesReimbursedByOther,
-					assignmentHousingBenefitData.finderFees.reimbursedByOther, subBenefitFormName);
+					assignmentHousingBenefitData.finderFees.reimbursedByOther, subBenefitFormName, PDTConstants.REIMBURSED_BY_OTHER);
 			CoreFunctions.clearAndSetText(driver, _txtAreaFinderFeesComment, PDTConstants.COMMENT,
 					assignmentHousingBenefitData.finderFees.comment);
 		} catch (Exception e) {			

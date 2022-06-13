@@ -14,7 +14,6 @@ import com.aires.businessrules.constants.MYLOConstants;
 import com.aires.managers.FileReaderManager;
 import com.aires.testdatatypes.mylo.Mylo_LoginData;
 import com.aires.utilities.Log;
-import com.gargoylesoftware.htmlunit.ElementNotFoundException;
 
 public class Mylo_LoginPage extends Base {
 
@@ -23,27 +22,27 @@ public class Mylo_LoginPage extends Base {
 	}
 
 	@FindBy(how = How.CSS, using = "img[src*='mylo-logo']")
-	private WebElement _img_MYLOLogo;
+	private WebElement _imgMYLOLogo;
 
 	@FindBy(how = How.CSS, using = "input[type='email']")
-	private WebElement _txt_UserEmail;
+	private WebElement _txtUserEmail;
 
 	@FindBy(how = How.CSS, using = "input[type='submit']")
 	private WebElement _submit;
 
 	@FindBy(how = How.CSS, using = "input[type='password']")
-	private WebElement _txt_Password;
+	private WebElement _txtPassword;
 	
-	@FindBy(how = How.XPATH, using = "//input[contains(@id,'idSIButton')]")
+	@FindBy(how = How.CSS, using = "input[id*='idSIButton']")
 	private WebElement _staySignedInYes;
 	
-	@FindBy(how = How.XPATH, using = "//div[@class='profile-img']/a/img")
+	@FindBy(how = How.CSS, using = "div[class='profile-img']>a>img")
 	private WebElement _userProfileImg;
 	
-	@FindBy(how = How.XPATH, using = "//img[@class='tile-img']")
+	@FindBy(how = How.CSS, using = "img[class='tile-img']")
 	private WebElement _logoutUserImg;
 	
-	@FindBy(how = How.XPATH, using = "//div[text()='Use another account']")
+	@FindBy(how = How.ID, using = "otherTileText")
 	private WebElement _anotherAccount;
 	
 	@FindBy(how = How.CSS, using = "div[class='sk-three-strings']")
@@ -53,20 +52,21 @@ public class Mylo_LoginPage extends Base {
 	private WebElement _userProfile;
 	
 	final By _loginImg = By.xpath("//img[contains(@src,'login-with-office-365.jpg')]");
+	final By _password = By.cssSelector("input[type='password']");
 	
 	Mylo_LoginData loginData = FileReaderManager.getInstance().getMyloJsonReader()
 			.getloginDetailsByUserProfileName(MYLOConstants.USER_PROFILE_NAME);
 
 	public void openApplication() throws InterruptedException {
-		Log.info(FileReaderManager.getInstance().getConfigReader().getMyloApplicationUrl());
+		Log.info(FileReaderManager.getInstance().getConfigReader().getApplicationUrl(System.getProperty("application")));
 		CoreFunctions.waitForBrowserToLoad(driver);
 		VerifyMYLOLogo();
 		CoreFunctions.switchToNewTab(driver);
 	}
 
 	public void VerifyMYLOLogo() {
-		CoreFunctions.explicitWaitTillElementVisibility(driver, _img_MYLOLogo, MYLOConstants.MYLOLOGO_TEXT);
-		if (_img_MYLOLogo.isDisplayed())
+		CoreFunctions.explicitWaitTillElementVisibility(driver, _imgMYLOLogo, MYLOConstants.MYLOLOGO_TEXT);
+		if (_imgMYLOLogo.isDisplayed())
 			Log.info(CoreConstants.VRFIED + MYLOConstants.APPLICATION_LAUNCHED_AND_LOGO_DISPLAYED);
 		else
 			Assert.fail(CoreConstants.FAIL + MYLOConstants.APPLICATION_FAILED_TO_LAUNCH);
@@ -83,24 +83,20 @@ public class Mylo_LoginPage extends Base {
 		CoreFunctions.switchToParentWindow(driver);
 		CoreFunctions.explicitWaitTillElementInVisibilityCustomTime(driver, _spinner, 10);
 		while(!(CoreFunctions.isElementExist(driver, _userProfile, 6))) {
-			//CoreFunctions.clickElement(driver, CoreFunctions.getElementByLocator(driver, _loginImg));
-			CoreFunctions.hoverAndClick(driver, CoreFunctions.getElementByLocator(driver, _loginImg));
+			CoreFunctions.hoverAndClick(driver, CoreFunctions.getElementByLocator(driver, _loginImg),MYLOConstants.LOGIN_IMAGE);
 		}	
 		CoreFunctions.explicitWaitTillElementInVisibilityCustomTime(driver, _spinner, 10);
 		CoreFunctions.highlightObject(driver, _userProfile);
 	}
 
 	public void enterUserEmailAndPasswordForMylo(String userName, String password) {
-		try {
-			CoreFunctions.explicitWaitTillElementVisibility(driver, _txt_UserEmail,
-					_txt_UserEmail.getAttribute("placeholder"));
-			CoreFunctions.clearAndSetText(driver, _txt_UserEmail, _txt_UserEmail.getAttribute("placeholder"), userName);
+			CoreFunctions.explicitWaitTillElementVisibility(driver, _txtUserEmail,
+					_txtUserEmail.getAttribute("placeholder"));
+			CoreFunctions.clearAndSetText(driver, _txtUserEmail, _txtUserEmail.getAttribute("placeholder"), userName);
 			CoreFunctions.clickUsingJS(driver, _submit, _submit.getAttribute("value"));
-			CoreFunctions.explicitWaitTillElementVisibility(driver, _txt_Password,
-					_txt_Password.getAttribute("name"));
-			CoreFunctions.clearAndSetText(driver, _txt_Password, _txt_Password.getAttribute("type"), password);
-		} catch (ElementNotFoundException e) {
-		}
+			CoreFunctions.explicitWaitTillElementInVisibilityCustomTime(driver, _spinner, 10);
+			WebElement _pswd = CoreFunctions.getElementByLocator(driver, _password);
+			CoreFunctions.clearAndSetText(driver, _pswd, _pswd.getAttribute("type"), password);
 	}
 	
 	public void logout() {

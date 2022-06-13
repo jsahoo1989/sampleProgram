@@ -34,14 +34,12 @@ import java.time.YearMonth;
 import java.time.format.DateTimeFormatter;
 import java.time.temporal.ChronoUnit;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Calendar;
 import java.util.Collections;
 import java.util.Date;
 import java.util.GregorianCalendar;
 import java.util.LinkedHashMap;
 import java.util.List;
-import java.util.Map;
 import java.util.Properties;
 import java.util.Random;
 import java.util.Set;
@@ -272,7 +270,7 @@ public class CoreFunctions {
 
 	public static void explicitWaitTillElementVisibility(WebDriver driver, WebElement Element, String name) {
 		Log.info("waiting for " + name + " to display");
-		WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(20));
+		WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(60));
 		wait.until(ExpectedConditions.visibilityOf(Element));
 		Log.info("Pass: " + name + " is displayed");
 	}
@@ -395,7 +393,7 @@ public class CoreFunctions {
 	}
 
 	public static void explicitWaitTillElementListClickable(WebDriver driver, List<WebElement> Element) {
-		WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(25));
+		WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(90));
 		for (WebElement ele : Element) {
 			wait.until(ExpectedConditions.elementToBeClickable(ele));
 		}
@@ -567,7 +565,7 @@ public class CoreFunctions {
 
 	public static void clickRowInResult(WebDriver driver, WebElement row, boolean reporter, String searchText) {
 		if (reporter) {
-			CoreFunctions.click(driver, row, searchText);
+			CoreFunctions.clickUsingJS(driver, row, searchText);
 		} else {
 			CoreFunctions.clickWithoutReporting(driver, row, searchText);
 		}
@@ -621,7 +619,7 @@ public class CoreFunctions {
 	}
 
 	public static void clickElement(WebDriver driver, WebElement Element) {
-		waitTillElementClickable(driver, Element, 30);
+		waitTillElementClickable(driver, Element, 60);
 		try {
 			highlightObject(driver, Element);
 			Element.click();
@@ -1062,11 +1060,11 @@ public class CoreFunctions {
 		return count + 1;
 	}
 
-	public static void hoverAndClick(WebDriver driver, WebElement element) {
+	public static void hoverAndClick(WebDriver driver, WebElement element,String name) {
 		Actions action = new Actions(driver);
 		action.moveToElement(element).doubleClick().build().perform();
 		Reporter.addStepLog(CoreConstants.PASS
-				+ MessageFormat.format(CoreConstants.VRFIED_ELE_CLCKED, element.getAttribute("title")));
+				+ MessageFormat.format(CoreConstants.VRFIED_ELE_CLCKED, name));
 	}
 
 	public static void scrollClickUsingJS(WebDriver driver, WebElement Element, String name) {
@@ -1876,22 +1874,39 @@ public class CoreFunctions {
 	public static String setDifferentFieldsForMylo(WebDriver driver,WebElement element, String fieldName, String fieldValue) {
 		String updatedValue;
 		try {
-			updatedValue = generateRandomCharOfLength(Integer.parseInt(fieldValue),
-					MYLOConstants.ONLY_CHARACTERS, 0);
+			updatedValue = (Integer.parseInt(fieldValue)>200)
+					? fieldValue
+					: generateRandomCharOfLength(Integer.parseInt(fieldValue),
+							MYLOConstants.ONLY_CHARACTERS, 0);
+			
 		} catch (NumberFormatException e) {
 			updatedValue = (fieldValue.equals(MYLOConstants.SPECIAL_CHARACTERS_STRING))
 					? generateRandomCharOfLength(4, MYLOConstants.SPECIAL_CHARACTERS_STRING, 2)
-					: (fieldValue.equals(""))?setBlankField(driver,element):fieldValue;
+					: (fieldValue.equals(""))?setBlankField(driver,element,fieldName):fieldValue;
 		}
 		clearAndSetText(driver, element, updatedValue);
 		return updatedValue;
 	}
 	
-	public static String setBlankField(WebDriver driver,WebElement element) {
+	public static String setBlankField(WebDriver driver,WebElement element,String fieldName) {
 			clickElement(driver, element);
 			element.sendKeys(Keys.chord(Keys.CONTROL, "a"));
 			element.sendKeys(Keys.BACK_SPACE);
 			return MYLOConstants.BLANK;
+	}
+	
+	public static String setDifferentDropDownFieldsForMylo(WebDriver driver,String fieldValue,List<WebElement> optionList) {
+		String updatedValue=null;
+			if (fieldValue.equals(MYLOConstants.RANDOM)) {
+				optionList.remove(0);
+				updatedValue = CoreFunctions.getRandomElementValueFromList(driver, optionList);
+				BusinessFunctions.selectItemFromListUsingText(driver, optionList,
+						updatedValue);
+			} else {
+				updatedValue=fieldValue;
+				BusinessFunctions.selectItemFromListUsingText(driver, optionList, fieldValue);
+			} 
+			return updatedValue;
 	}
 
 	public static String calculatePageLoadTime(double tIME_BEFORE_ACTION, double tIME_AFTER_ACTION) {
@@ -1906,5 +1921,4 @@ public class CoreFunctions {
 	      .collect(Collectors.toMap(entry -> entry[0], entry -> entry[1]));
 	    return map;
 	}
-
 }

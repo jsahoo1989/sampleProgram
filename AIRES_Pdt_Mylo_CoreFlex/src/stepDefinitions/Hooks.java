@@ -28,19 +28,22 @@ import java.io.File;
 import java.io.IOException;
 import java.lang.reflect.Field;
 import java.util.ArrayList;
-import java.util.Date;
 
 import javax.imageio.ImageIO;
 
 import org.apache.commons.lang3.reflect.FieldUtils;
 import org.openqa.selenium.OutputType;
 import org.openqa.selenium.TakesScreenshot;
+import org.testng.Assert;
 
+import com.aires.businessrules.BusinessFunctions;
+import com.aires.businessrules.CoreFunctions;
 import com.aires.businessrules.DbFunctions;
 import com.aires.businessrules.constants.CoreConstants;
 import com.aires.cucumber.TestContext;
 import com.aires.managers.FileReaderManager;
 import com.aires.utilities.Log;
+import com.aires.utilities.TestRail;
 import com.aventstack.extentreports.Status;
 import com.google.common.io.Files;
 import com.vimalselvam.cucumber.listener.Reporter;
@@ -66,33 +69,49 @@ public class Hooks {
 		scenarioName = scenario;
 		Reporter.assignAuthor("AIRES - Automation - By : " + System.getProperty("user.name"));
 		testContext.initializeWebManager(scenario.getName().contains("IRIS"));
+		String appName=System.getProperty("application");
+		String url=System.getProperty("testURL");
 		if (scenario.getName().contains("IRIS")) {
 			testContext.getBasePage().invokeIrisApplication();
 			testContext.getBasePage().killExistingBrowsers();
-		} else if (scenario.getName().contains("PDT")) {
+		}
+		//Commented Code is for debugging purpose in local
+		/* else if (scenario.getName().contains("PDT")) {
 			Log.info(FileReaderManager.getInstance().getConfigReader().getPDTApplicationUrl());
 			testContext.getWebDriverManager().getDriver().navigate()
 					.to(FileReaderManager.getInstance().getConfigReader().getPDTApplicationUrl());
 		} else if (scenario.getName().contains("Mylo")) {
-			Log.info(FileReaderManager.getInstance().getConfigReader().getMyloApplicationUrl());
+			Log.info(FileReaderManager.getInstance().getConfigReader().getApplicationUrl("MYLO"));
 			testContext.getWebDriverManager().getDriver().navigate()
-					.to(FileReaderManager.getInstance().getConfigReader().getMyloApplicationUrl());
+					.to(FileReaderManager.getInstance().getConfigReader().getApplicationUrl("MYLO"));
 		} else if (scenario.getName().contains("CoreFlex")) {
-			CoreConstants.TIME_BEFORE_ACTION = new Date().getTime();
 			Log.info(FileReaderManager.getInstance().getConfigReader().getCoreFlexPolicySetupApplicationUrl());
 			testContext.getWebDriverManager().getDriver().navigate()
 					.to(FileReaderManager.getInstance().getConfigReader().getCoreFlexPolicySetupApplicationUrl());
 		}else if (scenario.getName().contains("MXTransferee")) {
-			CoreConstants.TIME_BEFORE_ACTION = new Date().getTime();
 			Log.info(FileReaderManager.getInstance().getConfigReader().getMobilityXUrl());
 			testContext.getWebDriverManager().getDriver().navigate()
 					.to(FileReaderManager.getInstance().getConfigReader().getMobilityXUrl());
 		}		else if (scenario.getName().contains("TransfereeSubmissions")) {
-			CoreConstants.TIME_BEFORE_ACTION = new Date().getTime();
 			Log.info(FileReaderManager.getInstance().getConfigReader().getCoreFlexTransfereeSubmissionsApplicationUrl());
 			testContext.getWebDriverManager().getDriver().navigate()
 					.to(FileReaderManager.getInstance().getConfigReader().getCoreFlexTransfereeSubmissionsApplicationUrl());
+		}*/
+		
+		else if (appName.equals(CoreConstants.COREFLEX)&& scenario.getName().contains("MXTransferee")) {
+			Log.info(FileReaderManager.getInstance().getConfigReader().getApplicationUrl("MXTransferee"));
+			testContext.getWebDriverManager().getDriver().navigate()
+					.to(FileReaderManager.getInstance().getConfigReader().getApplicationUrl("MXTransferee"));
+		}	
+		else if (appName.equals(CoreConstants.COREFLEX)&& scenario.getName().contains("TransfereeSubmissions")) {
+			Log.info(FileReaderManager.getInstance().getConfigReader().getApplicationUrl("TransfereeSubmissions"));
+			testContext.getWebDriverManager().getDriver().navigate()
+					.to(FileReaderManager.getInstance().getConfigReader().getApplicationUrl("TransfereeSubmissions"));
 		}
+		else {
+			Log.info(url);
+			testContext.getWebDriverManager().getDriver().navigate().to(url);
+		}	
 	}
 
 	@After(order = 2)
@@ -164,20 +183,17 @@ public class Hooks {
 		}
 	}
 
-	/*
-	 * @After(order = 1) public void updateResultInTestRail(Scenario scenario) { //
-	 * String Case_ID = //
-	 * CoreFunctions.extractIntValue(scenario.getSourceTagNames().toString());
-	 * String Case_ID =
-	 * BusinessFunctions.getTestRailIdAsPerEnvt(CoreConstants.TAG_VALUE,
-	 * scenario.getSourceTagNames().toString()); Log.info(Case_ID); String
-	 * testrailRunName =
-	 * (CoreFunctions.getPropertyFromConfig("SniffSuite_TestRunId"));
-	 * TestRail.addResultForTestCase(Case_ID, testResult, testrailRunName,
-	 * AiresConstants.TEST_RAIL_URL, AiresConstants.testRailUseriD,
-	 * AiresConstants.testRailPassword, logError(scenario));
-	 * Runtime.getRuntime().gc(); }
-	 */
+	
+	@After(order = 1)
+	public void updateResultInTestRail(Scenario scenario) {
+		String Case_ID = BusinessFunctions.getTestRailIdAsPerApplication(System.getProperty("application"),scenario.getSourceTagNames().toString());
+		Log.info(Case_ID);
+		String testrailRunName = (CoreFunctions.getPropertyFromConfig("SniffSuite_TestRunId"));
+		TestRail.addResultForTestCase(Case_ID, testResult, testrailRunName, CoreConstants.TEST_RAIL_URL,
+				CoreConstants.testRailUseriD, CoreConstants.testRailPassword, logError(scenario));
+		Runtime.getRuntime().gc();
+	}
+	 
 
 	@After(order = 0)
 	public void AfterSteps(Scenario scenario) throws Exception {

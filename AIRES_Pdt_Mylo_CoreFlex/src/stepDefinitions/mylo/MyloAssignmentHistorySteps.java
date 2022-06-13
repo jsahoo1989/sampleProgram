@@ -76,6 +76,7 @@ public class MyloAssignmentHistorySteps {
 	public void the_history_card_should_no_longer_display_at_the_top_of_the_page_after_he_clicks_on_X(){
 		MYLOConstants.TIME_BEFORE_ACTION = new Date().getTime();
 		myloAssignmentPage.clickElementHistoryCardSection(MYLOConstants.CloseHistoryCard);
+		myloAssignmentPage.clickPopUpOkButton();
 		Assert.assertFalse(myloAssignmentPage.verifyHistoryCardPresent(),MYLOConstants.HISTORYCARD_IS_PRESENT);
 		MYLOConstants.TIME_AFTER_ACTION = new Date().getTime();
 		Reporter.addStepLog("<b>Total time taken by <i>'And'</i> statement is :"
@@ -160,6 +161,7 @@ public class MyloAssignmentHistorySteps {
 	public void he_deletes_one_of_the_history_cards_among_recent_files(int totalCount) {
 		MYLOConstants.TIME_BEFORE_ACTION = new Date().getTime();
 		myloAssignmentPage.deleteHistoryCard(totalCount);
+		myloAssignmentPage.clickPopUpOkButton();
 		MYLOConstants.TIME_AFTER_ACTION = new Date().getTime();
 		Reporter.addStepLog("<b>Total time taken by <i>'When'</i> statement is :"
 				+ (MYLOConstants.TIME_AFTER_ACTION - MYLOConstants.TIME_BEFORE_ACTION) / 1000 + " Seconds </b>");

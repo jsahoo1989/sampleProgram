@@ -1,7 +1,7 @@
 Feature: Login to Mylo Application
   I want to test the login functionlity of Mylo applcation
 
-  @MyloLogin @Mylo-Regression
+  @MyloLogin @Mylo:217536 @Mylo-Regression
   Scenario Outline: Login to Mylo Application
     Given he is on the Mylo login page
     And he has entered "<userEmail>" and "<password>" in username and password field

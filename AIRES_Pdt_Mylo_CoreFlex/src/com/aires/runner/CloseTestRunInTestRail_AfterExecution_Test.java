@@ -20,7 +20,7 @@ package com.aires.runner;
 import org.testng.annotations.Test;
 
 import com.aires.businessrules.CoreFunctions;
-import com.aires.businessrules.constants.PDTConstants;
+import com.aires.businessrules.constants.CoreConstants;
 import com.aires.utilities.Log;
 import com.aires.utilities.TestRail;
 
@@ -29,7 +29,7 @@ public class CloseTestRunInTestRail_AfterExecution_Test {
 	@Test
 	public void closeTestRunInTestRail() {
 		TestRail.closeTestRun(Integer.parseInt(CoreFunctions.getPropertyFromConfig("SniffSuite_TestRunId")), 
-				PDTConstants.TEST_RAIL_URL, PDTConstants.testRailUseriD, PDTConstants.testRailPassword);
-		Log.info(PDTConstants.EXECUTION_DONE_CLOSE_TEST_RUN_ID + CoreFunctions.getPropertyFromConfig("SniffSuite_TestRunId"));
+				CoreConstants.TEST_RAIL_URL, CoreConstants.testRailUseriD, CoreConstants.testRailPassword);
+		Log.info(CoreConstants.EXECUTION_DONE_CLOSE_TEST_RUN_ID + CoreFunctions.getPropertyFromConfig("SniffSuite_TestRunId"));
 	}
 }

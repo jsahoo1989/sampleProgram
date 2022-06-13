@@ -41,7 +41,8 @@ public class MyloAssignmentFileInformation_Steps {
 	@Given("^he views the File Information section where \"([^\"]*)\", \"([^\"]*)\", \"([^\"]*)\" are hard coded with background color \"([^\"]*)\"$")
 	public void he_views_the_File_Information_section_where_are_hard_coded_with_background_color(String fieldName1, String fieldName2, String fieldName3, String colorCode) {
 		MYLOConstants.TIME_BEFORE_ACTION = new Date().getTime();
-		String environment=CoreFunctions.getPropertyFromConfig("envt");
+		String environment=System.getProperty("envt");
+		//String environment=CoreFunctions.getPropertyFromConfig("envt");
 		String fileID = null,clientID = null,clientName = null,policyType = null;
 		if(environment.equals(MYLOConstants.UAT)) {
 			clientID = assignmentDetails.activeAssignment.clientID;
@@ -54,6 +55,13 @@ public class MyloAssignmentFileInformation_Steps {
 			clientName=assignmentDetails.activeAssignment_relonetqa4.clientName;
 			policyType=assignmentDetails.activeAssignment_relonetqa4.policyType;
 			fileID=assignmentDetails.activeAssignment_relonetqa4.fileID;
+		}
+		
+		else if(environment.equals(MYLOConstants.PREPROD)) {
+			clientID = assignmentDetails.activeAssignment_preprod.clientID;
+			clientName=assignmentDetails.activeAssignment_preprod.clientName;
+			policyType=assignmentDetails.activeAssignment_preprod.policyType;
+			fileID=assignmentDetails.activeAssignment_preprod.fileID;
 		}
 		
 		Assert.assertTrue(
@@ -162,8 +170,6 @@ public class MyloAssignmentFileInformation_Steps {
 		myloDashboardPage.selectParameterFromQueryScreen(MYLOConstants.FILE);
 		myloDashboardPage.selectOptionsForFileParameters(MYLOConstants.FILE_ID, fileId);
 		myloDashboardPage.clickExecuteButton();
-		//Assert.assertTrue(myloAssignmentPage.verifyActiveTab(MYLOConstants.SUMMARY),
-			//	MYLOConstants.SUMMARY + MYLOConstants.TAB_NOT_ACTIVE);
 		MYLOConstants.TIME_AFTER_ACTION = new Date().getTime();
 		Reporter.addStepLog("<b>Total time taken by <i>'When'</i> statement is :"
 				+ (MYLOConstants.TIME_AFTER_ACTION - MYLOConstants.TIME_BEFORE_ACTION) / 1000 + " Seconds </b>");
@@ -245,6 +251,7 @@ public class MyloAssignmentFileInformation_Steps {
 	@Given("^a warning message \"([^\"]*)\" displayed after he selects \"([^\"]*)\" check box$")
 	public void a_warning_message_displayed_after_he_selects_check_box(String msg, String checkBoxName) {
 		MYLOConstants.TIME_BEFORE_ACTION = new Date().getTime();
+		myloAssignmentPage.clickToastMesssgeCloseIcon();
 		myloAssignmentPage.clickCheckBoxOnAiresFileInfoSection(checkBoxName);
 		Assert.assertTrue(myloAssignmentPage.verifyAlertMessage(msg));
 		//myloAssignmentPage.clickButtonOnAiresFileInformationSection(MYLOConstants.OK_BUTTON);

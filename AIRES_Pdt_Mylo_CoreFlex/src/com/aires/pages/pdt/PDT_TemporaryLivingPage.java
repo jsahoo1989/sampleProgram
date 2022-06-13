@@ -35,10 +35,10 @@ public class PDT_TemporaryLivingPage extends Base {
 	@FindBy(how = How.CSS, using = "app-temporary-living-lodging ng-select[formcontrolname='maxAmountPerNightCode']")
 	private WebElement _drpDownMaxAmtLodging;
 	
-	@FindBy(how = How.CSS, using = "app-temporary-living-lodging ng-select[formcontrolname='maxAmountPerNightCode'] span.ng-option-label.ng-star-inserted")
+	@FindBy(how = How.CSS, using = "app-temporary-living-lodging ng-select[formcontrolname='maxAmountPerNightCode'] span.ng-option-label")
 	private List<WebElement> _drpDownMaxAmtLodgingOptions;
 	
-	@FindBy(how = How.CSS, using = "app-temporary-living-lodging ng-select[formcontrolname='maxAmountPerNightCode'] span.ng-value-label.ng-star-inserted")
+	@FindBy(how = How.CSS, using = "app-temporary-living-lodging ng-select[formcontrolname='maxAmountPerNightCode'] span.ng-value-label")
 	private WebElement _drpDownMaxAmtLodgingOptionsSelected;
 	
 	@FindBy(how = How.XPATH, using = "//app-temporary-living-lodging//label[contains(text(),'Flat Amount')]")
@@ -82,10 +82,10 @@ public class PDT_TemporaryLivingPage extends Base {
 	@FindBy(how = How.CSS, using = "app-temporary-living-meals ng-select[formcontrolname='maxAmountPerNightCode']")
 	private WebElement _drpDownMaxAmtMeals;
 	
-	@FindBy(how = How.CSS, using = "app-temporary-living-meals ng-select[formcontrolname='maxAmountPerNightCode'] span.ng-option-label.ng-star-inserted")
+	@FindBy(how = How.CSS, using = "app-temporary-living-meals ng-select[formcontrolname='maxAmountPerNightCode'] span.ng-option-label")
 	private List<WebElement> _drpDownMaxAmtMealsOptions;
 	
-	@FindBy(how = How.CSS, using = "app-temporary-living-meals ng-select[formcontrolname='maxAmountPerNightCode'] span.ng-value-label.ng-star-inserted")
+	@FindBy(how = How.CSS, using = "app-temporary-living-meals ng-select[formcontrolname='maxAmountPerNightCode'] span.ng-value-label")
 	private WebElement _drpDownMaxAmtMealsOptionsSelected;
 	
 	@FindBy(how = How.XPATH, using = "//label[contains(text(),'Max. Amount - Transferee')]")
@@ -165,10 +165,10 @@ public class PDT_TemporaryLivingPage extends Base {
 	@FindBy(how = How.CSS, using = "ng-select[formcontrolname='tempLivingTransportTypeList']")
 	private WebElement _drpDownTransportationType;
 	
-	@FindBy(how = How.CSS, using = "ng-select[formcontrolname='tempLivingTransportTypeList'] span.ng-option-label.ng-star-inserted")
+	@FindBy(how = How.CSS, using = "ng-select[formcontrolname='tempLivingTransportTypeList'] span.ng-option-label")
 	private List<WebElement> _drpDownTransportationTypeOptions;
 	
-	@FindBy(how = How.CSS, using = "ng-select[formcontrolname='tempLivingTransportTypeList'] span.ng-value-label.ng-star-inserted")
+	@FindBy(how = How.CSS, using = "ng-select[formcontrolname='tempLivingTransportTypeList'] span.ng-value-label")
 	private List<WebElement> _drpDownTransportationTypeMultiSelectOptions;
 	
 	@FindBy(how = How.CSS, using = "input[formcontrolname='tlTransportTypeOther']")
@@ -253,6 +253,7 @@ public class PDT_TemporaryLivingPage extends Base {
 				Reporter.addStepLog(MessageFormat.format(PDTConstants.VERIFIED_DROP_DWN_FIELD_DISPLAYED,
 						CoreConstants.PASS, PDTConstants.CURRENCY, subBenefitFormName));
 				CoreFunctions.clickElement(driver, _drpDownCurrency);
+				CoreFunctions.explicitWaitTillElementListClickable(driver, _drpDownCurrencyOptions);
 				CoreFunctions.selectItemInListByText(driver, _drpDownCurrencyOptions,
 						tempLivingBenefitData.temporaryLivingLodging.currencyCode,
 						PDTConstants.CURRENCY, PDTConstants.DROP_DOWN, true);
@@ -347,7 +348,7 @@ public class PDT_TemporaryLivingPage extends Base {
 			
 			String maxAmt = BusinessFunctions.selectAndReturnRandomValueFromDropDown(driver, addNewPolicyPage, subBenefitFormName,
 					_drpDownMaxAmtLodging, _drpDownMaxAmtLodgingOptions,
-					_drpDownMaxAmtLodgingOptionsSelected, _lblMaxAmtLodging);
+					_drpDownMaxAmtLodgingOptionsSelected, _lblMaxAmtLodging.getText());
 			setMaxAmtTempLivingLodging(maxAmt);
 			checkIfFlatAmtIsSelectedForLodging(addNewPolicyPage, subBenefitFormName);
 			CoreFunctions.explicitWaitTillElementListClickable(driver, _radioBtnTempLivingLodging);
@@ -357,10 +358,10 @@ public class PDT_TemporaryLivingPage extends Base {
 			CoreFunctions.selectItemInListByText(driver, _radioBtnTempLivingLodging,
 					tempLivingBenefitData.temporaryLivingLodging.reimbursedBy, PDTConstants.REIMBURSED_BY,
 					PDTConstants.RADIO_BUTTON_LIST, true);
-			BusinessFunctions.verifyReimbursedByOtherTextBoxIsDisplayed(driver, addNewPolicyPage,
+			BusinessFunctions.verifyOtherTextBoxIsDisplayed(driver, addNewPolicyPage,
 					tempLivingBenefitData.temporaryLivingLodging.reimbursedBy,
 					_txtBoxTempLivingLodgingReimbursedByOther,
-					tempLivingBenefitData.temporaryLivingLodging.reimbursedByOther, subBenefitFormName);
+					tempLivingBenefitData.temporaryLivingLodging.reimbursedByOther, subBenefitFormName, PDTConstants.REIMBURSED_BY_OTHER);
 			CoreFunctions.clearAndSetText(driver, _txtAreaTempLivingLodgingComment, PDTConstants.COMMENT,
 					tempLivingBenefitData.temporaryLivingLodging.comment);
 		} catch (Exception e) {
@@ -378,7 +379,7 @@ public class PDT_TemporaryLivingPage extends Base {
 					true);
 			String maxAmt = BusinessFunctions.selectAndReturnRandomValueFromDropDown(driver, addNewPolicyPage,
 					subBenefitFormName, _drpDownMaxAmtMeals, _drpDownMaxAmtMealsOptions,
-					_drpDownMaxAmtMealsOptionsSelected, _lblMaxAmtMeals);
+					_drpDownMaxAmtMealsOptionsSelected, _lblMaxAmtMeals.getText());
 			setMaxAmtTempLivingMeals(maxAmt);
 			checkIfFlatAmtIsSelected(addNewPolicyPage, subBenefitFormName);
 			
@@ -389,10 +390,10 @@ public class PDT_TemporaryLivingPage extends Base {
 					tempLivingBenefitData.temporaryLivingMeals.reimbursedBy, PDTConstants.REIMBURSED_BY,
 					PDTConstants.RADIO_BUTTON_LIST, true);
 
-			BusinessFunctions.verifyReimbursedByOtherTextBoxIsDisplayed(driver, addNewPolicyPage,
+			BusinessFunctions.verifyOtherTextBoxIsDisplayed(driver, addNewPolicyPage,
 					tempLivingBenefitData.temporaryLivingMeals.reimbursedBy,
 					_txtBoxTempLivingMealsReimbursedByOther,
-					tempLivingBenefitData.temporaryLivingMeals.reimbursedByOther, subBenefitFormName);
+					tempLivingBenefitData.temporaryLivingMeals.reimbursedByOther, subBenefitFormName, PDTConstants.REIMBURSED_BY_OTHER);
 
 			CoreFunctions.clearAndSetText(driver, _txtAreaTempLivingMealsComment, PDTConstants.COMMENT,
 					tempLivingBenefitData.temporaryLivingMeals.comment);
@@ -443,10 +444,10 @@ public class PDT_TemporaryLivingPage extends Base {
 					tempLivingBenefitData.temporaryLivingTransportation.reimbursedBy, PDTConstants.REIMBURSED_BY,
 					PDTConstants.RADIO_BUTTON_LIST, true);
 
-			BusinessFunctions.verifyReimbursedByOtherTextBoxIsDisplayed(driver, addNewPolicyPage,
+			BusinessFunctions.verifyOtherTextBoxIsDisplayed(driver, addNewPolicyPage,
 					tempLivingBenefitData.temporaryLivingTransportation.reimbursedBy,
 					_txtBoxTempLivingTransportationReimbursedByOther,
-					tempLivingBenefitData.temporaryLivingTransportation.reimbursedByOther, subBenefitFormName);
+					tempLivingBenefitData.temporaryLivingTransportation.reimbursedByOther, subBenefitFormName, PDTConstants.REIMBURSED_BY_OTHER);
 
 			CoreFunctions.clearAndSetText(driver, _txtAreaTempLivingTransportationComment, PDTConstants.COMMENT,
 					tempLivingBenefitData.temporaryLivingTransportation.comment);

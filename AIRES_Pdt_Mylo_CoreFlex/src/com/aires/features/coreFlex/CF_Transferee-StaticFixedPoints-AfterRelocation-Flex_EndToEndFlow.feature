@@ -8,7 +8,7 @@ Scenario: CoreFlex - Setting up a New CoreFlex policy in 'Policy Digitization To
     And he has clicked on "Approve Policy" button on "Custom Bundles" page
     And he has selected "Associate this policy with a NEW authorization in IRIS? " option and default 'Effective from booking date' on 'Approval this Policy' dialog
     When he clicks on "Approve" button to acknowledged 'Approve this Policy' dialog 
-    Then Policy Status should be displayed as "Active" on "View/Edit Policy Forms" page
+   Then Policy Status and Version should be displayed as "Active" and "V1" respectively on "View/Edit Policy Forms" page
 		
 #@FlexPolicy-Transferee-Static-FixedPoints-CashNotAuthorized @NewFeatureFormat 		
 #Scenario: IRIS - Creating and Actualizing a new Transferee in IRIS Apllication for Policy Created in 'Policy Digitization Tool' 

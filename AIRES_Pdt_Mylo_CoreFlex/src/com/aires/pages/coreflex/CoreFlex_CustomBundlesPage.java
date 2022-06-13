@@ -45,6 +45,10 @@ public class CoreFlex_CustomBundlesPage extends Base {
 	@FindBy(how = How.XPATH, using = "//app-approval-policy-modal//button/span[contains(text(),'APPROVE')]")
 	private WebElement _buttonApprove;
 
+	// Cancel Button
+	@FindBy(how = How.XPATH, using = "//app-approval-policy-modal//button/span[contains(text(),'CANCEL')]")
+	private WebElement _buttonCancelApproval;
+
 	// Save & Submit Button
 	@FindBy(how = How.XPATH, using = "//button[contains(text(),'Save & Submit')]")
 	private WebElement _buttonSaveAndSubmit;
@@ -153,6 +157,14 @@ public class CoreFlex_CustomBundlesPage extends Base {
 	@FindBy(how = How.XPATH, using = "//strong[contains(text(),'Policy Status')]/parent::label/following-sibling::label")
 	private WebElement _textPolicyStatus;
 
+	// Policy Version
+	@FindBy(how = How.XPATH, using = "//strong[contains(text(),'Version Number')]/parent::label/following-sibling::label")
+	private WebElement _textPolicyVersion;
+
+	// Approve this Policy Dialog
+	@FindBy(how = How.CSS, using = "app-approval-policy-modal")
+	private WebElement _dialogApproveThisPolicy;
+
 	/*********************************************************************/
 
 	public static final List<Benefit> coreBenefits = FileReaderManager.getInstance().getCoreFlexJsonReader()
@@ -218,6 +230,10 @@ public class CoreFlex_CustomBundlesPage extends Base {
 				break;
 			case COREFLEXConstants.APPROVE:
 				CoreFunctions.clickElement(driver, _buttonApprove);
+				break;
+			case COREFLEXConstants.CANCEL:
+				CoreFunctions.clickElement(driver, _buttonCancelApproval);
+				CoreFunctions.explicitWaitTillElementInVisibility(driver, _progressBar);
 				break;
 			case COREFLEXConstants.ASSOCIATE_THIS_POLICY:
 				CoreFunctions.clickElement(driver, _popUpApprovePolicyCheckBox);
@@ -423,8 +439,6 @@ public class CoreFlex_CustomBundlesPage extends Base {
 					.equals(COREFLEXConstants.EXPECTED_APPROVE_THIS_POLICY_DIALOG_VERSION_TEXT)
 					&& CoreFunctions.getElementText(driver, _popUpApprovePolicyAssignmentText)
 							.equals(COREFLEXConstants.EXPECTED_APPROVE_THIS_POLICY_DIALOG_ASSIGNMENT_TEXT);
-			System.out.println(
-					"Checkbox Text :" + CoreFunctions.getElementText(driver, _popUpApprovePolicyCheckBox).trim());
 			isDialogOptionsVerified = (CoreFunctions.getElementText(driver, _popUpApprovePolicyCheckBox).trim())
 					.equals(COREFLEXConstants.EXPECTED_APPROVE_THIS_POLICY_DIALOG_CHECKBOX_SELECTION.trim())
 					&& CoreFunctions.getAttributeText(_popUpApprovePolicyDefaultAssignmentDate, "min")
@@ -445,14 +459,42 @@ public class CoreFlex_CustomBundlesPage extends Base {
 		return isApproveThisPolicyDialogVerified;
 	}
 
-	public boolean verifyPolicyStatusPostSubmission() {
-		if(CoreFunctions.getElementText(driver, _textPolicyStatus).equals(COREFLEXConstants.SUBMITTED)) {
+	public boolean verifyPolicyStatusPostSubmission(String expectedPolicyStatus) {
+		if (CoreFunctions.getElementText(driver, _textPolicyStatus).equals(expectedPolicyStatus)) {
 			Reporter.addStepLog(MessageFormat.format(
-					COREFLEXConstants.SUCCESSFULLY_VERIFIED_POLICY_STATUS_SUBMITTED_POST_POLICY_SUBMISSION_ON_CUSTOM_BUNDLES_PAGE,
+					COREFLEXConstants.SUCCESSFULLY_VERIFIED_POLICY_STATUS_POST_POLICY_SUBMISSION_ON_CUSTOM_BUNDLES_PAGE,
+					CoreConstants.PASS, expectedPolicyStatus));
+			return true;
+		} else {
+			Reporter.addStepLog(MessageFormat.format(
+					COREFLEXConstants.FAILED_TO_VERIFY_POLICY_STATUS_POST_POLICY_SUBMISSION_ON_CUSTOM_BUNDLES_PAGE,
+					CoreConstants.FAIL, CoreFunctions.getElementText(driver, _textPolicyStatus),expectedPolicyStatus));
+			return false;
+		}
+	}
+
+	public boolean verifyPolicyVersionPostSubmission(String expectedPolicyVersion) {
+		if (CoreFunctions.getElementText(driver, _textPolicyVersion).equals(expectedPolicyVersion)) {
+			Reporter.addStepLog(MessageFormat.format(
+					COREFLEXConstants.SUCCESSFULLY_VERIFIED_POLICY_VERSION_POST_POLICY_SUBMISSION_ON_CUSTOM_BUNDLES_PAGE,
+					CoreConstants.PASS, expectedPolicyVersion));
+			return true;
+		} else {
+			Reporter.addStepLog(MessageFormat.format(
+					COREFLEXConstants.FAILED_TO_VERIFY_POLICY_VERSION_POST_POLICY_SUBMISSION_ON_CUSTOM_BUNDLES_PAGE,
+					CoreConstants.FAIL,CoreFunctions.getElementText(driver, _textPolicyVersion), expectedPolicyVersion));
+			return false;
+		}
+	}
+
+	public boolean verifyApprovalDialogNotDisplayed() {
+		if (!CoreFunctions.isElementExist(driver, _dialogApproveThisPolicy, 5)) {
+			Reporter.addStepLog(MessageFormat.format(
+					COREFLEXConstants.SUCCESSFULLY_VERIFIED_APPROVE_THIS_POLICY_DIALOG_NOT_DISPLAYED_ON_CUSTOM_BUNDLES_PAGE,
 					CoreConstants.PASS));
 			return true;
-		}
-		else return false;
+		} else
+			return false;
 	}
 
 }

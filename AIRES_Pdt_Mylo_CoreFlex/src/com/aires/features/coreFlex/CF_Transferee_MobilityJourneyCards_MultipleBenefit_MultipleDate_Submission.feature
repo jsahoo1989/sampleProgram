@@ -8,7 +8,7 @@ Feature: Validate the Mobility Journey Cards Functionality of Flex Aires Managed
     And he has clicked on "Approve Policy" button on "Custom Bundles" page
     And he has selected "Associate this policy with a NEW authorization in IRIS? " option and default 'Effective from booking date' on 'Approval this Policy' dialog
     When he clicks on "Approve" button to acknowledged 'Approve this Policy' dialog 
-    Then Policy Status should be displayed as "Active" on "View/Edit Policy Forms" page
+    Then Policy Status and Version should be displayed as "Active" and "V1" respectively on "View/Edit Policy Forms" page
 
   @End-To_End_CoreFlex @MultipleDateSubmission_FirstSubmission @AllCards
   Scenario: MXTransferee - Verifying Mobility Journey Both Card details for submitted Both type Aires Managed benefits  

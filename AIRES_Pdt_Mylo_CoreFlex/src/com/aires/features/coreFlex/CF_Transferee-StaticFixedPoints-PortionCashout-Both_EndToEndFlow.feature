@@ -8,7 +8,7 @@ Scenario: CoreFlex - Setting up a New CoreFlex policy in 'Policy Digitization To
     And he has clicked on "Approve Policy" button on "Custom Bundles" page
     And he has selected "Associate this policy with a NEW authorization in IRIS? " option and default 'Effective from booking date' on 'Approval this Policy' dialog
     When he clicks on "Approve" button to acknowledged 'Approve this Policy' dialog 
-    Then Policy Status should be displayed as "Active" on "View/Edit Policy Forms" page
+    Then Policy Status and Version should be displayed as "Active" and "V1" respectively on "View/Edit Policy Forms" page
 		
 @End-To_End_CoreFlex @End-To_End_Both-PortionCashout_ApproveAllRequest
 Scenario: MXTransferee - Submitting benefits & Portion Cashout available in configured policy and Tracking Available_Used Benefits Points

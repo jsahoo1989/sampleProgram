@@ -216,6 +216,18 @@ public class PDT_GeneralInformationPage extends Base {
 	@FindBy(how = How.CSS, using = "button[class*='swal2-confirm']")
 	private WebElement _cappedPolicyErrorDialogOKButton;
 
+	// Points Based Flex Policy Default value
+	@FindBy(how = How.XPATH, using = "//ng-select[@formcontrolname='pointBasedFlexInd']//span[@class='ng-value-label ng-star-inserted']")
+	private WebElement _textPointsBasedFlexPolicyDefaultValue;
+
+	// Points Based Flex Policy Disabled field
+	@FindBy(how = How.XPATH, using = "//ng-select[@formcontrolname='pointBasedFlexInd'][contains(@class,'ng-select-disabled')]")
+	private WebElement _fieldPointsBasedFlexPolicy;
+
+	// Policy Version
+	@FindBy(how = How.XPATH, using = "//strong[contains(text(),'Version Number')]/parent::label/following-sibling::label")
+	private WebElement _textPolicyVersion;
+
 	/*********************************************************************/
 
 	CoreFlex_PolicySetupPagesData policySetupPageData = FileReaderManager.getInstance().getCoreFlexJsonReader()
@@ -643,7 +655,7 @@ public class PDT_GeneralInformationPage extends Base {
 				CoreFunctions.clickElement(driver, _buttonLogout);
 				break;
 			case PDTConstants.NEXT:
-				CoreFunctions.clickElement(driver, _buttonNext);				
+				CoreFunctions.clickElement(driver, _buttonNext);
 				break;
 			case PDTConstants.BACK:
 				CoreFunctions.clickElement(driver, _buttonBack);
@@ -691,8 +703,9 @@ public class PDT_GeneralInformationPage extends Base {
 			Reporter.addStepLog(MessageFormat.format(
 					PDTConstants.SUCCESSFULLY_VERIFIED_CLIENT_AND_POLICY_DETAILS_ON_GENERAL_INFO_PAGE,
 					CoreConstants.PASS, pageName));
-			CoreFunctions.writeToPropertiesFile("Assignment_ClientName", CoreFunctions.getElementText(driver, _textClientName));
-			
+			CoreFunctions.writeToPropertiesFile("Assignment_ClientName",
+					CoreFunctions.getElementText(driver, _textClientName));
+
 		}
 		return isGeneralInfoDetailsValid;
 
@@ -737,6 +750,12 @@ public class PDT_GeneralInformationPage extends Base {
 			case PDTConstants.TRACING_SET:
 				if ((CoreFunctions.isElementExist(driver, _textTracingSet, 2))
 						&& (CoreFunctions.getElementText(driver, _textTracingSet)).equals(expectedDefaultValue))
+					isFieldVerified = true;
+				break;
+			case PDTConstants.POINTS_BASED_FLEX_POLICY:
+				if ((CoreFunctions.isElementExist(driver, _textPointsBasedFlexPolicyDefaultValue, 2))
+						&& (CoreFunctions.getElementText(driver, _textPointsBasedFlexPolicyDefaultValue))
+								.equals(expectedDefaultValue))
 					isFieldVerified = true;
 				break;
 			default:
@@ -952,7 +971,6 @@ public class PDT_GeneralInformationPage extends Base {
 		return isFieldOptionSelected;
 	}
 
-
 	/**
 	 * Method to fill all other Mandatory fields of General Information Page.
 	 * 
@@ -1059,7 +1077,7 @@ public class PDT_GeneralInformationPage extends Base {
 		selectFieldOption(PDTConstants.CAPPED_POLICY, policySetupPageData.generalInformationPage.cappedPolicy);
 		CoreFunctions.clickElement(driver, _radioExpenseManagementNoOption);
 	}
-	
+
 	/**
 	 * Method to verify navigated Page Header Title
 	 * 
@@ -1070,6 +1088,73 @@ public class PDT_GeneralInformationPage extends Base {
 		CoreFunctions.explicitWaitTillElementInVisibility(driver, _progressBar);
 		return CoreFunctions.verifyElementOnPage(driver, _headerGeneralInfo, COREFLEXConstants.GENERAL_INFORMATION,
 				expectedPageName, expectedPageName, true);
+	}
+
+	public boolean verifyFieldDisabledPostVersioning(String fieldName) {
+		boolean isFieldDisabled = false;
+		try {
+			switch (fieldName) {
+			case PDTConstants.POINTS_BASED_FLEX_POLICY:
+				if (CoreFunctions.isElementExist(driver, _fieldPointsBasedFlexPolicy, 2))
+					isFieldDisabled = true;
+				break;
+			default:
+				Reporter.addStepLog(MessageFormat.format(PDTConstants.INVALID_GENERAL_INFORMATION_FIELD,
+						CoreConstants.FAIL, fieldName));
+				return false;
+			}
+		} catch (Exception e) {
+			Reporter.addStepLog(MessageFormat.format(
+					COREFLEXConstants.EXCEPTION_OCCURED_WHILE_VALIDATING_GENERAL_INFORMATION_FIELD_DISABLED_STATUS,
+					CoreConstants.FAIL, fieldName, e.getMessage()));
+		}
+		if (isFieldDisabled) {
+			Reporter.addStepLog(MessageFormat.format(
+					COREFLEXConstants.SUCCESSFULLY_VERIFIED_FIELD_DISABLED_ON_GENERAL_INFORMATION_PAGE,
+					CoreConstants.PASS, fieldName));
+		}
+		return isFieldDisabled;
+	}
+
+	/**
+	 * Filling General Information Page Mandatory fields post versioning to verify
+	 * Page Editable Functionality
+	 */
+	public void fillOtherMandatoryFieldsPostVersioning() {
+		selectFieldOption(PDTConstants.POLICY_TYPE,
+				policySetupPageData.generalInformationPagePostVersioning.policyType);
+		selectFieldOption(PDTConstants.EMPLOYEE_TYPE,
+				policySetupPageData.generalInformationPagePostVersioning.employeeType);
+		selectFieldOption(PDTConstants.HOMEOWNER_TYPE,
+				policySetupPageData.generalInformationPagePostVersioning.homeownerType);
+		selectFieldOption(PDTConstants.CAPPED_POLICY,
+				policySetupPageData.generalInformationPagePostVersioning.cappedPolicy);
+		CoreFunctions.clickElement(driver, _radioExpenseManagementNoOption);
+	}
+
+	public boolean verifyPolicyNumberAfterVersioning(PDT_ViewPolicyPage viewPolicyPage) {
+		try {
+			String expectedPolicyVersion = viewPolicyPage.getNextPolicyVersion(CoreFunctions.getPropertyFromConfig("CoreFlex_PolicyVersion"));
+			if (CoreFunctions.getElementText(driver, _textPolicyVersion).equals(expectedPolicyVersion)) {
+				Reporter.addStepLog(MessageFormat.format(
+						COREFLEXConstants.SUCCESSFULLY_VERIFIED_POLICY_VERSION_POST_VERSIONING_ON_GENERAL_INFORMATION_PAGE,
+						CoreConstants.PASS, expectedPolicyVersion));
+				CoreFunctions.writeToPropertiesFile("CoreFlex_PolicyVersion", expectedPolicyVersion);
+				return true;
+			} else {
+				Reporter.addStepLog(MessageFormat.format(
+						COREFLEXConstants.FAILED_TO_VERIFY_POLICY_VERSION_POST_VERSIONING_ON_GENERAL_INFORMATION_PAGE,
+						CoreConstants.FAIL, CoreFunctions.getElementText(driver, _textPolicyVersion),
+						expectedPolicyVersion));
+				return false;
+			}
+
+		} catch (Exception e) {
+			Reporter.addStepLog(MessageFormat.format(
+					COREFLEXConstants.EXCEPTION_OCCURED_WHILE_VALIDATING_POLICY_NUMBER_POST_VERSIONING_ON_GENERAL_INFORMATION_PAGE,
+					CoreConstants.FAIL, e.getMessage()));
+			return false;
+		}
 	}
 
 }

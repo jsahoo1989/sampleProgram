@@ -132,8 +132,10 @@ public class CoreFlex_SharedSteps {
 				.getCoreFlexTemporaryLivingBenefitPage();
 		coreFlexCulturalTrainingBenefitsPage = testContext.getCoreFlexPageObjectManager()
 				.getCoreFlexCulturalTrainingBenefitsPage();
-		coreFlexConciergeServicesBenefitsPage = testContext.getCoreFlexPageObjectManager().getCoreFlexConciergeServicesBenefitsPage();
-		coreFlexHomePurchaseBenefitsPage = testContext.getCoreFlexPageObjectManager().getCoreFlexHomePurchaseBenefitsPage();
+		coreFlexConciergeServicesBenefitsPage = testContext.getCoreFlexPageObjectManager()
+				.getCoreFlexConciergeServicesBenefitsPage();
+		coreFlexHomePurchaseBenefitsPage = testContext.getCoreFlexPageObjectManager()
+				.getCoreFlexHomePurchaseBenefitsPage();
 		coreFlexFinalMoveBenefitsPage = testContext.getCoreFlexPageObjectManager().getCoreFlexFinalMoveBenefitsPage();
 		coreFlexAreaTourBenefitsPage = testContext.getCoreFlexPageObjectManager().getCoreFlexAreaTourBenefitsPage();
 	}
@@ -379,13 +381,11 @@ public class CoreFlex_SharedSteps {
 				+ CoreFunctions.calculatePageLoadTime(CoreConstants.TIME_BEFORE_ACTION, CoreConstants.TIME_AFTER_ACTION)
 				+ " Seconds </b>");
 
-		Assert.assertTrue(
-				coreFlexPolicyBenefitsCategoriesPage.selectAndFillAddedBenefits(policyType,
-						coreFlexDuplicateHousingBenefitsPage, coreFlexLumpSumBenefitsPage,
-						coreFlexOtherHousingBenefitsPage, coreFlexLanguageTrainingBenefitsPage,
-						coreFlexTemporaryLivingBenefitsPage, coreFlexCulturalTrainingBenefitsPage,
-						coreFlexConciergeServicesBenefitsPage,coreFlexHomePurchaseBenefitsPage,
-						coreFlexFinalMoveBenefitsPage, coreFlexAreaTourBenefitsPage),
+		Assert.assertTrue(coreFlexPolicyBenefitsCategoriesPage.selectAndFillAddedBenefits(policyType,
+				coreFlexDuplicateHousingBenefitsPage, coreFlexLumpSumBenefitsPage, coreFlexOtherHousingBenefitsPage,
+				coreFlexLanguageTrainingBenefitsPage, coreFlexTemporaryLivingBenefitsPage,
+				coreFlexCulturalTrainingBenefitsPage, coreFlexConciergeServicesBenefitsPage,
+				coreFlexHomePurchaseBenefitsPage, coreFlexFinalMoveBenefitsPage, coreFlexAreaTourBenefitsPage),
 				MessageFormat.format(COREFLEXConstants.FAILED_TO_SELECT_AND_FILL_ADDED_BENEFITS, CoreConstants.FAIL));
 
 		CoreConstants.TIME_BEFORE_ACTION = new Date().getTime();
@@ -448,27 +448,30 @@ public class CoreFlex_SharedSteps {
 		CoreConstants.TIME_BEFORE_ACTION = new Date().getTime();
 		coreFlexCustomBundlesPage.clickElementOfPage(COREFLEXConstants.OK);
 	}
-	
+
 	@Given("^he has clicked on \"([^\"]*)\" button on \"([^\"]*)\" page$")
 	public void he_has_clicked_on_button_on_page(String buttonName, String pageName) throws Throwable {
-		Assert.assertTrue(
-				coreFlexCustomBundlesPage.verifyPolicyStatusPostSubmission(),
-				MessageFormat.format(COREFLEXConstants.FAILED_TO_VERIFY_POLICY_STATUS_SUBMITTED_POST_POLICY_SUBMISSION_ON_CUSTOM_BUNDLES_PAGE,
-						CoreConstants.FAIL,pageName));
-		Assert.assertTrue(
-				coreFlexCustomBundlesPage.verifySubmitButtonDisabledPostSubmission(),
-				MessageFormat.format(COREFLEXConstants.SUBMIT_BUTTON_NOT_DISABLED_AFTER_POLICY_SUBMISSION_ON_CUSTOM_BUNDLES_PAGE,
-						CoreConstants.FAIL,pageName));
+		Assert.assertTrue(coreFlexCustomBundlesPage.verifyPolicyStatusPostSubmission(COREFLEXConstants.SUBMITTED),
+				MessageFormat.format(
+						COREFLEXConstants.FAILED_TO_VERIFY_POLICY_STATUS_POST_POLICY_SUBMISSION_ON_CUSTOM_BUNDLES_PAGE,
+						CoreConstants.FAIL, pageName));
+		Assert.assertTrue(coreFlexCustomBundlesPage.verifyPolicyVersionPostSubmission(COREFLEXConstants.VERSION1),
+				MessageFormat.format(
+						COREFLEXConstants.FAILED_TO_VERIFY_POLICY_VERSION_POST_POLICY_SUBMISSION_ON_CUSTOM_BUNDLES_PAGE,
+						CoreConstants.FAIL, pageName));
+		Assert.assertTrue(coreFlexCustomBundlesPage.verifySubmitButtonDisabledPostSubmission(),
+				MessageFormat.format(
+						COREFLEXConstants.SUBMIT_BUTTON_NOT_DISABLED_AFTER_POLICY_SUBMISSION_ON_CUSTOM_BUNDLES_PAGE,
+						CoreConstants.FAIL, pageName));
 		coreFlexCustomBundlesPage.clickElementOfPage(buttonName);
 	}
 
 	@Given("^he has selected \"([^\"]*)\" option and default 'Effective from booking date' on 'Approval this Policy' dialog$")
-	public void he_has_selected_option_and_default_Effective_from_booking_date_on_Approval_this_Policy_dialog(String checkBoxSelection) throws Throwable {
-		Assert.assertTrue(
-				coreFlexCustomBundlesPage.verifyApproveThisPolicyDialog(checkBoxSelection),
-				MessageFormat.format(COREFLEXConstants.FAILED_TO_VERIFY_APPROVE_THIS_POLICY_DIALOG,
-						CoreConstants.FAIL));
-		coreFlexCustomBundlesPage.clickElementOfPage(COREFLEXConstants.ASSOCIATE_THIS_POLICY);		
+	public void he_has_selected_option_and_default_Effective_from_booking_date_on_Approval_this_Policy_dialog(
+			String checkBoxSelection) throws Throwable {
+		Assert.assertTrue(coreFlexCustomBundlesPage.verifyApproveThisPolicyDialog(checkBoxSelection), MessageFormat
+				.format(COREFLEXConstants.FAILED_TO_VERIFY_APPROVE_THIS_POLICY_DIALOG, CoreConstants.FAIL));
+		coreFlexCustomBundlesPage.clickElementOfPage(COREFLEXConstants.ASSOCIATE_THIS_POLICY);
 	}
 
 	@When("^he clicks on \"([^\"]*)\" button to acknowledged 'Approve this Policy' dialog$")
@@ -477,8 +480,8 @@ public class CoreFlex_SharedSteps {
 		CoreConstants.TIME_BEFORE_ACTION = new Date().getTime();
 	}
 
-	@Then("^Policy Status should be displayed as \"([^\"]*)\" on \"([^\"]*)\" page$")
-	public void Policy_Status_should_be_displayed_as_on_page(String status, String pageName) throws Throwable {
+	@Then("^Policy Status and Version should be displayed as \"([^\"]*)\" and \"([^\"]*)\" respectively on \"([^\"]*)\" page$")
+	public void Policy_Status_and_Version_should_be_displayed_as_and_respectively_on_page(String expectedStatus,String expectedVersion, String pageName) throws Throwable {
 		Assert.assertTrue(viewPolicyPage.verifyPageNavigation(COREFLEXConstants.VIEW_EDIT_POLICY_FORMS),
 				MessageFormat.format(COREFLEXConstants.FAILED_TO_VERIFY_USER_NAVIGATION_TO_VIEW_EDIT_POLICY_PAGE,
 						CoreConstants.FAIL));
@@ -487,7 +490,8 @@ public class CoreFlex_SharedSteps {
 				+ CoreFunctions.calculatePageLoadTime(CoreConstants.TIME_BEFORE_ACTION, CoreConstants.TIME_AFTER_ACTION)
 				+ " Seconds </b>");
 		viewPolicyPage.clickElementOfPage(PDTConstants.CLEAR_FILTER);
-		Assert.assertTrue(viewPolicyPage.verifyApprovedPolicyStatus(addNewPolicyPage.getSelectedPolicyName(), status),
+		Assert.assertTrue(
+				viewPolicyPage.verifyApprovedPolicyStatusAndVersion(addNewPolicyPage.getSelectedPolicyName(), expectedStatus, expectedVersion),
 				MessageFormat.format(
 						COREFLEXConstants.FAILED_TO_VERIFY_APPROVED_POLICY_STATUS_ON_VIEW_EDIT_POLICY_FORMS_PAGE,
 						CoreConstants.FAIL));
@@ -504,7 +508,7 @@ public class CoreFlex_SharedSteps {
 				+ " Seconds </b>");
 
 		testContext.getBasePage().invokeIrisApplication();
-//		testContext.getBasePage().killExistingBrowsers();
+		testContext.getBasePage().killExistingBrowsers();
 		testContext.getIrisPageManager().irisLoginPage = new IRIS_LoginPage();
 		testContext.getIrisPageManager().irisLoginPage.getIRISLoginAsPerEnvt(_loginDetailsApplication);
 		testContext.getIrisPageManager().irisWelcome12C = new IRIS_Welcome12C();
@@ -613,14 +617,14 @@ public class CoreFlex_SharedSteps {
 				MobilityXConstants.ASSIGNMENT_DETAILS_NOT_MATCHED_ON_MOBILITY_JOURNEY_HOME_PAGE, CoreConstants.FAIL));
 		Assert.assertTrue(mxTransfereeJourneyHomePage.setUpPaymentAccount(),
 				MessageFormat.format(MobilityXConstants.FAILED_TO_SETUP_PAYMENT_ACCOUNT, CoreConstants.FAIL));
-		mxTransfereeJourneyHomePage.clickElementOfPage(MobilityXConstants.MANAGE_MY_POINTS);
-		CoreConstants.TIME_BEFORE_ACTION = new Date().getTime();
 	}
 
 	@Given("^he has navigated to \"([^\"]*)\" page with below Policy-Benefit type after clicking on 'Manage my Points' button on \"([^\"]*)\" page$")
 	public void he_has_navigated_to_page_with_below_Policy_Benefit_type_after_clicking_on_Manage_my_Points_button_on_page(
 			String navigatedPage, String sourcePage, DataTable dataTable) throws Throwable {
 
+		mxTransfereeJourneyHomePage.clickElementOfPage(MobilityXConstants.MANAGE_MY_POINTS);
+		CoreConstants.TIME_BEFORE_ACTION = new Date().getTime();
 		Assert.assertTrue(mxTransfereeFlexPlanningToolPage.isFlexPlanningToolHomePageDisplayed(),
 				MessageFormat.format(MobilityXConstants.FLEX_PLANNING_TOOL_PAGE_NOT_DISPLAYED, CoreConstants.FAIL));
 		CoreConstants.TIME_AFTER_ACTION = new Date().getTime();
@@ -636,7 +640,7 @@ public class CoreFlex_SharedSteps {
 		Assert.assertTrue(
 				mxTransfereeFlexPlanningToolPage.verifyBenefitDetailsOnFPT(policTypeMap.get(0).get("PolicyType")),
 				MessageFormat.format(
-						MobilityXConstants.BENEFIT_DETAILS_ON_FLEX_PLANNING_TOOL_PAGE_OF_MXTRANSFEREE_NOT_MATCHED_WITH_BENEFITS_DETAILS_SET_IN_PDT,
+						MobilityXConstants.BENEFIT_DETAILS_ON_FLEX_PLANNING_TOOL_PAGE_OF_MXTRANSFEREE_NOT_MATCHED_WITH_BENEFITS_DETAILS_SET_IN_BLUEPRINT_APPLICATION,
 						CoreConstants.FAIL));
 
 		mxTransfereeFlexPlanningToolPage.clickElementOfPage(MobilityXConstants.SUGGESTED_OPTIONS_LINK);

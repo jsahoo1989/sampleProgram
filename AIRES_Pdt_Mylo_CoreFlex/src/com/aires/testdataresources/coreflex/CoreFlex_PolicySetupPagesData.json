@@ -86,6 +86,12 @@
 				"Cost of Living Allowance (COLA)",
 				"Other Allowance Benefit"
 			]
+		},
+		"generalInformationPagePostVersioning": {
+			"policyType": "International",
+			"employeeType": "New Hire",
+			"homeownerType": "Renter",
+			"cappedPolicy": "No"
 		}
 	}
 ]

@@ -10,6 +10,7 @@ public class CoreFlex_PolicySetupPagesData {
 	public CustomBundlesPage customBundlesPage;
 	public PolicyBenefitsCategories policyBenefitsCategories;
 	public TransfereeSubmissionsDetails transfereeSubmissionsDetails;
+	public GeneralInformationPagePostVersioning generalInformationPagePostVersioning;
 	
 	public class GeneralInformationPage{
 		public String policyType;
@@ -45,4 +46,11 @@ public class CoreFlex_PolicySetupPagesData {
 		public List<String> lifeStyleSelectableBenefits;
 		public List<String> allowancesSelectableBenefits;
 	}
+	
+	public class GeneralInformationPagePostVersioning{
+		public String policyType;
+		public String employeeType;
+		public String homeownerType;
+		public String cappedPolicy;
+	}	
 }

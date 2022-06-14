@@ -5,7 +5,7 @@ Feature: Add new Policy form with Benefit Categories
   Background: Login to  Policy Digitization Tool (PDT) application
     Given he is logged into 'Aires Policy Tool' application as a "Client Service Manager" user
 
-  @Sprint-14 @PDT-Regression
+  @Sprint-14 @PDT-Regression @PDT-276 @Pdt:217605
   Scenario: Verify Core/Flex policy drop down should display as "No" on General Information section for selected PDT policy
     Given he is on the "Add New Policy" page after clicking on the link "Add New Policy Form" displayed under the left navigation menu on the 'View Policy' page
     When he clicks on the 'Next' button after selecting client, policy information on the 'Add New Policy' page
@@ -14,14 +14,14 @@ Feature: Add new Policy form with Benefit Categories
       | Bundle     |
       | A la carte |
 
-  @Sprint-14 @PDT-Regression
+  @Sprint-14 @PDT-Regression @PDT-279 @Pdt:217606
   Scenario: PDT - Verify Policy Benefit Categories are displayed on the 'Policy Benefits' page while adding a new Policy
     Given he is on the "Add New Policy" page after clicking on the link "Add New Policy Form" displayed under the left navigation menu on the 'View Policy' page
     And he has clicked on the 'Next' button after selecting client, policy information on the 'Add New Policy' page
     When he clicks on the 'Next' button after entering mandatory information on 'General Information' page
     Then all the available benefit categories should be displayed on the "Policy Benefits" page
 
-  @Sprint-14 @PDT-Regression
+  @Sprint-14 @PDT-Regression @PDT-282 @Pdt:217607
   Scenario: PDT - Validate that sub benefit form should show & hide after selecting sub benefit checkbox as checked or unchecked
     Given he is on the "Add New Policy" page after clicking on the link "Add New Policy Form" displayed under the left navigation menu on the 'View Policy' page
     And he has clicked on the 'Next' button after selecting client, policy information on the 'Add New Policy' page
@@ -33,7 +33,7 @@ Feature: Add new Policy form with Benefit Categories
     Then below sub benefit categories form should disappear from  "Pre-Acceptance Services" page
       | Candidate Selection | Pre-Acceptance Trip Transportation | Pre-Acceptance Trip Lodging | Pre-Acceptance Trip Meals |
 
-  @Sprint-15 @PDT-Regression
+  @Sprint-15 @PDT-Regression @PDT-335 @Pdt:217608
   Scenario: PDT - Add new Policy form using Pre-Acceptance Services as Benefit Category including their sub benefit categories
     Given he is on the "Add New Policy" page after clicking on the link "Add New Policy Form" displayed under the left navigation menu on the 'View Policy' page
     And he has clicked on the 'Next' button after selecting client, policy information on the 'Add New Policy' page
@@ -43,7 +43,7 @@ Feature: Add new Policy form with Benefit Categories
     Then success message "Policy saved and submitted" should be displayed on the "Policy Benefit" page
     And newly created Policy should be displayed under "View Policy" page after clicking on 'EXIT' button
 
-  @Sprint-16
+  @Sprint-16 @PDT-366 @Pdt:217609
   Scenario: PDT - Add new Policy form using Immigration as Benefit Category including their sub benefit categories
     Given he is on the "Add New Policy" page after clicking on the link "Add New Policy Form" displayed under the left navigation menu on the 'View Policy' page
     And he has clicked on the 'Next' button after selecting client, policy information on the 'Add New Policy' page
@@ -53,7 +53,7 @@ Feature: Add new Policy form with Benefit Categories
     Then success message "Policy saved and submitted" should be displayed on the "Policy Benefit" page
     And newly created Policy should be displayed under "View Policy" page after clicking on 'EXIT' button
 
-  @Sprint-16 @PDT-Regression
+  @Sprint-16 @PDT-Regression @PDT-367 @Pdt:217610
   Scenario: PDT - Validate the display of tabs on Sub benefits form depending upon the selection/deselection of Benefit differs for Employee type, Benefit differs for Homeowner types
     Given he is on the "Add New Policy Form" page after clicking on the link "Add New Policy Form" displayed under the left navigation menu on the 'View Policy' page
     And he has clicked on the 'Next' button after selecting client, policy information on the 'Add New Policy' page
@@ -71,7 +71,7 @@ Feature: Add new Policy form with Benefit Categories
       | Pre-Acceptance Trip Transportation | No                                | Yes                                 | Home Owner, Renter                                                                               |
       | Pre-Acceptance Trip Lodging        | Yes                               | Yes                                 | Current Employee - HomeOwner, Current Employee - Renter, New Hire - HomeOwner, New Hire - Renter |
 
-  @Sprint-17 @PDT-Regression
+  @Sprint-17 @PDT-Regression @PDT-383 @Pdt:217611
   Scenario: PDT - Add new Policy form using House Hunting Trip as Benefit Category including their sub benefit categories
     Given he is on the "Add New Policy" page after clicking on the link "Add New Policy Form" displayed under the left navigation menu on the 'View Policy' page
     And he has clicked on the 'Next' button after selecting client, policy information on the 'Add New Policy' page
@@ -81,7 +81,7 @@ Feature: Add new Policy form with Benefit Categories
     Then success message "Policy saved and submitted" should be displayed on the "Policy Benefit" page
     And newly created Policy should be displayed under "View Policy" page after clicking on 'EXIT' button
 
-  @Sprint-17 @PDT-Regression @PDT-384
+  @Sprint-17 @PDT-Regression @PDT-384 @Pdt:217612
   Scenario: PDT - Add new Policy form using Language Training as Benefit Category including their sub benefit categories
     Given he is on the "Add New Policy" page after clicking on the link "Add New Policy Form" displayed under the left navigation menu on the 'View Policy' page
     And he has clicked on the 'Next' button after selecting client, policy information on the 'Add New Policy' page
@@ -91,7 +91,7 @@ Feature: Add new Policy form with Benefit Categories
     Then success message "Policy saved and submitted" should be displayed on the "Policy Benefit" page
     And newly created Policy should be displayed under "View Policy" page after clicking on 'EXIT' button
 
-  @Sprint-17 @PDT-Regression @PDT-385
+  @Sprint-17 @PDT-Regression @PDT-385 @Pdt:217613
   Scenario: PDT - Add new Policy form using Cultural Training as Benefit Category including their sub benefit categories
     Given he is on the "Add New Policy" page after clicking on the link "Add New Policy Form" displayed under the left navigation menu on the 'View Policy' page
     And he has clicked on the 'Next' button after selecting client, policy information on the 'Add New Policy' page
@@ -101,7 +101,7 @@ Feature: Add new Policy form with Benefit Categories
     Then success message "Policy saved and submitted" should be displayed on the "Policy Benefit" page
     And newly created Policy should be displayed under "View Policy" page after clicking on 'EXIT' button
 
-  @Sprint-18 @PDT-Regression @PDT-429
+  @Sprint-18 @PDT-Regression @PDT-429 @Pdt:217614
   Scenario: PDT - Add new Policy form using Final Move as Benefit Category including their sub benefit categories
     Given he is on the "Add New Policy" page after clicking on the link "Add New Policy Form" displayed under the left navigation menu on the 'View Policy' page
     And he has clicked on the 'Next' button after selecting client, policy information on the 'Add New Policy' page
@@ -111,7 +111,7 @@ Feature: Add new Policy form with Benefit Categories
     Then success message "Policy saved and submitted" should be displayed on the "Policy Benefit" page
     And newly created Policy should be displayed under "View Policy" page after clicking on 'EXIT' button
 
-  @Sprint-19 @PDT-Regression @PDT-547
+  @Sprint-19 @PDT-Regression @PDT-547 @Pdt:217615
   Scenario: PDT - Add new Policy form using Temporary Living as Benefit Category including their sub benefit categories
     Given he is on the "Add New Policy" page after clicking on the link "Add New Policy Form" displayed under the left navigation menu on the 'View Policy' page
     And he has clicked on the 'Next' button after selecting client, policy information on the 'Add New Policy' page
@@ -121,7 +121,7 @@ Feature: Add new Policy form with Benefit Categories
     Then success message "Policy saved and submitted" should be displayed on the "Policy Benefit" page
     And newly created Policy should be displayed under "View Policy" page after clicking on 'EXIT' button
 
-  @Sprint-19 @PDT-Regression @PDT-546
+  @Sprint-19 @PDT-Regression @PDT-546 @Pdt:217616
   Scenario: PDT - Add new Policy form using Home Leave as Benefit Category including their sub benefit categories
     Given he is on the "Add New Policy" page after clicking on the link "Add New Policy Form" displayed under the left navigation menu on the 'View Policy' page
     And he has clicked on the 'Next' button after selecting client, policy information on the 'Add New Policy' page
@@ -131,7 +131,7 @@ Feature: Add new Policy form with Benefit Categories
     Then success message "Policy saved and submitted" should be displayed on the "Policy Benefit" page
     And newly created Policy should be displayed under "View Policy" page after clicking on 'EXIT' button
 
-  @Sprint-20 @PDT-Regression @PDT-590
+  @Sprint-20 @PDT-Regression @PDT-590 @Pdt:217617
   Scenario: PDT - Add new Policy form using Destination Services as Benefit Category including their sub benefit categories
     Given he is on the "Add New Policy" page after clicking on the link "Add New Policy Form" displayed under the left navigation menu on the 'View Policy' page
     And he has clicked on the 'Next' button after selecting client, policy information on the 'Add New Policy' page
@@ -141,7 +141,7 @@ Feature: Add new Policy form with Benefit Categories
     Then success message "Policy saved and submitted" should be displayed on the "Policy Benefit" page
     And newly created Policy should be displayed under "View Policy" page after clicking on 'EXIT' button
 
-  @Sprint-21 @PDT-Regression @PDT-548
+  @Sprint-21 @PDT-Regression @PDT-548 @Pdt:217618
   Scenario: PDT - Add new Policy form using Rental Assistance as Benefit Category including their sub benefit categories
     Given he is on the "Add New Policy" page after clicking on the link "Add New Policy Form" displayed under the left navigation menu on the 'View Policy' page
     And he has clicked on the 'Next' button after selecting client, policy information on the 'Add New Policy' page
@@ -151,7 +151,7 @@ Feature: Add new Policy form with Benefit Categories
     Then success message "Policy saved and submitted" should be displayed on the "Policy Benefit" page
     And newly created Policy should be displayed under "View Policy" page after clicking on 'EXIT' button
 
-  @Sprint-21 @PDT-Regression @PDT-587
+  @Sprint-21 @PDT-Regression @PDT-587 @Pdt:217619
   Scenario: PDT - Add new Policy form using Compensation Services as Benefit Category including their sub benefit categories
     Given he is on the "Add New Policy" page after clicking on the link "Add New Policy Form" displayed under the left navigation menu on the 'View Policy' page
     And he has clicked on the 'Next' button after selecting client, policy information on the 'Add New Policy' page
@@ -161,7 +161,7 @@ Feature: Add new Policy form with Benefit Categories
     Then success message "Policy saved and submitted" should be displayed on the "Policy Benefit" page
     And newly created Policy should be displayed under "View Policy" page after clicking on 'EXIT' button
 
-  @Sprint-21 @PDT-Regression @PDT-549
+  @Sprint-21 @PDT-Regression @PDT-549 @Pdt:217620
   Scenario: PDT - Add new Policy form using Assignment Housing (Company Sponsored) as Benefit Category including their sub benefit categories
     Given he is on the "Add New Policy" page after clicking on the link "Add New Policy Form" displayed under the left navigation menu on the 'View Policy' page
     And he has clicked on the 'Next' button after selecting client, policy information on the 'Add New Policy' page
@@ -171,7 +171,7 @@ Feature: Add new Policy form with Benefit Categories
     Then success message "Policy saved and submitted" should be displayed on the "Policy Benefit" page
     And newly created Policy should be displayed under "View Policy" page after clicking on 'EXIT' button
 
-  @Sprint-21 @PDT-Regression @PDT-588
+  @Sprint-21 @PDT-Regression @PDT-588 @Pdt:217621
   Scenario: PDT - Add new Policy form using Duplicate Housing as Benefit Category
     Given he is on the "Add New Policy" page after clicking on the link "Add New Policy Form" displayed under the left navigation menu on the 'View Policy' page
     And he has clicked on the 'Next' button after selecting client, policy information on the 'Add New Policy' page
@@ -180,7 +180,7 @@ Feature: Add new Policy form with Benefit Categories
     Then success message "Policy saved and submitted" should be displayed on the "Policy Benefit" page
     And newly created Policy should be displayed under "View Policy" page after clicking on 'EXIT' button
 
-  @Sprint-22 @PDT-Regression @PDT-544 @PDT-703
+  @Sprint-22 @PDT-Regression @PDT-544 @PDT-703 @Pdt:217622
   Scenario: PDT - Add new Policy form using One Time Payments and Reimbursements as Benefit Category including their sub benefit categories
     Given he is on the "Add New Policy" page after clicking on the link "Add New Policy Form" displayed under the left navigation menu on the 'View Policy' page
     And he has clicked on the 'Next' button after selecting client, policy information on the 'Add New Policy' page
@@ -190,7 +190,7 @@ Feature: Add new Policy form with Benefit Categories
     Then success message "Policy saved and submitted" should be displayed on the "Policy Benefit" page
     And newly created Policy should be displayed under "View Policy" page after clicking on 'EXIT' button
 
-  @Sprint-23 @PDT-Regression @PDT-735 @PDT-736
+  @Sprint-23 @PDT-Regression @PDT-735 @PDT-736 @Pdt:217623
   Scenario: PDT - Add new Policy form using Ongoing Payments and Reimbursements as Benefit Category including their sub benefit categories
     Given he is on the "Add New Policy" page after clicking on the link "Add New Policy Form" displayed under the left navigation menu on the 'View Policy' page
     And he has clicked on the 'Next' button after selecting client, policy information on the 'Add New Policy' page
@@ -200,7 +200,7 @@ Feature: Add new Policy form with Benefit Categories
     Then success message "Policy saved and submitted" should be displayed on the "Policy Benefit" page
     And newly created Policy should be displayed under "View Policy" page after clicking on 'EXIT' button
 
-  @Sprint-24 @PDT-Regression @PDT-509
+  @Sprint-24 @PDT-Regression @PDT-589 @Pdt:217624
   Scenario: PDT - Add new Policy form using Property Management as Benefit Category
     Given he is on the "Add New Policy" page after clicking on the link "Add New Policy Form" displayed under the left navigation menu on the 'View Policy' page
     And he has clicked on the 'Next' button after selecting client, policy information on the 'Add New Policy' page
@@ -209,7 +209,7 @@ Feature: Add new Policy form with Benefit Categories
     Then success message "Policy saved and submitted" should be displayed on the "Policy Benefit" page
     And newly created Policy should be displayed under "View Policy" page after clicking on 'EXIT' button
 
-  @Sprint-24 @PDT-Regression @PDT-734
+  @Sprint-24 @PDT-Regression @PDT-734 @Pdt:217625
   Scenario: PDT - Add new Policy form using Home Purchase as Benefit Category including their sub benefit categories
     Given he is on the "Add New Policy" page after clicking on the link "Add New Policy Form" displayed under the left navigation menu on the 'View Policy' page
     And he has clicked on the 'Next' button after selecting client, policy information on the 'Add New Policy' page
@@ -219,7 +219,7 @@ Feature: Add new Policy form with Benefit Categories
     Then success message "Policy saved and submitted" should be displayed on the "Policy Benefit" page
     And newly created Policy should be displayed under "View Policy" page after clicking on 'EXIT' button
 
-	@Sprint-25 @PDT-Regression @PDT-897
+	@Sprint-25 @PDT-Regression @PDT-897 @Pdt:217626
   Scenario: PDT - Add new Policy form using Household Goods as Benefit Category including their sub benefit categories
     Given he is on the "Add New Policy" page after clicking on the link "Add New Policy Form" displayed under the left navigation menu on the 'View Policy' page
     And he has clicked on the 'Next' button after selecting client, policy information on the 'Add New Policy' page
@@ -229,7 +229,7 @@ Feature: Add new Policy form with Benefit Categories
     Then success message "Policy saved and submitted" should be displayed on the "Policy Benefit" page
     And newly created Policy should be displayed under "View Policy" page after clicking on 'EXIT' button
     
-	@Sprint-27 @PDT-951 @PDT-Regression
+	@Sprint-27 @PDT-951 @PDT-Regression @Pdt:217627
   Scenario: PDT - Verify the Exit button functionality on sub-benefit page.
     Given he is on the "Add New Policy" page after clicking on the link "Add New Policy Form" displayed under the left navigation menu on the 'View Policy' page
     And he has clicked on the 'Next' button after selecting client, policy information on the 'Add New Policy' page

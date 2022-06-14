@@ -2,6 +2,7 @@ package com.aires.pages.pdt;
 
 import java.text.MessageFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.LinkedHashMap;
 import java.util.List;
@@ -218,6 +219,7 @@ public class PDT_SharedSubBenefitPage extends Base {
 	LinkedHashMap<String, WebElement> formMap= new LinkedHashMap<String, WebElement>();
 	LinkedHashMap<String, WebElement> buttonMap= new LinkedHashMap<String, WebElement>();
 	LinkedHashMap<String, WebElement> confirmationDialogButtonMap= new LinkedHashMap<String, WebElement>();
+	long timeBeforeAction, timeAfterAction;
 
 	public WebElement getElementByName(String pageName, String elementName) {		
 		if(pageName.equalsIgnoreCase(PDTConstants.ASSIGNMENT_HOUSING_COMPANY_SPONSORED) && elementName.equalsIgnoreCase(PDTConstants.ASSIGNMENT_FINDER_FEES)) 
@@ -255,9 +257,13 @@ public class PDT_SharedSubBenefitPage extends Base {
 		populateConfirmDialogbuttonMap();
 		for (String subBenefit : subBenefits) {
 			CoreFunctions.selectItemInListByText(driver, _subBenefitCategories, subBenefit, true);
-			BusinessFunctions.fluentWaitForSpinnerToDisappear(driver, _progressBar);
+			timeBeforeAction = new Date().getTime();
+			if(CoreFunctions.isElementExist(driver, _progressBar, 4))
+				BusinessFunctions.fluentWaitForSpinnerToDisappear(driver, _progressBar);
 			Assert.assertTrue(verifyFormIsDisplayed(subBenefit, getElementByName(pageName, subBenefit), subBenefit, pageName),
 					MessageFormat.format(PDTConstants.VERIFIED_FORM_IS_NOT_DISPLAYED, subBenefit, pageName));
+			timeAfterAction = new Date().getTime();
+			BusinessFunctions.printTimeTakenByPageToLoad(timeBeforeAction, timeAfterAction, pageName, subBenefit);
 			fillSubBenefitForm(subBenefit, addNewPolicyPage, objStep, pageName);
 		}
 		try {
@@ -643,6 +649,8 @@ public class PDT_SharedSubBenefitPage extends Base {
 	public void selectSubBenefit(String subBenefitName, String pageName, PDT_AddNewPolicyPage addNewPolicyPage) {
 		try {
 			CoreFunctions.selectItemInListByText(driver, _subBenefitCategories, subBenefitName, true);
+			if(CoreFunctions.isElementExist(driver, _progressBar, 4))
+				BusinessFunctions.fluentWaitForSpinnerToDisappear(driver, _progressBar);
 			Assert.assertTrue(verifyFormIsDisplayed(subBenefitName, getElementByName(pageName, subBenefitName), subBenefitName, pageName),
 					MessageFormat.format(PDTConstants.VERIFIED_FORM_IS_NOT_DISPLAYED, subBenefitName, pageName));
 		} catch (Exception e) {

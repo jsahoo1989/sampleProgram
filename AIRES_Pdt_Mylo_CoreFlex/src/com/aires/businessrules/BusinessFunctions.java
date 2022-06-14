@@ -1022,7 +1022,14 @@ public class BusinessFunctions {
 	public static void printTimeTakenByPageToLoad(long timeBeforeAction, long timeAfterAction, String pageName) {
 		DecimalFormat pgToLoadformat = new DecimalFormat();
 		pgToLoadformat.setMaximumFractionDigits(3);
-		Reporter.addStepLog("<b>Time taken by "+pageName+" page to Load is :"
+		Reporter.addStepLog("<b>Time taken by '"+pageName+"' page to Load is :"
+				+ pgToLoadformat.format((timeAfterAction - timeBeforeAction) / 1000) + " Seconds </b>");
+	}
+	
+	public static void printTimeTakenByPageToLoad(long timeBeforeAction, long timeAfterAction, String pageName, String subBenefitName) {
+		DecimalFormat pgToLoadformat = new DecimalFormat();
+		pgToLoadformat.setMaximumFractionDigits(3);
+		Reporter.addStepLog("<b>Time taken by sub-benefit:-'"+subBenefitName+"' to Load on '"+pageName+"' benefit page is:-"
 				+ pgToLoadformat.format((timeAfterAction - timeBeforeAction) / 1000) + " Seconds </b>");
 	}
 }

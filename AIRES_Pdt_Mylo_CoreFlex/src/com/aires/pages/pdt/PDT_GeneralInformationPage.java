@@ -58,11 +58,11 @@ public class PDT_GeneralInformationPage extends Base {
 	private WebElement _selectCoreFlexPolicy;
 
 	// CoreFlex Policy Select Field Default Value
-	@FindBy(how = How.XPATH, using = "//ng-select[@formcontrolname='coreFlexInd']//span[@class='ng-value-label']")
+	@FindBy(how = How.XPATH, using = "//ng-select[@formcontrolname='coreFlexInd']//span[contains(@class,'ng-value-label')]")
 	private WebElement _selectCoreFlexPolicyDefaultValue;
 
 	// Benefit Package Type Select Field
-	@FindBy(how = How.CSS, using = "ng-select[formcontrolname='benefitPackageTypeCode'")
+	@FindBy(how = How.CSS, using = "ng-select[formcontrolname='benefitPackageTypeCode']")
 	private WebElement _selectBenefitPackageType;
 
 	// Benefit Package Type Default Value
@@ -390,7 +390,7 @@ public class PDT_GeneralInformationPage extends Base {
 	}
 
 	public boolean verifyCoreFlexPolicyField(String expectedDefaultValue, String pageName) {
-
+		Log.info("inside verifyCoreFlexPolicyField");
 		if ((CoreFunctions.isElementExist(driver, _selectCoreFlexPolicy, 2))
 				&& _selectCoreFlexPolicyDefaultValue.getText().equals(expectedDefaultValue)) {
 			Reporter.addStepLog(MessageFormat.format(PDTConstants.VERIFIED_DEFAULT_COREFLEX_POLICY, CoreConstants.PASS,
@@ -430,11 +430,14 @@ public class PDT_GeneralInformationPage extends Base {
 	}
 
 	public boolean verifyBenefitPackageType(DataTable benefitPackageTypeTable) {
-		CoreFunctions.clickElement(driver, _selectBenefitPackageType);
-
+		if(CoreFunctions.isElementExist(driver,  _progressBar, 4))
+			BusinessFunctions.fluentWaitForSpinnerToDisappear(driver, _progressBar);
+		CoreFunctions.moveToElement(driver, _selectBenefitPackageType);
+		CoreFunctions.click(driver, _selectBenefitPackageType, PDTConstants.BENEFIT_PACKAGE_TYPE);
 		List<String> expectedOptions = benefitPackageTypeTable.asList(String.class);
 		List<String> actualOptions = CoreFunctions.getElementTextAndStoreInList(driver,
 				_selectBenefitPackageTypeOptions);
+		Log.info("actualOptions="+actualOptions);
 		if (actualOptions.equals(expectedOptions)) {
 			Reporter.addStepLog(MessageFormat.format(PDTConstants.VERIFIED_BENEFIT_PACKAGE_TYPE, CoreConstants.PASS,
 					expectedOptions));
@@ -551,6 +554,8 @@ public class PDT_GeneralInformationPage extends Base {
 
 	public void enterGeneralInformationFields() {
 		try {
+			if(CoreFunctions.isElementExist(driver,  _progressBar, 4))
+				BusinessFunctions.fluentWaitForSpinnerToDisappear(driver, _progressBar);
 			setTracingPrompt();			
 			CoreFunctions.clickElement(driver, _drpDwnPolicyType);
 			CoreFunctions.explicitWaitTillElementListVisibility(driver, _drpDwnPolicyTypeOptions);
@@ -606,6 +611,8 @@ public class PDT_GeneralInformationPage extends Base {
 	public void enterGeneralInformationFields(DataTable generalInfoTable) {
 		List<Map<String, String>> generalInfo = generalInfoTable.asMaps(String.class, String.class);
 		try {
+			if(CoreFunctions.isElementExist(driver,  _progressBar, 4))
+				BusinessFunctions.fluentWaitForSpinnerToDisappear(driver, _progressBar);
 			CoreFunctions.clickElement(driver, _drpDwnPolicyType);
 			CoreFunctions.selectItemInListByText(driver, _drpDwnPolicyTypeOptions, generalInfo.get(0).get("PolicyType"),
 					_lblPolicyType.getText(), PDTConstants.DROP_DOWN, true);

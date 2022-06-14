@@ -132,7 +132,7 @@ public class PDT_PreAcceptanceService extends Base {
 	@FindBy(how = How.CSS, using = "ng-select[formcontrolname='maxAmountCode'] span.ng-option-label")
 	private List<WebElement> _drpDownMaxAmountOptions;
 
-	@FindBy(how = How.XPATH, using = "//ng-select[@formcontrolname='maxAmountCode']/descendant::span[@class='ng-value-label']")
+	@FindBy(how = How.XPATH, using = "//ng-select[@formcontrolname='maxAmountCode']/descendant::span[contains(@class,'ng-value-label')]")
 	private WebElement _drpDownMaxAmountSelectedVal;
 
 	@FindBy(how = How.CSS, using = "input[formcontrolname='maxAmountEe']")
@@ -589,6 +589,7 @@ public class PDT_PreAcceptanceService extends Base {
 			CoreFunctions.clearAndSetText(driver, _txtAreaPreTripMealComment, PDTConstants.COMMENT,
 					preAcceptanceSubBenefitData.preAcceptanceTripMeals.comment);
 		} catch (Exception e) {
+			e.printStackTrace();
 			Assert.fail(MessageFormat.format(PDTConstants.EXCEPTION_OCCURED_FILL_SUBBENEFIT_FORM, CoreConstants.FAIL, subBenefitFormName));
 		}
 	}

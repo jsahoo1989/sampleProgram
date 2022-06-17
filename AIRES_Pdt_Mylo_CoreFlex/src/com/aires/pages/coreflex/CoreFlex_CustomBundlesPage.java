@@ -412,7 +412,7 @@ public class CoreFlex_CustomBundlesPage extends Base {
 		if (policyType.equals(COREFLEXConstants.FLEX) || policyType.equals(COREFLEXConstants.BOTH)) {
 			for (FlexBenefit benefit : flexBenefits) {
 				for (Benefit ben : benefit.getBenefits()) {
-					benefitNameList.add(ben.getBenefitType());
+					benefitNameList.add(ben.getBenefitDisplayName());
 				}
 			}
 		}

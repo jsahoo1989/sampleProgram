@@ -220,8 +220,8 @@ public class ConfigFileReader {
 	}
 
 	public DriverType getBrowser() {
-		//String browserName = properties.getProperty("browser").toLowerCase();
-		String browserName = System.getProperty("browser");
+		String browserName = properties.getProperty("browser").toLowerCase();
+//		String browserName = System.getProperty("browser");
 		switch (browserName) {
 		case "chrome":
 			return DriverType.CHROME;
@@ -289,8 +289,8 @@ public class ConfigFileReader {
 	}
 	
 	public String getNameOfCurrentLaunchedApplication() {
-		//String appName = properties.getProperty("application");
-		String appName = System.getProperty("application");
+		String appName = properties.getProperty("application");
+//		String appName = System.getProperty("application");
 		if (appName != null)
 			return appName;
 		else

@@ -196,7 +196,7 @@ public class CoreFlex_LumpSum_BenefitsPage extends Base {
 
 	/*********************************************************************/
 
-	CoreFlex_AllowancesBenefitsData lumpSumBenefitData = FileReaderManager.getInstance().getCoreFlexJsonReader()
+	CoreFlex_AllowancesBenefitsData allowancesBenefitData = FileReaderManager.getInstance().getCoreFlexJsonReader()
 			.getLifeStyleBenefitDataList(COREFLEXConstants.LUMP_SUM);
 
 	public static final List<Benefit> coreBenefits = FileReaderManager.getInstance().getCoreFlexJsonReader()
@@ -387,35 +387,35 @@ public class CoreFlex_LumpSum_BenefitsPage extends Base {
 					COREFLEXConstants.CALCULATION_METHOD);
 			CoreFunctions.clickElement(driver, _selectCalculationMethod);
 			CoreFunctions.selectItemInListByText(driver, _selectCalculationMethodOptions,
-					lumpSumBenefitData.lumpSum.calculationMethod, true, COREFLEXConstants.CALCULATION_METHOD);
-			if (lumpSumBenefitData.lumpSum.calculationMethod.equalsIgnoreCase(COREFLEXConstants.FLAT_AMOUNT)) {
+					allowancesBenefitData.lumpSum.calculationMethod, true, COREFLEXConstants.CALCULATION_METHOD);
+			if (allowancesBenefitData.lumpSum.calculationMethod.equalsIgnoreCase(COREFLEXConstants.FLAT_AMOUNT)) {
 				CoreFunctions.clearAndSetTextUsingKeys(driver, _inputMaxAmount,
-						lumpSumBenefitData.lumpSum.maxAmountIfApplicable, COREFLEXConstants.MAX_AMOUNT);
+						allowancesBenefitData.lumpSum.maxAmountIfApplicable, COREFLEXConstants.MAX_AMOUNT);
 				CoreFunctions.clickElement(driver, _selectCurrency);
 				CoreFunctions.selectItemInListByText(driver, _selectCurrencyOptions,
-						lumpSumBenefitData.lumpSum.currency, true, COREFLEXConstants.CURRENCY);
+						allowancesBenefitData.lumpSum.currency, true, COREFLEXConstants.CURRENCY);
 				CoreFunctions.clickElement(driver, _selectFrequency);
 				CoreFunctions.selectItemInListByText(driver, _selectFrequencyOptions,
-						lumpSumBenefitData.lumpSum.frequency, true, COREFLEXConstants.FREQUENCY);
+						allowancesBenefitData.lumpSum.frequency, true, COREFLEXConstants.FREQUENCY);
 			}
 			CoreFunctions.selectItemInListByText(driver, _radioBtnCandidateSelection,
-					lumpSumBenefitData.lumpSum.grossUp, true, COREFLEXConstants.GROSS_UP);
+					allowancesBenefitData.lumpSum.grossUp, true, COREFLEXConstants.GROSS_UP);
 			CoreFunctions.clickElement(driver, _selectWhenToMakePayment);
 			CoreFunctions.selectItemInListByText(driver, _selectWhenToMakePaymentOptions,
-					lumpSumBenefitData.lumpSum.whenToMakePayment, true, COREFLEXConstants.WHEN_TO_MAKE_PAYMENT_TEXT);
-			if (lumpSumBenefitData.lumpSum.whenToMakePayment.equalsIgnoreCase(COREFLEXConstants.WHEN_TO_MAKE_PAYMENT)) {
+					allowancesBenefitData.lumpSum.whenToMakePayment, true, COREFLEXConstants.WHEN_TO_MAKE_PAYMENT_TEXT);
+			if (allowancesBenefitData.lumpSum.whenToMakePayment.equalsIgnoreCase(COREFLEXConstants.WHEN_TO_MAKE_PAYMENT)) {
 				CoreFunctions.clickElement(driver, _selectIndicateNumberOfWeeks);
 				CoreFunctions.selectItemInListByText(driver, _selectIndicateNumberOfWeeksOptions,
-						lumpSumBenefitData.lumpSum.indicateNumberOfWeeksBeforeTransferDate, true,
+						allowancesBenefitData.lumpSum.indicateNumberOfWeeksBeforeTransferDate, true,
 						COREFLEXConstants.INDICATE_NUMBER_OF_WEEKS);
 			}
 			CoreFunctions.selectItemInListByText(driver, _radioBtnCandidateSelection,
-					lumpSumBenefitData.lumpSum.reimbursedBy, true, COREFLEXConstants.REIMBURSED_BY);
-			if (lumpSumBenefitData.lumpSum.reimbursedBy.equalsIgnoreCase(COREFLEXConstants.OTHER)) {
+					allowancesBenefitData.lumpSum.reimbursedBy, true, COREFLEXConstants.REIMBURSED_BY);
+			if (allowancesBenefitData.lumpSum.reimbursedBy.equalsIgnoreCase(COREFLEXConstants.OTHER)) {
 				CoreFunctions.clearAndSetTextUsingKeys(driver, _inputReimbursedBy,
-						lumpSumBenefitData.lumpSum.reimbursedByOther, COREFLEXConstants.REIMBURSED_BY_OTHER);
+						allowancesBenefitData.lumpSum.reimbursedByOther, COREFLEXConstants.REIMBURSED_BY_OTHER);
 			}
-			CoreFunctions.clearAndSetTextUsingKeys(driver, _txtAreaComment, lumpSumBenefitData.lumpSum.comment,
+			CoreFunctions.clearAndSetTextUsingKeys(driver, _txtAreaComment, allowancesBenefitData.lumpSum.comment,
 					COREFLEXConstants.COMMENT);
 		} catch (Exception e) {
 			Assert.fail(COREFLEXConstants.FAILED_TO_FILL_DUPLICATE_HOUSING_SUB_BENEFITS_FORM);

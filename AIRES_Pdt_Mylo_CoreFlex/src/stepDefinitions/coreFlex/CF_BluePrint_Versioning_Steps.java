@@ -19,6 +19,7 @@ import com.aires.pages.pdt.PDT_GeneralInformationPage;
 import com.aires.pages.pdt.PDT_ViewPolicyPage;
 import com.vimalselvam.cucumber.listener.Reporter;
 
+import cucumber.api.DataTable;
 import cucumber.api.java.en.Given;
 import cucumber.api.java.en.Then;
 import cucumber.api.java.en.When;
@@ -200,4 +201,76 @@ public class CF_BluePrint_Versioning_Steps {
 				MessageFormat.format(PDTConstants.FAILED_TO_VERIFY_DEFAULT_VALUE_OF_GENERAL_INFORMATION_PAGE_FIELD,
 						CoreConstants.FAIL, PDTConstants.POINTS_BASED_FLEX_POLICY));
 	}
+	
+	@Given("^he has verified 'Enabled/Disabled' status of searched 'Points Based CoreFlex Policy' Icons - \"([^\"]*)\" Versioning on \"([^\"]*)\" page$")
+	public void he_has_verified_Enabled_Disabled_status_of_searched_Points_Based_CoreFlex_Policy_Icons_Versioning_on_page(String versioning, String pageName, DataTable dataTable) throws Throwable {
+		Assert.assertTrue(
+				viewPolicyPage.verifyPolicyIconsStatus(versioning,pageName,dataTable),
+				MessageFormat.format(COREFLEXConstants.FAILED_TO_VERIFY_POLICY_ICONS_ENABLED_DISABLED_STATUS_ON_VIEW_EDIT_POLICY_FORMS_PAGE,
+						CoreConstants.FAIL, pageName));
+	}
+
+	@Given("^he has clicked on \"([^\"]*)\" icon of \"([^\"]*)\" - \"([^\"]*)\" version of the searched points based CoreFlex policy$")
+	public void he_has_clicked_on_icon_of_version_of_the_searched_points_based_CoreFlex_policy(String iconName, String policyVersion, String policyStatus) throws Throwable {
+		
+		viewPolicyPage.clickPolicyActionIcon(iconName,policyVersion,policyStatus);
+	}
+
+	@Given("^he has navigated to \"([^\"]*)\" page of 'New Version' policy in 'Editable' mode having Policy Status displayed as \"([^\"]*)\"$")
+	public void he_has_navigated_to_page_of_New_Version_policy_in_Editable_mode_having_Policy_Status_displayed_as(String arg1, String arg2) throws Throwable {
+		
+		Assert.assertTrue(generalInfoPage.verifyPageNavigation(COREFLEXConstants.GENERAL_INFORMATION_PAGE),
+				MessageFormat.format(PDTConstants.FAILED_TO_NAVIGATE_TO_COREFLEX_GENERAL_INFORMATION_PAGE,
+						CoreConstants.FAIL));
+		Assert.assertTrue(
+				generalInfoPage.validateClientAndPolicyDetailsOnGeneralInfo(COREFLEXConstants.GENERAL_INFORMATION_PAGE,
+						CoreFunctions.getPropertyFromConfig("Policy_ClientID"),
+						CoreFunctions.getPropertyFromConfig("Assignment_Policy")),
+				MessageFormat.format(PDTConstants.FAILED_TO_VALIDATE_CLIENT_POLICY_DATA_ON_GENERAL_INFORMATION_PAGE,
+						CoreConstants.FAIL));
+		Assert.assertTrue(
+				generalInfoPage.verifyGeneralInfoFieldDefaultValue(PDTConstants.POLICY_STATUS, PDTConstants.DRAFT),
+				MessageFormat.format(PDTConstants.FAILED_TO_VERIFY_DEFAULT_VALUE_OF_GENERAL_INFORMATION_PAGE_FIELD,
+						CoreConstants.FAIL, PDTConstants.POLICY_STATUS));
+		Assert.assertTrue(
+				generalInfoPage.verifyPolicyNumberAfterVersioning(viewPolicyPage),
+				MessageFormat.format(COREFLEXConstants.FAILED_TO_VERIFY_POLICY_VERSION_NUMBER_POST_VERSIONING,
+						CoreConstants.FAIL));		
+		Assert.assertTrue(
+				generalInfoPage.verifyGeneralInfoFieldDefaultValue(PDTConstants.TRACING_SET,
+						CoreFunctions.getPropertyFromConfig("Policy_TracingSet")),
+				MessageFormat.format(PDTConstants.FAILED_TO_VERIFY_DEFAULT_VALUE_OF_GENERAL_INFORMATION_PAGE_FIELD,
+						CoreConstants.FAIL, PDTConstants.TRACING_SET));
+		Assert.assertTrue(
+				generalInfoPage.verifyFieldDisabledPostVersioning(PDTConstants.POINTS_BASED_FLEX_POLICY),
+				MessageFormat.format(COREFLEXConstants.FIELD_NOT_DISABLED_ON_GENERAL_INFORMATION_PAGE,
+						CoreConstants.FAIL, PDTConstants.POINTS_BASED_FLEX_POLICY));	
+		Assert.assertTrue(
+				generalInfoPage.verifyGeneralInfoFieldDefaultValue(PDTConstants.POINTS_BASED_FLEX_POLICY, COREFLEXConstants.YES),
+				MessageFormat.format(PDTConstants.FAILED_TO_VERIFY_DEFAULT_VALUE_OF_GENERAL_INFORMATION_PAGE_FIELD,
+						CoreConstants.FAIL, PDTConstants.POINTS_BASED_FLEX_POLICY));
+	}
+
+	@Given("^he has verified 'Policy-Benefits-SubBenefits' details of \"([^\"]*)\" - \"([^\"]*)\" version Policy matches with \"([^\"]*)\" policy$")
+	public void he_has_verified_Policy_Benefits_SubBenefits_details_of_version_Policy_matches_with_policy(String arg1, String arg2, String arg3) throws Throwable {
+	    
+	}
+
+	@Given("^he has verified 'CustomBundles' and 'Transferee Preview' details of \"([^\"]*)\" - \"([^\"]*)\" version Policy matches with \"([^\"]*)\" policy$")
+	public void he_has_verified_CustomBundles_and_Transferee_Preview_details_of_version_Policy_matches_with_policy(String arg1, String arg2, String arg3) throws Throwable {
+	    
+	}
+
+	@Given("^he has acknowledged 'Submit Success' dialog after clicking on \"([^\"]*)\" button on \"([^\"]*)\" page$")
+	public void he_has_acknowledged_Submit_Success_dialog_after_clicking_on_button_on_page(String arg1, String arg2) throws Throwable {
+	    
+	}
+
+	@Given("^he has verified Policy Status and Version displayed as \"([^\"]*)\" and \"([^\"]*)\" on \"([^\"]*)\" page$")
+	public void he_has_verified_Policy_Status_and_Version_displayed_as_and_on_page(String arg1, String arg2, String arg3) throws Throwable {
+	   
+	}
+
+	
+	
 }

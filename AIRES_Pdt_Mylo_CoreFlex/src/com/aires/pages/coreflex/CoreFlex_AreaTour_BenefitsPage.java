@@ -152,7 +152,7 @@ public class CoreFlex_AreaTour_BenefitsPage extends Base {
 
 	/*********************************************************************/
 
-	CoreFlex_SettlingInBenefitsData areaTourBenefitData = FileReaderManager.getInstance()
+	CoreFlex_SettlingInBenefitsData settlingInBenefitData = FileReaderManager.getInstance()
 			.getCoreFlexJsonReader().getSettlingInBenefitDataList(COREFLEXConstants.AREA_TOUR);
 
 	public static final List<Benefit> coreBenefits = FileReaderManager.getInstance().getCoreFlexJsonReader()
@@ -343,16 +343,16 @@ public class CoreFlex_AreaTour_BenefitsPage extends Base {
 		try {
 			CoreFunctions.clickElement(driver, _selectDurationDays);
 			CoreFunctions.selectItemInListByText(driver, _selectDurationDaysOptions,
-					areaTourBenefitData.areaTour.durationDays, true);
+					settlingInBenefitData.areaTour.durationDays, true);
 			CoreFunctions.clearAndSetText(driver, _txtAreaComment,
-					areaTourBenefitData.areaTour.comment);
+					settlingInBenefitData.areaTour.comment);
 			CoreFunctions.selectItemInListByText(driver, _radioBtnGrossUp,
-					areaTourBenefitData.areaTour.grossUp, true);
+					settlingInBenefitData.areaTour.grossUp, true);
 			CoreFunctions.selectItemInListByText(driver, _radioBtnCandidateSelection,
-					areaTourBenefitData.areaTour.reimbursedBy, true);
-			if (areaTourBenefitData.areaTour.reimbursedBy.equalsIgnoreCase(COREFLEXConstants.OTHER)) {
+					settlingInBenefitData.areaTour.reimbursedBy, true);
+			if (settlingInBenefitData.areaTour.reimbursedBy.equalsIgnoreCase(COREFLEXConstants.OTHER)) {
 				CoreFunctions.clearAndSetText(driver, _inputReimbursedBy,
-						areaTourBenefitData.areaTour.reimbursedByOther);
+						settlingInBenefitData.areaTour.reimbursedByOther);
 			}
 		} catch (Exception e) {
 			Assert.fail(MessageFormat.format(PDTConstants.EXCEPTION_OCCURED_FILL_SUBBENEFIT_FORM, CoreConstants.FAIL,

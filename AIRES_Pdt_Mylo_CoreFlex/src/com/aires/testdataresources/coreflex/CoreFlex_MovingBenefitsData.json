@@ -1,7 +1,7 @@
 [
 	{
 		"benefitName": "Final Move",
-		"finalMoveTransportation": {			
+		"finalMoveTransportation": {
 			"transportationType": "Mileage",
 			"minMilForEconomyAirTravel": "200",
 			"minMilForBusinessAirTravel": "100",
@@ -13,24 +13,24 @@
 			"grossUp": "Yes",
 			"reimbursedBy": "Aires",
 			"reimbursedByOther": "Reimbursed Final Move Transporation by other",
-			"comment": "Final Move Transportation comment"			
+			"comment": "Final Move Transportation comment"
 		},
 		"finalMoveLodging": {
 			"duration": "Set # of nights",
 			"numberOfNights": "14",
-			"maxAmount" : "Flat Amount",
-			"flatAmountPerNight" : "200",
+			"maxAmount": "Flat Amount",
+			"flatAmountPerNight": "200",
 			"currency": "U.S. Dollar",
 			"grossUp": "Yes",
 			"reimbursedBy": "Client",
 			"reimbursedByOther": "Reimbursed Final Move Lodging by other",
-			"comment": "Final Move Lodging comment"			
+			"comment": "Final Move Lodging comment"
 		},
 		"finalMoveMeals": {
 			"numberOfDaysForMeal": "Set # of nights",
 			"numberOfDays": "3",
 			"type": "Allowance",
-			"maxAmount": "Flat Amount",			
+			"maxAmount": "Flat Amount",
 			"maxAmtTransferee": "100",
 			"maxAmtTransfereeDetail": "Per Day",
 			"maxAmtTransfereeCurrency": "U.S. Dollar",
@@ -44,6 +44,74 @@
 			"reimbursedBy": "Client",
 			"reimbursedByOther": "Reimbursed Final Move Meals by other",
 			"comment": "Final Move Meal comment"
-		}	
+		}
+	},
+	{
+		"benefitName": "Home Leave",
+		"homeLeaveTransportation": {
+			"assignmentNumberOfTrips": "10",
+			"frequencyTrip": "Other",
+			"frequencyTripOther": "4",
+			"transportationType": "Mileage",
+			"minMilForEconomyAirTravel": "2000",
+			"minMilForBusinessAirTravel": "1000",
+			"minFlightTimeExclLayovers": "40",
+			"accompanyingFamilyMember": "Transferee + Spouse/Partner Only",
+			"excessBaggageFees": "Yes",
+			"maxAmountPerPerson": "1000",
+			"grossUp": "Yes",
+			"reimbursedBy": "Aires",
+			"reimbursedByOther": "Reimbursed by other",
+			"comment": "Home Leave Transportation comment"
+		},
+		"homeLeaveLodging": {
+			"durationDays": "20",
+			"grossUp": "Yes",
+			"reimbursedBy": "Client",
+			"reimbursedByOther": "Reimbursed Home Leave Lodging by other",
+			"comment": "Home Leave Lodging comment"
+		},
+		"homeLeaveRentalCar": {
+			"durationDays": "20",
+			"rentalCarSize": "Other",
+			"rentalCarSizeOther": "SUV",
+			"grossUp": "Yes",
+			"reimbursedBy": "Aires",
+			"reimbursedByOther": "Reimbursed Home Leave Rental Car by other",
+			"comment": "Home Leave Rental Car comment"
+		},
+		"homeLeaveMeals": {
+			"numberOfDaysForMeal": "3",
+			"type": "Allowance",
+			"maxAmount": "Flat Amount",
+			"maxAmtTransferee": "100",
+			"maxAmtTransfereeDetail": "Per Day",
+			"maxAmtTransfereeCurrency": "U.S. Dollar",
+			"maxAmtAdult": "150",
+			"maxAmtAdultDetail": "Total",
+			"maxAmtAdultCurrency": "U.S. Dollar",
+			"maxAmtChildren": "50",
+			"maxAmtChildrenDetail": "Per Day",
+			"maxAmtChildrenCurrency": "U.S. Dollar",
+			"grossUp": "No",
+			"reimbursedBy": "Client",
+			"reimbursedByOther": "Reimbursed Home Leave Meals by other",
+			"comment": "Home Leave Meal comment"
+		}
+	},
+	{
+		"benefitName": "Permanent Storage",
+		"permanentStorage": {
+			"weightCap": "100",
+			"unitOfWeightCap": "lbs",
+			"volumeCap": "200",
+			"unitOfVolumeCap": "cuft",
+			"insuranceType": "Other",
+			"insuranceTypeOther": "Client Insurance",
+			"grossUp": "Yes",
+			"reimbursedBy": "Aires",
+			"reimbursedByOther": "Reimbursed by other",
+			"comment": "Permanent Storage comment"
+		}
 	}
 ]

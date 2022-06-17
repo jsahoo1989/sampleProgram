@@ -19,19 +19,27 @@ package com.aires.managers;
 
 import org.openqa.selenium.WebDriver;
 
+import com.aires.pages.coreflex.CoreFlex_AirportPickup_BenefitsPage;
 import com.aires.pages.coreflex.CoreFlex_AreaTour_BenefitsPage;
+import com.aires.pages.coreflex.CoreFlex_AutoRentalDuringAssignment_BenefitsPage;
 import com.aires.pages.coreflex.CoreFlex_BenefitSummaryPage;
 import com.aires.pages.coreflex.CoreFlex_ConciergeServices_BenefitsPage;
 import com.aires.pages.coreflex.CoreFlex_CulturalTraining_BenefitsPage;
 import com.aires.pages.coreflex.CoreFlex_CustomBundlesPage;
 import com.aires.pages.coreflex.CoreFlex_DuplicateHousing_BenefitsPage;
+import com.aires.pages.coreflex.CoreFlex_EducationAssistanceSchoolSearch_BenefitsPage;
 import com.aires.pages.coreflex.CoreFlex_FinalMove_BenefitsPage;
 import com.aires.pages.coreflex.CoreFlex_FlexPolicySetupPage;
+import com.aires.pages.coreflex.CoreFlex_FurnitureRental_BenefitsPage;
+import com.aires.pages.coreflex.CoreFlex_HomeLeave_BenefitsPage;
 import com.aires.pages.coreflex.CoreFlex_HomePurchase_BenefitsPage;
+import com.aires.pages.coreflex.CoreFlex_HouseHuntingTrip_BenefitsPage;
 import com.aires.pages.coreflex.CoreFlex_LanguageTraining_BenefitsPage;
 import com.aires.pages.coreflex.CoreFlex_LumpSum_BenefitsPage;
 import com.aires.pages.coreflex.CoreFlex_OtherHousing_BenefitsPage;
+import com.aires.pages.coreflex.CoreFlex_PermanentStorage_BenefitsPage;
 import com.aires.pages.coreflex.CoreFlex_PolicyBenefitsCategoriesPage;
+import com.aires.pages.coreflex.CoreFlex_PreAcceptanceServices_BenefitsPage;
 import com.aires.pages.coreflex.CoreFlex_PreviewTransfereePage;
 import com.aires.pages.coreflex.CoreFlex_TemporaryLiving_BenefitsPage;
 import com.aires.pages.coreflex.MX_Transferee_FlexPlanningTool_Page;
@@ -69,6 +77,14 @@ public class PageObjectManager_CoreFlex {
 	private CoreFlex_HomePurchase_BenefitsPage _coreFlexHomePurchaseBenefitsPage;
 	private CoreFlex_FinalMove_BenefitsPage _coreFlexFinalMoveBenefitsPage;
 	private CoreFlex_AreaTour_BenefitsPage _coreFlexAreaTourBenefitsPage;
+	private CoreFlex_HomeLeave_BenefitsPage _coreFlexHomeLeaveBenefitsPage;
+	private CoreFlex_PermanentStorage_BenefitsPage _coreFlexPermanentStorageBenefitsPage;
+	private CoreFlex_AirportPickup_BenefitsPage _coreFlexAireportPickupBenefitsPage;
+	private CoreFlex_PreAcceptanceServices_BenefitsPage _coreFlexPreAcceptanceServicesBenefitsPage;
+	private CoreFlex_FurnitureRental_BenefitsPage _coreFlexFurnitureRentalBenefitsPage;
+	private CoreFlex_AutoRentalDuringAssignment_BenefitsPage _coreFlexAutoRentalDuringAssignmentBenefitsPage;
+	private CoreFlex_EducationAssistanceSchoolSearch_BenefitsPage _coreFlexEducationAssistanceBenefitsPage;
+	private CoreFlex_HouseHuntingTrip_BenefitsPage _coreFlexHouseHuntingTripBenefitsPage;
 
 	public PageObjectManager_CoreFlex(WebDriver driver) {
 		this._driver = driver;
@@ -207,5 +223,53 @@ public class PageObjectManager_CoreFlex {
 		return (_coreFlexAreaTourBenefitsPage == null)
 				? _coreFlexAreaTourBenefitsPage = new CoreFlex_AreaTour_BenefitsPage(_driver)
 				: _coreFlexAreaTourBenefitsPage;
+	}
+	
+	public CoreFlex_HomeLeave_BenefitsPage getCoreFlexHomeLeaveBenefitsPage() {
+		return (_coreFlexHomeLeaveBenefitsPage == null)
+				? _coreFlexHomeLeaveBenefitsPage = new CoreFlex_HomeLeave_BenefitsPage(_driver)
+				: _coreFlexHomeLeaveBenefitsPage;
+	}
+	
+	public CoreFlex_PermanentStorage_BenefitsPage getCoreFlexPermanentStorageBenefitsPage() {
+		return (_coreFlexPermanentStorageBenefitsPage == null)
+				? _coreFlexPermanentStorageBenefitsPage = new CoreFlex_PermanentStorage_BenefitsPage(_driver)
+				: _coreFlexPermanentStorageBenefitsPage;
+	}
+	
+	public CoreFlex_AirportPickup_BenefitsPage getCoreFlexAirportPickupBenefitsPage() {
+		return (_coreFlexAireportPickupBenefitsPage == null)
+				? _coreFlexAireportPickupBenefitsPage = new CoreFlex_AirportPickup_BenefitsPage(_driver)
+				: _coreFlexAireportPickupBenefitsPage;
+	}
+	
+	public CoreFlex_PreAcceptanceServices_BenefitsPage getCoreFlexPreAcceptanceServicesBenefitsPage() {
+		return (_coreFlexPreAcceptanceServicesBenefitsPage == null)
+				? _coreFlexPreAcceptanceServicesBenefitsPage = new CoreFlex_PreAcceptanceServices_BenefitsPage(_driver)
+				: _coreFlexPreAcceptanceServicesBenefitsPage;
+	}
+	
+	public CoreFlex_FurnitureRental_BenefitsPage getCoreFlexFurnitureRentalBenefitsPage() {
+		return (_coreFlexFurnitureRentalBenefitsPage == null)
+				? _coreFlexFurnitureRentalBenefitsPage = new CoreFlex_FurnitureRental_BenefitsPage(_driver)
+				: _coreFlexFurnitureRentalBenefitsPage;
+	}
+	
+	public CoreFlex_AutoRentalDuringAssignment_BenefitsPage getCoreFlexAutoRentalDuringAssignmentBenefitsPage() {
+		return (_coreFlexAutoRentalDuringAssignmentBenefitsPage == null)
+				? _coreFlexAutoRentalDuringAssignmentBenefitsPage = new CoreFlex_AutoRentalDuringAssignment_BenefitsPage(_driver)
+				: _coreFlexAutoRentalDuringAssignmentBenefitsPage;
+	}
+	
+	public CoreFlex_EducationAssistanceSchoolSearch_BenefitsPage getCoreFlexEducationAssistanceBenefitsPage() {
+		return (_coreFlexEducationAssistanceBenefitsPage == null)
+				? _coreFlexEducationAssistanceBenefitsPage = new CoreFlex_EducationAssistanceSchoolSearch_BenefitsPage(_driver)
+				: _coreFlexEducationAssistanceBenefitsPage;
+	}	
+	
+	public CoreFlex_HouseHuntingTrip_BenefitsPage getCoreFlexHouseHuntingTripBenefitsPage() {
+		return (_coreFlexHouseHuntingTripBenefitsPage == null)
+				? _coreFlexHouseHuntingTripBenefitsPage = new CoreFlex_HouseHuntingTrip_BenefitsPage(_driver)
+				: _coreFlexHouseHuntingTripBenefitsPage;
 	}
 }

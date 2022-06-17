@@ -1,6 +1,6 @@
 Feature: Validate the New Policy Versioning Workflow for ‘Active’ points based CoreFlex policy that has one or more assignments/files
 
-@End-To_End_CoreFlex @CF_BluePrint_Versioning @NewInitialVersionPolicyApprovalWorkFlowCheck
+  @End-To_End_CoreFlex @CF_BluePrint_Versioning @NewInitialVersionPolicyApprovalWorkFlowCheck
   Scenario: CoreFlex - Validating policy status is updated to 'Active' on completion of Policy Setup Approval WorkFlow
     Given he has submitted a new "Both" Type Policy with following selection in 'Policy Digitization Tool (PDT)' application
       | Person Responsible For Benefit Selection | Flex Setup Type | Cashout Availability   |
@@ -11,7 +11,7 @@ Feature: Validate the New Policy Versioning Workflow for ‘Active’ points based C
     Then Policy Status and Version should be displayed as "Active" and "V1" respectively on "View/Edit Policy Forms" page
 
   @End-To_End_CoreFlex @CF_BluePrint_Versioning @TransfereeAssociationFlow
-  Scenario: MXTransferee - Validating association of Transferee with the Active BluePrint Version1 Policy 
+  Scenario: MXTransferee - Validating association of Transferee with the Active BluePrint Version1 Policy
     Given he has logged into 'MobilityX' application after creating a new 'Transferee' through IRIS application for policy setup in 'Policy Digitization Tool'
     And he has validated 'Assignment-Policy' details after selecting below option displayed on 'Welcome' dialog
       | WelcomeDialogSelection               |
@@ -28,17 +28,26 @@ Feature: Validate the New Policy Versioning Workflow for ‘Active’ points based C
     When he clicks on "CREATE" button on 'Version Control' popup screen
     Then user should be navigated to "General Information" page of 'New Version' policy in 'Editable' mode having Policy Status displayed as "Draft"
     And 'Points Based Flex Policy' field should be disabled with default value as "Yes"
-    
-    @End-To_End_CoreFlex @CF_BluePrint_Versioning @NewVersionPolicyWorkFlowBenefitSelectionCheck
+
+  @End-To_End_CoreFlex @CF_BluePrint_Versioning @NewVersionPolicyWorkFlowBenefitSelectionCheck
   Scenario: CoreFlex - Validating selected Benefits & Custom Bundles of New Policy version created from ‘Active’ points based CoreFlex policy that has one or more assignments/files
-    #Given he has searched for 'Active' points based CoreFlex policy that has one or more assignments/files on "View/Edit Policy Forms" page
-    #And he has verified that "Edit" and "Delete" icon of "V1" version of "Active" points based CoreFlex policy is disabled
-    #And he has clicked on "Edit" icon of the latest "Draft" version of the searched points based CoreFlex policy
-    #And he has navigated to "General Information" page of 'New Version' policy in 'Editable' mode having Policy Status displayed as "Draft"
-    #And he has verified Policy and Benefits Selection performed on "Flex Policy Setup" and "Policy Benefits Categories" page
-    #And he has verified 'Benefits-SubBenefits' details along with 'Custom Bundles' on the 
-    
-    @End-To_End_CoreFlex @CF_BluePrint_Versioning_ApprovalWF @CancelPolicy
+    Given he has searched for 'Active' points based CoreFlex policy that has one or more assignments/files on "View/Edit Policy Forms" page
+    And he has verified 'Enabled/Disabled' status of searched 'Points Based CoreFlex Policy' Icons - "Post" Versioning on "View/Edit Policy Forms" page
+      | PolicyVersion | PolicyStatus | EditIcon | DeleteIcon | CloneIcon | AssignmentHistoryIcon |
+      | V1            | Active       | Disabled | Disabled   | Enabled   | Enabled               |
+      | V2            | Draft        | Enabled  | Enabled    | Disabled  | Disabled              |
+    And he has clicked on "Edit" icon of "V2" - "Draft" version of the searched points based CoreFlex policy
+    And he has navigated to "General Information" page of 'New Version' policy in 'Editable' mode having Policy Status displayed as "Draft"
+    And he has verified 'Policy-Benefits-SubBenefits' details of "V2" - "Draft" version Policy matches with "V1" policy
+    And he has verified 'CustomBundles' and 'Transferee Preview' details of "V2" - "Draft" version Policy matches with "V1" policy
+    And he has acknowledged 'Submit Success' dialog after clicking on "Submit" button on "Custom Bundles" page
+    And he has verified Policy Status and Version displayed as "Submitted" and "V2" on "Custom Bundles" page
+    #And he has clicked on "Approve Policy" button on "Custom Bundles" page
+    #And he has selected "Associate this policy with a NEW authorization in IRIS? " option and default 'Effective from booking date' on 'Approval this Policy' dialog
+    #When he clicks on "Approve" button to acknowledged 'Approve this Policy' dialog
+    #Then Policy Status and Version should be displayed as "Active" and "V2" respectively on "View/Edit Policy Forms" page
+
+  @End-To_End_CoreFlex @CF_BluePrint_Versioning_ApprovalWF @CancelPolicy
   Scenario: CoreFlex - Validating policy status is NOT updated to 'Active' on cancellation of Policy Setup Approval WorkFlow
     Given he has submitted a new "Both" Type Policy with following selection in 'Policy Digitization Tool (PDT)' application
       | Person Responsible For Benefit Selection | Flex Setup Type | Cashout Availability   |
@@ -47,5 +56,4 @@ Feature: Validate the New Policy Versioning Workflow for ‘Active’ points based C
     And he has selected "Associate this policy with a NEW authorization in IRIS? " option and default 'Effective from booking date' on 'Approval this Policy' dialog
     When he clicks on "Cancel" button to close 'Approve this Policy' dialog
     Then 'Approve this Policy' dialog should be closed
-    And user should be navigated to "Custom Bundles" page having 'Policy Status' and 'Version Number' displayed as "Submitted" and "V1" respectively 
-    
+    And user should be navigated to "Custom Bundles" page having 'Policy Status' and 'Version Number' displayed as "Submitted" and "V1" respectively

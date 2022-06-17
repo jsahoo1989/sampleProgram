@@ -21,8 +21,8 @@ import com.aires.testdatatypes.coreflex.Benefit;
 import com.aires.testdatatypes.coreflex.CoreFlex_MovingBenefitsData;
 import com.vimalselvam.cucumber.listener.Reporter;
 
-public class CoreFlex_FinalMove_BenefitsPage extends Base {
-	public CoreFlex_FinalMove_BenefitsPage(WebDriver driver) {
+public class CoreFlex_HomeLeave_BenefitsPage extends Base {
+	public CoreFlex_HomeLeave_BenefitsPage(WebDriver driver) {
 		super(driver);
 	}
 
@@ -137,35 +137,48 @@ public class CoreFlex_FinalMove_BenefitsPage extends Base {
 	private WebElement _errorDialogPolicyBenefitsDataMissingOKButton;
 
 	// SubBenefit - Collapsable Menu 1
-	@FindBy(how = How.XPATH, using = "//h5[contains(text(),'Final Move Transportation')]/ancestor::a[contains(@href,'collapse')]")
-	private WebElement _formFinalMoveTransportation;
+	@FindBy(how = How.XPATH, using = "//h5[contains(text(),'Home Leave Transportation')]/ancestor::a[contains(@href,'collapse')]")
+	private WebElement _formHomeLeaveTransportation;
 
-	@FindBy(how = How.XPATH, using = "//h5[contains(text(),'Final Move Transportation')]")
-	private WebElement _headerFinalMoveTransportation;
+	@FindBy(how = How.XPATH, using = "//h5[contains(text(),'Home Leave Transportation')]")
+	private WebElement _headerHomeLeaveTransportation;
 
 	// SubBenefit - Collapsable Menu 2
-	@FindBy(how = How.XPATH, using = "//h5[contains(text(),'Final Move Lodging')]/ancestor::a[contains(@href,'collapse')]")
-	private WebElement _formFinalMoveLodging;
+	@FindBy(how = How.XPATH, using = "//h5[contains(text(),'Home Leave Lodging')]/ancestor::a[contains(@href,'collapse')]")
+	private WebElement _formHomeLeaveLodging;
 
 	// SubBenefit - Collapsable Menu 3
-	@FindBy(how = How.XPATH, using = "//h5[contains(text(),'Final Move Meals')]/ancestor::a[contains(@href,'collapse')]")
-	private WebElement _formFinalMoveMeals;
+	@FindBy(how = How.XPATH, using = "//h5[contains(text(),'Home Leave Rental Car')]/ancestor::a[contains(@href,'collapse')]")
+	private WebElement _formHomeLeaveRentalCar;
 
-	@FindBy(how = How.CSS, using = "ng-select[formcontrolname='finalMoveTransportTypeList']")
+	// SubBenefit - Collapsable Menu 4
+	@FindBy(how = How.XPATH, using = "//h5[contains(text(),'Home Leave Meals')]/ancestor::a[contains(@href,'collapse')]")
+	private WebElement _formHomeLeaveMeals;
+
+	@FindBy(how = How.CSS, using = "input[formcontrolname='assignmentTrip']")
+	private WebElement _inputAssignmentTrip;
+
+	@FindBy(how = How.CSS, using = "ng-select[formcontrolname='assignmentFreqOfTripCode']")
+	private WebElement _selectFrequencyOfTrip;
+
+	@FindBy(how = How.CSS, using = "ng-select[formcontrolname='assignmentFreqOfTripCode'] span.ng-option-label.ng-star-inserted")
+	private List<WebElement> _selectFrequencyOfTripOptions;
+
+	@FindBy(how = How.CSS, using = "input[formcontrolname='assignmentFreqOfTripOther']")
+	private WebElement _inputFrequencyOfTripOther;
+
+	@FindBy(how = How.CSS, using = "ng-select[formcontrolname='homeLeaveTransportTypeList']")
 	private WebElement _selectTransportationType;
 
-	@FindBy(how = How.CSS, using = "ng-select[formcontrolname='finalMoveTransportTypeList'] span.ng-option-label")
+	@FindBy(how = How.CSS, using = "ng-select[formcontrolname='homeLeaveTransportTypeList'] span.ng-option-label")
 	private List<WebElement> _selectTransportationTypeOptions;
 
-	@FindBy(how = How.CSS, using = "input[formcontrolname='minMileageEconomy']")
+	@FindBy(how = How.CSS, using = "input[formcontrolname='economyMinMileage']")
 	private WebElement _inputMinMileageEconomy;
 
-	@FindBy(how = How.CSS, using = "input[formcontrolname='minMileageBusiness']")
+	@FindBy(how = How.CSS, using = "input[formcontrolname='businessMinMileage']")
 	private WebElement _inputMinMileageBusiness;
-
-	@FindBy(how = How.CSS, using = "input[formcontrolname='minHrsBusinsAtrvl']")
-	private WebElement _inputMinHrsForBusinessAirTravel;
-
+	
 	@FindBy(how = How.CSS, using = "input[formcontrolname='minFlightTimeExec']")
 	private WebElement _inputMinFlightTimeExlLayovers;
 
@@ -174,48 +187,36 @@ public class CoreFlex_FinalMove_BenefitsPage extends Base {
 
 	@FindBy(how = How.CSS, using = "ng-select[formcontrolname='accompanyingFamilyMemberCode'] span.ng-option-label")
 	private List<WebElement> _selectAccompanyingFamilyMemberCodeOptions;
-
+	
 	@FindBy(how = How.XPATH, using = "//div[@class='collapse show']//input[@formcontrolname='excessBaggageFeesInd']/parent::label[@class='form-check-label']")
 	private List<WebElement> _radioBtnExcessBaggageFees;
 
 	@FindBy(how = How.CSS, using = "input[formcontrolname='maxAmountPerPerson']")
 	private WebElement _inputMaxAmountPerPerson;
 
-	@FindBy(how = How.XPATH, using = "//div[@class='collapse show']//ng-select[@formcontrolname='finalMoveDurationCode']")
-	private WebElement _selectDuration;
-
-	@FindBy(how = How.XPATH, using = "//div[@class='collapse show']//ng-select[@formcontrolname='finalMoveDurationCode']//div[@role='option']")
-	private List<WebElement> _selectDurationOptions;
-
-	@FindBy(how = How.XPATH, using = "//div[@class='collapse show']//ng-select[@formcontrolname='maxAmountCode']")
-	private WebElement _selectMaxAmt;
-
-	@FindBy(how = How.XPATH, using = "//div[@class='collapse show']//ng-select[@formcontrolname='maxAmountCode']//div[@role='option']")
-	private List<WebElement> _selectMaxAmtOptions;
-
-	@FindBy(how = How.CSS, using = "input[formcontrolname='numOfNight']")
-	private WebElement _inputNumberOfNights;
-
-	@FindBy(how = How.CSS, using = "input[formcontrolname='flatAmountPerNight']")
-	private WebElement _inputFlatAmtPerNight;
-
-	@FindBy(how = How.CSS, using = "ng-select[formcontrolname='currencyCode']")
-	private WebElement _selectCurrencyCode;
-
-	@FindBy(how = How.CSS, using = "ng-select[formcontrolname='currencyCode'] span.ng-option-label")
-	private List<WebElement> _selectCurrencyCodeOptions;
+	@FindBy(how = How.XPATH, using = "//div[@class='collapse show']//input[@formcontrolname='numOfDays']")
+	private WebElement _inputDurationInDays;
 	
-	@FindBy(how = How.XPATH, using = "//div[@class='collapse show']//ng-select[@formcontrolname='finalMoveDurationCode']")
-	private WebElement _selectNumberOfDaysForMeals;
+	@FindBy(how = How.CSS, using = "ng-select[formcontrolname='classSizeCode']")
+	private WebElement _selectRentalCarSize;
 
-	@FindBy(how = How.XPATH, using = "//div[@class='collapse show']//ng-select[@formcontrolname='finalMoveDurationCode']//div[@role='option']")
-	private List<WebElement> _selectNumberOfDaysForMealsOptions;
+	@FindBy(how = How.CSS, using = "ng-select[formcontrolname='classSizeCode'] span.ng-option-label")
+	private List<WebElement> _selectRentalCarSizeOptions;
+	
+	@FindBy(how = How.CSS, using = "input[formcontrolname='classSizeOther']")
+	private WebElement _inputRentalCarOtherSize;	
 
-	@FindBy(how = How.CSS, using = "input[formcontrolname='numOfDay']")
-	private WebElement _inputNumberOfDays;
-
-	@FindBy(how = How.XPATH, using = "//div[@class='collapse show']//input[@formcontrolname='mealTypeCode']/parent::label[@class='form-check-label']")
+	@FindBy(how = How.CSS, using = "app-meals input[formcontrolname='numOfDays']")
+	private WebElement _inputNumOfDaysForMeals;
+	
+	@FindBy(how = How.XPATH, using = "//div[@class='collapse show']//input[@formcontrolname='typeCode']/parent::label[@class='form-check-label']")
 	private List<WebElement> _radioBtnMealType;
+
+	@FindBy(how = How.CSS, using = "ng-select[formcontrolname='maxAmountCode']")
+	private WebElement _selectMaxAmtMeals;
+
+	@FindBy(how = How.CSS, using = "ng-select[formcontrolname='maxAmountCode'] span[class*=ng-option-label]")
+	private List<WebElement> _selectMaxAmtMealsOptions;
 
 	@FindBy(how = How.CSS, using = "input[formcontrolname='maxAmountEe']")
 	private WebElement _inputMaxAmtTransferee;
@@ -252,11 +253,11 @@ public class CoreFlex_FinalMove_BenefitsPage extends Base {
 
 	@FindBy(how = How.CSS, using = "ng-select[formcontrolname='currencyCodeChild'] span.ng-option-label")
 	private List<WebElement> _selectCurrencyCodeChildOptions;
-
+	
 	/*********************************************************************/
 
 	CoreFlex_MovingBenefitsData movingBenefitData = FileReaderManager.getInstance().getCoreFlexJsonReader()
-			.getMovingBenefitDataList(COREFLEXConstants.FINAL_MOVE);
+			.getMovingBenefitDataList(COREFLEXConstants.HOME_LEAVE);
 
 	public static final List<Benefit> coreBenefits = FileReaderManager.getInstance().getCoreFlexJsonReader()
 			.getMXTransfereeCoreBenefitDetails();
@@ -270,7 +271,7 @@ public class CoreFlex_FinalMove_BenefitsPage extends Base {
 	 * @return
 	 */
 	public boolean verifyPageNavigation(String expectedPageName) {
-		return CoreFunctions.verifyElementOnPage(driver, _headerPage, COREFLEXConstants.FINAL_MOVE, expectedPageName,
+		return CoreFunctions.verifyElementOnPage(driver, _headerPage, COREFLEXConstants.HOME_LEAVE, expectedPageName,
 				expectedPageName, true);
 	}
 
@@ -406,9 +407,9 @@ public class CoreFlex_FinalMove_BenefitsPage extends Base {
 					fillSubBenefit(subBenefit.trim(), benefitType);
 				} else {
 					Reporter.addStepLog(MessageFormat.format(COREFLEXConstants.SUB_BENEFIT_FORM_NOT_DISPLAYED,
-							CoreConstants.FAIL, subBenefit, COREFLEXConstants.FINAL_MOVE_BENEFITS_PAGE));
+							CoreConstants.FAIL, subBenefit, COREFLEXConstants.HOME_LEAVE_BENEFITS_PAGE));
 					throw new RuntimeException(MessageFormat.format(COREFLEXConstants.SUB_BENEFIT_FORM_NOT_DISPLAYED,
-							CoreConstants.FAIL, subBenefit, COREFLEXConstants.FINAL_MOVE_BENEFITS_PAGE));
+							CoreConstants.FAIL, subBenefit, COREFLEXConstants.HOME_LEAVE_BENEFITS_PAGE));
 				}
 			}
 		} catch (Exception e) {
@@ -426,17 +427,21 @@ public class CoreFlex_FinalMove_BenefitsPage extends Base {
 	 */
 	private void fillSubBenefit(String subBenefit, String benefitType) {
 		switch (subBenefit) {
-		case COREFLEXConstants.FINAL_MOVE_TRANSPORTATION:
-			expandSubBenefitIfCollapsed(getElementByName(COREFLEXConstants.FINAL_MOVE_TRANSPORTATION));
-			fillFinalMoveTransportationSubBenefitForm(COREFLEXConstants.FINAL_MOVE_TRANSPORTATION);
+		case COREFLEXConstants.HOME_LEAVE_TRANSPORTATION:
+			expandSubBenefitIfCollapsed(getElementByName(COREFLEXConstants.HOME_LEAVE_TRANSPORTATION));
+			fillHomeLeaveTransportationSubBenefitForm(COREFLEXConstants.HOME_LEAVE_TRANSPORTATION);
 			break;
-		case COREFLEXConstants.FINAL_MOVE_LODGING:
-			expandSubBenefitIfCollapsed(getElementByName(COREFLEXConstants.FINAL_MOVE_LODGING));
-			fillFinalMoveLodgingSubBenefitForm(COREFLEXConstants.FINAL_MOVE_LODGING);
+		case COREFLEXConstants.HOME_LEAVE_LODGING:
+			expandSubBenefitIfCollapsed(getElementByName(COREFLEXConstants.HOME_LEAVE_LODGING));
+			fillHomeLeaveLodgingSubBenefitForm(COREFLEXConstants.HOME_LEAVE_LODGING);
 			break;
-		case COREFLEXConstants.FINAL_MOVE_MEALS:
-			expandSubBenefitIfCollapsed(getElementByName(COREFLEXConstants.FINAL_MOVE_MEALS));
-			fillFinalMoveMealsSubBenefitForm(COREFLEXConstants.FINAL_MOVE_MEALS);
+		case COREFLEXConstants.HOME_LEAVE_RENTAL_CAR:
+			expandSubBenefitIfCollapsed(getElementByName(COREFLEXConstants.HOME_LEAVE_RENTAL_CAR));
+			fillHomeLeaveRentalCarSubBenefitForm(COREFLEXConstants.HOME_LEAVE_RENTAL_CAR);
+			break;
+		case COREFLEXConstants.HOME_LEAVE_MEALS:
+			expandSubBenefitIfCollapsed(getElementByName(COREFLEXConstants.HOME_LEAVE_MEALS));
+			fillHomeLeaveMealsSubBenefitForm(COREFLEXConstants.HOME_LEAVE_MEALS);
 			break;
 		default:
 			Assert.fail(MessageFormat.format(COREFLEXConstants.ELEMENT_NOT_FOUND, CoreConstants.FAIL));
@@ -444,75 +449,74 @@ public class CoreFlex_FinalMove_BenefitsPage extends Base {
 	}
 
 	/**
-	 * Method to fill Final Move Transportation subBenefit form
-	 * @param subBenefitFormName 
+	 * Method to fill Home Leave Transportation subBenefit form
+	 * 
+	 * @param subBenefitFormName
 	 */
-	private void fillFinalMoveTransportationSubBenefitForm(String subBenefitFormName) {
-		try {			
+	private void fillHomeLeaveTransportationSubBenefitForm(String subBenefitFormName) {
+		try {
+			CoreFunctions.clearAndSetText(driver, _inputAssignmentTrip,
+					movingBenefitData.homeLeaveTransportation.assignmentNumberOfTrips);
+			CoreFunctions.clickElement(driver, _selectFrequencyOfTrip);
+			CoreFunctions.selectItemInListByText(driver, _selectFrequencyOfTripOptions,
+					movingBenefitData.homeLeaveTransportation.frequencyTrip, true);
+			if (movingBenefitData.homeLeaveTransportation.frequencyTrip.equalsIgnoreCase(COREFLEXConstants.OTHER)) {
+				CoreFunctions.clearAndSetText(driver, _inputFrequencyOfTripOther,
+						movingBenefitData.homeLeaveTransportation.frequencyTripOther);
+			}			
 			CoreFunctions.clickElement(driver, _selectTransportationType);
 			CoreFunctions.selectItemInListByText(driver, _selectTransportationTypeOptions,
-					movingBenefitData.finalMoveTransportation.transportationType, true);
-			CoreFunctions.clickElement(driver, _selectTransportationType);
+					movingBenefitData.homeLeaveTransportation.transportationType, true);
+			CoreFunctions.clickElement(driver, _selectTransportationType);			
 			CoreFunctions.clearAndSetText(driver, _inputMinMileageEconomy,
-					movingBenefitData.finalMoveTransportation.minMilForEconomyAirTravel);
+					movingBenefitData.homeLeaveTransportation.minMilForEconomyAirTravel);
 			CoreFunctions.clearAndSetText(driver, _inputMinMileageBusiness,
-					movingBenefitData.finalMoveTransportation.minMilForBusinessAirTravel);
-			CoreFunctions.clearAndSetText(driver, _inputMinHrsForBusinessAirTravel,
-					movingBenefitData.finalMoveTransportation.minHrsForBusinessAirTravel);
+					movingBenefitData.homeLeaveTransportation.minMilForBusinessAirTravel);			
 			CoreFunctions.clearAndSetText(driver, _inputMinFlightTimeExlLayovers,
-					movingBenefitData.finalMoveTransportation.minFlightTimeExclLayovers);
+					movingBenefitData.homeLeaveTransportation.minFlightTimeExclLayovers);			
 			CoreFunctions.clickElement(driver, _selectAccompanyingFamilyMemberCode);
 			CoreFunctions.selectItemInListByText(driver, _selectAccompanyingFamilyMemberCodeOptions,
-					movingBenefitData.finalMoveTransportation.accompanyingFamilyMembers, true);
+					movingBenefitData.homeLeaveTransportation.accompanyingFamilyMember, true);
 			CoreFunctions.selectItemInListByText(driver, _radioBtnExcessBaggageFees,
-					movingBenefitData.finalMoveTransportation.excessBaggageFees, true);
+					movingBenefitData.homeLeaveTransportation.excessBaggageFees, true);
 			CoreFunctions.clearAndSetText(driver, _inputMaxAmountPerPerson,
-					movingBenefitData.finalMoveTransportation.maxAmountPerPerson);
+					movingBenefitData.homeLeaveTransportation.maxAmountPerPerson);
 			CoreFunctions.selectItemInListByText(driver, _radioBtnGrossUp,
-					movingBenefitData.finalMoveTransportation.grossUp, true);
+					movingBenefitData.homeLeaveTransportation.grossUp, true);
 			CoreFunctions.selectItemInListByText(driver, _radioBtnCandidateSelection,
-					movingBenefitData.finalMoveTransportation.reimbursedBy, true);
-			if (movingBenefitData.finalMoveTransportation.reimbursedBy.equalsIgnoreCase(COREFLEXConstants.OTHER)) {
+					movingBenefitData.homeLeaveTransportation.reimbursedBy, true);
+			if (movingBenefitData.homeLeaveTransportation.reimbursedBy.equalsIgnoreCase(COREFLEXConstants.OTHER)) {
 				CoreFunctions.clearAndSetText(driver, _inputReimbursedBy,
-						movingBenefitData.finalMoveTransportation.reimbursedByOther);
+						movingBenefitData.homeLeaveTransportation.reimbursedByOther);
 			}
 			CoreFunctions.clearAndSetText(driver, _txtAreaComment,
-					movingBenefitData.finalMoveTransportation.comment);			
+					movingBenefitData.homeLeaveTransportation.comment);
 		} catch (Exception e) {
 			Assert.fail(MessageFormat.format(PDTConstants.EXCEPTION_OCCURED_FILL_SUBBENEFIT_FORM, CoreConstants.FAIL,
-					subBenefitFormName,e.getMessage()));
+					subBenefitFormName, e.getMessage()));
 		}
 	}
 
 	/**
-	 * Method to fill Final Move Lodging subBenefit form
-	 * @param subBenefitFormName 
+	 * Method to fill Home Leave Lodging subBenefit form
+	 * 
+	 * @param subBenefitFormName
 	 */
-	private void fillFinalMoveLodgingSubBenefitForm(String subBenefitFormName) {
-		try {			
-			CoreFunctions.clickElement(driver, _selectDuration);
-			CoreFunctions.selectItemInListByText(driver, _selectDurationOptions,
-					movingBenefitData.finalMoveLodging.duration, true);
-			CoreFunctions.clearAndSetText(driver, _inputNumberOfNights,
-					movingBenefitData.finalMoveLodging.numberOfNights);
-			CoreFunctions.clickElement(driver, _selectMaxAmt);
-			CoreFunctions.selectItemInListByText(driver, _selectMaxAmtOptions,
-					movingBenefitData.finalMoveLodging.maxAmount, true);	
-			CoreFunctions.clearAndSetText(driver, _inputFlatAmtPerNight,
-					movingBenefitData.finalMoveLodging.flatAmountPerNight);
-			CoreFunctions.clickElement(driver, _selectCurrencyCode);
-			CoreFunctions.selectItemInListByText(driver, _selectCurrencyCodeOptions,
-					movingBenefitData.finalMoveLodging.currency, true);
+	private void fillHomeLeaveLodgingSubBenefitForm(String subBenefitFormName) {
+		try {
+			CoreFunctions.clearAndSetText(driver, _inputDurationInDays,
+					movingBenefitData.homeLeaveLodging.durationDays);
 			CoreFunctions.selectItemInListByText(driver, _radioBtnGrossUp,
-					movingBenefitData.finalMoveLodging.grossUp, true);			
+					movingBenefitData.homeLeaveLodging.grossUp, true);
 			CoreFunctions.selectItemInListByText(driver, _radioBtnCandidateSelection,
-					movingBenefitData.finalMoveLodging.reimbursedBy, true);
-			if (movingBenefitData.finalMoveLodging.reimbursedBy.equalsIgnoreCase(COREFLEXConstants.OTHER)) {
+					movingBenefitData.homeLeaveLodging.reimbursedBy, true);
+			if (movingBenefitData.homeLeaveLodging.reimbursedBy.equalsIgnoreCase(COREFLEXConstants.OTHER)) {
 				CoreFunctions.clearAndSetText(driver, _inputReimbursedBy,
-						movingBenefitData.finalMoveLodging.reimbursedByOther);
+						movingBenefitData.homeLeaveLodging.reimbursedByOther);
 			}
 			CoreFunctions.clearAndSetText(driver, _txtAreaComment,
-					movingBenefitData.finalMoveLodging.comment);			
+					movingBenefitData.homeLeaveLodging.comment);
+			
 		} catch (Exception e) {
 			Assert.fail(MessageFormat.format(PDTConstants.EXCEPTION_OCCURED_FILL_SUBBENEFIT_FORM, CoreConstants.FAIL,
 					subBenefitFormName));
@@ -520,56 +524,81 @@ public class CoreFlex_FinalMove_BenefitsPage extends Base {
 	}
 
 	/**
-	 * Method to fill Final Move Meals subBenefit form
+	 * Method to fill Home Leave Rental Car subBenefit form
+	 * 
 	 * @param subBenefitFormName
 	 */
-	private void fillFinalMoveMealsSubBenefitForm(String subBenefitFormName) {
-		try {			
-			CoreFunctions.clickElement(driver, _selectNumberOfDaysForMeals);
-			CoreFunctions.selectItemInListByText(driver, _selectNumberOfDaysForMealsOptions,
-					movingBenefitData.finalMoveMeals.numberOfDaysForMeal, true);
-			CoreFunctions.clearAndSetText(driver, _inputNumberOfDays,
-					movingBenefitData.finalMoveMeals.numberOfDays);
-			CoreFunctions.selectItemInListByText(driver, _radioBtnMealType,
-					movingBenefitData.finalMoveMeals.type, true);
-			CoreFunctions.clickElement(driver, _selectMaxAmt);
-			CoreFunctions.selectItemInListByText(driver, _selectMaxAmtOptions,
-					movingBenefitData.finalMoveMeals.maxAmount, true);
-			
-			CoreFunctions.clearAndSetText(driver, _inputMaxAmtTransferee,
-					movingBenefitData.finalMoveMeals.maxAmtTransferee);
-			CoreFunctions.clickElement(driver, _selectTransfereeCurrency);
-			CoreFunctions.selectItemInListByText(driver, _selectTransfereeCurrencyOptions,
-					movingBenefitData.finalMoveMeals.maxAmtTransfereeCurrency, true);
-			CoreFunctions.selectItemInListByText(driver, _radioDetailTransfereeCode,
-					movingBenefitData.finalMoveMeals.maxAmtTransfereeDetail, true);
-			
-			CoreFunctions.clearAndSetText(driver, _inputMaxAmtAdult,
-					movingBenefitData.finalMoveMeals.maxAmtAdult);
-			CoreFunctions.clickElement(driver, _selectAdultCurrency);
-			CoreFunctions.selectItemInListByText(driver, _selectAdultCurrencyOptions,
-					movingBenefitData.finalMoveMeals.maxAmtAdultCurrency, true);
-			CoreFunctions.selectItemInListByText(driver, _radioDetailAdult,
-					movingBenefitData.finalMoveMeals.maxAmtAdultDetail, true);
-			
-			CoreFunctions.clearAndSetText(driver, _inputMaxAmtChild,
-					movingBenefitData.finalMoveMeals.maxAmtChildren);
-			CoreFunctions.clickElement(driver, _selectCurrencyCodeChild);
-			CoreFunctions.selectItemInListByText(driver, _selectCurrencyCodeChildOptions,
-					movingBenefitData.finalMoveMeals.maxAmtChildrenCurrency, true);
-			CoreFunctions.selectItemInListByText(driver, _radioDetailChild,
-					movingBenefitData.finalMoveMeals.maxAmtChildrenDetail, true);
-			
+	private void fillHomeLeaveRentalCarSubBenefitForm(String subBenefitFormName) {
+		try {
+			CoreFunctions.clearAndSetText(driver, _inputDurationInDays,
+					movingBenefitData.homeLeaveRentalCar.durationDays);
+			CoreFunctions.clickElement(driver, _selectRentalCarSize);
+			CoreFunctions.selectItemInListByText(driver, _selectRentalCarSizeOptions,
+					movingBenefitData.homeLeaveRentalCar.rentalCarSize, true);
+			if (movingBenefitData.homeLeaveRentalCar.rentalCarSize.equalsIgnoreCase(COREFLEXConstants.OTHER)) {
+				CoreFunctions.clearAndSetText(driver, _inputRentalCarOtherSize,
+						movingBenefitData.homeLeaveRentalCar.rentalCarSizeOther);
+			}			
 			CoreFunctions.selectItemInListByText(driver, _radioBtnGrossUp,
-					movingBenefitData.finalMoveMeals.grossUp, true);			
+					movingBenefitData.homeLeaveRentalCar.grossUp, true);
 			CoreFunctions.selectItemInListByText(driver, _radioBtnCandidateSelection,
-					movingBenefitData.finalMoveMeals.reimbursedBy, true);
-			if (movingBenefitData.finalMoveMeals.reimbursedBy.equalsIgnoreCase(COREFLEXConstants.OTHER)) {
+					movingBenefitData.homeLeaveRentalCar.reimbursedBy, true);
+			if (movingBenefitData.homeLeaveRentalCar.reimbursedBy.equalsIgnoreCase(COREFLEXConstants.OTHER)) {
 				CoreFunctions.clearAndSetText(driver, _inputReimbursedBy,
-						movingBenefitData.finalMoveMeals.reimbursedByOther);
+						movingBenefitData.homeLeaveRentalCar.reimbursedByOther);
 			}
 			CoreFunctions.clearAndSetText(driver, _txtAreaComment,
-					movingBenefitData.finalMoveMeals.comment);			
+					movingBenefitData.homeLeaveRentalCar.comment);
+			
+		} catch (Exception e) {
+			Assert.fail(MessageFormat.format(PDTConstants.EXCEPTION_OCCURED_FILL_SUBBENEFIT_FORM, CoreConstants.FAIL,
+					subBenefitFormName));
+		}
+	}
+	
+	
+	/**
+	 * Method to fill Home Leave Meals subBenefit form
+	 * 
+	 * @param subBenefitFormName
+	 */
+	private void fillHomeLeaveMealsSubBenefitForm(String subBenefitFormName) {
+		try {
+			CoreFunctions.clearAndSetText(driver, _inputNumOfDaysForMeals, movingBenefitData.homeLeaveMeals.numberOfDaysForMeal);
+			CoreFunctions.selectItemInListByText(driver, _radioBtnMealType,  movingBenefitData.homeLeaveMeals.type,
+					true);
+			CoreFunctions.clickElement(driver, _selectMaxAmtMeals);
+			CoreFunctions.selectItemInListByText(driver, _selectMaxAmtMealsOptions,
+					movingBenefitData.homeLeaveMeals.maxAmount, true);
+			CoreFunctions.clearAndSetText(driver, _inputMaxAmtTransferee,
+					movingBenefitData.homeLeaveMeals.maxAmtTransferee);
+			CoreFunctions.clickElement(driver, _selectTransfereeCurrency);
+			CoreFunctions.selectItemInListByText(driver, _selectTransfereeCurrencyOptions,
+					movingBenefitData.homeLeaveMeals.maxAmtTransfereeCurrency, true);
+			CoreFunctions.selectItemInListByText(driver, _radioDetailTransfereeCode,
+					movingBenefitData.homeLeaveMeals.maxAmtTransfereeDetail, true);
+			CoreFunctions.clearAndSetText(driver, _inputMaxAmtAdult, movingBenefitData.homeLeaveMeals.maxAmtAdult);
+			CoreFunctions.clickElement(driver, _selectAdultCurrency);
+			CoreFunctions.selectItemInListByText(driver, _selectAdultCurrencyOptions,
+					movingBenefitData.homeLeaveMeals.maxAmtAdultCurrency, true);
+			CoreFunctions.selectItemInListByText(driver, _radioDetailAdult,
+					movingBenefitData.homeLeaveMeals.maxAmtAdultDetail, true);
+			CoreFunctions.clearAndSetText(driver, _inputMaxAmtChild,
+					movingBenefitData.homeLeaveMeals.maxAmtChildren);
+			CoreFunctions.clickElement(driver, _selectCurrencyCodeChild);
+			CoreFunctions.selectItemInListByText(driver, _selectCurrencyCodeChildOptions,
+					movingBenefitData.homeLeaveMeals.maxAmtChildrenCurrency, true);
+			CoreFunctions.selectItemInListByText(driver, _radioDetailChild,
+					movingBenefitData.homeLeaveMeals.maxAmtChildrenDetail, true);
+			CoreFunctions.selectItemInListByText(driver, _radioBtnGrossUp, movingBenefitData.homeLeaveMeals.grossUp,
+					true);
+			CoreFunctions.selectItemInListByText(driver, _radioBtnCandidateSelection,
+					movingBenefitData.homeLeaveMeals.reimbursedBy, true);
+			if (movingBenefitData.homeLeaveMeals.reimbursedBy.equalsIgnoreCase(COREFLEXConstants.OTHER)) {
+				CoreFunctions.clearAndSetText(driver, _inputReimbursedBy,
+						movingBenefitData.homeLeaveMeals.reimbursedByOther);
+			}
+			CoreFunctions.clearAndSetText(driver, _txtAreaComment, movingBenefitData.homeLeaveMeals.comment);
 		} catch (Exception e) {
 			Assert.fail(MessageFormat.format(PDTConstants.EXCEPTION_OCCURED_FILL_SUBBENEFIT_FORM, CoreConstants.FAIL,
 					subBenefitFormName));
@@ -596,14 +625,17 @@ public class CoreFlex_FinalMove_BenefitsPage extends Base {
 	public WebElement getElementByName(String elementName) {
 		WebElement element = null;
 		switch (elementName) {
-		case COREFLEXConstants.FINAL_MOVE_TRANSPORTATION:
-			element = _formFinalMoveTransportation;
+		case COREFLEXConstants.HOME_LEAVE_TRANSPORTATION:
+			element = _formHomeLeaveTransportation;
 			break;
-		case COREFLEXConstants.FINAL_MOVE_LODGING:
-			element = _formFinalMoveLodging;
+		case COREFLEXConstants.HOME_LEAVE_LODGING:
+			element = _formHomeLeaveLodging;
 			break;
-		case COREFLEXConstants.FINAL_MOVE_MEALS:
-			element = _formFinalMoveMeals;
+		case COREFLEXConstants.HOME_LEAVE_RENTAL_CAR:
+			element = _formHomeLeaveRentalCar;
+			break;
+		case COREFLEXConstants.HOME_LEAVE_MEALS:
+			element = _formHomeLeaveMeals;
 			break;
 		default:
 			Assert.fail(MessageFormat.format(COREFLEXConstants.ELEMENT_NOT_FOUND, CoreConstants.FAIL));
@@ -613,6 +645,7 @@ public class CoreFlex_FinalMove_BenefitsPage extends Base {
 
 	/**
 	 * Method to select Benefit Type and fill all Mandatory Fields
+	 * 
 	 * @param benefitType
 	 * @param multipleBenefitSelection
 	 * @param flexPoints
@@ -624,13 +657,13 @@ public class CoreFlex_FinalMove_BenefitsPage extends Base {
 	private void selectBenefitTypeAndFillMandatoryFields(String benefitType, String multipleBenefitSelection,
 			String flexPoints, String benefitDisplayName, String benefitAllowanceAmount, String benefitDescription,
 			String aireManagedService) {
-		Benefit finalMoveBenefit = coreBenefits.stream()
-				.filter(b -> b.getBenefitType().equals(COREFLEXConstants.FINAL_MOVE)).findAny().orElse(null);
+		Benefit homeLeaveBenefit = coreBenefits.stream()
+				.filter(b -> b.getBenefitType().equals(COREFLEXConstants.HOME_LEAVE)).findAny().orElse(null);
 		switch (benefitType) {
 		case COREFLEXConstants.CORE:
 			CoreFunctions.clickElement(driver, _textCore);
-			fillManadatoryDetails(benefitType, multipleBenefitSelection, finalMoveBenefit.getBenefitDisplayName(),
-					finalMoveBenefit.getBenefitAmount(), finalMoveBenefit.getBenefitDesc(), aireManagedService);
+			fillManadatoryDetails(benefitType, multipleBenefitSelection, homeLeaveBenefit.getBenefitDisplayName(),
+					homeLeaveBenefit.getBenefitAmount(), homeLeaveBenefit.getBenefitDesc(), aireManagedService);
 			break;
 		case COREFLEXConstants.FLEX:
 			CoreFunctions.clickElement(driver, _textFlex);
@@ -641,8 +674,8 @@ public class CoreFlex_FinalMove_BenefitsPage extends Base {
 			break;
 		case COREFLEXConstants.CORE_BENEFITS:
 			CoreFunctions.clickElement(driver, _textCoreBenefits);
-			fillManadatoryDetails(benefitType, multipleBenefitSelection, finalMoveBenefit.getBenefitDisplayName(),
-					finalMoveBenefit.getBenefitAmount(), finalMoveBenefit.getBenefitDesc(), aireManagedService);
+			fillManadatoryDetails(benefitType, multipleBenefitSelection, homeLeaveBenefit.getBenefitDisplayName(),
+					homeLeaveBenefit.getBenefitAmount(), homeLeaveBenefit.getBenefitDesc(), aireManagedService);
 			break;
 		case COREFLEXConstants.FLEX_BENEFITS:
 			CoreFunctions.clickElement(driver, _textFlexBenefits);

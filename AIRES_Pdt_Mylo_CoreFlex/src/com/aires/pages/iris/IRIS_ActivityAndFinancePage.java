@@ -354,7 +354,7 @@ public class IRIS_ActivityAndFinancePage extends BasePage {
 			} else {
 				Assert.fail(IRISConstants.SEND_CREDENTIALS_DIALOG_NOT_VISIBLE);
 			}
-		} catch (GeneralLeanFtException e) {
+		} catch (Exception e) {
 			e.printStackTrace();
 		}
 	}

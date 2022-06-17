@@ -64,5 +64,59 @@
 			"reimbursedByOther": "Reimbursed Home Purchase Inspections by other",
 			"comment": "Home Purchase Inspections comment"			
 		}		
+	},
+	{
+		"benefitName": "House Hunting Trip",
+		"houseHuntingTripTransportation": {
+			"numberOfTrips": "10",
+			"transportationType": "Economy Class Airfare",
+			"minMilForEconomyAirTravel": "2000",
+			"minMilForBusinessAirTravel": "1000",
+			"minFlightTimeExclLayovers": "40",
+			"accompanyingFamilyMember": "Transferee + Family",
+			"excessBaggageFees": "Yes",
+			"maxAmountPerPerson": "1000",
+			"grossUp": "Yes",
+			"reimbursedBy": "Aires",
+			"reimbursedByOther": "Reimbursed by other",
+			"comment": "House Hunting Trip Transportation comment"
+		},
+		"houseHuntingTripLodging": {
+			"numberOfNightsPerTrip": "4",
+			"maxAmountLodging": "Flat Amount/Night",
+			"flatAmountPerNight" : "100",
+			"currencyLodging": "U.S. Dollar",
+			"grossUp": "Yes",
+			"reimbursedBy": "Client",
+			"reimbursedByOther": "Reimbursed House Hunting Trip Lodging by other",
+			"comment": "House Hunting Trip Lodging comment"
+		},
+		"houseHuntingTripRentalCar": {
+			"durationDays": "5",
+			"rentalCarSize": "Other",
+			"rentalCarSizeOther": "Executive",
+			"grossUp": "Yes",
+			"reimbursedBy": "Aires",
+			"reimbursedByOther": "Reimbursed House Hunting Trip Rental Car by other",
+			"comment": "House Hunting Trip Rental Car comment"
+		},
+		"houseHuntingTripMeals": {
+			"numberOfDaysForMeal": "3",
+			"type": "Allowance",
+			"maxAmount": "Flat Amount",
+			"maxAmtTransferee": "100",
+			"maxAmtTransfereeDetail": "Per Day",
+			"maxAmtTransfereeCurrency": "U.S. Dollar",
+			"maxAmtAdult": "150",
+			"maxAmtAdultDetail": "Total",
+			"maxAmtAdultCurrency": "U.S. Dollar",
+			"maxAmtChildren": "50",
+			"maxAmtChildrenDetail": "Per Day",
+			"maxAmtChildrenCurrency": "U.S. Dollar",
+			"grossUp": "No",
+			"reimbursedBy": "Client",
+			"reimbursedByOther": "Reimbursed House Hunting Trip Meals by other",
+			"comment": "House Hunting Trip Meal comment"
+		}
 	}
 ]

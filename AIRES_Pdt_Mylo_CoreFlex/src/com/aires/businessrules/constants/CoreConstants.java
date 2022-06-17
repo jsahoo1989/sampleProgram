@@ -125,4 +125,5 @@ public class CoreConstants {
 	public static final String TRANSMISSION_SUBMISSION_QA = "TransfereeSubmissions_QA";
 	public static final String TRANSMISSION_SUBMISSION_UAT = "TransfereeSubmissions_UAT";
 	public static final String TRANSMISSION_SUBMISSION_PREPROD = "TransfereeSubmissions_PREPROD";
+	public static final String ENVT_PREPROD = "preprod";
 }

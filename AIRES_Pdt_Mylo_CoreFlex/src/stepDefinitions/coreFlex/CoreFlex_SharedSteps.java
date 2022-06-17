@@ -15,20 +15,27 @@ import com.aires.businessrules.constants.MobilityXConstants;
 import com.aires.businessrules.constants.PDTConstants;
 import com.aires.cucumber.TestContext;
 import com.aires.managers.FileReaderManager;
+import com.aires.pages.coreflex.CoreFlex_AirportPickup_BenefitsPage;
 import com.aires.pages.coreflex.CoreFlex_AreaTour_BenefitsPage;
+import com.aires.pages.coreflex.CoreFlex_AutoRentalDuringAssignment_BenefitsPage;
 import com.aires.pages.coreflex.CoreFlex_BenefitSummaryPage;
 import com.aires.pages.coreflex.CoreFlex_BluePrint_LoginPage;
 import com.aires.pages.coreflex.CoreFlex_ConciergeServices_BenefitsPage;
 import com.aires.pages.coreflex.CoreFlex_CulturalTraining_BenefitsPage;
 import com.aires.pages.coreflex.CoreFlex_CustomBundlesPage;
 import com.aires.pages.coreflex.CoreFlex_DuplicateHousing_BenefitsPage;
+import com.aires.pages.coreflex.CoreFlex_EducationAssistanceSchoolSearch_BenefitsPage;
 import com.aires.pages.coreflex.CoreFlex_FinalMove_BenefitsPage;
 import com.aires.pages.coreflex.CoreFlex_FlexPolicySetupPage;
+import com.aires.pages.coreflex.CoreFlex_FurnitureRental_BenefitsPage;
+import com.aires.pages.coreflex.CoreFlex_HomeLeave_BenefitsPage;
 import com.aires.pages.coreflex.CoreFlex_HomePurchase_BenefitsPage;
+import com.aires.pages.coreflex.CoreFlex_HouseHuntingTrip_BenefitsPage;
 import com.aires.pages.coreflex.CoreFlex_LanguageTraining_BenefitsPage;
 import com.aires.pages.coreflex.CoreFlex_LumpSum_BenefitsPage;
 import com.aires.pages.coreflex.CoreFlex_OtherHousing_BenefitsPage;
 import com.aires.pages.coreflex.CoreFlex_PolicyBenefitsCategoriesPage;
+import com.aires.pages.coreflex.CoreFlex_PreAcceptanceServices_BenefitsPage;
 import com.aires.pages.coreflex.CoreFlex_PreviewTransfereePage;
 import com.aires.pages.coreflex.CoreFlex_TemporaryLiving_BenefitsPage;
 import com.aires.pages.coreflex.MX_Transferee_FlexPlanningTool_Page;
@@ -91,6 +98,13 @@ public class CoreFlex_SharedSteps {
 	private CoreFlex_HomePurchase_BenefitsPage coreFlexHomePurchaseBenefitsPage;
 	private CoreFlex_FinalMove_BenefitsPage coreFlexFinalMoveBenefitsPage;
 	private CoreFlex_AreaTour_BenefitsPage coreFlexAreaTourBenefitsPage;
+	private CoreFlex_HomeLeave_BenefitsPage coreFlexHomeLeaveBenefitsPage;
+	private CoreFlex_AirportPickup_BenefitsPage coreFlexAirportPickupBenefitsPage;
+	private CoreFlex_PreAcceptanceServices_BenefitsPage coreFlexPreAcceptanceServicesBenefitsPage;
+	private CoreFlex_FurnitureRental_BenefitsPage coreFlexFurnitureRentalBenefitsPage;
+	private CoreFlex_AutoRentalDuringAssignment_BenefitsPage coreFlexAutoRentalDuringAssignmentBenefitsPage;
+	private CoreFlex_EducationAssistanceSchoolSearch_BenefitsPage coreFlexEducationAssistanceBenefitsPage;
+	private CoreFlex_HouseHuntingTrip_BenefitsPage coreFlexHouseHuntingTripBenefitsPage;
 
 	private MX_Transferee_MyProfilePage mxTransfereeMyProfilePage;
 	int _initialTableRowCount = 0;
@@ -138,6 +152,19 @@ public class CoreFlex_SharedSteps {
 				.getCoreFlexHomePurchaseBenefitsPage();
 		coreFlexFinalMoveBenefitsPage = testContext.getCoreFlexPageObjectManager().getCoreFlexFinalMoveBenefitsPage();
 		coreFlexAreaTourBenefitsPage = testContext.getCoreFlexPageObjectManager().getCoreFlexAreaTourBenefitsPage();
+		coreFlexHomeLeaveBenefitsPage = testContext.getCoreFlexPageObjectManager().getCoreFlexHomeLeaveBenefitsPage();
+		coreFlexAirportPickupBenefitsPage = testContext.getCoreFlexPageObjectManager()
+				.getCoreFlexAirportPickupBenefitsPage();
+		coreFlexPreAcceptanceServicesBenefitsPage = testContext.getCoreFlexPageObjectManager()
+				.getCoreFlexPreAcceptanceServicesBenefitsPage();
+		coreFlexFurnitureRentalBenefitsPage = testContext.getCoreFlexPageObjectManager()
+				.getCoreFlexFurnitureRentalBenefitsPage();
+		coreFlexAutoRentalDuringAssignmentBenefitsPage = testContext.getCoreFlexPageObjectManager()
+				.getCoreFlexAutoRentalDuringAssignmentBenefitsPage();
+		coreFlexEducationAssistanceBenefitsPage = testContext.getCoreFlexPageObjectManager()
+				.getCoreFlexEducationAssistanceBenefitsPage();
+		coreFlexHouseHuntingTripBenefitsPage = testContext.getCoreFlexPageObjectManager()
+				.getCoreFlexHouseHuntingTripBenefitsPage();
 	}
 
 	/**********************************************************************/
@@ -385,7 +412,11 @@ public class CoreFlex_SharedSteps {
 				coreFlexDuplicateHousingBenefitsPage, coreFlexLumpSumBenefitsPage, coreFlexOtherHousingBenefitsPage,
 				coreFlexLanguageTrainingBenefitsPage, coreFlexTemporaryLivingBenefitsPage,
 				coreFlexCulturalTrainingBenefitsPage, coreFlexConciergeServicesBenefitsPage,
-				coreFlexHomePurchaseBenefitsPage, coreFlexFinalMoveBenefitsPage, coreFlexAreaTourBenefitsPage),
+				coreFlexHomePurchaseBenefitsPage, coreFlexFinalMoveBenefitsPage, coreFlexAreaTourBenefitsPage,
+				coreFlexHomeLeaveBenefitsPage, coreFlexAirportPickupBenefitsPage,
+				coreFlexPreAcceptanceServicesBenefitsPage, coreFlexFurnitureRentalBenefitsPage,
+				coreFlexAutoRentalDuringAssignmentBenefitsPage, coreFlexEducationAssistanceBenefitsPage,
+				coreFlexHouseHuntingTripBenefitsPage),
 				MessageFormat.format(COREFLEXConstants.FAILED_TO_SELECT_AND_FILL_ADDED_BENEFITS, CoreConstants.FAIL));
 
 		CoreConstants.TIME_BEFORE_ACTION = new Date().getTime();
@@ -481,7 +512,8 @@ public class CoreFlex_SharedSteps {
 	}
 
 	@Then("^Policy Status and Version should be displayed as \"([^\"]*)\" and \"([^\"]*)\" respectively on \"([^\"]*)\" page$")
-	public void Policy_Status_and_Version_should_be_displayed_as_and_respectively_on_page(String expectedStatus,String expectedVersion, String pageName) throws Throwable {
+	public void Policy_Status_and_Version_should_be_displayed_as_and_respectively_on_page(String expectedStatus,
+			String expectedVersion, String pageName) throws Throwable {
 		Assert.assertTrue(viewPolicyPage.verifyPageNavigation(COREFLEXConstants.VIEW_EDIT_POLICY_FORMS),
 				MessageFormat.format(COREFLEXConstants.FAILED_TO_VERIFY_USER_NAVIGATION_TO_VIEW_EDIT_POLICY_PAGE,
 						CoreConstants.FAIL));
@@ -491,7 +523,8 @@ public class CoreFlex_SharedSteps {
 				+ " Seconds </b>");
 		viewPolicyPage.clickElementOfPage(PDTConstants.CLEAR_FILTER);
 		Assert.assertTrue(
-				viewPolicyPage.verifyApprovedPolicyStatusAndVersion(addNewPolicyPage.getSelectedPolicyName(), expectedStatus, expectedVersion),
+				viewPolicyPage.verifyApprovedPolicyStatusAndVersion(addNewPolicyPage.getSelectedPolicyName(),
+						expectedStatus, expectedVersion),
 				MessageFormat.format(
 						COREFLEXConstants.FAILED_TO_VERIFY_APPROVED_POLICY_STATUS_ON_VIEW_EDIT_POLICY_FORMS_PAGE,
 						CoreConstants.FAIL));
@@ -508,7 +541,7 @@ public class CoreFlex_SharedSteps {
 				+ " Seconds </b>");
 
 		testContext.getBasePage().invokeIrisApplication();
-		testContext.getBasePage().killExistingBrowsers();
+//		testContext.getBasePage().killExistingBrowsers();
 		testContext.getIrisPageManager().irisLoginPage = new IRIS_LoginPage();
 		testContext.getIrisPageManager().irisLoginPage.getIRISLoginAsPerEnvt(_loginDetailsApplication);
 		testContext.getIrisPageManager().irisWelcome12C = new IRIS_Welcome12C();
@@ -562,11 +595,10 @@ public class CoreFlex_SharedSteps {
 		testContext.getIrisPageManager().irisActivityAndFinancePage.displayActivityTable();
 		testContext.getIrisPageManager().irisActivityAndFinancePage.actualizeTracingPrompt(IRISConstants.ACT_DATE,
 				IRISConstants.ACTIVITY, IRISConstants.MAKE_FIRST_CONTACT);
-
 		testContext.getIrisPageManager().irisActivityAndFinancePage.clickOnSaveBtn();
 		testContext.getIrisPageManager().irisActivityAndFinancePage.sendLoginCredentials(IRISConstants.YES,
 				IRISConstants.SEND_CREDENTIALS, IRISConstants.SEND_USER_LOGIN_MSG);
-		testContext.getIrisPageManager().irisActivityAndFinancePage.acceptIdentityChallengeQuestionDialog();
+//		testContext.getIrisPageManager().irisActivityAndFinancePage.acceptIdentityChallengeQuestionDialog();
 		Assert.assertTrue(
 				testContext.getIrisPageManager().irisActivityAndFinancePage
 						.relonetCredentialsSent(IRISConstants.SUCCESS_MSG, IRISConstants.MESSAGE_DIALOG),

@@ -17,5 +17,16 @@
 			"allowanceAmountMessage":"Automated Lump Sum Allowance Amount Message",
 			"benefitLongDescription":"Automated Lump Sum Benefit Long Description Messsage for Policy Setup in Policy Digitization Tool (PDT) to be consumed by MX Transferee."
 		}			
+	},
+	{
+		"benefitName": "Auto Rental During Assignment",
+		"autoRentalDuringAssignment": {
+			"rentalCarType": "Other",
+			"rentalCarTypeOther": "SUV",
+			"grossUp": "Yes",
+			"reimbursedBy": "Aires",
+			"reimbursedByOther": "Reimbursed Auto Rental During Assignment by other",
+			"comment": "Auto Rental During Assignment comment"
+		}
 	}
 ]

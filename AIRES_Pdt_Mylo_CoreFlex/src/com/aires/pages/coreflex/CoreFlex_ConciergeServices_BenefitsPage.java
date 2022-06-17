@@ -146,7 +146,7 @@ public class CoreFlex_ConciergeServices_BenefitsPage extends Base {
 
 	/*********************************************************************/
 
-	CoreFlex_SettlingInBenefitsData conciergeServicesBenefitData = FileReaderManager.getInstance()
+	CoreFlex_SettlingInBenefitsData settlingInBenefitData = FileReaderManager.getInstance()
 			.getCoreFlexJsonReader().getSettlingInBenefitDataList(COREFLEXConstants.CONCIERGE_SERVICES);
 
 	public static final List<Benefit> coreBenefits = FileReaderManager.getInstance().getCoreFlexJsonReader()
@@ -329,14 +329,14 @@ public class CoreFlex_ConciergeServices_BenefitsPage extends Base {
 	 * Method to fill Concierge Services subBenefit form
 	 */
 	private void fillConciergeServicesSubBenefitForm() {
-		CoreFunctions.clearAndSetText(driver, _txtAreaComment, conciergeServicesBenefitData.conciergeServices.comment);
+		CoreFunctions.clearAndSetText(driver, _txtAreaComment, settlingInBenefitData.conciergeServices.comment);
 		CoreFunctions.selectItemInListByText(driver, _radioBtnGrossUp,
-				conciergeServicesBenefitData.conciergeServices.grossUp, true);
+				settlingInBenefitData.conciergeServices.grossUp, true);
 		CoreFunctions.selectItemInListByText(driver, _radioBtnCandidateSelection,
-				conciergeServicesBenefitData.conciergeServices.reimbursedBy, true);
-		if (conciergeServicesBenefitData.conciergeServices.reimbursedBy.equalsIgnoreCase(COREFLEXConstants.OTHER)) {
+				settlingInBenefitData.conciergeServices.reimbursedBy, true);
+		if (settlingInBenefitData.conciergeServices.reimbursedBy.equalsIgnoreCase(COREFLEXConstants.OTHER)) {
 			CoreFunctions.clearAndSetText(driver, _inputReimbursedBy,
-					conciergeServicesBenefitData.conciergeServices.reimbursedByOther);
+					settlingInBenefitData.conciergeServices.reimbursedByOther);
 		}		
 	}
 

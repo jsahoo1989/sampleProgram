@@ -9,6 +9,13 @@ public class CoreFlex_SettlingInBenefitsData {
 	public CulturalTrainingFamily culturalTrainingFamily;
 	public ConciergeServices conciergeServices;
 	public AreaTour areaTour;
+	public AirportPickup airportPickup;
+	public PreAcceptanceTripTransportation preAcceptanceTripTransportation;
+	public PreAcceptanceTripLodging preAcceptanceTripLodging;
+	public PreAcceptanceRentalCar preAcceptanceRentalCar;
+	public PreAcceptanceTripMeals preAcceptanceTripMeals;
+	public FurnitureRental furnitureRental;
+	public EduAssistSchlSearch eduAssistSchlSearch;
 	
 	public class LanguageTrainingEmployee{
 		public String maxNumberOfHours;
@@ -62,4 +69,83 @@ public class CoreFlex_SettlingInBenefitsData {
 		public String reimbursedByOther;
 		public String comment;		
 	}
+	
+	public class AirportPickup{
+		public String grossUp;
+		public String reimbursedBy;
+		public String reimbursedByOther;
+		public String comment;		
+	}
+	
+	public class PreAcceptanceTripTransportation{
+		public String numberOfTrips;
+		public String transportationType;
+		public String minMilForEconomyAirTravel;
+		public String minMilForBusinessAirTravel;
+		public String minFlightTimeExclLayovers;
+		public String accompanyingFamilyMember;
+		public String excessBaggageFees;
+		public String maxAmountPerPerson;		
+		public String grossUp;
+		public String reimbursedBy;
+		public String reimbursedByOther;
+		public String comment;
+	}
+	
+	public class PreAcceptanceTripLodging{
+		public String numberOfNightsPerTripLodging;		
+		public String amountLodging;
+		public String flatAmountPerNightLodging;
+		public String currencyLodging;
+		public String grossUp;
+		public String reimbursedBy;
+		public String reimbursedByOther;
+		public String comment;
+	}
+	
+	public class PreAcceptanceRentalCar{
+		public String durationDaysRentalCar;		
+		public String rentalCarSize;
+		public String rentalCarSizeOther;
+		public String grossUp;
+		public String reimbursedBy;
+		public String reimbursedByOther;
+		public String comment;
+	}
+	
+	public class PreAcceptanceTripMeals{
+		public String numberOfDaysForMeal;
+		public String type;		
+		public String maxAmount;
+		public String maxAmtTransferee;
+		public String maxAmtTransfereeDetail;
+		public String maxAmtTransfereeCurrency;
+		public String maxAmtAdult;
+		public String maxAmtAdultDetail;
+		public String maxAmtAdultCurrency;
+		public String maxAmtChildren;
+		public String maxAmtChildrenDetail;
+		public String maxAmtChildrenCurrency;		
+		public String grossUp;
+		public String reimbursedBy;
+		public String reimbursedByOther;
+		public String comment;	
+	}
+	
+	public class FurnitureRental{
+		public String duration;
+		public String grossUp;
+		public String reimbursedBy;
+		public String reimbursedByOther;
+		public String comment;		
+	}
+	
+	public class EduAssistSchlSearch{
+		public String durationDays;
+		public String grossUp;
+		public String reimbursedBy;
+		public String reimbursedByOther;
+		public String comment;		
+	}
+	
 }

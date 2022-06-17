@@ -274,9 +274,6 @@ public class MX_Transferee_JourneyHomePage extends Base {
 	CoreFlex_SettlingInBenefitsData languageTrainingBenefitData = FileReaderManager.getInstance()
 			.getCoreFlexJsonReader().getSettlingInBenefitDataList(COREFLEXConstants.LANGUAGE_TRAINING);
 
-	Map<String, String> submittedPolicyDetails = CoreFunctions
-			.convertStringToMapWithStream(CoreFunctions.getPropertyFromConfig("CoreFlexSubmittedPolicyData"));
-
 	/*********************************************************************/
 
 	public void clickElementOfPage(String elementName) {
@@ -1406,6 +1403,8 @@ public class MX_Transferee_JourneyHomePage extends Base {
 			String expectedStatus, String tracingSelection) {
 		boolean isPreviousSubmissionFlexCardDetailsVerified = false;
 		try {
+			Map<String, String> submittedPolicyDetails = CoreFunctions
+					.convertStringToMapWithStream(CoreFunctions.getPropertyFromConfig("CoreFlexSubmittedPolicyData"));
 			String expectedEstimatedDate = submittedPolicyDetails.get(" BenefitSubmittedDate");
 			List<Integer> multipleFlexCardIndex = getMultipleFlexCardIndexes(benefit);
 			int lastFlexCardIndex = multipleFlexCardIndex.get(multipleFlexCardIndex.size() - 1);

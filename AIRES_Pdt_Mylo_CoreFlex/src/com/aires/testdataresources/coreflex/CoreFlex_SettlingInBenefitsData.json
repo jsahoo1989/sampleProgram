@@ -58,5 +58,88 @@
 			"reimbursedByOther": "Reimbursed by other",
 			"comment": "Area Tour comment"			
 		}
+	},
+	{
+		"benefitName": "Airport Pickup",
+		"airportPickup": {
+			"grossUp": "Yes",
+			"reimbursedBy": "Aires",
+			"reimbursedByOther": "Reimbursed by other",
+			"comment": "Airport Pickup comment"			
+		}
+	},
+	{
+		"benefitName": "Pre-Acceptance Services",
+		"preAcceptanceTripTransportation": {
+			"numberOfTrips": "10",
+			"transportationType": "Mileage",
+			"minMilForEconomyAirTravel": "2000",
+			"minMilForBusinessAirTravel": "1000",
+			"minFlightTimeExclLayovers": "40",
+			"accompanyingFamilyMember": "Transferee + Spouse/Partner Only",
+			"excessBaggageFees": "Yes",
+			"maxAmountPerPerson": "1000",
+			"grossUp": "Yes",
+			"reimbursedBy": "Aires",
+			"reimbursedByOther": "Reimbursed by other",
+			"comment": "Pre-Acceptance Services Transportation comment"
+		},
+		"preAcceptanceTripLodging": {
+			"numberOfNightsPerTripLodging": "5",
+			"amountLodging": "Flat Amount/Night",
+			"flatAmountPerNightLodging": "100",
+			"currencyLodging": "U.S. Dollar",
+			"grossUp": "Yes",
+			"reimbursedBy": "Client",
+			"reimbursedByOther": "Reimbursed Pre-Acceptance Services Lodging by other",
+			"comment": "Pre-Acceptance Services Lodging comment"
+		},
+		"preAcceptanceRentalCar": {
+			"durationDaysRentalCar": "20",
+			"rentalCarSize": "Other",
+			"rentalCarSizeOther": "SUV",
+			"grossUp": "Yes",
+			"reimbursedBy": "Aires",
+			"reimbursedByOther": "Reimbursed Pre-Acceptance Rental Car by other",
+			"comment": "Pre-Acceptance Rental Car comment"
+		},
+		"preAcceptanceTripMeals": {
+			"numberOfDaysForMeal": "3",
+			"type": "Allowance",
+			"maxAmount": "Flat Amount",
+			"maxAmtTransferee": "100",
+			"maxAmtTransfereeDetail": "Per Day",
+			"maxAmtTransfereeCurrency": "U.S. Dollar",
+			"maxAmtAdult": "150",
+			"maxAmtAdultDetail": "Total",
+			"maxAmtAdultCurrency": "U.S. Dollar",
+			"maxAmtChildren": "50",
+			"maxAmtChildrenDetail": "Per Day",
+			"maxAmtChildrenCurrency": "U.S. Dollar",
+			"grossUp": "No",
+			"reimbursedBy": "Client",
+			"reimbursedByOther": "Reimbursed Pre-Acceptance Trip Meals by other",
+			"comment": "Pre-Acceptance Trip Meal comment"
+		}
+	},
+	{
+		"benefitName": "Furniture Rental",
+		"furnitureRental": {
+			"duration": "3 Months",
+			"grossUp": "Yes",
+			"reimbursedBy": "Aires",
+			"reimbursedByOther": "Reimbursed by other",
+			"comment": "Furniture Rental comment"			
+		}
+	},
+	{
+		"benefitName": "Education Assistance/School Search",
+		"eduAssistSchlSearch": {
+			"durationDays": "0.5 Day",
+			"grossUp": "Yes",
+			"reimbursedBy": "Aires",
+			"reimbursedByOther": "Reimbursed by other",
+			"comment": "Education Assistance/School Search comment"			
+		}
 	}
 ]

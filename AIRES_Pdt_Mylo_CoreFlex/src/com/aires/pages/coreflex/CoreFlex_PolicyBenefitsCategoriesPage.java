@@ -287,6 +287,34 @@ public class CoreFlex_PolicyBenefitsCategoriesPage extends Base {
 				CoreFunctions.selectItemInListByText(driver, _leftNavigationTitleList,
 						COREFLEXConstants.AREA_TOUR);	
 				break;
+			case COREFLEXConstants.HOME_LEAVE:
+				CoreFunctions.selectItemInListByText(driver, _leftNavigationTitleList,
+						COREFLEXConstants.HOME_LEAVE);	
+				break;
+			case COREFLEXConstants.AIRPORT_PICKUP:
+				CoreFunctions.selectItemInListByText(driver, _leftNavigationTitleList,
+						COREFLEXConstants.AIRPORT_PICKUP);	
+				break;
+			case COREFLEXConstants.PRE_ACCEPTANCE_SERVICES:
+				CoreFunctions.selectItemInListByText(driver, _leftNavigationTitleList,
+						COREFLEXConstants.PRE_ACCEPTANCE_SERVICES);	
+				break;
+			case COREFLEXConstants.FURNITURE_RENTAL:
+				CoreFunctions.selectItemInListByText(driver, _leftNavigationTitleList,
+						COREFLEXConstants.FURNITURE_RENTAL);	
+				break;
+			case COREFLEXConstants.AUTO_RENTAL_DURING_ASSIGNMENT:
+				CoreFunctions.selectItemInListByText(driver, _leftNavigationTitleList,
+						COREFLEXConstants.AUTO_RENTAL_DURING_ASSIGNMENT);	
+				break;
+			case COREFLEXConstants.EDUCATION_ASSISTANCE_SCHOOL_SEARCH:
+				CoreFunctions.selectItemInListByText(driver, _leftNavigationTitleList,
+						COREFLEXConstants.EDUCATION_ASSISTANCE_SCHOOL_SEARCH);	
+				break;
+			case COREFLEXConstants.HOUSE_HUNTING_TRIP:
+				CoreFunctions.selectItemInListByText(driver, _leftNavigationTitleList,
+						COREFLEXConstants.HOUSE_HUNTING_TRIP);	
+				break;
 			case COREFLEXConstants.BENEFIT_SUMMARY:
 				CoreFunctions.selectItemInListByText(driver, _leftNavigationTitleList,
 						COREFLEXConstants.BENEFIT_SUMMARY);
@@ -450,7 +478,14 @@ public class CoreFlex_PolicyBenefitsCategoriesPage extends Base {
 			CoreFlex_ConciergeServices_BenefitsPage coreFlexConciergeServicesBenefitsPage,
 			CoreFlex_HomePurchase_BenefitsPage coreFlexHomePurchaseBenefitsPage,
 			CoreFlex_FinalMove_BenefitsPage coreFlexFinalMoveBenefitsPage,
-			CoreFlex_AreaTour_BenefitsPage coreFlexAreaTourBenefitsPage) {
+			CoreFlex_AreaTour_BenefitsPage coreFlexAreaTourBenefitsPage,
+			CoreFlex_HomeLeave_BenefitsPage coreFlexHomeLeaveBenefitsPage,
+			CoreFlex_AirportPickup_BenefitsPage coreFlexAirportPickupBenefitsPage,
+			CoreFlex_PreAcceptanceServices_BenefitsPage coreFlexPreAcceptanceServicesBenefitsPage,
+			CoreFlex_FurnitureRental_BenefitsPage coreFlexFurnitureRentalBenefitsPage,
+			CoreFlex_AutoRentalDuringAssignment_BenefitsPage coreFlexAutoRentalDuringAssignmentBenefitsPage,
+			CoreFlex_EducationAssistanceSchoolSearch_BenefitsPage coreFlexEducationAssistanceBenefitsPage,
+			CoreFlex_HouseHuntingTrip_BenefitsPage coreFlexHouseHuntingTripBenefitsPage) {
 		boolean isBenefitSuccessfullySelectedAndFilled = false;
 		try {
 			if (policyType.equals(COREFLEXConstants.FLEX) || policyType.equals(COREFLEXConstants.BOTH)) {
@@ -459,7 +494,10 @@ public class CoreFlex_PolicyBenefitsCategoriesPage extends Base {
 						coreFlexOtherHousingBenefitsPage, coreFlexLanguageTrainingBenefitsPage,
 						coreFlexTemporaryLivingBenefitsPage,coreFlexCulturalTrainingBenefitsPage,
 						coreFlexConciergeServicesBenefitsPage,coreFlexHomePurchaseBenefitsPage,
-						coreFlexFinalMoveBenefitsPage,coreFlexAreaTourBenefitsPage);
+						coreFlexFinalMoveBenefitsPage,coreFlexAreaTourBenefitsPage, coreFlexHomeLeaveBenefitsPage,
+						coreFlexAirportPickupBenefitsPage,coreFlexPreAcceptanceServicesBenefitsPage,
+						coreFlexFurnitureRentalBenefitsPage,coreFlexAutoRentalDuringAssignmentBenefitsPage,
+						coreFlexEducationAssistanceBenefitsPage,coreFlexHouseHuntingTripBenefitsPage);
 			} else if (policyType.equals(COREFLEXConstants.CORE)) {
 				isBenefitSuccessfullySelectedAndFilled = fillAiresManagedCardCoreBenefitDetails(policyType,
 						coreFlexLanguageTrainingBenefitsPage);
@@ -488,7 +526,14 @@ public class CoreFlex_PolicyBenefitsCategoriesPage extends Base {
 			CoreFlex_ConciergeServices_BenefitsPage coreFlexConciergeServicesBenefitsPage,
 			CoreFlex_HomePurchase_BenefitsPage coreFlexHomePurchaseBenefitsPage,
 			CoreFlex_FinalMove_BenefitsPage coreFlexFinalMoveBenefitsPage,
-			CoreFlex_AreaTour_BenefitsPage coreFlexAreaTourBenefitsPage) {
+			CoreFlex_AreaTour_BenefitsPage coreFlexAreaTourBenefitsPage,
+			CoreFlex_HomeLeave_BenefitsPage coreFlexHomeLeaveBenefitsPage,
+			CoreFlex_AirportPickup_BenefitsPage coreFlexAirportPickupBenefitsPage,
+			CoreFlex_PreAcceptanceServices_BenefitsPage coreFlexPreAcceptanceServicesBenefitsPage,
+			CoreFlex_FurnitureRental_BenefitsPage coreFlexFurnitureRentalBenefitsPage,
+			CoreFlex_AutoRentalDuringAssignment_BenefitsPage coreFlexAutoRentalDuringAssignmentBenefitsPage,
+			CoreFlex_EducationAssistanceSchoolSearch_BenefitsPage coreFlexEducationAssistanceBenefitsPage,
+			CoreFlex_HouseHuntingTrip_BenefitsPage coreFlexHouseHuntingTripBenefitsPage) {
 		boolean isFlexBenefitSuccessfullySelectedAndFilled = false;
 		try {
 			for (FlexBenefit benefitList : flexBenefits) {
@@ -553,6 +598,48 @@ public class CoreFlex_PolicyBenefitsCategoriesPage extends Base {
 						break;
 					case COREFLEXConstants.AREA_TOUR:
 						coreFlexAreaTourBenefitsPage.selectAndFillBenefitsAndSubBenefitDetails(policyType,
+								benefit.getSubBenefits(), benefit.getMultipleBenefitSelection(), benefit.getPoints(),
+								benefit.getBenefitDisplayName(), benefit.getBenefitAmount(), benefit.getBenefitDesc(),
+								benefit.getAiresManagedService());
+						break;
+					case COREFLEXConstants.HOME_LEAVE:
+						coreFlexHomeLeaveBenefitsPage.selectAndFillBenefitsAndSubBenefitDetails(policyType,
+								benefit.getSubBenefits(), benefit.getMultipleBenefitSelection(), benefit.getPoints(),
+								benefit.getBenefitDisplayName(), benefit.getBenefitAmount(), benefit.getBenefitDesc(),
+								benefit.getAiresManagedService());
+						break;
+					case COREFLEXConstants.AIRPORT_PICKUP:
+						coreFlexAirportPickupBenefitsPage.selectAndFillBenefitsAndSubBenefitDetails(policyType,
+								benefit.getSubBenefits(), benefit.getMultipleBenefitSelection(), benefit.getPoints(),
+								benefit.getBenefitDisplayName(), benefit.getBenefitAmount(), benefit.getBenefitDesc(),
+								benefit.getAiresManagedService());
+						break;
+					case COREFLEXConstants.PRE_ACCEPTANCE_SERVICES:
+						coreFlexPreAcceptanceServicesBenefitsPage.selectAndFillBenefitsAndSubBenefitDetails(policyType,
+								benefit.getSubBenefits(), benefit.getMultipleBenefitSelection(), benefit.getPoints(),
+								benefit.getBenefitDisplayName(), benefit.getBenefitAmount(), benefit.getBenefitDesc(),
+								benefit.getAiresManagedService());
+						break;
+					case COREFLEXConstants.FURNITURE_RENTAL:
+						coreFlexFurnitureRentalBenefitsPage.selectAndFillBenefitsAndSubBenefitDetails(policyType,
+								benefit.getSubBenefits(), benefit.getMultipleBenefitSelection(), benefit.getPoints(),
+								benefit.getBenefitDisplayName(), benefit.getBenefitAmount(), benefit.getBenefitDesc(),
+								benefit.getAiresManagedService());
+						break;
+					case COREFLEXConstants.AUTO_RENTAL_DURING_ASSIGNMENT:
+						coreFlexAutoRentalDuringAssignmentBenefitsPage.selectAndFillBenefitsAndSubBenefitDetails(policyType,
+								benefit.getSubBenefits(), benefit.getMultipleBenefitSelection(), benefit.getPoints(),
+								benefit.getBenefitDisplayName(), benefit.getBenefitAmount(), benefit.getBenefitDesc(),
+								benefit.getAiresManagedService());
+						break;
+					case COREFLEXConstants.EDUCATION_ASSISTANCE_SCHOOL_SEARCH:
+						coreFlexEducationAssistanceBenefitsPage.selectAndFillBenefitsAndSubBenefitDetails(policyType,
+								benefit.getSubBenefits(), benefit.getMultipleBenefitSelection(), benefit.getPoints(),
+								benefit.getBenefitDisplayName(), benefit.getBenefitAmount(), benefit.getBenefitDesc(),
+								benefit.getAiresManagedService());
+						break;
+					case COREFLEXConstants.HOUSE_HUNTING_TRIP:
+						coreFlexHouseHuntingTripBenefitsPage.selectAndFillBenefitsAndSubBenefitDetails(policyType,
 								benefit.getSubBenefits(), benefit.getMultipleBenefitSelection(), benefit.getPoints(),
 								benefit.getBenefitDisplayName(), benefit.getBenefitAmount(), benefit.getBenefitDesc(),
 								benefit.getAiresManagedService());

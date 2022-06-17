@@ -156,7 +156,7 @@ public class CoreFlex_GeneralInformation_Steps {
 	public void he_should_be_navigated_to_page_having_based_on_selection(String expectedPageTitle,
 			String expectedLeftNavigationTitle, String pointsBasedFlexSelection) throws Throwable {
 		Assert.assertTrue(
-				generalInfoPage.verifyPageNavigation(pointsBasedFlexSelection, expectedPageTitle,
+				generalInfoPage.verifyPageNavigationBasedOnPointsBasedFlexPolicySelection(pointsBasedFlexSelection, expectedPageTitle,
 						expectedLeftNavigationTitle, flexPolicySetupPage, pdtPolicyBenefitCategoryPage),
 				MessageFormat.format(PDTConstants.FAILED_TO_VERIFY_USER_NAVIGATION_PAST_GENERAL_INFORMATION,
 						CoreConstants.FAIL));

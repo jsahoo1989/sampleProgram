@@ -178,7 +178,7 @@ public class CoreFlex_CulturalTraining_BenefitsPage extends Base {
 
 	/*********************************************************************/
 
-	CoreFlex_SettlingInBenefitsData culturalTrainingBenefitData = FileReaderManager.getInstance()
+	CoreFlex_SettlingInBenefitsData settlingInBenefitData = FileReaderManager.getInstance()
 			.getCoreFlexJsonReader().getSettlingInBenefitDataList(COREFLEXConstants.CULTURAL_TRAINING);
 
 	public static final List<Benefit> coreBenefits = FileReaderManager.getInstance().getCoreFlexJsonReader()
@@ -366,22 +366,22 @@ public class CoreFlex_CulturalTraining_BenefitsPage extends Base {
 	private void fillCulturalTrainingFamilySubBenefitForm() {
 		CoreFunctions.clickElement(driver, _selectFamilyDuration);
 		CoreFunctions.selectItemInListByText(driver, _selectFamilyDurationList,
-				culturalTrainingBenefitData.culturalTrainingFamily.familyDuration, true);
-		if (culturalTrainingBenefitData.culturalTrainingFamily.familyDuration
+				settlingInBenefitData.culturalTrainingFamily.familyDuration, true);
+		if (settlingInBenefitData.culturalTrainingFamily.familyDuration
 				.equalsIgnoreCase(COREFLEXConstants.OTHER)) {
 			CoreFunctions.clearAndSetText(driver, _inputFamilyDurationOther,
-					culturalTrainingBenefitData.culturalTrainingFamily.familyOtherDuration);
+					settlingInBenefitData.culturalTrainingFamily.familyOtherDuration);
 		}
 		CoreFunctions.selectItemInListByText(driver, _radioBtnGrossUp,
-				culturalTrainingBenefitData.culturalTrainingFamily.grossUp, true);
+				settlingInBenefitData.culturalTrainingFamily.grossUp, true);
 		CoreFunctions.selectItemInListByText(driver, _radioBtnCandidateSelection,
-				culturalTrainingBenefitData.culturalTrainingFamily.reimbursedBy, true);
-		if (culturalTrainingBenefitData.culturalTrainingFamily.reimbursedBy.equalsIgnoreCase(COREFLEXConstants.OTHER)) {
+				settlingInBenefitData.culturalTrainingFamily.reimbursedBy, true);
+		if (settlingInBenefitData.culturalTrainingFamily.reimbursedBy.equalsIgnoreCase(COREFLEXConstants.OTHER)) {
 			CoreFunctions.clearAndSetText(driver, _inputReimbursedBy,
-					culturalTrainingBenefitData.culturalTrainingFamily.reimbursedByOther);
+					settlingInBenefitData.culturalTrainingFamily.reimbursedByOther);
 		}
 		CoreFunctions.clearAndSetText(driver, _txtAreaComment,
-				culturalTrainingBenefitData.culturalTrainingFamily.comment);
+				settlingInBenefitData.culturalTrainingFamily.comment);
 	}
 
 	/**
@@ -390,23 +390,23 @@ public class CoreFlex_CulturalTraining_BenefitsPage extends Base {
 	private void fillCulturalTrainingEmployeeSubBenefitForm() {
 		CoreFunctions.clickElement(driver, _selectEmployeeDuration);
 		CoreFunctions.selectItemInListByText(driver, _selectEmployeeDurationList,
-				culturalTrainingBenefitData.culturalTrainingEmployee.employeeDuration, true);
-		if (culturalTrainingBenefitData.culturalTrainingEmployee.employeeDuration
+				settlingInBenefitData.culturalTrainingEmployee.employeeDuration, true);
+		if (settlingInBenefitData.culturalTrainingEmployee.employeeDuration
 				.equalsIgnoreCase(COREFLEXConstants.OTHER)) {
 			CoreFunctions.clearAndSetText(driver, _inputEmployeeDurationOther,
-					culturalTrainingBenefitData.culturalTrainingEmployee.employeeOtherDuration);
+					settlingInBenefitData.culturalTrainingEmployee.employeeOtherDuration);
 		}
 		CoreFunctions.selectItemInListByText(driver, _radioBtnGrossUp,
-				culturalTrainingBenefitData.culturalTrainingEmployee.grossUp, true);
+				settlingInBenefitData.culturalTrainingEmployee.grossUp, true);
 		CoreFunctions.selectItemInListByText(driver, _radioBtnCandidateSelection,
-				culturalTrainingBenefitData.culturalTrainingEmployee.reimbursedBy, true);
-		if (culturalTrainingBenefitData.culturalTrainingEmployee.reimbursedBy
+				settlingInBenefitData.culturalTrainingEmployee.reimbursedBy, true);
+		if (settlingInBenefitData.culturalTrainingEmployee.reimbursedBy
 				.equalsIgnoreCase(COREFLEXConstants.OTHER)) {
 			CoreFunctions.clearAndSetText(driver, _inputReimbursedBy,
-					culturalTrainingBenefitData.culturalTrainingEmployee.reimbursedByOther);
+					settlingInBenefitData.culturalTrainingEmployee.reimbursedByOther);
 		}
 		CoreFunctions.clearAndSetText(driver, _txtAreaComment,
-				culturalTrainingBenefitData.culturalTrainingEmployee.comment);
+				settlingInBenefitData.culturalTrainingEmployee.comment);
 	}
 
 	/**

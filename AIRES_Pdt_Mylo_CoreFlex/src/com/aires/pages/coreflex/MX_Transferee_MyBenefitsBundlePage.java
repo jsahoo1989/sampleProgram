@@ -192,8 +192,7 @@ public class MX_Transferee_MyBenefitsBundlePage extends Base {
 	CoreFlex_SettlingInBenefitsData languageTrainingBenefitData = FileReaderManager.getInstance()
 			.getCoreFlexJsonReader().getSettlingInBenefitDataList(COREFLEXConstants.LANGUAGE_TRAINING);
 
-	Map<String, String> submittedPolicyDetails = CoreFunctions
-			.convertStringToMapWithStream(CoreFunctions.getPropertyFromConfig("CoreFlexSubmittedPolicyData"));
+	
 
 	public static boolean benefitDeletedFlag;
 	public static boolean undoDeletedBenefitFlag;
@@ -1519,6 +1518,8 @@ public class MX_Transferee_MyBenefitsBundlePage extends Base {
 		int counter = 0;
 		boolean isSubmittedPolicyBenefitDetailsVerified = false;
 		try {
+			Map<String, String> submittedPolicyDetails = CoreFunctions
+					.convertStringToMapWithStream(CoreFunctions.getPropertyFromConfig("CoreFlexSubmittedPolicyData"));
 			List<Integer> multipleSubmittedBenefitIndex = getMultipleSubmittedBenefitIndexes(benefit);
 			while (counter < multipleSubmissionBenefitCount) {
 				if (submittedPolicyDetails.get(" BenefitSubmittedDate").equals(CoreFunctions.getElementText(driver,
@@ -1545,6 +1546,8 @@ public class MX_Transferee_MyBenefitsBundlePage extends Base {
 
 	private boolean verifySubmittedPolicyAiresManagedBenefitDetailsOnMBB(Integer indexBenefit, Benefit benefit,
 			String expectedStatus) {
+		Map<String, String> submittedPolicyDetails = CoreFunctions
+				.convertStringToMapWithStream(CoreFunctions.getPropertyFromConfig("CoreFlexSubmittedPolicyData"));
 		return (CoreFunctions.getItemsFromListByIndex(driver, _textSubmittedBenefitNameList, indexBenefit, true)
 				.equals(benefit.getBenefitDisplayName()))
 				&& (CoreFunctions.getItemsFromListByIndex(driver, _textSubmittedAllowanceAmountList, indexBenefit, true)

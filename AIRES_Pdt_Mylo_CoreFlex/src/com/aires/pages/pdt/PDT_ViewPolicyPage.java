@@ -18,8 +18,9 @@ import com.aires.businessrules.CoreFunctions;
 import com.aires.businessrules.constants.COREFLEXConstants;
 import com.aires.businessrules.constants.CoreConstants;
 import com.aires.businessrules.constants.PDTConstants;
-import com.aires.utilities.Log;
 import com.vimalselvam.cucumber.listener.Reporter;
+
+import cucumber.api.DataTable;
 
 public class PDT_ViewPolicyPage extends Base {
 	public PDT_ViewPolicyPage(WebDriver driver) {
@@ -122,6 +123,22 @@ public class PDT_ViewPolicyPage extends Base {
 	@FindBy(how = How.XPATH, using = "//strong[contains(text(),'Version Number')]/parent::h6")
 	private List<WebElement> _listPolicyVersion;
 
+	// Policy Edit Icon List
+	@FindBy(how = How.CSS, using = "div.icons-action a[mattooltip='Edit Policy']>img")
+	private List<WebElement> _listEditIcon;
+
+	// Policy Delete Icon List
+	@FindBy(how = How.CSS, using = "div.icons-action a[mattooltip='Delete Policy']>img")
+	private List<WebElement> _listDeleteIcon;
+
+	// Policy Clone Icon List
+	@FindBy(how = How.CSS, using = "div.icons-action a[mattooltip='Clone Policy']>img")
+	private List<WebElement> _listCloneIcon;
+
+	// Policy Assignment History Icon List
+	@FindBy(how = How.CSS, using = "div.icons-action a[mattooltip='Assignment History']>img")
+	private List<WebElement> _listAssignmentHistoryIcon;
+
 	final By _listPolicyNameByLocator = By.cssSelector("h5.text-info.info-pname");
 	final By _listClientNameByLocator = By.cssSelector("h6.info-pclient");
 	long timeBeforeAction, timeAfterAction;
@@ -150,7 +167,7 @@ public class PDT_ViewPolicyPage extends Base {
 			break;
 		case PDTConstants.ADD_NEW_POLICY_FORM:
 			CoreFunctions.clickUsingJS(driver, _addNewPolicyForm, PDTConstants.ADD_NEW_POLICY_FORM);
-			if(CoreFunctions.isElementExist(driver,  _progressBar, 4))
+			if (CoreFunctions.isElementExist(driver, _progressBar, 4))
 				BusinessFunctions.fluentWaitForSpinnerToDisappear(driver, _progressBar);
 			break;
 		case PDTConstants.VIEW_EDIT_POLICY_FORMS:
@@ -183,7 +200,7 @@ public class PDT_ViewPolicyPage extends Base {
 	}
 
 	public Boolean verifyUserlogin(String userName, String pageName) {
-		if(CoreFunctions.isElementExist(driver, _progressBar, 2))
+		if (CoreFunctions.isElementExist(driver, _progressBar, 2))
 			BusinessFunctions.fluentWaitForSpinnerToDisappear(driver, _progressBar);
 		if (getUserName().contains(userName)) {
 			CoreFunctions.highlightObject(driver, _userName);
@@ -198,7 +215,7 @@ public class PDT_ViewPolicyPage extends Base {
 
 	public Boolean verifyViewPolicyHeading(String pageName) {
 		timeBeforeAction = new Date().getTime();
-		if(CoreFunctions.isElementExist(driver, _progressBar, 2))
+		if (CoreFunctions.isElementExist(driver, _progressBar, 2))
 			BusinessFunctions.fluentWaitForSpinnerToDisappear(driver, _progressBar);
 		timeAfterAction = new Date().getTime();
 		BusinessFunctions.printTimeTakenByPageToLoad(timeBeforeAction, timeAfterAction, PDTConstants.VIEW_POLICY_PAGE);
@@ -208,7 +225,7 @@ public class PDT_ViewPolicyPage extends Base {
 
 	public boolean verifyPoliciesAreDisplayed(String pageName) {
 		timeBeforeAction = new Date().getTime();
-		if(CoreFunctions.isElementExist(driver, _progressBar, 2))
+		if (CoreFunctions.isElementExist(driver, _progressBar, 2))
 			BusinessFunctions.fluentWaitForSpinnerToDisappear(driver, _progressBar);
 		timeAfterAction = new Date().getTime();
 		BusinessFunctions.printTimeTakenByPageToLoad(timeBeforeAction, timeAfterAction, PDTConstants.VIEW_POLICY_PAGE);
@@ -297,7 +314,8 @@ public class PDT_ViewPolicyPage extends Base {
 
 	public boolean searchAndVerifyPolicy(String policyName, String pageName, PDT_AddNewPolicyPage addNewPolicyPage) {
 		try {
-			//CoreFunctions.explicitWaitTillElementInVisibilityCustomTime(driver, _progressBar, 5);
+			// CoreFunctions.explicitWaitTillElementInVisibilityCustomTime(driver,
+			// _progressBar, 5);
 			BusinessFunctions.fluentWaitForSpinnerToDisappear(driver, _progressBar);
 			CoreFunctions.isElementByLocatorExist(driver, _listPolicyNameByLocator, 20);
 			if (_listPolicyName.stream().anyMatch(t -> t.getText().toLowerCase().equalsIgnoreCase(policyName))) {
@@ -356,6 +374,35 @@ public class PDT_ViewPolicyPage extends Base {
 		return isApprovedPolicyVerified;
 	}
 
+	public boolean verifySubmittedPolicyStatus(String selectedPolicyName, String expectedPolicyStatus) {
+		boolean isSubmittedPolicyStatusVerified = false;
+		String[] actualPolicyStatus = null;
+		try {
+			int index = BusinessFunctions.returnindexItemFromListUsingText(driver, _listPolicyName, selectedPolicyName);
+			CoreFunctions.highlightObject(driver,
+					CoreFunctions.getElementFromListByText(_listPolicyName, selectedPolicyName));
+			String actualPolicyStatusList = _listPolicyStatus.get(index).getText();
+			actualPolicyStatus = actualPolicyStatusList.split(":");
+			isSubmittedPolicyStatusVerified = (actualPolicyStatus[1].trim()).equals(expectedPolicyStatus);
+			CoreFunctions.highlightObject(driver,
+					CoreFunctions.getElementFromListByText(_listPolicyStatus, (actualPolicyStatus[1].trim())));
+		} catch (Exception e) {
+			Reporter.addStepLog(MessageFormat.format(
+					COREFLEXConstants.EXCEPTION_OCCURED_WHILE_VALIDATING_POLICY_STATUS_ON_VIEW_EDIT_POLICY_FORMS_PAGE,
+					CoreConstants.FAIL, e.getMessage()));
+		}
+		if (isSubmittedPolicyStatusVerified) {
+			Reporter.addStepLog(MessageFormat.format(
+					COREFLEXConstants.SUCCESSFULLY_VERIFIED_POLICY_STATUS_ON_VIEW_EDIT_POLICY_FORMS_PAGE,
+					CoreConstants.PASS, expectedPolicyStatus, selectedPolicyName));
+		} else {
+			Reporter.addStepLog(MessageFormat.format(
+					COREFLEXConstants.FAILED_TO_VERIFY_POLICY_STATUS_ON_VIEW_EDIT_POLICY_FORMS_PAGE, CoreConstants.FAIL,
+					expectedPolicyStatus, actualPolicyStatus[1].trim()));
+		}
+		return isSubmittedPolicyStatusVerified;
+	}
+
 	/**
 	 * Method to verify navigated Page Header Title
 	 * 
@@ -396,8 +443,9 @@ public class PDT_ViewPolicyPage extends Base {
 	}
 
 	public boolean verifyVersionControlDialog() {
-		try {					
-			String expectedNewPolicyVersionString = getNextPolicyVersion(CoreFunctions.getPropertyFromConfig("CoreFlex_PolicyVersion"));
+		try {
+			String expectedNewPolicyVersionString = getNextPolicyVersion(
+					CoreFunctions.getPropertyFromConfig("CoreFlex_PolicyVersion"));
 			CoreFunctions.verifyText(driver, _textVersionContolDialog.get(0),
 					(COREFLEXConstants.VERSION_CONTROL_DIALOG_VERSION_ASSIGNMENT_EXPECTED_TEXT.replace("PV",
 							CoreFunctions.getPropertyFromConfig("CoreFlex_PolicyVersion"))),
@@ -430,18 +478,128 @@ public class PDT_ViewPolicyPage extends Base {
 		CoreFunctions.clearAndSetText(driver, _inputVersionContolDialogDescription,
 				COREFLEXConstants.VERSION_CONTROL_DESCRIPTION);
 	}
-	
+
 	public void navigateToGeneralInfoPage(String selectedPolicyName, String pageName) {
 		try {
 			timeBeforeAction = new Date().getTime();
-			CoreFunctions.clickElement(driver, CoreFunctions.getElementFromListByText(_listPolicyName, selectedPolicyName));
+			CoreFunctions.clickElement(driver,
+					CoreFunctions.getElementFromListByText(_listPolicyName, selectedPolicyName));
 			BusinessFunctions.fluentWaitForSpinnerToDisappear(driver, _progressBar);
 			timeAfterAction = new Date().getTime();
 			BusinessFunctions.printTimeTakenByPageToLoad(timeBeforeAction, timeAfterAction, pageName);
-		} catch(Exception e) {
-			Assert.fail(MessageFormat.format(PDTConstants.FAILED_TO_NAVIGATE_TO_PAGE, PDTConstants.GENERAL_INFORMATION, 
+		} catch (Exception e) {
+			Assert.fail(MessageFormat.format(PDTConstants.FAILED_TO_NAVIGATE_TO_PAGE, PDTConstants.GENERAL_INFORMATION,
 					CoreConstants.FAIL));
-		}		
+		}
+	}
+
+	public boolean verifyPolicyIconsStatus(String versioning, String policyStatus, DataTable dataTable) {
+		boolean isPolicyIconsVerified = false;
+		try {
+			switch (versioning) {
+			case COREFLEXConstants.POST:
+				isPolicyIconsVerified = verifyPolicyActionIconsPostVersioning(dataTable);
+				break;
+			case COREFLEXConstants.PRE:
+				break;
+			default:
+				Assert.fail(COREFLEXConstants.INVALID_OPTION);
+			}
+		} catch (Exception e) {
+			Reporter.addStepLog(MessageFormat.format(
+					COREFLEXConstants.EXCEPTION_OCCURED_WHILE_VALIDATING_POLICY_ICONS_ENABLED_DISABLED_STATUS_ON_VIEW_EDIT_POLICY_FORMS_PAGE,
+					CoreConstants.FAIL, e.getMessage()));
+			return false;
+		}
+		if (isPolicyIconsVerified) {
+			Reporter.addStepLog(MessageFormat.format(
+					COREFLEXConstants.SUCCESSFULLY_VERIFIED_POLICY_ICONS_ENABLED_DISABLED_STATUS_ON_VIEW_EDIT_POLICY_FORMS_PAGE,
+					CoreConstants.PASS));
+		}
+		return isPolicyIconsVerified;
+	}
+
+	private boolean verifyPolicyActionIconsPostVersioning(DataTable dataTable) {
+		boolean isPolicyActionIconsVerified = false;
+		List<Map<String, String>> dataMap = dataTable.asMaps(String.class, String.class);
+		for (Map<String, String> dataList : dataMap) {
+			String policyVersion = dataList.get("PolicyVersion");
+			int versionIndex = BusinessFunctions.returnindexItemFromListUsingText(driver, _listPolicyVersion,
+					policyVersion, true);
+			CoreFunctions.highlightObject(driver, _listPolicyVersion.get(versionIndex));
+			CoreFunctions.highlightObject(driver, _listPolicyStatus.get(versionIndex));
+			isPolicyActionIconsVerified = verifyPolicyIconsStatus(versionIndex, dataList);
+			if (!isPolicyActionIconsVerified) {
+				return false;
+			}
+		}
+		return isPolicyActionIconsVerified;
+	}
+
+	private boolean verifyPolicyIconsStatus(int versionIndex, Map<String, String> dataList) {
+		try {
+			String actualEditIconStatus = CoreFunctions.getAttributeText(_listEditIcon.get(versionIndex), "src")
+					.contains("Pencildisable") ? COREFLEXConstants.DISABLED : COREFLEXConstants.ENABLED;
+			CoreFunctions.highlightObject(driver, _listEditIcon.get(versionIndex));
+			String actualDeleteIconStatus = CoreFunctions.getAttributeText(_listDeleteIcon.get(versionIndex), "src")
+					.contains("Trash") ? COREFLEXConstants.DISABLED : COREFLEXConstants.ENABLED;
+			CoreFunctions.highlightObject(driver, _listDeleteIcon.get(versionIndex));
+			String actualCloneIconStatus = CoreFunctions.getAttributeText(_listCloneIcon.get(versionIndex), "src")
+					.contains("cloneDisable") ? COREFLEXConstants.DISABLED : COREFLEXConstants.ENABLED;
+			CoreFunctions.highlightObject(driver, _listCloneIcon.get(versionIndex));
+			String actualAssignmentHistoryIconStatus = CoreFunctions
+					.getAttributeText(_listAssignmentHistoryIcon.get(versionIndex), "src").contains("disable")
+							? COREFLEXConstants.DISABLED
+							: COREFLEXConstants.ENABLED;
+			CoreFunctions.highlightObject(driver, _listAssignmentHistoryIcon.get(versionIndex));
+			CoreFunctions.verifyText(actualEditIconStatus, dataList.get("EditIcon"), COREFLEXConstants.EDIT_ICON);
+			CoreFunctions.verifyText(actualDeleteIconStatus, dataList.get("DeleteIcon"), COREFLEXConstants.DELETE_ICON);
+			CoreFunctions.verifyText(actualCloneIconStatus, dataList.get("CloneIcon"), COREFLEXConstants.CLONE_ICON);
+			CoreFunctions.verifyText(actualAssignmentHistoryIconStatus, dataList.get("AssignmentHistoryIcon"),
+					COREFLEXConstants.ASSIGNMENT_HISTORY_ICON);
+			return true;
+		} catch (Exception e) {
+			Reporter.addStepLog(MessageFormat.format(
+					COREFLEXConstants.POLICY_ICONS_ENABLED_DISABLED_STATUS_NOT_AS_EXPECTED_ON_VIEW_EDIT_POLICY_FORMS_PAGE,
+					CoreConstants.FAIL));
+			return false;
+		}
+	}
+
+	public void clickPolicyActionIcon(String iconName, String policyVersion, String policyStatus) {
+		try {
+			int versionIndex = BusinessFunctions.returnindexItemFromListUsingText(driver, _listPolicyVersion,
+					policyVersion, true);
+			switch (iconName) {
+			case COREFLEXConstants.EDIT_ICON:
+				CoreFunctions.clickElement(driver, _listEditIcon.get(versionIndex));
+				CoreFunctions.explicitWaitTillElementInVisibilityCustomTime(driver, _progressBar, 5);
+				break;
+			case COREFLEXConstants.DELETE_ICON:
+				CoreFunctions.clickElement(driver, _listDeleteIcon.get(versionIndex));
+				CoreFunctions.explicitWaitTillElementInVisibilityCustomTime(driver, _progressBar, 5);
+				break;
+			case COREFLEXConstants.CLONE_ICON:
+				CoreFunctions.clickElement(driver, _listCloneIcon.get(versionIndex));
+				CoreFunctions.explicitWaitTillElementInVisibilityCustomTime(driver, _progressBar, 5);
+				break;
+			case COREFLEXConstants.ASSIGNMENT_HISTORY_ICON:
+				CoreFunctions.clickElement(driver, _listAssignmentHistoryIcon.get(versionIndex));
+				CoreFunctions.explicitWaitTillElementInVisibilityCustomTime(driver, _progressBar, 5);
+				break;
+			default:
+				Assert.fail(COREFLEXConstants.INVALID_OPTION);
+			}
+
+		} catch (Exception e) {
+			Reporter.addStepLog(MessageFormat.format(
+					COREFLEXConstants.FAILED_TO_CLICK_ON_POLICY_ACTION_ICON_ON_VIEW_EDIT_POLICY_FORMS_PAGE,
+					CoreConstants.FAIL, iconName, policyVersion));
+			Assert.fail(MessageFormat.format(
+					COREFLEXConstants.FAILED_TO_CLICK_ON_POLICY_ACTION_ICON_ON_VIEW_EDIT_POLICY_FORMS_PAGE,
+					CoreConstants.FAIL, iconName, policyVersion));
+		}
+
 	}
 
 }

@@ -166,7 +166,7 @@ public class CoreFlex_LanguageTraining_BenefitsPage extends Base {
 
 	/*********************************************************************/
 
-	CoreFlex_SettlingInBenefitsData languageTrainingBenefitData = FileReaderManager.getInstance()
+	CoreFlex_SettlingInBenefitsData settlingInBenefitData = FileReaderManager.getInstance()
 			.getCoreFlexJsonReader().getSettlingInBenefitDataList(COREFLEXConstants.LANGUAGE_TRAINING);
 
 	public static final List<Benefit> coreBenefits = FileReaderManager.getInstance().getCoreFlexJsonReader()
@@ -355,26 +355,26 @@ public class CoreFlex_LanguageTraining_BenefitsPage extends Base {
 	 */
 	private void fillLanguageTrainingFamilySubBenefitForm() {
 		CoreFunctions.clearAndSetText(driver, _inputMaxNumOfHoursPerPerson,
-				languageTrainingBenefitData.languageTrainingFamily.maxNumberOfHoursPerPerson);
+				settlingInBenefitData.languageTrainingFamily.maxNumberOfHoursPerPerson);
 		CoreFunctions.clearAndSetText(driver, _inputMaxNumOfHours,
-				languageTrainingBenefitData.languageTrainingFamily.maxNumberOfHoursPerFamily);
+				settlingInBenefitData.languageTrainingFamily.maxNumberOfHoursPerFamily);
 		CoreFunctions.selectItemInListByText(driver, _radioBtnSelfLearningTool,
-				languageTrainingBenefitData.languageTrainingFamily.selfLearningTool, true);
-		if (languageTrainingBenefitData.languageTrainingFamily.selfLearningTool
+				settlingInBenefitData.languageTrainingFamily.selfLearningTool, true);
+		if (settlingInBenefitData.languageTrainingFamily.selfLearningTool
 				.equalsIgnoreCase(COREFLEXConstants.YES)) {
 			CoreFunctions.clearAndSetText(driver, _inputMaxAmount,
-					languageTrainingBenefitData.languageTrainingFamily.maxAmount);
+					settlingInBenefitData.languageTrainingFamily.maxAmount);
 		}
 		CoreFunctions.selectItemInListByText(driver, _radioBtnGrossUp,
-				languageTrainingBenefitData.languageTrainingFamily.grossUp, true);
+				settlingInBenefitData.languageTrainingFamily.grossUp, true);
 		CoreFunctions.selectItemInListByText(driver, _radioBtnCandidateSelection,
-				languageTrainingBenefitData.languageTrainingFamily.reimbursedBy, true);
-		if (languageTrainingBenefitData.languageTrainingFamily.reimbursedBy.equalsIgnoreCase(COREFLEXConstants.OTHER)) {
+				settlingInBenefitData.languageTrainingFamily.reimbursedBy, true);
+		if (settlingInBenefitData.languageTrainingFamily.reimbursedBy.equalsIgnoreCase(COREFLEXConstants.OTHER)) {
 			CoreFunctions.clearAndSetText(driver, _inputReimbursedBy,
-					languageTrainingBenefitData.languageTrainingFamily.reimbursedByOther);
+					settlingInBenefitData.languageTrainingFamily.reimbursedByOther);
 		}
 		CoreFunctions.clearAndSetText(driver, _txtAreaComment,
-				languageTrainingBenefitData.languageTrainingFamily.comment);
+				settlingInBenefitData.languageTrainingFamily.comment);
 	}
 
 	/**
@@ -382,25 +382,25 @@ public class CoreFlex_LanguageTraining_BenefitsPage extends Base {
 	 */
 	private void fillLanguageTrainingEmployeeSubBenefitForm() {
 		CoreFunctions.clearAndSetText(driver, _inputMaxNumOfHours,
-				languageTrainingBenefitData.languageTrainingEmployee.maxNumberOfHours);
+				settlingInBenefitData.languageTrainingEmployee.maxNumberOfHours);
 		CoreFunctions.selectItemInListByText(driver, _radioBtnSelfLearningTool,
-				languageTrainingBenefitData.languageTrainingEmployee.selfLearningTool, true);
-		if (languageTrainingBenefitData.languageTrainingEmployee.selfLearningTool
+				settlingInBenefitData.languageTrainingEmployee.selfLearningTool, true);
+		if (settlingInBenefitData.languageTrainingEmployee.selfLearningTool
 				.equalsIgnoreCase(COREFLEXConstants.YES)) {
 			CoreFunctions.clearAndSetText(driver, _inputMaxAmount,
-					languageTrainingBenefitData.languageTrainingEmployee.maxAmount);
+					settlingInBenefitData.languageTrainingEmployee.maxAmount);
 		}
 		CoreFunctions.selectItemInListByText(driver, _radioBtnGrossUp,
-				languageTrainingBenefitData.languageTrainingEmployee.grossUp, true);
+				settlingInBenefitData.languageTrainingEmployee.grossUp, true);
 		CoreFunctions.selectItemInListByText(driver, _radioBtnCandidateSelection,
-				languageTrainingBenefitData.languageTrainingEmployee.reimbursedBy, true);
-		if (languageTrainingBenefitData.languageTrainingEmployee.reimbursedBy
+				settlingInBenefitData.languageTrainingEmployee.reimbursedBy, true);
+		if (settlingInBenefitData.languageTrainingEmployee.reimbursedBy
 				.equalsIgnoreCase(COREFLEXConstants.OTHER)) {
 			CoreFunctions.clearAndSetText(driver, _inputReimbursedBy,
-					languageTrainingBenefitData.languageTrainingEmployee.reimbursedByOther);
+					settlingInBenefitData.languageTrainingEmployee.reimbursedByOther);
 		}
 		CoreFunctions.clearAndSetText(driver, _txtAreaComment,
-				languageTrainingBenefitData.languageTrainingEmployee.comment);
+				settlingInBenefitData.languageTrainingEmployee.comment);
 	}
 
 	/**

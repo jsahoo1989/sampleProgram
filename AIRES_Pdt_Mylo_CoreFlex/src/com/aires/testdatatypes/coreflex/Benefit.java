@@ -29,6 +29,10 @@ public class Benefit {
 	private String postInitialTracingCardStatus;
 	private String postEndTracingCardStatus;
 	private boolean multipleBenefitSubmission;
+	private String secondTracingPrompt;
+	private String postSecondTracingCardStatus;
+	private String thirdTracingPrompt;
+	private String postThirdTracingCardStatus;
 	
 	public boolean getMultipleBenefitSubmission() {
 		return multipleBenefitSubmission;
@@ -307,6 +311,38 @@ public class Benefit {
 
 	public void setIrisSubserviceID(String irisSubserviceID) {
 		this.irisSubserviceID = irisSubserviceID;
+	}
+	
+	public String getSecondTracingPrompt() {
+		return secondTracingPrompt;
+	}
+
+	public void setSecondTracingPrompt(String secondTracingPrompt) {
+		this.secondTracingPrompt = secondTracingPrompt;
+	}
+
+	public String getPostSecondTracingCardStatus() {
+		return postSecondTracingCardStatus;
+	}
+
+	public void setPostSecondTracingCardStatus(String postSecondTracingCardStatus) {
+		this.postSecondTracingCardStatus = postSecondTracingCardStatus;
+	}
+
+	public String getThirdTracingPrompt() {
+		return thirdTracingPrompt;
+	}
+
+	public void setThirdTracingPrompt(String thirdTracingPrompt) {
+		this.thirdTracingPrompt = thirdTracingPrompt;
+	}
+
+	public String getPostThirdTracingCardStatus() {
+		return postThirdTracingCardStatus;
+	}
+
+	public void setPostThirdTracingCardStatus(String postThirdTracingCardStatus) {
+		this.postThirdTracingCardStatus = postThirdTracingCardStatus;
 	}
 
 	@Override

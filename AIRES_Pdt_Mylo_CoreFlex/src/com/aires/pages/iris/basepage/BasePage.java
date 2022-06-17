@@ -61,7 +61,7 @@ public class BasePage {
 	}
 
 	public void invokeIrisApplication() throws Exception {
-		getPIDAndKillProces();
+//		getPIDAndKillProces();
 		CoreFunctions.waitHandler(2);
 		allocateUFTPortToUsers();
 		runLFTEngineAsPerStatus();
@@ -71,7 +71,7 @@ public class BasePage {
 		Log.info("Port Assigned to " + _userName + " is : " + portNumber);
 		config.setServerAddress(new URI("ws://localhost:" + portNumber));
 		SDK.init(config);
-		_path = getIrisPathForApplication(CoreFunctions.getPropertyFromConfig("application").toLowerCase());
+		_path = getIrisPathForApplication(CoreFunctions.getPropertyFromConfig("application"));
 		_process = Runtime.getRuntime().exec(_path);
 		_windowTitle = getWindowText.getActiveWindowText();
 		while (!_windowTitle.contains("Login")) {
@@ -142,7 +142,7 @@ public class BasePage {
 	}
 
 	public void cleanIrisProcesses() throws Exception {
-		killExistingBrowsers();
+//		killExistingBrowsers();
 		closeIRISApplication();
 	}
 
@@ -299,7 +299,7 @@ public class BasePage {
 		userPortMap.put("spant", 5088);
 		userPortMap.put("rsharma", 5096);
 		userPortMap.put("pdash", 5097);
-		userPortMap.put("vmallah", 5091);
+		userPortMap.put("vmallah", 5095);
 	}
 	
 	public void reLaunchIrisToAvoidFreezingIssue() throws Exception {
@@ -307,7 +307,7 @@ public class BasePage {
 		int portNumber = getPortNumberAsPerUserName();
 		config.setServerAddress(new URI("ws://localhost:" + portNumber));
 		SDK.init(config);
-		String _path = getIrisPathForApplication(CoreFunctions.getPropertyFromConfig("application").toLowerCase());
+		String _path = getIrisPathForApplication(CoreFunctions.getPropertyFromConfig("application"));
 		Runtime.getRuntime().exec(_path);
 		String _windowTitle = getWindowText.getActiveWindowText();
 		while (!_windowTitle.contains("Login")) {

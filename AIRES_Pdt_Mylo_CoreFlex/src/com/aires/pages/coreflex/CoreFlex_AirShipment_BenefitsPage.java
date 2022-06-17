@@ -18,12 +18,12 @@ import com.aires.businessrules.constants.CoreConstants;
 import com.aires.businessrules.constants.PDTConstants;
 import com.aires.managers.FileReaderManager;
 import com.aires.testdatatypes.coreflex.Benefit;
-import com.aires.testdatatypes.coreflex.CoreFlex_HousingBenefitsData;
+import com.aires.testdatatypes.coreflex.CoreFlex_MovingBenefitsData;
 import com.vimalselvam.cucumber.listener.Reporter;
 
-public class CoreFlex_HomePurchase_BenefitsPage extends Base {
+public class CoreFlex_AirShipment_BenefitsPage extends Base {
 
-	public CoreFlex_HomePurchase_BenefitsPage(WebDriver driver) {
+	public CoreFlex_AirShipment_BenefitsPage(WebDriver driver) {
 		super(driver);
 	}
 
@@ -105,45 +105,6 @@ public class CoreFlex_HomePurchase_BenefitsPage extends Base {
 	@FindBy(how = How.CSS, using = "div.form-check > label.form-check-label")
 	private List<WebElement> _subBenefitList;
 
-	// SubBenefit - Collapsable Menu 1
-	@FindBy(how = How.XPATH, using = "//h5[contains(text(),'Home Purchase Closing Costs')]/ancestor::a[contains(@href,'collapse')]")
-	private WebElement _formHomePurchaseClosingCosts;
-	
-	@FindBy(how = How.XPATH, using = "//h5[contains(text(),'Home Purchase Closing Costs')]")
-	private WebElement _headerHomePurchaseClosingCosts;
-
-	// SubBenefit - Collapsable Menu 2
-	@FindBy(how = How.XPATH, using = "//h5[contains(text(),'Home Purchase Points')]/ancestor::a[contains(@href,'collapse')]")
-	private WebElement _formHomePurchasePoints;
-
-	// SubBenefit - Collapsable Menu 3
-	@FindBy(how = How.XPATH, using = "//h5[contains(text(),'Home Purchase Inspections')]/ancestor::a[contains(@href,'collapse')]")
-	private WebElement _formHomePurchaseInspections;
-
-	// Direct Bill Eligible - Radio Button Selection
-	@FindBy(how = How.XPATH, using = "//div[@class='collapse show']//input[@formcontrolname='directBillEligibleInd']/parent::label[@class='form-check-label']")
-	private List<WebElement> _radioBtnDirectBillEligible;
-
-	// Max.% of Home Purchase Price Input Field
-	@FindBy(how = How.XPATH, using = "//div[@class='collapse show']//input[@formcontrolname='maxPrice']")
-	private WebElement _inputMaxPurchasePrice;
-
-	// Closing Cost Cap Input Field
-	@FindBy(how = How.XPATH, using = "//div[@class='collapse show']//input[@formcontrolname='cap']")
-	private WebElement _inputClosingCostCap;
-
-	// Currency Select Field
-	@FindBy(how = How.CSS, using = "ng-select[formcontrolname='currencyCode']")
-	private WebElement _selectCurrency;
-
-	// Currency Select Field Options
-	@FindBy(how = How.XPATH, using = "//ng-select[@formcontrolname='currencyCode']//div[@role='option']")
-	private List<WebElement> _selectCurrencyOptions;
-
-	// Radio Button Selection - Aires Preferred Landers
-	@FindBy(how = How.XPATH, using = "//div[@class='collapse show']//div[@formarrayname='airesPreferredLenders']//label[@class='form-check-label']")
-	private List<WebElement> _radioBtnAiresPrefferedLenders;	
-
 	// Gross Up - Radio Button Selection
 	@FindBy(how = How.XPATH, using = "//div[@class='collapse show']//input[@formcontrolname='grossedUpInd']/parent::label[@class='form-check-label']")
 	private List<WebElement> _radioBtnGrossUp;
@@ -174,12 +135,91 @@ public class CoreFlex_HomePurchase_BenefitsPage extends Base {
 
 	// Policy Benefits data Missing Error Dialog - OK Button
 	@FindBy(how = How.CSS, using = "button[class*='swal2-confirm']")
-	private WebElement _errorDialogPolicyBenefitsDataMissingOKButton;	
+	private WebElement _errorDialogPolicyBenefitsDataMissingOKButton;
+
+	// SubBenefit - Collapsable Menu 1
+	@FindBy(how = How.XPATH, using = "//h5[contains(text(),'Air Shipment')]/ancestor::a[contains(@href,'collapse')]")
+	private WebElement _formAirShipment;
+
+	@FindBy(how = How.XPATH, using = "//h5[contains(text(),'Air Shipment')]")
+	private WebElement _headerAirShipment;	
+	
+	@FindBy(how = How.CSS, using = "input[formcontrolname='airWeightCap']")
+	private WebElement _inputWeightCap;
+	
+	@FindBy(how = How.XPATH, using = "//input[@formcontrolname='airNoUnitOfWeightCap']/parent::label[@class='form-check-label']")
+	private WebElement _radioWeightCap;
+	
+	@FindBy(how = How.XPATH, using = "//input[@formcontrolname='airWeightCapAppliesTo']/parent::label[@class='form-check-label']")
+	private WebElement _radioWeightCapAppliesTo;
+	
+	@FindBy(how = How.CSS, using = "input[formcontrolname='airVolumeCap']")
+	private WebElement _inputVolumeCap;
+	
+	@FindBy(how = How.XPATH, using = "//input[@formcontrolname='airUnitOfVolumeCap']/parent::label[@class='form-check-label']")
+	private WebElement _radioVolumeCap;
+	
+	@FindBy(how = How.XPATH, using = "//input[@formcontrolname='airVolumeCapAppliesTo']/parent::label[@class='form-check-label']")
+	private WebElement _radioVolumeCapAppliesTo;
+	
+	@FindBy(how = How.CSS, using = "input[formcontrolname='airNoOfEContainers']")
+	private WebElement _inputNumberOfEContainers;
+	
+	@FindBy(how = How.XPATH, using = "//input[@formcontrolname='airEContainerAppliesTo']/parent::label[@class='form-check-label']")
+	private WebElement _radioEContainersAppliesTo;
+	
+	@FindBy(how = How.CSS, using = "input[formcontrolname='airNoOfDContainers']")
+	private WebElement _inputNumberOfDContainers;
+	
+	@FindBy(how = How.XPATH, using = "//input[@formcontrolname='airDContainerAppliesTo']/parent::label[@class='form-check-label']")
+	private WebElement _radioDContainersAppliesTo;
+	
+	@FindBy(how = How.CSS, using = "input[formcontrolname='airNoOfLDNContainers']")
+	private WebElement _inputNumberOfLDNContainers;
+	
+	@FindBy(how = How.XPATH, using = "//input[@formcontrolname='airLdnContainerAppliesTo']/parent::label[@class='form-check-label']")
+	private WebElement _radioLDNContainersAppliesTo;
+	
+	@FindBy(how = How.CSS, using = "ng-select[formcontrolname='airShipmentTradedCodeList']")
+	private WebElement _selectAirShipmentTraded;
+
+	@FindBy(how = How.CSS, using = "ng-select[formcontrolname='airShipmentTradedCodeList'] span.ng-option-label")
+	private List<WebElement> _selectAirShipmentTradedOptions;
+	
+	@FindBy(how = How.CSS, using = "ng-select[formcontrolname='tempStorageDurationCode']")
+	private WebElement _selectTempStorageDuration;	
+
+	@FindBy(how = How.CSS, using = "ng-select[formcontrolname='tempStorageDurationCode'] span.ng-option-label")
+	private List<WebElement> _selectTempStorageDurationOptions;
+	
+	@FindBy(how = How.CSS, using = "input[formcontrolname='airNoOfDaysInTempStorage']")
+	private WebElement _inputTempStorageDurationNoOfDays;
+		
+	@FindBy(how = How.XPATH, using = "//input[@formcontrolname='insuranceType']/parent::label[@class='form-check-label']")
+	private WebElement _radioInsuranceType;
+	
+	@FindBy(how = How.CSS, using = "input[formcontrolname='insuranceTypeOther']")
+	private WebElement _inputInsuranceTypeOther;
+	
+	@FindBy(how = How.XPATH, using = "//input[@formcontrolname='exceValDueToWeight']/parent::label[@class='form-check-label']")
+	private WebElement _radioExcesValDueToWeight;
+	
+	@FindBy(how = How.CSS, using = "input[formcontrolname='exceValDueToWeightOther']")
+	private WebElement _inputExcesValDueToWeightOther;
+	
+	@FindBy(how = How.XPATH, using = "//input[@formcontrolname='exceValDueToValue']/parent::label[@class='form-check-label']")
+	private WebElement _radioExcesValDueToValue;
+	
+	@FindBy(how = How.CSS, using = "input[formcontrolname='exceValDueToValueOther']")
+	private WebElement _inputExcesValDueToValueOther;
+	
+	@FindBy(how = How.XPATH, using = "//input[@formcontrolname='discardDonateInd']/parent::label[@class='form-check-label']")
+	private WebElement _checkBoxDiscardAndDonate;	
 
 	/*********************************************************************/
 
-	CoreFlex_HousingBenefitsData housingBenefitData = FileReaderManager.getInstance()
-			.getCoreFlexJsonReader().getHousingBenefitDataList(COREFLEXConstants.HOME_PURCHASE);
+	CoreFlex_MovingBenefitsData airShipmentBenefitData = FileReaderManager.getInstance().getCoreFlexJsonReader()
+			.getMovingBenefitDataList(COREFLEXConstants.AIR_SHIPMENT);
 
 	public static final List<Benefit> coreBenefits = FileReaderManager.getInstance().getCoreFlexJsonReader()
 			.getMXTransfereeCoreBenefitDetails();
@@ -193,8 +233,8 @@ public class CoreFlex_HomePurchase_BenefitsPage extends Base {
 	 * @return
 	 */
 	public boolean verifyPageNavigation(String expectedPageName) {
-		return CoreFunctions.verifyElementOnPage(driver, _headerPage, COREFLEXConstants.HOME_PURCHASE,
-				expectedPageName, expectedPageName, true);
+		return CoreFunctions.verifyElementOnPage(driver, _headerPage, COREFLEXConstants.AIR_SHIPMENT, expectedPageName,
+				expectedPageName, true);
 	}
 
 	/**
@@ -271,7 +311,9 @@ public class CoreFlex_HomePurchase_BenefitsPage extends Base {
 	}
 
 	/**
-	 * Method to call select Benefit Type and Sub Benefits, fill all mandatory fields methods
+	 * Method to call select Benefit Type and Sub Benefits, fill all mandatory
+	 * fields methods
+	 * 
 	 * @param benefitType
 	 * @param subBenefitNames
 	 * @param multipleBenefitSelection
@@ -303,7 +345,6 @@ public class CoreFlex_HomePurchase_BenefitsPage extends Base {
 		if (CoreFunctions.isElementExist(driver, _errorDialogPolicyBenefitsDataMissing, 7)) {
 			CoreFunctions.clickElement(driver, _errorDialogPolicyBenefitsDataMissingOKButton);
 		}
-
 	}
 
 	/**
@@ -327,9 +368,9 @@ public class CoreFlex_HomePurchase_BenefitsPage extends Base {
 					fillSubBenefit(subBenefit.trim(), benefitType);
 				} else {
 					Reporter.addStepLog(MessageFormat.format(COREFLEXConstants.SUB_BENEFIT_FORM_NOT_DISPLAYED,
-							CoreConstants.FAIL, subBenefit, COREFLEXConstants.HOME_PURCHASE_BENEFITS_PAGE));
+							CoreConstants.FAIL, subBenefit, COREFLEXConstants.AIR_SHIPMENT_BENEFITS_PAGE));
 					throw new RuntimeException(MessageFormat.format(COREFLEXConstants.SUB_BENEFIT_FORM_NOT_DISPLAYED,
-							CoreConstants.FAIL, subBenefit, COREFLEXConstants.HOME_PURCHASE_BENEFITS_PAGE));
+							CoreConstants.FAIL, subBenefit, COREFLEXConstants.AIR_SHIPMENT_BENEFITS_PAGE));
 				}
 			}
 		} catch (Exception e) {
@@ -347,20 +388,12 @@ public class CoreFlex_HomePurchase_BenefitsPage extends Base {
 	 */
 	private void fillSubBenefit(String subBenefit, String benefitType) {
 		switch (subBenefit) {
-		case COREFLEXConstants.HOME_PURCHASE_CLOSING_COSTS:
-			expandSubBenefitIfCollapsed(getElementByName(COREFLEXConstants.HOME_PURCHASE_CLOSING_COSTS));
+		case COREFLEXConstants.AIR_SHIPMENT:
+			expandSubBenefitIfCollapsed(getElementByName(COREFLEXConstants.AIR_SHIPMENT));
 			if (benefitType.equals(COREFLEXConstants.FLEX_BENEFITS)) {
-				CoreFunctions.clickElement(driver, _headerHomePurchaseClosingCosts);
+				CoreFunctions.clickElement(driver, _headerAirShipment);
 			}
-			fillHomePurchaseClosingCostsSubBenefitForm();
-			break;
-		case COREFLEXConstants.HOME_PURCHASE_POINTS:
-			expandSubBenefitIfCollapsed(getElementByName(COREFLEXConstants.HOME_PURCHASE_POINTS));
-			fillHomePurchasePointsSubBenefitForm();
-			break;
-		case COREFLEXConstants.HOME_PURCHASE_INSPECTIONS:
-			expandSubBenefitIfCollapsed(getElementByName(COREFLEXConstants.HOME_PURCHASE_INSPECTIONS));
-			fillHomePurchaseInspectionsSubBenefitForm();
+			fillAirShipmentSubBenefitForm(COREFLEXConstants.AIR_SHIPMENT);
 			break;
 		default:
 			Assert.fail(MessageFormat.format(COREFLEXConstants.ELEMENT_NOT_FOUND, CoreConstants.FAIL));
@@ -368,64 +401,28 @@ public class CoreFlex_HomePurchase_BenefitsPage extends Base {
 	}
 
 	/**
-	 * Method to fill Home Purchase Closing Costs subBenefit form
+	 * Method to fill Area Tour subBenefit form
+	 * 
+	 * @param subBenefitFormName
 	 */
-	private void fillHomePurchaseClosingCostsSubBenefitForm() {
-		CoreFunctions.clearAndSetText(driver, _inputMaxPurchasePrice,
-				housingBenefitData.homePurchaseClosingCosts.maxHomePurchasePrice);
-		CoreFunctions.selectItemInListByText(driver, _radioBtnDirectBillEligible,
-				housingBenefitData.homePurchaseClosingCosts.directBillEligible, true);
-		CoreFunctions.clearAndSetText(driver, _inputClosingCostCap,
-				housingBenefitData.homePurchaseClosingCosts.closingCostCap);		
-		CoreFunctions.clickElement(driver, _selectCurrency);
-		CoreFunctions.selectItemInListByText(driver, _selectCurrencyOptions,
-				housingBenefitData.homePurchaseClosingCosts.currency, true);
-		CoreFunctions.selectItemInListByText(driver, _radioBtnAiresPrefferedLenders,
-				housingBenefitData.homePurchaseClosingCosts.airesPrefferedLenders, true);
-		CoreFunctions.selectItemInListByText(driver, _radioBtnGrossUp,
-				housingBenefitData.homePurchaseClosingCosts.grossUp, true);
-		CoreFunctions.selectItemInListByText(driver, _radioBtnCandidateSelection,
-				housingBenefitData.homePurchaseClosingCosts.reimbursedBy, true);
-		if (housingBenefitData.homePurchaseClosingCosts.reimbursedBy.equalsIgnoreCase(COREFLEXConstants.OTHER)) {
-			CoreFunctions.clearAndSetText(driver, _inputReimbursedBy,
-					housingBenefitData.homePurchaseClosingCosts.reimbursedByOther);
+	private void fillAirShipmentSubBenefitForm(String subBenefitFormName) {
+		try {
+//			CoreFunctions.clickElement(driver, _selectDurationDays);
+//			CoreFunctions.selectItemInListByText(driver, _selectDurationDaysOptions,
+//					areaTourBenefitData.areaTour.durationDays, true);
+//			CoreFunctions.clearAndSetText(driver, _txtAreaComment, areaTourBenefitData.areaTour.comment);
+//			CoreFunctions.selectItemInListByText(driver, _radioBtnGrossUp, areaTourBenefitData.areaTour.grossUp, true);
+//			CoreFunctions.selectItemInListByText(driver, _radioBtnCandidateSelection,
+//					areaTourBenefitData.areaTour.reimbursedBy, true);
+//			if (areaTourBenefitData.areaTour.reimbursedBy.equalsIgnoreCase(COREFLEXConstants.OTHER)) {
+//				CoreFunctions.clearAndSetText(driver, _inputReimbursedBy,
+//						areaTourBenefitData.areaTour.reimbursedByOther);
+//			}
+		} catch (Exception e) {
+			Assert.fail(MessageFormat.format(PDTConstants.EXCEPTION_OCCURED_FILL_SUBBENEFIT_FORM, CoreConstants.FAIL,
+					subBenefitFormName, e.getMessage()));
 		}
-		CoreFunctions.clearAndSetText(driver, _txtAreaComment,
-				housingBenefitData.homePurchaseClosingCosts.comment);
-	}
 
-	/**
-	 * Method to fill Home Purchase Points subBenefit form
-	 */
-	private void fillHomePurchasePointsSubBenefitForm() {
-		CoreFunctions.clearAndSetText(driver, _inputMaxPurchasePrice,
-				housingBenefitData.homePurchasePoints.maxHomePurchasePrice);		
-		CoreFunctions.selectItemInListByText(driver, _radioBtnGrossUp,
-				housingBenefitData.homePurchasePoints.grossUp, true);
-		CoreFunctions.selectItemInListByText(driver, _radioBtnCandidateSelection,
-				housingBenefitData.homePurchasePoints.reimbursedBy, true);
-		if (housingBenefitData.homePurchasePoints.reimbursedBy.equalsIgnoreCase(COREFLEXConstants.OTHER)) {
-			CoreFunctions.clearAndSetText(driver, _inputReimbursedBy,
-					housingBenefitData.homePurchasePoints.reimbursedByOther);
-		}
-		CoreFunctions.clearAndSetText(driver, _txtAreaComment,
-				housingBenefitData.homePurchasePoints.comment);
-	}
-	
-	/**
-	 * Method to fill Home Purchase Points subBenefit form
-	 */
-	private void fillHomePurchaseInspectionsSubBenefitForm() {
-		CoreFunctions.selectItemInListByText(driver, _radioBtnGrossUp,
-				housingBenefitData.homePurchaseInspections.grossUp, true);
-		CoreFunctions.selectItemInListByText(driver, _radioBtnCandidateSelection,
-				housingBenefitData.homePurchaseInspections.reimbursedBy, true);
-		if (housingBenefitData.homePurchaseInspections.reimbursedBy.equalsIgnoreCase(COREFLEXConstants.OTHER)) {
-			CoreFunctions.clearAndSetText(driver, _inputReimbursedBy,
-					housingBenefitData.homePurchaseInspections.reimbursedByOther);
-		}
-		CoreFunctions.clearAndSetText(driver, _txtAreaComment,
-				housingBenefitData.homePurchaseInspections.comment);
 	}
 
 	/**
@@ -448,14 +445,8 @@ public class CoreFlex_HomePurchase_BenefitsPage extends Base {
 	public WebElement getElementByName(String elementName) {
 		WebElement element = null;
 		switch (elementName) {
-		case COREFLEXConstants.HOME_PURCHASE_CLOSING_COSTS:
-			element = _formHomePurchaseClosingCosts;
-			break;
-		case COREFLEXConstants.HOME_PURCHASE_POINTS:
-			element = _formHomePurchasePoints;
-			break;
-		case COREFLEXConstants.HOME_PURCHASE_INSPECTIONS:
-			element = _formHomePurchaseInspections;
+		case COREFLEXConstants.AIR_SHIPMENT:
+			element = _formAirShipment;
 			break;
 		default:
 			Assert.fail(MessageFormat.format(COREFLEXConstants.ELEMENT_NOT_FOUND, CoreConstants.FAIL));
@@ -469,21 +460,21 @@ public class CoreFlex_HomePurchase_BenefitsPage extends Base {
 	 * @param benefitType
 	 * @param multipleBenefitSelection
 	 * @param flexPoints
-	 * @param benefitDescription
+	 * @param benefitDisplayName
 	 * @param benefitAllowanceAmount
-	 * @param benefitDescription2
+	 * @param benefitDescription
+	 * @param aireManagedService
 	 */
 	private void selectBenefitTypeAndFillMandatoryFields(String benefitType, String multipleBenefitSelection,
 			String flexPoints, String benefitDisplayName, String benefitAllowanceAmount, String benefitDescription,
 			String aireManagedService) {
-		Benefit homePurchaseBenefit = coreBenefits.stream()
-				.filter(b -> b.getBenefitType().equals(COREFLEXConstants.HOME_PURCHASE)).findAny().orElse(null);
+		Benefit airShipmentBenefit = coreBenefits.stream()
+				.filter(b -> b.getBenefitType().equals(COREFLEXConstants.AIR_SHIPMENT)).findAny().orElse(null);
 		switch (benefitType) {
 		case COREFLEXConstants.CORE:
 			CoreFunctions.clickElement(driver, _textCore);
-			fillManadatoryDetails(benefitType, multipleBenefitSelection,
-					homePurchaseBenefit.getBenefitDisplayName(), homePurchaseBenefit.getBenefitAmount(),
-					homePurchaseBenefit.getBenefitDesc(), aireManagedService);
+			fillManadatoryDetails(benefitType, multipleBenefitSelection, airShipmentBenefit.getBenefitDisplayName(),
+					airShipmentBenefit.getBenefitAmount(), airShipmentBenefit.getBenefitDesc(), aireManagedService);
 			break;
 		case COREFLEXConstants.FLEX:
 			CoreFunctions.clickElement(driver, _textFlex);
@@ -494,9 +485,8 @@ public class CoreFlex_HomePurchase_BenefitsPage extends Base {
 			break;
 		case COREFLEXConstants.CORE_BENEFITS:
 			CoreFunctions.clickElement(driver, _textCoreBenefits);
-			fillManadatoryDetails(benefitType, multipleBenefitSelection,
-					homePurchaseBenefit.getBenefitDisplayName(), homePurchaseBenefit.getBenefitAmount(),
-					homePurchaseBenefit.getBenefitDesc(), aireManagedService);
+			fillManadatoryDetails(benefitType, multipleBenefitSelection, airShipmentBenefit.getBenefitDisplayName(),
+					airShipmentBenefit.getBenefitAmount(), airShipmentBenefit.getBenefitDesc(), aireManagedService);
 			break;
 		case COREFLEXConstants.FLEX_BENEFITS:
 			CoreFunctions.clickElement(driver, _textFlexBenefits);
@@ -515,6 +505,7 @@ public class CoreFlex_HomePurchase_BenefitsPage extends Base {
 
 	/**
 	 * Method to fill Default Mandatory Fields of Benefit
+	 * 
 	 * @param benefitType
 	 * @param multipleBenefitSelection
 	 * @param benefitDisplayName

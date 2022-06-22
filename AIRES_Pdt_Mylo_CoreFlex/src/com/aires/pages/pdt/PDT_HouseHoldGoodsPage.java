@@ -918,6 +918,7 @@ public class PDT_HouseHoldGoodsPage extends Base {
 			CoreFunctions.clearAndSetText(driver, _txtAreaBenefitCommentPermStorage, PDTConstants.COMMENT,
 					houseHoldGoodsBenefitData.permStorage.comment);
 		} catch (Exception e) {
+			e.printStackTrace();
 			Assert.fail(MessageFormat.format(PDTConstants.EXCEPTION_OCCURED_FILL_SUBBENEFIT_FORM, CoreConstants.FAIL,
 					subBenefitFormName));
 		}
@@ -952,6 +953,7 @@ public class PDT_HouseHoldGoodsPage extends Base {
 					houseHoldGoodsBenefitData.petShipment.comment);
 
 		} catch (Exception e) {
+			e.printStackTrace();
 			Assert.fail(MessageFormat.format(PDTConstants.EXCEPTION_OCCURED_FILL_SUBBENEFIT_FORM, CoreConstants.FAIL,
 					subBenefitFormName));
 		}

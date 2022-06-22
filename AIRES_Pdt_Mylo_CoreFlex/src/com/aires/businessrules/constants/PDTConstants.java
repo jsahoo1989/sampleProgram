@@ -350,10 +350,10 @@ public class PDTConstants {
 	public static final String DEPARTURE_SERVICES = "Departure Services";
 	public static final String FURNITURE_RENTAL = "Furniture Rental";
 	public static final String REIMBURSEMENT_OF_MEMEBERSHIP_DUES = "Reimbursement of Membership Dues";
-	public static final String SCHOOL_SEARCH = "School Search";
+	public static final String SCHOOL_SEARCH = "Education Assistant";
 	public static final String SETTLING_IN_SERVICES = "Settling In Services";
 	public static final String TRANSITION_ASSISTANCE_PROGRAM = "Transition Assistance Program";
-	public static final String TUTION_AND_EDUCATION = "Tuition and Education";
+	public static final String TUTION_AND_EDUCATION = "Tuition/Education Payments";
 	public static final String EXCEPTION_OCCURED_FILL_SUBBENEFIT_FORM = "{0} Exception occurred while filling data for ''{1}'' sub-benefit form.";
 	public static final String RENTAL_TOUR = "Rental Tour";
 	public static final String FINDER_FEES = "Finder's Fee";
@@ -490,5 +490,6 @@ public class PDTConstants {
 	public static final String APPLICATION_PDT = "PDT";
 	public static final String APPLICATION_MYLO = "MYLO";
 	public static final String APPLICATION_NOT_VALID = "{0}Application ''{1}'' is not a valid application";
+	public static final String VERIFIED_DEFAULT_CURR_SELECTED = "{0}Verified default currency selected is ''{1}'' on {2} sub-benefit form.";
 	
 }

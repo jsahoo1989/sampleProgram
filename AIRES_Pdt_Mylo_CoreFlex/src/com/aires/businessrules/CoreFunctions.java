@@ -1556,7 +1556,7 @@ public class CoreFunctions {
 				}
 			}
 			if (!itemSearched) {
-				Assert.fail("Searched item:-" + searchText + "does not exist in " + fieldName + " list.");
+				Assert.fail("Searched item:-" + searchText + " does not exist in " + fieldName + " list.");
 			}
 		} catch (NoSuchElementException e) {
 			Assert.fail(

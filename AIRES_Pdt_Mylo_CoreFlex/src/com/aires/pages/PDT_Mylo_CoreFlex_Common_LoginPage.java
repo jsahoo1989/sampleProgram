@@ -66,6 +66,7 @@ public class PDT_Mylo_CoreFlex_Common_LoginPage extends Base {
 	
 	final By _loginImg = By.xpath("//img[contains(@src,'login-with-office-365')]");
 	final By _spinnerImg = By.cssSelector("div[class='sk-three-strings']");
+	final By _password = By.cssSelector("input[type='password']");
 	long timeBeforeAction, timeAfterAction;
 	LinkedHashMap<String, WebElement> applicationLogoMap = new LinkedHashMap<String, WebElement>();
 	
@@ -121,9 +122,9 @@ public class PDT_Mylo_CoreFlex_Common_LoginPage extends Base {
 					_txt_UserEmail.getAttribute("placeholder"));
 			CoreFunctions.clearAndSetText(driver, _txt_UserEmail, _txt_UserEmail.getAttribute("placeholder"), userName);
 			CoreFunctions.clickUsingJS(driver, _submit, _submit.getAttribute("value"));
-			CoreFunctions.explicitWaitTillElementVisibility(driver, _txt_Password,
-					_txt_Password.getAttribute("name"));
-			CoreFunctions.clearAndSetText(driver, _txt_Password, _txt_Password.getAttribute("type"), password);
+			CoreFunctions.explicitWaitTillElementInVisibilityCustomTime(driver, _spinner, 10);
+			WebElement _pswd = CoreFunctions.getElementByLocator(driver, _password);
+			CoreFunctions.clearAndSetText(driver, _pswd, _pswd.getAttribute("type"), password);
 		} catch (ElementNotFoundException e) {
 		}
 	}

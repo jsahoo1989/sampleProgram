@@ -227,8 +227,10 @@ public class BasePage {
 		case CoreConstants.APP_PDT:
 			_loginDetails = FileReaderManager.getInstance().getJsonReader()
 					.getLoginByApplication(CoreConstants.APP_PDT);
+			/*irisBuildPath = getIRISPathAsPerEnvtForPDT(_loginDetails,
+					CoreFunctions.getPropertyFromConfig("envt").toLowerCase());*/
 			irisBuildPath = getIRISPathAsPerEnvtForPDT(_loginDetails,
-					CoreFunctions.getPropertyFromConfig("envt").toLowerCase());
+					System.getProperty("envt").toLowerCase());
 			break;
 		case CoreConstants.APP_COREFLEX:
 			_loginDetails = FileReaderManager.getInstance().getJsonReader()
@@ -236,8 +238,10 @@ public class BasePage {
 			irisBuildPath = getIRISPathAsPerEnvtForCoreFlex(_loginDetails);
 			break;
 		default:
+			/*Assert.fail(MessageFormat.format(CoreConstants.INVALID_APPLICATION,
+					CoreFunctions.getPropertyFromConfig("application")));*/
 			Assert.fail(MessageFormat.format(CoreConstants.INVALID_APPLICATION,
-					CoreFunctions.getPropertyFromConfig("application")));
+					System.getProperty("application")));			
 		}
 		return irisBuildPath;
 	}
@@ -261,8 +265,10 @@ public class BasePage {
 			irisBuildPath = _loginDetails.prod.irisBuildPath;
 			break;
 		default:
+/*			Assert.fail(MessageFormat.format(CoreConstants.INVALID_ENVIRONMENT,
+					CoreFunctions.getPropertyFromConfig("application")));*/
 			Assert.fail(MessageFormat.format(CoreConstants.INVALID_ENVIRONMENT,
-					CoreFunctions.getPropertyFromConfig("application")));
+					System.getProperty("application")));
 		}
 		return irisBuildPath;
 	}
@@ -304,7 +310,8 @@ public class BasePage {
 		int portNumber = getPortNumberAsPerUserName();
 		config.setServerAddress(new URI("ws://localhost:" + portNumber));
 		SDK.init(config);
-		String _path = getIrisPathForApplication(CoreFunctions.getPropertyFromConfig("application").toLowerCase());
+		//String _path = getIrisPathForApplication(CoreFunctions.getPropertyFromConfig("application").toLowerCase());
+		String _path = getIrisPathForApplication(System.getProperty("application").toLowerCase());
 		Runtime.getRuntime().exec(_path);
 		String _windowTitle = getWindowText.getActiveWindowText();
 		while (!_windowTitle.contains("Login")) {

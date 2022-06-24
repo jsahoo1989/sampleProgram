@@ -169,7 +169,7 @@ public class CoreFlex_HouseHuntingTrip_BenefitsPage extends Base {
 
 	@FindBy(how = How.CSS, using = "input[formcontrolname='minMileageBusiness']")
 	private WebElement _inputMinMileageBusiness;
-	
+
 	@FindBy(how = How.CSS, using = "input[formcontrolname='minFlightTimeExec']")
 	private WebElement _inputMinFlightTimeExlLayovers;
 
@@ -178,46 +178,52 @@ public class CoreFlex_HouseHuntingTrip_BenefitsPage extends Base {
 
 	@FindBy(how = How.CSS, using = "ng-select[formcontrolname='accompanyingFamilyMemberCode'] span.ng-option-label")
 	private List<WebElement> _selectAccompanyingFamilyMemberCodeOptions;
-	
+
 	@FindBy(how = How.XPATH, using = "//div[@class='collapse show']//input[@formcontrolname='excessBaggageFeesInd']/parent::label[@class='form-check-label']")
 	private List<WebElement> _radioBtnExcessBaggageFees;
 
 	@FindBy(how = How.CSS, using = "input[formcontrolname='maxAmountPerPerson']")
 	private WebElement _inputMaxAmountPerPerson;
-	
+
 	@FindBy(how = How.CSS, using = "input[formcontrolname='numOfNightsPerTrip']")
 	private WebElement _inputNumOfNightsPerTrip;
-	
+
 	@FindBy(how = How.CSS, using = "ng-select[formcontrolname='maxAmountPerNightCode']")
 	private WebElement _selectMaxAmountLodging;
-	
+
+	@FindBy(how = How.CSS, using = "ng-select[formcontrolname='maxAmountPerNightCode'] span[class*='ng-value-label']")
+	private WebElement _selectMaxAmountLodgingSelectedValue;
+
 	@FindBy(how = How.CSS, using = "ng-select[formcontrolname='maxAmountPerNightCode'] span.ng-option-label")
 	private List<WebElement> _selectMaxAmountLodgingOptions;
-	
+
 	@FindBy(how = How.CSS, using = "input[formcontrolname='flatAmountPerNight']")
 	private WebElement _inputFlatAmountPerNight;
-	
+
 	@FindBy(how = How.CSS, using = "ng-select[formcontrolname='currencyCode']")
 	private WebElement _selectCurrency;
 
 	@FindBy(how = How.CSS, using = "ng-select[formcontrolname='currencyCode'] span.ng-option-label")
 	private List<WebElement> _selectCurrencyOptions;
-	
+
 	@FindBy(how = How.CSS, using = "input[formcontrolname='numOfDays']")
 	private WebElement _inputDurationNumOfDays;
-	
+
 	@FindBy(how = How.CSS, using = "ng-select[formcontrolname='classSizeCode']")
 	private WebElement _selectRentalCarSize;
 
+	@FindBy(how = How.CSS, using = "ng-select[formcontrolname='classSizeCode'] span[class*='ng-value-label']")
+	private WebElement _selectRentalCarSizeSelectedValue;
+
 	@FindBy(how = How.CSS, using = "ng-select[formcontrolname='classSizeCode'] span.ng-option-label")
 	private List<WebElement> _selectRentalCarSizeOptions;
-	
+
 	@FindBy(how = How.CSS, using = "input[formcontrolname='classSizeOther']")
-	private WebElement _inputRentalCarOtherSize;	
+	private WebElement _inputRentalCarOtherSize;
 
 	@FindBy(how = How.CSS, using = "app-trip-meals input[formcontrolname='durationPerTrip']")
 	private WebElement _inputNumOfDaysForMeals;
-	
+
 	@FindBy(how = How.XPATH, using = "//div[@class='collapse show']//input[@formcontrolname='mealTypeCode']/parent::label[@class='form-check-label']")
 	private List<WebElement> _radioBtnMealType;
 
@@ -235,6 +241,9 @@ public class CoreFlex_HouseHuntingTrip_BenefitsPage extends Base {
 
 	@FindBy(how = How.CSS, using = "ng-select[formcontrolname='currencyCodeEe']")
 	private WebElement _selectTransfereeCurrency;
+
+	@FindBy(how = How.CSS, using = "ng-select[formcontrolname='currencyCodeEe'] span[class*='ng-value-label']")
+	private WebElement _selectTransfereeCurrencySelectedValue;
 
 	@FindBy(how = How.CSS, using = "ng-select[formcontrolname='currencyCodeEe'] span.ng-option-label")
 	private List<WebElement> _selectTransfereeCurrencyOptions;
@@ -262,7 +271,89 @@ public class CoreFlex_HouseHuntingTrip_BenefitsPage extends Base {
 
 	@FindBy(how = How.CSS, using = "ng-select[formcontrolname='currencyCodeChild'] span.ng-option-label")
 	private List<WebElement> _selectCurrencyCodeChildOptions;
-	
+
+	// Aires Managed Benefit Radio Label Selection
+	@FindBy(how = How.XPATH, using = "//label[contains(text(),'Aires Managed Service')]/following-sibling::div/label[@class='form-check-label']")
+	private List<WebElement> _radioAiresManagedLabelList;
+
+	// Aires Managed Benefit Radio Button Selection
+	@FindBy(how = How.XPATH, using = "//label[contains(text(),'Aires Managed Service')]/following-sibling::div//input")
+	private List<WebElement> _radioAiresManagedButtonList;
+
+	// Benefit can be selected more than once Checkbox
+	@FindBy(how = How.XPATH, using = "//input[@id='multiAddInd']/parent::label")
+	private List<WebElement> _inputMultiAddBenefitLabel;
+
+	// Benefit can be selected more than once Checkbox
+	@FindBy(how = How.XPATH, using = "//input[@id='multiAddInd']")
+	private List<WebElement> _inputMultiAddBenefitButton;
+
+	// Gross Up Radio Label Selection
+	@FindBy(how = How.XPATH, using = "//label[contains(text(),'Gross-Up')]/following-sibling::div/label[@class='form-check-label']")
+	private List<WebElement> _radioGrossUpLabelList;
+
+	// Gross Up Radio Button Selection
+	@FindBy(how = How.XPATH, using = "//label[contains(text(),'Gross-Up')]/following-sibling::div//input")
+	private List<WebElement> _radioGrossUpButtonList;
+
+	// Reimbursed By Radio Label Selection
+	@FindBy(how = How.XPATH, using = "//label[contains(text(),'Reimbursed By')]/following-sibling::div/label[@class='form-check-label']")
+	private List<WebElement> _radioReimbursedByLabelList;
+
+	// Reimbursed By Radio Button Selection
+	@FindBy(how = How.XPATH, using = "//label[contains(text(),'Reimbursed By')]/following-sibling::div//input")
+	private List<WebElement> _radioReimbursedByButtonList;
+
+	// Type - Radio Button Selection - Label List
+	@FindBy(how = How.XPATH, using = "//div[@class='collapse show']//input[@formcontrolname='mealTypeCode']/parent::label[@class='form-check-label']")
+	private List<WebElement> _radioMealsTypeLabelList;
+
+	// Type - Radio Button Selection - Button List
+	@FindBy(how = How.CSS, using = "div[class='collapse show'] input[formcontrolname='mealTypeCode']")
+	private List<WebElement> _radioMealsTypeButtonList;
+
+	@FindBy(how = How.CSS, using = "ng-select[formcontrolname='houseHuntingTripTransportTypeList'] span[class*='ng-value-label']")
+	private WebElement _selectTransportationTypeSelectedValue;
+
+	@FindBy(how = How.CSS, using = "ng-select[formcontrolname='accompanyingFamilyMemberCode'] span[class*='ng-value-label']")
+	private WebElement _selectAccompanyingFamilyMemberCodeSelectedValue;
+
+	@FindBy(how = How.XPATH, using = "//div[@class='collapse show']//input[@formcontrolname='excessBaggageFeesInd']/parent::label[@class='form-check-label']")
+	private List<WebElement> _radioBtnExcessBaggageFeesLabelList;
+
+	@FindBy(how = How.XPATH, using = "//div[@class='collapse show']//input[@formcontrolname='excessBaggageFeesInd']")
+	private List<WebElement> _radioBtnExcessBaggageFeesButtonList;
+
+	@FindBy(how = How.CSS, using = "div[class='collapse show'] ng-select[formcontrolname='maxAmountCode'] span[class*='ng-value-label']")
+	private WebElement _selectMaxAmtSelectedValue;
+
+	@FindBy(how = How.CSS, using = "ng-select[formcontrolname='currencyCode'] span[class*='ng-value-label']")
+	private WebElement _selectCurrencyCodeSelectedValue;
+
+	@FindBy(how = How.XPATH, using = "//input[@formcontrolname='detailEeCode']/parent::label[contains(@class,'form-check-label')]")
+	private List<WebElement> _radioDetailTransfereeCodeLabelList;
+
+	@FindBy(how = How.CSS, using = "input[formcontrolname='detailEeCode']")
+	private List<WebElement> _radioDetailTransfereeCodeButtonList;
+
+	@FindBy(how = How.XPATH, using = "//input[@formcontrolname='detailAdultCode']/parent::label[contains(@class,'form-check-label')]")
+	private List<WebElement> _radioDetailAdultCodeLabelList;
+
+	@FindBy(how = How.CSS, using = "ng-select[formcontrolname='currencyCodeAdult'] span[class*='ng-value-label']")
+	private WebElement _selectAdultCurrencySelectedValue;
+
+	@FindBy(how = How.XPATH, using = "//input[@formcontrolname='detailChildCode']/parent::label[contains(@class,'form-check-label')]")
+	private List<WebElement> __radioDetailChildLabelList;
+
+	@FindBy(how = How.CSS, using = "input[formcontrolname='detailChildCode']")
+	private List<WebElement> _radioDetailChildButtonList;
+
+	@FindBy(how = How.CSS, using = "ng-select[formcontrolname='currencyCodeChild'] span[class*='ng-value-label']")
+	private WebElement _selectCurrencyCodeChildSelectedValue;
+
+	@FindBy(how = How.CSS, using = "input[formcontrolname='detailAdultCode']")
+	private List<WebElement> _radioDetailAdultCodeButtonList;
+
 	/*********************************************************************/
 
 	CoreFlex_HousingBenefitsData housingBenefitData = FileReaderManager.getInstance().getCoreFlexJsonReader()
@@ -280,8 +371,8 @@ public class CoreFlex_HouseHuntingTrip_BenefitsPage extends Base {
 	 * @return
 	 */
 	public boolean verifyPageNavigation(String expectedPageName) {
-		return CoreFunctions.verifyElementOnPage(driver, _headerPage, COREFLEXConstants.HOUSE_HUNTING_TRIP, expectedPageName,
-				expectedPageName, true);
+		return CoreFunctions.verifyElementOnPage(driver, _headerPage, COREFLEXConstants.HOUSE_HUNTING_TRIP,
+				expectedPageName, expectedPageName, true);
 	}
 
 	/**
@@ -465,17 +556,17 @@ public class CoreFlex_HouseHuntingTrip_BenefitsPage extends Base {
 	private void fillHouseHuntingTripTransportationSubBenefitForm(String subBenefitFormName) {
 		try {
 			CoreFunctions.clearAndSetText(driver, _inputNumberOfTrip,
-					housingBenefitData.houseHuntingTripTransportation.numberOfTrips);			
+					housingBenefitData.houseHuntingTripTransportation.numberOfTrips);
 			CoreFunctions.clickElement(driver, _selectTransportationType);
 			CoreFunctions.selectItemInListByText(driver, _selectTransportationTypeOptions,
 					housingBenefitData.houseHuntingTripTransportation.transportationType, true);
-			CoreFunctions.clickElement(driver, _selectTransportationType);			
+			CoreFunctions.clickElement(driver, _selectTransportationType);
 			CoreFunctions.clearAndSetText(driver, _inputMinMileageEconomy,
 					housingBenefitData.houseHuntingTripTransportation.minMilForEconomyAirTravel);
 			CoreFunctions.clearAndSetText(driver, _inputMinMileageBusiness,
-					housingBenefitData.houseHuntingTripTransportation.minMilForBusinessAirTravel);			
+					housingBenefitData.houseHuntingTripTransportation.minMilForBusinessAirTravel);
 			CoreFunctions.clearAndSetText(driver, _inputMinFlightTimeExlLayovers,
-					housingBenefitData.houseHuntingTripTransportation.minFlightTimeExclLayovers);			
+					housingBenefitData.houseHuntingTripTransportation.minFlightTimeExclLayovers);
 			CoreFunctions.clickElement(driver, _selectAccompanyingFamilyMemberCode);
 			CoreFunctions.selectItemInListByText(driver, _selectAccompanyingFamilyMemberCodeOptions,
 					housingBenefitData.houseHuntingTripTransportation.accompanyingFamilyMember, true);
@@ -487,7 +578,8 @@ public class CoreFlex_HouseHuntingTrip_BenefitsPage extends Base {
 					housingBenefitData.houseHuntingTripTransportation.grossUp, true);
 			CoreFunctions.selectItemInListByText(driver, _radioBtnCandidateSelection,
 					housingBenefitData.houseHuntingTripTransportation.reimbursedBy, true);
-			if (housingBenefitData.houseHuntingTripTransportation.reimbursedBy.equalsIgnoreCase(COREFLEXConstants.OTHER)) {
+			if (housingBenefitData.houseHuntingTripTransportation.reimbursedBy
+					.equalsIgnoreCase(COREFLEXConstants.OTHER)) {
 				CoreFunctions.clearAndSetText(driver, _inputReimbursedBy,
 						housingBenefitData.houseHuntingTripTransportation.reimbursedByOther);
 			}
@@ -500,7 +592,8 @@ public class CoreFlex_HouseHuntingTrip_BenefitsPage extends Base {
 	}
 
 	/**
-	 * Method to fill House Hunting Trip Lodging subBenefit form 
+	 * Method to fill House Hunting Trip Lodging subBenefit form
+	 * 
 	 * @param subBenefitFormName
 	 */
 	private void fillHouseHuntingTripLodgingSubBenefitForm(String subBenefitFormName) {
@@ -523,9 +616,8 @@ public class CoreFlex_HouseHuntingTrip_BenefitsPage extends Base {
 				CoreFunctions.clearAndSetText(driver, _inputReimbursedBy,
 						housingBenefitData.houseHuntingTripLodging.reimbursedByOther);
 			}
-			CoreFunctions.clearAndSetText(driver, _txtAreaComment,
-					housingBenefitData.houseHuntingTripLodging.comment);
-			
+			CoreFunctions.clearAndSetText(driver, _txtAreaComment, housingBenefitData.houseHuntingTripLodging.comment);
+
 		} catch (Exception e) {
 			Assert.fail(MessageFormat.format(PDTConstants.EXCEPTION_OCCURED_FILL_SUBBENEFIT_FORM, CoreConstants.FAIL,
 					subBenefitFormName));
@@ -533,7 +625,8 @@ public class CoreFlex_HouseHuntingTrip_BenefitsPage extends Base {
 	}
 
 	/**
-	 * Method to fill House Hunting Trip Rental Car subBenefit form 
+	 * Method to fill House Hunting Trip Rental Car subBenefit form
+	 * 
 	 * @param subBenefitFormName
 	 */
 	private void fillHouseHuntingTripRentalCarSubBenefitForm(String subBenefitFormName) {
@@ -546,7 +639,7 @@ public class CoreFlex_HouseHuntingTrip_BenefitsPage extends Base {
 			if (housingBenefitData.houseHuntingTripRentalCar.rentalCarSize.equalsIgnoreCase(COREFLEXConstants.OTHER)) {
 				CoreFunctions.clearAndSetText(driver, _inputRentalCarOtherSize,
 						housingBenefitData.houseHuntingTripRentalCar.rentalCarSizeOther);
-			}			
+			}
 			CoreFunctions.selectItemInListByText(driver, _radioBtnGrossUp,
 					housingBenefitData.houseHuntingTripRentalCar.grossUp, true);
 			CoreFunctions.selectItemInListByText(driver, _radioBtnCandidateSelection,
@@ -557,23 +650,24 @@ public class CoreFlex_HouseHuntingTrip_BenefitsPage extends Base {
 			}
 			CoreFunctions.clearAndSetText(driver, _txtAreaComment,
 					housingBenefitData.houseHuntingTripRentalCar.comment);
-			
+
 		} catch (Exception e) {
 			Assert.fail(MessageFormat.format(PDTConstants.EXCEPTION_OCCURED_FILL_SUBBENEFIT_FORM, CoreConstants.FAIL,
 					subBenefitFormName));
 		}
 	}
-	
-	
+
 	/**
-	 * Method to fill House Hunting Trip Meals subBenefit form 
+	 * Method to fill House Hunting Trip Meals subBenefit form
+	 * 
 	 * @param subBenefitFormName
 	 */
 	private void fillHouseHuntingTripMealsSubBenefitForm(String subBenefitFormName) {
 		try {
-			CoreFunctions.clearAndSetText(driver, _inputNumOfDaysForMeals, housingBenefitData.houseHuntingTripMeals.numberOfDaysForMeal);
-			CoreFunctions.selectItemInListByText(driver, _radioBtnMealType,  housingBenefitData.houseHuntingTripMeals.type,
-					true);
+			CoreFunctions.clearAndSetText(driver, _inputNumOfDaysForMeals,
+					housingBenefitData.houseHuntingTripMeals.numberOfDaysForMeal);
+			CoreFunctions.selectItemInListByText(driver, _radioBtnMealType,
+					housingBenefitData.houseHuntingTripMeals.type, true);
 			CoreFunctions.clickElement(driver, _selectMaxAmtMeals);
 			CoreFunctions.selectItemInListByText(driver, _selectMaxAmtMealsOptions,
 					housingBenefitData.houseHuntingTripMeals.maxAmount, true);
@@ -584,7 +678,8 @@ public class CoreFlex_HouseHuntingTrip_BenefitsPage extends Base {
 					housingBenefitData.houseHuntingTripMeals.maxAmtTransfereeCurrency, true);
 			CoreFunctions.selectItemInListByText(driver, _radioDetailTransfereeCode,
 					housingBenefitData.houseHuntingTripMeals.maxAmtTransfereeDetail, true);
-			CoreFunctions.clearAndSetText(driver, _inputMaxAmtAdult, housingBenefitData.houseHuntingTripMeals.maxAmtAdult);
+			CoreFunctions.clearAndSetText(driver, _inputMaxAmtAdult,
+					housingBenefitData.houseHuntingTripMeals.maxAmtAdult);
 			CoreFunctions.clickElement(driver, _selectAdultCurrency);
 			CoreFunctions.selectItemInListByText(driver, _selectAdultCurrencyOptions,
 					housingBenefitData.houseHuntingTripMeals.maxAmtAdultCurrency, true);
@@ -597,8 +692,8 @@ public class CoreFlex_HouseHuntingTrip_BenefitsPage extends Base {
 					housingBenefitData.houseHuntingTripMeals.maxAmtChildrenCurrency, true);
 			CoreFunctions.selectItemInListByText(driver, _radioDetailChild,
 					housingBenefitData.houseHuntingTripMeals.maxAmtChildrenDetail, true);
-			CoreFunctions.selectItemInListByText(driver, _radioBtnGrossUp, housingBenefitData.houseHuntingTripMeals.grossUp,
-					true);
+			CoreFunctions.selectItemInListByText(driver, _radioBtnGrossUp,
+					housingBenefitData.houseHuntingTripMeals.grossUp, true);
 			CoreFunctions.selectItemInListByText(driver, _radioBtnCandidateSelection,
 					housingBenefitData.houseHuntingTripMeals.reimbursedBy, true);
 			if (housingBenefitData.houseHuntingTripMeals.reimbursedBy.equalsIgnoreCase(COREFLEXConstants.OTHER)) {
@@ -669,8 +764,9 @@ public class CoreFlex_HouseHuntingTrip_BenefitsPage extends Base {
 		switch (benefitType) {
 		case COREFLEXConstants.CORE:
 			CoreFunctions.clickElement(driver, _textCore);
-			fillManadatoryDetails(benefitType, multipleBenefitSelection, houseHuntingTripBenefit.getBenefitDisplayName(),
-					houseHuntingTripBenefit.getBenefitAmount(), houseHuntingTripBenefit.getBenefitDesc(), aireManagedService);
+			fillManadatoryDetails(benefitType, multipleBenefitSelection,
+					houseHuntingTripBenefit.getBenefitDisplayName(), houseHuntingTripBenefit.getBenefitAmount(),
+					houseHuntingTripBenefit.getBenefitDesc(), aireManagedService);
 			break;
 		case COREFLEXConstants.FLEX:
 			CoreFunctions.clickElement(driver, _textFlex);
@@ -681,8 +777,9 @@ public class CoreFlex_HouseHuntingTrip_BenefitsPage extends Base {
 			break;
 		case COREFLEXConstants.CORE_BENEFITS:
 			CoreFunctions.clickElement(driver, _textCoreBenefits);
-			fillManadatoryDetails(benefitType, multipleBenefitSelection, houseHuntingTripBenefit.getBenefitDisplayName(),
-					houseHuntingTripBenefit.getBenefitAmount(), houseHuntingTripBenefit.getBenefitDesc(), aireManagedService);
+			fillManadatoryDetails(benefitType, multipleBenefitSelection,
+					houseHuntingTripBenefit.getBenefitDisplayName(), houseHuntingTripBenefit.getBenefitAmount(),
+					houseHuntingTripBenefit.getBenefitDesc(), aireManagedService);
 			break;
 		case COREFLEXConstants.FLEX_BENEFITS:
 			CoreFunctions.clickElement(driver, _textFlexBenefits);
@@ -728,6 +825,330 @@ public class CoreFlex_HouseHuntingTrip_BenefitsPage extends Base {
 			Reporter.addStepLog(
 					MessageFormat.format(COREFLEXConstants.EXCEPTION_OCCURED_WHILE_FILLING_MANDATORY_FIELDS_OF_BENEFIT,
 							CoreConstants.FAIL, e.getMessage(), benefitDisplayName));
+		}
+	}
+
+	public boolean verifyAddedBenefitsAndSubBenefitDetails(String benefitType, String subBenefitNames,
+			String multipleBenefitSelection, String flexPoints, String benefitDisplayName,
+			String benefitAllowanceAmount, String benefitDescription, String paymentOption,
+			String airesManagedService) {
+		if (benefitType.equals(COREFLEXConstants.BOTH)) {
+			CoreFunctions.clickElement(driver, _textBoth);
+			verifyBenefitsMandatoryDetails(COREFLEXConstants.CORE_BENEFITS, multipleBenefitSelection, flexPoints,
+					benefitDisplayName, benefitAllowanceAmount, benefitDescription, paymentOption, airesManagedService);
+			iterateSubBenefitAndVerifyDetails(subBenefitNames, COREFLEXConstants.CORE_BENEFITS);
+			verifyBenefitsMandatoryDetails(COREFLEXConstants.FLEX_BENEFITS, multipleBenefitSelection, flexPoints,
+					benefitDisplayName, benefitAllowanceAmount, benefitDescription, paymentOption, airesManagedService);
+			iterateSubBenefitAndVerifyDetails(subBenefitNames, COREFLEXConstants.FLEX_BENEFITS);
+			return true;
+		} else {
+			verifyBenefitsMandatoryDetails(benefitType, multipleBenefitSelection, flexPoints, benefitDisplayName,
+					benefitAllowanceAmount, benefitDescription, paymentOption, airesManagedService);
+			iterateSubBenefitAndVerifyDetails(subBenefitNames, benefitType);
+			return true;
+		}
+	}
+
+	private void verifyBenefitsMandatoryDetails(String benefitType, String multipleBenefitSelection, String flexPoints,
+			String benefitDisplayName, String benefitAllowanceAmount, String benefitDescription, String paymentOption,
+			String airesManagedService) {
+		Benefit houseHuntingTripBenefit = coreBenefits.stream()
+				.filter(b -> b.getBenefitType().equals(COREFLEXConstants.HOUSE_HUNTING_TRIP)).findAny().orElse(null);
+		switch (benefitType) {
+		case COREFLEXConstants.CORE:
+			CoreFunctions.clickElement(driver, _textCore);
+			verifyManadatoryDetails(benefitType, multipleBenefitSelection,
+					houseHuntingTripBenefit.getBenefitDisplayName(), houseHuntingTripBenefit.getBenefitAmount(),
+					houseHuntingTripBenefit.getBenefitDesc(), paymentOption, airesManagedService);
+			break;
+		case COREFLEXConstants.FLEX:
+			CoreFunctions.clickElement(driver, _textFlex);
+			CoreFunctions.verifyText(_inputFlexPoints.getDomProperty("value"), flexPoints,
+					COREFLEXConstants.FLEX_POINTS_VALUE);
+			CoreFunctions.highlightObject(driver, _inputFlexPoints);
+			verifyManadatoryDetails(benefitType, multipleBenefitSelection, benefitDisplayName, benefitAllowanceAmount,
+					benefitDescription, paymentOption, airesManagedService);
+			break;
+		case COREFLEXConstants.CORE_BENEFITS:
+			CoreFunctions.clickElement(driver, _textCoreBenefits);
+			verifyManadatoryDetails(benefitType, multipleBenefitSelection,
+					houseHuntingTripBenefit.getBenefitDisplayName(), houseHuntingTripBenefit.getBenefitAmount(),
+					houseHuntingTripBenefit.getBenefitDesc(), paymentOption, airesManagedService);
+			break;
+		case COREFLEXConstants.FLEX_BENEFITS:
+			CoreFunctions.clickElement(driver, _textFlexBenefits);
+			CoreFunctions.verifyText(_inputFlexPoints.getDomProperty("value"), flexPoints,
+					COREFLEXConstants.FLEX_POINTS_VALUE);
+			CoreFunctions.highlightObject(driver, _inputFlexPoints);
+			verifyManadatoryDetails(benefitType, multipleBenefitSelection, benefitDisplayName, benefitAllowanceAmount,
+					benefitDescription, paymentOption, airesManagedService);
+			break;
+		case COREFLEXConstants.BOTH:
+			CoreFunctions.clickElement(driver, _textBoth);
+			break;
+		default:
+			Assert.fail(COREFLEXConstants.INVALID_OPTION);
+		}
+
+	}
+
+	private void verifyManadatoryDetails(String benefitType, String multipleBenefitSelection, String benefitDisplayName,
+			String benefitAllowanceAmount, String benefitDescription, String paymentOption,
+			String airesManagedService) {
+		if ((benefitType.equals(COREFLEXConstants.FLEX_BENEFITS)) || (benefitType.equals(COREFLEXConstants.FLEX))) {
+			if ((multipleBenefitSelection.equals(COREFLEXConstants.YES))) {
+				CoreFunctions.verifyRadioButtonSelection(driver, _inputMultiAddBenefitLabel,
+						_inputMultiAddBenefitButton, COREFLEXConstants.BENEFIT_SELECTED_MORE_THAN_ONCE,
+						COREFLEXConstants.MULTIPLE_BENEFIT_SELECTION);
+			}
+			CoreFunctions.verifyRadioButtonSelection(driver, _radioAiresManagedLabelList, _radioAiresManagedButtonList,
+					airesManagedService, COREFLEXConstants.AIRES_MANAGED_SERVICE);
+		}
+		CoreFunctions.verifyText(_inputBenefitName.getDomProperty("value"), benefitDisplayName,
+				COREFLEXConstants.BENEFIT_DISPLAY_NAME);
+		CoreFunctions.highlightObject(driver, _inputBenefitName);
+		CoreFunctions.verifyText(_textAreaAllowanceAmountMessage.getDomProperty("value"), benefitAllowanceAmount,
+				COREFLEXConstants.ALLOWANCE_AMOUNT_MESSAGE);
+		CoreFunctions.highlightObject(driver, _textAreaAllowanceAmountMessage);
+		CoreFunctions.verifyText(_textAreaBenefitLongDescription.getDomProperty("value"), benefitDescription,
+				COREFLEXConstants.BENEFIT_LONG_DESCRIPTION);
+		CoreFunctions.highlightObject(driver, _textAreaBenefitLongDescription);
+	}
+
+	/**
+	 * Method to iterate and verify mentioned SubBenefits details
+	 * 
+	 * @param subBenefitNames
+	 * @param benefitType
+	 */
+	private void iterateSubBenefitAndVerifyDetails(String subBenefitNames, String benefitType) {
+		try {
+			List<String> subBenefitNamesList = new ArrayList<String>();
+			if (subBenefitNames.contains(";"))
+				subBenefitNamesList = Arrays.asList(subBenefitNames.split(";"));
+			else
+				subBenefitNamesList.add(subBenefitNames);
+
+			for (String subBenefit : subBenefitNamesList) {
+				if (CoreFunctions.isElementExist(driver, getElementByName(subBenefit.trim()), 5)) {
+					verifySubBenefitDetails(subBenefit.trim(), benefitType);
+				} else {
+					Reporter.addStepLog(MessageFormat.format(COREFLEXConstants.SUB_BENEFIT_FORM_NOT_DISPLAYED,
+							CoreConstants.FAIL, subBenefit, COREFLEXConstants.HOUSE_HUNTING_TRIP_BENEFITS_PAGE));
+					throw new RuntimeException(MessageFormat.format(COREFLEXConstants.SUB_BENEFIT_FORM_NOT_DISPLAYED,
+							CoreConstants.FAIL, subBenefit, COREFLEXConstants.HOUSE_HUNTING_TRIP_BENEFITS_PAGE));
+				}
+			}
+		} catch (Exception e) {
+			Reporter.addStepLog(MessageFormat.format(
+					COREFLEXConstants.EXCEPTION_OCCURED_WHILE_SELECTING_AND_VERIFYING_SUB_BENEFIT_DETAILS,
+					CoreConstants.FAIL, e.getMessage()));
+		}
+	}
+
+	/**
+	 * Method to Expand and call SubBenefit Verification Method's
+	 * 
+	 * @param subBenefit
+	 * @param benefitType
+	 */
+	private void verifySubBenefitDetails(String subBenefit, String benefitType) {
+		switch (subBenefit) {
+		case COREFLEXConstants.HOUSE_HUNTING_TRIP_TRANSPORTATION:
+			expandSubBenefitIfCollapsed(getElementByName(COREFLEXConstants.HOUSE_HUNTING_TRIP_TRANSPORTATION));
+			verifyHouseHuntingTripTransportationSubBenefitForm(COREFLEXConstants.HOUSE_HUNTING_TRIP_TRANSPORTATION);
+			break;
+		case COREFLEXConstants.HOUSE_HUNTING_TRIP_LODGING:
+			expandSubBenefitIfCollapsed(getElementByName(COREFLEXConstants.HOUSE_HUNTING_TRIP_LODGING));
+			verifyHouseHuntingTripLodgingSubBenefitForm(COREFLEXConstants.HOUSE_HUNTING_TRIP_LODGING);
+			break;
+		case COREFLEXConstants.HOUSE_HUNTING_TRIP_RENTAL_CAR:
+			expandSubBenefitIfCollapsed(getElementByName(COREFLEXConstants.HOUSE_HUNTING_TRIP_RENTAL_CAR));
+			verifyHouseHuntingTripRentalCarSubBenefitForm(COREFLEXConstants.HOUSE_HUNTING_TRIP_RENTAL_CAR);
+			break;
+		case COREFLEXConstants.HOUSE_HUNTING_TRIP_MEALS:
+			expandSubBenefitIfCollapsed(getElementByName(COREFLEXConstants.HOUSE_HUNTING_TRIP_MEALS));
+			verifyHouseHuntingTripMealsSubBenefitForm(COREFLEXConstants.HOUSE_HUNTING_TRIP_MEALS);
+			break;
+		default:
+			Assert.fail(MessageFormat.format(COREFLEXConstants.ELEMENT_NOT_FOUND, CoreConstants.FAIL));
+		}
+	}
+
+	/**
+	 * Method to verify HouseHuntingTripTransportation subBenefit form
+	 */
+	private void verifyHouseHuntingTripTransportationSubBenefitForm(String formName) {
+		try {
+			CoreFunctions.verifyText(_inputNumberOfTrip.getDomProperty("value"),
+					housingBenefitData.houseHuntingTripTransportation.numberOfTrips, COREFLEXConstants.NUMBER_OF_TRIPS);
+			CoreFunctions.verifyText(driver, _selectTransportationTypeSelectedValue,
+					housingBenefitData.houseHuntingTripTransportation.transportationType,
+					COREFLEXConstants.TRANSPORTATION_TYPE);
+			CoreFunctions.verifyText(_inputMinMileageEconomy.getDomProperty("value"),
+					housingBenefitData.houseHuntingTripTransportation.minMilForEconomyAirTravel,
+					COREFLEXConstants.MIN_MILEAGE_FOR_ECONOMY_AIR_TRAVEL);
+			CoreFunctions.verifyText(_inputMinMileageBusiness.getDomProperty("value"),
+					housingBenefitData.houseHuntingTripTransportation.minMilForBusinessAirTravel,
+					COREFLEXConstants.MIN_MILEAGE_FOR_BUSINESS_AIR_TRAVEL);
+			CoreFunctions.verifyText(_inputMinFlightTimeExlLayovers.getDomProperty("value"),
+					housingBenefitData.houseHuntingTripTransportation.minFlightTimeExclLayovers,
+					COREFLEXConstants.MIN_FLIGHT_TIME_EXCL_LAYOVERS);
+			CoreFunctions.verifyText(driver, _selectAccompanyingFamilyMemberCodeSelectedValue,
+					housingBenefitData.houseHuntingTripTransportation.accompanyingFamilyMember,
+					COREFLEXConstants.ACCOMPANYING_FAMILY_MEMBERS);
+			CoreFunctions.verifyRadioButtonSelection(driver, _radioBtnExcessBaggageFeesLabelList,
+					_radioBtnExcessBaggageFeesButtonList,
+					housingBenefitData.houseHuntingTripTransportation.excessBaggageFees,
+					COREFLEXConstants.EXCESS_BAGGAGE_FEES);
+			CoreFunctions.verifyText(_inputMaxAmountPerPerson.getDomProperty("value"),
+					housingBenefitData.houseHuntingTripTransportation.maxAmountPerPerson, COREFLEXConstants.MAX_AMOUNT);
+			CoreFunctions.verifyRadioButtonSelection(driver, _radioGrossUpLabelList, _radioGrossUpButtonList,
+					housingBenefitData.houseHuntingTripTransportation.grossUp, COREFLEXConstants.GROSS_UP);
+			CoreFunctions.verifyRadioButtonSelection(driver, _radioReimbursedByLabelList, _radioReimbursedByButtonList,
+					housingBenefitData.houseHuntingTripTransportation.reimbursedBy, COREFLEXConstants.REIMBURSED_BY);
+			if (housingBenefitData.houseHuntingTripTransportation.reimbursedBy
+					.equalsIgnoreCase(COREFLEXConstants.OTHER)) {
+				CoreFunctions.verifyText(_inputReimbursedBy.getDomProperty("value"),
+						housingBenefitData.houseHuntingTripTransportation.reimbursedByOther,
+						COREFLEXConstants.REIMBURSED_BY_OTHER);
+				CoreFunctions.highlightObject(driver, _inputReimbursedBy);
+			}
+			CoreFunctions.verifyText(_txtAreaComment.getDomProperty("value"),
+					housingBenefitData.houseHuntingTripTransportation.comment, COREFLEXConstants.COMMENT);
+			CoreFunctions.highlightObject(driver, _txtAreaComment);
+		} catch (Exception e) {
+			Assert.fail(MessageFormat.format(COREFLEXConstants.FAILED_TO_VERIFY_HOUSE_HUNTING_TRIP_SUB_BENEFITS_FORM,
+					CoreConstants.FAIL, formName));
+		}
+	}
+
+	/**
+	 * Method to verify HouseHuntingTrip subBenefit form
+	 */
+	private void verifyHouseHuntingTripLodgingSubBenefitForm(String formName) {
+		try {
+			CoreFunctions.verifyText(_inputNumOfNightsPerTrip.getDomProperty("value"),
+					housingBenefitData.houseHuntingTripLodging.numberOfNightsPerTrip,
+					COREFLEXConstants.NUMBER_OF_NIGHTS);
+			CoreFunctions.verifyText(driver, _selectMaxAmountLodgingSelectedValue,
+					housingBenefitData.houseHuntingTripLodging.maxAmountLodging, COREFLEXConstants.MAX_AMOUNT);
+			CoreFunctions.verifyText(_inputFlatAmountPerNight.getDomProperty("value"),
+					housingBenefitData.houseHuntingTripLodging.flatAmountPerNight,
+					COREFLEXConstants.FLAT_AMOUNT_PER_NIGHT);
+			CoreFunctions.verifyText(driver, _selectCurrencyCodeSelectedValue,
+					housingBenefitData.houseHuntingTripLodging.currencyLodging, COREFLEXConstants.CURRENCY);
+			CoreFunctions.verifyRadioButtonSelection(driver, _radioGrossUpLabelList, _radioGrossUpButtonList,
+					housingBenefitData.houseHuntingTripLodging.grossUp, COREFLEXConstants.GROSS_UP);
+			CoreFunctions.verifyRadioButtonSelection(driver, _radioReimbursedByLabelList, _radioReimbursedByButtonList,
+					housingBenefitData.houseHuntingTripLodging.reimbursedBy, COREFLEXConstants.REIMBURSED_BY);
+			if (housingBenefitData.houseHuntingTripLodging.reimbursedBy.equalsIgnoreCase(COREFLEXConstants.OTHER)) {
+				CoreFunctions.verifyText(_inputReimbursedBy.getDomProperty("value"),
+						housingBenefitData.houseHuntingTripLodging.reimbursedByOther,
+						COREFLEXConstants.REIMBURSED_BY_OTHER);
+				CoreFunctions.highlightObject(driver, _inputReimbursedBy);
+			}
+			CoreFunctions.verifyText(_txtAreaComment.getDomProperty("value"),
+					housingBenefitData.houseHuntingTripLodging.comment, COREFLEXConstants.COMMENT);
+			CoreFunctions.highlightObject(driver, _txtAreaComment);
+		} catch (Exception e) {
+			Assert.fail(MessageFormat.format(COREFLEXConstants.FAILED_TO_VERIFY_HOUSE_HUNTING_TRIP_SUB_BENEFITS_FORM,
+					CoreConstants.FAIL, formName));
+		}
+	}
+
+	/**
+	 * Method to verify HouseHuntingTrip subBenefit form
+	 */
+	private void verifyHouseHuntingTripRentalCarSubBenefitForm(String formName) {
+		try {
+			CoreFunctions.verifyText(_inputDurationNumOfDays.getDomProperty("value"),
+					housingBenefitData.houseHuntingTripRentalCar.durationDays, COREFLEXConstants.DURATION_DAYS);
+			CoreFunctions.highlightObject(driver, _inputDurationNumOfDays);
+			CoreFunctions.verifyText(driver, _selectRentalCarSizeSelectedValue,
+					housingBenefitData.houseHuntingTripRentalCar.rentalCarSize,
+					COREFLEXConstants.RENTAL_CAR_SIZE_CLASS);
+			if (housingBenefitData.houseHuntingTripRentalCar.rentalCarSize.equalsIgnoreCase(COREFLEXConstants.OTHER)) {
+				CoreFunctions.verifyText(_inputRentalCarOtherSize.getDomProperty("value"),
+						housingBenefitData.houseHuntingTripRentalCar.rentalCarSizeOther,
+						COREFLEXConstants.RENTAL_CAR_OTHER_SIZE_CLASS);
+				CoreFunctions.highlightObject(driver, _inputRentalCarOtherSize);
+			}
+			CoreFunctions.verifyRadioButtonSelection(driver, _radioGrossUpLabelList, _radioGrossUpButtonList,
+					housingBenefitData.houseHuntingTripRentalCar.grossUp, COREFLEXConstants.GROSS_UP);
+			CoreFunctions.verifyRadioButtonSelection(driver, _radioReimbursedByLabelList, _radioReimbursedByButtonList,
+					housingBenefitData.houseHuntingTripRentalCar.reimbursedBy, COREFLEXConstants.REIMBURSED_BY);
+			if (housingBenefitData.houseHuntingTripRentalCar.reimbursedBy.equalsIgnoreCase(COREFLEXConstants.OTHER)) {
+				CoreFunctions.verifyText(_inputReimbursedBy.getDomProperty("value"),
+						housingBenefitData.houseHuntingTripRentalCar.reimbursedByOther,
+						COREFLEXConstants.REIMBURSED_BY_OTHER);
+				CoreFunctions.highlightObject(driver, _inputReimbursedBy);
+			}
+			CoreFunctions.verifyText(_txtAreaComment.getDomProperty("value"),
+					housingBenefitData.houseHuntingTripRentalCar.comment, COREFLEXConstants.COMMENT);
+			CoreFunctions.highlightObject(driver, _txtAreaComment);
+		} catch (Exception e) {
+			Assert.fail(MessageFormat.format(COREFLEXConstants.FAILED_TO_VERIFY_HOUSE_HUNTING_TRIP_SUB_BENEFITS_FORM,
+					CoreConstants.FAIL, formName));
+		}
+	}
+
+	/**
+	 * Method to verify HouseHuntingTripMeals subBenefit form
+	 */
+	private void verifyHouseHuntingTripMealsSubBenefitForm(String formName) {
+		try {
+			CoreFunctions.verifyText(_inputNumOfDaysForMeals.getDomProperty("value"),
+					housingBenefitData.houseHuntingTripMeals.numberOfDaysForMeal,
+					COREFLEXConstants.NUMBER_OF_DAYS_FOR_MEAL);
+			CoreFunctions.highlightObject(driver, _inputNumOfDaysForMeals);
+			CoreFunctions.verifyRadioButtonSelection(driver, _radioMealsTypeLabelList, _radioMealsTypeButtonList,
+					housingBenefitData.houseHuntingTripMeals.type, COREFLEXConstants.MEAL_TYPE);
+			CoreFunctions.verifyText(driver, _selectMaxAmtSelectedValue,
+					housingBenefitData.houseHuntingTripMeals.maxAmount, COREFLEXConstants.MAX_AMOUNT);
+
+			CoreFunctions.verifyText(_inputMaxAmtTransferee.getDomProperty("value"),
+					housingBenefitData.houseHuntingTripMeals.maxAmtTransferee, COREFLEXConstants.MAX_AMOUNT_TRANSFEREE);
+			CoreFunctions.verifyText(driver, _selectTransfereeCurrencySelectedValue,
+					housingBenefitData.houseHuntingTripMeals.maxAmtTransfereeCurrency,
+					COREFLEXConstants.CURRENCY_TRANSFEREE);
+			CoreFunctions.verifyRadioButtonSelection(driver, _radioDetailTransfereeCodeLabelList,
+					_radioDetailTransfereeCodeButtonList,
+					housingBenefitData.houseHuntingTripMeals.maxAmtTransfereeDetail,
+					COREFLEXConstants.TRANSFEREE_DETAIL);
+
+			CoreFunctions.verifyText(_inputMaxAmtAdult.getDomProperty("value"),
+					housingBenefitData.houseHuntingTripMeals.maxAmtAdult, COREFLEXConstants.MAX_AMOUNT_ADULT);
+			CoreFunctions.verifyText(driver, _selectAdultCurrencySelectedValue,
+					housingBenefitData.houseHuntingTripMeals.maxAmtAdultCurrency, COREFLEXConstants.CURRENCY_ADULT);
+			CoreFunctions.verifyRadioButtonSelection(driver, _radioDetailAdultCodeLabelList,
+					_radioDetailAdultCodeButtonList, housingBenefitData.houseHuntingTripMeals.maxAmtAdultDetail,
+					COREFLEXConstants.ADULT_DETAIL);
+
+			CoreFunctions.verifyText(_inputMaxAmtChild.getDomProperty("value"),
+					housingBenefitData.houseHuntingTripMeals.maxAmtChildren, COREFLEXConstants.MAX_AMOUNT_CHILDREN);
+			CoreFunctions.verifyText(driver, _selectCurrencyCodeChildSelectedValue,
+					housingBenefitData.houseHuntingTripMeals.maxAmtChildrenCurrency,
+					COREFLEXConstants.CURRENCY_CHILDREN);
+			CoreFunctions.verifyRadioButtonSelection(driver, __radioDetailChildLabelList, _radioDetailChildButtonList,
+					housingBenefitData.houseHuntingTripMeals.maxAmtChildrenDetail, COREFLEXConstants.CHILDREN_DETAIL);
+
+			CoreFunctions.verifyRadioButtonSelection(driver, _radioGrossUpLabelList, _radioGrossUpButtonList,
+					housingBenefitData.houseHuntingTripMeals.grossUp, COREFLEXConstants.GROSS_UP);
+			CoreFunctions.verifyRadioButtonSelection(driver, _radioReimbursedByLabelList, _radioReimbursedByButtonList,
+					housingBenefitData.houseHuntingTripMeals.reimbursedBy, COREFLEXConstants.REIMBURSED_BY);
+			if (housingBenefitData.houseHuntingTripMeals.reimbursedBy.equalsIgnoreCase(COREFLEXConstants.OTHER)) {
+				CoreFunctions.verifyText(_inputReimbursedBy.getDomProperty("value"),
+						housingBenefitData.houseHuntingTripMeals.reimbursedByOther,
+						COREFLEXConstants.REIMBURSED_BY_OTHER);
+				CoreFunctions.highlightObject(driver, _inputReimbursedBy);
+			}
+			CoreFunctions.verifyText(_txtAreaComment.getDomProperty("value"),
+					housingBenefitData.houseHuntingTripMeals.comment, COREFLEXConstants.COMMENT);
+			CoreFunctions.highlightObject(driver, _txtAreaComment);
+		} catch (Exception e) {
+			Assert.fail(MessageFormat.format(COREFLEXConstants.FAILED_TO_VERIFY_HOUSE_HUNTING_TRIP_SUB_BENEFITS_FORM,
+					CoreConstants.FAIL, formName));
 		}
 	}
 }

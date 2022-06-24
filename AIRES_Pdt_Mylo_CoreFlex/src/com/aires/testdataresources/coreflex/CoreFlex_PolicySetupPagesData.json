@@ -5,13 +5,14 @@
 			"policyType": "US Domestic",
 			"employeeType": "Current Employee",
 			"homeownerType": "Homeowner",
-			"cappedPolicy": "No"
+			"cappedPolicy": "No",
+			"expenseManagement": "No"
 		},
 		"flexPolicySetupPage": {
 			"flexAllowanceType": "Point Allowance",
 			"lockTheBenefitsPointsSelection": "Not Applicable",
 			"benefitsExpirationTracingPrompt": "First Contact Date",
-			"benefitsExpirationDate": "First Contact Date + 6 Month",
+			"benefitsExpirationDate": "First Contact Date + 6 Months",
 			"StaticFixedTotalPointsAvailable": "500",
 			"customCashoutBenefitName": "TestCustomCashoutBenefit",
 			"maxPortionCashoutPercent": "50",

@@ -144,6 +144,46 @@ public class CoreFlex_OtherHousing_BenefitsPage extends Base {
 	@FindBy(how = How.XPATH, using = "//textarea[@formcontrolname='howItWorks']/preceding-sibling::label")
 	private WebElement _textExpenseReimInstructions;
 
+	// Payments Radio Label Selection
+	@FindBy(how = How.XPATH, using = "//label[contains(text(),'Payments')]/following-sibling::div/label[@class='form-check-label']")
+	private List<WebElement> _radioPaymentsLabelList;
+
+	// Payments Radio Button Selection
+	@FindBy(how = How.XPATH, using = "//label[contains(text(),'Payments')]/following-sibling::div//input")
+	private List<WebElement> _radioPaymentsButtonList;
+
+	// Benefit can be selected more than once Checkbox
+	@FindBy(how = How.XPATH, using = "//input[@formcontrolname='multiAddInd']/parent::label")
+	private List<WebElement> _inputMultiAddBenefitLabel;
+
+	// Benefit can be selected more than once Checkbox
+	@FindBy(how = How.XPATH, using = "//input[@formcontrolname='multiAddInd']")
+	private List<WebElement> _inputMultiAddBenefitButton;
+
+	// Gross Up Radio Label Selection
+	@FindBy(how = How.XPATH, using = "//label[contains(text(),'Gross-Up')]/following-sibling::div/label[@class='form-check-label']")
+	private List<WebElement> _radioGrossUpLabelList;
+
+	// Gross Up Radio Button Selection
+	@FindBy(how = How.XPATH, using = "//label[contains(text(),'Gross-Up')]/following-sibling::div//input")
+	private List<WebElement> _radioGrossUpButtonList;
+
+	// Reimbursed By Radio Label Selection
+	@FindBy(how = How.XPATH, using = "//label[contains(text(),'Reimbursed By')]/following-sibling::div/label[@class='form-check-label']")
+	private List<WebElement> _radioReimbursedByLabelList;
+
+	// Reimbursed By Radio Button Selection
+	@FindBy(how = How.XPATH, using = "//label[contains(text(),'Reimbursed By')]/following-sibling::div//input")
+	private List<WebElement> _radioReimbursedByButtonList;
+
+	// Aires Managed Benefit Radio Label Selection
+	@FindBy(how = How.XPATH, using = "//label[contains(text(),'Aires Managed Service')]/following-sibling::div/label[@class='form-check-label']")
+	private List<WebElement> _radioAiresManagedLabelList;
+
+	// Aires Managed Benefit Radio Button Selection
+	@FindBy(how = How.XPATH, using = "//label[contains(text(),'Aires Managed Service')]/following-sibling::div//input")
+	private List<WebElement> _radioAiresManagedButtonList;
+
 	/*********************************************************************/
 
 	CoreFlex_PolicySetupPagesData policySetupPageData = FileReaderManager.getInstance().getCoreFlexJsonReader()
@@ -406,6 +446,49 @@ public class CoreFlex_OtherHousing_BenefitsPage extends Base {
 					COREFLEXConstants.EXCEPTION_OCCURED_WHILE_VERIFYING_FIELD_TEXT_UPDATES_ON_OTHER_HOUSING_BENEFITS_PAGE,
 					CoreConstants.FAIL, e.getMessage()));
 		}
+	}
 
+	public boolean verifyAddedOtherBenefitsDetails(String benefitDisplayName, String flexPoints,
+			String multipleBenefitSelection, String benefitAllowanceAmount, String benefitDescription,
+			String benefitComment, String grossUp, String reimbursedBy, String paymentOption,
+			String airesManagedService) {
+		try {
+			CoreFunctions.verifyText(_inputBenefitName.getDomProperty("value"), benefitDisplayName,
+					COREFLEXConstants.BENEFIT_DISPLAY_NAME);
+			CoreFunctions.highlightObject(driver, _inputBenefitName);
+			CoreFunctions.verifyText(_inputPointValue.getDomProperty("value"), flexPoints,
+					COREFLEXConstants.FLEX_POINTS_VALUE);
+			CoreFunctions.highlightObject(driver, _inputPointValue);
+			if ((multipleBenefitSelection.equals(COREFLEXConstants.YES))) {
+				CoreFunctions.verifyRadioButtonSelection(driver, _inputMultiAddBenefitLabel,
+						_inputMultiAddBenefitButton, COREFLEXConstants.BENEFIT_SELECTED_MORE_THAN_ONCE,
+						COREFLEXConstants.MULTIPLE_BENEFIT_SELECTION);
+			}
+			CoreFunctions.verifyRadioButtonSelection(driver, _radioAiresManagedLabelList, _radioAiresManagedButtonList,
+					airesManagedService, COREFLEXConstants.AIRES_MANAGED_SERVICE);
+			CoreFunctions.verifyRadioButtonSelection(driver, _radioPaymentsLabelList, _radioPaymentsButtonList,
+					paymentOption, COREFLEXConstants.PAYMENT_OPTION);
+			CoreFunctions.verifyText(_textAreaAllowanceAmountMessage.getDomProperty("value"), benefitAllowanceAmount,
+					COREFLEXConstants.ALLOWANCE_AMOUNT_MESSAGE);
+			CoreFunctions.highlightObject(driver, _textAreaAllowanceAmountMessage);
+			CoreFunctions.verifyText(_textAreaBenefitLongDescription.getDomProperty("value"), benefitDescription,
+					COREFLEXConstants.BENEFIT_LONG_DESCRIPTION);
+			CoreFunctions.highlightObject(driver, _textAreaBenefitLongDescription);
+			CoreFunctions.verifyRadioButtonSelection(driver, _radioGrossUpLabelList, _radioGrossUpButtonList, grossUp,
+					COREFLEXConstants.GROSS_UP);
+			CoreFunctions.verifyRadioButtonSelection(driver, _radioReimbursedByLabelList, _radioReimbursedByButtonList,
+					reimbursedBy, COREFLEXConstants.REIMBURSED_BY);
+			CoreFunctions.verifyText(_textAreaBenefitComment.getDomProperty("value"), benefitComment,
+					COREFLEXConstants.BENEFIT_COMMENT);
+			CoreFunctions.highlightObject(driver, _textAreaBenefitComment);
+			verifyUpdatedBenefitTitle(benefitDisplayName);
+			return true;
+		} catch (Exception e) {
+			Reporter.addStepLog(MessageFormat.format(
+					COREFLEXConstants.EXCEPTION_OCCURED_WHILE_VERIFYING_BENEFIT_DETAILS_ON_OTHER_HOUSING_BENEFITS_PAGE,
+					CoreConstants.FAIL, e.getMessage()));
+			return false;
+		}
+		
 	}
 }

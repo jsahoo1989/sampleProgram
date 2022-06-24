@@ -5,9 +5,11 @@ Feature: Validate the Mobility Journey Cards Functionality of Flex Aires Managed
     Given he has submitted a new "Both" Type Policy with following selection in 'Policy Digitization Tool (PDT)' application
       | Person Responsible For Benefit Selection | Flex Setup Type | Cashout Availability   |
       | Transferee                               | Static/Fixed    | Cashout Not Authorized |
-    And he has clicked on "Approve Policy" button on "Custom Bundles" page
-    And he has selected "Associate this policy with a NEW authorization in IRIS? " option and default 'Effective from booking date' on 'Approval this Policy' dialog
-    When he clicks on "Approve" button to acknowledged 'Approve this Policy' dialog 
+    And he has clicked on "Approve Policy" button to approve "VI" policy verison on "Custom Bundles" page
+    And he has selected following options on 'Approval this Policy' dialog of "V2" Policy
+      | Associate this policy with a NEW authorization in IRIS? |
+      | Effective from booking date                             |
+    When he clicks on "Approve" button to acknowledged 'Approve this Policy' dialog
     Then Policy Status and Version should be displayed as "Active" and "V1" respectively on "View/Edit Policy Forms" page
 
   @End-To_End_CoreFlex @MultipleDateSubmission_FirstSubmission @AllCards

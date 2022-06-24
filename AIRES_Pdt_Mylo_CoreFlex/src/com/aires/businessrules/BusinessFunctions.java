@@ -559,7 +559,7 @@ public class BusinessFunctions {
 		try {
 			for (WebElement row : WebElementList) {
 				Log.info(CoreConstants.ACTUAL_ITEM_NAME_IS + row.getText());
-				if (row.getText().equals(itemName)) {
+				if (row.getText().trim().equals(itemName)) {
 					return WebElementList.indexOf(row);
 				}
 			}

@@ -118,6 +118,9 @@ public class CoreFlex_DuplicateHousing_BenefitsPage extends Base {
 	@FindBy(how = How.XPATH, using = "//ng-select[@formcontrolname='durationCode']//div[@role='option']")
 	private List<WebElement> _selectDurationOptions;
 
+	@FindBy(how = How.CSS, using = "ng-select[formcontrolname='durationCode'] span[class*='ng-value-label']")
+	private WebElement _selectDurationSelectedValue;
+
 	@FindBy(how = How.CSS, using = "input[formcontrolname='durationOther']")
 	private WebElement _inputDurationOther;
 
@@ -157,6 +160,38 @@ public class CoreFlex_DuplicateHousing_BenefitsPage extends Base {
 	// Aires Managed Services field required Text
 	@FindBy(how = How.XPATH, using = "//label[contains(text(),'Aires Managed Service')]/following-sibling::div/div[contains(@class,'input-error')]")
 	private WebElement _errorTextAiresManagedServicesRequiredField;
+
+	// Aires Managed Benefit Radio Label Selection
+	@FindBy(how = How.XPATH, using = "//label[contains(text(),'Aires Managed Service')]/following-sibling::div/label[@class='form-check-label']")
+	private List<WebElement> _radioAiresManagedLabelList;
+
+	// Aires Managed Benefit Radio Button Selection
+	@FindBy(how = How.XPATH, using = "//label[contains(text(),'Aires Managed Service')]/following-sibling::div//input")
+	private List<WebElement> _radioAiresManagedButtonList;
+
+	// Benefit can be selected more than once Checkbox
+	@FindBy(how = How.XPATH, using = "//input[@id='multiAddInd']/parent::label")
+	private List<WebElement> _inputMultiAddBenefitLabel;
+
+	// Benefit can be selected more than once Checkbox
+	@FindBy(how = How.XPATH, using = "//input[@id='multiAddInd']")
+	private List<WebElement> _inputMultiAddBenefitButton;
+
+	// Gross Up Radio Label Selection
+	@FindBy(how = How.XPATH, using = "//label[contains(text(),'Gross-Up')]/following-sibling::div/label[@class='form-check-label']")
+	private List<WebElement> _radioGrossUpLabelList;
+
+	// Gross Up Radio Button Selection
+	@FindBy(how = How.XPATH, using = "//label[contains(text(),'Gross-Up')]/following-sibling::div//input")
+	private List<WebElement> _radioGrossUpButtonList;
+
+	// Reimbursed By Radio Label Selection
+	@FindBy(how = How.XPATH, using = "//label[contains(text(),'Reimbursed By')]/following-sibling::div/label[@class='form-check-label']")
+	private List<WebElement> _radioReimbursedByLabelList;
+
+	// Reimbursed By Radio Button Selection
+	@FindBy(how = How.XPATH, using = "//label[contains(text(),'Reimbursed By')]/following-sibling::div//input")
+	private List<WebElement> _radioReimbursedByButtonList;
 
 	/*********************************************************************/
 
@@ -401,9 +436,10 @@ public class CoreFlex_DuplicateHousing_BenefitsPage extends Base {
 	 * @param benefitType
 	 * @param multipleBenefitSelection
 	 * @param flexPoints
-	 * @param benefitDescription
+	 * @param benefitDisplayName
 	 * @param benefitAllowanceAmount
-	 * @param benefitDescription2
+	 * @param benefitDescription
+	 * @param paymentOption
 	 */
 	private void selectBenefitTypeAndFillMandatoryFields(String benefitType, String multipleBenefitSelection,
 			String flexPoints, String benefitDisplayName, String benefitAllowanceAmount, String benefitDescription,
@@ -527,6 +563,140 @@ public class CoreFlex_DuplicateHousing_BenefitsPage extends Base {
 			Reporter.addStepLog(MessageFormat.format(
 					COREFLEXConstants.EXCEPTION_OCCURED_WHILE_VERIFYING_REQUIRED_FIELD_VALIDATION_ON_DUPLICATE_HOUSING_BENEFITS_PAGE,
 					CoreConstants.FAIL, e.getMessage()));
+		}
+
+	}
+
+	public boolean verifyAddedBenefitsAndSubBenefitDetails(String benefitType, String subBenefitNames,
+			String multipleBenefitSelection, String flexPoints, String benefitDisplayName,
+			String benefitAllowanceAmount, String benefitDescription, String paymentOption,
+			String airesManagedService) {
+		if (benefitType.equals(COREFLEXConstants.BOTH)) {
+			CoreFunctions.clickElement(driver, _textBoth);
+			verifyBenefitsMandatoryDetails(COREFLEXConstants.CORE_BENEFITS, multipleBenefitSelection, flexPoints,
+					benefitDisplayName, benefitAllowanceAmount, benefitDescription, paymentOption, airesManagedService);
+			verifySubBenefitDetails(subBenefitNames);
+			verifyBenefitsMandatoryDetails(COREFLEXConstants.FLEX_BENEFITS, multipleBenefitSelection, flexPoints,
+					benefitDisplayName, benefitAllowanceAmount, benefitDescription, paymentOption, airesManagedService);
+			verifySubBenefitDetails(subBenefitNames);			
+			return true;
+		} else {
+			verifyBenefitsMandatoryDetails(benefitType, multipleBenefitSelection, flexPoints, benefitDisplayName,
+					benefitAllowanceAmount, benefitDescription, paymentOption, airesManagedService);
+			verifySubBenefitDetails(subBenefitNames);
+			return true;
+		}
+	}
+
+	private void verifyBenefitsMandatoryDetails(String benefitType, String multipleBenefitSelection, String flexPoints,
+			String benefitDisplayName, String benefitAllowanceAmount, String benefitDescription, String paymentOption,
+			String airesManagedService) {
+		Benefit duplicateHosuingBenefit = coreBenefits.stream()
+				.filter(b -> b.getBenefitType().equals(COREFLEXConstants.DUPLICATE_HOUSING)).findAny().orElse(null);
+		switch (benefitType) {
+		case COREFLEXConstants.CORE:
+			CoreFunctions.clickElement(driver, _textCore);
+			verifyManadatoryDetails(benefitType, multipleBenefitSelection,
+					duplicateHosuingBenefit.getBenefitDisplayName(), duplicateHosuingBenefit.getBenefitAmount(),
+					duplicateHosuingBenefit.getBenefitDesc(), paymentOption, airesManagedService);
+			break;
+		case COREFLEXConstants.FLEX:
+			CoreFunctions.clickElement(driver, _textFlex);
+			System.out.println("Actual Flex Points :" + _inputFlexPoints.getDomProperty("value"));
+			CoreFunctions.verifyText(_inputFlexPoints.getDomProperty("value"), flexPoints,
+					COREFLEXConstants.FLEX_POINTS_VALUE);
+			verifyManadatoryDetails(benefitType, multipleBenefitSelection, benefitDisplayName, benefitAllowanceAmount,
+					benefitDescription, paymentOption, airesManagedService);
+			break;
+		case COREFLEXConstants.CORE_BENEFITS:
+			CoreFunctions.clickElement(driver, _textCoreBenefits);
+			verifyManadatoryDetails(benefitType, multipleBenefitSelection,
+					duplicateHosuingBenefit.getBenefitDisplayName(), duplicateHosuingBenefit.getBenefitAmount(),
+					duplicateHosuingBenefit.getBenefitDesc(), paymentOption, airesManagedService);
+			break;
+		case COREFLEXConstants.FLEX_BENEFITS:
+			CoreFunctions.clickElement(driver, _textFlexBenefits);
+			System.out.println("Actual Flex Points :" + _inputFlexPoints.getDomProperty("value"));
+			CoreFunctions.verifyText(_inputFlexPoints.getDomProperty("value"), flexPoints,
+					COREFLEXConstants.FLEX_POINTS_VALUE);
+			verifyManadatoryDetails(benefitType, multipleBenefitSelection, benefitDisplayName, benefitAllowanceAmount,
+					benefitDescription, paymentOption, airesManagedService);
+			break;
+		case COREFLEXConstants.BOTH:
+			CoreFunctions.clickElement(driver, _textBoth);
+			break;
+		default:
+			Assert.fail(COREFLEXConstants.INVALID_OPTION);
+		}
+
+	}
+
+	private void verifyManadatoryDetails(String benefitType, String multipleBenefitSelection, String benefitDisplayName,
+			String benefitAllowanceAmount, String benefitDescription, String paymentOption,
+			String airesManagedService) {
+		if ((benefitType.equals(COREFLEXConstants.FLEX_BENEFITS)) || (benefitType.equals(COREFLEXConstants.FLEX))) {
+			if ((multipleBenefitSelection.equals(COREFLEXConstants.YES))) {
+				CoreFunctions.verifyRadioButtonSelection(driver, _inputMultiAddBenefitLabel,
+						_inputMultiAddBenefitButton, COREFLEXConstants.BENEFIT_SELECTED_MORE_THAN_ONCE,
+						COREFLEXConstants.MULTIPLE_BENEFIT_SELECTION);
+			}
+			CoreFunctions.verifyRadioButtonSelection(driver, _radioAiresManagedLabelList, _radioAiresManagedButtonList,
+					airesManagedService, COREFLEXConstants.AIRES_MANAGED_SERVICE);
+		}
+		CoreFunctions.verifyText(_inputBenefitName.getDomProperty("value"), benefitDisplayName,
+				COREFLEXConstants.BENEFIT_DISPLAY_NAME);
+		CoreFunctions.highlightObject(driver, _inputBenefitName);
+		CoreFunctions.verifyText(_textAreaAllowanceAmountMessage.getDomProperty("value"), benefitAllowanceAmount,
+				COREFLEXConstants.ALLOWANCE_AMOUNT_MESSAGE);
+		CoreFunctions.highlightObject(driver, _textAreaAllowanceAmountMessage);
+		CoreFunctions.verifyText(_textAreaBenefitLongDescription.getDomProperty("value"), benefitDescription,
+				COREFLEXConstants.BENEFIT_LONG_DESCRIPTION);
+		CoreFunctions.highlightObject(driver, _textAreaBenefitLongDescription);
+	}
+
+	/**
+	 * Method to Expand and call verifyDuplicateHousingSubBenefitForm method
+	 * 
+	 * @param subBenefit
+	 */
+	private void verifySubBenefitDetails(String subBenefit) {
+		switch (subBenefit) {
+		case COREFLEXConstants.DUPLICATE_HOUSING:
+			expandSubBenefitIfCollapsed(getElementByName(COREFLEXConstants.DUPLICATE_HOUSING));
+			verifyDuplicateHousingSubBenefitForm();
+			break;
+		default:
+			Assert.fail(MessageFormat.format(COREFLEXConstants.ELEMENT_NOT_FOUND, CoreConstants.FAIL));
+		}
+	}
+
+	/**
+	 * Method to Verify SubBenefit Form
+	 */
+	private void verifyDuplicateHousingSubBenefitForm() {
+		try {
+			CoreFunctions.verifyText(driver, _selectDurationSelectedValue, housingBenefitData.duplicateHousing.duration,
+					COREFLEXConstants.DURATION);
+			if (housingBenefitData.duplicateHousing.duration.equalsIgnoreCase(COREFLEXConstants.OTHER)) {
+				CoreFunctions.verifyText(_inputDurationOther.getDomProperty("value"),
+						housingBenefitData.duplicateHousing.durationOther, COREFLEXConstants.DURATION_OTHER);
+				CoreFunctions.highlightObject(driver, _inputDurationOther);
+			}
+			CoreFunctions.verifyRadioButtonSelection(driver, _radioGrossUpLabelList, _radioGrossUpButtonList,
+					housingBenefitData.duplicateHousing.grossUp, COREFLEXConstants.GROSS_UP);
+			CoreFunctions.verifyRadioButtonSelection(driver, _radioReimbursedByLabelList, _radioReimbursedByButtonList,
+					housingBenefitData.duplicateHousing.reimbursedBy, COREFLEXConstants.REIMBURSED_BY);
+			if (housingBenefitData.duplicateHousing.reimbursedBy.equalsIgnoreCase(COREFLEXConstants.OTHER)) {
+				CoreFunctions.verifyText(_inputReimbursedBy.getDomProperty("value"),
+						housingBenefitData.duplicateHousing.reimbursedByOther, COREFLEXConstants.REIMBURSED_BY_OTHER);
+				CoreFunctions.highlightObject(driver, _inputReimbursedBy);
+			}
+			CoreFunctions.verifyText(_txtAreaComment.getDomProperty("value"),
+					housingBenefitData.duplicateHousing.comment, COREFLEXConstants.COMMENT);
+			CoreFunctions.highlightObject(driver, _txtAreaComment);
+			
+		} catch (Exception e) {
+			Assert.fail(COREFLEXConstants.FAILED_TO_VERIFY_DUPLICATE_HOUSING_SUB_BENEFITS_FORM);
 		}
 
 	}

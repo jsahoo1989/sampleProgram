@@ -118,7 +118,11 @@ public class CoreFlex_LumpSum_BenefitsPage extends Base {
 	@FindBy(how = How.XPATH, using = "//ng-select[@formcontrolname='oneTimeCalMethodCode']//div[@role='option']/span")
 	private List<WebElement> _selectCalculationMethodOptions;
 
-	// Radio Button List
+	// Calculation Method Select Field Selected Value
+	@FindBy(how = How.CSS, using = "ng-select[formcontrolname='oneTimeCalMethodCode'] span[class*='ng-value-label']")
+	private WebElement _selectCalculationMethodSelectedValue;
+
+	// Radio Button List 
 	@FindBy(how = How.XPATH, using = " //div[@class='collapse show']//label[@class='form-check-label']")
 	private List<WebElement> _radioBtnCandidateSelection;
 
@@ -142,6 +146,10 @@ public class CoreFlex_LumpSum_BenefitsPage extends Base {
 	@FindBy(how = How.XPATH, using = "//ng-select[@formcontrolname='currencyCode']//div[@role='option']")
 	private List<WebElement> _selectCurrencyOptions;
 
+	// Currency Select Field Selected Value
+	@FindBy(how = How.CSS, using = "ng-select[formcontrolname='currencyCode'] span[class*='ng-value-label']")
+	private WebElement _selectCurrencySelectedValue;
+
 	// Frequency Select Field
 	@FindBy(how = How.CSS, using = "ng-select[formcontrolname='frequencyCode']")
 	private WebElement _selectFrequency;
@@ -149,6 +157,10 @@ public class CoreFlex_LumpSum_BenefitsPage extends Base {
 	// Frequency Select Field Options
 	@FindBy(how = How.XPATH, using = "//ng-select[@formcontrolname='frequencyCode']//div[@role='option']/span")
 	private List<WebElement> _selectFrequencyOptions;
+
+	// Frequency Select Field Selected Value
+	@FindBy(how = How.CSS, using = "ng-select[formcontrolname='frequencyCode'] span[class*='ng-value-label']")
+	private WebElement _selectFrequencySelectedValue;
 
 	// WhenToMakePayment Select Field
 	@FindBy(how = How.CSS, using = "ng-select[formcontrolname='pmtTimeCode']")
@@ -158,6 +170,10 @@ public class CoreFlex_LumpSum_BenefitsPage extends Base {
 	@FindBy(how = How.XPATH, using = "//ng-select[@formcontrolname='pmtTimeCode']//div[@role='option']")
 	private List<WebElement> _selectWhenToMakePaymentOptions;
 
+	// WhenToMakePayment Select Field Selected Value
+	@FindBy(how = How.CSS, using = "ng-select[formcontrolname='pmtTimeCode'] span[class*='ng-value-label']")
+	private WebElement _selectWhenToMakePaymentSelectedValue;
+
 	// IndicateNumberOfWeeks Select Field
 	@FindBy(how = How.CSS, using = "ng-select[formcontrolname='pmtTimeWeeksBeforeCode']")
 	private WebElement _selectIndicateNumberOfWeeks;
@@ -165,6 +181,10 @@ public class CoreFlex_LumpSum_BenefitsPage extends Base {
 	// IndicateNumberOfWeeks Select Field Options
 	@FindBy(how = How.XPATH, using = "//ng-select[@formcontrolname='pmtTimeWeeksBeforeCode']//div[@role='option']")
 	private List<WebElement> _selectIndicateNumberOfWeeksOptions;
+
+	// IndicateNumberOfWeeks Select Field SelectedValue
+	@FindBy(how = How.CSS, using = "ng-select[formcontrolname='pmtTimeWeeksBeforeCode'] span[class*='ng-value-label']")
+	private WebElement _selectIndicateNumberOfWeeksSelectedValue;
 
 	// Benefit can be selected more than once Checkbox
 	@FindBy(how = How.XPATH, using = "//input[@id='multiAddInd']/parent::label")
@@ -193,6 +213,38 @@ public class CoreFlex_LumpSum_BenefitsPage extends Base {
 	// Aires Managed Services field required Text
 	@FindBy(how = How.XPATH, using = "//label[contains(text(),'Aires Managed Service')]/following-sibling::div/div[contains(@class,'input-error')]")
 	private WebElement _errorTextAiresManagedServicesRequiredField;
+
+	// Aires Managed Benefit Radio Label Selection
+	@FindBy(how = How.XPATH, using = "//label[contains(text(),'Aires Managed Service')]/following-sibling::div/label[@class='form-check-label']")
+	private List<WebElement> _radioAiresManagedLabelList;
+
+	// Aires Managed Benefit Radio Button Selection
+	@FindBy(how = How.XPATH, using = "//label[contains(text(),'Aires Managed Service')]/following-sibling::div//input")
+	private List<WebElement> _radioAiresManagedButtonList;
+
+	// Benefit can be selected more than once Checkbox
+	@FindBy(how = How.XPATH, using = "//input[@id='multiAddInd']/parent::label")
+	private List<WebElement> _inputMultiAddBenefitLabel;
+
+	// Benefit can be selected more than once Checkbox
+	@FindBy(how = How.XPATH, using = "//input[@id='multiAddInd']")
+	private List<WebElement> _inputMultiAddBenefitButton;
+
+	// Gross Up Radio Label Selection
+	@FindBy(how = How.XPATH, using = "//label[contains(text(),'Gross-Up')]/following-sibling::div/label[@class='form-check-label']")
+	private List<WebElement> _radioGrossUpLabelList;
+
+	// Gross Up Radio Button Selection
+	@FindBy(how = How.XPATH, using = "//label[contains(text(),'Gross-Up')]/following-sibling::div//input")
+	private List<WebElement> _radioGrossUpButtonList;
+
+	// Reimbursed By Radio Label Selection
+	@FindBy(how = How.XPATH, using = "//label[contains(text(),'Reimbursed By')]/following-sibling::div/label[@class='form-check-label']")
+	private List<WebElement> _radioReimbursedByLabelList;
+
+	// Reimbursed By Radio Button Selection
+	@FindBy(how = How.XPATH, using = "//label[contains(text(),'Reimbursed By')]/following-sibling::div//input")
+	private List<WebElement> _radioReimbursedByButtonList;
 
 	/*********************************************************************/
 
@@ -403,7 +455,8 @@ public class CoreFlex_LumpSum_BenefitsPage extends Base {
 			CoreFunctions.clickElement(driver, _selectWhenToMakePayment);
 			CoreFunctions.selectItemInListByText(driver, _selectWhenToMakePaymentOptions,
 					allowancesBenefitData.lumpSum.whenToMakePayment, true, COREFLEXConstants.WHEN_TO_MAKE_PAYMENT_TEXT);
-			if (allowancesBenefitData.lumpSum.whenToMakePayment.equalsIgnoreCase(COREFLEXConstants.WHEN_TO_MAKE_PAYMENT)) {
+			if (allowancesBenefitData.lumpSum.whenToMakePayment
+					.equalsIgnoreCase(COREFLEXConstants.WHEN_TO_MAKE_PAYMENT)) {
 				CoreFunctions.clickElement(driver, _selectIndicateNumberOfWeeks);
 				CoreFunctions.selectItemInListByText(driver, _selectIndicateNumberOfWeeksOptions,
 						allowancesBenefitData.lumpSum.indicateNumberOfWeeksBeforeTransferDate, true,
@@ -579,8 +632,153 @@ public class CoreFlex_LumpSum_BenefitsPage extends Base {
 			}
 		} catch (Exception e) {
 			Reporter.addStepLog(MessageFormat.format(
-					COREFLEXConstants.EXCEPTION_OCCURED_WHILE_VERIFYING_REQUIRED_FIELD_VALIDATION_ON_DUPLICATE_HOUSING_BENEFITS_PAGE,
+					COREFLEXConstants.EXCEPTION_OCCURED_WHILE_VERIFYING_REQUIRED_FIELD_VALIDATION_ON_LUMP_SUM_BENEFITS_PAGE,
 					CoreConstants.FAIL, e.getMessage()));
+		}
+	}
+
+	public boolean verifyAddedBenefitsAndSubBenefitDetails(String benefitType, String subBenefitNames,
+			String multipleBenefitSelection, String flexPoints, String benefitDisplayName,
+			String benefitAllowanceAmount, String benefitDescription, String paymentOption,
+			String airesManagedService) {
+		if (benefitType.equals(COREFLEXConstants.BOTH)) {
+			CoreFunctions.clickElement(driver, _textBoth);
+			verifyBenefitsMandatoryDetails(COREFLEXConstants.CORE_BENEFITS, multipleBenefitSelection, flexPoints,
+					benefitDisplayName, benefitAllowanceAmount, benefitDescription, paymentOption, airesManagedService);
+			verifySubBenefitDetails(subBenefitNames);
+			verifyBenefitsMandatoryDetails(COREFLEXConstants.FLEX_BENEFITS, multipleBenefitSelection, flexPoints,
+					benefitDisplayName, benefitAllowanceAmount, benefitDescription, paymentOption, airesManagedService);
+			verifySubBenefitDetails(subBenefitNames);
+			return true;
+		} else {
+			verifyBenefitsMandatoryDetails(benefitType, multipleBenefitSelection, flexPoints, benefitDisplayName,
+					benefitAllowanceAmount, benefitDescription, paymentOption, airesManagedService);
+			verifySubBenefitDetails(subBenefitNames);
+			return true;
+		}
+	}
+
+	private void verifyBenefitsMandatoryDetails(String benefitType, String multipleBenefitSelection, String flexPoints,
+			String benefitDisplayName, String benefitAllowanceAmount, String benefitDescription, String paymentOption,
+			String airesManagedService) {
+		Benefit lumpSumBenefit = coreBenefits.stream()
+				.filter(b -> b.getBenefitType().equals(COREFLEXConstants.LUMP_SUM)).findAny().orElse(null);
+		switch (benefitType) {
+		case COREFLEXConstants.CORE:
+			CoreFunctions.clickElement(driver, _textCore);
+			verifyManadatoryDetails(benefitType, multipleBenefitSelection, lumpSumBenefit.getBenefitDisplayName(),
+					lumpSumBenefit.getBenefitAmount(), lumpSumBenefit.getBenefitDesc(), paymentOption,
+					airesManagedService);
+			break;
+		case COREFLEXConstants.FLEX:
+			CoreFunctions.clickElement(driver, _textFlex);
+			CoreFunctions.verifyText(_inputFlexPoints.getDomProperty("value"), flexPoints,
+					COREFLEXConstants.FLEX_POINTS_VALUE);
+			CoreFunctions.highlightObject(driver, _inputFlexPoints);
+			verifyManadatoryDetails(benefitType, multipleBenefitSelection, benefitDisplayName, benefitAllowanceAmount,
+					benefitDescription, paymentOption, airesManagedService);
+			break;
+		case COREFLEXConstants.CORE_BENEFITS:
+			CoreFunctions.clickElement(driver, _textCoreBenefits);
+			verifyManadatoryDetails(benefitType, multipleBenefitSelection, lumpSumBenefit.getBenefitDisplayName(),
+					lumpSumBenefit.getBenefitAmount(), lumpSumBenefit.getBenefitDesc(), paymentOption,
+					airesManagedService);
+			break;
+		case COREFLEXConstants.FLEX_BENEFITS:
+			CoreFunctions.clickElement(driver, _textFlexBenefits);
+			CoreFunctions.verifyText(_inputFlexPoints.getDomProperty("value"), flexPoints,
+					COREFLEXConstants.FLEX_POINTS_VALUE);
+			CoreFunctions.highlightObject(driver, _inputFlexPoints);
+			verifyManadatoryDetails(benefitType, multipleBenefitSelection, benefitDisplayName, benefitAllowanceAmount,
+					benefitDescription, paymentOption, airesManagedService);
+			break;
+		case COREFLEXConstants.BOTH:
+			CoreFunctions.clickElement(driver, _textBoth);
+			break;
+		default:
+			Assert.fail(COREFLEXConstants.INVALID_OPTION);
+		}
+
+	}
+
+	private void verifyManadatoryDetails(String benefitType, String multipleBenefitSelection, String benefitDisplayName,
+			String benefitAllowanceAmount, String benefitDescription, String paymentOption,
+			String airesManagedService) {
+		if ((benefitType.equals(COREFLEXConstants.FLEX_BENEFITS)) || (benefitType.equals(COREFLEXConstants.FLEX))) {
+			if ((multipleBenefitSelection.equals(COREFLEXConstants.YES))) {
+				CoreFunctions.verifyRadioButtonSelection(driver, _inputMultiAddBenefitLabel,
+						_inputMultiAddBenefitButton, COREFLEXConstants.BENEFIT_SELECTED_MORE_THAN_ONCE,
+						COREFLEXConstants.MULTIPLE_BENEFIT_SELECTION);
+			}
+			CoreFunctions.verifyRadioButtonSelection(driver, _radioAiresManagedLabelList, _radioAiresManagedButtonList,
+					airesManagedService, COREFLEXConstants.AIRES_MANAGED_SERVICE);
+		}
+		CoreFunctions.verifyText(_inputBenefitName.getDomProperty("value"), benefitDisplayName,
+				COREFLEXConstants.BENEFIT_DISPLAY_NAME);
+		CoreFunctions.highlightObject(driver, _inputBenefitName);
+		CoreFunctions.verifyText(_textAreaAllowanceAmountMessage.getDomProperty("value"), benefitAllowanceAmount,
+				COREFLEXConstants.ALLOWANCE_AMOUNT_MESSAGE);
+		CoreFunctions.highlightObject(driver, _textAreaAllowanceAmountMessage);
+		CoreFunctions.verifyText(_textAreaBenefitLongDescription.getDomProperty("value"), benefitDescription,
+				COREFLEXConstants.BENEFIT_LONG_DESCRIPTION);
+		CoreFunctions.highlightObject(driver, _textAreaBenefitLongDescription);
+	}
+
+	/**
+	 * Method to Expand and call verifyLumpSumSubBenefitForm method
+	 * 
+	 * @param subBenefit
+	 */
+	private void verifySubBenefitDetails(String subBenefit) {
+		switch (subBenefit) {
+		case COREFLEXConstants.LUMP_SUM:
+			expandSubBenefitIfCollapsed(getElementByName(COREFLEXConstants.LUMP_SUM));
+			verifyLumpSumSubBenefitForm();
+			break;
+		default:
+			Assert.fail(MessageFormat.format(COREFLEXConstants.ELEMENT_NOT_FOUND, CoreConstants.FAIL));
+		}
+	}
+
+	/**
+	 * Method to Verify SubBenefit Form
+	 */
+	private void verifyLumpSumSubBenefitForm() {
+		try {
+			CoreFunctions.verifyText(driver, _selectCalculationMethodSelectedValue,
+					allowancesBenefitData.lumpSum.calculationMethod, COREFLEXConstants.CALCULATION_METHOD);
+			if (allowancesBenefitData.lumpSum.calculationMethod.equalsIgnoreCase(COREFLEXConstants.FLAT_AMOUNT)) {
+				CoreFunctions.verifyText(_inputMaxAmount.getDomProperty("value"),
+						allowancesBenefitData.lumpSum.maxAmountIfApplicable, COREFLEXConstants.MAX_AMOUNT);
+				CoreFunctions.highlightObject(driver, _inputMaxAmount);
+				CoreFunctions.verifyText(driver, _selectCurrencySelectedValue, allowancesBenefitData.lumpSum.currency,
+						COREFLEXConstants.CURRENCY);
+				CoreFunctions.verifyText(driver, _selectFrequencySelectedValue, allowancesBenefitData.lumpSum.frequency,
+						COREFLEXConstants.FREQUENCY);
+			}
+			CoreFunctions.verifyText(driver, _selectWhenToMakePaymentSelectedValue,
+					allowancesBenefitData.lumpSum.whenToMakePayment, COREFLEXConstants.WHEN_TO_MAKE_PAYMENT_TEXT);
+			if (allowancesBenefitData.lumpSum.whenToMakePayment
+					.equalsIgnoreCase(COREFLEXConstants.WHEN_TO_MAKE_PAYMENT)) {
+				CoreFunctions.verifyText(driver, _selectIndicateNumberOfWeeksSelectedValue,
+						allowancesBenefitData.lumpSum.indicateNumberOfWeeksBeforeTransferDate,
+						COREFLEXConstants.INDICATE_NUMBER_OF_WEEKS);
+			}
+			CoreFunctions.verifyRadioButtonSelection(driver, _radioGrossUpLabelList, _radioGrossUpButtonList,
+					allowancesBenefitData.lumpSum.grossUp, COREFLEXConstants.GROSS_UP);
+			CoreFunctions.verifyRadioButtonSelection(driver, _radioReimbursedByLabelList, _radioReimbursedByButtonList,
+					allowancesBenefitData.lumpSum.reimbursedBy, COREFLEXConstants.REIMBURSED_BY);
+			if (allowancesBenefitData.lumpSum.reimbursedBy.equalsIgnoreCase(COREFLEXConstants.OTHER)) {
+				CoreFunctions.verifyText(_inputReimbursedBy.getDomProperty("value"),
+						allowancesBenefitData.lumpSum.reimbursedByOther, COREFLEXConstants.REIMBURSED_BY_OTHER);
+				CoreFunctions.highlightObject(driver, _inputReimbursedBy);
+			}
+			CoreFunctions.verifyText(_txtAreaComment.getDomProperty("value"), allowancesBenefitData.lumpSum.comment,
+					COREFLEXConstants.COMMENT);
+			CoreFunctions.highlightObject(driver, _txtAreaComment);
+
+		} catch (Exception e) {
+			Assert.fail(COREFLEXConstants.FAILED_TO_VERIFY_LUMP_SUM_SUB_BENEFITS_FORM);
 		}
 
 	}

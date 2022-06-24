@@ -129,6 +129,10 @@ public class CoreFlex_TemporaryLiving_BenefitsPage extends Base {
 	@FindBy(how = How.CSS, using = "ng-select[formcontrolname='tempLivingTransportTypeList']")
 	private WebElement _selectTransportationType;
 
+	// Transportation Type Field - Selected Value
+	@FindBy(how = How.CSS, using = "ng-select[formcontrolname='tempLivingTransportTypeList'] span[class*='ng-value-label']")
+	private WebElement _selectTransportationTypeSelectedValue;
+
 	// Duration Days
 	@FindBy(how = How.CSS, using = "input[formcontrolname='numHoursPerPerson']")
 	private WebElement _inputMaxNumOfHoursPerPerson;
@@ -140,6 +144,14 @@ public class CoreFlex_TemporaryLiving_BenefitsPage extends Base {
 	// Radio Button Selection From Entire SubBenefit Section
 	@FindBy(how = How.XPATH, using = "//div[@class='collapse show']//label[@class='form-check-label']")
 	private List<WebElement> _radioBtnCandidateSelection;
+
+	// Type - Radio Button Selection - Label List
+	@FindBy(how = How.XPATH, using = "//div[@class='collapse show']//input[@formcontrolname='mealTypeCode']/parent::label[@class='form-check-label']")
+	private List<WebElement> _radioMealsTypeLabelList;
+
+	// Type - Radio Button Selection - Button List
+	@FindBy(how = How.CSS, using = "div[class='collapse show'] input[formcontrolname='mealTypeCode']")
+	private List<WebElement> _radioMealsTypeButtonList;
 
 	// Comment Text Area
 	@FindBy(how = How.XPATH, using = "//div[@class='collapse show']//textarea[@formcontrolname='benefitComment']")
@@ -157,6 +169,10 @@ public class CoreFlex_TemporaryLiving_BenefitsPage extends Base {
 	@FindBy(how = How.XPATH, using = "//div[@class='collapse show']//ng-select[@formcontrolname='maxAmountPerNightCode']")
 	private WebElement _selectMaxAmount;
 
+	// Max. Amount Select Field
+	@FindBy(how = How.CSS, using = "div[class='collapse show'] ng-select[formcontrolname='maxAmountPerNightCode'] span[class*='ng-value-label']")
+	private WebElement _selectMaxAmountSelectedValue;
+
 	// Aires Managed Service Radio Button
 	@FindBy(how = How.CSS, using = "div[class*='form-check-radio'] > label[class*='form-check']")
 	private List<WebElement> _radioAiresManagedService;
@@ -172,6 +188,38 @@ public class CoreFlex_TemporaryLiving_BenefitsPage extends Base {
 	// Policy Benefits data Missing Error Dialog - OK Button
 	@FindBy(how = How.CSS, using = "button[class*='swal2-confirm']")
 	private WebElement _errorDialogPolicyBenefitsDataMissingOKButton;
+
+	// Aires Managed Benefit Radio Label Selection
+	@FindBy(how = How.XPATH, using = "//label[contains(text(),'Aires Managed Service')]/following-sibling::div/label[@class='form-check-label']")
+	private List<WebElement> _radioAiresManagedLabelList;
+
+	// Aires Managed Benefit Radio Button Selection
+	@FindBy(how = How.XPATH, using = "//label[contains(text(),'Aires Managed Service')]/following-sibling::div//input")
+	private List<WebElement> _radioAiresManagedButtonList;
+
+	// Benefit can be selected more than once Checkbox
+	@FindBy(how = How.XPATH, using = "//input[@id='multiAddInd']/parent::label")
+	private List<WebElement> _inputMultiAddBenefitLabel;
+
+	// Benefit can be selected more than once Checkbox
+	@FindBy(how = How.XPATH, using = "//input[@id='multiAddInd']")
+	private List<WebElement> _inputMultiAddBenefitButton;
+
+	// Gross Up Radio Label Selection
+	@FindBy(how = How.XPATH, using = "//label[contains(text(),'Gross-Up')]/following-sibling::div/label[@class='form-check-label']")
+	private List<WebElement> _radioGrossUpLabelList;
+
+	// Gross Up Radio Button Selection
+	@FindBy(how = How.XPATH, using = "//label[contains(text(),'Gross-Up')]/following-sibling::div//input")
+	private List<WebElement> _radioGrossUpButtonList;
+
+	// Reimbursed By Radio Label Selection
+	@FindBy(how = How.XPATH, using = "//label[contains(text(),'Reimbursed By')]/following-sibling::div/label[@class='form-check-label']")
+	private List<WebElement> _radioReimbursedByLabelList;
+
+	// Reimbursed By Radio Button Selection
+	@FindBy(how = How.XPATH, using = "//label[contains(text(),'Reimbursed By')]/following-sibling::div//input")
+	private List<WebElement> _radioReimbursedByButtonList;
 
 	/*********************************************************************/
 
@@ -535,6 +583,235 @@ public class CoreFlex_TemporaryLiving_BenefitsPage extends Base {
 			Reporter.addStepLog(
 					MessageFormat.format(COREFLEXConstants.EXCEPTION_OCCURED_WHILE_FILLING_MANDATORY_FIELDS_OF_BENEFIT,
 							CoreConstants.FAIL, e.getMessage(), benefitDisplayName));
+		}
+	}
+
+	public boolean verifyAddedBenefitsAndSubBenefitDetails(String benefitType, String subBenefitNames,
+			String multipleBenefitSelection, String flexPoints, String benefitDisplayName,
+			String benefitAllowanceAmount, String benefitDescription, String paymentOption,
+			String airesManagedService) {
+		if (benefitType.equals(COREFLEXConstants.BOTH)) {
+			CoreFunctions.clickElement(driver, _textBoth);
+			verifyBenefitsMandatoryDetails(COREFLEXConstants.CORE_BENEFITS, multipleBenefitSelection, flexPoints,
+					benefitDisplayName, benefitAllowanceAmount, benefitDescription, paymentOption, airesManagedService);
+			iterateSubBenefitAndVerifyDetails(subBenefitNames, COREFLEXConstants.CORE_BENEFITS);
+			verifyBenefitsMandatoryDetails(COREFLEXConstants.FLEX_BENEFITS, multipleBenefitSelection, flexPoints,
+					benefitDisplayName, benefitAllowanceAmount, benefitDescription, paymentOption, airesManagedService);
+			iterateSubBenefitAndVerifyDetails(subBenefitNames, COREFLEXConstants.FLEX_BENEFITS);
+			return true;
+		} else {
+			verifyBenefitsMandatoryDetails(benefitType, multipleBenefitSelection, flexPoints, benefitDisplayName,
+					benefitAllowanceAmount, benefitDescription, paymentOption, airesManagedService);
+			iterateSubBenefitAndVerifyDetails(subBenefitNames, benefitType);
+			return true;
+		}
+	}
+
+	private void verifyBenefitsMandatoryDetails(String benefitType, String multipleBenefitSelection, String flexPoints,
+			String benefitDisplayName, String benefitAllowanceAmount, String benefitDescription, String paymentOption,
+			String airesManagedService) {
+		Benefit temporaryLivingBenefit = coreBenefits.stream()
+				.filter(b -> b.getBenefitType().equals(COREFLEXConstants.TEMPORARY_LIVING)).findAny().orElse(null);
+		switch (benefitType) {
+		case COREFLEXConstants.CORE:
+			CoreFunctions.clickElement(driver, _textCore);
+			verifyManadatoryDetails(benefitType, multipleBenefitSelection,
+					temporaryLivingBenefit.getBenefitDisplayName(), temporaryLivingBenefit.getBenefitAmount(),
+					temporaryLivingBenefit.getBenefitDesc(), paymentOption, airesManagedService);
+			break;
+		case COREFLEXConstants.FLEX:
+			CoreFunctions.clickElement(driver, _textFlex);
+			CoreFunctions.verifyText(_inputFlexPoints.getDomProperty("value"), flexPoints,
+					COREFLEXConstants.FLEX_POINTS_VALUE);
+			CoreFunctions.highlightObject(driver, _inputFlexPoints);
+			verifyManadatoryDetails(benefitType, multipleBenefitSelection, benefitDisplayName, benefitAllowanceAmount,
+					benefitDescription, paymentOption, airesManagedService);
+			break;
+		case COREFLEXConstants.CORE_BENEFITS:
+			CoreFunctions.clickElement(driver, _textCoreBenefits);
+			verifyManadatoryDetails(benefitType, multipleBenefitSelection,
+					temporaryLivingBenefit.getBenefitDisplayName(), temporaryLivingBenefit.getBenefitAmount(),
+					temporaryLivingBenefit.getBenefitDesc(), paymentOption, airesManagedService);
+			break;
+		case COREFLEXConstants.FLEX_BENEFITS:
+			CoreFunctions.clickElement(driver, _textFlexBenefits);
+			CoreFunctions.verifyText(_inputFlexPoints.getDomProperty("value"), flexPoints,
+					COREFLEXConstants.FLEX_POINTS_VALUE);
+			CoreFunctions.highlightObject(driver, _inputFlexPoints);
+			verifyManadatoryDetails(benefitType, multipleBenefitSelection, benefitDisplayName, benefitAllowanceAmount,
+					benefitDescription, paymentOption, airesManagedService);
+			break;
+		case COREFLEXConstants.BOTH:
+			CoreFunctions.clickElement(driver, _textBoth);
+			break;
+		default:
+			Assert.fail(COREFLEXConstants.INVALID_OPTION);
+		}
+
+	}
+
+	private void verifyManadatoryDetails(String benefitType, String multipleBenefitSelection, String benefitDisplayName,
+			String benefitAllowanceAmount, String benefitDescription, String paymentOption,
+			String airesManagedService) {
+		if ((benefitType.equals(COREFLEXConstants.FLEX_BENEFITS)) || (benefitType.equals(COREFLEXConstants.FLEX))) {
+			if ((multipleBenefitSelection.equals(COREFLEXConstants.YES))) {
+				CoreFunctions.verifyRadioButtonSelection(driver, _inputMultiAddBenefitLabel,
+						_inputMultiAddBenefitButton, COREFLEXConstants.BENEFIT_SELECTED_MORE_THAN_ONCE,
+						COREFLEXConstants.MULTIPLE_BENEFIT_SELECTION);
+			}
+			CoreFunctions.verifyRadioButtonSelection(driver, _radioAiresManagedLabelList, _radioAiresManagedButtonList,
+					airesManagedService, COREFLEXConstants.AIRES_MANAGED_SERVICE);
+		}
+		CoreFunctions.verifyText(_inputBenefitName.getDomProperty("value"), benefitDisplayName,
+				COREFLEXConstants.BENEFIT_DISPLAY_NAME);
+		CoreFunctions.highlightObject(driver, _inputBenefitName);
+		CoreFunctions.verifyText(_textAreaAllowanceAmountMessage.getDomProperty("value"), benefitAllowanceAmount,
+				COREFLEXConstants.ALLOWANCE_AMOUNT_MESSAGE);
+		CoreFunctions.highlightObject(driver, _textAreaAllowanceAmountMessage);
+		CoreFunctions.verifyText(_textAreaBenefitLongDescription.getDomProperty("value"), benefitDescription,
+				COREFLEXConstants.BENEFIT_LONG_DESCRIPTION);
+		CoreFunctions.highlightObject(driver, _textAreaBenefitLongDescription);
+	}
+
+	/**
+	 * Method to iterate and verify mentioned SubBenefits details
+	 * 
+	 * @param subBenefitNames
+	 * @param benefitType
+	 */
+	private void iterateSubBenefitAndVerifyDetails(String subBenefitNames, String benefitType) {
+		try {
+			List<String> subBenefitNamesList = new ArrayList<String>();
+			if (subBenefitNames.contains(";"))
+				subBenefitNamesList = Arrays.asList(subBenefitNames.split(";"));
+			else
+				subBenefitNamesList.add(subBenefitNames);
+
+			for (String subBenefit : subBenefitNamesList) {
+				if (CoreFunctions.isElementExist(driver, getElementByName(subBenefit.trim()), 5)) {
+					verifySubBenefitDetails(subBenefit.trim(), benefitType);
+				} else {
+					Reporter.addStepLog(MessageFormat.format(COREFLEXConstants.SUB_BENEFIT_FORM_NOT_DISPLAYED,
+							CoreConstants.FAIL, subBenefit, COREFLEXConstants.TEMPORARY_LIVING_BENEFITS_PAGE));
+					throw new RuntimeException(MessageFormat.format(COREFLEXConstants.SUB_BENEFIT_FORM_NOT_DISPLAYED,
+							CoreConstants.FAIL, subBenefit, COREFLEXConstants.TEMPORARY_LIVING_BENEFITS_PAGE));
+				}
+			}
+		} catch (Exception e) {
+			Reporter.addStepLog(MessageFormat.format(
+					COREFLEXConstants.EXCEPTION_OCCURED_WHILE_SELECTING_AND_VERIFYING_SUB_BENEFIT_DETAILS,
+					CoreConstants.FAIL, e.getMessage()));
+		}
+	}
+
+	/**
+	 * Method to Expand and call SubBenefit Verification Method's
+	 * 
+	 * @param subBenefit
+	 * @param benefitType
+	 */
+	private void verifySubBenefitDetails(String subBenefit, String benefitType) {
+		switch (subBenefit) {
+		case COREFLEXConstants.TEMPORARY_LIVING_TRANSPORTATION:
+			expandSubBenefitIfCollapsed(getElementByName(COREFLEXConstants.TEMPORARY_LIVING_TRANSPORTATION));
+			verifyTempLivingTransportationSubBenefitForm();
+			break;
+		case COREFLEXConstants.TEMPORARY_LIVING_LODGING:
+			expandSubBenefitIfCollapsed(getElementByName(COREFLEXConstants.TEMPORARY_LIVING_LODGING));
+			verifyTempLivingLodgingSubBenefitForm();
+			break;
+		case COREFLEXConstants.TEMPORARY_LIVING_MEALS:
+			expandSubBenefitIfCollapsed(getElementByName(COREFLEXConstants.TEMPORARY_LIVING_MEALS));
+			verifyTempLivingMealsSubBenefitForm();
+			break;
+
+		default:
+			Assert.fail(MessageFormat.format(COREFLEXConstants.ELEMENT_NOT_FOUND, CoreConstants.FAIL));
+		}
+	}
+
+	/**
+	 * Method to verify TempLivingTransportation subBenefit form
+	 */
+	private void verifyTempLivingTransportationSubBenefitForm() {
+		try {
+			CoreFunctions.verifyText(_inputDurationDays.getDomProperty("value"),
+					housingBenefitData.temporaryLivingTransportation.duration, COREFLEXConstants.DURATION_DAYS);
+			CoreFunctions.verifyText(driver, _selectTransportationTypeSelectedValue,
+					housingBenefitData.temporaryLivingTransportation.transportationType,
+					COREFLEXConstants.TRANSPORTATION_TYPE);
+			CoreFunctions.verifyRadioButtonSelection(driver, _radioGrossUpLabelList, _radioGrossUpButtonList,
+					housingBenefitData.temporaryLivingTransportation.grossUp, COREFLEXConstants.GROSS_UP);
+			CoreFunctions.verifyRadioButtonSelection(driver, _radioReimbursedByLabelList, _radioReimbursedByButtonList,
+					housingBenefitData.temporaryLivingTransportation.reimbursedBy, COREFLEXConstants.REIMBURSED_BY);
+			if (housingBenefitData.temporaryLivingTransportation.reimbursedBy
+					.equalsIgnoreCase(COREFLEXConstants.OTHER)) {
+				CoreFunctions.verifyText(_inputReimbursedBy.getDomProperty("value"),
+						housingBenefitData.temporaryLivingTransportation.reimbursedByOther,
+						COREFLEXConstants.REIMBURSED_BY_OTHER);
+				CoreFunctions.highlightObject(driver, _inputReimbursedBy);
+			}
+			CoreFunctions.verifyText(_txtAreaComment.getDomProperty("value"),
+					housingBenefitData.temporaryLivingTransportation.comment, COREFLEXConstants.COMMENT);
+			CoreFunctions.highlightObject(driver, _txtAreaComment);
+		} catch (Exception e) {
+			Assert.fail(COREFLEXConstants.FAILED_TO_VERIFY_TEMPORARY_LIVING_SUB_BENEFITS_FORM);
+		}
+	}
+
+	/**
+	 * Method to verify TempLivingLodging subBenefit form
+	 */
+	private void verifyTempLivingLodgingSubBenefitForm() {
+		try {
+			CoreFunctions.verifyText(_inputDurationDays.getDomProperty("value"),
+					housingBenefitData.temporaryLivingLodging.duration, COREFLEXConstants.DURATION_DAYS);
+			CoreFunctions.verifyText(driver, _selectMaxAmountSelectedValue,
+					housingBenefitData.temporaryLivingLodging.maxAmount, COREFLEXConstants.MAX_AMOUNT);
+			CoreFunctions.verifyRadioButtonSelection(driver, _radioGrossUpLabelList, _radioGrossUpButtonList,
+					housingBenefitData.temporaryLivingLodging.grossUp, COREFLEXConstants.GROSS_UP);
+			CoreFunctions.verifyRadioButtonSelection(driver, _radioReimbursedByLabelList, _radioReimbursedByButtonList,
+					housingBenefitData.temporaryLivingLodging.reimbursedBy, COREFLEXConstants.REIMBURSED_BY);
+			if (housingBenefitData.temporaryLivingLodging.reimbursedBy.equalsIgnoreCase(COREFLEXConstants.OTHER)) {
+				CoreFunctions.verifyText(_inputReimbursedBy.getDomProperty("value"),
+						housingBenefitData.temporaryLivingLodging.reimbursedByOther,
+						COREFLEXConstants.REIMBURSED_BY_OTHER);
+				CoreFunctions.highlightObject(driver, _inputReimbursedBy);
+			}
+			CoreFunctions.verifyText(_txtAreaComment.getDomProperty("value"),
+					housingBenefitData.temporaryLivingLodging.comment, COREFLEXConstants.COMMENT);
+			CoreFunctions.highlightObject(driver, _txtAreaComment);
+		} catch (Exception e) {
+			Assert.fail(COREFLEXConstants.FAILED_TO_VERIFY_TEMPORARY_LIVING_SUB_BENEFITS_FORM);
+		}
+	}
+
+	/**
+	 * Method to verify TempLivingMeals subBenefit form
+	 */
+	private void verifyTempLivingMealsSubBenefitForm() {
+		try {
+			CoreFunctions.verifyText(_inputDurationDays.getDomProperty("value"),
+					housingBenefitData.temporaryLivingMeals.duration, COREFLEXConstants.DURATION_DAYS);
+			CoreFunctions.verifyRadioButtonSelection(driver, _radioMealsTypeLabelList, _radioMealsTypeButtonList,
+					housingBenefitData.temporaryLivingMeals.type, COREFLEXConstants.MEAL_TYPE);
+			CoreFunctions.verifyText(driver, _selectMaxAmountSelectedValue,
+					housingBenefitData.temporaryLivingMeals.maxAmount, COREFLEXConstants.MAX_AMOUNT);
+			CoreFunctions.verifyRadioButtonSelection(driver, _radioGrossUpLabelList, _radioGrossUpButtonList,
+					housingBenefitData.temporaryLivingMeals.grossUp, COREFLEXConstants.GROSS_UP);
+			CoreFunctions.verifyRadioButtonSelection(driver, _radioReimbursedByLabelList, _radioReimbursedByButtonList,
+					housingBenefitData.temporaryLivingMeals.reimbursedBy, COREFLEXConstants.REIMBURSED_BY);
+			if (housingBenefitData.temporaryLivingMeals.reimbursedBy.equalsIgnoreCase(COREFLEXConstants.OTHER)) {
+				CoreFunctions.verifyText(_inputReimbursedBy.getDomProperty("value"),
+						housingBenefitData.temporaryLivingMeals.reimbursedByOther,
+						COREFLEXConstants.REIMBURSED_BY_OTHER);
+				CoreFunctions.highlightObject(driver, _inputReimbursedBy);
+			}
+			CoreFunctions.verifyText(_txtAreaComment.getDomProperty("value"),
+					housingBenefitData.temporaryLivingMeals.comment, COREFLEXConstants.COMMENT);
+			CoreFunctions.highlightObject(driver, _txtAreaComment);
+		} catch (Exception e) {
+			Assert.fail(COREFLEXConstants.FAILED_TO_VERIFY_TEMPORARY_LIVING_SUB_BENEFITS_FORM);
 		}
 	}
 

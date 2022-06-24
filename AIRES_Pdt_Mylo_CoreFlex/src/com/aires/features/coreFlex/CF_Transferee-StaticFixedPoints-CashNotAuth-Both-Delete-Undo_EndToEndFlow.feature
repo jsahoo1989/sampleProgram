@@ -1,17 +1,19 @@
 Feature: Validate the CoreFlex End-To-End Business Test Flow(BluePrint, MXTransferee,Transferee Submissions) for Both_Transferee_StaticFixedPoints_CashoutNotAuthorized_Delete_Undo selection
 
-@End-To_End_CoreFlex @Both-CashNotAuth_UndoRequest_PF @End-To-End-Flow_Both-CashNotAuth_UndoRequest
+  @End-To_End_CoreFlex @Both-CashNotAuth_UndoRequest_PF @End-To-End-Flow_Both-CashNotAuth_UndoRequest
   Scenario: CoreFlex - Setting up a New CoreFlex policy in 'Policy Digitization Tool' application
     Given he has submitted a new "Both" Type Policy with following selection in 'Policy Digitization Tool (PDT)' application
       | Person Responsible For Benefit Selection | Flex Setup Type | Cashout Availability   |
       | Transferee                               | Static/Fixed    | Cashout Not Authorized |
-    And he has clicked on "Approve Policy" button on "Custom Bundles" page
-    And he has selected "Associate this policy with a NEW authorization in IRIS? " option and default 'Effective from booking date' on 'Approval this Policy' dialog
-    When he clicks on "Approve" button to acknowledged 'Approve this Policy' dialog 
+    And he has clicked on "Approve Policy" button to approve "VI" policy verison on "Custom Bundles" page
+    And he has selected following options on 'Approval this Policy' dialog of "V2" Policy
+      | Associate this policy with a NEW authorization in IRIS? |
+      | Effective from booking date                             |
+    When he clicks on "Approve" button to acknowledged 'Approve this Policy' dialog
     Then Policy Status and Version should be displayed as "Active" and "V1" respectively on "View/Edit Policy Forms" page
-		
-@End-To_End_CoreFlex @Both-CashNotAuth_UndoRequest_MX @End-To-End-Flow_Both-CashNotAuth_UndoRequest
-Scenario: MXTransferee - Selecting & Submitting benefits available in configured policy, Undo the Delete Request and Tracking Available_Used Benefits Points
+
+  @End-To_End_CoreFlex @Both-CashNotAuth_UndoRequest_MX @End-To-End-Flow_Both-CashNotAuth_UndoRequest
+  Scenario: MXTransferee - Selecting & Submitting benefits available in configured policy, Undo the Delete Request and Tracking Available_Used Benefits Points
     Given he has logged into 'MobilityX' application after creating a new 'Transferee' through IRIS application for policy setup in 'Policy Digitization Tool'
     And he has validated 'Assignment-Policy' details after selecting below option displayed on 'Welcome' dialog
       | WelcomeDialogSelection               |
@@ -30,13 +32,13 @@ Scenario: MXTransferee - Selecting & Submitting benefits available in configured
     Then 'Delete Request Sent' growl message should be displayed on 'My Benefit Bundle' page
     And 'Status' of the deleted benefit should be displayed as "Delete Request Pending" under 'Submitted Benefits' section of 'My Benefit Bundle' page
 
-@End-To_End_CoreFlex @Both-CashNotAuth_UndoRequest_MX @End-To-End-Flow_Both-CashNotAuth_UndoRequest
-Scenario: TransfereeSubmissions - Verifying Undo Delete request submissions made by Transferee for the Client(s) assigned to PPC User 
-	Given he has logged into 'Transferee Submissions' application as a "MSPEC/PPC" user 
-	And he has navigated to "Transferee Submissions Dashboard" page having record of Bundle submitted by the transferee  
-	And he has clicked on "Review" button for Bundle submitted by the transferee on "Transferee Submissions Dashboard" page	
-	And he has navigated to "Transferee Submission Details" page having list of submitted benefits details
-	When he clicks on "Undo" button for the deleted benefit under 'Submitted Benefits' section of 'MXTransferee' application
-	Then 'Undo Request Completed' growl message should be displayed on 'My Benefits Bundle' page
-	And 'Delete Request Pending' benefit status should be updated to 'View Payments' in 'Submitted Benefits' list on 'My Benefits Bundle' page
-	And 'Delete Request Pending' benefit request status should be updated to 'Submitted' in 'Transferee Submission Details' list of 'Transferee Submissions' application
+  @End-To_End_CoreFlex @Both-CashNotAuth_UndoRequest_MX @End-To-End-Flow_Both-CashNotAuth_UndoRequest
+  Scenario: TransfereeSubmissions - Verifying Undo Delete request submissions made by Transferee for the Client(s) assigned to PPC User
+    Given he has logged into 'Transferee Submissions' application as a "MSPEC/PPC" user
+    And he has navigated to "Transferee Submissions Dashboard" page having record of Bundle submitted by the transferee
+    And he has clicked on "Review" button for Bundle submitted by the transferee on "Transferee Submissions Dashboard" page
+    And he has navigated to "Transferee Submission Details" page having list of submitted benefits details
+    When he clicks on "Undo" button for the deleted benefit under 'Submitted Benefits' section of 'MXTransferee' application
+    Then 'Undo Request Completed' growl message should be displayed on 'My Benefits Bundle' page
+    And 'Delete Request Pending' benefit status should be updated to 'View Payments' in 'Submitted Benefits' list on 'My Benefits Bundle' page
+    And 'Delete Request Pending' benefit request status should be updated to 'Submitted' in 'Transferee Submission Details' list of 'Transferee Submissions' application

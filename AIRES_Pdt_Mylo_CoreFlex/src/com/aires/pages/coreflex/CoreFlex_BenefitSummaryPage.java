@@ -219,12 +219,8 @@ public class CoreFlex_BenefitSummaryPage extends Base {
 	/**
 	 * Method to iterate and verify Added Benefits & SubBenefits on Benefit Summary
 	 * page
-	 * 
-	 * @param policyType
-	 * 
-	 * @param dataTable
 	 */
-	public boolean iterateAndVerifyBenefitSummaryDetails(String policyType) {
+	public boolean iterateAndVerifyBenefitSummaryDetails() {
 		try {
 			if (iterateAndVerifyBenefitsSummaryDetails()) {
 				Reporter.addStepLog(MessageFormat.format(

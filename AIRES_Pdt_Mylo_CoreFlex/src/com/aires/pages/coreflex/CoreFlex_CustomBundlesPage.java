@@ -2,7 +2,9 @@ package com.aires.pages.coreflex;
 
 import java.text.MessageFormat;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
+import java.util.stream.Collectors;
 
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
@@ -21,6 +23,8 @@ import com.aires.testdatatypes.coreflex.CoreFlex_PolicySetupPagesData;
 import com.aires.testdatatypes.coreflex.FlexBenefit;
 import com.vimalselvam.cucumber.listener.Reporter;
 
+import cucumber.api.DataTable;
+
 public class CoreFlex_CustomBundlesPage extends Base {
 
 	public CoreFlex_CustomBundlesPage(WebDriver driver) {
@@ -32,6 +36,10 @@ public class CoreFlex_CustomBundlesPage extends Base {
 	// Submit Button
 	@FindBy(how = How.XPATH, using = "//button[contains(text(),'Submit')]")
 	private WebElement _buttonSubmit;
+
+	// Save As Draft Button
+	@FindBy(how = How.XPATH, using = "//button[contains(text(),'Save as Draft')]")
+	private WebElement _buttonSaveAsDraft;
 
 	// Disabled Submit Button
 	@FindBy(how = How.XPATH, using = "//button[contains(text(),'Submit')][@disabled]")
@@ -116,6 +124,10 @@ public class CoreFlex_CustomBundlesPage extends Base {
 	// Saved Custom Bundles List
 	@FindBy(how = How.CSS, using = "span[class='bundleName']")
 	private List<WebElement> _textSavedCustomBundlesList;
+
+	// Saved Custom Bundle Benefit List
+	@FindBy(how = How.CSS, using = "li.list-group-item")
+	private List<WebElement> _customBundleBenefitList;
 
 	// Pop-Up Submit Status
 	@FindBy(how = How.CSS, using = "h2[id='swal2-title']")
@@ -429,16 +441,20 @@ public class CoreFlex_CustomBundlesPage extends Base {
 			return false;
 	}
 
-	public boolean verifyApproveThisPolicyDialog(String checkBoxSelection) {
+	public boolean verifyApproveThisPolicyDialog(String policyVersion, DataTable dataTable) {
 		boolean isDialogHeaderVerified, isDialogTextVerified, isDialogOptionsVerified,
 				isApproveThisPolicyDialogVerified;
+		String policyVersionNumber = policyVersion.replace("V", "").trim();
 		try {
 			isDialogHeaderVerified = CoreFunctions.getElementText(driver, _popUpApprovePolicyHeader)
 					.equals(COREFLEXConstants.EXPECTED_APPROVE_THIS_POLICY_DIALOG_HEADER);
 			isDialogTextVerified = CoreFunctions.getElementText(driver, _popUpApprovePolicyVersionText)
-					.equals(COREFLEXConstants.EXPECTED_APPROVE_THIS_POLICY_DIALOG_VERSION_TEXT)
-					&& CoreFunctions.getElementText(driver, _popUpApprovePolicyAssignmentText)
-							.equals(COREFLEXConstants.EXPECTED_APPROVE_THIS_POLICY_DIALOG_ASSIGNMENT_TEXT);
+					.equals((COREFLEXConstants.EXPECTED_APPROVE_THIS_POLICY_DIALOG_VERSION_TEXT).replace("VN",
+							policyVersionNumber));
+//					&& CoreFunctions.getElementText(driver, _popUpApprovePolicyAssignmentText)
+//							.equals(policyVersionNumber == "1"
+//									? COREFLEXConstants.EXPECTED_APPROVE_THIS_POLICY_DIALOG_ASSIGNMENT_TEXT_FIRST_VERSION
+//									: COREFLEXConstants.EXPECTED_APPROVE_THIS_POLICY_DIALOG_ASSIGNMENT_TEXT_SECOND_VERSION);
 			isDialogOptionsVerified = (CoreFunctions.getElementText(driver, _popUpApprovePolicyCheckBox).trim())
 					.equals(COREFLEXConstants.EXPECTED_APPROVE_THIS_POLICY_DIALOG_CHECKBOX_SELECTION.trim())
 					&& CoreFunctions.getAttributeText(_popUpApprovePolicyDefaultAssignmentDate, "min")
@@ -468,7 +484,7 @@ public class CoreFlex_CustomBundlesPage extends Base {
 		} else {
 			Reporter.addStepLog(MessageFormat.format(
 					COREFLEXConstants.FAILED_TO_VERIFY_POLICY_STATUS_POST_POLICY_SUBMISSION_ON_CUSTOM_BUNDLES_PAGE,
-					CoreConstants.FAIL, CoreFunctions.getElementText(driver, _textPolicyStatus),expectedPolicyStatus));
+					CoreConstants.FAIL, CoreFunctions.getElementText(driver, _textPolicyStatus), expectedPolicyStatus));
 			return false;
 		}
 	}
@@ -482,7 +498,8 @@ public class CoreFlex_CustomBundlesPage extends Base {
 		} else {
 			Reporter.addStepLog(MessageFormat.format(
 					COREFLEXConstants.FAILED_TO_VERIFY_POLICY_VERSION_POST_POLICY_SUBMISSION_ON_CUSTOM_BUNDLES_PAGE,
-					CoreConstants.FAIL,CoreFunctions.getElementText(driver, _textPolicyVersion), expectedPolicyVersion));
+					CoreConstants.FAIL, CoreFunctions.getElementText(driver, _textPolicyVersion),
+					expectedPolicyVersion));
 			return false;
 		}
 	}
@@ -495,6 +512,61 @@ public class CoreFlex_CustomBundlesPage extends Base {
 			return true;
 		} else
 			return false;
+	}
+
+	public boolean verifyAddedCustomBundlePostVersioningCloning() {
+		boolean isAddedCustomBundleVerified = false;
+		try {
+			if (CoreFunctions.searchElementExistsInListByText(driver, _textSavedCustomBundlesList,
+					policySetupPageData.customBundlesPage.customBundleName, true)) {
+				List<String> actualBenefitList = _customBundleBenefitList.stream().map(x -> x.getText())
+						.collect(Collectors.toList());
+				Collections.sort(actualBenefitList);
+				List<String> expectedBenefitList = getBenefitDisplayNameList();
+				Collections.sort(expectedBenefitList);
+				isAddedCustomBundleVerified = actualBenefitList.equals(expectedBenefitList);
+			}
+		} catch (Exception e) {
+			Reporter.addStepLog(MessageFormat.format(
+					COREFLEXConstants.EXCEPTION_OCCURED_WHILE_VALIDATING_ADDED_CUSTOM_BUNDLE_ON_CUSTOM_BUNDLES_PAGE,
+					CoreConstants.FAIL, e.getMessage()));
+		}
+
+		if (isAddedCustomBundleVerified) {
+			Reporter.addStepLog(MessageFormat.format(
+					COREFLEXConstants.SUCCESSFULLY_VERIFIED_ADDED_CUSTOM_BUNDLE_ON_CUSTOM_BUNDLES_PAGE_POST_VERSIONING_CLONING,
+					CoreConstants.PASS));
+		}
+		return isAddedCustomBundleVerified;
+	}
+
+	private List<String> getBenefitDisplayNameList() {
+		List<String> benefitNameList = new ArrayList<String>();
+		for (FlexBenefit benefit : flexBenefits) {
+			for (Benefit ben : benefit.getBenefits()) {
+				benefitNameList.add(ben.getBenefitDisplayName());
+			}
+		}
+		return benefitNameList;
+	}
+
+	public boolean verifyButtonDisplayedOnDraftPolicyStatus() {
+		try {
+			if (CoreFunctions.isElementExist(driver, _buttonSubmit, 3)
+					&& CoreFunctions.isElementExist(driver, _buttonPreviewTransfereeExp, 3)
+					&& CoreFunctions.isElementExist(driver, _buttonSaveAsDraft, 3)
+					&& !(CoreFunctions.isElementExist(driver, _buttonApprovePolicy, 3))) {
+				Reporter.addStepLog(MessageFormat.format(
+						COREFLEXConstants.SUCCESSFULLY_VERIFIED_BUTTONS_DISPLAYED_IN_DRAFT_POLICY_STATUS_ON_CUSTOM_BUNDLES_PAGE_POST_VERSIONING_CLONING,
+						CoreConstants.PASS));
+				return true;
+			}
+		} catch (Exception e) {
+			Reporter.addStepLog(MessageFormat.format(
+					COREFLEXConstants.EXCEPTION_OCCURED_WHILE_VALIDATING_BUTTONS_DISPLAYED_IN_DRAFT_POLICY_STATUS_ON_CUSTOM_BUNDLES_PAGE,
+					CoreConstants.FAIL, e.getMessage()));
+		}
+		return false;
 	}
 
 }

@@ -5,8 +5,10 @@ Feature: Validate the New Policy Versioning Workflow for ‘Active’ points based C
     Given he has submitted a new "Both" Type Policy with following selection in 'Policy Digitization Tool (PDT)' application
       | Person Responsible For Benefit Selection | Flex Setup Type | Cashout Availability   |
       | Transferee                               | Static/Fixed    | Cashout Not Authorized |
-    And he has clicked on "Approve Policy" button on "Custom Bundles" page
-    And he has selected "Associate this policy with a NEW authorization in IRIS? " option and default 'Effective from booking date' on 'Approval this Policy' dialog
+    And he has clicked on "Approve Policy" button to approve "VI" policy verison on "Custom Bundles" page
+    And he has selected following options on 'Approval this Policy' dialog of "V2" Policy
+      | Associate this policy with a NEW authorization in IRIS? |
+      | Effective from booking date                             |
     When he clicks on "Approve" button to acknowledged 'Approve this Policy' dialog
     Then Policy Status and Version should be displayed as "Active" and "V1" respectively on "View/Edit Policy Forms" page
 
@@ -38,22 +40,27 @@ Feature: Validate the New Policy Versioning Workflow for ‘Active’ points based C
       | V2            | Draft        | Enabled  | Enabled    | Disabled  | Disabled              |
     And he has clicked on "Edit" icon of "V2" - "Draft" version of the searched points based CoreFlex policy
     And he has navigated to "General Information" page of 'New Version' policy in 'Editable' mode having Policy Status displayed as "Draft"
-    And he has verified 'Policy-Benefits-SubBenefits' details of "V2" - "Draft" version Policy matches with "V1" policy
-    And he has verified 'CustomBundles' and 'Transferee Preview' details of "V2" - "Draft" version Policy matches with "V1" policy
+    And he has verified 'Policy-Benefits-SubBenefits' details of "V2" - "Draft" version Policy matches with following "V1" policy selections
+      | Person Responsible For Benefit Selection | Flex Setup Type | Cashout Availability   | PolicyType |
+      | Transferee                               | Static/Fixed    | Cashout Not Authorized | Both       |
+    And he has verified 'CustomBundles' and 'Transferee Preview' details of "V2" - "Draft" version Policy matches with "V1" - "Both" type policy
     And he has acknowledged 'Submit Success' dialog after clicking on "Submit" button on "Custom Bundles" page
-    And he has verified Policy Status and Version displayed as "Submitted" and "V2" on "Custom Bundles" page
-    #And he has clicked on "Approve Policy" button on "Custom Bundles" page
-    #And he has selected "Associate this policy with a NEW authorization in IRIS? " option and default 'Effective from booking date' on 'Approval this Policy' dialog
-    #When he clicks on "Approve" button to acknowledged 'Approve this Policy' dialog
-    #Then Policy Status and Version should be displayed as "Active" and "V2" respectively on "View/Edit Policy Forms" page
+    And he has clicked on "Approve Policy" button to approve "V2" policy verison on "Custom Bundles" page
+    And he has selected following options on 'Approval this Policy' dialog of "V2" Policy
+      | Associate this policy with a NEW authorization in IRIS? |
+      | Effective from booking date                             |
+    When he clicks on "Approve" button to acknowledged 'Approve this Policy' dialog
+    Then Policy Status and Version should be displayed as "Active" and "V2" respectively on "View/Edit Policy Forms" page
 
-  @End-To_End_CoreFlex @CF_BluePrint_Versioning_ApprovalWF @CancelPolicy
+  @End-To_End_CoreFlex @CF_BluePrint_Versioning @CancelPolicy
   Scenario: CoreFlex - Validating policy status is NOT updated to 'Active' on cancellation of Policy Setup Approval WorkFlow
     Given he has submitted a new "Both" Type Policy with following selection in 'Policy Digitization Tool (PDT)' application
       | Person Responsible For Benefit Selection | Flex Setup Type | Cashout Availability   |
       | Transferee                               | Static/Fixed    | Cashout Not Authorized |
-    And he has clicked on "Approve Policy" button on "Custom Bundles" page
-    And he has selected "Associate this policy with a NEW authorization in IRIS? " option and default 'Effective from booking date' on 'Approval this Policy' dialog
+    And he has clicked on "Approve Policy" button to approve "VI" policy verison on "Custom Bundles" page
+    And he has selected following options on 'Approval this Policy' dialog of "V2" Policy
+      | Associate this policy with a NEW authorization in IRIS? |
+      | Effective from booking date                             |
     When he clicks on "Cancel" button to close 'Approve this Policy' dialog
     Then 'Approve this Policy' dialog should be closed
     And user should be navigated to "Custom Bundles" page having 'Policy Status' and 'Version Number' displayed as "Submitted" and "V1" respectively

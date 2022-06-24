@@ -2,6 +2,7 @@ package com.aires.pages.coreflex;
 
 import java.text.MessageFormat;
 import java.util.List;
+import java.util.Map;
 
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
@@ -69,6 +70,10 @@ public class CoreFlex_FlexPolicySetupPage extends Base {
 	@FindBy(how = How.CSS, using = "ng-select[formcontrolname='flexSetupTypeCode']")
 	private WebElement _selectFlexSetupType;
 
+	// Flex Setup type Selected Value
+	@FindBy(how = How.CSS, using = "ng-select[formcontrolname='flexSetupTypeCode'] span[class*='ng-value-label']")
+	private WebElement _selectFlexSetupTypeSelectedValue;
+
 	// Flex Setup type Select Options
 	@FindBy(how = How.XPATH, using = "//ng-select[@formcontrolname='flexSetupTypeCode']/descendant::div[@role='option']/span")
 	private List<WebElement> _selectFlexSetupTypeOptions;
@@ -76,6 +81,10 @@ public class CoreFlex_FlexPolicySetupPage extends Base {
 	// Lock The Benefits Points Selection Select Field
 	@FindBy(how = How.CSS, using = "ng-select[formcontrolname='benefitLockCode']")
 	private WebElement _selectLockBenefitsPointsSelection;
+
+	// Lock The Benefits Points Selection Selected value
+	@FindBy(how = How.CSS, using = "ng-select[formcontrolname='benefitLockCode'] span[class*='ng-value-label']")
+	private WebElement _selectLockBenefitsPointsSelectedValue;
 
 	// ock The Benefits Points Selection Select Options
 	@FindBy(how = How.XPATH, using = "//ng-select[@formcontrolname='benefitLockCode']/descendant::div[@role='option']/span")
@@ -89,17 +98,29 @@ public class CoreFlex_FlexPolicySetupPage extends Base {
 	@FindBy(how = How.XPATH, using = "//label[contains(string(),'No Max/Unlimited')]")
 	private WebElement _checkboxNoMaxUnlimited;
 
-	// After Relocation Only Section
-	@FindBy(how = How.CSS, using = "label[class='cashout'] > p")
+	// Cashout Text Selection
+	@FindBy(how = How.XPATH, using = "//label[@class='cashout']/p[1]")
 	private List<WebElement> _sectionCashoutAvailability;
+
+	// Cashout Text Selection
+	@FindBy(how = How.CSS, using = "input[formcontrolname='cashoutTypeCode']")
+	private List<WebElement> _sectionCashoutAvailabilityButtonList;
 
 	// Flex Allowance Type
 	@FindBy(how = How.XPATH, using = "//input[@formcontrolname='allowanceTypeCode']/parent::label")
 	private List<WebElement> _radioFlexAllowanceType;
 
+	// Flex Allowance Type Radio Button List
+	@FindBy(how = How.CSS, using = "input[formcontrolname='allowanceTypeCode']")
+	private List<WebElement> _radioFlexAllowanceTypeButtonList;
+
 	// Person Responsible For Benefit Selection
 	@FindBy(how = How.XPATH, using = "//input[@formcontrolname='benefitSelection']/parent::label")
 	private List<WebElement> _radioPersonResponsibleForBenefitSelection;
+
+	// Person Responsible For Benefit Selection Button List
+	@FindBy(how = How.CSS, using = "input[formcontrolname='benefitSelection']")
+	private List<WebElement> _radioPersonResponsibleForBenefitSelectionButtonList;
 
 	// Custom Name for Cashout Benefit Text Field
 	@FindBy(how = How.ID, using = "customCashoutName")
@@ -121,6 +142,10 @@ public class CoreFlex_FlexPolicySetupPage extends Base {
 	@FindBy(how = How.CSS, using = "ng-select[formcontrolname='benefitExpTracingPrompt']")
 	private WebElement _selectBenefitExpirationTracingPrompt;
 
+	// Benefits Expiration Tracing Prompt Selected Value
+	@FindBy(how = How.CSS, using = "ng-select[formcontrolname='benefitExpTracingPrompt'] span[class*='ng-value-label']")
+	private WebElement _selectBenefitExpirationTracingPromptSelectedValue;
+
 	// Benefits Expiration Tracing Prompt Select Field Options
 	@FindBy(how = How.XPATH, using = "//ng-select[@formcontrolname='benefitExpTracingPrompt']//div[@role='option']/span")
 	private List<WebElement> _selectBenefitExpirationTracingPromptOptions;
@@ -128,6 +153,10 @@ public class CoreFlex_FlexPolicySetupPage extends Base {
 	// Benefits Expiration Date Select Field
 	@FindBy(how = How.CSS, using = "ng-select[formcontrolname='benefitExpDateCode']")
 	private WebElement _selectBenefitExpirationDate;
+
+	// Benefits Expiration Date Selected Value
+	@FindBy(how = How.CSS, using = "ng-select[formcontrolname='benefitExpDateCode'] span[class*='ng-value-label']")
+	private WebElement _selectBenefitExpirationDateSelectedValue;
 
 	// Benefits Expiration Date Select Field Options
 	@FindBy(how = How.XPATH, using = "//ng-select[@formcontrolname='benefitExpDateCode']//div[@role='option']/span")
@@ -511,6 +540,45 @@ public class CoreFlex_FlexPolicySetupPage extends Base {
 		} catch (Exception e) {
 			Reporter.addStepLog(MessageFormat.format(
 					COREFLEXConstants.EXCEPTION_OCCURED_WHILE_VERIFYING_BENEFIT_EXPIRATION_AND_LOCK_BENEFITS_TOOLTIP_TEXT_ON_FLEX_PLANNING_TOOL_PAGE,
+					CoreConstants.FAIL, e.getMessage()));
+			return false;
+		}
+	}
+
+	public boolean verifyFPTFieldValuesPostVersioningCloning(DataTable dataTable) {
+		try {
+			List<Map<String, String>> basePolicyDataMap = dataTable.asMaps(String.class, String.class);
+			CoreFunctions.verifyRadioButtonSelection(driver, _radioFlexAllowanceType, _radioFlexAllowanceTypeButtonList,
+					policySetupPageData.flexPolicySetupPage.flexAllowanceType, COREFLEXConstants.FLEX_ALLOWANCE_TYPE);
+			CoreFunctions.verifyRadioButtonSelection(driver, _radioPersonResponsibleForBenefitSelection,
+					_radioPersonResponsibleForBenefitSelectionButtonList,
+					basePolicyDataMap.get(0).get(COREFLEXConstants.PERSON_RESPONSIBLE_FOR_BENEFIT_SELECTION),
+					COREFLEXConstants.PERSON_RESPONSIBLE_FOR_BENEFIT_SELECTION);
+			CoreFunctions.verifyText(driver, _selectLockBenefitsPointsSelectedValue,
+					policySetupPageData.flexPolicySetupPage.lockTheBenefitsPointsSelection,
+					COREFLEXConstants.LOCK_THE_BENEFITS_POINTS_SELECTION);
+			CoreFunctions.verifyText(driver, _selectBenefitExpirationTracingPromptSelectedValue,
+					policySetupPageData.flexPolicySetupPage.benefitsExpirationTracingPrompt,
+					COREFLEXConstants.BENEFIT_EXPIRATION_TRACING_PROMPT);
+			CoreFunctions.verifyText(driver, _selectBenefitExpirationDateSelectedValue,
+					policySetupPageData.flexPolicySetupPage.benefitsExpirationDate,
+					COREFLEXConstants.BENEFIT_EXPIRATION_DATE);
+			CoreFunctions.verifyText(driver, _selectFlexSetupTypeSelectedValue,
+					basePolicyDataMap.get(0).get(COREFLEXConstants.FLEX_SETUP_TYPE), COREFLEXConstants.FLEX_SETUP_TYPE);
+			System.out.println("Actual Display Name :"+_inputTotalPointsAvailable.getDomProperty("value"));
+			CoreFunctions.verifyText(_inputTotalPointsAvailable.getDomProperty("value"),
+					policySetupPageData.flexPolicySetupPage.StaticFixedTotalPointsAvailable,
+					COREFLEXConstants.TOTAL_POINTS_AVAILABLE);
+			CoreFunctions.verifyRadioButtonSelection(driver, _sectionCashoutAvailability,
+					_sectionCashoutAvailabilityButtonList, basePolicyDataMap.get(0).get(COREFLEXConstants.CASHOUT_AVAILABILITY),
+					COREFLEXConstants.CASHOUT_AVAILABILITY);
+			Reporter.addStepLog(MessageFormat.format(
+					COREFLEXConstants.SUCCESSFULLY_VERIFIED_FIELD_VALUES_ON_FLEX_PLANNING_TOOL_PAGE_POST_VERSIONING_CLONING,
+					CoreConstants.PASS));
+			return true;
+		} catch (Exception e) {
+			Reporter.addStepLog(MessageFormat.format(
+					COREFLEXConstants.EXCEPTION_OCCURED_WHILE_VERIFYING_FIELD_VALUES_ON_FLEX_PLANNING_TOOL_PAGE_POST_VERSIONING_CLONING,
 					CoreConstants.FAIL, e.getMessage()));
 			return false;
 		}

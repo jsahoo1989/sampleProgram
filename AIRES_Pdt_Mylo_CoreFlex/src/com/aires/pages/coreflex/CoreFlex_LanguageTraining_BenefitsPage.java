@@ -128,6 +128,14 @@ public class CoreFlex_LanguageTraining_BenefitsPage extends Base {
 	@FindBy(how = How.XPATH, using = "//div[@class='collapse show']//input[@formcontrolname='selfLearningToolInd']/parent::label[@class='form-check-label']")
 	private List<WebElement> _radioBtnSelfLearningTool;
 
+	// Self Learning Tool - Radio Button Selection - Button List
+	@FindBy(how = How.XPATH, using = "//div[@class='collapse show']//input[@formcontrolname='selfLearningToolInd']")
+	private List<WebElement> _radioBtnSelfLearningToolButtonList;
+
+	// Self Learning Tool - Radio Button Selection - Label List
+	@FindBy(how = How.XPATH, using = "//div[@class='collapse show']//input[@formcontrolname='selfLearningToolInd']/parent::label[@class='form-check-label']")
+	private List<WebElement> _radioBtnSelfLearningToolLabelList;
+
 	// Gross Up - Radio Button Selection
 	@FindBy(how = How.XPATH, using = "//div[@class='collapse show']//input[@formcontrolname='grossedUpInd']/parent::label[@class='form-check-label']")
 	private List<WebElement> _radioBtnGrossUp;
@@ -164,10 +172,42 @@ public class CoreFlex_LanguageTraining_BenefitsPage extends Base {
 	@FindBy(how = How.CSS, using = "button[class*='swal2-confirm']")
 	private WebElement _errorDialogPolicyBenefitsDataMissingOKButton;
 
+	// Aires Managed Benefit Radio Label Selection
+	@FindBy(how = How.XPATH, using = "//label[contains(text(),'Aires Managed Service')]/following-sibling::div/label[@class='form-check-label']")
+	private List<WebElement> _radioAiresManagedLabelList;
+
+	// Aires Managed Benefit Radio Button Selection
+	@FindBy(how = How.XPATH, using = "//label[contains(text(),'Aires Managed Service')]/following-sibling::div//input")
+	private List<WebElement> _radioAiresManagedButtonList;
+
+	// Benefit can be selected more than once Checkbox
+	@FindBy(how = How.XPATH, using = "//input[@id='multiAddInd']/parent::label")
+	private List<WebElement> _inputMultiAddBenefitLabel;
+
+	// Benefit can be selected more than once Checkbox
+	@FindBy(how = How.XPATH, using = "//input[@id='multiAddInd']")
+	private List<WebElement> _inputMultiAddBenefitButton;
+
+	// Gross Up Radio Label Selection
+	@FindBy(how = How.XPATH, using = "//label[contains(text(),'Gross-Up')]/following-sibling::div/label[@class='form-check-label']")
+	private List<WebElement> _radioGrossUpLabelList;
+
+	// Gross Up Radio Button Selection
+	@FindBy(how = How.XPATH, using = "//label[contains(text(),'Gross-Up')]/following-sibling::div//input")
+	private List<WebElement> _radioGrossUpButtonList;
+
+	// Reimbursed By Radio Label Selection
+	@FindBy(how = How.XPATH, using = "//label[contains(text(),'Reimbursed By')]/following-sibling::div/label[@class='form-check-label']")
+	private List<WebElement> _radioReimbursedByLabelList;
+
+	// Reimbursed By Radio Button Selection
+	@FindBy(how = How.XPATH, using = "//label[contains(text(),'Reimbursed By')]/following-sibling::div//input")
+	private List<WebElement> _radioReimbursedByButtonList;
+
 	/*********************************************************************/
 
-	CoreFlex_SettlingInBenefitsData settlingInBenefitData = FileReaderManager.getInstance()
-			.getCoreFlexJsonReader().getSettlingInBenefitDataList(COREFLEXConstants.LANGUAGE_TRAINING);
+	CoreFlex_SettlingInBenefitsData settlingInBenefitData = FileReaderManager.getInstance().getCoreFlexJsonReader()
+			.getSettlingInBenefitDataList(COREFLEXConstants.LANGUAGE_TRAINING);
 
 	public static final List<Benefit> coreBenefits = FileReaderManager.getInstance().getCoreFlexJsonReader()
 			.getMXTransfereeCoreBenefitDetails();
@@ -360,8 +400,7 @@ public class CoreFlex_LanguageTraining_BenefitsPage extends Base {
 				settlingInBenefitData.languageTrainingFamily.maxNumberOfHoursPerFamily);
 		CoreFunctions.selectItemInListByText(driver, _radioBtnSelfLearningTool,
 				settlingInBenefitData.languageTrainingFamily.selfLearningTool, true);
-		if (settlingInBenefitData.languageTrainingFamily.selfLearningTool
-				.equalsIgnoreCase(COREFLEXConstants.YES)) {
+		if (settlingInBenefitData.languageTrainingFamily.selfLearningTool.equalsIgnoreCase(COREFLEXConstants.YES)) {
 			CoreFunctions.clearAndSetText(driver, _inputMaxAmount,
 					settlingInBenefitData.languageTrainingFamily.maxAmount);
 		}
@@ -373,8 +412,7 @@ public class CoreFlex_LanguageTraining_BenefitsPage extends Base {
 			CoreFunctions.clearAndSetText(driver, _inputReimbursedBy,
 					settlingInBenefitData.languageTrainingFamily.reimbursedByOther);
 		}
-		CoreFunctions.clearAndSetText(driver, _txtAreaComment,
-				settlingInBenefitData.languageTrainingFamily.comment);
+		CoreFunctions.clearAndSetText(driver, _txtAreaComment, settlingInBenefitData.languageTrainingFamily.comment);
 	}
 
 	/**
@@ -385,8 +423,7 @@ public class CoreFlex_LanguageTraining_BenefitsPage extends Base {
 				settlingInBenefitData.languageTrainingEmployee.maxNumberOfHours);
 		CoreFunctions.selectItemInListByText(driver, _radioBtnSelfLearningTool,
 				settlingInBenefitData.languageTrainingEmployee.selfLearningTool, true);
-		if (settlingInBenefitData.languageTrainingEmployee.selfLearningTool
-				.equalsIgnoreCase(COREFLEXConstants.YES)) {
+		if (settlingInBenefitData.languageTrainingEmployee.selfLearningTool.equalsIgnoreCase(COREFLEXConstants.YES)) {
 			CoreFunctions.clearAndSetText(driver, _inputMaxAmount,
 					settlingInBenefitData.languageTrainingEmployee.maxAmount);
 		}
@@ -394,13 +431,11 @@ public class CoreFlex_LanguageTraining_BenefitsPage extends Base {
 				settlingInBenefitData.languageTrainingEmployee.grossUp, true);
 		CoreFunctions.selectItemInListByText(driver, _radioBtnCandidateSelection,
 				settlingInBenefitData.languageTrainingEmployee.reimbursedBy, true);
-		if (settlingInBenefitData.languageTrainingEmployee.reimbursedBy
-				.equalsIgnoreCase(COREFLEXConstants.OTHER)) {
+		if (settlingInBenefitData.languageTrainingEmployee.reimbursedBy.equalsIgnoreCase(COREFLEXConstants.OTHER)) {
 			CoreFunctions.clearAndSetText(driver, _inputReimbursedBy,
 					settlingInBenefitData.languageTrainingEmployee.reimbursedByOther);
 		}
-		CoreFunctions.clearAndSetText(driver, _txtAreaComment,
-				settlingInBenefitData.languageTrainingEmployee.comment);
+		CoreFunctions.clearAndSetText(driver, _txtAreaComment, settlingInBenefitData.languageTrainingEmployee.comment);
 	}
 
 	/**
@@ -516,4 +551,225 @@ public class CoreFlex_LanguageTraining_BenefitsPage extends Base {
 		}
 	}
 
+	public boolean verifyAddedBenefitsAndSubBenefitDetails(String benefitType, String subBenefitNames,
+			String multipleBenefitSelection, String flexPoints, String benefitDisplayName,
+			String benefitAllowanceAmount, String benefitDescription, String paymentOption,
+			String airesManagedService) {
+		if (benefitType.equals(COREFLEXConstants.BOTH)) {
+			CoreFunctions.clickElement(driver, _textBoth);
+			verifyBenefitsMandatoryDetails(COREFLEXConstants.CORE_BENEFITS, multipleBenefitSelection, flexPoints,
+					benefitDisplayName, benefitAllowanceAmount, benefitDescription, paymentOption, airesManagedService);
+			iterateSubBenefitAndVerifyDetails(subBenefitNames, COREFLEXConstants.CORE_BENEFITS);
+			verifyBenefitsMandatoryDetails(COREFLEXConstants.FLEX_BENEFITS, multipleBenefitSelection, flexPoints,
+					benefitDisplayName, benefitAllowanceAmount, benefitDescription, paymentOption, airesManagedService);
+			iterateSubBenefitAndVerifyDetails(subBenefitNames, COREFLEXConstants.FLEX_BENEFITS);
+			return true;
+		} else {
+			verifyBenefitsMandatoryDetails(benefitType, multipleBenefitSelection, flexPoints, benefitDisplayName,
+					benefitAllowanceAmount, benefitDescription, paymentOption, airesManagedService);
+			iterateSubBenefitAndVerifyDetails(subBenefitNames, benefitType);
+			return true;
+		}
+	}
+	
+	private void verifyBenefitsMandatoryDetails(String benefitType, String multipleBenefitSelection, String flexPoints,
+			String benefitDisplayName, String benefitAllowanceAmount, String benefitDescription, String paymentOption,
+			String airesManagedService) {
+		Benefit languageTrainingBenefit = coreBenefits.stream()
+				.filter(b -> b.getBenefitType().equals(COREFLEXConstants.LANGUAGE_TRAINING)).findAny().orElse(null);
+		switch (benefitType) {
+		case COREFLEXConstants.CORE:
+			CoreFunctions.clickElement(driver, _textCore);
+			verifyManadatoryDetails(benefitType, multipleBenefitSelection,
+					languageTrainingBenefit.getBenefitDisplayName(), languageTrainingBenefit.getBenefitAmount(),
+					languageTrainingBenefit.getBenefitDesc(), paymentOption, airesManagedService);
+			break;
+		case COREFLEXConstants.FLEX:
+			CoreFunctions.clickElement(driver, _textFlex);
+			CoreFunctions.verifyText(_inputFlexPoints.getDomProperty("value"), flexPoints,
+					COREFLEXConstants.FLEX_POINTS_VALUE);
+			CoreFunctions.highlightObject(driver, _inputFlexPoints);
+			verifyManadatoryDetails(benefitType, multipleBenefitSelection, benefitDisplayName, benefitAllowanceAmount,
+					benefitDescription, paymentOption, airesManagedService);
+			break;
+		case COREFLEXConstants.CORE_BENEFITS:
+			CoreFunctions.clickElement(driver, _textCoreBenefits);
+			verifyManadatoryDetails(benefitType, multipleBenefitSelection,
+					languageTrainingBenefit.getBenefitDisplayName(), languageTrainingBenefit.getBenefitAmount(),
+					languageTrainingBenefit.getBenefitDesc(), paymentOption, airesManagedService);
+			break;
+		case COREFLEXConstants.FLEX_BENEFITS:
+			CoreFunctions.clickElement(driver, _textFlexBenefits);
+			CoreFunctions.verifyText(_inputFlexPoints.getDomProperty("value"), flexPoints,
+					COREFLEXConstants.FLEX_POINTS_VALUE);
+			CoreFunctions.highlightObject(driver, _inputFlexPoints);
+			verifyManadatoryDetails(benefitType, multipleBenefitSelection, benefitDisplayName, benefitAllowanceAmount,
+					benefitDescription, paymentOption, airesManagedService);
+			break;
+		case COREFLEXConstants.BOTH:
+			CoreFunctions.clickElement(driver, _textBoth);
+			break;
+		default:
+			Assert.fail(COREFLEXConstants.INVALID_OPTION);
+		}
+
+	}
+
+	private void verifyManadatoryDetails(String benefitType, String multipleBenefitSelection, String benefitDisplayName,
+			String benefitAllowanceAmount, String benefitDescription, String paymentOption,
+			String airesManagedService) {
+		if ((benefitType.equals(COREFLEXConstants.FLEX_BENEFITS)) || (benefitType.equals(COREFLEXConstants.FLEX))) {
+			if ((multipleBenefitSelection.equals(COREFLEXConstants.YES))) {
+				CoreFunctions.verifyRadioButtonSelection(driver, _inputMultiAddBenefitLabel,
+						_inputMultiAddBenefitButton, COREFLEXConstants.BENEFIT_SELECTED_MORE_THAN_ONCE,
+						COREFLEXConstants.MULTIPLE_BENEFIT_SELECTION);
+			}
+			CoreFunctions.verifyRadioButtonSelection(driver, _radioAiresManagedLabelList, _radioAiresManagedButtonList,
+					airesManagedService, COREFLEXConstants.AIRES_MANAGED_SERVICE);
+		}
+		CoreFunctions.verifyText(_inputBenefitName.getDomProperty("value"), benefitDisplayName,
+				COREFLEXConstants.BENEFIT_DISPLAY_NAME);
+		CoreFunctions.highlightObject(driver, _inputBenefitName);
+		CoreFunctions.verifyText(_textAreaAllowanceAmountMessage.getDomProperty("value"), benefitAllowanceAmount,
+				COREFLEXConstants.ALLOWANCE_AMOUNT_MESSAGE);
+		CoreFunctions.highlightObject(driver, _textAreaAllowanceAmountMessage);
+		CoreFunctions.verifyText(_textAreaBenefitLongDescription.getDomProperty("value"), benefitDescription,
+				COREFLEXConstants.BENEFIT_LONG_DESCRIPTION);
+		CoreFunctions.highlightObject(driver, _textAreaBenefitLongDescription);
+	}
+
+	
+	/**
+	 * Method to iterate and verify mentioned SubBenefits details
+	 * 
+	 * @param subBenefitNames
+	 * @param benefitType
+	 */
+	private void iterateSubBenefitAndVerifyDetails(String subBenefitNames, String benefitType) {
+		try {
+			List<String> subBenefitNamesList = new ArrayList<String>();
+			if (subBenefitNames.contains(";"))
+				subBenefitNamesList = Arrays.asList(subBenefitNames.split(";"));
+			else
+				subBenefitNamesList.add(subBenefitNames);
+
+			for (String subBenefit : subBenefitNamesList) {
+				if (CoreFunctions.isElementExist(driver, getElementByName(subBenefit.trim()), 5)) {
+					verifySubBenefitDetails(subBenefit.trim(), benefitType);
+				} else {
+					Reporter.addStepLog(MessageFormat.format(COREFLEXConstants.SUB_BENEFIT_FORM_NOT_DISPLAYED,
+							CoreConstants.FAIL, subBenefit, COREFLEXConstants.LANGUAGE_TRAINING_BENEFITS_PAGE));
+					throw new RuntimeException(MessageFormat.format(COREFLEXConstants.SUB_BENEFIT_FORM_NOT_DISPLAYED,
+							CoreConstants.FAIL, subBenefit, COREFLEXConstants.LANGUAGE_TRAINING_BENEFITS_PAGE));
+				}
+			}
+		} catch (Exception e) {
+			Reporter.addStepLog(MessageFormat.format(
+					COREFLEXConstants.EXCEPTION_OCCURED_WHILE_SELECTING_AND_VERIFYING_SUB_BENEFIT_DETAILS,
+					CoreConstants.FAIL, e.getMessage()));
+		}
+	}
+	
+	
+	
+	/**
+	 * Method to Expand and call SubBenefit Verification Method's
+	 * 
+	 * @param subBenefit
+	 * @param benefitType
+	 */
+	private void verifySubBenefitDetails(String subBenefit, String benefitType) {
+		switch (subBenefit) {
+		case COREFLEXConstants.LANGUAGE_TRAINING_EMPLOYEE:			
+			expandSubBenefitIfCollapsed(getElementByName(COREFLEXConstants.LANGUAGE_TRAINING_EMPLOYEE));	
+			if (benefitType.equals(COREFLEXConstants.FLEX_BENEFITS)) {
+				CoreFunctions.clickElement(driver, _headerLanguageTrainingEmployee);
+			}
+			verifyLanguageTrainingEmployeeSubBenefitForm();
+			break;
+		case COREFLEXConstants.LANGUAGE_TRAINING_FAMILY:
+			expandSubBenefitIfCollapsed(getElementByName(COREFLEXConstants.LANGUAGE_TRAINING_FAMILY));
+			verifyLanguageTrainingFamilySubBenefitForm();
+			break;
+		default:
+			Assert.fail(MessageFormat.format(COREFLEXConstants.ELEMENT_NOT_FOUND, CoreConstants.FAIL));
+		}
+	}
+
+	/**
+	 * Method to verify Language Training Family subBenefit form
+	 */
+	private void verifyLanguageTrainingFamilySubBenefitForm() {
+		try {
+			CoreFunctions.verifyText(_inputMaxNumOfHoursPerPerson.getDomProperty("value"),
+					settlingInBenefitData.languageTrainingFamily.maxNumberOfHoursPerPerson,
+					COREFLEXConstants.MAX_NUMBER_OF_HRS_PER_PERSON);
+			CoreFunctions.highlightObject(driver, _inputMaxNumOfHoursPerPerson);
+			CoreFunctions.verifyText(_inputMaxNumOfHours.getDomProperty("value"),
+					settlingInBenefitData.languageTrainingFamily.maxNumberOfHoursPerFamily,
+					COREFLEXConstants.MAX_NUMBER_OF_HRS_PER_FAMILY);
+			CoreFunctions.highlightObject(driver, _inputMaxNumOfHours);
+			CoreFunctions.verifyRadioButtonSelection(driver, _radioBtnSelfLearningToolLabelList,
+					_radioBtnSelfLearningToolButtonList, settlingInBenefitData.languageTrainingFamily.selfLearningTool,
+					COREFLEXConstants.SELF_LEARNING_TOOL);
+			if (settlingInBenefitData.languageTrainingFamily.selfLearningTool.equalsIgnoreCase(COREFLEXConstants.YES)) {
+				CoreFunctions.verifyText(_inputMaxAmount.getDomProperty("value"),
+						settlingInBenefitData.languageTrainingFamily.maxAmount, COREFLEXConstants.MAX_AMOUNT);
+				CoreFunctions.highlightObject(driver, _inputMaxAmount);
+			}
+			CoreFunctions.verifyRadioButtonSelection(driver, _radioGrossUpLabelList, _radioGrossUpButtonList,
+					settlingInBenefitData.languageTrainingFamily.grossUp, COREFLEXConstants.GROSS_UP);
+			CoreFunctions.verifyRadioButtonSelection(driver, _radioReimbursedByLabelList, _radioReimbursedByButtonList,
+					settlingInBenefitData.languageTrainingFamily.reimbursedBy, COREFLEXConstants.REIMBURSED_BY);
+			if (settlingInBenefitData.languageTrainingFamily.reimbursedBy.equalsIgnoreCase(COREFLEXConstants.OTHER)) {
+				CoreFunctions.verifyText(_inputReimbursedBy.getDomProperty("value"),
+						settlingInBenefitData.languageTrainingFamily.reimbursedByOther,
+						COREFLEXConstants.REIMBURSED_BY_OTHER);
+				CoreFunctions.highlightObject(driver, _inputReimbursedBy);
+			}
+			CoreFunctions.verifyText(_txtAreaComment.getDomProperty("value"),
+					settlingInBenefitData.languageTrainingFamily.comment, COREFLEXConstants.COMMENT);
+			CoreFunctions.highlightObject(driver, _txtAreaComment);
+
+		} catch (Exception e) {
+			Assert.fail(COREFLEXConstants.FAILED_TO_VERIFY_LANGUAGE_TRAINING_SUB_BENEFITS_FORM);
+		}
+	}
+
+	/**
+	 * Method to verify Language Training Employee subBenefit form
+	 */
+	private void verifyLanguageTrainingEmployeeSubBenefitForm() {
+		try {
+			CoreFunctions.verifyText(_inputMaxNumOfHours.getDomProperty("value"),
+					settlingInBenefitData.languageTrainingEmployee.maxNumberOfHours,
+					COREFLEXConstants.MAX_NUMBER_OF_HRS);
+			CoreFunctions.highlightObject(driver, _inputMaxNumOfHours);
+			CoreFunctions.verifyRadioButtonSelection(driver, _radioBtnSelfLearningToolLabelList,
+					_radioBtnSelfLearningToolButtonList,
+					settlingInBenefitData.languageTrainingEmployee.selfLearningTool,
+					COREFLEXConstants.SELF_LEARNING_TOOL);
+			if (settlingInBenefitData.languageTrainingEmployee.selfLearningTool
+					.equalsIgnoreCase(COREFLEXConstants.YES)) {
+				CoreFunctions.verifyText(_inputMaxAmount.getDomProperty("value"),
+						settlingInBenefitData.languageTrainingEmployee.maxAmount, COREFLEXConstants.MAX_AMOUNT);
+				CoreFunctions.highlightObject(driver, _inputMaxAmount);
+			}
+			CoreFunctions.verifyRadioButtonSelection(driver, _radioGrossUpLabelList, _radioGrossUpButtonList,
+					settlingInBenefitData.languageTrainingEmployee.grossUp, COREFLEXConstants.GROSS_UP);
+			CoreFunctions.verifyRadioButtonSelection(driver, _radioReimbursedByLabelList, _radioReimbursedByButtonList,
+					settlingInBenefitData.languageTrainingEmployee.reimbursedBy, COREFLEXConstants.REIMBURSED_BY);
+			if (settlingInBenefitData.languageTrainingEmployee.reimbursedBy.equalsIgnoreCase(COREFLEXConstants.OTHER)) {
+				CoreFunctions.verifyText(_inputReimbursedBy.getDomProperty("value"),
+						settlingInBenefitData.languageTrainingEmployee.reimbursedByOther,
+						COREFLEXConstants.REIMBURSED_BY_OTHER);
+				CoreFunctions.highlightObject(driver, _inputReimbursedBy);
+			}
+			CoreFunctions.verifyText(_txtAreaComment.getDomProperty("value"),
+					settlingInBenefitData.languageTrainingEmployee.comment, COREFLEXConstants.COMMENT);
+			CoreFunctions.highlightObject(driver, _txtAreaComment);
+		} catch (Exception e) {
+			Assert.fail(COREFLEXConstants.FAILED_TO_VERIFY_LANGUAGE_TRAINING_SUB_BENEFITS_FORM);
+		}
+	}
 }

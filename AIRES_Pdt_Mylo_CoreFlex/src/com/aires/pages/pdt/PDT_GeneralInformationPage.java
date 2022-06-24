@@ -160,6 +160,10 @@ public class PDT_GeneralInformationPage extends Base {
 	@FindBy(how = How.CSS, using = "ng-select[formcontrolname='policyTypeCode'][class*='ng-select-clearable']")
 	private WebElement _selectPolicyType;
 
+	// Policy type Select Field - Value
+	@FindBy(how = How.CSS, using = "ng-select[formcontrolname='policyTypeCode'][class*='ng-select-clearable'] span[class*='ng-value-label']")
+	private WebElement _selectPolicyTypeValue;
+
 	// Policy type Select Options
 	@FindBy(how = How.XPATH, using = "//label[contains(string(),'Policy Geographic Scope')]/following-sibling::ng-select/descendant::div[@role='option']")
 	private List<WebElement> _selectPolicyTypeOptions;
@@ -167,6 +171,10 @@ public class PDT_GeneralInformationPage extends Base {
 	// Employee type Select Field
 	@FindBy(how = How.CSS, using = "ng-select[formcontrolname='employeeTypeCode'][class*='ng-select-clearable']")
 	private WebElement _selectEmployeeType;
+
+	// Employee type Select Field - Value
+	@FindBy(how = How.CSS, using = "ng-select[formcontrolname='employeeTypeCode'][class*='ng-select-clearable'] span[class*='ng-value-label']")
+	private WebElement _selectEmployeeTypeValue;
 
 	// Employee type Select Options
 	@FindBy(how = How.XPATH, using = "//label[contains(string(),'Employee Type')]/following-sibling::ng-select/descendant::div[@role='option']")
@@ -176,6 +184,10 @@ public class PDT_GeneralInformationPage extends Base {
 	@FindBy(how = How.CSS, using = "ng-select[formcontrolname='homeownerTypeCode'][class*='ng-select-clearable']")
 	private WebElement _selectHomeownerType;
 
+	// Homeowner type Select Field - Value
+	@FindBy(how = How.CSS, using = "ng-select[formcontrolname='homeownerTypeCode'][class*='ng-select-clearable'] span[class*='ng-value-label']")
+	private WebElement _selectHomeownerTypeValue;
+
 	// Homeowner type Select Options
 	@FindBy(how = How.XPATH, using = "//label[contains(string(),'Homeowner Type')]/following-sibling::ng-select/descendant::div[@role='option']")
 	private List<WebElement> _selectHomeownerTypeOptions;
@@ -184,6 +196,10 @@ public class PDT_GeneralInformationPage extends Base {
 	@FindBy(how = How.CSS, using = "ng-select[formcontrolname='cappedPolicyCode'][class*='ng-select-clearable']")
 	private WebElement _selectCappedPolicyType;
 
+	// Capped Policy type Select Field - Value
+	@FindBy(how = How.CSS, using = "ng-select[formcontrolname='cappedPolicyCode'][class*='ng-select-clearable'] span[class*='ng-value-label']")
+	private WebElement _selectCappedPolicyTypeValue;
+
 	// Capped Policy type Select Options
 	@FindBy(how = How.XPATH, using = "//label[contains(string(),'Capped Policy')]/following-sibling::ng-select/descendant::div[@role='option']")
 	private List<WebElement> _selectCappedPolicyTypeOptions;
@@ -191,6 +207,14 @@ public class PDT_GeneralInformationPage extends Base {
 	// Expense Management Client Radio Button No Selection
 	@FindBy(how = How.XPATH, using = "//label[@class='form-check-label'][contains(string(),'No')]")
 	private WebElement _radioExpenseManagementNoOption;
+
+	// Expense Management Client Radio Text List
+	@FindBy(how = How.XPATH, using = "//input[@formcontrolname='expnMgmtInd']/parent::label")
+	private List<WebElement> _radioExpenseManagementTextList;
+
+	// Expense Management Client Radio Text List
+	@FindBy(how = How.XPATH, using = "//input[@formcontrolname='expnMgmtInd']")
+	private List<WebElement> _radioExpenseManagementButtonList;
 
 	@FindBy(how = How.XPATH, using = "//ng-select[@formcontrolname='tracingSet']//span[contains(@class,'ng-value-label')]")
 	private WebElement _drpDownTracingSetSelectedVal;
@@ -227,9 +251,25 @@ public class PDT_GeneralInformationPage extends Base {
 	@FindBy(how = How.XPATH, using = "//ng-select[@formcontrolname='pointBasedFlexInd'][contains(@class,'ng-select-disabled')]")
 	private WebElement _fieldPointsBasedFlexPolicy;
 
+	// Policy Geographic Scope
+	@FindBy(how = How.XPATH, using = "//strong[contains(text(),'Policy Geographic Scope')]/parent::label/following-sibling::label")
+	private WebElement _textPolicyType;
+
+	// Employee Type
+	@FindBy(how = How.XPATH, using = "//strong[contains(text(),'Employee Type')]/parent::label/following-sibling::label")
+	private WebElement _textEmployeeType;
+
+	// Homeowner Type
+	@FindBy(how = How.XPATH, using = "//strong[contains(text(),'Homeowner Type')]/parent::label/following-sibling::label")
+	private WebElement _textHomeownerType;
+
 	// Policy Version
 	@FindBy(how = How.XPATH, using = "//strong[contains(text(),'Version Number')]/parent::label/following-sibling::label")
 	private WebElement _textPolicyVersion;
+
+	// Points Based Flex Policy
+	@FindBy(how = How.XPATH, using = "//strong[contains(text(),'Points Based Flex Policy')]/parent::label/following-sibling::label")
+	private WebElement _textPointsBasedFlexPolicy;
 
 	/*********************************************************************/
 
@@ -564,7 +604,7 @@ public class PDT_GeneralInformationPage extends Base {
 
 	public void enterGeneralInformationFields() {
 		try {
-			setTracingPrompt();			
+			setTracingPrompt();
 			CoreFunctions.clickElement(driver, _drpDwnPolicyType);
 			CoreFunctions.explicitWaitTillElementListVisibility(driver, _drpDwnPolicyTypeOptions);
 			String randPolicyType = _drpDwnPolicyTypeOptions
@@ -607,8 +647,9 @@ public class PDT_GeneralInformationPage extends Base {
 			timeBeforeAction = new Date().getTime();
 			CoreFunctions.click(driver, _btnNext, _btnNext.getText());
 			BusinessFunctions.fluentWaitForSpinnerToDisappear(driver, _progressBar);
-			timeAfterAction = new Date().getTime();	
-			BusinessFunctions.printTimeTakenByPageToLoad(timeBeforeAction, timeAfterAction, PDTConstants.POLICY_BENEFIT_CATEGORIES);
+			timeAfterAction = new Date().getTime();
+			BusinessFunctions.printTimeTakenByPageToLoad(timeBeforeAction, timeAfterAction,
+					PDTConstants.POLICY_BENEFIT_CATEGORIES);
 		} catch (Exception e) {
 			e.printStackTrace();
 			Assert.fail(PDTConstants.FAILED_TO_FILL_GENERAL_INFO_FORM);
@@ -666,7 +707,7 @@ public class PDT_GeneralInformationPage extends Base {
 				CoreFunctions.clickElement(driver, _buttonLogout);
 				break;
 			case PDTConstants.NEXT:
-				CoreFunctions.clickElement(driver, _buttonNext);				
+				CoreFunctions.clickElement(driver, _buttonNext);
 				break;
 			case PDTConstants.BACK:
 				CoreFunctions.clickElement(driver, _buttonBack);
@@ -714,7 +755,8 @@ public class PDT_GeneralInformationPage extends Base {
 			Reporter.addStepLog(MessageFormat.format(
 					PDTConstants.SUCCESSFULLY_VERIFIED_CLIENT_AND_POLICY_DETAILS_ON_GENERAL_INFO_PAGE,
 					CoreConstants.PASS, pageName));
-			CoreFunctions.writeToPropertiesFile("Assignment_ClientName", CoreFunctions.getElementText(driver, _textClientName));
+			CoreFunctions.writeToPropertiesFile("Assignment_ClientName",
+					CoreFunctions.getElementText(driver, _textClientName));
 		}
 		return isGeneralInfoDetailsValid;
 
@@ -748,6 +790,11 @@ public class PDT_GeneralInformationPage extends Base {
 			case PDTConstants.POLICY_STATUS:
 				if ((CoreFunctions.isElementExist(driver, _textPolicyStatus, 2))
 						&& (CoreFunctions.getElementText(driver, _textPolicyStatus)).equals(expectedDefaultValue))
+					isFieldVerified = true;
+				break;
+			case COREFLEXConstants.POLICY_VERSION:
+				if ((CoreFunctions.isElementExist(driver, _textPolicyVersion, 2))
+						&& (CoreFunctions.getElementText(driver, _textPolicyVersion)).equals(expectedDefaultValue))
 					isFieldVerified = true;
 				break;
 			case PDTConstants.CORE_FLEX_POLICY:
@@ -955,6 +1002,10 @@ public class PDT_GeneralInformationPage extends Base {
 						fieldName);
 				isFieldOptionSelected = true;
 				break;
+			case COREFLEXConstants.EXPENSE_MANAGEMENT_CLIENT:
+				BusinessFunctions.selectRadioAsPerLabelText(driver, _radioExpenseManagementTextList, fieldSelection);
+				isFieldOptionSelected = true;
+				break;
 			case PDTConstants.BENEFIT_PACKAGE_TYPE:
 				CoreFunctions.clickElement(driver, _selectBenefitPackageType);
 				CoreFunctions.selectItemInListByText(driver, _selectBenefitPackageTypeOptions, fieldSelection, true,
@@ -1005,8 +1056,9 @@ public class PDT_GeneralInformationPage extends Base {
 	 * @param pdtPolicyBenefitsCategoriesPage
 	 * @return
 	 */
-	public boolean verifyPageNavigationBasedOnPointsBasedFlexPolicySelection(String pointsBasedFlexSelection, String expectedPageTitle,
-			String expectedLeftNavigationTitle, CoreFlex_FlexPolicySetupPage flexPolicySetupPage,
+	public boolean verifyPageNavigationBasedOnPointsBasedFlexPolicySelection(String pointsBasedFlexSelection,
+			String expectedPageTitle, String expectedLeftNavigationTitle,
+			CoreFlex_FlexPolicySetupPage flexPolicySetupPage,
 			PDT_PolicyBenefitCategoryPage pdtPolicyBenefitCategoryPage) {
 
 		boolean isNavigationCorrect = false;
@@ -1084,7 +1136,9 @@ public class PDT_GeneralInformationPage extends Base {
 		selectFieldOption(PDTConstants.EMPLOYEE_TYPE, policySetupPageData.generalInformationPage.employeeType);
 		selectFieldOption(PDTConstants.HOMEOWNER_TYPE, policySetupPageData.generalInformationPage.homeownerType);
 		selectFieldOption(PDTConstants.CAPPED_POLICY, policySetupPageData.generalInformationPage.cappedPolicy);
-		CoreFunctions.clickElement(driver, _radioExpenseManagementNoOption);
+		selectFieldOption(COREFLEXConstants.EXPENSE_MANAGEMENT_CLIENT,
+				policySetupPageData.generalInformationPage.expenseManagement);
+//		CoreFunctions.clickElement(driver, _radioExpenseManagementNoOption);
 	}
 
 	/**
@@ -1143,7 +1197,8 @@ public class PDT_GeneralInformationPage extends Base {
 
 	public boolean verifyPolicyNumberAfterVersioning(PDT_ViewPolicyPage viewPolicyPage) {
 		try {
-			String expectedPolicyVersion = viewPolicyPage.getNextPolicyVersion(CoreFunctions.getPropertyFromConfig("CoreFlex_PolicyVersion"));
+			String expectedPolicyVersion = viewPolicyPage
+					.getNextPolicyVersion(CoreFunctions.getPropertyFromConfig("CoreFlex_PolicyVersion"));
 			if (CoreFunctions.getElementText(driver, _textPolicyVersion).equals(expectedPolicyVersion)) {
 				Reporter.addStepLog(MessageFormat.format(
 						COREFLEXConstants.SUCCESSFULLY_VERIFIED_POLICY_VERSION_POST_VERSIONING_ON_GENERAL_INFORMATION_PAGE,
@@ -1165,27 +1220,66 @@ public class PDT_GeneralInformationPage extends Base {
 			return false;
 		}
 	}
-	
+
 	public void navigatePolicyBenefitPage(String expectedPageName) {
 		try {
-			timeBeforeAction = new Date().getTime();			
+			timeBeforeAction = new Date().getTime();
 			CoreFunctions.clickUsingJS(driver, _btnNext, _btnNext.getText());
 			BusinessFunctions.fluentWaitForSpinnerToDisappear(driver, _progressBar);
-			timeAfterAction = new Date().getTime();	
-			BusinessFunctions.printTimeTakenByPageToLoad(timeBeforeAction, timeAfterAction, PDTConstants.POLICY_BENEFIT_CATEGORIES);	
+			timeAfterAction = new Date().getTime();
+			BusinessFunctions.printTimeTakenByPageToLoad(timeBeforeAction, timeAfterAction,
+					PDTConstants.POLICY_BENEFIT_CATEGORIES);
 		} catch (Exception e) {
-			Assert.fail(MessageFormat.format(PDTConstants.FAILED_TO_NAVIGATE_TO_PAGE, PDTConstants.POLICY_BENEFIT_CATEGORIES, 
-					CoreConstants.FAIL));
+			Assert.fail(MessageFormat.format(PDTConstants.FAILED_TO_NAVIGATE_TO_PAGE,
+					PDTConstants.POLICY_BENEFIT_CATEGORIES, CoreConstants.FAIL));
 		}
 	}
-	
+
 	public void verifyGeneralInfoAndPolicyBenefitPage(PDT_PolicyBenefitCategoryPage policyBenefitCategoryPage) {
-		Assert.assertTrue(verifyPageNavigation(PDTConstants.GENERAL_INFORMATION),
-				MessageFormat.format(PDTConstants.FAILED_TO_NAVIGATE_TO_PAGE, PDTConstants.GENERAL_INFORMATION, 
-						CoreConstants.FAIL));
+		Assert.assertTrue(verifyPageNavigation(PDTConstants.GENERAL_INFORMATION), MessageFormat
+				.format(PDTConstants.FAILED_TO_NAVIGATE_TO_PAGE, PDTConstants.GENERAL_INFORMATION, CoreConstants.FAIL));
 		navigatePolicyBenefitPage(PDTConstants.POLICY_BENEFIT);
 		Assert.assertTrue(policyBenefitCategoryPage.verifyPolicyBenefitCategoryHeading(PDTConstants.POLICY_BENEFIT),
-				MessageFormat.format(PDTConstants.FAIL_TO_VERIFY_ELEMENT_VAL_ON_PAGE, CoreConstants.FAIL, PDTConstants.heading, PDTConstants.POLICY_BENEFIT_CATEGORIES, PDTConstants.POLICY_BENEFIT, policyBenefitCategoryPage.getElementText(PDTConstants.HEADING)));
-		Assert.assertTrue(policyBenefitCategoryPage.verifyIsPolicyBenefitCategoryChecked(policyBenefitCategoryPage.getBenefitCategoryName()), MessageFormat.format(PDTConstants.BENEFIT_CATEGORY_IS_NOT_SELECTED, CoreConstants.FAIL, policyBenefitCategoryPage.getBenefitCategoryName()));
+				MessageFormat.format(PDTConstants.FAIL_TO_VERIFY_ELEMENT_VAL_ON_PAGE, CoreConstants.FAIL,
+						PDTConstants.heading, PDTConstants.POLICY_BENEFIT_CATEGORIES, PDTConstants.POLICY_BENEFIT,
+						policyBenefitCategoryPage.getElementText(PDTConstants.HEADING)));
+		Assert.assertTrue(
+				policyBenefitCategoryPage
+						.verifyIsPolicyBenefitCategoryChecked(policyBenefitCategoryPage.getBenefitCategoryName()),
+				MessageFormat.format(PDTConstants.BENEFIT_CATEGORY_IS_NOT_SELECTED, CoreConstants.FAIL,
+						policyBenefitCategoryPage.getBenefitCategoryName()));
 	}
+
+	public boolean verifyGeneralInfoAdditionalPolicyDetails() {
+		try {
+			CoreFunctions.verifyText(driver, _textPolicyType,
+					policySetupPageData.generalInformationPage.policyType, PDTConstants.POLICY_TYPE);
+			CoreFunctions.verifyText(driver, _textEmployeeType,
+					policySetupPageData.generalInformationPage.employeeType, PDTConstants.EMPLOYEE_TYPE);
+			CoreFunctions.verifyText(driver, _textHomeownerType,
+					policySetupPageData.generalInformationPage.homeownerType, PDTConstants.HOMEOWNER_TYPE);
+			CoreFunctions.verifyText(driver, _textPointsBasedFlexPolicy,
+					COREFLEXConstants.YES, PDTConstants.POINTS_BASED_FLEX_POLICY);
+			
+			CoreFunctions.verifyText(driver, _selectPolicyTypeValue,
+					policySetupPageData.generalInformationPage.policyType, PDTConstants.POLICY_TYPE);
+			CoreFunctions.verifyText(driver, _selectEmployeeTypeValue,
+					policySetupPageData.generalInformationPage.employeeType, PDTConstants.EMPLOYEE_TYPE);
+			CoreFunctions.verifyText(driver, _selectHomeownerTypeValue,
+					policySetupPageData.generalInformationPage.homeownerType, PDTConstants.HOMEOWNER_TYPE);
+			CoreFunctions.verifyText(driver, _selectCappedPolicyTypeValue,
+					policySetupPageData.generalInformationPage.cappedPolicy, PDTConstants.CAPPED_POLICY);
+			CoreFunctions.verifyRadioButtonSelection(driver, _radioExpenseManagementTextList,
+					_radioExpenseManagementButtonList, policySetupPageData.generalInformationPage.expenseManagement,
+					COREFLEXConstants.EXPENSE_MANAGEMENT_CLIENT);
+			return true;
+		} catch (Exception e) {
+			Assert.fail(
+					MessageFormat.format(COREFLEXConstants.EXCEPTION_OCCURED_WHILE_VALIDATING_ADDITIONAL_POLICY_DETAILS,
+							CoreConstants.FAIL, e.getMessage()));
+			return false;
+		}
+
+	}
+
 }

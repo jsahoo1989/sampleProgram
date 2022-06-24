@@ -498,7 +498,7 @@ public class CoreFunctions {
 		try {
 			for (WebElement row : WebElementList) {
 				Log.info(CoreConstants.ACTUAL_ITEM_NAME_IS + row.getText());
-				if (row.getText().contains(searchText)) {
+				if (row.getText().trim().contains(searchText)) {
 					itemSearched = true;
 					CoreFunctions.highlightObject(driver, row);
 					CoreFunctions.clickUsingJS(driver, row, row.getText());
@@ -1922,5 +1922,22 @@ public class CoreFunctions {
 	      .map(entry -> entry.split("="))
 	      .collect(Collectors.toMap(entry -> entry[0], entry -> entry[1]));
 	    return map;
+	}
+
+	public static void verifyRadioButtonSelection(WebDriver driver,List<WebElement> _radioTextList,List<WebElement> _radioButtonList,
+			String expectedSelection, String fieldName) {		
+		int index = BusinessFunctions.returnindexItemFromListUsingText(driver, _radioTextList, expectedSelection);
+//		Log.info("DomProperty=="+_radioButtonList.get(index).getDomProperty("checked"));		
+		if (_radioButtonList.get(index).getAttribute("checked").equalsIgnoreCase("true")) {
+			highlightObject(driver, _radioTextList.get(index));
+			Reporter.addStepLog(
+					CoreConstants.PASS + MobilityXConstants.VERIFIED_FIELD_TEXT + fieldName + " : " + expectedSelection);
+		}
+		else {
+			Reporter.addStepLog(CoreConstants.FAIL + MobilityXConstants.FAILED_TO_VERIFY + fieldName + " | "
+					+ CoreConstants.VAL_EXPECTED + expectedSelection);
+			Assert.fail("Failed to verify the fields "+ fieldName +" Expected Text = " + expectedSelection);
+		}
+		
 	}
 }

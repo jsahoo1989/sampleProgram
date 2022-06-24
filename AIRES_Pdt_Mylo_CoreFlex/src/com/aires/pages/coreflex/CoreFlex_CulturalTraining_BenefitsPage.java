@@ -124,6 +124,10 @@ public class CoreFlex_CulturalTraining_BenefitsPage extends Base {
 	@FindBy(how = How.XPATH, using = "//ng-select[@formcontrolname='employeeNoOfDays']//div[@role='option']")
 	private List<WebElement> _selectEmployeeDurationList;
 
+	// Employee Duration Days Select Field
+	@FindBy(how = How.CSS, using = "div[class='collapse show'] ng-select[formcontrolname='employeeNoOfDays'] span[class*='ng-value-label']")
+	private WebElement _selectEmployeeDurationSelectedValue;
+
 	// Other Duration Employee Input Field
 	@FindBy(how = How.XPATH, using = "//div[@class='collapse show']//input[@formcontrolname='employeeNoOfDaysOther']")
 	private WebElement _inputEmployeeDurationOther;
@@ -131,6 +135,10 @@ public class CoreFlex_CulturalTraining_BenefitsPage extends Base {
 	// Family Duration Days Select Field
 	@FindBy(how = How.XPATH, using = "//div[@class='collapse show']//ng-select[@formcontrolname='familyNoOfDays']")
 	private WebElement _selectFamilyDuration;
+
+	// Family Duration Days Select Field - Selected Value
+	@FindBy(how = How.CSS, using = "div[class='collapse show'] ng-select[formcontrolname='familyNoOfDays'] span[class*='ng-value-label']")
+	private WebElement _selectFamilyDurationSelectedValue;
 
 	// Family Duration List
 	@FindBy(how = How.XPATH, using = "//ng-select[@formcontrolname='familyNoOfDays']//div[@role='option']")
@@ -176,10 +184,42 @@ public class CoreFlex_CulturalTraining_BenefitsPage extends Base {
 	@FindBy(how = How.CSS, using = "button[class*='swal2-confirm']")
 	private WebElement _errorDialogPolicyBenefitsDataMissingOKButton;
 
+	// Aires Managed Benefit Radio Label Selection
+	@FindBy(how = How.XPATH, using = "//label[contains(text(),'Aires Managed Service')]/following-sibling::div/label[@class='form-check-label']")
+	private List<WebElement> _radioAiresManagedLabelList;
+
+	// Aires Managed Benefit Radio Button Selection
+	@FindBy(how = How.XPATH, using = "//label[contains(text(),'Aires Managed Service')]/following-sibling::div//input")
+	private List<WebElement> _radioAiresManagedButtonList;
+
+	// Benefit can be selected more than once Checkbox
+	@FindBy(how = How.XPATH, using = "//input[@id='multiAddInd']/parent::label")
+	private List<WebElement> _inputMultiAddBenefitLabel;
+
+	// Benefit can be selected more than once Checkbox
+	@FindBy(how = How.XPATH, using = "//input[@id='multiAddInd']")
+	private List<WebElement> _inputMultiAddBenefitButton;
+
+	// Gross Up Radio Label Selection
+	@FindBy(how = How.XPATH, using = "//label[contains(text(),'Gross-Up')]/following-sibling::div/label[@class='form-check-label']")
+	private List<WebElement> _radioGrossUpLabelList;
+
+	// Gross Up Radio Button Selection
+	@FindBy(how = How.XPATH, using = "//label[contains(text(),'Gross-Up')]/following-sibling::div//input")
+	private List<WebElement> _radioGrossUpButtonList;
+
+	// Reimbursed By Radio Label Selection
+	@FindBy(how = How.XPATH, using = "//label[contains(text(),'Reimbursed By')]/following-sibling::div/label[@class='form-check-label']")
+	private List<WebElement> _radioReimbursedByLabelList;
+
+	// Reimbursed By Radio Button Selection
+	@FindBy(how = How.XPATH, using = "//label[contains(text(),'Reimbursed By')]/following-sibling::div//input")
+	private List<WebElement> _radioReimbursedByButtonList;
+
 	/*********************************************************************/
 
-	CoreFlex_SettlingInBenefitsData settlingInBenefitData = FileReaderManager.getInstance()
-			.getCoreFlexJsonReader().getSettlingInBenefitDataList(COREFLEXConstants.CULTURAL_TRAINING);
+	CoreFlex_SettlingInBenefitsData settlingInBenefitData = FileReaderManager.getInstance().getCoreFlexJsonReader()
+			.getSettlingInBenefitDataList(COREFLEXConstants.CULTURAL_TRAINING);
 
 	public static final List<Benefit> coreBenefits = FileReaderManager.getInstance().getCoreFlexJsonReader()
 			.getMXTransfereeCoreBenefitDetails();
@@ -299,7 +339,7 @@ public class CoreFlex_CulturalTraining_BenefitsPage extends Base {
 			selectSubBenefitsAndFillMandatoryFields(subBenefitNames, benefitType);
 		}
 		clickElementOfPage(COREFLEXConstants.SAVE_AND_CONTINUE);
-		
+
 		if (CoreFunctions.isElementExist(driver, _errorDialogPolicyBenefitsDataMissing, 7)) {
 			CoreFunctions.clickElement(driver, _errorDialogPolicyBenefitsDataMissingOKButton);
 		}
@@ -367,8 +407,7 @@ public class CoreFlex_CulturalTraining_BenefitsPage extends Base {
 		CoreFunctions.clickElement(driver, _selectFamilyDuration);
 		CoreFunctions.selectItemInListByText(driver, _selectFamilyDurationList,
 				settlingInBenefitData.culturalTrainingFamily.familyDuration, true);
-		if (settlingInBenefitData.culturalTrainingFamily.familyDuration
-				.equalsIgnoreCase(COREFLEXConstants.OTHER)) {
+		if (settlingInBenefitData.culturalTrainingFamily.familyDuration.equalsIgnoreCase(COREFLEXConstants.OTHER)) {
 			CoreFunctions.clearAndSetText(driver, _inputFamilyDurationOther,
 					settlingInBenefitData.culturalTrainingFamily.familyOtherDuration);
 		}
@@ -380,8 +419,7 @@ public class CoreFlex_CulturalTraining_BenefitsPage extends Base {
 			CoreFunctions.clearAndSetText(driver, _inputReimbursedBy,
 					settlingInBenefitData.culturalTrainingFamily.reimbursedByOther);
 		}
-		CoreFunctions.clearAndSetText(driver, _txtAreaComment,
-				settlingInBenefitData.culturalTrainingFamily.comment);
+		CoreFunctions.clearAndSetText(driver, _txtAreaComment, settlingInBenefitData.culturalTrainingFamily.comment);
 	}
 
 	/**
@@ -391,8 +429,7 @@ public class CoreFlex_CulturalTraining_BenefitsPage extends Base {
 		CoreFunctions.clickElement(driver, _selectEmployeeDuration);
 		CoreFunctions.selectItemInListByText(driver, _selectEmployeeDurationList,
 				settlingInBenefitData.culturalTrainingEmployee.employeeDuration, true);
-		if (settlingInBenefitData.culturalTrainingEmployee.employeeDuration
-				.equalsIgnoreCase(COREFLEXConstants.OTHER)) {
+		if (settlingInBenefitData.culturalTrainingEmployee.employeeDuration.equalsIgnoreCase(COREFLEXConstants.OTHER)) {
 			CoreFunctions.clearAndSetText(driver, _inputEmployeeDurationOther,
 					settlingInBenefitData.culturalTrainingEmployee.employeeOtherDuration);
 		}
@@ -400,13 +437,11 @@ public class CoreFlex_CulturalTraining_BenefitsPage extends Base {
 				settlingInBenefitData.culturalTrainingEmployee.grossUp, true);
 		CoreFunctions.selectItemInListByText(driver, _radioBtnCandidateSelection,
 				settlingInBenefitData.culturalTrainingEmployee.reimbursedBy, true);
-		if (settlingInBenefitData.culturalTrainingEmployee.reimbursedBy
-				.equalsIgnoreCase(COREFLEXConstants.OTHER)) {
+		if (settlingInBenefitData.culturalTrainingEmployee.reimbursedBy.equalsIgnoreCase(COREFLEXConstants.OTHER)) {
 			CoreFunctions.clearAndSetText(driver, _inputReimbursedBy,
 					settlingInBenefitData.culturalTrainingEmployee.reimbursedByOther);
 		}
-		CoreFunctions.clearAndSetText(driver, _txtAreaComment,
-				settlingInBenefitData.culturalTrainingEmployee.comment);
+		CoreFunctions.clearAndSetText(driver, _txtAreaComment, settlingInBenefitData.culturalTrainingEmployee.comment);
 	}
 
 	/**
@@ -447,9 +482,10 @@ public class CoreFlex_CulturalTraining_BenefitsPage extends Base {
 	 * @param benefitType
 	 * @param multipleBenefitSelection
 	 * @param flexPoints
-	 * @param benefitDescription
+	 * @param benefitDisplayName
 	 * @param benefitAllowanceAmount
-	 * @param benefitDescription2
+	 * @param benefitDescription
+	 * @param aireManagedService
 	 */
 	private void selectBenefitTypeAndFillMandatoryFields(String benefitType, String multipleBenefitSelection,
 			String flexPoints, String benefitDisplayName, String benefitAllowanceAmount, String benefitDescription,
@@ -494,11 +530,12 @@ public class CoreFlex_CulturalTraining_BenefitsPage extends Base {
 	/**
 	 * Method to fill Default Mandatory Fields of Benefit
 	 * 
-	 * @param multipleBenefitSelection
 	 * @param benefitType
-	 * @param benefitDescription
+	 * @param multipleBenefitSelection
+	 * @param benefitDisplayName
 	 * @param benefitAllowanceAmount
-	 * @param benefitDescription2
+	 * @param benefitDescription
+	 * @param aireManagedService
 	 */
 	private void fillManadatoryDetails(String benefitType, String multipleBenefitSelection, String benefitDisplayName,
 			String benefitAllowanceAmount, String benefitDescription, String aireManagedService) {
@@ -519,6 +556,208 @@ public class CoreFlex_CulturalTraining_BenefitsPage extends Base {
 			Reporter.addStepLog(
 					MessageFormat.format(COREFLEXConstants.EXCEPTION_OCCURED_WHILE_FILLING_MANDATORY_FIELDS_OF_BENEFIT,
 							CoreConstants.FAIL, e.getMessage(), benefitDisplayName));
+		}
+	}
+
+	public boolean verifyAddedBenefitsAndSubBenefitDetails(String benefitType, String subBenefitNames,
+			String multipleBenefitSelection, String flexPoints, String benefitDisplayName,
+			String benefitAllowanceAmount, String benefitDescription, String paymentOption,
+			String airesManagedService) {
+		if (benefitType.equals(COREFLEXConstants.BOTH)) {
+			CoreFunctions.clickElement(driver, _textBoth);
+			verifyBenefitsMandatoryDetails(COREFLEXConstants.CORE_BENEFITS, multipleBenefitSelection, flexPoints,
+					benefitDisplayName, benefitAllowanceAmount, benefitDescription, paymentOption, airesManagedService);
+			iterateSubBenefitAndVerifyDetails(subBenefitNames, COREFLEXConstants.CORE_BENEFITS);
+			verifyBenefitsMandatoryDetails(COREFLEXConstants.FLEX_BENEFITS, multipleBenefitSelection, flexPoints,
+					benefitDisplayName, benefitAllowanceAmount, benefitDescription, paymentOption, airesManagedService);
+			iterateSubBenefitAndVerifyDetails(subBenefitNames, COREFLEXConstants.FLEX_BENEFITS);
+			return true;
+		} else {
+			verifyBenefitsMandatoryDetails(benefitType, multipleBenefitSelection, flexPoints, benefitDisplayName,
+					benefitAllowanceAmount, benefitDescription, paymentOption, airesManagedService);
+			iterateSubBenefitAndVerifyDetails(subBenefitNames, benefitType);
+			return true;
+		}
+	}
+
+	private void verifyBenefitsMandatoryDetails(String benefitType, String multipleBenefitSelection, String flexPoints,
+			String benefitDisplayName, String benefitAllowanceAmount, String benefitDescription, String paymentOption,
+			String airesManagedService) {
+		Benefit culturalTrainingBenefit = coreBenefits.stream()
+				.filter(b -> b.getBenefitType().equals(COREFLEXConstants.CULTURAL_TRAINING)).findAny().orElse(null);
+		switch (benefitType) {
+		case COREFLEXConstants.CORE:
+			CoreFunctions.clickElement(driver, _textCore);
+			verifyManadatoryDetails(benefitType, multipleBenefitSelection,
+					culturalTrainingBenefit.getBenefitDisplayName(), culturalTrainingBenefit.getBenefitAmount(),
+					culturalTrainingBenefit.getBenefitDesc(), paymentOption, airesManagedService);
+			break;
+		case COREFLEXConstants.FLEX:
+			CoreFunctions.clickElement(driver, _textFlex);
+			CoreFunctions.verifyText(_inputFlexPoints.getDomProperty("value"), flexPoints,
+					COREFLEXConstants.FLEX_POINTS_VALUE);
+			CoreFunctions.highlightObject(driver, _inputFlexPoints);
+			verifyManadatoryDetails(benefitType, multipleBenefitSelection, benefitDisplayName, benefitAllowanceAmount,
+					benefitDescription, paymentOption, airesManagedService);
+			break;
+		case COREFLEXConstants.CORE_BENEFITS:
+			CoreFunctions.clickElement(driver, _textCoreBenefits);
+			verifyManadatoryDetails(benefitType, multipleBenefitSelection,
+					culturalTrainingBenefit.getBenefitDisplayName(), culturalTrainingBenefit.getBenefitAmount(),
+					culturalTrainingBenefit.getBenefitDesc(), paymentOption, airesManagedService);
+			break;
+		case COREFLEXConstants.FLEX_BENEFITS:
+			CoreFunctions.clickElement(driver, _textFlexBenefits);
+			CoreFunctions.verifyText(_inputFlexPoints.getDomProperty("value"), flexPoints,
+					COREFLEXConstants.FLEX_POINTS_VALUE);
+			CoreFunctions.highlightObject(driver, _inputFlexPoints);
+			verifyManadatoryDetails(benefitType, multipleBenefitSelection, benefitDisplayName, benefitAllowanceAmount,
+					benefitDescription, paymentOption, airesManagedService);
+			break;
+		case COREFLEXConstants.BOTH:
+			CoreFunctions.clickElement(driver, _textBoth);
+			break;
+		default:
+			Assert.fail(COREFLEXConstants.INVALID_OPTION);
+		}
+
+	}
+
+	private void verifyManadatoryDetails(String benefitType, String multipleBenefitSelection, String benefitDisplayName,
+			String benefitAllowanceAmount, String benefitDescription, String paymentOption,
+			String airesManagedService) {
+		if ((benefitType.equals(COREFLEXConstants.FLEX_BENEFITS)) || (benefitType.equals(COREFLEXConstants.FLEX))) {
+			if ((multipleBenefitSelection.equals(COREFLEXConstants.YES))) {
+				CoreFunctions.verifyRadioButtonSelection(driver, _inputMultiAddBenefitLabel,
+						_inputMultiAddBenefitButton, COREFLEXConstants.BENEFIT_SELECTED_MORE_THAN_ONCE,
+						COREFLEXConstants.MULTIPLE_BENEFIT_SELECTION);
+			}
+			CoreFunctions.verifyRadioButtonSelection(driver, _radioAiresManagedLabelList, _radioAiresManagedButtonList,
+					airesManagedService, COREFLEXConstants.AIRES_MANAGED_SERVICE);
+		}
+		CoreFunctions.verifyText(_inputBenefitName.getDomProperty("value"), benefitDisplayName,
+				COREFLEXConstants.BENEFIT_DISPLAY_NAME);
+		CoreFunctions.highlightObject(driver, _inputBenefitName);
+		CoreFunctions.verifyText(_textAreaAllowanceAmountMessage.getDomProperty("value"), benefitAllowanceAmount,
+				COREFLEXConstants.ALLOWANCE_AMOUNT_MESSAGE);
+		CoreFunctions.highlightObject(driver, _textAreaAllowanceAmountMessage);
+		CoreFunctions.verifyText(_textAreaBenefitLongDescription.getDomProperty("value"), benefitDescription,
+				COREFLEXConstants.BENEFIT_LONG_DESCRIPTION);
+		CoreFunctions.highlightObject(driver, _textAreaBenefitLongDescription);
+	}
+
+	/**
+	 * Method to iterate and verify mentioned SubBenefits details
+	 * 
+	 * @param subBenefitNames
+	 * @param benefitType
+	 */
+	private void iterateSubBenefitAndVerifyDetails(String subBenefitNames, String benefitType) {
+		try {
+			List<String> subBenefitNamesList = new ArrayList<String>();
+			if (subBenefitNames.contains(";"))
+				subBenefitNamesList = Arrays.asList(subBenefitNames.split(";"));
+			else
+				subBenefitNamesList.add(subBenefitNames);
+
+			for (String subBenefit : subBenefitNamesList) {
+				if (CoreFunctions.isElementExist(driver, getElementByName(subBenefit.trim()), 5)) {
+					verifySubBenefitDetails(subBenefit.trim(), benefitType);
+				} else {
+					Reporter.addStepLog(MessageFormat.format(COREFLEXConstants.SUB_BENEFIT_FORM_NOT_DISPLAYED,
+							CoreConstants.FAIL, subBenefit, COREFLEXConstants.CULTURAL_TRAINING_BENEFITS_PAGE));
+					throw new RuntimeException(MessageFormat.format(COREFLEXConstants.SUB_BENEFIT_FORM_NOT_DISPLAYED,
+							CoreConstants.FAIL, subBenefit, COREFLEXConstants.CULTURAL_TRAINING_BENEFITS_PAGE));
+				}
+			}
+		} catch (Exception e) {
+			Reporter.addStepLog(MessageFormat.format(
+					COREFLEXConstants.EXCEPTION_OCCURED_WHILE_SELECTING_AND_VERIFYING_SUB_BENEFIT_DETAILS,
+					CoreConstants.FAIL, e.getMessage()));
+		}
+	}
+
+	/**
+	 * Method to Expand and call SubBenefit Verification Method's
+	 * 
+	 * @param subBenefit
+	 * @param benefitType
+	 */
+	private void verifySubBenefitDetails(String subBenefit, String benefitType) {
+		switch (subBenefit) {
+		case COREFLEXConstants.CULTURAL_TRAINING_EMPLOYEE:
+			expandSubBenefitIfCollapsed(getElementByName(COREFLEXConstants.CULTURAL_TRAINING_EMPLOYEE));
+			verifyCulturalTrainingEmployeeSubBenefitForm();
+			break;
+		case COREFLEXConstants.CULTURAL_TRAINING_FAMILY:
+			expandSubBenefitIfCollapsed(getElementByName(COREFLEXConstants.CULTURAL_TRAINING_FAMILY));
+			verifyCulturalTrainingFamilySubBenefitForm();
+			break;
+		default:
+			Assert.fail(MessageFormat.format(COREFLEXConstants.ELEMENT_NOT_FOUND, CoreConstants.FAIL));
+		}
+	}
+
+	/**
+	 * Method to verify Cultural Training Family subBenefit form
+	 */
+	private void verifyCulturalTrainingFamilySubBenefitForm() {
+		try {
+			CoreFunctions.verifyText(driver, _selectFamilyDurationSelectedValue,
+					settlingInBenefitData.culturalTrainingFamily.familyDuration, COREFLEXConstants.DURATION);
+			if (settlingInBenefitData.culturalTrainingFamily.familyDuration.equalsIgnoreCase(COREFLEXConstants.OTHER)) {			
+				CoreFunctions.verifyText(_inputFamilyDurationOther.getDomProperty("value"),
+						settlingInBenefitData.culturalTrainingFamily.familyOtherDuration,
+						COREFLEXConstants.DURATION_OTHER);
+			}	
+			CoreFunctions.verifyRadioButtonSelection(driver, _radioGrossUpLabelList, _radioGrossUpButtonList,
+					settlingInBenefitData.culturalTrainingFamily.grossUp, COREFLEXConstants.GROSS_UP);
+			CoreFunctions.verifyRadioButtonSelection(driver, _radioReimbursedByLabelList, _radioReimbursedByButtonList,
+					settlingInBenefitData.culturalTrainingFamily.reimbursedBy, COREFLEXConstants.REIMBURSED_BY);
+			if (settlingInBenefitData.culturalTrainingFamily.reimbursedBy.equalsIgnoreCase(COREFLEXConstants.OTHER)) {
+				CoreFunctions.verifyText(_inputReimbursedBy.getDomProperty("value"),
+						settlingInBenefitData.culturalTrainingFamily.reimbursedByOther,
+						COREFLEXConstants.REIMBURSED_BY_OTHER);
+				CoreFunctions.highlightObject(driver, _inputReimbursedBy);
+			}
+			CoreFunctions.verifyText(_txtAreaComment.getDomProperty("value"),
+					settlingInBenefitData.culturalTrainingFamily.comment, COREFLEXConstants.COMMENT);
+			CoreFunctions.highlightObject(driver, _txtAreaComment);
+
+		} catch (Exception e) {
+			Assert.fail(COREFLEXConstants.FAILED_TO_VERIFY_CULTURAL_TRAINING_SUB_BENEFITS_FORM);
+		}
+	}
+
+	/**
+	 * Method to verify Cultural Training Employee subBenefit form
+	 */
+	private void verifyCulturalTrainingEmployeeSubBenefitForm() {
+		try {
+
+			CoreFunctions.verifyText(driver, _selectEmployeeDurationSelectedValue,
+					settlingInBenefitData.culturalTrainingEmployee.employeeDuration, COREFLEXConstants.DURATION);
+			if (settlingInBenefitData.culturalTrainingEmployee.employeeDuration
+					.equalsIgnoreCase(COREFLEXConstants.OTHER)) {
+				CoreFunctions.verifyText(_inputEmployeeDurationOther.getDomProperty("value"),
+						settlingInBenefitData.culturalTrainingEmployee.employeeOtherDuration,
+						COREFLEXConstants.DURATION_OTHER);
+			}
+			CoreFunctions.verifyRadioButtonSelection(driver, _radioGrossUpLabelList, _radioGrossUpButtonList,
+					settlingInBenefitData.culturalTrainingEmployee.grossUp, COREFLEXConstants.GROSS_UP);
+			CoreFunctions.verifyRadioButtonSelection(driver, _radioReimbursedByLabelList, _radioReimbursedByButtonList,
+					settlingInBenefitData.culturalTrainingEmployee.reimbursedBy, COREFLEXConstants.REIMBURSED_BY);
+			if (settlingInBenefitData.culturalTrainingEmployee.reimbursedBy.equalsIgnoreCase(COREFLEXConstants.OTHER)) {
+				CoreFunctions.verifyText(_inputReimbursedBy.getDomProperty("value"),
+						settlingInBenefitData.culturalTrainingEmployee.reimbursedByOther,
+						COREFLEXConstants.REIMBURSED_BY_OTHER);
+				CoreFunctions.highlightObject(driver, _inputReimbursedBy);
+			}
+			CoreFunctions.verifyText(_txtAreaComment.getDomProperty("value"),
+					settlingInBenefitData.culturalTrainingEmployee.comment, COREFLEXConstants.COMMENT);
+			CoreFunctions.highlightObject(driver, _txtAreaComment);
+		} catch (Exception e) {
+			Assert.fail(COREFLEXConstants.FAILED_TO_VERIFY_CULTURAL_TRAINING_SUB_BENEFITS_FORM);
 		}
 	}
 

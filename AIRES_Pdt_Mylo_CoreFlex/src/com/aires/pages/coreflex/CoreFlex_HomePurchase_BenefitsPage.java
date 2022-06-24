@@ -108,7 +108,7 @@ public class CoreFlex_HomePurchase_BenefitsPage extends Base {
 	// SubBenefit - Collapsable Menu 1
 	@FindBy(how = How.XPATH, using = "//h5[contains(text(),'Home Purchase Closing Costs')]/ancestor::a[contains(@href,'collapse')]")
 	private WebElement _formHomePurchaseClosingCosts;
-	
+
 	@FindBy(how = How.XPATH, using = "//h5[contains(text(),'Home Purchase Closing Costs')]")
 	private WebElement _headerHomePurchaseClosingCosts;
 
@@ -124,6 +124,14 @@ public class CoreFlex_HomePurchase_BenefitsPage extends Base {
 	@FindBy(how = How.XPATH, using = "//div[@class='collapse show']//input[@formcontrolname='directBillEligibleInd']/parent::label[@class='form-check-label']")
 	private List<WebElement> _radioBtnDirectBillEligible;
 
+	// Direct Bill Eligible - Radio Button Selection Label List
+	@FindBy(how = How.XPATH, using = "//div[@class='collapse show']//input[@formcontrolname='directBillEligibleInd']/parent::label[@class='form-check-label']")
+	private List<WebElement> _radioBtnDirectBillEligibleLabelList;
+
+	// Direct Bill Eligible - Radio Button Selection Button List
+	@FindBy(how = How.XPATH, using = "//div[@class='collapse show']//input[@formcontrolname='directBillEligibleInd']")
+	private List<WebElement> _radioBtnDirectBillEligibleButtonList;
+
 	// Max.% of Home Purchase Price Input Field
 	@FindBy(how = How.XPATH, using = "//div[@class='collapse show']//input[@formcontrolname='maxPrice']")
 	private WebElement _inputMaxPurchasePrice;
@@ -136,13 +144,25 @@ public class CoreFlex_HomePurchase_BenefitsPage extends Base {
 	@FindBy(how = How.CSS, using = "ng-select[formcontrolname='currencyCode']")
 	private WebElement _selectCurrency;
 
+	// Currency Select Field - SelectedValue
+	@FindBy(how = How.CSS, using = "ng-select[formcontrolname='currencyCode'] span[class*='ng-value-label']")
+	private WebElement _selectCurrencySelectedValue;
+
 	// Currency Select Field Options
 	@FindBy(how = How.XPATH, using = "//ng-select[@formcontrolname='currencyCode']//div[@role='option']")
 	private List<WebElement> _selectCurrencyOptions;
 
 	// Radio Button Selection - Aires Preferred Landers
 	@FindBy(how = How.XPATH, using = "//div[@class='collapse show']//div[@formarrayname='airesPreferredLenders']//label[@class='form-check-label']")
-	private List<WebElement> _radioBtnAiresPrefferedLenders;	
+	private List<WebElement> _radioBtnAiresPrefferedLenders;
+
+	// Radio Button Selection - Aires Preferred Landers
+	@FindBy(how = How.CSS, using = "div[formarrayname='airesPreferredLenders'] label[class='form-check-label']")
+	private List<WebElement> _radioBtnAiresPrefferedLendersLabelList;
+
+	// Radio Button Selection - Aires Preferred Landers
+	@FindBy(how = How.CSS, using = "div[formarrayname='airesPreferredLenders'] label[class='form-check-label'] > input")
+	private List<WebElement> _radioBtnAiresPrefferedLendersButtonList;
 
 	// Gross Up - Radio Button Selection
 	@FindBy(how = How.XPATH, using = "//div[@class='collapse show']//input[@formcontrolname='grossedUpInd']/parent::label[@class='form-check-label']")
@@ -174,12 +194,44 @@ public class CoreFlex_HomePurchase_BenefitsPage extends Base {
 
 	// Policy Benefits data Missing Error Dialog - OK Button
 	@FindBy(how = How.CSS, using = "button[class*='swal2-confirm']")
-	private WebElement _errorDialogPolicyBenefitsDataMissingOKButton;	
+	private WebElement _errorDialogPolicyBenefitsDataMissingOKButton;
+
+	// Aires Managed Benefit Radio Label Selection
+	@FindBy(how = How.XPATH, using = "//label[contains(text(),'Aires Managed Service')]/following-sibling::div/label[@class='form-check-label']")
+	private List<WebElement> _radioAiresManagedLabelList;
+
+	// Aires Managed Benefit Radio Button Selection
+	@FindBy(how = How.XPATH, using = "//label[contains(text(),'Aires Managed Service')]/following-sibling::div//input")
+	private List<WebElement> _radioAiresManagedButtonList;
+
+	// Benefit can be selected more than once Checkbox
+	@FindBy(how = How.XPATH, using = "//input[@id='multiAddInd']/parent::label")
+	private List<WebElement> _inputMultiAddBenefitLabel;
+
+	// Benefit can be selected more than once Checkbox
+	@FindBy(how = How.XPATH, using = "//input[@id='multiAddInd']")
+	private List<WebElement> _inputMultiAddBenefitButton;
+
+	// Gross Up Radio Label Selection
+	@FindBy(how = How.XPATH, using = "//label[contains(text(),'Gross-Up')]/following-sibling::div/label[@class='form-check-label']")
+	private List<WebElement> _radioGrossUpLabelList;
+
+	// Gross Up Radio Button Selection
+	@FindBy(how = How.XPATH, using = "//label[contains(text(),'Gross-Up')]/following-sibling::div//input")
+	private List<WebElement> _radioGrossUpButtonList;
+
+	// Reimbursed By Radio Label Selection
+	@FindBy(how = How.XPATH, using = "//label[contains(text(),'Reimbursed By')]/following-sibling::div/label[@class='form-check-label']")
+	private List<WebElement> _radioReimbursedByLabelList;
+
+	// Reimbursed By Radio Button Selection
+	@FindBy(how = How.XPATH, using = "//label[contains(text(),'Reimbursed By')]/following-sibling::div//input")
+	private List<WebElement> _radioReimbursedByButtonList;
 
 	/*********************************************************************/
 
-	CoreFlex_HousingBenefitsData housingBenefitData = FileReaderManager.getInstance()
-			.getCoreFlexJsonReader().getHousingBenefitDataList(COREFLEXConstants.HOME_PURCHASE);
+	CoreFlex_HousingBenefitsData housingBenefitData = FileReaderManager.getInstance().getCoreFlexJsonReader()
+			.getHousingBenefitDataList(COREFLEXConstants.HOME_PURCHASE);
 
 	public static final List<Benefit> coreBenefits = FileReaderManager.getInstance().getCoreFlexJsonReader()
 			.getMXTransfereeCoreBenefitDetails();
@@ -193,8 +245,8 @@ public class CoreFlex_HomePurchase_BenefitsPage extends Base {
 	 * @return
 	 */
 	public boolean verifyPageNavigation(String expectedPageName) {
-		return CoreFunctions.verifyElementOnPage(driver, _headerPage, COREFLEXConstants.HOME_PURCHASE,
-				expectedPageName, expectedPageName, true);
+		return CoreFunctions.verifyElementOnPage(driver, _headerPage, COREFLEXConstants.HOME_PURCHASE, expectedPageName,
+				expectedPageName, true);
 	}
 
 	/**
@@ -271,7 +323,9 @@ public class CoreFlex_HomePurchase_BenefitsPage extends Base {
 	}
 
 	/**
-	 * Method to call select Benefit Type and Sub Benefits, fill all mandatory fields methods
+	 * Method to call select Benefit Type and Sub Benefits, fill all mandatory
+	 * fields methods
+	 * 
 	 * @param benefitType
 	 * @param subBenefitNames
 	 * @param multipleBenefitSelection
@@ -376,7 +430,7 @@ public class CoreFlex_HomePurchase_BenefitsPage extends Base {
 		CoreFunctions.selectItemInListByText(driver, _radioBtnDirectBillEligible,
 				housingBenefitData.homePurchaseClosingCosts.directBillEligible, true);
 		CoreFunctions.clearAndSetText(driver, _inputClosingCostCap,
-				housingBenefitData.homePurchaseClosingCosts.closingCostCap);		
+				housingBenefitData.homePurchaseClosingCosts.closingCostCap);
 		CoreFunctions.clickElement(driver, _selectCurrency);
 		CoreFunctions.selectItemInListByText(driver, _selectCurrencyOptions,
 				housingBenefitData.homePurchaseClosingCosts.currency, true);
@@ -390,8 +444,7 @@ public class CoreFlex_HomePurchase_BenefitsPage extends Base {
 			CoreFunctions.clearAndSetText(driver, _inputReimbursedBy,
 					housingBenefitData.homePurchaseClosingCosts.reimbursedByOther);
 		}
-		CoreFunctions.clearAndSetText(driver, _txtAreaComment,
-				housingBenefitData.homePurchaseClosingCosts.comment);
+		CoreFunctions.clearAndSetText(driver, _txtAreaComment, housingBenefitData.homePurchaseClosingCosts.comment);
 	}
 
 	/**
@@ -399,19 +452,18 @@ public class CoreFlex_HomePurchase_BenefitsPage extends Base {
 	 */
 	private void fillHomePurchasePointsSubBenefitForm() {
 		CoreFunctions.clearAndSetText(driver, _inputMaxPurchasePrice,
-				housingBenefitData.homePurchasePoints.maxHomePurchasePrice);		
-		CoreFunctions.selectItemInListByText(driver, _radioBtnGrossUp,
-				housingBenefitData.homePurchasePoints.grossUp, true);
+				housingBenefitData.homePurchasePoints.maxHomePurchasePrice);
+		CoreFunctions.selectItemInListByText(driver, _radioBtnGrossUp, housingBenefitData.homePurchasePoints.grossUp,
+				true);
 		CoreFunctions.selectItemInListByText(driver, _radioBtnCandidateSelection,
 				housingBenefitData.homePurchasePoints.reimbursedBy, true);
 		if (housingBenefitData.homePurchasePoints.reimbursedBy.equalsIgnoreCase(COREFLEXConstants.OTHER)) {
 			CoreFunctions.clearAndSetText(driver, _inputReimbursedBy,
 					housingBenefitData.homePurchasePoints.reimbursedByOther);
 		}
-		CoreFunctions.clearAndSetText(driver, _txtAreaComment,
-				housingBenefitData.homePurchasePoints.comment);
+		CoreFunctions.clearAndSetText(driver, _txtAreaComment, housingBenefitData.homePurchasePoints.comment);
 	}
-	
+
 	/**
 	 * Method to fill Home Purchase Points subBenefit form
 	 */
@@ -424,8 +476,7 @@ public class CoreFlex_HomePurchase_BenefitsPage extends Base {
 			CoreFunctions.clearAndSetText(driver, _inputReimbursedBy,
 					housingBenefitData.homePurchaseInspections.reimbursedByOther);
 		}
-		CoreFunctions.clearAndSetText(driver, _txtAreaComment,
-				housingBenefitData.homePurchaseInspections.comment);
+		CoreFunctions.clearAndSetText(driver, _txtAreaComment, housingBenefitData.homePurchaseInspections.comment);
 	}
 
 	/**
@@ -481,9 +532,8 @@ public class CoreFlex_HomePurchase_BenefitsPage extends Base {
 		switch (benefitType) {
 		case COREFLEXConstants.CORE:
 			CoreFunctions.clickElement(driver, _textCore);
-			fillManadatoryDetails(benefitType, multipleBenefitSelection,
-					homePurchaseBenefit.getBenefitDisplayName(), homePurchaseBenefit.getBenefitAmount(),
-					homePurchaseBenefit.getBenefitDesc(), aireManagedService);
+			fillManadatoryDetails(benefitType, multipleBenefitSelection, homePurchaseBenefit.getBenefitDisplayName(),
+					homePurchaseBenefit.getBenefitAmount(), homePurchaseBenefit.getBenefitDesc(), aireManagedService);
 			break;
 		case COREFLEXConstants.FLEX:
 			CoreFunctions.clickElement(driver, _textFlex);
@@ -494,9 +544,8 @@ public class CoreFlex_HomePurchase_BenefitsPage extends Base {
 			break;
 		case COREFLEXConstants.CORE_BENEFITS:
 			CoreFunctions.clickElement(driver, _textCoreBenefits);
-			fillManadatoryDetails(benefitType, multipleBenefitSelection,
-					homePurchaseBenefit.getBenefitDisplayName(), homePurchaseBenefit.getBenefitAmount(),
-					homePurchaseBenefit.getBenefitDesc(), aireManagedService);
+			fillManadatoryDetails(benefitType, multipleBenefitSelection, homePurchaseBenefit.getBenefitDisplayName(),
+					homePurchaseBenefit.getBenefitAmount(), homePurchaseBenefit.getBenefitDesc(), aireManagedService);
 			break;
 		case COREFLEXConstants.FLEX_BENEFITS:
 			CoreFunctions.clickElement(driver, _textFlexBenefits);
@@ -515,6 +564,7 @@ public class CoreFlex_HomePurchase_BenefitsPage extends Base {
 
 	/**
 	 * Method to fill Default Mandatory Fields of Benefit
+	 * 
 	 * @param benefitType
 	 * @param multipleBenefitSelection
 	 * @param benefitDisplayName
@@ -541,6 +591,239 @@ public class CoreFlex_HomePurchase_BenefitsPage extends Base {
 			Reporter.addStepLog(
 					MessageFormat.format(COREFLEXConstants.EXCEPTION_OCCURED_WHILE_FILLING_MANDATORY_FIELDS_OF_BENEFIT,
 							CoreConstants.FAIL, e.getMessage(), benefitDisplayName));
+		}
+	}
+
+	public boolean verifyAddedBenefitsAndSubBenefitDetails(String benefitType, String subBenefitNames,
+			String multipleBenefitSelection, String flexPoints, String benefitDisplayName,
+			String benefitAllowanceAmount, String benefitDescription, String paymentOption,
+			String airesManagedService) {
+		if (benefitType.equals(COREFLEXConstants.BOTH)) {
+			CoreFunctions.clickElement(driver, _textBoth);
+			verifyBenefitsMandatoryDetails(COREFLEXConstants.CORE_BENEFITS, multipleBenefitSelection, flexPoints,
+					benefitDisplayName, benefitAllowanceAmount, benefitDescription, paymentOption, airesManagedService);
+			iterateSubBenefitAndVerifyDetails(subBenefitNames, COREFLEXConstants.CORE_BENEFITS);
+			verifyBenefitsMandatoryDetails(COREFLEXConstants.FLEX_BENEFITS, multipleBenefitSelection, flexPoints,
+					benefitDisplayName, benefitAllowanceAmount, benefitDescription, paymentOption, airesManagedService);
+			iterateSubBenefitAndVerifyDetails(subBenefitNames, COREFLEXConstants.FLEX_BENEFITS);
+			return true;
+		} else {
+			verifyBenefitsMandatoryDetails(benefitType, multipleBenefitSelection, flexPoints, benefitDisplayName,
+					benefitAllowanceAmount, benefitDescription, paymentOption, airesManagedService);
+			iterateSubBenefitAndVerifyDetails(subBenefitNames, benefitType);
+			return true;
+		}
+	}
+
+	private void verifyBenefitsMandatoryDetails(String benefitType, String multipleBenefitSelection, String flexPoints,
+			String benefitDisplayName, String benefitAllowanceAmount, String benefitDescription, String paymentOption,
+			String airesManagedService) {
+		Benefit homePurchaseBenefit = coreBenefits.stream()
+				.filter(b -> b.getBenefitType().equals(COREFLEXConstants.HOME_PURCHASE)).findAny().orElse(null);
+		switch (benefitType) {
+		case COREFLEXConstants.CORE:
+			CoreFunctions.clickElement(driver, _textCore);
+			verifyManadatoryDetails(benefitType, multipleBenefitSelection,
+					homePurchaseBenefit.getBenefitDisplayName(), homePurchaseBenefit.getBenefitAmount(),
+					homePurchaseBenefit.getBenefitDesc(), paymentOption, airesManagedService);
+			break;
+		case COREFLEXConstants.FLEX:
+			CoreFunctions.clickElement(driver, _textFlex);
+			CoreFunctions.verifyText(_inputFlexPoints.getDomProperty("value"), flexPoints,
+					COREFLEXConstants.FLEX_POINTS_VALUE);
+			CoreFunctions.highlightObject(driver, _inputFlexPoints);
+			verifyManadatoryDetails(benefitType, multipleBenefitSelection, benefitDisplayName, benefitAllowanceAmount,
+					benefitDescription, paymentOption, airesManagedService);
+			break;
+		case COREFLEXConstants.CORE_BENEFITS:
+			CoreFunctions.clickElement(driver, _textCoreBenefits);
+			verifyManadatoryDetails(benefitType, multipleBenefitSelection,
+					homePurchaseBenefit.getBenefitDisplayName(), homePurchaseBenefit.getBenefitAmount(),
+					homePurchaseBenefit.getBenefitDesc(), paymentOption, airesManagedService);
+			break;
+		case COREFLEXConstants.FLEX_BENEFITS:
+			CoreFunctions.clickElement(driver, _textFlexBenefits);
+			CoreFunctions.verifyText(_inputFlexPoints.getDomProperty("value"), flexPoints,
+					COREFLEXConstants.FLEX_POINTS_VALUE);
+			CoreFunctions.highlightObject(driver, _inputFlexPoints);
+			verifyManadatoryDetails(benefitType, multipleBenefitSelection, benefitDisplayName, benefitAllowanceAmount,
+					benefitDescription, paymentOption, airesManagedService);
+			break;
+		case COREFLEXConstants.BOTH:
+			CoreFunctions.clickElement(driver, _textBoth);
+			break;
+		default:
+			Assert.fail(COREFLEXConstants.INVALID_OPTION);
+		}
+
+	}
+
+	private void verifyManadatoryDetails(String benefitType, String multipleBenefitSelection, String benefitDisplayName,
+			String benefitAllowanceAmount, String benefitDescription, String paymentOption,
+			String airesManagedService) {
+		if ((benefitType.equals(COREFLEXConstants.FLEX_BENEFITS)) || (benefitType.equals(COREFLEXConstants.FLEX))) {
+			if ((multipleBenefitSelection.equals(COREFLEXConstants.YES))) {
+				CoreFunctions.verifyRadioButtonSelection(driver, _inputMultiAddBenefitLabel,
+						_inputMultiAddBenefitButton, COREFLEXConstants.BENEFIT_SELECTED_MORE_THAN_ONCE,
+						COREFLEXConstants.MULTIPLE_BENEFIT_SELECTION);
+			}
+			CoreFunctions.verifyRadioButtonSelection(driver, _radioAiresManagedLabelList, _radioAiresManagedButtonList,
+					airesManagedService, COREFLEXConstants.AIRES_MANAGED_SERVICE);
+		}
+		CoreFunctions.verifyText(_inputBenefitName.getDomProperty("value"), benefitDisplayName,
+				COREFLEXConstants.BENEFIT_DISPLAY_NAME);
+		CoreFunctions.highlightObject(driver, _inputBenefitName);
+		CoreFunctions.verifyText(_textAreaAllowanceAmountMessage.getDomProperty("value"), benefitAllowanceAmount,
+				COREFLEXConstants.ALLOWANCE_AMOUNT_MESSAGE);
+		CoreFunctions.highlightObject(driver, _textAreaAllowanceAmountMessage);
+		CoreFunctions.verifyText(_textAreaBenefitLongDescription.getDomProperty("value"), benefitDescription,
+				COREFLEXConstants.BENEFIT_LONG_DESCRIPTION);
+		CoreFunctions.highlightObject(driver, _textAreaBenefitLongDescription);
+	}
+
+	/**
+	 * Method to iterate and verify mentioned SubBenefits details
+	 * 
+	 * @param subBenefitNames
+	 * @param benefitType
+	 */
+	private void iterateSubBenefitAndVerifyDetails(String subBenefitNames, String benefitType) {
+		try {
+			List<String> subBenefitNamesList = new ArrayList<String>();
+			if (subBenefitNames.contains(";"))
+				subBenefitNamesList = Arrays.asList(subBenefitNames.split(";"));
+			else
+				subBenefitNamesList.add(subBenefitNames);
+
+			for (String subBenefit : subBenefitNamesList) {
+				if (CoreFunctions.isElementExist(driver, getElementByName(subBenefit.trim()), 5)) {
+					verifySubBenefitDetails(subBenefit.trim(), benefitType);
+				} else {
+					Reporter.addStepLog(MessageFormat.format(COREFLEXConstants.SUB_BENEFIT_FORM_NOT_DISPLAYED,
+							CoreConstants.FAIL, subBenefit, COREFLEXConstants.HOME_PURCHASE_BENEFITS_PAGE));
+					throw new RuntimeException(MessageFormat.format(COREFLEXConstants.SUB_BENEFIT_FORM_NOT_DISPLAYED,
+							CoreConstants.FAIL, subBenefit, COREFLEXConstants.HOME_PURCHASE_BENEFITS_PAGE));
+				}
+			}
+		} catch (Exception e) {
+			Reporter.addStepLog(MessageFormat.format(
+					COREFLEXConstants.EXCEPTION_OCCURED_WHILE_SELECTING_AND_VERIFYING_SUB_BENEFIT_DETAILS,
+					CoreConstants.FAIL, e.getMessage()));
+		}
+	}
+
+	/**
+	 * Method to Expand and call SubBenefit Verification Method's
+	 * 
+	 * @param subBenefit
+	 * @param benefitType
+	 */
+	private void verifySubBenefitDetails(String subBenefit, String benefitType) {
+		switch (subBenefit) {
+		case COREFLEXConstants.HOME_PURCHASE_CLOSING_COSTS:
+			expandSubBenefitIfCollapsed(getElementByName(COREFLEXConstants.HOME_PURCHASE_CLOSING_COSTS));
+//			if (benefitType.equals(COREFLEXConstants.FLEX_BENEFITS)) {
+//				CoreFunctions.clickElement(driver, _headerHomePurchaseClosingCosts);
+//			}
+			verifyHomePurchaseClosingCostsSubBenefitForm();
+			break;
+		case COREFLEXConstants.HOME_PURCHASE_POINTS:
+			expandSubBenefitIfCollapsed(getElementByName(COREFLEXConstants.HOME_PURCHASE_POINTS));
+			verifyHomePurchasePointsSubBenefitForm();
+			break;
+		case COREFLEXConstants.HOME_PURCHASE_INSPECTIONS:
+			expandSubBenefitIfCollapsed(getElementByName(COREFLEXConstants.HOME_PURCHASE_INSPECTIONS));
+			verifyHomePurchaseInspectionsSubBenefitForm();
+			break;
+		default:
+			Assert.fail(MessageFormat.format(COREFLEXConstants.ELEMENT_NOT_FOUND, CoreConstants.FAIL));
+		}
+	}
+
+	/**
+	 * Method to verify HomePurchaseClosingCosts subBenefit form
+	 */
+	private void verifyHomePurchaseClosingCostsSubBenefitForm() {
+		try {
+			CoreFunctions.verifyRadioButtonSelection(driver, _radioBtnDirectBillEligibleLabelList,
+					_radioBtnDirectBillEligibleButtonList,
+					housingBenefitData.homePurchaseClosingCosts.directBillEligible,
+					COREFLEXConstants.DIRECT_BILL_ELIGIBLE);
+			CoreFunctions.verifyText(_inputMaxPurchasePrice.getDomProperty("value"),
+					housingBenefitData.homePurchaseClosingCosts.maxHomePurchasePrice,
+					COREFLEXConstants.MAX_HOME_PURCHASE_PRICE);
+			CoreFunctions.verifyText(_inputClosingCostCap.getDomProperty("value"),
+					housingBenefitData.homePurchaseClosingCosts.closingCostCap, COREFLEXConstants.CLOSING_COST_CAP);
+			CoreFunctions.verifyText(driver, _selectCurrencySelectedValue,
+					housingBenefitData.homePurchaseClosingCosts.currency, COREFLEXConstants.CURRENCY);
+			CoreFunctions.verifyRadioButtonSelection(driver, _radioBtnAiresPrefferedLendersLabelList,
+					_radioBtnAiresPrefferedLendersButtonList,
+					housingBenefitData.homePurchaseClosingCosts.airesPrefferedLenders,
+					COREFLEXConstants.AIRES_PREFERRED_LENDERS);
+			CoreFunctions.verifyRadioButtonSelection(driver, _radioGrossUpLabelList, _radioGrossUpButtonList,
+					housingBenefitData.homePurchaseClosingCosts.grossUp, COREFLEXConstants.GROSS_UP);
+			CoreFunctions.verifyRadioButtonSelection(driver, _radioReimbursedByLabelList, _radioReimbursedByButtonList,
+					housingBenefitData.homePurchaseClosingCosts.reimbursedBy, COREFLEXConstants.REIMBURSED_BY);
+			if (housingBenefitData.homePurchaseClosingCosts.reimbursedBy
+					.equalsIgnoreCase(COREFLEXConstants.OTHER)) {
+				CoreFunctions.verifyText(_inputReimbursedBy.getDomProperty("value"),
+						housingBenefitData.homePurchaseClosingCosts.reimbursedByOther,
+						COREFLEXConstants.REIMBURSED_BY_OTHER);
+				CoreFunctions.highlightObject(driver, _inputReimbursedBy);
+			}
+			CoreFunctions.verifyText(_txtAreaComment.getDomProperty("value"),
+					housingBenefitData.homePurchaseClosingCosts.comment, COREFLEXConstants.COMMENT);
+			CoreFunctions.highlightObject(driver, _txtAreaComment);
+		} catch (Exception e) {
+			Assert.fail(COREFLEXConstants.FAILED_TO_VERIFY_HOME_PURCHASE_SUB_BENEFITS_FORM);
+		}
+	}
+
+	/**
+	 * Method to verify HomePurchasePoints subBenefit form
+	 */
+	private void verifyHomePurchasePointsSubBenefitForm() {
+		try {
+			CoreFunctions.verifyText(_inputMaxPurchasePrice.getDomProperty("value"),
+					housingBenefitData.homePurchasePoints.maxHomePurchasePrice, COREFLEXConstants.MAX_HOME_PURCHASE_PRICE);
+			CoreFunctions.verifyRadioButtonSelection(driver, _radioGrossUpLabelList, _radioGrossUpButtonList,
+					housingBenefitData.homePurchasePoints.grossUp, COREFLEXConstants.GROSS_UP);
+			CoreFunctions.verifyRadioButtonSelection(driver, _radioReimbursedByLabelList, _radioReimbursedByButtonList,
+					housingBenefitData.homePurchasePoints.reimbursedBy, COREFLEXConstants.REIMBURSED_BY);
+			if (housingBenefitData.homePurchasePoints.reimbursedBy.equalsIgnoreCase(COREFLEXConstants.OTHER)) {
+				CoreFunctions.verifyText(_inputReimbursedBy.getDomProperty("value"),
+						housingBenefitData.homePurchasePoints.reimbursedByOther,
+						COREFLEXConstants.REIMBURSED_BY_OTHER);
+				CoreFunctions.highlightObject(driver, _inputReimbursedBy);
+			}
+			CoreFunctions.verifyText(_txtAreaComment.getDomProperty("value"),
+					housingBenefitData.homePurchasePoints.comment, COREFLEXConstants.COMMENT);
+			CoreFunctions.highlightObject(driver, _txtAreaComment);
+		} catch (Exception e) {
+			Assert.fail(COREFLEXConstants.FAILED_TO_VERIFY_HOME_PURCHASE_SUB_BENEFITS_FORM);
+		}
+	}
+
+	/**
+	 * Method to verify HomePurchaseInspections subBenefit form
+	 */
+	private void verifyHomePurchaseInspectionsSubBenefitForm() {
+		try {
+			CoreFunctions.verifyRadioButtonSelection(driver, _radioGrossUpLabelList, _radioGrossUpButtonList,
+					housingBenefitData.homePurchaseInspections.grossUp, COREFLEXConstants.GROSS_UP);
+			CoreFunctions.verifyRadioButtonSelection(driver, _radioReimbursedByLabelList, _radioReimbursedByButtonList,
+					housingBenefitData.homePurchaseInspections.reimbursedBy, COREFLEXConstants.REIMBURSED_BY);
+			if (housingBenefitData.homePurchaseInspections.reimbursedBy.equalsIgnoreCase(COREFLEXConstants.OTHER)) {
+				CoreFunctions.verifyText(_inputReimbursedBy.getDomProperty("value"),
+						housingBenefitData.homePurchaseInspections.reimbursedByOther,
+						COREFLEXConstants.REIMBURSED_BY_OTHER);
+				CoreFunctions.highlightObject(driver, _inputReimbursedBy);
+			}
+			CoreFunctions.verifyText(_txtAreaComment.getDomProperty("value"),
+					housingBenefitData.homePurchaseInspections.comment, COREFLEXConstants.COMMENT);
+			CoreFunctions.highlightObject(driver, _txtAreaComment);
+		} catch (Exception e) {
+			Assert.fail(COREFLEXConstants.FAILED_TO_VERIFY_HOME_PURCHASE_SUB_BENEFITS_FORM);
 		}
 	}
 

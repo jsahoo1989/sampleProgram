@@ -284,6 +284,7 @@ public class CoreFlex_PreviewTransfereePage extends Base {
 		return verifyBenefitDetailsOnPreviewTransfereePage(policyType) && validatePortionCashOutSection();
 	}
 
+	@SuppressWarnings("unused")
 	private boolean verifyTracingPromptText() {
 		boolean isTracingPromptTextVerified = false;
 		String actualLockBenefitDateArray[], actualBenefitExpirationDateArray[];

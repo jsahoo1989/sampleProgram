@@ -127,9 +127,12 @@ public class CoreFlex_AutoRentalDuringAssignment_BenefitsPage extends Base {
 	@FindBy(how = How.CSS, using = "ng-select[formcontrolname='carTypeCode']")
 	private WebElement _selectRentalCarType;
 
+	@FindBy(how = How.CSS, using = "ng-select[formcontrolname='carTypeCode'] span[class*='ng-value-label']")
+	private WebElement _selectRentalCarTypeSelectedValue;
+	
 	@FindBy(how = How.CSS, using = "ng-select[formcontrolname='carTypeCode'] span.ng-option-label")
 	private List<WebElement> _selectRentalCarTypeOptions;
-	
+
 	@FindBy(how = How.CSS, using = "input[formcontrolname='carTypeOther']")
 	private WebElement _inputRentalCarOtherType;
 
@@ -153,6 +156,38 @@ public class CoreFlex_AutoRentalDuringAssignment_BenefitsPage extends Base {
 	@FindBy(how = How.CSS, using = "button[class*='swal2-confirm']")
 	private WebElement _errorDialogPolicyBenefitsDataMissingOKButton;
 
+	// Aires Managed Benefit Radio Label Selection
+	@FindBy(how = How.XPATH, using = "//label[contains(text(),'Aires Managed Service')]/following-sibling::div/label[@class='form-check-label']")
+	private List<WebElement> _radioAiresManagedLabelList;
+
+	// Aires Managed Benefit Radio Button Selection
+	@FindBy(how = How.XPATH, using = "//label[contains(text(),'Aires Managed Service')]/following-sibling::div//input")
+	private List<WebElement> _radioAiresManagedButtonList;
+
+	// Benefit can be selected more than once Checkbox
+	@FindBy(how = How.XPATH, using = "//input[@id='multiAddInd']/parent::label")
+	private List<WebElement> _inputMultiAddBenefitLabel;
+
+	// Benefit can be selected more than once Checkbox
+	@FindBy(how = How.XPATH, using = "//input[@id='multiAddInd']")
+	private List<WebElement> _inputMultiAddBenefitButton;
+
+	// Gross Up Radio Label Selection
+	@FindBy(how = How.XPATH, using = "//label[contains(text(),'Gross-Up')]/following-sibling::div/label[@class='form-check-label']")
+	private List<WebElement> _radioGrossUpLabelList;
+
+	// Gross Up Radio Button Selection
+	@FindBy(how = How.XPATH, using = "//label[contains(text(),'Gross-Up')]/following-sibling::div//input")
+	private List<WebElement> _radioGrossUpButtonList;
+
+	// Reimbursed By Radio Label Selection
+	@FindBy(how = How.XPATH, using = "//label[contains(text(),'Reimbursed By')]/following-sibling::div/label[@class='form-check-label']")
+	private List<WebElement> _radioReimbursedByLabelList;
+
+	// Reimbursed By Radio Button Selection
+	@FindBy(how = How.XPATH, using = "//label[contains(text(),'Reimbursed By')]/following-sibling::div//input")
+	private List<WebElement> _radioReimbursedByButtonList;
+
 	/*********************************************************************/
 
 	CoreFlex_AllowancesBenefitsData allowancesBenefitData = FileReaderManager.getInstance().getCoreFlexJsonReader()
@@ -170,8 +205,8 @@ public class CoreFlex_AutoRentalDuringAssignment_BenefitsPage extends Base {
 	 * @return
 	 */
 	public boolean verifyPageNavigation(String expectedPageName) {
-		return CoreFunctions.verifyElementOnPage(driver, _headerPage, COREFLEXConstants.AUTO_RENTAL_DURING_ASSIGNMENT, expectedPageName,
-				expectedPageName, true);
+		return CoreFunctions.verifyElementOnPage(driver, _headerPage, COREFLEXConstants.AUTO_RENTAL_DURING_ASSIGNMENT,
+				expectedPageName, expectedPageName, true);
 	}
 
 	/**
@@ -304,10 +339,12 @@ public class CoreFlex_AutoRentalDuringAssignment_BenefitsPage extends Base {
 				if (CoreFunctions.isElementExist(driver, getElementByName(subBenefit.trim()), 5)) {
 					fillSubBenefit(subBenefit.trim(), benefitType);
 				} else {
-					Reporter.addStepLog(MessageFormat.format(COREFLEXConstants.SUB_BENEFIT_FORM_NOT_DISPLAYED,
-							CoreConstants.FAIL, subBenefit, COREFLEXConstants.AUTO_RENTAL_DURING_ASSIGNMENT_BENEFITS_PAGE));
-					throw new RuntimeException(MessageFormat.format(COREFLEXConstants.SUB_BENEFIT_FORM_NOT_DISPLAYED,
-							CoreConstants.FAIL, subBenefit, COREFLEXConstants.AUTO_RENTAL_DURING_ASSIGNMENT_BENEFITS_PAGE));
+					Reporter.addStepLog(
+							MessageFormat.format(COREFLEXConstants.SUB_BENEFIT_FORM_NOT_DISPLAYED, CoreConstants.FAIL,
+									subBenefit, COREFLEXConstants.AUTO_RENTAL_DURING_ASSIGNMENT_BENEFITS_PAGE));
+					throw new RuntimeException(
+							MessageFormat.format(COREFLEXConstants.SUB_BENEFIT_FORM_NOT_DISPLAYED, CoreConstants.FAIL,
+									subBenefit, COREFLEXConstants.AUTO_RENTAL_DURING_ASSIGNMENT_BENEFITS_PAGE));
 				}
 			}
 		} catch (Exception e) {
@@ -327,9 +364,6 @@ public class CoreFlex_AutoRentalDuringAssignment_BenefitsPage extends Base {
 		switch (subBenefit) {
 		case COREFLEXConstants.AUTO_RENTAL_DURING_ASSIGNMENT:
 			expandSubBenefitIfCollapsed(getElementByName(COREFLEXConstants.AUTO_RENTAL_DURING_ASSIGNMENT));
-//			if (benefitType.equals(COREFLEXConstants.AUTO_RENTAL_DURING_ASSIGNMENT)) {
-//				CoreFunctions.clickElement(driver, _headerAutoRentalAssignment);
-//			}
 			fillAutoRentalSubBenefitForm(COREFLEXConstants.AUTO_RENTAL_DURING_ASSIGNMENT);
 			break;
 		default:
@@ -355,7 +389,8 @@ public class CoreFlex_AutoRentalDuringAssignment_BenefitsPage extends Base {
 					allowancesBenefitData.autoRentalDuringAssignment.grossUp, true);
 			CoreFunctions.selectItemInListByText(driver, _radioBtnCandidateSelection,
 					allowancesBenefitData.autoRentalDuringAssignment.reimbursedBy, true);
-			if (allowancesBenefitData.autoRentalDuringAssignment.reimbursedBy.equalsIgnoreCase(COREFLEXConstants.OTHER)) {
+			if (allowancesBenefitData.autoRentalDuringAssignment.reimbursedBy
+					.equalsIgnoreCase(COREFLEXConstants.OTHER)) {
 				CoreFunctions.clearAndSetText(driver, _inputReimbursedBy,
 						allowancesBenefitData.autoRentalDuringAssignment.reimbursedByOther);
 			}
@@ -410,13 +445,13 @@ public class CoreFlex_AutoRentalDuringAssignment_BenefitsPage extends Base {
 			String flexPoints, String benefitDisplayName, String benefitAllowanceAmount, String benefitDescription,
 			String aireManagedService) {
 		Benefit autoRentalBenefit = coreBenefits.stream()
-				.filter(b -> b.getBenefitType().equals(COREFLEXConstants.AUTO_RENTAL_DURING_ASSIGNMENT)).findAny().orElse(null);
+				.filter(b -> b.getBenefitType().equals(COREFLEXConstants.AUTO_RENTAL_DURING_ASSIGNMENT)).findAny()
+				.orElse(null);
 		switch (benefitType) {
 		case COREFLEXConstants.CORE:
 			CoreFunctions.clickElement(driver, _textCore);
-			fillManadatoryDetails(benefitType, multipleBenefitSelection,
-					autoRentalBenefit.getBenefitDisplayName(), autoRentalBenefit.getBenefitAmount(),
-					autoRentalBenefit.getBenefitDesc(), aireManagedService);
+			fillManadatoryDetails(benefitType, multipleBenefitSelection, autoRentalBenefit.getBenefitDisplayName(),
+					autoRentalBenefit.getBenefitAmount(), autoRentalBenefit.getBenefitDesc(), aireManagedService);
 			break;
 		case COREFLEXConstants.FLEX:
 			CoreFunctions.clickElement(driver, _textFlex);
@@ -427,9 +462,8 @@ public class CoreFlex_AutoRentalDuringAssignment_BenefitsPage extends Base {
 			break;
 		case COREFLEXConstants.CORE_BENEFITS:
 			CoreFunctions.clickElement(driver, _textCoreBenefits);
-			fillManadatoryDetails(benefitType, multipleBenefitSelection,
-					autoRentalBenefit.getBenefitDisplayName(), autoRentalBenefit.getBenefitAmount(),
-					autoRentalBenefit.getBenefitDesc(), aireManagedService);
+			fillManadatoryDetails(benefitType, multipleBenefitSelection, autoRentalBenefit.getBenefitDisplayName(),
+					autoRentalBenefit.getBenefitAmount(), autoRentalBenefit.getBenefitDesc(), aireManagedService);
 			break;
 		case COREFLEXConstants.FLEX_BENEFITS:
 			CoreFunctions.clickElement(driver, _textFlexBenefits);
@@ -475,6 +509,174 @@ public class CoreFlex_AutoRentalDuringAssignment_BenefitsPage extends Base {
 			Reporter.addStepLog(
 					MessageFormat.format(COREFLEXConstants.EXCEPTION_OCCURED_WHILE_FILLING_MANDATORY_FIELDS_OF_BENEFIT,
 							CoreConstants.FAIL, e.getMessage(), benefitDisplayName));
+		}
+	}
+
+	public boolean verifyAddedBenefitsAndSubBenefitDetails(String benefitType, String subBenefitNames,
+			String multipleBenefitSelection, String flexPoints, String benefitDisplayName,
+			String benefitAllowanceAmount, String benefitDescription, String paymentOption,
+			String airesManagedService) {
+		if (benefitType.equals(COREFLEXConstants.BOTH)) {
+			CoreFunctions.clickElement(driver, _textBoth);
+			verifyBenefitsMandatoryDetails(COREFLEXConstants.CORE_BENEFITS, multipleBenefitSelection, flexPoints,
+					benefitDisplayName, benefitAllowanceAmount, benefitDescription, paymentOption, airesManagedService);
+			iterateSubBenefitAndVerifyDetails(subBenefitNames, COREFLEXConstants.CORE_BENEFITS);
+			verifyBenefitsMandatoryDetails(COREFLEXConstants.FLEX_BENEFITS, multipleBenefitSelection, flexPoints,
+					benefitDisplayName, benefitAllowanceAmount, benefitDescription, paymentOption, airesManagedService);
+			iterateSubBenefitAndVerifyDetails(subBenefitNames, COREFLEXConstants.FLEX_BENEFITS);
+			return true;
+		} else {
+			verifyBenefitsMandatoryDetails(benefitType, multipleBenefitSelection, flexPoints, benefitDisplayName,
+					benefitAllowanceAmount, benefitDescription, paymentOption, airesManagedService);
+			iterateSubBenefitAndVerifyDetails(subBenefitNames, benefitType);
+			return true;
+		}
+	}
+
+	private void verifyBenefitsMandatoryDetails(String benefitType, String multipleBenefitSelection, String flexPoints,
+			String benefitDisplayName, String benefitAllowanceAmount, String benefitDescription, String paymentOption,
+			String airesManagedService) {
+		Benefit autoRentalBenefit = coreBenefits.stream()
+				.filter(b -> b.getBenefitType().equals(COREFLEXConstants.AUTO_RENTAL_DURING_ASSIGNMENT)).findAny()
+				.orElse(null);
+		switch (benefitType) {
+		case COREFLEXConstants.CORE:
+			CoreFunctions.clickElement(driver, _textCore);
+			verifyManadatoryDetails(benefitType, multipleBenefitSelection,
+					autoRentalBenefit.getBenefitDisplayName(), autoRentalBenefit.getBenefitAmount(),
+					autoRentalBenefit.getBenefitDesc(), paymentOption, airesManagedService);
+			break;
+		case COREFLEXConstants.FLEX:
+			CoreFunctions.clickElement(driver, _textFlex);
+			CoreFunctions.verifyText(_inputFlexPoints.getDomProperty("value"), flexPoints,
+					COREFLEXConstants.FLEX_POINTS_VALUE);
+			CoreFunctions.highlightObject(driver, _inputFlexPoints);
+			verifyManadatoryDetails(benefitType, multipleBenefitSelection, benefitDisplayName, benefitAllowanceAmount,
+					benefitDescription, paymentOption, airesManagedService);
+			break;
+		case COREFLEXConstants.CORE_BENEFITS:
+			CoreFunctions.clickElement(driver, _textCoreBenefits);
+			verifyManadatoryDetails(benefitType, multipleBenefitSelection,
+					autoRentalBenefit.getBenefitDisplayName(), autoRentalBenefit.getBenefitAmount(),
+					autoRentalBenefit.getBenefitDesc(), paymentOption, airesManagedService);
+			break;
+		case COREFLEXConstants.FLEX_BENEFITS:
+			CoreFunctions.clickElement(driver, _textFlexBenefits);
+			CoreFunctions.verifyText(_inputFlexPoints.getDomProperty("value"), flexPoints,
+					COREFLEXConstants.FLEX_POINTS_VALUE);
+			CoreFunctions.highlightObject(driver, _inputFlexPoints);
+			verifyManadatoryDetails(benefitType, multipleBenefitSelection, benefitDisplayName, benefitAllowanceAmount,
+					benefitDescription, paymentOption, airesManagedService);
+			break;
+		case COREFLEXConstants.BOTH:
+			CoreFunctions.clickElement(driver, _textBoth);
+			break;
+		default:
+			Assert.fail(COREFLEXConstants.INVALID_OPTION);
+		}
+
+	}
+
+	private void verifyManadatoryDetails(String benefitType, String multipleBenefitSelection, String benefitDisplayName,
+			String benefitAllowanceAmount, String benefitDescription, String paymentOption,
+			String airesManagedService) {
+		if ((benefitType.equals(COREFLEXConstants.FLEX_BENEFITS)) || (benefitType.equals(COREFLEXConstants.FLEX))) {
+			if ((multipleBenefitSelection.equals(COREFLEXConstants.YES))) {
+				CoreFunctions.verifyRadioButtonSelection(driver, _inputMultiAddBenefitLabel,
+						_inputMultiAddBenefitButton, COREFLEXConstants.BENEFIT_SELECTED_MORE_THAN_ONCE,
+						COREFLEXConstants.MULTIPLE_BENEFIT_SELECTION);
+			}
+			CoreFunctions.verifyRadioButtonSelection(driver, _radioAiresManagedLabelList, _radioAiresManagedButtonList,
+					airesManagedService, COREFLEXConstants.AIRES_MANAGED_SERVICE);
+		}
+		CoreFunctions.verifyText(_inputBenefitName.getDomProperty("value"), benefitDisplayName,
+				COREFLEXConstants.BENEFIT_DISPLAY_NAME);
+		CoreFunctions.highlightObject(driver, _inputBenefitName);
+		CoreFunctions.verifyText(_textAreaAllowanceAmountMessage.getDomProperty("value"), benefitAllowanceAmount,
+				COREFLEXConstants.ALLOWANCE_AMOUNT_MESSAGE);
+		CoreFunctions.highlightObject(driver, _textAreaAllowanceAmountMessage);
+		CoreFunctions.verifyText(_textAreaBenefitLongDescription.getDomProperty("value"), benefitDescription,
+				COREFLEXConstants.BENEFIT_LONG_DESCRIPTION);
+		CoreFunctions.highlightObject(driver, _textAreaBenefitLongDescription);
+	}
+
+	/**
+	 * Method to iterate and verify mentioned SubBenefits details
+	 * 
+	 * @param subBenefitNames
+	 * @param benefitType
+	 */
+	private void iterateSubBenefitAndVerifyDetails(String subBenefitNames, String benefitType) {
+		try {
+			List<String> subBenefitNamesList = new ArrayList<String>();
+			if (subBenefitNames.contains(";"))
+				subBenefitNamesList = Arrays.asList(subBenefitNames.split(";"));
+			else
+				subBenefitNamesList.add(subBenefitNames);
+
+			for (String subBenefit : subBenefitNamesList) {
+				if (CoreFunctions.isElementExist(driver, getElementByName(subBenefit.trim()), 5)) {
+					verifySubBenefitDetails(subBenefit.trim(), benefitType);
+				} else {
+					Reporter.addStepLog(MessageFormat.format(COREFLEXConstants.SUB_BENEFIT_FORM_NOT_DISPLAYED,
+							CoreConstants.FAIL, subBenefit, COREFLEXConstants.AUTO_RENTAL_DURING_ASSIGNMENT_BENEFITS_PAGE));
+					throw new RuntimeException(MessageFormat.format(COREFLEXConstants.SUB_BENEFIT_FORM_NOT_DISPLAYED,
+							CoreConstants.FAIL, subBenefit, COREFLEXConstants.AUTO_RENTAL_DURING_ASSIGNMENT_BENEFITS_PAGE));
+				}
+			}
+		} catch (Exception e) {
+			Reporter.addStepLog(MessageFormat.format(
+					COREFLEXConstants.EXCEPTION_OCCURED_WHILE_SELECTING_AND_VERIFYING_SUB_BENEFIT_DETAILS,
+					CoreConstants.FAIL, e.getMessage()));
+		}
+	}
+
+	/**
+	 * Method to Expand and call SubBenefit Verification Method's
+	 * 
+	 * @param subBenefit
+	 * @param benefitType
+	 */
+	private void verifySubBenefitDetails(String subBenefit, String benefitType) {
+		switch (subBenefit) {
+		case COREFLEXConstants.AUTO_RENTAL_DURING_ASSIGNMENT:
+			expandSubBenefitIfCollapsed(getElementByName(COREFLEXConstants.AUTO_RENTAL_DURING_ASSIGNMENT));
+			verifyAutoRentalSubBenefitForm(COREFLEXConstants.AUTO_RENTAL_DURING_ASSIGNMENT);
+			break;
+		default:
+			Assert.fail(MessageFormat.format(COREFLEXConstants.ELEMENT_NOT_FOUND, CoreConstants.FAIL));
+		}
+	}
+
+	/**
+	 * Method to verify AutoRental subBenefit form
+	 */
+	private void verifyAutoRentalSubBenefitForm(String formName) {
+		try {
+			
+			CoreFunctions.verifyText(driver, _selectRentalCarTypeSelectedValue,
+					allowancesBenefitData.autoRentalDuringAssignment.rentalCarType,
+					COREFLEXConstants.RENTAL_CAR_SIZE_CLASS);
+			if (allowancesBenefitData.autoRentalDuringAssignment.rentalCarType.equalsIgnoreCase(COREFLEXConstants.OTHER)) {	
+				CoreFunctions.verifyText(_inputRentalCarOtherType.getDomProperty("value"),
+						allowancesBenefitData.autoRentalDuringAssignment.rentalCarTypeOther, COREFLEXConstants.RENTAL_CAR_OTHER_SIZE_CLASS);
+				CoreFunctions.highlightObject(driver, _inputRentalCarOtherType);
+			}
+			CoreFunctions.verifyRadioButtonSelection(driver, _radioGrossUpLabelList, _radioGrossUpButtonList,
+					allowancesBenefitData.autoRentalDuringAssignment.grossUp, COREFLEXConstants.GROSS_UP);
+			CoreFunctions.verifyRadioButtonSelection(driver, _radioReimbursedByLabelList, _radioReimbursedByButtonList,
+					allowancesBenefitData.autoRentalDuringAssignment.reimbursedBy, COREFLEXConstants.REIMBURSED_BY);
+			if (allowancesBenefitData.autoRentalDuringAssignment.reimbursedBy.equalsIgnoreCase(COREFLEXConstants.OTHER)) {
+				CoreFunctions.verifyText(_inputReimbursedBy.getDomProperty("value"),
+						allowancesBenefitData.autoRentalDuringAssignment.reimbursedByOther, COREFLEXConstants.REIMBURSED_BY_OTHER);
+				CoreFunctions.highlightObject(driver, _inputReimbursedBy);
+			}
+			CoreFunctions.verifyText(_txtAreaComment.getDomProperty("value"),
+					allowancesBenefitData.autoRentalDuringAssignment.comment, COREFLEXConstants.COMMENT);
+			CoreFunctions.highlightObject(driver, _txtAreaComment);
+		} catch (Exception e) {
+			Assert.fail(MessageFormat.format(COREFLEXConstants.FAILED_TO_VERIFY_FURNITURE_RENTAL_SUB_BENEFITS_FORM,
+					CoreConstants.FAIL, formName));
 		}
 	}
 

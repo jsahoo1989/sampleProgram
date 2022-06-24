@@ -17,6 +17,7 @@ public class CoreFlex_PolicySetupPagesData {
 		public String employeeType;
 		public String homeownerType;
 		public String cappedPolicy;
+		public String expenseManagement;
 	}	
 	
 	public class FlexPolicySetupPage{

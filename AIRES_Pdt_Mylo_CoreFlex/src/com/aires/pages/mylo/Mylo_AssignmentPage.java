@@ -5,7 +5,6 @@ import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.Collections;
-import java.util.HashMap;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
@@ -25,11 +24,10 @@ import com.aires.businessrules.DbFunctions;
 import com.aires.businessrules.constants.CoreConstants;
 import com.aires.businessrules.constants.MYLOConstants;
 import com.aires.managers.FileReaderManager;
-import com.aires.testdatatypes.mylo.MyloAssignmentDetails;
 import com.aires.testdatatypes.mylo.MyloCAStates;
 import com.aires.testdatatypes.mylo.MyloIndiaStates;
 import com.aires.testdatatypes.mylo.MyloUSStates;
-import com.aires.testdatatypes.mylo.Mylo_AssignmentShipmentDetails;
+import com.aires.testdatatypes.mylo.Mylo_Assignment_HistoryDetails_DEV5;
 import com.aires.testdatatypes.mylo.Mylo_Assignment_HistoryDetails_PREPROD;
 import com.aires.testdatatypes.mylo.Mylo_Assignment_HistoryDetails_UAT;
 import com.vimalselvam.cucumber.listener.Reporter;
@@ -101,6 +99,9 @@ public class Mylo_AssignmentPage extends Base {
 	@FindBy(how = How.XPATH, using = "//ng-select[@name='policyType']//span[contains(@class,'ng-value-label')]")
 	private WebElement _fileInfoPolicyType;
 
+	@FindBy(how = How.XPATH, using = "//ng-select[@name='policyType']//span[@class='ng-arrow-wrapper']")
+	private WebElement _fileInfoPolicyTypeDropdown;
+
 	@FindBy(how = How.XPATH, using = "//app-aires-file-information/descendant::span[text()='Details']")
 	private WebElement _fileInfoDetailsCarrot;
 
@@ -112,15 +113,27 @@ public class Mylo_AssignmentPage extends Base {
 
 	@FindBy(how = How.XPATH, using = "//ng-select[@name='office']//span[contains(@class,'ng-value-label')]")
 	private WebElement _fileInfoOffice;
+	
+	@FindBy(how = How.XPATH, using = "//ng-select[@name='office']//span[@class='ng-arrow-wrapper']")
+	private WebElement _fileInfoOfficeDropdown;
 
 	@FindBy(how = How.XPATH, using = "//ng-select[@name='transferType']//span[contains(@class,'ng-value-label')]")
 	private WebElement _fileInfoTransferType;
+	
+	@FindBy(how = How.XPATH, using = "//ng-select[@name='transferType']//span[@class='ng-arrow-wrapper']")
+	private WebElement _fileInfoTransferTypeDropdown;
 
 	@FindBy(how = How.XPATH, using = "//ng-select[@name='journeyType']//span[contains(@class,'ng-value-label')]")
 	private WebElement _fileInfoJourneyType;
+	
+	@FindBy(how = How.XPATH, using = "//ng-select[@name='journeyType']//span[@class='ng-arrow-wrapper']")
+	private WebElement _fileInfoJourneyTypeDropdown;
 
 	@FindBy(how = How.XPATH, using = "//ng-select[@name='homeStatus']//span[contains(@class,'ng-value-label')]")
 	private WebElement _fileInfoHomeStatus;
+	
+	@FindBy(how = How.XPATH, using = "//ng-select[@name='homeStatus']//span[@class='ng-arrow-wrapper']")
+	private WebElement _fileInfoHomeStatusDropdown;
 
 	@FindBy(how = How.CSS, using = "app-aires-file-information  span[class='form-check-sign']")
 	private List<WebElement> _fileInfoCheckboxes;
@@ -416,6 +429,7 @@ public class Mylo_AssignmentPage extends Base {
 	int noOfAiresFileTeamMember;
 	LinkedHashMap<String, String> airesFileTeamExistingMembers = new LinkedHashMap<String, String>();
 	LinkedHashMap<String, WebElement> airesFileInfoFieldsMap = new LinkedHashMap<String, WebElement>();
+	LinkedHashMap<String, WebElement> airesFileInfoDropdownFieldsMap = new LinkedHashMap<String, WebElement>();
 	LinkedHashMap<String, WebElement> otherAdressFieldValueMap = new LinkedHashMap<String, WebElement>();
 	LinkedHashMap<String, String> otherAdressvalidFieldValueMap = new LinkedHashMap<String, String>();
 	List<WebElement> countryList = new ArrayList<WebElement>();
@@ -434,15 +448,6 @@ public class Mylo_AssignmentPage extends Base {
 	final By _fileInfoOfficeDropdownReadOnly = By.xpath("//ng-select[@name='office']//descendant::input[@disabled='']");
 	final By _fileInfoPolicyTypeDropdownReadOnly = By.xpath("//ng-select[@name='policyType']//input[@disabled]");
 	final By _assignmentSubMenus = By.xpath("//div[contains(@class,'navlist__container')]/li/descendant::a");
-
-	MyloAssignmentDetails assignmentDetails = FileReaderManager.getInstance().getMyloJsonReader()
-			.getAssignmentDetailsByApplication(MYLOConstants.IRIS);
-	//Commented Code is used for debugging in local
-	//Mylo_AssignmentShipmentDetails assignmentShipmentDetails = FileReaderManager.getInstance().getMyloJsonReader()
-		//	.getAssignmentShipmentDetailsByEnv(CoreFunctions.getPropertyFromConfig("envt"));
-			
-	Mylo_AssignmentShipmentDetails assignmentShipmentDetails = FileReaderManager.getInstance().getMyloJsonReader()
-		.getAssignmentShipmentDetailsByEnv(System.getProperty("envt"));
 	
 	//String environment = CoreFunctions.getPropertyFromConfig("envt");
 	String environment = System.getProperty("envt");
@@ -452,26 +457,6 @@ public class Mylo_AssignmentPage extends Base {
 	updatedTempAddressCommentsValue, updatedMailAddressCommentsValue, updatedTempAddressStateValue,
 	updatedMailAddressStateValue, updatedTempAddress1Value, updatedMailAddress1Value, updatedTempAddress2Value,
 	updatedMailAddress2Value, updatedTempAddressFromDateValue, updatedMailAddressFromDateValue,updatedCountryValue,updatedTypeValue,updatedNoValue,updatedFromDate,updatedToDate;
-
-	/**
-	 * @param option 
-	 * Click Different tabs in Assignment page
-	 */
-	public void clickAssignmentTabs(String option) {
-		List<WebElement> subTabs = CoreFunctions.getElementListByLocator(driver, _assignmentSubMenus);
-		CoreFunctions.selectItemInListByText(driver, subTabs, option);
-	}
-
-	/**
-	 * @param tabName
-	 * @return 
-	 * Verify Active tab in Assignment page
-	 */
-	public boolean verifyActiveTab(String tabName) {
-		List<WebElement> subTabs = CoreFunctions.getElementListByLocator(driver, _assignmentSubMenus);
-		WebElement tabElement = CoreFunctions.returnItemInListByText(driver, subTabs, tabName);
-		return (tabElement.getAttribute("class").contains("active")) ? true : false;
-	}
 
 	// *************** Aires File Team Section***********************//
 
@@ -838,7 +823,7 @@ public class Mylo_AssignmentPage extends Base {
 		case MYLOConstants.USER_WITHOUT_RESOURCE300096:
 		case MYLOConstants.NOT_AIRESSH_PROVIDER:
 		case MYLOConstants.AFFINITY_ENABLED:
-			Assert.assertFalse(verifyFileInfoFieldsReadOnly(fieldName));
+			Assert.assertFalse(verifyFileInfoFieldsReadOnly(fieldName),fieldName + " button is enabled for user " + scenarioType);
 			break;
 		case MYLOConstants.USER_WITH_RESOURCE300096:
 		case MYLOConstants.AIRESSH_PROVIDER:
@@ -966,27 +951,47 @@ public class Mylo_AssignmentPage extends Base {
 	 * Update Field Values by Field Name on Aires File Information section
 	 */
 	public void updateFileInfoFields(String fieldName, String fieldValue) {
-		CoreFunctions.click(driver, airesFileInfoFieldsMap.get(fieldName),
-				airesFileInfoFieldsMap.get(fieldName).getText());
 		switch (fieldName) {
 		case MYLOConstants.POLICY_TYPE:
+			CoreFunctions.click(driver, _fileInfoPolicyTypeDropdown,
+					fieldName);
 			updatedPolicyType = selectDropdownOptionsAndReturnText(fieldName, fieldValue);
 			break;
 		case MYLOConstants.OFFICE:
+			CoreFunctions.click(driver, _fileInfoOfficeDropdown,
+					fieldName);
 			updatedOffice = selectDropdownOptionsAndReturnText(fieldName, fieldValue);
 			break;
 		case MYLOConstants.TRANSFER_TYPE:
+			CoreFunctions.click(driver, _fileInfoTransferTypeDropdown,
+					fieldName);
 			updatedTransferType = selectDropdownOptionsAndReturnText(fieldName, fieldValue);
 			break;
 		case MYLOConstants.JOURNEY_TYPE:
+			CoreFunctions.click(driver, _fileInfoJourneyTypeDropdown,
+					fieldName);
 			updatedJourneyType = selectDropdownOptionsAndReturnText(fieldName, fieldValue);
 			break;
 		case MYLOConstants.HOMESTATUS:
+			CoreFunctions.click(driver, _fileInfoHomeStatusDropdown,
+					fieldName);
 			updatedHomeStatus = selectDropdownOptionsAndReturnText(fieldName, fieldValue);
 			break;
 		default:
 			Assert.fail(MYLOConstants.ENTER_CORRECT_FIELD_NAME);
 		}
+	}
+	
+	/**
+	 * Mapping the AiresFileInformation WebElements with associated fields
+	 */
+	public void mapFileInfoDropdownWebElementFields() {
+		airesFileInfoDropdownFieldsMap.put(MYLOConstants.POLICY_TYPE, _fileInfoPolicyTypeDropdown);
+		airesFileInfoDropdownFieldsMap.put(MYLOConstants.STATUS, _fileInfoStatus);
+		airesFileInfoDropdownFieldsMap.put(MYLOConstants.OFFICE, _fileInfoOfficeDropdown);
+		airesFileInfoDropdownFieldsMap.put(MYLOConstants.TRANSFER_TYPE, _fileInfoTransferTypeDropdown);
+		airesFileInfoDropdownFieldsMap.put(MYLOConstants.JOURNEY_TYPE, _fileInfoJourneyTypeDropdown);
+		airesFileInfoDropdownFieldsMap.put(MYLOConstants.HOMESTATUS, _fileInfoHomeStatusDropdown);
 	}
 
 	/**
@@ -996,8 +1001,9 @@ public class Mylo_AssignmentPage extends Base {
 	 * Verify Passed Value present in the Dropdown fields By FieldName on Aires File Information section
 	 */
 	public boolean verifyFileInfoDropDownValues(String fieldName, String fieldValue) {
-		CoreFunctions.click(driver, airesFileInfoFieldsMap.get(fieldName),
-				airesFileInfoFieldsMap.get(fieldName).getText());
+		mapFileInfoDropdownWebElementFields();
+		CoreFunctions.click(driver, airesFileInfoDropdownFieldsMap.get(fieldName),
+				fieldName);
 		List<WebElement> allOptions = CoreFunctions.getElementListByLocator(driver, _dropdownOptions);
 		return CoreFunctions.searchElementExistsInListByText(driver, allOptions, fieldValue);
 	}
@@ -1090,257 +1096,6 @@ public class Mylo_AssignmentPage extends Base {
 		return false;
 		
 
-	}
-
-	/**
-	 * @param fileStatusMode
-	 * @param requiredField
-	 * @return
-	 * Retrieve Required Assignment Field Data from json file based on the fileStatusMode
-	 */
-	public String getFileDetailsDataByFieldAndStatus(String fileStatusMode, String requiredField) {
-		LinkedHashMap<String, String> fileInfoDetailsmap = new LinkedHashMap<String, String>();
-		switch (fileStatusMode) {
-		case MYLOConstants.AFFINITY_ENABLED:
-			fileInfoDetailsmap.put(MYLOConstants.FILE_ID, assignmentDetails.affinityEnabled.fileID);
-			fileInfoDetailsmap.put(MYLOConstants.CLIENT_ID, assignmentDetails.affinityEnabled.clientID);
-			fileInfoDetailsmap.put(MYLOConstants.CLIENT_NAME, assignmentDetails.affinityEnabled.clientName);
-			break;
-		case MYLOConstants.NOT_AFFINITY_ENABLED:
-			fileInfoDetailsmap.put(MYLOConstants.FILE_ID, assignmentDetails.affinityNotEnabled.fileID);
-			fileInfoDetailsmap.put(MYLOConstants.CLIENT_ID, assignmentDetails.affinityNotEnabled.clientID);
-			fileInfoDetailsmap.put(MYLOConstants.CLIENT_NAME, assignmentDetails.affinityNotEnabled.clientName);
-			break;
-		case MYLOConstants.AIRESSH_PROVIDER:
-			fileInfoDetailsmap.put(MYLOConstants.FILE_ID, assignmentDetails.airesshProvider.fileID);
-			fileInfoDetailsmap.put(MYLOConstants.CLIENT_ID, assignmentDetails.airesshProvider.clientID);
-			fileInfoDetailsmap.put(MYLOConstants.CLIENT_NAME, assignmentDetails.airesshProvider.clientName);
-			break;
-		case MYLOConstants.NOT_AIRESSH_PROVIDER:
-			fileInfoDetailsmap.put(MYLOConstants.FILE_ID, assignmentDetails.notairesshProvider.fileID);
-			fileInfoDetailsmap.put(MYLOConstants.CLIENT_ID, assignmentDetails.notairesshProvider.clientID);
-			fileInfoDetailsmap.put(MYLOConstants.CLIENT_NAME, assignmentDetails.notairesshProvider.clientName);
-			break;
-		case MYLOConstants.CANCELED:
-			fileInfoDetailsmap.put(MYLOConstants.FILE_ID, assignmentDetails.canceledFile.fileID);
-			fileInfoDetailsmap.put(MYLOConstants.CLIENT_ID, assignmentDetails.canceledFile.clientID);
-			fileInfoDetailsmap.put(MYLOConstants.CLIENT_NAME, assignmentDetails.canceledFile.clientName);
-			break;
-		case MYLOConstants.CLOSED:
-			fileInfoDetailsmap.put(MYLOConstants.FILE_ID, getTestDataClosedFileId());
-			fileInfoDetailsmap.put(MYLOConstants.CLIENT_ID, assignmentDetails.closedFile.clientID);
-			fileInfoDetailsmap.put(MYLOConstants.CLIENT_NAME, assignmentDetails.closedFile.clientName);
-			break;
-		case MYLOConstants.RELOCATION_POLICY:
-			fileInfoDetailsmap.put(MYLOConstants.FILE_ID, getTestDataRelocationTypeFileId());
-			fileInfoDetailsmap.put(MYLOConstants.CLIENT_ID, assignmentDetails.relocationPolicyType.clientID);
-			fileInfoDetailsmap.put(MYLOConstants.CLIENT_NAME, assignmentDetails.relocationPolicyType.clientName);
-			break;
-		case MYLOConstants.LUMP_SUM_PLAN_POLICY:
-			fileInfoDetailsmap.put(MYLOConstants.FILE_ID, getTestDataLumpSumTypeFileId());
-			fileInfoDetailsmap.put(MYLOConstants.CLIENT_ID, assignmentDetails.lumpSumpPlanPolicyType.clientID);
-			fileInfoDetailsmap.put(MYLOConstants.CLIENT_NAME, assignmentDetails.lumpSumpPlanPolicyType.clientName);
-			break;
-		case MYLOConstants.DOMESTIC_POLICY:
-			fileInfoDetailsmap.put(MYLOConstants.FILE_ID, getTestDataDomesticTypeFileId());
-			fileInfoDetailsmap.put(MYLOConstants.CLIENT_ID, assignmentDetails.domesticPolicyType.clientID);
-			fileInfoDetailsmap.put(MYLOConstants.CLIENT_NAME, assignmentDetails.domesticPolicyType.clientName);
-			break;
-		case MYLOConstants.ACTIVE_ASSIGNMENT:
-			fileInfoDetailsmap.put(MYLOConstants.FILE_ID, getTestDataActiveFileId());
-			fileInfoDetailsmap.put(MYLOConstants.CLIENT_ID, assignmentDetails.activeAssignment.clientID);
-			fileInfoDetailsmap.put(MYLOConstants.CLIENT_NAME, assignmentDetails.activeAssignment.clientName);
-			break;
-		case MYLOConstants.CLOSED_IDENTITYDOC:
-			fileInfoDetailsmap.put(MYLOConstants.FILE_ID, getTestDataClosedIdentityDocFileId());
-			fileInfoDetailsmap.put(MYLOConstants.CLIENT_ID, assignmentDetails.closedFileIdentDoc.clientID);
-			fileInfoDetailsmap.put(MYLOConstants.CLIENT_NAME, assignmentDetails.closedFileIdentDoc.clientName);
-			break;
-		case MYLOConstants.TRANSFEREE_WITH_FAMILY_MEMBER:
-			fileInfoDetailsmap.put(MYLOConstants.FILE_ID, assignmentDetails.transfereeWithFamily.fileID);
-			fileInfoDetailsmap.put(MYLOConstants.CLIENT_ID, assignmentDetails.transfereeWithFamily.clientID);
-			fileInfoDetailsmap.put(MYLOConstants.CLIENT_NAME, assignmentDetails.transfereeWithFamily.clientName);
-			break;
-		case MYLOConstants.TRANSFEREE_WITH_OTHER_FAMILY_MEMBERS:
-			fileInfoDetailsmap.put(MYLOConstants.FILE_ID, assignmentDetails.transfereeWithOtherFamilyMembers.fileID);
-			fileInfoDetailsmap.put(MYLOConstants.CLIENT_ID, assignmentDetails.transfereeWithOtherFamilyMembers.clientID);
-			fileInfoDetailsmap.put(MYLOConstants.CLIENT_NAME, assignmentDetails.transfereeWithOtherFamilyMembers.clientName);
-			break;
-		case MYLOConstants.TRANSFEREE_ALLDATA:
-			fileInfoDetailsmap.put(MYLOConstants.FILE_ID, getTestDataTransfereeAllDataFileId());
-			fileInfoDetailsmap.put(MYLOConstants.CLIENT_ID, assignmentDetails.transfereeAllData.clientID);
-			fileInfoDetailsmap.put(MYLOConstants.CLIENT_NAME, assignmentDetails.transfereeAllData.clientName);
-			break;
-		case MYLOConstants.TRANSFEREEEMAILPHONE_ALLDATA:
-			fileInfoDetailsmap.put(MYLOConstants.FILE_ID, assignmentDetails.transfereeEmailPhone_preprod.fileID);
-			fileInfoDetailsmap.put(MYLOConstants.CLIENT_ID, assignmentDetails.transfereeEmailPhone_preprod.clientID);
-			fileInfoDetailsmap.put(MYLOConstants.CLIENT_NAME, assignmentDetails.transfereeEmailPhone_preprod.clientName);
-			break;
-		case MYLOConstants.PARTNER_DATA:
-			fileInfoDetailsmap.put(MYLOConstants.FILE_ID, getTestDataPartner());
-			fileInfoDetailsmap.put(MYLOConstants.CLIENT_ID, assignmentDetails.partnerData.clientID);
-			fileInfoDetailsmap.put(MYLOConstants.CLIENT_NAME, assignmentDetails.partnerData.clientName);
-			break;
-		case MYLOConstants.PARTNER_ALL_DATA:
-			fileInfoDetailsmap.put(MYLOConstants.FILE_ID, getTestDataPartnerAllData());
-			fileInfoDetailsmap.put(MYLOConstants.CLIENT_ID, assignmentDetails.partnerAllData.clientID);
-			fileInfoDetailsmap.put(MYLOConstants.CLIENT_NAME, assignmentDetails.partnerAllData.clientName);
-			break;
-		default:
-			Assert.fail(MYLOConstants.ENTER_CORRECT_FIELD_NAME);
-		}
-		return fileInfoDetailsmap.get(requiredField);
-
-	}
-	
-	public String getTestDataPartnerAllData() {
-		String fileID = null;
-		switch(environment) {
-		case MYLOConstants.UAT:
-		case MYLOConstants.RELONETQA4:
-			fileID = assignmentDetails.partnerAllData.fileID;
-			break;
-		case MYLOConstants.PREPROD:
-			fileID = assignmentDetails.partnerAllData_preprod.fileID;
-			break;
-		default:
-			Assert.fail(MYLOConstants.ENTER_CORRECT_FIELD_NAME);	
-		}
-		return fileID;
-	}
-	
-	public String getTestDataPartner() {
-		String fileID = null;
-		switch(environment) {
-		case MYLOConstants.UAT:
-		case MYLOConstants.RELONETQA4:
-			fileID = assignmentDetails.partnerData.fileID;
-			break;
-		case MYLOConstants.PREPROD:
-			fileID = assignmentDetails.partnerData_preprod.fileID;
-			break;
-		default:
-			Assert.fail(MYLOConstants.ENTER_CORRECT_FIELD_NAME);	
-		}
-		return fileID;
-	}
-	
-	public String getTestDataActiveFileId() {
-		String fileID = null;
-		switch(environment) {
-		case MYLOConstants.UAT:
-			fileID = assignmentDetails.activeAssignment.fileID;
-			break;
-		case MYLOConstants.RELONETQA4:
-			fileID = assignmentDetails.activeAssignment_relonetqa4.fileID;
-			break;
-		case MYLOConstants.PREPROD:
-			fileID = assignmentDetails.activeAssignment_preprod.fileID;
-			break;
-		default:
-			Assert.fail(MYLOConstants.ENTER_CORRECT_FIELD_NAME);	
-		}
-		return fileID;
-	}
-	
-	public String getTestDataClosedFileId() {
-		String fileID = null;
-		switch(environment) {
-		case MYLOConstants.UAT:
-			fileID = assignmentDetails.closedFile.fileID;
-			break;
-		case MYLOConstants.RELONETQA4:
-			fileID = assignmentDetails.closedFile.fileID;
-			break;
-		case MYLOConstants.PREPROD:
-			fileID = assignmentDetails.closedFile_preprod.fileID;
-			break;
-		default:
-			Assert.fail(MYLOConstants.ENTER_CORRECT_FIELD_NAME);	
-		}
-		return fileID;
-	}
-	
-	public String getTestDataClosedIdentityDocFileId() {
-		String fileID = null;
-		switch(environment) {
-		case MYLOConstants.UAT:
-			fileID = assignmentDetails.closedFileIdentDoc.fileID;
-			break;
-		case MYLOConstants.RELONETQA4:
-		case MYLOConstants.PREPROD:
-			fileID = assignmentDetails.closedFileIdentDocrelonetqa4.fileID;
-			break;
-		default:
-			Assert.fail(MYLOConstants.ENTER_CORRECT_FIELD_NAME);	
-		}
-		return fileID;
-	}
-	
-	public String getTestDataRelocationTypeFileId() {
-		String fileID = null;
-		switch(environment) {
-		case MYLOConstants.UAT:
-			fileID = assignmentDetails.relocationPolicyType.fileID;
-			break;
-		case MYLOConstants.RELONETQA4:
-			fileID = assignmentDetails.relocationPolicyTyperelonetqa4.fileID;
-			break;
-		case MYLOConstants.PREPROD:
-			fileID = assignmentDetails.relocationPolicyType_preprod.fileID;
-			break;
-		default:
-			Assert.fail(MYLOConstants.ENTER_CORRECT_FIELD_NAME);	
-		}
-		return fileID;
-	}
-	
-	public String getTestDataLumpSumTypeFileId() {
-		String fileID = null;
-		switch(environment) {
-		case MYLOConstants.UAT:
-			fileID = assignmentDetails.lumpSumpPlanPolicyType.fileID;
-			break;
-		case MYLOConstants.RELONETQA4:
-		case MYLOConstants.PREPROD:
-			fileID = assignmentDetails.lumpSumpPlanPolicyTyperelonetqa4.fileID;
-			break;
-		default:
-			Assert.fail(MYLOConstants.ENTER_CORRECT_FIELD_NAME);	
-		}
-		return fileID;
-	}
-	
-	public String getTestDataDomesticTypeFileId() {
-		String fileID = null;
-		switch(environment) {
-		case MYLOConstants.UAT:
-			fileID = assignmentDetails.domesticPolicyType.fileID;
-			break;
-		case MYLOConstants.RELONETQA4:
-		case MYLOConstants.PREPROD:
-			fileID = assignmentDetails.domesticPolicyTyperelonetqa4.fileID;
-			break;
-		default:
-			Assert.fail(MYLOConstants.ENTER_CORRECT_FIELD_NAME);	
-		}
-		return fileID;
-	}
-	
-	public String getTestDataTransfereeAllDataFileId() {
-		String fileID = null;
-		switch(environment) {
-		case MYLOConstants.UAT:
-		case MYLOConstants.RELONETQA4:
-			fileID = assignmentDetails.transfereeAllData.fileID;
-			break;
-		case MYLOConstants.PREPROD:
-			fileID = assignmentDetails.transfereeAllData_preprod.fileID;
-			break;
-		default:
-			Assert.fail(MYLOConstants.ENTER_CORRECT_FIELD_NAME);	
-		}
-		return fileID;
 	}
 	
 	// *************** Other Addresses Section***********************//
@@ -1547,6 +1302,7 @@ public class Mylo_AssignmentPage extends Base {
 			valuesToIgnore.add(MYLOConstants.USA_STATE);
 			valuesToIgnore.add(MYLOConstants.INDIA_STATE);
 			valuesToIgnore.add(MYLOConstants.CANADA_STATE);
+			valuesToIgnore.add(MYLOConstants.SELECT_ONE);
 			countryList.remove(0);
 			updatedCountryValue = CoreFunctions.getRandomOutOfSelectedElementValueFromList(driver, countryList, valuesToIgnore);
 			BusinessFunctions.selectItemFromListUsingText(driver, countryList,
@@ -2293,6 +2049,7 @@ public class Mylo_AssignmentPage extends Base {
 	
 	public void pageRefresh() {
 		CoreFunctions.refreshPage(driver);
+		CoreFunctions.explicitWaitTillElementInVisibilityCustomTime(driver, _spinner, 60);
 	}
 	
 	public void deleteHistoryCard(int totalCount) {	
@@ -2328,6 +2085,11 @@ public class Mylo_AssignmentPage extends Base {
 			historyfileIds.addAll(myloPreProdHistoryDetails.stream().map(x -> x.fileId).collect(Collectors.toList()));
 			historyDetails.addAll(myloPreProdHistoryDetails.stream().map(x -> x.historyDetails).collect(Collectors.toList()));
 			break;
+		case MYLOConstants.DEV5:
+			List<Mylo_Assignment_HistoryDetails_DEV5> myloDev5HistoryDetails = FileReaderManager.getInstance().getMyloJsonReader().getMyloAssignmentDEV5HistoryDetails();
+			historyfileIds.addAll(myloDev5HistoryDetails.stream().map(x -> x.fileId).collect(Collectors.toList()));
+			historyDetails.addAll(myloDev5HistoryDetails.stream().map(x -> x.historyDetails).collect(Collectors.toList()));
+			break;
 		default:
 			Reporter.addStepLog(CoreConstants.FAIL + MYLOConstants.ENTER_CORRECT_COUNTRY_NAME);
 			Assert.fail(MYLOConstants.ENTER_CORRECT_COUNTRY_NAME);
@@ -2348,6 +2110,9 @@ public class Mylo_AssignmentPage extends Base {
 			if (!(CoreFunctions.getElementText(driver, _historyCardDisplayedTransferreName.get(i)).equals(details[0].trim())
 					&& CoreFunctions.getElementText(driver, _historyCardDisplayedFileIdClient.get(i)).equals(details[1].trim())
 					&& CoreFunctions.getElementText(driver, _historyCardDisplayedAddress.get(i)).equals(details[2].trim()))) {
+System.out.println(details[0].trim() + "...." + CoreFunctions.getElementText(driver, _historyCardDisplayedTransferreName.get(i)) );
+System.out.println(details[1].trim() + "...." + CoreFunctions.getElementText(driver, _historyCardDisplayedFileIdClient.get(i)) );
+System.out.println(details[2].trim() + "...." + CoreFunctions.getElementText(driver, _historyCardDisplayedAddress.get(i)) );
 				flag = false;
 			}
 		}
@@ -2380,92 +2145,6 @@ public class Mylo_AssignmentPage extends Base {
 		return flag;
 	}
 	
-	/**
-	 * @param shipmentStatus
-	 * @param requiredField
-	 * @return
-	 * Get FileDetails Related to Shipment Services
-	 */
-	public String getFileDetailsByShipmentServices(String shipmentStatus, String requiredField ) {
-		HashMap<String, String> shipmentFileDetailsmap = new HashMap<String, String>();
-		switch (shipmentStatus) {
-		case MYLOConstants.NO_SHIPMENT:
-			shipmentFileDetailsmap.put(MYLOConstants.FILE_ID, assignmentShipmentDetails.noShipment.fileID);
-			shipmentFileDetailsmap.put(MYLOConstants.SHIPMENT_DETAILS, assignmentShipmentDetails.noShipment.shipmentDetails);
-			break;
-		case MYLOConstants.ONE_SHIPMENT:
-			shipmentFileDetailsmap.put(MYLOConstants.FILE_ID, assignmentShipmentDetails.oneShipment.fileID);
-			shipmentFileDetailsmap.put(MYLOConstants.SHIPMENT_DETAILS, assignmentShipmentDetails.oneShipment.shipmentDetails);
-			break;
-		case MYLOConstants.TWO_SHIPMENT:
-			shipmentFileDetailsmap.put(MYLOConstants.FILE_ID, assignmentShipmentDetails.twoShipment.fileID);
-			shipmentFileDetailsmap.put(MYLOConstants.SHIPMENT_DETAILS, assignmentShipmentDetails.twoShipment.shipmentDetails);
-			break;
-		case MYLOConstants.MULTIPLE_SHIPMENT:
-			shipmentFileDetailsmap.put(MYLOConstants.FILE_ID, assignmentShipmentDetails.multipleShipment.fileID);
-			shipmentFileDetailsmap.put(MYLOConstants.SHIPMENT_DETAILS, assignmentShipmentDetails.multipleShipment.shipmentDetails);
-			break;
-		
-		default:
-			Assert.fail(MYLOConstants.ENTER_CORRECT_STATUS);
-		}
-		return shipmentFileDetailsmap.get(requiredField);
-
-	}
-	
-	/**
-	 * @param option
-	 * @return
-	 * Get Background Color of Different Assignment Tabs
-	 */
-	public String getAssignmentTabsBgColor(String option) {
-		List<WebElement> subTabs = CoreFunctions.getElementListByLocator(driver, _assignmentSubMenus);
-		WebElement tabElement = CoreFunctions.returnItemInListByText(driver, subTabs, option);
-		CoreFunctions.explicitWaitTillElementVisibility(driver, tabElement, tabElement.getText());
-		String hexColorValue = Color.fromString(tabElement.getCssValue(MYLOConstants.BACKGROUND_COLOR)).asHex();
-		return hexColorValue;
-	}
-	
-	/**
-	 * @param option
-	 * @return
-	 * Get Hover Message on Mentioned Assignment Tab
-	 */
-	public String getAssignmentTabsHoverMessage(String option) {
-		List<WebElement> subTabs = CoreFunctions.getElementListByLocator(driver, _assignmentSubMenus);
-		CoreFunctions.explicitWaitTillElementListVisibility(driver, subTabs);
-		WebElement tabElement = CoreFunctions.returnItemInListByText(driver, subTabs, option);
-		CoreFunctions.explicitWaitTillElementVisibility(driver, tabElement, tabElement.getText());
-		CoreFunctions.hover(driver, tabElement);
-		return tabElement.getAttribute(MYLOConstants.TITLE);
-	}
-	
-	/**
-	 * @return
-	 * Verify Shipment Section Availability
-	 */
-	public boolean verifyShipmentSectionDisplayed() {
-		CoreFunctions.explicitWaitTillElementInVisibilityCustomTime(driver, _spinner, 180);
-		return CoreFunctions.verifyElementPresentOnPage(__webSwingSection, MYLOConstants.SHIPMENT_WEBSWING);	
-	}
-	
-	/**
-	 * @param shipmentStatus
-	 * @return
-	 * Verify Available Shipment Services in the Shipment Dropdown tab
-	 */
-	public boolean verifyShipmentDropdown(String shipmentStatus) {
-		boolean flag = true;
-		String[] shipmentDetail = getFileDetailsByShipmentServices(shipmentStatus, MYLOConstants.SHIPMENT_DETAILS)
-				.split(";");
-		for (int i = 0; i < _shipmentDropdownValues.size(); i++) {
-			if (!(CoreFunctions.getElementText(driver, _shipmentDropdownValues.get(i))
-					.equals(shipmentDetail[i].trim())))
-				flag = false;
-		}
-		return flag;
-	}
-	
 	// *************** Identification & Documentation section ***********************//
 	
 	/**
@@ -2493,7 +2172,7 @@ public class Mylo_AssignmentPage extends Base {
 			Reporter.addStepLog(MessageFormat.format(MYLOConstants.BUTTON_ENABLED, CoreConstants.PASS,
 					buttonName,MYLOConstants.IDENTIFICATION_AND_DOCUMENTATION,MYLOConstants.ASSIGNMENT));
 		else
-			Reporter.addStepLog(MessageFormat.format(MYLOConstants.BUTTON_DISABLED, CoreConstants.PASS,
+			Reporter.addStepLog(MessageFormat.format(MYLOConstants.BUTTON_DISABLED, CoreConstants.FAIL,
 					buttonName,MYLOConstants.IDENTIFICATION_AND_DOCUMENTATION,MYLOConstants.ASSIGNMENT));
 		return flag;
 	}
@@ -2728,7 +2407,6 @@ public class Mylo_AssignmentPage extends Base {
 			clickButtonOnIentificationAndDocumentationSection(MYLOConstants.CLOSE_BUTTON);
 			clickButtonOnIentificationAndDocumentationSection(MYLOConstants.CANCEL_BUTTON);
 			clickButtonOnIentificationAndDocumentationSection(MYLOConstants.YES_BUTTON);
-			//verifyActiveTab(MYLOConstants.SUMMARY);
 			highlightSectionHeader(MYLOConstants.IDENTIFICATION_AND_DOCUMENTATION);
 			CoreFunctions.highlightObject(driver, _identDocAddIcon);
 			clickButtonOnIentificationAndDocumentationSection(MYLOConstants.ADD_BUTTON);
@@ -2867,7 +2545,7 @@ public class Mylo_AssignmentPage extends Base {
 	 */
 	public boolean verifyMultipleRowsFieldValuesIdentDocSection() {
 		boolean flag = true;
-		CoreFunctions.explicitWaitTillElementInVisibilityCustomTime(driver, _spinner, 60);
+		CoreFunctions.explicitWaitTillElementInVisibilityCustomTime(driver, _spinner, 180);
 		for(int i=0;i<_identDocTypeDropdowns.size();i++) {
 		String updatedFromDate = CoreFunctions.getStringDateInFormat(
 				getFieldValuesIdentificationAndDocumentationSection(MYLOConstants.FROMDATE, i), "dd MMM yyyy",

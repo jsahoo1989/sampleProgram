@@ -1,19 +1,20 @@
 package stepDefinitions.mylo;
 
+import java.text.MessageFormat;
 import org.testng.Assert;
-
+import com.aires.businessrules.constants.CoreConstants;
+import com.aires.businessrules.constants.MYLOConstants;
 import com.aires.cucumber.TestContext;
 import com.aires.pages.mylo.Mylo_DashboardHomePage;
 import com.aires.pages.mylo.Mylo_LoginPage;
-
 import cucumber.api.java.en.Given;
 import cucumber.api.java.en.Then;
 import cucumber.api.java.en.When;
 
 public class Mylo_LoginPage_Steps {
-	TestContext testContext;
-	Mylo_LoginPage loginPage;
-	Mylo_DashboardHomePage myloDashboardPage;
+	private TestContext testContext;
+	private Mylo_LoginPage loginPage;
+	private Mylo_DashboardHomePage myloDashboardPage;
 
 	public Mylo_LoginPage_Steps(TestContext context) {
 		testContext = context;
@@ -39,6 +40,8 @@ public class Mylo_LoginPage_Steps {
 	@Then("^he should successfuly redirected onto the Dashboard home page of Mylo Application with \"([^\"]*)\" getting displayed$")
 	public void he_should_successfuly_redirected_onto_the_Dashboard_home_page_of_Mylo_Application_with_getting_displayed(
 			String userName) {
-		myloDashboardPage.verifyUserName(userName);
+		Assert.assertTrue(myloDashboardPage.verifyUserName(userName),
+				MessageFormat.format(MYLOConstants.VERIFIED_SECTION_NOT_DISPLAYED, CoreConstants.FAIL, userName,
+						MYLOConstants.MYLO_DASHBOARD_HOME_PAGE));
 	}
 }

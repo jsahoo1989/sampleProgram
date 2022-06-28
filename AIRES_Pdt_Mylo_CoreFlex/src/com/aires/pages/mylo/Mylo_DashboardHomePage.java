@@ -37,7 +37,7 @@ public class Mylo_DashboardHomePage extends Base {
 	@FindBy(how = How.CSS, using = "ul[class='menu-list'] a")
 	private List<WebElement> _hamburgerMenuOptions;
 
-	@FindBy(how = How.CSS, using = "div[class='firstmenu'] a")
+	@FindBy(how = How.CSS, using = "div[class='firstmenu'] span")
 	private List<WebElement> _firstMenuOptions;
 
 	@FindBy(how = How.CSS, using = "div[class='container']")
@@ -88,8 +88,9 @@ public class Mylo_DashboardHomePage extends Base {
 	@FindBy(how = How.CSS, using = "h5[class='modal-title']")
 	private WebElement _headerText;
 	
-	@FindBy(how = How.CSS, using = "button[class='btn btn-primary modal-md-blue-btn']")
+	@FindBy(how = How.CSS, using = "#collapseSummary a")
 	private List<WebElement> _assignmentOptions;
+	
 	
 	@FindBy(how = How.CSS, using = "mat-dialog-container[role='dialog']")
 	private WebElement _dialogBox;
@@ -105,6 +106,7 @@ public class Mylo_DashboardHomePage extends Base {
 	final By _fileParameterOptions = By.xpath(".//following-sibling::label");
 	final By _queryResultColumns = By.xpath("./li");
 	final By _dropdownSections = By.xpath(".//parent::div/ng-select");
+	final By _journeySubSections = By.cssSelector("#collapseSummary a");
 			
 	LinkedHashMap<String, Integer> parameterDropdownFieldsMap = new LinkedHashMap<String, Integer>();
 
@@ -113,18 +115,13 @@ public class Mylo_DashboardHomePage extends Base {
 		CoreFunctions.explicitWaitTillElementVisibility(driver, _userProfile, _userProfile.getText());
 		Log.info("userName is : " + _userProfile.getText());
 		CoreFunctions.highlightObject(driver, _userProfile);
-		boolean flag = userName.equals(_userProfile.getText());
-		return flag;
+		return userName.equals(_userProfile.getText());
 	}
 
 	public void clickOptionFromMainMenu(String option) {
 		CoreFunctions.explicitWaitTillElementInVisibilityCustomTime(driver, _spinner, 60);
 		CoreFunctions.explicitWaitTillElementListVisibility(driver, _firstMenuOptions);
 		CoreFunctions.selectItemInListByText(driver, _firstMenuOptions, option);
-		CoreFunctions.explicitWaitTillElementInVisibilityCustomTime(driver, _spinner, 60);
-		while(!(CoreFunctions.isElementExist(driver, _dialogBox, 60))) {
-			CoreFunctions.selectItemInListByText(driver, _firstMenuOptions, option);
-		}
 	}
 	
 	public boolean verifyJourneyHeaderText() {
@@ -170,10 +167,12 @@ public class Mylo_DashboardHomePage extends Base {
 	}
 	
 	public void selectOptionsFromAssignmentMenu(String optionToBeSelected) {
-		CoreFunctions.explicitWaitTillElementInVisibilityCustomTime(driver, _spinner, 60);
-		//CoreFunctions.explicitWaitTillElementVisibility(driver, _dialogBox, _dialogBox.getText(), 180);
-		CoreFunctions.explicitWaitTillElementListVisibilityCustomTime(driver, _assignmentOptions,180);
-		CoreFunctions.selectItemInListByText(driver, _assignmentOptions, optionToBeSelected);
+		CoreFunctions.explicitWaitTillElementInVisibilityCustomTime(driver, _spinner, 120);
+		while(!(CoreFunctions.isElementByLocatorExist(driver, _journeySubSections, 5))) {
+			clickOptionFromMainMenu(MYLOConstants.JOURNEY);
+		}
+		List<WebElement> journeySubSectionList = CoreFunctions.getElementListByLocator(driver, _journeySubSections);
+		CoreFunctions.selectItemInListByText(driver, journeySubSectionList, optionToBeSelected);
 		CoreFunctions.highlightObject(driver, _assignmentOptionHeader);
 		Assert.assertEquals(_assignmentOptionHeader.getText(), MYLOConstants.ASSIGNMENT_QUERYTYPE_HEADER, MYLOConstants.MISMATCH_HEADERTEXT);
 	}
@@ -270,7 +269,7 @@ public class Mylo_DashboardHomePage extends Base {
 
 	public void resetFileParameters() {
 		closePopUp();
-		clickOptionFromMainMenu(MYLOConstants.JOURNEY);
+		//clickOptionFromMainMenu(MYLOConstants.JOURNEY);
 		selectOptionsFromAssignmentMenu(MYLOConstants.QUERY_FILE);
 		selectParameterFromQueryScreen(MYLOConstants.FILE);
 	}
@@ -305,8 +304,8 @@ public class Mylo_DashboardHomePage extends Base {
 	}
 	
 	public void executeDifferentFileIds(int count, List<String> fileIds) {
+		clickOptionFromMainMenu(MYLOConstants.JOURNEY);
 		for (int i = 0; i < count; i++) {
-			clickOptionFromMainMenu(MYLOConstants.JOURNEY);
 			selectOptionsFromAssignmentMenu(MYLOConstants.QUERY_FILE);
 			selectParameterFromQueryScreen(MYLOConstants.FILE);
 			selectOptionsForFileParameters(MYLOConstants.FILE_ID, fileIds.get(i));

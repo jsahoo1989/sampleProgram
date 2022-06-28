@@ -1,16 +1,16 @@
-Feature: Validate the functionality of Mylo Assignment History section
-  As a Mylo user, I want to validate the functionality for "Mylo Assignment - History" section
+Feature: Validate the functionality of Mylo Journey History Card section
+  As a Mylo user, I want to validate the functionality for "Mylo Journey - History Card" section
 
 Background: Login to the Mylo application
     Given he has logged into the 'Mylo' application
    
 @IRIS-992 @214504 @214508 @214510 @Mylo:217520 @Mylo-Regression
 Scenario:  Mylo-Validate History Card appearing for Searching Multiple FileIds in the current session on Mylo Journey page
-Given he is on Mylo Assignment Summary page for file ID "482408" 
+Given he is on Mylo Journey Summary page for file ID "482408" 
 When he queries another file for file ID "611085"
 Then the prior file info should be displayed in the history card at the top of the page with the following data:
 |Transferee Name|FileId & Client Name   |Origin & Destination Address|
-|Tom Ripley|482408 (MobilityX Inc.)| San Jose, CA to Brooklyn, NY |
+|Ripley, Tom|482408 (MobilityX Inc.)| San Jose, CA to Brooklyn, NY |
 And the history card should continue to display after he refreshes the current session
 And the history card should no longer display at the top of the page after he clicks on X 
 

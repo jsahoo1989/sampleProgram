@@ -81,7 +81,7 @@ public class Mylo_LoginPage extends Base {
 			CoreFunctions.click(driver, _staySignedInYes, _staySignedInYes.getAttribute("value"));
 		}
 		CoreFunctions.switchToParentWindow(driver);
-		CoreFunctions.explicitWaitTillElementInVisibilityCustomTime(driver, _spinner, 10);
+		CoreFunctions.explicitWaitTillElementInVisibilityCustomTime(driver, _spinner, 120);
 		while(!(CoreFunctions.isElementExist(driver, _userProfile, 6))) {
 			CoreFunctions.hoverAndClick(driver, CoreFunctions.getElementByLocator(driver, _loginImg),MYLOConstants.LOGIN_IMAGE);
 		}	
@@ -90,18 +90,20 @@ public class Mylo_LoginPage extends Base {
 	}
 
 	public void enterUserEmailAndPasswordForMylo(String userName, String password) {
-			CoreFunctions.explicitWaitTillElementVisibility(driver, _txtUserEmail,
-					_txtUserEmail.getAttribute("placeholder"));
-			CoreFunctions.clearAndSetText(driver, _txtUserEmail, _txtUserEmail.getAttribute("placeholder"), userName);
-			CoreFunctions.clickUsingJS(driver, _submit, _submit.getAttribute("value"));
-			CoreFunctions.explicitWaitTillElementInVisibilityCustomTime(driver, _spinner, 10);
-			WebElement _pswd = CoreFunctions.getElementByLocator(driver, _password);
-			CoreFunctions.clearAndSetText(driver, _pswd, _pswd.getAttribute("type"), password);
+		CoreFunctions.explicitWaitTillElementVisibility(driver, _txtUserEmail,
+				MYLOConstants.USER_EMAIL,60);
+		CoreFunctions.clearAndSetText(driver, _txtUserEmail, _txtUserEmail.getAttribute("placeholder"), userName);
+		CoreFunctions.clickUsingJS(driver, _submit, _submit.getAttribute("value"));
+		CoreFunctions.explicitWaitTillElementInVisibilityCustomTime(driver, _spinner, 10);
+		WebElement _pswd = CoreFunctions.getElementByLocator(driver, _password);
+		CoreFunctions.clearAndSetText(driver, _pswd, _pswd.getAttribute("type"), password);
+
 	}
 	
 	public void logout() {
 		CoreFunctions.explicitWaitTillElementVisibility(driver, _userProfileImg, MYLOConstants.USER_PROFILE_IMAGE,15);
-		CoreFunctions.click(driver, _userProfileImg, MYLOConstants.USER_PROFILE_IMAGE);
+		//CoreFunctions.click(driver, _userProfileImg, MYLOConstants.USER_PROFILE_IMAGE);
+		CoreFunctions.clickUsingJS(driver, _userProfileImg, MYLOConstants.USER_PROFILE_IMAGE);
 		CoreFunctions.explicitWaitTillElementVisibility(driver, _logoutUserImg, _logoutUserImg.getText());
 		CoreFunctions.click(driver, _logoutUserImg, MYLOConstants.LOGOUT_IMAGE);
 	}

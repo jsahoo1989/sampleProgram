@@ -1,9 +1,8 @@
 package stepDefinitions.mylo;
 
-import java.util.Date;
-
+import java.text.MessageFormat;
 import org.testng.Assert;
-
+import com.aires.businessrules.constants.CoreConstants;
 import com.aires.businessrules.constants.MYLOConstants;
 import com.aires.cucumber.TestContext;
 import com.aires.managers.FileReaderManager;
@@ -12,8 +11,6 @@ import com.aires.pages.mylo.Mylo_AssignmentPage;
 import com.aires.pages.mylo.Mylo_DashboardHomePage;
 import com.aires.pages.mylo.Mylo_LoginPage;
 import com.aires.testdatatypes.mylo.Mylo_LoginData;
-import com.vimalselvam.cucumber.listener.Reporter;
-
 import cucumber.api.DataTable;
 import cucumber.api.java.en.Given;
 import cucumber.api.java.en.Then;
@@ -38,32 +35,25 @@ public class MyloDashboard_Steps {
 
 	@Given("^he has logged into the 'Mylo' application$")
 	public void he_has_logged_into_the_Mylo_application() throws Throwable {
-		MYLOConstants.TIME_BEFORE_ACTION = new Date().getTime();
 		loginPage.openApplication();
 		loginPage.enterUserEmailAndPasswordForMylo(loginData.MyloUserName, loginData.MyloPassword);
 		loginPage.clickSignIn();
-		myloDashboardPage.verifyUserName(loginData.MyloProfileName);
-		MYLOConstants.TIME_AFTER_ACTION = new Date().getTime();
-		Reporter.addStepLog("<b>Total time taken by <i>'Given'</i> statement is :"
-				+ (MYLOConstants.TIME_AFTER_ACTION - MYLOConstants.TIME_BEFORE_ACTION) / 1000 + " Seconds </b>");
+		Assert.assertTrue(myloDashboardPage.verifyUserName(loginData.MyloProfileName),
+				MessageFormat.format(MYLOConstants.VERIFIED_SECTION_NOT_DISPLAYED, CoreConstants.FAIL,
+						loginData.MyloProfileName, MYLOConstants.MYLO_DASHBOARD_HOME_PAGE));
 	}
 
 	@Given("^he is on Mylo Dashboard Home page$")
 	public void he_is_on_Mylo_Dashboard_Home_page() {
-		myloDashboardPage.verifyUserName(loginData.MyloProfileName);
+		Assert.assertTrue(myloDashboardPage.verifyUserName(loginData.MyloProfileName),
+				MessageFormat.format(MYLOConstants.VERIFIED_SECTION_NOT_DISPLAYED, CoreConstants.FAIL,
+						loginData.MyloProfileName, MYLOConstants.MYLO_DASHBOARD_HOME_PAGE));
 	}
 
 	@When("^he clicks on the \"([^\"]*)\" \"([^\"]*)\" option in the Mylo Menu on the sidebar$")
 	public void he_clicks_on_the_option_in_the_Mylo_Menu_on_the_sidebar(String section, String subSection) {
-		if (section.equals(MYLOConstants.HAMBURGER)) {
-			myloDashboardPage.clickOptionFromMainMenu(MYLOConstants.JOURNEY);
-			myloDashboardPage.closePopUp();
-			Assert.assertTrue(myloDashboardPage.clickHamburgerMenu(), MYLOConstants.HAMBURGER_MENU_NOT_APPEARING);
-			myloDashboardPage.selectOptionsFromHamburgerMenu(subSection);
-		} else {
-			myloDashboardPage.clickOptionFromMainMenu(section);
-			myloDashboardPage.selectOptionsFromAssignmentMenu(MYLOConstants.QUERY_FILE);
-		}
+		myloDashboardPage.clickOptionFromMainMenu(section);
+		myloDashboardPage.selectOptionsFromAssignmentMenu(subSection);
 	}
 
 	@Then("^the Select Query Type screen should display with the given parameters$")
@@ -81,27 +71,34 @@ public class MyloDashboard_Steps {
 
 	@Given("^Select Parameter popup should display with given parameters$")
 	public void select_Parameter_popup_should_display_with_given_parameters(DataTable data) {
-		Assert.assertTrue(myloDashboardPage.verifyFileParameterOptions(data));
+		Assert.assertTrue(myloDashboardPage.verifyFileParameterOptions(data),
+				MYLOConstants.FILE_PARAMETERS_OPTIONS_NOT_MATCHING);
 
 	}
 
 	@Given("^Message \"([^\"]*)\" is displayed after clicking on Execute button$")
 	public void message_is_displayed_after_clicking_on_Execute_button(String message) {
 		myloDashboardPage.clickExecuteButton();
-		Assert.assertTrue(myloDashboardPage.verifyPopUpMessage(message));
+		Assert.assertTrue(myloDashboardPage.verifyPopUpMessage(message),
+				MessageFormat.format(MYLOConstants.VERIFIED_POPUP_MESSAGE_NOT_DISPLAYED, CoreConstants.FAIL, message,
+						MYLOConstants.MYLO_DASHBOARD_HOME_PAGE));
 	}
-	
+
 	@Given("^alert message \"([^\"]*)\" is displayed after clicking on Execute button$")
 	public void alert_message_is_displayed_after_clicking_on_Execute_button(String message) {
 		myloDashboardPage.clickExecuteButton();
-		Assert.assertTrue(myloAssignmentPage.verifyAlertMessage(message));
+		Assert.assertTrue(myloAssignmentPage.verifyAlertMessage(message),
+				MessageFormat.format(MYLOConstants.VERIFIED_ALERT_MESSAGE_NOT_DISPLAYED, CoreConstants.FAIL, message,
+						MYLOConstants.MYLO_DASHBOARD_HOME_PAGE));
 	}
 
 	@Given("^Message \"([^\"]*)\" is displayed after clicking on Execute button with invalid File ID \"([^\"]*)\"$")
 	public void message_is_displayed_after_clicking_on_Execute_button_with_invalid_File_ID(String message,
 			String fileID) {
 		myloDashboardPage.selectOptionsForFileParameters(MYLOConstants.FILE_ID, fileID);
-		Assert.assertTrue(myloDashboardPage.verifyPopUpMessage(message));
+		Assert.assertTrue(myloDashboardPage.verifyPopUpMessage(message),
+				MessageFormat.format(MYLOConstants.VERIFIED_POPUP_MESSAGE_NOT_DISPLAYED, CoreConstants.FAIL, message,
+						MYLOConstants.MYLO_DASHBOARD_HOME_PAGE));
 	}
 
 	@When("^user clicks on Execute button after entering valid Client Id \"([^\"]*)\", Status \"([^\"]*)\", Origin Country \"([^\"]*)\" and Destination Country \"([^\"]*)\"$")
@@ -117,9 +114,15 @@ public class MyloDashboard_Steps {
 
 	@Then("^Query results should appear based on the parameter provided sorted by File ID$")
 	public void query_results_should_appear_based_on_the_parameter_provided_sorted_by_File_ID() {
-		Assert.assertTrue(myloDashboardPage.verifyQueryResults(MYLOConstants.STATUS, MYLOConstants.STATUS_VALUE));
-		Assert.assertTrue(myloDashboardPage.verifyQueryResults(MYLOConstants.ORIGIN, MYLOConstants.COUNTRY_NAME));
-		Assert.assertTrue(myloDashboardPage.verifyQueryResults(MYLOConstants.DESTINATION, MYLOConstants.COUNTRY_NAME));
+		Assert.assertTrue(myloDashboardPage.verifyQueryResults(MYLOConstants.STATUS, MYLOConstants.STATUS_VALUE),
+				MessageFormat.format(MYLOConstants.VERIFIED_VALUE_NOT_DISPLAYED, CoreConstants.FAIL,
+						MYLOConstants.STATUS, MYLOConstants.STATUS_VALUE, MYLOConstants.MYLO_DASHBOARD_HOME_PAGE));
+		Assert.assertTrue(myloDashboardPage.verifyQueryResults(MYLOConstants.ORIGIN, MYLOConstants.COUNTRY_NAME),
+				MessageFormat.format(MYLOConstants.VERIFIED_VALUE_NOT_DISPLAYED, CoreConstants.FAIL,
+						MYLOConstants.ORIGIN, MYLOConstants.COUNTRY_NAME, MYLOConstants.MYLO_DASHBOARD_HOME_PAGE));
+		Assert.assertTrue(myloDashboardPage.verifyQueryResults(MYLOConstants.DESTINATION, MYLOConstants.COUNTRY_NAME),
+				MessageFormat.format(MYLOConstants.VERIFIED_VALUE_NOT_DISPLAYED, CoreConstants.FAIL,
+						MYLOConstants.DESTINATION, MYLOConstants.COUNTRY_NAME, MYLOConstants.MYLO_DASHBOARD_HOME_PAGE));
 		Assert.assertTrue(myloDashboardPage.verifyQueryResults(MYLOConstants.FILE_ID, ""),
 				MYLOConstants.INCORRECT_FILEID_SORTING);
 	}

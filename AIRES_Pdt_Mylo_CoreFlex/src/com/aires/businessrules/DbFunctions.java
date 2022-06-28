@@ -82,8 +82,8 @@ public class DbFunctions {
 			//dbURL = "jdbc:oracle:thin:irisuser/nextir@corptesvl300.corp.aires.com:1521:irisnext";
 			dbURL = "jdbc:oracle:thin:isisdba/irisuatisisdba@corpqavl300.corp.aires.com:1521:irisuat";
 			break;
-		case "DEV":
-			dbURL = "jdbc:oracle:thin:isisdba/irisdevisisdba@corptesvl300.corp.aires.com:1521:IRISDEV";
+		case "DEV5":
+			dbURL = "jdbc:oracle:thin:irisuser/nextir@corptesvl300.corp.aires.com:1521:irisnext";				 
 			break;
 		case "TEST":
 			dbURL = "jdbc:oracle:thin:policydba/testpo@corptesvl300.corp.aires.com:1521:IRISTEST";
@@ -179,7 +179,7 @@ public class DbFunctions {
 		} catch (Exception ex) {			
 			Log.info(CoreConstants.ERROR+ex.getMessage());
 			Log.info(CoreConstants.ERROR+ex.getStackTrace());			
-			Assert.fail(CoreConstants.SQL_QUERY_FAILED);
+			Assert.fail(CoreConstants.SQL_QUERY_FAILED + "for " + fieldName);
 		} finally {
 			try {
 				if(connection != null) {

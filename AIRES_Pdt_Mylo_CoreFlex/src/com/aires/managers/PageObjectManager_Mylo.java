@@ -19,11 +19,14 @@ package com.aires.managers;
 
 import org.openqa.selenium.WebDriver;
 
+import com.aires.pages.mylo.MyloJourneyPage_DependentSection;
+import com.aires.pages.mylo.MyloJourneyPage_OtherSection;
 import com.aires.pages.mylo.MyloJourneyPage_PartnerSection;
 import com.aires.pages.mylo.MyloJourneyPage_TransfereeSection;
 import com.aires.pages.mylo.Mylo_AssignmentPage;
 //import com.aires.pages.mylo.Mylo_AssignmentPage;
 import com.aires.pages.mylo.Mylo_DashboardHomePage;
+import com.aires.pages.mylo.Mylo_JourneyPage;
 import com.aires.pages.mylo.Mylo_LoginPage;
 import com.aires.pages.mylo.Mylo_RestApiRequest;
 
@@ -36,7 +39,10 @@ public class PageObjectManager_Mylo {
 	private Mylo_AssignmentPage _assignmentPage; 
 	private MyloJourneyPage_TransfereeSection _journeyTransfereeSection;
 	private MyloJourneyPage_PartnerSection _journeyPartnerSection;
+	private MyloJourneyPage_DependentSection _journeyDependentSection;
+	private MyloJourneyPage_OtherSection _journeyOtherSection;
 	private Mylo_RestApiRequest _restApiRequest;
+	private Mylo_JourneyPage _journeyPage;
 
 	public PageObjectManager_Mylo(WebDriver driver) {
 		this._driver = driver;
@@ -57,6 +63,11 @@ public class PageObjectManager_Mylo {
 				: _assignmentPage;
 	}
 	 
+	 public Mylo_JourneyPage getJourneyPage() {
+			return (_journeyPage == null) ? _journeyPage = new Mylo_JourneyPage(_driver)
+					: _journeyPage;
+		}
+	 
 	public Mylo_RestApiRequest getRestApiRequest() {
 			return (_restApiRequest == null) ? _restApiRequest = new Mylo_RestApiRequest(_driver)
 					: _restApiRequest;
@@ -69,5 +80,13 @@ public class PageObjectManager_Mylo {
 	 public MyloJourneyPage_PartnerSection getJourneyPagePartnerSection() {
 			return (_journeyPartnerSection == null) ? _journeyPartnerSection = new MyloJourneyPage_PartnerSection(_driver)
 					: _journeyPartnerSection;
+		}
+	 public MyloJourneyPage_DependentSection getJourneyPageDependentSection() {
+			return (_journeyDependentSection == null) ? _journeyDependentSection = new MyloJourneyPage_DependentSection(_driver)
+					: _journeyDependentSection;
+		}
+	 public MyloJourneyPage_OtherSection getJourneyPageOtherSection() {
+			return (_journeyOtherSection == null) ? _journeyOtherSection = new MyloJourneyPage_OtherSection(_driver)
+					: _journeyOtherSection;
 		}
 }

@@ -5,18 +5,14 @@ Background: Login to  Mylo application
     Given he has logged into the 'Mylo' application
     
 @IRIS-582 @Mylo:217537 @Mylo-Regression
-Scenario Outline: Mylo-Validate Select Query parameters from Assignment Options
+Scenario: Mylo-Validate Select Query parameters from Assignment Options
 Given he is on Mylo Dashboard Home page
-When he clicks on the "<SectionType>" "<SubSection>" option in the Mylo Menu on the sidebar
+When he clicks on the "Journey" "Query" option in the Mylo Menu on the sidebar
 Then the Select Query Type screen should display with the given parameters
 |Row Number  |Parameters                                        |
 | First Row  |File,My File,My Active Files,My Unbilled          |
 | Second Row |Accounting,Transferee Name,Sub-Service ID,Advanced|
 | Third Row  |Shipment,PO Number,History                        |
-Examples:
-		| SectionType | SubSection |
-     	| Journey     |       None |
-     	| Hamburger	  |	     Query |
 
 @IRIS-666 @Mylo:217538 @Mylo-Regression
 Scenario: Mylo-Validate the functionality for Search Results in Query UI screen

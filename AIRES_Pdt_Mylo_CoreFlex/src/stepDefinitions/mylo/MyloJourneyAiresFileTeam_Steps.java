@@ -9,59 +9,47 @@ import com.aires.pages.mylo.Mylo_DashboardHomePage;
 import com.aires.pages.mylo.Mylo_LoginPage;
 import com.aires.testdatatypes.mylo.Mylo_LoginData;
 import com.vimalselvam.cucumber.listener.Reporter;
-
 import cucumber.api.java.en.Given;
 import cucumber.api.java.en.Then;
 import cucumber.api.java.en.When;
-
 import java.text.MessageFormat;
-import java.util.Date;
-
 import org.testng.Assert;
 
-public class MyloAssignmentAiresFileTeam_Steps {
-	TestContext testContext;
-	Mylo_LoginPage loginPage;
-	Mylo_DashboardHomePage myloDashboardPage;
-	Mylo_AssignmentPage myloAssignmentPage;
+public class MyloJourneyAiresFileTeam_Steps {
+	private TestContext testContext;
+	private Mylo_LoginPage loginPage;
+	private Mylo_DashboardHomePage myloDashboardPage;
+	private Mylo_AssignmentPage myloAssignmentPage;
 
 	Mylo_LoginData loginData = FileReaderManager.getInstance().getMyloJsonReader()
 			.getloginDetailsByUserProfileName(MYLOConstants.USER_PROFILE_NAME);
 
-	public MyloAssignmentAiresFileTeam_Steps(TestContext context) {
+	public MyloJourneyAiresFileTeam_Steps(TestContext context) {
 		testContext = context;
 		loginPage = testContext.getMyloPageObjectManager().getLoginPage();
 		myloDashboardPage = testContext.getMyloPageObjectManager().getDashboardHomePage();
 		myloAssignmentPage = testContext.getMyloPageObjectManager().getAssignmentPage();
 	}
 
-	@Given("^he views Summary Tab under Assignment after clicking on Execute button with FileID \"([^\"]*)\"$")
-	public void he_views_Summary_Tab_under_Assignment_after_clicking_on_Execute_button_with_FileID(String fileID) {
+	@Given("^he views Summary Tab under Journey after clicking on Execute button with FileID \"([^\"]*)\"$")
+	public void he_views_Summary_Tab_under_Journey_after_clicking_on_Execute_button_with_FileID(String fileID) {
 		myloDashboardPage.selectOptionsForFileParameters(MYLOConstants.FILE_ID, fileID);
 		myloDashboardPage.clickExecuteButton();
 	}
 
-	@Given("^he is on Mylo Assignment Summary page for file ID \"([^\"]*)\"$")
-	public void he_is_on_Mylo_Assignment_Summary_page_for_file_ID(String fileID) {
-		MYLOConstants.TIME_BEFORE_ACTION = new Date().getTime();
+	@Given("^he is on Mylo Journey Summary page for file ID \"([^\"]*)\"$")
+	public void he_is_on_Mylo_Journey_Summary_page_for_file_ID(String fileID) {
 		myloDashboardPage.clickOptionFromMainMenu(MYLOConstants.JOURNEY);
 		myloDashboardPage.selectOptionsFromAssignmentMenu(MYLOConstants.QUERY_FILE);
 		myloDashboardPage.selectParameterFromQueryScreen(MYLOConstants.FILE);
 		myloDashboardPage.selectOptionsForFileParameters(MYLOConstants.FILE_ID, fileID);
 		Reporter.addStepLog(MessageFormat.format(MYLOConstants.FILE_ID_ENTERED, CoreConstants.PASS, fileID));
 		myloDashboardPage.clickExecuteButton();
-		//Assert.assertTrue(myloAssignmentPage.verifyActiveTab(MYLOConstants.SUMMARY),
-			//	MYLOConstants.SUMMARY + MYLOConstants.TAB_NOT_ACTIVE);
-		MYLOConstants.TIME_AFTER_ACTION = new Date().getTime();
-		Reporter.addStepLog("<b>Total time taken by <i>'Given'</i> statement is :"
-				+ (MYLOConstants.TIME_AFTER_ACTION - MYLOConstants.TIME_BEFORE_ACTION) / 1000 + " Seconds </b>");
 	}
 
 	@Given("^he selects \"([^\"]*)\" with random team member from the dropdown after clicking on \"([^\"]*)\" button$")
 	public void he_selects_with_random_team_member_from_the_dropdown_after_clicking_on_button(String roleName,
 			String buttonName) {
-		//Assert.assertTrue(myloAssignmentPage.verifyActiveTab(MYLOConstants.SUMMARY),
-			//	MYLOConstants.SUMMARY + MYLOConstants.TAB_NOT_ACTIVE);
 		myloAssignmentPage.clickButtonOnAiresFileTeamSection(buttonName);
 		myloAssignmentPage.addRole(roleName);
 		myloAssignmentPage.addTeamMember(MYLOConstants.RANDOM);
@@ -112,7 +100,8 @@ public class MyloAssignmentAiresFileTeam_Steps {
 
 	@Then("^new row should be added for \"([^\"]*)\" with updated team member, End Date to current date$")
 	public void new_row_should_be_added_for_with_updated_team_member_End_Date_to_current_date(String roleName) {
-		Assert.assertTrue(myloAssignmentPage.verifyUpdatedRowAiresFileTeamSection(roleName), MYLOConstants.ROW_DIDNOT_UPDATED);
+		Assert.assertTrue(myloAssignmentPage.verifyUpdatedRowAiresFileTeamSection(roleName),
+				MYLOConstants.ROW_DIDNOT_UPDATED);
 	}
 
 	@Given("^all the values are readonly in the AiresFileTeam grid$")
@@ -123,9 +112,13 @@ public class MyloAssignmentAiresFileTeam_Steps {
 	@Given("^he has logged into the Mylo application with mentioned userType \"([^\"]*)\"$")
 	public void he_has_logged_into_the_Mylo_application_with_mentioned_userType(String userType)
 			throws InterruptedException {
-		myloDashboardPage.verifyUserName(loginData.MyloProfileName);
+		Assert.assertTrue(myloDashboardPage.verifyUserName(loginData.MyloProfileName),
+				MessageFormat.format(MYLOConstants.VERIFIED_SECTION_NOT_DISPLAYED, CoreConstants.FAIL,
+						loginData.MyloProfileName, MYLOConstants.MYLO_DASHBOARD_HOME_PAGE));
 		loginPage.loginWithUser(userType);
-		myloDashboardPage.verifyUserName(loginData.MyloProfileName);
+		Assert.assertTrue(myloDashboardPage.verifyUserName(loginData.MyloProfileName),
+				MessageFormat.format(MYLOConstants.VERIFIED_SECTION_NOT_DISPLAYED, CoreConstants.FAIL,
+						loginData.MyloProfileName, MYLOConstants.MYLO_DASHBOARD_HOME_PAGE));
 	}
 
 	@When("^he clicks on role dropdown after clicking on \"([^\"]*)\" button$")

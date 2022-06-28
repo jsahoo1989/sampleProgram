@@ -827,7 +827,7 @@ public class MyloJourneyPage_PartnerSection extends Base {
 	 * @param index
 	 * @param number
 	 * @return
-	 * Check whether Preferred checkbox is selected for Transferee Phone/Email section
+	 * Check whether Preferred checkbox is selected for Partner Phone/Email section
 	 */
 	public boolean isPreferredChecked(String section, int index, String number) {
 		boolean flag=false;

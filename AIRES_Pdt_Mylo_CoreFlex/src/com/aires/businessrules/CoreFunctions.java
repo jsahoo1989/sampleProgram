@@ -1659,7 +1659,7 @@ public class CoreFunctions {
 		String selectedValue;
 		do {
 			selectedValue = WebElementList.get(getRandomNumber(0, WebElementList.size() - 1)).getText();
-		} while (valuesToIgnore.contains(valuesToIgnore));
+		} while (valuesToIgnore.contains(selectedValue));
 		return selectedValue;
 	}
 

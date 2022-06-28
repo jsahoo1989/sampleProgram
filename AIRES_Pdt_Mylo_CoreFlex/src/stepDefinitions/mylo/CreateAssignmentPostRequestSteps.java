@@ -1,10 +1,7 @@
 package stepDefinitions.mylo;
 
-import java.util.Set;
-
 import org.json.JSONObject;
 import org.testng.Assert;
-
 import com.aires.cucumber.TestContext;
 import com.aires.pages.mylo.Mylo_RestApiRequest;
 import cucumber.api.java.en.Given;

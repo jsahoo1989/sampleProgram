@@ -83,7 +83,7 @@ public class MyloJourneyPage_TransfereeSection extends Base {
 	@FindBy(how = How.CSS, using = "ng-select[name='T_marritalstatus']")
 	private WebElement _transfereeMaritalStatusDropdown;
 	
-	@FindBy(how = How.CSS, using = "ng-select[name='T_marritalstatus'] span[class='ng-value-label ng-star-inserted']")
+	@FindBy(how = How.CSS, using = "ng-select[name='T_marritalstatus'] span[class='ng-value-label']")
 	private WebElement _transfereeMaritalStatusDropdownValue;
 
 	@FindBy(how = How.CSS, using = "ng-select[name='T_Pronouns']")
@@ -92,13 +92,13 @@ public class MyloJourneyPage_TransfereeSection extends Base {
 	@FindBy(how = How.CSS, using = "ng-select[name='T_Citizenship']")
 	private WebElement _transfereeCitizenshipDropdown;
 	
-	@FindBy(how = How.CSS, using = "ng-select[name='T_Citizenship'] span[class='ng-value-label ng-star-inserted']")
+	@FindBy(how = How.CSS, using = "ng-select[name='T_Citizenship'] span[class='ng-value-label']")
 	private WebElement _transfereeCitizenshipDropdownValue;
 	
 	@FindBy(how = How.CSS, using = "ng-select[name='P_Gender']")
 	private WebElement _transfereeGenderDropDown;
 	
-	@FindBy(how = How.CSS, using = "ng-select[name='P_Gender'] span[class='ng-value-label ng-star-inserted']")
+	@FindBy(how = How.CSS, using = "ng-select[name='P_Gender'] span[class='ng-value-label']")
 	private WebElement _transfereeGenderDropDownValue;
 	
 	@FindBy(how = How.CSS, using = "ng-select[name='P_Gender'] span[class='ng-arrow-wrapper']")
@@ -255,7 +255,8 @@ public class MyloJourneyPage_TransfereeSection extends Base {
 		case MYLOConstants.TRANSFEREE_FAMILY:
 			CoreFunctions.explicitWaitTillElementVisibility(driver, _transfereeAndFamilySection, sectionName);
 			CoreFunctions.highlightObject(driver, _transfereeAndFamilySection);
-			flag = (_transfereeAndFamilySection.getText().contains(MYLOConstants.TRANSFEREE_FAMILY));
+			System.out.println(_transfereeAndFamilySection.getText());
+			flag = (_transfereeAndFamilySection.getText().contains(MYLOConstants.TRANSFEREE_FAMILY_HEADER));
 			break;
 		case MYLOConstants.TRANSFEREE:
 			CoreFunctions.explicitWaitTillElementVisibility(driver, _transfereeAndFamilySectionHeaders.get(0),
@@ -263,7 +264,7 @@ public class MyloJourneyPage_TransfereeSection extends Base {
 			CoreFunctions.scrollToElementUsingJavaScript(driver, _transfereeAndFamilySection,
 					MYLOConstants.TRANSFEREE_FAMILY);
 			CoreFunctions.highlightObject(driver, _transfereeAndFamilySectionHeaders.get(0));
-			flag = (_transfereeAndFamilySectionHeaders.get(0).getText().contains(MYLOConstants.TRANSFEREE_FAMILY));
+			flag = (_transfereeAndFamilySectionHeaders.get(0).getText().equals(sectionName+MYLOConstants.COLON));
 			break;
 		case MYLOConstants.PARTNER:
 			CoreFunctions.explicitWaitTillElementVisibility(driver, _transfereeAndFamilySectionHeaders.get(1),
@@ -272,6 +273,24 @@ public class MyloJourneyPage_TransfereeSection extends Base {
 					MYLOConstants.TRANSFEREE_FAMILY);
 			CoreFunctions.highlightObject(driver, _transfereeAndFamilySectionHeaders.get(1));
 			flag = (_transfereeAndFamilySectionHeaders.get(1).getText().equals(sectionName+MYLOConstants.COLON));
+			break;
+		case MYLOConstants.DEPENDENTS:
+			CoreFunctions.scrollToElementUsingJavaScript(driver, _transfereeAndFamilySection,
+					MYLOConstants.TRANSFEREE_FAMILY);
+			CoreFunctions.explicitWaitTillElementVisibility(driver, _transfereeAndFamilySectionHeaders.get(2),
+					sectionName);
+			CoreFunctions.highlightObject(driver, _transfereeAndFamilySectionHeaders.get(2));
+			System.out.println(_transfereeAndFamilySectionHeaders.get(2).getText());
+			flag = (_transfereeAndFamilySectionHeaders.get(2).getText().equals(sectionName +MYLOConstants.COLON));
+			break;
+		case MYLOConstants.OTHER:
+			CoreFunctions.scrollToElementUsingJavaScript(driver, _transfereeAndFamilySection,
+					MYLOConstants.TRANSFEREE_FAMILY);
+			CoreFunctions.explicitWaitTillElementVisibility(driver, _transfereeAndFamilySectionHeaders.get(3),
+					sectionName);
+			CoreFunctions.highlightObject(driver, _transfereeAndFamilySectionHeaders.get(3));
+			System.out.println(_transfereeAndFamilySectionHeaders.get(3).getText());
+			flag = (_transfereeAndFamilySectionHeaders.get(3).getText().equals(sectionName +MYLOConstants.COLON));
 			break;
 		default:
 			Reporter.addStepLog(CoreConstants.FAIL + MYLOConstants.ENTER_CORRECT_SECTION_NAME);
@@ -378,9 +397,10 @@ public class MyloJourneyPage_TransfereeSection extends Base {
 		try {
 			CoreFunctions.scrollToElementUsingJavaScript(driver, _transfereeAndFamilySection,
 					MYLOConstants.TRANSFEREE_FAMILY);
-			CoreFunctions.explicitWaitTillElementVisibility(driver, _transfereeSaveBtn, MYLOConstants.SAVE_BUTTON);
+			//CoreFunctions.explicitWaitTillElementVisibility(driver, _transfereeSaveBtn, MYLOConstants.SAVE_BUTTON);
 			CoreFunctions.explicitWaitTillElementInVisibilityCustomTime(driver, _spinner, 180);
 			CoreFunctions.highlightElementAndClick(driver, _transfereeSaveBtn, MYLOConstants.SAVE_BUTTON);
+			CoreFunctions.explicitWaitTillElementInVisibilityCustomTime(driver, _spinner, 60);
 		} catch (Exception e) {
 			Reporter.addStepLog(MessageFormat.format(MYLOConstants.BUTTON_NOT_PRESENT, CoreConstants.FAIL,
 					MYLOConstants.SAVE_BUTTON, MYLOConstants.TRANSFEREE_FAMILY, MYLOConstants.JOURNEY));
@@ -585,6 +605,7 @@ public class MyloJourneyPage_TransfereeSection extends Base {
 		dropdownFields.add(MYLOConstants.TRANSFEREE_PHONE_TYPE);
 		dropdownFields.add(MYLOConstants.TRANSFEREE_ORGDEST);
 		try {
+			CoreFunctions.explicitWaitTillElementInVisibilityCustomTime(driver, _spinner, 60);
 			CoreFunctions.explicitWaitTillElementVisibility(driver,
 					transfereePhoneEmailFieldsMap.get(fieldName).get(index), fieldName);
 			requiredValue = (dropdownFields.contains(fieldName))
@@ -908,19 +929,6 @@ public class MyloJourneyPage_TransfereeSection extends Base {
 		else
 			Reporter.addStepLog(MessageFormat.format(MYLOConstants.VERIFIED_CHECKBOX_NOT_SELECTED, CoreConstants.PASS,
 					number, MYLOConstants.PREFERRED, section, MYLOConstants.TRANSFEREE));
-		return flag;
-	}
-	
-	/**
-	 * @param table
-	 * @return
-	 */
-	public boolean verifyDifferentTransfereeFieldsValue(DataTable table) {
-		boolean flag = false;
-		java.util.List<Map<String, String>> data = table.asMaps(String.class, String.class);
-		for (int i = 0; i < data.size(); i++) {
-			flag = (verifyTransfereeFieldsUpdatedValue(data.get(i).get(MYLOConstants.FIELD_NAME)));
-		}
 		return flag;
 	}
 	

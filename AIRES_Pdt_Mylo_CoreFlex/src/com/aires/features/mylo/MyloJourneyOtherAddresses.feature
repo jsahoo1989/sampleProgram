@@ -1,7 +1,7 @@
-Feature: Validate the functionality of Mylo Assignment Other Addresses section
-  As a Mylo user, I want to validate the functionality for "Mylo Assignment - Other Addresses" section
+Feature: Validate the functionality of Mylo Journey Other Addresses section
+  As a Mylo user, I want to validate the functionality for "Mylo Journey - Other Addresses" section
 
-Background: Login to  Mylo application and navigate to MyloAssignment Summart Page for given File Id
+Background: Login to  Mylo application and navigate to Mylo Journey Summary Page for given File Id
     Given he has logged into the 'Mylo' application
    
 @IRIS-830 @Mylo:217500 @Mylo-Regression

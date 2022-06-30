@@ -333,18 +333,13 @@ public class PDT_ViewPolicyPage extends Base {
 					CoreFunctions.getElementFromListByText(_listPolicyName, selectedPolicyName));
 			String actualPolicyStatusList = _listPolicyStatus.get(index).getText();
 			actualPolicyStatus = actualPolicyStatusList.split(":");
-			Log.info("Actual Policy Status=="+actualPolicyStatus[1].trim());
-			Log.info("Expected Policy Status=="+expectedPolicyStatus);
 			isSubmittedPolicyStatusVerified = (actualPolicyStatus[1].trim()).equals(expectedPolicyStatus);
-			Log.info("isSubmittedPolicyStatusVerified=="+isSubmittedPolicyStatusVerified);
 			CoreFunctions.highlightObject(driver,
 					CoreFunctions.getElementFromListByText(_listPolicyStatus, (actualPolicyStatus[1].trim())));
 			
 			String actualPolicyVersionList = _listVersionNo.get(index).getText();
 			actualPolicyVersion = actualPolicyVersionList.split(":");
-			Log.info("Actual Policy Version=="+actualPolicyVersion[1].trim());
 			isPolicyVersionVerified = (actualPolicyVersion[1].trim()).equals(expectedPolicyVersion);
-			Log.info("isPolicyVersionVerified=="+isPolicyVersionVerified);
 			CoreFunctions.highlightObject(driver,
 					CoreFunctions.getElementFromListByText(_listVersionNo, (actualPolicyVersion[1].trim())));
 		} catch (Exception e) {

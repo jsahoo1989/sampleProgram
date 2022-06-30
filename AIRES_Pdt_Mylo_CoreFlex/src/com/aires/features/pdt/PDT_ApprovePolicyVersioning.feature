@@ -4,7 +4,7 @@ Feature: Approve Policy to create new version
  Background: Login to  Policy Digitization Tool (PDT) application
     Given he is logged into 'Aires Policy Tool' application as a "Client Service Manager" user
     
-    @Sprint-29 @PDT-Regression @visible
+    @Sprint-29 @PDT-Regression @PDT-1115 @Pdt:217683
    Scenario: PDT - Validate 'Approve Policy' button is displayed as visible after submission of a policy from 'Policy benefit' page
     Given he is on the "Add New Policy" page after clicking on the link "Add New Policy Form" displayed under the left navigation menu on the 'View Policy' page
     And he has clicked on the 'Next' button after selecting client, policy information on the 'Add New Policy' page
@@ -15,9 +15,8 @@ Feature: Approve Policy to create new version
     Then "Approve Policy" button should become visible on the 'Policy Benefit' page
     And "SAVE & SUBMIT" button should become disabled on the 'Policy Benefit' page
 	
-	@Sprint-29 @PDT-Regression @ui
+	@Sprint-29 @PDT-Regression @PDT-1115 @Pdt:217684
   Scenario: PDT - Validate the UI of 'Approve Policy' pop-up displayed after clicking Approve Policy button on "Policy Benefit" page
-   # Given he is on the "Home Leave" Policy Benefit page
     Given he is on the "Policy Benefit" page after selecting "Home Leave" as Benefit Category;
     And he clicks on "SAVE & SUBMIT" button after entering mandatory information for all the below selected sub benefits on "Home Leave" page
       | Home Leave Transportation | Home Leave Lodging | Home Leave Meals |
@@ -30,7 +29,7 @@ Feature: Approve Policy to create new version
       | Checkbox2 | Associate this policy with a NEW authorization in IRIS?_Enabled                                                                                                                                                 |
       | button    | Approve_disabled, Cancel_Enabled                                                                                                                                                                             |
 
-	@Sprint-29 @PDT-Regression @PDT-POL
+	@Sprint-29 @PDT-Regression @PDT-1115 @Pdt:217685
   Scenario: PDT - Validate 'Approve' button on 'Approve Policy' pop-up becomes enabled after selecting checkbox 'Associate this policy with a NEW authorization' on Policy benefit page
     Given he is on the "Policy Benefit" page after selecting "Home Leave" as Benefit Category;
     And he clicks on "SAVE & SUBMIT" button after entering mandatory information for all the below selected sub benefits on "Home Leave" page
@@ -39,7 +38,7 @@ Feature: Approve Policy to create new version
     When he selects the checkbox having label 'Associate this policy with a NEW authorization in IRIS?' on 'Approve Policy' pop-up
     Then "Approve" button should become "enabled" on 'Approve Policy' pop-up
 	
-	@Sprint-29 @PDT-Regression @PDT-POL-ACTIVE
+	@Sprint-29 @PDT-Regression @PDT-1115 @Pdt:217686
   Scenario: PDT - Verify that status of a 'Submitted' Policy changes to 'Active' after clicking 'Approve' button on 'Approve Policy' pop-up
     Given he is on the "Policy Benefit" page after selecting "Home Leave" as Benefit Category;
     And he clicks on "SAVE & SUBMIT" button after entering mandatory information for all the below selected sub benefits on "Home Leave" page
@@ -49,7 +48,7 @@ Feature: Approve Policy to create new version
     When he clicks on "Approve" button on 'Approve Policy' pop-up on "Policy Benefit" page
     Then Version "V1" of Policy should be displayed on "View/Edit Policy Forms" page with "Active" status
 
-  @Sprint-29 @PDT-Regression @PDT-POL-CANCEL
+  @Sprint-29 @PDT-Regression @PDT-1115 @Pdt:217686
   Scenario: PDT - Verify that Policy Status of a 'Submitted' Policy should not change after clicking 'Cancel' button on 'Approve Policy' pop-up
     Given he is on the "Policy Benefit" page after selecting "Home Leave" as Benefit Category;
     And he clicks on "SAVE & SUBMIT" button after entering mandatory information for all the below selected sub benefits on "Home Leave" page

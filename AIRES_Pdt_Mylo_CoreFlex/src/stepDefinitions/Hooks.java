@@ -34,7 +34,6 @@ import javax.imageio.ImageIO;
 import org.apache.commons.lang3.reflect.FieldUtils;
 import org.openqa.selenium.OutputType;
 import org.openqa.selenium.TakesScreenshot;
-import org.testng.Assert;
 
 import com.aires.businessrules.BusinessFunctions;
 import com.aires.businessrules.CoreFunctions;
@@ -174,10 +173,14 @@ public class Hooks {
 				Reporter.addScreenCaptureFromPath(destinationPath.toString());
 			} catch (IOException e) {
 			}
+		} else if (scenario.getStatus().equalsIgnoreCase("passed") && scenario.getName().contains("PDT") && testContext.getPageObjectManager().getAddNewPolicyPage().getPolicyId() != null) {
+			DbFunctions.deletePolicyByPolicyId(testContext.getPageObjectManager().getAddNewPolicyPage().getPolicyId());
+			Reporter.addScenarioLog(Status.PASS + " : Test Scenario is Passed");
+			testResult = 1;
 		} else if (scenario.getStatus().equalsIgnoreCase("passed")) {
 			Reporter.addScenarioLog(Status.PASS + " : Test Scenario is Passed");
 			testResult = 1;
-		} else {
+		}else {
 			Reporter.addScenarioLog(Status.SKIP + " : Test Scenario is Skipped");
 			testResult = 2;
 		}
@@ -187,6 +190,7 @@ public class Hooks {
 	@After(order = 1)
 	public void updateResultInTestRail(Scenario scenario) {
 		String Case_ID = BusinessFunctions.getTestRailIdAsPerApplication(System.getProperty("application"),scenario.getSourceTagNames().toString());
+		//String Case_ID = BusinessFunctions.getTestRailIdAsPerApplication("PDT",scenario.getSourceTagNames().toString());
 		Log.info(Case_ID);
 		String testrailRunName = (CoreFunctions.getPropertyFromConfig("SniffSuite_TestRunId"));
 		TestRail.addResultForTestCase(Case_ID, testResult, testrailRunName, CoreConstants.TEST_RAIL_URL,

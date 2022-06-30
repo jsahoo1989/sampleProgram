@@ -89,6 +89,9 @@ public class PDT_ViewPolicyPage extends Base {
 	// Policies Status List
 	@FindBy(how = How.XPATH, using = "//strong[contains(text(),'Policy Status')]/parent::h6")
 	private List<WebElement> _listPolicyStatus;
+	
+	@FindBy(how = How.XPATH, using = "//strong[contains(text(),'Version Number')]/parent::h6")
+	private List<WebElement> _listVersionNo;
 
 	final By _listPolicyNameByLocator = By.cssSelector("h5.text-info.info-pname");
 	final By _listClientNameByLocator = By.cssSelector("h6.info-pclient");
@@ -319,5 +322,47 @@ public class PDT_ViewPolicyPage extends Base {
 			Assert.fail(MessageFormat.format(PDTConstants.FAILED_TO_NAVIGATE_TO_PAGE, PDTConstants.GENERAL_INFORMATION, 
 					CoreConstants.FAIL));
 		}		
+	}
+	public boolean verifyPolicyStatusWithVersion(String selectedPolicyName, String expectedPolicyStatus, String expectedPolicyVersion, String pageName) {
+		boolean isSubmittedPolicyStatusVerified = false;
+		boolean isPolicyVersionVerified = false;
+		String[] actualPolicyStatus = null, actualPolicyVersion = null;
+		try {
+			int index = BusinessFunctions.returnindexItemFromListUsingText(driver, _listPolicyName, selectedPolicyName);
+			CoreFunctions.highlightObject(driver,
+					CoreFunctions.getElementFromListByText(_listPolicyName, selectedPolicyName));
+			String actualPolicyStatusList = _listPolicyStatus.get(index).getText();
+			actualPolicyStatus = actualPolicyStatusList.split(":");
+			Log.info("Actual Policy Status=="+actualPolicyStatus[1].trim());
+			Log.info("Expected Policy Status=="+expectedPolicyStatus);
+			isSubmittedPolicyStatusVerified = (actualPolicyStatus[1].trim()).equals(expectedPolicyStatus);
+			Log.info("isSubmittedPolicyStatusVerified=="+isSubmittedPolicyStatusVerified);
+			CoreFunctions.highlightObject(driver,
+					CoreFunctions.getElementFromListByText(_listPolicyStatus, (actualPolicyStatus[1].trim())));
+			
+			String actualPolicyVersionList = _listVersionNo.get(index).getText();
+			actualPolicyVersion = actualPolicyVersionList.split(":");
+			Log.info("Actual Policy Version=="+actualPolicyVersion[1].trim());
+			isPolicyVersionVerified = (actualPolicyVersion[1].trim()).equals(expectedPolicyVersion);
+			Log.info("isPolicyVersionVerified=="+isPolicyVersionVerified);
+			CoreFunctions.highlightObject(driver,
+					CoreFunctions.getElementFromListByText(_listVersionNo, (actualPolicyVersion[1].trim())));
+		} catch (Exception e) {
+			Reporter.addStepLog(MessageFormat.format(
+					PDTConstants.EXCEPTION_OCCURED_VALIDATING_POLICY_STATUS_VERSION,
+					CoreConstants.FAIL, e.getMessage()));
+		}
+		if (isSubmittedPolicyStatusVerified && isPolicyVersionVerified) {
+			Reporter.addStepLog(MessageFormat.format(
+					PDTConstants.VERIFIED_POLICY_VERSION_STATUS,
+					CoreConstants.PASS, selectedPolicyName, actualPolicyVersion[1], actualPolicyStatus[1], pageName));
+			return true;
+		} else {
+			Reporter.addStepLog(MessageFormat.format(
+					PDTConstants.FAILED_TO_VERIFY_POLICY_VERSION_STATUS, CoreConstants.FAIL,
+					selectedPolicyName, expectedPolicyVersion, actualPolicyVersion[1], expectedPolicyStatus, actualPolicyStatus[1], pageName));
+			return false;
+		}
+		
 	}
 }

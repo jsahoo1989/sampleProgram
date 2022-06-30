@@ -9,7 +9,7 @@ Feature: Validate the functionality of View Policy page
   #      | userName | password |
   #| kbrian   | kbrian   |
   #      | ckitts   | ckitts   |
-  @Sprint-14 @PDT-Regression  @search @Pdt:217666
+  @Sprint-14 @PDT-Regression @Pdt:217666
   Scenario: PDT - Verify search operation on View Policy Page
     Given he is on "View Policy" page
     Then he should be able to verify Policy data on "View Policy" page after performing below SearchBy operations

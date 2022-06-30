@@ -61,6 +61,9 @@ public class PDT_Mylo_CoreFlex_Common_LoginPage extends Base {
 	@FindBy(how = How.XPATH, using = "//div[text()='Use another account']")
 	private WebElement _anotherAccount;
 	
+	@FindBy(how = How.XPATH, using = "//div[text()='Sign in']")
+	private WebElement _headingSignIn;
+	
 	@FindBy(how = How.CSS, using = "div.ngx-progress-bar.ngx-progress-bar-ltr")
 	private WebElement _progressBar;
 	
@@ -118,14 +121,15 @@ public class PDT_Mylo_CoreFlex_Common_LoginPage extends Base {
 	
 	public void enterUserEmailAndPassword(String userName, String password) {
 		try {
+			CoreFunctions.explicitWaitForElementTextPresent(driver, _headingSignIn, "Sign in", 20);
 			CoreFunctions.explicitWaitTillElementVisibility(driver, _txt_UserEmail,
-					_txt_UserEmail.getAttribute("placeholder"));
+					_txt_UserEmail.getAttribute("placeholder"), 120);
 			CoreFunctions.clearAndSetText(driver, _txt_UserEmail, _txt_UserEmail.getAttribute("placeholder"), userName);
 			CoreFunctions.clickUsingJS(driver, _submit, _submit.getAttribute("value"));
 			CoreFunctions.explicitWaitTillElementInVisibilityCustomTime(driver, _spinner, 10);
 			WebElement _pswd = CoreFunctions.getElementByLocator(driver, _password);
 			CoreFunctions.clearAndSetText(driver, _pswd, _pswd.getAttribute("type"), password);
-		} catch (ElementNotFoundException e) {
+		} catch (Exception e) {
 		}
 	}
 	

@@ -303,7 +303,7 @@ public class CoreFlex_FlexPolicySetupPage extends Base {
 				break;
 			case COREFLEXConstants.CUSTOM_BUNDLES:
 				CoreFunctions.selectItemInListByText(driver, _leftNavigationTitleList,
-						COREFLEXConstants.BENEFIT_SUMMARY);
+						COREFLEXConstants.CUSTOM_BUNDLES);
 				break;
 			default:
 				Assert.fail(PDTConstants.INVALID_ELEMENT);
@@ -399,6 +399,8 @@ public class CoreFlex_FlexPolicySetupPage extends Base {
 						fieldName);
 				fillCashoutAvailabilityDetails(fieldSelectionInput);
 				CoreFunctions.writeToPropertiesFile("PolicyCashoutType", fieldSelectionInput);
+				break;
+			case COREFLEXConstants.POLICY_REQUIRED_FOR:
 				break;
 			default:
 				Assert.fail(COREFLEXConstants.INVALID_ELEMENT);

@@ -126,7 +126,7 @@ public class CoreFlex_FurnitureRental_BenefitsPage extends Base {
 
 	@FindBy(how = How.CSS, using = "ng-select[formcontrolname='durationCode']")
 	private WebElement _selectDuration;
-	
+
 	@FindBy(how = How.CSS, using = "ng-select[formcontrolname='durationCode'] span[class*='ng-value-label']")
 	private WebElement _selectDurationSelectedValue;
 
@@ -332,7 +332,9 @@ public class CoreFlex_FurnitureRental_BenefitsPage extends Base {
 				subBenefitNamesList.add(subBenefitNames);
 
 			for (String subBenefit : subBenefitNamesList) {
-				CoreFunctions.selectItemInListByText(driver, _subBenefitList, subBenefit.trim(), true);
+				if (subBenefitNamesList.size() > 1) {
+					CoreFunctions.selectItemInListByText(driver, _subBenefitList, subBenefit, true);
+				}
 				if (CoreFunctions.isElementExist(driver, getElementByName(subBenefit.trim()), 5)) {
 					fillSubBenefit(subBenefit.trim(), benefitType);
 				} else {
@@ -649,10 +651,9 @@ public class CoreFlex_FurnitureRental_BenefitsPage extends Base {
 	 * Method to verify FurnitureRental subBenefit form
 	 */
 	private void verifyFurnitureRentalSubBenefitForm(String formName) {
-		try {			
+		try {
 			CoreFunctions.verifyText(driver, _selectDurationSelectedValue,
-					settlingInBenefitData.furnitureRental.duration,
-					COREFLEXConstants.DURATION);
+					settlingInBenefitData.furnitureRental.duration, COREFLEXConstants.DURATION);
 			CoreFunctions.verifyRadioButtonSelection(driver, _radioGrossUpLabelList, _radioGrossUpButtonList,
 					settlingInBenefitData.furnitureRental.grossUp, COREFLEXConstants.GROSS_UP);
 			CoreFunctions.verifyRadioButtonSelection(driver, _radioReimbursedByLabelList, _radioReimbursedByButtonList,

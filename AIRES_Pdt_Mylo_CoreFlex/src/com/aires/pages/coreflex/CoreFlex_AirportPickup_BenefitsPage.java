@@ -323,7 +323,9 @@ public class CoreFlex_AirportPickup_BenefitsPage extends Base {
 				subBenefitNamesList.add(subBenefitNames);
 
 			for (String subBenefit : subBenefitNamesList) {
-				CoreFunctions.selectItemInListByText(driver, _subBenefitList, subBenefit.trim(), true);
+				if (subBenefitNamesList.size() > 1) {
+					CoreFunctions.selectItemInListByText(driver, _subBenefitList, subBenefit, true);
+				}
 				if (CoreFunctions.isElementExist(driver, getElementByName(subBenefit.trim()), 5)) {
 					fillSubBenefit(subBenefit.trim(), benefitType);
 				} else {
@@ -642,8 +644,8 @@ public class CoreFlex_AirportPickup_BenefitsPage extends Base {
 						settlingInBenefitData.airportPickup.reimbursedByOther, COREFLEXConstants.REIMBURSED_BY_OTHER);
 				CoreFunctions.highlightObject(driver, _inputReimbursedBy);
 			}
-			CoreFunctions.verifyText(_txtAreaComment.getDomProperty("value"), settlingInBenefitData.airportPickup.comment,
-					COREFLEXConstants.COMMENT);
+			CoreFunctions.verifyText(_txtAreaComment.getDomProperty("value"),
+					settlingInBenefitData.airportPickup.comment, COREFLEXConstants.COMMENT);
 			CoreFunctions.highlightObject(driver, _txtAreaComment);
 		} catch (Exception e) {
 			Assert.fail(MessageFormat.format(COREFLEXConstants.FAILED_TO_VERIFY_AIRPORT_PICKUP_SUB_BENEFITS_FORM,

@@ -373,9 +373,9 @@ public class CoreFlex_CustomBundlesPage extends Base {
 	 * @return
 	 */
 	public boolean iterateAndAddNewCustomBundle(String addNewCustomBundleButton, String policyType,
-			String saveCustomBundleButton) {
+			String saveCustomBundleButton,String policyRequiredFor) {
 		try {
-			List<String> bundleBenefitList = getBenefitList(policyType);
+			List<String> bundleBenefitList = getBenefitList(policyType,policyRequiredFor);
 			if (policyType.equals(COREFLEXConstants.CORE)) {
 				Reporter.addStepLog(MessageFormat.format(
 						COREFLEXConstants.CANNOT_CREATE_CUSTOM_BUNDLE_FOR_CORE_BENEFIT_TYPE, CoreConstants.PASS));
@@ -418,16 +418,37 @@ public class CoreFlex_CustomBundlesPage extends Base {
 		return CoreFunctions.searchElementExistsInListByText(driver, _textSavedCustomBundlesList, bundleName, true);
 	}
 
-	private List<String> getBenefitList(String policyType) {
-
+	private List<String> getBenefitList(String policyType,String policyRequiredFor) {
 		List<String> benefitNameList = new ArrayList<String>();
-		if (policyType.equals(COREFLEXConstants.FLEX) || policyType.equals(COREFLEXConstants.BOTH)) {
-			for (FlexBenefit benefit : flexBenefits) {
-				for (Benefit ben : benefit.getBenefits()) {
-					benefitNameList.add(ben.getBenefitDisplayName());
+		try {
+			switch (policyRequiredFor) {
+			case COREFLEXConstants.CLONING:
+			case COREFLEXConstants.VERSIONING:
+				for (FlexBenefit benefit : flexBenefits) {
+					for (Benefit ben : benefit.getBenefits()) {
+						if (ben.getPolicyCreationGroup().contains(COREFLEXConstants.CLONING))
+						benefitNameList.add(ben.getBenefitDisplayName());
+					}
 				}
+				break;
+			case COREFLEXConstants.AIRES_MANAGED_BENEFITS_CARDS:
+				break;
+			case COREFLEXConstants.ALL_BENEFITS:
+				for (FlexBenefit benefit : flexBenefits) {
+					for (Benefit ben : benefit.getBenefits()) {
+						benefitNameList.add(ben.getBenefitDisplayName());
+					}
+				}
+				break;
+			default:
+				Assert.fail(COREFLEXConstants.BLUEPRINT_POLICY_REQUIRED_FOR_OPTION_NOT_PRESENT_IN_THE_LIST);
 			}
+		}catch (Exception e) {
+			Reporter.addStepLog(MessageFormat.format(
+					COREFLEXConstants.EXCEPTION_OCCURED_WHILE_ADDING_A_NEW_CUSTOM_BUNDLE_ON_CUSTOM_BUNDLES_PAGE,
+					CoreConstants.FAIL, e.getMessage()));
 		}
+		
 		return benefitNameList;
 	}
 
@@ -450,11 +471,11 @@ public class CoreFlex_CustomBundlesPage extends Base {
 					.equals(COREFLEXConstants.EXPECTED_APPROVE_THIS_POLICY_DIALOG_HEADER);
 			isDialogTextVerified = CoreFunctions.getElementText(driver, _popUpApprovePolicyVersionText)
 					.equals((COREFLEXConstants.EXPECTED_APPROVE_THIS_POLICY_DIALOG_VERSION_TEXT).replace("VN",
-							policyVersionNumber));
-//					&& CoreFunctions.getElementText(driver, _popUpApprovePolicyAssignmentText)
-//							.equals(policyVersionNumber == "1"
-//									? COREFLEXConstants.EXPECTED_APPROVE_THIS_POLICY_DIALOG_ASSIGNMENT_TEXT_FIRST_VERSION
-//									: COREFLEXConstants.EXPECTED_APPROVE_THIS_POLICY_DIALOG_ASSIGNMENT_TEXT_SECOND_VERSION);
+							policyVersionNumber))
+					&& CoreFunctions.getElementText(driver, _popUpApprovePolicyAssignmentText)
+							.equals((policyVersionNumber .equals("1"))
+									? COREFLEXConstants.EXPECTED_APPROVE_THIS_POLICY_DIALOG_ASSIGNMENT_TEXT_FIRST_VERSION
+									: COREFLEXConstants.EXPECTED_APPROVE_THIS_POLICY_DIALOG_ASSIGNMENT_TEXT_SECOND_VERSION);
 			isDialogOptionsVerified = (CoreFunctions.getElementText(driver, _popUpApprovePolicyCheckBox).trim())
 					.equals(COREFLEXConstants.EXPECTED_APPROVE_THIS_POLICY_DIALOG_CHECKBOX_SELECTION.trim())
 					&& CoreFunctions.getAttributeText(_popUpApprovePolicyDefaultAssignmentDate, "min")
@@ -514,7 +535,7 @@ public class CoreFlex_CustomBundlesPage extends Base {
 			return false;
 	}
 
-	public boolean verifyAddedCustomBundlePostVersioningCloning() {
+	public boolean verifyAddedCustomBundlePostVersioningCloning(String policyRequiredFor) {
 		boolean isAddedCustomBundleVerified = false;
 		try {
 			if (CoreFunctions.searchElementExistsInListByText(driver, _textSavedCustomBundlesList,
@@ -522,7 +543,7 @@ public class CoreFlex_CustomBundlesPage extends Base {
 				List<String> actualBenefitList = _customBundleBenefitList.stream().map(x -> x.getText())
 						.collect(Collectors.toList());
 				Collections.sort(actualBenefitList);
-				List<String> expectedBenefitList = getBenefitDisplayNameList();
+				List<String> expectedBenefitList = getBenefitDisplayNameList(policyRequiredFor);
 				Collections.sort(expectedBenefitList);
 				isAddedCustomBundleVerified = actualBenefitList.equals(expectedBenefitList);
 			}
@@ -540,12 +561,29 @@ public class CoreFlex_CustomBundlesPage extends Base {
 		return isAddedCustomBundleVerified;
 	}
 
-	private List<String> getBenefitDisplayNameList() {
-		List<String> benefitNameList = new ArrayList<String>();
-		for (FlexBenefit benefit : flexBenefits) {
-			for (Benefit ben : benefit.getBenefits()) {
-				benefitNameList.add(ben.getBenefitDisplayName());
+	private List<String> getBenefitDisplayNameList(String policyRequiredFor) {
+		List<String> benefitNameList = new ArrayList<String>();		
+		switch (policyRequiredFor) {
+		case COREFLEXConstants.CLONING:
+		case COREFLEXConstants.VERSIONING:
+			for (FlexBenefit benefit : flexBenefits) {
+				for (Benefit ben : benefit.getBenefits()) {
+					if (ben.getPolicyCreationGroup().contains(COREFLEXConstants.CLONING))
+					benefitNameList.add(ben.getBenefitDisplayName());
+				}
 			}
+			break;
+		case COREFLEXConstants.AIRES_MANAGED_BENEFITS_CARDS:
+			break;
+		case COREFLEXConstants.ALL_BENEFITS:
+			for (FlexBenefit benefit : flexBenefits) {
+				for (Benefit ben : benefit.getBenefits()) {
+					benefitNameList.add(ben.getBenefitDisplayName());
+				}
+			}
+			break;
+		default:
+			Assert.fail(COREFLEXConstants.BLUEPRINT_POLICY_REQUIRED_FOR_OPTION_NOT_PRESENT_IN_THE_LIST);
 		}
 		return benefitNameList;
 	}
@@ -568,5 +606,4 @@ public class CoreFlex_CustomBundlesPage extends Base {
 		}
 		return false;
 	}
-
 }

@@ -3,10 +3,11 @@ Feature: Validate the CoreFlex End-To-End Business Test Flow(BluePrint, MXTransf
 @End-To_End_CoreFlex @Flex-PortionCashout_DenyAllRequest_PF @Flex-PortionCashout_DenyAllRequest_End_To_End
   Scenario: CoreFlex - Setting up a New CoreFlex policy in 'Policy Digitization Tool' application
     Given he has submitted a new "Flex" Type Policy with following selection in 'Policy Digitization Tool (PDT)' application
-      | Person Responsible For Benefit Selection | Flex Setup Type | Cashout Availability   |
-      | Transferee                               | Static/Fixed    | Cashout Not Authorized |
-    And he has clicked on "Approve Policy" button to approve "VI" policy verison on "Custom Bundles" page
-    And he has selected following options on 'Approval this Policy' dialog of "V2" Policy
+      | Person Responsible For Benefit Selection | Flex Setup Type | Cashout Availability   | PolicyRequiredFor |
+      | Transferee                               | Static/Fixed    | Cashout Not Authorized | Cloning           |
+    And he has clicked on "Submit" button to submit "V1" policy verison on "Custom Bundles" page
+    And he has clicked on "Approve Policy" button to approve "V1" policy verison on "Custom Bundles" page
+    And he has selected following options on 'Approval this Policy' dialog of "V1" Policy
       | Associate this policy with a NEW authorization in IRIS? |
       | Effective from booking date                             |
     When he clicks on "Approve" button to acknowledged 'Approve this Policy' dialog

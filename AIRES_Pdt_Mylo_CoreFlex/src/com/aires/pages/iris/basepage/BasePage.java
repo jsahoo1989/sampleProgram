@@ -85,7 +85,7 @@ public class BasePage {
 //		int port = 0;
 		// String userName = System.getProperty("user.name").toLowerCase();
 		String computerName = InetAddress.getLocalHost().getHostName();
-		if (computerName.equalsIgnoreCase("corpprdvw270") || _userName.equalsIgnoreCase("srana"))
+		if (computerName.equalsIgnoreCase("corpprdvw270") || _userName.equalsIgnoreCase("vmallah"))
 			return 5095;
 		else
 			return userPortMap.get(_userName);

@@ -202,7 +202,7 @@ public class CoreFlex_HomeLeave_BenefitsPage extends Base {
 
 	@FindBy(how = How.CSS, using = "ng-select[formcontrolname='classSizeCode']")
 	private WebElement _selectRentalCarSize;
-	
+
 	@FindBy(how = How.CSS, using = "ng-select[formcontrolname='classSizeCode'] span[class*='ng-value-label']")
 	private WebElement _selectRentalCarSizeSelectedValue;
 
@@ -222,14 +222,14 @@ public class CoreFlex_HomeLeave_BenefitsPage extends Base {
 	private WebElement _selectMaxAmtMeals;
 
 	@FindBy(how = How.CSS, using = "ng-select[formcontrolname='maxAmountCode'] span[class*=ng-option-label]")
-	private List<WebElement> _selectMaxAmtMealsOptions;	
+	private List<WebElement> _selectMaxAmtMealsOptions;
 
 	@FindBy(how = How.XPATH, using = "//input[@formcontrolname='detailEeCode']/parent::label[contains(@class,'form-check-label')]")
 	private List<WebElement> _radioDetailTransfereeCode;
-	
+
 	@FindBy(how = How.XPATH, using = "//input[@formcontrolname='detailEeCode']/parent::label[contains(@class,'form-check-label')]")
 	private List<WebElement> _radioDetailTransfereeCodeLabelList;
-	
+
 	@FindBy(how = How.CSS, using = "input[formcontrolname='detailEeCode']")
 	private List<WebElement> _radioDetailTransfereeCodeButtonList;
 
@@ -238,7 +238,7 @@ public class CoreFlex_HomeLeave_BenefitsPage extends Base {
 
 	@FindBy(how = How.CSS, using = "ng-select[formcontrolname='currencyCodeEe']")
 	private WebElement _selectTransfereeCurrency;
-	
+
 	@FindBy(how = How.CSS, using = "ng-select[formcontrolname='currencyCodeEe'] span[class*='ng-value-label']")
 	private WebElement _selectTransfereeCurrencySelectedValue;
 
@@ -250,16 +250,16 @@ public class CoreFlex_HomeLeave_BenefitsPage extends Base {
 
 	@FindBy(how = How.XPATH, using = "//input[@formcontrolname='detailAdultCode']/parent::label[contains(@class,'form-check-label')]")
 	private List<WebElement> _radioDetailAdult;
-	
+
 	@FindBy(how = How.XPATH, using = "//input[@formcontrolname='detailAdultCode']/parent::label[contains(@class,'form-check-label')]")
 	private List<WebElement> _radioDetailAdultCodeLabelList;
-	
+
 	@FindBy(how = How.CSS, using = "input[formcontrolname='detailAdultCode']")
 	private List<WebElement> _radioDetailAdultCodeButtonList;
 
 	@FindBy(how = How.CSS, using = "ng-select[formcontrolname='currencyCodeAdult']")
 	private WebElement _selectAdultCurrency;
-	
+
 	@FindBy(how = How.CSS, using = "ng-select[formcontrolname='currencyCodeAdult'] span[class*='ng-value-label']")
 	private WebElement _selectAdultCurrencySelectedValue;
 
@@ -271,16 +271,16 @@ public class CoreFlex_HomeLeave_BenefitsPage extends Base {
 
 	@FindBy(how = How.XPATH, using = "//input[@formcontrolname='detailChildCode']/parent::label[contains(@class,'form-check-label')]")
 	private List<WebElement> _radioDetailChild;
-	
+
 	@FindBy(how = How.XPATH, using = "//input[@formcontrolname='detailChildCode']/parent::label[contains(@class,'form-check-label')]")
 	private List<WebElement> __radioDetailChildLabelList;
-	
+
 	@FindBy(how = How.CSS, using = "input[formcontrolname='detailChildCode']")
 	private List<WebElement> _radioDetailChildButtonList;
 
 	@FindBy(how = How.CSS, using = "ng-select[formcontrolname='currencyCodeChild']")
 	private WebElement _selectCurrencyCodeChild;
-	
+
 	@FindBy(how = How.CSS, using = "ng-select[formcontrolname='currencyCodeChild'] span[class*='ng-value-label']")
 	private WebElement _selectCurrencyCodeChildSelectedValue;
 
@@ -338,7 +338,7 @@ public class CoreFlex_HomeLeave_BenefitsPage extends Base {
 
 	@FindBy(how = How.XPATH, using = "//div[@class='collapse show']//input[@formcontrolname='excessBaggageFeesInd']")
 	private List<WebElement> _radioBtnExcessBaggageFeesButtonList;
-	
+
 	@FindBy(how = How.CSS, using = "div[class='collapse show'] ng-select[formcontrolname='maxAmountCode'] span[class*='ng-value-label']")
 	private WebElement _selectMaxAmtSelectedValue;
 
@@ -490,7 +490,9 @@ public class CoreFlex_HomeLeave_BenefitsPage extends Base {
 				subBenefitNamesList.add(subBenefitNames);
 
 			for (String subBenefit : subBenefitNamesList) {
-				CoreFunctions.selectItemInListByText(driver, _subBenefitList, subBenefit.trim(), true);
+				if (subBenefitNamesList.size() > 1) {
+					CoreFunctions.selectItemInListByText(driver, _subBenefitList, subBenefit, true);
+				}
 				if (CoreFunctions.isElementExist(driver, getElementByName(subBenefit.trim()), 5)) {
 					fillSubBenefit(subBenefit.trim(), benefitType);
 				} else {
@@ -1046,11 +1048,11 @@ public class CoreFlex_HomeLeave_BenefitsPage extends Base {
 					movingBenefitData.homeLeaveRentalCar.durationDays, COREFLEXConstants.DURATION_DAYS);
 			CoreFunctions.highlightObject(driver, _inputDurationInDays);
 			CoreFunctions.verifyText(driver, _selectRentalCarSizeSelectedValue,
-					movingBenefitData.homeLeaveRentalCar.rentalCarSize,
-					COREFLEXConstants.RENTAL_CAR_SIZE_CLASS);
-			if (movingBenefitData.homeLeaveRentalCar.rentalCarSize.equalsIgnoreCase(COREFLEXConstants.OTHER)) {	
+					movingBenefitData.homeLeaveRentalCar.rentalCarSize, COREFLEXConstants.RENTAL_CAR_SIZE_CLASS);
+			if (movingBenefitData.homeLeaveRentalCar.rentalCarSize.equalsIgnoreCase(COREFLEXConstants.OTHER)) {
 				CoreFunctions.verifyText(_inputRentalCarOtherSize.getDomProperty("value"),
-						movingBenefitData.homeLeaveRentalCar.rentalCarSizeOther, COREFLEXConstants.RENTAL_CAR_OTHER_SIZE_CLASS);
+						movingBenefitData.homeLeaveRentalCar.rentalCarSizeOther,
+						COREFLEXConstants.RENTAL_CAR_OTHER_SIZE_CLASS);
 				CoreFunctions.highlightObject(driver, _inputRentalCarOtherSize);
 			}
 			CoreFunctions.verifyRadioButtonSelection(driver, _radioGrossUpLabelList, _radioGrossUpButtonList,

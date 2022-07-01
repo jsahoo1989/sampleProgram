@@ -126,7 +126,7 @@ public class CoreFlex_AreaTour_BenefitsPage extends Base {
 
 	@FindBy(how = How.CSS, using = "ng-select[formcontrolname='durationCode']")
 	private WebElement _selectDurationDays;
-	
+
 	@FindBy(how = How.CSS, using = "ng-select[formcontrolname='durationCode'] span[class*='ng-value-label']")
 	private WebElement _selectDurationDaysSelectedValue;
 
@@ -332,7 +332,9 @@ public class CoreFlex_AreaTour_BenefitsPage extends Base {
 				subBenefitNamesList.add(subBenefitNames);
 
 			for (String subBenefit : subBenefitNamesList) {
-				CoreFunctions.selectItemInListByText(driver, _subBenefitList, subBenefit.trim(), true);
+				if (subBenefitNamesList.size() > 1) {
+					CoreFunctions.selectItemInListByText(driver, _subBenefitList, subBenefit, true);
+				}
 				if (CoreFunctions.isElementExist(driver, getElementByName(subBenefit.trim()), 5)) {
 					fillSubBenefit(subBenefit.trim(), benefitType);
 				} else {
@@ -647,7 +649,7 @@ public class CoreFlex_AreaTour_BenefitsPage extends Base {
 	 * Method to verify AreaTour subBenefit form
 	 */
 	private void verifyAreaTourSubBenefitForm(String formName) {
-		try {						
+		try {
 			CoreFunctions.verifyText(driver, _selectDurationDaysSelectedValue,
 					settlingInBenefitData.areaTour.durationDays, COREFLEXConstants.DURATION_DAYS);
 			CoreFunctions.verifyRadioButtonSelection(driver, _radioGrossUpLabelList, _radioGrossUpButtonList,
@@ -656,12 +658,11 @@ public class CoreFlex_AreaTour_BenefitsPage extends Base {
 					settlingInBenefitData.areaTour.reimbursedBy, COREFLEXConstants.REIMBURSED_BY);
 			if (settlingInBenefitData.areaTour.reimbursedBy.equalsIgnoreCase(COREFLEXConstants.OTHER)) {
 				CoreFunctions.verifyText(_inputReimbursedBy.getDomProperty("value"),
-						settlingInBenefitData.areaTour.reimbursedByOther,
-						COREFLEXConstants.REIMBURSED_BY_OTHER);
+						settlingInBenefitData.areaTour.reimbursedByOther, COREFLEXConstants.REIMBURSED_BY_OTHER);
 				CoreFunctions.highlightObject(driver, _inputReimbursedBy);
 			}
-			CoreFunctions.verifyText(_txtAreaComment.getDomProperty("value"),
-					settlingInBenefitData.areaTour.comment, COREFLEXConstants.COMMENT);
+			CoreFunctions.verifyText(_txtAreaComment.getDomProperty("value"), settlingInBenefitData.areaTour.comment,
+					COREFLEXConstants.COMMENT);
 			CoreFunctions.highlightObject(driver, _txtAreaComment);
 		} catch (Exception e) {
 			Assert.fail(MessageFormat.format(COREFLEXConstants.FAILED_TO_VERIFY_AREA_TOUR_SUB_BENEFITS_FORM,

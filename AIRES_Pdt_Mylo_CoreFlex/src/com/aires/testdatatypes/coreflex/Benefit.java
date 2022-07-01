@@ -33,7 +33,25 @@ public class Benefit {
 	private String postSecondTracingCardStatus;
 	private String thirdTracingPrompt;
 	private String postThirdTracingCardStatus;
+	private String policyCreationGroup;
+	private boolean deselectBenefitOnPBCPage;
 	
+	public boolean isDeselectBenefitOnPBCPage() {
+		return deselectBenefitOnPBCPage;
+	}
+
+	public void setDeselectBenefitOnPBCPage(boolean deselectBenefitOnPBCPage) {
+		this.deselectBenefitOnPBCPage = deselectBenefitOnPBCPage;
+	}
+
+	public String getPolicyCreationGroup() {
+		return policyCreationGroup;
+	}
+
+	public void setPolicyCreationGroup(String policyCreationGroup) {
+		this.policyCreationGroup = policyCreationGroup;
+	}
+
 	public boolean getMultipleBenefitSubmission() {
 		return multipleBenefitSubmission;
 	}

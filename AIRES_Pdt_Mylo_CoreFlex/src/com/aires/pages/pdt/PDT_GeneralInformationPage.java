@@ -145,7 +145,7 @@ public class PDT_GeneralInformationPage extends Base {
 	private WebElement _buttonBack;
 
 	// Exit Button
-	@FindBy(how = How.CSS, using = "button[class='btn-exit']")
+	@FindBy(how = How.CSS, using = "button[class*='btn-exit']")
 	private WebElement _buttonExit;
 
 	// Logout Button
@@ -270,6 +270,14 @@ public class PDT_GeneralInformationPage extends Base {
 	// Points Based Flex Policy
 	@FindBy(how = How.XPATH, using = "//strong[contains(text(),'Points Based Flex Policy')]/parent::label/following-sibling::label")
 	private WebElement _textPointsBasedFlexPolicy;
+
+	// Corporation Policy Number
+	@FindBy(how = How.CSS, using = "p.card-category > b")
+	private WebElement _textCorporationPolicyNum;
+
+	// OK Button
+	@FindBy(how = How.XPATH, using = "//button[contains(text(),'OK')]")
+	private WebElement _buttonOk;
 
 	/*********************************************************************/
 
@@ -540,6 +548,9 @@ public class PDT_GeneralInformationPage extends Base {
 		case PDTConstants.POLICY_NAME:
 			elementText = _headerPolicyInfo.getText().split(":")[1].trim();
 			break;
+		case COREFLEXConstants.CORPORATION_POLICY_NUMBER:
+			elementText = _textCorporationPolicyNum.getText().split(":")[1].trim();
+			break;
 		default:
 			Assert.fail(MessageFormat.format(PDTConstants.ELEMENT_NOT_FOUND, CoreConstants.FAIL));
 		}
@@ -715,6 +726,10 @@ public class PDT_GeneralInformationPage extends Base {
 				break;
 			case PDTConstants.EXIT:
 				CoreFunctions.clickElement(driver, _buttonExit);
+				break;
+			case PDTConstants.OK:
+				CoreFunctions.clickElement(driver, _buttonOk);
+				CoreFunctions.explicitWaitTillElementInVisibility(driver, _progressBar);
 				break;
 			default:
 				Assert.fail(PDTConstants.INVALID_ELEMENT);
@@ -1252,15 +1267,15 @@ public class PDT_GeneralInformationPage extends Base {
 
 	public boolean verifyGeneralInfoAdditionalPolicyDetails() {
 		try {
-			CoreFunctions.verifyText(driver, _textPolicyType,
-					policySetupPageData.generalInformationPage.policyType, PDTConstants.POLICY_TYPE);
-			CoreFunctions.verifyText(driver, _textEmployeeType,
-					policySetupPageData.generalInformationPage.employeeType, PDTConstants.EMPLOYEE_TYPE);
+			CoreFunctions.verifyText(driver, _textPolicyType, policySetupPageData.generalInformationPage.policyType,
+					PDTConstants.POLICY_TYPE);
+			CoreFunctions.verifyText(driver, _textEmployeeType, policySetupPageData.generalInformationPage.employeeType,
+					PDTConstants.EMPLOYEE_TYPE);
 			CoreFunctions.verifyText(driver, _textHomeownerType,
 					policySetupPageData.generalInformationPage.homeownerType, PDTConstants.HOMEOWNER_TYPE);
-			CoreFunctions.verifyText(driver, _textPointsBasedFlexPolicy,
-					COREFLEXConstants.YES, PDTConstants.POINTS_BASED_FLEX_POLICY);
-			
+			CoreFunctions.verifyText(driver, _textPointsBasedFlexPolicy, COREFLEXConstants.YES,
+					PDTConstants.POINTS_BASED_FLEX_POLICY);
+
 			CoreFunctions.verifyText(driver, _selectPolicyTypeValue,
 					policySetupPageData.generalInformationPage.policyType, PDTConstants.POLICY_TYPE);
 			CoreFunctions.verifyText(driver, _selectEmployeeTypeValue,

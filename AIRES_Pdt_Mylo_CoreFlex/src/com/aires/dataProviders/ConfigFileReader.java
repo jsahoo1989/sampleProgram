@@ -164,6 +164,8 @@ public class ConfigFileReader {
 			return properties.getProperty("coreFlexPolicySetupUatUrl");
 		else if (properties.getProperty("envt").equalsIgnoreCase("QA"))
 			return properties.getProperty("coreFlexPolicySetupQaUrl");
+		else if (properties.getProperty("envt").equalsIgnoreCase("PreProd"))
+			return properties.getProperty("coreFlexPolicySetupPreProdUrl");
 		else if (properties.getProperty("envt").equalsIgnoreCase("Prod"))
 			return properties.getProperty("coreFlexPolicySetupProdUrl");
 		else if (properties.getProperty("envt").equalsIgnoreCase("Dev"))
@@ -192,6 +194,8 @@ public class ConfigFileReader {
 			return properties.getProperty("mxTransfereeUatURL");
 		else if (properties.getProperty("envt").equalsIgnoreCase("QA"))
 			return properties.getProperty("mxTransfereeQaURL");
+		else if (properties.getProperty("envt").equalsIgnoreCase("PreProd"))
+			return properties.getProperty("mxTransfereePreProdURL");
 		else if (properties.getProperty("envt").equalsIgnoreCase("Prod"))
 			return properties.getProperty("mxTransfereeProdURL");
 		else if (properties.getProperty("envt").equalsIgnoreCase("Dev"))

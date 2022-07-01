@@ -149,7 +149,9 @@
 					"reimbursedBy": "Aires",
 					"comment": "Test Flex Duplicate Housing Benefit Comment",
 					"payments": "Allowance/Cashout",
-					"multipleBenefitSubmission": false
+					"multipleBenefitSubmission": false,
+					"policyCreationGroup": "All Benefits,Cloning",
+					"deselectBenefitOnPBCPage": false
 				},
 				{
 					"benefitType": "Other Housing Benefit",
@@ -167,7 +169,9 @@
 					"reimbursedBy": "Aires",
 					"comment": "Test Other Housing Benefit Comment",
 					"payments": "Expense Reimbursement",
-					"multipleBenefitSubmission": false
+					"multipleBenefitSubmission": false,
+					"policyCreationGroup": "All Benefits,Cloning",
+					"deselectBenefitOnPBCPage": false
 				},
 				{
 					"benefitType": "Temporary Living",
@@ -196,7 +200,9 @@
 					"postInitialTracingCardStatus": "Move In",
 					"endTracingPrompt": "Move-out/check-out date",
 					"postEndTracingCardStatus": "Move out",
-					"multipleBenefitSubmission": true
+					"multipleBenefitSubmission": true,
+					"policyCreationGroup": "All Benefits",
+					"deselectBenefitOnPBCPage": false
 				},
 				{
 					"benefitType": "Home Purchase",
@@ -225,7 +231,9 @@
 					"postInitialTracingCardStatus": "Begin property search",
 					"endTracingPrompt": "Closing Date",
 					"postEndTracingCardStatus": "Closing",
-					"multipleBenefitSubmission": true
+					"multipleBenefitSubmission": true,
+					"policyCreationGroup": "All Benefits",
+					"deselectBenefitOnPBCPage": false
 				},
 				{
 					"benefitType": "House Hunting Trip",
@@ -258,7 +266,9 @@
 					"postThirdTracingCardStatus": "Travel Begins",
 					"endTracingPrompt": "End date of trip",
 					"postEndTracingCardStatus": "Travel Complete",
-					"multipleBenefitSubmission": true
+					"multipleBenefitSubmission": true,
+					"policyCreationGroup": "All Benefits",
+					"deselectBenefitOnPBCPage": false
 				}
 			]
 		},
@@ -273,15 +283,17 @@
 					"points": "22.5",
 					"subBenefits": "Lump Sum",
 					"airesManagedService": "No",
-					"multipleBenefitSelection": "No",
+					"multipleBenefitSelection": "Yes",
 					"numberOfBenefitSelected": 1,
 					"selectBenefitOnFPTPage": false,
 					"deleteBenefitOnMBBPage": false,
 					"grossUp": "Yes",
 					"reimbursedBy": "Aires",
 					"comment": "Test Flex Lump Sum Benefit Comment",
-					"payments": "Allowance/Cashout",
-					"multipleBenefitSubmission": false
+					"payments": "Expense Reimbursement",
+					"multipleBenefitSubmission": false,
+					"policyCreationGroup": "All Benefits,Cloning",
+					"deselectBenefitOnPBCPage": true
 				},
 				{
 					"benefitType": "Auto Rental During Assignment",
@@ -310,7 +322,9 @@
 					"postInitialTracingCardStatus": "Auto pickup",
 					"endTracingPrompt": "Auto return date",
 					"postEndTracingCardStatus": "Auto return",
-					"multipleBenefitSubmission": true
+					"multipleBenefitSubmission": true,
+					"policyCreationGroup": "All Benefits",
+					"deselectBenefitOnPBCPage": false
 				}
 			]
 		},
@@ -344,7 +358,9 @@
 					"postInitialTracingCardStatus": "Travel Begins",
 					"endTracingPrompt": "End date of trip",
 					"postEndTracingCardStatus": "Travel Ends",
-					"multipleBenefitSubmission": true
+					"multipleBenefitSubmission": true,
+					"policyCreationGroup": "All Benefits",
+					"deselectBenefitOnPBCPage": false
 				},
 				{
 					"benefitType": "Home Leave",
@@ -377,7 +393,9 @@
 					"postThirdTracingCardStatus": "Travel Begins",
 					"endTracingPrompt": "End date of trip",
 					"postEndTracingCardStatus": "Travel Ends",
-					"multipleBenefitSubmission": true
+					"multipleBenefitSubmission": true,
+					"policyCreationGroup": "All Benefits",
+					"deselectBenefitOnPBCPage": false
 				}
 			]
 		},
@@ -411,7 +429,9 @@
 					"postInitialTracingCardStatus": "Begin training",
 					"endTracingPrompt": "End Date of Language Training",
 					"postEndTracingCardStatus": "Training complete",
-					"multipleBenefitSubmission": true
+					"multipleBenefitSubmission": true,
+					"policyCreationGroup": "All Benefits",
+					"deselectBenefitOnPBCPage": false
 				},
 				{
 					"benefitType": "Cultural Training",
@@ -440,7 +460,9 @@
 					"postInitialTracingCardStatus": "Begin training",
 					"endTracingPrompt": "Cultural training end date",
 					"postEndTracingCardStatus": "Training complete",
-					"multipleBenefitSubmission": true
+					"multipleBenefitSubmission": true,
+					"policyCreationGroup": "All Benefits",
+					"deselectBenefitOnPBCPage": false
 				},
 				{
 					"benefitType": "Concierge Services",
@@ -469,7 +491,9 @@
 					"postInitialTracingCardStatus": "Begin service",
 					"endTracingPrompt": "End date",
 					"postEndTracingCardStatus": "Service complete",
-					"multipleBenefitSubmission": true
+					"multipleBenefitSubmission": true,
+					"policyCreationGroup": "All Benefits",
+					"deselectBenefitOnPBCPage": false
 				},
 				{
 					"benefitType": "Area Tour",
@@ -498,7 +522,9 @@
 					"postInitialTracingCardStatus": "Begin Tour",
 					"endTracingPrompt": "Tour end date",
 					"postEndTracingCardStatus": "Tour Complete",
-					"multipleBenefitSubmission": true
+					"multipleBenefitSubmission": true,
+					"policyCreationGroup": "All Benefits",
+					"deselectBenefitOnPBCPage": false
 				},
 				{
 					"benefitType": "Airport Pickup",
@@ -527,7 +553,9 @@
 					"postInitialTracingCardStatus": "Appointment confirmed",
 					"endTracingPrompt": "Airport meet and greet date",
 					"postEndTracingCardStatus": "Arrival / meet and greet",
-					"multipleBenefitSubmission": true
+					"multipleBenefitSubmission": true,
+					"policyCreationGroup": "All Benefits",
+					"deselectBenefitOnPBCPage": false
 				},
 				{
 					"benefitType": "Pre-Acceptance Services",
@@ -560,7 +588,9 @@
 					"postThirdTracingCardStatus": "Travel Begins",
 					"endTracingPrompt": "End date of trip",
 					"postEndTracingCardStatus": "Tour Complete",
-					"multipleBenefitSubmission": true
+					"multipleBenefitSubmission": true,
+					"policyCreationGroup": "All Benefits",
+					"deselectBenefitOnPBCPage": false
 				},
 				{
 					"benefitType": "Furniture Rental",
@@ -589,7 +619,9 @@
 					"postInitialTracingCardStatus": "Furniture Delivery",
 					"endTracingPrompt": "Confirm Furniture Picked up",
 					"postEndTracingCardStatus": "Furniture Pick Up",
-					"multipleBenefitSubmission": true
+					"multipleBenefitSubmission": true,
+					"policyCreationGroup": "All Benefits",
+					"deselectBenefitOnPBCPage": false
 				},
 				{
 					"benefitType": "Education Assistance/School Search",
@@ -618,7 +650,9 @@
 					"postInitialTracingCardStatus": "Registration scheduled",
 					"endTracingPrompt": "School registration complete",
 					"postEndTracingCardStatus": "Registration completed",
-					"multipleBenefitSubmission": true
+					"multipleBenefitSubmission": true,
+					"policyCreationGroup": "All Benefits",
+					"deselectBenefitOnPBCPage": false
 				}
 			]
 		}

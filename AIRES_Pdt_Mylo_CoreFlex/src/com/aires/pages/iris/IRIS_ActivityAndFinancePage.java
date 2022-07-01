@@ -367,11 +367,12 @@ public class IRIS_ActivityAndFinancePage extends BasePage {
 	 * @throws GeneralLeanFtException
 	 */
 	public boolean relonetCredentialsSent(String message, String dialogName) throws Exception {
-		boolean messageVerified = false;
+//		boolean messageVerified = false;
 		IRIS_PageMaster.getDialogObject(_IRIS, "Message").waitUntilVisible();
-		messageVerified = BusinessFunctions.verifyMsgOnDialog(IRIS_PageMaster.getDialogObject(_IRIS, "Message"),
-				message, dialogName);
-		if (IRIS_PageMaster.getDialogObject(_IRIS, "Message").isVisible() && messageVerified) {
+//		messageVerified = BusinessFunctions.verifyMsgOnDialog(IRIS_PageMaster.getDialogObject(_IRIS, "Message"),
+//				message, dialogName);
+		if (IRIS_PageMaster.getDialogObject(_IRIS, "Message").isVisible()) {
+//			&& messageVerified) {
 			Helpers.clickButton(
 					IRIS_PageMaster.getButtonObjectFromLabel(IRIS_PageMaster.getDialogObject(_IRIS, "Message"), "OK"),
 					IRIS_PageMaster.getButtonObjectFromLabel(IRIS_PageMaster.getDialogObject(_IRIS, "Message"), "OK")
@@ -379,20 +380,20 @@ public class IRIS_ActivityAndFinancePage extends BasePage {
 			Reporter.addStepLog(MessageFormat.format(IRISConstants.VERIFIED_CLICKED_ON_BUTTON, CoreConstants.PASS,
 					IRISConstants.BUTTON_OK, dialogName));
 			IRIS_PageMaster.getDialogObject(_IRIS, "Saved").waitUntilVisible();
-			if (IRIS_PageMaster.getDialogObject(_IRIS, "Saved").isVisible()
-					&& BusinessFunctions.verifyMsgOnDialog(IRIS_PageMaster.getDialogObject(_IRIS, "Saved"),
-							IRISConstants.SAVE_SUCCESSFUL_MESSAGE, IRISConstants.SAVED_TEXT)) {
+			if (IRIS_PageMaster.getDialogObject(_IRIS, "Saved").isVisible()){
+//					&& BusinessFunctions.verifyMsgOnDialog(IRIS_PageMaster.getDialogObject(_IRIS, "Saved"),
+//							IRISConstants.MESSAGE_SAVESUCCESSFULL, IRISConstants.SAVED_TEXT)) {
 				Dialog savedDialog = _IRIS.describe(Dialog.class,
 						new DialogDescription.Builder().title("Saved").build());
 				Button oKButton = savedDialog.describe(Button.class,
 						new ButtonDescription.Builder().label("OK").build());
 				oKButton.click();
-
+				return true;
 			}
 		} else {
 			Assert.fail(IRISConstants.CREDENTIALS_NOT_SENT);
 		}
-		return messageVerified;
+		return false;
 	}
 
 	/**

@@ -4,6 +4,8 @@ import java.text.MessageFormat;
 import java.util.Date;
 import java.util.List;
 import java.util.Map;
+import java.util.stream.Collector;
+import java.util.stream.Collectors;
 
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
@@ -139,6 +141,74 @@ public class PDT_ViewPolicyPage extends Base {
 	@FindBy(how = How.CSS, using = "div.icons-action a[mattooltip='Assignment History']>img")
 	private List<WebElement> _listAssignmentHistoryIcon;
 
+	// Next Policy Page Button
+	@FindBy(how = How.CSS, using = "li.next-item > a")
+	private WebElement _btnNextPolicyPage;
+
+	// Clone Policy Dialog
+	@FindBy(how = How.XPATH, using = "//app-dialog-overview//span[contains(text(),'Clone Policy:')]")
+	private WebElement _dialogClonePolicy;
+
+	// Clone Policy Dialog - Reference Policy
+	@FindBy(how = How.XPATH, using = "//label[contains(text(),'Reference Policy:')]/parent::p")
+	private WebElement _labelReferencePolicy;
+
+	// Clone Policy Dialog - Reference Client
+	@FindBy(how = How.XPATH, using = "//label[contains(text(),'Reference Client:')]/parent::p")
+	private WebElement _labelReferenceClient;
+
+	// Clone Policy Dialog - Clone to: Client Text
+	@FindBy(how = How.XPATH, using = "//app-dialog-overview//label[contains(text(),'Clone to: Client')]")
+	private WebElement _labelCloneToClient;
+
+	// Clone Policy Dialog - Clone to: Client Select Field
+	@FindBy(how = How.CSS, using = "ng-select[formcontrolname='toCompanyId']")
+	private WebElement _selectCloneToClient;
+
+	// Clone Policy Dialog - Clone to: Client Select Field
+	@FindBy(how = How.CSS, using = "ng-select[formcontrolname='toCompanyId'] span[class*='ng-value-label']")
+	private WebElement _selectCloneToClientSelectedValue;
+
+	// Clone Policy Dialog - Clone to: Client Select Options
+	@FindBy(how = How.CSS, using = "ng-select[formcontrolname='toCompanyId'] div.ng-option")
+	private List<WebElement> _selectCloneToClientOptionsList;
+
+	// Clone Policy Dialog - Close Clone to: Client Select Options
+	@FindBy(how = How.CSS, using = "ng-select[formcontrolname='toCompanyId'] span[class='ng-arrow-wrapper']")
+	private WebElement _buttonCloseCloneToClientOptionsList;
+
+	// Clone Policy Dialog - Clone to: Policy Text
+	@FindBy(how = How.XPATH, using = "//app-dialog-overview//label[contains(text(),'Clone to: Policy')]")
+	private WebElement _labelCloneToPolicy;
+
+	// Clone Policy Dialog - Clone to: Policy Select Field
+	@FindBy(how = How.CSS, using = "ng-select[formcontrolname='toCorporationPolicyId']")
+	private WebElement _selectCloneToPolicy;
+
+	// Clone Policy Dialog - Clone to: Policy Select Options
+	@FindBy(how = How.CSS, using = "ng-select[formcontrolname='toCorporationPolicyId'] div.ng-option")
+	private List<WebElement> _selectCloneToPolicyOptionsList;
+
+	// Clone Policy Dialog - Close Clone to: Policy Select Options
+	@FindBy(how = How.CSS, using = "ng-select[formcontrolname='toCorporationPolicyId'] span[class='ng-arrow-wrapper']")
+	private WebElement _buttonCloseCloneToPolicyOptionsList;
+
+	// Clone Policy Dialog - Clone to: Client Select Field
+	@FindBy(how = How.CSS, using = "ng-select[formcontrolname='toCompanyId'] div.ng-placeholder")
+	private WebElement _selectCloneToClientDefaultText;
+
+	// Clone Policy Dialog - Clone to: Policy Select Field
+	@FindBy(how = How.CSS, using = "ng-select[formcontrolname='toCorporationPolicyId'] div.ng-placeholder")
+	private WebElement _selectCloneToPolicyDefaultText;
+
+	// Save As Draft Button
+	@FindBy(how = How.XPATH, using = "//span[contains(text(),'SAVE AS DRAFT')]/parent::button")
+	private WebElement _buttonSaveAsDraft;
+
+	// Cancel Button
+	@FindBy(how = How.XPATH, using = "//span[contains(text(),'CANCEL')]/parent::button")
+	private WebElement _buttonCancel;
+
 	final By _listPolicyNameByLocator = By.cssSelector("h5.text-info.info-pname");
 	final By _listClientNameByLocator = By.cssSelector("h6.info-pclient");
 	long timeBeforeAction, timeAfterAction;
@@ -182,12 +252,20 @@ public class PDT_ViewPolicyPage extends Base {
 			CoreFunctions.clickElement(driver, _btnVersionControlCreate);
 			CoreFunctions.explicitWaitTillElementInVisibilityCustomTime(driver, _progressBar, 5);
 			break;
+		case COREFLEXConstants.NEXT:
+			CoreFunctions.clickElement(driver, _btnNextPolicyPage);
+			break;
 		case COREFLEXConstants.EDIT_ICON:
 			CoreFunctions.clickElement(driver, _btnEditIcon);
 			CoreFunctions.explicitWaitTillElementInVisibilityCustomTime(driver, _progressBar, 5);
 			break;
+		case COREFLEXConstants.SAVE_AS_DRAFT:
+			CoreFunctions.clickElement(driver, _buttonSaveAsDraft);
+			CoreFunctions.explicitWaitTillElementInVisibilityCustomTime(driver, _progressBar, 5);
+			break;
 		case PDTConstants.CLEAR_FILTER:
 			CoreFunctions.highlightElementAndClick(driver, _clearFilter, PDTConstants.CLEAR_FILTER);
+			CoreFunctions.explicitWaitTillElementInVisibilityCustomTime(driver, _progressBar, 5);
 			break;
 		default:
 			Assert.fail("Element not found");
@@ -340,16 +418,16 @@ public class PDT_ViewPolicyPage extends Base {
 		try {
 			CoreFunctions.explicitWaitTillElementInVisibility(driver, _progressBar);
 			int index = BusinessFunctions.returnindexItemFromListUsingText(driver, _listPolicyName, selectedPolicyName);
+			String actualPolicyStatusList = _listPolicyStatus.get(index).getText();
+			String actualPolicyVersionList = _listPolicyVersion.get(index).getText();
 			CoreFunctions.highlightObject(driver,
 					CoreFunctions.getElementFromListByText(_listPolicyName, selectedPolicyName));
 
-			String actualPolicyStatusList = _listPolicyStatus.get(index).getText();
 			actualPolicyStatus = actualPolicyStatusList.split(":");
 			isApprovedPolicyStatusVerified = (actualPolicyStatus[1].trim()).equals(expectedPolicyStatus);
 			CoreFunctions.highlightObject(driver,
 					CoreFunctions.getElementFromListByText(_listPolicyStatus, (actualPolicyStatus[1].trim())));
 
-			String actualPolicyVersionList = _listPolicyVersion.get(index).getText();
 			actualPolicyVersion = actualPolicyVersionList.split(":");
 			isApprovedPolicyVersionVerified = (actualPolicyVersion[1].trim()).equals(expectedPolicyVersion);
 			CoreFunctions.highlightObject(driver,
@@ -602,4 +680,301 @@ public class PDT_ViewPolicyPage extends Base {
 
 	}
 
+	public int searchPolicyByStatus(String policyStatus) {
+		int policyIndex = -1;
+		try {
+			policyIndex = BusinessFunctions.returnindexItemFromListUsingText(driver, _listPolicyStatus, policyStatus,
+					true);
+			if (policyIndex == -1) {
+				while (policyIndex == -1) {
+					clickElementOfPage(COREFLEXConstants.NEXT);
+					policyIndex = BusinessFunctions.returnindexItemFromListUsingText(driver, _listPolicyStatus,
+							policyStatus, true);
+					if (policyIndex != -1) {
+						captureReferencePolicyValues(policyIndex);
+						return policyIndex;
+					}
+				}
+			} else {
+				CoreFunctions.highlightObject(driver, _listPolicyStatus.get(policyIndex));
+				captureReferencePolicyValues(policyIndex);
+				return policyIndex;
+			}
+		} catch (Exception e) {
+			Reporter.addStepLog(
+					MessageFormat.format(COREFLEXConstants.EXCEPTION_OCCURED_WHILE_SEARCHING_POLICY_WITH_STATUS,
+							CoreConstants.FAIL, e.getMessage(), policyStatus));
+		}
+		return policyIndex;
+	}
+
+	private void captureReferencePolicyValues(int policyIndex) {
+		CoreFunctions.highlightObject(driver, _listPolicyStatus.get(policyIndex));
+		CoreFunctions.writeToPropertiesFile("ClonePolicy_Reference_PolicyName",
+				_listPolicyName.get(policyIndex).getText());
+		CoreFunctions.writeToPropertiesFile("ClonePolicy_Reference_PolicyVersion",
+				_listPolicyVersion.get(policyIndex).getText().replace("Version Number:", "").trim());
+		CoreFunctions.writeToPropertiesFile("ClonePolicy_Reference_PolicyStatus",
+				_listPolicyStatus.get(policyIndex).getText().replace("Policy Status:", "").trim());
+		CoreFunctions.writeToPropertiesFile("ClonePolicy_Reference_Client",
+				_listClientName.get(policyIndex).getText().trim());
+	}
+
+	public boolean verifyCloneIconStatus(int searchedPolicyIndex, String expectedCloneIconStatus, String policyStatus) {
+		try {
+			String actualCloneIconStatus = CoreFunctions
+					.getAttributeText(_listCloneIcon.get(searchedPolicyIndex), "src").contains("cloneDisable")
+							? COREFLEXConstants.DISABLED
+							: COREFLEXConstants.ENABLED;
+			if (actualCloneIconStatus.equalsIgnoreCase(expectedCloneIconStatus)) {
+				CoreFunctions.highlightObject(driver, _listCloneIcon.get(searchedPolicyIndex));
+				Reporter.addStepLog(
+						MessageFormat.format(COREFLEXConstants.SUCCESSFULLY_VERIFIED_CLONE_ICON_FOR_POLICY_STATUS,
+								CoreConstants.PASS, policyStatus, expectedCloneIconStatus));
+				return true;
+			}
+		} catch (Exception e) {
+			Reporter.addStepLog(MessageFormat.format(
+					COREFLEXConstants.EXCEPTION_OCCURED_WHILE_VALIDATING_CLONE_ICON_FOR_POLICY_WITH_STATUS,
+					CoreConstants.FAIL, policyStatus, e.getMessage()));
+		}
+		return false;
+	}
+
+	public void hoverCloneIcon(int searchedPolicyIndex) {
+		CoreFunctions.moveToElement(driver, _listCloneIcon.get(searchedPolicyIndex));
+	}
+
+	public void searchPolicy(String policyName) {
+		CoreFunctions.clearAndSetText(driver, _inputPolicyName, policyName);
+		clickElementOfPage(COREFLEXConstants.SEARCH);
+	}
+
+	public boolean verifyCoreFlexClonePolicyDialog(String policyStatus, DataTable dataTable) {
+		boolean isCFClonePolicyDialogVerified = false;
+		try {
+			if (CoreFunctions.isElementExist(driver, _dialogClonePolicy, 5)) {
+				String expectedReferencePolicy = CoreFunctions.getPropertyFromConfig("ClonePolicy_Reference_PolicyName")
+						+ " # " + CoreFunctions.getPropertyFromConfig("ClonePolicy_Reference_CorporationPolicyNum");
+				String expectedReferenceClient = CoreFunctions.getPropertyFromConfig("ClonePolicy_Reference_Client");
+
+				isCFClonePolicyDialogVerified = expectedReferencePolicy
+						.equals(CoreFunctions.getElementText(driver, _labelReferencePolicy)
+								.replace("Reference Policy:", "").trim())
+						&& expectedReferenceClient.equals(CoreFunctions.getElementText(driver, _labelReferenceClient)
+								.replace("Reference Client:", "").trim())
+						&& verifyCloneToClientPolicyDefaultValues() && verifyClonePolicyDialogButtons();
+			} else {
+				Reporter.addStepLog(MessageFormat.format(
+						COREFLEXConstants.CLONE_POLICY_DIALOG_NOT_DISPLAYED_ON_VIEW_EDIT_POLICY_FORMS_PAGE,
+						CoreConstants.FAIL, policyStatus));
+				return false;
+			}
+		} catch (Exception e) {
+			Reporter.addStepLog(MessageFormat.format(
+					COREFLEXConstants.EXCEPTION_OCCURED_WHILE_VERIFYING_CLONE_POLICY_DIALOG_ON_VIEW_EDIT_POLICY_FORMS_PAGE,
+					CoreConstants.FAIL, policyStatus, e.getMessage()));
+		}
+		if (isCFClonePolicyDialogVerified) {
+			Reporter.addStepLog(MessageFormat.format(COREFLEXConstants.SUCCESSFULLY_VERIFIED_CLONE_POLICY_DIALOG,
+					CoreConstants.PASS));
+		}
+		return isCFClonePolicyDialogVerified;
+	}
+
+	private boolean verifyClonePolicyDialogButtons() {
+		return ((CoreFunctions.isElementExist(driver, _buttonSaveAsDraft, 2))
+				&& (CoreFunctions.isElementExist(driver, _buttonCancel, 2)));
+	}
+
+	private boolean verifyCloneToClientPolicyDefaultValues() {
+		boolean isCloneToClientPolicyFieldsExist, isCloneToClientVerified, isCloneToPolicyVerified,
+				isCloneToClientPlaceHolderVerified, isCloneToClientPolicyDefaultValuesVerified = false;
+		try {
+			isCloneToClientPolicyFieldsExist = CoreFunctions.isElementExist(driver, _labelCloneToClient, 2)
+					&& CoreFunctions.isElementExist(driver, _selectCloneToClient, 2)
+					&& CoreFunctions.isElementExist(driver, _labelCloneToPolicy, 2)
+					&& CoreFunctions.isElementExist(driver, _selectCloneToPolicy, 2);
+			isCloneToClientPlaceHolderVerified = CoreFunctions.getElementText(driver, _selectCloneToClientDefaultText)
+					.equals(COREFLEXConstants.SELECT_FIELD_PLACEHOLDER);
+			CoreFunctions.clickElement(driver, _selectCloneToClient);
+			isCloneToClientVerified = (_selectCloneToClientOptionsList.size() != -1)
+					&& CoreFunctions.searchElementExistsInListByText(driver, _selectCloneToClientOptionsList,
+							CoreFunctions.getPropertyFromConfig("ClonePolicy_Reference_Client").split("[(]")[0].trim())
+					&& isCloneToClientPlaceHolderVerified;
+			CoreFunctions.clickElement(driver, _buttonCloseCloneToClientOptionsList);
+			CoreFunctions.clickElement(driver, _selectCloneToPolicy);
+			isCloneToPolicyVerified = (_selectCloneToPolicyOptionsList.size() == 1)
+					&& ((CoreFunctions.getElementText(driver, _selectCloneToPolicyOptionsList.get(0)))
+							.equals(COREFLEXConstants.NO_ITEMS_FOUND));
+			CoreFunctions.clickElement(driver, _buttonCloseCloneToPolicyOptionsList);
+			isCloneToClientPolicyDefaultValuesVerified = isCloneToClientPolicyFieldsExist && isCloneToClientVerified
+					&& isCloneToPolicyVerified;
+
+		} catch (Exception e) {
+			Reporter.addStepLog(MessageFormat.format(
+					COREFLEXConstants.EXCEPTION_OCCURED_WHILE_VERIFYING_CLONE_TO_CLIENT_POLICY_DEFAULT_VALUES_OF_CLONE_POLICY_DIALOG,
+					CoreConstants.FAIL, e.getMessage()));
+		}
+		if (isCloneToClientPolicyDefaultValuesVerified) {
+			Reporter.addStepLog(MessageFormat.format(
+					COREFLEXConstants.SUCCESSFULLY_VERIFIED_CLONE_TO_CLIENT_POLICY_DEFAULT_VALUES_OF_CLONE_POLICY_DIALOG,
+					CoreConstants.PASS));
+		}
+		return isCloneToClientPolicyDefaultValuesVerified;
+	}
+
+	public void clickCloneIconOfReferencePolicy(String policyStatus) {
+		int versionIndex = BusinessFunctions.returnindexItemFromListUsingText(driver, _listPolicyVersion,
+				CoreFunctions.getPropertyFromConfig("ClonePolicy_Reference_PolicyVersion"), true);
+		if ((CoreFunctions.getPropertyFromConfig("ClonePolicy_Reference_Client")
+				.equals(_listClientName.get(versionIndex).getText().trim()))
+				&& (CoreFunctions.getPropertyFromConfig("ClonePolicy_Reference_PolicyName")
+						.equals(_listPolicyName.get(versionIndex).getText()))
+				&& (CoreFunctions.getPropertyFromConfig("ClonePolicy_Reference_PolicyVersion")
+						.equals(_listPolicyVersion.get(versionIndex).getText().replace("Version Number:", "").trim()))
+				&& (CoreFunctions.getPropertyFromConfig("ClonePolicy_Reference_PolicyStatus")
+						.equals(_listPolicyStatus.get(versionIndex).getText().replace("Policy Status:", "").trim()))) {
+			CoreFunctions.clickElement(driver, _listCloneIcon.get(versionIndex));
+			CoreFunctions.explicitWaitTillElementInVisibilityCustomTime(driver, _progressBar, 5);
+		} else {
+			Reporter.addStepLog(MessageFormat.format(
+					COREFLEXConstants.FAILED_TO_CLICK_ON_POLICY_ACTION_ICON_FOR_POLICY_STATUS_ON_VIEW_EDIT_POLICY_FORMS_PAGE,
+					CoreConstants.FAIL, COREFLEXConstants.CLONE_ICON, policyStatus));
+			Assert.fail(MessageFormat.format(
+					COREFLEXConstants.FAILED_TO_CLICK_ON_POLICY_ACTION_ICON_FOR_POLICY_STATUS_ON_VIEW_EDIT_POLICY_FORMS_PAGE,
+					CoreConstants.FAIL, COREFLEXConstants.CLONE_ICON, policyStatus));
+		}
+	}
+
+	public void captureCorporationPolicyValue(int searchedPolicyIndex, String policyStatus,
+			PDT_GeneralInformationPage generalInfoPage) {
+		try {
+			CoreFunctions.clickElement(driver, _listPolicyName.get(searchedPolicyIndex));
+			String corporationPolicyValue = generalInfoPage.getElementText(COREFLEXConstants.CORPORATION_POLICY_NUMBER);
+			CoreFunctions.writeToPropertiesFile("ClonePolicy_Reference_CorporationPolicyNum", corporationPolicyValue);
+			generalInfoPage.clickElementOfPage(COREFLEXConstants.EXIT);
+			generalInfoPage.clickElementOfPage(PDTConstants.OK);
+		} catch (Exception e) {
+			Reporter.addStepLog(MessageFormat.format(
+					COREFLEXConstants.FAILED_TO_CAPTURE_CORPORATION_POLICY_NUMBER_FOR_SELECTED_POLICY_WITH_STATUS,
+					CoreConstants.FAIL, policyStatus));
+			Assert.fail(MessageFormat.format(
+					COREFLEXConstants.FAILED_TO_CAPTURE_CORPORATION_POLICY_NUMBER_FOR_SELECTED_POLICY_WITH_STATUS,
+					CoreConstants.FAIL, policyStatus));
+		}
+	}
+
+	public boolean performCoreFlexCloneToClientPolicySelection(String clientType) {
+		try {
+			selectClientBasedOnType(clientType);
+			selectFirstAvailableCloneToPolicy();
+			return true;
+		} catch (Exception e) {
+			Reporter.addStepLog(MessageFormat.format(
+					COREFLEXConstants.EXCEPTION_OCCURED_WHILE_SELECTING_COREFLEX_CLONE_TO_CLIENT_POLICY_ON_CLONE_POLICY_DIALOG,
+					CoreConstants.FAIL));
+		}
+		return false;
+	}
+
+	private void selectFirstAvailableCloneToPolicy() {
+		if (!(CoreFunctions.getElementText(driver, _selectCloneToPolicyDefaultText))
+				.equals(COREFLEXConstants.NO_POLICY_AVAILABLE_FOR_SELECTION)) {
+			CoreFunctions.clickElement(driver, _selectCloneToPolicy);
+			CoreFunctions.explicitWaitTillElementListVisibility(driver, _selectCloneToPolicyOptionsList);
+			CoreFunctions.writeToPropertiesFile("ClonedPolicy_Policy_Name",
+					_selectCloneToPolicyOptionsList.get(0).getText().split("\\(#")[0].trim());
+			CoreFunctions.clickElement(driver, _selectCloneToPolicyOptionsList.get(0));
+		} else {
+			Reporter.addStepLog(MessageFormat.format(
+					COREFLEXConstants.POLICY_NOT_AVAILABLE_FOR_SELECTED_CLONE_TO_CLIENT_ON_CLONE_POLICY_DIALOG,
+					CoreConstants.FAIL));
+			Assert.fail(MessageFormat.format(
+					COREFLEXConstants.POLICY_NOT_AVAILABLE_FOR_SELECTED_CLONE_TO_CLIENT_ON_CLONE_POLICY_DIALOG,
+					CoreConstants.FAIL));
+		}
+
+	}
+
+	private void selectClientBasedOnType(String clientType) {
+		CoreFunctions.clickElement(driver, _selectCloneToClient);
+		if (clientType.equals(COREFLEXConstants.EXISTING)) {
+			CoreFunctions.selectItemInListByText(driver, _selectCloneToClientOptionsList,
+					CoreFunctions.getPropertyFromConfig("ClonePolicy_Reference_Client").split("\\(")[0].trim());
+		} else {
+			selectCloneToDifferentClientName(_selectCloneToClientOptionsList);
+		}
+		String clonedClient[] = CoreFunctions.getElementText(driver, _selectCloneToClientSelectedValue).split("\\(#");
+		CoreFunctions.writeToPropertiesFile("ClonedPolicy_Client_Name", clonedClient[0].trim());
+		CoreFunctions.writeToPropertiesFile("ClonedPolicy_Client_ID", clonedClient[1].replace(")", "").trim());
+		CoreFunctions.explicitWaitTillElementInVisibilityCustomTime(driver, _progressBar, 5);
+	}
+
+	private void selectCloneToDifferentClientName(List<WebElement> _selectCloneToClientOptionsList) {
+		try {
+			List<String> clientNamesList = _selectCloneToClientOptionsList.stream().map(x -> x.getText())
+					.collect(Collectors.toList());
+			for (String clientName : clientNamesList) {
+				if (!(clientName.contains(
+						CoreFunctions.getPropertyFromConfig("ClonePolicy_Reference_Client").split("\\(")[0].trim()))) {
+					CoreFunctions.clickElement(driver, _selectCloneToClient);
+					CoreFunctions.selectItemInListByText(driver, _selectCloneToClientOptionsList, clientName);
+					CoreFunctions.explicitWaitTillElementInVisibilityCustomTime(driver, _progressBar, 5);
+					if (!(CoreFunctions.getElementText(driver, _selectCloneToPolicyDefaultText))
+							.equals(COREFLEXConstants.NO_POLICY_AVAILABLE_FOR_SELECTION)) {
+						return;
+					} else {
+						CoreFunctions.clickElement(driver, _selectCloneToClient);
+						continue;
+					}
+				}
+			}
+		} catch (Exception e) {
+			Reporter.addStepLog(MessageFormat.format(
+					COREFLEXConstants.EXCEPTION_OCCURED_WHILE_SELECTING_DIFFERENT_CLONE_TO_CLIENT_ON_CLONE_POLICY_DIALOG,
+					CoreConstants.FAIL, e.getMessage()));
+		}
+		Assert.fail(MessageFormat.format(
+				COREFLEXConstants.POLICY_NOT_AVAILABLE_FOR_SELECTION_FOR_ANY_CLIENT_EXCEPT_REFERENCE_CLIENT_ON_CLONE_POLICY_DIALOG,
+				CoreConstants.FAIL));
+	}
+
+	public boolean verifyPolicyStatusForVersion(String selectedPolicyName, String expectedStatus,
+			String policyVersion) {
+		boolean isPolicyStatusVerifiedForVersion = false;
+		String actualPolicyStatus = null;
+		try {
+			CoreFunctions.explicitWaitTillElementInVisibility(driver, _progressBar);
+			CoreFunctions.clearAndSetText(driver, _inputPolicyName, selectedPolicyName);
+			clickElementOfPage(COREFLEXConstants.SEARCH);
+			CoreFunctions.explicitWaitTillElementListVisibility(driver, _listPolicyName);
+			if (_listPolicyName.stream()
+					.anyMatch(t -> t.getText().toLowerCase().equalsIgnoreCase(selectedPolicyName))) {
+				Reporter.addStepLog(MessageFormat.format(PDTConstants.VERIFIED_ELEMENT_DISPLAYED_ON_PAGE,
+						CoreConstants.PASS, PDTConstants.POLICY_NAME, selectedPolicyName,
+						COREFLEXConstants.VIEW_EDIT_POLICY_FORMS));
+				int index = BusinessFunctions.returnindexItemFromListUsingText(driver, _listPolicyVersion,
+						policyVersion, true);
+				actualPolicyStatus = CoreFunctions.getElementText(driver, _listPolicyStatus.get(index))
+						.replace("Policy Status:", "").trim();
+				isPolicyStatusVerifiedForVersion = actualPolicyStatus.equals(expectedStatus);
+			}
+
+		} catch (Exception e) {
+			Reporter.addStepLog(MessageFormat.format(
+					COREFLEXConstants.EXCEPTION_OCCURED_WHILE_VALIDATING_POLICY_STATUS_AND_VERSION_ON_VIEW_EDIT_POLICY_FORMS_PAGE,
+					CoreConstants.FAIL, e.getMessage()));
+		}
+		if (isPolicyStatusVerifiedForVersion) {
+			Reporter.addStepLog(MessageFormat.format(
+					COREFLEXConstants.SUCCESSFULLY_VERIFIED_POLICY_STATUS_FOR_VERSION_ON_VIEW_EDIT_POLICY_FORMS_PAGE,
+					CoreConstants.PASS, expectedStatus, policyVersion, selectedPolicyName));
+		} else {
+			Reporter.addStepLog(MessageFormat.format(
+					COREFLEXConstants.FAILED_TO_VERIFY_POLICY_STATUS_FOR_VERSION_ON_VIEW_EDIT_POLICY_FORMS_PAGE,
+					CoreConstants.FAIL, expectedStatus, actualPolicyStatus));
+		}
+		return isPolicyStatusVerifiedForVersion;
+	}
 }

@@ -133,6 +133,7 @@ public class PDT_ViewPolicyPage extends Base {
 	}
 
 	public String getUserName() {
+		CoreFunctions.explicitWaitTillElementVisibility(driver, _userName, _userName.getText().split("\n")[1]);
 		String userArray[] = _userName.getText().split("\n");
 		return userArray[1].trim();
 	}

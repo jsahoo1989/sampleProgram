@@ -48,7 +48,7 @@ Feature: Approve Policy to create new version
     When he clicks on "Approve" button on 'Approve Policy' pop-up on "Policy Benefit" page
     Then Version "V1" of Policy should be displayed on "View/Edit Policy Forms" page with "Active" status
 
-  @Sprint-29 @PDT-Regression @PDT-1115 @Pdt:217686
+  @Sprint-29 @PDT-Regression @PDT-1115 @Pdt:217687
   Scenario: PDT - Verify that Policy Status of a 'Submitted' Policy should not change after clicking 'Cancel' button on 'Approve Policy' pop-up
     Given he is on the "Policy Benefit" page after selecting "Home Leave" as Benefit Category;
     And he clicks on "SAVE & SUBMIT" button after entering mandatory information for all the below selected sub benefits on "Home Leave" page

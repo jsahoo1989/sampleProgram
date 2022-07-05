@@ -453,9 +453,9 @@ public class PDT_SharedSubBenefitPage extends Base {
 			subBenefitSteps.getDestinationServicePage().fillReimbursementOfMembershipDuesForm(addNewPolicyPage,
 					PDTConstants.REIMBURSEMENT_OF_MEMEBERSHIP_DUES);
 			break;
-		case PDTConstants.SCHOOL_SEARCH:
+		case PDTConstants.EDUCATION_ASSISTANCE:
 			subBenefitSteps.getDestinationServicePage().fillSchoolSearchForm(addNewPolicyPage,
-					PDTConstants.SCHOOL_SEARCH);
+					PDTConstants.EDUCATION_ASSISTANCE);
 			break;
 		case PDTConstants.SETTLING_IN_SERVICES:
 			subBenefitSteps.getDestinationServicePage().fillSettlingServicesForm(addNewPolicyPage,
@@ -918,7 +918,7 @@ public class PDT_SharedSubBenefitPage extends Base {
 		formMap.put(PDTConstants.DEPARTURE_SERVICES, _lnkFormCollapseDepartureServices);
 		formMap.put(PDTConstants.FURNITURE_RENTAL, _lnkFormCollapseFurnitureRental);
 		formMap.put(PDTConstants.REIMBURSEMENT_OF_MEMEBERSHIP_DUES, _lnkFormCollapseMembershipDues);
-		formMap.put(PDTConstants.SCHOOL_SEARCH, _lnkFormCollapseSchoolSearch);
+		formMap.put(PDTConstants.EDUCATION_ASSISTANCE, _lnkFormCollapseSchoolSearch);
 		formMap.put(PDTConstants.SETTLING_IN_SERVICES, _lnkFormCollapseSettlingInServices);
 		formMap.put(PDTConstants.TRANSITION_ASSISTANCE_PROGRAM, _lnkFormCollapseTransitionAssistances);
 		formMap.put(PDTConstants.TUTION_AND_EDUCATION, _lnkFormCollapseTutionEducation);
@@ -1077,7 +1077,7 @@ public class PDT_SharedSubBenefitPage extends Base {
 		try {
 			if (CoreFunctions.isElementExist(driver, _progressBar, 7))
 				BusinessFunctions.fluentWaitForSpinnerToDisappear(driver, _progressBar);
-			CoreFunctions.click(driver, buttonMap.get(btnName), btnName);	
+			CoreFunctions.clickUsingJS(driver, buttonMap.get(btnName), btnName);	
 		} catch(Exception e) {
 			Assert.fail(MessageFormat.format(PDTConstants.FAILED_TO_CLICK, CoreConstants.FAIL, PDTConstants.BTN_APPROVE_POLICY, pageName));
 		}		

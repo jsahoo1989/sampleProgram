@@ -1064,8 +1064,7 @@ public class PDT_SharedSubBenefitPage extends Base {
 	}
 	
 	public boolean verifyButtonDisabled(String btnName, PDT_PolicyBenefitCategoryPage policyBenefitCategoryPage) {
-		try {
-			Log.info("disabled attr="+_btnSaveAndContinue.getAttribute("disabled"));
+		try {			
 			if (_btnSaveAndContinue.getAttribute("disabled").equalsIgnoreCase("true")) {
 				Reporter.addStepLog(MessageFormat.format(PDTConstants.VERIFIED_BTN_ENABLED, CoreConstants.PASS, btnName,
 						policyBenefitCategoryPage.getBenefitCategoryName()));
@@ -1098,40 +1097,43 @@ public class PDT_SharedSubBenefitPage extends Base {
 	}
 	
 	public boolean verifyCheckBoxAndMsg(String fieldName, String msg, String status) {
-		Log.info("status=="+status);
-		Log.info("element exists=="+CoreFunctions.isElementExist(driver, _lblNewDateInd, 3));		
-//		Log.info("List=="+_chkBoxNewDateIndList.get(0).getDomProperty("disabled"));
-		Log.info("New Date Ind disabled status vinod=="+_chkBoxNewDateInd.getDomProperty("disabled"));
-//		Log.info("New Date Ind disabled status sarika=="+_chkBoxNewDateInd.getAttribute("disabled"));
-		if(status.equalsIgnoreCase("disabled") && _chkBoxExistingDateInd.getAttribute("disabled").equalsIgnoreCase("true")) {
-			CoreFunctions.highlightObject(driver, _chkBoxExistingDateInd);
-			CoreFunctions.verifyText(driver, _lblExistingDateInd, msg, fieldName);
-			Reporter.addStepLog(MessageFormat.format(PDTConstants.VERIFIED_CHKBOX_MSG, CoreConstants.PASS, msg, status));
-			return true;
-		} else if(status.equalsIgnoreCase("enabled") && _chkBoxNewDateInd.getDomProperty("disabled").equalsIgnoreCase("false")) {
-			CoreFunctions.highlightObject(driver, _chkBoxNewDateInd);
-			CoreFunctions.verifyText(driver, _lblNewDateInd, msg, fieldName);
-			Reporter.addStepLog(MessageFormat.format(PDTConstants.VERIFIED_CHKBOX_MSG, CoreConstants.PASS, msg, status));
-			return true;
+		try {
+			if(status.equalsIgnoreCase("disabled") && _chkBoxExistingDateInd.getAttribute("disabled").equalsIgnoreCase("true")) {
+				CoreFunctions.highlightObject(driver, _chkBoxExistingDateInd);
+				CoreFunctions.verifyText(driver, _lblExistingDateInd, msg, fieldName);
+				Reporter.addStepLog(MessageFormat.format(PDTConstants.VERIFIED_CHKBOX_MSG, CoreConstants.PASS, msg, status));
+				return true;
+			} else if(status.equalsIgnoreCase("enabled") && _chkBoxNewDateInd.getDomProperty("disabled").equalsIgnoreCase("false")) {
+				CoreFunctions.highlightObject(driver, _chkBoxNewDateInd);
+				CoreFunctions.verifyText(driver, _lblNewDateInd, msg, fieldName);
+				Reporter.addStepLog(MessageFormat.format(PDTConstants.VERIFIED_CHKBOX_MSG, CoreConstants.PASS, msg, status));
+				return true;
+			}
+		} catch(Exception e) {
+			Assert.fail(MessageFormat.format(PDTConstants.FAILED_TO_VERIFY_CHECKBOX, CoreConstants.FAIL, msg, status));
 		}
 		return false;
 	}
 	
 	
 	public boolean verifyButton(String btnName, String btnStatus) {	
-		if(btnName.equalsIgnoreCase("approve") && btnStatus.equalsIgnoreCase("disabled") && _btnApprove.getAttribute("disabled").equalsIgnoreCase("true")) {
-			CoreFunctions.highlightObject(driver, _btnApprove);
-			Reporter.addStepLog(MessageFormat.format(PDTConstants.VERIFIED_BTN_STATE, CoreConstants.PASS, btnName, btnStatus));
-			return true;
-		} else if(btnName.equalsIgnoreCase("approve") && btnStatus.equalsIgnoreCase("enabled") && _btnApprove.getDomProperty("disabled").equalsIgnoreCase("false")) {
-			CoreFunctions.highlightObject(driver, _btnApprove);
-			Reporter.addStepLog(MessageFormat.format(PDTConstants.VERIFIED_BTN_STATE, CoreConstants.PASS, btnName, btnStatus));
-			return true;
-		}
-		else if(btnName.equalsIgnoreCase("cancel") && btnStatus.equalsIgnoreCase("enabled") && CoreFunctions.isElementExist(driver, _btnCancel, 3)) {
-			CoreFunctions.highlightObject(driver, _btnCancel);
-			Reporter.addStepLog(MessageFormat.format(PDTConstants.VERIFIED_BTN_STATE, CoreConstants.PASS, btnName, btnStatus));
-			return true;
+		try {
+			if(btnName.equalsIgnoreCase("approve") && btnStatus.equalsIgnoreCase("disabled") && _btnApprove.getAttribute("disabled").equalsIgnoreCase("true")) {
+				CoreFunctions.highlightObject(driver, _btnApprove);
+				Reporter.addStepLog(MessageFormat.format(PDTConstants.VERIFIED_BTN_STATE, CoreConstants.PASS, btnName, btnStatus));
+				return true;
+			} else if(btnName.equalsIgnoreCase("approve") && btnStatus.equalsIgnoreCase("enabled") && _btnApprove.getDomProperty("disabled").equalsIgnoreCase("false")) {
+				CoreFunctions.highlightObject(driver, _btnApprove);
+				Reporter.addStepLog(MessageFormat.format(PDTConstants.VERIFIED_BTN_STATE, CoreConstants.PASS, btnName, btnStatus));
+				return true;
+			}
+			else if(btnName.equalsIgnoreCase("cancel") && btnStatus.equalsIgnoreCase("enabled") && CoreFunctions.isElementExist(driver, _btnCancel, 3)) {
+				CoreFunctions.highlightObject(driver, _btnCancel);
+				Reporter.addStepLog(MessageFormat.format(PDTConstants.VERIFIED_BTN_STATE, CoreConstants.PASS, btnName, btnStatus));
+				return true;
+			}			
+		} catch(Exception e) {
+			Assert.fail(MessageFormat.format(PDTConstants.FAILED_TO_VERIFY_BTN_STATE, CoreConstants.FAIL, btnName, btnStatus));
 		}
 		return false;
 	}

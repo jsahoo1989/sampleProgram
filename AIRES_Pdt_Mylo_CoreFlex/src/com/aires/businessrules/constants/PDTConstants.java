@@ -508,4 +508,7 @@ public class PDTConstants {
 	public static final String VERIFIED_POLICY_VERSION_STATUS = "{0}Successfully verified policy ''{1}'' has version ''{2}'' and status ''{3}'' on ''{4}'' page.";
 	public static final String FAILED_TO_VERIFY_POLICY_VERSION_STATUS = "{0}Failed to verify policy ''{1}'' version & status on ''{6}'' page. Expected version - ''{2}'' but found ''{3}''. Expected status - ''{4}'' but found ''{5}''";
 	public static final String EXCEPTION_OCCURED_VALIDATING_POLICY_STATUS_VERSION = "{0}Exception occured while validating Policy Status & Version on View/Edit Policy Forms Page.";
+	public static final String FAILED_TO_VERIFY_SELECTED_VAL = "{0}Failed to verify ''{1}'' is selected.";
+	public static final String FAILED_TO_SELECT_SUB_BENEFIT = "{0}Failed to select sub-benefit and verify form is displayed.";
+	
 }

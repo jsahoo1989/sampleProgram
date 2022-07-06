@@ -380,10 +380,14 @@ public class PDT_HouseHuntingTripPage extends Base {
 	}
 
 	public void checkIfFlatAmtIsSelected(PDT_AddNewPolicyPage addNewPolicyPage, String subBenefitFormName) {
-		if (_drpDownMaxAmountSelectedVal.getText().equalsIgnoreCase(PDTConstants.FLAT_AMT)) {
-			verifyAndFillTransfereeMealInfo(addNewPolicyPage, subBenefitFormName);
-			verifyAndFillAdultMealInfo(addNewPolicyPage, subBenefitFormName);
-			verifyAndFillChildMealInfo(addNewPolicyPage, subBenefitFormName);
+		try {
+			if (_drpDownMaxAmountSelectedVal.getText().equalsIgnoreCase(PDTConstants.FLAT_AMT)) {
+				verifyAndFillTransfereeMealInfo(addNewPolicyPage, subBenefitFormName);
+				verifyAndFillAdultMealInfo(addNewPolicyPage, subBenefitFormName);
+				verifyAndFillChildMealInfo(addNewPolicyPage, subBenefitFormName);
+			}
+		} catch(Exception e) {
+			Assert.fail(MessageFormat.format(PDTConstants.FAILED_TO_VERIFY_SELECTED_VAL, CoreConstants.FAIL, PDTConstants.FLAT_AMT));
 		}
 	}
 

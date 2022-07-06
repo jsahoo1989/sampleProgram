@@ -381,13 +381,17 @@ public class PDT_PreAcceptanceService extends Base {
 	}
 
 	public void selectSubBenefitAndVerifyFormIsDisplayed(DataTable subBenefitTable, String pageName) {
-		CoreFunctions.explicitWaitTillElementListClickable(driver, _subBenefitCategories);
-		List<String> subBenefits = subBenefitTable.asList(String.class);
-		for (String subBenefit : subBenefits) {
-			CoreFunctions.selectItemInListByText(driver, _subBenefitCategories, subBenefit, true);
-			CoreFunctions.explicitWaitTillElementInVisibilityCustomTime(driver, _progressBar, 5);
-			Assert.assertTrue(verifyFormIsDisplayed(subBenefit, getElementByName(subBenefit), pageName),
-					MessageFormat.format(PDTConstants.VERIFIED_FORM_IS_NOT_DISPLAYED, subBenefit, pageName));
+		try {
+			CoreFunctions.explicitWaitTillElementListClickable(driver, _subBenefitCategories);
+			List<String> subBenefits = subBenefitTable.asList(String.class);
+			for (String subBenefit : subBenefits) {
+				CoreFunctions.selectItemInListByText(driver, _subBenefitCategories, subBenefit, true);
+				CoreFunctions.explicitWaitTillElementInVisibilityCustomTime(driver, _progressBar, 5);
+				Assert.assertTrue(verifyFormIsDisplayed(subBenefit, getElementByName(subBenefit), pageName),
+						MessageFormat.format(PDTConstants.VERIFIED_FORM_IS_NOT_DISPLAYED, subBenefit, pageName));
+			}
+		} catch(Exception e) {
+			Assert.fail(MessageFormat.format(PDTConstants.FAILED_TO_SELECT_SUB_BENEFIT, CoreConstants.FAIL));
 		}
 	}
 

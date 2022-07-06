@@ -457,6 +457,10 @@ public class PDT_SharedSubBenefitPage extends Base {
 			subBenefitSteps.getDestinationServicePage().fillSchoolSearchForm(addNewPolicyPage,
 					PDTConstants.EDUCATION_ASSISTANCE);
 			break;
+		case PDTConstants.EDUCATION_ASSISTANT:
+			subBenefitSteps.getDestinationServicePage().fillSchoolSearchForm(addNewPolicyPage,
+					PDTConstants.EDUCATION_ASSISTANT);
+			break;
 		case PDTConstants.SETTLING_IN_SERVICES:
 			subBenefitSteps.getDestinationServicePage().fillSettlingServicesForm(addNewPolicyPage,
 					PDTConstants.SETTLING_IN_SERVICES);
@@ -919,6 +923,7 @@ public class PDT_SharedSubBenefitPage extends Base {
 		formMap.put(PDTConstants.FURNITURE_RENTAL, _lnkFormCollapseFurnitureRental);
 		formMap.put(PDTConstants.REIMBURSEMENT_OF_MEMEBERSHIP_DUES, _lnkFormCollapseMembershipDues);
 		formMap.put(PDTConstants.EDUCATION_ASSISTANCE, _lnkFormCollapseSchoolSearch);
+		formMap.put(PDTConstants.EDUCATION_ASSISTANT, _lnkFormCollapseSchoolSearch);
 		formMap.put(PDTConstants.SETTLING_IN_SERVICES, _lnkFormCollapseSettlingInServices);
 		formMap.put(PDTConstants.TRANSITION_ASSISTANCE_PROGRAM, _lnkFormCollapseTransitionAssistances);
 		formMap.put(PDTConstants.TUTION_AND_EDUCATION, _lnkFormCollapseTutionEducation);

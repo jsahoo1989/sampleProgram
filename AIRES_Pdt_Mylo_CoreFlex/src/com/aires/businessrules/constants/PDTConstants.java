@@ -351,6 +351,7 @@ public class PDTConstants {
 	public static final String FURNITURE_RENTAL = "Furniture Rental";
 	public static final String REIMBURSEMENT_OF_MEMEBERSHIP_DUES = "Reimbursement of Membership Dues";
 	public static final String EDUCATION_ASSISTANCE = "Education Assistance";
+	public static final String EDUCATION_ASSISTANT = "Education Assistant";
 	public static final String SETTLING_IN_SERVICES = "Settling In Services";
 	public static final String TRANSITION_ASSISTANCE_PROGRAM = "Transition Assistance Program";
 	public static final String TUTION_AND_EDUCATION = "Tuition/Education Payments";

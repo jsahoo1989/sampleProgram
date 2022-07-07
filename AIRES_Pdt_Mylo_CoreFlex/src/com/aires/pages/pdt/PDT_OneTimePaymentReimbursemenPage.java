@@ -1,7 +1,5 @@
 package com.aires.pages.pdt;
 
-import static org.openqa.selenium.support.locators.RelativeLocator.with;
-
 import java.text.MessageFormat;
 import java.util.List;
 

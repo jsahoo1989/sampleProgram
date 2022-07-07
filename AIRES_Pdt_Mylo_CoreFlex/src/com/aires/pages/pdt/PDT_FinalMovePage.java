@@ -335,7 +335,7 @@ public class PDT_FinalMovePage extends Base {
 	public void verifyAndFillFlatAmtPerNightTextBoxAndCurrencyDrpDown(PDT_AddNewPolicyPage addNewPolicyPage,
 			String subBenefitFormName) {
 		try {
-			if (_drpDownMaxAmtSelectedOption.getText().equalsIgnoreCase(PDTConstants.FLAT_AMT_PER_NIGHT)
+			if (_drpDownMaxAmtSelectedOption.getText().equalsIgnoreCase(PDTConstants.FLAT_AMT)
 					&& CoreFunctions.isElementExist(driver, _txtBoxFlatAmtPerNight, 1)
 							& CoreFunctions.isElementExist(driver, _drpDownCurrencyCode, 1)) {
 				Reporter.addStepLog(MessageFormat.format(PDTConstants.VERIFIED_TEXT_BOX_FIELD_DISPLAYED,

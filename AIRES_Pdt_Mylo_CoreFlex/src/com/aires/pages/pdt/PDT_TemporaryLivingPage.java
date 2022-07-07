@@ -50,11 +50,14 @@ public class PDT_TemporaryLivingPage extends Base {
 	@FindBy(how = How.CSS, using = "ng-select[formcontrolname='currencyCode']")
 	private WebElement _drpDownCurrency;
 	
-	@FindBy(how = How.CSS, using = "ng-select[formcontrolname='currencyCode'] span.ng-option-label.ng-star-inserted")
+	@FindBy(how = How.CSS, using = "ng-select[formcontrolname='currencyCode'] ng-dropdown-panel[role='listbox'] span.ng-option-label")
 	private List<WebElement> _drpDownCurrencyOptions;
 	
-	@FindBy(how = How.CSS, using = "ng-select[formcontrolname='currencyCode'] span.ng-value-label.ng-star-inserted")
+	@FindBy(how = How.CSS, using = "ng-select[formcontrolname='currencyCode'] span.ng-value-label")
 	private WebElement _drpDownCurrencyOptionsSelected;
+	
+	@FindBy(how = How.CSS, using = "ng-select[formcontrolname='currencyCode'] span.ng-clear-wrapper.ng-star-inserted")
+	private WebElement _clearCurrency;
 	
 	@FindBy(how = How.CSS, using = "app-temporary-living-lodging label.form-check-label")
 	private List<WebElement> _radioBtnTempLivingLodging;
@@ -247,11 +250,19 @@ public class PDT_TemporaryLivingPage extends Base {
 		}
 	}
 	
+	public void verifyDefaultCurrency(PDT_AddNewPolicyPage addNewPolicyPage, String subBenefitFormName) {
+		if(_drpDownCurrencyOptionsSelected.getText().equalsIgnoreCase(PDTConstants.DEFAULT_CURRENCY)) {
+			Reporter.addStepLog(MessageFormat.format(PDTConstants.VERIFIED_DEFAULT_CURR_SELECTED,
+					CoreConstants.PASS, PDTConstants.DEFAULT_CURRENCY, subBenefitFormName));			
+		}
+	}
+	
 	public void verifyAndFillCurrency(PDT_AddNewPolicyPage addNewPolicyPage, String subBenefitFormName) {
 		try {
 			if (CoreFunctions.isElementExist(driver, _drpDownCurrency, 1)) {
 				Reporter.addStepLog(MessageFormat.format(PDTConstants.VERIFIED_DROP_DWN_FIELD_DISPLAYED,
 						CoreConstants.PASS, PDTConstants.CURRENCY, subBenefitFormName));
+				verifyDefaultCurrency(addNewPolicyPage, subBenefitFormName);
 				CoreFunctions.clickElement(driver, _drpDownCurrency);
 				CoreFunctions.explicitWaitTillElementListClickable(driver, _drpDownCurrencyOptions);
 				CoreFunctions.selectItemInListByText(driver, _drpDownCurrencyOptions,

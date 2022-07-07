@@ -132,7 +132,7 @@ public class PDT_PreAcceptanceService extends Base {
 	@FindBy(how = How.CSS, using = "ng-select[formcontrolname='maxAmountCode'] span.ng-option-label")
 	private List<WebElement> _drpDownMaxAmountOptions;
 
-	@FindBy(how = How.XPATH, using = "//ng-select[@formcontrolname='maxAmountCode']/descendant::span[@class='ng-value-label']")
+	@FindBy(how = How.XPATH, using = "//ng-select[@formcontrolname='maxAmountCode']/descendant::span[contains(@class,'ng-value-label')]")
 	private WebElement _drpDownMaxAmountSelectedVal;
 
 	@FindBy(how = How.CSS, using = "input[formcontrolname='maxAmountEe']")
@@ -381,13 +381,17 @@ public class PDT_PreAcceptanceService extends Base {
 	}
 
 	public void selectSubBenefitAndVerifyFormIsDisplayed(DataTable subBenefitTable, String pageName) {
-		CoreFunctions.explicitWaitTillElementListClickable(driver, _subBenefitCategories);
-		List<String> subBenefits = subBenefitTable.asList(String.class);
-		for (String subBenefit : subBenefits) {
-			CoreFunctions.selectItemInListByText(driver, _subBenefitCategories, subBenefit, true);
-			CoreFunctions.explicitWaitTillElementInVisibilityCustomTime(driver, _progressBar, 5);
-			Assert.assertTrue(verifyFormIsDisplayed(subBenefit, getElementByName(subBenefit), pageName),
-					MessageFormat.format(PDTConstants.VERIFIED_FORM_IS_NOT_DISPLAYED, subBenefit, pageName));
+		try {
+			CoreFunctions.explicitWaitTillElementListClickable(driver, _subBenefitCategories);
+			List<String> subBenefits = subBenefitTable.asList(String.class);
+			for (String subBenefit : subBenefits) {
+				CoreFunctions.selectItemInListByText(driver, _subBenefitCategories, subBenefit, true);
+				CoreFunctions.explicitWaitTillElementInVisibilityCustomTime(driver, _progressBar, 5);
+				Assert.assertTrue(verifyFormIsDisplayed(subBenefit, getElementByName(subBenefit), pageName),
+						MessageFormat.format(PDTConstants.VERIFIED_FORM_IS_NOT_DISPLAYED, subBenefit, pageName));
+			}
+		} catch(Exception e) {
+			Assert.fail(MessageFormat.format(PDTConstants.FAILED_TO_SELECT_SUB_BENEFIT, CoreConstants.FAIL));
 		}
 	}
 
@@ -589,6 +593,7 @@ public class PDT_PreAcceptanceService extends Base {
 			CoreFunctions.clearAndSetText(driver, _txtAreaPreTripMealComment, PDTConstants.COMMENT,
 					preAcceptanceSubBenefitData.preAcceptanceTripMeals.comment);
 		} catch (Exception e) {
+			e.printStackTrace();
 			Assert.fail(MessageFormat.format(PDTConstants.EXCEPTION_OCCURED_FILL_SUBBENEFIT_FORM, CoreConstants.FAIL, subBenefitFormName));
 		}
 	}

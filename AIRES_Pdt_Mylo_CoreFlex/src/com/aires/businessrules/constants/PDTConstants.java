@@ -350,10 +350,11 @@ public class PDTConstants {
 	public static final String DEPARTURE_SERVICES = "Departure Services";
 	public static final String FURNITURE_RENTAL = "Furniture Rental";
 	public static final String REIMBURSEMENT_OF_MEMEBERSHIP_DUES = "Reimbursement of Membership Dues";
-	public static final String SCHOOL_SEARCH = "School Search";
+	public static final String EDUCATION_ASSISTANCE = "Education Assistance";
+	public static final String EDUCATION_ASSISTANT = "Education Assistant";
 	public static final String SETTLING_IN_SERVICES = "Settling In Services";
 	public static final String TRANSITION_ASSISTANCE_PROGRAM = "Transition Assistance Program";
-	public static final String TUTION_AND_EDUCATION = "Tuition and Education";
+	public static final String TUTION_AND_EDUCATION = "Tuition/Education Payments";
 	public static final String EXCEPTION_OCCURED_FILL_SUBBENEFIT_FORM = "{0} Exception occurred while filling data for ''{1}'' sub-benefit form.";
 	public static final String RENTAL_TOUR = "Rental Tour";
 	public static final String FINDER_FEES = "Finder's Fee";
@@ -490,5 +491,24 @@ public class PDTConstants {
 	public static final String APPLICATION_PDT = "PDT";
 	public static final String APPLICATION_MYLO = "MYLO";
 	public static final String APPLICATION_NOT_VALID = "{0}Application ''{1}'' is not a valid application";
+	public static final String VERIFIED_DEFAULT_CURR_SELECTED = "{0}Verified default currency selected is ''{1}'' on {2} sub-benefit form.";
+	public static final String BTN_APPROVE_POLICY = "APPROVE POLICY";
+	public static final String VERIFIED_BTN_VISIBLE = "{0}Verified ''{1}'' button is visible on ''{2}'' page.";
+	public static final String VERIFIED_BTN_ENABLED = "{0}Verified ''{1}'' button is enabled on ''{2}'' page.";
+	public static final String FAILED_TO_VERIFY_BTN_VISIBLE = "{0} Failed to veriy ''{1}'' button is visible on ''{2}'' page.";
+	public static final String FAILED_TO_VERIFY_BTN_DISABLED = "{0} Failed to veriy ''{1}'' button is disabled on ''{2}'' page.";
+	public static final String FAILED_TO_CLICK = "{0} Failed to click on ''{1}'' {2} on ''{3}'' page.";
+	public static final String BUTTON = "button";
+	public static final String VERIFIED_BTN_STATE = "{0}Verified ''{1}'' button is in ''{2}'' state on Approve Policy Pop-up.";
+	public static final String FAILED_TO_VERIFY_BTN_STATE = "{0}Failed to verify ''{1}'' button is in ''{2}'' state on Approve Policy Pop-up.";
+	public static final String FAILED_TO_VERIFY_CHECKBOX = "{0}Failed to verify checkbox ''{1}'' with ''{2}'' state.";
+	public static final String VERIFIED_CHKBOX_MSG = "{0}Verified checkbox ''{1}'' with ''{2}'' status.";
+	public static final String BTN_APPROVE = "Approve";
+	public static final String BTN_CANCEL = "Cancel";
+	public static final String VERIFIED_POLICY_VERSION_STATUS = "{0}Successfully verified policy ''{1}'' has version ''{2}'' and status ''{3}'' on ''{4}'' page.";
+	public static final String FAILED_TO_VERIFY_POLICY_VERSION_STATUS = "{0}Failed to verify policy ''{1}'' version & status on ''{6}'' page. Expected version - ''{2}'' but found ''{3}''. Expected status - ''{4}'' but found ''{5}''";
+	public static final String EXCEPTION_OCCURED_VALIDATING_POLICY_STATUS_VERSION = "{0}Exception occured while validating Policy Status & Version on View/Edit Policy Forms Page.";
+	public static final String FAILED_TO_VERIFY_SELECTED_VAL = "{0}Failed to verify ''{1}'' is selected.";
+	public static final String FAILED_TO_SELECT_SUB_BENEFIT = "{0}Failed to select sub-benefit and verify form is displayed.";
 	
 }

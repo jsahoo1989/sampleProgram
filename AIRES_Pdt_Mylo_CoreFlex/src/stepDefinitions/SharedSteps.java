@@ -14,8 +14,8 @@ import stepDefinitions.Hooks;
 public class SharedSteps {
 	TestContext testContext;
 	IRIS_Corporation_Main irisCorporation_Main;
-	private PDT_LoginDetails _loginDetailsApplication = FileReaderManager.getInstance().getJsonReader().getLoginByApplication(CoreFunctions.getPropertyFromConfig("application").toLowerCase());
-
+	//private PDT_LoginDetails _loginDetailsApplication = FileReaderManager.getInstance().getJsonReader().getLoginByApplication(CoreFunctions.getPropertyFromConfig("application").toLowerCase());
+	private PDT_LoginDetails _loginDetailsApplication = FileReaderManager.getInstance().getJsonReader().getLoginByApplication(System.getProperty("application").toLowerCase());
 	public SharedSteps(TestContext context) {
 		testContext = context;
 		if (Hooks.scenarioName.getName().contains("IRIS")) {

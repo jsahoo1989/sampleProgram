@@ -15,6 +15,7 @@ import org.openqa.selenium.support.How;
 import org.testng.Assert;
 
 import com.aires.businessrules.Base;
+import com.aires.businessrules.BusinessFunctions;
 import com.aires.businessrules.CoreFunctions;
 import com.aires.businessrules.DbFunctions;
 import com.aires.businessrules.constants.CoreConstants;
@@ -34,6 +35,9 @@ public class MyloJourneyPage_OtherSection extends Base {
 	
 	@FindBy(how = How.CSS, using = "app-transferee-family button[aria-controls='collapseTwo']")
 	private WebElement _transfereeAndFamilySection;
+	
+	@FindBy(how = How.CSS, using = "h2[class*='accchildhead']")
+	private List<WebElement> _transfereeAndFamilySectionHeaders;
 	
 	@FindBy(how = How.CSS, using = "i[class='icon-FloppyDisk_Open']")
 	private WebElement _otherSaveIcon;
@@ -274,8 +278,8 @@ public class MyloJourneyPage_OtherSection extends Base {
 			WebElement reqWebElement = otherWebElementsMap.get(fieldName);
 			CoreFunctions.explicitWaitTillElementVisibility(driver, reqWebElement, fieldName);
 			if (fieldValue.equals(""))
-				CoreFunctions.scrollToElementUsingJavaScript(driver, _transfereeAndFamilySection,
-						MYLOConstants.TRANSFEREE_FAMILY);
+				CoreFunctions.scrollToElementUsingJavaScript(driver,  _transfereeAndFamilySectionHeaders.get(3),
+						MYLOConstants.OTHER);
 			String setValue = CoreFunctions.setDifferentFieldsForMylo(driver, reqWebElement, fieldName, fieldValue);
 			otherUpdatedFieldValuesMap.put(fieldName, setValue);
 		} catch (Exception e) {
@@ -317,7 +321,7 @@ public class MyloJourneyPage_OtherSection extends Base {
 					data.get(i).get(MYLOConstants.OTHER_FIRSTNAME));
 			setOtherFields(MYLOConstants.OTHER_LASTNAME, data.get(i).get(MYLOConstants.OTHER_LASTNAME));
 			clickOtherSaveButton();
-			flag = (verifyToastMessage(data.get(i).get(MYLOConstants.MESSAGE), MYLOConstants.TRANSFEREE_FAMILY));
+			flag = (verifyOtherSectionToastMessage(data.get(i).get(MYLOConstants.MESSAGE)));
 		}
 		return flag;
 	}
@@ -408,7 +412,7 @@ public class MyloJourneyPage_OtherSection extends Base {
 			String fieldName = data.get(i).get(MYLOConstants.FIELD_NAME);
 			setOtherFields(fieldName, MYLOConstants.SPECIAL_CHARACTERS_STRING);
 			clickOtherSaveButton();
-			flag = (verifyToastMessage(data.get(i).get(MYLOConstants.MESSAGE), MYLOConstants.TRANSFEREE_FAMILY));
+			flag = (verifyOtherSectionToastMessage(data.get(i).get(MYLOConstants.MESSAGE)));
 			clickToastMesssgeCloseIcon();
 			setOtherFields(fieldName, MYLOConstants.TEST);
 		}
@@ -442,31 +446,6 @@ public class MyloJourneyPage_OtherSection extends Base {
 		for (int i = 0; i < data.size(); i++) {
 			flag = (verifyOtherFieldsUpdatedValue(data.get(i).get(MYLOConstants.FIELD_NAME)));
 		}
-		return flag;
-	}
-	
-	/**
-	 * @param msg
-	 * @param sectionType
-	 * @return
-	 * Verify Toast Messages appearing for Other Section
-	 */
-	public boolean verifyToastMessage(String msg, String sectionType) {
-		boolean flag = false;
-		try {
-			CoreFunctions.isElementVisible(_alertMessage);
-			CoreFunctions.highlightObject(driver, _alertMessage);
-			flag = (_alertMessage.getText().equals(msg));
-		} catch (Exception e) {
-			Reporter.addStepLog(MessageFormat.format(CoreConstants.FAIL_TO_VERIFY_ELEMENT_ON_SECTION, CoreConstants.FAIL,
-					MYLOConstants.ALERT_MESSAGE, sectionType));
-		}
-		if (flag)
-			Reporter.addStepLog(MessageFormat.format(MYLOConstants.VERIFIED_ALERT_MESSAGE_DISPLAYED, CoreConstants.PASS,
-					msg, MYLOConstants.JOURNEY));
-		else
-			Reporter.addStepLog(MessageFormat.format(MYLOConstants.EXPECTED_MESSAGE_DISPLAYED, CoreConstants.FAIL, msg,
-					_alertMessage.getText(), MYLOConstants.JOURNEY));
 		return flag;
 	}
 	
@@ -516,7 +495,7 @@ public class MyloJourneyPage_OtherSection extends Base {
 			setDifferentDropDownFields(MYLOConstants.OTHER_EMAIL_TYPE,
 					data.get(i).get(MYLOConstants.OTHER_EMAIL_TYPE));
 			clickOtherSaveButton();
-			flag = (verifyToastMessage(data.get(i).get(MYLOConstants.MESSAGE), MYLOConstants.TRANSFEREE_FAMILY));
+			flag = (verifyOtherSectionToastMessage(data.get(i).get(MYLOConstants.MESSAGE)));
 		}
 		return flag;
 	}
@@ -527,6 +506,7 @@ public class MyloJourneyPage_OtherSection extends Base {
 	 * Click respective dropdown fields of Other section
 	 */
 	public void clickDropdownFieldsOnOtherSection(String elementName, int index) {
+		CoreFunctions.scrollToElementUsingJavaScript(driver, _otherPreferredName, MYLOConstants.OTHER_PREFERREDNAME);
 		switch (elementName) {
 		case MYLOConstants.OTHER_ORGDEST:
 			originDestOption = returnDropDownOptionsList(_otherPhoneOrgDestDropdown.get(index), elementName);
@@ -538,11 +518,9 @@ public class MyloJourneyPage_OtherSection extends Base {
 			emailTypeOption = returnDropDownOptionsList(_otherEmailTypeDropdown.get(index), elementName);
 			break;
 		case MYLOConstants.OTHER_PHONE_PREFERRED:
-			CoreFunctions.scrollToElementUsingJavaScript(driver, _otherPreferredName, MYLOConstants.OTHER_PREFERREDNAME);
 			CoreFunctions.click(driver, _otherPhonePreferredSelect.get(index), elementName);
 			break;
 		case MYLOConstants.OTHER_EMAIL_PREFERRED:
-			CoreFunctions.scrollToElementUsingJavaScript(driver, _otherPreferredName, MYLOConstants.OTHER_PREFERREDNAME);
 			CoreFunctions.click(driver, _otherEmailPreferredSelect.get(index), elementName);
 			break;
 		default:
@@ -569,7 +547,7 @@ public class MyloJourneyPage_OtherSection extends Base {
 			setDifferentDropDownFields(MYLOConstants.OTHER_PHONE_TYPE,
 					data.get(i).get(MYLOConstants.OTHER_PHONE_TYPE));
 			clickOtherSaveButton();
-			flag = (verifyToastMessage(data.get(i).get(MYLOConstants.MESSAGE), MYLOConstants.TRANSFEREE_FAMILY));
+			flag = (verifyOtherSectionToastMessage(data.get(i).get(MYLOConstants.MESSAGE)));
 		}
 		return flag;
 	}
@@ -606,8 +584,8 @@ public class MyloJourneyPage_OtherSection extends Base {
 			WebElement reqWebElement = otherPhoneEmailFieldsMap.get(fieldName).get(index);
 			CoreFunctions.explicitWaitTillElementVisibility(driver, reqWebElement, fieldName);
 			if (fieldValue.equals(""))
-				CoreFunctions.scrollToElementUsingJavaScript(driver, _transfereeAndFamilySection,
-						MYLOConstants.TRANSFEREE_FAMILY);
+				CoreFunctions.scrollToElementUsingJavaScript(driver, _transfereeAndFamilySectionHeaders.get(3),
+						MYLOConstants.OTHER);
 			String setValue = CoreFunctions.setDifferentFieldsForMylo(driver, reqWebElement, fieldName, fieldValue);
 			otherUpdatedFieldValuesMap.put(fieldName, setValue);
 		} catch (Exception e) {
@@ -835,8 +813,17 @@ public class MyloJourneyPage_OtherSection extends Base {
 					data.get(i).get(MYLOConstants.OTHER_FIRSTNAME));
 			setOtherFields(MYLOConstants.OTHER_LASTNAME, data.get(i).get(MYLOConstants.OTHER_LASTNAME));
 			clickFieldsOnOtherSection(MYLOConstants.SAVE_BUTTON);
-			flag = (verifyToastMessage(data.get(i).get(MYLOConstants.MESSAGE), MYLOConstants.TRANSFEREE_FAMILY));
+			flag = (verifyOtherSectionToastMessage(data.get(i).get(MYLOConstants.MESSAGE)));
 		}
+		return flag;
+	}
+	
+
+	public boolean verifyOtherSectionToastMessage(String msg) {
+		boolean flag = false;
+		flag = (BusinessFunctions.verifyMyloToastMessage(driver, _alertMessage, msg, MYLOConstants.TRANSFEREE_FAMILY));
+		Assert.assertTrue(flag, MessageFormat.format(MYLOConstants.EXPECTED_MESSAGE_DISPLAYED, CoreConstants.FAIL, msg,
+				_alertMessage.getText(), MYLOConstants.JOURNEY));
 		return flag;
 	}
 

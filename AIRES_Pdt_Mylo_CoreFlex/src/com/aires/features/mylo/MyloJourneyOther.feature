@@ -1,4 +1,4 @@
-Feature: Validate the functionality of Mylo Journey Dependent section
+Feature: Validate the functionality of Mylo Journey Other section
   As a Mylo user, I want to validate the functionality for "Mylo Journey - Other" section
 
 Background: Login to  Mylo application

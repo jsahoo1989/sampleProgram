@@ -174,6 +174,7 @@ public class MyloJourneyTransferee_Steps {
 			String section, String sectionType) {
 		myloJourneyPageTransfereeSection.verifySectionHeader(MYLOConstants.TRANSFEREE);
 		myloJourneyPageTransfereeSection.clickFieldsOnTransfereeSection(MYLOConstants.EDIT_BUTTON);
+		myloJourneyPageTransfereeSection.scrollToTransfereeElement(MYLOConstants.DATEOFBIRTH);
 		myloJourneyPageTransfereeSection.clickDeleteIcon(0);
 		if (section.equals(MYLOConstants.TRANSFEREE_ADD_PHONE))
 			myloJourneyPageTransfereeSection.clickFieldsOnTransfereeSection(MYLOConstants.YES_BUTTON);
@@ -195,6 +196,7 @@ public class MyloJourneyTransferee_Steps {
 				MessageFormat.format(MYLOConstants.VERIFIED_SECTION_NOT_DISPLAYED, CoreConstants.FAIL,
 						MYLOConstants.TRANSFEREE, MYLOConstants.TRANSFEREE_FAMILY));
 		myloJourneyPageTransfereeSection.clickFieldsOnTransfereeSection(MYLOConstants.EDIT_BUTTON);
+		myloJourneyPageTransfereeSection.scrollToTransfereeElement(MYLOConstants.TRANSFEREE_PREFERREDNAME);
 		myloJourneyPageTransfereeSection.clickFieldsOnTransfereeSection(button);
 		myloJourneyPageTransfereeSection
 				.clickDropdownFieldsOnTransfereeSection(MYLOConstants.TRANSFEREE_PHONE_PREFERRED, 1);

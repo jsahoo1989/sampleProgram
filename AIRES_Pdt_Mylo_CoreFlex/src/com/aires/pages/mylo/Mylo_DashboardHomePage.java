@@ -31,12 +31,6 @@ public class Mylo_DashboardHomePage extends Base {
 	@FindBy(how = How.CSS, using = "div[id='user-profile'] span +span")
 	private WebElement _userProfile;
 
-	@FindBy(how = How.CSS, using = "div[class='secondmenu']")
-	private WebElement _hamburgerMenu;
-
-	@FindBy(how = How.CSS, using = "ul[class='menu-list'] a")
-	private List<WebElement> _hamburgerMenuOptions;
-
 	@FindBy(how = How.CSS, using = "div[class='firstmenu'] span")
 	private List<WebElement> _firstMenuOptions;
 
@@ -100,6 +94,10 @@ public class Mylo_DashboardHomePage extends Base {
 	
 	@FindBy(how = How.CSS, using = "button[class*='swal2-confirm']")
 	private WebElement _okButtonPopUp;
+	
+	@FindBy(how = How.CSS, using = "app-aires-file-information")
+	private WebElement _fileInformationSection;
+	
 			
 
 	final By _selectQueryoptions = By.xpath("./button");
@@ -115,7 +113,8 @@ public class Mylo_DashboardHomePage extends Base {
 		CoreFunctions.explicitWaitTillElementVisibility(driver, _userProfile, _userProfile.getText());
 		Log.info("userName is : " + _userProfile.getText());
 		CoreFunctions.highlightObject(driver, _userProfile);
-		return userName.equals(_userProfile.getText());
+		boolean flag=userName.equals(_userProfile.getText());
+		return flag;
 	}
 
 	public void clickOptionFromMainMenu(String option) {
@@ -138,43 +137,25 @@ public class Mylo_DashboardHomePage extends Base {
 	}
 
 	public void clickExecuteButton() {
-		CoreFunctions.explicitWaitTillElementVisibility(driver, _executeButton, _executeButton.getText(), 20L);
+		CoreFunctions.explicitWaitTillElementVisibility(driver, _executeButton, _executeButton.getText(), 10);
 		CoreFunctions.highlightElementAndClick(driver, _executeButton, _executeButton.getText());
-		if(CoreFunctions.isElementExist(driver, _spinner, 30)) {
-		CoreFunctions.explicitWaitTillElementInVisibilityCustomTime(driver, _spinner, 60);
+		CoreFunctions.waitForMyloSpinnnerInvisibilityIfExist(driver, _spinner);
+		if (CoreFunctions.isElementExist(driver, _okButtonPopUp, 2)) {
+			CoreFunctions.click(driver, _okButtonPopUp, MYLOConstants.OK_BUTTON);
+			CoreFunctions.waitForMyloSpinnnerInvisibilityIfExist(driver, _spinner);
 		}
-		if (CoreFunctions.isElementExist(driver, _myloErrorPopUp, 5) &&
-				CoreFunctions.isElementExist(driver, _okButtonPopUp, 5)) {			
-			CoreFunctions.clickElement(driver, _okButtonPopUp);
-			CoreFunctions.explicitWaitTillElementInVisibilityCustomTime(driver, _spinner, 60);
-		}
-	}
-
-	public boolean clickHamburgerMenu() {
-		try {
-			CoreFunctions.explicitWaitTillElementVisibility(driver, _hamburgerMenu, _hamburgerMenu.getText());
-			CoreFunctions.click(driver, _hamburgerMenu, _hamburgerMenu.getText());
-		} catch (Exception e) {
-			return false;
-		}
-		return true;
-
-	}
-
-	public void selectOptionsFromHamburgerMenu(String optionToBeSelected) {
-		CoreFunctions.explicitWaitTillElementListVisibility(driver, _hamburgerMenuOptions);
-		CoreFunctions.selectItemInListByText(driver, _hamburgerMenuOptions, optionToBeSelected);
 	}
 	
 	public void selectOptionsFromAssignmentMenu(String optionToBeSelected) {
-		CoreFunctions.explicitWaitTillElementInVisibilityCustomTime(driver, _spinner, 120);
-		while(!(CoreFunctions.isElementByLocatorExist(driver, _journeySubSections, 5))) {
-			clickOptionFromMainMenu(MYLOConstants.JOURNEY);
-		}
+		boolean flag=false;
+		CoreFunctions.waitForMyloSpinnnerInvisibilityIfExist(driver, _spinner);
 		List<WebElement> journeySubSectionList = CoreFunctions.getElementListByLocator(driver, _journeySubSections);
 		CoreFunctions.selectItemInListByText(driver, journeySubSectionList, optionToBeSelected);
 		CoreFunctions.highlightObject(driver, _assignmentOptionHeader);
-		Assert.assertEquals(_assignmentOptionHeader.getText(), MYLOConstants.ASSIGNMENT_QUERYTYPE_HEADER, MYLOConstants.MISMATCH_HEADERTEXT);
+		String headerText=_assignmentOptionHeader.getText();
+		
+		flag=(optionToBeSelected.equals(MYLOConstants.QUERY_FILE))?headerText.equals( MYLOConstants.ASSIGNMENT_QUERYTYPE_HEADER):
+			headerText.equals( MYLOConstants.CREATE_NEW_FILE);
 	}
 	
 	
@@ -202,7 +183,7 @@ public class Mylo_DashboardHomePage extends Base {
 		CoreFunctions.selectItemInListByText(driver, _selectQueryParameterButtons, parameter);
 		CoreFunctions.highlightObject(driver, _assignmentOptionHeader);
 		Assert.assertEquals(_assignmentOptionHeader.getText(), MYLOConstants.ASSIGNMENT_PARAMETERTYPE_HEADER, MYLOConstants.MISMATCH_HEADERTEXT);
-		CoreFunctions.explicitWaitTillElementInVisibilityCustomTime(driver, _spinner, 10);
+		CoreFunctions.waitForMyloSpinnnerInvisibilityIfExist(driver, _spinner);
 	}
 
 	public boolean verifyFileParameterOptions(DataTable data) {
@@ -236,7 +217,6 @@ public class Mylo_DashboardHomePage extends Base {
 		while(_fileParameterList.size()==0) {
 			selectParameterFromQueryScreen(MYLOConstants.FILE);
 		}
-		//CoreFunctions.explicitWaitTillElementListVisibilityWithTime(driver, _fileParameterList,60);
 		WebElement getOptionElement = CoreFunctions.returnItemInListByText(driver, _fileParameterList, option);
 		if (option.contains(MYLOConstants.STATUS) || option.contains(MYLOConstants.OFFICE)
 				|| option.contains(MYLOConstants.COUNTRY) || option.contains(MYLOConstants.STATE)) {
@@ -269,7 +249,6 @@ public class Mylo_DashboardHomePage extends Base {
 
 	public void resetFileParameters() {
 		closePopUp();
-		//clickOptionFromMainMenu(MYLOConstants.JOURNEY);
 		selectOptionsFromAssignmentMenu(MYLOConstants.QUERY_FILE);
 		selectParameterFromQueryScreen(MYLOConstants.FILE);
 	}

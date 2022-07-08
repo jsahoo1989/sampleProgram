@@ -83,6 +83,9 @@ public class MyloJourneyPage_PartnerSection extends Base {
 	@FindBy(how = How.CSS, using = "app-transferee-family button[aria-controls='collapseTwo']")
 	private WebElement _transfereeAndFamilySection;
 	
+	@FindBy(how = How.CSS, using = "h2[class*='accchildhead']")
+	private List<WebElement> _transfereeAndFamilySectionHeaders;
+	
 	@FindBy(how = How.CSS, using = "div[role='alert']")
 	private WebElement _alertMessage;
 	
@@ -251,6 +254,7 @@ public class MyloJourneyPage_PartnerSection extends Base {
 	 * Click respective dropdown fields of Partner section
 	 */
 	public void clickDropdownFieldsOnPartnerSection(String elementName, int index) {
+		CoreFunctions.scrollToElementUsingJavaScript(driver, _partnerPreferredName, MYLOConstants.PARTNER_PREFERREDNAME);
 		switch (elementName) {
 		case MYLOConstants.PARTNER_ORGDEST:
 			originDestOption = returnDropDownOptionsList(_partnerPhoneOrgDestDropdown.get(index), elementName);
@@ -262,11 +266,9 @@ public class MyloJourneyPage_PartnerSection extends Base {
 			emailTypeOption = returnDropDownOptionsList(_partnerEmailTypeDropdown.get(index), elementName);
 			break;
 		case MYLOConstants.PARTNER_PHONE_PREFERRED:
-			CoreFunctions.scrollToElementUsingJavaScript(driver, _partnerPreferredName, MYLOConstants.PARTNER_PREFERREDNAME);
 			CoreFunctions.click(driver, _partnerPhonePreferredSelect.get(index), elementName);
 			break;
 		case MYLOConstants.PARTNER_EMAIL_PREFERRED:
-			CoreFunctions.scrollToElementUsingJavaScript(driver, _partnerPreferredName, MYLOConstants.PARTNER_PREFERREDNAME);
 			CoreFunctions.click(driver, _partnerEmailPreferredSelect.get(index), elementName);
 			break;
 		case MYLOConstants.RELATIONSHIP:
@@ -367,8 +369,8 @@ public class MyloJourneyPage_PartnerSection extends Base {
 			WebElement reqWebElement = partnerPhoneEmailFieldsMap.get(fieldName).get(index);
 			CoreFunctions.explicitWaitTillElementVisibility(driver, reqWebElement, fieldName);
 			if (fieldValue.equals(""))
-				CoreFunctions.scrollToElementUsingJavaScript(driver, _transfereeAndFamilySection,
-						MYLOConstants.TRANSFEREE_FAMILY);
+				CoreFunctions.scrollToElementUsingJavaScript(driver, _transfereeAndFamilySectionHeaders.get(1),
+						MYLOConstants.PARTNER);
 			String setValue = CoreFunctions.setDifferentFieldsForMylo(driver, reqWebElement, fieldName, fieldValue);
 			partnerUpdatedFieldValuesMap.put(fieldName, setValue);
 		} catch (Exception e) {

@@ -19,6 +19,7 @@ package com.aires.managers;
 
 import org.openqa.selenium.WebDriver;
 
+import com.aires.pages.mylo.MyloJourneyPage_CreateNewFileSection;
 import com.aires.pages.mylo.MyloJourneyPage_DependentSection;
 import com.aires.pages.mylo.MyloJourneyPage_OtherSection;
 import com.aires.pages.mylo.MyloJourneyPage_PartnerSection;
@@ -41,6 +42,7 @@ public class PageObjectManager_Mylo {
 	private MyloJourneyPage_PartnerSection _journeyPartnerSection;
 	private MyloJourneyPage_DependentSection _journeyDependentSection;
 	private MyloJourneyPage_OtherSection _journeyOtherSection;
+	public MyloJourneyPage_CreateNewFileSection _journeyCreateNewFileSection;
 	private Mylo_RestApiRequest _restApiRequest;
 	private Mylo_JourneyPage _journeyPage;
 
@@ -88,5 +90,9 @@ public class PageObjectManager_Mylo {
 	 public MyloJourneyPage_OtherSection getJourneyPageOtherSection() {
 			return (_journeyOtherSection == null) ? _journeyOtherSection = new MyloJourneyPage_OtherSection(_driver)
 					: _journeyOtherSection;
+		}
+	 public MyloJourneyPage_CreateNewFileSection getJourneyPageCreateNewFileSection() {
+			return (_journeyCreateNewFileSection == null) ? _journeyCreateNewFileSection = new MyloJourneyPage_CreateNewFileSection(_driver)
+					: _journeyCreateNewFileSection;
 		}
 }

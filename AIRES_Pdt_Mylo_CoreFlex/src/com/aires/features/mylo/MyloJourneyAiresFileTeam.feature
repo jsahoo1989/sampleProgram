@@ -29,7 +29,7 @@ When he clicks on "Yes" button in AiresFileTeam
 Then new row should be added for "EMAC" with updated team member, End Date to current date
 And all the values are readonly in the AiresFileTeam grid
 
-@IRIS-687 @Mylo:217526 @Mylo-Regression
+@IRIS-687 @Mylo:217526
 Scenario Outline: Mylo-Validate Sales Option Availability With Respect to Resource Id of MyloUsers
 Given he has logged into the Mylo application with mentioned userType "<UserType>" 
 And he selects "File" section after clicking on "Journey" option in the Mylo Menu on the sidebar

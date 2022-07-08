@@ -195,6 +195,7 @@ public class MyloJourneyPartner_Steps {
 				MessageFormat.format(MYLOConstants.VERIFIED_SECTION_NOT_DISPLAYED, CoreConstants.FAIL,
 						MYLOConstants.PARTNER, MYLOConstants.TRANSFEREE_FAMILY));
 		myloJourneyPagePartnerSection.clickFieldsOnPartnerSection(MYLOConstants.EDIT_BUTTON);
+		myloJourneyPagePartnerSection.scrollToPartnerElement(MYLOConstants.CITIZENSHIP);
 		myloJourneyPageTransfereeSection.clickDeleteIcon(0);
 		if (section.equals(MYLOConstants.PARTNER_ADD_PHONE))
 			myloJourneyPagePartnerSection.clickFieldsOnPartnerSection(MYLOConstants.YES_BUTTON);

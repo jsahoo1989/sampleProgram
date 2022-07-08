@@ -4,7 +4,7 @@ Feature: Validate the functionality of Mylo Journey Identification & Documentati
 Background: Login to the  Mylo application
     Given he has logged into the 'Mylo' application
    
-@IRIS-1155 @217069 @217066 @217054 @IRIS-1225 @Mylo:217510 @Mylo-Regression
+@IRIS-1155 @217069 @217066 @217054 @IRIS-1225 @Mylo:217510
 Scenario:  Mylo-Validate enability of Edit, Add, Save icons of Identification & Documentation section for different UserType on Mylo Journey page
 Given he has logged into the Mylo application with mentioned userType "Without Resource300140"
 And "Edit" "Add" "Save" icons of Identification Records section is disabled for "activeAssignment" fileID

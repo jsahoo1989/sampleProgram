@@ -51,6 +51,7 @@ import org.apache.log4j.Logger;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.interactions.Actions;
+import org.openqa.selenium.By;
 import org.openqa.selenium.NoSuchElementException;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
@@ -61,6 +62,7 @@ import org.openqa.selenium.support.ui.Select;
 import org.testng.Assert;
 import com.aires.businessrules.constants.COREFLEXConstants;
 import com.aires.businessrules.constants.CoreConstants;
+import com.aires.businessrules.constants.MYLOConstants;
 import com.aires.businessrules.constants.MobilityXConstants;
 import com.aires.businessrules.constants.PDTConstants;
 import com.aires.pages.pdt.PDT_AddNewPolicyPage;
@@ -1024,5 +1026,45 @@ public class BusinessFunctions {
 		pgToLoadformat.setMaximumFractionDigits(3);
 		Reporter.addStepLog("<b>Time taken by "+pageName+" page to Load is :"
 				+ pgToLoadformat.format((timeAfterAction - timeBeforeAction) / 1000) + " Seconds </b>");
+	}
+	
+	/**
+	 * @param msg
+	 * @param sectionType
+	 * @return
+	 * Verify Toast Messages appearing for Different Sections
+	 */
+	public static boolean verifyMyloToastMessage(WebDriver driver,WebElement element,String msg, String sectionType) {
+		boolean flag = false;
+		try {
+			CoreFunctions.isElementVisible(element);
+			CoreFunctions.highlightObject(driver, element);
+			flag = (element.getText().equals(msg));
+		} catch (Exception e) {
+			Reporter.addStepLog(MessageFormat.format(CoreConstants.FAIL_TO_VERIFY_ELEMENT_ON_SECTION, CoreConstants.FAIL,
+					MYLOConstants.ALERT_MESSAGE, sectionType));
+		}
+		if (flag)
+			Reporter.addStepLog(MessageFormat.format(MYLOConstants.VERIFIED_ALERT_MESSAGE_DISPLAYED, CoreConstants.PASS,
+					msg, MYLOConstants.JOURNEY));
+		else
+			Reporter.addStepLog(MessageFormat.format(MYLOConstants.EXPECTED_MESSAGE_DISPLAYED, CoreConstants.FAIL, msg,
+					element.getText(), MYLOConstants.JOURNEY));
+		return flag;
+	}
+	
+	public static String setDifferentDropDownFieldsForMylo(WebDriver driver,By locator,String fieldValue) {
+		String updatedValue=null;
+		List<WebElement> optionList = CoreFunctions.getElementListByLocator(driver, locator);
+			if (fieldValue.equals(MYLOConstants.RANDOM)) {
+				optionList.remove(0);
+				updatedValue = CoreFunctions.getRandomElementValueFromList(driver, optionList);
+				selectItemFromListUsingText(driver, optionList,
+						updatedValue);
+			} else {
+				updatedValue=fieldValue;
+				selectItemFromListUsingText(driver, optionList, fieldValue);
+			} 
+			return updatedValue;
 	}
 }

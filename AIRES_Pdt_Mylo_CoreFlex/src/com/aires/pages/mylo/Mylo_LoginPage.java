@@ -61,6 +61,8 @@ public class Mylo_LoginPage extends Base {
 		Log.info(FileReaderManager.getInstance().getConfigReader().getApplicationUrl(System.getProperty("application")));
 		CoreFunctions.waitForBrowserToLoad(driver);
 		VerifyMYLOLogo();
+		WebElement loginImageElement = CoreFunctions.explicitWaitTillVisiblityAndReturnElement(driver, _loginImg);
+		CoreFunctions.hoverAndClick(driver, loginImageElement,MYLOConstants.LOGIN_IMAGE);
 		CoreFunctions.switchToNewTab(driver);
 	}
 
@@ -73,19 +75,15 @@ public class Mylo_LoginPage extends Base {
 	}
 
 	public void clickSignIn() {
-		CoreFunctions.explicitWaitTillElementBecomesClickable(driver, _submit, _submit.getAttribute("value"));
 		CoreFunctions.click(driver, _submit, _submit.getAttribute("value"));
-		if (CoreFunctions.isElementExist(driver, _staySignedInYes, 5)) {
-			CoreFunctions.explicitWaitTillElementVisibility(driver, _staySignedInYes,
-					_staySignedInYes.getAttribute("value"), 10);
-			CoreFunctions.click(driver, _staySignedInYes, _staySignedInYes.getAttribute("value"));
-		}
+		CoreFunctions.clickMyloElementIfExist(driver, _staySignedInYes, MYLOConstants.YES_BUTTON, 8);
 		CoreFunctions.switchToParentWindow(driver);
-		CoreFunctions.explicitWaitTillElementInVisibilityCustomTime(driver, _spinner, 120);
+		CoreFunctions.waitForMyloSpinnnerInvisibilityIfExist(driver, _spinner);
 		while(!(CoreFunctions.isElementExist(driver, _userProfile, 6))) {
-			CoreFunctions.hoverAndClick(driver, CoreFunctions.getElementByLocator(driver, _loginImg),MYLOConstants.LOGIN_IMAGE);
+			WebElement loginImageElement = CoreFunctions.explicitWaitTillVisiblityAndReturnElement(driver, _loginImg);
+			CoreFunctions.hoverAndClick(driver, loginImageElement,MYLOConstants.LOGIN_IMAGE);
 		}	
-		CoreFunctions.explicitWaitTillElementInVisibilityCustomTime(driver, _spinner, 10);
+		CoreFunctions.waitForMyloSpinnnerInvisibilityIfExist(driver, _spinner);
 		CoreFunctions.highlightObject(driver, _userProfile);
 	}
 
@@ -94,15 +92,13 @@ public class Mylo_LoginPage extends Base {
 				MYLOConstants.USER_EMAIL,60);
 		CoreFunctions.clearAndSetText(driver, _txtUserEmail, _txtUserEmail.getAttribute("placeholder"), userName);
 		CoreFunctions.clickUsingJS(driver, _submit, _submit.getAttribute("value"));
-		CoreFunctions.explicitWaitTillElementInVisibilityCustomTime(driver, _spinner, 10);
-		WebElement _pswd = CoreFunctions.getElementByLocator(driver, _password);
-		CoreFunctions.clearAndSetText(driver, _pswd, _pswd.getAttribute("type"), password);
-
+		CoreFunctions.isElementByLocatorExist(driver, _password, 60);
+		WebElement pswdElement =CoreFunctions.getElementByLocator(driver, _password);
+		CoreFunctions.clearAndSetText(driver, pswdElement, pswdElement.getAttribute("type"), password);
 	}
 	
 	public void logout() {
 		CoreFunctions.explicitWaitTillElementVisibility(driver, _userProfileImg, MYLOConstants.USER_PROFILE_IMAGE,15);
-		//CoreFunctions.click(driver, _userProfileImg, MYLOConstants.USER_PROFILE_IMAGE);
 		CoreFunctions.clickUsingJS(driver, _userProfileImg, MYLOConstants.USER_PROFILE_IMAGE);
 		CoreFunctions.explicitWaitTillElementVisibility(driver, _logoutUserImg, _logoutUserImg.getText());
 		CoreFunctions.click(driver, _logoutUserImg, MYLOConstants.LOGOUT_IMAGE);

@@ -318,6 +318,8 @@ public class CoreFunctions {
 			Assert.fail(MessageFormat.format(CoreConstants.FAILD_CLCK_ELE, name));
 		}
 	}
+	
+	
 
 	public static void setElementText(WebDriver driver, WebElement Element, String text) {
 		Log.info("Setting Element Text");
@@ -1884,7 +1886,7 @@ public class CoreFunctions {
 					? generateRandomCharOfLength(4, MYLOConstants.SPECIAL_CHARACTERS_STRING, 2)
 					: (fieldValue.equals(""))?setBlankField(driver,element,fieldName):fieldValue;
 		}
-		clearAndSetText(driver, element, updatedValue);
+		clearAndSetText(driver, element,fieldName, updatedValue);
 		return updatedValue;
 	}
 	
@@ -1913,5 +1915,22 @@ public class CoreFunctions {
 		DecimalFormat format = new DecimalFormat();
 		format.setMaximumFractionDigits(2);
 		return format.format((tIME_BEFORE_ACTION - tIME_AFTER_ACTION) / 1000);
+	}
+	
+	public static void waitForMyloSpinnnerInvisibilityIfExist(WebDriver driver,WebElement element) {
+		if(CoreFunctions.isElementExist(driver, element, 8)) {
+			CoreFunctions.explicitWaitTillElementInVisibilityCustomTime(driver, element, 120);
+			}
+	}
+
+	public static void clickMyloElementIfExist(WebDriver driver, WebElement element, String name, long time) {
+		if (isElementExist(driver, element, time)&& element.isDisplayed() ) {
+			CoreFunctions.click(driver, element, name);
+		}
+	}
+	
+	public static String getElementAttributeValue(WebDriver driver, WebElement element, String attributeName) {
+		highlightObject(driver, element);
+		return element.getAttribute(attributeName);
 	}
 }

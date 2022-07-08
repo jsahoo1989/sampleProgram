@@ -341,6 +341,7 @@ public class MyloJourneyPage_TransfereeSection extends Base {
 	 * Click respective dropdown fields of Transferee section
 	 */
 	public void clickDropdownFieldsOnTransfereeSection(String elementName, int index) {
+		CoreFunctions.scrollToElementUsingJavaScript(driver, _transfereeLastName, MYLOConstants.TRANSFEREE_LASTNAME);
 		switch (elementName) {
 		case MYLOConstants.MARITAL_STATUS:
 			maritalStatusOption = returnDropDownOptionsList(_transfereeMaritalStatusDropdown, elementName);
@@ -361,11 +362,9 @@ public class MyloJourneyPage_TransfereeSection extends Base {
 			emailTypeOption = returnDropDownOptionsList(_transfereeEmailTypeDropdown.get(index), elementName);
 			break;
 		case MYLOConstants.TRANSFEREE_PHONE_PREFERRED:
-			CoreFunctions.scrollToElementUsingJavaScript(driver, _transfereeTitle, MYLOConstants.TRANSFEREE_TITLE);
 			CoreFunctions.click(driver, _transfereePhonePreferredSelect.get(index), elementName);
 			break;
 		case MYLOConstants.TRANSFEREE_EMAIL_PREFERRED:
-			CoreFunctions.scrollToElementUsingJavaScript(driver, _transfereeTitle, MYLOConstants.TRANSFEREE_TITLE);
 			CoreFunctions.click(driver, _transfereeEmailPreferredSelect.get(index), elementName);
 			break;
 		default:
@@ -482,8 +481,8 @@ public class MyloJourneyPage_TransfereeSection extends Base {
 			WebElement reqWebElement = transfereePhoneEmailFieldsMap.get(fieldName).get(index);
 			CoreFunctions.explicitWaitTillElementVisibility(driver, reqWebElement, fieldName);
 			if (fieldValue.equals(""))
-				CoreFunctions.scrollToElementUsingJavaScript(driver, _transfereeAndFamilySection,
-						MYLOConstants.TRANSFEREE_FAMILY);
+				CoreFunctions.scrollToElementUsingJavaScript(driver, _transfereeDateOfBirth,
+						MYLOConstants.DATEOFBIRTH);
 			String setValue = CoreFunctions.setDifferentFieldsForMylo(driver, reqWebElement, fieldName, fieldValue);
 			transfereeUpdatedFieldValuesMap.put(fieldName, setValue);
 		} catch (Exception e) {
@@ -504,6 +503,7 @@ public class MyloJourneyPage_TransfereeSection extends Base {
 		for (int i = 0; i < data.size(); i++) {
 			setTransfereePhoneEmailFields(data.get(i).get(MYLOConstants.FIELD_NAME),
 					data.get(i).get(MYLOConstants.CHARACTER_LENGTH), index);
+			scrollToTransfereeElement(MYLOConstants.DATEOFBIRTH);
 			clickDropdownFieldsOnTransfereeSection(MYLOConstants.TRANSFEREE_ORGDEST, index);
 			setDifferentDropDownFields(MYLOConstants.TRANSFEREE_ORGDEST,
 					data.get(i).get(MYLOConstants.TRANSFEREE_ORGDEST));
@@ -523,6 +523,7 @@ public class MyloJourneyPage_TransfereeSection extends Base {
 		for (int i = 0; i < data.size(); i++) {
 			setTransfereePhoneEmailFields(data.get(i).get(MYLOConstants.FIELD_NAME),
 					data.get(i).get(MYLOConstants.FIELD_VALUE), index);
+			scrollToTransfereeElement(MYLOConstants.DATEOFBIRTH);
 			clickDropdownFieldsOnTransfereeSection(MYLOConstants.TRANSFEREE_EMAIL_TYPE, index);
 			setDifferentDropDownFields(MYLOConstants.TRANSFEREE_EMAIL_TYPE,
 					data.get(i).get(MYLOConstants.TRANSFEREE_EMAIL_TYPE));
@@ -669,6 +670,7 @@ public class MyloJourneyPage_TransfereeSection extends Base {
 		for (int i = 0; i < data.size(); i++) {
 			setTransfereePhoneEmailFields(MYLOConstants.TRANSFEREE_PHONE_NUMBER,
 					data.get(i).get(MYLOConstants.TRANSFEREE_PHONE_NUMBER), 0);
+			scrollToTransfereeElement(MYLOConstants.DATEOFBIRTH);
 			clickDropdownFieldsOnTransfereeSection(MYLOConstants.TRANSFEREE_ORGDEST, 0);
 			setDifferentDropDownFields(MYLOConstants.TRANSFEREE_ORGDEST,
 					data.get(i).get(MYLOConstants.TRANSFEREE_ORGDEST));
@@ -692,6 +694,7 @@ public class MyloJourneyPage_TransfereeSection extends Base {
 		for (int i = 0; i < data.size(); i++) {
 			setTransfereePhoneEmailFields(MYLOConstants.TRANSFEREE_EMAIL_ADDRESS,
 					data.get(i).get(MYLOConstants.TRANSFEREE_EMAIL_ADDRESS), 0);
+			scrollToTransfereeElement(MYLOConstants.DATEOFBIRTH);
 			clickDropdownFieldsOnTransfereeSection(MYLOConstants.TRANSFEREE_EMAIL_TYPE, 0);
 			setDifferentDropDownFields(MYLOConstants.TRANSFEREE_EMAIL_TYPE,
 					data.get(i).get(MYLOConstants.TRANSFEREE_EMAIL_TYPE));

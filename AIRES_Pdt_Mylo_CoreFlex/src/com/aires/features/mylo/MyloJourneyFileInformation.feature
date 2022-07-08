@@ -4,7 +4,7 @@ Feature: Validate the functionality of Mylo Journey File Information section
 Background: Login to  Mylo application
     Given he has logged into the 'Mylo' application
    
-@IRIS-731 @Mylo:217527 @Mylo-Regression
+@IRIS-731 @Mylo:217527 
 Scenario Outline:  Mylo-Validate Edit Option availability and additional fields displayed for Mylo Journey File Information section with different UserTypes
 Given he has logged into the Mylo application with mentioned userType "<UserType>" 
 And he is on Mylo Journey Summary page for file ID with "activeAssignment" 

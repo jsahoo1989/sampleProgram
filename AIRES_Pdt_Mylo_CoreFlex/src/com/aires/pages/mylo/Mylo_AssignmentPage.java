@@ -167,6 +167,12 @@ public class Mylo_AssignmentPage extends Base {
 	@FindBy(how = How.XPATH, using = "//a[text()='Add Mailing Address']/preceding-sibling::i")
 	private WebElement _addMailAddressBtn;
 	
+	@FindBy(how = How.XPATH, using = "//button[text()=' Other Addresses ']")
+	private WebElement _otherAdressesHeader;
+	
+	@FindBy(how = How.XPATH, using = "//button[text()=' Temporary: ']")
+	private WebElement _temporaryAdressesHeader;
+	
 	@FindBy(how = How.XPATH, using = "//a[text()='Add Temporary Address']/preceding-sibling::i")
 	private WebElement _addTempAddressBtn;
 	
@@ -495,9 +501,10 @@ public class Mylo_AssignmentPage extends Base {
 		CoreFunctions.explicitWaitTillElementBecomesClickable(driver, _roleSelectButtton,
 				_roleSelectButtton.getAttribute(MYLOConstants.NAME));
 		CoreFunctions.click(driver, _roleSelectButtton, _roleSelectButtton.getAttribute(MYLOConstants.NAME));
+		if(CoreFunctions.isElementByLocatorExist(driver, _dropdownOptions, 10)) {
 		List<WebElement> roleList = CoreFunctions.getElementListByLocator(driver, _dropdownOptions);
-		CoreFunctions.explicitWaitTillElementListVisibility(driver, roleList);
 		CoreFunctions.selectItemInListByText(driver, roleList, roleName);
+		}
 	}
 
 	/**
@@ -621,6 +628,7 @@ public class Mylo_AssignmentPage extends Base {
 	 */
 	public boolean verifyUpdatedRowAiresFileTeamSection(String roleName) {
 		CoreFunctions.waitForBrowserToLoad(driver);
+		CoreFunctions.waitForMyloSpinnnerInvisibilityIfExist(driver, _spinner);
 		CoreFunctions.explicitWaitTillElementListVisibility(driver, _airesFileTeamMemberGrid);
 		List<String> allRoleNames = _airesFileTeamRoleName.stream().map(x -> x.getAttribute(MYLOConstants.VALUE))
 				.collect(Collectors.toList());
@@ -633,7 +641,6 @@ public class Mylo_AssignmentPage extends Base {
 		String currentDate = DateTimeFormatter.ofPattern("MM/dd/yyyy").format(LocalDate.now());		
 		String expectedDateFormat= CoreFunctions.getStringDateInFormat(currentDate, "MM/dd/yyyy",
 				"dd MMM yyyy");
-		
 		if (allTeamMembers.get(allRoleNames.indexOf(roleName)).trim().equals(updatedTeamMember)
 				&& allStartDates.get(allRoleNames.indexOf(roleName)).trim().equals(expectedDateFormat)
 				&& allEndDates.get(allRoleNames.indexOf(roleName)).trim().equals(MYLOConstants.ACTIVE)
@@ -1107,6 +1114,8 @@ public class Mylo_AssignmentPage extends Base {
 	public void clickElementOnOtherAddressesSection(String elementName) {
 		switch (elementName) {
 		case MYLOConstants.MAILING_ADDRESS:
+			CoreFunctions.scrollToElementUsingJavaScript(driver, _otherAdressesHeader, MYLOConstants.OTHER_ADDRESS);
+			CoreFunctions.highlightObject(driver, _otherAdressesHeader);
 			CoreFunctions.explicitWaitTillElementVisibility(driver, _addMailAddressBtn, MYLOConstants.MAILING_ADDRESS);
 			CoreFunctions.explicitWaitTillElementBecomesClickable(driver, _addMailAddressBtn,
 					MYLOConstants.MAILING_ADDRESS);
@@ -1115,6 +1124,8 @@ public class Mylo_AssignmentPage extends Base {
 			Assert.assertEquals(MYLOConstants.ADD_MAILING_ADDRESS, _modalTitle.getText());
 			break;
 		case MYLOConstants.TEMPORARY_ADDRESS:
+			CoreFunctions.scrollToElementUsingJavaScript(driver, _otherAdressesHeader, MYLOConstants.OTHER_ADDRESS);
+			CoreFunctions.highlightObject(driver, _otherAdressesHeader);
 			CoreFunctions.explicitWaitTillElementVisibility(driver, _addTempAddressBtn,
 					MYLOConstants.TEMPORARY_ADDRESS);
 			CoreFunctions.explicitWaitTillElementBecomesClickable(driver, _addTempAddressBtn,
@@ -1182,6 +1193,7 @@ public class Mylo_AssignmentPage extends Base {
 			countryList = CoreFunctions.getElementListByLocator(driver, _dropdownOptions);
 			break;
 		case MYLOConstants.TEMP_ADDRESS_STATE:
+			CoreFunctions.scrollToElementUsingJavaScript(driver, _temporaryAdressesHeader, MYLOConstants.TEMPORARY_ADDRESS);
 			CoreFunctions.explicitWaitTillElementVisibility(driver, _tempAddressStateDropdown,
 					MYLOConstants.TEMP_ADDRESS_STATE);
 			CoreFunctions.click(driver, _tempAddressStateDropdown, MYLOConstants.TEMP_ADDRESS_STATE);
@@ -2545,7 +2557,7 @@ System.out.println(details[2].trim() + "...." + CoreFunctions.getElementText(dri
 	 */
 	public boolean verifyMultipleRowsFieldValuesIdentDocSection() {
 		boolean flag = true;
-		CoreFunctions.explicitWaitTillElementInVisibilityCustomTime(driver, _spinner, 180);
+		CoreFunctions.explicitWaitTillElementInVisibilityCustomTime(driver, _spinner, 240);
 		for(int i=0;i<_identDocTypeDropdowns.size();i++) {
 		String updatedFromDate = CoreFunctions.getStringDateInFormat(
 				getFieldValuesIdentificationAndDocumentationSection(MYLOConstants.FROMDATE, i), "dd MMM yyyy",

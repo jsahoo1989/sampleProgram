@@ -119,7 +119,7 @@ public class MYLOConstants {
 	public static final String VERIFIED_POPUP_MESSAGE_NOT_DISPLAYED = "{0}Verified Pop up message is not displayed as ''{1}''  on  ''{2}'' section";
 	public static final String VERIFIED_FIELD_HIGHLIGHTED = "{0}Verified ''{1}'' field is highlighted with Red background on  ''{2}'' section";
 	public static final String VERIFIED_FIELD_NOT_HIGHLIGHTED = "{0}Verified ''{1}'' field is not highlighted with Red background on  ''{2}'' section";
-	public static final String EXPECTED_MESSAGE_DISPLAYED = "{0}Expected message to be displayed as:  ''{1}''  but found:  ''{2}'' on ''{3}'' section";
+	public static final String EXPECTED_MESSAGE_DISPLAYED = "{0}Expected message to display:  ''{1}''  but found:  ''{2}'' on ''{3}'' section";
 	public static final String VERIFIED_VALUE_SUCCESSFULLY_SAVED = "{0}Verified Value  ''{1}'' is successfully saved for ''{2}'' field on  ''{3}'' section";
 	public static final String FAILED_TO_VERIFY_UPDATED_VALUE = "{0}Failed to Verify Update Value for ''{1}'' field on  ''{2}'' section";
 	public static final String VERIFY_UPDATED_FIELD_VALUE = "{0}Verified Value updated for ''{1}'' field is ''{2}'' on ''{3}'' section";
@@ -134,6 +134,9 @@ public class MYLOConstants {
 	public static final String VERIFIED_DATA_AVAILABLE = "{0}Verified that data available under ''{1}'' on ''{2}'' section";
 	public static final String VERIFIED_DATA_NOT_AVAILABLE = "{0}Verified that data not available under ''{1}'' on ''{2}'' section";
 	public static final String VALUE_UPDATED_ON_SECTION = "{0} Value: ''{1}'' is updated for :- ''{2}'' in ''{3}'' section on ''{4}'' page";
+	public static final String VALUE_NOT_UPDATED_ON_SECTION = "{0} Value: ''{1}'' is not updated for :- ''{2}'' in ''{3}'' section on ''{4}'' page";
+	public static final String VERIFIED_ALL_VALUES_UPDATED_ON_SECTION = "{0} Verified all values for ''{1}'' fields is updated in ''{2}'' section on ''{3}'' page";
+	public static final String VERIFIED_NO_VALUES_UPDATED_ON_SECTION = "{0} Verified that values for ''{1}'' fields is not updated in ''{2}'' section on ''{3}'' page";
 	public static final String FIELD_NAME_VALUE_DISPLAYED = "{0} FieldName- ''{1}'' value is displayed as :- ''{2}'' in ''{3}'' section on ''{4}'' page";
 	public static final String FIELD_VALUE_CSSPROPERTY_DISPLAYED = "{0} FieldName- ''{1}'' property:-''{2}'' code is displayed as :- ''{3}'' in ''{4}'' section on ''{5}'' page";
 	public static final String FILE_ID_DATA_UPDATION="611072";
@@ -431,6 +434,22 @@ public class MYLOConstants {
 	public static final String DID_NOT_MATCH_EXPECTED = "didnot match with expected values";
 	public static final String USER_EMAIL = "User Email";
 	public static final String TRANSFEREE_FAMILY_HEADER = "Transferee & Family";
+	public static final String TAX_TREATMENT = "Tax Treatment";
+	public static final String CREATE_NEW_FILE = "Create New File";
+	public static final String CLIENT_NAME_VALUE = "Aires QA Automation Client";
+	public static final String OFFICE_VALUE = "CRO";
+	public static final String PURPLE_BUBBLE_SECTION = "Purple bubble";
+	public static final String TOP_RIGHT_CORNER_SECTION ="Top right corner";
+	public static final String FILE_INFORMATION_SECTION = "File Information";
+	public static final String PRIMARY_CONTACT_SECTION = "Primary Contact";
+	public static final String BENEFITS_AT_A_GLANCE = "Benefits At A Glance";
+	public static final String SECTION_NAME = "Section Name";
+	public static final String TRANSFEREE_NAME = "Transferee Name";
+	public static final String ASTERISK = "*";
+	public static final String FILE_GROSS_PROFIT = "File Fross profit";
+	public static final String PPC = "PPC";
+	public static final Object AUTH_TRACK = "Authorization/Tracking Numbers";
+	public static final String REPAT = "Repat";
 	
 	public static long TIME_BEFORE_ACTION;
 	public static long TIME_AFTER_ACTION;

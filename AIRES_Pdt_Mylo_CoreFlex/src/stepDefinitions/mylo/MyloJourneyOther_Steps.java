@@ -144,8 +144,7 @@ public class MyloJourneyOther_Steps {
 	public void he_clicks_on_button_present_under_Other_section(String arg1) {
 		myloJourneyPageOtherSection.clickOtherSaveButton();
 		Assert.assertTrue(
-				myloJourneyPageOtherSection.verifyToastMessage(MYLOConstants.SAVE_SUCCESS_MESSAGE,
-						MYLOConstants.TRANSFEREE_FAMILY),
+				myloJourneyPageOtherSection.verifyOtherSectionToastMessage(MYLOConstants.SAVE_SUCCESS_MESSAGE),
 				MessageFormat.format(MYLOConstants.FAILED_TO_VERIFY_ALERT_MESSAGE_SECTION, CoreConstants.FAIL,
 						MYLOConstants.SUCCESS_MESSAGE, MYLOConstants.OTHER));
 	}
@@ -190,6 +189,7 @@ public class MyloJourneyOther_Steps {
 				MessageFormat.format(MYLOConstants.VERIFIED_SECTION_NOT_DISPLAYED, CoreConstants.FAIL,
 						MYLOConstants.OTHER, MYLOConstants.TRANSFEREE_FAMILY));
 		myloJourneyPageOtherSection.clickFieldsOnOtherSection(MYLOConstants.EDIT_BUTTON);
+		myloJourneyPageOtherSection.scrollToOtherElement(MYLOConstants.CITIZENSHIP);
 		myloJourneyPageTransfereeSection.clickDeleteIcon(0);
 		if (section.equals(MYLOConstants.OTHER_ADD_PHONE))
 			myloJourneyPageOtherSection.clickFieldsOnOtherSection(MYLOConstants.YES_BUTTON);
@@ -218,6 +218,7 @@ public class MyloJourneyOther_Steps {
 				MessageFormat.format(MYLOConstants.VERIFIED_SECTION_NOT_DISPLAYED, CoreConstants.FAIL,
 						MYLOConstants.OTHER, MYLOConstants.TRANSFEREE_FAMILY));
 		myloJourneyPageOtherSection.clickFieldsOnOtherSection(MYLOConstants.EDIT_BUTTON);
+		myloJourneyPageOtherSection.scrollToOtherElement(MYLOConstants.OTHER_PREFERREDNAME);
 		myloJourneyPageOtherSection.clickFieldsOnOtherSection(button);
 		myloJourneyPageOtherSection.clickDropdownFieldsOnOtherSection(MYLOConstants.OTHER_PHONE_PREFERRED, 1);
 	}

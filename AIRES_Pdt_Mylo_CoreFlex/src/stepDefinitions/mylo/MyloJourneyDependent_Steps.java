@@ -191,6 +191,7 @@ public class MyloJourneyDependent_Steps {
 				MessageFormat.format(MYLOConstants.VERIFIED_SECTION_NOT_DISPLAYED, CoreConstants.FAIL,
 						MYLOConstants.DEPENDENTS, MYLOConstants.TRANSFEREE_FAMILY));
 		myloJourneyPageDependentSection.clickFieldsOnDependentSection(MYLOConstants.EDIT_BUTTON);
+		myloJourneyPageDependentSection.scrollToDependentElement(MYLOConstants.CITIZENSHIP);
 		myloJourneyPageTransfereeSection.clickDeleteIcon(0);
 		if (section.equals(MYLOConstants.DEPENDENT_ADD_PHONE))
 			myloJourneyPageDependentSection.clickFieldsOnDependentSection(MYLOConstants.YES_BUTTON);
@@ -219,6 +220,7 @@ public class MyloJourneyDependent_Steps {
 				MessageFormat.format(MYLOConstants.VERIFIED_SECTION_NOT_DISPLAYED, CoreConstants.FAIL,
 						MYLOConstants.DEPENDENTS, MYLOConstants.TRANSFEREE_FAMILY));
 		myloJourneyPageDependentSection.clickFieldsOnDependentSection(MYLOConstants.EDIT_BUTTON);
+		myloJourneyPageDependentSection.scrollToDependentElement(MYLOConstants.DEPENDENT_PREFERREDNAME);
 		myloJourneyPageDependentSection.clickFieldsOnDependentSection(button);
 		myloJourneyPageDependentSection.clickDropdownFieldsOnDependentSection(MYLOConstants.DEPENDENT_PHONE_PREFERRED,
 				1);

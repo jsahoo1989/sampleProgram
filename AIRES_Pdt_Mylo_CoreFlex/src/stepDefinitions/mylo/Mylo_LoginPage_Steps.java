@@ -7,6 +7,8 @@ import com.aires.businessrules.constants.MYLOConstants;
 import com.aires.cucumber.TestContext;
 import com.aires.pages.mylo.Mylo_DashboardHomePage;
 import com.aires.pages.mylo.Mylo_LoginPage;
+
+import cucumber.api.DataTable;
 import cucumber.api.java.en.Given;
 import cucumber.api.java.en.Then;
 import cucumber.api.java.en.When;
@@ -43,5 +45,15 @@ public class Mylo_LoginPage_Steps {
 		Assert.assertTrue(myloDashboardPage.verifyUserName(userName),
 				MessageFormat.format(MYLOConstants.VERIFIED_SECTION_NOT_DISPLAYED, CoreConstants.FAIL, userName,
 						MYLOConstants.MYLO_DASHBOARD_HOME_PAGE));
+	}
+	
+	@Then("^messages corresponding to different usernames mentioned below should be displayed on Mylo login page$")
+	public void messages_corresponding_to_different_usernames_mentioned_below_should_be_displayed_on_Mylo_login_page(DataTable table){
+		loginPage.verifyUserNamePasswordErrorMessage(table, MYLOConstants.USER_EMAIL);
+	}
+	
+	@Then("^messages corresponding to different combination of username password mentioned below should be displayed on Mylo login page$")
+	public void messages_corresponding_to_different_combination_of_username_password_mentioned_below_should_be_displayed_on_Mylo_login_page(DataTable table){
+		loginPage.verifyUserNamePasswordErrorMessage(table, MYLOConstants.PASSWORD);
 	}
 }

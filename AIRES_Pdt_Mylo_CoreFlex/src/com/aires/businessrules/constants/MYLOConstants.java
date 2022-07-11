@@ -114,6 +114,7 @@ public class MYLOConstants {
 	public static final String VERIFIED_STATE_FREE_TEXT_FIELD = "{0}Verified that State field is appearing as Free Text Field on  ''{1}'' section";
 	public static final String VERIFIED_STATE_NOT_A_FREE_TEXT_FIELD = "{0}Verified that State field is not appearing as Free Text Field on  ''{1}'' section";
 	public static final String VERIFIED_ALERT_MESSAGE_DISPLAYED = "{0}Verified Alert message is displayed as ''{1}''  on  ''{2}'' page";
+	public static final String VERIFIED_ERROR_MESSAGE_DISPLAYED = "{0}Verified Error message is displayed as ''{1}''  on  ''{2}'' page";
 	public static final String VERIFIED_ALERT_MESSAGE_NOT_DISPLAYED = "{0}Verified Alert message is not displayed as ''{1}''  on  ''{2}'' page";
 	public static final String VERIFIED_POPUP_MESSAGE_DISPLAYED = "{0}Verified Pop up message is displayed as ''{1}''  on  ''{2}'' section";
 	public static final String VERIFIED_POPUP_MESSAGE_NOT_DISPLAYED = "{0}Verified Pop up message is not displayed as ''{1}''  on  ''{2}'' section";
@@ -448,8 +449,10 @@ public class MYLOConstants {
 	public static final String ASTERISK = "*";
 	public static final String FILE_GROSS_PROFIT = "File Fross profit";
 	public static final String PPC = "PPC";
-	public static final Object AUTH_TRACK = "Authorization/Tracking Numbers";
+	public static final String AUTH_TRACK = "Authorization/Tracking Numbers";
 	public static final String REPAT = "Repat";
+	public static final String LOGIN = "Login";
+	public static final String PASSWORD = "password";
 	
 	public static long TIME_BEFORE_ACTION;
 	public static long TIME_AFTER_ACTION;

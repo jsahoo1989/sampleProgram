@@ -31,7 +31,7 @@ Then messages corresponding to below fields should be displayed after entering "
 |TransfereeFirstName|Tag Scripts are not allowed in first name|
 |TransfereeLastName |Tag Scripts are not allowed in last name |
 
-@IRIS-1674 @C217629, @C217631, @C217632, @C217633, @C217634, @C217635, @C217636, @C217637, @C217638, @C217639, @C217640, @C217641  @Mylo:217699 @Mylo-Regression
+@IRIS-1674 @217629, @217631, @217632, @217633, @217634, @217635, @217636, @217637, @217638, @217639, @217640, @217641  @Mylo:217699 @Mylo-Regression
 Scenario:  Mylo-Validate Boundary Conditions for New File fields & Data Displayed for Newly Created File in Different sections on Mylo Journey page
 Given he has provided all mandatory information on "New File" section with below Character Limit for mentioned fields
 |Field Name          |CharacterLength |

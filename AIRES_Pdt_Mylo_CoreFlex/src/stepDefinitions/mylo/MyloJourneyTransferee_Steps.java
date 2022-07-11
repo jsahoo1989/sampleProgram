@@ -216,6 +216,7 @@ public class MyloJourneyTransferee_Steps {
 	@Then("^previous selected preferred checkbox for \"([^\"]*)\" should be cleared with latest selected preferred box AS-IS after he checks the preferred box for another email on clicking \"([^\"]*)\" button$")
 	public void previous_selected_preferred_checkbox_for_should_be_cleared_with_latest_selected_preferred_box_AS_IS_after_he_checks_the_preferred_box_for_another_email_on_clicking_button(
 			String section, String button) {
+		myloJourneyPageTransfereeSection.scrollToTransfereeElement(MYLOConstants.TRANSFEREE_GRADE);
 		myloJourneyPageTransfereeSection.clickFieldsOnTransfereeSection(button);
 		myloJourneyPageTransfereeSection
 				.clickDropdownFieldsOnTransfereeSection(MYLOConstants.TRANSFEREE_EMAIL_PREFERRED, 1);

@@ -365,6 +365,7 @@ public class MyloJourneyPage_TransfereeSection extends Base {
 			CoreFunctions.click(driver, _transfereePhonePreferredSelect.get(index), elementName);
 			break;
 		case MYLOConstants.TRANSFEREE_EMAIL_PREFERRED:
+			scrollToTransfereeElement(MYLOConstants.TRANSFEREE_GRADE);
 			CoreFunctions.click(driver, _transfereeEmailPreferredSelect.get(index), elementName);
 			break;
 		default:

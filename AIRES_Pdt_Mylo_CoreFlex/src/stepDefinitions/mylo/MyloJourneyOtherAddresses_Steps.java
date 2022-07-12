@@ -152,7 +152,6 @@ public class MyloJourneyOtherAddresses_Steps {
 			Assert.assertTrue(myloAssignmentPage.verifyAlertMessage(MYLOConstants.OTHER_ADDDRESS_SAVED_MESSAGE),
 					MessageFormat.format(MYLOConstants.MISMATCH_DIFFERENT_FIELDVALUES, CoreConstants.FAIL,
 							MYLOConstants.OTHER_ADDDRESS_SAVED_MESSAGE, MYLOConstants.OTHER_ADDRESS));
-			myloAssignmentPage.clickElementOnOtherAddressesSection(MYLOConstants.CLOSE_BUTTON);
 		}
 	}
 

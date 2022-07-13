@@ -3,7 +3,6 @@ package com.aires.pages.mylo;
 import java.text.MessageFormat;
 import java.util.LinkedHashMap;
 import java.util.List;
-import java.util.Map;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
@@ -18,8 +17,6 @@ import com.aires.businessrules.constants.MYLOConstants;
 import com.aires.managers.FileReaderManager;
 import com.aires.testdatatypes.mylo.Mylo_FileData;
 import com.vimalselvam.cucumber.listener.Reporter;
-
-import cucumber.api.DataTable;
 
 public class MyloJourneyPage_CreateNewFileSection extends Base {
 
@@ -144,10 +141,6 @@ public class MyloJourneyPage_CreateNewFileSection extends Base {
 		newFileWebElementsMap.put(MYLOConstants.CREATE_NEW_FILE, _btnCreateFile);
 	}
 
-	/**
-	 * @param fieldName
-	 * @param fieldValue Set Value of different fields on New File section
-	 */
 	public void setNewFileFields(String fieldName, String fieldValue) {
 		mapCreateNewFileWebElementFields();
 		try {
@@ -162,9 +155,6 @@ public class MyloJourneyPage_CreateNewFileSection extends Base {
 		}
 	}
 
-	/**
-	 * @param fieldName Click respective fields of New File section
-	 */
 	public void clickFieldsOnNewFileSection(String fieldName) {
 		mapCreateNewFileWebElementFields();
 		try {
@@ -187,61 +177,45 @@ public class MyloJourneyPage_CreateNewFileSection extends Base {
 		return updatedValue;
 	}
 
-	/**
-	 * @param table
-	 * @return Verify Toast Messages for Mandatory Fields of Create New File section
-	 */
-	public void verifyMandatoryFieldsToastMessagesCreateNewFileSection(DataTable table) {
-		java.util.List<Map<String, String>> data = table.asMaps(String.class, String.class);
-		for (int i = 0; i < data.size(); i++) {
-			setNewFileFields(MYLOConstants.TRANSFEREE_FIRSTNAME, data.get(i).get(MYLOConstants.TRANSFEREE_FIRSTNAME));
-			setNewFileFields(MYLOConstants.TRANSFEREE_LASTNAME, data.get(i).get(MYLOConstants.TRANSFEREE_LASTNAME));
-			setNewFileDropdownValues(MYLOConstants.OFFICE, data.get(i).get(MYLOConstants.OFFICE));
-			setNewFileFields(MYLOConstants.CLIENT_NAME, data.get(i).get(MYLOConstants.CLIENT_NAME));
-			if (!(data.get(i).get(MYLOConstants.CLIENT_NAME).equals(""))) {
-				CoreFunctions.hoverAndClick(driver,
-						CoreFunctions.getElementListByLocator(driver, _dropdownOptions).get(0),
-						data.get(i).get(MYLOConstants.CLIENT_NAME));
-			}
-			setNewFileDropdownValues(MYLOConstants.POLICY_TYPE, data.get(i).get(MYLOConstants.POLICY_TYPE));
-			setNewFileDropdownValues(MYLOConstants.TAX_TREATMENT, data.get(i).get(MYLOConstants.TAX_TREATMENT));
-			CoreFunctions.click(driver, _btnCreateFile, MYLOConstants.CREATE_NEW_FILE);
-			verifyToastMessage(data.get(i).get(MYLOConstants.MESSAGE));
+	public boolean verifyMandatoryFieldsToastMessagesCreateNewFileSection(String firstName, String lastName,
+			String office, String clientName, String policyType, String taxTreatment, String msg) {
+		setNewFileFields(MYLOConstants.TRANSFEREE_FIRSTNAME, firstName);
+		setNewFileFields(MYLOConstants.TRANSFEREE_LASTNAME, lastName);
+		setNewFileDropdownValues(MYLOConstants.OFFICE, office);
+		setNewFileFields(MYLOConstants.CLIENT_NAME, clientName);
+		if (!(clientName.equals(""))) {
+			CoreFunctions.hoverAndClick(driver, CoreFunctions.getElementListByLocator(driver, _dropdownOptions).get(0),
+					clientName);
 		}
+		setNewFileDropdownValues(MYLOConstants.POLICY_TYPE, policyType);
+		setNewFileDropdownValues(MYLOConstants.TAX_TREATMENT, taxTreatment);
+		CoreFunctions.click(driver, _btnCreateFile, MYLOConstants.CREATE_NEW_FILE);
+
+		return (BusinessFunctions.verifyMyloToastMessage(driver, _alertMessage, msg, MYLOConstants.CREATE_NEW_FILE));
 	}
 
 	public boolean verifyToastMessage(String msg) {
 		boolean flag = false;
 		flag = (BusinessFunctions.verifyMyloToastMessage(driver, _alertMessage, msg, MYLOConstants.CREATE_NEW_FILE));
-		Assert.assertTrue(flag, MessageFormat.format(MYLOConstants.EXPECTED_MESSAGE_DISPLAYED, CoreConstants.FAIL, msg,
-				_alertMessage.getText(), MYLOConstants.JOURNEY));
 		return flag;
 	}
 
-	/**
-	 * @param table
-	 * @return Verify Toast Messages for Special Characters entered in fields of New
-	 *         File section
-	 */
-	public void verifySpecialCharacterToastMessagesOtherSection(DataTable table) {
+	public boolean verifySpecialCharacterToastMessagesOtherSection(String fieldName, String msg) {
 		setNewFileFields(MYLOConstants.CLIENT_NAME, MYLOConstants.CLIENT_NAME_VALUE);
 		CoreFunctions.hoverAndClick(driver, CoreFunctions.getElementListByLocator(driver, _dropdownOptions).get(0),
 				MYLOConstants.CLIENT_NAME_VALUE);
 		setNewFileDropdownValues(MYLOConstants.OFFICE, MYLOConstants.OFFICE_VALUE);
-		java.util.List<Map<String, String>> data = table.asMaps(String.class, String.class);
-		for (int i = 0; i < data.size(); i++) {
-			String fieldName = data.get(i).get(MYLOConstants.FIELD_NAME);
-			String firstNameValue = (fieldName.equals(MYLOConstants.TRANSFEREE_FIRSTNAME))
-					? MYLOConstants.SPECIAL_CHARACTERS_STRING
-					: MYLOConstants.TEST;
-			String lastNameValue = (fieldName.equals(MYLOConstants.TRANSFEREE_LASTNAME))
-					? MYLOConstants.SPECIAL_CHARACTERS_STRING
-					: MYLOConstants.TEST;
-			setNewFileFields(MYLOConstants.TRANSFEREE_FIRSTNAME, firstNameValue);
-			setNewFileFields(MYLOConstants.TRANSFEREE_LASTNAME, lastNameValue);
-			CoreFunctions.click(driver, _btnCreateFile, MYLOConstants.CREATE_NEW_FILE);
-			verifyToastMessage(data.get(i).get(MYLOConstants.MESSAGE));
-		}
+		String firstNameValue = (fieldName.equals(MYLOConstants.TRANSFEREE_FIRSTNAME))
+				? MYLOConstants.SPECIAL_CHARACTERS_STRING
+				: MYLOConstants.TEST;
+		String lastNameValue = (fieldName.equals(MYLOConstants.TRANSFEREE_LASTNAME))
+				? MYLOConstants.SPECIAL_CHARACTERS_STRING
+				: MYLOConstants.TEST;
+		setNewFileFields(MYLOConstants.TRANSFEREE_FIRSTNAME, firstNameValue);
+		setNewFileFields(MYLOConstants.TRANSFEREE_LASTNAME, lastNameValue);
+		CoreFunctions.click(driver, _btnCreateFile, MYLOConstants.CREATE_NEW_FILE);
+
+		return (BusinessFunctions.verifyMyloToastMessage(driver, _alertMessage, msg, MYLOConstants.CREATE_NEW_FILE));
 	}
 
 	public boolean isClientOptionsExistsInDropdown() {
@@ -311,13 +285,6 @@ public class MyloJourneyPage_CreateNewFileSection extends Base {
 										: (sectionName.equals(MYLOConstants.PRIMARY_CONTACT_SECTION))
 												? verifyFileInfoPrimaryContactSection()
 												: verifyFileInfoFileTeamSection();
-
-		if (flag)
-			Reporter.addStepLog(MessageFormat.format(MYLOConstants.VERIFIED_ALL_VALUES_UPDATED_ON_SECTION,
-					CoreConstants.PASS, MYLOConstants.CREATE_NEW_FILE, sectionName, MYLOConstants.JOURNEY));
-		else
-			Reporter.addStepLog(MessageFormat.format(MYLOConstants.MISMATCH_DIFFERENT_FIELDVALUES, CoreConstants.FAIL,
-					sectionName));
 		return flag;
 	}
 
@@ -329,11 +296,13 @@ public class MyloJourneyPage_CreateNewFileSection extends Base {
 		if (flag)
 			Reporter.addStepLog(MessageFormat.format(MYLOConstants.VERIFIED_NO_VALUES_UPDATED_ON_SECTION,
 					CoreConstants.PASS, MYLOConstants.CREATE_NEW_FILE, sectionName, MYLOConstants.JOURNEY));
-		else
-			Reporter.addStepLog(MessageFormat.format(MYLOConstants.VERIFIED_ALL_VALUES_UPDATED_ON_SECTION,
-					CoreConstants.FAIL, MYLOConstants.CREATE_NEW_FILE, sectionName, MYLOConstants.JOURNEY));
 		return flag;
 
+	}
+
+	public String getFailureMessageForReport(String field, String value, String section) {
+		return (MessageFormat.format(MYLOConstants.VALUE_NOT_UPDATED_ON_SECTION, CoreConstants.FAIL, value, field,
+				section, MYLOConstants.JOURNEY));
 	}
 
 	public boolean verifyFileInfoPurpleBubbleSection() {
@@ -349,16 +318,14 @@ public class MyloJourneyPage_CreateNewFileSection extends Base {
 				CoreFunctions.writeToPropertiesFile("Mylo_AssignmentID", _purpleBubbleSectionFileId.getText());
 			} else {
 				String msg = (transfereeName != expectedTransfereeName)
-						? MessageFormat.format(MYLOConstants.VALUE_NOT_UPDATED_ON_SECTION, CoreConstants.FAIL,
-								expectedTransfereeName, MYLOConstants.TRANSFEREE_NAME,
-								MYLOConstants.PURPLE_BUBBLE_SECTION, MYLOConstants.JOURNEY)
+						? getFailureMessageForReport(MYLOConstants.TRANSFEREE_NAME, expectedTransfereeName,
+								MYLOConstants.PURPLE_BUBBLE_SECTION)
 						: (clientName != myloNewFileData.newFile.clientName)
-								? MessageFormat.format(MYLOConstants.VALUE_NOT_UPDATED_ON_SECTION, CoreConstants.FAIL,
-										myloNewFileData.newFile.clientName, MYLOConstants.CLIENT_NAME,
-										MYLOConstants.PURPLE_BUBBLE_SECTION, MYLOConstants.JOURNEY)
-								: MessageFormat.format(MYLOConstants.VALUE_NOT_UPDATED_ON_SECTION, CoreConstants.FAIL,
-										MYLOConstants.ASTERISK, MYLOConstants.FILE_ID,
-										MYLOConstants.PURPLE_BUBBLE_SECTION, MYLOConstants.JOURNEY);
+								? getFailureMessageForReport(MYLOConstants.CLIENT_NAME,
+										myloNewFileData.newFile.clientName, MYLOConstants.PURPLE_BUBBLE_SECTION)
+
+								: getFailureMessageForReport(MYLOConstants.FILE_ID, MYLOConstants.ASTERISK,
+										MYLOConstants.PURPLE_BUBBLE_SECTION);
 				Reporter.addStepLog(msg);
 			}
 		} catch (Exception e) {
@@ -381,16 +348,14 @@ public class MyloJourneyPage_CreateNewFileSection extends Base {
 				flag = true;
 			else {
 				String msg = (transfereeName != expectedTransfereeName)
-						? MessageFormat.format(MYLOConstants.VALUE_NOT_UPDATED_ON_SECTION, CoreConstants.FAIL,
-								expectedTransfereeName, MYLOConstants.TRANSFEREE_NAME,
-								MYLOConstants.TOP_RIGHT_CORNER_SECTION, MYLOConstants.JOURNEY)
+						? getFailureMessageForReport(MYLOConstants.TRANSFEREE_NAME, expectedTransfereeName,
+								MYLOConstants.TOP_RIGHT_CORNER_SECTION)
 						: (clientName != myloNewFileData.newFile.clientName)
-								? MessageFormat.format(MYLOConstants.VALUE_NOT_UPDATED_ON_SECTION, CoreConstants.FAIL,
-										myloNewFileData.newFile.clientName, MYLOConstants.CLIENT_NAME,
-										MYLOConstants.TOP_RIGHT_CORNER_SECTION, MYLOConstants.JOURNEY)
-								: MessageFormat.format(MYLOConstants.VALUE_NOT_UPDATED_ON_SECTION, CoreConstants.FAIL,
-										myloNewFileData.newFile.fileGrossprofit, MYLOConstants.FILE_GROSS_PROFIT,
-										MYLOConstants.TOP_RIGHT_CORNER_SECTION, MYLOConstants.JOURNEY);
+								? getFailureMessageForReport(MYLOConstants.CLIENT_NAME,
+										myloNewFileData.newFile.clientName, MYLOConstants.TOP_RIGHT_CORNER_SECTION)
+								: getFailureMessageForReport(MYLOConstants.FILE_GROSS_PROFIT,
+										myloNewFileData.newFile.fileGrossprofit,
+										MYLOConstants.TOP_RIGHT_CORNER_SECTION);
 				Reporter.addStepLog(msg);
 			}
 
@@ -399,11 +364,6 @@ public class MyloJourneyPage_CreateNewFileSection extends Base {
 					MYLOConstants.CREATE_NEW_FILE, MYLOConstants.TOP_RIGHT_CORNER_SECTION));
 		}
 		return flag;
-	}
-
-	public String getFailureMessageForReport(String field, String value, String section) {
-		return (MessageFormat.format(MYLOConstants.VALUE_NOT_UPDATED_ON_SECTION, CoreConstants.FAIL, value, field,
-				section, MYLOConstants.JOURNEY));
 	}
 
 	public boolean verifyFileInfoFileInformationSection() {

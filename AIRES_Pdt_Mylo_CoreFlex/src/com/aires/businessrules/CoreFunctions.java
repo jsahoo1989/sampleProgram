@@ -1919,7 +1919,7 @@ public class CoreFunctions {
 	
 	public static void waitForMyloSpinnnerInvisibilityIfExist(WebDriver driver,WebElement element) {
 		if(CoreFunctions.isElementExist(driver, element, 8)) {
-			CoreFunctions.explicitWaitTillElementInVisibilityCustomTime(driver, element, 120);
+			CoreFunctions.explicitWaitTillElementInVisibilityCustomTime(driver, element, 180);
 			}
 	}
 
@@ -1932,5 +1932,13 @@ public class CoreFunctions {
 	public static String getElementAttributeValue(WebDriver driver, WebElement element, String attributeName) {
 		highlightObject(driver, element);
 		return element.getAttribute(attributeName);
+	}
+	
+	public static List<WebElement> waitTillElementListSizeNotEmpty(WebDriver driver, By locator) {
+		List<WebElement> elementList = null;
+		do {
+			elementList=CoreFunctions.getElementListByLocator(driver, locator);
+	      }while(!(elementList.size()>0));
+		return elementList;	
 	}
 }

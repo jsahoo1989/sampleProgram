@@ -38,13 +38,30 @@ public class MyloCreateNewFile_Steps {
 
 	@Then("^he enters below fields under CreateNewFile section$")
 	public void he_enters_below_fields_under_CreateNewFile_section(DataTable table) {
-		myloNewFileSection.verifyMandatoryFieldsToastMessagesCreateNewFileSection(table);
+		java.util.List<Map<String, String>> data = table.asMaps(String.class, String.class);
+		for (int i = 0; i < data.size(); i++) {
+			Assert.assertTrue(
+					myloNewFileSection.verifyMandatoryFieldsToastMessagesCreateNewFileSection(
+							data.get(i).get(MYLOConstants.TRANSFEREE_FIRSTNAME),
+							data.get(i).get(MYLOConstants.TRANSFEREE_LASTNAME), data.get(i).get(MYLOConstants.OFFICE),
+							data.get(i).get(MYLOConstants.CLIENT_NAME), data.get(i).get(MYLOConstants.POLICY_TYPE),
+							data.get(i).get(MYLOConstants.TAX_TREATMENT), data.get(i).get(MYLOConstants.MESSAGE)),
+					MessageFormat.format(MYLOConstants.VERIFIED_MESSAGE_NOT_DISPLAYED, CoreConstants.FAIL,
+							data.get(i).get(MYLOConstants.MESSAGE), MYLOConstants.CREATE_NEW_FILE));
+		}
 	}
 
 	@Then("^messages corresponding to below fields should be displayed after entering \"([^\"]*)\" for different fields of New File section$")
 	public void messages_corresponding_to_below_fields_should_be_displayed_after_entering_for_different_fields_of_New_File_section(
 			String arg1, DataTable table) {
-		myloNewFileSection.verifySpecialCharacterToastMessagesOtherSection(table);
+		java.util.List<Map<String, String>> data = table.asMaps(String.class, String.class);
+		for (int i = 0; i < data.size(); i++) {
+			Assert.assertTrue(
+					myloNewFileSection.verifySpecialCharacterToastMessagesOtherSection(
+							data.get(i).get(MYLOConstants.FIELD_NAME), data.get(i).get(MYLOConstants.MESSAGE)),
+					MessageFormat.format(MYLOConstants.VERIFIED_MESSAGE_NOT_DISPLAYED, CoreConstants.FAIL,
+							data.get(i).get(MYLOConstants.MESSAGE), MYLOConstants.CREATE_NEW_FILE));
+		}
 	}
 
 	@Given("^he has provided all mandatory information on \"([^\"]*)\" section with below Character Limit for mentioned fields$")
@@ -113,13 +130,14 @@ public class MyloCreateNewFile_Steps {
 
 	@Then("^policyType dropdown field should be readonly field for affinity enabled journey type under CreateNewFile section$")
 	public void policytype_dropdown_field_should_be_readonly_field_for_affinity_enabled_journey_type_under_CreateNewFile_section() {
-		Assert.assertTrue(myloNewFileSection.verifyPolicyTypeFieldReadonly());
+		Assert.assertTrue(myloNewFileSection.verifyPolicyTypeFieldReadonly(),"PolicyType iis not readonly field");
 	}
 
 	@Then("^message \"([^\"]*)\" should be displayed after he clicks on \"([^\"]*)\" button$")
 	public void message_should_be_displayed_after_he_clicks_on_button(String msg, String buttonName) {
 		myloNewFileSection.clickFieldsOnNewFileSection(buttonName);
-		Assert.assertTrue(myloNewFileSection.verifyToastMessage(msg));
+		Assert.assertTrue(myloNewFileSection.verifyToastMessage(msg),MessageFormat.format(MYLOConstants.VERIFIED_MESSAGE_NOT_DISPLAYED, CoreConstants.FAIL,
+				msg, MYLOConstants.JOURNEY));
 	}
 
 }

@@ -1,13 +1,13 @@
 package stepDefinitions.mylo;
 
 import java.text.MessageFormat;
+import java.util.Map;
 import org.testng.Assert;
 import com.aires.businessrules.constants.CoreConstants;
 import com.aires.businessrules.constants.MYLOConstants;
 import com.aires.cucumber.TestContext;
 import com.aires.pages.mylo.Mylo_DashboardHomePage;
 import com.aires.pages.mylo.Mylo_LoginPage;
-
 import cucumber.api.DataTable;
 import cucumber.api.java.en.Given;
 import cucumber.api.java.en.Then;
@@ -49,11 +49,21 @@ public class Mylo_LoginPage_Steps {
 	
 	@Then("^messages corresponding to different usernames mentioned below should be displayed on Mylo login page$")
 	public void messages_corresponding_to_different_usernames_mentioned_below_should_be_displayed_on_Mylo_login_page(DataTable table){
-		loginPage.verifyUserNamePasswordErrorMessage(table, MYLOConstants.USER_EMAIL);
+		java.util.List<Map<String, String>> data = table.asMaps(String.class, String.class);
+		for (int i = 0; i < data.size(); i++) {
+			Assert.assertTrue(loginPage.verifyUserNamePasswordErrorMessage(data.get(i).get(MYLOConstants.USER_EMAIL),"",data.get(i).get(MYLOConstants.MESSAGE),
+					MYLOConstants.USER_EMAIL),MessageFormat.format(MYLOConstants.VERIFIED_MESSAGE_NOT_DISPLAYED, CoreConstants.FAIL,
+							data.get(i).get(MYLOConstants.MESSAGE), MYLOConstants.LOGIN));
+		}
 	}
 	
 	@Then("^messages corresponding to different combination of username password mentioned below should be displayed on Mylo login page$")
 	public void messages_corresponding_to_different_combination_of_username_password_mentioned_below_should_be_displayed_on_Mylo_login_page(DataTable table){
-		loginPage.verifyUserNamePasswordErrorMessage(table, MYLOConstants.PASSWORD);
+		java.util.List<Map<String, String>> data = table.asMaps(String.class, String.class);
+		for (int i = 0; i < data.size(); i++) {
+			Assert.assertTrue(loginPage.verifyUserNamePasswordErrorMessage(data.get(i).get(MYLOConstants.USER_EMAIL),data.get(i).get(MYLOConstants.PASSWORD),data.get(i).get(MYLOConstants.MESSAGE),
+					MYLOConstants.PASSWORD),MessageFormat.format(MYLOConstants.VERIFIED_MESSAGE_NOT_DISPLAYED, CoreConstants.FAIL,
+							data.get(i).get(MYLOConstants.MESSAGE), MYLOConstants.LOGIN));
+		}
 	}
 }

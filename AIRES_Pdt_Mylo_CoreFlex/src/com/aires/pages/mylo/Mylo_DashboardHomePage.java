@@ -147,15 +147,15 @@ public class Mylo_DashboardHomePage extends Base {
 	}
 	
 	public void selectOptionsFromAssignmentMenu(String optionToBeSelected) {
-		boolean flag=false;
 		CoreFunctions.waitForMyloSpinnnerInvisibilityIfExist(driver, _spinner);
-		List<WebElement> journeySubSectionList = CoreFunctions.getElementListByLocator(driver, _journeySubSections);
+		List<WebElement> journeySubSectionList = CoreFunctions.waitTillElementListSizeNotEmpty(driver,
+				_journeySubSections);
 		CoreFunctions.selectItemInListByText(driver, journeySubSectionList, optionToBeSelected);
 		CoreFunctions.highlightObject(driver, _assignmentOptionHeader);
-		String headerText=_assignmentOptionHeader.getText();
-		
-		flag=(optionToBeSelected.equals(MYLOConstants.QUERY_FILE))?headerText.equals( MYLOConstants.ASSIGNMENT_QUERYTYPE_HEADER):
-			headerText.equals( MYLOConstants.CREATE_NEW_FILE);
+		String headerText = _assignmentOptionHeader.getText();
+		Assert.assertTrue((optionToBeSelected.equals(MYLOConstants.QUERY_FILE))
+				? headerText.equals(MYLOConstants.ASSIGNMENT_QUERYTYPE_HEADER)
+				: headerText.equals(MYLOConstants.CREATE_NEW_FILE));
 	}
 	
 	

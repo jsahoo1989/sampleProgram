@@ -29,7 +29,6 @@
  ***********************************Header End*********************************************************************************/
 package com.aires.businessrules;
 
-import java.io.FileReader;
 import java.math.RoundingMode;
 import java.sql.Connection;
 import java.sql.DriverManager;
@@ -39,11 +38,7 @@ import java.text.MessageFormat;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
-import java.util.Properties;
 import java.time.Duration;
-import java.util.Collections;
-import java.util.Comparator;
-import java.util.List;
 import java.util.Random;
 import java.util.concurrent.ThreadLocalRandom;
 import org.apache.commons.codec.binary.Base64;
@@ -53,9 +48,6 @@ import org.openqa.selenium.WebElement;
 import org.openqa.selenium.interactions.Actions;
 import org.openqa.selenium.By;
 import org.openqa.selenium.NoSuchElementException;
-import org.openqa.selenium.WebDriver;
-import org.openqa.selenium.WebElement;
-import org.openqa.selenium.interactions.Actions;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.FluentWait;
 import org.openqa.selenium.support.ui.Select;
@@ -1066,5 +1058,16 @@ public class BusinessFunctions {
 				selectItemFromListUsingText(driver, optionList, fieldValue);
 			} 
 			return updatedValue;
+	}
+	
+	public static boolean verifyMyloValidationMessage(String expectedMessage, String actualMessage,String sectionName) {
+		boolean flag = actualMessage.equals(expectedMessage);
+		String msg = (flag)
+				? MessageFormat.format(MYLOConstants.VERIFIED_MESSAGE_DISPLAYED, CoreConstants.PASS,
+						actualMessage, sectionName)
+				: MessageFormat.format(MYLOConstants.EXPECTED_MESSAGE_DISPLAYED, CoreConstants.FAIL, expectedMessage,
+						actualMessage, sectionName);
+		Reporter.addStepLog(msg);
+		return flag;
 	}
 }

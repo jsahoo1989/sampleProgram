@@ -260,4 +260,10 @@ public class IRIS_PageMaster {
 	public static List getListObject(Window windowName, String attachedText, int indexNumber) throws Exception {
 		return windowName.describe(List.class, new ListDescription.Builder().attachedText(attachedText).nativeClass("javax.swing.JComboBox").index(indexNumber).build());
 	}
+	
+	public static Button getButtonObject(Window windowName, String labelAttachedText, String className, int indexValue)
+			throws Exception {
+		return windowName.describe(Button.class, new ButtonDescription.Builder().attachedText(labelAttachedText)
+				.label(labelAttachedText).nativeClass(className).index(indexValue).build());
+	}
 }

@@ -131,11 +131,11 @@ public class CoreFlex_CustomBundlesPage extends Base {
 
 	// Pop-Up Submit Status
 	@FindBy(how = How.CSS, using = "h2[id='swal2-title']")
-	private WebElement _popUpTextSubmitStatus;
+	private WebElement _popUpTextStatus;
 
 	// Pop-Up Submit Message
 	@FindBy(how = How.CSS, using = "div[id='swal2-content']")
-	private WebElement _popUpTextSubmitMessage;
+	private WebElement _popUpTextMessage;
 
 	// Pop-Up OK Button
 	@FindBy(how = How.XPATH, using = "//button[contains(text(),'OK')]")
@@ -232,6 +232,9 @@ public class CoreFlex_CustomBundlesPage extends Base {
 			case COREFLEXConstants.SAVE_AND_SUBMIT:
 				CoreFunctions.clickElement(driver, _buttonSaveAndSubmit);
 				CoreFunctions.explicitWaitTillElementInVisibility(driver, _progressBar);
+				break;
+			case COREFLEXConstants.SAVE_AS_DRAFT:
+				CoreFunctions.clickElement(driver, _buttonSaveAsDraft);
 				break;
 			case COREFLEXConstants.SUBMIT:
 				CoreFunctions.clickElement(driver, _buttonSubmit);
@@ -341,10 +344,10 @@ public class CoreFlex_CustomBundlesPage extends Base {
 		String actualSubmitMessage = null;
 		try {
 			CoreFunctions.explicitWaitTillElementInVisibility(driver, _progressBar);
-			actualSubmitMessage = CoreFunctions.getElementText(driver, _popUpTextSubmitMessage);
+			actualSubmitMessage = CoreFunctions.getElementText(driver, _popUpTextMessage);
 			isSubmitMessageVerified = (expectedSubmitStatusMessage.replace("PolicyName", policyName))
 					.equalsIgnoreCase(actualSubmitMessage);
-			isPolicySubmitStatusVerified = CoreFunctions.getElementText(driver, _popUpTextSubmitStatus)
+			isPolicySubmitStatusVerified = CoreFunctions.getElementText(driver, _popUpTextStatus)
 					.equals(COREFLEXConstants.SUCCESS) && isSubmitMessageVerified;
 		} catch (Exception e) {
 			Reporter.addStepLog(MessageFormat.format(
@@ -373,9 +376,9 @@ public class CoreFlex_CustomBundlesPage extends Base {
 	 * @return
 	 */
 	public boolean iterateAndAddNewCustomBundle(String addNewCustomBundleButton, String policyType,
-			String saveCustomBundleButton,String policyRequiredFor) {
+			String saveCustomBundleButton, String policyRequiredFor, String numberOfTracing) {
 		try {
-			List<String> bundleBenefitList = getBenefitList(policyType,policyRequiredFor);
+			List<String> bundleBenefitList = getBenefitList(policyType, policyRequiredFor,numberOfTracing);
 			if (policyType.equals(COREFLEXConstants.CORE)) {
 				Reporter.addStepLog(MessageFormat.format(
 						COREFLEXConstants.CANNOT_CREATE_CUSTOM_BUNDLE_FOR_CORE_BENEFIT_TYPE, CoreConstants.PASS));
@@ -418,7 +421,7 @@ public class CoreFlex_CustomBundlesPage extends Base {
 		return CoreFunctions.searchElementExistsInListByText(driver, _textSavedCustomBundlesList, bundleName, true);
 	}
 
-	private List<String> getBenefitList(String policyType,String policyRequiredFor) {
+	private List<String> getBenefitList(String policyType, String policyRequiredFor,String numberOfMilestones) {
 		List<String> benefitNameList = new ArrayList<String>();
 		try {
 			switch (policyRequiredFor) {
@@ -427,28 +430,39 @@ public class CoreFlex_CustomBundlesPage extends Base {
 				for (FlexBenefit benefit : flexBenefits) {
 					for (Benefit ben : benefit.getBenefits()) {
 						if (ben.getPolicyCreationGroup().contains(COREFLEXConstants.CLONING))
-						benefitNameList.add(ben.getBenefitDisplayName());
+							benefitNameList.add(ben.getBenefitDisplayName());
 					}
 				}
 				break;
 			case COREFLEXConstants.AIRES_MANAGED_BENEFITS_CARDS:
-				break;
-			case COREFLEXConstants.ALL_BENEFITS:
 				for (FlexBenefit benefit : flexBenefits) {
 					for (Benefit ben : benefit.getBenefits()) {
-						benefitNameList.add(ben.getBenefitDisplayName());
+						if ((ben.getAiresManagedService().equals("Yes"))
+								&& (ben.getNoOfMilestones() == Integer.parseInt(numberOfMilestones))) {
+							benefitNameList.add(ben.getBenefitDisplayName());
+						}
+					}
+				}
+				break;
+			case COREFLEXConstants.ALL_BENEFITS:
+			case COREFLEXConstants.END_TO_END:				
+				for (FlexBenefit benefit : flexBenefits) {
+					for (Benefit ben : benefit.getBenefits()) {
+						if (ben.getPolicyCreationGroup().contains(COREFLEXConstants.ALL_BENEFITS)) {
+							benefitNameList.add(ben.getBenefitDisplayName());
+						}
 					}
 				}
 				break;
 			default:
 				Assert.fail(COREFLEXConstants.BLUEPRINT_POLICY_REQUIRED_FOR_OPTION_NOT_PRESENT_IN_THE_LIST);
 			}
-		}catch (Exception e) {
+		} catch (Exception e) {
 			Reporter.addStepLog(MessageFormat.format(
 					COREFLEXConstants.EXCEPTION_OCCURED_WHILE_ADDING_A_NEW_CUSTOM_BUNDLE_ON_CUSTOM_BUNDLES_PAGE,
 					CoreConstants.FAIL, e.getMessage()));
 		}
-		
+
 		return benefitNameList;
 	}
 
@@ -457,6 +471,7 @@ public class CoreFlex_CustomBundlesPage extends Base {
 			Reporter.addStepLog(MessageFormat.format(
 					COREFLEXConstants.SUBMIT_BUTTON_DISABLED_POST_POLICY_SUBMISSION_ON_CUSTOM_BUNDLES_PAGE,
 					CoreConstants.PASS));
+			CoreFunctions.highlightObject(driver, _buttonSubmitDisabled);
 			return true;
 		} else
 			return false;
@@ -473,7 +488,7 @@ public class CoreFlex_CustomBundlesPage extends Base {
 					.equals((COREFLEXConstants.EXPECTED_APPROVE_THIS_POLICY_DIALOG_VERSION_TEXT).replace("VN",
 							policyVersionNumber))
 					&& CoreFunctions.getElementText(driver, _popUpApprovePolicyAssignmentText)
-							.equals((policyVersionNumber .equals("1"))
+							.equals((policyVersionNumber.equals("1"))
 									? COREFLEXConstants.EXPECTED_APPROVE_THIS_POLICY_DIALOG_ASSIGNMENT_TEXT_FIRST_VERSION
 									: COREFLEXConstants.EXPECTED_APPROVE_THIS_POLICY_DIALOG_ASSIGNMENT_TEXT_SECOND_VERSION);
 			isDialogOptionsVerified = (CoreFunctions.getElementText(driver, _popUpApprovePolicyCheckBox).trim())
@@ -562,14 +577,14 @@ public class CoreFlex_CustomBundlesPage extends Base {
 	}
 
 	private List<String> getBenefitDisplayNameList(String policyRequiredFor) {
-		List<String> benefitNameList = new ArrayList<String>();		
+		List<String> benefitNameList = new ArrayList<String>();
 		switch (policyRequiredFor) {
 		case COREFLEXConstants.CLONING:
 		case COREFLEXConstants.VERSIONING:
 			for (FlexBenefit benefit : flexBenefits) {
 				for (Benefit ben : benefit.getBenefits()) {
 					if (ben.getPolicyCreationGroup().contains(COREFLEXConstants.CLONING))
-					benefitNameList.add(ben.getBenefitDisplayName());
+						benefitNameList.add(ben.getBenefitDisplayName());
 				}
 			}
 			break;
@@ -578,7 +593,9 @@ public class CoreFlex_CustomBundlesPage extends Base {
 		case COREFLEXConstants.ALL_BENEFITS:
 			for (FlexBenefit benefit : flexBenefits) {
 				for (Benefit ben : benefit.getBenefits()) {
+					if (ben.getPolicyCreationGroup().contains(COREFLEXConstants.ALL_BENEFITS)) {
 					benefitNameList.add(ben.getBenefitDisplayName());
+					}
 				}
 			}
 			break;
@@ -595,7 +612,7 @@ public class CoreFlex_CustomBundlesPage extends Base {
 					&& CoreFunctions.isElementExist(driver, _buttonSaveAsDraft, 3)
 					&& !(CoreFunctions.isElementExist(driver, _buttonApprovePolicy, 3))) {
 				Reporter.addStepLog(MessageFormat.format(
-						COREFLEXConstants.SUCCESSFULLY_VERIFIED_BUTTONS_DISPLAYED_IN_DRAFT_POLICY_STATUS_ON_CUSTOM_BUNDLES_PAGE_POST_VERSIONING_CLONING,
+						COREFLEXConstants.SUCCESSFULLY_VERIFIED_BUTTONS_DISPLAYED_IN_DRAFT_POLICY_STATUS_ON_CUSTOM_BUNDLES_PAGE,
 						CoreConstants.PASS));
 				return true;
 			}
@@ -606,4 +623,100 @@ public class CoreFlex_CustomBundlesPage extends Base {
 		}
 		return false;
 	}
+
+	public boolean verifyPolicySaveAsDraftDialogStatus(String expectedDialogMessage) {
+		boolean isPolicyDraftStatusVerified = false;
+		String actualDialogMessage = null;
+		try {
+			actualDialogMessage = CoreFunctions.getElementText(driver, _popUpTextMessage);
+			isPolicyDraftStatusVerified = CoreFunctions.getElementText(driver, _popUpTextStatus)
+					.equals(COREFLEXConstants.SUCCESS) && actualDialogMessage.equalsIgnoreCase(expectedDialogMessage);
+		} catch (Exception e) {
+			Reporter.addStepLog(MessageFormat.format(
+					COREFLEXConstants.EXCEPTION_OCCURED_WHILE_VALIDATING_POLICY_SAVE_AS_DRAFT_DIALOG_STATUS_AND_MESSAGE_ON_CUSTOM_BUNDLES_PAGE,
+					CoreConstants.FAIL, e.getMessage()));
+		}
+		if (isPolicyDraftStatusVerified) {
+			Reporter.addStepLog(MessageFormat.format(
+					COREFLEXConstants.SUCCESSFULLY_VERIFIED_POLICY_SAVE_AS_DRAFT_DIALOG_STATUS_AND_MESSAGE_ON_CUSTOM_BUNDLES_PAGE,
+					CoreConstants.PASS, expectedDialogMessage));
+		} else {
+			Reporter.addStepLog(MessageFormat.format(
+					COREFLEXConstants.POLICY_SAVE_AS_DRAFT_DIALOG_STATUS_AND_MESSAGE_NOT_MATCHED_ON_CUSTOM_BUNDLES_PAGE,
+					CoreConstants.FAIL, expectedDialogMessage, actualDialogMessage));
+		}
+		return isPolicyDraftStatusVerified;
+	}
+	
+	public boolean verifyPolicyStatusPostSaveAsDraft(String expectedPolicyStatus) {
+		if (CoreFunctions.getElementText(driver, _textPolicyStatus).equals(expectedPolicyStatus)) {
+			Reporter.addStepLog(MessageFormat.format(
+					COREFLEXConstants.SUCCESSFULLY_VERIFIED_POLICY_STATUS_POST_POLICY_SUBMISSION_ON_CUSTOM_BUNDLES_PAGE,
+					CoreConstants.PASS, expectedPolicyStatus));
+			return true;
+		} else {
+			Reporter.addStepLog(MessageFormat.format(
+					COREFLEXConstants.FAILED_TO_VERIFY_POLICY_STATUS_POST_SAVE_AS_DRAFT_ON_CUSTOM_BUNDLES_PAGE,
+					CoreConstants.FAIL, CoreFunctions.getElementText(driver, _textPolicyStatus), expectedPolicyStatus));
+			return false;
+		}
+	}
+
+	public boolean verifyPolicyVersionPostSaveAsDraft(String expectedPolicyVersion) {
+		if (CoreFunctions.getElementText(driver, _textPolicyVersion).equals(expectedPolicyVersion)) {
+			Reporter.addStepLog(MessageFormat.format(
+					COREFLEXConstants.SUCCESSFULLY_VERIFIED_POLICY_VERSION_POST_SAVE_AS_DRAFT_ON_CUSTOM_BUNDLES_PAGE,
+					CoreConstants.PASS, expectedPolicyVersion));
+			return true;
+		} else {
+			Reporter.addStepLog(MessageFormat.format(
+					COREFLEXConstants.FAILED_TO_VERIFY_POLICY_VERSION_POST_SAVE_AS_DRAFT_ON_CUSTOM_BUNDLES_PAGE,
+					CoreConstants.FAIL, CoreFunctions.getElementText(driver, _textPolicyVersion),
+					expectedPolicyVersion));
+			return false;
+		}
+	}
+
+	public boolean verifyApproveButtonDisplayedPostSubmission() {
+		if (CoreFunctions.isElementExist(driver, _buttonApprovePolicy, 5)) {
+			Reporter.addStepLog(MessageFormat.format(
+					COREFLEXConstants.APPROVE_POLICY_BUTTON_DISPLAYED_POST_POLICY_SUBMISSION_ON_CUSTOM_BUNDLES_PAGE,
+					CoreConstants.PASS,COREFLEXConstants.CUSTOM_BUNDLES));
+			CoreFunctions.highlightObject(driver, _buttonApprovePolicy);
+			return true;
+		} else
+			return false;
+	}
+	
+	public boolean verifyButtonDisplayedOnSubmittedPolicyStatus() {
+		try {
+			if (CoreFunctions.isElementExist(driver, _buttonSubmitDisabled, 3)
+					&& CoreFunctions.isElementExist(driver, _buttonPreviewTransfereeExp, 3)
+					&& !(CoreFunctions.isElementExist(driver, _buttonSaveAsDraft, 3))
+					&& (CoreFunctions.isElementExist(driver, _buttonApprovePolicy, 3))) {
+				Reporter.addStepLog(MessageFormat.format(
+						COREFLEXConstants.SUCCESSFULLY_VERIFIED_BUTTONS_DISPLAYED_IN_SUBMITTED_POLICY_STATUS_ON_CUSTOM_BUNDLES_PAGE,
+						CoreConstants.PASS));
+				return true;
+			}
+		} catch (Exception e) {
+			Reporter.addStepLog(MessageFormat.format(
+					COREFLEXConstants.EXCEPTION_OCCURED_WHILE_VALIDATING_BUTTONS_DISPLAYED_IN_SUBMITTED_POLICY_STATUS_ON_CUSTOM_BUNDLES_PAGE,
+					CoreConstants.FAIL, e.getMessage()));
+		}
+		return false;
+	}
+	
+	public boolean verifyPolicyStatus(String expectedPolicyStatus) {
+		if (CoreFunctions.getElementText(driver, _textPolicyStatus).equals(expectedPolicyStatus)) {
+			Reporter.addStepLog(MessageFormat.format(COREFLEXConstants.SUCCESSFULLY_VERIFIED_POLICY_STATUS,
+					CoreConstants.PASS, expectedPolicyStatus));
+			return true;
+		} else {
+			Reporter.addStepLog(MessageFormat.format(COREFLEXConstants.FAILED_TO_VERIFY_POLICY_STATUS,
+					CoreConstants.FAIL, CoreFunctions.getElementText(driver, _textPolicyStatus), expectedPolicyStatus));
+			return false;
+		}
+	}
+
 }

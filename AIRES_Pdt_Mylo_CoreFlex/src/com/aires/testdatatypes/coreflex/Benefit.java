@@ -34,7 +34,44 @@ public class Benefit {
 	private String thirdTracingPrompt;
 	private String postThirdTracingCardStatus;
 	private String policyCreationGroup;
+	private boolean selectBenefitOnPBCPage;
 	private boolean deselectBenefitOnPBCPage;
+	private Integer noOfMilestones;
+	private String allMilestones;
+	private String subbenefitToBeDeselected;	
+
+	public String getSubbenefitToBeDeselected() {
+		return subbenefitToBeDeselected;
+	}
+
+	public void setSubbenefitToBeDeselected(String subbenefitToBeDeselected) {
+		this.subbenefitToBeDeselected = subbenefitToBeDeselected;
+	}
+
+	public String getAllMilestones() {
+		return allMilestones;
+	}
+
+	public void setAllMilestones(String allMilestones) {
+		this.allMilestones = allMilestones;
+	}
+
+	public Integer getNoOfMilestones() {
+		return noOfMilestones;
+	}
+
+	public void setNoOfMilestones(Integer noOfMilestones) {
+		this.noOfMilestones = noOfMilestones;
+	}	
+	
+	
+	public boolean isSelectBenefitOnPBCPage() {
+		return selectBenefitOnPBCPage;
+	}
+
+	public void setSelectBenefitOnPBCPage(boolean selectBenefitOnPBCPage) {
+		this.selectBenefitOnPBCPage = selectBenefitOnPBCPage;
+	}
 	
 	public boolean isDeselectBenefitOnPBCPage() {
 		return deselectBenefitOnPBCPage;

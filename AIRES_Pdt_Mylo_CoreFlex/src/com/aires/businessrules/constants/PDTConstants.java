@@ -488,4 +488,9 @@ public class PDTConstants {
 	public static final String APPLICATION_PDT = "PDT";
 	public static final String APPLICATION_MYLO = "MYLO";
 	public static final String APPLICATION_NOT_VALID = "{0}Application ''{1}'' is not a valid application";
+	public static final String FAILED_TO_NAVIGATE_TO_ASSIGNMENT_HISTORY_VIEW_POLICY_PAGE = "{0}Failed to navigate to Assignment History - View Policy Page.";
+	public static final String FAILED_TO_VERIFY_ASSIGNMENT_HISTORY_FOR_NO_ASSIGNMENT_ASSOCIATION = "{0}Failed to verify Assignment History Text : ''{1}'' for No Assignment Association.";
+	public static final String EXPORT_BUTTON_DISPLAYED_ABOVE_ASSIGNMENT_HISTORY_FOR_NO_ASSIGNMENT_ASSOCIATION = "{0}Export button displayed above Assignment History Table for No Assignment Association.";
+	public static final String FAILED_TO_VERIFY_ASSIGNMENT_HISTORY_FOR_ASSIGNMENT_ASSOCIATION = "{0}Failed to verify Assignment History record for Assignment Association.";
+	public static final String EXPORT_BUTTON_NOT_DISPLAYED_ABOVE_ASSIGNMENT_HISTORY_FOR_ASSIGNMENT_ASSOCIATION = "{0}Export button NOT displayed above Assignment History Table for Assignment Association.";
 }

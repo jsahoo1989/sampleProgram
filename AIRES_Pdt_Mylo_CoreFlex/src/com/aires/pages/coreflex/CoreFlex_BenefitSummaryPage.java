@@ -90,6 +90,10 @@ public class CoreFlex_BenefitSummaryPage extends Base {
 	@FindBy(how = How.CSS, using = "p[class*='pointText']")
 	private List<WebElement> _benefitsPointsList;
 
+	// Policy Status
+	@FindBy(how = How.XPATH, using = "//strong[contains(text(),'Policy Status')]/parent::label/following-sibling::label")
+	private WebElement _textPolicyStatus;
+
 	/*********************************************************************/
 
 	CoreFlex_HousingBenefitsData housingBenefitData = FileReaderManager.getInstance().getCoreFlexJsonReader()
@@ -220,7 +224,7 @@ public class CoreFlex_BenefitSummaryPage extends Base {
 	 * Method to iterate and verify Added Benefits & SubBenefits on Benefit Summary
 	 * page
 	 */
-	public boolean iterateAndVerifyBenefitSummaryDetails(String policyRequiredFor) {
+	public boolean iterateAndVerifyBenefitSummaryDetails(String policyRequiredFor, String numberOfTracing) {
 		boolean isBenefitSummaryDetailsVerified = false;
 		try {
 			switch (policyRequiredFor) {
@@ -228,10 +232,14 @@ public class CoreFlex_BenefitSummaryPage extends Base {
 			case COREFLEXConstants.VERSIONING:
 				isBenefitSummaryDetailsVerified = iterateAndVerifyCloningBenefitsSummaryDetails();
 				break;
-			case COREFLEXConstants.AIRES_MANAGED_BENEFITS_CARDS:
+			case COREFLEXConstants.SIGNIFICANT_CHANGE:
+				isBenefitSummaryDetailsVerified = iterateAndVerifySignificantChangeBenefitsSummaryDetails();
 				break;
 			case COREFLEXConstants.ALL_BENEFITS:
-				isBenefitSummaryDetailsVerified = iterateAndVerifyAllBenefitsSummaryDetails();
+			case COREFLEXConstants.AIRES_MANAGED_BENEFITS_CARDS:
+			case COREFLEXConstants.END_TO_END:
+				isBenefitSummaryDetailsVerified = iterateAndVerifyAllBenefitsSummaryDetails(policyRequiredFor,
+						numberOfTracing);
 				break;
 			default:
 				Assert.fail(COREFLEXConstants.BLUEPRINT_POLICY_REQUIRED_FOR_OPTION_NOT_PRESENT_IN_THE_LIST);
@@ -251,20 +259,38 @@ public class CoreFlex_BenefitSummaryPage extends Base {
 		return false;
 	}
 
-	private boolean iterateAndVerifyAllBenefitsSummaryDetails() {
+	private boolean iterateAndVerifyAllBenefitsSummaryDetails(String policyRequiredFor, String numberOfMilestones) {
 		boolean isFlexBenefitSummaryVerified = false;
 		try {
 			for (FlexBenefit benefitList : flexBenefits) {
 				for (Benefit benefit : benefitList.getBenefits()) {
-					int indexBenefit = BusinessFunctions.returnindexItemFromListUsingText(driver,
-							_textAddedBenefitNameList, benefit.getBenefitDisplayName());
-					int indexCategory = BusinessFunctions.returnindexItemFromListUsingText(driver,
-							_textAddedBenefitGroupList, benefitList.getCategory(), true);
-					isFlexBenefitSummaryVerified = (CoreFunctions
-							.getItemsFromListByIndex(driver, _textAddedBenefitGroupList, indexCategory, true)
-							.contains(benefitList.getCategory())) && verifyBenefitSummaryDetails(indexBenefit, benefit);
-					if (!isFlexBenefitSummaryVerified) {
-						break;
+					if ((policyRequiredFor.equals(COREFLEXConstants.ALL_BENEFITS))
+							&& (benefit.getPolicyCreationGroup().contains(policyRequiredFor))) {
+						int indexBenefit = BusinessFunctions.returnindexItemFromListUsingText(driver,
+								_textAddedBenefitNameList, benefit.getBenefitDisplayName());
+						int indexCategory = BusinessFunctions.returnindexItemFromListUsingText(driver,
+								_textAddedBenefitGroupList, benefitList.getCategory(), true);
+						isFlexBenefitSummaryVerified = (CoreFunctions
+								.getItemsFromListByIndex(driver, _textAddedBenefitGroupList, indexCategory, true)
+								.contains(benefitList.getCategory()))
+								&& verifyBenefitSummaryDetails(indexBenefit, benefit);
+						if (!isFlexBenefitSummaryVerified) {
+							break;
+						}
+					} else if ((policyRequiredFor.equals(COREFLEXConstants.AIRES_MANAGED_BENEFITS_CARDS))
+							&& (benefit.getAiresManagedService().equals("Yes"))
+							&& (benefit.getNoOfMilestones() == Integer.parseInt(numberOfMilestones))) {
+						int indexBenefit = BusinessFunctions.returnindexItemFromListUsingText(driver,
+								_textAddedBenefitNameList, benefit.getBenefitDisplayName());
+						int indexCategory = BusinessFunctions.returnindexItemFromListUsingText(driver,
+								_textAddedBenefitGroupList, benefitList.getCategory(), true);
+						isFlexBenefitSummaryVerified = (CoreFunctions
+								.getItemsFromListByIndex(driver, _textAddedBenefitGroupList, indexCategory, true)
+								.contains(benefitList.getCategory()))
+								&& verifyBenefitSummaryDetails(indexBenefit, benefit);
+						if (!isFlexBenefitSummaryVerified) {
+							break;
+						}
 					}
 				}
 			}
@@ -321,6 +347,53 @@ public class CoreFlex_BenefitSummaryPage extends Base {
 					CoreConstants.PASS));
 		}
 		return isFlexBenefitSummaryVerified;
+	}
+
+	private boolean iterateAndVerifySignificantChangeBenefitsSummaryDetails() {
+		boolean isFlexBenefitSummaryVerified = false;
+		try {
+			for (FlexBenefit benefitList : flexBenefits) {
+				for (Benefit benefit : benefitList.getBenefits()) {
+					if (benefit.getPolicyCreationGroup().contains(COREFLEXConstants.VERSIONING)
+							|| benefit.isSelectBenefitOnPBCPage()) {
+						int indexBenefit = BusinessFunctions.returnindexItemFromListUsingText(driver,
+								_textAddedBenefitNameList, benefit.getBenefitDisplayName());
+						int indexCategory = BusinessFunctions.returnindexItemFromListUsingText(driver,
+								_textAddedBenefitGroupList, benefitList.getCategory(), true);
+						isFlexBenefitSummaryVerified = (CoreFunctions
+								.getItemsFromListByIndex(driver, _textAddedBenefitGroupList, indexCategory, true)
+								.contains(benefitList.getCategory()))
+								&& verifyBenefitSummaryDetails(indexBenefit, benefit);
+						if (!isFlexBenefitSummaryVerified) {
+							break;
+						}
+					}
+				}
+			}
+		} catch (Exception e) {
+			Reporter.addStepLog(MessageFormat.format(
+					COREFLEXConstants.EXCEPTION_OCCURED_WHILE_VALIDATING_FLEX_BENEFIT_CATEGORIES_AND_TYPE_ON_BENEFIT_SUMMARY_PAGE,
+					CoreConstants.FAIL, e.getMessage()));
+		}
+
+		if (isFlexBenefitSummaryVerified) {
+			Reporter.addStepLog(MessageFormat.format(
+					COREFLEXConstants.SUCCESSFULLY_VERIFIED_FLEX_BENEFIT_CATEGORIES_AND_TYPE_ON_BENEFIT_SUMMARY_PAGE,
+					CoreConstants.PASS));
+		}
+		return isFlexBenefitSummaryVerified;
+	}
+
+	public boolean verifyPolicyStatus(String expectedPolicyStatus) {
+		if (CoreFunctions.getElementText(driver, _textPolicyStatus).equals(expectedPolicyStatus)) {
+			Reporter.addStepLog(MessageFormat.format(COREFLEXConstants.SUCCESSFULLY_VERIFIED_POLICY_STATUS,
+					CoreConstants.PASS, expectedPolicyStatus));
+			return true;
+		} else {
+			Reporter.addStepLog(MessageFormat.format(COREFLEXConstants.FAILED_TO_VERIFY_POLICY_STATUS,
+					CoreConstants.FAIL, CoreFunctions.getElementText(driver, _textPolicyStatus), expectedPolicyStatus));
+			return false;
+		}
 	}
 
 }

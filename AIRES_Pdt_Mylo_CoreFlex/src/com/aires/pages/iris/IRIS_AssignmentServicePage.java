@@ -8,6 +8,7 @@ import java.util.HashMap;
 import java.util.IdentityHashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Objects;
 
 import org.testng.Assert;
 
@@ -138,12 +139,21 @@ public class IRIS_AssignmentServicePage extends BasePage {
 		try {
 			Table _reloServicePanel1Table = IRIS_PageMaster.getTableObject(_IRIS,
 					"IRIS.Presentation.assignment.reloService.ReloServicePanel$RelocationServicePanel$1");
-			Button _serviceAddButton = _IRIS.describe(Button.class, new ButtonDescription.Builder().attachedText("Add")
-					.label("Add").nativeClass("javax.swing.JButton").index(0).build());
-			_reloServicePanel1Table.waitUntilVisible();
-			Helpers.clickButton(_serviceAddButton, _serviceAddButton.getAttachedText());
 			rowCount = Helpers.getTableRowCount(_reloServicePanel1Table);
-			_reloServicePanel1Table.getCell(rowCount - 1, IRISConstants.EDITOR_NAME).setValue(serviceName);
+			int rowId = rowCount == 0 ? -1
+					: Helpers.getRowIdMatchingCellValue(_reloServicePanel1Table, IRISConstants.EDITOR_NAME,
+							serviceName);
+			if (rowId == -1) {
+				Button _serviceAddButton = _IRIS.describe(Button.class, new ButtonDescription.Builder()
+						.attachedText("Add").label("Add").nativeClass("javax.swing.JButton").index(0).build());
+				_reloServicePanel1Table.waitUntilVisible();
+				Helpers.clickButton(_serviceAddButton, _serviceAddButton.getAttachedText());
+				rowCount = Helpers.getTableRowCount(_reloServicePanel1Table);
+				_reloServicePanel1Table.getCell(rowCount - 1, IRISConstants.EDITOR_NAME).setValue(serviceName);
+				clickSaveButton();
+			} else {
+				Helpers.selectTableRow(_reloServicePanel1Table, rowId);
+			}
 		} catch (Exception e) {
 			System.out.println("in catch of addService method");
 		}
@@ -153,6 +163,15 @@ public class IRIS_AssignmentServicePage extends BasePage {
 	public void clickSaveButton() throws Exception {
 		Helpers.clickButton(IRIS_PageMaster.getButtonObjectFromLabel(_IRIS, "Save"),
 				IRIS_PageMaster.getButtonObjectFromLabel(_IRIS, "Save").getLabel());
+//		if (IRIS_PageMaster.getDialogObject(_IRIS, "Warning").exists()) {
+//			Helpers.clickButton(
+//					IRIS_PageMaster.getButtonObject(IRIS_PageMaster.getDialogObject(_IRIS, "Warning"), "OK",
+//							"javax.swing.plaf.basic.BasicOptionPaneUI$ButtonFactory$ConstrainedButton"),
+//					IRIS_PageMaster
+//							.getButtonObject(IRIS_PageMaster.getDialogObject(_IRIS, "Warning"), "OK",
+//									"javax.swing.plaf.basic.BasicOptionPaneUI$ButtonFactory$ConstrainedButton")
+//							.getAttachedText());
+//		}
 		if (!IRIS_PageMaster.getDialogObject(_IRIS, "Saved").exists()) {
 			String _newTransfereeWindowTitle = MessageFormat.format(IRISConstants.TRANSFEREE_TITLE_TO_APPEND_SERVICE,
 					CoreFunctions.getPropertyFromConfig("Assignment_FileID"),
@@ -162,8 +181,11 @@ public class IRIS_AssignmentServicePage extends BasePage {
 		}
 		try {
 			Helpers.clickButton(
-					IRIS_PageMaster.getButtonObjectFromLabel(IRIS_PageMaster.getDialogObject(_IRIS, "Saved"), "OK"),
-					IRIS_PageMaster.getButtonObjectFromLabel(IRIS_PageMaster.getDialogObject(_IRIS, "Saved"), "OK")
+					IRIS_PageMaster.getButtonObject(IRIS_PageMaster.getDialogObject(_IRIS, "Saved"), "OK",
+							"javax.swing.plaf.basic.BasicOptionPaneUI$ButtonFactory$ConstrainedButton"),
+					IRIS_PageMaster
+							.getButtonObject(IRIS_PageMaster.getDialogObject(_IRIS, "Saved"), "OK",
+									"javax.swing.plaf.basic.BasicOptionPaneUI$ButtonFactory$ConstrainedButton")
 							.getLabel());
 		} catch (GeneralLeanFtException e) {
 			e.printStackTrace();
@@ -439,9 +461,15 @@ public class IRIS_AssignmentServicePage extends BasePage {
 		CoreFunctions.waitHandler(1);
 	}
 
-	public void selectSubService(String sectionName) throws GeneralLeanFtException, Exception {
-		Helpers.selectTableRow(getTableName(sectionName), 0);
-		CoreFunctions.waitHandler(1);
+	public void selectSubService(Table table, String columnName, String irisServiceName)
+			throws GeneralLeanFtException, Exception {
+		for (int rowCount = 0; rowCount < table.getRows().size(); rowCount++) {
+			if (table.getCell(rowCount, columnName).getValue().toString().contains(irisServiceName)) {
+				Helpers.selectTableRow(table, rowCount);
+				CoreFunctions.waitHandler(1);
+				break;
+			}
+		}
 	}
 
 	public void updateSubServiceColumnData(String sectionName, String columnName, String newSubserviceServiceType) {
@@ -467,10 +495,12 @@ public class IRIS_AssignmentServicePage extends BasePage {
 						addSubService(IRISConstants.SUB_SERVICE, benefit.getIrisSubserviceType(),
 								benefit.getIrisSubserviceName(), coreFlexType);
 						clickSaveButton();
+						int rowCount = Helpers.getTableRowCount(getTableName(IRISConstants.SUB_SERVICE));
 						benefit.setIrisSubserviceID(String.valueOf(
 								new Double(IRIS_PageMaster.getTableObjectWithIndex(_IRIS, "javax.swing.JTable", 1)
-										.getCell(0, IRISConstants.ID_TEXT).getValue().toString()).intValue()));
-						subServiceIDMap.put(benefit.getIrisServiceName(), benefit.getIrisSubserviceID());
+										.getCell(rowCount - 1, IRISConstants.ID_TEXT).getValue().toString())
+												.intValue()));
+						subServiceIDMap.put(benefit.getIrisSubserviceName(), benefit.getIrisSubserviceID());
 						CoreFunctions.waitHandler(2);
 					}
 				}
@@ -482,10 +512,9 @@ public class IRIS_AssignmentServicePage extends BasePage {
 		}
 
 	}
-	
+
 	public void addAdditionalSubService(String coreFlexType) {
 		subServiceIDMap = new HashMap<String, String>();
-		System.out.println("Empty SubserviceMap : "+subServiceIDMap);
 		try {
 			for (FlexBenefit benefitList : flexBenefits) {
 				for (Benefit benefit : benefitList.getBenefits()) {
@@ -495,12 +524,11 @@ public class IRIS_AssignmentServicePage extends BasePage {
 						clickOnAddSubServiceButton();
 						addSubService(IRISConstants.SUB_SERVICE, benefit.getIrisSubserviceType(),
 								benefit.getIrisSubserviceName(), coreFlexType);
-						clickSaveButton();							
+						clickSaveButton();
 						benefit.setIrisSubserviceID(String.valueOf(
 								new Double(IRIS_PageMaster.getTableObjectWithIndex(_IRIS, "javax.swing.JTable", 1)
 										.getCell(1, IRISConstants.ID_TEXT).getValue().toString()).intValue()));
 						subServiceIDMap.put(benefit.getIrisServiceName(), benefit.getIrisSubserviceID());
-						System.out.println("SubserviceMap : "+subServiceIDMap);
 					}
 				}
 			}
@@ -520,6 +548,7 @@ public class IRIS_AssignmentServicePage extends BasePage {
 			rowCount = Helpers.getTableRowCount(_tableName);
 			_tableName.getCell(rowCount - 1, "Type").setValue(irisSubserviceType);
 			_tableName.getCell(rowCount - 1, "Name").setValue(irisSubserviceName);
+			CoreFunctions.waitHandler(1);
 			_tableName.getCell(rowCount - 1, "Core/Flex").setValue(coreFlexType);
 		} catch (Exception e) {
 			Reporter.addStepLog(MessageFormat.format(
@@ -535,7 +564,8 @@ public class IRIS_AssignmentServicePage extends BasePage {
 					if ((benefit.getSelectBenefitOnFPTPage()) && (benefit.getAiresManagedService().equals("Yes"))) {
 						searchAndSelectAddedService(getTableName(IRISConstants.SERVICE), IRISConstants.NAME,
 								benefit.getIrisServiceName());
-						selectSubService(IRISConstants.SUB_SERVICE);
+						selectSubService(getTableName(IRISConstants.SUB_SERVICE), IRISConstants.NAME,
+								benefit.getIrisSubserviceName());
 						setSubServiceStatus(subServiceStatus);
 					}
 				}
@@ -557,7 +587,7 @@ public class IRIS_AssignmentServicePage extends BasePage {
 			}
 		}
 	}
-	
+
 	public void setSubServiceStatus(String fileStatus) throws Exception {
 		_IRIS = getIRISWindow();
 		Menu optionsMenu = _IRIS.describe(Menu.class, new MenuDescription.Builder().label("Options").build());
@@ -575,17 +605,18 @@ public class IRIS_AssignmentServicePage extends BasePage {
 		robot.keyPress(KeyEvent.VK_ENTER);
 		robot.keyRelease(KeyEvent.VK_ENTER);
 	}
-	
-	public void updateAddedServices(String columnName, String newSubserviceServiceType) {
+
+	public void updateAddedServices(String columnName, String newSubserviceServiceType, int numberOfMilestones) {
 		try {
 			for (FlexBenefit benefitList : flexBenefits) {
 				for (Benefit benefit : benefitList.getBenefits()) {
-					if ((benefit.getSelectBenefitOnFPTPage()) && (benefit.getAiresManagedService().equals("Yes"))) {
+					if (Objects.equals(benefit.getAiresManagedService(), "Yes") && benefit.getSelectBenefitOnFPTPage()
+							&& benefit.getNoOfMilestones() != null
+							&& Objects.equals(benefit.getNoOfMilestones(), numberOfMilestones)) {
 						searchAndSelectAddedService(getTableName(IRISConstants.SERVICE), IRISConstants.NAME,
 								benefit.getIrisServiceName());
-						selectSubService(IRISConstants.SUB_SERVICE);
-						updateSubServiceColumnData(IRISConstants.SUB_SERVICE,
-								columnName, newSubserviceServiceType);
+						selectAndUpdateSubServiceColumnData(getTableName(IRISConstants.SUB_SERVICE), IRISConstants.NAME,
+								benefit.getIrisSubserviceName(), columnName, newSubserviceServiceType);
 						clickSaveButton();
 					}
 				}
@@ -595,6 +626,80 @@ public class IRIS_AssignmentServicePage extends BasePage {
 					IRISConstants.EXCEPTION_OCCURED_WHILE_CANCELLING_ADDED_SERVICES_ON_SERVICES_TAB_OF_IRIS_APPLICATION,
 					CoreConstants.FAIL, e.getMessage()));
 		}
+	}
+
+	private void selectAndUpdateSubServiceColumnData(Table table, String name, String irisSubserviceName,
+			String columnName, String newSubserviceServiceType) throws GeneralLeanFtException {
+		for (int rowCount = 0; rowCount < table.getRows().size(); rowCount++) {
+			if (table.getCell(rowCount, name).getValue().toString().contains(irisSubserviceName)) {
+				Helpers.selectTableRow(table, rowCount);
+				CoreFunctions.waitHandler(1);
+				_tableName.getCell(rowCount, columnName).setValue(newSubserviceServiceType);
+				break;
+			}
+		}
+		
+	}
+
+	public void addServiceAndSubServiceForAiresManagedBenefit(String coreFlexType, int noOfMilestones) {
+		subServiceIDMap = new HashMap<String, String>();
+		try {
+			for (FlexBenefit benefitList : flexBenefits) {
+				for (Benefit benefit : benefitList.getBenefits()) {
+					if ((benefit.getSelectBenefitOnFPTPage()) && (benefit.getAiresManagedService().equals("Yes"))
+							&& benefit.getNoOfMilestones() != null && benefit.getNoOfMilestones() == noOfMilestones) {
+						System.out.println(benefit.getIrisServiceName() + ":" + benefit.getIrisSubserviceType() + ":"
+								+ benefit.getIrisSubserviceName());
+						addService(benefit.getIrisServiceName());
+						clickOnAddSubServiceButton();
+						addSubService(IRISConstants.SUB_SERVICE, benefit.getIrisSubserviceType(),
+								benefit.getIrisSubserviceName(), coreFlexType);
+						clickSaveButton();
+						int rowCount = Helpers.getTableRowCount(getTableName(IRISConstants.SUB_SERVICE));
+						benefit.setIrisSubserviceID(String.valueOf(
+								new Double(IRIS_PageMaster.getTableObjectWithIndex(_IRIS, "javax.swing.JTable", 1)
+										.getCell(rowCount - 1, IRISConstants.ID_TEXT).getValue().toString())
+												.intValue()));
+						subServiceIDMap.put(benefit.getIrisSubserviceName(), benefit.getIrisSubserviceID());
+						CoreFunctions.waitHandler(2);
+					}
+				}
+			}
+			System.out.println(subServiceIDMap);
+		} catch (Exception e) {
+			Reporter.addStepLog(MessageFormat.format(
+					IRISConstants.EXCEPTION_OCCURED_WHILE_ADDING_SERVICE_SUBSERVICE_ON_SERVICES_TAB_OF_IRIS_APPLICATION,
+					CoreConstants.FAIL, e.getMessage()));
+		}
+	}
+	
+	public void addServiceAndSubServiceForMultipleSubmission(String coreFlexType) {
+		subServiceIDMap = new HashMap<String, String>();
+		try {
+			for (FlexBenefit benefitList : flexBenefits) {
+				for (Benefit benefit : benefitList.getBenefits()) {
+					if (benefit.getSelectBenefitOnFPTPage() && benefit.getMultipleBenefitSubmission()) {
+						addService(benefit.getIrisServiceName());
+						clickOnAddSubServiceButton();
+						addSubService(IRISConstants.SUB_SERVICE, benefit.getIrisSubserviceType(),
+								benefit.getIrisSubserviceName(), coreFlexType);
+						clickSaveButton();
+						int rowCount = Helpers.getTableRowCount(getTableName(IRISConstants.SUB_SERVICE));
+						benefit.setIrisSubserviceID(String.valueOf(
+								new Double(IRIS_PageMaster.getTableObjectWithIndex(_IRIS, "javax.swing.JTable", 1)
+										.getCell(rowCount - 1, IRISConstants.ID_TEXT).getValue().toString())
+												.intValue()));
+						subServiceIDMap.put(benefit.getIrisSubserviceName(), benefit.getIrisSubserviceID());
+						CoreFunctions.waitHandler(2);
+					}
+				}
+			}
+		} catch (Exception e) {
+			Reporter.addStepLog(MessageFormat.format(
+					IRISConstants.EXCEPTION_OCCURED_WHILE_ADDING_SERVICE_SUBSERVICE_ON_SERVICES_TAB_OF_IRIS_APPLICATION,
+					CoreConstants.FAIL, e.getMessage()));
+		}
+
 	}
 
 }

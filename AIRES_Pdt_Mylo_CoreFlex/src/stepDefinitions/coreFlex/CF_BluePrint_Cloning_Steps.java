@@ -10,7 +10,6 @@ import org.testng.Assert;
 import com.aires.businessrules.CoreFunctions;
 import com.aires.businessrules.constants.COREFLEXConstants;
 import com.aires.businessrules.constants.CoreConstants;
-import com.aires.businessrules.constants.MobilityXConstants;
 import com.aires.businessrules.constants.PDTConstants;
 import com.aires.cucumber.TestContext;
 import com.aires.pages.coreflex.CoreFlex_AirportPickup_BenefitsPage;
@@ -45,7 +44,6 @@ import com.aires.pages.coreflex.TransfereeSubmissions_DetailsPage;
 import com.aires.pages.coreflex.TransfereeSubmissions_LoginPage;
 import com.aires.pages.pdt.PDT_GeneralInformationPage;
 import com.aires.pages.pdt.PDT_ViewPolicyPage;
-import com.aires.utilities.Log;
 import com.vimalselvam.cucumber.listener.Reporter;
 
 import cucumber.api.DataTable;
@@ -177,10 +175,10 @@ public class CF_BluePrint_Cloning_Steps {
 		searchedPolicyIndex = viewPolicyPage.searchPolicyByStatus(policyStatus);
 	}
 
-	@When("^he mouse-hover the 'clone' icon to check to check \"([^\"]*)\" policy Enabled/Disabled property$")
-	public void he_mouse_hovere_the_clone_icon_to_check_to_check_policy_Enabled_Disabled_property(
+	@When("^he mouse-hover the \"([^\"]*)\" icon to check to check \"([^\"]*)\" policy Enabled/Disabled property$")
+	public void he_mouse_hover_icon_to_check_to_check_policy_Enabled_Disabled_property(String iconName,
 			String expectedPolicyStatus) throws Throwable {
-		viewPolicyPage.hoverCloneIcon(searchedPolicyIndex);
+		viewPolicyPage.hoverIcon(iconName, searchedPolicyIndex);
 	}
 
 	@Given("^he has clicked on 'Clone Policy' icon after searching for 'Points Based CoreFlex Policy' with Policy Status as \"([^\"]*)\"$")
@@ -193,15 +191,14 @@ public class CF_BluePrint_Cloning_Steps {
 		viewPolicyPage.clickCloneIconOfReferencePolicy(policyStatus);
 	}
 
-	@Then("^'Clone Policy' icon Enabled/Disabled status should be \"([^\"]*)\" for \"([^\"]*)\" Policy Status$")
-	public void Clone_Policy_icon_Enabled_Disabled_status_should_be_for_Policy_Status(String expectedCloneIconStatus,
-			String expectedPolicyStatus) throws Throwable {
+	@Then("^\"([^\"]*)\" icon Enabled/Disabled status should be \"([^\"]*)\" for \"([^\"]*)\" Policy Status$")
+	public void icon_Enabled_Disabled_status_should_be_for_Policy_Status(String iconName,
+			String expectedCloneIconStatus, String expectedPolicyStatus) throws Throwable {
 		Assert.assertTrue(
-				viewPolicyPage.verifyCloneIconStatus(searchedPolicyIndex, expectedCloneIconStatus,
+				viewPolicyPage.verifyIconStatus(iconName, searchedPolicyIndex, expectedCloneIconStatus,
 						expectedPolicyStatus),
-				MessageFormat.format(
-						COREFLEXConstants.FAILED_TO_VERIFY_CLONE_ICON_STATUS_ON_VIEW_EDIT_POLICY_FORMS_PAGE,
-						CoreConstants.FAIL, expectedPolicyStatus));
+				MessageFormat.format(COREFLEXConstants.FAILED_TO_VERIFY_ICON_STATUS_ON_VIEW_EDIT_POLICY_FORMS_PAGE,
+						CoreConstants.FAIL, iconName, expectedPolicyStatus, expectedPolicyStatus));
 	}
 
 	@Given("^he has verified following 'Clone Policy' dialog values after clicking on 'Clone Policy' icon for Enabled Clone Icon \"([^\"]*)\"$")
@@ -246,12 +243,13 @@ public class CF_BluePrint_Cloning_Steps {
 				MessageFormat.format(PDTConstants.FAILED_TO_VALIDATE_CLIENT_POLICY_DATA_ON_GENERAL_INFORMATION_PAGE,
 						CoreConstants.FAIL));
 		Assert.assertTrue(
-				generalInfoPage.verifyGeneralInfoFieldDefaultValue(PDTConstants.POLICY_STATUS, PDTConstants.DRAFT),
+				generalInfoPage.verifyGeneralInfoFieldDefaultValue(PDTConstants.POLICY_STATUS,
+						expectedClonedPolicyStatus),
 				MessageFormat.format(PDTConstants.FAILED_TO_VERIFY_DEFAULT_VALUE_OF_GENERAL_INFORMATION_PAGE_FIELD,
 						CoreConstants.FAIL, PDTConstants.POLICY_STATUS));
 		Assert.assertTrue(
 				generalInfoPage.verifyGeneralInfoFieldDefaultValue(COREFLEXConstants.POLICY_VERSION,
-						CoreFunctions.getPropertyFromConfig("CoreFlex_PolicyVersion")),
+						expectedClonedPolicyVersion),
 				MessageFormat.format(PDTConstants.FAILED_TO_VERIFY_DEFAULT_VALUE_OF_GENERAL_INFORMATION_PAGE_FIELD,
 						CoreConstants.FAIL, COREFLEXConstants.POLICY_VERSION));
 		Assert.assertTrue(
@@ -271,10 +269,13 @@ public class CF_BluePrint_Cloning_Steps {
 		generalInfoPage.clickElementOfPage(PDTConstants.NEXT);
 	}
 
-	@Then("^all the 'CoreFlex' benefits from the reference \"([^\"]*)\" type 'Points Based CoreFlex policy' should be copied over to the 'Cloned - Points based CoreFlex Policy'$")
-	public void all_the_CoreFlex_benefits_from_the_reference_type_Points_Based_CoreFlex_policy_should_be_copied_over_to_the_Cloned_Points_based_CoreFlex_Policy(
-			String policyType, DataTable dataTable) throws Throwable {
+	@Then("^all the 'CoreFlex' benefits from the reference 'Points Based CoreFlex policy' should be copied over to the 'Cloned - Points based CoreFlex Policy'$")
+	public void all_the_CoreFlex_benefits_from_the_reference_Points_Based_CoreFlex_policy_should_be_copied_over_to_the_Cloned_Points_based_CoreFlex_Policy(
+			DataTable dataTable) throws Throwable {
 		List<Map<String, String>> basePolicyDataMap = dataTable.asMaps(String.class, String.class);
+		String benefitType = basePolicyDataMap.get(0).get("BenefitType");
+		String policyRequiredFor = basePolicyDataMap.get(0).get("PolicyRequiredFor");
+		String numberOfMilestones = basePolicyDataMap.get(0).get("MileStones");	
 		CoreConstants.TIME_BEFORE_ACTION = new Date().getTime();
 		Assert.assertTrue(flexPolicySetupPage.verifyPageNavigation(COREFLEXConstants.FLEX_POLICY_SETUP),
 				MessageFormat.format(COREFLEXConstants.FAILED_TO_VERIFY_USER_NAVIGATION_TO_FLEX_POLICY_SETUP_PAGE,
@@ -308,16 +309,15 @@ public class CF_BluePrint_Cloning_Steps {
 //						CoreConstants.FAIL));
 
 		Assert.assertTrue(
-				coreFlexPolicyBenefitsCategoriesPage.verifySelectedBenefitsPostVersioningCloning(
-						basePolicyDataMap.get(0).get("PolicyType"), basePolicyDataMap.get(0).get("PolicyRequiredFor")),
+				coreFlexPolicyBenefitsCategoriesPage.verifySelectedBenefitsPostVersioningCloning(benefitType,
+						policyRequiredFor, numberOfMilestones),
 				MessageFormat.format(
 						COREFLEXConstants.FAILED_TO_VERIFY_SELECTED_BENEFITS_ON_POLICY_BENEFITS_CATEGORIES_PAGE,
 						CoreConstants.FAIL));
 		coreFlexPolicyBenefitsCategoriesPage.clickElementOfPage(PDTConstants.NEXT);
 		CoreConstants.TIME_BEFORE_ACTION = new Date().getTime();
-		Assert.assertTrue(
-				coreFlexPolicyBenefitsCategoriesPage.verifyBenefitsDisplayedOnLeftNavigation(
-						policyType, basePolicyDataMap.get(0).get("PolicyRequiredFor")),
+		Assert.assertTrue(coreFlexPolicyBenefitsCategoriesPage.verifyBenefitsDisplayedOnLeftNavigation(benefitType,
+				policyRequiredFor, numberOfMilestones),
 				MessageFormat.format(
 						COREFLEXConstants.FAILED_TO_VERIFY_SELECTED_BENEFITS_ON_LEFT_NAVIGATION_POST_VERSIONING_CLONING,
 						CoreConstants.FAIL));
@@ -326,16 +326,16 @@ public class CF_BluePrint_Cloning_Steps {
 				+ CoreFunctions.calculatePageLoadTime(CoreConstants.TIME_BEFORE_ACTION, CoreConstants.TIME_AFTER_ACTION)
 				+ " Seconds </b>");
 		Assert.assertTrue(coreFlexPolicyBenefitsCategoriesPage.verifyAddedBenefitDetailsPostVersioningCloning(
-				policyType, coreFlexDuplicateHousingBenefitsPage,
-				coreFlexLumpSumBenefitsPage, coreFlexOtherHousingBenefitsPage, coreFlexLanguageTrainingBenefitsPage,
+				benefitType, coreFlexDuplicateHousingBenefitsPage, coreFlexLumpSumBenefitsPage,
+				coreFlexOtherHousingBenefitsPage, coreFlexLanguageTrainingBenefitsPage,
 				coreFlexTemporaryLivingBenefitsPage, coreFlexCulturalTrainingBenefitsPage,
 				coreFlexConciergeServicesBenefitsPage, coreFlexHomePurchaseBenefitsPage, coreFlexFinalMoveBenefitsPage,
 				coreFlexAreaTourBenefitsPage, coreFlexHomeLeaveBenefitsPage, coreFlexAirportPickupBenefitsPage,
 				coreFlexPreAcceptanceServicesBenefitsPage, coreFlexFurnitureRentalBenefitsPage,
 				coreFlexAutoRentalDuringAssignmentBenefitsPage, coreFlexEducationAssistanceBenefitsPage,
-				coreFlexHouseHuntingTripBenefitsPage, basePolicyDataMap.get(0).get("PolicyRequiredFor")),
+				coreFlexHouseHuntingTripBenefitsPage, policyRequiredFor,numberOfMilestones),
 				MessageFormat.format(COREFLEXConstants.FAILED_TO_SELECT_AND_FILL_ADDED_BENEFITS, CoreConstants.FAIL));
-		
+
 		coreFlexPolicyBenefitsCategoriesPage.clickLeftNavigationMenuOfPage(COREFLEXConstants.BENEFIT_SUMMARY);
 		CoreConstants.TIME_BEFORE_ACTION = new Date().getTime();
 		Assert.assertTrue(
@@ -348,7 +348,8 @@ public class CF_BluePrint_Cloning_Steps {
 				+ " Seconds </b>");
 
 		Assert.assertTrue(
-				coreFlexBenefitSummaryPage.iterateAndVerifyBenefitSummaryDetails(COREFLEXConstants.CLONING),
+				coreFlexBenefitSummaryPage.iterateAndVerifyBenefitSummaryDetails(policyRequiredFor,
+						numberOfMilestones),
 				MessageFormat.format(
 						COREFLEXConstants.FAILED_TO_VERIFY_BENEFIT_SUBBENEFIT_DETAILS_ON_BENEFIT_SUMMARY_PAGE,
 						CoreConstants.FAIL));
@@ -362,7 +363,8 @@ public class CF_BluePrint_Cloning_Steps {
 				+ CoreFunctions.calculatePageLoadTime(CoreConstants.TIME_BEFORE_ACTION, CoreConstants.TIME_AFTER_ACTION)
 				+ " Seconds </b>");
 
-		Assert.assertTrue(coreFlexCustomBundlesPage.verifyAddedCustomBundlePostVersioningCloning(COREFLEXConstants.CLONING),
+		Assert.assertTrue(
+				coreFlexCustomBundlesPage.verifyAddedCustomBundlePostVersioningCloning(policyRequiredFor),
 				MessageFormat.format(COREFLEXConstants.FAILED_TO_VERIFY_ADDED_CUSTOM_BUNDLE_ON_CUSTOM_BUNDLES_PAGE,
 						CoreConstants.FAIL));
 		coreFlexCustomBundlesPage.clickElementOfPage(COREFLEXConstants.PREVIEW_TRANSFEREE_EXPERIENCE);
@@ -374,7 +376,9 @@ public class CF_BluePrint_Cloning_Steps {
 				+ CoreFunctions.calculatePageLoadTime(CoreConstants.TIME_BEFORE_ACTION, CoreConstants.TIME_AFTER_ACTION)
 				+ " Seconds </b>");
 
-		Assert.assertTrue(coreFlexTransfereePreviewPage.verifyPreviewTransfereeExperience(policyType,COREFLEXConstants.CLONING),
+		Assert.assertTrue(
+				coreFlexTransfereePreviewPage.verifyPreviewTransfereeExperience(benefitType, policyRequiredFor,
+						numberOfMilestones),
 				MessageFormat.format(COREFLEXConstants.FAILED_TO_VERIFY_BENEFITS_DETAILS_ON_PREVIEW_TRANSFEREE_PAGE,
 						CoreConstants.FAIL));
 		coreFlexTransfereePreviewPage.clickElementOfPage(COREFLEXConstants.CLOSE_TRANSFEREE_PREVIEW);

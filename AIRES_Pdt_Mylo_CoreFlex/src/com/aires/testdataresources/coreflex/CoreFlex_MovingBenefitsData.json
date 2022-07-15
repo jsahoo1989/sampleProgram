@@ -27,7 +27,7 @@
 			"comment": "Final Move Lodging comment"
 		},
 		"finalMoveMeals": {
-			"numberOfDaysForMeal": "Set # of nights",
+			"numberOfDaysForMeal": "Set # of days",
 			"numberOfDays": "3",
 			"type": "Allowance",
 			"maxAmount": "Flat Amount",

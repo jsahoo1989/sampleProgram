@@ -306,4 +306,19 @@ public class Helpers {
 			System.out.println(tableObject.getColumnHeaders().get(i));
 		}
 	}
+	
+	public static int getRowIdMatchingCellValue(Table table, String searchColumnName, String searchString)
+			throws GeneralLeanFtException {
+		table.waitUntilVisible();
+		if (table.getRows().size() > 0 & table.getColumnHeaders().contains(searchColumnName)) {
+			for (int rowCount = 0; rowCount < table.getRows().size(); rowCount++) {
+				if (table.getCell(rowCount, searchColumnName).getValue().toString().equals(searchString)) {
+					return rowCount;
+				}
+			}
+		} else {
+			Assert.fail(IRISConstants.COLUMN_NAME_NOT_FOUND);
+		}
+		return -1;
+	}
 }

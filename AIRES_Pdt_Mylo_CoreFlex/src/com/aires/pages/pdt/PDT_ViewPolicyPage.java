@@ -4,7 +4,6 @@ import java.text.MessageFormat;
 import java.util.Date;
 import java.util.List;
 import java.util.Map;
-import java.util.stream.Collector;
 import java.util.stream.Collectors;
 
 import org.openqa.selenium.By;
@@ -19,7 +18,10 @@ import com.aires.businessrules.BusinessFunctions;
 import com.aires.businessrules.CoreFunctions;
 import com.aires.businessrules.constants.COREFLEXConstants;
 import com.aires.businessrules.constants.CoreConstants;
+import com.aires.businessrules.constants.IRISConstants;
 import com.aires.businessrules.constants.PDTConstants;
+import com.aires.managers.FileReaderManager;
+import com.aires.testdatatypes.iris.IRIS_AssignmentData;
 import com.vimalselvam.cucumber.listener.Reporter;
 
 import cucumber.api.DataTable;
@@ -209,9 +211,56 @@ public class PDT_ViewPolicyPage extends Base {
 	@FindBy(how = How.XPATH, using = "//span[contains(text(),'CANCEL')]/parent::button")
 	private WebElement _buttonCancel;
 
+	// View Policy Benefit
+	@FindBy(how = How.CSS, using = "li.view-text a.nav-link > p")
+	private WebElement _headingViewPolicyBenefit;
+
+	// Assignment History - No Assignment Association Record
+	@FindBy(how = How.XPATH, using = "//tfoot[@role='rowgroup']/mat-footer-row[not(@hidden)]/mat-footer-cell")
+	private WebElement _textAssignmentHistoryNoRecords;
+
+	// Assignment History - Export Button
+	@FindBy(how = How.CSS, using = "div.exportbutton > button")
+	private WebElement _buttonExportAssignmentHistory;
+
+	// Assignment ID
+	@FindBy(how = How.CSS, using = "td.mat-column-assignmentId")
+	private WebElement _textAssignmentID;
+
+	// Assignment Name
+	@FindBy(how = How.CSS, using = "td.mat-column-transfereeName")
+	private WebElement _textAssignmentName;
+
+	// Assignment Status
+	@FindBy(how = How.CSS, using = "td.mat-column-assignmentStatusCode")
+	private WebElement _textAssignmentStatus;
+
+	// Assignment Booked Date
+	@FindBy(how = How.CSS, using = "td.mat-column-bookDate")
+	private WebElement _textAssignmentBookedDate;
+
+	// Assignment Origin Country
+	@FindBy(how = How.CSS, using = "td.mat-column-originCountryName")
+	private WebElement _textAssignmentOriginCountry;
+
+	// Assignment Destination Country
+	@FindBy(how = How.CSS, using = "td.mat-column-destCountryName")
+	private WebElement _textAssignmentDestinationCountry;
+
+	// Assignment MSPEC
+	@FindBy(how = How.CSS, using = "td.mat-column-mspec")
+	private WebElement _textAssignmentMSPEC;
+
+	// Assignment PPC
+	@FindBy(how = How.CSS, using = "td.mat-column-ppc")
+	private WebElement _textAssignmentPPC;
+
 	final By _listPolicyNameByLocator = By.cssSelector("h5.text-info.info-pname");
 	final By _listClientNameByLocator = By.cssSelector("h6.info-pclient");
 	long timeBeforeAction, timeAfterAction;
+	
+	IRIS_AssignmentData assignmentOverviewData = FileReaderManager.getInstance().getIrisJsonReader()
+			.getAssignmentDataByTabName(IRISConstants.OVERVIEW);
 
 	public String getElementText(String elementName) {
 		String elementText = null;
@@ -425,13 +474,11 @@ public class PDT_ViewPolicyPage extends Base {
 
 			actualPolicyStatus = actualPolicyStatusList.split(":");
 			isApprovedPolicyStatusVerified = (actualPolicyStatus[1].trim()).equals(expectedPolicyStatus);
-			CoreFunctions.highlightObject(driver,
-					CoreFunctions.getElementFromListByText(_listPolicyStatus, (actualPolicyStatus[1].trim())));
+			CoreFunctions.highlightObject(driver,_listPolicyStatus.get(index));
 
 			actualPolicyVersion = actualPolicyVersionList.split(":");
 			isApprovedPolicyVersionVerified = (actualPolicyVersion[1].trim()).equals(expectedPolicyVersion);
-			CoreFunctions.highlightObject(driver,
-					CoreFunctions.getElementFromListByText(_listPolicyVersion, (actualPolicyVersion[1].trim())));
+			CoreFunctions.highlightObject(driver,_listPolicyVersion.get(index));
 			CoreFunctions.writeToPropertiesFile("CoreFlex_PolicyVersion", actualPolicyVersion[1].trim());
 			isApprovedPolicyVerified = isApprovedPolicyStatusVerified && isApprovedPolicyVersionVerified;
 		} catch (Exception e) {
@@ -501,7 +548,6 @@ public class PDT_ViewPolicyPage extends Base {
 			if (_listPolicyName.stream().anyMatch(t -> t.getText().toLowerCase().equalsIgnoreCase(policyName))) {
 				Reporter.addStepLog(MessageFormat.format(PDTConstants.VERIFIED_ELEMENT_DISPLAYED_ON_PAGE,
 						CoreConstants.PASS, PDTConstants.POLICY_NAME, policyName, pageName));
-
 				return true;
 			}
 		} catch (Exception e) {
@@ -720,29 +766,58 @@ public class PDT_ViewPolicyPage extends Base {
 				_listClientName.get(policyIndex).getText().trim());
 	}
 
-	public boolean verifyCloneIconStatus(int searchedPolicyIndex, String expectedCloneIconStatus, String policyStatus) {
+	public boolean verifyIconStatus(String iconName, int searchedPolicyIndex, String expectedIconStatus,
+			String policyStatus) {
+		String actualIconStatus = null;
 		try {
-			String actualCloneIconStatus = CoreFunctions
-					.getAttributeText(_listCloneIcon.get(searchedPolicyIndex), "src").contains("cloneDisable")
-							? COREFLEXConstants.DISABLED
-							: COREFLEXConstants.ENABLED;
-			if (actualCloneIconStatus.equalsIgnoreCase(expectedCloneIconStatus)) {
+			switch (iconName) {
+			case COREFLEXConstants.CLONE_ICON:
+				actualIconStatus = CoreFunctions.getAttributeText(_listCloneIcon.get(searchedPolicyIndex), "src")
+						.contains("cloneDisable") ? COREFLEXConstants.DISABLED : COREFLEXConstants.ENABLED;
 				CoreFunctions.highlightObject(driver, _listCloneIcon.get(searchedPolicyIndex));
-				Reporter.addStepLog(
-						MessageFormat.format(COREFLEXConstants.SUCCESSFULLY_VERIFIED_CLONE_ICON_FOR_POLICY_STATUS,
-								CoreConstants.PASS, policyStatus, expectedCloneIconStatus));
-				return true;
+				CoreFunctions.waitHandler(1);
+				break;
+			case COREFLEXConstants.ASSIGNMENT_HISTORY_ICON:
+				actualIconStatus = CoreFunctions
+						.getAttributeText(_listAssignmentHistoryIcon.get(searchedPolicyIndex), "src")
+						.contains("disable") ? COREFLEXConstants.DISABLED : COREFLEXConstants.ENABLED;
+				CoreFunctions.highlightObject(driver, _listAssignmentHistoryIcon.get(searchedPolicyIndex));
+				CoreFunctions.waitHandler(1);
+				break;
+			default:
+				Assert.fail(COREFLEXConstants.INVALID_OPTION);
 			}
 		} catch (Exception e) {
 			Reporter.addStepLog(MessageFormat.format(
-					COREFLEXConstants.EXCEPTION_OCCURED_WHILE_VALIDATING_CLONE_ICON_FOR_POLICY_WITH_STATUS,
-					CoreConstants.FAIL, policyStatus, e.getMessage()));
+					COREFLEXConstants.EXCEPTION_OCCURED_WHILE_VALIDATING_ICON_ENABLED_DISABLED_STATE_FOR_POLICY_WITH_STATUS,
+					CoreConstants.FAIL, iconName, expectedIconStatus, policyStatus, e.getMessage()));
+		}
+		if (actualIconStatus.equalsIgnoreCase(expectedIconStatus)) {
+			Reporter.addStepLog(MessageFormat.format(
+					COREFLEXConstants.SUCCESSFULLY_VERIFIED_ICON_ENABLED_DISABLED_STATE_FOR_POLICY_STATUS,
+					CoreConstants.PASS, iconName, expectedIconStatus, policyStatus));
+			return true;
 		}
 		return false;
 	}
 
-	public void hoverCloneIcon(int searchedPolicyIndex) {
-		CoreFunctions.moveToElement(driver, _listCloneIcon.get(searchedPolicyIndex));
+	public void hoverIcon(String iconName, int searchedPolicyIndex) {
+		try {
+			switch (iconName) {
+			case COREFLEXConstants.CLONE_ICON:
+				CoreFunctions.moveToElement(driver, _listCloneIcon.get(searchedPolicyIndex));
+				break;
+			case COREFLEXConstants.ASSIGNMENT_HISTORY_ICON:
+				CoreFunctions.moveToElement(driver, _listAssignmentHistoryIcon.get(searchedPolicyIndex));
+				break;
+			default:
+				Assert.fail(COREFLEXConstants.INVALID_OPTION);
+			}
+
+		} catch (Exception e) {
+			Reporter.addStepLog(MessageFormat.format(COREFLEXConstants.EXCEPTION_OCCURED_WHILE_HOVERING_OVER_ICON,
+					CoreConstants.FAIL, iconName, e.getMessage()));
+		}
 	}
 
 	public void searchPolicy(String policyName) {
@@ -976,5 +1051,111 @@ public class PDT_ViewPolicyPage extends Base {
 					CoreConstants.FAIL, expectedStatus, actualPolicyStatus));
 		}
 		return isPolicyStatusVerifiedForVersion;
+	}
+
+	/**
+	 * Method to verify navigated Page Header Title
+	 * 
+	 * @param expectedPageName
+	 * @return
+	 */
+	public boolean verifyViewPolicyPageNavigation(String expectedPageName) {
+		CoreFunctions.explicitWaitTillElementInVisibility(driver, _progressBar);
+		return CoreFunctions.verifyElementOnPage(driver, _headingViewPolicyBenefit,
+				COREFLEXConstants.VIEW_POLICY_BENEFIT, expectedPageName, expectedPageName, true);
+	}
+
+	public boolean verifyRecordForNoAssignmentAssociation(String expectedText) {
+		try {
+			if ((CoreFunctions.getElementText(driver, _textAssignmentHistoryNoRecords).trim()).equals(expectedText)) {
+				Reporter.addStepLog(MessageFormat.format(
+						COREFLEXConstants.SUCCESSFULLY_VERIFIED_ASSIGNMENT_HISTORY_RECORD_FOR_NO_ASSIGNMENT_ASSOCIATION,
+						CoreConstants.PASS, expectedText));
+				return true;
+			}
+
+		} catch (Exception e) {
+			Reporter.addStepLog(MessageFormat.format(
+					COREFLEXConstants.EXCEPTION_OCCURED_WHILE_VALIDATING_ASSIGNMENT_HISTORY_RECORD_FOR_NO_ASSIGNMENT_ASSOCIATION,
+					CoreConstants.FAIL, e.getMessage()));
+		}
+		return false;
+	}
+
+	public boolean verifyExportButtonDisplayed(String buttonName) {
+		return CoreFunctions.isElementExist(driver, _buttonExportAssignmentHistory, 3);
+	}
+
+	public boolean verifyRecordForAssignmentAssociation(DataTable dataTable) {
+		boolean isAssignmentDetailsVerified = false;
+		List<String> columnList = dataTable.asList(String.class);
+		try {
+			for (String columnName : columnList) {
+				isAssignmentDetailsVerified = verifyAssignmentHistoryColumnData(columnName);
+
+				if (!isAssignmentDetailsVerified) {
+					Reporter.addStepLog(MessageFormat.format(
+							COREFLEXConstants.ASSIGNMENT_HISTORY_DATA_NOT_MATCHED_ON_ASSIGNMENT_HISTORY_PAGE,
+							CoreConstants.FAIL, columnName));
+					break;
+				}
+			}
+		} catch (Exception e) {
+			Reporter.addStepLog(MessageFormat.format(
+					COREFLEXConstants.EXCEPTION_OCCURED_WHILE_VALIDATING_ASSIGNMENT_HISTORY_RECORD_FOR_NO_ASSIGNMENT_ASSOCIATION,
+					CoreConstants.FAIL, e.getMessage()));
+		}
+		if (isAssignmentDetailsVerified) {
+			Reporter.addStepLog(MessageFormat.format(
+					COREFLEXConstants.SUCCESSFULLY_VERIFIED_ASSIGNMENT_DETAILS_ON_ASSIGNMENT_HISTORY_VIEW_POLICY_BENEFIT_PAGE,
+					CoreConstants.PASS));
+		} 		
+		return isAssignmentDetailsVerified;
+	}
+
+	private boolean verifyAssignmentHistoryColumnData(String columnName) {
+		boolean isAssignmentColumnDataMatched = false;
+		try {
+			switch (columnName) {
+			case COREFLEXConstants.ASSIGNMENT_ID:
+				isAssignmentColumnDataMatched = (CoreFunctions.getElementText(driver, _textAssignmentID)
+						.equals(CoreFunctions.getPropertyFromConfig("Assignment_FileID")));
+				break;
+			case COREFLEXConstants.TRANSFEREE_NAME:
+				isAssignmentColumnDataMatched = (CoreFunctions.getElementText(driver, _textAssignmentName)
+						.equals((CoreFunctions.getPropertyFromConfig("Transferee_firstName")) + " "
+								+ (CoreFunctions.getPropertyFromConfig("Transferee_lastName"))));
+				break;
+			case COREFLEXConstants.ASSIGNMENT_STATUS:
+				isAssignmentColumnDataMatched = (CoreFunctions.getElementText(driver, _textAssignmentStatus)
+						.equals(COREFLEXConstants.ACTIVE));
+				break;
+			case COREFLEXConstants.BOOKED_DATE:
+				isAssignmentColumnDataMatched = (CoreFunctions.getElementText(driver, _textAssignmentBookedDate)
+						.equals(CoreFunctions.getPropertyFromConfig("Assignment_ActualizationDate")));
+				break;
+			case COREFLEXConstants.ORIGIN_COUNTRY:
+				isAssignmentColumnDataMatched = (CoreFunctions.getPropertyFromConfig("Assignment_OriginAddress")
+						.contains(CoreFunctions.getElementText(driver, _textAssignmentOriginCountry)));
+				break;
+			case COREFLEXConstants.DESTINATION_COUNTRY:
+				isAssignmentColumnDataMatched = (CoreFunctions.getPropertyFromConfig("Assignment_DestinationAddress")
+						.contains(CoreFunctions.getElementText(driver, _textAssignmentDestinationCountry)));
+				break;
+			case COREFLEXConstants.MSPEC_NAME:
+				isAssignmentColumnDataMatched = (CoreFunctions.getElementText(driver, _textAssignmentMSPEC)
+						.equals(assignmentOverviewData.airesFileTeamHistory.empNameMSPEC));
+				break;
+			case COREFLEXConstants.PPC_NAME:
+				isAssignmentColumnDataMatched = (CoreFunctions.getElementText(driver, _textAssignmentPPC)
+						.equals(assignmentOverviewData.airesFileTeamHistory.empNamePPC));
+				break;
+			}
+		} catch (Exception e) {
+			Reporter.addStepLog(MessageFormat.format(
+					COREFLEXConstants.EXCEPTION_OCCURED_WHILE_VALIDATING_ASSIGNMENT_HISTORY_COLUMN_DATA,
+					CoreConstants.FAIL, columnName, e.getMessage()));
+		}
+		return isAssignmentColumnDataMatched;
 	}
 }

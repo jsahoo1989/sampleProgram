@@ -405,9 +405,9 @@ public class CoreFlex_HomePurchase_BenefitsPage extends Base {
 		switch (subBenefit) {
 		case COREFLEXConstants.HOME_PURCHASE_CLOSING_COSTS:
 			expandSubBenefitIfCollapsed(getElementByName(COREFLEXConstants.HOME_PURCHASE_CLOSING_COSTS));
-			if (benefitType.equals(COREFLEXConstants.FLEX_BENEFITS)) {
-				CoreFunctions.clickElement(driver, _headerHomePurchaseClosingCosts);
-			}
+//			if (benefitType.equals(COREFLEXConstants.FLEX_BENEFITS)) {
+//				CoreFunctions.clickElement(driver, _headerHomePurchaseClosingCosts);
+//			}
 			fillHomePurchaseClosingCostsSubBenefitForm();
 			break;
 		case COREFLEXConstants.HOME_PURCHASE_POINTS:

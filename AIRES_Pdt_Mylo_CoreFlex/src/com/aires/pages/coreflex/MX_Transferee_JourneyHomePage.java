@@ -160,10 +160,16 @@ public class MX_Transferee_JourneyHomePage extends Base {
 	@FindBy(how = How.XPATH, using = "//span[contains(text(),'Flex Benefits')]/ancestor::div[contains(@id,'secondItemDiv')]//div[contains(@class,'RXCFServicesMonitoringBorderPanel')]")
 	private List<WebElement> flexCardPanelList;
 
+	private By travelRequested = By.xpath("div[4]//span[text()='Travel Requested']");
+	private By travelBooked = By.xpath("div[4]//span[text()='Travel Booked']");
+	private By travelBegins = By.xpath("div[4]//span[text()='Travel Begins']");
+	private By travelEnds = By.xpath("div[4]//span[text()='Travel Ends']");
+
 	private By flexCardBeginTrainingStatus = By
 			.xpath(".//span[contains(@class,'RXSmallerLink RXBold')][contains(text(),'Begin training')]");
 
 	private By beginTrainingEstimatedDate = By.xpath(".//div[5]//span[not(contains(text(),'estimated'))]");
+	private By autoPickupEstimatedDate = By.xpath(".//div[5]//span[not(contains(text(),'estimated'))]");
 
 	private By trainingCompletedActualizedDate = By
 			.xpath(".//div[5]//span[not(contains(text(),'estimated'))][@class='RXSmallerTextMuted RXBold']");
@@ -257,6 +263,24 @@ public class MX_Transferee_JourneyHomePage extends Base {
 	@FindBy(how = How.XPATH, using = "//span[contains(text(),'Core Benefits')]/ancestor::div[contains(@id,'firstItemDiv')]//span[contains(@class,'RXSmallerLink RXBold')][contains(text(),'Begin training')]")
 	private WebElement coreCardBeginProgressStatus;
 
+	private By coreCardAutoPickupStatus = By
+			.xpath(".//span[contains(@class,'RXSmallerLink RXBold')][contains(text(),'Auto pickup')]");
+
+	private By coreCardBeginServiceStatus = By
+			.xpath(".//span[contains(@class,'RXSmallerLink RXBold')][contains(text(),'Begin service')]");
+
+	private By coreCardRegistrationScheduledStatus = By
+			.xpath(".//span[contains(@class,'RXSmallerLink RXBold')][contains(text(),'Registration scheduled')]");
+
+	private By coreCardBeginTourStatus = By
+			.xpath(".//span[contains(@class,'RXSmallerLink RXBold')][contains(text(),'Begin tour')]");
+
+	private By coreCardFurnitureDeliveryStatus = By
+			.xpath(".//span[contains(@class,'RXSmallerLink RXBold')][contains(text(),'Furniture Delivery')]");
+
+	private By coreCardAirportPickupStatus = By
+			.xpath(".//span[contains(@class,'RXSmallerLink RXBold')][contains(text(),'Appointment Confirmed')]");
+
 	/*********************************************************************/
 
 	CoreFlex_PolicySetupPagesData policySetupPageData = FileReaderManager.getInstance().getCoreFlexJsonReader()
@@ -273,6 +297,91 @@ public class MX_Transferee_JourneyHomePage extends Base {
 
 	CoreFlex_SettlingInBenefitsData languageTrainingBenefitData = FileReaderManager.getInstance()
 			.getCoreFlexJsonReader().getSettlingInBenefitDataList(COREFLEXConstants.LANGUAGE_TRAINING);
+
+	private By flexCardAutoPickupStatus = By
+			.xpath(".//span[contains(@class,'RXSmallerLink RXBold')][contains(text(),'Auto pickup')]");
+
+	private By flexCardBeginServiceStatus = By
+			.xpath(".//span[contains(@class,'RXSmallerLink RXBold')][contains(text(),'Begin service')]");
+
+	private By beginServiceEstimatedDate = By.xpath(".//div[5]//span[not(contains(text(),'estimated'))]");
+
+	private By flexCardRegistrationScheduledStatus = By
+			.xpath(".//span[contains(@class,'RXSmallerLink RXBold')][contains(text(),'Registration scheduled')]");
+
+	private By registrationScheduledEstimatedDate = By.xpath(".//div[5]//span[not(contains(text(),'estimated'))]");
+
+	private By flexCardBeginTourStatus = By
+			.xpath(".//span[contains(@class,'RXSmallerLink RXBold')][contains(text(),'Begin tour')]");
+
+	private By beginTourEstimatedDate = By.xpath(".//div[5]//span[not(contains(text(),'estimated'))]");
+
+	private By flexCardFurnitureDeliveryStatus = By
+			.xpath(".//span[contains(@class,'RXSmallerLink RXBold')][contains(text(),'Furniture Delivery')]");
+
+	private By furnitureDeliveryEstimatedDate = By.xpath(".//div[5]//span[not(contains(text(),'estimated'))]");
+
+	private By flexCardAirportPickupStatus = By
+			.xpath(".//span[contains(@class,'RXSmallerLink RXBold')][contains(text(),'Appointment Confirmed')]");
+
+	private By airportPickupEstimatedDate = By.xpath(".//div[5]//span[not(contains(text(),'estimated'))]");
+
+	private By arrivalEstimatedDate = By
+			.xpath(".//div[5]//span[not(contains(text(),'estimated'))][@class='RXSmallerTextMuted RXBold']");
+
+	private By flexCardArrivalStatus = By.xpath(
+			"//span[contains(@class,'ServicesSuccessIcon ')]/ancestor::div[contains(@class,'ServicesTrain')]//span[contains(text(),'Arrival / meet and greet')]");
+
+	private By furniturePickUpEstimatedDate = By
+			.xpath(".//div[5]//span[not(contains(text(),'estimated'))][@class='RXSmallerTextMuted RXBold']");
+
+	private By flexCardFurniturePickUpStatus = By.xpath(
+			"//span[contains(@class,'ServicesSuccessIcon ')]/ancestor::div[contains(@class,'ServicesTrain')]//span[contains(text(),'Furniture Pick Up')]");
+
+	private By tourCompleteEstimatedDate = By
+			.xpath(".//div[5]//span[not(contains(text(),'estimated'))][@class='RXSmallerTextMuted RXBold']");
+
+	private By flexCardTourCompleteStatus = By.xpath(
+			"//span[contains(@class,'ServicesSuccessIcon ')]/ancestor::div[contains(@class,'ServicesTrain')]//span[contains(text(),'Tour complete')]");
+
+	private By registrationCompletedEstimatedDate = By
+			.xpath(".//div[5]//span[not(contains(text(),'estimated'))][@class='RXSmallerTextMuted RXBold']");
+
+	private By flexCardRegistrationCompletedStatus = By.xpath(
+			"//span[contains(@class,'ServicesSuccessIcon ')]/ancestor::div[contains(@class,'ServicesTrain')]//span[contains(text(),'Registration completed')]");
+
+	private By serviceCompleteEstimatedDate = By
+			.xpath(".//div[5]//span[not(contains(text(),'estimated'))][@class='RXSmallerTextMuted RXBold']");
+
+	private By flexCardServiceCompleteStatus = By.xpath(
+			"//span[contains(@class,'ServicesSuccessIcon ')]/ancestor::div[contains(@class,'ServicesTrain')]//span[contains(text(),'Service complete')]");
+
+	private By autoReturnEstimatedDate = By
+			.xpath(".//div[5]//span[not(contains(text(),'estimated'))][@class='RXSmallerTextMuted RXBold']");
+
+	private By flexCardAutoReturnStatus = By.xpath(
+			"//span[contains(@class,'ServicesSuccessIcon ')]/ancestor::div[contains(@class,'ServicesTrain')]//span[contains(text(),'Auto return')]");
+
+//	private By coreCardArrivalStatus = By.xpath(
+//			"//span[contains(@class,'ServicesSuccessIcon ')]/ancestor::div[contains(@class,'ServicesTrain')]//span[contains(text(),'Arrival / meet and greet')]");
+
+	private By coreCardFurniturePickUpStatus = By.xpath(
+			"//span[contains(@class,'ServicesSuccessIcon ')]/ancestor::div[contains(@class,'ServicesTrain')]//span[contains(text(),'Furniture Pick Up')]");
+
+	private By coreCardTourCompleteStatus = By.xpath(
+			"//span[contains(@class,'ServicesSuccessIcon ')]/ancestor::div[contains(@class,'ServicesTrain')]//span[contains(text(),'Tour complete')]");
+
+	private By coreCardRegistrationCompletedStatus = By.xpath(
+			"//span[contains(@class,'ServicesSuccessIcon ')]/ancestor::div[contains(@class,'ServicesTrain')]//span[contains(text(),'Registration completed')]");
+
+	private By coreCardServiceCompleteStatus = By.xpath(
+			"//span[contains(@class,'ServicesSuccessIcon ')]/ancestor::div[contains(@class,'ServicesTrain')]//span[contains(text(),'Service complete')]");
+
+	private By coreCardAutoReturnStatus = By.xpath(
+			"//span[contains(@class,'ServicesSuccessIcon ')]/ancestor::div[contains(@class,'ServicesTrain')]//span[contains(text(),'Auto return')]");
+
+	private By _serviceCompleted = By
+			.cssSelector("span[class='RXBigIconPrimary ServicesSuccessIcon icon-check-approved']");
 
 	/*********************************************************************/
 
@@ -627,6 +736,7 @@ public class MX_Transferee_JourneyHomePage extends Base {
 	private boolean verifyFlexBenefitCardStatusAfterInitialActualization(int indexBenefitCard, String expectedStatus,
 			Benefit benefit, String expectedEstimatedDate) {
 		boolean isFlexCardStatusVerified = false;
+		System.out.println("benfit anme: " + benefit.getBenefitType());
 		try {
 			switch (benefit.getBenefitType()) {
 			case COREFLEXConstants.LANGUAGE_TRAINING:
@@ -660,7 +770,83 @@ public class MX_Transferee_JourneyHomePage extends Base {
 								.equals(expectedEstimatedDate))
 						&& (!CoreFunctions.isElementExist(driver, flexCardStartingSoonStatus, 3)));
 				break;
-
+			case COREFLEXConstants.AUTO_RENTAL_DURING_ASSIGNMENT:
+				isFlexCardStatusVerified = (CoreFunctions.isElementExist(driver,
+						CoreFunctions.findSubElement(flexCardPanelList.get(indexBenefitCard), flexCardAutoPickupStatus),
+						3)
+						&& (CoreFunctions.getElementText(driver,
+								CoreFunctions.findSubElement(flexCardPanelList.get(indexBenefitCard),
+										autoPickupEstimatedDate))
+								.equals(expectedEstimatedDate))
+						&& (!CoreFunctions.isElementExist(driver, flexCardStartingSoonStatus, 3)));
+				break;
+			case COREFLEXConstants.CONCIERGE_SERVICES:
+				isFlexCardStatusVerified = (CoreFunctions.isElementExist(driver,
+						CoreFunctions.findSubElement(flexCardPanelList.get(indexBenefitCard),
+								flexCardBeginServiceStatus),
+						3)
+						&& (CoreFunctions.getElementText(driver,
+								CoreFunctions.findSubElement(flexCardPanelList.get(indexBenefitCard),
+										beginServiceEstimatedDate))
+								.equals(expectedEstimatedDate))
+						&& (!CoreFunctions.isElementExist(driver, flexCardStartingSoonStatus, 3)));
+				break;
+			case COREFLEXConstants.EDUCATION_ASSISTANCE_SCHOOL_SEARCH:
+				isFlexCardStatusVerified = (CoreFunctions.isElementExist(driver,
+						CoreFunctions.findSubElement(flexCardPanelList.get(indexBenefitCard),
+								flexCardRegistrationScheduledStatus),
+						3)
+						&& (CoreFunctions.getElementText(driver,
+								CoreFunctions.findSubElement(flexCardPanelList.get(indexBenefitCard),
+										registrationScheduledEstimatedDate))
+								.equals(expectedEstimatedDate))
+						&& (!CoreFunctions.isElementExist(driver, flexCardStartingSoonStatus, 3)));
+				break;
+			case COREFLEXConstants.AREA_TOUR:
+				isFlexCardStatusVerified = (CoreFunctions.isElementExist(driver,
+						CoreFunctions.findSubElement(flexCardPanelList.get(indexBenefitCard), flexCardBeginTourStatus),
+						3)
+						&& (CoreFunctions.getElementText(driver,
+								CoreFunctions.findSubElement(flexCardPanelList.get(indexBenefitCard),
+										beginTourEstimatedDate))
+								.equals(expectedEstimatedDate))
+						&& (!CoreFunctions.isElementExist(driver, flexCardStartingSoonStatus, 3)));
+				break;
+			case COREFLEXConstants.FURNITURE_RENTAL:
+				isFlexCardStatusVerified = (CoreFunctions.isElementExist(driver,
+						CoreFunctions.findSubElement(flexCardPanelList.get(indexBenefitCard),
+								flexCardFurnitureDeliveryStatus),
+						3)
+						&& (CoreFunctions.getElementText(driver,
+								CoreFunctions.findSubElement(flexCardPanelList.get(indexBenefitCard),
+										furnitureDeliveryEstimatedDate))
+								.equals(expectedEstimatedDate))
+						&& (!CoreFunctions.isElementExist(driver, flexCardStartingSoonStatus, 3)));
+				break;
+			case COREFLEXConstants.AIRPORT_PICKUP:
+				isFlexCardStatusVerified = (CoreFunctions.isElementExist(driver,
+						CoreFunctions.findSubElement(flexCardPanelList.get(indexBenefitCard),
+								flexCardAirportPickupStatus),
+						3)
+						&& (CoreFunctions.getElementText(driver,
+								CoreFunctions.findSubElement(flexCardPanelList.get(indexBenefitCard),
+										airportPickupEstimatedDate))
+								.equals(expectedEstimatedDate))
+						&& (!CoreFunctions.isElementExist(driver, flexCardStartingSoonStatus, 3)));
+				break;
+			case COREFLEXConstants.HOUSE_HUNTING_TRIP:
+			case COREFLEXConstants.FINAL_MOVE:
+			case COREFLEXConstants.HOME_LEAVE:
+			case COREFLEXConstants.PRE_ACCEPTANCE_SERVICES:
+				isFlexCardStatusVerified = CoreFunctions.isElementExist(driver,
+						CoreFunctions.findSubElement(flexCardPanelList.get(indexBenefitCard), travelRequested), 3)
+						&& CoreFunctions.isElementExist(driver,
+								CoreFunctions.findSubElement(flexCardPanelList.get(indexBenefitCard), travelBooked), 3)
+						&& CoreFunctions.isElementExist(driver,
+								CoreFunctions.findSubElement(flexCardPanelList.get(indexBenefitCard), travelBegins), 3)
+						&& CoreFunctions.isElementExist(driver,
+								CoreFunctions.findSubElement(flexCardPanelList.get(indexBenefitCard), travelEnds), 3);
+				break;
 			default:
 				Assert.fail(COREFLEXConstants.INVALID_OPTION);
 
@@ -717,7 +903,82 @@ public class MX_Transferee_JourneyHomePage extends Base {
 								.equals(expectedEstimatedDate))
 						&& (!CoreFunctions.isElementExist(driver, flexCardStartingSoonStatus, 3)));
 				break;
-
+			case COREFLEXConstants.AUTO_RENTAL_DURING_ASSIGNMENT:
+				isFlexCardStatusVerified = (CoreFunctions.isElementExist(driver,
+						CoreFunctions.findSubElement(flexCardPanelList.get(indexBenefitCard), flexCardAutoReturnStatus),
+						3)
+						&& (CoreFunctions.getElementText(driver,
+								CoreFunctions.findSubElement(flexCardPanelList.get(indexBenefitCard),
+										autoReturnEstimatedDate))
+								.equals(expectedEstimatedDate))
+						&& (!CoreFunctions.isElementExist(driver, flexCardStartingSoonStatus, 3)));
+				break;
+			case COREFLEXConstants.CONCIERGE_SERVICES:
+				isFlexCardStatusVerified = (CoreFunctions.isElementExist(driver,
+						CoreFunctions.findSubElement(flexCardPanelList.get(indexBenefitCard),
+								flexCardServiceCompleteStatus),
+						3)
+						&& (CoreFunctions.getElementText(driver,
+								CoreFunctions.findSubElement(flexCardPanelList.get(indexBenefitCard),
+										serviceCompleteEstimatedDate))
+								.equals(expectedEstimatedDate))
+						&& (!CoreFunctions.isElementExist(driver, flexCardStartingSoonStatus, 3)));
+				break;
+			case COREFLEXConstants.EDUCATION_ASSISTANCE_SCHOOL_SEARCH:
+				isFlexCardStatusVerified = (CoreFunctions.isElementExist(driver,
+						CoreFunctions.findSubElement(flexCardPanelList.get(indexBenefitCard),
+								flexCardRegistrationCompletedStatus),
+						3)
+						&& (CoreFunctions.getElementText(driver,
+								CoreFunctions.findSubElement(flexCardPanelList.get(indexBenefitCard),
+										registrationCompletedEstimatedDate))
+								.equals(expectedEstimatedDate))
+						&& (!CoreFunctions.isElementExist(driver, flexCardStartingSoonStatus, 3)));
+				break;
+			case COREFLEXConstants.AREA_TOUR:
+				isFlexCardStatusVerified = (CoreFunctions.isElementExist(driver,
+						CoreFunctions.findSubElement(flexCardPanelList.get(indexBenefitCard),
+								flexCardTourCompleteStatus),
+						3)
+						&& (CoreFunctions.getElementText(driver,
+								CoreFunctions.findSubElement(flexCardPanelList.get(indexBenefitCard),
+										tourCompleteEstimatedDate))
+								.equals(expectedEstimatedDate))
+						&& (!CoreFunctions.isElementExist(driver, flexCardStartingSoonStatus, 3)));
+				break;
+			case COREFLEXConstants.FURNITURE_RENTAL:
+				isFlexCardStatusVerified = (CoreFunctions.isElementExist(driver,
+						CoreFunctions.findSubElement(flexCardPanelList.get(indexBenefitCard),
+								flexCardFurniturePickUpStatus),
+						3)
+						&& (CoreFunctions.getElementText(driver,
+								CoreFunctions.findSubElement(flexCardPanelList.get(indexBenefitCard),
+										furniturePickUpEstimatedDate))
+								.equals(expectedEstimatedDate))
+						&& (!CoreFunctions.isElementExist(driver, flexCardStartingSoonStatus, 3)));
+				break;
+			case COREFLEXConstants.AIRPORT_PICKUP:
+				isFlexCardStatusVerified = (CoreFunctions.isElementExist(driver,
+						CoreFunctions.findSubElement(flexCardPanelList.get(indexBenefitCard), flexCardArrivalStatus), 3)
+						&& (CoreFunctions.getElementText(driver,
+								CoreFunctions.findSubElement(flexCardPanelList.get(indexBenefitCard),
+										arrivalEstimatedDate))
+								.equals(expectedEstimatedDate))
+						&& (!CoreFunctions.isElementExist(driver, flexCardStartingSoonStatus, 3)));
+				break;
+			case COREFLEXConstants.HOUSE_HUNTING_TRIP:
+			case COREFLEXConstants.FINAL_MOVE:
+			case COREFLEXConstants.HOME_LEAVE:
+			case COREFLEXConstants.PRE_ACCEPTANCE_SERVICES:
+				isFlexCardStatusVerified = CoreFunctions.isElementExist(driver,
+						CoreFunctions.findSubElement(flexCardPanelList.get(indexBenefitCard), travelRequested), 3)
+						&& CoreFunctions.isElementExist(driver,
+								CoreFunctions.findSubElement(flexCardPanelList.get(indexBenefitCard), travelBooked), 3)
+						&& CoreFunctions.isElementExist(driver,
+								CoreFunctions.findSubElement(flexCardPanelList.get(indexBenefitCard), travelBegins), 3)
+						&& CoreFunctions.isElementExist(driver,
+								CoreFunctions.findSubElement(flexCardPanelList.get(indexBenefitCard), travelEnds), 3);
+				break;
 			default:
 				Assert.fail(COREFLEXConstants.INVALID_OPTION);
 
@@ -768,6 +1029,48 @@ public class MX_Transferee_JourneyHomePage extends Base {
 							CoreConstants.FAIL, e.getMessage()));
 		}
 		return false;
+	}
+
+	public boolean verifyFlexBenefitCardDetailsOfAiresManagedBenefits(String expectedStatus, String tracingSelection,
+			int getNoOfMilestones) {
+		boolean isFlexCardDetailsVerified = false;
+		boolean flag = false;
+		String expectedEstimatedDate = CoreFunctions.getCurrentDateAsGivenFormat("dd-MMM-yyyy");
+		try {
+			for (FlexBenefit benefitList : flexBenefits) {
+				for (Benefit benefit : benefitList.getBenefits()) {
+					if ((benefit.getSelectBenefitOnFPTPage()) && (benefit.getAiresManagedService().equals("Yes"))
+							&& benefit.getNoOfMilestones() != null
+							&& getNoOfMilestones == benefit.getNoOfMilestones()) {
+						int indexBenefitCard = BusinessFunctions.returnindexItemFromListUsingText(driver,
+								flexCardBenefitDisplayName, benefit.getBenefitDisplayName());
+						isFlexCardDetailsVerified = verifyFlexCardDetails(indexBenefitCard, benefit)
+								&& verifyFlexCardStatus(indexBenefitCard, benefit, tracingSelection,
+										expectedEstimatedDate)
+								&& verifyManageThisBenefitButton(indexBenefitCard, tracingSelection, expectedStatus);
+						if (!isFlexCardDetailsVerified) {
+							return false;
+						} else {
+							flag = true;
+							CoreFunctions.scrollToElementUsingJS(driver, _textPolicyFileID,
+									COREFLEXConstants.POLICY_FILE_ID);
+						}
+					} else {
+						isFlexCardDetailsVerified = true;
+					}
+				}
+			}
+		} catch (Exception e) {
+			Reporter.addStepLog(
+					MessageFormat.format(COREFLEXConstants.EXCEPTION_OCCURED_WHILE_VERIFYING_FLEX_BENEFIT_CARD_DETAILS,
+							CoreConstants.FAIL, e.getMessage()));
+			return false;
+		}
+		if (isFlexCardDetailsVerified && flag) {
+			Reporter.addStepLog(MessageFormat.format(COREFLEXConstants.SUCCESSFULLY_VERIFIED_FLEX_BENEFIT_CARD_DETAILS,
+					CoreConstants.PASS));
+		}
+		return isFlexCardDetailsVerified;
 	}
 
 	private boolean verifyFlexBenefitCardDetails(String expectedStatus, String tracingSelection) {
@@ -915,12 +1218,57 @@ public class MX_Transferee_JourneyHomePage extends Base {
 		}
 	}
 
+	public boolean isCoreBenefitCardVerified(String tracingSelection, int noOfMilestones) {
+		try {			
+			return verifyCoreBenefitCardDetails(tracingSelection, noOfMilestones);
+		} catch (Exception e) {
+			Reporter.addStepLog(
+					MessageFormat.format(COREFLEXConstants.EXCEPTION_OCCURED_WHILE_VERIFYING_CORE_BENEFIT_CARD_DETAILS,
+							CoreConstants.FAIL, e.getMessage()));
+			return false;
+		}
+	}
+
+	private boolean verifyCoreBenefitCardDetails(String tracingSelection, int numberOfMilestones) {
+		boolean isCoreCardDetailsVerified = false;
+		boolean flag = false;
+		try {
+			for (Benefit benefit : coreBenefits) {
+				if (benefit.getAiresManagedService() != null && benefit.getAiresManagedService().equals("Yes")
+						&& benefit.getNoOfMilestones() != null
+						&& benefit.getNoOfMilestones() == numberOfMilestones) {
+					int indexBenefitCard = BusinessFunctions.returnindexItemFromListUsingText(driver,
+							coreCardBenefitDisplayName, benefit.getBenefitDisplayName());
+					isCoreCardDetailsVerified = verifyCoreCardDetails(indexBenefitCard, benefit)
+							&& verifyCoreCardStatus(indexBenefitCard, tracingSelection, benefit);
+					if (!isCoreCardDetailsVerified) {
+						return false;
+					} else {
+						flag = true;
+					}
+				}
+			}
+
+		} catch (Exception e) {
+			Reporter.addStepLog(
+					MessageFormat.format(COREFLEXConstants.EXCEPTION_OCCURED_WHILE_VERIFYING_CORE_BENEFIT_CARD_DETAILS,
+							CoreConstants.FAIL, e.getMessage()));
+			return false;
+		}
+		if (isCoreCardDetailsVerified && flag) {
+			Reporter.addStepLog(MessageFormat.format(COREFLEXConstants.SUCCESSFULLY_VERIFIED_CORE_BENEFIT_CARD_DETAILS,
+					CoreConstants.PASS));
+		}
+		return isCoreCardDetailsVerified;
+	}
+
 	private boolean verifyCoreBenefitCardDetails(String tracingSelection) {
 		boolean isCoreCardDetailsVerified = false;
 		boolean flag = false;
 		try {
 			for (Benefit benefit : coreBenefits) {
-				if (benefit.getAiresManagedService().equals("Yes")) {
+				if (benefit.getAiresManagedService() != null && benefit.getAiresManagedService().equals("Yes")) {
+
 					int indexBenefitCard = BusinessFunctions.returnindexItemFromListUsingText(driver,
 							coreCardBenefitDisplayName, benefit.getBenefitDisplayName());
 					isCoreCardDetailsVerified = verifyCoreCardDetails(indexBenefitCard, benefit)
@@ -948,12 +1296,13 @@ public class MX_Transferee_JourneyHomePage extends Base {
 
 	private boolean verifyCoreCardDetails(int indexBenefitCard, Benefit benefit) {
 		try {
-			CoreFunctions.scrollToElementUsingJS(driver, _textPolicyFileID, MobilityXConstants.POLICY_FILE_ID);
+			CoreFunctions.scrollToElementUsingJS(driver, _textPolicyFileID, MobilityXConstants.POLICY_FILE_ID);			
 			CoreFunctions.verifyText(driver, coreCardBenefitDisplayName.get(indexBenefitCard),
 					benefit.getBenefitDisplayName(), MobilityXConstants.CORE_CARD_BENEFIT_DISPLAY_NAME);
 			CoreFunctions.verifyText(driver, coreCardAmountAllowanceText.get(indexBenefitCard),
 					benefit.getBenefitAmount(), MobilityXConstants.CORE_CARD_BENEFIT_ALLOWANCE_AMOUNT);
 			CoreFunctions.moveToElement(driver, coreCardLongDescIcon.get(indexBenefitCard));
+			CoreFunctions.waitHandler(2);
 			CoreFunctions.verifyText(driver, coreCardLongDesc.get(indexBenefitCard), benefit.getBenefitDesc(),
 					MobilityXConstants.CORE_CARD_BENEFIT_LONG_DESCRIPTION);
 			CoreFunctions.moveToElement(driver, coreCardBenefitDisplayName.get(indexBenefitCard));
@@ -1038,7 +1387,83 @@ public class MX_Transferee_JourneyHomePage extends Base {
 								.equals(expectedEstimatedDate))
 						&& (!CoreFunctions.isElementExist(driver, coreCardStartingSoonStatus, 3)));
 				break;
-
+			case COREFLEXConstants.AUTO_RENTAL_DURING_ASSIGNMENT:
+				isCoreCardStatusVerified = (CoreFunctions.isElementExist(driver,
+						CoreFunctions.findSubElement(coreCardPanelList.get(indexBenefitCard), coreCardAutoPickupStatus),
+						3)
+						&& (CoreFunctions.getElementText(driver,
+								CoreFunctions.findSubElement(coreCardPanelList.get(indexBenefitCard),
+										autoPickupEstimatedDate))
+								.equals(expectedEstimatedDate))
+						&& (!CoreFunctions.isElementExist(driver, coreCardStartingSoonStatus, 3)));
+				break;
+			case COREFLEXConstants.CONCIERGE_SERVICES:
+				isCoreCardStatusVerified = (CoreFunctions.isElementExist(driver,
+						CoreFunctions.findSubElement(coreCardPanelList.get(indexBenefitCard),
+								coreCardBeginServiceStatus),
+						3)
+						&& (CoreFunctions.getElementText(driver,
+								CoreFunctions.findSubElement(coreCardPanelList.get(indexBenefitCard),
+										beginServiceEstimatedDate))
+								.equals(expectedEstimatedDate))
+						&& (!CoreFunctions.isElementExist(driver, coreCardStartingSoonStatus, 3)));
+				break;
+			case COREFLEXConstants.EDUCATION_ASSISTANCE_SCHOOL_SEARCH:
+				isCoreCardStatusVerified = (CoreFunctions.isElementExist(driver,
+						CoreFunctions.findSubElement(coreCardPanelList.get(indexBenefitCard),
+								coreCardRegistrationScheduledStatus),
+						3)
+						&& (CoreFunctions.getElementText(driver,
+								CoreFunctions.findSubElement(coreCardPanelList.get(indexBenefitCard),
+										registrationScheduledEstimatedDate))
+								.equals(expectedEstimatedDate))
+						&& (!CoreFunctions.isElementExist(driver, coreCardStartingSoonStatus, 3)));
+				break;
+			case COREFLEXConstants.AREA_TOUR:
+				isCoreCardStatusVerified = (CoreFunctions.isElementExist(driver,
+						CoreFunctions.findSubElement(coreCardPanelList.get(indexBenefitCard), coreCardBeginTourStatus),
+						3)
+						&& (CoreFunctions.getElementText(driver,
+								CoreFunctions.findSubElement(coreCardPanelList.get(indexBenefitCard),
+										beginTourEstimatedDate))
+								.equals(expectedEstimatedDate))
+						&& (!CoreFunctions.isElementExist(driver, coreCardStartingSoonStatus, 3)));
+				break;
+			case COREFLEXConstants.FURNITURE_RENTAL:
+				isCoreCardStatusVerified = (CoreFunctions.isElementExist(driver,
+						CoreFunctions.findSubElement(coreCardPanelList.get(indexBenefitCard),
+								coreCardFurnitureDeliveryStatus),
+						3)
+						&& (CoreFunctions.getElementText(driver,
+								CoreFunctions.findSubElement(coreCardPanelList.get(indexBenefitCard),
+										furnitureDeliveryEstimatedDate))
+								.equals(expectedEstimatedDate))
+						&& (!CoreFunctions.isElementExist(driver, coreCardStartingSoonStatus, 3)));
+				break;
+			case COREFLEXConstants.AIRPORT_PICKUP:
+				isCoreCardStatusVerified = (CoreFunctions.isElementExist(driver,
+						CoreFunctions.findSubElement(coreCardPanelList.get(indexBenefitCard),
+								coreCardAirportPickupStatus),
+						3)
+						&& (CoreFunctions.getElementText(driver,
+								CoreFunctions.findSubElement(coreCardPanelList.get(indexBenefitCard),
+										airportPickupEstimatedDate))
+								.equals(expectedEstimatedDate))
+						&& (!CoreFunctions.isElementExist(driver, coreCardStartingSoonStatus, 3)));
+				break;
+			case COREFLEXConstants.HOUSE_HUNTING_TRIP:
+			case COREFLEXConstants.FINAL_MOVE:
+			case COREFLEXConstants.HOME_LEAVE:
+			case COREFLEXConstants.PRE_ACCEPTANCE_SERVICES:
+				isCoreCardStatusVerified = CoreFunctions.isElementExist(driver,
+						CoreFunctions.findSubElement(coreCardPanelList.get(indexBenefitCard), travelRequested), 3)
+						&& CoreFunctions.isElementExist(driver,
+								CoreFunctions.findSubElement(coreCardPanelList.get(indexBenefitCard), travelBooked), 3)
+						&& CoreFunctions.isElementExist(driver,
+								CoreFunctions.findSubElement(coreCardPanelList.get(indexBenefitCard), travelBegins), 3)
+						&& CoreFunctions.isElementExist(driver,
+								CoreFunctions.findSubElement(coreCardPanelList.get(indexBenefitCard), travelEnds), 3);
+				break;
 			default:
 				Assert.fail(COREFLEXConstants.INVALID_OPTION);
 
@@ -1079,6 +1504,47 @@ public class MX_Transferee_JourneyHomePage extends Base {
 						CoreFunctions.findSubElement(coreCardPanelList.get(indexBenefitCard),
 								coreCardTrainingCompletedStatus),
 						3) && (!CoreFunctions.isElementExist(driver, coreCardStartingSoonStatus, 3)));
+				break;
+			case COREFLEXConstants.AUTO_RENTAL_DURING_ASSIGNMENT:
+				isCoreCardStatusVerified = (CoreFunctions.isElementExist(driver,
+						CoreFunctions.findSubElement(coreCardPanelList.get(indexBenefitCard), coreCardAutoReturnStatus),
+						3) && (!CoreFunctions.isElementExist(driver, coreCardStartingSoonStatus, 3)));
+				break;
+			case COREFLEXConstants.CONCIERGE_SERVICES:
+				isCoreCardStatusVerified = (CoreFunctions.isElementExist(driver,
+						CoreFunctions.findSubElement(coreCardPanelList.get(indexBenefitCard),
+								coreCardServiceCompleteStatus),
+						3) && (!CoreFunctions.isElementExist(driver, coreCardStartingSoonStatus, 3)));
+				break;
+			case COREFLEXConstants.EDUCATION_ASSISTANCE_SCHOOL_SEARCH:
+				isCoreCardStatusVerified = (CoreFunctions.isElementExist(driver,
+						CoreFunctions.findSubElement(coreCardPanelList.get(indexBenefitCard),
+								coreCardRegistrationCompletedStatus),
+						3) && (!CoreFunctions.isElementExist(driver, coreCardStartingSoonStatus, 3)));
+				break;
+			case COREFLEXConstants.AREA_TOUR:
+				isCoreCardStatusVerified = (CoreFunctions.isElementExist(driver,
+						CoreFunctions.findSubElement(coreCardPanelList.get(indexBenefitCard),
+								coreCardTourCompleteStatus),
+						3) && (!CoreFunctions.isElementExist(driver, coreCardStartingSoonStatus, 3)));
+				break;
+			case COREFLEXConstants.FURNITURE_RENTAL:
+				isCoreCardStatusVerified = (CoreFunctions.isElementExist(driver,
+						CoreFunctions.findSubElement(coreCardPanelList.get(indexBenefitCard),
+								coreCardFurniturePickUpStatus),
+						3) && (!CoreFunctions.isElementExist(driver, coreCardStartingSoonStatus, 3)));
+				break;
+			case COREFLEXConstants.AIRPORT_PICKUP:
+				isCoreCardStatusVerified = (CoreFunctions.isElementExist(driver,
+						CoreFunctions.findSubElement(coreCardPanelList.get(indexBenefitCard), coreCardAutoReturnStatus),
+						3) && (!CoreFunctions.isElementExist(driver, coreCardStartingSoonStatus, 3)));
+				break;
+			case COREFLEXConstants.HOUSE_HUNTING_TRIP:
+			case COREFLEXConstants.FINAL_MOVE:
+			case COREFLEXConstants.HOME_LEAVE:
+			case COREFLEXConstants.PRE_ACCEPTANCE_SERVICES:
+				isCoreCardStatusVerified = CoreFunctions.isElementExist(driver,
+						CoreFunctions.findSubElement(coreCardPanelList.get(indexBenefitCard), _serviceCompleted), 3);
 				break;
 			default:
 				Assert.fail(COREFLEXConstants.INVALID_OPTION);

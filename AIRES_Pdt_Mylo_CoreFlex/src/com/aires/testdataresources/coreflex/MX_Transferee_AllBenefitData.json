@@ -22,7 +22,8 @@
 			"benefitAmount": "Core - Max 4 hours or Self Learning App Subscription up to 1000$",
 			"benefitDesc": "Core training to assist in learning the language in new location.",
 			"subBenefits": "Language Training Employee;Language Training Family",
-			"airesManagedService": "Yes"
+			"airesManagedService": "Yes",
+			"noOfMilestones": 2
 		},
 		{
 			"benefitType": "Temporary Living",
@@ -30,7 +31,8 @@
 			"benefitAmount": "Temporary Housing in new location",
 			"benefitDesc": "Temporary Housing for the employee and family members while they wait the availability of their permanent residence.",
 			"subBenefits": "Temporary Living Transportation;Temporary Living Lodging;Temporary Living Meals",
-			"airesManagedService": "Yes"
+			"airesManagedService": "Yes",
+			"noOfMilestones": 2
 		},
 		{
 			"benefitType": "Cultural Training",
@@ -38,7 +40,8 @@
 			"benefitAmount": "Training to understand the living & working conditions in new location",
 			"benefitDesc": "The orientation and training programs for employees and their families to familiarize them with living and working effectively in a particular culture.",
 			"subBenefits": "Cultural Training Employee;Cultural Training Family",
-			"airesManagedService": "Yes"
+			"airesManagedService": "Yes",
+			"noOfMilestones": 2
 		},
 		{
 			"benefitType": "Concierge Services",
@@ -46,7 +49,8 @@
 			"benefitAmount": "Assistance with relocation services",
 			"benefitDesc": "The assistance with relocation services.",
 			"subBenefits": "Concierge Services",
-			"airesManagedService": "Yes"
+			"airesManagedService": "Yes",
+			"noOfMilestones": 2
 		},
 		{
 			"benefitType": "Home Purchase",
@@ -62,7 +66,8 @@
 			"benefitAmount": "Core Final Move Allowance",
 			"benefitDesc": "The reimbursement of final travel related expenses from home location to new location.",
 			"subBenefits": "Final Move Transportation;Final Move Lodging;Final Move Meals",
-			"airesManagedService": "Yes"
+			"airesManagedService": "Yes",
+			"noOfMilestones": 4
 		},
 		{
 			"benefitType": "Area Tour",
@@ -70,7 +75,8 @@
 			"benefitAmount": "Core Tour of new location",
 			"benefitDesc": "A tour highlighting neighborhoods, medical facilities, and any other areas of interests in new location.",
 			"subBenefits": "Area Tour",
-			"airesManagedService": "Yes"
+			"airesManagedService": "Yes",
+			"noOfMilestones": 2
 		},
 		{
 			"benefitType": "Home Leave",
@@ -78,7 +84,8 @@
 			"benefitAmount": "Core Return trip to home location",
 			"benefitDesc": "A return trip for the employee, spouse partner and eligible dependents to visit the home location",
 			"subBenefits": "Home Leave Transportation;Home Leave Lodging;Home Leave Rental Car;Home Leave Meals",
-			"airesManagedService": "Yes"
+			"airesManagedService": "Yes",
+			"noOfMilestones": 4
 		},
 		{
 			"benefitType": "Airport Pickup",
@@ -94,7 +101,8 @@
 			"benefitAmount": "Trip to new location prior to acceptance of new position",
 			"benefitDesc": "A trip to the new location to determine if the employee will accept the new position.",
 			"subBenefits": "Pre-Acceptance Trip Transportation;Pre-Acceptance Trip Lodging;Pre-Acceptance Rental Car;Pre-Acceptance Trip Meals",
-			"airesManagedService": "Yes"
+			"airesManagedService": "Yes",
+			"noOfMilestones": 4
 		},
 		{
 			"benefitType": "Furniture Rental",
@@ -102,7 +110,8 @@
 			"benefitAmount": "Rental of furniture at new location",
 			"benefitDesc": "The rental of furniture at new location.",
 			"subBenefits": "Furniture Rental",
-			"airesManagedService": "Yes"
+			"airesManagedService": "Yes",
+			"noOfMilestones": 2
 		},
 		{
 			"benefitType": "Auto Rental During Assignment",
@@ -110,7 +119,8 @@
 			"benefitAmount": "Rental of automobile during assignment",
 			"benefitDesc": "A rental car for employee while on assignment. The size of the car will depend on the company's travel policy.",
 			"subBenefits": "Auto Rental During Assignment",
-			"airesManagedService": "Yes"
+			"airesManagedService": "Yes",
+			"noOfMilestones": 2
 		},
 		{
 			"benefitType": "Education Assistance/School Search",
@@ -126,7 +136,62 @@
 			"benefitAmount": "Trip to look for housing in the new location",
 			"benefitDesc": "A home or apartment search in the new area, based on an employees specific requirements and preferences.",
 			"subBenefits": "House Hunting Trip Transportation;House Hunting Trip Lodging;House Hunting Trip Rental Car;House Hunting Trip Meals",
-			"airesManagedService": "Yes"
+			"airesManagedService": "Yes",
+			"noOfMilestones": 4
+		},
+		{
+			"benefitType": "Air Shipment",
+			"benefitDisplayName": "Automated Core Type Air Shipment Display Name",
+			"benefitAmount": "Transportation of goods by air to new location",
+			"benefitDesc": "The professional packing, air shipping, delivery, uncrating, unpacking, in-transit storage, if necessary, applicable moving insurance and import duties for the shipment of personal effects and furniture to new location.",
+			"subBenefits": "Air Shipment",
+			"airesManagedService": "Yes",
+			"noOfMilestones": 5
+		},
+		{
+			"benefitType": "Auto Shipment",
+			"benefitDisplayName": "Automated Core Type Auto Shipment Display Name",
+			"benefitAmount": "Shipment of automobile to new location",
+			"benefitDesc": "The transportation of personal automobile (car, truck, or SUV) from home location to new location.",
+			"subBenefits": "Auto Shipment",
+			"airesManagedService": "Yes",
+			"noOfMilestones": 5
+		},
+		{
+			"benefitType": "Sea/Surface Shipment",
+			"benefitDisplayName": "Automated Core Type Sea/Surface Shipment Display Name",
+			"benefitAmount": "Transportation of goods by sea to new location",
+			"benefitDesc": "TThe professional packing, sea shipping, delivery, uncrating, unpacking, in-transit storage, if necessary, applicable moving insurance and import duties for the shipment of personal effects and furniture to new location.",
+			"subBenefits": "Sea/Surface Shipment",
+			"airesManagedService": "Yes",
+			"noOfMilestones": 5
+		},
+		{
+			"benefitType": "Inland Shipment",
+			"benefitDisplayName": "Automated Core Type Inland Shipment Display Name",
+			"benefitAmount": "Shipment of households goods across land from home to host country.",
+			"benefitDesc": "Shipment of households goods across land from home to host country.",
+			"subBenefits": "Inland Shipment",
+			"airesManagedService": "Yes",
+			"noOfMilestones": 5
+		},
+		{
+			"benefitType": "Pet Shipment",
+			"benefitDisplayName": "Automated Core Type Pet Shipment Display Name",
+			"benefitAmount": "Shipment of pet to new location",
+			"benefitDesc": "The transportation of an employee's pet from the home location to the new location. Services are typically coordinated through a pet transportation company or the employee may be required to coordinate the transport themselves and receive reimbursement or an allowance intended to be applied towards the cost.",
+			"subBenefits": "Pet Shipment",
+			"airesManagedService": "Yes",
+			"noOfMilestones": 5
+		},
+		{
+			"benefitType": "Permanent Storage",
+			"benefitDisplayName": "Automated Core Type Permanent Storage Display Name",
+			"benefitAmount": "Placement of household goods in long-term storage facilities",
+			"benefitDesc": "The long term storage of employee¿s personal goods while on assignment if they had disposed of their home country housing, their home property is being leased or they have personal items which they are eligible to store.",
+			"subBenefits": "Permanent Storage",
+			"airesManagedService": "Yes",
+			"noOfMilestones": 5
 		}
 	],
 	"flexBenefits": [
@@ -150,7 +215,8 @@
 					"comment": "Test Flex Duplicate Housing Benefit Comment",
 					"payments": "Allowance/Cashout",
 					"multipleBenefitSubmission": false,
-					"policyCreationGroup": "All Benefits,Cloning",
+					"policyCreationGroup": "All Benefits,Cloning,Versioning",
+					"selectBenefitOnPBCPage": false,
 					"deselectBenefitOnPBCPage": false
 				},
 				{
@@ -170,7 +236,8 @@
 					"comment": "Test Other Housing Benefit Comment",
 					"payments": "Expense Reimbursement",
 					"multipleBenefitSubmission": false,
-					"policyCreationGroup": "All Benefits,Cloning",
+					"policyCreationGroup": "All Benefits",
+					"selectBenefitOnPBCPage": false,
 					"deselectBenefitOnPBCPage": false
 				},
 				{
@@ -202,7 +269,9 @@
 					"postEndTracingCardStatus": "Move out",
 					"multipleBenefitSubmission": true,
 					"policyCreationGroup": "All Benefits",
-					"deselectBenefitOnPBCPage": false
+					"selectBenefitOnPBCPage": false,
+					"deselectBenefitOnPBCPage": false,
+					"noOfMilestones": 2
 				},
 				{
 					"benefitType": "Home Purchase",
@@ -231,9 +300,11 @@
 					"postInitialTracingCardStatus": "Begin property search",
 					"endTracingPrompt": "Closing Date",
 					"postEndTracingCardStatus": "Closing",
-					"multipleBenefitSubmission": true,
+					"multipleBenefitSubmission": false,
 					"policyCreationGroup": "All Benefits",
-					"deselectBenefitOnPBCPage": false
+					"selectBenefitOnPBCPage": false,
+					"deselectBenefitOnPBCPage": false,
+					"noOfMilestones": 0
 				},
 				{
 					"benefitType": "House Hunting Trip",
@@ -266,8 +337,49 @@
 					"postThirdTracingCardStatus": "Travel Begins",
 					"endTracingPrompt": "End date of trip",
 					"postEndTracingCardStatus": "Travel Complete",
-					"multipleBenefitSubmission": true,
+					"multipleBenefitSubmission": false,
 					"policyCreationGroup": "All Benefits",
+					"selectBenefitOnPBCPage": false,
+					"deselectBenefitOnPBCPage": false,
+					"noOfMilestones": 4,
+					"allMilestones": "Book flight with travel agency/department, Confirm flight booking/confirmation number with transferee, Start date of trip, End date of trip"
+				},
+				{
+					"benefitType": "Property Management",
+					"benefitDisplayName": "Automated Flex Property Management Display Name",
+					"benefitAmount": "Upto 3 Days 4 Nights",
+					"benefitDesc": "A trip to the new location taken after the employee has accepted the new position to identify housing and tour the area.",
+					"points": "5",
+					"subBenefits": "House Hunting Trip Transportation;House Hunting Trip Lodging;House Hunting Trip Rental Car;House Hunting Trip Meals",
+					"airesManagedService": "Yes",
+					"noOfMilestones": 5,
+					"multipleBenefitSelection": "Yes",
+					"numberOfBenefitSelected": 2,
+					"selectBenefitOnFPTPage": false,
+					"deleteBenefitOnMBBPage": true,
+					"grossUp": "Yes",
+					"reimbursedBy": "Aires",
+					"comment": "Test Flex House Hunting Trip Benefit Comment",
+					"irisServiceName": "Destination Services",
+					"irisSubserviceType": "Travel Home Search/Post Acceptance",
+					"irisSubserviceName": "Custom House Hunting Trip Name",
+					"irisSubserviceID": "0",
+					"subServiceActivityFinance": "(ACTV) Custom House Hunting Trip Name",
+					"subServiceFunction": "Host Country Agent",
+					"compID": "49211",
+					"company": "AIRES-CIS-DEMO&'TEST(CLIENT)",
+					"allMilestones": "Book flight with travel agency/department, Confirm flight booking/confirmation number with transferee, Start date of trip, End date of trip",
+					"initialTracingPrompt": "Book flight with travel agency/department",
+					"postInitialTracingCardStatus": "Travel Requested",
+					"secondTracingPrompt": "*Confirm hotel booking/confirmation number with transferee",
+					"postSecondTracingCardStatus": "Travel Booked",
+					"thirdTracingPrompt": "Start date of trip",
+					"postThirdTracingCardStatus": "Travel Begins",
+					"endTracingPrompt": "End date of trip",
+					"postEndTracingCardStatus": "Travel Complete",
+					"multipleBenefitSubmission": false,
+					"policyCreationGroup": "NA",
+					"selectBenefitOnPBCPage": false,
 					"deselectBenefitOnPBCPage": false
 				}
 			]
@@ -292,8 +404,9 @@
 					"comment": "Test Flex Lump Sum Benefit Comment",
 					"payments": "Expense Reimbursement",
 					"multipleBenefitSubmission": false,
-					"policyCreationGroup": "All Benefits,Cloning",
-					"deselectBenefitOnPBCPage": true
+					"policyCreationGroup": "All Benefits,Cloning,Versioning",
+					"selectBenefitOnPBCPage": false,
+					"deselectBenefitOnPBCPage": false
 				},
 				{
 					"benefitType": "Auto Rental During Assignment",
@@ -304,7 +417,7 @@
 					"subBenefits": "Auto Rental During Assignment",
 					"airesManagedService": "Yes",
 					"multipleBenefitSelection": "Yes",
-					"numberOfBenefitSelected": 2,
+					"numberOfBenefitSelected": 1,
 					"selectBenefitOnFPTPage": true,
 					"deleteBenefitOnMBBPage": true,
 					"grossUp": "Yes",
@@ -324,7 +437,9 @@
 					"postEndTracingCardStatus": "Auto return",
 					"multipleBenefitSubmission": true,
 					"policyCreationGroup": "All Benefits",
-					"deselectBenefitOnPBCPage": false
+					"selectBenefitOnPBCPage": false,
+					"deselectBenefitOnPBCPage": false,
+					"noOfMilestones": 2
 				}
 			]
 		},
@@ -358,9 +473,12 @@
 					"postInitialTracingCardStatus": "Travel Begins",
 					"endTracingPrompt": "End date of trip",
 					"postEndTracingCardStatus": "Travel Ends",
-					"multipleBenefitSubmission": true,
+					"multipleBenefitSubmission": false,
 					"policyCreationGroup": "All Benefits",
-					"deselectBenefitOnPBCPage": false
+					"selectBenefitOnPBCPage": false,
+					"deselectBenefitOnPBCPage": false,
+					"noOfMilestones": 4,
+					"allMilestones": "Book flight with travel agency/department, Confirm flight booking/confirmation number with transferee, Start date of trip, End date of trip"
 				},
 				{
 					"benefitType": "Home Leave",
@@ -393,8 +511,239 @@
 					"postThirdTracingCardStatus": "Travel Begins",
 					"endTracingPrompt": "End date of trip",
 					"postEndTracingCardStatus": "Travel Ends",
-					"multipleBenefitSubmission": true,
+					"multipleBenefitSubmission": false,
 					"policyCreationGroup": "All Benefits",
+					"selectBenefitOnPBCPage": false,
+					"deselectBenefitOnPBCPage": false,
+					"noOfMilestones": 4,
+					"allMilestones": "Book flight with travel agency/department, Confirm flight booking/confirmation number with transferee, Start date of trip, End date of trip"
+				},
+				{
+					"benefitType": "Air Shipment",
+					"benefitDisplayName": "Automated Flex Air Shipment Display Name",
+					"benefitAmount": "Flex - Air Shipment Allowance",
+					"benefitDesc": "The professional packing, air shipping, delivery, uncrating, unpacking, in-transit storage, if necessary, applicable moving insurance and import duties for the shipment of personal effects and furniture to new location.",
+					"points": "15",
+					"subBenefits": "Air Shipment",
+					"airesManagedService": "Yes",
+					"noOfMilestones": 5,
+					"multipleBenefitSelection": "Yes",
+					"numberOfBenefitSelected": 1,
+					"selectBenefitOnFPTPage": false,
+					"deleteBenefitOnMBBPage": false,
+					"grossUp": "Yes",
+					"reimbursedBy": "Aires",
+					"comment": "Test Flex Air Shipment Aires Managed Benefit Comment",
+					"irisServiceName": "Shipment",
+					"irisSubserviceType": "Travel Home Leave",
+					"irisSubserviceName": "Custom Travel Home Leave Name",
+					"irisSubserviceID": "0",
+					"subServiceActivityFinance": "(ACTV) Custom Travel Home Leave Name",
+					"subServiceFunction": "NA",
+					"compID": "49211",
+					"company": "AIRES-CIS-DEMO&'TEST(CLIENT)",
+					"allMilestones": "Book flight with travel agency/department, Confirm flight booking/confirmation number with transferee, Start date of trip, End date of trip",
+					"initialTracingPrompt": "Book flight with travel agency/department",
+					"postInitialTracingCardStatus": "Travel Requested",
+					"secondTracingPrompt": "*Confirm flight booking/confirmation number with transferee",
+					"postSecondTracingCardStatus": "Travel Booked",
+					"thirdTracingPrompt": "Start date of trip",
+					"postThirdTracingCardStatus": "Travel Begins",
+					"endTracingPrompt": "End date of trip",
+					"postEndTracingCardStatus": "Travel Ends",
+					"multipleBenefitSubmission": false,
+					"policyCreationGroup": "NA",
+					"selectBenefitOnPBCPage": false,
+					"deselectBenefitOnPBCPage": false
+				},
+				{
+					"benefitType": "Auto Shipment",
+					"benefitDisplayName": "Automated Flex Auto Shipment Display Name",
+					"benefitAmount": "Flex - Auto Shipment Allowance",
+					"benefitDesc": "Flex - The transportation of personal automobile (car, truck, or SUV) from home location to new location.",
+					"points": "15",
+					"subBenefits": "Auto Shipment",
+					"airesManagedService": "Yes",
+					"noOfMilestones": 5,
+					"multipleBenefitSelection": "Yes",
+					"numberOfBenefitSelected": 1,
+					"selectBenefitOnFPTPage": false,
+					"deleteBenefitOnMBBPage": false,
+					"grossUp": "Yes",
+					"reimbursedBy": "Aires",
+					"comment": "Test Flex Auto Shipment Aires Managed Benefit Comment",
+					"irisServiceName": "Shipment",
+					"irisSubserviceType": "Travel Home Leave",
+					"irisSubserviceName": "Custom Travel Home Leave Name",
+					"irisSubserviceID": "0",
+					"subServiceActivityFinance": "(ACTV) Custom Travel Home Leave Name",
+					"subServiceFunction": "NA",
+					"compID": "49211",
+					"company": "AIRES-CIS-DEMO&'TEST(CLIENT)",
+					"allMilestones": "Book flight with travel agency/department, Confirm flight booking/confirmation number with transferee, Start date of trip, End date of trip",
+					"initialTracingPrompt": "Book flight with travel agency/department",
+					"postInitialTracingCardStatus": "Travel Requested",
+					"secondTracingPrompt": "*Confirm flight booking/confirmation number with transferee",
+					"postSecondTracingCardStatus": "Travel Booked",
+					"thirdTracingPrompt": "Start date of trip",
+					"postThirdTracingCardStatus": "Travel Begins",
+					"endTracingPrompt": "End date of trip",
+					"postEndTracingCardStatus": "Travel Ends",
+					"multipleBenefitSubmission": false,
+					"policyCreationGroup": "NA",
+					"selectBenefitOnPBCPage": false,
+					"deselectBenefitOnPBCPage": false
+				},
+				{
+					"benefitType": "Sea/Surface Shipment",
+					"benefitDisplayName": "Automated Flex Sea/Surface Shipment Display Name",
+					"benefitAmount": "Flex - Sea/Surface Shipment Allowance",
+					"benefitDesc": "Flex - The professional packing, sea shipping, delivery, uncrating, unpacking, in-transit storage, if necessary, applicable moving insurance and import duties for the shipment of personal effects and furniture to new location.",
+					"points": "15",
+					"subBenefits": "Sea/Surface Shipment",
+					"airesManagedService": "Yes",
+					"noOfMilestones": 5,
+					"multipleBenefitSelection": "Yes",
+					"numberOfBenefitSelected": 1,
+					"selectBenefitOnFPTPage": false,
+					"deleteBenefitOnMBBPage": false,
+					"grossUp": "Yes",
+					"reimbursedBy": "Aires",
+					"comment": "Test Flex Sea/Surface Shipment Aires Managed Benefit Comment",
+					"irisServiceName": "Shipment",
+					"irisSubserviceType": "Travel Home Leave",
+					"irisSubserviceName": "Custom Travel Home Leave Name",
+					"irisSubserviceID": "0",
+					"subServiceActivityFinance": "(ACTV) Custom Travel Home Leave Name",
+					"subServiceFunction": "NA",
+					"compID": "49211",
+					"company": "AIRES-CIS-DEMO&'TEST(CLIENT)",
+					"allMilestones": "Book flight with travel agency/department, Confirm flight booking/confirmation number with transferee, Start date of trip, End date of trip",
+					"initialTracingPrompt": "Book flight with travel agency/department",
+					"postInitialTracingCardStatus": "Travel Requested",
+					"secondTracingPrompt": "*Confirm flight booking/confirmation number with transferee",
+					"postSecondTracingCardStatus": "Travel Booked",
+					"thirdTracingPrompt": "Start date of trip",
+					"postThirdTracingCardStatus": "Travel Begins",
+					"endTracingPrompt": "End date of trip",
+					"postEndTracingCardStatus": "Travel Ends",
+					"multipleBenefitSubmission": false,
+					"policyCreationGroup": "NA",
+					"selectBenefitOnPBCPage": false,
+					"deselectBenefitOnPBCPage": false
+				},
+				{
+					"benefitType": "Inland Shipment",
+					"benefitDisplayName": "Automated Flex Inland Shipment Display Name",
+					"benefitAmount": "Flex - Inland Shipment Allowance",
+					"benefitDesc": "Flex - Shipment of households goods across land from home to host country.",
+					"points": "15",
+					"subBenefits": "Inland Shipment",
+					"airesManagedService": "Yes",
+					"noOfMilestones": 5,
+					"multipleBenefitSelection": "Yes",
+					"numberOfBenefitSelected": 1,
+					"selectBenefitOnFPTPage": false,
+					"deleteBenefitOnMBBPage": false,
+					"grossUp": "Yes",
+					"reimbursedBy": "Aires",
+					"comment": "Test Flex Inland Shipment Aires Managed Benefit Comment",
+					"irisServiceName": "Shipment",
+					"irisSubserviceType": "Travel Home Leave",
+					"irisSubserviceName": "Custom Travel Home Leave Name",
+					"irisSubserviceID": "0",
+					"subServiceActivityFinance": "(ACTV) Custom Travel Home Leave Name",
+					"subServiceFunction": "NA",
+					"compID": "49211",
+					"company": "AIRES-CIS-DEMO&'TEST(CLIENT)",
+					"allMilestones": "Book flight with travel agency/department, Confirm flight booking/confirmation number with transferee, Start date of trip, End date of trip",
+					"initialTracingPrompt": "Book flight with travel agency/department",
+					"postInitialTracingCardStatus": "Travel Requested",
+					"secondTracingPrompt": "*Confirm flight booking/confirmation number with transferee",
+					"postSecondTracingCardStatus": "Travel Booked",
+					"thirdTracingPrompt": "Start date of trip",
+					"postThirdTracingCardStatus": "Travel Begins",
+					"endTracingPrompt": "End date of trip",
+					"postEndTracingCardStatus": "Travel Ends",
+					"multipleBenefitSubmission": false,
+					"policyCreationGroup": "NA",
+					"selectBenefitOnPBCPage": false,
+					"deselectBenefitOnPBCPage": false
+				},
+				{
+					"benefitType": "Pet Shipment",
+					"benefitDisplayName": "Automated Flex Pet Shipment Display Name",
+					"benefitAmount": "Flex - Pet Shipment Allowance",
+					"benefitDesc": "Flex - The transportation of an employee¿s pet from the home location to the new location. Services are typically coordinated through a pet transportation company or the employee may be required to coordinate the transport themselves and receive reimbursement or an allowance intended to be applied towards the cost.",
+					"points": "15",
+					"subBenefits": "Pet Shipment",
+					"airesManagedService": "Yes",
+					"noOfMilestones": 5,
+					"multipleBenefitSelection": "Yes",
+					"numberOfBenefitSelected": 1,
+					"selectBenefitOnFPTPage": false,
+					"deleteBenefitOnMBBPage": false,
+					"grossUp": "Yes",
+					"reimbursedBy": "Aires",
+					"comment": "Test Flex Pet Shipment Aires Managed Benefit Comment",
+					"irisServiceName": "Shipment",
+					"irisSubserviceType": "Travel Home Leave",
+					"irisSubserviceName": "Custom Travel Home Leave Name",
+					"irisSubserviceID": "0",
+					"subServiceActivityFinance": "(ACTV) Custom Travel Home Leave Name",
+					"subServiceFunction": "NA",
+					"compID": "49211",
+					"company": "AIRES-CIS-DEMO&'TEST(CLIENT)",
+					"allMilestones": "Book flight with travel agency/department, Confirm flight booking/confirmation number with transferee, Start date of trip, End date of trip",
+					"initialTracingPrompt": "Book flight with travel agency/department",
+					"postInitialTracingCardStatus": "Travel Requested",
+					"secondTracingPrompt": "*Confirm flight booking/confirmation number with transferee",
+					"postSecondTracingCardStatus": "Travel Booked",
+					"thirdTracingPrompt": "Start date of trip",
+					"postThirdTracingCardStatus": "Travel Begins",
+					"endTracingPrompt": "End date of trip",
+					"postEndTracingCardStatus": "Travel Ends",
+					"multipleBenefitSubmission": false,
+					"policyCreationGroup": "NA",
+					"selectBenefitOnPBCPage": false,
+					"deselectBenefitOnPBCPage": false
+				},
+				{
+					"benefitType": "Permanent Storage",
+					"benefitDisplayName": "Automated Flex Permanent Storage Display Name",
+					"benefitAmount": "Flex - Permanent Storage Allowance",
+					"benefitDesc": "Flex - The long term storage of employee¿s personal goods while on assignment if they had disposed of their home country housing, their home property is being leased or they have personal items which they are eligible to store. ",
+					"points": "15",
+					"subBenefits": "Permanent Storage",
+					"airesManagedService": "Yes",
+					"noOfMilestones": 5,
+					"multipleBenefitSelection": "Yes",
+					"numberOfBenefitSelected": 1,
+					"selectBenefitOnFPTPage": false,
+					"deleteBenefitOnMBBPage": false,
+					"grossUp": "Yes",
+					"reimbursedBy": "Aires",
+					"comment": "Test Flex Permanent Storage Aires Managed Benefit Comment",
+					"irisServiceName": "Shipment",
+					"irisSubserviceType": "Travel Home Leave",
+					"irisSubserviceName": "Custom Travel Home Leave Name",
+					"irisSubserviceID": "0",
+					"subServiceActivityFinance": "(ACTV) Custom Travel Home Leave Name",
+					"subServiceFunction": "NA",
+					"compID": "49211",
+					"company": "AIRES-CIS-DEMO&'TEST(CLIENT)",
+					"allMilestones": "Book flight with travel agency/department, Confirm flight booking/confirmation number with transferee, Start date of trip, End date of trip",
+					"initialTracingPrompt": "Book flight with travel agency/department",
+					"postInitialTracingCardStatus": "Travel Requested",
+					"secondTracingPrompt": "*Confirm flight booking/confirmation number with transferee",
+					"postSecondTracingCardStatus": "Travel Booked",
+					"thirdTracingPrompt": "Start date of trip",
+					"postThirdTracingCardStatus": "Travel Begins",
+					"endTracingPrompt": "End date of trip",
+					"postEndTracingCardStatus": "Travel Ends",
+					"multipleBenefitSubmission": false,
+					"policyCreationGroup": "NA",
+					"selectBenefitOnPBCPage": false,
 					"deselectBenefitOnPBCPage": false
 				}
 			]
@@ -429,9 +778,12 @@
 					"postInitialTracingCardStatus": "Begin training",
 					"endTracingPrompt": "End Date of Language Training",
 					"postEndTracingCardStatus": "Training complete",
-					"multipleBenefitSubmission": true,
+					"multipleBenefitSubmission": false,
 					"policyCreationGroup": "All Benefits",
-					"deselectBenefitOnPBCPage": false
+					"selectBenefitOnPBCPage": true,
+					"deselectBenefitOnPBCPage": true,
+					"subbenefitToBeDeselected":"Language Training Family",
+					"noOfMilestones": 2
 				},
 				{
 					"benefitType": "Cultural Training",
@@ -460,9 +812,11 @@
 					"postInitialTracingCardStatus": "Begin training",
 					"endTracingPrompt": "Cultural training end date",
 					"postEndTracingCardStatus": "Training complete",
-					"multipleBenefitSubmission": true,
+					"multipleBenefitSubmission": false,
 					"policyCreationGroup": "All Benefits",
-					"deselectBenefitOnPBCPage": false
+					"selectBenefitOnPBCPage": false,
+					"deselectBenefitOnPBCPage": false,
+					"noOfMilestones": 2
 				},
 				{
 					"benefitType": "Concierge Services",
@@ -480,10 +834,10 @@
 					"reimbursedBy": "Aires",
 					"comment": "Test Flex Concierge Services Aires Managed Benefit Comment",
 					"irisServiceName": "Destination Services",
-					"irisSubserviceType": "Concierge Services",
-					"irisSubserviceName": "Custom Concierge Services Name",
+					"irisSubserviceType": "Concierge Service",
+					"irisSubserviceName": "Custom Concierge Service Name",
 					"irisSubserviceID": "0",
-					"subServiceActivityFinance": "(ACTV) Custom Concierge Services Name",
+					"subServiceActivityFinance": "(ACTV) Custom Concierge Service Name",
 					"subServiceFunction": "Host Country Agent",
 					"compID": "49211",
 					"company": "AIRES-CIS-DEMO&'TEST(CLIENT)",
@@ -491,9 +845,11 @@
 					"postInitialTracingCardStatus": "Begin service",
 					"endTracingPrompt": "End date",
 					"postEndTracingCardStatus": "Service complete",
-					"multipleBenefitSubmission": true,
+					"multipleBenefitSubmission": false,
 					"policyCreationGroup": "All Benefits",
-					"deselectBenefitOnPBCPage": false
+					"selectBenefitOnPBCPage": false,
+					"deselectBenefitOnPBCPage": false,
+					"noOfMilestones": 2
 				},
 				{
 					"benefitType": "Area Tour",
@@ -522,9 +878,11 @@
 					"postInitialTracingCardStatus": "Begin Tour",
 					"endTracingPrompt": "Tour end date",
 					"postEndTracingCardStatus": "Tour Complete",
-					"multipleBenefitSubmission": true,
+					"multipleBenefitSubmission": false,
 					"policyCreationGroup": "All Benefits",
-					"deselectBenefitOnPBCPage": false
+					"selectBenefitOnPBCPage": false,
+					"deselectBenefitOnPBCPage": false,
+					"noOfMilestones": 2
 				},
 				{
 					"benefitType": "Airport Pickup",
@@ -553,9 +911,11 @@
 					"postInitialTracingCardStatus": "Appointment confirmed",
 					"endTracingPrompt": "Airport meet and greet date",
 					"postEndTracingCardStatus": "Arrival / meet and greet",
-					"multipleBenefitSubmission": true,
+					"multipleBenefitSubmission": false,
 					"policyCreationGroup": "All Benefits",
-					"deselectBenefitOnPBCPage": false
+					"selectBenefitOnPBCPage": false,
+					"deselectBenefitOnPBCPage": false,
+					"noOfMilestones": 0
 				},
 				{
 					"benefitType": "Pre-Acceptance Services",
@@ -588,9 +948,12 @@
 					"postThirdTracingCardStatus": "Travel Begins",
 					"endTracingPrompt": "End date of trip",
 					"postEndTracingCardStatus": "Tour Complete",
-					"multipleBenefitSubmission": true,
+					"multipleBenefitSubmission": false,
 					"policyCreationGroup": "All Benefits",
-					"deselectBenefitOnPBCPage": false
+					"selectBenefitOnPBCPage": false,
+					"deselectBenefitOnPBCPage": false,
+					"noOfMilestones": 4,
+					"allMilestones": "Book flight with travel agency/department, Confirm flight booking/confirmation number with transferee, Start date of trip, End date of trip"
 				},
 				{
 					"benefitType": "Furniture Rental",
@@ -619,9 +982,11 @@
 					"postInitialTracingCardStatus": "Furniture Delivery",
 					"endTracingPrompt": "Confirm Furniture Picked up",
 					"postEndTracingCardStatus": "Furniture Pick Up",
-					"multipleBenefitSubmission": true,
+					"multipleBenefitSubmission": false,
 					"policyCreationGroup": "All Benefits",
-					"deselectBenefitOnPBCPage": false
+					"selectBenefitOnPBCPage": false,
+					"deselectBenefitOnPBCPage": false,
+					"noOfMilestones": 2
 				},
 				{
 					"benefitType": "Education Assistance/School Search",
@@ -650,9 +1015,11 @@
 					"postInitialTracingCardStatus": "Registration scheduled",
 					"endTracingPrompt": "School registration complete",
 					"postEndTracingCardStatus": "Registration completed",
-					"multipleBenefitSubmission": true,
+					"multipleBenefitSubmission": false,
 					"policyCreationGroup": "All Benefits",
-					"deselectBenefitOnPBCPage": false
+					"selectBenefitOnPBCPage": false,
+					"deselectBenefitOnPBCPage": false,
+					"noOfMilestones": 0
 				}
 			]
 		}

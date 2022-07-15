@@ -349,9 +349,9 @@ public class CoreFlex_LanguageTraining_BenefitsPage extends Base {
 				subBenefitNamesList.add(subBenefitNames);
 
 			for (String subBenefit : subBenefitNamesList) {
-				if(subBenefitNamesList.size() > 1) {
+				if (subBenefitNamesList.size() > 1) {
 					CoreFunctions.selectItemInListByText(driver, _subBenefitList, subBenefit, true);
-					}
+				}
 				if (CoreFunctions.isElementExist(driver, getElementByName(subBenefit.trim()), 5)) {
 					fillSubBenefit(subBenefit.trim(), benefitType);
 				} else {
@@ -573,7 +573,7 @@ public class CoreFlex_LanguageTraining_BenefitsPage extends Base {
 			return true;
 		}
 	}
-	
+
 	private void verifyBenefitsMandatoryDetails(String benefitType, String multipleBenefitSelection, String flexPoints,
 			String benefitDisplayName, String benefitAllowanceAmount, String benefitDescription, String paymentOption,
 			String airesManagedService) {
@@ -640,7 +640,6 @@ public class CoreFlex_LanguageTraining_BenefitsPage extends Base {
 		CoreFunctions.highlightObject(driver, _textAreaBenefitLongDescription);
 	}
 
-	
 	/**
 	 * Method to iterate and verify mentioned SubBenefits details
 	 * 
@@ -671,9 +670,7 @@ public class CoreFlex_LanguageTraining_BenefitsPage extends Base {
 					CoreConstants.FAIL, e.getMessage()));
 		}
 	}
-	
-	
-	
+
 	/**
 	 * Method to Expand and call SubBenefit Verification Method's
 	 * 
@@ -682,8 +679,8 @@ public class CoreFlex_LanguageTraining_BenefitsPage extends Base {
 	 */
 	private void verifySubBenefitDetails(String subBenefit, String benefitType) {
 		switch (subBenefit) {
-		case COREFLEXConstants.LANGUAGE_TRAINING_EMPLOYEE:			
-			expandSubBenefitIfCollapsed(getElementByName(COREFLEXConstants.LANGUAGE_TRAINING_EMPLOYEE));	
+		case COREFLEXConstants.LANGUAGE_TRAINING_EMPLOYEE:
+			expandSubBenefitIfCollapsed(getElementByName(COREFLEXConstants.LANGUAGE_TRAINING_EMPLOYEE));
 			if (benefitType.equals(COREFLEXConstants.FLEX_BENEFITS)) {
 				CoreFunctions.clickElement(driver, _headerLanguageTrainingEmployee);
 			}
@@ -773,5 +770,64 @@ public class CoreFlex_LanguageTraining_BenefitsPage extends Base {
 		} catch (Exception e) {
 			Assert.fail(COREFLEXConstants.FAILED_TO_VERIFY_LANGUAGE_TRAINING_SUB_BENEFITS_FORM);
 		}
+	}
+
+	public boolean deselectSelectedSubbenefit(String benefitType, Benefit benefit) {
+		boolean isSubBenefitDeselected = false;
+		try {
+			if (benefitType.equals(COREFLEXConstants.BOTH)) {
+				CoreFunctions.clickElement(driver, _textBoth);
+				CoreFunctions.clickElement(driver, _textCoreBenefits);
+				CoreFunctions.selectItemInListByText(driver, _subBenefitList, benefit.getSubbenefitToBeDeselected(),
+						true);
+				CoreFunctions.clickElement(driver, _textFlexBenefits);
+				CoreFunctions.waitHandler(2);
+				CoreFunctions.explicitWaitTillElementBecomesClickable(driver, _inputFlexPoints, COREFLEXConstants.FLEX_POINTS_VALUE);
+				CoreFunctions.selectItemInListByText(driver, _subBenefitList, benefit.getSubbenefitToBeDeselected(),
+						true);
+				isSubBenefitDeselected = true;
+			} else {
+				CoreFunctions.selectItemInListByText(driver, _subBenefitList, benefit.getSubbenefitToBeDeselected(),
+						true);
+				isSubBenefitDeselected = true;
+			}
+		} catch (Exception e) {
+			Assert.fail(COREFLEXConstants.FAILED_TO_DESELECT_LANGUAGE_TRAINING_SUB_BENEFIT);
+		}		
+		if(isSubBenefitDeselected) {			
+			clickElementOfPage(COREFLEXConstants.SAVE_AND_CONTINUE);			
+		}		
+		return isSubBenefitDeselected;
+	}
+
+	public boolean selectAndFillUnSelectedSubbenefit(String benefitType, Benefit benefit) {
+		boolean isSubBenefitSelectedAndFilled = false;
+		try {
+			if (benefitType.equals(COREFLEXConstants.BOTH)) {
+				CoreFunctions.clickElement(driver, _textBoth);
+				CoreFunctions.clickElement(driver, _textCoreBenefits);
+				CoreFunctions.selectItemInListByText(driver, _subBenefitList, benefit.getSubbenefitToBeDeselected(),
+						true);
+				fillSubBenefit(benefit.getSubbenefitToBeDeselected(),COREFLEXConstants.CORE_BENEFITS);
+				CoreFunctions.clickElement(driver, _textFlexBenefits);
+				CoreFunctions.waitHandler(2);
+				CoreFunctions.explicitWaitTillElementBecomesClickable(driver, _inputFlexPoints, COREFLEXConstants.FLEX_POINTS_VALUE);
+				CoreFunctions.selectItemInListByText(driver, _subBenefitList, benefit.getSubbenefitToBeDeselected(),
+						true);
+				fillSubBenefit(benefit.getSubbenefitToBeDeselected(),COREFLEXConstants.FLEX_BENEFITS);
+				isSubBenefitSelectedAndFilled = true;
+			} else {
+				CoreFunctions.selectItemInListByText(driver, _subBenefitList, benefit.getSubbenefitToBeDeselected(),
+						true);
+				fillSubBenefit(benefit.getSubbenefitToBeDeselected(),COREFLEXConstants.FLEX);
+				isSubBenefitSelectedAndFilled = true;
+			}
+		} catch (Exception e) {
+			Assert.fail(COREFLEXConstants.FAILED_TO_SELECT_AND_FILL_LANGUAGE_TRAINING_SUB_BENEFIT);
+		}		
+		if(isSubBenefitSelectedAndFilled) {			
+			clickElementOfPage(COREFLEXConstants.SAVE_AND_CONTINUE);			
+		}		
+		return isSubBenefitSelectedAndFilled;
 	}
 }

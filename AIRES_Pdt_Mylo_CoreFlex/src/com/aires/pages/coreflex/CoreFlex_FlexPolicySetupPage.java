@@ -402,6 +402,10 @@ public class CoreFlex_FlexPolicySetupPage extends Base {
 				break;
 			case COREFLEXConstants.POLICY_REQUIRED_FOR:
 				break;
+			case COREFLEXConstants.MILESTONES:
+				break;
+			case COREFLEXConstants.BENEFIT_TYPE:
+				break;
 			default:
 				Assert.fail(COREFLEXConstants.INVALID_ELEMENT);
 			}

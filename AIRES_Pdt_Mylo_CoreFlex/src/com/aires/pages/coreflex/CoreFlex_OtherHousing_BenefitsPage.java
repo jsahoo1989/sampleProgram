@@ -489,6 +489,23 @@ public class CoreFlex_OtherHousing_BenefitsPage extends Base {
 					CoreConstants.FAIL, e.getMessage()));
 			return false;
 		}
-		
+
+	}
+
+	public boolean changeBenefitDetails() {
+		try {
+			CoreFunctions.clearAndSetTextUsingKeys(driver, _inputBenefitName,
+					COREFLEXConstants.OTHER_HOUSING_BENEFIT_NON_SIGNIFICANT_CHANGE_NAME,
+					COREFLEXConstants.BENEFIT_DISPLAY_NAME);
+			CoreFunctions.clearAndSetTextUsingKeys(driver, _inputPointValue, "12.5",
+					COREFLEXConstants.FLEX_POINTS_VALUE);
+			clickElementOfPage(COREFLEXConstants.SAVE_AND_CONTINUE);
+			return true;
+		} catch (Exception e) {
+			Reporter.addStepLog(MessageFormat.format(
+					COREFLEXConstants.EXCEPTION_OCCURED_WHILE_VERIFYING_BENEFIT_DETAILS_ON_OTHER_HOUSING_BENEFITS_PAGE,
+					CoreConstants.FAIL, e.getMessage()));
+			return false;
+		}
 	}
 }

@@ -784,5 +784,18 @@ public class CoreFlex_LumpSum_BenefitsPage extends Base {
 		}
 
 	}
+	
+	public boolean changePolicyBenefitType(String benefitType, String changedPolicyType) {
+		try {
+			CoreFunctions.clickElement(driver, _textFlex);
+			clickElementOfPage(COREFLEXConstants.SAVE_AND_CONTINUE);
+			return true;
+		} catch (Exception e) {
+			Reporter.addStepLog(MessageFormat.format(
+					COREFLEXConstants.EXCEPTION_OCCURED_WHILE_CHANGING_POLICY_BENEFIT_TYPE_OF_ADDED_BENEFIT,
+					CoreConstants.FAIL, changedPolicyType, benefitType, e.getMessage()));
+		}
+		return false;
+	}
 
 }

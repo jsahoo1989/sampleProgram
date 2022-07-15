@@ -419,6 +419,7 @@ public class CoreFlex_TemporaryLiving_BenefitsPage extends Base {
 		CoreFunctions.clickElement(driver, _selectTransportationType);
 		CoreFunctions.selectItemInListByText(driver, _selectTransportationTypeList,
 				housingBenefitData.temporaryLivingTransportation.transportationType, true);
+		CoreFunctions.clickElement(driver, _selectTransportationType);
 		CoreFunctions.selectItemInListByText(driver, _radioBtnGrossUp,
 				housingBenefitData.temporaryLivingTransportation.grossUp, true);
 		CoreFunctions.selectItemInListByText(driver, _radioBtnCandidateSelection,

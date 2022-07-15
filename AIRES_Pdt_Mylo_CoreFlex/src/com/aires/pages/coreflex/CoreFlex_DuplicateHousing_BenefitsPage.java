@@ -344,8 +344,8 @@ public class CoreFlex_DuplicateHousing_BenefitsPage extends Base {
 			subBenefitNamesList.add(subBenefitNames);
 
 		for (String subBenefit : subBenefitNamesList) {
-			if(subBenefitNamesList.size() > 1) {
-			CoreFunctions.selectItemInListByText(driver, _subBenefitList, subBenefit, true);
+			if (subBenefitNamesList.size() > 1) {
+				CoreFunctions.selectItemInListByText(driver, _subBenefitList, subBenefit, true);
 			}
 			if (CoreFunctions.isElementExist(driver, getElementByName(subBenefit), 5)) {
 				fillSubBenefit(subBenefit);
@@ -580,7 +580,7 @@ public class CoreFlex_DuplicateHousing_BenefitsPage extends Base {
 			verifySubBenefitDetails(subBenefitNames);
 			verifyBenefitsMandatoryDetails(COREFLEXConstants.FLEX_BENEFITS, multipleBenefitSelection, flexPoints,
 					benefitDisplayName, benefitAllowanceAmount, benefitDescription, paymentOption, airesManagedService);
-			verifySubBenefitDetails(subBenefitNames);			
+			verifySubBenefitDetails(subBenefitNames);
 			return true;
 		} else {
 			verifyBenefitsMandatoryDetails(benefitType, multipleBenefitSelection, flexPoints, benefitDisplayName,
@@ -696,11 +696,24 @@ public class CoreFlex_DuplicateHousing_BenefitsPage extends Base {
 			CoreFunctions.verifyText(_txtAreaComment.getDomProperty("value"),
 					housingBenefitData.duplicateHousing.comment, COREFLEXConstants.COMMENT);
 			CoreFunctions.highlightObject(driver, _txtAreaComment);
-			
+
 		} catch (Exception e) {
 			Assert.fail(COREFLEXConstants.FAILED_TO_VERIFY_DUPLICATE_HOUSING_SUB_BENEFITS_FORM);
 		}
 
+	}
+
+	public boolean changePolicyBenefitType(String benefitType, String changedPolicyType) {
+		try {
+			CoreFunctions.clickElement(driver, _textFlex);
+			clickElementOfPage(COREFLEXConstants.SAVE_AND_CONTINUE);
+			return true;
+		} catch (Exception e) {
+			Reporter.addStepLog(MessageFormat.format(
+					COREFLEXConstants.EXCEPTION_OCCURED_WHILE_CHANGING_POLICY_BENEFIT_TYPE_OF_ADDED_BENEFIT,
+					CoreConstants.FAIL, changedPolicyType, benefitType, e.getMessage()));
+		}
+		return false;
 	}
 
 }

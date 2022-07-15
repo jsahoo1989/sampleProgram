@@ -352,9 +352,9 @@ public class CoreFlex_AirportPickup_BenefitsPage extends Base {
 		switch (subBenefit) {
 		case COREFLEXConstants.AIRPORT_PICKUP:
 			expandSubBenefitIfCollapsed(getElementByName(COREFLEXConstants.AIRPORT_PICKUP));
-			if (benefitType.equals(COREFLEXConstants.FLEX_BENEFITS)) {
-				CoreFunctions.clickElement(driver, _headerAirportPickup);
-			}
+//			if (benefitType.equals(COREFLEXConstants.FLEX_BENEFITS)) {
+//				CoreFunctions.clickElement(driver, _headerAirportPickup);
+//			}
 			fillAirportPickupSubBenefitForm(COREFLEXConstants.AIRPORT_PICKUP);
 			break;
 		default:

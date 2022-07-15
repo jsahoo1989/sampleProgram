@@ -309,7 +309,7 @@ public class CoreFunctions {
 		explicitWaitTillElementBecomesClickable(driver, Element, name);
 		Log.info("Clicking using JS on: " + name);
 		try {
-			CoreFunctions.waitHandler(2);
+			CoreFunctions.waitHandler(1);
 			JavascriptExecutor executor = (JavascriptExecutor) driver;
 			executor.executeScript("arguments[0].click();", Element);
 			Log.info("Pass: " + name + " :is clicked");

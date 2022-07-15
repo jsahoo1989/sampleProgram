@@ -2,9 +2,9 @@ Feature: Validate the CoreFlex End-To-End Business Test Flow(BluePrint, MXTransf
 
   @End-To_End_CoreFlex @End-To_End_Both-PortionCashout_ApproveAllRequest
   Scenario: CoreFlex - Setting up a New CoreFlex policy in 'Policy Digitization Tool' application
-     Given he has submitted a new "Both" Type Policy with following selection in 'Policy Digitization Tool (PDT)' application
-      | Person Responsible For Benefit Selection | Flex Setup Type | Cashout Availability   | PolicyRequiredFor |
-      | Transferee                               | Static/Fixed    | Cashout Not Authorized | Cloning           |
+    Given he has submitted a new "Both" Type Policy with following selection in 'Policy Digitization Tool (PDT)' application
+      | Person Responsible For Benefit Selection | Flex Setup Type | Cashout Availability   | PolicyRequiredFor | MileStones |
+      | Transferee                               | Static/Fixed    | Cashout Not Authorized | End-To-End        |          0 |
     And he has clicked on "Submit" button to submit "V1" policy verison on "Custom Bundles" page
     And he has clicked on "Approve Policy" button to approve "V1" policy verison on "Custom Bundles" page
     And he has selected following options on 'Approval this Policy' dialog of "V1" Policy

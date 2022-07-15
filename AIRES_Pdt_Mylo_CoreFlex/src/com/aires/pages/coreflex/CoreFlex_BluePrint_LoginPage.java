@@ -75,20 +75,12 @@ public class CoreFlex_BluePrint_LoginPage extends Base {
 		CoreFunctions.waitForBrowserToLoad(driver);
 		Log.info("Inside openApplication");
 		VerifyAIRESLogo();
-//		clickSignInButton();
+		CoreFunctions.waitHandler(3);
 		CoreFunctions.switchToNewTab(driver);
-	}
-
-	private void clickSignInButton() {
-		if (CoreFunctions.isElementExist(driver, _loginWithOfficeImg, 5)) {
-			CoreFunctions.clickElement(driver, _loginWithOfficeImg);
-			CoreFunctions.waitHandler(3);
-		}
 	}
 
 	public void VerifyAIRESLogo() {
 		WebElement imgApplicationLogo;
-
 		if ((FileReaderManager.getInstance().getConfigReader().getNameOfCurrentLaunchedApplication()
 				.equalsIgnoreCase("pdt"))
 				|| (FileReaderManager.getInstance().getConfigReader().getNameOfCurrentLaunchedApplication()
@@ -134,12 +126,17 @@ public class CoreFlex_BluePrint_LoginPage extends Base {
 			CoreFunctions.click(driver, _staySignedInYes, _staySignedInYes.getAttribute("value"));
 		}
 		CoreFunctions.switchToParentWindow(driver);
+		CoreFunctions.waitHandler(3);
 		if (CoreFunctions.isElementExist(driver, _spinner, 5))
 			CoreFunctions.explicitWaitTillElementInVisibilityCustomTime(driver, _spinner, 20);
 		else if (CoreFunctions.isElementExist(driver, _loginWithOfficeImg, 5)) {
 			CoreFunctions.clickElement(driver, _loginWithOfficeImg);
+			CoreFunctions.explicitWaitTillElementInVisibilityCustomTime(driver, _spinner, 20);			
+		}else if (CoreFunctions.isElementExist(driver, _loginWithOfficeImg, 5)) {
+			CoreFunctions.clickElement(driver, _loginWithOfficeImg);
 			CoreFunctions.explicitWaitTillElementInVisibilityCustomTime(driver, _spinner, 20);
 		}
+		CoreFunctions.waitHandler(3);
 	}
 
 	public void logout() {

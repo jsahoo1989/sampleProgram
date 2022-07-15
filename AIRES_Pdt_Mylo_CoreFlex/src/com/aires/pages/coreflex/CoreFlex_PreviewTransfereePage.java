@@ -207,21 +207,22 @@ public class CoreFlex_PreviewTransfereePage extends Base {
 		return isPortionCashoutVerified;
 	}
 
-	public boolean verifyBenefitDetailsOnPreviewTransfereePage(String policyType, String policyRequiredFor) {
+	public boolean verifyBenefitDetailsOnPreviewTransfereePage(String policyType, String policyRequiredFor,
+			String numberOfMilestones) {
 		switch (policyType) {
 		case COREFLEXConstants.FLEX:
-			return verifyFlexBenefitsDetails(policyRequiredFor);
+			return verifyFlexBenefitsDetails(policyRequiredFor, numberOfMilestones);
 		case COREFLEXConstants.CORE:
 			return verifyCoreBenefitName();
 		case COREFLEXConstants.BOTH:
-			return verifyCoreBenefitName() && verifyFlexBenefitsDetails(policyRequiredFor);
+			return verifyCoreBenefitName() && verifyFlexBenefitsDetails(policyRequiredFor, numberOfMilestones);
 		default:
 			Assert.fail(COREFLEXConstants.INVALID_OPTION);
 		}
 		return false;
 	}
 
-	private boolean verifyFlexBenefitsDetails(String policyRequiredFor) {
+	private boolean verifyFlexBenefitsDetails(String policyRequiredFor, String numberOfMilestones) {
 		boolean isFlexBenefitPreviewVerified = false;
 		try {
 			for (WebElement element : _moreLinkBenefitDesc) {
@@ -233,9 +234,8 @@ public class CoreFlex_PreviewTransfereePage extends Base {
 				isFlexBenefitPreviewVerified = verifyCloningFlexBenefitDetails();
 				break;
 			case COREFLEXConstants.AIRES_MANAGED_BENEFITS_CARDS:
-				break;
 			case COREFLEXConstants.ALL_BENEFITS:
-				isFlexBenefitPreviewVerified = verifyAllFlexBenefitDetails();
+				isFlexBenefitPreviewVerified = verifyAllFlexBenefitDetails(policyRequiredFor, numberOfMilestones);
 				break;
 			default:
 				Assert.fail(COREFLEXConstants.BLUEPRINT_POLICY_REQUIRED_FOR_OPTION_NOT_PRESENT_IN_THE_LIST);
@@ -278,20 +278,37 @@ public class CoreFlex_PreviewTransfereePage extends Base {
 		return isFlexBenefitPreviewVerified;
 	}
 
-	private boolean verifyAllFlexBenefitDetails() {
+	private boolean verifyAllFlexBenefitDetails(String policyRequiredFor, String numberOfMilestones) {
 		boolean isFlexBenefitPreviewVerified = false;
 		for (FlexBenefit benefitList : flexBenefits) {
 			for (Benefit benefit : benefitList.getBenefits()) {
-				int indexBenefit = BusinessFunctions.returnindexItemFromListUsingText(driver, _textAddedBenefitNameList,
-						benefit.getBenefitDisplayName());
-				int indexCategory = BusinessFunctions.returnindexItemFromListUsingText(driver,
-						_textAddedBenefitGroupList, benefitList.getCategory(), true);
-				isFlexBenefitPreviewVerified = (CoreFunctions
-						.getItemsFromListByIndex(driver, _textAddedBenefitGroupList, indexCategory, true)
-						.equals(benefitList.getCategory()))
-						&& verifyFlexPlanningToolBenefitDetails(indexBenefit, benefit);
-				if (!isFlexBenefitPreviewVerified) {
-					break;
+				if ((policyRequiredFor.equals(COREFLEXConstants.ALL_BENEFITS))
+						&& (benefit.getPolicyCreationGroup().contains(COREFLEXConstants.ALL_BENEFITS))) {
+					int indexBenefit = BusinessFunctions.returnindexItemFromListUsingText(driver,
+							_textAddedBenefitNameList, benefit.getBenefitDisplayName());
+					int indexCategory = BusinessFunctions.returnindexItemFromListUsingText(driver,
+							_textAddedBenefitGroupList, benefitList.getCategory(), true);
+					isFlexBenefitPreviewVerified = (CoreFunctions
+							.getItemsFromListByIndex(driver, _textAddedBenefitGroupList, indexCategory, true)
+							.equals(benefitList.getCategory()))
+							&& verifyFlexPlanningToolBenefitDetails(indexBenefit, benefit);
+					if (!isFlexBenefitPreviewVerified) {
+						break;
+					}
+				} else if ((policyRequiredFor.equals(COREFLEXConstants.AIRES_MANAGED_BENEFITS_CARDS))
+						&& (benefit.getAiresManagedService().equals("Yes"))
+						&& (benefit.getNoOfMilestones() == Integer.parseInt(numberOfMilestones))) {
+					int indexBenefit = BusinessFunctions.returnindexItemFromListUsingText(driver,
+							_textAddedBenefitNameList, benefit.getBenefitDisplayName());
+					int indexCategory = BusinessFunctions.returnindexItemFromListUsingText(driver,
+							_textAddedBenefitGroupList, benefitList.getCategory(), true);
+					isFlexBenefitPreviewVerified = (CoreFunctions
+							.getItemsFromListByIndex(driver, _textAddedBenefitGroupList, indexCategory, true)
+							.equals(benefitList.getCategory()))
+							&& verifyFlexPlanningToolBenefitDetails(indexBenefit, benefit);
+					if (!isFlexBenefitPreviewVerified) {
+						break;
+					}
 				}
 			}
 		}
@@ -320,8 +337,9 @@ public class CoreFlex_PreviewTransfereePage extends Base {
 				&& CoreFunctions.getElementText(driver, _textCashOutValue).contains(String.valueOf(cashoutPoints));
 	}
 
-	public boolean verifyPreviewTransfereeExperience(String policyType, String policyRequiredFor) {
-		return verifyBenefitDetailsOnPreviewTransfereePage(policyType, policyRequiredFor)
+	public boolean verifyPreviewTransfereeExperience(String policyType, String policyRequiredFor,
+			String numberOfMilestones) {
+		return verifyBenefitDetailsOnPreviewTransfereePage(policyType, policyRequiredFor, numberOfMilestones)
 				&& validatePortionCashOutSection();
 	}
 

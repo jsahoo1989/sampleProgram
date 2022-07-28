@@ -39,6 +39,7 @@ import com.aires.businessrules.BusinessFunctions;
 import com.aires.businessrules.CoreFunctions;
 import com.aires.businessrules.DbFunctions;
 import com.aires.businessrules.constants.CoreConstants;
+import com.aires.businessrules.constants.PDTConstants;
 import com.aires.cucumber.TestContext;
 import com.aires.managers.FileReaderManager;
 import com.aires.utilities.Log;
@@ -75,10 +76,11 @@ public class Hooks {
 			testContext.getBasePage().killExistingBrowsers();
 		}
 		//Commented Code is for debugging purpose in local
-		/* else if (scenario.getName().contains("PDT")) {
+		/*else if (scenario.getName().contains("PDT")) {
 			Log.info(FileReaderManager.getInstance().getConfigReader().getPDTApplicationUrl());
 			testContext.getWebDriverManager().getDriver().navigate()
 					.to(FileReaderManager.getInstance().getConfigReader().getPDTApplicationUrl());
+			CoreFunctions.writeToPropertiesFile("assignmentSubmitStatus", "false");
 		} else if (scenario.getName().contains("Mylo")) {
 			Log.info(FileReaderManager.getInstance().getConfigReader().getApplicationUrl("MYLO"));
 			testContext.getWebDriverManager().getDriver().navigate()
@@ -149,6 +151,8 @@ public class Hooks {
 
 				// Attach the specified screenshot to the test
 				Reporter.addScreenCaptureFromPath(destinationPath.toString());
+				if(CoreFunctions.getPropertyFromConfig("assignmentSubmitStatus").equalsIgnoreCase("true"))
+					DbFunctions.updateAssignmentStatus(PDTConstants.INACTIVE_ASSGN_STATUS_CODE, testContext.getPageObjectManager().getAddNewPolicyPage().getPolicyId());
 				DbFunctions.deletePolicyByPolicyId(testContext.getPageObjectManager().getAddNewPolicyPage().getPolicyId());
 			} catch (IOException e) {
 			}
@@ -174,6 +178,8 @@ public class Hooks {
 			} catch (IOException e) {
 			}
 		} else if (scenario.getStatus().equalsIgnoreCase("passed") && scenario.getName().contains("PDT") && testContext.getPageObjectManager().getAddNewPolicyPage().getPolicyId() != null) {
+			if(CoreFunctions.getPropertyFromConfig("assignmentSubmitStatus").equalsIgnoreCase("true"))
+				DbFunctions.updateAssignmentStatus(PDTConstants.INACTIVE_ASSGN_STATUS_CODE, testContext.getPageObjectManager().getAddNewPolicyPage().getPolicyId());
 			DbFunctions.deletePolicyByPolicyId(testContext.getPageObjectManager().getAddNewPolicyPage().getPolicyId());
 			Reporter.addScenarioLog(Status.PASS + " : Test Scenario is Passed");
 			testResult = 1;

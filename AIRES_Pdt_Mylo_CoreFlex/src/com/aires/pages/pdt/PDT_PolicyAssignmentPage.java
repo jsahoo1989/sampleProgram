@@ -1,0 +1,76 @@
+package com.aires.pages.pdt;
+
+import java.text.MessageFormat;
+import java.util.List;
+
+import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.WebElement;
+import org.openqa.selenium.support.FindBy;
+import org.openqa.selenium.support.How;
+import org.testng.Assert;
+
+import com.aires.businessrules.Base;
+import com.aires.businessrules.BusinessFunctions;
+import com.aires.businessrules.CoreFunctions;
+import com.aires.businessrules.constants.CoreConstants;
+import com.aires.businessrules.constants.MobilityXConstants;
+import com.aires.businessrules.constants.PDTConstants;
+import com.aires.utilities.Log;
+import com.vimalselvam.cucumber.listener.Reporter;
+
+public class PDT_PolicyAssignmentPage extends Base {
+	public PDT_PolicyAssignmentPage(WebDriver driver) {
+		super(driver);
+	}
+
+	@FindBy(how = How.CSS, using = "td[class*='mat-column-transfereeName']")
+	private List<WebElement> _listTransfereeName;
+
+	@FindBy(how = How.CSS, using = "td[class*='cdk-column-assignmentStatusCode']")
+	private List<WebElement> _listAssignmentStatus;
+
+	@FindBy(how = How.CSS, using = "td[class*='cdk-column-bookDate']")
+	private List<WebElement> _listAssignmentBookDate;
+
+	public boolean verifyAssignmentInfo(WebElement element, String expectedVal, String elementName) {
+		try {
+			if (element.getText().trim().equalsIgnoreCase(expectedVal.trim())) {
+				CoreFunctions.highlightObject(driver, element);
+				Reporter.addStepLog(MessageFormat.format(PDTConstants.VERIFIED_ASSIGMENT_INFO, CoreConstants.PASS,
+						elementName, expectedVal));
+				return true;
+			}
+		} catch (Exception e) {
+
+		}
+		Reporter.addStepLog(MessageFormat.format(PDTConstants.FAILED_TO_VERIFY_ASSIGNMENT_INFO, CoreConstants.FAIL,
+				elementName, expectedVal, element.getText()));
+		return false;
+	}
+
+	public boolean verifyAssignmentInfo() {
+		try {
+			String transfereeName = CoreFunctions.getPropertyFromConfig(MobilityXConstants.FIRST_NAME_TEXT) + " "
+					+ CoreFunctions.getPropertyFromConfig(MobilityXConstants.LAST_NAME_TEXT);
+			int index = BusinessFunctions.returnindexItemFromListUsingText(driver, _listTransfereeName, transfereeName);
+			Log.info("index inside verifyAssignment info=="+index);
+			if (index != -1) {
+				/*
+				 * CoreFunctions.highlightObject(driver,
+				 * CoreFunctions.getElementFromListByText(_listPolicyName, policyName));
+				 */
+				return (verifyAssignmentInfo(_listTransfereeName.get(index), transfereeName,
+						PDTConstants.TRANSFEREE_NAME)
+						&& verifyAssignmentInfo(_listAssignmentStatus.get(index), PDTConstants.ASSIGNMENT_STATUS_BOOKED, PDTConstants.ASSIGNMENT_STATUS)
+						&& verifyAssignmentInfo(_listAssignmentBookDate.get(index), CoreFunctions.getcurrentdate(), PDTConstants.BOOKED_DATE));
+
+			} else {
+				Assert.fail("Failed to search transfere");
+			}
+
+		} catch (Exception e) {
+			Log.info(CoreConstants.ERROR + e.getStackTrace());
+		}
+		return false;
+	}
+}

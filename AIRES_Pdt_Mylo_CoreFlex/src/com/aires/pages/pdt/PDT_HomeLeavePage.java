@@ -41,11 +41,18 @@ public class PDT_HomeLeavePage extends Base {
 	@FindBy(how = How.CSS, using = "ng-select[formcontrolname='assignmentFreqOfTripCode']")
 	private WebElement _drpDownFrequencyOfTrip;
 
-	@FindBy(how = How.CSS, using = "ng-select[formcontrolname='assignmentFreqOfTripCode'] span.ng-option-label.ng-star-inserted")
+/*	@FindBy(how = How.CSS, using = "ng-select[formcontrolname='assignmentFreqOfTripCode'] span.ng-option-label.ng-star-inserted")
 	private List<WebElement> _drpDownFrequencyOfTripOptions;
 
 	@FindBy(how = How.CSS, using = "ng-select[formcontrolname='assignmentFreqOfTripCode'] span.ng-value-label.ng-star-inserted")
+	private WebElement _drpDownFrequencyOfTripOptionsSelected;*/
+	
+	@FindBy(how = How.CSS, using = "ng-select[formcontrolname='assignmentFreqOfTripCode'] span.ng-option-label")
+	private List<WebElement> _drpDownFrequencyOfTripOptions;
+
+	@FindBy(how = How.CSS, using = "ng-select[formcontrolname='assignmentFreqOfTripCode'] span.ng-value-label")
 	private WebElement _drpDownFrequencyOfTripOptionsSelected;
+
 
 	@FindBy(how = How.CSS, using = "input[formcontrolname='assignmentFreqOfTripOther']")
 	private WebElement _txtBoxFrequencyOfTripOther;

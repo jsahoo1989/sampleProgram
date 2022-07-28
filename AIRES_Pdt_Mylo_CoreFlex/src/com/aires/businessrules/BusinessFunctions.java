@@ -553,7 +553,7 @@ public class BusinessFunctions {
 		try {
 			for (WebElement row : WebElementList) {
 				Log.info(CoreConstants.ACTUAL_ITEM_NAME_IS + row.getText());
-				if (row.getText().equals(itemName)) {
+				if (row.getText().trim().equals(itemName.trim())) {
 					return WebElementList.indexOf(row);
 				}
 			}
@@ -692,7 +692,8 @@ public class BusinessFunctions {
 		String randValue = null;
 		try {
 			CoreFunctions.clickElement(driver, drpDownElement);
-			randValue = drpDownElementOptions.get(CoreFunctions.getRandomNumber(0, drpDownElementOptions.size() - 1))
+			int index = CoreFunctions.getRandomNumber(0, drpDownElementOptions.size() - 1);
+			randValue = drpDownElementOptions.get(index)
 					.getText();
 			CoreFunctions.selectItemInListByText(driver, drpDownElementOptions, randValue, lblDropDown,
 					PDTConstants.DROP_DOWN, true);
@@ -737,33 +738,53 @@ public class BusinessFunctions {
 	}
 
 	public static String[] getCSMCredentials(PDT_LoginDetails _loginDetailsApplication) {
-		String csmCredentials[] = new String[3];
+		String csmCredentials[] = new String[7];
 		//switch (CoreFunctions.getPropertyFromConfig("envt").toLowerCase()) {
 		switch (System.getProperty("envt").toLowerCase()) {
 		case CoreConstants.ENVT_DEV:
 			csmCredentials[0] = _loginDetailsApplication.dev.csmUserName;
 			csmCredentials[1] = _loginDetailsApplication.dev.csmPassword;
 			csmCredentials[2] = _loginDetailsApplication.dev.firstName+ " " + _loginDetailsApplication.dev.lastName;
+			csmCredentials[3] = _loginDetailsApplication.dev.mobilityxUrl;
+			csmCredentials[4] = _loginDetailsApplication.dev.mobilityxUserName;
+			csmCredentials[5] = _loginDetailsApplication.dev.mobilityxPassword;
+			csmCredentials[6] = _loginDetailsApplication.dev.profileName;
 			break;
 		case CoreConstants.ENVT_QA:
 			csmCredentials[0] = _loginDetailsApplication.qa.csmUserName;
 			csmCredentials[1] = _loginDetailsApplication.qa.csmPassword;
 			csmCredentials[2] = _loginDetailsApplication.qa.firstName+ " " + _loginDetailsApplication.qa.lastName;
+			csmCredentials[3] = _loginDetailsApplication.qa.mobilityxUrl;
+			csmCredentials[4] = _loginDetailsApplication.qa.mobilityxUserName;
+			csmCredentials[5] = _loginDetailsApplication.qa.mobilityxPassword;
+			csmCredentials[6] = _loginDetailsApplication.qa.profileName;
 			break;
 		case CoreConstants.ENVT_TEST:
 			csmCredentials[0] = _loginDetailsApplication.preProd.csmUserName;
 			csmCredentials[1] = _loginDetailsApplication.preProd.csmPassword;
 			csmCredentials[2] = _loginDetailsApplication.preProd.firstName+ " " + _loginDetailsApplication.preProd.lastName;
+			csmCredentials[3] = _loginDetailsApplication.preProd.mobilityxUrl;
+			csmCredentials[4] = _loginDetailsApplication.preProd.mobilityxUserName;
+			csmCredentials[5] = _loginDetailsApplication.preProd.mobilityxPassword;
+			csmCredentials[6] = _loginDetailsApplication.preProd.profileName;
 			break;
 		case CoreConstants.ENVT_UAT:
 			csmCredentials[0] = _loginDetailsApplication.uat.csmUserName;
 			csmCredentials[1] = _loginDetailsApplication.uat.csmPassword;
 			csmCredentials[2] = _loginDetailsApplication.uat.firstName+ " " + _loginDetailsApplication.uat.lastName;
+			csmCredentials[3] = _loginDetailsApplication.uat.mobilityxUrl;
+			csmCredentials[4] = _loginDetailsApplication.uat.mobilityxUserName;
+			csmCredentials[5] = _loginDetailsApplication.uat.mobilityxPassword;
+			csmCredentials[6] = _loginDetailsApplication.uat.profileName;
 			break;
 		case CoreConstants.ENVT_PROD:
 			csmCredentials[0] = _loginDetailsApplication.prod.csmUserName;
 			csmCredentials[1] = _loginDetailsApplication.prod.csmPassword;
 			csmCredentials[2] = _loginDetailsApplication.prod.firstName+ " " + _loginDetailsApplication.prod.lastName;
+			csmCredentials[3] = _loginDetailsApplication.prod.mobilityxUrl;
+			csmCredentials[4] = _loginDetailsApplication.prod.mobilityxUserName;
+			csmCredentials[5] = _loginDetailsApplication.prod.mobilityxPassword;
+			csmCredentials[6] = _loginDetailsApplication.prod.profileName;
 			break;
 		}
 		return csmCredentials;

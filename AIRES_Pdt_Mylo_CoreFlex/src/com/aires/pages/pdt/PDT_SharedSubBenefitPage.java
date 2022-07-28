@@ -982,6 +982,7 @@ public class PDT_SharedSubBenefitPage extends Base {
 	}
 
 	public void exitFromPolicyBenefitPage() {
+		CoreFunctions.waitHandler(3);
 		CoreFunctions.click(driver, _btnExit, PDTConstants.EXIT);
 		if (CoreFunctions.isElementExist(driver, _dialogconfirmation, 1)) {
 			CoreFunctions.clickWithoutReporting(driver, _btnOk, _btnOk.getText());
@@ -1155,17 +1156,20 @@ public class PDT_SharedSubBenefitPage extends Base {
 		}		
 	}
 	
-	public boolean verifyStatusAndVersionOfCanceledPolicy(String selectedPolicyName, String expectedPolicyStatus, String expectedPolicyVersion, String pageName) {
-		//CoreFunctions.moveToElement(driver, _policyStatusText);
+	public boolean verifyStatusAndVersionOfPolicy(String selectedPolicyName, String expectedPolicyStatus, String expectedPolicyVersion, String pageName) {
+		if (CoreFunctions.isElementExist(driver, _progressBar, 7))
+			BusinessFunctions.fluentWaitForSpinnerToDisappear(driver, _progressBar);
 		CoreFunctions.scrollToElementUsingJS(driver, _policyStatus, _policyStatusText.getText());
 		CoreFunctions.explicitWaitForElementTextPresent(driver, _policyStatusText, _policyStatusText.getText(), 10);
 		if(expectedPolicyStatus.equalsIgnoreCase(_policyStatus.getText().trim()) && expectedPolicyVersion.equalsIgnoreCase(_policyVersion.getText().trim())) {
+			CoreFunctions.highlightObject(driver, _policyStatus);
+			CoreFunctions.highlightObject(driver, _policyVersion);
 			Reporter.addStepLog(MessageFormat.format(PDTConstants.VERIFIED_POLICY_VERSION_STATUS, CoreConstants.PASS, selectedPolicyName, expectedPolicyVersion, expectedPolicyStatus, pageName));
 			return true;
 		} else {
 			Reporter.addStepLog(MessageFormat.format(
 					PDTConstants.FAILED_TO_VERIFY_POLICY_VERSION_STATUS, CoreConstants.FAIL,
-					selectedPolicyName, expectedPolicyVersion, _policyStatus.getText().trim(), expectedPolicyStatus, _policyVersion.getText().trim(), pageName));
+					selectedPolicyName, expectedPolicyVersion, _policyVersion.getText().trim(), expectedPolicyStatus, _policyStatus.getText().trim(), pageName));
 			return false;
 		}		
 	}
@@ -1176,16 +1180,11 @@ public class PDT_SharedSubBenefitPage extends Base {
 			if(btnName.equalsIgnoreCase(PDTConstants.BTN_APPROVE)) {
 				approvePolicy(btnName, pageName);
 			}else if(btnName.equalsIgnoreCase(PDTConstants.BTN_CANCEL)) {
-				Log.info("inside btn cancel");				
 				CoreFunctions.highlightElementAndClick(driver, buttonMap.get(btnName), btnName);
-				//CoreFunctions.clickUsingJS(driver, buttonMap.get(btnName), btnName);
-				//CoreFunctions.click(driver, buttonMap.get(btnName), btnName);
 			} else {
-				Log.info("inside else condition");
 				Log.info("Button:-"+btnName+" does not exist.");
 			}
 		} catch(Exception e) {
-			e.printStackTrace();
 			Assert.fail("Button:-"+btnName+" does not exist.");
 		}
 

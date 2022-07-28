@@ -269,4 +269,10 @@ public class PDT_SharedSubBenefit_Steps {
 		Assert.assertTrue(subBenefitPage.verifySubBenefitCategoriesAreUnchecked(subBenefits.toString()), MessageFormat.format(PDTConstants.VERIFIED_DATA_SAVED_FOR_SUB_BENEFIT, CoreConstants.FAIL, subBenefits.toString()));
 		DbFunctions.deletePolicyByPolicyId(addNewPolicyPage.getPolicyId());
 	}
+	
+	@Then("^Policy Status should be changed to \"([^\"]*)\" along with Version \"([^\"]*)\" on the \"([^\"]*)\" page$")
+	public void policy_Status_should_be_changed_to_along_with_Version_on_the_page(String policyStatus, String policyVersion, String pageName) throws Throwable {
+		Assert.assertTrue(subBenefitPage.verifyStatusAndVersionOfPolicy(
+				addNewPolicyPage.getPolicyName().split("\\(#")[0].trim(), policyStatus, policyVersion, pageName));
+	}
 }

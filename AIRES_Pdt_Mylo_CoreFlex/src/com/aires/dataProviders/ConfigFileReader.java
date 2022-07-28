@@ -23,11 +23,9 @@ import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
 import java.util.LinkedHashMap;
-import java.util.List;
 import java.util.Properties;
+
 import com.aires.businessrules.constants.CoreConstants;
-import com.aires.businessrules.constants.MYLOConstants;
-import java.util.Properties;
 import com.aires.enums.DriverType;
 import com.aires.enums.EnvironmentType;
 

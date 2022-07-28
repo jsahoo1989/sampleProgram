@@ -26,6 +26,7 @@ import java.util.List;
 
 import com.aires.businessrules.constants.CoreConstants;
 import com.aires.managers.FileReaderManager;
+import com.aires.testdatatypes.mobilityx.MobilityX_AuthorizationData;
 import com.aires.testdatatypes.pdt.PDT_AssignmentHousingBenefit;
 import com.aires.testdatatypes.pdt.PDT_CompensationServicesBenefit;
 import com.aires.testdatatypes.pdt.PDT_CulturalTrainingBenefit;
@@ -90,6 +91,8 @@ public class JsonDataReader_Pdt {
 			.getTestDataResourcePath() + "pdt/PDT_HomePurchaseBenefit.json";
 	private final String _HouseholdGoodsFilePath = FileReaderManager.getInstance().getConfigReader()
 			.getTestDataResourcePath() + "pdt/PDT_HouseHoldGoodsBenefit.json";
+	private final String _MobilityXAuthDataFilePath = FileReaderManager.getInstance().getConfigReader()
+			.getTestDataResourcePath() + "mobilityx/MobilityX_AuthorizationData.json";
 
 	private List<PDT_LoginData> _loginDataList;
 	private List<PDT_LoginDetails> _loginDetailsList;
@@ -111,6 +114,7 @@ public class JsonDataReader_Pdt {
 	private List<PDT_PropertyManagementBenefit> _propertyManagementList;
 	private List<PDT_HomePurchaseBenefit> _homePurchaseList;
 	private List<PDT_HouseHoldGoodsBenefit> _houseHoldGoodsList;
+	private List<MobilityX_AuthorizationData> _mobilityXAuthorizationDataList;
 
 	public JsonDataReader_Pdt() {
 		_loginDataList = getUserData();
@@ -133,6 +137,7 @@ public class JsonDataReader_Pdt {
 		_propertyManagementList = getPropertyManagementData();
 		_homePurchaseList = getHomePurchaseData();
 		_houseHoldGoodsList = getHouseHoldGoodData();
+		_mobilityXAuthorizationDataList = getMobilityXAuthData();
 	}
 
 	private List<PDT_LoginData> getUserData() {
@@ -498,6 +503,23 @@ public class JsonDataReader_Pdt {
 		}		
 	}
 
+	private List<MobilityX_AuthorizationData> getMobilityXAuthData(){
+		Gson gson = new Gson();
+		BufferedReader bufferReader = null;
+		try {
+			bufferReader = new BufferedReader(new FileReader(_MobilityXAuthDataFilePath));
+			MobilityX_AuthorizationData[] mobilityXAuthData = gson.fromJson(bufferReader, MobilityX_AuthorizationData[].class);
+			return Arrays.asList(mobilityXAuthData);
+		} catch (FileNotFoundException e) {
+			throw new RuntimeException(CoreConstants.JSON_FILE_NOT_FOUND_AT_PATH + _MobilityXAuthDataFilePath);
+		} finally {
+			try {
+				if (bufferReader != null)
+					bufferReader.close();
+			} catch (IOException ignore) {
+			}
+		}		
+	}
 	
 	public final PDT_LoginData getloginDetailsByUserFirstName(String userFirstName) {
 		return _loginDataList.stream().filter(x -> x.firstName.equalsIgnoreCase(userFirstName)).findAny().get();
@@ -580,5 +602,9 @@ public class JsonDataReader_Pdt {
 	
 	public final PDT_HouseHoldGoodsBenefit getHouseHoldGoodsDataList(String policyBenefit) {
 		return _houseHoldGoodsList.stream().filter(x -> x.benefitName.equalsIgnoreCase(policyBenefit)).findAny().get();
+	}
+	
+	public final MobilityX_AuthorizationData getDataByModuleName(String moduleName) {
+		return _mobilityXAuthorizationDataList.stream().filter(x -> x.module.equalsIgnoreCase(moduleName)).findAny().get();
 	}
 }

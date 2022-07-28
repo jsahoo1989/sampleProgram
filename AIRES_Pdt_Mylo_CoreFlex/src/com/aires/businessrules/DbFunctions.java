@@ -8,7 +8,9 @@ import java.sql.ResultSet;
 import java.util.ArrayList;
 import java.util.LinkedHashMap;
 import java.util.List;
+
 import org.testng.Assert;
+
 import com.aires.businessrules.constants.CoreConstants;
 import com.aires.businessrules.constants.DbQueries;
 import com.aires.businessrules.constants.MYLOConstants;
@@ -194,5 +196,28 @@ public class DbFunctions {
 			}
 		}
 		return requiredList;
+	}
+	
+	public static void updateAssignmentStatus(String assignmentStatusCode, int policyId) {
+		Connection connection = null;
+		try {
+			DriverManager.registerDriver(new oracle.jdbc.OracleDriver());
+			/*connection = DriverManager.getConnection(
+					getDBConnectionStringAsPerEnvt(CoreFunctions.getPropertyFromConfig("envt").toLowerCase()));*/
+			connection = DriverManager.getConnection(
+					getDBConnectionStringAsPerEnvt(System.getProperty("envt").toLowerCase()));
+			PreparedStatement pstChangeStatus = connection.prepareStatement(DbQueries.QUERY_UPDATE_ASSIGNMENT_STATUS);
+			pstChangeStatus.setString(1, assignmentStatusCode);
+			pstChangeStatus.setString(2, null);
+			pstChangeStatus.setInt(3, policyId);
+			pstChangeStatus.setString(4, CoreFunctions.getCurrentDateAsGivenFormat("dd-MM-yyyy"));
+			System.out.println("prepared statement query=="+pstChangeStatus.toString());
+			
+			pstChangeStatus.executeUpdate();	
+			connection.close();
+		} catch (Exception ex) {
+			ex.printStackTrace();
+			Assert.fail("SQL Query Failed");
+		}
 	}
 }

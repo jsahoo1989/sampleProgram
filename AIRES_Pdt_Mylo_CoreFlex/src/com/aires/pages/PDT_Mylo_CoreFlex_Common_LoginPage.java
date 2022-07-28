@@ -67,6 +67,12 @@ public class PDT_Mylo_CoreFlex_Common_LoginPage extends Base {
 	@FindBy(how = How.CSS, using = "div.ngx-progress-bar.ngx-progress-bar-ltr")
 	private WebElement _progressBar;
 	
+	@FindBy(how = How.CSS, using = "a.logout")
+	private WebElement _imgPDTLogout;
+	
+    @FindBy(how = How.CSS, using = "#KmsiDescription")
+    private WebElement _staySignedInMsg;
+	
 	final By _loginImg = By.xpath("//img[contains(@src,'login-with-office-365')]");
 	final By _spinnerImg = By.cssSelector("div[class='sk-three-strings']");
 	final By _password = By.cssSelector("input[type='password']");
@@ -133,20 +139,35 @@ public class PDT_Mylo_CoreFlex_Common_LoginPage extends Base {
 		}
 	}
 	
+	public void waitForProgressBarToDisappear() {
+		try {
+			if(CoreFunctions.isElementExist(driver,  _progressBar, 5)) {			
+				CoreFunctions.explicitWaitTillElementInVisibility(driver, _progressBar);
+				//BusinessFunctions.fluentWaitForSpinnerToDisappear(driver, _progressBar);
+			}	
+		} catch(Exception e) {
+			
+		}
+		
+	}
+	
 	public void clickSignIn() {
 		try {
 			CoreFunctions.click(driver, _submit, _submit.getAttribute("value"));
 			if (CoreFunctions.isElementExist(driver, _staySignedInYes, 5)) {
 				CoreFunctions.explicitWaitTillElementVisibility(driver, _staySignedInYes,
 						_staySignedInYes.getAttribute("value"), 10);
+				Assert.assertEquals(CoreFunctions.getElementText(driver, _staySignedInMsg), "Do this to reduce the number of times you are asked to sign in.");
 				CoreFunctions.click(driver, _staySignedInYes, _staySignedInYes.getAttribute("value"));
 			}
 			CoreFunctions.switchToParentWindow(driver);		
-			if(CoreFunctions.isElementExist(driver,  _progressBar, 2))
-				BusinessFunctions.fluentWaitForSpinnerToDisappear(driver, _progressBar);			
+			if(CoreFunctions.isElementExist(driver,  _progressBar, 5)) {
+				CoreFunctions.explicitWaitTillElementInVisibility(driver, _progressBar);
+				//BusinessFunctions.fluentWaitForSpinnerToDisappear(driver, _progressBar);
+			}							
 			else if(CoreFunctions.isElementPresent(driver, _loginImg, 5, MYLOConstants.LOGIN_BUTTON)) {
 				CoreFunctions.click(driver, CoreFunctions.getElementByLocator(driver,_loginImg), MYLOConstants.LOGIN_BUTTON);
-				BusinessFunctions.fluentWaitForSpinnerToDisappear(driver, _progressBar);			
+				waitForProgressBarToDisappear();
 			}
 		} catch(Exception e) {
 			Reporter.addStepLog(MessageFormat.format(PDTConstants.EXCEPTION_OCCURED_WHILE_LOGGING_TO_APPLICATION,
@@ -214,4 +235,9 @@ public class PDT_Mylo_CoreFlex_Common_LoginPage extends Base {
 		applicationLogoMap.put(PDTConstants.APPLICATION_PDT, _imgAIRESLogo);
 		applicationLogoMap.put(PDTConstants.APPLICATION_MYLO, _img_MYLOLogo);		
 	}
+
+	public void logoutFromPDTApplication() {
+		CoreFunctions.clickUsingJS(driver, _imgPDTLogout, "Logout");
+	}
+
 }

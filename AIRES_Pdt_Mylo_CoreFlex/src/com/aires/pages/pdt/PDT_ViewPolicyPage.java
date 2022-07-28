@@ -2,6 +2,7 @@ package com.aires.pages.pdt;
 
 import java.text.MessageFormat;
 import java.util.Date;
+import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -17,6 +18,7 @@ import com.aires.businessrules.BusinessFunctions;
 import com.aires.businessrules.CoreFunctions;
 import com.aires.businessrules.constants.COREFLEXConstants;
 import com.aires.businessrules.constants.CoreConstants;
+import com.aires.businessrules.constants.MobilityXConstants;
 import com.aires.businessrules.constants.PDTConstants;
 import com.aires.utilities.Log;
 import com.vimalselvam.cucumber.listener.Reporter;
@@ -92,10 +94,47 @@ public class PDT_ViewPolicyPage extends Base {
 	
 	@FindBy(how = How.XPATH, using = "//strong[contains(text(),'Version Number')]/parent::h6")
 	private List<WebElement> _listVersionNo;
+	
+	@FindBy(how = How.CSS, using = "img[src*='ClockCounterClockwise_Open.png']")
+	private List<WebElement> _listAssignmentHistoryIcon;
+	
+	@FindBy(how = How.CSS, using = "div.msg-2>p")
+	private List<WebElement> _msgVersionPopUp;
+	
+	@FindBy(how = How.CSS, using = "div.control-label")
+	private WebElement _versionText;			
+	
+	@FindBy(how = How.XPATH, using = "//span[text()='CREATE']/parent::button[@disabled='true']")
+	private WebElement _btnCreateDisabled;
+	
+	@FindBy(how = How.XPATH, using = "//span[text()='CREATE']/parent::button")
+	private WebElement _btnCreate;
+	
+	@FindBy(how = How.XPATH, using = "//span[text()='CANCEL']/parent::button")
+	private WebElement _btnCancel;
+	
+	@FindBy(how = How.CSS, using = "img[src*='Vectoreditimg.png']")
+	private List<WebElement> _listEditIcon;
+	
+	@FindBy(how = How.CSS, using = "img[src*='Info.png']")
+	private WebElement _imgInfoIcon;
+	
+	@FindBy(how = How.CSS, using = "input[formcontrolname='description']")
+	private WebElement _txtBoxDescription;
+	
+	
+	LinkedHashMap<String, List<WebElement>> iconMap = new LinkedHashMap<String, List<WebElement>>();
+	
+	//span[text()='CREATE']/parent::button[@disabled='true']
 
 	final By _listPolicyNameByLocator = By.cssSelector("h5.text-info.info-pname");
 	final By _listClientNameByLocator = By.cssSelector("h6.info-pclient");
 	long timeBeforeAction, timeAfterAction;
+	
+	public void populateIconMap() {
+		iconMap.put(PDTConstants.ASSIGNMENT_HISTORY, _listAssignmentHistoryIcon);
+		iconMap.put(PDTConstants.ICON_EDIT, _listEditIcon);
+	}
 
 	public String getElementText(String elementName) {
 		String elementText = null;
@@ -334,13 +373,13 @@ public class PDT_ViewPolicyPage extends Base {
 					CoreFunctions.getElementFromListByText(_listPolicyName, selectedPolicyName));
 			String actualPolicyStatusList = _listPolicyStatus.get(index).getText();
 			actualPolicyStatus = actualPolicyStatusList.split(":");
-			isSubmittedPolicyStatusVerified = (actualPolicyStatus[1].trim()).equals(expectedPolicyStatus);
+			isSubmittedPolicyStatusVerified = (actualPolicyStatus[1].trim()).equalsIgnoreCase(expectedPolicyStatus);
 			CoreFunctions.highlightObject(driver,
 					CoreFunctions.getElementFromListByText(_listPolicyStatus, (actualPolicyStatus[1].trim())));
 			
 			String actualPolicyVersionList = _listVersionNo.get(index).getText();
 			actualPolicyVersion = actualPolicyVersionList.split(":");
-			isPolicyVersionVerified = (actualPolicyVersion[1].trim()).equals(expectedPolicyVersion);
+			isPolicyVersionVerified = (actualPolicyVersion[1].trim()).equalsIgnoreCase(expectedPolicyVersion);
 			CoreFunctions.highlightObject(driver,
 					CoreFunctions.getElementFromListByText(_listVersionNo, (actualPolicyVersion[1].trim())));
 		} catch (Exception e) {
@@ -358,7 +397,86 @@ public class PDT_ViewPolicyPage extends Base {
 					PDTConstants.FAILED_TO_VERIFY_POLICY_VERSION_STATUS, CoreConstants.FAIL,
 					selectedPolicyName, expectedPolicyVersion, actualPolicyVersion[1], expectedPolicyStatus, actualPolicyStatus[1], pageName));
 			return false;
+		}		
+	}
+	
+	public void searchByPolicyName(String iconName, String policyName, String pageName) {
+		try {
+			populateIconMap();
+			CoreFunctions.clearAndSetText(driver, _inputPolicyName, policyName);
+			CoreFunctions.click(driver, _btnSearch, _btnSearch.getText());
+			if(CoreFunctions.isElementExist(driver, _progressBar, 2)) {
+				BusinessFunctions.fluentWaitForSpinnerToDisappear(driver, _progressBar);			
+			}
+			int index = BusinessFunctions.returnindexItemFromListUsingText(driver, _listPolicyName, policyName);
+			if(index !=-1) {
+				CoreFunctions.highlightObject(driver,
+						_listPolicyName.get(index));
+				CoreFunctions.highlightElementAndClick(driver, iconMap.get(iconName).get(index), iconName);
+			} else {
+				Assert.fail("Failed to search policy name");
+			}
+			
+		} catch(Exception e) {
+			Log.info(CoreConstants.ERROR+e.getStackTrace());
+		}
+	}
+	
+	public boolean verifyButton(String btnName, String btnStatus) {	
+		try {
+			if(btnName.equalsIgnoreCase("create") && btnStatus.equalsIgnoreCase("disabled") && _btnCreateDisabled.getAttribute("disabled").equalsIgnoreCase("true")) {
+				CoreFunctions.highlightObject(driver, _btnCreateDisabled);
+				Reporter.addStepLog(MessageFormat.format(PDTConstants.VERIFIED_BTN_STATE, CoreConstants.PASS, btnName, btnStatus));
+				return true;
+			} else if(btnName.equalsIgnoreCase("create") && btnStatus.equalsIgnoreCase("enabled") && CoreFunctions.isElementExist(driver, _btnCreate, 3)) {
+				CoreFunctions.highlightObject(driver, _btnCreate);
+				Reporter.addStepLog(MessageFormat.format(PDTConstants.VERIFIED_BTN_STATE, CoreConstants.PASS, btnName, btnStatus));
+				return true;
+			}
+			else if(btnName.equalsIgnoreCase("cancel") && btnStatus.equalsIgnoreCase("enabled") && CoreFunctions.isElementExist(driver, _btnCancel, 3)) {
+				CoreFunctions.highlightObject(driver, _btnCancel);
+				Reporter.addStepLog(MessageFormat.format(PDTConstants.VERIFIED_BTN_STATE, CoreConstants.PASS, btnName, btnStatus));
+				return true;
+			}			
+		} catch(Exception e) {
+			Assert.fail(MessageFormat.format(PDTConstants.FAILED_TO_VERIFY_BTN_STATE, CoreConstants.FAIL, btnName, btnStatus));
+		}
+		return false;
+	}
+	
+	public void contentsOfPopUp(List<List<String>> data) {
+		if(CoreFunctions.isElementExist(driver, _progressBar, 3)) {		
+			BusinessFunctions.fluentWaitForSpinnerToDisappear(driver, _progressBar);			
+		}
+		String msgText = _msgVersionPopUp.get(0).getText().replace('“', '"').replace('”', '"').trim();
+		CoreFunctions.explicitWaitTillElementVisibility(driver, _imgInfoIcon, "Info Icon");
+		if (msgText.equalsIgnoreCase(data.get(0).get(1))) {
+			CoreFunctions.highlightObject(driver, _msgVersionPopUp.get(0));
+			Reporter.addStepLog(
+					CoreConstants.PASS + MobilityXConstants.VERIFIED_FIELD_TEXT + data.get(0).get(0) + " : " + data.get(0).get(1));
+		}
+		else {
+			Reporter.addStepLog(CoreConstants.FAIL + MobilityXConstants.FAILED_TO_VERIFY + data.get(0).get(0) + " | "
+					+ CoreConstants.VAL_ACTUAL + _msgVersionPopUp.get(0).getText() + " " + CoreConstants.VAL_EXPECTED + data.get(0).get(1));
+			Assert.fail("Failed to verify the fields "+ data.get(0).get(0) +" Text: Actual Text = " + _msgVersionPopUp.get(0).getText() + " | Expected Text = " + data.get(0).get(1));
 		}
 		
+		CoreFunctions.verifyText(driver, _msgVersionPopUp.get(1), data.get(1).get(1), data.get(1).get(0));
+		CoreFunctions.verifyText(driver, _versionText, data.get(2).get(1), data.get(2).get(0));
+		if(CoreFunctions.isElementVisible(_txtBoxDescription)) {
+			CoreFunctions.highlightObject(driver, _txtBoxDescription);
+			Reporter.addStepLog(MessageFormat.format(PDTConstants.VERIFIED_ELEMENT_VISIBLE, CoreConstants.PASS, PDTConstants.TXTBOX, PDTConstants.DESCRIPTION));
+		} else
+			Assert.fail(MessageFormat.format(PDTConstants.VERIFIED_ELEMENT_NOT_VISIBLE, CoreConstants.PASS, PDTConstants.TXTBOX, PDTConstants.DESCRIPTION));
+			
 	}
+	
+	public boolean enterDescriptionAndVerifyCreateBtn(String btnName, String btnStatus) {
+		CoreFunctions.clearAndSetText(driver, _txtBoxDescription, PDTConstants.DESCRIPTION, "Version 2 is getting created");
+		if(verifyButton(btnName, btnStatus))
+			return true;
+		else
+			return false;
+	}
+	
 }

@@ -510,5 +510,22 @@ public class PDTConstants {
 	public static final String EXCEPTION_OCCURED_VALIDATING_POLICY_STATUS_VERSION = "{0}Exception occured while validating Policy Status & Version on View/Edit Policy Forms Page.";
 	public static final String FAILED_TO_VERIFY_SELECTED_VAL = "{0}Failed to verify ''{1}'' is selected.";
 	public static final String FAILED_TO_SELECT_SUB_BENEFIT = "{0}Failed to select sub-benefit and verify form is displayed.";
-	
+	public static final String POLICY_SAVE_MSG = "Policy saved and submitted";
+	public static final String STATUS_ACTIVE = "Active";
+	public static final String VERSION_V1="V1";
+	public static final String VERIFIED_ASSIGMENT_INFO = "{0} Verified ''{1}'' is ''{2}''";
+	public static final String TRANSFEREE_NAME = "Transferee Name";
+	public static final String ASSIGNMENT_STATUS = "Assignment Status";
+	public static final String ASSIGNMENT_STATUS_BOOKED = "Booked";
+	public static final String BOOKED_DATE = "Assignment Booked Date";
+	public static final String FAILED_TO_VERIFY_ASSIGNMENT_INFO = "{0} Failed to verify ''{1}''. Expected ''{1}'' is ''{2}''. Actual ''{1}'' is ''3''";
+	public static final String FAILED_TO_VERIFY_ASSIGNMENT_DETAILS = "{0} Failed to verify Assignment Details.";
+	public static final String STATUS_SUBMITTED = "Submitted";
+	public static final String INACTIVE_ASSGN_STATUS_CODE = "INAC";
+	public static final String ICON_EDIT = "Edit";
+	public static final String ASSIGNMENT_HISTORY = "Assignment History";
+	public static final String VERIFIED_ELEMENT_VISIBLE = "{0}Verified ''{1}'' :- ''{2}'' is visible.";
+	public static final String TXTBOX = "textbox"; 
+	public static final String DESCRIPTION = "description"; 
+	public static final String VERIFIED_ELEMENT_NOT_VISIBLE = "Verified ''{0}'' :- ''{1}'' is not visible.";
 }

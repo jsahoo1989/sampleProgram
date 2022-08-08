@@ -533,7 +533,7 @@ public class CoreFunctions {
 		LinkedHashMap<String, String> mp = new LinkedHashMap<String, String>();
 		try {
 			for (int i = 0; i < roleNames.size(); i++) {
-				if(mp.containsKey(roleNames.get(i).getAttribute(CoreConstants.VALUE)))
+				if (mp.containsKey(roleNames.get(i).getAttribute(CoreConstants.VALUE)))
 					continue;
 				mp.put(roleNames.get(i).getAttribute(CoreConstants.VALUE),
 						memberNames.get(i).getAttribute(CoreConstants.VALUE));
@@ -1062,11 +1062,10 @@ public class CoreFunctions {
 		return count + 1;
 	}
 
-	public static void hoverAndClick(WebDriver driver, WebElement element,String name) {
+	public static void hoverAndClick(WebDriver driver, WebElement element, String name) {
 		Actions action = new Actions(driver);
 		action.moveToElement(element).doubleClick().build().perform();
-		Reporter.addStepLog(CoreConstants.PASS
-				+ MessageFormat.format(CoreConstants.VRFIED_ELE_CLCKED, name));
+		Reporter.addStepLog(CoreConstants.PASS + MessageFormat.format(CoreConstants.VRFIED_ELE_CLCKED, name));
 	}
 
 	public static void scrollClickUsingJS(WebDriver driver, WebElement Element, String name) {
@@ -1075,6 +1074,7 @@ public class CoreFunctions {
 		try {
 			JavascriptExecutor executor = (JavascriptExecutor) driver;
 			executor.executeScript("arguments[0].scrollIntoView(true);", Element);
+			CoreFunctions.waitHandler(2);
 			executor.executeScript("arguments[0].click();", Element);
 			Log.info("Pass: " + name + " :is clicked");
 			Reporter.addStepLog(CoreConstants.PASS + MessageFormat.format(CoreConstants.VRFIED_ELE_CLCKED, name));
@@ -1731,10 +1731,16 @@ public class CoreFunctions {
 		} else {
 			CoreFunctions.clickWithoutReporting(driver, row, searchText);
 		}
-	}	
+	}
 
 	public static WebElement findSubElement(WebElement ancestor, By childLocator) {
-		return ancestor.findElement(childLocator);
+		WebElement element = null;
+		try {
+			element = ancestor.findElement(childLocator);
+		} catch (Exception e) {
+
+		}
+		return element;
 	}
 
 	public static List<WebElement> findSubElementList(WebElement ancestor, By childLocator) {
@@ -1798,21 +1804,22 @@ public class CoreFunctions {
 		else {
 			Reporter.addStepLog(CoreConstants.FAIL + MobilityXConstants.FAILED_TO_VERIFY + fieldName + " | "
 					+ CoreConstants.VAL_ACTUAL + actualText + " " + CoreConstants.VAL_EXPECTED + expectedText);
-			Assert.fail("Failed to verify the fields "+ fieldName +" Text: Actual Text = " + actualText + " | Expected Text = " + expectedText);
+			Assert.fail("Failed to verify the fields " + fieldName + " Text: Actual Text = " + actualText
+					+ " | Expected Text = " + expectedText);
 		}
 	}
-	
+
 	public static void verifyText(WebDriver driver, WebElement element, String expectedText, String fieldName) {
 		String actualText = element.getText().trim();
 		if (actualText.equalsIgnoreCase(expectedText)) {
 			highlightObject(driver, element);
 			Reporter.addStepLog(
 					CoreConstants.PASS + MobilityXConstants.VERIFIED_FIELD_TEXT + fieldName + " : " + expectedText);
-		}
-		else {
+		} else {
 			Reporter.addStepLog(CoreConstants.FAIL + MobilityXConstants.FAILED_TO_VERIFY + fieldName + " | "
 					+ CoreConstants.VAL_ACTUAL + actualText + " " + CoreConstants.VAL_EXPECTED + expectedText);
-			Assert.fail("Failed to verify the fields "+ fieldName +" Text: Actual Text = " + actualText + " | Expected Text = " + expectedText);
+			Assert.fail("Failed to verify the fields " + fieldName + " Text: Actual Text = " + actualText
+					+ " | Expected Text = " + expectedText);
 		}
 	}
 
@@ -1823,26 +1830,25 @@ public class CoreFunctions {
 		else {
 			Reporter.addStepLog(CoreConstants.FAIL + MobilityXConstants.FAILED_TO_VERIFY + fieldName + " | "
 					+ CoreConstants.VAL_ACTUAL + actualValue + " " + CoreConstants.VAL_EXPECTED + expectedValue);
-			Assert.fail("Failed to verify the fields "+ fieldName +" Text: Actual Text = " + actualValue + " | Expected Text = " + expectedValue);
+			Assert.fail("Failed to verify the fields " + fieldName + " Text: Actual Text = " + actualValue
+					+ " | Expected Text = " + expectedValue);
 		}
 	}
-	
+
 	public static void verifyValue(WebDriver driver, WebElement element, Double expectedValue, String fieldName) {
 		Double actualValue = Double.parseDouble(element.getText().trim());
 		if (actualValue.equals(expectedValue)) {
 			highlightObject(driver, element);
 			Reporter.addStepLog(
 					CoreConstants.PASS + MobilityXConstants.VERIFIED_FIELD_TEXT + fieldName + " : " + expectedValue);
-		}
-		else {
+		} else {
 			Reporter.addStepLog(CoreConstants.FAIL + MobilityXConstants.FAILED_TO_VERIFY + fieldName + " | "
 					+ CoreConstants.VAL_ACTUAL + actualValue + " " + CoreConstants.VAL_EXPECTED + expectedValue);
-			Assert.fail("Failed to verify the fields "+ fieldName +" Text: Actual Text = " + actualValue + " | Expected Text = " + expectedValue);
+			Assert.fail("Failed to verify the fields " + fieldName + " Text: Actual Text = " + actualValue
+					+ " | Expected Text = " + expectedValue);
 		}
 	}
-	
-	
-	
+
 	public static void scrollToElementUsingJS(WebDriver driver, WebElement Element, String name) {
 		try {
 			JavascriptExecutor executor = (JavascriptExecutor) driver;
@@ -1852,63 +1858,62 @@ public class CoreFunctions {
 			Assert.fail(MessageFormat.format(CoreConstants.FAILED_TO_SCROLL_TO_ELEMENT, name));
 		}
 	}
-	
+
 	public static WebElement getLabelOfElement(WebDriver driver, By baseElement) {
 		return driver.findElement((with(By.tagName("label"))).above(baseElement));
 	}
-	
+
 	public static void refreshPage(WebDriver driver) {
 		driver.navigate().refresh();
 	}
-	
+
 	public static void scrollToElementUsingJavaScript(WebDriver driver, WebElement Element, String name) {
 		try {
 			JavascriptExecutor executor = (JavascriptExecutor) driver;
 			executor.executeScript("arguments[0].scrollIntoView(true);", Element);
 			Log.info("Pass: " + name + " :is Visible");
-			Reporter.addStepLog(MessageFormat.format(CoreConstants.VRFIED_ELE_PAGE,CoreConstants.PASS, name));
+			Reporter.addStepLog(MessageFormat.format(CoreConstants.VRFIED_ELE_PAGE, CoreConstants.PASS, name));
 		} catch (Exception e) {
 			Log.info("Fail:Could not find: " + name);
 			Assert.fail(MessageFormat.format(CoreConstants.FAIL_TO_VERIFY_ELEMENT_ON_PAGE, Element));
 		}
 	}
-	
-	public static String setDifferentFieldsForMylo(WebDriver driver,WebElement element, String fieldName, String fieldValue) {
+
+	public static String setDifferentFieldsForMylo(WebDriver driver, WebElement element, String fieldName,
+			String fieldValue) {
 		String updatedValue;
 		try {
-			updatedValue = (Integer.parseInt(fieldValue)>200)
-					? fieldValue
-					: generateRandomCharOfLength(Integer.parseInt(fieldValue),
-							MYLOConstants.ONLY_CHARACTERS, 0);
-			
+			updatedValue = (Integer.parseInt(fieldValue) > 200) ? fieldValue
+					: generateRandomCharOfLength(Integer.parseInt(fieldValue), MYLOConstants.ONLY_CHARACTERS, 0);
+
 		} catch (NumberFormatException e) {
 			updatedValue = (fieldValue.equals(MYLOConstants.SPECIAL_CHARACTERS_STRING))
 					? generateRandomCharOfLength(4, MYLOConstants.SPECIAL_CHARACTERS_STRING, 2)
-					: (fieldValue.equals(""))?setBlankField(driver,element,fieldName):fieldValue;
+					: (fieldValue.equals("")) ? setBlankField(driver, element, fieldName) : fieldValue;
 		}
 		clearAndSetText(driver, element, updatedValue);
 		return updatedValue;
 	}
-	
-	public static String setBlankField(WebDriver driver,WebElement element,String fieldName) {
-			clickElement(driver, element);
-			element.sendKeys(Keys.chord(Keys.CONTROL, "a"));
-			element.sendKeys(Keys.BACK_SPACE);
-			return MYLOConstants.BLANK;
+
+	public static String setBlankField(WebDriver driver, WebElement element, String fieldName) {
+		clickElement(driver, element);
+		element.sendKeys(Keys.chord(Keys.CONTROL, "a"));
+		element.sendKeys(Keys.BACK_SPACE);
+		return MYLOConstants.BLANK;
 	}
-	
-	public static String setDifferentDropDownFieldsForMylo(WebDriver driver,String fieldValue,List<WebElement> optionList) {
-		String updatedValue=null;
-			if (fieldValue.equals(MYLOConstants.RANDOM)) {
-				optionList.remove(0);
-				updatedValue = CoreFunctions.getRandomElementValueFromList(driver, optionList);
-				BusinessFunctions.selectItemFromListUsingText(driver, optionList,
-						updatedValue);
-			} else {
-				updatedValue=fieldValue;
-				BusinessFunctions.selectItemFromListUsingText(driver, optionList, fieldValue);
-			} 
-			return updatedValue;
+
+	public static String setDifferentDropDownFieldsForMylo(WebDriver driver, String fieldValue,
+			List<WebElement> optionList) {
+		String updatedValue = null;
+		if (fieldValue.equals(MYLOConstants.RANDOM)) {
+			optionList.remove(0);
+			updatedValue = CoreFunctions.getRandomElementValueFromList(driver, optionList);
+			BusinessFunctions.selectItemFromListUsingText(driver, optionList, updatedValue);
+		} else {
+			updatedValue = fieldValue;
+			BusinessFunctions.selectItemFromListUsingText(driver, optionList, fieldValue);
+		}
+		return updatedValue;
 	}
 
 	public static String calculatePageLoadTime(double tIME_BEFORE_ACTION, double tIME_AFTER_ACTION) {
@@ -1916,28 +1921,26 @@ public class CoreFunctions {
 		format.setMaximumFractionDigits(2);
 		return format.format((tIME_AFTER_ACTION - tIME_BEFORE_ACTION) / 1000);
 	}
-	
+
 	public static Map<String, String> convertStringToMapWithStream(String mapAsString) {
-	    Map<String, String> map = Arrays.stream(mapAsString.replace("{", "").replace("}", "").split(","))
-	      .map(entry -> entry.split("="))
-	      .collect(Collectors.toMap(entry -> entry[0], entry -> entry[1]));
-	    return map;
+		Map<String, String> map = Arrays.stream(mapAsString.replace("{", "").replace("}", "").split(","))
+				.map(entry -> entry.split("=")).collect(Collectors.toMap(entry -> entry[0], entry -> entry[1]));
+		return map;
 	}
 
-	public static void verifyRadioButtonSelection(WebDriver driver,List<WebElement> _radioTextList,List<WebElement> _radioButtonList,
-			String expectedSelection, String fieldName) {		
+	public static void verifyRadioButtonSelection(WebDriver driver, List<WebElement> _radioTextList,
+			List<WebElement> _radioButtonList, String expectedSelection, String fieldName) {
 		int index = BusinessFunctions.returnindexItemFromListUsingText(driver, _radioTextList, expectedSelection);
 //		Log.info("DomProperty=="+_radioButtonList.get(index).getDomProperty("checked"));		
 		if (_radioButtonList.get(index).getAttribute("checked").equalsIgnoreCase("true")) {
 			highlightObject(driver, _radioTextList.get(index));
-			Reporter.addStepLog(
-					CoreConstants.PASS + MobilityXConstants.VERIFIED_FIELD_TEXT + fieldName + " : " + expectedSelection);
-		}
-		else {
+			Reporter.addStepLog(CoreConstants.PASS + MobilityXConstants.VERIFIED_FIELD_TEXT + fieldName + " : "
+					+ expectedSelection);
+		} else {
 			Reporter.addStepLog(CoreConstants.FAIL + MobilityXConstants.FAILED_TO_VERIFY + fieldName + " | "
 					+ CoreConstants.VAL_EXPECTED + expectedSelection);
-			Assert.fail("Failed to verify the fields "+ fieldName +" Expected Text = " + expectedSelection);
+			Assert.fail("Failed to verify the fields " + fieldName + " Expected Text = " + expectedSelection);
 		}
-		
+
 	}
 }

@@ -98,6 +98,9 @@ public class PDT_AddNewPolicyPage extends Base {
 
 	@FindBy(how = How.CSS, using = "ng-select[bindvalue='corporationPolicyId'] span.ng-value-label")
 	private WebElement _selectedPolicy;
+	
+	@FindBy(how = How.CSS, using = "ng-select[bindvalue='corporationPolicyId'] input")
+	private WebElement _inputPolicy;
 
 	private PDT_LoginDetails _loginDetailsApplication = FileReaderManager.getInstance().getJsonReader()
 			.getLoginByApplication(CoreFunctions.getPropertyFromConfig("application"));
@@ -529,6 +532,7 @@ public class PDT_AddNewPolicyPage extends Base {
 					setClientId(clientId);
 					setClientName(clientName);
 					// clientFound = true;
+					CoreFunctions.writeToPropertiesFile("Policy_ClientID", clientId);
 					Reporter.addStepLog(MessageFormat.format(PDTConstants.VERIFY_VALUE_SELECTED_FROM_DROPDWON,
 							CoreConstants.PASS, PDTConstants.CLIENT_NAME, clientName));
 					break;
@@ -800,7 +804,6 @@ public class PDT_AddNewPolicyPage extends Base {
 			for (int i = 0; i < _optionsClientID.size(); i++) {
 
 				if (_optionsClientID.get(i).getText().contains("49211")
-						|| _optionsClientID.get(i).getText().contains("13951")
 						|| _optionsClientID.get(i).getText().contains("97402")
 						|| _optionsClientID.get(i).getText().contains("94941")
 						|| _optionsClientID.get(i).getText().contains("84243"))
@@ -822,6 +825,32 @@ public class PDT_AddNewPolicyPage extends Base {
 			}
 		} catch (Exception e) {
 			Reporter.addStepLog(MessageFormat.format(PDTConstants.EXCEPTION_OCCURED_WHILE_SELECTING_CLIENTID,
+					CoreConstants.FAIL, e.getMessage()));
+		}
+		return false;
+	}
+	
+	/**
+	 * Method to select a policy based on provided Policy Name
+	 * 
+	 * @param policyName
+	 * @return
+	 */
+	public boolean selectAutomationPolicy() {
+		try {
+			if (CoreFunctions.isElementExist(driver, _selectPolicyName, 5)) {
+				CoreFunctions.clickElement(driver, _selectPolicyName);
+				CoreFunctions.clearAndSetText(driver, _inputPolicy, COREFLEXConstants.AUTOMATION_POLICY);
+				CoreFunctions.explicitWaitTillElementListVisibility(driver, _optionsPolicyName);
+				setSelectedPolicyName(_optionsPolicyName.get(0).getText());				
+				CoreFunctions.selectItemInListByText(driver, _optionsPolicyName, selectedPolicyName, true);
+				return true;
+			} else if (CoreFunctions.isElementExist(driver, _popUpError, 2)) {
+				Reporter.addStepLog(MessageFormat.format(PDTConstants.ERROR_POP_UP_DISPLAYED_FOR_VALID_CLIENTID,
+						CoreConstants.FAIL, CoreFunctions.getElementText(driver, _popUpErrorMessage)));
+			}
+		} catch (Exception e) {
+			Reporter.addStepLog(MessageFormat.format(PDTConstants.EXCEPTION_OCCURED_WHILE_VALIDATING_POLICY_NAME_FIELD,
 					CoreConstants.FAIL, e.getMessage()));
 		}
 		return false;

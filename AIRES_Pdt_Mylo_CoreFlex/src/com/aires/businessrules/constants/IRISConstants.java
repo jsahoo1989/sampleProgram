@@ -266,13 +266,13 @@ public class IRISConstants {
 	public static final String VERIFIED_ENTERED_VAL = "{0}Verified he has entered ''{1}'' ''{2}'' on {3} tab";
 	public static final String IRIS_UPLOAD_PAGE_TEXT = "IRIS Upload Page";
 	// Assignment - Transferee & Family Tab
-	public static final String TRANSFEREE_TITLE_TO_APPEND = "File - 12C {0}  for  {1} {2} of MobilityX Inc. - Aires LLC Agreement in place.";
-	public static final String TRANSFEREE_TITLE_TO_APPEND_SERVICE = "File - 12C {0}  for {1} {2} of MobilityX Inc. - Aires LLC Agreement in place.";
-	public static final String NG_TRANSFEREE_TITLE_TO_APPEND = "File - 12C {0}  for  {1} {2} of Northrop Grumman-One Source Accounting - Aires LLC Agreement in place.";
-	public static final String TRANSFEREE_TITLE = "File - 12C {0}  for  {1} {2} of AIRES-CIS-DEMO&";
-	public static final String CLIENT_SEPECIFIC_TRANSFEREE_TITLE = "File - 12C {0}  for  {1} {2} of {3} - Aires LLC Agreement in place.";
-	public static final String TRANSFEREE_TITLE_SERVICE = "File - 12C {0}  for {1} {2} of AIRES-CIS-DEMO&";
-	public static final String TRANSFEREE_TITLE_SERVICE_CLIENT_92265 = "File - 12C {0}  for {1} {2} of MobilityX Inc. - Aires LLC Agreement in place.";
+	public static final String TRANSFEREE_TITLE_TO_APPEND = "File - {0}  for  {1} {2} of MobilityX Inc. - Aires LLC Agreement in place.";
+	public static final String TRANSFEREE_TITLE_TO_APPEND_SERVICE = "File - {0}  for {1} {2} of MobilityX Inc. - Aires LLC Agreement in place.";
+	public static final String NG_TRANSFEREE_TITLE_TO_APPEND = "File - {0}  for  {1} {2} of Northrop Grumman-One Source Accounting - Aires LLC Agreement in place.";
+	public static final String TRANSFEREE_TITLE = "File - {0}  for  {1} {2} of AIRES-CIS-DEMO&";
+	public static final String CLIENT_SEPECIFIC_TRANSFEREE_TITLE = "File {0}  for  {1} {2} of {3} - Aires LLC Agreement in place.";
+	public static final String TRANSFEREE_TITLE_SERVICE = "File - {0}  for {1} {2} of AIRES-CIS-DEMO&";
+	public static final String TRANSFEREE_TITLE_SERVICE_CLIENT_92265 = "File - {0}  for {1} {2} of MobilityX Inc. - Aires LLC Agreement in place.";
 	public static final String TRANSFEREE_POLICY = "TEST(CLIENT) - Aires India Branch Office Agreement in place.";
 	public static final String SAVE_BUTTON = "Save";
 	public static final String SEND_USERNAME_PASSWORD_AGAIN = "You are about to email the transferee his/her username";

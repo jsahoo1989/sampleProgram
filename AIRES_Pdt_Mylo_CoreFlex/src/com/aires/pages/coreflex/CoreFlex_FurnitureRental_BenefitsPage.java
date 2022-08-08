@@ -185,6 +185,10 @@ public class CoreFlex_FurnitureRental_BenefitsPage extends Base {
 	@FindBy(how = How.XPATH, using = "//label[contains(text(),'Reimbursed By')]/following-sibling::div//input")
 	private List<WebElement> _radioReimbursedByButtonList;
 
+	// Flex Policy Setup Page Header
+	@FindBy(how = How.XPATH, using = "//h4[@class='card-title'][contains(text(),'Furniture Rental')]")
+	private WebElement _headerPageName;
+
 	/*********************************************************************/
 
 	CoreFlex_SettlingInBenefitsData settlingInBenefitData = FileReaderManager.getInstance().getCoreFlexJsonReader()
@@ -295,6 +299,8 @@ public class CoreFlex_FurnitureRental_BenefitsPage extends Base {
 	public void selectAndFillBenefitsAndSubBenefitDetails(String benefitType, String subBenefitNames,
 			String multipleBenefitSelection, String flexPoints, String benefitDisplayName,
 			String benefitAllowanceAmount, String benefitDescription, String aireManagedService) {
+		CoreFunctions.explicitWaitTillElementVisibility(driver, _headerPageName,
+				COREFLEXConstants.FURNITURE_RENTAL_BENEFITS_PAGE);
 		if (benefitType.equals(COREFLEXConstants.BOTH)) {
 			selectBenefitTypeAndFillMandatoryFields(benefitType, multipleBenefitSelection, flexPoints,
 					benefitDisplayName, benefitAllowanceAmount, benefitDescription, aireManagedService);

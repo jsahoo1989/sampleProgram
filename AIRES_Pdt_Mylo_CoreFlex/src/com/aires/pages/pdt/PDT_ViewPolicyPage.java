@@ -91,6 +91,18 @@ public class PDT_ViewPolicyPage extends Base {
 	@FindBy(how = How.CSS, using = "a[mattooltip='Edit Policy']")
 	private WebElement _btnEditIcon;
 
+	// Exit Button
+	@FindBy(how = How.XPATH, using = "//span[contains(text(),'EXIT')]/parent::button")
+	private WebElement _btnExit;
+
+	// OK Button
+	@FindBy(how = How.XPATH, using = "//button[contains(text(),'OK')]")
+	private WebElement _btnOK;
+
+	// Assignment History Icon
+	@FindBy(how = How.CSS, using = "a[mattooltip='Assignment History']")
+	private WebElement _btnAssignmentHistoryIcon;
+
 	// Search Button
 	@FindBy(how = How.CSS, using = "a.clear_filter")
 	private WebElement _clearFilter;
@@ -258,7 +270,7 @@ public class PDT_ViewPolicyPage extends Base {
 	final By _listPolicyNameByLocator = By.cssSelector("h5.text-info.info-pname");
 	final By _listClientNameByLocator = By.cssSelector("h6.info-pclient");
 	long timeBeforeAction, timeAfterAction;
-	
+
 	IRIS_AssignmentData assignmentOverviewData = FileReaderManager.getInstance().getIrisJsonReader()
 			.getAssignmentDataByTabName(IRISConstants.OVERVIEW);
 
@@ -308,12 +320,23 @@ public class PDT_ViewPolicyPage extends Base {
 			CoreFunctions.clickElement(driver, _btnEditIcon);
 			CoreFunctions.explicitWaitTillElementInVisibilityCustomTime(driver, _progressBar, 5);
 			break;
+		case COREFLEXConstants.ASSIGNMENT_HISTORY_ICON:
+			CoreFunctions.clickElement(driver, _btnAssignmentHistoryIcon);
+			CoreFunctions.explicitWaitTillElementInVisibilityCustomTime(driver, _progressBar, 5);
+			break;
 		case COREFLEXConstants.SAVE_AS_DRAFT:
 			CoreFunctions.clickElement(driver, _buttonSaveAsDraft);
 			CoreFunctions.explicitWaitTillElementInVisibilityCustomTime(driver, _progressBar, 5);
 			break;
 		case PDTConstants.CLEAR_FILTER:
 			CoreFunctions.highlightElementAndClick(driver, _clearFilter, PDTConstants.CLEAR_FILTER);
+			CoreFunctions.explicitWaitTillElementInVisibilityCustomTime(driver, _progressBar, 5);
+			break;
+		case COREFLEXConstants.EXIT:
+			CoreFunctions.clickElement(driver, _btnExit);
+			break;
+		case COREFLEXConstants.OK:
+			CoreFunctions.clickElement(driver, _btnOK);
 			CoreFunctions.explicitWaitTillElementInVisibilityCustomTime(driver, _progressBar, 5);
 			break;
 		default:
@@ -327,7 +350,7 @@ public class PDT_ViewPolicyPage extends Base {
 	}
 
 	public Boolean verifyUserlogin(String userName, String pageName) {
-		if (CoreFunctions.isElementExist(driver, _progressBar, 2))
+		if (CoreFunctions.isElementExist(driver, _progressBar, 5))
 			BusinessFunctions.fluentWaitForSpinnerToDisappear(driver, _progressBar);
 		if (getUserName().contains(userName)) {
 			CoreFunctions.highlightObject(driver, _userName);
@@ -474,11 +497,11 @@ public class PDT_ViewPolicyPage extends Base {
 
 			actualPolicyStatus = actualPolicyStatusList.split(":");
 			isApprovedPolicyStatusVerified = (actualPolicyStatus[1].trim()).equals(expectedPolicyStatus);
-			CoreFunctions.highlightObject(driver,_listPolicyStatus.get(index));
+			CoreFunctions.highlightObject(driver, _listPolicyStatus.get(index));
 
 			actualPolicyVersion = actualPolicyVersionList.split(":");
 			isApprovedPolicyVersionVerified = (actualPolicyVersion[1].trim()).equals(expectedPolicyVersion);
-			CoreFunctions.highlightObject(driver,_listPolicyVersion.get(index));
+			CoreFunctions.highlightObject(driver, _listPolicyVersion.get(index));
 			CoreFunctions.writeToPropertiesFile("CoreFlex_PolicyVersion", actualPolicyVersion[1].trim());
 			isApprovedPolicyVerified = isApprovedPolicyStatusVerified && isApprovedPolicyVersionVerified;
 		} catch (Exception e) {
@@ -926,10 +949,11 @@ public class PDT_ViewPolicyPage extends Base {
 			PDT_GeneralInformationPage generalInfoPage) {
 		try {
 			CoreFunctions.clickElement(driver, _listPolicyName.get(searchedPolicyIndex));
+			CoreFunctions.explicitWaitTillElementInVisibility(driver, _progressBar);
+			CoreFunctions.waitHandler(4);
 			String corporationPolicyValue = generalInfoPage.getElementText(COREFLEXConstants.CORPORATION_POLICY_NUMBER);
 			CoreFunctions.writeToPropertiesFile("ClonePolicy_Reference_CorporationPolicyNum", corporationPolicyValue);
 			generalInfoPage.clickElementOfPage(COREFLEXConstants.EXIT);
-			generalInfoPage.clickElementOfPage(PDTConstants.OK);
 		} catch (Exception e) {
 			Reporter.addStepLog(MessageFormat.format(
 					COREFLEXConstants.FAILED_TO_CAPTURE_CORPORATION_POLICY_NUMBER_FOR_SELECTED_POLICY_WITH_STATUS,
@@ -1092,7 +1116,6 @@ public class PDT_ViewPolicyPage extends Base {
 		try {
 			for (String columnName : columnList) {
 				isAssignmentDetailsVerified = verifyAssignmentHistoryColumnData(columnName);
-
 				if (!isAssignmentDetailsVerified) {
 					Reporter.addStepLog(MessageFormat.format(
 							COREFLEXConstants.ASSIGNMENT_HISTORY_DATA_NOT_MATCHED_ON_ASSIGNMENT_HISTORY_PAGE,
@@ -1109,7 +1132,7 @@ public class PDT_ViewPolicyPage extends Base {
 			Reporter.addStepLog(MessageFormat.format(
 					COREFLEXConstants.SUCCESSFULLY_VERIFIED_ASSIGNMENT_DETAILS_ON_ASSIGNMENT_HISTORY_VIEW_POLICY_BENEFIT_PAGE,
 					CoreConstants.PASS));
-		} 		
+		}
 		return isAssignmentDetailsVerified;
 	}
 

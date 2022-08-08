@@ -193,25 +193,38 @@ public class TransfereeSubmissions_DashboardHomePage extends Base {
 			String[] fileNumber = _transfereeFileNumberList.get(indexTransferee).getText().split("#");
 			CoreFunctions.verifyText(fileNumber[1].trim(), CoreFunctions.getPropertyFromConfig("Assignment_FileID"),
 					COREFLEXConstants.TRANSFEREE_FILE_ID);
+			CoreFunctions.highlightObject(driver, _transfereeFileNumberList.get(indexTransferee));
 			CoreFunctions.verifyText(driver, _corporationNameList.get(indexTransferee),
 					CoreFunctions.getPropertyFromConfig("Assignment_ClientName"), COREFLEXConstants.CORPORATION_NAME);
 			CoreFunctions.verifyText(driver, _allowanceTypeList.get(indexTransferee), COREFLEXConstants.POINTS,
 					COREFLEXConstants.ALLOWANCE);
 			CoreFunctions.verifyValue(driver, _pointsSpentList.get(indexTransferee),
-					MX_Transferee_FlexPlanningTool_Page.totalSelectedPoints, COREFLEXConstants.POINTS_SPENT);
+					Double.parseDouble(CoreFunctions.getPropertyFromConfig("CF_Transferee_TotalSelectedPoints")),
+					COREFLEXConstants.POINTS_SPENT);
 			CoreFunctions.verifyValue(
 					Double.parseDouble(_totalPointsList.get(indexTransferee).getText().replace("/", "").trim()),
 					Double.parseDouble(policySetupPageData.flexPolicySetupPage.StaticFixedTotalPointsAvailable),
 					COREFLEXConstants.TOTAL_POINTS);
 			CoreFunctions.highlightObject(driver, _totalPointsList.get(indexTransferee));
+			CoreFunctions.verifyText(driver, _submittedDateList.get(indexTransferee),
+					CoreFunctions.getCurrentDateAsGivenFormat("dd-MMM-yyyy"), COREFLEXConstants.SUBMITTED_DATE);
 			return true;
-
 		} catch (Exception e) {
 			Reporter.addStepLog(MessageFormat.format(
 					COREFLEXConstants.EXCEPTION_OCCURED_WHILE_VALIDATING_TRANSFEREE_SUBMISSION_DETAILS_ON_DASHBOARD_HOME_PAGE,
 					CoreConstants.FAIL, e.getMessage()));
 		}
 		return false;
+	}
+
+	public void reloadApplicationIfNotLoaded() {
+		try {
+			while (!(CoreFunctions.isElementExist(driver, _txtApplicationTitle, 5))) {
+				CoreFunctions.refreshPage(driver);
+				CoreFunctions.explicitWaitTillElementInVisibilityCustomTime(driver, _spinner, 10);
+			}
+		} catch (Exception e) {
+		}
 	}
 
 }

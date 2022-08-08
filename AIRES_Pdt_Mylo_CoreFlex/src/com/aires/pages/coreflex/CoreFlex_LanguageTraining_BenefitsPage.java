@@ -204,6 +204,14 @@ public class CoreFlex_LanguageTraining_BenefitsPage extends Base {
 	@FindBy(how = How.XPATH, using = "//label[contains(text(),'Reimbursed By')]/following-sibling::div//input")
 	private List<WebElement> _radioReimbursedByButtonList;
 
+	// Flex Policy Setup Page Header
+	@FindBy(how = How.XPATH, using = "//h4[@class='card-title'][contains(text(),'Language Training')]")
+	private WebElement _headerPageName;
+
+	// If Applicable Text
+	@FindBy(how = How.XPATH, using = "//*[contains(text(),'if applicable')]")
+	private WebElement _textIfApplicable;
+
 	/*********************************************************************/
 
 	CoreFlex_SettlingInBenefitsData settlingInBenefitData = FileReaderManager.getInstance().getCoreFlexJsonReader()
@@ -312,6 +320,8 @@ public class CoreFlex_LanguageTraining_BenefitsPage extends Base {
 	public void selectAndFillBenefitsAndSubBenefitDetails(String benefitType, String subBenefitNames,
 			String multipleBenefitSelection, String flexPoints, String benefitDisplayName,
 			String benefitAllowanceAmount, String benefitDescription, String aireManagedService) {
+		CoreFunctions.explicitWaitTillElementVisibility(driver, _headerPageName,
+				COREFLEXConstants.LANGUAGE_TRAINING_BENEFITS_PAGE);
 		if (benefitType.equals(COREFLEXConstants.BOTH)) {
 			selectBenefitTypeAndFillMandatoryFields(benefitType, multipleBenefitSelection, flexPoints,
 					benefitDisplayName, benefitAllowanceAmount, benefitDescription, aireManagedService);
@@ -782,7 +792,8 @@ public class CoreFlex_LanguageTraining_BenefitsPage extends Base {
 						true);
 				CoreFunctions.clickElement(driver, _textFlexBenefits);
 				CoreFunctions.waitHandler(2);
-				CoreFunctions.explicitWaitTillElementBecomesClickable(driver, _inputFlexPoints, COREFLEXConstants.FLEX_POINTS_VALUE);
+				CoreFunctions.explicitWaitTillElementBecomesClickable(driver, _inputFlexPoints,
+						COREFLEXConstants.FLEX_POINTS_VALUE);
 				CoreFunctions.selectItemInListByText(driver, _subBenefitList, benefit.getSubbenefitToBeDeselected(),
 						true);
 				isSubBenefitDeselected = true;
@@ -793,10 +804,10 @@ public class CoreFlex_LanguageTraining_BenefitsPage extends Base {
 			}
 		} catch (Exception e) {
 			Assert.fail(COREFLEXConstants.FAILED_TO_DESELECT_LANGUAGE_TRAINING_SUB_BENEFIT);
-		}		
-		if(isSubBenefitDeselected) {			
-			clickElementOfPage(COREFLEXConstants.SAVE_AND_CONTINUE);			
-		}		
+		}
+		if (isSubBenefitDeselected) {
+			clickElementOfPage(COREFLEXConstants.SAVE_AND_CONTINUE);
+		}
 		return isSubBenefitDeselected;
 	}
 
@@ -808,26 +819,27 @@ public class CoreFlex_LanguageTraining_BenefitsPage extends Base {
 				CoreFunctions.clickElement(driver, _textCoreBenefits);
 				CoreFunctions.selectItemInListByText(driver, _subBenefitList, benefit.getSubbenefitToBeDeselected(),
 						true);
-				fillSubBenefit(benefit.getSubbenefitToBeDeselected(),COREFLEXConstants.CORE_BENEFITS);
+				fillSubBenefit(benefit.getSubbenefitToBeDeselected(), COREFLEXConstants.CORE_BENEFITS);
 				CoreFunctions.clickElement(driver, _textFlexBenefits);
 				CoreFunctions.waitHandler(2);
-				CoreFunctions.explicitWaitTillElementBecomesClickable(driver, _inputFlexPoints, COREFLEXConstants.FLEX_POINTS_VALUE);
+				CoreFunctions.explicitWaitTillElementBecomesClickable(driver, _inputFlexPoints,
+						COREFLEXConstants.FLEX_POINTS_VALUE);
 				CoreFunctions.selectItemInListByText(driver, _subBenefitList, benefit.getSubbenefitToBeDeselected(),
 						true);
-				fillSubBenefit(benefit.getSubbenefitToBeDeselected(),COREFLEXConstants.FLEX_BENEFITS);
+				fillSubBenefit(benefit.getSubbenefitToBeDeselected(), COREFLEXConstants.FLEX_BENEFITS);
 				isSubBenefitSelectedAndFilled = true;
 			} else {
 				CoreFunctions.selectItemInListByText(driver, _subBenefitList, benefit.getSubbenefitToBeDeselected(),
 						true);
-				fillSubBenefit(benefit.getSubbenefitToBeDeselected(),COREFLEXConstants.FLEX);
+				fillSubBenefit(benefit.getSubbenefitToBeDeselected(), COREFLEXConstants.FLEX);
 				isSubBenefitSelectedAndFilled = true;
 			}
 		} catch (Exception e) {
 			Assert.fail(COREFLEXConstants.FAILED_TO_SELECT_AND_FILL_LANGUAGE_TRAINING_SUB_BENEFIT);
-		}		
-		if(isSubBenefitSelectedAndFilled) {			
-			clickElementOfPage(COREFLEXConstants.SAVE_AND_CONTINUE);			
-		}		
+		}
+		if (isSubBenefitSelectedAndFilled) {
+			clickElementOfPage(COREFLEXConstants.SAVE_AND_CONTINUE);
+		}
 		return isSubBenefitSelectedAndFilled;
 	}
 }

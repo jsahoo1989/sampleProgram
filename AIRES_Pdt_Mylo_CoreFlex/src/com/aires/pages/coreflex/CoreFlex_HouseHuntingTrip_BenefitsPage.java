@@ -143,6 +143,9 @@ public class CoreFlex_HouseHuntingTrip_BenefitsPage extends Base {
 	@FindBy(how = How.XPATH, using = "//h5[contains(text(),'House Hunting Trip Transportation')]")
 	private WebElement _headerHouseHuntingTripTransportation;
 
+	@FindBy(how = How.XPATH, using = "//h5[contains(text(),'House Hunting Trip Meals')]")
+	private WebElement _headerHouseHuntingTripMeals;
+
 	// SubBenefit - Collapsable Menu 2
 	@FindBy(how = How.XPATH, using = "//h5[contains(text(),'House Hunting Trip Lodging')]/ancestor::a[contains(@href,'collapse')]")
 	private WebElement _formHouseHuntingTripLodging;
@@ -354,6 +357,14 @@ public class CoreFlex_HouseHuntingTrip_BenefitsPage extends Base {
 	@FindBy(how = How.CSS, using = "input[formcontrolname='detailAdultCode']")
 	private List<WebElement> _radioDetailAdultCodeButtonList;
 
+	// Flex Policy Setup Page Header
+	@FindBy(how = How.XPATH, using = "//h4[@class='card-title'][contains(text(),'House Hunting Trip')]")
+	private WebElement _headerPageName;
+
+	// If Applicable Text
+	@FindBy(how = How.XPATH, using = "//*[contains(text(),'if applicable')]")
+	private WebElement _textIfApplicable;
+
 	/*********************************************************************/
 
 	CoreFlex_HousingBenefitsData housingBenefitData = FileReaderManager.getInstance().getCoreFlexJsonReader()
@@ -464,6 +475,8 @@ public class CoreFlex_HouseHuntingTrip_BenefitsPage extends Base {
 	public void selectAndFillBenefitsAndSubBenefitDetails(String benefitType, String subBenefitNames,
 			String multipleBenefitSelection, String flexPoints, String benefitDisplayName,
 			String benefitAllowanceAmount, String benefitDescription, String aireManagedService) {
+		CoreFunctions.explicitWaitTillElementVisibility(driver, _headerPageName,
+				COREFLEXConstants.HOUSE_HUNTING_TRIP_BENEFITS_PAGE);
 		if (benefitType.equals(COREFLEXConstants.BOTH)) {
 			selectBenefitTypeAndFillMandatoryFields(benefitType, multipleBenefitSelection, flexPoints,
 					benefitDisplayName, benefitAllowanceAmount, benefitDescription, aireManagedService);
@@ -542,6 +555,7 @@ public class CoreFlex_HouseHuntingTrip_BenefitsPage extends Base {
 			fillHouseHuntingTripRentalCarSubBenefitForm(COREFLEXConstants.HOUSE_HUNTING_TRIP_RENTAL_CAR);
 			break;
 		case COREFLEXConstants.HOUSE_HUNTING_TRIP_MEALS:
+			CoreFunctions.clickElement(driver, _headerHouseHuntingTripMeals);
 			expandSubBenefitIfCollapsed(getElementByName(COREFLEXConstants.HOUSE_HUNTING_TRIP_MEALS));
 			fillHouseHuntingTripMealsSubBenefitForm(COREFLEXConstants.HOUSE_HUNTING_TRIP_MEALS);
 			break;
@@ -717,6 +731,7 @@ public class CoreFlex_HouseHuntingTrip_BenefitsPage extends Base {
 	private void expandSubBenefitIfCollapsed(WebElement subBenefitForm) {
 		if (subBenefitForm.getAttribute("class").equalsIgnoreCase("collapsed")) {
 			CoreFunctions.clickElement(driver, subBenefitForm);
+			CoreFunctions.waitHandler(1);
 		}
 	}
 

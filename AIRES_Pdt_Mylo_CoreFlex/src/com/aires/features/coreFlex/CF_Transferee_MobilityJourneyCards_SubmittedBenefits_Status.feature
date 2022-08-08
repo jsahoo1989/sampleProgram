@@ -32,8 +32,8 @@ Feature: Validate the Core_Flex Cards details on Mobility Journey and Aires Mana
     And he has verified submitted Aires Managed Benefits with '2' Milestones Status - changed to "In Progress" on "Mobility Journey Home" page - "Post Initial Tracing"
     And he has verified submitted Aires Managed Benefits with '2' Milestones Status - changed to "In Progress" on "My Benefit Bundle" page
     When he provides "Act Date" for added '2' sub-services tracing prompts after clicking on the "Activity & Finance" tab of added Service
-    Then he has verified submitted Aires Managed Benefits with '2' Milestones Status - changed to "Complete" on "Mobility Journey Home" page - "Post End Tracing"
-    And he has verified submitted Aires Managed Benefits with '2' Milestones Status - changed to "Complete" on "My Benefit Bundle" page
+    Then submitted Aires Managed Benefits with '2' Milestones Status - should be changed to "Complete" on "Mobility Journey Home" page - "Post End Tracing"
+    And submitted Aires Managed Benefits with '2' Milestones Status - should be changed to "Complete" on "My Benefit Bundle" page
 
   @End-To_End_CoreFlex @Both-Cards_PF_Card_StatusChecks @AllCards @MJ_Card_StatusChecks @FourMilestonesMJCards
   Scenario: CoreFlex - Setting up a New CoreFlex policy in 'Policy Digitization Tool' with Both type 'Aires Managed' benefit
@@ -67,8 +67,8 @@ Feature: Validate the Core_Flex Cards details on Mobility Journey and Aires Mana
     And he has verified submitted Aires Managed Benefits with '4' Milestones Status - changed to "In Progress" on "Mobility Journey Home" page - "Post Initial Tracing"
     And he has verified submitted Aires Managed Benefits with '4' Milestones Status - changed to "In Progress" on "My Benefit Bundle" page
     When he provides "Act Date" for added '4' sub-services tracing prompts after clicking on the "Activity & Finance" tab of added Service
-    Then he has verified submitted Aires Managed Benefits with '4' Milestones Status - changed to "Complete" on "Mobility Journey Home" page - "Post End Tracing"
-    And he has verified submitted Aires Managed Benefits with '4' Milestones Status - changed to "Complete" on "My Benefit Bundle" page
+    Then submitted Aires Managed Benefits with '4' Milestones Status - should be changed to "Complete" on "Mobility Journey Home" page - "Post End Tracing"
+    And submitted Aires Managed Benefits with '4' Milestones Status - should be changed to "Complete" on "My Benefit Bundle" page
 
   @End-To_End_CoreFlex @Both-Cards_Cancelled_MX @AllCards @MJ_Card_StatusChecks
   Scenario: MXTransferee - Verifying Flex_Core Cards details and Cancelled status of the submitted Aires Managed Benefit
@@ -82,7 +82,7 @@ Feature: Validate the Core_Flex Cards details on Mobility Journey and Aires Mana
     And he has clicked on "Yes - submit my bundle" button after entering Transferee name on "Submit Bundle Confirmation" dialog to submit 'Aires Managed' benefit
     And he has verified submitted Aires Managed Benefit status updated to "Submitted" on "My Benefit Bundle" page
     And he has verified 'Aires Managed' benefit card not added under 'Service Monitoring' section of "Mobility Journey Home" page
-    And he has created Service and SubService for 'Aires Managed' benefits of CoreFlex type "Both" in Services tab of IRIS application
+    And he has created Service and SubService for 'Aires Managed' benefits with '2' Milestones of CoreFlex type "Both" in Services tab of IRIS application
     And he has verified submitted Aires Managed Benefit Flex and Core card status updated to "Starting Soon" on "Mobility Journey Home" page - "Pre Initial Tracing"
     And he has verified submitted Aires Managed Benefit status updated to "Starting Soon" on "My Benefit Bundle" page
     When he change status of the 'Aires Managed' benefit SubService to "Cancel" from Services tab of IRIS application

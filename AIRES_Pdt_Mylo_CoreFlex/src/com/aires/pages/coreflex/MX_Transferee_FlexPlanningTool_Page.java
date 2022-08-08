@@ -5,6 +5,7 @@ import static org.testng.Assert.assertTrue;
 
 import java.text.DecimalFormat;
 import java.text.MessageFormat;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
@@ -128,6 +129,9 @@ public class MX_Transferee_FlexPlanningTool_Page extends Base {
 
 	@FindBy(how = How.CSS, using = "a[id*='minus']")
 	private WebElement _buttonMinus;
+
+	@FindBy(how = How.CSS, using = "a[id*='plus']")
+	private WebElement _buttonPlus;
 
 	@FindBy(how = How.CSS, using = "table.RXCFRoundedTitleBox.RXMineShaftBoxBorder.af_panelGroupLayout span.RXCFText.RXGraniteGrey")
 	private WebElement _text_cashOutName;
@@ -356,8 +360,8 @@ public class MX_Transferee_FlexPlanningTool_Page extends Base {
 				String defaultActualRemainingPointBalance = CoreFunctions.getElementText(driver, remaining_points);
 				String defaultActualTotalPointBalance = CoreFunctions.getElementText(driver, total_points)
 						.replace("/", "").trim();
-				isDefaultPointBalanceCorrect = ((MX_Transferee_MyBenefitsBundlePage.availablePointsAfterSubmission) == (Double
-						.parseDouble(defaultActualRemainingPointBalance)))
+				isDefaultPointBalanceCorrect = (Double.parseDouble(CoreFunctions.getPropertyFromConfig(
+						"CF_Transferee_AvailablePoints")) == (Double.parseDouble(defaultActualRemainingPointBalance)))
 						&& ((policySetupPageData.flexPolicySetupPage.StaticFixedTotalPointsAvailable)
 								.equals(defaultActualTotalPointBalance));
 			}
@@ -466,7 +470,7 @@ public class MX_Transferee_FlexPlanningTool_Page extends Base {
 			if ((CoreFunctions.getPropertyFromConfig("PolicyCashoutType").equals(MobilityXConstants.PORTION_CASHOUT))
 					|| (CoreFunctions.getPropertyFromConfig("PolicyCashoutType")
 							.equals(MobilityXConstants.AFTER_RELOCATION_ONLY))) {
-				isPortionCashoutSelected = selectPointsForCashout(cashoutPoints * 0.15);
+				isPortionCashoutSelected = selectPointsForCashout(cashoutPoints * 0.10);
 			} else if ((CoreFunctions.getPropertyFromConfig("PolicyCashoutType")
 					.equals(MobilityXConstants.CASHOUT_NOT_AUTHORIZED))) {
 				return true;
@@ -490,28 +494,17 @@ public class MX_Transferee_FlexPlanningTool_Page extends Base {
 			CoreFunctions.waitHandler(3);
 			if (Double.parseDouble(CoreFunctions.getElementText(driver, selectedPoints)) == totalSelectedPoints) {
 				CoreFunctions.clickElement(driver, _btn_next);
+				CoreFunctions.writeToPropertiesFile("CF_Transferee_TotalSelectedPoints",
+						String.valueOf(totalSelectedPoints));
+				CoreFunctions.writeToPropertiesFile("CF_Transferee_AvailablePoints",
+						String.valueOf(Double.parseDouble(policySetupPageData.flexPolicySetupPage.StaticFixedTotalPointsAvailable)
+								- totalSelectedPoints));
 				return true;
 			}
 		} catch (Exception e) {
 			Reporter.addStepLog(MessageFormat.format(
 					MobilityXConstants.EXCEPTION_OCCURED_WHILE_VALIDATING_POINTS_AND_CLICKING_ON_NEXT_BUTTON_ON_FPT_PAGE,
 					CoreConstants.FAIL, e.getMessage()));
-		}
-		return false;
-	}
-
-	public boolean verifyBenefitDetailsOnFPT(String policyType) {
-		switch (policyType) {
-		case COREFLEXConstants.FLEX:
-			return verifyDefaultPointsBalanceSection() && verifyPointBalanceTooltipContent()
-					&& verifyFlexBenefitsDetails();
-		case COREFLEXConstants.CORE:
-			return verifyCoreBenefitName() && verifyCoreBenefitTooltipText();
-		case COREFLEXConstants.BOTH:
-			return verifyCoreBenefitName() && verifyCoreBenefitTooltipText() && verifyDefaultPointsBalanceSection()
-					&& verifyPointBalanceTooltipContent() && verifyFlexBenefitsDetails();
-		default:
-			Assert.fail(COREFLEXConstants.INVALID_OPTION);
 		}
 		return false;
 	}
@@ -541,6 +534,8 @@ public class MX_Transferee_FlexPlanningTool_Page extends Base {
 		CoreFunctions.explicitWaitTillElementVisibility(driver, _buttonSelectedCashoutPoints,
 				MobilityXConstants.CASHOUT_SELECTED);
 		selectedCashoutPoints = Double.parseDouble(CoreFunctions.getAttributeText(_inputCashoutPoints, "value"));
+		CoreFunctions.writeToPropertiesFile("CF_Transferee_SelectedCashOutPoints",
+				String.valueOf(selectedCashoutPoints));
 		totalSelectedPoints += selectedCashoutPoints;
 		return CoreFunctions.isElementExist(driver, _buttonSelectedCashoutPoints, 2);
 	}
@@ -701,8 +696,8 @@ public class MX_Transferee_FlexPlanningTool_Page extends Base {
 		CoreFunctions.waitHandler(1);
 		DecimalFormat format = new DecimalFormat();
 		format.setDecimalSeparatorAlwaysShown(false);
-		if ((CoreFunctions.getElementText(driver, _afterSubmissionRemainingPoints))
-				.equals(format.format((MX_Transferee_MyBenefitsBundlePage.availablePointsAfterSubmission)))) {
+		if ((CoreFunctions.getElementText(driver, _afterSubmissionRemainingPoints)).equals(format
+				.format(Double.parseDouble(CoreFunctions.getPropertyFromConfig("CF_Transferee_AvailablePoints"))))) {
 			CoreFunctions.clickElement(driver, _btn_next);
 			return true;
 		}
@@ -723,39 +718,8 @@ public class MX_Transferee_FlexPlanningTool_Page extends Base {
 		DecimalFormat format = new DecimalFormat();
 		format.setDecimalSeparatorAlwaysShown(false);
 		return CoreFunctions.getElementText(driver, _textTotalPointBalance)
-				.contains(MobilityXConstants.AVAILABLE_POINTS_TEXT.replace("available_points",
-						format.format((MX_Transferee_MyBenefitsBundlePage.availablePointsAfterSubmission))));
-	}
-
-	public boolean verifyFlexBenefitsDetails() {
-		boolean isFlexBenefitDetailsOnFTPVerified = false;
-		try {
-			for (FlexBenefit benefitList : flexBenefits) {
-				for (Benefit benefit : benefitList.getBenefits()) {
-					int indexBenefit = BusinessFunctions.returnindexItemFromListUsingText(driver,
-							_textAddedBenefitNameList, benefit.getBenefitDisplayName());
-					int indexCategory = BusinessFunctions.returnindexItemFromListUsingText(driver,
-							_textAddedBenefitGroupList, benefitList.getCategory(), true);
-					isFlexBenefitDetailsOnFTPVerified = (CoreFunctions
-							.getItemsFromListByIndex(driver, _textAddedBenefitGroupList, indexCategory, true)
-							.equals(benefitList.getCategory()))
-							&& verifyFlexPlanningToolBenefitDetails(indexBenefit, benefit);
-					if (!isFlexBenefitDetailsOnFTPVerified) {
-						break;
-					}
-				}
-			}
-		} catch (Exception e) {
-			Reporter.addStepLog(MessageFormat.format(
-					COREFLEXConstants.EXCEPTION_OCCURED_WHILE_VALIDATING_FLEX_BENEFIT_DETAILS_ON_FLEX_PLANNING_TOOL_PAGE,
-					CoreConstants.FAIL, e.getMessage()));
-		}
-		if (isFlexBenefitDetailsOnFTPVerified) {
-			Reporter.addStepLog(MessageFormat.format(
-					COREFLEXConstants.SUCCESSFULLY_VERIFIED_FLEX_BENEFIT_DETAILS_ON_FLEX_PLANNING_TOOL_PAGE,
-					CoreConstants.PASS));
-		}
-		return isFlexBenefitDetailsOnFTPVerified;
+				.contains(MobilityXConstants.AVAILABLE_POINTS_TEXT.replace("available_points", format.format(
+						Double.parseDouble(CoreFunctions.getPropertyFromConfig("CF_Transferee_AvailablePoints")))));
 	}
 
 	private boolean verifyFlexPlanningToolBenefitDetails(int indexBenefit, Benefit benefit) {
@@ -783,7 +747,7 @@ public class MX_Transferee_FlexPlanningTool_Page extends Base {
 				break;
 			case MobilityXConstants.NEXT:
 				CoreFunctions.clickElement(driver, _btn_next);
-				CoreFunctions.explicitWaitTillElementInVisibility(driver, _progressBar);
+//				CoreFunctions.explicitWaitTillElementInVisibility(driver, _progressBar);
 				break;
 			default:
 				Assert.fail(COREFLEXConstants.INVALID_ELEMENT);
@@ -798,20 +762,20 @@ public class MX_Transferee_FlexPlanningTool_Page extends Base {
 
 	private boolean selectFlexBenefitsonFPT() {
 		boolean benefitsSelection = false, benefitsSelectionPerformed = false;
-		for (FlexBenefit benefitList : flexBenefits) {
-			for (Benefit benefit : benefitList.getBenefits()) {
-				if (benefit.getSelectBenefitOnFPTPage()) {
-					int indexBenefit = BusinessFunctions.returnindexItemFromListUsingText(driver,
-							_textAddedBenefitNameList, benefit.getBenefitDisplayName());
-					benefitsSelectionPerformed = performFlexBenefitSelection(benefit, indexBenefit);
-					if (!benefitsSelectionPerformed) {
-						return false;
-					} else {
-						benefitsSelection = benefitsSelectionPerformed;
-					}
+		for (Benefit benefit : getBenefits(CoreFunctions.getPropertyFromConfig("CoreFlex_Policy_BenefitType"),
+				CoreFunctions.getPropertyFromConfig("CoreFlex_Policy_RequiredFor"), "0")) {
+			if (benefit.getSelectBenefitOnFPTPage()) {
+				Log.info("Selecting " + benefit.getBenefitDisplayName() + " on FPT page.");
+				int indexBenefit = BusinessFunctions.returnindexItemFromListUsingText(driver, _textAddedBenefitNameList,
+						benefit.getBenefitDisplayName());
+				benefitsSelectionPerformed = performFlexBenefitSelection(benefit, indexBenefit);
+				if (!benefitsSelectionPerformed) {
+					return false;
 				} else {
-					benefitsSelection = true;
+					benefitsSelection = benefitsSelectionPerformed;
 				}
+			} else {
+				benefitsSelection = true;
 			}
 		}
 		return benefitsSelection;
@@ -820,33 +784,31 @@ public class MX_Transferee_FlexPlanningTool_Page extends Base {
 	private boolean performFlexBenefitSelection(Benefit benefit, int indexBenefit) {
 		boolean isBenefitSelected = false;
 		try {
-			CoreFunctions.waitHandler(3);
 			CoreFunctions.scrollToElementUsingJS(driver, flexHomePageTitle, MobilityXConstants.FLEX_PLANNING_TOOL);
-			CoreFunctions.waitHandler(3);
+			CoreFunctions.waitHandler(5);
 			double points = Double.parseDouble(benefit.getPoints());
 			if ((benefit.getMultipleBenefitSelection()).equals("Yes")) {
-//				CoreFunctions.explicitWaitTillElementBecomesClickable(driver, _buttonSelectThis.get(indexBenefit),
-//						MobilityXConstants.SELECT_THIS);
 				CoreFunctions.scrollClickUsingJS(driver, _buttonSelectThis.get(indexBenefit),
-						MobilityXConstants.SELECT_THIS);
+						benefit.getBenefitDisplayName() + " - Select This button");
 				CoreFunctions.waitHandler(3);
-//				BusinessFunctions.selectValueFromListUsingIndex(driver, _buttonSelectThis, indexBenefit);
 				totalSelectedPoints += points;
 				isBenefitSelected = true;
 				for (int j = 1; j < benefit.getNumberOfBenefitSelected(); j++) {
-					CoreFunctions.waitHandler(5);
+					CoreFunctions.waitHandler(3);
 					WebElement benefitSelectPlusButton = CoreFunctions
 							.findSubElement(flexBenefits_list.get(indexBenefit), _buttonSelectPlus);
-					CoreFunctions.scrollClickUsingJS(driver, benefitSelectPlusButton, "plus");
+					CoreFunctions.scrollClickUsingJS(driver, benefitSelectPlusButton,
+							"Multiple Selection - Plus Button");
 					totalSelectedPoints += points;
 					isBenefitSelected = true;
 				}
-			} else {				
+			} else {
 				BusinessFunctions.selectValueFromListUsingIndex(driver, _buttonSelectThis, indexBenefit);
 				totalSelectedPoints += points;
 				isBenefitSelected = true;
 			}
-
+			CoreFunctions.scrollToElementUsingJS(driver, flexHomePageTitle, MobilityXConstants.FLEX_PLANNING_TOOL);
+			CoreFunctions.waitHandler(5);
 		} catch (Exception e) {
 			Reporter.addStepLog(MessageFormat.format(
 					MobilityXConstants.EXCEPTION_OCCURED_WHILE_SELECTING_BENEFITS_ON_FLEX_PLANNING_TOOL_PAGE,
@@ -854,7 +816,6 @@ public class MX_Transferee_FlexPlanningTool_Page extends Base {
 		}
 		return isBenefitSelected;
 	}
-
 
 	public boolean verifyPortionCashOutOnFPT() {
 		boolean isPortionCashoutVerified = false, flag = false;
@@ -978,23 +939,18 @@ public class MX_Transferee_FlexPlanningTool_Page extends Base {
 	private boolean verifyCashoutContentBySelectingPointsEqualToMaxPortionCashoutPercent() {
 		boolean isPortionCashoutVerified = false;
 		try {
-			Benefit otherHosuingBenefit = allBenefits.stream()
-					.filter(b -> b.getBenefitType().equals(COREFLEXConstants.OTHER_HOUSING_BENEFIT)).findAny()
-					.orElse(null);
-			int indexOtherBenefit = BusinessFunctions.returnindexItemFromListUsingText(driver,
-					_textAddedBenefitNameList, otherHosuingBenefit.getBenefitDisplayName());
-			CoreFunctions.explicitWaitTillElementBecomesClickable(driver, _buttonSelectThisBenefit,
-					MobilityXConstants.SELECT_THIS);
-			BusinessFunctions.selectValueFromListUsingIndex(driver, _buttonSelectThis, indexOtherBenefit);
-			CoreFunctions.explicitWaitTillElementListVisibility(driver, _buttonSelected);
-			Benefit duplicateHosuingBenefit = allBenefits.stream()
-					.filter(b -> b.getBenefitType().equals(COREFLEXConstants.DUPLICATE_HOUSING)).findAny().orElse(null);
-			isPortionCashoutVerified = verifyPortionCashoutDetailsAfterBenefitCashoutSelectionDeselection(
-					(Double.parseDouble(duplicateHosuingBenefit.getPoints()))
-							+ (Double.parseDouble(otherHosuingBenefit.getPoints())),
-					false, 0);
-			CoreFunctions.explicitWaitTillElementBecomesClickable(driver, _buttonMinus,
-					MobilityXConstants.REMOVE_BENEFIT);
+			double selectedBenefitPoints = Double.parseDouble(CoreFunctions.getElementText(driver, selectedPoints));
+			while (selectedBenefitPoints <= cashoutPoints) {
+				selectedBenefitPoints = Double.parseDouble(CoreFunctions.getElementText(driver, selectedPoints));
+				if (selectedBenefitPoints == cashoutPoints) {
+					isPortionCashoutVerified = verifyPortionCashoutDetailsAfterBenefitCashoutSelectionDeselection(
+							selectedBenefitPoints, false, 0);
+					break;
+				} else {
+					CoreFunctions.clickUsingJS(driver, _buttonPlus, COREFLEXConstants.PLUS_BUTTON);
+					CoreFunctions.waitHandler(3);
+				}
+			}
 			if (isPortionCashoutVerified) {
 				Reporter.addStepLog(MessageFormat.format(
 						MobilityXConstants.SUCCESSFULLY_VERIFIED_CASHOUT_DETAILS_BY_SELECTING_BENEFITS_POINTS_EQUAL_TO_MAX_PORTION_CASHOUT_PERCENT_VALUE_ON_FLEX_PLANNING_TOOL_PAGE,
@@ -1012,30 +968,19 @@ public class MX_Transferee_FlexPlanningTool_Page extends Base {
 	private boolean verifyCashoutContentBySelectingPointsMoreThanMaxPortionCashoutPercent() {
 		boolean isPortionCashoutVerified = false;
 		try {
-			Benefit duplicateHosuingBenefit = allBenefits.stream()
-					.filter(b -> b.getBenefitType().equals(COREFLEXConstants.DUPLICATE_HOUSING)).findAny().orElse(null);
-			Benefit otherHosuingBenefit = allBenefits.stream()
-					.filter(b -> b.getBenefitType().equals(COREFLEXConstants.OTHER_HOUSING_BENEFIT)).findAny()
-					.orElse(null);
-			Benefit lumpSumBenefit = allBenefits.stream()
-					.filter(b -> b.getBenefitType().equals(COREFLEXConstants.LUMP_SUM)).findAny().orElse(null);
-			int indexLumpSumBenefit = BusinessFunctions.returnindexItemFromListUsingText(driver,
-					_textAddedBenefitNameList, lumpSumBenefit.getBenefitDisplayName());
-			CoreFunctions.explicitWaitTillElementBecomesClickable(driver, _buttonSelectThisBenefit,
-					MobilityXConstants.SELECT_THIS);
-			BusinessFunctions.selectValueFromListUsingIndex(driver, _buttonSelectThis, indexLumpSumBenefit);
-			isPortionCashoutVerified = verifyPortionCashoutDetailsAfterBenefitCashoutSelectionDeselection(
-					(Double.parseDouble(duplicateHosuingBenefit.getPoints()))
-							+ (Double.parseDouble(otherHosuingBenefit.getPoints()))
-							+ (Double.parseDouble(lumpSumBenefit.getPoints())),
-					false, 0);
-			CoreFunctions.explicitWaitTillElementBecomesClickable(driver, _buttonSelectedBenefit,
-					MobilityXConstants.REMOVE_BENEFIT);
-			CoreFunctions.clickElement(driver, _buttonSelectedBenefit);
-			CoreFunctions.explicitWaitTillElementVisibility(driver, _buttonSelectThisBenefit,
-					MobilityXConstants.SELECT_THIS);
-			if (isPortionCashoutVerified && verifyPortionCashoutDetailsAfterBenefitCashoutSelectionDeselection(
-					(Double.parseDouble(CoreFunctions.getElementText(driver, selectedPoints))), false, 0)) {
+			double selectedBenefitPoints = Double.parseDouble(CoreFunctions.getElementText(driver, selectedPoints));
+			while (selectedBenefitPoints < totalPointsOnPolicy) {
+				selectedBenefitPoints = Double.parseDouble(CoreFunctions.getElementText(driver, selectedPoints));
+				if (selectedBenefitPoints > cashoutPoints) {
+					isPortionCashoutVerified = verifyPortionCashoutDetailsAfterBenefitCashoutSelectionDeselection(
+							selectedBenefitPoints, false, 0);
+					break;
+				} else {
+					CoreFunctions.clickUsingJS(driver, _buttonPlus, COREFLEXConstants.PLUS_BUTTON);
+					CoreFunctions.waitHandler(3);
+				}
+			}
+			if (isPortionCashoutVerified) {
 				Reporter.addStepLog(MessageFormat.format(
 						MobilityXConstants.SUCCESSFULLY_VERIFIED_CASHOUT_DETAILS_BY_SELECTING_BENEFITS_POINTS_MORE_THAN_MAX_PORTION_CASHOUT_PERCENT_VALUE_ON_FLEX_PLANNING_TOOL_PAGE,
 						CoreConstants.PASS));
@@ -1052,29 +997,17 @@ public class MX_Transferee_FlexPlanningTool_Page extends Base {
 	private boolean verifyCashoutContentBySelectingAllBenefitPoints() {
 		boolean isPortionCashoutVerified = false;
 		try {
-			double remainingPoints = Double.parseDouble(CoreFunctions.getElementText(driver, remaining_points));
 			double selectedBenefitPoints = Double.parseDouble(CoreFunctions.getElementText(driver, selectedPoints));
-			Benefit duplicateHosuingBenefit = allBenefits.stream()
-					.filter(b -> b.getBenefitType().equals(COREFLEXConstants.DUPLICATE_HOUSING)).findAny().orElse(null);
-
-			while (selectedBenefitPoints < remainingPoints) {
+			while (selectedBenefitPoints <= totalPointsOnPolicy) {
 				selectedBenefitPoints = Double.parseDouble(CoreFunctions.getElementText(driver, selectedPoints));
-				if (selectedBenefitPoints == remainingPoints) {
+				if (selectedBenefitPoints == totalPointsOnPolicy) {
 					isPortionCashoutVerified = verifyPortionCashoutDetailsAfterBenefitCashoutSelectionDeselection(
 							selectedBenefitPoints, false, 0);
 					break;
 				} else {
-					isPortionCashoutVerified = verifyPortionCashoutDetailsAfterBenefitCashoutSelectionDeselection(
-							selectedBenefitPoints, false, 0);
-					int indexBenefit = BusinessFunctions.returnindexItemFromListUsingText(driver,
-							_textAddedBenefitNameList, duplicateHosuingBenefit.getBenefitDisplayName());
-					CoreFunctions.scrollToElementUsingJS(driver, flexHomePageTitle,
-							MobilityXConstants.FLEX_PLANNING_TOOL);
-					BusinessFunctions.selectValueFromListUsingIndex(driver, _buttonPlusBenefit, indexBenefit);
-					CoreFunctions.explicitWaitTillElementListVisibility(driver, _buttonSelected);
+					CoreFunctions.clickUsingJS(driver, _buttonPlus, COREFLEXConstants.PLUS_BUTTON);
+					CoreFunctions.waitHandler(3);
 				}
-				if (!isPortionCashoutVerified)
-					break;
 			}
 			if (isPortionCashoutVerified && verifyBenefitCashoutSelectionDisabled()) {
 				Reporter.addStepLog(MessageFormat.format(
@@ -1183,10 +1116,15 @@ public class MX_Transferee_FlexPlanningTool_Page extends Base {
 			if (selectedBenefitPoints == 0.0) {
 				break;
 			} else {
-				if (CoreFunctions.isElementExist(driver, _buttonMinus, 4))
+				if (CoreFunctions.isElementExist(driver, _buttonMinus, 4)) {
 					CoreFunctions.clickElement(driver, _buttonMinus);
-				else if (CoreFunctions.isElementExist(driver, _buttonSelectedBenefit, 4))
+					CoreFunctions.waitHandler(3);
+					CoreFunctions.waitForBrowserToLoad(driver);
+				} else if (CoreFunctions.isElementExist(driver, _buttonSelectedBenefit, 4)) {
 					CoreFunctions.clickElement(driver, _buttonSelectedBenefit);
+					CoreFunctions.waitHandler(3);
+					CoreFunctions.waitForBrowserToLoad(driver);
+				}
 			}
 		}
 	}
@@ -1353,7 +1291,8 @@ public class MX_Transferee_FlexPlanningTool_Page extends Base {
 	public boolean selectBenefitsForMultipleSubmission() {
 		boolean benefitsSelectedSuccessfully = false;
 		try {
-			benefitsSelectedSuccessfully = selectFlexBenefitsForMultipleSubmissionOnFPT() && validatePointsAndClickOnNext();
+			benefitsSelectedSuccessfully = selectFlexBenefitsForMultipleSubmissionOnFPT()
+					&& validatePointsAndClickOnNext();
 		} catch (Exception e) {
 			Reporter.addStepLog(MessageFormat.format(
 					MobilityXConstants.EXCEPTION_OCCURED_WHILE_SELECTING_BENEFITS_ON_FLEX_PLANNING_TOOL_PAGE,
@@ -1388,40 +1327,32 @@ public class MX_Transferee_FlexPlanningTool_Page extends Base {
 		return benefitsSelection;
 	}
 
-	public boolean verifyBenefitDetailsOnFPTForVersioning(String policyType) {
-		switch (policyType) {
+	public boolean verifyBenefitDetailsOnFPTBasedOnPolicyRequiredFor(String policyRequiredFor, String benefitType) {
+		switch (benefitType) {
 		case COREFLEXConstants.FLEX:
 			return verifyDefaultPointsBalanceSection() && verifyPointBalanceTooltipContent()
-					&& verifyFlexBenefitsDetailsVersioning();
+					&& verifyFlexBenefitsDetailsBasedOnPolicyRequiredFor(policyRequiredFor, benefitType);
 		case COREFLEXConstants.CORE:
 			return verifyCoreBenefitName() && verifyCoreBenefitTooltipText();
 		case COREFLEXConstants.BOTH:
 			return verifyCoreBenefitName() && verifyCoreBenefitTooltipText() && verifyDefaultPointsBalanceSection()
-					&& verifyPointBalanceTooltipContent() && verifyFlexBenefitsDetailsVersioning();
+					&& verifyPointBalanceTooltipContent()
+					&& verifyFlexBenefitsDetailsBasedOnPolicyRequiredFor(policyRequiredFor, benefitType);
 		default:
 			Assert.fail(COREFLEXConstants.INVALID_OPTION);
 		}
 		return false;
 	}
 
-	public boolean verifyFlexBenefitsDetailsVersioning() {
+	public boolean verifyFlexBenefitsDetailsBasedOnPolicyRequiredFor(String policyRequiredFor, String benefitType) {
 		boolean isFlexBenefitDetailsOnFTPVerified = false;
 		try {
-			for (FlexBenefit benefitList : flexBenefits) {
-				for (Benefit benefit : benefitList.getBenefits()) {
-					if (benefit.getPolicyCreationGroup().contains(COREFLEXConstants.VERSIONING)) {
-						int indexBenefit = BusinessFunctions.returnindexItemFromListUsingText(driver,
-								_textAddedBenefitNameList, benefit.getBenefitDisplayName());
-						int indexCategory = BusinessFunctions.returnindexItemFromListUsingText(driver,
-								_textAddedBenefitGroupList, benefitList.getCategory(), true);
-						isFlexBenefitDetailsOnFTPVerified = (CoreFunctions
-								.getItemsFromListByIndex(driver, _textAddedBenefitGroupList, indexCategory, true)
-								.equals(benefitList.getCategory()))
-								&& verifyFlexPlanningToolBenefitDetails(indexBenefit, benefit);
-						if (!isFlexBenefitDetailsOnFTPVerified) {
-							break;
-						}
-					}
+			for (Benefit benefit : getBenefits(benefitType, policyRequiredFor, "0")) {
+				int indexBenefit = BusinessFunctions.returnindexItemFromListUsingText(driver, _textAddedBenefitNameList,
+						benefit.getBenefitDisplayName());
+				isFlexBenefitDetailsOnFTPVerified = verifyFlexPlanningToolBenefitDetails(indexBenefit, benefit);
+				if (!isFlexBenefitDetailsOnFTPVerified) {
+					break;
 				}
 			}
 		} catch (Exception e) {
@@ -1429,7 +1360,8 @@ public class MX_Transferee_FlexPlanningTool_Page extends Base {
 					COREFLEXConstants.EXCEPTION_OCCURED_WHILE_VALIDATING_FLEX_BENEFIT_DETAILS_ON_FLEX_PLANNING_TOOL_PAGE,
 					CoreConstants.FAIL, e.getMessage()));
 		}
-		if (isFlexBenefitDetailsOnFTPVerified) {
+		if (isFlexBenefitDetailsOnFTPVerified
+				&& _textAddedBenefitNameList.size() == getBenefitsListSize(benefitType, policyRequiredFor, "0")) {
 			Reporter.addStepLog(MessageFormat.format(
 					COREFLEXConstants.SUCCESSFULLY_VERIFIED_FLEX_BENEFIT_DETAILS_ON_FLEX_PLANNING_TOOL_PAGE,
 					CoreConstants.PASS));
@@ -1437,7 +1369,7 @@ public class MX_Transferee_FlexPlanningTool_Page extends Base {
 		return isFlexBenefitDetailsOnFTPVerified;
 	}
 
-	public boolean verifySuggestedBundlesDetailsVersioning() {
+	public boolean verifySuggestedBundlesDetailsBasedOnPolicyRequiredFor(String policyRequiredFor, String benefitType) {
 		boolean isCustomBundleHeaderDetailsVerified = false, isCustomBundleBenefitListVerified = false,
 				customBundleMatched = false;
 		boolean isCustomBundleTotalPointsMatched = false;
@@ -1448,7 +1380,8 @@ public class MX_Transferee_FlexPlanningTool_Page extends Base {
 					.equals(MobilityXConstants.SUGGESTED_BUNDLES))
 					&& (CoreFunctions.getElementText(driver, _customBundleName)
 							.equals(policySetupPageData.customBundlesPage.customBundleName));
-			isCustomBundleBenefitListVerified = verifyCustomBundlesBenefitListDetailsVersioning();
+			isCustomBundleBenefitListVerified = verifyCustomBundlesBenefitListDetailsBasedOnPolicyRequiredFor(
+					benefitType, policyRequiredFor);
 			isCustomBundleTotalPointsMatched = verifyCustomBundlePointsDetails();
 			customBundleMatched = isCustomBundleHeaderDetailsVerified & isCustomBundleBenefitListVerified
 					& isCustomBundleTotalPointsMatched;
@@ -1464,33 +1397,30 @@ public class MX_Transferee_FlexPlanningTool_Page extends Base {
 		return customBundleMatched;
 	}
 
-	private boolean verifyCustomBundlesBenefitListDetailsVersioning() {
+	private boolean verifyCustomBundlesBenefitListDetailsBasedOnPolicyRequiredFor(String benefitType,
+			String policyRequiredFor) {
 		boolean isFlexBenefitsVerified = false;
-		for (FlexBenefit benefitList : flexBenefits) {
-			for (Benefit benefit : benefitList.getBenefits()) {
-				if (benefit.getPolicyCreationGroup().contains(COREFLEXConstants.VERSIONING)) {
-					int indexBenefit = BusinessFunctions.returnindexItemFromListUsingText(driver,
-							_suggestedBenefitNameList, benefit.getBenefitDisplayName());
-					isFlexBenefitsVerified = verifySuggestedBenefitDetails(indexBenefit, benefit);
-					if (!isFlexBenefitsVerified)
-						return false;
-				}
-			}
+		for (Benefit benefit : getBenefits(benefitType, policyRequiredFor, "0")) {
+			int indexBenefit = BusinessFunctions.returnindexItemFromListUsingText(driver, _suggestedBenefitNameList,
+					benefit.getBenefitDisplayName());
+			isFlexBenefitsVerified = verifySuggestedBenefitDetails(indexBenefit, benefit);
+			if (!isFlexBenefitsVerified)
+				return false;
 		}
-		if (isFlexBenefitsVerified) {
+		if (isFlexBenefitsVerified
+				&& _suggestedBenefitNameList.size() == getBenefitsListSize(benefitType, policyRequiredFor, "0")) {
 			Reporter.addStepLog(MessageFormat.format(MobilityXConstants.SUCCESSFULLY_VERIFIED_CUSTOM_BUNDLE_DETAILS,
 					CoreConstants.PASS));
 		}
 		return isFlexBenefitsVerified;
 	}
-	
+
 	public boolean verifyBenefitDetailsOnFPTJourneyCards(int numberOfMilestones) {
 		boolean isFlexBenefitDetailsOnFTPVerified = false;
 		try {
 			for (FlexBenefit benefitList : flexBenefits) {
 				for (Benefit benefit : benefitList.getBenefits()) {
-					if (benefit.getNoOfMilestones() != null
-							&& benefit.getNoOfMilestones() == numberOfMilestones) {
+					if (benefit.getNoOfMilestones() != null && benefit.getNoOfMilestones() == numberOfMilestones) {
 						int indexBenefit = BusinessFunctions.returnindexItemFromListUsingText(driver,
 								_textAddedBenefitNameList, benefit.getBenefitDisplayName());
 						int indexCategory = BusinessFunctions.returnindexItemFromListUsingText(driver,
@@ -1517,7 +1447,7 @@ public class MX_Transferee_FlexPlanningTool_Page extends Base {
 		}
 		return isFlexBenefitDetailsOnFTPVerified;
 	}
-	
+
 	public boolean selectAiresManagedBenefitsAndProceedToReviewAndSubmit(int noOfTracingPrompts) {
 		boolean benefitsSelectedSuccessfully = false;
 		totalSelectedPoints = 0;
@@ -1537,7 +1467,7 @@ public class MX_Transferee_FlexPlanningTool_Page extends Base {
 		}
 		return benefitsSelectedSuccessfully;
 	}
-	
+
 	private boolean selectAiresManagedBenefitsOnFPT(int numberOfMilestones) {
 		boolean benefitsSelection = false, benefitsSelectionPerformed = false;
 		for (FlexBenefit benefitList : flexBenefits) {
@@ -1561,6 +1491,43 @@ public class MX_Transferee_FlexPlanningTool_Page extends Base {
 		}
 		return benefitsSelection;
 	}
-	
+
+	private List<Benefit> getBenefits(String policyType, String policyRequiredFor, String numberOfMilestones) {
+		List<Benefit> benefitNameList = new ArrayList<Benefit>();
+		if (policyType.equals(COREFLEXConstants.FLEX) || policyType.equals(COREFLEXConstants.BOTH)) {
+			for (FlexBenefit benefit : flexBenefits) {
+				for (Benefit ben : benefit.getBenefits()) {
+					if ((policyRequiredFor.equals(COREFLEXConstants.ALL_BENEFITS))
+							&& (ben.getPolicyCreationGroup().contains(policyRequiredFor))) {
+						benefitNameList.add(ben);
+					} else if ((policyRequiredFor.equals(COREFLEXConstants.AIRES_MANAGED_BENEFITS_CARDS))
+							&& (ben.getAiresManagedService().equals("Yes"))
+							&& (ben.getNoOfMilestones() == Integer.parseInt(numberOfMilestones))) {
+						benefitNameList.add(ben);
+					}
+				}
+			}
+		}
+		return benefitNameList;
+	}
+
+	private int getBenefitsListSize(String policyType, String policyRequiredFor, String numberOfMilestones) {
+		List<Benefit> benefitNameList = new ArrayList<Benefit>();
+		if (policyType.equals(COREFLEXConstants.FLEX) || policyType.equals(COREFLEXConstants.BOTH)) {
+			for (FlexBenefit benefit : flexBenefits) {
+				for (Benefit ben : benefit.getBenefits()) {
+					if ((policyRequiredFor.equals(COREFLEXConstants.ALL_BENEFITS))
+							&& (ben.getPolicyCreationGroup().contains(policyRequiredFor))) {
+						benefitNameList.add(ben);
+					} else if ((policyRequiredFor.equals(COREFLEXConstants.AIRES_MANAGED_BENEFITS_CARDS))
+							&& (ben.getAiresManagedService().equals("Yes"))
+							&& (ben.getNoOfMilestones() == Integer.parseInt(numberOfMilestones))) {
+						benefitNameList.add(ben);
+					}
+				}
+			}
+		}
+		return benefitNameList.size();
+	}
 
 }

@@ -122,7 +122,7 @@ public class CoreFlex_LumpSum_BenefitsPage extends Base {
 	@FindBy(how = How.CSS, using = "ng-select[formcontrolname='oneTimeCalMethodCode'] span[class*='ng-value-label']")
 	private WebElement _selectCalculationMethodSelectedValue;
 
-	// Radio Button List 
+	// Radio Button List
 	@FindBy(how = How.XPATH, using = " //div[@class='collapse show']//label[@class='form-check-label']")
 	private List<WebElement> _radioBtnCandidateSelection;
 
@@ -246,6 +246,14 @@ public class CoreFlex_LumpSum_BenefitsPage extends Base {
 	@FindBy(how = How.XPATH, using = "//label[contains(text(),'Reimbursed By')]/following-sibling::div//input")
 	private List<WebElement> _radioReimbursedByButtonList;
 
+	// Flex Policy Setup Page Header
+	@FindBy(how = How.XPATH, using = "//h4[@class='card-title'][contains(text(),'Lump Sum')]")
+	private WebElement _headerPageName;
+
+	// If Applicable Text
+	@FindBy(how = How.XPATH, using = "//*[contains(text(),'if applicable')]")
+	private WebElement _textIfApplicable;
+
 	/*********************************************************************/
 
 	CoreFlex_AllowancesBenefitsData allowancesBenefitData = FileReaderManager.getInstance().getCoreFlexJsonReader()
@@ -364,7 +372,8 @@ public class CoreFlex_LumpSum_BenefitsPage extends Base {
 	public void selectAndFillBenefitsAndSubBenefitDetails(String benefitType, String subBenefitNames,
 			String multipleBenefitSelection, String flexPoints, String benefitDisplayName,
 			String benefitAllowanceAmount, String benefitDescription, String paymentOption) {
-
+		CoreFunctions.explicitWaitTillElementVisibility(driver, _headerPageName,
+				COREFLEXConstants.LUMP_SUM_BENEFITS_PAGE);
 		if (benefitType.equals(COREFLEXConstants.BOTH)) {
 			selectBenefitTypeAndFillMandatoryFields(benefitType, multipleBenefitSelection, flexPoints,
 					benefitDisplayName, benefitAllowanceAmount, benefitDescription, paymentOption);
@@ -401,9 +410,9 @@ public class CoreFlex_LumpSum_BenefitsPage extends Base {
 			subBenefitNamesList.add(subBenefitNames);
 
 		for (String subBenefit : subBenefitNamesList) {
-			if(subBenefitNamesList.size() > 1) {
+			if (subBenefitNamesList.size() > 1) {
 				CoreFunctions.selectItemInListByText(driver, _subBenefitList, subBenefit, true);
-				}
+			}
 			if (CoreFunctions.isElementExist(driver, getElementByName(subBenefit), 5)) {
 				fillSubBenefit(subBenefit);
 			} else {
@@ -784,7 +793,7 @@ public class CoreFlex_LumpSum_BenefitsPage extends Base {
 		}
 
 	}
-	
+
 	public boolean changePolicyBenefitType(String benefitType, String changedPolicyType) {
 		try {
 			CoreFunctions.clickElement(driver, _textFlex);
@@ -797,5 +806,4 @@ public class CoreFlex_LumpSum_BenefitsPage extends Base {
 		}
 		return false;
 	}
-
 }

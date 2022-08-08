@@ -24,7 +24,7 @@
 	{
 		"benefitName": "Cultural Training",
 		"culturalTrainingEmployee": {
-			"employeeDuration": "Other",
+			"employeeDuration": "1 day",
 			"employeeOtherDuration": "3",
 			"grossUp": "No",
 			"reimbursedBy": "Other",

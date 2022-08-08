@@ -62,6 +62,10 @@ public class CoreFlex_DuplicateHousing_BenefitsPage extends Base {
 	@FindBy(how = How.CSS, using = "div[class*='pcard-header'] > h4[class='card-title']")
 	private WebElement _headerPage;
 
+	// Flex Policy Setup Page Header
+	@FindBy(how = How.XPATH, using = "//h4[@class='card-title'][contains(text(),'Duplicate Housing')]")
+	private WebElement _headerPageName;
+
 	// Left Navigation Completed Sections
 	@FindBy(how = How.XPATH, using = "//ul[@class='nav']//li[contains(@class,'nav-item')]//p")
 	private List<WebElement> _leftNavigationTitleList;
@@ -193,6 +197,10 @@ public class CoreFlex_DuplicateHousing_BenefitsPage extends Base {
 	@FindBy(how = How.XPATH, using = "//label[contains(text(),'Reimbursed By')]/following-sibling::div//input")
 	private List<WebElement> _radioReimbursedByButtonList;
 
+	// If Applicable Text
+	@FindBy(how = How.XPATH, using = "//*[contains(text(),'if applicable')]")
+	private WebElement _textIfApplicable;
+
 	/*********************************************************************/
 
 	CoreFlex_HousingBenefitsData housingBenefitData = FileReaderManager.getInstance().getCoreFlexJsonReader()
@@ -301,13 +309,17 @@ public class CoreFlex_DuplicateHousing_BenefitsPage extends Base {
 	 * @param benefitType
 	 * @param subBenefitNames
 	 * @param multipleBenefitSelection
-	 * @param benefitDescription
+	 * @param flexPoints
+	 * @param benefitDisplayName
 	 * @param benefitAllowanceAmount
-	 * @param benefitDescription2
+	 * @param benefitDescription
+	 * @param paymentOption
 	 */
 	public void selectAndFillBenefitsAndSubBenefitDetails(String benefitType, String subBenefitNames,
 			String multipleBenefitSelection, String flexPoints, String benefitDisplayName,
 			String benefitAllowanceAmount, String benefitDescription, String paymentOption) {
+		CoreFunctions.explicitWaitTillElementVisibility(driver, _headerPageName,
+				COREFLEXConstants.DUPLICATE_HOUSING_BENEFITS_PAGE);
 		if (benefitType.equals(COREFLEXConstants.BOTH)) {
 			selectBenefitTypeAndFillMandatoryFields(benefitType, multipleBenefitSelection, flexPoints,
 					benefitDisplayName, benefitAllowanceAmount, benefitDescription, paymentOption);
@@ -715,5 +727,4 @@ public class CoreFlex_DuplicateHousing_BenefitsPage extends Base {
 		}
 		return false;
 	}
-
 }

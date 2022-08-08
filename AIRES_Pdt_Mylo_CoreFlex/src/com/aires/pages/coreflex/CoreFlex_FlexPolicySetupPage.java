@@ -74,6 +74,10 @@ public class CoreFlex_FlexPolicySetupPage extends Base {
 	@FindBy(how = How.CSS, using = "ng-select[formcontrolname='flexSetupTypeCode'] span[class*='ng-value-label']")
 	private WebElement _selectFlexSetupTypeSelectedValue;
 
+	// User Defined Selection Text
+	@FindBy(how = How.XPATH, using = "//label[contains(text(),'selection of user-defined requires the client initiator')]")
+	private WebElement _textUserDefinedSelection;
+
 	// Flex Setup type Select Options
 	@FindBy(how = How.XPATH, using = "//ng-select[@formcontrolname='flexSetupTypeCode']/descendant::div[@role='option']/span")
 	private List<WebElement> _selectFlexSetupTypeOptions;
@@ -348,9 +352,6 @@ public class CoreFlex_FlexPolicySetupPage extends Base {
 //		checkFieldValidation(COREFLEXConstants.TOTAL_POINTS_AVAILABLE, "#$%");
 //		checkFieldValidation(COREFLEXConstants.TOTAL_POINTS_AVAILABLE, "50 Points");
 
-		CoreFunctions.clearAndSetTextUsingKeys(driver, _inputTotalPointsAvailable,
-				policySetupPageData.flexPolicySetupPage.StaticFixedTotalPointsAvailable,
-				COREFLEXConstants.TOTAL_POINTS_AVAILABLE);
 	}
 
 	/**
@@ -571,12 +572,13 @@ public class CoreFlex_FlexPolicySetupPage extends Base {
 					COREFLEXConstants.BENEFIT_EXPIRATION_DATE);
 			CoreFunctions.verifyText(driver, _selectFlexSetupTypeSelectedValue,
 					basePolicyDataMap.get(0).get(COREFLEXConstants.FLEX_SETUP_TYPE), COREFLEXConstants.FLEX_SETUP_TYPE);
-			System.out.println("Actual Display Name :"+_inputTotalPointsAvailable.getDomProperty("value"));
+			System.out.println("Actual Display Name :" + _inputTotalPointsAvailable.getDomProperty("value"));
 			CoreFunctions.verifyText(_inputTotalPointsAvailable.getDomProperty("value"),
 					policySetupPageData.flexPolicySetupPage.StaticFixedTotalPointsAvailable,
 					COREFLEXConstants.TOTAL_POINTS_AVAILABLE);
 			CoreFunctions.verifyRadioButtonSelection(driver, _sectionCashoutAvailability,
-					_sectionCashoutAvailabilityButtonList, basePolicyDataMap.get(0).get(COREFLEXConstants.CASHOUT_AVAILABILITY),
+					_sectionCashoutAvailabilityButtonList,
+					basePolicyDataMap.get(0).get(COREFLEXConstants.CASHOUT_AVAILABILITY),
 					COREFLEXConstants.CASHOUT_AVAILABILITY);
 			Reporter.addStepLog(MessageFormat.format(
 					COREFLEXConstants.SUCCESSFULLY_VERIFIED_FIELD_VALUES_ON_FLEX_PLANNING_TOOL_PAGE_POST_VERSIONING_CLONING,
@@ -588,6 +590,29 @@ public class CoreFlex_FlexPolicySetupPage extends Base {
 					CoreConstants.FAIL, e.getMessage()));
 			return false;
 		}
+	}
+
+	public boolean verifyFlexSetupTypeSelection() {
+		try {
+			if (CoreFunctions.getElementText(driver, _selectFlexSetupTypeSelectedValue)
+					.equals(COREFLEXConstants.STATIC_FIXED)) {
+				CoreFunctions.clearAndSetTextUsingKeys(driver, _inputTotalPointsAvailable,
+						policySetupPageData.flexPolicySetupPage.StaticFixedTotalPointsAvailable,
+						COREFLEXConstants.TOTAL_POINTS_AVAILABLE);
+				return true;
+			} else if (CoreFunctions.getElementText(driver, _selectFlexSetupTypeSelectedValue)
+					.equals(COREFLEXConstants.USER_DEFINED)) {
+				CoreFunctions.verifyText(driver, _textUserDefinedSelection,
+						COREFLEXConstants.USER_DEFINED_SELECTION_TEXT, COREFLEXConstants.USER_DEFINED);
+				return true;
+			}
+
+		} catch (Exception e) {
+			Reporter.addStepLog(
+					MessageFormat.format(COREFLEXConstants.EXCEPTION_OCCURED_WHILE_VERIFYING_FLEX_SETUP_TYPE_SELECTION,
+							CoreConstants.FAIL, e.getMessage()));			
+		}
+		return false;
 	}
 
 }

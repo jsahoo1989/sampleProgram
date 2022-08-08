@@ -1012,15 +1012,16 @@ public class MX_Transferee_MyProfilePage extends Base {
 	}
 
 	public void loginPasswaordSetup() {
-		if (CoreFunctions.isElementByLocatorExist(driver, _textLoginSetupByLocator, MobilityXConstants.CUSTOM_TIME)) {
+		if (CoreFunctions.isElementByLocatorExist(driver, _textLoginSetupByLocator, 10)) {
 			CoreFunctions.highlightObject(driver, _textLoginSetup);
 			CoreFunctions.clearAndSetText(driver, _textboxNewPassword, mxTransfereeMyProfileData.password1);
 			CoreFunctions.clearAndSetText(driver, _textboxVerifyNewPassword, mxTransfereeMyProfileData.password1);
+			CoreFunctions.waitHandler(2);
 			CoreFunctions.click(driver, _buttonSaveContinue, _buttonSaveContinue.getText());
 			CoreFunctions.writeToPropertiesFile("Transferee_PasswordInEMail", mxTransfereeMyProfileData.password1);
 			CoreFunctions.waitHandler(4);
 		}
-		if (CoreFunctions.isElementByLocatorExist(driver, _textLoginSetupByLocator, MobilityXConstants.CUSTOM_TIME)) {
+		if (CoreFunctions.isElementByLocatorExist(driver, _textLoginSetupByLocator, 10)) {
 			CoreFunctions.clearAndSetText(driver, _textboxNewPassword, mxTransfereeMyProfileData.password1);
 			CoreFunctions.clearAndSetText(driver, _textboxVerifyNewPassword, mxTransfereeMyProfileData.password1);
 			CoreFunctions.click(driver, _buttonSaveContinue, _buttonSaveContinue.getText());
@@ -1029,7 +1030,7 @@ public class MX_Transferee_MyProfilePage extends Base {
 	}
 
 	public void privacyPolicySetup() {
-		if (CoreFunctions.isElementByLocatorExist(driver, _iframePrivacyPolicyByLocator, MobilityXConstants.CUSTOM_TIME)) {
+		if (CoreFunctions.isElementByLocatorExist(driver, _iframePrivacyPolicyByLocator, 10)) {
 			driver.switchTo().frame(_iframePrivacyPolicy);
 			CoreFunctions.highlightObject(driver, _textAiresPrivacyPolicy);
 			driver.switchTo().defaultContent();
@@ -1044,21 +1045,21 @@ public class MX_Transferee_MyProfilePage extends Base {
 				_textFewSecurityQuestions.getText());
 		BusinessFunctions.selectValueFromDropdown(_securityQuestionOneNewUser,
 				mxTransfereeMyProfileData.securityQuestionOne);
-		CoreFunctions.waitHandler(1);
+		CoreFunctions.waitHandler(3);
 		CoreFunctions.clearAndSetText(driver, _textBoxSecurityAnswerOneNewUser,
 				CoreFunctions.getAttributeText(_securityQuestionOneNewUser, MobilityXConstants.TITLE),
 				mxTransfereeMyProfileData.securityAnswerTwo);
-		CoreFunctions.waitHandler(2);
+		CoreFunctions.waitHandler(3);
 		BusinessFunctions.selectValueFromDropdown(_securityQuestionTwoNewUser,
 				mxTransfereeMyProfileData.securityQuestionTwo);
-		CoreFunctions.waitHandler(1);
+		CoreFunctions.waitHandler(3);
 		CoreFunctions.clearAndSetText(driver, _textBoxSecurityAnswerTwoNewUser,
 				CoreFunctions.getAttributeText(_securityQuestionTwoNewUser, MobilityXConstants.TITLE),
 				mxTransfereeMyProfileData.securityAnswerTwo);
-		CoreFunctions.waitHandler(2);
+		CoreFunctions.waitHandler(3);
 		BusinessFunctions.selectValueFromDropdown(_securityQuestionThreeNewUser,
 				mxTransfereeMyProfileData.securityQuestionThree);
-		CoreFunctions.waitHandler(1);
+		CoreFunctions.waitHandler(3);
 		CoreFunctions.clearAndSetText(driver, _textBoxSecurityAnswerThreeNewUser,
 				CoreFunctions.getAttributeText(_securityQuestionThreeNewUser, MobilityXConstants.TITLE),
 				mxTransfereeMyProfileData.securityAnswerTwo);

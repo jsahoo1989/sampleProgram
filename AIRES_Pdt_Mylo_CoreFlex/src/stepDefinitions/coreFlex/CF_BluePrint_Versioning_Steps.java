@@ -194,23 +194,26 @@ public class CF_BluePrint_Versioning_Steps {
 				+ " Seconds </b>");
 	}
 
-	@Then("^benefits selected on Active BluePrint \"([^\"]*)\" - \"([^\"]*)\" Benefit Type Policy should be displayed on \"([^\"]*)\" page$")
-	public void benefits_selected_on_Active_BluePrint_Type_Policy_should_be_displayed_on_page(String version,
-			String policyType, String pageName) throws Throwable {
+	@Then("^benefits selected on Active BluePrint \"([^\"]*)\" Policy should be displayed on \"([^\"]*)\" page$")
+	public void benefits_selected_on_Active_BluePrint_Policy_should_be_displayed_on_page(String version,
+			String pageName) throws Throwable {
 
 		Assert.assertTrue(mxTransfereeFlexPlanningToolPage.verifyAvailablePointsMessage(),
 				MessageFormat.format(
 						MobilityXConstants.FAILED_TO_VALIDATE_AVAILABLE_POINTS_MESSAGE_ON_FLEX_PLANNING_TOOL_PAGE,
 						CoreConstants.FAIL));
-		Assert.assertTrue(mxTransfereeFlexPlanningToolPage.verifyBenefitDetailsOnFPTForVersioning(policyType),
+		Assert.assertTrue(
+				mxTransfereeFlexPlanningToolPage.verifyBenefitDetailsOnFPTBasedOnPolicyRequiredFor(
+						CoreFunctions.getPropertyFromConfig("CoreFlex_Policy_RequiredFor"),
+						CoreFunctions.getPropertyFromConfig("CoreFlex_Policy_BenefitType")),
 				MessageFormat.format(
 						MobilityXConstants.BENEFIT_DETAILS_ON_FLEX_PLANNING_TOOL_PAGE_OF_MXTRANSFEREE_NOT_MATCHED_WITH_BENEFITS_DETAILS_SET_IN_BLUEPRINT_APPLICATION,
 						CoreConstants.FAIL));
 	}
 
-	@Then("^custom bundle created in Active BluePrint \"([^\"]*)\" - \"([^\"]*)\" Benefit Type Policy should be displayed on \"([^\"]*)\" page$")
-	public void custom_bundle_created_in_Active_BluePrint_Type_Policy_should_be_displayed_on_page(String version,
-			String policyType, String pageName) throws Throwable {
+	@Then("^custom bundle created in Active BluePrint \"([^\"]*)\" Policy should be displayed on \"([^\"]*)\" page$")
+	public void custom_bundle_created_in_Active_BluePrint_Policy_should_be_displayed_on_page(String version,
+			String pageName) throws Throwable {
 
 		mxTransfereeFlexPlanningToolPage.clickElementOfPage(MobilityXConstants.SUGGESTED_OPTIONS_LINK);
 		CoreConstants.TIME_BEFORE_ACTION = new Date().getTime();
@@ -220,7 +223,10 @@ public class CF_BluePrint_Versioning_Steps {
 		Reporter.addStepLog("<b>Total time taken to navigate to <i>Suggested Bundles</i> page is :"
 				+ CoreFunctions.calculatePageLoadTime(CoreConstants.TIME_BEFORE_ACTION, CoreConstants.TIME_AFTER_ACTION)
 				+ " Seconds </b>");
-		Assert.assertTrue(mxTransfereeFlexPlanningToolPage.verifySuggestedBundlesDetailsVersioning(),
+		Assert.assertTrue(
+				mxTransfereeFlexPlanningToolPage.verifySuggestedBundlesDetailsBasedOnPolicyRequiredFor(
+						CoreFunctions.getPropertyFromConfig("CoreFlex_Policy_RequiredFor"),
+						CoreFunctions.getPropertyFromConfig("CoreFlex_Policy_BenefitType")),
 				MessageFormat.format(MobilityXConstants.CUSTOM_BUNDLE_DETAILS_NOT_MATCHED_ON_SUGGESTED_BUNDLES_PAGE,
 						CoreConstants.FAIL));
 		mxTransfereeFlexPlanningToolPage.clickElementOfPage(MobilityXConstants.BACK_TO_BENEFITS_LIST);
@@ -247,6 +253,29 @@ public class CF_BluePrint_Versioning_Steps {
 			String policyStatus) throws Throwable {
 		viewPolicyPage.clickElementOfPage(editIcon);
 		CoreConstants.TIME_BEFORE_ACTION = new Date().getTime();
+	}
+
+	@Given("^he has verified following 'Assignment Details' after clicking on \"([^\"]*)\" icon of the searched \"([^\"]*)\" points based CoreFlex policy$")
+	public void he_has_verified_following_Assignment_Details_after_clicking_on_AssignmentHistoryIcon_icon_of_the_searched_points_based_CoreFlex_policy(
+			String assignmentHistoryIcon, String policyStatus, DataTable dataTable) throws Throwable {
+		viewPolicyPage.clickElementOfPage(assignmentHistoryIcon);
+		CoreConstants.TIME_BEFORE_ACTION = new Date().getTime();
+		Assert.assertTrue(viewPolicyPage.verifyViewPolicyPageNavigation(COREFLEXConstants.VIEW_POLICY_BENEFIT),
+				MessageFormat.format(PDTConstants.FAILED_TO_NAVIGATE_TO_ASSIGNMENT_HISTORY_VIEW_POLICY_PAGE,
+						CoreConstants.FAIL));
+		CoreConstants.TIME_AFTER_ACTION = new Date().getTime();
+		Reporter.addStepLog(
+				"<b>Total time taken to navigate to <i>View Policy Benefit - Assignment History</i> page is :"
+						+ CoreFunctions.calculatePageLoadTime(CoreConstants.TIME_BEFORE_ACTION,
+								CoreConstants.TIME_AFTER_ACTION)
+						+ " Seconds </b>");
+		Assert.assertTrue(viewPolicyPage.verifyRecordForAssignmentAssociation(dataTable), MessageFormat.format(
+				PDTConstants.FAILED_TO_VERIFY_ASSIGNMENT_HISTORY_FOR_NO_ASSIGNMENT_ASSOCIATION, CoreConstants.FAIL));
+		viewPolicyPage.clickElementOfPage(COREFLEXConstants.EXIT);
+		viewPolicyPage.clickElementOfPage(COREFLEXConstants.OK);
+		viewPolicyPage.searchAndVerifyPolicy(CoreFunctions.getPropertyFromConfig("Assignment_Policy"),
+				COREFLEXConstants.VIEW_EDIT_POLICY_FORMS);
+
 	}
 
 	@Given("^he has entered 'Description' after verifying 'Version Control' popup screen contents$")
@@ -326,7 +355,6 @@ public class CF_BluePrint_Versioning_Steps {
 	@Given("^he has clicked on \"([^\"]*)\" icon of \"([^\"]*)\" - \"([^\"]*)\" version of the searched points based CoreFlex policy$")
 	public void he_has_clicked_on_icon_of_version_of_the_searched_points_based_CoreFlex_policy(String iconName,
 			String policyVersion, String policyStatus) throws Throwable {
-
 		viewPolicyPage.clickPolicyActionIcon(iconName, policyVersion, policyStatus);
 	}
 
@@ -439,9 +467,9 @@ public class CF_BluePrint_Versioning_Steps {
 				MessageFormat.format(COREFLEXConstants.FAILED_TO_SELECT_AND_FILL_ADDED_BENEFITS, CoreConstants.FAIL));
 	}
 
-	@Given("^he has verified 'CustomBundles' and 'Transferee Preview' details of \"([^\"]*)\" - \"([^\"]*)\" version Policy matches with \"([^\"]*)\" - \"([^\"]*)\" type policy$")
-	public void he_has_verified_CustomBundles_and_Transferee_Preview_details_of_version_Policy_matches_with_type_policy(
-			String newPolicyVersion, String newPolicyStatus, String oldPolicyVersion, String policyType)
+	@Given("^he has verified 'CustomBundles' and 'Transferee Preview' details of \"([^\"]*)\" - \"([^\"]*)\" version Policy matches with \"([^\"]*)\" - \"([^\"]*)\" version Policy$")
+	public void he_has_verified_CustomBundles_and_Transferee_Preview_details_of_version_Policy_matches_with_version_Policy(
+			String newPolicyVersion, String newPolicyStatus, String oldPolicyVersion, String oldPolicyStatus)
 			throws Throwable {
 		coreFlexPolicyBenefitsCategoriesPage.clickLeftNavigationMenuOfPage(COREFLEXConstants.BENEFIT_SUMMARY);
 		CoreConstants.TIME_BEFORE_ACTION = new Date().getTime();
@@ -455,7 +483,8 @@ public class CF_BluePrint_Versioning_Steps {
 				+ " Seconds </b>");
 
 		Assert.assertTrue(
-				coreFlexBenefitSummaryPage.iterateAndVerifyBenefitSummaryDetails(COREFLEXConstants.VERSIONING, "0"),
+				coreFlexBenefitSummaryPage.iterateAndVerifyBenefitSummaryDetails(
+						CoreFunctions.getPropertyFromConfig("CoreFlex_Policy_RequiredFor"), "0"),
 				MessageFormat.format(
 						COREFLEXConstants.FAILED_TO_VERIFY_BENEFIT_SUBBENEFIT_DETAILS_ON_BENEFIT_SUMMARY_PAGE,
 						CoreConstants.FAIL));
@@ -470,7 +499,8 @@ public class CF_BluePrint_Versioning_Steps {
 				+ " Seconds </b>");
 
 		Assert.assertTrue(
-				coreFlexCustomBundlesPage.verifyAddedCustomBundlePostVersioningCloning(COREFLEXConstants.VERSIONING),
+				coreFlexCustomBundlesPage.verifyAddedCustomBundlePostVersioningCloning(
+						CoreFunctions.getPropertyFromConfig("CoreFlex_Policy_RequiredFor")),
 				MessageFormat.format(COREFLEXConstants.FAILED_TO_VERIFY_ADDED_CUSTOM_BUNDLE_ON_CUSTOM_BUNDLES_PAGE,
 						CoreConstants.FAIL));
 		coreFlexCustomBundlesPage.clickElementOfPage(COREFLEXConstants.PREVIEW_TRANSFEREE_EXPERIENCE);
@@ -483,8 +513,9 @@ public class CF_BluePrint_Versioning_Steps {
 				+ " Seconds </b>");
 
 		Assert.assertTrue(
-				coreFlexTransfereePreviewPage.verifyPreviewTransfereeExperience(policyType,
-						COREFLEXConstants.VERSIONING, "0"),
+				coreFlexTransfereePreviewPage.verifyPreviewTransfereeExperience(
+						CoreFunctions.getPropertyFromConfig("CoreFlex_Policy_BenefitType"),
+						CoreFunctions.getPropertyFromConfig("CoreFlex_Policy_RequiredFor"), "0"),
 				MessageFormat.format(COREFLEXConstants.FAILED_TO_VERIFY_BENEFITS_DETAILS_ON_PREVIEW_TRANSFEREE_PAGE,
 						CoreConstants.FAIL));
 		coreFlexTransfereePreviewPage.clickElementOfPage(COREFLEXConstants.CLOSE_TRANSFEREE_PREVIEW);
@@ -832,14 +863,14 @@ public class CF_BluePrint_Versioning_Steps {
 	public void Policy_Status_should_not_be_changed_from_to_for_Non_Significant_Change_in_Policy(
 			String expectedPolicyStatus, String incorrectPolicyStatus) throws Throwable {
 		Assert.assertTrue(coreFlexCustomBundlesPage.verifyPolicyStatus(expectedPolicyStatus), MessageFormat
-				.format(COREFLEXConstants.FAILED_TO_VERIFY_POLICY_STATUS, CoreConstants.FAIL, expectedPolicyStatus));		
+				.format(COREFLEXConstants.FAILED_TO_VERIFY_POLICY_STATUS, CoreConstants.FAIL, expectedPolicyStatus));
 	}
 
 	@Given("^he has clicked on \"([^\"]*)\" link from Left Navigation Menu$")
 	public void he_has_clicked_on_link_from_Left_Navigation_Menu(String pageName) throws Throwable {
 		flexPolicySetupPage.clickLeftNavigationMenuOfPage(pageName);
 	}
-	
+
 	@Given("^he has clicked on 'Benefit Summary' link from Left Navigation Menu$")
 	public void he_has_clicked_on_Benefit_Summary_link_from_Left_Navigation_Menu() throws Throwable {
 		coreFlexPolicyBenefitsCategoriesPage.clickLeftNavigationMenuOfPage(COREFLEXConstants.BENEFIT_SUMMARY);

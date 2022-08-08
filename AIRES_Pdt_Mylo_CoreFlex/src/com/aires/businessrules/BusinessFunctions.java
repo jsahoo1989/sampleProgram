@@ -29,28 +29,21 @@
  ***********************************Header End*********************************************************************************/
 package com.aires.businessrules;
 
-import java.io.FileReader;
 import java.math.RoundingMode;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.Statement;
 import java.text.DecimalFormat;
 import java.text.MessageFormat;
-import java.util.Collections;
-import java.util.Comparator;
-import java.util.List;
-import java.util.Properties;
 import java.time.Duration;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
 import java.util.Random;
 import java.util.concurrent.ThreadLocalRandom;
+
 import org.apache.commons.codec.binary.Base64;
 import org.apache.log4j.Logger;
-import org.openqa.selenium.WebDriver;
-import org.openqa.selenium.WebElement;
-import org.openqa.selenium.interactions.Actions;
 import org.openqa.selenium.NoSuchElementException;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
@@ -59,6 +52,7 @@ import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.FluentWait;
 import org.openqa.selenium.support.ui.Select;
 import org.testng.Assert;
+
 import com.aires.businessrules.constants.COREFLEXConstants;
 import com.aires.businessrules.constants.CoreConstants;
 import com.aires.businessrules.constants.MobilityXConstants;
@@ -95,7 +89,7 @@ public class BusinessFunctions {
 		CoreFunctions.waitForBrowserToLoad(driver);
 		CoreFunctions.waitHandler(3);
 		for (WebElement row : WebElementList) {
-			String text=row.getText();
+			String text = row.getText();
 			Log.info(CoreConstants.ACTUAL_ITEM_NAME_IS + text);
 			if (row.getText().equals(itemName)) {
 				CoreFunctions.clickUsingJS(driver, row, itemName);
@@ -448,7 +442,7 @@ public class BusinessFunctions {
 		}
 		return value;
 	}
-	
+
 	public static String getTestRailIdAsPerEnvt(String tagValue, String scenarioTagName) {
 		String value = null;
 		switch (tagValue) {
@@ -471,13 +465,15 @@ public class BusinessFunctions {
 	}
 
 	public static int getTestRailSectionIDAsPerApplication() {
-		int sectionID = 0;		
-		//Commented Code is for debugging purpose
-		/*String propertyFilePath = System.getProperty("user.dir") + "\\Configs\\Config.properties";
-		Properties properties = new Properties();
-		properties.load(new FileReader(propertyFilePath));
-		String applicationName=properties.getProperty("application");*/
-		String applicationName=System.getProperty("application");
+		int sectionID = 0;
+		// Commented Code is for debugging purpose
+		/*
+		 * String propertyFilePath = System.getProperty("user.dir") +
+		 * "\\Configs\\Config.properties"; Properties properties = new Properties();
+		 * properties.load(new FileReader(propertyFilePath)); String
+		 * applicationName=properties.getProperty("application");
+		 */
+		String applicationName = System.getProperty("application");
 		switch (applicationName) {
 		case CoreConstants.MYLO:
 			sectionID = 49911;
@@ -646,9 +642,9 @@ public class BusinessFunctions {
 		return listToBeSorted;
 	}
 
-	public static void verifyOtherTextBoxIsDisplayed(WebDriver driver,
-			PDT_AddNewPolicyPage addNewPolicyPage, String jsonReimbursedBy, WebElement element,
-			String jsonReimbursedByOther, String SubBenefitFormName, String lblOtherTextBox) {
+	public static void verifyOtherTextBoxIsDisplayed(WebDriver driver, PDT_AddNewPolicyPage addNewPolicyPage,
+			String jsonReimbursedBy, WebElement element, String jsonReimbursedByOther, String SubBenefitFormName,
+			String lblOtherTextBox) {
 		try {
 			if (jsonReimbursedBy.equalsIgnoreCase(PDTConstants.OTHER)
 					&& CoreFunctions.isElementExist(driver, element, 1)) {
@@ -657,8 +653,7 @@ public class BusinessFunctions {
 				CoreFunctions.clearAndSetText(driver, element, lblOtherTextBox, jsonReimbursedByOther);
 			}
 		} catch (Exception e) {
-			Assert.fail(MessageFormat.format(PDTConstants.FAILED_TO_FILL_FIELD, lblOtherTextBox,
-					SubBenefitFormName));
+			Assert.fail(MessageFormat.format(PDTConstants.FAILED_TO_FILL_FIELD, lblOtherTextBox, SubBenefitFormName));
 		}
 	}
 
@@ -747,32 +742,34 @@ public class BusinessFunctions {
 		case CoreConstants.ENVT_DEV:
 			csmCredentials[0] = _loginDetailsApplication.dev.csmUserName;
 			csmCredentials[1] = _loginDetailsApplication.dev.csmPassword;
-			csmCredentials[2] = _loginDetailsApplication.dev.firstName+ " " + _loginDetailsApplication.dev.lastName;
+			csmCredentials[2] = _loginDetailsApplication.dev.firstName + " " + _loginDetailsApplication.dev.lastName;
 			break;
 		case CoreConstants.ENVT_QA:
 			csmCredentials[0] = _loginDetailsApplication.qa.csmUserName;
 			csmCredentials[1] = _loginDetailsApplication.qa.csmPassword;
-			csmCredentials[2] = _loginDetailsApplication.qa.firstName+ " " + _loginDetailsApplication.qa.lastName;
+			csmCredentials[2] = _loginDetailsApplication.qa.firstName + " " + _loginDetailsApplication.qa.lastName;
 			break;
 		case CoreConstants.ENVT_TEST:
 			csmCredentials[0] = _loginDetailsApplication.preProd.csmUserName;
 			csmCredentials[1] = _loginDetailsApplication.preProd.csmPassword;
-			csmCredentials[2] = _loginDetailsApplication.preProd.firstName+ " " + _loginDetailsApplication.preProd.lastName;	
+			csmCredentials[2] = _loginDetailsApplication.preProd.firstName + " "
+					+ _loginDetailsApplication.preProd.lastName;
 			break;
 		case CoreConstants.ENVT_PREPROD:
 			csmCredentials[0] = _loginDetailsApplication.preProd.csmUserName;
 			csmCredentials[1] = _loginDetailsApplication.preProd.csmPassword;
-			csmCredentials[2] = _loginDetailsApplication.preProd.firstName+ " " + _loginDetailsApplication.preProd.lastName;
+			csmCredentials[2] = _loginDetailsApplication.preProd.firstName + " "
+					+ _loginDetailsApplication.preProd.lastName;
 			break;
 		case CoreConstants.ENVT_UAT:
 			csmCredentials[0] = _loginDetailsApplication.uat.csmUserName;
 			csmCredentials[1] = _loginDetailsApplication.uat.csmPassword;
-			csmCredentials[2] = _loginDetailsApplication.uat.firstName+ " " + _loginDetailsApplication.uat.lastName;
+			csmCredentials[2] = _loginDetailsApplication.uat.firstName + " " + _loginDetailsApplication.uat.lastName;
 			break;
 		case CoreConstants.ENVT_PROD:
 			csmCredentials[0] = _loginDetailsApplication.prod.csmUserName;
 			csmCredentials[1] = _loginDetailsApplication.prod.csmPassword;
-			csmCredentials[2] = _loginDetailsApplication.prod.firstName+ " " + _loginDetailsApplication.prod.lastName;
+			csmCredentials[2] = _loginDetailsApplication.prod.firstName + " " + _loginDetailsApplication.prod.lastName;
 			break;
 		}
 		return csmCredentials;
@@ -797,18 +794,18 @@ public class BusinessFunctions {
 					PDTConstants.OTHER, lblDrpDown, subBenefitFormName));
 		}
 	}
-	
+
 	public static void selectValueFromListUsingIndex(WebDriver driver, List<WebElement> listWebElement, int index) {
 		try {
-		CoreFunctions.explicitWaitTillElementListClickable(driver, listWebElement);		
-		listWebElement.get(index).click();
-		CoreFunctions.waitHandler(5);		
-		}catch (Exception e) {
-			Assert.fail(MessageFormat.format(MobilityXConstants.EXCEPTION_OCCURED_WHILE_CLICKING_ON_ELEMENT_FROM_LIST, CoreConstants.FAIL,
-					e.getMessage(),listWebElement.get(index).getText()));
+			CoreFunctions.explicitWaitTillElementListClickable(driver, listWebElement);
+			listWebElement.get(index).click();
+			CoreFunctions.waitHandler(5);
+		} catch (Exception e) {
+			Assert.fail(MessageFormat.format(MobilityXConstants.EXCEPTION_OCCURED_WHILE_CLICKING_ON_ELEMENT_FROM_LIST,
+					CoreConstants.FAIL, e.getMessage(), listWebElement.get(index).getText()));
 		}
 	}
-	
+
 	public static int returnindexItemFromListUsingText(WebDriver driver, List<WebElement> WebElementList,
 			String itemName, boolean flag) {
 		try {
@@ -818,12 +815,13 @@ public class BusinessFunctions {
 					return WebElementList.indexOf(row);
 			}
 		} catch (ElementNotFoundException e) {
-			Assert.fail(MessageFormat.format(MobilityXConstants.EXCEPTION_OCCURED_WHILE_RETURNING_INDEX_ITEM_FROM_LIST_USING_TEXT, CoreConstants.FAIL,
-					e.getMessage()));
+			Assert.fail(MessageFormat.format(
+					MobilityXConstants.EXCEPTION_OCCURED_WHILE_RETURNING_INDEX_ITEM_FROM_LIST_USING_TEXT,
+					CoreConstants.FAIL, e.getMessage()));
 		}
 		return -1;
 	}
-	
+
 	public static void checkValidationBasedOnInput(boolean isValidationMessageDisplayed, String fieldName,
 			String inputValue) {
 
@@ -837,13 +835,11 @@ public class BusinessFunctions {
 			} else if ((Double.parseDouble(inputValue) < 0.5 || Double.parseDouble(inputValue) > 999.5)
 					&& !isValidationMessageDisplayed) {
 				Reporter.addStepLog(MessageFormat.format(
-						COREFLEXConstants.VALIDATION_MESSAGE_NOT_DISPLAYED_FOR_INVALID_RANGE,
-						CoreConstants.FAIL, COREFLEXConstants.POINT_FIVE_TO_NINE_NINE_NINE_POINT_FIVE_RANGE, inputValue,
-						fieldName));
+						COREFLEXConstants.VALIDATION_MESSAGE_NOT_DISPLAYED_FOR_INVALID_RANGE, CoreConstants.FAIL,
+						COREFLEXConstants.POINT_FIVE_TO_NINE_NINE_NINE_POINT_FIVE_RANGE, inputValue, fieldName));
 				throw new RuntimeException(MessageFormat.format(
-						COREFLEXConstants.VALIDATION_MESSAGE_NOT_DISPLAYED_FOR_INVALID_RANGE,
-						CoreConstants.FAIL, COREFLEXConstants.POINT_FIVE_TO_NINE_NINE_NINE_POINT_FIVE_RANGE, inputValue,
-						fieldName));
+						COREFLEXConstants.VALIDATION_MESSAGE_NOT_DISPLAYED_FOR_INVALID_RANGE, CoreConstants.FAIL,
+						COREFLEXConstants.POINT_FIVE_TO_NINE_NINE_NINE_POINT_FIVE_RANGE, inputValue, fieldName));
 			} else if ((Double.parseDouble(inputValue) >= 0.5 || Double.parseDouble(inputValue) <= 999.5)
 					&& !isValidationMessageDisplayed) {
 				Reporter.addStepLog(MessageFormat.format(
@@ -852,14 +848,12 @@ public class BusinessFunctions {
 						fieldName));
 			} else if ((Double.parseDouble(inputValue) >= 0.5 || Double.parseDouble(inputValue) <= 999.5)
 					&& isValidationMessageDisplayed) {
-				Reporter.addStepLog(MessageFormat.format(
-						COREFLEXConstants.VALIDATION_MESSAGE_DISPLAYED_FOR_VALID_RANGE,
+				Reporter.addStepLog(MessageFormat.format(COREFLEXConstants.VALIDATION_MESSAGE_DISPLAYED_FOR_VALID_RANGE,
 						CoreConstants.FAIL, COREFLEXConstants.POINT_FIVE_TO_NINE_NINE_NINE_POINT_FIVE_RANGE, inputValue,
 						fieldName));
 				throw new RuntimeException(MessageFormat.format(
-						COREFLEXConstants.VALIDATION_MESSAGE_DISPLAYED_FOR_VALID_RANGE,
-						CoreConstants.FAIL, COREFLEXConstants.POINT_FIVE_TO_NINE_NINE_NINE_POINT_FIVE_RANGE, inputValue,
-						fieldName));
+						COREFLEXConstants.VALIDATION_MESSAGE_DISPLAYED_FOR_VALID_RANGE, CoreConstants.FAIL,
+						COREFLEXConstants.POINT_FIVE_TO_NINE_NINE_NINE_POINT_FIVE_RANGE, inputValue, fieldName));
 			}
 		} catch (NumberFormatException e) {
 			if (isValidationMessageDisplayed) {
@@ -900,17 +894,15 @@ public class BusinessFunctions {
 		} else if ((Double.parseDouble(inputValue) >= 1) && (Double.parseDouble(inputValue) <= 100)
 				&& ((validationMessage.equals(COREFLEXConstants.FIELD_VALUE_CANNOT_BE_LESS_THAN_ONE))
 						|| (validationMessage.equals(COREFLEXConstants.FIELD_VALUE_CANNOT_BE_GREATER_THAN_HUNDRED)))) {
-			Reporter.addStepLog(MessageFormat.format(
-					COREFLEXConstants.VALIDATION_MESSAGE_DISPLAYED_FOR_VALID_RANGE,
+			Reporter.addStepLog(MessageFormat.format(COREFLEXConstants.VALIDATION_MESSAGE_DISPLAYED_FOR_VALID_RANGE,
 					CoreConstants.FAIL, validationMessage, inputValue, fieldName));
-			throw new RuntimeException(MessageFormat.format(
-					COREFLEXConstants.VALIDATION_MESSAGE_DISPLAYED_FOR_VALID_RANGE,
-					CoreConstants.FAIL, validationMessage, inputValue, fieldName));
+			throw new RuntimeException(
+					MessageFormat.format(COREFLEXConstants.VALIDATION_MESSAGE_DISPLAYED_FOR_VALID_RANGE,
+							CoreConstants.FAIL, validationMessage, inputValue, fieldName));
 		}
 	}
-	
-	
-	public static int returnindexItemFromListUsingText(WebDriver driver, List<WebElement> WebElementList,boolean flag,
+
+	public static int returnindexItemFromListUsingText(WebDriver driver, List<WebElement> WebElementList, boolean flag,
 			String itemName) {
 		try {
 			for (WebElement row : WebElementList) {
@@ -990,13 +982,12 @@ public class BusinessFunctions {
 					drpDownVal, lblDropDown, subBenefitFormName));
 		}
 	}
-	
+
 	public static String selectAndReturnRandomValueFromList(WebDriver driver, PDT_AddNewPolicyPage addNewPolicyPage,
 			String subBenefitFormName, List<WebElement> webElementList, String labelText) {
 		String randValue = null;
-		try {			
-			randValue = webElementList.get(CoreFunctions.getRandomNumber(0, webElementList.size() - 1))
-					.getText();
+		try {
+			randValue = webElementList.get(CoreFunctions.getRandomNumber(0, webElementList.size() - 1)).getText();
 			CoreFunctions.selectItemInListByText(driver, webElementList, randValue, labelText,
 					PDTConstants.RADIO_BUTTON_LIST, true);
 		} catch (Exception e) {
@@ -1005,8 +996,7 @@ public class BusinessFunctions {
 		}
 		return randValue.trim();
 	}
-	
-	
+
 	public static boolean verifyDefaultOptionIsSelectedInDrpDown(String selectedOptionText, String expectedOption,
 			String lblDrpDown) {
 		if (selectedOptionText.equalsIgnoreCase(expectedOption)) {
@@ -1019,15 +1009,33 @@ public class BusinessFunctions {
 
 	public static void fluentWaitForSpinnerToDisappear(WebDriver driver, WebElement element) {
 		FluentWait<WebDriver> wait = new FluentWait<>(driver).withTimeout(Duration.ofSeconds(90))
-				.pollingEvery(Duration.ofMillis(1000)).withMessage("Timeout occured!")
+				.pollingEvery(Duration.ofMillis(500)).withMessage("Timeout occured!")
 				.ignoring(NoSuchElementException.class);
 		wait.until(ExpectedConditions.invisibilityOf(element));
 	}
-	
+
 	public static void printTimeTakenByPageToLoad(long timeBeforeAction, long timeAfterAction, String pageName) {
 		DecimalFormat pgToLoadformat = new DecimalFormat();
 		pgToLoadformat.setMaximumFractionDigits(3);
-		Reporter.addStepLog("<b>Time taken by "+pageName+" page to Load is :"
+		Reporter.addStepLog("<b>Time taken by " + pageName + " page to Load is :"
 				+ pgToLoadformat.format((timeAfterAction - timeBeforeAction) / 1000) + " Seconds </b>");
+	}
+
+	public static void verifyFieldNotPresentOnBenefitPage(WebDriver driver, WebElement element, String benefitName,
+			String fieldName) {
+		try {
+			if (CoreFunctions.isElementExist(driver, element, 5)) {
+				Assert.fail((MessageFormat.format(COREFLEXConstants.FIELD_DISPLAYED_ON_BENEFIT_PAGE, CoreConstants.FAIL,
+						benefitName, fieldName)));
+			} else {
+				Reporter.addStepLog(MessageFormat.format(
+						COREFLEXConstants.SUCCESSFULLY_VERIFIED_FIELD_NOT_DISPLAYED_ON_BENEFIT_PAGE, CoreConstants.PASS,
+						benefitName, fieldName));
+			}
+		} catch (Exception e) {
+			Reporter.addStepLog(
+					MessageFormat.format(COREFLEXConstants.EXCEPTION_OCCURED_WHILE_VERIFYING_FIELD_ON_BENEFIT_PAGE,
+							CoreConstants.FAIL, e.getMessage(), benefitName, fieldName));
+		}
 	}
 }

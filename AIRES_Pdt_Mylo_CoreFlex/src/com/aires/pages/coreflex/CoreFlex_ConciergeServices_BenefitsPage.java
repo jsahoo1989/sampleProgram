@@ -176,6 +176,10 @@ public class CoreFlex_ConciergeServices_BenefitsPage extends Base {
 	@FindBy(how = How.XPATH, using = "//label[contains(text(),'Reimbursed By')]/following-sibling::div//input")
 	private List<WebElement> _radioReimbursedByButtonList;
 
+	// Flex Policy Setup Page Header
+	@FindBy(how = How.XPATH, using = "//h4[@class='card-title'][contains(text(),'Concierge Services')]")
+	private WebElement _headerPageName;
+
 	/*********************************************************************/
 
 	CoreFlex_SettlingInBenefitsData settlingInBenefitData = FileReaderManager.getInstance().getCoreFlexJsonReader()
@@ -286,6 +290,8 @@ public class CoreFlex_ConciergeServices_BenefitsPage extends Base {
 	public void selectAndFillBenefitsAndSubBenefitDetails(String benefitType, String subBenefitNames,
 			String multipleBenefitSelection, String flexPoints, String benefitDisplayName,
 			String benefitAllowanceAmount, String benefitDescription, String aireManagedService) {
+		CoreFunctions.explicitWaitTillElementVisibility(driver, _headerPageName,
+				COREFLEXConstants.CONCIERGE_SERVICES_BENEFITS_PAGE);
 		if (benefitType.equals(COREFLEXConstants.BOTH)) {
 			selectBenefitTypeAndFillMandatoryFields(benefitType, multipleBenefitSelection, flexPoints,
 					benefitDisplayName, benefitAllowanceAmount, benefitDescription, aireManagedService);
@@ -323,9 +329,9 @@ public class CoreFlex_ConciergeServices_BenefitsPage extends Base {
 				subBenefitNamesList.add(subBenefitNames);
 
 			for (String subBenefit : subBenefitNamesList) {
-				if(subBenefitNamesList.size() > 1) {
+				if (subBenefitNamesList.size() > 1) {
 					CoreFunctions.selectItemInListByText(driver, _subBenefitList, subBenefit, true);
-					}
+				}
 				if (CoreFunctions.isElementExist(driver, getElementByName(subBenefit.trim()), 5)) {
 					fillSubBenefit(subBenefit.trim(), benefitType);
 				} else {

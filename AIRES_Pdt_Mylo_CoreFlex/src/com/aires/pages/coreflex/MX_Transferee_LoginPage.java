@@ -25,7 +25,9 @@
 
 package com.aires.pages.coreflex;
 
+import java.net.URI;
 import java.text.MessageFormat;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
@@ -48,6 +50,17 @@ import com.aires.utilities.Log;
 import com.vimalselvam.cucumber.listener.Reporter;
 
 import cucumber.api.DataTable;
+import microsoft.exchange.webservices.data.core.ExchangeService;
+import microsoft.exchange.webservices.data.core.enumeration.misc.ExchangeVersion;
+import microsoft.exchange.webservices.data.core.enumeration.property.WellKnownFolderName;
+import microsoft.exchange.webservices.data.core.enumeration.search.LogicalOperator;
+import microsoft.exchange.webservices.data.core.service.folder.Folder;
+import microsoft.exchange.webservices.data.core.service.item.Item;
+import microsoft.exchange.webservices.data.core.service.schema.ItemSchema;
+import microsoft.exchange.webservices.data.credential.ExchangeCredentials;
+import microsoft.exchange.webservices.data.credential.WebCredentials;
+import microsoft.exchange.webservices.data.search.ItemView;
+import microsoft.exchange.webservices.data.search.filter.SearchFilter;
 
 public class MX_Transferee_LoginPage extends Base {
 
@@ -345,6 +358,11 @@ public class MX_Transferee_LoginPage extends Base {
 
 	public boolean verifyBasePolicySubmitted() {
 		return Boolean.valueOf(CoreFunctions.getPropertyFromConfig("CoreFlexMultipleSubmissionFlag"));
+	}
+
+	public boolean verifyPreviousPolicySubmittedDate(String firstPolicySubmissionDate) {
+		return firstPolicySubmissionDate.equals(CoreFunctions.getCurrentDateAsGivenFormat("dd-MMM-yyyy")) ? false
+				: true;
 	}
 
 }

@@ -1,19 +1,19 @@
-Feature: Validate the Cloning feature of points based CoreFlex policy in BluePrint Application
+Feature: Validate the Cloning feature of Points Based CoreFlex policy in BluePrint Application
 
-  @End-To_End_CoreFlex @CF_BluePrint_Cloning @DataCreation_Cloning_Legacy_Status_Policy @DataCreation_Cloning
-  Scenario: CoreFlex - Creating a new Active Policy for Legacy Status policy as a part of Data Creation activity for Cloning
+  @End-To-End_CoreFlex @CF_BluePrint_Cloning @DataCreation_Cloning
+  Scenario: CoreFlex - Creating & Validating a new Active Policy as a part of Data Creation activity for Cloning
     Given he has setup a new CoreFlex Policy with following selection in Blueprint application
       | Person Responsible For Benefit Selection | Flex Setup Type | Cashout Availability   | BenefitType | PolicyRequiredFor | MileStones |
-      | Transferee                               | Static/Fixed    | Cashout Not Authorized | Both        | All Benefits      |          0 |
+      | Transferee                               | Static/Fixed    | Cashout Not Authorized | Both        | Cloning           |          0 |
     And he has clicked on "Submit" button to submit "V1" policy verison on "Custom Bundles" page
     And he has clicked on "Approve Policy" button to approve "V1" policy verison on "Custom Bundles" page
     And he has selected following options on 'Approval this Policy' dialog of "V1" Policy
       | Associate this policy with a NEW authorization in IRIS? |
       | Effective from booking date                             |
-    When he clicks on "Approve" button to acknowledged 'Approve this Policy' dialog
+    When he clicks on "Approve" button to acknowledge 'Approve this Policy' dialog
     Then Policy Status and Version should be displayed as "Active" and "V1" respectively on "View/Edit Policy Forms" page
 
-  @End-To_End_CoreFlex @CF_BluePrint_Cloning @DataCreation_Cloning_Legacy_Status_Policy_Test @DataCreation_Cloning
+  @End-To-End_CoreFlex @CF_BluePrint_Cloning @DataCreation_Cloning
   Scenario: CoreFlex - Creating & Validating a new Legacy Status policy as a part of Data Creation activity for Cloning
     Given he has created a new 'Transferee' through IRIS application for 'Cloning/Versioning' Data Setup
     And he has searched for "Active" points based CoreFlex policy that has one or more assignments/files on "View/Edit Policy Forms" page
@@ -27,19 +27,19 @@ Feature: Validate the Cloning feature of points based CoreFlex policy in BluePri
     And he has selected following options on 'Approval this Policy' dialog of "V2" Policy
       | Associate this policy with a NEW authorization in IRIS? |
       | Effective from booking date                             |
-    When he clicks on "Approve" button to acknowledged 'Approve this Policy' dialog
+    When he clicks on "Approve" button to acknowledge 'Approve this Policy' dialog
     Then Policy Status and Version should be displayed as "Active" and "V2" respectively on "View/Edit Policy Forms" page
     And Policy Status of Version "V1" policy should be displayed as "Legacy" on "View/Edit Policy Forms" page
 
-  @End-To_End_CoreFlex @CF_BluePrint_Cloning @DataCreation_Cloning_Submitted_Status_Policy @DataCreation_Cloning
-  Scenario: CoreFlex - Creating a new Submitted Status policy as a part of Data Creation activity for Cloning
+  @End-To-End_CoreFlex @CF_BluePrint_Cloning @DataCreation_Cloning
+  Scenario: CoreFlex - Creating & Validating a new Submitted Status policy as a part of Data Creation activity for Cloning
     Given he has setup a new CoreFlex Policy with following selection in Blueprint application
       | Person Responsible For Benefit Selection | Flex Setup Type | Cashout Availability   | BenefitType | PolicyRequiredFor | MileStones |
-      | Transferee                               | Static/Fixed    | Cashout Not Authorized | Both        | All Benefits      |          0 |
+      | Transferee                               | Static/Fixed    | Cashout Not Authorized | Both        | Cloning           |          0 |
     When he clicks on "Submit" button to submit "V1" policy verison on "Custom Bundles" page
     Then Policy Status and Version should be displayed as "Submitted" and "V1" respectively on 'Custom Bundles' page
 
-  @End-To_End_CoreFlex @CF_BluePrint_Cloning @CloneIconEnabledDisabledStatusCheck
+  @End-To-End_CoreFlex @CF_BluePrint_Cloning @CloneIconEnabledDisabledStatusCheck
   Scenario Outline: CoreFlex - Validating Clone Policy Icon - Enabled/Disabled status for Policy with Submit/Active/Legacy/Inactive/Draft status
     Given he has logged into 'BluePrint' application as 'CSM - SSO' user
     And he has searched for 'Points Based CoreFlex Policy' with Policy Status as "<PolicyStatus>"
@@ -53,7 +53,7 @@ Feature: Validate the Cloning feature of points based CoreFlex policy in BluePri
       | Legacy       | Enabled               |
       | Draft        | Disabled              |
 
-  @End-To_End_CoreFlex @CF_BluePrint_Cloning @CloningToSameClientPolicy
+  @End-To-End_CoreFlex @CF_BluePrint_Cloning @CloningToSameClientPolicy
   Scenario Outline: CoreFlex - Validating Cloned Policy contents for same Client reference selection and Policy with Submit/Active/Legacy status
     Given he has logged into 'BluePrint' application as 'CSM - SSO' user
     And he has clicked on 'Clone Policy' icon after searching for 'Points Based CoreFlex Policy' with Policy Status as "<PolicyStatus>"
@@ -64,7 +64,7 @@ Feature: Validate the Cloning feature of points based CoreFlex policy in BluePri
     Then he should be navigated to "General Information" page of new 'Cloned - Points based CoreFlex Policy' saved as "Draft" with Policy Version as "V1"
     And all the 'CoreFlex' benefits from the reference 'Points Based CoreFlex policy' should be copied over to the 'Cloned - Points based CoreFlex Policy'
       | Person Responsible For Benefit Selection | Flex Setup Type | Cashout Availability   | BenefitType | PolicyRequiredFor | MileStones |
-      | Transferee                               | Static/Fixed    | Cashout Not Authorized | Both        | All Benefits      |          0 |
+      | Transferee                               | Static/Fixed    | Cashout Not Authorized | Both        | Cloning           |          0 |
 
     Examples: 
       | PolicyStatus |
@@ -72,7 +72,7 @@ Feature: Validate the Cloning feature of points based CoreFlex policy in BluePri
       | Active       |
       | Legacy       |
 
-  @End-To_End_CoreFlex @CF_BluePrint_Cloning @CloningToDifferentClientPolicy
+  @End-To-End_CoreFlex @CF_BluePrint_Cloning @CloningToDifferentClientPolicy
   Scenario Outline: CoreFlex - Validating Cloned Policy contents for different Client reference selection and Policy with Submit/Active/Legacy status
     Given he has logged into 'BluePrint' application as 'CSM - SSO' user
     And he has clicked on 'Clone Policy' icon after searching for 'Points Based CoreFlex Policy' with Policy Status as "<PolicyStatus>"
@@ -83,7 +83,7 @@ Feature: Validate the Cloning feature of points based CoreFlex policy in BluePri
     Then he should be navigated to "General Information" page of new 'Cloned - Points based CoreFlex Policy' saved as "Draft" with Policy Version as "V1"
     And all the 'CoreFlex' benefits from the reference 'Points Based CoreFlex policy' should be copied over to the 'Cloned - Points based CoreFlex Policy'
       | Person Responsible For Benefit Selection | Flex Setup Type | Cashout Availability   | BenefitType | PolicyRequiredFor | MileStones |
-      | Transferee                               | Static/Fixed    | Cashout Not Authorized | Both        | All Benefits      |          0 |
+      | Transferee                               | Static/Fixed    | Cashout Not Authorized | Both        | Cloning           |          0 |
 
     Examples: 
       | PolicyStatus |

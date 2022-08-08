@@ -260,7 +260,8 @@ public class CoreFlex_PreviewTransfereePage extends Base {
 		boolean isFlexBenefitPreviewVerified = false;
 		for (FlexBenefit benefitList : flexBenefits) {
 			for (Benefit benefit : benefitList.getBenefits()) {
-				if (benefit.getPolicyCreationGroup().contains(COREFLEXConstants.CLONING)) {
+				if ((benefit.getPolicyCreationGroup().contains(COREFLEXConstants.CLONING))
+						|| (benefit.getPolicyCreationGroup().contains(COREFLEXConstants.VERSIONING))) {
 					int indexBenefit = BusinessFunctions.returnindexItemFromListUsingText(driver,
 							_textAddedBenefitNameList, benefit.getBenefitDisplayName());
 					int indexCategory = BusinessFunctions.returnindexItemFromListUsingText(driver,

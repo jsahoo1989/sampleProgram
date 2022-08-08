@@ -21,7 +21,6 @@ import com.aires.businessrules.constants.PDTConstants;
 import com.aires.managers.FileReaderManager;
 import com.aires.pages.coreflex.CoreFlex_FlexPolicySetupPage;
 import com.aires.testdatatypes.coreflex.CoreFlex_PolicySetupPagesData;
-import com.aires.utilities.Log;
 import com.vimalselvam.cucumber.listener.Reporter;
 
 import cucumber.api.DataTable;
@@ -726,6 +725,7 @@ public class PDT_GeneralInformationPage extends Base {
 				break;
 			case PDTConstants.EXIT:
 				CoreFunctions.clickElement(driver, _buttonExit);
+				CoreFunctions.explicitWaitTillElementInVisibility(driver, _progressBar);
 				break;
 			case PDTConstants.OK:
 				CoreFunctions.clickElement(driver, _buttonOk);
@@ -753,7 +753,6 @@ public class PDT_GeneralInformationPage extends Base {
 	 */
 	public boolean validateClientAndPolicyDetailsOnGeneralInfo(String pageName, String expectedClientID,
 			String selectedPolicyName) {
-
 		boolean isGeneralInfoDetailsValid = false;
 		try {
 			CoreFunctions.explicitWaitTillElementVisibility(driver, _headerGeneralInfo,

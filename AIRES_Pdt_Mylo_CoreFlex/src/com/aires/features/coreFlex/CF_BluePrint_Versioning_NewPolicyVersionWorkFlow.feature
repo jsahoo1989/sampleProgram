@@ -20,8 +20,8 @@ Feature: Validate Versioning Feature of Points based CoreFlex policy that has on
       | WelcomeDialogSelection               |
       | No thanks, I prefer to do this later |
     When he navigates to "FleX Planning Tool" after clicking on 'Manage my Points' button on "Mobility Journey Home" page
-    Then benefits selected on Active BluePrint "Version1" - "Both" Benefit Type Policy should be displayed on "FleX Planning Tool" page
-    And custom bundle created in Active BluePrint "Version1" - "Both" Benefit Type Policy should be displayed on "Suggested Bundles" page
+   Then benefits selected on Active BluePrint "Version1" Policy should be displayed on "FleX Planning Tool" page
+    And custom bundle created in Active BluePrint "Version1" Policy should be displayed on "Suggested Bundles" page
 
   @End-To_End_CoreFlex @CF_BluePrint_Versioning @CreatingNewVersion @Versioning_NewWF_Check
   Scenario: CoreFlex - Validating Status & Version of New Policy version created from ‘Active’ points based CoreFlex policy that has one or more assignments/files
@@ -44,7 +44,7 @@ Feature: Validate Versioning Feature of Points based CoreFlex policy that has on
     And he has verified 'Policy-Benefits-SubBenefits' details of "V2" - "Draft" version Policy matches with following "V1" policy selections
       | Person Responsible For Benefit Selection | Flex Setup Type | Cashout Availability   | BenefitType | PolicyRequiredFor | MileStones |
       | Transferee                               | Static/Fixed    | Cashout Not Authorized | Both        | All Benefits      |          0 |
-    And he has verified 'CustomBundles' and 'Transferee Preview' details of "V2" - "Draft" version Policy matches with "V1" - "Both" type policy
+     And he has verified 'CustomBundles' and 'Transferee Preview' details of "V2" - "Draft" version Policy matches with "V1" - "Active" version Policy
     And he has acknowledged 'Submit Success' dialog after clicking on "Submit" button on "Custom Bundles" page
     And he has clicked on "Approve Policy" button to approve "V2" policy verison on "Custom Bundles" page
     And he has selected following options on 'Approval this Policy' dialog of "V2" Policy

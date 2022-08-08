@@ -39,8 +39,14 @@
 				"Temporary Living",
 				"Rental Assistance",
 				"Home Sale BVO",
+				"Home Sale GBO",
+				"Home Sale Direct Reimbursement",
+				"Home Sale Marketing Assistance Only",
 				"Duplicate Housing",
+				"Loss on Sale",
+				"Property Management",
 				"Mortgage Differential",
+				"Home Sale Bonus",
 				"Other Housing Benefit"
 			],
 			"movingSelectableBenefits": [
@@ -53,6 +59,7 @@
 				"Permanent Storage",
 				"Immigration",
 				"Home Leave",
+				"Self Move",
 				"Other Moving Benefit"
 			],
 			"settlingInSelectableBenefits": [
@@ -60,13 +67,14 @@
 				"Language Training",
 				"Airport Pickup",
 				"Area Tour",
-				"School Search",
+				"Education Assistance/School Search",
 				"Family Transition Assistance",
-				"Pre-Acceptance Services",
-				"Tuition and Education Assistance",
+				"Pre-Acceptance Services",				
 				"Furniture Rental",
 				"Auto Loss on Sale / Lease Cancellation",
+				"Auto Registration Costs",
 				"Concierge Services",
+				"Departure Service",
 				"Other Settling In Benefit"
 			],
 			"lifeStyleSelectableBenefits": [
@@ -74,17 +82,23 @@
 				"Meal Prep Delivery Service Gift Card Reimbursement",
 				"Meal Delivery Service Gift Card Reimbursement",
 				"Other One Time Payment",
+				"Membership Dues Reimbursement",
 				"Other Lifestyle Benefit"
 			],
 			"allowancesSelectableBenefits": [
 				"Lump Sum",
 				"Miscellaneous Relocation Allowance",
 				"Housing Allowance/Reimbursement",
-				"Furniture Allowance/Reimbursement",
+				"Tuition/Education Payments",
+				"Transportation Allowance/Reimbursement",				
 				"Assignment Housing (Company Sponsored)",
-				"Transportation Allowance/Reimbursement",
+				"Furniture Allowance/Reimbursement",
+				"Utility Allowance/Reimbursement",
+				"Auto Rental During Assignment",
 				"Other Ongoing Allowance/Reimbursement",
+				"Home Leave Allowance/Reimbursement",
 				"Cost of Living Allowance (COLA)",
+				"Appliance Allowance",
 				"Other Allowance Benefit"
 			]
 		},

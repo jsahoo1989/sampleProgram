@@ -182,6 +182,8 @@ public class ConfigFileReader {
 			return properties.getProperty("coreFlexTransfereeSubmissionsQaUrl");
 		else if (properties.getProperty("envt").equalsIgnoreCase("Prod"))
 			return properties.getProperty("coreFlexTransfereeSubmissionsProdUrl");
+		else if (properties.getProperty("envt").equalsIgnoreCase("PreProd"))
+			return properties.getProperty("coreFlexTransfereeSubmissionsPreProdUrl");
 		else if (properties.getProperty("envt").equalsIgnoreCase("Dev"))
 			return properties.getProperty("coreFlexTransfereeSubmissionsDevUrl");
 		else

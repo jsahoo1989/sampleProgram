@@ -126,4 +126,6 @@ public class CoreConstants {
 	public static final String TRANSMISSION_SUBMISSION_UAT = "TransfereeSubmissions_UAT";
 	public static final String TRANSMISSION_SUBMISSION_PREPROD = "TransfereeSubmissions_PREPROD";
 	public static final String ENVT_PREPROD = "preprod";
+	public static final String EMAIL_NOT_FOUND = "Email Not Found";
+	public static final String VEIRFY_CONTIRBUTOR_NOT_RECEIVED_NOTIFICATION = "{0}Failed to verify Contributor not received Notification.";
 }

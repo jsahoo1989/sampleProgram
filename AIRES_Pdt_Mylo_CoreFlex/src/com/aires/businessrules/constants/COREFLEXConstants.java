@@ -733,4 +733,20 @@ public class COREFLEXConstants {
 	public static final String EXCEPTION_OCCURED_WHILE_SELECTING_AND_FILLING_SUBBENEFIT = "{0}Exception occured while selecting and filling SubBenefit. Exception : ''{1}''.";
 	public static final String SUCCESSFULLY_SELECTED_AND_FILLED_SUBBENEFIT_FORM = "{0}Successfully selected and filled SubBenefit form.";
 	public static final String FAILED_TO_SELECT_AND_FILL_LANGUAGE_TRAINING_SUB_BENEFIT = "{0}Failed to select and fill Language Training Sub-Benefit.";
+	public static final String BASE_POLICY_SUBMISSION_DATE_IS_SAME_FOR_MUTIPLE_SUBMISSION_DATE_CARD_VALIDATION = "{0}Base Policy Submission Date is same for Multiple Submission Date Card Validation.";
+	public static final String PLUS_BUTTON = "Add Multiple Benefits";
+	public static final String SUBMITTED_DATE = "Submitted Date";
+	public static final String AIRES_MANAGED_BENEFIT_TRACING = "Benefit requires a sub service.";
+	public static final String REQUEST_DATE = "Request Date";
+	public static final String SUCCESSFULLY_VERIFIED_DELETED_FLEX_BENEFIT_NOT_PRESENT_IN_SUBMITTED_BENEFITS_LIST_ON_MY_BENEFITS_PAGE_POST_DELETE_REQUEST_APPROVAL = "{0}Successfully verified Deleted Benefit List not present in Submitted Benefits List on MBB Page - Post Delete Request Approval By MSPEC.";
+	public static final String EXCEPTION_OCCURED_WHILE_VERIFYING_DELETE_BENEFIT_REQUEST_REMOVED_ON_MBB_PAGE = "{0}Exception occured while verifying delete benefit request is removed on MBB page. Exception : ''{1}''.";
+	public static final String ADD_PAYMENT_ACCOUNT = "Add Payment Account";
+	public static final String FAILED_TO_VERIFY_FLEX_SETUP_TYPE_SELECTION_ON_FLEX_POLICY_SETUP_PAGE = "{0}Failed to verify Flex Setup Type selection on Flex Policy Setup Page.";
+	public static final String EXCEPTION_OCCURED_WHILE_VERIFYING_FLEX_SETUP_TYPE_SELECTION = "{0}Exception occured while verifying Flex Setup Selection. Exception : ''{1}''.";
+	public static final String USER_DEFINED = "User Defined";
+	public static final String USER_DEFINED_SELECTION_TEXT = "A selection of user-defined requires the client initiator to indicate maximum point/cash value at the time of initiation.";
+	public static final String EXCEPTION_OCCURED_WHILE_VERIFYING_FIELD_ON_BENEFIT_PAGE = "{0}Exception occured while verifying ''{3}'' field on ''{2}'' benefit page. Exception - ''{1}''.";
+	public static final String FIELD_DISPLAYED_ON_BENEFIT_PAGE = "{0}{2} field is displayed on ''{1}'' benefit page.";
+	public static final String SUCCESSFULLY_VERIFIED_FIELD_NOT_DISPLAYED_ON_BENEFIT_PAGE = "{0}Successfully verified ''{2}'' not displayed for any field on ''{1}'' benefit page.";
+	public static final String IF_APPLICABLE = "If Applicable";
 }

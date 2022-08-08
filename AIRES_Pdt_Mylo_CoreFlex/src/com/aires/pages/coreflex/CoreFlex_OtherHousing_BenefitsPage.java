@@ -184,6 +184,14 @@ public class CoreFlex_OtherHousing_BenefitsPage extends Base {
 	@FindBy(how = How.XPATH, using = "//label[contains(text(),'Aires Managed Service')]/following-sibling::div//input")
 	private List<WebElement> _radioAiresManagedButtonList;
 
+	// Flex Policy Setup Page Header
+	@FindBy(how = How.XPATH, using = "//h4[@class='card-title'][contains(text(),'Other Housing Benefit')]")
+	private WebElement _headerPageName;
+
+	// If Applicable Text
+	@FindBy(how = How.XPATH, using = "//*[contains(text(),'if applicable')]")
+	private WebElement _textIfApplicable;
+
 	/*********************************************************************/
 
 	CoreFlex_PolicySetupPagesData policySetupPageData = FileReaderManager.getInstance().getCoreFlexJsonReader()
@@ -437,6 +445,8 @@ public class CoreFlex_OtherHousing_BenefitsPage extends Base {
 
 	public void verifyFieldTextUpdates() {
 		try {
+			CoreFunctions.explicitWaitTillElementVisibility(driver, _headerPageName,
+					COREFLEXConstants.OTHER_HOUSING_BENEFIT);
 			CoreFunctions.verifyText(driver, _textExpenseReimInstructions,
 					COREFLEXConstants.EXPENSE_REIMBURSEMENT_INSTRUCTIONS_TEXT,
 					COREFLEXConstants.EXPENSE_REIMBURSEMENT_INSTRUCTIONS);
@@ -489,7 +499,6 @@ public class CoreFlex_OtherHousing_BenefitsPage extends Base {
 					CoreConstants.FAIL, e.getMessage()));
 			return false;
 		}
-
 	}
 
 	public boolean changeBenefitDetails() {
@@ -508,4 +517,5 @@ public class CoreFlex_OtherHousing_BenefitsPage extends Base {
 			return false;
 		}
 	}
+
 }

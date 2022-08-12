@@ -188,9 +188,9 @@ public class COREFLEXConstants {
 	public static final String EXCEPTION_OCCURED_WHILE_VERIFYING_FIELDS_VALIDATIONS_ON_FLEX_PLANNING_TOOL_PAGE = "{0}Exception occured while verifying field validations on Flex Planning Tool Page.";
 	public static final String SUCCESSFULLY_VERIFIED_ALL_FIELD_VALIDATIONS_ON_FLEX_PLANNING_TOOL_PAGE = "{0}Successfully verified all fields validations on Flex Planning Tool page.";
 	public static final String STATIC_FIXED = "Static/Fixed";
-	public static final String POINT_FIVE_TO_NINE_NINE_NINE_POINT_FIVE_RANGE = "Please enter a value between 0.5 and 999.5";
-	public static final String POINT_FIVE_TO_NINE_NINE_NINE_POINT_FIVE_RANGE_NEW_MESSAGE = "Please enter a value between 0.5 and 999.5";
-	public static final String POINT_FIVE_TO_NINE_NINE_NINE_POINT_FIVE_RANGE_OLD_MESSAGE = "Field value must be between 0.5 and 999.5";
+	public static final String POINT_FIVE_TO_ONE_THOUSAND_RANGE = "Please enter a value between 0.5 and 1000";
+	public static final String POINT_FIVE_TO_ONE_THOUSAND_RANGE_NEW_MESSAGE = "Please enter a value between 0.5 and 1000";
+	public static final String POINT_FIVE_TO_ONE_THOUSAND_RANGE_OLD_MESSAGE = "Field value must be between 0.5 and 1000";
 	public static final String SUCCESSFULLY_VERIFIED_VALIDATIONS_ON_FLEX_PLANNING_TOOL_PAGE = "{0}Successfully verified validation message ''{1}'' is displayed for entered value : ''{2}'' in ''{3}'' field.";
 	public static final String SUCCESSFULLY_VERIFIED_VALIDATION_MESSAGE_NOT_DISPLAYED_ON_FLEX_PLANNING_TOOL_PAGE = "{0}Successfully verified validation message ''{1}'' is NOT displayed for entered value : ''{2}'' in ''{3}'' field.";
 	public static final String VALIDATION_MESSAGE_DISPLAYED_FOR_VALID_RANGE = "{0}Validation message ''{1}' displayed for ''{3}'' field for Valid value ''{2}''.";
@@ -749,4 +749,17 @@ public class COREFLEXConstants {
 	public static final String FIELD_DISPLAYED_ON_BENEFIT_PAGE = "{0}{2} field is displayed on ''{1}'' benefit page.";
 	public static final String SUCCESSFULLY_VERIFIED_FIELD_NOT_DISPLAYED_ON_BENEFIT_PAGE = "{0}Successfully verified ''{2}'' not displayed for any field on ''{1}'' benefit page.";
 	public static final String IF_APPLICABLE = "If Applicable";
+	public static final String FAILED_TO_VERIFY_INFORMATION_DIALOG_AFTER_SELECTING_BENEFITS_AND_CLICKING_NEXT_ON_POLICY_BENEFIT_CATEGORIES_PAGE = "{0}Failed to verify Information Dialog after selecting benefits and clicking next on Policy Benefit Categories page.";
+	public static final String INFORMATION_DIALOG_CONTENT = "Information Dialog Content";
+	public static final String INFORMATION_DIALOG_CONTENT_TEXT = "If you are unable to complete all of the required fields for the selected benefit(s), please go back to the Policy Benefit Categories page and unselect those benefit(s).";
+	public static final String SUCCESSFULLY_VERIFIED_INFORMATION_DIALOG_ON_POLICY_BENEFIT_CATEGORIES_PAGE = "{0}Successfully verified Information Dialog on Policy Benefits Categories Page.";
+	public static final String CLIENT_INITIATOR = "Client Initiator";	
+	public static final String CLIENT_AND_TRANSFEREE = "Client and Transferee";
+	public static final String TRANSFEREE = "Transferee";
+	public static final String TOTAL_POINTS_VALUE = "Total Points";	
+	public static final String EXCEPTION_OCCURED_WHILE_VERIFYING_TOTAL_POINTS_FIELD_VALIDATION_ON_AUTH_FORM_PAGE = "{0}Exception occured while verifying Total Points Field validation on Auth Form Page. Exception : ''{1}''.";
+	public static final String EXCEPTION_OCCURED_WHILE_VERIFYING_AVAILABLE_POINTS_MESSAGE_ON_BENEFIT_SELECTION_TOOL_PAGE = "{0}Exception occured while verifying Available Points Message on Benefit Selection Tool page. Exception : ''{1}''.";
+	public static final String EXCEPTION_OCCURED_WHILE_VERIFYING_INITIATION_FOR_TEXT_ON_BENEFIT_SELECTION_TOOL_PAGE = "{0}Exception occured while verifying Initiation For text on Benefit Selection Tool Page. Exception : ''{1}''.";
+	public static final String SUCCESSFULLY_VERIFIED_DEFAULT_PORTION_CASHOUT_DETAILS_ON_BENEFIT_SELECTION_TOOL_PAGE = "{0}Successfully verified default Portion Cashout details on Benefit Selection Tool page.";
+	public static final String EXCEPTION_OCCURED_WHILE_VERIFYING_DEFAULT_CASHOUT_DETAILS_ON_BENEFIT_SELECTION_TOOL_PAGE = "{0}Exception occured while verifying Default Cashout Details on Benefit Selection Tool Page. Exception : ''{1}''.";
 }

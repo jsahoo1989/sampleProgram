@@ -663,7 +663,7 @@ public class MX_Transferee_MyProfilePage extends Base {
 	boolean isPersonalInformationVerified, isManagePasswordVerified, isManageSecurityVerified, isManageAccountVerified,
 			isCreditCardVerified, isTaxInformationVerified, isEmailReminderVerified;
 	String fullName, address;
-	MX_Transferee_LoginPage loginPage;
+	MobilityX_LoginPage loginPage;
 
 	public boolean isInvalidCredentialMeesageDisplayed(String message) {
 		if (CoreFunctions.isElementByLocatorExist(driver, _invalidCredentialErrorMessageByLocator, MobilityXConstants.CUSTOM_TIME)

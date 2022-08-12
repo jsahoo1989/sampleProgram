@@ -512,7 +512,7 @@ public class CoreFlex_FlexPolicySetupPage extends Base {
 		if (CoreFunctions.isElementExist(driver, _validationMessagePointsExchangeRate, 5))
 			BusinessFunctions.checkValidationBasedOnInput(
 					CoreFunctions.getElementText(driver, _validationMessagePointsExchangeRate)
-							.equals(COREFLEXConstants.POINT_FIVE_TO_NINE_NINE_NINE_POINT_FIVE_RANGE_OLD_MESSAGE),
+							.equals(COREFLEXConstants.POINT_FIVE_TO_ONE_THOUSAND_RANGE_OLD_MESSAGE),
 					fieldName, inputValue);
 	}
 
@@ -521,7 +521,7 @@ public class CoreFlex_FlexPolicySetupPage extends Base {
 		if (CoreFunctions.isElementExist(driver, _validationMessageTotalPointsAvailable, 5)) {
 			BusinessFunctions.checkValidationBasedOnInput(
 					CoreFunctions.getElementText(driver, _validationMessageTotalPointsAvailable)
-							.equals(COREFLEXConstants.POINT_FIVE_TO_NINE_NINE_NINE_POINT_FIVE_RANGE_NEW_MESSAGE),
+							.equals(COREFLEXConstants.POINT_FIVE_TO_ONE_THOUSAND_RANGE_NEW_MESSAGE),
 					fieldName, inputValue);
 		} else if (CoreFunctions.getElementText(driver, _headerPage)
 				.equals(COREFLEXConstants.POLICY_BENEFIT_CATEGORIES)) {

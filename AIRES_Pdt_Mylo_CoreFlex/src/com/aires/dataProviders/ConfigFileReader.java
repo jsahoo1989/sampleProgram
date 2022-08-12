@@ -121,7 +121,6 @@ public class ConfigFileReader {
 			throw new RuntimeException(
 					"Application Url not specified in the Configuration.properties file for the Key:url");
 	}
-	
 
 	public void mapApplicationURL() {
 		mapEnvURL.put(CoreConstants.MXTRANSFEREE_QA, CoreConstants.MXTRANSFEREE_QA_URL);
@@ -131,22 +130,22 @@ public class ConfigFileReader {
 		mapEnvURL.put(CoreConstants.TRANSMISSION_SUBMISSION_UAT, CoreConstants.TRANSMISSION_SUBMISSION_UAT_URL);
 		mapEnvURL.put(CoreConstants.TRANSMISSION_SUBMISSION_PREPROD, CoreConstants.TRANSMISSION_SUBMISSION_PREPROD_URL);
 	}
-	
-	
+
 	public String getApplicationUrl(String appName) {
 		mapApplicationURL();
-		return mapEnvURL.get(appName+"_"+System.getProperty("envt"));
-		
-		//Commented Code is used for Debugging purpose in local
-		/*if (properties.getProperty("envt").equalsIgnoreCase("uat"))
-			return properties.getProperty("myloUATURL");
-		else if (properties.getProperty("envt").equalsIgnoreCase("relonetqa4"))
-			return properties.getProperty("myloRelonetQA4URL");
-		else if (properties.getProperty("envt").equalsIgnoreCase("preprod"))
-			return properties.getProperty("myloPreProdURL");
-		else
-			throw new RuntimeException(
-					"Application Url not specified in the Configuration.properties file for the Key:url");	*/
+		return mapEnvURL.get(appName + "_" + System.getProperty("envt"));
+
+		// Commented Code is used for Debugging purpose in local
+		/*
+		 * if (properties.getProperty("envt").equalsIgnoreCase("uat")) return
+		 * properties.getProperty("myloUATURL"); else if
+		 * (properties.getProperty("envt").equalsIgnoreCase("relonetqa4")) return
+		 * properties.getProperty("myloRelonetQA4URL"); else if
+		 * (properties.getProperty("envt").equalsIgnoreCase("preprod")) return
+		 * properties.getProperty("myloPreProdURL"); else throw new RuntimeException(
+		 * "Application Url not specified in the Configuration.properties file for the Key:url"
+		 * );
+		 */
 	}
 
 	public String getMyloApplicationUrl() {
@@ -158,7 +157,7 @@ public class ConfigFileReader {
 			throw new RuntimeException(
 					"Application Url not specified in the Configuration.properties file for the Key:url");
 	}
-	
+
 	public String getCoreFlexPolicySetupApplicationUrl() {
 		if (properties.getProperty("envt").equalsIgnoreCase("UAT"))
 			return properties.getProperty("coreFlexPolicySetupUatUrl");
@@ -174,7 +173,7 @@ public class ConfigFileReader {
 			throw new RuntimeException(
 					"Application Url not specified in the Configuration.properties file for the Key:url");
 	}
-	
+
 	public String getCoreFlexTransfereeSubmissionsApplicationUrl() {
 		if (properties.getProperty("envt").equalsIgnoreCase("UAT"))
 			return properties.getProperty("coreFlexTransfereeSubmissionsUatUrl");
@@ -190,7 +189,7 @@ public class ConfigFileReader {
 			throw new RuntimeException(
 					"Application Url not specified in the Configuration.properties file for the Key:url");
 	}
-	
+
 	public String getMobilityXUrl() {
 		if (properties.getProperty("envt").equalsIgnoreCase("UAT"))
 			return properties.getProperty("mxTransfereeUatURL");
@@ -241,19 +240,17 @@ public class ConfigFileReader {
 		default:
 			throw new RuntimeException(
 					"Browser Name Key value in Configuration.properties file is not matched : " + browserName);
-		}		
-			/*
-			if (browserName == null || browserName.equalsIgnoreCase("chrome"))
-			return DriverType.CHROME;
-		else if (browserName.equalsIgnoreCase("firefox"))
-			return DriverType.FIREFOX;
-		else if (browserName.equals("iexplorer") || browserName.equalsIgnoreCase("ie"))
-			return DriverType.INTERNETEXPLORER;
-		else if (browserName.equalsIgnoreCase("edge"))
-			return DriverType.EDGE;
-		else
-			throw new RuntimeException(
-					"Browser Name Key value in Configuration.properties is not matched : " + browserName);*/
+		}
+		/*
+		 * if (browserName == null || browserName.equalsIgnoreCase("chrome")) return
+		 * DriverType.CHROME; else if (browserName.equalsIgnoreCase("firefox")) return
+		 * DriverType.FIREFOX; else if (browserName.equals("iexplorer") ||
+		 * browserName.equalsIgnoreCase("ie")) return DriverType.INTERNETEXPLORER; else
+		 * if (browserName.equalsIgnoreCase("edge")) return DriverType.EDGE; else throw
+		 * new RuntimeException(
+		 * "Browser Name Key value in Configuration.properties is not matched : " +
+		 * browserName);
+		 */
 	}
 
 	public EnvironmentType getEnvironment() {
@@ -293,7 +290,7 @@ public class ConfigFileReader {
 			throw new RuntimeException(
 					"Report Config Path not specified in the Configuration.properties file for the Key:reportConfigPath");
 	}
-	
+
 	public String getNameOfCurrentLaunchedApplication() {
 		String appName = properties.getProperty("application");
 //		String appName = System.getProperty("application");
@@ -302,5 +299,9 @@ public class ConfigFileReader {
 		else
 			throw new RuntimeException(
 					"Application Name not specified in the Configuration.properties file for the Key:url");
+	}
+
+	public String getTransfereFullName() {
+		return properties.getProperty("Transferee_firstName") + " " + properties.getProperty("Transferee_lastName");
 	}
 }

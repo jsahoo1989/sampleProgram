@@ -12,6 +12,7 @@ import org.openqa.selenium.support.How;
 import org.testng.Assert;
 
 import com.aires.businessrules.Base;
+import com.aires.businessrules.BusinessFunctions;
 import com.aires.businessrules.CoreFunctions;
 import com.aires.businessrules.constants.COREFLEXConstants;
 import com.aires.businessrules.constants.CoreConstants;
@@ -349,8 +350,8 @@ public class CoreFlex_FinalMove_BenefitsPage extends Base {
 	private WebElement _headerPageName;
 
 	// If Applicable Text
-	@FindBy(how = How.XPATH, using = "//*[contains(text(),'if applicable')]")
-	private WebElement _textIfApplicable;
+	@FindBy(how = How.XPATH, using = "//label[contains(text(),'if applicable')]")
+	private List<WebElement> _textIfApplicable;
 
 	/*********************************************************************/
 
@@ -478,6 +479,8 @@ public class CoreFlex_FinalMove_BenefitsPage extends Base {
 					benefitDisplayName, benefitAllowanceAmount, benefitDescription, aireManagedService);
 			selectSubBenefitsAndFillMandatoryFields(subBenefitNames, benefitType);
 		}
+		BusinessFunctions.verifyFieldNotPresentOnBenefitPage(driver, _textIfApplicable,
+				benefitDisplayName, COREFLEXConstants.IF_APPLICABLE);
 		clickElementOfPage(COREFLEXConstants.SAVE_AND_CONTINUE);
 
 		if (CoreFunctions.isElementExist(driver, _errorDialogPolicyBenefitsDataMissing, 7)) {

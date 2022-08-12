@@ -44,7 +44,7 @@ public class PDT_ViewPolicyPage extends Base {
 	private WebElement _logout;
 
 	// Progress Bar
-	@FindBy(how = How.CSS, using = "div.ngx-progress-bar.ngx-progress-bar-ltr")
+	@FindBy(how = How.CSS, using = "div.ngx-progress-bar.ngx-progress-bar-ltr.foreground-closing")
 	private WebElement _progressBar;
 
 	// Edit Icon
@@ -1180,5 +1180,18 @@ public class PDT_ViewPolicyPage extends Base {
 					CoreConstants.FAIL, columnName, e.getMessage()));
 		}
 		return isAssignmentColumnDataMatched;
+	}
+
+	public Boolean verifyCFUserlogin(String userName, String pageName) {
+		CoreFunctions.explicitWaitTillElementBecomesClickable(driver, _addNewPolicyForm, PDTConstants.ADD_NEW_POLICY_FORM);
+		if (getUserName().contains(userName)) {
+			CoreFunctions.highlightObject(driver, _userName);
+			Reporter.addStepLog(MessageFormat.format(PDTConstants.VERIFIED_USERNAME_IS_DISPLAYED, CoreConstants.PASS,
+					userName, pageName));
+			return true;
+		}
+		Reporter.addStepLog(MessageFormat.format(PDTConstants.FAILED_TO_VERIFY_USERNAME, CoreConstants.FAIL, pageName,
+				userName, getUserName()));
+		return false;
 	}
 }

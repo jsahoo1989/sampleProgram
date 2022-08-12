@@ -1,33 +1,6 @@
-/***********************************Header Start*********************************************************************************
- * Application/ Module Name				: AIRES
- * Class Name        				    : Login Page 
- * Owner								: Test Automation Team
- ***********************************************************************
- * Creation /Modification Log: 
- * Date				By					  Notes                                    
- ---------			--------			---------
- *17/04/2020		Rahul Sharma		Created login page repository and function for MobilityX Application 
- ***********************************************************************
- * Review/Feedback Log: 
- * Date				By					Notes                                    
- ---------			--------			---------
- * [Date]			[Reviewer]			[Brief description of the review/feedback comments]
-
- ************************************************************************************************
- * Functional Test Coverage Description  : Identified and defined all web elements in Add Role.												   
- ************************************************************************************************
- * Notes								: NA
- * Assumptions							: NA
- * Limitations							: NA
-=============List of Resources used=========================
- * User Defined Functions				: BusinessFunctions
- ***********************************Header End*********************************************************************************/
-
 package com.aires.pages.coreflex;
 
-import java.net.URI;
 import java.text.MessageFormat;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
@@ -50,21 +23,10 @@ import com.aires.utilities.Log;
 import com.vimalselvam.cucumber.listener.Reporter;
 
 import cucumber.api.DataTable;
-import microsoft.exchange.webservices.data.core.ExchangeService;
-import microsoft.exchange.webservices.data.core.enumeration.misc.ExchangeVersion;
-import microsoft.exchange.webservices.data.core.enumeration.property.WellKnownFolderName;
-import microsoft.exchange.webservices.data.core.enumeration.search.LogicalOperator;
-import microsoft.exchange.webservices.data.core.service.folder.Folder;
-import microsoft.exchange.webservices.data.core.service.item.Item;
-import microsoft.exchange.webservices.data.core.service.schema.ItemSchema;
-import microsoft.exchange.webservices.data.credential.ExchangeCredentials;
-import microsoft.exchange.webservices.data.credential.WebCredentials;
-import microsoft.exchange.webservices.data.search.ItemView;
-import microsoft.exchange.webservices.data.search.filter.SearchFilter;
 
-public class MX_Transferee_LoginPage extends Base {
+public class MobilityX_LoginPage extends Base {
 
-	public MX_Transferee_LoginPage(WebDriver driver) {
+	public MobilityX_LoginPage(WebDriver driver) {
 		super(driver);
 	}
 

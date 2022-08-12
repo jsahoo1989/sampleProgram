@@ -15,8 +15,8 @@ import com.aires.cucumber.TestContext;
 import com.aires.managers.FileReaderManager;
 import com.aires.pages.coreflex.MX_Transferee_FlexPlanningTool_Page;
 import com.aires.pages.coreflex.MX_Transferee_JourneyHomePage;
-import com.aires.pages.coreflex.MX_Transferee_LoginPage;
 import com.aires.pages.coreflex.MX_Transferee_MyBenefitsBundlePage;
+import com.aires.pages.coreflex.MobilityX_LoginPage;
 import com.aires.pages.coreflex.TransfereeSubmissions_DashboardHomePage;
 import com.aires.pages.coreflex.TransfereeSubmissions_DetailsPage;
 import com.aires.pages.coreflex.TransfereeSubmissions_LoginPage;
@@ -36,7 +36,7 @@ public class CF_Transferee_StaticFixedPoints_CashNotAuth_Both_EndToEndFlow_Steps
 	private MX_Transferee_JourneyHomePage mxTransfereeJourneyHomePage;
 	private MX_Transferee_FlexPlanningTool_Page mxTransfereeFlexPlanningToolPage;
 	private MX_Transferee_MyBenefitsBundlePage mxTransfereeMyBenefitsBundlePage;
-	private MX_Transferee_LoginPage mxTransfereeLoginPage;
+	private MobilityX_LoginPage mobilityXLoginPage;
 	private TransfereeSubmissions_LoginPage transfereeSubmissionsLoginPage;
 
 	public static List<Map<String, String>> selectedBenefitDetails;
@@ -52,7 +52,7 @@ public class CF_Transferee_StaticFixedPoints_CashNotAuth_Both_EndToEndFlow_Steps
 				.getTransfereeSubmissionsDashboardHomePage();
 		transfereeSubmissionsDetailsPage = testContext.getCoreFlexPageObjectManager()
 				.getTransfereeSubmissionsDetailsPage();
-		mxTransfereeLoginPage = testContext.getCoreFlexPageObjectManager().getMXTransfereeLoginPage();
+		mobilityXLoginPage = testContext.getCoreFlexPageObjectManager().getMobilityXLoginPage();
 		transfereeSubmissionsLoginPage = testContext.getCoreFlexPageObjectManager().getTransfereeSubmissionsLoginPage();
 	}
 
@@ -185,10 +185,10 @@ public class CF_Transferee_StaticFixedPoints_CashNotAuth_Both_EndToEndFlow_Steps
 			String actionPerformed) throws Throwable {
 		testContext.getWebDriverManager().getDriver().navigate()
 				.to(FileReaderManager.getInstance().getConfigReader().getMobilityXUrl());
-		mxTransfereeLoginPage.enterUsernameAndPasswordForMobilityX(
+		mobilityXLoginPage.enterUsernameAndPasswordForMobilityX(
 				CoreFunctions.getPropertyFromConfig("Transferee_UserNameInEMail"),
 				CoreFunctions.getPropertyFromConfig("Transferee_PasswordInEMail"));
-		mxTransfereeLoginPage.clickSignIn();
+		mobilityXLoginPage.clickSignIn();
 		mxTransfereeJourneyHomePage.handle_Cookie_AfterLogin();
 		mxTransfereeJourneyHomePage.handle_points_expiry_reminder_popup();
 		Assert.assertTrue(mxTransfereeJourneyHomePage.verifySubmittedPointsDetails(),
@@ -215,10 +215,10 @@ public class CF_Transferee_StaticFixedPoints_CashNotAuth_Both_EndToEndFlow_Steps
 			String action) throws Throwable {
 		testContext.getWebDriverManager().getDriver().navigate()
 				.to(FileReaderManager.getInstance().getConfigReader().getMobilityXUrl());
-		mxTransfereeLoginPage.enterUsernameAndPasswordForMobilityX(
+		mobilityXLoginPage.enterUsernameAndPasswordForMobilityX(
 				CoreFunctions.getPropertyFromConfig("Transferee_UserNameInEMail"),
 				CoreFunctions.getPropertyFromConfig("Transferee_PasswordInEMail"));
-		mxTransfereeLoginPage.clickSignIn();
+		mobilityXLoginPage.clickSignIn();
 		mxTransfereeJourneyHomePage.handle_Cookie_AfterLogin();
 		mxTransfereeJourneyHomePage.handle_points_expiry_reminder_popup();
 		Assert.assertTrue(mxTransfereeJourneyHomePage.verifySubmittedPointsDetails(),

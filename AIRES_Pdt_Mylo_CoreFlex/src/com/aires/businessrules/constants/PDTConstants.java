@@ -21,8 +21,8 @@ public class PDTConstants {
 	public static final String RANDOM_STRING_TEXT = "randomString";
 	public static final String SPOUSE_NAME_TEXT = "spouseName";
 	public static final String EMP_ID_TEXT = "employeeID";
-	public static final String FNAME = "AUTOAIRES";
-	public static final String LNAME = "TESTAIRES";
+	public static final String FNAME = "AutoCoreFlex";
+	public static final String LNAME = "TestCoreFlex";
 	public static final String EMP_ID = "AIRESMobil";
 	public static final String SPOUSE_NAME = "SpouseTest";
 	public static final String NEW_TRANSFEREE_CREATED = "{0}The New Transferee is created having Firstname, Lastname as: {1}, {2}";

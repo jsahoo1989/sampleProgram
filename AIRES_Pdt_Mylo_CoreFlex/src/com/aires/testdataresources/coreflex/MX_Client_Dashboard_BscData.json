@@ -1,0 +1,103 @@
+[
+	{
+		"module": "Authorization",
+		"authTypeInfo": {
+			"assesment": "Yes",
+			"airesInstruction": "Employee Pre-Decision Counseling",
+			"costEstimate": "Yes",
+			"authTemplate": "BSC-International Authorization Form"
+		},
+		"bscEmployeeInfo": {
+			"relocationPolicy": "International Extended Business Traveler with Tax",
+			"vipMove": "No",
+			"immigrationServices": "Yes",
+			"currentCity": "New York",
+			"currentState": "New York",
+			"currentcountry": "USA",
+			"destinationLoc": "New Acquisition, not listed below",
+			"destinationCity": "pittsburg",
+			"destinationProvince": "pittsburg",
+			"destCountry": "USA",
+			"emailOne": "airesautomation@aires.com"
+		},
+		"relocationInfo": {
+			"transferType": "Transfer of Current Employee",
+			"assignmentType": "Long-Term",
+			"newSalary": "100",
+			"newSalaryCurrency": "U.S. Dollar",
+			"jobTitle": "Tester",
+			"excesBag": "1",
+			"predecisionBenfit": "Yes"
+		},
+		"reportingInfo": {
+			"costCenter": "Bill Me Later Scottsdale",
+			"glNumber": "123",
+			"division": "Endoscopy",
+			"operatingUnit": "Administration",
+			"companyCode": "200",
+			"costRechargeBack": "No",
+			"legalNameHomeCompany": "(Chile) Boston Scientific Chile SpA",
+			"legalNameHostCompany": "Chile) Boston Scientific Chile SpA",
+			"payRollLoc": "US"
+		},
+		"authorisationInfo": {
+			"hrManagerName": "Bill Me",
+			"hrManagerEmail": "airesautomation@aires.com",
+			"fundingMember": "2"
+		}
+	},
+	{
+		"module": "DomesticAuthorizationFormData",
+		"authTypeInfo": {
+			"assesment": "Yes",
+			"airesInstruction": "Employee Pre-Decision Counseling",
+			"costEstimate": "No",
+			"authTemplate": "Domestic Authorization Form"
+		},
+		"bscEmployeeInfo": {
+			"relocationPolicy": "Long Term Domestic Assignment",
+			"employeeID":"1007",
+			"homeStatus":"Homeowner",
+			"originHomeAddress":"7521 8th Ave NW",
+			"originHomeCity":"Seattle",
+			"originHomeState":"Washington",
+			"originHomeCountry":"USA",
+			"officeOriginCityState":"(United States-WA) 11911 N. Creek Parkway S. Bothell Washington 98011",
+			"destinationOfficeLocation":"(United States-NY) 10 GlensFalls TchPrk Glens Falls New York 12801",
+			"mobilePhone":"8891111111",
+			"emailOne": "airesautomation@aires.com"
+		},
+		"relocationInfo": {
+			"transferType": "Transfer of Current Employee",
+			"assignmentType": "Long-Term",
+			"startDateInNewLocation": "20-Oct-2021",
+			"newSalaryCurrency": "U.S. Dollar",
+			"newJobTitle": "Tester",
+			"immigration":"Yes"
+		},
+		"reportingInfo": {
+			"costCenter": "1234",
+			"division": "Endoscopy",
+			"operatingUnit": "Administration",
+			"companyCode": "200",
+			"region":"North America",
+			"payrollLocation":"US"
+		},
+		"flexBenefitInfo": {
+			"homeFindingTrip": "Yes",
+			"petShipment": "No",
+			"propertyManagement": "No",
+			"applianceAllowance":"No",
+			"totalPoints":"500"
+		},
+		"preDecisionBenefitInfo": {
+			"airesToInitiateImmigrationServices": "Yes"
+		},
+		"authorisationInfo": {
+			"hrManagerName": "Bill Me",
+			"hiringManagerName": "Bill me Hiring Manager",
+			"hrManagerEmail": "airesautomation@aires.com",
+			"fundingECMember": "JODI EDDY"
+		}
+	}
+]

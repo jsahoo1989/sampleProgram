@@ -294,7 +294,7 @@ public class MX_Transferee_FlexPlanningTool_Page extends Base {
 			.getAllFlexBenefitsData();
 
 	CoreFlex_SettlingInBenefitsData languageTrainingBenefitData = FileReaderManager.getInstance()
-			.getCoreFlexJsonReader().getSettlingInBenefitDataList(COREFLEXConstants.LANGUAGE_TRAINING);
+			.getCoreFlexJsonReader().getSettlingInBenefitDataList(COREFLEXConstants.LANGUAGE_TRAINING);	
 
 	public static double totalPointsOnPolicy;
 	public static double cashoutPoints;
@@ -497,7 +497,8 @@ public class MX_Transferee_FlexPlanningTool_Page extends Base {
 				CoreFunctions.writeToPropertiesFile("CF_Transferee_TotalSelectedPoints",
 						String.valueOf(totalSelectedPoints));
 				CoreFunctions.writeToPropertiesFile("CF_Transferee_AvailablePoints",
-						String.valueOf(Double.parseDouble(policySetupPageData.flexPolicySetupPage.StaticFixedTotalPointsAvailable)
+						String.valueOf(Double
+								.parseDouble(policySetupPageData.flexPolicySetupPage.StaticFixedTotalPointsAvailable)
 								- totalSelectedPoints));
 				return true;
 			}

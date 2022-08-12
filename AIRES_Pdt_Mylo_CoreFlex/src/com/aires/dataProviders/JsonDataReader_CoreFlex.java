@@ -17,6 +17,7 @@ import com.aires.testdatatypes.coreflex.CoreFlex_MovingBenefitsData;
 import com.aires.testdatatypes.coreflex.CoreFlex_PolicySetupPagesData;
 import com.aires.testdatatypes.coreflex.CoreFlex_SettlingInBenefitsData;
 import com.aires.testdatatypes.coreflex.FlexBenefit;
+import com.aires.testdatatypes.coreflex.MX_Client_Dashboard_BscData;
 import com.aires.testdatatypes.coreflex.MX_Transferee_AccountSetupDetails;
 import com.aires.testdatatypes.coreflex.MX_Transferee_BenefitData;
 import com.aires.testdatatypes.coreflex.MX_Transferee_LoginData;
@@ -56,6 +57,9 @@ public class JsonDataReader_CoreFlex {
 	private final String _movingBenefitsFilePath = FileReaderManager.getInstance().getConfigReader()
 			.getTestDataResourcePath() + "coreflex/CoreFlex_MovingBenefitsData.json";
 	
+	private final String _mxClientDashboardBscDataFilePath = FileReaderManager.getInstance().getConfigReader()
+			.getTestDataResourcePath() + "coreflex/MX_Client_Dashboard_BscData.json";
+	
 	private List<CoreFlex_HousingBenefitsData> _housingBenefitslist;
 	private List<CoreFlex_AllowancesBenefitsData> _allowancesBenefitslist;
 	private List<CoreFlex_SettlingInBenefitsData> _settlingInBenefitslist;
@@ -66,6 +70,7 @@ public class JsonDataReader_CoreFlex {
 	private List<MX_Transferee_MyProfileData> _mxTransfereeMyProfileDataList;
 	private MX_Transferee_BenefitData _mxTransfereeBenefitData;
 	private List<CoreFlex_MovingBenefitsData> _movingBenefitslist;
+	private List<MX_Client_Dashboard_BscData> _mxClientDashboardBscDataList;
 	
 	public JsonDataReader_CoreFlex() {
 		_housingBenefitslist = getHousingBenefitData();
@@ -78,6 +83,7 @@ public class JsonDataReader_CoreFlex {
 		_mxTransfereeMyProfileDataList = getMXTransfereeMyProfileData();
 		_mxTransfereeBenefitData = getMXTransfereeBenefitData();
 		_movingBenefitslist = getMovingBenefitData();
+		_mxClientDashboardBscDataList = getMXClientDashboardBscData();
 	}
 	
 	private List<CoreFlex_HousingBenefitsData> getHousingBenefitData() {
@@ -244,6 +250,24 @@ public class JsonDataReader_CoreFlex {
 			}
 		}
 	}
+		
+	private List<MX_Client_Dashboard_BscData> getMXClientDashboardBscData() {
+		Gson gson = new Gson();
+		BufferedReader bufferReader = null;
+		try {
+			bufferReader = new BufferedReader(new FileReader(_mxClientDashboardBscDataFilePath));
+			MX_Client_Dashboard_BscData[] bscData = gson.fromJson(bufferReader, MX_Client_Dashboard_BscData[].class);
+			return Arrays.asList(bscData);
+		} catch (FileNotFoundException e) {
+			throw new RuntimeException(CoreConstants.JSON_FILE_NOT_FOUND_AT_PATH + _mxClientDashboardBscDataFilePath);
+		} finally {
+			try {
+				if (bufferReader != null)
+					bufferReader.close();
+			} catch (IOException ignore) {
+			}
+		}
+	}
 	
 	private List<CoreFlex_MovingBenefitsData> getMovingBenefitData() {
 		Gson gson = new Gson();
@@ -312,5 +336,10 @@ public class JsonDataReader_CoreFlex {
 	
 	public final CoreFlex_MovingBenefitsData getMovingBenefitDataList(String policyBenefit) {
 		return _movingBenefitslist.stream().filter(x -> x.benefitName.equalsIgnoreCase(policyBenefit)).findAny().get();
+	}
+	
+	public final MX_Client_Dashboard_BscData getBscDataByModuleName(String moduleName) {
+		return _mxClientDashboardBscDataList.stream().filter(x -> x.module.equalsIgnoreCase(moduleName)).findAny()
+				.get();
 	}
 }

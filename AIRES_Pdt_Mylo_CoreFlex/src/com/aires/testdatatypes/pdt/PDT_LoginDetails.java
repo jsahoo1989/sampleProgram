@@ -71,6 +71,9 @@ public class PDT_LoginDetails {
 		public String csmPassword;
 		public String csmUserFirstName;
 		public String policy;
+		public String mxClientUserName;
+		public String mxClientPassword;
+		public String mxClientUserProfileName;
 	}
 
 	public class Dev {
@@ -86,6 +89,9 @@ public class PDT_LoginDetails {
 		public String csmPassword;
 		public String csmUserFirstName;
 		public String policy;
+		public String mxClientUserName;
+		public String mxClientPassword;
+		public String mxClientUserProfileName;
 	}
 	
 	public class Prod {
@@ -101,6 +107,9 @@ public class PDT_LoginDetails {
 		public String csmPassword;
 		public String csmUserFirstName;
 		public String policy;
+		public String mxClientUserName;
+		public String mxClientPassword;
+		public String mxClientUserProfileName;
 	}
 	
 	public class PreProd {
@@ -116,6 +125,9 @@ public class PDT_LoginDetails {
 		public String csmPassword;
 		public String csmUserFirstName;
 		public String policy;
+		public String mxClientUserName;
+		public String mxClientPassword;
+		public String mxClientUserProfileName;
 	}
 	
 	public class Uat {
@@ -131,5 +143,8 @@ public class PDT_LoginDetails {
 		public String csmPassword;
 		public String csmUserFirstName;
 		public String policy;
+		public String mxClientUserName;
+		public String mxClientPassword;
+		public String mxClientUserProfileName;
 	}
 }

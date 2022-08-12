@@ -36,7 +36,7 @@ public class PDT_AddNewPolicyPage extends Base {
 	private WebElement _headingAddNewPolicyForm;
 
 	// Progress Bar
-	@FindBy(how = How.CSS, using = "div.ngx-progress-bar.ngx-progress-bar-ltr")
+	@FindBy(how = How.CSS, using = "div.ngx-progress-bar.ngx-progress-bar-ltr.foreground-closing")
 	private WebElement _progressBar;
 
 	// ClientID Input Field
@@ -98,7 +98,7 @@ public class PDT_AddNewPolicyPage extends Base {
 
 	@FindBy(how = How.CSS, using = "ng-select[bindvalue='corporationPolicyId'] span.ng-value-label")
 	private WebElement _selectedPolicy;
-	
+
 	@FindBy(how = How.CSS, using = "ng-select[bindvalue='corporationPolicyId'] input")
 	private WebElement _inputPolicy;
 
@@ -421,14 +421,14 @@ public class PDT_AddNewPolicyPage extends Base {
 		timeBeforeAction = new Date().getTime();
 		CoreFunctions.click(driver, _buttonNext, _buttonNext.getText());
 		BusinessFunctions.fluentWaitForSpinnerToDisappear(driver, _progressBar);
-		timeAfterAction = new Date().getTime();	
-		BusinessFunctions.printTimeTakenByPageToLoad(timeBeforeAction, timeAfterAction, PDTConstants.GENERAL_INFORMATION);
+		timeAfterAction = new Date().getTime();
+		BusinessFunctions.printTimeTakenByPageToLoad(timeBeforeAction, timeAfterAction,
+				PDTConstants.GENERAL_INFORMATION);
 	}
 
 	public void selectClient(PDT_LoginDetails _loginDetailsApplication) {
 		String clientIdFromJson = BusinessFunctions.getClientAndPolicyDetails(_loginDetailsApplication)[0];
-		CoreFunctions.clearAndSetText(driver, _inputClientID, PDTConstants.CLIENT_ID,
-				clientIdFromJson);
+		CoreFunctions.clearAndSetText(driver, _inputClientID, PDTConstants.CLIENT_ID, clientIdFromJson);
 		CoreFunctions.explicitWaitTillElementListVisibilityCustomTime(driver, _optionsClientID, 90);
 		CoreFunctions.explicitWaitTillElementListClickable(driver, _optionsClientID);
 		if (_optionsClientID.size() > 0
@@ -557,7 +557,7 @@ public class PDT_AddNewPolicyPage extends Base {
 				CoreFunctions.clickElement(driver, _buttonLogout);
 				break;
 			case PDTConstants.NEXT:
-				CoreFunctions.clickElement(driver, _buttonNext);	
+				CoreFunctions.clickElement(driver, _buttonNext);
 				CoreFunctions.explicitWaitTillElementInVisibility(driver, _progressBar);
 				break;
 			case PDTConstants.BACK:
@@ -829,7 +829,7 @@ public class PDT_AddNewPolicyPage extends Base {
 		}
 		return false;
 	}
-	
+
 	/**
 	 * Method to select a policy based on provided Policy Name
 	 * 
@@ -842,7 +842,7 @@ public class PDT_AddNewPolicyPage extends Base {
 				CoreFunctions.clickElement(driver, _selectPolicyName);
 				CoreFunctions.clearAndSetText(driver, _inputPolicy, COREFLEXConstants.AUTOMATION_POLICY);
 				CoreFunctions.explicitWaitTillElementListVisibility(driver, _optionsPolicyName);
-				setSelectedPolicyName(_optionsPolicyName.get(0).getText());				
+				setSelectedPolicyName(_optionsPolicyName.get(0).getText());
 				CoreFunctions.selectItemInListByText(driver, _optionsPolicyName, selectedPolicyName, true);
 				return true;
 			} else if (CoreFunctions.isElementExist(driver, _popUpError, 2)) {

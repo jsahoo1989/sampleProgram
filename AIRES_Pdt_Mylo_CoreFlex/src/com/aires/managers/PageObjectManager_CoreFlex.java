@@ -42,11 +42,13 @@ import com.aires.pages.coreflex.CoreFlex_PolicyBenefitsCategoriesPage;
 import com.aires.pages.coreflex.CoreFlex_PreAcceptanceServices_BenefitsPage;
 import com.aires.pages.coreflex.CoreFlex_PreviewTransfereePage;
 import com.aires.pages.coreflex.CoreFlex_TemporaryLiving_BenefitsPage;
+import com.aires.pages.coreflex.MX_Client_AuthorizationHomePage;
+import com.aires.pages.coreflex.MX_Client_BenefitSelectionToolPage;
 import com.aires.pages.coreflex.MX_Transferee_FlexPlanningTool_Page;
 import com.aires.pages.coreflex.MX_Transferee_JourneyHomePage;
-import com.aires.pages.coreflex.MX_Transferee_LoginPage;
 import com.aires.pages.coreflex.MX_Transferee_MyBenefitsBundlePage;
 import com.aires.pages.coreflex.MX_Transferee_MyProfilePage;
+import com.aires.pages.coreflex.MobilityX_LoginPage;
 import com.aires.pages.coreflex.TransfereeSubmissions_DashboardHomePage;
 import com.aires.pages.coreflex.TransfereeSubmissions_DetailsPage;
 import com.aires.pages.coreflex.TransfereeSubmissions_LoginPage;
@@ -65,7 +67,7 @@ public class PageObjectManager_CoreFlex {
 	private CoreFlex_TemporaryLiving_BenefitsPage _coreFlexTemporaryLivingBenefitsPage;
 	private CoreFlex_CulturalTraining_BenefitsPage _coreFlexCulturalTrainingBenefitsPage;
 	private MX_Transferee_MyProfilePage _mxTransfereeMyProfilePage;
-	private MX_Transferee_LoginPage _mxTransfereeLoginPage;
+	private MobilityX_LoginPage _mobilityXLoginPage;
 	private MX_Transferee_JourneyHomePage _mxTransfereeJourneyHomePage;
 	private MX_Transferee_FlexPlanningTool_Page _mxTransfereeFlexPlanningToolPage;
 	private MX_Transferee_MyBenefitsBundlePage _myBenefitsBundlePage;
@@ -85,6 +87,8 @@ public class PageObjectManager_CoreFlex {
 	private CoreFlex_AutoRentalDuringAssignment_BenefitsPage _coreFlexAutoRentalDuringAssignmentBenefitsPage;
 	private CoreFlex_EducationAssistanceSchoolSearch_BenefitsPage _coreFlexEducationAssistanceBenefitsPage;
 	private CoreFlex_HouseHuntingTrip_BenefitsPage _coreFlexHouseHuntingTripBenefitsPage;
+	private MX_Client_AuthorizationHomePage _mxClientAuthorizationHomePage;
+	private MX_Client_BenefitSelectionToolPage _mxClientBenefitSelectionToolPage;
 
 	public PageObjectManager_CoreFlex(WebDriver driver) {
 		this._driver = driver;
@@ -131,9 +135,9 @@ public class PageObjectManager_CoreFlex {
 				: _coreFlexCustomBundlesPage;
 	}
 
-	public MX_Transferee_LoginPage getMXTransfereeLoginPage() {
-		return (_mxTransfereeLoginPage == null) ? _mxTransfereeLoginPage = new MX_Transferee_LoginPage(_driver)
-				: _mxTransfereeLoginPage;
+	public MobilityX_LoginPage getMobilityXLoginPage() {
+		return (_mobilityXLoginPage == null) ? _mobilityXLoginPage = new MobilityX_LoginPage(_driver)
+				: _mobilityXLoginPage;
 	}
 
 	public MX_Transferee_JourneyHomePage getMXTransfereeJourneyHomePage() {
@@ -271,5 +275,17 @@ public class PageObjectManager_CoreFlex {
 		return (_coreFlexHouseHuntingTripBenefitsPage == null)
 				? _coreFlexHouseHuntingTripBenefitsPage = new CoreFlex_HouseHuntingTrip_BenefitsPage(_driver)
 				: _coreFlexHouseHuntingTripBenefitsPage;
+	}
+	
+	public MX_Client_AuthorizationHomePage getMXClientAuthorizationHomePage() {
+		return (_mxClientAuthorizationHomePage == null)
+				? _mxClientAuthorizationHomePage = new MX_Client_AuthorizationHomePage(_driver)
+				: _mxClientAuthorizationHomePage;
+	}
+	
+	public MX_Client_BenefitSelectionToolPage getMXClientBenefitSelectionTollPage() {
+		return (_mxClientBenefitSelectionToolPage == null)
+				? _mxClientBenefitSelectionToolPage = new MX_Client_BenefitSelectionToolPage(_driver)
+				: _mxClientBenefitSelectionToolPage;
 	}
 }

@@ -251,8 +251,8 @@ public class CoreFlex_LumpSum_BenefitsPage extends Base {
 	private WebElement _headerPageName;
 
 	// If Applicable Text
-	@FindBy(how = How.XPATH, using = "//*[contains(text(),'if applicable')]")
-	private WebElement _textIfApplicable;
+	@FindBy(how = How.XPATH, using = "//label[contains(text(),'if applicable')]")
+	private List<WebElement> _textIfApplicable;
 
 	/*********************************************************************/
 
@@ -388,6 +388,8 @@ public class CoreFlex_LumpSum_BenefitsPage extends Base {
 					benefitDisplayName, benefitAllowanceAmount, benefitDescription, paymentOption);
 			selectSubBenefitsAndFillMandatoryFields(subBenefitNames);
 		}
+		BusinessFunctions.verifyFieldNotPresentOnBenefitPage(driver, _textIfApplicable, benefitDisplayName,
+				COREFLEXConstants.IF_APPLICABLE);
 		clickElementOfPage(COREFLEXConstants.SAVE_AND_CONTINUE);
 
 		if (CoreFunctions.isElementExist(driver, _errorDialogPolicyBenefitsDataMissing, 7)) {
@@ -601,7 +603,7 @@ public class CoreFlex_LumpSum_BenefitsPage extends Base {
 			clickElementOfPage(PDTConstants.OK);
 			if (CoreFunctions.isElementExist(driver, _validationMessageFlexPoints, 5))
 				isValidationMessageDisplayed = CoreFunctions.getElementText(driver, _validationMessageFlexPoints)
-						.equals(COREFLEXConstants.POINT_FIVE_TO_NINE_NINE_NINE_POINT_FIVE_RANGE);
+						.equals(COREFLEXConstants.POINT_FIVE_TO_ONE_THOUSAND_RANGE);
 			BusinessFunctions.checkValidationBasedOnInput(isValidationMessageDisplayed, fieldName, inputValue);
 			break;
 		default:

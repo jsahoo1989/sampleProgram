@@ -41,9 +41,9 @@ import com.aires.pages.coreflex.CoreFlex_PreviewTransfereePage;
 import com.aires.pages.coreflex.CoreFlex_TemporaryLiving_BenefitsPage;
 import com.aires.pages.coreflex.MX_Transferee_FlexPlanningTool_Page;
 import com.aires.pages.coreflex.MX_Transferee_JourneyHomePage;
-import com.aires.pages.coreflex.MX_Transferee_LoginPage;
 import com.aires.pages.coreflex.MX_Transferee_MyBenefitsBundlePage;
 import com.aires.pages.coreflex.MX_Transferee_MyProfilePage;
+import com.aires.pages.coreflex.MobilityX_LoginPage;
 import com.aires.pages.coreflex.TransfereeSubmissions_DashboardHomePage;
 import com.aires.pages.coreflex.TransfereeSubmissions_DetailsPage;
 import com.aires.pages.coreflex.TransfereeSubmissions_LoginPage;
@@ -83,7 +83,7 @@ public class CoreFlex_SharedSteps {
 	private CoreFlex_LumpSum_BenefitsPage coreFlexLumpSumBenefitsPage;
 	private CoreFlex_BenefitSummaryPage coreFlexBenefitSummaryPage;
 	private CoreFlex_OtherHousing_BenefitsPage coreFlexOtherHousingBenefitsPage;
-	private MX_Transferee_LoginPage mxTransfereeLoginPage;
+	private MobilityX_LoginPage mobilityXLoginPage;
 	private MX_Transferee_JourneyHomePage mxTransfereeJourneyHomePage;
 	private MX_Transferee_FlexPlanningTool_Page mxTransfereeFlexPlanningToolPage;
 	private MX_Transferee_MyBenefitsBundlePage mxTransfereeMyBenefitsBundlePage;
@@ -126,7 +126,7 @@ public class CoreFlex_SharedSteps {
 				.getCoreFlexDuplicateHousingBenefitsPage();
 		coreFlexLumpSumBenefitsPage = testContext.getCoreFlexPageObjectManager().getCoreFlexLumpSumBenefitsPage();
 		coreFlexBenefitSummaryPage = testContext.getCoreFlexPageObjectManager().getCoreFlexBenefitSummaryPage();
-		mxTransfereeLoginPage = testContext.getCoreFlexPageObjectManager().getMXTransfereeLoginPage();
+		mobilityXLoginPage = testContext.getCoreFlexPageObjectManager().getMobilityXLoginPage();
 		mxTransfereeJourneyHomePage = testContext.getCoreFlexPageObjectManager().getMXTransfereeJourneyHomePage();
 		mxTransfereeFlexPlanningToolPage = testContext.getCoreFlexPageObjectManager()
 				.getMXTransfereeFlexPlanningToolPage();
@@ -283,8 +283,12 @@ public class CoreFlex_SharedSteps {
 		String policyRequiredFor = dataMap.get(0).get("PolicyRequiredFor");
 		String numberOfMilestones = dataMap.get(0).get("MileStones");
 		String benefitType = dataMap.get(0).get("BenefitType");
+		String flexSetupType = dataMap.get(0).get("Flex Setup Type");
+		String personResponsibleForBenefitSelection = dataMap.get(0).get("Person Responsible For Benefit Selection");
 		CoreFunctions.writeToPropertiesFile("CoreFlex_Policy_RequiredFor", policyRequiredFor);
 		CoreFunctions.writeToPropertiesFile("CoreFlex_Policy_BenefitType", benefitType);
+		CoreFunctions.writeToPropertiesFile("CoreFlex_Policy_FlexSetupType", flexSetupType);
+		CoreFunctions.writeToPropertiesFile("CoreFlex_Policy_PersonResponsible", personResponsibleForBenefitSelection);
 
 		Assert.assertTrue(bluePrintCFLoginPage.verifyLoginPageNavigation(), MessageFormat.format(
 				PDTConstants.FAILED_TO_NAVIGATE_TO_COREFLEX_BLUE_PRINT_APPLICATION_LOGIN_PAGE, CoreConstants.FAIL));
@@ -321,22 +325,22 @@ public class CoreFlex_SharedSteps {
 				MessageFormat.format(PDTConstants.FAILED_TO_SELECT_POLICY_FROM_POLICY_NAME_FIELD, CoreConstants.FAIL));
 
 //		 Invoking IRIS application to select CoreFleXEnabled Policy
-		testContext.getBasePage().reLaunchIrisToAvoidFreezingIssue();
-		testContext.getIrisPageManager().irisLoginPage = new IRIS_LoginPage();
-		testContext.getIrisPageManager().irisLoginPage.getIRISLoginAsPerEnvt(_loginDetailsApplication);
-		testContext.getIrisPageManager().irisWelcome12C = new IRIS_Welcome12C();
-		testContext.getIrisPageManager().irisWelcome12C.selectWelcomeWindowModule(IRISConstants.CORPORATION_MODULE);
-		testContext.getIrisPageManager().irisCorporationMain = new IRIS_Corporation_Main();
-		testContext.getIrisPageManager().irisCorporationMain
-				.queryCorporation(CoreFunctions.getPropertyFromConfig("Policy_ClientID"));
-		testContext.getIrisPageManager().irisCorporationMain.selectCorporationModules(IRISConstants.ACCOUNTING);
-		testContext.getIrisPageManager().irisCorporationAccounting = new IRIS_Corporation_Accounting();
-		testContext.getIrisPageManager().irisCorporationAccounting.verifyAccountingTab();
-		testContext.getIrisPageManager().irisCorporationAccounting.performCoreFlexCheckboxSelectionForPolicy(
-				PDTConstants.COREFLEX_ENABLED, IRISConstants.CHECKED,
-				CoreFunctions.getPropertyFromConfig("Assignment_Policy"));
-		testContext.getIrisPageManager().irisCorporationAccounting.clickOnSaveBtn();
-		testContext.getBasePage().cleanIrisProcesses();
+//		testContext.getBasePage().reLaunchIrisToAvoidFreezingIssue();
+//		testContext.getIrisPageManager().irisLoginPage = new IRIS_LoginPage();
+//		testContext.getIrisPageManager().irisLoginPage.getIRISLoginAsPerEnvt(_loginDetailsApplication);
+//		testContext.getIrisPageManager().irisWelcome12C = new IRIS_Welcome12C();
+//		testContext.getIrisPageManager().irisWelcome12C.selectWelcomeWindowModule(IRISConstants.CORPORATION_MODULE);
+//		testContext.getIrisPageManager().irisCorporationMain = new IRIS_Corporation_Main();
+//		testContext.getIrisPageManager().irisCorporationMain
+//				.queryCorporation(CoreFunctions.getPropertyFromConfig("Policy_ClientID"));
+//		testContext.getIrisPageManager().irisCorporationMain.selectCorporationModules(IRISConstants.ACCOUNTING);
+//		testContext.getIrisPageManager().irisCorporationAccounting = new IRIS_Corporation_Accounting();
+//		testContext.getIrisPageManager().irisCorporationAccounting.verifyAccountingTab();
+//		testContext.getIrisPageManager().irisCorporationAccounting.performCoreFlexCheckboxSelectionForPolicy(
+//				PDTConstants.COREFLEX_ENABLED, IRISConstants.CHECKED,
+//				CoreFunctions.getPropertyFromConfig("Assignment_Policy"));
+//		testContext.getIrisPageManager().irisCorporationAccounting.clickOnSaveBtn();
+//		testContext.getBasePage().cleanIrisProcesses();
 
 		// Setting up a CoreFlex Enabled Policy
 		addNewPolicyPage.clickElementOfPage(PDTConstants.NEXT);
@@ -415,6 +419,10 @@ public class CoreFlex_SharedSteps {
 						CoreConstants.FAIL));
 		coreFlexPolicyBenefitsCategoriesPage.selectBenefits(benefitType, policyRequiredFor, numberOfMilestones);
 		coreFlexPolicyBenefitsCategoriesPage.clickElementOfPage(PDTConstants.NEXT);
+
+//		Assert.assertTrue(coreFlexPolicyBenefitsCategoriesPage.verifyInformationDialog(), MessageFormat.format(
+//				COREFLEXConstants.FAILED_TO_VERIFY_INFORMATION_DIALOG_AFTER_SELECTING_BENEFITS_AND_CLICKING_NEXT_ON_POLICY_BENEFIT_CATEGORIES_PAGE,
+//				CoreConstants.FAIL));
 
 		CoreConstants.TIME_BEFORE_ACTION = new Date().getTime();
 		Assert.assertTrue(
@@ -631,7 +639,7 @@ public class CoreFlex_SharedSteps {
 	@Given("^he has logged into 'MobilityX' application after creating a new 'Transferee' through IRIS application for policy setup in 'Policy Digitization Tool'$")
 	public void he_has_logged_into_MobilityX_application_after_creating_a_new_Transferee_through_IRIS_application_for_policy_setup_in_Policy_Digitization_Tool()
 			throws Throwable {
-		Assert.assertTrue(mxTransfereeLoginPage.verifyPageNavigation(),
+		Assert.assertTrue(mobilityXLoginPage.verifyPageNavigation(),
 				MessageFormat.format(COREFLEXConstants.FAILED_TO_NAVIGATE_TO_MOBILITYX_LOGIN_PAGE, CoreConstants.FAIL));
 		CoreConstants.TIME_AFTER_ACTION = new Date().getTime();
 		Reporter.addStepLog("<b>Total time taken to navigate to <i>MobilityX Login</i> page is :"
@@ -720,12 +728,12 @@ public class CoreFlex_SharedSteps {
 		testContext.getIrisPageManager().irisAssignmentOverviewPage.setFileStatus(IRISConstants.ACTIVATE);
 		testContext.getBasePage().cleanIrisProcesses();
 
-		Assert.assertTrue(mxTransfereeLoginPage.readCredentialsFromMail(), MessageFormat
+		Assert.assertTrue(mobilityXLoginPage.readCredentialsFromMail(), MessageFormat
 				.format(MobilityXConstants.FAILED_TO_READ_USER_CREDENTIALS_FROM_GENERATED_EMAIL, CoreConstants.FAIL));
-		mxTransfereeLoginPage.enterUsernameAndPasswordForMobilityX(
+		mobilityXLoginPage.enterUsernameAndPasswordForMobilityX(
 				CoreFunctions.getPropertyFromConfig("Transferee_UserNameInEMail"),
 				CoreFunctions.getPropertyFromConfig("Transferee_PasswordInEMail"));
-		mxTransfereeLoginPage.clickSignIn();
+		mobilityXLoginPage.clickSignIn();
 		mxTransfereeMyProfilePage.setUpNewMobilityXTransferee();
 		mxTransfereeJourneyHomePage.handle_Cookie_AfterLogin();
 		mxTransfereeJourneyHomePage.handle_points_expiry_reminder_popup();
@@ -733,16 +741,16 @@ public class CoreFlex_SharedSteps {
 
 	@Given("^he has logged into 'MobilityX' application with the 'Transferee' user$")
 	public void he_has_logged_into_MobilityX_application_with_the_Transferee_user() throws Throwable {
-		Assert.assertTrue(mxTransfereeLoginPage.verifyPageNavigation(),
+		Assert.assertTrue(mobilityXLoginPage.verifyPageNavigation(),
 				MessageFormat.format(COREFLEXConstants.FAILED_TO_NAVIGATE_TO_MOBILITYX_LOGIN_PAGE, CoreConstants.FAIL));
 		CoreConstants.TIME_AFTER_ACTION = new Date().getTime();
 		Reporter.addStepLog("<b>Total time taken to navigate to <i>MobilityX Login</i> page is :"
 				+ CoreFunctions.calculatePageLoadTime(CoreConstants.TIME_BEFORE_ACTION, CoreConstants.TIME_AFTER_ACTION)
 				+ " Seconds </b>");
-		mxTransfereeLoginPage.enterUsernameAndPasswordForMobilityX(
+		mobilityXLoginPage.enterUsernameAndPasswordForMobilityX(
 				CoreFunctions.getPropertyFromConfig("Transferee_UserNameInEMail"),
 				CoreFunctions.getPropertyFromConfig("Transferee_PasswordInEMail"));
-		mxTransfereeLoginPage.clickSignIn();
+		mobilityXLoginPage.clickSignIn();
 		mxTransfereeJourneyHomePage.handle_Cookie_AfterLogin();
 		mxTransfereeJourneyHomePage.handle_points_expiry_reminder_popup();
 	}

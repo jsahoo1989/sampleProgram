@@ -156,7 +156,7 @@ public class BusinessFunctions {
 
 	public static void selectRadioAsPerLabelText(WebDriver driver, List<WebElement> WebElementList_Label,
 			String labelName) {
-		CoreFunctions.waitHandler(2);
+		CoreFunctions.waitHandler(1);
 		System.out.println("inside radio as per label text");
 		System.out.println("count--" + WebElementList_Label.size());
 		for (WebElement row : WebElementList_Label) {
@@ -705,32 +705,52 @@ public class BusinessFunctions {
 	}
 
 	public static String[] getClientAndPolicyDetails(PDT_LoginDetails _loginDetailsApplication) {
-		String clientAndPolicyDetailsArr[] = new String[3];
+		String clientAndPolicyDetailsArr[] = new String[7];
 		switch (CoreFunctions.getPropertyFromConfig("envt").toLowerCase()) {
 		case CoreConstants.ENVT_DEV:
 			clientAndPolicyDetailsArr[0] = _loginDetailsApplication.dev.clientId;
 			clientAndPolicyDetailsArr[1] = _loginDetailsApplication.dev.clientName;
 			clientAndPolicyDetailsArr[2] = _loginDetailsApplication.dev.policy;
+			clientAndPolicyDetailsArr[3] = _loginDetailsApplication.dev.mxClientUserName;
+			clientAndPolicyDetailsArr[4] = _loginDetailsApplication.dev.mxClientPassword;
+			clientAndPolicyDetailsArr[5] = _loginDetailsApplication.dev.mxClientUserProfileName;
+			clientAndPolicyDetailsArr[6] = _loginDetailsApplication.dev.clientName;
 			break;
 		case CoreConstants.ENVT_QA:
 			clientAndPolicyDetailsArr[0] = _loginDetailsApplication.qa.clientId;
 			clientAndPolicyDetailsArr[1] = _loginDetailsApplication.qa.clientName;
 			clientAndPolicyDetailsArr[2] = _loginDetailsApplication.qa.policy;
+			clientAndPolicyDetailsArr[3] = _loginDetailsApplication.qa.mxClientUserName;
+			clientAndPolicyDetailsArr[4] = _loginDetailsApplication.qa.mxClientPassword;
+			clientAndPolicyDetailsArr[5] = _loginDetailsApplication.qa.mxClientUserProfileName;
+			clientAndPolicyDetailsArr[6] = _loginDetailsApplication.qa.clientName;
 			break;
 		case CoreConstants.ENVT_TEST:
 			clientAndPolicyDetailsArr[0] = _loginDetailsApplication.preProd.clientId;
 			clientAndPolicyDetailsArr[1] = _loginDetailsApplication.preProd.clientName;
 			clientAndPolicyDetailsArr[2] = _loginDetailsApplication.preProd.policy;
+			clientAndPolicyDetailsArr[3] = _loginDetailsApplication.preProd.mxClientUserName;
+			clientAndPolicyDetailsArr[4] = _loginDetailsApplication.preProd.mxClientPassword;
+			clientAndPolicyDetailsArr[5] = _loginDetailsApplication.preProd.mxClientUserProfileName;
+			clientAndPolicyDetailsArr[6] = _loginDetailsApplication.preProd.clientName;
 			break;
 		case CoreConstants.ENVT_UAT:
 			clientAndPolicyDetailsArr[0] = _loginDetailsApplication.uat.clientId;
 			clientAndPolicyDetailsArr[1] = _loginDetailsApplication.uat.clientName;
 			clientAndPolicyDetailsArr[2] = _loginDetailsApplication.uat.policy;
+			clientAndPolicyDetailsArr[3] = _loginDetailsApplication.uat.mxClientUserName;
+			clientAndPolicyDetailsArr[4] = _loginDetailsApplication.uat.mxClientPassword;
+			clientAndPolicyDetailsArr[5] = _loginDetailsApplication.uat.mxClientUserProfileName;
+			clientAndPolicyDetailsArr[6] = _loginDetailsApplication.uat.clientName;
 			break;
 		case CoreConstants.ENVT_PROD:
 			clientAndPolicyDetailsArr[0] = _loginDetailsApplication.prod.clientId;
 			clientAndPolicyDetailsArr[1] = _loginDetailsApplication.prod.clientName;
 			clientAndPolicyDetailsArr[2] = _loginDetailsApplication.prod.policy;
+			clientAndPolicyDetailsArr[3] = _loginDetailsApplication.prod.mxClientUserName;
+			clientAndPolicyDetailsArr[4] = _loginDetailsApplication.prod.mxClientPassword;
+			clientAndPolicyDetailsArr[5] = _loginDetailsApplication.prod.mxClientUserProfileName;
+			clientAndPolicyDetailsArr[6] = _loginDetailsApplication.prod.clientName;
 			break;
 		}
 		return clientAndPolicyDetailsArr;
@@ -826,50 +846,44 @@ public class BusinessFunctions {
 			String inputValue) {
 
 		try {
-			if ((Double.parseDouble(inputValue) < 0.5 || Double.parseDouble(inputValue) > 999.5)
+			if ((Double.parseDouble(inputValue) < 0.5 || Double.parseDouble(inputValue) > 1000)
 					&& isValidationMessageDisplayed) {
 				Reporter.addStepLog(MessageFormat.format(
 						COREFLEXConstants.SUCCESSFULLY_VERIFIED_VALIDATIONS_ON_FLEX_PLANNING_TOOL_PAGE,
-						CoreConstants.PASS, COREFLEXConstants.POINT_FIVE_TO_NINE_NINE_NINE_POINT_FIVE_RANGE, inputValue,
-						fieldName));
-			} else if ((Double.parseDouble(inputValue) < 0.5 || Double.parseDouble(inputValue) > 999.5)
+						CoreConstants.PASS, COREFLEXConstants.POINT_FIVE_TO_ONE_THOUSAND_RANGE, inputValue, fieldName));
+			} else if ((Double.parseDouble(inputValue) < 0.5 || Double.parseDouble(inputValue) > 1000)
 					&& !isValidationMessageDisplayed) {
 				Reporter.addStepLog(MessageFormat.format(
 						COREFLEXConstants.VALIDATION_MESSAGE_NOT_DISPLAYED_FOR_INVALID_RANGE, CoreConstants.FAIL,
-						COREFLEXConstants.POINT_FIVE_TO_NINE_NINE_NINE_POINT_FIVE_RANGE, inputValue, fieldName));
+						COREFLEXConstants.POINT_FIVE_TO_ONE_THOUSAND_RANGE, inputValue, fieldName));
 				throw new RuntimeException(MessageFormat.format(
 						COREFLEXConstants.VALIDATION_MESSAGE_NOT_DISPLAYED_FOR_INVALID_RANGE, CoreConstants.FAIL,
-						COREFLEXConstants.POINT_FIVE_TO_NINE_NINE_NINE_POINT_FIVE_RANGE, inputValue, fieldName));
-			} else if ((Double.parseDouble(inputValue) >= 0.5 || Double.parseDouble(inputValue) <= 999.5)
+						COREFLEXConstants.POINT_FIVE_TO_ONE_THOUSAND_RANGE, inputValue, fieldName));
+			} else if ((Double.parseDouble(inputValue) >= 0.5 || Double.parseDouble(inputValue) <= 1000)
 					&& !isValidationMessageDisplayed) {
 				Reporter.addStepLog(MessageFormat.format(
 						COREFLEXConstants.SUCCESSFULLY_VERIFIED_VALIDATION_MESSAGE_NOT_DISPLAYED_ON_FLEX_PLANNING_TOOL_PAGE,
-						CoreConstants.PASS, COREFLEXConstants.POINT_FIVE_TO_NINE_NINE_NINE_POINT_FIVE_RANGE, inputValue,
-						fieldName));
-			} else if ((Double.parseDouble(inputValue) >= 0.5 || Double.parseDouble(inputValue) <= 999.5)
+						CoreConstants.PASS, COREFLEXConstants.POINT_FIVE_TO_ONE_THOUSAND_RANGE, inputValue, fieldName));
+			} else if ((Double.parseDouble(inputValue) >= 0.5 || Double.parseDouble(inputValue) <= 1000)
 					&& isValidationMessageDisplayed) {
 				Reporter.addStepLog(MessageFormat.format(COREFLEXConstants.VALIDATION_MESSAGE_DISPLAYED_FOR_VALID_RANGE,
-						CoreConstants.FAIL, COREFLEXConstants.POINT_FIVE_TO_NINE_NINE_NINE_POINT_FIVE_RANGE, inputValue,
-						fieldName));
+						CoreConstants.FAIL, COREFLEXConstants.POINT_FIVE_TO_ONE_THOUSAND_RANGE, inputValue, fieldName));
 				throw new RuntimeException(MessageFormat.format(
 						COREFLEXConstants.VALIDATION_MESSAGE_DISPLAYED_FOR_VALID_RANGE, CoreConstants.FAIL,
-						COREFLEXConstants.POINT_FIVE_TO_NINE_NINE_NINE_POINT_FIVE_RANGE, inputValue, fieldName));
+						COREFLEXConstants.POINT_FIVE_TO_ONE_THOUSAND_RANGE, inputValue, fieldName));
 			}
 		} catch (NumberFormatException e) {
 			if (isValidationMessageDisplayed) {
 				Reporter.addStepLog(MessageFormat.format(
 						COREFLEXConstants.SUCCESSFULLY_VERIFIED_VALIDATIONS_ON_FLEX_PLANNING_TOOL_PAGE,
-						CoreConstants.PASS, COREFLEXConstants.POINT_FIVE_TO_NINE_NINE_NINE_POINT_FIVE_RANGE, inputValue,
-						fieldName));
+						CoreConstants.PASS, COREFLEXConstants.POINT_FIVE_TO_ONE_THOUSAND_RANGE, inputValue, fieldName));
 			} else {
 				Reporter.addStepLog(MessageFormat.format(
 						COREFLEXConstants.VALIDATION_MESSAGE_NOT_DISPLAYED_FOR_NON_NUMERIC_INVALID_VALUE,
-						CoreConstants.FAIL, COREFLEXConstants.POINT_FIVE_TO_NINE_NINE_NINE_POINT_FIVE_RANGE, inputValue,
-						fieldName));
+						CoreConstants.FAIL, COREFLEXConstants.POINT_FIVE_TO_ONE_THOUSAND_RANGE, inputValue, fieldName));
 				throw new RuntimeException(MessageFormat.format(
 						COREFLEXConstants.VALIDATION_MESSAGE_NOT_DISPLAYED_FOR_NON_NUMERIC_INVALID_VALUE,
-						CoreConstants.FAIL, COREFLEXConstants.POINT_FIVE_TO_NINE_NINE_NINE_POINT_FIVE_RANGE, inputValue,
-						fieldName));
+						CoreConstants.FAIL, COREFLEXConstants.POINT_FIVE_TO_ONE_THOUSAND_RANGE, inputValue, fieldName));
 			}
 		}
 	}
@@ -1021,16 +1035,17 @@ public class BusinessFunctions {
 				+ pgToLoadformat.format((timeAfterAction - timeBeforeAction) / 1000) + " Seconds </b>");
 	}
 
-	public static void verifyFieldNotPresentOnBenefitPage(WebDriver driver, WebElement element, String benefitName,
-			String fieldName) {
+	public static void verifyFieldNotPresentOnBenefitPage(WebDriver driver, List<WebElement> elementList,
+			String benefitName, String fieldName) {
 		try {
-			if (CoreFunctions.isElementExist(driver, element, 5)) {
-				Assert.fail((MessageFormat.format(COREFLEXConstants.FIELD_DISPLAYED_ON_BENEFIT_PAGE, CoreConstants.FAIL,
-						benefitName, fieldName)));
+			System.out.println(benefitName+" If Applicable List Size : "+elementList.size());
+			if (elementList.size() > 0) {
+//				Assert.fail((MessageFormat.format(COREFLEXConstants.FIELD_DISPLAYED_ON_BENEFIT_PAGE, CoreConstants.FAIL,
+//						benefitName, COREFLEXConstants.IF_APPLICABLE)));
 			} else {
 				Reporter.addStepLog(MessageFormat.format(
 						COREFLEXConstants.SUCCESSFULLY_VERIFIED_FIELD_NOT_DISPLAYED_ON_BENEFIT_PAGE, CoreConstants.PASS,
-						benefitName, fieldName));
+						benefitName, COREFLEXConstants.IF_APPLICABLE));
 			}
 		} catch (Exception e) {
 			Reporter.addStepLog(

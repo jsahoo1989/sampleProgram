@@ -77,12 +77,15 @@
 			"irisBuildPath": "\\\\corpprdvw589\\rdev\\IRIS_Builds\\IRIS_FnDEV_CORE_FLEX\\IRIS.exe",
 			"firstName": "mxsso",
 			"lastName": "dev5",
-			"clientId": "7403",
-			"clientName": "Dow Chemical Company (Global)",
+			"clientId": "13951",
+			"clientName": "Boston Scientific",
 			"csmUserName": "mxssodev5@corp.aires.com",
 			"csmPassword": "F74#jd*187_NB",
 			"csmUserFirstName":"MXSSO DEV5",
-			"policy": "hDCC Repatriation (# 14724)"
+			"policy": "hDCC Repatriation (# 14724)",
+			"mxClientUserName":"0011934473@aires.com",
+			"mxClientPassword":"relonetng1",
+			"mxClientUserProfileName":"Jaspal March"
 		},
 		"dev": {
 			"irisUserName": "vkamins",
@@ -124,7 +127,10 @@
 			"csmUserName": "mxssodev5@corp.aires.com",
 			"csmPassword": "F74#jd*187_NB",
 			"csmUserFirstName":"MXSSO DEV5",
-			"policy": "hDCC Repatriation (# 14724)"
+			"policy": "hDCC Repatriation (# 14724)",
+			"mxClientUserName":"0011856826@aires.com",
+			"mxClientPassword":"relonetng",
+			"mxClientUserProfileName":"Josh Warwick"
 		},
 		"uat": {
 			"irisUserName": "vkamins",
@@ -138,7 +144,10 @@
 			"csmUserName": "mxssodev5@corp.aires.com",
 			"csmPassword": "F74#jd*187_NB",
 			"csmUserFirstName":"MXSSO DEV5",
-			"policy": "hDCC Repatriation (# 14724)"
+			"policy": "hDCC Repatriation (# 14724)",
+			"mxClientUserName":"jzmarzlak@aires.com",
+			"mxClientPassword":"relonetng",
+			"mxClientUserProfileName":"Judson Offner"
 		}
 	}
 ]

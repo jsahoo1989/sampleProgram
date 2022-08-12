@@ -75,7 +75,7 @@ public class CoreFlex_BluePrint_LoginPage extends Base {
 		CoreFunctions.waitForBrowserToLoad(driver);
 		Log.info("Inside openApplication");
 		VerifyAIRESLogo();
-		CoreFunctions.waitHandler(3);
+		CoreFunctions.waitHandler(2);
 		CoreFunctions.switchToNewTab(driver);
 	}
 
@@ -160,7 +160,7 @@ public class CoreFlex_BluePrint_LoginPage extends Base {
 				enterUserEmailAndPassword(BusinessFunctions.getCSMCredentials(_loginDetailsApplication)[0],
 						BusinessFunctions.getCSMCredentials(_loginDetailsApplication)[1]);
 				clickSignIn();
-				isSuccessfullyLoggedIn = viewPolicyPage.verifyUserlogin(
+				isSuccessfullyLoggedIn = viewPolicyPage.verifyCFUserlogin(
 						BusinessFunctions.getCSMCredentials(_loginDetailsApplication)[2],
 						PDTConstants.VIEW_POLICY_PAGE);
 				break;

@@ -38,8 +38,8 @@ import com.aires.pages.coreflex.CoreFlex_PreviewTransfereePage;
 import com.aires.pages.coreflex.CoreFlex_TemporaryLiving_BenefitsPage;
 import com.aires.pages.coreflex.MX_Transferee_FlexPlanningTool_Page;
 import com.aires.pages.coreflex.MX_Transferee_JourneyHomePage;
-import com.aires.pages.coreflex.MX_Transferee_LoginPage;
 import com.aires.pages.coreflex.MX_Transferee_MyBenefitsBundlePage;
+import com.aires.pages.coreflex.MobilityX_LoginPage;
 import com.aires.pages.coreflex.TransfereeSubmissions_DashboardHomePage;
 import com.aires.pages.coreflex.TransfereeSubmissions_DetailsPage;
 import com.aires.pages.coreflex.TransfereeSubmissions_LoginPage;
@@ -68,7 +68,7 @@ public class CF_BluePrint_Versioning_Steps {
 	private CoreFlex_LumpSum_BenefitsPage coreFlexLumpSumBenefitsPage;
 	private CoreFlex_BenefitSummaryPage coreFlexBenefitSummaryPage;
 	private CoreFlex_OtherHousing_BenefitsPage coreFlexOtherHousingBenefitsPage;
-	private MX_Transferee_LoginPage mxTransfereeLoginPage;
+	private MobilityX_LoginPage mobilityXLoginPage;
 	private MX_Transferee_MyBenefitsBundlePage mxTransfereeMyBenefitsBundlePage;
 	private TransfereeSubmissions_LoginPage transfereeSubmissionsLoginPage;
 	private TransfereeSubmissions_DashboardHomePage transfereeSubmissionsDashboardHomePage;
@@ -112,7 +112,7 @@ public class CF_BluePrint_Versioning_Steps {
 				.getCoreFlexDuplicateHousingBenefitsPage();
 		coreFlexLumpSumBenefitsPage = testContext.getCoreFlexPageObjectManager().getCoreFlexLumpSumBenefitsPage();
 		coreFlexBenefitSummaryPage = testContext.getCoreFlexPageObjectManager().getCoreFlexBenefitSummaryPage();
-		mxTransfereeLoginPage = testContext.getCoreFlexPageObjectManager().getMXTransfereeLoginPage();
+		mobilityXLoginPage = testContext.getCoreFlexPageObjectManager().getMobilityXLoginPage();
 		mxTransfereeJourneyHomePage = testContext.getCoreFlexPageObjectManager().getMXTransfereeJourneyHomePage();
 		mxTransfereeFlexPlanningToolPage = testContext.getCoreFlexPageObjectManager()
 				.getMXTransfereeFlexPlanningToolPage();

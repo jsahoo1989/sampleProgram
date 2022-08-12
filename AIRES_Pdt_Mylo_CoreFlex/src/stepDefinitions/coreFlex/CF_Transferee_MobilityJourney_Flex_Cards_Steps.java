@@ -15,8 +15,8 @@ import com.aires.cucumber.TestContext;
 import com.aires.managers.FileReaderManager;
 import com.aires.pages.coreflex.MX_Transferee_FlexPlanningTool_Page;
 import com.aires.pages.coreflex.MX_Transferee_JourneyHomePage;
-import com.aires.pages.coreflex.MX_Transferee_LoginPage;
 import com.aires.pages.coreflex.MX_Transferee_MyBenefitsBundlePage;
+import com.aires.pages.coreflex.MobilityX_LoginPage;
 import com.aires.pages.iris.IRIS_ActivityAndFinancePage;
 import com.aires.pages.iris.IRIS_AssignmentOverviewPage;
 import com.aires.pages.iris.IRIS_AssignmentServicePage;
@@ -35,7 +35,7 @@ public class CF_Transferee_MobilityJourney_Flex_Cards_Steps {
 	private MX_Transferee_JourneyHomePage mxTransfereeJourneyHomePage;
 	private MX_Transferee_FlexPlanningTool_Page mxTransfereeFlexPlanningToolPage;
 	private MX_Transferee_MyBenefitsBundlePage mxTransfereeMyBenefitsBundlePage;
-	private MX_Transferee_LoginPage mxTransfereeLoginPage;
+	private MobilityX_LoginPage mobilityXLoginPage;
 	int _initialTableRowCount = 0;
 	private PDT_LoginDetails _loginDetailsApplication = FileReaderManager.getInstance().getJsonReader()
 			.getLoginByApplication(CoreFunctions.getPropertyFromConfig("application").toLowerCase());
@@ -48,7 +48,7 @@ public class CF_Transferee_MobilityJourney_Flex_Cards_Steps {
 				.getMXTransfereeFlexPlanningToolPage();
 		mxTransfereeMyBenefitsBundlePage = testContext.getCoreFlexPageObjectManager()
 				.getMXTransfereeMyBenefitsBundlePage();
-		mxTransfereeLoginPage = testContext.getCoreFlexPageObjectManager().getMXTransfereeLoginPage();
+		mobilityXLoginPage = testContext.getCoreFlexPageObjectManager().getMobilityXLoginPage();
 	}
 
 	/**********************************************************************/
@@ -473,27 +473,27 @@ public class CF_Transferee_MobilityJourney_Flex_Cards_Steps {
 	@Given("^he has logged into 'MobilityX' application with Transferee user of 'Submitted Benefits Policy'$")
 	public void he_has_logged_into_MobilityX_application_with_Transferee_user_of_Submitted_Benefits_Policy()
 			throws Throwable {
-		Assert.assertTrue(mxTransfereeLoginPage.verifyBasePolicySubmitted(),
+		Assert.assertTrue(mobilityXLoginPage.verifyBasePolicySubmitted(),
 				MessageFormat.format(
 						COREFLEXConstants.BASE_POLICY_NOT_SUBMITTED_FOR_MUTIPLE_SUBMISSION_DATE_CARD_VALIDATION,
 						CoreConstants.FAIL));
 		Map<String, String> submittedPolicyDetails = CoreFunctions
 				.convertStringToMapWithStream(CoreFunctions.getPropertyFromConfig("CoreFlexSubmittedPolicyData"));
 		Assert.assertTrue(
-				mxTransfereeLoginPage
+				mobilityXLoginPage
 						.verifyPreviousPolicySubmittedDate(submittedPolicyDetails.get(" PolicySubmissionDate")),
 				MessageFormat.format(
 						COREFLEXConstants.BASE_POLICY_SUBMISSION_DATE_IS_SAME_FOR_MUTIPLE_SUBMISSION_DATE_CARD_VALIDATION,
 						CoreConstants.FAIL));
-		Assert.assertTrue(mxTransfereeLoginPage.verifyPageNavigation(),
+		Assert.assertTrue(mobilityXLoginPage.verifyPageNavigation(),
 				MessageFormat.format(COREFLEXConstants.FAILED_TO_NAVIGATE_TO_MOBILITYX_LOGIN_PAGE, CoreConstants.FAIL));
 		CoreConstants.TIME_AFTER_ACTION = new Date().getTime();
 		Reporter.addStepLog("<b>Total time taken to navigate to <i>MobilityX Login</i> page is :"
 				+ CoreFunctions.calculatePageLoadTime(CoreConstants.TIME_BEFORE_ACTION, CoreConstants.TIME_AFTER_ACTION)
 				+ " Seconds </b>");
-		mxTransfereeLoginPage.enterUsernameAndPasswordForMobilityX(submittedPolicyDetails.get(" AssignmentUserName"),
+		mobilityXLoginPage.enterUsernameAndPasswordForMobilityX(submittedPolicyDetails.get(" AssignmentUserName"),
 				submittedPolicyDetails.get(" AssignmentPassword"));
-		mxTransfereeLoginPage.clickSignIn();
+		mobilityXLoginPage.clickSignIn();
 		mxTransfereeJourneyHomePage.handle_Cookie_AfterLogin();
 	}
 

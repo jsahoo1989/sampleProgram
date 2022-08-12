@@ -1822,6 +1822,20 @@ public class CoreFunctions {
 					+ " | Expected Text = " + expectedText);
 		}
 	}
+	
+	public static boolean verifyText(WebDriver driver, WebElement element, String expectedText, String fieldName, boolean flag) {
+		String actualText = element.getText().trim();
+		if (actualText.equalsIgnoreCase(expectedText)) {
+			highlightObject(driver, element);
+			Reporter.addStepLog(
+					CoreConstants.PASS + MobilityXConstants.VERIFIED_FIELD_TEXT + fieldName + " : " + expectedText);
+			return true;
+		} else {
+			Reporter.addStepLog(CoreConstants.FAIL + MobilityXConstants.FAILED_TO_VERIFY + fieldName + " | "
+					+ CoreConstants.VAL_ACTUAL + actualText + " " + CoreConstants.VAL_EXPECTED + expectedText);
+			return false;
+		}
+	}
 
 	public static void verifyValue(Double actualValue, Double expectedValue, String fieldName) {
 		if (actualValue.equals(expectedValue))

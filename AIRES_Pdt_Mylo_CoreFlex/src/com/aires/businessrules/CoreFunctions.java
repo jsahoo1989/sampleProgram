@@ -44,7 +44,6 @@ import java.util.Properties;
 import java.util.Random;
 import java.util.Set;
 import java.util.stream.Collectors;
-
 import org.openqa.selenium.Alert;
 import org.openqa.selenium.By;
 import org.openqa.selenium.JavascriptExecutor;
@@ -52,7 +51,6 @@ import org.openqa.selenium.Keys;
 import org.openqa.selenium.NoAlertPresentException;
 import org.openqa.selenium.NoSuchElementException;
 import org.openqa.selenium.StaleElementReferenceException;
-import org.openqa.selenium.TimeoutException;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.interactions.Actions;
@@ -63,7 +61,6 @@ import org.openqa.selenium.support.ui.FluentWait;
 import org.openqa.selenium.support.ui.Select;
 import org.openqa.selenium.support.ui.WebDriverWait;
 import org.testng.Assert;
-
 import com.aires.businessrules.constants.CoreConstants;
 import com.aires.businessrules.constants.MYLOConstants;
 import com.aires.businessrules.constants.MobilityXConstants;
@@ -1876,7 +1873,7 @@ public class CoreFunctions {
 	public static String setDifferentFieldsForMylo(WebDriver driver,WebElement element, String fieldName, String fieldValue) {
 		String updatedValue;
 		try {
-			updatedValue = (Integer.parseInt(fieldValue)>200)
+			updatedValue = (Integer.parseInt(fieldValue)>600)
 					? fieldValue
 					: generateRandomCharOfLength(Integer.parseInt(fieldValue),
 							MYLOConstants.ONLY_CHARACTERS, 0);
@@ -1918,7 +1915,7 @@ public class CoreFunctions {
 	}
 	
 	public static void waitForMyloSpinnnerInvisibilityIfExist(WebDriver driver,WebElement element) {
-		if(CoreFunctions.isElementExist(driver, element, 8)) {
+		if(CoreFunctions.isElementExist(driver, element, 5)) {
 			CoreFunctions.explicitWaitTillElementInVisibilityCustomTime(driver, element, 180);
 			}
 	}
@@ -1938,7 +1935,7 @@ public class CoreFunctions {
 		List<WebElement> elementList = null;
 		do {
 			elementList=CoreFunctions.getElementListByLocator(driver, locator);
-	      }while(!(elementList.size()>0));
+	      }while(!(elementList.size()>0)&& elementList!=null);
 		return elementList;	
 	}
 }

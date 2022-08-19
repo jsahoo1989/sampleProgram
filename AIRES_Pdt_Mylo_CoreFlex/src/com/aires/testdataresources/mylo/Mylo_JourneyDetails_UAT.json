@@ -30,8 +30,18 @@
 		},
 		
 		{
+		"fileType": "canceledFile_withAuthTrack",
+		"fileInfo": "483893;70519;Ericsson Canada;Canceled;Executive;AI;Permanent;CRO"
+		},
+		
+		{
 		"fileType": "closedFile",
 		"fileInfo": "208973;49076;Electric Boat - Puget Sound;Closed;SSGN B - Renter (Non-Homeowner);AI;Permanent;NERO"
+		},
+		
+		{
+		"fileType": "closedFile_withAuthTrack",
+		"fileInfo": "540016;78223;Northrop Grumman-One Source Accounting;Closed;SSGN B - Renter (Non-Homeowner);AI;Permanent;NERO"
 		},
 		
 		{
@@ -72,5 +82,47 @@
 		{
 		"fileType": "transfereeAllMemberDetails",
 		"fileInfo": "639582;92265;MobilityX Inc.;Active;Domestic Policy;AIRES;Long-Term;CRO"
+		},
+		
+		{
+		"fileType": "TRANSSCH",
+		"fileInfo": "645961;8472;Verizon;Booked;Domestic Policy;AIRES;Long-Term;CRO"
+		},
+		
+		{
+		"fileType": "TRANSSCH_withoutEmail",
+		"fileInfo": "646058;8472;Verizon;Booked;Domestic Policy;AIRES;Long-Term;CRO"
+		},
+		{
+		"fileType": "TRANSSCH_duplicateEmailActualizedTransferee",
+		"fileInfo": "646084;8472;Verizon;Booked;Domestic Policy;AIRES;Long-Term;CRO"
+		},
+		{
+		"fileType": "TRANSSCH_uniqueEmailActualizedTransferee",
+		"fileInfo": "646164;8472;Verizon;Booked;Domestic Policy;AIRES;Long-Term;CRO"
+		},
+		{
+		"fileType": "TRANSSCH_ActualizedTransferee",
+		"fileInfo": "646082;8472;Verizon;Booked;Domestic Policy;AIRES;Long-Term;CRO"
+		},
+		{
+		"fileType": "TRANSSCH_IDENTCHALLENGE",
+		"fileInfo": "646131;8472;Verizon;Booked;Domestic Policy;AIRES;Long-Term;CRO"
+		},
+		{
+		"fileType": "CLIENT_TRANSFEREE_SSOENABLED",
+		"fileInfo": "646154;25568;FedEx Ground;Booked;Domestic Policy;AIRES;Long-Term;CRO"
+		},
+		{
+		"fileType": "TRANSFEREE_WITH_MULTIPLE_EMAIL",
+		"fileInfo": "646155;49226;Aires QA Automation Client;Booked;Domestic Policy;AIRES;Long-Term;CRO"
+		},
+		{
+		"fileType": "TRANSFEREE_FILELINK",
+		"fileInfo": "646165;49226;Aires QA Automation Client;Booked;Domestic Policy;AIRES;Long-Term;CRO"
+		},
+		{
+		"fileType": "existingAuthTrackData",
+		"fileInfo": "646236;49226;Aires QA Automation Client;Booked;Domestic Policy;AIRES;Long-Term;CRO"
 		}
 ]

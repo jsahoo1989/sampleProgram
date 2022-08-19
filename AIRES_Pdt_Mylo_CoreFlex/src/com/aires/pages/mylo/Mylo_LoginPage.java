@@ -1,7 +1,6 @@
 package com.aires.pages.mylo;
 
 import java.text.MessageFormat;
-
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
@@ -11,10 +10,12 @@ import org.testng.Assert;
 import com.aires.businessrules.Base;
 import com.aires.businessrules.BusinessFunctions;
 import com.aires.businessrules.CoreFunctions;
+import com.aires.businessrules.constants.COREFLEXConstants;
 import com.aires.businessrules.constants.CoreConstants;
 import com.aires.businessrules.constants.MYLOConstants;
 import com.aires.managers.FileReaderManager;
 import com.aires.testdatatypes.mylo.Mylo_LoginData;
+import com.aires.utilities.EmailUtil;
 import com.aires.utilities.Log;
 import com.vimalselvam.cucumber.listener.Reporter;
 
@@ -32,6 +33,9 @@ public class Mylo_LoginPage extends Base {
 
 	@FindBy(how = How.CSS, using = "input[type='submit']")
 	private WebElement _submit;
+	
+	@FindBy(how = How.CSS, using = "#KmsiDescription")
+	private WebElement _staySignedInMsg;
 
 	@FindBy(how = How.CSS, using = "input[id*='idSIButton']")
 	private WebElement _staySignedInYes;
@@ -84,10 +88,15 @@ public class Mylo_LoginPage extends Base {
 
 	public void clickSignIn() {
 		CoreFunctions.click(driver, _submit, _submit.getAttribute("value"));
-		CoreFunctions.clickMyloElementIfExist(driver, _staySignedInYes, MYLOConstants.YES_BUTTON, 8);
+		if (CoreFunctions.isElementExist(driver, _staySignedInYes, 8)&& _staySignedInYes.isDisplayed() ) {
+			Assert.assertEquals(CoreFunctions.getElementText(driver, _staySignedInMsg), "Do this to reduce the number of times you are asked to sign in.");
+			CoreFunctions.click(driver, _staySignedInYes, MYLOConstants.YES_BUTTON);
+		}
 		CoreFunctions.switchToParentWindow(driver);
 		CoreFunctions.waitForMyloSpinnnerInvisibilityIfExist(driver, _spinner);
 		while (!(CoreFunctions.isElementExist(driver, _userProfile, 3))) {
+			CoreFunctions.refreshPage(driver);
+			CoreFunctions.waitForBrowserToLoad(driver);
 			CoreFunctions.explicitWaitTillElementVisibility(driver, _loginImg, MYLOConstants.LOGIN_IMAGE, 10);
 			CoreFunctions.hoverAndClick(driver, _loginImg, MYLOConstants.LOGIN_IMAGE);
 		}
@@ -120,10 +129,11 @@ public class Mylo_LoginPage extends Base {
 	public void loginWithUser(String userType) throws InterruptedException {
 		logout();
 		openApplication();
-		CoreFunctions.click(driver, _anotherAccount, _anotherAccount.getText());
+		CoreFunctions.click(driver, _anotherAccount, MYLOConstants.ANOTHER_ACCOUNT);
 		if (userType.equals(MYLOConstants.USER_WITHOUT_RESOURCE15)
 				|| userType.equals(MYLOConstants.USER_WITHOUT_RESOURCE300096)
-				|| userType.equals(MYLOConstants.USER_WITHOUT_RESOURCE300140))
+				|| userType.equals(MYLOConstants.USER_WITHOUT_RESOURCE300140)
+				|| userType.equals(MYLOConstants.USER_WITHOUT_RESOURCE300139))
 			enterUserEmailAndPasswordForMylo(loginData.MyloWithOutResource15UserName, loginData.MyloPassword);
 		else
 			enterUserEmailAndPasswordForMylo(loginData.MyloUserName, loginData.MyloPassword);
@@ -144,5 +154,41 @@ public class Mylo_LoginPage extends Base {
 		} else
 			errorTextDisplayed = CoreFunctions.getElementText(driver, _userNameError);
 		return (BusinessFunctions.verifyMyloValidationMessage(msg, errorTextDisplayed, MYLOConstants.LOGIN));
+	}
+	
+	public boolean readCredentialsFromMail() {
+		try {
+			CoreFunctions.waitHandler(10);
+			// Reading Transferee Username and Password from email and writing to the Config
+			// Properties File
+			String host = "outlook.office365.com";
+			// Enter Your Email ID
+			String userName = "airesautomation@aires.com";
+			// Enter your email outlook password
+			String pwd = CoreConstants.AUTO_EMAIL_PWD;
+			// Enter expected From complete email address
+			String expFromUserName = "securelogin@aires.com";
+			// Enter expected email subject
+			String expEmailSubject = "Aires MobilityX Login User Name";
+			String resultUserName = EmailUtil.searchEmailAndReturnResult(host, userName, pwd, expFromUserName,
+					expEmailSubject, MYLOConstants.MYLO_TRANSFEREE_USER_NAME);
+			String userName_InEmail = resultUserName.trim();
+			String expFromPwd = "securelogin@aires.com";
+			String expEmailSubjectPwd = "Aires MobilityX Login User Password";
+			String resultPassword = EmailUtil.searchEmailAndReturnResult(host, userName, pwd, expFromPwd,
+					expEmailSubjectPwd, MYLOConstants.MYLO_TRANSFEREE_PASSWORD);
+			CoreFunctions.writeToPropertiesFile("Mylo_Transferee_PasswordInEMail", resultPassword);
+			CoreFunctions.writeToPropertiesFile("Mylo_Transferee_UserNameInEMail", userName_InEmail);
+			Reporter.addStepLog(CoreConstants.PASS + CoreConstants.VRFIED_THAT
+					+ "UserName & Password Successfully received in Email for User : " + userName_InEmail);
+			return true;
+
+		} catch (Exception e) {
+			Reporter.addStepLog(
+					MessageFormat.format(COREFLEXConstants.EXCEPTION_OCCURED_WHILE_READING_CREDENTIALS_FROM_EMAIL,
+							CoreConstants.FAIL, e.getMessage()));
+		}
+
+		return false;
 	}
 }

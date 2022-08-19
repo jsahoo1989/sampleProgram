@@ -28,3 +28,8 @@ And alert message "Please input a query parameter." is displayed after clicking 
 And Message "No such file found" is displayed after clicking on Execute button with invalid File ID "1234"
 When user clicks on Execute button after entering valid Client Id "2", Status "Active", Origin Country "USA" and Destination Country "USA"
 Then Query results should appear based on the parameter provided sorted by File ID
+
+@PerformanceScenario
+Scenario: Mylo-Validate Select Query parameters from Assignment Options
+Given he queries "Active" files for clientId "45609"
+Then he is on "Activity & Finance" section after selecting "Activity & Finance" tab on "MyloDashboard Home Page" for 200 different files selected each time from the query results

@@ -594,8 +594,9 @@ public class MyloJourneyPage_PartnerSection extends Base {
 		boolean flag = false;
 		java.util.List<Map<String, String>> data = table.asMaps(String.class, String.class);
 		for (int i = 0; i < data.size(); i++) {
-			setPartnerPhoneEmailFields(MYLOConstants.PARTNER_EMAIL_ADDRESS,
-					data.get(i).get(MYLOConstants.PARTNER_EMAIL_ADDRESS), 0);
+			if (!(data.get(i).get(MYLOConstants.PARTNER_EMAIL_ADDRESS).equals("")))
+				setPartnerPhoneEmailFields(MYLOConstants.PARTNER_EMAIL_ADDRESS,
+						data.get(i).get(MYLOConstants.PARTNER_EMAIL_ADDRESS), 0);
 			clickDropdownFieldsOnPartnerSection(MYLOConstants.PARTNER_EMAIL_TYPE, 0);
 			setDifferentDropDownFields(MYLOConstants.PARTNER_EMAIL_TYPE,
 					data.get(i).get(MYLOConstants.PARTNER_EMAIL_TYPE));

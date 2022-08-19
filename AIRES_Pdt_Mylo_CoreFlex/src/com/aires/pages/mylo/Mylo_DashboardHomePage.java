@@ -3,6 +3,7 @@ package com.aires.pages.mylo;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
+import java.util.Date;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -15,8 +16,11 @@ import org.testng.Assert;
 import com.aires.businessrules.Base;
 import com.aires.businessrules.BusinessFunctions;
 import com.aires.businessrules.CoreFunctions;
+import com.aires.businessrules.constants.CoreConstants;
 import com.aires.businessrules.constants.MYLOConstants;
 import com.aires.utilities.Log;
+import com.vimalselvam.cucumber.listener.Reporter;
+
 import cucumber.api.DataTable;
 
 public class Mylo_DashboardHomePage extends Base {
@@ -98,6 +102,32 @@ public class Mylo_DashboardHomePage extends Base {
 	@FindBy(how = How.CSS, using = "app-aires-file-information")
 	private WebElement _fileInformationSection;
 	
+	@FindBy(how = How.XPATH, using = "//canvas[@data-id!='canvas']")
+	private WebElement _webswingSection;
+	
+	@FindBy(how = How.XPATH, using = "//div[@class='mylo-grid-warea']/ul/li[1]")
+	private List<WebElement> _resultFileIds;
+	
+	@FindBy(how = How.XPATH, using = "//a[text()='Next']")
+	private WebElement _resultNextBtn;
+	
+	@FindBy(how = How.XPATH, using = "//button[text()='Recall Query']")
+	private WebElement _recallQueryBtn;
+	
+	@FindBy(how = How.XPATH, using = "//div[@class='webswing-banner']/span[3]")
+	private WebElement _webswingBannerFileId;
+	
+	@FindBy(how = How.XPATH, using = "//button[text()='Different Person, Do Not Link']")
+	private WebElement _diffPersonDntLinkBtn;
+	
+	@FindBy(how = How.XPATH, using = "//label[text()='Jump to:']/parent::div/descendant::input[@type='text']")
+	private WebElement _jumpToPageInsert;
+	
+	@FindBy(how = How.XPATH, using = "//label[text()='Jump to:']/parent::div/descendant::ng-select")
+	private WebElement _jumpToPageDropdown;
+	
+	@FindBy(how = How.XPATH, using = "//mat-dialog-container")
+	private WebElement myloPopUpQueryResult;
 			
 
 	final By _selectQueryoptions = By.xpath("./button");
@@ -105,6 +135,7 @@ public class Mylo_DashboardHomePage extends Base {
 	final By _queryResultColumns = By.xpath("./li");
 	final By _dropdownSections = By.xpath(".//parent::div/ng-select");
 	final By _journeySubSections = By.cssSelector("#collapseSummary a");
+	public By _pageJumpTo = By.cssSelector("div[role='option'] span");
 			
 	LinkedHashMap<String, Integer> parameterDropdownFieldsMap = new LinkedHashMap<String, Integer>();
 
@@ -151,14 +182,13 @@ public class Mylo_DashboardHomePage extends Base {
 		List<WebElement> journeySubSectionList = CoreFunctions.waitTillElementListSizeNotEmpty(driver,
 				_journeySubSections);
 		CoreFunctions.selectItemInListByText(driver, journeySubSectionList, optionToBeSelected);
-		CoreFunctions.highlightObject(driver, _assignmentOptionHeader);
-		String headerText = _assignmentOptionHeader.getText();
+		CoreFunctions.waitForMyloSpinnnerInvisibilityIfExist(driver, _spinner);
 		Assert.assertTrue((optionToBeSelected.equals(MYLOConstants.QUERY_FILE))
-				? headerText.equals(MYLOConstants.ASSIGNMENT_QUERYTYPE_HEADER)
-				: headerText.equals(MYLOConstants.CREATE_NEW_FILE));
+				? CoreFunctions.getElementText(driver, _assignmentOptionHeader).equals(MYLOConstants.ASSIGNMENT_QUERYTYPE_HEADER)
+				:(optionToBeSelected.equals(MYLOConstants.NEW_FILE_BUTTON))
+				? CoreFunctions.getElementText(driver, _assignmentOptionHeader).equals(MYLOConstants.CREATE_NEW_FILE)
+				:CoreFunctions.isElementExist(driver, _webswingSection, 60));
 	}
-	
-	
 
 	public boolean verifySelectQueryOptions(DataTable data) {
 		try {
@@ -297,6 +327,67 @@ public class Mylo_DashboardHomePage extends Base {
 			CoreFunctions.highlightObject(driver, _errorText);
 			CoreFunctions.click(driver, _okButtonPopUp, MYLOConstants.OK_BUTTON);
 	}
+	}
+	
+	
+	public void clickPopUpsIfExist() {
+		if (CoreFunctions.isElementExist(driver, _okButtonPopUp, 6)) {
+			CoreFunctions.waitForMyloSpinnnerInvisibilityIfExist(driver, _spinner);
+			CoreFunctions.click(driver, _okButtonPopUp, MYLOConstants.OK_BUTTON);
+			CoreFunctions.waitForMyloSpinnnerInvisibilityIfExist(driver, _spinner);
+		}  
+		
+		if (CoreFunctions.isElementExist(driver, _diffPersonDntLinkBtn, 6)) {
+			CoreFunctions.waitForMyloSpinnnerInvisibilityIfExist(driver, _spinner);
+			CoreFunctions.click(driver, _diffPersonDntLinkBtn, MYLOConstants.DIFFERENT_PERSON_DONOT_LINK);
+			CoreFunctions.waitForMyloSpinnnerInvisibilityIfExist(driver, _spinner);
+		}
+	}
+	
+	public void jumpToSpecificvpages(int pageNo) {
+		if(pageNo!=1) {
+		CoreFunctions.clickElement(driver, _jumpToPageDropdown);
+		CoreFunctions.clearAndSetText(driver, _jumpToPageInsert,"JumpTo:Section", Integer.toString(pageNo));
+		List<WebElement> jumpToPagesList = CoreFunctions.getElementListByLocator(driver, _pageJumpTo);
+		BusinessFunctions.selectItemFromListUsingText(driver, jumpToPagesList, Integer.toString(pageNo));
+		CoreFunctions.waitForMyloSpinnnerInvisibilityIfExist(driver, _spinner);
+		}	
+	}
+	
+	
+	public void navigateActFinanceSectionForDifffileIds(int maxLimit) {
+		int flag=0;
+		int noOfPages=1;
+		outerloop:
+		while(flag<maxLimit) {
+			for(int j=0;j<_resultFileIds.size();j++) {			
+				String fileId= CoreFunctions.getElementText(driver, _resultFileIds.get(j));
+				int s=flag+1;
+				Reporter.addStepLog("<b><i>FileID_</i></b>"+s+": "+ fileId);
+				CoreFunctions.hoverAndClick(driver, _resultFileIds.get(j), fileId);
+				CoreFunctions.waitForMyloSpinnnerInvisibilityIfExist(driver, _spinner);
+				clickPopUpsIfExist();
+				CoreConstants.TIME_AFTER_ACTION = new Date().getTime();		
+				selectOptionsFromAssignmentMenu("Activity & Finance");
+				CoreFunctions.waitForMyloSpinnnerInvisibilityIfExist(driver, _spinner);
+				Assert.assertTrue(CoreFunctions.isElementExist(driver, _webswingSection, 60));
+				CoreConstants.TIME_BEFORE_ACTION = new Date().getTime();
+				Reporter.addStepLog("<b>Total time taken to load <i>WebSwing</i> section is :"
+						+ CoreFunctions.calculatePageLoadTime(CoreConstants.TIME_BEFORE_ACTION,CoreConstants.TIME_AFTER_ACTION) + " Seconds </b>");
+				Assert.assertEquals(CoreFunctions.getElementText(driver, _webswingBannerFileId), fileId);
+				flag++;
+				CoreFunctions.explicitWaitTillElementBecomesClickable(driver, _recallQueryBtn, "Recall Query Button");
+				CoreFunctions.clickElement(driver, _recallQueryBtn);
+				CoreFunctions.waitForMyloSpinnnerInvisibilityIfExist(driver, _spinner);
+				CoreFunctions.explicitWaitTillElementVisibility(driver, myloPopUpQueryResult, "Mylo PopUp",60);
+				if(flag==maxLimit)
+					break outerloop;
+				jumpToSpecificvpages(noOfPages);
+			}
+			
+			noOfPages++;
+			jumpToSpecificvpages(noOfPages);
+		}
 	}
 
 }

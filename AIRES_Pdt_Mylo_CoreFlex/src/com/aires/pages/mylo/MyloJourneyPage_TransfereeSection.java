@@ -967,6 +967,7 @@ public class MyloJourneyPage_TransfereeSection extends Base {
 			List<WebElement> genderOptions = CoreFunctions.getElementListByLocator(driver, _genderDropdownOptions);
 			WebElement genderXWebElement = CoreFunctions.returnItemInListByText(driver, genderOptions, MYLOConstants.GENDER_X);
 			CoreFunctions.hover(driver, genderXWebElement);
+			System.out.println(genderXWebElement.getAttribute(MYLOConstants.TITLE));
 			flag = genderXWebElement.getAttribute(MYLOConstants.TITLE).equals(msg);
 		} catch (Exception e) {
 			Reporter.addStepLog(MessageFormat.format(MYLOConstants.FAIL_TO_VERIFY_HOVER_MESSAGE_ON_SECTION,

@@ -1,5 +1,6 @@
 package com.aires.pages.mylo;
 
+import java.text.MessageFormat;
 import java.util.ArrayList;
 import java.util.LinkedHashMap;
 import java.util.List;
@@ -8,6 +9,9 @@ import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 
 import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.WebElement;
+import org.openqa.selenium.support.FindBy;
+import org.openqa.selenium.support.How;
 import org.testng.Assert;
 
 import com.aires.businessrules.Base;
@@ -27,6 +31,10 @@ public class Mylo_JourneyPage extends Base {
 		super(driver);
 	}
 	
+	@FindBy(how = How.CSS, using = "app-authorization-tracking")
+	private WebElement _authTrackSection;
+	
+	
 	String environment= System.getProperty("envt");
 	String application= System.getProperty("application");
 	//String environment= CoreFunctions.getPropertyFromConfig("envt");
@@ -34,6 +42,26 @@ public class Mylo_JourneyPage extends Base {
 	List<String> journeyCategory = new ArrayList<String>();
 	List<String> journeyDetails = new ArrayList<String>();
 	Map<String, String> journeyDetailsMap = new LinkedHashMap<String,String>();
+	LinkedHashMap<String, WebElement> journeyWebElementsMap = new LinkedHashMap<String, WebElement>();
+	
+	public void mapJourneySectionWebElements() {
+		journeyWebElementsMap.put(MYLOConstants.AUTH_TRACK_SECTION, _authTrackSection);
+	}
+	
+	
+	public void scrollToJourneySection(String elementName,String pageName) {
+		mapJourneySectionWebElements();
+		try {
+			CoreFunctions.scrollToElementUsingJavaScript(driver, journeyWebElementsMap.get(elementName),
+					elementName);
+			CoreFunctions.highlightObject(driver, journeyWebElementsMap.get(elementName));
+		} catch (Exception e) {
+			Reporter.addStepLog(MessageFormat.format(CoreConstants.FAIL_TO_VERIFY_ELEMENT_ON_SECTION,
+					CoreConstants.FAIL, elementName, pageName));
+			Assert.fail(MessageFormat.format(CoreConstants.FAIL_TO_VERIFY_ELEMENT_ON_SECTION, CoreConstants.FAIL,
+					elementName, pageName));
+		}
+	}
 	
 	public String getMyloJourneyDetailsByFileType(String fileType) {
 		switch (environment) {

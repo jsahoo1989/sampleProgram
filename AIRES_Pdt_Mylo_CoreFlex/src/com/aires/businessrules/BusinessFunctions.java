@@ -48,7 +48,6 @@ import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.interactions.Actions;
 import org.openqa.selenium.By;
-import org.openqa.selenium.NoSuchElementException;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.FluentWait;
 import org.openqa.selenium.support.ui.Select;
@@ -1071,7 +1070,7 @@ public class BusinessFunctions {
 	}
 	
 	public static boolean verifyMyloValidationMessage(String expectedMessage, String actualMessage,String sectionName) {
-		boolean flag = actualMessage.equals(expectedMessage);
+		boolean flag = actualMessage.equalsIgnoreCase(expectedMessage);
 		String msg = (flag)
 				? MessageFormat.format(MYLOConstants.VERIFIED_MESSAGE_DISPLAYED, CoreConstants.PASS,
 						actualMessage, sectionName)
@@ -1079,5 +1078,22 @@ public class BusinessFunctions {
 						actualMessage, sectionName);
 		Reporter.addStepLog(msg);
 		return flag;
+	}
+	
+	public static void verifyMyloButtonEnabilityStatus(String type, WebElement element, String btnName, String sectionName,
+			String pageName) {
+		boolean flag = CoreFunctions.isElementVisible(element);
+		if (type.contains(MYLOConstants.WITHOUT)||type.contains(MYLOConstants.CANCELED)||type.contains(MYLOConstants.CLOSED)) {
+			Assert.assertFalse(flag, MessageFormat.format(MYLOConstants.BUTTON_ENABLED, CoreConstants.FAIL, btnName,
+					sectionName, pageName));
+			Reporter.addStepLog(MessageFormat.format(MYLOConstants.BUTTON_DISABLED, CoreConstants.PASS, btnName,
+					sectionName, pageName));
+
+		} else {
+			Assert.assertTrue(flag, MessageFormat.format(MYLOConstants.BUTTON_DISABLED, CoreConstants.FAIL, btnName,
+					sectionName, pageName));
+			Reporter.addStepLog(MessageFormat.format(MYLOConstants.BUTTON_ENABLED, CoreConstants.PASS, btnName,
+					sectionName, pageName));
+		}
 	}
 }

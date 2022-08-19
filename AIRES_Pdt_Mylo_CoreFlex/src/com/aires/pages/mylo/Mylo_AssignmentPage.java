@@ -57,8 +57,11 @@ public class Mylo_AssignmentPage extends Base {
 	@FindBy(how = How.XPATH, using = "//label[text()='Name']//preceding-sibling::ng-select")
 	private WebElement _memberNameSelectButtton;
 
-	@FindBy(how = How.XPATH, using = "//h1[text()='Aires File Team']/parent::td/following-sibling::td/button")
+	@FindBy(how = How.CSS, using = "app-aires-file-teams i[class='icon-PlusCircle_Open']")
 	private WebElement _airesFileTeamAddButton;
+	
+	@FindBy(how = How.CSS, using = "app-aires-file-teams i[class='icon-Pencil_Open']")
+	private WebElement _airesFileTeamEditButton;
 
 	@FindBy(how = How.XPATH, using = "//i[@class='icon-XCircle_Open']/parent::button")
 	private WebElement _airesFileTeamCancelButton;
@@ -102,7 +105,7 @@ public class Mylo_AssignmentPage extends Base {
 	@FindBy(how = How.XPATH, using = "//ng-select[@name='policyType']//span[@class='ng-arrow-wrapper']")
 	private WebElement _fileInfoPolicyTypeDropdown;
 
-	@FindBy(how = How.XPATH, using = "//app-aires-file-information/descendant::span[text()='Details']")
+	@FindBy(how = How.XPATH, using = "//app-aires-file-information/descendant::span[text()=' Details ']")
 	private WebElement _fileInfoDetailsCarrot;
 
 	@FindBy(how = How.XPATH, using = "//ng-select[@name='status']//span[contains(@class,'ng-value-label')]")
@@ -456,8 +459,8 @@ public class Mylo_AssignmentPage extends Base {
 	final By _fileInfoPolicyTypeDropdownReadOnly = By.xpath("//ng-select[@name='policyType']//input[@disabled]");
 	final By _assignmentSubMenus = By.xpath("//div[contains(@class,'navlist__container')]/li/descendant::a");
 
-	// String environment = CoreFunctions.getPropertyFromConfig("envt");
-	String environment = System.getProperty("envt");
+	 //String environment = CoreFunctions.getPropertyFromConfig("envt");
+	 String environment = System.getProperty("envt");
 	String updatedTeamMember, updatedPolicyType, updatedTaxTreatment, updatedOffice, updatedJourneyType,
 			updatedTransferType, updatedHomeStatus, updatedFileInfoCheckboxSelected, updatedTempAddressCityValue,
 			updatedMailAddressCityValue, updatedTempAddressZipCodeValue, updatedMailAddressZipCodeValue,
@@ -491,6 +494,9 @@ public class Mylo_AssignmentPage extends Base {
 		case MYLOConstants.YES_BUTTON:
 			CoreFunctions.click(driver, _YesButton, _YesButton.getText());
 			break;
+		case MYLOConstants.EDIT_BUTTON:
+			CoreFunctions.click(driver, _airesFileTeamEditButton, MYLOConstants.EDIT_BUTTON);
+			break;
 		}
 	}
 
@@ -499,8 +505,8 @@ public class Mylo_AssignmentPage extends Base {
 	 */
 	public void addRole(String roleName) {
 		CoreFunctions.explicitWaitTillElementBecomesClickable(driver, _roleSelectButtton,
-				_roleSelectButtton.getAttribute(MYLOConstants.NAME));
-		CoreFunctions.click(driver, _roleSelectButtton, _roleSelectButtton.getAttribute(MYLOConstants.NAME));
+				roleName);
+		CoreFunctions.click(driver, _roleSelectButtton,roleName);
 		if (CoreFunctions.isElementByLocatorExist(driver, _dropdownOptions, 10)) {
 			List<WebElement> roleList = CoreFunctions.getElementListByLocator(driver, _dropdownOptions);
 			CoreFunctions.selectItemInListByText(driver, roleList, roleName);
@@ -801,6 +807,7 @@ public class Mylo_AssignmentPage extends Base {
 	 *         section
 	 */
 	public String getFileInfoFieldValue(String fieldName) {
+		mapFileInfoWebElementFields();
 		try {
 			CoreFunctions.explicitWaitTillElementVisibility(driver, airesFileInfoFieldsMap.get(fieldName),
 					airesFileInfoFieldsMap.get(fieldName).getText());

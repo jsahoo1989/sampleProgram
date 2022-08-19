@@ -126,5 +126,21 @@ public class MyloDashboard_Steps {
 		Assert.assertTrue(myloDashboardPage.verifyQueryResults(MYLOConstants.FILE_ID, ""),
 				MYLOConstants.INCORRECT_FILEID_SORTING);
 	}
+	
+	
+	@Given("^he queries \"([^\"]*)\" files for clientId \"([^\"]*)\"$")
+	public void he_queries_files_for_clientId(String statusName, String clientID) {
+		myloDashboardPage.clickOptionFromMainMenu(MYLOConstants.JOURNEY);
+		myloDashboardPage.selectOptionsFromAssignmentMenu(MYLOConstants.QUERY_FILE);
+		myloDashboardPage.selectParameterFromQueryScreen(MYLOConstants.FILE);
+		myloDashboardPage.selectOptionsForFileParameters(MYLOConstants.CLIENT_ID, clientID);
+		myloDashboardPage.selectOptionsForFileParameters(MYLOConstants.STATUS, statusName);
+		myloDashboardPage.clickExecuteButton();
+	}
+
+	@Then("^he is on \"([^\"]*)\" section after selecting \"([^\"]*)\" tab on \"([^\"]*)\" for (\\d+) different files selected each time from the query results$")
+	public void he_is_on_section_after_selecting_tab_on_for_different_files_selected_each_time_from_the_query_results(String arg1, String arg2, String arg3, int maxLimit) {
+		myloDashboardPage.navigateActFinanceSectionForDifffileIds(maxLimit);
+	}
 
 }

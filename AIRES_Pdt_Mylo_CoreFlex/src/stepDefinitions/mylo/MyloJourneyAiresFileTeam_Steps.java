@@ -50,6 +50,7 @@ public class MyloJourneyAiresFileTeam_Steps {
 	@Given("^he selects \"([^\"]*)\" with random team member from the dropdown after clicking on \"([^\"]*)\" button$")
 	public void he_selects_with_random_team_member_from_the_dropdown_after_clicking_on_button(String roleName,
 			String buttonName) {
+		myloAssignmentPage.clickButtonOnAiresFileTeamSection(MYLOConstants.EDIT_BUTTON);
 		myloAssignmentPage.clickButtonOnAiresFileTeamSection(buttonName);
 		myloAssignmentPage.addRole(roleName);
 		myloAssignmentPage.addTeamMember(MYLOConstants.RANDOM);
@@ -64,6 +65,7 @@ public class MyloJourneyAiresFileTeam_Steps {
 	@Given("^he did not find the existing team member for specified \"([^\"]*)\" in the dropdown section after clicking on \"([^\"]*)\" button$")
 	public void he_did_not_find_the_existing_team_member_for_specified_in_the_dropdown_section_after_clicking_on_button(
 			String roleName, String buttonName) {
+		myloAssignmentPage.clickButtonOnAiresFileTeamSection(MYLOConstants.EDIT_BUTTON);
 		myloAssignmentPage.clickButtonOnAiresFileTeamSection(buttonName);
 		myloAssignmentPage.addRole(roleName);
 		Assert.assertFalse(myloAssignmentPage.verifyExistingTeamMemberInDropdown(roleName),
@@ -73,6 +75,7 @@ public class MyloJourneyAiresFileTeam_Steps {
 	@Given("^he selects \"([^\"]*)\" as role in the dropdown section after clicking on \"([^\"]*)\" button$")
 	public void he_selects_as_role_in_the_dropdown_section_after_clicking_on_button(String roleName,
 			String buttonName) {
+		myloAssignmentPage.clickButtonOnAiresFileTeamSection(MYLOConstants.EDIT_BUTTON);
 		myloAssignmentPage.clickButtonOnAiresFileTeamSection(buttonName);
 	}
 
@@ -123,6 +126,7 @@ public class MyloJourneyAiresFileTeam_Steps {
 
 	@When("^he clicks on role dropdown after clicking on \"([^\"]*)\" button$")
 	public void he_clicks_on_role_dropdown_after_clicking_on_button(String buttonName) {
+		myloAssignmentPage.clickButtonOnAiresFileTeamSection(MYLOConstants.EDIT_BUTTON);
 		myloAssignmentPage.clickButtonOnAiresFileTeamSection(buttonName);
 	}
 

@@ -20,7 +20,7 @@ public class MyloCreateNewFile_Steps {
 	private Mylo_DashboardHomePage myloDashboardPage;
 	private MyloJourneyPage_CreateNewFileSection myloNewFileSection;
 
-	public MyloCreateNewFile_Steps(TestContext context) {
+	public MyloCreateNewFile_Steps(TestContext context) throws Exception {
 		testContext = context;
 		myloDashboardPage = testContext.getMyloPageObjectManager().getDashboardHomePage();
 		myloNewFileSection = testContext.getMyloPageObjectManager().getJourneyPageCreateNewFileSection();

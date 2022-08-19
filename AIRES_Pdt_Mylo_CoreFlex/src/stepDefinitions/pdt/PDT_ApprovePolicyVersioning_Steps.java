@@ -2,7 +2,9 @@ package stepDefinitions.pdt;
 
 import java.text.MessageFormat;
 import java.util.Date;
+import java.util.LinkedHashMap;
 import java.util.List;
+import java.util.Map;
 
 import org.testng.Assert;
 
@@ -20,6 +22,7 @@ import com.aires.pages.PDT_Mylo_CoreFlex_Common_LoginPage;
 import com.aires.pages.mobilityx.MobilityX_DashboardHomePage;
 import com.aires.pages.mobilityx.MobilityX_LoginPage;
 import com.aires.pages.pdt.PDT_AddNewPolicyPage;
+import com.aires.pages.pdt.PDT_CulturalTrainingPage;
 import com.aires.pages.pdt.PDT_GeneralInformationPage;
 import com.aires.pages.pdt.PDT_PolicyAssignmentPage;
 import com.aires.pages.pdt.PDT_PolicyBenefitCategoryPage;
@@ -47,13 +50,20 @@ public class PDT_ApprovePolicyVersioning_Steps {
 	private PDT_Mylo_CoreFlex_Common_LoginPage _pdtMyloCommonLoginPage;
 	private PDT_PolicyAssignmentPage _policyAssignmentPage;
 	private PageObjectManager_Pdt _pageObjectManagerPDT;
+	private PDT_CulturalTrainingPage _culturalTrainingPage;
+	LinkedHashMap<String, String> subBenefitMap = new LinkedHashMap<String, String>();
 
 	long timeBeforeAction, timeAfterAction;
 	/*private PDT_LoginDetails _loginDetailsApplication = FileReaderManager.getInstance().getJsonReader()
 			.getLoginByApplication(CoreFunctions.getPropertyFromConfig("application").toLowerCase());*/
 	private PDT_LoginDetails _loginDetailsApplication = FileReaderManager.getInstance().getJsonReader()
 			.getLoginByApplication(System.getProperty("application").toLowerCase());
-	
+
+	public void populateSubBenefitMap() {
+		subBenefitMap.put(PDTConstants.LANG_TRAINING,
+				PDTConstants.LANGUAGE_TRAINING_EMPLOYEE + ", " + PDTConstants.LANGUAGE_TRAINING_FAMILY);
+	}
+
 	public PDT_ApprovePolicyVersioning_Steps(TestContext context) {
 		testContext = context;
 		viewPolicyPage = testContext.getPageObjectManager().getViewPolicyPage();
@@ -63,6 +73,7 @@ public class PDT_ApprovePolicyVersioning_Steps {
 		generalInfoPage = testContext.getPageObjectManager().getGeneralInfoPage();
 		_pdtMyloCommonLoginPage = testContext.getPageObjectManager().getCommonLoginPage();
 		_policyAssignmentPage = testContext.getPageObjectManager().getPolicyAssignmentPage();
+		_culturalTrainingPage = testContext.getPageObjectManager().getCulturalTrainingPage();
 
 	}
 
@@ -74,9 +85,10 @@ public class PDT_ApprovePolicyVersioning_Steps {
 
 	@Then("^\"([^\"]*)\" button should become visible on the 'Policy Benefit' page$")
 	public void button_should_become_visible(String btnName) {
-		Assert.assertTrue(subBenefitPage.verifyStatusAndVersionOfPolicy(
-				addNewPolicyPage.getPolicyName().split("\\(#")[0].trim(), PDTConstants.STATUS_SUBMITTED, PDTConstants.VERSION_V1, PDTConstants.POLICY_BENEFIT));
-		
+		Assert.assertTrue(
+				subBenefitPage.verifyStatusAndVersionOfPolicy(addNewPolicyPage.getPolicyName().split("\\(#")[0].trim(),
+						PDTConstants.STATUS_SUBMITTED, PDTConstants.VERSION_V1, PDTConstants.POLICY_BENEFIT));
+
 		Assert.assertTrue(subBenefitPage.verifyButtonVisible(btnName, policyBenefitCategoryPage),
 				MessageFormat.format(PDTConstants.FAILED_TO_VERIFY_BTN_VISIBLE, CoreConstants.FAIL, btnName,
 						policyBenefitCategoryPage.getBenefitCategoryName()));
@@ -107,7 +119,6 @@ public class PDT_ApprovePolicyVersioning_Steps {
 				MessageFormat.format(PDTConstants.FAILED_TO_VERIFY_HEADING_ON_PAGE, CoreConstants.FAIL, pageName,
 						PDTConstants.ADD_NEW_POLICY_FORM, addNewPolicyPage.getElementText(PDTConstants.HEADING)));
 		addNewPolicyPage.enterClientPolicyDetails();
-
 		generalInfoPage.explicitWaitForGeneralInfoHeading();
 
 		Assert.assertTrue(
@@ -132,10 +143,9 @@ public class PDT_ApprovePolicyVersioning_Steps {
 	@When("^he clicks on 'Approve Policy' button after verifying status \"([^\"]*)\" on header section of \"([^\"]*)\" page$")
 	public void he_clicks_on_Approve_Policy_button_after_verifying_success_message_on_page(String policyStatus,
 			String pageName) {
-		/*Assert.assertTrue(subBenefitPage.verifySaveSuccessMessage(successMsg, pageName, addNewPolicyPage), MessageFormat
-				.format(PDTConstants.FAILED_TO_VERIFY_SUCCESS_MSG, CoreConstants.FAIL, successMsg, pageName));*/
-		Assert.assertTrue(subBenefitPage.verifyStatusAndVersionOfPolicy(
-				addNewPolicyPage.getPolicyName().split("\\(#")[0].trim(), policyStatus, PDTConstants.VERSION_V1, pageName));
+		Assert.assertTrue(
+				subBenefitPage.verifyStatusAndVersionOfPolicy(addNewPolicyPage.getPolicyName().split("\\(#")[0].trim(),
+						policyStatus, PDTConstants.VERSION_V1, pageName));
 		subBenefitPage.clickElementOfPage(PDTConstants.BTN_APPROVE_POLICY, pageName);
 	}
 
@@ -207,9 +217,7 @@ public class PDT_ApprovePolicyVersioning_Steps {
 				MessageFormat.format(PDTConstants.FAILED_TO_VERIFY_HEADING_ON_PAGE, CoreConstants.FAIL, pageName,
 						PDTConstants.ADD_NEW_POLICY_FORM, addNewPolicyPage.getElementText(PDTConstants.HEADING)));
 		addNewPolicyPage.enterClientPolicyDetails();
-
 		generalInfoPage.explicitWaitForGeneralInfoHeading();
-
 		Assert.assertTrue(
 				generalInfoPage.verifyClientDetails(addNewPolicyPage.getClientId(), addNewPolicyPage.getClientName()),
 				MessageFormat.format(PDTConstants.FAILED_TO_VERIFY_CLIENT_DETAILS, CoreConstants.FAIL,
@@ -234,13 +242,10 @@ public class PDT_ApprovePolicyVersioning_Steps {
 		subBenefitPage.verifySubBenefitCategoriesAreDisplayed(subBenefits, benefitCategory);
 		subBenefitPage.iterateAndSelectSubBenefits(benefitCategory, subBenefits, addNewPolicyPage, objStep,
 				PDTConstants.PDT_BTN_SAVE_SUBMIT);
-		
-		  Assert.assertTrue(subBenefitPage.verifySaveSuccessMessage(PDTConstants.POLICY_SAVE_MSG,
-		  PDTConstants.POLICY_BENEFIT, addNewPolicyPage), MessageFormat.format(PDTConstants.FAILED_TO_VERIFY_SUCCESS_MSG,
-		  CoreConstants.FAIL, PDTConstants.POLICY_SAVE_MSG, PDTConstants.POLICY_BENEFIT));
-		/*Assert.assertTrue(subBenefitPage.verifyStatusAndVersionOfPolicy(
-				addNewPolicyPage.getPolicyName().split("\\(#")[0].trim(), PDTConstants.STATUS_SUBMITTED, PDTConstants.VERSION_V1, PDTConstants.POLICY_BENEFIT));*/
-		 
+		Assert.assertTrue(
+				subBenefitPage.verifyStatusAndVersionOfPolicy(addNewPolicyPage.getPolicyName().split("\\(#")[0].trim(),
+						PDTConstants.STATUS_SUBMITTED, PDTConstants.VERSION_V1, PDTConstants.POLICY_BENEFIT));
+
 		subBenefitPage.clickElementOfPage(PDTConstants.BTN_APPROVE_POLICY, PDTConstants.POLICY_BENEFIT);
 
 		subBenefitPage.clickAssociateWithNewAuth();
@@ -249,7 +254,6 @@ public class PDT_ApprovePolicyVersioning_Steps {
 				viewPolicyPage.verifyPolicyStatusWithVersion(addNewPolicyPage.getPolicyName().split("\\(#")[0].trim(),
 						PDTConstants.STATUS_ACTIVE, PDTConstants.VERSION_V1, pageName));
 		_pdtMyloCommonLoginPage.logoutFromPDTApplication();
-		//testContext.getWebDriverManager().closeDriver();
 	}
 
 	@Given("^he has submitted a new authorization form in MobilityX application using template \"([^\"]*)\"$")
@@ -284,7 +288,8 @@ public class PDT_ApprovePolicyVersioning_Steps {
 	}
 
 	@When("^he clicks on \"([^\"]*)\" icon on \"([^\"]*)\" page of 'PDT' application for the newly created Active policy$")
-	public void he_clicks_on_Assignment_History_icon_on_page_for_the_newly_created_Active_policy(String iconName, String pageName) {
+	public void he_clicks_on_Assignment_History_icon_on_page_for_the_newly_created_Active_policy(String iconName,
+			String pageName) {
 		_webDriverManager = new WebDriverManager();
 		_webDriverManager.getDriver().navigate()
 				.to(FileReaderManager.getInstance().getConfigReader().getPDTApplicationUrl());
@@ -292,7 +297,7 @@ public class PDT_ApprovePolicyVersioning_Steps {
 		_pdtMyloCommonLoginPage = _pageObjectManagerPDT.getCommonLoginPage();
 		viewPolicyPage = _pageObjectManagerPDT.getViewPolicyPage();
 		Assert.assertTrue(_pdtMyloCommonLoginPage.loginByUserType(PDTConstants.CSM, viewPolicyPage),
-				MessageFormat.format(PDTConstants.FAILED_TO_VERIFY_LOGGED_IN_USER, CoreConstants.FAIL));		
+				MessageFormat.format(PDTConstants.FAILED_TO_VERIFY_LOGGED_IN_USER, CoreConstants.FAIL));
 		viewPolicyPage.searchByPolicyName(iconName, addNewPolicyPage.getPolicyName().split("\\(#")[0].trim(), pageName);
 	}
 
@@ -317,9 +322,116 @@ public class PDT_ApprovePolicyVersioning_Steps {
 	}
 
 	@Then("^\"([^\"]*)\" button becomes \"([^\"]*)\" after entering text on Description textbox$")
-	public void create_button_becomes_enabled_after_entering_text_on_Description_textbox(String btnName, String btnStatus) {
+	public void create_button_becomes_enabled_after_entering_text_on_Description_textbox(String btnName,
+			String btnStatus) {
 		Assert.assertTrue(viewPolicyPage.enterDescriptionAndVerifyCreateBtn(btnName, btnStatus),
-				MessageFormat.format(PDTConstants.FAILED_TO_VERIFY_BTN_STATE, btnName, btnStatus));	
-		//testContext.getWebDriverManager().closeDriver();
+				MessageFormat.format(PDTConstants.FAILED_TO_VERIFY_BTN_STATE, btnName, btnStatus));
+	}
+
+	@Given("^he has navigated to 'General Information page' of PDT application followed by selection of \"([^\"]*)\" as Benefit Category on \"([^\"]*)\" page after clicking on \"([^\"]*)\" icon on \"([^\"]*)\" page$")
+	public void he_has_navigated_to_General_Information_page_of_PDT_application_followed_by_selection_of_as_Benefit_Category_on_page_after_clicking_on_icon_on_page(
+			String benefitCategoryName, String policyBenefitPage, String editIcon, String viewEditPolicyPage)
+			throws Throwable {
+		_webDriverManager = new WebDriverManager();
+		_webDriverManager.getDriver().navigate()
+				.to(FileReaderManager.getInstance().getConfigReader().getPDTApplicationUrl());
+		_pageObjectManagerPDT = new PageObjectManager_Pdt(_webDriverManager.getDriver());
+		_pdtMyloCommonLoginPage = _pageObjectManagerPDT.getCommonLoginPage();
+		viewPolicyPage = _pageObjectManagerPDT.getViewPolicyPage();
+		Assert.assertTrue(_pdtMyloCommonLoginPage.loginByUserType(PDTConstants.CSM, viewPolicyPage),
+				MessageFormat.format(PDTConstants.FAILED_TO_VERIFY_LOGGED_IN_USER, CoreConstants.FAIL));
+		viewPolicyPage.searchByPolicyName(editIcon, addNewPolicyPage.getPolicyName().split("\\(#")[0].trim(),
+				viewEditPolicyPage);
+
+		String[] buttonsArr = PDTConstants.BUTTONS_STATE.split(", ");
+		String[] buttonApprove = buttonsArr[0].split("_");
+		String[] buttonCancel = buttonsArr[1].split("_");
+		viewPolicyPage.contentsOfPopUp();
+		Assert.assertTrue(viewPolicyPage.verifyButton(buttonApprove[0], buttonApprove[1]),
+				MessageFormat.format(PDTConstants.FAILED_TO_VERIFY_BTN_STATE, buttonApprove[0], buttonApprove[1]));
+		Assert.assertTrue(viewPolicyPage.verifyButton(buttonCancel[0], buttonCancel[1]),
+				MessageFormat.format(PDTConstants.FAILED_TO_VERIFY_BTN_STATE, buttonCancel[0], buttonCancel[1]));
+		viewPolicyPage.enterDescription();
+		generalInfoPage = _pageObjectManagerPDT.getGeneralInfoPage();
+		generalInfoPage.explicitWaitForGeneralInfoHeading();
+		Assert.assertTrue(
+				generalInfoPage.verifyClientDetails(addNewPolicyPage.getClientId(), addNewPolicyPage.getClientName()),
+				MessageFormat.format(PDTConstants.FAILED_TO_VERIFY_CLIENT_DETAILS, CoreConstants.FAIL,
+						addNewPolicyPage.getClientId(), addNewPolicyPage.getClientName(),
+						generalInfoPage.getElementText(PDTConstants.CLIENT_ID),
+						generalInfoPage.getElementText(PDTConstants.CLIENT_NAME)));
+
+		Assert.assertTrue(generalInfoPage.verifyPolicyName(addNewPolicyPage.getPolicyName()),
+				MessageFormat.format(PDTConstants.FAILED_TO_VERIFY_POLICY_NAME, CoreConstants.FAIL,
+						addNewPolicyPage.getPolicyName(), generalInfoPage.getElementText(PDTConstants.POLICY_NAME)));
+		generalInfoPage.navigatePolicyBenefitPage(PDTConstants.POLICY_BENEFIT);
+		policyBenefitCategoryPage = _pageObjectManagerPDT.getpolicyBenefitCategoryPage();
+		Assert.assertTrue(policyBenefitCategoryPage.verifyPolicyBenefitCategoryHeading(policyBenefitPage),
+				MessageFormat.format(PDTConstants.FAIL_TO_VERIFY_ELEMENT_VAL_ON_PAGE, CoreConstants.FAIL,
+						PDTConstants.heading, PDTConstants.POLICY_BENEFIT_CATEGORIES, policyBenefitPage,
+						policyBenefitCategoryPage.getElementText(PDTConstants.HEADING)));
+		policyBenefitCategoryPage.selectPolicyBenefitCategory(benefitCategoryName);
+	}
+
+	@Given("^he has submitted the mandatory information for \"([^\"]*)\" sub-benefit forms$")
+	public void he_has_submitted_the_mandatory_information_for_sub_benefit_forms(String benefitCategory)
+			throws Throwable {
+		/********************************************/
+		PDT_SharedSubBenefit_Steps objStep = new PDT_SharedSubBenefit_Steps(testContext);
+		objStep.initPageObjectMan(_pageObjectManagerPDT);
+		List<String> subBenefits = BusinessFunctions.getSubBenefitList(benefitCategory);
+		subBenefitPage = _pageObjectManagerPDT.getSharedSubBenefitPage();
+		subBenefitPage.navigateBenefitCategories(benefitCategory);
+		subBenefitPage.verifySelectedPolicyBenefitCategoryName(benefitCategory);
+		subBenefitPage.verifySubBenefitCategoriesAreDisplayed(subBenefits, benefitCategory);
+		subBenefitPage.iterateAndSelectSubBenefits(benefitCategory, subBenefits, addNewPolicyPage, objStep,
+				PDTConstants.PDT_BTN_SAVE_SUBMIT);
+	}
+
+	@When("^he approves the policy after selecting the checkbox having label 'Associate this policy with a NEW authorization in IRIS\\?' on 'Approve Policy' pop-up with Default Date on \"([^\"]*)\" page$")
+	public void he_approves_the_policy_after_selecting_the_checkbox_having_label_Associate_this_policy_with_a_NEW_authorization_in_IRIS_on_Approve_Policy_pop_up_with_Default_Date(
+			String pageName) throws Throwable {
+		Assert.assertTrue(
+				subBenefitPage.verifyStatusAndVersionOfPolicy(addNewPolicyPage.getPolicyName().split("\\(#")[0].trim(),
+						PDTConstants.STATUS_SUBMITTED, PDTConstants.VERSION_NUM_V2, PDTConstants.POLICY_BENEFIT));
+		subBenefitPage.clickElementOfPage(PDTConstants.BTN_APPROVE_POLICY, PDTConstants.POLICY_BENEFIT);
+		subBenefitPage.clickAssociateWithNewAuth();
+		subBenefitPage.clickButtonOnApprovePolicyPopUp(PDTConstants.BTN_APPROVE, PDTConstants.POLICY_BENEFIT);
+	}
+
+	@Then("^both versions \"([^\"]*)\" of Policy should be displayed on \"([^\"]*)\" Policy Forms with below information$")
+	public void both_versions_of_Policy_should_be_displayed_on_Policy_Forms_with_below_information(String versionInfo,
+			String pageName, DataTable policyInfoTable) throws Throwable {
+		_policyAssignmentPage = _pageObjectManagerPDT.getPolicyAssignmentPage();
+		String policyName = addNewPolicyPage.getPolicyName().split("\\(#")[0].trim();
+		List<Map<String, String>> policyInfo = policyInfoTable.asMaps(String.class, String.class);
+		for (int i = 0; i < policyInfo.size(); i++) {
+			viewPolicyPage.waitForProgressBarToDisapper();
+			viewPolicyPage.populateIconMap();
+			viewPolicyPage.enterPolicyName(policyName);
+			viewPolicyPage.waitForProgressBarToDisapper();
+			Assert.assertTrue(
+					viewPolicyPage.searchAndVerifyPolicyByNameVersionStatus(policyName, policyInfo.get(i).get("Status"),
+							policyInfo.get(i).get("Version"), pageName),
+					MessageFormat.format(PDTConstants.FAILED_TO_VERIFY_POLICY_VER_STATUS, CoreConstants.FAIL,
+							policyName, policyInfo.get(i).get("Status"), policyInfo.get(i).get("Version"), pageName));
+			viewPolicyPage.iterateAndVerifyIcons(policyInfo.get(i).get("EnabledIcon"), "Enabled", pageName);
+			viewPolicyPage.navigateAssignmentHistoryPage(_policyAssignmentPage);
+			Assert.assertTrue(viewPolicyPage.verifyAssignmentLinkedCount(policyName, Integer.parseInt(policyInfo.get(i).get("Assignments_Linked")), _policyAssignmentPage), MessageFormat.format(PDTConstants.FAIL_TO_VERIFY_ASSIGNMENT_LINKED_COUNT, CoreConstants.FAIL,
+					Integer.parseInt(policyInfo.get(i).get("Assignments_Linked")), _policyAssignmentPage.getTransfereeCount()));
+			_policyAssignmentPage.exitAssignmentTransfereePage();
+			viewPolicyPage.iterateAndVerifyIcons(policyInfo.get(i).get("DisabledIcon"), "Disabled", pageName);
+		}
+	}
+	
+	@When("^he approves the policy after selecting selecting the checkbox having label 'Associate this policy with an existing authorization in IRIS\\?' on 'Approve Policy' pop-up with Default Date$")
+	public void he_approves_the_policy_after_selecting_selecting_the_checkbox_having_label_Associate_this_policy_with_an_existing_authorization_in_IRIS_on_Approve_Policy_pop_up_with_Default_Date() throws Throwable {
+		Assert.assertTrue(
+				subBenefitPage.verifyStatusAndVersionOfPolicy(addNewPolicyPage.getPolicyName().split("\\(#")[0].trim(),
+						PDTConstants.STATUS_SUBMITTED, PDTConstants.VERSION_NUM_V2, PDTConstants.POLICY_BENEFIT));
+
+		subBenefitPage.clickElementOfPage(PDTConstants.BTN_APPROVE_POLICY, PDTConstants.POLICY_BENEFIT);
+		subBenefitPage.clickAssociateWithExistingAuth();
+		subBenefitPage.clickButtonOnApprovePolicyPopUp(PDTConstants.BTN_APPROVE, PDTConstants.POLICY_BENEFIT);
 	}
 }

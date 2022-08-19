@@ -218,6 +218,15 @@ public class PDT_GeneralInformationPage extends Base {
 	// Capped Policy Error Dialog OK Button
 	@FindBy(how = How.CSS, using = "button[class*='swal2-confirm']")
 	private WebElement _cappedPolicyErrorDialogOKButton;
+	
+	@FindBy(how = How.XPATH, using = "//strong[text()='Policy Status:']/parent::label/following-sibling::label[not(self::span/i)]")
+	private WebElement _policyStatus;
+	
+	@FindBy(how = How.XPATH, using = "//strong[text()='Policy Status:']")
+	private WebElement _policyStatusText;
+	
+	@FindBy(how = How.XPATH, using = "//strong[text()='Version Number:']/parent::label/following-sibling::label")
+	private WebElement _policyVersion;
 
 	/*********************************************************************/
 
@@ -451,6 +460,8 @@ public class PDT_GeneralInformationPage extends Base {
 	}
 
 	public void explicitWaitForGeneralInfoHeading() {
+		if(CoreFunctions.isElementExist(driver,  _progressBar, 4))
+			BusinessFunctions.fluentWaitForSpinnerToDisappear(driver, _progressBar);
 		CoreFunctions.explicitWaitTillElementVisibility(driver, _headerGeneralInfo, PDTConstants.GENERAL_INFORMATION);
 	}
 
@@ -1111,5 +1122,23 @@ public class PDT_GeneralInformationPage extends Base {
 		Assert.assertTrue(policyBenefitCategoryPage.verifyPolicyBenefitCategoryHeading(PDTConstants.POLICY_BENEFIT),
 				MessageFormat.format(PDTConstants.FAIL_TO_VERIFY_ELEMENT_VAL_ON_PAGE, CoreConstants.FAIL, PDTConstants.heading, PDTConstants.POLICY_BENEFIT_CATEGORIES, PDTConstants.POLICY_BENEFIT, policyBenefitCategoryPage.getElementText(PDTConstants.HEADING)));
 		Assert.assertTrue(policyBenefitCategoryPage.verifyIsPolicyBenefitCategoryChecked(policyBenefitCategoryPage.getBenefitCategoryName()), MessageFormat.format(PDTConstants.BENEFIT_CATEGORY_IS_NOT_SELECTED, CoreConstants.FAIL, policyBenefitCategoryPage.getBenefitCategoryName()));
+	}
+	
+	public boolean verifyStatusAndVersionOfPolicy(String selectedPolicyName, String expectedPolicyStatus, String expectedPolicyVersion, String pageName) {
+		if (CoreFunctions.isElementExist(driver, _progressBar, 7))
+			BusinessFunctions.fluentWaitForSpinnerToDisappear(driver, _progressBar);
+		CoreFunctions.scrollToElementUsingJS(driver, _policyStatus, _policyStatusText.getText());
+		CoreFunctions.explicitWaitForElementTextPresent(driver, _policyStatusText, _policyStatusText.getText(), 10);
+		if(expectedPolicyStatus.equalsIgnoreCase(_policyStatus.getText().trim()) && expectedPolicyVersion.equalsIgnoreCase(_policyVersion.getText().trim())) {
+			CoreFunctions.highlightObject(driver, _policyStatus);
+			CoreFunctions.highlightObject(driver, _policyVersion);
+			Reporter.addStepLog(MessageFormat.format(PDTConstants.VERIFIED_POLICY_VERSION_STATUS, CoreConstants.PASS, selectedPolicyName, expectedPolicyVersion, expectedPolicyStatus, pageName));
+			return true;
+		} else {
+			Reporter.addStepLog(MessageFormat.format(
+					PDTConstants.FAILED_TO_VERIFY_POLICY_VERSION_STATUS, CoreConstants.FAIL,
+					selectedPolicyName, expectedPolicyVersion, _policyVersion.getText().trim(), expectedPolicyStatus, _policyStatus.getText().trim(), pageName));
+			return false;
+		}		
 	}
 }

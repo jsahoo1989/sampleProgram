@@ -64,7 +64,7 @@ public class PDT_LanguageTrainingPage extends Base {
 	
 
 	public void fillLanguageTrainingEmployee(PDT_AddNewPolicyPage addNewPolicyPage, String subBenefitFormName) {
-		try {			
+		try {
 			CoreFunctions.explicitWaitTillElementVisibility(driver, _txtBoxMaxNumOfHours, _lblMaxNumOfHours.getText());
 			CoreFunctions.clearAndSetText(driver, _txtBoxMaxNumOfHours, _lblMaxNumOfHours.getText(),
 					languageTrainingBenefitData.languageTrainingEmployee.maxNumOfHours);

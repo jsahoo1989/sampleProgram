@@ -234,9 +234,9 @@ public class MobilityX_DashboardHomePage extends Base{
 	public void enterEmpFirstAndLastNameForNewAuthorization() {
 		try {
 			BusinessFunctions.generateUniqueValuesAndWriteToConfig(5);
-			if(CoreFunctions.isElementExist(driver, _imgBasicLoader, 3))
-				CoreFunctions.explicitWaitTillElementInVisibilityCustomTime(driver, _imgBasicLoader, 40);
-			CoreFunctions.click(driver, _linkAuthorization, _linkAuthorization.getText());
+			if(CoreFunctions.isElementExist(driver, _imgBasicLoader, 4))
+				BusinessFunctions.fluentWaitForSpinnerToDisappear(driver, _imgBasicLoader);
+			CoreFunctions.clickUsingJS(driver, _linkAuthorization, _linkAuthorization.getText());
 			switchToiFrame_Authorization();
 			CoreFunctions.explicitWaitTillElementVisibility(driver, _btnContinue, _btnContinue.getText());
 			if (!selectUploadOrManualOption()) {

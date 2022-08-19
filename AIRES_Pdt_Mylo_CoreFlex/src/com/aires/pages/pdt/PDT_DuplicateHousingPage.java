@@ -52,6 +52,10 @@ public class PDT_DuplicateHousingPage extends Base {
 	@FindBy(how = How.CSS, using = "button.btn-next[type='submit']")
 	private WebElement _btnSaveAndContinue;
 	
+	// Progress Bar
+	@FindBy(how = How.CSS, using = "div.ngx-progress-bar.ngx-progress-bar-ltr")
+	private WebElement _progressBar;
+	
 	PDT_DuplicateHousingBenefit duplicateHousingBenefitData = FileReaderManager.getInstance().getJsonReader()
 			.getDuplicateHousingDataList("Duplicate Housing");
 	private String duration;
@@ -68,6 +72,8 @@ public class PDT_DuplicateHousingPage extends Base {
 		try {
 			CoreFunctions.explicitWaitTillElementVisibility(driver, _lblDuration,
 					_lblDuration.getText());
+			CoreFunctions.click(driver, _drpDownDuration, _lblDuration.getText());
+			CoreFunctions.explicitWaitTillElementListClickable(driver, _drpDownDurationOptions);
 			String randDuration = BusinessFunctions.selectAndReturnRandomValueFromDropDown(driver, addNewPolicyPage,
 					subBenefitFormName, _drpDownDuration, _drpDownDurationOptions, _drpDownDurationOptionsSelected,
 					_lblDuration.getText());

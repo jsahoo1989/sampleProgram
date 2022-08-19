@@ -31,6 +31,26 @@ public class PDT_PolicyAssignmentPage extends Base {
 
 	@FindBy(how = How.CSS, using = "td[class*='cdk-column-bookDate']")
 	private List<WebElement> _listAssignmentBookDate;
+	
+	@FindBy(how = How.XPATH, using = "//span[text()='EXIT']/parent::button")
+	private WebElement _btnExit;
+	
+	@FindBy(how = How.CSS, using = "button.swal2-confirm")
+	private WebElement _btnOk;
+	
+	@FindBy(how = How.CSS, using = "div.swal2-container.swal2-backdrop-show")
+	private WebElement _popuSwal2;
+	
+	// Progress Bar
+	@FindBy(how = How.CSS, using = "div.ngx-progress-bar.ngx-progress-bar-ltr")
+	private WebElement _progressBar;
+	
+	public void waitForProgressBarToDisapper() {
+		if(CoreFunctions.isElementExist(driver, _progressBar, 3)) {		
+			BusinessFunctions.fluentWaitForSpinnerToDisappear(driver, _progressBar);			
+		}
+	}
+	
 
 	public boolean verifyAssignmentInfo(WebElement element, String expectedVal, String elementName) {
 		try {
@@ -72,5 +92,15 @@ public class PDT_PolicyAssignmentPage extends Base {
 			Log.info(CoreConstants.ERROR + e.getStackTrace());
 		}
 		return false;
+	}
+	
+	public int getTransfereeCount() {
+		return _listTransfereeName.size();
+	}
+	
+	public void exitAssignmentTransfereePage() {
+		CoreFunctions.highlightElementAndClick(driver, _btnExit, _btnExit.getText());
+		CoreFunctions.explicitWaitTillElementVisibility(driver, _popuSwal2, "Confirmation");
+		CoreFunctions.highlightElementAndClick(driver, _btnOk, _btnOk.getText());
 	}
 }

@@ -10,8 +10,7 @@ Feature: Approve Policy to create new version
     And he has clicked on the 'Next' button after selecting client, policy information on the 'Add New Policy' page
     And he has entered mandatory information on 'General Information' page followed by selection of "Home Leave" as Benefit Category on "Policy Benefit" page
     When he clicks on "SAVE & SUBMIT" button after entering mandatory information for all the below selected sub benefits on "Home Leave" page
-      | Home Leave Transportation | Home Leave Lodging | Home Leave Meals |
-    #When he clicks on the 'OK' button of success message "Policy saved and submitted" displayed on the "Policy Benefit" page
+      | Home Leave Transportation | Home Leave Lodging | Home Leave Meals |    
     Then "Approve Policy" button should become visible on the 'Policy Benefit' page
     And "SAVE & SUBMIT" button should become disabled on the 'Policy Benefit' page
 
@@ -19,8 +18,7 @@ Feature: Approve Policy to create new version
   Scenario: PDT - Validate the UI of 'Approve Policy' pop-up displayed after clicking Approve Policy button on "Policy Benefit" page
     Given he is on the "Policy Benefit" page after selecting "Home Leave" as Benefit Category;
     And he clicks on "SAVE & SUBMIT" button after entering mandatory information for all the below selected sub benefits on "Home Leave" page
-      | Home Leave Transportation | Home Leave Lodging | Home Leave Meals |
-    #When he clicks on 'Approve Policy' button after verifying success message "Policy saved and submitted" on "Policy Benefit" page
+      | Home Leave Transportation | Home Leave Lodging | Home Leave Meals |    
     When he clicks on 'Approve Policy' button after verifying status "Submitted" on header section of "Policy Benefit" page
     Then below information should be displayed on 'Approve Policy' Pop-up
       | Heading   | Do you want to proceed with the approval of this policy?                                                                                                                                           |
@@ -34,18 +32,16 @@ Feature: Approve Policy to create new version
   Scenario: PDT - Validate 'Approve' button on 'Approve Policy' pop-up becomes enabled after selecting checkbox 'Associate this policy with a NEW authorization' on Policy benefit page
     Given he is on the "Policy Benefit" page after selecting "Home Leave" as Benefit Category;
     And he clicks on "SAVE & SUBMIT" button after entering mandatory information for all the below selected sub benefits on "Home Leave" page
-      | Home Leave Transportation | Home Leave Lodging | Home Leave Meals |
-    #And he clicks on 'Approve Policy' button after verifying success message "Policy saved and submitted" on "Policy Benefit" page
+      | Home Leave Transportation | Home Leave Lodging | Home Leave Meals |    
     And he clicks on 'Approve Policy' button after verifying status "Submitted" on header section of "Policy Benefit" page
     When he selects the checkbox having label 'Associate this policy with a NEW authorization in IRIS?' on 'Approve Policy' pop-up
     Then "Approve" button should become "enabled" on 'Approve Policy' pop-up
 
-  @Sprint-29 @PDT-Regression @PDT-1115 @Pdt:217686
+  @Sprint-29 @PDT-Regression @PDT-1115 @Pdt:217686 @tes
   Scenario: PDT - Verify that status of a 'Submitted' Policy changes to 'Active' after clicking 'Approve' button on 'Approve Policy' pop-up
     Given he is on the "Policy Benefit" page after selecting "Home Leave" as Benefit Category;
     And he clicks on "SAVE & SUBMIT" button after entering mandatory information for all the below selected sub benefits on "Home Leave" page
-      | Home Leave Transportation | Home Leave Lodging | Home Leave Meals |
-    #And he clicks on 'Approve Policy' button after verifying success message "Policy saved and submitted" on "Policy Benefit" page
+      | Home Leave Transportation | Home Leave Lodging | Home Leave Meals |    
     And he clicks on 'Approve Policy' button after verifying status "Submitted" on header section of "Policy Benefit" page
     And he selects the checkbox having label 'Associate this policy with a NEW authorization in IRIS?' on 'Approve Policy' pop-up
     When he clicks on "Approve" button on 'Approve Policy' pop-up on "Policy Benefit" page
@@ -55,14 +51,13 @@ Feature: Approve Policy to create new version
   Scenario: PDT - Verify that Policy Status of a 'Submitted' Policy should not change after clicking 'Cancel' button on 'Approve Policy' pop-up
     Given he is on the "Policy Benefit" page after selecting "Home Leave" as Benefit Category;
     And he clicks on "SAVE & SUBMIT" button after entering mandatory information for all the below selected sub benefits on "Home Leave" page
-      | Home Leave Transportation | Home Leave Lodging | Home Leave Meals |
-    #And he clicks on 'Approve Policy' button after verifying success message "Policy saved and submitted" on "Policy Benefit" page
+      | Home Leave Transportation | Home Leave Lodging | Home Leave Meals |    
     And he clicks on 'Approve Policy' button after verifying status "Submitted" on header section of "Policy Benefit" page
     And he selects the checkbox having label 'Associate this policy with a NEW authorization in IRIS?' on 'Approve Policy' pop-up
     When he clicks on "Cancel" button on 'Approve Policy' pop-up on "Policy Benefit" page
     Then Status of Policy should remain "Submitted" with Version "V1" on "Policy Benefit" Page
 
-  @Sprint-30 @PDT-Regression
+  @Sprint-30 @PDT-Regression @assignm
   Scenario: PDT - Verify that Assignment History Section should display the Assignments linked with newly created Active Policy
     Given he is on the "View/Edit Policy Forms" page after approving a policy with below sub-benefits of "Language Training" Benefit Category;
       | Language Training Employee | Language Training Family |
@@ -77,22 +72,35 @@ Feature: Approve Policy to create new version
     And he has submitted a new authorization form in MobilityX application using template "Global Relocation Authorization"
     When he clicks on "Edit" icon on "View/Edit Policy Forms" page of 'PDT' application for the newly created Active policy
     Then below information should be displayed in the pop-up
-      | Message1    | This policy version "V1" is in an Active state and currently has 1 assignments or files associated with it in IRIS.                                                  |
+      | Message1    | This policy version "V1" is in an Active state and currently has 1 assignments or files associated with it in IRIS.                                                    |
       | Message2    | To edit this policy, you will need to create a new version and save it to a Draft state. To create the new draft, please input a brief description, then click create. |
-      | Version     | Version: V2                                                                                                                                                                     |
+      | Version     | Version: V2                                                                                                                                                            |
       | Description | textbox                                                                                                                                                                |
       | Button      | Create_disabled, Cancel_enabled                                                                                                                                        |
     And "Create" button becomes "enabled" after entering text on Description textbox
 
-  @Sprint-31
-  Scenario: PDT - Verify the UI of Version Control pop-up while editing Active Policy having assignments.
+  @Sprint-31 @PDT-Regression @legacy 
+  Scenario: PDT - Verify updating version V1 of Active Policy having assignments with option new Authorization with current date creates new Active version V2 of Policy and old version V1 becomes Legacy
     Given he is on the "View/Edit Policy Forms" page after approving a policy with below sub-benefits of "Language Training" Benefit Category;
       | Language Training Employee | Language Training Family |
     And he has submitted a new authorization form in MobilityX application using template "Global Relocation Authorization"
-    #And he has navigated to 'General Information page' which displays version "V2" with status "Draft" after clicking on "Edit" icon on "View/Edit Policy Forms" page
-    And he has updated mandatory information on 'General Information' page followed by selection of "Cultural Training" as Benefit Category on "Policy Benefit" page after clicking on "Edit" icon on "View/Edit Policy Forms" page
-    When he approves the policy after selecting selecting the checkbox having label 'Associate this policy with a NEW authorization in IRIS?' on 'Approve Policy' pop-up with Default Date
+    And he has navigated to 'General Information page' of PDT application followed by selection of "Cultural Training" as Benefit Category on "Policy Benefit" page after clicking on "Edit" icon on "View/Edit Policy Forms" page
+    And he has submitted the mandatory information for "Cultural Training" sub-benefit forms
+    When he approves the policy after selecting the checkbox having label 'Associate this policy with a NEW authorization in IRIS?' on 'Approve Policy' pop-up with Default Date on "Cultural Training" page
     Then both versions "V1, V2" of Policy should be displayed on "View/Edit" Policy Forms with below information
-      | Version | Status | Icon Status                                                                                      | Assignments_Linked |
-      | V2      | Active | Edit_Enabled, Clone_Enabled, Delete_Disabled, AssignmentHistory_Enabled, ApprovePolicy_Disabled  |                  0 |
-      | V1      | Legacy | Edit_Disabled, Clone_Enabled, Delete_Disabled, AssignmentHistory_Enabled, ApprovePolicy_Disabled |                  1 |
+      | Version | Status | EnabledIcon                     | DisabledIcon                 | Assignments_Linked |
+      | V2      | Active | Edit, Clone, Assignment History | Delete, Approve Policy       |                  0 |
+      | V1      | Legacy | Clone, Assignment History       | Edit, Delete, Approve Policy |                  1 |
+
+  @BLUE-01 @PDT-Regression @inactive
+  Scenario: PDT - Verify updating version V1 of Active Policy having assignments with option existing Authorization with current date creates new Active version V2 of Policy and old version V1 becomes Inactive.
+    Given he is on the "View/Edit Policy Forms" page after approving a policy with below sub-benefits of "Language Training" Benefit Category;
+      | Language Training Employee | Language Training Family |
+    And he has submitted a new authorization form in MobilityX application using template "Global Relocation Authorization"
+    And he has navigated to 'General Information page' of PDT application followed by selection of "Cultural Training" as Benefit Category on "Policy Benefit" page after clicking on "Edit" icon on "View/Edit Policy Forms" page
+    And he has submitted the mandatory information for "Cultural Training" sub-benefit forms
+    When he approves the policy after selecting selecting the checkbox having label 'Associate this policy with an existing authorization in IRIS?' on 'Approve Policy' pop-up with Default Date
+    Then both versions "V1, V2" of Policy should be displayed on "View/Edit" Policy Forms with below information
+      | Version | Status   | EnabledIcon                     | DisabledIcon                 | Assignments_Linked |
+      | V2      | Active   | Edit, Clone, Assignment History | Delete, Approve Policy       |                  1 |
+      | V1      | Inactive | Clone, Assignment History       | Edit, Delete, Approve Policy |                  0 |

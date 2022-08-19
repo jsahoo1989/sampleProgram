@@ -35,8 +35,11 @@ public class PDT_CulturalTrainingPage extends Base {
 	@FindBy(how = How.CSS, using = "input[formcontrolname='employeeNoOfDaysOther']")
 	private WebElement _txtBoxEmpNumOfDaysOther;
 
-	@FindBy(how = How.XPATH, using = "//div[@id='collapseOne1']//child::label[text()='Number of Days']")
-	private WebElement _lblNumOfDaysForEmployee;
+	/*@FindBy(how = How.XPATH, using = "//div[@id='collapseOne1']//child::label[text()='Number of Days']")
+	private WebElement _lblNumOfDaysForEmployee;*/
+	
+	@FindBy(how = How.XPATH, using = "//app-cultural-employee//label[text()='Number of Days']")
+	private WebElement _lblNumOfDaysForEmployee;	
 
 	@FindBy(how = How.XPATH, using = "//div[@id='collapseOne1']//child::label[text()='Other Number of Days']")
 	private WebElement _lblOtherNumOfDaysForEmploye;

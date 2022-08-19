@@ -209,13 +209,13 @@ public class PDT_HouseHuntingTripPage extends Base {
 	@FindBy(how = How.XPATH, using = "//app-trip-meals//label[contains(text(), 'Max. Amount')]")
 	private WebElement _lblMaxAmtHouseHuntingTripMeals;
 
-	@FindBy(how = How.XPATH, using = "//app-trip-meals//label[contains(text(), 'Max Amount - Transferee')]")
+	@FindBy(how = How.XPATH, using = "//app-trip-meals//label[contains(text(), 'Max. Amount - Transferee')]")
 	private WebElement _lblMaxAmtTransferee;
 
-	@FindBy(how = How.XPATH, using = "//app-trip-meals//label[contains(text(), 'Max Amount - Other Adults')]")
+	@FindBy(how = How.XPATH, using = "//app-trip-meals//label[contains(text(), 'Max. Amount - Other Adults')]")
 	private WebElement _lblMaxAmtOtherAdults;
 
-	@FindBy(how = How.XPATH, using = "//app-trip-meals//label[contains(text(), 'Max Amount - Children')]")
+	@FindBy(how = How.XPATH, using = "//app-trip-meals//label[contains(text(), 'Max. Amount - Children')]")
 	private WebElement _lblMaxAmtChildren;
 
 	PDT_HouseHuntingTripBenefit houseHuntingTripBenefitData = FileReaderManager.getInstance().getJsonReader()

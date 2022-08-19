@@ -36,8 +36,10 @@ import java.sql.Statement;
 import java.text.DecimalFormat;
 import java.text.MessageFormat;
 import java.time.Duration;
+import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
+import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Random;
 import java.util.concurrent.ThreadLocalRandom;
@@ -1048,5 +1050,21 @@ public class BusinessFunctions {
 		pgToLoadformat.setMaximumFractionDigits(3);
 		Reporter.addStepLog("<b>Time taken by sub-benefit:-'"+subBenefitName+"' to Load on '"+pageName+"' benefit page is:-"
 				+ pgToLoadformat.format((timeAfterAction - timeBeforeAction) / 1000) + " Seconds </b>");
+	}
+	
+	public static ArrayList<String> getSubBenefitList(String key) {
+		ArrayList<String> langTraining = new ArrayList<String>();
+		langTraining.add(PDTConstants.LANGUAGE_TRAINING_EMPLOYEE);
+		langTraining.add(PDTConstants.LANGUAGE_TRAINING_FAMILY);
+		
+		ArrayList<String> cultTraining = new ArrayList<String>();
+		cultTraining.add(PDTConstants.CULTURAL_TRAINING_EMPLOYEE);
+		cultTraining.add(PDTConstants.CULTURAL_TRAINING_FAMILY);	
+		LinkedHashMap<String, ArrayList<String>> subBenefitMap = new LinkedHashMap<String, ArrayList<String>>();
+		
+		subBenefitMap.put(PDTConstants.LANG_TRAINING, langTraining);
+		subBenefitMap.put(PDTConstants.CULT_TRAINING, cultTraining);
+		return subBenefitMap.get(key);
+		
 	}
 }

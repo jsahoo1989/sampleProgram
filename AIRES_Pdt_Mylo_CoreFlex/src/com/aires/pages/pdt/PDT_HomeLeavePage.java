@@ -139,7 +139,7 @@ public class PDT_HomeLeavePage extends Base {
 	@FindBy(how = How.CSS, using = "ng-select[formcontrolname='maxAmountCode'] span.ng-value-label")
 	private WebElement _drpDownMaxAmtMealsOptionsSelected;
 
-	@FindBy(how = How.XPATH, using = "//label[contains(text(),'Max Amount - Transferee')]")
+	@FindBy(how = How.XPATH, using = "//label[contains(text(),'Max. Amount - Transferee')]")
 	private WebElement _lblMaxAmtTransferee;
 
 	@FindBy(how = How.CSS, using = "input[formcontrolname='maxAmountEe']")
@@ -157,7 +157,7 @@ public class PDT_HomeLeavePage extends Base {
 	@FindBy(how = How.CSS, using = "ng-select[formcontrolname='currencyCodeEe'] span.ng-value-label")
 	private WebElement _drpDownTransfereeCurrencyOptionSelected;
 
-	@FindBy(how = How.XPATH, using = "//label[contains(text(),'Max Amount - Other Adults')]")
+	@FindBy(how = How.XPATH, using = "//label[contains(text(),'Max. Amount - Other Adults')]")
 	private WebElement _lblMaxAmtOtherAdults;
 
 	@FindBy(how = How.CSS, using = "input[formcontrolname='maxAmountAdult']")
@@ -175,7 +175,7 @@ public class PDT_HomeLeavePage extends Base {
 	@FindBy(how = How.CSS, using = "ng-select[formcontrolname='currencyCodeAdult'] span.ng-value-label")
 	private WebElement _drpDownAdultCurrencyOptionSelected;
 
-	@FindBy(how = How.XPATH, using = "//label[contains(text(),'Max Amount - Children')]")
+	@FindBy(how = How.XPATH, using = "//label[contains(text(),'Max. Amount - Children')]")
 	private WebElement _lblMaxAmtChildren;
 
 	@FindBy(how = How.CSS, using = "input[formcontrolname='maxAmountChild']")

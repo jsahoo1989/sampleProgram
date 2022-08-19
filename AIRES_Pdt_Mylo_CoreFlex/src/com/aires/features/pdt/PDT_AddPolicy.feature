@@ -39,8 +39,7 @@ Feature: Add new Policy form with Benefit Categories
     And he has clicked on the 'Next' button after selecting client, policy information on the 'Add New Policy' page
     And he has entered mandatory information on 'General Information' page followed by selection of "Pre-Acceptance Services" as Benefit Category on "Policy Benefit" page
     When he clicks on "SAVE & SUBMIT" button after entering mandatory information for all the below selected sub benefits on "Pre-Acceptance Services" page
-      | Candidate Selection | Pre-Acceptance Trip Transportation | Pre-Acceptance Trip Lodging | Pre-Acceptance Trip Meals |
-    #Then success message "Policy saved and submitted" should be displayed on the "Policy Benefit" page
+      | Candidate Selection | Pre-Acceptance Trip Transportation | Pre-Acceptance Trip Lodging | Pre-Acceptance Trip Meals |    
     Then Policy Status should be changed to "Submitted" along with Version "V1" on the "Policy Benefit" page
     And newly created Policy should be displayed under "View Policy" page after clicking on 'EXIT' button
 
@@ -50,8 +49,7 @@ Feature: Add new Policy form with Benefit Categories
     And he has clicked on the 'Next' button after selecting client, policy information on the 'Add New Policy' page
     And he has entered mandatory information on 'General Information' page followed by selection of "Immigration" as Benefit Category on "Policy Benefit" page
     When he clicks on "SAVE & SUBMIT" button after entering mandatory information for all the below selected sub benefits on "Immigration" page
-      | Immigration Fees | Immigration Travel |
-    #Then success message "Policy saved and submitted" should be displayed on the "Policy Benefit" page
+      | Immigration Fees | Immigration Travel |    
     Then Policy Status should be changed to "Submitted" along with Version "V1" on the "Policy Benefit" page
     And newly created Policy should be displayed under "View Policy" page after clicking on 'EXIT' button
 
@@ -79,8 +77,7 @@ Feature: Add new Policy form with Benefit Categories
     And he has clicked on the 'Next' button after selecting client, policy information on the 'Add New Policy' page
     And he has entered mandatory information on 'General Information' page followed by selection of "House Hunting Trip" as Benefit Category on "Policy Benefit" page
     When he clicks on "SAVE & SUBMIT" button after entering mandatory information for all the below selected sub benefits on "House Hunting Trip" page
-      | House Hunting Trip Transportation | House Hunting Trip Lodging | House Hunting Trip Meals |
-    #Then success message "Policy saved and submitted" should be displayed on the "Policy Benefit" page
+      | House Hunting Trip Transportation | House Hunting Trip Lodging | House Hunting Trip Meals |    
     Then Policy Status should be changed to "Submitted" along with Version "V1" on the "Policy Benefit" page
     And newly created Policy should be displayed under "View Policy" page after clicking on 'EXIT' button
 
@@ -90,8 +87,7 @@ Feature: Add new Policy form with Benefit Categories
     And he has clicked on the 'Next' button after selecting client, policy information on the 'Add New Policy' page
     And he has entered mandatory information on 'General Information' page followed by selection of "Language Training" as Benefit Category on "Policy Benefit" page
     When he clicks on "SAVE & SUBMIT" button after entering mandatory information for all the below selected sub benefits on "Language Training" page
-      | Language Training Employee | Language Training Family |
-    #Then success message "Policy saved and submitted" should be displayed on the "Policy Benefit" page
+      | Language Training Employee | Language Training Family |    
     Then Policy Status should be changed to "Submitted" along with Version "V1" on the "Policy Benefit" page
     And newly created Policy should be displayed under "View Policy" page after clicking on 'EXIT' button
 
@@ -101,8 +97,7 @@ Feature: Add new Policy form with Benefit Categories
     And he has clicked on the 'Next' button after selecting client, policy information on the 'Add New Policy' page
     And he has entered mandatory information on 'General Information' page followed by selection of "Cultural Training" as Benefit Category on "Policy Benefit" page
     When he clicks on "SAVE & SUBMIT" button after entering mandatory information for all the below selected sub benefits on "Cultural Training" page
-      | Cultural Training Employee | Cultural Training Family |
-    #Then success message "Policy saved and submitted" should be displayed on the "Policy Benefit" page
+      | Cultural Training Employee | Cultural Training Family |    
     Then Policy Status should be changed to "Submitted" along with Version "V1" on the "Policy Benefit" page
     And newly created Policy should be displayed under "View Policy" page after clicking on 'EXIT' button
 
@@ -112,8 +107,7 @@ Feature: Add new Policy form with Benefit Categories
     And he has clicked on the 'Next' button after selecting client, policy information on the 'Add New Policy' page
     And he has entered mandatory information on 'General Information' page followed by selection of "Final Move" as Benefit Category on "Policy Benefit" page
     When he clicks on "SAVE & SUBMIT" button after entering mandatory information for all the below selected sub benefits on "Final Move" page
-      | Final Move Transportation | Final Move Lodging | Final Move Meals |
-    #Then success message "Policy saved and submitted" should be displayed on the "Policy Benefit" page
+      | Final Move Transportation | Final Move Lodging | Final Move Meals |    
     Then Policy Status should be changed to "Submitted" along with Version "V1" on the "Policy Benefit" page
     And newly created Policy should be displayed under "View Policy" page after clicking on 'EXIT' button
 
@@ -123,8 +117,7 @@ Feature: Add new Policy form with Benefit Categories
     And he has clicked on the 'Next' button after selecting client, policy information on the 'Add New Policy' page
     And he has entered mandatory information on 'General Information' page followed by selection of "Temporary Living" as Benefit Category on "Policy Benefit" page
     When he clicks on "SAVE & SUBMIT" button after entering mandatory information for all the below selected sub benefits on "Temporary Living" page
-      | Temporary Living Lodging | Temporary Living Meals | Temporary Living Transportation |
-    #Then success message "Policy saved and submitted" should be displayed on the "Policy Benefit" page
+      | Temporary Living Lodging | Temporary Living Meals | Temporary Living Transportation |    
     Then Policy Status should be changed to "Submitted" along with Version "V1" on the "Policy Benefit" page
     And newly created Policy should be displayed under "View Policy" page after clicking on 'EXIT' button
 
@@ -134,8 +127,7 @@ Feature: Add new Policy form with Benefit Categories
     And he has clicked on the 'Next' button after selecting client, policy information on the 'Add New Policy' page
     And he has entered mandatory information on 'General Information' page followed by selection of "Home Leave" as Benefit Category on "Policy Benefit" page
     When he clicks on "SAVE & SUBMIT" button after entering mandatory information for all the below selected sub benefits on "Home Leave" page
-      | Home Leave Transportation | Home Leave Lodging | Home Leave Meals |
-    #Then success message "Policy saved and submitted" should be displayed on the "Policy Benefit" page
+      | Home Leave Transportation | Home Leave Lodging | Home Leave Meals |    
     Then Policy Status should be changed to "Submitted" along with Version "V1" on the "Policy Benefit" page
     And newly created Policy should be displayed under "View Policy" page after clicking on 'EXIT' button
 
@@ -146,7 +138,6 @@ Feature: Add new Policy form with Benefit Categories
     And he has entered mandatory information on 'General Information' page followed by selection of "Destination Services" as Benefit Category on "Policy Benefit" page
     When he clicks on "SAVE & SUBMIT" button after entering mandatory information for all the below selected sub benefits on "Destination Services" page
       | Airport Pickup | Area Tour | Auto Rental During Assignment | Concierge Services | Departure Services | Furniture Rental | Reimbursement of Membership Dues | Education Assistance | Settling In Services | Transition Assistance Program | Tuition/Education Payments |
-    #Then success message "Policy saved and submitted" should be displayed on the "Policy Benefit" page
     Then Policy Status should be changed to "Submitted" along with Version "V1" on the "Policy Benefit" page
     And newly created Policy should be displayed under "View Policy" page after clicking on 'EXIT' button
 
@@ -156,8 +147,7 @@ Feature: Add new Policy form with Benefit Categories
     And he has clicked on the 'Next' button after selecting client, policy information on the 'Add New Policy' page
     And he has entered mandatory information on 'General Information' page followed by selection of "Rental Assistance" as Benefit Category on "Policy Benefit" page
     When he clicks on "SAVE & SUBMIT" button after entering mandatory information for all the below selected sub benefits on "Rental Assistance" page
-      | Rental Tour | Finder's Fee |
-    #Then success message "Policy saved and submitted" should be displayed on the "Policy Benefit" page
+      | Rental Tour | Finder's Fee |    
     Then Policy Status should be changed to "Submitted" along with Version "V1" on the "Policy Benefit" page
     And newly created Policy should be displayed under "View Policy" page after clicking on 'EXIT' button
 
@@ -168,7 +158,6 @@ Feature: Add new Policy form with Benefit Categories
     And he has entered mandatory information on 'General Information' page followed by selection of "Compensation Services" as Benefit Category on "Policy Benefit" page
     When he clicks on "SAVE & SUBMIT" button after entering mandatory information for all the below selected sub benefits on "Compensation Services" page
       | Letter of Assignment | Cost Estimate with Tax | Cost Estimate without Tax | Balance Sheets | Allowance Updates (no balance sheet) | Global Data Collection | Payroll Instructions |
-    #Then success message "Policy saved and submitted" should be displayed on the "Policy Benefit" page
     Then Policy Status should be changed to "Submitted" along with Version "V1" on the "Policy Benefit" page
     And newly created Policy should be displayed under "View Policy" page after clicking on 'EXIT' button
 
@@ -179,7 +168,6 @@ Feature: Add new Policy form with Benefit Categories
     And he has entered mandatory information on 'General Information' page followed by selection of "Assignment Housing (Company Sponsored)" as Benefit Category on "Policy Benefit" page
     When he clicks on "SAVE & SUBMIT" button after entering mandatory information for all the below selected sub benefits on "Assignment Housing (Company Sponsored)" page
       | Assignment Housing | Security Deposit | Finder's Fee |
-    #Then success message "Policy saved and submitted" should be displayed on the "Policy Benefit" page
     Then Policy Status should be changed to "Submitted" along with Version "V1" on the "Policy Benefit" page
     And newly created Policy should be displayed under "View Policy" page after clicking on 'EXIT' button
 
@@ -189,7 +177,6 @@ Feature: Add new Policy form with Benefit Categories
     And he has clicked on the 'Next' button after selecting client, policy information on the 'Add New Policy' page
     And he has entered mandatory information on 'General Information' page followed by selection of "Duplicate Housing" as Benefit Category on "Policy Benefit" page
     When he clicks on 'SUBMIT' button after entering mandatory information on "Duplicate Housing" page
-    #Then success message "Policy saved and submitted" should be displayed on the "Policy Benefit" page
     Then Policy Status should be changed to "Submitted" along with Version "V1" on the "Policy Benefit" page
     And newly created Policy should be displayed under "View Policy" page after clicking on 'EXIT' button
 
@@ -200,7 +187,6 @@ Feature: Add new Policy form with Benefit Categories
     And he has entered mandatory information on 'General Information' page followed by selection of "One Time Payments/Reimbursements" as Benefit Category on "Policy Benefit" page
     When he clicks on "SAVE & SUBMIT" button after entering mandatory information for all the below selected sub benefits on "One Time Payments/Reimbursements" page
       | Miscellaneous Relocation Allowance | Lump Sum | Lease Break | Appliance Allowance | Auto Registration Costs | Auto Loss on Sale | Other One Time Payment |
-    #Then success message "Policy saved and submitted" should be displayed on the "Policy Benefit" page
     Then Policy Status should be changed to "Submitted" along with Version "V1" on the "Policy Benefit" page
     And newly created Policy should be displayed under "View Policy" page after clicking on 'EXIT' button
 
@@ -211,7 +197,6 @@ Feature: Add new Policy form with Benefit Categories
     And he has entered mandatory information on 'General Information' page followed by selection of "Ongoing Payments/Reimbursements" as Benefit Category on "Policy Benefit" page
     When he clicks on "SAVE & SUBMIT" button after entering mandatory information for all the below selected sub benefits on "Ongoing Payments/Reimbursements" page
       | COLA | Per Diem | Mobility Premium | Transportation Allowance | Housing Allowance | Home Maintenance Allowance | Furniture Allowance | Hardship Allowance | Banking Allowance | At Sea Allowance | Commuter Allowance | Differential Allowance | Goods & Services Allowance | Home Leave Allowance | Home Retention Allowance | Housekeeping Allowance | Utility Allowance | Other Ongoing Allowance |
-    #Then success message "Policy saved and submitted" should be displayed on the "Policy Benefit" page
     Then Policy Status should be changed to "Submitted" along with Version "V1" on the "Policy Benefit" page
     And newly created Policy should be displayed under "View Policy" page after clicking on 'EXIT' button
 
@@ -220,8 +205,7 @@ Feature: Add new Policy form with Benefit Categories
     Given he is on the "Add New Policy" page after clicking on the link "Add New Policy Form" displayed under the left navigation menu on the 'View Policy' page
     And he has clicked on the 'Next' button after selecting client, policy information on the 'Add New Policy' page
     And he has entered mandatory information on 'General Information' page followed by selection of "Property Management" as Benefit Category on "Policy Benefit" page
-    When he clicks on 'SUBMIT' button after entering mandatory information on "Property Management" page
-    #Then success message "Policy saved and submitted" should be displayed on the "Policy Benefit" page
+    When he clicks on 'SUBMIT' button after entering mandatory information on "Property Management" page    
     Then Policy Status should be changed to "Submitted" along with Version "V1" on the "Policy Benefit" page
     And newly created Policy should be displayed under "View Policy" page after clicking on 'EXIT' button
 
@@ -232,7 +216,6 @@ Feature: Add new Policy form with Benefit Categories
     And he has entered mandatory information on 'General Information' page followed by selection of "Home Purchase" as Benefit Category on "Policy Benefit" page
     When he clicks on "SAVE & SUBMIT" button after entering mandatory information for all the below selected sub benefits on "Home Purchase" page
       | Home Purchase Closing Costs | Home Purchase Points | Home Purchase Inspections | Home Purchase Bonus | Mortgage Differentials | Mortgage Subsidy |
-    #Then success message "Policy saved and submitted" should be displayed on the "Policy Benefit" page
     Then Policy Status should be changed to "Submitted" along with Version "V1" on the "Policy Benefit" page
     And newly created Policy should be displayed under "View Policy" page after clicking on 'EXIT' button
 
@@ -243,7 +226,6 @@ Feature: Add new Policy form with Benefit Categories
     And he has entered mandatory information on 'General Information' page followed by selection of "Household Goods" as Benefit Category on "Policy Benefit" page
     When he clicks on "SAVE & SUBMIT" button after entering mandatory information for all the below selected sub benefits on "Household Goods" page
       | US Domestic Vanline Shipment | Auto Shipment | Self Move | Air Shipment | Sea Shipment | Non-US Inland Shipment | Permanent Storage | Pet Shipment | Discard and Donate |
-    #Then success message "Policy saved and submitted" should be displayed on the "Policy Benefit" page
     Then Policy Status should be changed to "Submitted" along with Version "V1" on the "Policy Benefit" page
     And newly created Policy should be displayed under "View Policy" page after clicking on 'EXIT' button
     

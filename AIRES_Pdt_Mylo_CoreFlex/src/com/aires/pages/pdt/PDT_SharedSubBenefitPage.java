@@ -61,7 +61,7 @@ public class PDT_SharedSubBenefitPage extends Base {
 
 
 	@FindBy(how = How.XPATH, using = "//span[text()='SAVE & SUBMIT']/parent::button")
-	private WebElement _btnSaveAndContinue;
+	private WebElement _btnSaveAndSubmit;
 
 	@FindBy(how = How.XPATH, using = "//input[contains(@formcontrolname, 'candidateSelectionEmpTypeInd')]/parent::label")
 	private WebElement _lblCandidateSelEmpType;
@@ -254,11 +254,18 @@ public class PDT_SharedSubBenefitPage extends Base {
 	
 	@FindBy(how = How.XPATH, using = "//strong[text()='Version Number:']/parent::label/following-sibling::label")
 	private WebElement _policyVersion;
-
+	
+	@FindBy(how = How.CSS, using = "div.menu-pad div.col-10 >p")
+	private List<WebElement> _leftNavBenefitCategories;
+	
+	@FindBy(how = How.XPATH, using = "//span[text()='SAVE & CONTINUE']/parent::button")
+	private WebElement _btnSaveAndContinue;
+	
 	HashMap<String, Boolean> resultMapForTabNameNotMatch = new HashMap<>();
 	LinkedHashMap<String, WebElement> formMap = new LinkedHashMap<String, WebElement>();
 	LinkedHashMap<String, WebElement> buttonMap = new LinkedHashMap<String, WebElement>();
 	LinkedHashMap<String, WebElement> confirmationDialogButtonMap = new LinkedHashMap<String, WebElement>();
+	LinkedHashMap<String, String> subBenefitMap = new LinkedHashMap<String, String>();
 	long timeBeforeAction, timeAfterAction;
 
 	public WebElement getElementByName(String pageName, String elementName) {
@@ -1007,7 +1014,7 @@ public class PDT_SharedSubBenefitPage extends Base {
 	}
 
 	public void populateBtnMap() {
-		buttonMap.put(PDTConstants.PDT_BTN_SAVE_SUBMIT, _btnSaveAndContinue);
+		buttonMap.put(PDTConstants.PDT_BTN_SAVE_SUBMIT, _btnSaveAndSubmit);
 		buttonMap.put(PDTConstants.EXIT.toUpperCase(), _btnExit);
 		buttonMap.put(PDTConstants.BTN_APPROVE_POLICY, _btnApprovePolicy);
 		buttonMap.put(PDTConstants.BTN_APPROVE, _btnApprove);
@@ -1066,7 +1073,7 @@ public class PDT_SharedSubBenefitPage extends Base {
 	
 	public boolean verifyButtonDisabled(String btnName, PDT_PolicyBenefitCategoryPage policyBenefitCategoryPage) {
 		try {			
-			if (_btnSaveAndContinue.getAttribute("disabled").equalsIgnoreCase("true")) {
+			if (_btnSaveAndSubmit.getAttribute("disabled").equalsIgnoreCase("true")) {
 				Reporter.addStepLog(MessageFormat.format(PDTConstants.VERIFIED_BTN_ENABLED, CoreConstants.PASS, btnName,
 						policyBenefitCategoryPage.getBenefitCategoryName()));
 				return true;
@@ -1143,6 +1150,10 @@ public class PDT_SharedSubBenefitPage extends Base {
 		CoreFunctions.clickElement(driver, _lblNewDateInd);
 	}	
 	
+	public void clickAssociateWithExistingAuth() {
+		CoreFunctions.clickElement(driver, _lblExistingDateInd);
+	}	
+	
 	public void approvePolicy(String btnName, String pageName) {
 		try {
 			timeBeforeAction = new Date().getTime();
@@ -1186,9 +1197,24 @@ public class PDT_SharedSubBenefitPage extends Base {
 			}
 		} catch(Exception e) {
 			Assert.fail("Button:-"+btnName+" does not exist.");
-		}
-
-		
+		}		
 	}
 	
+	public void navigateBenefitCategories(String benefitCategoryName) {
+		if (CoreFunctions.isElementExist(driver, _progressBar, 7))
+			BusinessFunctions.fluentWaitForSpinnerToDisappear(driver, _progressBar);
+		for(WebElement benefitName : _leftNavBenefitCategories){
+			if(_benefitCategoryName.getText().trim().equalsIgnoreCase(benefitCategoryName))
+				return;
+			else
+				CoreFunctions.click(driver, _btnSaveAndContinue, _btnSaveAndContinue.getText());
+				
+			/*if(benefitName.getText().trim().equalsIgnoreCase(benefitCategoryName))
+				return;
+			else {
+				CoreFunctions.click(driver, _btnSaveAndContinue, _btnSaveAndContinue.getText());
+				return;
+			}*/	
+		}
+	}
 }

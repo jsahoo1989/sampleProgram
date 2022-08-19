@@ -237,7 +237,7 @@ public class PDT_PreAcceptanceService extends Base {
 	@FindBy(how = How.XPATH, using = "//app-pre-trip-meals//label[contains(text(), 'Other Adults')]")
 	private WebElement _lblMaxAmtOtherAdults;
 
-	@FindBy(how = How.XPATH, using = "//app-pre-trip-meals//label[contains(text(), 'Max Amount - Children')]")
+	@FindBy(how = How.XPATH, using = "//app-pre-trip-meals//label[contains(text(), 'Max. Amount - Children')]")
 	private WebElement _lblMaxAmtChildren;
 
 	@FindBy(how = How.XPATH, using = "//input[contains(@formcontrolname, 'candidateSelectionEmpTypeInd')]/parent::label")

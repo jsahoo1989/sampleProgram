@@ -79,7 +79,7 @@ public class PDT_TemporaryLivingPage extends Base {
 	@FindBy(how = How.XPATH, using = "//label[text()='Type']")
 	private WebElement _lblType;
 	
-	@FindBy(how = How.XPATH, using = "//app-temporary-living-meals//label[text()='Max. Amount ']")
+	@FindBy(how = How.XPATH, using = "//app-temporary-living-meals//label[text()='Max. Amount']")
 	private WebElement _lblMaxAmtMeals;
 	
 	@FindBy(how = How.CSS, using = "app-temporary-living-meals ng-select[formcontrolname='maxAmountPerNightCode']")

@@ -86,7 +86,7 @@ public class PDT_FinalMovePage extends Base {
 	@FindBy(how = How.CSS, using = "input[formcontrolname='numOfNight']")
 	private WebElement _txtBoxNumberOfNights;
 
-	@FindBy(how = How.XPATH, using = "//label[text()='Max. Amount ']")
+	@FindBy(how = How.XPATH, using = "//label[text()='Max. Amount']")
 	private WebElement _lblMaxAmt;
 
 	@FindBy(how = How.CSS, using = "ng-select[formcontrolname='maxAmountCode']")
@@ -150,7 +150,7 @@ public class PDT_FinalMovePage extends Base {
 	@FindBy(how = How.CSS, using = "#collapseThree label.form-check-label")
 	private List<WebElement> _radioBtnHouseHuntingTripMeals;
 	
-	@FindBy(how = How.XPATH, using = "//*[@id='collapseThree']//label[text()='Max. Amount ']")
+	@FindBy(how = How.XPATH, using = "//*[@id='collapseThree']//label[text()='Max. Amount']")
 	private WebElement _lblMaxAmtFinalMoveMeals;
 
 	@FindBy(how = How.CSS, using = "#collapseThree ng-select[formcontrolname='maxAmountCode']")
@@ -527,6 +527,7 @@ public class PDT_FinalMovePage extends Base {
 					finalMoveBenefitData.finalMoveMeals.comment);
 
 		} catch (Exception e) {
+			e.printStackTrace();
 			Assert.fail(MessageFormat.format(PDTConstants.EXCEPTION_OCCURED_FILL_SUBBENEFIT_FORM, CoreConstants.FAIL, subBenefitFormName));
 		}
 	}

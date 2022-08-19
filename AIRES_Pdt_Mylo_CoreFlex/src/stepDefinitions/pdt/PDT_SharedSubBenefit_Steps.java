@@ -11,6 +11,7 @@ import com.aires.businessrules.DbFunctions;
 import com.aires.businessrules.constants.CoreConstants;
 import com.aires.businessrules.constants.PDTConstants;
 import com.aires.cucumber.TestContext;
+import com.aires.managers.PageObjectManager_Pdt;
 import com.aires.pages.pdt.PDT_AddNewPolicyPage;
 import com.aires.pages.pdt.PDT_AssignmentHousingPage;
 import com.aires.pages.pdt.PDT_CompensationServicesPage;
@@ -64,7 +65,7 @@ public class PDT_SharedSubBenefit_Steps {
 	private PDT_PropertyManagementPage propertyManagementPage;
 	private PDT_HomePurchasePage homePurchasePage;
 	private PDT_HouseHoldGoodsPage houseHoldGoodsPage;
-	private PDT_PolicyBenefitCategoryPage policyBenefitCategoryPage;	
+	private PDT_PolicyBenefitCategoryPage policyBenefitCategoryPage;
 	long timeBeforeAction, timeAfterAction;
 	
 	public PDT_SharedSubBenefit_Steps(TestContext context) {
@@ -92,6 +93,10 @@ public class PDT_SharedSubBenefit_Steps {
 		homePurchasePage = testContext.getPageObjectManager().getHomePurchasePage();
 		houseHoldGoodsPage =  testContext.getPageObjectManager().getHouseHoldGoodsPage();
 		policyBenefitCategoryPage = testContext.getPageObjectManager().getpolicyBenefitCategoryPage();
+	}
+	
+	public void initPageObjectMan(PageObjectManager_Pdt _pageObjectManagerPDT) {
+		culturalTrainingPage = _pageObjectManagerPDT.getCulturalTrainingPage();
 	}
 	
 	public PDT_PreAcceptanceService getPreAcceptServicePage() {

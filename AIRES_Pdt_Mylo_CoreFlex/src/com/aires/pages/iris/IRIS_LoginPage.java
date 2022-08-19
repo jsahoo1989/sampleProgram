@@ -92,7 +92,8 @@ public class IRIS_LoginPage extends BasePage {
 	}
 
 	public void getIRISLoginAsPerEnvt(PDT_LoginDetails loginDataApp) throws Exception {		
-		switch(CoreFunctions.getPropertyFromConfig("envt").toLowerCase()) {
+		//switch(CoreFunctions.getPropertyFromConfig("envt").toLowerCase()) {
+		switch(System.getProperty("envt").toLowerCase()) {
 		case CoreConstants.ENVT_DEV:
 			_userName = loginDataApp.dev.irisUserName;			
 			_password = loginDataApp.dev.irisPassword;
@@ -119,7 +120,8 @@ public class IRIS_LoginPage extends BasePage {
 			_database = loginDataApp.prod.irisDatabase;
 			break;
 		default:
-			Assert.fail(MessageFormat.format(CoreConstants.INVALID_ENVIRONMENT, CoreFunctions.getPropertyFromConfig("envt")));
+			//Assert.fail(MessageFormat.format(CoreConstants.INVALID_ENVIRONMENT, CoreFunctions.getPropertyFromConfig("envt")));
+			Assert.fail(MessageFormat.format(CoreConstants.INVALID_ENVIRONMENT, System.getProperty("envt")));
 		}		
 		Log.info("User Name : " + _userName + "\nPassword : " + BusinessFunctions.encodedPassword(_password) + "\nDatabase : " + _database);
 		Reporter.addStepLog("Login Credentials Entered for IRIS Application are : \nUsername : "+_userName+"\nPassword : "+BusinessFunctions.encodedPassword(_password)+ "\nDatabase : " + _database);

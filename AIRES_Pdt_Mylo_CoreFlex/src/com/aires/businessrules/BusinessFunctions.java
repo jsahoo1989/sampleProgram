@@ -43,6 +43,7 @@ import java.util.Random;
 import java.util.concurrent.ThreadLocalRandom;
 import org.apache.commons.codec.binary.Base64;
 import org.apache.log4j.Logger;
+import org.openqa.selenium.NoSuchElementException;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.interactions.Actions;
@@ -705,7 +706,8 @@ public class BusinessFunctions {
 
 	public static String[] getClientAndPolicyDetails(PDT_LoginDetails _loginDetailsApplication) {
 		String clientAndPolicyDetailsArr[] = new String[3];
-		switch (CoreFunctions.getPropertyFromConfig("envt").toLowerCase()) {
+		//switch (CoreFunctions.getPropertyFromConfig("envt").toLowerCase()) {
+		switch (System.getProperty("envt").toLowerCase()) {
 		case CoreConstants.ENVT_DEV:
 			clientAndPolicyDetailsArr[0] = _loginDetailsApplication.dev.clientId;
 			clientAndPolicyDetailsArr[1] = _loginDetailsApplication.dev.clientName;
@@ -737,7 +739,8 @@ public class BusinessFunctions {
 
 	public static String[] getCSMCredentials(PDT_LoginDetails _loginDetailsApplication) {
 		String csmCredentials[] = new String[3];
-		switch (CoreFunctions.getPropertyFromConfig("envt").toLowerCase()) {
+		//switch (CoreFunctions.getPropertyFromConfig("envt").toLowerCase()) {
+		switch (System.getProperty("envt").toLowerCase()) {
 		case CoreConstants.ENVT_DEV:
 			csmCredentials[0] = _loginDetailsApplication.dev.csmUserName;
 			csmCredentials[1] = _loginDetailsApplication.dev.csmPassword;
@@ -1016,7 +1019,14 @@ public class BusinessFunctions {
 	public static void printTimeTakenByPageToLoad(long timeBeforeAction, long timeAfterAction, String pageName) {
 		DecimalFormat pgToLoadformat = new DecimalFormat();
 		pgToLoadformat.setMaximumFractionDigits(3);
-		Reporter.addStepLog("<b>Time taken by "+pageName+" page to Load is :"
+		Reporter.addStepLog("<b>Time taken by '"+pageName+"' page to Load is :"
+				+ pgToLoadformat.format((timeAfterAction - timeBeforeAction) / 1000) + " Seconds </b>");
+	}
+	
+	public static void printTimeTakenByPageToLoad(long timeBeforeAction, long timeAfterAction, String pageName, String subBenefitName) {
+		DecimalFormat pgToLoadformat = new DecimalFormat();
+		pgToLoadformat.setMaximumFractionDigits(3);
+		Reporter.addStepLog("<b>Time taken by sub-benefit:-'"+subBenefitName+"' to Load on '"+pageName+"' benefit page is:-"
 				+ pgToLoadformat.format((timeAfterAction - timeBeforeAction) / 1000) + " Seconds </b>");
 	}
 	

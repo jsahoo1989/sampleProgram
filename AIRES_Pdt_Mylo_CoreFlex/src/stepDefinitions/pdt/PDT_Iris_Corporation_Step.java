@@ -14,12 +14,14 @@ import com.aires.cucumber.TestContext;
 import com.aires.managers.FileReaderManager;
 import com.aires.managers.PageObjectManager_Pdt;
 import com.aires.managers.WebDriverManager;
+import com.aires.pages.PDT_Mylo_CoreFlex_Common_LoginPage;
 import com.aires.pages.iris.IRIS_Corporation_Accounting;
 import com.aires.pages.iris.IRIS_Corporation_Main;
 import com.aires.pages.iris.IRIS_Welcome12C;
 import com.aires.pages.pdt.PDT_AddNewPolicyPage;
 import com.aires.pages.pdt.PDT_LoginPage;
 import com.aires.pages.pdt.PDT_ViewPolicyPage;
+import com.aires.testdatatypes.pdt.PDT_LoginData;
 import com.aires.testdatatypes.pdt.PDT_LoginDetails;
 import com.aires.utilities.Log;
 
@@ -34,7 +36,12 @@ public class PDT_Iris_Corporation_Step {
 	PDT_LoginPage loginPage;
 	PDT_ViewPolicyPage viewPolicyPage;
 	PDT_AddNewPolicyPage addNewPolicyPage;
-	private PDT_LoginDetails _loginDetailsApplication = FileReaderManager.getInstance().getJsonReader().getLoginByApplication(CoreFunctions.getPropertyFromConfig("application"));
+	PDT_Mylo_CoreFlex_Common_LoginPage pdtMyloCommonLoginPage;
+
+	PDT_LoginData loginData = FileReaderManager.getInstance().getJsonReader()
+			.getloginDetailsByUserFirstName(PDTConstants.USER_FIRST_NAME);
+	//private PDT_LoginDetails _loginDetailsApplication = FileReaderManager.getInstance().getJsonReader().getLoginByApplication(CoreFunctions.getPropertyFromConfig("application"));
+	private PDT_LoginDetails _loginDetailsApplication = FileReaderManager.getInstance().getJsonReader().getLoginByApplication(System.getProperty("application"));
 	
 	public PDT_Iris_Corporation_Step(TestContext context) {
 		testContext = context;
@@ -67,8 +74,8 @@ public class PDT_Iris_Corporation_Step {
 		testContext.getIrisPageManager().irisCorporationAccounting.addPolicy();
 	}
 
-	@Given("^he logins to the PDT application$")
-	public void he_logins_to_the_PDT_application() throws Throwable {
+	@Given("^he logins to the PDT application as a \"([^\"]*)\" user$")
+	public void he_logins_to_the_PDT_application_as_a_user(String userType) throws Throwable {
 		webDriverManager = new WebDriverManager();
 		pageObjectManager = new PageObjectManager_Pdt(webDriverManager.getDriver());
 
@@ -76,9 +83,11 @@ public class PDT_Iris_Corporation_Step {
 				.to(FileReaderManager.getInstance().getConfigReader().getPDTApplicationUrl());
 		loginPage = pageObjectManager.getLoginPage();
 		loginPage.openApplication();
-		loginPage.enterLoginCredentials(BusinessFunctions.getCSMCredentials(_loginDetailsApplication)[0], BusinessFunctions.getCSMCredentials(_loginDetailsApplication)[1]);
+		Assert.assertTrue(pdtMyloCommonLoginPage.loginByUserType(userType, viewPolicyPage),
+				MessageFormat.format(PDTConstants.FAILED_TO_VERIFY_LOGGED_IN_USER, CoreConstants.FAIL));
+		/*loginPage.enterLoginCredentials(BusinessFunctions.getCSMCredentials(_loginDetailsApplication)[0], BusinessFunctions.getCSMCredentials(_loginDetailsApplication)[1]);
 		loginPage.clickLoginBtn();
-		loginPage.verifyLoginCredentials();
+		loginPage.verifyLoginCredentials();*/
 		viewPolicyPage = pageObjectManager.getViewPolicyPage();
 		Assert.assertTrue(viewPolicyPage.verifyViewPolicyHeading(PDTConstants.VIEW_POLICY),
 				MessageFormat.format(PDTConstants.FAILED_TO_VERIFY_HEADING_ON_PAGE, CoreConstants.FAIL, PDTConstants.VIEW_POLICY,

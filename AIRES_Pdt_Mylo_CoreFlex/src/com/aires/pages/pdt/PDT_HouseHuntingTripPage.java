@@ -101,7 +101,7 @@ public class PDT_HouseHuntingTripPage extends Base {
 	@FindBy(how = How.CSS, using = "ng-select[formcontrolname='maxAmountCode'] span.ng-option-label")
 	private List<WebElement> _drpDownMaxAmountOptions;
 
-	@FindBy(how = How.XPATH, using = "//ng-select[@formcontrolname='maxAmountCode']/descendant::span[@class='ng-value-label']")
+	@FindBy(how = How.XPATH, using = "//ng-select[@formcontrolname='maxAmountCode']/descendant::span[contains(@class,'ng-value-label')]")
 	private WebElement _drpDownMaxAmountSelectedVal;
 
 	@FindBy(how = How.CSS, using = "input[formcontrolname='maxAmountEe']")
@@ -380,10 +380,14 @@ public class PDT_HouseHuntingTripPage extends Base {
 	}
 
 	public void checkIfFlatAmtIsSelected(PDT_AddNewPolicyPage addNewPolicyPage, String subBenefitFormName) {
-		if (_drpDownMaxAmountSelectedVal.getText().equalsIgnoreCase(PDTConstants.FLAT_AMT)) {
-			verifyAndFillTransfereeMealInfo(addNewPolicyPage, subBenefitFormName);
-			verifyAndFillAdultMealInfo(addNewPolicyPage, subBenefitFormName);
-			verifyAndFillChildMealInfo(addNewPolicyPage, subBenefitFormName);
+		try {
+			if (_drpDownMaxAmountSelectedVal.getText().equalsIgnoreCase(PDTConstants.FLAT_AMT)) {
+				verifyAndFillTransfereeMealInfo(addNewPolicyPage, subBenefitFormName);
+				verifyAndFillAdultMealInfo(addNewPolicyPage, subBenefitFormName);
+				verifyAndFillChildMealInfo(addNewPolicyPage, subBenefitFormName);
+			}
+		} catch(Exception e) {
+			Assert.fail(MessageFormat.format(PDTConstants.FAILED_TO_VERIFY_SELECTED_VAL, CoreConstants.FAIL, PDTConstants.FLAT_AMT));
 		}
 	}
 
@@ -491,6 +495,7 @@ public class PDT_HouseHuntingTripPage extends Base {
 					houseHuntingTripBenefitData.houseHuntingTripMeals.comment);
 
 		} catch (Exception e) {
+			e.printStackTrace();
 			Assert.fail(MessageFormat.format(PDTConstants.EXCEPTION_OCCURED_FILL_SUBBENEFIT_FORM, CoreConstants.FAIL, subBenefitFormName));
 		}
 	}

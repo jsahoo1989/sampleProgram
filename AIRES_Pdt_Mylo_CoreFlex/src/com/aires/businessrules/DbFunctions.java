@@ -55,8 +55,11 @@ public class DbFunctions {
 		Connection connection = null;
 		try {
 			DriverManager.registerDriver(new oracle.jdbc.OracleDriver());
+			/*connection = DriverManager.getConnection(
+					getDBConnectionStringAsPerEnvt(CoreFunctions.getPropertyFromConfig("envt").toLowerCase()));*/
+			
 			connection = DriverManager.getConnection(
-					getDBConnectionStringAsPerEnvt(CoreFunctions.getPropertyFromConfig("envt").toLowerCase()));
+					getDBConnectionStringAsPerEnvt(System.getProperty("envt").toLowerCase()));
 			CallableStatement callableStatement = connection
 					.prepareCall(DbQueries.CALL_PROCEDURE_DELETE_POLICY_BY_ID);			
 			

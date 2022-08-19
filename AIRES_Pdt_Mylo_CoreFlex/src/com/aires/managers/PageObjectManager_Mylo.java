@@ -19,10 +19,13 @@ package com.aires.managers;
 
 import org.openqa.selenium.WebDriver;
 
+import com.aires.pages.mylo.MyloJourneyPage_AuthTrackSection;
 import com.aires.pages.mylo.MyloJourneyPage_CreateNewFileSection;
 import com.aires.pages.mylo.MyloJourneyPage_DependentSection;
+import com.aires.pages.mylo.MyloJourneyPage_IdentityChallengeSection;
 import com.aires.pages.mylo.MyloJourneyPage_OtherSection;
 import com.aires.pages.mylo.MyloJourneyPage_PartnerSection;
+import com.aires.pages.mylo.MyloJourneyPage_SendLoginCredentials;
 import com.aires.pages.mylo.MyloJourneyPage_TransfereeSection;
 import com.aires.pages.mylo.Mylo_AssignmentPage;
 //import com.aires.pages.mylo.Mylo_AssignmentPage;
@@ -42,9 +45,12 @@ public class PageObjectManager_Mylo {
 	private MyloJourneyPage_PartnerSection _journeyPartnerSection;
 	private MyloJourneyPage_DependentSection _journeyDependentSection;
 	private MyloJourneyPage_OtherSection _journeyOtherSection;
-	public MyloJourneyPage_CreateNewFileSection _journeyCreateNewFileSection;
+	private MyloJourneyPage_CreateNewFileSection _journeyCreateNewFileSection;
 	private Mylo_RestApiRequest _restApiRequest;
 	private Mylo_JourneyPage _journeyPage;
+	private MyloJourneyPage_IdentityChallengeSection _journeyIdentityChallengeSection;
+	private MyloJourneyPage_SendLoginCredentials _journeySendLoginCredentials;
+	private MyloJourneyPage_AuthTrackSection _journeyAuthTrackSection;
 
 	public PageObjectManager_Mylo(WebDriver driver) {
 		this._driver = driver;
@@ -94,5 +100,17 @@ public class PageObjectManager_Mylo {
 	 public MyloJourneyPage_CreateNewFileSection getJourneyPageCreateNewFileSection() {
 			return (_journeyCreateNewFileSection == null) ? _journeyCreateNewFileSection = new MyloJourneyPage_CreateNewFileSection(_driver)
 					: _journeyCreateNewFileSection;
+		}
+	 public MyloJourneyPage_IdentityChallengeSection getJourneyPageIdentityChallengeSection() {
+			return (_journeyIdentityChallengeSection == null) ? _journeyIdentityChallengeSection = new MyloJourneyPage_IdentityChallengeSection(_driver)
+					: _journeyIdentityChallengeSection;
+		}
+	 public MyloJourneyPage_SendLoginCredentials getJourneyPageSendLoginCredential() {
+			return (_journeySendLoginCredentials == null) ? _journeySendLoginCredentials = new MyloJourneyPage_SendLoginCredentials(_driver)
+					: _journeySendLoginCredentials;
+		}
+	 public MyloJourneyPage_AuthTrackSection getJourneyPageAuthTrackSection() {
+			return (_journeyAuthTrackSection == null) ? _journeyAuthTrackSection = new MyloJourneyPage_AuthTrackSection(_driver)
+					: _journeyAuthTrackSection;
 		}
 }

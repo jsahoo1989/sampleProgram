@@ -48,13 +48,13 @@ When he clicks on "Yes" button after verifying the "Login credentials were alrea
 Then popup message "You are about to email the transferee his/her username. Would you also like to reset his/her password?" should be displayed on Mylo Journey page
 And login credentials should be sent to the email selected after clicking on "Send UserName Password" button
 
-@IRIS-1834  @Mylo-Regression
+@IRIS-1834 @Mylo:217983  @Mylo-Regression
 Scenario:  Mylo-Validate SSO enabled for Transferee users of Send Login Credential on Mylo Journey page
 Given he is on Mylo Journey page for fileID with "CLIENT_TRANSFEREE_SSOENABLED" requirement which has already received SSO email
 When he clicks on the "Send Login Credentials" button
 Then pop up "This client is Single Sign On enabled for transferee users.Please advise the user to contact their IT team for password reset." should be displayed on MyloJourney page
 
-@IRIS-1834  @Mylo-Regression
+@IRIS-1834 @Mylo:217984  @Mylo-Regression
 Scenario:  Mylo-Validate Login Credentials sent to the selected email out of Multiple emails for Send Login Credential on Mylo Journey page
 Given he is on Mylo Journey page for fileID with "TRANSFEREE_WITH_MULTIPLE_EMAIL" of actualized transferee having multiple emails
 And popup "Please select the email address to which login credentials should be sent:" is displayed after clicking on "Send Login Credentials" button
@@ -63,7 +63,7 @@ Then popup "Login credentials were already sent to this transferee. Do you want 
 And login credentials should be sent to the email selected after clicking on "Yes"
 And login credentials should not be sent to the email selected after clicking on "Cancel"
 
-@IRIS-1834  @Mylo-Regression
+@IRIS-1834 @Mylo:217985  @Mylo-Regression
 Scenario:  Mylo-Validate Transferee File Link for Send Login Credential on Mylo Journey page
 Given he is on Mylo Journey page for fileID with "TRANSFEREE_FILELINK" that matches another file in Mylo
 When he clicks on the "Send Login Credentials" button

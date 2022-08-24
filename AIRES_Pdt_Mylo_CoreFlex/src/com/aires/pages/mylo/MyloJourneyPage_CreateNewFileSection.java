@@ -84,7 +84,7 @@ public class MyloJourneyPage_CreateNewFileSection extends Base {
 	@FindBy(how = How.CSS, using = "app-aires-file-information input[placeholder='Client Id']")
 	private WebElement _fileInfoSectionClientName;
 
-	@FindBy(how = How.CSS, using = "app-aires-file-information button[aria-controls='collapseOne']")
+	@FindBy(how = How.XPATH, using = "//app-aires-file-information/descendant::span[text()=' Details ']")
 	private WebElement _fileInfoDetailsCarrot;
 
 	@FindBy(how = How.CSS, using = "app-file-status div[class='FS_aboutuser FS_title']")

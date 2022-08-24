@@ -81,7 +81,9 @@ public class MyloJourneyFileInformation_Steps {
 		myloAssignmentPage.updateFileInfoFields(MYLOConstants.POLICY_TYPE, MYLOConstants.RANDOM);
 		myloAssignmentPage.updateFileInfoFields(MYLOConstants.JOURNEY_TYPE, MYLOConstants.JOURNEY_TYPE2_VALUE);
 		myloAssignmentPage.updateFileInfoFields(MYLOConstants.HOMESTATUS, MYLOConstants.HOMESTATUS2_VALUE);
+		myloJourneyPage.scrollToJourneySection(MYLOConstants.OFFICE, MYLOConstants.JOURNEY);
 		myloAssignmentPage.clickCheckBoxOnAiresFileInfoSection(MYLOConstants.INHERITED_FILE);
+		myloJourneyPage.scrollToJourneySection(MYLOConstants.FILE_INFORMATION_SECTION, MYLOConstants.JOURNEY);
 	}
 
 	@Then("^updated fields should be saved or not saved depending on the \"([^\"]*)\" clicked in the Journey File information section$")

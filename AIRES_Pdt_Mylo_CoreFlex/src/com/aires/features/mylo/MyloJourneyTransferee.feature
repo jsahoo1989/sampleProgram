@@ -10,7 +10,7 @@ Given he is on "Transferee" section after clicking on "Transferee Dropdown arrow
 And transferee detail section has below corresponding field and values
 |TransfereeFirstName|TransfereeLastName |TransfereeMiddleName |TransfereeSufix|TransfereeGrade|TransfereeTitle|TransfereeMaidenName|TransfereePreferredName|Marital Status|Citizenship|Gender|
 |AutoMyloqwer       |TestMyloqwer       |MiddleMyloqwer       |SuffixMyloqwer |GradeMyloqwer  |TitleMyloqwer  |MaidenMyloqwer      |PreferredMyloqwer      |Single        |USA        |Male|
-And message "Nonbinary, Intersex or Gender-Nonconforming" is displayed after he hovers on "X" in Gender dropdown field
+And message "Unspecified or another gender identity" is displayed after he hovers on "X" in Gender dropdown field
 When he clicks on "Save" button after entering "02/31/2022" invalid date in "Date of Birth" field
 Then toast message "Invalid birthdate!" should be displayed with "Date of Birth" box highlighted
 

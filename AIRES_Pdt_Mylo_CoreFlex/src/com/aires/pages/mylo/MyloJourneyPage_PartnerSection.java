@@ -32,7 +32,7 @@ public class MyloJourneyPage_PartnerSection extends Base {
 	@FindBy(how = How.CSS, using = "div[class='sk-three-strings']")
 	private WebElement _spinner;
 	
-	@FindBy(how = How.CSS, using = "#partnerList+div a")
+	@FindBy(how = How.XPATH, using = "//a[text()='Add Partner ']")
 	private WebElement _addPartnerLink;
 	
 	@FindBy(how = How.CSS, using = "ng-select[name='P_Gender']")
@@ -80,7 +80,7 @@ public class MyloJourneyPage_PartnerSection extends Base {
 	@FindBy(how = How.XPATH, using = "//a[text()=' Add Email ']")
 	private WebElement _partnerAddEmail;
 	
-	@FindBy(how = How.CSS, using = "app-transferee-family button[aria-controls='collapseTwo']")
+	@FindBy(how = How.CSS, using = "app-transferee-family button[aria-controls='collapseOneTransferee']")
 	private WebElement _transfereeAndFamilySection;
 	
 	@FindBy(how = How.CSS, using = "h2[class*='accchildhead']")

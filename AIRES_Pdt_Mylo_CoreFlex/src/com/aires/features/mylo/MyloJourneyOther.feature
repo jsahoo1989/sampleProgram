@@ -54,7 +54,7 @@ And he enters below invalid data for different fields with other mandatory data 
 |OtherMiddleName|31              |
 |OtherSuffix    |16              |
 |OtherMaidenName|61              |
-When he clicks on "Save" button present under Other section
+When he clicks on "Save" button under Other section
 Then values should be successfully saved as per below character limit set for different fields under Other section
 |Field Name     |CharacterLength |
 |OtherFirstName |30              |

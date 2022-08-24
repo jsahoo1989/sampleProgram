@@ -33,7 +33,7 @@ public class MyloJourneyPage_OtherSection extends Base {
 	@FindBy(how = How.CSS, using = "div[class='sk-three-strings']")
 	private WebElement _spinner;
 	
-	@FindBy(how = How.CSS, using = "app-transferee-family button[aria-controls='collapseTwo']")
+	@FindBy(how = How.CSS, using = "app-transferee-family button[aria-controls='collapseOneTransferee']")
 	private WebElement _transfereeAndFamilySection;
 	
 	@FindBy(how = How.CSS, using = "h2[class*='accchildhead']")
@@ -45,7 +45,7 @@ public class MyloJourneyPage_OtherSection extends Base {
 	@FindBy(how = How.CSS, using = "div[role='alert']")
 	private WebElement _alertMessage;
 	
-	@FindBy(how = How.CSS, using = "#otherList+div a")
+	@FindBy(how = How.XPATH, using = "//a[text()='Add Other Contact']")
 	private WebElement _addOtherLink;
 	
 	@FindBy(how = How.CSS, using = "ng-select[name='O_Gender']")
@@ -295,8 +295,27 @@ public class MyloJourneyPage_OtherSection extends Base {
 	 */
 	public void clickOtherSaveButton() {
 		try {
-			CoreFunctions.scrollToElementUsingJavaScript(driver, _transfereeAndFamilySection,
-					MYLOConstants.TRANSFEREE_FAMILY);
+			//CoreFunctions.scrollToElementUsingJavaScript(driver, _transfereeAndFamilySection,
+				//	MYLOConstants.TRANSFEREE_FAMILY);
+			CoreFunctions.explicitWaitTillElementVisibility(driver, _otherSaveIcon, MYLOConstants.SAVE_BUTTON);
+			CoreFunctions.explicitWaitTillElementInVisibilityCustomTime(driver, _spinner, 180);
+			//CoreFunctions.highlightElementAndClick(driver, _otherSaveIcon, MYLOConstants.SAVE_BUTTON);
+			CoreFunctions.scrollClickUsingJS(driver,_otherSaveIcon, MYLOConstants.SAVE_BUTTON);
+		} catch (Exception e) {
+			Reporter.addStepLog(MessageFormat.format(MYLOConstants.BUTTON_NOT_PRESENT, CoreConstants.FAIL,
+					MYLOConstants.SAVE_BUTTON, MYLOConstants.OTHER, MYLOConstants.JOURNEY));
+			Assert.fail(MessageFormat.format(MYLOConstants.BUTTON_NOT_PRESENT, CoreConstants.FAIL,
+					MYLOConstants.SAVE_BUTTON, MYLOConstants.OTHER, MYLOConstants.JOURNEY));
+		}
+	}
+	
+	/**
+	 * Click on Other Save button
+	 */
+	public void clickSaveButtonOnOtherSection() {
+		try {
+			//CoreFunctions.scrollToElementUsingJavaScript(driver, _transfereeAndFamilySection,
+				//	MYLOConstants.TRANSFEREE_FAMILY);
 			CoreFunctions.explicitWaitTillElementVisibility(driver, _otherSaveIcon, MYLOConstants.SAVE_BUTTON);
 			CoreFunctions.explicitWaitTillElementInVisibilityCustomTime(driver, _spinner, 180);
 			CoreFunctions.highlightElementAndClick(driver, _otherSaveIcon, MYLOConstants.SAVE_BUTTON);
@@ -353,6 +372,7 @@ public class MyloJourneyPage_OtherSection extends Base {
 		boolean flag = false;
 		mapOtherFieldsCharacterLimitMap();
 		String updatedValue = null;
+		CoreFunctions.waitForMyloSpinnnerInvisibilityIfExist(driver, _spinner);
 		try {
 			updatedValue = otherUpdatedFieldValuesMap.get(fieldName);
 			int fieldCharLimit = Integer.parseInt(otherFieldCharacterLimitMap.get(fieldName));
@@ -411,7 +431,9 @@ public class MyloJourneyPage_OtherSection extends Base {
 		for (int i = 0; i < data.size(); i++) {
 			String fieldName = data.get(i).get(MYLOConstants.FIELD_NAME);
 			setOtherFields(fieldName, MYLOConstants.SPECIAL_CHARACTERS_STRING);
-			clickOtherSaveButton();
+			CoreFunctions.explicitWaitTillElementVisibility(driver, _otherSaveIcon, MYLOConstants.SAVE_BUTTON);
+			CoreFunctions.explicitWaitTillElementInVisibilityCustomTime(driver, _spinner, 180);
+			CoreFunctions.highlightElementAndClick(driver, _otherSaveIcon, MYLOConstants.SAVE_BUTTON);
 			flag = (verifyOtherSectionToastMessage(data.get(i).get(MYLOConstants.MESSAGE)));
 			clickToastMesssgeCloseIcon();
 			setOtherFields(fieldName, MYLOConstants.TEST);
@@ -813,6 +835,7 @@ public class MyloJourneyPage_OtherSection extends Base {
 					data.get(i).get(MYLOConstants.OTHER_FIRSTNAME));
 			setOtherFields(MYLOConstants.OTHER_LASTNAME, data.get(i).get(MYLOConstants.OTHER_LASTNAME));
 			clickFieldsOnOtherSection(MYLOConstants.SAVE_BUTTON);
+			//clickOtherSaveButton();
 			flag = (verifyOtherSectionToastMessage(data.get(i).get(MYLOConstants.MESSAGE)));
 		}
 		return flag;

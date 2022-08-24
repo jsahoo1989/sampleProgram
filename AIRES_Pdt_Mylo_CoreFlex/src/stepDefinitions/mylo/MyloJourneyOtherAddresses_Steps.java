@@ -10,6 +10,7 @@ import com.aires.businessrules.constants.MYLOConstants;
 import com.aires.cucumber.TestContext;
 import com.aires.pages.mylo.Mylo_AssignmentPage;
 import com.aires.pages.mylo.Mylo_DashboardHomePage;
+import com.aires.pages.mylo.Mylo_JourneyPage;
 import com.vimalselvam.cucumber.listener.Reporter;
 import cucumber.api.DataTable;
 import cucumber.api.java.en.Given;
@@ -21,11 +22,13 @@ public class MyloJourneyOtherAddresses_Steps {
 	private TestContext testContext;
 	private Mylo_DashboardHomePage myloDashboardPage;
 	private Mylo_AssignmentPage myloAssignmentPage;
+	public Mylo_JourneyPage myloJourneyPage;
 
 	public MyloJourneyOtherAddresses_Steps(TestContext context) {
 		testContext = context;
 		myloDashboardPage = testContext.getMyloPageObjectManager().getDashboardHomePage();
 		myloAssignmentPage = testContext.getMyloPageObjectManager().getAssignmentPage();
+		myloJourneyPage=testContext.getMyloPageObjectManager().getJourneyPage();
 	}
 
 	/**********************************************/
@@ -250,6 +253,7 @@ public class MyloJourneyOtherAddresses_Steps {
 	@Then("^below fieldValues should be successfully saved under \"([^\"]*)\" section after changing the \"([^\"]*)\" dropdown to \"([^\"]*)\" on clicking \"([^\"]*)\" button$")
 	public void below_fieldValues_should_be_successfully_saved_under_section_after_changing_the_dropdown_to_on_clicking_button(
 			String sectionType, String fieldName, String fieldValue, String buttonName, DataTable table) {
+		myloJourneyPage.scrollToJourneySection(MYLOConstants.MAILING_ADDRESS, MYLOConstants.JOURNEY);
 		myloAssignmentPage.clickElementOnOtherAddressesSection(buttonName);
 		myloAssignmentPage.clickElementOnOtherAddressesSection(fieldName);
 		Assert.assertTrue(myloAssignmentPage.verifyTypeDropwnList(MYLOConstants.MAILING),

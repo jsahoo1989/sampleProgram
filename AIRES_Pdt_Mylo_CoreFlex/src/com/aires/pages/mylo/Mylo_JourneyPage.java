@@ -34,6 +34,17 @@ public class Mylo_JourneyPage extends Base {
 	@FindBy(how = How.CSS, using = "app-authorization-tracking")
 	private WebElement _authTrackSection;
 	
+	@FindBy(how = How.CSS, using = "app-aires-file-information h2")
+	private WebElement _fileInformationSection;
+	
+	@FindBy(how = How.CSS, using = "ng-select[name='office']")
+	private WebElement _fileInformationOffice;
+	
+	@FindBy(how = How.ID, using = "T_Grade")
+	private WebElement _transfereeGrade;
+	
+	@FindBy(how = How.XPATH, using = "//button[text()=' Mailing: ']")
+	private WebElement _mailingAddressHeader;
 	
 	String environment= System.getProperty("envt");
 	String application= System.getProperty("application");
@@ -46,6 +57,10 @@ public class Mylo_JourneyPage extends Base {
 	
 	public void mapJourneySectionWebElements() {
 		journeyWebElementsMap.put(MYLOConstants.AUTH_TRACK_SECTION, _authTrackSection);
+		journeyWebElementsMap.put(MYLOConstants.FILE_INFORMATION_SECTION, _fileInformationSection);
+		journeyWebElementsMap.put(MYLOConstants.OFFICE, _fileInformationOffice);
+		journeyWebElementsMap.put(MYLOConstants.TRANSFEREE_GRADE, _transfereeGrade);
+		journeyWebElementsMap.put(MYLOConstants.MAILING_ADDRESS, _mailingAddressHeader);
 	}
 	
 	

@@ -148,6 +148,15 @@ public class MyloJourneyOther_Steps {
 				MessageFormat.format(MYLOConstants.FAILED_TO_VERIFY_ALERT_MESSAGE_SECTION, CoreConstants.FAIL,
 						MYLOConstants.SUCCESS_MESSAGE, MYLOConstants.OTHER));
 	}
+	
+	@When("^he clicks on \"([^\"]*)\" button under Other section$")
+	public void he_clicks_on_button_under_Other_section(String arg1) throws Throwable {
+		myloJourneyPageOtherSection.clickSaveButtonOnOtherSection();
+		Assert.assertTrue(
+				myloJourneyPageOtherSection.verifyOtherSectionToastMessage(MYLOConstants.SAVE_SUCCESS_MESSAGE),
+				MessageFormat.format(MYLOConstants.FAILED_TO_VERIFY_ALERT_MESSAGE_SECTION, CoreConstants.FAIL,
+						MYLOConstants.SUCCESS_MESSAGE, MYLOConstants.OTHER));
+	}
 
 	@Then("^values should be successfully saved as per below character limit set for different fields under Other section$")
 	public void values_should_be_successfully_saved_as_per_below_character_limit_set_for_different_fields_under_Other_section(

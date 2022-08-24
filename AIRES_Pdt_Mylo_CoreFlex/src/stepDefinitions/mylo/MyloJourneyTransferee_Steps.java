@@ -52,6 +52,7 @@ public class MyloJourneyTransferee_Steps {
 		myloJourneyPageTransfereeSection.clickFieldsOnTransfereeSection(MYLOConstants.EDIT_BUTTON);
 		myloJourneyPageTransfereeSection.scrollToTransfereeElement(MYLOConstants.TRANSFEREE_FIRSTNAME);
 		myloJourneyPageTransfereeSection.clickFieldsOnTransfereeSection(MYLOConstants.TRANSFEREE_ADD_PHONE);
+		myloJourneyPage.scrollToJourneySection(MYLOConstants.TRANSFEREE_GRADE, MYLOConstants.JOURNEY);
 		myloJourneyPageTransfereeSection.clickFieldsOnTransfereeSection(MYLOConstants.TRANSFEREE_ADD_EMAIL);
 		java.util.List<Map<String, String>> data = table.asMaps(String.class, String.class);
 		for (int i = 0; i < data.size(); i++) {

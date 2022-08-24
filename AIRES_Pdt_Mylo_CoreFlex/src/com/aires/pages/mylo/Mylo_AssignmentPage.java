@@ -150,7 +150,7 @@ public class Mylo_AssignmentPage extends Base {
 	@FindBy(how = How.XPATH, using = "//i[@class='icon-XCircle_Open close_section']/parent::button")
 	private WebElement _fileInfoCancelButton;
 
-	@FindBy(how = How.CSS, using = "app-aires-file-information button[class='action-icon-right-panel']")
+	@FindBy(how = How.CSS, using = "app-aires-file-information button[class*='action-icon-right-panel']")
 	private WebElement _fileInfoEditButton;
 
 	@FindBy(how = How.XPATH, using = "//ng-select[@name='taxTreatment']")
@@ -355,7 +355,7 @@ public class Mylo_AssignmentPage extends Base {
 	@FindBy(how = How.CSS, using = "button[id='closedesc']")
 	private List<WebElement> _historyCardCloseBtn;
 
-	@FindBy(how = How.CSS, using = "button[aria-controls='collapseHistory']")
+	@FindBy(how = How.CSS, using = "button[aria-controls='collapseExampleHistory']")
 	private WebElement _historyCardDropdown;
 
 	@FindBy(how = How.XPATH, using = "//canvas[@data-id='canvas']/following-sibling::input")
@@ -409,7 +409,7 @@ public class Mylo_AssignmentPage extends Base {
 	@FindBy(how = How.XPATH, using = "//ng-select[contains(@id,'IDCountry')]/descendant::span[contains(@class,'ng-value-label')]")
 	private List<WebElement> _identDocCountryValuesSelected;
 
-	@FindBy(how = How.XPATH, using = "//a[contains(@class,'idlist__item')]")
+	@FindBy(how = How.XPATH, using = "//a[contains(@class,'mylo-tab-item')]")
 	private List<WebElement> _identDocTransferreFamilyMembersName;
 
 	@FindBy(how = How.XPATH, using = "//tr[@class='tablehead']//h1")
@@ -679,36 +679,35 @@ public class Mylo_AssignmentPage extends Base {
 	public void clickButtonOnAiresFileInformationSection(String buttonName) {
 		switch (buttonName) {
 		case MYLOConstants.EDIT_BUTTON:
-			CoreFunctions.explicitWaitTillElementVisibility(driver, _fileInfoEditButton, _fileInfoEditButton.getText());
-			CoreFunctions.click(driver, _fileInfoEditButton, _fileInfoEditButton.getText());
+			CoreFunctions.explicitWaitTillElementVisibility(driver, _fileInfoEditButton, buttonName);
+			CoreFunctions.scrollClickUsingJS(driver, _fileInfoEditButton,  buttonName);
 			break;
 		case MYLOConstants.CANCEL_BUTTON:
 			CoreFunctions.explicitWaitTillElementVisibility(driver, _fileInfoCancelButton,
-					_fileInfoCancelButton.getText());
-			CoreFunctions.scrollVerticallyDownByGivenPixle(driver, 20);
-			CoreFunctions.click(driver, _fileInfoCancelButton, _fileInfoCancelButton.getText());
+					buttonName);
+			CoreFunctions.scrollClickUsingJS(driver, _fileInfoCancelButton,  buttonName);
 			CoreFunctions.explicitWaitTillElementVisibility(driver, _fileInfoEditButton, _fileInfoEditButton.getText());
 			break;
 		case MYLOConstants.SAVE_BUTTON:
 			CoreFunctions.explicitWaitTillElementVisibility(driver, _fileInfoSaveButton, buttonName);
-			CoreFunctions.click(driver, _fileInfoSaveButton, buttonName);
+			CoreFunctions.scrollClickUsingJS(driver, _fileInfoSaveButton,  buttonName);
 			break;
 		case MYLOConstants.DETAILS_CARROT_BUTTON:
 			CoreFunctions.explicitWaitTillElementInVisibilityCustomTime(driver, _spinner, 60);
 			CoreFunctions.explicitWaitTillElementVisibility(driver, _fileInfoDetailsCarrot,
-					_fileInfoDetailsCarrot.getText());
-			CoreFunctions.click(driver, _fileInfoDetailsCarrot, _fileInfoDetailsCarrot.getText());
+					buttonName);
+			CoreFunctions.click(driver, _fileInfoDetailsCarrot, buttonName);
 			mapFileInfoWebElementFields();
 			break;
 		case MYLOConstants.OK_BUTTON:
-			CoreFunctions.explicitWaitTillElementVisibility(driver, _Okbutton, _Okbutton.getText());
-			CoreFunctions.click(driver, _Okbutton, _Okbutton.getText());
+			CoreFunctions.explicitWaitTillElementVisibility(driver, _Okbutton, buttonName);
+			CoreFunctions.click(driver, _Okbutton, buttonName);
 			break;
 		case MYLOConstants.NO_BUTTON:
-			CoreFunctions.click(driver, _NoButton, _NoButton.getText());
+			CoreFunctions.click(driver, _NoButton, buttonName);
 			break;
 		case MYLOConstants.YES_BUTTON:
-			CoreFunctions.click(driver, _YesButton, _YesButton.getText());
+			CoreFunctions.click(driver, _YesButton, buttonName);
 			break;
 		default:
 			Reporter.addStepLog(CoreConstants.FAIL + MYLOConstants.ENTER_CORRECT_BUTTON_NAME);
@@ -977,10 +976,12 @@ public class Mylo_AssignmentPage extends Base {
 			updatedTransferType = selectDropdownOptionsAndReturnText(fieldName, fieldValue);
 			break;
 		case MYLOConstants.JOURNEY_TYPE:
+			CoreFunctions.scrollToElementUsingJS(driver, _fileInfoOfficeDropdown, fieldName);
 			CoreFunctions.click(driver, _fileInfoJourneyTypeDropdown, fieldName);
 			updatedJourneyType = selectDropdownOptionsAndReturnText(fieldName, fieldValue);
 			break;
 		case MYLOConstants.HOMESTATUS:
+			CoreFunctions.scrollToElementUsingJS(driver, _fileInfoJourneyTypeDropdown, fieldName);
 			CoreFunctions.click(driver, _fileInfoHomeStatusDropdown, fieldName);
 			updatedHomeStatus = selectDropdownOptionsAndReturnText(fieldName, fieldValue);
 			break;
@@ -1231,7 +1232,7 @@ public class Mylo_AssignmentPage extends Base {
 			break;
 		case MYLOConstants.DELETE_BUTTON:
 			CoreFunctions.explicitWaitTillElementVisibility(driver, _addressDeleteButton, elementName);
-			CoreFunctions.click(driver, _addressDeleteButton, elementName);
+			CoreFunctions.scrollClickUsingJS(driver,  _addressDeleteButton, elementName);
 			break;
 		case MYLOConstants.YES_BUTTON:
 			CoreFunctions.explicitWaitTillElementVisibility(driver, _YesButton, _YesButton.getText());
@@ -2124,6 +2125,12 @@ public class Mylo_AssignmentPage extends Base {
 						+ CoreFunctions.getElementText(driver, _historyCardDisplayedFileIdClient.get(i)));
 				System.out.println(details[2].trim() + "...."
 						+ CoreFunctions.getElementText(driver, _historyCardDisplayedAddress.get(i)));
+				Reporter.addStepLog(MessageFormat.format(MYLOConstants.HISTORY_DETAILS_MISMATCH, CoreConstants.FAIL, details[0].trim(),
+						_historyCardDisplayedTransferreName.get(i)));
+				Reporter.addStepLog(MessageFormat.format(MYLOConstants.HISTORY_DETAILS_MISMATCH, CoreConstants.FAIL, details[1].trim(),
+						_historyCardDisplayedFileIdClient.get(i)));
+				Reporter.addStepLog(MessageFormat.format(MYLOConstants.HISTORY_DETAILS_MISMATCH, CoreConstants.FAIL, details[2].trim(),
+						_historyCardDisplayedAddress.get(i)));
 				flag = false;
 			}
 		}
@@ -2158,6 +2165,13 @@ public class Mylo_AssignmentPage extends Base {
 						+ "-------" + details[1].trim());
 				System.out.println(CoreFunctions.getElementText(driver, _historyCardDropdownAddress.get(i)) + "-------"
 						+ details[2].trim());
+				
+				Reporter.addStepLog(MessageFormat.format(MYLOConstants.HISTORY_DETAILS_MISMATCH, CoreConstants.FAIL, details[0].trim(),
+						_historyCardDropdownTransferreName.get(i)));
+				Reporter.addStepLog(MessageFormat.format(MYLOConstants.HISTORY_DETAILS_MISMATCH, CoreConstants.FAIL, details[1].trim(),
+						_historyCardDropdownFileIdClient.get(i)));
+				Reporter.addStepLog(MessageFormat.format(MYLOConstants.HISTORY_DETAILS_MISMATCH, CoreConstants.FAIL, details[2].trim(),
+						_historyCardDropdownAddress.get(i)));
 
 				flag = false;
 			}
@@ -2569,17 +2583,17 @@ public class Mylo_AssignmentPage extends Base {
 			String updatedFromDate = CoreFunctions.getStringDateInFormat(
 					getFieldValuesIdentificationAndDocumentationSection(MYLOConstants.FROMDATE, i), "dd MMM yyyy",
 					"MM/dd/yyyy");
-			String updatedToDate = CoreFunctions.getStringDateInFormat(
-					getFieldValuesIdentificationAndDocumentationSection(MYLOConstants.TODATE, i), "dd MMM yyyy",
-					"MM/dd/yyyy");
+			//String updatedToDate = CoreFunctions.getStringDateInFormat(
+				//	getFieldValuesIdentificationAndDocumentationSection(MYLOConstants.TODATE, i), "dd MMM yyyy",
+					//"MM/dd/yyyy");
 			if (!(getFieldValuesIdentificationAndDocumentationSection(MYLOConstants.IDENTITY_TYPE, i)
 					.equals(identDocTypeValues.get(i))
 					&& getFieldValuesIdentificationAndDocumentationSection(MYLOConstants.COUNTRY, i)
 							.equals(identDocCountryValues.get(i))
 					&& getFieldValuesIdentificationAndDocumentationSection(MYLOConstants.NUMBER, i).equals(
 							identDocNumberValues.get(i))
-					&& updatedFromDate.equals(identDocFromDateValues.get(i))
-					&& updatedToDate.equals(identDocToDateValues.get(i)))) {
+					&& updatedFromDate.equals(identDocFromDateValues.get(i)))) {
+				//&& updatedToDate.equals(identDocToDateValues.get(i))
 				flag = false;
 				Reporter.addStepLog(CoreConstants.FAIL + MYLOConstants.EXPECTED_FIELD_VALUE_NOTDISPLAYED);
 				break;

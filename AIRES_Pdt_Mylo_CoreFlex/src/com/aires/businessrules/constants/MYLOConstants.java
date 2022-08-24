@@ -499,6 +499,7 @@ public class MYLOConstants {
 	public static final String VERIFIED_FIELDS_NOT_SORTED = "{0} Verified ''{1}'' not sorted by the ''{2}'' in ''{3}'' order";
 	public static final String NO_AUTHTRACK_FILE = "No Authorization / Tracking on File";
 	public static final String NOAUTHTRACK_FILE_NOT_PRESENT="AuthTrackFile Link is not present on Authorization/Tracking section";
+	public static final String HISTORY_DETAILS_MISMATCH = "{0} History details didn't get matched: expected- ''{1}'' but found: ''{2}'' ";                                                                                                                                                                                                  
 	
 	public static long TIME_BEFORE_ACTION;
 	public static long TIME_AFTER_ACTION;

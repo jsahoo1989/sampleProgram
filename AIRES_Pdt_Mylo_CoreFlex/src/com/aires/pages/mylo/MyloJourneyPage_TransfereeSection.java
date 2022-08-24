@@ -35,7 +35,7 @@ public class MyloJourneyPage_TransfereeSection extends Base {
 	@FindBy(how = How.CSS, using = "button[aria-controls='collapsechildOne']")
 	private WebElement _expandTransfereeSection;
 
-	@FindBy(how = How.CSS, using = "app-transferee-family button[aria-controls='collapseTwo']")
+	@FindBy(how = How.CSS, using = "app-transferee-family button[aria-controls='collapseOneTransferee']")
 	private WebElement _transfereeAndFamilySection;
 
 	@FindBy(how = How.CSS, using = "h2[class*='accchildhead']")
@@ -284,8 +284,8 @@ public class MyloJourneyPage_TransfereeSection extends Base {
 			flag = (_transfereeAndFamilySectionHeaders.get(2).getText().equals(sectionName +MYLOConstants.COLON));
 			break;
 		case MYLOConstants.OTHER:
-			CoreFunctions.scrollToElementUsingJavaScript(driver, _transfereeAndFamilySection,
-					MYLOConstants.TRANSFEREE_FAMILY);
+			CoreFunctions.scrollToElementUsingJavaScript(driver, _transfereeAndFamilySectionHeaders.get(3),
+					MYLOConstants.OTHER);
 			CoreFunctions.explicitWaitTillElementVisibility(driver, _transfereeAndFamilySectionHeaders.get(3),
 					sectionName);
 			CoreFunctions.highlightObject(driver, _transfereeAndFamilySectionHeaders.get(3));

@@ -100,7 +100,7 @@ public class PDT_PolicyAssignmentPage extends Base {
 	
 	public void exitAssignmentTransfereePage() {
 		CoreFunctions.highlightElementAndClick(driver, _btnExit, _btnExit.getText());
-		CoreFunctions.explicitWaitTillElementVisibility(driver, _popuSwal2, "Confirmation");
-		CoreFunctions.highlightElementAndClick(driver, _btnOk, _btnOk.getText());
+		//CoreFunctions.explicitWaitTillElementVisibility(driver, _popuSwal2, "Confirmation");
+		//CoreFunctions.highlightElementAndClick(driver, _btnOk, _btnOk.getText());
 	}
 }

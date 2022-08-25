@@ -42,8 +42,12 @@ public class PDT_PreAcceptanceService extends Base {
 	@FindBy(how = How.CSS, using = "a[href='#collapseFour']")
 	private WebElement _formPreAcceptanceTripMeals;
 
-	@FindBy(how = How.CSS, using = "div.card-header-info > h4.card-title")
-	private WebElement _subCategoryHeading;
+	//@FindBy(how = How.CSS, using = "div.card-header-info > h4.card-title")
+	@FindBy(how = How.CSS, using = "div.displayHeaderSection > h4.card-title")
+	private WebElement _subCategoryHeading;	 
+	
+	@FindBy(how = How.CSS, using = "div.card-header-info > h4.card-title")	
+	private WebElement _subCatHeading;
 
 	@FindBy(how = How.CSS, using = "#collapseOne label.form-check-label")
 	private List<WebElement> _radioBtnCandidateSelection;
@@ -347,7 +351,13 @@ public class PDT_PreAcceptanceService extends Base {
 		String elementText = null;
 		switch (elementName) {
 		case PDTConstants.HEADING:
-			elementText = _subCategoryHeading.getText();
+			/*elementText = CoreFunctions.getPropertyFromConfig("envt").toLowerCase().equalsIgnoreCase(CoreConstants.ENVT_QA)
+					? _subCategoryHeading.getText()
+					: _subCatHeading.getText();*/
+					
+			elementText = System.getProperty("envt").toLowerCase().equalsIgnoreCase(CoreConstants.ENVT_QA)
+							? _subCategoryHeading.getText()
+							: _subCatHeading.getText();
 			break;
 		default:
 			Assert.fail(MessageFormat.format(PDTConstants.ELEMENT_NOT_FOUND, CoreConstants.FAIL));
@@ -374,9 +384,18 @@ public class PDT_PreAcceptanceService extends Base {
 	}
 
 	public boolean verifySubCategoryHeading(String pageName) {
-		CoreFunctions.waitHandler(3);
-		CoreFunctions.explicitWaitTillElementVisibility(driver, _subCategoryHeading, _subCategoryHeading.getText());
-		return CoreFunctions.verifyElementOnPage(driver, _subCategoryHeading, PDTConstants.heading, pageName, pageName,
+		if (CoreFunctions.isElementExist(driver, _progressBar, 3))
+			BusinessFunctions.fluentWaitForSpinnerToDisappear(driver, _progressBar);
+		/*WebElement element = CoreFunctions.getPropertyFromConfig("envt").toLowerCase().equalsIgnoreCase(CoreConstants.ENVT_QA)
+						? _subCategoryHeading
+						: _subCatHeading;*/
+		
+		WebElement element = System.getProperty("envt").toLowerCase().equalsIgnoreCase(CoreConstants.ENVT_QA)
+				? _subCategoryHeading
+				: _subCatHeading;
+		
+		CoreFunctions.explicitWaitTillElementVisibility(driver, element, element.getText());
+		return CoreFunctions.verifyElementOnPage(driver, element, PDTConstants.heading, pageName, pageName,
 				true);
 	}
 

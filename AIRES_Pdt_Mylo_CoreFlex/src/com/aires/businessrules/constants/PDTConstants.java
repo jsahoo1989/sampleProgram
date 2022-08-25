@@ -548,4 +548,5 @@ public class PDTConstants {
 	public static final String FAIL_TO_VERIFY_ASSIGNMENT_LINKED_COUNT = "{0}Failed to verify linked assignment count. Expected Assignment count{1}, Actual Assignment count:-{2}";
 	public static final String DISABLED = "Disabled";
 	public static final String ENABLED = "Enabled";
+	public static final String PRE_ACCEPTANCE_SERVICES = "Pre-Acceptance Services";
 }

@@ -709,5 +709,10 @@ public class PDT_ViewPolicyPage extends Base {
 				PDTConstants.ICON_ASSIGNMENT_HISTORY);
 		_policyAssignmentPage.waitForProgressBarToDisapper();
 	}
+	
+	public void highlightAndClickIcon(String key) {
+		populateIconMap();
+		CoreFunctions.highlightElementAndClick(driver, iconMap.get(key).get(policySearchIndex), PDTConstants.CLEAR_FILTER);
+	}
 
 }

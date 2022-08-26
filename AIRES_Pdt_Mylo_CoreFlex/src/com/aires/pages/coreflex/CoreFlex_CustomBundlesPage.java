@@ -427,10 +427,12 @@ public class CoreFlex_CustomBundlesPage extends Base {
 			switch (policyRequiredFor) {
 			case COREFLEXConstants.CLONING:
 			case COREFLEXConstants.VERSIONING:
+			case COREFLEXConstants.CLIENT:
 				for (FlexBenefit benefit : flexBenefits) {
 					for (Benefit ben : benefit.getBenefits()) {
 						if ((ben.getPolicyCreationGroup().contains(COREFLEXConstants.CLONING))
-								|| (ben.getPolicyCreationGroup().contains(COREFLEXConstants.VERSIONING)))
+								|| (ben.getPolicyCreationGroup().contains(COREFLEXConstants.VERSIONING))
+								|| (ben.getPolicyCreationGroup().contains(COREFLEXConstants.CLIENT)))
 							benefitNameList.add(ben.getBenefitDisplayName());
 					}
 				}

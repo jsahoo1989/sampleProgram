@@ -55,7 +55,7 @@ public class IRIS_AssignmentOverviewPage extends BasePage {
 	}
 
 	private static String _newAssignmentId = null;
-	private Window file12CWindow = IRIS_PageMaster.getWindowObject("File");
+	private Window file12CWindow = IRIS_PageMaster.getWindowObject("File - 12C");
 	private Editor _fileIDEditor1 = IRIS_PageMaster.getEditorObject(file12CWindow, "File ID*");
 	private static String _savedAssignmentTitle = null;
 	private Window _assignmentWindow = null;
@@ -110,7 +110,7 @@ public class IRIS_AssignmentOverviewPage extends BasePage {
 			CoreFunctions.waitHandler(2);
 			Helpers.setEditorText(_fileIDEditor1, fileNumber, _fileIDEditor1.getAttachedText());
 			Window file12CWindow = Desktop.describe(Window.class,
-					new WindowDescription.Builder().title("File").build());
+					new WindowDescription.Builder().title("File - 12C").build());
 			Button executeButton = file12CWindow.describe(Button.class,
 					new ButtonDescription.Builder().label("Execute").build());
 			executeButton.click();
@@ -1241,5 +1241,21 @@ public class IRIS_AssignmentOverviewPage extends BasePage {
 			} catch (Exception e) {
 			}
 		}
+	}
+
+	public void acceptLinkSuggestionDialog() {
+		try {
+			_isExists = (IRIS_PageMaster.getDialogObject(_IRIS, "Link Suggestion").isVisible());
+			if (_isExists) {
+				Helpers.clickButton(
+						IRIS_PageMaster.getDialogObject(_IRIS, "Link Suggestion").describe(Button.class,
+								new ButtonDescription.Builder().label("This is a different person").build()),
+						IRIS_PageMaster.getDialogObject(_IRIS, "Link Suggestion")
+								.describe(Button.class, new ButtonDescription.Builder().label("This is a different person").build())
+								.getLabel());
+			}
+		} catch (Exception e) {
+		}
+		
 	}
 }

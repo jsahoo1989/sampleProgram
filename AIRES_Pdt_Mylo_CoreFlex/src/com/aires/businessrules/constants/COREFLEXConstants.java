@@ -762,4 +762,16 @@ public class COREFLEXConstants {
 	public static final String EXCEPTION_OCCURED_WHILE_VERIFYING_INITIATION_FOR_TEXT_ON_BENEFIT_SELECTION_TOOL_PAGE = "{0}Exception occured while verifying Initiation For text on Benefit Selection Tool Page. Exception : ''{1}''.";
 	public static final String SUCCESSFULLY_VERIFIED_DEFAULT_PORTION_CASHOUT_DETAILS_ON_BENEFIT_SELECTION_TOOL_PAGE = "{0}Successfully verified default Portion Cashout details on Benefit Selection Tool page.";
 	public static final String EXCEPTION_OCCURED_WHILE_VERIFYING_DEFAULT_CASHOUT_DETAILS_ON_BENEFIT_SELECTION_TOOL_PAGE = "{0}Exception occured while verifying Default Cashout Details on Benefit Selection Tool Page. Exception : ''{1}''.";
+	public static final String EXCEPTION_OCCURED_WHILE_SELECTING_RELOCATION_POLICY_ON_AUTH_FORM_PAGE = "{0}Exception occured while selecting ''{2}'' - Relocation Policy on Authorization Form. Exception : ''{1}''.";
+	public static final String SUCCESSFULLY_SELECTED_RELOCATION_POLICY_ON_AUTH_FORM_PAGE = "{0}Successfully selected ''{1}'' - Relocation Policy on Authorization Form.";
+	public static final String EXCEPTION_OCCURED_WHILE_VERIFYING_AUTH_FORM_SELECTION_AFTER_NAVIGATING_BACK_TO_AUTH_FORM_PAGE = "{0}Exception occured while verifying Auth Form selection after navigating back to Auth Form page. Exception : ''{1}''.";
+	public static final String CLIENT = "Client";
+	public static final String EXCEPTION_OCCURED_WHILE_VALIDATING_PORTION_CASHOUT_DETAILS_UNDER_BENEFITS_BUNDLE_SECTION_OF_BB_PAGE = "{0}Exception occured while validating Portion Cashout Details under Benefits bundle section of Benefits Bundle page. Exception : ''{1}''.";
+	public static final String EXCEPTION_OCCURED_WHILE_VALIDATING_SELECTED_FLEX_BENEFIT_DETAILS_ON_BENEFITS_BUNDLE_PAGE = "{0}Exception occured while validating selected Flex Benefits Details On Benefits Bundle Page. Exception : ''{1}''.";
+	public static final String SUCCESSFULLY_VERIFIED_SELECTED_FLEX_BENEFIT_DETAILS_ON_BENEFITS_BUNDLE_PAGE = "{0}Successfully verified selected Flex Benefit details on Benefits Bundle Page.";
+	public static final String EXCEPTION_OCCURED_WHILE_VERIFYING_AUTH_FORM_STATUS = "{0}Exception occured while verifying Auth Form Status. Exception : ''{1}''.";
+	public static final String SUCCESSFULLY_VERIFIED_AUTH_FORM_STATUS = "{0}Successfully verified Auth Form Status : ''{1}''.";
+	public static final String AUTH_FORM_STATUS_NOT_MATCHED = "{0}Auth Form status not matched. Expected : ''{1}'' | Actual : ''{2}''.";
+	public static final String EXCEPTION_OCCURED_WHILE_VERIFYING_FLEX_BENEFIT_SECTION_DETAILS_ON_AUTH_FORM_POST_BENEFIT_CASHOUT_SELECTION = "{0}Exception occured while verifying Flex Benefit section details on Auth Form post Benefit_Cashout selection. Exception : ''{1}''.";
+	public static final String EXCEPTION_OCCURED_WHILE_READING_NEW_INITIATION_SUBMITTED_EMAIL = "{0}Exception occured while reading New Initiation Submitted Email. Exception : ''{1}''.";
 }

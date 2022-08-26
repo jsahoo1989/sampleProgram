@@ -803,7 +803,8 @@ public class PDT_GeneralInformationPage extends Base {
 			switch (fieldName) {
 			case PDTConstants.POLICY_STATUS:
 				if ((CoreFunctions.isElementExist(driver, _textPolicyStatus, 2))
-						&& (CoreFunctions.getElementText(driver, _textPolicyStatus)).equals(expectedDefaultValue))
+						&& ((CoreFunctions.getElementText(driver, _textPolicyStatus).replace("error", "").trim())
+								.equals(expectedDefaultValue)))
 					isFieldVerified = true;
 				break;
 			case COREFLEXConstants.POLICY_VERSION:
@@ -1133,7 +1134,7 @@ public class PDT_GeneralInformationPage extends Base {
 	}
 
 	private void verifyCappedAndPointsBasedFlexPolicyErrorDialog() {
-		if (CoreFunctions.isElementExist(driver, _cappedPolicyErrorDialogHeading, 3)
+		if (CoreFunctions.isElementExist(driver, _cappedPolicyErrorDialogMessasgeText, 3)
 				&& (CoreFunctions.getElementText(driver, _cappedPolicyErrorDialogMessasgeText)
 						.equals(PDTConstants.CAPPED_POINTS_ERROR_DIALOG_TEXT))) {
 			CoreFunctions.clickElement(driver, _cappedPolicyErrorDialogOKButton);

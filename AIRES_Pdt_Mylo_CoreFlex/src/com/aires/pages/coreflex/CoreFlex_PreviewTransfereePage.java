@@ -186,9 +186,14 @@ public class CoreFlex_PreviewTransfereePage extends Base {
 			if ((CoreFunctions.getPropertyFromConfig("PolicyCashoutType").equals(MobilityXConstants.PORTION_CASHOUT))
 					|| (CoreFunctions.getPropertyFromConfig("PolicyCashoutType")
 							.equals(MobilityXConstants.AFTER_RELOCATION_ONLY))) {
-				double cashoutPoints = Double
-						.parseDouble(policySetupPageData.flexPolicySetupPage.StaticFixedTotalPointsAvailable)
-						* Double.parseDouble(policySetupPageData.flexPolicySetupPage.maxPortionCashoutPercent) / 100;
+				double cashoutPoints = (CoreFunctions.getPropertyFromConfig("CoreFlex_Policy_FlexSetupType")
+						.equals(COREFLEXConstants.USER_DEFINED))
+								? Double.parseDouble("0")
+								: (Double.parseDouble(
+										policySetupPageData.flexPolicySetupPage.StaticFixedTotalPointsAvailable)
+										* Double.parseDouble(
+												policySetupPageData.flexPolicySetupPage.maxPortionCashoutPercent)
+										/ 100);
 				isPortionCashoutVerified = verifyCashOutContent(cashoutPoints);
 			} else if (CoreFunctions.getPropertyFromConfig("PolicyCashoutType")
 					.equals(MobilityXConstants.CASHOUT_NOT_AUTHORIZED)) {
@@ -231,6 +236,7 @@ public class CoreFlex_PreviewTransfereePage extends Base {
 			switch (policyRequiredFor) {
 			case COREFLEXConstants.CLONING:
 			case COREFLEXConstants.VERSIONING:
+			case COREFLEXConstants.CLIENT:
 				isFlexBenefitPreviewVerified = verifyCloningFlexBenefitDetails();
 				break;
 			case COREFLEXConstants.AIRES_MANAGED_BENEFITS_CARDS:
@@ -261,7 +267,8 @@ public class CoreFlex_PreviewTransfereePage extends Base {
 		for (FlexBenefit benefitList : flexBenefits) {
 			for (Benefit benefit : benefitList.getBenefits()) {
 				if ((benefit.getPolicyCreationGroup().contains(COREFLEXConstants.CLONING))
-						|| (benefit.getPolicyCreationGroup().contains(COREFLEXConstants.VERSIONING))) {
+						|| (benefit.getPolicyCreationGroup().contains(COREFLEXConstants.VERSIONING))
+						|| (benefit.getPolicyCreationGroup().contains(COREFLEXConstants.CLIENT))) {
 					int indexBenefit = BusinessFunctions.returnindexItemFromListUsingText(driver,
 							_textAddedBenefitNameList, benefit.getBenefitDisplayName());
 					int indexCategory = BusinessFunctions.returnindexItemFromListUsingText(driver,

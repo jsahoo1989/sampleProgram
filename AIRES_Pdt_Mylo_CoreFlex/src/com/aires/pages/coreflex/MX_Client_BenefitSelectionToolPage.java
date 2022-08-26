@@ -190,7 +190,7 @@ public class MX_Client_BenefitSelectionToolPage extends Base {
 
 	@FindBy(how = How.XPATH, using = "//span[text()='Back to benefits list']")
 	private WebElement _link_backToBenefitList;
-	
+
 	@FindBy(how = How.XPATH, using = "//span[text()='Back to initiation']")
 	private WebElement _link_backToIntiation;
 
@@ -311,7 +311,7 @@ public class MX_Client_BenefitSelectionToolPage extends Base {
 
 	CoreFlex_SettlingInBenefitsData languageTrainingBenefitData = FileReaderManager.getInstance()
 			.getCoreFlexJsonReader().getSettlingInBenefitDataList(COREFLEXConstants.LANGUAGE_TRAINING);
-	
+
 	MX_Client_Dashboard_BscData bscAuthorizationData = FileReaderManager.getInstance().getCoreFlexJsonReader()
 			.getBscDataByModuleName("DomesticAuthorizationFormData");
 
@@ -471,7 +471,7 @@ public class MX_Client_BenefitSelectionToolPage extends Base {
 		return isBenefitNamePresent;
 	}
 
-	public boolean selectBenefitsAndProceedToReviewAndSubmit() {
+	public boolean selectBenefitsAndProceedToReview() {
 		boolean benefitsSelectedSuccessfully = false;
 		totalSelectedPoints = 0;
 		MX_Transferee_MyBenefitsBundlePage.benefitDeletedFlag = false;
@@ -524,9 +524,7 @@ public class MX_Client_BenefitSelectionToolPage extends Base {
 				CoreFunctions.writeToPropertiesFile("CF_Transferee_TotalSelectedPoints",
 						String.valueOf(totalSelectedPoints));
 				CoreFunctions.writeToPropertiesFile("CF_Transferee_AvailablePoints",
-						String.valueOf(Double
-								.parseDouble(policySetupPageData.flexPolicySetupPage.StaticFixedTotalPointsAvailable)
-								- totalSelectedPoints));
+						String.valueOf(totalPointsOnPolicy - totalSelectedPoints));
 				return true;
 			}
 		} catch (Exception e) {
@@ -562,7 +560,7 @@ public class MX_Client_BenefitSelectionToolPage extends Base {
 		CoreFunctions.explicitWaitTillElementVisibility(driver, _buttonSelectedCashoutPoints,
 				MobilityXConstants.CASHOUT_SELECTED);
 		selectedCashoutPoints = Double.parseDouble(CoreFunctions.getAttributeText(_inputCashoutPoints, "value"));
-		CoreFunctions.writeToPropertiesFile("CF_Transferee_SelectedCashOutPoints",
+		CoreFunctions.writeToPropertiesFile("CF_Client_SelectedCashOutPoints",
 				String.valueOf(selectedCashoutPoints));
 		totalSelectedPoints += selectedCashoutPoints;
 		return CoreFunctions.isElementExist(driver, _buttonSelectedCashoutPoints, 2);
@@ -612,12 +610,12 @@ public class MX_Client_BenefitSelectionToolPage extends Base {
 			calculatedTotalPoints += Double.parseDouble(element.getText().replace("pts", "").trim());
 		}
 		String expectedCustomBundleTotalPoints = String.valueOf(calculatedTotalPoints) + "/"
-				+ bscAuthorizationData.flexBenefitInfo.totalPoints + " pts";
+				+ bscAuthorizationData.flexBenefitInfo.finalTotalPoints + " pts";
 		String actualCustomBundleTotalPoints = CoreFunctions.getElementText(driver, _textCustomBundleTotalPoints);
 
 		return (actualCustomBundleTotalPoints.equals(expectedCustomBundleTotalPoints))
 				&& validateSuggestedBundlesSelectThisButton(calculatedTotalPoints,
-						Double.parseDouble(bscAuthorizationData.flexBenefitInfo.totalPoints));
+						Double.parseDouble(bscAuthorizationData.flexBenefitInfo.finalTotalPoints));
 	}
 
 	private boolean validateSuggestedBundlesSelectThisButton(double calculatedTotalPoints,
@@ -736,12 +734,12 @@ public class MX_Client_BenefitSelectionToolPage extends Base {
 		try {
 			DecimalFormat format = new DecimalFormat();
 			format.setDecimalSeparatorAlwaysShown(false);
-			totalPointsOnPolicy = Double.parseDouble(bscAuthorizationData.flexBenefitInfo.totalPoints);
+			totalPointsOnPolicy = Double.parseDouble(bscAuthorizationData.flexBenefitInfo.finalTotalPoints);
 			String actualPointsBalanceText = CoreFunctions.getElementText(driver, _textTotalPointBalance).replace("\n",
 					" ");
 			return actualPointsBalanceText
 					.equals(MobilityXConstants.BENEFIT_SELECTION_TOOL_AVAILABLE_POINTS_TEXT.replace("available_points",
-							format.format(Double.parseDouble(bscAuthorizationData.flexBenefitInfo.totalPoints))));
+							format.format(Double.parseDouble(bscAuthorizationData.flexBenefitInfo.finalTotalPoints))));
 		} catch (Exception e) {
 			Reporter.addStepLog(MessageFormat.format(
 					COREFLEXConstants.EXCEPTION_OCCURED_WHILE_VERIFYING_AVAILABLE_POINTS_MESSAGE_ON_BENEFIT_SELECTION_TOOL_PAGE,
@@ -1359,7 +1357,7 @@ public class MX_Client_BenefitSelectionToolPage extends Base {
 		return benefitsSelection;
 	}
 
-	public boolean verifyBenefitDetailsOnFPTBasedOnPolicyRequiredFor(String policyRequiredFor, String benefitType) {
+	public boolean verifyBenefitDetailsOnBSTBasedOnPolicyRequiredFor(String policyRequiredFor, String benefitType) {
 		switch (benefitType) {
 		case COREFLEXConstants.FLEX:
 			return verifyFlexBenefitSectionText()
@@ -1546,6 +1544,11 @@ public class MX_Client_BenefitSelectionToolPage extends Base {
 							&& (ben.getAiresManagedService().equals("Yes"))
 							&& (ben.getNoOfMilestones() == Integer.parseInt(numberOfMilestones))) {
 						benefitNameList.add(ben);
+					} else if (((policyRequiredFor.equals(COREFLEXConstants.CLONING))
+							|| (policyRequiredFor.equals(COREFLEXConstants.VERSIONING))
+							|| (policyRequiredFor.equals(COREFLEXConstants.CLIENT)))
+							&& (ben.getPolicyCreationGroup().contains(policyRequiredFor))) {
+						benefitNameList.add(ben);
 					}
 				}
 			}
@@ -1564,6 +1567,11 @@ public class MX_Client_BenefitSelectionToolPage extends Base {
 					} else if ((policyRequiredFor.equals(COREFLEXConstants.AIRES_MANAGED_BENEFITS_CARDS))
 							&& (ben.getAiresManagedService().equals("Yes"))
 							&& (ben.getNoOfMilestones() == Integer.parseInt(numberOfMilestones))) {
+						benefitNameList.add(ben);
+					} else if (((policyRequiredFor.equals(COREFLEXConstants.CLONING))
+							|| (policyRequiredFor.equals(COREFLEXConstants.VERSIONING))
+							|| (policyRequiredFor.equals(COREFLEXConstants.CLIENT)))
+							&& (ben.getPolicyCreationGroup().contains(policyRequiredFor))) {
 						benefitNameList.add(ben);
 					}
 				}

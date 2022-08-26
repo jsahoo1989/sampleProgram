@@ -56,6 +56,14 @@ public class EmailUtil {
 			_searchTag[0] = "Hello";
 			_searchTag[1] = "using the link below to log";
 			break;
+		case MobilityXConstants.INITIATION_FILE_ID:
+			_searchTag[0] = "File ID: ";
+			_searchTag[1] = "</th>";
+			break;
+		case MobilityXConstants.INITIATION_SUBMISSION_BENEFIT_TOTAL_POINTS:
+			_searchTag[0] = "Benefits Total Points: ";
+			_searchTag[1] = "</th>";
+			break;
 		default:
 			Assert.fail("Information not found");
 		}

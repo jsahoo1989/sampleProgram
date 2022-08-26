@@ -45,7 +45,7 @@ Feature: Validate the Core_Flex Cards details on Mobility Journey and Aires Mana
     And he has selected following options on 'Approval this Policy' dialog of "V1" Policy
       | Associate this policy with a NEW authorization in IRIS? |
       | Effective from booking date                             |
-    When he clicks on "Approve" button to acknowledged 'Approve this Policy' dialog
+    When he clicks on "Approve" button to acknowledge 'Approve this Policy' dialog
     Then Policy Status and Version should be displayed as "Active" and "V1" respectively on "View/Edit Policy Forms" page
 
   @End-To_End_CoreFlex @Both-Cards_MX @AllCards @MJ_Card_StatusChecks @FourMilestonesMJCards

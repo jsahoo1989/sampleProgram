@@ -44,6 +44,8 @@ import com.aires.pages.coreflex.CoreFlex_PreviewTransfereePage;
 import com.aires.pages.coreflex.CoreFlex_TemporaryLiving_BenefitsPage;
 import com.aires.pages.coreflex.MX_Client_AuthorizationHomePage;
 import com.aires.pages.coreflex.MX_Client_BenefitSelectionToolPage;
+import com.aires.pages.coreflex.MX_Client_MyBenefitsBundlePage;
+import com.aires.pages.coreflex.MX_Client_ViewAllInitiationsPage;
 import com.aires.pages.coreflex.MX_Transferee_FlexPlanningTool_Page;
 import com.aires.pages.coreflex.MX_Transferee_JourneyHomePage;
 import com.aires.pages.coreflex.MX_Transferee_MyBenefitsBundlePage;
@@ -89,6 +91,8 @@ public class PageObjectManager_CoreFlex {
 	private CoreFlex_HouseHuntingTrip_BenefitsPage _coreFlexHouseHuntingTripBenefitsPage;
 	private MX_Client_AuthorizationHomePage _mxClientAuthorizationHomePage;
 	private MX_Client_BenefitSelectionToolPage _mxClientBenefitSelectionToolPage;
+	private MX_Client_MyBenefitsBundlePage _mxClientMyBenefitsBundlePage;
+	private MX_Client_ViewAllInitiationsPage _mxClientViewAllInitiationsPage;
 
 	public PageObjectManager_CoreFlex(WebDriver driver) {
 		this._driver = driver;
@@ -283,9 +287,23 @@ public class PageObjectManager_CoreFlex {
 				: _mxClientAuthorizationHomePage;
 	}
 	
-	public MX_Client_BenefitSelectionToolPage getMXClientBenefitSelectionTollPage() {
+	public MX_Client_BenefitSelectionToolPage getMXClientBenefitSelectionToolPage() {
 		return (_mxClientBenefitSelectionToolPage == null)
 				? _mxClientBenefitSelectionToolPage = new MX_Client_BenefitSelectionToolPage(_driver)
 				: _mxClientBenefitSelectionToolPage;
 	}
+	
+	public MX_Client_MyBenefitsBundlePage getMXClientMyBenefitsBundlePage() {
+		return (_mxClientMyBenefitsBundlePage == null)
+				? _mxClientMyBenefitsBundlePage = new MX_Client_MyBenefitsBundlePage(_driver)
+				: _mxClientMyBenefitsBundlePage;
+	}
+	
+	public MX_Client_ViewAllInitiationsPage getMXClientViewAllInitiationsPage() {
+		return (_mxClientViewAllInitiationsPage == null)
+				? _mxClientViewAllInitiationsPage = new MX_Client_ViewAllInitiationsPage(_driver)
+				: _mxClientViewAllInitiationsPage;
+	}
+	
+	
 }

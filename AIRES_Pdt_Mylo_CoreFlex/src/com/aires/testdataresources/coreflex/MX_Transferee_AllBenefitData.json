@@ -215,7 +215,7 @@
 					"comment": "Test Flex Duplicate Housing Benefit Comment",
 					"payments": "Allowance/Cashout",
 					"multipleBenefitSubmission": false,
-					"policyCreationGroup": "All Benefits,Cloning,Versioning",
+					"policyCreationGroup": "All Benefits,Cloning,Versioning,Client",
 					"selectBenefitOnPBCPage": false,
 					"deselectBenefitOnPBCPage": false
 				},
@@ -236,7 +236,7 @@
 					"comment": "Test Other Housing Benefit Comment",
 					"payments": "Expense Reimbursement",
 					"multipleBenefitSubmission": false,
-					"policyCreationGroup": "All Benefits,Cloning,Versioning",
+					"policyCreationGroup": "All Benefits,Cloning,Versioning,Client",
 					"selectBenefitOnPBCPage": false,
 					"deselectBenefitOnPBCPage": false
 				},
@@ -404,7 +404,7 @@
 					"comment": "Test Flex Lump Sum Benefit Comment",
 					"payments": "Expense Reimbursement",
 					"multipleBenefitSubmission": false,
-					"policyCreationGroup": "All Benefits,Cloning,Versioning",
+					"policyCreationGroup": "All Benefits,Cloning,Versioning,Client",
 					"selectBenefitOnPBCPage": false,
 					"deselectBenefitOnPBCPage": false
 				},
@@ -779,7 +779,7 @@
 					"endTracingPrompt": "End Date of Language Training",
 					"postEndTracingCardStatus": "Training complete",
 					"multipleBenefitSubmission": false,
-					"policyCreationGroup": "All Benefits,Cloning,Versioning",
+					"policyCreationGroup": "All Benefits,Cloning,Versioning,Client",
 					"selectBenefitOnPBCPage": true,
 					"deselectBenefitOnPBCPage": true,
 					"subbenefitToBeDeselected":"Language Training Family",

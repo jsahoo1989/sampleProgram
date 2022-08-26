@@ -230,6 +230,7 @@ public class CoreFlex_BenefitSummaryPage extends Base {
 			switch (policyRequiredFor) {
 			case COREFLEXConstants.CLONING:
 			case COREFLEXConstants.VERSIONING:
+			case COREFLEXConstants.CLIENT:
 				isBenefitSummaryDetailsVerified = iterateAndVerifyCloningBenefitsSummaryDetails();
 				break;
 			case COREFLEXConstants.SIGNIFICANT_CHANGE:
@@ -321,7 +322,8 @@ public class CoreFlex_BenefitSummaryPage extends Base {
 			for (FlexBenefit benefitList : flexBenefits) {
 				for (Benefit benefit : benefitList.getBenefits()) {
 					if ((benefit.getPolicyCreationGroup().contains(COREFLEXConstants.CLONING))
-							|| (benefit.getPolicyCreationGroup().contains(COREFLEXConstants.VERSIONING))) {
+							|| (benefit.getPolicyCreationGroup().contains(COREFLEXConstants.VERSIONING))
+							|| (benefit.getPolicyCreationGroup().contains(COREFLEXConstants.CLIENT))) {
 						int indexBenefit = BusinessFunctions.returnindexItemFromListUsingText(driver,
 								_textAddedBenefitNameList, benefit.getBenefitDisplayName());
 						int indexCategory = BusinessFunctions.returnindexItemFromListUsingText(driver,

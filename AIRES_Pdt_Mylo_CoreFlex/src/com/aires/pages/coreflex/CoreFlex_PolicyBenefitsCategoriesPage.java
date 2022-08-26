@@ -438,10 +438,12 @@ public class CoreFlex_PolicyBenefitsCategoriesPage extends Base {
 		switch (policyRequiredFor) {
 		case COREFLEXConstants.CLONING:
 		case COREFLEXConstants.VERSIONING:
+		case COREFLEXConstants.CLIENT:
 			for (FlexBenefit benefit : flexBenefits) {
 				for (Benefit ben : benefit.getBenefits()) {
 					if ((ben.getPolicyCreationGroup().contains(COREFLEXConstants.CLONING))
-							|| (ben.getPolicyCreationGroup().contains(COREFLEXConstants.VERSIONING)))
+							|| (ben.getPolicyCreationGroup().contains(COREFLEXConstants.VERSIONING))
+							|| (ben.getPolicyCreationGroup().contains(COREFLEXConstants.CLIENT)))
 						benefitNameList.add(ben.getBenefitType());
 				}
 			}
@@ -549,6 +551,7 @@ public class CoreFlex_PolicyBenefitsCategoriesPage extends Base {
 				switch (policyRequiredFor) {
 				case COREFLEXConstants.CLONING:
 				case COREFLEXConstants.VERSIONING:
+				case COREFLEXConstants.CLIENT:
 					isBenefitSuccessfullySelectedAndFilled = fillFlexBenefitDetailsForCloning(policyType,
 							policyRequiredFor, numberOfMilestones, coreFlexDuplicateHousingBenefitsPage,
 							coreFlexLumpSumBenefitsPage, coreFlexOtherHousingBenefitsPage,
@@ -711,7 +714,7 @@ public class CoreFlex_PolicyBenefitsCategoriesPage extends Base {
 					coreFlexDuplicateHousingBenefitsPage.selectAndFillBenefitsAndSubBenefitDetails(policyType,
 							benefit.getSubBenefits(), benefit.getMultipleBenefitSelection(), benefit.getPoints(),
 							benefit.getBenefitDisplayName(), benefit.getBenefitAmount(), benefit.getBenefitDesc(),
-							benefit.getPayments());					
+							benefit.getPayments());
 					break;
 				case COREFLEXConstants.LUMP_SUM:
 					coreFlexLumpSumBenefitsPage.selectAndFillBenefitsAndSubBenefitDetails(policyType,
@@ -755,7 +758,7 @@ public class CoreFlex_PolicyBenefitsCategoriesPage extends Base {
 					coreFlexHomePurchaseBenefitsPage.selectAndFillBenefitsAndSubBenefitDetails(policyType,
 							benefit.getSubBenefits(), benefit.getMultipleBenefitSelection(), benefit.getPoints(),
 							benefit.getBenefitDisplayName(), benefit.getBenefitAmount(), benefit.getBenefitDesc(),
-							benefit.getAiresManagedService());					
+							benefit.getAiresManagedService());
 					break;
 				case COREFLEXConstants.FINAL_MOVE:
 					coreFlexFinalMoveBenefitsPage.selectAndFillBenefitsAndSubBenefitDetails(policyType,
@@ -773,43 +776,43 @@ public class CoreFlex_PolicyBenefitsCategoriesPage extends Base {
 					coreFlexHomeLeaveBenefitsPage.selectAndFillBenefitsAndSubBenefitDetails(policyType,
 							benefit.getSubBenefits(), benefit.getMultipleBenefitSelection(), benefit.getPoints(),
 							benefit.getBenefitDisplayName(), benefit.getBenefitAmount(), benefit.getBenefitDesc(),
-							benefit.getAiresManagedService());					
+							benefit.getAiresManagedService());
 					break;
 				case COREFLEXConstants.AIRPORT_PICKUP:
 					coreFlexAirportPickupBenefitsPage.selectAndFillBenefitsAndSubBenefitDetails(policyType,
 							benefit.getSubBenefits(), benefit.getMultipleBenefitSelection(), benefit.getPoints(),
 							benefit.getBenefitDisplayName(), benefit.getBenefitAmount(), benefit.getBenefitDesc(),
-							benefit.getAiresManagedService());					
+							benefit.getAiresManagedService());
 					break;
 				case COREFLEXConstants.PRE_ACCEPTANCE_SERVICES:
 					coreFlexPreAcceptanceServicesBenefitsPage.selectAndFillBenefitsAndSubBenefitDetails(policyType,
 							benefit.getSubBenefits(), benefit.getMultipleBenefitSelection(), benefit.getPoints(),
 							benefit.getBenefitDisplayName(), benefit.getBenefitAmount(), benefit.getBenefitDesc(),
-							benefit.getAiresManagedService());				
+							benefit.getAiresManagedService());
 					break;
 				case COREFLEXConstants.FURNITURE_RENTAL:
 					coreFlexFurnitureRentalBenefitsPage.selectAndFillBenefitsAndSubBenefitDetails(policyType,
 							benefit.getSubBenefits(), benefit.getMultipleBenefitSelection(), benefit.getPoints(),
 							benefit.getBenefitDisplayName(), benefit.getBenefitAmount(), benefit.getBenefitDesc(),
-							benefit.getAiresManagedService());					
+							benefit.getAiresManagedService());
 					break;
 				case COREFLEXConstants.AUTO_RENTAL_DURING_ASSIGNMENT:
 					coreFlexAutoRentalDuringAssignmentBenefitsPage.selectAndFillBenefitsAndSubBenefitDetails(policyType,
 							benefit.getSubBenefits(), benefit.getMultipleBenefitSelection(), benefit.getPoints(),
 							benefit.getBenefitDisplayName(), benefit.getBenefitAmount(), benefit.getBenefitDesc(),
-							benefit.getAiresManagedService());					
+							benefit.getAiresManagedService());
 					break;
 				case COREFLEXConstants.EDUCATION_ASSISTANCE_SCHOOL_SEARCH:
 					coreFlexEducationAssistanceBenefitsPage.selectAndFillBenefitsAndSubBenefitDetails(policyType,
 							benefit.getSubBenefits(), benefit.getMultipleBenefitSelection(), benefit.getPoints(),
 							benefit.getBenefitDisplayName(), benefit.getBenefitAmount(), benefit.getBenefitDesc(),
-							benefit.getAiresManagedService());					
+							benefit.getAiresManagedService());
 					break;
 				case COREFLEXConstants.HOUSE_HUNTING_TRIP:
 					coreFlexHouseHuntingTripBenefitsPage.selectAndFillBenefitsAndSubBenefitDetails(policyType,
 							benefit.getSubBenefits(), benefit.getMultipleBenefitSelection(), benefit.getPoints(),
 							benefit.getBenefitDisplayName(), benefit.getBenefitAmount(), benefit.getBenefitDesc(),
-							benefit.getAiresManagedService());					
+							benefit.getAiresManagedService());
 					break;
 				default:
 					Assert.fail(PDTConstants.INVALID_ELEMENT);
@@ -1467,7 +1470,8 @@ public class CoreFlex_PolicyBenefitsCategoriesPage extends Base {
 							&& (ben.getNoOfMilestones() == Integer.parseInt(numberOfMilestones))) {
 						benefitNameList.add(ben);
 					} else if (((policyRequiredFor.equals(COREFLEXConstants.CLONING))
-							|| ((policyRequiredFor.equals(COREFLEXConstants.VERSIONING))))
+							|| (policyRequiredFor.equals(COREFLEXConstants.VERSIONING))
+							|| ((policyRequiredFor.equals(COREFLEXConstants.CLIENT))))
 							&& (ben.getPolicyCreationGroup().contains(policyRequiredFor))) {
 						benefitNameList.add(ben);
 					}
@@ -1563,7 +1567,8 @@ public class CoreFlex_PolicyBenefitsCategoriesPage extends Base {
 			CoreFunctions.verifyText(driver, _dialogContent, COREFLEXConstants.INFORMATION_DIALOG_CONTENT_TEXT,
 					COREFLEXConstants.INFORMATION_DIALOG_CONTENT);
 			CoreFunctions.clickElement(driver, _dialogContinueButton);
-			Reporter.addStepLog(MessageFormat.format(COREFLEXConstants.SUCCESSFULLY_VERIFIED_INFORMATION_DIALOG_ON_POLICY_BENEFIT_CATEGORIES_PAGE,
+			Reporter.addStepLog(MessageFormat.format(
+					COREFLEXConstants.SUCCESSFULLY_VERIFIED_INFORMATION_DIALOG_ON_POLICY_BENEFIT_CATEGORIES_PAGE,
 					CoreConstants.PASS));
 			return true;
 		} else {

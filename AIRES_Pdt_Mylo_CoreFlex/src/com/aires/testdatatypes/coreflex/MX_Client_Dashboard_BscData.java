@@ -82,7 +82,8 @@ public class MX_Client_Dashboard_BscData {
 		public String petShipment;
 		public String propertyManagement;
 		public String applianceAllowance;	
-		public String totalPoints;
+		public String initialTotalPoints;
+		public String finalTotalPoints;
 	}
 	
 	public class PreDecisionBenefitInfo {

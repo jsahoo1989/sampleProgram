@@ -415,6 +415,7 @@ public class Mylo_DashboardHomePage extends Base {
 		for (int i = 0; i < max; i++) {
 			CoreFunctions.explicitWaitTillElementListClickable(driver, _historyCards);
 			int index = CoreFunctions.getRandomNumber(0, _historyCards.size());
+			CoreFunctions.waitForMyloSpinnnerInvisibilityIfExist(driver, _spinner);
 			CoreFunctions.click(driver, _historyCards.get(index), _fileIdHistoryCard.get(index).getText());
 			CoreFunctions.waitForMyloSpinnnerInvisibilityIfExist(driver, _spinner);
 		}

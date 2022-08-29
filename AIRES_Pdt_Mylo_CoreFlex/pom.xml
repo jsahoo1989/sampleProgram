@@ -26,6 +26,7 @@
 					<systempropertyvariables>
 						<envt>${envt}</envt>
 						<browser>${browser}</browser>	
+						<noOfTimes>${noOfTimes}</noOfTimes>
 						<application>${application}</application>
 						<application>${testURL}</application>	
 					</systempropertyvariables>

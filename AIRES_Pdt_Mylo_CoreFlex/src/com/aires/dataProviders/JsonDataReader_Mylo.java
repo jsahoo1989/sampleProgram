@@ -27,6 +27,7 @@ import com.aires.businessrules.constants.CoreConstants;
 import com.aires.managers.FileReaderManager;
 import com.aires.testdatatypes.mylo.MyloCAStates;
 import com.aires.testdatatypes.mylo.MyloIndiaStates;
+import com.aires.testdatatypes.mylo.MyloMemoryCapacityFileIds;
 import com.aires.testdatatypes.mylo.MyloUSStates;
 import com.aires.testdatatypes.mylo.Mylo_Assignment_HistoryDetails_DEV5;
 import com.aires.testdatatypes.mylo.Mylo_Assignment_HistoryDetails_PREPROD;
@@ -64,6 +65,8 @@ public class JsonDataReader_Mylo {
 			.getTestDataResourcePath() + "mylo/Mylo_JourneyDetails_DEV5.json";
 	private final String _MylofileDataFilePath = FileReaderManager.getInstance().getConfigReader()
 			.getTestDataResourcePath() + "mylo/Mylo_FileData.json";
+	private final String _MyloMemoryCapacityFileIdPath = FileReaderManager.getInstance().getConfigReader()
+			.getTestDataResourcePath() + "mylo/MyloMemoryCapacityFileIds.json";
 	private List<Mylo_LoginData> _loginDataList;
 	private List<MyloUSStates> _USStatesList;
 	private List<MyloCAStates> _CAStatesList;
@@ -76,6 +79,7 @@ public class JsonDataReader_Mylo {
 	private List<Mylo_JourneyDetails_PREPROD> _journeyDetailsPREPRODList;
 	private List<Mylo_JourneyDetails_DEV5> _journeyDetailsDEV5List;
 	private List<Mylo_FileData> _fileDataList;
+	private List<MyloMemoryCapacityFileIds> _fileIdDetailsList;
 	
 	public JsonDataReader_Mylo() {
 		_loginDataList = getUserData();
@@ -90,6 +94,7 @@ public class JsonDataReader_Mylo {
 		_journeyDetailsPREPRODList = getJourneyDetailsPREPROD();
 		_journeyDetailsDEV5List = getJourneyDetailsDEV5();
 		_fileDataList=getFileData();
+		_fileIdDetailsList=getFileDetailsData();
 	}
 	private List<Mylo_LoginData> getUserData() {
 		Gson gson = new Gson();
@@ -308,6 +313,24 @@ public class JsonDataReader_Mylo {
 		}
 	}
 	
+	private List<MyloMemoryCapacityFileIds> getFileDetailsData() {
+		Gson gson = new Gson();
+		BufferedReader bufferReader = null;
+		try {
+			bufferReader = new BufferedReader(new FileReader(_MyloMemoryCapacityFileIdPath));
+			MyloMemoryCapacityFileIds[] data = gson.fromJson(bufferReader, MyloMemoryCapacityFileIds[].class);
+			return Arrays.asList(data);
+		} catch (FileNotFoundException e) {
+			throw new RuntimeException(CoreConstants.JSON_FILE_NOT_FOUND_AT_PATH + _MyloMemoryCapacityFileIdPath);
+		} finally {
+			try {
+				if (bufferReader != null)
+					bufferReader.close();
+			} catch (IOException ignore) {
+			}
+		}
+	}
+	
 	public final Mylo_LoginData getloginDetailsByUserProfileName(String userProfileName) {
 		return _loginDataList.stream().filter(x -> x.MyloProfileName.equalsIgnoreCase(userProfileName)).findAny().get();
 	}
@@ -349,5 +372,9 @@ public class JsonDataReader_Mylo {
 	}
 	public final List<Mylo_Assignment_HistoryDetails_DEV5> getMyloAssignmentDEV5HistoryDetails() {
 		return _myloAssignHistoryDet_DEV5;
+	}
+	
+	public final MyloMemoryCapacityFileIds getFileIdListByEnv(String environmentName) {
+		return _fileIdDetailsList.stream().filter(x -> x.environment.equalsIgnoreCase(environmentName)).findAny().get();
 	}
 }

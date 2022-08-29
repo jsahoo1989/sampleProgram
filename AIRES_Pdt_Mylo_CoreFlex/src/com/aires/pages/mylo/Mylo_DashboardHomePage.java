@@ -41,7 +41,7 @@ public class Mylo_DashboardHomePage extends Base {
 	@FindBy(how = How.CSS, using = "div[class='container']")
 	private List<WebElement> _selectQueryParameterRows;
 
-	@FindBy(how = How.CSS, using = "button[class='btn btn-primary modal-md-blue-btn']")
+	@FindBy(how = How.CSS, using = "button[class='mylo-query-btn']")
 	private List<WebElement> _selectQueryParameterButtons;
 	
 	@FindBy(how = How.CSS, using = "span[class='ng-arrow-wrapper']")
@@ -105,8 +105,8 @@ public class Mylo_DashboardHomePage extends Base {
 	@FindBy(how = How.XPATH, using = "//canvas[@data-id!='canvas']")
 	private WebElement _webswingSection;
 	
-	@FindBy(how = How.XPATH, using = "//div[@class='mylo-grid-warea']/ul/li[1]")
-	private List<WebElement> _resultFileIds;
+	@FindBy(how = How.XPATH, using = "//button[text()='Open File']")
+	private WebElement _openFileBtn;
 	
 	@FindBy(how = How.XPATH, using = "//a[text()='Next']")
 	private WebElement _resultNextBtn;
@@ -128,6 +128,12 @@ public class Mylo_DashboardHomePage extends Base {
 	
 	@FindBy(how = How.XPATH, using = "//mat-dialog-container")
 	private WebElement myloPopUpQueryResult;
+	
+	@FindBy(how = How.CSS, using = "div[class='fileuser-info']")
+	private List<WebElement> _historyCards;
+	
+	@FindBy(how = How.CSS, using = "span[class='fileid']")
+	private List<WebElement> _fileIdHistoryCard;
 			
 
 	final By _selectQueryoptions = By.xpath("./button");
@@ -136,8 +142,11 @@ public class Mylo_DashboardHomePage extends Base {
 	final By _dropdownSections = By.xpath(".//parent::div/ng-select");
 	final By _journeySubSections = By.cssSelector("#collapseSummary a");
 	public By _pageJumpTo = By.cssSelector("div[role='option'] span");
+	public By _queryResultFileIds = By.xpath("//ul[@class='even ng-star-inserted']/li[1]");
+
 			
 	LinkedHashMap<String, Integer> parameterDropdownFieldsMap = new LinkedHashMap<String, Integer>();
+	List<String> fileIds= new ArrayList<String>();
 
 	public boolean verifyUserName(String userName) {
 		CoreFunctions.waitForBrowserToLoad(driver);
@@ -344,49 +353,70 @@ public class Mylo_DashboardHomePage extends Base {
 		}
 	}
 	
-	public void jumpToSpecificvpages(int pageNo) {
-		if(pageNo!=1) {
-		CoreFunctions.clickElement(driver, _jumpToPageDropdown);
-		CoreFunctions.clearAndSetText(driver, _jumpToPageInsert,"JumpTo:Section", Integer.toString(pageNo));
-		List<WebElement> jumpToPagesList = CoreFunctions.getElementListByLocator(driver, _pageJumpTo);
-		BusinessFunctions.selectItemFromListUsingText(driver, jumpToPagesList, Integer.toString(pageNo));
-		CoreFunctions.waitForMyloSpinnnerInvisibilityIfExist(driver, _spinner);
-		}	
+	
+	
+	
+	
+	public void scrollClickFileIds(String fileId) {
+		boolean flag=true;
+		while (flag) {
+			List<WebElement> fileIdsResult2 = CoreFunctions.getElementListByLocator(driver, _queryResultFileIds);
+			List<String> fileIdDetails = new ArrayList<String>();
+			fileIdDetails.addAll(fileIdsResult2.stream().map(x -> x.getText()).collect(Collectors.toList()));
+			if (fileIdDetails.contains(fileId)) {
+				CoreFunctions.scrollClickUsingJS(driver, fileIdsResult2.get(fileIdDetails.indexOf(fileId)), "Y");
+				flag=false;
+			} else {
+				CoreFunctions.scrollClickUsingJS(driver, fileIdsResult2.get(fileIdsResult2.size() - 1), "Y");
+			}
+		}
 	}
 	
 	
 	public void navigateActFinanceSectionForDifffileIds(int maxLimit) {
-		int flag=0;
-		int noOfPages=1;
-		outerloop:
-		while(flag<maxLimit) {
-			for(int j=0;j<_resultFileIds.size();j++) {			
-				String fileId= CoreFunctions.getElementText(driver, _resultFileIds.get(j));
-				int s=flag+1;
-				Reporter.addStepLog("<b><i>FileID_</i></b>"+s+": "+ fileId);
-				CoreFunctions.hoverAndClick(driver, _resultFileIds.get(j), fileId);
+		int flag=0;			
+		String fileId = "";	
+		while (flag < 200) {
+			for (int j = 0; j < 10; j++) {
+				List<WebElement> fileIdsResult = CoreFunctions.getElementListByLocator(driver, _queryResultFileIds);
+				fileId = CoreFunctions.getElementText(driver, fileIdsResult.get(j));
+				if (fileIds.contains(fileId))
+					continue;
+				Reporter.addStepLog("<b><i>FileID_</i></b>" + flag + 1 + ": " + fileId);
+				CoreFunctions.waitHandler(2);
+				CoreFunctions.click(driver, fileIdsResult.get(j), fileId);
+				CoreFunctions.click(driver, _openFileBtn, "Open File Button");
+				fileIds.add(fileId);
+				flag++;
 				CoreFunctions.waitForMyloSpinnnerInvisibilityIfExist(driver, _spinner);
 				clickPopUpsIfExist();
-				CoreConstants.TIME_AFTER_ACTION = new Date().getTime();		
+				CoreConstants.TIME_AFTER_ACTION = new Date().getTime();
 				selectOptionsFromAssignmentMenu("Activity & Finance");
 				CoreFunctions.waitForMyloSpinnnerInvisibilityIfExist(driver, _spinner);
 				Assert.assertTrue(CoreFunctions.isElementExist(driver, _webswingSection, 60));
 				CoreConstants.TIME_BEFORE_ACTION = new Date().getTime();
-				Reporter.addStepLog("<b>Total time taken to load <i>WebSwing</i> section is :"
-						+ CoreFunctions.calculatePageLoadTime(CoreConstants.TIME_BEFORE_ACTION,CoreConstants.TIME_AFTER_ACTION) + " Seconds </b>");
-				Assert.assertEquals(CoreFunctions.getElementText(driver, _webswingBannerFileId), fileId);
-				flag++;
+				Reporter.addStepLog("<b>Total time taken to load <i>WebSwing</i> section is :" + CoreFunctions
+						.calculatePageLoadTime(CoreConstants.TIME_BEFORE_ACTION, CoreConstants.TIME_AFTER_ACTION)
+						+ " Seconds </b>");
 				CoreFunctions.explicitWaitTillElementBecomesClickable(driver, _recallQueryBtn, "Recall Query Button");
 				CoreFunctions.clickElement(driver, _recallQueryBtn);
 				CoreFunctions.waitForMyloSpinnnerInvisibilityIfExist(driver, _spinner);
-				CoreFunctions.explicitWaitTillElementVisibility(driver, myloPopUpQueryResult, "Mylo PopUp",60);
-				if(flag==maxLimit)
-					break outerloop;
-				jumpToSpecificvpages(noOfPages);
+				CoreFunctions.explicitWaitTillElementVisibility(driver, myloPopUpQueryResult, "Mylo PopUp", 60);
 			}
+				scrollClickFileIds(fileId);
+		}
 			
-			noOfPages++;
-			jumpToSpecificvpages(noOfPages);
+	}
+	
+	public void loadAlternateFiles() {
+		String ctr = System.getProperty("noOfTimes");
+		//String ctr="10";
+		int max = Integer.parseInt(ctr);
+		for (int i = 0; i < max; i++) {
+			CoreFunctions.explicitWaitTillElementListClickable(driver, _historyCards);
+			int index = CoreFunctions.getRandomNumber(0, _historyCards.size());
+			CoreFunctions.click(driver, _historyCards.get(index), _fileIdHistoryCard.get(index).getText());
+			CoreFunctions.waitForMyloSpinnnerInvisibilityIfExist(driver, _spinner);
 		}
 	}
 

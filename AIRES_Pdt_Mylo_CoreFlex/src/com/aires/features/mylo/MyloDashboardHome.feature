@@ -33,3 +33,11 @@ Then Query results should appear based on the parameter provided sorted by File 
 Scenario: Mylo-Validate Select Query parameters from Assignment Options
 Given he queries "Active" files for clientId "45609"
 Then he is on "Activity & Finance" section after selecting "Activity & Finance" tab on "MyloDashboard Home Page" for 200 different files selected each time from the query results
+
+@Mylo-Performance  @Mylo:217986
+Scenario: Mylo-Validate Memory Capacity for Loading Files on Mylo Journey Page
+Given he is on Mylo Dashboard Home page with different fileIds used for checking memory capacity
+When he loads the file alternatively for given number of times on Mylo Journey page
+Then browser should not be crashed for loading files continuosly
+
+

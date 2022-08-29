@@ -1,6 +1,8 @@
 package stepDefinitions.mylo;
 
 import java.text.MessageFormat;
+import java.util.Arrays;
+import java.util.List;
 import org.testng.Assert;
 import com.aires.businessrules.constants.CoreConstants;
 import com.aires.businessrules.constants.MYLOConstants;
@@ -10,6 +12,7 @@ import com.aires.pages.mylo.MyloJourneyPage_TransfereeSection;
 import com.aires.pages.mylo.Mylo_AssignmentPage;
 import com.aires.pages.mylo.Mylo_DashboardHomePage;
 import com.aires.pages.mylo.Mylo_LoginPage;
+import com.aires.testdatatypes.mylo.MyloMemoryCapacityFileIds;
 import com.aires.testdatatypes.mylo.Mylo_LoginData;
 import cucumber.api.DataTable;
 import cucumber.api.java.en.Given;
@@ -22,9 +25,12 @@ public class MyloDashboard_Steps {
 	Mylo_DashboardHomePage myloDashboardPage;
 	Mylo_AssignmentPage myloAssignmentPage;
 	MyloJourneyPage_TransfereeSection myloJourneyPageTransfereeSection;
-
+	String environment= System.getProperty("envt");
+	
 	Mylo_LoginData loginData = FileReaderManager.getInstance().getMyloJsonReader()
 			.getloginDetailsByUserProfileName(MYLOConstants.USER_PROFILE_NAME);
+	MyloMemoryCapacityFileIds myloFileIdDetails= FileReaderManager.getInstance()
+			.getMyloJsonReader().getFileIdListByEnv(environment);
 
 	public MyloDashboard_Steps(TestContext context) {
 		testContext = context;
@@ -141,6 +147,23 @@ public class MyloDashboard_Steps {
 	@Then("^he is on \"([^\"]*)\" section after selecting \"([^\"]*)\" tab on \"([^\"]*)\" for (\\d+) different files selected each time from the query results$")
 	public void he_is_on_section_after_selecting_tab_on_for_different_files_selected_each_time_from_the_query_results(String arg1, String arg2, String arg3, int maxLimit) {
 		myloDashboardPage.navigateActFinanceSectionForDifffileIds(maxLimit);
+	}
+	
+	@Given("^he is on Mylo Dashboard Home page with different fileIds used for checking memory capacity$")
+	public void he_is_on_Mylo_Dashboard_Home_page_with_different_fileIds_used_for_checking_memory_capacity()  {
+		String[] fileIDS = myloFileIdDetails.fileId.split(",");
+		 List<String> fileIds = Arrays.asList(fileIDS);
+		myloDashboardPage.executeDifferentFileIds(fileIds.size(), fileIds);
+	}
+
+	@When("^he loads the file alternatively for given number of times on Mylo Journey page$")
+	public void he_loads_the_file_alternatively_for_given_number_of_times_on_Mylo_Journey_page(){
+	  myloDashboardPage.loadAlternateFiles();
+	}
+
+	@Then("^browser should not be crashed for loading files continuosly$")
+	public void browser_should_not_be_crashed_for_loading_files_continuosly() {
+	    
 	}
 
 }

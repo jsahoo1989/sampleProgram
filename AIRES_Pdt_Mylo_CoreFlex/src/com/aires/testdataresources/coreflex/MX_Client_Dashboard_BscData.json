@@ -88,8 +88,8 @@
 			"petShipment": "No",
 			"propertyManagement": "No",
 			"applianceAllowance":"No",
-			"initialTotalPoints":"500",
-			"finalTotalPoints":"750"
+			"initialTotalPoints":"450",
+			"finalTotalPoints":"800"
 		},
 		"preDecisionBenefitInfo": {
 			"airesToInitiateImmigrationServices": "Yes"

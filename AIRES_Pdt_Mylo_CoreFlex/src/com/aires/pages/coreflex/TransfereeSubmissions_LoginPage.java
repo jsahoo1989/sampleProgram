@@ -76,7 +76,7 @@ public class TransfereeSubmissions_LoginPage extends Base {
 	public boolean verifyPageNavigation() {
 		try {
 			openApplication();
-			return CoreFunctions.isElementExist(driver, _inputUserEmail, 5);
+			return CoreFunctions.isElementExist(driver, _inputUserEmail, 20);
 		} catch (Exception e) {
 			Reporter.addStepLog(
 					MessageFormat.format(COREFLEXConstants.EXCEPTION_OCCURED_WHILE_NAVIGATING_TO_TRANSFEREE_SUBMISSIONS_LOGIN_PAGE,

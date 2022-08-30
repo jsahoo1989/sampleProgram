@@ -415,7 +415,7 @@ public class IRIS_AssignmentOverviewPage extends BasePage {
 				Helpers.clickButton(saveButtonAfterFileCreation, saveButtonAfterFileCreation.getAttachedText());
 //				verifySaveSucceedDialog();
 			}
-			_assignmentWindow = IRIS_PageMaster.getWindowObject("File "
+			_assignmentWindow = IRIS_PageMaster.getWindowObject("File - 12C "
 					+ CoreFunctions.getPropertyFromConfig("Assignment_FileID") + " - Aires LLC Agreement in place.");
 			Dialog saveSucceededDialog = IRIS_PageMaster.getDialogObject(_assignmentWindow, "Save succeeded");
 			saveSucceededDialog.waitUntilVisible();
@@ -1251,11 +1251,69 @@ public class IRIS_AssignmentOverviewPage extends BasePage {
 						IRIS_PageMaster.getDialogObject(_IRIS, "Link Suggestion").describe(Button.class,
 								new ButtonDescription.Builder().label("This is a different person").build()),
 						IRIS_PageMaster.getDialogObject(_IRIS, "Link Suggestion")
-								.describe(Button.class, new ButtonDescription.Builder().label("This is a different person").build())
+								.describe(Button.class,
+										new ButtonDescription.Builder().label("This is a different person").build())
+								.getLabel());
+				Helpers.clickButton(
+						IRIS_PageMaster.getDialogObject(_IRIS, "Confirm Link Files").describe(Button.class,
+								new ButtonDescription.Builder().label("OK").build()),
+						IRIS_PageMaster.getDialogObject(_IRIS, "Confirm Link Files")
+								.describe(Button.class, new ButtonDescription.Builder().label("OK").build())
 								.getLabel());
 			}
 		} catch (Exception e) {
 		}
-		
 	}
+
+	public void addAiresTeamDetailsOnOverviewTab(IRIS_AssignmentData overviewData) throws Exception {
+		deleteAiresFileTeamHistoryDetails(IRISConstants.FUNCTION_PPC);
+		saveAssignmentAfterFileCreation();
+		addAiresFileTeamHistoryDetails(IRISConstants.FUNCTION_PPC, overviewData.airesFileTeamHistory);
+		saveAssignmentAfterFileCreation();
+		addAiresFileTeamHistoryDetails(IRISConstants.FUNCTION_MSPEC, overviewData.airesFileTeamHistory);
+		saveAssignmentAfterFileCreation();
+	}
+
+	/**
+	 * Save Assignment.
+	 * 
+	 * @param clickCount
+	 * @throws Exception
+	 */
+	public void saveAssignmentAfterFileCreation() throws Exception {
+		try {
+			_assignmentWindow = IRIS_PageMaster.getWindowObject("File - 12C "
+					+ CoreFunctions.getPropertyFromConfig("Assignment_FileID") + "  for "
+					+ CoreFunctions.getPropertyFromConfig("Transferee_firstName") + " "
+					+ CoreFunctions.getPropertyFromConfig("Transferee_lastName") + " of "
+					+ CoreFunctions.getPropertyFromConfig("Policy_ClientName") + " - Aires LLC Agreement in place.");
+			Helpers.clickButton(IRIS_PageMaster.getButtonObjectFromLabel(_IRIS, "Save"),
+					IRIS_PageMaster.getButtonObjectFromLabel(_assignmentWindow, "Save").getLabel());
+			acceptAddConfirmationDialog();
+			Dialog saveSucceededDialog = IRIS_PageMaster.getDialogObject(_assignmentWindow, "Save succeeded");
+			saveSucceededDialog.waitUntilVisible();
+			Button saveSucceedoKButton = IRIS_PageMaster.getButtonObjectFromLabel(saveSucceededDialog, "OK");
+			Helpers.clickButton(saveSucceedoKButton, saveSucceedoKButton.getAttachedText());
+		} catch (GeneralLeanFtException e) {
+			e.printStackTrace();
+			Assert.fail(CoreConstants.FAIL + "Not Able to save the assignment");
+		}
+	}
+	
+	public void acceptAddConfirmationDialog() {
+		try {
+			_isExists = (IRIS_PageMaster.getDialogObject(_IRIS, "Add confirmation").isVisible());
+			if (_isExists) {
+				Helpers.clickButton(
+						IRIS_PageMaster.getDialogObject(_IRIS, "Add confirmation").describe(Button.class,
+								new ButtonDescription.Builder().label("Yes").build()),
+						IRIS_PageMaster.getDialogObject(_IRIS, "Add confirmation")
+								.describe(Button.class,
+										new ButtonDescription.Builder().label("Yes").build())
+								.getLabel());
+			}
+		} catch (Exception e) {
+		}
+	}
+
 }

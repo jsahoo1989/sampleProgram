@@ -529,5 +529,6 @@ public class MobilityXConstants {
 	public static final String EXCEPTION_OCCURED_WHILE_VALIDATING_INCREASED_POINTS_DIALOG_MESSAGE = "{0}Exception occured while validating Increased points dialog message. Exception : ''{1}''.";
 	public static final String SUCCESSFULLY_VERIFIED_AND_ACCEPTED_INCREASED_POINTS_DIALOG_MESSAGE = "{0}Successfully verified and accepted Increased points dialog message.";
 	public static final String RESUBMIT_WITH_CHANGES_MADE_TO_LETTER_POLICY_DOCUMENTS = "LETTER/POLICY DOCUMENTS ONLY";
+	public static final String LOGOUT = "Logout";
 	
 }

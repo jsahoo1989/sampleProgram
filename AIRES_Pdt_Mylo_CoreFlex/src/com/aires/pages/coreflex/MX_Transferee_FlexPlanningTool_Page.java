@@ -294,7 +294,7 @@ public class MX_Transferee_FlexPlanningTool_Page extends Base {
 			.getAllFlexBenefitsData();
 
 	CoreFlex_SettlingInBenefitsData languageTrainingBenefitData = FileReaderManager.getInstance()
-			.getCoreFlexJsonReader().getSettlingInBenefitDataList(COREFLEXConstants.LANGUAGE_TRAINING);	
+			.getCoreFlexJsonReader().getSettlingInBenefitDataList(COREFLEXConstants.LANGUAGE_TRAINING);
 
 	public static double totalPointsOnPolicy;
 	public static double cashoutPoints;
@@ -335,9 +335,10 @@ public class MX_Transferee_FlexPlanningTool_Page extends Base {
 				String defaultActualRemainingPointBalance = CoreFunctions.getElementText(driver, remaining_points);
 				String defaultActualTotalPointBalance = CoreFunctions.getElementText(driver, total_points)
 						.replace("/", "").trim();
-				isDefaultPointBalanceCorrect = ((policySetupPageData.flexPolicySetupPage.StaticFixedTotalPointsAvailable)
-						.equals(defaultActualRemainingPointBalance))
-						&& ((policySetupPageData.flexPolicySetupPage.StaticFixedTotalPointsAvailable)
+				isDefaultPointBalanceCorrect = ((CoreFunctions
+						.getPropertyFromConfig("CF_Transferee_TotalAvailablePoints"))
+								.equals(defaultActualRemainingPointBalance))
+						&& ((CoreFunctions.getPropertyFromConfig("CF_Transferee_TotalAvailablePoints"))
 								.equals(defaultActualTotalPointBalance));
 			}
 		} catch (Exception e) {
@@ -362,7 +363,7 @@ public class MX_Transferee_FlexPlanningTool_Page extends Base {
 						.replace("/", "").trim();
 				isDefaultPointBalanceCorrect = (Double.parseDouble(CoreFunctions.getPropertyFromConfig(
 						"CF_Transferee_AvailablePoints")) == (Double.parseDouble(defaultActualRemainingPointBalance)))
-						&& ((policySetupPageData.flexPolicySetupPage.StaticFixedTotalPointsAvailable)
+						&& ((CoreFunctions.getPropertyFromConfig("CF_Transferee_TotalAvailablePoints"))
 								.equals(defaultActualTotalPointBalance));
 			}
 		} catch (Exception e) {
@@ -498,7 +499,7 @@ public class MX_Transferee_FlexPlanningTool_Page extends Base {
 						String.valueOf(totalSelectedPoints));
 				CoreFunctions.writeToPropertiesFile("CF_Transferee_AvailablePoints",
 						String.valueOf(Double
-								.parseDouble(policySetupPageData.flexPolicySetupPage.StaticFixedTotalPointsAvailable)
+								.parseDouble(CoreFunctions.getPropertyFromConfig("CF_Transferee_TotalAvailablePoints"))
 								- totalSelectedPoints));
 				return true;
 			}
@@ -585,12 +586,12 @@ public class MX_Transferee_FlexPlanningTool_Page extends Base {
 			calculatedTotalPoints += Double.parseDouble(element.getText().replace("pts", "").trim());
 		}
 		String expectedCustomBundleTotalPoints = String.valueOf(calculatedTotalPoints) + "/"
-				+ policySetupPageData.flexPolicySetupPage.StaticFixedTotalPointsAvailable + " pts";
+				+ CoreFunctions.getPropertyFromConfig("CF_Transferee_TotalAvailablePoints") + " pts";
 		String actualCustomBundleTotalPoints = CoreFunctions.getElementText(driver, _textCustomBundleTotalPoints);
 
 		return (actualCustomBundleTotalPoints.equals(expectedCustomBundleTotalPoints))
 				&& validateSuggestedBundlesSelectThisButton(calculatedTotalPoints,
-						Double.parseDouble(policySetupPageData.flexPolicySetupPage.StaticFixedTotalPointsAvailable));
+						Double.parseDouble(CoreFunctions.getPropertyFromConfig("CF_Transferee_TotalAvailablePoints")));
 	}
 
 	private boolean validateSuggestedBundlesSelectThisButton(double calculatedTotalPoints,
@@ -711,8 +712,8 @@ public class MX_Transferee_FlexPlanningTool_Page extends Base {
 		totalPointsOnPolicy = Double
 				.parseDouble(CoreFunctions.getElementText(driver, total_points).replace("/", "").trim());
 		return CoreFunctions.getElementText(driver, _textTotalPointBalance)
-				.contains(MobilityXConstants.AVAILABLE_POINTS_TEXT.replace("available_points", format.format(
-						Double.parseDouble(policySetupPageData.flexPolicySetupPage.StaticFixedTotalPointsAvailable))));
+				.contains(MobilityXConstants.AVAILABLE_POINTS_TEXT.replace("available_points", format.format(Double
+						.parseDouble(CoreFunctions.getPropertyFromConfig("CF_Transferee_TotalAvailablePoints")))));
 	}
 
 	public boolean verifyAvailablePointsMessageAfterSubmission() {
@@ -1505,11 +1506,17 @@ public class MX_Transferee_FlexPlanningTool_Page extends Base {
 							&& (ben.getAiresManagedService().equals("Yes"))
 							&& (ben.getNoOfMilestones() == Integer.parseInt(numberOfMilestones))) {
 						benefitNameList.add(ben);
+					} else if (((policyRequiredFor.equals(COREFLEXConstants.CLONING))
+							|| (policyRequiredFor.equals(COREFLEXConstants.VERSIONING))
+							|| ((policyRequiredFor.equals(COREFLEXConstants.CLIENT))))
+							&& (ben.getPolicyCreationGroup().contains(policyRequiredFor))) {
+						benefitNameList.add(ben);
 					}
 				}
 			}
 		}
 		return benefitNameList;
+
 	}
 
 	private int getBenefitsListSize(String policyType, String policyRequiredFor, String numberOfMilestones) {

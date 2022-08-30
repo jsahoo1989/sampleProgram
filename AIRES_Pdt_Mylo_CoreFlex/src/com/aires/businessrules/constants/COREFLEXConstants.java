@@ -774,4 +774,6 @@ public class COREFLEXConstants {
 	public static final String AUTH_FORM_STATUS_NOT_MATCHED = "{0}Auth Form status not matched. Expected : ''{1}'' | Actual : ''{2}''.";
 	public static final String EXCEPTION_OCCURED_WHILE_VERIFYING_FLEX_BENEFIT_SECTION_DETAILS_ON_AUTH_FORM_POST_BENEFIT_CASHOUT_SELECTION = "{0}Exception occured while verifying Flex Benefit section details on Auth Form post Benefit_Cashout selection. Exception : ''{1}''.";
 	public static final String EXCEPTION_OCCURED_WHILE_READING_NEW_INITIATION_SUBMITTED_EMAIL = "{0}Exception occured while reading New Initiation Submitted Email. Exception : ''{1}''.";
+	public static final String EXCEPTION_OCCURED_WHILE_VALIDATING_CASHOUT_DETAILS_POST_DENIED_DELETE_REQUEST_ON_MBB_PAGE = "{0}Exception occured while validating cashout details post Denied Delete Request under Submitted Section of MBB Page. Exception : ''{1}''.";
+	public static final String SUCCESSFULLY_VERIFIED_CASHOUT_DETAILS_DISPLAYED_UNDER_SUBMITTED_BENEFITS_POST_DENIED_DELETE_REQUEST_ON_MBB_PAGE = "{0}Successfully verified cashout details displayed under submitted benefits post Denied Delete Request on My Benefits Bundles page.";
 }

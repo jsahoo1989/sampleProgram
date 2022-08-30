@@ -108,7 +108,7 @@ public class TransfereeSubmissions_DetailsPage extends Base {
 			.xpath(".//following-sibling::span[contains(@class,'ng-star-inserted')][contains(@class,'BlackText')]");
 
 	// Expense Reimbursement Tracing Prompt List
-	@FindBy(how = How.XPATH, using = "//div[contains(@class,'tblBenefits')]//span[contains(@class,'GrayText')][not(contains(text(),'to their account Via Check'))]")
+	@FindBy(how = How.XPATH, using = "//div[contains(@class,'tblBenefits')]//span[contains(@class,'GrayText')][not(contains(text(),'will be sent to the address provided'))]")
 	private List<WebElement> _reimbursementAllowanceTracingList;
 
 	// Comments Benefit List
@@ -291,7 +291,7 @@ public class TransfereeSubmissions_DetailsPage extends Base {
 			CoreFunctions.writeToPropertiesFile("CF_Transferee_DeleteRequestApproved", "false");
 			CoreFunctions.writeToPropertiesFile("CF_Transferee_UndoDeleteBenefit", "false");
 			Double availablePointsAfterSubmission = (Double
-					.parseDouble(policySetupPageData.flexPolicySetupPage.StaticFixedTotalPointsAvailable)
+					.parseDouble(CoreFunctions.getPropertyFromConfig("CF_Transferee_TotalAvailablePoints"))
 					- Double.parseDouble(CoreFunctions.getPropertyFromConfig("CF_Transferee_TotalSelectedPoints")));
 			MX_Transferee_MyBenefitsBundlePage.undoDeletedBenefitFlag = false;
 			CoreFunctions.verifyText(driver, _textTransfereeName,
@@ -309,7 +309,7 @@ public class TransfereeSubmissions_DetailsPage extends Base {
 					COREFLEXConstants.POINTS_BALANCE);
 			CoreFunctions.verifyValue(
 					Double.parseDouble(CoreFunctions.getElementText(driver, _textTotalPoints).replace("/", "").trim()),
-					Double.parseDouble(policySetupPageData.flexPolicySetupPage.StaticFixedTotalPointsAvailable),
+					Double.parseDouble(CoreFunctions.getPropertyFromConfig("CF_Transferee_TotalAvailablePoints")),
 					COREFLEXConstants.TOTAL_POINTS);
 			CoreFunctions.highlightObject(driver, _textTotalPoints);
 			Reporter.addStepLog(MessageFormat.format(
@@ -337,7 +337,7 @@ public class TransfereeSubmissions_DetailsPage extends Base {
 					COREFLEXConstants.POINTS_BALANCE);
 			CoreFunctions.verifyValue(
 					Double.parseDouble(CoreFunctions.getElementText(driver, _textTotalPoints).replace("/", "").trim()),
-					Double.parseDouble(policySetupPageData.flexPolicySetupPage.StaticFixedTotalPointsAvailable),
+					Double.parseDouble(CoreFunctions.getPropertyFromConfig("CF_Transferee_TotalAvailablePoints")),
 					COREFLEXConstants.TOTAL_POINTS);
 			CoreFunctions.highlightObject(driver, _textTotalPoints);
 			CoreFunctions.clickElement(driver, _textPointsBalance);
@@ -345,7 +345,7 @@ public class TransfereeSubmissions_DetailsPage extends Base {
 			format.setDecimalSeparatorAlwaysShown(false);
 			CoreFunctions.verifyText(driver, _tooltipSpentPoints, COREFLEXConstants.EXPECTED_POINT_SPENT_TOOLTIP_TEXT
 					.replace("used_points", format.format(MX_Transferee_FlexPlanningTool_Page.totalSelectedPoints))
-					.replace("total_points", policySetupPageData.flexPolicySetupPage.StaticFixedTotalPointsAvailable),
+					.replace("total_points", CoreFunctions.getPropertyFromConfig("CF_Transferee_TotalAvailablePoints")),
 					COREFLEXConstants.POINTS_BALANCE_TOOLTIP_TEXT);
 			CoreFunctions.verifyText(driver, _tooltipBalancePoints,
 					COREFLEXConstants.EXPECTED_POINT_BALANCE_TOOLTIP_TEXT.replace("remaining_points",
@@ -562,20 +562,18 @@ public class TransfereeSubmissions_DetailsPage extends Base {
 
 	private void resolveDeleteRequestPending() {
 		try {
-			for (FlexBenefit benefitList : flexBenefits) {
-				for (Benefit benefit : benefitList.getBenefits()) {
-					for (int index = 0; index < _submittedBenefitNameList.size(); index++) {
-						if ((benefit.getDeleteBenefitOnMBBPage())
-								&& (CoreFunctions.getElementText(driver, _submittedBenefitNameList.get(index))
-										.equals(benefit.getBenefitDisplayName()))) {
-							CoreFunctions.verifyText(driver, _buttonResolveDeleteRequest.get(index),
-									COREFLEXConstants.RESOLVE, COREFLEXConstants.DELETE_REQUEST_RESOLVE_BUTTON);
-							CoreFunctions.clickElement(driver, _buttonResolveDeleteRequest.get(index));
-							Reporter.addStepLog(MessageFormat.format(
-									COREFLEXConstants.SUCCESSFULLY_CLICKED_ON_RESOLVE_BUTTON_ON_SUBMISSION_DETAILS_PAGE,
-									CoreConstants.PASS, benefit.getBenefitDisplayName()));
-						}
-					}
+			for (Benefit benefit : getBenefits(CoreFunctions.getPropertyFromConfig("CoreFlex_Policy_BenefitType"),
+					CoreFunctions.getPropertyFromConfig("CoreFlex_Policy_RequiredFor"), "0")) {
+				int index = BusinessFunctions.returnindexItemFromListUsingText(driver, _submittedBenefitNameList,
+						benefit.getBenefitDisplayName());
+				if (benefit.getDeleteBenefitOnMBBPage()) {
+					CoreFunctions.verifyText(driver, _buttonResolveDeleteRequest.get(index), COREFLEXConstants.RESOLVE,
+							COREFLEXConstants.DELETE_REQUEST_RESOLVE_BUTTON);
+					CoreFunctions.clickElement(driver, _buttonResolveDeleteRequest.get(index));
+					Reporter.addStepLog(MessageFormat.format(
+							COREFLEXConstants.SUCCESSFULLY_CLICKED_ON_RESOLVE_BUTTON_ON_SUBMISSION_DETAILS_PAGE,
+							CoreConstants.PASS, benefit.getBenefitDisplayName()));
+					break;
 				}
 			}
 
@@ -897,7 +895,7 @@ public class TransfereeSubmissions_DetailsPage extends Base {
 					if (index == -1) {
 						isBenefitRemovedFromList = true;
 						continue;
-					}else {
+					} else {
 						isBenefitRemovedFromList = false;
 						break;
 					}
@@ -971,6 +969,11 @@ public class TransfereeSubmissions_DetailsPage extends Base {
 					} else if ((policyRequiredFor.equals(COREFLEXConstants.AIRES_MANAGED_BENEFITS_CARDS))
 							&& (ben.getAiresManagedService().equals("Yes"))
 							&& (ben.getNoOfMilestones() == Integer.parseInt(numberOfMilestones))) {
+						benefitNameList.add(ben);
+					} else if (((policyRequiredFor.equals(COREFLEXConstants.CLONING))
+							|| (policyRequiredFor.equals(COREFLEXConstants.VERSIONING))
+							|| ((policyRequiredFor.equals(COREFLEXConstants.CLIENT))))
+							&& (ben.getPolicyCreationGroup().contains(policyRequiredFor))) {
 						benefitNameList.add(ben);
 					}
 				}

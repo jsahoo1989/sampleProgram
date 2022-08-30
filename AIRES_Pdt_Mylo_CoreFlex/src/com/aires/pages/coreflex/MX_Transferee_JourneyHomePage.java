@@ -518,7 +518,7 @@ public class MX_Transferee_JourneyHomePage extends Base {
 
 		boolean isPolicyPointsDetailsMatched = CoreFunctions.getPropertyFromConfig("Assignment_Policy")
 				.equals(actualPolicyName) & actualSpentPoints.equals("0")
-				& actualTotalPoints.equals(policySetupPageData.flexPolicySetupPage.StaticFixedTotalPointsAvailable);
+				& actualTotalPoints.equals(CoreFunctions.getPropertyFromConfig("CF_Transferee_TotalAvailablePoints"));
 
 		if (isPolicyPointsDetailsMatched) {
 			Reporter.addStepLog(MessageFormat.format(
@@ -529,7 +529,7 @@ public class MX_Transferee_JourneyHomePage extends Base {
 					MobilityXConstants.POLICY_AND_POINTS_DETAILS_NOT_MATCHED_ON_MOBILITYX_JOURNEY_HOME_PAGE,
 					CoreConstants.FAIL, actualPolicyName, CoreFunctions.getPropertyFromConfig("Assignment_Policy"),
 					actualSpentPoints, 0, actualTotalPoints,
-					policySetupPageData.flexPolicySetupPage.StaticFixedTotalPointsAvailable));
+					CoreFunctions.getPropertyFromConfig("CF_Transferee_TotalAvailablePoints")));
 		}
 
 		return isPolicyPointsDetailsMatched;

@@ -463,9 +463,7 @@ public class CF_MX_Client_Steps {
 	@Then("^following confirmation dialogs should be displayed in sequence on acceptance of displayed dialog$")
 	public void following_confirmation_dialogs_should_be_displayed_in_sequence_on_acceptance_of_displayed_dialog(DataTable dataTable)
 			throws Throwable {
-		bscAuthorizationData = FileReaderManager.getInstance().getCoreFlexJsonReader()
-				.getBscDataByModuleName("DomesticAuthorizationFormData");
-		Assert.assertTrue(mxClientAuthorizationHomePage.verifyAndAcceptIncreasedPointsDialog(bscAuthorizationData),
+		Assert.assertTrue(mxClientAuthorizationHomePage.verifyAndAcceptIncreasedPointsDialog(),
 				MessageFormat.format(
 						MobilityXConstants.FAILED_TO_VERIFY_AND_ACCEPT_INCREASED_POINTS_CONFIRMATION_DIALOG_ON_AUTH_FORM_PAGE,
 						CoreConstants.FAIL));
@@ -484,6 +482,7 @@ public class CF_MX_Client_Steps {
 				MessageFormat.format(
 						MobilityXConstants.FAILED_TO_VERIFY_USER_NAVIGATION_TO_MXCLIENT_VIEW_ALL_INITIATONS_PAGE,
 						CoreConstants.FAIL));
+		
 	}
 
 	@Then("^Revised 'New Initiation Submitted' email having updated Transferee and Benefit Points details should be received$")
@@ -495,7 +494,7 @@ public class CF_MX_Client_Steps {
 				mxClientAuthorizationHomePage.verifyRevisedSubmissionEmail(bscAuthorizationData,
 						MobilityXConstants.FINAL_BENEFIT_TOTAL_POINTS),
 				MessageFormat.format(MobilityXConstants.FAILED_TO_VERIFY_INITIATION_SUBMISSION_EMAIL,
-						CoreConstants.FAIL));
+						CoreConstants.FAIL));		
 	}
 
 	@Then("^he should be able to login to 'MobilityX' application with Transferee details generated after actualizing the 'Authorization' in IRIS$")

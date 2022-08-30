@@ -984,4 +984,26 @@ public class IRIS_ActivityAndFinancePage extends BasePage {
 			}
 		}
 	}
+
+	public void acceptWarningDialog() {
+		try {
+			_isExists = (IRIS_PageMaster.getDialogObject(_IRIS, "Confirmation").isVisible());
+			if (_isExists) {
+				Helpers.clickButton(
+						IRIS_PageMaster.getDialogObject(_IRIS, "Confirmation").describe(Button.class,
+								new ButtonDescription.Builder().label("No").build()),
+						IRIS_PageMaster.getDialogObject(_IRIS, "Confirmation")
+								.describe(Button.class, new ButtonDescription.Builder().label("No").build())
+								.getLabel());
+//				Helpers.clickButton(
+//						IRIS_PageMaster.getDialogObject(_IRIS, "Saved").describe(Button.class,
+//								new ButtonDescription.Builder().label("OK").build()),
+//						IRIS_PageMaster.getDialogObject(_IRIS, "Saved")
+//								.describe(Button.class, new ButtonDescription.Builder().label("OK").build())
+//								.getLabel());
+			}
+		} catch (Exception e) {
+		}
+		
+	}
 }

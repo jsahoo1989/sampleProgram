@@ -510,19 +510,21 @@ public class CoreFlex_FlexPolicySetupPage extends Base {
 	private void validatePointsExchangeRateField(String fieldName, String inputValue) {
 		acceptErrorDialogIfDisplayed();
 		if (CoreFunctions.isElementExist(driver, _validationMessagePointsExchangeRate, 5))
-			BusinessFunctions.checkValidationBasedOnInput(
-					CoreFunctions.getElementText(driver, _validationMessagePointsExchangeRate)
-							.equals(COREFLEXConstants.POINT_FIVE_TO_ONE_THOUSAND_RANGE_OLD_MESSAGE),
-					fieldName, inputValue);
+			BusinessFunctions
+					.checkValidationBasedOnInput(
+							CoreFunctions.getElementText(driver, _validationMessagePointsExchangeRate)
+									.equals(COREFLEXConstants.POINT_FIVE_TO_ONE_THOUSAND_RANGE_OLD_MESSAGE),
+							fieldName, inputValue);
 	}
 
 	private void validateTotalPointsAvailableField(String fieldName, String inputValue) {
 		acceptErrorDialogIfDisplayed();
 		if (CoreFunctions.isElementExist(driver, _validationMessageTotalPointsAvailable, 5)) {
-			BusinessFunctions.checkValidationBasedOnInput(
-					CoreFunctions.getElementText(driver, _validationMessageTotalPointsAvailable)
-							.equals(COREFLEXConstants.POINT_FIVE_TO_ONE_THOUSAND_RANGE_NEW_MESSAGE),
-					fieldName, inputValue);
+			BusinessFunctions
+					.checkValidationBasedOnInput(
+							CoreFunctions.getElementText(driver, _validationMessageTotalPointsAvailable)
+									.equals(COREFLEXConstants.POINT_FIVE_TO_ONE_THOUSAND_RANGE_NEW_MESSAGE),
+							fieldName, inputValue);
 		} else if (CoreFunctions.getElementText(driver, _headerPage)
 				.equals(COREFLEXConstants.POLICY_BENEFIT_CATEGORIES)) {
 			Assert.fail(MessageFormat.format(COREFLEXConstants.USER_NAVIGATION_TO_POLICY_BENEFITS_CATEGORIES_INVALID,
@@ -599,18 +601,21 @@ public class CoreFlex_FlexPolicySetupPage extends Base {
 				CoreFunctions.clearAndSetTextUsingKeys(driver, _inputTotalPointsAvailable,
 						policySetupPageData.flexPolicySetupPage.StaticFixedTotalPointsAvailable,
 						COREFLEXConstants.TOTAL_POINTS_AVAILABLE);
+				CoreFunctions.writeToPropertiesFile("CF_Transferee_TotalAvailablePoints",
+						policySetupPageData.flexPolicySetupPage.StaticFixedTotalPointsAvailable);
 				return true;
 			} else if (CoreFunctions.getElementText(driver, _selectFlexSetupTypeSelectedValue)
 					.equals(COREFLEXConstants.USER_DEFINED)) {
 				CoreFunctions.verifyText(driver, _textUserDefinedSelection,
 						COREFLEXConstants.USER_DEFINED_SELECTION_TEXT, COREFLEXConstants.USER_DEFINED);
+				CoreFunctions.writeToPropertiesFile("CF_Transferee_TotalAvailablePoints", "");
 				return true;
 			}
 
 		} catch (Exception e) {
 			Reporter.addStepLog(
 					MessageFormat.format(COREFLEXConstants.EXCEPTION_OCCURED_WHILE_VERIFYING_FLEX_SETUP_TYPE_SELECTION,
-							CoreConstants.FAIL, e.getMessage()));			
+							CoreConstants.FAIL, e.getMessage()));
 		}
 		return false;
 	}

@@ -1,10 +1,10 @@
-Feature: Validate the CoreFlex End-To-End Business Test Flow(BluePrint, MXTransferee,Transferee Submissions) for Both_Transferee_UserDefined_CashoutNotAuthorized_Delete_ApproveAll selection
+Feature: Validate the CoreFlex End-To-End Business Test Flow(BluePrint, MXTransferee,Transferee Submissions) for Both_Transferee_UserDefined_PortionCashout_Delete_DenyAll selection
 
-  @End-To-End_CoreFlex @CF_MXTransferee_UserDefined_CashNotAuth
-  Scenario: CoreFlex - Creating & Validating a new Active Points Based CoreFlex Policy with Transferee, UserDefined and CashNotAuth selection
+  @End-To-End_CoreFlex @CF_MXTransferee_UserDefined_PortionCashout
+  Scenario: CoreFlex - Creating & Validating a new Active Points Based CoreFlex Policy with Transferee, UserDefined and PortionCashout selection
     Given he has setup a new CoreFlex Policy with following selection in Blueprint application
-      | Person Responsible For Benefit Selection | Flex Setup Type | Cashout Availability   | BenefitType | PolicyRequiredFor | MileStones |
-      | Transferee                               | User Defined    | Cashout Not Authorized | Both        | Client            |          0 |
+      | Person Responsible For Benefit Selection | Flex Setup Type | Cashout Availability | BenefitType | PolicyRequiredFor | MileStones |
+      | Transferee                               | User Defined    | Portion Cashout      | Both        | Client            |          0 |
     And he has clicked on "Submit" button to submit "V1" policy verison on "Custom Bundles" page
     And he has clicked on "Approve Policy" button to approve "V1" policy verison on "Custom Bundles" page
     And he has selected following options on 'Approval this Policy' dialog of "V1" Policy
@@ -13,7 +13,7 @@ Feature: Validate the CoreFlex End-To-End Business Test Flow(BluePrint, MXTransf
     When he clicks on "Approve" button to acknowledge 'Approve this Policy' dialog
     Then Policy Status and Version should be displayed as "Active" and "V1" respectively on "View/Edit Policy Forms" page
 
-  @End-To-End_CoreFlex @CF_MXTransferee_UserDefined_CashNotAuth 
+  @End-To-End_CoreFlex @CF_MXTransferee_UserDefined_PortionCashout
   Scenario: MXClient - Creating a new Authorization and assigning Total Flex Points for the Points Based CF policy
     Given he has logged into 'MobilityX' application as a 'Client' user
     And he has clicked on "Create an authorization" after validating Client details on 'Authorization Home Page'
@@ -37,8 +37,8 @@ Feature: Validate the CoreFlex End-To-End Business Test Flow(BluePrint, MXTransf
     And 'Auth Submit Success' growl message should be displayed on the navigated 'View all initiation' page on confirmation of the last dialog
     And Revised 'New Initiation Submitted' email having updated Transferee and Benefit Points details should be received
 
-   @End-To-End_CoreFlex @CF_MXTransferee_UserDefined_CashNotAuth
-  Scenario: MXTransferee - Selecting & Submitting Flex benefits available in configured policy and Verifying UserDefined Available Benefits Points
+  @End-To-End_CoreFlex @CF_MXTransferee_UserDefined_PortionCashout 
+  Scenario: MXTransferee - Selecting & Submitting Flex benefits_Portion Cashout available in configured policy and Verifying UserDefined Available Benefits Points
     Given he has logged into 'MobilityX' application after actualizing a new 'Transferee' through IRIS application and setting-up user profile in 'MobilityX' application
     And he has validated 'Assignment-Policy' details after selecting below option displayed on 'Welcome' dialog
       | WelcomeDialogSelection               |
@@ -58,14 +58,15 @@ Feature: Validate the CoreFlex End-To-End Business Test Flow(BluePrint, MXTransf
     When he 'Delete' submitted Benefit_Cashout and confirms 'Remove Benefit Selection' dialog by entering username and clicking on "Yes-request to delete this benefit"
     Then 'Status' of the deleted benefit_cashout should be displayed as "Delete Request Pending" under 'Submitted Benefits' section of 'My Benefit Bundle' page
 
-  @End-To_End_CoreFlex @CF_MXTransferee_UserDefined_CashNotAuth
-  Scenario: TransfereeSubmissions - Verifying UserDefined Points, BenefitSubmissions and Delete Request ApprovalAll transaction for the request made by the Transferee
+  @End-To_End_CoreFlex @CF_MXTransferee_UserDefined_PortionCashout
+  Scenario: TransfereeSubmissions - Verifying UserDefined Points, Benefit & Cashout Submissions and Delete Request Deny transaction for the request made by the Transferee
     Given he has logged into 'Transferee Submissions' application as a "MSPEC/PPC" user
     And he has navigated to "Transferee Submissions Dashboard" page having record of Bundle submitted by the transferee
     And he has clicked on "Review" button for Bundle submitted by the transferee on "Transferee Submissions Dashboard" page
     And he has navigated to "Transferee Submission Details" page having list of submitted benefits details
     And he has clicked on "Check All" followed by "Resolve Multiple" button to resolve multiple 'Delete Request Pending' request of the Transferee
-    When he confirms request by selecting "Approve All" option after verifying 'Delete Request Pending' benefit request details on 'Requests' dialog
-    Then 'Action Completed' growl message for "Approve Request" should be displayed on "Transferee Submission Details" page
-    And 'Delete Request Pending' benefit request should be removed from 'Transferee Submission Details' list
-    And benefit details should be updated in 'MXTransferee' application based on "Approved" 'Delete Request' on Transferee Submission
+    When he confirms request by selecting "Deny All" option after verifying 'Delete Request Pending' benefit request details on 'Requests' dialog
+    Then 'Action Completed' growl message for "Deny Request" should be displayed on "Transferee Submission Details" page
+    And 'Delete Request Pending' benefit request status should be updated to 'Submitted' in 'Transferee Submission Details' list
+    And benefit details should be updated in 'MXTransferee' application based on "Denied" 'Delete Request' on Transferee Submission
+

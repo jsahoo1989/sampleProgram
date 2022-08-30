@@ -86,6 +86,9 @@ public class TransfereeSubmissions_DashboardHomePage extends Base {
 	@FindBy(how = How.CSS, using = "div[class='sk-three-strings']")
 	private WebElement _spinner;
 
+	@FindBy(how = How.XPATH, using = "//a[@class='page-link'][contains(text(),'Next')]")
+	private WebElement _linkNextPagination;
+
 	/**********************************************************************/
 
 	CoreFlex_PolicySetupPagesData policySetupPageData = FileReaderManager.getInstance().getCoreFlexJsonReader()
@@ -169,6 +172,15 @@ public class TransfereeSubmissions_DashboardHomePage extends Base {
 			indexTransferee = BusinessFunctions.returnindexItemFromListUsingText(driver, _transfereeNameList, true,
 					CoreFunctions.getPropertyFromConfig("Transferee_firstName") + " "
 							+ CoreFunctions.getPropertyFromConfig("Transferee_lastName"));
+			while (indexTransferee == -1) {
+				CoreFunctions.clickElement(driver, _linkNextPagination);
+				CoreFunctions.explicitWaitTillElementListVisibility(driver, _transfereeNameList);
+				indexTransferee = BusinessFunctions.returnindexItemFromListUsingText(driver, _transfereeNameList, true,
+						CoreFunctions.getPropertyFromConfig("Transferee_firstName") + " "
+								+ CoreFunctions.getPropertyFromConfig("Transferee_lastName"));
+				if (indexTransferee != -1)
+					break;
+			}
 			if (verifyTransfereeBundleDetailsOnDashboard(indexTransferee)) {
 				Reporter.addStepLog(MessageFormat.format(
 						COREFLEXConstants.SUCCESSFULLY_VALIDATED_TRANSFEREE_SUBMISSION_DETAILS_ON_DASHBOARD_HOME_PAGE,
@@ -203,7 +215,7 @@ public class TransfereeSubmissions_DashboardHomePage extends Base {
 					COREFLEXConstants.POINTS_SPENT);
 			CoreFunctions.verifyValue(
 					Double.parseDouble(_totalPointsList.get(indexTransferee).getText().replace("/", "").trim()),
-					Double.parseDouble(policySetupPageData.flexPolicySetupPage.StaticFixedTotalPointsAvailable),
+					Double.parseDouble(CoreFunctions.getPropertyFromConfig("CF_Transferee_TotalAvailablePoints")),
 					COREFLEXConstants.TOTAL_POINTS);
 			CoreFunctions.highlightObject(driver, _totalPointsList.get(indexTransferee));
 			CoreFunctions.verifyText(driver, _submittedDateList.get(indexTransferee),

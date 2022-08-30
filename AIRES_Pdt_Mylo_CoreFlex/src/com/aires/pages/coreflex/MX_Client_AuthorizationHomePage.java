@@ -519,8 +519,12 @@ public class MX_Client_AuthorizationHomePage extends Base {
 			// Enter Employee First Name and Last Name
 			CoreFunctions.clearAndSetText(driver, _txt_EmpFirstName,
 					CoreFunctions.getPropertyFromConfig(MobilityXConstants.FIRST_NAME_TEXT));
+			CoreFunctions.writeToPropertiesFile("Transferee_firstName",
+					CoreFunctions.getPropertyFromConfig(MobilityXConstants.FIRST_NAME_TEXT));
 
 			CoreFunctions.clearAndSetText(driver, _txt_EmpLastName,
+					CoreFunctions.getPropertyFromConfig(MobilityXConstants.LAST_NAME_TEXT));
+			CoreFunctions.writeToPropertiesFile("Transferee_lastName",
 					CoreFunctions.getPropertyFromConfig(MobilityXConstants.LAST_NAME_TEXT));
 			// Click Continue button
 			CoreFunctions.click(driver, _button_Continue, MobilityXConstants.CONTINUE_BUTTON);
@@ -798,7 +802,6 @@ public class MX_Client_AuthorizationHomePage extends Base {
 		case MobilityXConstants.RESUBMIT_WITH_CHANGES_MADE_TO_LETTER_POLICY_DOCUMENTS:
 			CoreFunctions.clickElement(driver, _buttonLetterPolicyDocuments);
 			break;
-
 		default:
 			Assert.fail(tabName + MobilityXConstants.NOT_EXIST);
 		}
@@ -1066,6 +1069,8 @@ public class MX_Client_AuthorizationHomePage extends Base {
 	public void enterValidFinalTotalPointsValue(MX_Client_Dashboard_BscData authorizationData) {
 		CoreFunctions.clearAndSetTextUsingKeys(driver, _inputTotalPoints,
 				authorizationData.flexBenefitInfo.finalTotalPoints, COREFLEXConstants.TOTAL_POINTS_VALUE);
+		CoreFunctions.writeToPropertiesFile("CF_Transferee_TotalAvailablePoints",
+				authorizationData.flexBenefitInfo.finalTotalPoints);
 	}
 
 	public boolean selectRelocationPolicy() {
@@ -1331,9 +1336,8 @@ public class MX_Client_AuthorizationHomePage extends Base {
 		}
 		return false;
 	}
-	
-	public boolean verifyRevisedSubmissionEmail(MX_Client_Dashboard_BscData authorizationData,
-			String benefitPoints) {
+
+	public boolean verifyRevisedSubmissionEmail(MX_Client_Dashboard_BscData authorizationData, String benefitPoints) {
 		try {
 			boolean isBenefitTotalPointsVerified = false;
 			// Reading Transferee FileID and Benefits TotalPoints from email and writing to
@@ -1357,7 +1361,7 @@ public class MX_Client_AuthorizationHomePage extends Base {
 			String expectedTotalBenefitPoints = benefitPoints.equals(MobilityXConstants.INITIAL_BENEFIT_TOTAL_POINTS)
 					? authorizationData.flexBenefitInfo.initialTotalPoints
 					: authorizationData.flexBenefitInfo.finalTotalPoints;
-			String[] actualTotalPoints =  actualResultBenefitTotalPoints.split("/");
+			String[] actualTotalPoints = actualResultBenefitTotalPoints.split("/");
 			if ((actualTotalPoints[1].trim()).equals(expectedTotalBenefitPoints)) {
 				isBenefitTotalPointsVerified = true;
 				Reporter.addStepLog(CoreConstants.PASS
@@ -1372,13 +1376,13 @@ public class MX_Client_AuthorizationHomePage extends Base {
 		return false;
 	}
 
-	public boolean verifyAndAcceptIncreasedPointsDialog(MX_Client_Dashboard_BscData authorizationData) {
+	public boolean verifyAndAcceptIncreasedPointsDialog() {
 		boolean isIncreasedPointsDialogVerified = false;
 		try {
 			isIncreasedPointsDialogVerified = CoreFunctions.isElementExist(driver, _dialogIncreasingPointsText, 5)
 					&& CoreFunctions.verifyText(driver, _dialogIncreasingPointsText,
 							MobilityXConstants.EXPECTED_INCREASED_POINTS_MESSAGE.replace("BenefitTP",
-									authorizationData.flexBenefitInfo.finalTotalPoints),
+									CoreFunctions.getPropertyFromConfig("CF_Transferee_TotalAvailablePoints")),
 							MobilityXConstants.INCREASED_POINTS_DIALOG, true);
 		} catch (Exception e) {
 			Reporter.addStepLog(MessageFormat.format(

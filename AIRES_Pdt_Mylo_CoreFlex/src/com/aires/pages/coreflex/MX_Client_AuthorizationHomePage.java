@@ -315,7 +315,10 @@ public class MX_Client_AuthorizationHomePage extends Base {
 	private WebElement _textAuthFormStatus;
 
 	@FindBy(how = How.CSS, using = "div[id*='savedCore'] label")
-	private List<WebElement> optedCoreBenefits;
+	private List<WebElement> _textSelectedCoreBenefitsNameList;
+
+	@FindBy(how = How.CSS, using = "div[id*='savedCore'] span[class='RXCFSmallText RXAiresSeaglass']")
+	private List<WebElement> _textCoreAllowanceAmountList;
 
 	@FindBy(how = How.CSS, using = "div[id*='savedFlex'] span[class*='RXCFSubmitBenefitsBenefits']")
 	private List<WebElement> _textSelectedFlexBenefitsNameList;
@@ -345,10 +348,16 @@ public class MX_Client_AuthorizationHomePage extends Base {
 	private WebElement _linkViewAllInitiations;
 
 	@FindBy(how = How.CSS, using = "td[id*='fwpppw'] div[class*='RXModalTitle'] span")
-	private WebElement _dialogIncreasingPointsText;
+	private WebElement _dialogPointsText;
+
+	@FindBy(how = How.CSS, using = "td[id*='pppw'] div[class*='RXModalTitle'] span")
+	private WebElement _dialogCannotDecreasePointsText;
 
 	@FindBy(how = How.XPATH, using = "//td[contains(@id,'fwpppw')]//span[contains(text(),'Yes')]")
-	private WebElement _buttonYesIncreasingPoints;
+	private WebElement _buttonYesPoints;
+
+	@FindBy(how = How.XPATH, using = "//td[contains(@id,'pppw')]//span[contains(text(),'OK')]")
+	private WebElement _buttonDialogOK;
 
 	@FindBy(how = How.XPATH, using = "//span[contains(text(),'LETTER/POLICY DOCUMENTS ONLY')]")
 	private WebElement _buttonLetterPolicyDocuments;
@@ -794,6 +803,7 @@ public class MX_Client_AuthorizationHomePage extends Base {
 			CoreFunctions.click(driver, _linkCreateAnAuthorization, MobilityXConstants.CREATE_AN_AUTHORIZATION);
 			break;
 		case MobilityXConstants.START_BENEFIT_SELECTION:
+		case MobilityXConstants.MANAGE_BENEFIT_SELECTION:
 			CoreFunctions.clickElement(driver, _btnFlexBenefitSelection);
 			break;
 		case MobilityXConstants.VIEW_ALL_INITIATIONS:
@@ -857,7 +867,7 @@ public class MX_Client_AuthorizationHomePage extends Base {
 		BusinessFunctions.selectValueFromDropdown(_originOfficeCityState, bscEmployeeInfo.officeOriginCityState);
 		BusinessFunctions.selectValueFromDropdown(_destinationOfficeCityState,
 				bscEmployeeInfo.destinationOfficeLocation);
-		CoreFunctions.waitHandler(2);
+		CoreFunctions.waitHandler(3);
 		CoreFunctions.clearAndSetText(driver, _txt_mobileTelephone, bscEmployeeInfo.mobilePhone);
 		CoreFunctions.clearAndSetText(driver, _txt_employeeEmail, bscEmployeeInfo.emailOne);
 	}
@@ -987,7 +997,24 @@ public class MX_Client_AuthorizationHomePage extends Base {
 					MobilityXConstants.FLEX_BENEFITS_HEADER);
 			CoreFunctions.verifyText(driver, _textFlexBenefitsDesc, MobilityXConstants.FLEX_BENEFITS_SECTION_DESC,
 					MobilityXConstants.FLEX_BENEFITS_SECTION_TEXT);
-			return CoreFunctions.isElementExist(driver, _btnFlexBenefitSelection, 3);
+			CoreFunctions.verifyText(driver, _btnFlexBenefitSelection, MobilityXConstants.START_BENEFIT_SELECTION,
+					MobilityXConstants.START_BENEFIT_SELECTION);
+			return true;
+		} catch (Exception e) {
+			Log.info(e.getMessage());
+			return false;
+		}
+	}
+
+	private boolean verifyFlexBenefitsSectionContentsPostAuthFormSubmission() {
+		try {
+			CoreFunctions.verifyText(driver, _textFlexBenefitsHeader, MobilityXConstants.FLEX_BENEFITS,
+					MobilityXConstants.FLEX_BENEFITS_HEADER);
+			CoreFunctions.verifyText(driver, _textFlexBenefitsDesc, MobilityXConstants.FLEX_BENEFITS_SECTION_DESC,
+					MobilityXConstants.FLEX_BENEFITS_SECTION_TEXT);
+			CoreFunctions.verifyText(driver, _btnFlexBenefitSelection, MobilityXConstants.MANAGE_BENEFIT_SELECTION,
+					MobilityXConstants.MANAGE_BENEFIT_SELECTION);
+			return true;
 		} catch (Exception e) {
 			Log.info(e.getMessage());
 			return false;
@@ -1010,10 +1037,12 @@ public class MX_Client_AuthorizationHomePage extends Base {
 			isItemsNeedsAttentionVerified = CoreFunctions.verifyText(driver, _textItemsNeedAttention,
 					buttonName.equals(MobilityXConstants.START_BENEFIT_SELECTION)
 							? MobilityXConstants.EXPECTED_ONE_ITEM_NEEDS_ATTENTION
-							: (CoreFunctions.getPropertyFromConfig("CoreFlex_Policy_FlexSetupType")
+							: ((CoreFunctions.getPropertyFromConfig("CoreFlex_Policy_FlexSetupType")
 									.equals(COREFLEXConstants.USER_DEFINED))
-											? MobilityXConstants.EXPECTED_ONE_ITEM_NEEDS_ATTENTION
-											: MobilityXConstants.EXPECTED_TWO_ITEM_NEEDS_ATTENTION,
+									&& (CoreFunctions.getPropertyFromConfig("CoreFlex_Policy_PersonResponsible")
+											.equals(COREFLEXConstants.CLIENT_INITIATOR)))
+													? MobilityXConstants.EXPECTED_TWO_ITEM_NEEDS_ATTENTION
+													: MobilityXConstants.EXPECTED_ONE_ITEM_NEEDS_ATTENTION,
 					MobilityXConstants.ITEM_NEEDS_ATTENTION, true);
 			areRequiredFieldsVerified = isGrowlMessageVerified && isItemsNeedsAttentionVerified
 					&& verifyNumericRangeFieldsValidation();
@@ -1064,13 +1093,22 @@ public class MX_Client_AuthorizationHomePage extends Base {
 	public void enterValidInitialTotalPointsValue(MX_Client_Dashboard_BscData authorizationData) {
 		CoreFunctions.clearAndSetTextUsingKeys(driver, _inputTotalPoints,
 				authorizationData.flexBenefitInfo.initialTotalPoints, COREFLEXConstants.TOTAL_POINTS_VALUE);
+		CoreFunctions.writeToPropertiesFile("CF_Transferee_TotalAvailablePoints",
+				authorizationData.flexBenefitInfo.initialTotalPoints);
 	}
 
-	public void enterValidFinalTotalPointsValue(MX_Client_Dashboard_BscData authorizationData) {
+	public void enterValidDecreasedTotalPointsValue(MX_Client_Dashboard_BscData authorizationData) {
 		CoreFunctions.clearAndSetTextUsingKeys(driver, _inputTotalPoints,
-				authorizationData.flexBenefitInfo.finalTotalPoints, COREFLEXConstants.TOTAL_POINTS_VALUE);
+				authorizationData.flexBenefitInfo.decreasedTotalPoints, COREFLEXConstants.TOTAL_POINTS_VALUE);
 		CoreFunctions.writeToPropertiesFile("CF_Transferee_TotalAvailablePoints",
-				authorizationData.flexBenefitInfo.finalTotalPoints);
+				authorizationData.flexBenefitInfo.decreasedTotalPoints);
+	}
+
+	public void enterValidIncreasedTotalPointsValue(MX_Client_Dashboard_BscData authorizationData) {
+		CoreFunctions.clearAndSetTextUsingKeys(driver, _inputTotalPoints,
+				authorizationData.flexBenefitInfo.increasedTotalPoints, COREFLEXConstants.TOTAL_POINTS_VALUE);
+		CoreFunctions.writeToPropertiesFile("CF_Transferee_TotalAvailablePoints",
+				authorizationData.flexBenefitInfo.increasedTotalPoints);
 	}
 
 	public boolean selectRelocationPolicy() {
@@ -1105,7 +1143,9 @@ public class MX_Client_AuthorizationHomePage extends Base {
 			CoreFunctions.highlightObject(driver, _relocationPolicy);
 			String expectedTotalBenefitPoints = benefitPoints.equals(MobilityXConstants.INITIAL_BENEFIT_TOTAL_POINTS)
 					? authorizationData.flexBenefitInfo.initialTotalPoints
-					: authorizationData.flexBenefitInfo.finalTotalPoints;
+					: benefitPoints.equals(MobilityXConstants.INCREASED_BENEFIT_TOTAL_POINTS)
+							? authorizationData.flexBenefitInfo.increasedTotalPoints
+							: authorizationData.flexBenefitInfo.decreasedTotalPoints;
 			CoreFunctions.verifyText(CoreFunctions.getAttributeText(_inputTotalPoints, "value"),
 					expectedTotalBenefitPoints, MobilityXConstants.TOTAL_POINTS);
 			CoreFunctions.highlightObject(driver, _inputTotalPoints);
@@ -1140,16 +1180,16 @@ public class MX_Client_AuthorizationHomePage extends Base {
 		return false;
 	}
 
-	public boolean verifyFlexBenefitSectionPostBenefitSelection() {
+	public boolean verifySelectedCoreFlexBenefits() {
 		boolean isFlexBenefitSectionVerified = false;
 		try {
 			isFlexBenefitSectionVerified = verifySelectedBenefitDetails(
 					CoreFunctions.getPropertyFromConfig("CoreFlex_Policy_RequiredFor"),
 					CoreFunctions.getPropertyFromConfig("CoreFlex_Policy_BenefitType"))
-					&& (Double.parseDouble(CoreFunctions.getElementText(driver,
-							_selectedPoints)) == MX_Client_BenefitSelectionToolPage.totalSelectedPoints)
-					&& (Double.parseDouble(CoreFunctions.getElementText(driver,
-							_totalPoints)) == (MX_Client_BenefitSelectionToolPage.totalPointsOnPolicy));
+					&& Double.parseDouble(CoreFunctions.getElementText(driver, _selectedPoints)) == (Double
+							.parseDouble(CoreFunctions.getPropertyFromConfig("CF_Client_TotalSelectedPoints")))
+					&& (Double.parseDouble(CoreFunctions.getElementText(driver, _totalPoints)) == (Double
+							.parseDouble(CoreFunctions.getPropertyFromConfig("CF_Transferee_TotalAvailablePoints"))));
 //					&& verifySelectedCashoutDetails();
 
 		} catch (Exception e) {
@@ -1165,36 +1205,68 @@ public class MX_Client_AuthorizationHomePage extends Base {
 		case COREFLEXConstants.FLEX:
 			return verifySelectedFlexBenefitsDetails(policyRequiredFor, benefitType);
 		case COREFLEXConstants.CORE:
-			return verifyCoreBenefits();
+			return verifyCoreBenefitsDetails(policyRequiredFor, benefitType);
 		case COREFLEXConstants.BOTH:
-			return verifyCoreBenefits() && verifySelectedFlexBenefitsDetails(policyRequiredFor, benefitType);
+			return verifyCoreBenefitsDetails(policyRequiredFor, benefitType)
+					&& verifySelectedFlexBenefitsDetails(policyRequiredFor, benefitType);
 		default:
 			Assert.fail(COREFLEXConstants.INVALID_OPTION);
 		}
 		return false;
 	}
 
-	private boolean verifyCoreBenefits() {
-		boolean isBenefitNamePresent = false;
+	private boolean verifyCoreBenefitsDetails(String policyRequiredFor, String benefitType) {
+		boolean isCoreBenefitDetailsOnAuthFormVerified = false;
 		try {
-			for (int i = 0; i < optedCoreBenefits.size(); i++) {
-				WebElement benefit = optedCoreBenefits.get(i);
-				CoreFunctions.highlightObject(driver, benefit);
-				isBenefitNamePresent = coreBenefits.stream()
-						.filter(o -> o.getBenefitDisplayName().equals(benefit.getText())).findAny()
-						.orElse(null) != null;
+			for (Benefit benefit : getCoreBenefits(benefitType, policyRequiredFor, "0")) {
+				int indexBenefit = BusinessFunctions.returnindexItemFromListUsingText(driver,
+						_textSelectedCoreBenefitsNameList, benefit.getBenefitDisplayName());
+				isCoreBenefitDetailsOnAuthFormVerified = verifyCorePlanningToolBenefitDetails(indexBenefit, benefit);
+				if (!isCoreBenefitDetailsOnAuthFormVerified) {
+					break;
+				}
 			}
 		} catch (Exception e) {
 			Reporter.addStepLog(MessageFormat.format(
-					MobilityXConstants.EXCEPTION_OCCURED_WHILE_VALIDATING_CORE_BENEFITS_ON_AUTH_FORM_POST_BENEFIT_SELECTION,
+					MobilityXConstants.EXCEPTION_OCCURED_WHILE_VALIDATING_CORE_BENEFIT_DETAILS_ON_AUTH_FORM_PAGE,
 					CoreConstants.FAIL, e.getMessage()));
-			isBenefitNamePresent = false;
 		}
-		if (isBenefitNamePresent)
+		if (isCoreBenefitDetailsOnAuthFormVerified) {
 			Reporter.addStepLog(MessageFormat.format(
-					MobilityXConstants.CORE_BENEFITS_NOT_MATCHED_ON_AUTH_FORM_POST_BENEFIT_SELECTION,
+					MobilityXConstants.SUCCESSFULLY_VERIFIED_CORE_BENEFIT_DETAILS_ON_AUTH_FORM_PAGE,
 					CoreConstants.PASS));
-		return isBenefitNamePresent;
+		}
+		return isCoreBenefitDetailsOnAuthFormVerified;
+	}
+
+	private boolean verifyCorePlanningToolBenefitDetails(int indexBenefit, Benefit benefit) {
+		return (CoreFunctions.getItemsFromListByIndex(driver, _textSelectedCoreBenefitsNameList, indexBenefit, true)
+				.equals(benefit.getBenefitDisplayName()))
+				&& (CoreFunctions.getItemsFromListByIndex(driver, _textCoreAllowanceAmountList, indexBenefit, true)
+						.equals(benefit.getBenefitAmount()));
+	}
+
+	private List<Benefit> getCoreBenefits(String policyType, String policyRequiredFor, String numberOfMilestones) {
+		List<Benefit> benefitNameList = new ArrayList<Benefit>();
+		if (policyType.equals(COREFLEXConstants.FLEX) || policyType.equals(COREFLEXConstants.BOTH)) {
+			for (Benefit benefit : coreBenefits) {
+				if ((policyRequiredFor.equals(COREFLEXConstants.ALL_BENEFITS))
+						&& (benefit.getPolicyCreationGroup().contains(policyRequiredFor))) {
+					benefitNameList.add(benefit);
+				} else if ((policyRequiredFor.equals(COREFLEXConstants.AIRES_MANAGED_BENEFITS_CARDS))
+						&& (benefit.getAiresManagedService().equals("Yes"))
+						&& (benefit.getNoOfMilestones() == Integer.parseInt(numberOfMilestones))) {
+					benefitNameList.add(benefit);
+				} else if (((policyRequiredFor.equals(COREFLEXConstants.CLONING))
+						|| (policyRequiredFor.equals(COREFLEXConstants.VERSIONING))
+						|| (policyRequiredFor.equals(COREFLEXConstants.CLIENT)))
+						&& (benefit.getPolicyCreationGroup().contains(policyRequiredFor))) {
+					benefitNameList.add(benefit);
+				}
+
+			}
+		}
+		return benefitNameList;
 	}
 
 	private boolean verifySelectedFlexBenefitsDetails(String policyRequiredFor, String benefitType) {
@@ -1290,8 +1362,7 @@ public class MX_Client_AuthorizationHomePage extends Base {
 		return isGrowlMessageVerified;
 	}
 
-	public boolean verifyInitiationSubmissionEmail(MX_Client_Dashboard_BscData authorizationData,
-			String benefitPoints) {
+	public boolean verifyInitiationSubmissionEmail(MX_Client_Dashboard_BscData authorizationData) {
 		try {
 			boolean isBenefitTotalPointsVerified = false, isFileIDVerified = false;
 			// Reading Transferee FileID and Benefits TotalPoints from email and writing to
@@ -1318,11 +1389,11 @@ public class MX_Client_AuthorizationHomePage extends Base {
 						+ "Successfully verified New Initiation Submitted Email generated for created Assignment.");
 			}
 			String actualResultBenefitTotalPoints = EmailUtil.searchEmailAndReturnResult(host, userName, pwd,
-					expFromUserName, expEmailSubject, MobilityXConstants.INITIATION_SUBMISSION_BENEFIT_TOTAL_POINTS);
+					expFromUserName, expEmailSubject,
+					MobilityXConstants.NEW_INITIATION_SUBMISSION_BENEFIT_TOTAL_POINTS);
 			actualResultBenefitTotalPoints = actualResultBenefitTotalPoints.trim();
-			String expectedTotalBenefitPoints = benefitPoints.equals(MobilityXConstants.INITIAL_BENEFIT_TOTAL_POINTS)
-					? authorizationData.flexBenefitInfo.initialTotalPoints
-					: authorizationData.flexBenefitInfo.finalTotalPoints;
+			String expectedTotalBenefitPoints = CoreFunctions
+					.getPropertyFromConfig("CF_Transferee_TotalAvailablePoints");
 			if (actualResultBenefitTotalPoints.equals(expectedTotalBenefitPoints)) {
 				isBenefitTotalPointsVerified = true;
 				Reporter.addStepLog(CoreConstants.PASS
@@ -1337,7 +1408,105 @@ public class MX_Client_AuthorizationHomePage extends Base {
 		return false;
 	}
 
-	public boolean verifyRevisedSubmissionEmail(MX_Client_Dashboard_BscData authorizationData, String benefitPoints) {
+	public boolean verifyInitiationBenefitsSubmissionEmail(MX_Client_Dashboard_BscData authorizationData) {
+		try {
+			boolean isBenefitPointsVerified = false, isFileIDVerified = false;
+			// Reading Transferee FileID and Benefits TotalPoints from email and writing to
+			// the Config
+			// Properties File
+			String host = "outlook.office365.com";
+			// Enter Your Email ID
+			String userName = "airesautomation@aires.com";
+			// Enter your email outlook password
+			String pwd = CoreConstants.AUTO_EMAIL_PWD;
+			// Enter expected From complete email address
+			String expFromUserName = "testrelonet@aires.com";
+			// Enter expected email subject
+			String expEmailSubject = "New relocation authorization from "
+					+ CoreFunctions.getPropertyFromConfig("Policy_ClientName") + " for "
+					+ CoreFunctions.getPropertyFromConfig(MobilityXConstants.LAST_NAME_TEXT) + ", "
+					+ CoreFunctions.getPropertyFromConfig(MobilityXConstants.FIRST_NAME_TEXT);
+			String actualResultFileID = EmailUtil.searchEmailAndReturnResult(host, userName, pwd, expFromUserName,
+					expEmailSubject, MobilityXConstants.INITIATION_FILE_ID);
+			isFileIDVerified = !(actualResultFileID.isEmpty());
+			if (isFileIDVerified) {
+				CoreFunctions.writeToPropertiesFile("Assignment_FileID", actualResultFileID.trim());
+				Log.info(CoreConstants.PASS
+						+ "Successfully verified New Initiation Benefits Submitted Email generated for created Assignment.");
+				Reporter.addStepLog(CoreConstants.PASS
+						+ "Successfully verified New Initiation Benefits Submitted Email generated for created Assignment.");
+			}
+			String actualResultBenefitTotalPoints = EmailUtil.searchEmailAndReturnResult(host, userName, pwd,
+					expFromUserName, expEmailSubject,
+					MobilityXConstants.NEW_INITIATION_SUBMISSION_BENEFIT_TOTAL_POINTS_AND_SUBMITTED_POINTS);
+			actualResultBenefitTotalPoints = actualResultBenefitTotalPoints.trim();
+			String actualResultBenefitPoints[] = actualResultBenefitTotalPoints.split("/");
+			double expectedTotalBenefitPoints = Double.parseDouble(CoreFunctions
+					.getPropertyFromConfig("CF_Transferee_TotalAvailablePoints"));
+			double expectedSubmittedBenefitPoints = Double.parseDouble(CoreFunctions
+					.getPropertyFromConfig("CF_Client_TotalSelectedPoints"));
+			if ((Double.parseDouble((actualResultBenefitPoints[1].trim()))==(expectedTotalBenefitPoints))
+					&& (Double.parseDouble(actualResultBenefitPoints[0].trim()))==(expectedSubmittedBenefitPoints)) {
+				isBenefitPointsVerified = true;
+				Log.info(CoreConstants.PASS
+						+ "Successfully verified Benefit Submitted & Total Points displayed in New Initiation Submitted Email.");
+				Reporter.addStepLog(CoreConstants.PASS
+						+ "Successfully verified Benefit Submitted & Total Points displayed in New Initiation Submitted Email.");
+			}
+			return isFileIDVerified && isBenefitPointsVerified;
+		} catch (Exception e) {
+			Reporter.addStepLog(MessageFormat.format(
+					COREFLEXConstants.EXCEPTION_OCCURED_WHILE_READING_NEW_INITIATION_SUBMITTED_EMAIL,
+					CoreConstants.FAIL, e.getMessage()));
+		}
+		return false;
+	}
+	
+	public boolean verifyRevisedBenefitsSubmissionEmail(MX_Client_Dashboard_BscData authorizationData) {
+		try {
+			boolean isBenefitPointsVerified = false, isFileIDVerified = false;
+			// Reading Transferee FileID and Benefits TotalPoints from email and writing to
+			// the Config
+			// Properties File
+			String host = "outlook.office365.com";
+			// Enter Your Email ID
+			String userName = "airesautomation@aires.com";
+			// Enter your email outlook password
+			String pwd = CoreConstants.AUTO_EMAIL_PWD;
+			// Enter expected From complete email address
+			String expFromUserName = "testrelonet@aires.com";
+			// Enter expected email subject
+			String expEmailSubject = "Revised mobility initiation from "
+					+ CoreFunctions.getPropertyFromConfig("Policy_ClientName") + " for  "
+					+ CoreFunctions.getPropertyFromConfig(MobilityXConstants.LAST_NAME_TEXT) + ", "
+					+ CoreFunctions.getPropertyFromConfig(MobilityXConstants.FIRST_NAME_TEXT);
+			String actualResultBenefitTotalPoints = EmailUtil.searchEmailAndReturnResult(host, userName, pwd,
+					expFromUserName, expEmailSubject,
+					MobilityXConstants.NEW_INITIATION_SUBMISSION_BENEFIT_TOTAL_POINTS_AND_SUBMITTED_POINTS);
+			actualResultBenefitTotalPoints = actualResultBenefitTotalPoints.trim();
+			String actualResultBenefitPoints[] = actualResultBenefitTotalPoints.split("/");
+			double expectedTotalBenefitPoints = Double.parseDouble(CoreFunctions
+					.getPropertyFromConfig("CF_Transferee_TotalAvailablePoints"));
+			double expectedSubmittedBenefitPoints = Double.parseDouble(CoreFunctions
+					.getPropertyFromConfig("CF_Client_TotalSelectedPoints"));
+			if ((Double.parseDouble((actualResultBenefitPoints[1].trim()))==(expectedTotalBenefitPoints))
+					&& (Double.parseDouble(actualResultBenefitPoints[0].trim()))==(expectedSubmittedBenefitPoints)) {
+				isBenefitPointsVerified = true;
+				Log.info(CoreConstants.PASS
+						+ "Successfully verified Benefit Submitted & Total Points displayed in Revised mobility Initiation Email.");
+				Reporter.addStepLog(CoreConstants.PASS
+						+ "Successfully verified Benefit Submitted & Total Points displayed in Revised mobility Initiation Email.");
+			}
+			return isBenefitPointsVerified;
+		} catch (Exception e) {
+			Reporter.addStepLog(MessageFormat.format(
+					COREFLEXConstants.EXCEPTION_OCCURED_WHILE_READING_REVISED_MOBILITY_INITIATION_EMAIL,
+					CoreConstants.FAIL, e.getMessage()));
+		}
+		return false;
+	}
+
+	public boolean verifyRevisedSubmissionEmail(MX_Client_Dashboard_BscData authorizationData) {
 		try {
 			boolean isBenefitTotalPointsVerified = false;
 			// Reading Transferee FileID and Benefits TotalPoints from email and writing to
@@ -1356,13 +1525,12 @@ public class MX_Client_AuthorizationHomePage extends Base {
 					+ CoreFunctions.getPropertyFromConfig(MobilityXConstants.LAST_NAME_TEXT) + ", "
 					+ CoreFunctions.getPropertyFromConfig(MobilityXConstants.FIRST_NAME_TEXT);
 			String actualResultBenefitTotalPoints = EmailUtil.searchEmailAndReturnResult(host, userName, pwd,
-					expFromUserName, expEmailSubject, MobilityXConstants.INITIATION_SUBMISSION_BENEFIT_TOTAL_POINTS);
+					expFromUserName, expEmailSubject,
+					MobilityXConstants.REVISED_MOBILITY_INITIATION_SUBMISSION_BENEFIT_TOTAL_POINTS);
 			actualResultBenefitTotalPoints = actualResultBenefitTotalPoints.trim();
-			String expectedTotalBenefitPoints = benefitPoints.equals(MobilityXConstants.INITIAL_BENEFIT_TOTAL_POINTS)
-					? authorizationData.flexBenefitInfo.initialTotalPoints
-					: authorizationData.flexBenefitInfo.finalTotalPoints;
-			String[] actualTotalPoints = actualResultBenefitTotalPoints.split("/");
-			if ((actualTotalPoints[1].trim()).equals(expectedTotalBenefitPoints)) {
+			String expectedTotalBenefitPoints = CoreFunctions
+					.getPropertyFromConfig("CF_Transferee_TotalAvailablePoints");
+			if ((actualResultBenefitTotalPoints).equals(expectedTotalBenefitPoints)) {
 				isBenefitTotalPointsVerified = true;
 				Reporter.addStepLog(CoreConstants.PASS
 						+ "Successfully verified Benefit Total Points displayed in Revised mobility Initiation Submitted Email.");
@@ -1379,8 +1547,8 @@ public class MX_Client_AuthorizationHomePage extends Base {
 	public boolean verifyAndAcceptIncreasedPointsDialog() {
 		boolean isIncreasedPointsDialogVerified = false;
 		try {
-			isIncreasedPointsDialogVerified = CoreFunctions.isElementExist(driver, _dialogIncreasingPointsText, 5)
-					&& CoreFunctions.verifyText(driver, _dialogIncreasingPointsText,
+			isIncreasedPointsDialogVerified = CoreFunctions.isElementExist(driver, _dialogPointsText, 5)
+					&& CoreFunctions.verifyText(driver, _dialogPointsText,
 							MobilityXConstants.EXPECTED_INCREASED_POINTS_MESSAGE.replace("BenefitTP",
 									CoreFunctions.getPropertyFromConfig("CF_Transferee_TotalAvailablePoints")),
 							MobilityXConstants.INCREASED_POINTS_DIALOG, true);
@@ -1390,7 +1558,7 @@ public class MX_Client_AuthorizationHomePage extends Base {
 					CoreConstants.FAIL, e.getMessage()));
 		}
 		if (isIncreasedPointsDialogVerified) {
-			CoreFunctions.clickElement(driver, _buttonYesIncreasingPoints);
+			CoreFunctions.clickElement(driver, _buttonYesPoints);
 			Reporter.addStepLog(MessageFormat.format(
 					MobilityXConstants.SUCCESSFULLY_VERIFIED_AND_ACCEPTED_INCREASED_POINTS_DIALOG_MESSAGE,
 					CoreConstants.PASS));
@@ -1399,4 +1567,116 @@ public class MX_Client_AuthorizationHomePage extends Base {
 		return isIncreasedPointsDialogVerified;
 	}
 
+	public boolean verifyAndAcceptCannotDecreasedPointsAfterSubmissionDialog() {
+		boolean isDecreasedPointsDialogVerified = false;
+		try {
+			isDecreasedPointsDialogVerified = CoreFunctions.isElementExist(driver, _dialogCannotDecreasePointsText, 5)
+					&& CoreFunctions.verifyText(driver, _dialogCannotDecreasePointsText,
+							MobilityXConstants.EXPECTED_CANNOT_DECREASED_POINTS_AFTER_SUBMISSION_MESSAGE,
+							MobilityXConstants.CANNOT_DECREASE_POINTS_AFTER_SUBMISSION_DIALOG, true);
+		} catch (Exception e) {
+			Reporter.addStepLog(MessageFormat.format(
+					MobilityXConstants.EXCEPTION_OCCURED_WHILE_VALIDATING_CANNOT_DECREASE_POINTS_AFTER_SUBMISSION_DIALOG_MESSAGE,
+					CoreConstants.FAIL, e.getMessage()));
+		}
+		if (isDecreasedPointsDialogVerified) {
+			CoreFunctions.clickElement(driver, _buttonDialogOK);
+			Reporter.addStepLog(MessageFormat.format(
+					MobilityXConstants.SUCCESSFULLY_VERIFIED_AND_ACCEPTED_CANNOT_DECREASE_POINTS_AFTER_SUBMISSION_DIALOG_MESSAGE,
+					CoreConstants.PASS));
+		}
+		return isDecreasedPointsDialogVerified;
+	}
+
+	public boolean verifyFlexBenefitsSectionPostBenefitSelection(String personResponsible) {
+		boolean iFlexBenefitsSectionVerified = false;
+		try {
+			switch (personResponsible) {
+			case COREFLEXConstants.CLIENT_INITIATOR:
+			case COREFLEXConstants.CLIENT_AND_TRANSFEREE:
+				if (CoreFunctions.isElementExist(driver, _textFlexBenefitsHeader, 3)) {
+					Reporter.addStepLog(MessageFormat.format(
+							MobilityXConstants.FLEX_BENEFITS_SECTION_DISPLAYED_ON_AUTH_FORM_FOR_PERSON_RESPONSIBLE_FOR_BENEFIT_SELECTION_IN_BLUEPRINT_APPLICATION,
+							CoreConstants.PASS,
+							CoreFunctions.getPropertyFromConfig("CoreFlex_Policy_PersonResponsible")));
+					iFlexBenefitsSectionVerified = verifyFlexBenefitsSectionContents()
+							&& verifySelectedCoreFlexBenefits();
+				} else {
+					Reporter.addStepLog(MessageFormat.format(
+							MobilityXConstants.FLEX_BENEFITS_SECTION_NOT_DISPLAYED_ON_AUTH_FORM_FOR_PERSON_RESPONSIBLE_FOR_BENEFIT_SELECTION_IN_BLUEPRINT_APPLICATION,
+							CoreConstants.FAIL,
+							CoreFunctions.getPropertyFromConfig("CoreFlex_Policy_PersonResponsible")));
+					iFlexBenefitsSectionVerified = false;
+				}
+				break;
+			case COREFLEXConstants.TRANSFEREE:
+				if (CoreFunctions.isElementExist(driver, _textFlexBenefitsHeader, 3)) {
+					Reporter.addStepLog(MessageFormat.format(
+							MobilityXConstants.FLEX_BENEFITS_SECTION_DISPLAYED_ON_AUTH_FORM_FOR_TRANSFEREE_PERSON_RESPONSIBLE_FOR_BENEFIT_SELECTION_IN_BLUEPRINT_APPLICATION,
+							CoreConstants.FAIL));
+					iFlexBenefitsSectionVerified = false;
+				} else {
+					Reporter.addStepLog(MessageFormat.format(
+							MobilityXConstants.SUCCESSFULLY_VERIFIED_FLEX_BENEFITS_SECTION_NOT_DISPLAYED_ON_AUTH_FORM_FOR_TRANSFEREE_PERSON_RESPONSIBLE_FOR_BENEFIT_SELECTION_IN_BLUEPRINT_APPLICATION,
+							CoreConstants.PASS));
+					iFlexBenefitsSectionVerified = true;
+				}
+				break;
+			default:
+				Assert.fail(COREFLEXConstants.INVALID_OPTION);
+			}
+		} catch (Exception e) {
+			Reporter.addStepLog(MessageFormat.format(
+					MobilityXConstants.EXCEPTION_OCCURED_WHILE_VALIDATING_FLEX_BENEFIT_SECTION_ON_AUTH_FORM,
+					CoreConstants.FAIL, e.getMessage()));
+			Log.info(e.getMessage());
+		}
+		return iFlexBenefitsSectionVerified;
+	}
+
+	public boolean verifyFlexBenefitsSectionPostAuthFormSubmission(String personResponsible) {
+		boolean iFlexBenefitsSectionVerified = false;
+		try {
+			switch (personResponsible) {
+			case COREFLEXConstants.CLIENT_INITIATOR:
+			case COREFLEXConstants.CLIENT_AND_TRANSFEREE:
+				if (CoreFunctions.isElementExist(driver, _textFlexBenefitsHeader, 3)) {
+					Reporter.addStepLog(MessageFormat.format(
+							MobilityXConstants.FLEX_BENEFITS_SECTION_DISPLAYED_ON_AUTH_FORM_FOR_PERSON_RESPONSIBLE_FOR_BENEFIT_SELECTION_IN_BLUEPRINT_APPLICATION,
+							CoreConstants.PASS,
+							CoreFunctions.getPropertyFromConfig("CoreFlex_Policy_PersonResponsible")));
+					iFlexBenefitsSectionVerified = verifyFlexBenefitsSectionContentsPostAuthFormSubmission()
+							&& verifySelectedCoreFlexBenefits();
+				} else {
+					Reporter.addStepLog(MessageFormat.format(
+							MobilityXConstants.FLEX_BENEFITS_SECTION_NOT_DISPLAYED_ON_AUTH_FORM_FOR_PERSON_RESPONSIBLE_FOR_BENEFIT_SELECTION_IN_BLUEPRINT_APPLICATION,
+							CoreConstants.FAIL,
+							CoreFunctions.getPropertyFromConfig("CoreFlex_Policy_PersonResponsible")));
+					iFlexBenefitsSectionVerified = false;
+				}
+				break;
+			case COREFLEXConstants.TRANSFEREE:
+				if (CoreFunctions.isElementExist(driver, _textFlexBenefitsHeader, 3)) {
+					Reporter.addStepLog(MessageFormat.format(
+							MobilityXConstants.FLEX_BENEFITS_SECTION_DISPLAYED_ON_AUTH_FORM_FOR_TRANSFEREE_PERSON_RESPONSIBLE_FOR_BENEFIT_SELECTION_IN_BLUEPRINT_APPLICATION,
+							CoreConstants.FAIL));
+					iFlexBenefitsSectionVerified = false;
+				} else {
+					Reporter.addStepLog(MessageFormat.format(
+							MobilityXConstants.SUCCESSFULLY_VERIFIED_FLEX_BENEFITS_SECTION_NOT_DISPLAYED_ON_AUTH_FORM_FOR_TRANSFEREE_PERSON_RESPONSIBLE_FOR_BENEFIT_SELECTION_IN_BLUEPRINT_APPLICATION,
+							CoreConstants.PASS));
+					iFlexBenefitsSectionVerified = true;
+				}
+				break;
+			default:
+				Assert.fail(COREFLEXConstants.INVALID_OPTION);
+			}
+		} catch (Exception e) {
+			Reporter.addStepLog(MessageFormat.format(
+					MobilityXConstants.EXCEPTION_OCCURED_WHILE_VALIDATING_FLEX_BENEFIT_SECTION_ON_AUTH_FORM,
+					CoreConstants.FAIL, e.getMessage()));
+			Log.info(e.getMessage());
+		}
+		return iFlexBenefitsSectionVerified;
+	}
 }

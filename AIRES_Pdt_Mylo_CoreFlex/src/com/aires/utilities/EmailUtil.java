@@ -60,9 +60,17 @@ public class EmailUtil {
 			_searchTag[0] = "File ID: ";
 			_searchTag[1] = "</th>";
 			break;
-		case MobilityXConstants.INITIATION_SUBMISSION_BENEFIT_TOTAL_POINTS:
+		case MobilityXConstants.NEW_INITIATION_SUBMISSION_BENEFIT_TOTAL_POINTS:
 			_searchTag[0] = "Benefits Total Points: ";
 			_searchTag[1] = "</th>";
+			break;			
+		case MobilityXConstants.NEW_INITIATION_SUBMISSION_BENEFIT_TOTAL_POINTS_AND_SUBMITTED_POINTS:
+			_searchTag[0] = "Benefits Total Points: ";
+			_searchTag[1] = "</th>";
+			break;	
+		case MobilityXConstants.REVISED_MOBILITY_INITIATION_SUBMISSION_BENEFIT_TOTAL_POINTS:
+			_searchTag[0] = "Benefits Total Points: <span style=\"\">0</span> / <span style=\"color:Red\">";
+			_searchTag[1] = "</span></th>";
 			break;
 		default:
 			Assert.fail("Information not found");

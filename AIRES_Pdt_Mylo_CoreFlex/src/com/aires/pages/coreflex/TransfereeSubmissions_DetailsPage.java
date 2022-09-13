@@ -748,6 +748,8 @@ public class TransfereeSubmissions_DetailsPage extends Base {
 			Double totalPointsSelectedAfterDeleteApproval, availablePointsAfterDeleteApproval;
 			DecimalFormat format = new DecimalFormat();
 			format.setDecimalSeparatorAlwaysShown(false);
+			CoreFunctions.writeToPropertiesFile("CF_Transferee_TotalSelectedPoints",
+					CoreFunctions.getPropertyFromConfig("CF_Client_TotalSelectedPoints"));
 			String expectedGrowlMessage = MobilityXConstants.DELETE_ACTION_COMPLETED.replace("approvedDeletedPoints",
 					format.format(Double.parseDouble(
 							CoreFunctions.getPropertyFromConfig("CF_Transferee_DeleteRequestTotalPoints"))));
@@ -772,6 +774,8 @@ public class TransfereeSubmissions_DetailsPage extends Base {
 					String.valueOf(availablePointsAfterDeleteApproval));
 			isDeleteRequestApproved = true;
 			CoreFunctions.writeToPropertiesFile("CF_Transferee_DeleteRequestApproved", "true");
+			CoreFunctions.writeToPropertiesFile("CF_Client_TotalSelectedPoints",
+					String.valueOf(totalPointsSelectedAfterDeleteApproval));
 			return true;
 		} catch (Exception e) {
 			Reporter.addStepLog(MessageFormat.format(
@@ -980,5 +984,48 @@ public class TransfereeSubmissions_DetailsPage extends Base {
 			}
 		}
 		return benefitNameList;
+	}
+
+	public boolean verifyClientAndPointsDetails() {
+		try {
+			isDeleteRequestDenied = false;
+			isDeleteRequestApproved = false;
+			CoreFunctions.writeToPropertiesFile("CF_Client_DeleteRequestDenied", "false");
+			CoreFunctions.writeToPropertiesFile("CF_Client_DeleteRequestApproved", "false");
+			CoreFunctions.writeToPropertiesFile("CF_Client_UndoDeleteBenefit", "false");
+			Double availablePointsAfterSubmission = (Double
+					.parseDouble(CoreFunctions.getPropertyFromConfig("CF_Transferee_TotalAvailablePoints"))
+					- Double.parseDouble(CoreFunctions.getPropertyFromConfig("CF_Client_TotalSelectedPoints")));
+
+			CoreFunctions.verifyText(driver, _textTransfereeName,
+					CoreFunctions.getPropertyFromConfig("Transferee_firstName") + " "
+							+ CoreFunctions.getPropertyFromConfig("Transferee_lastName"),
+					COREFLEXConstants.TRANSFEREE_NAME);
+			CoreFunctions.verifyText(driver, _textCorporationName,
+					CoreFunctions.getPropertyFromConfig("Assignment_ClientName"), COREFLEXConstants.CORPORATION_NAME);
+			String actualPointsSpent[] = CoreFunctions.getElementText(driver, _textPointsSpent).trim().split("of");
+			CoreFunctions.verifyValue(Double.parseDouble(actualPointsSpent[0].trim()),
+					Double.parseDouble(CoreFunctions.getPropertyFromConfig("CF_Client_TotalSelectedPoints")),
+					COREFLEXConstants.POINTS_SPENT);
+			CoreFunctions.highlightObject(driver, _textPointsSpent);
+			CoreFunctions.verifyValue(driver, _textPointsBalance, availablePointsAfterSubmission,
+					COREFLEXConstants.POINTS_BALANCE);
+			CoreFunctions.verifyValue(
+					Double.parseDouble(CoreFunctions.getElementText(driver, _textTotalPoints).replace("/", "").trim()),
+					Double.parseDouble(CoreFunctions.getPropertyFromConfig("CF_Transferee_TotalAvailablePoints")),
+					COREFLEXConstants.TOTAL_POINTS);
+			CoreFunctions.highlightObject(driver, _textTotalPoints);
+			Reporter.addStepLog(MessageFormat.format(
+					COREFLEXConstants.SUCCESSFULLY_VALIDATED_TRANSFEREE_SUBMISSION_DETAILS_ON_DASHBOARD_HOME_PAGE,
+					CoreConstants.PASS));
+			CoreFunctions.writeToPropertiesFile("CF_Transferee_AvailablePoints",
+					String.valueOf(availablePointsAfterSubmission));
+			return true;
+		} catch (Exception e) {
+			Reporter.addStepLog(MessageFormat.format(
+					COREFLEXConstants.EXCEPTION_OCCURED_WHILE_VALIDATING_TRANSFEREE_SUBMISSION_DETAILS_ON_DASHBOARD_HOME_PAGE,
+					CoreConstants.FAIL, e.getMessage()));
+		}
+		return false;
 	}
 }

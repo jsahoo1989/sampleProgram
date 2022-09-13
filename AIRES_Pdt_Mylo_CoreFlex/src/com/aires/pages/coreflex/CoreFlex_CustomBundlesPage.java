@@ -495,9 +495,9 @@ public class CoreFlex_CustomBundlesPage extends Base {
 									? COREFLEXConstants.EXPECTED_APPROVE_THIS_POLICY_DIALOG_ASSIGNMENT_TEXT_FIRST_VERSION
 									: COREFLEXConstants.EXPECTED_APPROVE_THIS_POLICY_DIALOG_ASSIGNMENT_TEXT_SECOND_VERSION);
 			isDialogOptionsVerified = (CoreFunctions.getElementText(driver, _popUpApprovePolicyCheckBox).trim())
-					.equals(COREFLEXConstants.EXPECTED_APPROVE_THIS_POLICY_DIALOG_CHECKBOX_SELECTION.trim())
-					&& CoreFunctions.getAttributeText(_popUpApprovePolicyDefaultAssignmentDate, "min")
-							.equals(CoreFunctions.getCurrentDateAsGivenFormat("YYYY-MM-dd"));
+					.equals(COREFLEXConstants.EXPECTED_APPROVE_THIS_POLICY_DIALOG_CHECKBOX_SELECTION.trim());
+//					&& CoreFunctions.getAttributeText(_popUpApprovePolicyDefaultAssignmentDate, "min")
+//							.equals(CoreFunctions.getCurrentDateAsGivenFormat("YYYY-MM-dd"));
 			isApproveThisPolicyDialogVerified = isDialogHeaderVerified && isDialogTextVerified
 					&& isDialogOptionsVerified;
 		} catch (Exception e) {

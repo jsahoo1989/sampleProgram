@@ -577,7 +577,7 @@ public class MX_Transferee_JourneyHomePage extends Base {
 				CoreFunctions.explicitWaitTillElementVisibility(driver, _poinBalance_tooltip_content,
 						MobilityXConstants.TRANSFEREE_JOURNEY_TOOLTIP);
 				isSubmittedSpentPointsValid = CoreFunctions.getElementText(driver, _poinBalance_tooltip_content)
-						.equals(pointBalanceDetails());
+						.equals(pointBalanceDetailsMobilityJourneyPage());
 				CoreFunctions.clickElement(driver, _close_tootip);
 			}
 		} catch (Exception e) {
@@ -600,13 +600,23 @@ public class MX_Transferee_JourneyHomePage extends Base {
 		return isSubmittedSpentPointsValid;
 	}
 
-	public String pointBalanceDetails() {
+	public String pointBalanceDetailsMobilityJourneyPage() {
 		String total = CoreFunctions.getElementText(driver, _poinBalance_tooltip).split("/")[1].replace(" pts.", "");
 		String consumed = CoreFunctions.getElementText(driver, _poinBalance_tooltip).split("/")[0];
 		double remaining = Double.parseDouble(total) - Double.parseDouble(consumed);
 		DecimalFormat format = new DecimalFormat();
 		format.setDecimalSeparatorAlwaysShown(false);
 		return MobilityXConstants.POINT_BALANCE_DETAILS.replace("used_points", consumed).replace("total_points", total)
+				.replace("current_balance", format.format(remaining));
+	}
+	
+	public String pointBalanceDetailsFlexPlanningToolPage() {
+		String total = CoreFunctions.getElementText(driver, _poinBalance_tooltip).split("/")[1].replace(" pts.", "");
+		String consumed = CoreFunctions.getElementText(driver, _poinBalance_tooltip).split("/")[0];
+		double remaining = Double.parseDouble(total) - Double.parseDouble(consumed);
+		DecimalFormat format = new DecimalFormat();
+		format.setDecimalSeparatorAlwaysShown(false);
+		return MobilityXConstants.POINT_BALANCE_DETAILS_FPT.replace("used_points", consumed).replace("total_points", total)
 				.replace("current_balance", format.format(remaining));
 	}
 

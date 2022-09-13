@@ -309,7 +309,8 @@ public class IRIS_ActivityAndFinancePage extends BasePage {
 				break;
 			}
 		}
-		CoreFunctions.writeToPropertiesFile("Assignment_ActualizationDate", CoreFunctions.getCurrentDateAsGivenFormat("dd-MMM-yyyy"));
+		CoreFunctions.writeToPropertiesFile("Assignment_ActualizationDate",
+				CoreFunctions.getCurrentDateAsGivenFormat("dd-MMM-yyyy"));
 	}
 
 	public void clickBtnConfirmationDialog(String btnName, String dialogName) throws Exception {
@@ -827,8 +828,7 @@ public class IRIS_ActivityAndFinancePage extends BasePage {
 			for (FlexBenefit benefitList : flexBenefits) {
 				for (Benefit benefit : benefitList.getBenefits()) {
 					if ((benefit.getSelectBenefitOnFPTPage()) && (benefit.getAiresManagedService().equals("Yes"))
-							&& benefit.getNoOfMilestones() != null
-							&& benefit.getNoOfMilestones() == noOfMilestones) {
+							&& benefit.getNoOfMilestones() != null && benefit.getNoOfMilestones() == noOfMilestones) {
 						selectServiceAndSubService(benefit);
 						displayActivityTable();
 						if (noOfMilestones == 2) {
@@ -917,8 +917,7 @@ public class IRIS_ActivityAndFinancePage extends BasePage {
 			for (FlexBenefit benefitList : flexBenefits) {
 				for (Benefit benefit : benefitList.getBenefits()) {
 					if ((benefit.getSelectBenefitOnFPTPage()) && benefit.getAiresManagedService().equals("Yes")
-							&& benefit.getNoOfMilestones() != null
-							&& benefit.getNoOfMilestones() == noOfMilestones) {
+							&& benefit.getNoOfMilestones() != null && benefit.getNoOfMilestones() == noOfMilestones) {
 						selectServiceAndSubService(benefit);
 						displayActivityTable();
 						if (noOfMilestones == 2) {
@@ -966,8 +965,7 @@ public class IRIS_ActivityAndFinancePage extends BasePage {
 		for (FlexBenefit benefitList : flexBenefits) {
 			for (Benefit benefit : benefitList.getBenefits()) {
 				if ((benefit.getSelectBenefitOnFPTPage()) && benefit.getAiresManagedService().equals("Yes")
-						&& benefit.getNoOfMilestones() != null
-						&& benefit.getNoOfMilestones() == noOfMilestones) {
+						&& benefit.getNoOfMilestones() != null && benefit.getNoOfMilestones() == noOfMilestones) {
 					selectServiceAndSubService(benefit);
 					displayActivityTable();
 					for (int i = 0; i < noOfMilestones; i++) {
@@ -995,15 +993,25 @@ public class IRIS_ActivityAndFinancePage extends BasePage {
 						IRIS_PageMaster.getDialogObject(_IRIS, "Confirmation")
 								.describe(Button.class, new ButtonDescription.Builder().label("No").build())
 								.getLabel());
-//				Helpers.clickButton(
-//						IRIS_PageMaster.getDialogObject(_IRIS, "Saved").describe(Button.class,
-//								new ButtonDescription.Builder().label("OK").build()),
-//						IRIS_PageMaster.getDialogObject(_IRIS, "Saved")
-//								.describe(Button.class, new ButtonDescription.Builder().label("OK").build())
-//								.getLabel());
 			}
 		} catch (Exception e) {
 		}
-		
+
+	}
+
+	public void acceptSavedSuccessDialog() {
+		try {
+			_isExists = (IRIS_PageMaster.getDialogObject(_IRIS, "Saved").isVisible());
+			if (_isExists) {
+				Helpers.clickButton(
+						IRIS_PageMaster.getDialogObject(_IRIS, "Saved").describe(Button.class,
+								new ButtonDescription.Builder().label("OK").build()),
+						IRIS_PageMaster.getDialogObject(_IRIS, "Saved")
+								.describe(Button.class, new ButtonDescription.Builder().label("OK").build())
+								.getLabel());
+			}
+		} catch (Exception e) {
+		}
+
 	}
 }

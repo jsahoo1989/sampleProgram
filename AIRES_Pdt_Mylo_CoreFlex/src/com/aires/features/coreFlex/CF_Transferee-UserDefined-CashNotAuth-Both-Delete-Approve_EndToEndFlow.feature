@@ -29,8 +29,8 @@ Feature: Validate the CoreFlex End-To-End Business Test Flow(BluePrint, MXTransf
     And he has verified 'New Initiation Submitted' email having Transferee details along with assigned CoreFlex Total Points
     And he has clicked on "View all initiations" link on 'Authorization Home Page' to navigate to 'View all initiation' page
     And he has clicked 'Transferee Name' from 'All Initiations' List on 'View all initiation' page
-    When he clicks on 'Resubmit to Aires' after updating 'Benfit Total Points' value on 'Auth Form Template' page
-    Then following confirmation dialogs should be displayed in sequence on acceptance of displayed dialog
+    When he clicks on 'Resubmit to Aires' after increasing 'Benfit Total Points' value on 'Auth Form Template' page
+    Then following confirmation dialogs should be displayed after increasing 'Benfit Total Points' value in sequence on acceptance of current dialog
       | You are increasing the Total Points to * point(s). The transferee will see the increased points in MobilityX. Do you want to continue? |
       | It looks like there arent any approvers set up for this initiation. Do you want to submit it without the required approvals?           |
       | Where should your changes be reflected? Note: revisions may incur additional costs to your organization.                               |

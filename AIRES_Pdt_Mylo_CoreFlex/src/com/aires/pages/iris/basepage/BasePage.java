@@ -132,7 +132,7 @@ public class BasePage {
 
 	public void closeIRISApplication() throws Exception {
 		Thread.sleep(2000);
-		_IRIS = Desktop.describe(Window.class, new WindowDescription.Builder().title("Welcome - 12C").build());
+		_IRIS = Desktop.describe(Window.class, new WindowDescription.Builder().title("Welcome").build());
 		if (_IRIS.exists() && _IRIS.isVisible()) {
 			_IRIS.describe(Button.class, new ButtonDescription.Builder().label("exit_32").build()).click();
 		}

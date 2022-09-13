@@ -28,6 +28,7 @@ import java.io.File;
 import java.io.IOException;
 import java.lang.reflect.Field;
 import java.util.ArrayList;
+import java.util.Date;
 
 import javax.imageio.ImageIO;
 
@@ -76,7 +77,7 @@ public class Hooks {
 			testContext.getBasePage().killExistingBrowsers();
 		}
 		//Commented Code is for debugging purpose in local
-		/* else if (scenario.getName().contains("PDT")) {
+		 else if (scenario.getName().contains("PDT")) {
 			Log.info(FileReaderManager.getInstance().getConfigReader().getPDTApplicationUrl());
 			testContext.getWebDriverManager().getDriver().navigate()
 					.to(FileReaderManager.getInstance().getConfigReader().getPDTApplicationUrl());
@@ -88,7 +89,7 @@ public class Hooks {
 			Log.info(FileReaderManager.getInstance().getConfigReader().getCoreFlexPolicySetupApplicationUrl());
 			testContext.getWebDriverManager().getDriver().navigate()
 					.to(FileReaderManager.getInstance().getConfigReader().getCoreFlexPolicySetupApplicationUrl());
-		}else if (scenario.getName().contains("MXTransferee")) {
+		}else if ((scenario.getName().contains("MXTransferee")) || (scenario.getName().contains("MXClient"))) {
 			Log.info(FileReaderManager.getInstance().getConfigReader().getMobilityXUrl());
 			testContext.getWebDriverManager().getDriver().navigate()
 					.to(FileReaderManager.getInstance().getConfigReader().getMobilityXUrl());
@@ -96,8 +97,11 @@ public class Hooks {
 			Log.info(FileReaderManager.getInstance().getConfigReader().getCoreFlexTransfereeSubmissionsApplicationUrl());
 			testContext.getWebDriverManager().getDriver().navigate()
 					.to(FileReaderManager.getInstance().getConfigReader().getCoreFlexTransfereeSubmissionsApplicationUrl());
-		}*/
+		}
+		CoreConstants.TIME_BEFORE_ACTION = new Date().getTime();
 		
+		// Jenkins Code for remote execution - Uncomment this code before merging code to main
+		/*
 		else if (appName.equals(CoreConstants.COREFLEX)&& scenario.getName().contains("MXTransferee")) {
 			Log.info(FileReaderManager.getInstance().getConfigReader().getApplicationUrl("MXTransferee"));
 			testContext.getWebDriverManager().getDriver().navigate()
@@ -111,7 +115,7 @@ public class Hooks {
 		else {
 			Log.info(url);
 			testContext.getWebDriverManager().getDriver().navigate().to(url);
-		}	
+		}*/	
 	}
 
 	@After(order = 2)
@@ -184,7 +188,7 @@ public class Hooks {
 	}
 
 	
-	@After(order = 1)
+//	@After(order = 1)
 	public void updateResultInTestRail(Scenario scenario) {
 		String Case_ID = BusinessFunctions.getTestRailIdAsPerApplication(System.getProperty("application"),scenario.getSourceTagNames().toString());
 		Log.info(Case_ID);
@@ -200,7 +204,7 @@ public class Hooks {
 		if (scenario.getName().contains("IRIS")) {
 			testContext.getBasePage().cleanIrisProcesses();
 		} else {
-			testContext.getWebDriverManager().closeDriver();
+//			testContext.getWebDriverManager().closeDriver();
 		}
 		Runtime.getRuntime().gc();
 	}

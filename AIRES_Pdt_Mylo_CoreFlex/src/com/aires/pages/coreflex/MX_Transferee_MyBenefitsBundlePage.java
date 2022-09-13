@@ -464,7 +464,8 @@ public class MX_Transferee_MyBenefitsBundlePage extends Base {
 					&& verifySubmittedCashoutDetailsOnMBBPage() && verifySubmittedFlexBenefitsDetailsOnMBBPage();
 			isBenefitsAndPointsMatched = isSubmittedBenefitDetailsVerified
 					&& ((Double.parseDouble(CoreFunctions.getItemsFromListByIndex(driver, _textSubmittedBenefitsPoints,
-							0, true))) == MX_Transferee_FlexPlanningTool_Page.totalSelectedPoints)
+							0, true))) == (Double.parseDouble(
+									CoreFunctions.getPropertyFromConfig("CF_Transferee_TotalSelectedPoints"))))
 					&& ((CoreFunctions.getItemsFromListByIndex(driver, _textSubmittedBenefitsPoints, 1, true))
 							.equals(CoreFunctions.getPropertyFromConfig("CF_Transferee_TotalAvailablePoints")));
 		} catch (Exception e) {
@@ -819,12 +820,12 @@ public class MX_Transferee_MyBenefitsBundlePage extends Base {
 						.equals(MobilityXConstants.DELETE_REQUEST_PENDING);
 	}
 
-	public boolean verifySelectedPortionCashoutDetails() {
+	public boolean verifySelectedCashoutDetails() {
 		try {
 			switch ((CoreFunctions.getPropertyFromConfig("PolicyCashoutType"))) {
 			case MobilityXConstants.PORTION_CASHOUT:
 			case MobilityXConstants.AFTER_RELOCATION_ONLY:
-				return verifySelectedPortionCashout();
+				return verifySelectedCashout();
 			case MobilityXConstants.CASHOUT_NOT_AUTHORIZED:
 				return true;
 			default:
@@ -832,13 +833,13 @@ public class MX_Transferee_MyBenefitsBundlePage extends Base {
 			}
 		} catch (Exception e) {
 			Reporter.addStepLog(MessageFormat.format(
-					COREFLEXConstants.EXCEPTION_OCCURED_WHILE_VALIDATING_PORTION_CASHOUT_DETAILS_UNDER_MY_BENEFIT_BUNDLE_SECTION_OF_MBB_PAGE,
+					COREFLEXConstants.EXCEPTION_OCCURED_WHILE_VALIDATING_CASHOUT_DETAILS_UNDER_MY_BENEFIT_BUNDLE_SECTION_OF_MBB_PAGE,
 					CoreConstants.FAIL, e.getMessage()));
 		}
 		return false;
 	}
 
-	private boolean verifySelectedPortionCashout() {
+	private boolean verifySelectedCashout() {
 		boolean isSelectedPortionCashoutDetailsVerified = false;
 		for (WebElement element : _textAddedBenefitNameList) {
 			if (element.getText().equals(policySetupPageData.flexPolicySetupPage.customCashoutBenefitName)) {
@@ -877,7 +878,7 @@ public class MX_Transferee_MyBenefitsBundlePage extends Base {
 			return CoreFunctions.isElementExist(driver, _buttonCashoutUpdate, 2);
 		} catch (Exception e) {
 			Reporter.addStepLog(MessageFormat.format(
-					COREFLEXConstants.EXCEPTION_OCCURED_WHILE_VALIDATING_PORTION_CASHOUT_DETAILS_UNDER_MY_BENEFIT_BUNDLE_SECTION_OF_MBB_PAGE,
+					COREFLEXConstants.EXCEPTION_OCCURED_WHILE_VALIDATING_CASHOUT_DETAILS_UNDER_MY_BENEFIT_BUNDLE_SECTION_OF_MBB_PAGE,
 					CoreConstants.FAIL, e.getMessage()));
 		}
 		return false;
@@ -1196,20 +1197,30 @@ public class MX_Transferee_MyBenefitsBundlePage extends Base {
 		boolean isDeleteButtonDisabled = false;
 		boolean isDeleteHoverTextVerified = false;
 		if (benefit.getDeleteBenefitOnMBBPage()) {
-			isDeleteButtonDisabled = Boolean.valueOf(
-					CoreFunctions.getAttributeText(_buttonDeleteBenefitList.get(indexBenefit), "aria-disabled"));
-			CoreFunctions.moveToElement(driver, _buttonDeleteBenefitList.get(indexBenefit));
-			isDeleteHoverTextVerified = CoreFunctions.isElementExist(driver,
-					_disabledDeleteButtonHoverText.get(indexBenefit), 5);
-			CoreFunctions.highlightObject(driver, _disabledDeleteButtonHoverText.get(indexBenefit));
-			CoreFunctions.moveToElement(driver, _textSubmittedBenefitNameList.get(indexBenefit));
-			if (isDeleteButtonDisabled && isDeleteHoverTextVerified) {
+			try {
+				isDeleteButtonDisabled = Boolean.valueOf(
+						CoreFunctions.getAttributeText(_buttonDeleteBenefitList.get(indexBenefit), "aria-disabled"));
+				CoreFunctions.moveToElement(driver, _buttonDeleteBenefitList.get(indexBenefit));
+				isDeleteHoverTextVerified = CoreFunctions.isElementExist(driver,
+						_disabledDeleteButtonHoverText.get(indexBenefit), 5);
+				CoreFunctions.highlightObject(driver, _disabledDeleteButtonHoverText.get(indexBenefit));
+				CoreFunctions.moveToElement(driver, _textSubmittedBenefitNameList.get(indexBenefit));
+				if (isDeleteButtonDisabled && isDeleteHoverTextVerified) {
+					Reporter.addStepLog(MessageFormat.format(
+							COREFLEXConstants.SUCCESSFULLY_VERIFIED_DELETE_BUTTON_IS_DISABLED_AND_DISABLED_DELETE_HOVER_TEXT_POST_DELETE_REQUEST_DENIED_BY_MSPEC_PPC_USER,
+							CoreConstants.PASS));
+					return true;
+				} else {
+					Reporter.addStepLog(MessageFormat.format(
+							COREFLEXConstants.DELETE_HOVER_TEXT_POST_DELETE_REQUEST_DENIED_BY_MSPEC_PPC_USER_IS_NOT_DISPLAYED_UNDER_SUBMITTED_BENEFITS_SECTION_OF_MBB_PAGE,
+							CoreConstants.FAIL));
+					return false;
+				}
+			} catch (Exception e) {
 				Reporter.addStepLog(MessageFormat.format(
-						COREFLEXConstants.SUCCESSFULLY_VERIFIED_DELETE_BUTTON_IS_DISABLED_AND_DISABLED_DELETE_HOVER_TEXT_POST_DELETE_REQUEST_DENIED_BY_MSPEC_PPC_USER,
-						CoreConstants.PASS));
-				return true;
-			} else
-				return false;
+						COREFLEXConstants.EXCEPTION_OCCURED_WHILE_VERIFYING_DELETE_BUTTON_IS_DISABLED_AND_DISABLED_DELETE_HOVER_TEXT_POST_DELETE_REQUEST_DENIED_BY_MSPEC_PPC_USER,
+						CoreConstants.FAIL, e.getMessage()));
+			}
 		}
 		return true;
 	}

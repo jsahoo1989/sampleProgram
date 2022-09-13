@@ -44,7 +44,7 @@ import com.aires.pages.coreflex.CoreFlex_PreviewTransfereePage;
 import com.aires.pages.coreflex.CoreFlex_TemporaryLiving_BenefitsPage;
 import com.aires.pages.coreflex.MX_Client_AuthorizationHomePage;
 import com.aires.pages.coreflex.MX_Client_BenefitSelectionToolPage;
-import com.aires.pages.coreflex.MX_Client_MyBenefitsBundlePage;
+import com.aires.pages.coreflex.MX_Client_BenefitsBundlePage;
 import com.aires.pages.coreflex.MX_Client_ViewAllInitiationsPage;
 import com.aires.pages.coreflex.MX_Transferee_FlexPlanningTool_Page;
 import com.aires.pages.coreflex.MX_Transferee_JourneyHomePage;
@@ -91,7 +91,7 @@ public class PageObjectManager_CoreFlex {
 	private CoreFlex_HouseHuntingTrip_BenefitsPage _coreFlexHouseHuntingTripBenefitsPage;
 	private MX_Client_AuthorizationHomePage _mxClientAuthorizationHomePage;
 	private MX_Client_BenefitSelectionToolPage _mxClientBenefitSelectionToolPage;
-	private MX_Client_MyBenefitsBundlePage _mxClientMyBenefitsBundlePage;
+	private MX_Client_BenefitsBundlePage _mxClientBenefitsBundlePage;
 	private MX_Client_ViewAllInitiationsPage _mxClientViewAllInitiationsPage;
 
 	public PageObjectManager_CoreFlex(WebDriver driver) {
@@ -293,10 +293,10 @@ public class PageObjectManager_CoreFlex {
 				: _mxClientBenefitSelectionToolPage;
 	}
 	
-	public MX_Client_MyBenefitsBundlePage getMXClientMyBenefitsBundlePage() {
-		return (_mxClientMyBenefitsBundlePage == null)
-				? _mxClientMyBenefitsBundlePage = new MX_Client_MyBenefitsBundlePage(_driver)
-				: _mxClientMyBenefitsBundlePage;
+	public MX_Client_BenefitsBundlePage getMXClientBenefitsBundlePage() {
+		return (_mxClientBenefitsBundlePage == null)
+				? _mxClientBenefitsBundlePage = new MX_Client_BenefitsBundlePage(_driver)
+				: _mxClientBenefitsBundlePage;
 	}
 	
 	public MX_Client_ViewAllInitiationsPage getMXClientViewAllInitiationsPage() {

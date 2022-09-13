@@ -6,7 +6,8 @@
 			"benefitAmount": "Core Type payments $23",
 			"benefitDesc": "Automated Core Duplicate Housing Benefit Long Description. Setting up a CoreFlex Policy to be consumed by Client/Transferee to select Desired Benefits and track/Manage Points.",
 			"subBenefits": "Duplicate Housing",
-			"airesManagedService": "No"
+			"airesManagedService": "No",
+			"policyCreationGroup": "All Benefits,Cloning,Versioning,Client"
 		},
 		{
 			"benefitType": "Lump Sum",
@@ -14,7 +15,8 @@
 			"benefitAmount": "Core Type Flat Amount , INR, # of weeks before start transfer",
 			"benefitDesc": "Automated Core Lump Sum Benefit Long Description. Setting up a CoreFlex Policy to be consumed by Client/Transferee to select Desired Benefits and track/Manage Points.",
 			"subBenefits": "Lump Sum",
-			"airesManagedService": "No"
+			"airesManagedService": "No",
+			"policyCreationGroup": "All Benefits,Cloning,Versioning,Client"
 		},
 		{
 			"benefitType": "Language Training",
@@ -23,7 +25,8 @@
 			"benefitDesc": "Core training to assist in learning the language in new location.",
 			"subBenefits": "Language Training Employee;Language Training Family",
 			"airesManagedService": "Yes",
-			"noOfMilestones": 2
+			"noOfMilestones": 2,
+			"policyCreationGroup": "All Benefits,Cloning,Versioning,Client"
 		},
 		{
 			"benefitType": "Temporary Living",
@@ -32,7 +35,8 @@
 			"benefitDesc": "Temporary Housing for the employee and family members while they wait the availability of their permanent residence.",
 			"subBenefits": "Temporary Living Transportation;Temporary Living Lodging;Temporary Living Meals",
 			"airesManagedService": "Yes",
-			"noOfMilestones": 2
+			"noOfMilestones": 2,
+			"policyCreationGroup": "All Benefits"
 		},
 		{
 			"benefitType": "Cultural Training",
@@ -41,7 +45,8 @@
 			"benefitDesc": "The orientation and training programs for employees and their families to familiarize them with living and working effectively in a particular culture.",
 			"subBenefits": "Cultural Training Employee;Cultural Training Family",
 			"airesManagedService": "Yes",
-			"noOfMilestones": 2
+			"noOfMilestones": 2,
+			"policyCreationGroup": "All Benefits"
 		},
 		{
 			"benefitType": "Concierge Services",
@@ -50,7 +55,8 @@
 			"benefitDesc": "The assistance with relocation services.",
 			"subBenefits": "Concierge Services",
 			"airesManagedService": "Yes",
-			"noOfMilestones": 2
+			"noOfMilestones": 2,
+			"policyCreationGroup": "All Benefits"
 		},
 		{
 			"benefitType": "Home Purchase",
@@ -58,7 +64,8 @@
 			"benefitAmount": "Normal and customary home purchase closing costs assistance",
 			"benefitDesc": "The reimbursement or direct payment of normal and customary home purchase closing costs.",
 			"subBenefits": "Home Purchase Closing Costs;Home Purchase Points;Home Purchase Inspections",
-			"airesManagedService": "Yes"
+			"airesManagedService": "Yes",
+			"policyCreationGroup": "All Benefits"
 		},
 		{
 			"benefitType": "Final Move",
@@ -67,7 +74,8 @@
 			"benefitDesc": "The reimbursement of final travel related expenses from home location to new location.",
 			"subBenefits": "Final Move Transportation;Final Move Lodging;Final Move Meals",
 			"airesManagedService": "Yes",
-			"noOfMilestones": 4
+			"noOfMilestones": 4,
+			"policyCreationGroup": "All Benefits"
 		},
 		{
 			"benefitType": "Area Tour",
@@ -76,7 +84,8 @@
 			"benefitDesc": "A tour highlighting neighborhoods, medical facilities, and any other areas of interests in new location.",
 			"subBenefits": "Area Tour",
 			"airesManagedService": "Yes",
-			"noOfMilestones": 2
+			"noOfMilestones": 2,
+			"policyCreationGroup": "All Benefits"
 		},
 		{
 			"benefitType": "Home Leave",
@@ -85,7 +94,8 @@
 			"benefitDesc": "A return trip for the employee, spouse partner and eligible dependents to visit the home location",
 			"subBenefits": "Home Leave Transportation;Home Leave Lodging;Home Leave Rental Car;Home Leave Meals",
 			"airesManagedService": "Yes",
-			"noOfMilestones": 4
+			"noOfMilestones": 4,
+			"policyCreationGroup": "All Benefits"
 		},
 		{
 			"benefitType": "Airport Pickup",
@@ -93,7 +103,8 @@
 			"benefitAmount": "Core Pickup from the airport to new location accommodations",
 			"benefitDesc": "The pickup from the airport to new location accommodations.",
 			"subBenefits": "Airport Pickup",
-			"airesManagedService": "Yes"
+			"airesManagedService": "Yes",
+			"policyCreationGroup": "All Benefits"
 		},
 		{
 			"benefitType": "Pre-Acceptance Services",
@@ -102,7 +113,8 @@
 			"benefitDesc": "A trip to the new location to determine if the employee will accept the new position.",
 			"subBenefits": "Pre-Acceptance Trip Transportation;Pre-Acceptance Trip Lodging;Pre-Acceptance Rental Car;Pre-Acceptance Trip Meals",
 			"airesManagedService": "Yes",
-			"noOfMilestones": 4
+			"noOfMilestones": 4,
+			"policyCreationGroup": "All Benefits"
 		},
 		{
 			"benefitType": "Furniture Rental",
@@ -111,7 +123,8 @@
 			"benefitDesc": "The rental of furniture at new location.",
 			"subBenefits": "Furniture Rental",
 			"airesManagedService": "Yes",
-			"noOfMilestones": 2
+			"noOfMilestones": 2,
+			"policyCreationGroup": "All Benefits"
 		},
 		{
 			"benefitType": "Auto Rental During Assignment",
@@ -120,7 +133,8 @@
 			"benefitDesc": "A rental car for employee while on assignment. The size of the car will depend on the company's travel policy.",
 			"subBenefits": "Auto Rental During Assignment",
 			"airesManagedService": "Yes",
-			"noOfMilestones": 2
+			"noOfMilestones": 2,
+			"policyCreationGroup": "All Benefits"
 		},
 		{
 			"benefitType": "Education Assistance/School Search",
@@ -128,7 +142,8 @@
 			"benefitAmount": "Search for school(s) in new location",
 			"benefitDesc": "A tour of new country schools per a service provider.",
 			"subBenefits": "Education Assistance/School Search",
-			"airesManagedService": "Yes"
+			"airesManagedService": "Yes",
+			"policyCreationGroup": "All Benefits"
 		},
 		{
 			"benefitType": "House Hunting Trip",
@@ -137,7 +152,8 @@
 			"benefitDesc": "A home or apartment search in the new area, based on an employees specific requirements and preferences.",
 			"subBenefits": "House Hunting Trip Transportation;House Hunting Trip Lodging;House Hunting Trip Rental Car;House Hunting Trip Meals",
 			"airesManagedService": "Yes",
-			"noOfMilestones": 4
+			"noOfMilestones": 4,
+			"policyCreationGroup": "All Benefits"
 		},
 		{
 			"benefitType": "Air Shipment",
@@ -146,7 +162,8 @@
 			"benefitDesc": "The professional packing, air shipping, delivery, uncrating, unpacking, in-transit storage, if necessary, applicable moving insurance and import duties for the shipment of personal effects and furniture to new location.",
 			"subBenefits": "Air Shipment",
 			"airesManagedService": "Yes",
-			"noOfMilestones": 5
+			"noOfMilestones": 5,
+			"policyCreationGroup": "NA"
 		},
 		{
 			"benefitType": "Auto Shipment",
@@ -155,7 +172,8 @@
 			"benefitDesc": "The transportation of personal automobile (car, truck, or SUV) from home location to new location.",
 			"subBenefits": "Auto Shipment",
 			"airesManagedService": "Yes",
-			"noOfMilestones": 5
+			"noOfMilestones": 5,
+			"policyCreationGroup": "NA"
 		},
 		{
 			"benefitType": "Sea/Surface Shipment",
@@ -164,7 +182,8 @@
 			"benefitDesc": "TThe professional packing, sea shipping, delivery, uncrating, unpacking, in-transit storage, if necessary, applicable moving insurance and import duties for the shipment of personal effects and furniture to new location.",
 			"subBenefits": "Sea/Surface Shipment",
 			"airesManagedService": "Yes",
-			"noOfMilestones": 5
+			"noOfMilestones": 5,
+			"policyCreationGroup": "NA"
 		},
 		{
 			"benefitType": "Inland Shipment",
@@ -173,7 +192,8 @@
 			"benefitDesc": "Shipment of households goods across land from home to host country.",
 			"subBenefits": "Inland Shipment",
 			"airesManagedService": "Yes",
-			"noOfMilestones": 5
+			"noOfMilestones": 5,
+			"policyCreationGroup": "NA"
 		},
 		{
 			"benefitType": "Pet Shipment",
@@ -182,7 +202,8 @@
 			"benefitDesc": "The transportation of an employee's pet from the home location to the new location. Services are typically coordinated through a pet transportation company or the employee may be required to coordinate the transport themselves and receive reimbursement or an allowance intended to be applied towards the cost.",
 			"subBenefits": "Pet Shipment",
 			"airesManagedService": "Yes",
-			"noOfMilestones": 5
+			"noOfMilestones": 5,
+			"policyCreationGroup": "NA"
 		},
 		{
 			"benefitType": "Permanent Storage",
@@ -191,7 +212,8 @@
 			"benefitDesc": "The long term storage of employee¿s personal goods while on assignment if they had disposed of their home country housing, their home property is being leased or they have personal items which they are eligible to store.",
 			"subBenefits": "Permanent Storage",
 			"airesManagedService": "Yes",
-			"noOfMilestones": 5
+			"noOfMilestones": 5,
+			"policyCreationGroup": "NA"
 		}
 	],
 	"flexBenefits": [

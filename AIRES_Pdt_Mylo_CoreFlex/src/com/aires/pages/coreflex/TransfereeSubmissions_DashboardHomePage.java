@@ -3,6 +3,7 @@ package com.aires.pages.coreflex;
 import java.text.MessageFormat;
 import java.util.List;
 
+import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
@@ -88,6 +89,12 @@ public class TransfereeSubmissions_DashboardHomePage extends Base {
 
 	@FindBy(how = How.XPATH, using = "//a[@class='page-link'][contains(text(),'Next')]")
 	private WebElement _linkNextPagination;
+
+	@FindBy(how = How.XPATH, using = "//span[@class='Total-Points']/ancestor::div[contains(@class,'d-flex')]")
+	private List<WebElement> _clientSubmissionIconParentElement;
+
+	private By clientSubmissionIconChildElement = By
+			.xpath(".//div/img[contains(@src,'Company_Selected_Benefit_Icon.png')]");
 
 	/**********************************************************************/
 
@@ -190,6 +197,76 @@ public class TransfereeSubmissions_DashboardHomePage extends Base {
 		} catch (Exception e) {
 			Reporter.addStepLog(MessageFormat.format(
 					COREFLEXConstants.EXCEPTION_OCCURED_WHILE_VALIDATING_TRANSFEREE_SUBMISSION_DETAILS_ON_DASHBOARD_HOME_PAGE,
+					CoreConstants.FAIL, e.getMessage()));
+		}
+		return false;
+	}
+
+	public boolean verifyClientBundleSubmissionDetails() {
+		int indexTransferee = 0;
+		try {
+			indexTransferee = BusinessFunctions.returnindexItemFromListUsingText(driver, _transfereeNameList, true,
+					CoreFunctions.getPropertyFromConfig("Transferee_firstName") + " "
+							+ CoreFunctions.getPropertyFromConfig("Transferee_lastName"));
+			while (indexTransferee == -1) {
+				CoreFunctions.clickElement(driver, _linkNextPagination);
+				CoreFunctions.explicitWaitTillElementListVisibility(driver, _transfereeNameList);
+				indexTransferee = BusinessFunctions.returnindexItemFromListUsingText(driver, _transfereeNameList, true,
+						CoreFunctions.getPropertyFromConfig("Transferee_firstName") + " "
+								+ CoreFunctions.getPropertyFromConfig("Transferee_lastName"));
+				if (indexTransferee != -1)
+					break;
+			}
+			if (verifyClientBundleDetailsOnDashboard(indexTransferee)) {
+				Reporter.addStepLog(MessageFormat.format(
+						COREFLEXConstants.SUCCESSFULLY_VALIDATED_CLIENT_SUBMISSION_DETAILS_ON_DASHBOARD_HOME_PAGE,
+						CoreConstants.PASS));
+				return true;
+			}
+		} catch (Exception e) {
+			Reporter.addStepLog(MessageFormat.format(
+					COREFLEXConstants.EXCEPTION_OCCURED_WHILE_VALIDATING_CLIENT_SUBMISSION_DETAILS_ON_DASHBOARD_HOME_PAGE,
+					CoreConstants.FAIL, e.getMessage()));
+		}
+		return false;
+	}
+
+	private boolean verifyClientBundleDetailsOnDashboard(int indexTransferee) {
+		boolean isClientSubmissionIconPresent = false;
+		try {
+			CoreFunctions.explicitWaitTillElementListVisibility(driver, _transfereeNameList);
+			CoreFunctions.verifyText(driver, _transfereeNameList.get(indexTransferee),
+					CoreFunctions.getPropertyFromConfig("Transferee_firstName") + " "
+							+ CoreFunctions.getPropertyFromConfig("Transferee_lastName"),
+					COREFLEXConstants.TRANSFEREE_NAME);
+			String[] fileNumber = _transfereeFileNumberList.get(indexTransferee).getText().split("#");
+			CoreFunctions.verifyText(fileNumber[1].trim(), CoreFunctions.getPropertyFromConfig("Assignment_FileID"),
+					COREFLEXConstants.TRANSFEREE_FILE_ID);
+			CoreFunctions.highlightObject(driver, _transfereeFileNumberList.get(indexTransferee));
+			CoreFunctions.verifyText(driver, _corporationNameList.get(indexTransferee),
+					CoreFunctions.getPropertyFromConfig("Assignment_ClientName"), COREFLEXConstants.CORPORATION_NAME);
+			CoreFunctions.verifyText(driver, _allowanceTypeList.get(indexTransferee), COREFLEXConstants.POINTS,
+					COREFLEXConstants.ALLOWANCE);
+			CoreFunctions.verifyValue(driver, _pointsSpentList.get(indexTransferee),
+					Double.parseDouble(CoreFunctions.getPropertyFromConfig("CF_Client_TotalSelectedPoints")),
+					COREFLEXConstants.POINTS_SPENT);
+			CoreFunctions.verifyValue(
+					Double.parseDouble(_totalPointsList.get(indexTransferee).getText().replace("/", "").trim()),
+					Double.parseDouble(CoreFunctions.getPropertyFromConfig("CF_Transferee_TotalAvailablePoints")),
+					COREFLEXConstants.TOTAL_POINTS);
+			CoreFunctions.highlightObject(driver, _totalPointsList.get(indexTransferee));
+			isClientSubmissionIconPresent = CoreFunctions.verifyElementPresentOnPage(
+					CoreFunctions.findSubElement(_clientSubmissionIconParentElement.get(indexTransferee),
+							clientSubmissionIconChildElement),
+					COREFLEXConstants.CLIENT_SUBMISSION_ICON);
+			CoreFunctions.highlightObject(driver, CoreFunctions.findSubElement(
+					_clientSubmissionIconParentElement.get(indexTransferee), clientSubmissionIconChildElement));
+			CoreFunctions.verifyText(driver, _submittedDateList.get(indexTransferee),
+					CoreFunctions.getCurrentDateAsGivenFormat("dd-MMM-yyyy"), COREFLEXConstants.SUBMITTED_DATE);
+			return isClientSubmissionIconPresent;
+		} catch (Exception e) {
+			Reporter.addStepLog(MessageFormat.format(
+					COREFLEXConstants.EXCEPTION_OCCURED_WHILE_VALIDATING_CLIENT_SUBMISSION_DETAILS_ON_DASHBOARD_HOME_PAGE,
 					CoreConstants.FAIL, e.getMessage()));
 		}
 		return false;

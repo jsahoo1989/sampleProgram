@@ -55,7 +55,7 @@ public class IRIS_AssignmentOverviewPage extends BasePage {
 	}
 
 	private static String _newAssignmentId = null;
-	private Window file12CWindow = IRIS_PageMaster.getWindowObject("File - 12C");
+	private Window file12CWindow = IRIS_PageMaster.getWindowObject("File");
 	private Editor _fileIDEditor1 = IRIS_PageMaster.getEditorObject(file12CWindow, "File ID*");
 	private static String _savedAssignmentTitle = null;
 	private Window _assignmentWindow = null;
@@ -110,7 +110,7 @@ public class IRIS_AssignmentOverviewPage extends BasePage {
 			CoreFunctions.waitHandler(2);
 			Helpers.setEditorText(_fileIDEditor1, fileNumber, _fileIDEditor1.getAttachedText());
 			Window file12CWindow = Desktop.describe(Window.class,
-					new WindowDescription.Builder().title("File - 12C").build());
+					new WindowDescription.Builder().title("File").build());
 			Button executeButton = file12CWindow.describe(Button.class,
 					new ButtonDescription.Builder().label("Execute").build());
 			executeButton.click();
@@ -415,7 +415,7 @@ public class IRIS_AssignmentOverviewPage extends BasePage {
 				Helpers.clickButton(saveButtonAfterFileCreation, saveButtonAfterFileCreation.getAttachedText());
 //				verifySaveSucceedDialog();
 			}
-			_assignmentWindow = IRIS_PageMaster.getWindowObject("File - 12C "
+			_assignmentWindow = IRIS_PageMaster.getWindowObject("File "
 					+ CoreFunctions.getPropertyFromConfig("Assignment_FileID") + " - Aires LLC Agreement in place.");
 			Dialog saveSucceededDialog = IRIS_PageMaster.getDialogObject(_assignmentWindow, "Save succeeded");
 			saveSucceededDialog.waitUntilVisible();
@@ -1282,7 +1282,7 @@ public class IRIS_AssignmentOverviewPage extends BasePage {
 	 */
 	public void saveAssignmentAfterFileCreation() throws Exception {
 		try {
-			_assignmentWindow = IRIS_PageMaster.getWindowObject("File - 12C "
+			_assignmentWindow = IRIS_PageMaster.getWindowObject("File "
 					+ CoreFunctions.getPropertyFromConfig("Assignment_FileID") + "  for "
 					+ CoreFunctions.getPropertyFromConfig("Transferee_firstName") + " "
 					+ CoreFunctions.getPropertyFromConfig("Transferee_lastName") + " of "

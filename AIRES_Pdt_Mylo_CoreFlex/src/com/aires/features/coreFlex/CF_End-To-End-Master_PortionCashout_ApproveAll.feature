@@ -85,6 +85,7 @@ Feature: Validate End-to-End Business workflow of BluePrint CF Transferee-Portio
       | Take a look at some suggested options! |
     And he has verified 'Custom Bundle' Benefit details displayed under 'Recommended Bundle' section on "Suggested Bundles" page
     And he has navigated back to "FleX Planning Tool" page after clicking on 'Back to benefits list' button
+     And he has verified 'Portion Cashout' details "FleX Planning Tool" page
     And he has navigated to "My Benefits Bundle" page after selecting required benefits and PortionCashout on "FleX Planning Tool" page
     And he has clicked on "Review and Submit" button after validating all the benefit and Cashout details listed under 'Selected Benefits' section on "My Benefits Bundle" page
     And he has clicked on "Yes - submit my bundle" button after entering Transferee name on "Submit Bundle Confirmation" dialog

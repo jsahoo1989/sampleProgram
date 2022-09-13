@@ -1483,7 +1483,7 @@ public class MX_Client_AuthorizationHomePage extends Base {
 			String actualResultBenefitTotalPoints = EmailUtil.searchEmailAndReturnResult(host, userName, pwd,
 					expFromUserName, expEmailSubject,
 					MobilityXConstants.NEW_INITIATION_SUBMISSION_BENEFIT_TOTAL_POINTS_AND_SUBMITTED_POINTS);
-			actualResultBenefitTotalPoints = actualResultBenefitTotalPoints.trim();
+			actualResultBenefitTotalPoints = actualResultBenefitTotalPoints.trim().replace("<span style=\"\">", "").replace("</span>", "");
 			String actualResultBenefitPoints[] = actualResultBenefitTotalPoints.split("/");
 			double expectedTotalBenefitPoints = Double.parseDouble(CoreFunctions
 					.getPropertyFromConfig("CF_Transferee_TotalAvailablePoints"));

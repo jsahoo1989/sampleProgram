@@ -107,6 +107,8 @@ public class TransfereeSubmissions_DetailsPage extends Base {
 	By allowanceAmountMessage = By
 			.xpath(".//following-sibling::span[contains(@class,'ng-star-inserted')][contains(@class,'BlackText')]");
 
+	By clientSubmissionIcon = By.xpath("./span/img[contains(@src,'Company_Selected_Benefit_Icon')]");
+
 	// Expense Reimbursement Tracing Prompt List
 	@FindBy(how = How.XPATH, using = "//div[contains(@class,'tblBenefits')]//span[contains(@class,'GrayText')][not(contains(text(),'will be sent to the address provided'))]")
 	private List<WebElement> _reimbursementAllowanceTracingList;
@@ -124,7 +126,7 @@ public class TransfereeSubmissions_DetailsPage extends Base {
 	private List<WebElement> _requestDialogBenefitNameList;
 
 	// Request Dialog Allowance Amount List
-	@FindBy(how = How.CSS, using = "td > div[class*=benefit-desc]")
+	@FindBy(how = How.XPATH, using = "//td/div[contains(@class,'benefit-desc')] | //td/div/span[contains(text(),'The transferee will receive')]")
 	private List<WebElement> _requestDialogAllowanceAmountList;
 
 	/// Request Dialog Points List
@@ -371,11 +373,12 @@ public class TransfereeSubmissions_DetailsPage extends Base {
 		try {
 			for (Benefit benefit : getBenefits(CoreFunctions.getPropertyFromConfig("CoreFlex_Policy_BenefitType"),
 					CoreFunctions.getPropertyFromConfig("CoreFlex_Policy_RequiredFor"), "0")) {
-				isSubmittedBenefitStatusMatched = verifyBenefitDetails(benefit);
+				isSubmittedBenefitStatusMatched = verifyBenefitDetails(benefit, MobilityXConstants.TRANSFEREE);
 				if (!isSubmittedBenefitStatusMatched)
 					break;
 			}
-			isSubmittedDetailsMatched = isSubmittedBenefitStatusMatched && verifySubmittedCashoutDetails();
+			isSubmittedDetailsMatched = isSubmittedBenefitStatusMatched
+					&& verifySubmittedCashoutDetails(MobilityXConstants.TRANSFEREE);
 		} catch (Exception e) {
 			Reporter.addStepLog(MessageFormat.format(
 					COREFLEXConstants.EXCEPTION_OCCURED_WHILE_VALIDATING_SUBMITTED_BENEFITS_DETAILS_ON_SUBMISSION_DETAILS_PAGE,
@@ -396,13 +399,13 @@ public class TransfereeSubmissions_DetailsPage extends Base {
 			return false;
 	}
 
-	private boolean verifySubmittedCashoutDetails() {
+	private boolean verifySubmittedCashoutDetails(String submittedBy) {
 		boolean isSubmittedPortionCashoutDetailsVerified = false;
 		try {
 			if ((CoreFunctions.getPropertyFromConfig("PolicyCashoutType").equals(MobilityXConstants.PORTION_CASHOUT))
 					|| (CoreFunctions.getPropertyFromConfig("PolicyCashoutType")
 							.equals(MobilityXConstants.AFTER_RELOCATION_ONLY))) {
-				isSubmittedPortionCashoutDetailsVerified = iterateSubmittedBenefitListAndVerifyCashout();
+				isSubmittedPortionCashoutDetailsVerified = iterateSubmittedBenefitListAndVerifyCashout(submittedBy);
 			} else if (CoreFunctions.getPropertyFromConfig("PolicyCashoutType")
 					.equals(MobilityXConstants.CASHOUT_NOT_AUTHORIZED)) {
 				return true;
@@ -422,7 +425,8 @@ public class TransfereeSubmissions_DetailsPage extends Base {
 		return isSubmittedPortionCashoutDetailsVerified;
 	}
 
-	private boolean iterateSubmittedBenefitListAndVerifyCashout() {
+	private boolean iterateSubmittedBenefitListAndVerifyCashout(String submittedBy) {
+		boolean isClientSubmissionIconVerified = false;
 		for (WebElement element : _submittedBenefitNameList) {
 			if (element.getText().equals(policySetupPageData.flexPolicySetupPage.customCashoutBenefitName)) {
 				int indexCashout = BusinessFunctions.returnindexItemFromListUsingText(driver, _submittedBenefitNameList,
@@ -440,10 +444,16 @@ public class TransfereeSubmissions_DetailsPage extends Base {
 				CoreFunctions.verifyText(driver, _submittedBenefitRequestedSentDateList.get(indexCashout),
 						CoreFunctions.getCurrentDateAsGivenFormat("dd-MMM-yyyy"), COREFLEXConstants.SUBMITTED_DATE);
 				verifyCashoutStatus(indexCashout);
-				if (verifyExpenseAllowanceTracing("No", COREFLEXConstants.ALLOWANCE_CASHOUT, indexCashout)) {
-					return true;
+				if (submittedBy.equals(MobilityXConstants.CLIENT)) {
+					isClientSubmissionIconVerified = (CoreFunctions.verifyElementPresentOnPage(CoreFunctions
+							.findSubElement(_submittedBenefitNameList.get(indexCashout), clientSubmissionIcon),
+							COREFLEXConstants.CLIENT_SUBMISSION_ICON));
+					CoreFunctions.highlightObject(driver, CoreFunctions
+							.findSubElement(_submittedBenefitNameList.get(indexCashout), clientSubmissionIcon));
+					return isClientSubmissionIconVerified
+							&& verifyExpenseAllowanceTracing("No", COREFLEXConstants.ALLOWANCE_CASHOUT, indexCashout);
 				} else {
-					return false;
+					return verifyExpenseAllowanceTracing("No", COREFLEXConstants.ALLOWANCE_CASHOUT, indexCashout);
 				}
 			}
 		}
@@ -475,7 +485,8 @@ public class TransfereeSubmissions_DetailsPage extends Base {
 				.replace("reim_type", reimAccountType[0].trim());
 	}
 
-	private boolean verifyBenefitDetails(Benefit benefit) {
+	private boolean verifyBenefitDetails(Benefit benefit, String submittedBy) {
+		boolean isClientSubmissionIconVerified = false;
 		try {
 			if (benefit.getSelectBenefitOnFPTPage()) {
 				int index = BusinessFunctions.returnindexItemFromListUsingText(driver, _submittedBenefitNameList,
@@ -498,10 +509,18 @@ public class TransfereeSubmissions_DetailsPage extends Base {
 						COREFLEXConstants.SUBMITTED_BENEFIT_SELECTED_QUANTITY);
 				CoreFunctions.verifyText(driver, _submittedBenefitRequestedSentDateList.get(index),
 						CoreFunctions.getCurrentDateAsGivenFormat("dd-MMM-yyyy"), COREFLEXConstants.SUBMITTED_DATE);
-				if (verifyExpenseAllowanceTracing(benefit.getAiresManagedService(), benefit.getPayments(), index)) {
-					return true;
+
+				if (submittedBy.equals(MobilityXConstants.CLIENT)) {
+					isClientSubmissionIconVerified = (CoreFunctions.verifyElementPresentOnPage(
+							CoreFunctions.findSubElement(_submittedBenefitNameList.get(index), clientSubmissionIcon),
+							COREFLEXConstants.CLIENT_SUBMISSION_ICON));
+					CoreFunctions.highlightObject(driver,
+							CoreFunctions.findSubElement(_submittedBenefitNameList.get(index), clientSubmissionIcon));
+					return isClientSubmissionIconVerified && verifyExpenseAllowanceTracing(
+							benefit.getAiresManagedService(), benefit.getPayments(), index);
 				} else {
-					return false;
+					return verifyExpenseAllowanceTracing(benefit.getAiresManagedService(), benefit.getPayments(),
+							index);
 				}
 			}
 
@@ -1010,22 +1029,76 @@ public class TransfereeSubmissions_DetailsPage extends Base {
 			CoreFunctions.highlightObject(driver, _textPointsSpent);
 			CoreFunctions.verifyValue(driver, _textPointsBalance, availablePointsAfterSubmission,
 					COREFLEXConstants.POINTS_BALANCE);
+			CoreFunctions.writeToPropertiesFile("CF_Transferee_AvailablePoints",
+					String.valueOf(availablePointsAfterSubmission));
 			CoreFunctions.verifyValue(
 					Double.parseDouble(CoreFunctions.getElementText(driver, _textTotalPoints).replace("/", "").trim()),
 					Double.parseDouble(CoreFunctions.getPropertyFromConfig("CF_Transferee_TotalAvailablePoints")),
 					COREFLEXConstants.TOTAL_POINTS);
 			CoreFunctions.highlightObject(driver, _textTotalPoints);
 			Reporter.addStepLog(MessageFormat.format(
-					COREFLEXConstants.SUCCESSFULLY_VALIDATED_TRANSFEREE_SUBMISSION_DETAILS_ON_DASHBOARD_HOME_PAGE,
+					COREFLEXConstants.SUCCESSFULLY_VALIDATED_TRANSFEREE_DETAILS_ON_TRANSFEREE_SUBMISSION_DETAILS_PAGE,
 					CoreConstants.PASS));
-			CoreFunctions.writeToPropertiesFile("CF_Transferee_AvailablePoints",
-					String.valueOf(availablePointsAfterSubmission));
+			CoreFunctions.clickElement(driver, _textPointsBalance);
+			DecimalFormat format = new DecimalFormat();
+			format.setDecimalSeparatorAlwaysShown(false);
+			CoreFunctions
+					.verifyText(driver, _tooltipSpentPoints,
+							COREFLEXConstants.EXPECTED_POINT_SPENT_TOOLTIP_TEXT
+									.replace("used_points",
+											format.format(Double.parseDouble(CoreFunctions
+													.getPropertyFromConfig("CF_Client_TotalSelectedPoints"))))
+									.replace("total_points",
+											CoreFunctions.getPropertyFromConfig("CF_Transferee_TotalAvailablePoints")),
+							COREFLEXConstants.POINTS_BALANCE_TOOLTIP_TEXT);
+			CoreFunctions.verifyText(driver, _tooltipBalancePoints,
+					COREFLEXConstants.EXPECTED_POINT_BALANCE_TOOLTIP_TEXT.replace("remaining_points",
+							format.format(Double.parseDouble(CoreFunctions
+									.getPropertyFromConfig("CF_Transferee_AvailablePoints")))),
+					COREFLEXConstants.POINTS_BALANCE_TOOLTIP_TEXT);
+			Reporter.addStepLog(MessageFormat.format(
+					COREFLEXConstants.SUCCESSFULLY_VALIDATED_SPENT_REMAINING_AND_TOTAL_POINTS_DETAILS_ON_TRANSFEREE_SUBMISSION_DETAILS_PAGE,
+					CoreConstants.PASS));
 			return true;
 		} catch (Exception e) {
 			Reporter.addStepLog(MessageFormat.format(
-					COREFLEXConstants.EXCEPTION_OCCURED_WHILE_VALIDATING_TRANSFEREE_SUBMISSION_DETAILS_ON_DASHBOARD_HOME_PAGE,
+					COREFLEXConstants.EXCEPTION_OCCURED_WHILE_VALIDATING_TRANSFEREE_SUBMISSION_POINTS_DETAILS_ON_TRANSFEREE_SUBMISSION_DETAILS_PAGE,
 					CoreConstants.FAIL, e.getMessage()));
 		}
 		return false;
 	}
+
+	public boolean verifySubmittedBenefitsCashoutDetailsByClient() {
+		boolean isSubmittedDetailsMatched = false;
+		boolean isSubmittedBenefitStatusMatched = false;
+		benefitCount = 0;
+		try {
+			for (Benefit benefit : getBenefits(CoreFunctions.getPropertyFromConfig("CoreFlex_Policy_BenefitType"),
+					CoreFunctions.getPropertyFromConfig("CoreFlex_Policy_RequiredFor"), "0")) {
+				isSubmittedBenefitStatusMatched = verifyBenefitDetails(benefit, MobilityXConstants.CLIENT);
+				if (!isSubmittedBenefitStatusMatched)
+					break;
+			}
+			isSubmittedDetailsMatched = isSubmittedBenefitStatusMatched
+					&& verifySubmittedCashoutDetails(MobilityXConstants.CLIENT);
+		} catch (Exception e) {
+			Reporter.addStepLog(MessageFormat.format(
+					COREFLEXConstants.EXCEPTION_OCCURED_WHILE_VALIDATING_SUBMITTED_BENEFITS_DETAILS_ON_SUBMISSION_DETAILS_PAGE,
+					CoreConstants.FAIL, e.getMessage()));
+		}
+		if (isSubmittedDetailsMatched && (_submittedBenefitNameList.size() == benefitCount) && isDeleteRequestDenied) {
+			Reporter.addStepLog(MessageFormat.format(
+					COREFLEXConstants.SUCCESSFULLY_VALIDATED_SUBMITTED_BENEFITS_DETAILS_ON_SUBMISSION_DETAILS_PAGE_POST_DENYING_DELETE_BENEFIT_REQUEST,
+					CoreConstants.PASS));
+			return true;
+		} else if (isSubmittedDetailsMatched && (_submittedBenefitNameList.size() == benefitCount)
+				&& !(isDeleteRequestDenied)) {
+			Reporter.addStepLog(MessageFormat.format(
+					COREFLEXConstants.SUCCESSFULLY_VALIDATED_SUBMITTED_BENEFITS_DETAILS_ON_SUBMISSION_DETAILS_PAGE,
+					CoreConstants.PASS));
+			return true;
+		} else
+			return false;
+	}
+
 }

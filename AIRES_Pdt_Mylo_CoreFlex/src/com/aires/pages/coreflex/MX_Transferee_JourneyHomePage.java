@@ -541,10 +541,10 @@ public class MX_Transferee_JourneyHomePage extends Base {
 		Log.info((CoreFunctions.getPropertyFromConfig("Transferee_firstName") + " "
 				+ CoreFunctions.getPropertyFromConfig("Transferee_lastName")) + ":" + (actualTransfereeName) + "");
 
-		boolean isAssignmentClientDetailsMatched = (CoreFunctions.getPropertyFromConfig("Assignment_ClientName").equals(
+		boolean isAssignmentClientDetailsMatched = (CoreFunctions.getPropertyFromConfig("Assignment_ClientName").equalsIgnoreCase(
 				actualClientName) & CoreFunctions.getPropertyFromConfig("Assignment_FileID").equals(actualFileId)
 				& (CoreFunctions.getPropertyFromConfig("Transferee_firstName") + " "
-						+ CoreFunctions.getPropertyFromConfig("Transferee_lastName")).equals(actualTransfereeName));
+						+ CoreFunctions.getPropertyFromConfig("Transferee_lastName")).equalsIgnoreCase(actualTransfereeName));
 
 		if (isAssignmentClientDetailsMatched) {
 			Reporter.addStepLog(MessageFormat.format(

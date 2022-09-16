@@ -179,7 +179,7 @@ public class CF_Transferee_StaticFixedPoints_CashNotAuth_Both_EndToEndFlow_Steps
 		Assert.assertTrue(transfereeSubmissionsDetailsPage.verifySubmittedBenefitsDetails(), MessageFormat.format(
 				COREFLEXConstants.FAILED_TO_VERIFY_DENY_DELETE_REQUEST_UPDATED_TO_SUBMITTED_IN_TRANSFEREE_SUBMISSION_DETAILS_PAGE,
 				CoreConstants.FAIL));
-	}
+	}	
 
 	@Then("^benefit details should be updated in 'MXTransferee' application based on \"([^\"]*)\" 'Delete Request' on Transferee Submission$")
 	public void benefit_details_should_be_updated_in_MXTransferee_application_based_on_Delete_Request_on_Transferee_Submission(

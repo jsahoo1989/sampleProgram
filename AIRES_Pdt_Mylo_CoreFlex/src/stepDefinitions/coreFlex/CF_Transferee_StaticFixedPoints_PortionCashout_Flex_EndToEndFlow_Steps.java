@@ -54,8 +54,8 @@ public class CF_Transferee_StaticFixedPoints_PortionCashout_Flex_EndToEndFlow_St
 	private PDT_LoginDetails _loginDetailsApplication = FileReaderManager.getInstance().getJsonReader()
 			.getLoginByApplication(CoreFunctions.getPropertyFromConfig("application").toLowerCase());
 
-	@Given("^he has verified 'Portion Cashout' details \"([^\"]*)\" page$")
-	public void he_has_verified_Portion_Cashout_details_page(String navigatedPage, String sourcePage) throws Throwable {
+	@Given("^he has verified 'Portion Cashout' details on \"([^\"]*)\" page$")
+	public void he_has_verified_Portion_Cashout_details_on_page(String sourcePage) throws Throwable {
 		Assert.assertTrue(mxTransfereeFlexPlanningToolPage.verifyCashoutDetailsOnFPT(), MessageFormat.format(
 				MobilityXConstants.PORTION_CASHOUT_DETAILS_NOT_MATCHED_ON_FLEX_PLANNING_TOOL_PAGE, CoreConstants.FAIL));
 	}
@@ -110,8 +110,8 @@ public class CF_Transferee_StaticFixedPoints_PortionCashout_Flex_EndToEndFlow_St
 						CoreConstants.FAIL));
 	}
 
-	@Given("^he has navigated to \"([^\"]*)\" page after selecting required benefits and Cashout on \"([^\"]*)\" page$")
-	public void he_has_navigated_to_page_after_selecting_required_benefits_and_Cashout_on_page(
+	@Given("^he has navigated to \"([^\"]*)\" page after selecting required Benefits and Cashout on \"([^\"]*)\" page$")
+	public void he_has_navigated_to_page_after_selecting_required_Benefits_and_Cashout_on_page(
 			String navigatedPage, String sourcePage) throws Throwable {
 		Assert.assertTrue(mxTransfereeFlexPlanningToolPage.selectBenefitsAndProceedToReviewAndSubmit(), MessageFormat
 				.format(MobilityXConstants.FAILED_TO_SELECT_BENEFITS_AND_PROCEED_TO_REVIEW_PAGE, CoreConstants.FAIL));

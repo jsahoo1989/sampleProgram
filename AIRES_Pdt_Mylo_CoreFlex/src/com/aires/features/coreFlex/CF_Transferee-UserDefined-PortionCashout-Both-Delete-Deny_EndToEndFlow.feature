@@ -29,9 +29,9 @@ Feature: Validate the CoreFlex End-To-End Business Test Flow(BluePrint, MXTransf
     And he has verified 'New Initiation Submitted' email having Transferee details along with assigned CoreFlex Total Points
     And he has clicked on "View all initiations" link on 'Authorization Home Page' to navigate to 'View all initiation' page
     And he has clicked 'Transferee Name' from 'All Initiations' List on 'View all initiation' page
-    When he clicks on 'Resubmit to Aires' after decreasing 'Benfit Total Points' value on 'Auth Form Template' page
-    Then following confirmation dialogs should be displayed after decreasing 'Benfit Total Points' value in sequence on acceptance of current dialog
-      | You are decreasing the Total Points to * point(s). The transferee will see the decreased points in MobilityX. Do you want to continue? |
+    When he clicks on 'Resubmit to Aires' after increasing 'Benfit Total Points' value on 'Auth Form Template' page
+    Then following confirmation dialogs should be displayed after increasing 'Benfit Total Points' value in sequence on acceptance of current dialog
+      | You are increasing the Total Points to * point(s). The transferee will see the increased points in MobilityX. Do you want to continue? |
       | It looks like there arent any approvers set up for this initiation. Do you want to submit it without the required approvals?           |
       | Where should your changes be reflected? Note: revisions may incur additional costs to your organization.                               |
     And 'Auth Submit Success' growl message should be displayed on the navigated 'View all initiation' page on confirmation of the last dialog
@@ -49,8 +49,8 @@ Feature: Validate the CoreFlex End-To-End Business Test Flow(BluePrint, MXTransf
       | Take a look at some suggested options! |
     And he has verified 'Custom Bundle' Benefit details displayed under 'Recommended Bundle' section on "Suggested Bundles" page
     And he has navigated back to "FleX Planning Tool" page after clicking on 'Back to benefits list' button
-    And he has verified 'Portion Cashout' details "FleX Planning Tool" page
-    And he has navigated to "My Benefits Bundle" page after selecting required benefits and PortionCashout on "FleX Planning Tool" page
+    And he has verified 'Portion Cashout' details on "FleX Planning Tool" page
+    And he has navigated to "My Benefits Bundle" page after selecting required Benefits and Cashout on "FleX Planning Tool" page
     And he has clicked on "Review and Submit" button after validating all the benefit and Cashout details listed under 'Selected Benefits' section on "My Benefits Bundle" page
     And he has clicked on "Yes - submit my bundle" button after entering Transferee name on "Submit Bundle Confirmation" dialog
     And he has clicked on "OK - Let Me See My Benefits!" button displayed on 'Success Flex' dialog

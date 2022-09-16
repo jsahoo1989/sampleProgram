@@ -49,6 +49,7 @@ public class IRIS_ActivityAndFinancePage extends BasePage {
 
 	String actDateVal = null;
 	private boolean _isExists = false;
+	private Window _assignmentWindow = null;
 
 	private Button _saveButton = IRIS_PageMaster.getDialogObject(_IRIS, "Partner Recommendation").describe(Button.class,
 			new ButtonDescription.Builder().label("Save").build());
@@ -999,7 +1000,7 @@ public class IRIS_ActivityAndFinancePage extends BasePage {
 
 	}
 
-	public void acceptSavedSuccessDialog() {
+	public void acceptSavedSuccessDialog() throws GeneralLeanFtException, Exception {
 		try {
 			_isExists = (IRIS_PageMaster.getDialogObject(_IRIS, "Saved").isVisible());
 			if (_isExists) {
@@ -1011,7 +1012,7 @@ public class IRIS_ActivityAndFinancePage extends BasePage {
 								.getLabel());
 			}
 		} catch (Exception e) {
+			
 		}
-
 	}
 }

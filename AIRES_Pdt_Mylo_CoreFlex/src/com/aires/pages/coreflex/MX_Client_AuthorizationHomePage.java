@@ -1411,9 +1411,6 @@ public class MX_Client_AuthorizationHomePage extends Base {
 	public boolean verifyInitiationBenefitsSubmissionEmail(MX_Client_Dashboard_BscData authorizationData) {
 		try {
 			boolean isBenefitPointsVerified = false, isFileIDVerified = false;
-			// Reading Transferee FileID and Benefits TotalPoints from email and writing to
-			// the Config
-			// Properties File
 			String host = "outlook.office365.com";
 			// Enter Your Email ID
 			String userName = "airesautomation@aires.com";
@@ -1441,12 +1438,12 @@ public class MX_Client_AuthorizationHomePage extends Base {
 					MobilityXConstants.NEW_INITIATION_SUBMISSION_BENEFIT_TOTAL_POINTS_AND_SUBMITTED_POINTS);
 			actualResultBenefitTotalPoints = actualResultBenefitTotalPoints.trim();
 			String actualResultBenefitPoints[] = actualResultBenefitTotalPoints.split("/");
-			double expectedTotalBenefitPoints = Double.parseDouble(CoreFunctions
-					.getPropertyFromConfig("CF_Transferee_TotalAvailablePoints"));
-			double expectedSubmittedBenefitPoints = Double.parseDouble(CoreFunctions
-					.getPropertyFromConfig("CF_Client_TotalSelectedPoints"));
-			if ((Double.parseDouble((actualResultBenefitPoints[1].trim()))==(expectedTotalBenefitPoints))
-					&& (Double.parseDouble(actualResultBenefitPoints[0].trim()))==(expectedSubmittedBenefitPoints)) {
+			double expectedTotalBenefitPoints = Double
+					.parseDouble(CoreFunctions.getPropertyFromConfig("CF_Transferee_TotalAvailablePoints"));
+			double expectedSubmittedBenefitPoints = Double
+					.parseDouble(CoreFunctions.getPropertyFromConfig("CF_Client_TotalSelectedPoints"));
+			if ((Double.parseDouble((actualResultBenefitPoints[1].trim())) == (expectedTotalBenefitPoints))
+					&& (Double.parseDouble(actualResultBenefitPoints[0].trim())) == (expectedSubmittedBenefitPoints)) {
 				isBenefitPointsVerified = true;
 				Log.info(CoreConstants.PASS
 						+ "Successfully verified Benefit Submitted & Total Points displayed in New Initiation Submitted Email.");
@@ -1461,12 +1458,10 @@ public class MX_Client_AuthorizationHomePage extends Base {
 		}
 		return false;
 	}
-	
+
 	public boolean verifyRevisedBenefitsSubmissionEmail(MX_Client_Dashboard_BscData authorizationData) {
 		try {
-			boolean isBenefitPointsVerified = false, isFileIDVerified = false;
-			// Reading Transferee FileID and Benefits TotalPoints from email and writing to
-			// the Config
+			boolean isBenefitPointsVerified = false;
 			// Properties File
 			String host = "outlook.office365.com";
 			// Enter Your Email ID
@@ -1483,14 +1478,15 @@ public class MX_Client_AuthorizationHomePage extends Base {
 			String actualResultBenefitTotalPoints = EmailUtil.searchEmailAndReturnResult(host, userName, pwd,
 					expFromUserName, expEmailSubject,
 					MobilityXConstants.NEW_INITIATION_SUBMISSION_BENEFIT_TOTAL_POINTS_AND_SUBMITTED_POINTS);
-			actualResultBenefitTotalPoints = actualResultBenefitTotalPoints.trim().replace("<span style=\"\">", "").replace("</span>", "");
+			actualResultBenefitTotalPoints = actualResultBenefitTotalPoints.trim()
+					.replace("<span style=\"color:Red\">", "").replace("<span style=\"\">", "").replace("</span>", "");
 			String actualResultBenefitPoints[] = actualResultBenefitTotalPoints.split("/");
-			double expectedTotalBenefitPoints = Double.parseDouble(CoreFunctions
-					.getPropertyFromConfig("CF_Transferee_TotalAvailablePoints"));
-			double expectedSubmittedBenefitPoints = Double.parseDouble(CoreFunctions
-					.getPropertyFromConfig("CF_Client_TotalSelectedPoints"));
-			if ((Double.parseDouble((actualResultBenefitPoints[1].trim()))==(expectedTotalBenefitPoints))
-					&& (Double.parseDouble(actualResultBenefitPoints[0].trim()))==(expectedSubmittedBenefitPoints)) {
+			double expectedTotalBenefitPoints = Double
+					.parseDouble(CoreFunctions.getPropertyFromConfig("CF_Transferee_TotalAvailablePoints"));
+			double expectedSubmittedBenefitPoints = Double
+					.parseDouble(CoreFunctions.getPropertyFromConfig("CF_Client_TotalSelectedPoints"));
+			if ((Double.parseDouble((actualResultBenefitPoints[1].trim())) == (expectedTotalBenefitPoints))
+					&& (Double.parseDouble(actualResultBenefitPoints[0].trim())) == (expectedSubmittedBenefitPoints)) {
 				isBenefitPointsVerified = true;
 				Log.info(CoreConstants.PASS
 						+ "Successfully verified Benefit Submitted & Total Points displayed in Revised mobility Initiation Email.");
@@ -1678,5 +1674,66 @@ public class MX_Client_AuthorizationHomePage extends Base {
 			Log.info(e.getMessage());
 		}
 		return iFlexBenefitsSectionVerified;
+	}
+
+	public boolean verifyCashoutSelectionOnAuthForm() {
+		boolean isSelectedPortionCashoutDetailsVerified = false;
+		for (WebElement element : _textSelectedFlexBenefitsNameList) {
+			if (element.getText().equals(policySetupPageData.flexPolicySetupPage.customCashoutBenefitName)) {
+				int indexCashout = BusinessFunctions.returnindexItemFromListUsingText(driver,
+						_textSelectedFlexBenefitsNameList,
+						policySetupPageData.flexPolicySetupPage.customCashoutBenefitName);
+				isSelectedPortionCashoutDetailsVerified = verifySelectedCashoutDetails(indexCashout,
+						policySetupPageData.flexPolicySetupPage.customCashoutBenefitName);
+				break;
+			}
+		}
+		if (isSelectedPortionCashoutDetailsVerified) {
+			Reporter.addStepLog(MessageFormat.format(
+					MobilityXConstants.SUCCESSFULLY_VERIFIED_SELECTED_PORTION_CASHOUT_DETAILS_UNDER_FLEX_BENEFIT_SECTION_ON_AUTHORIZATION_FORM_PAGE,
+					CoreConstants.PASS));
+		}
+		return isSelectedPortionCashoutDetailsVerified;
+	}
+
+	private boolean verifySelectedCashoutDetails(int indexCashout, String customCashoutBenefitName) {
+		try {
+			CoreFunctions.verifyText(
+					CoreFunctions.getItemsFromListByIndex(driver, _textSelectedFlexBenefitsNameList, indexCashout,
+							true),
+					policySetupPageData.flexPolicySetupPage.customCashoutBenefitName,
+					MobilityXConstants.CUSTOM_CASHOUT_NAME);
+			CoreFunctions.verifyValue(
+					(Double.parseDouble((CoreFunctions
+							.getItemsFromListByIndex(driver, _textSelectedFlexBenefitsPointsList, indexCashout, true)
+							.replace("pts", "").trim()))),
+					Double.parseDouble(CoreFunctions.getPropertyFromConfig("CF_Client_SelectedCashOutPoints")),
+					MobilityXConstants.CASHOUT_POINTS);
+			return true;
+		} catch (Exception e) {
+			Reporter.addStepLog(MessageFormat.format(
+					COREFLEXConstants.EXCEPTION_OCCURED_WHILE_VALIDATING_PORTION_CASHOUT_DETAILS_UNDER_FLEX_BENEFIT_SECTION_ON_AUTHORIZATION_FORM_PAGE,
+					CoreConstants.FAIL, e.getMessage()));
+		}
+		return false;
+	}
+
+	public void resetPropertiesValue() {
+		CoreFunctions.writeToPropertiesFile("CF_Client_AvailablePoints", "0");
+		CoreFunctions.writeToPropertiesFile("CF_Transferee_SelectedCashOutPoints", "0");
+		CoreFunctions.writeToPropertiesFile("CF_Transferee_TotalAvailablePoints", "0");
+		CoreFunctions.writeToPropertiesFile("CF_Client_SelectedCashOutPoints", "0");
+		CoreFunctions.writeToPropertiesFile("CF_Transferee_DeleteRequestTotalPoints", "0");
+		CoreFunctions.writeToPropertiesFile("CF_Transferee_AvailablePoints", "0");
+		CoreFunctions.writeToPropertiesFile("CF_Transferee_TotalSelectedPoints", "0");
+		CoreFunctions.writeToPropertiesFile("CF_Client_TotalSelectedPoints", "0");
+		CoreFunctions.writeToPropertiesFile("CF_Transferee_DeleteRequestDenied", "false");
+		CoreFunctions.writeToPropertiesFile("CF_Client_DeleteRequestDenied", "false");
+		CoreFunctions.writeToPropertiesFile("CF_Transferee_UndoDeleteBenefit", "false");
+		CoreFunctions.writeToPropertiesFile("CF_Transferee_DeleteRequestApproved", "false");
+		CoreFunctions.writeToPropertiesFile("CF_Client_DeleteRequestApproved", "false");
+		CoreFunctions.writeToPropertiesFile("CF_Client_UndoDeleteBenefit", "false");
+		CoreFunctions.writeToPropertiesFile("CF_Transferee_BenefitDeleteFlag", "false");
+		CoreFunctions.writeToPropertiesFile("CF_Transferee_BenefitDeleteFlag", "false");
 	}
 }

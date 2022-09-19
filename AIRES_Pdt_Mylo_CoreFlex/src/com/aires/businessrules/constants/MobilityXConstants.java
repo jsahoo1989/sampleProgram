@@ -604,4 +604,5 @@ public class MobilityXConstants {
 	public static final String FAILED_TO_VERIFY_SELECTED_CASHOUT_DETAILS_ON_BENEFITS_BUNDLE_PAGE = "{0}Failed to verify selected Cashout details on Benefits Bundle Page.";
 	public static final String EXCEPTION_OCCURED_WHILE_CLICKING_ON_NEXT_BUTTON_ON_BST_PAGE = "{0}Exception occured while clicking on Next button on Benefit Selection Tool Page. Exception : ''{1}''.";
 	public static final String EXCEPTION_OCCURED_WHILE_VALIDATING_POINTS_AND_CLICKING_ON_NEXT_BUTTON_ON_BST_PAGE = "{0}Exception occured while validating selected points and clicking on Next button on Benefit Selection Tool Page. Exception : ''{1}''.";
+	public static final String APPROVED = "Approved";
 }

@@ -158,6 +158,16 @@ public class CF_MX_Client_Steps {
 						MobilityXConstants.FAILED_TO_VERIFY_REQUIRED_FIELDS_VALIDATION_ON_AUTHORIZATION_FORM,
 						CoreConstants.FAIL));
 	}
+	
+	@Given("^he has verified 'Error Growl Message' and 'Required Field Validation' displayed after clicking on \"([^\"]*)\" button without selecting any FlexBenefits$")
+	public void he_has_verified_Error_Growl_Message_and_Required_Field_Validation_displayed_after_clicking_on_button_without_selecting_any_FlexBenefits(
+			String buttonName) throws Throwable {
+		mxClientAuthorizationHomePage.clickOnElementOnAuthorizationPage(buttonName);
+		Assert.assertTrue(mxClientAuthorizationHomePage.verifyRequiredFieldsValidation(buttonName),
+				MessageFormat.format(
+						MobilityXConstants.FAILED_TO_VERIFY_REQUIRED_FIELDS_VALIDATION_ON_AUTHORIZATION_FORM,
+						CoreConstants.FAIL));
+	}
 
 	@Given("^he has navigated to \"([^\"]*)\" page after entering valid 'Total Points' value and clicking on \"([^\"]*)\" button$")
 	public void he_has_navigated_to_page_after_entering_valid_Total_Points_value_and_clicking_on_button(String arg1,
@@ -614,7 +624,7 @@ public class CF_MX_Client_Steps {
 				+ CoreFunctions.calculatePageLoadTime(CoreConstants.TIME_BEFORE_ACTION, CoreConstants.TIME_AFTER_ACTION)
 				+ " Seconds </b>");
 	}
-	
+
 	@Given("^he has navigated to \"([^\"]*)\" page after selecting required Cashout on 'Benefit Selection Tool' page$")
 	public void he_has_navigated_to_page_after_selecting_required_Cashout_on_Benefit_Selection_Tool_page(
 			String navigatedPageName) throws Throwable {
@@ -750,12 +760,14 @@ public class CF_MX_Client_Steps {
 		mxClientBenefitsBundlePage.clickElementOfPage(saveAndExitButton);
 		CoreConstants.TIME_BEFORE_ACTION = new Date().getTime();
 	}
-	
+
 	@Given("^he has clicked on \"([^\"]*)\" button after validating selected Cashout details listed under 'Selected Benefits' section on \"([^\"]*)\" page$")
 	public void he_has_clicked_on_button_after_validating_selected_Cashout_details_listed_under_Selected_Benefits_section_on_page(
 			String saveAndExitButton, String pageName) throws Throwable {
-		Assert.assertTrue(mxClientBenefitsBundlePage.verifySelectedCashoutDetails(), MessageFormat.format(
-				MobilityXConstants.FAILED_TO_VERIFY_SELECTED_CASHOUT_DETAILS_ON_BENEFITS_BUNDLE_PAGE, CoreConstants.FAIL));
+		Assert.assertTrue(mxClientBenefitsBundlePage.verifySelectedCashoutDetails(),
+				MessageFormat.format(
+						MobilityXConstants.FAILED_TO_VERIFY_SELECTED_CASHOUT_DETAILS_ON_BENEFITS_BUNDLE_PAGE,
+						CoreConstants.FAIL));		
 		mxClientBenefitsBundlePage.clickElementOfPage(saveAndExitButton);
 		CoreConstants.TIME_BEFORE_ACTION = new Date().getTime();
 	}
@@ -835,7 +847,7 @@ public class CF_MX_Client_Steps {
 				MessageFormat.format(MobilityXConstants.FAILED_TO_VERIFY_FLEX_BENEFITS_SECTION_ON_AUTHORIZATION_FORM,
 						CoreConstants.FAIL));
 	}
-	
+
 	@Given("^he has verified entered 'Total Points' value and selected 'Core_Flex Benefit_Cashout' details displayed on the navigated 'Authorization Form' page post Auth form submission$")
 	public void he_has_verified_entered_Total_Points_value_and_selected_Core_Flex_Benefit_Cashout_details_displayed_on_the_navigated_Authorization_Form_page_post_Auth_form_submission()
 			throws Throwable {
@@ -980,12 +992,14 @@ public class CF_MX_Client_Steps {
 		Assert.assertTrue(mxClientBenefitsBundlePage.validateSubmittedBenefitDetails(), MessageFormat.format(
 				MobilityXConstants.SUBMITTED_BENEFIT_DETAILS_NOT_MATCHED_ON_BENEFITS_BUNDLE_PAGE, CoreConstants.FAIL));
 	}
-	
+
 	@Given("^he has verified submitted 'Core_Flex Benefit_Cashout' details displayed under 'Submitted Benefits' section of 'Benefits Bundle' page$")
 	public void he_has_verified_submitted_Core_Flex_Benefit_Cashout_details_displayed_under_Submitted_Benefits_section_of_Benefits_Bundle_page()
 			throws Throwable {
-		Assert.assertTrue(mxClientBenefitsBundlePage.validateSubmittedBenefitCashoutDetails(), MessageFormat.format(
-				MobilityXConstants.SUBMITTED_BENEFIT_CASHOUT_DETAILS_NOT_MATCHED_ON_BENEFITS_BUNDLE_PAGE, CoreConstants.FAIL));
+		Assert.assertTrue(mxClientBenefitsBundlePage.validateSubmittedBenefitCashoutDetails(),
+				MessageFormat.format(
+						MobilityXConstants.SUBMITTED_BENEFIT_CASHOUT_DETAILS_NOT_MATCHED_ON_BENEFITS_BUNDLE_PAGE,
+						CoreConstants.FAIL));
 	}
 
 	@Given("^he has 'Deleted' submitted Benefit on Benefits Bundle page and confirmed 'Remove Benefit Selection' dialog by entering username and clicking on \"([^\"]*)\"$")
@@ -998,10 +1012,10 @@ public class CF_MX_Client_Steps {
 	@Given("^he has 'Deleted' submitted Benefit_Cashout on Benefits Bundle page and confirmed 'Remove Benefit Selection' dialog by entering username and clicking on \"([^\"]*)\"$")
 	public void he_has_Deleted_submited_Benefit_Cashout_on_Benefits_Bundle_page_and_confirmed_Remove_Benefit_Selection_dialog_by_entering_username_and_clicking_on(
 			String buttonName) throws Throwable {
-		Assert.assertTrue(mxClientBenefitsBundlePage.deleteSubmittedBenefit(buttonName), MessageFormat.format(
-				MobilityXConstants.FAILED_TO_DELETE_SUBMITTED_BENEFIT_ON_BENEFITS_BUNDLE_PAGE, CoreConstants.FAIL));
 		Assert.assertTrue(mxClientBenefitsBundlePage.deleteSubmittedCashoutDetails(buttonName), MessageFormat.format(
 				MobilityXConstants.FAILED_TO_DELETE_SUBMITTED_CASHOUT_ON_BENEFITS_BUNDLE_PAGE, CoreConstants.FAIL));
+		Assert.assertTrue(mxClientBenefitsBundlePage.deleteSubmittedBenefit(buttonName), MessageFormat.format(
+				MobilityXConstants.FAILED_TO_DELETE_SUBMITTED_BENEFIT_ON_BENEFITS_BUNDLE_PAGE, CoreConstants.FAIL));		
 	}
 
 	@Given("^he has verified 'Status' of the deleted benefit displayed as \"([^\"]*)\" under 'Submitted Benefits' section of 'Benefits Bundle' page$")
@@ -1099,7 +1113,7 @@ public class CF_MX_Client_Steps {
 		transfereeSubmissionsDetailsPage.clickElementOfPage(checkAllButton);
 		transfereeSubmissionsDetailsPage.clickElementOfPage(resolveMultipleButton);
 	}
-	
+
 	@Given("^he has verified 'Auth Submit Success' growl message displayed on the navigated 'Advanced Authorization Search' page$")
 	public void he_has_verified_Auth_Submit_Success_growl_message_displayed_on_the_navigated_Advanced_Authorization_Search_page()
 			throws Throwable {
@@ -1125,7 +1139,7 @@ public class CF_MX_Client_Steps {
 				MessageFormat.format(MobilityXConstants.FAILED_TO_VERIFY_REVISED_MOBILITY_INITIATION_EMAIL,
 						CoreConstants.FAIL));
 	}
-	
+
 	@When("^he has verified 'Revised Mobility Initiation' email having submitted Benefit_Cashout and Points details$")
 	public void he_has_verified_Revised_Mobility_Initiation_email_having_submitted_Benefit_Cashout_and_Points_details()
 			throws Throwable {
@@ -1192,7 +1206,7 @@ public class CF_MX_Client_Steps {
 				MessageFormat.format(
 						MobilityXConstants.FAILED_TO_VALIDATE_AVAILABLE_POINTS_MESSAGE_ON_MXCLIENT_BENEFIT_SELECTION_TOOL_PAGE,
 						CoreConstants.FAIL));
-		Assert.assertTrue(mxClientBenefitSelectionToolPage.verifyCashoutSectionDetailsOnBST(true),
+		Assert.assertTrue(mxClientBenefitSelectionToolPage.verifyCashoutSectionDetailsOnBSTPostDeleteRequestOperation(actionPerformed),
 				MessageFormat.format(
 						MobilityXConstants.PORTION_CASHOUT_DETAILS_NOT_MATCHED_ON_BENEFIT_SELECTION_TOOL_PAGE,
 						CoreConstants.FAIL));
@@ -1243,7 +1257,7 @@ public class CF_MX_Client_Steps {
 						MobilityXConstants.AFTER_RELOCATION_CASHOUT_DETAILS_NOT_MATCHED_ON_BENEFIT_SELECTION_TOOL_PAGE,
 						CoreConstants.FAIL));
 	}
-	
+
 	@Given("^he has verified Cashout details displayed on 'Benefit Selection Tool' page before Auth Form Submission for AfterRelocation Cashout selection$")
 	public void he_has_verified_Cashout_details_displayed_on_Flex_Planning_Tool_page_before_Auth_Form_Submission_for_AfterRelocation_Cashout_selection()
 			throws Throwable {
@@ -1322,18 +1336,18 @@ public class CF_MX_Client_Steps {
 				MessageFormat.format(
 						MobilityXConstants.FAILED_TO_VERIFY_USER_NAVIGATION_TO_MXCLIENT_BENEFIT_SELECTION_TOOL_PAGE,
 						CoreConstants.FAIL));
-		Assert.assertTrue(mxClientBenefitSelectionToolPage.verifyCashoutNoteNotDisplayedOnBST(),
-				MessageFormat.format(
-						MobilityXConstants.AFTER_RELOCATION_CASHOUT_NOTE_DISPLAYED_ON_BENEFIT_SELECTION_TOOL_PAGE_AFTER_ACTUALIZING_TRACING,
-						CoreConstants.FAIL));
+		Assert.assertTrue(mxClientBenefitSelectionToolPage.verifyCashoutNoteNotDisplayedOnBST(), MessageFormat.format(
+				MobilityXConstants.AFTER_RELOCATION_CASHOUT_NOTE_DISPLAYED_ON_BENEFIT_SELECTION_TOOL_PAGE_AFTER_ACTUALIZING_TRACING,
+				CoreConstants.FAIL));
 		Assert.assertTrue(mxClientBenefitSelectionToolPage.verifyCashoutSectionDetailsOnBST(true),
 				MessageFormat.format(
 						MobilityXConstants.AFTER_RELOCATION_CASHOUT_DETAILS_NOT_MATCHED_ON_BENEFIT_SELECTION_TOOL_PAGE,
 						CoreConstants.FAIL));
 	}
-	
+
 	@Given("^he has selected required 'MSPEC_PPC' user after setting Assignment File status as 'Active' in IRIS application$")
-	public void he_has_selected_required_MSPEC_PPC_user_after_setting_Assignment_File_status_as_Active_in_IRIS_application() throws Throwable {
+	public void he_has_selected_required_MSPEC_PPC_user_after_setting_Assignment_File_status_as_Active_in_IRIS_application()
+			throws Throwable {
 		testContext.getBasePage().reLaunchIrisToAvoidFreezingIssue();
 		testContext.getIrisPageManager().irisLoginPage = new IRIS_LoginPage();
 		testContext.getIrisPageManager().irisLoginPage.getIRISLoginAsPerEnvt(_loginDetailsApplication);
@@ -1351,5 +1365,21 @@ public class CF_MX_Client_Steps {
 		testContext.getIrisPageManager().irisAssignmentOverviewPage
 				.addAiresTeamDetailsOnOverviewTab(assignmentOverviewData);
 		testContext.getBasePage().cleanIrisProcesses();
+	}
+	
+	@Given("^he has clicked on 'Start Benefit Selection' on 'Auth Form Template' page to navigate to 'Benefit Selection Tool' page$")
+	public void he_has_clicked_on_Start_Benefit_Selection_on_Auth_Form_Template_page_to_navigate_to_Benefit_Selection_Tool_page() throws Throwable {		
+		mxClientAuthorizationHomePage.clickOnElementOnAuthorizationPage(MobilityXConstants.START_BENEFIT_SELECTION);
+		CoreConstants.TIME_BEFORE_ACTION = new Date().getTime();
+		Assert.assertTrue(mxClientBenefitSelectionToolPage.verifyPageNavigation(),
+				MessageFormat.format(
+						MobilityXConstants.FAILED_TO_VERIFY_USER_NAVIGATION_TO_MXCLIENT_BENEFIT_SELECTION_TOOL_PAGE,
+						CoreConstants.FAIL));
+		CoreConstants.TIME_AFTER_ACTION = new Date().getTime();
+		Reporter.addStepLog(
+				"<b>Total time taken to navigate to <i>MobilityX Client Benefit Selection Tool</i> page is :"
+						+ CoreFunctions.calculatePageLoadTime(CoreConstants.TIME_BEFORE_ACTION,
+								CoreConstants.TIME_AFTER_ACTION)
+						+ " Seconds </b>");
 	}
 }

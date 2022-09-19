@@ -107,13 +107,13 @@ public class MX_Client_BenefitsBundlePage extends Base {
 	@FindBy(how = How.XPATH, using = "//div[contains(@class,'RXCFBenefitNameDesc')]//span[contains(@class,'RXBolder')]")
 	private List<WebElement> _textSubmittedBenefitNameList;
 
-	@FindBy(how = How.XPATH, using = "//div[contains(@id,'SubmitBenefit')]//span[@class='RXCFSmallText RXMineShaft RXCFWordwrap']")
+	@FindBy(how = How.XPATH, using = "//div[contains(@id,'SubmitBenefit')]//span[@class='RXCFSmallText RXMineShaft RXCFWordwrap'] | //div[contains(@id,'innerDivCashoutSubmitCashoutBenefit')]//div[contains(@class,'RXCFBenefitNameDesc')]")
 	private List<WebElement> _textSubmittedAllowanceAmountList;
 
 	@FindBy(how = How.XPATH, using = "//div[contains(@class,'Benefit')]//span[@class='RXCFText RXBold RXAiresSeaglass']")
 	private List<WebElement> _textSubmittedBenefitsPointsList;
 
-	@FindBy(how = How.XPATH, using = "//div[contains(@id,'SubmitBenefit')]//span[@class='RXBolder RXCFSmallText']")
+	@FindBy(how = How.XPATH, using = "//div[contains(@id,'SubmitBenefit')]//span[@class='RXBolder RXCFSmallText'] | //div[contains(@id,'innerDivCashoutSubmitCashoutBenefit')]//img[@src='/mobilityx/adf/images/t.gif']")
 	private List<WebElement> _textSubmittedBenefitQuantityList;
 
 	@FindBy(how = How.CSS, using = "span[class='RXCFSmallerItalicText RXAiresCharcoal']")
@@ -810,9 +810,9 @@ public class MX_Client_BenefitsBundlePage extends Base {
 		boolean flag = false;
 		try {
 			for (Benefit benefit : getBenefits(CoreFunctions.getPropertyFromConfig("CoreFlex_Policy_BenefitType"),
-					CoreFunctions.getPropertyFromConfig("CoreFlex_Policy_RequiredFor"), "0")) {
-				flag = false;
+					CoreFunctions.getPropertyFromConfig("CoreFlex_Policy_RequiredFor"), "0")) {				
 				if (benefit.getDeleteBenefitOnMBBPage()) {
+					flag = false;
 					int indexBenefit = BusinessFunctions.returnindexItemFromListUsingText(driver,
 							_textSubmittedBenefitNameList, benefit.getBenefitDisplayName());
 					isFlexBenefitDeleteStatus = verifyDeleteBenefitStatus(indexBenefit, benefit);
@@ -895,6 +895,7 @@ public class MX_Client_BenefitsBundlePage extends Base {
 		if (isSelectedPortionCashoutDetailsVerified) {
 			CoreFunctions.writeToPropertiesFile("CF_Transferee_SelectedCashOutPoints",
 					CoreFunctions.getPropertyFromConfig("CF_Client_SelectedCashOutPoints"));
+			
 			Reporter.addStepLog(MessageFormat.format(
 					MobilityXConstants.SUCCESSFULLY_VERIFIED_SELECTED_PORTION_CASHOUT_DETAILS_UNDER_MY_BENEFIT_BUNDLES_SECTION_OF_MBB_PAGE,
 					CoreConstants.PASS));

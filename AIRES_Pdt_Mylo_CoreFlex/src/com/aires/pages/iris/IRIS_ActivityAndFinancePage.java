@@ -374,6 +374,7 @@ public class IRIS_ActivityAndFinancePage extends BasePage {
 		IRIS_PageMaster.getDialogObject(_IRIS, "Message").waitUntilVisible();
 		messageVerified = BusinessFunctions.verifyMsgOnDialog(IRIS_PageMaster.getDialogObject(_IRIS, "Message"),
 				message, dialogName);
+		System.out.println("IRIS Message Verified : "+messageVerified);
 		if (IRIS_PageMaster.getDialogObject(_IRIS, "Message").isVisible() && messageVerified) {
 			Helpers.clickButton(
 					IRIS_PageMaster.getButtonObjectFromLabel(IRIS_PageMaster.getDialogObject(_IRIS, "Message"), "OK"),

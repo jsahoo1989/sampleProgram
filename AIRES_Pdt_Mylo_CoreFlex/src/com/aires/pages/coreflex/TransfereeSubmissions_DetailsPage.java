@@ -461,7 +461,7 @@ public class TransfereeSubmissions_DetailsPage extends Base {
 	}
 
 	private void verifyCashoutStatus(int indexCashout) {
-		if (Boolean.valueOf(CoreFunctions.getPropertyFromConfig("CF_Transferee_BenefitDeleteFlag"))
+		if (Boolean.valueOf(CoreFunctions.getPropertyFromConfig("CF_Transferee_BenefitDeletedFlag"))
 				&& !(isDeleteRequestDenied)
 				&& !(Boolean.valueOf(CoreFunctions.getPropertyFromConfig("CF_Transferee_BenefitUndoFlag")))) {
 			CoreFunctions.verifyText(driver, _submittedBenefitStatusList.get(indexCashout),
@@ -533,7 +533,7 @@ public class TransfereeSubmissions_DetailsPage extends Base {
 	}
 
 	private void verifyBenefitStatus(Benefit benefit, int index) {
-		if (Boolean.valueOf(CoreFunctions.getPropertyFromConfig("CF_Transferee_BenefitDeleteFlag"))
+		if (Boolean.valueOf(CoreFunctions.getPropertyFromConfig("CF_Transferee_BenefitDeletedFlag"))
 				&& benefit.getDeleteBenefitOnMBBPage() && !(isDeleteRequestDenied)
 				&& !(Boolean.valueOf(CoreFunctions.getPropertyFromConfig("CF_Transferee_BenefitUndoFlag")))) {
 			CoreFunctions.verifyText(driver, _submittedBenefitStatusList.get(index),

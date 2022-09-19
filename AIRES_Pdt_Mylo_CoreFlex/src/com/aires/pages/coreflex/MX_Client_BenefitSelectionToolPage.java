@@ -567,13 +567,16 @@ public class MX_Client_BenefitSelectionToolPage extends Base {
 			CoreFunctions.waitHandler(3);
 			CoreFunctions.clickElement(driver, _btn_next);
 			CoreFunctions.writeToPropertiesFile("CF_Client_TotalSelectedPoints", String.valueOf(totalSelectedPoints));
-			CoreFunctions.writeToPropertiesFile("CF_Client_AvailablePoints",
-					String.valueOf(totalPointsOnPolicy - totalSelectedPoints));
+			CoreFunctions.writeToPropertiesFile("CF_Client_AvailablePoints", String.valueOf(Double
+					.parseDouble(CoreFunctions.getPropertyFromConfig("CF_Transferee_TotalAvailablePoints"))
+					- (Double.parseDouble(CoreFunctions.getPropertyFromConfig("CF_Client_TotalSelectedPoints")))));
+			CoreFunctions.writeToPropertiesFile("CF_Transferee_AvailablePoints",
+					CoreFunctions.getPropertyFromConfig("CF_Client_AvailablePoints"));
 			return true;
 		} catch (Exception e) {
-			Reporter.addStepLog(MessageFormat.format(
-					MobilityXConstants.EXCEPTION_OCCURED_WHILE_CLICKING_ON_NEXT_BUTTON_ON_BST_PAGE,
-					CoreConstants.FAIL, e.getMessage()));
+			Reporter.addStepLog(
+					MessageFormat.format(MobilityXConstants.EXCEPTION_OCCURED_WHILE_CLICKING_ON_NEXT_BUTTON_ON_BST_PAGE,
+							CoreConstants.FAIL, e.getMessage()));
 		}
 		return false;
 	}
@@ -969,10 +972,98 @@ public class MX_Client_BenefitSelectionToolPage extends Base {
 		}
 		return cashoutPoints;
 	}
+	
+	public boolean verifyCashoutSectionDetailsOnBSTPostDeleteRequestOperation(String actionPerformed) {
+		boolean isPortionCashoutVerified = false, flag = false;
+		try {
+			if ((CoreFunctions.getPropertyFromConfig("PolicyCashoutType").equals(MobilityXConstants.PORTION_CASHOUT))
+					|| (CoreFunctions.getPropertyFromConfig("PolicyCashoutType")
+							.equals(MobilityXConstants.AFTER_RELOCATION_ONLY))) {
+				isPortionCashoutVerified = verifyInitialCashOutContentPostDeleteRequestOperation(actionPerformed);
+				flag = true;
+			} else if (CoreFunctions.getPropertyFromConfig("PolicyCashoutType")
+					.equals(MobilityXConstants.CASHOUT_NOT_AUTHORIZED)) {
+				isPortionCashoutVerified = true;
+				flag = false;
+			} else {
+				return false;
+			}
+		} catch (Exception e) {
+			Reporter.addStepLog(MessageFormat.format(
+					MobilityXConstants.EXCEPTION_OCCURED_WHILE_VERIFYING_CASHOUT_DETAILS_ON_BENEFIT_SELECTION_TOOL_PAGE,
+					CoreConstants.FAIL, e.getMessage()));
+		}
+		if (isPortionCashoutVerified & flag) {
+			Reporter.addStepLog(MessageFormat.format(
+					MobilityXConstants.SUCCESSFULLY_VERIFIED_PORTION_CASHOUT_FUNCTIONALITY_ON_BENEFIT_SELECTION_TOOL_PAGE,
+					CoreConstants.PASS));
+		}
+		return isPortionCashoutVerified;
+	}
+	
+	public double getAvailableCashoutPointsPostDeleteRequestOperation(String actionPerformed) {
+		if (actionPerformed.equals(MobilityXConstants.APPROVED)) {
+			cashoutPoints = (Double
+					.parseDouble(CoreFunctions.getPropertyFromConfig("CF_Transferee_TotalAvailablePoints")))
+					* Double.parseDouble(policySetupPageData.flexPolicySetupPage.maxPortionCashoutPercent) / 100;
+		} else {
+			cashoutPoints = ((Double
+					.parseDouble(CoreFunctions.getPropertyFromConfig("CF_Transferee_TotalAvailablePoints")))
+					* Double.parseDouble(policySetupPageData.flexPolicySetupPage.maxPortionCashoutPercent) / 100)
+					- (Double.parseDouble(CoreFunctions.getPropertyFromConfig("CF_Client_SelectedCashOutPoints")));
+			cashoutPoints = (Double
+					.parseDouble(CoreFunctions.getPropertyFromConfig("CF_Transferee_AvailablePoints"))) < cashoutPoints
+							? (Double.parseDouble(
+									CoreFunctions.getPropertyFromConfig("CF_Transferee_TotalAvailablePoints")))
+							: cashoutPoints;
+		}
+		return cashoutPoints;
+	}
+	
+	
 
 	public boolean verifyInitialCashOutContent(boolean isBenefitsSubmitted) {
 		try {
 			getAvailableCashoutPoints(isBenefitsSubmitted);
+			CoreFunctions.explicitWaitTillElementVisibility(driver, _text_cashOutName,
+					MobilityXConstants.CUSTOM_CASHOUT_NAME);
+			CoreFunctions.verifyText(CoreFunctions.getElementText(driver, _text_cashOutName),
+					policySetupPageData.flexPolicySetupPage.customCashoutBenefitName,
+					MobilityXConstants.CUSTOM_CASHOUT_NAME);
+			CoreFunctions.verifyText((CoreFunctions.getElementText(driver, _text_cashOutSuggestion).trim()),
+					(MobilityXConstants.MX_CLIENT_CASHOUT_SUGGESTION_TEXT).trim(),
+					MobilityXConstants.CASHOUT_SUGGESTION);
+			CoreFunctions.verifyText(CoreFunctions.getElementText(driver, _text_howManyPoints),
+					MobilityXConstants.HOW_MANY_POINTS_WOULD_YOU_LIKE_TO_CASH_OUT,
+					MobilityXConstants.HOW_MANY_POINTS_TEXT);
+			CoreFunctions.verifyValue(
+					Double.parseDouble(CoreFunctions.getElementText(driver, _text_pointsAvailableForCashOut)),
+					cashoutPoints, MobilityXConstants.POINTS_AVAILABLE_FOR_CASHOUT);
+			String[] cashOutValue = CoreFunctions.getElementText(driver, _text_cashOutValue).split("\\(");
+			CoreFunctions.verifyValue(Double.parseDouble(cashOutValue[0].trim()), cashoutPoints,
+					MobilityXConstants.CASHOUT_VALUE);
+			CoreFunctions.verifyValue(Double.parseDouble(CoreFunctions.getAttributeText(_inputCashoutPoints, "value")),
+					cashoutPoints, MobilityXConstants.CASHOUT_INPUT_FIELD);
+			String[] cashOutInputText = CoreFunctions.getElementText(driver, _textInputCashoutPoints).split("\\(");
+			CoreFunctions.verifyValue(Double.parseDouble(cashOutInputText[0].trim()), cashoutPoints,
+					MobilityXConstants.CASHOUT_INPUT_FIELD_LABEL_VALUE);
+			if (CoreFunctions.isElementExist(driver, _buttonSelectThisCashoutPoints, 2)) {
+				Reporter.addStepLog(MessageFormat.format(
+						COREFLEXConstants.SUCCESSFULLY_VERIFIED_DEFAULT_PORTION_CASHOUT_DETAILS_ON_BENEFIT_SELECTION_TOOL_PAGE,
+						CoreConstants.PASS));
+				return true;
+			}
+		} catch (Exception e) {
+			Reporter.addStepLog(MessageFormat.format(
+					COREFLEXConstants.EXCEPTION_OCCURED_WHILE_VERIFYING_DEFAULT_CASHOUT_DETAILS_ON_BENEFIT_SELECTION_TOOL_PAGE,
+					CoreConstants.FAIL, e.getMessage()));
+		}
+		return false;
+	}
+	
+	public boolean verifyInitialCashOutContentPostDeleteRequestOperation(String actionPerformed) {
+		try {
+			getAvailableCashoutPointsPostDeleteRequestOperation(actionPerformed);
 			CoreFunctions.explicitWaitTillElementVisibility(driver, _text_cashOutName,
 					MobilityXConstants.CUSTOM_CASHOUT_NAME);
 			CoreFunctions.verifyText(CoreFunctions.getElementText(driver, _text_cashOutName),

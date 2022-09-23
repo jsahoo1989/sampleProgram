@@ -63,16 +63,17 @@ public class PDT_LanguageTrainingPage extends Base {
 			.getLanguageTrainingDataList("Language Training");
 	
 
-	public void fillLanguageTrainingEmployee(PDT_AddNewPolicyPage addNewPolicyPage, String subBenefitFormName) {
+	public void fillLanguageTrainingEmployee(PDT_AddNewPolicyPage addNewPolicyPage, String subBenefitFormName, PDT_SharedSubBenefitPage subBenefitPage) {
 		try {
 			CoreFunctions.explicitWaitTillElementVisibility(driver, _txtBoxMaxNumOfHours, _lblMaxNumOfHours.getText());
 			CoreFunctions.clearAndSetText(driver, _txtBoxMaxNumOfHours, _lblMaxNumOfHours.getText(),
 					languageTrainingBenefitData.languageTrainingEmployee.maxNumOfHours);
 
 			CoreFunctions.explicitWaitTillElementListClickable(driver, _radioBtnLangTrainingEmployee);
-			CoreFunctions.selectItemInListByText(driver, _radioBtnLangTrainingEmployee,
-					languageTrainingBenefitData.languageTrainingEmployee.grossUp, PDTConstants.GROSS_UP,
-					PDTConstants.RADIO_BUTTON_LIST, true);
+			if(subBenefitPage.getCompletePolicyState())
+				CoreFunctions.selectItemInListByText(driver, _radioBtnLangTrainingEmployee,
+						languageTrainingBenefitData.languageTrainingEmployee.grossUp, PDTConstants.GROSS_UP,
+						PDTConstants.RADIO_BUTTON_LIST, true);
 			CoreFunctions.selectItemInListByText(driver, _radioBtnLangTrainingEmployee,
 					languageTrainingBenefitData.languageTrainingEmployee.reimbursedBy, PDTConstants.REIMBURSED_BY,
 					PDTConstants.RADIO_BUTTON_LIST, true);
@@ -88,7 +89,7 @@ public class PDT_LanguageTrainingPage extends Base {
 		}
 	}
 
-	public void fillLanguageTrainingFamily(PDT_AddNewPolicyPage addNewPolicyPage, String subBenefitFormName) {
+	public void fillLanguageTrainingFamily(PDT_AddNewPolicyPage addNewPolicyPage, String subBenefitFormName, PDT_SharedSubBenefitPage subBenefitPage) {
 		try {
 			CoreFunctions.explicitWaitTillElementVisibility(driver, _txtBoxMaxNumOfHoursPerPerson,
 					_lblMaxNumOfHoursPerPerson.getText());
@@ -99,9 +100,10 @@ public class PDT_LanguageTrainingPage extends Base {
 					languageTrainingBenefitData.languageTrainingFamily.maxNumOfHrsPerFamily);
 
 			CoreFunctions.explicitWaitTillElementListClickable(driver, _radioBtnLangTrainingFamily);
-			CoreFunctions.selectItemInListByText(driver, _radioBtnLangTrainingFamily,
-					languageTrainingBenefitData.languageTrainingFamily.grossUp, PDTConstants.GROSS_UP,
-					PDTConstants.RADIO_BUTTON_LIST, true);
+			if(subBenefitPage.getCompletePolicyState())
+				CoreFunctions.selectItemInListByText(driver, _radioBtnLangTrainingFamily,
+						languageTrainingBenefitData.languageTrainingFamily.grossUp, PDTConstants.GROSS_UP,
+						PDTConstants.RADIO_BUTTON_LIST, true);
 			CoreFunctions.selectItemInListByText(driver, _radioBtnLangTrainingFamily,
 					languageTrainingBenefitData.languageTrainingFamily.reimbursedBy, PDTConstants.REIMBURSED_BY,
 					PDTConstants.RADIO_BUTTON_LIST, true);

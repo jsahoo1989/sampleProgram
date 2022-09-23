@@ -1,13 +1,17 @@
 package com.aires.pages.mobilityx;
 
 import java.text.MessageFormat;
+import java.time.Duration;
 import java.util.List;
 
 import org.openqa.selenium.By;
+import org.openqa.selenium.StaleElementReferenceException;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.How;
+import org.openqa.selenium.support.ui.ExpectedConditions;
+import org.openqa.selenium.support.ui.WebDriverWait;
 import org.testng.Assert;
 
 import com.aires.businessrules.Base;
@@ -344,8 +348,16 @@ public class MobilityX_DashboardHomePage extends Base{
 				CoreFunctions.waitHandler(3);
 				BusinessFunctions.selectValueFromDropdown(_drpDowndestinationCountry, employeeInfo.destinationCountry);
 				BusinessFunctions.selectRadioAsPerLabelText(driver, _radioBtnEmpCurrentlyOnAssignment,
-						employeeInfo.empCurrentlyOnAssignment);				
-				BusinessFunctions.selectValueFromDropdown(_drpDownHomeCountry, employeeInfo.homeCountry);
+						employeeInfo.empCurrentlyOnAssignment);	
+				
+				try {					
+					BusinessFunctions.selectValueFromDropdown(_drpDownHomeCountry, employeeInfo.homeCountry);
+				} catch(StaleElementReferenceException e) {
+					WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(60));
+					
+					BusinessFunctions.selectValueFromDropdown(wait.until(ExpectedConditions.refreshed(ExpectedConditions.elementToBeClickable(_drpDownHomeCountry))), employeeInfo.homeCountry);
+				}
+				
 				BusinessFunctions.selectValueFromDropdown(_drpDownDualCitizenShip, employeeInfo.dualCitizenShip);
 		} catch (ElementNotFoundException e) {
 			Log.info(CoreConstants.ERROR + e);

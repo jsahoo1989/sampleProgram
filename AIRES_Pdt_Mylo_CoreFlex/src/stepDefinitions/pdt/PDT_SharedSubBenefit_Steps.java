@@ -97,6 +97,7 @@ public class PDT_SharedSubBenefit_Steps {
 	
 	public void initPageObjectMan(PageObjectManager_Pdt _pageObjectManagerPDT) {
 		culturalTrainingPage = _pageObjectManagerPDT.getCulturalTrainingPage();
+		languageTrainingPage = testContext.getPageObjectManager().getLanguageTrainingPage();
 	}
 	
 	public PDT_PreAcceptanceService getPreAcceptServicePage() {

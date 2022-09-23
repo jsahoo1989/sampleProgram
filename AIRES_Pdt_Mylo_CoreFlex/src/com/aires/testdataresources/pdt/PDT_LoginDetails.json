@@ -13,9 +13,9 @@
 			"csmUserName": "mxssodev5@corp.aires.com",
 			"csmPassword": "F74#jd*187_NB",
 			"policy": "HR - EBT Program (# 6966)",
-			"mobilityxUserName": "0141754442@aires.com",
-			"mobilityxPassword": "relonetng",
-			"profileName": "Fannie Uddin",
+			"mobilityxUserName": "0001159966@aires.com",
+			"mobilityxPassword": "Relonetng1",
+			"profileName": "Nicole Rickett",
 			"mobilityxUrl": "https://relonetqa.aires.com/mobilityx/faces/jsf/Login.jsf"
 		},
 		"dev": {
@@ -63,11 +63,11 @@
 			"clientName": "Dow Chemical Company (Global)",
 			"csmUserName": "mxssodev5@corp.aires.com",
 			"csmPassword": "F74#jd*187_NB",
-			"policy": "hDCC Repatriation (# 14724)",
-			"mobilityxUserName": "0141754442@aires.com",
-			"mobilityxPassword": "relonetng",
-			"profileName": "Fannie Uddin",
-			"mobilityxUrl": "https://samltest.aires.com/mobilityx/faces/jsf/Login.jsf"
+			"policy": "HR - EBT Program (# 6966)",
+			"mobilityxUserName": "0011857546@aires.com",
+			"mobilityxPassword": "Relonetng1",
+			"profileName": "Winnifred Tickell",
+			"mobilityxUrl": "https://relonettest2.aires.com/mobilityx/faces/jsf/Login.jsf"
 		},
 		"uat": {
 			"irisUserName": "BBENEDU",

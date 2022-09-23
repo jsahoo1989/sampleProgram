@@ -50,16 +50,16 @@ public class PDT_OngoingPaymentReimbursementPage extends Base {
 	@FindBy(how = How.CSS, using = "input[formcontrolname='minDiffToQulify']")
 	private WebElement _txtBoxColaMinDiffToQualify;
 
-	@FindBy(how = How.XPATH, using = "//ng-select[@formcontrolname='frequency']/preceding-sibling::label")
+	@FindBy(how = How.XPATH, using = "//ng-select[@formcontrolname='frequencyCode']/preceding-sibling::label")
 	private WebElement _lblColaPaymentFrequency;
 
-	@FindBy(how = How.CSS, using = "ng-select[formcontrolname='frequency']")
+	@FindBy(how = How.CSS, using = "ng-select[formcontrolname='frequencyCode']")
 	private WebElement _drpDownColaPaymentFrequency;
 
-	@FindBy(how = How.CSS, using = "ng-select[formcontrolname='frequency'] span.ng-option-label")
+	@FindBy(how = How.CSS, using = "ng-select[formcontrolname='frequencyCode'] span.ng-option-label")
 	private List<WebElement> _drpDownColaPaymentFrequencyOption;
 
-	@FindBy(how = How.CSS, using = "ng-select[formcontrolname='frequency'] span.ng-value-label")
+	@FindBy(how = How.CSS, using = "ng-select[formcontrolname='frequencyCode'] span.ng-value-label")
 	private WebElement _drpDownColaPaymentFrequencySelectedOption;
 
 	@FindBy(how = How.XPATH, using = "//input[@formcontrolname='frequencyOther']/preceding-sibling::label")
@@ -135,13 +135,13 @@ public class PDT_OngoingPaymentReimbursementPage extends Base {
 	@FindBy(how = How.CSS, using = "app-per-diem ng-select[formcontrolname='currencyCode'] span.ng-value-label")
 	private WebElement _drpDownPerDiemCurrencyOptionsSelected;
 
-	@FindBy(how = How.CSS, using = "app-per-diem ng-select[formcontrolname='frequency']")
+	@FindBy(how = How.CSS, using = "app-per-diem ng-select[formcontrolname='frequencyCode']")
 	private WebElement _drpDownPerDiemPaymentFrequency;
 
-	@FindBy(how = How.CSS, using = "app-per-diem ng-select[formcontrolname='frequency'] span.ng-option-label")
+	@FindBy(how = How.CSS, using = "app-per-diem ng-select[formcontrolname='frequencyCode'] span.ng-option-label")
 	private List<WebElement> _drpDownPerDiemPaymentFrequencyOption;
 
-	@FindBy(how = How.CSS, using = "app-per-diem ng-select[formcontrolname='frequency'] span.ng-value-label")
+	@FindBy(how = How.CSS, using = "app-per-diem ng-select[formcontrolname='frequencyCode'] span.ng-value-label")
 	private WebElement _drpDownPerDiemPaymentFrequencySelectedOption;
 
 	@FindBy(how = How.CSS, using = "app-per-diem input[formcontrolname='frequencyOther']")
@@ -181,13 +181,13 @@ public class PDT_OngoingPaymentReimbursementPage extends Base {
 	@FindBy(how = How.CSS, using = "app-mobility-premium ng-select[formcontrolname='currencyCode'] span.ng-value-label")
 	private WebElement _drpDownMobilityPremCurrencyOptionsSelected;
 
-	@FindBy(how = How.CSS, using = "app-mobility-premium ng-select[formcontrolname='frequency']")
+	@FindBy(how = How.CSS, using = "app-mobility-premium ng-select[formcontrolname='frequencyCode']")
 	private WebElement _drpDownMobilityPremPaymentFrequency;
 
-	@FindBy(how = How.CSS, using = "app-mobility-premium ng-select[formcontrolname='frequency'] span.ng-option-label")
+	@FindBy(how = How.CSS, using = "app-mobility-premium ng-select[formcontrolname='frequencyCode'] span.ng-option-label")
 	private List<WebElement> _drpDownMobilityPremPaymentFrequencyOption;
 
-	@FindBy(how = How.CSS, using = "app-mobility-premium ng-select[formcontrolname='frequency'] span.ng-value-label")
+	@FindBy(how = How.CSS, using = "app-mobility-premium ng-select[formcontrolname='frequencyCode'] span.ng-value-label")
 	private WebElement _drpDownMobilityPremPaymentFrequencySelectedOption;
 
 	@FindBy(how = How.CSS, using = "app-mobility-premium input[formcontrolname='frequencyOther']")
@@ -227,13 +227,13 @@ public class PDT_OngoingPaymentReimbursementPage extends Base {
 	@FindBy(how = How.CSS, using = "app-transportation-allowance ng-select[formcontrolname='currencyCode'] span.ng-value-label")
 	private WebElement _drpDownTransportAllowCurrencyOptionsSelected;
 
-	@FindBy(how = How.CSS, using = "app-transportation-allowance ng-select[formcontrolname='frequency']")
+	@FindBy(how = How.CSS, using = "app-transportation-allowance ng-select[formcontrolname='frequencyCode']")
 	private WebElement _drpDownTransportAllowPaymentFrequency;
 
-	@FindBy(how = How.CSS, using = "app-transportation-allowance ng-select[formcontrolname='frequency'] span.ng-option-label")
+	@FindBy(how = How.CSS, using = "app-transportation-allowance ng-select[formcontrolname='frequencyCode'] span.ng-option-label")
 	private List<WebElement> _drpDownTransportAllowPaymentFrequencyOption;
 
-	@FindBy(how = How.CSS, using = "app-transportation-allowance ng-select[formcontrolname='frequency'] span.ng-value-label")
+	@FindBy(how = How.CSS, using = "app-transportation-allowance ng-select[formcontrolname='frequencyCode'] span.ng-value-label")
 	private WebElement _drpDownTransportAllowPaymentFrequencySelectedOption;
 
 	@FindBy(how = How.CSS, using = "app-transportation-allowance input[formcontrolname='frequencyOther']")
@@ -273,13 +273,13 @@ public class PDT_OngoingPaymentReimbursementPage extends Base {
 	@FindBy(how = How.CSS, using = "app-housing-allowance ng-select[formcontrolname='currencyCode'] span.ng-value-label")
 	private WebElement _drpDownHousingAllowCurrencyOptionsSelected;
 
-	@FindBy(how = How.CSS, using = "app-housing-allowance ng-select[formcontrolname='frequency']")
+	@FindBy(how = How.CSS, using = "app-housing-allowance ng-select[formcontrolname='frequencyCode']")
 	private WebElement _drpDownHousingAllowPaymentFrequency;
 
-	@FindBy(how = How.CSS, using = "app-housing-allowance ng-select[formcontrolname='frequency'] span.ng-option-label")
+	@FindBy(how = How.CSS, using = "app-housing-allowance ng-select[formcontrolname='frequencyCode'] span.ng-option-label")
 	private List<WebElement> _drpDownHousingAllowPaymentFrequencyOption;
 
-	@FindBy(how = How.CSS, using = "app-housing-allowance ng-select[formcontrolname='frequency'] span.ng-value-label")
+	@FindBy(how = How.CSS, using = "app-housing-allowance ng-select[formcontrolname='frequencyCode'] span.ng-value-label")
 	private WebElement _drpDownHousingAllowPaymentFrequencySelectedOption;
 
 	@FindBy(how = How.CSS, using = "app-housing-allowance input[formcontrolname='frequencyOther']")
@@ -319,13 +319,13 @@ public class PDT_OngoingPaymentReimbursementPage extends Base {
 	@FindBy(how = How.CSS, using = "app-home-maintenance-allowance ng-select[formcontrolname='currencyCode'] span.ng-value-label")
 	private WebElement _drpDownHomeMaintAllowCurrencyOptionsSelected;
 
-	@FindBy(how = How.CSS, using = "app-home-maintenance-allowance ng-select[formcontrolname='frequency']")
+	@FindBy(how = How.CSS, using = "app-home-maintenance-allowance ng-select[formcontrolname='frequencyCode']")
 	private WebElement _drpDownHomeMaintAllowPaymentFrequency;
 
-	@FindBy(how = How.CSS, using = "app-home-maintenance-allowance ng-select[formcontrolname='frequency'] span.ng-option-label")
+	@FindBy(how = How.CSS, using = "app-home-maintenance-allowance ng-select[formcontrolname='frequencyCode'] span.ng-option-label")
 	private List<WebElement> _drpDownHomeMaintAllowPaymentFrequencyOption;
 
-	@FindBy(how = How.CSS, using = "app-home-maintenance-allowance ng-select[formcontrolname='frequency'] span.ng-value-label")
+	@FindBy(how = How.CSS, using = "app-home-maintenance-allowance ng-select[formcontrolname='frequencyCode'] span.ng-value-label")
 	private WebElement _drpDownHomeMaintAllowPaymentFrequencySelectedOption;
 
 	@FindBy(how = How.CSS, using = "app-home-maintenance-allowance input[formcontrolname='frequencyOther']")
@@ -365,13 +365,13 @@ public class PDT_OngoingPaymentReimbursementPage extends Base {
 	@FindBy(how = How.CSS, using = "app-furniture-allowance ng-select[formcontrolname='currencyCode'] span.ng-value-label")
 	private WebElement _drpDownFurnitureAllowCurrencyOptionsSelected;
 
-	@FindBy(how = How.CSS, using = "app-furniture-allowance ng-select[formcontrolname='frequency']")
+	@FindBy(how = How.CSS, using = "app-furniture-allowance ng-select[formcontrolname='frequencyCode']")
 	private WebElement _drpDownFurnitureAllowPaymentFrequency;
 
-	@FindBy(how = How.CSS, using = "app-furniture-allowance ng-select[formcontrolname='frequency'] span.ng-option-label")
+	@FindBy(how = How.CSS, using = "app-furniture-allowance ng-select[formcontrolname='frequencyCode'] span.ng-option-label")
 	private List<WebElement> _drpDownFurnitureAllowPaymentFrequencyOption;
 
-	@FindBy(how = How.CSS, using = "app-furniture-allowance ng-select[formcontrolname='frequency'] span.ng-value-label")
+	@FindBy(how = How.CSS, using = "app-furniture-allowance ng-select[formcontrolname='frequencyCode'] span.ng-value-label")
 	private WebElement _drpDownFurnitureAllowPaymentFrequencySelectedOption;
 
 	@FindBy(how = How.CSS, using = "app-furniture-allowance input[formcontrolname='frequencyOther']")
@@ -411,13 +411,13 @@ public class PDT_OngoingPaymentReimbursementPage extends Base {
 	@FindBy(how = How.CSS, using = "app-hardship-allowance ng-select[formcontrolname='currencyCode'] span.ng-value-label")
 	private WebElement _drpDownHardshipAllowCurrencyOptionsSelected;
 
-	@FindBy(how = How.CSS, using = "app-hardship-allowance ng-select[formcontrolname='frequency']")
+	@FindBy(how = How.CSS, using = "app-hardship-allowance ng-select[formcontrolname='frequencyCode']")
 	private WebElement _drpDownHardshipAllowPaymentFrequency;
 
-	@FindBy(how = How.CSS, using = "app-hardship-allowance ng-select[formcontrolname='frequency'] span.ng-option-label")
+	@FindBy(how = How.CSS, using = "app-hardship-allowance ng-select[formcontrolname='frequencyCode'] span.ng-option-label")
 	private List<WebElement> _drpDownHardshipAllowPaymentFrequencyOption;
 
-	@FindBy(how = How.CSS, using = "app-hardship-allowance ng-select[formcontrolname='frequency'] span.ng-value-label")
+	@FindBy(how = How.CSS, using = "app-hardship-allowance ng-select[formcontrolname='frequencyCode'] span.ng-value-label")
 	private WebElement _drpDownHardshipAllowPaymentFrequencySelectedOption;
 
 	@FindBy(how = How.CSS, using = "app-hardship-allowance input[formcontrolname='frequencyOther']")
@@ -457,13 +457,13 @@ public class PDT_OngoingPaymentReimbursementPage extends Base {
 	@FindBy(how = How.CSS, using = "app-banking-allowance ng-select[formcontrolname='currencyCode'] span.ng-value-label")
 	private WebElement _drpDownBankingAllowCurrencyOptionsSelected;
 
-	@FindBy(how = How.CSS, using = "app-banking-allowance ng-select[formcontrolname='frequency']")
+	@FindBy(how = How.CSS, using = "app-banking-allowance ng-select[formcontrolname='frequencyCode']")
 	private WebElement _drpDownBankingAllowPaymentFrequency;
 
-	@FindBy(how = How.CSS, using = "app-banking-allowance ng-select[formcontrolname='frequency'] span.ng-option-label")
+	@FindBy(how = How.CSS, using = "app-banking-allowance ng-select[formcontrolname='frequencyCode'] span.ng-option-label")
 	private List<WebElement> _drpDownBankingAllowPaymentFrequencyOption;
 
-	@FindBy(how = How.CSS, using = "app-banking-allowance ng-select[formcontrolname='frequency'] span.ng-value-label")
+	@FindBy(how = How.CSS, using = "app-banking-allowance ng-select[formcontrolname='frequencyCode'] span.ng-value-label")
 	private WebElement _drpDownBankingAllowPaymentFrequencySelectedOption;
 
 	@FindBy(how = How.CSS, using = "app-banking-allowance input[formcontrolname='frequencyOther']")
@@ -503,13 +503,13 @@ public class PDT_OngoingPaymentReimbursementPage extends Base {
 	@FindBy(how = How.CSS, using = "app-at-sea-allowance ng-select[formcontrolname='currencyCode'] span.ng-value-label")
 	private WebElement _drpDownAtSeaAllowCurrencyOptionsSelected;
 
-	@FindBy(how = How.CSS, using = "app-at-sea-allowance ng-select[formcontrolname='frequency']")
+	@FindBy(how = How.CSS, using = "app-at-sea-allowance ng-select[formcontrolname='frequencyCode']")
 	private WebElement _drpDownAtSeaAllowPaymentFrequency;
 
-	@FindBy(how = How.CSS, using = "app-at-sea-allowance ng-select[formcontrolname='frequency'] span.ng-option-label")
+	@FindBy(how = How.CSS, using = "app-at-sea-allowance ng-select[formcontrolname='frequencyCode'] span.ng-option-label")
 	private List<WebElement> _drpDownAtSeaAllowPaymentFrequencyOption;
 
-	@FindBy(how = How.CSS, using = "app-at-sea-allowance ng-select[formcontrolname='frequency'] span.ng-value-label")
+	@FindBy(how = How.CSS, using = "app-at-sea-allowance ng-select[formcontrolname='frequencyCode'] span.ng-value-label")
 	private WebElement _drpDownAtSeaAllowPaymentFrequencySelectedOption;
 
 	@FindBy(how = How.CSS, using = "app-at-sea-allowance input[formcontrolname='frequencyOther']")
@@ -549,13 +549,13 @@ public class PDT_OngoingPaymentReimbursementPage extends Base {
 	@FindBy(how = How.CSS, using = "app-commuter-allowance ng-select[formcontrolname='currencyCode'] span.ng-value-label")
 	private WebElement _drpDownCommuterAllowCurrencyOptionsSelected;
 
-	@FindBy(how = How.CSS, using = "app-commuter-allowance ng-select[formcontrolname='frequency']")
+	@FindBy(how = How.CSS, using = "app-commuter-allowance ng-select[formcontrolname='frequencyCode']")
 	private WebElement _drpDownCommuterAllowPaymentFrequency;
 
-	@FindBy(how = How.CSS, using = "app-commuter-allowance ng-select[formcontrolname='frequency'] span.ng-option-label")
+	@FindBy(how = How.CSS, using = "app-commuter-allowance ng-select[formcontrolname='frequencyCode'] span.ng-option-label")
 	private List<WebElement> _drpDownCommuterAllowPaymentFrequencyOption;
 
-	@FindBy(how = How.CSS, using = "app-commuter-allowance ng-select[formcontrolname='frequency'] span.ng-value-label")
+	@FindBy(how = How.CSS, using = "app-commuter-allowance ng-select[formcontrolname='frequencyCode'] span.ng-value-label")
 	private WebElement _drpDownCommuterAllowPaymentFrequencySelectedOption;
 
 	@FindBy(how = How.CSS, using = "app-commuter-allowance input[formcontrolname='frequencyOther']")
@@ -595,13 +595,13 @@ public class PDT_OngoingPaymentReimbursementPage extends Base {
 	@FindBy(how = How.CSS, using = "app-differential-allowance ng-select[formcontrolname='currencyCode'] span.ng-value-label")
 	private WebElement _drpDownDiffAllowCurrencyOptionsSelected;
 
-	@FindBy(how = How.CSS, using = "app-differential-allowance ng-select[formcontrolname='frequency']")
+	@FindBy(how = How.CSS, using = "app-differential-allowance ng-select[formcontrolname='frequencyCode']")
 	private WebElement _drpDownDiffAllowPaymentFrequency;
 
-	@FindBy(how = How.CSS, using = "app-differential-allowance ng-select[formcontrolname='frequency'] span.ng-option-label")
+	@FindBy(how = How.CSS, using = "app-differential-allowance ng-select[formcontrolname='frequencyCode'] span.ng-option-label")
 	private List<WebElement> _drpDownDiffAllowPaymentFrequencyOption;
 
-	@FindBy(how = How.CSS, using = "app-differential-allowance ng-select[formcontrolname='frequency'] span.ng-value-label")
+	@FindBy(how = How.CSS, using = "app-differential-allowance ng-select[formcontrolname='frequencyCode'] span.ng-value-label")
 	private WebElement _drpDownDiffAllowPaymentFrequencySelectedOption;
 
 	@FindBy(how = How.CSS, using = "app-differential-allowance input[formcontrolname='frequencyOther']")
@@ -641,13 +641,13 @@ public class PDT_OngoingPaymentReimbursementPage extends Base {
 	@FindBy(how = How.CSS, using = "app-goods-services-allowance ng-select[formcontrolname='currencyCode'] span.ng-value-label")
 	private WebElement _drpDownGoodAndServicesAllowCurrencyOptionsSelected;
 
-	@FindBy(how = How.CSS, using = "app-goods-services-allowance ng-select[formcontrolname='frequency']")
+	@FindBy(how = How.CSS, using = "app-goods-services-allowance ng-select[formcontrolname='frequencyCode']")
 	private WebElement _drpDownGoodAndServicesAllowPaymentFrequency;
 
-	@FindBy(how = How.CSS, using = "app-goods-services-allowance ng-select[formcontrolname='frequency'] span.ng-option-label")
+	@FindBy(how = How.CSS, using = "app-goods-services-allowance ng-select[formcontrolname='frequencyCode'] span.ng-option-label")
 	private List<WebElement> _drpDownGoodAndServicesAllowPaymentFrequencyOption;
 
-	@FindBy(how = How.CSS, using = "app-goods-services-allowance ng-select[formcontrolname='frequency'] span.ng-value-label")
+	@FindBy(how = How.CSS, using = "app-goods-services-allowance ng-select[formcontrolname='frequencyCode'] span.ng-value-label")
 	private WebElement _drpDownGoodAndServicesAllowPaymentFrequencySelectedOption;
 
 	@FindBy(how = How.CSS, using = "app-goods-services-allowance input[formcontrolname='frequencyOther']")
@@ -687,13 +687,13 @@ public class PDT_OngoingPaymentReimbursementPage extends Base {
 	@FindBy(how = How.CSS, using = "app-home-leave-allowance ng-select[formcontrolname='currencyCode'] span.ng-value-label")
 	private WebElement _drpDownHomeLeaveAllowCurrencyOptionsSelected;
 
-	@FindBy(how = How.CSS, using = "app-home-leave-allowance ng-select[formcontrolname='frequency']")
+	@FindBy(how = How.CSS, using = "app-home-leave-allowance ng-select[formcontrolname='frequencyCode']")
 	private WebElement _drpDownHomeLeaveAllowPaymentFrequency;
 
-	@FindBy(how = How.CSS, using = "app-home-leave-allowance ng-select[formcontrolname='frequency'] span.ng-option-label")
+	@FindBy(how = How.CSS, using = "app-home-leave-allowance ng-select[formcontrolname='frequencyCode'] span.ng-option-label")
 	private List<WebElement> _drpDownHomeLeaveAllowPaymentFrequencyOption;
 
-	@FindBy(how = How.CSS, using = "app-home-leave-allowance ng-select[formcontrolname='frequency'] span.ng-value-label")
+	@FindBy(how = How.CSS, using = "app-home-leave-allowance ng-select[formcontrolname='frequencyCode'] span.ng-value-label")
 	private WebElement _drpDownHomeLeaveAllowPaymentFrequencySelectedOption;
 
 	@FindBy(how = How.CSS, using = "app-home-leave-allowance input[formcontrolname='frequencyOther']")
@@ -733,13 +733,13 @@ public class PDT_OngoingPaymentReimbursementPage extends Base {
 	@FindBy(how = How.CSS, using = "app-home-retention-allowance ng-select[formcontrolname='currencyCode'] span.ng-value-label")
 	private WebElement _drpDownHomeRetentionAllowCurrencyOptionsSelected;
 
-	@FindBy(how = How.CSS, using = "app-home-retention-allowance ng-select[formcontrolname='frequency']")
+	@FindBy(how = How.CSS, using = "app-home-retention-allowance ng-select[formcontrolname='frequencyCode']")
 	private WebElement _drpDownHomeRetentionAllowPaymentFrequency;
 
-	@FindBy(how = How.CSS, using = "app-home-retention-allowance ng-select[formcontrolname='frequency'] span.ng-option-label")
+	@FindBy(how = How.CSS, using = "app-home-retention-allowance ng-select[formcontrolname='frequencyCode'] span.ng-option-label")
 	private List<WebElement> _drpDownHomeRetentionAllowPaymentFrequencyOption;
 
-	@FindBy(how = How.CSS, using = "app-home-retention-allowance ng-select[formcontrolname='frequency'] span.ng-value-label")
+	@FindBy(how = How.CSS, using = "app-home-retention-allowance ng-select[formcontrolname='frequencyCode'] span.ng-value-label")
 	private WebElement _drpDownHomeRetentionAllowPaymentFrequencySelectedOption;
 
 	@FindBy(how = How.CSS, using = "app-home-retention-allowance input[formcontrolname='frequencyOther']")
@@ -779,13 +779,13 @@ public class PDT_OngoingPaymentReimbursementPage extends Base {
 	@FindBy(how = How.CSS, using = "app-housekeeping-allowance ng-select[formcontrolname='currencyCode'] span.ng-value-label")
 	private WebElement _drpDownHouseKeepingAllowCurrencyOptionsSelected;
 
-	@FindBy(how = How.CSS, using = "app-housekeeping-allowance ng-select[formcontrolname='frequency']")
+	@FindBy(how = How.CSS, using = "app-housekeeping-allowance ng-select[formcontrolname='frequencyCode']")
 	private WebElement _drpDownHouseKeepingAllowPaymentFrequency;
 
-	@FindBy(how = How.CSS, using = "app-housekeeping-allowance ng-select[formcontrolname='frequency'] span.ng-option-label")
+	@FindBy(how = How.CSS, using = "app-housekeeping-allowance ng-select[formcontrolname='frequencyCode'] span.ng-option-label")
 	private List<WebElement> _drpDownHouseKeepingAllowPaymentFrequencyOption;
 
-	@FindBy(how = How.CSS, using = "app-housekeeping-allowance ng-select[formcontrolname='frequency'] span.ng-value-label")
+	@FindBy(how = How.CSS, using = "app-housekeeping-allowance ng-select[formcontrolname='frequencyCode'] span.ng-value-label")
 	private WebElement _drpDownHouseKeepingAllowPaymentFrequencySelectedOption;
 
 	@FindBy(how = How.CSS, using = "app-housekeeping-allowance input[formcontrolname='frequencyOther']")
@@ -825,13 +825,13 @@ public class PDT_OngoingPaymentReimbursementPage extends Base {
 	@FindBy(how = How.CSS, using = "app-utility-allowance ng-select[formcontrolname='currencyCode'] span.ng-value-label")
 	private WebElement _drpDownUtilityAllowCurrencyOptionsSelected;
 
-	@FindBy(how = How.CSS, using = "app-utility-allowance ng-select[formcontrolname='frequency']")
+	@FindBy(how = How.CSS, using = "app-utility-allowance ng-select[formcontrolname='frequencyCode']")
 	private WebElement _drpDownUtilityAllowPaymentFrequency;
 
-	@FindBy(how = How.CSS, using = "app-utility-allowance ng-select[formcontrolname='frequency'] span.ng-option-label")
+	@FindBy(how = How.CSS, using = "app-utility-allowance ng-select[formcontrolname='frequencyCode'] span.ng-option-label")
 	private List<WebElement> _drpDownUtilityAllowPaymentFrequencyOption;
 
-	@FindBy(how = How.CSS, using = "app-utility-allowance ng-select[formcontrolname='frequency'] span.ng-value-label")
+	@FindBy(how = How.CSS, using = "app-utility-allowance ng-select[formcontrolname='frequencyCode'] span.ng-value-label")
 	private WebElement _drpDownUtilityAllowPaymentFrequencySelectedOption;
 
 	@FindBy(how = How.CSS, using = "app-utility-allowance input[formcontrolname='frequencyOther']")
@@ -877,13 +877,13 @@ public class PDT_OngoingPaymentReimbursementPage extends Base {
 	@FindBy(how = How.CSS, using = "app-other-ongoing-allowance ng-select[formcontrolname='currencyCode'] span.ng-value-label")
 	private WebElement _drpDownOthOngoingCurrOptionsSelected;
 
-	@FindBy(how = How.CSS, using = "app-other-ongoing-allowance ng-select[formcontrolname='frequency']")
+	@FindBy(how = How.CSS, using = "app-other-ongoing-allowance ng-select[formcontrolname='frequencyCode']")
 	private WebElement _drpDownOthOngoingFreq;
 
-	@FindBy(how = How.CSS, using = "app-other-ongoing-allowance ng-select[formcontrolname='frequency'] span.ng-option-label")
+	@FindBy(how = How.CSS, using = "app-other-ongoing-allowance ng-select[formcontrolname='frequencyCode'] span.ng-option-label")
 	private List<WebElement> _drpDownOthOngoingFreqOption;
 
-	@FindBy(how = How.CSS, using = "app-other-ongoing-allowance ng-select[formcontrolname='frequency'] span.ng-value-label")
+	@FindBy(how = How.CSS, using = "app-other-ongoing-allowance ng-select[formcontrolname='frequencyCode'] span.ng-value-label")
 	private WebElement _drpDownOthOngoingFreqSelectedOption;
 
 	@FindBy(how = How.CSS, using = "app-other-ongoing-allowance input[formcontrolname='frequencyOther']")

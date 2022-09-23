@@ -57,7 +57,7 @@ Feature: Approve Policy to create new version
     When he clicks on "Cancel" button on 'Approve Policy' pop-up on "Policy Benefit" page
     Then Status of Policy should remain "Submitted" with Version "V1" on "Policy Benefit" Page
 
-  @Sprint-30 @PDT-Regression @assignm
+  @Sprint-30 @PDT-Regression @PDT-1116 @Pdt:218025
   Scenario: PDT - Verify that Assignment History Section should display the Assignments linked with newly created Active Policy
     Given he is on the "View/Edit Policy Forms" page after approving a policy with below sub-benefits of "Language Training" Benefit Category;
       | Language Training Employee | Language Training Family |
@@ -65,7 +65,7 @@ Feature: Approve Policy to create new version
     When he clicks on "Assignment History" icon on "View/Edit Policy Forms" page of 'PDT' application for the newly created Active policy
     Then Assignment details should be displayed in 'Assignment History' Page
 
-  @Sprint-30 @PDT-Regression @uiv
+  @Sprint-30 @PDT-Regression @PDT-1117 @Pdt:218026
   Scenario: PDT - Verify the UI of Version Control pop-up while editing Active Policy having assignments.
     Given he is on the "View/Edit Policy Forms" page after approving a policy with below sub-benefits of "Language Training" Benefit Category;
       | Language Training Employee | Language Training Family |
@@ -79,7 +79,7 @@ Feature: Approve Policy to create new version
       | Button      | Create_disabled, Cancel_enabled                                                                                                                                        |
     And "Create" button becomes "enabled" after entering text on Description textbox
 
-  @Sprint-31 @PDT-Regression @legacy
+  @Sprint-31 @PDT-Regression @BLUE-190 @Pdt:218027
   Scenario: PDT - Verify updating version V1 of Active Policy having assignments with option new Authorization with current date creates new Active version V2 of Policy and old version V1 becomes Legacy
     Given he is on the "View/Edit Policy Forms" page after approving a policy with below sub-benefits of "Language Training" Benefit Category;
       | Language Training Employee | Language Training Family |
@@ -92,7 +92,7 @@ Feature: Approve Policy to create new version
       | V2      | Active | Edit, Clone, Assignment History | Delete, Approve Policy       |                  0 |
       | V1      | Legacy | Clone, Assignment History       | Edit, Delete, Approve Policy |                  1 |
 
-  @BLUE-01 @PDT-Regression @inactive
+  @BLUE-01 @PDT-Regression @BLUE-85 @Pdt:218028
   Scenario: PDT - Verify updating version V1 of Active Policy having assignments with option existing Authorization with current date creates new Active version V2 of Policy and old version V1 becomes Inactive.
     Given he is on the "View/Edit Policy Forms" page after approving a policy with below sub-benefits of "Language Training" Benefit Category;
       | Language Training Employee | Language Training Family |
@@ -105,7 +105,7 @@ Feature: Approve Policy to create new version
       | V2      | Active   | Edit, Clone, Assignment History | Delete, Approve Policy       |                  1 |
       | V1      | Inactive | Clone, Assignment History       | Edit, Delete, Approve Policy |                  0 |
 
-  @BLUE-02 @PDT-Regression
+  @BLUE-02 @PDT-Regression @BLUE-282 @Pdt:218029
   Scenario: PDT - Validate user is able to update an Active Policy having no Assignments without creating the new version of Policy.
     Given he has verified the name, version of Policy on "View/Edit Policy Forms" page after approving a policy with below sub-benefits of "Language Training" Benefit Category;
       | Language Training Employee | Language Training Family |

@@ -22,13 +22,13 @@ public class PDT_PropertyManagementPage extends Base {
 		super(driver);
 	}
 
-	@FindBy(how = How.CSS, using = "ng-select[formcontrolname='calculationMethodCode']")
+	@FindBy(how = How.CSS, using = "ng-select[formcontrolname='calculationMethod']")
 	private WebElement _drpDownCalculationMethod;
 
-	@FindBy(how = How.CSS, using = "ng-select[formcontrolname='calculationMethodCode'] span.ng-option-label")
+	@FindBy(how = How.CSS, using = "ng-select[formcontrolname='calculationMethod'] span.ng-option-label")
 	private List<WebElement> _drpDownCalculationMethodOptions;
 
-	@FindBy(how = How.CSS, using = "ng-select[formcontrolname='calculationMethodCode'] span.ng-value-label")
+	@FindBy(how = How.CSS, using = "ng-select[formcontrolname='calculationMethod'] span.ng-value-label")
 	private WebElement _drpDownCalculationMethodOptionSelected;
 
 	@FindBy(how = How.CSS, using = "input[formcontrolname='calculationMethodOther']")

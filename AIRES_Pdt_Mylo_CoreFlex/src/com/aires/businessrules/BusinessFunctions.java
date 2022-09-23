@@ -1032,7 +1032,7 @@ public class BusinessFunctions {
 	}
 
 	public static void fluentWaitForSpinnerToDisappear(WebDriver driver, WebElement element) {
-		FluentWait<WebDriver> wait = new FluentWait<>(driver).withTimeout(Duration.ofSeconds(90))
+		FluentWait<WebDriver> wait = new FluentWait<>(driver).withTimeout(Duration.ofSeconds(120))
 				.pollingEvery(Duration.ofMillis(1000)).withMessage("Timeout occured!")
 				.ignoring(NoSuchElementException.class);
 		wait.until(ExpectedConditions.invisibilityOf(element));

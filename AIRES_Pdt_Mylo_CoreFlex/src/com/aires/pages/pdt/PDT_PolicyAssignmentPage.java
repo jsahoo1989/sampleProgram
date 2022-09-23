@@ -73,12 +73,7 @@ public class PDT_PolicyAssignmentPage extends Base {
 			String transfereeName = CoreFunctions.getPropertyFromConfig(MobilityXConstants.FIRST_NAME_TEXT) + " "
 					+ CoreFunctions.getPropertyFromConfig(MobilityXConstants.LAST_NAME_TEXT);
 			int index = BusinessFunctions.returnindexItemFromListUsingText(driver, _listTransfereeName, transfereeName);
-			Log.info("index inside verifyAssignment info=="+index);
 			if (index != -1) {
-				/*
-				 * CoreFunctions.highlightObject(driver,
-				 * CoreFunctions.getElementFromListByText(_listPolicyName, policyName));
-				 */
 				return (verifyAssignmentInfo(_listTransfereeName.get(index), transfereeName,
 						PDTConstants.TRANSFEREE_NAME)
 						&& verifyAssignmentInfo(_listAssignmentStatus.get(index), PDTConstants.ASSIGNMENT_STATUS_BOOKED, PDTConstants.ASSIGNMENT_STATUS)
@@ -100,6 +95,7 @@ public class PDT_PolicyAssignmentPage extends Base {
 	
 	public void exitAssignmentTransfereePage() {
 		CoreFunctions.highlightElementAndClick(driver, _btnExit, _btnExit.getText());
+		waitForProgressBarToDisapper();
 		//CoreFunctions.explicitWaitTillElementVisibility(driver, _popuSwal2, "Confirmation");
 		//CoreFunctions.highlightElementAndClick(driver, _btnOk, _btnOk.getText());
 	}

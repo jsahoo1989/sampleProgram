@@ -427,6 +427,9 @@ public class PDT_HouseHoldGoodsPage extends Base {
 	
 	@FindBy(how = How.CSS, using = "app-permanant-storage input[type='number']")
 	private List<WebElement> _txtBoxPermStorageWtVolContainer;
+	
+	@FindBy(how = How.CSS, using = "div.ngx-progress-bar.ngx-progress-bar-ltr")
+	private WebElement _progressBar;
 
 	LinkedHashMap<WebElement, String> seaWeightVolTxtBoxFieldsMap = new LinkedHashMap<WebElement, String>();
 	LinkedHashMap<WebElement, String> airWeightVolTxtBoxFieldsMap = new LinkedHashMap<WebElement, String>();
@@ -561,6 +564,8 @@ public class PDT_HouseHoldGoodsPage extends Base {
 
 	public void fillUSDomesticForm(PDT_AddNewPolicyPage addNewPolicyPage, String subBenefitFormName) {
 		try {
+			if (CoreFunctions.isElementExist(driver, _progressBar, 3))
+				BusinessFunctions.fluentWaitForSpinnerToDisappear(driver, _progressBar);
 			CoreFunctions.explicitWaitTillElementVisibility(driver, _chkBoxNoWeighCostCap,
 					_chkBoxNoWeighCostCap.getText());
 			// Check the checkbox to hide the fields

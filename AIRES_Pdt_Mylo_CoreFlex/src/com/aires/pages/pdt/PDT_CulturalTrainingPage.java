@@ -101,7 +101,7 @@ public class PDT_CulturalTrainingPage extends Base {
 		return numOfDaysForFamily;
 	}
 	
-	public void fillCulturalTrainingEmployee(PDT_AddNewPolicyPage addNewPolicyPage, String subBenefitFormName) {
+	public void fillCulturalTrainingEmployee(PDT_AddNewPolicyPage addNewPolicyPage, String subBenefitFormName, PDT_SharedSubBenefitPage subBenefitPage) {
 		try {			
 			CoreFunctions.explicitWaitTillElementVisibility(driver, _lblNumOfDaysForEmployee, _lblNumOfDaysForEmployee.getText());
 			CoreFunctions.clickElement(driver, _drpDownEmployeNumOfDays);
@@ -120,6 +120,7 @@ public class PDT_CulturalTrainingPage extends Base {
 			}
 
 			CoreFunctions.explicitWaitTillElementListClickable(driver, _radioBtnLangCulTrainEmployee);
+			if(subBenefitPage.getCompletePolicyState())
 			CoreFunctions.selectItemInListByText(driver, _radioBtnLangCulTrainEmployee,
 					culturalTrainingBenefitData.culturalTrainingEmployee.grossUp, PDTConstants.GROSS_UP,
 					PDTConstants.RADIO_BUTTON_LIST, true);
@@ -138,7 +139,7 @@ public class PDT_CulturalTrainingPage extends Base {
 		}
 	}
 	
-	public void fillCulturalTrainingFamily(PDT_AddNewPolicyPage addNewPolicyPage, String subBenefitFormName) {
+	public void fillCulturalTrainingFamily(PDT_AddNewPolicyPage addNewPolicyPage, String subBenefitFormName,  PDT_SharedSubBenefitPage subBenefitPage) {
 		try {			
 			CoreFunctions.explicitWaitTillElementVisibility(driver, _lblNumOfDaysForFamily, _lblNumOfDaysForFamily.getText());
 			CoreFunctions.clickElement(driver, _drpDownFamilyNumOfDays);
@@ -157,6 +158,7 @@ public class PDT_CulturalTrainingPage extends Base {
 			}
 
 			CoreFunctions.explicitWaitTillElementListClickable(driver, _radioBtnCultTrainingFamily);
+			if(subBenefitPage.getCompletePolicyState())
 			CoreFunctions.selectItemInListByText(driver, _radioBtnCultTrainingFamily,
 					culturalTrainingBenefitData.culturalTrainingFamily.grossUp, PDTConstants.GROSS_UP,
 					PDTConstants.RADIO_BUTTON_LIST, true);

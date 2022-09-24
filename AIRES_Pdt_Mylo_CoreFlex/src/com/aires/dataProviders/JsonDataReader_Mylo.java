@@ -32,6 +32,7 @@ import com.aires.testdatatypes.mylo.MyloUSStates;
 import com.aires.testdatatypes.mylo.Mylo_Assignment_HistoryDetails_DEV5;
 import com.aires.testdatatypes.mylo.Mylo_Assignment_HistoryDetails_PREPROD;
 import com.aires.testdatatypes.mylo.Mylo_Assignment_HistoryDetails_UAT;
+import com.aires.testdatatypes.mylo.Mylo_DropDownFieldData;
 import com.aires.testdatatypes.mylo.Mylo_FileData;
 import com.aires.testdatatypes.mylo.Mylo_JourneyDetails_DEV5;
 import com.aires.testdatatypes.mylo.Mylo_JourneyDetails_PREPROD;
@@ -67,6 +68,8 @@ public class JsonDataReader_Mylo {
 			.getTestDataResourcePath() + "mylo/Mylo_FileData.json";
 	private final String _MyloMemoryCapacityFileIdPath = FileReaderManager.getInstance().getConfigReader()
 			.getTestDataResourcePath() + "mylo/MyloMemoryCapacityFileIds.json";
+	private final String _MyloDropDownFieldsDataPath = FileReaderManager.getInstance().getConfigReader()
+			.getTestDataResourcePath() + "mylo/Mylo_DropDownFieldData.json";
 	private List<Mylo_LoginData> _loginDataList;
 	private List<MyloUSStates> _USStatesList;
 	private List<MyloCAStates> _CAStatesList;
@@ -78,6 +81,7 @@ public class JsonDataReader_Mylo {
 	private List<Mylo_JourneyDetails_QA4> _journeyDetailsQA4List;
 	private List<Mylo_JourneyDetails_PREPROD> _journeyDetailsPREPRODList;
 	private List<Mylo_JourneyDetails_DEV5> _journeyDetailsDEV5List;
+	private List<Mylo_DropDownFieldData> _dropdownList;
 	private List<Mylo_FileData> _fileDataList;
 	private List<MyloMemoryCapacityFileIds> _fileIdDetailsList;
 	
@@ -95,6 +99,7 @@ public class JsonDataReader_Mylo {
 		_journeyDetailsDEV5List = getJourneyDetailsDEV5();
 		_fileDataList=getFileData();
 		_fileIdDetailsList=getFileDetailsData();
+		_dropdownList=getDropdownData();
 	}
 	private List<Mylo_LoginData> getUserData() {
 		Gson gson = new Gson();
@@ -177,6 +182,24 @@ public class JsonDataReader_Mylo {
 			return Arrays.asList(application);
 		} catch (FileNotFoundException e) {
 			throw new RuntimeException(CoreConstants.JSON_FILE_NOT_FOUND_AT_PATH + _JourneyDetailsDEV5FilePath);
+		} finally {
+			try {
+				if (bufferReader != null)
+					bufferReader.close();
+			} catch (IOException ignore) {
+			}
+		}
+	}
+	
+	private List<Mylo_DropDownFieldData> getDropdownData() {
+		Gson gson = new Gson();
+		BufferedReader bufferReader = null;
+		try {
+			bufferReader = new BufferedReader(new FileReader(_MyloDropDownFieldsDataPath));
+			Mylo_DropDownFieldData[] application = gson.fromJson(bufferReader, Mylo_DropDownFieldData[].class);
+			return Arrays.asList(application);
+		} catch (FileNotFoundException e) {
+			throw new RuntimeException(CoreConstants.JSON_FILE_NOT_FOUND_AT_PATH + _MyloDropDownFieldsDataPath);
 		} finally {
 			try {
 				if (bufferReader != null)
@@ -376,5 +399,9 @@ public class JsonDataReader_Mylo {
 	
 	public final MyloMemoryCapacityFileIds getFileIdListByEnv(String environmentName) {
 		return _fileIdDetailsList.stream().filter(x -> x.environment.equalsIgnoreCase(environmentName)).findAny().get();
+	}
+	
+	public final Mylo_DropDownFieldData getDropDownListByFieldName(String fieldName) {
+		return _dropdownList.stream().filter(x -> x.field.equalsIgnoreCase(fieldName)).findAny().get();
 	}
 }

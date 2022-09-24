@@ -19,6 +19,7 @@ package com.aires.managers;
 
 import org.openqa.selenium.WebDriver;
 
+import com.aires.pages.mylo.MyloJourneyPage_AddressSection;
 import com.aires.pages.mylo.MyloJourneyPage_AuthTrackSection;
 import com.aires.pages.mylo.MyloJourneyPage_CreateNewFileSection;
 import com.aires.pages.mylo.MyloJourneyPage_DependentSection;
@@ -26,6 +27,7 @@ import com.aires.pages.mylo.MyloJourneyPage_IdentityChallengeSection;
 import com.aires.pages.mylo.MyloJourneyPage_OtherSection;
 import com.aires.pages.mylo.MyloJourneyPage_PartnerSection;
 import com.aires.pages.mylo.MyloJourneyPage_SendLoginCredentials;
+import com.aires.pages.mylo.MyloJourneyPage_TaxReportingSection;
 import com.aires.pages.mylo.MyloJourneyPage_TransfereeSection;
 import com.aires.pages.mylo.Mylo_AssignmentPage;
 //import com.aires.pages.mylo.Mylo_AssignmentPage;
@@ -51,6 +53,8 @@ public class PageObjectManager_Mylo {
 	private MyloJourneyPage_IdentityChallengeSection _journeyIdentityChallengeSection;
 	private MyloJourneyPage_SendLoginCredentials _journeySendLoginCredentials;
 	private MyloJourneyPage_AuthTrackSection _journeyAuthTrackSection;
+	private MyloJourneyPage_TaxReportingSection _journeyPageTaxReportingSection;
+	private MyloJourneyPage_AddressSection _journeyPage_AddressSection;
 
 	public PageObjectManager_Mylo(WebDriver driver) {
 		this._driver = driver;
@@ -112,5 +116,13 @@ public class PageObjectManager_Mylo {
 	 public MyloJourneyPage_AuthTrackSection getJourneyPageAuthTrackSection() {
 			return (_journeyAuthTrackSection == null) ? _journeyAuthTrackSection = new MyloJourneyPage_AuthTrackSection(_driver)
 					: _journeyAuthTrackSection;
+		}
+	 public MyloJourneyPage_TaxReportingSection getJourneyPageTaxReportingSection() {
+			return (_journeyPageTaxReportingSection == null) ? _journeyPageTaxReportingSection = new MyloJourneyPage_TaxReportingSection(_driver)
+					: _journeyPageTaxReportingSection;
+		}
+	 public MyloJourneyPage_AddressSection getJourneyPageAddressSection() {
+			return (_journeyPage_AddressSection == null) ? _journeyPage_AddressSection = new MyloJourneyPage_AddressSection(_driver)
+					: _journeyPage_AddressSection;
 		}
 }

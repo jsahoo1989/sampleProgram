@@ -15,6 +15,7 @@ import org.openqa.selenium.support.How;
 import org.testng.Assert;
 
 import com.aires.businessrules.Base;
+import com.aires.businessrules.BusinessFunctions;
 import com.aires.businessrules.CoreFunctions;
 import com.aires.businessrules.constants.CoreConstants;
 import com.aires.businessrules.constants.MYLOConstants;
@@ -34,6 +35,9 @@ public class Mylo_JourneyPage extends Base {
 	@FindBy(how = How.CSS, using = "app-authorization-tracking")
 	private WebElement _authTrackSection;
 	
+	@FindBy(how = How.CSS, using = "app-expense-taxes")
+	private WebElement _taxReportSection;
+	
 	@FindBy(how = How.CSS, using = "app-aires-file-information h2")
 	private WebElement _fileInformationSection;
 	
@@ -46,6 +50,15 @@ public class Mylo_JourneyPage extends Base {
 	@FindBy(how = How.XPATH, using = "//button[text()=' Mailing: ']")
 	private WebElement _mailingAddressHeader;
 	
+	@FindBy(how = How.XPATH, using = "//button[text()=' Origin ']")
+	private WebElement _originAddressHeader;
+	
+	@FindBy(how = How.XPATH, using = "//button[text()=' Destination ']")
+	private WebElement _destinationAddressHeader;
+	
+	@FindBy(how = How.CSS, using = "h1[class='errortext']")
+	private WebElement _popUpMessage;
+	
 	String environment= System.getProperty("envt");
 	String application= System.getProperty("application");
 	//String environment= CoreFunctions.getPropertyFromConfig("envt");
@@ -57,10 +70,13 @@ public class Mylo_JourneyPage extends Base {
 	
 	public void mapJourneySectionWebElements() {
 		journeyWebElementsMap.put(MYLOConstants.AUTH_TRACK_SECTION, _authTrackSection);
+		journeyWebElementsMap.put(MYLOConstants.TAX_REPORTING_SECTION, _taxReportSection);
 		journeyWebElementsMap.put(MYLOConstants.FILE_INFORMATION_SECTION, _fileInformationSection);
 		journeyWebElementsMap.put(MYLOConstants.OFFICE, _fileInformationOffice);
 		journeyWebElementsMap.put(MYLOConstants.TRANSFEREE_GRADE, _transfereeGrade);
 		journeyWebElementsMap.put(MYLOConstants.MAILING_ADDRESS, _mailingAddressHeader);
+		journeyWebElementsMap.put(MYLOConstants.ORIGIN_ADDRESS, _originAddressHeader);
+		journeyWebElementsMap.put(MYLOConstants.DESTINATION_ADDRESS, _destinationAddressHeader);
 	}
 	
 	
@@ -132,6 +148,10 @@ public class Mylo_JourneyPage extends Base {
 		reqString=fileInfomation.split(";")[fileInfoFields.indexOf(field)];
 		journeyDetailsMap.clear();
 		return reqString;
+	}
+	
+	public boolean verifyPopUpMessage(String msg) {
+		return BusinessFunctions.verifyMyloPopUpMessage(driver, _popUpMessage, msg, MYLOConstants.JOURNEY);
 	}
 
 }

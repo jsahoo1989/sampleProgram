@@ -8,7 +8,7 @@ Background: Login to  Mylo application
 Scenario Outline:  Mylo-Validate Edit Option availability and additional fields displayed for Mylo Journey File Information section with different UserTypes
 Given he has logged into the Mylo application with mentioned userType "<UserType>" 
 And he is on Mylo Journey Summary page for file ID with "activeAssignment" 
-And he views the File Information section where "File ID", "Client ID", "Policy Type" are hard coded with background color "rgba(211, 191, 250, 1)"
+And he views the File Information section where "File ID", "Client ID", "Policy Type" are hard coded with background color "rgb(211, 191, 250)"
 When he clicks on the button "Details Carrot" under the file information section
 Then the file information should expand to display additional fields
 And "Status" of the file is not "CLSD" or "CNCL" 
@@ -101,4 +101,4 @@ Given he is on Mylo Journey Summary page for file ID with "activeAssignment"
 And he clicks on the button "Details Carrot" under the file information section
 When he has clicked on the dropdown for "<FieldName>" after clicking on "Edit" button
 Then "Select One" should display in the list of values of the mentioned dropdown fields
-|Office|Transfer Type|Policy Type|Homestatus|Journey Type|
+|Office|Transfer Type|Homestatus|Policy Type|Journey Type|

@@ -124,5 +124,17 @@
 		{
 		"fileType": "existingAuthTrackData",
 		"fileInfo": "646236;49226;Aires QA Automation Client;Booked;Domestic Policy;AIRES;Long-Term;CRO"
+		},
+		{
+		"fileType": "paymentCutOffDateCompletion",
+		"fileInfo": "261205;47090;Diageo NA;Booked;Current Employee Homeowner Band 5;AIRES;Permanent;NERO"
+		},
+		{
+		"fileType": "addressExist",
+		"fileInfo": "646365;49226;Aires QA Automation Client;Booked;Domestic Policy;AIRES;Long-Term;EMEA"
+		},
+		{
+		"fileType": "mailingAddressNotExist",
+		"fileInfo": "646406;49226;Aires QA Automation Client;Booked;Domestic Policy;AIRES;Long-Term;CRO"
 		}
 ]

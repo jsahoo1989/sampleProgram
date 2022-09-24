@@ -1040,7 +1040,7 @@ public class BusinessFunctions {
 		try {
 			CoreFunctions.isElementVisible(element);
 			CoreFunctions.highlightObject(driver, element);
-			flag = (element.getText().equals(msg));
+			flag = (element.getAttribute("innerHTML").split("<")[0].equals(msg));
 		} catch (Exception e) {
 			Reporter.addStepLog(MessageFormat.format(CoreConstants.FAIL_TO_VERIFY_ELEMENT_ON_SECTION, CoreConstants.FAIL,
 					MYLOConstants.ALERT_MESSAGE, sectionType));
@@ -1052,6 +1052,32 @@ public class BusinessFunctions {
 			Reporter.addStepLog(MessageFormat.format(MYLOConstants.EXPECTED_MESSAGE_DISPLAYED, CoreConstants.FAIL, msg,
 					element.getText(), MYLOConstants.JOURNEY));
 		return flag;
+	}
+	
+	/**
+	 * @param msg
+	 * @param sectionType
+	 * @return
+	 * Verify Toast Messages appearing for Different Sections
+	 */
+	public static boolean verifyMyloPopUpMessage(WebDriver driver,WebElement element,String msg, String pageName) {
+		boolean flag = false;
+		try {
+			CoreFunctions.explicitWaitTillElementVisibility(driver, element, element.getText(), 60);
+			CoreFunctions.highlightObject(driver, element);
+			flag = (element.getText().equals(msg));
+		} catch (Exception e) {
+			Reporter.addStepLog(MessageFormat.format(CoreConstants.FAIL_TO_VERIFY_ELEMENT_ON_PAGE, CoreConstants.FAIL,
+					MYLOConstants.EXPECTED_POPUP_MESSAGE, pageName));
+		}
+		if (flag)
+			Reporter.addStepLog(MessageFormat.format(MYLOConstants.VERIFIED_POPUP_MESSAGE_DISPLAYED, CoreConstants.PASS,
+					msg, pageName));
+		else
+			Reporter.addStepLog(MessageFormat.format(MYLOConstants.EXPECTED_MESSAGE_DISPLAYED, CoreConstants.FAIL, msg,
+					element.getText(), pageName));
+		return flag;
+		
 	}
 	
 	public static String setDifferentDropDownFieldsForMylo(WebDriver driver,By locator,String fieldValue) {
@@ -1082,8 +1108,15 @@ public class BusinessFunctions {
 	
 	public static void verifyMyloButtonEnabilityStatus(String type, WebElement element, String btnName, String sectionName,
 			String pageName) {
-		boolean flag = CoreFunctions.isElementVisible(element);
-		if (type.contains(MYLOConstants.WITHOUT)||type.contains(MYLOConstants.CANCELED)||type.contains(MYLOConstants.CLOSED)) {
+		boolean flag = false;
+		try {
+			flag = CoreFunctions.isElementVisible(element);
+		} catch (Exception e) {
+			Reporter.addStepLog(MessageFormat.format(CoreConstants.FAIL_TO_VERIFY_ELEMENT_ON_SECTION,
+					CoreConstants.FAIL, element, sectionName));
+		}
+		if (type.contains(MYLOConstants.WITHOUT) || type.contains(MYLOConstants.CANCELED)
+				|| type.contains(MYLOConstants.CLOSED)|| type.contains(MYLOConstants.PAYMENT_CUT_OFF_COMPLETION)) {
 			Assert.assertFalse(flag, MessageFormat.format(MYLOConstants.BUTTON_ENABLED, CoreConstants.FAIL, btnName,
 					sectionName, pageName));
 			Reporter.addStepLog(MessageFormat.format(MYLOConstants.BUTTON_DISABLED, CoreConstants.PASS, btnName,
@@ -1095,5 +1128,28 @@ public class BusinessFunctions {
 			Reporter.addStepLog(MessageFormat.format(MYLOConstants.BUTTON_ENABLED, CoreConstants.PASS, btnName,
 					sectionName, pageName));
 		}
+	}
+	
+	public static String setDifferentMyloFields(WebDriver driver, String fieldName, String fieldValue,
+			WebElement element, String type) {
+		String updatedValue = "";
+		try {
+			updatedValue = (type.equals(MYLOConstants.RANDOM_STRING))
+					? CoreFunctions.generateRandomCharOfLength(Integer.parseInt(fieldValue),
+							MYLOConstants.ONLY_CHARACTERS, 0)
+					: (type.equals(MYLOConstants.RANDOM_INTEGER))
+							? CoreFunctions.generateRandomNumberAsGivenLength((Integer.parseInt(fieldValue)))
+							: (type.equals(MYLOConstants.BLANK))
+									? CoreFunctions.setBlankField(driver, element, fieldName)
+									: (type.equals(MYLOConstants.SPECIAL_CHARACTERS_STRING))
+											? CoreFunctions.generateRandomCharOfLength(4,
+													MYLOConstants.SPECIAL_CHARACTERS_STRING, 2)
+											: fieldValue;
+		} catch (Exception e) {
+			Assert.fail(
+					MessageFormat.format(PDTConstants.WEB_ELEMENT_NOT_FOUND_ON_PAGE, CoreConstants.FAIL, fieldName));
+		}
+		CoreFunctions.clearAndSetText(driver, element, fieldName, updatedValue);
+		return updatedValue;
 	}
 }

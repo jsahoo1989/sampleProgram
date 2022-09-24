@@ -9,7 +9,10 @@ import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
+
+import org.openqa.selenium.Alert;
 import org.openqa.selenium.By;
+import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.Keys;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
@@ -311,7 +314,7 @@ public class Mylo_AssignmentPage extends Base {
 	@FindBy(how = How.XPATH, using = "//span[text()='Delete']")
 	private WebElement _DeleteButton;
 
-	@FindBy(how = How.CSS, using = "app-address i[class='icon-Trash_Open Trash_icon']")
+	@FindBy(how = How.CSS, using = "app-address i[class='icon-Trash_Open']")
 	private WebElement _addressDeleteButton;
 
 	@FindBy(how = How.CSS, using = "app-address[id='temporaryAddress'] i[class='icon-Pencil_Open']")
@@ -340,16 +343,16 @@ public class Mylo_AssignmentPage extends Base {
 	@FindBy(how = How.XPATH, using = "//figcaption/h3")
 	private List<WebElement> _historyCardDropdownTransferreName;
 
-	@FindBy(how = How.CSS, using = "div[class='historyusertitle text-truncate']")
+	@FindBy(how = How.CSS, using = "div[class='history-address text-truncate']")
 	private List<WebElement> _historyCardDisplayedAddress;
 
-	@FindBy(how = How.XPATH, using = "//div[@class='historyrole text-truncate']/span")
+	@FindBy(how = How.XPATH, using = "//div[@class='history-role text-truncate']/span")
 	private List<WebElement> _historyCardDisplayedFileIdClient;
 
-	@FindBy(how = How.CSS, using = "div[class='historyfiletitle text-truncate']")
+	@FindBy(how = How.CSS, using = "div[class='history-transferee-title text-truncate']")
 	private List<WebElement> _historyCardDisplayedTransferreName;
 
-	@FindBy(how = How.XPATH, using = "//div[contains(@class,'historycard')]")
+	@FindBy(how = How.XPATH, using = "//div[contains(@class,'history-card px')]")
 	private WebElement _historyCardSection;
 
 	@FindBy(how = How.CSS, using = "button[id='closedesc']")
@@ -459,8 +462,8 @@ public class Mylo_AssignmentPage extends Base {
 	final By _fileInfoPolicyTypeDropdownReadOnly = By.xpath("//ng-select[@name='policyType']//input[@disabled]");
 	final By _assignmentSubMenus = By.xpath("//div[contains(@class,'navlist__container')]/li/descendant::a");
 
-	 //String environment = CoreFunctions.getPropertyFromConfig("envt");
-	 String environment = System.getProperty("envt");
+	//String environment = CoreFunctions.getPropertyFromConfig("envt");
+	String environment = System.getProperty("envt");
 	String updatedTeamMember, updatedPolicyType, updatedTaxTreatment, updatedOffice, updatedJourneyType,
 			updatedTransferType, updatedHomeStatus, updatedFileInfoCheckboxSelected, updatedTempAddressCityValue,
 			updatedMailAddressCityValue, updatedTempAddressZipCodeValue, updatedMailAddressZipCodeValue,
@@ -949,7 +952,8 @@ public class Mylo_AssignmentPage extends Base {
 		} else {
 			if (fieldValue != airesFileInfoFieldsMap.get(fieldName).getText())
 				selectedText = CoreFunctions.returnItemInListByText(driver, allOptions, fieldValue).getText();
-			CoreFunctions.clickElement(driver, CoreFunctions.returnItemInListByText(driver, allOptions, fieldValue));
+			WebElement reqElement = CoreFunctions.returnItemInListByText(driver, allOptions, fieldValue);
+			CoreFunctions.clickUsingJS(driver, reqElement, fieldValue);
 			Reporter.addStepLog(MessageFormat.format(MYLOConstants.VALUE_UPDATED_ON_SECTION, CoreConstants.PASS,
 					selectedText, fieldName, MYLOConstants.AIRES_FILE_INFORMATION, MYLOConstants.ASSIGNMENT));
 		}
@@ -976,12 +980,16 @@ public class Mylo_AssignmentPage extends Base {
 			updatedTransferType = selectDropdownOptionsAndReturnText(fieldName, fieldValue);
 			break;
 		case MYLOConstants.JOURNEY_TYPE:
+			if (CoreFunctions.isElementExist(driver, _YesButton, 30)) {
+				CoreFunctions.click(driver, _YesButton, MYLOConstants.YES_BUTTON);
+				CoreFunctions.click(driver, _OKButtonPopUp, MYLOConstants.OK_BUTTON);
+			}
 			CoreFunctions.scrollToElementUsingJS(driver, _fileInfoOfficeDropdown, fieldName);
 			CoreFunctions.click(driver, _fileInfoJourneyTypeDropdown, fieldName);
 			updatedJourneyType = selectDropdownOptionsAndReturnText(fieldName, fieldValue);
 			break;
 		case MYLOConstants.HOMESTATUS:
-			CoreFunctions.scrollToElementUsingJS(driver, _fileInfoJourneyTypeDropdown, fieldName);
+			CoreFunctions.scrollToElementUsingJS(driver, _fileInfoOfficeDropdown, fieldName);
 			CoreFunctions.click(driver, _fileInfoHomeStatusDropdown, fieldName);
 			updatedHomeStatus = selectDropdownOptionsAndReturnText(fieldName, fieldValue);
 			break;
@@ -1050,16 +1058,16 @@ public class Mylo_AssignmentPage extends Base {
 			CoreFunctions.explicitWaitTillElementInVisibilityCustomTime(driver, _spinner, 60);
 		}
 		clickButtonOnAiresFileInformationSection(MYLOConstants.EDIT_BUTTON);
+		updateFileInfoFields(MYLOConstants.JOURNEY_TYPE, MYLOConstants.JOURNEY_TYPE_VALUE);
 		updateFileInfoFields(MYLOConstants.POLICY_TYPE, MYLOConstants.POLICY_TYPE_VALUE);
 		if (CoreFunctions.isElementExist(driver, _YesButton, 30))
 			CoreFunctions.click(driver, _YesButton, MYLOConstants.YES_BUTTON);
 		if (CoreFunctions.isElementExist(driver, _OKButtonPopUp, 30))
 			CoreFunctions.click(driver, _OKButtonPopUp, MYLOConstants.OK_BUTTON);
-		updateFileInfoFields(MYLOConstants.JOURNEY_TYPE, MYLOConstants.JOURNEY_TYPE_VALUE);
 		// CoreFunctions.scrollToElementUsingJS(driver, _fileInfoOffice,
 		// MYLOConstants.OFFICE);
 		updateFileInfoFields(MYLOConstants.HOMESTATUS, MYLOConstants.HOMESTATUS_VALUE);
-		clickCheckBoxOnAiresFileInfoSection(MYLOConstants.INHERITED_FILE);
+		clickCheckBoxOnAiresFileInfoSection(MYLOConstants.INHERITED_FILE);		
 		clickButtonOnAiresFileInformationSection(MYLOConstants.SAVE_BUTTON);
 		// Assert.assertTrue(verifyMessage(MYLOConstants.SUCCESS_MESSAGE));
 		// clickButtonOnAiresFileInformationSection(MYLOConstants.OK_BUTTON);
@@ -1219,14 +1227,14 @@ public class Mylo_AssignmentPage extends Base {
 			typeDropDownList = CoreFunctions.getElementListByLocator(driver, _dropdownOptions);
 			break;
 		case MYLOConstants.TEMPORARY_ADDRESS_DROPDOWN:
-			CoreFunctions.explicitWaitTillElementVisibility(driver, _tempAddressDropdown,
-					MYLOConstants.TEMPORARY_ADDRESS_DROPDOWN);
+			CoreFunctions.refreshPage(driver);
+			CoreFunctions.waitForMyloSpinnnerInvisibilityIfExist(driver, _spinner);
 			CoreFunctions.scrollClickUsingJS(driver, _tempAddressDropdown, MYLOConstants.TEMPORARY_ADDRESS_DROPDOWN);
 			mapOtherAddresssWebElementFields();
 			break;
 		case MYLOConstants.MAILING_ADDRESS_DROPDOWN:
-			CoreFunctions.explicitWaitTillElementVisibility(driver, _mailAddressDropdown,
-					MYLOConstants.MAILING_ADDRESS_DROPDOWN);
+			CoreFunctions.refreshPage(driver);
+			CoreFunctions.waitForMyloSpinnnerInvisibilityIfExist(driver, _spinner);
 			CoreFunctions.scrollClickUsingJS(driver, _mailAddressDropdown, MYLOConstants.MAILING_ADDRESS_DROPDOWN);
 			mapOtherAddresssWebElementFields();
 			break;
@@ -1310,7 +1318,6 @@ public class Mylo_AssignmentPage extends Base {
 			valuesToIgnore.add(MYLOConstants.INDIA_STATE);
 			valuesToIgnore.add(MYLOConstants.CANADA_STATE);
 			valuesToIgnore.add(MYLOConstants.SELECT_ONE);
-			countryList.remove(0);
 			updatedCountryValue = CoreFunctions.getRandomOutOfSelectedElementValueFromList(driver, countryList,
 					valuesToIgnore);
 			BusinessFunctions.selectItemFromListUsingText(driver, countryList, updatedCountryValue);
@@ -1327,8 +1334,6 @@ public class Mylo_AssignmentPage extends Base {
 		if (fieldValue.equals(MYLOConstants.RANDOM)) {
 			List<String> valuesToIgnore = new ArrayList<String>();
 			valuesToIgnore.add("Select One");
-			stateList.remove(0);
-			stateList.remove(1);
 			CoreFunctions.explicitWaitTillElementListVisibilityCustomTime(driver, stateList, 60);
 			BusinessFunctions.selectItemFromListUsingText(driver, stateList,
 					CoreFunctions.getRandomOutOfSelectedElementValueFromList(driver, stateList, valuesToIgnore));
@@ -1686,10 +1691,9 @@ public class Mylo_AssignmentPage extends Base {
 		boolean flag = false;
 		try {
 			CoreFunctions.explicitWaitTillElementVisibility(driver, _alertMessage, msg);
-			CoreFunctions.isElementVisible(_alertMessage);
+			Assert.assertTrue(CoreFunctions.isElementVisible(_alertMessage));
 			CoreFunctions.highlightObject(driver, _alertMessage);
-			System.out.println(_alertMessage.getText());
-			flag = (_alertMessage.getText().equals(msg));
+			flag = (_alertMessage.getAttribute("innerHTML").split("<")[0].equals(msg));
 		} catch (Exception e) {
 			Reporter.addStepLog(MessageFormat.format(CoreConstants.FAIL_TO_VERIFY_ELEMENT_ON_PAGE, CoreConstants.FAIL,
 					MYLOConstants.ALERT_MESSAGE, MYLOConstants.OTHER_ADDRESS));
@@ -2611,24 +2615,7 @@ public class Mylo_AssignmentPage extends Base {
 	 * @return Verify Multiple Toast Messages appearing simultaneously
 	 */
 	public boolean verifyAlertMessageList(String msg, int index) {
-		boolean flag = false;
-		try {
-			CoreFunctions.isElementListExist(driver, _alertMessageList, 5);
-			CoreFunctions.highlightObject(driver, _alertMessageList.get(index));
-			System.out.println(_alertMessageList.get(index).getText());
-			flag = (_alertMessageList.get(index).getText().equals(msg));
-		} catch (Exception e) {
-			Reporter.addStepLog(MessageFormat.format(CoreConstants.FAIL_TO_VERIFY_ELEMENT_ON_PAGE, CoreConstants.FAIL,
-					MYLOConstants.ALERT_MESSAGE, MYLOConstants.ASSIGNMENT));
-		}
-
-		if (flag)
-			Reporter.addStepLog(MessageFormat.format(MYLOConstants.VERIFIED_ALERT_MESSAGE_DISPLAYED, CoreConstants.PASS,
-					msg, MYLOConstants.ASSIGNMENT));
-		else
-			Reporter.addStepLog(MessageFormat.format(MYLOConstants.EXPECTED_MESSAGE_DISPLAYED, CoreConstants.FAIL, msg,
-					_alertMessage.getText(), MYLOConstants.ASSIGNMENT));
-		return flag;
+		return BusinessFunctions.verifyMyloToastMessage(driver, _alertMessageList.get(index), msg, MYLOConstants.JOURNEY);
 	}
 
 	/**

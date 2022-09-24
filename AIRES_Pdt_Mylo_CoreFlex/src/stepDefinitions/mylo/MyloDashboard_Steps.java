@@ -30,7 +30,7 @@ public class MyloDashboard_Steps {
 	Mylo_LoginData loginData = FileReaderManager.getInstance().getMyloJsonReader()
 			.getloginDetailsByUserProfileName(MYLOConstants.USER_PROFILE_NAME);
 	MyloMemoryCapacityFileIds myloFileIdDetails= FileReaderManager.getInstance()
-			.getMyloJsonReader().getFileIdListByEnv(environment);
+			.getMyloJsonReader().getFileIdListByEnv("DEV5");
 
 	public MyloDashboard_Steps(TestContext context) {
 		testContext = context;
@@ -158,7 +158,7 @@ public class MyloDashboard_Steps {
 
 	@When("^he loads the file alternatively for given number of times on Mylo Journey page$")
 	public void he_loads_the_file_alternatively_for_given_number_of_times_on_Mylo_Journey_page(){
-	  myloDashboardPage.loadAlternateFiles();
+		myloDashboardPage.loadAlternateFiles();
 	}
 
 	@Then("^browser should not be crashed for loading files continuosly$")

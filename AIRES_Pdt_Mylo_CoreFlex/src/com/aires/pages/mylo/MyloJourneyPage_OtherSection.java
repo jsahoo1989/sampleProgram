@@ -543,6 +543,7 @@ public class MyloJourneyPage_OtherSection extends Base {
 			CoreFunctions.click(driver, _otherPhonePreferredSelect.get(index), elementName);
 			break;
 		case MYLOConstants.OTHER_EMAIL_PREFERRED:
+			CoreFunctions.scrollToElementUsingJavaScript(driver, _otherCitizenship, MYLOConstants.CITIZENSHIP);
 			CoreFunctions.click(driver, _otherEmailPreferredSelect.get(index), elementName);
 			break;
 		default:

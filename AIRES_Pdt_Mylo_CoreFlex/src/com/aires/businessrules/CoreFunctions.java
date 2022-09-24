@@ -1657,6 +1657,7 @@ public class CoreFunctions {
 			List<String> valuesToIgnore) {
 		String selectedValue;
 		do {
+			WebElementList.remove(0);
 			selectedValue = WebElementList.get(getRandomNumber(0, WebElementList.size() - 1)).getText();
 		} while (valuesToIgnore.contains(selectedValue));
 		return selectedValue;

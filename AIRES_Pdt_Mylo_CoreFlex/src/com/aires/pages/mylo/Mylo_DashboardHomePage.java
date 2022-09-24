@@ -96,8 +96,11 @@ public class Mylo_DashboardHomePage extends Base {
 	@FindBy(how = How.CSS, using = "div[role='dialog']")
 	private WebElement _myloErrorPopUp;
 	
-	@FindBy(how = How.CSS, using = "button[class*='swal2-confirm']")
+	@FindBy(how = How.XPATH, using = "//button[text()='Ok']")
 	private WebElement _okButtonPopUp;
+	
+	@FindBy(how = How.XPATH, using = "//button[text()='OK']")
+	private WebElement _OKButtonPopUp;
 	
 	@FindBy(how = How.CSS, using = "app-aires-file-information")
 	private WebElement _fileInformationSection;
@@ -181,7 +184,8 @@ public class Mylo_DashboardHomePage extends Base {
 		CoreFunctions.highlightElementAndClick(driver, _executeButton, _executeButton.getText());
 		CoreFunctions.waitForMyloSpinnnerInvisibilityIfExist(driver, _spinner);
 		if (CoreFunctions.isElementExist(driver, _okButtonPopUp, 2)) {
-			CoreFunctions.click(driver, _okButtonPopUp, MYLOConstants.OK_BUTTON);
+			CoreFunctions.explicitWaitTillElementBecomesClickable(driver, _okButtonPopUp, MYLOConstants.OK_BUTTON);
+			CoreFunctions.clickUsingJS(driver, _okButtonPopUp, MYLOConstants.OK_BUTTON);
 			CoreFunctions.waitForMyloSpinnnerInvisibilityIfExist(driver, _spinner);
 		}
 	}
@@ -277,7 +281,7 @@ public class Mylo_DashboardHomePage extends Base {
 				CoreFunctions.explicitWaitTillElementInVisibilityCustomTime(driver, _spinner, 60);
 				CoreFunctions.explicitWaitTillElementVisibility(driver, _popUpMessage, _popUpMessage.getText());
 				Assert.assertEquals(_popUpMessage.getText(), message, MYLOConstants.INCORRECT_MESSAGE);
-				CoreFunctions.clickElement(driver, _okButtonPopUp);
+				CoreFunctions.clickElement(driver, _OKButtonPopUp);
 				CoreFunctions.explicitWaitTillElementInVisibilityCustomTime(driver, _spinner, 60);
 			}
 		} catch (Exception e) {
@@ -410,7 +414,6 @@ public class Mylo_DashboardHomePage extends Base {
 	
 	public void loadAlternateFiles() {
 		String ctr = System.getProperty("noOfTimes");
-		//String ctr="10";
 		int max = Integer.parseInt(ctr);
 		for (int i = 0; i < max; i++) {
 			CoreFunctions.explicitWaitTillElementListClickable(driver, _historyCards);

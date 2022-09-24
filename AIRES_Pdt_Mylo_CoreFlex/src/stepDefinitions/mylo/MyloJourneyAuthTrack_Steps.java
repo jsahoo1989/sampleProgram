@@ -32,8 +32,8 @@ public class MyloJourneyAuthTrack_Steps {
 	}
 	
 	@When("^he views \"([^\"]*)\" section$")
-	public void he_views_section(String arg1) {
-		myloJourneyPage.scrollToJourneySection(MYLOConstants.AUTH_TRACK_SECTION, MYLOConstants.JOURNEY);
+	public void he_views_section(String sectionName) {
+		myloJourneyPage.scrollToJourneySection(sectionName, MYLOConstants.JOURNEY);
 	}
 
 	@Then("^\"([^\"]*)\",\"([^\"]*)\" button should be enabled for Resource(\\d+) or disabled for Without Resource(\\d+) depending on \"([^\"]*)\"$")

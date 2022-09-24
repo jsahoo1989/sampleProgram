@@ -14,6 +14,7 @@ import com.aires.businessrules.constants.COREFLEXConstants;
 import com.aires.businessrules.constants.CoreConstants;
 import com.aires.businessrules.constants.MYLOConstants;
 import com.aires.managers.FileReaderManager;
+import com.aires.pages.PDT_Mylo_CoreFlex_Common_LoginPage;
 import com.aires.testdatatypes.mylo.Mylo_LoginData;
 import com.aires.utilities.EmailUtil;
 import com.aires.utilities.Log;
@@ -133,7 +134,8 @@ public class Mylo_LoginPage extends Base {
 		if (userType.equals(MYLOConstants.USER_WITHOUT_RESOURCE15)
 				|| userType.equals(MYLOConstants.USER_WITHOUT_RESOURCE300096)
 				|| userType.equals(MYLOConstants.USER_WITHOUT_RESOURCE300140)
-				|| userType.equals(MYLOConstants.USER_WITHOUT_RESOURCE300139))
+				|| userType.equals(MYLOConstants.USER_WITHOUT_RESOURCE300139)
+				|| userType.equals(MYLOConstants.USER_WITHOUT_RESOURCE300023))
 			enterUserEmailAndPasswordForMylo(loginData.MyloWithOutResource15UserName, loginData.MyloPassword);
 		else
 			enterUserEmailAndPasswordForMylo(loginData.MyloUserName, loginData.MyloPassword);

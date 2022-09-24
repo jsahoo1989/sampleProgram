@@ -15,6 +15,7 @@ import org.openqa.selenium.support.How;
 import org.testng.Assert;
 
 import com.aires.businessrules.Base;
+import com.aires.businessrules.BusinessFunctions;
 import com.aires.businessrules.CoreFunctions;
 import com.aires.businessrules.DbFunctions;
 import com.aires.businessrules.constants.CoreConstants;
@@ -290,7 +291,7 @@ public class MyloJourneyPage_DependentSection extends Base {
 	/**
 	 * @param fieldName
 	 * @param fieldValue
-	 * Set Value of different fields on Deependent section
+	 * Set Value of different fields on Dependent section
 	 */
 	public void setDependentFields(String fieldName, String fieldValue) {
 		mapDependentWebElementFields();
@@ -298,7 +299,7 @@ public class MyloJourneyPage_DependentSection extends Base {
 			WebElement reqWebElement = dependentWebElementsMap.get(fieldName);
 			CoreFunctions.explicitWaitTillElementVisibility(driver, reqWebElement, fieldName);
 			if (fieldValue.equals(""))
-				CoreFunctions.scrollToElementUsingJavaScript(driver, _transfereeAndFamilySection,
+				CoreFunctions.scrollToElementUsingJavaScript(driver, _transfereeAndFamilySectionHeaders.get(2),
 						MYLOConstants.TRANSFEREE_FAMILY);
 			String setValue = CoreFunctions.setDifferentFieldsForMylo(driver, reqWebElement, fieldName, fieldValue);
 			dependentUpdatedFieldValuesMap.put(fieldName, setValue);
@@ -335,22 +336,7 @@ public class MyloJourneyPage_DependentSection extends Base {
 	 * Verify Toast Messages appearing for Dependent Section
 	 */
 	public boolean verifyToastMessage(String msg, String sectionType) {
-		boolean flag = false;
-		try {
-			CoreFunctions.isElementVisible(_alertMessage);
-			CoreFunctions.highlightObject(driver, _alertMessage);
-			flag = (_alertMessage.getText().equals(msg));
-		} catch (Exception e) {
-			Reporter.addStepLog(MessageFormat.format(CoreConstants.FAIL_TO_VERIFY_ELEMENT_ON_SECTION, CoreConstants.FAIL,
-					MYLOConstants.ALERT_MESSAGE, sectionType));
-		}
-		if (flag)
-			Reporter.addStepLog(MessageFormat.format(MYLOConstants.VERIFIED_ALERT_MESSAGE_DISPLAYED, CoreConstants.PASS,
-					msg, MYLOConstants.JOURNEY));
-		else
-			Reporter.addStepLog(MessageFormat.format(MYLOConstants.EXPECTED_MESSAGE_DISPLAYED, CoreConstants.FAIL, msg,
-					_alertMessage.getText(), MYLOConstants.JOURNEY));
-		return flag;
+		return BusinessFunctions.verifyMyloToastMessage(driver, _alertMessage, msg, sectionType);
 	}
 	
 	/**
@@ -572,6 +558,8 @@ public class MyloJourneyPage_DependentSection extends Base {
 			CoreFunctions.click(driver, _dependentPhonePreferredSelect.get(index), elementName);
 			break;
 		case MYLOConstants.DEPENDENT_EMAIL_PREFERRED:
+			CoreFunctions.scrollToElementUsingJavaScript(driver,_dependentCitizenship ,
+					MYLOConstants.CITIZENSHIP);
 			CoreFunctions.click(driver, _dependentEmailPreferredSelect.get(index), elementName);
 			break;
 		case MYLOConstants.RELATIONSHIP:

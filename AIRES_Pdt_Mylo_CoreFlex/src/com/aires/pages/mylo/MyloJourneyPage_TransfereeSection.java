@@ -15,6 +15,7 @@ import org.openqa.selenium.support.How;
 import org.testng.Assert;
 
 import com.aires.businessrules.Base;
+import com.aires.businessrules.BusinessFunctions;
 import com.aires.businessrules.CoreFunctions;
 import com.aires.businessrules.DbFunctions;
 import com.aires.businessrules.constants.CoreConstants;
@@ -280,7 +281,6 @@ public class MyloJourneyPage_TransfereeSection extends Base {
 			CoreFunctions.explicitWaitTillElementVisibility(driver, _transfereeAndFamilySectionHeaders.get(2),
 					sectionName);
 			CoreFunctions.highlightObject(driver, _transfereeAndFamilySectionHeaders.get(2));
-			System.out.println(_transfereeAndFamilySectionHeaders.get(2).getText());
 			flag = (_transfereeAndFamilySectionHeaders.get(2).getText().equals(sectionName +MYLOConstants.COLON));
 			break;
 		case MYLOConstants.OTHER:
@@ -289,7 +289,6 @@ public class MyloJourneyPage_TransfereeSection extends Base {
 			CoreFunctions.explicitWaitTillElementVisibility(driver, _transfereeAndFamilySectionHeaders.get(3),
 					sectionName);
 			CoreFunctions.highlightObject(driver, _transfereeAndFamilySectionHeaders.get(3));
-			System.out.println(_transfereeAndFamilySectionHeaders.get(3).getText());
 			flag = (_transfereeAndFamilySectionHeaders.get(3).getText().equals(sectionName +MYLOConstants.COLON));
 			break;
 		default:
@@ -858,22 +857,7 @@ public class MyloJourneyPage_TransfereeSection extends Base {
 	 * Verify Toast Messages appearing for Transferee Section
 	 */
 	public boolean verifyToastMessage(String msg, String sectionType) {
-		boolean flag = false;
-		try {
-			CoreFunctions.isElementVisible(_alertMessage);
-			CoreFunctions.highlightObject(driver, _alertMessage);
-			flag = (_alertMessage.getText().equals(msg));
-		} catch (Exception e) {
-			Reporter.addStepLog(MessageFormat.format(CoreConstants.FAIL_TO_VERIFY_ELEMENT_ON_SECTION, CoreConstants.FAIL,
-					MYLOConstants.ALERT_MESSAGE, sectionType));
-		}
-		if (flag)
-			Reporter.addStepLog(MessageFormat.format(MYLOConstants.VERIFIED_ALERT_MESSAGE_DISPLAYED, CoreConstants.PASS,
-					msg, MYLOConstants.JOURNEY));
-		else
-			Reporter.addStepLog(MessageFormat.format(MYLOConstants.EXPECTED_MESSAGE_DISPLAYED, CoreConstants.FAIL, msg,
-					_alertMessage.getText(), MYLOConstants.JOURNEY));
-		return flag;
+		return BusinessFunctions.verifyMyloToastMessage(driver, _alertMessage, msg, sectionType);
 	}
 
 	/**

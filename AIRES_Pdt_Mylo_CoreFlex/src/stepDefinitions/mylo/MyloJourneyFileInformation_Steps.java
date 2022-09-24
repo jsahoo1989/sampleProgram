@@ -237,13 +237,6 @@ public class MyloJourneyFileInformation_Steps {
 		myloAssignmentPage.clickButtonOnAiresFileInformationSection(buttonName);
 	}
 
-	@Then("^\"([^\"]*)\" should display in the list of values of the \"([^\"]*)\"  dropdown$")
-	public void should_display_in_the_list_of_values_of_the_dropdown(String listValue, String fieldName) {
-		Assert.assertTrue(myloAssignmentPage.verifyFileInfoDropDownValues(fieldName, listValue),
-				MessageFormat.format(MYLOConstants.VERIFIED_DROPDOWN_VALUE_NOT_APPEARING, CoreConstants.FAIL, listValue,
-						fieldName, MYLOConstants.AIRES_FILE_INFORMATION));
-	}
-
 	@Then("^\"([^\"]*)\" should display in the list of values of the mentioned dropdown fields$")
 	public void should_display_in_the_list_of_values_of_the_mentioned_dropdown_fields(String listValue,
 			DataTable fields) {

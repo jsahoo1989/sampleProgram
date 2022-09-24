@@ -187,7 +187,7 @@ public class Hooks {
 	}
 
 	
-	//@After(order = 1)
+	@After(order = 1)
 	public void updateResultInTestRail(Scenario scenario) {
 		String Case_ID = BusinessFunctions.getTestRailIdAsPerApplication(System.getProperty("application"),scenario.getSourceTagNames().toString());
 		//String Case_ID = BusinessFunctions.getTestRailIdAsPerApplication("PDT",scenario.getSourceTagNames().toString());

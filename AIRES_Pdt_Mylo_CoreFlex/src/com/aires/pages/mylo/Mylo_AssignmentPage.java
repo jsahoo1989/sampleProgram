@@ -1692,24 +1692,8 @@ public class Mylo_AssignmentPage extends Base {
 	 * @return Verify all the Alert Messages
 	 */
 	public boolean verifyAlertMessage(String msg) {
-		boolean flag = false;
-		try {
-			CoreFunctions.explicitWaitTillElementVisibility(driver, _alertMessage, msg);
-			Assert.assertTrue(CoreFunctions.isElementVisible(_alertMessage));
-			CoreFunctions.highlightObject(driver, _alertMessage);
-			flag = (_alertMessage.getAttribute("innerHTML").split("<")[0].equals(msg));
-		} catch (Exception e) {
-			Reporter.addStepLog(MessageFormat.format(CoreConstants.FAIL_TO_VERIFY_ELEMENT_ON_PAGE, CoreConstants.FAIL,
-					MYLOConstants.ALERT_MESSAGE, MYLOConstants.OTHER_ADDRESS));
-		}
-
-		if (flag)
-			Reporter.addStepLog(MessageFormat.format(MYLOConstants.VERIFIED_ALERT_MESSAGE_DISPLAYED, CoreConstants.PASS,
-					msg, MYLOConstants.OTHER_ADDRESS));
-		else
-			Reporter.addStepLog(MessageFormat.format(MYLOConstants.EXPECTED_MESSAGE_DISPLAYED, CoreConstants.FAIL, msg,
-					_alertMessage.getText(), MYLOConstants.OTHER_ADDRESS));
-		return flag;
+		return BusinessFunctions.verifyMyloToastMessage(driver, _alertMessage, msg, MYLOConstants.OTHER_ADDRESS);
+		
 	}
 
 	/**

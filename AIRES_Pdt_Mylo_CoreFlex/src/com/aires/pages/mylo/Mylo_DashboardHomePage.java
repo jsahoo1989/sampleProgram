@@ -53,7 +53,7 @@ public class Mylo_DashboardHomePage extends Base {
 	@FindBy(how = How.CSS, using = "span[class='ng-option-label ng-star-inserted']")
 	private List<WebElement> _selectOptions;
 
-	@FindBy(how = How.CSS, using = "td[scope='col'] label")
+	@FindBy(how = How.CSS, using = "div[class='row'] label")
 	private List<WebElement> _fileParameterList;
 	
 	@FindBy(how = How.CSS, using = "h1[class='popupheader']")

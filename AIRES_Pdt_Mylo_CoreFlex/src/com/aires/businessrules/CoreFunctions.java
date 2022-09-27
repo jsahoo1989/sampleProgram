@@ -1917,7 +1917,7 @@ public class CoreFunctions {
 	
 	public static void waitForMyloSpinnnerInvisibilityIfExist(WebDriver driver,WebElement element) {
 		if(CoreFunctions.isElementExist(driver, element, 5)) {
-			CoreFunctions.explicitWaitTillElementInVisibilityCustomTime(driver, element, 180);
+			CoreFunctions.explicitWaitTillElementInVisibilityCustomTime(driver, element, 300);
 			}
 	}
 

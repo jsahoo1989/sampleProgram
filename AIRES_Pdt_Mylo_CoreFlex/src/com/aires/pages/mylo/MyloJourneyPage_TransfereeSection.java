@@ -255,41 +255,35 @@ public class MyloJourneyPage_TransfereeSection extends Base {
 		switch (sectionName) {
 		case MYLOConstants.TRANSFEREE_FAMILY:
 			CoreFunctions.explicitWaitTillElementVisibility(driver, _transfereeAndFamilySection, sectionName);
-			CoreFunctions.highlightObject(driver, _transfereeAndFamilySection);
-			System.out.println(_transfereeAndFamilySection.getText());
-			flag = (_transfereeAndFamilySection.getText().contains(MYLOConstants.TRANSFEREE_FAMILY_HEADER));
+			flag = (CoreFunctions.getElementText(driver, _transfereeAndFamilySection).contains(MYLOConstants.TRANSFEREE_FAMILY_HEADER));
 			break;
 		case MYLOConstants.TRANSFEREE:
+			CoreFunctions.scrollToElementUsingJavaScript(driver, _transfereeAndFamilySection,
+					MYLOConstants.TRANSFEREE_FAMILY);
 			CoreFunctions.explicitWaitTillElementVisibility(driver, _transfereeAndFamilySectionHeaders.get(0),
 					sectionName);
-			CoreFunctions.scrollToElementUsingJavaScript(driver, _transfereeAndFamilySection,
-					MYLOConstants.TRANSFEREE_FAMILY);
-			CoreFunctions.highlightObject(driver, _transfereeAndFamilySectionHeaders.get(0));
-			flag = (_transfereeAndFamilySectionHeaders.get(0).getText().equals(sectionName+MYLOConstants.COLON));
+			flag = (CoreFunctions.getElementText(driver, _transfereeAndFamilySectionHeaders.get(0)).equals(sectionName +MYLOConstants.COLON));
 			break;
 		case MYLOConstants.PARTNER:
-			CoreFunctions.explicitWaitTillElementVisibility(driver, _transfereeAndFamilySectionHeaders.get(1),
-					sectionName);
 			CoreFunctions.scrollToElementUsingJavaScript(driver, _transfereeAndFamilySection,
 					MYLOConstants.TRANSFEREE_FAMILY);
-			CoreFunctions.highlightObject(driver, _transfereeAndFamilySectionHeaders.get(1));
-			flag = (_transfereeAndFamilySectionHeaders.get(1).getText().equals(sectionName+MYLOConstants.COLON));
+			CoreFunctions.explicitWaitTillElementVisibility(driver, _transfereeAndFamilySectionHeaders.get(1),
+					sectionName);
+			flag = (CoreFunctions.getElementText(driver, _transfereeAndFamilySectionHeaders.get(1)).equals(sectionName +MYLOConstants.COLON));
 			break;
 		case MYLOConstants.DEPENDENTS:
 			CoreFunctions.scrollToElementUsingJavaScript(driver, _transfereeAndFamilySection,
 					MYLOConstants.TRANSFEREE_FAMILY);
 			CoreFunctions.explicitWaitTillElementVisibility(driver, _transfereeAndFamilySectionHeaders.get(2),
 					sectionName);
-			CoreFunctions.highlightObject(driver, _transfereeAndFamilySectionHeaders.get(2));
-			flag = (_transfereeAndFamilySectionHeaders.get(2).getText().equals(sectionName +MYLOConstants.COLON));
+			flag = (CoreFunctions.getElementText(driver, _transfereeAndFamilySectionHeaders.get(2)).equals(sectionName +MYLOConstants.COLON));
 			break;
 		case MYLOConstants.OTHER:
 			CoreFunctions.scrollToElementUsingJavaScript(driver, _transfereeAndFamilySectionHeaders.get(3),
 					MYLOConstants.OTHER);
 			CoreFunctions.explicitWaitTillElementVisibility(driver, _transfereeAndFamilySectionHeaders.get(3),
 					sectionName);
-			CoreFunctions.highlightObject(driver, _transfereeAndFamilySectionHeaders.get(3));
-			flag = (_transfereeAndFamilySectionHeaders.get(3).getText().equals(sectionName +MYLOConstants.COLON));
+			flag = (CoreFunctions.getElementText(driver, _transfereeAndFamilySectionHeaders.get(3)).equals(sectionName +MYLOConstants.COLON));
 			break;
 		default:
 			Reporter.addStepLog(CoreConstants.FAIL + MYLOConstants.ENTER_CORRECT_SECTION_NAME);

@@ -749,19 +749,20 @@ public class Mylo_AssignmentPage extends Base {
 		String code = null;
 		switch (fieldName) {
 		case MYLOConstants.POLICY_TYPE:
-			code = CoreFunctions.getElementCSSProperty(driver, _fileInfoPolicyTypeBgColor, propertyType);
+			code = Color.fromString(_fileInfoFileId.getCssValue(MYLOConstants.BORDER_COLOR)).asHex();
 			break;
 		case MYLOConstants.FILE_ID:
-			code = CoreFunctions.getElementCSSProperty(driver, _fileInfoFileId, propertyType);
+			code = Color.fromString(_fileInfoFileId.getCssValue(MYLOConstants.BORDER_COLOR)).asHex();
 			break;
 		case MYLOConstants.CLIENT_ID:
-			code = CoreFunctions.getElementCSSProperty(driver, _fileInfoClientId, propertyType);
+			code = Color.fromString(_fileInfoFileId.getCssValue(MYLOConstants.BORDER_COLOR)).asHex();
 			break;
 		default:
 			Reporter.addStepLog(CoreConstants.FAIL + MYLOConstants.ENTER_CORRECT_FIELD_NAME);
 			Assert.fail(MYLOConstants.ENTER_CORRECT_FIELD_NAME);
 		}
-		if (code.equals(expectedValue))
+		
+		if (code.contains(expectedValue))
 			return true;
 		return false;
 	}
@@ -1058,8 +1059,8 @@ public class Mylo_AssignmentPage extends Base {
 			CoreFunctions.explicitWaitTillElementInVisibilityCustomTime(driver, _spinner, 60);
 		}
 		clickButtonOnAiresFileInformationSection(MYLOConstants.EDIT_BUTTON);
-		updateFileInfoFields(MYLOConstants.JOURNEY_TYPE, MYLOConstants.JOURNEY_TYPE_VALUE);
 		updateFileInfoFields(MYLOConstants.POLICY_TYPE, MYLOConstants.POLICY_TYPE_VALUE);
+		updateFileInfoFields(MYLOConstants.JOURNEY_TYPE, MYLOConstants.JOURNEY_TYPE_VALUE);
 		if (CoreFunctions.isElementExist(driver, _YesButton, 30))
 			CoreFunctions.click(driver, _YesButton, MYLOConstants.YES_BUTTON);
 		if (CoreFunctions.isElementExist(driver, _OKButtonPopUp, 30))
@@ -1175,6 +1176,7 @@ public class Mylo_AssignmentPage extends Base {
 			}
 			break;
 		case MYLOConstants.TEMP_EDIT_BUTTON:
+			CoreFunctions.waitForMyloSpinnnerInvisibilityIfExist(driver, _spinner);
 			CoreFunctions.explicitWaitTillElementVisibility(driver, _tempEditButton, MYLOConstants.TEMP_EDIT_BUTTON);
 			CoreFunctions.explicitWaitTillElementBecomesClickable(driver, _tempEditButton,
 					MYLOConstants.TEMP_EDIT_BUTTON);
@@ -1227,13 +1229,15 @@ public class Mylo_AssignmentPage extends Base {
 			typeDropDownList = CoreFunctions.getElementListByLocator(driver, _dropdownOptions);
 			break;
 		case MYLOConstants.TEMPORARY_ADDRESS_DROPDOWN:
-			CoreFunctions.refreshPage(driver);
+			if(!(CoreFunctions.isElementExist(driver, _tempAddressDropdown, 10)))
+				CoreFunctions.refreshPage(driver);
 			CoreFunctions.waitForMyloSpinnnerInvisibilityIfExist(driver, _spinner);
 			CoreFunctions.scrollClickUsingJS(driver, _tempAddressDropdown, MYLOConstants.TEMPORARY_ADDRESS_DROPDOWN);
 			mapOtherAddresssWebElementFields();
 			break;
 		case MYLOConstants.MAILING_ADDRESS_DROPDOWN:
-			CoreFunctions.refreshPage(driver);
+			if(!(CoreFunctions.isElementExist(driver, _mailAddressDropdown, 10)))
+				CoreFunctions.refreshPage(driver);
 			CoreFunctions.waitForMyloSpinnnerInvisibilityIfExist(driver, _spinner);
 			CoreFunctions.scrollClickUsingJS(driver, _mailAddressDropdown, MYLOConstants.MAILING_ADDRESS_DROPDOWN);
 			mapOtherAddresssWebElementFields();

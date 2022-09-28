@@ -195,16 +195,16 @@ public class CoreFlex_PreAcceptanceServices_BenefitsPage extends Base {
 	@FindBy(how = How.CSS, using = "input[formcontrolname='numOfNightsPerTrip']")
 	private WebElement _inputNumOfNightsPerTrip;
 
-	@FindBy(how = How.CSS, using = "ng-select[formcontrolname='maxAmountPerNightCode']")
+	@FindBy(how = How.CSS, using = "ng-select[formcontrolname='maxAmountCode']")
 	private WebElement _selectAmount;
 
-	@FindBy(how = How.CSS, using = "ng-select[formcontrolname='maxAmountPerNightCode'] span[class*='ng-value-label']")
+	@FindBy(how = How.CSS, using = "ng-select[formcontrolname='maxAmountCode'] span[class*='ng-value-label']")
 	private WebElement _selectMaxAmountLodgingSelectedValue;
 
-	@FindBy(how = How.CSS, using = "ng-select[formcontrolname='maxAmountPerNightCode'] span.ng-option-label")
+	@FindBy(how = How.CSS, using = "ng-select[formcontrolname='maxAmountCode'] span.ng-option-label")
 	private List<WebElement> _selectAmountOptions;
 
-	@FindBy(how = How.CSS, using = "input[formcontrolname='flatAmountPerNight']")
+	@FindBy(how = How.CSS, using = "input[formcontrolname='flatAmount']")
 	private WebElement _inputFlatAmountPerNight;
 
 	@FindBy(how = How.CSS, using = "ng-select[formcontrolname='currencyCode']")
@@ -237,10 +237,10 @@ public class CoreFlex_PreAcceptanceServices_BenefitsPage extends Base {
 	@FindBy(how = How.XPATH, using = "//div[@class='collapse show']//input[@formcontrolname='mealTypeCode']/parent::label[@class='form-check-label']")
 	private List<WebElement> _radioBtnMealType;
 
-	@FindBy(how = How.CSS, using = "ng-select[formcontrolname='maxAmountCode']")
+	@FindBy(how = How.CSS, using = "app-pre-trip-meals ng-select[formcontrolname='maxAmountCode']")
 	private WebElement _selectMaxAmtMeals;
 
-	@FindBy(how = How.CSS, using = "ng-select[formcontrolname='maxAmountCode'] span[class*=ng-option-label]")
+	@FindBy(how = How.CSS, using = "app-pre-trip-meals ng-select[formcontrolname='maxAmountCode'] span[class*=ng-option-label]")
 	private List<WebElement> _selectMaxAmtMealsOptions;
 
 	@FindBy(how = How.CSS, using = "input[formcontrolname='maxAmountEe']")

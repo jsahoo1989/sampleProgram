@@ -1,6 +1,6 @@
 Feature: Validate the CoreFlex End-To-End Business Test Flow(BluePrint, MXTransferee,Transferee Submissions) for Both_Transferee_UserDefined_CashoutNotAuthorized_Delete_ApproveAll selection
 
-  @End-To-End_CoreFlex @CF_MXTransferee_UserDefined_CashNotAuth
+  @End-To-End_CoreFlex @CF_MXTransferee_UserDefined_CashNotAuthIgnore
   Scenario: CoreFlex - Creating & Validating a new Active Points Based CoreFlex Policy with Transferee, UserDefined and CashNotAuth selection
     Given he has setup a new CoreFlex Policy with following selection in Blueprint application
       | Person Responsible For Benefit Selection | Flex Setup Type | Cashout Availability   | BenefitType | PolicyRequiredFor | MileStones |
@@ -13,7 +13,7 @@ Feature: Validate the CoreFlex End-To-End Business Test Flow(BluePrint, MXTransf
     When he clicks on "Approve" button to acknowledge 'Approve this Policy' dialog
     Then Policy Status and Version should be displayed as "Active" and "V1" respectively on "View/Edit Policy Forms" page
 
-  @End-To-End_CoreFlex @CF_MXTransferee_UserDefined_CashNotAuth 
+  @End-To-End_CoreFlex @CF_MXTransferee_UserDefined_CashNotAuth
   Scenario: MXClient - Creating a new Authorization and assigning Total Flex Points for the Points Based CF policy
     Given he has logged into 'MobilityX' application as a 'Client' user
     And he has clicked on "Create an authorization" after validating Client details on 'Authorization Home Page'

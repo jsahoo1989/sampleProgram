@@ -1,6 +1,6 @@
 Feature: Validate the CoreFlex End-To-End Business Test Flow(BluePrint, MXTransferee,Transferee Submissions) for Both_Transferee_UserDefined_PortionCashout_Delete_DenyAll selection
 
-  @End-To-End_CoreFlex @CF_MXTransferee_UserDefined_PortionCashout
+  @End-To-End_CoreFlex @CF_MXTransferee_UserDefined_PortionCashoutIgnore
   Scenario: CoreFlex - Creating & Validating a new Active Points Based CoreFlex Policy with Transferee, UserDefined and PortionCashout selection
     Given he has setup a new CoreFlex Policy with following selection in Blueprint application
       | Person Responsible For Benefit Selection | Flex Setup Type | Cashout Availability | BenefitType | PolicyRequiredFor | MileStones |
@@ -37,7 +37,7 @@ Feature: Validate the CoreFlex End-To-End Business Test Flow(BluePrint, MXTransf
     And 'Auth Submit Success' growl message should be displayed on the navigated 'View all initiation' page on confirmation of the last dialog
     And Revised 'New Initiation Submitted' email having updated Transferee and Benefit Points details should be received
 
-  @End-To-End_CoreFlex @CF_MXTransferee_UserDefined_PortionCashout 
+  @End-To-End_CoreFlex @CF_MXTransferee_UserDefined_PortionCashout
   Scenario: MXTransferee - Selecting & Submitting Flex benefits_Portion Cashout available in configured policy and Verifying UserDefined Available Benefits Points
     Given he has logged into 'MobilityX' application after actualizing a new 'Transferee' through IRIS application and setting-up user profile in 'MobilityX' application
     And he has validated 'Assignment-Policy' details after selecting below option displayed on 'Welcome' dialog

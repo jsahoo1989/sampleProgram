@@ -13,8 +13,8 @@ Feature: Validate the CoreFlex End-To-End Business Test Flow(BluePrint, MXClient
     When he clicks on "Approve" button to acknowledge 'Approve this Policy' dialog
     Then Policy Status and Version should be displayed as "Active" and "V1" respectively on "View/Edit Policy Forms" page
 
-  @End-To-End_CoreFlex @CF_MXClient_UserDefined_AfterRelocation
-  Scenario: MXClient - Validating Total Points Section, Core/Flex benefits & AfterRelocationCashout displayed on BenefitSelectionTool page for Client Initiator BluePrint Policy Setup
+  @End-To-End_CoreFlex @CF_MXClient_UserDefined_AfterRelocation @Demo_MXClient_AfterRelocation
+  Scenario: MXClient - Verifying Authorization Submission with UserDefined TotalPoints, Core/Flex Benefits & AfterRelocationCashout for configured ClientInitiator BluePrint Policy
     Given he has logged into 'MobilityX' application as a 'Client' user
     And he has clicked on "Create an authorization" after validating Client details on 'Authorization Home Page'
     And he has filled all the mandatory information on 'Authorization Form' after selecting following 'Assignment Option' with 'Auth Form Template' for an employee on 'Authorization Home Page'
@@ -30,10 +30,13 @@ Feature: Validate the CoreFlex End-To-End Business Test Flow(BluePrint, MXClient
     And he has navigated to "Benefits Bundle" page after selecting required Flex Benefits on 'Benefit Selection Tool' page
     And he has clicked on "Save & Exit" button after validating selected Flex Benefit details listed under 'Selected Benefits' section on "Benefits Bundle" page
     And he has verified entered 'Total Points' value and selected 'Core_Flex Benefit' details displayed on the navigated 'Authorization Form' page
-    And he has clicked on "Submit to Aires" button from right floating menu of 'Authorization Form' page
-    And he has clicked on "SUBMIT" button on the 'Do you want to submit it without the required approvals?' dialog
-    And he has verified 'Auth Submit Success' growl message displayed on the navigated 'MobilityX Dashboard Home' page
-    And he has verified 'New Initiation Submitted' email having Transferee details along with assigned CoreFlex Total Points and Submitted Benefits Points
+    When he clicks on "Submit to Aires" button from right floating menu of 'Authorization Form' page without routing it to Approvers
+    Then 'Auth Submit Success' growl message should be displayed on the navigated 'MobilityX Dashboard Home' page
+    And 'New Initiation Submitted' email should be received having Transferee details along with assigned CoreFlex Total Points and Submitted Benefits Points
+
+  @End-To-End_CoreFlex @CF_MXClient_UserDefined_AfterRelocation @Demo_MXClient_AfterRelocation
+  Scenario: MXClient - Verifying AfterRelocation Cashout Note and Deleted Submitted Core/Flex Benefits, AfterRelocation Cashout Status on MXClient Submitted Benefits
+    Given he has logged into 'MobilityX' application as a 'Client' user
     And he has selected required 'MSPEC_PPC' user after setting Assignment File status as 'Active' in IRIS application
     And he has clicked on "View all initiations" link on 'Authorization Home Page' to navigate to 'View all initiation' page
     And he has clicked 'Transferee Name' from 'All Initiations' List on 'View all initiation' page
@@ -68,8 +71,8 @@ Feature: Validate the CoreFlex End-To-End Business Test Flow(BluePrint, MXClient
     Then 'Auth Submit Success' growl message should be displayed on the navigated 'Advanced Authorization Search' page
     And 'Revised Mobility Initiation' email having submitted_deleted Benefit and Points details should be received
 
-  @End-To_End_CoreFlex @CF_MXClient_UserDefined_AfterRelocation
-  Scenario: TransfereeSubmissions - Verifying UserDefined Points, Benefit_Cashout Submissions and Delete Request DenyAll transaction for the request made by the Client
+  @End-To_End_CoreFlex @CF_MXClient_UserDefined_AfterRelocation @Demo_MXClient_AfterRelocation
+  Scenario: TransfereeSubmissions - Verifying UserDefined Points, Benefit_Cashout Submissions and Delete Request ApproveAll transaction for the request made by the Client
     Given he has logged into 'Transferee Submissions' application as a "MSPEC/PPC" user
     And he has navigated to "Transferee Submissions Dashboard" page having record of Bundle submitted by the Client
     And he has clicked on "Review" button for Bundle submitted by the Client on "Transferee Submissions Dashboard" page

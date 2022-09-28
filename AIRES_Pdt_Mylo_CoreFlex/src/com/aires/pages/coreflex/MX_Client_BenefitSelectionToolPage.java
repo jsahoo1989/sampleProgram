@@ -275,6 +275,10 @@ public class MX_Client_BenefitSelectionToolPage extends Base {
 	@FindBy(how = How.XPATH, using = "//table[contains(@id,'flexCash')]//span[contains(text(),'Select This')]/parent::a[@aria-disabled='true']")
 	private WebElement _disabledSelectThisCashoutPointsButton;
 
+	// Disabled CashOut Section Submitted Button
+	@FindBy(how = How.XPATH, using = "//table[contains(@id,'flexCash')]//span[contains(text(),'Submitted')]/parent::a[@aria-disabled='true']")
+	private WebElement _disabledSubmittedCashoutPointsButton;
+
 	// CashOut Button Disabled Minus
 	@FindBy(how = How.XPATH, using = "//table[contains(@id,'flexCash')]//a[contains(@id,'csb1')][@aria-disabled='true']")
 	private WebElement _buttonCashoutDisabledMinus;
@@ -343,7 +347,7 @@ public class MX_Client_BenefitSelectionToolPage extends Base {
 			.getBscDataByModuleName("DomesticAuthorizationFormData");
 
 	public static double totalPointsOnPolicy = 0.0;
-	public static double cashoutPoints;
+	public static double cashoutPoints = 0.0;
 	public static double selectedCashoutPoints;
 
 	public static String reimAccountType;
@@ -524,7 +528,8 @@ public class MX_Client_BenefitSelectionToolPage extends Base {
 			if ((CoreFunctions.getPropertyFromConfig("PolicyCashoutType").equals(MobilityXConstants.PORTION_CASHOUT))
 					|| (CoreFunctions.getPropertyFromConfig("PolicyCashoutType")
 							.equals(MobilityXConstants.AFTER_RELOCATION_ONLY))) {
-				isPortionCashoutSelected = selectPointsForCashout(cashoutPoints * 0.10);
+				isPortionCashoutSelected = selectPointsForCashout(
+						cashoutPoints == 0.0 ? getAvailableCashoutPoints(false) : cashoutPoints * 0.10);
 			} else if ((CoreFunctions.getPropertyFromConfig("PolicyCashoutType")
 					.equals(MobilityXConstants.CASHOUT_NOT_AUTHORIZED))) {
 				return true;
@@ -972,7 +977,7 @@ public class MX_Client_BenefitSelectionToolPage extends Base {
 		}
 		return cashoutPoints;
 	}
-	
+
 	public boolean verifyCashoutSectionDetailsOnBSTPostDeleteRequestOperation(String actionPerformed) {
 		boolean isPortionCashoutVerified = false, flag = false;
 		try {
@@ -1000,7 +1005,7 @@ public class MX_Client_BenefitSelectionToolPage extends Base {
 		}
 		return isPortionCashoutVerified;
 	}
-	
+
 	public double getAvailableCashoutPointsPostDeleteRequestOperation(String actionPerformed) {
 		if (actionPerformed.equals(MobilityXConstants.APPROVED)) {
 			cashoutPoints = (Double
@@ -1019,8 +1024,6 @@ public class MX_Client_BenefitSelectionToolPage extends Base {
 		}
 		return cashoutPoints;
 	}
-	
-	
 
 	public boolean verifyInitialCashOutContent(boolean isBenefitsSubmitted) {
 		try {
@@ -1047,7 +1050,13 @@ public class MX_Client_BenefitSelectionToolPage extends Base {
 			String[] cashOutInputText = CoreFunctions.getElementText(driver, _textInputCashoutPoints).split("\\(");
 			CoreFunctions.verifyValue(Double.parseDouble(cashOutInputText[0].trim()), cashoutPoints,
 					MobilityXConstants.CASHOUT_INPUT_FIELD_LABEL_VALUE);
-			if (CoreFunctions.isElementExist(driver, _buttonSelectThisCashoutPoints, 2)) {
+			if (cashoutPoints == 0.0 && isBenefitsSubmitted
+					&& CoreFunctions.isElementExist(driver, _disabledSubmittedCashoutPointsButton, 2)) {
+				Reporter.addStepLog(MessageFormat.format(
+						COREFLEXConstants.SUCCESSFULLY_VERIFIED_PORTION_CASHOUT_DETAILS_POST_ALL_CASHOUT_VALUE_SUBMISSION_ON_BENEFIT_SELECTION_TOOL_PAGE,
+						CoreConstants.PASS));
+				return true;
+			} else if (CoreFunctions.isElementExist(driver, _buttonSelectThisCashoutPoints, 2)) {
 				Reporter.addStepLog(MessageFormat.format(
 						COREFLEXConstants.SUCCESSFULLY_VERIFIED_DEFAULT_PORTION_CASHOUT_DETAILS_ON_BENEFIT_SELECTION_TOOL_PAGE,
 						CoreConstants.PASS));
@@ -1060,7 +1069,7 @@ public class MX_Client_BenefitSelectionToolPage extends Base {
 		}
 		return false;
 	}
-	
+
 	public boolean verifyInitialCashOutContentPostDeleteRequestOperation(String actionPerformed) {
 		try {
 			getAvailableCashoutPointsPostDeleteRequestOperation(actionPerformed);
@@ -1086,9 +1095,15 @@ public class MX_Client_BenefitSelectionToolPage extends Base {
 			String[] cashOutInputText = CoreFunctions.getElementText(driver, _textInputCashoutPoints).split("\\(");
 			CoreFunctions.verifyValue(Double.parseDouble(cashOutInputText[0].trim()), cashoutPoints,
 					MobilityXConstants.CASHOUT_INPUT_FIELD_LABEL_VALUE);
-			if (CoreFunctions.isElementExist(driver, _buttonSelectThisCashoutPoints, 2)) {
+			if (cashoutPoints == 0.0 && actionPerformed.equals(MobilityXConstants.DENIED)
+					&& CoreFunctions.isElementExist(driver, _disabledSubmittedCashoutPointsButton, 2)) {
 				Reporter.addStepLog(MessageFormat.format(
-						COREFLEXConstants.SUCCESSFULLY_VERIFIED_DEFAULT_PORTION_CASHOUT_DETAILS_ON_BENEFIT_SELECTION_TOOL_PAGE,
+						COREFLEXConstants.SUCCESSFULLY_VERIFIED_PORTION_CASHOUT_DETAILS_POST_DELETE_REQUEST_DENIED_ON_BENEFIT_SELECTION_TOOL_PAGE,
+						CoreConstants.PASS));
+				return true;
+			} else if (CoreFunctions.isElementExist(driver, _buttonSelectThisCashoutPoints, 2)) {
+				Reporter.addStepLog(MessageFormat.format(
+						MobilityXConstants.SUCCESSFULLY_VERIFIED_DEFAULT_PORTION_CASHOUT_DETAILS_POST_DELETE_REQUEST_DENIED_ON_BENEFIT_SELECTION_TOOL_PAGE,
 						CoreConstants.PASS));
 				return true;
 			}
@@ -1977,7 +1992,7 @@ public class MX_Client_BenefitSelectionToolPage extends Base {
 	private boolean verifyAfterRelocationNoteBeforeTracing() {
 		try {
 			if (CoreFunctions.getElementText(driver, _textAfterRelocationNote)
-					.equals(MobilityXConstants.RELOCATION_CASHOUT_NOTE_BEFORE_TRACING)) {
+					.equals(MobilityXConstants.RELOCATION_CASHOUT_NOTE_BEFORE_TRACING_FOR_CLIENT)) {
 				Reporter.addStepLog(MessageFormat.format(
 						COREFLEXConstants.SUCCESSFULLY_VERIFIED_DEFAULT_AFTER_RELOCATION_CASHOUT_NOTE_BEFORE_TRACING_ACTUALIZATION_ON_BENEFIT_SELECTION_TOOL_PAGE,
 						CoreConstants.PASS));
@@ -1985,7 +2000,7 @@ public class MX_Client_BenefitSelectionToolPage extends Base {
 			} else {
 				Reporter.addStepLog(MessageFormat.format(
 						COREFLEXConstants.FAILED_TO_VERIFY_DEFAULT_AFTER_RELOCATION_CASHOUT_NOTE_BEFORE_TRACING_ACTUALIZATION_ON_BENEFIT_SELECTION_TOOL_PAGE,
-						CoreConstants.FAIL, MobilityXConstants.RELOCATION_CASHOUT_NOTE_BEFORE_TRACING,
+						CoreConstants.FAIL, MobilityXConstants.RELOCATION_CASHOUT_NOTE_BEFORE_TRACING_FOR_CLIENT,
 						CoreFunctions.getElementText(driver, _textAfterRelocationNote)));
 			}
 		} catch (Exception e) {

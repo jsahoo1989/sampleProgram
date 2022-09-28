@@ -304,8 +304,7 @@ public class TransfereeSubmissions_DetailsPage extends Base {
 					CoreFunctions.getPropertyFromConfig("Assignment_ClientName"), COREFLEXConstants.CORPORATION_NAME);
 			String actualPointsSpent[] = CoreFunctions.getElementText(driver, _textPointsSpent).trim().split("of");
 			CoreFunctions.verifyValue(Double.parseDouble(actualPointsSpent[0].trim()),
-					Double.parseDouble(CoreFunctions.getPropertyFromConfig("CF_Transferee_TotalSelectedPoints")),
-					COREFLEXConstants.POINTS_SPENT);
+					Double.parseDouble(CoreFunctions.getPropertyFromConfig("CF_Transferee_TotalSelectedPoints")), COREFLEXConstants.POINTS_SPENT);
 			CoreFunctions.highlightObject(driver, _textPointsSpent);
 			CoreFunctions.verifyValue(driver, _textPointsBalance, availablePointsAfterSubmission,
 					COREFLEXConstants.POINTS_BALANCE);
@@ -767,8 +766,12 @@ public class TransfereeSubmissions_DetailsPage extends Base {
 			Double totalPointsSelectedAfterDeleteApproval, availablePointsAfterDeleteApproval;
 			DecimalFormat format = new DecimalFormat();
 			format.setDecimalSeparatorAlwaysShown(false);
-			CoreFunctions.writeToPropertiesFile("CF_Transferee_TotalSelectedPoints",
-					CoreFunctions.getPropertyFromConfig("CF_Client_TotalSelectedPoints"));
+			
+			if (CoreFunctions.getPropertyFromConfig("CoreFlex_Policy_PersonResponsible")
+					.equals(MobilityXConstants.CLIENT)) {
+				CoreFunctions.writeToPropertiesFile("CF_Transferee_TotalSelectedPoints",
+						CoreFunctions.getPropertyFromConfig("CF_Client_TotalSelectedPoints"));
+			}
 			String expectedGrowlMessage = MobilityXConstants.DELETE_ACTION_COMPLETED.replace("approvedDeletedPoints",
 					format.format(Double.parseDouble(
 							CoreFunctions.getPropertyFromConfig("CF_Transferee_DeleteRequestTotalPoints"))));
@@ -1053,8 +1056,8 @@ public class TransfereeSubmissions_DetailsPage extends Base {
 							COREFLEXConstants.POINTS_BALANCE_TOOLTIP_TEXT);
 			CoreFunctions.verifyText(driver, _tooltipBalancePoints,
 					COREFLEXConstants.EXPECTED_POINT_BALANCE_TOOLTIP_TEXT.replace("remaining_points",
-							format.format(Double.parseDouble(CoreFunctions
-									.getPropertyFromConfig("CF_Transferee_AvailablePoints")))),
+							format.format(Double.parseDouble(
+									CoreFunctions.getPropertyFromConfig("CF_Transferee_AvailablePoints")))),
 					COREFLEXConstants.POINTS_BALANCE_TOOLTIP_TEXT);
 			Reporter.addStepLog(MessageFormat.format(
 					COREFLEXConstants.SUCCESSFULLY_VALIDATED_SPENT_REMAINING_AND_TOTAL_POINTS_DETAILS_ON_TRANSFEREE_SUBMISSION_DETAILS_PAGE,

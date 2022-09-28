@@ -1,10 +1,10 @@
 Feature: Validate the Cloning feature of Points Based CoreFlex policy in BluePrint Application
 
-  @End-To-End_CoreFlex @CF_BluePrint_Cloning @DataCreation_Cloning
+  @End-To-End_CoreFlex @CF_BluePrint_Cloning @DataCreation_Cloning @CF_BluePrint_Cloning_QA_PreUAT_Test
   Scenario: CoreFlex - Creating & Validating a new Active Policy as a part of Data Creation activity for Cloning
     Given he has setup a new CoreFlex Policy with following selection in Blueprint application
       | Person Responsible For Benefit Selection | Flex Setup Type | Cashout Availability   | BenefitType | PolicyRequiredFor | MileStones |
-      | Transferee                               | Static/Fixed    | Cashout Not Authorized | Both        | Cloning           |          0 |
+      | Transferee                               | Static/Fixed    | Cashout Not Authorized | Both        | All Benefits      |          0 |
     And he has clicked on "Submit" button to submit "V1" policy verison on "Custom Bundles" page
     And he has clicked on "Approve Policy" button to approve "V1" policy verison on "Custom Bundles" page
     And he has selected following options on 'Approval this Policy' dialog of "V1" Policy
@@ -35,7 +35,7 @@ Feature: Validate the Cloning feature of Points Based CoreFlex policy in BluePri
   Scenario: CoreFlex - Creating & Validating a new Submitted Status policy as a part of Data Creation activity for Cloning
     Given he has setup a new CoreFlex Policy with following selection in Blueprint application
       | Person Responsible For Benefit Selection | Flex Setup Type | Cashout Availability   | BenefitType | PolicyRequiredFor | MileStones |
-      | Transferee                               | Static/Fixed    | Cashout Not Authorized | Both        | Cloning           |          0 |
+      | Transferee                               | Static/Fixed    | Cashout Not Authorized | Both        | All Benefits      |          0 |
     When he clicks on "Submit" button to submit "V1" policy verison on "Custom Bundles" page
     Then Policy Status and Version should be displayed as "Submitted" and "V1" respectively on 'Custom Bundles' page
 
@@ -64,7 +64,7 @@ Feature: Validate the Cloning feature of Points Based CoreFlex policy in BluePri
     Then he should be navigated to "General Information" page of new 'Cloned - Points based CoreFlex Policy' saved as "Draft" with Policy Version as "V1"
     And all the 'CoreFlex' benefits from the reference 'Points Based CoreFlex policy' should be copied over to the 'Cloned - Points based CoreFlex Policy'
       | Person Responsible For Benefit Selection | Flex Setup Type | Cashout Availability   | BenefitType | PolicyRequiredFor | MileStones |
-      | Transferee                               | Static/Fixed    | Cashout Not Authorized | Both        | Cloning           |          0 |
+      | Transferee                               | Static/Fixed    | Cashout Not Authorized | Both        | All Benefits      |          0 |
 
     Examples: 
       | PolicyStatus |
@@ -83,7 +83,7 @@ Feature: Validate the Cloning feature of Points Based CoreFlex policy in BluePri
     Then he should be navigated to "General Information" page of new 'Cloned - Points based CoreFlex Policy' saved as "Draft" with Policy Version as "V1"
     And all the 'CoreFlex' benefits from the reference 'Points Based CoreFlex policy' should be copied over to the 'Cloned - Points based CoreFlex Policy'
       | Person Responsible For Benefit Selection | Flex Setup Type | Cashout Availability   | BenefitType | PolicyRequiredFor | MileStones |
-      | Transferee                               | Static/Fixed    | Cashout Not Authorized | Both        | Cloning           |          0 |
+      | Transferee                               | Static/Fixed    | Cashout Not Authorized | Both        | All Benefits      |          0 |
 
     Examples: 
       | PolicyStatus |

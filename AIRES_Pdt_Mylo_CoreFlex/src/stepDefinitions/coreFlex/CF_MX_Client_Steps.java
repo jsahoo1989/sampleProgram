@@ -15,7 +15,9 @@ import com.aires.businessrules.constants.IRISConstants;
 import com.aires.businessrules.constants.MobilityXConstants;
 import com.aires.cucumber.TestContext;
 import com.aires.managers.FileReaderManager;
+import com.aires.pages.coreflex.MX_Client_AuthWorkflow_ApprovalActionPage;
 import com.aires.pages.coreflex.MX_Client_AuthorizationHomePage;
+import com.aires.pages.coreflex.MX_Client_AuthorizationHome_CollaborationPage;
 import com.aires.pages.coreflex.MX_Client_BenefitSelectionToolPage;
 import com.aires.pages.coreflex.MX_Client_BenefitsBundlePage;
 import com.aires.pages.coreflex.MX_Client_ViewAllInitiationsPage;
@@ -51,6 +53,8 @@ public class CF_MX_Client_Steps {
 	private TransfereeSubmissions_LoginPage transfereeSubmissionsLoginPage;
 	private TransfereeSubmissions_DashboardHomePage transfereeSubmissionsDashboardHomePage;
 	private TransfereeSubmissions_DetailsPage transfereeSubmissionsDetailsPage;
+	private MX_Client_AuthorizationHome_CollaborationPage mxClientAuthCollaborationPage;
+	private MX_Client_AuthWorkflow_ApprovalActionPage mxClientAuthWFApprovalActionPage;
 
 	public CF_MX_Client_Steps(TestContext context) {
 		testContext = context;
@@ -65,6 +69,9 @@ public class CF_MX_Client_Steps {
 		transfereeSubmissionsLoginPage = testContext.getCoreFlexPageObjectManager().getTransfereeSubmissionsLoginPage();
 		transfereeSubmissionsDetailsPage = testContext.getCoreFlexPageObjectManager()
 				.getTransfereeSubmissionsDetailsPage();
+		mxClientAuthCollaborationPage = testContext.getCoreFlexPageObjectManager().getMXClientAuthCollaborationPage();
+		mxClientAuthWFApprovalActionPage = testContext.getCoreFlexPageObjectManager()
+				.getMXClientAuthWFApprovalActionPage();
 	}
 
 	private TransfereeSubmissions_LoginData _transfereeSubmissionLoginData = FileReaderManager.getInstance()
@@ -158,7 +165,7 @@ public class CF_MX_Client_Steps {
 						MobilityXConstants.FAILED_TO_VERIFY_REQUIRED_FIELDS_VALIDATION_ON_AUTHORIZATION_FORM,
 						CoreConstants.FAIL));
 	}
-	
+
 	@Given("^he has verified 'Error Growl Message' and 'Required Field Validation' displayed after clicking on \"([^\"]*)\" button without selecting any FlexBenefits$")
 	public void he_has_verified_Error_Growl_Message_and_Required_Field_Validation_displayed_after_clicking_on_button_without_selecting_any_FlexBenefits(
 			String buttonName) throws Throwable {
@@ -432,6 +439,13 @@ public class CF_MX_Client_Steps {
 		mxClientAuthorizationHomePage.clickOnElementsOfFloatingMenu(buttonName);
 	}
 
+	@When("^he clicks on \"([^\"]*)\" button from right floating menu of 'Authorization Form' page without routing it to Approvers$")
+	public void he_clicks_on_button_from_right_floating_menu_of_Authorization_Form_page_without_routing_it_to_Approvers(
+			String buttonName) throws Throwable {
+		mxClientAuthorizationHomePage.clickOnElementsOfFloatingMenu(buttonName);
+		mxClientAuthorizationHomePage.clickOnElementOnAuthorizationPage(MobilityXConstants.SUBMIT);
+	}
+
 	@When("^he clicks on \"([^\"]*)\" button from right floating menu of 'Authorization Form' page$")
 	public void he_clicks_on_button_from_right_floating_menu_of_Authorization_Form_page(String buttonName)
 			throws Throwable {
@@ -447,6 +461,19 @@ public class CF_MX_Client_Steps {
 
 	@Given("^he has verified 'Auth Submit Success' growl message displayed on the navigated 'MobilityX Dashboard Home' page$")
 	public void he_has_verified_Auth_Submit_Success_growl_message_displayed_on_the_navigated_MobilityX_Dashboard_Home_page()
+			throws Throwable {
+		Assert.assertTrue(mxClientAuthorizationHomePage.verifyInitiationSubmittedSuccessGrowlMessage(),
+				MessageFormat.format(MobilityXConstants.FAILED_TO_VERIFY_INITIATION_SUBMITTED_SUCCESS_GROWL_MESSAGE,
+						CoreConstants.FAIL));
+		CoreFunctions.writeToPropertiesFile("CF_Transferee_AvailablePoints", String
+				.valueOf(Double.parseDouble(CoreFunctions.getPropertyFromConfig("CF_Transferee_TotalAvailablePoints"))
+						- Double.parseDouble(CoreFunctions.getPropertyFromConfig("CF_Client_TotalSelectedPoints"))));
+		Assert.assertTrue(mxClientAuthorizationHomePage.verifyPageNavigation(), MessageFormat
+				.format(MobilityXConstants.FAILED_TO_VERIFY_USER_NAVIGATION_TO_MXCLIENT_HOME_PAGE, CoreConstants.FAIL));
+	}
+
+	@Then("^'Auth Submit Success' growl message should be displayed on the navigated 'MobilityX Dashboard Home' page$")
+	public void Auth_Submit_Success_growl_message_should_be_displayed_on_the_navigated_MobilityX_Dashboard_Home_page()
 			throws Throwable {
 		Assert.assertTrue(mxClientAuthorizationHomePage.verifyInitiationSubmittedSuccessGrowlMessage(),
 				MessageFormat.format(MobilityXConstants.FAILED_TO_VERIFY_INITIATION_SUBMITTED_SUCCESS_GROWL_MESSAGE,
@@ -767,7 +794,7 @@ public class CF_MX_Client_Steps {
 		Assert.assertTrue(mxClientBenefitsBundlePage.verifySelectedCashoutDetails(),
 				MessageFormat.format(
 						MobilityXConstants.FAILED_TO_VERIFY_SELECTED_CASHOUT_DETAILS_ON_BENEFITS_BUNDLE_PAGE,
-						CoreConstants.FAIL));		
+						CoreConstants.FAIL));
 		mxClientBenefitsBundlePage.clickElementOfPage(saveAndExitButton);
 		CoreConstants.TIME_BEFORE_ACTION = new Date().getTime();
 	}
@@ -903,11 +930,15 @@ public class CF_MX_Client_Steps {
 	@Given("^he has verified 'New Initiation Submitted' email having Transferee details along with assigned CoreFlex Total Points and Submitted Benefits Points$")
 	public void he_has_verified_New_Initiation_Submitted_email_having_Transferee_details_along_with_assigned_CoreFlex_Total_Points_and_Submitted_Benefits_Points()
 			throws Throwable {
-		bscAuthorizationData = FileReaderManager.getInstance().getCoreFlexJsonReader()
-				.getBscDataByModuleName("DomesticAuthorizationFormData");
-		Assert.assertTrue(mxClientAuthorizationHomePage.verifyInitiationBenefitsSubmissionEmail(bscAuthorizationData),
-				MessageFormat.format(MobilityXConstants.FAILED_TO_VERIFY_INITIATION_BENEFITS_SUBMISSION_EMAIL,
-						CoreConstants.FAIL));
+		Assert.assertTrue(mxClientAuthorizationHomePage.verifyInitiationBenefitsSubmissionEmail(), MessageFormat
+				.format(MobilityXConstants.FAILED_TO_VERIFY_INITIATION_BENEFITS_SUBMISSION_EMAIL, CoreConstants.FAIL));
+	}
+
+	@Then("'New Initiation Submitted' email should be received having Transferee details along with assigned CoreFlex Total Points and Submitted Benefits Points$")
+	public void New_Initiation_Submitted_email_should_be_received_having_Transferee_details_along_with_assigned_CoreFlex_Total_Points_and_Submitted_Benefits_Points()
+			throws Throwable {
+		Assert.assertTrue(mxClientAuthorizationHomePage.verifyInitiationBenefitsSubmissionEmail(), MessageFormat
+				.format(MobilityXConstants.FAILED_TO_VERIFY_INITIATION_BENEFITS_SUBMISSION_EMAIL, CoreConstants.FAIL));
 	}
 
 	@Given("^he has actualized the Transferee after selecting required 'MSPEC_PPC' user and setting file status as 'Active' in IRIS application$")
@@ -1015,7 +1046,7 @@ public class CF_MX_Client_Steps {
 		Assert.assertTrue(mxClientBenefitsBundlePage.deleteSubmittedCashoutDetails(buttonName), MessageFormat.format(
 				MobilityXConstants.FAILED_TO_DELETE_SUBMITTED_CASHOUT_ON_BENEFITS_BUNDLE_PAGE, CoreConstants.FAIL));
 		Assert.assertTrue(mxClientBenefitsBundlePage.deleteSubmittedBenefit(buttonName), MessageFormat.format(
-				MobilityXConstants.FAILED_TO_DELETE_SUBMITTED_BENEFIT_ON_BENEFITS_BUNDLE_PAGE, CoreConstants.FAIL));		
+				MobilityXConstants.FAILED_TO_DELETE_SUBMITTED_BENEFIT_ON_BENEFITS_BUNDLE_PAGE, CoreConstants.FAIL));
 	}
 
 	@Given("^he has verified 'Status' of the deleted benefit displayed as \"([^\"]*)\" under 'Submitted Benefits' section of 'Benefits Bundle' page$")
@@ -1206,7 +1237,9 @@ public class CF_MX_Client_Steps {
 				MessageFormat.format(
 						MobilityXConstants.FAILED_TO_VALIDATE_AVAILABLE_POINTS_MESSAGE_ON_MXCLIENT_BENEFIT_SELECTION_TOOL_PAGE,
 						CoreConstants.FAIL));
-		Assert.assertTrue(mxClientBenefitSelectionToolPage.verifyCashoutSectionDetailsOnBSTPostDeleteRequestOperation(actionPerformed),
+		Assert.assertTrue(
+				mxClientBenefitSelectionToolPage
+						.verifyCashoutSectionDetailsOnBSTPostDeleteRequestOperation(actionPerformed),
 				MessageFormat.format(
 						MobilityXConstants.PORTION_CASHOUT_DETAILS_NOT_MATCHED_ON_BENEFIT_SELECTION_TOOL_PAGE,
 						CoreConstants.FAIL));
@@ -1366,9 +1399,10 @@ public class CF_MX_Client_Steps {
 				.addAiresTeamDetailsOnOverviewTab(assignmentOverviewData);
 		testContext.getBasePage().cleanIrisProcesses();
 	}
-	
+
 	@Given("^he has clicked on 'Start Benefit Selection' on 'Auth Form Template' page to navigate to 'Benefit Selection Tool' page$")
-	public void he_has_clicked_on_Start_Benefit_Selection_on_Auth_Form_Template_page_to_navigate_to_Benefit_Selection_Tool_page() throws Throwable {		
+	public void he_has_clicked_on_Start_Benefit_Selection_on_Auth_Form_Template_page_to_navigate_to_Benefit_Selection_Tool_page()
+			throws Throwable {
 		mxClientAuthorizationHomePage.clickOnElementOnAuthorizationPage(MobilityXConstants.START_BENEFIT_SELECTION);
 		CoreConstants.TIME_BEFORE_ACTION = new Date().getTime();
 		Assert.assertTrue(mxClientBenefitSelectionToolPage.verifyPageNavigation(),
@@ -1382,4 +1416,176 @@ public class CF_MX_Client_Steps {
 								CoreConstants.TIME_AFTER_ACTION)
 						+ " Seconds </b>");
 	}
+
+	@Given("^he has clicked on \"([^\"]*)\" tab on 'Intiation' page to navigate to 'Collaboration Workflow' page$")
+	public void he_has_clicked_on_tab_on_Intiation_page_to_navigate_to_Collaboration_Workflow_page(String tabName)
+			throws Throwable {
+		mxClientAuthorizationHomePage.clickTabOnAuthorisationPage(tabName);
+		CoreConstants.TIME_BEFORE_ACTION = new Date().getTime();
+		Assert.assertTrue(mxClientAuthCollaborationPage.verifyPageNavigation(),
+				MessageFormat.format(
+						MobilityXConstants.FAILED_TO_VERIFY_USER_NAVIGATION_TO_MXCLIENT_AUTH_COLLABORATION_PAGE,
+						CoreConstants.FAIL));
+		CoreConstants.TIME_AFTER_ACTION = new Date().getTime();
+		Reporter.addStepLog("<b>Total time taken to navigate to <i>MobilityX Client Auth Collaboration</i> page is :"
+				+ CoreFunctions.calculatePageLoadTime(CoreConstants.TIME_BEFORE_ACTION, CoreConstants.TIME_AFTER_ACTION)
+				+ " Seconds </b>");
+	}
+
+	@Given("^he has added following approvers for 'Authorization Form' to be routed in \"([^\"]*)\" order on 'Collaboration' tab$")
+	public void he_has_added_following_approvers_for_Authorization_Form_to_be_routed_in_order_on_Collaboration_tab(
+			String routingOrder, DataTable dataTable) throws Throwable {
+		Assert.assertTrue(mxClientAuthCollaborationPage.removeDefaultAdditionalContributors(), MessageFormat
+				.format(MobilityXConstants.FAILED_TO_REMOVE_ADDITIONAL_DEFAULT_CONTRIBUTORS, CoreConstants.FAIL));
+		mxClientAuthCollaborationPage.setAuthFormRoutingOrder(routingOrder);
+		Assert.assertTrue(mxClientAuthCollaborationPage.addContributorsAndApprovers(dataTable),
+				MessageFormat.format(MobilityXConstants.FAILED_TO_ADD_COLLABORATORS, CoreConstants.FAIL));
+
+	}
+
+	@Given("^he has verified 'Initiation routed for approver workflow' success dialog displayed on 'Authorization Form' page$")
+	public void he_has_verified_Initiation_routed_for_approver_workflow_success_dialog_displayed_on_Authorization_Form_page()
+			throws Throwable {
+		Assert.assertTrue(mxClientAuthCollaborationPage.verifyInitiationRoutedToApproverWFDialog(),
+				MessageFormat.format(MobilityXConstants.FAILED_TO_VERIFY_INITIATION_ROUTED_TO_APPROVER_WORKFLOW_DIALOG,
+						CoreConstants.FAIL));
+	}
+
+	@When("^he clicks on \"([^\"]*)\" option on sucess dialog$")
+	public void he_clicks_on_option_on_sucess_dialog(String option) throws Throwable {
+		mxClientAuthCollaborationPage.clickElementOnPage(option);
+	}
+
+	@Then("^'Form Intiator' should not navigate away from 'Collaboration Workflow' page$")
+	public void form_Intiator_should_stays_on_the_same_Collaboration_Workflow_page() throws Throwable {
+		Assert.assertTrue(mxClientAuthCollaborationPage.verifyPageNavigation(),
+				MessageFormat.format(
+						MobilityXConstants.FAILED_TO_VERIFY_USER_NAVIGATION_TO_MXCLIENT_AUTH_COLLABORATION_PAGE,
+						CoreConstants.FAIL));
+	}
+
+	@Then("^'Form Intiator' Contibutor workflow should be completed and \"([^\"]*)\" text should be displayed in Approval Workflow section$")
+	public void form_Intiator_Contibutor_workflow_should_be_completed_and_text_should_be_displayed_in_Approval_Workflow_section(
+			String approvalWorkflowStatusText) throws Throwable {
+		Assert.assertTrue(mxClientAuthCollaborationPage.verifyContributorWFCompleted(), MessageFormat.format(
+				MobilityXConstants.CONTRIBUTOR_WORKFLOW_NOT_COMPLETED_POST_START_ROUTING_ON_MXCLIENT_AUTH_COLLABORATION_PAGE,
+				CoreConstants.FAIL));
+		Assert.assertTrue(mxClientAuthCollaborationPage.verifyApprovalWFStarted(approvalWorkflowStatusText),
+				MessageFormat.format(
+						MobilityXConstants.APPROVER_WORKFLOW_NOT_STARTED_POST_CONTRIBUTOR_WF_COMPLETION_ON_MXCLIENT_AUTH_COLLABORATION_PAGE,
+						CoreConstants.FAIL));
+	}
+
+	@Then("^'Cancel Routing' and 'Resubmit to Aires' buttons should be displayed on right floating menu of 'Authorization Form' page$")
+	public void cancel_Routing_and_Resubmit_to_Aires_buttons_should_be_displayed_on_right_floating_menu_of_Authorization_Form_page()
+			throws Throwable {
+		Assert.assertTrue(mxClientAuthCollaborationPage.verifyFloatingButtonsPostStartRouting(), MessageFormat.format(
+				MobilityXConstants.FAILED_TO_VERIFY_FLOATING_BUTTONS_POST_START_ROUTING_ON_MXCLIENT_AUTH_COLLABORATION_PAGE,
+				CoreConstants.FAIL));
+	}
+
+	@Given("^Email notification should be sent to First Approver \"([^\"]*)\" for approval but not to Second Approver \"([^\"]*)\"$")
+	public void email_notification_should_be_sent_to_First_Approver_for_approval_but_not_to_Second_Approver(
+			String approver1, String approver2) throws Throwable {
+		Assert.assertTrue(mxClientAuthCollaborationPage.verifyEmailNotificationSentToApprover(approver1), MessageFormat
+				.format(MobilityXConstants.FAILED_TO_VERIFY_EMAIL_NOTIFICATION_SENT_TO_APPROVER, CoreConstants.FAIL,approver1));
+		Assert.assertFalse(mxClientAuthCollaborationPage.verifyEmailNotificationSentToApprover(approver2), MessageFormat
+				.format(MobilityXConstants.EMAIL_NOTIFICATION_WAS_SENT_TO_APPROVER, CoreConstants.FAIL, approver2));
+	}
+	
+	@Given("^Email notification should be sent to both - First Approver \"([^\"]*)\" and Second Approver \"([^\"]*)\" for approval$")
+	public void email_notification_should_be_sent_to_both_First_Approver_and_Second_Approver_for_approval(
+			String approver1, String approver2) throws Throwable {
+		Assert.assertTrue(mxClientAuthCollaborationPage.verifyEmailNotificationSentToApprover(approver1), MessageFormat
+				.format(MobilityXConstants.FAILED_TO_VERIFY_EMAIL_NOTIFICATION_SENT_TO_APPROVER, CoreConstants.FAIL,approver1));
+		Assert.assertTrue(mxClientAuthCollaborationPage.verifyEmailNotificationSentToApprover(approver2), MessageFormat
+				.format(MobilityXConstants.FAILED_TO_VERIFY_EMAIL_NOTIFICATION_SENT_TO_APPROVER, CoreConstants.FAIL, approver2));
+	}
+
+	@Given("^\"([^\"]*)\" has verified 'CoreFlex Assignment' details in the received 'Approver Review Required' email before 'Approving' request$")
+	public void has_verified_CoreFlex_Assignment_details_in_the_received_Approver_Review_Required_email_before_Approving_request(
+			String approver1) throws Throwable {
+		Assert.assertTrue(mxClientAuthCollaborationPage.verifyCFContentsInApproverEmail(approver1),
+				MessageFormat.format(
+						MobilityXConstants.FAILED_TO_VERIFY_COREFLEX_ASSIGNMENT_DETAILS_IN_THE_APPROVAL_REQUIRED_EMAIL,
+						CoreConstants.FAIL, approver1));
+	}
+
+	@Given("^\"([^\"]*)\" has navigated to \"([^\"]*)\" page after clicking on \"([^\"]*)\" button on 'Approver Review Required' email$")
+	public void has_navigated_to_page_after_clicking_on_button_on_Approver_Review_Required_email(String approverName,
+			String navigatedPage, String buttonName) throws Throwable {
+		mxClientAuthCollaborationPage.clickButtonOnApproverEmail(approverName, buttonName, testContext);
+		mxClientAuthWFApprovalActionPage.handle_Cookie_AfterLogin();
+		Assert.assertTrue(mxClientAuthWFApprovalActionPage.verifyPageNavigation(navigatedPage),
+				MessageFormat.format(MobilityXConstants.FAILED_TO_NAVIGATE_TO_PAGE, CoreConstants.FAIL, navigatedPage));
+	}
+
+	@Given("^he has verified CoreFlex 'Benefits_Cashout' and 'BenefitsTotalPoints' details on 'Authorization Form' displayed on the \"([^\"]*)\" page$")
+	public void he_has_verified_CoreFlex_Benefits_Cashout_and_BenefitsTotalPoints_details_on_Authorization_Form_displayed_on_the_page(
+			String pageName) throws Throwable {
+		Assert.assertTrue(mxClientAuthWFApprovalActionPage.verifyTotalPointsSection(), MessageFormat.format(
+				MobilityXConstants.FAILED_TO_VERIFY_TOTAL_POINTS_SECTION_ON_AUTHORIZATION_FORM, CoreConstants.FAIL));
+		Assert.assertTrue(
+				mxClientAuthWFApprovalActionPage.verifySubmittedFlexBenefits(
+						CoreFunctions.getPropertyFromConfig("CoreFlex_Policy_PersonResponsible")),
+				MessageFormat.format(
+						MobilityXConstants.FAILED_TO_VERIFY_FLEX_BENEFITS_SECTION_ON_AUTH_WORKFLOW_APPROVAL_ACTION_PAGE,
+						CoreConstants.FAIL));
+		Assert.assertTrue(mxClientAuthWFApprovalActionPage.verifyCashoutSelectionOnAuthForm(),
+				MessageFormat.format(
+						MobilityXConstants.FAILED_TO_VERIFY_CASHOUT_DETAILS_ON_AUTH_WORKFLOW_APPROVAL_ACTION_PAGE,
+						CoreConstants.FAIL));
+	}
+	
+	@Given("^he has verified CoreFlex 'Benefits' and 'BenefitsTotalPoints' details on 'Authorization Form' displayed on the \"([^\"]*)\" page$")
+	public void he_has_verified_CoreFlex_Benefits_and_BenefitsTotalPoints_details_on_Authorization_Form_displayed_on_the_page(
+			String pageName) throws Throwable {
+		Assert.assertTrue(mxClientAuthWFApprovalActionPage.verifyTotalPointsSection(), MessageFormat.format(
+				MobilityXConstants.FAILED_TO_VERIFY_TOTAL_POINTS_SECTION_ON_AUTHORIZATION_FORM, CoreConstants.FAIL));
+		Assert.assertTrue(
+				mxClientAuthWFApprovalActionPage.verifySubmittedFlexBenefits(
+						CoreFunctions.getPropertyFromConfig("CoreFlex_Policy_PersonResponsible")),
+				MessageFormat.format(
+						MobilityXConstants.FAILED_TO_VERIFY_FLEX_BENEFITS_SECTION_ON_AUTH_WORKFLOW_APPROVAL_ACTION_PAGE,
+						CoreConstants.FAIL));
+	}
+
+	@When("^\"([^\"]*)\" clicks on \"([^\"]*)\" button on 'Authorization Form'$")
+	public void clicks_on_button_on_Authorization_Form(String approverName, String action) throws Throwable {
+		mxClientAuthWFApprovalActionPage.clickElementOnThePage(action);
+		mxClientAuthWFApprovalActionPage.clickElementOnThePage(MobilityXConstants.SEND_APPROVAL);
+		mxClientAuthWFApprovalActionPage.clickElementOnThePage(MobilityXConstants.CLOSE_ICON);
+
+	}
+
+	@Then("'Auth Form' status should be displayed as \"([^\"]*)\" on \"([^\"]*)\" page$")
+	public void Auth_Form_status_should_be_displayed_as_on_page(String status, String pageName) throws Throwable {
+		Assert.assertTrue(mxClientAuthWFApprovalActionPage.verifyAuthFormStatusPostAction(status), MessageFormat.format(
+				MobilityXConstants.FAILED_TO_VERIFY_AUTH_FORM_APPROVAL_STATUS_ON_AUTH_WORKFLOW_APPROVAL_ACTION_PAGE,
+				CoreConstants.FAIL, status));
+	}
+
+	@Then("^Email notification should be sent to Second Approver \"([^\"]*)\" for approval$")
+	public void email_notification_should_be_sent_to_Second_Approver_for_approval(String approver2) throws Throwable {
+		Assert.assertTrue(mxClientAuthCollaborationPage.verifyEmailNotificationSentToApprover(approver2),
+				MessageFormat.format(MobilityXConstants.FAILED_TO_VERIFY_EMAIL_NOTIFICATION_SENT_TO_APPROVER,
+						CoreConstants.FAIL, approver2));
+	}
+
+	@Given("^\"([^\"]*)\" has received 'Approver Review Required' email$")
+	public void has_received_Approver_Review_Required_email(String approver) throws Throwable {
+		Assert.assertTrue(mxClientAuthCollaborationPage.verifyEmailNotificationSentToApprover(approver), MessageFormat
+				.format(MobilityXConstants.FAILED_TO_VERIFY_EMAIL_NOTIFICATION_SENT_TO_APPROVER, CoreConstants.FAIL));
+	}
+
+	@Then("^'Authorization Form' status should be displayed as 'Submitted' in 'New Initiation Submitted' email$")
+	public void authorization_Form_status_should_be_displayed_as_Submitted_on_MXClient_Authorization_Form_page()
+			throws Throwable {
+		Assert.assertTrue(mxClientAuthorizationHomePage.verifyInitiationBenefitsSubmissionEmail(), MessageFormat
+				.format(MobilityXConstants.FAILED_TO_VERIFY_INITIATION_BENEFITS_SUBMISSION_EMAIL, CoreConstants.FAIL));
+		CoreFunctions.writeToPropertiesFile("CF_Transferee_AvailablePoints", String
+				.valueOf((Double.parseDouble(CoreFunctions.getPropertyFromConfig("CF_Transferee_TotalAvailablePoints")))
+						- (Double.parseDouble(CoreFunctions.getPropertyFromConfig("CF_Client_TotalSelectedPoints")))));
+	}
+
 }

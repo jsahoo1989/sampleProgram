@@ -1,6 +1,6 @@
-Feature: Validate the CoreFlex End-To-End Business Test Flow(BluePrint, MXClient, Transferee Submissions) for Both_MXClient_UserDefined_PortionCashout_Delete_DenyAll selection
+Feature: Validate the MXClient Auth Form Sequential-ApprovalWF and CoreFlex End-To-End Business Test Flow(BluePrint, MXClient, Transferee Submissions) for Both_MXClient_UserDefined_PortionCashout_Delete_DenyAll selection
 
-  @End-To-End_CoreFlex @CF_MXClient_UserDefined_PortionCashout
+  @End-To-End_CoreFlex @CF_MXClient_ApprovalWF_Sequential_UserDefined_PortionCashout
   Scenario: CoreFlex - Creating & Validating a new Active Points Based CoreFlex Policy with MXClient, UserDefined and PortionCahout selection
     Given he has setup a new CoreFlex Policy with following selection in Blueprint application
       | Person Responsible For Benefit Selection | Flex Setup Type | Cashout Availability | BenefitType | PolicyRequiredFor | MileStones |
@@ -13,8 +13,8 @@ Feature: Validate the CoreFlex End-To-End Business Test Flow(BluePrint, MXClient
     When he clicks on "Approve" button to acknowledge 'Approve this Policy' dialog
     Then Policy Status and Version should be displayed as "Active" and "V1" respectively on "View/Edit Policy Forms" page
 
-  @End-To-End_CoreFlex @CF_MXClient_UserDefined_PortionCashout @Demo_MXClient_PortionCashout
-  Scenario: MXClient - Verifying Authorization Submission with UserDefined TotalPoints, Core/Flex Benefits & PortionCashout for configured ClientInitiator BluePrint Policy
+  @End-To-End_CoreFlex @CF_MXClient_ApprovalWF_Sequential_UserDefined_PortionCashout 
+  Scenario: MXClient - Validating Total Points Section, Core/Flex benefits & PortionCashout displayed on BenefitSelectionTool page and ApprovalWF for Client Initiator BluePrint Policy Setup
     Given he has logged into 'MobilityX' application as a 'Client' user
     And he has clicked on "Create an authorization" after validating Client details on 'Authorization Home Page'
     And he has filled all the mandatory information on 'Authorization Form' after selecting following 'Assignment Option' with 'Auth Form Template' for an employee on 'Authorization Home Page'
@@ -22,25 +22,44 @@ Feature: Validate the CoreFlex End-To-End Business Test Flow(BluePrint, MXClient
       | A new transfer or assignment | Domestic Authorization Form |
     And he has verified 'Total Points' section displayed on 'Authorization Form' for "User Defined" - 'Flex Setup Type' selection in BluePrint CoreFlex Policy
     And he has verified 'FleX Benefits' section displayed on 'Authorization Form' for "Client Initiator" - 'Person Responsible' selection in BluePrint CoreFlex Policy
-    And he has verified 'Error Growl Message' and 'Required Field Validation' displayed after clicking on "Submit to Aires" button with Blank/No 'Total Points' value
-    And he has navigated to "Benefit Selection Tool" page after entering valid 'Total Points' value and clicking on "Start Benefit Selection" button
-    And he has verified following details on "Benefit Selection Tool" page based on configured Points Based CoreFlex BluePrint Policy
-      | Available Point Balance | Core Benefits | Flex Benefits | Suggested Bundles | Cashout |
-    And he has clicked on 'Back to initiation' link on 'Benefit Selection Tool' to navigate to 'Authorization Form' page
-    And he has clicked on 'Start Benefit Selection' after increasing 'Benfit Total Points' value on 'Auth Form Template' page
-    And he has verified following details on "Benefit Selesction Tool" page based on configured Points Based CoreFlex BluePrint Policy
-      | Available Point Balance | Core Benefits | Flex Benefits | Suggested Bundles | Cashout |
-    And he has clicked on 'Back to benefits list' link to navigate to 'Benefit Selection Tool' page
-    And he has verified 'Portion Cashout' details on 'Benefit Selection Tool' page
+    And he has clicked on 'Start Benefit Selection' after entering valid 'Benfit Total Points' value on 'Auth Form Template' page
     And he has navigated to "Benefits Bundle" page after selecting required Flex Benefits and Cashout on 'Benefit Selection Tool' page
     And he has clicked on "Save & Exit" button after validating selected FlexBenefit and Cashout details listed under 'Selected Benefits' section on "Benefits Bundle" page
-    And he has verified entered 'Total Points' value and selected 'Core_Flex Benefit' along with 'Cashout' details displayed on the navigated 'Authorization Form' page
-    When he clicks on "Submit to Aires" button from right floating menu of 'Authorization Form' page without routing it to Approvers
-    Then 'Auth Submit Success' growl message should be displayed on the navigated 'MobilityX Dashboard Home' page
-    And 'New Initiation Submitted' email should be received having Transferee details along with assigned CoreFlex Total Points and Submitted Benefits Points
+    And he has clicked on "Collaboration" tab on 'Intiation' page to navigate to 'Collaboration Workflow' page
+    And he has added following approvers for 'Authorization Form' to be routed in "Route in sequential order" order on 'Collaboration' tab
+      | Role     | Name             | Comments                          | Email                               | Approver job title   |
+      | Approver | Test ApproverOne | Add an first approver to an Auth  | airesautomation@aires.com           | Relonet Approver One |
+      | Approver | Test ApproverTwo | Add an second approver to an Auth | airesautomationTransferee@aires.com | Relonet Approver Two |
+    And he has clicked on "Start routing" button from right floating menu of 'Authorization Form' page
+    And he has verified 'Initiation routed for approver workflow' success dialog displayed on 'Authorization Form' page
+    When he clicks on "Continue working on this initiation" option on sucess dialog
+    Then 'Form Intiator' should not navigate away from 'Collaboration Workflow' page
+    And 'Form Intiator' Contibutor workflow should be completed and "Routing for approval..." text should be displayed in Approval Workflow section
+    And 'Cancel Routing' and 'Resubmit to Aires' buttons should be displayed on right floating menu of 'Authorization Form' page
+    And Email notification should be sent to First Approver "Test ApproverOne" for approval but not to Second Approver "Test ApproverTwo"
 
-  @End-To-End_CoreFlex @CF_MXClient_UserDefined_PortionCashout @Demo_MXClient_PortionCashout
-  Scenario: MXClient - Verifying Deleted Submitted Core/Flex Benefits & PortionCashout Status on MXClient Submitted Benefits
+  @End-To-End_CoreFlex @CF_MXClient_ApprovalWF_Sequential_UserDefined_PortionCashout 
+  Scenario: MXClient - Validating Email Contents received in Approver Review Required Email and Approval of Authorization Form by ApproverOne
+    Given "Test ApproverOne" has received 'Approver Review Required' email
+    And "Test ApproverOne" has verified 'CoreFlex Assignment' details in the received 'Approver Review Required' email before 'Approving' request
+    And "Test ApproverOne" has navigated to "AuthWorkFlowAction" page after clicking on "SUBMIT MY RESPONSE" button on 'Approver Review Required' email
+    And he has verified CoreFlex 'Benefits_Cashout' and 'BenefitsTotalPoints' details on 'Authorization Form' displayed on the "AuthWorkFlowAction" page
+    When "Test ApproverOne" clicks on "Approve" button on 'Authorization Form'    
+    Then 'Auth Form' status should be displayed as "Approved" on "AuthWorkFlowAction" page
+    And Email notification should be sent to Second Approver "Test ApproverTwo" for approval
+
+  @End-To-End_CoreFlex @CF_MXClient_ApprovalWF_Sequential_UserDefined_PortionCashout 
+  Scenario: MXClient - Validating Email Contents received in Approver Review Required Email and Approval of Authorization Form by ApproverTwo
+    Given "Test ApproverTwo" has received 'Approver Review Required' email
+    And "Test ApproverTwo" has verified 'CoreFlex Assignment' details in the received 'Approver Review Required' email before 'Approving' request
+    And "Test ApproverTwo" has navigated to "AuthWorkFlowAction" page after clicking on "SUBMIT MY RESPONSE" button on 'Approver Review Required' email
+    And he has verified CoreFlex 'Benefits_Cashout' and 'BenefitsTotalPoints' details on 'Authorization Form' displayed on the "AuthWorkFlowAction" page
+    When "Test ApproverTwo" clicks on "Approve" button on 'Authorization Form'
+    Then 'Auth Form' status should be displayed as "Approved" on "AuthWorkFlowAction" page
+    And 'Authorization Form' status should be displayed as 'Submitted' in 'New Initiation Submitted' email
+
+  @End-To-End_CoreFlex @CF_MXClient_ApprovalWF_Sequential_UserDefined_PortionCashout 
+  Scenario: MXClient - Deleting and Verifying Deleted Submitted Core/Flex Benefits & PortionCashout Status on MXClient Submitted Benefits
     Given he has logged into 'MobilityX' application as a 'Client' user
     And he has actualized the Transferee after selecting required 'MSPEC_PPC' user and setting file status as 'Active' in IRIS application
     And he has clicked on "View all initiations" link on 'Authorization Home Page' to navigate to 'View all initiation' page
@@ -57,7 +76,7 @@ Feature: Validate the CoreFlex End-To-End Business Test Flow(BluePrint, MXClient
     Then 'Auth Submit Success' growl message should be displayed on the navigated 'Advanced Authorization Search' page
     And 'Revised Mobility Initiation' email having submitted_deleted Benefit and Points details should be received
 
-  @End-To_End_CoreFlex @CF_MXClient_UserDefined_PortionCashout @Demo_MXClient_PortionCashout
+  @End-To_End_CoreFlex @CF_MXClient_ApprovalWF_Sequential_UserDefined_PortionCashout 
   Scenario: TransfereeSubmissions - Verifying UserDefined Points, Benefit_Cashout Submissions and Delete Request DenyAll transaction for the request made by the Client
     Given he has logged into 'Transferee Submissions' application as a "MSPEC/PPC" user
     And he has navigated to "Transferee Submissions Dashboard" page having record of Bundle submitted by the Client

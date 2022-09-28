@@ -1,6 +1,6 @@
 Feature: Validate the CoreFlex End-To-End Business Test Flow(BluePrint, MXTransferee,Transferee Submissions) for Both_Transferee_UserDefined_AfterRelocation_Delete_DenyAll selection
 
-  @End-To-End_CoreFlex @CF_MXTransferee_UserDefined_AfterRelocation
+  @End-To-End_CoreFlex @CF_MXTransferee_UserDefined_AfterRelocationIgnore
   Scenario: CoreFlex - Creating & Validating a new Active Points Based CoreFlex Policy with Transferee, UserDefined and AfterRelocation selection
     Given he has setup a new CoreFlex Policy with following selection in Blueprint application
       | Person Responsible For Benefit Selection | Flex Setup Type | Cashout Availability  | BenefitType | PolicyRequiredFor | MileStones |

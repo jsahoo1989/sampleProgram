@@ -74,7 +74,7 @@
 				"Auto Loss on Sale / Lease Cancellation",
 				"Auto Registration Costs",
 				"Concierge Services",
-				"Departure Service",
+				"Departure Services",
 				"Other Settling In Benefit"
 			],
 			"lifeStyleSelectableBenefits": [
@@ -85,6 +85,8 @@
 				"Dry Cleaning Services Reimbursement",
 				"Other One Time Payment",
 				"Pet Daycare Services Reimbursement",
+				"Laundry Services Reimbursement",
+				"Conceirge Home Cleaning Services Reimbursement",
 				"Membership Dues Reimbursement",
 				"Other Lifestyle Benefit"
 			],
@@ -101,6 +103,8 @@
 				"Other Ongoing Allowance/Reimbursement",
 				"Home Leave Allowance/Reimbursement",
 				"Cost of Living Allowance (COLA)",
+				"Goods & Services Allowance",
+				"Mobility Premium",
 				"Appliance Allowance",
 				"Other Allowance Benefit"
 			]

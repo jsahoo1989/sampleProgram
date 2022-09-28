@@ -60,7 +60,7 @@ public class CoreFlex_BluePrint_LoginPage extends Base {
 	@FindBy(how = How.XPATH, using = "//div[text()='Use another account']")
 	private WebElement _anotherAccount;
 
-	@FindBy(how = How.XPATH, using = "//img[contains(@src,'login-with-office-365')]")
+	@FindBy(how = How.XPATH, using = "//button/span[contains(text(),'Login With Office 365')]")
 	private WebElement _loginWithOfficeImg;
 
 	// Progress Bar

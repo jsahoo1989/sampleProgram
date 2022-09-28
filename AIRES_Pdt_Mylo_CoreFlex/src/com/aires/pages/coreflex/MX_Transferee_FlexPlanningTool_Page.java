@@ -511,8 +511,7 @@ public class MX_Transferee_FlexPlanningTool_Page extends Base {
 		}
 		if (isPortionCashoutSelected) {
 			Reporter.addStepLog(MessageFormat.format(
-					MobilityXConstants.SUCCESSFULLY_SELECTED_CASHOUT_ON_FLEX_PLANNING_TOOL_PAGE,
-					CoreConstants.PASS));
+					MobilityXConstants.SUCCESSFULLY_SELECTED_CASHOUT_ON_FLEX_PLANNING_TOOL_PAGE, CoreConstants.PASS));
 			setReimAccountType(CoreFunctions.getAttributeText(_selectSelectAccount, "title"));
 		}
 		return isPortionCashoutSelected;
@@ -1487,8 +1486,8 @@ public class MX_Transferee_FlexPlanningTool_Page extends Base {
 		totalSelectedPoints = 0;
 		MX_Transferee_MyBenefitsBundlePage.benefitDeletedFlag = false;
 		try {
-			benefitsSelectedSuccessfully = selectAiresManagedBenefitsOnFPT(noOfTracingPrompts)
-					&& selectCashOutOnFPT() && validatePointsAndClickOnNext();
+			benefitsSelectedSuccessfully = selectAiresManagedBenefitsOnFPT(noOfTracingPrompts) && selectCashOutOnFPT()
+					&& validatePointsAndClickOnNext();
 		} catch (Exception e) {
 			Reporter.addStepLog(MessageFormat.format(
 					MobilityXConstants.EXCEPTION_OCCURED_WHILE_SELECTING_BENEFITS_ON_FLEX_PLANNING_TOOL_PAGE,
@@ -1727,11 +1726,9 @@ public class MX_Transferee_FlexPlanningTool_Page extends Base {
 	}
 
 	private boolean verifyAfterRelocationNoteBeforeTracing() {
-		try {
-			System.out.println("Expected:" + MobilityXConstants.RELOCATION_CASHOUT_NOTE_BEFORE_TRACING);
-			System.out.println("Actual:" + CoreFunctions.getElementText(driver, _textAfterRelocationNote));
+		try {							
 			if (CoreFunctions.getElementText(driver, _textAfterRelocationNote)
-					.equals(MobilityXConstants.RELOCATION_CASHOUT_NOTE_BEFORE_TRACING)) {
+					.equals(MobilityXConstants.RELOCATION_CASHOUT_NOTE_BEFORE_TRACING_FOR_TRANSFEREE)) {
 				Reporter.addStepLog(MessageFormat.format(
 						COREFLEXConstants.SUCCESSFULLY_VERIFIED_DEFAULT_AFTER_RELOCATION_CASHOUT_NOTE_BEFORE_TRACING_ACTUALIZATION_ON_FLEX_PLANNING_TOOL_PAGE,
 						CoreConstants.PASS));
@@ -1739,7 +1736,7 @@ public class MX_Transferee_FlexPlanningTool_Page extends Base {
 			} else {
 				Reporter.addStepLog(MessageFormat.format(
 						COREFLEXConstants.FAILED_TO_VERIFY_DEFAULT_AFTER_RELOCATION_CASHOUT_NOTE_BEFORE_TRACING_ACTUALIZATION_ON_FLEX_PLANNING_TOOL_PAGE,
-						CoreConstants.FAIL, MobilityXConstants.RELOCATION_CASHOUT_NOTE_BEFORE_TRACING,
+						CoreConstants.FAIL, MobilityXConstants.RELOCATION_CASHOUT_NOTE_BEFORE_TRACING_FOR_TRANSFEREE,
 						CoreFunctions.getElementText(driver, _textAfterRelocationNote)));
 			}
 		} catch (Exception e) {

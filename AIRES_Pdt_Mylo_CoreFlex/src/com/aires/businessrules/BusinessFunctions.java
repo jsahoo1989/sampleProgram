@@ -1116,7 +1116,7 @@ public class BusinessFunctions {
 					CoreConstants.FAIL, element, sectionName));
 		}
 		if (type.contains(MYLOConstants.WITHOUT) || type.contains(MYLOConstants.CANCELED)
-				|| type.contains(MYLOConstants.CLOSED)|| type.contains(MYLOConstants.PAYMENT_CUT_OFF_COMPLETION)) {
+				|| type.contains(MYLOConstants.CLOSED) || type.contains(MYLOConstants.PAYMENT_CUT_OFF_COMPLETION)) {
 			Assert.assertFalse(flag, MessageFormat.format(MYLOConstants.BUTTON_ENABLED, CoreConstants.FAIL, btnName,
 					sectionName, pageName));
 			Reporter.addStepLog(MessageFormat.format(MYLOConstants.BUTTON_DISABLED, CoreConstants.PASS, btnName,
@@ -1132,6 +1132,7 @@ public class BusinessFunctions {
 	
 	public static String setDifferentMyloFields(WebDriver driver, String fieldName, String fieldValue,
 			WebElement element, String type) {
+		type=(fieldValue.equals(MYLOConstants.BLANK))?MYLOConstants.BLANK:type;
 		String updatedValue = "";
 		try {
 			updatedValue = (type.equals(MYLOConstants.RANDOM_STRING))
@@ -1151,5 +1152,14 @@ public class BusinessFunctions {
 		}
 		CoreFunctions.clearAndSetText(driver, element, fieldName, updatedValue);
 		return updatedValue;
+	}
+	
+	public static void fluentWaitForMyloSpinnerToDisappear(WebDriver driver,WebElement element) {
+		if(CoreFunctions.isElementExist(driver, element, 5)) {
+			FluentWait<WebDriver> wait = new FluentWait<>(driver).withTimeout(Duration.ofSeconds(90))
+					.pollingEvery(Duration.ofMillis(1000)).withMessage("Timeout occured!")
+					.ignoring(NoSuchElementException.class);
+			wait.until(ExpectedConditions.invisibilityOf(element));
+			}
 	}
 }

@@ -75,10 +75,12 @@ public class MyloJourneyAddress_Steps {
 	public void he_clicks_on_button_after_entering_below_valid_data_for_respective_fields_on_section(String btnName,
 			String sectionType, DataTable table) {
 		java.util.List<Map<String, String>> data = table.asMaps(String.class, String.class);
-		myloJourneyPageAddressSection.setFieldValueAddressSection(data.get(0).get(MYLOConstants.COUNTRY),
-				data.get(0).get(MYLOConstants.STATE_TEXT_FIELD), data.get(0).get(MYLOConstants.CITY),
-				data.get(0).get(MYLOConstants.ZIPCODE), data.get(0).get(MYLOConstants.ADDRESS1),
-				data.get(0).get(MYLOConstants.ADDRESS2), sectionType);
+		for (int i = 0; i < data.size(); i++) {
+			String fieldName = data.get(i).get(MYLOConstants.FIELD_NAME);
+			String fieldValue = data.get(i).get(MYLOConstants.CHARACTER_LENGTH);
+			myloJourneyPageAddressSection.setAddressFieldValues(fieldName, fieldValue, MYLOConstants.RANDOM_STRING,
+					sectionType);
+		}
 		myloJourneyPageAddressSection.clickFieldsOnAddressSection(btnName, sectionType);
 	}
 
@@ -110,9 +112,12 @@ public class MyloJourneyAddress_Steps {
 	public void he_clicks_on_button_after_entering_below_mandatory_data_on_section(String btnName, String sectionType,
 			DataTable table) {
 		java.util.List<Map<String, String>> data = table.asMaps(String.class, String.class);
-		myloJourneyPageAddressSection.setAddressMandatoryFields(sectionType, data.get(0).get(MYLOConstants.COUNTRY),
-				data.get(0).get(MYLOConstants.STATE_TEXT_FIELD), data.get(0).get(MYLOConstants.CITY),
-				MYLOConstants.RANDOM_STRING);
+		for (int i = 0; i < data.size(); i++) {
+			String fieldName = data.get(i).get(MYLOConstants.FIELD_NAME);
+			String fieldValue = data.get(i).get(MYLOConstants.CHARACTER_LENGTH);
+			myloJourneyPageAddressSection.setAddressFieldValues(fieldName, fieldValue, MYLOConstants.RANDOM_STRING,
+					sectionType);
+		}
 		myloJourneyPageAddressSection.clickFieldsOnAddressSection(btnName, sectionType);
 	}
 
@@ -140,10 +145,12 @@ public class MyloJourneyAddress_Steps {
 		String btnName = (sectionType.equals(MYLOConstants.ORIGIN_ADDRESS)) ? MYLOConstants.ORIGIN_ADDRESS_SAVE_BUTTON
 				: MYLOConstants.DESTINATION_ADDRESS_SAVE_BUTTON;
 		java.util.List<Map<String, String>> data = table.asMaps(String.class, String.class);
-		myloJourneyPageAddressSection.setFieldValueAddressSection(data.get(0).get(MYLOConstants.COUNTRY),
-				data.get(0).get(MYLOConstants.STATE_TEXT_FIELD), data.get(0).get(MYLOConstants.CITY),
-				data.get(0).get(MYLOConstants.ZIPCODE), data.get(0).get(MYLOConstants.ADDRESS1),
-				data.get(0).get(MYLOConstants.ADDRESS2), sectionType);
+		for (int i = 0; i < data.size(); i++) {
+			String fieldName = data.get(i).get(MYLOConstants.FIELD_NAME);
+			String fieldValue = data.get(i).get(MYLOConstants.CHARACTER_LENGTH);
+			myloJourneyPageAddressSection.setAddressFieldValues(fieldName, fieldValue, MYLOConstants.RANDOM_STRING,
+					sectionType);
+		}
 		myloJourneyPageAddressSection.clickFieldsOnAddressSection(btnName, sectionType);
 		myloJourneyPageAddressSection.clickFieldsOnAddressSection(btn, sectionType);
 	}
@@ -231,10 +238,12 @@ public class MyloJourneyAddress_Steps {
 		String btnName = (sectionType.equals(MYLOConstants.ORIGIN_ADDRESS)) ? MYLOConstants.ORIGIN_ADDRESS_SAVE_BUTTON
 				: MYLOConstants.DESTINATION_ADDRESS_SAVE_BUTTON;
 		java.util.List<Map<String, String>> data = table.asMaps(String.class, String.class);
-		myloJourneyPageAddressSection.setFieldValueAddressSection(data.get(0).get(MYLOConstants.COUNTRY),
-				data.get(0).get(MYLOConstants.STATE_TEXT_FIELD), data.get(0).get(MYLOConstants.CITY),
-				data.get(0).get(MYLOConstants.ZIPCODE), data.get(0).get(MYLOConstants.ADDRESS1),
-				data.get(0).get(MYLOConstants.ADDRESS2), sectionType);
+		for (int i = 0; i < data.size(); i++) {
+			String fieldName = data.get(i).get(MYLOConstants.FIELD_NAME);
+			String fieldValue = data.get(i).get(MYLOConstants.CHARACTER_LENGTH);
+			myloJourneyPageAddressSection.setAddressFieldValues(fieldName, fieldValue, MYLOConstants.RANDOM_STRING,
+					sectionType);
+		}
 		myloJourneyPageAddressSection.clickFieldsOnAddressSection(btnName, sectionType);
 		myloJourneyPageAddressSection.clickFieldsOnAddressSection(btn, sectionType);
 	}
@@ -242,7 +251,7 @@ public class MyloJourneyAddress_Steps {
 	@Then("^\"([^\"]*)\" should be updated in \"([^\"]*)\" section after clicking on \"([^\"]*)\" button$")
 	public void should_be_updated_in_section_after_clicking_on_button(String sectionType, String section, String btn) {
 		myloJourneyPageAddressSection.clickFieldsOnAddressSection(btn, sectionType);
-		Assert.assertTrue(myloJourneyPageAddressSection.verifiedAddressCopied(sectionType),
+		Assert.assertTrue(myloJourneyPageAddressSection.verifyAddressCopied(sectionType),
 				MessageFormat.format(MYLOConstants.VERIFIED_ADDRESS_NOT_COPIED, CoreConstants.FAIL, sectionType,
 						MYLOConstants.MAILING_ADDRESS));
 		Reporter.addStepLog(MessageFormat.format(MYLOConstants.VERIFIED_ADDRESS_COPIED, CoreConstants.PASS, sectionType,
@@ -252,7 +261,7 @@ public class MyloJourneyAddress_Steps {
 	@Then("^\"([^\"]*)\" should not get updated in existing Mailing address section on Mylo Journey page$")
 	public void should_not_get_updated_in_existing_Mailing_address_section_on_Mylo_Journey_page(String sectionType) {
 		myloJourneyPage.scrollToJourneySection(MYLOConstants.MAILING_ADDRESS, MYLOConstants.JOURNEY);
-		Assert.assertFalse(myloJourneyPageAddressSection.verifiedAddressCopied(sectionType), MessageFormat.format(
+		Assert.assertFalse(myloJourneyPageAddressSection.verifyAddressCopied(sectionType), MessageFormat.format(
 				MYLOConstants.VERIFIED_ADDRESS_COPIED, CoreConstants.FAIL, sectionType, MYLOConstants.MAILING_ADDRESS));
 		Reporter.addStepLog(MessageFormat.format(MYLOConstants.VERIFIED_ADDRESS_NOT_COPIED, CoreConstants.PASS,
 				sectionType, MYLOConstants.MAILING_ADDRESS));
@@ -269,10 +278,9 @@ public class MyloJourneyAddress_Steps {
 		myloJourneyPageAddressSection.clickFieldsOnAddressSection(MYLOConstants.YES_BUTTON, MYLOConstants.JOURNEY);
 		myloJourneyPageAddressSection.clickFieldsOnAddressSection(MYLOConstants.CLOSE_POPUP, MYLOConstants.JOURNEY);
 		myloJourneyPage.scrollToJourneySection(section, MYLOConstants.JOURNEY);
-		Assert.assertFalse(myloJourneyPageAddressSection.verifiedAddressCopied(sectionType), MessageFormat.format(
+		Assert.assertFalse(myloJourneyPageAddressSection.verifyAddressCopied(sectionType), MessageFormat.format(
 				MYLOConstants.VERIFIED_ADDRESS_COPIED, CoreConstants.FAIL, sectionType, MYLOConstants.MAILING_ADDRESS));
 		Reporter.addStepLog(MessageFormat.format(MYLOConstants.VERIFIED_ADDRESS_NOT_COPIED, CoreConstants.PASS,
 				sectionType, MYLOConstants.MAILING_ADDRESS));
 	}
-
 }

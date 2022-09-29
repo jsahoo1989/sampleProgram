@@ -565,6 +565,7 @@ public class MYLOConstants {
 	public static final String UNABLE_TO_COPY_TEXT = "{0}Unable to copy text of ''{1}' section";
 	public static final String CLOSE_POPUP = "Close Icon";
 	public static final String COMPLETE_MAILING_ADDRESS = "Complete Mailing Address";
+	public static final CharSequence STATE_DROPDOWN = "State Dropdown";
 	
 	public static long TIME_BEFORE_ACTION;
 	public static long TIME_AFTER_ACTION;

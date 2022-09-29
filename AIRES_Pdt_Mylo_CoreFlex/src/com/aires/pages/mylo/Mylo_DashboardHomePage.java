@@ -53,7 +53,7 @@ public class Mylo_DashboardHomePage extends Base {
 	@FindBy(how = How.CSS, using = "span[class='ng-option-label ng-star-inserted']")
 	private List<WebElement> _selectOptions;
 
-	@FindBy(how = How.CSS, using = "div[class='row'] label")
+	@FindBy(how = How.CSS, using = "div[class='mylo-popup'] input")
 	private List<WebElement> _fileParameterList;
 	
 	@FindBy(how = How.CSS, using = "h1[class='popupheader']")
@@ -260,7 +260,7 @@ public class Mylo_DashboardHomePage extends Base {
 		while(_fileParameterList.size()==0) {
 			selectParameterFromQueryScreen(MYLOConstants.FILE);
 		}
-		WebElement getOptionElement = CoreFunctions.returnItemInListByText(driver, _fileParameterList, option);
+		WebElement getOptionElement = CoreFunctions.returnItemInListByAttributeText(driver, _fileParameterList,"placeholder", option);
 		if (option.contains(MYLOConstants.STATUS) || option.contains(MYLOConstants.OFFICE)
 				|| option.contains(MYLOConstants.COUNTRY) || option.contains(MYLOConstants.STATE)) {
 			mapParameterDropdownFields();
@@ -413,7 +413,8 @@ public class Mylo_DashboardHomePage extends Base {
 	}
 	
 	public void loadAlternateFiles() {
-		String ctr = System.getProperty("noOfTimes");
+		//String ctr = System.getProperty("noOfTimes");
+		String ctr="5";
 		int max = Integer.parseInt(ctr);
 		for (int i = 0; i < max; i++) {
 			CoreFunctions.explicitWaitTillElementListClickable(driver, _historyCards);

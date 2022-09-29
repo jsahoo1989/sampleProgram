@@ -524,6 +524,21 @@ public class CoreFunctions {
 		}
 		return null;
 	}
+	
+	public static WebElement returnItemInListByAttributeText(WebDriver driver, List<WebElement> WebElementList,
+			String attributeName,String searchText) {
+		try {
+			for (WebElement row : WebElementList) {
+				Log.info(CoreConstants.ACTUAL_ITEM_NAME_IS + row.getAttribute(attributeName));
+				if (row.getAttribute(attributeName).contains(searchText)) {
+					return row;
+				}
+			}
+		} catch (Exception e) {
+			Assert.fail(PDTConstants.COULD_NOT_SELECT_ITEM_FROM_LIST);
+		}
+		return null;
+	}
 
 	public static LinkedHashMap<String, String> returnMapFromBothLists(WebDriver driver, List<WebElement> roleNames,
 			List<WebElement> memberNames) {

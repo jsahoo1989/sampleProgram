@@ -63,30 +63,13 @@ public class CF_BluePrint_Cloning_Steps {
 	private PDT_GeneralInformationPage generalInfoPage;
 	private CoreFlex_FlexPolicySetupPage flexPolicySetupPage;
 	private CoreFlex_PolicyBenefitsCategoriesPage coreFlexPolicyBenefitsCategoriesPage;
-	private CoreFlex_DuplicateHousing_BenefitsPage coreFlexDuplicateHousingBenefitsPage;
-	private CoreFlex_LumpSum_BenefitsPage coreFlexLumpSumBenefitsPage;
 	private CoreFlex_BenefitSummaryPage coreFlexBenefitSummaryPage;
-	private CoreFlex_OtherHousing_BenefitsPage coreFlexOtherHousingBenefitsPage;
 	private MobilityX_LoginPage mobilityXLoginPage;
 	private MX_Transferee_MyBenefitsBundlePage mxTransfereeMyBenefitsBundlePage;
 	private TransfereeSubmissions_LoginPage transfereeSubmissionsLoginPage;
 	private TransfereeSubmissions_DashboardHomePage transfereeSubmissionsDashboardHomePage;
 	private CoreFlex_PreviewTransfereePage coreFlexTransfereePreviewPage;
 	private TransfereeSubmissions_DetailsPage transfereeSubmissionsDetailsPage;
-	private CoreFlex_LanguageTraining_BenefitsPage coreFlexLanguageTrainingBenefitsPage;
-	private CoreFlex_TemporaryLiving_BenefitsPage coreFlexTemporaryLivingBenefitsPage;
-	private CoreFlex_CulturalTraining_BenefitsPage coreFlexCulturalTrainingBenefitsPage;
-	private CoreFlex_ConciergeServices_BenefitsPage coreFlexConciergeServicesBenefitsPage;
-	private CoreFlex_HomePurchase_BenefitsPage coreFlexHomePurchaseBenefitsPage;
-	private CoreFlex_FinalMove_BenefitsPage coreFlexFinalMoveBenefitsPage;
-	private CoreFlex_AreaTour_BenefitsPage coreFlexAreaTourBenefitsPage;
-	private CoreFlex_HomeLeave_BenefitsPage coreFlexHomeLeaveBenefitsPage;
-	private CoreFlex_AirportPickup_BenefitsPage coreFlexAirportPickupBenefitsPage;
-	private CoreFlex_PreAcceptanceServices_BenefitsPage coreFlexPreAcceptanceServicesBenefitsPage;
-	private CoreFlex_FurnitureRental_BenefitsPage coreFlexFurnitureRentalBenefitsPage;
-	private CoreFlex_AutoRentalDuringAssignment_BenefitsPage coreFlexAutoRentalDuringAssignmentBenefitsPage;
-	private CoreFlex_EducationAssistanceSchoolSearch_BenefitsPage coreFlexEducationAssistanceBenefitsPage;
-	private CoreFlex_HouseHuntingTrip_BenefitsPage coreFlexHouseHuntingTripBenefitsPage;
 
 	public CF_BluePrint_Cloning_Steps(TestContext context) {
 		testContext = context;
@@ -107,9 +90,7 @@ public class CF_BluePrint_Cloning_Steps {
 		coreFlexPolicyBenefitsCategoriesPage = testContext.getCoreFlexPageObjectManager()
 				.getCoreFlexPolicyBenefitsCategoriesPage();
 		coreFlexCustomBundlesPage = testContext.getCoreFlexPageObjectManager().getCoreFlexCustomBundlesPage();
-		coreFlexDuplicateHousingBenefitsPage = testContext.getCoreFlexPageObjectManager()
-				.getCoreFlexDuplicateHousingBenefitsPage();
-		coreFlexLumpSumBenefitsPage = testContext.getCoreFlexPageObjectManager().getCoreFlexLumpSumBenefitsPage();
+		testContext.getCoreFlexPageObjectManager().initializeCoreFlexPageObjects();
 		coreFlexBenefitSummaryPage = testContext.getCoreFlexPageObjectManager().getCoreFlexBenefitSummaryPage();
 		mobilityXLoginPage = testContext.getCoreFlexPageObjectManager().getMobilityXLoginPage();
 		mxTransfereeJourneyHomePage = testContext.getCoreFlexPageObjectManager().getMXTransfereeJourneyHomePage();
@@ -120,36 +101,10 @@ public class CF_BluePrint_Cloning_Steps {
 		transfereeSubmissionsLoginPage = testContext.getCoreFlexPageObjectManager().getTransfereeSubmissionsLoginPage();
 		transfereeSubmissionsDashboardHomePage = testContext.getCoreFlexPageObjectManager()
 				.getTransfereeSubmissionsDashboardHomePage();
-		coreFlexOtherHousingBenefitsPage = testContext.getCoreFlexPageObjectManager().getOtherHousingBenefitPage();
 		coreFlexTransfereePreviewPage = testContext.getCoreFlexPageObjectManager().getCoreFlexTransfereePreviewPage();
 		bluePrintCFLoginPage = testContext.getPageObjectManager().getBluePrintCoreFlexLoginPage();
 		transfereeSubmissionsDetailsPage = testContext.getCoreFlexPageObjectManager()
 				.getTransfereeSubmissionsDetailsPage();
-		coreFlexLanguageTrainingBenefitsPage = testContext.getCoreFlexPageObjectManager()
-				.getCoreFlexLanguageTrainingBenefitsPage();
-		coreFlexTemporaryLivingBenefitsPage = testContext.getCoreFlexPageObjectManager()
-				.getCoreFlexTemporaryLivingBenefitPage();
-		coreFlexCulturalTrainingBenefitsPage = testContext.getCoreFlexPageObjectManager()
-				.getCoreFlexCulturalTrainingBenefitsPage();
-		coreFlexConciergeServicesBenefitsPage = testContext.getCoreFlexPageObjectManager()
-				.getCoreFlexConciergeServicesBenefitsPage();
-		coreFlexHomePurchaseBenefitsPage = testContext.getCoreFlexPageObjectManager()
-				.getCoreFlexHomePurchaseBenefitsPage();
-		coreFlexFinalMoveBenefitsPage = testContext.getCoreFlexPageObjectManager().getCoreFlexFinalMoveBenefitsPage();
-		coreFlexAreaTourBenefitsPage = testContext.getCoreFlexPageObjectManager().getCoreFlexAreaTourBenefitsPage();
-		coreFlexHomeLeaveBenefitsPage = testContext.getCoreFlexPageObjectManager().getCoreFlexHomeLeaveBenefitsPage();
-		coreFlexAirportPickupBenefitsPage = testContext.getCoreFlexPageObjectManager()
-				.getCoreFlexAirportPickupBenefitsPage();
-		coreFlexPreAcceptanceServicesBenefitsPage = testContext.getCoreFlexPageObjectManager()
-				.getCoreFlexPreAcceptanceServicesBenefitsPage();
-		coreFlexFurnitureRentalBenefitsPage = testContext.getCoreFlexPageObjectManager()
-				.getCoreFlexFurnitureRentalBenefitsPage();
-		coreFlexAutoRentalDuringAssignmentBenefitsPage = testContext.getCoreFlexPageObjectManager()
-				.getCoreFlexAutoRentalDuringAssignmentBenefitsPage();
-		coreFlexEducationAssistanceBenefitsPage = testContext.getCoreFlexPageObjectManager()
-				.getCoreFlexEducationAssistanceBenefitsPage();
-		coreFlexHouseHuntingTripBenefitsPage = testContext.getCoreFlexPageObjectManager()
-				.getCoreFlexHouseHuntingTripBenefitsPage();
 	}
 
 	private static int searchedPolicyIndex;
@@ -275,7 +230,7 @@ public class CF_BluePrint_Cloning_Steps {
 		List<Map<String, String>> basePolicyDataMap = dataTable.asMaps(String.class, String.class);
 		String benefitType = basePolicyDataMap.get(0).get("BenefitType");
 		String policyRequiredFor = basePolicyDataMap.get(0).get("PolicyRequiredFor");
-		String numberOfMilestones = basePolicyDataMap.get(0).get("MileStones");	
+		String numberOfMilestones = basePolicyDataMap.get(0).get("MileStones");
 		CoreConstants.TIME_BEFORE_ACTION = new Date().getTime();
 		Assert.assertTrue(flexPolicySetupPage.verifyPageNavigation(COREFLEXConstants.FLEX_POLICY_SETUP),
 				MessageFormat.format(COREFLEXConstants.FAILED_TO_VERIFY_USER_NAVIGATION_TO_FLEX_POLICY_SETUP_PAGE,
@@ -316,8 +271,9 @@ public class CF_BluePrint_Cloning_Steps {
 						CoreConstants.FAIL));
 		coreFlexPolicyBenefitsCategoriesPage.clickElementOfPage(PDTConstants.NEXT);
 		CoreConstants.TIME_BEFORE_ACTION = new Date().getTime();
-		Assert.assertTrue(coreFlexPolicyBenefitsCategoriesPage.verifyBenefitsDisplayedOnLeftNavigation(benefitType,
-				policyRequiredFor, numberOfMilestones),
+		Assert.assertTrue(
+				coreFlexPolicyBenefitsCategoriesPage.verifyBenefitsDisplayedOnLeftNavigation(benefitType,
+						policyRequiredFor, numberOfMilestones),
 				MessageFormat.format(
 						COREFLEXConstants.FAILED_TO_VERIFY_SELECTED_BENEFITS_ON_LEFT_NAVIGATION_POST_VERSIONING_CLONING,
 						CoreConstants.FAIL));
@@ -325,15 +281,9 @@ public class CF_BluePrint_Cloning_Steps {
 		Reporter.addStepLog("<b>Total time taken to navigate to <i>Selected Benefits</i> page is :"
 				+ CoreFunctions.calculatePageLoadTime(CoreConstants.TIME_BEFORE_ACTION, CoreConstants.TIME_AFTER_ACTION)
 				+ " Seconds </b>");
-		Assert.assertTrue(coreFlexPolicyBenefitsCategoriesPage.verifyAddedBenefitDetailsPostVersioningCloning(
-				benefitType, coreFlexDuplicateHousingBenefitsPage, coreFlexLumpSumBenefitsPage,
-				coreFlexOtherHousingBenefitsPage, coreFlexLanguageTrainingBenefitsPage,
-				coreFlexTemporaryLivingBenefitsPage, coreFlexCulturalTrainingBenefitsPage,
-				coreFlexConciergeServicesBenefitsPage, coreFlexHomePurchaseBenefitsPage, coreFlexFinalMoveBenefitsPage,
-				coreFlexAreaTourBenefitsPage, coreFlexHomeLeaveBenefitsPage, coreFlexAirportPickupBenefitsPage,
-				coreFlexPreAcceptanceServicesBenefitsPage, coreFlexFurnitureRentalBenefitsPage,
-				coreFlexAutoRentalDuringAssignmentBenefitsPage, coreFlexEducationAssistanceBenefitsPage,
-				coreFlexHouseHuntingTripBenefitsPage, policyRequiredFor,numberOfMilestones),
+		Assert.assertTrue(
+				coreFlexPolicyBenefitsCategoriesPage.verifyAddedBenefitDetailsPostVersioningCloning(benefitType,
+						policyRequiredFor, numberOfMilestones),
 				MessageFormat.format(COREFLEXConstants.FAILED_TO_SELECT_AND_FILL_ADDED_BENEFITS, CoreConstants.FAIL));
 
 		coreFlexPolicyBenefitsCategoriesPage.clickLeftNavigationMenuOfPage(COREFLEXConstants.BENEFIT_SUMMARY);
@@ -348,8 +298,7 @@ public class CF_BluePrint_Cloning_Steps {
 				+ " Seconds </b>");
 
 		Assert.assertTrue(
-				coreFlexBenefitSummaryPage.iterateAndVerifyBenefitSummaryDetails(policyRequiredFor,
-						numberOfMilestones),
+				coreFlexBenefitSummaryPage.iterateAndVerifyBenefitSummaryDetails(policyRequiredFor, numberOfMilestones),
 				MessageFormat.format(
 						COREFLEXConstants.FAILED_TO_VERIFY_BENEFIT_SUBBENEFIT_DETAILS_ON_BENEFIT_SUMMARY_PAGE,
 						CoreConstants.FAIL));
@@ -363,8 +312,7 @@ public class CF_BluePrint_Cloning_Steps {
 				+ CoreFunctions.calculatePageLoadTime(CoreConstants.TIME_BEFORE_ACTION, CoreConstants.TIME_AFTER_ACTION)
 				+ " Seconds </b>");
 
-		Assert.assertTrue(
-				coreFlexCustomBundlesPage.verifyAddedCustomBundlePostVersioningCloning(policyRequiredFor),
+		Assert.assertTrue(coreFlexCustomBundlesPage.verifyAddedCustomBundlePostVersioningCloning(policyRequiredFor),
 				MessageFormat.format(COREFLEXConstants.FAILED_TO_VERIFY_ADDED_CUSTOM_BUNDLE_ON_CUSTOM_BUNDLES_PAGE,
 						CoreConstants.FAIL));
 		coreFlexCustomBundlesPage.clickElementOfPage(COREFLEXConstants.PREVIEW_TRANSFEREE_EXPERIENCE);

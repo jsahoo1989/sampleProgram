@@ -14,7 +14,6 @@ import com.aires.businessrules.BusinessFunctions;
 import com.aires.businessrules.CoreFunctions;
 import com.aires.businessrules.constants.COREFLEXConstants;
 import com.aires.businessrules.constants.CoreConstants;
-import com.aires.businessrules.constants.PDTConstants;
 import com.aires.managers.FileReaderManager;
 import com.aires.testdatatypes.coreflex.Benefit;
 import com.aires.testdatatypes.coreflex.CoreFlex_AllowancesBenefitsData;
@@ -180,37 +179,7 @@ public class CoreFlex_BenefitSummaryPage extends Base {
 	 */
 	public void clickLeftNavigationMenuOfPage(String elementName) {
 		try {
-			switch (elementName) {
-			case COREFLEXConstants.GENERAL_INFORMATION:
-				CoreFunctions.selectItemInListByText(driver, _leftNavigationTitleList,
-						COREFLEXConstants.GENERAL_INFORMATION);
-				break;
-			case COREFLEXConstants.FLEX_POLICY_SETUP:
-				CoreFunctions.selectItemInListByText(driver, _leftNavigationTitleList,
-						COREFLEXConstants.FLEX_POLICY_SETUP);
-				break;
-			case COREFLEXConstants.POLICY_BENEFIT_CATEGORIES:
-				CoreFunctions.selectItemInListByText(driver, _leftNavigationTitleList,
-						COREFLEXConstants.POLICY_BENEFIT_CATEGORIES);
-				break;
-			case COREFLEXConstants.DUPLICATE_HOUSING:
-				CoreFunctions.selectItemInListByText(driver, _leftNavigationTitleList,
-						COREFLEXConstants.DUPLICATE_HOUSING);
-				break;
-			case COREFLEXConstants.LUMP_SUM:
-				CoreFunctions.selectItemInListByText(driver, _leftNavigationTitleList, COREFLEXConstants.LUMP_SUM);
-				break;
-			case COREFLEXConstants.BENEFIT_SUMMARY:
-				CoreFunctions.selectItemInListByText(driver, _leftNavigationTitleList,
-						COREFLEXConstants.BENEFIT_SUMMARY);
-				break;
-			case COREFLEXConstants.CUSTOM_BUNDLES:
-				CoreFunctions.selectItemInListByText(driver, _leftNavigationTitleList,
-						COREFLEXConstants.CUSTOM_BUNDLES);
-				break;
-			default:
-				Assert.fail(PDTConstants.INVALID_ELEMENT);
-			}
+			CoreFunctions.selectItemInListByText(driver, _leftNavigationTitleList, elementName);
 		} catch (Exception e) {
 			Reporter.addStepLog(MessageFormat.format(
 					COREFLEXConstants.EXCEPTION_OCCURED_WHILE_CLICKING_ON_LEFTNAVIGATION_ELEMENT_OF_PAGE,

@@ -51,7 +51,9 @@ public class BasePage {
 
 	public BasePage() throws Exception {
 		Thread.sleep(2000);
-		_windowTitle = getWindowText.getActiveWindowText();
+		String _windowTitle = CoreFunctions.getPropertyFromConfig("irisWindowTitle").isEmpty()
+				? getWindowText.getActiveWindowText()
+				: CoreFunctions.getPropertyFromConfig("irisWindowTitle");
 		while (_windowTitle.contains(IRISConstants.PROGRESS_TEXT)) {
 			_windowTitle = getWindowText.getActiveWindowText();
 			Thread.sleep(2000);
@@ -62,14 +64,14 @@ public class BasePage {
 
 	public void invokeIrisApplication() throws Exception {
 //		getPIDAndKillProces();
-		CoreFunctions.waitHandler(2);
-		allocateUFTPortToUsers();
-		runLFTEngineAsPerStatus();
-		CoreFunctions.waitHandler(3);
+//		CoreFunctions.waitHandler(2);
+//		allocateUFTPortToUsers();
+//		runLFTEngineAsPerStatus();
+//		CoreFunctions.waitHandler(3);
 		ModifiableSDKConfiguration config = new ModifiableSDKConfiguration();
-		int portNumber = getPortNumberAsPerUserName();
-		Log.info("Port Assigned to " + _userName + " is : " + portNumber);
-		config.setServerAddress(new URI("ws://localhost:" + portNumber));
+//		int portNumber = getPortNumberAsPerUserName();
+//		Log.info("Port Assigned to " + _userName + " is : " + portNumber);
+		config.setServerAddress(new URI("ws://localhost:" + 5096));
 		SDK.init(config);
 		_path = getIrisPathForApplication(CoreFunctions.getPropertyFromConfig("application"));
 		_process = Runtime.getRuntime().exec(_path);
@@ -103,7 +105,9 @@ public class BasePage {
 
 	public static Window getIRISWindow() throws Exception {
 		Thread.sleep(8000);
-		_windowTitle = getWindowText.getActiveWindowText();
+		String _windowTitle = CoreFunctions.getPropertyFromConfig("irisWindowTitle").isEmpty()
+				? getWindowText.getActiveWindowText()
+				: CoreFunctions.getPropertyFromConfig("irisWindowTitle");
 		return Desktop.describe(Window.class, new WindowDescription.Builder().title(_windowTitle).build());
 	}
 
@@ -239,6 +243,7 @@ public class BasePage {
 			Assert.fail(MessageFormat.format(CoreConstants.INVALID_APPLICATION,
 					CoreFunctions.getPropertyFromConfig("application")));
 		}
+		Log.info("IRIS build path:" + irisBuildPath);
 		return irisBuildPath;
 	}
 
@@ -301,14 +306,15 @@ public class BasePage {
 		userPortMap.put("pdash", 5097);
 		userPortMap.put("vmallah", 5090);
 	}
-	
+
 	public void reLaunchIrisToAvoidFreezingIssue() throws Exception {
 		ModifiableSDKConfiguration config = new ModifiableSDKConfiguration();
-		int portNumber = getPortNumberAsPerUserName();
-		config.setServerAddress(new URI("ws://localhost:" + portNumber));
+//		int portNumber = getPortNumberAsPerUserName();
+		config.setServerAddress(new URI("ws://localhost:" + 5095));
 		SDK.init(config);
 		String _path = getIrisPathForApplication(CoreFunctions.getPropertyFromConfig("application"));
 		Runtime.getRuntime().exec(_path);
+		CoreFunctions.writeToPropertiesFile("irisWindowTitle", "");
 		String _windowTitle = getWindowText.getActiveWindowText();
 		while (!_windowTitle.contains("Login")) {
 			CoreFunctions.waitHandler(5);

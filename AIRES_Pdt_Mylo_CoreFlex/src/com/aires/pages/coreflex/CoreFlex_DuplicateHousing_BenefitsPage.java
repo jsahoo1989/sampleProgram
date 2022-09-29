@@ -11,18 +11,21 @@ import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.How;
 import org.testng.Assert;
 
-import com.aires.businessrules.Base;
 import com.aires.businessrules.BusinessFunctions;
 import com.aires.businessrules.CoreFunctions;
 import com.aires.businessrules.constants.COREFLEXConstants;
 import com.aires.businessrules.constants.CoreConstants;
+import com.aires.businessrules.constants.IRISConstants;
 import com.aires.businessrules.constants.PDTConstants;
+import com.aires.iris.helpers.Helpers;
 import com.aires.managers.FileReaderManager;
 import com.aires.testdatatypes.coreflex.Benefit;
 import com.aires.testdatatypes.coreflex.CoreFlex_HousingBenefitsData;
+import com.hp.lft.sdk.java.Table;
+import com.hp.lft.sdk.java.Window;
 import com.vimalselvam.cucumber.listener.Reporter;
 
-public class CoreFlex_DuplicateHousing_BenefitsPage extends Base {
+public class CoreFlex_DuplicateHousing_BenefitsPage extends BenefitPage {
 
 	public CoreFlex_DuplicateHousing_BenefitsPage(WebDriver driver) {
 		super(driver);
@@ -201,6 +204,9 @@ public class CoreFlex_DuplicateHousing_BenefitsPage extends Base {
 	@FindBy(how = How.XPATH, using = "//label[contains(text(),'if applicable')]")
 	private List<WebElement> _textIfApplicable;
 
+	@FindBy(how = How.XPATH, using = "//span[contains(text(),'Flex Benefits')]/ancestor::div[contains(@id,'secondItemDiv')]//div[contains(@class,'RXCFServicesMonitoringBorderPanel')]")
+	private List<WebElement> flexCardPanelList;
+
 	/*********************************************************************/
 
 	CoreFlex_HousingBenefitsData housingBenefitData = FileReaderManager.getInstance().getCoreFlexJsonReader()
@@ -349,7 +355,7 @@ public class CoreFlex_DuplicateHousing_BenefitsPage extends Base {
 	 * 
 	 * @param subBenefitNames
 	 */
-	private void selectSubBenefitsAndFillMandatoryFields(String subBenefitNames) {
+	public void selectSubBenefitsAndFillMandatoryFields(String subBenefitNames) {
 
 		List<String> subBenefitNamesList = new ArrayList<String>();
 		if (subBenefitNames.contains(";"))
@@ -378,7 +384,7 @@ public class CoreFlex_DuplicateHousing_BenefitsPage extends Base {
 	 * 
 	 * @param subBenefit
 	 */
-	private void fillSubBenefit(String subBenefit) {
+	public void fillSubBenefit(String subBenefit) {
 		switch (subBenefit) {
 		case COREFLEXConstants.DUPLICATE_HOUSING:
 			expandSubBenefitIfCollapsed(getElementByName(COREFLEXConstants.DUPLICATE_HOUSING));
@@ -422,7 +428,7 @@ public class CoreFlex_DuplicateHousing_BenefitsPage extends Base {
 	 * 
 	 * @param subBenefitForm
 	 */
-	private void expandSubBenefitIfCollapsed(WebElement subBenefitForm) {
+	public void expandSubBenefitIfCollapsed(WebElement subBenefitForm) {
 		if (subBenefitForm.getAttribute("class").equalsIgnoreCase("collapsed")) {
 			CoreFunctions.clickElement(driver, subBenefitForm);
 		}
@@ -457,7 +463,7 @@ public class CoreFlex_DuplicateHousing_BenefitsPage extends Base {
 	 * @param benefitDescription
 	 * @param paymentOption
 	 */
-	private void selectBenefitTypeAndFillMandatoryFields(String benefitType, String multipleBenefitSelection,
+	public void selectBenefitTypeAndFillMandatoryFields(String benefitType, String multipleBenefitSelection,
 			String flexPoints, String benefitDisplayName, String benefitAllowanceAmount, String benefitDescription,
 			String paymentOption) {
 		Benefit duplicateHosuingBenefit = coreBenefits.stream()
@@ -508,7 +514,7 @@ public class CoreFlex_DuplicateHousing_BenefitsPage extends Base {
 	 * @param benefitAllowanceAmount
 	 * @param benefitDescription2
 	 */
-	private void fillManadatoryDetails(String benefitType, String multipleBenefitSelection, String benefitDisplayName,
+	public void fillManadatoryDetails(String benefitType, String multipleBenefitSelection, String benefitDisplayName,
 			String benefitAllowanceAmount, String benefitDescription, String paymentOption) {
 
 		if (((benefitType.equals(COREFLEXConstants.FLEX_BENEFITS)) || (benefitType.equals(COREFLEXConstants.FLEX)))
@@ -728,5 +734,45 @@ public class CoreFlex_DuplicateHousing_BenefitsPage extends Base {
 					CoreConstants.FAIL, changedPolicyType, benefitType, e.getMessage()));
 		}
 		return false;
+	}
+
+	@Override
+	public boolean verifyFlexBenefitCardStatusAfterInitialActualization(int index, String expectedEstimatedDate) {
+		return true;
+	}
+
+	@Override
+	protected boolean verifyFlexBenefitCardStatusAfterEndActualization(int index, String expectedEstimatedDate) {
+		// TODO Auto-generated method stub
+		return false;
+	}
+
+	@Override
+	public boolean verifyCoreBenefitCardStatusAfterInitialActualization(int index, String expectedEstimatedDate) {
+		// TODO Auto-generated method stub
+		return false;
+	}
+
+	@Override
+	protected boolean verifyCoreBenefitCardStatusAfterEndActualization(int index, Benefit benefit) {
+		// TODO Auto-generated method stub
+		return false;
+	}
+
+	@Override
+	public void addSubService(Window _IRIS, Table table, Benefit benefit, String coreFlexType) {
+		try {
+			table.waitUntilVisible();
+			int rowCount = Helpers.getTableRowCount(table);
+			table.getCell(rowCount - 1, "Type").setValue(benefit.getIrisSubserviceType());
+			table.getCell(rowCount - 1, "Name").setValue(benefit.getIrisSubserviceName());
+			CoreFunctions.waitHandler(1);
+			table.getCell(rowCount - 1, "Core/Flex").setValue(coreFlexType);
+		} catch (Exception e) {
+			Reporter.addStepLog(MessageFormat.format(
+					IRISConstants.EXCEPTION_OCCURED_WHILE_ADDING_SERVICE_SUBSERVICE_ON_SERVICES_TAB_OF_IRIS_APPLICATION,
+					CoreConstants.FAIL, benefit.getIrisSubserviceType(), e.getMessage()));
+		}
+
 	}
 }

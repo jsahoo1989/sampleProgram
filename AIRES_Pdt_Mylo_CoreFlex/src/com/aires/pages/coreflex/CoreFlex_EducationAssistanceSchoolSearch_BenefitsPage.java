@@ -5,24 +5,28 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
+import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.How;
 import org.testng.Assert;
 
-import com.aires.businessrules.Base;
 import com.aires.businessrules.BusinessFunctions;
 import com.aires.businessrules.CoreFunctions;
 import com.aires.businessrules.constants.COREFLEXConstants;
 import com.aires.businessrules.constants.CoreConstants;
+import com.aires.businessrules.constants.IRISConstants;
 import com.aires.businessrules.constants.PDTConstants;
+import com.aires.iris.helpers.Helpers;
 import com.aires.managers.FileReaderManager;
 import com.aires.testdatatypes.coreflex.Benefit;
 import com.aires.testdatatypes.coreflex.CoreFlex_SettlingInBenefitsData;
+import com.hp.lft.sdk.java.Table;
+import com.hp.lft.sdk.java.Window;
 import com.vimalselvam.cucumber.listener.Reporter;
 
-public class CoreFlex_EducationAssistanceSchoolSearch_BenefitsPage extends Base {
+public class CoreFlex_EducationAssistanceSchoolSearch_BenefitsPage extends BenefitPage {
 
 	public CoreFlex_EducationAssistanceSchoolSearch_BenefitsPage(WebDriver driver) {
 		super(driver);
@@ -194,6 +198,35 @@ public class CoreFlex_EducationAssistanceSchoolSearch_BenefitsPage extends Base 
 	@FindBy(how = How.XPATH, using = "//label[contains(text(),'if applicable')]")
 	private List<WebElement> _textIfApplicable;
 
+	@FindBy(how = How.XPATH, using = "//span[contains(text(),'Flex Benefits')]/ancestor::div[contains(@id,'secondItemDiv')]//div[contains(@class,'RXCFServicesMonitoringBorderPanel')]")
+	private List<WebElement> flexCardPanelList;
+	
+	@FindBy(how = How.XPATH, using = "//span[contains(text(),'Core Benefits')]/ancestor::div[contains(@id,'firstItemDiv')]//div[contains(@class,'RXCFServicesMonitoringBorderPanel')]")
+	private List<WebElement> coreCardPanelList;
+	
+	@FindBy(how = How.XPATH, using = "//span[contains(text(),'Core Benefits')]/ancestor::div[contains(@id,'firstItemDiv')]//table[contains(@class,'RXRightIconPanel')]//span[contains(text(),'Starting Soon')]")
+	private WebElement coreCardStartingSoonStatus;
+	
+	private By coreCardRegistrationCompletedStatus = By.xpath(
+			"//span[contains(@class,'ServicesSuccessIcon ')]/ancestor::div[contains(@class,'ServicesTrain')]//span[contains(text(),'Registration completed')]");
+	
+	private By coreCardRegistrationScheduledStatus = By
+			.xpath(".//span[contains(@class,'RXSmallerLink RXBold')][contains(text(),'Registration scheduled')]");
+	
+	private By coreCardStartingSoonStatusBy = By
+			.xpath(".//table[contains(@class,'RXRightIconPanel')]//span[contains(text(),'Starting Soon')]");
+
+	private By flexCardStartingSoonStatusBy = By
+			.xpath(".//table[contains(@class,'RXRightIconPanel')]//span[contains(text(),'Starting Soon')]");
+	private By flexCardRegistrationScheduledStatus = By
+			.xpath(".//span[contains(@class,'RXSmallerLink RXBold')][contains(text(),'Registration scheduled')]");
+
+	private By registrationScheduledEstimatedDate = By.xpath(".//div[5]//span[not(contains(text(),'estimated'))]");
+	private By flexCardRegistrationCompletedStatus = By.xpath(
+			"//span[contains(@class,'ServicesSuccessIcon ')]/ancestor::div[contains(@class,'ServicesTrain')]//span[contains(text(),'Registration completed')]");
+	private By registrationCompletedEstimatedDate = By
+			.xpath(".//div[5]//span[not(contains(text(),'estimated'))][@class='RXSmallerTextMuted RXBold']");
+
 	/*********************************************************************/
 
 	CoreFlex_SettlingInBenefitsData settlingInBenefitData = FileReaderManager.getInstance().getCoreFlexJsonReader()
@@ -320,8 +353,8 @@ public class CoreFlex_EducationAssistanceSchoolSearch_BenefitsPage extends Base 
 					benefitDisplayName, benefitAllowanceAmount, benefitDescription, aireManagedService);
 			selectSubBenefitsAndFillMandatoryFields(subBenefitNames, benefitType);
 		}
-		BusinessFunctions.verifyFieldNotPresentOnBenefitPage(driver, _textIfApplicable,
-				benefitDisplayName, COREFLEXConstants.IF_APPLICABLE);
+		BusinessFunctions.verifyFieldNotPresentOnBenefitPage(driver, _textIfApplicable, benefitDisplayName,
+				COREFLEXConstants.IF_APPLICABLE);
 		clickElementOfPage(COREFLEXConstants.SAVE_AND_CONTINUE);
 
 		if (CoreFunctions.isElementExist(driver, _errorDialogPolicyBenefitsDataMissing, 7)) {
@@ -336,7 +369,7 @@ public class CoreFlex_EducationAssistanceSchoolSearch_BenefitsPage extends Base 
 	 * @param subBenefitNames
 	 * @param benefitType
 	 */
-	private void selectSubBenefitsAndFillMandatoryFields(String subBenefitNames, String benefitType) {
+	public void selectSubBenefitsAndFillMandatoryFields(String subBenefitNames, String benefitType) {
 		try {
 			List<String> subBenefitNamesList = new ArrayList<String>();
 			if (subBenefitNames.contains(";"))
@@ -372,7 +405,7 @@ public class CoreFlex_EducationAssistanceSchoolSearch_BenefitsPage extends Base 
 	 * @param subBenefit
 	 * @param benefitType
 	 */
-	private void fillSubBenefit(String subBenefit, String benefitType) {
+	public void fillSubBenefit(String subBenefit, String benefitType) {
 		switch (subBenefit) {
 		case COREFLEXConstants.EDUCATION_ASSISTANCE_SCHOOL_SEARCH:
 			expandSubBenefitIfCollapsed(getElementByName(COREFLEXConstants.EDUCATION_ASSISTANCE_SCHOOL_SEARCH));
@@ -414,7 +447,7 @@ public class CoreFlex_EducationAssistanceSchoolSearch_BenefitsPage extends Base 
 	 * 
 	 * @param subBenefitForm
 	 */
-	private void expandSubBenefitIfCollapsed(WebElement subBenefitForm) {
+	public void expandSubBenefitIfCollapsed(WebElement subBenefitForm) {
 		if (subBenefitForm.getAttribute("class").equalsIgnoreCase("collapsed")) {
 			CoreFunctions.clickElement(driver, subBenefitForm);
 		}
@@ -449,7 +482,7 @@ public class CoreFlex_EducationAssistanceSchoolSearch_BenefitsPage extends Base 
 	 * @param benefitDescription
 	 * @param aireManagedService
 	 */
-	private void selectBenefitTypeAndFillMandatoryFields(String benefitType, String multipleBenefitSelection,
+	public void selectBenefitTypeAndFillMandatoryFields(String benefitType, String multipleBenefitSelection,
 			String flexPoints, String benefitDisplayName, String benefitAllowanceAmount, String benefitDescription,
 			String aireManagedService) {
 		Benefit eduAssistSchlSearchBenefit = coreBenefits.stream()
@@ -500,7 +533,7 @@ public class CoreFlex_EducationAssistanceSchoolSearch_BenefitsPage extends Base 
 	 * @param benefitDescription
 	 * @param aireManagedService
 	 */
-	private void fillManadatoryDetails(String benefitType, String multipleBenefitSelection, String benefitDisplayName,
+	public void fillManadatoryDetails(String benefitType, String multipleBenefitSelection, String benefitDisplayName,
 			String benefitAllowanceAmount, String benefitDescription, String aireManagedService) {
 		try {
 			CoreFunctions.clearAndSetTextUsingKeys(driver, _inputBenefitName, benefitDisplayName,
@@ -684,6 +717,67 @@ public class CoreFlex_EducationAssistanceSchoolSearch_BenefitsPage extends Base 
 			Assert.fail(MessageFormat.format(COREFLEXConstants.FAILED_TO_VERIFY_FURNITURE_RENTAL_SUB_BENEFITS_FORM,
 					CoreConstants.FAIL, formName));
 		}
+	}
+
+	@Override
+	public boolean verifyFlexBenefitCardStatusAfterInitialActualization(int index, String expectedEstimatedDate) {
+		return (CoreFunctions.isElementExist(driver,
+				CoreFunctions.findSubElement(flexCardPanelList.get(index), flexCardRegistrationScheduledStatus), 3)
+				&& (CoreFunctions.getElementText(driver,
+						CoreFunctions.findSubElement(flexCardPanelList.get(index), registrationScheduledEstimatedDate))
+						.equals(expectedEstimatedDate))
+				&& (!CoreFunctions.isElementExist(driver,
+						CoreFunctions.findSubElement(flexCardPanelList.get(index), flexCardStartingSoonStatusBy), 3)));
+	}
+
+	@Override
+	protected boolean verifyFlexBenefitCardStatusAfterEndActualization(int index, String expectedEstimatedDate) {
+		return (CoreFunctions.isElementExist(driver,
+				CoreFunctions.findSubElement(flexCardPanelList.get(index), flexCardRegistrationCompletedStatus), 3)
+				&& (CoreFunctions.getElementText(driver,
+						CoreFunctions.findSubElement(flexCardPanelList.get(index), registrationCompletedEstimatedDate))
+						.equals(expectedEstimatedDate))
+				&& (!CoreFunctions.isElementExist(driver,
+						CoreFunctions.findSubElement(flexCardPanelList.get(index), flexCardStartingSoonStatusBy), 3)));
+	}
+
+	@Override
+	public boolean verifyCoreBenefitCardStatusAfterInitialActualization(int index, String expectedEstimatedDate) {
+		return (CoreFunctions.isElementExist(driver,
+				CoreFunctions.findSubElement(coreCardPanelList.get(index),
+						coreCardRegistrationScheduledStatus),
+				3)
+				&& (CoreFunctions.getElementText(driver,
+						CoreFunctions.findSubElement(coreCardPanelList.get(index),
+								registrationScheduledEstimatedDate))
+						.equals(expectedEstimatedDate))
+				&& (!CoreFunctions.isElementExist(driver, CoreFunctions.findSubElement(
+						coreCardPanelList.get(index), coreCardStartingSoonStatusBy), 3)));
+	}
+
+	@Override
+	protected boolean verifyCoreBenefitCardStatusAfterEndActualization(int index, Benefit benefit) {
+		return (CoreFunctions.isElementExist(driver,
+				CoreFunctions.findSubElement(coreCardPanelList.get(index),
+						coreCardRegistrationCompletedStatus),
+				3) && (!CoreFunctions.isElementExist(driver, coreCardStartingSoonStatus, 3)));
+	}
+
+	@Override
+	public void addSubService(Window _IRIS, Table table, Benefit benefit, String coreFlexType) {
+		try {
+			table.waitUntilVisible();
+			int rowCount = Helpers.getTableRowCount(table);
+			table.getCell(rowCount - 1, "Type").setValue(benefit.getIrisSubserviceType());
+			table.getCell(rowCount - 1, "Name").setValue(benefit.getIrisSubserviceName());
+			CoreFunctions.waitHandler(1);
+			table.getCell(rowCount - 1, "Core/Flex").setValue(coreFlexType);
+		} catch (Exception e) {
+			Reporter.addStepLog(MessageFormat.format(
+					IRISConstants.EXCEPTION_OCCURED_WHILE_ADDING_SERVICE_SUBSERVICE_ON_SERVICES_TAB_OF_IRIS_APPLICATION,
+					CoreConstants.FAIL, benefit.getIrisSubserviceType(), e.getMessage()));
+		}
+
 	}
 
 }

@@ -13,7 +13,6 @@ import org.testng.Assert;
 import com.aires.businessrules.Base;
 import com.aires.businessrules.BusinessFunctions;
 import com.aires.businessrules.CoreFunctions;
-
 import com.aires.businessrules.constants.CoreConstants;
 import com.aires.businessrules.constants.MobilityXConstants;
 import com.aires.managers.FileReaderManager;
@@ -831,14 +830,14 @@ public class MX_Transferee_MyProfilePage extends Base {
 		BusinessFunctions.selectRadioAsPerLabelText(driver, _radioButtonListPaymentType,
 				mxTransfereeMyProfileData.paymentType);
 		CoreFunctions.click(driver, _buttonAddAccount, _buttonAddAccount.getText());
-		BusinessFunctions.selectValueFromDropdown(_dropdownAccountCurrency, mxTransfereeMyProfileData.accountCurrency);
+		BusinessFunctions.selectValueFromDropdown(driver,_dropdownAccountCurrency, mxTransfereeMyProfileData.accountCurrency);
 		CoreFunctions.clearAndSetText(driver, _textBoxAddressOne, MobilityXConstants.ADDRESS,
 				mxTransfereeMyProfileData.addressOne);
 		CoreFunctions.clearAndSetText(driver, _textBoxCity, MobilityXConstants.CITY, mxTransfereeMyProfileData.city);
-		BusinessFunctions.selectValueFromDropdown(_dropdownState, mxTransfereeMyProfileData.state);
+		BusinessFunctions.selectValueFromDropdown(driver,_dropdownState, mxTransfereeMyProfileData.state);
 		zipCode = CoreFunctions.generateRandomNumberAsGivenLength(5);
 		CoreFunctions.clearAndSetText(driver, _textBoxZipCode, MobilityXConstants.ZIPCODE, zipCode);
-		BusinessFunctions.selectValueFromDropdown(_dropdownCountry, mxTransfereeMyProfileData.country);
+		BusinessFunctions.selectValueFromDropdown(driver,_dropdownCountry, mxTransfereeMyProfileData.country);
 		CoreFunctions.click(driver, _buttonSubmit, _buttonSubmit.getText());
 		CoreFunctions.click(driver, _buttonNo, _buttonNo.getText());
 		CoreFunctions.explicitWaitTillElementVisibility(driver, _textMessageAccountSaved,
@@ -893,11 +892,11 @@ public class MX_Transferee_MyProfilePage extends Base {
 	public void editYearEndTaxInformationTiles() {
 		CoreFunctions.click(driver, _linkYearEndTaxInformation, _linkYearEndTaxInformation.getText());
 		CoreFunctions.explicitWaitTillElementVisibility(driver, _textTaxInformation, _textTaxInformation.getText());
-		BusinessFunctions.selectValueFromDropdown(_dropdownFilingStatus, mxTransfereeMyProfileData.filingStatus);
-		BusinessFunctions.selectValueFromDropdown(_dropdownDeductionMethod, mxTransfereeMyProfileData.deductionMethod);
+		BusinessFunctions.selectValueFromDropdown(driver,_dropdownFilingStatus, mxTransfereeMyProfileData.filingStatus);
+		BusinessFunctions.selectValueFromDropdown(driver,_dropdownDeductionMethod, mxTransfereeMyProfileData.deductionMethod);
 		CoreFunctions.clearAndSetText(driver, _textboxEstimatedAmount, _textEstimatedAmount.getText(),
 				CoreFunctions.generateRandomNumberAsGivenLength(5));
-		BusinessFunctions.selectValueFromDropdown(_dropdownNumberOfDependents,
+		BusinessFunctions.selectValueFromDropdown(driver,_dropdownNumberOfDependents,
 				mxTransfereeMyProfileData.numberOfDependents);
 		CoreFunctions.click(driver, _buttonSave, _buttonSave.getText());
 		if (CoreFunctions.isElementByLocatorExist(driver, _textYearEndInformationByLocator, MobilityXConstants.CUSTOM_TIME)) {
@@ -922,7 +921,7 @@ public class MX_Transferee_MyProfilePage extends Base {
 		CoreFunctions.click(driver, _linkEmailReminderSetup, _linkEmailReminderSetup.getText());
 		CoreFunctions.explicitWaitTillElementVisibility(driver, _textEmailReminderPreference,
 				_textEmailReminderPreference.getText());
-		BusinessFunctions.selectValueFromDropdown(_dropdownEmailReminderFrequency,
+		BusinessFunctions.selectValueFromDropdown(driver,_dropdownEmailReminderFrequency,
 				mxTransfereeMyProfileData.emailReminderFrequency);
 		CoreFunctions.click(driver, _buttonSave, _buttonSave.getText());
 		if (CoreFunctions.isElementByLocatorExist(driver, _emailReminderFrequencySavedMessageByLocator, MobilityXConstants.CUSTOM_TIME)) {
@@ -1043,21 +1042,21 @@ public class MX_Transferee_MyProfilePage extends Base {
 		CoreFunctions.waitHandler(3);
 		CoreFunctions.explicitWaitTillElementVisibility(driver, _textFewSecurityQuestions,
 				_textFewSecurityQuestions.getText());
-		BusinessFunctions.selectValueFromDropdown(_securityQuestionOneNewUser,
+		BusinessFunctions.selectValueFromDropdown(driver,_securityQuestionOneNewUser,
 				mxTransfereeMyProfileData.securityQuestionOne);
 		CoreFunctions.waitHandler(3);
 		CoreFunctions.clearAndSetText(driver, _textBoxSecurityAnswerOneNewUser,
 				CoreFunctions.getAttributeText(_securityQuestionOneNewUser, MobilityXConstants.TITLE),
 				mxTransfereeMyProfileData.securityAnswerTwo);
 		CoreFunctions.waitHandler(3);
-		BusinessFunctions.selectValueFromDropdown(_securityQuestionTwoNewUser,
+		BusinessFunctions.selectValueFromDropdown(driver,_securityQuestionTwoNewUser,
 				mxTransfereeMyProfileData.securityQuestionTwo);
 		CoreFunctions.waitHandler(3);
 		CoreFunctions.clearAndSetText(driver, _textBoxSecurityAnswerTwoNewUser,
 				CoreFunctions.getAttributeText(_securityQuestionTwoNewUser, MobilityXConstants.TITLE),
 				mxTransfereeMyProfileData.securityAnswerTwo);
 		CoreFunctions.waitHandler(3);
-		BusinessFunctions.selectValueFromDropdown(_securityQuestionThreeNewUser,
+		BusinessFunctions.selectValueFromDropdown(driver,_securityQuestionThreeNewUser,
 				mxTransfereeMyProfileData.securityQuestionThree);
 		CoreFunctions.waitHandler(3);
 		CoreFunctions.clearAndSetText(driver, _textBoxSecurityAnswerThreeNewUser,
@@ -1187,17 +1186,17 @@ public class MX_Transferee_MyProfilePage extends Base {
 		CoreFunctions.explicitWaitTillElementVisibility(driver, _textAccountDetails, _textAccountDetails.getText());
 		CoreFunctions.clearAndSetText(driver, _textBoxAccountHolderNameACHAccount,
 				_textAccountHolderNameACHAccount.getText(), mxTransfereeMyProfileData.accountHolderName);
-		BusinessFunctions.selectValueFromDropdown(_dropdownAccountTypeACHAccount, mxTransfereeMyProfileData.accountType);
+		BusinessFunctions.selectValueFromDropdown(driver,_dropdownAccountTypeACHAccount, mxTransfereeMyProfileData.accountType);
 		CoreFunctions.clearAndSetText(driver, _textBoxBankNameACHAccount, _textBankNameACHAccount.getText(),
 				mxTransfereeMyProfileData.bankName);
 		CoreFunctions.clearAndSetText(driver, _textBoxAddressOneACHAccount, MobilityXConstants.ADDRESS,
 				mxTransfereeMyProfileData.addressOne);
 		CoreFunctions.clearAndSetText(driver, _textBoxCityACHAccount, MobilityXConstants.CITY,
 				mxTransfereeMyProfileData.city);
-		BusinessFunctions.selectValueFromDropdown(_dropdownStateACHAccount, mxTransfereeMyProfileData.state);
+		BusinessFunctions.selectValueFromDropdown(driver,_dropdownStateACHAccount, mxTransfereeMyProfileData.state);
 		CoreFunctions.clearAndSetText(driver, _textBoxZipCodeACHAccount, MobilityXConstants.ZIPCODE,
 				CoreFunctions.generateRandomNumberAsGivenLength(5));
-		BusinessFunctions.selectValueFromDropdown(_dropdownCountryACHAccount, mxTransfereeMyProfileData.country);
+		BusinessFunctions.selectValueFromDropdown(driver,_dropdownCountryACHAccount, mxTransfereeMyProfileData.country);
 		CoreFunctions.clearAndSetText(driver, _textBoxSwiftRoutingACHAccount, _textSwiftRoutingACHAccount.getText(),
 				mxTransfereeMyProfileData.swiftRoutingNumber);
 		CoreFunctions.clearAndSetText(driver, _textBoxAccountIbanNumberACHAccount,

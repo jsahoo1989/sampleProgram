@@ -118,7 +118,7 @@
 		"preProd": {
 			"irisUserName": "vkamins",
 			"irisPassword": "testvk",
-			"irisDatabase": "TESTS",
+			"irisDatabase": "TRAINING",
 			"irisBuildPath": "\\\\corpprdvw589\\rdev\\IRIS_Builds\\IRIS_PRE_RELEASE_QA_ACCESS_ONLY\\IRIS.exe",
 			"firstName": "mxsso",
 			"lastName": "dev5",

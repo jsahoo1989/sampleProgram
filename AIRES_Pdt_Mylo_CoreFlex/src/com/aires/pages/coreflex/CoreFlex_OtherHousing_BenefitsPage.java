@@ -9,18 +9,22 @@ import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.How;
 import org.testng.Assert;
 
-import com.aires.businessrules.Base;
 import com.aires.businessrules.BusinessFunctions;
 import com.aires.businessrules.CoreFunctions;
 import com.aires.businessrules.constants.COREFLEXConstants;
 import com.aires.businessrules.constants.CoreConstants;
+import com.aires.businessrules.constants.IRISConstants;
 import com.aires.businessrules.constants.PDTConstants;
+import com.aires.iris.helpers.Helpers;
 import com.aires.managers.FileReaderManager;
+import com.aires.testdatatypes.coreflex.Benefit;
 import com.aires.testdatatypes.coreflex.CoreFlex_PolicySetupPagesData;
 import com.gargoylesoftware.htmlunit.ElementNotFoundException;
+import com.hp.lft.sdk.java.Table;
+import com.hp.lft.sdk.java.Window;
 import com.vimalselvam.cucumber.listener.Reporter;
 
-public class CoreFlex_OtherHousing_BenefitsPage extends Base {
+public class CoreFlex_OtherHousing_BenefitsPage extends BenefitPage {
 
 	public CoreFlex_OtherHousing_BenefitsPage(WebDriver driver) {
 		super(driver);
@@ -518,6 +522,70 @@ public class CoreFlex_OtherHousing_BenefitsPage extends Base {
 					CoreConstants.FAIL, e.getMessage()));
 			return false;
 		}
+	}
+
+	@Override
+	public void selectAndFillBenefitsAndSubBenefitDetails(String benefitType, String subBenefitNames,
+			String multipleBenefitSelection, String flexPoints, String benefitDisplayName,
+			String benefitAllowanceAmount, String benefitDescription, String aireManagedService) {
+		// TODO Auto-generated method stub
+
+	}
+
+	@Override
+	public void fillManadatoryDetails(String benefitType, String multipleBenefitSelection, String benefitDisplayName,
+			String benefitAllowanceAmount, String benefitDescription, String aireManagedService) {
+		// TODO Auto-generated method stub
+
+	}
+
+	@Override
+	protected boolean verifyAddedBenefitsAndSubBenefitDetails(String policyType, String subBenefits,
+			String multipleBenefitSelection, String points, String benefitDisplayName, String benefitAmount,
+			String benefitDesc, String payments, String airesManagedService) {
+		// TODO Auto-generated method stub
+		return false;
+	}
+
+	@Override
+	public boolean verifyFlexBenefitCardStatusAfterInitialActualization(int index, String expectedEstimatedDate) {
+		// TODO Auto-generated method stub
+		return false;
+	}
+
+	@Override
+	protected boolean verifyFlexBenefitCardStatusAfterEndActualization(int index, String expectedEstimatedDate) {
+		// TODO Auto-generated method stub
+		return false;
+	}
+
+	@Override
+	public boolean verifyCoreBenefitCardStatusAfterInitialActualization(int index, String expectedEstimatedDate) {
+		// TODO Auto-generated method stub
+		return false;
+	}
+
+	@Override
+	protected boolean verifyCoreBenefitCardStatusAfterEndActualization(int index, Benefit benefit) {
+		// TODO Auto-generated method stub
+		return false;
+	}
+
+	@Override
+	public void addSubService(Window _IRIS, Table table, Benefit benefit, String coreFlexType) {
+		try {
+			table.waitUntilVisible();
+			int rowCount = Helpers.getTableRowCount(table);
+			table.getCell(rowCount - 1, "Type").setValue(benefit.getIrisSubserviceType());
+			table.getCell(rowCount - 1, "Name").setValue(benefit.getIrisSubserviceName());
+			CoreFunctions.waitHandler(1);
+			table.getCell(rowCount - 1, "Core/Flex").setValue(coreFlexType);
+		} catch (Exception e) {
+			Reporter.addStepLog(MessageFormat.format(
+					IRISConstants.EXCEPTION_OCCURED_WHILE_ADDING_SERVICE_SUBSERVICE_ON_SERVICES_TAB_OF_IRIS_APPLICATION,
+					CoreConstants.FAIL, benefit.getIrisSubserviceType(), e.getMessage()));
+		}
+
 	}
 
 }

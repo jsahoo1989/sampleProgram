@@ -792,4 +792,12 @@ public class COREFLEXConstants {
 	public static final String EXCEPTION_OCCURED_WHILE_READING_REVISED_MOBILITY_INITIATION_EMAIL = "{0}Exception occured while reading Revised Mobility Initiation Email. Exception : ''{1}''.";
 	public static final String SUCCESSFULLY_VERIFIED_DELETED_FLEX_BENEFIT_NOT_PRESENT_IN_SUBMITTED_BENEFITS_LIST_ON_BENEFITS_BUNDLE_PAGE_POST_DELETE_REQUEST_APPROVAL = "{0}Successfully verified Deleted Benefit List not present in Submitted Benefits List on BB Page - Post Delete Request Approval By MSPEC.";
 	public static final String EXCEPTION_OCCURED_WHILE_VERIFYING_DELETE_BENEFIT_REQUEST_REMOVED_ON_BB_PAGE = "{0}Exception occured while verifying delete benefit request is removed on BB page. Exception : ''{1}''.";
+	public static final String AUTO_SHIPMENT = "Auto Shipment";
+	public static final String SEA_OR_SURFACE_SHIPMENT = "Sea/Surface Shipment";
+	public static final String INLAND_SHIPMENT = "Inland Shipment";
+	public static final String PET_SHIPMENT = "Pet Shipment";
+	public static final String PET_SHIPMENT_BENEFITS_PAGE = "Pet Shipment Benefits Page";
+	public static final String AUTO_SHIPMENT_BENEFITS_PAGE = "Auto Shipment Benefits Page";
+	public static final String INLAND_SHIPMENT_BENEFITS_PAGE = "Inland Shipment Benefits Page";
+	public static final String SEA_OR_SURFACE_SHIPMENT_BENEFITS_PAGE = "Sea/Surface Shipment Benefits Page";
 }

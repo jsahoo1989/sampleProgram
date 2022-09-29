@@ -312,7 +312,7 @@ public class Helpers {
 		table.waitUntilVisible();
 		if (table.getRows().size() > 0 & table.getColumnHeaders().contains(searchColumnName)) {
 			for (int rowCount = 0; rowCount < table.getRows().size(); rowCount++) {
-				if (table.getCell(rowCount, searchColumnName).getValue().toString().equals(searchString)) {
+				if (table.getCell(rowCount, searchColumnName).getValue().toString().contains(searchString)) {
 					return rowCount;
 				}
 			}

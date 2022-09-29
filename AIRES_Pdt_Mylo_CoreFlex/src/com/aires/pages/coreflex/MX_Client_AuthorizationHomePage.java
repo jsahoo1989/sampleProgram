@@ -647,7 +647,7 @@ public class MX_Client_AuthorizationHomePage extends Base {
 			Assert.assertEquals(CoreFunctions.getElementText(driver, _titleAuthorizationForm),
 					MobilityXConstants.AUTHORIZATION_FORM_TITLE_TEXT, MobilityXConstants.AUTHORIZATION_FORM_TITLE
 							+ MobilityXConstants.TITLE + MobilityXConstants.NOT_EXIST);
-			BusinessFunctions.selectValueFromDropdown(_drpdownAuthorizationFormTemplate,
+			BusinessFunctions.selectValueFromDropdown(driver,_drpdownAuthorizationFormTemplate,
 					MobilityXConstants.DROPDOWN_AUTHORIZATION_FORM_TEMPLATE_VALUE);
 			CoreFunctions.click(driver, _btn_Continue_AuthorizationForm, MobilityXConstants.CONTINUE_BUTTON);
 			CoreFunctions.waitUntilBrowserReady(driver);
@@ -685,10 +685,10 @@ public class MX_Client_AuthorizationHomePage extends Base {
 			Assert.assertEquals(CoreFunctions.getElementText(driver, _titleAuthorizationForm),
 					MobilityXConstants.AUTHORIZATION_FORM_TITLE_TEXT, MobilityXConstants.AUTHORIZATION_FORM_TITLE
 							+ MobilityXConstants.TITLE + MobilityXConstants.NOT_EXIST);
-			BusinessFunctions.selectValueFromDropdown(_drpdownAuthorizationFormTemplateCompanyName,
+			BusinessFunctions.selectValueFromDropdown(driver,_drpdownAuthorizationFormTemplateCompanyName,
 					companyName + " (" + companyId + ")");
 			CoreFunctions.waitHandler(2);
-			BusinessFunctions.selectValueFromDropdown(_drpdownAuthorizationFormTemplate, option);
+			BusinessFunctions.selectValueFromDropdown(driver,_drpdownAuthorizationFormTemplate, option);
 			CoreFunctions.click(driver, _btn_Continue_AuthorizationForm, MobilityXConstants.CONTINUE_BUTTON);
 			CoreFunctions.waitUntilBrowserReady(driver);
 			driver.switchTo().defaultContent();
@@ -838,34 +838,34 @@ public class MX_Client_AuthorizationHomePage extends Base {
 	private void fillAuthorizationInfoForBSCDomesticForm(AuthorizationInfo authorisationInfo) {
 		CoreFunctions.clearAndSetText(driver, _hrManagerTextField, authorisationInfo.hrManagerName);
 		CoreFunctions.clearAndSetText(driver, _hiringManagerName, authorisationInfo.hiringManagerName);
-		BusinessFunctions.selectValueFromDropdown(_fundingECMember, authorisationInfo.fundingECMember);
+		BusinessFunctions.selectValueFromDropdown(driver,_fundingECMember, authorisationInfo.fundingECMember);
 	}
 
 	private void fillAuthorizationReportingInfoForBSCDomesticForm(ReportingInfo reportingInfo) {
 		CoreFunctions.clearAndSetText(driver, _inputCostCenter, reportingInfo.costCenter);
-		BusinessFunctions.selectValueFromDropdown(_selectDivision, reportingInfo.division);
-		BusinessFunctions.selectValueFromDropdown(_selectOperatingUnit, reportingInfo.operatingUnit);
+		BusinessFunctions.selectValueFromDropdown(driver,_selectDivision, reportingInfo.division);
+		BusinessFunctions.selectValueFromDropdown(driver,_selectOperatingUnit, reportingInfo.operatingUnit);
 	}
 
 	private void fillAuthorizationRelocationInfoForBSCDomesticForm(RelocationInfo relocationInfo) {
 		BusinessFunctions.selectRadioAsPerLabelText(driver, _radioButtonLabel_listForAll, relocationInfo.transferType);
-		BusinessFunctions.selectValueFromDropdown(_assignmentType, relocationInfo.assignmentType);
+		BusinessFunctions.selectValueFromDropdown(driver,_assignmentType, relocationInfo.assignmentType);
 		CoreFunctions.clearAndSetText(driver, _inputStartDate, CoreFunctions.getcurrentdate());
 		CoreFunctions.clearAndSetText(driver, _txt_jobTitle, relocationInfo.newJobTitle);
 		BusinessFunctions.selectRadioAsPerLabelText(driver, _radioButtonLabel_Immigration, relocationInfo.immigration);
 	}
 
 	private void fillAuthorizationEmployeeInfoForBSCDomesticForm(BscEmployeeInfo bscEmployeeInfo) {
-		BusinessFunctions.selectValueFromDropdown(_relocationPolicy,
+		BusinessFunctions.selectValueFromDropdown(driver,_relocationPolicy,
 				CoreFunctions.getPropertyFromConfig("Assignment_Policy"));
 		CoreFunctions.clearAndSetText(driver, _txt_EmployeeID, bscEmployeeInfo.employeeID);
 		BusinessFunctions.selectRadioAsPerLabelText(driver, _homeStatusRadio, bscEmployeeInfo.homeStatus);
 		CoreFunctions.clearAndSetText(driver, _txt_OriginHomeAddress, bscEmployeeInfo.originHomeAddress);
 		CoreFunctions.clearAndSetText(driver, _txt_OriginCity, bscEmployeeInfo.originHomeCity);
-		BusinessFunctions.selectValueFromDropdown(_originState, bscEmployeeInfo.originHomeState);
-		BusinessFunctions.selectValueFromDropdown(_originCountry, bscEmployeeInfo.originHomeCountry.trim());
-		BusinessFunctions.selectValueFromDropdown(_originOfficeCityState, bscEmployeeInfo.officeOriginCityState);
-		BusinessFunctions.selectValueFromDropdown(_destinationOfficeCityState,
+		BusinessFunctions.selectValueFromDropdown(driver,_originState, bscEmployeeInfo.originHomeState);
+		BusinessFunctions.selectValueFromDropdown(driver,_originCountry, bscEmployeeInfo.originHomeCountry.trim());
+		BusinessFunctions.selectValueFromDropdown(driver,_originOfficeCityState, bscEmployeeInfo.officeOriginCityState);
+		BusinessFunctions.selectValueFromDropdown(driver,_destinationOfficeCityState,
 				bscEmployeeInfo.destinationOfficeLocation);
 		CoreFunctions.waitHandler(3);
 		CoreFunctions.clearAndSetText(driver, _txt_mobileTelephone, bscEmployeeInfo.mobilePhone);
@@ -1113,7 +1113,7 @@ public class MX_Client_AuthorizationHomePage extends Base {
 
 	public boolean selectRelocationPolicy() {
 		try {
-			BusinessFunctions.selectValueFromDropdown(_relocationPolicy,
+			BusinessFunctions.selectValueFromDropdown(driver,_relocationPolicy,
 					CoreFunctions.getPropertyFromConfig("Assignment_Policy"));
 			Reporter.addStepLog(
 					MessageFormat.format(COREFLEXConstants.SUCCESSFULLY_SELECTED_RELOCATION_POLICY_ON_AUTH_FORM_PAGE,

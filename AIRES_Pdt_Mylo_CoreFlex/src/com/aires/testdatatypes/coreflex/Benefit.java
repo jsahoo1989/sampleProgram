@@ -1,5 +1,10 @@
 package com.aires.testdatatypes.coreflex;
 
+import java.util.Arrays;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+
 public class Benefit {
 	private String benefitType;
 	private String benefitDisplayName;
@@ -15,11 +20,11 @@ public class Benefit {
 	private String comment;
 	private boolean deleteBenefitOnMBBPage;
 	private String payments;
-	private String airesManagedService;	
+	private String airesManagedService;
 	private String irisServiceName;
 	private String irisSubserviceType;
 	private String irisSubserviceName;
-	private  String irisSubserviceID;
+	private String irisSubserviceID;
 	private String subServiceActivityFinance;
 	private String subServiceFunction;
 	private String compID;
@@ -38,7 +43,24 @@ public class Benefit {
 	private boolean deselectBenefitOnPBCPage;
 	private Integer noOfMilestones;
 	private String allMilestones;
-	private String subbenefitToBeDeselected;	
+	private String subbenefitToBeDeselected;
+	private String subServiceDetails;
+	private String partners;
+	private List<TracingPromptToBeSelected> tracingPromptsToBeSelected;
+	private String partnerForInitialTracingPrompt;
+
+	public String getPartnerForInitialTracingPrompt() {
+		return partnerForInitialTracingPrompt;
+	}
+
+	public void setPartnerForInitialTracingPrompt(String partnerForInitialTracingPrompt) {
+		this.partnerForInitialTracingPrompt = partnerForInitialTracingPrompt;
+	}
+
+	public class TracingPromptToBeSelected {
+		public String partner;
+		public String tracingPrompt;
+	}
 
 	public String getSubbenefitToBeDeselected() {
 		return subbenefitToBeDeselected;
@@ -62,9 +84,8 @@ public class Benefit {
 
 	public void setNoOfMilestones(Integer noOfMilestones) {
 		this.noOfMilestones = noOfMilestones;
-	}	
-	
-	
+	}
+
 	public boolean isSelectBenefitOnPBCPage() {
 		return selectBenefitOnPBCPage;
 	}
@@ -72,7 +93,7 @@ public class Benefit {
 	public void setSelectBenefitOnPBCPage(boolean selectBenefitOnPBCPage) {
 		this.selectBenefitOnPBCPage = selectBenefitOnPBCPage;
 	}
-	
+
 	public boolean isDeselectBenefitOnPBCPage() {
 		return deselectBenefitOnPBCPage;
 	}
@@ -311,7 +332,7 @@ public class Benefit {
 	public void setSelectBenefitOnFPTPage(boolean selectBenefitOnFPTPage) {
 		this.selectBenefitOnFPTPage = selectBenefitOnFPTPage;
 	}
-	
+
 	public boolean getDeleteBenefitOnMBBPage() {
 		return deleteBenefitOnMBBPage;
 	}
@@ -319,7 +340,7 @@ public class Benefit {
 	public void setDeleteBenefitOnMBBPage(boolean deleteBenefitOnMBBPage) {
 		this.deleteBenefitOnMBBPage = deleteBenefitOnMBBPage;
 	}
-	
+
 	public String getPayments() {
 		return payments;
 	}
@@ -327,7 +348,7 @@ public class Benefit {
 	public void setPayments(String payments) {
 		this.payments = payments;
 	}
-	
+
 	public String getAiresManagedService() {
 		return airesManagedService;
 	}
@@ -335,7 +356,7 @@ public class Benefit {
 	public void setAiresManagedService(String airesManagedService) {
 		this.airesManagedService = airesManagedService;
 	}
-	
+
 	public String getIrisServiceName() {
 		return irisServiceName;
 	}
@@ -359,7 +380,7 @@ public class Benefit {
 	public void setIrisSubserviceName(String irisSubserviceName) {
 		this.irisSubserviceName = irisSubserviceName;
 	}
-	
+
 	public String getIrisSubserviceID() {
 		return irisSubserviceID;
 	}
@@ -367,7 +388,7 @@ public class Benefit {
 	public void setIrisSubserviceID(String irisSubserviceID) {
 		this.irisSubserviceID = irisSubserviceID;
 	}
-	
+
 	public String getSecondTracingPrompt() {
 		return secondTracingPrompt;
 	}
@@ -400,6 +421,14 @@ public class Benefit {
 		this.postThirdTracingCardStatus = postThirdTracingCardStatus;
 	}
 
+	public String getSubServiceDetails() {
+		return subServiceDetails;
+	}
+
+	public void setSubServiceDetails(String subServiceDetails) {
+		this.subServiceDetails = subServiceDetails;
+	}
+
 	@Override
 	public boolean equals(Object obj) {
 		Benefit benefit = (Benefit) obj;
@@ -409,6 +438,29 @@ public class Benefit {
 				&& (benefit.getPoints() == null || benefit.getPoints().equals(points)))
 			return true;
 		return false;
+	}
+
+	public Map<String, String> shipmentSubSeriveDetails() {
+		Map<String, String> details = new HashMap<String, String>();
+		Arrays.asList(subServiceDetails.split(",")).stream()
+				.forEach(detail -> details.put(detail.trim().split(":")[0].trim(), detail.trim().split(":")[1].trim()));
+		return details;
+	}
+
+	public void setPartners(String partners) {
+		this.partners = partners;
+	}
+
+	public String getPartners() {
+		return partners;
+	}
+
+	public List<TracingPromptToBeSelected> getTracingPromptsToBeSelected() {
+		return tracingPromptsToBeSelected;
+	}
+
+	public void setTracingPromptsToBeSelected(List<TracingPromptToBeSelected> tracingPromptsToBeSelected) {
+		this.tracingPromptsToBeSelected = tracingPromptsToBeSelected;
 	}
 
 }

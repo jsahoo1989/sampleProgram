@@ -1316,4 +1316,20 @@ public class IRIS_AssignmentOverviewPage extends BasePage {
 		}
 	}
 
+	public void switchToIRISWindowOnSpecificTab() throws Exception {
+		
+		Log.info("File "
+				+ CoreFunctions.getPropertyFromConfig("Assignment_FileID") + "  for  "
+				+ CoreFunctions.getPropertyFromConfig("Transferee_firstName") + " "
+				+ CoreFunctions.getPropertyFromConfig("Transferee_lastName") + " of "
+				+ CoreFunctions.getPropertyFromConfig("Policy_ClientName") + " - Aires LLC Agreement in place.");
+		
+		_IRIS = IRIS_PageMaster.getWindowObject("File "
+				+ CoreFunctions.getPropertyFromConfig("Assignment_FileID") + "  for  "
+				+ CoreFunctions.getPropertyFromConfig("Transferee_firstName") + " "
+				+ CoreFunctions.getPropertyFromConfig("Transferee_lastName") + " of "
+				+ CoreFunctions.getPropertyFromConfig("Policy_ClientName") + " - Aires LLC Agreement in place.");
+		Helpers.selectTabControl(IRIS_PageMaster.getTabControlObject(_IRIS, 0), IRISConstants.SERVICE_TAB);
+	}
+
 }

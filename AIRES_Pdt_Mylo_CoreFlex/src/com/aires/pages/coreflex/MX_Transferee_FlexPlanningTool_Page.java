@@ -270,7 +270,7 @@ public class MX_Transferee_FlexPlanningTool_Page extends Base {
 	private WebElement _buttonCashoutDisabledPlus;
 
 	// More Link
-	@FindBy(how = How.XPATH, using = "//div[@class='BenefitDescription']/following-sibling::a[contains(text(),'More')]")
+	@FindBy(how = How.XPATH, using = "//div[@class='RXCFBenefitInnerCard af_panelGroupLayout']//span[text()='More']")
 	private List<WebElement> _moreLinkBenefitDesc;
 
 	// Progress Bar
@@ -511,8 +511,7 @@ public class MX_Transferee_FlexPlanningTool_Page extends Base {
 		}
 		if (isPortionCashoutSelected) {
 			Reporter.addStepLog(MessageFormat.format(
-					MobilityXConstants.SUCCESSFULLY_SELECTED_CASHOUT_ON_FLEX_PLANNING_TOOL_PAGE,
-					CoreConstants.PASS));
+					MobilityXConstants.SUCCESSFULLY_SELECTED_CASHOUT_ON_FLEX_PLANNING_TOOL_PAGE, CoreConstants.PASS));
 			setReimAccountType(CoreFunctions.getAttributeText(_selectSelectAccount, "title"));
 		}
 		return isPortionCashoutSelected;
@@ -1451,10 +1450,21 @@ public class MX_Transferee_FlexPlanningTool_Page extends Base {
 
 	public boolean verifyBenefitDetailsOnFPTJourneyCards(int numberOfMilestones) {
 		boolean isFlexBenefitDetailsOnFTPVerified = false;
+		for (int i = 0; i <= _moreLinkBenefitDesc.size(); i++) {
+			try {
+				CoreFunctions.waitHandler(2);
+				CoreFunctions.scrollClickUsingJS(driver, _moreLinkBenefitDesc.get(0), "More");
+			} catch (Exception e) {
+				System.out.println("exception:==>"+i+e.getMessage());
+			}
+		}
+		CoreFunctions.explicitWaitTillElementListVisibility(driver, _textAddedBenefitNameList);
+		CoreFunctions.explicitWaitTillElementListVisibility(driver, _textAddedBenefitGroupList);
 		try {
 			for (FlexBenefit benefitList : flexBenefits) {
 				for (Benefit benefit : benefitList.getBenefits()) {
 					if (benefit.getNoOfMilestones() != null && benefit.getNoOfMilestones() == numberOfMilestones) {
+						Log.info("benefit.getBenefitDisplayName()"+benefit.getBenefitDisplayName());
 						int indexBenefit = BusinessFunctions.returnindexItemFromListUsingText(driver,
 								_textAddedBenefitNameList, benefit.getBenefitDisplayName());
 						int indexCategory = BusinessFunctions.returnindexItemFromListUsingText(driver,
@@ -1470,6 +1480,7 @@ public class MX_Transferee_FlexPlanningTool_Page extends Base {
 				}
 			}
 		} catch (Exception e) {
+			e.printStackTrace();
 			Reporter.addStepLog(MessageFormat.format(
 					COREFLEXConstants.EXCEPTION_OCCURED_WHILE_VALIDATING_FLEX_BENEFIT_DETAILS_ON_FLEX_PLANNING_TOOL_PAGE,
 					CoreConstants.FAIL, e.getMessage()));
@@ -1487,8 +1498,8 @@ public class MX_Transferee_FlexPlanningTool_Page extends Base {
 		totalSelectedPoints = 0;
 		MX_Transferee_MyBenefitsBundlePage.benefitDeletedFlag = false;
 		try {
-			benefitsSelectedSuccessfully = selectAiresManagedBenefitsOnFPT(noOfTracingPrompts)
-					&& selectCashOutOnFPT() && validatePointsAndClickOnNext();
+			benefitsSelectedSuccessfully = selectAiresManagedBenefitsOnFPT(noOfTracingPrompts) && selectCashOutOnFPT()
+					&& validatePointsAndClickOnNext();
 		} catch (Exception e) {
 			Reporter.addStepLog(MessageFormat.format(
 					MobilityXConstants.EXCEPTION_OCCURED_WHILE_SELECTING_BENEFITS_ON_FLEX_PLANNING_TOOL_PAGE,

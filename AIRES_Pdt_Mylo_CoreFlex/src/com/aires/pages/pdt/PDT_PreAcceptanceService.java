@@ -97,16 +97,16 @@ public class PDT_PreAcceptanceService extends Base {
 	@FindBy(how = How.CSS, using = "input[formcontrolname='numOfNightsPerTrip']")
 	private WebElement _txtBoxNumOfNightsPerTrip;
 
-	@FindBy(how = How.CSS, using = "ng-select[formcontrolname='maxAmountPerNightCode']")
+	@FindBy(how = How.CSS, using = "ng-select[formcontrolname='maxAmountCode']")
 	private WebElement _drpDownMaxAmt;
 
-	@FindBy(how = How.CSS, using = "ng-select[formcontrolname='maxAmountPerNightCode'] span.ng-option-label")
+	@FindBy(how = How.CSS, using = "ng-select[formcontrolname='maxAmountCode'] span.ng-option-label")
 	private List<WebElement> _drpDownMaxAmtOptions;
 
-	@FindBy(how = How.CSS, using = "ng-select[formcontrolname='maxAmountPerNightCode'] span.ng-value-label")
+	@FindBy(how = How.CSS, using = "ng-select[formcontrolname='maxAmountCode'] span.ng-value-label")
 	private WebElement _drpDownMaxAmtSelectedOption;
 
-	@FindBy(how = How.CSS, using = "input[formcontrolname='flatAmountPerNight']")
+	@FindBy(how = How.CSS, using = "input[formcontrolname='flatAmount']")
 	private WebElement _txtBoxFlatAmtPerNight;
 
 	@FindBy(how = How.CSS, using = "ng-select[formcontrolname='currencyCode']")
@@ -136,7 +136,7 @@ public class PDT_PreAcceptanceService extends Base {
 	@FindBy(how = How.CSS, using = "ng-select[formcontrolname='maxAmountCode'] span.ng-option-label")
 	private List<WebElement> _drpDownMaxAmountOptions;
 
-	@FindBy(how = How.XPATH, using = "//ng-select[@formcontrolname='maxAmountCode']/descendant::span[contains(@class,'ng-value-label')]")
+	@FindBy(how = How.XPATH, using = "//app-pre-trip-meals//ng-select[@formcontrolname='maxAmountCode']/descendant::span[contains(@class,'ng-value-label')]")
 	private WebElement _drpDownMaxAmountSelectedVal;
 
 	@FindBy(how = How.CSS, using = "input[formcontrolname='maxAmountEe']")
@@ -347,17 +347,18 @@ public class PDT_PreAcceptanceService extends Base {
 		return element;
 	}
 
-	public String getElementText(String elementName) {
+	public String getElementText(String elementName, String pageName) {
 		String elementText = null;
 		switch (elementName) {
 		case PDTConstants.HEADING:
-			/*elementText = CoreFunctions.getPropertyFromConfig("envt").toLowerCase().equalsIgnoreCase(CoreConstants.ENVT_QA)
+			elementText = pageName.trim().equalsIgnoreCase(PDTConstants.PRE_ACCEPTANCE_SERVICES)
 					? _subCategoryHeading.getText()
-					: _subCatHeading.getText();*/
+					: _subCatHeading.getText();
 					
-			elementText = System.getProperty("envt").toLowerCase().equalsIgnoreCase(CoreConstants.ENVT_QA)
+			/*elementText = System.getProperty("envt").toLowerCase().equalsIgnoreCase(CoreConstants.ENVT_QA)
 							? _subCategoryHeading.getText()
-							: _subCatHeading.getText();
+							: _subCatHeading.getText();*/
+			//elementText = _subCategoryHeading.getText();
 			break;
 		default:
 			Assert.fail(MessageFormat.format(PDTConstants.ELEMENT_NOT_FOUND, CoreConstants.FAIL));
@@ -386,13 +387,14 @@ public class PDT_PreAcceptanceService extends Base {
 	public boolean verifySubCategoryHeading(String pageName) {
 		if (CoreFunctions.isElementExist(driver, _progressBar, 3))
 			BusinessFunctions.fluentWaitForSpinnerToDisappear(driver, _progressBar);
-		/*WebElement element = CoreFunctions.getPropertyFromConfig("envt").toLowerCase().equalsIgnoreCase(CoreConstants.ENVT_QA)
+		WebElement element = pageName.trim().equalsIgnoreCase(PDTConstants.PRE_ACCEPTANCE_SERVICES)
 						? _subCategoryHeading
-						: _subCatHeading;*/
+						: _subCatHeading;
 		
-		WebElement element = System.getProperty("envt").toLowerCase().equalsIgnoreCase(CoreConstants.ENVT_QA)
+		/*WebElement element = System.getProperty("envt").toLowerCase().equalsIgnoreCase(CoreConstants.ENVT_QA)
 				? _subCategoryHeading
-				: _subCatHeading;
+				: _subCatHeading;*/
+		//WebElement element = _subCategoryHeading;
 		
 		CoreFunctions.explicitWaitTillElementVisibility(driver, element, element.getText());
 		return CoreFunctions.verifyElementOnPage(driver, element, PDTConstants.heading, pageName, pageName,
@@ -573,6 +575,7 @@ public class PDT_PreAcceptanceService extends Base {
 			CoreFunctions.clearAndSetText(driver, _txtAreaPreTripLodgingComment, PDTConstants.COMMENT,
 					preAcceptanceSubBenefitData.preAcceptanceTripLodging.comment);
 		} catch (Exception e) {
+			e.printStackTrace();
 			Assert.fail(MessageFormat.format(PDTConstants.EXCEPTION_OCCURED_FILL_SUBBENEFIT_FORM, CoreConstants.FAIL, subBenefitFormName));
 		}
 

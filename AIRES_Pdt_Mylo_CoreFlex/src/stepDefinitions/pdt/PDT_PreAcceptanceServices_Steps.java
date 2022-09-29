@@ -36,7 +36,7 @@ public class PDT_PreAcceptanceServices_Steps {
 		Assert.assertTrue(preAcceptanceServicePage.verifySubCategoryHeading(pageName),
 				MessageFormat.format(PDTConstants.FAIL_TO_VERIFY_ELEMENT_VAL_ON_PAGE, CoreConstants.FAIL,
 						PDTConstants.heading, pageName, pageName, pageName,
-						preAcceptanceServicePage.getElementText(PDTConstants.HEADING)));
+						preAcceptanceServicePage.getElementText(PDTConstants.HEADING, pageName)));
 		preAcceptanceServicePage.selectSubBenefitAndVerifyFormIsDisplayed(subBenefitTable, pageName);
 	}
 

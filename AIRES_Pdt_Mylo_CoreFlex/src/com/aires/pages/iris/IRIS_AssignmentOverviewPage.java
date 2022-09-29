@@ -1266,8 +1266,8 @@ public class IRIS_AssignmentOverviewPage extends BasePage {
 	}
 
 	public void addAiresTeamDetailsOnOverviewTab(IRIS_AssignmentData overviewData) throws Exception {
-		deleteAiresFileTeamHistoryDetails(IRISConstants.FUNCTION_PPC);
-		saveAssignmentAfterFileCreation();
+//		deleteAiresFileTeamHistoryDetails(IRISConstants.FUNCTION_PPC);
+//		saveAssignmentAfterFileCreation();
 		addAiresFileTeamHistoryDetails(IRISConstants.FUNCTION_PPC, overviewData.airesFileTeamHistory);
 		saveAssignmentAfterFileCreation();
 		addAiresFileTeamHistoryDetails(IRISConstants.FUNCTION_MSPEC, overviewData.airesFileTeamHistory);

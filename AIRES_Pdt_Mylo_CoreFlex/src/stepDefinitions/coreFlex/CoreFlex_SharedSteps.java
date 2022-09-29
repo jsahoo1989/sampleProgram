@@ -264,9 +264,7 @@ public class CoreFlex_SharedSteps {
 		Assert.assertTrue(bluePrintCFLoginPage.loginByUserType(PDTConstants.CSM, viewPolicyPage),
 				MessageFormat.format(PDTConstants.FAILED_TO_VERIFY_LOGGED_IN_USER, CoreConstants.FAIL));
 		CoreConstants.TIME_BEFORE_ACTION = new Date().getTime();
-		viewPolicyPage.clickElementOfPage(PDTConstants.ADD_NEW_POLICY_FORM);
-
-		CoreConstants.TIME_BEFORE_ACTION = new Date().getTime();
+		viewPolicyPage.clickElementOfPage(PDTConstants.ADD_NEW_POLICY_FORM);	
 		Assert.assertTrue(addNewPolicyPage.verifyAddNewPolicyHeading(COREFLEXConstants.ADD_NEW_POLICY_PAGE),
 				MessageFormat.format(PDTConstants.FAILED_TO_VERIFY_HEADING_ON_PAGE, CoreConstants.FAIL,
 						COREFLEXConstants.ADD_NEW_POLICY_PAGE, PDTConstants.ADD_NEW_POLICY_FORM,

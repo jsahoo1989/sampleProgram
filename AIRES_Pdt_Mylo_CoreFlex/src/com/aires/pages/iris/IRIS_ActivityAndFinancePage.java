@@ -54,6 +54,8 @@ public class IRIS_ActivityAndFinancePage extends BasePage {
 	String actDateVal = null;
 	private boolean _isExists = false;
 	public static PageObjectManager_CoreFlex pageObjectManager_CoreFlex;
+	private Window _assignmentWindow = null;
+
 
 	private Button _saveButton = IRIS_PageMaster.getDialogObject(_IRIS, "Partner Recommendation").describe(Button.class,
 			new ButtonDescription.Builder().label("Save").build());
@@ -378,6 +380,7 @@ public class IRIS_ActivityAndFinancePage extends BasePage {
 		IRIS_PageMaster.getDialogObject(_IRIS, "Message").waitUntilVisible();
 		messageVerified = BusinessFunctions.verifyMsgOnDialog(IRIS_PageMaster.getDialogObject(_IRIS, "Message"),
 				message, dialogName);
+		System.out.println("IRIS Message Verified : "+messageVerified);
 		if (IRIS_PageMaster.getDialogObject(_IRIS, "Message").isVisible() && messageVerified) {
 			Helpers.clickButton(
 					IRIS_PageMaster.getButtonObjectFromLabel(IRIS_PageMaster.getDialogObject(_IRIS, "Message"), "OK"),
@@ -1111,7 +1114,7 @@ public class IRIS_ActivityAndFinancePage extends BasePage {
 
 	}
 
-	public void acceptSavedSuccessDialog() {
+	public void acceptSavedSuccessDialog() throws GeneralLeanFtException, Exception {
 		try {
 			_isExists = (IRIS_PageMaster.getDialogObject(_IRIS, "Saved").isVisible());
 			if (_isExists) {
@@ -1123,7 +1126,7 @@ public class IRIS_ActivityAndFinancePage extends BasePage {
 								.getLabel());
 			}
 		} catch (Exception e) {
+			
 		}
-
 	}
 }

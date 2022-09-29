@@ -1074,7 +1074,7 @@ public class CoreFunctions {
 
 	public static void hoverAndClick(WebDriver driver, WebElement element, String name) {
 		Actions action = new Actions(driver);
-		action.moveToElement(element).doubleClick().build().perform();
+		action.moveToElement(element).click().build().perform();
 		Reporter.addStepLog(CoreConstants.PASS + MessageFormat.format(CoreConstants.VRFIED_ELE_CLCKED, name));
 	}
 

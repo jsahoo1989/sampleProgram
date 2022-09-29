@@ -1738,11 +1738,9 @@ public class MX_Transferee_FlexPlanningTool_Page extends Base {
 	}
 
 	private boolean verifyAfterRelocationNoteBeforeTracing() {
-		try {
-			System.out.println("Expected:" + MobilityXConstants.RELOCATION_CASHOUT_NOTE_BEFORE_TRACING);
-			System.out.println("Actual:" + CoreFunctions.getElementText(driver, _textAfterRelocationNote));
+		try {							
 			if (CoreFunctions.getElementText(driver, _textAfterRelocationNote)
-					.equals(MobilityXConstants.RELOCATION_CASHOUT_NOTE_BEFORE_TRACING)) {
+					.equals(MobilityXConstants.RELOCATION_CASHOUT_NOTE_BEFORE_TRACING_FOR_TRANSFEREE)) {
 				Reporter.addStepLog(MessageFormat.format(
 						COREFLEXConstants.SUCCESSFULLY_VERIFIED_DEFAULT_AFTER_RELOCATION_CASHOUT_NOTE_BEFORE_TRACING_ACTUALIZATION_ON_FLEX_PLANNING_TOOL_PAGE,
 						CoreConstants.PASS));
@@ -1750,7 +1748,7 @@ public class MX_Transferee_FlexPlanningTool_Page extends Base {
 			} else {
 				Reporter.addStepLog(MessageFormat.format(
 						COREFLEXConstants.FAILED_TO_VERIFY_DEFAULT_AFTER_RELOCATION_CASHOUT_NOTE_BEFORE_TRACING_ACTUALIZATION_ON_FLEX_PLANNING_TOOL_PAGE,
-						CoreConstants.FAIL, MobilityXConstants.RELOCATION_CASHOUT_NOTE_BEFORE_TRACING,
+						CoreConstants.FAIL, MobilityXConstants.RELOCATION_CASHOUT_NOTE_BEFORE_TRACING_FOR_TRANSFEREE,
 						CoreFunctions.getElementText(driver, _textAfterRelocationNote)));
 			}
 		} catch (Exception e) {

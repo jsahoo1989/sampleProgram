@@ -62,19 +62,44 @@ public class EmailUtil {
 			_searchTag[1] = "</th>";
 			break;
 		case MobilityXConstants.NEW_INITIATION_SUBMISSION_BENEFIT_TOTAL_POINTS:
+		case MobilityXConstants.APPROVAL_EMAIL_BENEFIT_TOTAL_POINTS_AND_SUBMITTED_POINTS:
 			_searchTag[0] = "Benefits Total Points: ";
 			_searchTag[1] = "</th>";
-			break;			
+			break;
 		case MobilityXConstants.NEW_INITIATION_SUBMISSION_BENEFIT_TOTAL_POINTS_AND_SUBMITTED_POINTS:
 			_searchTag[0] = "Benefits Total Points: ";
 			_searchTag[1] = "</th>";
-			break;	
+			break;
 		case MobilityXConstants.REVISED_MOBILITY_INITIATION_SUBMISSION_BENEFIT_TOTAL_POINTS:
 			_searchTag[0] = "Benefits Total Points: <span style=\"\">0</span> / <span style=\"color:Red\">";
 			_searchTag[1] = "</span></th>";
 			break;
+		case MobilityXConstants.MOBILITY_APPROVAL_REQUEST:
+			_searchTag[0] = "Hello";
+			_searchTag[1] = "Please see below";
+			break;
+		case MobilityXConstants.APPROVAL_EMAIL_TRANSFEREE_FIRST_NAME:
+			_searchTag[0] = "Legal First Name</td><td width=\"60%\" style=\"font-family:century gothic, Helvetica, Calibri, Roboto;font-size:14px;text-align:left;padding-left:10px;border:1px solid #E7F2F5;\">";
+			_searchTag[1] = "</td></tr>";
+			break;
+		case MobilityXConstants.APPROVAL_EMAIL_TRANSFEREE_LAST_NAME:
+			_searchTag[0] = "Legal Last Name</td><td width=\"60%\" style=\"font-family:century gothic, Helvetica, Calibri, Roboto;font-size:14px;text-align:left;padding-left:10px;border:1px solid #E7F2F5;\">";
+			_searchTag[1] = "</td></tr>";
+			break;
+		case MobilityXConstants.APPROVAL_EMAIL_RELOCATION_POLICY:
+			_searchTag[0] = "Relocation Policy</td><td width=\"60%\" style=\"font-family:century gothic, Helvetica, Calibri, Roboto;font-size:14px;text-align:left;padding-left:10px;border:1px solid #E7F2F5;\">";
+			_searchTag[1] = "</td></tr>";
+			break;
+		case MobilityXConstants.SUBMIT_MY_RESPONSE:
+			_searchTag[0] = "href=";
+			_searchTag[1] = "><img alt=\"Submit My Response\"";
+			break;
+		case MobilityXConstants.NEW_INITIATION_SUBMISSION_STATUS:
+			_searchTag[0] = "Status of the Initiation </td><td width=\"60%\" style=\"font-family:century gothic, Helvetica, Calibri, Roboto;font-size:14px;text-align:left;padding-left:10px;border:1px solid #E7F2F5;\">";
+			_searchTag[1] = "</td></tr>";
+			break;
 		default:
-			Assert.fail("Information not found");
+			Assert.fail(MobilityXConstants.INFORMATION_NOT_FOUND_IN_EMAIL);
 		}
 		return _searchTag;
 	}
@@ -209,8 +234,8 @@ public class EmailUtil {
 						searchFilterCollection);
 				iterationCount++;
 				ArrayList<Item> items = service.findItems(inbox.getId(), finalSearchFilter, view).getItems();
-				service.loadPropertiesForItems(items, PropertySet.FirstClassProperties);
 				if (items.size() > 0) {
+					service.loadPropertiesForItems(items, PropertySet.FirstClassProperties);
 					EmailMessage emailMessage = (EmailMessage) items.get(0);
 					Log.info("Pass:Email Received from: " + emailMessage.getFrom().toString());
 					Log.info("Email Received Date:" + emailMessage.getDateTimeReceived());
@@ -222,12 +247,12 @@ public class EmailUtil {
 					searchText = StringUtils.substringBetween(messageText, _searchTag[0], _searchTag[1]);
 					return searchText;
 				}
-				if (iterationCount < 12)
+				if (iterationCount < 4)
 					CoreFunctions.waitHandler(10);
 				else
 					break;
 			}
-			Log.info("No Email Received within 3 minutes From:" + expFrom + " with subject:" + expEmailSubject);
+			Log.info("No Email Received within 1 minutes From:" + expFrom + " with subject:" + expEmailSubject);
 			return CoreConstants.EMAIL_NOT_FOUND;
 		} catch (Exception e) {
 			Assert.fail(CoreConstants.ERROR + e.getMessage());

@@ -1,6 +1,6 @@
 Feature: Validate the CoreFlex End-To-End Business Test Flow(BluePrint, MXTransferee,Transferee Submissions) for Both_Transferee_UserDefined_AfterRelocation_Delete_DenyAll selection
 
-  @End-To-End_CoreFlex @CF_MXTransferee_UserDefined_AfterRelocation
+  @End-To-End_CoreFlex @CF_MXTransferee_UserDefined_AfterRelocationIgnore
   Scenario: CoreFlex - Creating & Validating a new Active Points Based CoreFlex Policy with Transferee, UserDefined and AfterRelocation selection
     Given he has setup a new CoreFlex Policy with following selection in Blueprint application
       | Person Responsible For Benefit Selection | Flex Setup Type | Cashout Availability  | BenefitType | PolicyRequiredFor | MileStones |
@@ -56,7 +56,7 @@ Feature: Validate the CoreFlex End-To-End Business Test Flow(BluePrint, MXTransf
       | Tracing Set | Tracing                             |
       | Assignment  | Assignment start date               |
       | Transfer    | Transfer/Start Date in New Location |
-    And he has navigated to "My Benefits Bundle" page after selecting required benefits and Cashout on "FleX Planning Tool" page
+    And he has navigated to "My Benefits Bundle" page after selecting required Benefits and Cashout on "FleX Planning Tool" page
     And he has clicked on "Review and Submit" button after validating all the benefit and Cashout details listed under 'Selected Benefits' section on "My Benefits Bundle" page
     And he has clicked on "Yes - submit my bundle" button after entering Transferee name on "Submit Bundle Confirmation" dialog
     And he has clicked on "OK - Let Me See My Benefits!" button displayed on 'Success Flex' dialog

@@ -800,4 +800,15 @@ public class COREFLEXConstants {
 	public static final String AUTO_SHIPMENT_BENEFITS_PAGE = "Auto Shipment Benefits Page";
 	public static final String INLAND_SHIPMENT_BENEFITS_PAGE = "Inland Shipment Benefits Page";
 	public static final String SEA_OR_SURFACE_SHIPMENT_BENEFITS_PAGE = "Sea/Surface Shipment Benefits Page";
+	public static final String EXCEPTION_OCCURED_WHILE_VALIDATING_PORTION_CASHOUT_DETAILS_UNDER_FLEX_BENEFIT_SECTION_ON_AUTHORIZATION_FORM_PAGE = "{0}Exception occured while validating Portion Cashout Details under Flex Benefits Section of Authorization Form page. Exception : ''{1}''.";
+	public static final String EXCEPTION_OCCURED_WHILE_DELETING_SUBMITTED_CASHOUT_ON_BB_PAGE = "{0}Exception occured while Deleting submitted Cashout on Benefits Bundle page. Exception : ''{1}''.";
+	public static final String FAILED_TO_VERIFY_SUBMITTED_BENEFITS_CASHOUT_DETAILS_BY_CLIENT_ON_TRANSFEREE_SUBMISSIONS_DETAILS_PAGE = "{0}Failed to verify submitted Benefits Cashout details by Client on Transferee Submissions Details Page.";
+	public static final String SUCCESSFULLY_VALIDATED_TRANSFEREE_DETAILS_ON_TRANSFEREE_SUBMISSION_DETAILS_PAGE = "{0}Successfully validated transferee details on Tranferee Submissions Details Page.";
+	public static final String SUCCESSFULLY_VALIDATED_SPENT_REMAINING_AND_TOTAL_POINTS_DETAILS_ON_TRANSFEREE_SUBMISSION_DETAILS_PAGE = "{0}Successfully validated Spent, Remaining & Total Points details on Tranferee Submissions Details Page.";
+	public static final String EXCEPTION_OCCURED_WHILE_VALIDATING_TRANSFEREE_SUBMISSION_POINTS_DETAILS_ON_TRANSFEREE_SUBMISSION_DETAILS_PAGE = "{0}Exception occured while validating transferee submission Points details on Tranferee Submissions Details Page. Exception : ''{1}''.";
+	public static final String SUCCESSFULLY_VERIFIED_DEFAULT_AFTER_RELOCATION_CASHOUT_DETAILS_ON_BENEFIT_SELECTION_TOOL_PAGE = "{0}Successfully verified Default After Relocation Cashout Details on Benefit Selection Tool Page.";
+	public static final String SUCCESSFULLY_VERIFIED_DEFAULT_AFTER_RELOCATION_CASHOUT_NOTE_BEFORE_TRACING_ACTUALIZATION_ON_BENEFIT_SELECTION_TOOL_PAGE = "{0}Successfully verified default after relocation cashout note before Tracing Actualization on Benefit Selection Tool page.";
+	public static final String FAILED_TO_VERIFY_DEFAULT_AFTER_RELOCATION_CASHOUT_NOTE_BEFORE_TRACING_ACTUALIZATION_ON_BENEFIT_SELECTION_TOOL_PAGE = "{0}Failed to verify default after relocation cashout note before Tracing Actualization on Benefit Selection Tool page.Expected : ''{1}'' | Actual : ''{2}''";
+	public static final String SUCCESSFULLY_VERIFIED_PORTION_CASHOUT_DETAILS_POST_ALL_CASHOUT_VALUE_SUBMISSION_ON_BENEFIT_SELECTION_TOOL_PAGE = "{0}Successfully verified Portion Cashout details Post All Cashout value submission on Benefit Selection Tool page.";
+	public static final String SUCCESSFULLY_VERIFIED_PORTION_CASHOUT_DETAILS_POST_DELETE_REQUEST_DENIED_ON_BENEFIT_SELECTION_TOOL_PAGE = "{0}Successfully verified Portion Cashout details Post Delete Request Denied for All Cashout value submission on Benefit Selection Tool page.";
 }

@@ -401,10 +401,10 @@ public class MX_Transferee_JourneyHomePage extends Base {
 		Log.info((CoreFunctions.getPropertyFromConfig("Transferee_firstName") + " "
 				+ CoreFunctions.getPropertyFromConfig("Transferee_lastName")) + ":" + (actualTransfereeName) + "");
 
-		boolean isAssignmentClientDetailsMatched = (CoreFunctions.getPropertyFromConfig("Assignment_ClientName").equals(
+		boolean isAssignmentClientDetailsMatched = (CoreFunctions.getPropertyFromConfig("Assignment_ClientName").equalsIgnoreCase(
 				actualClientName) & CoreFunctions.getPropertyFromConfig("Assignment_FileID").equals(actualFileId)
 				& (CoreFunctions.getPropertyFromConfig("Transferee_firstName") + " "
-						+ CoreFunctions.getPropertyFromConfig("Transferee_lastName")).equals(actualTransfereeName));
+						+ CoreFunctions.getPropertyFromConfig("Transferee_lastName")).equalsIgnoreCase(actualTransfereeName));
 
 		if (isAssignmentClientDetailsMatched) {
 			Reporter.addStepLog(MessageFormat.format(
@@ -514,11 +514,12 @@ public class MX_Transferee_JourneyHomePage extends Base {
 			CoreFunctions.clearAndSetText(driver, _mailingAddress1, accountDetails.mailingAddress.address1);
 			CoreFunctions.clearAndSetText(driver, _accountHolderName, accountDetails.accountHoldersName);
 			CoreFunctions.clearAndSetText(driver, _mailingAddress2, accountDetails.mailingAddress.address2);
-			CoreFunctions.clearAndSetText(driver, _mailingCity, accountDetails.mailingAddress.city);
-			CoreFunctions.selectByVisibleText(driver, _select_mailingState, accountDetails.mailingAddress.state);
+			CoreFunctions.clearAndSetText(driver, _mailingCity, accountDetails.mailingAddress.city);			
 			CoreFunctions.clearAndSetText(driver, _province, accountDetails.mailingAddress.province);
 			CoreFunctions.clearAndSetText(driver, _postalCode, accountDetails.mailingAddress.postalCode);
 			CoreFunctions.selectByVisibleText(driver, _select_mailingCountry, accountDetails.mailingAddress.country);
+			CoreFunctions.waitHandler(1);
+			CoreFunctions.selectByVisibleText(driver, _select_mailingState, accountDetails.mailingAddress.state);
 			CoreFunctions.clearAndSetText(driver, _accountClosingDate,
 					accountDetails.mailingAddress.accountClosingDate);
 			CoreFunctions.clickElement(driver, _btn_submit);

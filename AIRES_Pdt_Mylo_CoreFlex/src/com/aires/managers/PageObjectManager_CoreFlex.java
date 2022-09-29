@@ -52,7 +52,9 @@ import com.aires.pages.coreflex.CoreFlex_PreAcceptanceServices_BenefitsPage;
 import com.aires.pages.coreflex.CoreFlex_PreviewTransfereePage;
 import com.aires.pages.coreflex.CoreFlex_Sea_Surface_Shipment_BenefitsPage;
 import com.aires.pages.coreflex.CoreFlex_TemporaryLiving_BenefitsPage;
+import com.aires.pages.coreflex.MX_Client_AuthWorkflow_ApprovalActionPage;
 import com.aires.pages.coreflex.MX_Client_AuthorizationHomePage;
+import com.aires.pages.coreflex.MX_Client_AuthorizationHome_CollaborationPage;
 import com.aires.pages.coreflex.MX_Client_BenefitSelectionToolPage;
 import com.aires.pages.coreflex.MX_Client_BenefitsBundlePage;
 import com.aires.pages.coreflex.MX_Client_ViewAllInitiationsPage;
@@ -111,6 +113,9 @@ public class PageObjectManager_CoreFlex {
 
 	private static Map<String, BenefitPage> benefitPageObjects = new HashMap<String, BenefitPage>();
 
+	private MX_Client_AuthorizationHome_CollaborationPage _mxClientAuthCollaborationPage;
+	private MX_Client_AuthWorkflow_ApprovalActionPage _mxClientAuthWFApprovalActionPage;
+ 
 	public PageObjectManager_CoreFlex(WebDriver driver) {
 		this._driver = driver;
 	}
@@ -407,5 +412,16 @@ public class PageObjectManager_CoreFlex {
 		_coreFlexPetShipmentBenefitsPage = this.getCoreFlexPetShipmentBenefitsPage();
 		_coreFlexPermanentStorageBenefitsPage = this.getCoreFlexPermanentStorageBenefitsPage();
 	}
-
+	
+	public MX_Client_AuthorizationHome_CollaborationPage getMXClientAuthCollaborationPage() {
+		return (_mxClientAuthCollaborationPage == null)
+				? _mxClientAuthCollaborationPage = new MX_Client_AuthorizationHome_CollaborationPage(_driver)
+				: _mxClientAuthCollaborationPage;
+	}
+	
+	public MX_Client_AuthWorkflow_ApprovalActionPage getMXClientAuthWFApprovalActionPage() {
+		return (_mxClientAuthWFApprovalActionPage == null)
+				? _mxClientAuthWFApprovalActionPage = new MX_Client_AuthWorkflow_ApprovalActionPage(_driver)
+				: _mxClientAuthWFApprovalActionPage;
+	}	
 }

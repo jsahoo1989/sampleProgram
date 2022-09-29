@@ -1,27 +1,25 @@
 Feature: Validate the CoreFlex End-To-End Business Test Flow(BluePrint, MXTransferee,Transferee Submissions) for Both_Transferee_StaticFixedPoints_CashoutNotAuthorized_Delete_Deny selection
 
-  @End-To_End_CoreFlex @Both-CashNotAuth_DenyRequest_PF @End-To-End-Flow_Both-CashNotAuth_DenyRequest
-  Scenario: CoreFlex - Setting up a New CoreFlex policy in 'Policy Digitization Tool' application
-    Given he has submitted a new "Both" Type Policy with following selection in 'Policy Digitization Tool (PDT)' application
-      | Person Responsible For Benefit Selection | Flex Setup Type | Cashout Availability   | PolicyRequiredFor | MileStones |
-      | Transferee                               | Static/Fixed    | Cashout Not Authorized | End-To-End        |          0 |
+  @End-To-End_CoreFlex @CF_MXTransferee_StaticFixed_CashNotAuth_DeleteDeny
+  Scenario: CoreFlex - Creating & Validating a new Active Points Based CoreFlex Policy with Transferee, Static/Fixed and CashNotAuth selection
+    Given he has setup a new CoreFlex Policy with following selection in Blueprint application
+      | Person Responsible For Benefit Selection | Flex Setup Type | Cashout Availability   | BenefitType | PolicyRequiredFor | MileStones |
+      | Transferee                               | Static/Fixed    | Cashout Not Authorized | Both        | Client            |          0 |
     And he has clicked on "Submit" button to submit "V1" policy verison on "Custom Bundles" page
     And he has clicked on "Approve Policy" button to approve "V1" policy verison on "Custom Bundles" page
     And he has selected following options on 'Approval this Policy' dialog of "V1" Policy
       | Associate this policy with a NEW authorization in IRIS? |
       | Effective from booking date                             |
-    When he clicks on "Approve" button to acknowledged 'Approve this Policy' dialog
+    When he clicks on "Approve" button to acknowledge 'Approve this Policy' dialog
     Then Policy Status and Version should be displayed as "Active" and "V1" respectively on "View/Edit Policy Forms" page
 
-  @End-To_End_CoreFlex @Both-CashNotAuth_DenyRequest_MX @End-To-End-Flow_Both-CashNotAuth_DenyRequest
+  @End-To-End_CoreFlex @CF_MXTransferee_StaticFixed_CashNotAuth_DeleteDeny
   Scenario: MXTransferee - Selecting & Submitting Flex benefits available in configured policy and Tracking Available_Used Benefits Points
     Given he has logged into 'MobilityX' application after creating a new 'Transferee' through IRIS application for policy setup in 'Policy Digitization Tool'
     And he has validated 'Assignment-Policy' details after selecting below option displayed on 'Welcome' dialog
       | WelcomeDialogSelection               |
       | No thanks, I prefer to do this later |
-    And he has navigated to "FleX Planning Tool" page with below Policy-Benefit type after clicking on 'Manage my Points' button on "Mobility Journey Home" page
-      | PolicyType |
-      | Both       |
+    And he has navigated to "FleX Planning Tool" page after clicking on 'Manage my Points' button on "Mobility Journey Home" page
     And he has navigated to "My Benefits Bundle" page after selecting required benefits on "FleX Planning Tool" page
     And he has clicked on "Review and Submit" button after validating all the benefit details listed under 'Selected Benefits' section on "My Benefits Bundle" page
     And he has clicked on "Yes - submit my bundle" button after entering Transferee name on "Submit Bundle Confirmation" dialog
@@ -33,8 +31,8 @@ Feature: Validate the CoreFlex End-To-End Business Test Flow(BluePrint, MXTransf
     Then 'Delete Request Sent' growl message should be displayed on 'My Benefit Bundle' page
     And 'Status' of the deleted benefit should be displayed as "Delete Request Pending" under 'Submitted Benefits' section of 'My Benefit Bundle' page
 
-  @End-To_End_CoreFlex @Both-CashNotAuth_DenyRequest_MX @End-To-End-Flow_Both-CashNotAuth_DenyRequest
-  Scenario: TransfereeSubmissions - Verifying submissions and Denying the delete request made by Transferee for the Client(s) assigned to PPC User
+  @End-To-End_CoreFlex @CF_MXTransferee_StaticFixed_CashNotAuth_DeleteDeny
+  Scenario: TransfereeSubmissions - Verifying StaticFixed Points, BenefitSubmissions and Delete Request Deny transaction for the request made by the Transferee
     Given he has logged into 'Transferee Submissions' application as a "MSPEC/PPC" user
     And he has navigated to "Transferee Submissions Dashboard" page having record of Bundle submitted by the transferee
     And he has clicked on "Review" button for Bundle submitted by the transferee on "Transferee Submissions Dashboard" page

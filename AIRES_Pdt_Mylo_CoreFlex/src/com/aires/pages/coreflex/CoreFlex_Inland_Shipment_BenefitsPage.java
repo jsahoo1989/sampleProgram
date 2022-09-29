@@ -756,7 +756,6 @@ public class CoreFlex_Inland_Shipment_BenefitsPage extends BenefitPage {
 			Reporter.addStepLog(
 					MessageFormat.format(IRISConstants.SUCCESSFULLY_ADDED_SUB_SERVICE_DETAILS, CoreConstants.PASS));
 		} catch (Exception e) {
-			e.printStackTrace();
 			Reporter.addStepLog(MessageFormat.format(IRISConstants.FAILED_TO_ADD_SUB_SERVICE_DETAILS,
 					CoreConstants.FAIL, e.getMessage()));
 			Assert.fail(IRISConstants.FAILED_TO_ADD_SUB_SERVICE_DETAILS_ON_SEB_SERVICE_WINDOW);

@@ -1295,11 +1295,10 @@ public class IRIS_AssignmentOverviewPage extends BasePage {
 			Button saveSucceedoKButton = IRIS_PageMaster.getButtonObjectFromLabel(saveSucceededDialog, "OK");
 			Helpers.clickButton(saveSucceedoKButton, saveSucceedoKButton.getAttachedText());
 		} catch (GeneralLeanFtException e) {
-			e.printStackTrace();
 			Assert.fail(CoreConstants.FAIL + "Not Able to save the assignment");
 		}
 	}
-	
+
 	public void acceptAddConfirmationDialog() {
 		try {
 			_isExists = (IRIS_PageMaster.getDialogObject(_IRIS, "Add confirmation").isVisible());
@@ -1308,28 +1307,10 @@ public class IRIS_AssignmentOverviewPage extends BasePage {
 						IRIS_PageMaster.getDialogObject(_IRIS, "Add confirmation").describe(Button.class,
 								new ButtonDescription.Builder().label("Yes").build()),
 						IRIS_PageMaster.getDialogObject(_IRIS, "Add confirmation")
-								.describe(Button.class,
-										new ButtonDescription.Builder().label("Yes").build())
+								.describe(Button.class, new ButtonDescription.Builder().label("Yes").build())
 								.getLabel());
 			}
 		} catch (Exception e) {
 		}
 	}
-
-	public void switchToIRISWindowOnSpecificTab() throws Exception {
-		
-		Log.info("File "
-				+ CoreFunctions.getPropertyFromConfig("Assignment_FileID") + "  for  "
-				+ CoreFunctions.getPropertyFromConfig("Transferee_firstName") + " "
-				+ CoreFunctions.getPropertyFromConfig("Transferee_lastName") + " of "
-				+ CoreFunctions.getPropertyFromConfig("Policy_ClientName") + " - Aires LLC Agreement in place.");
-		
-		_IRIS = IRIS_PageMaster.getWindowObject("File "
-				+ CoreFunctions.getPropertyFromConfig("Assignment_FileID") + "  for  "
-				+ CoreFunctions.getPropertyFromConfig("Transferee_firstName") + " "
-				+ CoreFunctions.getPropertyFromConfig("Transferee_lastName") + " of "
-				+ CoreFunctions.getPropertyFromConfig("Policy_ClientName") + " - Aires LLC Agreement in place.");
-		Helpers.selectTabControl(IRIS_PageMaster.getTabControlObject(_IRIS, 0), IRISConstants.SERVICE_TAB);
-	}
-
 }

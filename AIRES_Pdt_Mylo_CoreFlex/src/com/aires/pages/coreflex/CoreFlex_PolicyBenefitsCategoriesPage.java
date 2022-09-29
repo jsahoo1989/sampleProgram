@@ -598,7 +598,6 @@ public class CoreFlex_PolicyBenefitsCategoriesPage extends Base {
 				isFlexBenefitSuccessfullySelectedAndFilled = true;
 			}
 		} catch (Exception e) {
-			e.printStackTrace();
 			Reporter.addStepLog(MessageFormat.format(
 					COREFLEXConstants.EXCEPTION_OCCURED_WHILE_SELECTING_AND_FILLING_ADDED_FLEX_BENEFITS,
 					CoreConstants.FAIL, e.getMessage()));

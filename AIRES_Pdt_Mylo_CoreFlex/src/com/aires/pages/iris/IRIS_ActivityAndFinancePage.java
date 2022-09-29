@@ -869,7 +869,6 @@ public class IRIS_ActivityAndFinancePage extends BasePage {
 			}
 			CoreFunctions.writeToPropertiesFile("irisWindowTitle", getIRISWindow().getTitle());
 		} catch (Exception e) {
-			e.printStackTrace();
 			Reporter.addStepLog(MessageFormat.format(
 					IRISConstants.EXCEPTION_OCCURED_WHILE_ACTUALIZING_ADDED_SERVICES_TRACING_PROMPT_ON_IRIS_APPLICATION,
 					CoreConstants.FAIL, e.getMessage()));
@@ -1008,7 +1007,6 @@ public class IRIS_ActivityAndFinancePage extends BasePage {
 			}
 			CoreFunctions.writeToPropertiesFile("irisWindowTitle", getIRISWindow().getTitle());
 		} catch (Exception e) {
-			e.printStackTrace();
 			Reporter.addStepLog(MessageFormat.format(
 					IRISConstants.EXCEPTION_OCCURED_WHILE_ACTUALIZING_ADDED_SERVICES_TRACING_PROMPT_ON_IRIS_APPLICATION,
 					CoreConstants.FAIL, e.getMessage()));

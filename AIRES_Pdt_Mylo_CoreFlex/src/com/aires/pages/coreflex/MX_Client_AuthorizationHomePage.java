@@ -506,7 +506,6 @@ public class MX_Client_AuthorizationHomePage extends Base {
 				return false;
 			}
 		} catch (ElementNotFoundException e) {
-			e.printStackTrace();
 			Log.info("Exception :" + e);
 			return false;
 		}

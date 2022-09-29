@@ -16,34 +16,12 @@ import com.aires.businessrules.constants.MobilityXConstants;
 import com.aires.businessrules.constants.PDTConstants;
 import com.aires.cucumber.TestContext;
 import com.aires.managers.FileReaderManager;
-import com.aires.pages.coreflex.CoreFlex_AirShipment_BenefitsPage;
-import com.aires.pages.coreflex.CoreFlex_AirportPickup_BenefitsPage;
-import com.aires.pages.coreflex.CoreFlex_AreaTour_BenefitsPage;
-import com.aires.pages.coreflex.CoreFlex_AutoRentalDuringAssignment_BenefitsPage;
-import com.aires.pages.coreflex.CoreFlex_AutoShipment_BenefitsPage;
 import com.aires.pages.coreflex.CoreFlex_BenefitSummaryPage;
 import com.aires.pages.coreflex.CoreFlex_BluePrint_LoginPage;
-import com.aires.pages.coreflex.CoreFlex_ConciergeServices_BenefitsPage;
-import com.aires.pages.coreflex.CoreFlex_CulturalTraining_BenefitsPage;
 import com.aires.pages.coreflex.CoreFlex_CustomBundlesPage;
-import com.aires.pages.coreflex.CoreFlex_DuplicateHousing_BenefitsPage;
-import com.aires.pages.coreflex.CoreFlex_EducationAssistanceSchoolSearch_BenefitsPage;
-import com.aires.pages.coreflex.CoreFlex_FinalMove_BenefitsPage;
 import com.aires.pages.coreflex.CoreFlex_FlexPolicySetupPage;
-import com.aires.pages.coreflex.CoreFlex_FurnitureRental_BenefitsPage;
-import com.aires.pages.coreflex.CoreFlex_HomeLeave_BenefitsPage;
-import com.aires.pages.coreflex.CoreFlex_HomePurchase_BenefitsPage;
-import com.aires.pages.coreflex.CoreFlex_HouseHuntingTrip_BenefitsPage;
-import com.aires.pages.coreflex.CoreFlex_Inland_Shipment_BenefitsPage;
-import com.aires.pages.coreflex.CoreFlex_LanguageTraining_BenefitsPage;
-import com.aires.pages.coreflex.CoreFlex_LumpSum_BenefitsPage;
-import com.aires.pages.coreflex.CoreFlex_OtherHousing_BenefitsPage;
-import com.aires.pages.coreflex.CoreFlex_Pet_Shipment_BenefitsPage;
 import com.aires.pages.coreflex.CoreFlex_PolicyBenefitsCategoriesPage;
-import com.aires.pages.coreflex.CoreFlex_PreAcceptanceServices_BenefitsPage;
 import com.aires.pages.coreflex.CoreFlex_PreviewTransfereePage;
-import com.aires.pages.coreflex.CoreFlex_Sea_Surface_Shipment_BenefitsPage;
-import com.aires.pages.coreflex.CoreFlex_TemporaryLiving_BenefitsPage;
 import com.aires.pages.coreflex.MX_Transferee_FlexPlanningTool_Page;
 import com.aires.pages.coreflex.MX_Transferee_JourneyHomePage;
 import com.aires.pages.coreflex.MX_Transferee_MyBenefitsBundlePage;
@@ -63,7 +41,6 @@ import com.aires.pages.pdt.PDT_AddNewPolicyPage;
 import com.aires.pages.pdt.PDT_GeneralInformationPage;
 import com.aires.pages.pdt.PDT_LoginPage;
 import com.aires.pages.pdt.PDT_ViewPolicyPage;
-import com.aires.testdatatypes.coreflex.CoreFlex_PolicySetupPagesData;
 import com.aires.testdatatypes.coreflex.TransfereeSubmissions_LoginData;
 import com.aires.testdatatypes.iris.IRIS_AssignmentData;
 import com.aires.testdatatypes.pdt.PDT_LoginDetails;
@@ -686,8 +663,8 @@ public class CoreFlex_SharedSteps {
 
 		List<Map<String, String>> action = dataTable.asMaps(String.class, String.class);
 		mxTransfereeJourneyHomePage.progressOrSkipMobilityJourneyHomePage(action.get(0).get("WelcomeDialogSelection"));
-//		Assert.assertTrue(mxTransfereeJourneyHomePage.verifyAssignmentAndPolicyDetails(), MessageFormat.format(
-//				MobilityXConstants.ASSIGNMENT_DETAILS_NOT_MATCHED_ON_MOBILITY_JOURNEY_HOME_PAGE, CoreConstants.FAIL));
+		Assert.assertTrue(mxTransfereeJourneyHomePage.verifyAssignmentAndPolicyDetails(), MessageFormat.format(
+				MobilityXConstants.ASSIGNMENT_DETAILS_NOT_MATCHED_ON_MOBILITY_JOURNEY_HOME_PAGE, CoreConstants.FAIL));
 		Assert.assertTrue(mxTransfereeJourneyHomePage.setUpPaymentAccount(),
 				MessageFormat.format(MobilityXConstants.FAILED_TO_SETUP_PAYMENT_ACCOUNT, CoreConstants.FAIL));
 	}

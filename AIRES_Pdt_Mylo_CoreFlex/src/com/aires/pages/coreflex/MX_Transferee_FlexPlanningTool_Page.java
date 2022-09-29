@@ -1480,7 +1480,6 @@ public class MX_Transferee_FlexPlanningTool_Page extends Base {
 				}
 			}
 		} catch (Exception e) {
-			e.printStackTrace();
 			Reporter.addStepLog(MessageFormat.format(
 					COREFLEXConstants.EXCEPTION_OCCURED_WHILE_VALIDATING_FLEX_BENEFIT_DETAILS_ON_FLEX_PLANNING_TOOL_PAGE,
 					CoreConstants.FAIL, e.getMessage()));

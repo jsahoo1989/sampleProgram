@@ -129,7 +129,7 @@ public class EmailUtil {
 					EmailMessage emailMessage = (EmailMessage) items.get(0);
 					emailMessage.load();
 					Log.info("Pass:Email Received from: " + emailMessage.getFrom().toString());
-					Log.info("Email Received Date:" + emailMessage.getDateTimeReceived().getTime());
+					Log.info("Email Received Date:" + emailMessage.getDateTimeReceived());
 					Log.info("Email Subject: " + emailMessage.getSubject());
 					String messageText = emailMessage.getBody().toString();
 					Log.info("messageText==" + messageText);

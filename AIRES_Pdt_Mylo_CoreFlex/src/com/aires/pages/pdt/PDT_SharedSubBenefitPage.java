@@ -771,19 +771,18 @@ public class PDT_SharedSubBenefitPage extends Base {
 
 	public boolean checkIfEditLabelBenefit(String subBenefitName) {
 		try{
-			/*if ((CoreFunctions.getPropertyFromConfig("envt").toLowerCase().equalsIgnoreCase(CoreConstants.ENVT_QA))
+			if ((subBenefitName.equalsIgnoreCase(PDTConstants.CANDIDATE_SELECTION)
+							|| subBenefitName.equalsIgnoreCase(PDTConstants.PRE_ACCEPTANCE_TRIP_TRANSPORTATION)
+							|| subBenefitName.equalsIgnoreCase(PDTConstants.PRE_ACCEPTANCE_TRIP_LODGING)
+							|| subBenefitName.equalsIgnoreCase(PDTConstants.PRE_ACCEPTANCE_TRIP_MEALS)))
+				return true;
+			
+			/*if ((System.getProperty("envt").toLowerCase().equalsIgnoreCase(CoreConstants.ENVT_QA))
 					&& (subBenefitName.equalsIgnoreCase(PDTConstants.CANDIDATE_SELECTION)
 							|| subBenefitName.equalsIgnoreCase(PDTConstants.PRE_ACCEPTANCE_TRIP_TRANSPORTATION)
 							|| subBenefitName.equalsIgnoreCase(PDTConstants.PRE_ACCEPTANCE_TRIP_LODGING)
 							|| subBenefitName.equalsIgnoreCase(PDTConstants.PRE_ACCEPTANCE_TRIP_MEALS)))
 				return true;*/
-			
-			if ((System.getProperty("envt").toLowerCase().equalsIgnoreCase(CoreConstants.ENVT_QA))
-					&& (subBenefitName.equalsIgnoreCase(PDTConstants.CANDIDATE_SELECTION)
-							|| subBenefitName.equalsIgnoreCase(PDTConstants.PRE_ACCEPTANCE_TRIP_TRANSPORTATION)
-							|| subBenefitName.equalsIgnoreCase(PDTConstants.PRE_ACCEPTANCE_TRIP_LODGING)
-							|| subBenefitName.equalsIgnoreCase(PDTConstants.PRE_ACCEPTANCE_TRIP_MEALS)))
-				return true;
 			else
 				return false;
 		} catch (Exception e) {
@@ -911,15 +910,14 @@ public class PDT_SharedSubBenefitPage extends Base {
 			DataTable subBenefitTable) {
 		List<Map<String, String>> subBenefits = subBenefitTable.asMaps(String.class, String.class);
 		try {
-			/*WebElement element = pageName.trim().equalsIgnoreCase(PDTConstants.PRE_ACCEPTANCE_SERVICES)
-					&& CoreFunctions.getPropertyFromConfig("envt").toLowerCase().equalsIgnoreCase(CoreConstants.ENVT_QA)
-							? _benefitCatName
-							: _benefitCategoryName;*/
-			
-			WebElement element = pageName.trim().equalsIgnoreCase(PDTConstants.PRE_ACCEPTANCE_SERVICES)
-					&& System.getProperty("envt").toLowerCase().equalsIgnoreCase(CoreConstants.ENVT_QA)
+			WebElement element = pageName.trim().equalsIgnoreCase(PDTConstants.PRE_ACCEPTANCE_SERVICES)					
 							? _benefitCatName
 							: _benefitCategoryName;
+			
+			/*WebElement element = pageName.trim().equalsIgnoreCase(PDTConstants.PRE_ACCEPTANCE_SERVICES)
+					&& System.getProperty("envt").toLowerCase().equalsIgnoreCase(CoreConstants.ENVT_QA)
+							? _benefitCatName
+							: _benefitCategoryName;*/
 			CoreFunctions.explicitWaitForElementTextPresent(driver, element, pageName, 3);
 			if (CoreFunctions.isElementExist(driver, _progressBar, 3))
 				BusinessFunctions.fluentWaitForSpinnerToDisappear(driver, _progressBar);
@@ -1012,15 +1010,14 @@ public class PDT_SharedSubBenefitPage extends Base {
 			return;
 		}
 		try {
-			/*WebElement element = pageName.trim().equalsIgnoreCase(PDTConstants.PRE_ACCEPTANCE_SERVICES)
-					&& CoreFunctions.getPropertyFromConfig("envt").toLowerCase().equalsIgnoreCase(CoreConstants.ENVT_QA)
-							? _benefitCatName
-							: _benefitCategoryName;*/
-			
-			WebElement element = pageName.trim().equalsIgnoreCase(PDTConstants.PRE_ACCEPTANCE_SERVICES)
-					&& System.getProperty("envt").toLowerCase().equalsIgnoreCase(CoreConstants.ENVT_QA)
+			WebElement element = pageName.trim().equalsIgnoreCase(PDTConstants.PRE_ACCEPTANCE_SERVICES)					
 							? _benefitCatName
 							: _benefitCategoryName;
+			
+			/*WebElement element = pageName.trim().equalsIgnoreCase(PDTConstants.PRE_ACCEPTANCE_SERVICES)
+					&& System.getProperty("envt").toLowerCase().equalsIgnoreCase(CoreConstants.ENVT_QA)
+							? _benefitCatName
+							: _benefitCategoryName;*/			
 			CoreFunctions.explicitWaitForElementTextPresent(driver, element, pageName, 3);
 			if (!CoreFunctions.verifyElementOnPage(driver, element, PDTConstants.POLICY_BENEFIT_CATEGORY, pageName,
 					pageName, true))
@@ -1032,25 +1029,12 @@ public class PDT_SharedSubBenefitPage extends Base {
 						CoreConstants.FAIL, PDTConstants.POLICY_BENEFIT_CATEGORY, pageName, pageName, PDTConstants.PRE_ACCEPTANCE_SERVICES));
 		}
 	}
-	
-	public void populatePreAcceptanceServiceMapBasedOnEnvt() {
-		//if (CoreFunctions.getPropertyFromConfig("envt").toLowerCase().equalsIgnoreCase(CoreConstants.ENVT_QA)) {
-		if (System.getProperty("envt").toLowerCase().equalsIgnoreCase(CoreConstants.ENVT_QA)) {
-		formMap.put(PDTConstants.CANDIDATE_SELECTION, _lnkFormCandSel);
-			formMap.put(PDTConstants.PRE_ACCEPTANCE_TRIP_TRANSPORTATION, _lnkFormPreTripTransport);
-			formMap.put(PDTConstants.PRE_ACCEPTANCE_TRIP_LODGING, _lnkFormPreTripLodging);
-			formMap.put(PDTConstants.PRE_ACCEPTANCE_TRIP_MEALS, _lnkFormPreTripMeals);
-		} else {
-			formMap.put(PDTConstants.CANDIDATE_SELECTION, _lnkFormCollapseOne);
-			formMap.put(PDTConstants.PRE_ACCEPTANCE_TRIP_TRANSPORTATION, _lnkFormCollapseTwo);
-			formMap.put(PDTConstants.PRE_ACCEPTANCE_TRIP_LODGING, _lnkFormCollapseThree);
-			formMap.put(PDTConstants.PRE_ACCEPTANCE_TRIP_MEALS, _lnkFormCollapseFour);
-		}
-					
-	}
 
 	public void populateFormHeaderElement() {
-		populatePreAcceptanceServiceMapBasedOnEnvt();
+		formMap.put(PDTConstants.CANDIDATE_SELECTION, _lnkFormCandSel);
+		formMap.put(PDTConstants.PRE_ACCEPTANCE_TRIP_TRANSPORTATION, _lnkFormPreTripTransport);
+		formMap.put(PDTConstants.PRE_ACCEPTANCE_TRIP_LODGING, _lnkFormPreTripLodging);
+		formMap.put(PDTConstants.PRE_ACCEPTANCE_TRIP_MEALS, _lnkFormPreTripMeals);		
 		formMap.put(PDTConstants.IMMIGRATION_FEES, _lnkFormCollapseOne);
 		formMap.put(PDTConstants.IMMIGRATION_TRAVEL, _lnkFormCollapseTwo);
 		formMap.put(PDTConstants.HOUSE_HUNTING_TRIP_TRANSPORTATION, _lnkFormCollapseFive);
@@ -1389,14 +1373,13 @@ public class PDT_SharedSubBenefitPage extends Base {
 	}
 	
 	public String getCurrentBenefitCategoryName(String pageName) {
-		/*WebElement element = pageName.trim().equalsIgnoreCase(PDTConstants.PRE_ACCEPTANCE_SERVICES)
-				&& CoreFunctions.getPropertyFromConfig("envt").toLowerCase().equalsIgnoreCase(CoreConstants.ENVT_QA)
-						? _benefitCatName
-						: _benefitCategoryName;*/
-		WebElement element = pageName.trim().equalsIgnoreCase(PDTConstants.PRE_ACCEPTANCE_SERVICES)
-				&& System.getProperty("envt").toLowerCase().equalsIgnoreCase(CoreConstants.ENVT_QA)
+		WebElement element = pageName.trim().equalsIgnoreCase(PDTConstants.PRE_ACCEPTANCE_SERVICES)				
 						? _benefitCatName
 						: _benefitCategoryName;
+		/*WebElement element = pageName.trim().equalsIgnoreCase(PDTConstants.PRE_ACCEPTANCE_SERVICES)
+				&& System.getProperty("envt").toLowerCase().equalsIgnoreCase(CoreConstants.ENVT_QA)
+						? _benefitCatName
+						: _benefitCategoryName;*/
 		return element.getText();
 	}
 	
@@ -1608,15 +1591,14 @@ public class PDT_SharedSubBenefitPage extends Base {
 		if (CoreFunctions.isElementExist(driver, _progressBar, 4))
 			BusinessFunctions.fluentWaitForSpinnerToDisappear(driver, _progressBar);
 		try {
-			/*WebElement element = pageName.trim().equalsIgnoreCase(PDTConstants.PRE_ACCEPTANCE_SERVICES)
-					&& CoreFunctions.getPropertyFromConfig("envt").toLowerCase().equalsIgnoreCase(CoreConstants.ENVT_QA)
-							? _benefitCatName
-							: _benefitCategoryName;*/
-			
-			WebElement element = pageName.trim().equalsIgnoreCase(PDTConstants.PRE_ACCEPTANCE_SERVICES)
-					&& System.getProperty("envt").toLowerCase().equalsIgnoreCase(CoreConstants.ENVT_QA)
+			WebElement element = pageName.trim().equalsIgnoreCase(PDTConstants.PRE_ACCEPTANCE_SERVICES)					
 							? _benefitCatName
 							: _benefitCategoryName;
+			
+			/*WebElement element = pageName.trim().equalsIgnoreCase(PDTConstants.PRE_ACCEPTANCE_SERVICES)
+					&& System.getProperty("envt").toLowerCase().equalsIgnoreCase(CoreConstants.ENVT_QA)
+							? _benefitCatName
+							: _benefitCategoryName;*/
 			
 			CoreFunctions.explicitWaitForElementTextPresent(driver, element, pageName, 3);
 			if(element.getText().equalsIgnoreCase(pageName)) {

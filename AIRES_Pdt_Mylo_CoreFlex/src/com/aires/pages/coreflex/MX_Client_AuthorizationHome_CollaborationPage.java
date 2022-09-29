@@ -612,7 +612,7 @@ public class MX_Client_AuthorizationHome_CollaborationPage extends Base {
 		// Select Contributor name
 		CoreFunctions.waitHandler(10);
 		CoreFunctions.explicitWaitTillElementListVisibility(driver, _drpDwn_contributorName);
-		BusinessFunctions.selectValueFromDropdown(_contributorName, data.get(1).get(1));
+		BusinessFunctions.selectValueFromDropdown(driver, _contributorName, data.get(1).get(1));
 
 		CoreFunctions.explicitWaitTillElementBecomesClickable(driver, _txtArea_comments, MobilityXConstants.COMMENTS);
 		CoreFunctions.clearAndSetText(driver, _txtArea_comments, data.get(1).get(2));
@@ -629,7 +629,7 @@ public class MX_Client_AuthorizationHome_CollaborationPage extends Base {
 		if (!BusinessFunctions.verifyItemExistsInList(driver, _list_Contributors, data.get(1).get(1))) {
 			BusinessFunctions.selectRadioAsPerLabelText(driver, _radioButtonLabel_listForAll, data.get(1).get(0));
 			CoreFunctions.explicitWaitTillElementListVisibility(driver, _drpDwn_contributorName);
-			BusinessFunctions.selectValueFromDropdown(_contributorName, data.get(1).get(1));
+			BusinessFunctions.selectValueFromDropdown(driver, _contributorName, data.get(1).get(1));
 			CoreFunctions.explicitWaitTillElementBecomesClickable(driver, _txtArea_comments,
 					MobilityXConstants.COMMENTS);
 			CoreFunctions.clearAndSetText(driver, _txtArea_comments, data.get(1).get(2));
@@ -755,7 +755,7 @@ public class MX_Client_AuthorizationHome_CollaborationPage extends Base {
 		CoreFunctions.setElementText(driver, _textAreaAuthWorkFlow,
 				"Review Comment Added To Test Review Approver Comments Fuctionality");
 		CoreFunctions.waitHandler(2);
-		BusinessFunctions.selectValueFromDropdown(_dropDownReplyTo, "Test Six");
+		BusinessFunctions.selectValueFromDropdown(driver, _dropDownReplyTo, "Test Six");
 		CoreFunctions.waitHandler(2);
 		CoreFunctions.click(driver, _btnSaveOnAuthWorkFlowAction, "Save Button");
 	}
@@ -936,7 +936,7 @@ public class MX_Client_AuthorizationHome_CollaborationPage extends Base {
 			CoreFunctions.waitHandler(8);
 			driver.findElement(_addACommentLink).click();
 			CoreFunctions.click(driver, _linkAddComment, _linkAddComment.getText());
-			BusinessFunctions.selectValueFromDropdown(_contributorNameDropdown, contributor);
+			BusinessFunctions.selectValueFromDropdown(driver, _contributorNameDropdown, contributor);
 			CoreFunctions.clearAndSetText(driver, _textareaComments, comment);
 			CoreFunctions.click(driver, _commentsSentButton, _commentsSentButton.getText());
 			CoreFunctions.waitUntilBrowserReady(driver);
@@ -947,7 +947,7 @@ public class MX_Client_AuthorizationHome_CollaborationPage extends Base {
 		if (CoreFunctions.isElementByLocatorExist(driver, _addViewCommentsLink, 25)) {
 			driver.findElement(_addViewCommentsLink).click();
 			CoreFunctions.explicitWaitWithLocatorTillElementAppears(driver, _commentsLabel);
-			BusinessFunctions.selectValueFromDropdown(_approverNameDropdown, approver);
+			BusinessFunctions.selectValueFromDropdown(driver, _approverNameDropdown, approver);
 			CoreFunctions.clearAndSetText(driver, _textareaComments, comment);
 			CoreFunctions.click(driver, _commentsSaveButton, _commentsSaveButton.getText());
 			CoreFunctions.waitUntilBrowserReady(driver);
@@ -1029,7 +1029,7 @@ public class MX_Client_AuthorizationHome_CollaborationPage extends Base {
 			BusinessFunctions.selectRadioAsPerLabelText(driver, _radioButtonLabel_AuthorizationType,
 					collaboratorsData.get(counter).get(1));
 			CoreFunctions.explicitWaitTillElementListVisibility(driver, _drpDwn_contributorName);
-			BusinessFunctions.selectValueFromDropdown(_contributorName, collaboratorsData.get(counter).get(1));
+			BusinessFunctions.selectValueFromDropdown(driver, _contributorName, collaboratorsData.get(counter).get(1));
 			CoreFunctions.clearAndSetText(driver, _txtArea_comments, collaboratorsData.get(counter).get(2));
 			clickAddaContributor_Link_Button(MobilityXConstants.ADD_CONTRIBUTOR);
 			break;

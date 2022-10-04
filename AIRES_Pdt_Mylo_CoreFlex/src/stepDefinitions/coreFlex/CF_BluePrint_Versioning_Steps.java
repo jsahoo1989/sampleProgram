@@ -11,28 +11,12 @@ import com.aires.businessrules.constants.CoreConstants;
 import com.aires.businessrules.constants.MobilityXConstants;
 import com.aires.businessrules.constants.PDTConstants;
 import com.aires.cucumber.TestContext;
-import com.aires.pages.coreflex.CoreFlex_AirShipment_BenefitsPage;
-import com.aires.pages.coreflex.CoreFlex_AirportPickup_BenefitsPage;
-import com.aires.pages.coreflex.CoreFlex_AreaTour_BenefitsPage;
-import com.aires.pages.coreflex.CoreFlex_AutoRentalDuringAssignment_BenefitsPage;
-import com.aires.pages.coreflex.CoreFlex_AutoShipment_BenefitsPage;
 import com.aires.pages.coreflex.CoreFlex_BenefitSummaryPage;
 import com.aires.pages.coreflex.CoreFlex_BluePrint_LoginPage;
 import com.aires.pages.coreflex.CoreFlex_CustomBundlesPage;
 import com.aires.pages.coreflex.CoreFlex_FlexPolicySetupPage;
-import com.aires.pages.coreflex.CoreFlex_FurnitureRental_BenefitsPage;
-import com.aires.pages.coreflex.CoreFlex_HomeLeave_BenefitsPage;
-import com.aires.pages.coreflex.CoreFlex_HomePurchase_BenefitsPage;
-import com.aires.pages.coreflex.CoreFlex_HouseHuntingTrip_BenefitsPage;
-import com.aires.pages.coreflex.CoreFlex_Inland_Shipment_BenefitsPage;
-import com.aires.pages.coreflex.CoreFlex_LanguageTraining_BenefitsPage;
-import com.aires.pages.coreflex.CoreFlex_LumpSum_BenefitsPage;
-import com.aires.pages.coreflex.CoreFlex_OtherHousing_BenefitsPage;
-import com.aires.pages.coreflex.CoreFlex_Pet_Shipment_BenefitsPage;
 import com.aires.pages.coreflex.CoreFlex_PolicyBenefitsCategoriesPage;
 import com.aires.pages.coreflex.CoreFlex_PreviewTransfereePage;
-import com.aires.pages.coreflex.CoreFlex_Sea_Surface_Shipment_BenefitsPage;
-import com.aires.pages.coreflex.CoreFlex_TemporaryLiving_BenefitsPage;
 import com.aires.pages.coreflex.MX_Transferee_FlexPlanningTool_Page;
 import com.aires.pages.coreflex.MX_Transferee_JourneyHomePage;
 import com.aires.pages.pdt.PDT_GeneralInformationPage;
@@ -58,12 +42,6 @@ public class CF_BluePrint_Versioning_Steps {
 	private CoreFlex_PolicyBenefitsCategoriesPage coreFlexPolicyBenefitsCategoriesPage;
 	private CoreFlex_BenefitSummaryPage coreFlexBenefitSummaryPage;
 	private CoreFlex_PreviewTransfereePage coreFlexTransfereePreviewPage;
-	private MobilityX_LoginPage mobilityXLoginPage;
-	private MX_Transferee_MyBenefitsBundlePage mxTransfereeMyBenefitsBundlePage;
-	private TransfereeSubmissions_LoginPage transfereeSubmissionsLoginPage;
-	private TransfereeSubmissions_DashboardHomePage transfereeSubmissionsDashboardHomePage;
-	private CoreFlex_PreviewTransfereePage coreFlexTransfereePreviewPage;
-	private TransfereeSubmissions_DetailsPage transfereeSubmissionsDetailsPage;
 
 	public CF_BluePrint_Versioning_Steps(TestContext context) {
 		testContext = context;
@@ -92,15 +70,8 @@ public class CF_BluePrint_Versioning_Steps {
 				.getMXTransfereeFlexPlanningToolPage();
 		coreFlexTransfereePreviewPage = testContext.getCoreFlexPageObjectManager().getCoreFlexTransfereePreviewPage();
 		bluePrintCFLoginPage = testContext.getPageObjectManager().getBluePrintCoreFlexLoginPage();
-		mxTransfereeMyBenefitsBundlePage = testContext.getCoreFlexPageObjectManager()
-				.getMXTransfereeMyBenefitsBundlePage();
-		transfereeSubmissionsLoginPage = testContext.getCoreFlexPageObjectManager().getTransfereeSubmissionsLoginPage();
-		transfereeSubmissionsDashboardHomePage = testContext.getCoreFlexPageObjectManager()
-				.getTransfereeSubmissionsDashboardHomePage();
 		coreFlexTransfereePreviewPage = testContext.getCoreFlexPageObjectManager().getCoreFlexTransfereePreviewPage();
 		bluePrintCFLoginPage = testContext.getPageObjectManager().getBluePrintCoreFlexLoginPage();
-		transfereeSubmissionsDetailsPage = testContext.getCoreFlexPageObjectManager()
-				.getTransfereeSubmissionsDetailsPage();
 	}
 
 	@When("^he clicks on \"([^\"]*)\" button to close 'Approve this Policy' dialog$")

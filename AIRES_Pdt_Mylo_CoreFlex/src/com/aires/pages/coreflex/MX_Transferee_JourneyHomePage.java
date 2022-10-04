@@ -586,6 +586,7 @@ public class MX_Transferee_JourneyHomePage extends Base {
 					expFromUserName, expEmailSubject, MobilityXConstants.FLEX_BENEFIT_SUBMISSION);
 			actualResultSubmissionDetails = actualResultSubmissionDetails.replace("<span>", "").replace("</span>", "")
 					.replace("\r\n", "").trim();
+			Log.info("ActualEmailSearchedText : "+actualResultSubmissionDetails);
 			String expectedSubmittedPointsEmailMessage = submittedPointsEmailMessage();
 			if (actualResultSubmissionDetails.equals(expectedSubmittedPointsEmailMessage)) {
 				Reporter.addStepLog(MessageFormat.format(

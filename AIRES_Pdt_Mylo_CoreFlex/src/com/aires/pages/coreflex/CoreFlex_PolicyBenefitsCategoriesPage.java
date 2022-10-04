@@ -446,25 +446,25 @@ public class CoreFlex_PolicyBenefitsCategoriesPage extends Base {
 	 * @param coreFlexLumpSumBenefitsPage
 	 * @param coreFlexLanguageTrainingBenefitsPage
 	 */
-	public boolean selectAndFillAddedBenefits(String policyType, String policyRequiredFor, String numberOfMilestones) {
+	public boolean selectAndFillAddedBenefits(String benefitType, String policyRequiredFor, String numberOfMilestones) {
 		boolean isBenefitSuccessfullySelectedAndFilled = false;
 		try {
-			if (policyType.equals(COREFLEXConstants.FLEX) || policyType.equals(COREFLEXConstants.BOTH)) {
+			if (benefitType.equals(COREFLEXConstants.FLEX) || benefitType.equals(COREFLEXConstants.BOTH)) {
 				switch (policyRequiredFor) {
 				case COREFLEXConstants.CLONING:
 				case COREFLEXConstants.VERSIONING:
 				case COREFLEXConstants.CLIENT:
-					isBenefitSuccessfullySelectedAndFilled = fillFlexBenefitDetailsForCloning(policyType,
+					isBenefitSuccessfullySelectedAndFilled = fillFlexBenefitDetailsForCloning(benefitType,
 							policyRequiredFor, numberOfMilestones);
 					break;
 				case COREFLEXConstants.AIRES_MANAGED_BENEFITS_CARDS:
 				case COREFLEXConstants.ALL_BENEFITS:
 				case COREFLEXConstants.END_TO_END:
-					isBenefitSuccessfullySelectedAndFilled = fillAllFlexBenefitDetails(policyType, policyRequiredFor,
+					isBenefitSuccessfullySelectedAndFilled = fillAllFlexBenefitDetails(benefitType, policyRequiredFor,
 							numberOfMilestones);
 					break;
 				case COREFLEXConstants.SIGNIFICANT_CHANGE:
-					isBenefitSuccessfullySelectedAndFilled = fillFlexBenefitDetailsForSignificantChange(policyType,
+					isBenefitSuccessfullySelectedAndFilled = fillFlexBenefitDetailsForSignificantChange(benefitType,
 							policyRequiredFor);
 					break;
 
@@ -472,8 +472,8 @@ public class CoreFlex_PolicyBenefitsCategoriesPage extends Base {
 					Assert.fail(COREFLEXConstants.BLUEPRINT_POLICY_REQUIRED_FOR_OPTION_NOT_PRESENT_IN_THE_LIST);
 				}
 
-			} else if (policyType.equals(COREFLEXConstants.CORE)) {
-				isBenefitSuccessfullySelectedAndFilled = fillAiresManagedCardCoreBenefitDetails(policyType);
+			} else if (benefitType.equals(COREFLEXConstants.CORE)) {
+				isBenefitSuccessfullySelectedAndFilled = fillAiresManagedCardCoreBenefitDetails(benefitType);
 			}
 
 		} catch (Exception e) {
@@ -524,23 +524,24 @@ public class CoreFlex_PolicyBenefitsCategoriesPage extends Base {
 		return isFlexBenefitSuccessfullySelectedAndFilled;
 	}
 
-	private boolean fillFlexBenefitDetailsForCloning(String policyType, String policyRequiredFor,
+	private boolean fillFlexBenefitDetailsForCloning(String benefitType, String policyRequiredFor,
 			String numberOfMilestones) {
 		boolean isFlexBenefitSuccessfullySelectedAndFilled = false;
 		try {
-			for (Benefit benefit : getBenefits(policyType, policyRequiredFor, numberOfMilestones)) {
+			for (Benefit benefit : getBenefits(benefitType, policyRequiredFor, numberOfMilestones)) {
 				clickLeftNavigationMenuOfPage(benefit.getBenefitType());
 				switch (benefit.getBenefitType()) {
 				case COREFLEXConstants.DUPLICATE_HOUSING:
+					System.out.println(pageObjectManager_CoreFlex.getPageObjects().get(benefit.getBenefitType()));
 					pageObjectManager_CoreFlex.getPageObjects().get(benefit.getBenefitType())
-							.selectAndFillBenefitsAndSubBenefitDetails(policyType, benefit.getSubBenefits(),
+							.selectAndFillBenefitsAndSubBenefitDetails(benefitType, benefit.getSubBenefits(),
 									benefit.getMultipleBenefitSelection(), benefit.getPoints(),
 									benefit.getBenefitDisplayName(), benefit.getBenefitAmount(),
 									benefit.getBenefitDesc(), benefit.getPayments());
 					break;
 				case COREFLEXConstants.LUMP_SUM:
 					pageObjectManager_CoreFlex.getPageObjects().get(benefit.getBenefitType())
-							.selectAndFillBenefitsAndSubBenefitDetails(policyType, benefit.getSubBenefits(),
+							.selectAndFillBenefitsAndSubBenefitDetails(benefitType, benefit.getSubBenefits(),
 									benefit.getMultipleBenefitSelection(), benefit.getPoints(),
 									benefit.getBenefitDisplayName(), benefit.getBenefitAmount(),
 									benefit.getBenefitDesc(), benefit.getPayments());
@@ -557,7 +558,7 @@ public class CoreFlex_PolicyBenefitsCategoriesPage extends Base {
 					break;
 				case COREFLEXConstants.LANGUAGE_TRAINING:
 					pageObjectManager_CoreFlex.getPageObjects().get(benefit.getBenefitType())
-							.selectAndFillBenefitsAndSubBenefitDetails(policyType, benefit.getSubBenefits(),
+							.selectAndFillBenefitsAndSubBenefitDetails(benefitType, benefit.getSubBenefits(),
 									benefit.getMultipleBenefitSelection(), benefit.getPoints(),
 									benefit.getBenefitDisplayName(), benefit.getBenefitAmount(),
 									benefit.getBenefitDesc(), benefit.getAiresManagedService());
@@ -1069,9 +1070,9 @@ public class CoreFlex_PolicyBenefitsCategoriesPage extends Base {
 		return isBenefitTypeSuccessfullyChanged;
 	}
 
-	private List<Benefit> getBenefits(String policyType, String policyRequiredFor, String numberOfMilestones) {
+	private List<Benefit> getBenefits(String benefitType, String policyRequiredFor, String numberOfMilestones) {
 		List<Benefit> benefitNameList = new ArrayList<Benefit>();
-		if (policyType.equals(COREFLEXConstants.FLEX) || policyType.equals(COREFLEXConstants.BOTH)) {
+		if (benefitType.equals(COREFLEXConstants.FLEX) || benefitType.equals(COREFLEXConstants.BOTH)) {
 			for (FlexBenefit benefit : flexBenefits) {
 				for (Benefit ben : benefit.getBenefits()) {
 					if ((policyRequiredFor.equals(COREFLEXConstants.ALL_BENEFITS))
@@ -1181,6 +1182,25 @@ public class CoreFlex_PolicyBenefitsCategoriesPage extends Base {
 		} else {
 			return false;
 		}
+	}
+	
+	public boolean verifyPolicyCategoriesBenefitsAndOrderPostCloning() {
+		boolean isPolicyCategoriesBenefitsAndOrderVerified = false;
+		try {
+			expandAllBenefitCategories();
+			isPolicyCategoriesBenefitsAndOrderVerified = verifySelectableBenefitsAndDisplayOrder();
+			CoreFunctions.clickElement(driver, _toggleButtonDeselectAll);
+		} catch (Exception e) {
+			Reporter.addStepLog(MessageFormat.format(
+					COREFLEXConstants.EXCEPTION_OCCURED_WHILE_VALIDATING_SELECTALL_DESELECTALL_BENEFITS_ON_POLICY_BENEFITS_CATEGORIES_PAGE,
+					CoreConstants.FAIL, e.getMessage()));
+		}
+		if (isPolicyCategoriesBenefitsAndOrderVerified) {
+			Reporter.addStepLog(MessageFormat.format(
+					COREFLEXConstants.SUCCESSFULLY_VERIFIED_SELECTALL_DESELECTALL_BENEFITS_ON_POLICY_BENEFITS_CATEGORIES_PAGE,
+					CoreConstants.PASS));
+		}
+		return isPolicyCategoriesBenefitsAndOrderVerified;
 	}
 
 }

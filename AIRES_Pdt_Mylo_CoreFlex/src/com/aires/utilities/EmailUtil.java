@@ -136,6 +136,7 @@ public class EmailUtil {
 					Log.info("searchTag[0]==" + _searchTag[0]);
 					Log.info("searchTag[1]==" + _searchTag[1]);
 					searchText = StringUtils.substringBetween(messageText, _searchTag[0], _searchTag[1]);
+					Log.info("SearchText==" + searchText);
 					return searchText;
 				}
 				if (iterationCount < 12)

@@ -38,12 +38,7 @@ public class CF_BluePrint_Cloning_Steps {
 	private CoreFlex_PolicyBenefitsCategoriesPage coreFlexPolicyBenefitsCategoriesPage;
 	private CoreFlex_BenefitSummaryPage coreFlexBenefitSummaryPage;	
 	private CoreFlex_PreviewTransfereePage coreFlexTransfereePreviewPage;
-	private MobilityX_LoginPage mobilityXLoginPage;
-	private MX_Transferee_MyBenefitsBundlePage mxTransfereeMyBenefitsBundlePage;
-	private TransfereeSubmissions_LoginPage transfereeSubmissionsLoginPage;
-	private TransfereeSubmissions_DashboardHomePage transfereeSubmissionsDashboardHomePage;
-	private CoreFlex_PreviewTransfereePage coreFlexTransfereePreviewPage;
-	private TransfereeSubmissions_DetailsPage transfereeSubmissionsDetailsPage;
+	
 
 
 	public CF_BluePrint_Cloning_Steps(TestContext context) {
@@ -67,19 +62,9 @@ public class CF_BluePrint_Cloning_Steps {
 		coreFlexBenefitSummaryPage = testContext.getCoreFlexPageObjectManager().getCoreFlexBenefitSummaryPage();	
 		coreFlexTransfereePreviewPage = testContext.getCoreFlexPageObjectManager().getCoreFlexTransfereePreviewPage();
 		bluePrintCFLoginPage = testContext.getPageObjectManager().getBluePrintCoreFlexLoginPage();
-		mobilityXLoginPage = testContext.getCoreFlexPageObjectManager().getMobilityXLoginPage();
-		mxTransfereeJourneyHomePage = testContext.getCoreFlexPageObjectManager().getMXTransfereeJourneyHomePage();
-		mxTransfereeFlexPlanningToolPage = testContext.getCoreFlexPageObjectManager()
-				.getMXTransfereeFlexPlanningToolPage();
-		mxTransfereeMyBenefitsBundlePage = testContext.getCoreFlexPageObjectManager()
-				.getMXTransfereeMyBenefitsBundlePage();
-		transfereeSubmissionsLoginPage = testContext.getCoreFlexPageObjectManager().getTransfereeSubmissionsLoginPage();
-		transfereeSubmissionsDashboardHomePage = testContext.getCoreFlexPageObjectManager()
-				.getTransfereeSubmissionsDashboardHomePage();
 		coreFlexTransfereePreviewPage = testContext.getCoreFlexPageObjectManager().getCoreFlexTransfereePreviewPage();
 		bluePrintCFLoginPage = testContext.getPageObjectManager().getBluePrintCoreFlexLoginPage();
-		transfereeSubmissionsDetailsPage = testContext.getCoreFlexPageObjectManager()
-				.getTransfereeSubmissionsDetailsPage();
+
 	}
 
 	private static int searchedPolicyIndex;

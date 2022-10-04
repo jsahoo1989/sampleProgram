@@ -327,8 +327,8 @@ public class CoreFlex_OtherHousing_BenefitsPage extends BenefitPage {
 		CoreFunctions.selectItemInListByText(driver, _radioButtonGrossUp, grossUp, true);
 		CoreFunctions.selectItemInListByText(driver, _radioButtonReimbursedBy, reimbursedBy, true);
 		verifyUpdatedBenefitTitle(benefitDisplayName);
-		verifyAddAnotherBenefitLimit();
-		deleteAdditionalAddedBenefits();
+//		verifyAddAnotherBenefitLimit();
+//		deleteAdditionalAddedBenefits();
 		BusinessFunctions.verifyFieldNotPresentOnBenefitPage(driver, _textIfApplicable, benefitDisplayName,
 				COREFLEXConstants.IF_APPLICABLE);
 		clickElementOfPage(COREFLEXConstants.SAVE_AND_CONTINUE);

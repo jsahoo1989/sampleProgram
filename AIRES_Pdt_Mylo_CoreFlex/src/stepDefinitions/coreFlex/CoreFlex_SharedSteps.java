@@ -11,6 +11,7 @@ import com.aires.businessrules.constants.CoreConstants;
 import com.aires.businessrules.constants.MobilityXConstants;
 import com.aires.businessrules.constants.PDTConstants;
 import com.aires.cucumber.TestContext;
+import com.aires.managers.FileReaderManager;
 import com.aires.pages.coreflex.CoreFlex_BenefitSummaryPage;
 import com.aires.pages.coreflex.CoreFlex_BluePrint_LoginPage;
 import com.aires.pages.coreflex.CoreFlex_CustomBundlesPage;
@@ -37,13 +38,13 @@ public class CoreFlex_SharedSteps {
 	private CoreFlex_FlexPolicySetupPage flexPolicySetupPage;
 	private CoreFlex_PolicyBenefitsCategoriesPage coreFlexPolicyBenefitsCategoriesPage;
 	private CoreFlex_CustomBundlesPage coreFlexCustomBundlesPage;
-	
+	private MobilityX_LoginPage mobilityXLoginPage;
 	private MX_Transferee_JourneyHomePage mxTransfereeJourneyHomePage;
-	private MX_Transferee_FlexPlanningTool_Page mxTransfereeFlexPlanningToolPage;
-	
+	private MX_Transferee_FlexPlanningTool_Page mxTransfereeFlexPlanningToolPage;	
 	private CoreFlex_PreviewTransfereePage coreFlexTransfereePreviewPage;
 	private CoreFlex_BluePrint_LoginPage bluePrintCFLoginPage;
-	
+	private TransfereeSubmissions_DetailsPage transfereeSubmissionsDetailsPage;
+	private MX_Transferee_MyProfilePage mxTransfereeMyProfilePage;
 	private CoreFlex_BenefitSummaryPage coreFlexBenefitSummaryPage;
 
 	int _initialTableRowCount = 0;
@@ -65,10 +66,18 @@ public class CoreFlex_SharedSteps {
 		mxTransfereeJourneyHomePage = testContext.getCoreFlexPageObjectManager().getMXTransfereeJourneyHomePage();
 		mxTransfereeFlexPlanningToolPage = testContext.getCoreFlexPageObjectManager()
 				.getMXTransfereeFlexPlanningToolPage();
-		
 		coreFlexTransfereePreviewPage = testContext.getCoreFlexPageObjectManager().getCoreFlexTransfereePreviewPage();
 		bluePrintCFLoginPage = testContext.getPageObjectManager().getBluePrintCoreFlexLoginPage();
-		
+		mxTransfereeMyBenefitsBundlePage = testContext.getCoreFlexPageObjectManager()
+				.getMXTransfereeMyBenefitsBundlePage();
+		transfereeSubmissionsLoginPage = testContext.getCoreFlexPageObjectManager().getTransfereeSubmissionsLoginPage();
+		transfereeSubmissionsDashboardHomePage = testContext.getCoreFlexPageObjectManager()
+				.getTransfereeSubmissionsDashboardHomePage();
+		coreFlexTransfereePreviewPage = testContext.getCoreFlexPageObjectManager().getCoreFlexTransfereePreviewPage();
+		bluePrintCFLoginPage = testContext.getPageObjectManager().getBluePrintCoreFlexLoginPage();
+		transfereeSubmissionsDetailsPage = testContext.getCoreFlexPageObjectManager()
+				.getTransfereeSubmissionsDetailsPage();
+		mxTransfereeMyProfilePage = testContext.getCoreFlexPageObjectManager().getTransfereeMyProfilePage();
 	}
 
 	/**********************************************************************/

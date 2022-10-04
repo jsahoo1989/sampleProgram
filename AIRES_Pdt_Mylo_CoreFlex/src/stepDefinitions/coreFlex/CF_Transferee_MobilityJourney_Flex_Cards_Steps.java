@@ -13,6 +13,7 @@ import com.aires.businessrules.constants.IRISConstants;
 import com.aires.businessrules.constants.MobilityXConstants;
 import com.aires.cucumber.TestContext;
 import com.aires.managers.FileReaderManager;
+import com.aires.pages.coreflex.CoreFlex_PolicyBenefitsCategoriesPage;
 import com.aires.pages.coreflex.MX_Transferee_FlexPlanningTool_Page;
 import com.aires.pages.coreflex.MX_Transferee_JourneyHomePage;
 import com.aires.pages.coreflex.MX_Transferee_MyBenefitsBundlePage;
@@ -42,7 +43,10 @@ public class CF_Transferee_MobilityJourney_Flex_Cards_Steps {
 
 	public CF_Transferee_MobilityJourney_Flex_Cards_Steps(TestContext context) {
 		testContext = context;
-
+		MX_Transferee_JourneyHomePage.pageObjectManager_CoreFlex = testContext.getCoreFlexPageObjectManager();
+		IRIS_AssignmentServicePage.pageObjectManager_CoreFlex = testContext.getCoreFlexPageObjectManager();
+		IRIS_ActivityAndFinancePage.pageObjectManager_CoreFlex = testContext.getCoreFlexPageObjectManager();
+		testContext.getCoreFlexPageObjectManager().initializeCoreFlexPageObjects();
 		mxTransfereeJourneyHomePage = testContext.getCoreFlexPageObjectManager().getMXTransfereeJourneyHomePage();
 		mxTransfereeFlexPlanningToolPage = testContext.getCoreFlexPageObjectManager()
 				.getMXTransfereeFlexPlanningToolPage();
@@ -861,18 +865,7 @@ public class CF_Transferee_MobilityJourney_Flex_Cards_Steps {
 	public void he_has_created_a_Service_and_SubService_for_Aires_Managed_benefits_with_Milestones_of_CoreFlex_type_in_Services_tab_of_IRIS_application(
 			String noOfMilestones, String coreFlexType) throws Throwable {
 
-		testContext.getBasePage().reLaunchIrisToAvoidFreezingIssue();
-//		testContext.getBasePage().killExistingBrowsers();
-		testContext.getIrisPageManager().irisLoginPage = new IRIS_LoginPage();
-		testContext.getIrisPageManager().irisLoginPage.getIRISLoginAsPerEnvt(_loginDetailsApplication);
-		testContext.getIrisPageManager().irisWelcome12C = new IRIS_Welcome12C();
-		testContext.getIrisPageManager().irisWelcome12C.selectWelcomeWindowModule(IRISConstants.ASSIGNMENT_TAB);
 		testContext.getIrisPageManager().irisAssignmentOverviewPage = new IRIS_AssignmentOverviewPage();
-		Assert.assertTrue(testContext.getIrisPageManager().irisAssignmentOverviewPage.verifyOverviewTab(), MessageFormat
-				.format(IRISConstants.FAIL_TO_VERIFY_CURRENT_TAB, CoreConstants.FAIL, IRISConstants.OVERVIEW));
-		testContext.getIrisPageManager().irisAssignmentOverviewPage
-				.queryFile(CoreFunctions.getPropertyFromConfig("Assignment_FileID"));
-		testContext.getIrisPageManager().irisAssignmentOverviewPage.acceptFailedImageLoadDialog();
 		testContext.getIrisPageManager().irisAssignmentOverviewPage.switchTab(IRISConstants.SERVICE_TAB);
 		CoreFunctions.waitHandler(2);
 		testContext.getIrisPageManager().irisAssignmentServicePage = new IRIS_AssignmentServicePage();
@@ -880,7 +873,6 @@ public class CF_Transferee_MobilityJourney_Flex_Cards_Steps {
 				.format(IRISConstants.FAIL_TO_VERIFY_CURRENT_TAB, CoreConstants.FAIL, IRISConstants.SERVICE));
 		testContext.getIrisPageManager().irisAssignmentServicePage
 				.addServiceAndSubServiceForAiresManagedBenefit(coreFlexType, Integer.parseInt(noOfMilestones));
-		testContext.getBasePage().cleanIrisProcesses();
 	}
 
 	@Given("^he has verified submitted Aires Managed Benefits with '([^\"]*)' Milestones Status - changed to \"([^\"]*)\" on \"([^\"]*)\" page - \"([^\"]*)\"$")
@@ -970,16 +962,6 @@ public class CF_Transferee_MobilityJourney_Flex_Cards_Steps {
 	@Given("^he has provided \"([^\"]*)\" for added '([^\"]*)' services tracing prompt after clicking on the \"([^\"]*)\" tab of added Service$")
 	public void he_has_provided_for_added_all_services_tracing_prompt_after_clicking_on_the_tab_of_added_sub_service(
 			String tracingColumn, String noOfTracingPrompts, String tabName) throws Throwable {
-		testContext.getBasePage().reLaunchIrisToAvoidFreezingIssue();
-		testContext.getIrisPageManager().irisLoginPage = new IRIS_LoginPage();
-		testContext.getIrisPageManager().irisLoginPage.getIRISLoginAsPerEnvt(_loginDetailsApplication);
-//		testContext.getBasePage().invokeIrisApplication();
-		testContext.getIrisPageManager().irisAssignmentOverviewPage = new IRIS_AssignmentOverviewPage();
-		testContext.getIrisPageManager().irisWelcome12C = new IRIS_Welcome12C();
-		testContext.getIrisPageManager().irisWelcome12C.selectWelcomeWindowModule(IRISConstants.ASSIGNMENT_TAB);
-		testContext.getIrisPageManager().irisAssignmentOverviewPage
-				.queryFile(CoreFunctions.getPropertyFromConfig("Assignment_FileID"));
-		testContext.getIrisPageManager().irisAssignmentOverviewPage.acceptFailedImageLoadDialog();
 		testContext.getIrisPageManager().irisAssignmentOverviewPage.switchTab(IRISConstants.ACTIVITY_FINANCE_TAB);
 		testContext.getIrisPageManager().irisActivityAndFinancePage = new IRIS_ActivityAndFinancePage();
 		Assert.assertTrue(testContext.getIrisPageManager().irisActivityAndFinancePage.verifyActivityAndFinanceTab(),
@@ -989,7 +971,6 @@ public class CF_Transferee_MobilityJourney_Flex_Cards_Steps {
 		testContext.getIrisPageManager().irisActivityAndFinancePage
 				.actualizeInitialTracingPromptForAiresManagedBenefits(tracingColumn, IRISConstants.ACTIVITY,
 						Integer.parseInt(noOfTracingPrompts));
-		testContext.getBasePage().cleanIrisProcesses();
 	}
 
 	@When("^he provides \"([^\"]*)\" for added '([^\"]*)' services tracing prompt after clicking on the \"([^\"]*)\" tab of added Service$")
@@ -1020,18 +1001,7 @@ public class CF_Transferee_MobilityJourney_Flex_Cards_Steps {
 	@When("^he provides \"([^\"]*)\" for added '([^\"]*)' sub-services tracing prompts after clicking on the \"([^\"]*)\" tab of added Service$")
 	public void he_provides_for_added_sub_Services_tracing_prompt_after_clicking_on_the_tab_of_added_sub_service(
 			String actDate, String noOfTracingPrompts, String tabName) throws Throwable {
-		testContext.getBasePage().reLaunchIrisToAvoidFreezingIssue();
-//		testContext.getBasePage().killExistingBrowsers();
-		testContext.getIrisPageManager().irisLoginPage = new IRIS_LoginPage();
-		testContext.getIrisPageManager().irisLoginPage.getIRISLoginAsPerEnvt(_loginDetailsApplication);
-		testContext.getIrisPageManager().irisWelcome12C = new IRIS_Welcome12C();
-		testContext.getIrisPageManager().irisWelcome12C.selectWelcomeWindowModule(IRISConstants.ASSIGNMENT_TAB);
 		testContext.getIrisPageManager().irisAssignmentOverviewPage = new IRIS_AssignmentOverviewPage();
-		Assert.assertTrue(testContext.getIrisPageManager().irisAssignmentOverviewPage.verifyOverviewTab(), MessageFormat
-				.format(IRISConstants.FAIL_TO_VERIFY_CURRENT_TAB, CoreConstants.FAIL, IRISConstants.OVERVIEW));
-		testContext.getIrisPageManager().irisAssignmentOverviewPage
-				.queryFile(CoreFunctions.getPropertyFromConfig("Assignment_FileID"));
-		testContext.getIrisPageManager().irisAssignmentOverviewPage.acceptFailedImageLoadDialog();
 		testContext.getIrisPageManager().irisAssignmentOverviewPage.switchTab(IRISConstants.ACTIVITY_FINANCE_TAB);
 		testContext.getIrisPageManager().irisActivityAndFinancePage = new IRIS_ActivityAndFinancePage();
 		Assert.assertTrue(testContext.getIrisPageManager().irisActivityAndFinancePage.verifyActivityAndFinanceTab(),

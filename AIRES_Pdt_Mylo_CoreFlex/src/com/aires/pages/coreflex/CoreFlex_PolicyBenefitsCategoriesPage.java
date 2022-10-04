@@ -588,6 +588,7 @@ public class CoreFlex_PolicyBenefitsCategoriesPage extends Base {
 				System.out.println(benefit.getBenefitType());
 				for (Entry<String, BenefitPage> map : pageObjectManager_CoreFlex.getPageObjects().entrySet()) {
 					System.out.println(map.getKey() + ":" + map.getValue());
+
 				}
 				System.out.println(pageObjectManager_CoreFlex.getPageObjects().get(benefit.getBenefitType()));
 				pageObjectManager_CoreFlex.getPageObjects().get(benefit.getBenefitType())

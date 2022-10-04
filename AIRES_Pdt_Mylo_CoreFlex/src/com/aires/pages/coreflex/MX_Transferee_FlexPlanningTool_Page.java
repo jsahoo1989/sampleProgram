@@ -270,7 +270,7 @@ public class MX_Transferee_FlexPlanningTool_Page extends Base {
 	private WebElement _buttonCashoutDisabledPlus;
 
 	// More Link
-	@FindBy(how = How.XPATH, using = "//div[@class='BenefitDescription']/following-sibling::a[contains(text(),'More')]")
+	@FindBy(how = How.XPATH, using = "//div[@class='RXCFBenefitInnerCard af_panelGroupLayout']//span[text()='More']")
 	private List<WebElement> _moreLinkBenefitDesc;
 
 	// Progress Bar
@@ -1453,10 +1453,21 @@ public class MX_Transferee_FlexPlanningTool_Page extends Base {
 
 	public boolean verifyBenefitDetailsOnFPTJourneyCards(int numberOfMilestones) {
 		boolean isFlexBenefitDetailsOnFTPVerified = false;
+		for (int i = 0; i <= _moreLinkBenefitDesc.size(); i++) {
+			try {
+				CoreFunctions.waitHandler(2);
+				CoreFunctions.scrollClickUsingJS(driver, _moreLinkBenefitDesc.get(0), "More");
+			} catch (Exception e) {
+				System.out.println("exception:==>"+i+e.getMessage());
+			}
+		}
+		CoreFunctions.explicitWaitTillElementListVisibility(driver, _textAddedBenefitNameList);
+		CoreFunctions.explicitWaitTillElementListVisibility(driver, _textAddedBenefitGroupList);
 		try {
 			for (FlexBenefit benefitList : flexBenefits) {
 				for (Benefit benefit : benefitList.getBenefits()) {
 					if (benefit.getNoOfMilestones() != null && benefit.getNoOfMilestones() == numberOfMilestones) {
+						Log.info("benefit.getBenefitDisplayName()"+benefit.getBenefitDisplayName());
 						int indexBenefit = BusinessFunctions.returnindexItemFromListUsingText(driver,
 								_textAddedBenefitNameList, benefit.getBenefitDisplayName());
 						int indexCategory = BusinessFunctions.returnindexItemFromListUsingText(driver,

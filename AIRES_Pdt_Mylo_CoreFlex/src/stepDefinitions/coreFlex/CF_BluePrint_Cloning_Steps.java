@@ -36,10 +36,15 @@ public class CF_BluePrint_Cloning_Steps {
 	private PDT_GeneralInformationPage generalInfoPage;
 	private CoreFlex_FlexPolicySetupPage flexPolicySetupPage;
 	private CoreFlex_PolicyBenefitsCategoriesPage coreFlexPolicyBenefitsCategoriesPage;
-	private CoreFlex_BenefitSummaryPage coreFlexBenefitSummaryPage;
-	
+	private CoreFlex_BenefitSummaryPage coreFlexBenefitSummaryPage;	
 	private CoreFlex_PreviewTransfereePage coreFlexTransfereePreviewPage;
-	
+	private MobilityX_LoginPage mobilityXLoginPage;
+	private MX_Transferee_MyBenefitsBundlePage mxTransfereeMyBenefitsBundlePage;
+	private TransfereeSubmissions_LoginPage transfereeSubmissionsLoginPage;
+	private TransfereeSubmissions_DashboardHomePage transfereeSubmissionsDashboardHomePage;
+	private CoreFlex_PreviewTransfereePage coreFlexTransfereePreviewPage;
+	private TransfereeSubmissions_DetailsPage transfereeSubmissionsDetailsPage;
+
 
 	public CF_BluePrint_Cloning_Steps(TestContext context) {
 		testContext = context;
@@ -59,11 +64,22 @@ public class CF_BluePrint_Cloning_Steps {
 				.getCoreFlexPolicyBenefitsCategoriesPage();
 		coreFlexCustomBundlesPage = testContext.getCoreFlexPageObjectManager().getCoreFlexCustomBundlesPage();
 		testContext.getCoreFlexPageObjectManager().initializeCoreFlexPageObjects();
-		coreFlexBenefitSummaryPage = testContext.getCoreFlexPageObjectManager().getCoreFlexBenefitSummaryPage();
-		
+		coreFlexBenefitSummaryPage = testContext.getCoreFlexPageObjectManager().getCoreFlexBenefitSummaryPage();	
 		coreFlexTransfereePreviewPage = testContext.getCoreFlexPageObjectManager().getCoreFlexTransfereePreviewPage();
 		bluePrintCFLoginPage = testContext.getPageObjectManager().getBluePrintCoreFlexLoginPage();
-		
+		mobilityXLoginPage = testContext.getCoreFlexPageObjectManager().getMobilityXLoginPage();
+		mxTransfereeJourneyHomePage = testContext.getCoreFlexPageObjectManager().getMXTransfereeJourneyHomePage();
+		mxTransfereeFlexPlanningToolPage = testContext.getCoreFlexPageObjectManager()
+				.getMXTransfereeFlexPlanningToolPage();
+		mxTransfereeMyBenefitsBundlePage = testContext.getCoreFlexPageObjectManager()
+				.getMXTransfereeMyBenefitsBundlePage();
+		transfereeSubmissionsLoginPage = testContext.getCoreFlexPageObjectManager().getTransfereeSubmissionsLoginPage();
+		transfereeSubmissionsDashboardHomePage = testContext.getCoreFlexPageObjectManager()
+				.getTransfereeSubmissionsDashboardHomePage();
+		coreFlexTransfereePreviewPage = testContext.getCoreFlexPageObjectManager().getCoreFlexTransfereePreviewPage();
+		bluePrintCFLoginPage = testContext.getPageObjectManager().getBluePrintCoreFlexLoginPage();
+		transfereeSubmissionsDetailsPage = testContext.getCoreFlexPageObjectManager()
+				.getTransfereeSubmissionsDetailsPage();
 	}
 
 	private static int searchedPolicyIndex;
@@ -243,6 +259,7 @@ public class CF_BluePrint_Cloning_Steps {
 				+ CoreFunctions.calculatePageLoadTime(CoreConstants.TIME_BEFORE_ACTION, CoreConstants.TIME_AFTER_ACTION)
 				+ " Seconds </b>");
 		Assert.assertTrue(
+
 				coreFlexPolicyBenefitsCategoriesPage.verifyAddedBenefitDetailsPostVersioningCloning(
 						CoreFunctions.getPropertyFromConfig("CoreFlex_Policy_BenefitType"),
 						CoreFunctions.getPropertyFromConfig("CoreFlex_Policy_RequiredFor"), "0"),

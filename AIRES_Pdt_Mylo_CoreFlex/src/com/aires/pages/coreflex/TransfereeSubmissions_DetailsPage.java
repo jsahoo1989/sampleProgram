@@ -6,7 +6,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.openqa.selenium.By;
-import org.openqa.selenium.NoSuchElementException;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
@@ -126,7 +125,7 @@ public class TransfereeSubmissions_DetailsPage extends Base {
 	private List<WebElement> _requestDialogBenefitNameList;
 
 	// Request Dialog Allowance Amount List
-	@FindBy(how = How.XPATH, using = "//td/div[contains(@class,'benefit-desc')] | //td/div/span[contains(text(),'The transferee will receive')]")
+	@FindBy(how = How.XPATH, using = "//td/div[contains(@class,'benefit-desc')] | //td/div/span[contains(text(),'The transferee will receive')] | //div[contains(@class,'benefit-desc')]/span[contains(text(),'will be sent to the account' )]")
 	private List<WebElement> _requestDialogAllowanceAmountList;
 
 	/// Request Dialog Points List
@@ -289,9 +288,6 @@ public class TransfereeSubmissions_DetailsPage extends Base {
 		try {
 			isDeleteRequestDenied = false;
 			isDeleteRequestApproved = false;
-			CoreFunctions.writeToPropertiesFile("CF_Transferee_DeleteRequestDenied", "false");
-			CoreFunctions.writeToPropertiesFile("CF_Transferee_DeleteRequestApproved", "false");
-			CoreFunctions.writeToPropertiesFile("CF_Transferee_UndoDeleteBenefit", "false");
 			Double availablePointsAfterSubmission = (Double
 					.parseDouble(CoreFunctions.getPropertyFromConfig("CF_Transferee_TotalAvailablePoints"))
 					- Double.parseDouble(CoreFunctions.getPropertyFromConfig("CF_Transferee_TotalSelectedPoints")));
@@ -304,7 +300,8 @@ public class TransfereeSubmissions_DetailsPage extends Base {
 					CoreFunctions.getPropertyFromConfig("Assignment_ClientName"), COREFLEXConstants.CORPORATION_NAME);
 			String actualPointsSpent[] = CoreFunctions.getElementText(driver, _textPointsSpent).trim().split("of");
 			CoreFunctions.verifyValue(Double.parseDouble(actualPointsSpent[0].trim()),
-					Double.parseDouble(CoreFunctions.getPropertyFromConfig("CF_Transferee_TotalSelectedPoints")), COREFLEXConstants.POINTS_SPENT);
+					Double.parseDouble(CoreFunctions.getPropertyFromConfig("CF_Transferee_TotalSelectedPoints")),
+					COREFLEXConstants.POINTS_SPENT);
 			CoreFunctions.highlightObject(driver, _textPointsSpent);
 			CoreFunctions.verifyValue(driver, _textPointsBalance, availablePointsAfterSubmission,
 					COREFLEXConstants.POINTS_BALANCE);
@@ -313,6 +310,23 @@ public class TransfereeSubmissions_DetailsPage extends Base {
 					Double.parseDouble(CoreFunctions.getPropertyFromConfig("CF_Transferee_TotalAvailablePoints")),
 					COREFLEXConstants.TOTAL_POINTS);
 			CoreFunctions.highlightObject(driver, _textTotalPoints);
+			CoreFunctions.clickElement(driver, _textPointsBalance);
+			DecimalFormat format = new DecimalFormat();
+			format.setDecimalSeparatorAlwaysShown(false);
+			CoreFunctions
+					.verifyText(driver, _tooltipSpentPoints,
+							COREFLEXConstants.EXPECTED_POINT_SPENT_TOOLTIP_TEXT
+									.replace("used_points",
+											format.format(Double.parseDouble(CoreFunctions
+													.getPropertyFromConfig("CF_Transferee_TotalSelectedPoints"))))
+									.replace("total_points",
+											CoreFunctions.getPropertyFromConfig("CF_Transferee_TotalAvailablePoints")),
+							COREFLEXConstants.POINTS_BALANCE_TOOLTIP_TEXT);
+			CoreFunctions.verifyText(driver, _tooltipBalancePoints,
+					COREFLEXConstants.EXPECTED_POINT_BALANCE_TOOLTIP_TEXT.replace("remaining_points",
+							format.format(Double.parseDouble(
+									CoreFunctions.getPropertyFromConfig("CF_Transferee_AvailablePoints")))),
+					COREFLEXConstants.POINTS_BALANCE_TOOLTIP_TEXT);
 			Reporter.addStepLog(MessageFormat.format(
 					COREFLEXConstants.SUCCESSFULLY_VALIDATED_TRANSFEREE_SUBMISSION_DETAILS_ON_DASHBOARD_HOME_PAGE,
 					CoreConstants.PASS));
@@ -331,10 +345,11 @@ public class TransfereeSubmissions_DetailsPage extends Base {
 		try {
 			String actualPointsSpent[] = CoreFunctions.getElementText(driver, _textPointsSpent).trim().split("of");
 			CoreFunctions.verifyValue(Double.parseDouble(actualPointsSpent[0].trim()),
-					MX_Transferee_FlexPlanningTool_Page.totalSelectedPoints, COREFLEXConstants.POINTS_SPENT);
+					Double.parseDouble(CoreFunctions.getPropertyFromConfig("CF_Transferee_TotalSelectedPoints")),
+					COREFLEXConstants.POINTS_SPENT);
 			CoreFunctions.highlightObject(driver, _textPointsSpent);
 			CoreFunctions.verifyValue(driver, _textPointsBalance,
-					MX_Transferee_MyBenefitsBundlePage.availablePointsAfterSubmission,
+					Double.parseDouble(CoreFunctions.getPropertyFromConfig("CF_Transferee_AvailablePoints")),
 					COREFLEXConstants.POINTS_BALANCE);
 			CoreFunctions.verifyValue(
 					Double.parseDouble(CoreFunctions.getElementText(driver, _textTotalPoints).replace("/", "").trim()),
@@ -345,12 +360,12 @@ public class TransfereeSubmissions_DetailsPage extends Base {
 			DecimalFormat format = new DecimalFormat();
 			format.setDecimalSeparatorAlwaysShown(false);
 			CoreFunctions.verifyText(driver, _tooltipSpentPoints, COREFLEXConstants.EXPECTED_POINT_SPENT_TOOLTIP_TEXT
-					.replace("used_points", format.format(MX_Transferee_FlexPlanningTool_Page.totalSelectedPoints))
+					.replace("used_points", CoreFunctions.getPropertyFromConfig("CF_Transferee_TotalSelectedPoints"))
 					.replace("total_points", CoreFunctions.getPropertyFromConfig("CF_Transferee_TotalAvailablePoints")),
 					COREFLEXConstants.POINTS_BALANCE_TOOLTIP_TEXT);
 			CoreFunctions.verifyText(driver, _tooltipBalancePoints,
 					COREFLEXConstants.EXPECTED_POINT_BALANCE_TOOLTIP_TEXT.replace("remaining_points",
-							format.format(MX_Transferee_MyBenefitsBundlePage.availablePointsAfterSubmission)),
+							CoreFunctions.getPropertyFromConfig("CF_Transferee_AvailablePoints")),
 					COREFLEXConstants.POINTS_BALANCE_TOOLTIP_TEXT);
 			Reporter.addStepLog(MessageFormat.format(
 					COREFLEXConstants.SUCCESSFULLY_VALIDATED_POINTS_BALANCE_DETAILS_ON_TRANSFEREE_SUBMISSIONS_DETAILS_PAGE,
@@ -766,9 +781,9 @@ public class TransfereeSubmissions_DetailsPage extends Base {
 			Double totalPointsSelectedAfterDeleteApproval, availablePointsAfterDeleteApproval;
 			DecimalFormat format = new DecimalFormat();
 			format.setDecimalSeparatorAlwaysShown(false);
-			
+
 			if (CoreFunctions.getPropertyFromConfig("CoreFlex_Policy_PersonResponsible")
-					.equals(MobilityXConstants.CLIENT)) {
+					.equals(MobilityXConstants.CLIENT_INITIATOR)) {
 				CoreFunctions.writeToPropertiesFile("CF_Transferee_TotalSelectedPoints",
 						CoreFunctions.getPropertyFromConfig("CF_Client_TotalSelectedPoints"));
 			}
@@ -795,7 +810,7 @@ public class TransfereeSubmissions_DetailsPage extends Base {
 			CoreFunctions.writeToPropertiesFile("CF_Transferee_AvailablePoints",
 					String.valueOf(availablePointsAfterDeleteApproval));
 			isDeleteRequestApproved = true;
-			CoreFunctions.writeToPropertiesFile("CF_Transferee_DeleteRequestApproved", "true");
+			CoreFunctions.writeToPropertiesFile("CF_Transferee_DeletedRequestApproved", "true");						
 			CoreFunctions.writeToPropertiesFile("CF_Client_TotalSelectedPoints",
 					String.valueOf(totalPointsSelectedAfterDeleteApproval));
 			return true;
@@ -907,7 +922,7 @@ public class TransfereeSubmissions_DetailsPage extends Base {
 		DecimalFormat format = new DecimalFormat();
 		format.setDecimalSeparatorAlwaysShown(false);
 		return MobilityXConstants.DELETE_REQUEST_REMAINING_POINTS_TO_USE_MESSAGE.replace("current_balance",
-				String.valueOf(format.format(MX_Transferee_MyBenefitsBundlePage.availablePointsAfterSubmission)));
+				CoreFunctions.getPropertyFromConfig("CF_Transferee_AvailablePoints"));
 	}
 
 	public boolean verifyApprovedDeleteRequestRemovedFromList() {
@@ -968,9 +983,8 @@ public class TransfereeSubmissions_DetailsPage extends Base {
 		DecimalFormat format = new DecimalFormat();
 		format.setDecimalSeparatorAlwaysShown(false);
 		return MobilityXConstants.DENIED_DELETE_REQUEST_REMAINING_POINTS_TO_USE_MESSAGE.replace("current_balance",
-				String.valueOf(format.format(MX_Transferee_MyBenefitsBundlePage.availablePointsAfterSubmission))
-						.replace("total_points", String.valueOf(format
-								.format(policySetupPageData.flexPolicySetupPage.StaticFixedTotalPointsAvailable))));
+				CoreFunctions.getPropertyFromConfig("CF_Transferee_AvailablePoints").replace("total_points",
+						CoreFunctions.getPropertyFromConfig("CF_Transferee_TotalAvailablePoints")));
 	}
 
 	public boolean verifyRequestsDialogDisplayed() {

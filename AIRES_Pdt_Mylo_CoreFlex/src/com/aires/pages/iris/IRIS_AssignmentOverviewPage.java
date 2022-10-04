@@ -1295,11 +1295,10 @@ public class IRIS_AssignmentOverviewPage extends BasePage {
 			Button saveSucceedoKButton = IRIS_PageMaster.getButtonObjectFromLabel(saveSucceededDialog, "OK");
 			Helpers.clickButton(saveSucceedoKButton, saveSucceedoKButton.getAttachedText());
 		} catch (GeneralLeanFtException e) {
-			e.printStackTrace();
 			Assert.fail(CoreConstants.FAIL + "Not Able to save the assignment");
 		}
 	}
-	
+
 	public void acceptAddConfirmationDialog() {
 		try {
 			_isExists = (IRIS_PageMaster.getDialogObject(_IRIS, "Add confirmation").isVisible());
@@ -1308,12 +1307,10 @@ public class IRIS_AssignmentOverviewPage extends BasePage {
 						IRIS_PageMaster.getDialogObject(_IRIS, "Add confirmation").describe(Button.class,
 								new ButtonDescription.Builder().label("Yes").build()),
 						IRIS_PageMaster.getDialogObject(_IRIS, "Add confirmation")
-								.describe(Button.class,
-										new ButtonDescription.Builder().label("Yes").build())
+								.describe(Button.class, new ButtonDescription.Builder().label("Yes").build())
 								.getLabel());
 			}
 		} catch (Exception e) {
 		}
 	}
-
 }

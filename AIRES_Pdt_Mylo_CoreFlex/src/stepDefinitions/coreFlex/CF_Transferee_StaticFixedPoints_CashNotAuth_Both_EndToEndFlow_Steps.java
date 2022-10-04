@@ -76,15 +76,8 @@ public class CF_Transferee_StaticFixedPoints_CashNotAuth_Both_EndToEndFlow_Steps
 		Reporter.addStepLog("<b>Total time taken to navigateTo/display <i>Delete Benefit</i> page is :"
 				+ CoreFunctions.calculatePageLoadTime(CoreConstants.TIME_BEFORE_ACTION, CoreConstants.TIME_AFTER_ACTION)
 				+ " Seconds </b>");
-
-		Assert.assertTrue(mxTransfereeMyBenefitsBundlePage.verifyBenefitsDetailsOnRemoveBenefitDialog(),
-				MessageFormat.format(MobilityXConstants.POINTS_AND_BENEFIT_DETAILS_NOT_MATCHED_ON_SUBMIT_BUNDLE_POPUP,
-						CoreConstants.FAIL));
-		mxTransfereeMyBenefitsBundlePage.reviewAndConfirmRemoveBenefitSubmission(
-				MobilityXConstants.SUBMIT_BENEFITS_OPTIONAL_NOTES,
-				CoreFunctions.getPropertyFromConfig("Transferee_firstName") + " "
-						+ CoreFunctions.getPropertyFromConfig("Transferee_lastName"),
-				buttonName);
+		Assert.assertTrue(mxTransfereeMyBenefitsBundlePage.deleteSubmittedBenefitAndCashout(buttonName), MessageFormat
+				.format(MobilityXConstants.FAILED_TO_DELETE_SUBMITTED_BENEFIT_AND_CASHOUT, CoreConstants.FAIL));
 	}
 
 	@Then("^'Delete Request Sent' growl message should be displayed on 'My Benefit Bundle' page$")

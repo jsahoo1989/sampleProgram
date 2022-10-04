@@ -248,7 +248,7 @@ public class CoreFlex_CustomBundlesPage extends Base {
 				break;
 			case COREFLEXConstants.CANCEL:
 				CoreFunctions.clickElement(driver, _buttonCancelApproval);
-				CoreFunctions.explicitWaitTillElementInVisibility(driver, _progressBar);
+//				CoreFunctions.explicitWaitTillElementInVisibility(driver, _progressBar);
 				break;
 			case COREFLEXConstants.ASSOCIATE_THIS_POLICY:
 				CoreFunctions.clickElement(driver, _popUpApprovePolicyCheckBox);
@@ -544,6 +544,7 @@ public class CoreFlex_CustomBundlesPage extends Base {
 	}
 
 	public boolean verifyApprovalDialogNotDisplayed() {
+		CoreFunctions.waitHandler(2);
 		if (!CoreFunctions.isElementExist(driver, _dialogApproveThisPolicy, 5)) {
 			Reporter.addStepLog(MessageFormat.format(
 					COREFLEXConstants.SUCCESSFULLY_VERIFIED_APPROVE_THIS_POLICY_DIALOG_NOT_DISPLAYED_ON_CUSTOM_BUNDLES_PAGE,

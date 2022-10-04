@@ -212,7 +212,7 @@
 			"benefitDesc": "The long term storage of employee¿s personal goods while on assignment if they had disposed of their home country housing, their home property is being leased or they have personal items which they are eligible to store.",
 			"subBenefits": "Permanent Storage",
 			"airesManagedService": "Yes",
-			"noOfMilestones": 5,
+			"noOfMilestones": 50,
 			"policyCreationGroup": "NA"
 		}
 	],
@@ -374,7 +374,7 @@
 					"points": "5",
 					"subBenefits": "House Hunting Trip Transportation;House Hunting Trip Lodging;House Hunting Trip Rental Car;House Hunting Trip Meals",
 					"airesManagedService": "Yes",
-					"noOfMilestones": 5,
+					"noOfMilestones": 50,
 					"multipleBenefitSelection": "Yes",
 					"numberOfBenefitSelected": 2,
 					"selectBenefitOnFPTPage": false,
@@ -551,21 +551,42 @@
 					"noOfMilestones": 5,
 					"multipleBenefitSelection": "Yes",
 					"numberOfBenefitSelected": 2,
-					"selectBenefitOnFPTPage": false,
+					"selectBenefitOnFPTPage": true,
 					"deleteBenefitOnMBBPage": false,
 					"grossUp": "Yes",
 					"reimbursedBy": "Aires",
 					"comment": "Test Flex Air Shipment Aires Managed Benefit Comment",
 					"irisServiceName": "Shipment",
-					"irisSubserviceType": "Travel Home Leave",
-					"irisSubserviceName": "Custom Travel Home Leave Name",
+					"irisSubserviceType": "Shipment",
+					"irisSubserviceName": "Custom Air Shipment Name",
 					"irisSubserviceID": "0",
 					"subServiceActivityFinance": "(ACTV) Custom Travel Home Leave Name",
 					"subServiceFunction": "NA",
 					"compID": "49211",
 					"company": "AIRES-CIS-DEMO&'TEST(CLIENT)",
+					"tracingPromptsToBeSelected": [
+						{
+							"partner": "OA",
+							"tracingPrompt": "Load Shipment and call transferee"
+						},
+						{
+							"partner": "AI",
+							"tracingPrompt": "Confirm vessel or airline departure and call transferee"
+						},
+						{
+							"partner": "AI",
+							"tracingPrompt": "Confirm vessel or airline arrival and call transferee"
+						},
+						{
+							"partner": "DA",
+							"tracingPrompt": "Deliver shipment and call transferee"
+						}
+					],
+					"partners": "AI, OA, DA",
 					"allMilestones": "Book flight with travel agency/department, Confirm flight booking/confirmation number with transferee, Start date of trip, End date of trip",
-					"initialTracingPrompt": "Book flight with travel agency/department",
+					"subServiceDetails": "Pack:TRI,Routing1:DR,Routing2:DR,Mode:AIR,Type:THRD,StateCross:INTER",
+					"initialTracingPrompt": "Pack Shipment and call transferee",
+					"partnerForInitialTracingPrompt": "OA",
 					"postInitialTracingCardStatus": "Travel Requested",
 					"secondTracingPrompt": "*Confirm flight booking/confirmation number with transferee",
 					"postSecondTracingCardStatus": "Travel Booked",
@@ -589,21 +610,37 @@
 					"noOfMilestones": 5,
 					"multipleBenefitSelection": "Yes",
 					"numberOfBenefitSelected": 1,
-					"selectBenefitOnFPTPage": false,
+					"selectBenefitOnFPTPage": true,
 					"deleteBenefitOnMBBPage": false,
 					"grossUp": "Yes",
 					"reimbursedBy": "Aires",
 					"comment": "Test Flex Auto Shipment Aires Managed Benefit Comment",
 					"irisServiceName": "Shipment",
-					"irisSubserviceType": "Travel Home Leave",
-					"irisSubserviceName": "Custom Travel Home Leave Name",
+					"irisSubserviceType": "Shipment",
+					"irisSubserviceName": "Custom Auto Shipment Name",
 					"irisSubserviceID": "0",
 					"subServiceActivityFinance": "(ACTV) Custom Travel Home Leave Name",
 					"subServiceFunction": "NA",
 					"compID": "49211",
 					"company": "AIRES-CIS-DEMO&'TEST(CLIENT)",
+					"tracingPromptsToBeSelected": [
+						{
+							"partner": "AI",
+							"tracingPrompt": "Confirm auto departure and call transferee"
+						},
+						{
+							"partner": "AI",
+							"tracingPrompt": "Confirm auto arrival and call transferee"
+						},
+						{
+							"partner": "AI",
+							"tracingPrompt": "Deliver auto and call transferee"
+						}
+					],
 					"allMilestones": "Book flight with travel agency/department, Confirm flight booking/confirmation number with transferee, Start date of trip, End date of trip",
-					"initialTracingPrompt": "Book flight with travel agency/department",
+					"subServiceDetails": "Pack:AUTO,Routing1:DR,Routing2:DR,Mode:INLD,Type:DOM,StateCross:INTER",
+					"initialTracingPrompt": "Confirm auto pick up and call transferee",
+					"partnerForInitialTracingPrompt": "AI",
 					"postInitialTracingCardStatus": "Travel Requested",
 					"secondTracingPrompt": "*Confirm flight booking/confirmation number with transferee",
 					"postSecondTracingCardStatus": "Travel Booked",
@@ -627,21 +664,42 @@
 					"noOfMilestones": 5,
 					"multipleBenefitSelection": "Yes",
 					"numberOfBenefitSelected": 1,
-					"selectBenefitOnFPTPage": false,
+					"selectBenefitOnFPTPage": true,
 					"deleteBenefitOnMBBPage": false,
 					"grossUp": "Yes",
 					"reimbursedBy": "Aires",
 					"comment": "Test Flex Sea/Surface Shipment Aires Managed Benefit Comment",
 					"irisServiceName": "Shipment",
-					"irisSubserviceType": "Travel Home Leave",
-					"irisSubserviceName": "Custom Travel Home Leave Name",
+					"irisSubserviceType": "Shipment",
+					"irisSubserviceName": "Custom Sea/Surface Shipment Name",
 					"irisSubserviceID": "0",
 					"subServiceActivityFinance": "(ACTV) Custom Travel Home Leave Name",
 					"subServiceFunction": "NA",
 					"compID": "49211",
 					"company": "AIRES-CIS-DEMO&'TEST(CLIENT)",
+					"partners": "AI, OA, DA, INS, IMVR",
+					"tracingPromptsToBeSelected": [
+						{
+							"partner": "IMVR",
+							"tracingPrompt": "Load Date"
+						},
+						{
+							"partner": "IMVR",
+							"tracingPrompt": "Departure Date"
+						},
+						{
+							"partner": "IMVR",
+							"tracingPrompt": "Arrival Date"
+						},
+						{
+							"partner": "IMVR",
+							"tracingPrompt": "Deliver shipment"
+						}
+					],
 					"allMilestones": "Book flight with travel agency/department, Confirm flight booking/confirmation number with transferee, Start date of trip, End date of trip",
-					"initialTracingPrompt": "Book flight with travel agency/department",
+					"subServiceDetails": "Pack:AHHG,Routing1:DR,Routing2:DR,Mode:SURF,Type:EXP,StateCross:INTER",
+					"initialTracingPrompt": "Pack Date",
+					"partnerForInitialTracingPrompt": "IMVR",
 					"postInitialTracingCardStatus": "Travel Requested",
 					"secondTracingPrompt": "*Confirm flight booking/confirmation number with transferee",
 					"postSecondTracingCardStatus": "Travel Booked",
@@ -665,21 +723,42 @@
 					"noOfMilestones": 5,
 					"multipleBenefitSelection": "Yes",
 					"numberOfBenefitSelected": 1,
-					"selectBenefitOnFPTPage": false,
+					"selectBenefitOnFPTPage": true,
 					"deleteBenefitOnMBBPage": false,
 					"grossUp": "Yes",
 					"reimbursedBy": "Aires",
 					"comment": "Test Flex Inland Shipment Aires Managed Benefit Comment",
 					"irisServiceName": "Shipment",
-					"irisSubserviceType": "Travel Home Leave",
-					"irisSubserviceName": "Custom Travel Home Leave Name",
+					"irisSubserviceType": "Shipment",
+					"irisSubserviceName": "Custom Inland Shipment Name",
 					"irisSubserviceID": "0",
 					"subServiceActivityFinance": "(ACTV) Custom Travel Home Leave Name",
 					"subServiceFunction": "NA",
 					"compID": "49211",
 					"company": "AIRES-CIS-DEMO&'TEST(CLIENT)",
+					"partners": "AI, OA, DA, IMVR",
+					"tracingPromptsToBeSelected": [
+						{
+							"partner": "IMVR",
+							"tracingPrompt": "Load Date"
+						},
+						{
+							"partner": "IMVR",
+							"tracingPrompt": "Departure Date"
+						},
+						{
+							"partner": "IMVR",
+							"tracingPrompt": "Arrival Date"
+						},
+						{
+							"partner": "IMVR",
+							"tracingPrompt": "Deliver shipment"
+						}
+					],
 					"allMilestones": "Book flight with travel agency/department, Confirm flight booking/confirmation number with transferee, Start date of trip, End date of trip",
-					"initialTracingPrompt": "Book flight with travel agency/department",
+					"subServiceDetails": "Pack:AHHG,Routing1:DR,Routing2:DR,Mode:INLD,Type:EXP",
+					"initialTracingPrompt": "Pack Date",
+					"partnerForInitialTracingPrompt": "IMVR",
 					"postInitialTracingCardStatus": "Travel Requested",
 					"secondTracingPrompt": "*Confirm flight booking/confirmation number with transferee",
 					"postSecondTracingCardStatus": "Travel Booked",
@@ -703,21 +782,37 @@
 					"noOfMilestones": 5,
 					"multipleBenefitSelection": "Yes",
 					"numberOfBenefitSelected": 1,
-					"selectBenefitOnFPTPage": false,
+					"selectBenefitOnFPTPage": true,
 					"deleteBenefitOnMBBPage": false,
 					"grossUp": "Yes",
 					"reimbursedBy": "Aires",
 					"comment": "Test Flex Pet Shipment Aires Managed Benefit Comment",
 					"irisServiceName": "Shipment",
-					"irisSubserviceType": "Travel Home Leave",
-					"irisSubserviceName": "Custom Travel Home Leave Name",
+					"irisSubserviceType": "Shipment",
+					"irisSubserviceName": "Custom Pet Shipment Name",
 					"irisSubserviceID": "0",
 					"subServiceActivityFinance": "(ACTV) Custom Travel Home Leave Name",
 					"subServiceFunction": "NA",
 					"compID": "49211",
 					"company": "AIRES-CIS-DEMO&'TEST(CLIENT)",
+					"tracingPromptsToBeSelected": [
+						{
+							"partner": "AI",
+							"tracingPrompt": "Confirm pet departure with partner and call transferee"
+						},
+						{
+							"partner": "AI",
+							"tracingPrompt": "Confirm pet arrival with partner and call transferee"
+						},
+						{
+							"partner": "AI",
+							"tracingPrompt": "Confirm pet delivery with partner and call transferee"
+						}
+					],
 					"allMilestones": "Book flight with travel agency/department, Confirm flight booking/confirmation number with transferee, Start date of trip, End date of trip",
-					"initialTracingPrompt": "Book flight with travel agency/department",
+					"subServiceDetails": "Pack:PET,Routing1:DR,Routing2:DR,Mode:AIR,Type:THRD",
+					"initialTracingPrompt": "Confirm pet pick up with partner and call transferee",
+					"partnerForInitialTracingPrompt": "AI",
 					"postInitialTracingCardStatus": "Travel Requested",
 					"secondTracingPrompt": "*Confirm flight booking/confirmation number with transferee",
 					"postSecondTracingCardStatus": "Travel Booked",
@@ -738,7 +833,7 @@
 					"points": "15",
 					"subBenefits": "Permanent Storage",
 					"airesManagedService": "Yes",
-					"noOfMilestones": 5,
+					"noOfMilestones": 50,
 					"multipleBenefitSelection": "Yes",
 					"numberOfBenefitSelected": 1,
 					"selectBenefitOnFPTPage": false,
@@ -802,9 +897,9 @@
 					"postEndTracingCardStatus": "Training complete",
 					"multipleBenefitSubmission": false,
 					"policyCreationGroup": "All Benefits,Cloning,Versioning,Client",
-					"selectBenefitOnPBCPage": true,
-					"deselectBenefitOnPBCPage": true,
-					"subbenefitToBeDeselected":"Language Training Family",
+					"selectBenefitOnPBCPage": false,
+					"deselectBenefitOnPBCPage": false,
+					"subbenefitToBeDeselected": "Language Training Family",
 					"noOfMilestones": 2
 				},
 				{
@@ -836,8 +931,8 @@
 					"postEndTracingCardStatus": "Training complete",
 					"multipleBenefitSubmission": false,
 					"policyCreationGroup": "All Benefits",
-					"selectBenefitOnPBCPage": false,
-					"deselectBenefitOnPBCPage": false,
+					"selectBenefitOnPBCPage": true,
+					"deselectBenefitOnPBCPage": true,
 					"noOfMilestones": 2
 				},
 				{

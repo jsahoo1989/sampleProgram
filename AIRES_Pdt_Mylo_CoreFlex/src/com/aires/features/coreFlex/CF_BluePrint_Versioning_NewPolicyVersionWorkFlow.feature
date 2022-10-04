@@ -4,13 +4,13 @@ Feature: Validate Versioning Feature of Points based CoreFlex policy that has on
   Scenario: CoreFlex - Validating policy status is updated to 'Active' on completion of Policy Setup Approval WorkFlow
     Given he has setup a new CoreFlex Policy with following selection in Blueprint application
       | Person Responsible For Benefit Selection | Flex Setup Type | Cashout Availability   | BenefitType | PolicyRequiredFor | MileStones |
-      | Transferee                               | Static/Fixed    | Cashout Not Authorized | Both        | All Benefits      |          0 |
+      | Transferee                               | Static/Fixed    | Cashout Not Authorized | Both        | Cloning           |          0 |
     And he has clicked on "Submit" button to submit "V1" policy verison on "Custom Bundles" page
     And he has clicked on "Approve Policy" button to approve "V1" policy verison on "Custom Bundles" page
     And he has selected following options on 'Approval this Policy' dialog of "V1" Policy
       | Associate this policy with a NEW authorization in IRIS? |
       | Effective from booking date                             |
-    When he clicks on "Approve" button to acknowledged 'Approve this Policy' dialog
+    When he clicks on "Approve" button to acknowledge 'Approve this Policy' dialog
     Then Policy Status and Version should be displayed as "Active" and "V1" respectively on "View/Edit Policy Forms" page
 
   @End-To_End_CoreFlex @CF_BluePrint_Versioning @MXPolicyVerification @Versioning_NewWF_Check
@@ -20,7 +20,7 @@ Feature: Validate Versioning Feature of Points based CoreFlex policy that has on
       | WelcomeDialogSelection               |
       | No thanks, I prefer to do this later |
     When he navigates to "FleX Planning Tool" after clicking on 'Manage my Points' button on "Mobility Journey Home" page
-   Then benefits selected on Active BluePrint "Version1" Policy should be displayed on "FleX Planning Tool" page
+    Then benefits selected on Active BluePrint "Version1" Policy should be displayed on "FleX Planning Tool" page
     And custom bundle created in Active BluePrint "Version1" Policy should be displayed on "Suggested Bundles" page
 
   @End-To_End_CoreFlex @CF_BluePrint_Versioning @CreatingNewVersion @Versioning_NewWF_Check
@@ -41,25 +41,24 @@ Feature: Validate Versioning Feature of Points based CoreFlex policy that has on
       | V2            | Draft        | Enabled  | Enabled    | Disabled  | Disabled              |
     And he has clicked on "Edit" icon of "V2" - "Draft" version of the searched points based CoreFlex policy
     And he has navigated to "General Information" page of 'New Version' policy in 'Editable' mode having CoreFlex Policy Status displayed as "Draft"
-    And he has verified 'Policy-Benefits-SubBenefits' details of "V2" - "Draft" version Policy matches with following "V1" policy selections
-      | Person Responsible For Benefit Selection | Flex Setup Type | Cashout Availability   | BenefitType | PolicyRequiredFor | MileStones |
-      | Transferee                               | Static/Fixed    | Cashout Not Authorized | Both        | All Benefits      |          0 |
-     And he has verified 'CustomBundles' and 'Transferee Preview' details of "V2" - "Draft" version Policy matches with "V1" - "Active" version Policy
+    And he has verified 'Policy-Benefits-SubBenefits' details of "V2" - "Draft" version Policy matches with "V1" policy selections
+    And he has verified 'CustomBundles' and 'Transferee Preview' details of "V2" - "Draft" version Policy matches with "V1" - "Active" version Policy
     And he has acknowledged 'Submit Success' dialog after clicking on "Submit" button on "Custom Bundles" page
     And he has clicked on "Approve Policy" button to approve "V2" policy verison on "Custom Bundles" page
     And he has selected following options on 'Approval this Policy' dialog of "V2" Policy
       | Associate this policy with a NEW authorization in IRIS? |
       | Effective from booking date                             |
-    When he clicks on "Approve" button to acknowledged 'Approve this Policy' dialog
+    When he clicks on "Approve" button to acknowledge 'Approve this Policy' dialog
     Then Policy Status and Version should be displayed as "Active" and "V2" respectively on "View/Edit Policy Forms" page
 
-  @End-To_End_CoreFlex @CF_BluePrint_Versioning @CancelPolicy @Versioning_NewWF_Check
+  @End-To_End_CoreFlex @CF_BluePrint_Versioning @CancelPolicy @Versioning_NewWF_Check1
   Scenario: CoreFlex - Validating policy status is NOT updated to 'Active' on cancellation of Policy Setup Approval WorkFlow
     Given he has setup a new CoreFlex Policy with following selection in Blueprint application
       | Person Responsible For Benefit Selection | Flex Setup Type | Cashout Availability   | BenefitType | PolicyRequiredFor | MileStones |
-      | Transferee                               | Static/Fixed    | Cashout Not Authorized | Both        | All Benefits      |          0 |
-    And he has clicked on "Approve Policy" button to approve "VI" policy verison on "Custom Bundles" page
-    And he has selected following options on 'Approval this Policy' dialog of "V2" Policy
+      | Transferee                               | Static/Fixed    | Cashout Not Authorized | Both        | Cloning           |          0 |
+    And he has clicked on "Submit" button to submit "V1" policy verison on "Custom Bundles" page
+    And he has clicked on "Approve Policy" button to approve "V1" policy verison on "Custom Bundles" page
+    And he has selected following options on 'Approval this Policy' dialog of "V1" Policy
       | Associate this policy with a NEW authorization in IRIS? |
       | Effective from booking date                             |
     When he clicks on "Cancel" button to close 'Approve this Policy' dialog

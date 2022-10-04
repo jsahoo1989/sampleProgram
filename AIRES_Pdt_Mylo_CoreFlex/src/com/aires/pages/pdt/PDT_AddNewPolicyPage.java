@@ -844,7 +844,7 @@ public class PDT_AddNewPolicyPage extends Base {
 				CoreFunctions.clearAndSetText(driver, _inputPolicy, COREFLEXConstants.AUTOMATION_POLICY);
 				CoreFunctions.explicitWaitTillElementListVisibility(driver, _optionsPolicyName);
 				setSelectedPolicyName(_optionsPolicyName.get(0).getText());
-				CoreFunctions.selectItemInListByText(driver, _optionsPolicyName, selectedPolicyName, true);
+				CoreFunctions.selectItemInListByText(driver, _optionsPolicyName, _optionsPolicyName.get(0).getText(), true);
 				return true;
 			} else if (CoreFunctions.isElementExist(driver, _popUpError, 2)) {
 				Reporter.addStepLog(MessageFormat.format(PDTConstants.ERROR_POP_UP_DISPLAYED_FOR_VALID_CLIENTID,

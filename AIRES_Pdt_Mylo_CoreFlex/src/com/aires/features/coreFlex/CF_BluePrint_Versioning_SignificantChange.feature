@@ -2,9 +2,9 @@ Feature: Validate Significant Change Feature of Points based CoreFlex policy for
 
   @End-To_End_CoreFlex @CF_BluePrint_Versioning @Versioning_SignificantChange @SubmittedPolicyDataCreationSignificantChange
   Scenario: CoreFlex - Creating a new Submitted Status policy as a part of Data Creation activity to validate Significant Change Functionality
-    Given he has setup a new CoreFlex Policy with following selection in Blueprint application
-      | Person Responsible For Benefit Selection | Flex Setup Type | Cashout Availability   | BenefitType | PolicyRequiredFor | MileStones |
-      | Transferee                               | Static/Fixed    | Cashout Not Authorized | Both        | Versioning        |          0 |
+    Given he has setup a new Points Based CoreFlex Policy with following selection in Blueprint application
+      | Person Responsible For Benefit Selection | Flex Setup Type | Cashout Availability | BenefitType | PolicyRequiredFor | MileStones |
+      | Transferee                               | Static/Fixed    | Portion Cashout      | Both        | Versioning        |          0 |
     When he clicks on "Submit" button to submit "V1" policy verison on "Custom Bundles" page
     Then Policy Status and Version should be displayed as "Submitted" and "V1" respectively on 'Custom Bundles' page
 
@@ -15,7 +15,7 @@ Feature: Validate Significant Change Feature of Points based CoreFlex policy for
     And he has clicked on "Edit" icon of the searched "Submitted" points based CoreFlex policy
     And he has navigated to "General Information" page of 'Existing Version' policy in 'Editable' mode having Policy Status displayed as "Submitted"
     And he has clicked on "Next" button to navigate to "Flex Policy Setup" page
-    And he has filled 'Benefit-SubBenefit' details after adding a new "Both" type Benefit on 'Policy Benefit Categories' page
+    And he has filled 'Benefit-SubBenefit' details after adding a new Benefit on 'Policy Benefit Categories' page
     And he has verified additional added benefit displayed on Summary Details after navigating to 'Benefit Summary' page
     When he clicks on "Continue" button on 'Benefit Summary' page
     Then he should be navigated to "Custom Bundles" page having following buttons displayed in enabled state and 'APPROVE POLICY' button should not be displayed
@@ -30,7 +30,7 @@ Feature: Validate Significant Change Feature of Points based CoreFlex policy for
     And he has clicked on "Next" button to navigate to "Flex Policy Setup" page
     And he has clicked on "Custom Bundles" link from Left Navigation Menu
     When he clicks on "SAVE AS DRAFT" button on 'Custom Bundles' page
-    Then "Success" dialog with message "Policy draft saved" should be displayed
+    Then "Success" dialog with message "Policy draft saved." should be displayed
     And Policy Status should be displayed as "Draft" on 'Custom Bundles' page
 
   @End-To_End_CoreFlex @CF_BluePrint_Versioning @Versioning_SignificantChange @SC_AddBenefit_DraftToSubmitted
@@ -50,7 +50,7 @@ Feature: Validate Significant Change Feature of Points based CoreFlex policy for
     And he has clicked on "Edit" icon of the searched "Submitted" points based CoreFlex policy
     And he has navigated to "General Information" page of 'Existing Version' policy in 'Editable' mode having Policy Status displayed as "Submitted"
     And he has clicked on "Next" button to navigate to "Flex Policy Setup" page
-    And he has deselected an existing "Both" type Benefit on 'Policy Benefit Categories' page
+    And he has deselected an existing Benefit on 'Policy Benefit Categories' page
     And he has verified removed benefit is not displayed on Summary Details after navigating to 'Benefit Summary' page
     When he clicks on "Continue" button on 'Benefit Summary' page
     Then he should be navigated to "Custom Bundles" page having following buttons displayed in enabled state and 'APPROVE POLICY' button should not be displayed
@@ -65,7 +65,7 @@ Feature: Validate Significant Change Feature of Points based CoreFlex policy for
     And he has clicked on "Next" button to navigate to "Flex Policy Setup" page
     And he has clicked on "Custom Bundles" link from Left Navigation Menu
     When he clicks on "SAVE AS DRAFT" button on 'Custom Bundles' page
-    Then "Success" dialog with message "Policy draft saved" should be displayed
+    Then "Success" dialog with message "Policy draft saved." should be displayed
     And Policy Status should be displayed as "Draft" on 'Custom Bundles' page
 
   @End-To_End_CoreFlex @CF_BluePrint_Versioning @Versioning_SignificantChange @SC_RemoveBenefit_DraftToSubmitted
@@ -106,7 +106,7 @@ Feature: Validate Significant Change Feature of Points based CoreFlex policy for
     Given he has searched for "Submitted" points based CoreFlex policy that has one or more assignments/files on "View/Edit Policy Forms" page
     And he has clicked on "Edit" icon of the searched "Submitted" points based CoreFlex policy
     And he has navigated to "General Information" page of 'Existing Version' policy in 'Editable' mode having Policy Status displayed as "Submitted"
-    And he has filled 'Benefit-SubBenefit' details after adding a new "Both" type Benefit on 'Policy Benefit Categories' page
+    And he has filled 'Benefit-SubBenefit' details after adding a new Benefit on 'Policy Benefit Categories' page
     And he has verified additional added benefit displayed on Summary Details after navigating to 'Benefit Summary' page
     And he has clicked on "Continue" button on 'Benefit Summary' page
     When he clicks on "SUBMIT" button on 'Custom Bundles' page
@@ -119,7 +119,7 @@ Feature: Validate Significant Change Feature of Points based CoreFlex policy for
     And he has clicked on "Edit" icon of the searched "Submitted" points based CoreFlex policy
     And he has navigated to "General Information" page of 'Existing Version' policy in 'Editable' mode having Policy Status displayed as "Submitted"
     And he has clicked on "Next" button to navigate to "Flex Policy Setup" page
-    And he has clicked on "Save & Continue" button after removing a 'SubBenefit' from an added "Both" type Benefit
+    And he has clicked on "Save & Continue" button after removing a 'SubBenefit' from an added Benefit
     And he has clicked on 'Benefit Summary' link from Left Navigation Menu
     When he clicks on "Continue" button on 'Benefit Summary' page
     Then he should be navigated to "Custom Bundles" page having 'APPROVE POLICY' button in Enabled and 'SUBMIT' button is Disabled state
@@ -131,7 +131,7 @@ Feature: Validate Significant Change Feature of Points based CoreFlex policy for
     And he has clicked on "Edit" icon of the searched "Submitted" points based CoreFlex policy
     And he has navigated to "General Information" page of 'Existing Version' policy in 'Editable' mode having Policy Status displayed as "Submitted"
     And he has clicked on "Next" button to navigate to "Flex Policy Setup" page
-    And he has clicked on "Save & Continue" button after adding a 'SubBenefit' to an added "Both" type Benefit
+    And he has clicked on "Save & Continue" button after adding a 'SubBenefit' to an added Benefit
     And he has clicked on 'Benefit Summary' link from Left Navigation Menu
     When he clicks on "Continue" button on 'Benefit Summary' page
     Then he should be navigated to "Custom Bundles" page having 'APPROVE POLICY' button in Enabled and 'SUBMIT' button is Disabled state

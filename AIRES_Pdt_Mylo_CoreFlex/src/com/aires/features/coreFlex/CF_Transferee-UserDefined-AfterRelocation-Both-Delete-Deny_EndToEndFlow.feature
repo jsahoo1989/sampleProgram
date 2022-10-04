@@ -1,8 +1,8 @@
 Feature: Validate the CoreFlex End-To-End Business Test Flow(BluePrint, MXTransferee,Transferee Submissions) for Both_Transferee_UserDefined_AfterRelocation_Delete_DenyAll selection
 
-  @End-To-End_CoreFlex @CF_MXTransferee_UserDefined_AfterRelocationIgnore
+  @End-To-End_CoreFlex @CF_MXTransferee_UserDefined_AfterRelocation
   Scenario: CoreFlex - Creating & Validating a new Active Points Based CoreFlex Policy with Transferee, UserDefined and AfterRelocation selection
-    Given he has setup a new CoreFlex Policy with following selection in Blueprint application
+    Given he has setup a new Points Based CoreFlex Policy with following selection in Blueprint application
       | Person Responsible For Benefit Selection | Flex Setup Type | Cashout Availability  | BenefitType | PolicyRequiredFor | MileStones |
       | Transferee                               | User Defined    | After Relocation Only | Both        | Client            |          0 |
     And he has clicked on "Submit" button to submit "V1" policy verison on "Custom Bundles" page
@@ -65,7 +65,7 @@ Feature: Validate the CoreFlex End-To-End Business Test Flow(BluePrint, MXTransf
     When he 'Delete' submitted Benefit_Cashout and confirms 'Remove Benefit Selection' dialog by entering username and clicking on "Yes-request to delete this benefit"
     Then 'Status' of the deleted benefit_cashout should be displayed as "Delete Request Pending" under 'Submitted Benefits' section of 'My Benefit Bundle' page
 
-  @End-To_End_CoreFlex @CF_MXTransferee_UserDefined_AfterRelocation 
+  @End-To_End_CoreFlex @CF_MXTransferee_UserDefined_AfterRelocation
   Scenario: TransfereeSubmissions - Verifying UserDefined Points, Benefit & Cashout Submissions and Delete Request Deny transaction for the request made by the Transferee
     Given he has logged into 'Transferee Submissions' application as a "MSPEC/PPC" user
     And he has navigated to "Transferee Submissions Dashboard" page having record of Bundle submitted by the transferee

@@ -2,7 +2,7 @@ Feature: Validate the CoreFlex End-To-End Business Test Flow(BluePrint, MXTransf
 
   @End-To-End_CoreFlex @CF_MXTransferee_StaticFixed_CashNotAuth_DeleteDeny
   Scenario: CoreFlex - Creating & Validating a new Active Points Based CoreFlex Policy with Transferee, Static/Fixed and CashNotAuth selection
-    Given he has setup a new CoreFlex Policy with following selection in Blueprint application
+    Given he has setup a new Points Based CoreFlex Policy with following selection in Blueprint application
       | Person Responsible For Benefit Selection | Flex Setup Type | Cashout Availability   | BenefitType | PolicyRequiredFor | MileStones |
       | Transferee                               | Static/Fixed    | Cashout Not Authorized | Both        | Client            |          0 |
     And he has clicked on "Submit" button to submit "V1" policy verison on "Custom Bundles" page
@@ -26,10 +26,8 @@ Feature: Validate the CoreFlex End-To-End Business Test Flow(BluePrint, MXTransf
     And he has clicked on "OK - Let Me See My Benefits!" button displayed on 'Success Flex' dialog
     And he has verified submitted points details on 'Mobility Journey Home' and 'Flex Planning Tool' page
     And he has verified submitted benefit details under 'Submitted Benefits' section of 'My Benefits Bundle' page
-    And he has clicked on "Delete" button for a benefit under 'Submitted Benefits' section
-    When he confirms 'Remove Benefit Selection' dialog by entering username and clicking on "Yes-request to delete these benefits"
-    Then 'Delete Request Sent' growl message should be displayed on 'My Benefit Bundle' page
-    And 'Status' of the deleted benefit should be displayed as "Delete Request Pending" under 'Submitted Benefits' section of 'My Benefit Bundle' page
+    When he 'Delete' submitted Benefits and confirms 'Remove Benefit Selection' dialog by entering username and clicking on "Yes-request to delete this benefit"
+    Then 'Status' of the deleted benefit should be displayed as "Delete Request Pending" under 'Submitted Benefits' section of 'My Benefit Bundle' page
 
   @End-To-End_CoreFlex @CF_MXTransferee_StaticFixed_CashNotAuth_DeleteDeny
   Scenario: TransfereeSubmissions - Verifying StaticFixed Points, BenefitSubmissions and Delete Request Deny transaction for the request made by the Transferee
@@ -37,9 +35,8 @@ Feature: Validate the CoreFlex End-To-End Business Test Flow(BluePrint, MXTransf
     And he has navigated to "Transferee Submissions Dashboard" page having record of Bundle submitted by the transferee
     And he has clicked on "Review" button for Bundle submitted by the transferee on "Transferee Submissions Dashboard" page
     And he has navigated to "Transferee Submission Details" page having list of submitted benefits details
-    And he has clicked on "Resolve" button for 'Delete Request Pending' request of the Transferee
-    When he confirms the "Deny Request" after verifying 'Delete Request Pending' benefit request details and adding comments on 'Requests' dialog
+    And he has clicked on "Check All" followed by "Resolve Multiple" button to resolve multiple 'Delete Request Pending' request of the Transferee
+    When he confirms request by selecting "Deny All" option after verifying 'Delete Request Pending' benefit request details on 'Requests' dialog
     Then 'Action Completed' growl message for "Deny Request" should be displayed on "Transferee Submission Details" page
-    And points should not be updated in 'Points Balance' section for the "Denied" delete request on "Transferee Submission Details" page
     And 'Delete Request Pending' benefit request status should be updated to 'Submitted' in 'Transferee Submission Details' list
     And benefit details should be updated in 'MXTransferee' application based on "Denied" 'Delete Request' on Transferee Submission

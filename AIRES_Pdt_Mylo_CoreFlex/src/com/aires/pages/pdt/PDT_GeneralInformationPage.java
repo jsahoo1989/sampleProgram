@@ -57,7 +57,7 @@ public class PDT_GeneralInformationPage extends Base {
 	private WebElement _selectCoreFlexPolicy;
 
 	// CoreFlex Policy Select Field Default Value
-	@FindBy(how = How.XPATH, using = "//ng-select[@formcontrolname='coreFlexInd']//span[@class='ng-value-label']")
+	@FindBy(how = How.CSS, using = "ng-select[formcontrolname='coreFlexInd'] span[class*='ng-value-label']")
 	private WebElement _selectCoreFlexPolicyDefaultValue;
 
 	// Benefit Package Type Select Field

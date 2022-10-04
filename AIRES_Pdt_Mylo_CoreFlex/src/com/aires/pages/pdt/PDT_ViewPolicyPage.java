@@ -44,7 +44,7 @@ public class PDT_ViewPolicyPage extends Base {
 	private WebElement _logout;
 
 	// Progress Bar
-	@FindBy(how = How.CSS, using = "div.ngx-progress-bar.ngx-progress-bar-ltr.foreground-closing")
+	@FindBy(how = How.CSS, using = "div.ngx-progress-bar.ngx-progress-bar-ltr")
 	private WebElement _progressBar;
 
 	// Edit Icon
@@ -720,7 +720,7 @@ public class PDT_ViewPolicyPage extends Base {
 			switch (iconName) {
 			case COREFLEXConstants.EDIT_ICON:
 				CoreFunctions.clickElement(driver, _listEditIcon.get(versionIndex));
-				CoreFunctions.explicitWaitTillElementInVisibilityCustomTime(driver, _progressBar, 5);
+//				CoreFunctions.explicitWaitTillElementInVisibilityCustomTime(driver, _progressBar, 5);
 				break;
 			case COREFLEXConstants.DELETE_ICON:
 				CoreFunctions.clickElement(driver, _listDeleteIcon.get(versionIndex));
@@ -740,8 +740,8 @@ public class PDT_ViewPolicyPage extends Base {
 
 		} catch (Exception e) {
 			Reporter.addStepLog(MessageFormat.format(
-					COREFLEXConstants.FAILED_TO_CLICK_ON_POLICY_ACTION_ICON_ON_VIEW_EDIT_POLICY_FORMS_PAGE,
-					CoreConstants.FAIL, iconName, policyVersion));
+					COREFLEXConstants.EXCEPTION_OCCURED_WHILE_CLICKING_ON_POLICY_ACTION_ICON_ON_VIEW_EDIT_POLICY_FORMS_PAGE,
+					CoreConstants.FAIL, iconName, policyVersion,e.getMessage()));
 			Assert.fail(MessageFormat.format(
 					COREFLEXConstants.FAILED_TO_CLICK_ON_POLICY_ACTION_ICON_ON_VIEW_EDIT_POLICY_FORMS_PAGE,
 					CoreConstants.FAIL, iconName, policyVersion));

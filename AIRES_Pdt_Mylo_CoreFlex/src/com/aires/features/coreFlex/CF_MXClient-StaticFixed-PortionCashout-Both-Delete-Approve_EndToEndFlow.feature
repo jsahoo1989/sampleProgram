@@ -1,8 +1,8 @@
 Feature: Validate the CoreFlex End-To-End Business Test Flow(BluePrint, MXClient, Transferee Submissions) for Both_MXClient_StaticFixed_PortionCashout_Delete_DenyAll selection
 
-  @End-To-End_CoreFlex @CF_MXClient_StaticFixed_PortionCashout
+  @End-To-End_CoreFlex @CF_MXClient_StaticFixed_PortionCashout_Delete_Approve
   Scenario: CoreFlex - Creating & Validating a new Active Points Based CoreFlex Policy with MXClient, StaticFixed and PortionCahout selection
-    Given he has setup a new CoreFlex Policy with following selection in Blueprint application
+    Given he has setup a new Points Based CoreFlex Policy with following selection in Blueprint application
       | Person Responsible For Benefit Selection | Flex Setup Type | Cashout Availability | BenefitType | PolicyRequiredFor | MileStones |
       | Client Initiator                         | Static/Fixed    | Portion Cashout      | Both        | Client            |          0 |
     And he has clicked on "Submit" button to submit "V1" policy verison on "Custom Bundles" page
@@ -13,14 +13,14 @@ Feature: Validate the CoreFlex End-To-End Business Test Flow(BluePrint, MXClient
     When he clicks on "Approve" button to acknowledge 'Approve this Policy' dialog
     Then Policy Status and Version should be displayed as "Active" and "V1" respectively on "View/Edit Policy Forms" page
 
-  @End-To-End_CoreFlex @CF_MXClient_StaticFixed_PortionCashout
+  @End-To-End_CoreFlex @CF_MXClient_StaticFixed_PortionCashout_Delete_Approve
   Scenario: MXClient - Validating Total Points Section, Core/Flex benefits & PortionCashout displayed on BenefitSelectionTool page for Client Initiator BluePrint Policy Setup
     Given he has logged into 'MobilityX' application as a 'Client' user
     And he has clicked on "Create an authorization" after validating Client details on 'Authorization Home Page'
     And he has filled all the mandatory information on 'Authorization Form' after selecting following 'Assignment Option' with 'Auth Form Template' for an employee on 'Authorization Home Page'
       | Assignment Option            | Authorization Form Template |
       | A new transfer or assignment | Domestic Authorization Form |
-    And he has verified 'Total Points' section displayed on 'Authorization Form' for "Static/Fixed" - 'Flex Setup Type' selection in BluePrint CoreFlex Policy
+    And he has verified 'Total Points' section not displayed on 'Authorization Form' for "Static/Fixed" - 'Flex Setup Type' selection in BluePrint CoreFlex Policy
     And he has verified 'FleX Benefits' section displayed on 'Authorization Form' for "Client Initiator" - 'Person Responsible' selection in BluePrint CoreFlex Policy
     And he has verified 'Error Growl Message' and 'Required Field Validation' displayed after clicking on "Submit to Aires" button without selecting any FlexBenefits
     And he has clicked on 'Start Benefit Selection' on 'Auth Form Template' page to navigate to 'Benefit Selection Tool' page
@@ -50,7 +50,7 @@ Feature: Validate the CoreFlex End-To-End Business Test Flow(BluePrint, MXClient
     Then 'Auth Submit Success' growl message should be displayed on the navigated 'Advanced Authorization Search' page
     And 'Revised Mobility Initiation' email having submitted_deleted Benefit and Points details should be received
 
-  @End-To_End_CoreFlex @CF_MXClient_StaticFixed_PortionCashout
+  @End-To_End_CoreFlex @CF_MXClient_StaticFixed_PortionCashout_Delete_Approve
   Scenario: TransfereeSubmissions - Verifying StaticFixed Points, BenefitSubmissions and Delete Request ApproveAll transaction for the request made by the Client
     Given he has logged into 'Transferee Submissions' application as a "MSPEC/PPC" user
     And he has navigated to "Transferee Submissions Dashboard" page having record of Bundle submitted by the Client

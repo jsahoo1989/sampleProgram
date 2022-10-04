@@ -810,7 +810,7 @@ public class MX_Client_BenefitsBundlePage extends Base {
 		boolean flag = false;
 		try {
 			for (Benefit benefit : getBenefits(CoreFunctions.getPropertyFromConfig("CoreFlex_Policy_BenefitType"),
-					CoreFunctions.getPropertyFromConfig("CoreFlex_Policy_RequiredFor"), "0")) {				
+					CoreFunctions.getPropertyFromConfig("CoreFlex_Policy_RequiredFor"), "0")) {
 				if (benefit.getDeleteBenefitOnMBBPage()) {
 					flag = false;
 					int indexBenefit = BusinessFunctions.returnindexItemFromListUsingText(driver,
@@ -895,7 +895,7 @@ public class MX_Client_BenefitsBundlePage extends Base {
 		if (isSelectedPortionCashoutDetailsVerified) {
 			CoreFunctions.writeToPropertiesFile("CF_Transferee_SelectedCashOutPoints",
 					CoreFunctions.getPropertyFromConfig("CF_Client_SelectedCashOutPoints"));
-			
+
 			Reporter.addStepLog(MessageFormat.format(
 					MobilityXConstants.SUCCESSFULLY_VERIFIED_SELECTED_PORTION_CASHOUT_DETAILS_UNDER_MY_BENEFIT_BUNDLES_SECTION_OF_MBB_PAGE,
 					CoreConstants.PASS));
@@ -1246,11 +1246,13 @@ public class MX_Client_BenefitsBundlePage extends Base {
 		if (benefit.getDeleteBenefitOnMBBPage()) {
 			isDeleteButtonDisabled = Boolean.valueOf(
 					CoreFunctions.getAttributeText(_buttonDeleteBenefitList.get(indexBenefit), "aria-disabled"));
+			CoreFunctions.scrollToElementUsingJS(driver, _textSubmittedBenefitNameList.get(indexBenefit),
+					MobilityXConstants.DELETE_BUTTON_HOVER_TEXT);
 			CoreFunctions.moveToElement(driver, _buttonDeleteBenefitList.get(indexBenefit));
-			isDeleteHoverTextVerified = CoreFunctions.isElementExist(driver,
-					_disabledDeleteButtonHoverText.get(indexBenefit), 5);
-			CoreFunctions.highlightObject(driver, _disabledDeleteButtonHoverText.get(indexBenefit));
-			if (isDeleteButtonDisabled && isDeleteHoverTextVerified) {
+//			isDeleteHoverTextVerified = CoreFunctions.isElementExist(driver,
+//					_disabledDeleteButtonHoverText.get(indexBenefit), 5);
+//			CoreFunctions.highlightObject(driver, _disabledDeleteButtonHoverText.get(indexBenefit));
+			if (isDeleteButtonDisabled) {
 				Reporter.addStepLog(MessageFormat.format(
 						COREFLEXConstants.SUCCESSFULLY_VERIFIED_DELETE_BUTTON_IS_DISABLED_AND_DISABLED_DELETE_HOVER_TEXT_POST_DELETE_REQUEST_DENIED_BY_MSPEC_PPC_USER,
 						CoreConstants.PASS));

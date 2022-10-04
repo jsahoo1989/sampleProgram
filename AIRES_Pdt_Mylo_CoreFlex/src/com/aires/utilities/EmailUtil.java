@@ -45,8 +45,8 @@ public class EmailUtil {
 			_searchTag[1] = "</span></p>";
 			break;
 		case MobilityXConstants.FLEX_BENEFIT_SUBMISSION:
-			_searchTag[0] = "journey!<br><br>\r\n<p>";
-			_searchTag[1] = "<br><br>\r\n\r\nYour Aires";
+			_searchTag[0] = "journey!<br><br></p><p>";
+			_searchTag[1] = "<br><br>Your Aires";
 			break;
 		case MobilityXConstants.DELETE_REQUEST_APPROVED:
 			_searchTag[0] = "Hello";

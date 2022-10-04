@@ -264,10 +264,15 @@ public class CoreFunctions {
 	}
 
 	public static void explicitWaitTillElementBecomesClickable(WebDriver driver, WebElement Element, String name) {
-		Log.info("waiting for " + name + " to be clickable");
-		WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(60));
-		wait.until(ExpectedConditions.elementToBeClickable(Element));
-		Log.info("Pass: " + name + " is clickable");
+		try {
+			Log.info("waiting for " + name + " to be clickable");
+			WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(60));
+			wait.until(ExpectedConditions.elementToBeClickable(Element));
+			Log.info("Pass: " + name + " is clickable");
+		} catch (StaleElementReferenceException e) {
+			WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(60));
+			wait.until(ExpectedConditions.refreshed(ExpectedConditions.visibilityOf(Element)));
+		}
 	}
 
 	public static void explicitWaitTillElementVisibility(WebDriver driver, WebElement Element, String name) {
@@ -351,7 +356,12 @@ public class CoreFunctions {
 		waitHandler(1);
 		WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(25));
 		for (WebElement ele : Element) {
-			wait.until(ExpectedConditions.visibilityOf(ele));
+			try {
+				wait.until(ExpectedConditions.visibilityOf(ele));
+			} catch (StaleElementReferenceException e) {
+				wait = new WebDriverWait(driver, Duration.ofSeconds(60));
+				wait.until(ExpectedConditions.refreshed(ExpectedConditions.visibilityOf(ele)));
+			}
 		}
 	}
 
@@ -550,7 +560,7 @@ public class CoreFunctions {
 		try {
 			for (WebElement row : WebElementList) {
 				Log.info(CoreConstants.ACTUAL_ITEM_NAME_IS + row.getText());
-				if (row.getText().contains(searchText)) {
+				if (row.getText().trim().equals(searchText)) {
 					itemSearched = true;
 					clickRowInResult(driver, row, reporter, searchText);
 					break;
@@ -1078,6 +1088,13 @@ public class CoreFunctions {
 			executor.executeScript("arguments[0].click();", Element);
 			Log.info("Pass: " + name + " :is clicked");
 			Reporter.addStepLog(CoreConstants.PASS + MessageFormat.format(CoreConstants.VRFIED_ELE_CLCKED, name));
+		} catch (StaleElementReferenceException e) {
+			WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(60));
+			wait.until(ExpectedConditions.refreshed(ExpectedConditions.visibilityOf(Element)));
+			JavascriptExecutor executor = (JavascriptExecutor) driver;
+			executor.executeScript("arguments[0].scrollIntoView(true);", Element);
+			CoreFunctions.waitHandler(2);
+			executor.executeScript("arguments[0].click();", Element);
 		} catch (Exception e) {
 			Log.info("Fail:Could not Click on: " + name);
 			e.printStackTrace();
@@ -1719,8 +1736,8 @@ public class CoreFunctions {
 				Assert.fail(MessageFormat.format(PDTConstants.SEARCHED_ITEM_NOT_IN_LIST, searchText));
 			}
 		} catch (Exception e) {
-			Assert.fail(PDTConstants.COULD_NOT_SELECT_ITEM_FROM_LIST);
 			e.printStackTrace();
+			Assert.fail(PDTConstants.COULD_NOT_SELECT_ITEM_FROM_LIST);
 		}
 	}
 
@@ -1822,8 +1839,9 @@ public class CoreFunctions {
 					+ " | Expected Text = " + expectedText);
 		}
 	}
-	
-	public static boolean verifyText(WebDriver driver, WebElement element, String expectedText, String fieldName, boolean flag) {
+
+	public static boolean verifyText(WebDriver driver, WebElement element, String expectedText, String fieldName,
+			boolean flag) {
 		String actualText = element.getText().trim();
 		if (actualText.equalsIgnoreCase(expectedText)) {
 			highlightObject(driver, element);

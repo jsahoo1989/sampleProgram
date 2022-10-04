@@ -113,5 +113,78 @@
 			"reimbursedByOther": "Reimbursed by other",
 			"comment": "Permanent Storage comment"
 		}
+	},
+	{
+		"benefitName": "Air Shipment",
+		"airShipment": {
+			"weightCap": "100",
+			"unitOfWeightCap": "lbs",
+			"weightCapAppliesTo": "Total",
+			"volumeCap": "200",
+			"unitOfVolumeCap": "cuft",
+			"volCapAppliesTo": "Total",
+			"noOfEContainers": "2",
+			"eContainerAppliesTo": "Total",
+			"noOfDContainers": "2",
+			"dContainerAppliesTo": "Total",
+			"noOfLDNContainers": "2",
+			"LDNContainerAppliesTo": "Total",
+			"canThisBenefitBeTradedForAnotherBenefit": "Lump Sum",
+			"insuranceType": "Other",
+			"insuranceTypeOther": "Client Insurance",
+			"excessValuationDueToWeightPaid": "Client",
+			"excessValuationDueToValuePaid": "Client",
+			"grossUp": "Yes",
+			"reimbursedBy": "Aires",
+			"reimbursedByOther": "Reimbursed by other",
+			"comment": "Air Shipment comment",
+			"temporaryStorageDuration": "Not Offered"
+		}
+	},
+	{
+		"benefitName": "Auto Shipment",
+		"autoShipment": {
+			"maxNoOfAutos": "2",
+			"insuranceType": "Other",
+			"insuranceTypeOther": "Client Insurance",
+			"grossUp": "Yes",
+			"reimbursedBy": "Aires",
+			"reimbursedByOther": "Reimbursed by other",
+			"comment": "Auto Shipment comment"
+		}
+	},
+	{
+		"benefitName": "Sea/Surface Shipment",
+		"seaSurfaceShipment": {
+			"temporaryStorageDuration": "Not Offered",
+			"insuranceType": "Other",
+			"insuranceTypeOther": "Client Insurance",
+			"grossUp": "Yes",
+			"reimbursedBy": "Aires",
+			"reimbursedByOther": "Reimbursed by other",
+			"comment": "Sea/Surface comment"
+		}
+	},
+	{
+		"benefitName": "Inland Shipment",
+		"inlandShipment": {
+			"temporaryStorageDuration": "Not Offered",
+			"insuranceType": "Other",
+			"insuranceTypeOther": "Client Insurance",
+			"grossUp": "Yes",
+			"reimbursedBy": "Aires",
+			"reimbursedByOther": "Reimbursed by other",
+			"comment": "Inland comment"
+		}
+	},
+	{
+		"benefitName": "Pet Shipment",
+		"petShipment": {
+			"noOfPets": "2",
+			"grossUp": "Yes",
+			"reimbursedBy": "Aires",
+			"reimbursedByOther": "Reimbursed by other",
+			"comment": "Pet comment"
+		}
 	}
 ]

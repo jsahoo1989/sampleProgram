@@ -506,7 +506,6 @@ public class MX_Client_AuthorizationHomePage extends Base {
 				return false;
 			}
 		} catch (ElementNotFoundException e) {
-			e.printStackTrace();
 			Log.info("Exception :" + e);
 			return false;
 		}
@@ -655,7 +654,7 @@ public class MX_Client_AuthorizationHomePage extends Base {
 			Assert.assertEquals(CoreFunctions.getElementText(driver, _titleAuthorizationForm),
 					MobilityXConstants.AUTHORIZATION_FORM_TITLE_TEXT, MobilityXConstants.AUTHORIZATION_FORM_TITLE
 							+ MobilityXConstants.TITLE + MobilityXConstants.NOT_EXIST);
-			BusinessFunctions.selectValueFromDropdown(_drpdownAuthorizationFormTemplate,
+			BusinessFunctions.selectValueFromDropdown(driver,_drpdownAuthorizationFormTemplate,
 					MobilityXConstants.DROPDOWN_AUTHORIZATION_FORM_TEMPLATE_VALUE);
 			CoreFunctions.click(driver, _btn_Continue_AuthorizationForm, MobilityXConstants.CONTINUE_BUTTON);
 			CoreFunctions.waitUntilBrowserReady(driver);
@@ -693,10 +692,10 @@ public class MX_Client_AuthorizationHomePage extends Base {
 			Assert.assertEquals(CoreFunctions.getElementText(driver, _titleAuthorizationForm),
 					MobilityXConstants.AUTHORIZATION_FORM_TITLE_TEXT, MobilityXConstants.AUTHORIZATION_FORM_TITLE
 							+ MobilityXConstants.TITLE + MobilityXConstants.NOT_EXIST);
-			BusinessFunctions.selectValueFromDropdown(_drpdownAuthorizationFormTemplateCompanyName,
+			BusinessFunctions.selectValueFromDropdown(driver,_drpdownAuthorizationFormTemplateCompanyName,
 					companyName + " (" + companyId + ")");
 			CoreFunctions.waitHandler(2);
-			BusinessFunctions.selectValueFromDropdown(_drpdownAuthorizationFormTemplate, option);
+			BusinessFunctions.selectValueFromDropdown(driver,_drpdownAuthorizationFormTemplate, option);
 			CoreFunctions.click(driver, _btn_Continue_AuthorizationForm, MobilityXConstants.CONTINUE_BUTTON);
 			CoreFunctions.waitUntilBrowserReady(driver);
 			driver.switchTo().defaultContent();
@@ -846,34 +845,34 @@ public class MX_Client_AuthorizationHomePage extends Base {
 	private void fillAuthorizationInfoForBSCDomesticForm(AuthorizationInfo authorisationInfo) {
 		CoreFunctions.clearAndSetText(driver, _hrManagerTextField, authorisationInfo.hrManagerName);
 		CoreFunctions.clearAndSetText(driver, _hiringManagerName, authorisationInfo.hiringManagerName);
-		BusinessFunctions.selectValueFromDropdown(_fundingECMember, authorisationInfo.fundingECMember);
+		BusinessFunctions.selectValueFromDropdown(driver,_fundingECMember, authorisationInfo.fundingECMember);
 	}
 
 	private void fillAuthorizationReportingInfoForBSCDomesticForm(ReportingInfo reportingInfo) {
 		CoreFunctions.clearAndSetText(driver, _inputCostCenter, reportingInfo.costCenter);
-		BusinessFunctions.selectValueFromDropdown(_selectDivision, reportingInfo.division);
-		BusinessFunctions.selectValueFromDropdown(_selectOperatingUnit, reportingInfo.operatingUnit);
+		BusinessFunctions.selectValueFromDropdown(driver,_selectDivision, reportingInfo.division);
+		BusinessFunctions.selectValueFromDropdown(driver,_selectOperatingUnit, reportingInfo.operatingUnit);
 	}
 
 	private void fillAuthorizationRelocationInfoForBSCDomesticForm(RelocationInfo relocationInfo) {
 		BusinessFunctions.selectRadioAsPerLabelText(driver, _radioButtonLabel_listForAll, relocationInfo.transferType);
-		BusinessFunctions.selectValueFromDropdown(_assignmentType, relocationInfo.assignmentType);
+		BusinessFunctions.selectValueFromDropdown(driver,_assignmentType, relocationInfo.assignmentType);
 		CoreFunctions.clearAndSetText(driver, _inputStartDate, CoreFunctions.getcurrentdate());
 		CoreFunctions.clearAndSetText(driver, _txt_jobTitle, relocationInfo.newJobTitle);
 		BusinessFunctions.selectRadioAsPerLabelText(driver, _radioButtonLabel_Immigration, relocationInfo.immigration);
 	}
 
 	private void fillAuthorizationEmployeeInfoForBSCDomesticForm(BscEmployeeInfo bscEmployeeInfo) {
-		BusinessFunctions.selectValueFromDropdown(_relocationPolicy,
+		BusinessFunctions.selectValueFromDropdown(driver,_relocationPolicy,
 				CoreFunctions.getPropertyFromConfig("Assignment_Policy"));
 		CoreFunctions.clearAndSetText(driver, _txt_EmployeeID, bscEmployeeInfo.employeeID);
 		BusinessFunctions.selectRadioAsPerLabelText(driver, _homeStatusRadio, bscEmployeeInfo.homeStatus);
 		CoreFunctions.clearAndSetText(driver, _txt_OriginHomeAddress, bscEmployeeInfo.originHomeAddress);
 		CoreFunctions.clearAndSetText(driver, _txt_OriginCity, bscEmployeeInfo.originHomeCity);
-		BusinessFunctions.selectValueFromDropdown(_originState, bscEmployeeInfo.originHomeState);
-		BusinessFunctions.selectValueFromDropdown(_originCountry, bscEmployeeInfo.originHomeCountry.trim());
-		BusinessFunctions.selectValueFromDropdown(_originOfficeCityState, bscEmployeeInfo.officeOriginCityState);
-		BusinessFunctions.selectValueFromDropdown(_destinationOfficeCityState,
+		BusinessFunctions.selectValueFromDropdown(driver,_originState, bscEmployeeInfo.originHomeState);
+		BusinessFunctions.selectValueFromDropdown(driver,_originCountry, bscEmployeeInfo.originHomeCountry.trim());
+		BusinessFunctions.selectValueFromDropdown(driver,_originOfficeCityState, bscEmployeeInfo.officeOriginCityState);
+		BusinessFunctions.selectValueFromDropdown(driver,_destinationOfficeCityState,
 				bscEmployeeInfo.destinationOfficeLocation);
 		CoreFunctions.waitHandler(3);
 		CoreFunctions.clearAndSetText(driver, _txt_mobileTelephone, bscEmployeeInfo.mobilePhone);
@@ -1033,11 +1032,15 @@ public class MX_Client_AuthorizationHomePage extends Base {
 		boolean areRequiredFieldsVerified = false, isGrowlMessageVerified = false,
 				isItemsNeedsAttentionVerified = false;
 		try {
-			String expectedGrowlMessage = buttonName.equals(MobilityXConstants.START_BENEFIT_SELECTION)
-					? MobilityXConstants.GROWL_MESSAGE_FOR_FLEX_BENEFITS
-					: (buttonName.equals(MobilityXConstants.SUBMIT_TO_AIRES)
-							? MobilityXConstants.GROWL_MESSAGE_FOR_SUBMIT_AUTHORIZATION
-							: null);
+			String expectedGrowlMessage = (buttonName
+					.equals(MobilityXConstants.START_BENEFIT_SELECTION)
+							? MobilityXConstants.GROWL_MESSAGE_FOR_MISSING_INFORMATION
+							: (buttonName.equals(MobilityXConstants.SUBMIT_TO_AIRES) && (CoreFunctions
+									.getPropertyFromConfig("CoreFlex_Policy_FlexSetupType")
+									.equals(COREFLEXConstants.STATIC_FIXED)))
+											? MobilityXConstants.GROWL_MESSAGE_FOR_MISSING_FLEX_BENEFITS_SELECTION
+											: MobilityXConstants.GROWL_MESSAGE_FOR_SUBMIT_AUTHORIZATION);
+
 			if (CoreFunctions.isElementExist(driver, _textGrowlMessage, 3)) {
 				isGrowlMessageVerified = CoreFunctions.verifyText(driver, _textGrowlMessage, expectedGrowlMessage,
 						MobilityXConstants.REQUIRED_FIELDS_GROWL_MESSAGE, true);
@@ -1071,8 +1074,10 @@ public class MX_Client_AuthorizationHomePage extends Base {
 
 	public boolean verifyNumericRangeFieldsValidation() {
 		try {
-			checkFieldValidation(COREFLEXConstants.TOTAL_POINTS_VALUE, "0.49");
-			return true;
+			return (CoreFunctions.getPropertyFromConfig("CoreFlex_Policy_FlexSetupType")
+					.equals(COREFLEXConstants.STATIC_FIXED)) ? true
+							: checkFieldValidation(COREFLEXConstants.TOTAL_POINTS_VALUE, "0.49");
+
 		} catch (Exception e) {
 			Reporter.addStepLog(MessageFormat.format(
 					COREFLEXConstants.EXCEPTION_OCCURED_WHILE_VERIFYING_TOTAL_POINTS_FIELD_VALIDATION_ON_AUTH_FORM_PAGE,
@@ -1081,21 +1086,23 @@ public class MX_Client_AuthorizationHomePage extends Base {
 		return false;
 	}
 
-	public void checkFieldValidation(String fieldName, String inputValue) {
+	public boolean checkFieldValidation(String fieldName, String inputValue) {
 		boolean isValidationMessageDisplayed = false;
 		switch (fieldName) {
 		case COREFLEXConstants.TOTAL_POINTS_VALUE:
 			CoreFunctions.clearAndSetTextUsingKeys(driver, _inputTotalPoints, inputValue,
 					COREFLEXConstants.TOTAL_POINTS_VALUE);
 			clickOnElementOnAuthorizationPage(MobilityXConstants.SUBMIT_TO_AIRES);
-			if (CoreFunctions.isElementExist(driver, _textTotalPointsErrorMessage, 2))
+			if (CoreFunctions.isElementExist(driver, _textTotalPointsErrorMessage, 2)) {
 				isValidationMessageDisplayed = CoreFunctions.getElementText(driver, _textTotalPointsErrorMessage)
 						.equals(COREFLEXConstants.POINT_FIVE_TO_ONE_THOUSAND_RANGE_OLD_MESSAGE);
-			BusinessFunctions.checkValidationBasedOnInput(isValidationMessageDisplayed, fieldName, inputValue);
-			break;
+				BusinessFunctions.checkValidationBasedOnInput(isValidationMessageDisplayed, fieldName, inputValue);
+				return true;
+			}
 		default:
 			Assert.fail(COREFLEXConstants.INVALID_OPTION);
 		}
+		return false;
 	}
 
 	public void enterValidInitialTotalPointsValue(MX_Client_Dashboard_BscData authorizationData) {
@@ -1121,7 +1128,7 @@ public class MX_Client_AuthorizationHomePage extends Base {
 
 	public boolean selectRelocationPolicy() {
 		try {
-			BusinessFunctions.selectValueFromDropdown(_relocationPolicy,
+			BusinessFunctions.selectValueFromDropdown(driver,_relocationPolicy,
 					CoreFunctions.getPropertyFromConfig("Assignment_Policy"));
 			Reporter.addStepLog(
 					MessageFormat.format(COREFLEXConstants.SUCCESSFULLY_SELECTED_RELOCATION_POLICY_ON_AUTH_FORM_PAGE,
@@ -1454,7 +1461,7 @@ public class MX_Client_AuthorizationHomePage extends Base {
 			CoreFunctions.writeToPropertiesFile("Assignment_FileID", actualResultFileID.trim());
 			Reporter.addStepLog(MessageFormat.format(
 					MobilityXConstants.SUCCESSFULLY_VERIFIED_FILE_ID_PRESENT_IN_NEW_INITIATION_SUBMITTED_EMAIL,
-					CoreConstants.PASS,actualResultFileID));
+					CoreConstants.PASS, actualResultFileID));
 		}
 		return isFileIDVerified;
 	}
@@ -1509,7 +1516,7 @@ public class MX_Client_AuthorizationHomePage extends Base {
 		if (isSubmissionStatusVerified) {
 			Reporter.addStepLog(MessageFormat.format(
 					MobilityXConstants.SUCCESSFULLY_VERIFIED_AUTH_FORM_SUBMISSION_STATUS_IN_NEW_INITIATION_SUBMITTED_EMAIL,
-					CoreConstants.PASS,MobilityXConstants.SUBMITTED));
+					CoreConstants.PASS, MobilityXConstants.SUBMITTED));
 		}
 		return isSubmissionStatusVerified;
 	}

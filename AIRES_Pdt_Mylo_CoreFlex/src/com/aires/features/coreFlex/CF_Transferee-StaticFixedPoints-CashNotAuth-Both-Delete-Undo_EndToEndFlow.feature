@@ -1,8 +1,8 @@
 Feature: Validate the CoreFlex End-To-End Business Test Flow(BluePrint, MXTransferee,Transferee Submissions) for Both_Transferee_StaticFixedPoints_CashoutNotAuthorized_Delete_Undo selection
 
   @End-To-End_CoreFlex @CF_MXTransferee_StaticFixed_CashNotAuth_UndoRequest
-  Scenario: CoreFlex - Setting up a New CoreFlex policy in 'Policy Digitization Tool' application
-    Given he has setup a new CoreFlex Policy with following selection in Blueprint application
+  Scenario: CoreFlex - Creating & Validating a new Active Points Based CoreFlex Policy with Transferee, Static/Fixed and CashNotAuth selection
+   Given he has setup a new Points Based CoreFlex Policy with following selection in Blueprint application
       | Person Responsible For Benefit Selection | Flex Setup Type | Cashout Availability   | BenefitType | PolicyRequiredFor | MileStones |
       | Transferee                               | Static/Fixed    | Cashout Not Authorized | Both        | Client            |          0 |
     And he has clicked on "Submit" button to submit "V1" policy verison on "Custom Bundles" page
@@ -23,13 +23,11 @@ Feature: Validate the CoreFlex End-To-End Business Test Flow(BluePrint, MXTransf
     And he has navigated to "My Benefits Bundle" page after selecting required benefits on "FleX Planning Tool" page
     And he has clicked on "Review and Submit" button after validating all the benefit details listed under 'Selected Benefits' section on "My Benefits Bundle" page
     And he has clicked on "Yes - submit my bundle" button after entering Transferee name on "Submit Bundle Confirmation" dialog
-    And he has clicked on "OK - Let Me See My Benefits!" button displayed on 'Success Flex' dialog
+   And he has clicked on "OK - Let Me See My Benefits!" button displayed on 'Success Flex' dialog
     And he has verified submitted points details on 'Mobility Journey Home' and 'Flex Planning Tool' page
     And he has verified submitted benefit details under 'Submitted Benefits' section of 'My Benefits Bundle' page
-    And he has clicked on "Delete" button for a benefit under 'Submitted Benefits' section
-    When he confirms 'Remove Benefit Selection' dialog by entering username and clicking on "Yes-request to delete these benefits"
-    Then 'Delete Request Sent' growl message should be displayed on 'My Benefit Bundle' page
-    And 'Status' of the deleted benefit should be displayed as "Delete Request Pending" under 'Submitted Benefits' section of 'My Benefit Bundle' page
+    When he 'Delete' submitted Benefits and confirms 'Remove Benefit Selection' dialog by entering username and clicking on "Yes-request to delete this benefit"
+    Then 'Status' of the deleted benefit should be displayed as "Delete Request Pending" under 'Submitted Benefits' section of 'My Benefit Bundle' page
 
   @End-To-End_CoreFlex @CF_MXTransferee_StaticFixed_CashNotAuth_UndoRequest
   Scenario: TransfereeSubmissions - Verifying StaticFixed Points, BenefitSubmissions and Delete Undo Request transaction for the request made by the Transferee

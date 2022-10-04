@@ -2,8 +2,6 @@ package stepDefinitions.coreFlex;
 
 import java.text.MessageFormat;
 import java.util.Date;
-import java.util.List;
-import java.util.Map;
 
 import org.testng.Assert;
 
@@ -13,36 +11,14 @@ import com.aires.businessrules.constants.CoreConstants;
 import com.aires.businessrules.constants.MobilityXConstants;
 import com.aires.businessrules.constants.PDTConstants;
 import com.aires.cucumber.TestContext;
-import com.aires.pages.coreflex.CoreFlex_AirportPickup_BenefitsPage;
-import com.aires.pages.coreflex.CoreFlex_AreaTour_BenefitsPage;
-import com.aires.pages.coreflex.CoreFlex_AutoRentalDuringAssignment_BenefitsPage;
 import com.aires.pages.coreflex.CoreFlex_BenefitSummaryPage;
 import com.aires.pages.coreflex.CoreFlex_BluePrint_LoginPage;
-import com.aires.pages.coreflex.CoreFlex_ConciergeServices_BenefitsPage;
-import com.aires.pages.coreflex.CoreFlex_CulturalTraining_BenefitsPage;
 import com.aires.pages.coreflex.CoreFlex_CustomBundlesPage;
-import com.aires.pages.coreflex.CoreFlex_DuplicateHousing_BenefitsPage;
-import com.aires.pages.coreflex.CoreFlex_EducationAssistanceSchoolSearch_BenefitsPage;
-import com.aires.pages.coreflex.CoreFlex_FinalMove_BenefitsPage;
 import com.aires.pages.coreflex.CoreFlex_FlexPolicySetupPage;
-import com.aires.pages.coreflex.CoreFlex_FurnitureRental_BenefitsPage;
-import com.aires.pages.coreflex.CoreFlex_HomeLeave_BenefitsPage;
-import com.aires.pages.coreflex.CoreFlex_HomePurchase_BenefitsPage;
-import com.aires.pages.coreflex.CoreFlex_HouseHuntingTrip_BenefitsPage;
-import com.aires.pages.coreflex.CoreFlex_LanguageTraining_BenefitsPage;
-import com.aires.pages.coreflex.CoreFlex_LumpSum_BenefitsPage;
-import com.aires.pages.coreflex.CoreFlex_OtherHousing_BenefitsPage;
 import com.aires.pages.coreflex.CoreFlex_PolicyBenefitsCategoriesPage;
-import com.aires.pages.coreflex.CoreFlex_PreAcceptanceServices_BenefitsPage;
 import com.aires.pages.coreflex.CoreFlex_PreviewTransfereePage;
-import com.aires.pages.coreflex.CoreFlex_TemporaryLiving_BenefitsPage;
 import com.aires.pages.coreflex.MX_Transferee_FlexPlanningTool_Page;
 import com.aires.pages.coreflex.MX_Transferee_JourneyHomePage;
-import com.aires.pages.coreflex.MX_Transferee_MyBenefitsBundlePage;
-import com.aires.pages.coreflex.MobilityX_LoginPage;
-import com.aires.pages.coreflex.TransfereeSubmissions_DashboardHomePage;
-import com.aires.pages.coreflex.TransfereeSubmissions_DetailsPage;
-import com.aires.pages.coreflex.TransfereeSubmissions_LoginPage;
 import com.aires.pages.pdt.PDT_GeneralInformationPage;
 import com.aires.pages.pdt.PDT_ViewPolicyPage;
 import com.vimalselvam.cucumber.listener.Reporter;
@@ -64,30 +40,9 @@ public class CF_BluePrint_Versioning_Steps {
 	private PDT_GeneralInformationPage generalInfoPage;
 	private CoreFlex_FlexPolicySetupPage flexPolicySetupPage;
 	private CoreFlex_PolicyBenefitsCategoriesPage coreFlexPolicyBenefitsCategoriesPage;
-	private CoreFlex_DuplicateHousing_BenefitsPage coreFlexDuplicateHousingBenefitsPage;
-	private CoreFlex_LumpSum_BenefitsPage coreFlexLumpSumBenefitsPage;
 	private CoreFlex_BenefitSummaryPage coreFlexBenefitSummaryPage;
-	private CoreFlex_OtherHousing_BenefitsPage coreFlexOtherHousingBenefitsPage;
-	private MobilityX_LoginPage mobilityXLoginPage;
-	private MX_Transferee_MyBenefitsBundlePage mxTransfereeMyBenefitsBundlePage;
-	private TransfereeSubmissions_LoginPage transfereeSubmissionsLoginPage;
-	private TransfereeSubmissions_DashboardHomePage transfereeSubmissionsDashboardHomePage;
+
 	private CoreFlex_PreviewTransfereePage coreFlexTransfereePreviewPage;
-	private TransfereeSubmissions_DetailsPage transfereeSubmissionsDetailsPage;
-	private CoreFlex_LanguageTraining_BenefitsPage coreFlexLanguageTrainingBenefitsPage;
-	private CoreFlex_TemporaryLiving_BenefitsPage coreFlexTemporaryLivingBenefitsPage;
-	private CoreFlex_CulturalTraining_BenefitsPage coreFlexCulturalTrainingBenefitsPage;
-	private CoreFlex_ConciergeServices_BenefitsPage coreFlexConciergeServicesBenefitsPage;
-	private CoreFlex_HomePurchase_BenefitsPage coreFlexHomePurchaseBenefitsPage;
-	private CoreFlex_FinalMove_BenefitsPage coreFlexFinalMoveBenefitsPage;
-	private CoreFlex_AreaTour_BenefitsPage coreFlexAreaTourBenefitsPage;
-	private CoreFlex_HomeLeave_BenefitsPage coreFlexHomeLeaveBenefitsPage;
-	private CoreFlex_AirportPickup_BenefitsPage coreFlexAirportPickupBenefitsPage;
-	private CoreFlex_PreAcceptanceServices_BenefitsPage coreFlexPreAcceptanceServicesBenefitsPage;
-	private CoreFlex_FurnitureRental_BenefitsPage coreFlexFurnitureRentalBenefitsPage;
-	private CoreFlex_AutoRentalDuringAssignment_BenefitsPage coreFlexAutoRentalDuringAssignmentBenefitsPage;
-	private CoreFlex_EducationAssistanceSchoolSearch_BenefitsPage coreFlexEducationAssistanceBenefitsPage;
-	private CoreFlex_HouseHuntingTrip_BenefitsPage coreFlexHouseHuntingTripBenefitsPage;
 
 	public CF_BluePrint_Versioning_Steps(TestContext context) {
 		testContext = context;
@@ -108,49 +63,16 @@ public class CF_BluePrint_Versioning_Steps {
 		coreFlexPolicyBenefitsCategoriesPage = testContext.getCoreFlexPageObjectManager()
 				.getCoreFlexPolicyBenefitsCategoriesPage();
 		coreFlexCustomBundlesPage = testContext.getCoreFlexPageObjectManager().getCoreFlexCustomBundlesPage();
-		coreFlexDuplicateHousingBenefitsPage = testContext.getCoreFlexPageObjectManager()
-				.getCoreFlexDuplicateHousingBenefitsPage();
-		coreFlexLumpSumBenefitsPage = testContext.getCoreFlexPageObjectManager().getCoreFlexLumpSumBenefitsPage();
+		testContext.getCoreFlexPageObjectManager().initializeCoreFlexPageObjects();
 		coreFlexBenefitSummaryPage = testContext.getCoreFlexPageObjectManager().getCoreFlexBenefitSummaryPage();
-		mobilityXLoginPage = testContext.getCoreFlexPageObjectManager().getMobilityXLoginPage();
+
 		mxTransfereeJourneyHomePage = testContext.getCoreFlexPageObjectManager().getMXTransfereeJourneyHomePage();
 		mxTransfereeFlexPlanningToolPage = testContext.getCoreFlexPageObjectManager()
 				.getMXTransfereeFlexPlanningToolPage();
-		mxTransfereeMyBenefitsBundlePage = testContext.getCoreFlexPageObjectManager()
-				.getMXTransfereeMyBenefitsBundlePage();
-		transfereeSubmissionsLoginPage = testContext.getCoreFlexPageObjectManager().getTransfereeSubmissionsLoginPage();
-		transfereeSubmissionsDashboardHomePage = testContext.getCoreFlexPageObjectManager()
-				.getTransfereeSubmissionsDashboardHomePage();
-		coreFlexOtherHousingBenefitsPage = testContext.getCoreFlexPageObjectManager().getOtherHousingBenefitPage();
+
 		coreFlexTransfereePreviewPage = testContext.getCoreFlexPageObjectManager().getCoreFlexTransfereePreviewPage();
 		bluePrintCFLoginPage = testContext.getPageObjectManager().getBluePrintCoreFlexLoginPage();
-		transfereeSubmissionsDetailsPage = testContext.getCoreFlexPageObjectManager()
-				.getTransfereeSubmissionsDetailsPage();
-		coreFlexLanguageTrainingBenefitsPage = testContext.getCoreFlexPageObjectManager()
-				.getCoreFlexLanguageTrainingBenefitsPage();
-		coreFlexTemporaryLivingBenefitsPage = testContext.getCoreFlexPageObjectManager()
-				.getCoreFlexTemporaryLivingBenefitPage();
-		coreFlexCulturalTrainingBenefitsPage = testContext.getCoreFlexPageObjectManager()
-				.getCoreFlexCulturalTrainingBenefitsPage();
-		coreFlexConciergeServicesBenefitsPage = testContext.getCoreFlexPageObjectManager()
-				.getCoreFlexConciergeServicesBenefitsPage();
-		coreFlexHomePurchaseBenefitsPage = testContext.getCoreFlexPageObjectManager()
-				.getCoreFlexHomePurchaseBenefitsPage();
-		coreFlexFinalMoveBenefitsPage = testContext.getCoreFlexPageObjectManager().getCoreFlexFinalMoveBenefitsPage();
-		coreFlexAreaTourBenefitsPage = testContext.getCoreFlexPageObjectManager().getCoreFlexAreaTourBenefitsPage();
-		coreFlexHomeLeaveBenefitsPage = testContext.getCoreFlexPageObjectManager().getCoreFlexHomeLeaveBenefitsPage();
-		coreFlexAirportPickupBenefitsPage = testContext.getCoreFlexPageObjectManager()
-				.getCoreFlexAirportPickupBenefitsPage();
-		coreFlexPreAcceptanceServicesBenefitsPage = testContext.getCoreFlexPageObjectManager()
-				.getCoreFlexPreAcceptanceServicesBenefitsPage();
-		coreFlexFurnitureRentalBenefitsPage = testContext.getCoreFlexPageObjectManager()
-				.getCoreFlexFurnitureRentalBenefitsPage();
-		coreFlexAutoRentalDuringAssignmentBenefitsPage = testContext.getCoreFlexPageObjectManager()
-				.getCoreFlexAutoRentalDuringAssignmentBenefitsPage();
-		coreFlexEducationAssistanceBenefitsPage = testContext.getCoreFlexPageObjectManager()
-				.getCoreFlexEducationAssistanceBenefitsPage();
-		coreFlexHouseHuntingTripBenefitsPage = testContext.getCoreFlexPageObjectManager()
-				.getCoreFlexHouseHuntingTripBenefitsPage();
+
 	}
 
 	@When("^he clicks on \"([^\"]*)\" button to close 'Approve this Policy' dialog$")
@@ -255,6 +177,12 @@ public class CF_BluePrint_Versioning_Steps {
 		CoreConstants.TIME_BEFORE_ACTION = new Date().getTime();
 	}
 
+	@Given("^he has searched for \"([^\"]*)\" points based CoreFlex policy on \"([^\"]*)\" page$")
+	public void he_has_searched_for_points_based_CoreFlex_policy_on_page(String policyStatus, String pageName)
+			throws Throwable {
+		viewPolicyPage.searchAndVerifyPolicy(CoreFunctions.getPropertyFromConfig("Assignment_Policy"), pageName);
+	}
+
 	@Given("^he has verified following 'Assignment Details' after clicking on \"([^\"]*)\" icon of the searched \"([^\"]*)\" points based CoreFlex policy$")
 	public void he_has_verified_following_Assignment_Details_after_clicking_on_AssignmentHistoryIcon_icon_of_the_searched_points_based_CoreFlex_policy(
 			String assignmentHistoryIcon, String policyStatus, DataTable dataTable) throws Throwable {
@@ -272,9 +200,9 @@ public class CF_BluePrint_Versioning_Steps {
 		Assert.assertTrue(viewPolicyPage.verifyRecordForAssignmentAssociation(dataTable), MessageFormat.format(
 				PDTConstants.FAILED_TO_VERIFY_ASSIGNMENT_HISTORY_FOR_NO_ASSIGNMENT_ASSOCIATION, CoreConstants.FAIL));
 		viewPolicyPage.clickElementOfPage(COREFLEXConstants.EXIT);
-		viewPolicyPage.clickElementOfPage(COREFLEXConstants.OK);
-		viewPolicyPage.searchAndVerifyPolicy(CoreFunctions.getPropertyFromConfig("Assignment_Policy"),
-				COREFLEXConstants.VIEW_EDIT_POLICY_FORMS);
+//		viewPolicyPage.clickElementOfPage(COREFLEXConstants.OK);
+//		viewPolicyPage.searchAndVerifyPolicy(CoreFunctions.getPropertyFromConfig("Assignment_Policy"),
+//				COREFLEXConstants.VIEW_EDIT_POLICY_FORMS);
 
 	}
 
@@ -382,9 +310,9 @@ public class CF_BluePrint_Versioning_Steps {
 						CoreFunctions.getPropertyFromConfig("Policy_TracingSet")),
 				MessageFormat.format(PDTConstants.FAILED_TO_VERIFY_DEFAULT_VALUE_OF_GENERAL_INFORMATION_PAGE_FIELD,
 						CoreConstants.FAIL, PDTConstants.TRACING_SET));
-		Assert.assertTrue(generalInfoPage.verifyFieldDisabledPostVersioning(PDTConstants.POINTS_BASED_FLEX_POLICY),
-				MessageFormat.format(COREFLEXConstants.FIELD_NOT_DISABLED_ON_GENERAL_INFORMATION_PAGE,
-						CoreConstants.FAIL, PDTConstants.POINTS_BASED_FLEX_POLICY));
+//		Assert.assertTrue(generalInfoPage.verifyFieldDisabledPostVersioning(PDTConstants.POINTS_BASED_FLEX_POLICY),
+//				MessageFormat.format(COREFLEXConstants.FIELD_NOT_DISABLED_ON_GENERAL_INFORMATION_PAGE,
+//						CoreConstants.FAIL, PDTConstants.POINTS_BASED_FLEX_POLICY));
 		Assert.assertTrue(
 				generalInfoPage.verifyGeneralInfoFieldDefaultValue(PDTConstants.POINTS_BASED_FLEX_POLICY,
 						COREFLEXConstants.YES),
@@ -397,14 +325,10 @@ public class CF_BluePrint_Versioning_Steps {
 		generalInfoPage.clickElementOfPage(PDTConstants.NEXT);
 	}
 
-	@Given("^he has verified 'Policy-Benefits-SubBenefits' details of \"([^\"]*)\" - \"([^\"]*)\" version Policy matches with following \"([^\"]*)\" policy selections$")
-	public void he_has_verified_Policy_Benefits_SubBenefits_details_of_version_Policy_matches_with_following_policy_selections(
-			String newPolicyVersion, String newPolicyStatus, String oldPolicyVersion, DataTable dataTable)
-			throws Throwable {
-		List<Map<String, String>> basePolicyDataMap = dataTable.asMaps(String.class, String.class);
-		String benefitType = basePolicyDataMap.get(0).get("BenefitType");
-		String policyRequiredFor = basePolicyDataMap.get(0).get("PolicyRequiredFor");
-		String numberOfMilestones = basePolicyDataMap.get(0).get("MileStones");
+	@Given("^he has verified 'Policy-Benefits-SubBenefits' details of \"([^\"]*)\" - \"([^\"]*)\" version Policy matches with \"([^\"]*)\" policy selections$")
+	public void he_has_verified_Policy_Benefits_SubBenefits_details_of_version_Policy_matches_with_policy_selections(
+			String newPolicyVersion, String newPolicyStatus, String oldPolicyVersion) throws Throwable {
+
 		CoreConstants.TIME_BEFORE_ACTION = new Date().getTime();
 		Assert.assertTrue(flexPolicySetupPage.verifyPageNavigation(COREFLEXConstants.FLEX_POLICY_SETUP),
 				MessageFormat.format(COREFLEXConstants.FAILED_TO_VERIFY_USER_NAVIGATION_TO_FLEX_POLICY_SETUP_PAGE,
@@ -416,7 +340,7 @@ public class CF_BluePrint_Versioning_Steps {
 		Assert.assertTrue(flexPolicySetupPage.verifyBenfitExpirationLockBenefitTooltip(), MessageFormat.format(
 				COREFLEXConstants.FAILED_TO_VERIFY_BENEFIT_EXPIRATION_AND_LOCK_BENEFITS_TOOLTIP_ON_FLEX_POLICY_SETUP_PAGE,
 				CoreConstants.FAIL));
-		Assert.assertTrue(flexPolicySetupPage.verifyFPTFieldValuesPostVersioningCloning(dataTable),
+		Assert.assertTrue(flexPolicySetupPage.verifyFPTFieldValuesPostVersioningCloning(),
 				MessageFormat.format(
 						COREFLEXConstants.FIELDS_VALIDATION_FAILED_ON_FLEX_POLICY_SETUP_PAGE_POST_VERSIONING_CLONING,
 						CoreConstants.FAIL));
@@ -432,22 +356,29 @@ public class CF_BluePrint_Versioning_Steps {
 		Reporter.addStepLog("<b>Total time taken to navigate to <i>Blueprint - Policy Benefit Categories</i> page is :"
 				+ CoreFunctions.calculatePageLoadTime(CoreConstants.TIME_BEFORE_ACTION, CoreConstants.TIME_AFTER_ACTION)
 				+ " Seconds </b>");
-//		Assert.assertTrue(coreFlexPolicyBenefitsCategoriesPage.verifyPolicyCategoriesBenefitsAndOrder(),
-//				MessageFormat.format(
-//						COREFLEXConstants.FAILED_TO_VERIFY_POLICY_CATEGORIES_BENEFITS_AND_ORDER_ON_POLICY_BENEFITS_CATEGORIES_PAGE,
-//						CoreConstants.FAIL));
+		Assert.assertTrue(coreFlexPolicyBenefitsCategoriesPage.verifyPolicyCategoriesBenefitsAndOrder(),
+				MessageFormat.format(
+						COREFLEXConstants.FAILED_TO_VERIFY_POLICY_CATEGORIES_BENEFITS_AND_ORDER_ON_POLICY_BENEFITS_CATEGORIES_PAGE,
+						CoreConstants.FAIL));
 
 		Assert.assertTrue(
-				coreFlexPolicyBenefitsCategoriesPage.verifySelectedBenefitsPostVersioningCloning(benefitType,
-						policyRequiredFor, numberOfMilestones),
+				coreFlexPolicyBenefitsCategoriesPage.verifySelectedBenefitsPostVersioningCloning(
+						CoreFunctions.getPropertyFromConfig("CoreFlex_Policy_BenefitType"),
+						CoreFunctions.getPropertyFromConfig("CoreFlex_Policy_RequiredFor"), "0"),
 				MessageFormat.format(
 						COREFLEXConstants.FAILED_TO_VERIFY_SELECTED_BENEFITS_ON_POLICY_BENEFITS_CATEGORIES_PAGE,
 						CoreConstants.FAIL));
 		coreFlexPolicyBenefitsCategoriesPage.clickElementOfPage(PDTConstants.NEXT);
+
+		Assert.assertTrue(coreFlexPolicyBenefitsCategoriesPage.verifyInformationDialog(), MessageFormat.format(
+				COREFLEXConstants.FAILED_TO_VERIFY_INFORMATION_DIALOG_AFTER_SELECTING_BENEFITS_AND_CLICKING_NEXT_ON_POLICY_BENEFIT_CATEGORIES_PAGE,
+				CoreConstants.FAIL));
+
 		CoreConstants.TIME_BEFORE_ACTION = new Date().getTime();
 		Assert.assertTrue(
-				coreFlexPolicyBenefitsCategoriesPage.verifyBenefitsDisplayedOnLeftNavigation(benefitType,
-						policyRequiredFor, numberOfMilestones),
+				coreFlexPolicyBenefitsCategoriesPage.verifyBenefitsDisplayedOnLeftNavigation(
+						CoreFunctions.getPropertyFromConfig("CoreFlex_Policy_BenefitType"),
+						CoreFunctions.getPropertyFromConfig("CoreFlex_Policy_RequiredFor"), "0"),
 				MessageFormat.format(
 						COREFLEXConstants.FAILED_TO_VERIFY_SELECTED_BENEFITS_ON_LEFT_NAVIGATION_POST_VERSIONING_CLONING,
 						CoreConstants.FAIL));
@@ -455,15 +386,10 @@ public class CF_BluePrint_Versioning_Steps {
 		Reporter.addStepLog("<b>Total time taken to navigate to <i>Selected Benefits</i> page is :"
 				+ CoreFunctions.calculatePageLoadTime(CoreConstants.TIME_BEFORE_ACTION, CoreConstants.TIME_AFTER_ACTION)
 				+ " Seconds </b>");
-		Assert.assertTrue(coreFlexPolicyBenefitsCategoriesPage.verifyAddedBenefitDetailsPostVersioningCloning(
-				benefitType, coreFlexDuplicateHousingBenefitsPage, coreFlexLumpSumBenefitsPage,
-				coreFlexOtherHousingBenefitsPage, coreFlexLanguageTrainingBenefitsPage,
-				coreFlexTemporaryLivingBenefitsPage, coreFlexCulturalTrainingBenefitsPage,
-				coreFlexConciergeServicesBenefitsPage, coreFlexHomePurchaseBenefitsPage, coreFlexFinalMoveBenefitsPage,
-				coreFlexAreaTourBenefitsPage, coreFlexHomeLeaveBenefitsPage, coreFlexAirportPickupBenefitsPage,
-				coreFlexPreAcceptanceServicesBenefitsPage, coreFlexFurnitureRentalBenefitsPage,
-				coreFlexAutoRentalDuringAssignmentBenefitsPage, coreFlexEducationAssistanceBenefitsPage,
-				coreFlexHouseHuntingTripBenefitsPage, policyRequiredFor, numberOfMilestones),
+		Assert.assertTrue(
+				coreFlexPolicyBenefitsCategoriesPage.verifyAddedBenefitDetailsPostVersioningCloning(
+						CoreFunctions.getPropertyFromConfig("CoreFlex_Policy_BenefitType"),
+						CoreFunctions.getPropertyFromConfig("CoreFlex_Policy_RequiredFor"), "0"),
 				MessageFormat.format(COREFLEXConstants.FAILED_TO_SELECT_AND_FILL_ADDED_BENEFITS, CoreConstants.FAIL));
 	}
 
@@ -657,12 +583,12 @@ public class CF_BluePrint_Versioning_Steps {
 						CoreFunctions.getPropertyFromConfig("Policy_TracingSet")),
 				MessageFormat.format(PDTConstants.FAILED_TO_VERIFY_DEFAULT_VALUE_OF_GENERAL_INFORMATION_PAGE_FIELD,
 						CoreConstants.FAIL, PDTConstants.TRACING_SET));
-		generalInfoPage.fillOtherMandatoryFieldsPostVersioning();
+//		generalInfoPage.fillOtherMandatoryFieldsPostVersioning();
 	}
 
-	@Given("^he has filled 'Benefit-SubBenefit' details after adding a new \"([^\"]*)\" type Benefit on 'Policy Benefit Categories' page$")
-	public void he_has_filled_Benefit_SubBenefit_details_after_adding_a_new_type_Benefit_on_Policy_Benefit_Categories_page(
-			String policyType) throws Throwable {
+	@Given("^he has filled 'Benefit-SubBenefit' details after adding a new Benefit on 'Policy Benefit Categories' page$")
+	public void he_has_filled_Benefit_SubBenefit_details_after_adding_a_new_Benefit_on_Policy_Benefit_Categories_page()
+			throws Throwable {
 		flexPolicySetupPage.clickLeftNavigationMenuOfPage(COREFLEXConstants.POLICY_BENEFIT_CATEGORIES);
 		CoreConstants.TIME_BEFORE_ACTION = new Date().getTime();
 		Assert.assertTrue(
@@ -679,6 +605,11 @@ public class CF_BluePrint_Versioning_Steps {
 						COREFLEXConstants.FAILED_TO_SELECT_ADDITIONAL_BENEFIT_ON_POLICY_BENEFITS_CATEGORIES_PAGE,
 						CoreConstants.FAIL));
 		coreFlexPolicyBenefitsCategoriesPage.clickElementOfPage(PDTConstants.NEXT);
+
+		Assert.assertTrue(coreFlexPolicyBenefitsCategoriesPage.verifyInformationDialog(), MessageFormat.format(
+				COREFLEXConstants.FAILED_TO_VERIFY_INFORMATION_DIALOG_AFTER_SELECTING_BENEFITS_AND_CLICKING_NEXT_ON_POLICY_BENEFIT_CATEGORIES_PAGE,
+				CoreConstants.FAIL));
+
 		CoreConstants.TIME_BEFORE_ACTION = new Date().getTime();
 		Assert.assertTrue(coreFlexPolicyBenefitsCategoriesPage.verifySelectedBenefitDisplayedOnLeftNavigation(),
 				MessageFormat.format(COREFLEXConstants.FAILED_TO_VERIFY_SELECTED_BENEFITS_ON_LEFT_NAVIGATION,
@@ -687,15 +618,10 @@ public class CF_BluePrint_Versioning_Steps {
 		Reporter.addStepLog("<b>Total time taken to navigate to <i>Selected Benefits</i> page is :"
 				+ CoreFunctions.calculatePageLoadTime(CoreConstants.TIME_BEFORE_ACTION, CoreConstants.TIME_AFTER_ACTION)
 				+ " Seconds </b>");
-		Assert.assertTrue(coreFlexPolicyBenefitsCategoriesPage.selectAndFillAddedBenefits(policyType,
-				coreFlexDuplicateHousingBenefitsPage, coreFlexLumpSumBenefitsPage, coreFlexOtherHousingBenefitsPage,
-				coreFlexLanguageTrainingBenefitsPage, coreFlexTemporaryLivingBenefitsPage,
-				coreFlexCulturalTrainingBenefitsPage, coreFlexConciergeServicesBenefitsPage,
-				coreFlexHomePurchaseBenefitsPage, coreFlexFinalMoveBenefitsPage, coreFlexAreaTourBenefitsPage,
-				coreFlexHomeLeaveBenefitsPage, coreFlexAirportPickupBenefitsPage,
-				coreFlexPreAcceptanceServicesBenefitsPage, coreFlexFurnitureRentalBenefitsPage,
-				coreFlexAutoRentalDuringAssignmentBenefitsPage, coreFlexEducationAssistanceBenefitsPage,
-				coreFlexHouseHuntingTripBenefitsPage, COREFLEXConstants.SIGNIFICANT_CHANGE, "0"),
+		Assert.assertTrue(
+				coreFlexPolicyBenefitsCategoriesPage.selectAndFillAddedBenefits(
+						CoreFunctions.getPropertyFromConfig("CoreFlex_Policy_BenefitType"),
+						COREFLEXConstants.SIGNIFICANT_CHANGE, "0"),
 				MessageFormat.format(COREFLEXConstants.FAILED_TO_SELECT_AND_FILL_ADDED_BENEFITS, CoreConstants.FAIL));
 	}
 
@@ -809,9 +735,8 @@ public class CF_BluePrint_Versioning_Steps {
 		coreFlexCustomBundlesPage.clickElementOfPage(COREFLEXConstants.OK);
 	}
 
-	@Given("^he has deselected an existing \"([^\"]*)\" type Benefit on 'Policy Benefit Categories' page$")
-	public void he_has_deselected_an_existing_type_Benefit_on_Policy_Benefit_Categories_page(String policyType)
-			throws Throwable {
+	@Given("^he has deselected an existing Benefit on 'Policy Benefit Categories' page$")
+	public void he_has_deselected_an_existing_Benefit_on_Policy_Benefit_Categories_page() throws Throwable {
 		flexPolicySetupPage.clickLeftNavigationMenuOfPage(COREFLEXConstants.POLICY_BENEFIT_CATEGORIES);
 		CoreConstants.TIME_BEFORE_ACTION = new Date().getTime();
 		Assert.assertTrue(
@@ -826,6 +751,9 @@ public class CF_BluePrint_Versioning_Steps {
 		Assert.assertTrue(coreFlexPolicyBenefitsCategoriesPage.deselectSelectedBenefit(), MessageFormat.format(
 				COREFLEXConstants.FAILED_TO_DESELECT_BENEFIT_ON_POLICY_BENEFIT_CATEGORIES_PAGE, CoreConstants.FAIL));
 		coreFlexPolicyBenefitsCategoriesPage.clickElementOfPage(PDTConstants.NEXT);
+		Assert.assertTrue(coreFlexPolicyBenefitsCategoriesPage.verifyInformationDialog(), MessageFormat.format(
+				COREFLEXConstants.FAILED_TO_VERIFY_INFORMATION_DIALOG_AFTER_SELECTING_BENEFITS_AND_CLICKING_NEXT_ON_POLICY_BENEFIT_CATEGORIES_PAGE,
+				CoreConstants.FAIL));
 	}
 
 	@Given("^he has changed Benefit type of added Benefits from \"([^\"]*)\" to \"([^\"]*)\"$")
@@ -853,8 +781,7 @@ public class CF_BluePrint_Versioning_Steps {
 				+ " Seconds </b>");
 		Assert.assertTrue(
 				coreFlexPolicyBenefitsCategoriesPage.iterateAndChangePolicyBenefitType(previousPolicyType,
-						changedPolicyType, coreFlexDuplicateHousingBenefitsPage, coreFlexLumpSumBenefitsPage,
-						coreFlexOtherHousingBenefitsPage),
+						changedPolicyType),
 				MessageFormat.format(COREFLEXConstants.FAILED_TO_CHANGE_POLICY_BENEFIT_TYPE_OF_ADDED_BENEFITS,
 						CoreConstants.FAIL, changedPolicyType));
 	}
@@ -893,9 +820,9 @@ public class CF_BluePrint_Versioning_Steps {
 				+ " Seconds </b>");
 	}
 
-	@Given("^he has clicked on \"([^\"]*)\" button after removing a 'SubBenefit' from an added \"([^\"]*)\" type Benefit$")
-	public void he_has_clicked_on_button_after_removing_a_Subbenefit_from_an_added_type_Benefit(String buttonName,
-			String benefitType) throws Throwable {
+	@Given("^he has clicked on \"([^\"]*)\" button after removing a 'SubBenefit' from an added Benefit$")
+	public void he_has_clicked_on_button_after_removing_a_Subbenefit_from_an_added_Benefit(String buttonName)
+			throws Throwable {
 		flexPolicySetupPage.clickLeftNavigationMenuOfPage(COREFLEXConstants.POLICY_BENEFIT_CATEGORIES);
 		CoreConstants.TIME_BEFORE_ACTION = new Date().getTime();
 		Assert.assertTrue(
@@ -908,16 +835,16 @@ public class CF_BluePrint_Versioning_Steps {
 				+ CoreFunctions.calculatePageLoadTime(CoreConstants.TIME_BEFORE_ACTION, CoreConstants.TIME_AFTER_ACTION)
 				+ " Seconds </b>");
 		Assert.assertTrue(
-				coreFlexPolicyBenefitsCategoriesPage.deselectSelectedSubBenefit(benefitType,
-						coreFlexLanguageTrainingBenefitsPage),
+				coreFlexPolicyBenefitsCategoriesPage
+						.deselectSelectedSubBenefit(CoreFunctions.getPropertyFromConfig("CoreFlex_Policy_BenefitType")),
 				MessageFormat.format(COREFLEXConstants.FAILED_TO_DESELECT_SUBBENEFIT_FROM_SELECTED_BENEFIT_PAGE,
 						CoreConstants.FAIL));
 
 	}
 
-	@Given("^he has clicked on \"([^\"]*)\" button after adding a 'SubBenefit' to an added \"([^\"]*)\" type Benefit$")
-	public void he_has_clicked_on_button_after_adding_a_SubBenefit_to_an_added_type_Benefit(String buttonName,
-			String benefitType) throws Throwable {
+	@Given("^he has clicked on \"([^\"]*)\" button after adding a 'SubBenefit' to an added Benefit$")
+	public void he_has_clicked_on_button_after_adding_a_SubBenefit_to_an_added_Benefit(String buttonName)
+			throws Throwable {
 		flexPolicySetupPage.clickLeftNavigationMenuOfPage(COREFLEXConstants.POLICY_BENEFIT_CATEGORIES);
 		CoreConstants.TIME_BEFORE_ACTION = new Date().getTime();
 		Assert.assertTrue(
@@ -930,8 +857,8 @@ public class CF_BluePrint_Versioning_Steps {
 				+ CoreFunctions.calculatePageLoadTime(CoreConstants.TIME_BEFORE_ACTION, CoreConstants.TIME_AFTER_ACTION)
 				+ " Seconds </b>");
 		Assert.assertTrue(
-				coreFlexPolicyBenefitsCategoriesPage.selectAndFillUnSelectedSubBenefit(benefitType,
-						coreFlexLanguageTrainingBenefitsPage),
+				coreFlexPolicyBenefitsCategoriesPage.selectAndFillUnSelectedSubBenefit(
+						CoreFunctions.getPropertyFromConfig("CoreFlex_Policy_BenefitType")),
 				MessageFormat.format(COREFLEXConstants.FAILED_TO_DESELECT_SUBBENEFIT_FROM_SELECTED_BENEFIT_PAGE,
 						CoreConstants.FAIL));
 

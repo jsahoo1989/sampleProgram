@@ -45,12 +45,14 @@ import java.util.concurrent.ThreadLocalRandom;
 import org.apache.commons.codec.binary.Base64;
 import org.apache.log4j.Logger;
 import org.openqa.selenium.NoSuchElementException;
+import org.openqa.selenium.StaleElementReferenceException;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.interactions.Actions;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.FluentWait;
 import org.openqa.selenium.support.ui.Select;
+import org.openqa.selenium.support.ui.WebDriverWait;
 import org.testng.Assert;
 
 import com.aires.businessrules.constants.COREFLEXConstants;
@@ -210,11 +212,20 @@ public class BusinessFunctions {
 		CoreFunctions.writeToPropertiesFile(PDTConstants.EMP_ID_TEXT, PDTConstants.EMP_ID + randomString);
 	}
 
-	public static void selectValueFromDropdown(WebElement element, String drpdwnValue) {
-		Select dropDown = new Select(element);
-		String elementName = element.getAttribute("title");
-		dropDown.selectByVisibleText(drpdwnValue);
-		if (element.getAttribute("title").equalsIgnoreCase(drpdwnValue))
+	public static void selectValueFromDropdown(WebDriver driver, WebElement element, String drpdwnValue) {
+		String elementName = "";
+		boolean failedToSelect = false;
+		try {
+			Select dropDown = new Select(element);
+			elementName = element.getAttribute("title");
+			dropDown.selectByVisibleText(drpdwnValue);
+			failedToSelect = element.getAttribute("title").equalsIgnoreCase(drpdwnValue);
+		} catch (StaleElementReferenceException e) {
+			WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(60));
+			wait.until(ExpectedConditions.refreshed(ExpectedConditions.visibilityOf(element)));
+			failedToSelect = element.getAttribute("title").equalsIgnoreCase(drpdwnValue);
+		}
+		if (!failedToSelect)
 			Reporter.addStepLog(MessageFormat.format(PDTConstants.VERIFY_VALUE_SELECTED_IN_DROPDWON, CoreConstants.PASS,
 					elementName, drpdwnValue));
 		else
@@ -554,9 +565,18 @@ public class BusinessFunctions {
 			String itemName) {
 		try {
 			for (WebElement row : WebElementList) {
-				Log.info(CoreConstants.ACTUAL_ITEM_NAME_IS + row.getText());
-				if (row.getText().trim().equals(itemName)) {
-					return WebElementList.indexOf(row);
+				try {
+					Log.info("Actual Item: " + row.getText() + "Expected Item: " + itemName);
+					if (row.getText().trim().equals(itemName)) {
+						return WebElementList.indexOf(row);
+					}
+				} catch (StaleElementReferenceException e) {
+					WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(60));
+					wait.until(ExpectedConditions.refreshed(ExpectedConditions.visibilityOf(row)));
+					Log.info("Actual Item: "+row.getText()+"Expected Item: "+itemName);
+					if (row.getText().trim().equals(itemName)) {
+						return WebElementList.indexOf(row);
+					}
 				}
 			}
 		} catch (ElementNotFoundException e) {
@@ -830,9 +850,15 @@ public class BusinessFunctions {
 			String itemName, boolean flag) {
 		try {
 			for (WebElement row : WebElementList) {
-				Log.info(CoreConstants.ACTUAL_ITEM_NAME_IS + row.getText());
-				if ((row.getText().trim()).contains(itemName))
-					return WebElementList.indexOf(row);
+				try {
+					if ((row.getText().trim()).contains(itemName))
+						return WebElementList.indexOf(row);
+				} catch (StaleElementReferenceException e) {
+					WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(60));
+					wait.until(ExpectedConditions.refreshed(ExpectedConditions.visibilityOf(row)));
+					if ((row.getText().trim()).contains(itemName))
+						return WebElementList.indexOf(row);
+				}
 			}
 		} catch (ElementNotFoundException e) {
 			Assert.fail(MessageFormat.format(
@@ -1038,7 +1064,7 @@ public class BusinessFunctions {
 	public static void verifyFieldNotPresentOnBenefitPage(WebDriver driver, List<WebElement> elementList,
 			String benefitName, String fieldName) {
 		try {
-			System.out.println(benefitName+" If Applicable List Size : "+elementList.size());
+			System.out.println(benefitName + " If Applicable List Size : " + elementList.size());
 			if (elementList.size() > 0) {
 //				Assert.fail((MessageFormat.format(COREFLEXConstants.FIELD_DISPLAYED_ON_BENEFIT_PAGE, CoreConstants.FAIL,
 //						benefitName, COREFLEXConstants.IF_APPLICABLE)));
@@ -1052,5 +1078,17 @@ public class BusinessFunctions {
 					MessageFormat.format(COREFLEXConstants.EXCEPTION_OCCURED_WHILE_VERIFYING_FIELD_ON_BENEFIT_PAGE,
 							CoreConstants.FAIL, e.getMessage(), benefitName, fieldName));
 		}
+	}
+	
+	public static void selectValueFromDropdown(WebElement element, String drpdwnValue) {
+		Select dropDown = new Select(element);
+		String elementName = element.getAttribute("title");
+		dropDown.selectByVisibleText(drpdwnValue);
+		if (element.getAttribute("title").equalsIgnoreCase(drpdwnValue))
+			Reporter.addStepLog(MessageFormat.format(PDTConstants.VERIFY_VALUE_SELECTED_IN_DROPDWON, CoreConstants.PASS,
+					elementName, drpdwnValue));
+		else
+			Reporter.addStepLog(MessageFormat.format(PDTConstants.FAIL_TO_SELECT_VALUE_IN_DROPDOWN, CoreConstants.FAIL,
+					drpdwnValue, elementName));
 	}
 }

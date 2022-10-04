@@ -2,7 +2,7 @@ Feature: Validate the MXClient Auth Form Sequential-ApprovalWF and CoreFlex End-
 
   @End-To-End_CoreFlex @CF_MXClient_ApprovalWF_Sequential_UserDefined_PortionCashout
   Scenario: CoreFlex - Creating & Validating a new Active Points Based CoreFlex Policy with MXClient, UserDefined and PortionCahout selection
-    Given he has setup a new CoreFlex Policy with following selection in Blueprint application
+    Given he has setup a new Points Based CoreFlex Policy with following selection in Blueprint application
       | Person Responsible For Benefit Selection | Flex Setup Type | Cashout Availability | BenefitType | PolicyRequiredFor | MileStones |
       | Client Initiator                         | User Defined    | Portion Cashout      | Both        | Client            |          0 |
     And he has clicked on "Submit" button to submit "V1" policy verison on "Custom Bundles" page
@@ -13,7 +13,7 @@ Feature: Validate the MXClient Auth Form Sequential-ApprovalWF and CoreFlex End-
     When he clicks on "Approve" button to acknowledge 'Approve this Policy' dialog
     Then Policy Status and Version should be displayed as "Active" and "V1" respectively on "View/Edit Policy Forms" page
 
-  @End-To-End_CoreFlex @CF_MXClient_ApprovalWF_Sequential_UserDefined_PortionCashout 
+  @End-To-End_CoreFlex @CF_MXClient_ApprovalWF_Sequential_UserDefined_PortionCashout
   Scenario: MXClient - Validating Total Points Section, Core/Flex benefits & PortionCashout displayed on BenefitSelectionTool page and ApprovalWF for Client Initiator BluePrint Policy Setup
     Given he has logged into 'MobilityX' application as a 'Client' user
     And he has clicked on "Create an authorization" after validating Client details on 'Authorization Home Page'
@@ -38,17 +38,17 @@ Feature: Validate the MXClient Auth Form Sequential-ApprovalWF and CoreFlex End-
     And 'Cancel Routing' and 'Resubmit to Aires' buttons should be displayed on right floating menu of 'Authorization Form' page
     And Email notification should be sent to First Approver "Test ApproverOne" for approval but not to Second Approver "Test ApproverTwo"
 
-  @End-To-End_CoreFlex @CF_MXClient_ApprovalWF_Sequential_UserDefined_PortionCashout 
+  @End-To-End_CoreFlex @CF_MXClient_ApprovalWF_Sequential_UserDefined_PortionCashout
   Scenario: MXClient - Validating Email Contents received in Approver Review Required Email and Approval of Authorization Form by ApproverOne
     Given "Test ApproverOne" has received 'Approver Review Required' email
     And "Test ApproverOne" has verified 'CoreFlex Assignment' details in the received 'Approver Review Required' email before 'Approving' request
     And "Test ApproverOne" has navigated to "AuthWorkFlowAction" page after clicking on "SUBMIT MY RESPONSE" button on 'Approver Review Required' email
     And he has verified CoreFlex 'Benefits_Cashout' and 'BenefitsTotalPoints' details on 'Authorization Form' displayed on the "AuthWorkFlowAction" page
-    When "Test ApproverOne" clicks on "Approve" button on 'Authorization Form'    
+    When "Test ApproverOne" clicks on "Approve" button on 'Authorization Form'
     Then 'Auth Form' status should be displayed as "Approved" on "AuthWorkFlowAction" page
     And Email notification should be sent to Second Approver "Test ApproverTwo" for approval
 
-  @End-To-End_CoreFlex @CF_MXClient_ApprovalWF_Sequential_UserDefined_PortionCashout 
+  @End-To-End_CoreFlex @CF_MXClient_ApprovalWF_Sequential_UserDefined_PortionCashout
   Scenario: MXClient - Validating Email Contents received in Approver Review Required Email and Approval of Authorization Form by ApproverTwo
     Given "Test ApproverTwo" has received 'Approver Review Required' email
     And "Test ApproverTwo" has verified 'CoreFlex Assignment' details in the received 'Approver Review Required' email before 'Approving' request
@@ -58,7 +58,7 @@ Feature: Validate the MXClient Auth Form Sequential-ApprovalWF and CoreFlex End-
     Then 'Auth Form' status should be displayed as "Approved" on "AuthWorkFlowAction" page
     And 'Authorization Form' status should be displayed as 'Submitted' in 'New Initiation Submitted' email
 
-  @End-To-End_CoreFlex @CF_MXClient_ApprovalWF_Sequential_UserDefined_PortionCashout 
+  @End-To-End_CoreFlex @CF_MXClient_ApprovalWF_Sequential_UserDefined_PortionCashout
   Scenario: MXClient - Deleting and Verifying Deleted Submitted Core/Flex Benefits & PortionCashout Status on MXClient Submitted Benefits
     Given he has logged into 'MobilityX' application as a 'Client' user
     And he has actualized the Transferee after selecting required 'MSPEC_PPC' user and setting file status as 'Active' in IRIS application
@@ -76,7 +76,7 @@ Feature: Validate the MXClient Auth Form Sequential-ApprovalWF and CoreFlex End-
     Then 'Auth Submit Success' growl message should be displayed on the navigated 'Advanced Authorization Search' page
     And 'Revised Mobility Initiation' email having submitted_deleted Benefit and Points details should be received
 
-  @End-To_End_CoreFlex @CF_MXClient_ApprovalWF_Sequential_UserDefined_PortionCashout 
+  @End-To_End_CoreFlex @CF_MXClient_ApprovalWF_Sequential_UserDefined_PortionCashout
   Scenario: TransfereeSubmissions - Verifying UserDefined Points, Benefit_Cashout Submissions and Delete Request DenyAll transaction for the request made by the Client
     Given he has logged into 'Transferee Submissions' application as a "MSPEC/PPC" user
     And he has navigated to "Transferee Submissions Dashboard" page having record of Bundle submitted by the Client

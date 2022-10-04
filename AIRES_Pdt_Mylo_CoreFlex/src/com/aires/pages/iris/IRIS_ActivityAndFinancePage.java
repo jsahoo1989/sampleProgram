@@ -7,6 +7,7 @@ import java.text.Format;
 import java.text.MessageFormat;
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
 
 import org.testng.Assert;
@@ -17,8 +18,10 @@ import com.aires.businessrules.constants.CoreConstants;
 import com.aires.businessrules.constants.IRISConstants;
 import com.aires.iris.helpers.Helpers;
 import com.aires.managers.FileReaderManager;
+import com.aires.managers.PageObjectManager_CoreFlex;
 import com.aires.pages.iris.basepage.BasePage;
 import com.aires.testdatatypes.coreflex.Benefit;
+import com.aires.testdatatypes.coreflex.Benefit.TracingPromptToBeSelected;
 import com.aires.testdatatypes.coreflex.FlexBenefit;
 import com.aires.utilities.Log;
 import com.aires.utilities.getWindowText;
@@ -32,6 +35,7 @@ import com.hp.lft.sdk.java.Label;
 import com.hp.lft.sdk.java.LabelDescription;
 import com.hp.lft.sdk.java.Menu;
 import com.hp.lft.sdk.java.MenuDescription;
+import com.hp.lft.sdk.java.TabControl;
 import com.hp.lft.sdk.java.Table;
 import com.hp.lft.sdk.java.TableDescription;
 import com.hp.lft.sdk.java.UiObject;
@@ -49,7 +53,9 @@ public class IRIS_ActivityAndFinancePage extends BasePage {
 
 	String actDateVal = null;
 	private boolean _isExists = false;
+	public static PageObjectManager_CoreFlex pageObjectManager_CoreFlex;
 	private Window _assignmentWindow = null;
+
 
 	private Button _saveButton = IRIS_PageMaster.getDialogObject(_IRIS, "Partner Recommendation").describe(Button.class,
 			new ButtonDescription.Builder().label("Save").build());
@@ -387,7 +393,7 @@ public class IRIS_ActivityAndFinancePage extends BasePage {
 			Dialog savedDialog = _IRIS.describe(Dialog.class, new DialogDescription.Builder().title("Saved").build());
 			Button oKButton = savedDialog.describe(Button.class, new ButtonDescription.Builder().label("OK").build());
 			oKButton.click();
-
+			CoreFunctions.writeToPropertiesFile("irisWindowTitle", getIRISWindow().getTitle());
 		} else {
 			Assert.fail(IRISConstants.CREDENTIALS_NOT_SENT);
 		}
@@ -831,37 +837,89 @@ public class IRIS_ActivityAndFinancePage extends BasePage {
 				for (Benefit benefit : benefitList.getBenefits()) {
 					if ((benefit.getSelectBenefitOnFPTPage()) && (benefit.getAiresManagedService().equals("Yes"))
 							&& benefit.getNoOfMilestones() != null && benefit.getNoOfMilestones() == noOfMilestones) {
-						selectServiceAndSubService(benefit);
-						displayActivityTable();
-						if (noOfMilestones == 2) {
-							if (benefit.getSubServiceFunction() != null
-									&& !benefit.getSubServiceFunction().equals("NA")) {
-								clickAddButton();
-								addParticipant(benefit);
-								clickOnSaveBtn();
-								verifySaveSuccessfulMsg();
+						if (benefit.getIrisServiceName().equals("Shipment"))
+							actualizeInitialTracingPromptForShipmentService(_IRIS, activity, benefit);
+						else {
+							selectServiceAndSubService(benefit);
+							displayActivityTable();
+							if (noOfMilestones == 2) {
+								if (benefit.getSubServiceFunction() != null
+										&& !benefit.getSubServiceFunction().equals("NA")) {
+									clickAddButton();
+									addParticipant(benefit);
+									clickOnSaveBtn();
+									verifySaveSuccessfulMsg();
+								}
+								enterActDateForTracingPrompt(
+										IRIS_PageMaster.getTableObject(_IRIS,
+												"IRIS.Presentation.assignment.activityFinance.ActivityPanel$1"),
+										activity, benefit.getInitialTracingPrompt(), IRISConstants.EST_DATE);
 							}
-							enterActDateForTracingPrompt(
-									IRIS_PageMaster.getTableObject(_IRIS,
-											"IRIS.Presentation.assignment.activityFinance.ActivityPanel$1"),
-									activity, benefit.getInitialTracingPrompt(), IRISConstants.EST_DATE);
-						}
-						if (noOfMilestones == 4) {
-							enterActDateForTracingPrompt(
-									IRIS_PageMaster.getTableObject(_IRIS,
-											"IRIS.Presentation.assignment.activityFinance.ActivityPanel$1"),
-									activity, IRISConstants.PERFORM_NEEDS_ASSESSMENT_TEXT, estDate);
+							if (noOfMilestones == 4) {
+								enterActDateForTracingPrompt(
+										IRIS_PageMaster.getTableObject(_IRIS,
+												"IRIS.Presentation.assignment.activityFinance.ActivityPanel$1"),
+										activity, IRISConstants.PERFORM_NEEDS_ASSESSMENT_TEXT, estDate);
+							}
 						}
 						clickOnSaveBtn();
 						verifySaveSuccessfulMsg();
 					}
 				}
 			}
+			CoreFunctions.writeToPropertiesFile("irisWindowTitle", getIRISWindow().getTitle());
 		} catch (Exception e) {
 			Reporter.addStepLog(MessageFormat.format(
 					IRISConstants.EXCEPTION_OCCURED_WHILE_ACTUALIZING_ADDED_SERVICES_TRACING_PROMPT_ON_IRIS_APPLICATION,
 					CoreConstants.FAIL, e.getMessage()));
 		}
+	}
+
+	private void actualizeInitialTracingPromptForShipmentService(Window _IRIS, String activity, Benefit benefit)
+			throws Exception {
+		Helpers.selectTabControl(IRIS_PageMaster.getTabControlObject(_IRIS, 0), IRISConstants.SERVICE_TAB);
+
+		int rowId = Helpers.getRowIdMatchingCellValue(
+				IRIS_PageMaster.getTableObject(_IRIS,
+						"IRIS.Presentation.assignment.reloService.ReloServicePanel$RelocationServicePanel$1"),
+				"Name", benefit.getIrisServiceName());
+
+		Helpers.selectTableRow(IRIS_PageMaster.getTableObject(_IRIS,
+				"IRIS.Presentation.assignment.reloService.ReloServicePanel$RelocationServicePanel$1"), rowId);
+
+		Log.info(IRIS_AssignmentServicePage.subServiceIDMap.get(benefit.getIrisSubserviceName()));
+
+		rowId = Helpers.getRowIdMatchingCellValue(
+				IRIS_PageMaster.getTableObjectWithIndex(_IRIS, "javax.swing.JTable", 1), "ID",
+				IRIS_AssignmentServicePage.subServiceIDMap.get(benefit.getIrisSubserviceName()));
+
+		Helpers.selectTableRow(IRIS_PageMaster.getTableObjectWithIndex(_IRIS, "javax.swing.JTable", 1), rowId);
+		IRIS_PageMaster.getButtonObjectFromLabel(_IRIS, "Detail").click();
+
+		String subServiceWindowTitle = MessageFormat.format(IRISConstants.SUB_SERVICE_TITLE_WITH_ID,
+				IRIS_AssignmentServicePage.subServiceIDMap.get(benefit.getIrisSubserviceName()),
+				CoreFunctions.getPropertyFromConfig("Assignment_FileID"),
+				CoreFunctions.getPropertyFromConfig("Transferee_firstName"),
+				CoreFunctions.getPropertyFromConfig("Transferee_lastName"),
+				CoreFunctions.getPropertyFromConfig("Assignment_ClientName"),
+				CoreFunctions.getPropertyFromConfig("Assignment_ClientID"));
+
+		Log.info(subServiceWindowTitle);
+
+		_IRIS = IRIS_PageMaster.getWindowObject(subServiceWindowTitle);
+
+		_IRIS.waitUntilVisible();
+
+		TabControl tabControl = IRIS_PageMaster.getTabControlObject(_IRIS, "javax.swing.JTabbedPane", 0);
+		Helpers.selectTabControl(tabControl, "Activity & Finance");
+
+		Table activityFinanceTable = IRIS_PageMaster.getTableObject(_IRIS,
+				"com.aires.iris.shipment.activityfinance.ActivityFinancePanel$3");
+
+		pageObjectManager_CoreFlex.getPageObjects().get(benefit.getBenefitType()).actualizeSubServiceTracingPrompt(
+				_IRIS, activityFinanceTable, benefit.getPartnerForInitialTracingPrompt(),
+				benefit.getInitialTracingPrompt());
+		_IRIS.close();
 	}
 
 	public void displayAllActivityTable() {
@@ -920,21 +978,25 @@ public class IRIS_ActivityAndFinancePage extends BasePage {
 				for (Benefit benefit : benefitList.getBenefits()) {
 					if ((benefit.getSelectBenefitOnFPTPage()) && benefit.getAiresManagedService().equals("Yes")
 							&& benefit.getNoOfMilestones() != null && benefit.getNoOfMilestones() == noOfMilestones) {
-						selectServiceAndSubService(benefit);
-						displayActivityTable();
-						if (noOfMilestones == 2) {
-							enterActDateForTracingPrompt(
-									IRIS_PageMaster.getTableObject(_IRIS,
-											"IRIS.Presentation.assignment.activityFinance.ActivityPanel$1"),
-									activity, benefit.getEndTracingPrompt(), tracingDate);
-						}
-						if (noOfMilestones == 4) {
-							for (int i = 0; i < noOfMilestones; i++) {
-								String activityName = benefit.getAllMilestones().split(",")[i].trim();
+						if (benefit.getIrisServiceName().equals("Shipment")) {
+							actualizeAllTracingPromptForShipmentService(_IRIS, activity, benefit);
+						} else {
+							selectServiceAndSubService(benefit);
+							displayActivityTable();
+							if (noOfMilestones == 2) {
 								enterActDateForTracingPrompt(
 										IRIS_PageMaster.getTableObject(_IRIS,
 												"IRIS.Presentation.assignment.activityFinance.ActivityPanel$1"),
-										activity, activityName, tracingDate);
+										activity, benefit.getEndTracingPrompt(), tracingDate);
+							}
+							if (noOfMilestones == 4) {
+								for (int i = 0; i < noOfMilestones; i++) {
+									String activityName = benefit.getAllMilestones().split(",")[i].trim();
+									enterActDateForTracingPrompt(
+											IRIS_PageMaster.getTableObject(_IRIS,
+													"IRIS.Presentation.assignment.activityFinance.ActivityPanel$1"),
+											activity, activityName, tracingDate);
+								}
 							}
 						}
 						clickOnSaveBtn();
@@ -943,12 +1005,61 @@ public class IRIS_ActivityAndFinancePage extends BasePage {
 					}
 				}
 			}
+			CoreFunctions.writeToPropertiesFile("irisWindowTitle", getIRISWindow().getTitle());
 		} catch (Exception e) {
-			e.printStackTrace();
 			Reporter.addStepLog(MessageFormat.format(
 					IRISConstants.EXCEPTION_OCCURED_WHILE_ACTUALIZING_ADDED_SERVICES_TRACING_PROMPT_ON_IRIS_APPLICATION,
 					CoreConstants.FAIL, e.getMessage()));
 		}
+	}
+
+	private void actualizeAllTracingPromptForShipmentService(Window _IRIS, String activity, Benefit benefit)
+			throws GeneralLeanFtException, Exception {
+		Helpers.selectTabControl(IRIS_PageMaster.getTabControlObject(_IRIS, 0), IRISConstants.SERVICE_TAB);
+
+		int rowId = Helpers.getRowIdMatchingCellValue(
+				IRIS_PageMaster.getTableObject(_IRIS,
+						"IRIS.Presentation.assignment.reloService.ReloServicePanel$RelocationServicePanel$1"),
+				"Name", benefit.getIrisServiceName());
+
+		Helpers.selectTableRow(IRIS_PageMaster.getTableObject(_IRIS,
+				"IRIS.Presentation.assignment.reloService.ReloServicePanel$RelocationServicePanel$1"), rowId);
+
+		System.out.println(IRIS_AssignmentServicePage.subServiceIDMap.get(benefit.getIrisSubserviceName()));
+
+		rowId = Helpers.getRowIdMatchingCellValue(
+				IRIS_PageMaster.getTableObjectWithIndex(_IRIS, "javax.swing.JTable", 1), "ID",
+				IRIS_AssignmentServicePage.subServiceIDMap.get(benefit.getIrisSubserviceName()));
+
+		Helpers.selectTableRow(IRIS_PageMaster.getTableObjectWithIndex(_IRIS, "javax.swing.JTable", 1), rowId);
+		IRIS_PageMaster.getButtonObjectFromLabel(_IRIS, "Detail").click();
+
+		String subServiceWindowTitle = MessageFormat.format(IRISConstants.SUB_SERVICE_TITLE_WITH_ID,
+				IRIS_AssignmentServicePage.subServiceIDMap.get(benefit.getIrisSubserviceName()),
+				CoreFunctions.getPropertyFromConfig("Assignment_FileID"),
+				CoreFunctions.getPropertyFromConfig("Transferee_firstName"),
+				CoreFunctions.getPropertyFromConfig("Transferee_lastName"),
+				CoreFunctions.getPropertyFromConfig("Assignment_ClientName"),
+				CoreFunctions.getPropertyFromConfig("Assignment_ClientID"));
+
+		Log.info(subServiceWindowTitle);
+
+		_IRIS = IRIS_PageMaster.getWindowObject(subServiceWindowTitle);
+
+		_IRIS.waitUntilVisible();
+
+		TabControl tabControl = IRIS_PageMaster.getTabControlObject(_IRIS, "javax.swing.JTabbedPane", 0);
+		Helpers.selectTabControl(tabControl, "Activity & Finance");
+
+		Table activityFinanceTable = IRIS_PageMaster.getTableObject(_IRIS,
+				"com.aires.iris.shipment.activityfinance.ActivityFinancePanel$3");
+
+		for (TracingPromptToBeSelected partnerAndPrompt : benefit.getTracingPromptsToBeSelected()) {
+			pageObjectManager_CoreFlex.getPageObjects().get(benefit.getBenefitType()).actualizeSubServiceTracingPrompt(
+					_IRIS, activityFinanceTable, partnerAndPrompt.partner, partnerAndPrompt.tracingPrompt);
+		}
+
+		_IRIS.close();
 	}
 
 	private void handleInactivateSubServiceError() throws Exception {

@@ -267,7 +267,7 @@ public class IRISConstants {
 	public static final String IRIS_UPLOAD_PAGE_TEXT = "IRIS Upload Page";
 	// Assignment - Transferee & Family Tab
 	public static final String TRANSFEREE_TITLE_TO_APPEND = "File - {0}  for  {1} {2} of MobilityX Inc. - Aires LLC Agreement in place.";
-	public static final String TRANSFEREE_TITLE_TO_APPEND_SERVICE = "File - {0}  for {1} {2} of MobilityX Inc. - Aires LLC Agreement in place.";
+	public static final String TRANSFEREE_TITLE_TO_APPEND_SERVICE = "File {0}  for {1} {2} of MobilityX Inc. - Aires LLC Agreement in place.";
 	public static final String NG_TRANSFEREE_TITLE_TO_APPEND = "File - {0}  for  {1} {2} of Northrop Grumman-One Source Accounting - Aires LLC Agreement in place.";
 	public static final String TRANSFEREE_TITLE = "File - {0}  for  {1} {2} of AIRES-CIS-DEMO&";
 	public static final String CLIENT_SEPECIFIC_TRANSFEREE_TITLE = "File {0}  for  {1} {2} of {3} - Aires LLC Agreement in place.";
@@ -475,7 +475,7 @@ public class IRISConstants {
 	public static final String VERIFIED_DIALOG_ACCEPTED = "{0} Verified Identity Dialog accepted with ''{1}'' option.";
 	public static final String ADD_BUTTON = "Add";
 	public static final String FAILED_TO_ADD_SUB_SERVICE = "Failed to add Sub-service";
-	public static final String CLIENT_SPECIFIC_TRANSFEREE_TITLE_TO_APPEND_WITH_REDUCED_SPACE = "File - 12C {0}  for {1} {2} of {3} - Aires LLC Agreement in place.";
+	public static final String CLIENT_SPECIFIC_TRANSFEREE_TITLE_TO_APPEND_WITH_REDUCED_SPACE = "File {0}  for {1} {2} of {3} - Aires LLC Agreement in place.";
 	public static final String SUB_SERVICE_TITLE_WITH_ID = "Sub-Service ID: {0}; File ID: {1}; {2} {3} of {4} #{5}";
 	public static final String SUCCESSFULLY_SELECTED_SUB_SERVICE_ACTIVITIES = "{1} Successfully selected sub-service activities";
 	public static final String FAILED_TO_SELECT_SUB_SERVICE_ACTIVITIES = "{0} Failed to select sub-service activities. Exception is - ''{1}''";
@@ -491,4 +491,15 @@ public class IRISConstants {
 	public static final String EXCEPTION_OCCURED_WHILE_CANCELLING_ADDED_SERVICES_ON_SERVICES_TAB_OF_IRIS_APPLICATION = "{0}Exception occured while cancelling added services on Services tab of IRIS application. Exception : ''{1}''.";
 	public static final String EXCEPTION_OCCURED_WHILE_ADDING_ADDITIONAL_SUBSERVICE_ON_SERVICES_TAB_OF_IRIS_APPLICATION = "{0}Exception occured while adding additional SubService on services tab of IRIS application. Exception : ''{1}''.";
 	public static final String ACTIVATE = "Activate";
+	public static final String INITIAL_SUB_SERVICE_TITLE = "Sub-Service ID: ; File ID: {0}; {1} {2} of {3} #{4}";
+	public static final String PACK = "Pack*";
+	public static final String ROUTING = "Routing*";
+	public static final String MODE = "Mode*";
+	public static final String TYPE_SUBSERVICE = "Type*";
+	public static final String EST_MOVE_DATE = "Est Move Date*";
+	public static final String WHSE = "Whse";
+	public static final String STATE_CROSS = "State Cross";
+	public static final String SUCCESSFULLY_ADDED_SUB_SERVICE_DETAILS = "{0} Successfully added sub-service details";
+	public static final String FAILED_TO_ADD_SUB_SERVICE_DETAILS = "{0} Failed to add sub-service details. Exception is - ''{1}''";
+	public static final String FAILED_TO_ADD_SUB_SERVICE_DETAILS_ON_SEB_SERVICE_WINDOW = "Failed to add sub-service details on sub-service window";
 }

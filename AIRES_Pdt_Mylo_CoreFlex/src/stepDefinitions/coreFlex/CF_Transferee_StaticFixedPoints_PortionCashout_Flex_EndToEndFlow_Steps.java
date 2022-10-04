@@ -143,6 +143,13 @@ public class CF_Transferee_StaticFixedPoints_PortionCashout_Flex_EndToEndFlow_St
 		Assert.assertTrue(mxTransfereeMyBenefitsBundlePage.deleteSubmittedBenefitAndCashout(buttonName), MessageFormat
 				.format(MobilityXConstants.FAILED_TO_DELETE_SUBMITTED_BENEFIT_AND_CASHOUT, CoreConstants.FAIL));
 	}
+	
+	@When("^he 'Delete' submitted Benefits and confirms 'Remove Benefit Selection' dialog by entering username and clicking on \"([^\"]*)\"$")
+	public void he_Delete_submited_Benefits_and_confirms_Remove_Benefit_Selection_dialog_by_entering_username_and_clicking_on(
+			String buttonName) throws Throwable {
+		Assert.assertTrue(mxTransfereeMyBenefitsBundlePage.deleteSubmittedBenefitAndCashout(buttonName), MessageFormat
+				.format(MobilityXConstants.FAILED_TO_DELETE_SUBMITTED_BENEFIT_AND_CASHOUT, CoreConstants.FAIL));
+	}
 
 	@Then("^'Status' of the deleted benefit_cashout should be displayed as \"([^\"]*)\" under 'Submitted Benefits' section of 'My Benefit Bundle' page$")
 	public void status_of_the_deleted_benefit_cashout_should_be_displayed_as_under_Submitted_Benefits_section_of_My_Benefit_Bundle_page(

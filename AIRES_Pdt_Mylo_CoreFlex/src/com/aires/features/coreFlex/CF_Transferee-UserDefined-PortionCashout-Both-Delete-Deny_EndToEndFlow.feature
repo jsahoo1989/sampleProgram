@@ -1,8 +1,8 @@
 Feature: Validate the CoreFlex End-To-End Business Test Flow(BluePrint, MXTransferee,Transferee Submissions) for Both_Transferee_UserDefined_PortionCashout_Delete_DenyAll selection
 
-  @End-To-End_CoreFlex @CF_MXTransferee_UserDefined_PortionCashoutIgnore
+  @End-To-End_CoreFlex @CF_MXTransferee_UserDefined_PortionCashout
   Scenario: CoreFlex - Creating & Validating a new Active Points Based CoreFlex Policy with Transferee, UserDefined and PortionCashout selection
-    Given he has setup a new CoreFlex Policy with following selection in Blueprint application
+    Given he has setup a new Points Based CoreFlex Policy with following selection in Blueprint application
       | Person Responsible For Benefit Selection | Flex Setup Type | Cashout Availability | BenefitType | PolicyRequiredFor | MileStones |
       | Transferee                               | User Defined    | Portion Cashout      | Both        | Client            |          0 |
     And he has clicked on "Submit" button to submit "V1" policy verison on "Custom Bundles" page
@@ -55,7 +55,7 @@ Feature: Validate the CoreFlex End-To-End Business Test Flow(BluePrint, MXTransf
     And he has clicked on "Yes - submit my bundle" button after entering Transferee name on "Submit Bundle Confirmation" dialog
     And he has clicked on "OK - Let Me See My Benefits!" button displayed on 'Success Flex' dialog
     And he has verified submitted points details on 'Mobility Journey Home' and 'Flex Planning Tool' page
-    And he has verified submitted benefit details under 'Submitted Benefits' section of 'My Benefits Bundle' page
+    And he has verified submitted Benefit_Cashout details under 'Submitted Benefits' section of 'My Benefits Bundle' page
     When he 'Delete' submitted Benefit_Cashout and confirms 'Remove Benefit Selection' dialog by entering username and clicking on "Yes-request to delete this benefit"
     Then 'Status' of the deleted benefit_cashout should be displayed as "Delete Request Pending" under 'Submitted Benefits' section of 'My Benefit Bundle' page
 
@@ -70,4 +70,3 @@ Feature: Validate the CoreFlex End-To-End Business Test Flow(BluePrint, MXTransf
     Then 'Action Completed' growl message for "Deny Request" should be displayed on "Transferee Submission Details" page
     And 'Delete Request Pending' benefit request status should be updated to 'Submitted' in 'Transferee Submission Details' list
     And benefit details should be updated in 'MXTransferee' application based on "Denied" 'Delete Request' on Transferee Submission
-

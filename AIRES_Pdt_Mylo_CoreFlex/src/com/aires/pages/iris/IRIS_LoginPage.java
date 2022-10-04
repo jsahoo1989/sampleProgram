@@ -72,11 +72,15 @@ public class IRIS_LoginPage extends BasePage {
 
 	public void loginToIRISApp(String userName, String password, String database) throws Exception {
 		try {
-			//IRIS_PageMaster.getListObject(_IRIS, "Database:        ", 0).waitUntilEnabled();			
-			Log.info("username=="+userName+" pasword=="+password+" database=="+database);
-			/*IRIS_PageMaster.getListObject(_IRIS, "Database:", 0).waitUntilEnabled();
-			Helpers.selectFromList(IRIS_PageMaster.getListObject(_IRIS, "Database:", 0), database,
-					IRISConstants.DATABASE_NAME);*/
+			_IRIS = getIRISWindow();
+			// IRIS_PageMaster.getListObject(_IRIS, "Database: ", 0).waitUntilEnabled();
+			Log.info("username==" + userName + " pasword==" + password + " database==" + database);
+			/*
+			 * IRIS_PageMaster.getListObject(_IRIS, "Database:", 0).waitUntilEnabled();
+			 * Helpers.selectFromList(IRIS_PageMaster.getListObject(_IRIS, "Database:", 0),
+			 * database, IRISConstants.DATABASE_NAME);
+			 */
+			Log.info(_IRIS.getTitle());
 			IRIS_PageMaster.getListObject(_IRIS, "Database:").waitUntilEnabled();
 			Helpers.selectFromList(IRIS_PageMaster.getListObject(_IRIS, "Database:"), database,
 					IRISConstants.DATABASE_NAME);
@@ -91,43 +95,46 @@ public class IRIS_LoginPage extends BasePage {
 		}
 	}
 
-	public void getIRISLoginAsPerEnvt(PDT_LoginDetails loginDataApp) throws Exception {		
-		switch(CoreFunctions.getPropertyFromConfig("envt").toLowerCase()) {
+	public void getIRISLoginAsPerEnvt(PDT_LoginDetails loginDataApp) throws Exception {
+		switch (CoreFunctions.getPropertyFromConfig("envt").toLowerCase()) {
 		case CoreConstants.ENVT_DEV:
-			_userName = loginDataApp.dev.irisUserName;			
+			_userName = loginDataApp.dev.irisUserName;
 			_password = loginDataApp.dev.irisPassword;
 			_database = loginDataApp.dev.irisDatabase;
 			break;
 		case CoreConstants.ENVT_QA:
-			_userName = loginDataApp.qa.irisUserName;			
+			_userName = loginDataApp.qa.irisUserName;
 			_password = loginDataApp.qa.irisPassword;
 			_database = loginDataApp.qa.irisDatabase;
 			break;
 		case CoreConstants.ENVT_UAT:
-			_userName = loginDataApp.uat.irisUserName;			
+			_userName = loginDataApp.uat.irisUserName;
 			_password = loginDataApp.uat.irisPassword;
 			_database = loginDataApp.uat.irisDatabase;
 			break;
 		case CoreConstants.ENVT_TEST:
-			_userName = loginDataApp.preProd.irisUserName;			
+			_userName = loginDataApp.preProd.irisUserName;
 			_password = loginDataApp.preProd.irisPassword;
 			_database = loginDataApp.preProd.irisDatabase;
 			break;
 		case CoreConstants.ENVT_PREPROD:
-			_userName = loginDataApp.preProd.irisUserName;			
+			_userName = loginDataApp.preProd.irisUserName;
 			_password = loginDataApp.preProd.irisPassword;
 			_database = loginDataApp.preProd.irisDatabase;
 			break;
 		case CoreConstants.ENVT_PROD:
-			_userName = loginDataApp.prod.irisUserName;			
+			_userName = loginDataApp.prod.irisUserName;
 			_password = loginDataApp.prod.irisPassword;
 			_database = loginDataApp.prod.irisDatabase;
 			break;
 		default:
-			Assert.fail(MessageFormat.format(CoreConstants.INVALID_ENVIRONMENT, CoreFunctions.getPropertyFromConfig("envt")));
-		}		
-		Log.info("User Name : " + _userName + "\nPassword : " + BusinessFunctions.encodedPassword(_password) + "\nDatabase : " + _database);
-		Reporter.addStepLog("Login Credentials Entered for IRIS Application are : \nUsername : "+_userName+"\nPassword : "+BusinessFunctions.encodedPassword(_password)+ "\nDatabase : " + _database);
+			Assert.fail(MessageFormat.format(CoreConstants.INVALID_ENVIRONMENT,
+					CoreFunctions.getPropertyFromConfig("envt")));
+		}
+		Log.info("User Name : " + _userName + "\nPassword : " + BusinessFunctions.encodedPassword(_password)
+				+ "\nDatabase : " + _database);
+		Reporter.addStepLog("Login Credentials Entered for IRIS Application are : \nUsername : " + _userName
+				+ "\nPassword : " + BusinessFunctions.encodedPassword(_password) + "\nDatabase : " + _database);
 		loginToIRISApp(_userName, _password, _database);
 		handleErrorDialog();
 	}
@@ -144,6 +151,5 @@ public class IRIS_LoginPage extends BasePage {
 		} else
 			Log.info("No Error Dialog is Displayed");
 	}
-	
-	
+
 }

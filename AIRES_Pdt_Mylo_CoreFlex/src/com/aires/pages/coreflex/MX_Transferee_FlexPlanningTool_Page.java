@@ -476,7 +476,6 @@ public class MX_Transferee_FlexPlanningTool_Page extends Base {
 	public boolean selectBenefitsAndProceedToReviewAndSubmit() {
 		boolean benefitsSelectedSuccessfully = false;
 		totalSelectedPoints = 0;
-		MX_Transferee_MyBenefitsBundlePage.benefitDeletedFlag = false;
 		try {
 			benefitsSelectedSuccessfully = selectFlexBenefitsonFPT() && selectCashOutOnFPT()
 					&& validatePointsAndClickOnNext();
@@ -498,8 +497,9 @@ public class MX_Transferee_FlexPlanningTool_Page extends Base {
 		try {
 			if ((CoreFunctions.getPropertyFromConfig("PolicyCashoutType").equals(MobilityXConstants.PORTION_CASHOUT))
 					|| (CoreFunctions.getPropertyFromConfig("PolicyCashoutType")
-							.equals(MobilityXConstants.AFTER_RELOCATION_ONLY))) {
-				isPortionCashoutSelected = selectPointsForCashout(cashoutPoints * 0.10);
+							.equals(MobilityXConstants.AFTER_RELOCATION_ONLY))) {							
+				isPortionCashoutSelected = selectPointsForCashout(
+						cashoutPoints == 0.0 ? getAvailableCashoutPoints(false) : cashoutPoints * 0.10);
 			} else if ((CoreFunctions.getPropertyFromConfig("PolicyCashoutType")
 					.equals(MobilityXConstants.CASHOUT_NOT_AUTHORIZED))) {
 				return true;
@@ -523,11 +523,7 @@ public class MX_Transferee_FlexPlanningTool_Page extends Base {
 			if (Double.parseDouble(CoreFunctions.getElementText(driver, selectedPoints)) == totalSelectedPoints) {
 				CoreFunctions.clickElement(driver, _btn_next);
 				CoreFunctions.writeToPropertiesFile("CF_Transferee_TotalSelectedPoints",
-						String.valueOf(totalSelectedPoints));
-				CoreFunctions.writeToPropertiesFile("CF_Transferee_AvailablePoints",
-						String.valueOf(Double
-								.parseDouble(CoreFunctions.getPropertyFromConfig("CF_Transferee_TotalAvailablePoints"))
-								- totalSelectedPoints));
+						String.valueOf(totalSelectedPoints));				
 				return true;
 			}
 		} catch (Exception e) {
@@ -883,14 +879,21 @@ public class MX_Transferee_FlexPlanningTool_Page extends Base {
 		return isPortionCashoutVerified;
 	}
 
-	public double getAvailableCashoutPoints(boolean submittedBenefits) {
+	public double getAvailableCashoutPoints(boolean submittedBenefits) {		
 		if (!submittedBenefits) {
-			cashoutPoints = totalPointsOnPolicy
+			cashoutPoints = (Double
+					.parseDouble(CoreFunctions.getPropertyFromConfig("CF_Transferee_TotalAvailablePoints")))
 					* Double.parseDouble(policySetupPageData.flexPolicySetupPage.maxPortionCashoutPercent) / 100;
 		} else {
-			cashoutPoints = MX_Transferee_MyBenefitsBundlePage.availablePointsAfterSubmission < cashoutPoints
-					? MX_Transferee_MyBenefitsBundlePage.availablePointsAfterSubmission
-					: cashoutPoints;
+			cashoutPoints = ((Double
+					.parseDouble(CoreFunctions.getPropertyFromConfig("CF_Transferee_TotalAvailablePoints")))
+					* Double.parseDouble(policySetupPageData.flexPolicySetupPage.maxPortionCashoutPercent) / 100)
+					- (Double.parseDouble(CoreFunctions.getPropertyFromConfig("CF_Transferee_SelectedCashOutPoints")));
+			cashoutPoints = (Double
+					.parseDouble(CoreFunctions.getPropertyFromConfig("CF_Transferee_AvailablePoints"))) < cashoutPoints
+							? (Double.parseDouble(
+									CoreFunctions.getPropertyFromConfig("CF_Transferee_TotalAvailablePoints")))
+							: cashoutPoints;
 		}
 		return cashoutPoints;
 	}
@@ -1726,7 +1729,7 @@ public class MX_Transferee_FlexPlanningTool_Page extends Base {
 	}
 
 	private boolean verifyAfterRelocationNoteBeforeTracing() {
-		try {							
+		try {
 			if (CoreFunctions.getElementText(driver, _textAfterRelocationNote)
 					.equals(MobilityXConstants.RELOCATION_CASHOUT_NOTE_BEFORE_TRACING_FOR_TRANSFEREE)) {
 				Reporter.addStepLog(MessageFormat.format(

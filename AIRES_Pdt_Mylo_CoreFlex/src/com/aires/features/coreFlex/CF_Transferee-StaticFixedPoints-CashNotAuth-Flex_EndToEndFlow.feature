@@ -2,7 +2,7 @@ Feature: Validate the CoreFlex End-To-End Business Test Flow(BluePrint, MXTransf
 
   @End-To-End_CoreFlex @CF_MXTransferee_StaticFixed_CashNotAuth_Flex
   Scenario: CoreFlex - Creating & Validating a new Active Points Based CoreFlex Policy with Transferee, Static/Fixed and CashNotAuth selection
-    Given he has setup a new CoreFlex Policy with following selection in Blueprint application
+    Given he has setup a new Points Based CoreFlex Policy with following selection in Blueprint application
       | Person Responsible For Benefit Selection | Flex Setup Type | Cashout Availability   | BenefitType | PolicyRequiredFor | MileStones |
       | Transferee                               | Static/Fixed    | Cashout Not Authorized | Flex        | Client            |          0 |
     And he has clicked on "Submit" button to submit "V1" policy verison on "Custom Bundles" page
@@ -24,10 +24,10 @@ Feature: Validate the CoreFlex End-To-End Business Test Flow(BluePrint, MXTransf
     And he has clicked on "Review and Submit" button after validating all the benefit details listed under 'Selected Benefits' section on "My Benefits Bundle" page
     And he has clicked on "Yes - submit my bundle" button after entering Transferee name on "Submit Bundle Confirmation" dialog
     When he clicks on "OK - Let Me See My Benefits!" button displayed on 'Success Flex' dialog
-    Then submitted points details should be updated on 'Mobility Journey Home' and 'Flex Planning Tool' page
+    Then 'Mobility Flex Benefit(s) Submission' email should be generated for the submitted benefit bundle
+    And submitted points details should be updated on 'Mobility Journey Home' and 'Flex Planning Tool' page
     And submitted benefit details should be displayed under 'Submitted Benefits' section of 'My Benefits Bundle' page
-    And 'Mobility Flex Benefit(s) Submission' email should be generated for the submitted benefit bundle
-
+    
   @End-To-End_CoreFlex @CF_MXTransferee_StaticFixed_CashNotAuth_Flex
   Scenario: TransfereeSubmissions - Verifying StaticFixed Points, BenefitSubmissions made by the Transferee
     Given he has logged into 'Transferee Submissions' application as a "MSPEC/PPC" user

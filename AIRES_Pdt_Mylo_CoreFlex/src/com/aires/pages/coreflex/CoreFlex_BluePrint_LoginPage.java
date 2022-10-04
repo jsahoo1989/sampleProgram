@@ -126,7 +126,7 @@ public class CoreFlex_BluePrint_LoginPage extends Base {
 			CoreFunctions.click(driver, _staySignedInYes, _staySignedInYes.getAttribute("value"));
 		}
 		CoreFunctions.switchToParentWindow(driver);
-		CoreFunctions.waitHandler(3);
+		CoreFunctions.waitHandler(1);
 		if (CoreFunctions.isElementExist(driver, _spinner, 5))
 			CoreFunctions.explicitWaitTillElementInVisibilityCustomTime(driver, _spinner, 20);
 		else if (CoreFunctions.isElementExist(driver, _loginWithOfficeImg, 5)) {
@@ -136,7 +136,7 @@ public class CoreFlex_BluePrint_LoginPage extends Base {
 			CoreFunctions.clickElement(driver, _loginWithOfficeImg);
 			CoreFunctions.explicitWaitTillElementInVisibilityCustomTime(driver, _spinner, 20);
 		}
-		CoreFunctions.waitHandler(3);
+		CoreFunctions.waitHandler(1);
 	}
 
 	public void logout() {

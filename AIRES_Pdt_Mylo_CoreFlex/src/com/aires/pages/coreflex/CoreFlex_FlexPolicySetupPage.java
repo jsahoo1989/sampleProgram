@@ -554,14 +554,13 @@ public class CoreFlex_FlexPolicySetupPage extends Base {
 		}
 	}
 
-	public boolean verifyFPTFieldValuesPostVersioningCloning(DataTable dataTable) {
-		try {
-			List<Map<String, String>> basePolicyDataMap = dataTable.asMaps(String.class, String.class);
+	public boolean verifyFPTFieldValuesPostVersioningCloning() {
+		try {			
 			CoreFunctions.verifyRadioButtonSelection(driver, _radioFlexAllowanceType, _radioFlexAllowanceTypeButtonList,
 					policySetupPageData.flexPolicySetupPage.flexAllowanceType, COREFLEXConstants.FLEX_ALLOWANCE_TYPE);
 			CoreFunctions.verifyRadioButtonSelection(driver, _radioPersonResponsibleForBenefitSelection,
 					_radioPersonResponsibleForBenefitSelectionButtonList,
-					basePolicyDataMap.get(0).get(COREFLEXConstants.PERSON_RESPONSIBLE_FOR_BENEFIT_SELECTION),
+					CoreFunctions.getPropertyFromConfig("CoreFlex_Policy_PersonResponsible"),
 					COREFLEXConstants.PERSON_RESPONSIBLE_FOR_BENEFIT_SELECTION);
 			CoreFunctions.verifyText(driver, _selectLockBenefitsPointsSelectedValue,
 					policySetupPageData.flexPolicySetupPage.lockTheBenefitsPointsSelection,
@@ -573,14 +572,14 @@ public class CoreFlex_FlexPolicySetupPage extends Base {
 					policySetupPageData.flexPolicySetupPage.benefitsExpirationDate,
 					COREFLEXConstants.BENEFIT_EXPIRATION_DATE);
 			CoreFunctions.verifyText(driver, _selectFlexSetupTypeSelectedValue,
-					basePolicyDataMap.get(0).get(COREFLEXConstants.FLEX_SETUP_TYPE), COREFLEXConstants.FLEX_SETUP_TYPE);
+					CoreFunctions.getPropertyFromConfig("CoreFlex_Policy_FlexSetupType"), COREFLEXConstants.FLEX_SETUP_TYPE);
 			System.out.println("Actual Display Name :" + _inputTotalPointsAvailable.getDomProperty("value"));
 			CoreFunctions.verifyText(_inputTotalPointsAvailable.getDomProperty("value"),
 					policySetupPageData.flexPolicySetupPage.StaticFixedTotalPointsAvailable,
 					COREFLEXConstants.TOTAL_POINTS_AVAILABLE);
 			CoreFunctions.verifyRadioButtonSelection(driver, _sectionCashoutAvailability,
 					_sectionCashoutAvailabilityButtonList,
-					basePolicyDataMap.get(0).get(COREFLEXConstants.CASHOUT_AVAILABILITY),
+					CoreFunctions.getPropertyFromConfig("PolicyCashoutType"),
 					COREFLEXConstants.CASHOUT_AVAILABILITY);
 			Reporter.addStepLog(MessageFormat.format(
 					COREFLEXConstants.SUCCESSFULLY_VERIFIED_FIELD_VALUES_ON_FLEX_PLANNING_TOOL_PAGE_POST_VERSIONING_CLONING,

@@ -179,7 +179,7 @@ public class MobilityXConstants {
 	public static final String DELETE = "Delete";
 	public static final String TRANSFEREE_JOURNEY_TOOLTIP = "Transferee Journey ToolTip";
 	public static final String FLEX_BENEFIT_SUBMISSION = "Flex Benefit Submission";
-	public static final String FLEX_BENEFITS_SUBMISSION_MESSAGE = "The attached document outlines the mobility flex benefit(s) that you have submitted. You have used used_points point(s) of yourtotal_points-point allowance. Your current point balance is current_balance point(s).";
+	public static final String FLEX_BENEFITS_SUBMISSION_MESSAGE = "The attached document outlines the mobility flex benefit(s) that you have submitted. You have used used_points point(s) of your total_points-point allowance. Your current point balance is current_balance point(s).";
 	public static final String FAILED_TO_DELETE_SUBMITTED_BENEFIT = "{0}Failed to delete submitted benefit.";
 	public static final String REMOVE_BENEFIT_SELECTION_POPUP_NOT_DISPLAYED = "{0}Remove Benefit Selection popup not displayed";
 	public static final String REMOVE_BENEFIT_DIALOG_INFO_TEXT = "Your request will be sent to your Aires Representative for review. Benefits and services that have started or are completed may not be eligible for change, but we'll let you know as soon as possible!";
@@ -470,7 +470,8 @@ public class MobilityXConstants {
 	public static final String FAILED_TO_VERIFY_REQUIRED_FIELDS_VALIDATION_ON_AUTHORIZATION_FORM = "{0}Failed to verify required fields validation on Authorization Form.";
 	public static final String EXCEPTION_OCCURED_WHILE_VERIFYING_REQUIRED_FIELDS_VALIDATION_ON_AUTH_FORM = "{0}Exceptions occured while verifying required fields validation on Auth form. Exception : ''{1}''.";
 	public static final String REQUIRED_FIELDS_GROWL_MESSAGE = "Required Fields Growl Message";
-	public static final String GROWL_MESSAGE_FOR_FLEX_BENEFITS = "Looks like we are missing some information needed to start the benefits selection. We've highlighted the issues for you.";
+	public static final String GROWL_MESSAGE_FOR_MISSING_FLEX_BENEFITS_SELECTION = "Looks like you have not selected any benefit for the employee. We've highlighted the issue for you.";
+	public static final String GROWL_MESSAGE_FOR_MISSING_INFORMATION = "Looks like we are missing some information needed to start the benefits selection. We've highlighted the issues for you.";
 	public static final String ITEM_NEEDS_ATTENTION = "Item needs attention";
 	public static final String EXPECTED_ONE_ITEM_NEEDS_ATTENTION = "1 item needs attention";
 	public static final String EXPECTED_TWO_ITEM_NEEDS_ATTENTION = "2 items need attention";
@@ -733,4 +734,6 @@ public class MobilityXConstants {
 	public static final String INFORMATION_NOT_FOUND_IN_EMAIL = "Information not found in Email";
 	public static final String DENIED = "Denied";
 	public static final String SUCCESSFULLY_VERIFIED_DEFAULT_PORTION_CASHOUT_DETAILS_POST_DELETE_REQUEST_DENIED_ON_BENEFIT_SELECTION_TOOL_PAGE = "{0}Successfully verified default Portion Cashout details - Post Delete Request Denied on Benefit Selection Tool page.";
+	public static final String CLIENT_INITIATOR = "Client Initiator";
+	public static final String DELETE_BUTTON_HOVER_TEXT = "Delete Button Hover Text";
 }

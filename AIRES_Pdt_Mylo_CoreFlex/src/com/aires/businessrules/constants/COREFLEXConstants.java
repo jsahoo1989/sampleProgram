@@ -792,6 +792,14 @@ public class COREFLEXConstants {
 	public static final String EXCEPTION_OCCURED_WHILE_READING_REVISED_MOBILITY_INITIATION_EMAIL = "{0}Exception occured while reading Revised Mobility Initiation Email. Exception : ''{1}''.";
 	public static final String SUCCESSFULLY_VERIFIED_DELETED_FLEX_BENEFIT_NOT_PRESENT_IN_SUBMITTED_BENEFITS_LIST_ON_BENEFITS_BUNDLE_PAGE_POST_DELETE_REQUEST_APPROVAL = "{0}Successfully verified Deleted Benefit List not present in Submitted Benefits List on BB Page - Post Delete Request Approval By MSPEC.";
 	public static final String EXCEPTION_OCCURED_WHILE_VERIFYING_DELETE_BENEFIT_REQUEST_REMOVED_ON_BB_PAGE = "{0}Exception occured while verifying delete benefit request is removed on BB page. Exception : ''{1}''.";
+	public static final String AUTO_SHIPMENT = "Auto Shipment";
+	public static final String SEA_OR_SURFACE_SHIPMENT = "Sea/Surface Shipment";
+	public static final String INLAND_SHIPMENT = "Inland Shipment";
+	public static final String PET_SHIPMENT = "Pet Shipment";
+	public static final String PET_SHIPMENT_BENEFITS_PAGE = "Pet Shipment Benefits Page";
+	public static final String AUTO_SHIPMENT_BENEFITS_PAGE = "Auto Shipment Benefits Page";
+	public static final String INLAND_SHIPMENT_BENEFITS_PAGE = "Inland Shipment Benefits Page";
+	public static final String SEA_OR_SURFACE_SHIPMENT_BENEFITS_PAGE = "Sea/Surface Shipment Benefits Page";
 	public static final String EXCEPTION_OCCURED_WHILE_VALIDATING_PORTION_CASHOUT_DETAILS_UNDER_FLEX_BENEFIT_SECTION_ON_AUTHORIZATION_FORM_PAGE = "{0}Exception occured while validating Portion Cashout Details under Flex Benefits Section of Authorization Form page. Exception : ''{1}''.";
 	public static final String EXCEPTION_OCCURED_WHILE_DELETING_SUBMITTED_CASHOUT_ON_BB_PAGE = "{0}Exception occured while Deleting submitted Cashout on Benefits Bundle page. Exception : ''{1}''.";
 	public static final String FAILED_TO_VERIFY_SUBMITTED_BENEFITS_CASHOUT_DETAILS_BY_CLIENT_ON_TRANSFEREE_SUBMISSIONS_DETAILS_PAGE = "{0}Failed to verify submitted Benefits Cashout details by Client on Transferee Submissions Details Page.";
@@ -803,5 +811,6 @@ public class COREFLEXConstants {
 	public static final String FAILED_TO_VERIFY_DEFAULT_AFTER_RELOCATION_CASHOUT_NOTE_BEFORE_TRACING_ACTUALIZATION_ON_BENEFIT_SELECTION_TOOL_PAGE = "{0}Failed to verify default after relocation cashout note before Tracing Actualization on Benefit Selection Tool page.Expected : ''{1}'' | Actual : ''{2}''";
 	public static final String SUCCESSFULLY_VERIFIED_PORTION_CASHOUT_DETAILS_POST_ALL_CASHOUT_VALUE_SUBMISSION_ON_BENEFIT_SELECTION_TOOL_PAGE = "{0}Successfully verified Portion Cashout details Post All Cashout value submission on Benefit Selection Tool page.";
 	public static final String SUCCESSFULLY_VERIFIED_PORTION_CASHOUT_DETAILS_POST_DELETE_REQUEST_DENIED_ON_BENEFIT_SELECTION_TOOL_PAGE = "{0}Successfully verified Portion Cashout details Post Delete Request Denied for All Cashout value submission on Benefit Selection Tool page.";
-	
+	public static final String EXCEPTION_OCCURED_WHILE_CLICKING_ON_POLICY_ACTION_ICON_ON_VIEW_EDIT_POLICY_FORMS_PAGE = "{0}Exception occured while clicking on ''{1}'' action icon of Policy Version : ''{2}'' on View/Edit Policy Forms page. Exception : ''{3}''.";
+	public static final String SUCCESSFULLY_VERIFIED_MOBILITY_FLEX_BENEFITS_SUBMISSION_EMAIL = "{0}Successfully verified Mobility Flex Benefit(s) Submission Email. Email Content Verified : ''{1}''.";
 }

@@ -5,9 +5,9 @@ import java.awt.Robot;
 import java.awt.event.KeyEvent;
 import java.text.MessageFormat;
 import java.util.HashMap;
-import java.util.IdentityHashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Map.Entry;
 import java.util.Objects;
 
 import org.testng.Assert;
@@ -17,6 +17,7 @@ import com.aires.businessrules.constants.CoreConstants;
 import com.aires.businessrules.constants.IRISConstants;
 import com.aires.iris.helpers.Helpers;
 import com.aires.managers.FileReaderManager;
+import com.aires.managers.PageObjectManager_CoreFlex;
 import com.aires.pages.iris.basepage.BasePage;
 import com.aires.testdatatypes.coreflex.Benefit;
 import com.aires.testdatatypes.coreflex.FlexBenefit;
@@ -56,6 +57,8 @@ public class IRIS_AssignmentServicePage extends BasePage {
 	private String _serviceWindowTitle = null;
 	private String subServiceId;
 	public static Map<String, String> subServiceIDMap;
+
+	public static PageObjectManager_CoreFlex pageObjectManager_CoreFlex;
 
 	public void setSubServiceId(String sectionName) {
 		try {
@@ -163,15 +166,15 @@ public class IRIS_AssignmentServicePage extends BasePage {
 	public void clickSaveButton() throws Exception {
 		Helpers.clickButton(IRIS_PageMaster.getButtonObjectFromLabel(_IRIS, "Save"),
 				IRIS_PageMaster.getButtonObjectFromLabel(_IRIS, "Save").getLabel());
-//		if (IRIS_PageMaster.getDialogObject(_IRIS, "Warning").exists()) {
-//			Helpers.clickButton(
-//					IRIS_PageMaster.getButtonObject(IRIS_PageMaster.getDialogObject(_IRIS, "Warning"), "OK",
-//							"javax.swing.plaf.basic.BasicOptionPaneUI$ButtonFactory$ConstrainedButton"),
-//					IRIS_PageMaster
-//							.getButtonObject(IRIS_PageMaster.getDialogObject(_IRIS, "Warning"), "OK",
-//									"javax.swing.plaf.basic.BasicOptionPaneUI$ButtonFactory$ConstrainedButton")
-//							.getAttachedText());
-//		}
+		if (IRIS_PageMaster.getDialogObject(_IRIS, "Warning").exists()) {
+			Helpers.clickButton(
+					IRIS_PageMaster.getButtonObject(IRIS_PageMaster.getDialogObject(_IRIS, "Warning"), "OK",
+							"javax.swing.plaf.basic.BasicOptionPaneUI$ButtonFactory$ConstrainedButton"),
+					IRIS_PageMaster
+							.getButtonObject(IRIS_PageMaster.getDialogObject(_IRIS, "Warning"), "OK",
+									"javax.swing.plaf.basic.BasicOptionPaneUI$ButtonFactory$ConstrainedButton")
+							.getAttachedText());
+		}
 		if (!IRIS_PageMaster.getDialogObject(_IRIS, "Saved").exists()) {
 			String _newTransfereeWindowTitle = MessageFormat.format(IRISConstants.TRANSFEREE_TITLE_TO_APPEND_SERVICE,
 					CoreFunctions.getPropertyFromConfig("Assignment_FileID"),
@@ -188,8 +191,30 @@ public class IRIS_AssignmentServicePage extends BasePage {
 									"javax.swing.plaf.basic.BasicOptionPaneUI$ButtonFactory$ConstrainedButton")
 							.getLabel());
 		} catch (GeneralLeanFtException e) {
-			e.printStackTrace();
-			Assert.fail("Failed to click Ok Button");
+			try {
+				if (IRIS_PageMaster.getDialogObject(_IRIS, "Failed").exists()) {
+					IRIS_PageMaster.getButtonObjectFromLabel(IRIS_PageMaster.getDialogObject(_IRIS, "Failed"), "OK")
+							.click();
+					String _newTransfereeWindowTitle = MessageFormat.format(
+							IRISConstants.CLIENT_SPECIFIC_TRANSFEREE_TITLE_TO_APPEND_WITH_REDUCED_SPACE,
+							CoreFunctions.getPropertyFromConfig("Assignment_FileID"),
+							CoreFunctions.getPropertyFromConfig("Transferee_firstName"),
+							CoreFunctions.getPropertyFromConfig("Transferee_lastName"),
+							CoreFunctions.getPropertyFromConfig("Assignment_ClientName"));
+					Log.info("new:" + _newTransfereeWindowTitle);
+					_IRIS = IRIS_PageMaster.getWindowObject(_newTransfereeWindowTitle);
+				}
+				Log.info(_IRIS.getTitle());
+				IRIS_PageMaster.getDialogObject(_IRIS, "Saved").waitUntilVisible();
+				if (IRIS_PageMaster.getDialogObject(_IRIS, "Saved").exists()) {
+					IRIS_PageMaster.getButtonObjectFromLabel(IRIS_PageMaster.getDialogObject(_IRIS, "Saved"), "OK")
+							.click();
+				}
+
+			} catch (Exception ex) {
+				ex.printStackTrace();
+				Assert.fail("Failed to click Ok Button" + ex.getMessage());
+			}
 		}
 	}
 
@@ -505,6 +530,9 @@ public class IRIS_AssignmentServicePage extends BasePage {
 					}
 				}
 			}
+			for (Entry<String, String> subService : subServiceIDMap.entrySet()) {
+				Log.info("===>key" + subService.getKey() + "===>value" + subService.getValue());
+			}
 		} catch (Exception e) {
 			Reporter.addStepLog(MessageFormat.format(
 					IRISConstants.EXCEPTION_OCCURED_WHILE_ADDING_SERVICE_SUBSERVICE_ON_SERVICES_TAB_OF_IRIS_APPLICATION,
@@ -638,7 +666,7 @@ public class IRIS_AssignmentServicePage extends BasePage {
 				break;
 			}
 		}
-		
+
 	}
 
 	public void addServiceAndSubServiceForAiresManagedBenefit(String coreFlexType, int noOfMilestones) {
@@ -652,19 +680,24 @@ public class IRIS_AssignmentServicePage extends BasePage {
 								+ benefit.getIrisSubserviceName());
 						addService(benefit.getIrisServiceName());
 						clickOnAddSubServiceButton();
-						addSubService(IRISConstants.SUB_SERVICE, benefit.getIrisSubserviceType(),
-								benefit.getIrisSubserviceName(), coreFlexType);
-						clickSaveButton();
+						pageObjectManager_CoreFlex.getPageObjects().get(benefit.getBenefitType()).addSubService(_IRIS,
+								IRIS_PageMaster.getTableObjectWithIndex(_IRIS, "javax.swing.JTable", 1), benefit,
+								coreFlexType);
 						int rowCount = Helpers.getTableRowCount(getTableName(IRISConstants.SUB_SERVICE));
 						benefit.setIrisSubserviceID(String.valueOf(
 								new Double(IRIS_PageMaster.getTableObjectWithIndex(_IRIS, "javax.swing.JTable", 1)
 										.getCell(rowCount - 1, IRISConstants.ID_TEXT).getValue().toString())
 												.intValue()));
+						Helpers.setTableCellValue(
+								IRIS_PageMaster.getTableObjectWithIndex(_IRIS, "javax.swing.JTable", 1), rowCount - 1,
+								"Core/Flex", "Both");
 						subServiceIDMap.put(benefit.getIrisSubserviceName(), benefit.getIrisSubserviceID());
+						clickSaveButton();
 						CoreFunctions.waitHandler(2);
 					}
 				}
 			}
+			CoreFunctions.writeToPropertiesFile("irisWindowTitle", getIRISWindow().getTitle());
 			System.out.println(subServiceIDMap);
 		} catch (Exception e) {
 			Reporter.addStepLog(MessageFormat.format(
@@ -672,7 +705,7 @@ public class IRIS_AssignmentServicePage extends BasePage {
 					CoreConstants.FAIL, e.getMessage()));
 		}
 	}
-	
+
 	public void addServiceAndSubServiceForMultipleSubmission(String coreFlexType) {
 		subServiceIDMap = new HashMap<String, String>();
 		try {
@@ -699,7 +732,6 @@ public class IRIS_AssignmentServicePage extends BasePage {
 					IRISConstants.EXCEPTION_OCCURED_WHILE_ADDING_SERVICE_SUBSERVICE_ON_SERVICES_TAB_OF_IRIS_APPLICATION,
 					CoreConstants.FAIL, e.getMessage()));
 		}
-
 	}
 
 }

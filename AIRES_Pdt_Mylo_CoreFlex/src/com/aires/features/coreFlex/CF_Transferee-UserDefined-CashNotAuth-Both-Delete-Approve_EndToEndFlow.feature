@@ -1,8 +1,8 @@
 Feature: Validate the CoreFlex End-To-End Business Test Flow(BluePrint, MXTransferee,Transferee Submissions) for Both_Transferee_UserDefined_CashoutNotAuthorized_Delete_ApproveAll selection
 
-  @End-To-End_CoreFlex @CF_MXTransferee_UserDefined_CashNotAuthIgnore
+  @End-To-End_CoreFlex @CF_MXTransferee_UserDefined_CashNotAuth
   Scenario: CoreFlex - Creating & Validating a new Active Points Based CoreFlex Policy with Transferee, UserDefined and CashNotAuth selection
-    Given he has setup a new CoreFlex Policy with following selection in Blueprint application
+    Given he has setup a new Points Based CoreFlex Policy with following selection in Blueprint application
       | Person Responsible For Benefit Selection | Flex Setup Type | Cashout Availability   | BenefitType | PolicyRequiredFor | MileStones |
       | Transferee                               | User Defined    | Cashout Not Authorized | Both        | Client            |          0 |
     And he has clicked on "Submit" button to submit "V1" policy verison on "Custom Bundles" page
@@ -37,7 +37,7 @@ Feature: Validate the CoreFlex End-To-End Business Test Flow(BluePrint, MXTransf
     And 'Auth Submit Success' growl message should be displayed on the navigated 'View all initiation' page on confirmation of the last dialog
     And Revised 'New Initiation Submitted' email having updated Transferee and Benefit Points details should be received
 
-   @End-To-End_CoreFlex @CF_MXTransferee_UserDefined_CashNotAuth
+  @End-To-End_CoreFlex @CF_MXTransferee_UserDefined_CashNotAuth
   Scenario: MXTransferee - Selecting & Submitting Flex benefits available in configured policy and Verifying UserDefined Available Benefits Points
     Given he has logged into 'MobilityX' application after actualizing a new 'Transferee' through IRIS application and setting-up user profile in 'MobilityX' application
     And he has validated 'Assignment-Policy' details after selecting below option displayed on 'Welcome' dialog

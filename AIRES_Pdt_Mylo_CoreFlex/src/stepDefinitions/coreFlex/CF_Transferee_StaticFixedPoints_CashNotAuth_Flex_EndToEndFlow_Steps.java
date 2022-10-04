@@ -74,6 +74,24 @@ public class CF_Transferee_StaticFixedPoints_CashNotAuth_Flex_EndToEndFlow_Steps
 				COREFLEXConstants.FAILED_TO_VERIFY_SUBMITTED_BENEFITS_DETAILS_ON_TRANSFEREE_SUBMISSIONS_DETAILS_PAGE,
 				CoreConstants.FAIL));
 	}
+	
+	@Then("^he should be navigated to \"([^\"]*)\" page having list of submitted Benefits and Cashout details$")
+	public void he_should_be_navigated_to_page_having_list_of_submitted_Benefits_and_Cashout_details(
+			String pageName) throws Throwable {
+		Assert.assertTrue(transfereeSubmissionsDetailsPage.verifiyPageNavigation(pageName),
+				MessageFormat.format(COREFLEXConstants.FAILED_TO_NAVIGATE_TO_TRANSFEREE_SUBMISSIONS_DETAILS_PAGE,
+						CoreConstants.FAIL, pageName));
+		CoreConstants.TIME_AFTER_ACTION = new Date().getTime();
+		Reporter.addStepLog("<b>Total time taken to navigate to <i>Transferee Submissions Detail</i> page is :"
+				+ CoreFunctions.calculatePageLoadTime(CoreConstants.TIME_BEFORE_ACTION, CoreConstants.TIME_AFTER_ACTION)
+				+ " Seconds </b>");
+		Assert.assertTrue(transfereeSubmissionsDetailsPage.verifyTransfereeAndPointsDetails(), MessageFormat.format(
+				COREFLEXConstants.FAILED_TO_VERIFY_TRANSFEREE_AND_POINTS_DETAILS_ON_TRANSFEREE_SUBMISSIONS_DETAILS_PAGE,
+				CoreConstants.FAIL));
+		Assert.assertTrue(transfereeSubmissionsDetailsPage.verifySubmittedBenefitsDetails(), MessageFormat.format(
+				COREFLEXConstants.FAILED_TO_VERIFY_SUBMITTED_BENEFITS_DETAILS_ON_TRANSFEREE_SUBMISSIONS_DETAILS_PAGE,
+				CoreConstants.FAIL));
+	}
 
 	@When("^he has created a payment account to credit portion cashout amount$")
 	public void he_has_created_a_payment_account_to_credit_portion_cashout_amount() {
@@ -83,6 +101,14 @@ public class CF_Transferee_StaticFixedPoints_CashNotAuth_Flex_EndToEndFlow_Steps
 	
 	@Then("^submitted benefit details should be displayed under 'Submitted Benefits' section of 'My Benefits Bundle' page$")
 	public void submitted_benefit_details_should_be_displayed_under_Submitted_Benefits_section_of_my_benefits_bundle_page() {
+		Assert.assertTrue(mxTransfereeMyBenefitsBundlePage.isMyBundlePageDisplayed(),
+				MessageFormat.format(MobilityXConstants.FAILED_TO_DISPLAY_MY_BENEFIT_BUNDLE_PAGE, CoreConstants.FAIL));
+		CoreConstants.TIME_AFTER_ACTION = new Date().getTime();
+		Reporter.addStepLog(
+				"<b>Total time taken to navigate to <i>My Benefits Bundle page after Benefit Submission</i> is :"
+						+ CoreFunctions.calculatePageLoadTime(CoreConstants.TIME_BEFORE_ACTION,
+								CoreConstants.TIME_AFTER_ACTION)
+						+ " Seconds </b>");
 		Assert.assertTrue(mxTransfereeMyBenefitsBundlePage.validateSubmittedBenefitDetails(),
 				MobilityXConstants.SUBMITTED_BENEFIT_DETAILS_NOT_MATCHED);
 	}

@@ -28,6 +28,7 @@ Feature: Validate End-to-End Business workflow of BluePrint CF Transferee-Cashou
     Given he has searched for "Active" points based CoreFlex policy that has one or more assignments/files on "View/Edit Policy Forms" page
     And he has verified following 'Assignment Details' after clicking on "Assignment History" icon of the searched "Active" points based CoreFlex policy
       | Assignment ID | Transferee Name | Assignment Status | Booked Date | Origin Country | Destination Country | MSPEC Name | PPC Name |
+    And he has searched for "Active" points based CoreFlex policy on "View/Edit Policy Forms" page
     And he has clicked on "Edit" icon of the searched "Active" points based CoreFlex policy
     And he has entered 'Description' after verifying 'Version Control' popup screen contents
     When he clicks on "CREATE" button on 'Version Control' popup screen
@@ -43,9 +44,7 @@ Feature: Validate End-to-End Business workflow of BluePrint CF Transferee-Cashou
       | V2            | Draft        | Enabled  | Enabled    | Disabled  | Disabled              |
     And he has clicked on "Edit" icon of "V2" - "Draft" version of the searched points based CoreFlex policy
     And he has navigated to "General Information" page of 'New Version' policy in 'Editable' mode having CoreFlex Policy Status displayed as "Draft"
-    And he has verified 'Policy-Benefits-SubBenefits' details of "V2" - "Draft" version Policy matches with following "V1" policy selections
-      | Person Responsible For Benefit Selection | Flex Setup Type | Cashout Availability   | BenefitType | PolicyRequiredFor | MileStones |
-      | Transferee                               | Static/Fixed    | Cashout Not Authorized | Both        | All Benefits      |          0 |
+    And he has verified 'Policy-Benefits-SubBenefits' details of "V2" - "Draft" version Policy matches with "V1" policy selections
     And he has verified 'CustomBundles' and 'Transferee Preview' details of "V2" - "Draft" version Policy matches with "V1" - "Active" version Policy
     And he has acknowledged 'Submit Success' dialog after clicking on "Submit" button on "Custom Bundles" page
     And he has clicked on "Approve Policy" button to approve "V2" policy verison on "Custom Bundles" page
@@ -66,8 +65,6 @@ Feature: Validate End-to-End Business workflow of BluePrint CF Transferee-Cashou
     When he clicks on "SAVE AS DRAFT" button
     Then he should be navigated to "General Information" page of new 'Cloned - Points based CoreFlex Policy' saved as "Draft" with Policy Version as "V1"
     And all the 'CoreFlex' benefits from the reference 'Points Based CoreFlex policy' should be copied over to the 'Cloned - Points based CoreFlex Policy'
-      | Person Responsible For Benefit Selection | Flex Setup Type | Cashout Availability   | BenefitType | PolicyRequiredFor | MileStones |
-      | Transferee                               | Static/Fixed    | Cashout Not Authorized | Both        | All Benefits      |          0 |
 
     Examples: 
       | PolicyStatus |
@@ -85,14 +82,14 @@ Feature: Validate End-to-End Business workflow of BluePrint CF Transferee-Cashou
       | Take a look at some suggested options! |
     And he has verified 'Custom Bundle' Benefit details displayed under 'Recommended Bundle' section on "Suggested Bundles" page
     And he has navigated back to "FleX Planning Tool" page after clicking on 'Back to benefits list' button
-    And he has navigated to "My Benefits Bundle" page after selecting required benefits and PortionCashout on "FleX Planning Tool" page
+    And he has navigated to "My Benefits Bundle" page after selecting required benefits on "FleX Planning Tool" page
     And he has clicked on "Review and Submit" button after validating all the benefit and Cashout details listed under 'Selected Benefits' section on "My Benefits Bundle" page
     And he has clicked on "Yes - submit my bundle" button after entering Transferee name on "Submit Bundle Confirmation" dialog
     And he has clicked on "OK - Let Me See My Benefits!" button displayed on 'Success Flex' dialog
     And he has verified submitted points details on 'Mobility Journey Home' and 'Flex Planning Tool' page
     And he has verified submitted benefit details under 'Submitted Benefits' section of 'My Benefits Bundle' page
     When he 'Delete' submitted Benefit_Cashout and confirms 'Remove Benefit Selection' dialog by entering username and clicking on "Yes-request to delete this benefit"
-    Then 'Status' of the deleted benefit_cashout should be displayed as "Delete Request Pending" under 'Submitted Benefits' section of 'My Benefit Bundle' page
+    Then 'Status' of the deleted benefit should be displayed as "Delete Request Pending" under 'Submitted Benefits' section of 'My Benefit Bundle' page
 
   @CF_End-To-End_MasterScript @CF_Master_CashNotAuthDeny @CF_Master_CashNotAuthDeny_MSPEC_PPC_Flow
   Scenario: TransfereeSubmissions - Verifying DenyAll Delete request for submissions made by Transferee for the Client assigned to PPC User
@@ -105,8 +102,8 @@ Feature: Validate End-to-End Business workflow of BluePrint CF Transferee-Cashou
     Then 'Action Completed' growl message for "Deny Request" should be displayed on "Transferee Submission Details" page
     And 'Delete Request Pending' benefit request status should be updated to 'Submitted' in 'Transferee Submission Details' list
     And benefit details should be updated in 'MXTransferee' application based on "Denied" 'Delete Request' on Transferee Submission
-    
-     @CF_End-To-End_MasterScript @CF_MasterCashNotAuthDeny @CF_Master_CashNotAuthDeny_TwoMilestones_MJCards
+
+  @CF_End-To-End_MasterScript @CF_MasterCashNotAuthDeny @CF_Master_CashNotAuthDeny_TwoMilestones_MJCards
   Scenario: MXTransferee - Verifying Flex_Core Cards details and (Submitted,StartingSoon,InProgress,Complete) status of 2 Milestones Aires Managed Benefit
     Given he has logged into 'MobilityX' application with the 'Transferee' user
     And he has navigated to 'My Benefit Bundle' page from 'Mobility Journey Home' page

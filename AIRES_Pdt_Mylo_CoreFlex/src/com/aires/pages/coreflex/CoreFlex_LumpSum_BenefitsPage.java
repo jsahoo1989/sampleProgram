@@ -11,18 +11,21 @@ import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.How;
 import org.testng.Assert;
 
-import com.aires.businessrules.Base;
 import com.aires.businessrules.BusinessFunctions;
 import com.aires.businessrules.CoreFunctions;
 import com.aires.businessrules.constants.COREFLEXConstants;
 import com.aires.businessrules.constants.CoreConstants;
+import com.aires.businessrules.constants.IRISConstants;
 import com.aires.businessrules.constants.PDTConstants;
+import com.aires.iris.helpers.Helpers;
 import com.aires.managers.FileReaderManager;
 import com.aires.testdatatypes.coreflex.Benefit;
 import com.aires.testdatatypes.coreflex.CoreFlex_AllowancesBenefitsData;
+import com.hp.lft.sdk.java.Table;
+import com.hp.lft.sdk.java.Window;
 import com.vimalselvam.cucumber.listener.Reporter;
 
-public class CoreFlex_LumpSum_BenefitsPage extends Base {
+public class CoreFlex_LumpSum_BenefitsPage extends BenefitPage {
 
 	public CoreFlex_LumpSum_BenefitsPage(WebDriver driver) {
 		super(driver);
@@ -318,37 +321,7 @@ public class CoreFlex_LumpSum_BenefitsPage extends Base {
 	 */
 	public void clickLeftNavigationMenuOfPage(String elementName) {
 		try {
-			switch (elementName) {
-			case COREFLEXConstants.GENERAL_INFORMATION:
-				CoreFunctions.selectItemInListByText(driver, _leftNavigationTitleList,
-						COREFLEXConstants.GENERAL_INFORMATION);
-				break;
-			case COREFLEXConstants.FLEX_POLICY_SETUP:
-				CoreFunctions.selectItemInListByText(driver, _leftNavigationTitleList,
-						COREFLEXConstants.FLEX_POLICY_SETUP);
-				break;
-			case COREFLEXConstants.POLICY_BENEFIT_CATEGORIES:
-				CoreFunctions.selectItemInListByText(driver, _leftNavigationTitleList,
-						COREFLEXConstants.POLICY_BENEFIT_CATEGORIES);
-				break;
-			case COREFLEXConstants.DUPLICATE_HOUSING:
-				CoreFunctions.selectItemInListByText(driver, _leftNavigationTitleList,
-						COREFLEXConstants.DUPLICATE_HOUSING);
-				break;
-			case COREFLEXConstants.LUMP_SUM:
-				CoreFunctions.selectItemInListByText(driver, _leftNavigationTitleList, COREFLEXConstants.LUMP_SUM);
-				break;
-			case COREFLEXConstants.BENEFIT_SUMMARY:
-				CoreFunctions.selectItemInListByText(driver, _leftNavigationTitleList,
-						COREFLEXConstants.BENEFIT_SUMMARY);
-				break;
-			case COREFLEXConstants.CUSTOM_BUNDLES:
-				CoreFunctions.selectItemInListByText(driver, _leftNavigationTitleList,
-						COREFLEXConstants.BENEFIT_SUMMARY);
-				break;
-			default:
-				Assert.fail(PDTConstants.INVALID_ELEMENT);
-			}
+			CoreFunctions.selectItemInListByText(driver, _leftNavigationTitleList, elementName);
 		} catch (Exception e) {
 			Reporter.addStepLog(MessageFormat.format(
 					COREFLEXConstants.EXCEPTION_OCCURED_WHILE_CLICKING_ON_LEFTNAVIGATION_ELEMENT_OF_PAGE,
@@ -403,7 +376,7 @@ public class CoreFlex_LumpSum_BenefitsPage extends Base {
 	 * 
 	 * @param subBenefitNames
 	 */
-	private void selectSubBenefitsAndFillMandatoryFields(String subBenefitNames) {
+	public void selectSubBenefitsAndFillMandatoryFields(String subBenefitNames) {
 
 		List<String> subBenefitNamesList = new ArrayList<String>();
 		if (subBenefitNames.contains(";"))
@@ -432,7 +405,7 @@ public class CoreFlex_LumpSum_BenefitsPage extends Base {
 	 * 
 	 * @param subBenefit
 	 */
-	private void fillSubBenefit(String subBenefit) {
+	public void fillSubBenefit(String subBenefit) {
 		switch (subBenefit) {
 		case COREFLEXConstants.LUMP_SUM:
 			expandSubBenefitIfCollapsed(getElementByName(COREFLEXConstants.LUMP_SUM));
@@ -493,7 +466,7 @@ public class CoreFlex_LumpSum_BenefitsPage extends Base {
 	 * 
 	 * @param subBenefitForm
 	 */
-	private void expandSubBenefitIfCollapsed(WebElement subBenefitForm) {
+	public void expandSubBenefitIfCollapsed(WebElement subBenefitForm) {
 		if (subBenefitForm.getAttribute("class").equalsIgnoreCase("collapsed")) {
 			CoreFunctions.clickElement(driver, subBenefitForm);
 		}
@@ -527,7 +500,7 @@ public class CoreFlex_LumpSum_BenefitsPage extends Base {
 	 * @param benefitAllowanceAmount
 	 * @param benefitName
 	 */
-	private void selectBenefitTypeAndFillMandatoryFields(String benefitType, String multipleBenefitSelection,
+	public void selectBenefitTypeAndFillMandatoryFields(String benefitType, String multipleBenefitSelection,
 			String flexPoints, String benefitDisplayName, String benefitAllowanceAmount, String benefitDescription,
 			String paymentOption) {
 		Benefit lumpSumBenefit = coreBenefits.stream()
@@ -576,7 +549,7 @@ public class CoreFlex_LumpSum_BenefitsPage extends Base {
 	 * @param benefitAllowanceAmount
 	 * @param benefitName
 	 */
-	private void fillManadatoryDetails(String benefitType, String multipleBenefitSelection, String benefitDisplayName,
+	public void fillManadatoryDetails(String benefitType, String multipleBenefitSelection, String benefitDisplayName,
 			String benefitAllowanceAmount, String benefitDescription, String paymentOption) {
 
 		if (((benefitType.equals(COREFLEXConstants.FLEX_BENEFITS)) || (benefitType.equals(COREFLEXConstants.FLEX)))
@@ -807,5 +780,46 @@ public class CoreFlex_LumpSum_BenefitsPage extends Base {
 					CoreConstants.FAIL, changedPolicyType, benefitType, e.getMessage()));
 		}
 		return false;
+	}
+
+	@Override
+	public boolean verifyFlexBenefitCardStatusAfterInitialActualization(int index, String expectedEstimatedDate) {
+		// TODO Auto-generated method stub
+		return false;
+	}
+
+	@Override
+	protected boolean verifyFlexBenefitCardStatusAfterEndActualization(int index, String expectedEstimatedDate) {
+		// TODO Auto-generated method stub
+		return false;
+	}
+
+	@Override
+	public boolean verifyCoreBenefitCardStatusAfterInitialActualization(int index, String expectedEstimatedDate) {
+		// TODO Auto-generated method stub
+		return false;
+	}
+
+	@Override
+	protected boolean verifyCoreBenefitCardStatusAfterEndActualization(int index, Benefit benefit) {
+		// TODO Auto-generated method stub
+		return false;
+	}
+
+	@Override
+	public void addSubService(Window _IRIS, Table table, Benefit benefit, String coreFlexType) {
+		try {
+			table.waitUntilVisible();
+			int rowCount = Helpers.getTableRowCount(table);
+			table.getCell(rowCount - 1, "Type").setValue(benefit.getIrisSubserviceType());
+			table.getCell(rowCount - 1, "Name").setValue(benefit.getIrisSubserviceName());
+			CoreFunctions.waitHandler(1);
+			table.getCell(rowCount - 1, "Core/Flex").setValue(coreFlexType);
+		} catch (Exception e) {
+			Reporter.addStepLog(MessageFormat.format(
+					IRISConstants.EXCEPTION_OCCURED_WHILE_ADDING_SERVICE_SUBSERVICE_ON_SERVICES_TAB_OF_IRIS_APPLICATION,
+					CoreConstants.FAIL, benefit.getIrisSubserviceType(), e.getMessage()));
+		}
+
 	}
 }

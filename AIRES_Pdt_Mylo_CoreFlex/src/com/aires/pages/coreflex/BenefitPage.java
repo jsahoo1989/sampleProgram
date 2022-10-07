@@ -114,4 +114,6 @@ public abstract class BenefitPage extends Base {
 		Button oKButton = messageDialog.describe(Button.class, new ButtonDescription.Builder().label("OK").build());
 		oKButton.click();
 	}
+
+
 }

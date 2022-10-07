@@ -15,6 +15,7 @@ import com.aires.businessrules.constants.IRISConstants;
 import com.aires.businessrules.constants.MobilityXConstants;
 import com.aires.cucumber.TestContext;
 import com.aires.managers.FileReaderManager;
+import com.aires.pages.coreflex.CoreFlex_PolicyBenefitsCategoriesPage;
 import com.aires.pages.coreflex.MX_Client_AuthWorkflow_ApprovalActionPage;
 import com.aires.pages.coreflex.MX_Client_AuthorizationHomePage;
 import com.aires.pages.coreflex.MX_Client_AuthorizationHome_CollaborationPage;
@@ -58,6 +59,8 @@ public class CF_MX_Client_Steps {
 
 	public CF_MX_Client_Steps(TestContext context) {
 		testContext = context;
+		CoreFlex_PolicyBenefitsCategoriesPage.pageObjectManager_CoreFlex = testContext.getCoreFlexPageObjectManager();
+		testContext.getCoreFlexPageObjectManager().initializeCoreFlexPageObjects();
 		mobilityXLoginPage = testContext.getCoreFlexPageObjectManager().getMobilityXLoginPage();
 		mxClientAuthorizationHomePage = testContext.getCoreFlexPageObjectManager().getMXClientAuthorizationHomePage();
 		mxClientBenefitSelectionToolPage = testContext.getCoreFlexPageObjectManager()

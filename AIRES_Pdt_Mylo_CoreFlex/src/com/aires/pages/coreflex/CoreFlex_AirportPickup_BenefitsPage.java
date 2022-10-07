@@ -20,7 +20,6 @@ import com.aires.businessrules.constants.IRISConstants;
 import com.aires.businessrules.constants.PDTConstants;
 import com.aires.iris.helpers.Helpers;
 import com.aires.managers.FileReaderManager;
-import com.aires.pages.iris.IRIS_PageMaster;
 import com.aires.testdatatypes.coreflex.Benefit;
 import com.aires.testdatatypes.coreflex.CoreFlex_SettlingInBenefitsData;
 import com.hp.lft.sdk.java.Table;

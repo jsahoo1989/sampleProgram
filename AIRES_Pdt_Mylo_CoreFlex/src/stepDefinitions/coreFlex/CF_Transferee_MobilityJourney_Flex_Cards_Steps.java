@@ -43,6 +43,8 @@ public class CF_Transferee_MobilityJourney_Flex_Cards_Steps {
 
 	public CF_Transferee_MobilityJourney_Flex_Cards_Steps(TestContext context) {
 		testContext = context;
+		CoreFlex_PolicyBenefitsCategoriesPage.pageObjectManager_CoreFlex = testContext.getCoreFlexPageObjectManager();
+		testContext.getCoreFlexPageObjectManager().initializeCoreFlexPageObjects();
 		MX_Transferee_JourneyHomePage.pageObjectManager_CoreFlex = testContext.getCoreFlexPageObjectManager();
 		IRIS_AssignmentServicePage.pageObjectManager_CoreFlex = testContext.getCoreFlexPageObjectManager();
 		IRIS_ActivityAndFinancePage.pageObjectManager_CoreFlex = testContext.getCoreFlexPageObjectManager();

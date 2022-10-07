@@ -95,7 +95,7 @@ public class PageObjectManager_CoreFlex {
 	private CoreFlex_AreaTour_BenefitsPage _coreFlexAreaTourBenefitsPage;
 	private CoreFlex_HomeLeave_BenefitsPage _coreFlexHomeLeaveBenefitsPage;
 	private CoreFlex_PermanentStorage_BenefitsPage _coreFlexPermanentStorageBenefitsPage;
-	private CoreFlex_AirportPickup_BenefitsPage _coreFlexAireportPickupBenefitsPage;
+	private CoreFlex_AirportPickup_BenefitsPage _coreFlexAirportPickupBenefitsPage;
 	private CoreFlex_PreAcceptanceServices_BenefitsPage _coreFlexPreAcceptanceServicesBenefitsPage;
 	private CoreFlex_FurnitureRental_BenefitsPage _coreFlexFurnitureRentalBenefitsPage;
 	private CoreFlex_AutoRentalDuringAssignment_BenefitsPage _coreFlexAutoRentalDuringAssignmentBenefitsPage;
@@ -268,9 +268,9 @@ public class PageObjectManager_CoreFlex {
 	}
 
 	public CoreFlex_AirportPickup_BenefitsPage getCoreFlexAirportPickupBenefitsPage() {
-		return (_coreFlexAireportPickupBenefitsPage == null)
-				? _coreFlexAireportPickupBenefitsPage = new CoreFlex_AirportPickup_BenefitsPage(_driver)
-				: _coreFlexAireportPickupBenefitsPage;
+		return (_coreFlexAirportPickupBenefitsPage == null)
+				? _coreFlexAirportPickupBenefitsPage = new CoreFlex_AirportPickup_BenefitsPage(_driver)
+				: _coreFlexAirportPickupBenefitsPage;
 	}
 
 	public CoreFlex_PreAcceptanceServices_BenefitsPage getCoreFlexPreAcceptanceServicesBenefitsPage() {
@@ -384,6 +384,7 @@ public class PageObjectManager_CoreFlex {
 		benefitPageObjects.put(COREFLEXConstants.INLAND_SHIPMENT, _coreFlexInlandShipmentBenefitsPage);
 		benefitPageObjects.put(COREFLEXConstants.PET_SHIPMENT, _coreFlexPetShipmentBenefitsPage);
 		benefitPageObjects.put(COREFLEXConstants.PERMANENT_STORAGE, _coreFlexPermanentStorageBenefitsPage);
+		benefitPageObjects.put(COREFLEXConstants.AIRPORT_PICKUP, _coreFlexAirportPickupBenefitsPage);
 		return benefitPageObjects;
 	}
 
@@ -399,7 +400,7 @@ public class PageObjectManager_CoreFlex {
 		_coreFlexFinalMoveBenefitsPage = this.getCoreFlexFinalMoveBenefitsPage();
 		_coreFlexAreaTourBenefitsPage = this.getCoreFlexAreaTourBenefitsPage();
 		_coreFlexHomeLeaveBenefitsPage = this.getCoreFlexHomeLeaveBenefitsPage();
-		_coreFlexAireportPickupBenefitsPage = this.getCoreFlexAirportPickupBenefitsPage();
+		_coreFlexAirportPickupBenefitsPage = this.getCoreFlexAirportPickupBenefitsPage();
 		_coreFlexPreAcceptanceServicesBenefitsPage = this.getCoreFlexPreAcceptanceServicesBenefitsPage();
 		_coreFlexFurnitureRentalBenefitsPage = this.getCoreFlexFurnitureRentalBenefitsPage();
 		_coreFlexAutoRentalDuringAssignmentBenefitsPage = this.getCoreFlexAutoRentalDuringAssignmentBenefitsPage();

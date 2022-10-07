@@ -5,7 +5,6 @@ import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -23,7 +22,6 @@ import com.aires.businessrules.constants.IRISConstants;
 import com.aires.businessrules.constants.PDTConstants;
 import com.aires.iris.helpers.Helpers;
 import com.aires.managers.FileReaderManager;
-import com.aires.pages.iris.IRIS_AssignmentServicePage;
 import com.aires.pages.iris.IRIS_PageMaster;
 import com.aires.testdatatypes.coreflex.Benefit;
 import com.aires.testdatatypes.coreflex.CoreFlex_MovingBenefitsData;
@@ -143,6 +141,15 @@ public class CoreFlex_AutoShipment_BenefitsPage extends BenefitPage {
 	@FindBy(how = How.XPATH, using = "//div[@class='collapse show']//input[@formcontrolname='grossedUpInd']/parent::label[@class='form-check-label']")
 	private List<WebElement> _radioBtnGrossUp;
 
+	@FindBy(how = How.XPATH, using = "//label[contains(text(),'Gross-Up')]/following-sibling::div//input")
+	private List<WebElement> _radioBtnGrossUpButtonList;
+
+	@FindBy(how = How.XPATH, using = "//div[@class='collapse show']//input[@formcontrolname='paidByCode']/parent::label[@class='form-check-label']")
+	private List<WebElement> _radioReimbursedBy;
+
+	@FindBy(how = How.XPATH, using = "//label[contains(text(),'Reimbursed By')]/following-sibling::div//input")
+	private List<WebElement> _radioReimbursedByButtonList;
+
 	// Radio Button Selection From Entire SubBenefit Section
 	@FindBy(how = How.XPATH, using = "//div[@class='collapse show']//label[@class='form-check-label']")
 	private List<WebElement> _radioBtnCandidateSelection;
@@ -176,10 +183,13 @@ public class CoreFlex_AutoShipment_BenefitsPage extends BenefitPage {
 	private WebElement _formautoShipment;
 
 	@FindBy(how = How.XPATH, using = "//h5[contains(text(),'Auto Shipment')]")
-	private WebElement _headerautoShipment;
+	private WebElement _headerAutoShipment;
 
 	@FindBy(how = How.XPATH, using = "//input[@formcontrolname='insuranceType']/parent::label[@class='form-check-label']")
 	private List<WebElement> _radioInsuranceType;
+
+	@FindBy(how = How.XPATH, using = "//label[contains(text(),'Insurance Type')]/following-sibling::div//input")
+	private List<WebElement> _radioInsuranceTypeButtonList;
 
 	@FindBy(how = How.CSS, using = "input[formcontrolname='insuranceTypeOther']")
 	private WebElement _inputInsuranceTypeOther;
@@ -548,12 +558,15 @@ public class CoreFlex_AutoShipment_BenefitsPage extends BenefitPage {
 			CoreFunctions.clickElement(driver, _textBoth);
 			verifyBenefitsMandatoryDetails(COREFLEXConstants.CORE_BENEFITS, multipleBenefitSelection, flexPoints,
 					benefitDisplayName, benefitAllowanceAmount, benefitDescription, paymentOption, airesManagedService);
+			iterateSubBenefitAndVerifyDetails(subBenefitNames, COREFLEXConstants.CORE_BENEFITS);
 			verifyBenefitsMandatoryDetails(COREFLEXConstants.FLEX_BENEFITS, multipleBenefitSelection, flexPoints,
 					benefitDisplayName, benefitAllowanceAmount, benefitDescription, paymentOption, airesManagedService);
+			iterateSubBenefitAndVerifyDetails(subBenefitNames, COREFLEXConstants.FLEX_BENEFITS);
 			return true;
 		} else {
 			verifyBenefitsMandatoryDetails(benefitType, multipleBenefitSelection, flexPoints, benefitDisplayName,
 					benefitAllowanceAmount, benefitDescription, paymentOption, airesManagedService);
+			iterateSubBenefitAndVerifyDetails(subBenefitNames, benefitType);
 			return true;
 		}
 	}
@@ -561,14 +574,13 @@ public class CoreFlex_AutoShipment_BenefitsPage extends BenefitPage {
 	private void verifyBenefitsMandatoryDetails(String benefitType, String multipleBenefitSelection, String flexPoints,
 			String benefitDisplayName, String benefitAllowanceAmount, String benefitDescription, String paymentOption,
 			String airesManagedService) {
-		Benefit culturalTrainingBenefit = coreBenefits.stream()
-				.filter(b -> b.getBenefitType().equals(COREFLEXConstants.CULTURAL_TRAINING)).findAny().orElse(null);
+		Benefit autoShipment = coreBenefits.stream()
+				.filter(b -> b.getBenefitType().equals(COREFLEXConstants.AUTO_SHIPMENT)).findAny().orElse(null);
 		switch (benefitType) {
 		case COREFLEXConstants.CORE:
 			CoreFunctions.clickElement(driver, _textCore);
-			verifyManadatoryDetails(benefitType, multipleBenefitSelection,
-					culturalTrainingBenefit.getBenefitDisplayName(), culturalTrainingBenefit.getBenefitAmount(),
-					culturalTrainingBenefit.getBenefitDesc(), paymentOption, airesManagedService);
+			verifyManadatoryDetails(benefitType, multipleBenefitSelection, autoShipment.getBenefitDisplayName(),
+					autoShipment.getBenefitAmount(), autoShipment.getBenefitDesc(), paymentOption, airesManagedService);
 			break;
 		case COREFLEXConstants.FLEX:
 			CoreFunctions.clickElement(driver, _textFlex);
@@ -580,9 +592,8 @@ public class CoreFlex_AutoShipment_BenefitsPage extends BenefitPage {
 			break;
 		case COREFLEXConstants.CORE_BENEFITS:
 			CoreFunctions.clickElement(driver, _textCoreBenefits);
-			verifyManadatoryDetails(benefitType, multipleBenefitSelection,
-					culturalTrainingBenefit.getBenefitDisplayName(), culturalTrainingBenefit.getBenefitAmount(),
-					culturalTrainingBenefit.getBenefitDesc(), paymentOption, airesManagedService);
+			verifyManadatoryDetails(benefitType, multipleBenefitSelection, autoShipment.getBenefitDisplayName(),
+					autoShipment.getBenefitAmount(), autoShipment.getBenefitDesc(), paymentOption, airesManagedService);
 			break;
 		case COREFLEXConstants.FLEX_BENEFITS:
 			CoreFunctions.clickElement(driver, _textFlexBenefits);
@@ -623,6 +634,91 @@ public class CoreFlex_AutoShipment_BenefitsPage extends BenefitPage {
 				COREFLEXConstants.BENEFIT_LONG_DESCRIPTION);
 		CoreFunctions.highlightObject(driver, _textAreaBenefitLongDescription);
 	}
+
+	/**
+	 * Method to iterate and verify mentioned SubBenefits details
+	 * 
+	 * @param subBenefitNames
+	 * @param benefitType
+	 */
+	private void iterateSubBenefitAndVerifyDetails(String subBenefitNames, String benefitType) {
+		try {
+			List<String> subBenefitNamesList = new ArrayList<String>();
+			if (subBenefitNames.contains(";"))
+				subBenefitNamesList = Arrays.asList(subBenefitNames.split(";"));
+			else
+				subBenefitNamesList.add(subBenefitNames);
+
+			for (String subBenefit : subBenefitNamesList) {
+				if (CoreFunctions.isElementExist(driver, getElementByName(subBenefit.trim()), 5)) {
+					verifySubBenefitDetails(subBenefit.trim(), benefitType);
+				} else {
+					Reporter.addStepLog(MessageFormat.format(COREFLEXConstants.SUB_BENEFIT_FORM_NOT_DISPLAYED,
+							CoreConstants.FAIL, subBenefit, COREFLEXConstants.AUTO_SHIPMENT_BENEFITS_PAGE));
+					throw new RuntimeException(MessageFormat.format(COREFLEXConstants.SUB_BENEFIT_FORM_NOT_DISPLAYED,
+							CoreConstants.FAIL, subBenefit, COREFLEXConstants.AUTO_SHIPMENT_BENEFITS_PAGE));
+				}
+			}
+		} catch (Exception e) {
+			Reporter.addStepLog(MessageFormat.format(
+					COREFLEXConstants.EXCEPTION_OCCURED_WHILE_SELECTING_AND_VERIFYING_SUB_BENEFIT_DETAILS,
+					CoreConstants.FAIL, e.getMessage()));
+		}
+	}
+
+	/**
+	 * Method to Expand and call SubBenefit Verification Method's
+	 * 
+	 * @param subBenefit
+	 * @param benefitType
+	 */
+	private void verifySubBenefitDetails(String subBenefit, String benefitType) {
+		switch (subBenefit) {
+		case COREFLEXConstants.AUTO_SHIPMENT:
+			expandSubBenefitIfCollapsed(getElementByName(COREFLEXConstants.AUTO_SHIPMENT));
+			if (benefitType.equals(COREFLEXConstants.FLEX_BENEFITS)) {
+				CoreFunctions.clickElement(driver, _headerAutoShipment);
+			}
+			verifyAutoShipmentSubBenefitForm(COREFLEXConstants.AUTO_SHIPMENT);
+			break;
+		default:
+			Assert.fail(MessageFormat.format(COREFLEXConstants.ELEMENT_NOT_FOUND, CoreConstants.FAIL));
+		}
+	}
+
+	/**
+	 * Method to verify AutoShipment subBenefit form
+	 */
+	private void verifyAutoShipmentSubBenefitForm(String formName) {
+		try {
+			CoreFunctions.verifyText(_inputMaxNoOfAutos.getDomProperty("value"),
+					autoShipmentBenefitData.autoShipment.maxNoOfAutos, COREFLEXConstants.MAX_NUMBER_OF_AUTOS);
+			CoreFunctions.verifyRadioButtonSelection(driver, _radioInsuranceType, _radioInsuranceTypeButtonList,
+					autoShipmentBenefitData.autoShipment.insuranceType, COREFLEXConstants.INSURANCE_TYPE);
+			if (autoShipmentBenefitData.autoShipment.insuranceType.equalsIgnoreCase(COREFLEXConstants.OTHER)) {
+				CoreFunctions.verifyText(_inputInsuranceTypeOther.getDomProperty("value"),
+						autoShipmentBenefitData.autoShipment.insuranceTypeOther,
+						COREFLEXConstants.INSURANCE_TYPE_OTHER);
+			}
+			CoreFunctions.verifyRadioButtonSelection(driver, _radioBtnGrossUp, _radioBtnGrossUpButtonList,
+					autoShipmentBenefitData.autoShipment.grossUp, COREFLEXConstants.GROSS_UP);
+			CoreFunctions.verifyRadioButtonSelection(driver, _radioReimbursedBy, _radioReimbursedByButtonList,
+					autoShipmentBenefitData.autoShipment.reimbursedBy, COREFLEXConstants.REIMBURSED_BY);
+			if (autoShipmentBenefitData.autoShipment.reimbursedBy.equalsIgnoreCase(COREFLEXConstants.OTHER)) {
+				CoreFunctions.verifyText(_inputReimbursedBy.getDomProperty("value"),
+						autoShipmentBenefitData.autoShipment.reimbursedByOther, COREFLEXConstants.REIMBURSED_BY_OTHER);
+				CoreFunctions.highlightObject(driver, _inputReimbursedBy);
+			}
+			CoreFunctions.verifyText(_txtAreaComment.getDomProperty("value"),
+					autoShipmentBenefitData.autoShipment.comment, COREFLEXConstants.COMMENT);
+			CoreFunctions.highlightObject(driver, _txtAreaComment);
+		} catch (Exception e) {
+			Assert.fail(MessageFormat.format(COREFLEXConstants.FAILED_TO_VERIFY_SUB_BENEFITS_FORM, CoreConstants.FAIL,
+					formName));
+		}
+	}
+
+	/******************** Mobility Journey Cards Code ********************/
 
 	@Override
 	public boolean verifyFlexBenefitCardStatusAfterInitialActualization(int index, String expectedEstimatedDate) {

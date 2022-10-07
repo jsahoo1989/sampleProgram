@@ -7,11 +7,11 @@ import java.util.Map;
 
 import org.testng.Assert;
 
-import com.aires.businessrules.CoreFunctions;
 import com.aires.businessrules.constants.CoreConstants;
 import com.aires.businessrules.constants.MobilityXConstants;
 import com.aires.cucumber.TestContext;
 import com.aires.managers.PageObjectManager_CoreFlex;
+import com.aires.pages.coreflex.CoreFlex_PolicyBenefitsCategoriesPage;
 import com.aires.pages.coreflex.MX_Transferee_FlexPlanningTool_Page;
 import com.aires.pages.coreflex.MX_Transferee_JourneyHomePage;
 import com.aires.pages.coreflex.MX_Transferee_MyBenefitsBundlePage;
@@ -20,8 +20,6 @@ import com.aires.pages.coreflex.TransfereeSubmissions_DetailsPage;
 import com.vimalselvam.cucumber.listener.Reporter;
 
 import cucumber.api.java.en.Given;
-import cucumber.api.java.en.Then;
-import cucumber.api.java.en.When;
 
 public class CF_Transferee_StaticFixedPoints_PortionCashout_Both_EndToEndFlow_Steps {
 
@@ -38,6 +36,8 @@ public class CF_Transferee_StaticFixedPoints_PortionCashout_Both_EndToEndFlow_St
 
 	public CF_Transferee_StaticFixedPoints_PortionCashout_Both_EndToEndFlow_Steps(TestContext context) {
 		testContext = context;
+		CoreFlex_PolicyBenefitsCategoriesPage.pageObjectManager_CoreFlex = testContext.getCoreFlexPageObjectManager();
+		testContext.getCoreFlexPageObjectManager().initializeCoreFlexPageObjects();
 		mxTransfereeJourneyHomePage = testContext.getCoreFlexPageObjectManager().getMXTransfereeJourneyHomePage();
 		mxTransfereeFlexPlanningToolPage = testContext.getCoreFlexPageObjectManager()
 				.getMXTransfereeFlexPlanningToolPage();

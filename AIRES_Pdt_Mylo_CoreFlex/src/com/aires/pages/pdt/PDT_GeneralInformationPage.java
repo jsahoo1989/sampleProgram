@@ -724,7 +724,8 @@ public class PDT_GeneralInformationPage extends Base {
 				CoreFunctions.explicitWaitTillElementInVisibility(driver, _progressBar);
 				break;
 			case PDTConstants.EXIT:
-				CoreFunctions.clickElement(driver, _buttonExit);
+				CoreFunctions.clickUsingJS(driver, _buttonExit, PDTConstants.EXIT);
+//				CoreFunctions.clickElement(driver, _buttonExit);
 				CoreFunctions.explicitWaitTillElementInVisibility(driver, _progressBar);
 				break;
 			case PDTConstants.OK:

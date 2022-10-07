@@ -134,6 +134,7 @@
 			"insuranceTypeOther": "Client Insurance",
 			"excessValuationDueToWeightPaid": "Client",
 			"excessValuationDueToValuePaid": "Client",
+			"discardAndDonate":true,
 			"grossUp": "Yes",
 			"reimbursedBy": "Aires",
 			"reimbursedByOther": "Reimbursed by other",

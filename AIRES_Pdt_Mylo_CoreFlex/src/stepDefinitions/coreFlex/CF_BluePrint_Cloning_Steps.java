@@ -43,8 +43,9 @@ public class CF_BluePrint_Cloning_Steps {
 
 	public CF_BluePrint_Cloning_Steps(TestContext context) {
 		testContext = context;
-		coreFlexCustomBundlesPage = testContext.getCoreFlexPageObjectManager().getCoreFlexCustomBundlesPage();
-		
+		CoreFlex_PolicyBenefitsCategoriesPage.pageObjectManager_CoreFlex = testContext.getCoreFlexPageObjectManager();
+		testContext.getCoreFlexPageObjectManager().initializeCoreFlexPageObjects();
+		coreFlexCustomBundlesPage = testContext.getCoreFlexPageObjectManager().getCoreFlexCustomBundlesPage();		
 		bluePrintCFLoginPage = testContext.getPageObjectManager().getBluePrintCoreFlexLoginPage();
 		viewPolicyPage = testContext.getPageObjectManager().getViewPolicyPage();
 		generalInfoPage = testContext.getPageObjectManager().getGeneralInfoPage();
@@ -244,7 +245,6 @@ public class CF_BluePrint_Cloning_Steps {
 				+ CoreFunctions.calculatePageLoadTime(CoreConstants.TIME_BEFORE_ACTION, CoreConstants.TIME_AFTER_ACTION)
 				+ " Seconds </b>");
 		Assert.assertTrue(
-
 				coreFlexPolicyBenefitsCategoriesPage.verifyAddedBenefitDetailsPostVersioningCloning(
 						CoreFunctions.getPropertyFromConfig("CoreFlex_Policy_BenefitType"),
 						CoreFunctions.getPropertyFromConfig("CoreFlex_Policy_RequiredFor"), "0"),

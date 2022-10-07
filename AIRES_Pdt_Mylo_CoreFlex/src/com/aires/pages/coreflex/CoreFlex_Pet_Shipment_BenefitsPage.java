@@ -5,7 +5,6 @@ import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -23,7 +22,6 @@ import com.aires.businessrules.constants.IRISConstants;
 import com.aires.businessrules.constants.PDTConstants;
 import com.aires.iris.helpers.Helpers;
 import com.aires.managers.FileReaderManager;
-import com.aires.pages.iris.IRIS_AssignmentServicePage;
 import com.aires.pages.iris.IRIS_PageMaster;
 import com.aires.testdatatypes.coreflex.Benefit;
 import com.aires.testdatatypes.coreflex.CoreFlex_MovingBenefitsData;
@@ -143,6 +141,15 @@ public class CoreFlex_Pet_Shipment_BenefitsPage extends BenefitPage {
 	@FindBy(how = How.XPATH, using = "//div[@class='collapse show']//input[@formcontrolname='grossedUpInd']/parent::label[@class='form-check-label']")
 	private List<WebElement> _radioBtnGrossUp;
 
+	@FindBy(how = How.XPATH, using = "//label[contains(text(),'Gross-Up')]/following-sibling::div//input")
+	private List<WebElement> _radioBtnGrossUpButtonList;
+	
+	@FindBy(how = How.XPATH, using = "//div[@class='collapse show']//input[@formcontrolname='paidByCode']/parent::label[@class='form-check-label']")
+	private List<WebElement> _radioReimbursedBy;
+
+	@FindBy(how = How.XPATH, using = "//label[contains(text(),'Reimbursed By')]/following-sibling::div//input")
+	private List<WebElement> _radioReimbursedByButtonList;
+
 	// Radio Button Selection From Entire SubBenefit Section
 	@FindBy(how = How.XPATH, using = "//div[@class='collapse show']//label[@class='form-check-label']")
 	private List<WebElement> _radioBtnCandidateSelection;
@@ -174,6 +181,9 @@ public class CoreFlex_Pet_Shipment_BenefitsPage extends BenefitPage {
 	// SubBenefit - Collapsable Menu 1
 	@FindBy(how = How.XPATH, using = "//h5[contains(text(),'Pet Shipment')]/ancestor::a[contains(@href,'collapse')]")
 	private WebElement _formpetShipment;
+
+	@FindBy(how = How.XPATH, using = "//h5[contains(text(),'Pet Shipment')]")
+	private WebElement _headerPetShipment;
 
 	@FindBy(how = How.CSS, using = "input[formcontrolname='petNoOfPets']")
 	private WebElement _inputNoOfPets;
@@ -383,7 +393,7 @@ public class CoreFlex_Pet_Shipment_BenefitsPage extends BenefitPage {
 //			if (benefitType.equals(COREFLEXConstants.FLEX_BENEFITS)) {
 //				CoreFunctions.clickElement(driver, _headerpetShipment);
 //			}
-			fillpetShipmentSubBenefitForm(COREFLEXConstants.PET_SHIPMENT);
+			fillPetShipmentSubBenefitForm(COREFLEXConstants.PET_SHIPMENT);
 			break;
 		default:
 			Assert.fail(MessageFormat.format(COREFLEXConstants.ELEMENT_NOT_FOUND, CoreConstants.FAIL));
@@ -395,7 +405,7 @@ public class CoreFlex_Pet_Shipment_BenefitsPage extends BenefitPage {
 	 * 
 	 * @param subBenefitFormName
 	 */
-	private void fillpetShipmentSubBenefitForm(String subBenefitFormName) {
+	private void fillPetShipmentSubBenefitForm(String subBenefitFormName) {
 		try {
 			CoreFunctions.clearAndSetText(driver, _inputNoOfPets, petShipmentBenefitData.petShipment.noOfPets);
 			CoreFunctions.clearAndSetText(driver, _txtAreaComment, petShipmentBenefitData.petShipment.comment);
@@ -532,12 +542,15 @@ public class CoreFlex_Pet_Shipment_BenefitsPage extends BenefitPage {
 			CoreFunctions.clickElement(driver, _textBoth);
 			verifyBenefitsMandatoryDetails(COREFLEXConstants.CORE_BENEFITS, multipleBenefitSelection, flexPoints,
 					benefitDisplayName, benefitAllowanceAmount, benefitDescription, paymentOption, airesManagedService);
+			iterateSubBenefitAndVerifyDetails(subBenefitNames, COREFLEXConstants.CORE_BENEFITS);
 			verifyBenefitsMandatoryDetails(COREFLEXConstants.FLEX_BENEFITS, multipleBenefitSelection, flexPoints,
 					benefitDisplayName, benefitAllowanceAmount, benefitDescription, paymentOption, airesManagedService);
+			iterateSubBenefitAndVerifyDetails(subBenefitNames, COREFLEXConstants.FLEX_BENEFITS);
 			return true;
 		} else {
 			verifyBenefitsMandatoryDetails(benefitType, multipleBenefitSelection, flexPoints, benefitDisplayName,
 					benefitAllowanceAmount, benefitDescription, paymentOption, airesManagedService);
+			iterateSubBenefitAndVerifyDetails(subBenefitNames, benefitType);
 			return true;
 		}
 	}
@@ -545,14 +558,14 @@ public class CoreFlex_Pet_Shipment_BenefitsPage extends BenefitPage {
 	private void verifyBenefitsMandatoryDetails(String benefitType, String multipleBenefitSelection, String flexPoints,
 			String benefitDisplayName, String benefitAllowanceAmount, String benefitDescription, String paymentOption,
 			String airesManagedService) {
-		Benefit culturalTrainingBenefit = coreBenefits.stream()
-				.filter(b -> b.getBenefitType().equals(COREFLEXConstants.CULTURAL_TRAINING)).findAny().orElse(null);
+		Benefit petShipmentBenefit = coreBenefits.stream()
+				.filter(b -> b.getBenefitType().equals(COREFLEXConstants.PET_SHIPMENT)).findAny().orElse(null);
 		switch (benefitType) {
 		case COREFLEXConstants.CORE:
 			CoreFunctions.clickElement(driver, _textCore);
-			verifyManadatoryDetails(benefitType, multipleBenefitSelection,
-					culturalTrainingBenefit.getBenefitDisplayName(), culturalTrainingBenefit.getBenefitAmount(),
-					culturalTrainingBenefit.getBenefitDesc(), paymentOption, airesManagedService);
+			verifyManadatoryDetails(benefitType, multipleBenefitSelection, petShipmentBenefit.getBenefitDisplayName(),
+					petShipmentBenefit.getBenefitAmount(), petShipmentBenefit.getBenefitDesc(), paymentOption,
+					airesManagedService);
 			break;
 		case COREFLEXConstants.FLEX:
 			CoreFunctions.clickElement(driver, _textFlex);
@@ -564,9 +577,9 @@ public class CoreFlex_Pet_Shipment_BenefitsPage extends BenefitPage {
 			break;
 		case COREFLEXConstants.CORE_BENEFITS:
 			CoreFunctions.clickElement(driver, _textCoreBenefits);
-			verifyManadatoryDetails(benefitType, multipleBenefitSelection,
-					culturalTrainingBenefit.getBenefitDisplayName(), culturalTrainingBenefit.getBenefitAmount(),
-					culturalTrainingBenefit.getBenefitDesc(), paymentOption, airesManagedService);
+			verifyManadatoryDetails(benefitType, multipleBenefitSelection, petShipmentBenefit.getBenefitDisplayName(),
+					petShipmentBenefit.getBenefitAmount(), petShipmentBenefit.getBenefitDesc(), paymentOption,
+					airesManagedService);
 			break;
 		case COREFLEXConstants.FLEX_BENEFITS:
 			CoreFunctions.clickElement(driver, _textFlexBenefits);
@@ -607,6 +620,85 @@ public class CoreFlex_Pet_Shipment_BenefitsPage extends BenefitPage {
 				COREFLEXConstants.BENEFIT_LONG_DESCRIPTION);
 		CoreFunctions.highlightObject(driver, _textAreaBenefitLongDescription);
 	}
+
+	/**
+	 * Method to iterate and verify mentioned SubBenefits details
+	 * 
+	 * @param subBenefitNames
+	 * @param benefitType
+	 */
+	private void iterateSubBenefitAndVerifyDetails(String subBenefitNames, String benefitType) {
+		try {
+			List<String> subBenefitNamesList = new ArrayList<String>();
+			if (subBenefitNames.contains(";"))
+				subBenefitNamesList = Arrays.asList(subBenefitNames.split(";"));
+			else
+				subBenefitNamesList.add(subBenefitNames);
+
+			for (String subBenefit : subBenefitNamesList) {
+				if (CoreFunctions.isElementExist(driver, getElementByName(subBenefit.trim()), 5)) {
+					verifySubBenefitDetails(subBenefit.trim(), benefitType);
+				} else {
+					Reporter.addStepLog(MessageFormat.format(COREFLEXConstants.SUB_BENEFIT_FORM_NOT_DISPLAYED,
+							CoreConstants.FAIL, subBenefit, COREFLEXConstants.INLAND_SHIPMENT_BENEFITS_PAGE));
+					throw new RuntimeException(MessageFormat.format(COREFLEXConstants.SUB_BENEFIT_FORM_NOT_DISPLAYED,
+							CoreConstants.FAIL, subBenefit, COREFLEXConstants.INLAND_SHIPMENT_BENEFITS_PAGE));
+				}
+			}
+		} catch (Exception e) {
+			Reporter.addStepLog(MessageFormat.format(
+					COREFLEXConstants.EXCEPTION_OCCURED_WHILE_SELECTING_AND_VERIFYING_SUB_BENEFIT_DETAILS,
+					CoreConstants.FAIL, e.getMessage()));
+		}
+	}
+
+	/**
+	 * Method to Expand and call SubBenefit Verification Method's
+	 * 
+	 * @param subBenefit
+	 * @param benefitType
+	 */
+	private void verifySubBenefitDetails(String subBenefit, String benefitType) {
+		switch (subBenefit) {
+		case COREFLEXConstants.PET_SHIPMENT:
+			expandSubBenefitIfCollapsed(getElementByName(COREFLEXConstants.PET_SHIPMENT));
+			if (benefitType.equals(COREFLEXConstants.FLEX_BENEFITS)) {
+				CoreFunctions.clickElement(driver, _headerPetShipment);
+			}
+			verifyPetShipmentSubBenefitForm(COREFLEXConstants.PET_SHIPMENT);
+			break;
+		default:
+			Assert.fail(MessageFormat.format(COREFLEXConstants.ELEMENT_NOT_FOUND, CoreConstants.FAIL));
+		}
+	}
+
+	/**
+	 * Method to verify PetShipment subBenefit form
+	 */
+	private void verifyPetShipmentSubBenefitForm(String formName) {
+		try {
+
+			CoreFunctions.verifyText(_inputNoOfPets.getDomProperty("value"),
+					petShipmentBenefitData.petShipment.noOfPets, COREFLEXConstants.NUMBER_OF_PETS);
+			CoreFunctions.verifyRadioButtonSelection(driver, _radioBtnGrossUp, _radioBtnGrossUpButtonList,
+					petShipmentBenefitData.petShipment.grossUp, COREFLEXConstants.GROSS_UP);
+			CoreFunctions.verifyRadioButtonSelection(driver, _radioReimbursedBy, _radioReimbursedByButtonList,
+					petShipmentBenefitData.petShipment.reimbursedBy, COREFLEXConstants.REIMBURSED_BY);
+			if (petShipmentBenefitData.petShipment.reimbursedBy.equalsIgnoreCase(COREFLEXConstants.OTHER)) {
+				CoreFunctions.verifyText(_inputReimbursedBy.getDomProperty("value"),
+						petShipmentBenefitData.petShipment.reimbursedByOther, COREFLEXConstants.REIMBURSED_BY_OTHER);
+				CoreFunctions.highlightObject(driver, _inputReimbursedBy);
+			}
+			CoreFunctions.verifyText(_txtAreaComment.getDomProperty("value"),
+					petShipmentBenefitData.petShipment.comment, COREFLEXConstants.COMMENT);
+			CoreFunctions.highlightObject(driver, _txtAreaComment);
+		} catch (Exception e) {
+			Assert.fail(MessageFormat.format(COREFLEXConstants.FAILED_TO_VERIFY_SUB_BENEFITS_FORM, CoreConstants.FAIL,
+					formName));
+		}
+	}
+
+	/******************** Mobility Journey Cards Code ********************/
 
 	@Override
 	public boolean verifyFlexBenefitCardStatusAfterInitialActualization(int index, String expectedEstimatedDate) {

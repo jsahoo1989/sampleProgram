@@ -326,11 +326,11 @@ public class PDT_ViewPolicyPage extends Base {
 			break;
 		case COREFLEXConstants.SAVE_AS_DRAFT:
 			CoreFunctions.clickElement(driver, _buttonSaveAsDraft);
-			CoreFunctions.explicitWaitTillElementInVisibilityCustomTime(driver, _progressBar, 5);
+//			CoreFunctions.explicitWaitTillElementInVisibilityCustomTime(driver, _progressBar, 5);
 			break;
 		case PDTConstants.CLEAR_FILTER:
 			CoreFunctions.highlightElementAndClick(driver, _clearFilter, PDTConstants.CLEAR_FILTER);
-			CoreFunctions.explicitWaitTillElementInVisibilityCustomTime(driver, _progressBar, 5);
+//			CoreFunctions.explicitWaitTillElementInVisibilityCustomTime(driver, _progressBar, 5);
 			break;
 		case COREFLEXConstants.EXIT:
 			CoreFunctions.clickElement(driver, _btnExit);

@@ -713,6 +713,8 @@ public class CoreFlex_AreaTour_BenefitsPage extends BenefitPage {
 					CoreConstants.FAIL, formName));
 		}
 	}
+	
+	/******************** Mobility Journey Cards Code ********************/
 
 	@Override
 	public boolean verifyFlexBenefitCardStatusAfterInitialActualization(int index, String expectedEstimatedDate) {

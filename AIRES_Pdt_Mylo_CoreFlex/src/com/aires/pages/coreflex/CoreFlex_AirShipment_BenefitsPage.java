@@ -5,7 +5,6 @@ import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -23,7 +22,6 @@ import com.aires.businessrules.constants.IRISConstants;
 import com.aires.businessrules.constants.PDTConstants;
 import com.aires.iris.helpers.Helpers;
 import com.aires.managers.FileReaderManager;
-import com.aires.pages.iris.IRIS_AssignmentServicePage;
 import com.aires.pages.iris.IRIS_PageMaster;
 import com.aires.testdatatypes.coreflex.Benefit;
 import com.aires.testdatatypes.coreflex.CoreFlex_MovingBenefitsData;
@@ -143,9 +141,19 @@ public class CoreFlex_AirShipment_BenefitsPage extends BenefitPage {
 	@FindBy(how = How.XPATH, using = "//div[@class='collapse show']//input[@formcontrolname='grossedUpInd']/parent::label[@class='form-check-label']")
 	private List<WebElement> _radioBtnGrossUp;
 
+	@FindBy(how = How.XPATH, using = "//label[contains(text(),'Gross-Up')]/following-sibling::div//input")
+	private List<WebElement> _radioBtnGrossUpButtonList;
+
 	// Radio Button Selection From Entire SubBenefit Section
 	@FindBy(how = How.XPATH, using = "//div[@class='collapse show']//label[@class='form-check-label']")
 	private List<WebElement> _radioBtnCandidateSelection;
+
+	// Gross Up - Radio Button Selection
+	@FindBy(how = How.XPATH, using = "//div[@class='collapse show']//input[@formcontrolname='paidByCode']/parent::label[@class='form-check-label']")
+	private List<WebElement> _radioReimbursedBy;
+
+	@FindBy(how = How.XPATH, using = "//label[contains(text(),'Reimbursed By')]/following-sibling::div//input")
+	private List<WebElement> _radioReimbursedByButtonList;
 
 	// Reimbursed By Other Input
 	@FindBy(how = How.XPATH, using = "//div[@class='collapse show']//input[@formcontrolname='paidByOther']")
@@ -182,19 +190,31 @@ public class CoreFlex_AirShipment_BenefitsPage extends BenefitPage {
 	private WebElement _inputWeightCap;
 
 	@FindBy(how = How.XPATH, using = "//input[@formcontrolname='airNoUnitOfWeightCap']/parent::label[@class='form-check-label']")
-	private List<WebElement> _radioWeightCap;
+	private List<WebElement> _radioUnitOfWeightCap;
+
+	@FindBy(how = How.XPATH, using = "//label[contains(text(),'Unit of Weight Cap')]/following-sibling::div//input")
+	private List<WebElement> _radioUnitOfWeightCapButtonList;
 
 	@FindBy(how = How.XPATH, using = "//input[@formcontrolname='airWeightCapAppliesTo']/parent::label[@class='form-check-label']")
 	private List<WebElement> _radioWeightCapAppliesTo;
+
+	@FindBy(how = How.XPATH, using = "//label[contains(text(),'Weight Cap Applies To')]/following-sibling::div//input")
+	private List<WebElement> _radioWeightCapAppliesToButtonList;
 
 	@FindBy(how = How.CSS, using = "input[formcontrolname='airVolumeCap']")
 	private WebElement _inputVolumeCap;
 
 	@FindBy(how = How.XPATH, using = "//input[@formcontrolname='airUnitOfVolumeCap']/parent::label[@class='form-check-label']")
-	private List<WebElement> _radioVolumeCap;
+	private List<WebElement> _radioUnitOfVolumeCap;
+
+	@FindBy(how = How.XPATH, using = "//label[contains(text(),'Unit of Volume Cap')]/following-sibling::div//input")
+	private List<WebElement> _radioUnitOfVolumeCapButtonList;
 
 	@FindBy(how = How.XPATH, using = "//input[@formcontrolname='airVolumeCapAppliesTo']/parent::label[@class='form-check-label']")
 	private List<WebElement> _radioVolumeCapAppliesTo;
+
+	@FindBy(how = How.XPATH, using = "//label[contains(text(),'Volume Cap Applies To')]/following-sibling::div//input")
+	private List<WebElement> _radioVolumeCapAppliesToButtonList;
 
 	@FindBy(how = How.CSS, using = "input[formcontrolname='airNoOfEContainers']")
 	private WebElement _inputNumberOfEContainers;
@@ -202,11 +222,17 @@ public class CoreFlex_AirShipment_BenefitsPage extends BenefitPage {
 	@FindBy(how = How.XPATH, using = "//input[@formcontrolname='airEContainerAppliesTo']/parent::label[@class='form-check-label']")
 	private List<WebElement> _radioEContainersAppliesTo;
 
+	@FindBy(how = How.XPATH, using = "//label[contains(text(),'E Container Applies To')]/following-sibling::div//input")
+	private List<WebElement> _radioEContainersAppliesToButtonList;
+
 	@FindBy(how = How.CSS, using = "input[formcontrolname='airNoOfDContainers']")
 	private WebElement _inputNumberOfDContainers;
 
 	@FindBy(how = How.XPATH, using = "//input[@formcontrolname='airDContainerAppliesTo']/parent::label[@class='form-check-label']")
 	private List<WebElement> _radioDContainersAppliesTo;
+
+	@FindBy(how = How.XPATH, using = "//label[contains(text(),'D Container Applies To')]/following-sibling::div//input")
+	private List<WebElement> _radioDContainersAppliesToButtonList;
 
 	@FindBy(how = How.CSS, using = "input[formcontrolname='airNoOfLDNContainers']")
 	private WebElement _inputNumberOfLDNContainers;
@@ -214,11 +240,17 @@ public class CoreFlex_AirShipment_BenefitsPage extends BenefitPage {
 	@FindBy(how = How.XPATH, using = "//input[@formcontrolname='airLdnContainerAppliesTo']/parent::label[@class='form-check-label']")
 	private List<WebElement> _radioLDNContainersAppliesTo;
 
+	@FindBy(how = How.XPATH, using = "//label[contains(text(),'LDN Container Applies To')]/following-sibling::div//input")
+	private List<WebElement> _radioLDNContainersAppliesToButtonList;
+
 	@FindBy(how = How.CSS, using = "ng-select[formcontrolname='airShipmentTradedCodeList']")
 	private WebElement _selectAirShipmentTraded;
 
 	@FindBy(how = How.CSS, using = "ng-select[formcontrolname='airShipmentTradedCodeList'] span.ng-option-label")
 	private List<WebElement> _selectAirShipmentTradedOptions;
+
+	@FindBy(how = How.CSS, using = "div[class='collapse show'] ng-select[formcontrolname='airShipmentTradedCodeList'] span[class*='ng-value-label']")
+	private WebElement _selectAirShipmentTradedSelectedValue;
 
 	@FindBy(how = How.CSS, using = "ng-select[formcontrolname='tempStorageDurationCode']")
 	private WebElement _selectTempStorageDuration;
@@ -226,11 +258,17 @@ public class CoreFlex_AirShipment_BenefitsPage extends BenefitPage {
 	@FindBy(how = How.CSS, using = "ng-select[formcontrolname='tempStorageDurationCode'] span.ng-option-label")
 	private List<WebElement> _selectTempStorageDurationOptions;
 
+	@FindBy(how = How.CSS, using = "div[class='collapse show'] ng-select[formcontrolname='tempStorageDurationCode'] span[class*='ng-value-label']")
+	private WebElement _selectTempStorageDurationSelectedValue;
+
 	@FindBy(how = How.CSS, using = "input[formcontrolname='airNoOfDaysInTempStorage']")
 	private WebElement _inputTempStorageDurationNoOfDays;
 
 	@FindBy(how = How.XPATH, using = "//input[@formcontrolname='insuranceType']/parent::label[@class='form-check-label']")
 	private List<WebElement> _radioInsuranceType;
+
+	@FindBy(how = How.XPATH, using = "//label[contains(text(),'Insurance Type')]/following-sibling::div//input")
+	private List<WebElement> _radioInsuranceTypeButtonList;
 
 	@FindBy(how = How.CSS, using = "input[formcontrolname='insuranceTypeOther']")
 	private WebElement _inputInsuranceTypeOther;
@@ -238,11 +276,17 @@ public class CoreFlex_AirShipment_BenefitsPage extends BenefitPage {
 	@FindBy(how = How.XPATH, using = "//input[@formcontrolname='exceValDueToWeight']/parent::label[@class='form-check-label']")
 	private List<WebElement> _radioExcesValDueToWeight;
 
+	@FindBy(how = How.XPATH, using = "//label[contains(text(),'Excess valuation due to Weight Paid By')]/following-sibling::div//input")
+	private List<WebElement> _radioExcesValDueToWeightButtonList;
+
 	@FindBy(how = How.CSS, using = "input[formcontrolname='exceValDueToWeightOther']")
 	private WebElement _inputExcesValDueToWeightOther;
 
 	@FindBy(how = How.XPATH, using = "//input[@formcontrolname='exceValDueToValue']/parent::label[@class='form-check-label']")
 	private List<WebElement> _radioExcesValDueToValue;
+
+	@FindBy(how = How.XPATH, using = "//label[contains(text(),'Excess valuation due to Value Paid By')]/following-sibling::div//input")
+	private List<WebElement> _radioExcesValDueToValueButtonList;
 
 	@FindBy(how = How.CSS, using = "input[formcontrolname='exceValDueToValueOther']")
 	private WebElement _inputExcesValDueToValueOther;
@@ -472,11 +516,11 @@ public class CoreFlex_AirShipment_BenefitsPage extends BenefitPage {
 			CoreFunctions.clearAndSetText(driver, _inputWeightCap, airShipmentBenefitData.airShipment.weightCap);
 			CoreFunctions.selectItemInListByText(driver, _radioWeightCapAppliesTo,
 					airShipmentBenefitData.airShipment.weightCapAppliesTo, true);
-			CoreFunctions.selectItemInListByText(driver, _radioWeightCap,
+			CoreFunctions.selectItemInListByText(driver, _radioUnitOfWeightCap,
 					airShipmentBenefitData.airShipment.unitOfWeightCap, true);
 
 			CoreFunctions.clearAndSetText(driver, _inputVolumeCap, airShipmentBenefitData.airShipment.volumeCap);
-			CoreFunctions.selectItemInListByText(driver, _radioVolumeCap,
+			CoreFunctions.selectItemInListByText(driver, _radioUnitOfVolumeCap,
 					airShipmentBenefitData.airShipment.unitOfVolumeCap, true);
 			CoreFunctions.selectItemInListByText(driver, _radioVolumeCapAppliesTo,
 					airShipmentBenefitData.airShipment.volCapAppliesTo, true);
@@ -497,6 +541,13 @@ public class CoreFlex_AirShipment_BenefitsPage extends BenefitPage {
 			CoreFunctions.selectItemInListByText(driver, _selectAirShipmentTradedOptions,
 					airShipmentBenefitData.airShipment.canThisBenefitBeTradedForAnotherBenefit, true);
 
+			CoreFunctions.selectItemInListByText(driver, _radioExcesValDueToWeight,
+					airShipmentBenefitData.airShipment.excessValuationDueToWeightPaid, true);
+			CoreFunctions.selectItemInListByText(driver, _radioExcesValDueToValue,
+					airShipmentBenefitData.airShipment.excessValuationDueToValuePaid, true);
+			if (airShipmentBenefitData.airShipment.discardAndDonate) {
+				CoreFunctions.clickElement(driver, _checkBoxDiscardAndDonate);
+			}
 			CoreFunctions.clearAndSetText(driver, _txtAreaComment, airShipmentBenefitData.airShipment.comment);
 			CoreFunctions.selectItemInListByText(driver, _radioBtnGrossUp, airShipmentBenefitData.airShipment.grossUp,
 					true);
@@ -640,12 +691,15 @@ public class CoreFlex_AirShipment_BenefitsPage extends BenefitPage {
 			CoreFunctions.clickElement(driver, _textBoth);
 			verifyBenefitsMandatoryDetails(COREFLEXConstants.CORE_BENEFITS, multipleBenefitSelection, flexPoints,
 					benefitDisplayName, benefitAllowanceAmount, benefitDescription, paymentOption, airesManagedService);
+			iterateSubBenefitAndVerifyDetails(subBenefitNames, COREFLEXConstants.CORE_BENEFITS);
 			verifyBenefitsMandatoryDetails(COREFLEXConstants.FLEX_BENEFITS, multipleBenefitSelection, flexPoints,
 					benefitDisplayName, benefitAllowanceAmount, benefitDescription, paymentOption, airesManagedService);
+			iterateSubBenefitAndVerifyDetails(subBenefitNames, COREFLEXConstants.FLEX_BENEFITS);
 			return true;
 		} else {
 			verifyBenefitsMandatoryDetails(benefitType, multipleBenefitSelection, flexPoints, benefitDisplayName,
 					benefitAllowanceAmount, benefitDescription, paymentOption, airesManagedService);
+			iterateSubBenefitAndVerifyDetails(subBenefitNames, benefitType);
 			return true;
 		}
 	}
@@ -653,14 +707,14 @@ public class CoreFlex_AirShipment_BenefitsPage extends BenefitPage {
 	private void verifyBenefitsMandatoryDetails(String benefitType, String multipleBenefitSelection, String flexPoints,
 			String benefitDisplayName, String benefitAllowanceAmount, String benefitDescription, String paymentOption,
 			String airesManagedService) {
-		Benefit culturalTrainingBenefit = coreBenefits.stream()
-				.filter(b -> b.getBenefitType().equals(COREFLEXConstants.CULTURAL_TRAINING)).findAny().orElse(null);
+		Benefit airShipmentBenefit = coreBenefits.stream()
+				.filter(b -> b.getBenefitType().equals(COREFLEXConstants.AIR_SHIPMENT)).findAny().orElse(null);
 		switch (benefitType) {
 		case COREFLEXConstants.CORE:
 			CoreFunctions.clickElement(driver, _textCore);
-			verifyManadatoryDetails(benefitType, multipleBenefitSelection,
-					culturalTrainingBenefit.getBenefitDisplayName(), culturalTrainingBenefit.getBenefitAmount(),
-					culturalTrainingBenefit.getBenefitDesc(), paymentOption, airesManagedService);
+			verifyManadatoryDetails(benefitType, multipleBenefitSelection, airShipmentBenefit.getBenefitDisplayName(),
+					airShipmentBenefit.getBenefitAmount(), airShipmentBenefit.getBenefitDesc(), paymentOption,
+					airesManagedService);
 			break;
 		case COREFLEXConstants.FLEX:
 			CoreFunctions.clickElement(driver, _textFlex);
@@ -672,9 +726,9 @@ public class CoreFlex_AirShipment_BenefitsPage extends BenefitPage {
 			break;
 		case COREFLEXConstants.CORE_BENEFITS:
 			CoreFunctions.clickElement(driver, _textCoreBenefits);
-			verifyManadatoryDetails(benefitType, multipleBenefitSelection,
-					culturalTrainingBenefit.getBenefitDisplayName(), culturalTrainingBenefit.getBenefitAmount(),
-					culturalTrainingBenefit.getBenefitDesc(), paymentOption, airesManagedService);
+			verifyManadatoryDetails(benefitType, multipleBenefitSelection, airShipmentBenefit.getBenefitDisplayName(),
+					airShipmentBenefit.getBenefitAmount(), airShipmentBenefit.getBenefitDesc(), paymentOption,
+					airesManagedService);
 			break;
 		case COREFLEXConstants.FLEX_BENEFITS:
 			CoreFunctions.clickElement(driver, _textFlexBenefits);
@@ -715,6 +769,137 @@ public class CoreFlex_AirShipment_BenefitsPage extends BenefitPage {
 				COREFLEXConstants.BENEFIT_LONG_DESCRIPTION);
 		CoreFunctions.highlightObject(driver, _textAreaBenefitLongDescription);
 	}
+
+	/**
+	 * Method to iterate and verify mentioned SubBenefits details
+	 * 
+	 * @param subBenefitNames
+	 * @param benefitType
+	 */
+	private void iterateSubBenefitAndVerifyDetails(String subBenefitNames, String benefitType) {
+		try {
+			List<String> subBenefitNamesList = new ArrayList<String>();
+			if (subBenefitNames.contains(";"))
+				subBenefitNamesList = Arrays.asList(subBenefitNames.split(";"));
+			else
+				subBenefitNamesList.add(subBenefitNames);
+
+			for (String subBenefit : subBenefitNamesList) {
+				if (CoreFunctions.isElementExist(driver, getElementByName(subBenefit.trim()), 5)) {
+					verifySubBenefitDetails(subBenefit.trim(), benefitType);
+				} else {
+					Reporter.addStepLog(MessageFormat.format(COREFLEXConstants.SUB_BENEFIT_FORM_NOT_DISPLAYED,
+							CoreConstants.FAIL, subBenefit, COREFLEXConstants.AIR_SHIPMENT_BENEFITS_PAGE));
+					throw new RuntimeException(MessageFormat.format(COREFLEXConstants.SUB_BENEFIT_FORM_NOT_DISPLAYED,
+							CoreConstants.FAIL, subBenefit, COREFLEXConstants.AIR_SHIPMENT_BENEFITS_PAGE));
+				}
+			}
+		} catch (Exception e) {
+			Reporter.addStepLog(MessageFormat.format(
+					COREFLEXConstants.EXCEPTION_OCCURED_WHILE_SELECTING_AND_VERIFYING_SUB_BENEFIT_DETAILS,
+					CoreConstants.FAIL, e.getMessage()));
+		}
+	}
+
+	/**
+	 * Method to Expand and call SubBenefit Verification Method's
+	 * 
+	 * @param subBenefit
+	 * @param benefitType
+	 */
+	private void verifySubBenefitDetails(String subBenefit, String benefitType) {
+		switch (subBenefit) {
+		case COREFLEXConstants.AIR_SHIPMENT:
+			expandSubBenefitIfCollapsed(getElementByName(COREFLEXConstants.AIR_SHIPMENT));
+			if (benefitType.equals(COREFLEXConstants.FLEX_BENEFITS)) {
+				CoreFunctions.clickElement(driver, _headerAirShipment);
+			}
+			verifyAirShipmentSubBenefitForm(COREFLEXConstants.AIR_SHIPMENT);
+			break;
+		default:
+			Assert.fail(MessageFormat.format(COREFLEXConstants.ELEMENT_NOT_FOUND, CoreConstants.FAIL));
+		}
+	}
+
+	/**
+	 * Method to verify AirShipment subBenefit form
+	 */
+	private void verifyAirShipmentSubBenefitForm(String formName) {
+		try {
+
+			CoreFunctions.verifyText(_inputWeightCap.getDomProperty("value"),
+					airShipmentBenefitData.airShipment.weightCap, COREFLEXConstants.WEIGHT_CAP);
+			CoreFunctions.verifyRadioButtonSelection(driver, _radioUnitOfWeightCap, _radioUnitOfWeightCapButtonList,
+					airShipmentBenefitData.airShipment.unitOfWeightCap, COREFLEXConstants.UNIT_OF_WEIGHT_CAP);
+			CoreFunctions.verifyRadioButtonSelection(driver, _radioWeightCapAppliesTo,
+					_radioWeightCapAppliesToButtonList, airShipmentBenefitData.airShipment.weightCapAppliesTo,
+					COREFLEXConstants.WEIGHT_CAP_APPLIES_TO);
+			CoreFunctions.verifyText(_inputVolumeCap.getDomProperty("value"),
+					airShipmentBenefitData.airShipment.volumeCap, COREFLEXConstants.VOLUME_CAP);
+			CoreFunctions.verifyRadioButtonSelection(driver, _radioUnitOfVolumeCap, _radioUnitOfVolumeCapButtonList,
+					airShipmentBenefitData.airShipment.unitOfVolumeCap, COREFLEXConstants.UNIT_OF_VOLUME_CAP);
+			CoreFunctions.verifyRadioButtonSelection(driver, _radioVolumeCapAppliesTo,
+					_radioVolumeCapAppliesToButtonList, airShipmentBenefitData.airShipment.volCapAppliesTo,
+					COREFLEXConstants.VOLUME_CAP_APPLIES_TO);
+			CoreFunctions.verifyText(_inputNumberOfDContainers.getDomProperty("value"),
+					airShipmentBenefitData.airShipment.noOfDContainers, COREFLEXConstants.NUMBER_OF_D_CONTAINERS);
+			CoreFunctions.verifyRadioButtonSelection(driver, _radioDContainersAppliesTo,
+					_radioDContainersAppliesToButtonList, airShipmentBenefitData.airShipment.dContainerAppliesTo,
+					COREFLEXConstants.D_CONTAINERS_APPLIES_TO);
+			CoreFunctions.verifyText(_inputNumberOfEContainers.getDomProperty("value"),
+					airShipmentBenefitData.airShipment.noOfEContainers, COREFLEXConstants.NUMBER_OF_E_CONTAINERS);
+			CoreFunctions.verifyRadioButtonSelection(driver, _radioEContainersAppliesTo,
+					_radioEContainersAppliesToButtonList, airShipmentBenefitData.airShipment.eContainerAppliesTo,
+					COREFLEXConstants.E_CONTAINERS_APPLIES_TO);
+			CoreFunctions.verifyText(_inputNumberOfLDNContainers.getDomProperty("value"),
+					airShipmentBenefitData.airShipment.noOfLDNContainers, COREFLEXConstants.NUMBER_OF_LDN_CONTAINERS);
+			CoreFunctions.verifyRadioButtonSelection(driver, _radioLDNContainersAppliesTo,
+					_radioLDNContainersAppliesToButtonList, airShipmentBenefitData.airShipment.LDNContainerAppliesTo,
+					COREFLEXConstants.LDN_CONTAINERS_APPLIES_TO);
+
+			CoreFunctions.verifyRadioButtonSelection(driver, _radioExcesValDueToWeight,
+					_radioExcesValDueToWeightButtonList,
+					airShipmentBenefitData.airShipment.excessValuationDueToWeightPaid,
+					COREFLEXConstants.EXCESS_VALUATION_DUE_TO_WEIGHT_PAID);
+
+			CoreFunctions.verifyRadioButtonSelection(driver, _radioExcesValDueToValue,
+					_radioExcesValDueToValueButtonList,
+					airShipmentBenefitData.airShipment.excessValuationDueToValuePaid,
+					COREFLEXConstants.EXCESS_VALUATION_DUE_TO_VALUE_PAID);
+
+			CoreFunctions.verifyText(driver, _selectAirShipmentTradedSelectedValue,
+					airShipmentBenefitData.airShipment.canThisBenefitBeTradedForAnotherBenefit,
+					COREFLEXConstants.CAN_THIS_BENEFIT_BE_TRADED_FOR_ANOTHER_BENEFIT);
+			CoreFunctions.verifyText(driver, _selectTempStorageDurationSelectedValue,
+					airShipmentBenefitData.airShipment.temporaryStorageDuration,
+					COREFLEXConstants.TEMPORARY_STORAGE_SIT_DURATION);
+
+			CoreFunctions.verifyRadioButtonSelection(driver, _radioInsuranceType, _radioInsuranceTypeButtonList,
+					airShipmentBenefitData.airShipment.insuranceType, COREFLEXConstants.INSURANCE_TYPE);
+			if (airShipmentBenefitData.airShipment.insuranceType.equalsIgnoreCase(COREFLEXConstants.OTHER)) {
+				CoreFunctions.verifyText(_inputInsuranceTypeOther.getDomProperty("value"),
+						airShipmentBenefitData.airShipment.insuranceTypeOther, COREFLEXConstants.INSURANCE_TYPE_OTHER);
+			}
+
+			CoreFunctions.verifyRadioButtonSelection(driver, _radioBtnGrossUp, _radioBtnGrossUpButtonList,
+					airShipmentBenefitData.airShipment.grossUp, COREFLEXConstants.GROSS_UP);
+			CoreFunctions.verifyRadioButtonSelection(driver, _radioReimbursedBy, _radioReimbursedByButtonList,
+					airShipmentBenefitData.airShipment.reimbursedBy, COREFLEXConstants.REIMBURSED_BY);
+			if (airShipmentBenefitData.airShipment.reimbursedBy.equalsIgnoreCase(COREFLEXConstants.OTHER)) {
+				CoreFunctions.verifyText(_inputReimbursedBy.getDomProperty("value"),
+						airShipmentBenefitData.airShipment.reimbursedByOther, COREFLEXConstants.REIMBURSED_BY_OTHER);
+				CoreFunctions.highlightObject(driver, _inputReimbursedBy);
+			}
+			CoreFunctions.verifyText(_txtAreaComment.getDomProperty("value"),
+					airShipmentBenefitData.airShipment.comment, COREFLEXConstants.COMMENT);
+			CoreFunctions.highlightObject(driver, _txtAreaComment);
+		} catch (Exception e) {
+			Assert.fail(MessageFormat.format(COREFLEXConstants.FAILED_TO_VERIFY_SUB_BENEFITS_FORM, CoreConstants.FAIL,
+					formName));
+		}
+	}
+
+	/******************** Mobility Journey Cards Code ********************/
 
 	@Override
 	public boolean verifyFlexBenefitCardStatusAfterInitialActualization(int index, String expectedEstimatedDate) {

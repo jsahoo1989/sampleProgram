@@ -7,7 +7,7 @@
 			"benefitDesc": "Automated Core Duplicate Housing Benefit Long Description. Setting up a CoreFlex Policy to be consumed by Client/Transferee to select Desired Benefits and track/Manage Points.",
 			"subBenefits": "Duplicate Housing",
 			"airesManagedService": "No",
-			"policyCreationGroup": "All Benefits,Cloning,Versioning,Client"
+			"policyCreationGroup": "Cloning,Versioning,Client"
 		},
 		{
 			"benefitType": "Lump Sum",
@@ -16,7 +16,7 @@
 			"benefitDesc": "Automated Core Lump Sum Benefit Long Description. Setting up a CoreFlex Policy to be consumed by Client/Transferee to select Desired Benefits and track/Manage Points.",
 			"subBenefits": "Lump Sum",
 			"airesManagedService": "No",
-			"policyCreationGroup": "All Benefits,Cloning,Versioning,Client"
+			"policyCreationGroup": "Cloning,Versioning,Client"
 		},
 		{
 			"benefitType": "Language Training",
@@ -26,7 +26,7 @@
 			"subBenefits": "Language Training Employee;Language Training Family",
 			"airesManagedService": "Yes",
 			"noOfMilestones": 2,
-			"policyCreationGroup": "All Benefits,Cloning,Versioning,Client"
+			"policyCreationGroup": "Cloning,Versioning,Client"
 		},
 		{
 			"benefitType": "Temporary Living",
@@ -36,7 +36,7 @@
 			"subBenefits": "Temporary Living Transportation;Temporary Living Lodging;Temporary Living Meals",
 			"airesManagedService": "Yes",
 			"noOfMilestones": 2,
-			"policyCreationGroup": "All Benefits"
+			"policyCreationGroup": "NA"
 		},
 		{
 			"benefitType": "Cultural Training",
@@ -46,7 +46,7 @@
 			"subBenefits": "Cultural Training Employee;Cultural Training Family",
 			"airesManagedService": "Yes",
 			"noOfMilestones": 2,
-			"policyCreationGroup": "All Benefits"
+			"policyCreationGroup": "NA"
 		},
 		{
 			"benefitType": "Concierge Services",
@@ -56,7 +56,7 @@
 			"subBenefits": "Concierge Services",
 			"airesManagedService": "Yes",
 			"noOfMilestones": 2,
-			"policyCreationGroup": "All Benefits"
+			"policyCreationGroup": "NA"
 		},
 		{
 			"benefitType": "Home Purchase",
@@ -65,7 +65,7 @@
 			"benefitDesc": "The reimbursement or direct payment of normal and customary home purchase closing costs.",
 			"subBenefits": "Home Purchase Closing Costs;Home Purchase Points;Home Purchase Inspections",
 			"airesManagedService": "Yes",
-			"policyCreationGroup": "All Benefits"
+			"policyCreationGroup": "NA"
 		},
 		{
 			"benefitType": "Final Move",
@@ -75,7 +75,7 @@
 			"subBenefits": "Final Move Transportation;Final Move Lodging;Final Move Meals",
 			"airesManagedService": "Yes",
 			"noOfMilestones": 4,
-			"policyCreationGroup": "All Benefits"
+			"policyCreationGroup": "NA"
 		},
 		{
 			"benefitType": "Area Tour",
@@ -85,7 +85,7 @@
 			"subBenefits": "Area Tour",
 			"airesManagedService": "Yes",
 			"noOfMilestones": 2,
-			"policyCreationGroup": "All Benefits"
+			"policyCreationGroup": "NA"
 		},
 		{
 			"benefitType": "Home Leave",
@@ -95,7 +95,7 @@
 			"subBenefits": "Home Leave Transportation;Home Leave Lodging;Home Leave Rental Car;Home Leave Meals",
 			"airesManagedService": "Yes",
 			"noOfMilestones": 4,
-			"policyCreationGroup": "All Benefits"
+			"policyCreationGroup": "NA"
 		},
 		{
 			"benefitType": "Airport Pickup",
@@ -104,7 +104,7 @@
 			"benefitDesc": "The pickup from the airport to new location accommodations.",
 			"subBenefits": "Airport Pickup",
 			"airesManagedService": "Yes",
-			"policyCreationGroup": "All Benefits"
+			"policyCreationGroup": "NA"
 		},
 		{
 			"benefitType": "Pre-Acceptance Services",
@@ -114,7 +114,7 @@
 			"subBenefits": "Pre-Acceptance Trip Transportation;Pre-Acceptance Trip Lodging;Pre-Acceptance Rental Car;Pre-Acceptance Trip Meals",
 			"airesManagedService": "Yes",
 			"noOfMilestones": 4,
-			"policyCreationGroup": "All Benefits"
+			"policyCreationGroup": "NA"
 		},
 		{
 			"benefitType": "Furniture Rental",
@@ -124,7 +124,7 @@
 			"subBenefits": "Furniture Rental",
 			"airesManagedService": "Yes",
 			"noOfMilestones": 2,
-			"policyCreationGroup": "All Benefits"
+			"policyCreationGroup": "NA"
 		},
 		{
 			"benefitType": "Auto Rental During Assignment",
@@ -134,7 +134,7 @@
 			"subBenefits": "Auto Rental During Assignment",
 			"airesManagedService": "Yes",
 			"noOfMilestones": 2,
-			"policyCreationGroup": "All Benefits"
+			"policyCreationGroup": "NA"
 		},
 		{
 			"benefitType": "Education Assistance/School Search",
@@ -143,7 +143,7 @@
 			"benefitDesc": "A tour of new country schools per a service provider.",
 			"subBenefits": "Education Assistance/School Search",
 			"airesManagedService": "Yes",
-			"policyCreationGroup": "All Benefits"
+			"policyCreationGroup": "NA"
 		},
 		{
 			"benefitType": "House Hunting Trip",
@@ -153,7 +153,7 @@
 			"subBenefits": "House Hunting Trip Transportation;House Hunting Trip Lodging;House Hunting Trip Rental Car;House Hunting Trip Meals",
 			"airesManagedService": "Yes",
 			"noOfMilestones": 4,
-			"policyCreationGroup": "All Benefits"
+			"policyCreationGroup": "NA"
 		},
 		{
 			"benefitType": "Air Shipment",
@@ -163,7 +163,7 @@
 			"subBenefits": "Air Shipment",
 			"airesManagedService": "Yes",
 			"noOfMilestones": 5,
-			"policyCreationGroup": "NA"
+			"policyCreationGroup": "All Benefits"
 		},
 		{
 			"benefitType": "Auto Shipment",
@@ -173,7 +173,7 @@
 			"subBenefits": "Auto Shipment",
 			"airesManagedService": "Yes",
 			"noOfMilestones": 5,
-			"policyCreationGroup": "NA"
+			"policyCreationGroup": "All Benefits"
 		},
 		{
 			"benefitType": "Sea/Surface Shipment",
@@ -183,7 +183,7 @@
 			"subBenefits": "Sea/Surface Shipment",
 			"airesManagedService": "Yes",
 			"noOfMilestones": 5,
-			"policyCreationGroup": "NA"
+			"policyCreationGroup": "All Benefits"
 		},
 		{
 			"benefitType": "Inland Shipment",
@@ -193,7 +193,7 @@
 			"subBenefits": "Inland Shipment",
 			"airesManagedService": "Yes",
 			"noOfMilestones": 5,
-			"policyCreationGroup": "NA"
+			"policyCreationGroup": "All Benefits"
 		},
 		{
 			"benefitType": "Pet Shipment",
@@ -203,7 +203,7 @@
 			"subBenefits": "Pet Shipment",
 			"airesManagedService": "Yes",
 			"noOfMilestones": 5,
-			"policyCreationGroup": "NA"
+			"policyCreationGroup": "All Benefits"
 		},
 		{
 			"benefitType": "Permanent Storage",
@@ -237,7 +237,7 @@
 					"comment": "Test Flex Duplicate Housing Benefit Comment",
 					"payments": "Allowance/Cashout",
 					"multipleBenefitSubmission": false,
-					"policyCreationGroup": "All Benefits,Cloning,Versioning,Client",
+					"policyCreationGroup": "NA,Cloning,Versioning,Client",
 					"selectBenefitOnPBCPage": false,
 					"deselectBenefitOnPBCPage": false
 				},
@@ -258,7 +258,7 @@
 					"comment": "Test Other Housing Benefit Comment",
 					"payments": "Expense Reimbursement",
 					"multipleBenefitSubmission": false,
-					"policyCreationGroup": "All Benefits,Cloning,Versioning,Client",
+					"policyCreationGroup": "NA,Cloning,Versioning,Client",
 					"selectBenefitOnPBCPage": false,
 					"deselectBenefitOnPBCPage": false
 				},
@@ -290,7 +290,7 @@
 					"endTracingPrompt": "Move-out/check-out date",
 					"postEndTracingCardStatus": "Move out",
 					"multipleBenefitSubmission": true,
-					"policyCreationGroup": "All Benefits",
+					"policyCreationGroup": "NA",
 					"selectBenefitOnPBCPage": false,
 					"deselectBenefitOnPBCPage": false,
 					"noOfMilestones": 2
@@ -323,7 +323,7 @@
 					"endTracingPrompt": "Closing Date",
 					"postEndTracingCardStatus": "Closing",
 					"multipleBenefitSubmission": false,
-					"policyCreationGroup": "All Benefits",
+					"policyCreationGroup": "NA",
 					"selectBenefitOnPBCPage": false,
 					"deselectBenefitOnPBCPage": false,
 					"noOfMilestones": 0
@@ -360,7 +360,7 @@
 					"endTracingPrompt": "End date of trip",
 					"postEndTracingCardStatus": "Travel Complete",
 					"multipleBenefitSubmission": false,
-					"policyCreationGroup": "All Benefits",
+					"policyCreationGroup": "NA",
 					"selectBenefitOnPBCPage": false,
 					"deselectBenefitOnPBCPage": false,
 					"noOfMilestones": 4,
@@ -426,7 +426,7 @@
 					"comment": "Test Flex Lump Sum Benefit Comment",
 					"payments": "Expense Reimbursement",
 					"multipleBenefitSubmission": false,
-					"policyCreationGroup": "All Benefits,Cloning,Versioning,Client",
+					"policyCreationGroup": "NA,Cloning,Versioning,Client",
 					"selectBenefitOnPBCPage": false,
 					"deselectBenefitOnPBCPage": false
 				},
@@ -458,7 +458,7 @@
 					"endTracingPrompt": "Auto return date",
 					"postEndTracingCardStatus": "Auto return",
 					"multipleBenefitSubmission": true,
-					"policyCreationGroup": "All Benefits",
+					"policyCreationGroup": "NA",
 					"selectBenefitOnPBCPage": false,
 					"deselectBenefitOnPBCPage": false,
 					"noOfMilestones": 2
@@ -496,7 +496,7 @@
 					"endTracingPrompt": "End date of trip",
 					"postEndTracingCardStatus": "Travel Ends",
 					"multipleBenefitSubmission": false,
-					"policyCreationGroup": "All Benefits",
+					"policyCreationGroup": "NA",
 					"selectBenefitOnPBCPage": false,
 					"deselectBenefitOnPBCPage": false,
 					"noOfMilestones": 4,
@@ -534,7 +534,7 @@
 					"endTracingPrompt": "End date of trip",
 					"postEndTracingCardStatus": "Travel Ends",
 					"multipleBenefitSubmission": false,
-					"policyCreationGroup": "All Benefits",
+					"policyCreationGroup": "NA",
 					"selectBenefitOnPBCPage": false,
 					"deselectBenefitOnPBCPage": false,
 					"noOfMilestones": 4,
@@ -595,7 +595,7 @@
 					"endTracingPrompt": "End date of trip",
 					"postEndTracingCardStatus": "Travel Ends",
 					"multipleBenefitSubmission": false,
-					"policyCreationGroup": "NA",
+					"policyCreationGroup": "All Benefits",
 					"selectBenefitOnPBCPage": false,
 					"deselectBenefitOnPBCPage": false
 				},
@@ -649,7 +649,7 @@
 					"endTracingPrompt": "End date of trip",
 					"postEndTracingCardStatus": "Travel Ends",
 					"multipleBenefitSubmission": false,
-					"policyCreationGroup": "NA",
+					"policyCreationGroup": "All Benefits",
 					"selectBenefitOnPBCPage": false,
 					"deselectBenefitOnPBCPage": false
 				},
@@ -708,7 +708,7 @@
 					"endTracingPrompt": "End date of trip",
 					"postEndTracingCardStatus": "Travel Ends",
 					"multipleBenefitSubmission": false,
-					"policyCreationGroup": "NA",
+					"policyCreationGroup": "All Benefits",
 					"selectBenefitOnPBCPage": false,
 					"deselectBenefitOnPBCPage": false
 				},
@@ -767,7 +767,7 @@
 					"endTracingPrompt": "End date of trip",
 					"postEndTracingCardStatus": "Travel Ends",
 					"multipleBenefitSubmission": false,
-					"policyCreationGroup": "NA",
+					"policyCreationGroup": "All Benefits",
 					"selectBenefitOnPBCPage": false,
 					"deselectBenefitOnPBCPage": false
 				},
@@ -821,7 +821,7 @@
 					"endTracingPrompt": "End date of trip",
 					"postEndTracingCardStatus": "Travel Ends",
 					"multipleBenefitSubmission": false,
-					"policyCreationGroup": "NA",
+					"policyCreationGroup": "All Benefits",
 					"selectBenefitOnPBCPage": false,
 					"deselectBenefitOnPBCPage": false
 				},
@@ -896,7 +896,7 @@
 					"endTracingPrompt": "End Date of Language Training",
 					"postEndTracingCardStatus": "Training complete",
 					"multipleBenefitSubmission": false,
-					"policyCreationGroup": "All Benefits,Cloning,Versioning,Client",
+					"policyCreationGroup": "NA,Cloning,Versioning,Client",
 					"selectBenefitOnPBCPage": false,
 					"deselectBenefitOnPBCPage": false,
 					"subbenefitToBeDeselected": "Language Training Family",
@@ -930,7 +930,7 @@
 					"endTracingPrompt": "Cultural training end date",
 					"postEndTracingCardStatus": "Training complete",
 					"multipleBenefitSubmission": false,
-					"policyCreationGroup": "All Benefits",
+					"policyCreationGroup": "NA",
 					"selectBenefitOnPBCPage": true,
 					"deselectBenefitOnPBCPage": true,
 					"noOfMilestones": 2
@@ -963,7 +963,7 @@
 					"endTracingPrompt": "End date",
 					"postEndTracingCardStatus": "Service complete",
 					"multipleBenefitSubmission": false,
-					"policyCreationGroup": "All Benefits",
+					"policyCreationGroup": "NA",
 					"selectBenefitOnPBCPage": false,
 					"deselectBenefitOnPBCPage": false,
 					"noOfMilestones": 2
@@ -996,7 +996,7 @@
 					"endTracingPrompt": "Tour end date",
 					"postEndTracingCardStatus": "Tour Complete",
 					"multipleBenefitSubmission": false,
-					"policyCreationGroup": "All Benefits",
+					"policyCreationGroup": "NA",
 					"selectBenefitOnPBCPage": false,
 					"deselectBenefitOnPBCPage": false,
 					"noOfMilestones": 2
@@ -1029,7 +1029,7 @@
 					"endTracingPrompt": "Airport meet and greet date",
 					"postEndTracingCardStatus": "Arrival / meet and greet",
 					"multipleBenefitSubmission": false,
-					"policyCreationGroup": "All Benefits",
+					"policyCreationGroup": "NA",
 					"selectBenefitOnPBCPage": false,
 					"deselectBenefitOnPBCPage": false,
 					"noOfMilestones": 0
@@ -1066,7 +1066,7 @@
 					"endTracingPrompt": "End date of trip",
 					"postEndTracingCardStatus": "Tour Complete",
 					"multipleBenefitSubmission": false,
-					"policyCreationGroup": "All Benefits",
+					"policyCreationGroup": "NA",
 					"selectBenefitOnPBCPage": false,
 					"deselectBenefitOnPBCPage": false,
 					"noOfMilestones": 4,
@@ -1100,7 +1100,7 @@
 					"endTracingPrompt": "Confirm Furniture Picked up",
 					"postEndTracingCardStatus": "Furniture Pick Up",
 					"multipleBenefitSubmission": false,
-					"policyCreationGroup": "All Benefits",
+					"policyCreationGroup": "NA",
 					"selectBenefitOnPBCPage": false,
 					"deselectBenefitOnPBCPage": false,
 					"noOfMilestones": 2
@@ -1133,7 +1133,7 @@
 					"endTracingPrompt": "School registration complete",
 					"postEndTracingCardStatus": "Registration completed",
 					"multipleBenefitSubmission": false,
-					"policyCreationGroup": "All Benefits",
+					"policyCreationGroup": "NA",
 					"selectBenefitOnPBCPage": false,
 					"deselectBenefitOnPBCPage": false,
 					"noOfMilestones": 0

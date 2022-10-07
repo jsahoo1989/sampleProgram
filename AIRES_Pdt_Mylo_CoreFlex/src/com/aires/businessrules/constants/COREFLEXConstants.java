@@ -813,4 +813,28 @@ public class COREFLEXConstants {
 	public static final String SUCCESSFULLY_VERIFIED_PORTION_CASHOUT_DETAILS_POST_DELETE_REQUEST_DENIED_ON_BENEFIT_SELECTION_TOOL_PAGE = "{0}Successfully verified Portion Cashout details Post Delete Request Denied for All Cashout value submission on Benefit Selection Tool page.";
 	public static final String EXCEPTION_OCCURED_WHILE_CLICKING_ON_POLICY_ACTION_ICON_ON_VIEW_EDIT_POLICY_FORMS_PAGE = "{0}Exception occured while clicking on ''{1}'' action icon of Policy Version : ''{2}'' on View/Edit Policy Forms page. Exception : ''{3}''.";
 	public static final String SUCCESSFULLY_VERIFIED_MOBILITY_FLEX_BENEFITS_SUBMISSION_EMAIL = "{0}Successfully verified Mobility Flex Benefit(s) Submission Email. Email Content Verified : ''{1}''.";
+	public static final String SUCCESSFULLY_SELECTED_AND_FILLED_ADDED_BENEFIT = "{0}Successfully selected and filled ''{1}'' Benefit";
+	public static final String FAILED_TO_SELECT_AND_FILL_ADDED_BENEFIT = "{0}Failed to select and fill ''{1}'' Benefit";
+	public static final String WEIGHT_CAP = "Weight Cap";
+	public static final String WEIGHT_CAP_APPLIES_TO = "Weight Cap Applies To";
+	public static final String UNIT_OF_WEIGHT_CAP = "Unit of Weight Cap";
+	public static final String VOLUME_CAP = "Volume Cap";
+	public static final String VOLUME_CAP_APPLIES_TO = "Volume Cap Applies To";
+	public static final String UNIT_OF_VOLUME_CAP = "Unit of Volume Cap";
+	public static final String NUMBER_OF_D_CONTAINERS = "Number of D Containers";
+	public static final String D_CONTAINERS_APPLIES_TO = "D Container Applies To";
+	public static final String NUMBER_OF_E_CONTAINERS = "Number of E Containers";
+	public static final String E_CONTAINERS_APPLIES_TO = "E Container Applies To";
+	public static final String NUMBER_OF_LDN_CONTAINERS = "Number of LDN Containers";
+	public static final String LDN_CONTAINERS_APPLIES_TO = "LDN Container Applies To";
+	public static final String CAN_THIS_BENEFIT_BE_TRADED_FOR_ANOTHER_BENEFIT = "Can this benefit be traded for another benefit";
+	public static final String TEMPORARY_STORAGE_SIT_DURATION = "Temporary Storage (SIT) Duration";
+	public static final String INSURANCE_TYPE = "Insurance Type";
+	public static final String INSURANCE_TYPE_OTHER = "Other Insurance Type";
+	public static final String FAILED_TO_VERIFY_SUB_BENEFITS_FORM = "{0}Failed to verify ''{1}'' SubBenefit form.";
+	public static final String MAX_NUMBER_OF_AUTOS = "Max. Number of Autos";
+	public static final String NUMBER_OF_PETS = "Number of Pets";
+	public static final String EXCESS_VALUATION_DUE_TO_WEIGHT_PAID = "Excess valuation due to Weight Paid By";
+	public static final String EXCESS_VALUATION_DUE_TO_VALUE_PAID = "Excess valuation due to Value Paid By";
+	
 }

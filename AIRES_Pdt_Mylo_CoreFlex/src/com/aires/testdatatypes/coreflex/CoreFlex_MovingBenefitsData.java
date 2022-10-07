@@ -152,7 +152,9 @@ public class CoreFlex_MovingBenefitsData {
 		public String LDNContainerAppliesTo;
 		public String canThisBenefitBeTradedForAnotherBenefit;
 		public String excessValuationDueToWeightPaid;
+		public String excessValuationDueToValuePaid;
 		public String temporaryStorageDuration;
+		public boolean discardAndDonate;
 	}
 
 	public class AutoShipment {

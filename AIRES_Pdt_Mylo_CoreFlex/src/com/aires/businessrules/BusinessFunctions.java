@@ -1064,10 +1064,10 @@ public class BusinessFunctions {
 	public static void verifyFieldNotPresentOnBenefitPage(WebDriver driver, List<WebElement> elementList,
 			String benefitName, String fieldName) {
 		try {
-			System.out.println(benefitName + " If Applicable List Size : " + elementList.size());
+//			System.out.println(benefitName + " If Applicable List Size : " + elementList.size());
 			if (elementList.size() > 0) {
-//				Assert.fail((MessageFormat.format(COREFLEXConstants.FIELD_DISPLAYED_ON_BENEFIT_PAGE, CoreConstants.FAIL,
-//						benefitName, COREFLEXConstants.IF_APPLICABLE)));
+				Assert.fail((MessageFormat.format(COREFLEXConstants.FIELD_DISPLAYED_ON_BENEFIT_PAGE, CoreConstants.FAIL,
+						benefitName, COREFLEXConstants.IF_APPLICABLE)));
 			} else {
 				Reporter.addStepLog(MessageFormat.format(
 						COREFLEXConstants.SUCCESSFULLY_VERIFIED_FIELD_NOT_DISPLAYED_ON_BENEFIT_PAGE, CoreConstants.PASS,

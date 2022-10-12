@@ -1,12 +1,26 @@
 Feature: Validate the functionality of Create New Assignment Post Request
   I want to test the  functionlity of Create New Assignment Post Request
     
-@createAssignAPI 
+@createAssignAPIPositiveScenario
 Scenario: Validate POST call for Create New Assignment
 Given he has service api endpoint for "Create New Assignment" functionality
 When a "POST" call is made for "Create New Assignment"
 Then a 201 response code should be received
 And all fieldValues related to created assignment should be populated in the response body
+
+@createAssignAPINegativeScenario
+Scenario Outline: Validate Mandatory fields Error Messages for POST call of Create New Assignment service
+Given he has service api endpoint for "Create New Assignment" functionality
+When a "POST" call is made for "Create New Assignment" without adding "<Field>"
+Then a 400 response code should be received
+And error "<Message>" should be populated in the response body
+Examples:
+|Field       |Message                                         |
+|officeCode  |[office code cannot be null or blank]           |
+|firstName   |[You have to type in the transferee first name!]|
+|lastName    |[You have to type in the transferee last name!] |
+|clientId    |[Client ID cannot be null]                      |
+|providerCode|[provider code cannot be null or blank]         |
 
 @getAssignAPI 
 Scenario: Validate GET call for Get Assignment Details

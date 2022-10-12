@@ -8,6 +8,7 @@ public class MYLOConstants {
 	public static final String USER_PROFILE_IMAGE = "User Profile Image";
 	public static final String LOGOUT_IMAGE = "Logout Image";
 	public static final String OTHER="Other";
+	public static final String AND="and";
 	public static final String USER_PROFILE_NAME = "mxsso!";
 	public static final String INCORRECT_QUERY_PARAMETERS= "Incorrect Select Query Parameters";
 	public static final String HAMBURGER_MENU_NOT_APPEARING = "Hamburger Menu Not Appearing";
@@ -519,6 +520,8 @@ public class MYLOConstants {
 	public static final String ESTIMATED_ITEMIZED_AMOUNT = "Estimated Itemized Amount";
 	public static final String SALARY_COMMENTS = "Salary Comments";
 	public static final String MXSSODEV5 = "mxsso dev5";
+	public static final String MXSSODEV7 = "mxsso dev7";
+	public static final String MXSSODEV9 = "mxsso dev9";
 	public static final String ORIGIN_ADDRESS = "Origin Address";
 	public static final String DESTINATION_ADDRESS = "Destination Address";
 	public static final String COMPLETE_ORIGIN_ADDRESS = "Complete Origin Address";
@@ -565,7 +568,21 @@ public class MYLOConstants {
 	public static final String UNABLE_TO_COPY_TEXT = "{0}Unable to copy text of ''{1}' section";
 	public static final String CLOSE_POPUP = "Close Icon";
 	public static final String COMPLETE_MAILING_ADDRESS = "Complete Mailing Address";
-	public static final CharSequence STATE_DROPDOWN = "State Dropdown";
+	public static final String STATE_DROPDOWN = "State Dropdown";
+	public static final String NEXT_BUTTON = "Next Button";
+	public static final String STAY_SIGNED_IN = "Stay signed in?";
+	public static final String STAY_SIGNED_IN_MESSAGE = "Do this to reduce the number of times you are asked to sign in.";
+	public static final String UNABLE_TO_SIGN_IN_MYLO= "Unable to Sign in Mylo application";
+	public static final String FAIL_TO_VERIFY_ERROR_MESSAGE_ON_SECTION = "{0}Failed to verify ''{1}'' error message on ''{2}'' section";
+	public static final String FAIL_TO_VERIFY_ERROR_MESSAGE_ON_API_SERVICE = "{0}Failed to verify ''{1}'' error message on ''{2}'' API Service";
+	public static final String TEAM_POSTS = "Team Posts";
+	public static final String ADD_ICON = "Add icon";
+	public static final String TEAM_POST_COMMENTS = "Team Post Comments";
+	public static final String TEAM_POST_TYPE = "Team Post Type";
+	public static final String ARCHIVE_ICON ="Archive icon";
+	public static final String VIEW_ARCHIVE ="View Archive";
+	public static final String EXPAND_ICON = "Expand";
+	public static final String GENERAL = "General";
 	
 	public static long TIME_BEFORE_ACTION;
 	public static long TIME_AFTER_ACTION;

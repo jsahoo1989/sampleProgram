@@ -1,10 +1,10 @@
 Feature: Validate the Cloning feature of Points Based CoreFlex policy in BluePrint Application
 
-  @End-To-End_CoreFlex @CF_BluePrint_Cloning @DataCreation_Cloning 
+  @End-To-End_CoreFlex @CF_BluePrint_Cloning @DataCreation_Cloning @Test3556
   Scenario: CoreFlex - Creating & Validating a new Active Policy as a part of Data Creation activity for Cloning
-    Given he has setup a new CoreFlex Policy with following selection in Blueprint application
-      | Person Responsible For Benefit Selection | Flex Setup Type | Cashout Availability   | BenefitType | PolicyRequiredFor | MileStones |
-      | Transferee                               | Static/Fixed    | Cashout Not Authorized | Both        | All Benefits      |          0 |
+    Given he has setup a new Points Based CoreFlex Policy with following selection in Blueprint application
+      | Person Responsible For Benefit Selection | Flex Setup Type | Cashout Availability   | BenefitType | PolicyRequiredFor            | MileStones |
+      | Transferee                               | Static/Fixed    | Cashout Not Authorized | Both        | Aires Managed Benefits Cards |          0 |
     And he has clicked on "Submit" button to submit "V1" policy verison on "Custom Bundles" page
     And he has clicked on "Approve Policy" button to approve "V1" policy verison on "Custom Bundles" page
     And he has selected following options on 'Approval this Policy' dialog of "V1" Policy
@@ -53,7 +53,7 @@ Feature: Validate the Cloning feature of Points Based CoreFlex policy in BluePri
       | Legacy       | Enabled               |
       | Draft        | Disabled              |
 
-  @End-To-End_CoreFlex @CF_BluePrint_Cloning @CloningToSameClientPolicy @Test3556
+  @End-To-End_CoreFlex @CF_BluePrint_Cloning @CloningToSameClientPolicy 
   Scenario Outline: CoreFlex - Validating Cloned Policy contents for same Client reference selection and Policy with Submit/Active/Legacy status
     Given he has logged into 'BluePrint' application as 'CSM - SSO' user
     And he has clicked on 'Clone Policy' icon after searching for 'Points Based CoreFlex Policy' with Policy Status as "<PolicyStatus>"
@@ -68,8 +68,8 @@ Feature: Validate the Cloning feature of Points Based CoreFlex policy in BluePri
       | PolicyStatus |
       #| Submitted    |
       | Active       |
-      #| Legacy       |
 
+  #| Legacy       |
   @End-To-End_CoreFlex @CF_BluePrint_Cloning @CloningToDifferentClientPolicy
   Scenario Outline: CoreFlex - Validating Cloned Policy contents for different Client reference selection and Policy with Submit/Active/Legacy status
     Given he has logged into 'BluePrint' application as 'CSM - SSO' user

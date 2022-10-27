@@ -159,6 +159,10 @@ public class CoreFlex_MovingBenefitsData {
 
 	public class AutoShipment {
 		public String maxNoOfAutos;
+		public String minimumMileageForShipment;
+		public String minimumKilometersForShipment;
+		public String rentalCarProvidedDuringTransit;
+		public String maxNumberOfDays;
 		public String grossUp;
 		public String insuranceType;
 		public String insuranceTypeOther;
@@ -168,17 +172,40 @@ public class CoreFlex_MovingBenefitsData {
 	}
 
 	public class SeaSurfaceShipment {
+		public String weightCap;
+		public String unitOfWeightCap;
+		public String volumeCap;
+		public String unitOfVolumeCap;
+		public String containerSizeTransfereeOnly;
+		public String containerQuantityTransfereeOnly;
+		public String containerSizeTransfereePartner;
+		public String containerQuantityTransfereePartner;
+		public String containerSizeTransfereeFamily;
+		public String containerQuantityTransfereeFamily;
+		public String containerQuantityOtherTransfereeFamily;		
 		public String temporaryStorageDuration;
+		public String canThisBenefitBeTradedForAnotherBenefit;
+		public String excessValuationDueToWeightPaid;
+		public String excessValuationDueToValuePaid;		
 		public String grossUp;
 		public String insuranceType;
 		public String insuranceTypeOther;
 		public String reimbursedBy;
 		public String reimbursedByOther;
 		public String comment;
+		public boolean discardAndDonate;
 	}
 
 	public class InlandShipment {
+		public String weightCap;
+		public String unitOfWeightCap;
+		public String volumeCap;
+		public String unitOfVolumeCap;
 		public String temporaryStorageDuration;
+		public String canThisBenefitBeTradedForAnotherBenefit;
+		public String excessValuationDueToWeightPaid;
+		public String excessValuationDueToValuePaid;
+		public boolean discardAndDonate;
 		public String grossUp;
 		public String insuranceType;
 		public String insuranceTypeOther;
@@ -189,6 +216,9 @@ public class CoreFlex_MovingBenefitsData {
 
 	public class PetShipment {
 		public String noOfPets;
+		public String maxAmount;
+		public String currency;
+		public String detail;
 		public String grossUp;
 		public String reimbursedBy;
 		public String reimbursedByOther;

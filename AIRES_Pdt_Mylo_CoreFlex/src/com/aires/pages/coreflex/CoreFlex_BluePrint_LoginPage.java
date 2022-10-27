@@ -9,14 +9,13 @@ import org.openqa.selenium.support.How;
 import org.testng.Assert;
 
 import com.aires.businessrules.Base;
-import com.aires.businessrules.BusinessFunctions;
 import com.aires.businessrules.CoreFunctions;
 import com.aires.businessrules.constants.CoreConstants;
 import com.aires.businessrules.constants.MYLOConstants;
 import com.aires.businessrules.constants.PDTConstants;
 import com.aires.managers.FileReaderManager;
 import com.aires.pages.pdt.PDT_ViewPolicyPage;
-import com.aires.testdatatypes.pdt.PDT_LoginDetails;
+import com.aires.testdatatypes.coreflex.CoreFlex_LoginInfo;
 import com.aires.utilities.Log;
 import com.vimalselvam.cucumber.listener.Reporter;
 
@@ -67,19 +66,19 @@ public class CoreFlex_BluePrint_LoginPage extends Base {
 	@FindBy(how = How.CSS, using = "div.ngx-progress-bar.ngx-progress-bar-ltr")
 	private WebElement _progressBar;
 
-	private PDT_LoginDetails _loginDetailsApplication = FileReaderManager.getInstance().getJsonReader()
-			.getLoginByApplication(CoreFunctions.getPropertyFromConfig("application").toLowerCase());
+	private CoreFlex_LoginInfo _loginInfo = FileReaderManager.getInstance().getCoreFlexJsonReader()
+			.getLoginInfoByEnviroment((CoreFunctions.getPropertyFromConfig("envt").toLowerCase()));
 
 	public void openApplication() {
 		Log.info(FileReaderManager.getInstance().getConfigReader().getCoreFlexPolicySetupApplicationUrl());
 		CoreFunctions.waitForBrowserToLoad(driver);
 		Log.info("Inside openApplication");
-		VerifyAIRESLogo();
+		verifyAIRESLogo();
 		CoreFunctions.waitHandler(2);
 		CoreFunctions.switchToNewTab(driver);
 	}
 
-	public void VerifyAIRESLogo() {
+	public void verifyAIRESLogo() {
 		WebElement imgApplicationLogo;
 		if ((FileReaderManager.getInstance().getConfigReader().getNameOfCurrentLaunchedApplication()
 				.equalsIgnoreCase("pdt"))
@@ -131,8 +130,8 @@ public class CoreFlex_BluePrint_LoginPage extends Base {
 			CoreFunctions.explicitWaitTillElementInVisibilityCustomTime(driver, _spinner, 20);
 		else if (CoreFunctions.isElementExist(driver, _loginWithOfficeImg, 5)) {
 			CoreFunctions.clickElement(driver, _loginWithOfficeImg);
-			CoreFunctions.explicitWaitTillElementInVisibilityCustomTime(driver, _spinner, 20);			
-		}else if (CoreFunctions.isElementExist(driver, _loginWithOfficeImg, 5)) {
+			CoreFunctions.explicitWaitTillElementInVisibilityCustomTime(driver, _spinner, 20);
+		} else if (CoreFunctions.isElementExist(driver, _loginWithOfficeImg, 5)) {
 			CoreFunctions.clickElement(driver, _loginWithOfficeImg);
 			CoreFunctions.explicitWaitTillElementInVisibilityCustomTime(driver, _spinner, 20);
 		}
@@ -157,12 +156,10 @@ public class CoreFlex_BluePrint_LoginPage extends Base {
 			openApplication();
 			switch (userType) {
 			case PDTConstants.CSM:
-				enterUserEmailAndPassword(BusinessFunctions.getCSMCredentials(_loginDetailsApplication)[0],
-						BusinessFunctions.getCSMCredentials(_loginDetailsApplication)[1]);
+				enterUserEmailAndPassword(_loginInfo.details.csmUserName, _loginInfo.details.csmPassword);
 				clickSignIn();
 				isSuccessfullyLoggedIn = viewPolicyPage.verifyCFUserlogin(
-						BusinessFunctions.getCSMCredentials(_loginDetailsApplication)[2],
-						PDTConstants.VIEW_POLICY_PAGE);
+						_loginInfo.details.firstName +" "+ _loginInfo.details.lastName, PDTConstants.VIEW_POLICY_PAGE);
 				break;
 			default:
 				Reporter.addStepLog(

@@ -7,7 +7,6 @@ import java.util.Map;
 
 import org.testng.Assert;
 
-import com.aires.businessrules.BusinessFunctions;
 import com.aires.businessrules.CoreFunctions;
 import com.aires.businessrules.constants.COREFLEXConstants;
 import com.aires.businessrules.constants.CoreConstants;
@@ -30,10 +29,10 @@ import com.aires.pages.iris.IRIS_ActivityAndFinancePage;
 import com.aires.pages.iris.IRIS_AssignmentOverviewPage;
 import com.aires.pages.iris.IRIS_LoginPage;
 import com.aires.pages.iris.IRIS_Welcome12C;
+import com.aires.testdatatypes.coreflex.CoreFlex_LoginInfo;
 import com.aires.testdatatypes.coreflex.MX_Client_Dashboard_BscData;
 import com.aires.testdatatypes.coreflex.TransfereeSubmissions_LoginData;
 import com.aires.testdatatypes.iris.IRIS_AssignmentData;
-import com.aires.testdatatypes.pdt.PDT_LoginDetails;
 import com.vimalselvam.cucumber.listener.Reporter;
 
 import cucumber.api.DataTable;
@@ -44,7 +43,6 @@ import cucumber.api.java.en.When;
 public class CF_MX_Client_Steps {
 
 	private TestContext testContext;
-
 	private MobilityX_LoginPage mobilityXLoginPage;
 	private MX_Client_AuthorizationHomePage mxClientAuthorizationHomePage;
 	private MX_Client_BenefitSelectionToolPage mxClientBenefitSelectionToolPage;
@@ -80,8 +78,8 @@ public class CF_MX_Client_Steps {
 	private TransfereeSubmissions_LoginData _transfereeSubmissionLoginData = FileReaderManager.getInstance()
 			.getCoreFlexJsonReader().getTransfereeSubmissionLoginDataList(COREFLEXConstants.TRANSFEREE_SUBMISSIONS);
 
-	private PDT_LoginDetails _loginDetailsApplication = FileReaderManager.getInstance().getJsonReader()
-			.getLoginByApplication(CoreFunctions.getPropertyFromConfig("application").toLowerCase());
+	private CoreFlex_LoginInfo _loginInfo = FileReaderManager.getInstance().getCoreFlexJsonReader()
+			.getLoginInfoByEnviroment((CoreFunctions.getPropertyFromConfig("envt").toLowerCase()));
 
 	@Given("^he has logged into 'MobilityX' application as a 'Client' user$")
 	public void he_is_logged_into_MobilityX_application_as_a_Client_user() throws Throwable {
@@ -91,9 +89,8 @@ public class CF_MX_Client_Steps {
 		Reporter.addStepLog("<b>Total time taken to navigate to <i>MobilityX Login</i> page is :"
 				+ CoreFunctions.calculatePageLoadTime(CoreConstants.TIME_BEFORE_ACTION, CoreConstants.TIME_AFTER_ACTION)
 				+ " Seconds </b>");
-		mobilityXLoginPage.enterUsernameAndPasswordForMobilityX(
-				BusinessFunctions.getClientAndPolicyDetails(_loginDetailsApplication)[3],
-				BusinessFunctions.getClientAndPolicyDetails(_loginDetailsApplication)[4]);
+		mobilityXLoginPage.enterUsernameAndPasswordForMobilityX(_loginInfo.details.mxClientUserName,
+				_loginInfo.details.mxClientPassword);
 		mobilityXLoginPage.clickSignIn();
 		mxClientAuthorizationHomePage.handle_Cookie_AfterLogin();
 
@@ -110,9 +107,8 @@ public class CF_MX_Client_Steps {
 	public void he_has_clicked_on_after_validating_Client_details_on_Authorization_Home_Page(String createAuthButton)
 			throws Throwable {
 		Assert.assertTrue(
-				mxClientAuthorizationHomePage.verifyClientDetails(
-						BusinessFunctions.getClientAndPolicyDetails(_loginDetailsApplication)[5],
-						BusinessFunctions.getClientAndPolicyDetails(_loginDetailsApplication)[6]),
+				mxClientAuthorizationHomePage.verifyClientDetails(_loginInfo.details.mxClientUserProfileName,
+						_loginInfo.details.clientName),
 				MessageFormat.format(MobilityXConstants.CLIENT_DETAILS_NOT_MATCHED_ON_MOBILITYX_CLIENT_HOME_PAGE,
 						CoreConstants.FAIL));
 		mxClientAuthorizationHomePage.clickOnElementOnAuthorizationPage(createAuthButton);
@@ -126,9 +122,7 @@ public class CF_MX_Client_Steps {
 		String authFormTemplate = dataMap.get(0).get("Authorization Form Template");
 		mxClientAuthorizationHomePage.enterEmpFirstAndLastNameForNewAuthorization();
 		mxClientAuthorizationHomePage.selectAuthorizationOptionForEmployee(assignmentOption);
-		mxClientAuthorizationHomePage.selectAuthorizationFormTemplate(
-				BusinessFunctions.getClientAndPolicyDetails(_loginDetailsApplication)[0],
-				BusinessFunctions.getClientAndPolicyDetails(_loginDetailsApplication)[1], authFormTemplate);
+		mxClientAuthorizationHomePage.selectAuthorizationFormTemplate(_loginInfo.details.clientId,_loginInfo.details.clientName,authFormTemplate);
 		CoreConstants.TIME_BEFORE_ACTION = new Date().getTime();
 		Assert.assertTrue(mxClientAuthorizationHomePage.verifyPageNavigationToAuthForm(), MessageFormat
 				.format(MobilityXConstants.FAILED_TO_VERIFY_USER_NAVIGATION_TO_MXCLIENT_HOME_PAGE, CoreConstants.FAIL));
@@ -149,12 +143,13 @@ public class CF_MX_Client_Steps {
 		Assert.assertTrue(mxClientAuthorizationHomePage.verifyTotalPointsSection(), MessageFormat.format(
 				MobilityXConstants.FAILED_TO_VERIFY_TOTAL_POINTS_SECTION_ON_AUTHORIZATION_FORM, CoreConstants.FAIL));
 	}
-	
+
 	@Given("^he has verified 'Total Points' section not displayed on 'Authorization Form' for \"([^\"]*)\" - 'Flex Setup Type' selection in BluePrint CoreFlex Policy$")
 	public void he_has_verified_Total_Points_section_not_displayed_on_Authorization_Form_for_Flex_Setup_Type_selection_in_BluePrint_CoreFlex_Policy(
 			String arg1) throws Throwable {
 		Assert.assertTrue(mxClientAuthorizationHomePage.verifyTotalPointsSection(), MessageFormat.format(
-				MobilityXConstants.TOTAL_POINTS_SECTION_DISPLAYED_ON_AUTH_FORM_FOR_STATIC_FIXED_FLEX_POLICY_TYPE_SELECTION_IN_BLUEPRINT_APPLICATION, CoreConstants.FAIL));
+				MobilityXConstants.TOTAL_POINTS_SECTION_DISPLAYED_ON_AUTH_FORM_FOR_STATIC_FIXED_FLEX_POLICY_TYPE_SELECTION_IN_BLUEPRINT_APPLICATION,
+				CoreConstants.FAIL));
 	}
 
 	@Given("^he has verified 'FleX Benefits' section displayed on 'Authorization Form' for \"([^\"]*)\" - 'Person Responsible' selection in BluePrint CoreFlex Policy$")
@@ -509,7 +504,7 @@ public class CF_MX_Client_Steps {
 //		testContext.getBasePage().reLaunchIrisToAvoidFreezingIssue();
 		testContext.getBasePage().invokeIrisApplication();
 		testContext.getIrisPageManager().irisLoginPage = new IRIS_LoginPage();
-		testContext.getIrisPageManager().irisLoginPage.getIRISLoginAsPerEnvt(_loginDetailsApplication);
+		testContext.getIrisPageManager().irisLoginPage.getIRISLoginAsPerEnvt(_loginInfo);
 		testContext.getIrisPageManager().irisAssignmentOverviewPage = new IRIS_AssignmentOverviewPage();
 		testContext.getIrisPageManager().irisWelcome12C = new IRIS_Welcome12C();
 		testContext.getIrisPageManager().irisWelcome12C.selectWelcomeWindowModule(IRISConstants.ASSIGNMENT_TAB);
@@ -955,7 +950,7 @@ public class CF_MX_Client_Steps {
 			throws Throwable {
 		testContext.getBasePage().reLaunchIrisToAvoidFreezingIssue();
 		testContext.getIrisPageManager().irisLoginPage = new IRIS_LoginPage();
-		testContext.getIrisPageManager().irisLoginPage.getIRISLoginAsPerEnvt(_loginDetailsApplication);
+		testContext.getIrisPageManager().irisLoginPage.getIRISLoginAsPerEnvt(_loginInfo);
 		testContext.getIrisPageManager().irisWelcome12C = new IRIS_Welcome12C();
 		testContext.getIrisPageManager().irisWelcome12C.selectWelcomeWindowModule(IRISConstants.ASSIGNMENT_TAB);
 		testContext.getIrisPageManager().irisAssignmentOverviewPage = new IRIS_AssignmentOverviewPage();
@@ -1201,9 +1196,7 @@ public class CF_MX_Client_Steps {
 		Reporter.addStepLog("<b>Total time taken to navigate to <i>MobilityX Login</i> page is :"
 				+ CoreFunctions.calculatePageLoadTime(CoreConstants.TIME_BEFORE_ACTION, CoreConstants.TIME_AFTER_ACTION)
 				+ " Seconds </b>");
-		mobilityXLoginPage.enterUsernameAndPasswordForMobilityX(
-				BusinessFunctions.getClientAndPolicyDetails(_loginDetailsApplication)[3],
-				BusinessFunctions.getClientAndPolicyDetails(_loginDetailsApplication)[4]);
+		mobilityXLoginPage.enterUsernameAndPasswordForMobilityX(_loginInfo.details.mxClientUserName,_loginInfo.details.mxClientPassword);
 		mobilityXLoginPage.clickSignIn();
 		mxClientAuthorizationHomePage.handle_Cookie_AfterLogin();
 
@@ -1350,7 +1343,7 @@ public class CF_MX_Client_Steps {
 
 		testContext.getBasePage().reLaunchIrisToAvoidFreezingIssue();
 		testContext.getIrisPageManager().irisLoginPage = new IRIS_LoginPage();
-		testContext.getIrisPageManager().irisLoginPage.getIRISLoginAsPerEnvt(_loginDetailsApplication);
+		testContext.getIrisPageManager().irisLoginPage.getIRISLoginAsPerEnvt(_loginInfo);
 		testContext.getIrisPageManager().irisWelcome12C = new IRIS_Welcome12C();
 		testContext.getIrisPageManager().irisWelcome12C.selectWelcomeWindowModule(IRISConstants.ASSIGNMENT_TAB);
 		testContext.getIrisPageManager().irisAssignmentOverviewPage = new IRIS_AssignmentOverviewPage();
@@ -1392,7 +1385,7 @@ public class CF_MX_Client_Steps {
 			throws Throwable {
 		testContext.getBasePage().reLaunchIrisToAvoidFreezingIssue();
 		testContext.getIrisPageManager().irisLoginPage = new IRIS_LoginPage();
-		testContext.getIrisPageManager().irisLoginPage.getIRISLoginAsPerEnvt(_loginDetailsApplication);
+		testContext.getIrisPageManager().irisLoginPage.getIRISLoginAsPerEnvt(_loginInfo);
 		testContext.getIrisPageManager().irisWelcome12C = new IRIS_Welcome12C();
 		testContext.getIrisPageManager().irisWelcome12C.selectWelcomeWindowModule(IRISConstants.ASSIGNMENT_TAB);
 		testContext.getIrisPageManager().irisAssignmentOverviewPage = new IRIS_AssignmentOverviewPage();
@@ -1496,19 +1489,22 @@ public class CF_MX_Client_Steps {
 	@Given("^Email notification should be sent to First Approver \"([^\"]*)\" for approval but not to Second Approver \"([^\"]*)\"$")
 	public void email_notification_should_be_sent_to_First_Approver_for_approval_but_not_to_Second_Approver(
 			String approver1, String approver2) throws Throwable {
-		Assert.assertTrue(mxClientAuthCollaborationPage.verifyEmailNotificationSentToApprover(approver1), MessageFormat
-				.format(MobilityXConstants.FAILED_TO_VERIFY_EMAIL_NOTIFICATION_SENT_TO_APPROVER, CoreConstants.FAIL,approver1));
+		Assert.assertTrue(mxClientAuthCollaborationPage.verifyEmailNotificationSentToApprover(approver1),
+				MessageFormat.format(MobilityXConstants.FAILED_TO_VERIFY_EMAIL_NOTIFICATION_SENT_TO_APPROVER,
+						CoreConstants.FAIL, approver1));
 		Assert.assertFalse(mxClientAuthCollaborationPage.verifyEmailNotificationSentToApprover(approver2), MessageFormat
 				.format(MobilityXConstants.EMAIL_NOTIFICATION_WAS_SENT_TO_APPROVER, CoreConstants.FAIL, approver2));
 	}
-	
+
 	@Given("^Email notification should be sent to both - First Approver \"([^\"]*)\" and Second Approver \"([^\"]*)\" for approval$")
 	public void email_notification_should_be_sent_to_both_First_Approver_and_Second_Approver_for_approval(
 			String approver1, String approver2) throws Throwable {
-		Assert.assertTrue(mxClientAuthCollaborationPage.verifyEmailNotificationSentToApprover(approver1), MessageFormat
-				.format(MobilityXConstants.FAILED_TO_VERIFY_EMAIL_NOTIFICATION_SENT_TO_APPROVER, CoreConstants.FAIL,approver1));
-		Assert.assertTrue(mxClientAuthCollaborationPage.verifyEmailNotificationSentToApprover(approver2), MessageFormat
-				.format(MobilityXConstants.FAILED_TO_VERIFY_EMAIL_NOTIFICATION_SENT_TO_APPROVER, CoreConstants.FAIL, approver2));
+		Assert.assertTrue(mxClientAuthCollaborationPage.verifyEmailNotificationSentToApprover(approver1),
+				MessageFormat.format(MobilityXConstants.FAILED_TO_VERIFY_EMAIL_NOTIFICATION_SENT_TO_APPROVER,
+						CoreConstants.FAIL, approver1));
+		Assert.assertTrue(mxClientAuthCollaborationPage.verifyEmailNotificationSentToApprover(approver2),
+				MessageFormat.format(MobilityXConstants.FAILED_TO_VERIFY_EMAIL_NOTIFICATION_SENT_TO_APPROVER,
+						CoreConstants.FAIL, approver2));
 	}
 
 	@Given("^\"([^\"]*)\" has verified 'CoreFlex Assignment' details in the received 'Approver Review Required' email before 'Approving' request$")
@@ -1545,7 +1541,7 @@ public class CF_MX_Client_Steps {
 						MobilityXConstants.FAILED_TO_VERIFY_CASHOUT_DETAILS_ON_AUTH_WORKFLOW_APPROVAL_ACTION_PAGE,
 						CoreConstants.FAIL));
 	}
-	
+
 	@Given("^he has verified CoreFlex 'Benefits' and 'BenefitsTotalPoints' details on 'Authorization Form' displayed on the \"([^\"]*)\" page$")
 	public void he_has_verified_CoreFlex_Benefits_and_BenefitsTotalPoints_details_on_Authorization_Form_displayed_on_the_page(
 			String pageName) throws Throwable {

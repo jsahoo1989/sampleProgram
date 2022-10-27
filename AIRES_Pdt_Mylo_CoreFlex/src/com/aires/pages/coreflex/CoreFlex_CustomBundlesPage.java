@@ -345,9 +345,9 @@ public class CoreFlex_CustomBundlesPage extends Base {
 	 * @return
 	 */
 	public boolean iterateAndAddNewCustomBundle(String addNewCustomBundleButton, String policyType,
-			String saveCustomBundleButton, String policyRequiredFor, String numberOfTracing) {
+			String saveCustomBundleButton, String policyRequiredFor) {
 		try {
-			List<String> bundleBenefitList = getBenefitList(policyType, policyRequiredFor, numberOfTracing);
+			List<String> bundleBenefitList = getBenefitList(policyType, policyRequiredFor);
 			if (policyType.equals(COREFLEXConstants.CORE)) {
 				Reporter.addStepLog(MessageFormat.format(
 						COREFLEXConstants.CANNOT_CREATE_CUSTOM_BUNDLE_FOR_CORE_BENEFIT_TYPE, CoreConstants.PASS));
@@ -390,44 +390,15 @@ public class CoreFlex_CustomBundlesPage extends Base {
 		return CoreFunctions.searchElementExistsInListByText(driver, _textSavedCustomBundlesList, bundleName, true);
 	}
 
-	private List<String> getBenefitList(String policyType, String policyRequiredFor, String numberOfMilestones) {
+	private List<String> getBenefitList(String policyType, String policyRequiredFor) {
 		List<String> benefitNameList = new ArrayList<String>();
 		try {
-			switch (policyRequiredFor) {
-			case COREFLEXConstants.CLONING:
-			case COREFLEXConstants.VERSIONING:
-			case COREFLEXConstants.CLIENT:
-				for (FlexBenefit benefit : flexBenefits) {
-					for (Benefit ben : benefit.getBenefits()) {
-						if ((ben.getPolicyCreationGroup().contains(COREFLEXConstants.CLONING))
-								|| (ben.getPolicyCreationGroup().contains(COREFLEXConstants.VERSIONING))
-								|| (ben.getPolicyCreationGroup().contains(COREFLEXConstants.CLIENT)))
-							benefitNameList.add(ben.getBenefitDisplayName());
-					}
+
+			for (FlexBenefit benefit : flexBenefits) {
+				for (Benefit ben : benefit.getBenefits()) {
+					if ((ben.getPolicyCreationGroup().contains(policyRequiredFor)))
+						benefitNameList.add(ben.getBenefitDisplayName());
 				}
-				break;
-			case COREFLEXConstants.AIRES_MANAGED_BENEFITS_CARDS:
-				for (FlexBenefit benefit : flexBenefits) {
-					for (Benefit ben : benefit.getBenefits()) {
-						if ((ben.getAiresManagedService().equals("Yes"))
-								&& (ben.getNoOfMilestones() == Integer.parseInt(numberOfMilestones))) {
-							benefitNameList.add(ben.getBenefitDisplayName());
-						}
-					}
-				}
-				break;
-			case COREFLEXConstants.ALL_BENEFITS:
-			case COREFLEXConstants.END_TO_END:
-				for (FlexBenefit benefit : flexBenefits) {
-					for (Benefit ben : benefit.getBenefits()) {
-						if (ben.getPolicyCreationGroup().contains(COREFLEXConstants.ALL_BENEFITS)) {
-							benefitNameList.add(ben.getBenefitDisplayName());
-						}
-					}
-				}
-				break;
-			default:
-				Assert.fail(COREFLEXConstants.BLUEPRINT_POLICY_REQUIRED_FOR_OPTION_NOT_PRESENT_IN_THE_LIST);
 			}
 		} catch (Exception e) {
 			Reporter.addStepLog(MessageFormat.format(

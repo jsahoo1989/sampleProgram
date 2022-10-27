@@ -352,14 +352,13 @@ public class PDT_ViewPolicyPage extends Base {
 	public Boolean verifyUserlogin(String userName, String pageName) {
 		if (CoreFunctions.isElementExist(driver, _progressBar, 5))
 			BusinessFunctions.fluentWaitForSpinnerToDisappear(driver, _progressBar);
-		if (getUserName().contains(userName)) {
-			CoreFunctions.highlightObject(driver, _userName);
+		if (CoreFunctions.getElementText(driver, _userName).contains(userName)) {
 			Reporter.addStepLog(MessageFormat.format(PDTConstants.VERIFIED_USERNAME_IS_DISPLAYED, CoreConstants.PASS,
 					userName, pageName));
 			return true;
 		}
 		Reporter.addStepLog(MessageFormat.format(PDTConstants.FAILED_TO_VERIFY_USERNAME, CoreConstants.FAIL, pageName,
-				userName, getUserName()));
+				userName, CoreFunctions.getElementText(driver, _userName)));
 		return false;
 	}
 
@@ -1184,14 +1183,13 @@ public class PDT_ViewPolicyPage extends Base {
 
 	public Boolean verifyCFUserlogin(String userName, String pageName) {
 		CoreFunctions.explicitWaitTillElementBecomesClickable(driver, _addNewPolicyForm, PDTConstants.ADD_NEW_POLICY_FORM);
-		if (getUserName().contains(userName)) {
-			CoreFunctions.highlightObject(driver, _userName);
+		if (CoreFunctions.getElementText(driver, _userName).contains(userName)) {
 			Reporter.addStepLog(MessageFormat.format(PDTConstants.VERIFIED_USERNAME_IS_DISPLAYED, CoreConstants.PASS,
 					userName, pageName));
 			return true;
 		}
 		Reporter.addStepLog(MessageFormat.format(PDTConstants.FAILED_TO_VERIFY_USERNAME, CoreConstants.FAIL, pageName,
-				userName, getUserName()));
+				userName, CoreFunctions.getElementText(driver, _userName)));
 		return false;
 	}
 }

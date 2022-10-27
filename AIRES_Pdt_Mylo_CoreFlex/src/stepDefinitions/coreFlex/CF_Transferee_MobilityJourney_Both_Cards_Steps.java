@@ -18,7 +18,7 @@ import com.aires.pages.iris.IRIS_AssignmentOverviewPage;
 import com.aires.pages.iris.IRIS_AssignmentServicePage;
 import com.aires.pages.iris.IRIS_LoginPage;
 import com.aires.pages.iris.IRIS_Welcome12C;
-import com.aires.testdatatypes.pdt.PDT_LoginDetails;
+import com.aires.testdatatypes.coreflex.CoreFlex_LoginInfo;
 
 import cucumber.api.java.en.Given;
 import cucumber.api.java.en.Then;
@@ -31,8 +31,8 @@ public class CF_Transferee_MobilityJourney_Both_Cards_Steps {
 	private MX_Transferee_FlexPlanningTool_Page mxTransfereeFlexPlanningToolPage;
 	private MX_Transferee_MyBenefitsBundlePage mxTransfereeMyBenefitsBundlePage;
 	int _initialTableRowCount = 0;
-	private PDT_LoginDetails _loginDetailsApplication = FileReaderManager.getInstance().getJsonReader()
-			.getLoginByApplication(CoreFunctions.getPropertyFromConfig("application").toLowerCase());
+	private CoreFlex_LoginInfo _loginInfo = FileReaderManager.getInstance().getCoreFlexJsonReader()
+			.getLoginInfoByEnviroment((CoreFunctions.getPropertyFromConfig("envt").toLowerCase()));
 
 	public CF_Transferee_MobilityJourney_Both_Cards_Steps(TestContext context) {
 		testContext = context;
@@ -120,7 +120,7 @@ public class CF_Transferee_MobilityJourney_Both_Cards_Steps {
 		Assert.assertTrue(mxTransfereeJourneyHomePage.verifyUserNavigationToJourneyHomePage(), MessageFormat.format(
 				MobilityXConstants.FALIED_TO_VALIDATE_USER_NAVIGATION_TO_MOBILITYX_JOURNEY_HOME_PAGE_AFTER_BENEFIT_SUBMISSION,
 				CoreConstants.FAIL));
-		Assert.assertTrue(mxTransfereeJourneyHomePage.isCoreBenefitCardVerified(MobilityXConstants.PRE_INITIAL_TRACING, noOfMileStones),
+		Assert.assertTrue(mxTransfereeJourneyHomePage.isCoreBenefitCardVerified(MobilityXConstants.PRE_INITIAL_TRACING),
 				MessageFormat.format(MobilityXConstants.FAILED_TO_VERIFY_CORE_BENEFIT_CARD, CoreConstants.FAIL,
 						pageName));
 	}
@@ -217,7 +217,7 @@ public class CF_Transferee_MobilityJourney_Both_Cards_Steps {
 		testContext.getBasePage().invokeIrisApplication();
 //		testContext.getBasePage().killExistingBrowsers();
 		testContext.getIrisPageManager().irisLoginPage = new IRIS_LoginPage();
-		testContext.getIrisPageManager().irisLoginPage.getIRISLoginAsPerEnvt(_loginDetailsApplication);
+		testContext.getIrisPageManager().irisLoginPage.getIRISLoginAsPerEnvt(_loginInfo);
 		testContext.getIrisPageManager().irisWelcome12C = new IRIS_Welcome12C();
 		testContext.getIrisPageManager().irisWelcome12C.selectWelcomeWindowModule(IRISConstants.ASSIGNMENT_TAB);
 		testContext.getIrisPageManager().irisAssignmentOverviewPage = new IRIS_AssignmentOverviewPage();
@@ -266,7 +266,7 @@ public class CF_Transferee_MobilityJourney_Both_Cards_Steps {
 	@Then("^submitted Core Cards having '([^\"]*)' Milestones should be displayed under 'Service Monitoring' section of \"([^\"]*)\" page$")
 	public void submitted_Core_Cards_with_Milestones_should_be_displayed_under_Service_Monitoring_section_of_page(int noOfMileStones, String pageName)
 			throws Throwable {
-		Assert.assertTrue(mxTransfereeJourneyHomePage.isCoreBenefitCardVerified(MobilityXConstants.PRE_INITIAL_TRACING, noOfMileStones),
+		Assert.assertTrue(mxTransfereeJourneyHomePage.isCoreBenefitCardVerified(MobilityXConstants.PRE_INITIAL_TRACING),
 				MessageFormat.format(MobilityXConstants.FAILED_TO_VERIFY_CORE_BENEFIT_CARD, CoreConstants.FAIL,
 						pageName));
 	}
@@ -319,7 +319,7 @@ public class CF_Transferee_MobilityJourney_Both_Cards_Steps {
 			String noOfMilestones, String pageName) throws Throwable {
 		Assert.assertTrue(
 				mxTransfereeJourneyHomePage.verifyFlexBenefitCardDetailsOfAiresManagedBenefits(MobilityXConstants.STARTING_SOON,
-						MobilityXConstants.PRE_INITIAL_TRACING, Integer.parseInt(noOfMilestones)),
+						MobilityXConstants.PRE_INITIAL_TRACING),
 				MessageFormat.format(MobilityXConstants.FAILED_TO_VERIFY_FLEX_BENEFIT_CARD, CoreConstants.FAIL,
 						pageName));
 	}	

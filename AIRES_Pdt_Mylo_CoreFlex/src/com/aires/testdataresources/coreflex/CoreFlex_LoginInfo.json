@@ -1,0 +1,96 @@
+[
+	{
+		"environment": "qa",
+		"details": {
+			"irisUserName": "vkamins",
+			"irisPassword": "fndevvk",
+			"irisDatabase": "FnDEV",
+			"irisBuildPath": "\\\\corpprdvw589\\rdev\\IRIS_Builds\\IRIS_FnDEV_CORE_FLEX\\IRIS.exe",
+			"firstName": "mxsso",
+			"lastName": "dev5",
+			"clientId": "13951",
+			"clientName": "Boston Scientific",
+			"csmUserName": "mxssodev5@corp.aires.com",
+			"csmPassword": "F74#jd*187_NB",
+			"csmUserFirstName": "MXSSO DEV5",
+			"policy": "hDCC Repatriation (# 14724)",
+			"mxClientUserName": "0011934473@aires.com",
+			"mxClientPassword": "relonetng1",
+			"mxClientUserProfileName": "Jaspal March"
+		}
+	},
+	{
+		"environment": "dev",
+		"details": {
+			"irisUserName": "vkamins",
+			"irisPassword": "fndevvk",
+			"irisDatabase": "FnDEV",
+			"irisBuildPath": "\\\\corpprdvw589\\rdev\\IRIS_Builds\\IRIS_FnDEV_CORE_FLEX\\IRIS.exe",
+			"firstName": "mxsso",
+			"lastName": "dev5",
+			"clientId": "7403",
+			"clientName": "Dow Chemical Company (Global)",
+			"csmUserName": "mxssodev5@corp.aires.com",
+			"csmPassword": "F74#jd*187_NB",
+			"csmUserFirstName": "MXSSO DEV5",
+			"policy": "hDCC Repatriation (# 14724)"
+		}
+	},
+	{
+		"environment": "prod",
+		"details": {
+			"irisUserName": "vkamins",
+			"irisPassword": "fndevvk",
+			"irisDatabase": "FnDEV",
+			"irisBuildPath": "\\\\corpprdvw589\\rdev\\IRIS_Builds\\IRIS_FnDEV_CORE_FLEX\\IRIS.exe",
+			"firstName": "Chere",
+			"lastName": "kitts",
+			"clientId": "7403",
+			"clientName": "Dow Chemical Company (Global)",
+			"csmUserName": "mxssodev5@corp.aires.com",
+			"csmPassword": "F74#jd*187_NB",
+			"csmUserFirstName": "MXSSO DEV5",
+			"policy": "hDCC Repatriation (# 14724)"
+		}
+	},
+	{
+		"environment": "preProd",
+		"details": {
+			"irisUserName": "vkamins",
+			"irisPassword": "testvk",
+			"irisDatabase": "TRAINING",
+			"irisBuildPath": "\\\\corpprdvw589\\rdev\\IRIS_Builds\\IRIS_PRE_PROD_STAGING\\IRIS.exe",
+			"firstName": "mxsso",
+			"lastName": "dev5",
+			"clientId": "13951",
+			"clientName": "Boston Scientific",
+			"csmUserName": "mxssodev5@corp.aires.com",
+			"csmPassword": "F74#jd*187_NB",
+			"csmUserFirstName": "MXSSO DEV5",
+			"policy": "hDCC Repatriation (# 14724)",
+			"mxClientUserName": "0011856826@aires.com",
+			"mxClientPassword": "relonetng",
+			"mxClientUserProfileName": "Josh Warwick"
+		}
+	},
+	{
+		"environment": "uat",
+		"details": {
+			"irisUserName": "vkamins",
+			"irisPassword": "uatvk",
+			"irisDatabase": "UAT",
+			"irisBuildPath": "\\\\corpprdvw589\\rdev\\IRIS_Builds\\IRIS_CoreFleX_UAT\\IRIS.exe",
+			"firstName": "mxsso",
+			"lastName": "dev5",
+			"clientId": "13951",
+			"clientName": "Boston Scientific",
+			"csmUserName": "mxssodev5@corp.aires.com",
+			"csmPassword": "F74#jd*187_NB",
+			"csmUserFirstName": "MXSSO DEV5",
+			"policy": "hDCC Repatriation (# 14724)",
+			"mxClientUserName": "jzmarzlak@aires.com",
+			"mxClientPassword": "relonetng",
+			"mxClientUserProfileName": "Judson Offner"
+		}
+	}
+]

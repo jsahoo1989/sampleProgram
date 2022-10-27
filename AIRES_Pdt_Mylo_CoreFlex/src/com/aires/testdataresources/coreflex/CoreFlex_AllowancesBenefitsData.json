@@ -11,11 +11,20 @@
 			"indicateNumberOfWeeksBeforeTransferDate": "1 Week",
 			"reimbursedBy": "Other",
 			"reimbursedByOther": "Reimbursed by other",
-			"comment": "Lump Sum comment",
-			"flexPoints":"25",
-			"benefitName":"Lump Sum",
-			"allowanceAmountMessage":"Automated Lump Sum Allowance Amount Message",
-			"benefitLongDescription":"Automated Lump Sum Benefit Long Description Messsage for Policy Setup in Policy Digitization Tool (PDT) to be consumed by MX Transferee."
+			"comment": "Lump Sum comment"
+		}			
+	},
+	{
+		"benefitName": "Goods & Services Allowance",
+		"goodsAndServicesAllowance": {
+			"calculationMethod" : "Flat Amount",			
+			"grossUp": "Yes",
+			"maxAmountIfApplicable" : "100000",
+			"currency": "U.S. Dollar",
+			"frequency": "One Time",
+			"reimbursedBy": "Other",
+			"reimbursedByOther": "Reimbursed by other",
+			"comment": "Goods & Services Allowance comment"
 		}			
 	},
 	{

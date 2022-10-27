@@ -4,6 +4,7 @@ import java.awt.AWTException;
 import java.awt.Robot;
 import java.awt.event.KeyEvent;
 import java.text.MessageFormat;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -13,6 +14,7 @@ import java.util.Objects;
 import org.testng.Assert;
 
 import com.aires.businessrules.CoreFunctions;
+import com.aires.businessrules.constants.COREFLEXConstants;
 import com.aires.businessrules.constants.CoreConstants;
 import com.aires.businessrules.constants.IRISConstants;
 import com.aires.iris.helpers.Helpers;
@@ -21,6 +23,7 @@ import com.aires.managers.PageObjectManager_CoreFlex;
 import com.aires.pages.iris.basepage.BasePage;
 import com.aires.testdatatypes.coreflex.Benefit;
 import com.aires.testdatatypes.coreflex.FlexBenefit;
+import com.aires.testdatatypes.iris.IRIS_AssignmentData;
 import com.aires.utilities.Log;
 import com.aires.utilities.getWindowText;
 import com.hp.lft.sdk.Desktop;
@@ -45,8 +48,14 @@ public class IRIS_AssignmentServicePage extends BasePage {
 		super();
 	}
 
+	private Dialog _subServiceDetailScreen = _IRIS.describe(Dialog.class,
+			new DialogDescription.Builder().title(IRISConstants.SUB_SERVICE_DETAIL_SCREEN).build());
+
 	public static final List<FlexBenefit> flexBenefits = FileReaderManager.getInstance().getCoreFlexJsonReader()
 			.getMXTransfereeFlexBenefitData();
+
+	IRIS_AssignmentData assignmentTransfereeData = FileReaderManager.getInstance().getIrisJsonReader()
+			.getAssignmentDataByTabName(IRISConstants.TRANSFEREE_AND_FAMILY);
 
 	private Table _tableName = null;
 	private Button _addButtonName = null;
@@ -166,15 +175,15 @@ public class IRIS_AssignmentServicePage extends BasePage {
 	public void clickSaveButton() throws Exception {
 		Helpers.clickButton(IRIS_PageMaster.getButtonObjectFromLabel(_IRIS, "Save"),
 				IRIS_PageMaster.getButtonObjectFromLabel(_IRIS, "Save").getLabel());
-		if (IRIS_PageMaster.getDialogObject(_IRIS, "Warning").exists()) {
-			Helpers.clickButton(
-					IRIS_PageMaster.getButtonObject(IRIS_PageMaster.getDialogObject(_IRIS, "Warning"), "OK",
-							"javax.swing.plaf.basic.BasicOptionPaneUI$ButtonFactory$ConstrainedButton"),
-					IRIS_PageMaster
-							.getButtonObject(IRIS_PageMaster.getDialogObject(_IRIS, "Warning"), "OK",
-									"javax.swing.plaf.basic.BasicOptionPaneUI$ButtonFactory$ConstrainedButton")
-							.getAttachedText());
-		}
+//		if (IRIS_PageMaster.getDialogObject(_IRIS, "Warning").exists()) {
+//			Helpers.clickButton(
+//					IRIS_PageMaster.getButtonObject(IRIS_PageMaster.getDialogObject(_IRIS, "Warning"), "OK",
+//							"javax.swing.plaf.basic.BasicOptionPaneUI$ButtonFactory$ConstrainedButton"),
+//					IRIS_PageMaster
+//							.getButtonObject(IRIS_PageMaster.getDialogObject(_IRIS, "Warning"), "OK",
+//									"javax.swing.plaf.basic.BasicOptionPaneUI$ButtonFactory$ConstrainedButton")
+//							.getAttachedText());
+//		}
 		if (!IRIS_PageMaster.getDialogObject(_IRIS, "Saved").exists()) {
 			String _newTransfereeWindowTitle = MessageFormat.format(IRISConstants.TRANSFEREE_TITLE_TO_APPEND_SERVICE,
 					CoreFunctions.getPropertyFromConfig("Assignment_FileID"),
@@ -511,23 +520,21 @@ public class IRIS_AssignmentServicePage extends BasePage {
 	public void addServiceAndSubService(String coreFlexType) {
 		subServiceIDMap = new HashMap<String, String>();
 		try {
-			for (FlexBenefit benefitList : flexBenefits) {
-				for (Benefit benefit : benefitList.getBenefits()) {
-					if ((benefit.getSelectBenefitOnFPTPage()) && (benefit.getAiresManagedService().equals("Yes"))) {
-						addService(benefit.getIrisServiceName());
-						clickSaveButton();
-						clickOnAddSubServiceButton();
-						addSubService(IRISConstants.SUB_SERVICE, benefit.getIrisSubserviceType(),
-								benefit.getIrisSubserviceName(), coreFlexType);
-						clickSaveButton();
-						int rowCount = Helpers.getTableRowCount(getTableName(IRISConstants.SUB_SERVICE));
-						benefit.setIrisSubserviceID(String.valueOf(
-								new Double(IRIS_PageMaster.getTableObjectWithIndex(_IRIS, "javax.swing.JTable", 1)
-										.getCell(rowCount - 1, IRISConstants.ID_TEXT).getValue().toString())
-												.intValue()));
-						subServiceIDMap.put(benefit.getIrisSubserviceName(), benefit.getIrisSubserviceID());
-						CoreFunctions.waitHandler(2);
-					}
+			for (Benefit benefit : getBenefits(CoreFunctions.getPropertyFromConfig("CoreFlex_Policy_BenefitType"),
+					CoreFunctions.getPropertyFromConfig("CoreFlex_Policy_RequiredFor"))) {
+				if ((benefit.getSelectBenefitOnFPTPage()) && (benefit.getAiresManagedService().equals("Yes"))) {
+					addService(benefit.getIrisServiceName());
+					clickSaveButton();
+					clickOnAddSubServiceButton();
+					addSubService(IRISConstants.SUB_SERVICE, benefit.getIrisSubserviceType(),
+							benefit.getIrisSubserviceName(), coreFlexType);
+					clickSaveButton();
+					int rowCount = Helpers.getTableRowCount(getTableName(IRISConstants.SUB_SERVICE));
+					benefit.setIrisSubserviceID(String
+							.valueOf(new Double(IRIS_PageMaster.getTableObjectWithIndex(_IRIS, "javax.swing.JTable", 1)
+									.getCell(rowCount - 1, IRISConstants.ID_TEXT).getValue().toString()).intValue()));
+					subServiceIDMap.put(benefit.getIrisSubserviceName(), benefit.getIrisSubserviceID());
+					CoreFunctions.waitHandler(2);
 				}
 			}
 			for (Entry<String, String> subService : subServiceIDMap.entrySet()) {
@@ -544,20 +551,19 @@ public class IRIS_AssignmentServicePage extends BasePage {
 	public void addAdditionalSubService(String coreFlexType) {
 		subServiceIDMap = new HashMap<String, String>();
 		try {
-			for (FlexBenefit benefitList : flexBenefits) {
-				for (Benefit benefit : benefitList.getBenefits()) {
-					if ((benefit.getMultipleBenefitSubmission())) {
-						searchAndSelectAddedService(getTableName(IRISConstants.SERVICE), IRISConstants.NAME,
-								benefit.getIrisServiceName());
-						clickOnAddSubServiceButton();
-						addSubService(IRISConstants.SUB_SERVICE, benefit.getIrisSubserviceType(),
-								benefit.getIrisSubserviceName(), coreFlexType);
-						clickSaveButton();
-						benefit.setIrisSubserviceID(String.valueOf(
-								new Double(IRIS_PageMaster.getTableObjectWithIndex(_IRIS, "javax.swing.JTable", 1)
-										.getCell(1, IRISConstants.ID_TEXT).getValue().toString()).intValue()));
-						subServiceIDMap.put(benefit.getIrisServiceName(), benefit.getIrisSubserviceID());
-					}
+			for (Benefit benefit : getBenefits(CoreFunctions.getPropertyFromConfig("CoreFlex_Policy_BenefitType"),
+					CoreFunctions.getPropertyFromConfig("CoreFlex_Policy_RequiredFor"))) {
+				if ((benefit.getMultipleBenefitSubmission())) {
+					searchAndSelectAddedService(getTableName(IRISConstants.SERVICE), IRISConstants.NAME,
+							benefit.getIrisServiceName());
+					clickOnAddSubServiceButton();
+					addSubService(IRISConstants.SUB_SERVICE, benefit.getIrisSubserviceType(),
+							benefit.getIrisSubserviceName(), coreFlexType);
+					clickSaveButton();
+					benefit.setIrisSubserviceID(String
+							.valueOf(new Double(IRIS_PageMaster.getTableObjectWithIndex(_IRIS, "javax.swing.JTable", 1)
+									.getCell(1, IRISConstants.ID_TEXT).getValue().toString()).intValue()));
+					subServiceIDMap.put(benefit.getIrisServiceName(), benefit.getIrisSubserviceID());
 				}
 			}
 		} catch (Exception e) {
@@ -587,15 +593,14 @@ public class IRIS_AssignmentServicePage extends BasePage {
 
 	public void cancelAddedServices(String subServiceStatus) {
 		try {
-			for (FlexBenefit benefitList : flexBenefits) {
-				for (Benefit benefit : benefitList.getBenefits()) {
-					if ((benefit.getSelectBenefitOnFPTPage()) && (benefit.getAiresManagedService().equals("Yes"))) {
-						searchAndSelectAddedService(getTableName(IRISConstants.SERVICE), IRISConstants.NAME,
-								benefit.getIrisServiceName());
-						selectSubService(getTableName(IRISConstants.SUB_SERVICE), IRISConstants.NAME,
-								benefit.getIrisSubserviceName());
-						setSubServiceStatus(subServiceStatus);
-					}
+			for (Benefit benefit : getBenefits(CoreFunctions.getPropertyFromConfig("CoreFlex_Policy_BenefitType"),
+					CoreFunctions.getPropertyFromConfig("CoreFlex_Policy_RequiredFor"))) {
+				if ((benefit.getSelectBenefitOnFPTPage()) && (benefit.getAiresManagedService().equals("Yes"))) {
+					searchAndSelectAddedService(getTableName(IRISConstants.SERVICE), IRISConstants.NAME,
+							benefit.getIrisServiceName());
+					selectSubService(getTableName(IRISConstants.SUB_SERVICE), IRISConstants.NAME,
+							benefit.getIrisSubserviceName());
+					setSubServiceStatus(subServiceStatus);
 				}
 			}
 		} catch (Exception e) {
@@ -636,17 +641,16 @@ public class IRIS_AssignmentServicePage extends BasePage {
 
 	public void updateAddedServices(String columnName, String newSubserviceServiceType, int numberOfMilestones) {
 		try {
-			for (FlexBenefit benefitList : flexBenefits) {
-				for (Benefit benefit : benefitList.getBenefits()) {
-					if (Objects.equals(benefit.getAiresManagedService(), "Yes") && benefit.getSelectBenefitOnFPTPage()
-							&& benefit.getNoOfMilestones() != null
-							&& Objects.equals(benefit.getNoOfMilestones(), numberOfMilestones)) {
-						searchAndSelectAddedService(getTableName(IRISConstants.SERVICE), IRISConstants.NAME,
-								benefit.getIrisServiceName());
-						selectAndUpdateSubServiceColumnData(getTableName(IRISConstants.SUB_SERVICE), IRISConstants.NAME,
-								benefit.getIrisSubserviceName(), columnName, newSubserviceServiceType);
-						clickSaveButton();
-					}
+			for (Benefit benefit : getBenefits(CoreFunctions.getPropertyFromConfig("CoreFlex_Policy_BenefitType"),
+					CoreFunctions.getPropertyFromConfig("CoreFlex_Policy_RequiredFor"))) {
+				if (Objects.equals(benefit.getAiresManagedService(), "Yes") && benefit.getSelectBenefitOnFPTPage()
+						&& benefit.getNoOfMilestones() != null
+						&& Objects.equals(benefit.getNoOfMilestones(), numberOfMilestones)) {
+					searchAndSelectAddedService(getTableName(IRISConstants.SERVICE), IRISConstants.NAME,
+							benefit.getIrisServiceName());
+					selectAndUpdateSubServiceColumnData(getTableName(IRISConstants.SUB_SERVICE), IRISConstants.NAME,
+							benefit.getIrisSubserviceName(), columnName, newSubserviceServiceType);
+					clickSaveButton();
 				}
 			}
 		} catch (Exception e) {
@@ -669,37 +673,73 @@ public class IRIS_AssignmentServicePage extends BasePage {
 
 	}
 
-	public void addServiceAndSubServiceForAiresManagedBenefit(String coreFlexType, int noOfMilestones) {
+//	public void addServiceAndSubServiceForAiresManagedBenefit(String coreFlexType, int noOfMilestones) {
+//		subServiceIDMap = new HashMap<String, String>();
+//		try {
+//			for (FlexBenefit benefitList : flexBenefits) {
+//				for (Benefit benefit : benefitList.getBenefits()) {
+//					if ((benefit.getSelectBenefitOnFPTPage()) && (benefit.getAiresManagedService().equals("Yes"))
+//							&& benefit.getNoOfMilestones() != null && benefit.getNoOfMilestones() == noOfMilestones) {
+//						System.out.println(benefit.getIrisServiceName() + ":" + benefit.getIrisSubserviceType() + ":"
+//								+ benefit.getIrisSubserviceName());
+//						addService(benefit.getIrisServiceName());
+//						clickOnAddSubServiceButton();
+//						pageObjectManager_CoreFlex.getPageObjects().get(benefit.getBenefitType()).addSubService(_IRIS,
+//								IRIS_PageMaster.getTableObjectWithIndex(_IRIS, "javax.swing.JTable", 1), benefit,
+//								coreFlexType);
+//						int rowCount = Helpers.getTableRowCount(getTableName(IRISConstants.SUB_SERVICE));
+//						benefit.setIrisSubserviceID(String.valueOf(
+//								new Double(IRIS_PageMaster.getTableObjectWithIndex(_IRIS, "javax.swing.JTable", 1)
+//										.getCell(rowCount - 1, IRISConstants.ID_TEXT).getValue().toString())
+//												.intValue()));
+//						Helpers.setTableCellValue(
+//								IRIS_PageMaster.getTableObjectWithIndex(_IRIS, "javax.swing.JTable", 1), rowCount - 1,
+//								"Core/Flex", "Both");
+//						subServiceIDMap.put(benefit.getIrisSubserviceName(), benefit.getIrisSubserviceID());
+//						clickSaveButton();
+//						CoreFunctions.waitHandler(2);
+//					}
+//				}
+//			}
+//			CoreFunctions.writeToPropertiesFile("irisWindowTitle", getIRISWindow().getTitle());
+//			System.out.println(subServiceIDMap);
+//		} catch (Exception e) {
+//			Reporter.addStepLog(MessageFormat.format(
+//					IRISConstants.EXCEPTION_OCCURED_WHILE_ADDING_SERVICE_SUBSERVICE_ON_SERVICES_TAB_OF_IRIS_APPLICATION,
+//					CoreConstants.FAIL, e.getMessage()));
+//		}
+//	}
+
+	public void addServiceAndSubServiceForAiresManagedBenefit(String coreFlexType) {
 		subServiceIDMap = new HashMap<String, String>();
 		try {
-			for (FlexBenefit benefitList : flexBenefits) {
-				for (Benefit benefit : benefitList.getBenefits()) {
-					if ((benefit.getSelectBenefitOnFPTPage()) && (benefit.getAiresManagedService().equals("Yes"))
-							&& benefit.getNoOfMilestones() != null && benefit.getNoOfMilestones() == noOfMilestones) {
-						System.out.println(benefit.getIrisServiceName() + ":" + benefit.getIrisSubserviceType() + ":"
-								+ benefit.getIrisSubserviceName());
-						addService(benefit.getIrisServiceName());
-						clickOnAddSubServiceButton();
-						pageObjectManager_CoreFlex.getPageObjects().get(benefit.getBenefitType()).addSubService(_IRIS,
-								IRIS_PageMaster.getTableObjectWithIndex(_IRIS, "javax.swing.JTable", 1), benefit,
-								coreFlexType);
-						int rowCount = Helpers.getTableRowCount(getTableName(IRISConstants.SUB_SERVICE));
-						benefit.setIrisSubserviceID(String.valueOf(
-								new Double(IRIS_PageMaster.getTableObjectWithIndex(_IRIS, "javax.swing.JTable", 1)
-										.getCell(rowCount - 1, IRISConstants.ID_TEXT).getValue().toString())
-												.intValue()));
-						Helpers.setTableCellValue(
-								IRIS_PageMaster.getTableObjectWithIndex(_IRIS, "javax.swing.JTable", 1), rowCount - 1,
-								"Core/Flex", "Both");
-						subServiceIDMap.put(benefit.getIrisSubserviceName(), benefit.getIrisSubserviceID());
-						clickSaveButton();
-						CoreFunctions.waitHandler(2);
-					}
+			for (Benefit benefit : getBenefits(CoreFunctions.getPropertyFromConfig("CoreFlex_Policy_BenefitType"),
+					CoreFunctions.getPropertyFromConfig("CoreFlex_Policy_RequiredFor"))) {
+				if ((benefit.getSelectBenefitOnFPTPage()) && (benefit.getAiresManagedService().equals("Yes"))
+						&& benefit.getNoOfMilestones() != null) {
+					addService(benefit.getIrisServiceName());
+					clickOnAddSubServiceButton();
+					pageObjectManager_CoreFlex.getPageObjects().get(benefit.getBenefitType()).addSubService(_IRIS,
+							IRIS_PageMaster.getTableObjectWithIndex(_IRIS, "javax.swing.JTable", 1), benefit,
+							coreFlexType);
+					int rowCount = Helpers.getTableRowCount(getTableName(IRISConstants.SUB_SERVICE));
+					Helpers.setTableCellValue(IRIS_PageMaster.getTableObjectWithIndex(_IRIS, "javax.swing.JTable", 1),
+							rowCount - 1, "Core/Flex", "Both");
+					clickSaveButton();
+					CoreFunctions.waitHandler(2);
+					addAdditionalDetailIfRequired(benefit);
+					benefit.setIrisSubserviceID(String
+							.valueOf(new Double(IRIS_PageMaster.getTableObjectWithIndex(_IRIS, "javax.swing.JTable", 1)
+									.getCell(rowCount - 1, IRISConstants.ID_TEXT).getValue().toString()).intValue()));
+					Log.info("SubServiceID : " + benefit.getIrisSubserviceID());
+					subServiceIDMap.put(benefit.getIrisSubserviceName(), benefit.getIrisSubserviceID());
 				}
+
 			}
 			CoreFunctions.writeToPropertiesFile("irisWindowTitle", getIRISWindow().getTitle());
-			System.out.println(subServiceIDMap);
+			System.out.println("SubServiceMap : " + subServiceIDMap);
 		} catch (Exception e) {
+			Log.info("Exception occured while adding Service/SubService : " + e.getMessage());
 			Reporter.addStepLog(MessageFormat.format(
 					IRISConstants.EXCEPTION_OCCURED_WHILE_ADDING_SERVICE_SUBSERVICE_ON_SERVICES_TAB_OF_IRIS_APPLICATION,
 					CoreConstants.FAIL, e.getMessage()));
@@ -709,28 +749,84 @@ public class IRIS_AssignmentServicePage extends BasePage {
 	public void addServiceAndSubServiceForMultipleSubmission(String coreFlexType) {
 		subServiceIDMap = new HashMap<String, String>();
 		try {
-			for (FlexBenefit benefitList : flexBenefits) {
-				for (Benefit benefit : benefitList.getBenefits()) {
-					if (benefit.getSelectBenefitOnFPTPage() && benefit.getMultipleBenefitSubmission()) {
-						addService(benefit.getIrisServiceName());
-						clickOnAddSubServiceButton();
-						addSubService(IRISConstants.SUB_SERVICE, benefit.getIrisSubserviceType(),
-								benefit.getIrisSubserviceName(), coreFlexType);
-						clickSaveButton();
-						int rowCount = Helpers.getTableRowCount(getTableName(IRISConstants.SUB_SERVICE));
-						benefit.setIrisSubserviceID(String.valueOf(
-								new Double(IRIS_PageMaster.getTableObjectWithIndex(_IRIS, "javax.swing.JTable", 1)
-										.getCell(rowCount - 1, IRISConstants.ID_TEXT).getValue().toString())
-												.intValue()));
-						subServiceIDMap.put(benefit.getIrisSubserviceName(), benefit.getIrisSubserviceID());
-						CoreFunctions.waitHandler(2);
-					}
+			for (Benefit benefit : getBenefits(CoreFunctions.getPropertyFromConfig("CoreFlex_Policy_BenefitType"),
+					CoreFunctions.getPropertyFromConfig("CoreFlex_Policy_RequiredFor"))) {
+				if (benefit.getSelectBenefitOnFPTPage() && benefit.getMultipleBenefitSubmission()) {
+					addService(benefit.getIrisServiceName());
+					clickOnAddSubServiceButton();
+					addSubService(IRISConstants.SUB_SERVICE, benefit.getIrisSubserviceType(),
+							benefit.getIrisSubserviceName(), coreFlexType);
+					clickSaveButton();
+					int rowCount = Helpers.getTableRowCount(getTableName(IRISConstants.SUB_SERVICE));
+					benefit.setIrisSubserviceID(String
+							.valueOf(new Double(IRIS_PageMaster.getTableObjectWithIndex(_IRIS, "javax.swing.JTable", 1)
+									.getCell(rowCount - 1, IRISConstants.ID_TEXT).getValue().toString()).intValue()));
+					subServiceIDMap.put(benefit.getIrisSubserviceName(), benefit.getIrisSubserviceID());
+					CoreFunctions.waitHandler(2);
 				}
 			}
 		} catch (Exception e) {
 			Reporter.addStepLog(MessageFormat.format(
 					IRISConstants.EXCEPTION_OCCURED_WHILE_ADDING_SERVICE_SUBSERVICE_ON_SERVICES_TAB_OF_IRIS_APPLICATION,
 					CoreConstants.FAIL, e.getMessage()));
+		}
+	}
+
+	private List<Benefit> getBenefits(String benefitType, String policyRequiredFor) {
+		List<Benefit> benefitNameList = new ArrayList<Benefit>();
+		if (benefitType.equals(COREFLEXConstants.FLEX) || benefitType.equals(COREFLEXConstants.BOTH)) {
+			for (FlexBenefit benefit : flexBenefits) {
+				for (Benefit ben : benefit.getBenefits()) {
+					if ((ben.getPolicyCreationGroup().contains(policyRequiredFor))) {
+						benefitNameList.add(ben);
+					} else
+						continue;
+				}
+			}
+		}
+		return benefitNameList;
+	}
+
+	private void addAdditionalDetailIfRequired(Benefit benefit) {
+		try {
+			switch (benefit.getIrisSubserviceType()) {
+			case COREFLEXConstants.MEET_AND_GREET:
+				IRIS_PageMaster.getButtonObjectFromLabel(_IRIS, "Detail").click();
+				Helpers.setEditorText(IRIS_PageMaster.getEditorObject(_subServiceDetailScreen, "Updated By"), "Test",
+						"Updated By");
+				Helpers.clickButton(IRIS_PageMaster.getButtonObject(_IRIS, IRISConstants.UPDATE, 2),
+						IRIS_PageMaster.getButtonObject(_IRIS, IRISConstants.UPDATE, 2).getAttachedText());
+
+				Helpers.clickButton(
+						IRIS_PageMaster.getButtonObject(IRIS_PageMaster.getDialogObject(_IRIS, "Save succeeded"), "OK",
+								"javax.swing.plaf.basic.BasicOptionPaneUI$ButtonFactory$ConstrainedButton"),
+						IRIS_PageMaster
+								.getButtonObject(IRIS_PageMaster.getDialogObject(_IRIS, "Save succeeded"), "OK",
+										"javax.swing.plaf.basic.BasicOptionPaneUI$ButtonFactory$ConstrainedButton")
+								.getLabel());
+				break;
+			case COREFLEXConstants.EDUCATION_ASSISTANCE:
+				Dialog _subServiceDetailScreenEducation = _IRIS.describe(Dialog.class,
+						new DialogDescription.Builder().index(1)
+								.nativeClass("IRIS.Presentation.assignment.reloService.SubSrvDlg")
+								.title(IRISConstants.SUB_SERVICE_DETAIL_SCREEN).build());
+				IRIS_PageMaster.getButtonObjectFromLabel(_IRIS, "Detail").click();
+				Helpers.setEditorText(
+						IRIS_PageMaster.getEditorObject(_subServiceDetailScreenEducation, "Service Provider Email"),
+						"TestGrade", "Grade/Level");
+				Helpers.setEditorText(IRIS_PageMaster.getEditorObject(_subServiceDetailScreen, "Vladimir Kaminsky"),
+						"TestSchool", "School");
+				Helpers.selectFromList(IRIS_PageMaster.getListObject(_subServiceDetailScreen, "Service Provider Email"),
+						assignmentTransfereeData.familyFirstName + " " + assignmentTransfereeData.familyLastName,
+						"Service Receipient Name");
+				break;
+			default:
+				return;
+			}
+		} catch (Exception e) {
+			Reporter.addStepLog(MessageFormat.format(
+					IRISConstants.EXCEPTION_OCCURED_WHILE_ADDING_ADDITIONAL_DETAILS_TO_ADDED_SUB_SERVICE,
+					CoreConstants.FAIL, e.getMessage(), benefit.getIrisSubserviceType()));
 		}
 	}
 

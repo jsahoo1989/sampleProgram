@@ -736,4 +736,7 @@ public class MobilityXConstants {
 	public static final String SUCCESSFULLY_VERIFIED_DEFAULT_PORTION_CASHOUT_DETAILS_POST_DELETE_REQUEST_DENIED_ON_BENEFIT_SELECTION_TOOL_PAGE = "{0}Successfully verified default Portion Cashout details - Post Delete Request Denied on Benefit Selection Tool page.";
 	public static final String CLIENT_INITIATOR = "Client Initiator";
 	public static final String DELETE_BUTTON_HOVER_TEXT = "Delete Button Hover Text";
+	public static final String MY_BENEFITS_BUNDLE = "My Benefits Bundle";
+	public static final String EXCEPTION_OCCURED_WHILE_CLICKING_ON_MORE_LINK_TO_EXPAND_BENEFIT_DESCRIPTION_ON_FLEX_PLANNING_TOOL_PAGE = "{0}Exception occured while clicking on More Link to expand Benefit description on Flex Planning Tool Page. Exception : ''{1}''.";
+	public static final String FLEX_CARD_PANEL = "Flex Card Panel";
 }

@@ -6,14 +6,15 @@ import java.awt.event.KeyEvent;
 import java.text.Format;
 import java.text.MessageFormat;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Date;
-import java.util.HashMap;
 import java.util.List;
 
 import org.testng.Assert;
 
 import com.aires.businessrules.BusinessFunctions;
 import com.aires.businessrules.CoreFunctions;
+import com.aires.businessrules.constants.COREFLEXConstants;
 import com.aires.businessrules.constants.CoreConstants;
 import com.aires.businessrules.constants.IRISConstants;
 import com.aires.iris.helpers.Helpers;
@@ -54,8 +55,6 @@ public class IRIS_ActivityAndFinancePage extends BasePage {
 	String actDateVal = null;
 	private boolean _isExists = false;
 	public static PageObjectManager_CoreFlex pageObjectManager_CoreFlex;
-	private Window _assignmentWindow = null;
-
 
 	private Button _saveButton = IRIS_PageMaster.getDialogObject(_IRIS, "Partner Recommendation").describe(Button.class,
 			new ButtonDescription.Builder().label("Save").build());
@@ -66,6 +65,12 @@ public class IRIS_ActivityAndFinancePage extends BasePage {
 
 	private Table _subServiceTable = _IRIS.describe(Table.class, new TableDescription.Builder()
 			.nativeClass("IRIS.Presentation.assignment.activityFinance.ParticipantPanel$1").build());
+
+	private Table _selectPartnerTable = _IRIS.describe(Table.class,
+			new TableDescription.Builder()
+					.nativeClass(
+							"IRIS.Presentation.assignment.activityFinance.partnerallocation.PartnerSelectionPanel$1")
+					.build());
 
 	private Button _deleteButton = _IRIS.describe(Button.class, new ButtonDescription.Builder().attachedText("Delete")
 			.label("Delete").nativeClass("javax.swing.JButton").index(0).build());
@@ -81,6 +86,9 @@ public class IRIS_ActivityAndFinancePage extends BasePage {
 			new ButtonDescription.Builder().label("OK").build());
 	private Button _addButton = _IRIS.describe(Button.class, new ButtonDescription.Builder().attachedText("Add")
 			.label("Add").nativeClass("javax.swing.JButton").index(0).build());
+	private Button _selectPartner = _IRIS.describe(Button.class,
+			new ButtonDescription.Builder().attachedText("Select Partner").label("Select Partner")
+					.nativeClass("javax.swing.JButton").index(0).build());
 	private Dialog partnerRecommendationDialog = _IRIS.describe(Dialog.class,
 			new DialogDescription.Builder().title("Partner Recommendation").build());
 	private UiObject jScrollPaneUiObject = partnerRecommendationDialog.describe(UiObject.class,
@@ -380,7 +388,7 @@ public class IRIS_ActivityAndFinancePage extends BasePage {
 		IRIS_PageMaster.getDialogObject(_IRIS, "Message").waitUntilVisible();
 		messageVerified = BusinessFunctions.verifyMsgOnDialog(IRIS_PageMaster.getDialogObject(_IRIS, "Message"),
 				message, dialogName);
-		System.out.println("IRIS Message Verified : "+messageVerified);
+		System.out.println("IRIS Message Verified : " + messageVerified);
 		if (IRIS_PageMaster.getDialogObject(_IRIS, "Message").isVisible() && messageVerified) {
 			Helpers.clickButton(
 					IRIS_PageMaster.getButtonObjectFromLabel(IRIS_PageMaster.getDialogObject(_IRIS, "Message"), "OK"),
@@ -494,8 +502,12 @@ public class IRIS_ActivityAndFinancePage extends BasePage {
 
 	public void clickSelectPartnetBtn(String btnName) {
 		try {
-			IRIS_PageMaster.getButtonObjectFromLabel(_IRIS, "Select Partner").waitUntilEnabled();
-			Helpers.clickButton(IRIS_PageMaster.getButtonObjectFromLabel(_IRIS, "Select Partner"), btnName);
+			IRIS_PageMaster.getButtonObjectFromLabel(IRIS_PageMaster.getDialogObject(_IRIS, "Partner Recommendation"),
+					"Select Partner").waitUntilEnabled();
+			Helpers.clickButton(
+					IRIS_PageMaster.getButtonObjectFromLabel(
+							IRIS_PageMaster.getDialogObject(_IRIS, "Partner Recommendation"), "Select Partner"),
+					btnName);
 			Reporter.addStepLog(
 					MessageFormat.format(IRISConstants.VERIFIED_BUTTON_CLICKED, CoreConstants.PASS, btnName));
 		} catch (Exception e) {
@@ -511,8 +523,13 @@ public class IRIS_ActivityAndFinancePage extends BasePage {
 				partnerName,
 				IRIS_PageMaster.getListObject(IRIS_PageMaster.getDialogObject(_IRIS, "Partner Recommendation"),
 						"Select a participant, then select a partner").getDisplayName());
-		Helpers.selectTableRow(IRIS_PageMaster.getDialogObject(_IRIS, "Partner Recommendation").describe(Table.class,
-				new TableDescription()), 1);
+		_rowCount = Helpers.getTableRowCount(_selectPartnerTable);
+		if (_rowCount == 1) {
+			Helpers.setTableCellValue(_selectPartnerTable, 0, "Partner ID", "49211");
+		} else {
+			Helpers.selectTableRow(IRIS_PageMaster.getDialogObject(_IRIS, "Partner Recommendation")
+					.describe(Table.class, new TableDescription()), 1);
+		}
 		Reporter.addStepLog(
 				MessageFormat.format(IRISConstants.VERIFIED_PARTNER_SELECTED, CoreConstants.PASS, partnerName));
 	}
@@ -528,21 +545,22 @@ public class IRIS_ActivityAndFinancePage extends BasePage {
 		}
 	}
 
-	public boolean verifySaveSuccessMsgInPartnerRecommendationDialog(String message) throws GeneralLeanFtException {
-		Window AutoAiresAIRESCWindow = Desktop.describe(Window.class,
-				new WindowDescription.Builder().title(CoreFunctions.getPropertyFromConfig("ServiceTitle")).build());
-		Dialog partnerRecommendationDialog = AutoAiresAIRESCWindow.describe(Dialog.class,
-				new DialogDescription.Builder().title("Partner Recommendation").build());
-		Dialog savedDialog = partnerRecommendationDialog.describe(Dialog.class,
-				new DialogDescription.Builder().title("Saved").build());
-		Button oKButton = savedDialog.describe(Button.class, new ButtonDescription.Builder().label("OK").build());
-		if (savedDialog.getVisibleText().contains(message)) {
-			_isExists = true;
-			Helpers.clickButton(oKButton, oKButton.getLabel());
-			Reporter.addStepLog(MessageFormat.format(IRISConstants.VERIFY_MESSAGE_DISPLAYED_ON_SERVICE_TAB,
-					CoreConstants.PASS, message));
+	public boolean verifySaveSuccessMsgInPartnerRecommendationDialog(String message) throws Exception {
+		try {
+			Helpers.clickButton(
+					IRIS_PageMaster.getButtonObject(IRIS_PageMaster.getDialogObject(_IRIS, "Saved"), "OK",
+							"javax.swing.plaf.basic.BasicOptionPaneUI$ButtonFactory$ConstrainedButton"),
+					IRIS_PageMaster
+							.getButtonObject(IRIS_PageMaster.getDialogObject(_IRIS, "Saved"), "OK",
+									"javax.swing.plaf.basic.BasicOptionPaneUI$ButtonFactory$ConstrainedButton")
+							.getLabel());
+			return true;
+		} catch (Exception e) {
+			Reporter.addStepLog(MessageFormat.format(
+					IRISConstants.EXCEPTION_OCCURED_WHILE_SELECTING_PARTNER_ON_ACTIVITY_AND_FINANCE_TAB_OF_IRIS_APPLICATION,
+					CoreConstants.FAIL, e.getMessage()));
+			return false;
 		}
-		return _isExists;
 	}
 
 	public void clickSelectPartnetBtnInPartnerRecommendationDialog(String btnName) {
@@ -593,6 +611,13 @@ public class IRIS_ActivityAndFinancePage extends BasePage {
 		Helpers.clickButton(_addButton, _addButton.getLabel());
 		Reporter.addStepLog(
 				MessageFormat.format(IRISConstants.VERIFIED_BUTTON_CLICKED, CoreConstants.PASS, _addButton.getLabel()));
+	}
+
+	public void clickSelectPartnerButton() throws GeneralLeanFtException {
+		_selectPartner.waitUntilEnabled();
+		Helpers.clickButton(_selectPartner, _selectPartner.getLabel());
+		Reporter.addStepLog(MessageFormat.format(IRISConstants.VERIFIED_BUTTON_CLICKED, CoreConstants.PASS,
+				_selectPartner.getLabel()));
 	}
 
 	public int addPartner(DataTable subServiceData) {
@@ -830,42 +855,41 @@ public class IRIS_ActivityAndFinancePage extends BasePage {
 	/**
 	 * Actualize Services Initial Tracing Prompts.
 	 */
-	public void actualizeInitialTracingPromptForAiresManagedBenefits(String estDate, String activity,
-			int noOfMilestones) {
+	public void actualizeInitialTracingPromptForAiresManagedBenefits(String estDate, String activity) {
 		try {
-			for (FlexBenefit benefitList : flexBenefits) {
-				for (Benefit benefit : benefitList.getBenefits()) {
-					if ((benefit.getSelectBenefitOnFPTPage()) && (benefit.getAiresManagedService().equals("Yes"))
-							&& benefit.getNoOfMilestones() != null && benefit.getNoOfMilestones() == noOfMilestones) {
-						if (benefit.getIrisServiceName().equals("Shipment"))
-							actualizeInitialTracingPromptForShipmentService(_IRIS, activity, benefit);
-						else {
-							selectServiceAndSubService(benefit);
-							displayActivityTable();
-							if (noOfMilestones == 2) {
-								if (benefit.getSubServiceFunction() != null
-										&& !benefit.getSubServiceFunction().equals("NA")) {
-									clickAddButton();
-									addParticipant(benefit);
-									clickOnSaveBtn();
-									verifySaveSuccessfulMsg();
-								}
-								enterActDateForTracingPrompt(
-										IRIS_PageMaster.getTableObject(_IRIS,
-												"IRIS.Presentation.assignment.activityFinance.ActivityPanel$1"),
-										activity, benefit.getInitialTracingPrompt(), IRISConstants.EST_DATE);
+			for (Benefit benefit : getFlexBenefitsList(
+					CoreFunctions.getPropertyFromConfig("CoreFlex_Policy_BenefitType"),
+					CoreFunctions.getPropertyFromConfig("CoreFlex_Policy_RequiredFor"))) {
+				if ((benefit.getSelectBenefitOnFPTPage()) && (benefit.getAiresManagedService().equals("Yes"))) {
+					int noOfMilestones = benefit.getNoOfMilestones();
+					if (benefit.getIrisServiceName().equals("Shipment"))
+						actualizeInitialTracingPromptForShipmentService(_IRIS, activity, benefit);
+					else {
+						selectServiceAndSubService(benefit);
+						displayActivityTable();
+						if (noOfMilestones == 2) {
+							if (benefit.getSubServiceFunction() != null
+									&& !benefit.getSubServiceFunction().equals("NA")) {
+								addParticipantOrSelectPartner(benefit);
+								clickOnSaveBtn();
+								verifySaveSuccessfulMsg();
 							}
-							if (noOfMilestones == 4) {
-								enterActDateForTracingPrompt(
-										IRIS_PageMaster.getTableObject(_IRIS,
-												"IRIS.Presentation.assignment.activityFinance.ActivityPanel$1"),
-										activity, IRISConstants.PERFORM_NEEDS_ASSESSMENT_TEXT, estDate);
-							}
+							enterActDateForTracingPrompt(
+									IRIS_PageMaster.getTableObject(_IRIS,
+											"IRIS.Presentation.assignment.activityFinance.ActivityPanel$1"),
+									activity, benefit.getInitialTracingPrompt(), IRISConstants.EST_DATE);
 						}
-						clickOnSaveBtn();
-						verifySaveSuccessfulMsg();
+						if (noOfMilestones == 4) {
+							enterActDateForTracingPrompt(
+									IRIS_PageMaster.getTableObject(_IRIS,
+											"IRIS.Presentation.assignment.activityFinance.ActivityPanel$1"),
+									activity, IRISConstants.PERFORM_NEEDS_ASSESSMENT_TEXT, estDate);
+						}
 					}
+					clickOnSaveBtn();
+					verifySaveSuccessfulMsg();
 				}
+
 			}
 			CoreFunctions.writeToPropertiesFile("irisWindowTitle", getIRISWindow().getTitle());
 		} catch (Exception e) {
@@ -873,6 +897,51 @@ public class IRIS_ActivityAndFinancePage extends BasePage {
 					IRISConstants.EXCEPTION_OCCURED_WHILE_ACTUALIZING_ADDED_SERVICES_TRACING_PROMPT_ON_IRIS_APPLICATION,
 					CoreConstants.FAIL, e.getMessage()));
 		}
+	}
+
+	private void addParticipantOrSelectPartner(Benefit benefit) {
+		try {
+			if (IRIS_PageMaster.getButtonObjectFromLabel(_IRIS, "Select Partner").exists()) {
+				clickSelectPartnerButton();
+				selectPartnerClientAgent(benefit.getSubServiceFunction());
+				clickSelectPartnetBtn("Select Partner");
+				clickSaveBtnInPartnerRecommendationBox("Save");
+				verifySaveSuccessMsgInPartnerRecommendationDialog("Saved successful!");
+			} else {
+				clickAddButton();
+				addParticipant(benefit);
+			}
+			addRatingIfApplicable(benefit);
+		} catch (Exception e) {
+			Reporter.addStepLog(MessageFormat.format(
+					IRISConstants.EXCEPTION_OCCURED_WHILE_ADDING_PARTICIPANT_ON_ACTIVITY_AND_FINANCE_TAB_OF_IRIS_APPLICATION,
+					CoreConstants.FAIL, e.getMessage()));
+		}
+
+	}
+
+	private void addRatingIfApplicable(Benefit benefit) {
+		try {
+			switch (benefit.getIrisSubserviceType()) {
+			case COREFLEXConstants.MEET_AND_GREET:
+				_subServiceTable.waitUntilVisible();
+				for (int rowCount = 0; rowCount < _subServiceTable.getRows().size(); rowCount++) {
+					if (_subServiceTable.getCell(rowCount, "Function").getValue().toString()
+							.contains(benefit.getSubServiceFunction())) {
+						Helpers.setTableCellValue(_subServiceTable, rowCount, "Rating", "Satisfied");
+						break;
+					}
+				}
+				break;
+			default:
+				return;
+			}
+		} catch (Exception e) {
+			Reporter.addStepLog(MessageFormat.format(
+					IRISConstants.EXCEPTION_OCCURED_WHILE_ADDING_RATING_TO_THE_ADDED_PARTICIPANT_ON_ACTIVITY_AND_FINANCE_TAB,
+					CoreConstants.FAIL, e.getMessage()));
+		}
+
 	}
 
 	private void actualizeInitialTracingPromptForShipmentService(Window _IRIS, String activity, Benefit benefit)
@@ -968,42 +1037,40 @@ public class IRIS_ActivityAndFinancePage extends BasePage {
 	/**
 	 * Actualize Services End Tracing Prompts.
 	 */
-	public void actualizeAllTracingPromptsOfAiresMangedBenefits(String tracingDate, String activity,
-			int noOfMilestones) {
+	public void actualizeAllTracingPromptsOfAiresMangedBenefits(String tracingDate, String activity) {
 		try {
-			if (noOfMilestones == 4)
-				provideEstimatedDatesForAllTracingPrompts(noOfMilestones);
-
-			for (FlexBenefit benefitList : flexBenefits) {
-				for (Benefit benefit : benefitList.getBenefits()) {
-					if ((benefit.getSelectBenefitOnFPTPage()) && benefit.getAiresManagedService().equals("Yes")
-							&& benefit.getNoOfMilestones() != null && benefit.getNoOfMilestones() == noOfMilestones) {
-						if (benefit.getIrisServiceName().equals("Shipment")) {
-							actualizeAllTracingPromptForShipmentService(_IRIS, activity, benefit);
-						} else {
-							selectServiceAndSubService(benefit);
-							displayActivityTable();
-							if (noOfMilestones == 2) {
+			for (Benefit benefit : getFlexBenefitsList(
+					CoreFunctions.getPropertyFromConfig("CoreFlex_Policy_BenefitType"),
+					CoreFunctions.getPropertyFromConfig("CoreFlex_Policy_RequiredFor"))) {
+				if ((benefit.getSelectBenefitOnFPTPage()) && benefit.getAiresManagedService().equals("Yes")) {
+					int noOfMilestones = benefit.getNoOfMilestones();
+					if (benefit.getIrisServiceName().equals("Shipment")) {
+						actualizeAllTracingPromptForShipmentService(_IRIS, activity, benefit);
+					} else {
+						selectServiceAndSubService(benefit);
+						displayActivityTable();
+						if (noOfMilestones == 2) {
+							enterActDateForTracingPrompt(
+									IRIS_PageMaster.getTableObject(_IRIS,
+											"IRIS.Presentation.assignment.activityFinance.ActivityPanel$1"),
+									activity, benefit.getEndTracingPrompt(), tracingDate);
+						}
+						if (noOfMilestones == 4) {
+							provideEstimatedDatesForAllTracingPrompts(noOfMilestones);
+							for (int i = 0; i < noOfMilestones; i++) {
+								String activityName = benefit.getAllMilestones().split(",")[i].trim();
 								enterActDateForTracingPrompt(
 										IRIS_PageMaster.getTableObject(_IRIS,
 												"IRIS.Presentation.assignment.activityFinance.ActivityPanel$1"),
-										activity, benefit.getEndTracingPrompt(), tracingDate);
-							}
-							if (noOfMilestones == 4) {
-								for (int i = 0; i < noOfMilestones; i++) {
-									String activityName = benefit.getAllMilestones().split(",")[i].trim();
-									enterActDateForTracingPrompt(
-											IRIS_PageMaster.getTableObject(_IRIS,
-													"IRIS.Presentation.assignment.activityFinance.ActivityPanel$1"),
-											activity, activityName, tracingDate);
-								}
+										activity, activityName, tracingDate);
 							}
 						}
-						clickOnSaveBtn();
-						verifySaveSuccessfulMsg();
-						handleInactivateSubServiceError();
 					}
+					clickOnSaveBtn();
+					verifySaveSuccessfulMsg();
+					handleInactivateSubServiceError();
 				}
+
 			}
 			CoreFunctions.writeToPropertiesFile("irisWindowTitle", getIRISWindow().getTitle());
 		} catch (Exception e) {
@@ -1124,7 +1191,22 @@ public class IRIS_ActivityAndFinancePage extends BasePage {
 								.getLabel());
 			}
 		} catch (Exception e) {
-			
+
 		}
+	}
+
+	private List<Benefit> getFlexBenefitsList(String benefitType, String policyRequiredFor) {
+		List<Benefit> benefitNameList = new ArrayList<Benefit>();
+		if (benefitType.equals(COREFLEXConstants.FLEX) || benefitType.equals(COREFLEXConstants.BOTH)) {
+			for (FlexBenefit benefit : flexBenefits) {
+				for (Benefit ben : benefit.getBenefits()) {
+					if ((ben.getPolicyCreationGroup().contains(policyRequiredFor))) {
+						benefitNameList.add(ben);
+					} else
+						continue;
+				}
+			}
+		}
+		return benefitNameList;
 	}
 }

@@ -10,6 +10,9 @@ public class IRIS_AssignmentData {
 	public Authorization authorization;
 	public String firstName;
 	public String lastName;
+	public String familyFirstName;
+	public String familyLastName;
+	public String familyRelation;
 	public BasicInformation basicInformation;
 	public MiscInformation miscInformation;
 	public File_AnotherClient file_AnotherClient;

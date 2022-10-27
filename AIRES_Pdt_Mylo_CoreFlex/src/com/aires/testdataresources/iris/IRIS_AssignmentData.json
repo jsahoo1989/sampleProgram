@@ -53,6 +53,9 @@
 		"tabName": "Transferee & Family",
 		"firstName": "AutoCoreFlex",
 		"lastName": "TestCoreFlex",
+		"familyFirstName":"TestFamilyFirstName",
+		"familyLastName":"TestFamilyLastName",
+		"familyRelation":"Child",
 		"basicInformation": {
 			"transferType": "Transfer",
 			"citizenship": "USA",

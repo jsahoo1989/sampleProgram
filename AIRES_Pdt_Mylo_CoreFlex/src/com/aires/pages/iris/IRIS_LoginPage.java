@@ -1,16 +1,13 @@
 package com.aires.pages.iris;
 
-import java.text.MessageFormat;
-
 import org.testng.Assert;
 
 import com.aires.businessrules.BusinessFunctions;
 import com.aires.businessrules.CoreFunctions;
-import com.aires.businessrules.constants.CoreConstants;
 import com.aires.businessrules.constants.IRISConstants;
 import com.aires.iris.helpers.Helpers;
 import com.aires.pages.iris.basepage.BasePage;
-import com.aires.testdatatypes.pdt.PDT_LoginDetails;
+import com.aires.testdatatypes.coreflex.CoreFlex_LoginInfo;
 import com.aires.utilities.Log;
 import com.aires.utilities.getWindowText;
 import com.hp.lft.sdk.Desktop;
@@ -95,42 +92,10 @@ public class IRIS_LoginPage extends BasePage {
 		}
 	}
 
-	public void getIRISLoginAsPerEnvt(PDT_LoginDetails loginDataApp) throws Exception {
-		switch (CoreFunctions.getPropertyFromConfig("envt").toLowerCase()) {
-		case CoreConstants.ENVT_DEV:
-			_userName = loginDataApp.dev.irisUserName;
-			_password = loginDataApp.dev.irisPassword;
-			_database = loginDataApp.dev.irisDatabase;
-			break;
-		case CoreConstants.ENVT_QA:
-			_userName = loginDataApp.qa.irisUserName;
-			_password = loginDataApp.qa.irisPassword;
-			_database = loginDataApp.qa.irisDatabase;
-			break;
-		case CoreConstants.ENVT_UAT:
-			_userName = loginDataApp.uat.irisUserName;
-			_password = loginDataApp.uat.irisPassword;
-			_database = loginDataApp.uat.irisDatabase;
-			break;
-		case CoreConstants.ENVT_TEST:
-			_userName = loginDataApp.preProd.irisUserName;
-			_password = loginDataApp.preProd.irisPassword;
-			_database = loginDataApp.preProd.irisDatabase;
-			break;
-		case CoreConstants.ENVT_PREPROD:
-			_userName = loginDataApp.preProd.irisUserName;
-			_password = loginDataApp.preProd.irisPassword;
-			_database = loginDataApp.preProd.irisDatabase;
-			break;
-		case CoreConstants.ENVT_PROD:
-			_userName = loginDataApp.prod.irisUserName;
-			_password = loginDataApp.prod.irisPassword;
-			_database = loginDataApp.prod.irisDatabase;
-			break;
-		default:
-			Assert.fail(MessageFormat.format(CoreConstants.INVALID_ENVIRONMENT,
-					CoreFunctions.getPropertyFromConfig("envt")));
-		}
+	public void getIRISLoginAsPerEnvt(CoreFlex_LoginInfo loginInfo) throws Exception {	
+		_userName = loginInfo.details.irisUserName;
+		_password = loginInfo.details.irisPassword;
+		_database = loginInfo.details.irisDatabase;		
 		Log.info("User Name : " + _userName + "\nPassword : " + BusinessFunctions.encodedPassword(_password)
 				+ "\nDatabase : " + _database);
 		Reporter.addStepLog("Login Credentials Entered for IRIS Application are : \nUsername : " + _userName

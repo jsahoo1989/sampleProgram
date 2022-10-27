@@ -1,12 +1,9 @@
 package com.aires.pages.coreflex;
 
 import java.text.MessageFormat;
-import java.time.LocalDateTime;
-import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
-import java.util.Map;
 
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
@@ -15,6 +12,7 @@ import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.How;
 import org.testng.Assert;
 
+import com.aires.businessrules.BusinessFunctions;
 import com.aires.businessrules.CoreFunctions;
 import com.aires.businessrules.constants.COREFLEXConstants;
 import com.aires.businessrules.constants.CoreConstants;
@@ -22,25 +20,15 @@ import com.aires.businessrules.constants.IRISConstants;
 import com.aires.businessrules.constants.PDTConstants;
 import com.aires.iris.helpers.Helpers;
 import com.aires.managers.FileReaderManager;
-import com.aires.pages.iris.IRIS_PageMaster;
 import com.aires.testdatatypes.coreflex.Benefit;
-import com.aires.testdatatypes.coreflex.CoreFlex_MovingBenefitsData;
-import com.aires.utilities.Log;
-import com.hp.lft.sdk.Desktop;
-import com.hp.lft.sdk.java.Button;
-import com.hp.lft.sdk.java.ButtonDescription;
-import com.hp.lft.sdk.java.Dialog;
-import com.hp.lft.sdk.java.DialogDescription;
-import com.hp.lft.sdk.java.Menu;
-import com.hp.lft.sdk.java.TabControl;
+import com.aires.testdatatypes.coreflex.CoreFlex_LifestyleBenefitsData;
 import com.hp.lft.sdk.java.Table;
-import com.hp.lft.sdk.java.TableDescription;
 import com.hp.lft.sdk.java.Window;
 import com.vimalselvam.cucumber.listener.Reporter;
 
-public class CoreFlex_Pet_Shipment_BenefitsPage extends BenefitPage {
+public class CoreFlex_ConciergeHomeCleaningServicesReimbursement_BenefitsPage extends BenefitPage {
 
-	public CoreFlex_Pet_Shipment_BenefitsPage(WebDriver driver) {
+	public CoreFlex_ConciergeHomeCleaningServicesReimbursement_BenefitsPage(WebDriver driver) {
 		super(driver);
 	}
 
@@ -110,21 +98,6 @@ public class CoreFlex_Pet_Shipment_BenefitsPage extends BenefitPage {
 	@FindBy(how = How.ID, using = "benefitName")
 	private WebElement _inputBenefitName;
 
-	@FindBy(how = How.XPATH, using = "//input[@id='multiAddInd']/parent::label")
-	private List<WebElement> _inputMultiAddBenefitLabel;
-
-	// Benefit can be selected more than once Checkbox
-	@FindBy(how = How.XPATH, using = "//input[@id='multiAddInd']")
-	private List<WebElement> _inputMultiAddBenefitButton;
-
-	// Aires Managed Benefit Radio Label Selection
-	@FindBy(how = How.XPATH, using = "//label[contains(text(),'Aires Managed Service')]/following-sibling::div/label[@class='form-check-label']")
-	private List<WebElement> _radioAiresManagedLabelList;
-
-	// Aires Managed Benefit Radio Button Selection
-	@FindBy(how = How.XPATH, using = "//label[contains(text(),'Aires Managed Service')]/following-sibling::div//input")
-	private List<WebElement> _radioAiresManagedButtonList;
-
 	// Allowance / Amount Message TextArea Field
 	@FindBy(how = How.CSS, using = "textarea[name='shortDesc']")
 	private WebElement _textAreaAllowanceAmountMessage;
@@ -137,35 +110,27 @@ public class CoreFlex_Pet_Shipment_BenefitsPage extends BenefitPage {
 	@FindBy(how = How.CSS, using = "div.form-check > label.form-check-label")
 	private List<WebElement> _subBenefitList;
 
+	// SubBenefit - Collapsable Menu 1
+	@FindBy(how = How.XPATH, using = "//h5[contains(text(),'Concierge Home Cleaning Services Reimbursement')]/ancestor::a[contains(@href,'collapse')]")
+	private WebElement _formConciergeHomeCleaningServicesReimbursement;
+
+	@FindBy(how = How.XPATH, using = "//h5[contains(text(),'Concierge Home Cleaning Services Reimbursement')]")
+	private WebElement _headerConciergeHomeCleaningServicesReimbursement;
+
 	// Gross Up - Radio Button Selection
 	@FindBy(how = How.XPATH, using = "//div[@class='collapse show']//input[@formcontrolname='grossedUpInd']/parent::label[@class='form-check-label']")
 	private List<WebElement> _radioBtnGrossUp;
-
-	@FindBy(how = How.XPATH, using = "//label[contains(text(),'Gross-Up')]/following-sibling::div//input")
-	private List<WebElement> _radioBtnGrossUpButtonList;
-	
-	@FindBy(how = How.XPATH, using = "//div[@class='collapse show']//input[@formcontrolname='petDetail']/parent::label[@class='form-check-label']")
-	private List<WebElement> _radioBtnPetDetail;
-
-	@FindBy(how = How.XPATH, using = "//label[contains(text(),'Detail')]/following-sibling::div//input")
-	private List<WebElement> _radioBtnPetDetailButtonList;
-
-	@FindBy(how = How.XPATH, using = "//div[@class='collapse show']//input[@formcontrolname='paidByCode']/parent::label[@class='form-check-label']")
-	private List<WebElement> _radioReimbursedBy;
-
-	@FindBy(how = How.XPATH, using = "//label[contains(text(),'Reimbursed By')]/following-sibling::div//input")
-	private List<WebElement> _radioReimbursedByButtonList;
 
 	// Radio Button Selection From Entire SubBenefit Section
 	@FindBy(how = How.XPATH, using = "//div[@class='collapse show']//label[@class='form-check-label']")
 	private List<WebElement> _radioBtnCandidateSelection;
 
 	// Reimbursed By Other Input
-	@FindBy(how = How.XPATH, using = "//div[@class='collapse show']//input[@formcontrolname='paidByOther']")
-	private WebElement _inputReimbursedBy;
+	@FindBy(how = How.CSS, using = "div[class='collapse show'] input[formcontrolname='paidByOther']")
+	private WebElement _inputReimbursedByOther;
 
 	// Comment Text Area
-	@FindBy(how = How.XPATH, using = "//div[@class='collapse show']//textarea[@formcontrolname='benefitComment']")
+	@FindBy(how = How.CSS, using = "div[class='collapse show'] textarea[formcontrolname='benefitComment']")
 	private WebElement _txtAreaComment;
 
 	// Aires Managed Service Radio Button
@@ -184,27 +149,45 @@ public class CoreFlex_Pet_Shipment_BenefitsPage extends BenefitPage {
 	@FindBy(how = How.CSS, using = "button[class*='swal2-confirm']")
 	private WebElement _errorDialogPolicyBenefitsDataMissingOKButton;
 
-	// SubBenefit - Collapsable Menu 1
-	@FindBy(how = How.XPATH, using = "//h5[contains(text(),'Pet Shipment')]/ancestor::a[contains(@href,'collapse')]")
-	private WebElement _formpetShipment;
+	// Aires Managed Benefit Radio Label Selection
+	@FindBy(how = How.XPATH, using = "//label[contains(text(),'Aires Managed Service')]/following-sibling::div/label[@class='form-check-label']")
+	private List<WebElement> _radioAiresManagedLabelList;
 
-	@FindBy(how = How.XPATH, using = "//h5[contains(text(),'Pet Shipment')]")
-	private WebElement _headerPetShipment;
+	// Aires Managed Benefit Radio Button Selection
+	@FindBy(how = How.XPATH, using = "//label[contains(text(),'Aires Managed Service')]/following-sibling::div//input")
+	private List<WebElement> _radioAiresManagedButtonList;
 
-	@FindBy(how = How.CSS, using = "input[formcontrolname='petNoOfPets']")
-	private WebElement _inputNoOfPets;
+	// Benefit can be selected more than once Checkbox
+	@FindBy(how = How.XPATH, using = "//input[@id='multiAddInd']/parent::label")
+	private List<WebElement> _inputMultiAddBenefitLabel;
 
-	@FindBy(how = How.CSS, using = "input[formcontrolname='petMaxAmount']")
-	private WebElement _inputMaxAmount;
+	// Benefit can be selected more than once Checkbox
+	@FindBy(how = How.XPATH, using = "//input[@id='multiAddInd']")
+	private List<WebElement> _inputMultiAddBenefitButton;
 
-	@FindBy(how = How.CSS, using = "ng-select[formcontrolname='petCurrency']")
-	private WebElement _selectCurrencyCode;
+	// Gross Up Radio Label Selection
+	@FindBy(how = How.XPATH, using = "//label[contains(text(),'Gross-Up')]/following-sibling::div/label[@class='form-check-label']")
+	private List<WebElement> _radioGrossUpLabelList;
 
-	@FindBy(how = How.CSS, using = "ng-select[formcontrolname='petCurrency'] span[class*='ng-value-label']")
-	private WebElement _selectCurrencyCodeSelectedValue;
+	// Gross Up Radio Button Selection
+	@FindBy(how = How.XPATH, using = "//label[contains(text(),'Gross-Up')]/following-sibling::div//input")
+	private List<WebElement> _radioGrossUpButtonList;
 
-	@FindBy(how = How.CSS, using = "ng-select[formcontrolname='petCurrency'] span.ng-option-label")
-	private List<WebElement> _selectCurrencyCodeOptions;
+	// Reimbursed By Radio Label Selection
+	@FindBy(how = How.XPATH, using = "//label[contains(text(),'Reimbursed By')]/following-sibling::div/label[@class='form-check-label']")
+	private List<WebElement> _radioReimbursedByLabelList;
+
+	// Reimbursed By Radio Button Selection
+	@FindBy(how = How.XPATH, using = "//label[contains(text(),'Reimbursed By')]/following-sibling::div//input")
+	private List<WebElement> _radioReimbursedByButtonList;
+
+	// Flex Policy Setup Page Header
+	@FindBy(how = How.XPATH, using = "//h4[@class='card-title'][contains(text(),'Concierge Home Cleaning Services Reimbursement')]")
+	private WebElement _headerPageName;
+
+	// If Applicable Text
+	@FindBy(how = How.XPATH, using = "//label[contains(text(),'if applicable')]")
+	private List<WebElement> _textIfApplicable;
 
 	@FindBy(how = How.XPATH, using = "//span[contains(text(),'Flex Benefits')]/ancestor::div[contains(@id,'secondItemDiv')]//div[contains(@class,'RXCFServicesMonitoringBorderPanel')]")
 	private List<WebElement> flexCardPanelList;
@@ -215,27 +198,28 @@ public class CoreFlex_Pet_Shipment_BenefitsPage extends BenefitPage {
 	@FindBy(how = How.XPATH, using = "//span[contains(text(),'Core Benefits')]/ancestor::div[contains(@id,'firstItemDiv')]//table[contains(@class,'RXRightIconPanel')]//span[contains(text(),'Starting Soon')]")
 	private WebElement coreCardStartingSoonStatus;
 
-	private By petPickupStatus = By
-			.xpath(".//span[contains(@class,'RXSmallerTextMuted RXBold')][contains(text(),'Pet Pick up')]");
+	private By coreCardTourCompleteStatus = By.xpath(
+			"//span[contains(@class,'ServicesSuccessIcon ')]/ancestor::div[contains(@class,'ServicesTrain')]//span[contains(text(),'Tour complete')]");
 
-	private By petPickupEstimatedDate = By.xpath(".//div[5]//span[not(contains(text(),'estimated'))]");
-
-	private By deliveryEstimatedDate = By
-			.xpath(".//div[5]//span[not(contains(text(),'estimated'))][@class='RXSmallerTextMuted RXBold']");
-
+	private By coreCardBeginTourStatus = By
+			.xpath(".//span[contains(@class,'RXSmallerLink RXBold')][contains(text(),'Begin tour')]");
+	private By coreCardStartingSoonStatusBy = By
+			.xpath(".//table[contains(@class,'RXRightIconPanel')]//span[contains(text(),'Starting Soon')]");
 	private By flexCardStartingSoonStatusBy = By
 			.xpath(".//table[contains(@class,'RXRightIconPanel')]//span[contains(text(),'Starting Soon')]");
+	private By flexCardBeginTourStatus = By
+			.xpath(".//span[contains(@class,'RXSmallerLink RXBold')][contains(text(),'Begin tour')]");
 
-	private By startingSoonStatusBy = By
-			.xpath(".//table[contains(@class,'RXRightIconPanel')]//span[contains(text(),'Starting Soon')]");
-
-	private By deliveryStatus = By.xpath(
-			".//span[contains(@class,'ServicesSuccessIcon')]/ancestor::div[contains(@class,'ServicesTrain')]//span[contains(text(),'Delivery')]");
+	private By beginTourEstimatedDate = By.xpath(".//div[5]//span[not(contains(text(),'estimated'))]");
+	private By flexCardTourCompleteStatus = By.xpath(
+			"//span[contains(@class,'ServicesSuccessIcon ')]/ancestor::div[contains(@class,'ServicesTrain')]//span[contains(text(),'Tour complete')]");
+	private By tourCompleteEstimatedDate = By
+			.xpath(".//div[5]//span[not(contains(text(),'estimated'))][@class='RXSmallerTextMuted RXBold']");
 
 	/*********************************************************************/
 
-	CoreFlex_MovingBenefitsData petShipmentBenefitData = FileReaderManager.getInstance().getCoreFlexJsonReader()
-			.getMovingBenefitDataList(COREFLEXConstants.PET_SHIPMENT);
+	CoreFlex_LifestyleBenefitsData lifestyleBenefitData = FileReaderManager.getInstance().getCoreFlexJsonReader()
+			.getLifestyleBenefitDataList(COREFLEXConstants.CONCIERGE_HOME_CLEANING_SERVICES_REIMBURSEMENT);
 
 	public static final List<Benefit> coreBenefits = FileReaderManager.getInstance().getCoreFlexJsonReader()
 			.getMXTransfereeCoreBenefitDetails();
@@ -249,8 +233,9 @@ public class CoreFlex_Pet_Shipment_BenefitsPage extends BenefitPage {
 	 * @return
 	 */
 	public boolean verifyPageNavigation(String expectedPageName) {
-		return CoreFunctions.verifyElementOnPage(driver, _headerPage, COREFLEXConstants.PET_SHIPMENT, expectedPageName,
-				expectedPageName, true);
+		return CoreFunctions.verifyElementOnPage(driver, _headerPage,
+				COREFLEXConstants.CONCIERGE_HOME_CLEANING_SERVICES_REIMBURSEMENT, expectedPageName, expectedPageName,
+				true);
 	}
 
 	/**
@@ -342,6 +327,8 @@ public class CoreFlex_Pet_Shipment_BenefitsPage extends BenefitPage {
 	public void selectAndFillBenefitsAndSubBenefitDetails(String benefitType, String subBenefitNames,
 			String multipleBenefitSelection, String flexPoints, String benefitDisplayName,
 			String benefitAllowanceAmount, String benefitDescription, String aireManagedService) {
+		CoreFunctions.explicitWaitTillElementVisibility(driver, _headerPageName,
+				COREFLEXConstants.CONCIERGE_HOME_CLEANING_SERVICES_REIMBURSEMENT_BENEFITS_PAGE);
 		if (benefitType.equals(COREFLEXConstants.BOTH)) {
 			selectBenefitTypeAndFillMandatoryFields(benefitType, multipleBenefitSelection, flexPoints,
 					benefitDisplayName, benefitAllowanceAmount, benefitDescription, aireManagedService);
@@ -356,6 +343,8 @@ public class CoreFlex_Pet_Shipment_BenefitsPage extends BenefitPage {
 					benefitDisplayName, benefitAllowanceAmount, benefitDescription, aireManagedService);
 			selectSubBenefitsAndFillMandatoryFields(subBenefitNames, benefitType);
 		}
+		BusinessFunctions.verifyFieldNotPresentOnBenefitPage(driver, _textIfApplicable, benefitDisplayName,
+				COREFLEXConstants.IF_APPLICABLE);
 		clickElementOfPage(COREFLEXConstants.SAVE_AND_CONTINUE);
 
 		if (CoreFunctions.isElementExist(driver, _errorDialogPolicyBenefitsDataMissing, 7)) {
@@ -380,15 +369,17 @@ public class CoreFlex_Pet_Shipment_BenefitsPage extends BenefitPage {
 
 			for (String subBenefit : subBenefitNamesList) {
 				if (subBenefitNamesList.size() > 1) {
-					CoreFunctions.selectItemInListByText(driver, _subBenefitList, subBenefit.trim(), true);
+					CoreFunctions.selectItemInListByText(driver, _subBenefitList, subBenefit, true);
 				}
 				if (CoreFunctions.isElementExist(driver, getElementByName(subBenefit.trim()), 5)) {
 					fillSubBenefit(subBenefit.trim(), benefitType);
 				} else {
 					Reporter.addStepLog(MessageFormat.format(COREFLEXConstants.SUB_BENEFIT_FORM_NOT_DISPLAYED,
-							CoreConstants.FAIL, subBenefit, COREFLEXConstants.PET_SHIPMENT_BENEFITS_PAGE));
+							CoreConstants.FAIL, subBenefit,
+							COREFLEXConstants.CONCIERGE_HOME_CLEANING_SERVICES_REIMBURSEMENT_BENEFITS_PAGE));
 					throw new RuntimeException(MessageFormat.format(COREFLEXConstants.SUB_BENEFIT_FORM_NOT_DISPLAYED,
-							CoreConstants.FAIL, subBenefit, COREFLEXConstants.PET_SHIPMENT_BENEFITS_PAGE));
+							CoreConstants.FAIL, subBenefit,
+							COREFLEXConstants.CONCIERGE_HOME_CLEANING_SERVICES_REIMBURSEMENT_BENEFITS_PAGE));
 				}
 			}
 		} catch (Exception e) {
@@ -406,12 +397,11 @@ public class CoreFlex_Pet_Shipment_BenefitsPage extends BenefitPage {
 	 */
 	public void fillSubBenefit(String subBenefit, String benefitType) {
 		switch (subBenefit) {
-		case COREFLEXConstants.PET_SHIPMENT:
-			expandSubBenefitIfCollapsed(getElementByName(COREFLEXConstants.PET_SHIPMENT));
-//			if (benefitType.equals(COREFLEXConstants.FLEX_BENEFITS)) {
-//				CoreFunctions.clickElement(driver, _headerpetShipment);
-//			}
-			fillPetShipmentSubBenefitForm(COREFLEXConstants.PET_SHIPMENT);
+		case COREFLEXConstants.CONCIERGE_HOME_CLEANING_SERVICES_REIMBURSEMENT:
+			expandSubBenefitIfCollapsed(
+					getElementByName(COREFLEXConstants.CONCIERGE_HOME_CLEANING_SERVICES_REIMBURSEMENT));
+			fillConciergeHomeCleaningServicesReimbursementSubBenefitForm(
+					COREFLEXConstants.CONCIERGE_HOME_CLEANING_SERVICES_REIMBURSEMENT);
 			break;
 		default:
 			Assert.fail(MessageFormat.format(COREFLEXConstants.ELEMENT_NOT_FOUND, CoreConstants.FAIL));
@@ -419,33 +409,27 @@ public class CoreFlex_Pet_Shipment_BenefitsPage extends BenefitPage {
 	}
 
 	/**
-	 * Method to fill Area Tour subBenefit form
+	 * Method to fill Concierge Home Cleaning Services Reimbursement subBenefit form
 	 * 
 	 * @param subBenefitFormName
 	 */
-	private void fillPetShipmentSubBenefitForm(String subBenefitFormName) {
+	private void fillConciergeHomeCleaningServicesReimbursementSubBenefitForm(String subBenefitFormName) {
 		try {
-			CoreFunctions.clearAndSetText(driver, _inputNoOfPets, petShipmentBenefitData.petShipment.noOfPets);
-			CoreFunctions.clearAndSetText(driver, _inputMaxAmount, petShipmentBenefitData.petShipment.maxAmount);
-			CoreFunctions.clickElement(driver, _selectCurrencyCode);
-			CoreFunctions.selectItemInListByText(driver, _selectCurrencyCodeOptions,
-					petShipmentBenefitData.petShipment.currency, true);
-			CoreFunctions.selectItemInListByText(driver, _radioBtnPetDetail, petShipmentBenefitData.petShipment.detail,
-					true);
-			CoreFunctions.clearAndSetText(driver, _txtAreaComment, petShipmentBenefitData.petShipment.comment);
-			CoreFunctions.selectItemInListByText(driver, _radioBtnGrossUp, petShipmentBenefitData.petShipment.grossUp,
-					true);
+			CoreFunctions.selectItemInListByText(driver, _radioBtnGrossUp,
+					lifestyleBenefitData.conciergeHomeCleaningServicesReimbursement.grossUp, true);
 			CoreFunctions.selectItemInListByText(driver, _radioBtnCandidateSelection,
-					petShipmentBenefitData.petShipment.reimbursedBy, true);
-			if (petShipmentBenefitData.petShipment.reimbursedBy.equalsIgnoreCase(COREFLEXConstants.OTHER)) {
-				CoreFunctions.clearAndSetText(driver, _inputReimbursedBy,
-						petShipmentBenefitData.petShipment.reimbursedByOther);
+					lifestyleBenefitData.conciergeHomeCleaningServicesReimbursement.reimbursedBy, true);
+			if (lifestyleBenefitData.conciergeHomeCleaningServicesReimbursement.reimbursedBy
+					.equalsIgnoreCase(COREFLEXConstants.OTHER)) {
+				CoreFunctions.clearAndSetText(driver, _inputReimbursedByOther,
+						lifestyleBenefitData.conciergeHomeCleaningServicesReimbursement.reimbursedByOther);
 			}
+			CoreFunctions.clearAndSetText(driver, _txtAreaComment,
+					lifestyleBenefitData.conciergeHomeCleaningServicesReimbursement.comment);
 		} catch (Exception e) {
 			Assert.fail(MessageFormat.format(PDTConstants.EXCEPTION_OCCURED_FILL_SUBBENEFIT_FORM, CoreConstants.FAIL,
 					subBenefitFormName, e.getMessage()));
 		}
-
 	}
 
 	/**
@@ -468,8 +452,8 @@ public class CoreFlex_Pet_Shipment_BenefitsPage extends BenefitPage {
 	public WebElement getElementByName(String elementName) {
 		WebElement element = null;
 		switch (elementName) {
-		case COREFLEXConstants.PET_SHIPMENT:
-			element = _formpetShipment;
+		case COREFLEXConstants.CONCIERGE_HOME_CLEANING_SERVICES_REIMBURSEMENT:
+			element = _formConciergeHomeCleaningServicesReimbursement;
 			break;
 		default:
 			Assert.fail(MessageFormat.format(COREFLEXConstants.ELEMENT_NOT_FOUND, CoreConstants.FAIL));
@@ -491,13 +475,16 @@ public class CoreFlex_Pet_Shipment_BenefitsPage extends BenefitPage {
 	public void selectBenefitTypeAndFillMandatoryFields(String benefitType, String multipleBenefitSelection,
 			String flexPoints, String benefitDisplayName, String benefitAllowanceAmount, String benefitDescription,
 			String aireManagedService) {
-		Benefit petShipmentBenefit = coreBenefits.stream()
-				.filter(b -> b.getBenefitType().equals(COREFLEXConstants.PET_SHIPMENT)).findAny().orElse(null);
+		Benefit conciergeHomeCleaningServicesReimBenefit = coreBenefits.stream().filter(
+				b -> b.getBenefitType().equals(COREFLEXConstants.CONCIERGE_HOME_CLEANING_SERVICES_REIMBURSEMENT))
+				.findAny().orElse(null);
 		switch (benefitType) {
 		case COREFLEXConstants.CORE:
 			CoreFunctions.clickElement(driver, _textCore);
-			fillManadatoryDetails(benefitType, multipleBenefitSelection, petShipmentBenefit.getBenefitDisplayName(),
-					petShipmentBenefit.getBenefitAmount(), petShipmentBenefit.getBenefitDesc(), aireManagedService);
+			fillManadatoryDetails(benefitType, multipleBenefitSelection,
+					conciergeHomeCleaningServicesReimBenefit.getBenefitDisplayName(),
+					conciergeHomeCleaningServicesReimBenefit.getBenefitAmount(),
+					conciergeHomeCleaningServicesReimBenefit.getBenefitDesc(), aireManagedService);
 			break;
 		case COREFLEXConstants.FLEX:
 			CoreFunctions.clickElement(driver, _textFlex);
@@ -508,8 +495,10 @@ public class CoreFlex_Pet_Shipment_BenefitsPage extends BenefitPage {
 			break;
 		case COREFLEXConstants.CORE_BENEFITS:
 			CoreFunctions.clickElement(driver, _textCoreBenefits);
-			fillManadatoryDetails(benefitType, multipleBenefitSelection, petShipmentBenefit.getBenefitDisplayName(),
-					petShipmentBenefit.getBenefitAmount(), petShipmentBenefit.getBenefitDesc(), aireManagedService);
+			fillManadatoryDetails(benefitType, multipleBenefitSelection,
+					conciergeHomeCleaningServicesReimBenefit.getBenefitDisplayName(),
+					conciergeHomeCleaningServicesReimBenefit.getBenefitAmount(),
+					conciergeHomeCleaningServicesReimBenefit.getBenefitDesc(), aireManagedService);
 			break;
 		case COREFLEXConstants.FLEX_BENEFITS:
 			CoreFunctions.clickElement(driver, _textFlexBenefits);
@@ -582,14 +571,16 @@ public class CoreFlex_Pet_Shipment_BenefitsPage extends BenefitPage {
 	private void verifyBenefitsMandatoryDetails(String benefitType, String multipleBenefitSelection, String flexPoints,
 			String benefitDisplayName, String benefitAllowanceAmount, String benefitDescription, String paymentOption,
 			String airesManagedService) {
-		Benefit petShipmentBenefit = coreBenefits.stream()
-				.filter(b -> b.getBenefitType().equals(COREFLEXConstants.PET_SHIPMENT)).findAny().orElse(null);
+		Benefit conciergeHomeCleaningServicesReimBenefit = coreBenefits.stream().filter(
+				b -> b.getBenefitType().equals(COREFLEXConstants.CONCIERGE_HOME_CLEANING_SERVICES_REIMBURSEMENT))
+				.findAny().orElse(null);
 		switch (benefitType) {
 		case COREFLEXConstants.CORE:
 			CoreFunctions.clickElement(driver, _textCore);
-			verifyManadatoryDetails(benefitType, multipleBenefitSelection, petShipmentBenefit.getBenefitDisplayName(),
-					petShipmentBenefit.getBenefitAmount(), petShipmentBenefit.getBenefitDesc(), paymentOption,
-					airesManagedService);
+			verifyManadatoryDetails(benefitType, multipleBenefitSelection,
+					conciergeHomeCleaningServicesReimBenefit.getBenefitDisplayName(),
+					conciergeHomeCleaningServicesReimBenefit.getBenefitAmount(),
+					conciergeHomeCleaningServicesReimBenefit.getBenefitDesc(), paymentOption, airesManagedService);
 			break;
 		case COREFLEXConstants.FLEX:
 			CoreFunctions.clickElement(driver, _textFlex);
@@ -601,9 +592,10 @@ public class CoreFlex_Pet_Shipment_BenefitsPage extends BenefitPage {
 			break;
 		case COREFLEXConstants.CORE_BENEFITS:
 			CoreFunctions.clickElement(driver, _textCoreBenefits);
-			verifyManadatoryDetails(benefitType, multipleBenefitSelection, petShipmentBenefit.getBenefitDisplayName(),
-					petShipmentBenefit.getBenefitAmount(), petShipmentBenefit.getBenefitDesc(), paymentOption,
-					airesManagedService);
+			verifyManadatoryDetails(benefitType, multipleBenefitSelection,
+					conciergeHomeCleaningServicesReimBenefit.getBenefitDisplayName(),
+					conciergeHomeCleaningServicesReimBenefit.getBenefitAmount(),
+					conciergeHomeCleaningServicesReimBenefit.getBenefitDesc(), paymentOption, airesManagedService);
 			break;
 		case COREFLEXConstants.FLEX_BENEFITS:
 			CoreFunctions.clickElement(driver, _textFlexBenefits);
@@ -664,9 +656,11 @@ public class CoreFlex_Pet_Shipment_BenefitsPage extends BenefitPage {
 					verifySubBenefitDetails(subBenefit.trim(), benefitType);
 				} else {
 					Reporter.addStepLog(MessageFormat.format(COREFLEXConstants.SUB_BENEFIT_FORM_NOT_DISPLAYED,
-							CoreConstants.FAIL, subBenefit, COREFLEXConstants.INLAND_SHIPMENT_BENEFITS_PAGE));
+							CoreConstants.FAIL, subBenefit,
+							COREFLEXConstants.CONCIERGE_HOME_CLEANING_SERVICES_REIMBURSEMENT_BENEFITS_PAGE));
 					throw new RuntimeException(MessageFormat.format(COREFLEXConstants.SUB_BENEFIT_FORM_NOT_DISPLAYED,
-							CoreConstants.FAIL, subBenefit, COREFLEXConstants.INLAND_SHIPMENT_BENEFITS_PAGE));
+							CoreConstants.FAIL, subBenefit,
+							COREFLEXConstants.CONCIERGE_HOME_CLEANING_SERVICES_REIMBURSEMENT_BENEFITS_PAGE));
 				}
 			}
 		} catch (Exception e) {
@@ -684,12 +678,14 @@ public class CoreFlex_Pet_Shipment_BenefitsPage extends BenefitPage {
 	 */
 	private void verifySubBenefitDetails(String subBenefit, String benefitType) {
 		switch (subBenefit) {
-		case COREFLEXConstants.PET_SHIPMENT:
-			expandSubBenefitIfCollapsed(getElementByName(COREFLEXConstants.PET_SHIPMENT));
+		case COREFLEXConstants.CONCIERGE_HOME_CLEANING_SERVICES_REIMBURSEMENT:
+			expandSubBenefitIfCollapsed(
+					getElementByName(COREFLEXConstants.CONCIERGE_HOME_CLEANING_SERVICES_REIMBURSEMENT));
 			if (benefitType.equals(COREFLEXConstants.FLEX_BENEFITS)) {
-				CoreFunctions.clickElement(driver, _headerPetShipment);
+				CoreFunctions.clickElement(driver, _headerConciergeHomeCleaningServicesReimbursement);
 			}
-			verifyPetShipmentSubBenefitForm(COREFLEXConstants.PET_SHIPMENT);
+			verifyConciergeHomeCleaningServicesReimbursementSubBenefitForm(
+					COREFLEXConstants.CONCIERGE_HOME_CLEANING_SERVICES_REIMBURSEMENT);
 			break;
 		default:
 			Assert.fail(MessageFormat.format(COREFLEXConstants.ELEMENT_NOT_FOUND, CoreConstants.FAIL));
@@ -697,29 +693,26 @@ public class CoreFlex_Pet_Shipment_BenefitsPage extends BenefitPage {
 	}
 
 	/**
-	 * Method to verify PetShipment subBenefit form
+	 * Method to verify Concierge Home Cleaning Services Reimbursement subBenefit
+	 * form
 	 */
-	private void verifyPetShipmentSubBenefitForm(String formName) {
+	private void verifyConciergeHomeCleaningServicesReimbursementSubBenefitForm(String formName) {
 		try {
-			CoreFunctions.verifyText(_inputNoOfPets.getDomProperty("value"),
-					petShipmentBenefitData.petShipment.noOfPets, COREFLEXConstants.NUMBER_OF_PETS);
-			CoreFunctions.verifyText(_inputMaxAmount.getDomProperty("value"),
-					petShipmentBenefitData.petShipment.maxAmount, COREFLEXConstants.MAX_AMOUNT);
-			CoreFunctions.verifyText(driver, _selectCurrencyCodeSelectedValue,
-					petShipmentBenefitData.petShipment.currency, COREFLEXConstants.CURRENCY);
-			CoreFunctions.verifyRadioButtonSelection(driver, _radioBtnPetDetail, _radioBtnPetDetailButtonList,
-					petShipmentBenefitData.petShipment.detail, COREFLEXConstants.PET_DETAIL);
-			CoreFunctions.verifyRadioButtonSelection(driver, _radioBtnGrossUp, _radioBtnGrossUpButtonList,
-					petShipmentBenefitData.petShipment.grossUp, COREFLEXConstants.GROSS_UP);
-			CoreFunctions.verifyRadioButtonSelection(driver, _radioReimbursedBy, _radioReimbursedByButtonList,
-					petShipmentBenefitData.petShipment.reimbursedBy, COREFLEXConstants.REIMBURSED_BY);
-			if (petShipmentBenefitData.petShipment.reimbursedBy.equalsIgnoreCase(COREFLEXConstants.OTHER)) {
-				CoreFunctions.verifyText(_inputReimbursedBy.getDomProperty("value"),
-						petShipmentBenefitData.petShipment.reimbursedByOther, COREFLEXConstants.REIMBURSED_BY_OTHER);
-				CoreFunctions.highlightObject(driver, _inputReimbursedBy);
+			CoreFunctions.verifyRadioButtonSelection(driver, _radioGrossUpLabelList, _radioGrossUpButtonList,
+					lifestyleBenefitData.conciergeHomeCleaningServicesReimbursement.grossUp,
+					COREFLEXConstants.GROSS_UP);
+			CoreFunctions.verifyRadioButtonSelection(driver, _radioReimbursedByLabelList, _radioReimbursedByButtonList,
+					lifestyleBenefitData.conciergeHomeCleaningServicesReimbursement.reimbursedBy,
+					COREFLEXConstants.REIMBURSED_BY);
+			if (lifestyleBenefitData.conciergeHomeCleaningServicesReimbursement.reimbursedBy
+					.equalsIgnoreCase(COREFLEXConstants.OTHER)) {
+				CoreFunctions.verifyText(_inputReimbursedByOther.getDomProperty("value"),
+						lifestyleBenefitData.conciergeHomeCleaningServicesReimbursement.reimbursedByOther,
+						COREFLEXConstants.REIMBURSED_BY_OTHER);
+				CoreFunctions.highlightObject(driver, _inputReimbursedByOther);
 			}
 			CoreFunctions.verifyText(_txtAreaComment.getDomProperty("value"),
-					petShipmentBenefitData.petShipment.comment, COREFLEXConstants.COMMENT);
+					lifestyleBenefitData.conciergeHomeCleaningServicesReimbursement.comment, COREFLEXConstants.COMMENT);
 			CoreFunctions.highlightObject(driver, _txtAreaComment);
 		} catch (Exception e) {
 			Assert.fail(MessageFormat.format(COREFLEXConstants.FAILED_TO_VERIFY_SUB_BENEFITS_FORM, CoreConstants.FAIL,
@@ -731,26 +724,23 @@ public class CoreFlex_Pet_Shipment_BenefitsPage extends BenefitPage {
 
 	@Override
 	public boolean verifyFlexBenefitCardStatusAfterInitialActualization(int index, String expectedEstimatedDate) {
-		Log.info(CoreFunctions.getElementText(driver,
-				CoreFunctions.findSubElement(flexCardPanelList.get(index), petPickupEstimatedDate)) + ":"
-				+ expectedEstimatedDate);
 		return (CoreFunctions.isElementExist(driver,
-				CoreFunctions.findSubElement(flexCardPanelList.get(index), petPickupStatus), 3)
+				CoreFunctions.findSubElement(flexCardPanelList.get(index), flexCardBeginTourStatus), 3)
 				&& (CoreFunctions
 						.getElementText(driver,
-								CoreFunctions.findSubElement(flexCardPanelList.get(index), petPickupEstimatedDate))
+								CoreFunctions.findSubElement(flexCardPanelList.get(index), beginTourEstimatedDate))
 						.equals(expectedEstimatedDate))
 				&& (!CoreFunctions.isElementExist(driver,
-						CoreFunctions.findSubElement(flexCardPanelList.get(index), startingSoonStatusBy), 3)));
+						CoreFunctions.findSubElement(flexCardPanelList.get(index), flexCardStartingSoonStatusBy), 3)));
 	}
 
 	@Override
 	protected boolean verifyFlexBenefitCardStatusAfterEndActualization(int index, String expectedEstimatedDate) {
 		return (CoreFunctions.isElementExist(driver,
-				CoreFunctions.findSubElement(flexCardPanelList.get(index), deliveryStatus), 3)
+				CoreFunctions.findSubElement(flexCardPanelList.get(index), flexCardTourCompleteStatus), 3)
 				&& (CoreFunctions
 						.getElementText(driver,
-								CoreFunctions.findSubElement(flexCardPanelList.get(index), deliveryEstimatedDate))
+								CoreFunctions.findSubElement(flexCardPanelList.get(index), tourCompleteEstimatedDate))
 						.equals(expectedEstimatedDate))
 				&& (!CoreFunctions.isElementExist(driver,
 						CoreFunctions.findSubElement(flexCardPanelList.get(index), flexCardStartingSoonStatusBy), 3)));
@@ -759,292 +749,37 @@ public class CoreFlex_Pet_Shipment_BenefitsPage extends BenefitPage {
 	@Override
 	public boolean verifyCoreBenefitCardStatusAfterInitialActualization(int index, String expectedEstimatedDate) {
 		return (CoreFunctions.isElementExist(driver,
-				CoreFunctions.findSubElement(coreCardPanelList.get(index), petPickupStatus), 3)
+				CoreFunctions.findSubElement(coreCardPanelList.get(index), coreCardBeginTourStatus), 3)
 				&& (CoreFunctions
 						.getElementText(driver,
-								CoreFunctions.findSubElement(coreCardPanelList.get(index), petPickupEstimatedDate))
+								CoreFunctions.findSubElement(coreCardPanelList.get(index), beginTourEstimatedDate))
 						.equals(expectedEstimatedDate))
 				&& (!CoreFunctions.isElementExist(driver,
-						CoreFunctions.findSubElement(coreCardPanelList.get(index), startingSoonStatusBy), 3)));
+						CoreFunctions.findSubElement(coreCardPanelList.get(index), coreCardStartingSoonStatusBy), 3)));
 	}
 
 	@Override
 	protected boolean verifyCoreBenefitCardStatusAfterEndActualization(int index, Benefit benefit) {
 		return (CoreFunctions.isElementExist(driver,
-				CoreFunctions.findSubElement(coreCardPanelList.get(index), deliveryStatus), 3)
+				CoreFunctions.findSubElement(coreCardPanelList.get(index), coreCardTourCompleteStatus), 3)
 				&& (!CoreFunctions.isElementExist(driver, coreCardStartingSoonStatus, 3)));
 	}
 
 	@Override
 	public void addSubService(Window _IRIS, Table table, Benefit benefit, String coreFlexType) {
 		try {
-			String initialSubSerivceWindow = MessageFormat.format(IRISConstants.INITIAL_SUB_SERVICE_TITLE,
-					CoreFunctions.getPropertyFromConfig("Assignment_FileID"),
-					CoreFunctions.getPropertyFromConfig("Transferee_firstName"),
-					CoreFunctions.getPropertyFromConfig("Transferee_lastName"),
-					CoreFunctions.getPropertyFromConfig("Assignment_ClientName"),
-					CoreFunctions.getPropertyFromConfig("Assignment_ClientID"));
-
-			Log.info(initialSubSerivceWindow);
-
-			DateTimeFormatter dtf = DateTimeFormatter.ofPattern("MM/dd/uuuu");
-			LocalDateTime now = LocalDateTime.now();
-
-			_IRIS = IRIS_PageMaster.getWindowObject(initialSubSerivceWindow);
-			_IRIS.waitUntilVisible();
-			System.out.println(benefit.getSubServiceDetails());
-			Map<String, String> details = benefit.shipmentSubSeriveDetails();
-			IRIS_PageMaster.getListObject(_IRIS, IRISConstants.PACK, 0).select(details.get("Pack"));
-			IRIS_PageMaster.getListObject(_IRIS, IRISConstants.PACK, 1).select(details.get("Routing1"));
-			IRIS_PageMaster.getListObject(_IRIS, IRISConstants.ROUTING).select(details.get("Routing2"));
-			IRIS_PageMaster.getListObject(_IRIS, IRISConstants.MODE).select(details.get("Mode"));
-			IRIS_PageMaster.getListObject(_IRIS, IRISConstants.TYPE_SUBSERVICE).select(details.get("Type"));
-			IRIS_PageMaster.getEditorObjectWithNativeClass(_IRIS, IRISConstants.EST_MOVE_DATE,
-					"com.aires.iris.shipment.viewcommon.component.ISISDateTextField").setText(dtf.format(now));
-			if (details.get("StateCross") != null)
-				IRIS_PageMaster.getListObject(_IRIS, IRISConstants.STATE_CROSS).select(details.get("StateCross"));
-
-			Helpers.clickButton(IRIS_PageMaster.getButtonObject(_IRIS, IRISConstants.SAVE_BUTTON),
-					IRIS_PageMaster.getButtonObject(_IRIS, IRISConstants.SAVE_BUTTON).getAttachedText());
-
-			Helpers.clickButton(IRIS_PageMaster.getButtonObjectFromLabel(
-					IRIS_PageMaster.getDialogObject(_IRIS, IRISConstants.MESSAGE_DIALOG), IRISConstants.OK_BUTTON),
-					IRIS_PageMaster.getButtonObjectFromLabel(
-							IRIS_PageMaster.getDialogObject(_IRIS, IRISConstants.MESSAGE_DIALOG),
-							IRISConstants.OK_BUTTON).getAttachedText());
-			CoreFunctions.writeToPropertiesFile("irisWindowTitle", "");
-
-			String assignmentWindowTitle = MessageFormat.format(
-					IRISConstants.CLIENT_SPECIFIC_TRANSFEREE_TITLE_TO_APPEND_WITH_REDUCED_SPACE,
-					CoreFunctions.getPropertyFromConfig("Assignment_FileID"),
-					CoreFunctions.getPropertyFromConfig("Transferee_firstName"),
-					CoreFunctions.getPropertyFromConfig("Transferee_lastName"),
-					CoreFunctions.getPropertyFromConfig("Assignment_ClientName"));
-
-			Log.info(assignmentWindowTitle);
-
-			_IRIS = IRIS_PageMaster.getWindowObject(assignmentWindowTitle);
-
-			int rowCount = Helpers
-					.getTableRowCount(IRIS_PageMaster.getTableObjectWithIndex(_IRIS, "javax.swing.JTable", 1));
-
-			String subServiceId = String
-					.valueOf(new Double(IRIS_PageMaster.getTableObjectWithIndex(_IRIS, "javax.swing.JTable", 1)
-							.getCell(rowCount - 1, IRISConstants.ID_TEXT).getValue().toString()).intValue());
-			CoreFunctions.writeToPropertiesFile("Assignment_subServiceID", subServiceId);
-
-			String subServiceWindow = MessageFormat.format(IRISConstants.SUB_SERVICE_TITLE_WITH_ID, subServiceId,
-					CoreFunctions.getPropertyFromConfig("Assignment_FileID"),
-					CoreFunctions.getPropertyFromConfig("Transferee_firstName"),
-					CoreFunctions.getPropertyFromConfig("Transferee_lastName"),
-					CoreFunctions.getPropertyFromConfig("Assignment_ClientName"),
-					CoreFunctions.getPropertyFromConfig("Assignment_ClientID"));
-
-			_IRIS = IRIS_PageMaster.getWindowObject(subServiceWindow);
-
-			Log.info(_IRIS.getTitle());
-			activateSubService(_IRIS);
-			addRequiredPartners(_IRIS, benefit);
-			_IRIS.close();
-
-			_IRIS = IRIS_PageMaster.getWindowObject(assignmentWindowTitle);
-			_IRIS.waitUntilVisible();
-
-			CoreFunctions.waitHandler(2);
-			Reporter.addStepLog(
-					MessageFormat.format(IRISConstants.SUCCESSFULLY_ADDED_SUB_SERVICE_DETAILS, CoreConstants.PASS));
+			table.waitUntilVisible();
+			int rowCount = Helpers.getTableRowCount(table);
+			table.getCell(rowCount - 1, "Type").setValue(benefit.getIrisSubserviceType());
+			table.getCell(rowCount - 1, "Name").setValue(benefit.getIrisSubserviceName());
+			CoreFunctions.waitHandler(1);
+			table.getCell(rowCount - 1, "Core/Flex").setValue(coreFlexType);
 		} catch (Exception e) {
-			Reporter.addStepLog(MessageFormat.format(IRISConstants.FAILED_TO_ADD_SUB_SERVICE_DETAILS,
-					CoreConstants.FAIL, e.getMessage()));
-			Assert.fail(IRISConstants.FAILED_TO_ADD_SUB_SERVICE_DETAILS_ON_SEB_SERVICE_WINDOW);
+			Reporter.addStepLog(MessageFormat.format(
+					IRISConstants.EXCEPTION_OCCURED_WHILE_ADDING_SERVICE_SUBSERVICE_ON_SERVICES_TAB_OF_IRIS_APPLICATION,
+					CoreConstants.FAIL, benefit.getIrisSubserviceType(), e.getMessage()));
 		}
 
-	}
-
-	private void activateSubService(Window _IRIS) throws Exception {
-		Menu optionsMenu = IRIS_PageMaster.getMenuObject(_IRIS, "Options");
-		Menu changeShipmentStatusMenu = IRIS_PageMaster.getMenuObject(optionsMenu, "Change Shipment Status");
-		Menu activateMenu = IRIS_PageMaster.getMenuObject(changeShipmentStatusMenu, "Activate");
-		activateMenu.select();
-		IRIS_PageMaster.getButtonObjectFromLabel(IRIS_PageMaster.getDialogObject(_IRIS, "Change Shipment Status"), "OK")
-				.click();
-	}
-
-	private static void addRequiredPartners(Window _IRIS, Benefit benefit) throws Exception {
-		TabControl tabControl = IRIS_PageMaster.getTabControlObject(_IRIS, "javax.swing.JTabbedPane", 0);
-		Helpers.selectTabControl(tabControl, "Activity & Finance");
-		Table activityFinanceTable = IRIS_PageMaster.getTableObject(_IRIS,
-				"com.aires.iris.shipment.activityfinance.ActivityFinancePanel$3");
-		int rowId = Helpers.getRowIdMatchingCellValue(activityFinanceTable, "Co. Name", "Aires");
-		activityFinanceTable.selectRows(rowId);
-
-		String[] partners = benefit.getPartners() != null ? benefit.getPartners().split(",") : new String[0];
-		for (String partner : partners) {
-
-			Button selectPartnerButton = IRIS_PageMaster.getButtonObjectFromLabel(_IRIS, "Select Partner");
-			selectPartnerButton.click();
-
-			Dialog partnerRecommendationDialog = IRIS_PageMaster.getDialogObject(_IRIS, "Partner Recommendation");
-
-			if (partner.trim().equals("OA")) {
-				partnerRecommendationDialog.waitUntilVisible();
-				Helpers.selectFromList(IRIS_PageMaster.getListObject(partnerRecommendationDialog,
-						"Select a participant, then select a partner"), "Origin Agent", "");
-
-				Helpers.setTableCellValue(IRIS_PageMaster.getTableObject(partnerRecommendationDialog), 0, "Partner ID",
-						"0");
-
-				IRIS_PageMaster.getTableObject(partnerRecommendationDialog).getCell(0, "Partner Name").click();
-
-				IRIS_PageMaster.getButtonObjectFromLabel(partnerRecommendationDialog, "...").click();
-
-				Dialog companyLookupDialog = IRIS_PageMaster.getDialogObject(partnerRecommendationDialog,
-						"Company Lookup");
-				Table companyLookupTableTable = IRIS_PageMaster.getTableObject(companyLookupDialog);
-				Helpers.selectTableRow(companyLookupTableTable, 0);
-
-				Button selectButton = IRIS_PageMaster.getButtonObjectFromLabel(companyLookupDialog, "Select");
-				selectButton.click();
-
-				Button selectPartnerButton1 = IRIS_PageMaster.getButtonObjectFromLabel(partnerRecommendationDialog,
-						"Select Partner");
-				selectPartnerButton1.click();
-
-				Button saveButton = IRIS_PageMaster.getButtonObjectFromLabel(partnerRecommendationDialog, "Save");
-				saveButton.click();
-
-				Dialog participantTracingDialog = IRIS_PageMaster.getDialogObject(partnerRecommendationDialog,
-						"Participant Tracing");
-				Button yesButton = IRIS_PageMaster.getButtonObjectFromLabel(participantTracingDialog, "Yes");
-				yesButton.click();
-
-				Dialog reportingRequirementsDialog = IRIS_PageMaster.getDialogObject(partnerRecommendationDialog,
-						"Reporting Requirements");
-				Button saveButton1 = IRIS_PageMaster.getButtonObjectFromLabel(reportingRequirementsDialog, "Save");
-				saveButton1.click();
-
-				Dialog messageDialog = IRIS_PageMaster.getDialogObject(_IRIS, "Message");
-				Button oKButton = IRIS_PageMaster.getButtonObject(messageDialog, "OK",
-						"javax.swing.plaf.basic.BasicOptionPaneUI$ButtonFactory$ConstrainedButton");
-				oKButton.click();
-
-				if (benefit.getPartners().contains("DA")) {
-					selectPartnerButton.click();
-					partnerRecommendationDialog = IRIS_PageMaster.getDialogObject(_IRIS, "Partner Recommendation");
-					Helpers.selectFromList(IRIS_PageMaster.getListObject(partnerRecommendationDialog,
-							"Select a participant, then select a partner"), "Destination Agent", "");
-
-					Helpers.selectTableRow(IRIS_PageMaster.getTableObject(partnerRecommendationDialog), 1);
-
-					selectPartnerButton1.click();
-
-					saveButton.click();
-
-					yesButton.click();
-
-					Table tonnagePanel1Table = reportingRequirementsDialog.describe(Table.class,
-							new TableDescription());
-					tonnagePanel1Table.selectRows(1);
-
-					saveButton1.click();
-
-					oKButton.click();
-				}
-				Button saveButton2 = IRIS_PageMaster.getButtonObjectFromLabel(_IRIS, "Save");
-				saveButton2.click();
-
-				oKButton.click();
-			}
-
-			if (partner.trim().equals("IMVR")) {
-				partnerRecommendationDialog.waitUntilVisible();
-				Helpers.selectFromList(IRIS_PageMaster.getListObject(partnerRecommendationDialog,
-						"Select a participant, then select a partner"), "International Mover", "");
-
-				Helpers.setTableCellValue(IRIS_PageMaster.getTableObject(partnerRecommendationDialog), 0, "Partner ID",
-						"0");
-
-				IRIS_PageMaster.getTableObject(partnerRecommendationDialog).getCell(0, "Partner Name").click();
-
-				IRIS_PageMaster.getButtonObjectFromLabel(partnerRecommendationDialog, "...").click();
-
-				Dialog companyLookupDialog = IRIS_PageMaster.getDialogObject(partnerRecommendationDialog,
-						"Company Lookup");
-				Table companyLookupTableTable = IRIS_PageMaster.getTableObject(companyLookupDialog);
-
-				rowId = Helpers.getRowIdMatchingCellValue(companyLookupTableTable, "Partner ID", "98392");
-
-				companyLookupTableTable.activateRow(rowId);
-
-				Button selectButton = companyLookupDialog.describe(Button.class,
-						new ButtonDescription.Builder().label("Select").build());
-				selectButton.click();
-
-				selectPartnerButton.click();
-
-				Button saveButton = partnerRecommendationDialog.describe(Button.class,
-						new ButtonDescription.Builder().label("Save").build());
-				saveButton.click();
-
-				Dialog participantTracingDialog = partnerRecommendationDialog.describe(Dialog.class,
-						new DialogDescription.Builder().title("Participant Tracing").build());
-				Button yesButton = participantTracingDialog.describe(Button.class,
-						new ButtonDescription.Builder().label("Yes").build());
-				yesButton.click();
-
-				Dialog messageDialog = Desktop.describe(Dialog.class,
-						new DialogDescription.Builder().title("Message").build());
-				Button oKButton = messageDialog.describe(Button.class,
-						new ButtonDescription.Builder().label("OK").build());
-				oKButton.click();
-			}
-
-			if (partner.trim().equals("INS")) {
-				partnerRecommendationDialog.waitUntilVisible();
-				Helpers.selectFromList(IRIS_PageMaster.getListObject(partnerRecommendationDialog,
-						"Select a participant, then select a partner"), "Insurance", "");
-
-				Table showPartnersForTable = partnerRecommendationDialog.describe(Table.class, new TableDescription());
-				showPartnersForTable.getCell(0, "Partner ID").setValue("0");
-
-				Button button = partnerRecommendationDialog.describe(Button.class,
-						new ButtonDescription.Builder().label("...").build());
-				button.click();
-
-				Dialog companyLookupDialog = partnerRecommendationDialog.describe(Dialog.class,
-						new DialogDescription.Builder().title("Company Lookup").build());
-				Table companyLookupTableTable = companyLookupDialog.describe(Table.class, new TableDescription());
-				companyLookupTableTable.selectColumnHeader("Partner ID");
-
-				rowId = Helpers.getRowIdMatchingCellValue(companyLookupTableTable, "Partner ID", "89685");
-
-				companyLookupTableTable.activateRow(rowId);
-
-				Button selectButton = companyLookupDialog.describe(Button.class,
-						new ButtonDescription.Builder().label("Select").build());
-				selectButton.click();
-
-				selectPartnerButton.click();
-
-				Button saveButton = partnerRecommendationDialog.describe(Button.class,
-						new ButtonDescription.Builder().label("Save").build());
-				saveButton.click();
-
-				Dialog participantTracingDialog = partnerRecommendationDialog.describe(Dialog.class,
-						new DialogDescription.Builder().title("Participant Tracing").build());
-				Button yesButton = participantTracingDialog.describe(Button.class,
-						new ButtonDescription.Builder().label("Yes").build());
-				yesButton.click();
-
-				Dialog messageDialog = Desktop.describe(Dialog.class,
-						new DialogDescription.Builder().title("Message").build());
-				Button oKButton = messageDialog.describe(Button.class,
-						new ButtonDescription.Builder().label("OK").build());
-				oKButton.click();
-			}
-			if (partnerRecommendationDialog.exists())
-				partnerRecommendationDialog.close();
-		}
 	}
 
 }

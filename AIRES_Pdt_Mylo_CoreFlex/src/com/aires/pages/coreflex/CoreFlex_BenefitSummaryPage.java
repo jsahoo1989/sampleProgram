@@ -99,7 +99,7 @@ public class CoreFlex_BenefitSummaryPage extends Base {
 			.getHousingBenefitDataList(COREFLEXConstants.DUPLICATE_HOUSING);
 
 	CoreFlex_AllowancesBenefitsData lumpSumBenefitData = FileReaderManager.getInstance().getCoreFlexJsonReader()
-			.getLifeStyleBenefitDataList(COREFLEXConstants.LUMP_SUM);
+			.getAllowanceBenefitDataList(COREFLEXConstants.LUMP_SUM);
 
 	public static final List<Benefit> coreBenefits = FileReaderManager.getInstance().getCoreFlexJsonReader()
 			.getMXTransfereeCoreBenefitDetails();
@@ -193,7 +193,7 @@ public class CoreFlex_BenefitSummaryPage extends Base {
 	 * Method to iterate and verify Added Benefits & SubBenefits on Benefit Summary
 	 * page
 	 */
-	public boolean iterateAndVerifyBenefitSummaryDetails(String policyRequiredFor, String numberOfTracing) {
+	public boolean iterateAndVerifyBenefitSummaryDetails(String policyRequiredFor) {
 		boolean isBenefitSummaryDetailsVerified = false;
 		try {
 			switch (policyRequiredFor) {
@@ -208,8 +208,7 @@ public class CoreFlex_BenefitSummaryPage extends Base {
 			case COREFLEXConstants.ALL_BENEFITS:
 			case COREFLEXConstants.AIRES_MANAGED_BENEFITS_CARDS:
 			case COREFLEXConstants.END_TO_END:
-				isBenefitSummaryDetailsVerified = iterateAndVerifyAllBenefitsSummaryDetails(policyRequiredFor,
-						numberOfTracing);
+				isBenefitSummaryDetailsVerified = iterateAndVerifyAllBenefitsSummaryDetails(policyRequiredFor);
 				break;
 			default:
 				Assert.fail(COREFLEXConstants.BLUEPRINT_POLICY_REQUIRED_FOR_OPTION_NOT_PRESENT_IN_THE_LIST);
@@ -229,27 +228,12 @@ public class CoreFlex_BenefitSummaryPage extends Base {
 		return false;
 	}
 
-	private boolean iterateAndVerifyAllBenefitsSummaryDetails(String policyRequiredFor, String numberOfMilestones) {
+	private boolean iterateAndVerifyAllBenefitsSummaryDetails(String policyRequiredFor) {
 		boolean isFlexBenefitSummaryVerified = false;
 		try {
 			for (FlexBenefit benefitList : flexBenefits) {
 				for (Benefit benefit : benefitList.getBenefits()) {
-					if ((policyRequiredFor.equals(COREFLEXConstants.ALL_BENEFITS))
-							&& (benefit.getPolicyCreationGroup().contains(policyRequiredFor))) {
-						int indexBenefit = BusinessFunctions.returnindexItemFromListUsingText(driver,
-								_textAddedBenefitNameList, benefit.getBenefitDisplayName());
-						int indexCategory = BusinessFunctions.returnindexItemFromListUsingText(driver,
-								_textAddedBenefitGroupList, benefitList.getCategory(), true);
-						isFlexBenefitSummaryVerified = (CoreFunctions
-								.getItemsFromListByIndex(driver, _textAddedBenefitGroupList, indexCategory, true)
-								.contains(benefitList.getCategory()))
-								&& verifyBenefitSummaryDetails(indexBenefit, benefit);
-						if (!isFlexBenefitSummaryVerified) {
-							break;
-						}
-					} else if ((policyRequiredFor.equals(COREFLEXConstants.AIRES_MANAGED_BENEFITS_CARDS))
-							&& (benefit.getAiresManagedService().equals("Yes"))
-							&& (benefit.getNoOfMilestones() == Integer.parseInt(numberOfMilestones))) {
+					if ((benefit.getPolicyCreationGroup().contains(policyRequiredFor))) {
 						int indexBenefit = BusinessFunctions.returnindexItemFromListUsingText(driver,
 								_textAddedBenefitNameList, benefit.getBenefitDisplayName());
 						int indexCategory = BusinessFunctions.returnindexItemFromListUsingText(driver,

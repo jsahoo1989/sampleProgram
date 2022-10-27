@@ -151,6 +151,22 @@ public class IRIS_AssignmentTransfereeNFamilyPage extends BasePage {
 		}
 	}
 
+	public void addNewFamilyDetails(IRIS_AssignmentData transfereeData) throws Exception {
+		addFamilyFirstAndLastName(transfereeData);
+		try {
+			CoreFunctions.waitHandler(2);
+			clickSaveButton();
+			Helpers.clickButton(
+					IRIS_PageMaster.getButtonObject(IRIS_PageMaster.getDialogObject(_IRIS, "Saved"), "OK",
+							"javax.swing.plaf.basic.BasicOptionPaneUI$ButtonFactory$ConstrainedButton"),
+					IRIS_PageMaster
+							.getButtonObject(IRIS_PageMaster.getDialogObject(_IRIS, "Saved"), "OK",
+									"javax.swing.plaf.basic.BasicOptionPaneUI$ButtonFactory$ConstrainedButton")
+							.getLabel());
+		} catch (AWTException e) {
+		}
+	}
+
 	public void addTransfereeIdentityDetails() {
 		try {
 			CoreFunctions.waitHandler(3);
@@ -206,6 +222,33 @@ public class IRIS_AssignmentTransfereeNFamilyPage extends BasePage {
 								IRIS_PageMaster.getDialogObject(_IRIS, "Please enter the new Transferee name"), "Ok")
 								.getLabel());
 			}
+		} catch (GeneralLeanFtException e) {
+			e.printStackTrace();
+		}
+	}
+
+	public void addFamilyFirstAndLastName(IRIS_AssignmentData transfereeData) throws Exception {
+		_fName = transfereeData.familyFirstName;
+		_lName = transfereeData.familyLastName;
+		try {
+			IRIS_PageMaster.getTabControlObject(_IRIS, "javax.swing.JTabbedPane", 1).select("Family");
+			IRIS_PageMaster.getButtonObject(_IRIS, "Add", 1).waitUntilEnabled();
+			Helpers.clickButton(IRIS_PageMaster.getButtonObject(_IRIS, "Add", 1),
+					IRIS_PageMaster.getButtonObject(_IRIS, "Add", 1).getAttachedText());
+
+			Helpers.setEditorText(
+					IRIS_PageMaster.getEditorObjectWithIndex(_IRIS, "Name(f*/m/l*)", "javax.swing.JTextField", 0),
+					_fName,
+					IRIS_PageMaster.getEditorObjectWithIndex(_IRIS, "Name(f*/m/l*)", "javax.swing.JTextField", 0)
+							.getAttachedText());
+			Helpers.setEditorText(
+					IRIS_PageMaster.getEditorObjectWithIndex(_IRIS, "Basic Information", "javax.swing.JTextField", 1),
+					_lName,
+					IRIS_PageMaster.getEditorObjectWithIndex(_IRIS, "Basic Information", "javax.swing.JTextField", 1)
+							.getAttachedText());
+			Helpers.selectFromList(IRIS_PageMaster.getListObject(_IRIS, "Relation*"), transfereeData.familyRelation,
+					IRIS_PageMaster.getListObject(_IRIS, "Relation*").getAttachedText());
+
 		} catch (GeneralLeanFtException e) {
 			e.printStackTrace();
 		}

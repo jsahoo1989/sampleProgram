@@ -518,10 +518,10 @@ public class CoreFlex_DuplicateHousing_BenefitsPage extends BenefitPage {
 			String benefitAllowanceAmount, String benefitDescription, String paymentOption) {
 
 		if (((benefitType.equals(COREFLEXConstants.FLEX_BENEFITS)) || (benefitType.equals(COREFLEXConstants.FLEX)))
-				& (multipleBenefitSelection.equals(COREFLEXConstants.YES))) {
-			CoreFunctions.clickElement(driver, _inputMultiAddBenefit);
+				&& (multipleBenefitSelection.equals(COREFLEXConstants.YES))) {			
 			CoreFunctions.selectItemInListByText(driver, _radioBenefitMandatoryButtons, paymentOption, true,
 					COREFLEXConstants.PAYMENT_OPTION);
+			CoreFunctions.clickElement(driver, _inputMultiAddBenefit);
 		}
 		CoreFunctions.clearAndSetTextUsingKeys(driver, _inputBenefitName, benefitDisplayName,
 				COREFLEXConstants.BENEFIT_DISPLAY_NAME);

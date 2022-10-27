@@ -230,6 +230,108 @@ public class CoreFlex_Sea_Surface_Shipment_BenefitsPage extends BenefitPage {
 	private By deliveryStatus = By.xpath(
 			".//span[contains(@class,'ServicesSuccessIcon')]/ancestor::div[contains(@class,'ServicesTrain')]//span[contains(text(),'Delivery')]");
 
+	@FindBy(how = How.CSS, using = "input[formcontrolname='seaWeightCap']")
+	private WebElement _inputWeightCap;
+
+	@FindBy(how = How.XPATH, using = "//input[@formcontrolname='seaUnitOfWeightCap']/parent::label[@class='form-check-label']")
+	private List<WebElement> _radioUnitOfWeightCap;
+
+	@FindBy(how = How.XPATH, using = "//label[contains(text(),'Unit of Weight Cap')]/following-sibling::div//input")
+	private List<WebElement> _radioUnitOfWeightCapButtonList;
+
+	@FindBy(how = How.CSS, using = "input[formcontrolname='seaVolumeCap']")
+	private WebElement _inputVolumeCap;
+
+	@FindBy(how = How.XPATH, using = "//input[@formcontrolname='seaUnitOfVolumeCap']/parent::label[@class='form-check-label']")
+	private List<WebElement> _radioUnitOfVolumeCap;
+
+	@FindBy(how = How.XPATH, using = "//label[contains(text(),'Unit of Volume Cap')]/following-sibling::div//input")
+	private List<WebElement> _radioUnitOfVolumeCapButtonList;
+
+	@FindBy(how = How.CSS, using = "ng-select[formcontrolname='seaShipmentContainerCodeList']")
+	private WebElement _selectContainerSizeTransfereeOnly;
+
+	@FindBy(how = How.CSS, using = "div[class='collapse show'] ng-select[formcontrolname='seaShipmentContainerCodeList'] span[class*='ng-value-label']")
+	private WebElement _selectContainerSizeTransfereeOnlySelectedValue;
+
+	@FindBy(how = How.CSS, using = "ng-select[formcontrolname='seaShipmentContainerCodeList'] span.ng-option-label")
+	private List<WebElement> _selectContainerSizeTransfereeOnlyOptions;
+
+	@FindBy(how = How.CSS, using = "ng-select[formcontrolname='quantityCodeTransfereeOnly']")
+	private WebElement _selectContainerSizeTransfereeOnlyQuantity;
+
+	@FindBy(how = How.CSS, using = "div[class='collapse show'] ng-select[formcontrolname='quantityCodeTransfereeOnly'] span[class*='ng-value-label']")
+	private WebElement _selectContainerSizeTransfereeOnlyQuantitySelectedValue;
+
+	@FindBy(how = How.CSS, using = "ng-select[formcontrolname='quantityCodeTransfereeOnly'] span.ng-option-label")
+	private List<WebElement> _selectContainerSizeTransfereeOnlyQuantityOptions;
+
+	@FindBy(how = How.CSS, using = "ng-select[formcontrolname='seaShipmentPartnerCodeList']")
+	private WebElement _selectContainerSizeTransfereePartner;
+
+	@FindBy(how = How.CSS, using = "div[class='collapse show'] ng-select[formcontrolname='seaShipmentPartnerCodeList'] span[class*='ng-value-label']")
+	private WebElement _selectContainerSizeTransfereePartnerSelectedValue;
+
+	@FindBy(how = How.CSS, using = "ng-select[formcontrolname='seaShipmentPartnerCodeList'] span.ng-option-label")
+	private List<WebElement> _selectContainerSizeTransfereePartnerOptions;
+
+	@FindBy(how = How.CSS, using = "ng-select[formcontrolname='quantityCodeTransfereePartner']")
+	private WebElement _selectContainerSizeTransfereePartnerQuantity;
+
+	@FindBy(how = How.CSS, using = "div[class='collapse show'] ng-select[formcontrolname='quantityCodeTransfereePartner'] span[class*='ng-value-label']")
+	private WebElement _selectContainerSizeTransfereePartnerQuantitySelectedValue;
+
+	@FindBy(how = How.CSS, using = "ng-select[formcontrolname='quantityCodeTransfereePartner'] span.ng-option-label")
+	private List<WebElement> _selectContainerSizeTransfereePartnerQuantityOptions;
+
+	@FindBy(how = How.CSS, using = "ng-select[formcontrolname='seaShipmentFamilyCodeList']")
+	private WebElement _selectContainerSizeTransfereeFamily;
+
+	@FindBy(how = How.CSS, using = "div[class='collapse show'] ng-select[formcontrolname='seaShipmentFamilyCodeList'] span[class*='ng-value-label']")
+	private WebElement _selectContainerSizeTransfereeFamilySelectedValue;
+
+	@FindBy(how = How.CSS, using = "ng-select[formcontrolname='seaShipmentFamilyCodeList'] span.ng-option-label")
+	private List<WebElement> _selectContainerSizeTransfereeFamilyOptions;
+
+	@FindBy(how = How.CSS, using = "ng-select[formcontrolname='quantityCodeTransfereeFamily']")
+	private WebElement _selectContainerSizeTransfereeFamilyQuantity;
+
+	@FindBy(how = How.CSS, using = "div[class='collapse show'] ng-select[formcontrolname='quantityCodeTransfereeFamily'] span[class*='ng-value-label']")
+	private WebElement _selectContainerSizeTransfereeFamilyQuantitySelectedValue;
+
+	@FindBy(how = How.CSS, using = "ng-select[formcontrolname='quantityCodeTransfereeFamily'] span.ng-option-label")
+	private List<WebElement> _selectContainerSizeTransfereeFamilyQuantityOptions;
+
+	@FindBy(how = How.CSS, using = "input[formcontrolname='quantityOtherTransfereeFamily']")
+	private WebElement _inputQuantityOtherTransfereeFamily;
+
+	@FindBy(how = How.XPATH, using = "//input[@formcontrolname='excessValuationDueToWeightCode']/parent::label[@class='form-check-label']")
+	private List<WebElement> _radioExcesValDueToWeight;
+
+	@FindBy(how = How.XPATH, using = "//label[contains(text(),'Excess valuation due to Weight Paid By')]/following-sibling::div//input")
+	private List<WebElement> _radioExcesValDueToWeightButtonList;
+
+	@FindBy(how = How.CSS, using = "input[formcontrolname='excessValuationDueToWeightOther']")
+	private WebElement _inputExcesValDueToWeightOther;
+
+	@FindBy(how = How.XPATH, using = "//input[@formcontrolname='excessValuationDueToValueCode']/parent::label[@class='form-check-label']")
+	private List<WebElement> _radioExcesValDueToValue;
+
+	@FindBy(how = How.XPATH, using = "//label[contains(text(),'Excess valuation due to Value Paid By')]/following-sibling::div//input")
+	private List<WebElement> _radioExcesValDueToValueButtonList;
+
+	@FindBy(how = How.CSS, using = "input[formcontrolname='excessValuationDueToValueOther']")
+	private WebElement _inputExcesValDueToValueOther;
+
+	@FindBy(how = How.CSS, using = "ng-select[formcontrolname='seaShipmentTradedCodeList']")
+	private WebElement _selectSeaShipmentTraded;
+
+	@FindBy(how = How.CSS, using = "ng-select[formcontrolname='seaShipmentTradedCodeList'] span.ng-option-label")
+	private List<WebElement> _selectSeaShipmentTradedOptions;
+
+	@FindBy(how = How.CSS, using = "div[class='collapse show'] ng-select[formcontrolname='seaShipmentTradedCodeList'] span[class*='ng-value-label']")
+	private WebElement _selectSeaShipmentTradedSelectedValue;
+
 	/*********************************************************************/
 
 	CoreFlex_MovingBenefitsData seaSurfaceShipmentShipmentBenefitData = FileReaderManager.getInstance()
@@ -423,6 +525,52 @@ public class CoreFlex_Sea_Surface_Shipment_BenefitsPage extends BenefitPage {
 	 */
 	private void fillSeaSurfaceShipmentSubBenefitForm(String subBenefitFormName) {
 		try {
+			CoreFunctions.clearAndSetText(driver, _inputWeightCap,
+					seaSurfaceShipmentShipmentBenefitData.seaSurfaceShipment.weightCap);
+			CoreFunctions.selectItemInListByText(driver, _radioUnitOfWeightCap,
+					seaSurfaceShipmentShipmentBenefitData.seaSurfaceShipment.unitOfWeightCap, true);
+			CoreFunctions.clearAndSetText(driver, _inputVolumeCap,
+					seaSurfaceShipmentShipmentBenefitData.seaSurfaceShipment.volumeCap);
+			CoreFunctions.selectItemInListByText(driver, _radioUnitOfVolumeCap,
+					seaSurfaceShipmentShipmentBenefitData.seaSurfaceShipment.unitOfVolumeCap, true);
+
+			CoreFunctions.clickElement(driver, _selectContainerSizeTransfereeOnly);
+			CoreFunctions.selectItemInListByText(driver, _selectContainerSizeTransfereeOnlyOptions,
+					seaSurfaceShipmentShipmentBenefitData.seaSurfaceShipment.containerSizeTransfereeOnly, true);
+			CoreFunctions.clickElement(driver, _selectContainerSizeTransfereeOnlyQuantity);
+			CoreFunctions.selectItemInListByText(driver, _selectContainerSizeTransfereeOnlyQuantityOptions,
+					seaSurfaceShipmentShipmentBenefitData.seaSurfaceShipment.containerQuantityTransfereeOnly, true);
+
+			CoreFunctions.clickElement(driver, _selectContainerSizeTransfereePartner);
+			CoreFunctions.selectItemInListByText(driver, _selectContainerSizeTransfereePartnerOptions,
+					seaSurfaceShipmentShipmentBenefitData.seaSurfaceShipment.containerSizeTransfereePartner, true);
+			CoreFunctions.clickElement(driver, _selectContainerSizeTransfereePartnerQuantity);
+			CoreFunctions.selectItemInListByText(driver, _selectContainerSizeTransfereePartnerQuantityOptions,
+					seaSurfaceShipmentShipmentBenefitData.seaSurfaceShipment.containerQuantityTransfereePartner, true);
+
+			CoreFunctions.clickElement(driver, _selectContainerSizeTransfereeFamily);
+			CoreFunctions.selectItemInListByText(driver, _selectContainerSizeTransfereeFamilyOptions,
+					seaSurfaceShipmentShipmentBenefitData.seaSurfaceShipment.containerSizeTransfereeFamily, true);
+			CoreFunctions.clickElement(driver, _selectContainerSizeTransfereeFamilyQuantity);
+			CoreFunctions.selectItemInListByText(driver, _selectContainerSizeTransfereeFamilyQuantityOptions,
+					seaSurfaceShipmentShipmentBenefitData.seaSurfaceShipment.containerQuantityTransfereeFamily, true);
+
+			if (seaSurfaceShipmentShipmentBenefitData.seaSurfaceShipment.containerQuantityTransfereeFamily
+					.equals(COREFLEXConstants.OTHER)) {
+				CoreFunctions.clearAndSetText(driver, _inputQuantityOtherTransfereeFamily,
+						seaSurfaceShipmentShipmentBenefitData.seaSurfaceShipment.containerQuantityOtherTransfereeFamily);
+			}
+
+			CoreFunctions.clickElement(driver, _selectSeaShipmentTraded);
+			CoreFunctions.selectItemInListByText(driver, _selectSeaShipmentTradedOptions,
+					seaSurfaceShipmentShipmentBenefitData.seaSurfaceShipment.canThisBenefitBeTradedForAnotherBenefit,
+					true);
+
+			CoreFunctions.selectItemInListByText(driver, _radioExcesValDueToWeight,
+					seaSurfaceShipmentShipmentBenefitData.seaSurfaceShipment.excessValuationDueToWeightPaid, true);
+			CoreFunctions.selectItemInListByText(driver, _radioExcesValDueToValue,
+					seaSurfaceShipmentShipmentBenefitData.seaSurfaceShipment.excessValuationDueToValuePaid, true);
+
 			CoreFunctions.clickElement(driver, _selectTempStorageDuration);
 			CoreFunctions.selectItemInListByText(driver, _selectTempStorageDurationOptions,
 					seaSurfaceShipmentShipmentBenefitData.seaSurfaceShipment.temporaryStorageDuration, true);
@@ -706,6 +854,53 @@ public class CoreFlex_Sea_Surface_Shipment_BenefitsPage extends BenefitPage {
 	 */
 	private void verifySeaSurfaceShipmentSubBenefitForm(String formName) {
 		try {
+			CoreFunctions.verifyText(_inputWeightCap.getDomProperty("value"),
+					seaSurfaceShipmentShipmentBenefitData.seaSurfaceShipment.weightCap, COREFLEXConstants.WEIGHT_CAP);
+			CoreFunctions.verifyRadioButtonSelection(driver, _radioUnitOfWeightCap, _radioUnitOfWeightCapButtonList,
+					seaSurfaceShipmentShipmentBenefitData.seaSurfaceShipment.unitOfWeightCap,
+					COREFLEXConstants.UNIT_OF_WEIGHT_CAP);
+			CoreFunctions.verifyText(_inputVolumeCap.getDomProperty("value"),
+					seaSurfaceShipmentShipmentBenefitData.seaSurfaceShipment.volumeCap, COREFLEXConstants.VOLUME_CAP);
+			CoreFunctions.verifyRadioButtonSelection(driver, _radioUnitOfVolumeCap, _radioUnitOfVolumeCapButtonList,
+					seaSurfaceShipmentShipmentBenefitData.seaSurfaceShipment.unitOfVolumeCap,
+					COREFLEXConstants.UNIT_OF_VOLUME_CAP);
+			CoreFunctions.verifyText(driver, _selectContainerSizeTransfereeOnlySelectedValue,
+					seaSurfaceShipmentShipmentBenefitData.seaSurfaceShipment.containerSizeTransfereeOnly,
+					COREFLEXConstants.CONTAINER_SIZE_TRANSFEREE_ONLY);
+			CoreFunctions.verifyText(driver, _selectContainerSizeTransfereeOnlyQuantitySelectedValue,
+					seaSurfaceShipmentShipmentBenefitData.seaSurfaceShipment.containerQuantityTransfereeOnly,
+					COREFLEXConstants.CONTAINER_QUANTITY_TRANSFEREE_ONLY);
+			CoreFunctions.verifyText(driver, _selectContainerSizeTransfereePartnerSelectedValue,
+					seaSurfaceShipmentShipmentBenefitData.seaSurfaceShipment.containerSizeTransfereePartner,
+					COREFLEXConstants.CONTAINER_SIZE_TRANSFEREE_PARTNER);
+			CoreFunctions.verifyText(driver, _selectContainerSizeTransfereePartnerQuantitySelectedValue,
+					seaSurfaceShipmentShipmentBenefitData.seaSurfaceShipment.containerQuantityTransfereePartner,
+					COREFLEXConstants.CONTAINER_QUANTITY_TRANSFEREE_PARTNER);
+			CoreFunctions.verifyText(driver, _selectContainerSizeTransfereeFamilySelectedValue,
+					seaSurfaceShipmentShipmentBenefitData.seaSurfaceShipment.containerSizeTransfereeFamily,
+					COREFLEXConstants.CONTAINER_SIZE_TRANSFEREE_FAMILY);
+			CoreFunctions.verifyText(driver, _selectContainerSizeTransfereeFamilyQuantitySelectedValue,
+					seaSurfaceShipmentShipmentBenefitData.seaSurfaceShipment.containerQuantityTransfereeFamily,
+					COREFLEXConstants.CONTAINER_QUANTITY_TRANSFEREE_FAMILY);
+			if (seaSurfaceShipmentShipmentBenefitData.seaSurfaceShipment.containerQuantityTransfereeFamily
+					.equals(COREFLEXConstants.OTHER)) {
+				CoreFunctions.verifyText(_inputQuantityOtherTransfereeFamily.getDomProperty("value"),
+						seaSurfaceShipmentShipmentBenefitData.seaSurfaceShipment.containerQuantityOtherTransfereeFamily,
+						COREFLEXConstants.CONTAINER_QUANTITY_OTHER_TRANSFEREE_FAMILY);
+			}
+			CoreFunctions.verifyText(driver, _selectSeaShipmentTradedSelectedValue,
+					seaSurfaceShipmentShipmentBenefitData.seaSurfaceShipment.canThisBenefitBeTradedForAnotherBenefit,
+					COREFLEXConstants.CAN_THIS_BENEFIT_BE_TRADED_FOR_ANOTHER_BENEFIT);
+
+			CoreFunctions.verifyRadioButtonSelection(driver, _radioExcesValDueToWeight,
+					_radioExcesValDueToWeightButtonList,
+					seaSurfaceShipmentShipmentBenefitData.seaSurfaceShipment.excessValuationDueToWeightPaid,
+					COREFLEXConstants.EXCESS_VALUATION_DUE_TO_WEIGHT_PAID);
+			CoreFunctions.verifyRadioButtonSelection(driver, _radioExcesValDueToValue,
+					_radioExcesValDueToValueButtonList,
+					seaSurfaceShipmentShipmentBenefitData.seaSurfaceShipment.excessValuationDueToValuePaid,
+					COREFLEXConstants.EXCESS_VALUATION_DUE_TO_VALUE_PAID);
+
 			CoreFunctions.verifyText(driver, _selectTempStorageDurationSelectedValue,
 					seaSurfaceShipmentShipmentBenefitData.seaSurfaceShipment.temporaryStorageDuration,
 					COREFLEXConstants.TEMPORARY_STORAGE_SIT_DURATION);

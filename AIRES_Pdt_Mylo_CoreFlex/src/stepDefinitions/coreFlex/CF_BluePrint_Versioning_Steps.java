@@ -357,18 +357,17 @@ public class CF_BluePrint_Versioning_Steps {
 		Reporter.addStepLog("<b>Total time taken to navigate to <i>Blueprint - Policy Benefit Categories</i> page is :"
 				+ CoreFunctions.calculatePageLoadTime(CoreConstants.TIME_BEFORE_ACTION, CoreConstants.TIME_AFTER_ACTION)
 				+ " Seconds </b>");
-		Assert.assertTrue(coreFlexPolicyBenefitsCategoriesPage.verifyPolicyCategoriesBenefitsAndOrder(),
-				MessageFormat.format(
-						COREFLEXConstants.FAILED_TO_VERIFY_POLICY_CATEGORIES_BENEFITS_AND_ORDER_ON_POLICY_BENEFITS_CATEGORIES_PAGE,
-						CoreConstants.FAIL));
-
-		Assert.assertTrue(
-				coreFlexPolicyBenefitsCategoriesPage.verifySelectedBenefitsPostVersioningCloning(
-						CoreFunctions.getPropertyFromConfig("CoreFlex_Policy_BenefitType"),
-						CoreFunctions.getPropertyFromConfig("CoreFlex_Policy_RequiredFor"), "0"),
-				MessageFormat.format(
-						COREFLEXConstants.FAILED_TO_VERIFY_SELECTED_BENEFITS_ON_POLICY_BENEFITS_CATEGORIES_PAGE,
-						CoreConstants.FAIL));
+//		Assert.assertTrue(coreFlexPolicyBenefitsCategoriesPage.verifyPolicyCategoriesBenefitsAndOrder(),
+//				MessageFormat.format(
+//						COREFLEXConstants.FAILED_TO_VERIFY_POLICY_CATEGORIES_BENEFITS_AND_ORDER_ON_POLICY_BENEFITS_CATEGORIES_PAGE,
+//						CoreConstants.FAIL));
+//		Assert.assertTrue(
+//				coreFlexPolicyBenefitsCategoriesPage.verifySelectedBenefitsPostVersioningCloning(
+//						CoreFunctions.getPropertyFromConfig("CoreFlex_Policy_BenefitType"),
+//						CoreFunctions.getPropertyFromConfig("CoreFlex_Policy_RequiredFor")),
+//				MessageFormat.format(
+//						COREFLEXConstants.FAILED_TO_VERIFY_SELECTED_BENEFITS_ON_POLICY_BENEFITS_CATEGORIES_PAGE,
+//						CoreConstants.FAIL));
 		coreFlexPolicyBenefitsCategoriesPage.clickElementOfPage(PDTConstants.NEXT);
 
 		Assert.assertTrue(coreFlexPolicyBenefitsCategoriesPage.verifyInformationDialog(), MessageFormat.format(
@@ -379,7 +378,7 @@ public class CF_BluePrint_Versioning_Steps {
 		Assert.assertTrue(
 				coreFlexPolicyBenefitsCategoriesPage.verifyBenefitsDisplayedOnLeftNavigation(
 						CoreFunctions.getPropertyFromConfig("CoreFlex_Policy_BenefitType"),
-						CoreFunctions.getPropertyFromConfig("CoreFlex_Policy_RequiredFor"), "0"),
+						CoreFunctions.getPropertyFromConfig("CoreFlex_Policy_RequiredFor")),
 				MessageFormat.format(
 						COREFLEXConstants.FAILED_TO_VERIFY_SELECTED_BENEFITS_ON_LEFT_NAVIGATION_POST_VERSIONING_CLONING,
 						CoreConstants.FAIL));
@@ -411,7 +410,7 @@ public class CF_BluePrint_Versioning_Steps {
 
 		Assert.assertTrue(
 				coreFlexBenefitSummaryPage.iterateAndVerifyBenefitSummaryDetails(
-						CoreFunctions.getPropertyFromConfig("CoreFlex_Policy_RequiredFor"), "0"),
+						CoreFunctions.getPropertyFromConfig("CoreFlex_Policy_RequiredFor")),
 				MessageFormat.format(
 						COREFLEXConstants.FAILED_TO_VERIFY_BENEFIT_SUBBENEFIT_DETAILS_ON_BENEFIT_SUMMARY_PAGE,
 						CoreConstants.FAIL));
@@ -622,7 +621,7 @@ public class CF_BluePrint_Versioning_Steps {
 		Assert.assertTrue(
 				coreFlexPolicyBenefitsCategoriesPage.selectAndFillAddedBenefits(
 						CoreFunctions.getPropertyFromConfig("CoreFlex_Policy_BenefitType"),
-						COREFLEXConstants.SIGNIFICANT_CHANGE, "0"),
+						COREFLEXConstants.SIGNIFICANT_CHANGE),
 				MessageFormat.format(COREFLEXConstants.FAILED_TO_SELECT_AND_FILL_ADDED_BENEFITS, CoreConstants.FAIL));
 	}
 
@@ -642,8 +641,7 @@ public class CF_BluePrint_Versioning_Steps {
 				MessageFormat.format(COREFLEXConstants.FAILED_TO_VERIFY_USER_NAVIGATION_TO_BENEFIT_SUMMARY_PAGE,
 						CoreConstants.FAIL));
 		Assert.assertTrue(
-				coreFlexBenefitSummaryPage.iterateAndVerifyBenefitSummaryDetails(COREFLEXConstants.SIGNIFICANT_CHANGE,
-						"0"),
+				coreFlexBenefitSummaryPage.iterateAndVerifyBenefitSummaryDetails(COREFLEXConstants.SIGNIFICANT_CHANGE),
 				MessageFormat.format(
 						COREFLEXConstants.FAILED_TO_VERIFY_BENEFIT_SUBBENEFIT_DETAILS_ON_BENEFIT_SUMMARY_PAGE,
 						CoreConstants.FAIL));
@@ -658,7 +656,7 @@ public class CF_BluePrint_Versioning_Steps {
 				MessageFormat.format(COREFLEXConstants.FAILED_TO_VERIFY_USER_NAVIGATION_TO_BENEFIT_SUMMARY_PAGE,
 						CoreConstants.FAIL));
 		Assert.assertTrue(
-				coreFlexBenefitSummaryPage.iterateAndVerifyBenefitSummaryDetails(COREFLEXConstants.VERSIONING, "0"),
+				coreFlexBenefitSummaryPage.iterateAndVerifyBenefitSummaryDetails(COREFLEXConstants.VERSIONING),
 				MessageFormat.format(
 						COREFLEXConstants.FAILED_TO_VERIFY_BENEFIT_SUBBENEFIT_DETAILS_ON_BENEFIT_SUMMARY_PAGE,
 						CoreConstants.FAIL));

@@ -502,4 +502,9 @@ public class IRISConstants {
 	public static final String SUCCESSFULLY_ADDED_SUB_SERVICE_DETAILS = "{0} Successfully added sub-service details";
 	public static final String FAILED_TO_ADD_SUB_SERVICE_DETAILS = "{0} Failed to add sub-service details. Exception is - ''{1}''";
 	public static final String FAILED_TO_ADD_SUB_SERVICE_DETAILS_ON_SEB_SERVICE_WINDOW = "Failed to add sub-service details on sub-service window";
+	public static final String EXCEPTION_OCCURED_WHILE_SELECTING_PARTNER_ON_ACTIVITY_AND_FINANCE_TAB_OF_IRIS_APPLICATION = "{0}Exception occured while Selecting Partner on Activity & Finance Tab of IRIS Application. Exception : ''{1}''.";
+	public static final String EXCEPTION_OCCURED_WHILE_ADDING_ADDITIONAL_DETAILS_TO_ADDED_SUB_SERVICE = "{0}Exception occured while adding additional details to ''{2}'' Sub-Service. Exception : ''{1}''.";
+	public static final String SUB_SERVICE_DETAIL_SCREEN = "Sub-Service Detail Screen";
+	public static final String UPDATE = "Update";
+	public static final String EXCEPTION_OCCURED_WHILE_ADDING_RATING_TO_THE_ADDED_PARTICIPANT_ON_ACTIVITY_AND_FINANCE_TAB = "{0}Exception occured while adding rating to the added participant for ''{2}'' benefit on Activity & Finance tab. Exception : ''{1}''.";
 }

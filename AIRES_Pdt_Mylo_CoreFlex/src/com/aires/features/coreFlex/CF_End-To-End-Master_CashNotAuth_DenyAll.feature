@@ -1,10 +1,10 @@
 Feature: Validate End-to-End Business workflow of BluePrint CF Transferee-CashoutNotAuthorized Policy Setup with Versioning & Cloning, Transferee Mobility Journey and Transferee Submissions DenyAll Operation
 
-  @CF_End-To-End_MasterScript @CF_Master_CashNotAuthDeny @CF_Master_CashNotAuthDeny_PolicySetup
+  @CF_End-To-End_MasterScript @CF_Master_CashNotAuthDeny @CF_Master_CashNotAuthDeny_PolicySetup 
   Scenario: CoreFlex - Validating policy status is updated to 'Active' on completion of Policy Setup Approval WorkFlow
-    Given he has setup a new CoreFlex Policy with following selection in Blueprint application
-      | Person Responsible For Benefit Selection | Flex Setup Type | Cashout Availability   | BenefitType | PolicyRequiredFor | MileStones |
-      | Transferee                               | Static/Fixed    | Cashout Not Authorized | Both        | All Benefits      |          0 |
+    Given he has setup a new Points Based CoreFlex Policy with following selection in Blueprint application
+      | Person Responsible For Benefit Selection | Flex Setup Type | Cashout Availability   | BenefitType | PolicyRequiredFor            |
+      | Transferee                               | Static/Fixed    | Cashout Not Authorized | Both        | Aires Managed Benefits Cards |
     And he has clicked on "Submit" button to submit "V1" policy verison on "Custom Bundles" page
     And he has clicked on "Approve Policy" button to approve "V1" policy verison on "Custom Bundles" page
     And he has selected following options on 'Approval this Policy' dialog of "V1" Policy
@@ -71,7 +71,7 @@ Feature: Validate End-to-End Business workflow of BluePrint CF Transferee-Cashou
       | Legacy       |
 
   @CF_End-To-End_MasterScript @CF_Master_CashNotAuthDeny @CF_Master_CashNotAuthDeny_MXTransfereeFlow
-  Scenario: MXTransferee - Submitting Flex benefits & Portion Cashout available in configured policy and Tracking Available_Used Benefits Points
+  Scenario: MXTransferee - Submitting Flex benefits available in configured policy and Tracking Available_Used Benefits Points Post Delete Operation
     Given he has logged into 'MobilityX' application after creating a new 'Transferee' through IRIS application for policy setup in 'Policy Digitization Tool'
     And he has validated 'Assignment-Policy' details after selecting below option displayed on 'Welcome' dialog
       | WelcomeDialogSelection               |
@@ -88,7 +88,7 @@ Feature: Validate End-to-End Business workflow of BluePrint CF Transferee-Cashou
     And he has clicked on "OK - Let Me See My Benefits!" button displayed on 'Success Flex' dialog
     And he has verified submitted points details on 'Mobility Journey Home' and 'Flex Planning Tool' page
     And he has verified submitted benefit details under 'Submitted Benefits' section of 'My Benefits Bundle' page
-    When he 'Delete' submitted Benefit_Cashout and confirms 'Remove Benefit Selection' dialog by entering username and clicking on "Yes-request to delete this benefit"
+    When he 'Delete' submitted Benefits and confirms 'Remove Benefit Selection' dialog by entering username and clicking on "Yes-request to delete this benefit"
     Then 'Status' of the deleted benefit should be displayed as "Delete Request Pending" under 'Submitted Benefits' section of 'My Benefit Bundle' page
 
   @CF_End-To-End_MasterScript @CF_Master_CashNotAuthDeny @CF_Master_CashNotAuthDeny_MSPEC_PPC_Flow
@@ -103,33 +103,38 @@ Feature: Validate End-to-End Business workflow of BluePrint CF Transferee-Cashou
     And 'Delete Request Pending' benefit request status should be updated to 'Submitted' in 'Transferee Submission Details' list
     And benefit details should be updated in 'MXTransferee' application based on "Denied" 'Delete Request' on Transferee Submission
 
-  @CF_End-To-End_MasterScript @CF_MasterCashNotAuthDeny @CF_Master_CashNotAuthDeny_TwoMilestones_MJCards
-  Scenario: MXTransferee - Verifying Flex_Core Cards details and (Submitted,StartingSoon,InProgress,Complete) status of 2 Milestones Aires Managed Benefit
-    Given he has logged into 'MobilityX' application with the 'Transferee' user
-    And he has navigated to 'My Benefit Bundle' page from 'Mobility Journey Home' page
-    And he has verified submitted Aires Managed Benefits with '2' Milestones Status - changed to "Submitted" on "My Benefit Bundle" page
-    And he has verified 'Aires Managed' benefits with '2' Milestones card not added under 'Service Monitoring' section of "Mobility Journey Home" page
-    And he has created Service and SubService for 'Aires Managed' benefits with '2' Milestones of CoreFlex type "Both" in Services tab of IRIS application
-    And he has verified submitted Aires Managed Benefits with '2' Milestones Status - changed to "Starting Soon" on "Mobility Journey Home" page - "Pre Initial Tracing"
-    And he has verified submitted Aires Managed Benefits with '2' Milestones Status - changed to "Starting Soon" on "My Benefit Bundle" page
-    And he has provided "Est Date" for added '2' services tracing prompt after clicking on the "Activity & Finance" tab of added Service
-    And he has verified submitted Aires Managed Benefits with '2' Milestones Status - changed to "In Progress" on "Mobility Journey Home" page - "Post Initial Tracing"
-    And he has verified submitted Aires Managed Benefits with '2' Milestones Status - changed to "In Progress" on "My Benefit Bundle" page
-    When he provides "Act Date" for added '2' sub-services tracing prompts after clicking on the "Activity & Finance" tab of added Service
-    Then submitted Aires Managed Benefits with '2' Milestones Status - should be changed to "Complete" on "Mobility Journey Home" page - "Post End Tracing"
-    And submitted Aires Managed Benefits with '2' Milestones Status - should be changed to "Complete" on "My Benefit Bundle" page
+  @CF_End-To-End_MasterScript @CF_Master_CashNotAuthDeny @CF_Master_CashNotAuthDeny_Shipment_MJCards_PF 
+  Scenario: CoreFlex - Setting up a New CoreFlex policy in 'Policy Digitization Tool' with Both type 'Aires Managed' benefit
+    Given he has setup a new Points Based CoreFlex Policy with following selection in Blueprint application
+      | Person Responsible For Benefit Selection | Flex Setup Type | Cashout Availability   | BenefitType | PolicyRequiredFor            |
+      | Transferee                               | Static/Fixed    | Cashout Not Authorized | Both        | Aires Managed Benefits Cards |
+    And he has clicked on "Submit" button to submit "V1" policy verison on "Custom Bundles" page
+    And he has clicked on "Approve Policy" button to approve "V1" policy verison on "Custom Bundles" page
+    And he has selected following options on 'Approval this Policy' dialog of "V1" Policy
+      | Associate this policy with a NEW authorization in IRIS? |
+      | Effective from booking date                             |
+    When he clicks on "Approve" button to acknowledge 'Approve this Policy' dialog
+    Then Policy Status and Version should be displayed as "Active" and "V1" respectively on "View/Edit Policy Forms" page
 
-  @CF_End-To-End_MasterScript @CF_Master_CashNotAuthDeny @CF_Master_CashNotAuthDeny_FourMilestones_MJCards
-  Scenario: MXTransferee - Verifying Flex_Core Cards details and (Submitted,StartingSoon,InProgress,Complete) status of 4 Milestones Aires Managed Benefit
-    Given he has logged into 'MobilityX' application with the 'Transferee' user
-    And he has navigated to 'My Benefit Bundle' page from 'Mobility Journey Home' page
-    And he has verified submitted Aires Managed Benefits with '4' Milestones Status - changed to "Submitted" on "My Benefit Bundle" page
-    And he has created Service and SubService for 'Aires Managed' benefits with '4' Milestones of CoreFlex type "Both" in Services tab of IRIS application
-    And he has verified submitted Aires Managed Benefits with '4' Milestones Status - changed to "Starting Soon" on "Mobility Journey Home" page - "Pre Initial Tracing"
-    And he has verified submitted Aires Managed Benefits with '4' Milestones Status - changed to "Starting Soon" on "My Benefit Bundle" page
-    And he has provided "Act Date" for added '4' services tracing prompt after clicking on the "Activity & Finance" tab of added Service
-    And he has verified submitted Aires Managed Benefits with '4' Milestones Status - changed to "In Progress" on "Mobility Journey Home" page - "Post Initial Tracing"
-    And he has verified submitted Aires Managed Benefits with '4' Milestones Status - changed to "In Progress" on "My Benefit Bundle" page
-    When he provides "Act Date" for added '4' sub-services tracing prompts after clicking on the "Activity & Finance" tab of added Service
-    Then submitted Aires Managed Benefits with '4' Milestones Status - should be changed to "Complete" on "Mobility Journey Home" page - "Post End Tracing"
-    And submitted Aires Managed Benefits with '4' Milestones Status - should be changed to "Complete" on "My Benefit Bundle" page
+  @CF_End-To-End_MasterScript @CF_Master_CashNotAuthDeny @CF_Master_CashNotAuthDeny_Shipment_MJCards_MobilityX @Test56734
+  Scenario: MXTransferee - Verifying Flex_Core Cards details and (Submitted,StartingSoon,InProgress,Complete) status of the submitted Aires Managed Benefit
+    Given he has logged into 'MobilityX' application after creating a new 'Transferee' through IRIS application for policy setup in 'Policy Digitization Tool'
+    And he has validated 'Assignment-Policy' details after selecting below option displayed on 'Welcome' dialog
+      | WelcomeDialogSelection               |
+      | No thanks, I prefer to do this later |
+    And he has navigated to "FleX Planning Tool" after clicking on 'Manage my Points' button on "Mobility Journey Home" page
+    And he has navigated to "My Benefits Bundle" page after validating and selecting 'Aires Managed' benefits on "FleX Planning Tool" page
+    And he has clicked on "Review and Submit" button after validating all the benefit details listed under 'Selected Benefits' section on "My Benefits Bundle" page
+    And he has clicked on "Yes - submit my bundle" button after entering Transferee name on "Submit Bundle Confirmation" dialog
+    And he has clicked on "OK - Let Me See My Benefits!" button displayed on 'Success Flex' dialog
+    And he has verified submitted Aires Managed Benefits Status - changed to "Submitted" on "My Benefit Bundle" page
+    And he has verified 'Aires Managed' benefit cards not added under 'Service Monitoring' section of "Mobility Journey Home" page
+    And he has created Service and SubService for 'Aires Managed' benefits in Services tab of IRIS application
+    And he has verified submitted Aires Managed Benefits Status - changed to "Starting Soon" on "Mobility Journey Home" page - "Pre Initial Tracing"
+    And he has verified submitted Aires Managed Benefits Status - changed to "Starting Soon" on "My Benefit Bundle" page
+    And he has provided "Est Date" for added services tracing after clicking on the "Activity & Finance" tab of added Service
+    And he has verified submitted Aires Managed Benefits Status - changed to "In Progress" on "Mobility Journey Home" page - "Post Initial Tracing"
+    And he has verified submitted Aires Managed Benefits Status - changed to "In Progress" on "My Benefit Bundle" page
+    When he provides "Act Date" for added sub-services tracing prompts after clicking on the "Activity & Finance" tab of added Service
+    Then submitted Aires Managed Benefits Status - should be changed to "Complete" on "Mobility Journey Home" page - "Post End Tracing"
+    And submitted Aires Managed Benefits Status - should be changed to "Complete" on "My Benefit Bundle" page

@@ -283,11 +283,10 @@ public class CoreFlex_PolicyBenefitsCategoriesPage extends Base {
 	 * @param policyType
 	 * @return
 	 */
-	public boolean selectBenefits(String policyType, String policyRequiredFor, String numberOfMilestones) {
+	public boolean selectBenefits(String policyType, String policyRequiredFor) {
 		try {
 			expandAllBenefitCategories();
-			// Method to select Provided benefit from the List
-			List<String> benefitList = getBenefitList(policyType, policyRequiredFor, numberOfMilestones);
+			List<String> benefitList = getBenefitList(policyType, policyRequiredFor);
 			for (String benefit : benefitList) {
 				CoreFunctions.selectItemInListByText(driver, _allBenefitsList, benefit, true);
 			}
@@ -350,46 +349,16 @@ public class CoreFlex_PolicyBenefitsCategoriesPage extends Base {
 		}
 	}
 
-	private List<String> getBenefitList(String policyType, String policyRequiredFor, String numberOfMilestones) {
+	private List<String> getBenefitList(String policyType, String policyRequiredFor) {
 		List<String> benefitNameList = new ArrayList<String>();
-		switch (policyRequiredFor) {
-		case COREFLEXConstants.CLONING:
-		case COREFLEXConstants.VERSIONING:
-		case COREFLEXConstants.CLIENT:
-			for (FlexBenefit benefit : flexBenefits) {
-				for (Benefit ben : benefit.getBenefits()) {
-					if ((ben.getPolicyCreationGroup().contains(COREFLEXConstants.CLONING))
-							|| (ben.getPolicyCreationGroup().contains(COREFLEXConstants.VERSIONING))
-							|| (ben.getPolicyCreationGroup().contains(COREFLEXConstants.CLIENT)))
-						benefitNameList.add(ben.getBenefitType());
+		for (FlexBenefit benefit : flexBenefits) {
+			for (Benefit ben : benefit.getBenefits()) {
+				if (ben.getPolicyCreationGroup().contains(policyRequiredFor)) {
+					benefitNameList.add(ben.getBenefitType());
 				}
 			}
-			break;
-		case COREFLEXConstants.AIRES_MANAGED_BENEFITS_CARDS:
-			for (FlexBenefit benefit : flexBenefits) {
-				for (Benefit ben : benefit.getBenefits()) {
-					if ((ben.getAiresManagedService().equals("Yes"))
-							&& (ben.getNoOfMilestones() == Integer.parseInt(numberOfMilestones))) {
-						benefitNameList.add(ben.getBenefitType());
-					}
-				}
-			}
-			break;
-		case COREFLEXConstants.ALL_BENEFITS:
-		case COREFLEXConstants.END_TO_END:
-			for (FlexBenefit benefit : flexBenefits) {
-				for (Benefit ben : benefit.getBenefits()) {
-					if (ben.getPolicyCreationGroup().contains(COREFLEXConstants.ALL_BENEFITS)) {
-						benefitNameList.add(ben.getBenefitType());
-					}
-				}
-			}
-			break;
-		default:
-			Assert.fail(COREFLEXConstants.BLUEPRINT_POLICY_REQUIRED_FOR_OPTION_NOT_PRESENT_IN_THE_LIST);
 		}
 		return benefitNameList;
-
 	}
 
 	private List<String> getAiresManagedBenefitList(String policyType) {
@@ -412,12 +381,11 @@ public class CoreFlex_PolicyBenefitsCategoriesPage extends Base {
 	 * @param dataTable
 	 * @return
 	 */
-	public boolean verifyBenefitsDisplayedOnLeftNavigation(String policyType, String policyRequiredFor,
-			String numberOfTracing) {
+	public boolean verifyBenefitsDisplayedOnLeftNavigation(String policyType, String policyRequiredFor) {
 		CoreFunctions.explicitWaitTillElementInVisibility(driver, _progressBar);
 		boolean isBenefitsAddedVerifiedOnLeftNavigation = false;
 		try {
-			List<String> benefitList = getBenefitList(policyType, policyRequiredFor, numberOfTracing);
+			List<String> benefitList = getBenefitList(policyType, policyRequiredFor);
 			List<String> leftNavigationBenefitsList = CoreFunctions.getElementTextAndStoreInList(driver,
 					_leftNavigationTitleSelectedBenefitsList);
 			isBenefitsAddedVerifiedOnLeftNavigation = benefitList.containsAll(leftNavigationBenefitsList);
@@ -444,7 +412,7 @@ public class CoreFlex_PolicyBenefitsCategoriesPage extends Base {
 	 * @param coreFlexLumpSumBenefitsPage
 	 * @param coreFlexLanguageTrainingBenefitsPage
 	 */
-	public boolean selectAndFillAddedBenefits(String benefitType, String policyRequiredFor, String numberOfMilestones) {
+	public boolean selectAndFillAddedBenefits(String benefitType, String policyRequiredFor) {
 		boolean isBenefitSuccessfullySelectedAndFilled = false;
 		try {
 			if (benefitType.equals(COREFLEXConstants.FLEX) || benefitType.equals(COREFLEXConstants.BOTH)) {
@@ -453,13 +421,12 @@ public class CoreFlex_PolicyBenefitsCategoriesPage extends Base {
 				case COREFLEXConstants.VERSIONING:
 				case COREFLEXConstants.CLIENT:
 					isBenefitSuccessfullySelectedAndFilled = fillFlexBenefitDetailsForCloning(benefitType,
-							policyRequiredFor, numberOfMilestones);
+							policyRequiredFor);
 					break;
 				case COREFLEXConstants.AIRES_MANAGED_BENEFITS_CARDS:
 				case COREFLEXConstants.ALL_BENEFITS:
 				case COREFLEXConstants.END_TO_END:
-					isBenefitSuccessfullySelectedAndFilled = fillAllFlexBenefitDetails(benefitType, policyRequiredFor,
-							numberOfMilestones);
+					isBenefitSuccessfullySelectedAndFilled = fillAllFlexBenefitDetails(benefitType, policyRequiredFor);
 					break;
 				case COREFLEXConstants.SIGNIFICANT_CHANGE:
 					isBenefitSuccessfullySelectedAndFilled = fillFlexBenefitDetailsForSignificantChange(benefitType,
@@ -522,11 +489,10 @@ public class CoreFlex_PolicyBenefitsCategoriesPage extends Base {
 		return isFlexBenefitSuccessfullySelectedAndFilled;
 	}
 
-	private boolean fillFlexBenefitDetailsForCloning(String benefitType, String policyRequiredFor,
-			String numberOfMilestones) {
+	private boolean fillFlexBenefitDetailsForCloning(String benefitType, String policyRequiredFor) {
 		boolean isFlexBenefitSuccessfullySelectedAndFilled = false;
 		try {
-			for (Benefit benefit : getBenefits(benefitType, policyRequiredFor, numberOfMilestones)) {
+			for (Benefit benefit : getBenefits(benefitType, policyRequiredFor)) {
 				clickLeftNavigationMenuOfPage(benefit.getBenefitType());
 				switch (benefit.getBenefitType()) {
 				case COREFLEXConstants.DUPLICATE_HOUSING:
@@ -579,10 +545,10 @@ public class CoreFlex_PolicyBenefitsCategoriesPage extends Base {
 		return isFlexBenefitSuccessfullySelectedAndFilled;
 	}
 
-	private boolean fillAllFlexBenefitDetails(String policyType, String policyRequiredFor, String numberOfMilestones) {
+	private boolean fillAllFlexBenefitDetails(String policyType, String policyRequiredFor) {
 		boolean isFlexBenefitSuccessfullySelectedAndFilled = false;
 		try {
-			for (Benefit benefit : getBenefits(policyType, policyRequiredFor, numberOfMilestones)) {
+			for (Benefit benefit : getBenefits(policyType, policyRequiredFor)) {
 				clickLeftNavigationMenuOfPage(benefit.getBenefitType());
 				if (benefit.getBenefitType().equals(COREFLEXConstants.OTHER_HOUSING_BENEFIT)) {
 					((CoreFlex_OtherHousing_BenefitsPage) pageObjectManager_CoreFlex.getPageObjects()
@@ -594,12 +560,19 @@ public class CoreFlex_PolicyBenefitsCategoriesPage extends Base {
 									benefit.getBenefitDesc(), benefit.getComment(), benefit.getGrossUp(),
 									benefit.getReimbursedBy(), benefit.getPayments());
 					isFlexBenefitSuccessfullySelectedAndFilled = true;
-				} else {
+				} else if (benefit.getAiresManagedService().equals(COREFLEXConstants.YES)) {
 					pageObjectManager_CoreFlex.getPageObjects().get(benefit.getBenefitType())
 							.selectAndFillBenefitsAndSubBenefitDetails(policyType, benefit.getSubBenefits(),
 									benefit.getMultipleBenefitSelection(), benefit.getPoints(),
 									benefit.getBenefitDisplayName(), benefit.getBenefitAmount(),
 									benefit.getBenefitDesc(), benefit.getAiresManagedService());
+					isFlexBenefitSuccessfullySelectedAndFilled = true;
+				} else if (benefit.getAiresManagedService().equals(COREFLEXConstants.NO)) {
+					pageObjectManager_CoreFlex.getPageObjects().get(benefit.getBenefitType())
+							.selectAndFillBenefitsAndSubBenefitDetails(policyType, benefit.getSubBenefits(),
+									benefit.getMultipleBenefitSelection(), benefit.getPoints(),
+									benefit.getBenefitDisplayName(), benefit.getBenefitAmount(),
+									benefit.getBenefitDesc(), benefit.getPayments());
 					isFlexBenefitSuccessfullySelectedAndFilled = true;
 				}
 				if (isFlexBenefitSuccessfullySelectedAndFilled) {
@@ -756,11 +729,10 @@ public class CoreFlex_PolicyBenefitsCategoriesPage extends Base {
 		return isBenefitSuccessfullySelectedAndFilled;
 	}
 
-	public boolean verifySelectedBenefitsPostVersioningCloning(String policyType, String policyRequiredFor,
-			String numberOfTracing) {
+	public boolean verifySelectedBenefitsPostVersioningCloning(String policyType, String policyRequiredFor) {
 		try {
-//			expandAllBenefitCategories();
-			List<String> expectedBenefitList = getBenefitList(policyType, policyRequiredFor, numberOfTracing);
+			expandAllBenefitCategories();
+			List<String> expectedBenefitList = getBenefitList(policyType, policyRequiredFor);
 			Collections.sort(expectedBenefitList);
 			List<String> actualBenefitList = getSelectedBenefitList();
 			Collections.sort(actualBenefitList);
@@ -811,7 +783,7 @@ public class CoreFlex_PolicyBenefitsCategoriesPage extends Base {
 				case COREFLEXConstants.ALL_BENEFITS:
 				case COREFLEXConstants.END_TO_END:
 					isAddedBenefitSuccessfullyVerified = verifyAddedFlexBenefitSubBenefitDetails(policyType,
-							policyRequiredFor, numberOfMilestones);
+							policyRequiredFor);
 					break;
 				default:
 					Assert.fail(COREFLEXConstants.BLUEPRINT_POLICY_REQUIRED_FOR_OPTION_NOT_PRESENT_IN_THE_LIST);
@@ -915,11 +887,10 @@ public class CoreFlex_PolicyBenefitsCategoriesPage extends Base {
 		return false;
 	}
 
-	private boolean verifyAddedFlexBenefitSubBenefitDetails(String policyType, String policyRequiredFor,
-			String numberOfMilestones) {
+	private boolean verifyAddedFlexBenefitSubBenefitDetails(String policyType, String policyRequiredFor) {
 		boolean isBenefitDetailsSuccessfullyVerified = false;
 		try {
-			for (Benefit benefit : getBenefits(policyType, policyRequiredFor, numberOfMilestones)) {
+			for (Benefit benefit : getBenefits(policyType, policyRequiredFor)) {
 				clickLeftNavigationMenuOfPage(benefit.getBenefitType());
 				isBenefitDetailsSuccessfullyVerified = false;
 				if (benefit.getBenefitType().equals(COREFLEXConstants.OTHER_HOUSING_BENEFIT)) {
@@ -1094,22 +1065,12 @@ public class CoreFlex_PolicyBenefitsCategoriesPage extends Base {
 		return isBenefitTypeSuccessfullyChanged;
 	}
 
-	private List<Benefit> getBenefits(String benefitType, String policyRequiredFor, String numberOfMilestones) {
+	private List<Benefit> getBenefits(String benefitType, String policyRequiredFor) {
 		List<Benefit> benefitNameList = new ArrayList<Benefit>();
 		if (benefitType.equals(COREFLEXConstants.FLEX) || benefitType.equals(COREFLEXConstants.BOTH)) {
 			for (FlexBenefit benefit : flexBenefits) {
 				for (Benefit ben : benefit.getBenefits()) {
-					if ((policyRequiredFor.equals(COREFLEXConstants.ALL_BENEFITS))
-							&& (ben.getPolicyCreationGroup().contains(policyRequiredFor))) {
-						benefitNameList.add(ben);
-					} else if ((policyRequiredFor.equals(COREFLEXConstants.AIRES_MANAGED_BENEFITS_CARDS))
-							&& (ben.getAiresManagedService().equals("Yes"))
-							&& (ben.getNoOfMilestones() == Integer.parseInt(numberOfMilestones))) {
-						benefitNameList.add(ben);
-					} else if (((policyRequiredFor.equals(COREFLEXConstants.CLONING))
-							|| (policyRequiredFor.equals(COREFLEXConstants.VERSIONING))
-							|| ((policyRequiredFor.equals(COREFLEXConstants.CLIENT))))
-							&& (ben.getPolicyCreationGroup().contains(policyRequiredFor))) {
+					if ((ben.getPolicyCreationGroup().contains(policyRequiredFor))) {
 						benefitNameList.add(ben);
 					}
 				}

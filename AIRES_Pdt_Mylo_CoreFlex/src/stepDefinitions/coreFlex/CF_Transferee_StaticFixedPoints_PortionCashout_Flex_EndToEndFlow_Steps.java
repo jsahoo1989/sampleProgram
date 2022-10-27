@@ -23,7 +23,7 @@ import com.aires.pages.iris.IRIS_ActivityAndFinancePage;
 import com.aires.pages.iris.IRIS_AssignmentOverviewPage;
 import com.aires.pages.iris.IRIS_LoginPage;
 import com.aires.pages.iris.IRIS_Welcome12C;
-import com.aires.testdatatypes.pdt.PDT_LoginDetails;
+import com.aires.testdatatypes.coreflex.CoreFlex_LoginInfo;
 import com.vimalselvam.cucumber.listener.Reporter;
 
 import cucumber.api.DataTable;
@@ -54,8 +54,8 @@ public class CF_Transferee_StaticFixedPoints_PortionCashout_Flex_EndToEndFlow_St
 		mxTransfereeJourneyHomePage = testContext.getCoreFlexPageObjectManager().getMXTransfereeJourneyHomePage();
 	}
 
-	private PDT_LoginDetails _loginDetailsApplication = FileReaderManager.getInstance().getJsonReader()
-			.getLoginByApplication(CoreFunctions.getPropertyFromConfig("application").toLowerCase());
+	private CoreFlex_LoginInfo _loginInfo = FileReaderManager.getInstance().getCoreFlexJsonReader()
+			.getLoginInfoByEnviroment((CoreFunctions.getPropertyFromConfig("envt").toLowerCase()));
 
 	@Given("^he has verified 'Portion Cashout' details on \"([^\"]*)\" page$")
 	public void he_has_verified_Portion_Cashout_details_on_page(String sourcePage) throws Throwable {
@@ -72,7 +72,7 @@ public class CF_Transferee_StaticFixedPoints_PortionCashout_Flex_EndToEndFlow_St
 
 		testContext.getBasePage().reLaunchIrisToAvoidFreezingIssue();
 		testContext.getIrisPageManager().irisLoginPage = new IRIS_LoginPage();
-		testContext.getIrisPageManager().irisLoginPage.getIRISLoginAsPerEnvt(_loginDetailsApplication);
+		testContext.getIrisPageManager().irisLoginPage.getIRISLoginAsPerEnvt(_loginInfo);
 		testContext.getIrisPageManager().irisWelcome12C = new IRIS_Welcome12C();
 		testContext.getIrisPageManager().irisWelcome12C.selectWelcomeWindowModule(IRISConstants.ASSIGNMENT_TAB);
 		testContext.getIrisPageManager().irisAssignmentOverviewPage = new IRIS_AssignmentOverviewPage();

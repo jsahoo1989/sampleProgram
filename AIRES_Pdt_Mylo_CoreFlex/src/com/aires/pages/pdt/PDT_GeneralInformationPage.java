@@ -753,13 +753,13 @@ public class PDT_GeneralInformationPage extends Base {
 	 * @return
 	 */
 	public boolean validateClientAndPolicyDetailsOnGeneralInfo(String pageName, String expectedClientID,
-			String selectedPolicyName) {
+			String expectedPolicyName) {
 		boolean isGeneralInfoDetailsValid = false;
 		try {
 			CoreFunctions.explicitWaitTillElementVisibility(driver, _headerGeneralInfo,
 					PDTConstants.GENERAL_INFORMATION);
 			isGeneralInfoDetailsValid = verifyLeftNavigationMenu(pageName)
-					&& (verifyPolicyNameOnGeneralInfo(selectedPolicyName)
+					&& (verifyPolicyNameOnGeneralInfo(expectedPolicyName)
 							&& verifyClientDetailsOnGenaralInfo(expectedClientID));
 		} catch (Exception e) {
 			Reporter.addStepLog(
@@ -772,6 +772,10 @@ public class PDT_GeneralInformationPage extends Base {
 					CoreConstants.PASS, pageName));
 			CoreFunctions.writeToPropertiesFile("Assignment_ClientName",
 					CoreFunctions.getElementText(driver, _textClientName));
+		} else {
+			Reporter.addStepLog(
+					MessageFormat.format(PDTConstants.FAILED_TO_VALIDATE_CLIENT_POLICY_DATA_ON_GENERAL_INFORMATION_PAGE,
+							CoreConstants.FAIL));
 		}
 		return isGeneralInfoDetailsValid;
 
@@ -786,9 +790,9 @@ public class PDT_GeneralInformationPage extends Base {
 		return (CoreFunctions.getElementText(driver, _textClientID).equals(expectedClientID)) ? true : false;
 	}
 
-	private boolean verifyPolicyNameOnGeneralInfo(String selectedPolicyName) {
-		String[] expectedPolicyName = ((CoreFunctions.getElementText(driver, _headerPolicyInfo)).split(":"));
-		return (selectedPolicyName.contains(expectedPolicyName[1].trim())) ? true : false;
+	private boolean verifyPolicyNameOnGeneralInfo(String expectedPolicyName) {
+		String[] actualPolicyName = ((CoreFunctions.getElementText(driver, _headerPolicyInfo)).split(":"));
+		return (expectedPolicyName.contains(actualPolicyName[1].trim())) ? true : false;
 	}
 
 	/**
@@ -1296,6 +1300,29 @@ public class PDT_GeneralInformationPage extends Base {
 			return false;
 		}
 
+	}
+
+	public boolean verifyGeneralInfoPageFieldValues() {
+		boolean isCoreFlexGeneralInfoVerified = false;
+		boolean isClientPolicyDetailsVerified = false, isPolicyStatusVerified = false, isPolicyVersionVerified = false,
+				isCoreFlexPolicySelectionVerified = false;
+		try {
+			isClientPolicyDetailsVerified = validateClientAndPolicyDetailsOnGeneralInfo(
+					COREFLEXConstants.GENERAL_INFORMATION_PAGE, CoreFunctions.getPropertyFromConfig("Policy_ClientID"),
+					CoreFunctions.getPropertyFromConfig("Assignment_Policy"));
+			isPolicyStatusVerified = verifyGeneralInfoFieldDefaultValue(PDTConstants.POLICY_STATUS, PDTConstants.DRAFT);
+			isPolicyVersionVerified = verifyGeneralInfoFieldDefaultValue(COREFLEXConstants.POLICY_VERSION,
+					COREFLEXConstants.VERSION1);
+			isCoreFlexPolicySelectionVerified = verifyGeneralInfoFieldDefaultValue(PDTConstants.CORE_FLEX_POLICY,
+					PDTConstants.YES);
+			isCoreFlexGeneralInfoVerified = isClientPolicyDetailsVerified && isPolicyStatusVerified
+					&& isPolicyVersionVerified && isCoreFlexPolicySelectionVerified;
+		} catch (Exception e) {
+			Assert.fail(MessageFormat.format(PDTConstants.EXCEPTION_OCCURED_WHILE_VALIDATING_GENERAL_INFORMATION_PAGE,
+					CoreConstants.FAIL, e.getMessage()));
+			return false;
+		}
+		return isCoreFlexGeneralInfoVerified;
 	}
 
 }

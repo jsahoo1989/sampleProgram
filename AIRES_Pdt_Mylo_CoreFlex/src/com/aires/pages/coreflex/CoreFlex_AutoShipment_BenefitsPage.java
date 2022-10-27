@@ -197,6 +197,21 @@ public class CoreFlex_AutoShipment_BenefitsPage extends BenefitPage {
 	@FindBy(how = How.CSS, using = "input[formcontrolname='maxNoOfAutos']")
 	private WebElement _inputMaxNoOfAutos;
 
+	@FindBy(how = How.CSS, using = "input[formcontrolname='minMileageForShipment']")
+	private WebElement _inputMinimumMileageForShipment;
+
+	@FindBy(how = How.CSS, using = "input[formcontrolname='minKmForShipment']")
+	private WebElement _inputMinimumKilometersForShipment;
+
+	@FindBy(how = How.XPATH, using = "//div[@class='collapse show']//input[@formcontrolname='rentalCarProvideInd']/parent::label[@class='form-check-label']")
+	private List<WebElement> _radioBtnRentalCarProvidedDuringTransit;
+
+	@FindBy(how = How.XPATH, using = "//label[contains(text(),'Rental Car provided during transit')]/following-sibling::div//input")
+	private List<WebElement> _radioBtnRentalCarProvidedDuringTransitButtonList;
+
+	@FindBy(how = How.CSS, using = "input[formcontrolname='maxNumOfDays']")
+	private WebElement _inputMaxNumberOfDays;
+
 	@FindBy(how = How.XPATH, using = "//span[contains(text(),'Flex Benefits')]/ancestor::div[contains(@id,'secondItemDiv')]//div[contains(@class,'RXCFServicesMonitoringBorderPanel')]")
 	private List<WebElement> flexCardPanelList;
 
@@ -418,21 +433,32 @@ public class CoreFlex_AutoShipment_BenefitsPage extends BenefitPage {
 		try {
 			CoreFunctions.clearAndSetText(driver, _inputMaxNoOfAutos,
 					autoShipmentBenefitData.autoShipment.maxNoOfAutos);
-			CoreFunctions.clearAndSetText(driver, _txtAreaComment, autoShipmentBenefitData.autoShipment.comment);
-			CoreFunctions.selectItemInListByText(driver, _radioBtnGrossUp, autoShipmentBenefitData.autoShipment.grossUp,
-					true);
+			CoreFunctions.clearAndSetText(driver, _inputMinimumMileageForShipment,
+					autoShipmentBenefitData.autoShipment.minimumMileageForShipment);
+			CoreFunctions.clearAndSetText(driver, _inputMinimumKilometersForShipment,
+					autoShipmentBenefitData.autoShipment.minimumKilometersForShipment);
+			CoreFunctions.selectItemInListByText(driver, _radioBtnRentalCarProvidedDuringTransit,
+					autoShipmentBenefitData.autoShipment.rentalCarProvidedDuringTransit, true);
+			if (autoShipmentBenefitData.autoShipment.rentalCarProvidedDuringTransit
+					.equalsIgnoreCase(COREFLEXConstants.YES)) {
+				CoreFunctions.clearAndSetText(driver, _inputMaxNumberOfDays,
+						autoShipmentBenefitData.autoShipment.maxNumberOfDays);
+			}
 			CoreFunctions.selectItemInListByText(driver, _radioInsuranceType,
 					autoShipmentBenefitData.autoShipment.insuranceType, true);
 			if (autoShipmentBenefitData.autoShipment.insuranceType.equalsIgnoreCase(COREFLEXConstants.OTHER)) {
 				CoreFunctions.clearAndSetText(driver, _inputInsuranceTypeOther,
 						autoShipmentBenefitData.autoShipment.insuranceTypeOther);
 			}
+			CoreFunctions.selectItemInListByText(driver, _radioBtnGrossUp, autoShipmentBenefitData.autoShipment.grossUp,
+					true);
 			CoreFunctions.selectItemInListByText(driver, _radioBtnCandidateSelection,
 					autoShipmentBenefitData.autoShipment.reimbursedBy, true);
 			if (autoShipmentBenefitData.autoShipment.reimbursedBy.equalsIgnoreCase(COREFLEXConstants.OTHER)) {
 				CoreFunctions.clearAndSetText(driver, _inputReimbursedBy,
 						autoShipmentBenefitData.autoShipment.reimbursedByOther);
 			}
+			CoreFunctions.clearAndSetText(driver, _txtAreaComment, autoShipmentBenefitData.autoShipment.comment);
 		} catch (Exception e) {
 			Assert.fail(MessageFormat.format(PDTConstants.EXCEPTION_OCCURED_FILL_SUBBENEFIT_FORM, CoreConstants.FAIL,
 					subBenefitFormName, e.getMessage()));
@@ -693,6 +719,21 @@ public class CoreFlex_AutoShipment_BenefitsPage extends BenefitPage {
 		try {
 			CoreFunctions.verifyText(_inputMaxNoOfAutos.getDomProperty("value"),
 					autoShipmentBenefitData.autoShipment.maxNoOfAutos, COREFLEXConstants.MAX_NUMBER_OF_AUTOS);
+			CoreFunctions.verifyText(_inputMinimumMileageForShipment.getDomProperty("value"),
+					autoShipmentBenefitData.autoShipment.minimumMileageForShipment,
+					COREFLEXConstants.MIN_MILEAGE_FOR_SHIPMENT_TO_BE_AUTHORIZED);
+			CoreFunctions.verifyText(_inputMinimumKilometersForShipment.getDomProperty("value"),
+					autoShipmentBenefitData.autoShipment.minimumKilometersForShipment,
+					COREFLEXConstants.MIN_KILOMETERS_FOR_SHIPMENT_TO_BE_AUTHORIZED);
+			CoreFunctions.verifyRadioButtonSelection(driver, _radioBtnRentalCarProvidedDuringTransit,
+					_radioBtnRentalCarProvidedDuringTransitButtonList,
+					autoShipmentBenefitData.autoShipment.rentalCarProvidedDuringTransit,
+					COREFLEXConstants.RENTAL_CAR_PROVIDED_DURING_TRANSIT);
+			if (autoShipmentBenefitData.autoShipment.rentalCarProvidedDuringTransit
+					.equalsIgnoreCase(COREFLEXConstants.YES)) {
+				CoreFunctions.verifyText(_inputMaxNumberOfDays.getDomProperty("value"),
+						autoShipmentBenefitData.autoShipment.maxNumberOfDays, COREFLEXConstants.MAX_NUMBER_OF_DAYS);
+			}
 			CoreFunctions.verifyRadioButtonSelection(driver, _radioInsuranceType, _radioInsuranceTypeButtonList,
 					autoShipmentBenefitData.autoShipment.insuranceType, COREFLEXConstants.INSURANCE_TYPE);
 			if (autoShipmentBenefitData.autoShipment.insuranceType.equalsIgnoreCase(COREFLEXConstants.OTHER)) {

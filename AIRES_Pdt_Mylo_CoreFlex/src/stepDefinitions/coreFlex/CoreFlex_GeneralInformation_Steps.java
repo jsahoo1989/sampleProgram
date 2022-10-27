@@ -22,7 +22,7 @@ import com.aires.pages.pdt.PDT_GeneralInformationPage;
 import com.aires.pages.pdt.PDT_LoginPage;
 import com.aires.pages.pdt.PDT_PolicyBenefitCategoryPage;
 import com.aires.pages.pdt.PDT_ViewPolicyPage;
-import com.aires.testdatatypes.pdt.PDT_LoginDetails;
+import com.aires.testdatatypes.coreflex.CoreFlex_LoginInfo;
 
 import cucumber.api.DataTable;
 import cucumber.api.java.en.Given;
@@ -37,7 +37,9 @@ public class CoreFlex_GeneralInformation_Steps {
 	private PDT_GeneralInformationPage generalInfoPage;
 	private CoreFlex_FlexPolicySetupPage flexPolicySetupPage;
 	private PDT_PolicyBenefitCategoryPage pdtPolicyBenefitCategoryPage;
-	private PDT_LoginDetails _loginDetails = null;
+	
+	private CoreFlex_LoginInfo _loginInfo = FileReaderManager.getInstance().getCoreFlexJsonReader()
+			.getLoginInfoByEnviroment((CoreFunctions.getPropertyFromConfig("envt").toLowerCase()));
 
 	public CoreFlex_GeneralInformation_Steps(TestContext context) {
 		testContext = context;
@@ -74,9 +76,9 @@ public class CoreFlex_GeneralInformation_Steps {
 			String tabName) throws Throwable {
 		testContext.getBasePage().invokeIrisApplication();
 		//_loginDetails = FileReaderManager.getInstance().getJsonReader().getLoginByApplication("IRIS");
-		_loginDetails = FileReaderManager.getInstance().getJsonReader().getLoginByApplication(CoreFunctions.getPropertyFromConfig("application").toLowerCase());
+//		_loginDetails = FileReaderManager.getInstance().getJsonReader().getLoginByApplication(CoreFunctions.getPropertyFromConfig("application").toLowerCase());
 		testContext.getIrisPageManager().irisLoginPage = new IRIS_LoginPage();
-		testContext.getIrisPageManager().irisLoginPage.getIRISLoginAsPerEnvt(_loginDetails);
+		testContext.getIrisPageManager().irisLoginPage.getIRISLoginAsPerEnvt(_loginInfo);
 		testContext.getIrisPageManager().irisWelcome12C = new IRIS_Welcome12C();
 		testContext.getIrisPageManager().irisWelcome12C.selectWelcomeWindowModule(tabName);
 		testContext.getIrisPageManager().irisCorporationMain = new IRIS_Corporation_Main();

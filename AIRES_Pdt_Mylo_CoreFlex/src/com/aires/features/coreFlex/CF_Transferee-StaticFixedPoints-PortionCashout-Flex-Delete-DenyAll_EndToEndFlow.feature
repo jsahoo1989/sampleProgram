@@ -1,6 +1,6 @@
 Feature: Validate the CoreFlex End-To-End Business Test Flow(BluePrint, MXTransferee,Transferee Submissions) for Flex_Transferee_StaticFixedPoints_PortionCashout_Delete_DenyAll selection
 
-  @End-To-End_CoreFlex @End-To-End_MXTransferee @CF_MXTransferee_StaticFixed_PortionCashout_DenyAllRequest_Flex
+  @End-To-End_CoreFlex @End-To-End_MXTransferee @CF_MXTransferee_StaticFixed_PortionCashout_DenyAllRequest_Flex_PF
   Scenario: CoreFlex - Creating & Validating a new Active Points Based CoreFlex Policy with Transferee, Static/Fixed and PortionCashout selection
     Given he has setup a new Points Based CoreFlex Policy with following selection in Blueprint application
       | Person Responsible For Benefit Selection | Flex Setup Type | Cashout Availability | BenefitType | PolicyRequiredFor | MileStones |

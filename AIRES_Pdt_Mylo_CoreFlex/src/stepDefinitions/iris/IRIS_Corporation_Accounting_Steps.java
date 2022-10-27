@@ -5,6 +5,7 @@ import java.util.Map;
 
 import org.testng.Assert;
 
+import com.aires.businessrules.CoreFunctions;
 import com.aires.businessrules.constants.IRISConstants;
 import com.aires.cucumber.TestContext;
 import com.aires.managers.FileReaderManager;
@@ -14,7 +15,7 @@ import com.aires.pages.iris.IRIS_Corporation_Accounting;
 import com.aires.pages.iris.IRIS_Corporation_Main;
 import com.aires.pages.iris.IRIS_LoginPage;
 import com.aires.pages.iris.IRIS_Welcome12C;
-import com.aires.testdatatypes.pdt.PDT_LoginDetails;
+import com.aires.testdatatypes.coreflex.CoreFlex_LoginInfo;
 
 import cucumber.api.DataTable;
 import cucumber.api.java.en.Given;
@@ -26,7 +27,9 @@ public class IRIS_Corporation_Accounting_Steps {
 	private TestContext _testContext;
 	WebDriverManager _webDriverManager;
 	PageObjectManager_Pdt _pageObjectManager;
-	private PDT_LoginDetails _loginDetails;
+	
+	private CoreFlex_LoginInfo _loginInfo = FileReaderManager.getInstance().getCoreFlexJsonReader()
+			.getLoginInfoByEnviroment((CoreFunctions.getPropertyFromConfig("envt").toLowerCase()));
 
 	public IRIS_Corporation_Accounting_Steps(TestContext testContext) {
 		_testContext = testContext;
@@ -69,9 +72,9 @@ public class IRIS_Corporation_Accounting_Steps {
 			String tabName, String corporationId) throws Throwable {
 		_testContext.getBasePage().cleanIrisProcesses();
 		_testContext.getBasePage().invokeIrisApplication();
-		_loginDetails = FileReaderManager.getInstance().getJsonReader().getLoginByApplication("IRIS");
+//		_loginDetails = FileReaderManager.getInstance().getJsonReader().getLoginByApplication("IRIS");
 		_testContext.getIrisPageManager().irisLoginPage = new IRIS_LoginPage();
-		_testContext.getIrisPageManager().irisLoginPage.getIRISLoginAsPerEnvt(_loginDetails);
+		_testContext.getIrisPageManager().irisLoginPage.getIRISLoginAsPerEnvt(_loginInfo);
 		_testContext.getIrisPageManager().irisWelcome12C = new IRIS_Welcome12C();
 		_testContext.getIrisPageManager().irisWelcome12C.selectWelcomeWindowModule(IRISConstants.CORPORATION_MODULE);
 		_testContext.getIrisPageManager().irisCorporationMain = new IRIS_Corporation_Main();

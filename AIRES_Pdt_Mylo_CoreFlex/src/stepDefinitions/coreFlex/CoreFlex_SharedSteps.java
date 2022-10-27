@@ -7,7 +7,6 @@ import java.util.Map;
 
 import org.testng.Assert;
 
-import com.aires.businessrules.BusinessFunctions;
 import com.aires.businessrules.CoreFunctions;
 import com.aires.businessrules.constants.COREFLEXConstants;
 import com.aires.businessrules.constants.CoreConstants;
@@ -41,9 +40,9 @@ import com.aires.pages.pdt.PDT_AddNewPolicyPage;
 import com.aires.pages.pdt.PDT_GeneralInformationPage;
 import com.aires.pages.pdt.PDT_LoginPage;
 import com.aires.pages.pdt.PDT_ViewPolicyPage;
+import com.aires.testdatatypes.coreflex.CoreFlex_LoginInfo;
 import com.aires.testdatatypes.coreflex.TransfereeSubmissions_LoginData;
 import com.aires.testdatatypes.iris.IRIS_AssignmentData;
-import com.aires.testdatatypes.pdt.PDT_LoginDetails;
 import com.vimalselvam.cucumber.listener.Reporter;
 
 import cucumber.api.DataTable;
@@ -56,13 +55,12 @@ public class CoreFlex_SharedSteps {
 	private TestContext testContext;
 	private PDT_ViewPolicyPage viewPolicyPage;
 	private PDT_AddNewPolicyPage addNewPolicyPage;
-	private PDT_LoginDetails _loginDetails;
 	private PDT_LoginPage loginPage;
 	private PDT_GeneralInformationPage generalInfoPage;
 	private CoreFlex_FlexPolicySetupPage flexPolicySetupPage;
 	private CoreFlex_PolicyBenefitsCategoriesPage coreFlexPolicyBenefitsCategoriesPage;
 	private CoreFlex_CustomBundlesPage coreFlexCustomBundlesPage;
-	private CoreFlex_BenefitSummaryPage coreFlexBenefitSummaryPage;	
+	private CoreFlex_BenefitSummaryPage coreFlexBenefitSummaryPage;
 	private MobilityX_LoginPage mobilityXLoginPage;
 	private MX_Transferee_JourneyHomePage mxTransfereeJourneyHomePage;
 	private MX_Transferee_FlexPlanningTool_Page mxTransfereeFlexPlanningToolPage;
@@ -72,12 +70,12 @@ public class CoreFlex_SharedSteps {
 	private CoreFlex_PreviewTransfereePage coreFlexTransfereePreviewPage;
 	private CoreFlex_BluePrint_LoginPage bluePrintCFLoginPage;
 	private TransfereeSubmissions_DetailsPage transfereeSubmissionsDetailsPage;
-	
+
 	private MX_Transferee_MyProfilePage mxTransfereeMyProfilePage;
 
 	int _initialTableRowCount = 0;
-	private PDT_LoginDetails _loginDetailsApplication = FileReaderManager.getInstance().getJsonReader()
-			.getLoginByApplication(CoreFunctions.getPropertyFromConfig("application").toLowerCase());
+	private CoreFlex_LoginInfo _loginInfo = FileReaderManager.getInstance().getCoreFlexJsonReader()
+			.getLoginInfoByEnviroment((CoreFunctions.getPropertyFromConfig("envt").toLowerCase()));
 
 	public CoreFlex_SharedSteps(TestContext context) {
 		testContext = context;
@@ -91,7 +89,7 @@ public class CoreFlex_SharedSteps {
 		coreFlexPolicyBenefitsCategoriesPage = testContext.getCoreFlexPageObjectManager()
 				.getCoreFlexPolicyBenefitsCategoriesPage();
 		coreFlexCustomBundlesPage = testContext.getCoreFlexPageObjectManager().getCoreFlexCustomBundlesPage();
-		
+
 		coreFlexBenefitSummaryPage = testContext.getCoreFlexPageObjectManager().getCoreFlexBenefitSummaryPage();
 		mobilityXLoginPage = testContext.getCoreFlexPageObjectManager().getMobilityXLoginPage();
 		mxTransfereeJourneyHomePage = testContext.getCoreFlexPageObjectManager().getMXTransfereeJourneyHomePage();
@@ -102,12 +100,12 @@ public class CoreFlex_SharedSteps {
 		transfereeSubmissionsLoginPage = testContext.getCoreFlexPageObjectManager().getTransfereeSubmissionsLoginPage();
 		transfereeSubmissionsDashboardHomePage = testContext.getCoreFlexPageObjectManager()
 				.getTransfereeSubmissionsDashboardHomePage();
-		
+
 		coreFlexTransfereePreviewPage = testContext.getCoreFlexPageObjectManager().getCoreFlexTransfereePreviewPage();
 		bluePrintCFLoginPage = testContext.getPageObjectManager().getBluePrintCoreFlexLoginPage();
 		transfereeSubmissionsDetailsPage = testContext.getCoreFlexPageObjectManager()
 				.getTransfereeSubmissionsDetailsPage();
-		
+
 		mxTransfereeMyProfilePage = testContext.getCoreFlexPageObjectManager().getTransfereeMyProfilePage();
 	}
 
@@ -137,9 +135,9 @@ public class CoreFlex_SharedSteps {
 				MessageFormat.format(PDTConstants.FAILED_TO_SELECT_POLICY_FROM_POLICY_NAME_FIELD, CoreConstants.FAIL));
 
 		testContext.getBasePage().invokeIrisApplication();
-		_loginDetails = FileReaderManager.getInstance().getJsonReader().getLoginByApplication("IRIS");
+//		_loginDetails = FileReaderManager.getInstance().getJsonReader().getLoginByApplication("IRIS");
 		testContext.getIrisPageManager().irisLoginPage = new IRIS_LoginPage();
-		testContext.getIrisPageManager().irisLoginPage.getIRISLoginAsPerEnvt(_loginDetails);
+		testContext.getIrisPageManager().irisLoginPage.getIRISLoginAsPerEnvt(_loginInfo);
 		testContext.getIrisPageManager().irisWelcome12C = new IRIS_Welcome12C();
 		testContext.getIrisPageManager().irisWelcome12C.selectWelcomeWindowModule(IRISConstants.CORPORATION_MODULE);
 		testContext.getIrisPageManager().irisCorporationMain = new IRIS_Corporation_Main();
@@ -247,7 +245,7 @@ public class CoreFlex_SharedSteps {
 		Assert.assertTrue(bluePrintCFLoginPage.loginByUserType(PDTConstants.CSM, viewPolicyPage),
 				MessageFormat.format(PDTConstants.FAILED_TO_VERIFY_LOGGED_IN_USER, CoreConstants.FAIL));
 		CoreConstants.TIME_BEFORE_ACTION = new Date().getTime();
-		viewPolicyPage.clickElementOfPage(PDTConstants.ADD_NEW_POLICY_FORM);	
+		viewPolicyPage.clickElementOfPage(PDTConstants.ADD_NEW_POLICY_FORM);
 		Assert.assertTrue(addNewPolicyPage.verifyAddNewPolicyHeading(COREFLEXConstants.ADD_NEW_POLICY_PAGE),
 				MessageFormat.format(PDTConstants.FAILED_TO_VERIFY_HEADING_ON_PAGE, CoreConstants.FAIL,
 						COREFLEXConstants.ADD_NEW_POLICY_PAGE, PDTConstants.ADD_NEW_POLICY_FORM,
@@ -262,8 +260,7 @@ public class CoreFlex_SharedSteps {
 //		Assert.assertTrue(addNewPolicyPage.selectAPolicy(addNewPolicyPage.getFirstAvailablePolicyOption()),
 //				MessageFormat.format(PDTConstants.FAILED_TO_SELECT_POLICY_FROM_POLICY_NAME_FIELD, CoreConstants.FAIL));
 
-		addNewPolicyPage.selectClient(BusinessFunctions.getClientAndPolicyDetails(_loginDetailsApplication)[0],
-				BusinessFunctions.getClientAndPolicyDetails(_loginDetailsApplication)[1]);
+		addNewPolicyPage.selectClient(_loginInfo.details.clientId, _loginInfo.details.clientName);
 		Assert.assertTrue(addNewPolicyPage.selectAutomationPolicy(),
 				MessageFormat.format(PDTConstants.FAILED_TO_SELECT_POLICY_FROM_POLICY_NAME_FIELD, CoreConstants.FAIL));
 
@@ -360,7 +357,7 @@ public class CoreFlex_SharedSteps {
 				MessageFormat.format(
 						COREFLEXConstants.FAILED_TO_VERIFY_POLICY_CATEGORIES_BENEFITS_AND_ORDER_ON_POLICY_BENEFITS_CATEGORIES_PAGE,
 						CoreConstants.FAIL));
-		coreFlexPolicyBenefitsCategoriesPage.selectBenefits(benefitType, policyRequiredFor, numberOfMilestones);
+		coreFlexPolicyBenefitsCategoriesPage.selectBenefits(benefitType, policyRequiredFor);
 		coreFlexPolicyBenefitsCategoriesPage.clickElementOfPage(PDTConstants.NEXT);
 
 		Assert.assertTrue(coreFlexPolicyBenefitsCategoriesPage.verifyInformationDialog(), MessageFormat.format(
@@ -370,7 +367,7 @@ public class CoreFlex_SharedSteps {
 		CoreConstants.TIME_BEFORE_ACTION = new Date().getTime();
 		Assert.assertTrue(
 				coreFlexPolicyBenefitsCategoriesPage.verifyBenefitsDisplayedOnLeftNavigation(benefitType,
-						policyRequiredFor, numberOfMilestones),
+						policyRequiredFor),
 				MessageFormat.format(COREFLEXConstants.FAILED_TO_VERIFY_BENEFITS_DISPLAYED_ON_LEFT_NAVIGATION,
 						CoreConstants.FAIL));
 		CoreConstants.TIME_AFTER_ACTION = new Date().getTime();
@@ -378,8 +375,8 @@ public class CoreFlex_SharedSteps {
 				+ CoreFunctions.calculatePageLoadTime(CoreConstants.TIME_BEFORE_ACTION, CoreConstants.TIME_AFTER_ACTION)
 				+ " Seconds </b>");
 
-		Assert.assertTrue(coreFlexPolicyBenefitsCategoriesPage.selectAndFillAddedBenefits(benefitType,
-				 policyRequiredFor, numberOfMilestones),
+		Assert.assertTrue(
+				coreFlexPolicyBenefitsCategoriesPage.selectAndFillAddedBenefits(benefitType, policyRequiredFor),
 				MessageFormat.format(COREFLEXConstants.FAILED_TO_SELECT_AND_FILL_ADDED_BENEFITS, CoreConstants.FAIL));
 
 		CoreConstants.TIME_BEFORE_ACTION = new Date().getTime();
@@ -392,8 +389,7 @@ public class CoreFlex_SharedSteps {
 				+ CoreFunctions.calculatePageLoadTime(CoreConstants.TIME_BEFORE_ACTION, CoreConstants.TIME_AFTER_ACTION)
 				+ " Seconds </b>");
 
-		Assert.assertTrue(
-				coreFlexBenefitSummaryPage.iterateAndVerifyBenefitSummaryDetails(policyRequiredFor, numberOfMilestones),
+		Assert.assertTrue(coreFlexBenefitSummaryPage.iterateAndVerifyBenefitSummaryDetails(policyRequiredFor),
 				MessageFormat.format(
 						COREFLEXConstants.FAILED_TO_VERIFY_BENEFIT_SUBBENEFIT_DETAILS_ON_BENEFIT_SUMMARY_PAGE,
 						CoreConstants.FAIL));
@@ -410,7 +406,7 @@ public class CoreFlex_SharedSteps {
 
 		Assert.assertTrue(
 				coreFlexCustomBundlesPage.iterateAndAddNewCustomBundle(COREFLEXConstants.ADD_NEW_CUSTOM_BUNDLE,
-						benefitType, COREFLEXConstants.SAVE_CUSTOM_BUNDLE, policyRequiredFor, numberOfMilestones),
+						benefitType, COREFLEXConstants.SAVE_CUSTOM_BUNDLE, policyRequiredFor),
 				MessageFormat.format(COREFLEXConstants.FAILED_TO_ADD_A_NEW_BUNDLE_ON_CUSTOM_BUNDLES_PAGE,
 						CoreConstants.FAIL));
 		coreFlexCustomBundlesPage.clickElementOfPage(COREFLEXConstants.PREVIEW_TRANSFEREE_EXPERIENCE);
@@ -575,6 +571,7 @@ public class CoreFlex_SharedSteps {
 	@Given("^he has logged into 'MobilityX' application after creating a new 'Transferee' through IRIS application for policy setup in 'Policy Digitization Tool'$")
 	public void he_has_logged_into_MobilityX_application_after_creating_a_new_Transferee_through_IRIS_application_for_policy_setup_in_Policy_Digitization_Tool()
 			throws Throwable {
+
 		Assert.assertTrue(mobilityXLoginPage.verifyPageNavigation(),
 				MessageFormat.format(COREFLEXConstants.FAILED_TO_NAVIGATE_TO_MOBILITYX_LOGIN_PAGE, CoreConstants.FAIL));
 		CoreConstants.TIME_AFTER_ACTION = new Date().getTime();
@@ -582,71 +579,60 @@ public class CoreFlex_SharedSteps {
 				+ CoreFunctions.calculatePageLoadTime(CoreConstants.TIME_BEFORE_ACTION, CoreConstants.TIME_AFTER_ACTION)
 				+ " Seconds </b>");
 
-		testContext.getBasePage().reLaunchIrisToAvoidFreezingIssue();
-//		testContext.getBasePage().invokeIrisApplication();
-//		testContext.getBasePage().killExistingBrowsers();
-		testContext.getIrisPageManager().irisLoginPage = new IRIS_LoginPage();
-		testContext.getIrisPageManager().irisLoginPage.getIRISLoginAsPerEnvt(_loginDetailsApplication);
-		testContext.getIrisPageManager().irisWelcome12C = new IRIS_Welcome12C();
-		testContext.getIrisPageManager().irisWelcome12C.selectWelcomeWindowModule(IRISConstants.ASSIGNMENT_TAB);
-		testContext.getIrisPageManager().irisAssignmentOverviewPage = new IRIS_AssignmentOverviewPage();
-		Assert.assertTrue(testContext.getIrisPageManager().irisAssignmentOverviewPage.verifyOverviewTab(), MessageFormat
-				.format(IRISConstants.FAIL_TO_VERIFY_CURRENT_TAB, CoreConstants.FAIL, IRISConstants.OVERVIEW));
-		IRIS_AssignmentData assignmentOverviewData = FileReaderManager.getInstance().getIrisJsonReader()
-				.getAssignmentDataByTabName(IRISConstants.OVERVIEW);
-		testContext.getIrisPageManager().irisAssignmentOverviewPage.selectNewAssignmentFromFileMenu();
-		testContext.getIrisPageManager().irisAssignmentOverviewPage.addDetailsOnOverviewTabForNewAssignment(
-				assignmentOverviewData, CoreFunctions.getPropertyFromConfig("Policy_ClientID"),
-				CoreFunctions.getPropertyFromConfig("Assignment_Policy"));
-		IRIS_AssignmentData assignmentTransfereeData = FileReaderManager.getInstance().getIrisJsonReader()
-				.getAssignmentDataByTabName(IRISConstants.TRANSFEREE_AND_FAMILY);
-		testContext.getIrisPageManager().irisAssignmentOverviewPage.switchTab(IRISConstants.TRANSFEREE_AND_FAMILY);
-		testContext
-				.getIrisPageManager().irisAssignmentTransfereeAndFamilyPage = new IRIS_AssignmentTransfereeNFamilyPage();
-		testContext.getIrisPageManager().irisAssignmentTransfereeAndFamilyPage
-				.verifyTransfereeAndFamilyTab(IRISConstants.TRANSFEREE_AND_FAMILY);
-		testContext.getIrisPageManager().irisAssignmentTransfereeAndFamilyPage
-				.addNewTransfereeDetails(assignmentTransfereeData);
-		Assert.assertTrue(
-				testContext.getIrisPageManager().irisAssignmentTransfereeAndFamilyPage
-						.saveTransferee(IRISConstants.NEW_TRANSFEREE_CREATED_SUCCESS_MSG),
-				IRISConstants.NEW_TRANSFEREE_CREATED_SUCCESS_MSG + " Message " + IRISConstants.IS_NOT_DISPLAYED);
-		testContext.getIrisPageManager().irisAssignmentTransfereeAndFamilyPage.addTransfereeIdentityDetails();
-		testContext.getIrisPageManager().irisAssignmentOverviewPage.switchTab(IRISConstants.ACTIVITY_FINANCE_TAB);
-		testContext.getIrisPageManager().irisActivityAndFinancePage = new IRIS_ActivityAndFinancePage();
-		Assert.assertTrue(testContext.getIrisPageManager().irisActivityAndFinancePage.verifyActivityAndFinanceTab(),
-				MessageFormat.format(IRISConstants.FAIL_TO_VERIFY_CURRENT_TAB, CoreConstants.FAIL,
-						IRISConstants.ACTIVITY_AND_FINANCE));
-		testContext.getIrisPageManager().irisActivityAndFinancePage.displayActivityTable();
-		testContext.getIrisPageManager().irisActivityAndFinancePage.actualizeTracingPrompt(IRISConstants.ACT_DATE,
-				IRISConstants.ACTIVITY, IRISConstants.MAKE_FIRST_CONTACT);
-		testContext.getIrisPageManager().irisActivityAndFinancePage.clickOnSaveBtn();
-		testContext.getIrisPageManager().irisActivityAndFinancePage.sendLoginCredentials(IRISConstants.YES,
-				IRISConstants.SEND_CREDENTIALS, IRISConstants.SEND_USER_LOGIN_MSG);
-//		testContext.getIrisPageManager().irisActivityAndFinancePage.acceptIdentityChallengeQuestionDialog();
-		Assert.assertTrue(
-				testContext.getIrisPageManager().irisActivityAndFinancePage
-						.relonetCredentialsSent(IRISConstants.SUCCESS_MSG, IRISConstants.MESSAGE_DIALOG),
-				MessageFormat.format(IRISConstants.FAILED_TO_VERIFY_MESSAGE, CoreConstants.FAIL,
-						IRISConstants.SUCCESS_MSG));
-		testContext.getBasePage().cleanIrisProcesses();
-
-		testContext.getBasePage().reLaunchIrisToAvoidFreezingIssue();
-		testContext.getIrisPageManager().irisLoginPage = new IRIS_LoginPage();
-		testContext.getIrisPageManager().irisLoginPage.getIRISLoginAsPerEnvt(_loginDetailsApplication);
-		testContext.getIrisPageManager().irisWelcome12C = new IRIS_Welcome12C();
-		testContext.getIrisPageManager().irisWelcome12C.selectWelcomeWindowModule(IRISConstants.ASSIGNMENT_TAB);
-		testContext.getIrisPageManager().irisAssignmentOverviewPage = new IRIS_AssignmentOverviewPage();
-		Assert.assertTrue(testContext.getIrisPageManager().irisAssignmentOverviewPage.verifyOverviewTab(), MessageFormat
-				.format(IRISConstants.FAIL_TO_VERIFY_CURRENT_TAB, CoreConstants.FAIL, IRISConstants.OVERVIEW));
-		testContext.getIrisPageManager().irisAssignmentOverviewPage
-				.queryFile(CoreFunctions.getPropertyFromConfig("Assignment_FileID"));
-		testContext.getIrisPageManager().irisAssignmentOverviewPage.acceptFailedImageLoadDialog();
-		testContext.getIrisPageManager().irisAssignmentOverviewPage.setFileStatus(IRISConstants.ACTIVATE);
-		testContext.getBasePage().cleanIrisProcesses();
-
-		Assert.assertTrue(mobilityXLoginPage.readCredentialsFromMail(), MessageFormat
-				.format(MobilityXConstants.FAILED_TO_READ_USER_CREDENTIALS_FROM_GENERATED_EMAIL, CoreConstants.FAIL));
+//		testContext.getBasePage().reLaunchIrisToAvoidFreezingIssue();
+////		testContext.getBasePage().invokeIrisApplication();
+////		testContext.getBasePage().killExistingBrowsers();
+//		testContext.getIrisPageManager().irisLoginPage = new IRIS_LoginPage();
+//		testContext.getIrisPageManager().irisLoginPage.getIRISLoginAsPerEnvt(_loginInfo);
+//		testContext.getIrisPageManager().irisWelcome12C = new IRIS_Welcome12C();
+//		testContext.getIrisPageManager().irisWelcome12C.selectWelcomeWindowModule(IRISConstants.ASSIGNMENT_TAB);
+//		testContext.getIrisPageManager().irisAssignmentOverviewPage = new IRIS_AssignmentOverviewPage();
+//		Assert.assertTrue(testContext.getIrisPageManager().irisAssignmentOverviewPage.verifyOverviewTab(), MessageFormat
+//				.format(IRISConstants.FAIL_TO_VERIFY_CURRENT_TAB, CoreConstants.FAIL, IRISConstants.OVERVIEW));
+//		IRIS_AssignmentData assignmentOverviewData = FileReaderManager.getInstance().getIrisJsonReader()
+//				.getAssignmentDataByTabName(IRISConstants.OVERVIEW);
+//		testContext.getIrisPageManager().irisAssignmentOverviewPage.selectNewAssignmentFromFileMenu();
+//		testContext.getIrisPageManager().irisAssignmentOverviewPage.addDetailsOnOverviewTabForNewAssignment(
+//				assignmentOverviewData, CoreFunctions.getPropertyFromConfig("Policy_ClientID"),
+//				CoreFunctions.getPropertyFromConfig("Assignment_Policy"));
+//		IRIS_AssignmentData assignmentTransfereeData = FileReaderManager.getInstance().getIrisJsonReader()
+//				.getAssignmentDataByTabName(IRISConstants.TRANSFEREE_AND_FAMILY);
+//		testContext.getIrisPageManager().irisAssignmentOverviewPage.switchTab(IRISConstants.TRANSFEREE_AND_FAMILY);
+//		testContext
+//				.getIrisPageManager().irisAssignmentTransfereeAndFamilyPage = new IRIS_AssignmentTransfereeNFamilyPage();
+//		testContext.getIrisPageManager().irisAssignmentTransfereeAndFamilyPage
+//				.verifyTransfereeAndFamilyTab(IRISConstants.TRANSFEREE_AND_FAMILY);
+//		testContext.getIrisPageManager().irisAssignmentTransfereeAndFamilyPage
+//				.addNewTransfereeDetails(assignmentTransfereeData);		
+//		Assert.assertTrue(
+//				testContext.getIrisPageManager().irisAssignmentTransfereeAndFamilyPage
+//						.saveTransferee(IRISConstants.NEW_TRANSFEREE_CREATED_SUCCESS_MSG),
+//				IRISConstants.NEW_TRANSFEREE_CREATED_SUCCESS_MSG + " Message " + IRISConstants.IS_NOT_DISPLAYED);
+//		testContext.getIrisPageManager().irisAssignmentTransfereeAndFamilyPage.addTransfereeIdentityDetails();
+//		testContext.getIrisPageManager().irisAssignmentTransfereeAndFamilyPage
+//		.addNewFamilyDetails(assignmentTransfereeData);
+//		testContext.getIrisPageManager().irisAssignmentOverviewPage.switchTab(IRISConstants.ACTIVITY_FINANCE_TAB);
+//		testContext.getIrisPageManager().irisActivityAndFinancePage = new IRIS_ActivityAndFinancePage();
+//		Assert.assertTrue(testContext.getIrisPageManager().irisActivityAndFinancePage.verifyActivityAndFinanceTab(),
+//				MessageFormat.format(IRISConstants.FAIL_TO_VERIFY_CURRENT_TAB, CoreConstants.FAIL,
+//						IRISConstants.ACTIVITY_AND_FINANCE));
+//		testContext.getIrisPageManager().irisActivityAndFinancePage.displayActivityTable();
+//		testContext.getIrisPageManager().irisActivityAndFinancePage.actualizeTracingPrompt(IRISConstants.ACT_DATE,
+//				IRISConstants.ACTIVITY, IRISConstants.MAKE_FIRST_CONTACT);
+//		testContext.getIrisPageManager().irisActivityAndFinancePage.clickOnSaveBtn();
+//		testContext.getIrisPageManager().irisActivityAndFinancePage.sendLoginCredentials(IRISConstants.YES,
+//				IRISConstants.SEND_CREDENTIALS, IRISConstants.SEND_USER_LOGIN_MSG);
+////		testContext.getIrisPageManager().irisActivityAndFinancePage.acceptIdentityChallengeQuestionDialog();
+//		Assert.assertTrue(
+//				testContext.getIrisPageManager().irisActivityAndFinancePage
+//						.relonetCredentialsSent(IRISConstants.SUCCESS_MSG, IRISConstants.MESSAGE_DIALOG),
+//				MessageFormat.format(IRISConstants.FAILED_TO_VERIFY_MESSAGE, CoreConstants.FAIL,
+//						IRISConstants.SUCCESS_MSG));
+//		testContext.getIrisPageManager().irisAssignmentOverviewPage.setFileStatus(IRISConstants.ACTIVATE);
+//		testContext.getBasePage().cleanIrisProcesses();
+//
+//		Assert.assertTrue(mobilityXLoginPage.readCredentialsFromMail(), MessageFormat
+//				.format(MobilityXConstants.FAILED_TO_READ_USER_CREDENTIALS_FROM_GENERATED_EMAIL, CoreConstants.FAIL));
 		mobilityXLoginPage.enterUsernameAndPasswordForMobilityX(
 				CoreFunctions.getPropertyFromConfig("Transferee_UserNameInEMail"),
 				CoreFunctions.getPropertyFromConfig("Transferee_PasswordInEMail"));
@@ -944,7 +930,7 @@ public class CoreFlex_SharedSteps {
 		Assert.assertTrue(mxTransfereeMyBenefitsBundlePage.validateSubmittedBenefitDetails(),
 				MobilityXConstants.SUBMITTED_BENEFIT_DETAILS_NOT_MATCHED);
 	}
-	
+
 	@Given("^he has verified submitted Benefit_Cashout details under 'Submitted Benefits' section of 'My Benefits Bundle' page$")
 	public void he_has_verified_submitted_Benefit_Cashout_details_under_Submitted_Benefits_section_of_my_benefits_bundle_page() {
 		Assert.assertTrue(mxTransfereeMyBenefitsBundlePage.isMyBundlePageDisplayed(),
@@ -982,7 +968,7 @@ public class CoreFlex_SharedSteps {
 			throws Throwable {
 		testContext.getBasePage().reLaunchIrisToAvoidFreezingIssue();
 		testContext.getIrisPageManager().irisLoginPage = new IRIS_LoginPage();
-		testContext.getIrisPageManager().irisLoginPage.getIRISLoginAsPerEnvt(_loginDetailsApplication);
+		testContext.getIrisPageManager().irisLoginPage.getIRISLoginAsPerEnvt(_loginInfo);
 		testContext.getIrisPageManager().irisWelcome12C = new IRIS_Welcome12C();
 		testContext.getIrisPageManager().irisWelcome12C.selectWelcomeWindowModule(IRISConstants.ASSIGNMENT_TAB);
 		testContext.getIrisPageManager().irisAssignmentOverviewPage = new IRIS_AssignmentOverviewPage();
@@ -1029,7 +1015,7 @@ public class CoreFlex_SharedSteps {
 		testContext.getBasePage().cleanIrisProcesses();
 		testContext.getBasePage().invokeIrisApplication();
 		testContext.getIrisPageManager().irisLoginPage = new IRIS_LoginPage();
-		testContext.getIrisPageManager().irisLoginPage.getIRISLoginAsPerEnvt(_loginDetailsApplication);
+		testContext.getIrisPageManager().irisLoginPage.getIRISLoginAsPerEnvt(_loginInfo);
 		testContext.getIrisPageManager().irisWelcome12C = new IRIS_Welcome12C();
 		testContext.getIrisPageManager().irisWelcome12C.selectWelcomeWindowModule(IRISConstants.ASSIGNMENT_TAB);
 		testContext.getIrisPageManager().irisAssignmentOverviewPage = new IRIS_AssignmentOverviewPage();
@@ -1054,7 +1040,7 @@ public class CoreFlex_SharedSteps {
 
 		testContext.getBasePage().reLaunchIrisToAvoidFreezingIssue();
 		testContext.getIrisPageManager().irisLoginPage = new IRIS_LoginPage();
-		testContext.getIrisPageManager().irisLoginPage.getIRISLoginAsPerEnvt(_loginDetailsApplication);
+		testContext.getIrisPageManager().irisLoginPage.getIRISLoginAsPerEnvt(_loginInfo);
 		testContext.getIrisPageManager().irisWelcome12C = new IRIS_Welcome12C();
 		testContext.getIrisPageManager().irisWelcome12C.selectWelcomeWindowModule(IRISConstants.ASSIGNMENT_TAB);
 		testContext.getIrisPageManager().irisAssignmentOverviewPage = new IRIS_AssignmentOverviewPage();
@@ -1098,15 +1084,14 @@ public class CoreFlex_SharedSteps {
 		mxTransfereeJourneyHomePage.handle_Cookie_AfterLogin();
 		mxTransfereeJourneyHomePage.handle_points_expiry_reminder_popup();
 	}
-	
+
 	@Given("^he has setup a new Points Based CoreFlex Policy with following selection in Blueprint application$")
 	public void he_has_setup_a_new_Points_Based_CoreFlex_Policy_with_following_selection_in_Blueprint_application(
 			DataTable dataTable) throws Throwable {
-		
+
 		resetPropertiesValue();
 		List<Map<String, String>> dataMap = dataTable.asMaps(String.class, String.class);
 		String policyRequiredFor = dataMap.get(0).get("PolicyRequiredFor");
-		String numberOfMilestones = dataMap.get(0).get("MileStones");
 		String benefitType = dataMap.get(0).get("BenefitType");
 		String flexSetupType = dataMap.get(0).get("Flex Setup Type");
 		String personResponsibleForBenefitSelection = dataMap.get(0).get("Person Responsible For Benefit Selection");
@@ -1126,8 +1111,9 @@ public class CoreFlex_SharedSteps {
 
 		Assert.assertTrue(bluePrintCFLoginPage.loginByUserType(PDTConstants.CSM, viewPolicyPage),
 				MessageFormat.format(PDTConstants.FAILED_TO_VERIFY_LOGGED_IN_USER, CoreConstants.FAIL));
-		viewPolicyPage.clickElementOfPage(PDTConstants.ADD_NEW_POLICY_FORM);	
+
 		CoreConstants.TIME_BEFORE_ACTION = new Date().getTime();
+		viewPolicyPage.clickElementOfPage(PDTConstants.ADD_NEW_POLICY_FORM);
 		Assert.assertTrue(addNewPolicyPage.verifyAddNewPolicyHeading(COREFLEXConstants.ADD_NEW_POLICY_PAGE),
 				MessageFormat.format(PDTConstants.FAILED_TO_VERIFY_HEADING_ON_PAGE, CoreConstants.FAIL,
 						COREFLEXConstants.ADD_NEW_POLICY_PAGE, PDTConstants.ADD_NEW_POLICY_FORM,
@@ -1137,14 +1123,12 @@ public class CoreFlex_SharedSteps {
 				+ CoreFunctions.calculatePageLoadTime(CoreConstants.TIME_BEFORE_ACTION, CoreConstants.TIME_AFTER_ACTION)
 				+ " Seconds </b>");
 
-		addNewPolicyPage.selectClient(BusinessFunctions.getClientAndPolicyDetails(_loginDetailsApplication)[0],
-				BusinessFunctions.getClientAndPolicyDetails(_loginDetailsApplication)[1]);
+		addNewPolicyPage.selectClient(_loginInfo.details.clientId, _loginInfo.details.clientName);
 		Assert.assertTrue(addNewPolicyPage.selectAutomationPolicy(),
 				MessageFormat.format(PDTConstants.FAILED_TO_SELECT_POLICY_FROM_POLICY_NAME_FIELD, CoreConstants.FAIL));
 
-		addNewPolicyPage.clickElementOfPage(PDTConstants.NEXT);
-
 		CoreConstants.TIME_BEFORE_ACTION = new Date().getTime();
+		addNewPolicyPage.clickElementOfPage(PDTConstants.NEXT);
 		Assert.assertTrue(generalInfoPage.verifyPageNavigation(COREFLEXConstants.GENERAL_INFORMATION_PAGE),
 				MessageFormat.format(PDTConstants.FAILED_TO_NAVIGATE_TO_COREFLEX_GENERAL_INFORMATION_PAGE,
 						CoreConstants.FAIL));
@@ -1153,28 +1137,16 @@ public class CoreFlex_SharedSteps {
 				+ CoreFunctions.calculatePageLoadTime(CoreConstants.TIME_BEFORE_ACTION, CoreConstants.TIME_AFTER_ACTION)
 				+ " Seconds </b>");
 
-		Assert.assertTrue(
-				generalInfoPage.validateClientAndPolicyDetailsOnGeneralInfo(COREFLEXConstants.GENERAL_INFORMATION_PAGE,
-						CoreFunctions.getPropertyFromConfig("Policy_ClientID"),
-						CoreFunctions.getPropertyFromConfig("Assignment_Policy")),
-				MessageFormat.format(PDTConstants.FAILED_TO_VALIDATE_CLIENT_POLICY_DATA_ON_GENERAL_INFORMATION_PAGE,
-						CoreConstants.FAIL));
-		Assert.assertTrue(
-				generalInfoPage.verifyGeneralInfoFieldDefaultValue(PDTConstants.POLICY_STATUS, PDTConstants.DRAFT),
-				MessageFormat.format(PDTConstants.FAILED_TO_VERIFY_DEFAULT_VALUE_OF_GENERAL_INFORMATION_PAGE_FIELD,
-						CoreConstants.FAIL, PDTConstants.POLICY_STATUS));
-		Assert.assertTrue(
-				generalInfoPage.verifyGeneralInfoFieldDefaultValue(PDTConstants.CORE_FLEX_POLICY, PDTConstants.YES),
-				MessageFormat.format(PDTConstants.FAILED_TO_VERIFY_DEFAULT_VALUE_OF_GENERAL_INFORMATION_PAGE_FIELD,
-						CoreConstants.FAIL, PDTConstants.CORE_FLEX_POLICY));
+		Assert.assertTrue(generalInfoPage.verifyGeneralInfoPageFieldValues(), MessageFormat
+				.format(COREFLEXConstants.FAILED_TO_VERIFY_VALUES_ON_GENERAL_INFORMATION_PAGE, CoreConstants.FAIL));
 		generalInfoPage.fillOtherMandatoryFields();
 		Assert.assertTrue(
 				generalInfoPage.selectFieldOption(PDTConstants.POINTS_BASED_FLEX_POLICY, COREFLEXConstants.YES),
 				MessageFormat.format(PDTConstants.FAILED_TO_SELECT_FIELD_OPTIONS_ON_GENERAL_INFO_PAGE,
 						CoreConstants.FAIL));
-		generalInfoPage.clickElementOfPage(PDTConstants.NEXT);
 
 		CoreConstants.TIME_BEFORE_ACTION = new Date().getTime();
+		generalInfoPage.clickElementOfPage(PDTConstants.NEXT);
 		Assert.assertTrue(flexPolicySetupPage.verifyPageNavigation(COREFLEXConstants.FLEX_POLICY_SETUP),
 				MessageFormat.format(COREFLEXConstants.FAILED_TO_VERIFY_USER_NAVIGATION_TO_FLEX_POLICY_SETUP_PAGE,
 						CoreConstants.FAIL));
@@ -1188,9 +1160,9 @@ public class CoreFlex_SharedSteps {
 				MessageFormat.format(
 						COREFLEXConstants.FAILED_TO_VERIFY_FLEX_SETUP_TYPE_SELECTION_ON_FLEX_POLICY_SETUP_PAGE,
 						CoreConstants.FAIL));
-		flexPolicySetupPage.clickElementOfPage(PDTConstants.NEXT);
 
 		CoreConstants.TIME_BEFORE_ACTION = new Date().getTime();
+		flexPolicySetupPage.clickElementOfPage(PDTConstants.NEXT);
 		Assert.assertTrue(
 				coreFlexPolicyBenefitsCategoriesPage.verifyPageNavigation(COREFLEXConstants.POLICY_BENEFIT_CATEGORIES),
 				MessageFormat.format(
@@ -1201,17 +1173,15 @@ public class CoreFlex_SharedSteps {
 				+ CoreFunctions.calculatePageLoadTime(CoreConstants.TIME_BEFORE_ACTION, CoreConstants.TIME_AFTER_ACTION)
 				+ " Seconds </b>");
 
-		coreFlexPolicyBenefitsCategoriesPage.selectBenefits(benefitType, policyRequiredFor, numberOfMilestones);
+		coreFlexPolicyBenefitsCategoriesPage.selectBenefits(benefitType, policyRequiredFor);
 		coreFlexPolicyBenefitsCategoriesPage.clickElementOfPage(PDTConstants.NEXT);
-
+		CoreConstants.TIME_BEFORE_ACTION = new Date().getTime();
 		Assert.assertTrue(coreFlexPolicyBenefitsCategoriesPage.verifyInformationDialog(), MessageFormat.format(
 				COREFLEXConstants.FAILED_TO_VERIFY_INFORMATION_DIALOG_AFTER_SELECTING_BENEFITS_AND_CLICKING_NEXT_ON_POLICY_BENEFIT_CATEGORIES_PAGE,
 				CoreConstants.FAIL));
-		
-		CoreConstants.TIME_BEFORE_ACTION = new Date().getTime();
 		Assert.assertTrue(
 				coreFlexPolicyBenefitsCategoriesPage.verifyBenefitsDisplayedOnLeftNavigation(benefitType,
-						policyRequiredFor, numberOfMilestones),
+						policyRequiredFor),
 				MessageFormat.format(COREFLEXConstants.FAILED_TO_VERIFY_BENEFITS_DISPLAYED_ON_LEFT_NAVIGATION,
 						CoreConstants.FAIL));
 		CoreConstants.TIME_AFTER_ACTION = new Date().getTime();
@@ -1219,8 +1189,8 @@ public class CoreFlex_SharedSteps {
 				+ CoreFunctions.calculatePageLoadTime(CoreConstants.TIME_BEFORE_ACTION, CoreConstants.TIME_AFTER_ACTION)
 				+ " Seconds </b>");
 
-		Assert.assertTrue(coreFlexPolicyBenefitsCategoriesPage.selectAndFillAddedBenefits(benefitType,
-				 policyRequiredFor, numberOfMilestones),
+		Assert.assertTrue(
+				coreFlexPolicyBenefitsCategoriesPage.selectAndFillAddedBenefits(benefitType, policyRequiredFor),
 				MessageFormat.format(COREFLEXConstants.FAILED_TO_SELECT_AND_FILL_ADDED_BENEFITS, CoreConstants.FAIL));
 
 		CoreConstants.TIME_BEFORE_ACTION = new Date().getTime();
@@ -1233,8 +1203,7 @@ public class CoreFlex_SharedSteps {
 				+ CoreFunctions.calculatePageLoadTime(CoreConstants.TIME_BEFORE_ACTION, CoreConstants.TIME_AFTER_ACTION)
 				+ " Seconds </b>");
 
-		Assert.assertTrue(
-				coreFlexBenefitSummaryPage.iterateAndVerifyBenefitSummaryDetails(policyRequiredFor, numberOfMilestones),
+		Assert.assertTrue(coreFlexBenefitSummaryPage.iterateAndVerifyBenefitSummaryDetails(policyRequiredFor),
 				MessageFormat.format(
 						COREFLEXConstants.FAILED_TO_VERIFY_BENEFIT_SUBBENEFIT_DETAILS_ON_BENEFIT_SUMMARY_PAGE,
 						CoreConstants.FAIL));
@@ -1251,11 +1220,11 @@ public class CoreFlex_SharedSteps {
 
 		Assert.assertTrue(
 				coreFlexCustomBundlesPage.iterateAndAddNewCustomBundle(COREFLEXConstants.ADD_NEW_CUSTOM_BUNDLE,
-						benefitType, COREFLEXConstants.SAVE_CUSTOM_BUNDLE, policyRequiredFor, numberOfMilestones),
+						benefitType, COREFLEXConstants.SAVE_CUSTOM_BUNDLE, policyRequiredFor),
 				MessageFormat.format(COREFLEXConstants.FAILED_TO_ADD_A_NEW_BUNDLE_ON_CUSTOM_BUNDLES_PAGE,
 						CoreConstants.FAIL));
 	}
-	
+
 	public void resetPropertiesValue() {
 		CoreFunctions.writeToPropertiesFile("CF_Client_AvailablePoints", "0");
 		CoreFunctions.writeToPropertiesFile("CF_Transferee_SelectedCashOutPoints", "0");

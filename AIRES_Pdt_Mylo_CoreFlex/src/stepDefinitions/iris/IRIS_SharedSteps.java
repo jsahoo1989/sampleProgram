@@ -15,8 +15,8 @@ import com.aires.pages.iris.IRIS_AssignmentServicePage;
 import com.aires.pages.iris.IRIS_AssignmentTransfereeNFamilyPage;
 import com.aires.pages.iris.IRIS_LoginPage;
 import com.aires.pages.iris.IRIS_Welcome12C;
+import com.aires.testdatatypes.coreflex.CoreFlex_LoginInfo;
 import com.aires.testdatatypes.iris.IRIS_AssignmentData;
-import com.aires.testdatatypes.pdt.PDT_LoginDetails;
 
 import cucumber.api.java.en.Given;
 import cucumber.api.java.en.Then;
@@ -25,8 +25,11 @@ import cucumber.api.java.en.When;
 public class IRIS_SharedSteps {
 	
 	private TestContext testContext;
-	private PDT_LoginDetails _loginDetails;
+	
 	int _initialTableRowCount=0;
+	
+	private CoreFlex_LoginInfo _loginInfo = FileReaderManager.getInstance().getCoreFlexJsonReader()
+			.getLoginInfoByEnviroment((CoreFunctions.getPropertyFromConfig("envt").toLowerCase()));
 	
 	public IRIS_SharedSteps(TestContext context) {
 		testContext = context;
@@ -36,9 +39,9 @@ public class IRIS_SharedSteps {
 	public void he_has_Created_and_Actualized_a_New_Transferee_in_Assignment_module_of_IRIS_Application()
 			throws Throwable {
 		// Creating and actualizing a new Transferee		
-		_loginDetails = FileReaderManager.getInstance().getJsonReader().getLoginByApplication("IRIS");
+//		_loginDetails = FileReaderManager.getInstance().getJsonReader().getLoginByApplication("IRIS");
 		testContext.getIrisPageManager().irisLoginPage = new IRIS_LoginPage();
-		testContext.getIrisPageManager().irisLoginPage.getIRISLoginAsPerEnvt(_loginDetails);
+		testContext.getIrisPageManager().irisLoginPage.getIRISLoginAsPerEnvt(_loginInfo);
 		testContext.getIrisPageManager().irisWelcome12C = new IRIS_Welcome12C();
 		testContext.getIrisPageManager().irisWelcome12C.selectWelcomeWindowModule(IRISConstants.ASSIGNMENT_TAB);
 		testContext.getIrisPageManager().irisAssignmentOverviewPage = new IRIS_AssignmentOverviewPage();

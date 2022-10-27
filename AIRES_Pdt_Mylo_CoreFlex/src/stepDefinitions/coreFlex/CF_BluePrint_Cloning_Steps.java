@@ -224,7 +224,7 @@ public class CF_BluePrint_Cloning_Steps {
 		Assert.assertTrue(
 				coreFlexPolicyBenefitsCategoriesPage.verifySelectedBenefitsPostVersioningCloning(
 						CoreFunctions.getPropertyFromConfig("CoreFlex_Policy_BenefitType"),
-						CoreFunctions.getPropertyFromConfig("CoreFlex_Policy_RequiredFor"), "0"),
+						CoreFunctions.getPropertyFromConfig("CoreFlex_Policy_RequiredFor")),
 				MessageFormat.format(
 						COREFLEXConstants.FAILED_TO_VERIFY_SELECTED_BENEFITS_ON_POLICY_BENEFITS_CATEGORIES_PAGE,
 						CoreConstants.FAIL));
@@ -236,7 +236,7 @@ public class CF_BluePrint_Cloning_Steps {
 		Assert.assertTrue(
 				coreFlexPolicyBenefitsCategoriesPage.verifyBenefitsDisplayedOnLeftNavigation(
 						CoreFunctions.getPropertyFromConfig("CoreFlex_Policy_BenefitType"),
-						CoreFunctions.getPropertyFromConfig("CoreFlex_Policy_RequiredFor"), "0"),
+						CoreFunctions.getPropertyFromConfig("CoreFlex_Policy_RequiredFor")),
 				MessageFormat.format(
 						COREFLEXConstants.FAILED_TO_VERIFY_SELECTED_BENEFITS_ON_LEFT_NAVIGATION_POST_VERSIONING_CLONING,
 						CoreConstants.FAIL));
@@ -263,7 +263,7 @@ public class CF_BluePrint_Cloning_Steps {
 
 		Assert.assertTrue(
 				coreFlexBenefitSummaryPage.iterateAndVerifyBenefitSummaryDetails(
-						CoreFunctions.getPropertyFromConfig("CoreFlex_Policy_RequiredFor"), "0"),
+						CoreFunctions.getPropertyFromConfig("CoreFlex_Policy_RequiredFor")),
 				MessageFormat.format(
 						COREFLEXConstants.FAILED_TO_VERIFY_BENEFIT_SUBBENEFIT_DETAILS_ON_BENEFIT_SUMMARY_PAGE,
 						CoreConstants.FAIL));
@@ -298,6 +298,7 @@ public class CF_BluePrint_Cloning_Steps {
 				MessageFormat.format(COREFLEXConstants.FAILED_TO_VERIFY_BENEFITS_DETAILS_ON_PREVIEW_TRANSFEREE_PAGE,
 						CoreConstants.FAIL));
 		coreFlexTransfereePreviewPage.clickElementOfPage(COREFLEXConstants.CLOSE_TRANSFEREE_PREVIEW);
+		CoreFunctions.writeToPropertiesFile("Assignment_Policy", CoreFunctions.getPropertyFromConfig("ClonedPolicy_Policy_Name"));
 	}
 
 }

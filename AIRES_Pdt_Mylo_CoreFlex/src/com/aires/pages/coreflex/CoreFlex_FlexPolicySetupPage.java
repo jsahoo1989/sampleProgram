@@ -2,7 +2,6 @@ package com.aires.pages.coreflex;
 
 import java.text.MessageFormat;
 import java.util.List;
-import java.util.Map;
 
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
@@ -341,17 +340,11 @@ public class CoreFlex_FlexPolicySetupPage extends Base {
 		CoreFunctions.clickElement(driver, _selectBenefitExpirationDate);
 		CoreFunctions.selectItemInListByText(driver, _selectBenefitExpirationDateOptions,
 				policySetupPageData.flexPolicySetupPage.benefitsExpirationDate, true);
-
 		for (int i = 0; i < dataList.get(0).size(); i++) {
 			fieldName = dataList.get(0).get(i);
 			fieldSelection = dataList.get(1).get(i);
 			performPageFieldSelection(fieldName, fieldSelection);
 		}
-
-//		checkFieldValidation(COREFLEXConstants.TOTAL_POINTS_AVAILABLE, "ABCD");
-//		checkFieldValidation(COREFLEXConstants.TOTAL_POINTS_AVAILABLE, "#$%");
-//		checkFieldValidation(COREFLEXConstants.TOTAL_POINTS_AVAILABLE, "50 Points");
-
 	}
 
 	/**
@@ -555,7 +548,7 @@ public class CoreFlex_FlexPolicySetupPage extends Base {
 	}
 
 	public boolean verifyFPTFieldValuesPostVersioningCloning() {
-		try {			
+		try {
 			CoreFunctions.verifyRadioButtonSelection(driver, _radioFlexAllowanceType, _radioFlexAllowanceTypeButtonList,
 					policySetupPageData.flexPolicySetupPage.flexAllowanceType, COREFLEXConstants.FLEX_ALLOWANCE_TYPE);
 			CoreFunctions.verifyRadioButtonSelection(driver, _radioPersonResponsibleForBenefitSelection,
@@ -572,14 +565,14 @@ public class CoreFlex_FlexPolicySetupPage extends Base {
 					policySetupPageData.flexPolicySetupPage.benefitsExpirationDate,
 					COREFLEXConstants.BENEFIT_EXPIRATION_DATE);
 			CoreFunctions.verifyText(driver, _selectFlexSetupTypeSelectedValue,
-					CoreFunctions.getPropertyFromConfig("CoreFlex_Policy_FlexSetupType"), COREFLEXConstants.FLEX_SETUP_TYPE);
+					CoreFunctions.getPropertyFromConfig("CoreFlex_Policy_FlexSetupType"),
+					COREFLEXConstants.FLEX_SETUP_TYPE);
 			System.out.println("Actual Display Name :" + _inputTotalPointsAvailable.getDomProperty("value"));
 			CoreFunctions.verifyText(_inputTotalPointsAvailable.getDomProperty("value"),
 					policySetupPageData.flexPolicySetupPage.StaticFixedTotalPointsAvailable,
 					COREFLEXConstants.TOTAL_POINTS_AVAILABLE);
 			CoreFunctions.verifyRadioButtonSelection(driver, _sectionCashoutAvailability,
-					_sectionCashoutAvailabilityButtonList,
-					CoreFunctions.getPropertyFromConfig("PolicyCashoutType"),
+					_sectionCashoutAvailabilityButtonList, CoreFunctions.getPropertyFromConfig("PolicyCashoutType"),
 					COREFLEXConstants.CASHOUT_AVAILABILITY);
 			Reporter.addStepLog(MessageFormat.format(
 					COREFLEXConstants.SUCCESSFULLY_VERIFIED_FIELD_VALUES_ON_FLEX_PLANNING_TOOL_PAGE_POST_VERSIONING_CLONING,
@@ -610,7 +603,6 @@ public class CoreFlex_FlexPolicySetupPage extends Base {
 				CoreFunctions.writeToPropertiesFile("CF_Transferee_TotalAvailablePoints", "");
 				return true;
 			}
-
 		} catch (Exception e) {
 			Reporter.addStepLog(
 					MessageFormat.format(COREFLEXConstants.EXCEPTION_OCCURED_WHILE_VERIFYING_FLEX_SETUP_TYPE_SELECTION,
@@ -618,5 +610,4 @@ public class CoreFlex_FlexPolicySetupPage extends Base {
 		}
 		return false;
 	}
-
 }

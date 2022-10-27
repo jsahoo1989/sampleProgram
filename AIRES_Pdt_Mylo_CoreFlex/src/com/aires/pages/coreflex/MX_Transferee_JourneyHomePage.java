@@ -178,8 +178,13 @@ public class MX_Transferee_JourneyHomePage extends Base {
 	@FindBy(how = How.XPATH, using = "//span[contains(text(),'Flex Benefits')]/ancestor::div[contains(@id,'secondItemDiv')]//div[contains(@class,'RXCFCircle')]//span")
 	private List<WebElement> flexCardNumberOfBenefitSelected;
 
+	private By flexCardNumberOfBenefitSelectedSubElement = By.xpath(".//div[contains(@class,'RXCFCircle')]//span");
+
 	@FindBy(how = How.CSS, using = "div.RXFlexBeneftsPointsTooltiptext  > div > span")
 	private List<WebElement> flexCardNumberOfBenefitSelectedToolTipText;
+
+	private By flexCardNumberOfBenefitSelectedToolTipTextSubElement = By
+			.cssSelector("div.RXFlexBeneftsPointsTooltiptext  > div > span");
 
 	@FindBy(how = How.XPATH, using = "//span[contains(text(),'Flex Benefits')]/ancestor::div[contains(@id,'secondItemDiv')]//table[contains(@class,'RXRightIconPanel')]//span[contains(text(),'Starting Soon')]")
 	private List<WebElement> flexCardStartingSoonStatusList;
@@ -237,6 +242,9 @@ public class MX_Transferee_JourneyHomePage extends Base {
 
 	@FindBy(how = How.XPATH, using = "//span[contains(text(),'Core Benefits')]/ancestor::div[contains(@id,'firstItemDiv')]//span[contains(@class,'RXSmallerLink RXBold')][contains(text(),'Begin training')]")
 	private WebElement coreCardBeginProgressStatus;
+
+	@FindBy(how = How.XPATH, using = "//span[@class='RXCFBigText RXMineShaft RXBolder'][contains(text(),'Flex Benefits')]")
+	private WebElement flexCardSectionHeader;
 
 	/*********************************************************************/
 
@@ -517,7 +525,7 @@ public class MX_Transferee_JourneyHomePage extends Base {
 			CoreFunctions.clearAndSetText(driver, _accountHolderName, accountDetails.accountHoldersName);
 			CoreFunctions.clearAndSetText(driver, _mailingAddress2, accountDetails.mailingAddress.address2);
 			CoreFunctions.clearAndSetText(driver, _mailingCity, accountDetails.mailingAddress.city);
-			CoreFunctions.clearAndSetText(driver, _province, accountDetails.mailingAddress.province);
+//			CoreFunctions.clearAndSetText(driver, _province, accountDetails.mailingAddress.province);
 			CoreFunctions.clearAndSetText(driver, _postalCode, accountDetails.mailingAddress.postalCode);
 			CoreFunctions.selectByVisibleText(driver, _select_mailingCountry, accountDetails.mailingAddress.country);
 			CoreFunctions.waitHandler(1);
@@ -586,7 +594,7 @@ public class MX_Transferee_JourneyHomePage extends Base {
 					expFromUserName, expEmailSubject, MobilityXConstants.FLEX_BENEFIT_SUBMISSION);
 			actualResultSubmissionDetails = actualResultSubmissionDetails.replace("<span>", "").replace("</span>", "")
 					.replace("\r\n", "").trim();
-			Log.info("ActualEmailSearchedText : "+actualResultSubmissionDetails);
+			Log.info("ActualEmailSearchedText : " + actualResultSubmissionDetails);
 			String expectedSubmittedPointsEmailMessage = submittedPointsEmailMessage();
 			if (actualResultSubmissionDetails.equals(expectedSubmittedPointsEmailMessage)) {
 				Reporter.addStepLog(MessageFormat.format(
@@ -710,35 +718,30 @@ public class MX_Transferee_JourneyHomePage extends Base {
 		return false;
 	}
 
-	public boolean verifyFlexBenefitCardDetailsOfAiresManagedBenefits(String expectedStatus, String tracingSelection,
-			int getNoOfMilestones) {
+	public boolean verifyFlexBenefitCardDetailsOfAiresManagedBenefits(String expectedStatus, String tracingSelection) {
 		boolean isFlexCardDetailsVerified = false;
 		boolean flag = false;
 		String expectedEstimatedDate = CoreFunctions.getCurrentDateAsGivenFormat("dd-MMM-yyyy");
-//		String expectedEstimatedDate = CoreFunctions.addDaysInCurrentDate("dd-MMM-yyyy", -1);
 		try {
-			for (FlexBenefit benefitList : flexBenefits) {
-				for (Benefit benefit : benefitList.getBenefits()) {
-					if ((benefit.getSelectBenefitOnFPTPage()) && (benefit.getAiresManagedService().equals("Yes"))
-							&& benefit.getNoOfMilestones() != null
-							&& getNoOfMilestones == benefit.getNoOfMilestones()) {
-						int indexBenefitCard = BusinessFunctions.returnindexItemFromListUsingText(driver,
-								flexCardBenefitDisplayName, benefit.getBenefitDisplayName());
-						isFlexCardDetailsVerified = verifyFlexCardDetails(indexBenefitCard, benefit)
-								&& verifyFlexCardStatus(indexBenefitCard, benefit, tracingSelection,
-										expectedEstimatedDate)
-								&& verifyManageThisBenefitButton(indexBenefitCard, tracingSelection, expectedStatus);
-						if (!isFlexCardDetailsVerified) {
-							return false;
-						} else {
-							flag = true;
-							CoreFunctions.scrollToElementUsingJS(driver, _textPolicyFileID,
-									COREFLEXConstants.POLICY_FILE_ID);
-						}
+			for (Benefit benefit : getBenefits(CoreFunctions.getPropertyFromConfig("CoreFlex_Policy_BenefitType"),
+					CoreFunctions.getPropertyFromConfig("CoreFlex_Policy_RequiredFor"))) {
+				if ((benefit.getSelectBenefitOnFPTPage()) && (benefit.getAiresManagedService().equals("Yes"))) {
+					int indexBenefitCard = BusinessFunctions.returnindexItemFromListUsingText(driver,
+							flexCardBenefitDisplayName, benefit.getBenefitDisplayName());
+					isFlexCardDetailsVerified = verifyFlexCardDetails(indexBenefitCard, benefit)
+							&& verifyFlexCardStatus(indexBenefitCard, benefit, tracingSelection, expectedEstimatedDate)
+							&& verifyManageThisBenefitButton(indexBenefitCard, tracingSelection, expectedStatus);
+					if (!isFlexCardDetailsVerified) {
+						return false;
 					} else {
-						isFlexCardDetailsVerified = true;
+						flag = true;
+						CoreFunctions.scrollToElementUsingJS(driver, _textPolicyFileID,
+								COREFLEXConstants.POLICY_FILE_ID);
 					}
+				} else {
+					isFlexCardDetailsVerified = true;
 				}
+
 			}
 		} catch (Exception e) {
 			Reporter.addStepLog(
@@ -867,14 +870,22 @@ public class MX_Transferee_JourneyHomePage extends Base {
 					benefit.getBenefitDisplayName(), MobilityXConstants.FLEX_CARD_BENEFIT_DISPLAY_NAME);
 			CoreFunctions.verifyText(driver, flexCardAmountAllowanceText.get(indexBenefitCard),
 					benefit.getBenefitAmount(), MobilityXConstants.FLEX_CARD_BENEFIT_ALLOWANCE_AMOUNT);
-			CoreFunctions.verifyText(driver, flexCardNumberOfBenefitSelected.get(indexBenefitCard),
-					String.valueOf(benefit.getNumberOfBenefitSelected()),
-					MobilityXConstants.FLEX_CARD_NUMBER_OF_BENEFIT_SELECTED);
-			CoreFunctions.moveToElement(driver, flexCardNumberOfBenefitSelected.get(indexBenefitCard));
-			CoreFunctions.verifyText(driver, flexCardNumberOfBenefitSelectedToolTipText.get(indexBenefitCard),
-					MobilityXConstants.FLEX_CARD_NUMBER_OF_BENEFIT_SELECTED_TOOLTIP_TEXT.replace("numberOf",
-							String.valueOf(benefit.getNumberOfBenefitSelected())),
-					MobilityXConstants.FLEX_CARD_NUMBER_OF_BENEFIT_SELECTED_TOOLTIP);
+			if (benefit.getNumberOfBenefitSelected() > 1) {
+				CoreFunctions.scrollToElementUsingJS(driver, flexCardSectionHeader, MobilityXConstants.FLEX_CARD_PANEL);
+				CoreFunctions.verifyText(driver,
+						CoreFunctions.findSubElement(flexCardPanelList.get(indexBenefitCard),
+								flexCardNumberOfBenefitSelectedSubElement),
+						String.valueOf(benefit.getNumberOfBenefitSelected()),
+						MobilityXConstants.FLEX_CARD_NUMBER_OF_BENEFIT_SELECTED);
+				CoreFunctions.moveToElement(driver, CoreFunctions.findSubElement(
+						flexCardPanelList.get(indexBenefitCard), flexCardNumberOfBenefitSelectedSubElement));
+				CoreFunctions.verifyText(driver,
+						CoreFunctions.findSubElement(flexCardPanelList.get(indexBenefitCard),
+								flexCardNumberOfBenefitSelectedToolTipTextSubElement),
+						MobilityXConstants.FLEX_CARD_NUMBER_OF_BENEFIT_SELECTED_TOOLTIP_TEXT.replace("numberOf",
+								String.valueOf(benefit.getNumberOfBenefitSelected())),
+						MobilityXConstants.FLEX_CARD_NUMBER_OF_BENEFIT_SELECTED_TOOLTIP);
+			}
 			CoreFunctions.moveToElement(driver, flexCardLongDescIcon.get(indexBenefitCard));
 			CoreFunctions.verifyText(driver, flexCardLongDesc.get(indexBenefitCard), benefit.getBenefitDesc(),
 					MobilityXConstants.FLEX_CARD_BENEFIT_LONG_DESCRIPTION);
@@ -900,57 +911,14 @@ public class MX_Transferee_JourneyHomePage extends Base {
 		}
 	}
 
-	public boolean isCoreBenefitCardVerified(String tracingSelection, int noOfMilestones) {
-		try {
-			return verifyCoreBenefitCardDetails(tracingSelection, noOfMilestones);
-		} catch (Exception e) {
-			Reporter.addStepLog(
-					MessageFormat.format(COREFLEXConstants.EXCEPTION_OCCURED_WHILE_VERIFYING_CORE_BENEFIT_CARD_DETAILS,
-							CoreConstants.FAIL, e.getMessage()));
-			return false;
-		}
-	}
-
-	private boolean verifyCoreBenefitCardDetails(String tracingSelection, int numberOfMilestones) {
-		boolean isCoreCardDetailsVerified = false;
-		boolean flag = false;
-		try {
-			CoreFunctions.explicitWaitTillElementListVisibility(driver, coreCardBenefitDisplayName);
-			for (Benefit benefit : coreBenefits) {
-				if (benefit.getAiresManagedService() != null && benefit.getAiresManagedService().equals("Yes")
-						&& benefit.getNoOfMilestones() != null && benefit.getNoOfMilestones() == numberOfMilestones) {
-					int indexBenefitCard = BusinessFunctions.returnindexItemFromListUsingText(driver,
-							coreCardBenefitDisplayName, benefit.getBenefitDisplayName());
-					isCoreCardDetailsVerified = verifyCoreCardDetails(indexBenefitCard, benefit)
-							&& verifyCoreCardStatus(indexBenefitCard, tracingSelection, benefit);
-					if (!isCoreCardDetailsVerified) {
-						return false;
-					} else {
-						flag = true;
-					}
-				}
-			}
-
-		} catch (Exception e) {
-			Reporter.addStepLog(
-					MessageFormat.format(COREFLEXConstants.EXCEPTION_OCCURED_WHILE_VERIFYING_CORE_BENEFIT_CARD_DETAILS,
-							CoreConstants.FAIL, e.getMessage()));
-			return false;
-		}
-		if (isCoreCardDetailsVerified && flag) {
-			Reporter.addStepLog(MessageFormat.format(COREFLEXConstants.SUCCESSFULLY_VERIFIED_CORE_BENEFIT_CARD_DETAILS,
-					CoreConstants.PASS));
-		}
-		return isCoreCardDetailsVerified;
-	}
-
 	private boolean verifyCoreBenefitCardDetails(String tracingSelection) {
 		boolean isCoreCardDetailsVerified = false;
 		boolean flag = false;
 		try {
 			for (Benefit benefit : coreBenefits) {
-				if (benefit.getAiresManagedService() != null && benefit.getAiresManagedService().equals("Yes")) {
-
+				if (benefit.getPolicyCreationGroup()
+						.contains(CoreFunctions.getPropertyFromConfig("CoreFlex_Policy_RequiredFor"))
+						&& benefit.getAiresManagedService().equals("Yes")) {
 					int indexBenefitCard = BusinessFunctions.returnindexItemFromListUsingText(driver,
 							coreCardBenefitDisplayName, benefit.getBenefitDisplayName());
 					isCoreCardDetailsVerified = verifyCoreCardDetails(indexBenefitCard, benefit)
@@ -984,7 +952,7 @@ public class MX_Transferee_JourneyHomePage extends Base {
 			CoreFunctions.verifyText(driver, coreCardAmountAllowanceText.get(indexBenefitCard),
 					benefit.getBenefitAmount(), MobilityXConstants.CORE_CARD_BENEFIT_ALLOWANCE_AMOUNT);
 			CoreFunctions.moveToElement(driver, coreCardLongDescIcon.get(indexBenefitCard));
-			CoreFunctions.waitHandler(5);
+			CoreFunctions.waitHandler(2);
 			CoreFunctions.verifyText(driver, coreCardLongDesc.get(indexBenefitCard), benefit.getBenefitDesc(),
 					MobilityXConstants.CORE_CARD_BENEFIT_LONG_DESCRIPTION);
 			CoreFunctions.moveToElement(driver, coreCardBenefitDisplayName.get(indexBenefitCard));
@@ -1399,6 +1367,21 @@ public class MX_Transferee_JourneyHomePage extends Base {
 		}
 		return isPreviousSubmissionFlexCardDetailsVerified;
 
+	}
+
+	private List<Benefit> getBenefits(String benefitType, String policyRequiredFor) {
+		List<Benefit> benefitNameList = new ArrayList<Benefit>();
+		if (benefitType.equals(COREFLEXConstants.FLEX) || benefitType.equals(COREFLEXConstants.BOTH)) {
+			for (FlexBenefit benefit : flexBenefits) {
+				for (Benefit ben : benefit.getBenefits()) {
+					if ((ben.getPolicyCreationGroup().contains(policyRequiredFor))) {
+						benefitNameList.add(ben);
+					} else
+						continue;
+				}
+			}
+		}
+		return benefitNameList;
 	}
 
 }

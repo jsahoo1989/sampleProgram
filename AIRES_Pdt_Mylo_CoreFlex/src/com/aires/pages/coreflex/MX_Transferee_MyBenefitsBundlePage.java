@@ -7,6 +7,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.Objects;
 
+import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
@@ -104,25 +105,25 @@ public class MX_Transferee_MyBenefitsBundlePage extends Base {
 	@FindBy(how = How.CSS, using = "span[class='RXText RXGraniteGrey RXBolder']")
 	private List<WebElement> _confirmationDialogBenefitSelectionQuantity;
 
-	@FindBy(how = How.XPATH, using = "//div[contains(@class,'RXCFBenefitNameDesc')]//span[contains(@class,'RXBolder')]")
+	@FindBy(how = How.CSS, using = "div[class*='RXCFBenefitNameDesc'] span[class*='RXBolder']")
 	private List<WebElement> _textSubmittedBenefitNameList;
 
-	@FindBy(how = How.XPATH, using = "//div[contains(@id,'SubmitBenefit')]//span[@class='RXCFSmallText RXMineShaft RXCFWordwrap']")
+	@FindBy(how = How.CSS, using = "div[id*='SubmitBenefit'] span[class='RXCFSmallText RXMineShaft RXCFWordwrap']")
 	private List<WebElement> _textSubmittedAllowanceAmountList;
 
-	@FindBy(how = How.XPATH, using = "//div[contains(@class,'Benefit')]//span[@class='RXCFText RXBold RXAiresSeaglass']")
+	@FindBy(how = How.CSS, using = "div[class*='Benefit'] span[class='RXCFText RXBold RXAiresSeaglass']")
 	private List<WebElement> _textSubmittedBenefitsPointsList;
 
-	@FindBy(how = How.XPATH, using = "//div[contains(@id,'SubmitBenefit')]//span[@class='RXBolder RXCFSmallText']")
+	@FindBy(how = How.CSS, using = "div[id*='SubmitBenefit'] span[class='RXBolder RXCFSmallText']")
 	private List<WebElement> _textSubmittedBenefitQuantityList;
 
-	@FindBy(how = How.XPATH, using = "//span[@class='RXCFSmallerItalicText RXAiresCharcoal']")
+	@FindBy(how = How.CSS, using = "span[class='RXCFSmallerItalicText RXAiresCharcoal']")
 	private List<WebElement> _textSubmittedBenefitDate;
 
-	@FindBy(how = How.XPATH, using = "//div[contains(@id,'Benefit')]//a[contains(@class,'BorderButton')]/span")
+	@FindBy(how = How.CSS, using = "div[id*='Benefit'] a[class*='BorderButton'] > span")
 	private List<WebElement> _buttonDeleteSubmittedBenefitList;
 
-	@FindBy(how = How.XPATH, using = "//div[contains(@id,'Benefit')]//a[contains(@class,'BorderButton')]")
+	@FindBy(how = How.CSS, using = "div[id*='Benefit'] a[class*='BorderButton']")
 	private List<WebElement> _buttonDeleteBenefitList;
 
 	@FindBy(how = How.XPATH, using = "//span[contains(text(),'Unable to delete benefit. Please see comments in the History section below for more information.')]")
@@ -134,7 +135,7 @@ public class MX_Transferee_MyBenefitsBundlePage extends Base {
 	@FindBy(how = How.XPATH, using = "//span[contains(text(),'This benefit has been canceled by your Aires Representative due to a change. There will be no points returned to you as this benefit is still being used.')]")
 	private List<WebElement> _canceledBenefitDisabledDeleteButtonHoverText;
 
-	@FindBy(how = How.XPATH, using = "//div[contains(@id,'mainSubmittedBenefits')]//span[@class='RXAiresSeaglass RXCFBigText']")
+	@FindBy(how = How.CSS, using = "div[id*='mainSubmittedBenefits'] span[class='RXAiresSeaglass RXCFBigText']")
 	private List<WebElement> _textSubmittedBenefitsPoints;
 
 	@FindBy(how = How.XPATH, using = "//span[contains(text(),'Are you sure you want to remove this benefit selection?')]")
@@ -175,6 +176,20 @@ public class MX_Transferee_MyBenefitsBundlePage extends Base {
 
 	@FindBy(how = How.XPATH, using = "//span[text()='Back to benefits list']")
 	private WebElement _link_backToBenefitList;
+
+	@FindBy(how = How.XPATH, using = "//span[@class='RXHugestText RXBolder'][contains(text(),'My Benefits Bundle')]")
+	private WebElement _headerMyBenefitsBundle;
+
+	@FindBy(how = How.CSS, using = "div[class*='RXCFBenefitRow']")
+	private List<WebElement> _submittedBenefitfRow;
+
+	private By _deleteButtonSubElement = By.cssSelector("a[class*='BorderButton']");
+
+	private By _disabledDeleteButtonHoverTextSubElement = By
+			.xpath(".//span[contains(text(),'Unable to delete benefit due to completion of benefit.')]");
+	
+	private By _canceledBenefitDisabledDeleteButtonHoverTextSubElement = By
+			.xpath(".//span[contains(text(),'This benefit has been canceled by your Aires Representative due to a change. There will be no points returned to you as this benefit is still being used.')]");
 
 	/*********************************************************************/
 
@@ -361,7 +376,7 @@ public class MX_Transferee_MyBenefitsBundlePage extends Base {
 		boolean flag = false;
 		try {
 			for (Benefit benefit : getBenefits(CoreFunctions.getPropertyFromConfig("CoreFlex_Policy_BenefitType"),
-					CoreFunctions.getPropertyFromConfig("CoreFlex_Policy_RequiredFor"), "0")) {
+					CoreFunctions.getPropertyFromConfig("CoreFlex_Policy_RequiredFor"))) {
 				if (benefit.getSelectBenefitOnFPTPage()) {
 					int indexBenefit = BusinessFunctions.returnindexItemFromListUsingText(driver,
 							_textAddedBenefitNameList, benefit.getBenefitDisplayName());
@@ -408,7 +423,7 @@ public class MX_Transferee_MyBenefitsBundlePage extends Base {
 		boolean flag = false;
 		try {
 			for (Benefit benefit : getBenefits(CoreFunctions.getPropertyFromConfig("CoreFlex_Policy_BenefitType"),
-					CoreFunctions.getPropertyFromConfig("CoreFlex_Policy_RequiredFor"), "0")) {
+					CoreFunctions.getPropertyFromConfig("CoreFlex_Policy_RequiredFor"))) {
 				if (benefit.getSelectBenefitOnFPTPage()) {
 					int indexBenefit = BusinessFunctions.returnindexItemFromListUsingText(driver,
 							_textAddedBenefitNameList, benefit.getBenefitDisplayName());
@@ -517,8 +532,8 @@ public class MX_Transferee_MyBenefitsBundlePage extends Base {
 		boolean flag = false;
 		try {
 			for (Benefit benefit : getBenefits(CoreFunctions.getPropertyFromConfig("CoreFlex_Policy_BenefitType"),
-					CoreFunctions.getPropertyFromConfig("CoreFlex_Policy_RequiredFor"), "0")) {
-				if (benefit.getSelectBenefitOnFPTPage() && benefit.getAiresManagedService().equals("No")) {
+					CoreFunctions.getPropertyFromConfig("CoreFlex_Policy_RequiredFor"))) {
+				if (benefit.getSelectBenefitOnFPTPage()) {
 					int indexBenefit = BusinessFunctions.returnindexItemFromListUsingText(driver,
 							_textSubmittedBenefitNameList, benefit.getBenefitDisplayName());
 					isSubmittedFlexBenefitDetailsOnMBBVerified = verifySubmittedBenefitDetailsOnMBB(indexBenefit,
@@ -560,7 +575,8 @@ public class MX_Transferee_MyBenefitsBundlePage extends Base {
 								* (Integer.parseInt(CoreFunctions.getItemsFromListByIndex(driver,
 										_textSubmittedBenefitQuantityList, indexBenefit, true)))))
 				&& (CoreFunctions.getItemsFromListByIndex(driver, _benefitStatus, indexBenefit, true)
-						.equals(MobilityXConstants.VIEW_PAYMENTS))
+						.equals((benefit.getAiresManagedService().equals("No")) ? MobilityXConstants.VIEW_PAYMENTS
+								: MobilityXConstants.SUBMITTED))
 				&& (CoreFunctions.getItemsFromListByIndex(driver, _buttonDeleteSubmittedBenefitList, indexBenefit, true)
 						.equals(MobilityXConstants.DELETE));
 	}
@@ -587,13 +603,13 @@ public class MX_Transferee_MyBenefitsBundlePage extends Base {
 	private boolean undoDeletedFlexBenefit() {
 		boolean isDeletedBenefitUndo = false;
 		for (Benefit benefit : getBenefits(CoreFunctions.getPropertyFromConfig("CoreFlex_Policy_BenefitType"),
-				CoreFunctions.getPropertyFromConfig("CoreFlex_Policy_RequiredFor"), "0")) {
-				isDeletedBenefitUndo = undoDeletedBenefit(benefit);			
-				if (!isDeletedBenefitUndo) {
-					break;
-				}
-			}		
-		
+				CoreFunctions.getPropertyFromConfig("CoreFlex_Policy_RequiredFor"))) {
+			isDeletedBenefitUndo = undoDeletedBenefit(benefit);
+			if (!isDeletedBenefitUndo) {
+				break;
+			}
+		}
+
 		return isDeletedBenefitUndo;
 	}
 
@@ -681,7 +697,7 @@ public class MX_Transferee_MyBenefitsBundlePage extends Base {
 		boolean flag = false;
 		try {
 			for (Benefit benefit : getBenefits(CoreFunctions.getPropertyFromConfig("CoreFlex_Policy_BenefitType"),
-					CoreFunctions.getPropertyFromConfig("CoreFlex_Policy_RequiredFor"), "0")) {
+					CoreFunctions.getPropertyFromConfig("CoreFlex_Policy_RequiredFor"))) {
 				if (benefit.getDeleteBenefitOnMBBPage()) {
 					int indexBenefit = BusinessFunctions.returnindexItemFromListUsingText(driver,
 							_textRemoveBenefitNameList, benefit.getBenefitDisplayName());
@@ -718,7 +734,7 @@ public class MX_Transferee_MyBenefitsBundlePage extends Base {
 	public void reviewAndConfirmRemoveBenefitSubmission(String optionalNotes, String transfereeName,
 			String buttonName) {
 		CoreFunctions.setElementText(driver, input_transfereeName, transfereeName);
-		CoreFunctions.setElementText(driver, optionalComments, optionalNotes);		
+		CoreFunctions.setElementText(driver, optionalComments, optionalNotes);
 		CoreFunctions.click(driver, _buttonDeleteThisBenefits, buttonName);
 	}
 
@@ -747,7 +763,7 @@ public class MX_Transferee_MyBenefitsBundlePage extends Base {
 				Reporter.addStepLog(MessageFormat.format(
 						MobilityXConstants.SUCCESSFULLY_VERIFIED_DELETE_REQUEST_STATUS_UNDER_SUBMITTED_BENEFITS_SECTION_ON_MBB_PAGE,
 						CoreConstants.PASS));
-				}
+			}
 
 		} catch (Exception e) {
 			Reporter.addStepLog(MessageFormat.format(
@@ -762,7 +778,7 @@ public class MX_Transferee_MyBenefitsBundlePage extends Base {
 		boolean flag = false;
 		try {
 			for (Benefit benefit : getBenefits(CoreFunctions.getPropertyFromConfig("CoreFlex_Policy_BenefitType"),
-					CoreFunctions.getPropertyFromConfig("CoreFlex_Policy_RequiredFor"), "0")) {
+					CoreFunctions.getPropertyFromConfig("CoreFlex_Policy_RequiredFor"))) {
 				flag = false;
 				if (benefit.getDeleteBenefitOnMBBPage()) {
 					int indexBenefit = BusinessFunctions.returnindexItemFromListUsingText(driver,
@@ -787,7 +803,7 @@ public class MX_Transferee_MyBenefitsBundlePage extends Base {
 		if (isFlexBenefitDeleteStatus & flag) {
 			Reporter.addStepLog(MessageFormat.format(
 					MobilityXConstants.SUCCESSFULLY_VERIFIED_DELETED_FLEX_BENEFIT_STATUS_UNDER_SUBMITTED_BENEFITS_SECTION_OF_MBB_PAGE,
-					CoreConstants.PASS));			
+					CoreConstants.PASS));
 		}
 		return isFlexBenefitDeleteStatus;
 	}
@@ -915,10 +931,12 @@ public class MX_Transferee_MyBenefitsBundlePage extends Base {
 		boolean isSubmittedBenefitDeleted = false, flag = false;
 		try {
 			for (Benefit benefit : getBenefits(CoreFunctions.getPropertyFromConfig("CoreFlex_Policy_BenefitType"),
-					CoreFunctions.getPropertyFromConfig("CoreFlex_Policy_RequiredFor"), "0")) {
-				if (benefit.getSelectBenefitOnFPTPage() && benefit.getAiresManagedService().equals("No")
-						&& benefit.getDeleteBenefitOnMBBPage()) {
+					CoreFunctions.getPropertyFromConfig("CoreFlex_Policy_RequiredFor"))) {
+				if (benefit.getSelectBenefitOnFPTPage() && benefit.getDeleteBenefitOnMBBPage()) {
+					CoreFunctions.scrollToElementUsingJS(driver, _headerMyBenefitsBundle,
+							MobilityXConstants.MY_BENEFITS_BUNDLE);
 					flag = false;
+					CoreFunctions.waitHandler(2);
 					int indexBenefit = BusinessFunctions.returnindexItemFromListUsingText(driver,
 							_textSubmittedBenefitNameList, benefit.getBenefitDisplayName());
 					BusinessFunctions.selectValueFromListUsingIndex(driver, _buttonDeleteSubmittedBenefitList,
@@ -953,6 +971,8 @@ public class MX_Transferee_MyBenefitsBundlePage extends Base {
 							buttonName);
 					isSubmittedBenefitDeleted = verifyRemoveBenefitRequestSuccessMessage();
 					CoreFunctions.explicitWaitTillElementInVisibility(driver, _beleteBenefitSentGrowlMessage);
+					CoreFunctions.scrollToElementUsingJS(driver, _headerMyBenefitsBundle,
+							MobilityXConstants.MY_BENEFITS_BUNDLE);
 				} else if (!benefit.getDeleteBenefitOnMBBPage())
 					isSubmittedBenefitDeleted = true;
 			}
@@ -1023,7 +1043,7 @@ public class MX_Transferee_MyBenefitsBundlePage extends Base {
 				CoreFunctions.writeToPropertiesFile("CF_Transferee_BenefitDeletedFlag", "true");
 				Reporter.addStepLog(MessageFormat.format(
 						MobilityXConstants.SUCCESSFULLY_VERIFIED_DELETE_REQUEST_STATUS_UNDER_SUBMITTED_BENEFITS_SECTION_ON_MBB_PAGE,
-						CoreConstants.PASS));				
+						CoreConstants.PASS));
 			}
 
 		} catch (Exception e) {
@@ -1048,8 +1068,8 @@ public class MX_Transferee_MyBenefitsBundlePage extends Base {
 						.equals(policySetupPageData.flexPolicySetupPage.customCashoutBenefitName)))
 						&& ((Double.parseDouble((CoreFunctions
 								.getItemsFromListByIndex(driver, _textSubmittedBenefitsPointsList, indexCashout, true)
-								.replace("pts", "")
-								.trim()))) == (Double.parseDouble(CoreFunctions.getPropertyFromConfig("CF_Transferee_SelectedCashOutPoints"))))
+								.replace("pts", "").trim()))) == (Double.parseDouble(
+										CoreFunctions.getPropertyFromConfig("CF_Transferee_SelectedCashOutPoints"))))
 						&& CoreFunctions
 								.getItemsFromListByIndex(driver, _buttonDeleteSubmittedBenefitList, indexCashout, true)
 								.equals(MobilityXConstants.UNDO)
@@ -1158,7 +1178,7 @@ public class MX_Transferee_MyBenefitsBundlePage extends Base {
 		boolean flag = false;
 		try {
 			for (Benefit benefit : getBenefits(CoreFunctions.getPropertyFromConfig("CoreFlex_Policy_BenefitType"),
-					CoreFunctions.getPropertyFromConfig("CoreFlex_Policy_RequiredFor"), "0")) {
+					CoreFunctions.getPropertyFromConfig("CoreFlex_Policy_RequiredFor"))) {
 				if (benefit.getSelectBenefitOnFPTPage() && benefit.getDeleteBenefitOnMBBPage()) {
 					int indexBenefit = BusinessFunctions.returnindexItemFromListUsingText(driver,
 							_textSubmittedBenefitNameList, benefit.getBenefitDisplayName());
@@ -1223,7 +1243,7 @@ public class MX_Transferee_MyBenefitsBundlePage extends Base {
 		boolean isDeletedBenefitNotInSubmittedList = false;
 		try {
 			for (Benefit benefit : getBenefits(CoreFunctions.getPropertyFromConfig("CoreFlex_Policy_BenefitType"),
-					CoreFunctions.getPropertyFromConfig("CoreFlex_Policy_RequiredFor"), "0")) {
+					CoreFunctions.getPropertyFromConfig("CoreFlex_Policy_RequiredFor"))) {
 				if (benefit.getSelectBenefitOnFPTPage() && benefit.getDeleteBenefitOnMBBPage()) {
 					int index = BusinessFunctions.returnindexItemFromListUsingText(driver,
 							_textSubmittedBenefitNameList, benefit.getBenefitDisplayName());
@@ -1343,9 +1363,11 @@ public class MX_Transferee_MyBenefitsBundlePage extends Base {
 					&& verifySubmittedAiresManagedBenefitsDetailsOnMBBPage(expectedStatus);
 			isBenefitsAndPointsMatched = isSubmittedBenefitDetailsVerified
 					&& ((Double.parseDouble(CoreFunctions.getItemsFromListByIndex(driver, _textSubmittedBenefitsPoints,
-							0, true))) == MX_Transferee_FlexPlanningTool_Page.totalSelectedPoints)
+							0, true))) == (Double.parseDouble(
+									CoreFunctions.getPropertyFromConfig("CF_Transferee_TotalSelectedPoints"))))
 					&& ((CoreFunctions.getItemsFromListByIndex(driver, _textSubmittedBenefitsPoints, 1, true))
-							.equals(policySetupPageData.flexPolicySetupPage.StaticFixedTotalPointsAvailable));
+							.equals(CoreFunctions.getPropertyFromConfig("CF_Transferee_TotalAvailablePoints")));
+
 		} catch (Exception e) {
 			Reporter.addStepLog(MessageFormat.format(
 					MobilityXConstants.FAILED_TO_VERIFY_SUBMITTED_AIRES_MANAGED_BENEFITS_ON_MY_BUNDLE_PAGE,
@@ -1363,23 +1385,21 @@ public class MX_Transferee_MyBenefitsBundlePage extends Base {
 		boolean isSubmittedAiresManagedBenefitDetailsOnMBBVerified = false;
 		boolean flag = false;
 		try {
-			for (FlexBenefit benefitList : flexBenefits) {
-				for (Benefit benefit : benefitList.getBenefits()) {
-					if ((benefit.getSelectBenefitOnFPTPage()) && (benefit.getAiresManagedService().equals("Yes"))
-							&& (benefit.getMultipleBenefitSubmission())) {
-						int indexBenefit = BusinessFunctions.returnindexItemFromListUsingText(driver,
-								_textSubmittedBenefitNameList, benefit.getBenefitDisplayName());
-						isSubmittedAiresManagedBenefitDetailsOnMBBVerified = verifySubmittedAiresManagedBenefitDetailsOnMBB(
-								indexBenefit, benefit, expectedStatus)
-								&& verifyBenefitDeleteButtonDisabled(indexBenefit, benefit, expectedStatus);
-						if (!isSubmittedAiresManagedBenefitDetailsOnMBBVerified) {
-							return false;
-						} else {
-							flag = true;
-						}
+			for (Benefit benefit : getBenefits(CoreFunctions.getPropertyFromConfig("CoreFlex_Policy_BenefitType"),
+					CoreFunctions.getPropertyFromConfig("CoreFlex_Policy_RequiredFor"))) {
+				if ((benefit.getSelectBenefitOnFPTPage()) && (benefit.getAiresManagedService().equals("Yes"))) {
+					int indexBenefit = BusinessFunctions.returnindexItemFromListUsingText(driver,
+							_textSubmittedBenefitNameList, benefit.getBenefitDisplayName());
+					isSubmittedAiresManagedBenefitDetailsOnMBBVerified = verifySubmittedAiresManagedBenefitDetailsOnMBB(
+							indexBenefit, benefit, expectedStatus)
+							&& verifyBenefitDeleteButtonDisabled(indexBenefit, benefit, expectedStatus);
+					if (!isSubmittedAiresManagedBenefitDetailsOnMBBVerified) {
+						return false;
 					} else {
-						isSubmittedAiresManagedBenefitDetailsOnMBBVerified = true;
+						flag = true;
 					}
+				} else {
+					isSubmittedAiresManagedBenefitDetailsOnMBBVerified = true;
 				}
 			}
 		} catch (Exception e) {
@@ -1435,18 +1455,24 @@ public class MX_Transferee_MyBenefitsBundlePage extends Base {
 		boolean isDeleteButtonDisabled = false;
 		boolean isDeleteHoverTextVerified = false;
 		try {
-			isDeleteButtonDisabled = Boolean.valueOf(
-					CoreFunctions.getAttributeText(_buttonDeleteBenefitList.get(indexBenefit), "aria-disabled"));
-			CoreFunctions.moveToElement(driver, _buttonDeleteBenefitList.get(indexBenefit));
-			isDeleteHoverTextVerified = CoreFunctions.isElementExist(driver,
-					_canceledBenefitDisabledDeleteButtonHoverText.get(hoverIndex), 5);
-			CoreFunctions.highlightObject(driver, _canceledBenefitDisabledDeleteButtonHoverText.get(hoverIndex));
+			
+			isDeleteButtonDisabled = Boolean.valueOf(CoreFunctions.getAttributeText(
+					CoreFunctions.findSubElement(_submittedBenefitfRow.get(indexBenefit), _deleteButtonSubElement),
+					"aria-disabled"));
+			CoreFunctions.scrollToElementUsingJS(driver,
+					CoreFunctions.findSubElement(_submittedBenefitfRow.get(indexBenefit), _deleteButtonSubElement),
+					COREFLEXConstants.DELETE_BUTTON);
+			CoreFunctions.moveToElement(driver,
+					CoreFunctions.findSubElement(_submittedBenefitfRow.get(indexBenefit), _deleteButtonSubElement));
+			isDeleteHoverTextVerified = CoreFunctions.isElementExist(driver, CoreFunctions.findSubElement(
+					_submittedBenefitfRow.get(indexBenefit), _canceledBenefitDisabledDeleteButtonHoverTextSubElement), 5);
+			CoreFunctions.highlightObject(driver, CoreFunctions.findSubElement(_submittedBenefitfRow.get(indexBenefit),
+					_canceledBenefitDisabledDeleteButtonHoverTextSubElement));
 			if (isDeleteButtonDisabled && isDeleteHoverTextVerified) {
 				Reporter.addStepLog(MessageFormat.format(
 						COREFLEXConstants.SUCCESSFULLY_VERIFIED_DELETE_BUTTON_IS_DISABLED_AND_DISABLED_DELETE_HOVER_TEXT_POST_BENEFIT_STATUS_CANCELED,
 						CoreConstants.PASS));
 				CoreFunctions.moveToElement(driver, _textSubmittedBenefitNameList.get(indexBenefit));
-				hoverIndex++;
 				return true;
 			} else
 				return false;
@@ -1462,20 +1488,23 @@ public class MX_Transferee_MyBenefitsBundlePage extends Base {
 		boolean isDeleteButtonDisabled = false;
 		boolean isDeleteHoverTextVerified = false;
 		try {
-			isDeleteButtonDisabled = Boolean.valueOf(
-					CoreFunctions.getAttributeText(_buttonDeleteBenefitList.get(indexBenefit), "aria-disabled"));
-			CoreFunctions.scrollToElementUsingJS(driver, _buttonDeleteBenefitList.get(indexBenefit),
+			isDeleteButtonDisabled = Boolean.valueOf(CoreFunctions.getAttributeText(
+					CoreFunctions.findSubElement(_submittedBenefitfRow.get(indexBenefit), _deleteButtonSubElement),
+					"aria-disabled"));
+			CoreFunctions.scrollToElementUsingJS(driver,
+					CoreFunctions.findSubElement(_submittedBenefitfRow.get(indexBenefit), _deleteButtonSubElement),
 					COREFLEXConstants.DELETE_BUTTON);
-			CoreFunctions.moveToElement(driver, _buttonDeleteBenefitList.get(indexBenefit));
-			isDeleteHoverTextVerified = CoreFunctions.isElementExist(driver,
-					_completedBenefitDisabledDeleteButtonHoverText.get(hoverIndex), 5);
-			CoreFunctions.highlightObject(driver, _completedBenefitDisabledDeleteButtonHoverText.get(hoverIndex));
+			CoreFunctions.moveToElement(driver,
+					CoreFunctions.findSubElement(_submittedBenefitfRow.get(indexBenefit), _deleteButtonSubElement));
+			isDeleteHoverTextVerified = CoreFunctions.isElementExist(driver, CoreFunctions.findSubElement(
+					_submittedBenefitfRow.get(indexBenefit), _disabledDeleteButtonHoverTextSubElement), 5);
+			CoreFunctions.highlightObject(driver, CoreFunctions.findSubElement(_submittedBenefitfRow.get(indexBenefit),
+					_disabledDeleteButtonHoverTextSubElement));
 			if (isDeleteButtonDisabled && isDeleteHoverTextVerified) {
 				Reporter.addStepLog(MessageFormat.format(
 						COREFLEXConstants.SUCCESSFULLY_VERIFIED_DELETE_BUTTON_IS_DISABLED_AND_DISABLED_DELETE_HOVER_TEXT_POST_BENEFIT_STATUS_COMPLETE,
 						CoreConstants.PASS));
 				CoreFunctions.moveToElement(driver, _textSubmittedBenefitNameList.get(indexBenefit));
-				hoverIndex++;
 				return true;
 			} else
 				return false;
@@ -1705,67 +1734,61 @@ public class MX_Transferee_MyBenefitsBundlePage extends Base {
 		return isFlexBenefitDetailsOnFTPVerified;
 	}
 
-	public boolean validateSubmittedAiresManagedBenefitDetails(String expectedStatus, int noOfMilestones) {
-		boolean isBenefitsAndPointsMatched = false, isSubmittedBenefitDetailsVerified = false;
-		hoverIndex = 0;
-		try {
-			isSubmittedBenefitDetailsVerified = verifySubmittedBenefitsSectionHeader()
-//					&& verifySubmittedCashoutDetailsOnMBBPage()
-					&& verifySubmittedAiresManagedBenefitsDetailsOnMBBPage(expectedStatus, noOfMilestones);
-			isBenefitsAndPointsMatched = isSubmittedBenefitDetailsVerified;
-//					&& ((Double.parseDouble(CoreFunctions.getItemsFromListByIndex(driver, _textSubmittedBenefitsPoints,
-//							0, true))) == MX_Transferee_FlexPlanningTool_Page.totalSelectedPoints)
-//					&& ((CoreFunctions.getItemsFromListByIndex(driver, _textSubmittedBenefitsPoints, 1, true))
-//							.equals(policySetupPageData.flexPolicySetupPage.StaticFixedTotalPointsAvailable));
-		} catch (Exception e) {
-			Reporter.addStepLog(MessageFormat.format(
-					MobilityXConstants.FAILED_TO_VERIFY_SUBMITTED_AIRES_MANAGED_BENEFITS_ON_MY_BUNDLE_PAGE,
-					CoreConstants.FAIL, e.getMessage()));
-		}
-		if (isBenefitsAndPointsMatched)
-			Reporter.addStepLog(MessageFormat.format(
-					MobilityXConstants.SUCCESSFULLY_VERIFIED_SUBMITTED_AIRES_MANAGED_BENEFIT_ON_MY_BUNDLE_PAGE,
-					CoreConstants.PASS));
+//	public boolean validateSubmittedAiresManagedBenefitDetails(String expectedStatus, int noOfMilestones) {
+//		boolean isSubmittedBenefitDetailsVerified = false;
+//		hoverIndex = 0;
+//		try {
+//			isSubmittedBenefitDetailsVerified = verifySubmittedBenefitsSectionHeader()
+//					&& verifySubmittedAiresManagedBenefitsDetailsOnMBBPage(expectedStatus, noOfMilestones);
+//		} catch (Exception e) {
+//			Reporter.addStepLog(MessageFormat.format(
+//					MobilityXConstants.FAILED_TO_VERIFY_SUBMITTED_AIRES_MANAGED_BENEFITS_ON_MY_BUNDLE_PAGE,
+//					CoreConstants.FAIL, e.getMessage()));
+//		}
+//		if (isSubmittedBenefitDetailsVerified)
+//			Reporter.addStepLog(MessageFormat.format(
+//					MobilityXConstants.SUCCESSFULLY_VERIFIED_SUBMITTED_AIRES_MANAGED_BENEFIT_ON_MY_BUNDLE_PAGE,
+//					CoreConstants.PASS));
+//
+//		return isSubmittedBenefitDetailsVerified;
+//	}
 
-		return isBenefitsAndPointsMatched;
-	}
-
-	private boolean verifySubmittedAiresManagedBenefitsDetailsOnMBBPage(String expectedStatus, int noOfMilestones) {
-		boolean isSubmittedAiresManagedBenefitDetailsOnMBBVerified = false;
-		boolean flag = false;
-		try {
-			for (FlexBenefit benefitList : flexBenefits) {
-				for (Benefit benefit : benefitList.getBenefits()) {
-					if ((benefit.getSelectBenefitOnFPTPage()) && (benefit.getAiresManagedService().equals("Yes"))
-							&& benefit.getNoOfMilestones() != null
-							&& Objects.equals(benefit.getNoOfMilestones(), noOfMilestones)) {
-						int indexBenefit = BusinessFunctions.returnindexItemFromListUsingText(driver,
-								_textSubmittedBenefitNameList, benefit.getBenefitDisplayName());
-						isSubmittedAiresManagedBenefitDetailsOnMBBVerified = verifySubmittedAiresManagedBenefitDetailsOnMBB(
-								indexBenefit, benefit, expectedStatus)
-								&& verifyBenefitDeleteButtonDisabled(indexBenefit, benefit, expectedStatus);
-						if (!isSubmittedAiresManagedBenefitDetailsOnMBBVerified) {
-							return false;
-						} else {
-							flag = true;
-						}
-					} else {
-						isSubmittedAiresManagedBenefitDetailsOnMBBVerified = true;
-					}
-				}
-			}
-		} catch (Exception e) {
-			Reporter.addStepLog(MessageFormat.format(
-					COREFLEXConstants.EXCEPTION_OCCURED_WHILE_VALIDATING_SELECTED_AIRES_MANAGED_BENEFIT_DETAILS_ON_MY_BENEFITS_PAGE,
-					CoreConstants.FAIL, e.getMessage()));
-		}
-		if (isSubmittedAiresManagedBenefitDetailsOnMBBVerified & flag) {
-			Reporter.addStepLog(MessageFormat.format(
-					COREFLEXConstants.SUCCESSFULLY_VERIFIED_SELECTED_AIRES_MANAGED_BENEFIT_DETAILS_ON_MY_BENEFITS_PAGE,
-					CoreConstants.PASS));
-		}
-		return isSubmittedAiresManagedBenefitDetailsOnMBBVerified;
-	}
+//	private boolean verifySubmittedAiresManagedBenefitsDetailsOnMBBPage(String expectedStatus, int noOfMilestones) {
+//		boolean isSubmittedAiresManagedBenefitDetailsOnMBBVerified = false;
+//		boolean flag = false;
+//		try {
+//			for (FlexBenefit benefitList : flexBenefits) {
+//				for (Benefit benefit : benefitList.getBenefits()) {
+//					if ((benefit.getSelectBenefitOnFPTPage()) && (benefit.getAiresManagedService().equals("Yes"))
+//							&& benefit.getNoOfMilestones() != null
+//							&& Objects.equals(benefit.getNoOfMilestones(), noOfMilestones)) {
+//						int indexBenefit = BusinessFunctions.returnindexItemFromListUsingText(driver,
+//								_textSubmittedBenefitNameList, benefit.getBenefitDisplayName());
+//						isSubmittedAiresManagedBenefitDetailsOnMBBVerified = verifySubmittedAiresManagedBenefitDetailsOnMBB(
+//								indexBenefit, benefit, expectedStatus)
+//								&& verifyBenefitDeleteButtonDisabled(indexBenefit, benefit, expectedStatus);
+//						if (!isSubmittedAiresManagedBenefitDetailsOnMBBVerified) {
+//							return false;
+//						} else {
+//							flag = true;
+//						}
+//					} else {
+//						isSubmittedAiresManagedBenefitDetailsOnMBBVerified = true;
+//					}
+//				}
+//			}
+//		} catch (Exception e) {
+//			Reporter.addStepLog(MessageFormat.format(
+//					COREFLEXConstants.EXCEPTION_OCCURED_WHILE_VALIDATING_SELECTED_AIRES_MANAGED_BENEFIT_DETAILS_ON_MY_BENEFITS_PAGE,
+//					CoreConstants.FAIL, e.getMessage()));
+//		}
+//		if (isSubmittedAiresManagedBenefitDetailsOnMBBVerified & flag) {
+//			Reporter.addStepLog(MessageFormat.format(
+//					COREFLEXConstants.SUCCESSFULLY_VERIFIED_SELECTED_AIRES_MANAGED_BENEFIT_DETAILS_ON_MY_BENEFITS_PAGE,
+//					CoreConstants.PASS));
+//		}
+//		return isSubmittedAiresManagedBenefitDetailsOnMBBVerified;
+//	}
 
 	public boolean verifySelectedBenefitDetails(int noOfMilestones) {
 		boolean isBenefitsAndPointsMatached = false;
@@ -1847,9 +1870,10 @@ public class MX_Transferee_MyBenefitsBundlePage extends Base {
 					&& verifySubmittedAMMultipleBenefitsDetailsOnMBBPage(expectedStatus);
 			isBenefitsAndPointsMatched = isSubmittedBenefitDetailsVerified
 					&& ((Double.parseDouble(CoreFunctions.getItemsFromListByIndex(driver, _textSubmittedBenefitsPoints,
-							0, true))) == MX_Transferee_FlexPlanningTool_Page.totalSelectedPoints)
+							0, true))) == (Double.parseDouble(
+									CoreFunctions.getPropertyFromConfig("CF_Transferee_TotalSelectedPoints"))))
 					&& ((CoreFunctions.getItemsFromListByIndex(driver, _textSubmittedBenefitsPoints, 1, true))
-							.equals(policySetupPageData.flexPolicySetupPage.StaticFixedTotalPointsAvailable));
+							.equals(CoreFunctions.getPropertyFromConfig("CF_Transferee_TotalAvailablePoints")));
 		} catch (Exception e) {
 			Reporter.addStepLog(MessageFormat.format(
 					MobilityXConstants.FAILED_TO_VERIFY_SUBMITTED_AIRES_MANAGED_BENEFITS_ON_MY_BUNDLE_PAGE,
@@ -1898,24 +1922,15 @@ public class MX_Transferee_MyBenefitsBundlePage extends Base {
 		return isSubmittedAiresManagedBenefitDetailsOnMBBVerified;
 	}
 
-	private List<Benefit> getBenefits(String policyType, String policyRequiredFor, String numberOfMilestones) {
+	private List<Benefit> getBenefits(String benefitType, String policyRequiredFor) {
 		List<Benefit> benefitNameList = new ArrayList<Benefit>();
-		if (policyType.equals(COREFLEXConstants.FLEX) || policyType.equals(COREFLEXConstants.BOTH)) {
+		if (benefitType.equals(COREFLEXConstants.FLEX) || benefitType.equals(COREFLEXConstants.BOTH)) {
 			for (FlexBenefit benefit : flexBenefits) {
 				for (Benefit ben : benefit.getBenefits()) {
-					if ((policyRequiredFor.equals(COREFLEXConstants.ALL_BENEFITS))
-							&& (ben.getPolicyCreationGroup().contains(policyRequiredFor))) {
+					if ((ben.getPolicyCreationGroup().contains(policyRequiredFor))) {
 						benefitNameList.add(ben);
-					} else if ((policyRequiredFor.equals(COREFLEXConstants.AIRES_MANAGED_BENEFITS_CARDS))
-							&& (ben.getAiresManagedService().equals("Yes"))
-							&& (ben.getNoOfMilestones() == Integer.parseInt(numberOfMilestones))) {
-						benefitNameList.add(ben);
-					} else if (((policyRequiredFor.equals(COREFLEXConstants.CLONING))
-							|| (policyRequiredFor.equals(COREFLEXConstants.VERSIONING))
-							|| ((policyRequiredFor.equals(COREFLEXConstants.CLIENT))))
-							&& (ben.getPolicyCreationGroup().contains(policyRequiredFor))) {
-						benefitNameList.add(ben);
-					}
+					} else
+						continue;
 				}
 			}
 		}

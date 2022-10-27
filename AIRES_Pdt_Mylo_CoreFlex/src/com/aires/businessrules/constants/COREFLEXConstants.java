@@ -836,5 +836,28 @@ public class COREFLEXConstants {
 	public static final String NUMBER_OF_PETS = "Number of Pets";
 	public static final String EXCESS_VALUATION_DUE_TO_WEIGHT_PAID = "Excess valuation due to Weight Paid By";
 	public static final String EXCESS_VALUATION_DUE_TO_VALUE_PAID = "Excess valuation due to Value Paid By";
-	
+	public static final String MIN_MILEAGE_FOR_SHIPMENT_TO_BE_AUTHORIZED = "Minimum mileage for shipment to be authorized";
+	public static final String MIN_KILOMETERS_FOR_SHIPMENT_TO_BE_AUTHORIZED = "Minimum kilometers for shipment to be authorized";
+	public static final String RENTAL_CAR_PROVIDED_DURING_TRANSIT = "Rental Car provided during transit";
+	public static final String MAX_NUMBER_OF_DAYS = "Max. Number of Days";
+	public static final String PET_DETAIL = "Pet Detail";
+	public static final String CONTAINER_SIZE_TRANSFEREE_ONLY = "Container Size - Transferee Only";
+	public static final String CONTAINER_QUANTITY_TRANSFEREE_ONLY = "Container Quantity - Transferee Only";
+	public static final String CONTAINER_SIZE_TRANSFEREE_PARTNER = "Container Size - Transferee Partner";
+	public static final String CONTAINER_QUANTITY_TRANSFEREE_PARTNER = "Container Quantity - Transferee Partner";
+	public static final String CONTAINER_SIZE_TRANSFEREE_FAMILY = "Container Size - Transferee Family";
+	public static final String CONTAINER_QUANTITY_TRANSFEREE_FAMILY = "Container Quantity - Transferee Family";
+	public static final String CONTAINER_QUANTITY_OTHER_TRANSFEREE_FAMILY = "Container Quantity Other - Transferee Family";
+	public static final String FAILED_TO_VERIFY_VALUES_ON_GENERAL_INFORMATION_PAGE = "{0} Failed to verify field values on General Information Page.";
+	public static final String SUCCESSFULLY_VERIFIED_POLICY_DETAILS_ON_GENERAL_INFO_PAGE = "{0} Successfully verified Policy Details on General Information Page.";
+	public static final String NO = "No";
+	public static final String CONCIERGE_HOME_CLEANING_SERVICES_REIMBURSEMENT = "Concierge Home Cleaning Services Reimbursement";
+	public static final String CONCIERGE_HOME_CLEANING_SERVICES_REIMBURSEMENT_BENEFITS_PAGE = "Concierge Home Cleaning Services Reimbursement Benefits Page";
+	public static final String CHILD_CARE_SERVICES_REIMBURSEMENT = "Child Care Services Reimbursement";
+	public static final String CHILD_CARE_SERVICES_REIMBURSEMENT_BENEFITS_PAGE = "Child Care Services Reimbursement Benefits Page";
+	public static final String GOODS_SERVICES_ALLOWANCE = "Goods & Services Allowance";
+	public static final String GOODS_SERVICES_ALLOWANCE_BENEFITS_PAGE = "Goods & Services Allowance Benefits Page";
+	public static final String EXCEPTION_OCCURED_WHILE_FILLING_SUB_BENEFIT_FORM = "{0} Exception occured while filling ''{2}'' SubBenefit form. Exception : ''{1}''.";
+	public static final String MEET_AND_GREET = "Meet and Greet";
+	public static final String EDUCATION_ASSISTANCE = "Education Assistance";
 }

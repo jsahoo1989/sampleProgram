@@ -1,6 +1,6 @@
 Feature: Validate the Core_Flex Cards details on Mobility Journey and Aires Managed Submitted Benefit status on My Benefit Bundle Page
 
-  @End-To_End_CoreFlex @Both-Cards_PF_Card_StatusChecks @AllCards @MJ_Card_StatusChecks @TwoMileStonesMJCards
+  @End-To_End_CoreFlex @Both-Cards_PF_Card_StatusChecks @AllCards @MJ_Card_StatusChecks @TwoMileStonesMJCardsPF
   Scenario: CoreFlex - Setting up a New CoreFlex policy in 'Policy Digitization Tool' with Both type 'Aires Managed' benefit
     Given he has setup a new CoreFlex Policy with following selection in Blueprint application
       | Person Responsible For Benefit Selection | Flex Setup Type | Cashout Availability   | BenefitType | PolicyRequiredFor            | MileStones |
@@ -89,9 +89,9 @@ Feature: Validate the Core_Flex Cards details on Mobility Journey and Aires Mana
     Then submitted Aires Managed Benefit Flex and Core card status should be updated to "Cancelled" on "Mobility Journey Home" page
     And submitted Aires Managed Benefit status should be updated to "Cancelled" on "My Benefit Bundle" page
 
-  @End-To_End_CoreFlex @Both-Cards_PF_Card_StatusChecks @AllCards @MJ_Card_StatusChecks 
+  @End-To_End_CoreFlex @Both-Cards_PF_Card_StatusChecks @AllCards @MJ_Card_StatusChecksPF 
   Scenario: CoreFlex - Setting up a New CoreFlex policy in 'Policy Digitization Tool' with Both type 'Aires Managed' benefit
-    Given he has setup a new CoreFlex Policy with following selection in Blueprint application
+    Given he has setup a new Points Based CoreFlex Policy with following selection in Blueprint application
       | Person Responsible For Benefit Selection | Flex Setup Type | Cashout Availability   | BenefitType | PolicyRequiredFor            | MileStones |
       | Transferee                               | Static/Fixed    | Cashout Not Authorized | Both        | Aires Managed Benefits Cards |          5 |
     And he has clicked on "Submit" button to submit "V1" policy verison on "Custom Bundles" page

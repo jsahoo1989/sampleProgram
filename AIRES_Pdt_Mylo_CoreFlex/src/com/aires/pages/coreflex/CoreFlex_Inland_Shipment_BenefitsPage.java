@@ -194,7 +194,7 @@ public class CoreFlex_Inland_Shipment_BenefitsPage extends BenefitPage {
 	@FindBy(how = How.CSS, using = "ng-select[formcontrolname='tempStorageDurationCode'] span.ng-option-label")
 	private List<WebElement> _selectTempStorageDurationOptions;
 
-	@FindBy(how = How.XPATH, using = "//input[@formcontrolname='insuranceType']/parent::label[@class='form-check-label']")
+	@FindBy(how = How.XPATH, using = "//input[@formcontrolname='insuranceType']/parent::label[contains(@class,'form-check-label')]")
 	private List<WebElement> _radioInsuranceType;
 
 	@FindBy(how = How.XPATH, using = "//label[contains(text(),'Insurance Type')]/following-sibling::div//input")
@@ -228,6 +228,52 @@ public class CoreFlex_Inland_Shipment_BenefitsPage extends BenefitPage {
 
 	private By deliveryStatus = By.xpath(
 			".//span[contains(@class,'ServicesSuccessIcon')]/ancestor::div[contains(@class,'ServicesTrain')]//span[contains(text(),'Delivery')]");
+
+	@FindBy(how = How.CSS, using = "input[formcontrolname='nonUsWeightCap']")
+	private WebElement _inputWeightCap;
+
+	@FindBy(how = How.XPATH, using = "//input[@formcontrolname='nonUsUnitOfWeightCap']/parent::label[@class='form-check-label']")
+	private List<WebElement> _radioUnitOfWeightCap;
+
+	@FindBy(how = How.XPATH, using = "//label[contains(text(),'Unit of Weight Cap')]/following-sibling::div//input")
+	private List<WebElement> _radioUnitOfWeightCapButtonList;
+
+	@FindBy(how = How.CSS, using = "input[formcontrolname='nonUsVolumeCap']")
+	private WebElement _inputVolumeCap;
+
+	@FindBy(how = How.XPATH, using = "//input[@formcontrolname='nonUsUnitOfVolumeCap']/parent::label[@class='form-check-label']")
+	private List<WebElement> _radioUnitOfVolumeCap;
+
+	@FindBy(how = How.XPATH, using = "//label[contains(text(),'Unit of Volume Cap')]/following-sibling::div//input")
+	private List<WebElement> _radioUnitOfVolumeCapButtonList;
+	
+	@FindBy(how = How.CSS, using = "ng-select[formcontrolname='inlandShipmentTradedCodeList']")
+	private WebElement _selectInlandShipmentTraded;
+
+	@FindBy(how = How.CSS, using = "ng-select[formcontrolname='inlandShipmentTradedCodeList'] span.ng-option-label")
+	private List<WebElement> _selectInlandShipmentTradedOptions;
+
+	@FindBy(how = How.CSS, using = "div[class='collapse show'] ng-select[formcontrolname='inlandShipmentTradedCodeList'] span[class*='ng-value-label']")
+	private WebElement _selectInlandShipmentTradedSelectedValue;
+	
+	@FindBy(how = How.XPATH, using = "//input[@formcontrolname='exceValDueToWeight']/parent::label[@class='form-check-label']")
+	private List<WebElement> _radioExcesValDueToWeight;
+
+	@FindBy(how = How.XPATH, using = "//label[contains(text(),'Excess valuation due to Weight Paid By')]/following-sibling::div//input")
+	private List<WebElement> _radioExcesValDueToWeightButtonList;
+
+	@FindBy(how = How.CSS, using = "input[formcontrolname='exceValDueToWeightOther']")
+	private WebElement _inputExcesValDueToWeightOther;
+
+	@FindBy(how = How.XPATH, using = "//input[@formcontrolname='exceValDueToValue']/parent::label[@class='form-check-label']")
+	private List<WebElement> _radioExcesValDueToValue;
+
+	@FindBy(how = How.XPATH, using = "//label[contains(text(),'Excess valuation due to Value Paid By')]/following-sibling::div//input")
+	private List<WebElement> _radioExcesValDueToValueButtonList;
+
+	@FindBy(how = How.CSS, using = "input[formcontrolname='exceValDueToValueOther']")
+	private WebElement _inputExcesValDueToValueOther;
+
 
 	/*********************************************************************/
 
@@ -422,25 +468,37 @@ public class CoreFlex_Inland_Shipment_BenefitsPage extends BenefitPage {
 	 */
 	private void fillInlandShipmentSubBenefitForm(String subBenefitFormName) {
 		try {
+			CoreFunctions.clearAndSetText(driver, _inputWeightCap, inlandShipmentBenefitData.inlandShipment.weightCap);
+			CoreFunctions.selectItemInListByText(driver, _radioUnitOfWeightCap,
+					inlandShipmentBenefitData.inlandShipment.unitOfWeightCap, true);									
+			CoreFunctions.clearAndSetText(driver, _inputVolumeCap, inlandShipmentBenefitData.inlandShipment.volumeCap);
+			CoreFunctions.selectItemInListByText(driver, _radioUnitOfVolumeCap,
+					inlandShipmentBenefitData.inlandShipment.unitOfVolumeCap, true);
 			CoreFunctions.clickElement(driver, _selectTempStorageDuration);
 			CoreFunctions.selectItemInListByText(driver, _selectTempStorageDurationOptions,
-					inlandShipmentBenefitData.inlandShipment.temporaryStorageDuration, true);
-
-			CoreFunctions.clearAndSetText(driver, _txtAreaComment, inlandShipmentBenefitData.inlandShipment.comment);
-			CoreFunctions.selectItemInListByText(driver, _radioBtnGrossUp,
-					inlandShipmentBenefitData.inlandShipment.grossUp, true);
+					inlandShipmentBenefitData.inlandShipment.temporaryStorageDuration, true);	
+			CoreFunctions.selectItemInListByText(driver, _radioExcesValDueToWeight,
+					inlandShipmentBenefitData.inlandShipment.excessValuationDueToWeightPaid, true);
+			CoreFunctions.selectItemInListByText(driver, _radioExcesValDueToValue,
+					inlandShipmentBenefitData.inlandShipment.excessValuationDueToValuePaid, true);
 			CoreFunctions.selectItemInListByText(driver, _radioInsuranceType,
-					inlandShipmentBenefitData.inlandShipment.insuranceType, true);
+					inlandShipmentBenefitData.inlandShipment.insuranceType, true);			
 			if (inlandShipmentBenefitData.inlandShipment.insuranceType.equalsIgnoreCase(COREFLEXConstants.OTHER)) {
 				CoreFunctions.clearAndSetText(driver, _inputInsuranceTypeOther,
 						inlandShipmentBenefitData.inlandShipment.insuranceTypeOther);
 			}
+			CoreFunctions.selectItemInListByText(driver, _radioBtnGrossUp,
+					inlandShipmentBenefitData.inlandShipment.grossUp, true);
+			CoreFunctions.clickElement(driver, _selectInlandShipmentTraded);
+			CoreFunctions.selectItemInListByText(driver, _selectInlandShipmentTradedOptions,
+					inlandShipmentBenefitData.inlandShipment.canThisBenefitBeTradedForAnotherBenefit, true);
 			CoreFunctions.selectItemInListByText(driver, _radioBtnCandidateSelection,
 					inlandShipmentBenefitData.inlandShipment.reimbursedBy, true);
 			if (inlandShipmentBenefitData.inlandShipment.reimbursedBy.equalsIgnoreCase(COREFLEXConstants.OTHER)) {
 				CoreFunctions.clearAndSetText(driver, _inputReimbursedBy,
 						inlandShipmentBenefitData.inlandShipment.reimbursedByOther);
 			}
+			CoreFunctions.clearAndSetText(driver, _txtAreaComment, inlandShipmentBenefitData.inlandShipment.comment);
 		} catch (Exception e) {
 			Assert.fail(MessageFormat.format(PDTConstants.EXCEPTION_OCCURED_FILL_SUBBENEFIT_FORM, CoreConstants.FAIL,
 					subBenefitFormName, e.getMessage()));
@@ -703,6 +761,22 @@ public class CoreFlex_Inland_Shipment_BenefitsPage extends BenefitPage {
 	 */
 	private void verifyInlandShipmentSubBenefitForm(String formName) {
 		try {
+			CoreFunctions.verifyText(_inputWeightCap.getDomProperty("value"),
+					inlandShipmentBenefitData.inlandShipment.weightCap, COREFLEXConstants.WEIGHT_CAP);
+			CoreFunctions.verifyRadioButtonSelection(driver, _radioUnitOfWeightCap, _radioUnitOfWeightCapButtonList,
+					inlandShipmentBenefitData.inlandShipment.unitOfWeightCap, COREFLEXConstants.UNIT_OF_WEIGHT_CAP);
+			CoreFunctions.verifyText(_inputVolumeCap.getDomProperty("value"),
+					inlandShipmentBenefitData.inlandShipment.volumeCap, COREFLEXConstants.VOLUME_CAP);
+			CoreFunctions.verifyRadioButtonSelection(driver, _radioUnitOfVolumeCap, _radioUnitOfVolumeCapButtonList,
+					inlandShipmentBenefitData.inlandShipment.unitOfVolumeCap, COREFLEXConstants.UNIT_OF_VOLUME_CAP);			
+			CoreFunctions.verifyRadioButtonSelection(driver, _radioExcesValDueToWeight,
+					_radioExcesValDueToWeightButtonList,
+					inlandShipmentBenefitData.inlandShipment.excessValuationDueToWeightPaid,
+					COREFLEXConstants.EXCESS_VALUATION_DUE_TO_WEIGHT_PAID);
+			CoreFunctions.verifyRadioButtonSelection(driver, _radioExcesValDueToValue,
+					_radioExcesValDueToValueButtonList,
+					inlandShipmentBenefitData.inlandShipment.excessValuationDueToValuePaid,
+					COREFLEXConstants.EXCESS_VALUATION_DUE_TO_VALUE_PAID);			
 			CoreFunctions.verifyText(driver, _selectTempStorageDurationSelectedValue,
 					inlandShipmentBenefitData.inlandShipment.temporaryStorageDuration,
 					COREFLEXConstants.TEMPORARY_STORAGE_SIT_DURATION);

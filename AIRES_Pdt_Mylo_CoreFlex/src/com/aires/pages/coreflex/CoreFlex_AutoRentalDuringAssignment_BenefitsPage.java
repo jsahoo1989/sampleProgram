@@ -237,7 +237,7 @@ public class CoreFlex_AutoRentalDuringAssignment_BenefitsPage extends BenefitPag
 	/*********************************************************************/
 
 	CoreFlex_AllowancesBenefitsData allowancesBenefitData = FileReaderManager.getInstance().getCoreFlexJsonReader()
-			.getLifeStyleBenefitDataList(COREFLEXConstants.AUTO_RENTAL_DURING_ASSIGNMENT);
+			.getAllowanceBenefitDataList(COREFLEXConstants.AUTO_RENTAL_DURING_ASSIGNMENT);
 
 	public static final List<Benefit> coreBenefits = FileReaderManager.getInstance().getCoreFlexJsonReader()
 			.getMXTransfereeCoreBenefitDetails();

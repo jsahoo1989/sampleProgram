@@ -45,14 +45,12 @@ import java.util.concurrent.ThreadLocalRandom;
 import org.apache.commons.codec.binary.Base64;
 import org.apache.log4j.Logger;
 import org.openqa.selenium.NoSuchElementException;
-import org.openqa.selenium.StaleElementReferenceException;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.interactions.Actions;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.FluentWait;
 import org.openqa.selenium.support.ui.Select;
-import org.openqa.selenium.support.ui.WebDriverWait;
 import org.testng.Assert;
 
 import com.aires.businessrules.constants.COREFLEXConstants;
@@ -725,52 +723,33 @@ public class BusinessFunctions {
 	}
 
 	public static String[] getClientAndPolicyDetails(PDT_LoginDetails _loginDetailsApplication) {
-		String clientAndPolicyDetailsArr[] = new String[7];
-		switch (CoreFunctions.getPropertyFromConfig("envt").toLowerCase()) {
+		String clientAndPolicyDetailsArr[] = new String[3];
+		//switch (CoreFunctions.getPropertyFromConfig("envt").toLowerCase()) {
+		switch (System.getProperty("envt").toLowerCase()) {
 		case CoreConstants.ENVT_DEV:
 			clientAndPolicyDetailsArr[0] = _loginDetailsApplication.dev.clientId;
 			clientAndPolicyDetailsArr[1] = _loginDetailsApplication.dev.clientName;
 			clientAndPolicyDetailsArr[2] = _loginDetailsApplication.dev.policy;
-			clientAndPolicyDetailsArr[3] = _loginDetailsApplication.dev.mxClientUserName;
-			clientAndPolicyDetailsArr[4] = _loginDetailsApplication.dev.mxClientPassword;
-			clientAndPolicyDetailsArr[5] = _loginDetailsApplication.dev.mxClientUserProfileName;
-			clientAndPolicyDetailsArr[6] = _loginDetailsApplication.dev.clientName;
 			break;
 		case CoreConstants.ENVT_QA:
 			clientAndPolicyDetailsArr[0] = _loginDetailsApplication.qa.clientId;
 			clientAndPolicyDetailsArr[1] = _loginDetailsApplication.qa.clientName;
 			clientAndPolicyDetailsArr[2] = _loginDetailsApplication.qa.policy;
-			clientAndPolicyDetailsArr[3] = _loginDetailsApplication.qa.mxClientUserName;
-			clientAndPolicyDetailsArr[4] = _loginDetailsApplication.qa.mxClientPassword;
-			clientAndPolicyDetailsArr[5] = _loginDetailsApplication.qa.mxClientUserProfileName;
-			clientAndPolicyDetailsArr[6] = _loginDetailsApplication.qa.clientName;
 			break;
 		case CoreConstants.ENVT_TEST:
 			clientAndPolicyDetailsArr[0] = _loginDetailsApplication.preProd.clientId;
 			clientAndPolicyDetailsArr[1] = _loginDetailsApplication.preProd.clientName;
 			clientAndPolicyDetailsArr[2] = _loginDetailsApplication.preProd.policy;
-			clientAndPolicyDetailsArr[3] = _loginDetailsApplication.preProd.mxClientUserName;
-			clientAndPolicyDetailsArr[4] = _loginDetailsApplication.preProd.mxClientPassword;
-			clientAndPolicyDetailsArr[5] = _loginDetailsApplication.preProd.mxClientUserProfileName;
-			clientAndPolicyDetailsArr[6] = _loginDetailsApplication.preProd.clientName;
 			break;
 		case CoreConstants.ENVT_UAT:
 			clientAndPolicyDetailsArr[0] = _loginDetailsApplication.uat.clientId;
 			clientAndPolicyDetailsArr[1] = _loginDetailsApplication.uat.clientName;
 			clientAndPolicyDetailsArr[2] = _loginDetailsApplication.uat.policy;
-			clientAndPolicyDetailsArr[3] = _loginDetailsApplication.uat.mxClientUserName;
-			clientAndPolicyDetailsArr[4] = _loginDetailsApplication.uat.mxClientPassword;
-			clientAndPolicyDetailsArr[5] = _loginDetailsApplication.uat.mxClientUserProfileName;
-			clientAndPolicyDetailsArr[6] = _loginDetailsApplication.uat.clientName;
 			break;
 		case CoreConstants.ENVT_PROD:
 			clientAndPolicyDetailsArr[0] = _loginDetailsApplication.prod.clientId;
 			clientAndPolicyDetailsArr[1] = _loginDetailsApplication.prod.clientName;
 			clientAndPolicyDetailsArr[2] = _loginDetailsApplication.prod.policy;
-			clientAndPolicyDetailsArr[3] = _loginDetailsApplication.prod.mxClientUserName;
-			clientAndPolicyDetailsArr[4] = _loginDetailsApplication.prod.mxClientPassword;
-			clientAndPolicyDetailsArr[5] = _loginDetailsApplication.prod.mxClientUserProfileName;
-			clientAndPolicyDetailsArr[6] = _loginDetailsApplication.prod.clientName;
 			break;
 		}
 		return clientAndPolicyDetailsArr;
@@ -778,7 +757,8 @@ public class BusinessFunctions {
 
 	public static String[] getCSMCredentials(PDT_LoginDetails _loginDetailsApplication) {
 		String csmCredentials[] = new String[3];
-		switch (CoreFunctions.getPropertyFromConfig("envt").toLowerCase()) {
+		//switch (CoreFunctions.getPropertyFromConfig("envt").toLowerCase()) {
+		switch (System.getProperty("envt").toLowerCase()) {
 		case CoreConstants.ENVT_DEV:
 			csmCredentials[0] = _loginDetailsApplication.dev.csmUserName;
 			csmCredentials[1] = _loginDetailsApplication.dev.csmPassword;
@@ -1090,5 +1070,52 @@ public class BusinessFunctions {
 		else
 			Reporter.addStepLog(MessageFormat.format(PDTConstants.FAIL_TO_SELECT_VALUE_IN_DROPDOWN, CoreConstants.FAIL,
 					drpdwnValue, elementName));
+	}
+	
+	public static String selectAndReturnRandomValueFromList(WebDriver driver, PDT_AddNewPolicyPage addNewPolicyPage,
+			String subBenefitFormName, List<WebElement> webElementList, String labelText) {
+		String randValue = null;
+		try {			
+			randValue = webElementList.get(CoreFunctions.getRandomNumber(0, webElementList.size() - 1))
+					.getText();
+			CoreFunctions.selectItemInListByText(driver, webElementList, randValue, labelText,
+					PDTConstants.RADIO_BUTTON_LIST, true);
+		} catch (Exception e) {
+			Assert.fail(MessageFormat.format(PDTConstants.FAIL_TO_SELECT_VALUE_FROM_FIELD, CoreConstants.FAIL,
+					randValue, labelText, PDTConstants.RADIO_BUTTON_LIST));
+		}
+		return randValue.trim();
+	}
+	
+	
+	public static boolean verifyDefaultOptionIsSelectedInDrpDown(String selectedOptionText, String expectedOption,
+			String lblDrpDown) {
+		if (selectedOptionText.equalsIgnoreCase(expectedOption)) {
+			Reporter.addStepLog(MessageFormat.format(PDTConstants.VERIFIED_DEFAULT_OPTION_SELECTED, CoreConstants.PASS,
+					expectedOption, lblDrpDown));
+			return true;
+		}
+		return false;
+	}
+
+	public static void fluentWaitForSpinnerToDisappear(WebDriver driver, WebElement element) {
+		FluentWait<WebDriver> wait = new FluentWait<>(driver).withTimeout(Duration.ofSeconds(90))
+				.pollingEvery(Duration.ofMillis(1000)).withMessage("Timeout occured!")
+				.ignoring(NoSuchElementException.class);
+		wait.until(ExpectedConditions.invisibilityOf(element));
+	}
+	
+	public static void printTimeTakenByPageToLoad(long timeBeforeAction, long timeAfterAction, String pageName) {
+		DecimalFormat pgToLoadformat = new DecimalFormat();
+		pgToLoadformat.setMaximumFractionDigits(3);
+		Reporter.addStepLog("<b>Time taken by '"+pageName+"' page to Load is :"
+				+ pgToLoadformat.format((timeAfterAction - timeBeforeAction) / 1000) + " Seconds </b>");
+	}
+	
+	public static void printTimeTakenByPageToLoad(long timeBeforeAction, long timeAfterAction, String pageName, String subBenefitName) {
+		DecimalFormat pgToLoadformat = new DecimalFormat();
+		pgToLoadformat.setMaximumFractionDigits(3);
+		Reporter.addStepLog("<b>Time taken by sub-benefit:-'"+subBenefitName+"' to Load on '"+pageName+"' benefit page is:-"
+				+ pgToLoadformat.format((timeAfterAction - timeBeforeAction) / 1000) + " Seconds </b>");
 	}
 }

@@ -28,14 +28,12 @@ import java.io.File;
 import java.io.IOException;
 import java.lang.reflect.Field;
 import java.util.ArrayList;
-import java.util.Date;
 
 import javax.imageio.ImageIO;
 
 import org.apache.commons.lang3.reflect.FieldUtils;
 import org.openqa.selenium.OutputType;
 import org.openqa.selenium.TakesScreenshot;
-import org.testng.Assert;
 
 import com.aires.businessrules.BusinessFunctions;
 import com.aires.businessrules.CoreFunctions;
@@ -77,7 +75,7 @@ public class Hooks {
 			testContext.getBasePage().killExistingBrowsers();
 		}
 		//Commented Code is for debugging purpose in local
-		 else if (scenario.getName().contains("PDT")) {
+		/* else if (scenario.getName().contains("PDT")) {
 			Log.info(FileReaderManager.getInstance().getConfigReader().getPDTApplicationUrl());
 			testContext.getWebDriverManager().getDriver().navigate()
 					.to(FileReaderManager.getInstance().getConfigReader().getPDTApplicationUrl());
@@ -89,7 +87,7 @@ public class Hooks {
 			Log.info(FileReaderManager.getInstance().getConfigReader().getCoreFlexPolicySetupApplicationUrl());
 			testContext.getWebDriverManager().getDriver().navigate()
 					.to(FileReaderManager.getInstance().getConfigReader().getCoreFlexPolicySetupApplicationUrl());
-		}else if ((scenario.getName().contains("MXTransferee")) || (scenario.getName().contains("MXClient"))) {
+		}else if (scenario.getName().contains("MXTransferee")) {
 			Log.info(FileReaderManager.getInstance().getConfigReader().getMobilityXUrl());
 			testContext.getWebDriverManager().getDriver().navigate()
 					.to(FileReaderManager.getInstance().getConfigReader().getMobilityXUrl());
@@ -97,11 +95,8 @@ public class Hooks {
 			Log.info(FileReaderManager.getInstance().getConfigReader().getCoreFlexTransfereeSubmissionsApplicationUrl());
 			testContext.getWebDriverManager().getDriver().navigate()
 					.to(FileReaderManager.getInstance().getConfigReader().getCoreFlexTransfereeSubmissionsApplicationUrl());
-		}
-		CoreConstants.TIME_BEFORE_ACTION = new Date().getTime();
+		}*/
 		
-		// Jenkins Code for remote execution - Uncomment this code before merging code to main
-		/*
 		else if (appName.equals(CoreConstants.COREFLEX)&& scenario.getName().contains("MXTransferee")) {
 			Log.info(FileReaderManager.getInstance().getConfigReader().getApplicationUrl("MXTransferee"));
 			testContext.getWebDriverManager().getDriver().navigate()
@@ -115,7 +110,7 @@ public class Hooks {
 		else {
 			Log.info(url);
 			testContext.getWebDriverManager().getDriver().navigate().to(url);
-		}*/	
+		}	
 	}
 
 	@After(order = 2)
@@ -178,19 +173,24 @@ public class Hooks {
 				Reporter.addScreenCaptureFromPath(destinationPath.toString());
 			} catch (IOException e) {
 			}
+		} else if (scenario.getStatus().equalsIgnoreCase("passed") && scenario.getName().contains("PDT") && testContext.getPageObjectManager().getAddNewPolicyPage().getPolicyId() != null) {
+			DbFunctions.deletePolicyByPolicyId(testContext.getPageObjectManager().getAddNewPolicyPage().getPolicyId());
+			Reporter.addScenarioLog(Status.PASS + " : Test Scenario is Passed");
+			testResult = 1;
 		} else if (scenario.getStatus().equalsIgnoreCase("passed")) {
 			Reporter.addScenarioLog(Status.PASS + " : Test Scenario is Passed");
 			testResult = 1;
-		} else {
+		}else {
 			Reporter.addScenarioLog(Status.SKIP + " : Test Scenario is Skipped");
 			testResult = 2;
 		}
 	}
 
 	
-//	@After(order = 1)
+	@After(order = 1)
 	public void updateResultInTestRail(Scenario scenario) {
 		String Case_ID = BusinessFunctions.getTestRailIdAsPerApplication(System.getProperty("application"),scenario.getSourceTagNames().toString());
+		//String Case_ID = BusinessFunctions.getTestRailIdAsPerApplication("PDT",scenario.getSourceTagNames().toString());
 		Log.info(Case_ID);
 		String testrailRunName = (CoreFunctions.getPropertyFromConfig("SniffSuite_TestRunId"));
 		TestRail.addResultForTestCase(Case_ID, testResult, testrailRunName, CoreConstants.TEST_RAIL_URL,
@@ -204,7 +204,7 @@ public class Hooks {
 		if (scenario.getName().contains("IRIS")) {
 			testContext.getBasePage().cleanIrisProcesses();
 		} else {
-//			testContext.getWebDriverManager().closeDriver();
+			testContext.getWebDriverManager().closeDriver();
 		}
 		Runtime.getRuntime().gc();
 	}

@@ -51,9 +51,7 @@ public class BasePage {
 
 	public BasePage() throws Exception {
 		Thread.sleep(2000);
-		String _windowTitle = CoreFunctions.getPropertyFromConfig("irisWindowTitle").isEmpty()
-				? getWindowText.getActiveWindowText()
-				: CoreFunctions.getPropertyFromConfig("irisWindowTitle");
+		_windowTitle = getWindowText.getActiveWindowText();
 		while (_windowTitle.contains(IRISConstants.PROGRESS_TEXT)) {
 			_windowTitle = getWindowText.getActiveWindowText();
 			Thread.sleep(2000);
@@ -63,17 +61,18 @@ public class BasePage {
 	}
 
 	public void invokeIrisApplication() throws Exception {
-//		getPIDAndKillProces();
-//		CoreFunctions.waitHandler(2);
-//		allocateUFTPortToUsers();
-//		runLFTEngineAsPerStatus();
-//		CoreFunctions.waitHandler(3);
+		getPIDAndKillProces();
+		CoreFunctions.waitHandler(2);
+		allocateUFTPortToUsers();
+		runLFTEngineAsPerStatus();
+		CoreFunctions.waitHandler(3);
 		ModifiableSDKConfiguration config = new ModifiableSDKConfiguration();
-//		int portNumber = getPortNumberAsPerUserName();
-//		Log.info("Port Assigned to " + _userName + " is : " + portNumber);
-		config.setServerAddress(new URI("ws://localhost:" + 5090));
+		int portNumber = getPortNumberAsPerUserName();
+		Log.info("Port Assigned to " + _userName + " is : " + portNumber);
+		config.setServerAddress(new URI("ws://localhost:" + portNumber));
 		SDK.init(config);
-		_path = getIrisPathForApplication(CoreFunctions.getPropertyFromConfig("application"));
+		//_path = getIrisPathForApplication(CoreFunctions.getPropertyFromConfig("application"));
+		_path = getIrisPathForApplication(System.getProperty("application"));
 		_process = Runtime.getRuntime().exec(_path);
 		_windowTitle = getWindowText.getActiveWindowText();
 		while (!_windowTitle.contains("Login")) {
@@ -87,8 +86,8 @@ public class BasePage {
 //		int port = 0;
 		// String userName = System.getProperty("user.name").toLowerCase();
 		String computerName = InetAddress.getLocalHost().getHostName();
-		if (computerName.equalsIgnoreCase("corpprdvw270") || _userName.equalsIgnoreCase("vmallah"))
-			return 5090;
+		if (computerName.equalsIgnoreCase("corpprdvw270") || _userName.equalsIgnoreCase("srana"))
+			return 5095;
 		else
 			return userPortMap.get(_userName);
 	}
@@ -105,9 +104,7 @@ public class BasePage {
 
 	public static Window getIRISWindow() throws Exception {
 		Thread.sleep(8000);
-		String _windowTitle = CoreFunctions.getPropertyFromConfig("irisWindowTitle").isEmpty()
-				? getWindowText.getActiveWindowText()
-				: CoreFunctions.getPropertyFromConfig("irisWindowTitle");
+		_windowTitle = getWindowText.getActiveWindowText();
 		return Desktop.describe(Window.class, new WindowDescription.Builder().title(_windowTitle).build());
 	}
 
@@ -136,7 +133,7 @@ public class BasePage {
 
 	public void closeIRISApplication() throws Exception {
 		Thread.sleep(2000);
-		_IRIS = Desktop.describe(Window.class, new WindowDescription.Builder().title("Welcome").build());
+		_IRIS = Desktop.describe(Window.class, new WindowDescription.Builder().title("Welcome - 12C").build());
 		if (_IRIS.exists() && _IRIS.isVisible()) {
 			_IRIS.describe(Button.class, new ButtonDescription.Builder().label("exit_32").build()).click();
 		}
@@ -146,7 +143,7 @@ public class BasePage {
 	}
 
 	public void cleanIrisProcesses() throws Exception {
-//		killExistingBrowsers();
+		killExistingBrowsers();
 		closeIRISApplication();
 	}
 
@@ -227,12 +224,15 @@ public class BasePage {
 
 	public String getIrisPathForApplication(String appName) {
 		String irisBuildPath = null;
+		Log.info("appName="+appName);
 		switch (appName) {
 		case CoreConstants.APP_PDT:
 			_loginDetails = FileReaderManager.getInstance().getJsonReader()
 					.getLoginByApplication(CoreConstants.APP_PDT);
+			/*irisBuildPath = getIRISPathAsPerEnvtForPDT(_loginDetails,
+					CoreFunctions.getPropertyFromConfig("envt").toLowerCase());*/
 			irisBuildPath = getIRISPathAsPerEnvtForPDT(_loginDetails,
-					CoreFunctions.getPropertyFromConfig("envt").toLowerCase());
+					System.getProperty("envt").toLowerCase());
 			break;
 		case CoreConstants.APP_COREFLEX:
 			_loginDetails = FileReaderManager.getInstance().getJsonReader()
@@ -240,10 +240,11 @@ public class BasePage {
 			irisBuildPath = getIRISPathAsPerEnvtForCoreFlex(_loginDetails);
 			break;
 		default:
+			/*Assert.fail(MessageFormat.format(CoreConstants.INVALID_APPLICATION,
+					CoreFunctions.getPropertyFromConfig("application")));*/
 			Assert.fail(MessageFormat.format(CoreConstants.INVALID_APPLICATION,
-					CoreFunctions.getPropertyFromConfig("application")));
+					System.getProperty("application")));			
 		}
-		Log.info("IRIS build path:" + irisBuildPath);
 		return irisBuildPath;
 	}
 
@@ -268,6 +269,8 @@ public class BasePage {
 		default:
 			Assert.fail(MessageFormat.format(CoreConstants.INVALID_ENVIRONMENT,
 					CoreFunctions.getPropertyFromConfig("application")));
+			/*Assert.fail(MessageFormat.format(CoreConstants.INVALID_ENVIRONMENT,
+					System.getProperty("application")));*/
 		}
 		return irisBuildPath;
 	}
@@ -287,9 +290,6 @@ public class BasePage {
 		case CoreConstants.ENVT_TEST:
 			irisBuildPath = _loginDetails.preProd.irisBuildPath;
 			break;
-		case CoreConstants.ENVT_PREPROD:
-			irisBuildPath = _loginDetails.preProd.irisBuildPath;
-			break;
 		case CoreConstants.ENVT_PROD:
 			irisBuildPath = _loginDetails.prod.irisBuildPath;
 			break;
@@ -301,20 +301,20 @@ public class BasePage {
 	}
 
 	public void allocateUFTPortToUsers() {
-		userPortMap.put("spant", 5088);
+		userPortMap.put("spant", 5095);
 		userPortMap.put("rsharma", 5096);
 		userPortMap.put("pdash", 5097);
 		userPortMap.put("vmallah", 5090);
 	}
-
+	
 	public void reLaunchIrisToAvoidFreezingIssue() throws Exception {
 		ModifiableSDKConfiguration config = new ModifiableSDKConfiguration();
-//		int portNumber = getPortNumberAsPerUserName();
-		config.setServerAddress(new URI("ws://localhost:" + 5090));
+		int portNumber = getPortNumberAsPerUserName();
+		config.setServerAddress(new URI("ws://localhost:" + portNumber));
 		SDK.init(config);
-		String _path = getIrisPathForApplication(CoreFunctions.getPropertyFromConfig("application"));
+		//String _path = getIrisPathForApplication(CoreFunctions.getPropertyFromConfig("application"));
+		String _path = getIrisPathForApplication(System.getProperty("application"));
 		Runtime.getRuntime().exec(_path);
-		CoreFunctions.writeToPropertiesFile("irisWindowTitle", "");
 		String _windowTitle = getWindowText.getActiveWindowText();
 		while (!_windowTitle.contains("Login")) {
 			CoreFunctions.waitHandler(5);

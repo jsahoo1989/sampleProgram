@@ -61,19 +61,23 @@ public class PDT_Mylo_CoreFlex_Common_LoginPage extends Base {
 	@FindBy(how = How.XPATH, using = "//div[text()='Use another account']")
 	private WebElement _anotherAccount;
 	
+	@FindBy(how = How.XPATH, using = "//div[text()='Sign in']")
+	private WebElement _headingSignIn;
+	
 	@FindBy(how = How.CSS, using = "div.ngx-progress-bar.ngx-progress-bar-ltr")
 	private WebElement _progressBar;
 	
 	final By _loginImg = By.xpath("//img[contains(@src,'login-with-office-365')]");
 	final By _spinnerImg = By.cssSelector("div[class='sk-three-strings']");
+	final By _password = By.cssSelector("input[type='password']");
 	long timeBeforeAction, timeAfterAction;
 	LinkedHashMap<String, WebElement> applicationLogoMap = new LinkedHashMap<String, WebElement>();
 	
 	Mylo_LoginData loginData = FileReaderManager.getInstance().getMyloJsonReader()
 			.getloginDetailsByUserProfileName(MYLOConstants.USER_PROFILE_NAME);
 	
-	private PDT_LoginDetails _loginDetailsApplication = FileReaderManager.getInstance().getJsonReader().getLoginByApplication(CoreFunctions.getPropertyFromConfig("application").toLowerCase());
-	
+	//private PDT_LoginDetails _loginDetailsApplication = FileReaderManager.getInstance().getJsonReader().getLoginByApplication(CoreFunctions.getPropertyFromConfig("application").toLowerCase());
+	private PDT_LoginDetails _loginDetailsApplication = FileReaderManager.getInstance().getJsonReader().getLoginByApplication(System.getProperty("application").toLowerCase());
 	public void VerifyMYLOLogo() {
 		CoreFunctions.explicitWaitTillElementVisibility(driver, _img_MYLOLogo, MYLOConstants.MYLOLOGO_TEXT);
 		if (_img_MYLOLogo.isDisplayed())
@@ -117,14 +121,15 @@ public class PDT_Mylo_CoreFlex_Common_LoginPage extends Base {
 	
 	public void enterUserEmailAndPassword(String userName, String password) {
 		try {
+			CoreFunctions.explicitWaitForElementTextPresent(driver, _headingSignIn, "Sign in", 20);
 			CoreFunctions.explicitWaitTillElementVisibility(driver, _txt_UserEmail,
-					_txt_UserEmail.getAttribute("placeholder"));
+					_txt_UserEmail.getAttribute("placeholder"), 120);
 			CoreFunctions.clearAndSetText(driver, _txt_UserEmail, _txt_UserEmail.getAttribute("placeholder"), userName);
 			CoreFunctions.clickUsingJS(driver, _submit, _submit.getAttribute("value"));
-			CoreFunctions.explicitWaitTillElementVisibility(driver, _txt_Password,
-					_txt_Password.getAttribute("name"));
-			CoreFunctions.clearAndSetText(driver, _txt_Password, _txt_Password.getAttribute("type"), password);
-		} catch (ElementNotFoundException e) {
+			CoreFunctions.explicitWaitTillElementInVisibilityCustomTime(driver, _spinner, 10);
+			WebElement _pswd = CoreFunctions.getElementByLocator(driver, _password);
+			CoreFunctions.clearAndSetText(driver, _pswd, _pswd.getAttribute("type"), password);
+		} catch (Exception e) {
 		}
 	}
 	

@@ -116,5 +116,4 @@ public class IRIS_LoginPage extends BasePage {
 		} else
 			Log.info("No Error Dialog is Displayed");
 	}
-
 }

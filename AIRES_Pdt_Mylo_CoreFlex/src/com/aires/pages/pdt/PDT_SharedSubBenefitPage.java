@@ -2,6 +2,7 @@ package com.aires.pages.pdt;
 
 import java.text.MessageFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.LinkedHashMap;
 import java.util.List;
@@ -45,20 +46,21 @@ public class PDT_SharedSubBenefitPage extends Base {
 
 	@FindBy(how = How.CSS, using = "a[href='#collapseFour']")
 	private WebElement _lnkFormCollapseFour;
-	
+
 	@FindBy(how = How.CSS, using = "a[href='#collapseFive']")
 	private WebElement _lnkFormCollapse5;
-	
+
 	@FindBy(how = How.CSS, using = "a[href='#collapseSix']")
 	private WebElement _lnkFormCollapseSix;
-	
+
 	@FindBy(how = How.CSS, using = "a[href='#collapseSeven']")
 	private WebElement _lnkFormCollapseSeven;
 
 	@FindBy(how = How.CSS, using = "div.card-header-info > h4.card-title")
 	private WebElement _benefitCategoryName;
 
-	@FindBy(how = How.CSS, using = "button.btn-next[type='submit']")
+
+	@FindBy(how = How.XPATH, using = "//span[text()='SAVE & SUBMIT']/parent::button")
 	private WebElement _btnSaveAndContinue;
 
 	@FindBy(how = How.XPATH, using = "//input[contains(@formcontrolname, 'candidateSelectionEmpTypeInd')]/parent::label")
@@ -99,52 +101,52 @@ public class PDT_SharedSubBenefitPage extends Base {
 
 	@FindBy(how = How.CSS, using = "div#collapseFour div.mat-tab-label-content")
 	private List<WebElement> _tabOnPreAcceptanceTripMeals;
-	
+
 	@FindBy(how = How.CSS, using = "a[href='#collapseOne1']")
 	private WebElement _lnkFormCollapseFive;
-	
+
 	@FindBy(how = How.CSS, using = "a[href='#collapseAirport']")
 	private WebElement _lnkFormCollapseAirport;
-	
+
 	@FindBy(how = How.CSS, using = "a[href='#collapseTour']")
 	private WebElement _lnkFormCollapseTour;
-	
+
 	@FindBy(how = How.CSS, using = "a[href='#collapseAutoRental']")
 	private WebElement _lnkFormCollapseAutoRental;
-	
+
 	@FindBy(how = How.CSS, using = "a[href='#collapseConciergeServices']")
 	private WebElement _lnkFormCollapseConciergeServices;
-	
+
 	@FindBy(how = How.CSS, using = "a[href='#collapseDepartureServices']")
 	private WebElement _lnkFormCollapseDepartureServices;
-	
+
 	@FindBy(how = How.CSS, using = "a[href='#collapseFurnitureRental']")
 	private WebElement _lnkFormCollapseFurnitureRental;
-	
+
 	@FindBy(how = How.CSS, using = "a[href='#collapseHealthClub']")
 	private WebElement _lnkFormCollapseMembershipDues;
-	
+
 	@FindBy(how = How.CSS, using = "a[href='#collapseSchoolSearch']")
 	private WebElement _lnkFormCollapseSchoolSearch;
-	
+
 	@FindBy(how = How.CSS, using = "a[href='#collapseSettlingInServices']")
 	private WebElement _lnkFormCollapseSettlingInServices;
-	
+
 	@FindBy(how = How.CSS, using = "a[href='#collapseTransitionAssistances']")
 	private WebElement _lnkFormCollapseTransitionAssistances;
-	
+
 	@FindBy(how = How.CSS, using = "a[href='#collapseTuitionEducation']")
-	private WebElement _lnkFormCollapseTutionEducation;	
-	
+	private WebElement _lnkFormCollapseTutionEducation;
+
 	@FindBy(how = How.CSS, using = "div.swal2-popup.swal2-modal.swal2-icon-question.swal2-show")
 	private WebElement _dialogconfirmation;
-		
+
 	@FindBy(how = How.CSS, using = "button.swal2-confirm.swal2-styled")
 	private WebElement _btnOk;
-	
+
 	@FindBy(how = How.CSS, using = "button.btn.btn-info.btn-exit")
 	private WebElement _btnExit;
-	
+
 	@FindBy(how = How.CSS, using = "div.swal2-popup.swal2-modal.swal2-icon-success.swal2-show")
 	private WebElement _successPopUp;
 
@@ -153,74 +155,115 @@ public class PDT_SharedSubBenefitPage extends Base {
 
 	@FindBy(how = How.CSS, using = "button.swal2-confirm.swal2-styled")
 	private WebElement _btnOkOnSuccessPopUp;
-	
+
 	@FindBy(how = How.CSS, using = "div.validation-error-popup.swal2-icon-error.swal2-show")
 	private WebElement _errorPopUp;
-	
+
 	@FindBy(how = How.CSS, using = "div.ngx-progress-bar.ngx-progress-bar-ltr")
 	private WebElement _progressBar;
-	
+
 	@FindBy(how = How.CSS, using = "div[id='swal2-content']")
 	private WebElement _errMsg;
-	
+
 	@FindBy(how = How.CSS, using = "a[href='#collapse8']")
 	private WebElement _lnkFormCollapseEight;
-	
+
 	@FindBy(how = How.CSS, using = "a[href='#collapse9']")
 	private WebElement _lnkFormCollapseNine;
-	
+
 	@FindBy(how = How.CSS, using = "a[href='#collapse10']")
 	private WebElement _lnkFormCollapseTen;
-	
+
 	@FindBy(how = How.CSS, using = "a[href='#collapse11']")
 	private WebElement _lnkFormCollapseEleven;
-	
+
 	@FindBy(how = How.CSS, using = "a[href='#collapse12']")
 	private WebElement _lnkFormCollapseTwelve;
-	
+
 	@FindBy(how = How.CSS, using = "a[href='#collapse13']")
 	private WebElement _lnkFormCollapseThirteen;
-	
+
 	@FindBy(how = How.CSS, using = "a[href='#collapse14']")
 	private WebElement _lnkFormCollapseFourteen;
-	
+
 	@FindBy(how = How.CSS, using = "a[href='#collapse15']")
 	private WebElement _lnkFormCollapseFifteen;
-	
+
 	@FindBy(how = How.CSS, using = "a[href='#collapse16']")
 	private WebElement _lnkFormCollapseSixteen;
-	
+
 	@FindBy(how = How.CSS, using = "a[href='#collapse17']")
 	private WebElement _lnkFormCollapseSeventeen;
-	
+
 	@FindBy(how = How.CSS, using = "a[href='#collapse18']")
 	private WebElement _lnkFormCollapseEightteen;
-	
+
 	@FindBy(how = How.CSS, using = "a[href='#collapseEight']")
 	private WebElement _lnkFormCollapse8;
-	
+
 	@FindBy(how = How.CSS, using = "a[href='#collapseNine']")
 	private WebElement _lnkFormCollapse9;
-	
+
 	@FindBy(how = How.CSS, using = "button.swal2-confirm")
 	private WebElement _btnOkOnConfirmationDialog;
-	
+
 	@FindBy(how = How.CSS, using = "button.swal2-deny")
 	private WebElement _btnCancelOnConfirmationDialog;
-	
+
 	@FindBy(how = How.CSS, using = "button.swal2-cancel")
 	private WebElement _btnSaveOnConfirmationDialog;
-	
+
 	@FindBy(how = How.CSS, using = "label.form-check-label input[type='checkbox']")
 	private List<WebElement> _chkBoxesSubBenefitCategories;
 
-	HashMap<String, Boolean> resultMapForTabNameNotMatch = new HashMap<>();
-	LinkedHashMap<String, WebElement> formMap= new LinkedHashMap<String, WebElement>();
-	LinkedHashMap<String, WebElement> buttonMap= new LinkedHashMap<String, WebElement>();
-	LinkedHashMap<String, WebElement> confirmationDialogButtonMap= new LinkedHashMap<String, WebElement>();
+	@FindBy(how = How.XPATH, using = "//span[text()='APPROVE POLICY']")
+	private WebElement _btnApprovePolicy;
+	
+	@FindBy(how = How.CSS, using = "div.approve-header")
+	private WebElement _headerApprovePopUp;
+	
+	@FindBy(how = How.CSS, using = "div.msg-1 > p")
+	private WebElement _msg1ApprovePopUp;
+	
+	@FindBy(how = How.CSS, using = "div.msg-2 > p")
+	private WebElement _msg2ApprovePopUp;
+	
+	@FindBy(how = How.CSS, using = "input[formcontrolname='existingAuthDateInd']")
+	private WebElement _chkBoxExistingDateInd;
+	
+	@FindBy(how = How.XPATH, using = "//input[@formcontrolname='existingAuthDateInd']/parent::label")
+	private WebElement _lblExistingDateInd;
+	
+	@FindBy(how = How.CSS, using = "input[formcontrolname='newAuthDateInd']")
+	private WebElement _chkBoxNewDateInd;
+	
+	@FindBy(how = How.XPATH, using = "//input[@formcontrolname='newAuthDateInd']/parent::label")
+	private WebElement _lblNewDateInd;
+	
+	@FindBy(how = How.XPATH, using = "//span[text()='APPROVE']/parent::button")
+	private WebElement _btnApprove;
+	
+	@FindBy(how = How.XPATH, using = "//span[text()='CANCEL']")
+	private WebElement _btnCancel;
+	
+	@FindBy(how = How.XPATH, using = "//strong[text()='Policy Status:']/parent::label/following-sibling::label")
+	private WebElement _policyStatus;
+	
+	@FindBy(how = How.XPATH, using = "//strong[text()='Policy Status:']")
+	private WebElement _policyStatusText;
+	
+	@FindBy(how = How.XPATH, using = "//strong[text()='Version Number:']/parent::label/following-sibling::label")
+	private WebElement _policyVersion;
 
-	public WebElement getElementByName(String pageName, String elementName) {		
-		if(pageName.equalsIgnoreCase(PDTConstants.ASSIGNMENT_HOUSING_COMPANY_SPONSORED) && elementName.equalsIgnoreCase(PDTConstants.ASSIGNMENT_FINDER_FEES)) 
+	HashMap<String, Boolean> resultMapForTabNameNotMatch = new HashMap<>();
+	LinkedHashMap<String, WebElement> formMap = new LinkedHashMap<String, WebElement>();
+	LinkedHashMap<String, WebElement> buttonMap = new LinkedHashMap<String, WebElement>();
+	LinkedHashMap<String, WebElement> confirmationDialogButtonMap = new LinkedHashMap<String, WebElement>();
+	long timeBeforeAction, timeAfterAction;
+
+	public WebElement getElementByName(String pageName, String elementName) {
+		if (pageName.equalsIgnoreCase(PDTConstants.ASSIGNMENT_HOUSING_COMPANY_SPONSORED)
+				&& elementName.equalsIgnoreCase(PDTConstants.ASSIGNMENT_FINDER_FEES))
 			return _lnkFormCollapseThree;
 		else
 			return formMap.get(elementName);
@@ -255,20 +298,24 @@ public class PDT_SharedSubBenefitPage extends Base {
 		populateConfirmDialogbuttonMap();
 		for (String subBenefit : subBenefits) {
 			CoreFunctions.selectItemInListByText(driver, _subBenefitCategories, subBenefit, true);
-			BusinessFunctions.fluentWaitForSpinnerToDisappear(driver, _progressBar);
-			Assert.assertTrue(verifyFormIsDisplayed(subBenefit, getElementByName(pageName, subBenefit), subBenefit, pageName),
+			timeBeforeAction = new Date().getTime();
+			if (CoreFunctions.isElementExist(driver, _progressBar, 4))
+				BusinessFunctions.fluentWaitForSpinnerToDisappear(driver, _progressBar);
+			Assert.assertTrue(
+					verifyFormIsDisplayed(subBenefit, getElementByName(pageName, subBenefit), subBenefit, pageName),
 					MessageFormat.format(PDTConstants.VERIFIED_FORM_IS_NOT_DISPLAYED, subBenefit, pageName));
+			timeAfterAction = new Date().getTime();
+			BusinessFunctions.printTimeTakenByPageToLoad(timeBeforeAction, timeAfterAction, pageName, subBenefit);
 			fillSubBenefitForm(subBenefit, addNewPolicyPage, objStep, pageName);
 		}
 		try {
 			CoreFunctions.click(driver, buttonMap.get(btnName), btnName);
 		} catch (NoSuchElementException e) {
 			Assert.fail(MessageFormat.format(PDTConstants.MISSING_BTN, CoreConstants.FAIL, btnName));
-	    } 
-		catch (Exception e) {
+		} catch (Exception e) {
 			Assert.fail(MessageFormat.format(PDTConstants.FAILED_TO_CLICK_ON_BTN, CoreConstants.FAIL, btnName));
 		}
-		
+
 	}
 
 	public boolean verifyFormIsDisplayed(String formName, WebElement element, String subBenefitName, String pageName) {
@@ -283,24 +330,31 @@ public class PDT_SharedSubBenefitPage extends Base {
 
 	public void fillSubBenefitForm(String subBenefit, PDT_AddNewPolicyPage addNewPolicyPage,
 			PDT_SharedSubBenefit_Steps subBenefitSteps, String pageName) {
-		if(!pageName.equalsIgnoreCase(PDTConstants.DUPLICATE_HOUSING) && !pageName.equalsIgnoreCase(PDTConstants.PROPERTY_MANAGEMENT))
+		if (!pageName.equalsIgnoreCase(PDTConstants.DUPLICATE_HOUSING)
+				&& !pageName.equalsIgnoreCase(PDTConstants.PROPERTY_MANAGEMENT))
 			expandSubBenefitIfCollapsed(getElementByName(pageName, subBenefit));
-		if(pageName.equalsIgnoreCase(PDTConstants.ASSIGNMENT_HOUSING_COMPANY_SPONSORED) && subBenefit.equalsIgnoreCase(PDTConstants.ASSIGNMENT_FINDER_FEES)) {
-			subBenefitSteps.getAssignmentHousingPage().fillAssignmentFinderFeesForm(addNewPolicyPage, PDTConstants.ASSIGNMENT_FINDER_FEES);
+		if (pageName.equalsIgnoreCase(PDTConstants.ASSIGNMENT_HOUSING_COMPANY_SPONSORED)
+				&& subBenefit.equalsIgnoreCase(PDTConstants.ASSIGNMENT_FINDER_FEES)) {
+			subBenefitSteps.getAssignmentHousingPage().fillAssignmentFinderFeesForm(addNewPolicyPage,
+					PDTConstants.ASSIGNMENT_FINDER_FEES);
 			return;
-		}			
+		}
 		switch (subBenefit) {
 		case PDTConstants.CANDIDATE_SELECTION:
-			subBenefitSteps.getPreAcceptServicePage().fillCandidateSelection(addNewPolicyPage, PDTConstants.CANDIDATE_SELECTION);
+			subBenefitSteps.getPreAcceptServicePage().fillCandidateSelection(addNewPolicyPage,
+					PDTConstants.CANDIDATE_SELECTION);
 			break;
 		case PDTConstants.PRE_ACCEPTANCE_TRIP_TRANSPORTATION:
-			subBenefitSteps.getPreAcceptServicePage().fillPreAcceptanceTripTransportation(addNewPolicyPage, PDTConstants.PRE_ACCEPTANCE_TRIP_TRANSPORTATION);
+			subBenefitSteps.getPreAcceptServicePage().fillPreAcceptanceTripTransportation(addNewPolicyPage,
+					PDTConstants.PRE_ACCEPTANCE_TRIP_TRANSPORTATION);
 			break;
 		case PDTConstants.PRE_ACCEPTANCE_TRIP_LODGING:
-			subBenefitSteps.getPreAcceptServicePage().fillPreAcceptanceTripLodging(addNewPolicyPage, PDTConstants.PRE_ACCEPTANCE_TRIP_LODGING);
+			subBenefitSteps.getPreAcceptServicePage().fillPreAcceptanceTripLodging(addNewPolicyPage,
+					PDTConstants.PRE_ACCEPTANCE_TRIP_LODGING);
 			break;
 		case PDTConstants.PRE_ACCEPTANCE_TRIP_MEALS:
-			subBenefitSteps.getPreAcceptServicePage().fillPreAcceptanceTripMeals(addNewPolicyPage, PDTConstants.PRE_ACCEPTANCE_TRIP_MEALS);
+			subBenefitSteps.getPreAcceptServicePage().fillPreAcceptanceTripMeals(addNewPolicyPage,
+					PDTConstants.PRE_ACCEPTANCE_TRIP_MEALS);
 			break;
 		case PDTConstants.IMMIGRATION_FEES:
 			subBenefitSteps.getImmigrationPage().fillImmigrationFeesForm(addNewPolicyPage,
@@ -317,7 +371,7 @@ public class PDT_SharedSubBenefitPage extends Base {
 		case PDTConstants.HOUSE_HUNTING_TRIP_LODGING:
 			subBenefitSteps.getHouseHuntingTripPage().fillHouseHuntingTripLodgingForm(addNewPolicyPage,
 					PDTConstants.HOUSE_HUNTING_TRIP_LODGING);
-			break;		
+			break;
 		case PDTConstants.HOUSE_HUNTING_TRIP_MEALS:
 			subBenefitSteps.getHouseHuntingTripPage().fillHouseHuntingTripMealForm(addNewPolicyPage,
 					PDTConstants.HOUSE_HUNTING_TRIP_MEALS);
@@ -347,8 +401,7 @@ public class PDT_SharedSubBenefitPage extends Base {
 					PDTConstants.FINAL_MOVE_LODGING);
 			break;
 		case PDTConstants.FINAL_MOVE_MEALS:
-			subBenefitSteps.getFinalMovePage().fillFinalMoveMealForm(addNewPolicyPage,
-					PDTConstants.FINAL_MOVE_MEALS);
+			subBenefitSteps.getFinalMovePage().fillFinalMoveMealForm(addNewPolicyPage, PDTConstants.FINAL_MOVE_MEALS);
 			break;
 		case PDTConstants.HOME_LEAVE_TRANSPORTATION:
 			subBenefitSteps.getHomeLeavePage().fillHomeLeaveTransportationForm(addNewPolicyPage,
@@ -359,53 +412,66 @@ public class PDT_SharedSubBenefitPage extends Base {
 					PDTConstants.HOME_LEAVE_LODGING);
 			break;
 		case PDTConstants.HOME_LEAVE_MEALS:
-			subBenefitSteps.getHomeLeavePage().fillHomeLeaveMealForm(addNewPolicyPage,
-					PDTConstants.HOME_LEAVE_MEALS);
+			subBenefitSteps.getHomeLeavePage().fillHomeLeaveMealForm(addNewPolicyPage, PDTConstants.HOME_LEAVE_MEALS);
 			break;
-		case PDTConstants.TEMPORARY_LIVING_TRANSPORTATION:			
+		case PDTConstants.TEMPORARY_LIVING_TRANSPORTATION:
 			subBenefitSteps.getTemporaryLivingPage().fillTemporaryLivingTransportationForm(addNewPolicyPage,
 					PDTConstants.TEMPORARY_LIVING_TRANSPORTATION);
 			break;
-		case PDTConstants.TEMPORARY_LIVING_LODGING:			
+		case PDTConstants.TEMPORARY_LIVING_LODGING:
 			subBenefitSteps.getTemporaryLivingPage().fillTemporaryLivingLodgingForm(addNewPolicyPage,
 					PDTConstants.TEMPORARY_LIVING_LODGING);
 			break;
-		case PDTConstants.TEMPORARY_LIVING_MEALS:			
+		case PDTConstants.TEMPORARY_LIVING_MEALS:
 			subBenefitSteps.getTemporaryLivingPage().fillTemporaryLivingMealsForm(addNewPolicyPage,
 					PDTConstants.TEMPORARY_LIVING_MEALS);
 			break;
 		case PDTConstants.AIRPORT_PICKUP:
-			subBenefitSteps.getDestinationServicePage().fillAirPortPickUpForm(addNewPolicyPage, PDTConstants.AIRPORT_PICKUP);
+			subBenefitSteps.getDestinationServicePage().fillAirPortPickUpForm(addNewPolicyPage,
+					PDTConstants.AIRPORT_PICKUP);
 			break;
 		case PDTConstants.AREA_TOUR:
 			subBenefitSteps.getDestinationServicePage().fillAreaTourForm(addNewPolicyPage, PDTConstants.AREA_TOUR);
 			break;
 		case PDTConstants.AUTO_RENTAL_DURING_ASSIGNMENT:
-			subBenefitSteps.getDestinationServicePage().fillAutoRentalForm(addNewPolicyPage, PDTConstants.AUTO_RENTAL_DURING_ASSIGNMENT);
+			subBenefitSteps.getDestinationServicePage().fillAutoRentalForm(addNewPolicyPage,
+					PDTConstants.AUTO_RENTAL_DURING_ASSIGNMENT);
 			break;
 		case PDTConstants.CONCIERGE_SERVICES:
-			subBenefitSteps.getDestinationServicePage().fillConciergeServicesForm(addNewPolicyPage, PDTConstants.CONCIERGE_SERVICES);
+			subBenefitSteps.getDestinationServicePage().fillConciergeServicesForm(addNewPolicyPage,
+					PDTConstants.CONCIERGE_SERVICES);
 			break;
 		case PDTConstants.DEPARTURE_SERVICES:
-			subBenefitSteps.getDestinationServicePage().fillDepartureServicesForm(addNewPolicyPage, PDTConstants.DEPARTURE_SERVICES);
+			subBenefitSteps.getDestinationServicePage().fillDepartureServicesForm(addNewPolicyPage,
+					PDTConstants.DEPARTURE_SERVICES);
 			break;
 		case PDTConstants.FURNITURE_RENTAL:
-			subBenefitSteps.getDestinationServicePage().fillFurnitureRentalForm(addNewPolicyPage, PDTConstants.FURNITURE_RENTAL);
+			subBenefitSteps.getDestinationServicePage().fillFurnitureRentalForm(addNewPolicyPage,
+					PDTConstants.FURNITURE_RENTAL);
 			break;
 		case PDTConstants.REIMBURSEMENT_OF_MEMEBERSHIP_DUES:
-			subBenefitSteps.getDestinationServicePage().fillReimbursementOfMembershipDuesForm(addNewPolicyPage, PDTConstants.REIMBURSEMENT_OF_MEMEBERSHIP_DUES);
+			subBenefitSteps.getDestinationServicePage().fillReimbursementOfMembershipDuesForm(addNewPolicyPage,
+					PDTConstants.REIMBURSEMENT_OF_MEMEBERSHIP_DUES);
 			break;
-		case PDTConstants.SCHOOL_SEARCH:
-			subBenefitSteps.getDestinationServicePage().fillSchoolSearchForm(addNewPolicyPage, PDTConstants.SCHOOL_SEARCH);
+		case PDTConstants.EDUCATION_ASSISTANCE:
+			subBenefitSteps.getDestinationServicePage().fillSchoolSearchForm(addNewPolicyPage,
+					PDTConstants.EDUCATION_ASSISTANCE);
+			break;
+		case PDTConstants.EDUCATION_ASSISTANT:
+			subBenefitSteps.getDestinationServicePage().fillSchoolSearchForm(addNewPolicyPage,
+					PDTConstants.EDUCATION_ASSISTANT);
 			break;
 		case PDTConstants.SETTLING_IN_SERVICES:
-			subBenefitSteps.getDestinationServicePage().fillSettlingServicesForm(addNewPolicyPage, PDTConstants.SETTLING_IN_SERVICES);
+			subBenefitSteps.getDestinationServicePage().fillSettlingServicesForm(addNewPolicyPage,
+					PDTConstants.SETTLING_IN_SERVICES);
 			break;
 		case PDTConstants.TRANSITION_ASSISTANCE_PROGRAM:
-			subBenefitSteps.getDestinationServicePage().fillTransitionAssistanceProgramForm(addNewPolicyPage, PDTConstants.TRANSITION_ASSISTANCE_PROGRAM);
+			subBenefitSteps.getDestinationServicePage().fillTransitionAssistanceProgramForm(addNewPolicyPage,
+					PDTConstants.TRANSITION_ASSISTANCE_PROGRAM);
 			break;
 		case PDTConstants.TUTION_AND_EDUCATION:
-			subBenefitSteps.getDestinationServicePage().fillTutionAndEductionForm(addNewPolicyPage, PDTConstants.TUTION_AND_EDUCATION);
+			subBenefitSteps.getDestinationServicePage().fillTutionAndEductionForm(addNewPolicyPage,
+					PDTConstants.TUTION_AND_EDUCATION);
 			break;
 		case PDTConstants.RENTAL_TOUR:
 			subBenefitSteps.getRentalAssistancePage().fillRentalTourForm(addNewPolicyPage, PDTConstants.RENTAL_TOUR);
@@ -414,37 +480,49 @@ public class PDT_SharedSubBenefitPage extends Base {
 			subBenefitSteps.getRentalAssistancePage().fillFinderFeesForm(addNewPolicyPage, PDTConstants.FINDER_FEES);
 			break;
 		case PDTConstants.LETTER_OF_ASSIGNMENT:
-			subBenefitSteps.getCompensationServicesPage().fillLetterOfAssignmentForm(addNewPolicyPage, PDTConstants.LETTER_OF_ASSIGNMENT);
+			subBenefitSteps.getCompensationServicesPage().fillLetterOfAssignmentForm(addNewPolicyPage,
+					PDTConstants.LETTER_OF_ASSIGNMENT);
 			break;
 		case PDTConstants.COST_ESTIMATE_WITH_TAX:
-			subBenefitSteps.getCompensationServicesPage().fillCostEstimateWithTaxForm(addNewPolicyPage, PDTConstants.COST_ESTIMATE_WITH_TAX);
+			subBenefitSteps.getCompensationServicesPage().fillCostEstimateWithTaxForm(addNewPolicyPage,
+					PDTConstants.COST_ESTIMATE_WITH_TAX);
 			break;
 		case PDTConstants.COST_ESTIMATE_WITHOUT_TAX:
-			subBenefitSteps.getCompensationServicesPage().fillCostEstimateWithoutTaxForm(addNewPolicyPage, PDTConstants.COST_ESTIMATE_WITHOUT_TAX);
+			subBenefitSteps.getCompensationServicesPage().fillCostEstimateWithoutTaxForm(addNewPolicyPage,
+					PDTConstants.COST_ESTIMATE_WITHOUT_TAX);
 			break;
 		case PDTConstants.BALANCE_SHEET:
-			subBenefitSteps.getCompensationServicesPage().fillBalanceSheetForm(addNewPolicyPage, PDTConstants.BALANCE_SHEET);
+			subBenefitSteps.getCompensationServicesPage().fillBalanceSheetForm(addNewPolicyPage,
+					PDTConstants.BALANCE_SHEET);
 			break;
 		case PDTConstants.ALLOWANCE_UPDATES:
-			subBenefitSteps.getCompensationServicesPage().fillAllowanceUpdateForm(addNewPolicyPage, PDTConstants.ALLOWANCE_UPDATES);
+			subBenefitSteps.getCompensationServicesPage().fillAllowanceUpdateForm(addNewPolicyPage,
+					PDTConstants.ALLOWANCE_UPDATES);
 			break;
 		case PDTConstants.GLOBAL_DATA_COLLECTION:
-			subBenefitSteps.getCompensationServicesPage().fillGlobalDataCollectionForm(addNewPolicyPage, PDTConstants.GLOBAL_DATA_COLLECTION);
+			subBenefitSteps.getCompensationServicesPage().fillGlobalDataCollectionForm(addNewPolicyPage,
+					PDTConstants.GLOBAL_DATA_COLLECTION);
 			break;
 		case PDTConstants.PAYROLL_INSTRUCTIONS:
-			subBenefitSteps.getCompensationServicesPage().fillPayrollInstructionsForm(addNewPolicyPage, PDTConstants.PAYROLL_INSTRUCTIONS);
+			subBenefitSteps.getCompensationServicesPage().fillPayrollInstructionsForm(addNewPolicyPage,
+					PDTConstants.PAYROLL_INSTRUCTIONS);
 			break;
 		case PDTConstants.ASSIGNMENT_HOUSING:
-			subBenefitSteps.getAssignmentHousingPage().fillAssignmentHousingForm(addNewPolicyPage, PDTConstants.ASSIGNMENT_HOUSING);
+			subBenefitSteps.getAssignmentHousingPage().fillAssignmentHousingForm(addNewPolicyPage,
+					PDTConstants.ASSIGNMENT_HOUSING);
 			break;
 		case PDTConstants.SECURITY_DEPOSIT:
-			subBenefitSteps.getAssignmentHousingPage().fillSecurityDepositForm(addNewPolicyPage, PDTConstants.SECURITY_DEPOSIT);
+			subBenefitSteps.getAssignmentHousingPage().fillSecurityDepositForm(addNewPolicyPage,
+					PDTConstants.SECURITY_DEPOSIT);
 			break;
-		/*case PDTConstants.ASSIGNMENT_FINDER_FEES:
-			subBenefitSteps.getAssignmentHousingPage().fillSecurityDepositForm(addNewPolicyPage, PDTConstants.SECURITY_DEPOSIT);
-			break;*/
+		/*
+		 * case PDTConstants.ASSIGNMENT_FINDER_FEES:
+		 * subBenefitSteps.getAssignmentHousingPage().fillSecurityDepositForm(
+		 * addNewPolicyPage, PDTConstants.SECURITY_DEPOSIT); break;
+		 */
 		case PDTConstants.MISC_RELOCATION_ALLOWANCE:
-			subBenefitSteps.getOneTimePaymentPage().fillMiscRelocationAllowance(addNewPolicyPage, PDTConstants.MISC_RELOCATION_ALLOWANCE);
+			subBenefitSteps.getOneTimePaymentPage().fillMiscRelocationAllowance(addNewPolicyPage,
+					PDTConstants.MISC_RELOCATION_ALLOWANCE);
 			break;
 		case PDTConstants.LUMP_SUM:
 			subBenefitSteps.getOneTimePaymentPage().fillLumpSum(addNewPolicyPage, PDTConstants.LUMP_SUM);
@@ -453,16 +531,20 @@ public class PDT_SharedSubBenefitPage extends Base {
 			subBenefitSteps.getOneTimePaymentPage().fillLeaseBreak(addNewPolicyPage, PDTConstants.LEASE_BREAK);
 			break;
 		case PDTConstants.APPLIANCE_ALLOWANCE:
-			subBenefitSteps.getOneTimePaymentPage().fillApplAllowance(addNewPolicyPage, PDTConstants.APPLIANCE_ALLOWANCE);
+			subBenefitSteps.getOneTimePaymentPage().fillApplAllowance(addNewPolicyPage,
+					PDTConstants.APPLIANCE_ALLOWANCE);
 			break;
 		case PDTConstants.AUTO_REGISTRATION_COSTS:
-			subBenefitSteps.getOneTimePaymentPage().fillAutoRegistrationCost(addNewPolicyPage, PDTConstants.AUTO_REGISTRATION_COSTS);
+			subBenefitSteps.getOneTimePaymentPage().fillAutoRegistrationCost(addNewPolicyPage,
+					PDTConstants.AUTO_REGISTRATION_COSTS);
 			break;
 		case PDTConstants.AUTO_LOSS_ON_SALE:
-			subBenefitSteps.getOneTimePaymentPage().fillAutoLossOnSale(addNewPolicyPage, PDTConstants.AUTO_LOSS_ON_SALE);
+			subBenefitSteps.getOneTimePaymentPage().fillAutoLossOnSale(addNewPolicyPage,
+					PDTConstants.AUTO_LOSS_ON_SALE);
 			break;
 		case PDTConstants.OTHER_ONE_TIME_PAYMENT:
-			subBenefitSteps.getOneTimePaymentPage().fillOtherOneTimePayment(addNewPolicyPage, PDTConstants.OTHER_ONE_TIME_PAYMENT);
+			subBenefitSteps.getOneTimePaymentPage().fillOtherOneTimePayment(addNewPolicyPage,
+					PDTConstants.OTHER_ONE_TIME_PAYMENT);
 			break;
 		case PDTConstants.COLA:
 			subBenefitSteps.getOngoingPaymentReimbursementPage().fillCola(addNewPolicyPage, PDTConstants.COLA);
@@ -471,82 +553,107 @@ public class PDT_SharedSubBenefitPage extends Base {
 			subBenefitSteps.getOngoingPaymentReimbursementPage().fillPerDiem(addNewPolicyPage, PDTConstants.PER_DIEM);
 			break;
 		case PDTConstants.MOBILITY_PREMIUM:
-			subBenefitSteps.getOngoingPaymentReimbursementPage().fillMobilityPremium(addNewPolicyPage, PDTConstants.MOBILITY_PREMIUM);
+			subBenefitSteps.getOngoingPaymentReimbursementPage().fillMobilityPremium(addNewPolicyPage,
+					PDTConstants.MOBILITY_PREMIUM);
 			break;
 		case PDTConstants.TRANSPORTATION_ALLOWANCE:
-			subBenefitSteps.getOngoingPaymentReimbursementPage().fillTransportationAllowance(addNewPolicyPage, PDTConstants.TRANSPORTATION_ALLOWANCE);
+			subBenefitSteps.getOngoingPaymentReimbursementPage().fillTransportationAllowance(addNewPolicyPage,
+					PDTConstants.TRANSPORTATION_ALLOWANCE);
 			break;
 		case PDTConstants.HOUSING_ALLOWANCE:
-			subBenefitSteps.getOngoingPaymentReimbursementPage().fillHousingAllowance(addNewPolicyPage, PDTConstants.HOUSING_ALLOWANCE);
+			subBenefitSteps.getOngoingPaymentReimbursementPage().fillHousingAllowance(addNewPolicyPage,
+					PDTConstants.HOUSING_ALLOWANCE);
 			break;
 		case PDTConstants.HOME_MAINTENANCE_ALLOWANCE:
-			subBenefitSteps.getOngoingPaymentReimbursementPage().fillHomeMaintenanceAllowance(addNewPolicyPage, PDTConstants.HOME_MAINTENANCE_ALLOWANCE);
+			subBenefitSteps.getOngoingPaymentReimbursementPage().fillHomeMaintenanceAllowance(addNewPolicyPage,
+					PDTConstants.HOME_MAINTENANCE_ALLOWANCE);
 			break;
 		case PDTConstants.FURNITURE_ALLOWANCE:
-			subBenefitSteps.getOngoingPaymentReimbursementPage().fillFurnitureAllowance(addNewPolicyPage, PDTConstants.FURNITURE_ALLOWANCE);
+			subBenefitSteps.getOngoingPaymentReimbursementPage().fillFurnitureAllowance(addNewPolicyPage,
+					PDTConstants.FURNITURE_ALLOWANCE);
 			break;
 		case PDTConstants.HARDSHIP_ALLOWANCE:
-			subBenefitSteps.getOngoingPaymentReimbursementPage().fillHardshipAllowance(addNewPolicyPage, PDTConstants.HARDSHIP_ALLOWANCE);
+			subBenefitSteps.getOngoingPaymentReimbursementPage().fillHardshipAllowance(addNewPolicyPage,
+					PDTConstants.HARDSHIP_ALLOWANCE);
 			break;
 		case PDTConstants.BANKING_ALLOWANCE:
-			subBenefitSteps.getOngoingPaymentReimbursementPage().fillBankingAllowance(addNewPolicyPage, PDTConstants.BANKING_ALLOWANCE);
+			subBenefitSteps.getOngoingPaymentReimbursementPage().fillBankingAllowance(addNewPolicyPage,
+					PDTConstants.BANKING_ALLOWANCE);
 			break;
 		case PDTConstants.AT_SEA_ALLOWANCE:
-			subBenefitSteps.getOngoingPaymentReimbursementPage().fillAtSeaAllowance(addNewPolicyPage, PDTConstants.AT_SEA_ALLOWANCE);
+			subBenefitSteps.getOngoingPaymentReimbursementPage().fillAtSeaAllowance(addNewPolicyPage,
+					PDTConstants.AT_SEA_ALLOWANCE);
 			break;
 		case PDTConstants.COMMUTER_ALLOWANCE:
-			subBenefitSteps.getOngoingPaymentReimbursementPage().fillCommuterAllowance(addNewPolicyPage, PDTConstants.COMMUTER_ALLOWANCE);
+			subBenefitSteps.getOngoingPaymentReimbursementPage().fillCommuterAllowance(addNewPolicyPage,
+					PDTConstants.COMMUTER_ALLOWANCE);
 			break;
 		case PDTConstants.DIFFERENTIAL_ALLOWANCE:
-			subBenefitSteps.getOngoingPaymentReimbursementPage().fillDifferentialAllowance(addNewPolicyPage, PDTConstants.DIFFERENTIAL_ALLOWANCE);
+			subBenefitSteps.getOngoingPaymentReimbursementPage().fillDifferentialAllowance(addNewPolicyPage,
+					PDTConstants.DIFFERENTIAL_ALLOWANCE);
 			break;
 		case PDTConstants.GOODS_AND_SERVICES_ALLOWANCE:
-			subBenefitSteps.getOngoingPaymentReimbursementPage().fillGoodsAndServicesAllowance(addNewPolicyPage, PDTConstants.GOODS_AND_SERVICES_ALLOWANCE);
+			subBenefitSteps.getOngoingPaymentReimbursementPage().fillGoodsAndServicesAllowance(addNewPolicyPage,
+					PDTConstants.GOODS_AND_SERVICES_ALLOWANCE);
 			break;
 		case PDTConstants.HOME_LEAVE_ALLOWANCE:
-			subBenefitSteps.getOngoingPaymentReimbursementPage().fillHomeLeaveAllowance(addNewPolicyPage, PDTConstants.HOME_LEAVE_ALLOWANCE);
+			subBenefitSteps.getOngoingPaymentReimbursementPage().fillHomeLeaveAllowance(addNewPolicyPage,
+					PDTConstants.HOME_LEAVE_ALLOWANCE);
 			break;
 		case PDTConstants.HOME_RETENTION_ALLOWANCE:
-			subBenefitSteps.getOngoingPaymentReimbursementPage().fillHomeRetentionAllowance(addNewPolicyPage, PDTConstants.HOME_RETENTION_ALLOWANCE);
+			subBenefitSteps.getOngoingPaymentReimbursementPage().fillHomeRetentionAllowance(addNewPolicyPage,
+					PDTConstants.HOME_RETENTION_ALLOWANCE);
 			break;
 		case PDTConstants.HOUSEKEEPING_ALLOWANCE:
-			subBenefitSteps.getOngoingPaymentReimbursementPage().fillHouseKeepingAllowance(addNewPolicyPage, PDTConstants.HOUSEKEEPING_ALLOWANCE);
+			subBenefitSteps.getOngoingPaymentReimbursementPage().fillHouseKeepingAllowance(addNewPolicyPage,
+					PDTConstants.HOUSEKEEPING_ALLOWANCE);
 			break;
 		case PDTConstants.UTILITY_ALLOWANCE:
-			subBenefitSteps.getOngoingPaymentReimbursementPage().fillUtilityAllowance(addNewPolicyPage, PDTConstants.UTILITY_ALLOWANCE);
+			subBenefitSteps.getOngoingPaymentReimbursementPage().fillUtilityAllowance(addNewPolicyPage,
+					PDTConstants.UTILITY_ALLOWANCE);
 			break;
 		case PDTConstants.OTHER_ONGOING_ALLOWANCE:
-			subBenefitSteps.getOngoingPaymentReimbursementPage().fillOtherOngoingAllowance(addNewPolicyPage, PDTConstants.OTHER_ONGOING_ALLOWANCE);
+			subBenefitSteps.getOngoingPaymentReimbursementPage().fillOtherOngoingAllowance(addNewPolicyPage,
+					PDTConstants.OTHER_ONGOING_ALLOWANCE);
 			break;
 		case PDTConstants.DUPLICATE_HOUSING:
-			subBenefitSteps.getDuplicateHousingPage().fillDuplicateHousingForm(addNewPolicyPage, PDTConstants.DUPLICATE_HOUSING);
+			subBenefitSteps.getDuplicateHousingPage().fillDuplicateHousingForm(addNewPolicyPage,
+					PDTConstants.DUPLICATE_HOUSING);
 			break;
 		case PDTConstants.PROPERTY_MANAGEMENT:
-			subBenefitSteps.getPropertyManagementPage().fillPropertyManagementForm(addNewPolicyPage, PDTConstants.PROPERTY_MANAGEMENT);
+			subBenefitSteps.getPropertyManagementPage().fillPropertyManagementForm(addNewPolicyPage,
+					PDTConstants.PROPERTY_MANAGEMENT);
 			break;
 		case PDTConstants.HOME_PURCHASE_CLOSING_COSTS:
-			subBenefitSteps.getHomePurchasePage().fillHomePurchaseClosingCostForm(addNewPolicyPage, PDTConstants.HOME_PURCHASE_CLOSING_COSTS);
+			subBenefitSteps.getHomePurchasePage().fillHomePurchaseClosingCostForm(addNewPolicyPage,
+					PDTConstants.HOME_PURCHASE_CLOSING_COSTS);
 			break;
 		case PDTConstants.HOME_PURCHASE_POINTS:
-			subBenefitSteps.getHomePurchasePage().fillHomePurchasePointsForm(addNewPolicyPage, PDTConstants.HOME_PURCHASE_POINTS);
+			subBenefitSteps.getHomePurchasePage().fillHomePurchasePointsForm(addNewPolicyPage,
+					PDTConstants.HOME_PURCHASE_POINTS);
 			break;
 		case PDTConstants.HOME_PURCHASE_INSPECTIONS:
-			subBenefitSteps.getHomePurchasePage().fillHomePurchaseInspectionForm(addNewPolicyPage, PDTConstants.HOME_PURCHASE_INSPECTIONS);
+			subBenefitSteps.getHomePurchasePage().fillHomePurchaseInspectionForm(addNewPolicyPage,
+					PDTConstants.HOME_PURCHASE_INSPECTIONS);
 			break;
 		case PDTConstants.HOME_PURCHASE_BONUS:
-			subBenefitSteps.getHomePurchasePage().fillHomePurchaseBonusForm(addNewPolicyPage, PDTConstants.HOME_PURCHASE_BONUS);
+			subBenefitSteps.getHomePurchasePage().fillHomePurchaseBonusForm(addNewPolicyPage,
+					PDTConstants.HOME_PURCHASE_BONUS);
 			break;
 		case PDTConstants.MORTGAGE_DIFFERENTIALS:
-			subBenefitSteps.getHomePurchasePage().fillMortgageDifferentialForm(addNewPolicyPage, PDTConstants.MORTGAGE_DIFFERENTIALS);
+			subBenefitSteps.getHomePurchasePage().fillMortgageDifferentialForm(addNewPolicyPage,
+					PDTConstants.MORTGAGE_DIFFERENTIALS);
 			break;
 		case PDTConstants.MORTGAGE_SUBSIDY:
-			subBenefitSteps.getHomePurchasePage().fillMortgageSubsidyForm(addNewPolicyPage, PDTConstants.MORTGAGE_SUBSIDY);
+			subBenefitSteps.getHomePurchasePage().fillMortgageSubsidyForm(addNewPolicyPage,
+					PDTConstants.MORTGAGE_SUBSIDY);
 			break;
 		case PDTConstants.US_DOM_VANLINE_SHIPMENT:
-			subBenefitSteps.getHouseHoldGoodsPage().fillUSDomesticForm(addNewPolicyPage, PDTConstants.US_DOM_VANLINE_SHIPMENT);
+			subBenefitSteps.getHouseHoldGoodsPage().fillUSDomesticForm(addNewPolicyPage,
+					PDTConstants.US_DOM_VANLINE_SHIPMENT);
 			break;
 		case PDTConstants.AUTO_SHIPMENT:
-			subBenefitSteps.getHouseHoldGoodsPage().fillAutoShipmentForm(addNewPolicyPage,PDTConstants.AUTO_SHIPMENT);
+			subBenefitSteps.getHouseHoldGoodsPage().fillAutoShipmentForm(addNewPolicyPage, PDTConstants.AUTO_SHIPMENT);
 			break;
 		case PDTConstants.SELF_MOVE:
 			subBenefitSteps.getHouseHoldGoodsPage().fillSelfMoveForm(addNewPolicyPage, PDTConstants.SELF_MOVE);
@@ -558,17 +665,20 @@ public class PDT_SharedSubBenefitPage extends Base {
 			subBenefitSteps.getHouseHoldGoodsPage().fillSeaShipmentForm(addNewPolicyPage, PDTConstants.SEA_SHIPMENT);
 			break;
 		case PDTConstants.NONUS_INLAND_SHIPMENT:
-			subBenefitSteps.getHouseHoldGoodsPage().fillNonUsInlandShipmentForm(addNewPolicyPage, PDTConstants.NONUS_INLAND_SHIPMENT);
+			subBenefitSteps.getHouseHoldGoodsPage().fillNonUsInlandShipmentForm(addNewPolicyPage,
+					PDTConstants.NONUS_INLAND_SHIPMENT);
 			break;
 		case PDTConstants.PERMANENT_STORAGE:
-			subBenefitSteps.getHouseHoldGoodsPage().fillPermanentStorageForm(addNewPolicyPage, PDTConstants.PERMANENT_STORAGE);
+			subBenefitSteps.getHouseHoldGoodsPage().fillPermanentStorageForm(addNewPolicyPage,
+					PDTConstants.PERMANENT_STORAGE);
 			break;
 		case PDTConstants.PET_SHIPMENT:
 			subBenefitSteps.getHouseHoldGoodsPage().fillPetShipmentForm(addNewPolicyPage, PDTConstants.PET_SHIPMENT);
 			break;
 		case PDTConstants.DISCARD_DONATE:
-			subBenefitSteps.getHouseHoldGoodsPage().fillDiscardDonateForm(addNewPolicyPage, PDTConstants.DISCARD_DONATE);
-			break; 
+			subBenefitSteps.getHouseHoldGoodsPage().fillDiscardDonateForm(addNewPolicyPage,
+					PDTConstants.DISCARD_DONATE);
+			break;
 		default:
 			Assert.fail(MessageFormat.format(PDTConstants.ELEMENT_NOT_FOUND, CoreConstants.FAIL));
 		}
@@ -588,25 +698,28 @@ public class PDT_SharedSubBenefitPage extends Base {
 		case PDTConstants.CANDIDATE_SELECTION:
 			CoreFunctions.explicitWaitTillElementBecomesClickable(driver, _lblCandidateSelEmpType,
 					_lblCandidateSelEmpType.getText() + "(" + PDTConstants.CANDIDATE_SELECTION + ")");
-			CoreFunctions.clickUsingJS(driver, _lblCandidateSelEmpType, _lblCandidateSelEmpType.getText() + "(" + PDTConstants.CANDIDATE_SELECTION +
-			  ")");
+			CoreFunctions.clickUsingJS(driver, _lblCandidateSelEmpType,
+					_lblCandidateSelEmpType.getText() + "(" + PDTConstants.CANDIDATE_SELECTION + ")");
 			break;
 		case PDTConstants.PRE_ACCEPTANCE_TRIP_TRANSPORTATION:
 			CoreFunctions.explicitWaitTillElementBecomesClickable(driver, _lblPreAcceptTripTransportEmpType,
 					_lblPreAcceptTripTransportEmpType.getText() + "(" + PDTConstants.PRE_ACCEPTANCE_TRIP_TRANSPORTATION
 							+ ")");
-			CoreFunctions.clickUsingJS(driver, _lblPreAcceptTripTransportEmpType, _lblPreAcceptTripTransportEmpType.getText()
-					+ "(" + PDTConstants.PRE_ACCEPTANCE_TRIP_TRANSPORTATION + ")");
+			CoreFunctions.clickUsingJS(driver, _lblPreAcceptTripTransportEmpType,
+					_lblPreAcceptTripTransportEmpType.getText() + "(" + PDTConstants.PRE_ACCEPTANCE_TRIP_TRANSPORTATION
+							+ ")");
 			break;
 		case PDTConstants.PRE_ACCEPTANCE_TRIP_LODGING:
 			CoreFunctions.explicitWaitTillElementBecomesClickable(driver, _lblPreAcceptTripLodgingEmpType,
 					_lblPreAcceptTripLodgingEmpType.getText() + "(" + PDTConstants.PRE_ACCEPTANCE_TRIP_LODGING + ")");
-			CoreFunctions.clickUsingJS(driver, _lblPreAcceptTripLodgingEmpType, _lblPreAcceptTripLodgingEmpType.getText() + "(" + PDTConstants.PRE_ACCEPTANCE_TRIP_LODGING + ")");
+			CoreFunctions.clickUsingJS(driver, _lblPreAcceptTripLodgingEmpType,
+					_lblPreAcceptTripLodgingEmpType.getText() + "(" + PDTConstants.PRE_ACCEPTANCE_TRIP_LODGING + ")");
 			break;
 		case PDTConstants.PRE_ACCEPTANCE_TRIP_MEALS:
 			CoreFunctions.explicitWaitTillElementBecomesClickable(driver, _lblPreAcceptTripMealEmpType,
 					_lblPreAcceptTripMealEmpType.getText() + "(" + PDTConstants.PRE_ACCEPTANCE_TRIP_MEALS + ")");
-			CoreFunctions.clickUsingJS(driver, _lblPreAcceptTripMealEmpType, _lblPreAcceptTripMealEmpType.getText() + "(" + PDTConstants.PRE_ACCEPTANCE_TRIP_MEALS + ")");
+			CoreFunctions.clickUsingJS(driver, _lblPreAcceptTripMealEmpType,
+					_lblPreAcceptTripMealEmpType.getText() + "(" + PDTConstants.PRE_ACCEPTANCE_TRIP_MEALS + ")");
 			break;
 		}
 	}
@@ -616,26 +729,30 @@ public class PDT_SharedSubBenefitPage extends Base {
 		case PDTConstants.CANDIDATE_SELECTION:
 			CoreFunctions.explicitWaitTillElementBecomesClickable(driver, _lblCandidateSelHomeOwnerType,
 					_lblCandidateSelHomeOwnerType.getText() + "(" + PDTConstants.CANDIDATE_SELECTION + ")");
-			CoreFunctions.clickUsingJS(driver, _lblCandidateSelHomeOwnerType, _lblCandidateSelHomeOwnerType.getText() + "(" + PDTConstants.CANDIDATE_SELECTION + ")");
+			CoreFunctions.clickUsingJS(driver, _lblCandidateSelHomeOwnerType,
+					_lblCandidateSelHomeOwnerType.getText() + "(" + PDTConstants.CANDIDATE_SELECTION + ")");
 			break;
 		case PDTConstants.PRE_ACCEPTANCE_TRIP_TRANSPORTATION:
 			CoreFunctions.explicitWaitTillElementBecomesClickable(driver, _lblPreAcceptTripTransportHomeOwnerType,
 					_lblPreAcceptTripTransportHomeOwnerType.getText() + "("
 							+ PDTConstants.PRE_ACCEPTANCE_TRIP_TRANSPORTATION + ")");
-			CoreFunctions.clickUsingJS(driver, _lblPreAcceptTripTransportHomeOwnerType, _lblPreAcceptTripTransportHomeOwnerType.getText() + "("
+			CoreFunctions.clickUsingJS(driver, _lblPreAcceptTripTransportHomeOwnerType,
+					_lblPreAcceptTripTransportHomeOwnerType.getText() + "("
 							+ PDTConstants.PRE_ACCEPTANCE_TRIP_TRANSPORTATION + ")");
 			break;
 		case PDTConstants.PRE_ACCEPTANCE_TRIP_LODGING:
 			CoreFunctions.explicitWaitTillElementBecomesClickable(driver, _lblPreAcceptTripLodgingHomeOwnerType,
 					_lblPreAcceptTripLodgingHomeOwnerType.getText() + "(" + PDTConstants.PRE_ACCEPTANCE_TRIP_LODGING
 							+ ")");
-			CoreFunctions.clickUsingJS(driver, _lblPreAcceptTripLodgingHomeOwnerType, _lblPreAcceptTripLodgingHomeOwnerType.getText() + "(" + PDTConstants.PRE_ACCEPTANCE_TRIP_LODGING
+			CoreFunctions.clickUsingJS(driver, _lblPreAcceptTripLodgingHomeOwnerType,
+					_lblPreAcceptTripLodgingHomeOwnerType.getText() + "(" + PDTConstants.PRE_ACCEPTANCE_TRIP_LODGING
 							+ ")");
 			break;
 		case PDTConstants.PRE_ACCEPTANCE_TRIP_MEALS:
 			CoreFunctions.explicitWaitTillElementBecomesClickable(driver, _lblPreAcceptTripMealHomeOwnerType,
 					_lblPreAcceptTripMealHomeOwnerType.getText() + "(" + PDTConstants.PRE_ACCEPTANCE_TRIP_MEALS + ")");
-			CoreFunctions.clickUsingJS(driver, _lblPreAcceptTripMealHomeOwnerType, _lblPreAcceptTripMealHomeOwnerType.getText() + "(" + PDTConstants.PRE_ACCEPTANCE_TRIP_MEALS + ")");
+			CoreFunctions.clickUsingJS(driver, _lblPreAcceptTripMealHomeOwnerType,
+					_lblPreAcceptTripMealHomeOwnerType.getText() + "(" + PDTConstants.PRE_ACCEPTANCE_TRIP_MEALS + ")");
 			break;
 		}
 	}
@@ -643,7 +760,11 @@ public class PDT_SharedSubBenefitPage extends Base {
 	public void selectSubBenefit(String subBenefitName, String pageName, PDT_AddNewPolicyPage addNewPolicyPage) {
 		try {
 			CoreFunctions.selectItemInListByText(driver, _subBenefitCategories, subBenefitName, true);
-			Assert.assertTrue(verifyFormIsDisplayed(subBenefitName, getElementByName(pageName, subBenefitName), subBenefitName, pageName),
+			if (CoreFunctions.isElementExist(driver, _progressBar, 4))
+				BusinessFunctions.fluentWaitForSpinnerToDisappear(driver, _progressBar);
+			Assert.assertTrue(
+					verifyFormIsDisplayed(subBenefitName, getElementByName(pageName, subBenefitName), subBenefitName,
+							pageName),
 					MessageFormat.format(PDTConstants.VERIFIED_FORM_IS_NOT_DISPLAYED, subBenefitName, pageName));
 		} catch (Exception e) {
 			Assert.fail("Failed to select sub-benefit:-" + subBenefitName + " on " + pageName + "page.");
@@ -705,13 +826,14 @@ public class PDT_SharedSubBenefitPage extends Base {
 			}
 			resultMapForTabNameNotMatch = getFilterMapWhereTabNameNotMatch(subBenefits.size(), resultMap);
 		} catch (Exception e) {
-		} 
+		}
 		return resultMapForTabNameNotMatch.isEmpty();
 	}
 
 	public String getTabNameNotMatch(String pageName) {
 		String str = "";
-		for (@SuppressWarnings("rawtypes") Map.Entry m : resultMapForTabNameNotMatch.entrySet()) {
+		for (@SuppressWarnings("rawtypes")
+		Map.Entry m : resultMapForTabNameNotMatch.entrySet()) {
 			String[] tabName = m.getKey().toString().split("_");
 			str += MessageFormat.format(PDTConstants.VERFIED_TAB_NOT_DISPLAYED, CoreConstants.FAIL, tabName[1],
 					tabName[0], pageName);
@@ -745,29 +867,31 @@ public class PDT_SharedSubBenefitPage extends Base {
 		return map;
 	}
 
-	public void verifySubBenefitCategoriesAreDisplayed(List<String> subBenefitsFromDataTable, String pageName) {		
+	public void verifySubBenefitCategoriesAreDisplayed(List<String> subBenefitsFromDataTable, String pageName) {
 		CoreFunctions.explicitWaitTillElementListClickable(driver, _subBenefitCategories);
 		if (subBenefitsFromDataTable.equals(CoreFunctions.getElementTextAndStoreInList(driver, _subBenefitCategories)))
 			Reporter.addStepLog(MessageFormat.format(PDTConstants.VERIFIED_SUB_BENEFITS_DISPLAYED, CoreConstants.PASS,
 					subBenefitsFromDataTable.toString(), pageName));
 		else
-			Reporter.addStepLog(MessageFormat.format(PDTConstants.FAILED_TO_VERIFY_SUB_BENEFITS, CoreConstants.FAIL, pageName,
-					subBenefitsFromDataTable.toString(),
+			Reporter.addStepLog(MessageFormat.format(PDTConstants.FAILED_TO_VERIFY_SUB_BENEFITS, CoreConstants.FAIL,
+					pageName, subBenefitsFromDataTable.toString(),
 					CoreFunctions.getElementTextAndStoreInList(driver, _subBenefitCategories).toString()));
 	}
-	
+
 	public void verifySelectedPolicyBenefitCategoryName(String pageName) {
 		CoreFunctions.explicitWaitTillElementInVisibilityCustomTime(driver, _progressBar, 5);
-		if(pageName.equalsIgnoreCase("One-Time Payments/Reimbursements") || pageName.equalsIgnoreCase("Ongoing Payments/Reimbursements")) {
+		if (pageName.equalsIgnoreCase("One-Time Payments/Reimbursements")
+				|| pageName.equalsIgnoreCase("Ongoing Payments/Reimbursements")) {
 			return;
 		}
-		CoreFunctions.explicitWaitForElementTextPresent(driver, _benefitCategoryName, pageName, 3);		
-		if(!CoreFunctions.verifyElementOnPage(driver, _benefitCategoryName, PDTConstants.POLICY_BENEFIT_CATEGORY, pageName, pageName,
-				true))
-			Reporter.addStepLog(MessageFormat.format(PDTConstants.FAIL_TO_VERIFY_ELEMENT_VAL_ON_PAGE, CoreConstants.FAIL,
-					PDTConstants.POLICY_BENEFIT_CATEGORY, pageName, pageName, _benefitCategoryName.getText()));
+		CoreFunctions.explicitWaitForElementTextPresent(driver, _benefitCategoryName, pageName, 3);
+		if (!CoreFunctions.verifyElementOnPage(driver, _benefitCategoryName, PDTConstants.POLICY_BENEFIT_CATEGORY,
+				pageName, pageName, true))
+			Reporter.addStepLog(
+					MessageFormat.format(PDTConstants.FAIL_TO_VERIFY_ELEMENT_VAL_ON_PAGE, CoreConstants.FAIL,
+							PDTConstants.POLICY_BENEFIT_CATEGORY, pageName, pageName, _benefitCategoryName.getText()));
 	}
-	
+
 	public void populateFormHeaderElement() {
 		formMap.put(PDTConstants.CANDIDATE_SELECTION, _lnkFormCollapseOne);
 		formMap.put(PDTConstants.PRE_ACCEPTANCE_TRIP_TRANSPORTATION, _lnkFormCollapseTwo);
@@ -798,7 +922,8 @@ public class PDT_SharedSubBenefitPage extends Base {
 		formMap.put(PDTConstants.DEPARTURE_SERVICES, _lnkFormCollapseDepartureServices);
 		formMap.put(PDTConstants.FURNITURE_RENTAL, _lnkFormCollapseFurnitureRental);
 		formMap.put(PDTConstants.REIMBURSEMENT_OF_MEMEBERSHIP_DUES, _lnkFormCollapseMembershipDues);
-		formMap.put(PDTConstants.SCHOOL_SEARCH, _lnkFormCollapseSchoolSearch);
+		formMap.put(PDTConstants.EDUCATION_ASSISTANCE, _lnkFormCollapseSchoolSearch);
+		formMap.put(PDTConstants.EDUCATION_ASSISTANT, _lnkFormCollapseSchoolSearch);
 		formMap.put(PDTConstants.SETTLING_IN_SERVICES, _lnkFormCollapseSettlingInServices);
 		formMap.put(PDTConstants.TRANSITION_ASSISTANCE_PROGRAM, _lnkFormCollapseTransitionAssistances);
 		formMap.put(PDTConstants.TUTION_AND_EDUCATION, _lnkFormCollapseTutionEducation);
@@ -853,19 +978,19 @@ public class PDT_SharedSubBenefitPage extends Base {
 		formMap.put(PDTConstants.PERMANENT_STORAGE, _lnkFormCollapseSeven);
 		formMap.put(PDTConstants.PET_SHIPMENT, _lnkFormCollapse8);
 		formMap.put(PDTConstants.DISCARD_DONATE, _lnkFormCollapse9);
-		
+
 	}
-	
+
 	public void exitFromPolicyBenefitPage() {
 		CoreFunctions.click(driver, _btnExit, PDTConstants.EXIT);
-		if(CoreFunctions.isElementExist(driver, _dialogconfirmation, 1)) {
+		if (CoreFunctions.isElementExist(driver, _dialogconfirmation, 1)) {
 			CoreFunctions.clickWithoutReporting(driver, _btnOk, _btnOk.getText());
-		}		
+		}
 	}
-	
+
 	public boolean verifySaveSuccessMessage(String msg, String pageName, PDT_AddNewPolicyPage addNewPolicyPage) {
-		try {			
-			if(CoreFunctions.isElementExist(driver, _progressBar, 7))
+		try {
+			if (CoreFunctions.isElementExist(driver, _progressBar, 7))
 				BusinessFunctions.fluentWaitForSpinnerToDisappear(driver, _progressBar);
 			if (CoreFunctions.isElementExist(driver, _successPopUp, 5) && _successMsg.getText().equalsIgnoreCase(msg)) {
 				Reporter.addStepLog(MessageFormat.format(PDTConstants.VERIFIED_SUCCESS_MSG, CoreConstants.PASS,
@@ -874,46 +999,197 @@ public class PDT_SharedSubBenefitPage extends Base {
 				return true;
 			}
 		} catch (Exception e) {
-			Assert.fail(MessageFormat.format(PDTConstants.FAILED_TO_VERIFY_SUCCESS_MSG, CoreConstants.FAIL, msg, pageName));
+			Assert.fail(
+					MessageFormat.format(PDTConstants.FAILED_TO_VERIFY_SUCCESS_MSG, CoreConstants.FAIL, msg, pageName));
 		}
 		return false;
 	}
-	
+
 	public void populateBtnMap() {
 		buttonMap.put(PDTConstants.PDT_BTN_SAVE_SUBMIT, _btnSaveAndContinue);
-		buttonMap.put(PDTConstants.EXIT.toUpperCase(), _btnExit);		
+		buttonMap.put(PDTConstants.EXIT.toUpperCase(), _btnExit);
+		buttonMap.put(PDTConstants.BTN_APPROVE_POLICY, _btnApprovePolicy);
+		buttonMap.put(PDTConstants.BTN_APPROVE, _btnApprove);
+		buttonMap.put(PDTConstants.BTN_CANCEL, _btnCancel);
 	}
-	
+
 	public void populateConfirmDialogbuttonMap() {
 		confirmationDialogButtonMap.put(PDTConstants.OK, _btnOkOnConfirmationDialog);
 		confirmationDialogButtonMap.put(PDTConstants.CANCEL, _btnCancelOnConfirmationDialog);
-		confirmationDialogButtonMap.put(PDTConstants.SAVE, _btnSaveOnConfirmationDialog);		
+		confirmationDialogButtonMap.put(PDTConstants.SAVE, _btnSaveOnConfirmationDialog);
 	}
-	
+
 	public void clickOnConfirmDialogBtn(String btnName) {
-		try {			
-			if(CoreFunctions.isElementExist(driver, _dialogconfirmation, 1))
-			CoreFunctions.click(driver, confirmationDialogButtonMap.get(btnName), btnName);
-		} catch (NoSuchElementException e) {			
+		try {
+			if (CoreFunctions.isElementExist(driver, _dialogconfirmation, 1))
+				CoreFunctions.click(driver, confirmationDialogButtonMap.get(btnName), btnName);
+		} catch (NoSuchElementException e) {
 			Assert.fail(MessageFormat.format(PDTConstants.MISSING_BTN, CoreConstants.FAIL, btnName));
-	    } 
-		catch (Exception e) {
+		} catch (Exception e) {
 			Assert.fail(MessageFormat.format(PDTConstants.FAILED_TO_CLICK_ON_BTN, CoreConstants.FAIL, btnName));
 		}
 	}
-	
+
 	public boolean verifySubBenefitCategoriesAreUnchecked(String subBenefitCategoryName) {
-		List<Boolean> resultList=new ArrayList<Boolean>();
-			for(WebElement _chBoxSubBenefit: _chkBoxesSubBenefitCategories) {
-			if(_chBoxSubBenefit.getDomProperty("checked").equals("false")) {
+		List<Boolean> resultList = new ArrayList<Boolean>();
+		for (WebElement _chBoxSubBenefit : _chkBoxesSubBenefitCategories) {
+			if (_chBoxSubBenefit.getDomProperty("checked").equals("false")) {
 				resultList.add(true);
 			}
-			
+
 		}
-		if(resultList.stream().allMatch(t->t.equals(true))) {
-			Reporter.addStepLog(MessageFormat.format(PDTConstants.VERIFIED_DATA_NOT_SAVED_SUB_BENEFIT, CoreConstants.PASS, subBenefitCategoryName));
+		if (resultList.stream().allMatch(t -> t.equals(true))) {
+			Reporter.addStepLog(MessageFormat.format(PDTConstants.VERIFIED_DATA_NOT_SAVED_SUB_BENEFIT,
+					CoreConstants.PASS, subBenefitCategoryName));
 			return true;
 		}
 		return false;
 	}
+
+	public boolean verifyButtonVisible(String btnName, PDT_PolicyBenefitCategoryPage policyBenefitCategoryPage) {
+		try {
+			if (CoreFunctions.isElementExist(driver, _progressBar, 3))
+				BusinessFunctions.fluentWaitForSpinnerToDisappear(driver, _progressBar);
+			if (CoreFunctions.isElementExist(driver, _btnApprovePolicy, 5)) {
+				Reporter.addStepLog(MessageFormat.format(PDTConstants.VERIFIED_BTN_VISIBLE, CoreConstants.PASS, btnName,
+						policyBenefitCategoryPage.getBenefitCategoryName()));
+
+				return true;
+			}
+		} catch (Exception e) {
+			Assert.fail(MessageFormat.format(PDTConstants.FAILED_TO_VERIFY_BTN_VISIBLE, CoreConstants.FAIL, btnName,
+					policyBenefitCategoryPage.getBenefitCategoryName()));
+		}
+		return false;
+	}
+	
+	public boolean verifyButtonDisabled(String btnName, PDT_PolicyBenefitCategoryPage policyBenefitCategoryPage) {
+		try {			
+			if (_btnSaveAndContinue.getAttribute("disabled").equalsIgnoreCase("true")) {
+				Reporter.addStepLog(MessageFormat.format(PDTConstants.VERIFIED_BTN_ENABLED, CoreConstants.PASS, btnName,
+						policyBenefitCategoryPage.getBenefitCategoryName()));
+				return true;
+			}
+		} catch (Exception e) {
+			Assert.fail(MessageFormat.format(PDTConstants.FAILED_TO_VERIFY_BTN_DISABLED, CoreConstants.FAIL, btnName,
+					policyBenefitCategoryPage.getBenefitCategoryName()));
+		}
+		return false;
+	}
+	
+	public void clickElementOfPage(String btnName, String pageName) {
+		try {
+			if (CoreFunctions.isElementExist(driver, _progressBar, 7))
+				BusinessFunctions.fluentWaitForSpinnerToDisappear(driver, _progressBar);
+			CoreFunctions.clickUsingJS(driver, buttonMap.get(btnName), btnName);	
+		} catch(Exception e) {
+			Assert.fail(MessageFormat.format(PDTConstants.FAILED_TO_CLICK, CoreConstants.FAIL, PDTConstants.BTN_APPROVE_POLICY, pageName));
+		}		
+	}
+	
+	public void verifyHeadingAndMsgOfPopUp(List<List<String>> data) {
+		if (CoreFunctions.isElementExist(driver, _progressBar, 7))
+			BusinessFunctions.fluentWaitForSpinnerToDisappear(driver, _progressBar);
+		CoreFunctions.explicitWaitForElementTextPresent(driver, _headerApprovePopUp, data.get(0).get(1), 10);
+		CoreFunctions.verifyText(driver, _headerApprovePopUp, data.get(0).get(1), data.get(0).get(0));
+		CoreFunctions.verifyText(driver, _msg1ApprovePopUp, data.get(1).get(1), data.get(1).get(0));
+		CoreFunctions.verifyText(driver, _msg2ApprovePopUp, data.get(2).get(1), data.get(2).get(0));
+	}
+	
+	public boolean verifyCheckBoxAndMsg(String fieldName, String msg, String status) {
+		try {
+			if(status.equalsIgnoreCase("disabled") && _chkBoxExistingDateInd.getAttribute("disabled").equalsIgnoreCase("true")) {
+				CoreFunctions.highlightObject(driver, _chkBoxExistingDateInd);
+				CoreFunctions.verifyText(driver, _lblExistingDateInd, msg, fieldName);
+				Reporter.addStepLog(MessageFormat.format(PDTConstants.VERIFIED_CHKBOX_MSG, CoreConstants.PASS, msg, status));
+				return true;
+			} else if(status.equalsIgnoreCase("enabled") && _chkBoxNewDateInd.getDomProperty("disabled").equalsIgnoreCase("false")) {
+				CoreFunctions.highlightObject(driver, _chkBoxNewDateInd);
+				CoreFunctions.verifyText(driver, _lblNewDateInd, msg, fieldName);
+				Reporter.addStepLog(MessageFormat.format(PDTConstants.VERIFIED_CHKBOX_MSG, CoreConstants.PASS, msg, status));
+				return true;
+			}
+		} catch(Exception e) {
+			Assert.fail(MessageFormat.format(PDTConstants.FAILED_TO_VERIFY_CHECKBOX, CoreConstants.FAIL, msg, status));
+		}
+		return false;
+	}
+	
+	
+	public boolean verifyButton(String btnName, String btnStatus) {	
+		try {
+			if(btnName.equalsIgnoreCase("approve") && btnStatus.equalsIgnoreCase("disabled") && _btnApprove.getAttribute("disabled").equalsIgnoreCase("true")) {
+				CoreFunctions.highlightObject(driver, _btnApprove);
+				Reporter.addStepLog(MessageFormat.format(PDTConstants.VERIFIED_BTN_STATE, CoreConstants.PASS, btnName, btnStatus));
+				return true;
+			} else if(btnName.equalsIgnoreCase("approve") && btnStatus.equalsIgnoreCase("enabled") && _btnApprove.getDomProperty("disabled").equalsIgnoreCase("false")) {
+				CoreFunctions.highlightObject(driver, _btnApprove);
+				Reporter.addStepLog(MessageFormat.format(PDTConstants.VERIFIED_BTN_STATE, CoreConstants.PASS, btnName, btnStatus));
+				return true;
+			}
+			else if(btnName.equalsIgnoreCase("cancel") && btnStatus.equalsIgnoreCase("enabled") && CoreFunctions.isElementExist(driver, _btnCancel, 3)) {
+				CoreFunctions.highlightObject(driver, _btnCancel);
+				Reporter.addStepLog(MessageFormat.format(PDTConstants.VERIFIED_BTN_STATE, CoreConstants.PASS, btnName, btnStatus));
+				return true;
+			}			
+		} catch(Exception e) {
+			Assert.fail(MessageFormat.format(PDTConstants.FAILED_TO_VERIFY_BTN_STATE, CoreConstants.FAIL, btnName, btnStatus));
+		}
+		return false;
+	}
+	
+	public void clickAssociateWithNewAuth() {
+		CoreFunctions.clickElement(driver, _lblNewDateInd);
+	}	
+	
+	public void approvePolicy(String btnName, String pageName) {
+		try {
+			timeBeforeAction = new Date().getTime();
+			CoreFunctions.click(driver, buttonMap.get(btnName), btnName);
+			if (CoreFunctions.isElementExist(driver, _progressBar, 7))
+				BusinessFunctions.fluentWaitForSpinnerToDisappear(driver, _progressBar);
+			timeAfterAction = new Date().getTime();
+			BusinessFunctions.printTimeTakenByPageToLoad(timeBeforeAction, timeAfterAction, PDTConstants.VIEW_EDIT_POLICY_FORMS);
+		} catch(Exception e) {
+			Assert.fail(MessageFormat.format(PDTConstants.FAILED_TO_CLICK, CoreConstants.FAIL, PDTConstants.BTN_APPROVE_POLICY, pageName));
+		}		
+	}
+	
+	public boolean verifyStatusAndVersionOfCanceledPolicy(String selectedPolicyName, String expectedPolicyStatus, String expectedPolicyVersion, String pageName) {
+		//CoreFunctions.moveToElement(driver, _policyStatusText);
+		CoreFunctions.scrollToElementUsingJS(driver, _policyStatus, _policyStatusText.getText());
+		CoreFunctions.explicitWaitForElementTextPresent(driver, _policyStatusText, _policyStatusText.getText(), 10);
+		if(expectedPolicyStatus.equalsIgnoreCase(_policyStatus.getText().trim()) && expectedPolicyVersion.equalsIgnoreCase(_policyVersion.getText().trim())) {
+			Reporter.addStepLog(MessageFormat.format(PDTConstants.VERIFIED_POLICY_VERSION_STATUS, CoreConstants.PASS, selectedPolicyName, expectedPolicyVersion, expectedPolicyStatus, pageName));
+			return true;
+		} else {
+			Reporter.addStepLog(MessageFormat.format(
+					PDTConstants.FAILED_TO_VERIFY_POLICY_VERSION_STATUS, CoreConstants.FAIL,
+					selectedPolicyName, expectedPolicyVersion, _policyStatus.getText().trim(), expectedPolicyStatus, _policyVersion.getText().trim(), pageName));
+			return false;
+		}		
+	}
+	
+	public void clickButtonOnApprovePolicyPopUp(String btnName, String pageName) {
+		try {
+			populateBtnMap();			
+			if(btnName.equalsIgnoreCase(PDTConstants.BTN_APPROVE)) {
+				approvePolicy(btnName, pageName);
+			}else if(btnName.equalsIgnoreCase(PDTConstants.BTN_CANCEL)) {
+				Log.info("inside btn cancel");				
+				CoreFunctions.highlightElementAndClick(driver, buttonMap.get(btnName), btnName);
+				//CoreFunctions.clickUsingJS(driver, buttonMap.get(btnName), btnName);
+				//CoreFunctions.click(driver, buttonMap.get(btnName), btnName);
+			} else {
+				Log.info("inside else condition");
+				Log.info("Button:-"+btnName+" does not exist.");
+			}
+		} catch(Exception e) {
+			e.printStackTrace();
+			Assert.fail("Button:-"+btnName+" does not exist.");
+		}
+
+		
+	}
+	
 }

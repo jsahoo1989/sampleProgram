@@ -25,7 +25,7 @@ Feature: Validate the CoreFlex End-To-End Business Test Flow(BluePrint, MXClient
     And he has navigated to "Benefits Bundle" page after selecting required Flex Benefits on 'Benefit Selection Tool' page
     And he has clicked on "Save & Exit" button after validating selected Flex Benefit details listed under 'Selected Benefits' section on "Benefits Bundle" page
     And he has verified entered 'Total Points' value and selected 'Core_Flex Benefit' details displayed on the navigated 'Authorization Form' page
-    And he has clicked on 'Upload or Create a Document' tab on 'Authorization Form' page
-    When he clicks on "Create LOU" on 'What type of document would you like to add?' pop-up dialog
-    Then he has verified following options on the navigated 'Demo Dynamic Document' pop-up dialog
+    #And he has clicked on 'Upload or Create a Document' tab on 'Authorization Form' page
+    #When he clicks on "Create LOU" on 'What type of document would you like to add?' pop-up dialog
+    #Then he has verified following options on the navigated 'Demo Dynamic Document' pop-up dialog
     

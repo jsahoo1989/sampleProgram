@@ -95,7 +95,7 @@
 			"subBenefits": "Home Leave Transportation;Home Leave Lodging;Home Leave Rental Car;Home Leave Meals",
 			"airesManagedService": "Yes",
 			"noOfMilestones": 4,
-			"policyCreationGroup": "Aires Managed Benefits Cards"
+			"policyCreationGroup": "All Benefits,Aires Managed Benefits Cards"
 		},
 		{
 			"benefitType": "Airport Pickup",
@@ -223,7 +223,7 @@
 			"subBenefits": "Concierge Home Cleaning Services Reimbursement",
 			"airesManagedService": "Yes",
 			"noOfMilestones": 50,
-			"policyCreationGroup": "All Benefits"
+			"policyCreationGroup": "All Benefits,Cloning,Versioning,Client"
 		},
 		{
 			"benefitType": "Child Care Services Reimbursement",
@@ -233,7 +233,7 @@
 			"subBenefits": "Child Care Services Reimbursement",
 			"airesManagedService": "Yes",
 			"noOfMilestones": 50,
-			"policyCreationGroup": "All Benefits"
+			"policyCreationGroup": "All Benefits,Cloning,Versioning,Client"
 		},
 		{
 			"benefitType": "Goods & Services Allowance",
@@ -243,7 +243,7 @@
 			"subBenefits": "Goods & Services Allowance",
 			"airesManagedService": "No",
 			"noOfMilestones": 50,
-			"policyCreationGroup": "All Benefits"
+			"policyCreationGroup": "All Benefits,Cloning,Versioning,Client"
 		}
 	],
 	"flexBenefits": [
@@ -585,7 +585,7 @@
 					"endTracingPrompt": "End date of trip",
 					"postEndTracingCardStatus": "Travel Ends",
 					"multipleBenefitSubmission": false,
-					"policyCreationGroup": "Aires Managed Benefits Cards",
+					"policyCreationGroup": "All Benefits,Aires Managed Benefits Cards",
 					"selectBenefitOnPBCPage": false,
 					"deselectBenefitOnPBCPage": false,
 					"noOfMilestones": 4,
@@ -1187,7 +1187,7 @@
 					"policyCreationGroup": "All Benefits",
 					"selectBenefitOnPBCPage": false,
 					"deselectBenefitOnPBCPage": false,
-					"noOfMilestones": 2
+					"noOfMilestones": 0
 				}
 			]
 		},
@@ -1222,7 +1222,7 @@
 					"endTracingPrompt": "",
 					"postEndTracingCardStatus": "",
 					"multipleBenefitSubmission": false,
-					"policyCreationGroup": "All Benefits",
+					"policyCreationGroup": "All Benefits,Cloning,Versioning,Client",
 					"selectBenefitOnPBCPage": false,
 					"deselectBenefitOnPBCPage": false,
 					"noOfMilestones": 50
@@ -1255,7 +1255,7 @@
 					"endTracingPrompt": "",
 					"postEndTracingCardStatus": "",
 					"multipleBenefitSubmission": false,
-					"policyCreationGroup": "All Benefits",
+					"policyCreationGroup": "All Benefits,Cloning,Versioning,Client",
 					"selectBenefitOnPBCPage": false,
 					"deselectBenefitOnPBCPage": false,
 					"noOfMilestones": 50

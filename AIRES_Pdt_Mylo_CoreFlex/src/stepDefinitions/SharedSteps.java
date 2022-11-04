@@ -6,6 +6,7 @@ import com.aires.managers.FileReaderManager;
 import com.aires.pages.iris.IRIS_Corporation_Main;
 import com.aires.pages.iris.IRIS_LoginPage;
 import com.aires.testdatatypes.coreflex.CoreFlex_LoginInfo;
+import com.aires.testdatatypes.pdt.PDT_LoginDetails;
 
 import cucumber.api.java.en.Given;
 

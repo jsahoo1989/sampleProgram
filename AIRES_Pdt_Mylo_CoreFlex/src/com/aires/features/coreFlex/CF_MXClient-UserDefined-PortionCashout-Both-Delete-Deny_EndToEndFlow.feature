@@ -47,8 +47,8 @@ Feature: Validate the CoreFlex End-To-End Business Test Flow(BluePrint, MXClient
     And he has clicked 'Transferee Name' from 'All Initiations' List on 'View all initiation' page
     And he has navigated to 'Benefit Selection Tool' page after clicking on 'Manage Benefit Selection' button
     And he has verified following details on 'Benefit Selection Tool' page post Authorization form submission
-      | Available Point Balance | Edit Benefit Selection | Cashout |
-    And he has clicked on 'Edit Benefit Selection' button to navigate to 'Benefits Bundle' page
+      | Available Point Balance | Edit Submitted Benefits | Cashout |
+    And he has clicked on 'Edit Submitted Benefits' button to navigate to 'Benefits Bundle' page
     And he has verified submitted 'Core_Flex Benefit_Cashout' details displayed under 'Submitted Benefits' section of 'Benefits Bundle' page
     And he has 'Deleted' submitted Benefit_Cashout on Benefits Bundle page and confirmed 'Remove Benefit Selection' dialog by entering username and clicking on "Yes-request to delete this benefit"
     And he has verified 'Status' of the deleted Benefit_Cashout displayed as "Delete Request Pending" under 'Submitted Benefits' section of 'Benefits Bundle' page

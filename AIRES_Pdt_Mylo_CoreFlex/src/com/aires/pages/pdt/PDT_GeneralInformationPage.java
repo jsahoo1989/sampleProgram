@@ -21,6 +21,7 @@ import com.aires.businessrules.constants.PDTConstants;
 import com.aires.managers.FileReaderManager;
 import com.aires.pages.coreflex.CoreFlex_FlexPolicySetupPage;
 import com.aires.testdatatypes.coreflex.CoreFlex_PolicySetupPagesData;
+import com.aires.utilities.Log;
 import com.vimalselvam.cucumber.listener.Reporter;
 
 import cucumber.api.DataTable;

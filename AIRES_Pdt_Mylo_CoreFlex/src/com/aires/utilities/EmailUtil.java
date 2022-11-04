@@ -1,32 +1,26 @@
 package com.aires.utilities;
 
-import java.net.URI;
 import java.text.MessageFormat;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 
-import org.apache.commons.lang.StringUtils;
+import org.apache.commons.lang3.StringUtils;
 import org.testng.Assert;
 
 import com.aires.businessrules.CoreFunctions;
 import com.aires.businessrules.constants.CoreConstants;
 import com.aires.businessrules.constants.MobilityXConstants;
 import com.aires.businessrules.constants.PDTConstants;
+import com.azure.identity.UsernamePasswordCredential;
+import com.azure.identity.UsernamePasswordCredentialBuilder;
+import com.microsoft.graph.authentication.TokenCredentialAuthProvider;
+import com.microsoft.graph.models.Message;
+import com.microsoft.graph.requests.GraphServiceClient;
+import com.microsoft.graph.requests.MessageCollectionPage;
 import com.vimalselvam.cucumber.listener.Reporter;
 
-import microsoft.exchange.webservices.data.core.ExchangeService;
-import microsoft.exchange.webservices.data.core.PropertySet;
-import microsoft.exchange.webservices.data.core.enumeration.misc.ExchangeVersion;
-import microsoft.exchange.webservices.data.core.enumeration.property.WellKnownFolderName;
-import microsoft.exchange.webservices.data.core.enumeration.search.LogicalOperator;
-import microsoft.exchange.webservices.data.core.service.item.EmailMessage;
-import microsoft.exchange.webservices.data.core.service.item.Item;
-import microsoft.exchange.webservices.data.core.service.schema.ItemSchema;
-import microsoft.exchange.webservices.data.credential.ExchangeCredentials;
-import microsoft.exchange.webservices.data.credential.WebCredentials;
-import microsoft.exchange.webservices.data.search.ItemView;
-import microsoft.exchange.webservices.data.search.filter.SearchFilter;
+import okhttp3.Request;
 
 public class EmailUtil {
 	private static String[] _searchTag = new String[2];
@@ -39,11 +33,11 @@ public class EmailUtil {
 			break;
 		case PDTConstants.TRANSFEREE_USER_NAME:
 			_searchTag[0] = "<strong>Username</strong> :";
-			_searchTag[1] = "</span></p>";
+			_searchTag[1] = "</span> </p>";
 			break;
 		case PDTConstants.TRANSFEREE_PASSWORD:
-			_searchTag[0] = "</span></b><span style=\"font-family:century gothic, Helvetica, Calibri, Roboto;\">";
-			_searchTag[1] = "</span></p>";
+			_searchTag[0] = "Password: </span></b><span style=\"font-family:century gothic,Helvetica,Calibri,Roboto\">";
+			_searchTag[1] = "</span> </p>";
 			break;
 		case MobilityXConstants.FLEX_BENEFIT_SUBMISSION:
 			_searchTag[0] = "journey!<br><br></p><p>";
@@ -95,8 +89,8 @@ public class EmailUtil {
 			_searchTag[1] = "><img alt=\"Submit My Response\"";
 			break;
 		case MobilityXConstants.NEW_INITIATION_SUBMISSION_STATUS:
-			_searchTag[0] = "Status of the Initiation </td><td width=\"60%\" style=\"font-family:century gothic, Helvetica, Calibri, Roboto;font-size:14px;text-align:left;padding-left:10px;border:1px solid #E7F2F5;\">";
-			_searchTag[1] = "</td></tr>";
+			_searchTag[0] = "Status of the Initiation </td><td width=\"60%\" style=\"font-family:century gothic,Helvetica,Calibri,Roboto; font-size:14px; text-align:left; padding-left:10px; border:1px solid #E7F2F5\">";
+			_searchTag[1] = "</td></tr></tbody></table>";
 			break;
 		default:
 			Assert.fail(MobilityXConstants.INFORMATION_NOT_FOUND_IN_EMAIL);
@@ -104,47 +98,41 @@ public class EmailUtil {
 		return _searchTag;
 	}
 
-	public static String searchEmailAndReturnResult(String host, final String userName, final String password,
-			String expFrom, String expEmailSubject, String infoToExtractFromMail) {
+	public static String searchEmailAndReturnResult(String host, final String userName, final String password, String expFrom,
+			String expEmailSubject, String infoToExtractFromMail) {
 		String searchText = "";
 		int iterationCount = 0;
+		Log.info("expected email subject: " + expEmailSubject);
 		_searchTag = getStartEndTagFromEmail(infoToExtractFromMail);
 		try {
+			CoreFunctions.waitHandler(10);
+			List<Message> messages = getRecentMessagesRecieved(userName, password);
 			while (true) {
 				iterationCount++;
-				ExchangeService service = createConnection(userName, password);
-				Log.info("Login Successful...");
-				microsoft.exchange.webservices.data.core.service.folder.Folder inbox = microsoft.exchange.webservices.data.core.service.folder.Folder
-						.bind(service, WellKnownFolderName.Inbox);
-				// set number of items you want to retrieve
-				ItemView view = new ItemView(10);
-				List<SearchFilter> searchFilterCollection = new ArrayList<>();
-				// flag to pick only email which contains attachments
-				searchFilterCollection.add(new SearchFilter.ContainsSubstring(ItemSchema.Subject, expEmailSubject));
-				SearchFilter finalSearchFilter = new SearchFilter.SearchFilterCollection(LogicalOperator.And,
-						searchFilterCollection);
-				ArrayList<Item> items = service.findItems(inbox.getId(), finalSearchFilter, view).getItems();
-				if (items.size() > 0) {
-					service.loadPropertiesForItems(items, PropertySet.FirstClassProperties);
-					EmailMessage emailMessage = (EmailMessage) items.get(0);
-					emailMessage.load();
-					Log.info("Pass:Email Received from: " + emailMessage.getFrom().toString());
-					Log.info("Email Received Date:" + emailMessage.getDateTimeReceived());
-					Log.info("Email Subject: " + emailMessage.getSubject());
-					String messageText = emailMessage.getBody().toString();
-					Log.info("messageText==" + messageText);
-					Log.info("searchTag[0]==" + _searchTag[0]);
-					Log.info("searchTag[1]==" + _searchTag[1]);
-					searchText = StringUtils.substringBetween(messageText, _searchTag[0], _searchTag[1]);
-					Log.info("SearchText==" + searchText);
-					return searchText;
+				for (Message message : messages) {
+					Log.info("Actual email subject: " + message.subject + ": Expected email subject: "
+							+ expEmailSubject);
+					if (message.subject.contains(expEmailSubject)) {
+						Log.info("Pass:Email Received from: " + message.from.emailAddress);
+						Log.info("Email Received Date:" + message.receivedDateTime
+								.format(DateTimeFormatter.ofPattern("MM/dd/yyyy 'at' hh:mm")));
+						Log.info("Email Subject: " + message.subject);
+						String messageText = message.body.content;
+						Log.info("messageText==" + messageText);
+						Log.info("searchTag[0]==" + _searchTag[0]);
+						Log.info("searchTag[1]==" + _searchTag[1]);
+						searchText = StringUtils.substringBetween(messageText, _searchTag[0], _searchTag[1]);
+						Log.info("Searched Email Result :"+searchText);
+						return (searchText.trim());
+					}
 				}
-				if (iterationCount < 12)
+				if (iterationCount < 30)
 					CoreFunctions.waitHandler(10);
 				else
 					break;
 			}
-			Log.info("No Email Received within 3 minutes From:" + expFrom + " with subject:" + expEmailSubject);
+			Log.info("No Email Received within " + iterationCount * 60 + " minutes From:" + expFrom + " with subject:"
+					+ expEmailSubject);
 			return CoreConstants.EMAIL_NOT_FOUND;
 		} catch (Exception e) {
 			Assert.fail(CoreConstants.ERROR + e.getMessage());
@@ -153,62 +141,49 @@ public class EmailUtil {
 	}
 
 	public static boolean verifyReceivedEmailSubjectMatch(String host, final String userName, final String password,
-			String expEmailSubject) throws Exception {
+			String expEmailSubject) {
 		int iterationCount = 0;
 		Log.info("Verifying received email...");
+		Log.info("expected email subject: " + expEmailSubject);
 		try {
-			ExchangeService service = createConnection(userName, password);
-			Log.info("Login Successful...");
-			microsoft.exchange.webservices.data.core.service.folder.Folder inbox = microsoft.exchange.webservices.data.core.service.folder.Folder
-					.bind(service, WellKnownFolderName.Inbox);
-			// set number of items you want to retrieve
-			ItemView view = new ItemView(10);
-			List<SearchFilter> searchFilterCollection = new ArrayList<>();
-			// flag to pick only email which contains attachments
-			searchFilterCollection.add(new SearchFilter.ContainsSubstring(ItemSchema.Subject, expEmailSubject));
-			SearchFilter finalSearchFilter = new SearchFilter.SearchFilterCollection(LogicalOperator.And,
-					searchFilterCollection);
+			CoreFunctions.waitHandler(10);
+			List<Message> messages = getRecentMessagesRecieved(userName, password);
 			while (true) {
 				iterationCount++;
-				ArrayList<Item> items = service.findItems(inbox.getId(), finalSearchFilter, view).getItems();
-				service.loadPropertiesForItems(items, PropertySet.FirstClassProperties);
-				if (items.size() > 0) {
-					EmailMessage emailMessage = (EmailMessage) items.get(0);
-					Log.info("Pass:Email Received from: " + emailMessage.getFrom().toString());
-					Log.info("Email Received Date:" + emailMessage.getDateTimeReceived());
-					Log.info("Email Subject: " + emailMessage.getSubject());
-					String messageText = emailMessage.getBody().toString();
-					Log.info("messageText==" + messageText);
-					Log.info("searchTag[0]==" + _searchTag[0]);
-					Log.info("searchTag[1]==" + _searchTag[1]);
-					return true;
+				for (Message message : messages) {
+					if (message.subject.contains(expEmailSubject)) {
+						Log.info("Pass:Email Received from: " + message.from.emailAddress);
+						Log.info("Email Received Date:" + message.receivedDateTime
+								.format(DateTimeFormatter.ofPattern("MM/dd/yyyy 'at' hh:mm")));
+						Log.info("Email Subject: " + message.subject);
+						String messageText = message.body.content;
+						Log.info("messageText==" + messageText);
+						Log.info("searchTag[0]==" + _searchTag[0]);
+						Log.info("searchTag[1]==" + _searchTag[1]);
+						return true;
+					}
 				}
-				if (iterationCount < 12)
+				if (iterationCount < 30)
 					CoreFunctions.waitHandler(10);
 				else
 					break;
 			}
 			Reporter.addStepLog(MessageFormat.format(CoreConstants.VEIRFY_CONTIRBUTOR_NOT_RECEIVED_NOTIFICATION,
 					CoreConstants.FAIL));
-			Assert.fail("Unable to find email within 3 minute");
+			Assert.fail("No Email Received within " + (iterationCount * 10) / 60 + " minutes with subject:"
+					+ expEmailSubject);
 		} catch (Exception e) {
 			Assert.fail(CoreConstants.ERROR + e.getMessage());
 		}
-
 		return false;
 	}
 
 	public static String getLatestEmailSubject(String host, final String userName, final String password) {
 		try {
-			ExchangeService service = createConnection(userName, password);
-			Log.info("Login Successful...");
-			microsoft.exchange.webservices.data.core.service.folder.Folder inbox = microsoft.exchange.webservices.data.core.service.folder.Folder
-					.bind(service, WellKnownFolderName.Inbox);
-			ItemView view = new ItemView(1);
-			ArrayList<Item> items = service.findItems(inbox.getId(), view).getItems();
-			service.loadPropertiesForItems(items, PropertySet.FirstClassProperties);
-			EmailMessage emailMessage = (EmailMessage) items.get(0);
-			return emailMessage.getSubject();
+			List<Message> messages = getRecentMessagesRecieved(userName, password);
+			for (Message message : messages) {
+				return message.subject;
+			}
 		} catch (Exception e) {
 			Assert.fail(CoreConstants.ERROR + e.getMessage());
 		}
@@ -216,57 +191,74 @@ public class EmailUtil {
 	}
 
 	public static String verifyEmailPresentAndReturnResult(String host, final String userName, final String password,
-			String expFrom, String expEmailSubject, String infoToExtractFromMail) throws Exception {
+			String expFrom, String expEmailSubject, String infoToExtractFromMail) {
 		String searchText = "";
 		int iterationCount = 0;
+		Log.info("expected email subject: " + expEmailSubject);
 		_searchTag = getStartEndTagFromEmail(infoToExtractFromMail);
 		try {
-			ExchangeService service = createConnection(userName, password);
-			Log.info("Login Successful...");
+			CoreFunctions.waitHandler(10);
+			List<Message> messages = getRecentMessagesRecieved(userName, password);
 			while (true) {
-				microsoft.exchange.webservices.data.core.service.folder.Folder inbox = microsoft.exchange.webservices.data.core.service.folder.Folder
-						.bind(service, WellKnownFolderName.Inbox);
-				// set number of items you want to retrieve
-				ItemView view = new ItemView(10);
-				List<SearchFilter> searchFilterCollection = new ArrayList<>();
-				// flag to pick only email which contains attachments
-				searchFilterCollection.add(new SearchFilter.ContainsSubstring(ItemSchema.Subject, expEmailSubject));
-				SearchFilter finalSearchFilter = new SearchFilter.SearchFilterCollection(LogicalOperator.And,
-						searchFilterCollection);
 				iterationCount++;
-				ArrayList<Item> items = service.findItems(inbox.getId(), finalSearchFilter, view).getItems();
-				if (items.size() > 0) {
-					service.loadPropertiesForItems(items, PropertySet.FirstClassProperties);
-					EmailMessage emailMessage = (EmailMessage) items.get(0);
-					Log.info("Pass:Email Received from: " + emailMessage.getFrom().toString());
-					Log.info("Email Received Date:" + emailMessage.getDateTimeReceived());
-					Log.info("Email Subject: " + emailMessage.getSubject());
-					String messageText = emailMessage.getBody().toString();
-					Log.info("messageText==" + messageText);
-					Log.info("searchTag[0]==" + _searchTag[0]);
-					Log.info("searchTag[1]==" + _searchTag[1]);
-					searchText = StringUtils.substringBetween(messageText, _searchTag[0], _searchTag[1]);
-					return searchText;
+				for (Message message : messages) {
+					if (message.subject.contains(expEmailSubject)) {
+						Log.info("Pass:Email Received from: " + message.from.emailAddress);
+						Log.info("Email Received Date:" + message.receivedDateTime
+								.format(DateTimeFormatter.ofPattern("MM/dd/yyyy 'at' hh:mm")));
+						Log.info("Email Subject: " + message.subject);
+						String messageText = message.body.content;
+						Log.info("messageText==" + messageText);
+						Log.info("searchTag[0]==" + _searchTag[0]);
+						Log.info("searchTag[1]==" + _searchTag[1]);
+						searchText = StringUtils.substringBetween(messageText, _searchTag[0], _searchTag[1]);
+						Log.info("Searched Email Result :"+searchText);
+						return searchText;
+					}
 				}
-				if (iterationCount < 4)
+				if (iterationCount < 30)
 					CoreFunctions.waitHandler(10);
 				else
 					break;
 			}
-			Log.info("No Email Received within 1 minutes From:" + expFrom + " with subject:" + expEmailSubject);
 			return CoreConstants.EMAIL_NOT_FOUND;
-		} catch (Exception e) {
+		} catch (
+
+		Exception e) {
 			Assert.fail(CoreConstants.ERROR + e.getMessage());
 		}
 		return searchText;
 	}
 
-	private static ExchangeService createConnection(String email, String password) throws Exception {
-		ExchangeService service = new ExchangeService(ExchangeVersion.Exchange2010_SP2);
-		ExchangeCredentials credentials = new WebCredentials(email, password);
-		service.setUrl(new URI("https://outlook.office365.com/EWS/Exchange.asmx"));
-		service.setCredentials(credentials);
-		return service;
+	private static List<Message> getRecentMessagesRecieved(String email, String password) {
+		try {
+			final UsernamePasswordCredential usernamePasswordCredential = new UsernamePasswordCredentialBuilder()
+					.clientId("724f1c20-511f-4f8f-a901-56daf6e0b4c5").username("airesautomation@aires.com")
+					.tenantId("4a76d546-bb2b-44d3-94e6-23c28e086165").password("Aut0Mati0nT34mAug").build();
+
+			final TokenCredentialAuthProvider tokenCredentialAuthProvider = new TokenCredentialAuthProvider(
+					new ArrayList<String>() {
+						{
+							{
+								add("user.read");
+								add("openid");
+								add("profile");
+								add("offline_access");
+
+							}
+						}
+					}, usernamePasswordCredential);
+
+			GraphServiceClient<Request> graphClient = GraphServiceClient.builder()
+					.authenticationProvider(tokenCredentialAuthProvider).buildClient();
+
+			MessageCollectionPage user = graphClient.me().messages().buildRequest().get();
+
+			return user.getCurrentPage();
+		} catch (Exception e) {
+			Assert.fail(CoreConstants.ERROR + e.getMessage());
+		}
+		return null;
 	}
 
 }

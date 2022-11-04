@@ -1004,14 +1004,14 @@ public class CF_MX_Client_Steps {
 						MobilityXConstants.FAILED_TO_VERIFY_AVAILABLE_POINTS_ON_NEXT_BUTTON_ON_BENEFIT_SELECTION_TOOL_PAGE,
 						CoreConstants.FAIL));
 		Assert.assertTrue(
-				mxClientBenefitSelectionToolPage.verifyElementPresentOnPage(MobilityXConstants.EDIT_BENEFIT_SELECTION),
+				mxClientBenefitSelectionToolPage.verifyElementPresentOnPage(MobilityXConstants.EDIT_SUBMITTED_BENEFITS),
 				MessageFormat.format(MobilityXConstants.FAILED_TO_VERIFY_ELEMENT_PRESENT_ON_BENEFIT_SELECTION_TOOL_PAGE,
-						CoreConstants.FAIL, MobilityXConstants.EDIT_BENEFIT_SELECTION));
+						CoreConstants.FAIL, MobilityXConstants.EDIT_SUBMITTED_BENEFITS));
 	}
 
-	@Given("^he has clicked on 'Edit Benefit Selection' button to navigate to 'Benefits Bundle' page$")
-	public void he_has_clicked_on_Edit_Benefit_Selection_button_to_navigate_to_Benefits_Bundle_page() throws Throwable {
-		mxClientBenefitSelectionToolPage.clickElementOfPage(MobilityXConstants.EDIT_BENEFIT_SELECTION);
+	@Given("^he has clicked on 'Edit Submitted Benefits' button to navigate to 'Benefits Bundle' page$")
+	public void he_has_clicked_on_Edit_Submitted_Benefits_button_to_navigate_to_Benefits_Bundle_page() throws Throwable {
+		mxClientBenefitSelectionToolPage.clickElementOfPage(MobilityXConstants.EDIT_SUBMITTED_BENEFITS);
 		CoreConstants.TIME_BEFORE_ACTION = new Date().getTime();
 		Assert.assertTrue(mxClientBenefitsBundlePage.isBenefitsBundlePageDisplayed(), MessageFormat
 				.format(MobilityXConstants.FAILED_TO_DISPLAY_MX_CLIENT_BENEFITS_BUNDLE_PAGE, CoreConstants.FAIL));
@@ -1250,10 +1250,10 @@ public class CF_MX_Client_Steps {
 						MobilityXConstants.FAILED_TO_VERIFY_AVAILABLE_POINTS_ON_NEXT_BUTTON_ON_BENEFIT_SELECTION_TOOL_PAGE,
 						CoreConstants.FAIL));
 		Assert.assertTrue(
-				mxClientBenefitSelectionToolPage.verifyElementPresentOnPage(MobilityXConstants.EDIT_BENEFIT_SELECTION),
+				mxClientBenefitSelectionToolPage.verifyElementPresentOnPage(MobilityXConstants.EDIT_SUBMITTED_BENEFITS),
 				MessageFormat.format(MobilityXConstants.FAILED_TO_VERIFY_ELEMENT_PRESENT_ON_BENEFIT_SELECTION_TOOL_PAGE,
-						CoreConstants.FAIL, MobilityXConstants.EDIT_BENEFIT_SELECTION));
-		mxClientBenefitSelectionToolPage.clickElementOfPage(MobilityXConstants.EDIT_BENEFIT_SELECTION);
+						CoreConstants.FAIL, MobilityXConstants.EDIT_SUBMITTED_BENEFITS));
+		mxClientBenefitSelectionToolPage.clickElementOfPage(MobilityXConstants.EDIT_SUBMITTED_BENEFITS);
 		CoreConstants.TIME_BEFORE_ACTION = new Date().getTime();
 		Assert.assertTrue(mxClientBenefitsBundlePage.isBenefitsBundlePageDisplayed(), MessageFormat
 				.format(MobilityXConstants.FAILED_TO_DISPLAY_MX_CLIENT_BENEFITS_BUNDLE_PAGE, CoreConstants.FAIL));

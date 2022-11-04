@@ -68,14 +68,14 @@ public class Hooks {
 		scenarioName = scenario;
 		Reporter.assignAuthor("AIRES - Automation - By : " + System.getProperty("user.name"));
 		testContext.initializeWebManager(scenario.getName().contains("IRIS"));
-		String appName=System.getProperty("application");
-		String url=System.getProperty("testURL");
+//		String appName=System.getProperty("application");
+//		String url=System.getProperty("testURL");
 		if (scenario.getName().contains("IRIS")) {
 			testContext.getBasePage().invokeIrisApplication();
 			testContext.getBasePage().killExistingBrowsers();
 		}
 		//Commented Code is for debugging purpose in local
-		/* else if (scenario.getName().contains("PDT")) {
+		 else if (scenario.getName().contains("PDT")) {
 			Log.info(FileReaderManager.getInstance().getConfigReader().getPDTApplicationUrl());
 			testContext.getWebDriverManager().getDriver().navigate()
 					.to(FileReaderManager.getInstance().getConfigReader().getPDTApplicationUrl());
@@ -87,7 +87,7 @@ public class Hooks {
 			Log.info(FileReaderManager.getInstance().getConfigReader().getCoreFlexPolicySetupApplicationUrl());
 			testContext.getWebDriverManager().getDriver().navigate()
 					.to(FileReaderManager.getInstance().getConfigReader().getCoreFlexPolicySetupApplicationUrl());
-		}else if (scenario.getName().contains("MXTransferee")) {
+		}else if ((scenario.getName().contains("MXTransferee")) || (scenario.getName().contains("MXClient"))) {
 			Log.info(FileReaderManager.getInstance().getConfigReader().getMobilityXUrl());
 			testContext.getWebDriverManager().getDriver().navigate()
 					.to(FileReaderManager.getInstance().getConfigReader().getMobilityXUrl());
@@ -95,22 +95,22 @@ public class Hooks {
 			Log.info(FileReaderManager.getInstance().getConfigReader().getCoreFlexTransfereeSubmissionsApplicationUrl());
 			testContext.getWebDriverManager().getDriver().navigate()
 					.to(FileReaderManager.getInstance().getConfigReader().getCoreFlexTransfereeSubmissionsApplicationUrl());
-		}*/
-		
-		else if (appName.equals(CoreConstants.COREFLEX)&& scenario.getName().contains("MXTransferee")) {
-			Log.info(FileReaderManager.getInstance().getConfigReader().getApplicationUrl("MXTransferee"));
-			testContext.getWebDriverManager().getDriver().navigate()
-					.to(FileReaderManager.getInstance().getConfigReader().getApplicationUrl("MXTransferee"));
-		}	
-		else if (appName.equals(CoreConstants.COREFLEX)&& scenario.getName().contains("TransfereeSubmissions")) {
-			Log.info(FileReaderManager.getInstance().getConfigReader().getApplicationUrl("TransfereeSubmissions"));
-			testContext.getWebDriverManager().getDriver().navigate()
-					.to(FileReaderManager.getInstance().getConfigReader().getApplicationUrl("TransfereeSubmissions"));
 		}
-		else {
-			Log.info(url);
-			testContext.getWebDriverManager().getDriver().navigate().to(url);
-		}	
+		
+//		else if (appName.equals(CoreConstants.COREFLEX)&& scenario.getName().contains("MXTransferee")) {
+//			Log.info(FileReaderManager.getInstance().getConfigReader().getApplicationUrl("MXTransferee"));
+//			testContext.getWebDriverManager().getDriver().navigate()
+//					.to(FileReaderManager.getInstance().getConfigReader().getApplicationUrl("MXTransferee"));
+//		}	
+//		else if (appName.equals(CoreConstants.COREFLEX)&& scenario.getName().contains("TransfereeSubmissions")) {
+//			Log.info(FileReaderManager.getInstance().getConfigReader().getApplicationUrl("TransfereeSubmissions"));
+//			testContext.getWebDriverManager().getDriver().navigate()
+//					.to(FileReaderManager.getInstance().getConfigReader().getApplicationUrl("TransfereeSubmissions"));
+//		}
+//		else {
+//			Log.info(url);
+//			testContext.getWebDriverManager().getDriver().navigate().to(url);
+//		}	
 	}
 
 	@After(order = 2)
@@ -187,7 +187,7 @@ public class Hooks {
 	}
 
 	
-	@After(order = 1)
+//	@After(order = 1)
 	public void updateResultInTestRail(Scenario scenario) {
 		String Case_ID = BusinessFunctions.getTestRailIdAsPerApplication(System.getProperty("application"),scenario.getSourceTagNames().toString());
 		//String Case_ID = BusinessFunctions.getTestRailIdAsPerApplication("PDT",scenario.getSourceTagNames().toString());
@@ -204,7 +204,7 @@ public class Hooks {
 		if (scenario.getName().contains("IRIS")) {
 			testContext.getBasePage().cleanIrisProcesses();
 		} else {
-			testContext.getWebDriverManager().closeDriver();
+//			testContext.getWebDriverManager().closeDriver();
 		}
 		Runtime.getRuntime().gc();
 	}

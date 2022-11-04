@@ -560,7 +560,7 @@ public class MobilityXConstants {
 	public static final String RELOCATION_CASHOUT_NOTE_BEFORE_TRACING_FOR_TRANSFEREE = "Cashout benefit will be available soon. If you have any questions, please contact your Aires Representative at mxssodev5@aires.com or mxssodev5@aires.com.";
 	public static final String EXCEPTION_OCCURED_WHILE_VERIFYING_DEFAULT_AFTER_RELOCATION_CASHOUT_DETAILS_NOTE_BEFORE_TRACING_ACTUALIZATION_ON_FLEX_PLANNING_TOOL_PAGE = "{0}Exception occured while verifying default after relocation cashout note before Tracing Actualization on Flex Planning Tool page. Exception : ''{1}''.";
 	public static final String FAILED_TO_VERIFY_INITIATION_BENEFITS_SUBMISSION_EMAIL = "{0}Failed to verify Initiation Benefits Submission Email.";
-	public static final String EDIT_BENEFIT_SELECTION = "Edit Benefit Selection";
+//	public static final String EDIT_BENEFIT_SELECTION = "Edit Benefit Selection";
 	public static final String FAILED_TO_VERIFY_ELEMENT_PRESENT_ON_BENEFIT_SELECTION_TOOL_PAGE = "{0}Failed to verify ''{1}'' element present on Benefit Selection Tool page.";
 	public static final String SUCCESSFULLY_VERIFIED_ELEMENT_PRESENT_ON_BENEFIT_SELECTION_TOOL_PAGE = "{0}Successfully verified ''{1}'' element present on Benefit Selection Tool page.";
 	public static final String FAILED_TO_VERIFY_AVAILABLE_POINTS_ON_NEXT_BUTTON_ON_BENEFIT_SELECTION_TOOL_PAGE = "{0}Failed to verify Available Points on Next Button of Benefit Selection Tool page.";
@@ -739,4 +739,11 @@ public class MobilityXConstants {
 	public static final String MY_BENEFITS_BUNDLE = "My Benefits Bundle";
 	public static final String EXCEPTION_OCCURED_WHILE_CLICKING_ON_MORE_LINK_TO_EXPAND_BENEFIT_DESCRIPTION_ON_FLEX_PLANNING_TOOL_PAGE = "{0}Exception occured while clicking on More Link to expand Benefit description on Flex Planning Tool Page. Exception : ''{1}''.";
 	public static final String FLEX_CARD_PANEL = "Flex Card Panel";
+	public static final String EDIT_SUBMITTED_BENEFITS = "Edit Submitted Benefits";
+	public static final String FAILED_TO_VERIFY_ELEMENT_PRESENT_ON_FLEX_PLANNING_TOOL_PAGE = "{0}Failed to verify ''{1}'' element present on Flex Planning Tool page.";
+	public static final String SUCCESSFULLY_VERIFIED_FLEX_BENEFITS_SECTION_DISPLAYED_ON_AUTH_FORM_FOR_PERSON_RESPONSIBLE_FOR_BENEFIT_SELECTION_IN_BLUEPRINT_APPLICATION = "{0}Successfully verified Flex benefits section displayed on Authorization Form page for ''{1}''.";
+	public static final String AVAILABLE_POINTS_AFTER_CLIENT_SUBMISSION_TEXT = "Congratulations on your upcoming Mobility Journey! Your employer has submitted benefit(s) of spent_points point(s) on your behalf. Your total available point balance is available_points points.";
+	public static final String EXCEPTION_OCCURED_WHILE_VERIFYING_AVAILABLE_POINTS_MESSAGE_TEXT_ON_FLEX_PLANNING_TOOL_PAGE = "{0}Exceptiom occured while verifying available points message text on Flex Planning Tool page. Exception : ''{1}''.";
+	public static final String SUCCESSFULLY_VERIFIED_AVAILABLE_POINTS_MESSAGE_TEXT_ON_FLEX_PLANNING_TOOL_PAGE = "{0}Successfully verified Available Points Message Text - ''{1}'' on Flex Planning Tool page.";
+	
 }

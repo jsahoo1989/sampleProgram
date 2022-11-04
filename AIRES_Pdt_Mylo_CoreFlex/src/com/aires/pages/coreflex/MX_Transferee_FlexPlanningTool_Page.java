@@ -304,6 +304,10 @@ public class MX_Transferee_FlexPlanningTool_Page extends Base {
 	@FindBy(how = How.XPATH, using = "//table[contains(@id,'flexCash')]//a[not(contains(@class,'Disabled'))]/span[contains(text(),'Select This')]")
 	private WebElement _buttonEnabledSelectThisCashoutPoints;
 
+	// Edit Submitted Benefits Button
+	@FindBy(how = How.XPATH, using = "//span[contains(text(),'Edit Submitted Benefits')]")
+	private WebElement _buttonEditSubmittedBenefits;
+
 	/*********************************************************************/
 
 	CoreFlex_PolicySetupPagesData policySetupPageData = FileReaderManager.getInstance().getCoreFlexJsonReader()
@@ -363,9 +367,9 @@ public class MX_Transferee_FlexPlanningTool_Page extends Base {
 				String defaultActualRemainingPointBalance = CoreFunctions.getElementText(driver, remaining_points);
 				String defaultActualTotalPointBalance = CoreFunctions.getElementText(driver, total_points)
 						.replace("/", "").trim();
-				isDefaultPointBalanceCorrect = ((CoreFunctions
-						.getPropertyFromConfig("CF_Transferee_TotalAvailablePoints"))
-								.equals(defaultActualRemainingPointBalance))
+				isDefaultPointBalanceCorrect = ((Double
+						.parseDouble(CoreFunctions.getPropertyFromConfig("CF_Transferee_AvailablePoints"))) == (Double
+								.parseDouble(defaultActualRemainingPointBalance)))
 						&& ((CoreFunctions.getPropertyFromConfig("CF_Transferee_TotalAvailablePoints"))
 								.equals(defaultActualTotalPointBalance));
 			}
@@ -745,6 +749,32 @@ public class MX_Transferee_FlexPlanningTool_Page extends Base {
 		return CoreFunctions.getElementText(driver, _textTotalPointBalance)
 				.contains(MobilityXConstants.AVAILABLE_POINTS_TEXT.replace("available_points", format.format(
 						Double.parseDouble(CoreFunctions.getPropertyFromConfig("CF_Transferee_AvailablePoints")))));
+	}
+
+	public boolean verifyAvailablePointsMessageAfterClientSubmission() {
+		try {
+			DecimalFormat format = new DecimalFormat();
+			format.setDecimalSeparatorAlwaysShown(false);
+			CoreFunctions
+					.verifyText(CoreFunctions.getElementText(driver, _textTotalPointBalance),
+							(MobilityXConstants.AVAILABLE_POINTS_AFTER_CLIENT_SUBMISSION_TEXT
+									.replace("available_points",
+											format.format(Double.parseDouble(CoreFunctions
+													.getPropertyFromConfig("CF_Transferee_AvailablePoints"))))
+									.replace("spent_points", format.format(Double.parseDouble(
+											CoreFunctions.getPropertyFromConfig("CF_Client_TotalSelectedPoints"))))));
+			Reporter.addStepLog(MessageFormat.format(
+					MobilityXConstants.SUCCESSFULLY_VERIFIED_AVAILABLE_POINTS_MESSAGE_TEXT_ON_FLEX_PLANNING_TOOL_PAGE,
+					CoreConstants.PASS, CoreFunctions.getElementText(driver, _textTotalPointBalance)));
+			CoreFunctions.writeToPropertiesFile("CF_Transferee_TotalSelectedPoints",
+					CoreFunctions.getPropertyFromConfig("CF_Client_TotalSelectedPoints"));
+			return true;
+		} catch (Exception e) {
+			Reporter.addStepLog(MessageFormat.format(
+					MobilityXConstants.EXCEPTION_OCCURED_WHILE_VERIFYING_AVAILABLE_POINTS_MESSAGE_TEXT_ON_FLEX_PLANNING_TOOL_PAGE,
+					CoreConstants.FAIL, e.getMessage()));
+		}
+		return false;
 	}
 
 	private boolean verifyFlexPlanningToolBenefitDetails(int indexBenefit, Benefit benefit) {
@@ -1677,6 +1707,30 @@ public class MX_Transferee_FlexPlanningTool_Page extends Base {
 						CoreConstants.FAIL, e.getMessage()));
 			}
 		}
+	}
+
+	public boolean verifyElementPresentOnPage(String elementName) {
+		boolean isElementPresentOnPage = false;
+		try {
+			switch (elementName) {
+			case MobilityXConstants.EDIT_SUBMITTED_BENEFITS:
+				isElementPresentOnPage = CoreFunctions.isElementExist(driver, _buttonEditSubmittedBenefits, 2);
+				break;
+			default:
+				Assert.fail(COREFLEXConstants.INVALID_ELEMENT);
+			}
+		} catch (Exception e) {
+			Reporter.addStepLog(MessageFormat.format(
+					COREFLEXConstants.EXCEPTION_OCCURED_WHILE_VERIFYING_ELEMENT_PRESENT_ON_FLEX_PLANNING_TOOL_PAGE,
+					CoreConstants.FAIL, elementName, e.getMessage()));
+			throw new RuntimeException(e);
+		}
+		if (isElementPresentOnPage) {
+			Reporter.addStepLog(MessageFormat.format(
+					COREFLEXConstants.SUCCESSFULLY_VERIFIED_ELEMENT_PRESENT_ON_FLEX_PLANNING_TOOL_PAGE,
+					CoreConstants.PASS, elementName));
+		}
+		return isElementPresentOnPage;
 	}
 
 }

@@ -383,11 +383,23 @@ public class MX_Transferee_JourneyHomePage extends Base {
 
 	private boolean verifyPolicyPointsDetails(String actualPolicyName, String actualSpentPoints,
 			String actualTotalPoints) {
+		boolean isPolicyPointsDetailsMatched;
 
-		boolean isPolicyPointsDetailsMatched = CoreFunctions.getPropertyFromConfig("Assignment_Policy")
-				.equals(actualPolicyName) & actualSpentPoints.equals("0")
-				& actualTotalPoints.equals(CoreFunctions.getPropertyFromConfig("CF_Transferee_TotalAvailablePoints"));
-
+		if ((CoreFunctions.getPropertyFromConfig("CoreFlex_Policy_PersonResponsible")
+				.equals(COREFLEXConstants.CLIENT_AND_TRANSFEREE))
+				&& Boolean.valueOf(CoreFunctions.getPropertyFromConfig("CF_Client_BenefitSubmitted"))) {
+			isPolicyPointsDetailsMatched = CoreFunctions.getPropertyFromConfig("Assignment_Policy")
+					.equals(actualPolicyName)
+					&& (Double.parseDouble(actualSpentPoints) == Double
+							.parseDouble(CoreFunctions.getPropertyFromConfig("CF_Client_TotalSelectedPoints")))
+					&& actualTotalPoints
+							.equals(CoreFunctions.getPropertyFromConfig("CF_Transferee_TotalAvailablePoints"));
+		} else {
+			isPolicyPointsDetailsMatched = CoreFunctions.getPropertyFromConfig("Assignment_Policy")
+					.equals(actualPolicyName) && actualSpentPoints.equals("0")
+					&& actualTotalPoints
+							.equals(CoreFunctions.getPropertyFromConfig("CF_Transferee_TotalAvailablePoints"));
+		}
 		if (isPolicyPointsDetailsMatched) {
 			Reporter.addStepLog(MessageFormat.format(
 					MobilityXConstants.POLICY_AND_POINTS_DETAILS_MATCHED_ON_MOBILITY_JOURNEY_HOME_PAGE,

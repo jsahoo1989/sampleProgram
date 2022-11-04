@@ -307,9 +307,9 @@ public class MX_Client_BenefitSelectionToolPage extends Base {
 	@FindBy(how = How.CSS, using = "div[id*='secondItemDiv'] span[class='RXCFText RXGraniteGrey RXWrappedText']")
 	private WebElement _textFlexBenefitSectionText;
 
-	// Edit Benefit Selection Button
-	@FindBy(how = How.XPATH, using = "//span[contains(text(),'Edit Benefit Selection')]")
-	private WebElement _buttonEditBenefitSeletion;
+	// Edit Submitted Benefits Button
+	@FindBy(how = How.XPATH, using = "//span[contains(text(),'Edit Submitted Benefits')]")
+	private WebElement _buttonEditSubmittedBenefits;
 
 	// Cashout - After Relocation Note
 	@FindBy(how = How.CSS, using = "span[id*='note'] > span")
@@ -854,8 +854,8 @@ public class MX_Client_BenefitSelectionToolPage extends Base {
 			case MobilityXConstants.SUGGESTED_OPTIONS_LINK:
 				CoreFunctions.clickElement(driver, _link_suggestedOptions);
 				break;
-			case MobilityXConstants.EDIT_BENEFIT_SELECTION:
-				CoreFunctions.clickElement(driver, _buttonEditBenefitSeletion);
+			case MobilityXConstants.EDIT_SUBMITTED_BENEFITS:
+				CoreFunctions.clickElement(driver, _buttonEditSubmittedBenefits);
 				break;
 			case MobilityXConstants.NEXT:
 				CoreFunctions.clickElement(driver, _btn_next);
@@ -1855,7 +1855,7 @@ public class MX_Client_BenefitSelectionToolPage extends Base {
 	public boolean selectBenefitsAndProceedToSaveAndExit() {
 		boolean benefitsSelectedSuccessfully = false;
 		totalSelectedPoints = 0;
-		MX_Client_BenefitsBundlePage.benefitDeletedFlag = false;
+//		MX_Client_BenefitsBundlePage.benefitDeletedFlag = false;
 		try {
 			benefitsSelectedSuccessfully = selectFlexBenefitsonBST() && validatePointsAndClickOnNext();
 		} catch (Exception e) {
@@ -1892,8 +1892,8 @@ public class MX_Client_BenefitSelectionToolPage extends Base {
 		boolean isElementPresentOnPage = false;
 		try {
 			switch (elementName) {
-			case MobilityXConstants.EDIT_BENEFIT_SELECTION:
-				isElementPresentOnPage = CoreFunctions.isElementExist(driver, _buttonEditBenefitSeletion, 2);
+			case MobilityXConstants.EDIT_SUBMITTED_BENEFITS:
+				isElementPresentOnPage = CoreFunctions.isElementExist(driver, _buttonEditSubmittedBenefits, 2);
 				break;
 			default:
 				Assert.fail(COREFLEXConstants.INVALID_ELEMENT);

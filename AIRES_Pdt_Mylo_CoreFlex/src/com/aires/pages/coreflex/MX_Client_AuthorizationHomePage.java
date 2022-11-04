@@ -889,8 +889,7 @@ public class MX_Client_AuthorizationHomePage extends Base {
 
 	public boolean verifyAuthFormChangesAutoSaved() {
 		try {
-			CoreFunctions.explicitWaitTillElementInVisibility(driver, _txtAuthFormNotSaved);
-			return CoreFunctions.isElementExist(driver, _txtAuthFormSaved, 5);
+			return CoreFunctions.isElementExist(driver, _txtAuthFormSaved, 30);
 		} catch (Exception e) {
 			Reporter.addStepLog(
 					MessageFormat.format(MobilityXConstants.EXCEPTION_OCCURED_WHILE_VALIDATING_AUTO_SAVE_AUTH_FORM,
@@ -1429,10 +1428,12 @@ public class MX_Client_AuthorizationHomePage extends Base {
 
 	public boolean verifyInitiationBenefitsSubmissionEmail() {
 		try {
-			String expEmailSubject = "New relocation authorization from "
-					+ CoreFunctions.getPropertyFromConfig("Policy_ClientName") + " for "
-					+ CoreFunctions.getPropertyFromConfig(MobilityXConstants.LAST_NAME_TEXT) + ", "
-					+ CoreFunctions.getPropertyFromConfig(MobilityXConstants.FIRST_NAME_TEXT);
+//			String expEmailSubject = "New relocation authorization from "
+//					+ CoreFunctions.getPropertyFromConfig("Policy_ClientName") + " for "
+//					+ CoreFunctions.getPropertyFromConfig(MobilityXConstants.LAST_NAME_TEXT) + ", "
+//					+ CoreFunctions.getPropertyFromConfig(MobilityXConstants.FIRST_NAME_TEXT);
+			String expEmailSubject = "New Authorization from "
+					+ CoreFunctions.getPropertyFromConfig("Policy_ClientName");
 			return verifyFileIDPresent(expEmailSubject)
 					&& verifyBenefitPointsInInitiationSubmittedEmail(expEmailSubject)
 					&& verifyAuthFormSubmissionStatus(expEmailSubject);
@@ -1649,7 +1650,7 @@ public class MX_Client_AuthorizationHomePage extends Base {
 	}
 
 	public boolean verifyFlexBenefitsSectionPostBenefitSelection(String personResponsible) {
-		boolean iFlexBenefitsSectionVerified = false;
+		boolean iFlexBenefitsSectionVerified = false, flag = false;
 		try {
 			switch (personResponsible) {
 			case COREFLEXConstants.CLIENT_INITIATOR:
@@ -1661,6 +1662,7 @@ public class MX_Client_AuthorizationHomePage extends Base {
 							CoreFunctions.getPropertyFromConfig("CoreFlex_Policy_PersonResponsible")));
 					iFlexBenefitsSectionVerified = verifyFlexBenefitsSectionContents()
 							&& verifySelectedCoreFlexBenefits();
+					flag = true;
 				} else {
 					Reporter.addStepLog(MessageFormat.format(
 							MobilityXConstants.FLEX_BENEFITS_SECTION_NOT_DISPLAYED_ON_AUTH_FORM_FOR_PERSON_RESPONSIBLE_FOR_BENEFIT_SELECTION_IN_BLUEPRINT_APPLICATION,
@@ -1690,6 +1692,12 @@ public class MX_Client_AuthorizationHomePage extends Base {
 					MobilityXConstants.EXCEPTION_OCCURED_WHILE_VALIDATING_FLEX_BENEFIT_SECTION_ON_AUTH_FORM,
 					CoreConstants.FAIL, e.getMessage()));
 			Log.info(e.getMessage());
+		}
+		if (iFlexBenefitsSectionVerified && flag) {
+			Reporter.addStepLog(MessageFormat.format(
+					MobilityXConstants.SUCCESSFULLY_VERIFIED_FLEX_BENEFITS_SECTION_DISPLAYED_ON_AUTH_FORM_FOR_PERSON_RESPONSIBLE_FOR_BENEFIT_SELECTION_IN_BLUEPRINT_APPLICATION,
+					CoreConstants.FAIL, CoreFunctions.getPropertyFromConfig("CoreFlex_Policy_PersonResponsible")));
+			CoreFunctions.writeToPropertiesFile("CF_Client_BenefitSubmitted", "true");
 		}
 		return iFlexBenefitsSectionVerified;
 	}

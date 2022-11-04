@@ -860,4 +860,6 @@ public class COREFLEXConstants {
 	public static final String EXCEPTION_OCCURED_WHILE_FILLING_SUB_BENEFIT_FORM = "{0} Exception occured while filling ''{2}'' SubBenefit form. Exception : ''{1}''.";
 	public static final String MEET_AND_GREET = "Meet and Greet";
 	public static final String EDUCATION_ASSISTANCE = "Education Assistance";
+	public static final String EXCEPTION_OCCURED_WHILE_VERIFYING_ELEMENT_PRESENT_ON_FLEX_PLANNING_TOOL_PAGE = "{0}Exception occured while verifying ''{1}'' element present on Flex Planning Tool page. Exception : ''{2}''.";
+	public static final String SUCCESSFULLY_VERIFIED_ELEMENT_PRESENT_ON_FLEX_PLANNING_TOOL_PAGE = "{0}Successfully verified ''{1}'' element present on Flex Planning Tool page.";
 }

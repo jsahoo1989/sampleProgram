@@ -494,23 +494,7 @@ public class CoreFlex_PolicyBenefitsCategoriesPage extends Base {
 		try {
 			for (Benefit benefit : getBenefits(benefitType, policyRequiredFor)) {
 				clickLeftNavigationMenuOfPage(benefit.getBenefitType());
-				switch (benefit.getBenefitType()) {
-				case COREFLEXConstants.DUPLICATE_HOUSING:
-					System.out.println(pageObjectManager_CoreFlex.getPageObjects().get(benefit.getBenefitType()));
-					pageObjectManager_CoreFlex.getPageObjects().get(benefit.getBenefitType())
-							.selectAndFillBenefitsAndSubBenefitDetails(benefitType, benefit.getSubBenefits(),
-									benefit.getMultipleBenefitSelection(), benefit.getPoints(),
-									benefit.getBenefitDisplayName(), benefit.getBenefitAmount(),
-									benefit.getBenefitDesc(), benefit.getPayments());
-					break;
-				case COREFLEXConstants.LUMP_SUM:
-					pageObjectManager_CoreFlex.getPageObjects().get(benefit.getBenefitType())
-							.selectAndFillBenefitsAndSubBenefitDetails(benefitType, benefit.getSubBenefits(),
-									benefit.getMultipleBenefitSelection(), benefit.getPoints(),
-									benefit.getBenefitDisplayName(), benefit.getBenefitAmount(),
-									benefit.getBenefitDesc(), benefit.getPayments());
-					break;
-				case COREFLEXConstants.OTHER_HOUSING_BENEFIT:
+				if (benefit.getBenefitType().equals(COREFLEXConstants.OTHER_HOUSING_BENEFIT)) {
 					((CoreFlex_OtherHousing_BenefitsPage) pageObjectManager_CoreFlex.getPageObjects()
 							.get(benefit.getBenefitType())).verifyFieldTextUpdates();
 					((CoreFlex_OtherHousing_BenefitsPage) pageObjectManager_CoreFlex.getPageObjects()
@@ -519,18 +503,22 @@ public class CoreFlex_PolicyBenefitsCategoriesPage extends Base {
 									benefit.getMultipleBenefitSelection(), benefit.getBenefitAmount(),
 									benefit.getBenefitDesc(), benefit.getComment(), benefit.getGrossUp(),
 									benefit.getReimbursedBy(), benefit.getPayments());
-					break;
-				case COREFLEXConstants.LANGUAGE_TRAINING:
+					isFlexBenefitSuccessfullySelectedAndFilled = true;
+				} else if (benefit.getAiresManagedService().equals(COREFLEXConstants.YES)) {
 					pageObjectManager_CoreFlex.getPageObjects().get(benefit.getBenefitType())
 							.selectAndFillBenefitsAndSubBenefitDetails(benefitType, benefit.getSubBenefits(),
 									benefit.getMultipleBenefitSelection(), benefit.getPoints(),
 									benefit.getBenefitDisplayName(), benefit.getBenefitAmount(),
 									benefit.getBenefitDesc(), benefit.getAiresManagedService());
-					break;
-				default:
-					Assert.fail(PDTConstants.INVALID_ELEMENT);
+					isFlexBenefitSuccessfullySelectedAndFilled = true;
+				} else if (benefit.getAiresManagedService().equals(COREFLEXConstants.NO)) {
+					pageObjectManager_CoreFlex.getPageObjects().get(benefit.getBenefitType())
+							.selectAndFillBenefitsAndSubBenefitDetails(benefitType, benefit.getSubBenefits(),
+									benefit.getMultipleBenefitSelection(), benefit.getPoints(),
+									benefit.getBenefitDisplayName(), benefit.getBenefitAmount(),
+									benefit.getBenefitDesc(), benefit.getPayments());
+					isFlexBenefitSuccessfullySelectedAndFilled = true;
 				}
-				isFlexBenefitSuccessfullySelectedAndFilled = true;
 			}
 
 		} catch (Exception e) {

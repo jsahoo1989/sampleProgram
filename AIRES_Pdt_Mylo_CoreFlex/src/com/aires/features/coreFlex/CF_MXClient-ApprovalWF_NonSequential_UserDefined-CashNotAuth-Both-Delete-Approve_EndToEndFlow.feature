@@ -65,8 +65,8 @@ Feature: Validate the MXClient Auth Form NonSequential-ApprovalWF and CoreFlex E
     And he has clicked 'Transferee Name' from 'All Initiations' List on 'View all initiation' page
     And he has navigated to 'Benefit Selection Tool' page after clicking on 'Manage Benefit Selection' button
     And he has verified following details on 'Benefit Selection Tool' page post Authorization form submission
-      | Available Point Balance | Edit Benefit Selection |
-    And he has clicked on 'Edit Benefit Selection' button to navigate to 'Benefits Bundle' page
+      | Available Point Balance | Edit Submitted Benefits |
+    And he has clicked on 'Edit Submitted Benefits' button to navigate to 'Benefits Bundle' page
     And he has verified submitted 'Core_Flex Benefit' details displayed under 'Submitted Benefits' section of 'Benefits Bundle' page
     And he has 'Deleted' submitted Benefit on Benefits Bundle page and confirmed 'Remove Benefit Selection' dialog by entering username and clicking on "Yes-request to delete this benefit"
     And he has verified 'Status' of the deleted benefit displayed as "Delete Request Pending" under 'Submitted Benefits' section of 'Benefits Bundle' page

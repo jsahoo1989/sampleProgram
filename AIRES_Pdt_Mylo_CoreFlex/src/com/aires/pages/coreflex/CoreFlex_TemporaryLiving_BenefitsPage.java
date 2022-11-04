@@ -167,16 +167,28 @@ public class CoreFlex_TemporaryLiving_BenefitsPage extends BenefitPage {
 	private WebElement _inputReimbursedBy;
 
 	// Max. Amount Dropdown
-	@FindBy(how = How.XPATH, using = "//div[@class='collapse show']//ng-select[@formcontrolname='maxAmountPerNightCode']//div[@role='option']")
+	@FindBy(how = How.CSS, using = "div[class='collapse show'] ng-select[formcontrolname='maxAmountPerNightCode'] div[role='option']")
 	private List<WebElement> _selectMaxAmountList;
 
 	// Max. Amount Select Field
-	@FindBy(how = How.XPATH, using = "//div[@class='collapse show']//ng-select[@formcontrolname='maxAmountPerNightCode']")
+	@FindBy(how = How.CSS, using = "div[class='collapse show'] ng-select[formcontrolname='maxAmountPerNightCode']")
 	private WebElement _selectMaxAmount;
 
 	// Max. Amount Select Field
 	@FindBy(how = How.CSS, using = "div[class='collapse show'] ng-select[formcontrolname='maxAmountPerNightCode'] span[class*='ng-value-label']")
 	private WebElement _selectMaxAmountSelectedValue;
+
+	// Max. Amount Dropdown
+	@FindBy(how = How.CSS, using = "div[class='collapse show'] ng-select[formcontrolname='maxAmountCode'] div[role='option']")
+	private List<WebElement> _selectMaxAmountMealsList;
+
+	// Max. Amount Select Field
+	@FindBy(how = How.CSS, using = "div[class='collapse show'] ng-select[formcontrolname='maxAmountCode']")
+	private WebElement _selectMaxAmountMeals;
+
+	// Max. Amount Select Field
+	@FindBy(how = How.CSS, using = "div[class='collapse show'] ng-select[formcontrolname='maxAmountCode'] span[class*='ng-value-label']")
+	private WebElement _selectMaxAmountSelectedValueMeals;
 
 	// Aires Managed Service Radio Button
 	@FindBy(how = How.CSS, using = "div[class*='form-check-radio'] > label[class*='form-check']")
@@ -236,16 +248,16 @@ public class CoreFlex_TemporaryLiving_BenefitsPage extends BenefitPage {
 
 	@FindBy(how = How.XPATH, using = "//span[contains(text(),'Flex Benefits')]/ancestor::div[contains(@id,'secondItemDiv')]//div[contains(@class,'RXCFServicesMonitoringBorderPanel')]")
 	private List<WebElement> flexCardPanelList;
-	
+
 	@FindBy(how = How.XPATH, using = "//span[contains(text(),'Core Benefits')]/ancestor::div[contains(@id,'firstItemDiv')]//div[contains(@class,'RXCFServicesMonitoringBorderPanel')]")
 	private List<WebElement> coreCardPanelList;
-	
+
 	@FindBy(how = How.XPATH, using = "//span[contains(text(),'Core Benefits')]/ancestor::div[contains(@id,'firstItemDiv')]//table[contains(@class,'RXRightIconPanel')]//span[contains(text(),'Starting Soon')]")
 	private WebElement coreCardStartingSoonStatus;
-	
+
 	private By coreCardMoveOutStatus = By.xpath(
 			".//span[contains(@class,'ServicesSuccessIcon ')]/ancestor::div[contains(@class,'ServicesTrain')]//span[contains(text(),'Move out')]");
-	
+
 	private By coreCardMoveInStatus = By
 			.xpath(".//span[contains(@class,'RXSmallerLink RXBold')][contains(text(),'Move In')]");
 
@@ -505,8 +517,8 @@ public class CoreFlex_TemporaryLiving_BenefitsPage extends BenefitPage {
 		CoreFunctions.clearAndSetText(driver, _inputDurationDays, housingBenefitData.temporaryLivingMeals.duration);
 		CoreFunctions.selectItemInListByText(driver, _radioBtnCandidateSelection,
 				housingBenefitData.temporaryLivingMeals.type, true);
-		CoreFunctions.clickElement(driver, _selectMaxAmount);
-		CoreFunctions.selectItemInListByText(driver, _selectMaxAmountList,
+		CoreFunctions.clickElement(driver, _selectMaxAmountMeals);
+		CoreFunctions.selectItemInListByText(driver, _selectMaxAmountMealsList,
 				housingBenefitData.temporaryLivingMeals.maxAmount, true);
 		CoreFunctions.selectItemInListByText(driver, _radioBtnGrossUp, housingBenefitData.temporaryLivingMeals.grossUp,
 				true);
@@ -845,7 +857,7 @@ public class CoreFlex_TemporaryLiving_BenefitsPage extends BenefitPage {
 					housingBenefitData.temporaryLivingMeals.duration, COREFLEXConstants.DURATION_DAYS);
 			CoreFunctions.verifyRadioButtonSelection(driver, _radioMealsTypeLabelList, _radioMealsTypeButtonList,
 					housingBenefitData.temporaryLivingMeals.type, COREFLEXConstants.MEAL_TYPE);
-			CoreFunctions.verifyText(driver, _selectMaxAmountSelectedValue,
+			CoreFunctions.verifyText(driver, _selectMaxAmountSelectedValueMeals,
 					housingBenefitData.temporaryLivingMeals.maxAmount, COREFLEXConstants.MAX_AMOUNT);
 			CoreFunctions.verifyRadioButtonSelection(driver, _radioGrossUpLabelList, _radioGrossUpButtonList,
 					housingBenefitData.temporaryLivingMeals.grossUp, COREFLEXConstants.GROSS_UP);
@@ -892,12 +904,12 @@ public class CoreFlex_TemporaryLiving_BenefitsPage extends BenefitPage {
 	public boolean verifyCoreBenefitCardStatusAfterInitialActualization(int index, String expectedEstimatedDate) {
 		return (CoreFunctions.isElementExist(driver,
 				CoreFunctions.findSubElement(coreCardPanelList.get(index), coreCardMoveInStatus), 3)
-				&& (CoreFunctions.getElementText(driver,
-						CoreFunctions.findSubElement(coreCardPanelList.get(index),
-								moveInEstimatedDate))
+				&& (CoreFunctions
+						.getElementText(driver,
+								CoreFunctions.findSubElement(coreCardPanelList.get(index), moveInEstimatedDate))
 						.equals(expectedEstimatedDate))
-				&& (!CoreFunctions.isElementExist(driver, CoreFunctions.findSubElement(
-						coreCardPanelList.get(index), coreCardStartingSoonStatusBy), 3)));
+				&& (!CoreFunctions.isElementExist(driver,
+						CoreFunctions.findSubElement(coreCardPanelList.get(index), coreCardStartingSoonStatusBy), 3)));
 	}
 
 	@Override

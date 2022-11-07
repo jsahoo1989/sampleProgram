@@ -1,20 +1,20 @@
-Feature: Validate End-to-End Business workflow of BluePrint CF Transferee-CashoutNotAuthorized Policy Setup with Versioning & Cloning, Transferee Mobility Journey and Transferee Submissions DenyAll Operation
+Feature: Validate MXTransferee Workflow and MJ Cards(Submitted,StartingSoon,InProgress,Complete Status) for Transferee-CashoutNotAuthorized selection, Versioning & CloningToSameClient, Transferee Mobility Journey and Transferee Submissions DenyAll Operation
 
-  @Coreflex:218310 @CF_End-To-End_MasterScript @CF_Master_CashNotAuthDeny @CF_Master_CashNotAuthDeny_PolicySetup 
+  @Coreflex:218310 @CF_End-To-End_MasterScript @CF_Master_CashNotAuthDeny @CF_Master_CashNotAuthDeny_PolicySetup
   Scenario: CoreFlex - Validating policy status is updated to 'Active' on completion of Approval WorkFlow for Transferee-CashoutNotAuthorized MasterScript Policy Setup
     Given he has setup a new Points Based CoreFlex Policy with following selection in Blueprint application
       | Person Responsible For Benefit Selection | Flex Setup Type | Cashout Availability   | BenefitType | PolicyRequiredFor |
-      | Transferee                               | Static/Fixed    | Cashout Not Authorized | Both        | All Benefits      |
+      | Transferee                               | Static/Fixed    | Cashout Not Authorized | Both        | Client            |
     And he has clicked on "Submit" button to submit "V1" policy verison on "Custom Bundles" page
     And he has clicked on "Approve Policy" button to approve "V1" policy verison on "Custom Bundles" page
-    And he has selected following options on 'Approval this Policy' dialog of "V1" Policy
+    And he has filled 'Description' after selecting following option on 'Approval this Policy' dialog of "V1" Policy
       | Associate this policy with a NEW authorization in IRIS? |
       | Effective from booking date                             |
     When he clicks on "Approve" button to acknowledge 'Approve this Policy' dialog
     Then Policy Status and Version should be displayed as "Active" and "V1" respectively on "View/Edit Policy Forms" page
 
-  @CF_End-To-End_MasterScript @CF_Master_CashNotAuthDeny @CF_Master_CashNotAuthDeny_MXPolicyVerification 
-  Scenario: MXTransferee - Validating association of Transferee with the Active BluePrint Version1 Policy
+  @Coreflex:218322 @CF_End-To-End_MasterScript @CF_Master_CashNotAuthDeny @CF_Master_CashNotAuthDeny_MXPolicyVerification
+  Scenario: MXTransferee - Validating Policy Benefit_Points Details in MXTransferee application after associating Transferee with the Active BluePrint Version1 Policy
     Given he has logged into 'MobilityX' application after creating a new 'Transferee' through IRIS application for policy setup in 'Policy Digitization Tool'
     And he has validated 'Assignment-Policy' details after selecting below option displayed on 'Welcome' dialog
       | WelcomeDialogSelection               |
@@ -23,8 +23,8 @@ Feature: Validate End-to-End Business workflow of BluePrint CF Transferee-Cashou
     Then benefits selected on Active BluePrint "Version1" Policy should be displayed on "FleX Planning Tool" page
     And custom bundle created in Active BluePrint "Version1" Policy should be displayed on "Suggested Bundles" page
 
-  @CF_End-To-End_MasterScript @CF_Master_CashNotAuthDeny @CF_Master_CashNotAuthDeny_CreatingNewVersion 
-  Scenario: CoreFlex - Validating Status & Version of New Policy version created from ‘Active’ points based CoreFlex policy that has one or more assignments/files
+  @Coreflex:218323 @CF_End-To-End_MasterScript @CF_Master_CashNotAuthDeny @CF_Master_CashNotAuthDeny_CreatingNewVersion
+  Scenario: CoreFlex - Validating Assignment History & Status_Version of New Policy version created from ‘Active’ points based CoreFlex policy that has one or more assignments/files
     Given he has searched for "Active" points based CoreFlex policy that has one or more assignments/files on "View/Edit Policy Forms" page
     And he has verified following 'Assignment Details' after clicking on "Assignment History" icon of the searched "Active" points based CoreFlex policy
       | Assignment ID | Transferee Name | Assignment Status | Booked Date | Origin Country | Destination Country | MSPEC Name | PPC Name |
@@ -35,7 +35,7 @@ Feature: Validate End-to-End Business workflow of BluePrint CF Transferee-Cashou
     Then user should be navigated to "General Information" page of 'New Version' policy in 'Editable' mode having Policy Status displayed as "Draft"
     And 'Points Based Flex Policy' field should be disabled with default value as "Yes"
 
-  @CF_End-To-End_MasterScript @CF_Master_CashNotAuthDeny @CF_Master_CashNotAuthDeny_BluePrintNewVersionPolicyBenefitSelection 
+  @Coreflex:218324 @CF_End-To-End_MasterScript @CF_Master_CashNotAuthDeny @CF_Master_CashNotAuthDeny_BluePrintNewVersionPolicyBenefitSelection
   Scenario: CoreFlex - Validating selected Benefits & Custom Bundles of New Policy version created from ‘Active’ points based CoreFlex policy that has one or more assignments/files
     Given he has searched for "Active" points based CoreFlex policy that has one or more assignments/files on "View/Edit Policy Forms" page
     And he has verified 'Enabled/Disabled' status of searched 'Points Based CoreFlex Policy' Icons - "Post" Versioning on "View/Edit Policy Forms" page
@@ -48,14 +48,14 @@ Feature: Validate End-to-End Business workflow of BluePrint CF Transferee-Cashou
     And he has verified 'CustomBundles' and 'Transferee Preview' details of "V2" - "Draft" version Policy matches with "V1" - "Active" version Policy
     And he has acknowledged 'Submit Success' dialog after clicking on "Submit" button on "Custom Bundles" page
     And he has clicked on "Approve Policy" button to approve "V2" policy verison on "Custom Bundles" page
-    And he has selected following options on 'Approval this Policy' dialog of "V2" Policy
+    And he has filled 'Description' after selecting following option on 'Approval this Policy' dialog of "V2" Policy
       | Associate this policy with a NEW authorization in IRIS? |
       | Effective from booking date                             |
     When he clicks on "Approve" button to acknowledge 'Approve this Policy' dialog
     Then Policy Status and Version should be displayed as "Active" and "V2" respectively on "View/Edit Policy Forms" page
     And Policy Status of Version "V1" policy should be displayed as "Legacy" on "View/Edit Policy Forms" page
 
-  @CF_End-To-End_MasterScript @CF_Master_CashNotAuthDeny @CF_Master_CashNotAuthDeny_CloningToSameClientPolicy
+  @Coreflex:218325 @CF_End-To-End_MasterScript @CF_Master_CashNotAuthDeny @CF_Master_CashNotAuthDeny_CloningToSameClientPolicy
   Scenario Outline: CoreFlex - Validating Cloned Policy contents for same Client reference selection and Policy with Submit/Active/Legacy status
     Given he has logged into 'BluePrint' application as 'CSM - SSO' user
     And he has clicked on 'Clone Policy' icon after searching for 'Points Based CoreFlex Policy' with Policy Status as "<PolicyStatus>"
@@ -70,8 +70,8 @@ Feature: Validate End-to-End Business workflow of BluePrint CF Transferee-Cashou
       | PolicyStatus |
       | Legacy       |
 
-  @CF_End-To-End_MasterScript @CF_Master_CashNotAuthDeny @CF_Master_CashNotAuthDeny_MXTransfereeFlow 
-  Scenario: MXTransferee - Submitting Flex benefits available in configured policy and Tracking Available_Used Benefits Points Post Delete Operation
+  @Coreflex:218326 @CF_End-To-End_MasterScript @CF_Master_CashNotAuthDeny @CF_Master_CashNotAuthDeny_MXTransfereeFlow
+  Scenario: MXTransferee - Submitting Flex benefits available in configured policy and Validating Available_Used Benefits Points Post Delete Operation
     Given he has logged into 'MobilityX' application after creating a new 'Transferee' through IRIS application for policy setup in 'Policy Digitization Tool'
     And he has validated 'Assignment-Policy' details after selecting below option displayed on 'Welcome' dialog
       | WelcomeDialogSelection               |
@@ -91,8 +91,8 @@ Feature: Validate End-to-End Business workflow of BluePrint CF Transferee-Cashou
     When he 'Delete' submitted Benefits and confirms 'Remove Benefit Selection' dialog by entering username and clicking on "Yes-request to delete this benefit"
     Then 'Status' of the deleted benefit should be displayed as "Delete Request Pending" under 'Submitted Benefits' section of 'My Benefit Bundle' page
 
-  @CF_End-To-End_MasterScript @CF_Master_CashNotAuthDeny @CF_Master_CashNotAuthDeny_MSPEC_PPC_Flow @Test56734
-  Scenario: TransfereeSubmissions - Verifying DenyAll Delete request for submissions made by Transferee for the Client assigned to PPC User
+  @Coreflex:218327 @CF_End-To-End_MasterScript @CF_Master_CashNotAuthDeny @CF_Master_CashNotAuthDeny_MSPEC_PPC_Flow
+  Scenario: TransfereeSubmissions - Verifying Benefit_Points Details in TransfereeSubmissions & MobilityX application post Deny All Delete request selection by MSPEC/PPC User
     Given he has logged into 'Transferee Submissions' application as a "MSPEC/PPC" user
     And he has navigated to "Transferee Submissions Dashboard" page having record of Bundle submitted by the transferee
     And he has clicked on "Review" button for Bundle submitted by the transferee on "Transferee Submissions Dashboard" page
@@ -103,20 +103,20 @@ Feature: Validate End-to-End Business workflow of BluePrint CF Transferee-Cashou
     And 'Delete Request Pending' benefit request status should be updated to 'Submitted' in 'Transferee Submission Details' list
     And benefit details should be updated in 'MXTransferee' application based on "Denied" 'Delete Request' on Transferee Submission
 
-  @CF_End-To-End_MasterScript @CF_Master_CashNotAuthDeny @CF_Master_CashNotAuthDeny_Shipment_MJCards_PF
-  Scenario: CoreFlex - Setting up a New CoreFlex policy in 'Policy Digitization Tool' with Both type 'Aires Managed' benefit
+  @Coreflex:218328 @CF_End-To-End_MasterScript @CF_Master_CashNotAuthDeny @CF_Master_CashNotAuthDeny_Shipment_MJCards_PF
+  Scenario: CoreFlex - Setting up a New CoreFlex policy in 'CoreFlex Blueprint Application' with Both type 'Aires Managed' benefits
     Given he has setup a new Points Based CoreFlex Policy with following selection in Blueprint application
       | Person Responsible For Benefit Selection | Flex Setup Type | Cashout Availability   | BenefitType | PolicyRequiredFor            |
       | Transferee                               | Static/Fixed    | Cashout Not Authorized | Both        | Aires Managed Benefits Cards |
     And he has clicked on "Submit" button to submit "V1" policy verison on "Custom Bundles" page
     And he has clicked on "Approve Policy" button to approve "V1" policy verison on "Custom Bundles" page
-    And he has selected following options on 'Approval this Policy' dialog of "V1" Policy
+    And he has filled 'Description' after selecting following option on 'Approval this Policy' dialog of "V1" Policy
       | Associate this policy with a NEW authorization in IRIS? |
       | Effective from booking date                             |
     When he clicks on "Approve" button to acknowledge 'Approve this Policy' dialog
     Then Policy Status and Version should be displayed as "Active" and "V1" respectively on "View/Edit Policy Forms" page
 
-  @CF_End-To-End_MasterScript @CF_Master_CashNotAuthDeny @CF_Master_CashNotAuthDeny_Shipment_MJCards_MobilityX
+  @Coreflex:218329 @CF_End-To-End_MasterScript @CF_Master_CashNotAuthDeny @CF_Master_CashNotAuthDeny_Shipment_MJCards_MobilityX
   Scenario: MXTransferee - Verifying Flex_Core Cards details and (Submitted,StartingSoon,InProgress,Complete) status of the submitted Aires Managed Benefit
     Given he has logged into 'MobilityX' application after creating a new 'Transferee' through IRIS application for policy setup in 'Policy Digitization Tool'
     And he has validated 'Assignment-Policy' details after selecting below option displayed on 'Welcome' dialog

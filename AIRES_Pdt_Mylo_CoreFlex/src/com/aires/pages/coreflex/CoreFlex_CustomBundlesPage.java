@@ -176,6 +176,10 @@ public class CoreFlex_CustomBundlesPage extends Base {
 	@FindBy(how = How.CSS, using = "app-approval-policy-modal")
 	private WebElement _dialogApproveThisPolicy;
 
+	// Approve This Policy Dialog Description
+	@FindBy(how = How.CSS, using = "textarea[formcontrolname='versionDescription']")
+	private WebElement _txtAreaDescription;
+
 	/*********************************************************************/
 
 	public static final List<Benefit> coreBenefits = FileReaderManager.getInstance().getCoreFlexJsonReader()
@@ -450,6 +454,7 @@ public class CoreFlex_CustomBundlesPage extends Base {
 			Reporter.addStepLog(MessageFormat.format(
 					COREFLEXConstants.SUCCESSFULLY_VERIFIED_APPROVE_THIS_POLICY_DIALOG_HEADER_VERSION_ASSIGNMENT_TEXT_AND_FIELDS,
 					CoreConstants.PASS));
+			CoreFunctions.clearAndSetText(driver, _txtAreaDescription, COREFLEXConstants.VERSION_DIALOG_DESCRIPTION);
 		}
 		return isApproveThisPolicyDialogVerified;
 	}

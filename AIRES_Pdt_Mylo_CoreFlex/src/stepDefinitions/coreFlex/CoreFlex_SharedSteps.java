@@ -517,8 +517,8 @@ public class CoreFlex_SharedSteps {
 						CoreConstants.PASS, buttonName));
 	}
 
-	@Given("^he has selected following options on 'Approval this Policy' dialog of \"([^\"]*)\" Policy$")
-	public void he_has_selected_following_options_on_Approval_this_Policy_dialog_of_Policy(String policyVersion,
+	@Given("^he has filled 'Description' after selecting following option on 'Approval this Policy' dialog of \"([^\"]*)\" Policy$")
+	public void he_has_filled_Description_after_selecting_following_option_on_Approval_this_Policy_dialog_of_Policy(String policyVersion,
 			DataTable dataTable) throws Throwable {
 		Assert.assertTrue(coreFlexCustomBundlesPage.verifyApproveThisPolicyDialog(policyVersion, dataTable),
 				MessageFormat.format(COREFLEXConstants.FAILED_TO_VERIFY_APPROVE_THIS_POLICY_DIALOG,

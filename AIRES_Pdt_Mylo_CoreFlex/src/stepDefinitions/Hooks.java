@@ -68,49 +68,49 @@ public class Hooks {
 		scenarioName = scenario;
 		Reporter.assignAuthor("AIRES - Automation - By : " + System.getProperty("user.name"));
 		testContext.initializeWebManager(scenario.getName().contains("IRIS"));
-//		String appName=System.getProperty("application");
-//		String url=System.getProperty("testURL");
+		String appName=System.getProperty("application");
+		String url=System.getProperty("testURL");
 		if (scenario.getName().contains("IRIS")) {
 			testContext.getBasePage().invokeIrisApplication();
 			testContext.getBasePage().killExistingBrowsers();
 		}
 		//Commented Code is for debugging purpose in local
-		 else if (scenario.getName().contains("PDT")) {
-			Log.info(FileReaderManager.getInstance().getConfigReader().getPDTApplicationUrl());
-			testContext.getWebDriverManager().getDriver().navigate()
-					.to(FileReaderManager.getInstance().getConfigReader().getPDTApplicationUrl());
-		} else if (scenario.getName().contains("Mylo")) {
-			Log.info(FileReaderManager.getInstance().getConfigReader().getApplicationUrl("MYLO"));
-			testContext.getWebDriverManager().getDriver().navigate()
-					.to(FileReaderManager.getInstance().getConfigReader().getApplicationUrl("MYLO"));
-		} else if (scenario.getName().contains("CoreFlex")) {
-			Log.info(FileReaderManager.getInstance().getConfigReader().getCoreFlexPolicySetupApplicationUrl());
-			testContext.getWebDriverManager().getDriver().navigate()
-					.to(FileReaderManager.getInstance().getConfigReader().getCoreFlexPolicySetupApplicationUrl());
-		}else if ((scenario.getName().contains("MXTransferee")) || (scenario.getName().contains("MXClient"))) {
-			Log.info(FileReaderManager.getInstance().getConfigReader().getMobilityXUrl());
-			testContext.getWebDriverManager().getDriver().navigate()
-					.to(FileReaderManager.getInstance().getConfigReader().getMobilityXUrl());
-		}		else if (scenario.getName().contains("TransfereeSubmissions")) {
-			Log.info(FileReaderManager.getInstance().getConfigReader().getCoreFlexTransfereeSubmissionsApplicationUrl());
-			testContext.getWebDriverManager().getDriver().navigate()
-					.to(FileReaderManager.getInstance().getConfigReader().getCoreFlexTransfereeSubmissionsApplicationUrl());
-		}
-		
-//		else if (appName.equals(CoreConstants.COREFLEX)&& scenario.getName().contains("MXTransferee")) {
-//			Log.info(FileReaderManager.getInstance().getConfigReader().getApplicationUrl("MXTransferee"));
+//		 else if (scenario.getName().contains("PDT")) {
+//			Log.info(FileReaderManager.getInstance().getConfigReader().getPDTApplicationUrl());
 //			testContext.getWebDriverManager().getDriver().navigate()
-//					.to(FileReaderManager.getInstance().getConfigReader().getApplicationUrl("MXTransferee"));
-//		}	
-//		else if (appName.equals(CoreConstants.COREFLEX)&& scenario.getName().contains("TransfereeSubmissions")) {
-//			Log.info(FileReaderManager.getInstance().getConfigReader().getApplicationUrl("TransfereeSubmissions"));
+//					.to(FileReaderManager.getInstance().getConfigReader().getPDTApplicationUrl());
+//		} else if (scenario.getName().contains("Mylo")) {
+//			Log.info(FileReaderManager.getInstance().getConfigReader().getApplicationUrl("MYLO"));
 //			testContext.getWebDriverManager().getDriver().navigate()
-//					.to(FileReaderManager.getInstance().getConfigReader().getApplicationUrl("TransfereeSubmissions"));
+//					.to(FileReaderManager.getInstance().getConfigReader().getApplicationUrl("MYLO"));
+//		} else if (scenario.getName().contains("CoreFlex")) {
+//			Log.info(FileReaderManager.getInstance().getConfigReader().getCoreFlexPolicySetupApplicationUrl());
+//			testContext.getWebDriverManager().getDriver().navigate()
+//					.to(FileReaderManager.getInstance().getConfigReader().getCoreFlexPolicySetupApplicationUrl());
+//		}else if ((scenario.getName().contains("MXTransferee")) || (scenario.getName().contains("MXClient"))) {
+//			Log.info(FileReaderManager.getInstance().getConfigReader().getMobilityXUrl());
+//			testContext.getWebDriverManager().getDriver().navigate()
+//					.to(FileReaderManager.getInstance().getConfigReader().getMobilityXUrl());
+//		}		else if (scenario.getName().contains("TransfereeSubmissions")) {
+//			Log.info(FileReaderManager.getInstance().getConfigReader().getCoreFlexTransfereeSubmissionsApplicationUrl());
+//			testContext.getWebDriverManager().getDriver().navigate()
+//					.to(FileReaderManager.getInstance().getConfigReader().getCoreFlexTransfereeSubmissionsApplicationUrl());
 //		}
-//		else {
-//			Log.info(url);
-//			testContext.getWebDriverManager().getDriver().navigate().to(url);
-//		}	
+		
+		else if (appName.equals(CoreConstants.COREFLEX)&& scenario.getName().contains("MXTransferee")) {
+			Log.info(FileReaderManager.getInstance().getConfigReader().getApplicationUrl("MXTransferee"));
+			testContext.getWebDriverManager().getDriver().navigate()
+					.to(FileReaderManager.getInstance().getConfigReader().getApplicationUrl("MXTransferee"));
+		}	
+		else if (appName.equals(CoreConstants.COREFLEX)&& scenario.getName().contains("TransfereeSubmissions")) {
+			Log.info(FileReaderManager.getInstance().getConfigReader().getApplicationUrl("TransfereeSubmissions"));
+			testContext.getWebDriverManager().getDriver().navigate()
+					.to(FileReaderManager.getInstance().getConfigReader().getApplicationUrl("TransfereeSubmissions"));
+		}
+		else {
+			Log.info(url);
+			testContext.getWebDriverManager().getDriver().navigate().to(url);
+		}	
 	}
 
 	@After(order = 2)
@@ -187,10 +187,10 @@ public class Hooks {
 	}
 
 	
-//	@After(order = 1)
+	@After(order = 1)
 	public void updateResultInTestRail(Scenario scenario) {
 		String Case_ID = BusinessFunctions.getTestRailIdAsPerApplication(System.getProperty("application"),scenario.getSourceTagNames().toString());
-		//String Case_ID = BusinessFunctions.getTestRailIdAsPerApplication("PDT",scenario.getSourceTagNames().toString());
+//		String Case_ID = BusinessFunctions.getTestRailIdAsPerApplication("COREFLEX",scenario.getSourceTagNames().toString());
 		Log.info(Case_ID);
 		String testrailRunName = (CoreFunctions.getPropertyFromConfig("SniffSuite_TestRunId"));
 		TestRail.addResultForTestCase(Case_ID, testResult, testrailRunName, CoreConstants.TEST_RAIL_URL,

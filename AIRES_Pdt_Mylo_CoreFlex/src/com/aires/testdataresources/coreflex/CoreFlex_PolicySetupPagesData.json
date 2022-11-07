@@ -86,7 +86,9 @@
 				"Other One Time Payment",
 				"Pet Daycare Services Reimbursement",
 				"Laundry Services Reimbursement",
+				"Concierge Home Cleaning Services Reimbursement",				
 				"Membership Dues Reimbursement",
+				"Child Care Services Reimbursement",
 				"Other Lifestyle Benefit"
 			],
 			"allowancesSelectableBenefits": [
@@ -102,6 +104,8 @@
 				"Other Ongoing Allowance/Reimbursement",
 				"Home Leave Allowance/Reimbursement",
 				"Cost of Living Allowance (COLA)",
+				"Goods & Services Allowance",
+				"Mobility Premium",
 				"Appliance Allowance",
 				"Other Allowance Benefit"
 			]

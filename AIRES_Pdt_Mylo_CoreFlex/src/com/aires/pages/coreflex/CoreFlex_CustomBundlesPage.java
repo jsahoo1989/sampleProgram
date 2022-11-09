@@ -454,7 +454,7 @@ public class CoreFlex_CustomBundlesPage extends Base {
 			Reporter.addStepLog(MessageFormat.format(
 					COREFLEXConstants.SUCCESSFULLY_VERIFIED_APPROVE_THIS_POLICY_DIALOG_HEADER_VERSION_ASSIGNMENT_TEXT_AND_FIELDS,
 					CoreConstants.PASS));
-			CoreFunctions.clearAndSetText(driver, _txtAreaDescription, COREFLEXConstants.VERSION_DIALOG_DESCRIPTION);
+			CoreFunctions.clearAndSetText(driver, _txtAreaDescription, COREFLEXConstants.VERSION_DIALOG_DESCRIPTION_SHORT_TEXT);
 		}
 		return isApproveThisPolicyDialogVerified;
 	}

@@ -367,9 +367,13 @@ public class MX_Transferee_FlexPlanningTool_Page extends Base {
 				String defaultActualRemainingPointBalance = CoreFunctions.getElementText(driver, remaining_points);
 				String defaultActualTotalPointBalance = CoreFunctions.getElementText(driver, total_points)
 						.replace("/", "").trim();
-				isDefaultPointBalanceCorrect = ((Double
-						.parseDouble(CoreFunctions.getPropertyFromConfig("CF_Transferee_AvailablePoints"))) == (Double
-								.parseDouble(defaultActualRemainingPointBalance)))
+				isDefaultPointBalanceCorrect = ((Boolean
+						.valueOf(CoreFunctions.getPropertyFromConfig("CF_Transferee_BenefitSubmitted")))
+								? (Double.parseDouble(
+										CoreFunctions.getPropertyFromConfig("CF_Transferee_AvailablePoints")))
+								: Double.parseDouble(CoreFunctions
+										.getPropertyFromConfig("CF_Transferee_TotalAvailablePoints"))) == (Double
+												.parseDouble(defaultActualRemainingPointBalance))
 						&& ((CoreFunctions.getPropertyFromConfig("CF_Transferee_TotalAvailablePoints"))
 								.equals(defaultActualTotalPointBalance));
 			}
@@ -492,6 +496,7 @@ public class MX_Transferee_FlexPlanningTool_Page extends Base {
 			Reporter.addStepLog(
 					MessageFormat.format(MobilityXConstants.SUCCESSFULLY_SELECTED_BENEFITS_AND_PROCEEDED_TO_REVIEW_PAGE,
 							CoreConstants.PASS));
+			CoreFunctions.writeToPropertiesFile("CF_Transferee_BenefitSubmitted", "true");
 		}
 		return benefitsSelectedSuccessfully;
 	}
@@ -930,6 +935,8 @@ public class MX_Transferee_FlexPlanningTool_Page extends Base {
 
 	public boolean verifyInitialCashOutContent(boolean isBenefitsSubmitted) {
 		try {
+			DecimalFormat format = new DecimalFormat();
+			format.setDecimalSeparatorAlwaysShown(false);
 			getAvailableCashoutPoints(isBenefitsSubmitted);
 			CoreFunctions.explicitWaitTillElementVisibility(driver, _text_cashOutName,
 					MobilityXConstants.CUSTOM_CASHOUT_NAME);
@@ -944,6 +951,12 @@ public class MX_Transferee_FlexPlanningTool_Page extends Base {
 			CoreFunctions.verifyValue(
 					Double.parseDouble(CoreFunctions.getElementText(driver, _text_pointsAvailableForCashOut)),
 					cashoutPoints, MobilityXConstants.POINTS_AVAILABLE_FOR_CASHOUT);
+
+			String actualCashoutValue = CoreFunctions.getElementText(driver, _text_cashOutValue);
+			String expectedCashoutValue = CoreFunctions.getPropertyFromConfig("CF_Transferee_CashoutCurrencySign")
+					+ format.format(cashoutPoints) + " ("
+					+ CoreFunctions.getPropertyFromConfig("CF_Transferee_CashoutCurrencyCode") + ")";
+
 			String[] cashOutValue = CoreFunctions.getElementText(driver, _text_cashOutValue).split("\\(");
 			CoreFunctions.verifyValue(Double.parseDouble(cashOutValue[0].trim()), cashoutPoints,
 					MobilityXConstants.CASHOUT_VALUE);

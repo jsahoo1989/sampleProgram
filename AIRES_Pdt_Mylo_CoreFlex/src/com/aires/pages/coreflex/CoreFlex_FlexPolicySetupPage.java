@@ -193,6 +193,18 @@ public class CoreFlex_FlexPolicySetupPage extends Base {
 	@FindBy(how = How.XPATH, using = "//div[@id='swal2-content'][contains(text(),'Please complete the required field(s)')]")
 	private WebElement _textErrorDialog;
 
+	// Cashout Currency Select Field
+	@FindBy(how = How.CSS, using = "ng-select[formcontrolname='currencyCode']")
+	private WebElement _selectCashoutCurrency;
+
+	// Cashout Currency Select Field Options List
+	@FindBy(how = How.CSS, using = "ng-select[formcontrolname='currencyCode'] div[class*='ng-option']")
+	private List<WebElement> _selectCashoutCurrencyOptions;
+
+	// Cashout Currency Select Field Selected Value
+	@FindBy(how = How.CSS, using = "ng-select[formcontrolname='currencyCode'] div[class='ng-value ng-star-inserted']")
+	private WebElement _selectCashoutCurrencySelectedValue;
+
 	/*********************************************************************/
 
 	CoreFlex_PolicySetupPagesData policySetupPageData = FileReaderManager.getInstance().getCoreFlexJsonReader()
@@ -428,6 +440,9 @@ public class CoreFlex_FlexPolicySetupPage extends Base {
 				CoreFunctions.clearAndSetTextUsingKeys(driver, _inputCashoutPointConversion,
 						policySetupPageData.flexPolicySetupPage.pointExchangeRate,
 						COREFLEXConstants.CASHOUT_POINT_CONVERSION);
+				CoreFunctions.clickElement(driver, _selectCashoutCurrency);
+				CoreFunctions.selectRandomOptionFromTheList(driver, _selectCashoutCurrencyOptions);
+				saveSelectedCurrencyDetails(CoreFunctions.getElementText(driver, _selectCashoutCurrencySelectedValue));
 				break;
 			case COREFLEXConstants.CASHOUT_NOT_AUTHORIZED:
 				break;
@@ -439,6 +454,20 @@ public class CoreFlex_FlexPolicySetupPage extends Base {
 					MessageFormat.format(COREFLEXConstants.EXCEPTION_OCCURED_WHILE_FILLING_CASHOUT_AVAILIBLITY_DETAILS,
 							CoreConstants.FAIL, cashOutAvaiblityType, e.getMessage()));
 			throw new RuntimeException(e.getMessage());
+		}
+	}
+
+	private void saveSelectedCurrencyDetails(String elementText) {
+		try {
+			String[] currencyDetails = elementText.split(" ");
+			CoreFunctions.writeToPropertiesFile("CF_Transferee_CashoutCurrencySign", currencyDetails[0]);
+			CoreFunctions.writeToPropertiesFile("CF_Transferee_CashoutCurrencyCode", currencyDetails[1]);
+			CoreFunctions.writeToPropertiesFile("CF_Transferee_CashoutCurrencyText", currencyDetails[2]+" "+currencyDetails[3]);
+		} catch (Exception e) {
+			Reporter.addStepLog(
+					MessageFormat.format(COREFLEXConstants.EXCEPTION_OCCURED_WHILE_SAVING_CASHOUT_CURRENCY_DETAILS,
+							CoreConstants.FAIL, e.getMessage()));
+			throw new RuntimeException(COREFLEXConstants.FAILED_SAVING_CASHOUT_CURRENCY_DETAILS + e.getMessage());
 		}
 	}
 

@@ -1,6 +1,6 @@
 Feature: Validate MXTransferee Workflow and MJ Cards(CancelledStatus) for Transferee-PortionCashout selection, Versioning & CloningToDifferentClient, Transferee Mobility Journey, PortionCashout and Transferee Submissions ApproveAll Operation
 
-  @Coreflex:218336 @CF_End-To-End_MasterScript @CF_Master_PortionApprova1 @CF_Master_PortionApprove_PolicySetup
+  @Coreflex:218330 @CF_End-To-End_MasterScript @CF_Master_PortionApprova1 @CF_Master_PortionApprove_PolicySetup
   Scenario: CoreFlex - Validating policy status is updated to 'Active' on completion of Approval WorkFlow for Transferee-PortionCashout MasterScript Policy Setup
     Given he has setup a new Points Based CoreFlex Policy with following selection in Blueprint application
       | Person Responsible For Benefit Selection | Flex Setup Type | Cashout Availability | BenefitType | PolicyRequiredFor |

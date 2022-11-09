@@ -1973,6 +1973,15 @@ public class CoreFunctions {
 					+ CoreConstants.VAL_EXPECTED + expectedSelection);
 			Assert.fail("Failed to verify the fields " + fieldName + " Expected Text = " + expectedSelection);
 		}
+	}
 
+	public static void selectRandomOptionFromTheList(WebDriver driver, List<WebElement> elementList) {
+		String randomValue;
+		try {
+			randomValue = elementList.get(getRandomNumber(0, elementList.size() - 1)).getText();
+			selectItemInListByText(driver, elementList, randomValue);
+		} catch (Exception e) {
+			Assert.fail(CoreConstants.FAILED_TO_SELECT_RANDOM_OPTION_FROM_THE_LIST);
+		}
 	}
 }

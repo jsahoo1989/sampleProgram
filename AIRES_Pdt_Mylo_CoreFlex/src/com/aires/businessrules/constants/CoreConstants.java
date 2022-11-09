@@ -75,7 +75,7 @@ public class CoreConstants {
 	public static final String ENVT_PROD = "prod";
 	public static final String INVALID_ENVIRONMENT = "Invalid Environment:-''{1}''";
 	public static final String SUCCESS_MESSAGE_TEXT = "Success Message";
-	public static final String AUTO_EMAIL_PWD = "Aut0Mati0nT34mAug";
+	public static final String AUTO_EMAIL_PWD = "Aut0Mati0nT34mNov";
 	public static final String NOT_EXIST = "not exists";
   
 	// CoreFlex Policy Setup Constants
@@ -128,4 +128,5 @@ public class CoreConstants {
 	public static final String ENVT_PREPROD = "preprod";
 	public static final String EMAIL_NOT_FOUND = "Email Not Found";
 	public static final String VEIRFY_CONTIRBUTOR_NOT_RECEIVED_NOTIFICATION = "{0}Failed to verify Contributor not received Notification.";
+	public static final String FAILED_TO_SELECT_RANDOM_OPTION_FROM_THE_LIST = "{0}Failed to select random option from the list.";
 }

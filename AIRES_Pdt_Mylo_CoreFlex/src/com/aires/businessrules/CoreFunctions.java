@@ -39,6 +39,7 @@ import java.util.Collections;
 import java.util.Date;
 import java.util.GregorianCalendar;
 import java.util.LinkedHashMap;
+import java.util.LinkedHashSet;
 import java.util.List;
 import java.util.Properties;
 import java.util.Random;
@@ -1913,5 +1914,19 @@ public class CoreFunctions {
 		DecimalFormat format = new DecimalFormat();
 		format.setMaximumFractionDigits(2);
 		return format.format((tIME_BEFORE_ACTION - tIME_AFTER_ACTION) / 1000);
+	}
+	
+	public static ArrayList<String> getMultipleRandomOptionsForDropDown(int maxNum, int noOfRandDigits, WebDriver driver, List<WebElement> webElementList) {
+		Random randNum = new Random();
+		LinkedHashSet<Integer> set = new LinkedHashSet<Integer>();
+		ArrayList<String> randWebElementList = new ArrayList<String>();
+		
+		while(set.size() < noOfRandDigits) {
+			set.add(randNum.nextInt(noOfRandDigits) + 1);
+		}
+		for(Integer index:set) {
+			randWebElementList.add(webElementList.get(index).getText());
+		}
+		return randWebElementList;		
 	}
 }

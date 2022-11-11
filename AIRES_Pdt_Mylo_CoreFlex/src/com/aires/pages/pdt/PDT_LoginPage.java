@@ -18,6 +18,7 @@ import com.aires.businessrules.constants.PDTConstants;
 import com.aires.managers.FileReaderManager;
 import com.aires.pages.PDT_Mylo_CoreFlex_Common_LoginPage;
 import com.aires.testdatatypes.pdt.PDT_LoginDetails;
+import com.aires.testdatatypes.pdt.PDT_LoginInfo;
 import com.aires.utilities.Log;
 import com.gargoylesoftware.htmlunit.ElementNotFoundException;
 import com.vimalselvam.cucumber.listener.Reporter;
@@ -47,10 +48,11 @@ public class PDT_LoginPage extends Base {
 	@FindBy(how = How.XPATH, using = "//h1[text()='Aires Policy Tool']")
 	private WebElement _txtAiresPolicyTool;
 
-	private PDT_LoginDetails _loginDetailsApplication = FileReaderManager.getInstance().getJsonReader().getLoginByApplication(CoreFunctions.getPropertyFromConfig("application").toLowerCase());
-
+	//private PDT_LoginInfo _loginInfo = FileReaderManager.getInstance().getJsonReader().getLoginByEnvt(CoreFunctions.getPropertyFromConfig("envt").toLowerCase());
+	private PDT_LoginInfo _loginInfo = FileReaderManager.getInstance().getJsonReader().getLoginByEnvt(System.getProperty("envt").toLowerCase());
+	
 	final By _imgAIRESLogoByLocator = By.cssSelector("img[src='assets/img/aires.png']");
-	final By _btnLoginByLocator = By.cssSelector("button[type='submit']");
+	final By _btnLoginByLocator = By.cssSelector("button[type='submit']");	
 	
 	public void VerifyAIRESLogo() {
 		CoreFunctions.explicitWaitTillElementVisibility(driver, _imgAIRESLogo, PDTConstants.AIRESLOGO_TEXT);
@@ -101,8 +103,8 @@ public class PDT_LoginPage extends Base {
 			openApplication();
 			switch (userType) {
 			case PDTConstants.CSM:
-				enterLoginCredentials(BusinessFunctions.getCSMCredentials(_loginDetailsApplication)[0], BusinessFunctions.getCSMCredentials(_loginDetailsApplication)[1]);
-				isSuccessfullyLoggedIn = viewPolicyPage.verifyUserlogin(BusinessFunctions.getCSMCredentials(_loginDetailsApplication)[2],
+				enterLoginCredentials(_loginInfo.details.csmUserName, _loginInfo.details.csmPassword);
+				isSuccessfullyLoggedIn = viewPolicyPage.verifyUserlogin(_loginInfo.details.firstName + " " + _loginInfo.details.lastName,
 						PDTConstants.VIEW_POLICY_PAGE);
 				break;
 			default:

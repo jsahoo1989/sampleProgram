@@ -20,9 +20,8 @@ import com.aires.businessrules.constants.PDTConstants;
 import com.aires.managers.FileReaderManager;
 import com.aires.pages.pdt.PDT_ViewPolicyPage;
 import com.aires.testdatatypes.mylo.Mylo_LoginData;
-import com.aires.testdatatypes.pdt.PDT_LoginDetails;
+import com.aires.testdatatypes.pdt.PDT_LoginInfo;
 import com.aires.utilities.Log;
-import com.gargoylesoftware.htmlunit.ElementNotFoundException;
 import com.vimalselvam.cucumber.listener.Reporter;
 
 public class PDT_Mylo_CoreFlex_Common_LoginPage extends Base {	
@@ -69,7 +68,7 @@ public class PDT_Mylo_CoreFlex_Common_LoginPage extends Base {
 	
 	@FindBy(how = How.CSS, using = "a.logout")
 	private WebElement _imgPDTLogout;
-	
+
     @FindBy(how = How.CSS, using = "#KmsiDescription")
     private WebElement _staySignedInMsg;
 	
@@ -81,17 +80,12 @@ public class PDT_Mylo_CoreFlex_Common_LoginPage extends Base {
 	
 	Mylo_LoginData loginData = FileReaderManager.getInstance().getMyloJsonReader()
 			.getloginDetailsByUserProfileName(MYLOConstants.USER_PROFILE_NAME);
+
 	
-	//private PDT_LoginDetails _loginDetailsApplication = FileReaderManager.getInstance().getJsonReader().getLoginByApplication(CoreFunctions.getPropertyFromConfig("application").toLowerCase());
-	private PDT_LoginDetails _loginDetailsApplication = FileReaderManager.getInstance().getJsonReader().getLoginByApplication(System.getProperty("application").toLowerCase());
-	public void VerifyMYLOLogo() {
-		CoreFunctions.explicitWaitTillElementVisibility(driver, _img_MYLOLogo, MYLOConstants.MYLOLOGO_TEXT);
-		if (_img_MYLOLogo.isDisplayed())
-			Log.info(CoreConstants.VRFIED + MYLOConstants.APPLICATION_LAUNCHED_AND_LOGO_DISPLAYED);
-		else
-			Assert.fail(CoreConstants.FAIL + MYLOConstants.APPLICATION_FAILED_TO_LAUNCH);
-	}
+	//private PDT_LoginInfo _loginInfo = FileReaderManager.getInstance().getJsonReader().getLoginByEnvt(CoreFunctions.getPropertyFromConfig("envt").toLowerCase());	
 	
+	private PDT_LoginInfo _loginInfo = FileReaderManager.getInstance().getJsonReader().getLoginByEnvt(System.getProperty("envt").toLowerCase());
+
 	public void openApplication() {		
 		CoreFunctions.waitForBrowserToLoad(driver);		
 		VerifyAIRESLogo();
@@ -102,27 +96,17 @@ public class PDT_Mylo_CoreFlex_Common_LoginPage extends Base {
 		WebElement imgApplicationLogo;
 		populateApplicationLogoMap();
 		imgApplicationLogo = applicationLogoMap.get(FileReaderManager.getInstance().getConfigReader().getNameOfCurrentLaunchedApplication().toUpperCase());
-		/*try {
-			imgApplicationLogo = applicationLogoMap.get(FileReaderManager.getInstance().getConfigReader().getNameOfCurrentLaunchedApplication().toUpperCase());
+		try {
+			CoreFunctions.explicitWaitTillElementVisibility(driver, imgApplicationLogo, PDTConstants.AIRESLOGO_TEXT);
+			if (imgApplicationLogo.isDisplayed()) {
+				CoreFunctions.highlightObject(driver, imgApplicationLogo);
+				Log.info(CoreConstants.VRFIED + PDTConstants.APPLICATION_LAUNCHED_AND_LOGO_DISPLAYED);
+			} else
+				Assert.fail(CoreConstants.FAIL + PDTConstants.APPLICATION_FAILED_TO_LAUNCH);
 		} catch(Exception e) {
 			Assert.fail(MessageFormat.format(PDTConstants.APPLICATION_NOT_VALID, CoreConstants.FAIL, FileReaderManager.getInstance().getConfigReader().getNameOfCurrentLaunchedApplication()));
-		}*/
-		
-		/*if (FileReaderManager.getInstance().getConfigReader().getNameOfCurrentLaunchedApplication().equalsIgnoreCase("pdt")) {
-			imgApplicationLogo = _imgAIRESLogo;
-		} else if(FileReaderManager.getInstance().getConfigReader().getNameOfCurrentLaunchedApplication().equalsIgnoreCase("mylo")) {
-			imgApplicationLogo = _img_MYLOLogo;
-		} else {
-			throw new RuntimeException(
-					"Application "+FileReaderManager.getInstance().getConfigReader().getNameOfCurrentLaunchedApplication()+" is not a valid application");
-		}*/
-		
-		CoreFunctions.explicitWaitTillElementVisibility(driver, imgApplicationLogo, PDTConstants.AIRESLOGO_TEXT);
-		if (imgApplicationLogo.isDisplayed()) {
-			CoreFunctions.highlightObject(driver, _imgAIRESLogo);
-			Log.info(CoreConstants.VRFIED + PDTConstants.APPLICATION_LAUNCHED_AND_LOGO_DISPLAYED);
-		} else
-			Assert.fail(CoreConstants.FAIL + PDTConstants.APPLICATION_FAILED_TO_LAUNCH);
+		}
+
 	}
 	
 	public void enterUserEmailAndPassword(String userName, String password) {
@@ -136,19 +120,31 @@ public class PDT_Mylo_CoreFlex_Common_LoginPage extends Base {
 			WebElement _pswd = CoreFunctions.getElementByLocator(driver, _password);
 			CoreFunctions.clearAndSetText(driver, _pswd, _pswd.getAttribute("type"), password);
 		} catch (Exception e) {
+			Assert.fail("Failed to enter username & password");
 		}
 	}
 	
 	public void waitForProgressBarToDisappear() {
 		try {
-			if(CoreFunctions.isElementExist(driver,  _progressBar, 5)) {			
-				CoreFunctions.explicitWaitTillElementInVisibility(driver, _progressBar);
-				//BusinessFunctions.fluentWaitForSpinnerToDisappear(driver, _progressBar);
-			}	
+			BusinessFunctions.fluentWaitForSpinnerToDisappear(driver, _progressBar);
 		} catch(Exception e) {
-			
+			Assert.fail(MessageFormat.format(PDTConstants.FAIL_TO_WAIT_PROGRESS_BAR, CoreConstants.FAIL));
 		}
 		
+	}
+	
+	public void navigateToViewPolicyPage() {
+		try {
+			if(CoreFunctions.isElementExist(driver,  _progressBar, 5)) {
+				CoreFunctions.explicitWaitTillElementInVisibility(driver, _progressBar);			
+			}							
+			else if(CoreFunctions.isElementPresent(driver, _loginImg, 5, MYLOConstants.LOGIN_BUTTON)) {
+				CoreFunctions.click(driver, CoreFunctions.getElementByLocator(driver,_loginImg), MYLOConstants.LOGIN_BUTTON);
+				waitForProgressBarToDisappear();
+			}
+		} catch(Exception e ) {
+			Assert.fail("Failed to navigate to View Policy Page.");
+		}
 	}
 	
 	public void clickSignIn() {
@@ -160,15 +156,9 @@ public class PDT_Mylo_CoreFlex_Common_LoginPage extends Base {
 				Assert.assertEquals(CoreFunctions.getElementText(driver, _staySignedInMsg), "Do this to reduce the number of times you are asked to sign in.");
 				CoreFunctions.click(driver, _staySignedInYes, _staySignedInYes.getAttribute("value"));
 			}
-			CoreFunctions.switchToParentWindow(driver);		
-			if(CoreFunctions.isElementExist(driver,  _progressBar, 5)) {
-				CoreFunctions.explicitWaitTillElementInVisibility(driver, _progressBar);
-				//BusinessFunctions.fluentWaitForSpinnerToDisappear(driver, _progressBar);
-			}							
-			else if(CoreFunctions.isElementPresent(driver, _loginImg, 5, MYLOConstants.LOGIN_BUTTON)) {
-				CoreFunctions.click(driver, CoreFunctions.getElementByLocator(driver,_loginImg), MYLOConstants.LOGIN_BUTTON);
-				waitForProgressBarToDisappear();
-			}
+			CoreFunctions.switchToParentWindow(driver);
+			navigateToViewPolicyPage();
+
 		} catch(Exception e) {
 			Reporter.addStepLog(MessageFormat.format(PDTConstants.EXCEPTION_OCCURED_WHILE_LOGGING_TO_APPLICATION,
 					CoreConstants.FAIL,e.getMessage()));
@@ -206,13 +196,13 @@ public class PDT_Mylo_CoreFlex_Common_LoginPage extends Base {
 		try {
 			openApplication();
 			switch (userType) {
-			case PDTConstants.CSM:				
-				enterUserEmailAndPassword(BusinessFunctions.getCSMCredentials(_loginDetailsApplication)[0], BusinessFunctions.getCSMCredentials(_loginDetailsApplication)[1]);
+			case PDTConstants.CSM:
+				enterUserEmailAndPassword(_loginInfo.details.csmUserName, _loginInfo.details.csmPassword);
 				timeBeforeAction = new Date().getTime();
 				clickSignIn();
 				timeAfterAction = new Date().getTime();
 				BusinessFunctions.printTimeTakenByPageToLoad(timeBeforeAction, timeAfterAction, PDTConstants.VIEW_POLICY_PAGE);
-				isSuccessfullyLoggedIn = viewPolicyPage.verifyUserlogin(BusinessFunctions.getCSMCredentials(_loginDetailsApplication)[2],
+				isSuccessfullyLoggedIn = viewPolicyPage.verifyUserlogin(_loginInfo.details.firstName + " " + _loginInfo.details.lastName,
 						PDTConstants.VIEW_POLICY_PAGE);
 				break;
 			default:
@@ -238,6 +228,7 @@ public class PDT_Mylo_CoreFlex_Common_LoginPage extends Base {
 
 	public void logoutFromPDTApplication() {
 		CoreFunctions.clickUsingJS(driver, _imgPDTLogout, "Logout");
+		CoreFunctions.clickUsingJS(driver, _logoutUserImg, "Logout");
 	}
 
 }

@@ -21,12 +21,14 @@ public class DbFunctions {
 	
 	static LinkedHashMap<String, String> myloQueryStatementMap = new LinkedHashMap<String, String>();
 	static LinkedHashMap<String, String> myloQTableColumnFields = new LinkedHashMap<String, String>();
+	static LinkedHashMap<String, String> pdtExpenseCodeQueryStatementMap = new LinkedHashMap<String, String>();
 	
 	public static String getDBConnectionStringAsPerEnvt(String envt) {
 		String dbURL = null;
 		switch (envt) {
 		case "qa":
 			dbURL = "jdbc:oracle:thin:isisdba/irisqaisisdba@corpqavl300.corp.aires.com:1521:IRISQA";
+			//dbURL = "jdbc:oracle:thin:isisdba/irisnextisisdba@corptesvl300.corp.aires.com:1521:IRISNEXT";
 			break;
 		case "dev":
 			dbURL = "jdbc:oracle:thin:isisdba/irisdevisisdba@corptesvl300.corp.aires.com:1521:IRISDEV";
@@ -68,6 +70,7 @@ public class DbFunctions {
 			callableStatement.setInt(1, policyId);
 			callableStatement.execute();
 		} catch (Exception ex) {
+			ex.printStackTrace();
 			Assert.fail(CoreConstants.ERROR + "Fail to call procedure");
 		} finally {
 			try {
@@ -219,5 +222,45 @@ public class DbFunctions {
 			ex.printStackTrace();
 			Assert.fail("SQL Query Failed");
 		}
+	}
+	
+	public static void populatePDTExpenseCodeQueryStatements() {
+		pdtExpenseCodeQueryStatementMap.put(PDTConstants.PRE_ACCEPTANCE_SERVICES, DbQueries.QUERY_GET_PRE_ACCEPTANCE_EXPENSE_CODE);
+		pdtExpenseCodeQueryStatementMap.put(PDTConstants.IMMIGRATION, DbQueries.QUERY_GET_IMMIGRATION_EXPENSE_CODE);
+		pdtExpenseCodeQueryStatementMap.put(PDTConstants.LANGUAGE_TRAINING, DbQueries.QUERY_GET_LANG_TRAIN_EXPENSE_CODE);
+		pdtExpenseCodeQueryStatementMap.put(PDTConstants.CULTURAL_TRAINING, DbQueries.QUERY_GET_CULT_TRAIN_EXPENSE_CODE);
+	}
+	
+	public static List<String> getExpenseCodeListForBenefit(String benefitName) {
+		populatePDTExpenseCodeQueryStatements();		
+		List<String> expenseCodeList = new ArrayList<String>();
+		Connection connection = null;		
+		try {
+			DriverManager.registerDriver(new oracle.jdbc.OracleDriver());
+			connection = DriverManager.getConnection(
+					getMyloDBConnectionStringAsPerEnvt(System.getProperty("envt")));	
+			/*connection = DriverManager.getConnection(
+					getDBConnectionStringAsPerEnvt(CoreFunctions.getPropertyFromConfig("envt")));*/			
+			PreparedStatement pst = connection.prepareStatement(pdtExpenseCodeQueryStatementMap.get(benefitName));
+			ResultSet resultset = pst.executeQuery();
+			while (resultset.next()) {
+				expenseCodeList.add(resultset.getString("EXPENSE_CODE")+" - "+ resultset.getString("DESCRIPTION"));
+			}
+		
+		} catch (Exception ex) {			
+			Log.info(CoreConstants.ERROR+ex.getMessage());
+			Log.info(CoreConstants.ERROR+ex.getStackTrace());			
+			Assert.fail(CoreConstants.SQL_QUERY_FAILED);
+		} finally {
+			try {
+				if(connection != null) {
+					connection.close();
+				}
+			}catch (Exception ex){
+				Log.info(CoreConstants.ERROR+ex.getMessage());
+				Log.info(CoreConstants.ERROR+ex.getStackTrace());
+			}
+		}
+		return expenseCodeList;
 	}
 }

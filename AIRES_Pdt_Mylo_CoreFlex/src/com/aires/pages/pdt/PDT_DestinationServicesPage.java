@@ -1,15 +1,16 @@
 package com.aires.pages.pdt;
 
 import java.text.MessageFormat;
+import java.util.Date;
 import java.util.List;
 
+import org.openqa.selenium.NoSuchElementException;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.How;
 import org.testng.Assert;
 
-import com.aires.businessrules.Base;
 import com.aires.businessrules.BusinessFunctions;
 import com.aires.businessrules.CoreFunctions;
 import com.aires.businessrules.constants.CoreConstants;
@@ -17,7 +18,9 @@ import com.aires.businessrules.constants.PDTConstants;
 import com.aires.managers.FileReaderManager;
 import com.aires.testdatatypes.pdt.PDT_DestinationServicesBenefit;
 
-public class PDT_DestinationServicesPage extends Base {
+import stepDefinitions.pdt.PDT_SharedSubBenefit_Steps;
+
+public class PDT_DestinationServicesPage extends PDT_SharedSubBenefitPage {
 	public PDT_DestinationServicesPage(WebDriver driver) {
 		super(driver);
 	}
@@ -236,8 +239,46 @@ public class PDT_DestinationServicesPage extends Base {
 	private WebElement _txtBoxReimbursedByOtherTutionAndEduction;
 
 	@FindBy(how = How.CSS, using = "app-tution-and-education textarea[formcontrolname='benefitComment']")
-	private WebElement _txtAreaCommentForTutionAndEduction;		
+	private WebElement _txtAreaCommentForTutionAndEduction;	
 	
+	@FindBy(how = How.CSS, using = "a[href='#collapseAirport']")
+	private WebElement _formHeaderAirportPickup;
+
+	@FindBy(how = How.CSS, using = "a[href='#collapseTour']")
+	private WebElement _formHeaderAreaTour;
+
+	@FindBy(how = How.CSS, using = "a[href='#collapseAutoRental']")
+	private WebElement _formHeaderAutoRental;
+
+	@FindBy(how = How.CSS, using = "a[href='#collapseConciergeServices']")
+	private WebElement _formHeaderConciergeServices;
+
+	@FindBy(how = How.CSS, using = "a[href='#collapseDepartureServices']")
+	private WebElement _formHeaderDepartureServices;
+
+	@FindBy(how = How.CSS, using = "a[href='#collapseFurnitureRental']")
+	private WebElement _formHeadereFurnitureRental;
+
+	@FindBy(how = How.CSS, using = "a[href='#collapseHealthClub']")
+	private WebElement _formHeaderMembershipDues;
+
+	@FindBy(how = How.CSS, using = "a[href='#collapseSchoolSearch']")
+	private WebElement _formHeaderSchoolSearch;
+
+	@FindBy(how = How.CSS, using = "a[href='#collapseSettlingInServices']")
+	private WebElement _formHeaderSettlingInServices;
+
+	@FindBy(how = How.CSS, using = "a[href='#collapseTransitionAssistances']")
+	private WebElement _formHeaderTransitionAssistances;
+
+	@FindBy(how = How.CSS, using = "a[href='#collapseTuitionEducation']")
+	private WebElement _formHeaderTutionEducation;
+
+	@FindBy(how = How.CSS, using = "div.form-check > label.form-check-label")
+	private List<WebElement> _subBenefitCategories;
+	
+	@FindBy(how = How.CSS, using = "div.ngx-progress-bar.ngx-progress-bar-ltr")
+	private WebElement _progressBar;
 
 	PDT_DestinationServicesBenefit destinationServicesBenefitData = FileReaderManager.getInstance().getJsonReader()
 			.getDestinationServicesDataList("Destination Services");
@@ -268,9 +309,30 @@ public class PDT_DestinationServicesPage extends Base {
 		return durationForFurntiureRental;
 	}
 
-	public void fillAirPortPickUpForm(PDT_AddNewPolicyPage addNewPolicyPage, String subBenefitFormName) {
+	/**
+	 * Add the Form Header of Destination services sub-benefit in Hash map i.e. subBenefitHeaderMap
+	 */
+	public void populateSubBenefitHeaderMap() {
+		subBenefitHeaderMap.put(PDTConstants.AIRPORT_PICKUP, _formHeaderAirportPickup);
+		subBenefitHeaderMap.put(PDTConstants.AREA_TOUR, _formHeaderAreaTour);
+		subBenefitHeaderMap.put(PDTConstants.AUTO_RENTAL_DURING_ASSIGNMENT, _formHeaderAutoRental);
+		subBenefitHeaderMap.put(PDTConstants.CONCIERGE_SERVICES, _formHeaderConciergeServices);
+		subBenefitHeaderMap.put(PDTConstants.DEPARTURE_SERVICES, _formHeaderDepartureServices);
+		subBenefitHeaderMap.put(PDTConstants.FURNITURE_RENTAL, _formHeadereFurnitureRental);
+		subBenefitHeaderMap.put(PDTConstants.REIMBURSEMENT_OF_MEMEBERSHIP_DUES, _formHeaderMembershipDues);
+		subBenefitHeaderMap.put(PDTConstants.EDUCATION_ASSISTANCE, _formHeaderSchoolSearch);		
+		subBenefitHeaderMap.put(PDTConstants.SETTLING_IN_SERVICES, _formHeaderSettlingInServices);
+		subBenefitHeaderMap.put(PDTConstants.TRANSITION_ASSISTANCE_PROGRAM, _formHeaderTransitionAssistances);
+		subBenefitHeaderMap.put(PDTConstants.TUTION_AND_EDUCATION, _formHeaderTutionEducation);
+	}
+	
+	public void fillAirPortPickUpForm(PDT_AddNewPolicyPage addNewPolicyPage, String subBenefitFormName, String pageName) {
 
 		try {
+			populateSubBenefitHeaderMap();
+			Assert.assertTrue(BusinessFunctions.verifySubBenefitFormHeaderIsDisplayed(driver, subBenefitHeaderMap.get(subBenefitFormName), subBenefitFormName, pageName),
+					MessageFormat.format(PDTConstants.VERIFIED_FORM_IS_NOT_DISPLAYED, subBenefitFormName, pageName));
+			BusinessFunctions.expandSubBenefitIfCollapsed(subBenefitHeaderMap.get(subBenefitFormName), subBenefitFormName, driver);
 			CoreFunctions.explicitWaitTillElementListClickable(driver, _radioBtnAirportPickup);
 			CoreFunctions.selectItemInListByText(driver, _radioBtnAirportPickup,
 					destinationServicesBenefitData.airPortPickup.grossUp, PDTConstants.GROSS_UP,
@@ -279,7 +341,7 @@ public class PDT_DestinationServicesPage extends Base {
 					destinationServicesBenefitData.airPortPickup.reimbursedBy, PDTConstants.REIMBURSED_BY,
 					PDTConstants.RADIO_BUTTON_LIST, true);
 
-			BusinessFunctions.verifyOtherTextBoxIsDisplayed(driver, addNewPolicyPage,
+			BusinessFunctions.verifyOtherTextBoxIsDisplayed(driver,
 					destinationServicesBenefitData.airPortPickup.reimbursedBy, _txtBoxReimbursedByOtherForAirportPickup,
 					destinationServicesBenefitData.airPortPickup.reimbursedByOther, subBenefitFormName, PDTConstants.REIMBURSED_BY_OTHER);
 			CoreFunctions.clearAndSetText(driver, _txtAreaCommentForAirportPickup, PDTConstants.COMMENT,
@@ -289,9 +351,13 @@ public class PDT_DestinationServicesPage extends Base {
 		}
 	}
 
-	public void fillAreaTourForm(PDT_AddNewPolicyPage addNewPolicyPage, String subBenefitFormName) {
+	public void fillAreaTourForm(PDT_AddNewPolicyPage addNewPolicyPage, String subBenefitFormName, String pageName) {
 
 		try {
+			populateSubBenefitHeaderMap();
+			Assert.assertTrue(BusinessFunctions.verifySubBenefitFormHeaderIsDisplayed(driver, subBenefitHeaderMap.get(subBenefitFormName), subBenefitFormName, pageName),
+					MessageFormat.format(PDTConstants.VERIFIED_FORM_IS_NOT_DISPLAYED, subBenefitFormName, pageName));
+			BusinessFunctions.expandSubBenefitIfCollapsed(subBenefitHeaderMap.get(subBenefitFormName), subBenefitFormName, driver);
 			CoreFunctions.explicitWaitTillElementVisibility(driver, _txtBoxDurationForAreaTour,
 					_lblDurationForAreaTour.getText());
 			CoreFunctions.clearAndSetText(driver, _txtBoxDurationForAreaTour, _lblDurationForAreaTour.getText(),
@@ -304,7 +370,7 @@ public class PDT_DestinationServicesPage extends Base {
 					destinationServicesBenefitData.areaTour.reimbursedBy, PDTConstants.REIMBURSED_BY,
 					PDTConstants.RADIO_BUTTON_LIST, true);
 
-			BusinessFunctions.verifyOtherTextBoxIsDisplayed(driver, addNewPolicyPage,
+			BusinessFunctions.verifyOtherTextBoxIsDisplayed(driver,
 					destinationServicesBenefitData.areaTour.reimbursedBy, _txtBoxReimbursedByOtherForAreaTour,
 					destinationServicesBenefitData.areaTour.reimbursedByOther, subBenefitFormName, PDTConstants.REIMBURSED_BY_OTHER);
 			CoreFunctions.clearAndSetText(driver, _txtAreaCommentForAreaTour, PDTConstants.COMMENT,
@@ -314,9 +380,13 @@ public class PDT_DestinationServicesPage extends Base {
 		}
 	}
 
-	public void fillAutoRentalForm(PDT_AddNewPolicyPage addNewPolicyPage, String subBenefitFormName) {
+	public void fillAutoRentalForm(PDT_AddNewPolicyPage addNewPolicyPage, String subBenefitFormName, String pageName) {
 
 		try {
+			populateSubBenefitHeaderMap();
+			Assert.assertTrue(BusinessFunctions.verifySubBenefitFormHeaderIsDisplayed(driver, subBenefitHeaderMap.get(subBenefitFormName), subBenefitFormName, pageName),
+					MessageFormat.format(PDTConstants.VERIFIED_FORM_IS_NOT_DISPLAYED, subBenefitFormName, pageName));
+			BusinessFunctions.expandSubBenefitIfCollapsed(subBenefitHeaderMap.get(subBenefitFormName), subBenefitFormName, driver);
 			CoreFunctions.explicitWaitTillElementListVisibility(driver, _drpDownCarTypeOptions);			
 
 			String randCarType = BusinessFunctions.selectAndReturnRandomValueFromDropDown(driver, addNewPolicyPage,
@@ -335,7 +405,7 @@ public class PDT_DestinationServicesPage extends Base {
 					destinationServicesBenefitData.autoRentalDuringAssignment.reimbursedBy, PDTConstants.REIMBURSED_BY,
 					PDTConstants.RADIO_BUTTON_LIST, true);
 
-			BusinessFunctions.verifyOtherTextBoxIsDisplayed(driver, addNewPolicyPage,
+			BusinessFunctions.verifyOtherTextBoxIsDisplayed(driver,
 					destinationServicesBenefitData.autoRentalDuringAssignment.reimbursedBy,
 					_txtBoxReimbursedByOtherForAutoRental,
 					destinationServicesBenefitData.autoRentalDuringAssignment.reimbursedByOther, subBenefitFormName, PDTConstants.REIMBURSED_BY_OTHER);
@@ -346,8 +416,12 @@ public class PDT_DestinationServicesPage extends Base {
 		}
 	}
 
-	public void fillConciergeServicesForm(PDT_AddNewPolicyPage addNewPolicyPage, String subBenefitFormName) {
+	public void fillConciergeServicesForm(PDT_AddNewPolicyPage addNewPolicyPage, String subBenefitFormName, String pageName) {
 		try {
+			populateSubBenefitHeaderMap();
+			Assert.assertTrue(BusinessFunctions.verifySubBenefitFormHeaderIsDisplayed(driver, subBenefitHeaderMap.get(subBenefitFormName), subBenefitFormName, pageName),
+					MessageFormat.format(PDTConstants.VERIFIED_FORM_IS_NOT_DISPLAYED, subBenefitFormName, pageName));
+			BusinessFunctions.expandSubBenefitIfCollapsed(subBenefitHeaderMap.get(subBenefitFormName), subBenefitFormName, driver);
 			CoreFunctions.explicitWaitTillElementListClickable(driver, _radioBtnConciergeServices);
 			CoreFunctions.selectItemInListByText(driver, _radioBtnConciergeServices,
 					destinationServicesBenefitData.conciergeServices.grossUp, PDTConstants.GROSS_UP,
@@ -356,7 +430,7 @@ public class PDT_DestinationServicesPage extends Base {
 					destinationServicesBenefitData.conciergeServices.reimbursedBy, PDTConstants.REIMBURSED_BY,
 					PDTConstants.RADIO_BUTTON_LIST, true);
 
-			BusinessFunctions.verifyOtherTextBoxIsDisplayed(driver, addNewPolicyPage,
+			BusinessFunctions.verifyOtherTextBoxIsDisplayed(driver,
 					destinationServicesBenefitData.conciergeServices.reimbursedBy,
 					_txtBoxReimbursedByOtherForConciergeServices,
 					destinationServicesBenefitData.conciergeServices.reimbursedByOther, subBenefitFormName, PDTConstants.REIMBURSED_BY_OTHER);
@@ -367,9 +441,13 @@ public class PDT_DestinationServicesPage extends Base {
 		}
 	}
 
-	public void fillDepartureServicesForm(PDT_AddNewPolicyPage addNewPolicyPage, String subBenefitFormName) {
+	public void fillDepartureServicesForm(PDT_AddNewPolicyPage addNewPolicyPage, String subBenefitFormName, String pageName) {
 
 		try {
+			populateSubBenefitHeaderMap();
+			Assert.assertTrue(BusinessFunctions.verifySubBenefitFormHeaderIsDisplayed(driver, subBenefitHeaderMap.get(subBenefitFormName), subBenefitFormName, pageName),
+					MessageFormat.format(PDTConstants.VERIFIED_FORM_IS_NOT_DISPLAYED, subBenefitFormName, pageName));
+			BusinessFunctions.expandSubBenefitIfCollapsed(subBenefitHeaderMap.get(subBenefitFormName), subBenefitFormName, driver);
 			CoreFunctions.explicitWaitTillElementListVisibility(driver, _drpDownNoOfDaysOptions);
 
 			String randNoOfDays = BusinessFunctions.selectAndReturnRandomValueFromDropDown(driver, addNewPolicyPage,
@@ -388,7 +466,7 @@ public class PDT_DestinationServicesPage extends Base {
 					destinationServicesBenefitData.departureServices.reimbursedBy, PDTConstants.REIMBURSED_BY,
 					PDTConstants.RADIO_BUTTON_LIST, true);
 
-			BusinessFunctions.verifyOtherTextBoxIsDisplayed(driver, addNewPolicyPage,
+			BusinessFunctions.verifyOtherTextBoxIsDisplayed(driver,
 					destinationServicesBenefitData.departureServices.reimbursedBy,
 					_txtBoxReimbursedByOtherForDepartureServices,
 					destinationServicesBenefitData.departureServices.reimbursedByOther, subBenefitFormName, PDTConstants.REIMBURSED_BY_OTHER);
@@ -399,8 +477,12 @@ public class PDT_DestinationServicesPage extends Base {
 		}
 	}
 
-	public void fillFurnitureRentalForm(PDT_AddNewPolicyPage addNewPolicyPage, String subBenefitFormName) {
+	public void fillFurnitureRentalForm(PDT_AddNewPolicyPage addNewPolicyPage, String subBenefitFormName, String pageName) {
 		try {
+			populateSubBenefitHeaderMap();
+			Assert.assertTrue(BusinessFunctions.verifySubBenefitFormHeaderIsDisplayed(driver, subBenefitHeaderMap.get(subBenefitFormName), subBenefitFormName, pageName),
+					MessageFormat.format(PDTConstants.VERIFIED_FORM_IS_NOT_DISPLAYED, subBenefitFormName, pageName));
+			BusinessFunctions.expandSubBenefitIfCollapsed(subBenefitHeaderMap.get(subBenefitFormName), subBenefitFormName, driver);
 			CoreFunctions.explicitWaitTillElementListVisibility(driver, _drpDownDurationOptions);
 
 			String randDuration = BusinessFunctions.selectAndReturnRandomValueFromDropDown(driver, addNewPolicyPage,
@@ -419,7 +501,7 @@ public class PDT_DestinationServicesPage extends Base {
 					destinationServicesBenefitData.furnitureRental.reimbursedBy, PDTConstants.REIMBURSED_BY,
 					PDTConstants.RADIO_BUTTON_LIST, true);
 
-			BusinessFunctions.verifyOtherTextBoxIsDisplayed(driver, addNewPolicyPage,
+			BusinessFunctions.verifyOtherTextBoxIsDisplayed(driver,
 					destinationServicesBenefitData.furnitureRental.reimbursedBy,
 					_txtBoxReimbursedByOtherFurnitureRental,
 					destinationServicesBenefitData.furnitureRental.reimbursedByOther, subBenefitFormName, PDTConstants.REIMBURSED_BY_OTHER);
@@ -430,8 +512,12 @@ public class PDT_DestinationServicesPage extends Base {
 		}
 	}
 	
-	public void fillReimbursementOfMembershipDuesForm(PDT_AddNewPolicyPage addNewPolicyPage, String subBenefitFormName) {
+	public void fillReimbursementOfMembershipDuesForm(PDT_AddNewPolicyPage addNewPolicyPage, String subBenefitFormName, String pageName) {
 		try {
+			populateSubBenefitHeaderMap();
+			Assert.assertTrue(BusinessFunctions.verifySubBenefitFormHeaderIsDisplayed(driver, subBenefitHeaderMap.get(subBenefitFormName), subBenefitFormName, pageName),
+					MessageFormat.format(PDTConstants.VERIFIED_FORM_IS_NOT_DISPLAYED, subBenefitFormName, pageName));
+			BusinessFunctions.expandSubBenefitIfCollapsed(subBenefitHeaderMap.get(subBenefitFormName), subBenefitFormName, driver);
 			CoreFunctions.explicitWaitTillElementListClickable(driver, _radioBtnMembershipDues);
 			CoreFunctions.selectItemInListByText(driver, _radioBtnMembershipDues,
 					destinationServicesBenefitData.reimbursementOfMemberShipDues.grossUp, PDTConstants.GROSS_UP,
@@ -440,7 +526,7 @@ public class PDT_DestinationServicesPage extends Base {
 					destinationServicesBenefitData.reimbursementOfMemberShipDues.reimbursedBy, PDTConstants.REIMBURSED_BY,
 					PDTConstants.RADIO_BUTTON_LIST, true);
 
-			BusinessFunctions.verifyOtherTextBoxIsDisplayed(driver, addNewPolicyPage,
+			BusinessFunctions.verifyOtherTextBoxIsDisplayed(driver,
 					destinationServicesBenefitData.reimbursementOfMemberShipDues.reimbursedBy,
 					_txtBoxReimbursedByOtherMemberShipDues,
 					destinationServicesBenefitData.reimbursementOfMemberShipDues.reimbursedByOther, subBenefitFormName, PDTConstants.REIMBURSED_BY_OTHER);
@@ -451,8 +537,12 @@ public class PDT_DestinationServicesPage extends Base {
 		}
 	}
 	
-	public void fillSchoolSearchForm(PDT_AddNewPolicyPage addNewPolicyPage, String subBenefitFormName) {
+	public void fillSchoolSearchForm(PDT_AddNewPolicyPage addNewPolicyPage, String subBenefitFormName, String pageName) {
 		try {
+			populateSubBenefitHeaderMap();
+			Assert.assertTrue(BusinessFunctions.verifySubBenefitFormHeaderIsDisplayed(driver, subBenefitHeaderMap.get(subBenefitFormName), subBenefitFormName, pageName),
+					MessageFormat.format(PDTConstants.VERIFIED_FORM_IS_NOT_DISPLAYED, subBenefitFormName, pageName));
+			BusinessFunctions.expandSubBenefitIfCollapsed(subBenefitHeaderMap.get(subBenefitFormName), subBenefitFormName, driver);
 			CoreFunctions.explicitWaitTillElementVisibility(driver, _txtBoxDurationInDays,
 					_lblDurationInDays.getText());
 			CoreFunctions.clearAndSetText(driver, _txtBoxDurationInDays, _lblDurationInDays.getText(),
@@ -465,7 +555,7 @@ public class PDT_DestinationServicesPage extends Base {
 					destinationServicesBenefitData.schoolSearch.reimbursedBy, PDTConstants.REIMBURSED_BY,
 					PDTConstants.RADIO_BUTTON_LIST, true);
 
-			BusinessFunctions.verifyOtherTextBoxIsDisplayed(driver, addNewPolicyPage,
+			BusinessFunctions.verifyOtherTextBoxIsDisplayed(driver,
 					destinationServicesBenefitData.schoolSearch.reimbursedBy, _txtBoxReimbursedByOtherSchoolSearch,
 					destinationServicesBenefitData.schoolSearch.reimbursedByOther, subBenefitFormName, PDTConstants.REIMBURSED_BY_OTHER);
 			CoreFunctions.clearAndSetText(driver, _txtAreaCommentForSchoolSearch, PDTConstants.COMMENT,
@@ -475,8 +565,12 @@ public class PDT_DestinationServicesPage extends Base {
 		}
 	}
 	
-	public void fillSettlingServicesForm(PDT_AddNewPolicyPage addNewPolicyPage, String subBenefitFormName) {
+	public void fillSettlingServicesForm(PDT_AddNewPolicyPage addNewPolicyPage, String subBenefitFormName, String pageName) {
 		try {
+			populateSubBenefitHeaderMap();
+			Assert.assertTrue(BusinessFunctions.verifySubBenefitFormHeaderIsDisplayed(driver, subBenefitHeaderMap.get(subBenefitFormName), subBenefitFormName, pageName),
+					MessageFormat.format(PDTConstants.VERIFIED_FORM_IS_NOT_DISPLAYED, subBenefitFormName, pageName));
+			BusinessFunctions.expandSubBenefitIfCollapsed(subBenefitHeaderMap.get(subBenefitFormName), subBenefitFormName, driver);
 			CoreFunctions.explicitWaitTillElementVisibility(driver, _txtBoxDurationInDaysForSettlingServices,
 					_lblDurationInDaysForSettlingServices.getText());
 			CoreFunctions.clearAndSetText(driver, _txtBoxDurationInDaysForSettlingServices, _lblDurationInDaysForSettlingServices.getText(),
@@ -489,7 +583,7 @@ public class PDT_DestinationServicesPage extends Base {
 					destinationServicesBenefitData.settlingInServices.reimbursedBy, PDTConstants.REIMBURSED_BY,
 					PDTConstants.RADIO_BUTTON_LIST, true);
 
-			BusinessFunctions.verifyOtherTextBoxIsDisplayed(driver, addNewPolicyPage,
+			BusinessFunctions.verifyOtherTextBoxIsDisplayed(driver,
 					destinationServicesBenefitData.settlingInServices.reimbursedBy, _txtBoxReimbursedByOtherSettlingServices,
 					destinationServicesBenefitData.settlingInServices.reimbursedByOther, subBenefitFormName, PDTConstants.REIMBURSED_BY_OTHER);
 			CoreFunctions.clearAndSetText(driver, _txtAreaCommentForSettlingServices, PDTConstants.COMMENT,
@@ -499,8 +593,12 @@ public class PDT_DestinationServicesPage extends Base {
 		}
 	}
 	
-	public void fillTransitionAssistanceProgramForm(PDT_AddNewPolicyPage addNewPolicyPage, String subBenefitFormName) {
+	public void fillTransitionAssistanceProgramForm(PDT_AddNewPolicyPage addNewPolicyPage, String subBenefitFormName, String pageName) {
 		try {
+			populateSubBenefitHeaderMap();
+			Assert.assertTrue(BusinessFunctions.verifySubBenefitFormHeaderIsDisplayed(driver, subBenefitHeaderMap.get(subBenefitFormName), subBenefitFormName, pageName),
+					MessageFormat.format(PDTConstants.VERIFIED_FORM_IS_NOT_DISPLAYED, subBenefitFormName, pageName));
+			BusinessFunctions.expandSubBenefitIfCollapsed(subBenefitHeaderMap.get(subBenefitFormName), subBenefitFormName, driver);
 			CoreFunctions.explicitWaitTillElementVisibility(driver, _txtBoxDurationInDaysForTransitionAssistanceProg,
 					_lblDurationInDaysForTransitionAssistanceProg.getText());
 			CoreFunctions.clearAndSetText(driver, _txtBoxDurationInDaysForTransitionAssistanceProg, _lblDurationInDaysForTransitionAssistanceProg.getText(),
@@ -520,7 +618,7 @@ public class PDT_DestinationServicesPage extends Base {
 					destinationServicesBenefitData.transitionAssistanceProgram.reimbursedBy, PDTConstants.REIMBURSED_BY,
 					PDTConstants.RADIO_BUTTON_LIST, true);
 
-			BusinessFunctions.verifyOtherTextBoxIsDisplayed(driver, addNewPolicyPage,
+			BusinessFunctions.verifyOtherTextBoxIsDisplayed(driver,
 					destinationServicesBenefitData.transitionAssistanceProgram.reimbursedBy, _txtBoxReimbursedByOtherTransitionAssistanceProg,
 					destinationServicesBenefitData.transitionAssistanceProgram.reimbursedByOther, subBenefitFormName, PDTConstants.REIMBURSED_BY_OTHER);
 			CoreFunctions.clearAndSetText(driver, _txtAreaCommentForTransitionAssistanceProg, PDTConstants.COMMENT,
@@ -530,8 +628,12 @@ public class PDT_DestinationServicesPage extends Base {
 		}
 	}
 	
-	public void fillTutionAndEductionForm(PDT_AddNewPolicyPage addNewPolicyPage, String subBenefitFormName) {
+	public void fillTutionAndEductionForm(PDT_AddNewPolicyPage addNewPolicyPage, String subBenefitFormName, String pageName) {
 		try {
+			populateSubBenefitHeaderMap();
+			Assert.assertTrue(BusinessFunctions.verifySubBenefitFormHeaderIsDisplayed(driver, subBenefitHeaderMap.get(subBenefitFormName), subBenefitFormName, pageName),
+					MessageFormat.format(PDTConstants.VERIFIED_FORM_IS_NOT_DISPLAYED, subBenefitFormName, pageName));
+			BusinessFunctions.expandSubBenefitIfCollapsed(subBenefitHeaderMap.get(subBenefitFormName), subBenefitFormName, driver);
 			CoreFunctions.explicitWaitTillElementVisibility(driver, _txtBoxMaxAmtTutionAndEduction,
 					_lblMaxAmtForTutionAndEduction.getText());
 			CoreFunctions.clearAndSetText(driver, _txtBoxMaxAmtTutionAndEduction, _lblMaxAmtForTutionAndEduction.getText(),
@@ -549,7 +651,7 @@ public class PDT_DestinationServicesPage extends Base {
 					destinationServicesBenefitData.tutionAndEducation.reimbursedBy, PDTConstants.REIMBURSED_BY,
 					PDTConstants.RADIO_BUTTON_LIST, true);
 
-			BusinessFunctions.verifyOtherTextBoxIsDisplayed(driver, addNewPolicyPage,
+			BusinessFunctions.verifyOtherTextBoxIsDisplayed(driver,
 					destinationServicesBenefitData.tutionAndEducation.reimbursedBy, _txtBoxReimbursedByOtherTutionAndEduction,
 					destinationServicesBenefitData.tutionAndEducation.reimbursedByOther, subBenefitFormName, PDTConstants.REIMBURSED_BY_OTHER);
 			CoreFunctions.clearAndSetText(driver, _txtAreaCommentForTutionAndEduction, PDTConstants.COMMENT,
@@ -559,5 +661,81 @@ public class PDT_DestinationServicesPage extends Base {
 		}
 	}
 
+	public void fillDestinationServicesSubBenefit(String subBenefit, String pageName, PDT_AddNewPolicyPage addNewPolicyPage, PDT_SharedSubBenefitPage subBenefitPage) {		
+		switch (subBenefit) {
+		case PDTConstants.AIRPORT_PICKUP:
+			fillAirPortPickUpForm(addNewPolicyPage,	subBenefit, pageName);
+			break;
+		case PDTConstants.AREA_TOUR:
+			fillAreaTourForm(addNewPolicyPage, subBenefit, pageName);
+			break;
+		case PDTConstants.AUTO_RENTAL_DURING_ASSIGNMENT:
+			fillAutoRentalForm(addNewPolicyPage, subBenefit, pageName);
+			break;
+		case PDTConstants.CONCIERGE_SERVICES:
+			fillConciergeServicesForm(addNewPolicyPage, subBenefit, pageName);
+			break;
+		case PDTConstants.DEPARTURE_SERVICES:
+			fillDepartureServicesForm(addNewPolicyPage, subBenefit, pageName);
+			break;
+		case PDTConstants.FURNITURE_RENTAL:
+			fillFurnitureRentalForm(addNewPolicyPage, subBenefit, pageName);
+			break;
+		case PDTConstants.REIMBURSEMENT_OF_MEMEBERSHIP_DUES:
+			fillReimbursementOfMembershipDuesForm(addNewPolicyPage, subBenefit, pageName);
+			break;
+		case PDTConstants.EDUCATION_ASSISTANCE:
+			fillSchoolSearchForm(addNewPolicyPage, subBenefit, pageName);
+			break;
+		case PDTConstants.EDUCATION_ASSISTANT:
+			fillSchoolSearchForm(addNewPolicyPage, subBenefit, pageName);
+			break;
+		case PDTConstants.SETTLING_IN_SERVICES:
+			fillSettlingServicesForm(addNewPolicyPage, subBenefit, pageName);
+			break;
+		case PDTConstants.TRANSITION_ASSISTANCE_PROGRAM:
+			fillTransitionAssistanceProgramForm(addNewPolicyPage, subBenefit, pageName);
+			break;
+		case PDTConstants.TUTION_AND_EDUCATION:
+			fillTutionAndEductionForm(addNewPolicyPage, subBenefit, pageName);
+			break;
+
+		default:
+			Assert.fail(MessageFormat.format(PDTConstants.SUBBENEFIT_NOT_FOUND, CoreConstants.FAIL, subBenefit, pageName));
+		}		
+	}
+	
+	/**
+	 * Iterate Destination Services sub-benefits and fill their corresponding form.
+	 * @param pageName
+	 * @param subBenefits
+	 * @param addNewPolicyPage
+	 * @param objStep
+	 * @param btnName
+	 * @param subBenefitPage 
+	 */
+	public void iterateAndFillDestinationServicesSubBenefits(String pageName, List<String> subBenefits,
+			PDT_AddNewPolicyPage addNewPolicyPage, PDT_SharedSubBenefit_Steps objStep, String btnName, PDT_SharedSubBenefitPage subBenefitPage) {
+		CoreFunctions.explicitWaitTillElementListClickable(driver, _subBenefitCategories);			
+		populateBtnMap();
+		populateConfirmDialogbuttonMap();
+		WebElement btnToClick = (btnName != null) ?  buttonMap.get(btnName) : buttonMap.get(PDTConstants.SAVE);
+		for (String subBenefit : subBenefits) {
+			CoreFunctions.selectItemInListByText(driver, _subBenefitCategories, subBenefit, true);
+			timeBeforeAction = new Date().getTime();
+			BusinessFunctions.fluentWaitForSpinnerToDisappear(driver, _progressBar);
+			timeAfterAction = new Date().getTime();
+			BusinessFunctions.printTimeTakenByPageToLoad(timeBeforeAction, timeAfterAction, pageName, subBenefit);
+			fillDestinationServicesSubBenefit(subBenefit, pageName, addNewPolicyPage, subBenefitPage);
+		}
+		try {
+			CoreFunctions.click(driver, btnToClick, btnToClick.getText());
+		} catch (NoSuchElementException e) {
+			Assert.fail(MessageFormat.format(PDTConstants.MISSING_BTN, CoreConstants.FAIL, btnName));
+		} catch (Exception e) {
+			e.printStackTrace();
+			Assert.fail(MessageFormat.format(PDTConstants.FAILED_TO_CLICK_ON_BTN, CoreConstants.FAIL, btnName));
+		}
+	}
 
 }

@@ -60,6 +60,10 @@ public class WebDriverManager {
 			driver = createDriver();
 		return driver;
 	}
+	
+	public WebDriver getCurrentDriverStatus() {
+		return driver;
+	}
 
 	private WebDriver createDriver() {
 		switch (environmentType) {

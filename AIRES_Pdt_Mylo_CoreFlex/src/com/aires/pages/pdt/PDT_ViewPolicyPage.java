@@ -120,8 +120,11 @@ public class PDT_ViewPolicyPage extends Base {
 	@FindBy(how = How.CSS, using = "img[src*='Info.png']")
 	private WebElement _imgInfoIcon;
 
+	@FindBy(how = How.CSS, using = "textarea[formcontrolname='description']")
+	private WebElement _txtAreaDescription;
+	
 	@FindBy(how = How.CSS, using = "input[formcontrolname='description']")
-	private WebElement _txtBoxDescription;
+	private WebElement _inputDescription;
 
 	@FindBy(how = How.CSS, using = "img[src='assets/img/vectorcopy.png']")
 	private List<WebElement> _listCloneEnableIcon;
@@ -163,10 +166,15 @@ public class PDT_ViewPolicyPage extends Base {
 	@FindBy(how = How.CSS, using = "div.icons-action a[mattooltip='Assignment History']>img")
 	private List<WebElement> _listAssignmentHistoryIcon;
 	
+	@FindBy(how = How.XPATH, using = "//strong[contains(text(),'Version Number')]/parent::label/following-sibling::label")
+	private WebElement _versionNumber;
+	
 	// Approve Policy Icon List
 	@FindBy(how = How.CSS, using = "div.icons-action a[mattooltip='Approve Policy']>img")
 	private List<WebElement> _listApprovePolicyIcon;
 	LinkedHashMap<String, List<WebElement>> iconMap = new LinkedHashMap<String, List<WebElement>>();
+	LinkedHashMap<String, WebElement> webElementsMap = new LinkedHashMap<String, WebElement>();
+	LinkedHashMap<String, String> webElementsTextMap = new LinkedHashMap<String, String>();
 
 	final By _listPolicyNameByLocator = By.cssSelector("h5.text-info.info-pname");
 	final By _listClientNameByLocator = By.cssSelector("h6.info-pclient");
@@ -177,51 +185,52 @@ public class PDT_ViewPolicyPage extends Base {
 		iconMap.put(PDTConstants.ICON_ASSIGNMENT_HISTORY, _listAssignmentHistoryEnableIcon);
 		iconMap.put(PDTConstants.ICON_EDIT, _listEditEnableIcon);
 	}
-
-	public String getElementText(String elementName) {
-		String elementText = null;
-
-		switch (elementName) {
-		case PDTConstants.HEADING:
-			elementText = _headingViewEditPolicyForm.getText();
-			break;
-		case PDTConstants.USERNAME:
-			elementText = _userName.getText();
-			break;
-		default:
-			Assert.fail("Element not found");
-		}
-		return elementText;
-
+	
+	public void initWebElementsMap() {
+		webElementsMap.put(PDTConstants.LOGOUT, _logout);
+		webElementsMap.put(PDTConstants.ADD_NEW_POLICY_FORM, _addNewPolicyForm);
+		webElementsMap.put(PDTConstants.CLEAR_FILTER, _clearFilter);
 	}
 
-	public void clickElementOfPage(String elementName) {
-		switch (elementName) {
-		case PDTConstants.LOGOUT:
-			CoreFunctions.clickElement(driver, _logout);
-			break;
-		case PDTConstants.ADD_NEW_POLICY_FORM:
-			CoreFunctions.clickUsingJS(driver, _addNewPolicyForm, PDTConstants.ADD_NEW_POLICY_FORM);
-			if (CoreFunctions.isElementExist(driver, _progressBar, 4))
-				BusinessFunctions.fluentWaitForSpinnerToDisappear(driver, _progressBar);
-			break;
-		case PDTConstants.CLEAR_FILTER:
-			CoreFunctions.highlightElementAndClick(driver, _clearFilter, PDTConstants.CLEAR_FILTER);
-			break;
-		default:
-			Assert.fail("Element not found");
+	public void initWebElementsTextMap() {
+		webElementsTextMap.put(PDTConstants.HEADING, _headingViewEditPolicyForm.getText());
+		webElementsTextMap.put(PDTConstants.USERNAME, _userName.getText());		
+	}
+	
+	public String getElementText(String elementName) {
+		String elementText = null;		
+		initWebElementsTextMap();
+		try {
+			elementText = webElementsTextMap.get(elementName);
+		} catch(Exception e) {
+			Assert.fail(MessageFormat.format(PDTConstants.ELEMENT_NOT_FOUND, CoreConstants.FAIL));
+		}
+		return elementText;
+	}
+
+	public void clickElementOfPage(String elementName, String pageName) {
+		try {
+			initWebElementsMap();
+			CoreFunctions.clickUsingJS(driver, webElementsMap.get(elementName), elementName);
+		} catch (Exception e){
+			Assert.fail(MessageFormat.format(PDTConstants.FAILED_TO_CLICK, elementName, pageName));
 		}
 	}
 
 	public String getUserName() {
-		CoreFunctions.explicitWaitTillElementVisibility(driver, _userName, _userName.getText().split("\n")[1]);
-		String userArray[] = _userName.getText().split("\n");
-		return userArray[1].trim();
+		String userName = "";
+		try {
+			CoreFunctions.explicitWaitTillElementVisibility(driver, _userName, _userName.getText().split("\n")[1]);
+			userName = _userName.getText().substring(_userName.getText().indexOf("\n")+1, _userName.getText().length());
+		} catch(Exception e) {
+			Assert.fail("Failed to get username");
+		}
+		return userName;
 	}
 
-	public Boolean verifyUserlogin(String userName, String pageName) {
-		if (CoreFunctions.isElementExist(driver, _progressBar, 2))
-			BusinessFunctions.fluentWaitForSpinnerToDisappear(driver, _progressBar);
+	public Boolean verifyUserlogin(String userName, String pageName) {	
+		BusinessFunctions.fluentWaitForSpinnerToDisappear(driver, _progressBar);
+		CoreFunctions.explicitWaitTillElementVisibility(driver, _userName, _userName.getText().split("\n")[1]);
 		if (getUserName().contains(userName)) {
 			CoreFunctions.highlightObject(driver, _userName);
 			Reporter.addStepLog(MessageFormat.format(PDTConstants.VERIFIED_USERNAME_IS_DISPLAYED, CoreConstants.PASS,
@@ -252,18 +261,26 @@ public class PDT_ViewPolicyPage extends Base {
 		if (_txtPolicyName.size() > 0) {
 			Reporter.addStepLog(
 					MessageFormat.format(PDTConstants.POLICIES_ARE_DISPLAYED, CoreConstants.PASS, pageName));
-			clickElementOfPage(PDTConstants.LOGOUT);
+			clickElementOfPage(PDTConstants.LOGOUT, pageName);
 			return true;
 		}
 		return false;
+	}
+	
+	public void enterSearchCriteria(WebElement element, String searchText) {
+		try {
+			CoreFunctions.clearAndSetText(driver, element, searchText);
+			CoreFunctions.click(driver, _btnSearch, _btnSearch.getText());
+			BusinessFunctions.fluentWaitForSpinnerToDisappear(driver, _progressBar);
+		} catch(Exception e) {
+			Assert.fail("Fail to enter search criteria");
+		}
 	}
 
 	public void performSearchOperation(Map<String, String> policyDetails, String pageName) {
 		switch (policyDetails.get("SearchBy")) {
 		case PDTConstants.CLIENT_ID:
-			CoreFunctions.clearAndSetText(driver, _inputClientId, policyDetails.get("SearchText"));
-			CoreFunctions.click(driver, _btnSearch, _btnSearch.getText());
-			BusinessFunctions.fluentWaitForSpinnerToDisappear(driver, _progressBar);
+			enterSearchCriteria(_inputClientId, policyDetails.get("SearchText"));
 			Assert.assertTrue(
 					verifyClientIdAndCompanyName(policyDetails.get("SearchText"), policyDetails.get("CompanyName"),
 							pageName),
@@ -271,9 +288,7 @@ public class PDT_ViewPolicyPage extends Base {
 							policyDetails.get("SearchText"), policyDetails.get("CompanyName"), pageName));
 			break;
 		case PDTConstants.CLIENT_NAME:
-			CoreFunctions.clearAndSetText(driver, _inputClientName, policyDetails.get("SearchText"));
-			CoreFunctions.click(driver, _btnSearch, _btnSearch.getText());
-			BusinessFunctions.fluentWaitForSpinnerToDisappear(driver, _progressBar);
+			enterSearchCriteria(_inputClientName, policyDetails.get("SearchText"));
 			Assert.assertTrue(
 					verifyClientIdAndCompanyName(policyDetails.get("ClientId"), policyDetails.get("SearchText"),
 							pageName),
@@ -281,9 +296,7 @@ public class PDT_ViewPolicyPage extends Base {
 							policyDetails.get("ClientId"), policyDetails.get("SearchText"), pageName));
 			break;
 		case PDTConstants.POLICY:
-			CoreFunctions.clearAndSetText(driver, _inputPolicyName, policyDetails.get("SearchText"));
-			CoreFunctions.click(driver, _btnSearch, _btnSearch.getText());
-			BusinessFunctions.fluentWaitForSpinnerToDisappear(driver, _progressBar);
+			enterSearchCriteria(_inputPolicyName, policyDetails.get("SearchText"));
 			Assert.assertTrue(verifyPolicyName(policyDetails.get("SearchText"), pageName),
 					MessageFormat.format(PDTConstants.FAIL_TO_VERIFY_POLICY_NAME_ON_PAGE, CoreConstants.FAIL,
 							policyDetails.get("SearchText"), pageName));
@@ -328,7 +341,7 @@ public class PDT_ViewPolicyPage extends Base {
 	public void iteratePolicyData(List<Map<String, String>> policyData, String pageName) {
 		for (int i = 0; i < policyData.size(); i++) {
 			performSearchOperation(policyData.get(i), pageName);
-			clickElementOfPage(PDTConstants.CLEAR_FILTER);
+			clickElementOfPage(PDTConstants.CLEAR_FILTER, pageName);
 		}
 	}
 
@@ -442,7 +455,7 @@ public class PDT_ViewPolicyPage extends Base {
 		}
 	}
 
-	public void searchByPolicyName(String iconName, String policyName, String pageName) {
+	public void searchByPolicyNameAndClickIcon(String iconName, String policyName, String pageName) {
 		try {
 			populateIconMap();
 			CoreFunctions.clearAndSetText(driver, _inputPolicyName, policyName);
@@ -491,8 +504,12 @@ public class PDT_ViewPolicyPage extends Base {
 	}
 
 	public void waitForProgressBarToDisapper() {
-		if (CoreFunctions.isElementExist(driver, _progressBar, 3)) {
-			BusinessFunctions.fluentWaitForSpinnerToDisappear(driver, _progressBar);
+		try {
+			if(CoreFunctions.isElementExist(driver, _progressBar, 5)) {		
+				BusinessFunctions.fluentWaitForSpinnerToDisappear(driver, _progressBar);			
+			}			
+		} catch(Exception e) {
+			Assert.fail(MessageFormat.format(PDTConstants.FAIL_TO_WAIT_PROGRESS_BAR, CoreConstants.FAIL));
 		}
 	}
 
@@ -514,18 +531,18 @@ public class PDT_ViewPolicyPage extends Base {
 
 		CoreFunctions.verifyText(driver, _msgVersionPopUp.get(1), data.get(1).get(1), data.get(1).get(0));
 		CoreFunctions.verifyText(driver, _versionText, data.get(2).get(1), data.get(2).get(0));
-		if (CoreFunctions.isElementVisible(_txtBoxDescription)) {
-			CoreFunctions.highlightObject(driver, _txtBoxDescription);
+		if (CoreFunctions.isElementVisible(_inputDescription)) {
+			CoreFunctions.highlightObject(driver, _inputDescription);
 			Reporter.addStepLog(MessageFormat.format(PDTConstants.VERIFIED_ELEMENT_VISIBLE, CoreConstants.PASS,
-					PDTConstants.TXTBOX, PDTConstants.DESCRIPTION));
+					PDTConstants.TXTAREA, PDTConstants.DESCRIPTION));
 		} else
 			Assert.fail(MessageFormat.format(PDTConstants.VERIFIED_ELEMENT_NOT_VISIBLE, CoreConstants.PASS,
-					PDTConstants.TXTBOX, PDTConstants.DESCRIPTION));
+					PDTConstants.TXTAREA, PDTConstants.DESCRIPTION));
 
 	}
 
 	public boolean enterDescriptionAndVerifyCreateBtn(String btnName, String btnStatus) {
-		CoreFunctions.clearAndSetText(driver, _txtBoxDescription, PDTConstants.DESCRIPTION,
+		CoreFunctions.clearAndSetText(driver, _inputDescription, PDTConstants.DESCRIPTION,
 				"Version 2 is getting created");
 		if (verifyButton(btnName, btnStatus))
 			return true;
@@ -553,8 +570,8 @@ public class PDT_ViewPolicyPage extends Base {
 
 		CoreFunctions.verifyText(driver, _msgVersionPopUp.get(1), PDTConstants.MESSAGE2, "Message2");
 		CoreFunctions.verifyText(driver, _versionText, PDTConstants.VERSION_V2, "Version");
-		if (CoreFunctions.isElementVisible(_txtBoxDescription)) {
-			CoreFunctions.highlightObject(driver, _txtBoxDescription);
+		if (CoreFunctions.isElementVisible(_inputDescription)) {
+			CoreFunctions.highlightObject(driver, _inputDescription);
 			Reporter.addStepLog(MessageFormat.format(PDTConstants.VERIFIED_ELEMENT_VISIBLE, CoreConstants.PASS,
 					PDTConstants.TXTBOX, PDTConstants.DESCRIPTION));
 		} else
@@ -564,8 +581,8 @@ public class PDT_ViewPolicyPage extends Base {
 	}
 
 	public void enterDescription() {
-		CoreFunctions.clearAndSetText(driver, _txtBoxDescription, PDTConstants.DESCRIPTION,
-				"Version 2 is getting created");
+		CoreFunctions.clearAndSetText(driver, _inputDescription, PDTConstants.DESCRIPTION,
+				"Version V2 is getting created");
 		CoreFunctions.click(driver, _btnCreate, _btnCreate.getText());
 		waitForProgressBarToDisapper();
 	}
@@ -713,6 +730,25 @@ public class PDT_ViewPolicyPage extends Base {
 	public void highlightAndClickIcon(String key) {
 		populateIconMap();
 		CoreFunctions.highlightElementAndClick(driver, iconMap.get(key).get(policySearchIndex), PDTConstants.CLEAR_FILTER);
+	}
+	
+	public void searchByPolicyNameAndClickPolicy(String policyName, String pageName) {
+		try {
+			populateIconMap();
+			CoreFunctions.clearAndSetText(driver, _inputPolicyName, policyName);
+			CoreFunctions.click(driver, _btnSearch, _btnSearch.getText());
+			if (CoreFunctions.isElementExist(driver, _progressBar, 2)) {
+				BusinessFunctions.fluentWaitForSpinnerToDisappear(driver, _progressBar);
+			}
+			int index = BusinessFunctions.returnindexItemFromListUsingText(driver, _listPolicyName, policyName);
+			if (index != -1) {
+				CoreFunctions.highlightElementAndClick(driver, _listPolicyName.get(index), _listPolicyName.get(index).getText());
+			} else {
+				Assert.fail("Failed to search policy name");
+			}
+		} catch (Exception e) {
+			Assert.fail("Failed to search policy name");
+		}
 	}
 
 }

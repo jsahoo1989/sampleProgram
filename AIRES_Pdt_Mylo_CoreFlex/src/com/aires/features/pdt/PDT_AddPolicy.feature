@@ -1,4 +1,3 @@
-@spant
 Feature: Add new Policy form with Benefit Categories
   Validate the functionality of Add new Policy form
 
@@ -176,7 +175,7 @@ Feature: Add new Policy form with Benefit Categories
     Given he is on the "Add New Policy" page after clicking on the link "Add New Policy Form" displayed under the left navigation menu on the 'View Policy' page
     And he has clicked on the 'Next' button after selecting client, policy information on the 'Add New Policy' page
     And he has entered mandatory information on 'General Information' page followed by selection of "Duplicate Housing" as Benefit Category on "Policy Benefit" page
-    When he clicks on 'SUBMIT' button after entering mandatory information on "Duplicate Housing" page
+    When he clicks on "SAVE & SUBMIT" button after entering mandatory information on "Duplicate Housing" page
     Then Policy Status should be changed to "Submitted" along with Version "V1" on the "Policy Benefit" page
     And newly created Policy should be displayed under "View Policy" page after clicking on 'EXIT' button
 
@@ -196,7 +195,7 @@ Feature: Add new Policy form with Benefit Categories
     And he has clicked on the 'Next' button after selecting client, policy information on the 'Add New Policy' page
     And he has entered mandatory information on 'General Information' page followed by selection of "Ongoing Payments/Reimbursements" as Benefit Category on "Policy Benefit" page
     When he clicks on "SAVE & SUBMIT" button after entering mandatory information for all the below selected sub benefits on "Ongoing Payments/Reimbursements" page
-      | COLA | Per Diem | Mobility Premium | Transportation Allowance | Housing Allowance | Home Maintenance Allowance | Furniture Allowance | Hardship Allowance | Banking Allowance | At Sea Allowance | Commuter Allowance | Differential Allowance | Goods & Services Allowance | Home Leave Allowance | Home Retention Allowance | Housekeeping Allowance | Utility Allowance | Other Ongoing Allowance |
+    | COLA | Per Diem | Mobility Premium | Transportation Allowance | Housing Allowance | Home Maintenance Allowance | Furniture Allowance | Hardship Allowance | Banking Allowance | At Sea Allowance | Commuter Allowance | Differential Allowance | Goods & Services Allowance | Home Leave Allowance | Home Retention Allowance | Housekeeping Allowance | Utility Allowance | Other Ongoing Allowance |
     Then Policy Status should be changed to "Submitted" along with Version "V1" on the "Policy Benefit" page
     And newly created Policy should be displayed under "View Policy" page after clicking on 'EXIT' button
 
@@ -205,7 +204,7 @@ Feature: Add new Policy form with Benefit Categories
     Given he is on the "Add New Policy" page after clicking on the link "Add New Policy Form" displayed under the left navigation menu on the 'View Policy' page
     And he has clicked on the 'Next' button after selecting client, policy information on the 'Add New Policy' page
     And he has entered mandatory information on 'General Information' page followed by selection of "Property Management" as Benefit Category on "Policy Benefit" page
-    When he clicks on 'SUBMIT' button after entering mandatory information on "Property Management" page    
+    When he clicks on "SAVE & SUBMIT" button after entering mandatory information on "Property Management" page    
     Then Policy Status should be changed to "Submitted" along with Version "V1" on the "Policy Benefit" page
     And newly created Policy should be displayed under "View Policy" page after clicking on 'EXIT' button
 
@@ -241,3 +240,12 @@ Feature: Add new Policy form with Benefit Categories
 		Then information should not be saved for below sub-benefits of "Cultural Training" page
 		| Cultural Training Employee | Cultural Training Family |
 		
+	@BLUE-08
+	Scenario: PDT - Add new Policy form using Expense Management Category as Yes and validate that Gross-Up/Reimbursed by field should display their updated values after any udpates
+		Given he is on the "Add New Policy" page after clicking on the link "Add New Policy Form" displayed under the left navigation menu on the 'View Policy' page
+    And he has clicked on the 'Next' button after selecting client, policy information on the 'Add New Policy' page
+    And he has entered mandatory information on 'General Information' page with 'Expense Management client' as 'Yes' followed by selection of below categories on "Policy Benefit Category" page
+    | Language Training | Cultural Training |
+    And the sub-benefit form of above benefit categories displays the default selected option for Gross-Up, Reimbursed by fields
+    When he clicks on "SAVE & SUBMIT" button after entering mandatory information for all the sub-benefit forms
+    Then updated value of Gross-Up, Reimbursed by fields should be displayed on all sub-benefit forms 

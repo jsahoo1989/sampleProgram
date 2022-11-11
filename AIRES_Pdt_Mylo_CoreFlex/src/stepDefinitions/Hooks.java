@@ -42,6 +42,8 @@ import com.aires.businessrules.constants.CoreConstants;
 import com.aires.businessrules.constants.PDTConstants;
 import com.aires.cucumber.TestContext;
 import com.aires.managers.FileReaderManager;
+import com.aires.testdatatypes.pdt.PDT_LoginInfo;
+import com.aires.utilities.ClientPolicyDetails;
 import com.aires.utilities.Log;
 import com.aires.utilities.TestRail;
 import com.aventstack.extentreports.Status;
@@ -59,6 +61,7 @@ public class Hooks {
 	TestContext testContext;
 	public static int testResult;
 	public static Scenario scenarioName;
+	private PDT_LoginInfo _loginInfo;	
 
 	public Hooks(TestContext context) {
 		testContext = context;
@@ -68,18 +71,21 @@ public class Hooks {
 	public void BeforeSteps(Scenario scenario) throws Exception {
 		scenarioName = scenario;
 		Reporter.assignAuthor("AIRES - Automation - By : " + System.getProperty("user.name"));
+		//_loginInfo = FileReaderManager.getInstance().getJsonReader().getLoginByEnvt(CoreFunctions.getPropertyFromConfig("envt").toLowerCase());
+		_loginInfo = FileReaderManager.getInstance().getJsonReader().getLoginByEnvt(System.getProperty("envt").toLowerCase());
 		testContext.initializeWebManager(scenario.getName().contains("IRIS"));
-		String appName=System.getProperty("application");
-		String url=System.getProperty("testURL");
-		if (scenario.getName().contains("IRIS")) {
-			testContext.getBasePage().invokeIrisApplication();
+		
+		//testContext.initializeWebManager(CoreFunctions.getPropertyFromConfig("application"));//appName
+		//String appName=System.getProperty("application");
+		//String url=System.getProperty("testURL");
+		/*if (scenario.getName().contains("IRIS")) {
+			//testContext.getBasePage().invokeIrisApplication();
 			testContext.getBasePage().killExistingBrowsers();
-		}
+		}*/
 		//Commented Code is for debugging purpose in local
-		/*else if (scenario.getName().contains("PDT")) {
-			Log.info(FileReaderManager.getInstance().getConfigReader().getPDTApplicationUrl());
-			testContext.getWebDriverManager().getDriver().navigate()
-					.to(FileReaderManager.getInstance().getConfigReader().getPDTApplicationUrl());
+		if (scenario.getName().contains("PDT")) {
+			Log.info(_loginInfo.details.pdtUrl);
+			testContext.getWebDriverManager().getDriver().navigate().to(_loginInfo.details.pdtUrl);
 			CoreFunctions.writeToPropertiesFile("assignmentSubmitStatus", "false");
 		} else if (scenario.getName().contains("Mylo")) {
 			Log.info(FileReaderManager.getInstance().getConfigReader().getApplicationUrl("MYLO"));
@@ -97,9 +103,9 @@ public class Hooks {
 			Log.info(FileReaderManager.getInstance().getConfigReader().getCoreFlexTransfereeSubmissionsApplicationUrl());
 			testContext.getWebDriverManager().getDriver().navigate()
 					.to(FileReaderManager.getInstance().getConfigReader().getCoreFlexTransfereeSubmissionsApplicationUrl());
-		}*/
+		}
 		
-		else if (appName.equals(CoreConstants.COREFLEX)&& scenario.getName().contains("MXTransferee")) {
+		/*else if (appName.equals(CoreConstants.COREFLEX)&& scenario.getName().contains("MXTransferee")) {
 			Log.info(FileReaderManager.getInstance().getConfigReader().getApplicationUrl("MXTransferee"));
 			testContext.getWebDriverManager().getDriver().navigate()
 					.to(FileReaderManager.getInstance().getConfigReader().getApplicationUrl("MXTransferee"));
@@ -112,7 +118,7 @@ public class Hooks {
 		else {
 			Log.info(url);
 			testContext.getWebDriverManager().getDriver().navigate().to(url);
-		}	
+		}*/	
 	}
 
 	@After(order = 2)
@@ -132,7 +138,8 @@ public class Hooks {
 				e.printStackTrace();
 			}
 			Reporter.addScreenCaptureFromPath(screenshotPath.toString());
-		} else if (scenario.isFailed() && scenario.getName().contains("PDT") && testContext.getPageObjectManager().getAddNewPolicyPage().getPolicyId() != null) {
+		//} else if (scenario.isFailed() && scenario.getName().contains("PDT") && testContext.getPageObjectManager().getAddNewPolicyPage().getPolicyId() != null) {
+		} else if (scenario.isFailed() && scenario.getName().contains("PDT") && ClientPolicyDetails.getPolicyId() != null) {	
 			Reporter.addStepLog(Status.FAIL + " : Please refer failed screen shot attached here.");
 			testResult = 5;
 			try {
@@ -152,8 +159,8 @@ public class Hooks {
 				// Attach the specified screenshot to the test
 				Reporter.addScreenCaptureFromPath(destinationPath.toString());
 				if(CoreFunctions.getPropertyFromConfig("assignmentSubmitStatus").equalsIgnoreCase("true"))
-					DbFunctions.updateAssignmentStatus(PDTConstants.INACTIVE_ASSGN_STATUS_CODE, testContext.getPageObjectManager().getAddNewPolicyPage().getPolicyId());
-				DbFunctions.deletePolicyByPolicyId(testContext.getPageObjectManager().getAddNewPolicyPage().getPolicyId());
+					DbFunctions.updateAssignmentStatus(PDTConstants.INACTIVE_ASSGN_STATUS_CODE, ClientPolicyDetails.getPolicyId());
+				DbFunctions.deletePolicyByPolicyId(ClientPolicyDetails.getPolicyId());
 			} catch (IOException e) {
 			}
 		} else if (scenario.isFailed()) {
@@ -177,10 +184,11 @@ public class Hooks {
 				Reporter.addScreenCaptureFromPath(destinationPath.toString());
 			} catch (IOException e) {
 			}
-		} else if (scenario.getStatus().equalsIgnoreCase("passed") && scenario.getName().contains("PDT") && testContext.getPageObjectManager().getAddNewPolicyPage().getPolicyId() != null) {
+		//} else if (scenario.getStatus().equalsIgnoreCase("passed") && scenario.getName().contains("PDT") && testContext.getPageObjectManager().getAddNewPolicyPage().getPolicyId() != null) {
+		} else if (scenario.getStatus().equalsIgnoreCase("passed") && scenario.getName().contains("PDT") && ClientPolicyDetails.getPolicyId() != null) {	
 			if(CoreFunctions.getPropertyFromConfig("assignmentSubmitStatus").equalsIgnoreCase("true"))
-				DbFunctions.updateAssignmentStatus(PDTConstants.INACTIVE_ASSGN_STATUS_CODE, testContext.getPageObjectManager().getAddNewPolicyPage().getPolicyId());
-			DbFunctions.deletePolicyByPolicyId(testContext.getPageObjectManager().getAddNewPolicyPage().getPolicyId());
+				DbFunctions.updateAssignmentStatus(PDTConstants.INACTIVE_ASSGN_STATUS_CODE, ClientPolicyDetails.getPolicyId());
+			DbFunctions.deletePolicyByPolicyId(ClientPolicyDetails.getPolicyId());			
 			Reporter.addScenarioLog(Status.PASS + " : Test Scenario is Passed");
 			testResult = 1;
 		} else if (scenario.getStatus().equalsIgnoreCase("passed")) {
@@ -189,14 +197,14 @@ public class Hooks {
 		}else {
 			Reporter.addScenarioLog(Status.SKIP + " : Test Scenario is Skipped");
 			testResult = 2;
-		}
+		}		
 	}
 
 	
-	@After(order = 1)
+	//@After(order = 1)
 	public void updateResultInTestRail(Scenario scenario) {
-		String Case_ID = BusinessFunctions.getTestRailIdAsPerApplication(System.getProperty("application"),scenario.getSourceTagNames().toString());
-		//String Case_ID = BusinessFunctions.getTestRailIdAsPerApplication("PDT",scenario.getSourceTagNames().toString());
+		//String Case_ID = BusinessFunctions.getTestRailIdAsPerApplication(System.getProperty("application"),scenario.getSourceTagNames().toString());
+		String Case_ID = BusinessFunctions.getTestRailIdAsPerApplication("PDT",scenario.getSourceTagNames().toString());
 		Log.info(Case_ID);
 		String testrailRunName = (CoreFunctions.getPropertyFromConfig("SniffSuite_TestRunId"));
 		TestRail.addResultForTestCase(Case_ID, testResult, testrailRunName, CoreConstants.TEST_RAIL_URL,
@@ -207,12 +215,19 @@ public class Hooks {
 
 	@After(order = 0)
 	public void AfterSteps(Scenario scenario) throws Exception {
+
 		if (scenario.getName().contains("IRIS")) {
 			testContext.getBasePage().cleanIrisProcesses();
 		} else {
-			testContext.getWebDriverManager().closeDriver();
-		}
+			quitDriver();			
+		}		
 		Runtime.getRuntime().gc();
+	}
+
+	public void quitDriver() {
+		Log.info("testContext.getWebDriverManager().toString()=="+testContext.getWebDriverManager().getCurrentDriverStatus());
+		if(!(testContext.getWebDriverManager().getCurrentDriverStatus() == null))
+			testContext.getWebDriverManager().closeDriver();			
 	}
 
 	private static String logError(Scenario scenario) {

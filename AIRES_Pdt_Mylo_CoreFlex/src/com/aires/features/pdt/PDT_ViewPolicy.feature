@@ -14,9 +14,9 @@ Feature: Validate the functionality of View Policy page
     Given he is on "View Policy" page
     Then he should be able to verify Policy data on "View Policy" page after performing below SearchBy operations
       | SearchBy    | SearchText                    | ClientId | CompanyName                   |
-      #| Policy      | Global Transfer Core/Flex - US Inpat |    50270 | American Eagle Outfitters     |
+      | Policy      | Global Transfer Core/Flex - US Expat |    50270 | American Eagle Outfitters     |
       #| Policy      | Integrated Services           |     7403 | Dow Chemical Company (Global) |
-      | Policy      | Canada Transfer               |     7403 | Dow Chemical Company (Global) |
+      #| Policy      | Canada Transfer               |     7403 | Dow Chemical Company (Global) |
       | Client Id   |                         50270 |    50270 | American Eagle Outfitters     |
       | Client Name | Dow Chemical Company (Global) |     7403 | Dow Chemical Company (Global) |
 			#| Client Name | Seagen                       |    93835 | Seagen                 |

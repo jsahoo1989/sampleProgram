@@ -11,6 +11,7 @@ import com.aires.cucumber.TestContext;
 import com.aires.pages.pdt.PDT_AddNewPolicyPage;
 import com.aires.pages.pdt.PDT_PreAcceptanceService;
 import com.aires.pages.pdt.PDT_ViewPolicyPage;
+import com.aires.utilities.ClientPolicyDetails;
 
 import cucumber.api.DataTable;
 import cucumber.api.java.en.Given;
@@ -49,6 +50,6 @@ public class PDT_PreAcceptanceServices_Steps {
 	public void below_sub_benefit_categories_form_should_disappear_from_page(String pageName,
 			DataTable subBenefitTable) {
 		preAcceptanceServicePage.checkFormIsHidden(subBenefitTable, pageName);
-		DbFunctions.deletePolicyByPolicyId(addNewPolicyPage.getPolicyId());
+		DbFunctions.deletePolicyByPolicyId(ClientPolicyDetails.getPolicyId());
 	}
 }

@@ -1,15 +1,16 @@
 package com.aires.pages.pdt;
 
 import java.text.MessageFormat;
+import java.util.Date;
 import java.util.List;
 
+import org.openqa.selenium.NoSuchElementException;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.How;
 import org.testng.Assert;
 
-import com.aires.businessrules.Base;
 import com.aires.businessrules.BusinessFunctions;
 import com.aires.businessrules.CoreFunctions;
 import com.aires.businessrules.constants.CoreConstants;
@@ -18,7 +19,9 @@ import com.aires.managers.FileReaderManager;
 import com.aires.testdatatypes.pdt.PDT_HomeLeaveBenefit;
 import com.vimalselvam.cucumber.listener.Reporter;
 
-public class PDT_HomeLeavePage extends Base {
+import stepDefinitions.pdt.PDT_SharedSubBenefit_Steps;
+
+public class PDT_HomeLeavePage extends PDT_SharedSubBenefitPage {
 	public PDT_HomeLeavePage(WebDriver driver) {
 		super(driver);
 	}
@@ -40,12 +43,6 @@ public class PDT_HomeLeavePage extends Base {
 
 	@FindBy(how = How.CSS, using = "ng-select[formcontrolname='assignmentFreqOfTripCode']")
 	private WebElement _drpDownFrequencyOfTrip;
-
-/*	@FindBy(how = How.CSS, using = "ng-select[formcontrolname='assignmentFreqOfTripCode'] span.ng-option-label.ng-star-inserted")
-	private List<WebElement> _drpDownFrequencyOfTripOptions;
-
-	@FindBy(how = How.CSS, using = "ng-select[formcontrolname='assignmentFreqOfTripCode'] span.ng-value-label.ng-star-inserted")
-	private WebElement _drpDownFrequencyOfTripOptionsSelected;*/
 	
 	@FindBy(how = How.CSS, using = "ng-select[formcontrolname='assignmentFreqOfTripCode'] span.ng-option-label")
 	private List<WebElement> _drpDownFrequencyOfTripOptions;
@@ -201,6 +198,21 @@ public class PDT_HomeLeavePage extends Base {
 
 	@FindBy(how = How.CSS, using = "app-meals textArea[formcontrolname='benefitComment']")
 	private WebElement _txtAreaHomeLeaveMealsComment;
+	
+	@FindBy(how = How.CSS, using = "a[href='#collapseOne1']")
+	private WebElement _formHeaderHomeLeaveTransportation;
+	
+	@FindBy(how = How.CSS, using = "a[href='#collapseTwo']")
+	private WebElement _formHeaderHomeLeaveLodging;
+
+	@FindBy(how = How.CSS, using = "a[href='#collapseThree']")
+	private WebElement _formHeaderHomeLeaveMeals;
+	
+	@FindBy(how = How.CSS, using = "div.form-check > label.form-check-label")
+	private List<WebElement> _subBenefitCategories;
+	
+	@FindBy(how = How.CSS, using = "div.ngx-progress-bar.ngx-progress-bar-ltr")
+	private WebElement _progressBar;
 
 	PDT_HomeLeaveBenefit homeLeaveBenefitData = FileReaderManager.getInstance().getJsonReader()
 			.getHomeLeaveDataList("Home Leave");
@@ -239,6 +251,15 @@ public class PDT_HomeLeavePage extends Base {
 		return frequencyOfTrips;
 	}
 
+	/**
+	 * Add the Form Header of Home Leave Transportation, Home Leave Lodging & Home Leave Meals in Hash map i.e. subBenefitHeaderMap
+	 */
+	public void populateSubBenefitHeaderMap() {
+		subBenefitHeaderMap.put(PDTConstants.HOME_LEAVE_TRANSPORTATION, _formHeaderHomeLeaveTransportation);
+		subBenefitHeaderMap.put(PDTConstants.HOME_LEAVE_LODGING, _formHeaderHomeLeaveLodging);
+		subBenefitHeaderMap.put(PDTConstants.HOME_LEAVE_MEALS, _formHeaderHomeLeaveMeals);
+	}
+	
 	public void selectRandomTransportTypeOption(PDT_AddNewPolicyPage addNewPolicyPage, String subBenefitFormName) {
 		try {
 			CoreFunctions.clickElement(driver, _drpDownTransportationType);
@@ -286,17 +307,23 @@ public class PDT_HomeLeavePage extends Base {
 	}
 
 	public void verifyAndSelectFrequencyOfTrips(PDT_AddNewPolicyPage addNewPolicyPage, String subBenefitFormName) {
-		if (CoreFunctions.isElementExist(driver, _drpDownFrequencyOfTrip, 1)) {
-			Reporter.addStepLog(MessageFormat.format(PDTConstants.VERIFIED_DROP_DWN_FIELD_DISPLAYED, CoreConstants.PASS,
-					_lblFrequencyOfTrips.getText(), subBenefitFormName));
-			String randFrequencyOfTrips = BusinessFunctions.selectAndReturnRandomValueFromDropDown(driver,
-					addNewPolicyPage, subBenefitFormName, _drpDownFrequencyOfTrip, _drpDownFrequencyOfTripOptions,
-					_drpDownFrequencyOfTripOptionsSelected, _lblFrequencyOfTrips.getText());
-			setFrequencyOfTrips(randFrequencyOfTrips);
-			verifyAndFillOtherFreq(addNewPolicyPage, subBenefitFormName, randFrequencyOfTrips);
-		} else {
+		try {
+			if (CoreFunctions.isElementExist(driver, _drpDownFrequencyOfTrip, 1)) {
+				Reporter.addStepLog(MessageFormat.format(PDTConstants.VERIFIED_DROP_DWN_FIELD_DISPLAYED, CoreConstants.PASS,
+						_lblFrequencyOfTrips.getText(), subBenefitFormName));
+				String randFrequencyOfTrips = BusinessFunctions.selectAndReturnRandomValueFromDropDown(driver,
+						addNewPolicyPage, subBenefitFormName, _drpDownFrequencyOfTrip, _drpDownFrequencyOfTripOptions,
+						_drpDownFrequencyOfTripOptionsSelected, _lblFrequencyOfTrips.getText());
+				setFrequencyOfTrips(randFrequencyOfTrips);
+				verifyAndFillOtherFreq(addNewPolicyPage, subBenefitFormName, randFrequencyOfTrips);
+			} else {
+				
+				Assert.fail(PDTConstants.ASSIGNMENT_FREQTRIPS_NOT_DISPLAYED);
+			}
+		} catch(Exception e) {
 			Assert.fail(PDTConstants.ASSIGNMENT_FREQTRIPS_NOT_DISPLAYED);
 		}
+
 	}
 
 	public void verifyAndFillOtherFreq(PDT_AddNewPolicyPage addNewPolicyPage, String subBenefitFormName,
@@ -332,9 +359,20 @@ public class PDT_HomeLeavePage extends Base {
 		}
 	}
 
+	/**
+	 * Fill Home Leave Transportation Form.
+	 * @param addNewPolicyPage
+	 * @param subBenefitFormName
+	 * @param tracingSet
+	 * @param pageName
+	 */
 	public void fillHomeLeaveTransportationForm(PDT_AddNewPolicyPage addNewPolicyPage, String subBenefitFormName,
-			String tracingSet) {
+			String tracingSet, String pageName) {
 		try {
+			populateSubBenefitHeaderMap();
+			Assert.assertTrue(BusinessFunctions.verifySubBenefitFormHeaderIsDisplayed(driver, subBenefitHeaderMap.get(subBenefitFormName), subBenefitFormName, pageName),
+					MessageFormat.format(PDTConstants.VERIFIED_FORM_IS_NOT_DISPLAYED, subBenefitFormName, pageName));
+			BusinessFunctions.expandSubBenefitIfCollapsed(subBenefitHeaderMap.get(subBenefitFormName), subBenefitFormName, driver);
 			CoreFunctions.explicitWaitTillElementVisibility(driver, _lblTransportationType,
 					_lblTransportationType.getText());
 			verifyAndFillNumberOfTripsBasedOnTracingSetValue(addNewPolicyPage, subBenefitFormName, tracingSet);
@@ -355,7 +393,7 @@ public class PDT_HomeLeavePage extends Base {
 			CoreFunctions.selectItemInListByText(driver, _radioBtnHomeLeaveTransportation,
 					homeLeaveBenefitData.homeLeaveTransportation.reimbursedBy, PDTConstants.REIMBURSED_BY,
 					PDTConstants.RADIO_BUTTON_LIST, true);
-			BusinessFunctions.verifyOtherTextBoxIsDisplayed(driver, addNewPolicyPage,
+			BusinessFunctions.verifyOtherTextBoxIsDisplayed(driver,
 					homeLeaveBenefitData.homeLeaveTransportation.reimbursedBy,
 					_txtBoxHomeLeaveTransportReimbursedByOther,
 					homeLeaveBenefitData.homeLeaveTransportation.reimbursedByOther, subBenefitFormName, PDTConstants.REIMBURSED_BY_OTHER);
@@ -366,8 +404,18 @@ public class PDT_HomeLeavePage extends Base {
 		}
 	}
 
-	public void fillHomeLeaveLodgingForm(PDT_AddNewPolicyPage addNewPolicyPage, String subBenefitFormName) {
+	/**
+	 * Fill Home Leave Lodging Form.
+	 * @param addNewPolicyPage
+	 * @param subBenefitFormName
+	 * @param pageName
+	 */
+	public void fillHomeLeaveLodgingForm(PDT_AddNewPolicyPage addNewPolicyPage, String subBenefitFormName, String pageName) {
 		try {
+			populateSubBenefitHeaderMap();
+			Assert.assertTrue(BusinessFunctions.verifySubBenefitFormHeaderIsDisplayed(driver, subBenefitHeaderMap.get(subBenefitFormName), subBenefitFormName, pageName),
+					MessageFormat.format(PDTConstants.VERIFIED_FORM_IS_NOT_DISPLAYED, subBenefitFormName, pageName));
+			BusinessFunctions.expandSubBenefitIfCollapsed(subBenefitHeaderMap.get(subBenefitFormName), subBenefitFormName, driver);
 			CoreFunctions.explicitWaitTillElementVisibility(driver, _txtBoxDurationInDays,
 					_lblDurationInDays.getText());
 			CoreFunctions.clearAndSetText(driver, _txtBoxDurationInDays, _lblDurationInDays.getText(),
@@ -380,7 +428,7 @@ public class PDT_HomeLeavePage extends Base {
 			CoreFunctions.selectItemInListByText(driver, _radioBtnHomeLeaveLodging,
 					homeLeaveBenefitData.homeLeaveLodging.reimbursedBy, PDTConstants.REIMBURSED_BY,
 					PDTConstants.RADIO_BUTTON_LIST, true);
-			BusinessFunctions.verifyOtherTextBoxIsDisplayed(driver, addNewPolicyPage,
+			BusinessFunctions.verifyOtherTextBoxIsDisplayed(driver,
 					homeLeaveBenefitData.homeLeaveLodging.reimbursedBy, _txtBoxHomeLeaveLodgingReimbursedByOther,
 					homeLeaveBenefitData.homeLeaveLodging.reimbursedByOther, subBenefitFormName, PDTConstants.REIMBURSED_BY_OTHER);
 			CoreFunctions.clearAndSetText(driver, _txtAreaHomeLeaveLodgingComment, PDTConstants.COMMENT,
@@ -474,8 +522,18 @@ public class PDT_HomeLeavePage extends Base {
 		}
 	}
 
-	public void fillHomeLeaveMealForm(PDT_AddNewPolicyPage addNewPolicyPage, String subBenefitFormName) {
+	/**
+	 * Fill Home Leave Meal Form.
+	 * @param addNewPolicyPage
+	 * @param subBenefitFormName
+	 * @param pageName
+	 */
+	public void fillHomeLeaveMealForm(PDT_AddNewPolicyPage addNewPolicyPage, String subBenefitFormName, String pageName) {
 		try {
+			populateSubBenefitHeaderMap();
+			Assert.assertTrue(BusinessFunctions.verifySubBenefitFormHeaderIsDisplayed(driver, subBenefitHeaderMap.get(subBenefitFormName), subBenefitFormName, pageName),
+					MessageFormat.format(PDTConstants.VERIFIED_FORM_IS_NOT_DISPLAYED, subBenefitFormName, pageName));
+			BusinessFunctions.expandSubBenefitIfCollapsed(subBenefitHeaderMap.get(subBenefitFormName), subBenefitFormName, driver);
 			CoreFunctions.explicitWaitTillElementVisibility(driver, _txtBoxHomeNumOfDaysForMeals,
 					_lblNumOfDaysForMeals.getText());
 			CoreFunctions.clearAndSetText(driver, _txtBoxHomeNumOfDaysForMeals, _lblNumOfDaysForMeals.getText(),
@@ -497,7 +555,7 @@ public class PDT_HomeLeavePage extends Base {
 					homeLeaveBenefitData.homeLeaveMeals.reimbursedBy, PDTConstants.REIMBURSED_BY,
 					PDTConstants.RADIO_BUTTON_LIST, true);
 
-			BusinessFunctions.verifyOtherTextBoxIsDisplayed(driver, addNewPolicyPage,
+			BusinessFunctions.verifyOtherTextBoxIsDisplayed(driver,
 					homeLeaveBenefitData.homeLeaveMeals.reimbursedBy, _txtBoxHomeLeaveMealsReimbursedByOther,
 					homeLeaveBenefitData.homeLeaveMeals.reimbursedByOther, subBenefitFormName, PDTConstants.REIMBURSED_BY_OTHER);
 
@@ -506,6 +564,62 @@ public class PDT_HomeLeavePage extends Base {
 
 		} catch (Exception e) {
 			Assert.fail(MessageFormat.format(PDTConstants.EXCEPTION_OCCURED_FILL_SUBBENEFIT_FORM, CoreConstants.FAIL, subBenefitFormName));
+		}
+	}
+	
+	/**
+	 * Fill Home Leave sub-benefit based on sub-benefit name
+	 * @param subBenefit
+	 * @param pageName
+	 * @param addNewPolicyPage
+	 * @param tracingSet
+	 */
+	public void fillHomeLeaveSubBenefit(String subBenefit, String pageName, PDT_AddNewPolicyPage addNewPolicyPage, String tracingSet, PDT_SharedSubBenefitPage subBenefitPage) {		
+		switch (subBenefit) {
+		case PDTConstants.HOME_LEAVE_TRANSPORTATION:
+			fillHomeLeaveTransportationForm(addNewPolicyPage, subBenefit, tracingSet, pageName);
+			break;
+		case PDTConstants.HOME_LEAVE_LODGING:
+			fillHomeLeaveLodgingForm(addNewPolicyPage, subBenefit, pageName);
+			break;
+		case PDTConstants.HOME_LEAVE_MEALS:
+			fillHomeLeaveMealForm(addNewPolicyPage, subBenefit, pageName);
+			break;
+		default:
+			Assert.fail(MessageFormat.format(PDTConstants.SUBBENEFIT_NOT_FOUND, CoreConstants.FAIL, subBenefit, pageName));
+		}		
+	}
+	
+	/**
+	 * Iterate Home Leave sub-benefits and fill their corresponding form.
+	 * @param pageName
+	 * @param subBenefits
+	 * @param addNewPolicyPage
+	 * @param objStep
+	 * @param btnName
+	 * @param subBenefitPage 
+	 */
+	public void iterateAndFillHomeLeaveSubBenefits(String pageName, List<String> subBenefits,
+			PDT_AddNewPolicyPage addNewPolicyPage, PDT_SharedSubBenefit_Steps objStep, String btnName, PDT_SharedSubBenefitPage subBenefitPage, String tracingSet) {
+		CoreFunctions.explicitWaitTillElementListClickable(driver, _subBenefitCategories);			
+		populateBtnMap();
+		populateConfirmDialogbuttonMap();
+		WebElement btnToClick = (btnName != null) ?  buttonMap.get(btnName) : buttonMap.get(PDTConstants.SAVE);
+		for (String subBenefit : subBenefits) {
+			CoreFunctions.selectItemInListByText(driver, _subBenefitCategories, subBenefit, true);
+			timeBeforeAction = new Date().getTime();
+			BusinessFunctions.fluentWaitForSpinnerToDisappear(driver, _progressBar);
+			timeAfterAction = new Date().getTime();
+			BusinessFunctions.printTimeTakenByPageToLoad(timeBeforeAction, timeAfterAction, pageName, subBenefit);
+			fillHomeLeaveSubBenefit(subBenefit, pageName, addNewPolicyPage, tracingSet, subBenefitPage);
+		}
+		try {
+			CoreFunctions.click(driver, btnToClick, btnToClick.getText());
+		} catch (NoSuchElementException e) {
+			Assert.fail(MessageFormat.format(PDTConstants.MISSING_BTN, CoreConstants.FAIL, btnName));
+		} catch (Exception e) {
+			e.printStackTrace();
+			Assert.fail(MessageFormat.format(PDTConstants.FAILED_TO_CLICK_ON_BTN, CoreConstants.FAIL, btnName));
 		}
 	}
 

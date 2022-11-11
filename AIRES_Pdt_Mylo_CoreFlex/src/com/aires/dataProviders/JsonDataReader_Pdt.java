@@ -41,6 +41,7 @@ import com.aires.testdatatypes.pdt.PDT_ImmigrationBenefit;
 import com.aires.testdatatypes.pdt.PDT_LanguageTrainingBenefit;
 import com.aires.testdatatypes.pdt.PDT_LoginData;
 import com.aires.testdatatypes.pdt.PDT_LoginDetails;
+import com.aires.testdatatypes.pdt.PDT_LoginInfo;
 import com.aires.testdatatypes.pdt.PDT_OneTimePaymentBenefit;
 import com.aires.testdatatypes.pdt.PDT_OngoingPaymentReimbursementBenefit;
 import com.aires.testdatatypes.pdt.PDT_PreAcceptanceServiceBenefit;
@@ -53,6 +54,8 @@ public class JsonDataReader_Pdt {
 
 	private final String _loginDataFilePath = FileReaderManager.getInstance().getConfigReader()
 			.getTestDataResourcePath() + "pdt/PDT_LoginData.json";
+	private final String _loginInfoFilePath = FileReaderManager.getInstance().getConfigReader()
+			.getTestDataResourcePath() + "pdt/PDT_LoginInfo.json";
 	private final String _PreAcceptanceServiceFilePath = FileReaderManager.getInstance().getConfigReader()
 			.getTestDataResourcePath() + "pdt/PDT_PreAcceptanceServiceBenefit.json";
 	private final String _ImmigrationFilePath = FileReaderManager.getInstance().getConfigReader()
@@ -96,6 +99,7 @@ public class JsonDataReader_Pdt {
 
 	private List<PDT_LoginData> _loginDataList;
 	private List<PDT_LoginDetails> _loginDetailsList;
+	private List<PDT_LoginInfo> _loginInfoList;
 	private List<PDT_PreAcceptanceServiceBenefit> _preAcceptanceServicelist;
 	private List<PDT_ImmigrationBenefit> _immigrationList;
 	private List<PDT_HouseHuntingTripBenefit> _houseHuntingTripList;
@@ -119,6 +123,7 @@ public class JsonDataReader_Pdt {
 	public JsonDataReader_Pdt() {
 		_loginDataList = getUserData();
 		_loginDetailsList = getLoginByApplication();
+		_loginInfoList = getLoginInfoByEnvt();
 		_preAcceptanceServicelist = getPreAcceptanceData();
 		_immigrationList = getImmigrationData();
 		_houseHuntingTripList = getHouseHuntingTripData();
@@ -166,7 +171,25 @@ public class JsonDataReader_Pdt {
 			PDT_LoginDetails[] application = gson.fromJson(bufferReader, PDT_LoginDetails[].class);
 			return Arrays.asList(application);
 		} catch (FileNotFoundException e) {
-			throw new RuntimeException(CoreConstants.JSON_FILE_NOT_FOUND_AT_PATH + _loginDataFilePath);
+			throw new RuntimeException(CoreConstants.JSON_FILE_NOT_FOUND_AT_PATH + _loginDetailsFilePath);
+		} finally {
+			try {
+				if (bufferReader != null)
+					bufferReader.close();
+			} catch (IOException ignore) {
+			}
+		}
+	}
+	
+	private List<PDT_LoginInfo> getLoginInfoByEnvt() {
+		Gson gson = new Gson();
+		BufferedReader bufferReader = null;
+		try {
+			bufferReader = new BufferedReader(new FileReader(_loginInfoFilePath));
+			PDT_LoginInfo[] loginInfo = gson.fromJson(bufferReader, PDT_LoginInfo[].class);
+			return Arrays.asList(loginInfo);
+		} catch (FileNotFoundException e) {
+			throw new RuntimeException(CoreConstants.JSON_FILE_NOT_FOUND_AT_PATH + _loginInfoFilePath);
 		} finally {
 			try {
 				if (bufferReader != null)
@@ -527,6 +550,10 @@ public class JsonDataReader_Pdt {
 	
 	public final PDT_LoginDetails getLoginByApplication(String applicationName) {
 		return _loginDetailsList.stream().filter(x -> x.application.equalsIgnoreCase(applicationName)).findAny().get();
+	}
+	
+	public final PDT_LoginInfo getLoginByEnvt(String envt) {
+		return _loginInfoList.stream().filter(x -> x.environment.equalsIgnoreCase(envt)).findAny().get();
 	}
 
 	public final PDT_PreAcceptanceServiceBenefit getPreAcceptanceDataList(String policyBenefit) {

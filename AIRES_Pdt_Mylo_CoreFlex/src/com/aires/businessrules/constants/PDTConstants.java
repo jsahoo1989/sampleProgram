@@ -118,9 +118,10 @@ public class PDTConstants {
 	public static final String FAILED_TO_VERIFY_USERNAME = "{0}Failed to match username on ''{1}'' page. Expected username:- ''{2}''. Actual username displayed:- ''{3}''";
 	public static final String VIEW_EDIT_POLICY_FORMS = "View/Edit Policy Forms";
 	public static final String VERIFIED_HEADING_ON_PAGE = "{0}Verfied heading ''{1}'' on ''{2}'' page.";
-	public static final String FAILED_TO_VERIFY_HEADING_ON_PAGE = "{0}Failed to verify heading on ''{1}'' page. Expected heading:- ''{2}''. Actual heading displayed:- ''{3}''";
+	public static final String FAILED_TO_VERIFY_HEADING_ON_PAGE = "<font color=''red''>{0}Failed to verify heading on ''{1}'' page. Expected heading:- ''{2}''. Actual heading displayed:- ''{3}''</font>";
 	public static final String USERNAME = "username";
 	public static final String HEADING = "heading";
+	public static final String MESSAGE = "message";
 	public static final String LOGOUT = "logout";
 	public static final String VERIFY_USER_RECEIVED_NOTIFICATION = "{0} Verified that user ''{1}'' has successfully recieved the notification email ''{2}''";
 	public static final String VEIRFY_USER_NOT_RECEIVED_NOTIFICATION = "{0} Verified that user did not recieve the notification email ''{1}''";
@@ -204,7 +205,7 @@ public class PDTConstants {
 	public static final String VERIFIED_FORM_IS_NOT_HIDDEN = "{0} ''{1}'' form is not hidden on ''{2}'' page.";
 	public static final String NO_ITEMS_FOUND = "No items found";
 	public static final String VERIFY_ELEMENT_VALUE_ON_PAGE = "{0}Verified ''{1}'' :- ''{2}'' on ''{3}'' page.";
-	public static final String FAIL_TO_VERIFY_ELEMENT_VAL_ON_PAGE = "{0}Failed to verify ''{1}'' :- ''{2}'' on ''{3}'' page.<br/> Expected ''{1}'' :- ''{2}''. <br/>Actual ''{1}'' :- ''{4}''.";
+	public static final String FAIL_TO_VERIFY_ELEMENT_VAL_ON_PAGE = "<font color=''red''>{0}Failed to verify ''{1}'' :- ''{2}'' on ''{3}'' page.<br/> Expected ''{1}'' :- ''{2}''. <br/>Actual ''{1}'' :- ''{4}''</font>.";
 	public static final String heading = "heading";
 	public static final String FAILED_TO_FILL_GENERAL_INFO_FORM = "Failed to fill General Information form";
 	public static final String VERIFY_VALUE_SELECTED_FROM_DROPDWON = "{0}Verified value selected from ''{1}'' drop down is : ''{2}''";
@@ -219,9 +220,7 @@ public class PDTConstants {
 	public static final String REIMBURSED_BY_OTHER = "Reimbursed By(Other)";
 	public static final String COMMENT = "Comment";
 	public static final String VERIFIED_DROP_DOWN_MULTISELECT = "{0}Verified drop down ''{1}'' is a multiselect drop down and optons selected are:- ''{2}''";
-	public static final String DETAIL = "Detail";
-	public static final String VERIFIED_SUCCESS_MSG = "{0}Verified success message is displayes as ''{1}'' on ''{2}'' page.";
-	public static final String FAILED_TO_VERIFY_SUCCESS_MSG = "{0}Failed to verify success message ''{1}'' on ''{2}'' page.";
+	public static final String DETAIL = "Detail";	
 	public static final String VERIFIED_ELEMENT_ON_PAGE = "{0}Verified ''{1}'' on ''{2}'' page";
 	public static final String FAIL_TO_VERIFY_ELEMENT_ON_PAGE = "{0}Failed to verify ''{1}'' on ''{2}'' page";
 	public static final String VERIFIED_ELEMENT_DISPLAYED_ON_PAGE = "{0}Verified ''{1}'' :- ''{2}'' is displayed on ''{3}'' page";
@@ -302,6 +301,7 @@ public class PDTConstants {
 	// cultural Training
 	public static final String CULTURAL_TRAINING_EMPLOYEE = "Cultural Training Employee";
 	public static final String CULTURAL_TRAINING_FAMILY = "Cultural Training Family";
+	
 	// Db Constants
 	public static final String DATABASE_CONNECTION = "Database connection";
 	public static final String FAIL_TO_CALL_PROC = "Fail to call procedure";
@@ -490,6 +490,9 @@ public class PDTConstants {
 	public static final String VERIFIED_DATA_SAVED_FOR_SUB_BENEFIT = "{0}Verified data is saved for SubBenefit Categories:-''{1}''";
 	public static final String APPLICATION_PDT = "PDT";
 	public static final String APPLICATION_MYLO = "MYLO";
+	public static final String APPLICATION_COREFLEX = "CoreFlex";
+	public static final String APPLICATION_IRIS = "IRIS";
+	public static final String APPLICATION_MOBILITYX= "MobilityX";
 	public static final String APPLICATION_NOT_VALID = "{0}Application ''{1}'' is not a valid application";
 	public static final String VERIFIED_DEFAULT_CURR_SELECTED = "{0}Verified default currency selected is ''{1}'' on {2} sub-benefit form.";
 	public static final String BTN_APPROVE_POLICY = "APPROVE POLICY";
@@ -497,7 +500,7 @@ public class PDTConstants {
 	public static final String VERIFIED_BTN_ENABLED = "{0}Verified ''{1}'' button is enabled on ''{2}'' page.";
 	public static final String FAILED_TO_VERIFY_BTN_VISIBLE = "{0} Failed to veriy ''{1}'' button is visible on ''{2}'' page.";
 	public static final String FAILED_TO_VERIFY_BTN_DISABLED = "{0} Failed to veriy ''{1}'' button is disabled on ''{2}'' page.";
-	public static final String FAILED_TO_CLICK = "{0} Failed to click on ''{1}'' {2} on ''{3}'' page.";
+	public static final String FAILED_TO_CLICK = "{0} Failed to click on ''{1}'' element on ''{3}'' page.";
 	public static final String BUTTON = "button";
 	public static final String VERIFIED_BTN_STATE = "{0}Verified ''{1}'' button is in ''{2}'' state on Approve Policy Pop-up.";
 	public static final String FAILED_TO_VERIFY_BTN_STATE = "{0}Failed to verify ''{1}'' button is in ''{2}'' state on Approve Policy Pop-up.";
@@ -526,6 +529,7 @@ public class PDTConstants {
 	public static final String ASSIGNMENT_HISTORY = "Assignment History";
 	public static final String VERIFIED_ELEMENT_VISIBLE = "{0}Verified ''{1}'' :- ''{2}'' is visible.";
 	public static final String TXTBOX = "textbox"; 
+	public static final String TXTAREA = "textarea"; 
 	public static final String DESCRIPTION = "description"; 
 	public static final String VERIFIED_ELEMENT_NOT_VISIBLE = "Verified ''{0}'' :- ''{1}'' is not visible.";
 	public static final String MESSAGE1 = "This policy version \"V1\" is in an Active state and currently has 1 assignments or files associated with it in IRIS.";
@@ -554,8 +558,8 @@ public class PDTConstants {
 	public static final String CIRCLE_CHECK_INDICATOR = "check_circle_outline";
 	public static final String ERROR_INDICATOR = "error";
 	public static final String ERROR_IND = "error indicator";
-	public static final String VERIFIED_ICON_INDICATOR = "{0}Verified ''{1}'' is displayed with ''{2}'' Benefit Category on Left menu.";
-	public static final String FAILED_TO_VERIFY_ICON_INDICATOR = "{0}Failed to Verify ''{1}'' is displayed with ''{2}'' Benefit Category on Left menu.";
+	public static final String VERIFIED_ICON_INDICATOR = "{0}Verified ''{1}'' icon is displayed with ''{2}'' Benefit Category on Left menu.";
+	public static final String FAILED_TO_VERIFY_ICON_INDICATOR = "{0}Failed to Verify ''{1}'' icon is displayed with ''{2}'' Benefit Category on Left menu. Expected icon:- ''{1}''. Actual icon displayed:-''{3}''";
 	public static final String VERIFIED_STAYS_ON_SAME_PAGE = "{0}Verified he stays on same page i.e. ''{1}'' even after Save operation";
 	public static final String FAILED_TO_VERIFY_STAYS_ON_SAME_PAGE = "{0}Failed to Verify he stays on same page even after Save operation. Expected page name after save:''{1}''. Actual page name after save:''{2}''";
 	public static final String VERIFIED_POLICY_STATUS_REMAINS_SAME = "{0}Verified Policy status remains same i.e. ''{1}'' after {2} Operation";
@@ -576,6 +580,49 @@ public class PDTConstants {
 	public static final String FAILED_TO_VERIFY_WARNING_MSG = "{0}Failed to Verify Warning Message. Expected Message:- ''{1}''. Actual Message displayed in the Warning Pop-up:-''{2}''.";
 	public static final String VERIFIED_NAVIGATED_TO_PREV_PAGE = "{0}Verified he has navigated to previous page i.e. ''{1}''.";
 	public static final String FAIL_TO_VERIFY_NAVIGATED_TO_PREV_PAGE = "{0}Failed to verify that he has navigated to previous page. Expected page ''{1}''. Actual Page ''{2}''";
-	public static final String EXCEPTION_OCCUR_NAV_TO_PREV_PAGE = "{0}Exception occured while navigating to previous page.";
+	public static final String EXCEPTION_OCCUR_NAV_TO_PAGE = "{0}Exception occured while navigating to {1} page.";
 	public static final String BTN_DOES_NOT_EXIST = "{0}Button:- {1} does not exist.";
+	public static final String FAIL_TO_WAIT_PROGRESS_BAR = "{0}Exception occurred while waiting for progress bar to disappear";
+	public static final String FAIL_TO_GET_TEXT_FOR_ELEMENT = "{0}Exception occurred while trying to get text for element {1}";
+	public static final String IMMIGRATION = "Immigration";
+	public static final String HOUSE_HUNTING_TRIP = "House Hunting Trip";
+	public static final String ONE_TIME_PAYMENTS_REIMBURSEMENTS = "One Time Payments/Reimbursements";
+	public static final String ONGOING_PAYMENTS_REIMBURSEMENTS = "Ongoing Payments/Reimbursements";
+	public static final String HOUSEHOLD_GOODS = "Household Goods";
+	public static final String FINAL_MOVE = "Final Move";
+	public static final String DESTINATION_SERVICES = "Destination Services";
+	public static final String LANGUAGE_TRAINING = "Language Training";
+	public static final String CULTURAL_TRAINING = "Cultural Training";
+	public static final String HOME_LEAVE = "Home Leave";
+	public static final String HOME_SALE = "Home Sale";
+	public static final String TEMPORARY_LIVING = "Temporary Living";
+	public static final String ASSIGNMENT_HOUSING_CMPNY_SPONSORED = "Assignment Housing (Company Sponsored)";
+	public static final String HOME_PURCHASE = "Home Purchase";
+	public static final String RENTAL_ASSISTANCE = "Rental Assistance";
+	public static final String COMPENSATION_SERVICES = "Compensation Services";
+	public static final String SUBBENEFIT_NOT_FOUND = "{0}SubBenefit:--''{1}'' not found on ''{2}'' page";
+	public static final String INVALID_APP = "{0}Invalid Application:-{1}";
+	public static final String VERIFY_POPUP_CONTENTS = "{0}Verified ''{1}'' :- ''{2}'' is displayed on ''{3}''";
+	public static final String FAIL_TO_VERIFY_POPUP = "{0}Failed to Verify ''{1}'' :- ''{2}'' on {3}";
+	public static final String FAIL_TO_VERIFY_POPUP_CONTENTS = "<font color=''red''>{0}Failed to verify ''{1}'' :- ''{2}'' on {3}.<br/> Expected ''{1}'' :- ''{2}''. <br/>Actual ''{1}'' :- ''{4}''</font>.";
+	public static final String VERIFY_BUTTON_DISPLAYED_ON_POPUP = "{0}Verified ''{1}'' button is displayed on {2}.";
+	public static final String FAILED_TO_VERIFY_BUTTON_DISPLAYED_ON_POPUP = "<font color=''red''>{0}Failed to verify ''{1}'' button is displayed on {2}. Expected button name:-''{1}''. Actual button name:-''{2}''</font>";
+	public static final String POP_UP_NOT_DISPLAYED = "{0}{1} is not displayed";
+	public static final String VERIFIED_NAVIGATED_TO_NEXT_PAGE = "{0}Verified he has navigated to next page i.e. ''{1}''.";
+	public static final String FAIL_TO_VERIFY_NAVIGATED_TO_NEXT_PAGE = "{0}Failed to verify that he has navigated to next page. Expected page ''{1}''. Actual Page ''{2}''";
+	public static final String PREVIOUS = "previous";
+	public static final String FAILED_VERIFY_DATA_NOT_SAVED_SUB_BENEFIT = "{0}Failed to verify data is not saved for SubBenefit Category:-''{1}''";
+	public static final String VERIFIED_STAYS_ON_SAME_PAGE_AFTER_CANCEL = "{0}Verified he stays on same page i.e. ''{1}'' after clicking CANCEL button on Confirmation popup";
+	public static final String FAILED_TO_VERIFY_STAYS_ON_SAME_PAGE_AFTER_CANCEL = "{0}Failed to Verify he stays on same page even after clicking Cancel button. Expected page name after clicking Cancel button:''{1}''. Actual page name after clicking Cancel button:''{2}''";
+	public static final String DRAFT_CHECK_CIRCLE = "Draft check_circle";
+	public static final String VERIFIED_DATA_SAVED = "{0}Verified data is saved after clicking on Save button on Confirmation popup";
+	public static final String XBTN = "X";
+	public static final String VERIFIED_HE_IS_ON_PAGE = "{0}Verified he is on ''{1}'' page.";
+	public static final String FAIL_TO_VERIFY_HE_IS_ON_PAGE = "{0}Failed to verify he is on ''{1}'' page. Expected pagename:-''{1}''. Actual pagename:-''{2}''";
+	public static final String VERIFIED_EXIT_MODAL_NOT_DISPLAYED = "{0}Verified Exit Modal dialog not displayed.";
+	public static final String VERIFIED_EXIT_MODAL_DISPLAYED = "{0}Verified Exit Modal dialog is displayed.";
+	public static final String VERIFIED_FIELD_IS_DISPLAYED = "{0}Verified ''{1}'' field is displayed";
+	public static final String VERIFIED_FIELD_IS_NOT_DISPLAYED = "{0}Verified ''{1}'' field is not displayed";
+	public static final String VERIFIED_EXPENSE_CODE_OPTIONS_POPULATED = "{0}Verified all expense code options are populated for ''{1}''";
+	public static final String VERIFIED_EXPENSE_CODE_OPTIONS_NOT_POPULATED = "{0}Failed to verify all expense code options are not populated for ''{1}''";
 }

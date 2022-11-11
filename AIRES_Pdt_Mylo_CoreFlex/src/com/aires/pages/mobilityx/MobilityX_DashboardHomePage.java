@@ -25,6 +25,7 @@ import com.aires.testdatatypes.mobilityx.MobilityX_AuthorizationData.GlobalReloE
 import com.aires.testdatatypes.mobilityx.MobilityX_AuthorizationData.GlobalReloFamilyInfo;
 import com.aires.testdatatypes.mobilityx.MobilityX_AuthorizationData.GlobalReloFinancialInfo;
 import com.aires.testdatatypes.mobilityx.MobilityX_AuthorizationData.GlobalReloTransferInfo;
+import com.aires.utilities.ClientPolicyDetails;
 import com.aires.utilities.Log;
 import com.gargoylesoftware.htmlunit.ElementNotFoundException;
 import com.vimalselvam.cucumber.listener.Reporter;
@@ -294,6 +295,7 @@ public class MobilityX_DashboardHomePage extends Base{
 	
 	public void selectAuthorizationOptionForEmployee(String option) {
 		try {
+			CoreFunctions.waitHandler(5);
 			CoreFunctions.explicitWaitTillElementVisibility(driver, _titleText_AuthorizationNextStep,
 					MobilityXConstants.IFRAME_TITLE);
 			Assert.assertEquals(CoreFunctions.getElementText(driver, _titleText_AuthorizationNextStep),
@@ -369,7 +371,7 @@ public class MobilityX_DashboardHomePage extends Base{
 			BusinessFunctions.selectValueFromDropdown(_drpDownReceivingRegion, transferInfo.receivingRegion);
 			BusinessFunctions.selectRadioAsPerLabelText(driver, _radioBtnProjectRelated,
 					transferInfo.projectRelated);	
-			BusinessFunctions.selectOptionValueFromDropdown(_relocationPolicy, transferInfo.relocationPolicy);
+			BusinessFunctions.selectOptionValueFromDropdown(_relocationPolicy, ClientPolicyDetails.getPolicyName().replace("(", "").replace(")", "").split("#")[0].trim());
 			CoreFunctions.clearAndSetText(driver, _txtBoxStartDateInNewLocation, CoreFunctions.getcurrentdate());
 			CoreFunctions.clearAndSetText(driver, _txtBoxAssignmentEndDate, CoreFunctions.addDaysMonthYearToCurrentDate(MobilityXConstants.YEAR, "dd-MMM-yyyy", 1));
 			CoreFunctions.clearAndSetText(driver, _txtBoxBusinessGroup, transferInfo.businessGroup);

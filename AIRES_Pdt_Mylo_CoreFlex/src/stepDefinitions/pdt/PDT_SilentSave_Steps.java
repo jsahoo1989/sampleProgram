@@ -1,7 +1,6 @@
 package stepDefinitions.pdt;
 
 import java.text.MessageFormat;
-import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.util.Map;
@@ -9,7 +8,6 @@ import java.util.Map;
 import org.testng.Assert;
 
 import com.aires.businessrules.BusinessFunctions;
-import com.aires.businessrules.CoreFunctions;
 import com.aires.businessrules.constants.CoreConstants;
 import com.aires.businessrules.constants.PDTConstants;
 import com.aires.cucumber.TestContext;
@@ -18,6 +16,8 @@ import com.aires.pages.pdt.PDT_GeneralInformationPage;
 import com.aires.pages.pdt.PDT_PolicyBenefitCategoryPage;
 import com.aires.pages.pdt.PDT_SharedSubBenefitPage;
 import com.aires.pages.pdt.PDT_ViewPolicyPage;
+import com.aires.utilities.ClientPolicyDetails;
+import com.aires.utilities.CustomSoftAssert;
 import com.aires.utilities.Log;
 
 import cucumber.api.DataTable;
@@ -35,7 +35,7 @@ public class PDT_SilentSave_Steps {
 	private PDT_GeneralInformationPage generalInfoPage;
 	String benefitCatPageNameBeforeSave, policyStatusBeforeSave;
 	long timeBeforeAction, timeAfterAction;
-	//ArrayList<String> pdtPagesList = new ArrayList<String>();
+	private CustomSoftAssert _softAssert;
 
 	public PDT_SilentSave_Steps(TestContext context) {
 		testContext = context;
@@ -44,24 +44,19 @@ public class PDT_SilentSave_Steps {
 		subBenefitPage = testContext.getPageObjectManager().getSharedSubBenefitPage();
 		policyBenefitCategoryPage = testContext.getPageObjectManager().getpolicyBenefitCategoryPage();
 		generalInfoPage = testContext.getPageObjectManager().getGeneralInfoPage();
-		// _pdtMyloCommonLoginPage =
-		// testContext.getPageObjectManager().getCommonLoginPage();
+		_softAssert = testContext.getSoftAssertObject();
 	}
 
 	@When("^he clicks on 'Save' button after entering mandatory information for all sub-benefits of \"([^\"]*)\" page$")
 	public void he_clicks_on_Save_button_after_entering_mandatory_information_for_all_sub_benefits_of_page(
 			String benefitCategory) throws Throwable {
-		PDT_SharedSubBenefit_Steps objStep = new PDT_SharedSubBenefit_Steps(testContext);
-		// objStep.initPageObjectMan(_pageObjectManagerPDT);
+		PDT_SharedSubBenefit_Steps objStep = new PDT_SharedSubBenefit_Steps(testContext);		
 		List<String> subBenefits = BusinessFunctions.getSubBenefitList(benefitCategory);
-		// subBenefitPage = _pageObjectManagerPDT.getSharedSubBenefitPage();
-		// subBenefitPage.navigateBenefitCategories(benefitCategory);
 		benefitCatPageNameBeforeSave = subBenefitPage.getCurrentBenefitCategoryName(benefitCategory);
 		policyStatusBeforeSave = subBenefitPage.getPolicyStatus();
 		subBenefitPage.verifySelectedPolicyBenefitCategoryName(benefitCategory);
 		subBenefitPage.verifySubBenefitCategoriesAreDisplayed(subBenefits, benefitCategory);
-		subBenefitPage.iterateAndSelectSubBenefits(benefitCategory, subBenefits, addNewPolicyPage, objStep,
-				PDTConstants.SAVE);
+		subBenefitPage.navigateBenefitCategory(subBenefits, addNewPolicyPage, objStep, benefitCategory, PDTConstants.SAVE);
 	}
 
 	@Then("^Saved indicator is displayed for saved Policy Benefit Category on the left menu$")
@@ -90,15 +85,15 @@ public class PDT_SilentSave_Steps {
 		generalInfoPage.explicitWaitForGeneralInfoHeading();
 
 		Assert.assertTrue(
-				generalInfoPage.verifyClientDetails(addNewPolicyPage.getClientId(), addNewPolicyPage.getClientName()),
+				generalInfoPage.verifyClientDetails(ClientPolicyDetails.getClientId(), ClientPolicyDetails.getClientName()),
 				MessageFormat.format(PDTConstants.FAILED_TO_VERIFY_CLIENT_DETAILS, CoreConstants.FAIL,
-						addNewPolicyPage.getClientId(), addNewPolicyPage.getClientName(),
+						ClientPolicyDetails.getClientId(), ClientPolicyDetails.getClientName(),
 						generalInfoPage.getElementText(PDTConstants.CLIENT_ID),
 						generalInfoPage.getElementText(PDTConstants.CLIENT_NAME)));
 
-		Assert.assertTrue(generalInfoPage.verifyPolicyName(addNewPolicyPage.getPolicyName()),
+		Assert.assertTrue(generalInfoPage.verifyPolicyName(ClientPolicyDetails.getPolicyName()),
 				MessageFormat.format(PDTConstants.FAILED_TO_VERIFY_POLICY_NAME, CoreConstants.FAIL,
-						addNewPolicyPage.getPolicyName(), generalInfoPage.getElementText(PDTConstants.POLICY_NAME)));
+						ClientPolicyDetails.getPolicyName(), generalInfoPage.getElementText(PDTConstants.POLICY_NAME)));
 
 		generalInfoPage.enterGeneralInformationFields();
 		Assert.assertTrue(policyBenefitCategoryPage.verifyPolicyBenefitCategoryHeading(policyBenefitPage),
@@ -136,26 +131,30 @@ public class PDT_SilentSave_Steps {
 	public void he_is_on_Page_after_selecting_Client_Policy_information_followed_by_filling_information_on_page(
 			String policyBenefitPage, String generInfoPage) throws Throwable {
 		timeBeforeAction = new Date().getTime();
-		viewPolicyPage.clickElementOfPage(PDTConstants.ADD_NEW_POLICY_FORM);
+		viewPolicyPage.clickElementOfPage(PDTConstants.ADD_NEW_POLICY_FORM, PDTConstants.VIEW_EDIT_POLICY_FORMS);
 		timeAfterAction = new Date().getTime();
 		BusinessFunctions.printTimeTakenByPageToLoad(timeBeforeAction, timeAfterAction, PDTConstants.ADD_NEW_POLICY);
 		Assert.assertTrue(addNewPolicyPage.verifyAddNewPolicyHeading(PDTConstants.ADD_NEW_POLICY),
 				MessageFormat.format(PDTConstants.FAILED_TO_VERIFY_HEADING_ON_PAGE, CoreConstants.FAIL,
 						PDTConstants.ADD_NEW_POLICY, PDTConstants.ADD_NEW_POLICY_FORM,
 						addNewPolicyPage.getElementText(PDTConstants.HEADING)));
+		/*_softAssert.assertTrue(addNewPolicyPage.verifyAddNewPolicyHeading(PDTConstants.ADD_NEW_POLICY),
+				MessageFormat.format(PDTConstants.FAILED_TO_VERIFY_HEADING_ON_PAGE, CoreConstants.FAIL,
+						PDTConstants.ADD_NEW_POLICY, PDTConstants.ADD_NEW_POLICY_FORM,
+						"testing"));*/
 		addNewPolicyPage.enterClientPolicyDetails();
 		generalInfoPage.explicitWaitForGeneralInfoHeading();
 
 		Assert.assertTrue(
-				generalInfoPage.verifyClientDetails(addNewPolicyPage.getClientId(), addNewPolicyPage.getClientName()),
+				generalInfoPage.verifyClientDetails(ClientPolicyDetails.getClientId(), ClientPolicyDetails.getClientName()),
 				MessageFormat.format(PDTConstants.FAILED_TO_VERIFY_CLIENT_DETAILS, CoreConstants.FAIL,
-						addNewPolicyPage.getClientId(), addNewPolicyPage.getClientName(),
+						ClientPolicyDetails.getClientId(), ClientPolicyDetails.getClientName(),
 						generalInfoPage.getElementText(PDTConstants.CLIENT_ID),
 						generalInfoPage.getElementText(PDTConstants.CLIENT_NAME)));
 
-		Assert.assertTrue(generalInfoPage.verifyPolicyName(addNewPolicyPage.getPolicyName()),
+		Assert.assertTrue(generalInfoPage.verifyPolicyName(ClientPolicyDetails.getPolicyName()),
 				MessageFormat.format(PDTConstants.FAILED_TO_VERIFY_POLICY_NAME, CoreConstants.FAIL,
-						addNewPolicyPage.getPolicyName(), generalInfoPage.getElementText(PDTConstants.POLICY_NAME)));
+						ClientPolicyDetails.getPolicyName(), generalInfoPage.getElementText(PDTConstants.POLICY_NAME)));
 
 		generalInfoPage.enterGeneralInformationFields();
 		Assert.assertTrue(policyBenefitCategoryPage.verifyPolicyBenefitCategoryHeading(policyBenefitPage),
@@ -183,7 +182,7 @@ public class PDT_SilentSave_Steps {
 	public void policy_status_is_changed_to_on_Benefit_Category_page(String policyStatus, String policyVersion)
 			{
 		Assert.assertTrue(
-				subBenefitPage.verifyStatusAndVersionOfPolicy(addNewPolicyPage.getPolicyName().split("\\(#")[0].trim(),
+				subBenefitPage.verifyStatusAndVersionOfPolicy(ClientPolicyDetails.getPolicyName().split("\\(#")[0].trim(),
 						policyStatus, policyVersion, subBenefitPage.getCategoryName()));
 	}
 
@@ -208,8 +207,7 @@ public class PDT_SilentSave_Steps {
 		subBenefitPage.verifySelectedPolicyBenefitCategoryName(benefitCategory);
 		subBenefitPage.verifySubBenefitCategoriesAreDisplayed(subBenefits, benefitCategory);
 		subBenefitPage.setCompletePolicyState(false);
-		subBenefitPage.iterateAndSelectSubBenefits(benefitCategory, subBenefits, addNewPolicyPage, objStep,
-				PDTConstants.SAVE);
+		subBenefitPage.navigateBenefitCategory(subBenefits, addNewPolicyPage, objStep, benefitCategory, PDTConstants.SAVE);
 	}
 
 	@Then("^\"([^\"]*)\" color 'exclamation mark' \"([^\"]*)\"  indicator is displayed on each sub-benefit tab header level where the mandatory field value is missing$")
@@ -289,9 +287,9 @@ public class PDT_SilentSave_Steps {
 		Assert.assertTrue(viewPolicyPage.verifyViewPolicyHeading(pageName),
 				MessageFormat.format(PDTConstants.FAIL_TO_VERIFY_ELEMENT_VAL_ON_PAGE, CoreConstants.FAIL, PDTConstants.heading, PDTConstants.VIEW_EDIT_POLICY_FORMS, PDTConstants.VIEW_POLICY,
 						viewPolicyPage.getElementText(PDTConstants.HEADING)));
-		Assert.assertTrue(viewPolicyPage.searchAndVerifyPolicy(addNewPolicyPage.getPolicyName().split("\\(#")[0].trim(), pageName, addNewPolicyPage),
+		Assert.assertTrue(viewPolicyPage.searchAndVerifyPolicy(ClientPolicyDetails.getPolicyName().split("\\(#")[0].trim(), pageName, addNewPolicyPage),
 				MessageFormat.format(PDTConstants.FAILED_TO_VERIFY_ELEMENT_DISPLAYED_ON_PAGE, CoreConstants.FAIL, PDTConstants.POLICY_NAME,
-						addNewPolicyPage.getPolicyName(), pageName, viewPolicyPage.getPolicyList()));
+						ClientPolicyDetails.getPolicyName(), pageName, viewPolicyPage.getPolicyList()));
 	}
 	
 	@When("^he clicks on BACK button on last benefit category each page$")
@@ -301,7 +299,67 @@ public class PDT_SilentSave_Steps {
 
 	@Then("^he should navigate to previous page with same result on subsequent BACK button click$")
 	public void he_should_navigate_to_previous_page_with_same_result_on_subsequent_BACK_button_click() throws Throwable {
-		Assert.assertTrue(subBenefitPage.verifyUserNavigateToPrevPage(),subBenefitPage.printFailedExpectedActualPrevPageMap());
+		Assert.assertTrue(subBenefitPage.verifyUserNavigateToPrevPage(PDTConstants.PREVIOUS),subBenefitPage.printFailedExpectedActualPageMap(PDTConstants.PREVIOUS));
+	}
+	
+	@Then("^a \"([^\"]*)\" should be displayed with below information$")
+	public void a_Confirmation_pop_up_should_be_displayed_with_below_information(String popUpName, DataTable popUpInfo) {
+		List<List<String>> data = popUpInfo.raw();
+		subBenefitPage.verifyConfirmationPopContents(_softAssert, data, popUpName);
+		_softAssert.assertTrue(subBenefitPage.verifyButtonsOnConfirmationPopUp(data.get(2).get(1), popUpName), subBenefitPage.getfailedButtonString(popUpName));
+		_softAssert.assertAll();
+	
+	}
+
+	@Then("^a \"([^\"]*)\" should be displayed with 'OK, CANCEL, SAVE' buttons with below functionalities on clicking these buttons$")
+	public void a_Confirmation_pop_up_should_be_displayed_with_OK_CANCEL_SAVE_buttons_with_below_functionalities(String popUpName, DataTable popUpInfo) {
+		List<List<String>> data = popUpInfo.raw();
+		Assert.assertTrue(subBenefitPage.verifyOkBtnFunctionality(viewPolicyPage, data.get(0).get(0), popUpName), "Failed to verify Ok btn functionality");
+		String benefitCategory = policyBenefitCategoryPage.getSelectedCategoriesName().get((policyBenefitCategoryPage.getSelectedCategoriesName().size()-1));
+		String benefitCatPageNameBeforeEXITOperation = subBenefitPage.getCurrentBenefitCategoryName(benefitCategory);
+		Assert.assertTrue(subBenefitPage.verifyCancelBtnFunctionality(viewPolicyPage, addNewPolicyPage, benefitCategory, testContext, benefitCatPageNameBeforeEXITOperation, data.get(1).get(0), PDTConstants.EXIT, popUpName), "Failed to verify Cancel btn functionality");
+		Assert.assertTrue(subBenefitPage.verifySaveBtnFunctionality(viewPolicyPage, data.get(2).get(0), benefitCategory, generalInfoPage, popUpName), "Failed to verify Save btn functionality");
+	}
+
+	@Then("^a \"([^\"]*)\" should be displayed with 'OK, CANCEL, SAVE' buttons with below functionalities on click of these buttons$")
+	public void a_Confirmation_pop_up_should_be_displayed_with_OK_CANCEL_SAVE_buttons_with_below_functionalities_on_click_of_these_buttons(String popUpName, DataTable popUpInfo) {
+		List<List<String>> data = popUpInfo.raw();
+		String currentBenefitCategory = policyBenefitCategoryPage.getSelectedCategoriesName().get((policyBenefitCategoryPage.getSelectedCategoriesName().size()-1));
+		Assert.assertTrue(subBenefitPage.verifyOkBtnFunctionalityOnClickingBackBtn(viewPolicyPage, data.get(0).get(0), popUpName, currentBenefitCategory), "Failed to verify Ok btn functionality");
+		String benefitCatPageNameBeforeBACKOperation = subBenefitPage.getCurrentBenefitCategoryName(currentBenefitCategory);
+		Assert.assertTrue(subBenefitPage.verifyCancelBtnFunctionality(viewPolicyPage, addNewPolicyPage, currentBenefitCategory, testContext, benefitCatPageNameBeforeBACKOperation, data.get(1).get(0), PDTConstants.BACK, popUpName), "Failed to verify Cancel btn functionality");
+		Assert.assertTrue(subBenefitPage.verifySaveBtnFunctionalityOnClickingBACKBtn(viewPolicyPage, data.get(2).get(0), currentBenefitCategory, generalInfoPage, popUpName), "Failed to verify Save btn functionality");
+	}
+	
+	@Given("^he has clicked on \"([^\"]*)\" button followed by \"([^\"]*)\" button after entering mandatory information for all sub-benefits of each selected benefit Category$")
+	public void he_has_clicked_on_button_followed_by_button_after_entering_mandatory_information_for_all_sub_benefits_of_each_selected_benefit_Category(String saveBtn, String exitBtn) {
+		subBenefitPage.iterateEachBenefitCategory(policyBenefitCategoryPage.getSelectedCategoriesName(), testContext,
+				subBenefitPage, addNewPolicyPage);
+		subBenefitPage.clickOnBtn(saveBtn);
+		subBenefitPage.waitForProgressBarToDisapper();
+		subBenefitPage.clickOnBtn(exitBtn);
+	}
+	
+	@When("^he clicks on EXIT button on any page$")
+	public void he_clicks_on_EXIT_button_on_any_page() {
+		generalInfoPage.explicitWaitForGeneralInfoHeading();
+		subBenefitPage.clickOnBtn(PDTConstants.EXIT.toUpperCase());
+	}
+	
+	@When("^he clicks on newly added Policy after searching it on \"([^\"]*)\" page$")
+	public void he_clicks_on_newly_added_Policy_after_searching_it_on_page(String pageName) {
+		Assert.assertTrue(viewPolicyPage.verifyViewPolicyHeading(PDTConstants.VIEW_POLICY),
+				MessageFormat.format(PDTConstants.FAIL_TO_VERIFY_ELEMENT_VAL_ON_PAGE, CoreConstants.FAIL, PDTConstants.heading, PDTConstants.VIEW_EDIT_POLICY_FORMS, PDTConstants.VIEW_POLICY,
+						viewPolicyPage.getElementText(PDTConstants.HEADING)));
+		
+		viewPolicyPage.searchByPolicyNameAndClickPolicy(ClientPolicyDetails.getPolicyName().split("\\(#")[0].trim(),
+				pageName);
+	}
+
+	@Then("^he should navigate back to \"([^\"]*)\" page without displaying exit modal after clicking on \"([^\"]*)\" buttons on following pages$")
+	public void he_should_navigate_back_to_page_without_displaying_exit_modal_after_clicking_on_buttons_on_following_pages(String pageName, String buttons, DataTable pagesTable)  {
+		List<List<String>> pagesList = pagesTable.raw();
+		subBenefitPage.verifyExitBtnOnReadOnlyMode(pageName, buttons, pagesList, viewPolicyPage);
 	}
 
 }

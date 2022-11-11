@@ -1,20 +1,26 @@
 package com.aires.pages.pdt;
 
+import java.text.MessageFormat;
+import java.util.Date;
 import java.util.List;
 
+import org.openqa.selenium.NoSuchElementException;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.How;
+import org.testng.Assert;
 
-import com.aires.businessrules.Base;
 import com.aires.businessrules.BusinessFunctions;
 import com.aires.businessrules.CoreFunctions;
+import com.aires.businessrules.constants.CoreConstants;
 import com.aires.businessrules.constants.PDTConstants;
 import com.aires.managers.FileReaderManager;
 import com.aires.testdatatypes.pdt.PDT_OngoingPaymentReimbursementBenefit;
 
-public class PDT_OngoingPaymentReimbursementPage extends Base {
+import stepDefinitions.pdt.PDT_SharedSubBenefit_Steps;
+
+public class PDT_OngoingPaymentReimbursementPage extends PDT_SharedSubBenefitPage {
 	public PDT_OngoingPaymentReimbursementPage(WebDriver driver) {
 		super(driver);
 	}
@@ -897,6 +903,63 @@ public class PDT_OngoingPaymentReimbursementPage extends Base {
 
 	@FindBy(how = How.CSS, using = "app-other-ongoing-allowance textArea[formcontrolname='benefitComment']")
 	private WebElement _txtAreaOtherOngoingComment;
+	
+	@FindBy(how = How.CSS, using = "a[href='#collapseOne']")
+	private WebElement _formHeaderCOLA;
+
+	@FindBy(how = How.CSS, using = "a[href='#collapseTwo']")
+	private WebElement _formHeaderPerDiem;
+
+	@FindBy(how = How.CSS, using = "a[href='#collapseThree']")
+	private WebElement _formHeaderMobilityPremium;
+
+	@FindBy(how = How.CSS, using = "a[href='#collapseFour']")
+	private WebElement _formHeaderTransportationAllowance;
+
+	@FindBy(how = How.CSS, using = "a[href='#collapseFive']")
+	private WebElement _formHeaderHousingAllowance;
+
+	@FindBy(how = How.CSS, using = "a[href='#collapseSix']")
+	private WebElement _formHeaderHomeMaintenanceAllowance;
+
+	@FindBy(how = How.CSS, using = "a[href='#collapseSeven']")
+	private WebElement _formHeaderFurnitureAllowance;
+	
+	@FindBy(how = How.CSS, using = "a[href='#collapse8']")
+	private WebElement _formHeaderHardshipAllowance;
+
+	@FindBy(how = How.CSS, using = "a[href='#collapse9']")
+	private WebElement _formHeaderBankingAllowance;
+
+	@FindBy(how = How.CSS, using = "a[href='#collapse10']")
+	private WebElement _formHeaderAtSeaAllowance;
+
+	@FindBy(how = How.CSS, using = "a[href='#collapse11']")
+	private WebElement _formHeaderCommuterAllowance;
+
+	@FindBy(how = How.CSS, using = "a[href='#collapse12']")
+	private WebElement _formHeaderDifferentialAllowance;
+
+	@FindBy(how = How.CSS, using = "a[href='#collapse13']")
+	private WebElement _formHeaderGoodsAndServicesAllowance;
+
+	@FindBy(how = How.CSS, using = "a[href='#collapse14']")
+	private WebElement _formHeaderHomeLeaveAllowance;
+
+	@FindBy(how = How.CSS, using = "a[href='#collapse15']")
+	private WebElement _formHeaderHomeRetentionAllowance;
+
+	@FindBy(how = How.CSS, using = "a[href='#collapse16']")
+	private WebElement _formHeaderHouseKeepingAllowance;
+
+	@FindBy(how = How.CSS, using = "a[href='#collapse17']")
+	private WebElement _formHeaderUtilityAllowance;
+
+	@FindBy(how = How.CSS, using = "a[href='#collapse18']")
+	private WebElement _formHeaderOtherOngoingAllowance;
+	
+	@FindBy(how = How.CSS, using = "div.form-check > label.form-check-label")
+	private List<WebElement> _subBenefitCategories;
 
 	PDT_OngoingPaymentReimbursementBenefit ongoingPaymentReimbursementBenefitData = FileReaderManager.getInstance()
 			.getJsonReader().getOngoingPaymentReimbursementDataList("Ongoing Payments and Reimbursements");
@@ -1207,7 +1270,38 @@ public class PDT_OngoingPaymentReimbursementPage extends Base {
 		return otherOngoingAllowPayFreq;
 	}
 
-	public void fillCola(PDT_AddNewPolicyPage addNewPolicyPage, String subBenefitFormName) {
+	/**
+	 * Add the Form Header of Compensation Services sub-benefit in Hash map i.e. subBenefitHeaderMap
+	 */
+	public void populateSubBenefitHeaderMap() {
+		subBenefitHeaderMap.put(PDTConstants.COLA, _formHeaderCOLA);
+		subBenefitHeaderMap.put(PDTConstants.PER_DIEM, _formHeaderPerDiem);
+		subBenefitHeaderMap.put(PDTConstants.MOBILITY_PREMIUM, _formHeaderMobilityPremium);
+		subBenefitHeaderMap.put(PDTConstants.TRANSPORTATION_ALLOWANCE, _formHeaderTransportationAllowance);
+		subBenefitHeaderMap.put(PDTConstants.HOUSING_ALLOWANCE, _formHeaderHousingAllowance);
+		subBenefitHeaderMap.put(PDTConstants.HOME_MAINTENANCE_ALLOWANCE, _formHeaderHomeMaintenanceAllowance);
+		subBenefitHeaderMap.put(PDTConstants.FURNITURE_ALLOWANCE, _formHeaderFurnitureAllowance);
+		subBenefitHeaderMap.put(PDTConstants.HARDSHIP_ALLOWANCE, _formHeaderHardshipAllowance);
+		subBenefitHeaderMap.put(PDTConstants.BANKING_ALLOWANCE, _formHeaderBankingAllowance);
+		subBenefitHeaderMap.put(PDTConstants.AT_SEA_ALLOWANCE, _formHeaderAtSeaAllowance);
+		subBenefitHeaderMap.put(PDTConstants.COMMUTER_ALLOWANCE, _formHeaderCommuterAllowance);
+		subBenefitHeaderMap.put(PDTConstants.DIFFERENTIAL_ALLOWANCE, _formHeaderDifferentialAllowance);
+		subBenefitHeaderMap.put(PDTConstants.GOODS_AND_SERVICES_ALLOWANCE, _formHeaderGoodsAndServicesAllowance);
+		subBenefitHeaderMap.put(PDTConstants.HOME_LEAVE_ALLOWANCE, _formHeaderHomeLeaveAllowance);
+		subBenefitHeaderMap.put(PDTConstants.HOME_RETENTION_ALLOWANCE, _formHeaderHomeRetentionAllowance);
+		subBenefitHeaderMap.put(PDTConstants.HOUSEKEEPING_ALLOWANCE, _formHeaderHouseKeepingAllowance);
+		subBenefitHeaderMap.put(PDTConstants.UTILITY_ALLOWANCE, _formHeaderUtilityAllowance);
+		subBenefitHeaderMap.put(PDTConstants.OTHER_ONGOING_ALLOWANCE, _formHeaderOtherOngoingAllowance);
+	}
+	
+
+	
+	public void fillCola(PDT_AddNewPolicyPage addNewPolicyPage, String subBenefitFormName, String pageName) {
+		populateSubBenefitHeaderMap();
+		Assert.assertTrue(BusinessFunctions.verifySubBenefitFormHeaderIsDisplayed(driver, subBenefitHeaderMap.get(subBenefitFormName), subBenefitFormName, pageName),
+				MessageFormat.format(PDTConstants.VERIFIED_FORM_IS_NOT_DISPLAYED, subBenefitFormName, pageName));
+		BusinessFunctions.expandSubBenefitIfCollapsed(subBenefitHeaderMap.get(subBenefitFormName), subBenefitFormName, driver);
+		
 		CoreFunctions.explicitWaitTillElementListVisibility(driver, _radioBtnCola);
 		CoreFunctions.selectItemInListByText(driver, _radioBtnCola, ongoingPaymentReimbursementBenefitData.cola.typeOfPayment,
 				_lblTypeOfPayment.getText(), PDTConstants.RADIO_BUTTON_LIST, true);
@@ -1254,14 +1348,19 @@ public class PDT_OngoingPaymentReimbursementPage extends Base {
 				ongoingPaymentReimbursementBenefitData.cola.reimbursedBy, PDTConstants.REIMBURSED_BY,
 				PDTConstants.RADIO_BUTTON_LIST, true);
 
-		BusinessFunctions.verifyOtherTextBoxIsDisplayed(driver, addNewPolicyPage,
+		BusinessFunctions.verifyOtherTextBoxIsDisplayed(driver,
 				ongoingPaymentReimbursementBenefitData.cola.reimbursedBy, _txtBoxColaReimbursedByOther,
 				ongoingPaymentReimbursementBenefitData.cola.reimbursedByOther, subBenefitFormName, PDTConstants.REIMBURSED_BY_OTHER);
 		CoreFunctions.clearAndSetText(driver, _txtAreaColaComment, PDTConstants.COMMENT,
 				ongoingPaymentReimbursementBenefitData.cola.comments);
 	}
 
-	public void fillPerDiem(PDT_AddNewPolicyPage addNewPolicyPage, String subBenefitFormName) {
+	public void fillPerDiem(PDT_AddNewPolicyPage addNewPolicyPage, String subBenefitFormName, String pageName) {
+		populateSubBenefitHeaderMap();
+		Assert.assertTrue(BusinessFunctions.verifySubBenefitFormHeaderIsDisplayed(driver, subBenefitHeaderMap.get(subBenefitFormName), subBenefitFormName, pageName),
+				MessageFormat.format(PDTConstants.VERIFIED_FORM_IS_NOT_DISPLAYED, subBenefitFormName, pageName));
+		BusinessFunctions.expandSubBenefitIfCollapsed(subBenefitHeaderMap.get(subBenefitFormName), subBenefitFormName, driver);
+		
 		CoreFunctions.explicitWaitTillElementListVisibility(driver, _drpDownPerDiemCalcMethodOptions);
 		String randPerDiemCalcMethod = BusinessFunctions.selectAndReturnRandomValueFromDropDown(driver,
 				addNewPolicyPage, subBenefitFormName, _drpDownPerDiemCalcMethod, _drpDownPerDiemCalcMethodOptions,
@@ -1297,14 +1396,19 @@ public class PDT_OngoingPaymentReimbursementPage extends Base {
 				ongoingPaymentReimbursementBenefitData.perDiem.reimbursedBy, PDTConstants.REIMBURSED_BY,
 				PDTConstants.RADIO_BUTTON_LIST, true);
 
-		BusinessFunctions.verifyOtherTextBoxIsDisplayed(driver, addNewPolicyPage,
+		BusinessFunctions.verifyOtherTextBoxIsDisplayed(driver,
 				ongoingPaymentReimbursementBenefitData.perDiem.reimbursedBy, _txtBoxPerDiemReimbursedByOther,
 				ongoingPaymentReimbursementBenefitData.perDiem.reimbursedByOther, subBenefitFormName, PDTConstants.REIMBURSED_BY_OTHER);
 		CoreFunctions.clearAndSetText(driver, _txtAreaPerDiemComment, PDTConstants.COMMENT,
 				ongoingPaymentReimbursementBenefitData.perDiem.comments);
 	}
 
-	public void fillMobilityPremium(PDT_AddNewPolicyPage addNewPolicyPage, String subBenefitFormName) {
+	public void fillMobilityPremium(PDT_AddNewPolicyPage addNewPolicyPage, String subBenefitFormName, String pageName) {
+		populateSubBenefitHeaderMap();
+		Assert.assertTrue(BusinessFunctions.verifySubBenefitFormHeaderIsDisplayed(driver, subBenefitHeaderMap.get(subBenefitFormName), subBenefitFormName, pageName),
+				MessageFormat.format(PDTConstants.VERIFIED_FORM_IS_NOT_DISPLAYED, subBenefitFormName, pageName));
+		BusinessFunctions.expandSubBenefitIfCollapsed(subBenefitHeaderMap.get(subBenefitFormName), subBenefitFormName, driver);
+		
 		CoreFunctions.explicitWaitTillElementListVisibility(driver, _drpDownMobilityPremCalcMethodOptions);
 		String randMobilityPremCalcMethod = BusinessFunctions.selectAndReturnRandomValueFromDropDown(driver,
 				addNewPolicyPage, subBenefitFormName, _drpDownMobilityPremCalcMethod,
@@ -1343,7 +1447,7 @@ public class PDT_OngoingPaymentReimbursementPage extends Base {
 				ongoingPaymentReimbursementBenefitData.mobilityPremium.reimbursedBy, PDTConstants.REIMBURSED_BY,
 				PDTConstants.RADIO_BUTTON_LIST, true);
 
-		BusinessFunctions.verifyOtherTextBoxIsDisplayed(driver, addNewPolicyPage,
+		BusinessFunctions.verifyOtherTextBoxIsDisplayed(driver,
 				ongoingPaymentReimbursementBenefitData.mobilityPremium.reimbursedBy,
 				_txtBoxMobilityPremReimbursedByOther,
 				ongoingPaymentReimbursementBenefitData.mobilityPremium.reimbursedByOther, subBenefitFormName, PDTConstants.REIMBURSED_BY_OTHER);
@@ -1351,7 +1455,12 @@ public class PDT_OngoingPaymentReimbursementPage extends Base {
 				ongoingPaymentReimbursementBenefitData.mobilityPremium.comments);
 	}
 
-	public void fillTransportationAllowance(PDT_AddNewPolicyPage addNewPolicyPage, String subBenefitFormName) {
+	public void fillTransportationAllowance(PDT_AddNewPolicyPage addNewPolicyPage, String subBenefitFormName, String pageName) {
+		populateSubBenefitHeaderMap();
+		Assert.assertTrue(BusinessFunctions.verifySubBenefitFormHeaderIsDisplayed(driver, subBenefitHeaderMap.get(subBenefitFormName), subBenefitFormName, pageName),
+				MessageFormat.format(PDTConstants.VERIFIED_FORM_IS_NOT_DISPLAYED, subBenefitFormName, pageName));
+		BusinessFunctions.expandSubBenefitIfCollapsed(subBenefitHeaderMap.get(subBenefitFormName), subBenefitFormName, driver);
+		
 		CoreFunctions.explicitWaitTillElementListVisibility(driver, _drpDownTransportAllowCalcMethodOptions);
 		String randTransportAllowCalcMethod = BusinessFunctions.selectAndReturnRandomValueFromDropDown(driver,
 				addNewPolicyPage, subBenefitFormName, _drpDownTransportAllowCalcMethod,
@@ -1391,7 +1500,7 @@ public class PDT_OngoingPaymentReimbursementPage extends Base {
 				ongoingPaymentReimbursementBenefitData.transportationAllowance.reimbursedBy, PDTConstants.REIMBURSED_BY,
 				PDTConstants.RADIO_BUTTON_LIST, true);
 
-		BusinessFunctions.verifyOtherTextBoxIsDisplayed(driver, addNewPolicyPage,
+		BusinessFunctions.verifyOtherTextBoxIsDisplayed(driver,
 				ongoingPaymentReimbursementBenefitData.transportationAllowance.reimbursedBy,
 				_txtBoxTransportAllowReimbursedByOther,
 				ongoingPaymentReimbursementBenefitData.transportationAllowance.reimbursedByOther, subBenefitFormName, PDTConstants.REIMBURSED_BY_OTHER);
@@ -1399,7 +1508,12 @@ public class PDT_OngoingPaymentReimbursementPage extends Base {
 				ongoingPaymentReimbursementBenefitData.transportationAllowance.comments);
 	}
 
-	public void fillHousingAllowance(PDT_AddNewPolicyPage addNewPolicyPage, String subBenefitFormName) {
+	public void fillHousingAllowance(PDT_AddNewPolicyPage addNewPolicyPage, String subBenefitFormName, String pageName) {
+		populateSubBenefitHeaderMap();
+		Assert.assertTrue(BusinessFunctions.verifySubBenefitFormHeaderIsDisplayed(driver, subBenefitHeaderMap.get(subBenefitFormName), subBenefitFormName, pageName),
+				MessageFormat.format(PDTConstants.VERIFIED_FORM_IS_NOT_DISPLAYED, subBenefitFormName, pageName));
+		BusinessFunctions.expandSubBenefitIfCollapsed(subBenefitHeaderMap.get(subBenefitFormName), subBenefitFormName, driver);
+		
 		CoreFunctions.explicitWaitTillElementListVisibility(driver, _drpDownHousingAllowCalcMethodOptions);
 		String randHousingAllowCalcMethod = BusinessFunctions.selectAndReturnRandomValueFromDropDown(driver,
 				addNewPolicyPage, subBenefitFormName, _drpDownHousingAllowCalcMethod,
@@ -1438,7 +1552,7 @@ public class PDT_OngoingPaymentReimbursementPage extends Base {
 				ongoingPaymentReimbursementBenefitData.housingAllowance.reimbursedBy, PDTConstants.REIMBURSED_BY,
 				PDTConstants.RADIO_BUTTON_LIST, true);
 
-		BusinessFunctions.verifyOtherTextBoxIsDisplayed(driver, addNewPolicyPage,
+		BusinessFunctions.verifyOtherTextBoxIsDisplayed(driver,
 				ongoingPaymentReimbursementBenefitData.housingAllowance.reimbursedBy,
 				_txtBoxHousingAllowReimbursedByOther,
 				ongoingPaymentReimbursementBenefitData.housingAllowance.reimbursedByOther, subBenefitFormName, PDTConstants.REIMBURSED_BY_OTHER);
@@ -1446,7 +1560,11 @@ public class PDT_OngoingPaymentReimbursementPage extends Base {
 				ongoingPaymentReimbursementBenefitData.housingAllowance.comments);
 	}
 
-	public void fillHomeMaintenanceAllowance(PDT_AddNewPolicyPage addNewPolicyPage, String subBenefitFormName) {
+	public void fillHomeMaintenanceAllowance(PDT_AddNewPolicyPage addNewPolicyPage, String subBenefitFormName, String pageName) {
+		populateSubBenefitHeaderMap();
+		Assert.assertTrue(BusinessFunctions.verifySubBenefitFormHeaderIsDisplayed(driver, subBenefitHeaderMap.get(subBenefitFormName), subBenefitFormName, pageName),
+				MessageFormat.format(PDTConstants.VERIFIED_FORM_IS_NOT_DISPLAYED, subBenefitFormName, pageName));
+		BusinessFunctions.expandSubBenefitIfCollapsed(subBenefitHeaderMap.get(subBenefitFormName), subBenefitFormName, driver);
 		CoreFunctions.explicitWaitTillElementListVisibility(driver, _drpDownHomeMaintAllowCalcMethodOptions);
 		String randHomeMaintAllowance = BusinessFunctions.selectAndReturnRandomValueFromDropDown(driver,
 				addNewPolicyPage, subBenefitFormName, _drpDownHomeMaintAllowCalcMethod,
@@ -1485,7 +1603,7 @@ public class PDT_OngoingPaymentReimbursementPage extends Base {
 				ongoingPaymentReimbursementBenefitData.homeMaintainAllowance.reimbursedBy, PDTConstants.REIMBURSED_BY,
 				PDTConstants.RADIO_BUTTON_LIST, true);
 
-		BusinessFunctions.verifyOtherTextBoxIsDisplayed(driver, addNewPolicyPage,
+		BusinessFunctions.verifyOtherTextBoxIsDisplayed(driver,
 				ongoingPaymentReimbursementBenefitData.homeMaintainAllowance.reimbursedBy,
 				_txtBoxHomeMaintAllowReimbursedByOther,
 				ongoingPaymentReimbursementBenefitData.homeMaintainAllowance.reimbursedByOther, subBenefitFormName, PDTConstants.REIMBURSED_BY_OTHER);
@@ -1493,7 +1611,12 @@ public class PDT_OngoingPaymentReimbursementPage extends Base {
 				ongoingPaymentReimbursementBenefitData.homeMaintainAllowance.comments);
 	}
 
-	public void fillFurnitureAllowance(PDT_AddNewPolicyPage addNewPolicyPage, String subBenefitFormName) {
+	public void fillFurnitureAllowance(PDT_AddNewPolicyPage addNewPolicyPage, String subBenefitFormName, String pageName) {
+		populateSubBenefitHeaderMap();
+		Assert.assertTrue(BusinessFunctions.verifySubBenefitFormHeaderIsDisplayed(driver, subBenefitHeaderMap.get(subBenefitFormName), subBenefitFormName, pageName),
+				MessageFormat.format(PDTConstants.VERIFIED_FORM_IS_NOT_DISPLAYED, subBenefitFormName, pageName));
+		BusinessFunctions.expandSubBenefitIfCollapsed(subBenefitHeaderMap.get(subBenefitFormName), subBenefitFormName, driver);
+		
 		CoreFunctions.explicitWaitTillElementListVisibility(driver, _drpDownFurnitureAllowCalcMethodOptions);
 		String randFurnAllowCalcMethod = BusinessFunctions.selectAndReturnRandomValueFromDropDown(driver,
 				addNewPolicyPage, subBenefitFormName, _drpDownFurnitureAllowCalcMethod,
@@ -1531,7 +1654,7 @@ public class PDT_OngoingPaymentReimbursementPage extends Base {
 				ongoingPaymentReimbursementBenefitData.furnitureAllowance.reimbursedBy, PDTConstants.REIMBURSED_BY,
 				PDTConstants.RADIO_BUTTON_LIST, true);
 
-		BusinessFunctions.verifyOtherTextBoxIsDisplayed(driver, addNewPolicyPage,
+		BusinessFunctions.verifyOtherTextBoxIsDisplayed(driver,
 				ongoingPaymentReimbursementBenefitData.furnitureAllowance.reimbursedBy,
 				_txtBoxFurnitureAllowReimbursedByOther,
 				ongoingPaymentReimbursementBenefitData.furnitureAllowance.reimbursedByOther, subBenefitFormName, PDTConstants.REIMBURSED_BY_OTHER);
@@ -1539,7 +1662,11 @@ public class PDT_OngoingPaymentReimbursementPage extends Base {
 				ongoingPaymentReimbursementBenefitData.furnitureAllowance.comments);
 	}
 
-	public void fillHardshipAllowance(PDT_AddNewPolicyPage addNewPolicyPage, String subBenefitFormName) {
+	public void fillHardshipAllowance(PDT_AddNewPolicyPage addNewPolicyPage, String subBenefitFormName, String pageName) {
+		populateSubBenefitHeaderMap();
+		Assert.assertTrue(BusinessFunctions.verifySubBenefitFormHeaderIsDisplayed(driver, subBenefitHeaderMap.get(subBenefitFormName), subBenefitFormName, pageName),
+				MessageFormat.format(PDTConstants.VERIFIED_FORM_IS_NOT_DISPLAYED, subBenefitFormName, pageName));
+		BusinessFunctions.expandSubBenefitIfCollapsed(subBenefitHeaderMap.get(subBenefitFormName), subBenefitFormName, driver);
 		CoreFunctions.explicitWaitTillElementListVisibility(driver, _drpDownHardshipAllowCalcMethodOptions);
 		String randHardshipAllowCalcMethod = BusinessFunctions.selectAndReturnRandomValueFromDropDown(driver,
 				addNewPolicyPage, subBenefitFormName, _drpDownHardshipAllowCalcMethod,
@@ -1577,7 +1704,7 @@ public class PDT_OngoingPaymentReimbursementPage extends Base {
 				ongoingPaymentReimbursementBenefitData.hardshipAllowance.reimbursedBy, PDTConstants.REIMBURSED_BY,
 				PDTConstants.RADIO_BUTTON_LIST, true);
 
-		BusinessFunctions.verifyOtherTextBoxIsDisplayed(driver, addNewPolicyPage,
+		BusinessFunctions.verifyOtherTextBoxIsDisplayed(driver,
 				ongoingPaymentReimbursementBenefitData.hardshipAllowance.reimbursedBy,
 				_txtBoxHardshipAllowReimbursedByOther,
 				ongoingPaymentReimbursementBenefitData.hardshipAllowance.reimbursedByOther, subBenefitFormName, PDTConstants.REIMBURSED_BY_OTHER);
@@ -1585,7 +1712,11 @@ public class PDT_OngoingPaymentReimbursementPage extends Base {
 				ongoingPaymentReimbursementBenefitData.hardshipAllowance.comments);
 	}
 
-	public void fillBankingAllowance(PDT_AddNewPolicyPage addNewPolicyPage, String subBenefitFormName) {
+	public void fillBankingAllowance(PDT_AddNewPolicyPage addNewPolicyPage, String subBenefitFormName, String pageName) {
+		populateSubBenefitHeaderMap();
+		Assert.assertTrue(BusinessFunctions.verifySubBenefitFormHeaderIsDisplayed(driver, subBenefitHeaderMap.get(subBenefitFormName), subBenefitFormName, pageName),
+				MessageFormat.format(PDTConstants.VERIFIED_FORM_IS_NOT_DISPLAYED, subBenefitFormName, pageName));
+		BusinessFunctions.expandSubBenefitIfCollapsed(subBenefitHeaderMap.get(subBenefitFormName), subBenefitFormName, driver);
 		CoreFunctions.explicitWaitTillElementListVisibility(driver, _drpDownBankingAllowCalcMethodOptions);
 		String randBankAllowCalcMethod = BusinessFunctions.selectAndReturnRandomValueFromDropDown(driver,
 				addNewPolicyPage, subBenefitFormName, _drpDownBankingAllowCalcMethod,
@@ -1623,7 +1754,7 @@ public class PDT_OngoingPaymentReimbursementPage extends Base {
 				ongoingPaymentReimbursementBenefitData.bankingAllowance.reimbursedBy, PDTConstants.REIMBURSED_BY,
 				PDTConstants.RADIO_BUTTON_LIST, true);
 
-		BusinessFunctions.verifyOtherTextBoxIsDisplayed(driver, addNewPolicyPage,
+		BusinessFunctions.verifyOtherTextBoxIsDisplayed(driver,
 				ongoingPaymentReimbursementBenefitData.bankingAllowance.reimbursedBy,
 				_txtBoxBankingAllowReimbursedByOther,
 				ongoingPaymentReimbursementBenefitData.bankingAllowance.reimbursedByOther, subBenefitFormName, PDTConstants.REIMBURSED_BY_OTHER);
@@ -1631,7 +1762,11 @@ public class PDT_OngoingPaymentReimbursementPage extends Base {
 				ongoingPaymentReimbursementBenefitData.bankingAllowance.comments);
 	}
 
-	public void fillAtSeaAllowance(PDT_AddNewPolicyPage addNewPolicyPage, String subBenefitFormName) {
+	public void fillAtSeaAllowance(PDT_AddNewPolicyPage addNewPolicyPage, String subBenefitFormName, String pageName) {
+		populateSubBenefitHeaderMap();
+		Assert.assertTrue(BusinessFunctions.verifySubBenefitFormHeaderIsDisplayed(driver, subBenefitHeaderMap.get(subBenefitFormName), subBenefitFormName, pageName),
+				MessageFormat.format(PDTConstants.VERIFIED_FORM_IS_NOT_DISPLAYED, subBenefitFormName, pageName));
+		BusinessFunctions.expandSubBenefitIfCollapsed(subBenefitHeaderMap.get(subBenefitFormName), subBenefitFormName, driver);
 		CoreFunctions.explicitWaitTillElementListVisibility(driver, _drpDownAtSeaAllowCalcMethodOptions);
 		String randAtSeaAllowCalcMethod = BusinessFunctions.selectAndReturnRandomValueFromDropDown(driver,
 				addNewPolicyPage, subBenefitFormName, _drpDownAtSeaAllowCalcMethod, _drpDownAtSeaAllowCalcMethodOptions,
@@ -1668,14 +1803,18 @@ public class PDT_OngoingPaymentReimbursementPage extends Base {
 				ongoingPaymentReimbursementBenefitData.atSeaAllowanace.reimbursedBy, PDTConstants.REIMBURSED_BY,
 				PDTConstants.RADIO_BUTTON_LIST, true);
 
-		BusinessFunctions.verifyOtherTextBoxIsDisplayed(driver, addNewPolicyPage,
+		BusinessFunctions.verifyOtherTextBoxIsDisplayed(driver,
 				ongoingPaymentReimbursementBenefitData.atSeaAllowanace.reimbursedBy, _txtBoxAtSeaAllowReimbursedByOther,
 				ongoingPaymentReimbursementBenefitData.atSeaAllowanace.reimbursedByOther, subBenefitFormName, PDTConstants.REIMBURSED_BY_OTHER);
 		CoreFunctions.clearAndSetText(driver, _txtAreaAtSeaAllowComment, PDTConstants.COMMENT,
 				ongoingPaymentReimbursementBenefitData.atSeaAllowanace.comments);
 	}
 
-	public void fillCommuterAllowance(PDT_AddNewPolicyPage addNewPolicyPage, String subBenefitFormName) {
+	public void fillCommuterAllowance(PDT_AddNewPolicyPage addNewPolicyPage, String subBenefitFormName, String pageName) {
+		populateSubBenefitHeaderMap();
+		Assert.assertTrue(BusinessFunctions.verifySubBenefitFormHeaderIsDisplayed(driver, subBenefitHeaderMap.get(subBenefitFormName), subBenefitFormName, pageName),
+				MessageFormat.format(PDTConstants.VERIFIED_FORM_IS_NOT_DISPLAYED, subBenefitFormName, pageName));
+		BusinessFunctions.expandSubBenefitIfCollapsed(subBenefitHeaderMap.get(subBenefitFormName), subBenefitFormName, driver);
 		CoreFunctions.explicitWaitTillElementListVisibility(driver, _drpDownCommuterAllowCalcMethodOptions);
 		String randCommutAllowCalcMethod = BusinessFunctions.selectAndReturnRandomValueFromDropDown(driver,
 				addNewPolicyPage, subBenefitFormName, _drpDownCommuterAllowCalcMethod,
@@ -1713,7 +1852,7 @@ public class PDT_OngoingPaymentReimbursementPage extends Base {
 				ongoingPaymentReimbursementBenefitData.commuterAllowance.reimbursedBy, PDTConstants.REIMBURSED_BY,
 				PDTConstants.RADIO_BUTTON_LIST, true);
 
-		BusinessFunctions.verifyOtherTextBoxIsDisplayed(driver, addNewPolicyPage,
+		BusinessFunctions.verifyOtherTextBoxIsDisplayed(driver,
 				ongoingPaymentReimbursementBenefitData.commuterAllowance.reimbursedBy,
 				_txtBoxCommuterAllowReimbursedByOther,
 				ongoingPaymentReimbursementBenefitData.commuterAllowance.reimbursedByOther, subBenefitFormName, PDTConstants.REIMBURSED_BY_OTHER);
@@ -1721,7 +1860,11 @@ public class PDT_OngoingPaymentReimbursementPage extends Base {
 				ongoingPaymentReimbursementBenefitData.commuterAllowance.comments);
 	}
 
-	public void fillDifferentialAllowance(PDT_AddNewPolicyPage addNewPolicyPage, String subBenefitFormName) {
+	public void fillDifferentialAllowance(PDT_AddNewPolicyPage addNewPolicyPage, String subBenefitFormName, String pageName) {
+		populateSubBenefitHeaderMap();
+		Assert.assertTrue(BusinessFunctions.verifySubBenefitFormHeaderIsDisplayed(driver, subBenefitHeaderMap.get(subBenefitFormName), subBenefitFormName, pageName),
+				MessageFormat.format(PDTConstants.VERIFIED_FORM_IS_NOT_DISPLAYED, subBenefitFormName, pageName));
+		BusinessFunctions.expandSubBenefitIfCollapsed(subBenefitHeaderMap.get(subBenefitFormName), subBenefitFormName, driver);
 		CoreFunctions.explicitWaitTillElementListVisibility(driver, _drpDownDiffAllowCalcMethodOptions);
 		String randDiffAllowCalcMethod = BusinessFunctions.selectAndReturnRandomValueFromDropDown(driver, addNewPolicyPage,
 				subBenefitFormName, _drpDownDiffAllowCalcMethod, _drpDownDiffAllowCalcMethodOptions,
@@ -1754,14 +1897,18 @@ public class PDT_OngoingPaymentReimbursementPage extends Base {
 				ongoingPaymentReimbursementBenefitData.differentialAllowance.reimbursedBy, PDTConstants.REIMBURSED_BY,
 				PDTConstants.RADIO_BUTTON_LIST, true);
 
-		BusinessFunctions.verifyOtherTextBoxIsDisplayed(driver, addNewPolicyPage,
+		BusinessFunctions.verifyOtherTextBoxIsDisplayed(driver,
 				ongoingPaymentReimbursementBenefitData.differentialAllowance.reimbursedBy, _txtBoxDiffAllowReimbursedByOther,
 				ongoingPaymentReimbursementBenefitData.differentialAllowance.reimbursedByOther, subBenefitFormName, PDTConstants.REIMBURSED_BY_OTHER);
 		CoreFunctions.clearAndSetText(driver, _txtAreaDiffAllowComment, PDTConstants.COMMENT,
 				ongoingPaymentReimbursementBenefitData.differentialAllowance.comments);
 	}
 
-	public void fillGoodsAndServicesAllowance(PDT_AddNewPolicyPage addNewPolicyPage, String subBenefitFormName) {
+	public void fillGoodsAndServicesAllowance(PDT_AddNewPolicyPage addNewPolicyPage, String subBenefitFormName, String pageName) {
+		populateSubBenefitHeaderMap();
+		Assert.assertTrue(BusinessFunctions.verifySubBenefitFormHeaderIsDisplayed(driver, subBenefitHeaderMap.get(subBenefitFormName), subBenefitFormName, pageName),
+				MessageFormat.format(PDTConstants.VERIFIED_FORM_IS_NOT_DISPLAYED, subBenefitFormName, pageName));
+		BusinessFunctions.expandSubBenefitIfCollapsed(subBenefitHeaderMap.get(subBenefitFormName), subBenefitFormName, driver);
 		CoreFunctions.explicitWaitTillElementListVisibility(driver, _drpDownGoodAndServicesAllowCalcMethodOptions);
 		String randGoodsServicesCalcMethod = BusinessFunctions.selectAndReturnRandomValueFromDropDown(driver, addNewPolicyPage,
 				subBenefitFormName, _drpDownGoodAndServicesAllowCalcMethod, _drpDownGoodAndServicesAllowCalcMethodOptions,
@@ -1794,14 +1941,19 @@ public class PDT_OngoingPaymentReimbursementPage extends Base {
 				ongoingPaymentReimbursementBenefitData.goodsAndServicesAllowance.reimbursedBy, PDTConstants.REIMBURSED_BY,
 				PDTConstants.RADIO_BUTTON_LIST, true);
 
-		BusinessFunctions.verifyOtherTextBoxIsDisplayed(driver, addNewPolicyPage,
+		BusinessFunctions.verifyOtherTextBoxIsDisplayed(driver,
 				ongoingPaymentReimbursementBenefitData.goodsAndServicesAllowance.reimbursedBy, _txtBoxGoodAndServicesAllowReimbursedByOther,
 				ongoingPaymentReimbursementBenefitData.goodsAndServicesAllowance.reimbursedByOther, subBenefitFormName, PDTConstants.REIMBURSED_BY_OTHER);
 		CoreFunctions.clearAndSetText(driver, _txtAreaGoodAndServicesAllowComment, PDTConstants.COMMENT,
 				ongoingPaymentReimbursementBenefitData.goodsAndServicesAllowance.comments);
 	}
 
-	public void fillHomeLeaveAllowance(PDT_AddNewPolicyPage addNewPolicyPage, String subBenefitFormName) {
+	public void fillHomeLeaveAllowance(PDT_AddNewPolicyPage addNewPolicyPage, String subBenefitFormName, String pageName) {
+		populateSubBenefitHeaderMap();
+		Assert.assertTrue(BusinessFunctions.verifySubBenefitFormHeaderIsDisplayed(driver, subBenefitHeaderMap.get(subBenefitFormName), subBenefitFormName, pageName),
+				MessageFormat.format(PDTConstants.VERIFIED_FORM_IS_NOT_DISPLAYED, subBenefitFormName, pageName));
+		BusinessFunctions.expandSubBenefitIfCollapsed(subBenefitHeaderMap.get(subBenefitFormName), subBenefitFormName, driver);
+		
 		CoreFunctions.explicitWaitTillElementListVisibility(driver, _drpDownHomeLeaveAllowCalcMethodOptions);
 		String randHomeLeaveAllowCalcMethod = BusinessFunctions.selectAndReturnRandomValueFromDropDown(driver, addNewPolicyPage,
 				subBenefitFormName, _drpDownHomeLeaveAllowCalcMethod, _drpDownHomeLeaveAllowCalcMethodOptions,
@@ -1838,14 +1990,19 @@ public class PDT_OngoingPaymentReimbursementPage extends Base {
 				ongoingPaymentReimbursementBenefitData.homeLeaveAllowance.reimbursedBy, PDTConstants.REIMBURSED_BY,
 				PDTConstants.RADIO_BUTTON_LIST, true);
 
-		BusinessFunctions.verifyOtherTextBoxIsDisplayed(driver, addNewPolicyPage,
+		BusinessFunctions.verifyOtherTextBoxIsDisplayed(driver,
 				ongoingPaymentReimbursementBenefitData.homeLeaveAllowance.reimbursedBy, _txtBoxHomeLeaveAllowReimbursedByOther,
 				ongoingPaymentReimbursementBenefitData.homeLeaveAllowance.reimbursedByOther, subBenefitFormName, PDTConstants.REIMBURSED_BY_OTHER);
 		CoreFunctions.clearAndSetText(driver, _txtAreaHomeLeaveAllowComment, PDTConstants.COMMENT,
 				ongoingPaymentReimbursementBenefitData.homeLeaveAllowance.comments);
 	}
 
-	public void fillHomeRetentionAllowance(PDT_AddNewPolicyPage addNewPolicyPage, String subBenefitFormName) {
+	public void fillHomeRetentionAllowance(PDT_AddNewPolicyPage addNewPolicyPage, String subBenefitFormName, String pageName) {
+		populateSubBenefitHeaderMap();
+		Assert.assertTrue(BusinessFunctions.verifySubBenefitFormHeaderIsDisplayed(driver, subBenefitHeaderMap.get(subBenefitFormName), subBenefitFormName, pageName),
+				MessageFormat.format(PDTConstants.VERIFIED_FORM_IS_NOT_DISPLAYED, subBenefitFormName, pageName));
+		BusinessFunctions.expandSubBenefitIfCollapsed(subBenefitHeaderMap.get(subBenefitFormName), subBenefitFormName, driver);
+		
 		CoreFunctions.explicitWaitTillElementListVisibility(driver, _drpDownHomeRetentionAllowCalcMethodOptions);
 		String randHomeRetnAllowCalcMethod = BusinessFunctions.selectAndReturnRandomValueFromDropDown(driver, addNewPolicyPage,
 				subBenefitFormName, _drpDownHomeRetentionAllowCalcMethod, _drpDownHomeRetentionAllowCalcMethodOptions,
@@ -1878,14 +2035,19 @@ public class PDT_OngoingPaymentReimbursementPage extends Base {
 				ongoingPaymentReimbursementBenefitData.homeRetentionAllowance.reimbursedBy, PDTConstants.REIMBURSED_BY,
 				PDTConstants.RADIO_BUTTON_LIST, true);
 
-		BusinessFunctions.verifyOtherTextBoxIsDisplayed(driver, addNewPolicyPage,
+		BusinessFunctions.verifyOtherTextBoxIsDisplayed(driver,
 				ongoingPaymentReimbursementBenefitData.homeRetentionAllowance.reimbursedBy, _txtBoxHomeRetentionAllowReimbursedByOther,
 				ongoingPaymentReimbursementBenefitData.homeRetentionAllowance.reimbursedByOther, subBenefitFormName, PDTConstants.REIMBURSED_BY_OTHER);
 		CoreFunctions.clearAndSetText(driver, _txtAreaHomeRetentionAllowComment, PDTConstants.COMMENT,
 				ongoingPaymentReimbursementBenefitData.homeRetentionAllowance.comments);
 	}
 
-	public void fillHouseKeepingAllowance(PDT_AddNewPolicyPage addNewPolicyPage, String subBenefitFormName) {
+	public void fillHouseKeepingAllowance(PDT_AddNewPolicyPage addNewPolicyPage, String subBenefitFormName, String pageName) {
+		populateSubBenefitHeaderMap();
+		Assert.assertTrue(BusinessFunctions.verifySubBenefitFormHeaderIsDisplayed(driver, subBenefitHeaderMap.get(subBenefitFormName), subBenefitFormName, pageName),
+				MessageFormat.format(PDTConstants.VERIFIED_FORM_IS_NOT_DISPLAYED, subBenefitFormName, pageName));
+		BusinessFunctions.expandSubBenefitIfCollapsed(subBenefitHeaderMap.get(subBenefitFormName), subBenefitFormName, driver);
+		
 		CoreFunctions.explicitWaitTillElementListVisibility(driver, _drpDownHouseKeepingAllowCalcMethodOptions);
 		String randHouseKeepAllowCalcMethod = BusinessFunctions.selectAndReturnRandomValueFromDropDown(driver, addNewPolicyPage,
 				subBenefitFormName, _drpDownHouseKeepingAllowCalcMethod, _drpDownHouseKeepingAllowCalcMethodOptions,
@@ -1918,14 +2080,19 @@ public class PDT_OngoingPaymentReimbursementPage extends Base {
 				ongoingPaymentReimbursementBenefitData.houseKeepingAllowance.reimbursedBy, PDTConstants.REIMBURSED_BY,
 				PDTConstants.RADIO_BUTTON_LIST, true);
 
-		BusinessFunctions.verifyOtherTextBoxIsDisplayed(driver, addNewPolicyPage,
+		BusinessFunctions.verifyOtherTextBoxIsDisplayed(driver,
 				ongoingPaymentReimbursementBenefitData.houseKeepingAllowance.reimbursedBy, _txtBoxHouseKeepingAllowReimbursedByOther,
 				ongoingPaymentReimbursementBenefitData.houseKeepingAllowance.reimbursedByOther, subBenefitFormName, PDTConstants.REIMBURSED_BY_OTHER);
 		CoreFunctions.clearAndSetText(driver, _txtAreaHouseKeepingAllowComment, PDTConstants.COMMENT,
 				ongoingPaymentReimbursementBenefitData.houseKeepingAllowance.comments);
 	}
 
-	public void fillUtilityAllowance(PDT_AddNewPolicyPage addNewPolicyPage, String subBenefitFormName) {
+	public void fillUtilityAllowance(PDT_AddNewPolicyPage addNewPolicyPage, String subBenefitFormName, String pageName) {
+		populateSubBenefitHeaderMap();
+		Assert.assertTrue(BusinessFunctions.verifySubBenefitFormHeaderIsDisplayed(driver, subBenefitHeaderMap.get(subBenefitFormName), subBenefitFormName, pageName),
+				MessageFormat.format(PDTConstants.VERIFIED_FORM_IS_NOT_DISPLAYED, subBenefitFormName, pageName));
+		BusinessFunctions.expandSubBenefitIfCollapsed(subBenefitHeaderMap.get(subBenefitFormName), subBenefitFormName, driver);
+		
 		CoreFunctions.explicitWaitTillElementListVisibility(driver, _drpDownUtilityAllowCalcMethodOptions);
 		String randUtilityAllowCalcMethod = BusinessFunctions.selectAndReturnRandomValueFromDropDown(driver, addNewPolicyPage,
 				subBenefitFormName, _drpDownUtilityAllowCalcMethod, _drpDownUtilityAllowCalcMethodOptions,
@@ -1958,14 +2125,19 @@ public class PDT_OngoingPaymentReimbursementPage extends Base {
 				ongoingPaymentReimbursementBenefitData.utilityAllowance.reimbursedBy, PDTConstants.REIMBURSED_BY,
 				PDTConstants.RADIO_BUTTON_LIST, true);
 
-		BusinessFunctions.verifyOtherTextBoxIsDisplayed(driver, addNewPolicyPage,
+		BusinessFunctions.verifyOtherTextBoxIsDisplayed(driver,
 				ongoingPaymentReimbursementBenefitData.utilityAllowance.reimbursedBy, _txtBoxUtilityAllowReimbursedByOther,
 				ongoingPaymentReimbursementBenefitData.utilityAllowance.reimbursedByOther, subBenefitFormName, PDTConstants.REIMBURSED_BY_OTHER);
 		CoreFunctions.clearAndSetText(driver, _txtAreaUtilityAllowComment, PDTConstants.COMMENT,
 				ongoingPaymentReimbursementBenefitData.utilityAllowance.comments);
 	}
 
-	public void fillOtherOngoingAllowance(PDT_AddNewPolicyPage addNewPolicyPage, String subBenefitFormName) {
+	public void fillOtherOngoingAllowance(PDT_AddNewPolicyPage addNewPolicyPage, String subBenefitFormName, String pageName) {
+		populateSubBenefitHeaderMap();
+		Assert.assertTrue(BusinessFunctions.verifySubBenefitFormHeaderIsDisplayed(driver, subBenefitHeaderMap.get(subBenefitFormName), subBenefitFormName, pageName),
+				MessageFormat.format(PDTConstants.VERIFIED_FORM_IS_NOT_DISPLAYED, subBenefitFormName, pageName));
+		BusinessFunctions.expandSubBenefitIfCollapsed(subBenefitHeaderMap.get(subBenefitFormName), subBenefitFormName, driver);
+		
 		CoreFunctions.explicitWaitTillElementListVisibility(driver, _drpDownOthOngoingCalcMethOptions);
 		
 		CoreFunctions.clearAndSetText(driver, _txtBoxAllowanceDesc, _lblAllowanceDesc.getText(),
@@ -2002,10 +2174,104 @@ public class PDT_OngoingPaymentReimbursementPage extends Base {
 				ongoingPaymentReimbursementBenefitData.otherOngoingAllowance.reimbursedBy, PDTConstants.REIMBURSED_BY,
 				PDTConstants.RADIO_BUTTON_LIST, true);
 
-		BusinessFunctions.verifyOtherTextBoxIsDisplayed(driver, addNewPolicyPage,
+		BusinessFunctions.verifyOtherTextBoxIsDisplayed(driver,
 				ongoingPaymentReimbursementBenefitData.otherOngoingAllowance.reimbursedBy, _txtBoxOthOngoingReimbursedByOth,
 				ongoingPaymentReimbursementBenefitData.otherOngoingAllowance.reimbursedByOther, subBenefitFormName, PDTConstants.REIMBURSED_BY_OTHER);
 		CoreFunctions.clearAndSetText(driver, _txtAreaOtherOngoingComment, PDTConstants.COMMENT,
 				ongoingPaymentReimbursementBenefitData.otherOngoingAllowance.comments);
+	}
+	
+	public void fillOngoingPaymentSubBenefit(String subBenefit, String pageName, PDT_AddNewPolicyPage addNewPolicyPage, PDT_SharedSubBenefitPage subBenefitPage) {		
+		switch (subBenefit) {
+		case PDTConstants.COLA:
+			fillCola(addNewPolicyPage, subBenefit, pageName);
+			break;
+		case PDTConstants.PER_DIEM:
+			fillPerDiem(addNewPolicyPage, subBenefit, pageName);
+			break;
+		case PDTConstants.MOBILITY_PREMIUM:
+			fillMobilityPremium(addNewPolicyPage, subBenefit, pageName);
+			break;
+		case PDTConstants.TRANSPORTATION_ALLOWANCE:
+			fillTransportationAllowance(addNewPolicyPage, subBenefit, pageName);
+			break;
+		case PDTConstants.HOUSING_ALLOWANCE:
+			fillHousingAllowance(addNewPolicyPage, subBenefit, pageName);
+			break;
+		case PDTConstants.HOME_MAINTENANCE_ALLOWANCE:
+			fillHomeMaintenanceAllowance(addNewPolicyPage, subBenefit, pageName);
+			break;
+		case PDTConstants.FURNITURE_ALLOWANCE:
+			fillFurnitureAllowance(addNewPolicyPage, subBenefit, pageName);
+			break;
+		case PDTConstants.HARDSHIP_ALLOWANCE:
+			fillHardshipAllowance(addNewPolicyPage, subBenefit, pageName);
+			break;
+		case PDTConstants.BANKING_ALLOWANCE:
+			fillBankingAllowance(addNewPolicyPage, subBenefit, pageName);
+			break;
+		case PDTConstants.AT_SEA_ALLOWANCE:
+			fillAtSeaAllowance(addNewPolicyPage, subBenefit, pageName);
+			break;
+		case PDTConstants.COMMUTER_ALLOWANCE:
+			fillCommuterAllowance(addNewPolicyPage, subBenefit, pageName);
+			break;
+		case PDTConstants.DIFFERENTIAL_ALLOWANCE:
+			fillDifferentialAllowance(addNewPolicyPage, subBenefit, pageName);
+			break;
+		case PDTConstants.GOODS_AND_SERVICES_ALLOWANCE:
+			fillGoodsAndServicesAllowance(addNewPolicyPage, subBenefit, pageName);
+			break;
+		case PDTConstants.HOME_LEAVE_ALLOWANCE:
+			fillHomeLeaveAllowance(addNewPolicyPage, subBenefit, pageName);
+			break;
+		case PDTConstants.HOME_RETENTION_ALLOWANCE:
+			fillHomeRetentionAllowance(addNewPolicyPage, subBenefit, pageName);
+			break;
+		case PDTConstants.HOUSEKEEPING_ALLOWANCE:
+			fillHouseKeepingAllowance(addNewPolicyPage, subBenefit, pageName);
+			break;
+		case PDTConstants.UTILITY_ALLOWANCE:
+			fillUtilityAllowance(addNewPolicyPage, subBenefit, pageName);
+			break;
+		case PDTConstants.OTHER_ONGOING_ALLOWANCE:
+			fillOtherOngoingAllowance(addNewPolicyPage, subBenefit, pageName);
+			break;
+		default:
+			Assert.fail(MessageFormat.format(PDTConstants.SUBBENEFIT_NOT_FOUND, CoreConstants.FAIL, subBenefit, pageName));
+		}		
+	}
+	
+	/**
+	 * Iterate Destination Services sub-benefits and fill their corresponding form.
+	 * @param pageName
+	 * @param subBenefits
+	 * @param addNewPolicyPage
+	 * @param objStep
+	 * @param btnName
+	 * @param subBenefitPage 
+	 */
+	public void iterateAndFillOngoingPaymentsReimbursementsSubBenefits(String pageName, List<String> subBenefits,
+			PDT_AddNewPolicyPage addNewPolicyPage, PDT_SharedSubBenefit_Steps objStep, String btnName, PDT_SharedSubBenefitPage subBenefitPage) {
+		CoreFunctions.explicitWaitTillElementListClickable(driver, _subBenefitCategories);			
+		populateBtnMap();
+		populateConfirmDialogbuttonMap();
+		WebElement btnToClick = (btnName != null) ?  buttonMap.get(btnName) : buttonMap.get(PDTConstants.SAVE);
+		for (String subBenefit : subBenefits) {
+			CoreFunctions.selectItemInListByText(driver, _subBenefitCategories, subBenefit, true);
+			timeBeforeAction = new Date().getTime();
+			waitForProgressBarToDisapper();
+			timeAfterAction = new Date().getTime();
+			BusinessFunctions.printTimeTakenByPageToLoad(timeBeforeAction, timeAfterAction, pageName, subBenefit);
+			fillOngoingPaymentSubBenefit(subBenefit, pageName, addNewPolicyPage, subBenefitPage);
+		}
+		try {
+			CoreFunctions.click(driver, btnToClick, btnToClick.getText());
+		} catch (NoSuchElementException e) {
+			Assert.fail(MessageFormat.format(PDTConstants.MISSING_BTN, CoreConstants.FAIL, btnName));
+		} catch (Exception e) {
+			e.printStackTrace();
+			Assert.fail(MessageFormat.format(PDTConstants.FAILED_TO_CLICK_ON_BTN, CoreConstants.FAIL, btnName));
+		}
 	}
 }

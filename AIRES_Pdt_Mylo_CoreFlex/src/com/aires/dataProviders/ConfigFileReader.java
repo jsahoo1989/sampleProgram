@@ -32,7 +32,6 @@ import com.aires.enums.EnvironmentType;
 public class ConfigFileReader {
 	private Properties properties;
 	private final String propertyFilePath = System.getProperty("user.dir") + "\\Configs\\Config.properties";
-//	private static String _url = null;
 	LinkedHashMap<String, String> mapEnvURL = new LinkedHashMap<String, String>();
 
 	public ConfigFileReader() {
@@ -104,22 +103,6 @@ public class ConfigFileReader {
 		return 30;
 	}
 
-	public String getPDTApplicationUrl() {
-		if (properties.getProperty("envt").equalsIgnoreCase("Test"))
-			return properties.getProperty("pdtTestURL");
-		else if (properties.getProperty("envt").equalsIgnoreCase("QA"))
-			return properties.getProperty("pdtQaURL");
-		else if (properties.getProperty("envt").equalsIgnoreCase("Prod"))
-			return properties.getProperty("pdtProdURL");
-		else if (properties.getProperty("envt").equalsIgnoreCase("Dev"))
-			return properties.getProperty("pdtDevURL");
-		else if (properties.getProperty("envt").equalsIgnoreCase("Uat"))
-			return properties.getProperty("pdtUatURL");
-		else
-			throw new RuntimeException(
-					"Application Url not specified in the Configuration.properties file for the Key:url");
-	}
-	
 	public void mapApplicationURL() {
 		mapEnvURL.put(CoreConstants.MXTRANSFEREE_QA, CoreConstants.MXTRANSFEREE_QA_URL);
 		mapEnvURL.put(CoreConstants.MXTRANSFEREE_UAT, CoreConstants.MXTRANSFEREE_UAT_URL);

@@ -1,13 +1,17 @@
 package stepDefinitions.pdt;
 
 import java.text.MessageFormat;
+
 import org.testng.Assert;
+
 import com.aires.businessrules.constants.CoreConstants;
 import com.aires.businessrules.constants.PDTConstants;
 import com.aires.cucumber.TestContext;
 import com.aires.pages.pdt.PDT_AddNewPolicyPage;
 import com.aires.pages.pdt.PDT_GeneralInformationPage;
 import com.aires.pages.pdt.PDT_PolicyBenefitCategoryPage;
+import com.aires.utilities.ClientPolicyDetails;
+
 import cucumber.api.DataTable;
 import cucumber.api.java.en.Given;
 import cucumber.api.java.en.Then;
@@ -29,12 +33,12 @@ public class PDT_GeneralInfo_Steps {
 	@Then("^by default \"([^\"]*)\" option should be selected for 'Core/Flex policy' drop down on \"([^\"]*)\" page$")
 	public void by_default_option_should_be_selected_for_Core_Flex_policy_drop_down_on_page(String noOption, String generalInfoPageName) {
 		generalInfoPage.explicitWaitForGeneralInfoHeading();
-		Assert.assertTrue(generalInfoPage.verifyClientDetails(addNewPolicyPage.getClientId(), addNewPolicyPage.getClientName()),
-				MessageFormat.format(PDTConstants.FAILED_TO_VERIFY_CLIENT_DETAILS, CoreConstants.FAIL, addNewPolicyPage.getClientId(), addNewPolicyPage.getClientName(),
+		Assert.assertTrue(generalInfoPage.verifyClientDetails(ClientPolicyDetails.getClientId(), ClientPolicyDetails.getClientName()),
+				MessageFormat.format(PDTConstants.FAILED_TO_VERIFY_CLIENT_DETAILS, CoreConstants.FAIL, ClientPolicyDetails.getClientId(), ClientPolicyDetails.getClientName(),
 						generalInfoPage.getElementText(PDTConstants.CLIENT_ID), generalInfoPage.getElementText(PDTConstants.CLIENT_NAME)));
 		
-		Assert.assertTrue(generalInfoPage.verifyPolicyName(addNewPolicyPage.getPolicyName()),
-				MessageFormat.format(PDTConstants.FAILED_TO_VERIFY_POLICY_NAME, CoreConstants.FAIL, addNewPolicyPage.getPolicyName(), generalInfoPage.getElementText(PDTConstants.POLICY_NAME)));
+		Assert.assertTrue(generalInfoPage.verifyPolicyName(ClientPolicyDetails.getPolicyName()),
+				MessageFormat.format(PDTConstants.FAILED_TO_VERIFY_POLICY_NAME, CoreConstants.FAIL, ClientPolicyDetails.getPolicyName(), generalInfoPage.getElementText(PDTConstants.POLICY_NAME)));
 		
 		Assert.assertTrue(generalInfoPage.verifyCoreFlexPolicyField(noOption, generalInfoPageName),
 				MessageFormat.format(PDTConstants.FAILED_TO_VERIFY_DEFAULT_COREFLEX_POLICY, CoreConstants.FAIL, generalInfoPageName, noOption,
@@ -51,12 +55,12 @@ public class PDT_GeneralInfo_Steps {
 	public void he_clicks_on_the_Next_button_after_entering_mandatory_information_on_General_Information_page() {
 		generalInfoPage.explicitWaitForGeneralInfoHeading();
 		
-		Assert.assertTrue(generalInfoPage.verifyClientDetails(addNewPolicyPage.getClientId(), addNewPolicyPage.getClientName()),
-				MessageFormat.format(PDTConstants.FAILED_TO_VERIFY_CLIENT_DETAILS, CoreConstants.FAIL, addNewPolicyPage.getClientId(), addNewPolicyPage.getClientName(),
+		Assert.assertTrue(generalInfoPage.verifyClientDetails(ClientPolicyDetails.getClientId(), ClientPolicyDetails.getClientName()),
+				MessageFormat.format(PDTConstants.FAILED_TO_VERIFY_CLIENT_DETAILS, CoreConstants.FAIL, ClientPolicyDetails.getClientId(), ClientPolicyDetails.getClientName(),
 						generalInfoPage.getElementText(PDTConstants.CLIENT_ID), generalInfoPage.getElementText(PDTConstants.CLIENT_NAME)));
 		
-		Assert.assertTrue(generalInfoPage.verifyPolicyName(addNewPolicyPage.getPolicyName()),
-				MessageFormat.format(PDTConstants.FAILED_TO_VERIFY_POLICY_NAME, CoreConstants.FAIL, addNewPolicyPage.getPolicyName(), generalInfoPage.getElementText(PDTConstants.POLICY_NAME)));
+		Assert.assertTrue(generalInfoPage.verifyPolicyName(ClientPolicyDetails.getPolicyName()),
+				MessageFormat.format(PDTConstants.FAILED_TO_VERIFY_POLICY_NAME, CoreConstants.FAIL, ClientPolicyDetails.getPolicyName(), generalInfoPage.getElementText(PDTConstants.POLICY_NAME)));
 		
 		generalInfoPage.enterGeneralInformationFields();
 	}
@@ -64,13 +68,13 @@ public class PDT_GeneralInfo_Steps {
 	@Given("^he has entered mandatory information on 'General Information' page followed by selection of \"([^\"]*)\" as Benefit Category on \"([^\"]*)\" page$")
 	public void he_has_entered_mandatory_information_on_General_Information_page_followed_by_selection_of_as_Benefit_Category_on_page(String benefitCategory, String policyBenefitPage) {
 		generalInfoPage.explicitWaitForGeneralInfoHeading();
-		
-		Assert.assertTrue(generalInfoPage.verifyClientDetails(addNewPolicyPage.getClientId(), addNewPolicyPage.getClientName()),
-				MessageFormat.format(PDTConstants.FAILED_TO_VERIFY_CLIENT_DETAILS, CoreConstants.FAIL, addNewPolicyPage.getClientId(), addNewPolicyPage.getClientName(),
+		//Use soft assert
+		Assert.assertTrue(generalInfoPage.verifyClientDetails(ClientPolicyDetails.getClientId(), ClientPolicyDetails.getClientName()),
+				MessageFormat.format(PDTConstants.FAILED_TO_VERIFY_CLIENT_DETAILS, CoreConstants.FAIL, ClientPolicyDetails.getClientId(), ClientPolicyDetails.getClientName(),
 						generalInfoPage.getElementText(PDTConstants.CLIENT_ID), generalInfoPage.getElementText(PDTConstants.CLIENT_NAME)));
 		
-		Assert.assertTrue(generalInfoPage.verifyPolicyName(addNewPolicyPage.getPolicyName()),
-				MessageFormat.format(PDTConstants.FAILED_TO_VERIFY_POLICY_NAME, CoreConstants.FAIL, addNewPolicyPage.getPolicyName(), generalInfoPage.getElementText(PDTConstants.POLICY_NAME)));
+		Assert.assertTrue(generalInfoPage.verifyPolicyName(ClientPolicyDetails.getPolicyName()),
+				MessageFormat.format(PDTConstants.FAILED_TO_VERIFY_POLICY_NAME, CoreConstants.FAIL, ClientPolicyDetails.getPolicyName(), generalInfoPage.getElementText(PDTConstants.POLICY_NAME)));
 		
 		generalInfoPage.enterGeneralInformationFields();
 		Assert.assertTrue(policyBenefitCategoryPage.verifyPolicyBenefitCategoryHeading(policyBenefitPage),
@@ -82,12 +86,12 @@ public class PDT_GeneralInfo_Steps {
 	public void he_has_selected_below_information_for_form_fields_on_General_Information_page_followed_by_selection_of_as_Benefit_Category_on_page(String benefitCategory, String pageName, DataTable generalInfoTable) {
 		generalInfoPage.explicitWaitForGeneralInfoHeading();
 		
-		Assert.assertTrue(generalInfoPage.verifyClientDetails(addNewPolicyPage.getClientId(), addNewPolicyPage.getClientName()),
-				MessageFormat.format(PDTConstants.FAILED_TO_VERIFY_CLIENT_DETAILS, CoreConstants.FAIL, addNewPolicyPage.getClientId(), addNewPolicyPage.getClientName(),
+		Assert.assertTrue(generalInfoPage.verifyClientDetails(ClientPolicyDetails.getClientId(), ClientPolicyDetails.getClientName()),
+				MessageFormat.format(PDTConstants.FAILED_TO_VERIFY_CLIENT_DETAILS, CoreConstants.FAIL, ClientPolicyDetails.getClientId(), ClientPolicyDetails.getClientName(),
 						generalInfoPage.getElementText(PDTConstants.CLIENT_ID), generalInfoPage.getElementText(PDTConstants.CLIENT_NAME)));
 		
-		Assert.assertTrue(generalInfoPage.verifyPolicyName(addNewPolicyPage.getPolicyName()),
-				MessageFormat.format(PDTConstants.FAILED_TO_VERIFY_POLICY_NAME, CoreConstants.FAIL, addNewPolicyPage.getPolicyName(), generalInfoPage.getElementText(PDTConstants.POLICY_NAME)));
+		Assert.assertTrue(generalInfoPage.verifyPolicyName(ClientPolicyDetails.getPolicyName()),
+				MessageFormat.format(PDTConstants.FAILED_TO_VERIFY_POLICY_NAME, CoreConstants.FAIL, ClientPolicyDetails.getPolicyName(), generalInfoPage.getElementText(PDTConstants.POLICY_NAME)));
 		
 		generalInfoPage.enterGeneralInformationFields(generalInfoTable);
 		Assert.assertTrue(policyBenefitCategoryPage.verifyPolicyBenefitCategoryHeading(pageName),

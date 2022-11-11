@@ -1,15 +1,16 @@
 package com.aires.pages.pdt;
 
 import java.text.MessageFormat;
+import java.util.Date;
 import java.util.List;
 
+import org.openqa.selenium.NoSuchElementException;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.How;
 import org.testng.Assert;
 
-import com.aires.businessrules.Base;
 import com.aires.businessrules.BusinessFunctions;
 import com.aires.businessrules.CoreFunctions;
 import com.aires.businessrules.constants.CoreConstants;
@@ -18,7 +19,9 @@ import com.aires.managers.FileReaderManager;
 import com.aires.testdatatypes.pdt.PDT_FinalMoveBenefit;
 import com.vimalselvam.cucumber.listener.Reporter;
 
-public class PDT_FinalMovePage extends Base {
+import stepDefinitions.pdt.PDT_SharedSubBenefit_Steps;
+
+public class PDT_FinalMovePage extends PDT_SharedSubBenefitPage {
 	public PDT_FinalMovePage(WebDriver driver) {
 		super(driver);
 	}
@@ -221,6 +224,21 @@ public class PDT_FinalMovePage extends Base {
 
 	@FindBy(how = How.XPATH, using = "//input[@formcontrolname='maxAmountChild']/preceding-sibling::label")
 	private WebElement _lblMaxAmtChildren;
+	
+	@FindBy(how = How.CSS, using = "a[href='#collapseOne1']")
+	private WebElement _formHeaderFinalMoveTransportation;
+	
+	@FindBy(how = How.CSS, using = "a[href='#collapseTwo']")
+	private WebElement _formHeaderFinalMoveLodging;
+
+	@FindBy(how = How.CSS, using = "a[href='#collapseThree']")
+	private WebElement _formHeaderFinalMoveMeals;
+	
+	@FindBy(how = How.CSS, using = "div.form-check > label.form-check-label")
+	private List<WebElement> _subBenefitCategories;
+	
+	@FindBy(how = How.CSS, using = "div.ngx-progress-bar.ngx-progress-bar-ltr")
+	private WebElement _progressBar;
 
 	PDT_FinalMoveBenefit finalMoveBenefitData = FileReaderManager.getInstance().getJsonReader()
 			.getFinalMoveDataList("Final Move");
@@ -276,6 +294,15 @@ public class PDT_FinalMovePage extends Base {
 		return maxAmtFinalMoveMeals;
 	}
 
+	/**
+	 * Add the Form Header of Final Move Transportation, Final Move Lodging & Final Move Meals in Hash map i.e. subBenefitHeaderMap
+	 */
+	public void populateSubBenefitHeaderMap() {
+		subBenefitHeaderMap.put(PDTConstants.FINAL_MOVE_TRANSPORTATION, _formHeaderFinalMoveTransportation);
+		subBenefitHeaderMap.put(PDTConstants.FINAL_MOVE_LODGING, _formHeaderFinalMoveLodging);
+		subBenefitHeaderMap.put(PDTConstants.FINAL_MOVE_MEALS, _formHeaderFinalMoveMeals);
+	}
+	
 	public void selectRandomTransportTypeOption(PDT_AddNewPolicyPage addNewPolicyPage, String subBenefitFormName) {
 		try {
 			CoreFunctions.clickElement(driver, _drpDownTransportationType);
@@ -298,9 +325,19 @@ public class PDT_FinalMovePage extends Base {
 		}
 	}
 
+	/**
+	 * Fill Final Move Transportation Form.
+	 * @param addNewPolicyPage
+	 * @param subBenefitFormName
+	 * @param pageName
+	 */
 	public void fillFinalMoveTransportationForm(PDT_AddNewPolicyPage addNewPolicyPage,
-			String subBenefitFormName) {
+			String subBenefitFormName, String pageName) {
 		try {
+			populateSubBenefitHeaderMap();
+			Assert.assertTrue(BusinessFunctions.verifySubBenefitFormHeaderIsDisplayed(driver, subBenefitHeaderMap.get(subBenefitFormName), subBenefitFormName, pageName),
+					MessageFormat.format(PDTConstants.VERIFIED_FORM_IS_NOT_DISPLAYED, subBenefitFormName, pageName));
+			BusinessFunctions.expandSubBenefitIfCollapsed(subBenefitHeaderMap.get(subBenefitFormName), subBenefitFormName, driver);
 			CoreFunctions.explicitWaitTillElementVisibility(driver, _lblTransportationType,
 					_lblTransportationType.getText());
 			selectRandomTransportTypeOption(addNewPolicyPage, subBenefitFormName);
@@ -321,7 +358,7 @@ public class PDT_FinalMovePage extends Base {
 			CoreFunctions.selectItemInListByText(driver, _radioBtnFinalMoveTransport,
 					finalMoveBenefitData.finalMoveTransportation.reimbursedBy, PDTConstants.REIMBURSED_BY,
 					PDTConstants.RADIO_BUTTON_LIST, true);
-			BusinessFunctions.verifyOtherTextBoxIsDisplayed(driver, addNewPolicyPage,
+			BusinessFunctions.verifyOtherTextBoxIsDisplayed(driver,
 					finalMoveBenefitData.finalMoveTransportation.reimbursedBy,
 					_txtBoxFinalMoveTransportReimbursedByOther,
 					finalMoveBenefitData.finalMoveTransportation.reimbursedByOther, subBenefitFormName, PDTConstants.REIMBURSED_BY_OTHER);
@@ -385,8 +422,18 @@ public class PDT_FinalMovePage extends Base {
 		}
 	}
 
-	public void fillFinalMoveLodgingForm(PDT_AddNewPolicyPage addNewPolicyPage, String subBenefitFormName) {
+	/**
+	 * Fill Final Move Lodging Form.
+	 * @param addNewPolicyPage
+	 * @param subBenefitFormName
+	 * @param pageName
+	 */
+	public void fillFinalMoveLodgingForm(PDT_AddNewPolicyPage addNewPolicyPage, String subBenefitFormName, String pageName) {
 		try {
+			populateSubBenefitHeaderMap();
+			Assert.assertTrue(BusinessFunctions.verifySubBenefitFormHeaderIsDisplayed(driver, subBenefitHeaderMap.get(subBenefitFormName), subBenefitFormName, pageName),
+					MessageFormat.format(PDTConstants.VERIFIED_FORM_IS_NOT_DISPLAYED, subBenefitFormName, pageName));
+			BusinessFunctions.expandSubBenefitIfCollapsed(subBenefitHeaderMap.get(subBenefitFormName), subBenefitFormName, driver);
 			CoreFunctions.explicitWaitTillElementVisibility(driver, _drpDownDuration, _lblDuration.getText());
 			String randDuration = BusinessFunctions.selectAndReturnRandomValueFromDropDown(driver, addNewPolicyPage, subBenefitFormName,
 					_drpDownDuration, _drpDownDurationOptions,
@@ -405,7 +452,7 @@ public class PDT_FinalMovePage extends Base {
 			CoreFunctions.selectItemInListByText(driver, _radioBtnFinalMoveLodging,
 					finalMoveBenefitData.finalMoveLodging.reimbursedBy, PDTConstants.REIMBURSED_BY,
 					PDTConstants.RADIO_BUTTON_LIST, true);
-			BusinessFunctions.verifyOtherTextBoxIsDisplayed(driver, addNewPolicyPage,
+			BusinessFunctions.verifyOtherTextBoxIsDisplayed(driver,
 					finalMoveBenefitData.finalMoveLodging.reimbursedBy,
 					_txtBoxFinalMoveLodgingReimbursedByOther,
 					finalMoveBenefitData.finalMoveLodging.reimbursedByOther, subBenefitFormName, PDTConstants.REIMBURSED_BY_OTHER);
@@ -493,8 +540,18 @@ public class PDT_FinalMovePage extends Base {
 		}
 	}
 
-	public void fillFinalMoveMealForm(PDT_AddNewPolicyPage addNewPolicyPage, String subBenefitFormName) {
+	/**
+	 * Fill Final Move Meal Form
+	 * @param addNewPolicyPage
+	 * @param subBenefitFormName
+	 * @param pageName
+	 */
+	public void fillFinalMoveMealForm(PDT_AddNewPolicyPage addNewPolicyPage, String subBenefitFormName, String pageName) {
 		try {
+			populateSubBenefitHeaderMap();
+			Assert.assertTrue(BusinessFunctions.verifySubBenefitFormHeaderIsDisplayed(driver, subBenefitHeaderMap.get(subBenefitFormName), subBenefitFormName, pageName),
+					MessageFormat.format(PDTConstants.VERIFIED_FORM_IS_NOT_DISPLAYED, subBenefitFormName, pageName));
+			BusinessFunctions.expandSubBenefitIfCollapsed(subBenefitHeaderMap.get(subBenefitFormName), subBenefitFormName, driver);
 			CoreFunctions.explicitWaitTillElementVisibility(driver, _drpDownNumOfDaysForMeals,  _lblNumOfDaysForMeals.getText());
 			String randNumDays = BusinessFunctions.selectAndReturnRandomValueFromDropDown(driver, addNewPolicyPage, subBenefitFormName,
 					_drpDownNumOfDaysForMeals, _drpDownNumOfDaysForMealsOptions,
@@ -518,7 +575,7 @@ public class PDT_FinalMovePage extends Base {
 					finalMoveBenefitData.finalMoveMeals.reimbursedBy, PDTConstants.REIMBURSED_BY,
 					PDTConstants.RADIO_BUTTON_LIST, true);
 
-			BusinessFunctions.verifyOtherTextBoxIsDisplayed(driver, addNewPolicyPage,
+			BusinessFunctions.verifyOtherTextBoxIsDisplayed(driver,
 					finalMoveBenefitData.finalMoveMeals.reimbursedBy,
 					_txtBoxFinalMoveMealReimbursedByOther,
 					finalMoveBenefitData.finalMoveMeals.reimbursedByOther, subBenefitFormName, PDTConstants.REIMBURSED_BY_OTHER);
@@ -529,6 +586,61 @@ public class PDT_FinalMovePage extends Base {
 		} catch (Exception e) {
 			e.printStackTrace();
 			Assert.fail(MessageFormat.format(PDTConstants.EXCEPTION_OCCURED_FILL_SUBBENEFIT_FORM, CoreConstants.FAIL, subBenefitFormName));
+		}
+	}
+	
+	/**
+	 * Fill Final Move sub-benefit based on sub-benefit name
+	 * @param subBenefit
+	 * @param pageName
+	 * @param addNewPolicyPage
+	 */
+	public void fillFinalMoveSubBenefit(String subBenefit, String pageName, PDT_AddNewPolicyPage addNewPolicyPage, PDT_SharedSubBenefitPage subBenefitPage) {		
+		switch (subBenefit) {
+		case PDTConstants.FINAL_MOVE_TRANSPORTATION:
+			fillFinalMoveTransportationForm(addNewPolicyPage, subBenefit, pageName);
+			break;
+		case PDTConstants.FINAL_MOVE_LODGING:
+			fillFinalMoveLodgingForm(addNewPolicyPage, subBenefit, pageName);
+			break;
+		case PDTConstants.FINAL_MOVE_MEALS:
+			fillFinalMoveMealForm(addNewPolicyPage, subBenefit, pageName);
+			break;
+		default:
+			Assert.fail(MessageFormat.format(PDTConstants.SUBBENEFIT_NOT_FOUND, CoreConstants.FAIL, subBenefit, pageName));
+		}		
+	}
+	
+	/**
+	 * Iterate Final Move sub-benefits and fill their corresponding form.
+	 * @param pageName
+	 * @param subBenefits
+	 * @param addNewPolicyPage
+	 * @param objStep
+	 * @param btnName
+	 * @param subBenefitPage 
+	 */
+	public void iterateAndFillFinalMoveSubBenefits(String pageName, List<String> subBenefits,
+			PDT_AddNewPolicyPage addNewPolicyPage, PDT_SharedSubBenefit_Steps objStep, String btnName, PDT_SharedSubBenefitPage subBenefitPage) {
+		CoreFunctions.explicitWaitTillElementListClickable(driver, _subBenefitCategories);			
+		populateBtnMap();
+		populateConfirmDialogbuttonMap();
+		WebElement btnToClick = (btnName != null) ?  buttonMap.get(btnName) : buttonMap.get(PDTConstants.SAVE);
+		for (String subBenefit : subBenefits) {
+			CoreFunctions.selectItemInListByText(driver, _subBenefitCategories, subBenefit, true);
+			timeBeforeAction = new Date().getTime();
+			BusinessFunctions.fluentWaitForSpinnerToDisappear(driver, _progressBar);
+			timeAfterAction = new Date().getTime();
+			BusinessFunctions.printTimeTakenByPageToLoad(timeBeforeAction, timeAfterAction, pageName, subBenefit);
+			fillFinalMoveSubBenefit(subBenefit, pageName, addNewPolicyPage, subBenefitPage);
+		}
+		try {
+			CoreFunctions.click(driver, btnToClick, btnToClick.getText());
+		} catch (NoSuchElementException e) {
+			Assert.fail(MessageFormat.format(PDTConstants.MISSING_BTN, CoreConstants.FAIL, btnName));
+		} catch (Exception e) {
+			e.printStackTrace();
+			Assert.fail(MessageFormat.format(PDTConstants.FAILED_TO_CLICK_ON_BTN, CoreConstants.FAIL, btnName));
 		}
 	}
 }

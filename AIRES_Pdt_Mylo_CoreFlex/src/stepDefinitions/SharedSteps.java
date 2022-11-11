@@ -1,5 +1,6 @@
 package stepDefinitions;
 
+import com.aires.businessrules.CoreFunctions;
 import com.aires.cucumber.TestContext;
 import com.aires.managers.FileReaderManager;
 import com.aires.pages.iris.IRIS_Corporation_Main;

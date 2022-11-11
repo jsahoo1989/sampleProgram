@@ -1,22 +1,18 @@
 package stepDefinitions;
 
-import com.aires.businessrules.CoreFunctions;
 import com.aires.cucumber.TestContext;
 import com.aires.managers.FileReaderManager;
 import com.aires.pages.iris.IRIS_Corporation_Main;
 import com.aires.pages.iris.IRIS_LoginPage;
 import com.aires.testdatatypes.pdt.PDT_LoginDetails;
-import com.aires.testdatatypes.pdt.PDT_LoginInfo;
-import com.aires.utilities.Log;
 
 import cucumber.api.java.en.Given;
-import stepDefinitions.Hooks;
 
 public class SharedSteps {
 	TestContext testContext;
 	IRIS_Corporation_Main irisCorporation_Main;
-	private PDT_LoginDetails _loginDetailsApplication = FileReaderManager.getInstance().getJsonReader().getLoginByApplication(CoreFunctions.getPropertyFromConfig("application").toLowerCase());
-	//private PDT_LoginDetails _loginDetailsApplication = FileReaderManager.getInstance().getJsonReader().getLoginByApplication(System.getProperty("application").toLowerCase());
+	//private PDT_LoginDetails _loginDetailsApplication = FileReaderManager.getInstance().getJsonReader().getLoginByApplication(CoreFunctions.getPropertyFromConfig("application").toLowerCase());
+	private PDT_LoginDetails _loginDetailsApplication = FileReaderManager.getInstance().getJsonReader().getLoginByApplication(System.getProperty("application").toLowerCase());
 	
 	//private PDT_LoginInfo _loginInfo = FileReaderManager.getInstance().getJsonReader().getLoginByEnvt(CoreFunctions.getPropertyFromConfig("envt").toLowerCase());
 	//private PDT_LoginInfo _loginInfo = FileReaderManager.getInstance().getJsonReader().getLoginByEnvt(System.getProperty("envt").toLowerCase());

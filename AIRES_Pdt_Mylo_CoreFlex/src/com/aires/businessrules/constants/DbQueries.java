@@ -11,4 +11,5 @@ public class DbQueries {
 	public static final String QUERY_GET_COUNTRY_DROPDOWNLIST = "SELECT COUNTRY_NAME FROM isisdba.country_codes order by COUNTRY_NAME";
 	public static final String QUERY_GET_GENDER_DROPDOWNLIST = "SELECT GENDER_MARKER_DESCRIPTION FROM isisdba.gender_marker_code";
 	public static final String QUERY_GET_RELATIONSHIP_DROPDOWNLIST = "SELECT GENDER_MARKER_DESCRIPTION FROM isisdba.family_relation_code";
+	public static final String QUERY_GET_CURRENCYCOUNTRY = "SELECT DISTINCT COUNTRY FROM ISISDBA.CURRENCY_LOCALES WHERE ISO_CODE = ?";
 }

@@ -329,7 +329,7 @@ public class MX_Client_BenefitSelectionToolPage extends Base {
 			.getPolicySetupPagesDataList(COREFLEXConstants.POLICY_SETUP);
 
 	MX_Transferee_AccountSetupDetails accountDetails = FileReaderManager.getInstance().getCoreFlexJsonReader()
-			.getMxTransfereeAccountSetupDetails();
+			.getMxTransfereeAccountSetupDetails("AddPaymentAccount");
 
 	public static final List<Benefit> coreBenefits = FileReaderManager.getInstance().getCoreFlexJsonReader()
 			.getMXTransfereeCoreBenefitDetails();

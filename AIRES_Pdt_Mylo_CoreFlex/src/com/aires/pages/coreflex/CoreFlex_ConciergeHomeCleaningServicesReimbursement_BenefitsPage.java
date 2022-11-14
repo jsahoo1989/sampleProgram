@@ -537,8 +537,8 @@ public class CoreFlex_ConciergeHomeCleaningServicesReimbursement_BenefitsPage ex
 			if ((benefitType.equals(COREFLEXConstants.FLEX_BENEFITS)) || (benefitType.equals(COREFLEXConstants.FLEX))) {
 				if ((multipleBenefitSelection.equals(COREFLEXConstants.YES)))
 					CoreFunctions.clickElement(driver, _inputMultiAddBenefit);
-				CoreFunctions.selectItemInListByText(driver, _radioAiresManagedService, aireManagedService, true,
-						COREFLEXConstants.AIRES_MANAGED_SERVICE);
+//				CoreFunctions.selectItemInListByText(driver, _radioAiresManagedService, aireManagedService, true,
+//						COREFLEXConstants.AIRES_MANAGED_SERVICE);
 			}
 		} catch (Exception e) {
 			Reporter.addStepLog(

@@ -2011,4 +2011,28 @@ public class CoreFunctions {
 			break;
 		}
 	}
+	
+	public static void verifyTextContains(String actualText, String expectedText, String fieldName) {
+		if (actualText.contains(expectedText))
+			Reporter.addStepLog(
+					CoreConstants.PASS + MobilityXConstants.VERIFIED_FIELD_TEXT + fieldName + " : " + expectedText);
+		else {
+			Reporter.addStepLog(CoreConstants.FAIL + MobilityXConstants.FAILED_TO_VERIFY + fieldName + " | "
+					+ CoreConstants.VAL_ACTUAL + actualText + " " + CoreConstants.VAL_EXPECTED + expectedText);
+			Assert.fail("Failed to verify the fields " + fieldName + " Text: Actual Text = " + actualText
+					+ " Contains Expected Text = " + expectedText);
+		}
+	}
+
+	public static void selectRandomOptionFromTheProvidedList(WebDriver driver,
+			List<WebElement> elementList, List<String> providedCurrencyList) {
+		String randomValue;
+		try {
+			randomValue = providedCurrencyList.get(getRandomNumber(0, providedCurrencyList.size() - 1));
+			selectItemInListByText(driver, elementList, randomValue);
+		} catch (Exception e) {
+			Assert.fail(CoreConstants.FAILED_TO_SELECT_RANDOM_OPTION_FROM_THE_LIST);
+		}
+		
+	}
 }

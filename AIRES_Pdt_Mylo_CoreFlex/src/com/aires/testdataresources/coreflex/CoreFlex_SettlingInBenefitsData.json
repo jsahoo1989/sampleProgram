@@ -72,7 +72,7 @@
 		"benefitName": "Pre-Acceptance Services",
 		"preAcceptanceTripTransportation": {
 			"numberOfTrips": "10",
-			"transportationType": "Mileage",
+			"transportationType": "Distance",
 			"minMilForEconomyAirTravel": "2000",
 			"minMilForBusinessAirTravel": "1000",
 			"minFlightTimeExclLayovers": "40",

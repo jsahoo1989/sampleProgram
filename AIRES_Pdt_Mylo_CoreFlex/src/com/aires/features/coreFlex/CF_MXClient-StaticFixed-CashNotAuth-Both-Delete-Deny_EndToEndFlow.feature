@@ -1,19 +1,19 @@
 Feature: Validate the CoreFlex End-To-End Business Test Flow(BluePrint, MXClient, Transferee Submissions) for Both_MXClient_StaticFixed_CashoutNotAuthorized_Delete_DenyAll selection
 
-  @End-To-End_CoreFlex @CF_MXClient_StaticFixed_CashNotAuth_Delete_Deny
+  @End-To-End_CoreFlex @CF_MXClient_StaticFixed_CashNotAuth_Delete_Deny_PF
   Scenario: CoreFlex - Creating & Validating a new Active Points Based CoreFlex Policy with MXClient, StaticFixed and CashNotAuth selection
     Given he has setup a new Points Based CoreFlex Policy with following selection in Blueprint application
-      | Person Responsible For Benefit Selection | Flex Setup Type | Cashout Availability   | BenefitType | PolicyRequiredFor | MileStones |
-      | Client Initiator                         | Static/Fixed    | Cashout Not Authorized | Both        | Client            |          0 |
+      | Person Responsible For Benefit Selection | Flex Setup Type | Cashout Availability   | BenefitType | PolicyRequiredFor | 
+      | Client Initiator                         | Static/Fixed    | Cashout Not Authorized | Both        | Client            | 
     And he has clicked on "Submit" button to submit "V1" policy verison on "Custom Bundles" page
     And he has clicked on "Approve Policy" button to approve "V1" policy verison on "Custom Bundles" page
-    And he has selected following options on 'Approval this Policy' dialog of "V1" Policy
+   And he has filled 'Description' after selecting following option on 'Approval this Policy' dialog of "V1" Policy
       | Associate this policy with a NEW authorization in IRIS? |
       | Effective from booking date                             |
     When he clicks on "Approve" button to acknowledge 'Approve this Policy' dialog
     Then Policy Status and Version should be displayed as "Active" and "V1" respectively on "View/Edit Policy Forms" page
 
-  @End-To-End_CoreFlex @CF_MXClient_StaticFixed_CashNotAuth_Delete_Deny
+  @End-To-End_CoreFlex @CF_MXClient_StaticFixed_CashNotAuth_Delete_Deny_CF
   Scenario: MXClient - Validating Total Points Section & Core/Flex benefits displayed on BenefitSelectionTool page for Client Initiator BluePrint Policy Setup
     Given he has logged into 'MobilityX' application as a 'Client' user
     And he has clicked on "Create an authorization" after validating Client details on 'Authorization Home Page'

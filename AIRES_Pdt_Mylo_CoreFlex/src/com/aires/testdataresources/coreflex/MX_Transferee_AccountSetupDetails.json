@@ -1,15 +1,35 @@
-{
-	"accountType": "Check",
-	"currency": "U.S. Dollar",
-	"accountHoldersName": "TestAutomationUser",
-	"mailingAddress": {
-		"address1": "177A Bleecker Street",
-		"address2": "5th Avenue",
-		"city": "New York City",
-		"state": "New York",
-		"province": "NY",
-		"postalCode": "10014",
-		"country": "USA",
-		"accountClosingDate": "16 Feb 2023"
+[
+	{
+		"module": "AddPaymentAccount",
+		"checkAccountType": {
+			"accountType": "Check",
+			"currency": "U.S. Dollar",
+			"accountHoldersName": "TestAutomationUser",
+			"address1": "177A Bleecker Street",
+			"address2": "5th Avenue",
+			"city": "New York City",
+			"state": "New York",
+			"province": "NY",
+			"postalCode": "10014",
+			"country": "USA",
+			"accountClosingDate": "16 Feb 2023"
+		},
+		"wireTransferAccountType": {
+			"accountType": "Wire Transfer",
+			"currency": "",
+			"accountHoldersName": "TestAutomationUser",
+			"accountHolderDOB": "16 Feb 1989",
+			"bankName": "TEST Bank",
+			"bankAddress1": "Test Address 1",
+			"bankAddress2": "Test Address 2",
+			"bankCity": "Test City",
+			"bankState": "",
+			"bankProvince": "",
+			"bankPostalCode": "11111",
+			"bankCountry": "",
+			"accountIBAN": "12345",
+			"swiftRouting": "11301125",
+			"bankAccountClosingDate": "16 Nov 2023"
+		}
 	}
-}
+]

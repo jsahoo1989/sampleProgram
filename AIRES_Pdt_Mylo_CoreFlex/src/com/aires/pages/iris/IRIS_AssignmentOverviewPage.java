@@ -1150,6 +1150,8 @@ public class IRIS_AssignmentOverviewPage extends BasePage {
 //		CoreFunctions.waitHandler(2);
 		activateMenu.select();
 		CoreFunctions.waitHandler(2);
+		acceptFailedImageLoadDialog();
+		CoreFunctions.waitHandler(2);
 		Robot robot = new Robot();
 		robot.setAutoDelay(250);
 		robot.keyPress(KeyEvent.VK_ENTER);
@@ -1225,7 +1227,7 @@ public class IRIS_AssignmentOverviewPage extends BasePage {
 
 	}
 
-	public void acceptFailedImageLoadDialog() {
+	public void acceptFailedImageLoadDialog() throws GeneralLeanFtException, Exception {
 		if (CoreFunctions.getPropertyFromConfig("envt").equalsIgnoreCase("PreProd")
 				|| CoreFunctions.getPropertyFromConfig("envt").equalsIgnoreCase("UAT")) {
 			try {

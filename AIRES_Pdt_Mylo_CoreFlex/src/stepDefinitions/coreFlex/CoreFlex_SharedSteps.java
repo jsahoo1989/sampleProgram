@@ -579,65 +579,65 @@ public class CoreFlex_SharedSteps {
 				+ CoreFunctions.calculatePageLoadTime(CoreConstants.TIME_BEFORE_ACTION, CoreConstants.TIME_AFTER_ACTION)
 				+ " Seconds </b>");
 
-//		testContext.getBasePage().reLaunchIrisToAvoidFreezingIssue();
-////		testContext.getBasePage().invokeIrisApplication();
-////		testContext.getBasePage().killExistingBrowsers();
-//		testContext.getIrisPageManager().irisLoginPage = new IRIS_LoginPage();
-//		testContext.getIrisPageManager().irisLoginPage.getIRISLoginAsPerEnvt(_loginInfo);
-//		testContext.getIrisPageManager().irisWelcome12C = new IRIS_Welcome12C();
-//		testContext.getIrisPageManager().irisWelcome12C.selectWelcomeWindowModule(IRISConstants.ASSIGNMENT_TAB);
-//		testContext.getIrisPageManager().irisAssignmentOverviewPage = new IRIS_AssignmentOverviewPage();
-//		Assert.assertTrue(testContext.getIrisPageManager().irisAssignmentOverviewPage.verifyOverviewTab(), MessageFormat
-//				.format(IRISConstants.FAIL_TO_VERIFY_CURRENT_TAB, CoreConstants.FAIL, IRISConstants.OVERVIEW));
-//		IRIS_AssignmentData assignmentOverviewData = FileReaderManager.getInstance().getIrisJsonReader()
-//				.getAssignmentDataByTabName(IRISConstants.OVERVIEW);
-//		testContext.getIrisPageManager().irisAssignmentOverviewPage.selectNewAssignmentFromFileMenu();
-//		testContext.getIrisPageManager().irisAssignmentOverviewPage.addDetailsOnOverviewTabForNewAssignment(
-//				assignmentOverviewData, CoreFunctions.getPropertyFromConfig("Policy_ClientID"),
-//				CoreFunctions.getPropertyFromConfig("Assignment_Policy"));
-//		IRIS_AssignmentData assignmentTransfereeData = FileReaderManager.getInstance().getIrisJsonReader()
-//				.getAssignmentDataByTabName(IRISConstants.TRANSFEREE_AND_FAMILY);
-//		testContext.getIrisPageManager().irisAssignmentOverviewPage.switchTab(IRISConstants.TRANSFEREE_AND_FAMILY);
-//		testContext
-//				.getIrisPageManager().irisAssignmentTransfereeAndFamilyPage = new IRIS_AssignmentTransfereeNFamilyPage();
-//		testContext.getIrisPageManager().irisAssignmentTransfereeAndFamilyPage
-//				.verifyTransfereeAndFamilyTab(IRISConstants.TRANSFEREE_AND_FAMILY);
-//		testContext.getIrisPageManager().irisAssignmentTransfereeAndFamilyPage
-//				.addNewTransfereeDetails(assignmentTransfereeData);		
-//		Assert.assertTrue(
-//				testContext.getIrisPageManager().irisAssignmentTransfereeAndFamilyPage
-//						.saveTransferee(IRISConstants.NEW_TRANSFEREE_CREATED_SUCCESS_MSG),
-//				IRISConstants.NEW_TRANSFEREE_CREATED_SUCCESS_MSG + " Message " + IRISConstants.IS_NOT_DISPLAYED);
-//		testContext.getIrisPageManager().irisAssignmentTransfereeAndFamilyPage.addTransfereeIdentityDetails();
-//		testContext.getIrisPageManager().irisAssignmentTransfereeAndFamilyPage
-//		.addNewFamilyDetails(assignmentTransfereeData);
-//		testContext.getIrisPageManager().irisAssignmentOverviewPage.switchTab(IRISConstants.ACTIVITY_FINANCE_TAB);
-//		testContext.getIrisPageManager().irisActivityAndFinancePage = new IRIS_ActivityAndFinancePage();
-//		Assert.assertTrue(testContext.getIrisPageManager().irisActivityAndFinancePage.verifyActivityAndFinanceTab(),
-//				MessageFormat.format(IRISConstants.FAIL_TO_VERIFY_CURRENT_TAB, CoreConstants.FAIL,
-//						IRISConstants.ACTIVITY_AND_FINANCE));
-//		testContext.getIrisPageManager().irisActivityAndFinancePage.displayActivityTable();
-//		testContext.getIrisPageManager().irisActivityAndFinancePage.actualizeTracingPrompt(IRISConstants.ACT_DATE,
-//				IRISConstants.ACTIVITY, IRISConstants.MAKE_FIRST_CONTACT);
-//		testContext.getIrisPageManager().irisActivityAndFinancePage.clickOnSaveBtn();
-//		testContext.getIrisPageManager().irisActivityAndFinancePage.sendLoginCredentials(IRISConstants.YES,
-//				IRISConstants.SEND_CREDENTIALS, IRISConstants.SEND_USER_LOGIN_MSG);
-////		testContext.getIrisPageManager().irisActivityAndFinancePage.acceptIdentityChallengeQuestionDialog();
-//		Assert.assertTrue(
-//				testContext.getIrisPageManager().irisActivityAndFinancePage
-//						.relonetCredentialsSent(IRISConstants.SUCCESS_MSG, IRISConstants.MESSAGE_DIALOG),
-//				MessageFormat.format(IRISConstants.FAILED_TO_VERIFY_MESSAGE, CoreConstants.FAIL,
-//						IRISConstants.SUCCESS_MSG));
-//		testContext.getIrisPageManager().irisAssignmentOverviewPage.setFileStatus(IRISConstants.ACTIVATE);
-//		testContext.getBasePage().cleanIrisProcesses();
-//
-//		Assert.assertTrue(mobilityXLoginPage.readCredentialsFromMail(), MessageFormat
-//				.format(MobilityXConstants.FAILED_TO_READ_USER_CREDENTIALS_FROM_GENERATED_EMAIL, CoreConstants.FAIL));
+		testContext.getBasePage().reLaunchIrisToAvoidFreezingIssue();
+//		testContext.getBasePage().invokeIrisApplication();
+//		testContext.getBasePage().killExistingBrowsers();
+		testContext.getIrisPageManager().irisLoginPage = new IRIS_LoginPage();
+		testContext.getIrisPageManager().irisLoginPage.getIRISLoginAsPerEnvt(_loginInfo);
+		testContext.getIrisPageManager().irisWelcome12C = new IRIS_Welcome12C();
+		testContext.getIrisPageManager().irisWelcome12C.selectWelcomeWindowModule(IRISConstants.ASSIGNMENT_TAB);
+		testContext.getIrisPageManager().irisAssignmentOverviewPage = new IRIS_AssignmentOverviewPage();
+		Assert.assertTrue(testContext.getIrisPageManager().irisAssignmentOverviewPage.verifyOverviewTab(), MessageFormat
+				.format(IRISConstants.FAIL_TO_VERIFY_CURRENT_TAB, CoreConstants.FAIL, IRISConstants.OVERVIEW));
+		IRIS_AssignmentData assignmentOverviewData = FileReaderManager.getInstance().getIrisJsonReader()
+				.getAssignmentDataByTabName(IRISConstants.OVERVIEW);
+		testContext.getIrisPageManager().irisAssignmentOverviewPage.selectNewAssignmentFromFileMenu();
+		testContext.getIrisPageManager().irisAssignmentOverviewPage.addDetailsOnOverviewTabForNewAssignment(
+				assignmentOverviewData, CoreFunctions.getPropertyFromConfig("Policy_ClientID"),
+				CoreFunctions.getPropertyFromConfig("Assignment_Policy"));
+		IRIS_AssignmentData assignmentTransfereeData = FileReaderManager.getInstance().getIrisJsonReader()
+				.getAssignmentDataByTabName(IRISConstants.TRANSFEREE_AND_FAMILY);
+		testContext.getIrisPageManager().irisAssignmentOverviewPage.switchTab(IRISConstants.TRANSFEREE_AND_FAMILY);
+		testContext
+				.getIrisPageManager().irisAssignmentTransfereeAndFamilyPage = new IRIS_AssignmentTransfereeNFamilyPage();
+		testContext.getIrisPageManager().irisAssignmentTransfereeAndFamilyPage
+				.verifyTransfereeAndFamilyTab(IRISConstants.TRANSFEREE_AND_FAMILY);
+		testContext.getIrisPageManager().irisAssignmentTransfereeAndFamilyPage
+				.addNewTransfereeDetails(assignmentTransfereeData);		
+		Assert.assertTrue(
+				testContext.getIrisPageManager().irisAssignmentTransfereeAndFamilyPage
+						.saveTransferee(IRISConstants.NEW_TRANSFEREE_CREATED_SUCCESS_MSG),
+				IRISConstants.NEW_TRANSFEREE_CREATED_SUCCESS_MSG + " Message " + IRISConstants.IS_NOT_DISPLAYED);
+		testContext.getIrisPageManager().irisAssignmentTransfereeAndFamilyPage.addTransfereeIdentityDetails();
+		testContext.getIrisPageManager().irisAssignmentTransfereeAndFamilyPage
+		.addNewFamilyDetails(assignmentTransfereeData);
+		testContext.getIrisPageManager().irisAssignmentOverviewPage.switchTab(IRISConstants.ACTIVITY_FINANCE_TAB);
+		testContext.getIrisPageManager().irisActivityAndFinancePage = new IRIS_ActivityAndFinancePage();
+		Assert.assertTrue(testContext.getIrisPageManager().irisActivityAndFinancePage.verifyActivityAndFinanceTab(),
+				MessageFormat.format(IRISConstants.FAIL_TO_VERIFY_CURRENT_TAB, CoreConstants.FAIL,
+						IRISConstants.ACTIVITY_AND_FINANCE));
+		testContext.getIrisPageManager().irisActivityAndFinancePage.displayActivityTable();
+		testContext.getIrisPageManager().irisActivityAndFinancePage.actualizeTracingPrompt(IRISConstants.ACT_DATE,
+				IRISConstants.ACTIVITY, IRISConstants.MAKE_FIRST_CONTACT);
+		testContext.getIrisPageManager().irisActivityAndFinancePage.clickOnSaveBtn();
+		testContext.getIrisPageManager().irisActivityAndFinancePage.sendLoginCredentials(IRISConstants.YES,
+				IRISConstants.SEND_CREDENTIALS, IRISConstants.SEND_USER_LOGIN_MSG);
+//		testContext.getIrisPageManager().irisActivityAndFinancePage.acceptIdentityChallengeQuestionDialog();
+		Assert.assertTrue(
+				testContext.getIrisPageManager().irisActivityAndFinancePage
+						.relonetCredentialsSent(IRISConstants.SUCCESS_MSG, IRISConstants.MESSAGE_DIALOG),
+				MessageFormat.format(IRISConstants.FAILED_TO_VERIFY_MESSAGE, CoreConstants.FAIL,
+						IRISConstants.SUCCESS_MSG));
+		testContext.getIrisPageManager().irisAssignmentOverviewPage.setFileStatus(IRISConstants.ACTIVATE);
+		testContext.getBasePage().cleanIrisProcesses();
+
+		Assert.assertTrue(mobilityXLoginPage.readCredentialsFromMail(), MessageFormat
+				.format(MobilityXConstants.FAILED_TO_READ_USER_CREDENTIALS_FROM_GENERATED_EMAIL, CoreConstants.FAIL));
 		mobilityXLoginPage.enterUsernameAndPasswordForMobilityX(
 				CoreFunctions.getPropertyFromConfig("Transferee_UserNameInEMail"),
 				CoreFunctions.getPropertyFromConfig("Transferee_PasswordInEMail"));
 		mobilityXLoginPage.clickSignIn();
-//		mxTransfereeMyProfilePage.setUpNewMobilityXTransferee();
+		mxTransfereeMyProfilePage.setUpNewMobilityXTransferee();
 		mxTransfereeJourneyHomePage.handle_Cookie_AfterLogin();
 		mxTransfereeJourneyHomePage.handle_points_expiry_reminder_popup();
 	}

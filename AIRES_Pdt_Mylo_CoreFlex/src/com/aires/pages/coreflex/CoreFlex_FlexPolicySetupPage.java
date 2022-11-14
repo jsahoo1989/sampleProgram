@@ -1,6 +1,7 @@
 package com.aires.pages.coreflex;
 
 import java.text.MessageFormat;
+import java.util.Arrays;
 import java.util.List;
 
 import org.openqa.selenium.WebDriver;
@@ -209,6 +210,8 @@ public class CoreFlex_FlexPolicySetupPage extends Base {
 
 	CoreFlex_PolicySetupPagesData policySetupPageData = FileReaderManager.getInstance().getCoreFlexJsonReader()
 			.getPolicySetupPagesDataList(COREFLEXConstants.POLICY_SETUP);
+
+	private List<String> providedCurrencyList = Arrays.asList("U.S. Dollar", "Japanese Yen", "Moroccan Dirham");
 
 	/*********************************************************************/
 
@@ -441,7 +444,8 @@ public class CoreFlex_FlexPolicySetupPage extends Base {
 						policySetupPageData.flexPolicySetupPage.pointExchangeRate,
 						COREFLEXConstants.CASHOUT_POINT_CONVERSION);
 				CoreFunctions.clickElement(driver, _selectCashoutCurrency);
-				CoreFunctions.selectRandomOptionFromTheList(driver, _selectCashoutCurrencyOptions);
+				CoreFunctions.selectRandomOptionFromTheProvidedList(driver, _selectCashoutCurrencyOptions,
+						providedCurrencyList);
 				saveSelectedCurrencyDetails(CoreFunctions.getElementText(driver, _selectCashoutCurrencySelectedValue));
 				break;
 			case COREFLEXConstants.CASHOUT_NOT_AUTHORIZED:
@@ -462,7 +466,13 @@ public class CoreFlex_FlexPolicySetupPage extends Base {
 			String[] currencyDetails = elementText.split(" ");
 			CoreFunctions.writeToPropertiesFile("CF_Transferee_CashoutCurrencySign", currencyDetails[0]);
 			CoreFunctions.writeToPropertiesFile("CF_Transferee_CashoutCurrencyCode", currencyDetails[1]);
-			CoreFunctions.writeToPropertiesFile("CF_Transferee_CashoutCurrencyText", currencyDetails[2]+" "+currencyDetails[3]);
+			if (currencyDetails.length == 5) {
+				CoreFunctions.writeToPropertiesFile("CF_Transferee_CashoutCurrencyText",
+						currencyDetails[2] + " " + currencyDetails[3] + " " + currencyDetails[4]);
+			} else {
+				CoreFunctions.writeToPropertiesFile("CF_Transferee_CashoutCurrencyText",
+						currencyDetails[2] + " " + currencyDetails[3]);
+			}
 		} catch (Exception e) {
 			Reporter.addStepLog(
 					MessageFormat.format(COREFLEXConstants.EXCEPTION_OCCURED_WHILE_SAVING_CASHOUT_CURRENCY_DETAILS,

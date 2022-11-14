@@ -195,4 +195,62 @@ public class DbFunctions {
 		}
 		return requiredList;
 	}
+
+	public static String getCoreFlexDBConnectionStringAsPerEnvt(String envt) {
+		String dbURL = null;
+		switch (envt) {
+		case "qa":
+		case "QA":
+			dbURL = "jdbc:oracle:thin:isisdba/irsfndevisisdba@corpuatvl303.corp.aires.com:1516:IRSFNDEV";
+			break;		
+		case "uat":
+		case "UAT":
+			dbURL = "jdbc:oracle:thin:isisdba/irisuatisisdba@corpqavl300.corp.aires.com:1521:irisuat";
+			break;
+		case "preprod":
+		case "PreProd":
+			dbURL = "jdbc:oracle:thin:isisdba/iristestisisdba@corptesvl300.corp.aires.com:1521:iristest";
+			break;
+		case "prod":
+		case "PROD":
+			dbURL = "";
+			break;					
+		default:
+			Assert.fail(PDTConstants.DATABASE_CONNECTION + PDTConstants.NOT_EXIST);
+		}
+		return dbURL;
+	}
+
+	public static String getCoreFlexCurrencyCountry(String currencyCode) {
+		String currencyCountry = null;
+		Connection connection = null;
+		try {
+			DriverManager.registerDriver(new oracle.jdbc.OracleDriver());
+//				connection = DriverManager.getConnection(
+//						getCoreFlexDBConnectionStringAsPerEnvt(System.getProperty("envt")));			
+			connection = DriverManager
+					.getConnection(getCoreFlexDBConnectionStringAsPerEnvt(CoreFunctions.getPropertyFromConfig("envt")));
+			PreparedStatement pst = connection.prepareStatement(DbQueries.QUERY_GET_CURRENCYCOUNTRY);
+			pst.setString(1, currencyCode);
+			ResultSet resultset = pst.executeQuery();
+			while (resultset.next()) {
+				currencyCountry = resultset.getString("COUNTRY");
+			}
+
+		} catch (Exception ex) {
+			Log.info(CoreConstants.ERROR + ex.getMessage());
+			Log.info(CoreConstants.ERROR + ex.getStackTrace());
+			Assert.fail(CoreConstants.SQL_QUERY_FAILED);
+		} finally {
+			try {
+				if (connection != null) {
+					connection.close();
+				}
+			} catch (Exception ex) {
+				Log.info(CoreConstants.ERROR + ex.getMessage());
+				Log.info(CoreConstants.ERROR + ex.getStackTrace());
+			}
+		}
+		return currencyCountry;
+	}
 }

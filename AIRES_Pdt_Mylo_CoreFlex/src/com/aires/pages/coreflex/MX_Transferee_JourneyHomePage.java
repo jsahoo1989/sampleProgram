@@ -17,6 +17,7 @@ import org.testng.Assert;
 import com.aires.businessrules.Base;
 import com.aires.businessrules.BusinessFunctions;
 import com.aires.businessrules.CoreFunctions;
+import com.aires.businessrules.DbFunctions;
 import com.aires.businessrules.constants.COREFLEXConstants;
 import com.aires.businessrules.constants.CoreConstants;
 import com.aires.businessrules.constants.MobilityXConstants;
@@ -107,7 +108,7 @@ public class MX_Transferee_JourneyHomePage extends Base {
 	private WebElement _btn_continue;
 
 	@FindBy(how = How.CSS, using = "select[title='Currency*']")
-	private WebElement _select_currency;
+	private WebElement _selectCurrency;
 
 	@FindBy(how = How.CSS, using = "input[placeholder='All account holder name(s)*']")
 	private WebElement _accountHolderName;
@@ -246,13 +247,50 @@ public class MX_Transferee_JourneyHomePage extends Base {
 	@FindBy(how = How.XPATH, using = "//span[@class='RXCFBigText RXMineShaft RXBolder'][contains(text(),'Flex Benefits')]")
 	private WebElement flexCardSectionHeader;
 
+	@FindBy(how = How.CSS, using = "input[placeholder*='bank name']")
+	private WebElement _textBankName;
+
+	@FindBy(how = How.CSS, using = "input[placeholder*='Bank address 1*']")
+	private WebElement _textBankAddress1;
+
+	@FindBy(how = How.CSS, using = "input[placeholder*='Bank address 2']")
+	private WebElement _textBankAddress2;
+
+	@FindBy(how = How.CSS, using = "input[placeholder*='Bank city']")
+	private WebElement _textBankCity;
+
+	@FindBy(how = How.CSS, using = "input[placeholder*='Bank zip']")
+	private WebElement _textBankZip;
+
+	@FindBy(how = How.CSS, using = "select[title*='Bank state']")
+	private WebElement _selectBankState;
+
+	@FindBy(how = How.CSS, using = "select[title*='Bank country']")
+	private WebElement _selectBankCountry;
+
+	@FindBy(how = How.CSS, using = "span[id*='wire'] > input[placeholder='Account closing date']")
+	private WebElement _textBankAccountClosingDate;
+
+	@FindBy(how = How.CSS, using = "input[placeholder*='Account/IBAN number*']")
+	private WebElement _textBankIBAN;
+
+	@FindBy(how = How.CSS, using = "input[placeholder*='SWIFT/Routing number*']")
+	private WebElement _textBankSwift;
+
+	@FindBy(how = How.CSS, using = "input[id*='dobWire']")
+	private WebElement _textAccountHolderDOB;
+	
+	@FindBy(how = How.CSS, using = "div[title='Submit'][id*='wire'] > a")
+	private WebElement _btnWireSubmit;
+	
+
 	/*********************************************************************/
 
 	CoreFlex_PolicySetupPagesData policySetupPageData = FileReaderManager.getInstance().getCoreFlexJsonReader()
 			.getPolicySetupPagesDataList(COREFLEXConstants.POLICY_SETUP);
 
 	MX_Transferee_AccountSetupDetails accountDetails = FileReaderManager.getInstance().getCoreFlexJsonReader()
-			.getMxTransfereeAccountSetupDetails();
+			.getMxTransfereeAccountSetupDetails("AddPaymentAccount");
 
 	public static final List<FlexBenefit> flexBenefits = FileReaderManager.getInstance().getCoreFlexJsonReader()
 			.getMXTransfereeFlexBenefitData();
@@ -515,7 +553,8 @@ public class MX_Transferee_JourneyHomePage extends Base {
 			if ((CoreFunctions.getPropertyFromConfig("PolicyCashoutType").equals(MobilityXConstants.PORTION_CASHOUT))
 					|| (CoreFunctions.getPropertyFromConfig("PolicyCashoutType")
 							.equals(MobilityXConstants.AFTER_RELOCATION_ONLY))) {
-				return proceedToAccountSetupPage() && selectAccountType() && setupAccountAndSave();
+				return proceedToAccountSetupPage() && setupUSDCheckAccountAndSave()
+						&& setupWireTransferAccountBasedOnCurrencyAndSave();
 			} else
 				return true;
 		} catch (Exception e) {
@@ -526,49 +565,95 @@ public class MX_Transferee_JourneyHomePage extends Base {
 		return false;
 	}
 
-	private boolean setupAccountAndSave() {
+	private boolean setupUSDCheckAccountAndSave() {
 		try {
-//			CoreFunctions.selectByVisibleText(driver, _select_currency, accountDetails.currency);
+			CoreFunctions.selectByVisibleText(driver, _select_accountType, accountDetails.checkAccountType.accountType);
+			CoreFunctions.clickElement(driver, _btn_continue);
+			Reporter.addStepLog(
+					MessageFormat.format(MobilityXConstants.SUCCESSFULLY_SELECTED_ACCOUNT_TYPE, CoreConstants.PASS));
 			CoreFunctions.waitHandler(2);
 			CoreFunctions.explicitWaitTillElementVisibility(driver, _titleAddPaymentAccount,
 					COREFLEXConstants.ADD_PAYMENT_ACCOUNT);
 			CoreFunctions.highlightObject(driver, _titleAddPaymentAccount);
-			CoreFunctions.clearAndSetText(driver, _mailingAddress1, accountDetails.mailingAddress.address1);
-			CoreFunctions.clearAndSetText(driver, _accountHolderName, accountDetails.accountHoldersName);
-			CoreFunctions.clearAndSetText(driver, _mailingAddress2, accountDetails.mailingAddress.address2);
-			CoreFunctions.clearAndSetText(driver, _mailingCity, accountDetails.mailingAddress.city);
-//			CoreFunctions.clearAndSetText(driver, _province, accountDetails.mailingAddress.province);
-			CoreFunctions.clearAndSetText(driver, _postalCode, accountDetails.mailingAddress.postalCode);
-			CoreFunctions.selectByVisibleText(driver, _select_mailingCountry, accountDetails.mailingAddress.country);
+			CoreFunctions.clearAndSetText(driver, _mailingAddress1, accountDetails.checkAccountType.address1);
+			CoreFunctions.clearAndSetText(driver, _accountHolderName,
+					accountDetails.checkAccountType.accountHoldersName);
+			CoreFunctions.clearAndSetText(driver, _mailingAddress2, accountDetails.checkAccountType.address2);
+			CoreFunctions.clearAndSetText(driver, _mailingCity, accountDetails.checkAccountType.city);
+//			CoreFunctions.clearAndSetText(driver, _province, accountDetails.checkAccountType.province);
+			CoreFunctions.clearAndSetText(driver, _postalCode, accountDetails.checkAccountType.postalCode);
+			CoreFunctions.selectByVisibleText(driver, _select_mailingCountry, accountDetails.checkAccountType.country);
 			CoreFunctions.waitHandler(1);
-			CoreFunctions.selectByVisibleText(driver, _select_mailingState, accountDetails.mailingAddress.state);
+			CoreFunctions.selectByVisibleText(driver, _select_mailingState, accountDetails.checkAccountType.state);
 			CoreFunctions.clearAndSetText(driver, _accountClosingDate,
-					accountDetails.mailingAddress.accountClosingDate);
+					accountDetails.checkAccountType.accountClosingDate);
 			CoreFunctions.clickElement(driver, _btn_submit);
 			CoreFunctions.explicitWaitTillElementVisibility(driver, _successGrowlMessage,
 					MobilityXConstants.SAVED_SUCCESSFUL_GROWL_MESSAGE);
 			CoreFunctions.explicitWaitTillElementInVisibility(driver, _successGrowlMessage);
 			CoreFunctions.clickElement(driver, _btn_save);
-			CoreFunctions.clickElement(driver, _link_backToMobilityJourney);
-			Reporter.addStepLog(
-					MessageFormat.format(MobilityXConstants.SUCCESSFULLY_ADDED_PAYMENT_ACCOUNT, CoreConstants.PASS));
+			Reporter.addStepLog(MessageFormat.format(MobilityXConstants.SUCCESSFULLY_ADDED_PAYMENT_ACCOUNT,
+					CoreConstants.PASS, accountDetails.checkAccountType.accountType));
 			return true;
 		} catch (Exception e) {
 			Reporter.addStepLog(MessageFormat.format(MobilityXConstants.PAYMENT_ACCOUNT_SETUP_FAILED,
-					CoreConstants.FAIL, e.getMessage()));
+					CoreConstants.FAIL, e.getMessage(), accountDetails.checkAccountType.accountType));
 		}
 		return false;
 	}
 
-	private boolean selectAccountType() {
+	private boolean setupWireTransferAccountBasedOnCurrencyAndSave() {
 		try {
-			CoreFunctions.selectByVisibleText(driver, _select_accountType, accountDetails.accountType);
-			CoreFunctions.clickElement(driver, _btn_continue);
-			Reporter.addStepLog(
-					MessageFormat.format(MobilityXConstants.SUCCESSFULLY_SELECTED_ACCOUNT_TYPE, CoreConstants.PASS));
-			return true;
+			if (!CoreFunctions.getPropertyFromConfig("CF_Transferee_CashoutCurrencyCode").equalsIgnoreCase("USD")) {
+				CoreFunctions.clickElement(driver, _link_addPaymentAccount);
+				CoreFunctions.selectByVisibleText(driver, _select_accountType,
+						accountDetails.wireTransferAccountType.accountType);
+				CoreFunctions.clickElement(driver, _btn_continue);
+				Reporter.addStepLog(MessageFormat.format(MobilityXConstants.SUCCESSFULLY_SELECTED_ACCOUNT_TYPE,
+						CoreConstants.PASS));
+				CoreFunctions.waitHandler(2);
+				CoreFunctions.selectByVisibleText(driver, _selectCurrency,
+						CoreFunctions.getPropertyFromConfig("CF_Transferee_CashoutCurrencyText"));
+				CoreFunctions.clearAndSetText(driver, _accountHolderName,
+						accountDetails.wireTransferAccountType.accountHoldersName);
+				CoreFunctions.clearAndSetText(driver, _textAccountHolderDOB,
+						accountDetails.wireTransferAccountType.accountHolderDOB);
+
+				CoreFunctions.clearAndSetText(driver, _textBankName, accountDetails.wireTransferAccountType.bankName);
+				CoreFunctions.clearAndSetText(driver, _textBankAddress1,
+						accountDetails.wireTransferAccountType.bankAddress1);
+				CoreFunctions.clearAndSetText(driver, _textBankAddress2,
+						accountDetails.wireTransferAccountType.bankAddress2);
+				CoreFunctions.clearAndSetText(driver, _textBankCity, accountDetails.wireTransferAccountType.bankCity);
+				CoreFunctions.clearAndSetText(driver, _textBankZip,
+						accountDetails.wireTransferAccountType.bankPostalCode);
+				String bankCountry = DbFunctions.getCoreFlexCurrencyCountry(CoreFunctions.getPropertyFromConfig("CF_Transferee_CashoutCurrencyCode"));
+				CoreFunctions.selectByVisibleText(driver, _selectBankCountry,
+						bankCountry);				
+				CoreFunctions.waitHandler(1);
+				CoreFunctions.clearAndSetText(driver, _textBankIBAN,
+						accountDetails.wireTransferAccountType.accountIBAN);
+				CoreFunctions.clearAndSetText(driver, _textBankSwift,
+						accountDetails.wireTransferAccountType.swiftRouting);
+				CoreFunctions.clearAndSetText(driver, _textBankAccountClosingDate,
+						accountDetails.wireTransferAccountType.bankAccountClosingDate);
+				CoreFunctions.clickElement(driver, _btnWireSubmit);
+				CoreFunctions.explicitWaitTillElementVisibility(driver, _successGrowlMessage,
+						MobilityXConstants.SAVED_SUCCESSFUL_GROWL_MESSAGE);
+				CoreFunctions.explicitWaitTillElementInVisibility(driver, _successGrowlMessage);
+				CoreFunctions.clickElement(driver, _btn_save);
+				CoreFunctions.clickElement(driver, _link_backToMobilityJourney);
+				Reporter.addStepLog(MessageFormat.format(MobilityXConstants.SUCCESSFULLY_ADDED_PAYMENT_ACCOUNT,
+						CoreConstants.PASS, accountDetails.wireTransferAccountType.accountType));
+				return true;
+			} else {
+				Reporter.addStepLog(MessageFormat.format(MobilityXConstants.USD_CURRENCY_PAYMENT_ACCOUNT_ALREADY_SETUP,
+						CoreConstants.PASS));
+				CoreFunctions.clickElement(driver, _link_backToMobilityJourney);
+				return true;
+			}
 		} catch (Exception e) {
-			Reporter.addStepLog(MessageFormat.format(MobilityXConstants.FAILED_TO_SELECT_ACCOUNT_TYPE,
+			Reporter.addStepLog(MessageFormat.format(MobilityXConstants.PAYMENT_ACCOUNT_SETUP_FAILED,
 					CoreConstants.FAIL, e.getMessage()));
 		}
 		return false;

@@ -2,7 +2,7 @@
 	{
 		"benefitName": "Final Move",
 		"finalMoveTransportation": {
-			"transportationType": "Mileage",
+			"transportationType": "Economy Class Airfare",
 			"minMilForEconomyAirTravel": "200",
 			"minMilForBusinessAirTravel": "100",
 			"minHrsForBusinessAirTravel": "50",
@@ -52,7 +52,7 @@
 			"assignmentNumberOfTrips": "10",
 			"frequencyTrip": "Other",
 			"frequencyTripOther": "4",
-			"transportationType": "Mileage",
+			"transportationType": "Economy Class Airfare",
 			"minMilForEconomyAirTravel": "2000",
 			"minMilForBusinessAirTravel": "1000",
 			"minFlightTimeExclLayovers": "40",

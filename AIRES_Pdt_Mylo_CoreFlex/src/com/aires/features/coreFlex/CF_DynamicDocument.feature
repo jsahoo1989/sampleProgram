@@ -7,7 +7,7 @@ Feature: Validate the CoreFlex End-To-End Business Test Flow(BluePrint, MXClient
       | Client and Transferee                    | Static/Fixed    | Cashout Not Authorized | Both        | Client            |
     And he has clicked on "Submit" button to submit "V1" policy verison on "Custom Bundles" page
     And he has clicked on "Approve Policy" button to approve "V1" policy verison on "Custom Bundles" page
-    And he has selected following options on 'Approval this Policy' dialog of "V1" Policy
+     And he has filled 'Description' after selecting following option on 'Approval this Policy' dialog of "V1" Policy
       | Associate this policy with a NEW authorization in IRIS? |
       | Effective from booking date                             |
     When he clicks on "Approve" button to acknowledge 'Approve this Policy' dialog

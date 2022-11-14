@@ -1984,4 +1984,31 @@ public class CoreFunctions {
 			Assert.fail(CoreConstants.FAILED_TO_SELECT_RANDOM_OPTION_FROM_THE_LIST);
 		}
 	}
+	
+	public static void removeFileMatchingName(String downloadPath, String fileMatch) {
+		File directory = new File(downloadPath);
+		File[] files = directory.listFiles();
+		for (int i = 1; i < files.length; i++) {
+			if (files[i].getName().contains(fileMatch))
+				files[i].delete();
+		}
+	}
+
+	public static void waitForAMatchingFileToBeDownloaded(String downloadPath, String fileMatch) {
+		int count = 0;
+		while (true) {
+			count++;
+			File directory = new File(downloadPath);
+			File[] files = directory.listFiles();
+			for (int i = 1; i < files.length; i++) {
+				if (files[i].getName().contains(fileMatch))
+					break;
+			}
+			if (count < 10)
+				waitHandler(10);
+			else
+				Assert.fail("Failed to download the file");
+			break;
+		}
+	}
 }

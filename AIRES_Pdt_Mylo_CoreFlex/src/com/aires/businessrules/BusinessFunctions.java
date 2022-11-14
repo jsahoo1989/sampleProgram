@@ -29,7 +29,11 @@
  ***********************************Header End*********************************************************************************/
 package com.aires.businessrules;
 
+import java.io.File;
+import java.io.IOException;
 import java.math.RoundingMode;
+import java.nio.file.Files;
+import java.nio.file.Paths;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.Statement;
@@ -44,6 +48,10 @@ import java.util.concurrent.ThreadLocalRandom;
 
 import org.apache.commons.codec.binary.Base64;
 import org.apache.log4j.Logger;
+import org.apache.pdfbox.pdmodel.PDDocument;
+import org.apache.pdfbox.text.PDFTextStripper;
+import org.apache.poi.xwpf.extractor.XWPFWordExtractor;
+import org.apache.poi.xwpf.usermodel.XWPFDocument;
 import org.openqa.selenium.NoSuchElementException;
 import org.openqa.selenium.StaleElementReferenceException;
 import org.openqa.selenium.WebDriver;
@@ -417,12 +425,14 @@ public class BusinessFunctions {
 			st.executeUpdate(query);
 			CoreFunctions.waitHandler(2);
 			st.executeUpdate("commit");
+//			connection.commit();
 			CoreFunctions.waitHandler(5);
 			if (true) {
 				Log.info("executed successfully : " + query);
 			}
 			connection.close();
 		} catch (Exception ex) {
+			ex.printStackTrace();
 			Log.info(CoreConstants.ERROR + ex);
 		}
 	}
@@ -574,7 +584,7 @@ public class BusinessFunctions {
 				} catch (StaleElementReferenceException e) {
 					WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(60));
 					wait.until(ExpectedConditions.refreshed(ExpectedConditions.visibilityOf(row)));
-					Log.info("Actual Item: "+row.getText()+"Expected Item: "+itemName);
+					Log.info("Actual Item: " + row.getText() + "Expected Item: " + itemName);
 					if (row.getText().trim().equals(itemName)) {
 						return WebElementList.indexOf(row);
 					}
@@ -727,7 +737,7 @@ public class BusinessFunctions {
 
 	public static String[] getClientAndPolicyDetails(PDT_LoginDetails _loginDetailsApplication) {
 		String clientAndPolicyDetailsArr[] = new String[3];
-		//switch (CoreFunctions.getPropertyFromConfig("envt").toLowerCase()) {
+		// switch (CoreFunctions.getPropertyFromConfig("envt").toLowerCase()) {
 		switch (System.getProperty("envt").toLowerCase()) {
 		case CoreConstants.ENVT_DEV:
 			clientAndPolicyDetailsArr[0] = _loginDetailsApplication.dev.clientId;
@@ -760,7 +770,7 @@ public class BusinessFunctions {
 
 	public static String[] getCSMCredentials(PDT_LoginDetails _loginDetailsApplication) {
 		String csmCredentials[] = new String[3];
-		//switch (CoreFunctions.getPropertyFromConfig("envt").toLowerCase()) {
+		// switch (CoreFunctions.getPropertyFromConfig("envt").toLowerCase()) {
 		switch (System.getProperty("envt").toLowerCase()) {
 		case CoreConstants.ENVT_DEV:
 			csmCredentials[0] = _loginDetailsApplication.dev.csmUserName;
@@ -1062,7 +1072,7 @@ public class BusinessFunctions {
 							CoreConstants.FAIL, e.getMessage(), benefitName, fieldName));
 		}
 	}
-	
+
 	public static void selectValueFromDropdown(WebElement element, String drpdwnValue) {
 		Select dropDown = new Select(element);
 		String elementName = element.getAttribute("title");
@@ -1075,12 +1085,40 @@ public class BusinessFunctions {
 					drpdwnValue, elementName));
 	}
 
-	
-	
-	public static void printTimeTakenByPageToLoad(long timeBeforeAction, long timeAfterAction, String pageName, String subBenefitName) {
+	public static void printTimeTakenByPageToLoad(long timeBeforeAction, long timeAfterAction, String pageName,
+			String subBenefitName) {
 		DecimalFormat pgToLoadformat = new DecimalFormat();
 		pgToLoadformat.setMaximumFractionDigits(3);
-		Reporter.addStepLog("<b>Time taken by sub-benefit:-'"+subBenefitName+"' to Load on '"+pageName+"' benefit page is:-"
-				+ pgToLoadformat.format((timeAfterAction - timeBeforeAction) / 1000) + " Seconds </b>");
+		Reporter.addStepLog(
+				"<b>Time taken by sub-benefit:-'" + subBenefitName + "' to Load on '" + pageName + "' benefit page is:-"
+						+ pgToLoadformat.format((timeAfterAction - timeBeforeAction) / 1000) + " Seconds </b>");
+	}
+
+	public static String getPdfDocContent(String fileName) {
+		PDDocument document;
+		try {
+			File file = new File(fileName);
+			document = PDDocument.load(file);
+			PDFTextStripper pdfStripper = new PDFTextStripper();
+			String text = pdfStripper.getText(document);
+			document.close();
+			return text;
+		} catch (IOException e) {
+			Assert.fail(CoreConstants.ERROR + e.getMessage());
+		}
+		return null;
+	}
+
+	public static String getDocContent(String fileName) {
+		try {
+			XWPFDocument doc = new XWPFDocument(Files.newInputStream(Paths.get(fileName)));
+			XWPFWordExtractor xwpfWordExtractor = new XWPFWordExtractor(doc);
+			String docText = xwpfWordExtractor.getText();
+			xwpfWordExtractor.close();
+			return docText;
+		} catch (IOException e) {
+			Assert.fail(CoreConstants.ERROR + e.getMessage());
+		}
+		return null;
 	}
 }

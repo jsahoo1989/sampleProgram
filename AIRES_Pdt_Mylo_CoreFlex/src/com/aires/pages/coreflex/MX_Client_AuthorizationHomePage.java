@@ -3,6 +3,7 @@ package com.aires.pages.coreflex;
 import java.text.MessageFormat;
 import java.util.ArrayList;
 import java.util.List;
+import org.apache.commons.lang3.StringUtils;
 
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
@@ -29,6 +30,7 @@ import com.aires.testdatatypes.coreflex.MX_Client_Dashboard_BscData.ReportingInf
 import com.aires.utilities.EmailUtil;
 import com.aires.utilities.Log;
 import com.gargoylesoftware.htmlunit.ElementNotFoundException;
+import com.google.common.base.Objects;
 import com.vimalselvam.cucumber.listener.Reporter;
 
 public class MX_Client_AuthorizationHomePage extends Base {
@@ -373,6 +375,21 @@ public class MX_Client_AuthorizationHomePage extends Base {
 	@FindBy(how = How.XPATH, using = "//span[contains(text(),'Resubmit without revising documents')]")
 	private WebElement _buttonResubmitWithoutRevisingDoc;
 
+	@FindBy(how = How.XPATH, using = "//span[text()='Upload or Create a Document']")
+	private WebElement _linkUploadOrCreateADocument;
+
+	@FindBy(how = How.XPATH, using = "//span[text()='Create LOU']")
+	private WebElement _linkCreateLOU;
+
+	@FindBy(how = How.CSS, using = "span[class='RXSmallText RXBold'][id*='otatt']")
+	private WebElement _documentHeading;
+
+	@FindBy(how = How.CSS, using = "span[id='searchViewAll']")
+	private WebElement _downloadDocument;
+
+	@FindBy(how = How.XPATH, using = "//span[text()='Send document to employee to begin relocation']")
+	private WebElement _linkSendDocumentToEmployee;
+
 	/**************************************************************************************************************/
 
 	CoreFlex_PolicySetupPagesData policySetupPageData = FileReaderManager.getInstance().getCoreFlexJsonReader()
@@ -389,6 +406,7 @@ public class MX_Client_AuthorizationHomePage extends Base {
 	private boolean _isExists = false;
 	String empName;
 	private boolean _isDisplayed = false;
+
 	public static double clientCashoutPoints;
 
 	/**
@@ -517,6 +535,7 @@ public class MX_Client_AuthorizationHomePage extends Base {
 			CoreFunctions.explicitWaitTillElementVisibility(driver, _iframe_EmployeName, MobilityXConstants.IFRAME);
 			driver.switchTo().frame(_iframe_EmployeName);
 		} catch (ElementNotFoundException e) {
+			e.printStackTrace();
 			Log.info(CoreConstants.ERROR + e);
 		}
 	}
@@ -721,6 +740,15 @@ public class MX_Client_AuthorizationHomePage extends Base {
 			CoreFunctions.explicitWaitTillElementBecomesClickable(driver, _linkCollaboration,
 					MobilityXConstants.COLLABORATION_TAB);
 			CoreFunctions.clickUsingJS(driver, _linkCollaboration, MobilityXConstants.COLLABORATION_TAB);
+			CoreFunctions.waitUntilBrowserReady(driver);
+			break;
+		case MobilityXConstants.CREATE_OR_UPLOAD_A_DOCUMENT:
+			CoreFunctions.waitUntilBrowserReady(driver);
+			CoreFunctions.waitHandler(2);
+			CoreFunctions.explicitWaitTillElementBecomesClickable(driver, _linkUploadOrCreateADocument,
+					MobilityXConstants.CREATE_OR_UPLOAD_A_DOCUMENT);
+			CoreFunctions.clickUsingJS(driver, _linkUploadOrCreateADocument,
+					MobilityXConstants.CREATE_OR_UPLOAD_A_DOCUMENT);
 			CoreFunctions.waitUntilBrowserReady(driver);
 			break;
 		default:
@@ -1807,5 +1835,41 @@ public class MX_Client_AuthorizationHomePage extends Base {
 		CoreFunctions.writeToPropertiesFile("CF_Client_UndoDeleteBenefit", "false");
 		CoreFunctions.writeToPropertiesFile("CF_Transferee_BenefitDeleteFlag", "false");
 		CoreFunctions.writeToPropertiesFile("CF_Transferee_BenefitDeleteFlag", "false");
+	}
+
+	public boolean clickOnCreateLOU() {
+		try {
+			switchToiFrame_Authorization();
+			CoreFunctions.clickElement(driver, _linkCreateLOU);
+			driver.switchTo().defaultContent();
+		} catch (Exception e) {
+			return false;
+		}
+		return true;
+	}
+
+	public boolean validateDynamicDocumnet(String documentName) {
+		switchToiFrame_Authorization();
+		CoreFunctions.explicitWaitTillElementVisibility(driver, _documentHeading, "document heading");
+		Log.info(CoreFunctions.getElementText(driver, _documentHeading));
+		if (!Objects.equal(CoreFunctions.getElementText(driver, _documentHeading), documentName)) {
+			return false;
+		}
+		CoreFunctions.removeFileMatchingName(System.getProperty("user.home") + "/Downloads/", "Demo Dynamic Document");
+		CoreFunctions.clickElement(driver, _downloadDocument);
+		CoreFunctions.waitForAMatchingFileToBeDownloaded(System.getProperty("user.home") + "/Downloads/",
+				"Demo Dynamic Document");
+
+		String filePath = System.getProperty("user.home") + "/Downloads/" + documentName;
+
+		String file_content = documentName.contains(".docx") ? BusinessFunctions.getDocContent(filePath)
+				: BusinessFunctions.getPdfDocContent(filePath);
+
+		for (Benefit benefit : getBenefits(CoreFunctions.getPropertyFromConfig("CoreFlex_Policy_BenefitType"),
+				CoreFunctions.getPropertyFromConfig("CoreFlex_Policy_RequiredFor"), "0")) {
+			if (!(StringUtils.countMatches(file_content, benefit.getBenefitDisplayName()) == 1))
+				return false;
+		}
+		return true;
 	}
 }

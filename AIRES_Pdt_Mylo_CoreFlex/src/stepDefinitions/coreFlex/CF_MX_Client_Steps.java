@@ -7,11 +7,13 @@ import java.util.Map;
 
 import org.testng.Assert;
 
+import com.aires.businessrules.BusinessFunctions;
 import com.aires.businessrules.CoreFunctions;
 import com.aires.businessrules.constants.COREFLEXConstants;
 import com.aires.businessrules.constants.CoreConstants;
 import com.aires.businessrules.constants.IRISConstants;
 import com.aires.businessrules.constants.MobilityXConstants;
+import com.aires.businessrules.constants.PDTConstants;
 import com.aires.cucumber.TestContext;
 import com.aires.managers.FileReaderManager;
 import com.aires.pages.coreflex.CoreFlex_PolicyBenefitsCategoriesPage;
@@ -36,6 +38,7 @@ import com.aires.testdatatypes.iris.IRIS_AssignmentData;
 import com.vimalselvam.cucumber.listener.Reporter;
 
 import cucumber.api.DataTable;
+import cucumber.api.java.en.And;
 import cucumber.api.java.en.Given;
 import cucumber.api.java.en.Then;
 import cucumber.api.java.en.When;
@@ -122,7 +125,8 @@ public class CF_MX_Client_Steps {
 		String authFormTemplate = dataMap.get(0).get("Authorization Form Template");
 		mxClientAuthorizationHomePage.enterEmpFirstAndLastNameForNewAuthorization();
 		mxClientAuthorizationHomePage.selectAuthorizationOptionForEmployee(assignmentOption);
-		mxClientAuthorizationHomePage.selectAuthorizationFormTemplate(_loginInfo.details.clientId,_loginInfo.details.clientName,authFormTemplate);
+		mxClientAuthorizationHomePage.selectAuthorizationFormTemplate(_loginInfo.details.clientId,
+				_loginInfo.details.clientName, authFormTemplate);
 		CoreConstants.TIME_BEFORE_ACTION = new Date().getTime();
 		Assert.assertTrue(mxClientAuthorizationHomePage.verifyPageNavigationToAuthForm(), MessageFormat
 				.format(MobilityXConstants.FAILED_TO_VERIFY_USER_NAVIGATION_TO_MXCLIENT_HOME_PAGE, CoreConstants.FAIL));
@@ -135,6 +139,28 @@ public class CF_MX_Client_Steps {
 		mxClientAuthorizationHomePage.fillAuthorizationForBSCDomesticForm(bscAuthorizationData);
 		Assert.assertTrue(mxClientAuthorizationHomePage.verifyAuthFormChangesAutoSaved(), MessageFormat.format(
 				MobilityXConstants.CHANGES_NOT_AUTO_SAVED_AFTER_FILLING_AUTHORIZATION_FORM, CoreConstants.FAIL));
+	}
+
+	@And("^he has clicked on '([^\"]*)' tab on 'Authorization Form' page$")
+	public void he_has_clicked_on_Upload_or_Create_a_Document_tab_on_Authorization_Form_page(String tabName) {
+		mxClientAuthorizationHomePage.clickTabOnAuthorisationPage(tabName);
+	}
+
+	@When("^he clicks on \"Create LOU\" to generate ([^\"]*) on 'What type of document would you like to add' pop-up dialog$")
+	public void he_clicks_on_Create_LOU_on_What_type_of_document_would_you_like_to_add_pop_up_dialog(
+			String documentName) {
+		BusinessFunctions.updateQuery(PDTConstants.FNDEV_DB_URL,
+				MessageFormat.format(PDTConstants.UPDATE_DYNAMIC_DOCUMENT_FORMAT,
+						CoreFunctions.getPropertyFromConfig("Assignment_Policy"), documentName.split("\\.")[1]));
+		Assert.assertTrue(mxClientAuthorizationHomePage.clickOnCreateLOU(),
+				MessageFormat.format(MobilityXConstants.FAILED_TO_LOU_DOCUMENT, CoreConstants.FAIL));
+	}
+
+	@Then("^he has verified selected benefits listed on generated ([^\"]*)$")
+	public void he_has_verified_following_options_on_the_navigated_Demo_Dynamic_Document_pop_up_dialog(
+			String documentName) {
+		Assert.assertTrue(mxClientAuthorizationHomePage.validateDynamicDocumnet(documentName),
+				MessageFormat.format(MobilityXConstants.FAILED_TO_VERIFY_DYNAMIC_DOCUMENT_CONTENT, CoreConstants.FAIL));
 	}
 
 	@Given("^he has verified 'Total Points' section displayed on 'Authorization Form' for \"([^\"]*)\" - 'Flex Setup Type' selection in BluePrint CoreFlex Policy$")
@@ -1010,7 +1036,8 @@ public class CF_MX_Client_Steps {
 	}
 
 	@Given("^he has clicked on 'Edit Submitted Benefits' button to navigate to 'Benefits Bundle' page$")
-	public void he_has_clicked_on_Edit_Submitted_Benefits_button_to_navigate_to_Benefits_Bundle_page() throws Throwable {
+	public void he_has_clicked_on_Edit_Submitted_Benefits_button_to_navigate_to_Benefits_Bundle_page()
+			throws Throwable {
 		mxClientBenefitSelectionToolPage.clickElementOfPage(MobilityXConstants.EDIT_SUBMITTED_BENEFITS);
 		CoreConstants.TIME_BEFORE_ACTION = new Date().getTime();
 		Assert.assertTrue(mxClientBenefitsBundlePage.isBenefitsBundlePageDisplayed(), MessageFormat
@@ -1196,7 +1223,8 @@ public class CF_MX_Client_Steps {
 		Reporter.addStepLog("<b>Total time taken to navigate to <i>MobilityX Login</i> page is :"
 				+ CoreFunctions.calculatePageLoadTime(CoreConstants.TIME_BEFORE_ACTION, CoreConstants.TIME_AFTER_ACTION)
 				+ " Seconds </b>");
-		mobilityXLoginPage.enterUsernameAndPasswordForMobilityX(_loginInfo.details.mxClientUserName,_loginInfo.details.mxClientPassword);
+		mobilityXLoginPage.enterUsernameAndPasswordForMobilityX(_loginInfo.details.mxClientUserName,
+				_loginInfo.details.mxClientPassword);
 		mobilityXLoginPage.clickSignIn();
 		mxClientAuthorizationHomePage.handle_Cookie_AfterLogin();
 

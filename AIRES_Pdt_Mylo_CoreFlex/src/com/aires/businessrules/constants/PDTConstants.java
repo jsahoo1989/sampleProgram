@@ -371,7 +371,7 @@ public class PDTConstants {
 	public static final String ASSIGNMENT_FINDER_FEES = "Finder's Fee";
 	public static final String ASSIGNMENT_HOUSING_COMPANY_SPONSORED = "Assignment Housing (Company Sponsored)";
 	public static final String ERR_MSG = "{0}Caught error popup with message:- ''{1}'' on ''{2}''";
-	//one Time Payment
+	// one Time Payment
 	public static final String MISC_RELOCATION_ALLOWANCE = "Miscellaneous Relocation Allowance";
 	public static final String LUMP_SUM = "Lump Sum";
 	public static final String LEASE_BREAK = "Lease Break";
@@ -388,7 +388,7 @@ public class PDTConstants {
 	public static final String FAILED_TO_VERIFY_AND_FILL_DROP_DOWN = "{0} Failed to verify and fill drop down '''{1}'' in ''{2}'' sub benefit form.";
 	public static final String FAILED_TO_VERIFY_AND_FILL_TEXTBOX = "{0} Failed to verify and fill text box '''{1}'' in ''{2}'' sub benefit form.";
 	public static final String FAILED_TO_VERIFY_AND_SELECT_DRP_DOWN = "{0} Failed to verify and select value ''1'' from ''{2}'' drop down in ''{3}'' sub benefit form.";
-	//Ongoing Payments and Reimburesement
+	// Ongoing Payments and Reimburesement
 	public static final String COLA = "COLA";
 	public static final String PER_DIEM = "Per Diem";
 	public static final String MOBILITY_PREMIUM = "Mobility Premium";
@@ -418,8 +418,8 @@ public class PDTConstants {
 	public static final String DUPLICATE_HOUSING = "Duplicate Housing";
 	public static final String DURATION_OTHER = "Duration Other";
 	public static final String CAR_TYPE_OTHER = "Car Type Other";
-	public static final String OTHER_PAYMENT_TIME = "Other Payment Time";	
-	//Home Purchase
+	public static final String OTHER_PAYMENT_TIME = "Other Payment Time";
+	// Home Purchase
 	public static final String HOME_PURCHASE_CLOSING_COSTS = "Home Purchase Closing Costs";
 	public static final String HOME_PURCHASE_POINTS = "Home Purchase Points";
 	public static final String HOME_PURCHASE_INSPECTIONS = "Home Purchase Inspections";
@@ -452,7 +452,7 @@ public class PDTConstants {
 	public static final String FAILED_TO_VERIFY_CAPPED_AND_POINTS_BASED_FLEX_POLICY_CONDITIONAL_CHECKS_ERROR_POP_UP_ON_GENRAL_INFORMATION_PAGE = "{0}Failed to verify Capped & Points Based Flex Policy Conditional Checks error pop up on General Information Page.";
 	public static final String FAILED_TO_NAVIGATE_TO_COREFLEX_BLUE_PRINT_APPLICATION_LOGIN_PAGE = "{0}Failed to navigate to Coreflex Blue Print application Login Page.";
 	public static final String FAILED_TO_NAVIGATE_TO_COREFLEX_GENERAL_INFORMATION_PAGE = "{0}Failed to navigate to CoreFlex General Information Page.";
-	//House Hold Goods
+	// House Hold Goods
 	public static final String WEIGHT_CAP = "Weight Cap";
 	public static final String VOLUME_CAP = "Volume Cap";
 	public static final String UNIT_OF_WT_CAP = "Unit of Weight Cap";
@@ -479,7 +479,7 @@ public class PDTConstants {
 	public static final String VERIFIED_ELEMENT_HIDDEN = "{0}Verified element ''{1}'' is hidden on sub-benefit form:-''{2}''";
 	public static final String PDT_BTN_SAVE_SUBMIT = "SAVE & SUBMIT";
 	public static final String SAVE = "SAVE";
-	public static final String CANCEL = "CANCEL";	
+	public static final String CANCEL = "CANCEL";
 	public static final String FAILED_TO_NAVIGATE_TO_PAGE = "{0}Failed to navigate to ''{1}'' Page.";
 	public static final String POLICY_BENEFIT = "Policy Benefit";
 	public static final String VERIFIED_BENEFIT_CATEGORY_IS_SELECTED = "{0}Verified Policy Benefit Category:-''{1}'' is selected";
@@ -513,4 +513,6 @@ public class PDTConstants {
 	public static final String EXCEPTION_OCCURED_VALIDATING_POLICY_STATUS_VERSION = "{0}Exception occured while validating Policy Status & Version on View/Edit Policy Forms Page.";
 	public static final String FAILED_TO_VERIFY_SELECTED_VAL = "{0}Failed to verify ''{1}'' is selected.";
 	public static final String FAILED_TO_SELECT_SUB_BENEFIT = "{0}Failed to select sub-benefit and verify form is displayed.";
+	public static final String FNDEV_DB_URL = "jdbc:oracle:thin:isisdba/irsfndevisisdba@corpuatvl303.corp.aires.com:1516:IRSFNDEV";
+	public static final String UPDATE_DYNAMIC_DOCUMENT_FORMAT = "update isisdba.ol_report_detail set CONDITION_PARAM_XML = ''<OfferLetter xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\" xmlns=\"http://www.aires.com/programdocumentgenerator\" xsi:schemaLocation=\"http://www.aires.com/programdocumentgenerator OfferLetterSchema.xsd\"> <Condition formElementName=\"relocationPolicy\" formElementNameMandatory=\"true\" relationalOperator=\"EQUALS\" reportNameCondition=\"true\" value=\"{0}\" type=\"STRING\"> <Parameter reportParamName=\"REPORT_NAME\" value=\"SandboxLOUDocument\"/> <Parameter reportParamName=\"OUTPUT_TYPE\" value=\"{1}\"/> <Parameter reportParamName=\"logo\" value=\"images/aireslogo.jpg\"/> <Parameter reportParamName=\"firstName\" formElementName=\"firstName\"/> <Parameter reportParamName=\"lastName\" formElementName=\"lastName\"/> <Parameter reportParamName=\"originCountry\" formElementName=\"originCountry\"/> <Parameter reportParamName=\"originCity\" formElementName=\"originCity\"/> <Parameter reportParamName=\"destCountry\" formElementName=\"destCountry\"/> <Parameter reportParamName=\"destinationCity\" formElementName=\"destCity\"/> <Parameter reportParamName=\"destinationState\" formElementName=\"destinationState\"/> <Parameter reportParamName=\"startDate\" formElementName=\"startDate\"/> <Parameter reportParamName=\"empId\" formElementName=\"employeeID\"/> <Parameter reportParamName=\"perDiem\" formElementName=\"perDiem\"/> <Parameter reportParamName=\"coreFlexEnabled\" value=\"Y\"/> </Condition> </OfferLetter>\'' where DEPENDENCY_ID = 28087";
 }

@@ -745,5 +745,8 @@ public class MobilityXConstants {
 	public static final String AVAILABLE_POINTS_AFTER_CLIENT_SUBMISSION_TEXT = "Congratulations on your upcoming Mobility Journey! Your employer has submitted benefit(s) of spent_points point(s) on your behalf. Your total available point balance is available_points points.";
 	public static final String EXCEPTION_OCCURED_WHILE_VERIFYING_AVAILABLE_POINTS_MESSAGE_TEXT_ON_FLEX_PLANNING_TOOL_PAGE = "{0}Exceptiom occured while verifying available points message text on Flex Planning Tool page. Exception : ''{1}''.";
 	public static final String SUCCESSFULLY_VERIFIED_AVAILABLE_POINTS_MESSAGE_TEXT_ON_FLEX_PLANNING_TOOL_PAGE = "{0}Successfully verified Available Points Message Text - ''{1}'' on Flex Planning Tool page.";
-	
+	public static final String CREATE_OR_UPLOAD_A_DOCUMENT = "Upload or Create a Document";
+	public static final String FAILED_TO_VERIFY_DYNAMIC_DOCUMENT_CONTENT = "{0} Failed to verify Dynamic Document Content.";
+	public static final String FAILED_TO_LOU_DOCUMENT = "{0} Failed to create LOU Document.";
+
 }

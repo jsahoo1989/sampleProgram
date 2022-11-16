@@ -19,6 +19,8 @@ public class DbFunctions {
 	
 	static LinkedHashMap<String, String> myloQueryStatementMap = new LinkedHashMap<String, String>();
 	static LinkedHashMap<String, String> myloQTableColumnFields = new LinkedHashMap<String, String>();
+	static String environment=System.getProperty("envt").toLowerCase();
+	//static String environment =CoreFunctions.getPropertyFromConfig("envt").toLowerCase();
 	
 	public static String getDBConnectionStringAsPerEnvt(String envt) {
 		String dbURL = null;
@@ -55,11 +57,11 @@ public class DbFunctions {
 		Connection connection = null;
 		try {
 			DriverManager.registerDriver(new oracle.jdbc.OracleDriver());
-			/*connection = DriverManager.getConnection(
-					getDBConnectionStringAsPerEnvt(CoreFunctions.getPropertyFromConfig("envt").toLowerCase()));*/
-			
 			connection = DriverManager.getConnection(
-					getDBConnectionStringAsPerEnvt(System.getProperty("envt").toLowerCase()));
+					getDBConnectionStringAsPerEnvt(CoreFunctions.getPropertyFromConfig("envt").toLowerCase()));
+			
+			/*connection = DriverManager.getConnection(
+					getDBConnectionStringAsPerEnvt(System.getProperty("envt").toLowerCase()));*/
 			CallableStatement callableStatement = connection
 					.prepareCall(DbQueries.CALL_PROCEDURE_DELETE_POLICY_BY_ID);			
 			
@@ -81,25 +83,23 @@ public class DbFunctions {
 	public static String getMyloDBConnectionStringAsPerEnvt(String envt) {
 		String dbURL = null;
 		switch (envt) {
-		case "RELONETQA4":
-			//dbURL = "jdbc:oracle:thin:irisuser/nextir@corptesvl300.corp.aires.com:1521:irisnext";
+		case "relonetqa4":
 			dbURL = "jdbc:oracle:thin:isisdba/irisuatisisdba@corpqavl300.corp.aires.com:1521:irisuat";
 			break;
-		case "DEV5":
+		case "dev5":
 			dbURL = "jdbc:oracle:thin:irisuser/nextir@corptesvl300.corp.aires.com:1521:irisnext";				 
 			break;
-		case "TEST":
+		case "test":
 			dbURL = "jdbc:oracle:thin:policydba/testpo@corptesvl300.corp.aires.com:1521:IRISTEST";
 			break;
-		case "PROD":
+		case "prod":
 			// For Production Envt. - Change username/Password & verify DB connection
-			// details
 			dbURL = "jdbc:oracle:thin:isisdba/iristestisisdba@corpprdl200.corp.aires.com:1521:IRIS";
 			break;
-		case "UAT":
+		case "uat":
 			dbURL = "jdbc:oracle:thin:irisuser/uatir@corpqavl300.corp.aires.com:1521:irisuat";
 			break;
-		case "PREPROD":
+		case "preprod":
 			dbURL = "jdbc:oracle:thin:irisuser/testir@corptesvl300.corp.aires.com:1521:iristest";
 			break;
 		default:
@@ -112,11 +112,9 @@ public class DbFunctions {
 		List<String> identityTypeList = new ArrayList<String>();
 		Connection connection = null;		
 		try {
-			DriverManager.registerDriver(new oracle.jdbc.OracleDriver());
+			DriverManager.registerDriver(new oracle.jdbc.OracleDriver());			
 			connection = DriverManager.getConnection(
-					getMyloDBConnectionStringAsPerEnvt(System.getProperty("envt")));			
-			//connection = DriverManager.getConnection(
-				//	getMyloDBConnectionStringAsPerEnvt(CoreFunctions.getPropertyFromConfig("envt")));			
+					getMyloDBConnectionStringAsPerEnvt(environment));			
 			PreparedStatement pst = connection.prepareStatement(DbQueries.QUERY_GET_IDENTITY_TYPE_DROPDOWNLIST);
 			ResultSet resultset = pst.executeQuery();
 			while (resultset.next()) {
@@ -148,6 +146,9 @@ public class DbFunctions {
 		myloQueryStatementMap.put(MYLOConstants.TRANSFEREE_PHONE_TYPE, DbQueries.QUERY_GET_PHONE_TYPE_DROPDOWNLIST);
 		myloQueryStatementMap.put(MYLOConstants.TRANSFEREE_ORGDEST, DbQueries.QUERY_GET_LOCATION_TYPE_DROPDOWNLIST);
 		myloQueryStatementMap.put(MYLOConstants.GENDER, DbQueries.QUERY_GET_GENDER_DROPDOWNLIST);
+		myloQueryStatementMap.put(MYLOConstants.VIP, DbQueries.QUERY_GET_MYFILES_INFO_BY_STATUS_AND_VIP);
+		myloQueryStatementMap.put(MYLOConstants.EVIP, DbQueries.QUERY_GET_MYFILES_INFO_BY_STATUS_AND_EVIP);
+		myloQueryStatementMap.put(MYLOConstants.CONFIDENTIAL, DbQueries.QUERY_GET_MYFILES_INFO_BY_STATUS_AND_CONFIDENTIAL);
 		
 	}
 	
@@ -170,9 +171,7 @@ public class DbFunctions {
 		try {
 			DriverManager.registerDriver(new oracle.jdbc.OracleDriver());
 			connection = DriverManager.getConnection(
-					getMyloDBConnectionStringAsPerEnvt(System.getProperty("envt")));	
-			//connection = DriverManager.getConnection(
-				//	getMyloDBConnectionStringAsPerEnvt(CoreFunctions.getPropertyFromConfig("envt")));			
+					getMyloDBConnectionStringAsPerEnvt(environment));			
 			PreparedStatement pst = connection.prepareStatement(myloQueryStatementMap.get(fieldName));
 			ResultSet resultset = pst.executeQuery();
 			while (resultset.next()) {
@@ -191,6 +190,77 @@ public class DbFunctions {
 			}catch (Exception ex){
 				Log.info(CoreConstants.ERROR+ex.getMessage());
 				Log.info(CoreConstants.ERROR+ex.getStackTrace());
+			}
+		}
+		return requiredList;
+	}
+	
+	public static List<String> getMyFilesInfoByStatusAndCheckBox(String empNo, String status, String checkbox,
+			String reqColumn, String noOfRecords, String type) {
+		mapMyloQueryStatements();
+		Connection connection = null;
+		List<String> requiredList = new ArrayList<String>();
+		try {
+			DriverManager.registerDriver(new oracle.jdbc.OracleDriver());
+			connection = DriverManager.getConnection(getMyloDBConnectionStringAsPerEnvt(environment));
+			String query = (type.equals(MYLOConstants.CHECKBOX)) ? myloQueryStatementMap.get(checkbox)
+					: DbQueries.QUERY_GET_MYFILES_INFO_BY_STATUS_AND_USER;
+			PreparedStatement pst = connection.prepareStatement(query);
+			pst.setString(1, empNo);
+			pst.setString(2, status);
+			pst.setString(3, noOfRecords);
+			ResultSet resultset = pst.executeQuery();
+			while (resultset.next()) {
+				requiredList.add(resultset.getString(reqColumn));
+			}
+		} catch (Exception ex) {
+			Log.info(CoreConstants.ERROR + ex.getMessage());
+			Log.info(CoreConstants.ERROR + ex.getStackTrace());
+			Assert.fail(CoreConstants.SQL_QUERY_FAILED + "for " + status);
+		} finally {
+			try {
+				if (connection != null) {
+					connection.close();
+				}
+			} catch (Exception ex) {
+				Log.info(CoreConstants.ERROR + ex.getMessage());
+				Log.info(CoreConstants.ERROR + ex.getStackTrace());
+			}
+		}
+		return requiredList;
+	}
+	
+	public static List<String> getMyFilesSortResult(String empNo, String status, String colName,
+			String sortOrder, String noOfRecords) {
+		Connection connection = null;
+		List<String> requiredList = new ArrayList<String>();
+		try {
+			DriverManager.registerDriver(new oracle.jdbc.OracleDriver());
+			connection = DriverManager.getConnection(getMyloDBConnectionStringAsPerEnvt(environment));
+			PreparedStatement pst = connection.prepareStatement(DbQueries.QUERY_GET_MYFILES_INFO_BY_STATUS_AND_SORT_ORDER+" ORDER BY "+ colName + " "+ sortOrder + ",FILEID asc");
+			pst.setString(1, empNo);
+			pst.setString(2, status);
+			ResultSet resultset = pst.executeQuery();
+			int flag=1;
+			int maxRow=Integer.parseInt(noOfRecords);
+			while (resultset.next()) {
+				requiredList.add(resultset.getString(MYLOConstants.FILEID));
+				if (flag == maxRow)
+					break;
+				flag++;
+			}
+		} catch (Exception ex) {
+			Log.info(CoreConstants.ERROR + ex.getMessage());
+			Log.info(CoreConstants.ERROR + ex.getStackTrace());
+			Assert.fail(CoreConstants.SQL_QUERY_FAILED + "for sorting" + colName);
+		} finally {
+			try {
+				if (connection != null) {
+					connection.close();
+				}
+			} catch (Exception ex) {
+				Log.info(CoreConstants.ERROR + ex.getMessage());
+				Log.info(CoreConstants.ERROR + ex.getStackTrace());
 			}
 		}
 		return requiredList;

@@ -18,6 +18,9 @@
 
 package com.aires.businessrules;
 
+import java.awt.AWTException;
+import java.awt.Robot;
+import java.awt.event.KeyEvent;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
@@ -170,7 +173,6 @@ public class CoreFunctions {
 		try {
 			text = Element.getText().trim();
 			highlightObject(driver, Element);
-//			Reporter.addStepLog(CoreConstants.PASS + CoreConstants.TXT_ACTUAL + CoreConstants.IS_DISPLAYED_AS + text);
 		} catch (Exception e) {
 			Reporter.addStepLog("Could not get element text");
 		}
@@ -298,6 +300,18 @@ public class CoreFunctions {
 			Log.info(MessageFormat.format(CoreConstants.FAILD_CLCK_ELE, name));
 			Assert.fail(MessageFormat.format(CoreConstants.FAILD_CLCK_ELE, name));
 		}
+	}
+	
+	public static void pressEnter() {
+		Robot robot;
+		try {
+			robot = new Robot();
+			robot.keyPress(KeyEvent.VK_ENTER);
+			robot.keyRelease(KeyEvent.VK_ENTER);
+			robot.delay(2000);
+		} catch (AWTException e) {
+			Assert.fail(MessageFormat.format(CoreConstants.FAILD_CLCK_ELE,"Enter"));
+		}	
 	}
 
 	public static void clickUsingJS(WebDriver driver, WebElement Element, String name) {
@@ -1191,7 +1205,7 @@ public class CoreFunctions {
 		Actions act = new Actions(driver);
 		act.sendKeys(Keys.UP).build().perform();
 	}
-
+	
 	public static void explicitWaitWithLocatorTillElementAppears(WebDriver driver, By byElement) {
 		WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(40));
 		wait.until(ExpectedConditions.visibilityOfElementLocated(byElement));
@@ -1667,6 +1681,24 @@ public class CoreFunctions {
 		}
 		return reqWord;
 	}
+	
+	
+	/**
+	 * Generate RandomCharacters (special characters if needed) of Specific Length
+	 * @param charlength
+	 * @param specCharLength
+	 * @return
+	 */
+	public static String generateRandomCharacters(int charlength, int specCharLength) {
+		Random rnd = new Random();
+		String reqWord = Collections.nCopies(charlength, 0).stream().map(
+				i -> Character.toString(CoreConstants.ALPHABET.charAt(rnd.nextInt(CoreConstants.ALPHABET.length()))))
+				.collect(Collectors.joining());
+		String specialChar = Collections.nCopies(specCharLength, 0).stream().map(i -> Character.toString(
+				CoreConstants.SPECIAL_CHARACTERS.charAt(rnd.nextInt(CoreConstants.SPECIAL_CHARACTERS.length()))))
+				.collect(Collectors.joining());
+		return reqWord + specialChar;
+	}
 
 	public static String getRandomOutOfSelectedElementValueFromList(WebDriver driver, List<WebElement> WebElementList,
 			List<String> valuesToIgnore) {
@@ -1903,11 +1935,16 @@ public class CoreFunctions {
 		return updatedValue;
 	}
 	
-	public static String setBlankField(WebDriver driver,WebElement element,String fieldName) {
+	public static String setBlankField(WebDriver driver, WebElement element, String fieldName) {
+		try {
 			clickElement(driver, element);
 			element.sendKeys(Keys.chord(Keys.CONTROL, "a"));
 			element.sendKeys(Keys.BACK_SPACE);
-			return MYLOConstants.BLANK;
+		} catch (Exception e) {
+			Reporter.addStepLog(MessageFormat.format(CoreConstants.FAIL_TO_VERIFY_ELEMENT_ON_SECTION,
+					CoreConstants.FAIL, fieldName, CoreConstants.MYLO));
+		}
+		return MYLOConstants.BLANK;
 	}
 	
 	public static String setDifferentDropDownFieldsForMylo(WebDriver driver,String fieldValue,List<WebElement> optionList) {
@@ -1936,9 +1973,9 @@ public class CoreFunctions {
 			}
 	}
 
-	public static void clickMyloElementIfExist(WebDriver driver, WebElement element, String name, long time) {
+	public static void clickOnElementIfExist(WebDriver driver, WebElement element, String name, long time) {
 		if (isElementExist(driver, element, time)&& element.isDisplayed() ) {
-			CoreFunctions.click(driver, element, name);
+			CoreFunctions.highlightElementAndClick(driver, element, name);
 		}
 	}
 	
@@ -1953,5 +1990,57 @@ public class CoreFunctions {
 			elementList=CoreFunctions.getElementListByLocator(driver, locator);
 	      }while(!(elementList.size()>0)&& elementList!=null);
 		return elementList;	
+	}
+	
+	public static boolean isChildElementExist(WebDriver driver, WebElement parentElement, By locatorKey) {
+		boolean flag=false;
+		try {
+			WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(30));
+			WebElement childElement = parentElement.findElement(locatorKey);
+			wait.until(ExpectedConditions.visibilityOf(childElement));
+			highlightObject(driver, childElement);
+			flag=true;
+		} catch (Exception e) {
+		}
+		return flag;
+	}
+	
+	public static void clickItemInListByText(WebDriver driver, List<WebElement> WebElementList, String searchText) {
+		boolean itemSearched = false;
+		try {
+			for (WebElement row : WebElementList) {
+				Log.info(CoreConstants.ACTUAL_ITEM_NAME_IS + row.getText());
+				if (row.getText().contains(searchText)) {
+					itemSearched = true;
+					highlightObject(driver, row);
+					click(driver, row, row.getText());
+					break;
+				}
+			}
+			if (!itemSearched) {
+				Assert.fail(MessageFormat.format(PDTConstants.SEARCHED_ITEM_NOT_IN_LIST, searchText));
+			}
+		} catch (Exception e) {
+			Assert.fail(PDTConstants.COULD_NOT_SELECT_ITEM_FROM_LIST);
+		}
+	}
+	
+	public static void sortListByOrder(String sortOrder, List<String> valueList) {
+		if (sortOrder.equals(MYLOConstants.ASCENDING))
+			Collections.sort(valueList);
+		else
+			Collections.sort(valueList, Collections.reverseOrder());
+	}
+	
+	public static String scrollAndGetElementText(WebDriver driver, WebElement Element) {
+		String text = "";
+		try {
+			scrollToElementUsingJS(driver, Element, Element.getText());
+			text = Element.getText().trim();
+			highlightObject(driver, Element);
+		} catch (Exception e) {
+			Reporter.addStepLog("Could not get element text");
+		}
+		return text;
 	}
 }

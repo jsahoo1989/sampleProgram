@@ -75,7 +75,7 @@ public class CoreConstants {
 	public static final String ENVT_PROD = "prod";
 	public static final String INVALID_ENVIRONMENT = "Invalid Environment:-''{1}''";
 	public static final String SUCCESS_MESSAGE_TEXT = "Success Message";
-	public static final String AUTO_EMAIL_PWD = "Aut0Mati0nT34mAug";
+	public static final String AUTO_EMAIL_PWD = "Aut0Mati0nT34mNov";
 	public static final String NOT_EXIST = "not exists";
   
 	// CoreFlex Policy Setup Constants

@@ -41,6 +41,9 @@ import java.util.List;
 import java.time.Duration;
 import java.util.Random;
 import java.util.concurrent.ThreadLocalRandom;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
+
 import org.apache.commons.codec.binary.Base64;
 import org.apache.log4j.Logger;
 import org.openqa.selenium.NoSuchElementException;
@@ -554,6 +557,7 @@ public class BusinessFunctions {
 			for (WebElement row : WebElementList) {
 				Log.info(CoreConstants.ACTUAL_ITEM_NAME_IS + row.getText());
 				if (row.getText().equals(itemName)) {
+					CoreFunctions.highlightObject(driver, row);
 					return WebElementList.indexOf(row);
 				}
 			}
@@ -1048,9 +1052,6 @@ public class BusinessFunctions {
 		if (flag)
 			Reporter.addStepLog(MessageFormat.format(MYLOConstants.VERIFIED_ALERT_MESSAGE_DISPLAYED, CoreConstants.PASS,
 					msg, MYLOConstants.JOURNEY));
-		else
-			Reporter.addStepLog(MessageFormat.format(MYLOConstants.EXPECTED_MESSAGE_DISPLAYED, CoreConstants.FAIL, msg,
-					element.getText(), MYLOConstants.JOURNEY));
 		return flag;
 	}
 	
@@ -1067,7 +1068,7 @@ public class BusinessFunctions {
 			CoreFunctions.highlightObject(driver, element);
 			flag = (element.getText().equals(msg));
 		} catch (Exception e) {
-			Reporter.addStepLog(MessageFormat.format(CoreConstants.FAIL_TO_VERIFY_ELEMENT_ON_PAGE, CoreConstants.FAIL,
+			Assert.fail(MessageFormat.format(CoreConstants.FAIL_TO_VERIFY_ELEMENT_ON_PAGE, CoreConstants.FAIL,
 					MYLOConstants.EXPECTED_POPUP_MESSAGE, pageName));
 		}
 		if (flag)
@@ -1078,21 +1079,6 @@ public class BusinessFunctions {
 					element.getText(), pageName));
 		return flag;
 		
-	}
-	
-	public static String setDifferentDropDownFieldsForMylo(WebDriver driver,By locator,String fieldValue) {
-		String updatedValue=null;
-		List<WebElement> optionList = CoreFunctions.getElementListByLocator(driver, locator);
-			if (fieldValue.equals(MYLOConstants.RANDOM)) {
-				optionList.remove(0);
-				updatedValue = CoreFunctions.getRandomElementValueFromList(driver, optionList);
-				selectItemFromListUsingText(driver, optionList,
-						updatedValue);
-			} else {
-				updatedValue=fieldValue;
-				selectItemFromListUsingText(driver, optionList, fieldValue);
-			} 
-			return updatedValue;
 	}
 	
 	public static boolean verifyMyloValidationMessage(String expectedMessage, String actualMessage,String sectionName) {
@@ -1109,19 +1095,19 @@ public class BusinessFunctions {
 	public static void verifyMyloButtonEnabilityStatus(String type, WebElement element, String btnName, String sectionName,
 			String pageName) {
 		boolean flag = false;
+		List<String> disableTypeList = Stream.of(MYLOConstants.CANCELED, MYLOConstants.CLOSED,
+				MYLOConstants.PAYMENT_CUT_OFF_COMPLETION, MYLOConstants.DISABLE).collect(Collectors.toList());
 		try {
 			flag = CoreFunctions.isElementVisible(element);
 		} catch (Exception e) {
 			Reporter.addStepLog(MessageFormat.format(CoreConstants.FAIL_TO_VERIFY_ELEMENT_ON_SECTION,
 					CoreConstants.FAIL, element, sectionName));
 		}
-		if (type.contains(MYLOConstants.WITHOUT) || type.contains(MYLOConstants.CANCELED)
-				|| type.contains(MYLOConstants.CLOSED) || type.contains(MYLOConstants.PAYMENT_CUT_OFF_COMPLETION)) {
+		if (disableTypeList.contains(type)||type.contains(MYLOConstants.WITHOUT)) {
 			Assert.assertFalse(flag, MessageFormat.format(MYLOConstants.BUTTON_ENABLED, CoreConstants.FAIL, btnName,
 					sectionName, pageName));
 			Reporter.addStepLog(MessageFormat.format(MYLOConstants.BUTTON_DISABLED, CoreConstants.PASS, btnName,
 					sectionName, pageName));
-
 		} else {
 			Assert.assertTrue(flag, MessageFormat.format(MYLOConstants.BUTTON_DISABLED, CoreConstants.FAIL, btnName,
 					sectionName, pageName));
@@ -1130,30 +1116,71 @@ public class BusinessFunctions {
 		}
 	}
 	
-	public static String setDifferentMyloFields(WebDriver driver, String fieldName, String fieldValue,
-			WebElement element, String type) {
-		type=(fieldValue.equals(MYLOConstants.BLANK))?MYLOConstants.BLANK:type;
+	/**
+	 * Set any Mylo Input fields based on the parameter passed for fieldName, fieldValue, element,type and returns the UpdatedValue
+	 * @param driver
+	 * @param fieldName
+	 * @param fieldValue
+	 * @param element
+	 * @param type
+	 * @return
+	 */
+	public static String setMyloInputFields(WebDriver driver, String fieldName, String fieldValue, WebElement element,
+			String type) {
 		String updatedValue = "";
-		try {
-			updatedValue = (type.equals(MYLOConstants.RANDOM_STRING))
-					? CoreFunctions.generateRandomCharOfLength(Integer.parseInt(fieldValue),
-							MYLOConstants.ONLY_CHARACTERS, 0)
-					: (type.equals(MYLOConstants.RANDOM_INTEGER))
-							? CoreFunctions.generateRandomNumberAsGivenLength((Integer.parseInt(fieldValue)))
-							: (type.equals(MYLOConstants.BLANK))
-									? CoreFunctions.setBlankField(driver, element, fieldName)
-									: (type.equals(MYLOConstants.SPECIAL_CHARACTERS_STRING))
-											? CoreFunctions.generateRandomCharOfLength(4,
-													MYLOConstants.SPECIAL_CHARACTERS_STRING, 2)
-											: fieldValue;
-		} catch (Exception e) {
-			Assert.fail(
-					MessageFormat.format(PDTConstants.WEB_ELEMENT_NOT_FOUND_ON_PAGE, CoreConstants.FAIL, fieldName));
+		type = (fieldValue.equals(MYLOConstants.BLANK)) ? MYLOConstants.BLANK : type;
+		switch (type) {
+		case MYLOConstants.RANDOM_STRING:
+			updatedValue = CoreFunctions.generateRandomCharacters(Integer.parseInt(fieldValue),0);
+			break;
+		case MYLOConstants.RANDOM_INTEGER:
+			updatedValue = CoreFunctions.generateRandomNumberAsGivenLength((Integer.parseInt(fieldValue)));
+			break;
+		case MYLOConstants.BLANK:
+			updatedValue = CoreFunctions.setBlankField(driver, element, fieldName);
+			break;
+		case MYLOConstants.SPECIAL_CHARACTERS_STRING:
+			updatedValue = CoreFunctions.generateRandomCharacters(4, 2);
+			break;
+		case MYLOConstants.VALUE:
+			updatedValue = fieldValue;
+			break;
+		default:
+			Assert.fail(MYLOConstants.ENTER_CORRECT_TYPE);
 		}
 		CoreFunctions.clearAndSetText(driver, element, fieldName, updatedValue);
 		return updatedValue;
 	}
 	
+	/**
+	 * Set any Mylo Dropdown fields based on the parameter passed for fieldValue,locator,type and returns the UpdatedValue
+	 * @param driver
+	 * @param locator
+	 * @param fieldValue
+	 * @return
+	 */
+	public static String setMyloDropdownFields(WebDriver driver, By locator, String fieldType, String fieldName) {
+		String updatedValue = null;
+		List<WebElement> optionList = CoreFunctions.getElementListByLocator(driver, locator);
+		try {
+			if (fieldType.equals(MYLOConstants.RANDOM)) {
+				optionList.remove(0);
+				updatedValue = CoreFunctions.getRandomElementValueFromList(driver, optionList);
+			} else
+				updatedValue = fieldType;
+			selectItemFromListUsingText(driver, optionList, updatedValue);
+		} catch (Exception e) {
+			Assert.fail(MessageFormat.format(CoreConstants.FAIL_TO_SELECT_VALUE_FROM_DROPDOWN, CoreConstants.FAIL,
+					fieldType, fieldName));
+		}
+		return updatedValue;
+	}
+	
+	/**
+	 * Wait for Mylo Spinner to disappear
+	 * @param driver
+	 * @param element
+	 */
 	public static void fluentWaitForMyloSpinnerToDisappear(WebDriver driver,WebElement element) {
 		if(CoreFunctions.isElementExist(driver, element, 5)) {
 			FluentWait<WebDriver> wait = new FluentWait<>(driver).withTimeout(Duration.ofSeconds(90))

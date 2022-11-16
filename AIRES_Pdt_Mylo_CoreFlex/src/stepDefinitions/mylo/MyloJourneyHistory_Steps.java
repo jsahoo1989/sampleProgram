@@ -99,12 +99,10 @@ public class MyloJourneyHistory_Steps {
 	public void the_history_cards_should_no_longer_display_at_the_top_of_the_page_after_he_relogins_with_same_user()
 			throws InterruptedException {
 		loginPage.loginWithUser(MYLOConstants.USER_WITH_RESOURCE15);
-		String fileId = myloJourneyPage.getFileInfoFieldByEnvtAndType("activeAssignment", MYLOConstants.FILE_ID);
 		myloDashboardPage.clickOptionFromMainMenu(MYLOConstants.JOURNEY);
 		myloDashboardPage.selectOptionsFromAssignmentMenu(MYLOConstants.QUERY_FILE);
 		myloDashboardPage.selectParameterFromQueryScreen(MYLOConstants.FILE);
-		myloDashboardPage.selectOptionsForFileParameters(MYLOConstants.FILE_ID, fileId);
-		Reporter.addStepLog(MessageFormat.format(MYLOConstants.FILE_ID_ENTERED, CoreConstants.PASS, fileId));
+		myloDashboardPage.selectOptionsForFileParameters(MYLOConstants.FILE_ID, myloJourneyPage.getFileInfo("activeAssignment",MYLOConstants.FILE_ID));
 		myloDashboardPage.clickExecuteButton();
 		Assert.assertFalse(myloAssignmentPage.verifyHistoryCardPresent(), MYLOConstants.HISTORYCARD_IS_PRESENT);
 	}

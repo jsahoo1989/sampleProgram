@@ -39,9 +39,7 @@ public class MyloJourneyIdentificationDocumentation_Steps {
 		myloDashboardPage.clickOptionFromMainMenu(MYLOConstants.JOURNEY);
 		myloDashboardPage.selectOptionsFromAssignmentMenu(MYLOConstants.QUERY_FILE);
 		myloDashboardPage.selectParameterFromQueryScreen(MYLOConstants.FILE);
-		String fileID = myloJourneyPage.getFileInfoFieldByEnvtAndType(fileType, MYLOConstants.FILE_ID);
-		myloDashboardPage.selectOptionsForFileParameters(MYLOConstants.FILE_ID, fileID);
-		Reporter.addStepLog(MessageFormat.format(MYLOConstants.FILE_ID_ENTERED, CoreConstants.PASS, fileID));
+		myloDashboardPage.selectOptionsForFileParameters(MYLOConstants.FILE_ID, myloJourneyPage.getFileInfo(fileType,MYLOConstants.FILE_ID));
 		myloDashboardPage.clickExecuteButton();
 	}
 
@@ -58,9 +56,7 @@ public class MyloJourneyIdentificationDocumentation_Steps {
 	public void he_views_Identification_Records_section_for_status_file_ID(String fileType) {
 		myloDashboardPage.selectOptionsFromAssignmentMenu(MYLOConstants.QUERY_FILE);
 		myloDashboardPage.selectParameterFromQueryScreen(MYLOConstants.FILE);
-		String fileID = myloJourneyPage.getFileInfoFieldByEnvtAndType(fileType, MYLOConstants.FILE_ID);
-		myloDashboardPage.selectOptionsForFileParameters(MYLOConstants.FILE_ID, fileID);
-		Reporter.addStepLog(MessageFormat.format(MYLOConstants.FILE_ID_ENTERED, CoreConstants.PASS, fileID));
+		myloDashboardPage.selectOptionsForFileParameters(MYLOConstants.FILE_ID, myloJourneyPage.getFileInfo(fileType,MYLOConstants.FILE_ID));
 		myloDashboardPage.clickExecuteButton();
 		myloAssignmentPage.highlightSectionHeader(MYLOConstants.IDENTIFICATION_AND_DOCUMENTATION);
 	}
@@ -78,9 +74,7 @@ public class MyloJourneyIdentificationDocumentation_Steps {
 		myloDashboardPage.clickOptionFromMainMenu(MYLOConstants.JOURNEY);
 		myloDashboardPage.selectOptionsFromAssignmentMenu(MYLOConstants.QUERY_FILE);
 		myloDashboardPage.selectParameterFromQueryScreen(MYLOConstants.FILE);
-		String fileID = myloJourneyPage.getFileInfoFieldByEnvtAndType(fileType, MYLOConstants.FILE_ID);
-		myloDashboardPage.selectOptionsForFileParameters(MYLOConstants.FILE_ID, fileID);
-		Reporter.addStepLog(MessageFormat.format(MYLOConstants.FILE_ID_ENTERED, CoreConstants.PASS, fileID));
+		myloDashboardPage.selectOptionsForFileParameters(MYLOConstants.FILE_ID, myloJourneyPage.getFileInfo(fileType,MYLOConstants.FILE_ID));
 		myloDashboardPage.clickExecuteButton();
 	}
 
@@ -150,9 +144,7 @@ public class MyloJourneyIdentificationDocumentation_Steps {
 		myloDashboardPage.clickOptionFromMainMenu(MYLOConstants.JOURNEY);
 		myloDashboardPage.selectOptionsFromAssignmentMenu(MYLOConstants.QUERY_FILE);
 		myloDashboardPage.selectParameterFromQueryScreen(MYLOConstants.FILE);
-		String fileID = myloJourneyPage.getFileInfoFieldByEnvtAndType(fileType, MYLOConstants.FILE_ID);
-		myloDashboardPage.selectOptionsForFileParameters(MYLOConstants.FILE_ID, fileID);
-		Reporter.addStepLog(MessageFormat.format(MYLOConstants.FILE_ID_ENTERED, CoreConstants.PASS, fileID));
+		myloDashboardPage.selectOptionsForFileParameters(MYLOConstants.FILE_ID, myloJourneyPage.getFileInfo(fileType,MYLOConstants.FILE_ID));
 		myloDashboardPage.clickExecuteButton();
 		myloAssignmentPage.highlightSectionHeader(MYLOConstants.IDENTIFICATION_AND_DOCUMENTATION);
 		Assert.assertFalse(myloAssignmentPage.verifyIdentDocButtonDisplayed(button2),
@@ -167,9 +159,7 @@ public class MyloJourneyIdentificationDocumentation_Steps {
 		myloDashboardPage.clickOptionFromMainMenu(MYLOConstants.JOURNEY);
 		myloDashboardPage.selectOptionsFromAssignmentMenu(MYLOConstants.QUERY_FILE);
 		myloDashboardPage.selectParameterFromQueryScreen(MYLOConstants.FILE);
-		String fileID = myloJourneyPage.getFileInfoFieldByEnvtAndType(fileType, MYLOConstants.FILE_ID);
-		myloDashboardPage.selectOptionsForFileParameters(MYLOConstants.FILE_ID, fileID);
-		Reporter.addStepLog(MessageFormat.format(MYLOConstants.FILE_ID_ENTERED, CoreConstants.PASS, fileID));
+		myloDashboardPage.selectOptionsForFileParameters(MYLOConstants.FILE_ID, myloJourneyPage.getFileInfo(fileType,MYLOConstants.FILE_ID));
 		myloDashboardPage.clickExecuteButton();
 		myloAssignmentPage.highlightSectionHeader(MYLOConstants.IDENTIFICATION_AND_DOCUMENTATION);
 	}

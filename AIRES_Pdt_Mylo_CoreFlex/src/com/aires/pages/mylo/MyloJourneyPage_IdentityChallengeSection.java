@@ -114,8 +114,6 @@ public class MyloJourneyPage_IdentityChallengeSection extends Base {
 					: updatedValue;
 			flag = getFieldValueOfIdentityChallengeSection(fieldName).equals(updatedValue);
 		} catch (Exception e) {
-			Reporter.addStepLog(MessageFormat.format(CoreConstants.FAIL_TO_VERIFY_ELEMENT_ON_SECTION,
-					CoreConstants.FAIL, fieldName, MYLOConstants.IDENTITY_CHALLENGE_QUESTION));
 			Assert.fail(MessageFormat.format(CoreConstants.FAIL_TO_VERIFY_ELEMENT_ON_SECTION, CoreConstants.FAIL,
 					fieldName, MYLOConstants.IDENTITY_CHALLENGE_QUESTION));
 		}

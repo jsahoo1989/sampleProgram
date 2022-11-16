@@ -25,7 +25,7 @@ public class MyloJourneyOther_Steps {
 	private MyloJourneyPage_TransfereeSection myloJourneyPageTransfereeSection;
 	private MyloJourneyPage_DependentSection myloJourneyPageDependentSection;
 	private MyloJourneyPage_OtherSection myloJourneyPageOtherSection;
-	private Mylo_JourneyPage myloJourneypage;
+	private Mylo_JourneyPage myloJourneyPage;
 
 	public MyloJourneyOther_Steps(TestContext context) {
 		testContext = context;
@@ -33,7 +33,7 @@ public class MyloJourneyOther_Steps {
 		myloJourneyPageTransfereeSection = testContext.getMyloPageObjectManager().getJourneyPageTransfereeSection();
 		myloJourneyPageDependentSection = testContext.getMyloPageObjectManager().getJourneyPageDependentSection();
 		myloJourneyPageOtherSection = testContext.getMyloPageObjectManager().getJourneyPageOtherSection();
-		myloJourneypage = testContext.getMyloPageObjectManager().getJourneyPage();
+		myloJourneyPage = testContext.getMyloPageObjectManager().getJourneyPage();
 	}
 
 	@Given("^he is on \"([^\"]*)\" section after clicking on 'Add' link displayed in right panel under Other section for \"([^\"]*)\" fileID$")
@@ -42,8 +42,7 @@ public class MyloJourneyOther_Steps {
 		myloDashboardPage.clickOptionFromMainMenu(MYLOConstants.JOURNEY);
 		myloDashboardPage.selectOptionsFromAssignmentMenu(MYLOConstants.QUERY_FILE);
 		myloDashboardPage.selectParameterFromQueryScreen(MYLOConstants.FILE);
-		String fileID = myloJourneypage.getFileInfoFieldByEnvtAndType(fileType, MYLOConstants.FILE_ID);
-		myloDashboardPage.selectOptionsForFileParameters(MYLOConstants.FILE_ID, fileID);
+		myloDashboardPage.selectOptionsForFileParameters(MYLOConstants.FILE_ID, myloJourneyPage.getFileInfo(fileType,MYLOConstants.FILE_ID));
 		myloDashboardPage.clickExecuteButton();
 		Assert.assertTrue(myloJourneyPageTransfereeSection.verifySectionHeader(MYLOConstants.TRANSFEREE_FAMILY),
 				MessageFormat.format(MYLOConstants.VERIFIED_SECTION_NOT_DISPLAYED, CoreConstants.FAIL,
@@ -83,8 +82,7 @@ public class MyloJourneyOther_Steps {
 		myloDashboardPage.clickOptionFromMainMenu(MYLOConstants.JOURNEY);
 		myloDashboardPage.selectOptionsFromAssignmentMenu(MYLOConstants.QUERY_FILE);
 		myloDashboardPage.selectParameterFromQueryScreen(MYLOConstants.FILE);
-		String fileID = myloJourneypage.getFileInfoFieldByEnvtAndType(fileType, MYLOConstants.FILE_ID);
-		myloDashboardPage.selectOptionsForFileParameters(MYLOConstants.FILE_ID, fileID);
+		myloDashboardPage.selectOptionsForFileParameters(MYLOConstants.FILE_ID, myloJourneyPage.getFileInfo(fileType,MYLOConstants.FILE_ID));
 		myloDashboardPage.clickExecuteButton();
 		Assert.assertTrue(myloJourneyPageTransfereeSection.verifySectionHeader(sectionHeader),
 				MessageFormat.format(MYLOConstants.VERIFIED_SECTION_NOT_DISPLAYED, CoreConstants.FAIL, sectionHeader,

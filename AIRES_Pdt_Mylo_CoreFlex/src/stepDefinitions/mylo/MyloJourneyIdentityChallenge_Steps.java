@@ -42,8 +42,7 @@ public class MyloJourneyIdentityChallenge_Steps {
 		myloDashboardPage.clickOptionFromMainMenu(MYLOConstants.JOURNEY);
 		myloDashboardPage.selectOptionsFromAssignmentMenu(MYLOConstants.QUERY_FILE);
 		myloDashboardPage.selectParameterFromQueryScreen(MYLOConstants.FILE);
-		String fileID = myloJourneyPage.getFileInfoFieldByEnvtAndType(fileType, MYLOConstants.FILE_ID);
-		myloDashboardPage.selectOptionsForFileParameters(MYLOConstants.FILE_ID, fileID);
+		myloDashboardPage.selectOptionsForFileParameters(MYLOConstants.FILE_ID, myloJourneyPage.getFileInfo(fileType,MYLOConstants.FILE_ID));
 		myloDashboardPage.clickExecuteButton();
 	}
 
@@ -91,8 +90,7 @@ public class MyloJourneyIdentityChallenge_Steps {
 		myloDashboardPage.clickOptionFromMainMenu(MYLOConstants.JOURNEY);
 		myloDashboardPage.selectOptionsFromAssignmentMenu(MYLOConstants.QUERY_FILE);
 		myloDashboardPage.selectParameterFromQueryScreen(MYLOConstants.FILE);
-		String fileID = myloJourneyPage.getFileInfoFieldByEnvtAndType(fileType, MYLOConstants.FILE_ID);
-		myloDashboardPage.selectOptionsForFileParameters(MYLOConstants.FILE_ID, fileID);
+		myloDashboardPage.selectOptionsForFileParameters(MYLOConstants.FILE_ID, myloJourneyPage.getFileInfo(fileType,MYLOConstants.FILE_ID));
 		myloDashboardPage.clickExecuteButton();
 		myloJourneyPageIdentityChallengeSection.clickFieldsOnIdentityChallengeSection(buttonName);
 	}

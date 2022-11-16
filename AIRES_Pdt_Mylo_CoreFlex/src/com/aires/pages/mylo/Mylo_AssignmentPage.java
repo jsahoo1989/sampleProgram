@@ -495,6 +495,8 @@ public class Mylo_AssignmentPage extends Base {
 			CoreFunctions.click(driver, _YesButton, _YesButton.getText());
 			break;
 		case MYLOConstants.EDIT_BUTTON:
+			BusinessFunctions.fluentWaitForMyloSpinnerToDisappear(driver, _spinner);
+			CoreFunctions.explicitWaitTillElementVisibility(driver, _airesFileTeamEditButton, buttonName);
 			CoreFunctions.click(driver, _airesFileTeamEditButton, MYLOConstants.EDIT_BUTTON);
 			break;
 		}

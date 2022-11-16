@@ -73,11 +73,10 @@ public class MyloJourneyTaxReportingInformation_Steps {
 	@Given("^he is on Mylo Journey Summary page for file ID with \"([^\"]*)\" where payment completion date has been passed$")
 	public void he_is_on_Mylo_Journey_Summary_page_for_file_ID_with_where_payment_completion_date_has_been_passed(
 			String fileType) {
-		String fileId = myloJourneyPage.getFileInfoFieldByEnvtAndType(fileType, MYLOConstants.FILE_ID);
 		myloDashboardPage.clickOptionFromMainMenu(MYLOConstants.JOURNEY);
 		myloDashboardPage.selectOptionsFromAssignmentMenu(MYLOConstants.QUERY_FILE);
 		myloDashboardPage.selectParameterFromQueryScreen(MYLOConstants.FILE);
-		myloDashboardPage.selectOptionsForFileParameters(MYLOConstants.FILE_ID, fileId);
+		myloDashboardPage.selectOptionsForFileParameters(MYLOConstants.FILE_ID, myloJourneyPage.getFileInfo(fileType,MYLOConstants.FILE_ID));
 		myloDashboardPage.clickExecuteButton();
 	}
 

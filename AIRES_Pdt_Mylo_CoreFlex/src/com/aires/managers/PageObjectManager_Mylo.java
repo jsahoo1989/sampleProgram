@@ -19,6 +19,7 @@ package com.aires.managers;
 
 import org.openqa.selenium.WebDriver;
 
+import com.aires.pages.mylo.MyloJourneyPage_AccountingQuerySection;
 import com.aires.pages.mylo.MyloJourneyPage_AddressSection;
 import com.aires.pages.mylo.MyloJourneyPage_AuthTrackSection;
 import com.aires.pages.mylo.MyloJourneyPage_CreateNewFileSection;
@@ -28,6 +29,7 @@ import com.aires.pages.mylo.MyloJourneyPage_OtherSection;
 import com.aires.pages.mylo.MyloJourneyPage_PartnerSection;
 import com.aires.pages.mylo.MyloJourneyPage_SendLoginCredentials;
 import com.aires.pages.mylo.MyloJourneyPage_TaxReportingSection;
+import com.aires.pages.mylo.MyloJourneyPage_TeamPostSection;
 import com.aires.pages.mylo.MyloJourneyPage_TransfereeSection;
 import com.aires.pages.mylo.Mylo_AssignmentPage;
 //import com.aires.pages.mylo.Mylo_AssignmentPage;
@@ -35,6 +37,7 @@ import com.aires.pages.mylo.Mylo_DashboardHomePage;
 import com.aires.pages.mylo.Mylo_JourneyPage;
 import com.aires.pages.mylo.Mylo_LoginPage;
 import com.aires.pages.mylo.Mylo_RestApiRequest;
+import com.aires.utilities.MyloNewFileUtil;
 
 
 public class PageObjectManager_Mylo {
@@ -55,6 +58,10 @@ public class PageObjectManager_Mylo {
 	private MyloJourneyPage_AuthTrackSection _journeyAuthTrackSection;
 	private MyloJourneyPage_TaxReportingSection _journeyPageTaxReportingSection;
 	private MyloJourneyPage_AddressSection _journeyPage_AddressSection;
+	private MyloJourneyPage_TeamPostSection _journeyPage_TeamPostSection;
+	private MyloJourneyPage_AccountingQuerySection _journeyPage_AccountingQuerySection;
+	
+	private MyloNewFileUtil _myloNewFileUtil;
 
 	public PageObjectManager_Mylo(WebDriver driver) {
 		this._driver = driver;
@@ -124,5 +131,16 @@ public class PageObjectManager_Mylo {
 	 public MyloJourneyPage_AddressSection getJourneyPageAddressSection() {
 			return (_journeyPage_AddressSection == null) ? _journeyPage_AddressSection = new MyloJourneyPage_AddressSection(_driver)
 					: _journeyPage_AddressSection;
+		}
+	 public MyloJourneyPage_TeamPostSection getJourneyPageTeamPostSection() {
+			return (_journeyPage_TeamPostSection == null) ? _journeyPage_TeamPostSection = new MyloJourneyPage_TeamPostSection(_driver)
+					: _journeyPage_TeamPostSection;
+		}
+	 public MyloNewFileUtil getMyloNewFileUtil() {
+			return (_myloNewFileUtil == null) ? _myloNewFileUtil = new MyloNewFileUtil(): _myloNewFileUtil;
+		}
+	 public MyloJourneyPage_AccountingQuerySection getJourneyAccountingQuery() {
+			return (_journeyPage_AccountingQuerySection == null) ? _journeyPage_AccountingQuerySection = new MyloJourneyPage_AccountingQuerySection(_driver)
+					: _journeyPage_AccountingQuerySection;
 		}
 }

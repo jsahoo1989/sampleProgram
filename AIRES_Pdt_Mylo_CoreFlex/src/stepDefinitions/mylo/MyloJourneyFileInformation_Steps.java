@@ -29,11 +29,11 @@ public class MyloJourneyFileInformation_Steps {
 	@Given("^he views the File Information section where \"([^\"]*)\", \"([^\"]*)\", \"([^\"]*)\" are hard coded with background color \"([^\"]*)\"$")
 	public void he_views_the_File_Information_section_where_are_hard_coded_with_background_color(String fieldName1,
 			String fieldName2, String fieldName3, String colorCode) {
-		String fileID = myloJourneyPage.getFileInfoFieldByEnvtAndType("activeAssignment", MYLOConstants.FILE_ID);
-		String clientID = myloJourneyPage.getFileInfoFieldByEnvtAndType("activeAssignment", MYLOConstants.CLIENT_ID);
-		String clientName = myloJourneyPage.getFileInfoFieldByEnvtAndType("activeAssignment",
+		String fileID = myloJourneyPage.getFileInfo("activeAssignment",MYLOConstants.FILE_ID);
+		String clientID = myloJourneyPage.getFileInfo("activeAssignment", MYLOConstants.CLIENT_ID);
+		String clientName = myloJourneyPage.getFileInfo("activeAssignment",
 				MYLOConstants.CLIENT_NAME);
-		String policyType = myloJourneyPage.getFileInfoFieldByEnvtAndType("activeAssignment",
+		String policyType = myloJourneyPage.getFileInfo("activeAssignment",
 				MYLOConstants.POLICY_TYPE);
 		Assert.assertTrue(
 				myloAssignmentPage.verifyFileInfoDisplayedFields(fileID, clientID + "-" + clientName, policyType),
@@ -107,11 +107,10 @@ public class MyloJourneyFileInformation_Steps {
 
 	@Given("^he is on Mylo Journey Summary page for file ID with \"([^\"]*)\"$")
 	public void he_is_on_Mylo_Journey_Summary_page_for_file_ID_with(String fileType) {
-		String fileId = myloJourneyPage.getFileInfoFieldByEnvtAndType(fileType, MYLOConstants.FILE_ID);
 		myloDashboardPage.clickOptionFromMainMenu(MYLOConstants.JOURNEY);
 		myloDashboardPage.selectOptionsFromAssignmentMenu(MYLOConstants.QUERY_FILE);
 		myloDashboardPage.selectParameterFromQueryScreen(MYLOConstants.FILE);
-		myloDashboardPage.selectOptionsForFileParameters(MYLOConstants.FILE_ID, fileId);
+		myloDashboardPage.selectOptionsForFileParameters(MYLOConstants.FILE_ID, myloJourneyPage.getFileInfo(fileType, MYLOConstants.FILE_ID));
 		myloDashboardPage.clickExecuteButton();
 	}
 

@@ -51,11 +51,10 @@ public class MyloJourneyAddress_Steps {
 	@Given("^he is on \"([^\"]*)\" section after clicking on \"([^\"]*)\" button displayed under it for file ID with \"([^\"]*)\"$")
 	public void he_is_on_section_after_clicking_on_button_displayed_under_it_for_file_ID_with(String sectionType,
 			String btnName, String fileType) {
-		String fileId = myloJourneyPage.getFileInfoFieldByEnvtAndType(fileType, MYLOConstants.FILE_ID);
 		myloDashboardPage.clickOptionFromMainMenu(MYLOConstants.JOURNEY);
 		myloDashboardPage.selectOptionsFromAssignmentMenu(MYLOConstants.QUERY_FILE);
 		myloDashboardPage.selectParameterFromQueryScreen(MYLOConstants.FILE);
-		myloDashboardPage.selectOptionsForFileParameters(MYLOConstants.FILE_ID, fileId);
+		myloDashboardPage.selectOptionsForFileParameters(MYLOConstants.FILE_ID, myloJourneyPage.getFileInfo(fileType,MYLOConstants.FILE_ID));
 		myloDashboardPage.clickExecuteButton();
 		myloJourneyPage.scrollToJourneySection(sectionType, MYLOConstants.JOURNEY);
 		String detailsBtn = (sectionType.equals(MYLOConstants.ORIGIN_ADDRESS))
@@ -225,11 +224,10 @@ public class MyloJourneyAddress_Steps {
 	@Given("^he clicks on \"([^\"]*)\" button of \"([^\"]*)\" section after saving below data for file ID with \"([^\"]*)\"$")
 	public void he_clicks_on_button_of_section_after_saving_below_data_for_file_ID_with(String btn, String sectionType,
 			String fileType, DataTable table) throws Throwable {
-		String fileId = myloJourneyPage.getFileInfoFieldByEnvtAndType(fileType, MYLOConstants.FILE_ID);
 		myloDashboardPage.clickOptionFromMainMenu(MYLOConstants.JOURNEY);
 		myloDashboardPage.selectOptionsFromAssignmentMenu(MYLOConstants.QUERY_FILE);
 		myloDashboardPage.selectParameterFromQueryScreen(MYLOConstants.FILE);
-		myloDashboardPage.selectOptionsForFileParameters(MYLOConstants.FILE_ID, fileId);
+		myloDashboardPage.selectOptionsForFileParameters(MYLOConstants.FILE_ID, myloJourneyPage.getFileInfo(fileType,MYLOConstants.FILE_ID));
 		myloDashboardPage.clickExecuteButton();
 		myloJourneyPage.scrollToJourneySection(sectionType, MYLOConstants.JOURNEY);
 		String editBtn = (sectionType.equals(MYLOConstants.ORIGIN_ADDRESS)) ? MYLOConstants.ORIGIN_ADDRESS_EDIT_BUTTON

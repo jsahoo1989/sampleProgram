@@ -178,8 +178,6 @@ public class MyloJourneyPage_AuthTrackSection extends Base {
 						.equals(CoreFunctions.getElementText(driver, _authTrackHistoryTableHeaders.get(i)))))
 					flag = false;
 			} catch (Exception e) {
-				Reporter.addStepLog(MessageFormat.format(CoreConstants.FAIL_TO_VERIFY_ELEMENT_ON_SECTION,
-						CoreConstants.FAIL, data.get(0).get(i) + MYLOConstants.HEADER, MYLOConstants.AUTH_TRACK_HISTORY));
 				Assert.fail(MessageFormat.format(CoreConstants.FAIL_TO_VERIFY_ELEMENT_ON_SECTION, CoreConstants.FAIL,
 						data.get(0).get(i) + MYLOConstants.HEADER, MYLOConstants.AUTH_TRACK_HISTORY));
 			}
@@ -210,8 +208,6 @@ public class MyloJourneyPage_AuthTrackSection extends Base {
 						.equals(CoreFunctions.getElementText(driver, _authTrackFieldLabels.get(i)))))
 					flag = false;
 			} catch (Exception e) {
-				Reporter.addStepLog(MessageFormat.format(CoreConstants.FAIL_TO_VERIFY_ELEMENT_ON_SECTION,
-						CoreConstants.FAIL, data.get(0).get(i)+ MYLOConstants.FIELD_NAME, MYLOConstants.AUTH_TRACK_SECTION));
 				Assert.fail(MessageFormat.format(CoreConstants.FAIL_TO_VERIFY_ELEMENT_ON_SECTION, CoreConstants.FAIL,
 						data.get(0).get(i)+ MYLOConstants.FIELD_NAME, MYLOConstants.AUTH_TRACK_SECTION));
 			}

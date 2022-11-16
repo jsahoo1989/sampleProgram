@@ -9,6 +9,7 @@ import com.aires.cucumber.TestContext;
 import com.aires.managers.FileReaderManager;
 import com.aires.pages.mylo.MyloJourneyPage_CreateNewFileSection;
 import com.aires.pages.mylo.Mylo_DashboardHomePage;
+import com.aires.pages.mylo.Mylo_JourneyPage;
 import com.aires.testdatatypes.mylo.Mylo_FileData;
 import cucumber.api.DataTable;
 import cucumber.api.java.en.Given;
@@ -19,11 +20,13 @@ public class MyloCreateNewFile_Steps {
 	private TestContext testContext;
 	private Mylo_DashboardHomePage myloDashboardPage;
 	private MyloJourneyPage_CreateNewFileSection myloNewFileSection;
+	private Mylo_JourneyPage journeyPage;
 
 	public MyloCreateNewFile_Steps(TestContext context) throws Exception {
 		testContext = context;
 		myloDashboardPage = testContext.getMyloPageObjectManager().getDashboardHomePage();
 		myloNewFileSection = testContext.getMyloPageObjectManager().getJourneyPageCreateNewFileSection();
+		journeyPage=testContext.getMyloPageObjectManager().getJourneyPage();
 	}
 
 	Mylo_FileData myloNewFileData = FileReaderManager.getInstance().getMyloJsonReader()
@@ -85,18 +88,13 @@ public class MyloCreateNewFile_Steps {
 	public void all_values_should_be_successfully_saved_as_per_below_character_limit_for_mentioned_fields_under_sections_on_Journey_Page(
 			String section1, String section2, String section3, String section4, String section5, String section6,
 			DataTable table) {
-		Assert.assertTrue(myloNewFileSection.verifyFileInfoInDifferentSection(section1),
-				MessageFormat.format(MYLOConstants.MISMATCH_DIFFERENT_FIELDVALUES, CoreConstants.FAIL, section1));
-		Assert.assertTrue(myloNewFileSection.verifyFileInfoInDifferentSection(section2),
-				MessageFormat.format(MYLOConstants.MISMATCH_DIFFERENT_FIELDVALUES, CoreConstants.FAIL, section2));
-		Assert.assertTrue(myloNewFileSection.verifyFileInfoInDifferentSection(section3),
-				MessageFormat.format(MYLOConstants.MISMATCH_DIFFERENT_FIELDVALUES, CoreConstants.FAIL, section3));
-		Assert.assertTrue(myloNewFileSection.verifyFileInfoInDifferentSection(section4),
-				MessageFormat.format(MYLOConstants.MISMATCH_DIFFERENT_FIELDVALUES, CoreConstants.FAIL, section4));
-		Assert.assertTrue(myloNewFileSection.verifyFileInfoInDifferentSection(section5),
-				MessageFormat.format(MYLOConstants.MISMATCH_DIFFERENT_FIELDVALUES, CoreConstants.FAIL, section5));
-		Assert.assertTrue(myloNewFileSection.verifyFileInfoInDifferentSection(section6),
-				MessageFormat.format(MYLOConstants.MISMATCH_DIFFERENT_FIELDVALUES, CoreConstants.FAIL, section6));
+		myloNewFileSection.verifyFileInfoInDifferentSection(section1);
+		myloNewFileSection.verifyFileInfoInDifferentSection(section2);
+		myloNewFileSection.verifyFileInfoInDifferentSection(section3);
+		myloNewFileSection.verifyFileInfoInDifferentSection(section4);
+		myloNewFileSection.verifyFileInfoInDifferentSection(section5);
+		myloNewFileSection.verifyFileInfoInDifferentSection(section6);
+						
 	}
 
 	@Then("^following information should be displayed under different sections mentioned below on Journey Page$")
@@ -115,8 +113,7 @@ public class MyloCreateNewFile_Steps {
 
 	@Given("^no dropdown options for client is visible for invalid client \"([^\"]*)\" entered$")
 	public void no_dropdown_options_for_client_is_visible_for_invalid_client_entered(String clientID) {
-		myloNewFileSection.setNewFileFields(MYLOConstants.CLIENT_NAME, clientID);
-		Assert.assertFalse(myloNewFileSection.isClientOptionsExistsInDropdown(),
+		Assert.assertFalse(myloNewFileSection.isClientOptionsExistsInDropdown(clientID),
 				"Client Option is appearing in the dropdown for invalid ClientID: " + clientID);
 	}
 
@@ -136,7 +133,7 @@ public class MyloCreateNewFile_Steps {
 	@Then("^message \"([^\"]*)\" should be displayed after he clicks on \"([^\"]*)\" button$")
 	public void message_should_be_displayed_after_he_clicks_on_button(String msg, String buttonName) {
 		myloNewFileSection.clickFieldsOnNewFileSection(buttonName);
-		Assert.assertTrue(myloNewFileSection.verifyToastMessage(msg),MessageFormat.format(MYLOConstants.VERIFIED_MESSAGE_NOT_DISPLAYED, CoreConstants.FAIL,
+		Assert.assertTrue(journeyPage.verifyToastMessage(msg),MessageFormat.format(MYLOConstants.VERIFIED_MESSAGE_NOT_DISPLAYED, CoreConstants.FAIL,
 				msg, MYLOConstants.JOURNEY));
 	}
 

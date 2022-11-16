@@ -249,7 +249,7 @@ public class MyloJourneyPage_AddressSection extends Base {
 		updatedValue = (fieldName.contains(MYLOConstants.COUNTRY) || fieldName.equals(MYLOConstants.ORIGIN_STATE)
 				|| fieldName.equals(MYLOConstants.DESTINATION_STATE))
 						? setAddressCountryStateDropdown(fieldName, fieldValue, sectionType)
-						: BusinessFunctions.setDifferentMyloFields(driver, fieldName, fieldValue,
+						: BusinessFunctions.setMyloInputFields(driver, fieldName, fieldValue,
 								addressWebElementsMap.get(fieldName), type);
 		addressUpdatedFieldValueMap.put(getFieldNameForUpdatingValue(fieldName), updatedValue);
 	}
@@ -262,7 +262,7 @@ public class MyloJourneyPage_AddressSection extends Base {
 			setAddressFieldValues((countryStateDropdownList.contains(countryValue)) ? MYLOConstants.ORIGIN_STATE
 					: MYLOConstants.ORIGIN_STATE_TEXT_FIELD, stateValue, type, sectionType);
 			addressUpdatedFieldValueMap.put(MYLOConstants.ORIGIN_CITY,
-					BusinessFunctions.setDifferentMyloFields(driver, MYLOConstants.ORIGIN_CITY, cityValue, _orgnCity,
+					BusinessFunctions.setMyloInputFields(driver, MYLOConstants.ORIGIN_CITY, cityValue, _orgnCity,
 							(cityValue.equals(MYLOConstants.BLANK) ? cityValue : type)));
 		}
 
@@ -272,7 +272,7 @@ public class MyloJourneyPage_AddressSection extends Base {
 			setAddressFieldValues((countryStateDropdownList.contains(countryValue)) ? MYLOConstants.DESTINATION_STATE
 					: MYLOConstants.DESTINATION_STATE_TEXT_FIELD, stateValue, type, sectionType);
 			addressUpdatedFieldValueMap.put(MYLOConstants.DESTINATION_CITY, BusinessFunctions
-					.setDifferentMyloFields(driver, MYLOConstants.DESTINATION_CITY, cityValue, _destCity, type));
+					.setMyloInputFields(driver, MYLOConstants.DESTINATION_CITY, cityValue, _destCity, type));
 		}
 	}
 
@@ -328,7 +328,7 @@ public class MyloJourneyPage_AddressSection extends Base {
 		for (int i = 0; i < data.size(); i++) {
 			String fieldName = data.get(i).get(MYLOConstants.FIELD_NAME);
 			String fieldValue = data.get(i).get(MYLOConstants.CHARACTER_LENGTH);
-			BusinessFunctions.setDifferentMyloFields(driver, fieldName, fieldValue,
+			BusinessFunctions.setMyloInputFields(driver, fieldName, fieldValue,
 					addressWebElementsMap.get(fieldName), MYLOConstants.RANDOM_STRING);
 			clickSaveBtn(sectionType);
 			Assert.assertTrue(

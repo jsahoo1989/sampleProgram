@@ -76,8 +76,8 @@ public class PDT_Mylo_CoreFlex_Common_LoginPage extends Base {
 	Mylo_LoginData loginData = FileReaderManager.getInstance().getMyloJsonReader()
 			.getloginDetailsByUserProfileName(MYLOConstants.USER_PROFILE_NAME);
 	
-	//private PDT_LoginDetails _loginDetailsApplication = FileReaderManager.getInstance().getJsonReader().getLoginByApplication(CoreFunctions.getPropertyFromConfig("application").toLowerCase());
-	private PDT_LoginDetails _loginDetailsApplication = FileReaderManager.getInstance().getJsonReader().getLoginByApplication(System.getProperty("application").toLowerCase());
+	private PDT_LoginDetails _loginDetailsApplication = FileReaderManager.getInstance().getJsonReader().getLoginByApplication(CoreFunctions.getPropertyFromConfig("application").toLowerCase());
+	//private PDT_LoginDetails _loginDetailsApplication = FileReaderManager.getInstance().getJsonReader().getLoginByApplication(System.getProperty("application").toLowerCase());
 	public void VerifyMYLOLogo() {
 		CoreFunctions.explicitWaitTillElementVisibility(driver, _img_MYLOLogo, MYLOConstants.MYLOLOGO_TEXT);
 		if (_img_MYLOLogo.isDisplayed())
@@ -172,7 +172,7 @@ public class PDT_Mylo_CoreFlex_Common_LoginPage extends Base {
 		CoreFunctions.explicitWaitTillElementVisibility(driver, _anotherAccount, _anotherAccount.getText());
 		CoreFunctions.click(driver, _anotherAccount, _anotherAccount.getText());
 		if (userType.equals(MYLOConstants.USER_WITHOUT_RESOURCE15)||userType.equals(MYLOConstants.USER_WITHOUT_RESOURCE300096)) {
-			enterUserEmailAndPassword(loginData.MyloWithOutResource15UserName, loginData.MyloPassword);	
+			enterUserEmailAndPassword(loginData.MyloWithOutResource, loginData.MyloPassword);	
 		}
 		else {
 			enterUserEmailAndPassword(loginData.MyloUserName, loginData.MyloPassword);	

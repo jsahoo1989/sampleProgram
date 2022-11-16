@@ -23,6 +23,7 @@ import com.aires.managers.PageObjectManager_Mylo;
 import com.aires.managers.PageObjectManager_Pdt;
 import com.aires.managers.WebDriverManager;
 import com.aires.pages.iris.basepage.BasePage;
+import com.aires.utilities.CustomSoftAssert;
 
 public class TestContext {
 	private WebDriverManager _webDriverManager;
@@ -32,6 +33,7 @@ public class TestContext {
 	private BasePage _basePage;
 	private IrisPageManager _irisPageManager;
 	private String browserTitle;
+	private CustomSoftAssert _customSoftAssert;
 
 	public TestContext() throws Exception {
 		_basePage = new BasePage();
@@ -45,6 +47,7 @@ public class TestContext {
 			_pageObjectManagerPDT = new PageObjectManager_Pdt(_webDriverManager.getDriver());
 			_pageObjectManagerMylo = new PageObjectManager_Mylo(_webDriverManager.getDriver());
 			_pageObjectManagerCoreFlex = new PageObjectManager_CoreFlex(_webDriverManager.getDriver());
+			_customSoftAssert = new CustomSoftAssert();
 		}
 	}
 
@@ -70,5 +73,9 @@ public class TestContext {
 
 	public IrisPageManager getIrisPageManager() {
 		return _irisPageManager;
+	}
+	
+	public CustomSoftAssert getSoftAssertObject() {
+		return _customSoftAssert;
 	}
 }

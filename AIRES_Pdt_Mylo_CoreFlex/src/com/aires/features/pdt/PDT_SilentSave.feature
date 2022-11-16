@@ -83,7 +83,7 @@ Feature: Silent Save
     When he clicks on BACK button on last benefit category each page
     Then he should navigate to previous page with same result on subsequent BACK button click
 
-  @BLUE-05 @PDT-Regression @ui-confirm
+  @BLUE-05 @PDT-Regression @ui-confirm @Pdt:218374
   Scenario: PDT - Valdite the UI of Confirmation pop-up when Exit button is clicked after making Sub-benefit form dirty
     Given he is on "Policy Benefit Categories" Page after selecting Client/Policy information followed by filling information on "General Information" page
     And he has clicked on 'Next' button after selecting below categories on "Policy Benefit Categories" Page
@@ -95,7 +95,7 @@ Feature: Silent Save
       | Message | Please click Cancel to stay on the page, click OK to leave the page or click Save to save your current changes before leaving the page. |
       | Buttons | OK, CANCEL, SAVE                                                                                                                        |
 
-  @BLUE-05 @PDT-Regression
+  @BLUE-05 @PDT-Regression @Pdt:218375
   Scenario: PDT - Valdite OK, CANCEL, SAVE button functionality on Confirmation pop-up when Exit button is clicked after making Sub-benefit form dirty
     Given he is on "Policy Benefit Categories" Page after selecting Client/Policy information followed by filling information on "General Information" page
     And he has clicked on 'Next' button after selecting below categories on "Policy Benefit Categories" Page
@@ -107,7 +107,7 @@ Feature: Silent Save
       | CANCEL | User remains on same page                                                                         |
       | SAVE   | User navigates to View/Edit Policy after silently saving the changes on sub-benefit forms         |
 
-@BLUE-05 @PDT-Regression
+  @BLUE-05 @PDT-Regression @Pdt:218376
   Scenario: PDT - Valdite OK, CANCEL, SAVE button functionality on Confirmation pop-up when BACK button is clicked after making Sub-benefit form dirty
     Given he is on "Policy Benefit Categories" Page after selecting Client/Policy information followed by filling information on "General Information" page
     And he has clicked on 'Next' button after selecting below categories on "Policy Benefit Categories" Page
@@ -115,21 +115,21 @@ Feature: Silent Save
     And he has clicked on 'Save & Continue' button on each benefit page after entering mandatory information for all sub-benefits of each selected benefit Category
     When he clicks on "BACK" button after entering mandatory information for all sub-benefits on last benefit category page
     Then a "Confirmation pop-up" should be displayed with 'OK, CANCEL, SAVE' buttons with below functionalities on click of these buttons
-      | OK     | User navigates to previous page without saving changes on last benefit category page |
-      | CANCEL | User remains on same page                                                                         |
-      | SAVE   | User navigates to previous page after silently saving the changes on sub-benefit forms         |  
-   
-  @BLUE-06 @PDT-Regression @read
+      | OK     | User navigates to previous page without saving changes on last benefit category page   |
+      | CANCEL | User remains on same page                                                              |
+      | SAVE   | User navigates to previous page after silently saving the changes on sub-benefit forms |
+
+  @BLUE-06 @PDT-Regression @BLUE-422 @Pdt:218377
   Scenario: PDT - Validate EXIT button functionality in read only mode
     Given he is on "Policy Benefit Categories" Page after selecting Client/Policy information followed by filling information on "General Information" page
     And he has clicked on 'Next' button after selecting below categories on "Policy Benefit Categories" Page
       | Language Training | Cultural Training |
     And he has clicked on "SAVE & SUBMIT" button followed by "EXIT" button after entering mandatory information for all sub-benefits of each selected benefit Category
-  When he clicks on newly added Policy after searching it on "View/Edit Policy Forms" page
-  Then he should navigate back to "View/Edit Policy Forms" page without displaying exit modal after clicking on "EXIT/X" buttons on following pages
-  |General Information |Policy Benefit Categories| Language Training | Cultural Training |
-  
-  @BLUE-06 @PDT-Regression
+    When he clicks on newly added Policy after searching it on "View/Edit Policy Forms" page
+    Then he should navigate back to "View/Edit Policy Forms" page without displaying exit modal after clicking on "EXIT/X" buttons on following pages
+      | General Information | Policy Benefit Categories | Language Training | Cultural Training |
+
+  @BLUE-06 @PDT-Regression @BLUE-458 @multiple
   Scenario: PDT - Validate Save & Submit functionality for 16 multiple Policy benefit categories
     Given he is on "Policy Benefit Categories" Page after selecting Client/Policy information followed by filling information on "General Information" page
     And he has clicked on 'Next' button after selecting below categories on "Policy Benefit Categories" Page

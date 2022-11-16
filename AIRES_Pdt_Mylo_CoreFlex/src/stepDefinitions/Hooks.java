@@ -97,7 +97,7 @@ public class Hooks {
 //					.to(FileReaderManager.getInstance().getConfigReader().getCoreFlexTransfereeSubmissionsApplicationUrl());
 //		}
 		
-		else if (appName.equals(CoreConstants.COREFLEX)&& scenario.getName().contains("MXTransferee")) {
+		else if (appName.equals(CoreConstants.COREFLEX)&& (scenario.getName().contains("MXTransferee")|| (scenario.getName().contains("MXClient")))) {
 			Log.info(FileReaderManager.getInstance().getConfigReader().getApplicationUrl("MXTransferee"));
 			testContext.getWebDriverManager().getDriver().navigate()
 					.to(FileReaderManager.getInstance().getConfigReader().getApplicationUrl("MXTransferee"));
@@ -204,7 +204,7 @@ public class Hooks {
 		if (scenario.getName().contains("IRIS")) {
 			testContext.getBasePage().cleanIrisProcesses();
 		} else {
-//			testContext.getWebDriverManager().closeDriver();
+			testContext.getWebDriverManager().closeDriver();
 		}
 		Runtime.getRuntime().gc();
 	}

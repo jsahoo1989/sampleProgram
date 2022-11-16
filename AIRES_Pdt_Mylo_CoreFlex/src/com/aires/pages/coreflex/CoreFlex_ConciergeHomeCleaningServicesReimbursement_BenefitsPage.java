@@ -216,6 +216,10 @@ public class CoreFlex_ConciergeHomeCleaningServicesReimbursement_BenefitsPage ex
 	private By tourCompleteEstimatedDate = By
 			.xpath(".//div[5]//span[not(contains(text(),'estimated'))][@class='RXSmallerTextMuted RXBold']");
 
+	// Payments Radio Selection
+	@FindBy(how = How.XPATH, using = "//div[@class='container']//label[@class='form-check-label']")
+	private List<WebElement> _radioBenefitMandatoryButtons;
+
 	/*********************************************************************/
 
 	CoreFlex_LifestyleBenefitsData lifestyleBenefitData = FileReaderManager.getInstance().getCoreFlexJsonReader()
@@ -525,21 +529,22 @@ public class CoreFlex_ConciergeHomeCleaningServicesReimbursement_BenefitsPage ex
 	 * @param benefitDescription
 	 * @param aireManagedService
 	 */
+
 	public void fillManadatoryDetails(String benefitType, String multipleBenefitSelection, String benefitDisplayName,
-			String benefitAllowanceAmount, String benefitDescription, String aireManagedService) {
+			String benefitAllowanceAmount, String benefitDescription, String paymentOption) {
 		try {
+			if (((benefitType.equals(COREFLEXConstants.FLEX_BENEFITS)) || (benefitType.equals(COREFLEXConstants.FLEX)))
+					&& (multipleBenefitSelection.equals(COREFLEXConstants.YES))) {
+				CoreFunctions.selectItemInListByText(driver, _radioBenefitMandatoryButtons, paymentOption, true,
+						COREFLEXConstants.PAYMENT_OPTION);
+				CoreFunctions.clickElement(driver, _inputMultiAddBenefit);
+			}
 			CoreFunctions.clearAndSetTextUsingKeys(driver, _inputBenefitName, benefitDisplayName,
 					COREFLEXConstants.BENEFIT_DISPLAY_NAME);
 			CoreFunctions.clearAndSetTextUsingKeys(driver, _textAreaAllowanceAmountMessage, benefitAllowanceAmount,
 					COREFLEXConstants.ALLOWANCE_AMOUNT_MESSAGE);
 			CoreFunctions.clearAndSetTextUsingKeys(driver, _textAreaBenefitLongDescription, benefitDescription,
 					COREFLEXConstants.BENEFIT_LONG_DESCRIPTION);
-			if ((benefitType.equals(COREFLEXConstants.FLEX_BENEFITS)) || (benefitType.equals(COREFLEXConstants.FLEX))) {
-				if ((multipleBenefitSelection.equals(COREFLEXConstants.YES)))
-					CoreFunctions.clickElement(driver, _inputMultiAddBenefit);
-//				CoreFunctions.selectItemInListByText(driver, _radioAiresManagedService, aireManagedService, true,
-//						COREFLEXConstants.AIRES_MANAGED_SERVICE);
-			}
 		} catch (Exception e) {
 			Reporter.addStepLog(
 					MessageFormat.format(COREFLEXConstants.EXCEPTION_OCCURED_WHILE_FILLING_MANDATORY_FIELDS_OF_BENEFIT,
@@ -681,9 +686,9 @@ public class CoreFlex_ConciergeHomeCleaningServicesReimbursement_BenefitsPage ex
 		case COREFLEXConstants.CONCIERGE_HOME_CLEANING_SERVICES_REIMBURSEMENT:
 			expandSubBenefitIfCollapsed(
 					getElementByName(COREFLEXConstants.CONCIERGE_HOME_CLEANING_SERVICES_REIMBURSEMENT));
-			if (benefitType.equals(COREFLEXConstants.FLEX_BENEFITS)) {
-				CoreFunctions.clickElement(driver, _headerConciergeHomeCleaningServicesReimbursement);
-			}
+//			if (benefitType.equals(COREFLEXConstants.FLEX_BENEFITS)) {
+//				CoreFunctions.clickElement(driver, _headerConciergeHomeCleaningServicesReimbursement);
+//			}
 			verifyConciergeHomeCleaningServicesReimbursementSubBenefitForm(
 					COREFLEXConstants.CONCIERGE_HOME_CLEANING_SERVICES_REIMBURSEMENT);
 			break;

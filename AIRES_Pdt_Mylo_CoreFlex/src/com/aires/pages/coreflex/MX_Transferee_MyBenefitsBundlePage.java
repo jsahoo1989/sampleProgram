@@ -190,10 +190,9 @@ public class MX_Transferee_MyBenefitsBundlePage extends Base {
 
 	private By _canceledBenefitDisabledDeleteButtonHoverTextSubElement = By.xpath(
 			".//span[contains(text(),'This benefit has been canceled by your Aires Representative due to a change. There will be no points returned to you as this benefit is still being used.')]");
-	
+
 	@FindBy(how = How.CSS, using = "div[id*='deleteOwnedBenefits::content'] span[class='RXCFSmallText RXMineShaft RXCFWordwrap']")
 	private List<WebElement> _deleteCashoutDescriptionText;
-	
 
 	/*********************************************************************/
 
@@ -350,7 +349,6 @@ public class MX_Transferee_MyBenefitsBundlePage extends Base {
 	}
 
 	private boolean iterateSubmissionDialogListAndVerifyCashout() {
-		String expectedCashoutDescription;
 		DecimalFormat format = new DecimalFormat();
 		format.setDecimalSeparatorAlwaysShown(false);
 		for (WebElement element : _confirmationDialogBenefitName) {
@@ -358,26 +356,13 @@ public class MX_Transferee_MyBenefitsBundlePage extends Base {
 				int indexCashout = BusinessFunctions.returnindexItemFromListUsingText(driver,
 						_confirmationDialogBenefitName,
 						policySetupPageData.flexPolicySetupPage.customCashoutBenefitName);
-				if (CoreFunctions.getPropertyFromConfig("CF_Transferee_CashoutCurrencySign").length() == 1) {
-					expectedCashoutDescription = CoreFunctions
-							.getPropertyFromConfig("CF_Transferee_CashoutCurrencySign")
-							+ format.format(Double.parseDouble(
-									CoreFunctions.getPropertyFromConfig("CF_Transferee_SelectedCashOutPoints")))
-							+ " " + CoreFunctions.getPropertyFromConfig("CF_Transferee_CashoutCurrencyCode")
-							+ MobilityXConstants.TRANSFEREE_CASHOUT_DESCRIPTION;
-				} else {
-					expectedCashoutDescription = CoreFunctions
-							.getPropertyFromConfig("CF_Transferee_CashoutCurrencySign")
-							+ " "
-							+ format.format(Double.parseDouble(
-									CoreFunctions.getPropertyFromConfig("CF_Transferee_SelectedCashOutPoints")))
-							+ MobilityXConstants.TRANSFEREE_CASHOUT_DESCRIPTION;
-				}
 				return (Double.parseDouble((CoreFunctions.getItemsFromListByIndex(driver,
 						_confirmationDialogBenefitPoint, indexCashout, false)))) == (Double.parseDouble(
 								CoreFunctions.getPropertyFromConfig("CF_Transferee_SelectedCashOutPoints")))
-						&& ((CoreFunctions.getItemsFromListByIndex(driver, _confirmationDialogAmountAllowanceMessage,
-								indexCashout, false).contains(expectedCashoutDescription)));
+						&& ((CoreFunctions
+								.getItemsFromListByIndex(driver, _confirmationDialogAmountAllowanceMessage,
+										indexCashout, false)
+								.contains(BusinessFunctions.getExpectedCashoutDescription())));
 			}
 		}
 		return false;
@@ -532,9 +517,9 @@ public class MX_Transferee_MyBenefitsBundlePage extends Base {
 					CoreConstants.FAIL, e.getMessage()));
 		}
 		if (isSubmittedPortionCashoutDetailsVerified) {
-			Reporter.addStepLog(MessageFormat.format(
-					MobilityXConstants.SUCCESSFULLY_VERIFIED_SUBMITTED_PORTION_CASHOUT_DETAILS_ON_MBB_PAGE,
-					CoreConstants.PASS));
+			Reporter.addStepLog(
+					MessageFormat.format(MobilityXConstants.SUCCESSFULLY_VERIFIED_SUBMITTED_CASHOUT_DETAILS_ON_MBB_PAGE,
+							CoreConstants.PASS));
 		}
 		return isSubmittedPortionCashoutDetailsVerified;
 	}
@@ -574,7 +559,7 @@ public class MX_Transferee_MyBenefitsBundlePage extends Base {
 			}
 		} catch (Exception e) {
 			Reporter.addStepLog(MessageFormat.format(
-					COREFLEXConstants.EXCEPTION_OCCURED_WHILE_VALIDATING_SELECTED_FLEX_BENEFIT_DETAILS_ON_MY_BENEFITS_PAGE,
+					COREFLEXConstants.EXCEPTION_OCCURED_WHILE_VALIDATING_SUBMITTED_FLEX_BENEFIT_DETAILS_ON_MY_BENEFITS_PAGE,
 					CoreConstants.FAIL, e.getMessage()));
 		}
 		if (isSubmittedFlexBenefitDetailsOnMBBVerified & flag) {
@@ -586,24 +571,43 @@ public class MX_Transferee_MyBenefitsBundlePage extends Base {
 	}
 
 	private boolean verifySubmittedBenefitDetailsOnMBB(int indexBenefit, Benefit benefit) {
-		return (CoreFunctions.getItemsFromListByIndex(driver, _textSubmittedBenefitNameList, indexBenefit, true)
-				.equals(benefit.getBenefitDisplayName()))
-				&& (CoreFunctions.getItemsFromListByIndex(driver, _textSubmittedAllowanceAmountList, indexBenefit, true)
-						.equals(benefit.getBenefitAmount()))
-				&& (CoreFunctions.getItemsFromListByIndex(driver, _textSubmittedBenefitQuantityList, indexBenefit, true)
-						.equals(String.valueOf(benefit.getNumberOfBenefitSelected())))
-				&& (CoreFunctions.getItemsFromListByIndex(driver, _textSubmittedBenefitDate, indexBenefit, true)
-						.equals(CoreFunctions.getCurrentDateAsGivenFormat("dd-MMM-yyyy")))
-				&& ((Double.parseDouble((CoreFunctions
-						.getItemsFromListByIndex(driver, _textSubmittedBenefitsPointsList, indexBenefit, true)
-						.replace("pts", "").trim()))) == ((Double.parseDouble(benefit.getPoints()))
-								* (Integer.parseInt(CoreFunctions.getItemsFromListByIndex(driver,
-										_textSubmittedBenefitQuantityList, indexBenefit, true)))))
-				&& (CoreFunctions.getItemsFromListByIndex(driver, _benefitStatus, indexBenefit, true)
-						.equals((benefit.getAiresManagedService().equals("No")) ? MobilityXConstants.VIEW_PAYMENTS
-								: MobilityXConstants.SUBMITTED))
-				&& (CoreFunctions.getItemsFromListByIndex(driver, _buttonDeleteSubmittedBenefitList, indexBenefit, true)
-						.equals(MobilityXConstants.DELETE));
+		try {
+			CoreFunctions.verifyText(
+					CoreFunctions.getItemsFromListByIndex(driver, _textSubmittedBenefitNameList, indexBenefit, true),
+					benefit.getBenefitDisplayName(), COREFLEXConstants.SUBMITTED_BENEFIT_NAME);
+			CoreFunctions
+					.verifyText(
+							CoreFunctions.getItemsFromListByIndex(driver, _textSubmittedAllowanceAmountList,
+									indexBenefit, true),
+							benefit.getBenefitAmount(), COREFLEXConstants.SUBMITTED_BENEFIT_ALLOWANCE_AMOUNT);
+			CoreFunctions.verifyText(
+					CoreFunctions.getItemsFromListByIndex(driver, _textSubmittedBenefitQuantityList, indexBenefit,
+							true),
+					String.valueOf(benefit.getNumberOfBenefitSelected()),
+					COREFLEXConstants.SUBMITTED_BENEFIT_SELECTED_QUANTITY);
+			CoreFunctions.verifyText(
+					CoreFunctions.getItemsFromListByIndex(driver, _textSubmittedBenefitDate, indexBenefit, true),
+					CoreFunctions.getCurrentDateAsGivenFormat("dd-MMM-yyyy"), COREFLEXConstants.SUBMITTED_DATE);
+			CoreFunctions.verifyValue(
+					(Double.parseDouble((CoreFunctions
+							.getItemsFromListByIndex(driver, _textSubmittedBenefitsPointsList, indexBenefit, true)
+							.replace("pts", "").trim()))),
+					((Double.parseDouble(benefit.getPoints())) * (Integer.parseInt(CoreFunctions
+							.getItemsFromListByIndex(driver, _textSubmittedBenefitQuantityList, indexBenefit, true)))),
+					COREFLEXConstants.SUBMITTED_BENEFIT_POINTS);
+			CoreFunctions.verifyText(CoreFunctions.getItemsFromListByIndex(driver, _benefitStatus, indexBenefit, true),
+					benefit.getAiresManagedService().equals("No") ? MobilityXConstants.VIEW_PAYMENTS
+							: MobilityXConstants.SUBMITTED,
+					COREFLEXConstants.SUBMITTED_BENEFIT_STATUS);
+			CoreFunctions.verifyText(CoreFunctions.getItemsFromListByIndex(driver, _buttonDeleteSubmittedBenefitList,
+					indexBenefit, true), MobilityXConstants.DELETE, COREFLEXConstants.SUBMITTED_BENEFIT_DELETE_BUTTON);
+			return true;
+		} catch (Exception e) {
+			Reporter.addStepLog(MessageFormat.format(
+					COREFLEXConstants.EXCEPTION_OCCURED_WHILE_VALIDATING_SUBMITTED_FLEX_BENEFIT_DETAILS_ON_MY_BENEFITS_PAGE,
+					CoreConstants.FAIL, e.getMessage()));
+		}
+		return false;
 	}
 
 	public boolean performSubmittedBenefitAction(String action) {
@@ -895,7 +899,6 @@ public class MX_Transferee_MyBenefitsBundlePage extends Base {
 	private boolean verifyMyBenefitBundleCashoutDetails(int indexCashout, String customCashoutBenefitName) {
 		try {
 			String expectedCashoutValue;
-			String expectedCashoutDescription;
 			DecimalFormat format = new DecimalFormat();
 			format.setDecimalSeparatorAlwaysShown(false);
 			CoreFunctions.verifyText(
@@ -926,26 +929,10 @@ public class MX_Transferee_MyBenefitsBundlePage extends Base {
 			String actualCashOutInputText = CoreFunctions.getElementText(driver, _textInputCashoutPoints);
 			CoreFunctions.verifyText(actualCashOutInputText, expectedCashoutValue,
 					MobilityXConstants.CASHOUT_INPUT_FIELD_LABEL_VALUE);
-
-			String actualCashoutDescription = CoreFunctions.getItemsFromListByIndex(driver, _allowanceAmountList,
-					indexCashout, true);
-			if (CoreFunctions.getPropertyFromConfig("CF_Transferee_CashoutCurrencySign").length() == 1) {
-				expectedCashoutDescription = CoreFunctions.getPropertyFromConfig("CF_Transferee_CashoutCurrencySign")
-						+ format.format(Double.parseDouble(
-								CoreFunctions.getPropertyFromConfig("CF_Transferee_SelectedCashOutPoints")))
-						+ " " + CoreFunctions.getPropertyFromConfig("CF_Transferee_CashoutCurrencyCode")
-						+ MobilityXConstants.TRANSFEREE_CASHOUT_DESCRIPTION;
-			} else {
-				expectedCashoutDescription = CoreFunctions.getPropertyFromConfig("CF_Transferee_CashoutCurrencySign")
-						+ " "
-						+ format.format(Double.parseDouble(
-								CoreFunctions.getPropertyFromConfig("CF_Transferee_SelectedCashOutPoints")))
-						+ " " + CoreFunctions.getPropertyFromConfig("CF_Transferee_CashoutCurrencyCode")
-						+ MobilityXConstants.TRANSFEREE_CASHOUT_DESCRIPTION;
-			}
-			CoreFunctions.verifyTextContains(actualCashoutDescription, expectedCashoutDescription,
+			CoreFunctions.verifyTextContains(
+					CoreFunctions.getItemsFromListByIndex(driver, _allowanceAmountList, indexCashout, true),
+					BusinessFunctions.getExpectedCashoutDescription(),
 					MobilityXConstants.TRANSFEREE_CASHOUT_DESCRIPTION_FIELD);
-
 			return CoreFunctions.isElementExist(driver, _buttonCashoutUpdate, 2);
 		} catch (Exception e) {
 			Reporter.addStepLog(MessageFormat.format(
@@ -977,9 +964,6 @@ public class MX_Transferee_MyBenefitsBundlePage extends Base {
 
 	private boolean verifySubmittedCashoutDetails(int indexCashout, String customCashoutBenefitName) {
 		try {
-			String expectedCashoutDescription = null;
-			DecimalFormat format = new DecimalFormat();
-			format.setDecimalSeparatorAlwaysShown(false);
 			CoreFunctions.verifyText(
 					CoreFunctions.getItemsFromListByIndex(driver, _textSubmittedBenefitNameList, indexCashout, true),
 					policySetupPageData.flexPolicySetupPage.customCashoutBenefitName,
@@ -994,23 +978,10 @@ public class MX_Transferee_MyBenefitsBundlePage extends Base {
 					MobilityXConstants.VIEW_PAYMENTS, MobilityXConstants.VIEW_PAYMENTS);
 			CoreFunctions.verifyText(CoreFunctions.getItemsFromListByIndex(driver, _buttonDeleteSubmittedBenefitList,
 					indexCashout, true), MobilityXConstants.DELETE, MobilityXConstants.DELETE);
-			String actualCashoutDescription = CoreFunctions.getItemsFromListByIndex(driver,
-					_textSubmittedAllowanceAmountList, indexCashout, true);
-			if (CoreFunctions.getPropertyFromConfig("CF_Transferee_CashoutCurrencySign").length() == 1) {
-				expectedCashoutDescription = CoreFunctions.getPropertyFromConfig("CF_Transferee_CashoutCurrencySign")
-						+ format.format(Double.parseDouble(
-								CoreFunctions.getPropertyFromConfig("CF_Transferee_SelectedCashOutPoints")))
-						+ " " + CoreFunctions.getPropertyFromConfig("CF_Transferee_CashoutCurrencyCode")
-						+ MobilityXConstants.TRANSFEREE_CASHOUT_DESCRIPTION;
-			} else {
-				expectedCashoutDescription = CoreFunctions.getPropertyFromConfig("CF_Transferee_CashoutCurrencySign")
-						+ " "
-						+ format.format(Double.parseDouble(
-								CoreFunctions.getPropertyFromConfig("CF_Transferee_SelectedCashOutPoints")))
-						+ " " + CoreFunctions.getPropertyFromConfig("CF_Transferee_CashoutCurrencyCode")
-						+ MobilityXConstants.TRANSFEREE_CASHOUT_DESCRIPTION;
-			}
-			CoreFunctions.verifyTextContains(actualCashoutDescription, expectedCashoutDescription,
+			CoreFunctions.verifyTextContains(
+					CoreFunctions.getItemsFromListByIndex(driver, _textSubmittedAllowanceAmountList, indexCashout,
+							true),
+					BusinessFunctions.getExpectedCashoutDescription(),
 					MobilityXConstants.TRANSFEREE_CASHOUT_DESCRIPTION_FIELD);
 			return true;
 		} catch (Exception e) {
@@ -1097,9 +1068,6 @@ public class MX_Transferee_MyBenefitsBundlePage extends Base {
 
 	private boolean deleteSubmittedCashoutDetails(String buttonName) {
 		boolean isSubmittedCashoutDeleted = false;
-		String expectedCashoutDescription;
-		DecimalFormat format = new DecimalFormat();
-		format.setDecimalSeparatorAlwaysShown(false);
 		try {
 			if ((CoreFunctions.getPropertyFromConfig("PolicyCashoutType").equals(MobilityXConstants.PORTION_CASHOUT))
 					|| (CoreFunctions.getPropertyFromConfig("PolicyCashoutType")
@@ -1118,25 +1086,11 @@ public class MX_Transferee_MyBenefitsBundlePage extends Base {
 								false),
 						policySetupPageData.flexPolicySetupPage.customCashoutBenefitName,
 						MobilityXConstants.CASHOUT_NAME);
-				
-				if (CoreFunctions.getPropertyFromConfig("CF_Transferee_CashoutCurrencySign").length() == 1) {
-					expectedCashoutDescription = CoreFunctions.getPropertyFromConfig("CF_Transferee_CashoutCurrencySign")
-							+ format.format(Double.parseDouble(
-									CoreFunctions.getPropertyFromConfig("CF_Transferee_SelectedCashOutPoints")))
-							+ " " + CoreFunctions.getPropertyFromConfig("CF_Transferee_CashoutCurrencyCode")
-							+ MobilityXConstants.TRANSFEREE_CASHOUT_DESCRIPTION;
-				} else {
-					expectedCashoutDescription = CoreFunctions.getPropertyFromConfig("CF_Transferee_CashoutCurrencySign")
-							+ " "
-							+ format.format(Double.parseDouble(
-									CoreFunctions.getPropertyFromConfig("CF_Transferee_SelectedCashOutPoints")))
-							+ " " + CoreFunctions.getPropertyFromConfig("CF_Transferee_CashoutCurrencyCode")
-							+ MobilityXConstants.TRANSFEREE_CASHOUT_DESCRIPTION;
-				}
-				CoreFunctions.verifyTextContains(CoreFunctions.getItemsFromListByIndex(driver, _deleteCashoutDescriptionText, indexDeleteBenefit,
-						false), expectedCashoutDescription,
+				CoreFunctions.verifyTextContains(
+						CoreFunctions.getItemsFromListByIndex(driver, _deleteCashoutDescriptionText, indexDeleteBenefit,
+								false),
+						BusinessFunctions.getExpectedCashoutDescription(),
 						MobilityXConstants.TRANSFEREE_CASHOUT_DESCRIPTION_FIELD);
-				
 				CoreFunctions.verifyValue(
 						Double.parseDouble(CoreFunctions.getItemsFromListByIndex(driver,
 								_confirmationDialogBenefitPoint, indexDeleteBenefit, false)),
@@ -1210,9 +1164,6 @@ public class MX_Transferee_MyBenefitsBundlePage extends Base {
 
 	private boolean verifyDeletedCashoutDetails(int indexCashout, String customCashoutBenefitName) {
 		try {
-			String expectedCashoutDescription = null;
-			DecimalFormat format = new DecimalFormat();
-			format.setDecimalSeparatorAlwaysShown(false);
 			CoreFunctions.verifyText(
 					CoreFunctions.getItemsFromListByIndex(driver, _textSubmittedBenefitNameList, indexCashout, true),
 					policySetupPageData.flexPolicySetupPage.customCashoutBenefitName,
@@ -1230,23 +1181,10 @@ public class MX_Transferee_MyBenefitsBundlePage extends Base {
 			CoreFunctions.verifyText(
 					CoreFunctions.getItemsFromListByIndex(driver, _textSubmittedBenefitDate, indexCashout, true),
 					CoreFunctions.getCurrentDateAsGivenFormat("dd-MMM-yyyy"), MobilityXConstants.SUBMITTED_DATE);
-			String actualCashoutDescription = CoreFunctions.getItemsFromListByIndex(driver,
-					_textSubmittedAllowanceAmountList, indexCashout, true);
-			if (CoreFunctions.getPropertyFromConfig("CF_Transferee_CashoutCurrencySign").length() == 1) {
-				expectedCashoutDescription = CoreFunctions.getPropertyFromConfig("CF_Transferee_CashoutCurrencySign")
-						+ format.format(Double.parseDouble(
-								CoreFunctions.getPropertyFromConfig("CF_Transferee_SelectedCashOutPoints")))
-						+ " " + CoreFunctions.getPropertyFromConfig("CF_Transferee_CashoutCurrencyCode")
-						+ MobilityXConstants.TRANSFEREE_CASHOUT_DESCRIPTION;
-			} else {
-				expectedCashoutDescription = CoreFunctions.getPropertyFromConfig("CF_Transferee_CashoutCurrencySign")
-						+ " "
-						+ format.format(Double.parseDouble(
-								CoreFunctions.getPropertyFromConfig("CF_Transferee_SelectedCashOutPoints")))
-						+ " " + CoreFunctions.getPropertyFromConfig("CF_Transferee_CashoutCurrencyCode")
-						+ MobilityXConstants.TRANSFEREE_CASHOUT_DESCRIPTION;
-			}
-			CoreFunctions.verifyTextContains(actualCashoutDescription, expectedCashoutDescription,
+			CoreFunctions.verifyTextContains(
+					CoreFunctions.getItemsFromListByIndex(driver, _textSubmittedAllowanceAmountList, indexCashout,
+							true),
+					BusinessFunctions.getExpectedCashoutDescription(),
 					MobilityXConstants.TRANSFEREE_CASHOUT_DESCRIPTION_FIELD);
 			return true;
 		} catch (Exception e) {

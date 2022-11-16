@@ -817,7 +817,7 @@ public class PDT_GeneralInformationPage extends Base {
 			switch (fieldName) {
 			case PDTConstants.POLICY_STATUS:
 				if ((CoreFunctions.isElementExist(driver, _textPolicyStatus, 2))
-						&& ((CoreFunctions.getElementText(driver, _textPolicyStatus).replace("error", "").trim())
+						&& ((CoreFunctions.getElementText(driver, _textPolicyStatus).replace("check_circle", "").trim())
 								.equals(expectedDefaultValue)))
 					isFieldVerified = true;
 				break;

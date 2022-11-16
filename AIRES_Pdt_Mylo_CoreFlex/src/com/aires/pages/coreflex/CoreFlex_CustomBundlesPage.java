@@ -454,7 +454,8 @@ public class CoreFlex_CustomBundlesPage extends Base {
 			Reporter.addStepLog(MessageFormat.format(
 					COREFLEXConstants.SUCCESSFULLY_VERIFIED_APPROVE_THIS_POLICY_DIALOG_HEADER_VERSION_ASSIGNMENT_TEXT_AND_FIELDS,
 					CoreConstants.PASS));
-			CoreFunctions.clearAndSetText(driver, _txtAreaDescription, COREFLEXConstants.VERSION_DIALOG_DESCRIPTION_SHORT_TEXT);
+			CoreFunctions.clearAndSetText(driver, _txtAreaDescription,
+					COREFLEXConstants.VERSION_DIALOG_DESCRIPTION_SHORT_TEXT);
 		}
 		return isApproveThisPolicyDialogVerified;
 	}
@@ -527,29 +528,11 @@ public class CoreFlex_CustomBundlesPage extends Base {
 
 	private List<String> getBenefitDisplayNameList(String policyRequiredFor) {
 		List<String> benefitNameList = new ArrayList<String>();
-		switch (policyRequiredFor) {
-		case COREFLEXConstants.CLONING:
-		case COREFLEXConstants.VERSIONING:
-			for (FlexBenefit benefit : flexBenefits) {
-				for (Benefit ben : benefit.getBenefits()) {
-					if (ben.getPolicyCreationGroup().contains(COREFLEXConstants.CLONING))
-						benefitNameList.add(ben.getBenefitDisplayName());
-				}
+		for (FlexBenefit benefit : flexBenefits) {
+			for (Benefit ben : benefit.getBenefits()) {
+				if (ben.getPolicyCreationGroup().contains(policyRequiredFor))
+					benefitNameList.add(ben.getBenefitDisplayName());
 			}
-			break;
-		case COREFLEXConstants.AIRES_MANAGED_BENEFITS_CARDS:
-			break;
-		case COREFLEXConstants.ALL_BENEFITS:
-			for (FlexBenefit benefit : flexBenefits) {
-				for (Benefit ben : benefit.getBenefits()) {
-					if (ben.getPolicyCreationGroup().contains(COREFLEXConstants.ALL_BENEFITS)) {
-						benefitNameList.add(ben.getBenefitDisplayName());
-					}
-				}
-			}
-			break;
-		default:
-			Assert.fail(COREFLEXConstants.BLUEPRINT_POLICY_REQUIRED_FOR_OPTION_NOT_PRESENT_IN_THE_LIST);
 		}
 		return benefitNameList;
 	}

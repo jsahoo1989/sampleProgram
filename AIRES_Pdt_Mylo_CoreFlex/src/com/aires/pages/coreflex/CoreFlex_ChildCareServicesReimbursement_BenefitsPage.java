@@ -216,6 +216,10 @@ public class CoreFlex_ChildCareServicesReimbursement_BenefitsPage extends Benefi
 	private By tourCompleteEstimatedDate = By
 			.xpath(".//div[5]//span[not(contains(text(),'estimated'))][@class='RXSmallerTextMuted RXBold']");
 
+	// Payments Radio Selection
+	@FindBy(how = How.XPATH, using = "//div[@class='container']//label[@class='form-check-label']")
+	private List<WebElement> _radioBenefitMandatoryButtons;
+
 	/*********************************************************************/
 
 	CoreFlex_LifestyleBenefitsData lifestyleBenefitData = FileReaderManager.getInstance().getCoreFlexJsonReader()
@@ -522,22 +526,23 @@ public class CoreFlex_ChildCareServicesReimbursement_BenefitsPage extends Benefi
 	 * @param benefitDescription
 	 * @param aireManagedService
 	 */
+
 	public void fillManadatoryDetails(String benefitType, String multipleBenefitSelection, String benefitDisplayName,
-			String benefitAllowanceAmount, String benefitDescription, String aireManagedService) {
+			String benefitAllowanceAmount, String benefitDescription, String paymentOption) {
 		try {
-			CoreFunctions.clearAndSetTextUsingKeys(driver, _inputBenefitName, benefitDisplayName,
-					COREFLEXConstants.BENEFIT_DISPLAY_NAME);
-			CoreFunctions.clearAndSetTextUsingKeys(driver, _textAreaAllowanceAmountMessage, benefitAllowanceAmount,
-					COREFLEXConstants.ALLOWANCE_AMOUNT_MESSAGE);
-			CoreFunctions.clearAndSetTextUsingKeys(driver, _textAreaBenefitLongDescription, benefitDescription,
-					COREFLEXConstants.BENEFIT_LONG_DESCRIPTION);
-			if ((benefitType.equals(COREFLEXConstants.FLEX_BENEFITS)) || (benefitType.equals(COREFLEXConstants.FLEX))) {
-				if ((multipleBenefitSelection.equals(COREFLEXConstants.YES)))
-					CoreFunctions.clickElement(driver, _inputMultiAddBenefit);
-				CoreFunctions.selectItemInListByText(driver, _radioAiresManagedService, aireManagedService, true,
-						COREFLEXConstants.AIRES_MANAGED_SERVICE);
-			}
-		} catch (Exception e) {
+		if (((benefitType.equals(COREFLEXConstants.FLEX_BENEFITS)) || (benefitType.equals(COREFLEXConstants.FLEX)))
+				&& (multipleBenefitSelection.equals(COREFLEXConstants.YES))) {
+			CoreFunctions.selectItemInListByText(driver, _radioBenefitMandatoryButtons, paymentOption, true,
+					COREFLEXConstants.PAYMENT_OPTION);
+			CoreFunctions.clickElement(driver, _inputMultiAddBenefit);
+		}
+		CoreFunctions.clearAndSetTextUsingKeys(driver, _inputBenefitName, benefitDisplayName,
+				COREFLEXConstants.BENEFIT_DISPLAY_NAME);
+		CoreFunctions.clearAndSetTextUsingKeys(driver, _textAreaAllowanceAmountMessage, benefitAllowanceAmount,
+				COREFLEXConstants.ALLOWANCE_AMOUNT_MESSAGE);
+		CoreFunctions.clearAndSetTextUsingKeys(driver, _textAreaBenefitLongDescription, benefitDescription,
+				COREFLEXConstants.BENEFIT_LONG_DESCRIPTION);
+		}catch (Exception e) {
 			Reporter.addStepLog(
 					MessageFormat.format(COREFLEXConstants.EXCEPTION_OCCURED_WHILE_FILLING_MANDATORY_FIELDS_OF_BENEFIT,
 							CoreConstants.FAIL, e.getMessage(), benefitDisplayName));
@@ -677,9 +682,9 @@ public class CoreFlex_ChildCareServicesReimbursement_BenefitsPage extends Benefi
 		switch (subBenefit) {
 		case COREFLEXConstants.CHILD_CARE_SERVICES_REIMBURSEMENT:
 			expandSubBenefitIfCollapsed(getElementByName(COREFLEXConstants.CHILD_CARE_SERVICES_REIMBURSEMENT));
-			if (benefitType.equals(COREFLEXConstants.FLEX_BENEFITS)) {
-				CoreFunctions.clickElement(driver, _headerChildCareServicesReimbursement);
-			}
+//			if (benefitType.equals(COREFLEXConstants.FLEX_BENEFITS)) {
+//				CoreFunctions.clickElement(driver, _headerChildCareServicesReimbursement);
+//			}
 			verifyChildCareServicesReimbursementSubBenefitForm(COREFLEXConstants.CHILD_CARE_SERVICES_REIMBURSEMENT);
 			break;
 		default:

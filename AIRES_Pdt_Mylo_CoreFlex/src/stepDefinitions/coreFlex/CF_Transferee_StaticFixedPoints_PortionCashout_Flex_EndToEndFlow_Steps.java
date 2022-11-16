@@ -177,5 +177,15 @@ public class CF_Transferee_StaticFixedPoints_PortionCashout_Flex_EndToEndFlow_St
 						CoreConstants.FAIL));
 		transfereeSubmissionsDetailsPage.clickElementOfPage(action);
 	}
+	
+	@When("^\"([^\"]*)\" delete request Benefit_Cashout details should be displayed under 'Transferee History' section with \"([^\"]*)\" status$")
+	public void delete_request_Benefit_Cashout_details_should_be_displayed_under_Transferee_History_section_with_status(
+			String action, String expectedStatus) throws Throwable {
+		transfereeSubmissionsDetailsPage.clickElementOfPage(COREFLEXConstants.TRANSFEREE_HISTORY_SECTION);
+		Assert.assertTrue(transfereeSubmissionsDetailsPage.verifyTransfereeHistorySection(action),
+				MessageFormat.format(
+						COREFLEXConstants.FAILED_TO_VERIFY_BENEFIT_CASHOUT_DETAILS_DISPLAYED_UNDER_HISTORY_SECTION_ON_TRANSFEREE_SUBMISSIONS_DETAILS_PAGE,
+						CoreConstants.FAIL,action));
+	}
 
 }

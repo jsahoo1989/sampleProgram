@@ -58,8 +58,8 @@
 		"details": {
 			"irisUserName": "vkamins",
 			"irisPassword": "testvk",
-			"irisDatabase": "TRAINING",
-			"irisBuildPath": "\\\\corpprdvw589\\rdev\\IRIS_Builds\\IRIS_PRE_PROD_STAGING\\IRIS.exe",
+			"irisDatabase": "TESTS",
+			"irisBuildPath": "\\\\corpprdvw589\\rdev\\IRIS_Builds\\IRIS_PRE_RELEASE_QA_ACCESS_ONLY\\IRIS.exe",
 			"firstName": "mxsso",
 			"lastName": "dev5",
 			"clientId": "13951",

@@ -235,7 +235,7 @@ public class MobilityXConstants {
 	public static final String SUCCESSFULLY_VERIFIED_SUBMITTED_PORTION_CASHOUT_DETAILS_ON_SUBMISSION_CONFIRMATION_DIALOG = "{0}Successfully verified Submitted Portion Cashout Details On Submission Confirmation Dialog.";
 	public static final String EXCEPTION_OCCURED_WHILE_VALIDATING_CASHOUT_DETAILS_ON_SUBMISSION_CONFIRMATION_DIALOG = "{0}Exception occured while validating cashout details on Submission Confirmation Dialog. Exception : ''{1}''.";
 	public static final String EXCEPTION_OCCURED_WHILE_VALIDATING_SUBMITTED_CASHOUT_DETAILS_ON_MBB_PAGE = "{0}Exception occured while validating submitted cashout details on My Benefit Bundle Page. Exception : ''{1}''.";
-	public static final String SUCCESSFULLY_VERIFIED_SUBMITTED_PORTION_CASHOUT_DETAILS_ON_MBB_PAGE = "{0}Successfully verified submitted Portion Cashout details on My Benefit Bundle page.";
+	public static final String SUCCESSFULLY_VERIFIED_SUBMITTED_CASHOUT_DETAILS_ON_MBB_PAGE = "{0}Successfully verified submitted Cashout details on My Benefit Bundle page.";
 	public static final String FAILED_TO_DELETE_SUBMITTED_BENEFIT_AND_CASHOUT = "{0}Failed to delete submitted Benefit & Cashout.";
 	public static final String REMOVE_BENEFIT_DIALOG = "Remove Benefit Dialog";
 	public static final String BENEFIT_NAME = "Benefit Name";
@@ -750,7 +750,8 @@ public class MobilityXConstants {
 	public static final String FAILED_TO_LOU_DOCUMENT = "{0} Failed to create LOU Document.";
 	public static final String USD_CURRENCY_PAYMENT_ACCOUNT_ALREADY_SETUP = "{0} USD Currency payment account already setup.";
 	public static final String CASHOUT_SUGGESTION_TEXT_WIRE = "If you do not need any additional benefits, you may cashout your remaining points by selecting the block below to receive payment. Any wire transfer charges from your bank will be deducted from the amount you will receive.";
-	public static final String TRANSFEREE_CASHOUT_DESCRIPTION = " will be sent to the account ending";
+	public static final String TRANSFEREE_CASHOUT_DESCRIPTION_WIRE = " will be sent to the account ending";
+	public static final String TRANSFEREE_CASHOUT_DESCRIPTION_CHECK = " check will be sent to the address provided";
 	public static final String TRANSFEREE_CASHOUT_DESCRIPTION_FIELD = "Transferee Cashout Description";
 	public static final String SUCCESSFULLY_VERIFIED_SUBMITTED_CASHOUT_DETAILS_UNDER_SUBMITTED_BENEFITS_SECTION_OF_MBB_PAGE = "{0}Successfully verified Submitted Cashout details under Submitted Benefits section of My Benefits Bundle Page.";
 	public static final String EXCEPTION_OCCURED_WHILE_VALIDATING_SUBMITTED_CASHOUT_DETAILS_UNDER_SUBMITTED_BENEFITS_SECTION_OF_MBB_PAGE = "{0}Exception occured while validating Submitted Cashout Details under Submitted Benefits section of MBB page. Exception : ''{1}''.";

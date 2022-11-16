@@ -639,7 +639,7 @@ public class COREFLEXConstants {
 	public static final String POLICY_ADDITIONAL_DETAILS = "Policy Additional Details";
 	public static final String EMPLOYEE_TYPE = "Employee Type";
 	public static final String SUCCESSFULLY_CLICKED_ON_BUTTON_ON_CUSTOM_BUNDLES_PAGE = "{0}Successfully clicked on ''{1}'' button on Custom Bundles page.";
-	public static final String EXPECTED_APPROVE_THIS_POLICY_DIALOG_ASSIGNMENT_TEXT_SECOND_VERSION = "*If you would like to associate any of the 1 existing Assignments or Files with this version of the points based CoreFlex policy in IRIS then all required updates will need to be manual.";
+	public static final String EXPECTED_APPROVE_THIS_POLICY_DIALOG_ASSIGNMENT_TEXT_SECOND_VERSION = "*If you would like to link any of the 1 existing Assignments or Files with this version of the points based CoreFlex policy in IRIS then all required updates will need to be manual.";
 	public static final String SUCCESSFULLY_CLICKED_ON_BUTTON_ON_APPROVE_THIS_POLICY_DIALOG = "{0}Successfully clicked on ''{1}'' button on Approve this Policy Dialog.";
 	public static final String FAILED_TO_SEARCH_POLICY_WITH_POLICY_STATUS = "{0}Failed to seacrh policy with Policy Status : ''{1}''.";
 	public static final String EXCEPTION_OCCURED_WHILE_SEARCHING_POLICY_WITH_STATUS = "{0}Exception occured while validating policy with ''{2}'' status. Exception : ''{1}''.";
@@ -866,4 +866,23 @@ public class COREFLEXConstants {
 	public static final String VERSION_DIALOG_DESCRIPTION_SHORT_TEXT = "Test Description";
 	public static final String EXCEPTION_OCCURED_WHILE_SAVING_CASHOUT_CURRENCY_DETAILS = "{0}Exception occured while saving Cashout Currency details. Exception : ''{1}''.";
 	public static final String FAILED_SAVING_CASHOUT_CURRENCY_DETAILS = "Failed saving Cashout Currency details.";
+	public static final String FAILED_TO_VERIFY_BENEFIT_CASHOUT_DETAILS_DISPLAYED_UNDER_HISTORY_SECTION_ON_TRANSFEREE_SUBMISSIONS_DETAILS_PAGE = "{0}Failed to verify Benefit_Cashout details displayed under Transferee History Section post ''{1}'' action on Transferee Submissions Details page. ";
+	public static final String TRANSFEREE_HISTORY_SECTION = "Transferee History Section";
+	public static final String TRANSFEREE_SUBMISSIONS_HISTORY_BENEFIT_NAME = "Transferee Submissions History Benefit Name";
+	public static final String TRANSFEREE_SUBMISSIONS_HISTORY_BENEFIT_ALLOWANCE_AMOUNT = "Transferee Submissions History Benefit Allowance Amount";
+	public static final String TRANSFEREE_SUBMISSIONS_HISTORY_BENEFIT_POINTS = "Transferee Submissions History Benefit Points";
+	public static final String TRANSFEREE_SUBMISSIONS_HISTORY_DELETE_REQUEST_STATUS = "Transferee Submissions History Delete Request Status";
+	public static final String TRANSFEREE_SUBMISSIONS_HISTORY_BENEFIT_SELECTED_QUANTITY = "Transferee Submissions History Benefit Selected Quantity";
+	public static final String DELETED = "Deleted";
+	public static final String REQUEST_DENIED = "Request Denied";
+	public static final String SUCCESSFULLY_VERIFIED_BENEFIT_DETAILS_DISPLAYED_UNDER_HISTORY_SECTION_ON_TRANSFEREE_SUBMISSIONS_DETAILS_PAGE = "{0}Successfully verified Benefit details displayed under history section on Transferee Submissions Details page.";
+	public static final String EXCEPTION_OCCURED_WHILE_VERIFYING_BENEFIT_DETAILS_DISPLAYED_UNDER_HISTORY_SECTION_ON_TRANSFEREE_SUBMISSIONS_DETAILS_PAGE = "{0}Exception occured while verifying Benefit details displayed under history section on Transferee Submissions Details page. Exception : ''{1}''.";
+	public static final String SUCCESSFULLY_VERIFIED_CASHOUT_DETAILS_DISPLAYED_UNDER_HISTORY_SECTION_ON_TRANSFEREE_SUBMISSIONS_DETAILS_PAGE = "{0}Successfully verified Cashout details displayed under history section on Transferee Submissions Details page.";
+	public static final String EXCEPTION_OCCURED_WHILE_VERIFYING_CASHOUT_DETAILS_DISPLAYED_UNDER_HISTORY_SECTION_ON_TRANSFEREE_SUBMISSIONS_DETAILS_PAGE = "{0}Exception occured while verifying Cashout details displayed under history section on Transferee Submissions Details page. Exception : ''{1}''.";
+	public static final String TRANSFEREE_SUBMISSIONS_HISTORY_CASHOUT_NAME = "Transferee Submissions History Cashout Name";
+	public static final String TRANSFEREE_SUBMISSIONS_HISTORY_CASHOUT_DESCRIPTION = "Transferee Submissions History Cashout Description";
+	public static final String TRANSFEREE_SUBMISSIONS_HISTORY_CASHOUT_POINTS = "Transferee Submissions History Cashout Points";
+	public static final String CASHOUT_DESCRIPTION = "Cashout Description";
+	public static final String EXCEPTION_OCCURED_WHILE_VALIDATING_SUBMITTED_FLEX_BENEFIT_DETAILS_ON_MY_BENEFITS_PAGE = "{0}Exception occured while validating Submitted Flex Benefits Details On My Benefits Page. Exception : ''{1}''.";
+	public static final String SUBMITTED_BENEFIT_DELETE_BUTTON = "Submitted Benefit Delete Button";
 }

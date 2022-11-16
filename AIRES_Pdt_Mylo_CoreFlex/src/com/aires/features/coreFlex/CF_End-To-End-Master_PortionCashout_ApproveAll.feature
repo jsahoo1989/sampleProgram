@@ -60,6 +60,7 @@ Feature: Validate MXTransferee Workflow and MJ Cards(CancelledStatus) for Transf
     When he confirms request by selecting "Approve All" option after verifying 'Delete Request Pending' benefit request details on 'Requests' dialog
     Then 'Action Completed' growl message for "Approve Request" should be displayed on "Transferee Submission Details" page
     And 'Delete Request Pending' benefit request should be removed from 'Transferee Submission Details' list
+    And "Approved" delete request Benefit_Cashout details should be displayed under 'Transferee History' section with "Deleted" status
     And benefit details should be updated in 'MXTransferee' application based on "Approved" 'Delete Request' on Transferee Submission
 
   @Coreflex:218334 @CF_End-To-End_MasterScript @CF_Master_PortionApprove @CF_Master_PortionApprove_Cards_PF

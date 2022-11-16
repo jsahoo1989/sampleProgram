@@ -763,6 +763,7 @@ public class CoreFlex_PolicyBenefitsCategoriesPage extends Base {
 				switch (policyRequiredFor) {
 				case COREFLEXConstants.CLONING:
 				case COREFLEXConstants.VERSIONING:
+				case COREFLEXConstants.CLIENT:
 					isAddedBenefitSuccessfullyVerified = verifyAddedFlexBenefitSubBenefitDetailsForCloning(policyType,
 							policyRequiredFor);
 					break;
@@ -796,65 +797,34 @@ public class CoreFlex_PolicyBenefitsCategoriesPage extends Base {
 	private boolean verifyAddedFlexBenefitSubBenefitDetailsForCloning(String policyType, String policyRequiredFor) {
 		boolean isBenefitDetailsSuccessfullyVerified = false;
 		try {
-			for (FlexBenefit benefitList : flexBenefits) {
-				for (Benefit benefit : benefitList.getBenefits()) {
-					if (benefit.getPolicyCreationGroup().contains(policyRequiredFor)) {
-						clickLeftNavigationMenuOfPage(benefit.getBenefitType());
-						isBenefitDetailsSuccessfullyVerified = false;
-						switch (benefit.getBenefitType()) {
-						case COREFLEXConstants.DUPLICATE_HOUSING:
-							isBenefitDetailsSuccessfullyVerified = ((CoreFlex_DuplicateHousing_BenefitsPage) pageObjectManager_CoreFlex
-									.getPageObjects().get(benefit.getBenefitType()))
-											.verifyAddedBenefitsAndSubBenefitDetails(policyType,
-													benefit.getSubBenefits(), benefit.getMultipleBenefitSelection(),
-													benefit.getPoints(), benefit.getBenefitDisplayName(),
-													benefit.getBenefitAmount(), benefit.getBenefitDesc(),
-													benefit.getPayments(), benefit.getAiresManagedService());
-							break;
-						case COREFLEXConstants.LUMP_SUM:
-							isBenefitDetailsSuccessfullyVerified = ((CoreFlex_LumpSum_BenefitsPage) pageObjectManager_CoreFlex
-									.getPageObjects().get(benefit.getBenefitType()))
-											.verifyAddedBenefitsAndSubBenefitDetails(policyType,
-													benefit.getSubBenefits(), benefit.getMultipleBenefitSelection(),
-													benefit.getPoints(), benefit.getBenefitDisplayName(),
-													benefit.getBenefitAmount(), benefit.getBenefitDesc(),
-													benefit.getPayments(), benefit.getAiresManagedService());
-							break;
-						case COREFLEXConstants.OTHER_HOUSING_BENEFIT:
-							((CoreFlex_OtherHousing_BenefitsPage) pageObjectManager_CoreFlex.getPageObjects()
-									.get(benefit.getBenefitType())).verifyFieldTextUpdates();
-							isBenefitDetailsSuccessfullyVerified = ((CoreFlex_OtherHousing_BenefitsPage) pageObjectManager_CoreFlex
-									.getPageObjects().get(benefit.getBenefitType())).verifyAddedOtherBenefitsDetails(
-											benefit.getBenefitDisplayName(), benefit.getPoints(),
-											benefit.getMultipleBenefitSelection(), benefit.getBenefitAmount(),
-											benefit.getBenefitDesc(), benefit.getComment(), benefit.getGrossUp(),
-											benefit.getReimbursedBy(), benefit.getPayments(),
-											benefit.getAiresManagedService());
-							break;
-						case COREFLEXConstants.LANGUAGE_TRAINING:
-							isBenefitDetailsSuccessfullyVerified = ((CoreFlex_LanguageTraining_BenefitsPage) pageObjectManager_CoreFlex
-									.getPageObjects().get(benefit.getBenefitType()))
-											.verifyAddedBenefitsAndSubBenefitDetails(policyType,
-													benefit.getSubBenefits(), benefit.getMultipleBenefitSelection(),
-													benefit.getPoints(), benefit.getBenefitDisplayName(),
-													benefit.getBenefitAmount(), benefit.getBenefitDesc(),
-													benefit.getPayments(), benefit.getAiresManagedService());
-							break;
-						default:
-							Assert.fail(PDTConstants.INVALID_ELEMENT);
-						}
-
-						if (!isBenefitDetailsSuccessfullyVerified) {
-							Reporter.addStepLog(MessageFormat.format(
-									COREFLEXConstants.ADDED_BENEFIT_DETAILS_NOT_MATCHED_POST_VERSIONING_CLONING,
-									CoreConstants.FAIL, benefit.getBenefitType()));
-							return false;
-						} else {
-							Reporter.addStepLog(MessageFormat.format(
-									COREFLEXConstants.SUCCESSFULLY_VALIDATED_BENEFIT_DETAILS_POST_VERSIONING_CLONING,
-									CoreConstants.PASS, benefit.getBenefitType()));
-						}
-					}
+			for (Benefit benefit : getBenefits(policyType, policyRequiredFor)) {
+				clickLeftNavigationMenuOfPage(benefit.getBenefitType());
+				isBenefitDetailsSuccessfullyVerified = false;
+				if (benefit.getBenefitType().equals(COREFLEXConstants.OTHER_HOUSING_BENEFIT)) {
+					isBenefitDetailsSuccessfullyVerified = ((CoreFlex_OtherHousing_BenefitsPage) pageObjectManager_CoreFlex
+							.getPageObjects().get(benefit.getBenefitType())).verifyAddedOtherBenefitsDetails(
+									benefit.getBenefitDisplayName(), benefit.getPoints(),
+									benefit.getMultipleBenefitSelection(), benefit.getBenefitAmount(),
+									benefit.getBenefitDesc(), benefit.getComment(), benefit.getGrossUp(),
+									benefit.getReimbursedBy(), benefit.getPayments(), benefit.getAiresManagedService());
+				} else {
+					System.out.println(pageObjectManager_CoreFlex.getPageObjects().get(benefit.getBenefitType()));
+					isBenefitDetailsSuccessfullyVerified = pageObjectManager_CoreFlex.getPageObjects()
+							.get(benefit.getBenefitType()).verifyAddedBenefitsAndSubBenefitDetails(policyType,
+									benefit.getSubBenefits(), benefit.getMultipleBenefitSelection(),
+									benefit.getPoints(), benefit.getBenefitDisplayName(), benefit.getBenefitAmount(),
+									benefit.getBenefitDesc(), benefit.getPayments(), benefit.getAiresManagedService());
+				}
+				if (isBenefitDetailsSuccessfullyVerified) {
+					Reporter.addStepLog(MessageFormat.format(
+							COREFLEXConstants.SUCCESSFULLY_VALIDATED_BENEFIT_DETAILS_POST_VERSIONING_CLONING,
+							CoreConstants.PASS, benefit.getBenefitType()));
+					continue;
+				} else {
+					Reporter.addStepLog(MessageFormat.format(
+							COREFLEXConstants.ADDED_BENEFIT_DETAILS_NOT_MATCHED_POST_VERSIONING_CLONING,
+							CoreConstants.FAIL, benefit.getBenefitType()));
+					return false;
 				}
 			}
 		} catch (Exception e) {

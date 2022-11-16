@@ -1856,7 +1856,7 @@ public class CoreFunctions {
 	}
 
 	public static void verifyValue(Double actualValue, Double expectedValue, String fieldName) {
-		if (actualValue.equals(expectedValue))
+		if (actualValue==expectedValue)
 			Reporter.addStepLog(
 					CoreConstants.PASS + MobilityXConstants.VERIFIED_FIELD_TEXT + fieldName + " : " + expectedValue);
 		else {
@@ -1869,7 +1869,7 @@ public class CoreFunctions {
 
 	public static void verifyValue(WebDriver driver, WebElement element, Double expectedValue, String fieldName) {
 		Double actualValue = Double.parseDouble(element.getText().trim());
-		if (actualValue.equals(expectedValue)) {
+		if (actualValue==(expectedValue)) {
 			highlightObject(driver, element);
 			Reporter.addStepLog(
 					CoreConstants.PASS + MobilityXConstants.VERIFIED_FIELD_TEXT + fieldName + " : " + expectedValue);

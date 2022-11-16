@@ -134,7 +134,7 @@ public class PDT_ViewPolicyPage extends Base {
 	// Policies Status List
 	@FindBy(how = How.XPATH, using = "//strong[contains(text(),'Policy Status')]/parent::h6")
 	private List<WebElement> _listPolicyStatus;
-	
+
 	@FindBy(how = How.XPATH, using = "//strong[contains(text(),'Version Number')]/parent::h6")
 	private List<WebElement> _listVersionNo;
 
@@ -270,6 +270,10 @@ public class PDT_ViewPolicyPage extends Base {
 	@FindBy(how = How.CSS, using = "td.mat-column-ppc")
 	private WebElement _textAssignmentPPC;
 
+	// Policy Dialog Description
+	@FindBy(how = How.CSS, using = "textarea[formcontrolname='description']")
+	private WebElement _txtAreaDescription;
+
 	final By _listPolicyNameByLocator = By.cssSelector("h5.text-info.info-pname");
 	final By _listClientNameByLocator = By.cssSelector("h6.info-pclient");
 	long timeBeforeAction, timeAfterAction;
@@ -337,6 +341,7 @@ public class PDT_ViewPolicyPage extends Base {
 			break;
 		case COREFLEXConstants.EXIT:
 			CoreFunctions.clickElement(driver, _btnExit);
+			CoreFunctions.explicitWaitTillElementInVisibilityCustomTime(driver, _progressBar, 10);
 			break;
 		case COREFLEXConstants.OK:
 			CoreFunctions.clickElement(driver, _btnOK);
@@ -625,7 +630,7 @@ public class PDT_ViewPolicyPage extends Base {
 	}
 
 	public void enterVersionControlDialogDescription() {
-		CoreFunctions.clearAndSetText(driver, _inputVersionContolDialogDescription,
+		CoreFunctions.clearAndSetText(driver, _txtAreaDescription,
 				COREFLEXConstants.VERSION_CONTROL_DESCRIPTION);
 	}
 
@@ -744,7 +749,7 @@ public class PDT_ViewPolicyPage extends Base {
 		} catch (Exception e) {
 			Reporter.addStepLog(MessageFormat.format(
 					COREFLEXConstants.EXCEPTION_OCCURED_WHILE_CLICKING_ON_POLICY_ACTION_ICON_ON_VIEW_EDIT_POLICY_FORMS_PAGE,
-					CoreConstants.FAIL, iconName, policyVersion,e.getMessage()));
+					CoreConstants.FAIL, iconName, policyVersion, e.getMessage()));
 			Assert.fail(MessageFormat.format(
 					COREFLEXConstants.FAILED_TO_CLICK_ON_POLICY_ACTION_ICON_ON_VIEW_EDIT_POLICY_FORMS_PAGE,
 					CoreConstants.FAIL, iconName, policyVersion));
@@ -1186,7 +1191,8 @@ public class PDT_ViewPolicyPage extends Base {
 	}
 
 	public Boolean verifyCFUserlogin(String userName, String pageName) {
-		CoreFunctions.explicitWaitTillElementBecomesClickable(driver, _addNewPolicyForm, PDTConstants.ADD_NEW_POLICY_FORM);
+		CoreFunctions.explicitWaitTillElementBecomesClickable(driver, _addNewPolicyForm,
+				PDTConstants.ADD_NEW_POLICY_FORM);
 		if (CoreFunctions.getElementText(driver, _userName).contains(userName)) {
 			Reporter.addStepLog(MessageFormat.format(PDTConstants.VERIFIED_USERNAME_IS_DISPLAYED, CoreConstants.PASS,
 					userName, pageName));
@@ -1196,7 +1202,9 @@ public class PDT_ViewPolicyPage extends Base {
 				userName, CoreFunctions.getElementText(driver, _userName)));
 		return false;
 	}
-	public boolean verifyPolicyStatusWithVersion(String selectedPolicyName, String expectedPolicyStatus, String expectedPolicyVersion, String pageName) {
+
+	public boolean verifyPolicyStatusWithVersion(String selectedPolicyName, String expectedPolicyStatus,
+			String expectedPolicyVersion, String pageName) {
 		boolean isSubmittedPolicyStatusVerified = false;
 		boolean isPolicyVersionVerified = false;
 		String[] actualPolicyStatus = null, actualPolicyVersion = null;
@@ -1209,28 +1217,26 @@ public class PDT_ViewPolicyPage extends Base {
 			isSubmittedPolicyStatusVerified = (actualPolicyStatus[1].trim()).equals(expectedPolicyStatus);
 			CoreFunctions.highlightObject(driver,
 					CoreFunctions.getElementFromListByText(_listPolicyStatus, (actualPolicyStatus[1].trim())));
-			
+
 			String actualPolicyVersionList = _listVersionNo.get(index).getText();
 			actualPolicyVersion = actualPolicyVersionList.split(":");
 			isPolicyVersionVerified = (actualPolicyVersion[1].trim()).equals(expectedPolicyVersion);
 			CoreFunctions.highlightObject(driver,
 					CoreFunctions.getElementFromListByText(_listVersionNo, (actualPolicyVersion[1].trim())));
 		} catch (Exception e) {
-			Reporter.addStepLog(MessageFormat.format(
-					PDTConstants.EXCEPTION_OCCURED_VALIDATING_POLICY_STATUS_VERSION,
+			Reporter.addStepLog(MessageFormat.format(PDTConstants.EXCEPTION_OCCURED_VALIDATING_POLICY_STATUS_VERSION,
 					CoreConstants.FAIL, e.getMessage()));
 		}
 		if (isSubmittedPolicyStatusVerified && isPolicyVersionVerified) {
-			Reporter.addStepLog(MessageFormat.format(
-					PDTConstants.VERIFIED_POLICY_VERSION_STATUS,
-					CoreConstants.PASS, selectedPolicyName, actualPolicyVersion[1], actualPolicyStatus[1], pageName));
+			Reporter.addStepLog(MessageFormat.format(PDTConstants.VERIFIED_POLICY_VERSION_STATUS, CoreConstants.PASS,
+					selectedPolicyName, actualPolicyVersion[1], actualPolicyStatus[1], pageName));
 			return true;
 		} else {
-			Reporter.addStepLog(MessageFormat.format(
-					PDTConstants.FAILED_TO_VERIFY_POLICY_VERSION_STATUS, CoreConstants.FAIL,
-					selectedPolicyName, expectedPolicyVersion, actualPolicyVersion[1], expectedPolicyStatus, actualPolicyStatus[1], pageName));
+			Reporter.addStepLog(MessageFormat.format(PDTConstants.FAILED_TO_VERIFY_POLICY_VERSION_STATUS,
+					CoreConstants.FAIL, selectedPolicyName, expectedPolicyVersion, actualPolicyVersion[1],
+					expectedPolicyStatus, actualPolicyStatus[1], pageName));
 			return false;
 		}
-		
+
 	}
 }

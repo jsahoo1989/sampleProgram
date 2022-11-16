@@ -125,7 +125,7 @@ public class TransfereeSubmissions_DetailsPage extends Base {
 	private List<WebElement> _requestDialogBenefitNameList;
 
 	// Request Dialog Allowance Amount List
-	@FindBy(how = How.XPATH, using = "//td/div[contains(@class,'benefit-desc')] | //td/div/span[contains(text(),'The transferee will receive')] | //div[contains(@class,'benefit-desc')]/span[contains(text(),'will be sent to the account' )]")
+	@FindBy(how = How.XPATH, using = "//td/div[contains(@class,'benefit-desc')] | //div[contains(@class,'benefit-desc')]")
 	private List<WebElement> _requestDialogAllowanceAmountList;
 
 	/// Request Dialog Points List
@@ -191,6 +191,30 @@ public class TransfereeSubmissions_DetailsPage extends Base {
 	// Point Balance ToolTip Text
 	@FindBy(how = How.CSS, using = "div[class*='popper'] > span[class*='greenColor']")
 	private WebElement _tooltipBalancePoints;
+
+	// Transferee History Section Header
+	@FindBy(how = How.CSS, using = "app-transferee-history  a[class*='collapsed'] > span")
+	private WebElement _transfereeHistorySectionHeader;
+
+	// Transferee History - Benefit Name
+	@FindBy(how = How.CSS, using = "app-transferee-history  mat-cell[class*='description'] > span[class*='BlackText'][style*='600']")
+	private List<WebElement> _transfereeHistoryBenefitNameList;
+
+	// Transferee History - Benefit Allowance Amount
+	@FindBy(how = How.CSS, using = "app-transferee-history  mat-cell[class*='description'] > span[class*='BlackText'][style*='500']")
+	private List<WebElement> _transfereeHistoryAllowanceAmountList;
+
+	// Transferee History - Benefit Points
+	@FindBy(how = How.CSS, using = "app-transferee-history  mat-cell[class*='column-Points'] > span")
+	private List<WebElement> _transfereeHistoryBenefitPointsList;
+
+	// Transferee History - Benefit Status
+	@FindBy(how = How.CSS, using = "app-transferee-history  mat-cell[class*='column-Status'] > span > span")
+	private List<WebElement> _transfereeHistoryBenefitStatusList;
+
+	// Transferee History - Benefit Quantity
+	@FindBy(how = How.CSS, using = "app-transferee-history  mat-cell[class*='column-Quantity']")
+	private List<WebElement> _transfereeHistoryBenefitQuantityList;
 
 	/**********************************************************************/
 
@@ -272,6 +296,9 @@ public class TransfereeSubmissions_DetailsPage extends Base {
 			case COREFLEXConstants.DENY_ALL:
 				CoreFunctions.clickElement(driver, _requestDialogDenyRadioButton);
 				CoreFunctions.clickElement(driver, _requestDialogConfirmButton);
+				break;
+			case COREFLEXConstants.TRANSFEREE_HISTORY_SECTION:
+				CoreFunctions.clickElement(driver, _transfereeHistorySectionHeader);
 				break;
 			default:
 				Assert.fail(COREFLEXConstants.INVALID_ELEMENT);
@@ -386,7 +413,7 @@ public class TransfereeSubmissions_DetailsPage extends Base {
 		benefitCount = 0;
 		try {
 			for (Benefit benefit : getBenefits(CoreFunctions.getPropertyFromConfig("CoreFlex_Policy_BenefitType"),
-					CoreFunctions.getPropertyFromConfig("CoreFlex_Policy_RequiredFor"), "0")) {
+					CoreFunctions.getPropertyFromConfig("CoreFlex_Policy_RequiredFor"))) {
 				isSubmittedBenefitStatusMatched = verifyBenefitDetails(benefit, MobilityXConstants.TRANSFEREE);
 				if (!isSubmittedBenefitStatusMatched)
 					break;
@@ -449,6 +476,11 @@ public class TransfereeSubmissions_DetailsPage extends Base {
 				CoreFunctions.verifyText(driver, _submittedBenefitNameList.get(indexCashout),
 						policySetupPageData.flexPolicySetupPage.customCashoutBenefitName,
 						COREFLEXConstants.SUBMITTED_CASHOUT_NAME);
+				WebElement allowanceAmount = CoreFunctions.findSubElement(_submittedBenefitNameList.get(indexCashout),
+						allowanceAmountMessage);
+				CoreFunctions.verifyText(driver, allowanceAmount,
+						BusinessFunctions.getExpectedCashoutDescriptionWithDecimalPrecesion(),
+						COREFLEXConstants.CASHOUT_DESCRIPTION);
 				CoreFunctions.verifyValue(
 						Double.parseDouble(
 								_submittedBenefitPointsList.get(indexCashout).getText().replace("pts", "").trim()),
@@ -487,16 +519,6 @@ public class TransfereeSubmissions_DetailsPage extends Base {
 					COREFLEXConstants.SUBMITTED_BENEFIT_STATUS);
 		}
 
-	}
-
-	private String getCashoutAllowanceAmountText() {
-		DecimalFormat format = new DecimalFormat();
-		format.setMinimumFractionDigits(2);
-		String reimAccountType[] = MX_Transferee_FlexPlanningTool_Page.getReimAccountType().split("-");
-		String currency[] = reimAccountType[1].split("\\(");
-		return (COREFLEXConstants.TRANSFEREE_CASHOUT_ALLOWANCE_TEXT).replace("currency", currency[0].trim())
-				.replace("cashout_value", format.format(MX_Transferee_FlexPlanningTool_Page.selectedCashoutPoints))
-				.replace("reim_type", reimAccountType[0].trim());
 	}
 
 	private boolean verifyBenefitDetails(Benefit benefit, String submittedBy) {
@@ -596,7 +618,7 @@ public class TransfereeSubmissions_DetailsPage extends Base {
 	private void resolveDeleteRequestPending() {
 		try {
 			for (Benefit benefit : getBenefits(CoreFunctions.getPropertyFromConfig("CoreFlex_Policy_BenefitType"),
-					CoreFunctions.getPropertyFromConfig("CoreFlex_Policy_RequiredFor"), "0")) {
+					CoreFunctions.getPropertyFromConfig("CoreFlex_Policy_RequiredFor"))) {
 				int index = BusinessFunctions.returnindexItemFromListUsingText(driver, _submittedBenefitNameList,
 						benefit.getBenefitDisplayName());
 				if (benefit.getDeleteBenefitOnMBBPage()) {
@@ -658,6 +680,7 @@ public class TransfereeSubmissions_DetailsPage extends Base {
 	}
 
 	private boolean iterateRequestDialogListAndVerifyCashout() {
+
 		for (WebElement element : _requestDialogBenefitNameList) {
 			if (element.getText().equals(policySetupPageData.flexPolicySetupPage.customCashoutBenefitName)) {
 				int indexCashout = BusinessFunctions.returnindexItemFromListUsingText(driver,
@@ -666,8 +689,10 @@ public class TransfereeSubmissions_DetailsPage extends Base {
 				CoreFunctions.verifyText(driver, _requestDialogBenefitNameList.get(indexCashout),
 						policySetupPageData.flexPolicySetupPage.customCashoutBenefitName,
 						COREFLEXConstants.SUBMITTED_CASHOUT_NAME);
-//				CoreFunctions.verifyText(driver, _requestDialogAllowanceAmountList.get(indexCashout),
-//						getCashoutAllowanceAmountText(), COREFLEXConstants.SUBMITTED_CASHOUT_ALLOWANCE_AMOUNT);
+				CoreFunctions.verifyTextContains(
+						CoreFunctions.getElementText(driver, _requestDialogAllowanceAmountList.get(indexCashout)),
+						BusinessFunctions.getExpectedCashoutDescriptionWithDecimalPrecesion(),
+						COREFLEXConstants.SUBMITTED_CASHOUT_ALLOWANCE_AMOUNT);
 				CoreFunctions.verifyValue(
 						Double.parseDouble(
 								_requestDialogPointsList.get(indexCashout).getText().replace("pts", "").trim()),
@@ -690,7 +715,7 @@ public class TransfereeSubmissions_DetailsPage extends Base {
 		boolean isBenefitDetailsVerified = false;
 		try {
 			for (Benefit benefit : getBenefits(CoreFunctions.getPropertyFromConfig("CoreFlex_Policy_BenefitType"),
-					CoreFunctions.getPropertyFromConfig("CoreFlex_Policy_RequiredFor"), "0")) {
+					CoreFunctions.getPropertyFromConfig("CoreFlex_Policy_RequiredFor"))) {
 				int index = BusinessFunctions.returnindexItemFromListUsingText(driver, _requestDialogBenefitNameList,
 						benefit.getBenefitDisplayName());
 				if (benefit.getSelectBenefitOnFPTPage() && benefit.getDeleteBenefitOnMBBPage()
@@ -810,7 +835,7 @@ public class TransfereeSubmissions_DetailsPage extends Base {
 			CoreFunctions.writeToPropertiesFile("CF_Transferee_AvailablePoints",
 					String.valueOf(availablePointsAfterDeleteApproval));
 			isDeleteRequestApproved = true;
-			CoreFunctions.writeToPropertiesFile("CF_Transferee_DeletedRequestApproved", "true");						
+			CoreFunctions.writeToPropertiesFile("CF_Transferee_DeletedRequestApproved", "true");
 			CoreFunctions.writeToPropertiesFile("CF_Client_TotalSelectedPoints",
 					String.valueOf(totalPointsSelectedAfterDeleteApproval));
 			return true;
@@ -929,7 +954,7 @@ public class TransfereeSubmissions_DetailsPage extends Base {
 		boolean isBenefitRemovedFromList = false;
 		try {
 			for (Benefit benefit : getBenefits(CoreFunctions.getPropertyFromConfig("CoreFlex_Policy_BenefitType"),
-					CoreFunctions.getPropertyFromConfig("CoreFlex_Policy_RequiredFor"), "0")) {
+					CoreFunctions.getPropertyFromConfig("CoreFlex_Policy_RequiredFor"))) {
 				if (benefit.getSelectBenefitOnFPTPage() && benefit.getDeleteBenefitOnMBBPage()) {
 					int index = BusinessFunctions.returnindexItemFromListUsingText(driver, _submittedBenefitNameList,
 							benefit.getBenefitDisplayName());
@@ -998,7 +1023,7 @@ public class TransfereeSubmissions_DetailsPage extends Base {
 		}
 	}
 
-	private List<Benefit> getBenefits(String policyType, String policyRequiredFor, String numberOfMilestones) {
+	private List<Benefit> getBenefits(String policyType, String policyRequiredFor) {
 		List<Benefit> benefitNameList = new ArrayList<Benefit>();
 		if (policyType.equals(COREFLEXConstants.FLEX) || policyType.equals(COREFLEXConstants.BOTH)) {
 			for (FlexBenefit benefit : flexBenefits) {
@@ -1007,8 +1032,7 @@ public class TransfereeSubmissions_DetailsPage extends Base {
 							&& (ben.getPolicyCreationGroup().contains(policyRequiredFor))) {
 						benefitNameList.add(ben);
 					} else if ((policyRequiredFor.equals(COREFLEXConstants.AIRES_MANAGED_BENEFITS_CARDS))
-							&& (ben.getAiresManagedService().equals("Yes"))
-							&& (ben.getNoOfMilestones() == Integer.parseInt(numberOfMilestones))) {
+							&& (ben.getAiresManagedService().equals("Yes"))) {
 						benefitNameList.add(ben);
 					} else if (((policyRequiredFor.equals(COREFLEXConstants.CLONING))
 							|| (policyRequiredFor.equals(COREFLEXConstants.VERSIONING))
@@ -1091,7 +1115,7 @@ public class TransfereeSubmissions_DetailsPage extends Base {
 		benefitCount = 0;
 		try {
 			for (Benefit benefit : getBenefits(CoreFunctions.getPropertyFromConfig("CoreFlex_Policy_BenefitType"),
-					CoreFunctions.getPropertyFromConfig("CoreFlex_Policy_RequiredFor"), "0")) {
+					CoreFunctions.getPropertyFromConfig("CoreFlex_Policy_RequiredFor"))) {
 				isSubmittedBenefitStatusMatched = verifyBenefitDetails(benefit, MobilityXConstants.CLIENT);
 				if (!isSubmittedBenefitStatusMatched)
 					break;
@@ -1116,6 +1140,119 @@ public class TransfereeSubmissions_DetailsPage extends Base {
 			return true;
 		} else
 			return false;
+	}
+
+	public boolean verifyTransfereeHistorySection(String action) {
+		try {
+			return verifyBenefitDetailsInHistorySection(action) && verifyCashoutDetailInHistorySection(action);
+		} catch (Exception e) {
+			Reporter.addStepLog(MessageFormat.format(
+					COREFLEXConstants.EXCEPTION_OCCURED_WHILE_VERIFYING_DELETE_REQUEST_DETAILS_ON_REQUEST_DIALOG,
+					CoreConstants.FAIL, e.getMessage()));
+		}
+		return false;
+	}
+
+	public boolean verifyBenefitDetailsInHistorySection(String action) {
+		boolean isBenefitHistoryDetailsVerified = false;
+		try {
+			for (Benefit benefit : getBenefits(CoreFunctions.getPropertyFromConfig("CoreFlex_Policy_BenefitType"),
+					CoreFunctions.getPropertyFromConfig("CoreFlex_Policy_RequiredFor"))) {
+				int index = BusinessFunctions.returnindexItemFromListUsingText(driver,
+						_transfereeHistoryBenefitNameList, benefit.getBenefitDisplayName());
+				if (benefit.getSelectBenefitOnFPTPage() && benefit.getDeleteBenefitOnMBBPage()
+						&& (_transfereeHistoryBenefitNameList.get(index).getText())
+								.equals(benefit.getBenefitDisplayName())) {
+					CoreFunctions.verifyText(_transfereeHistoryBenefitNameList.get(index).getText(),
+							benefit.getBenefitDisplayName(),
+							COREFLEXConstants.TRANSFEREE_SUBMISSIONS_HISTORY_BENEFIT_NAME);
+					CoreFunctions.verifyText(_transfereeHistoryAllowanceAmountList.get(index).getText(),
+							benefit.getBenefitAmount(),
+							COREFLEXConstants.TRANSFEREE_SUBMISSIONS_HISTORY_BENEFIT_ALLOWANCE_AMOUNT);
+					CoreFunctions.verifyValue(
+							Double.parseDouble(
+									_transfereeHistoryBenefitPointsList.get(index).getText().replace("pts", "").trim()),
+							(Double.parseDouble(benefit.getPoints()) * benefit.getNumberOfBenefitSelected()),
+							COREFLEXConstants.TRANSFEREE_SUBMISSIONS_HISTORY_BENEFIT_POINTS);
+					CoreFunctions.verifyText(_transfereeHistoryBenefitStatusList.get(index).getText(),
+							action.equalsIgnoreCase(COREFLEXConstants.APPROVED) ? COREFLEXConstants.DELETED
+									: COREFLEXConstants.REQUEST_DENIED,
+							COREFLEXConstants.TRANSFEREE_SUBMISSIONS_HISTORY_DELETE_REQUEST_STATUS);
+					CoreFunctions.verifyText(_transfereeHistoryBenefitQuantityList.get(index).getText(),
+							String.valueOf(benefit.getNumberOfBenefitSelected()),
+							COREFLEXConstants.TRANSFEREE_SUBMISSIONS_HISTORY_BENEFIT_SELECTED_QUANTITY);
+					isBenefitHistoryDetailsVerified = true;
+				} else {
+					continue;
+				}
+			}
+		} catch (Exception e) {
+			Reporter.addStepLog(MessageFormat.format(
+					COREFLEXConstants.EXCEPTION_OCCURED_WHILE_VERIFYING_BENEFIT_DETAILS_DISPLAYED_UNDER_HISTORY_SECTION_ON_TRANSFEREE_SUBMISSIONS_DETAILS_PAGE,
+					CoreConstants.FAIL, e.getMessage()));
+			return false;
+		}
+		if (isBenefitHistoryDetailsVerified) {
+			Reporter.addStepLog(MessageFormat.format(
+					COREFLEXConstants.SUCCESSFULLY_VERIFIED_BENEFIT_DETAILS_DISPLAYED_UNDER_HISTORY_SECTION_ON_TRANSFEREE_SUBMISSIONS_DETAILS_PAGE,
+					CoreConstants.PASS));
+		}
+		return isBenefitHistoryDetailsVerified;
+	}
+
+	private boolean verifyCashoutDetailInHistorySection(String action) {
+		boolean isCashoutHistoryDetailsVerified = false;
+		try {
+			if ((CoreFunctions.getPropertyFromConfig("PolicyCashoutType").equals(MobilityXConstants.PORTION_CASHOUT))
+					|| (CoreFunctions.getPropertyFromConfig("PolicyCashoutType")
+							.equals(MobilityXConstants.AFTER_RELOCATION_ONLY))) {
+				isCashoutHistoryDetailsVerified = iterateHistorySectionListAndVerifyCashout(action);
+			} else if (CoreFunctions.getPropertyFromConfig("PolicyCashoutType")
+					.equals(MobilityXConstants.CASHOUT_NOT_AUTHORIZED)) {
+				return true;
+			} else {
+				return false;
+			}
+
+		} catch (Exception e) {
+			Reporter.addStepLog(MessageFormat.format(
+					COREFLEXConstants.EXCEPTION_OCCURED_WHILE_VERIFYING_CASHOUT_DETAILS_DISPLAYED_UNDER_HISTORY_SECTION_ON_TRANSFEREE_SUBMISSIONS_DETAILS_PAGE,
+					CoreConstants.FAIL, e.getMessage()));
+			return false;
+		}
+		if (isCashoutHistoryDetailsVerified) {
+			Reporter.addStepLog(MessageFormat.format(
+					COREFLEXConstants.SUCCESSFULLY_VERIFIED_CASHOUT_DETAILS_DISPLAYED_UNDER_HISTORY_SECTION_ON_TRANSFEREE_SUBMISSIONS_DETAILS_PAGE,
+					CoreConstants.PASS));
+		}
+		return isCashoutHistoryDetailsVerified;
+	}
+
+	private boolean iterateHistorySectionListAndVerifyCashout(String action) {
+		for (WebElement element : _transfereeHistoryBenefitNameList) {
+			if (element.getText().equals(policySetupPageData.flexPolicySetupPage.customCashoutBenefitName)) {
+				int indexCashout = BusinessFunctions.returnindexItemFromListUsingText(driver,
+						_transfereeHistoryBenefitNameList,
+						policySetupPageData.flexPolicySetupPage.customCashoutBenefitName);
+				CoreFunctions.verifyText(_transfereeHistoryBenefitNameList.get(indexCashout).getText(),
+						policySetupPageData.flexPolicySetupPage.customCashoutBenefitName,
+						COREFLEXConstants.TRANSFEREE_SUBMISSIONS_HISTORY_CASHOUT_NAME);
+				CoreFunctions.verifyTextContains((_transfereeHistoryAllowanceAmountList.get(indexCashout).getText()),
+						BusinessFunctions.getExpectedCashoutDescriptionWithDecimalPrecesion(),
+						COREFLEXConstants.TRANSFEREE_SUBMISSIONS_HISTORY_CASHOUT_DESCRIPTION);
+				CoreFunctions.verifyValue(
+						Double.parseDouble(_transfereeHistoryBenefitPointsList.get(indexCashout).getText()
+								.replace("pts", "").trim()),
+						Double.parseDouble(CoreFunctions.getPropertyFromConfig("CF_Transferee_SelectedCashOutPoints")),
+						COREFLEXConstants.TRANSFEREE_SUBMISSIONS_HISTORY_CASHOUT_POINTS);
+				CoreFunctions.verifyText(_transfereeHistoryBenefitStatusList.get(indexCashout).getText(),
+						action.equalsIgnoreCase(COREFLEXConstants.APPROVED) ? COREFLEXConstants.DELETED
+								: COREFLEXConstants.REQUEST_DENIED,
+						COREFLEXConstants.TRANSFEREE_SUBMISSIONS_HISTORY_DELETE_REQUEST_STATUS);
+				return true;
+			}
+		}
+		return false;
 	}
 
 }

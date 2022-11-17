@@ -1,6 +1,7 @@
 package com.aires.pages.pdt;
 
 import java.text.MessageFormat;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
@@ -67,12 +68,22 @@ public class PDT_PolicyBenefitCategoryPage extends Base {
 	long timeBeforeAction, timeAfterAction;
 	String policyBenefitCategoryName;
 	
+	private ArrayList<String> selectedBenefitCategories = new ArrayList<String>();
+	
 	public void setBenefitCategoryName(String categoryName) {
 		policyBenefitCategoryName = categoryName;
 	}
 	
 	public String getBenefitCategoryName() {
 		return policyBenefitCategoryName; 
+	}
+	
+	public void waitForProgressBarToDisappear() {
+		try {
+				BusinessFunctions.fluentWaitForSpinnerToDisappear(driver, _progressBar);			
+		} catch(Exception e) {
+			Assert.fail(MessageFormat.format(PDTConstants.FAIL_TO_WAIT_PROGRESS_BAR, CoreConstants.FAIL));
+		}
 	}
 
 	public String getElementText(String elementName) {
@@ -97,6 +108,7 @@ public class PDT_PolicyBenefitCategoryPage extends Base {
 	}
 
 	public boolean verifyPolicyBenefitCategoryHeading(String pageName) {
+		waitForProgressBarToDisappear();
 		return CoreFunctions.verifyElementOnPage(driver, _headingPolicyBenefitCategory, PDTConstants.heading,
 				PDTConstants.POLICY_BENEFIT_CATEGORIES, pageName, true);
 	}
@@ -112,9 +124,8 @@ public class PDT_PolicyBenefitCategoryPage extends Base {
 
 	public void selectPolicyBenefitCategory(String benefitCategoryName) {
 		CoreFunctions.selectItemInListByText(driver, _lblChkBoxPolicyBenefitCategory, benefitCategoryName, true);
-		if(verifyIsPolicyBenefitCategoryChecked(benefitCategoryName)) {
+		if(verifyIsPolicyBenefitCategoryChecked(benefitCategoryName))
 			setBenefitCategoryName(benefitCategoryName);
-		}
 		timeBeforeAction = new Date().getTime();
 		CoreFunctions.clickUsingJS(driver, _btnNext, _btnNext.getText());
 		BusinessFunctions.fluentWaitForSpinnerToDisappear(driver, _progressBar);
@@ -134,7 +145,7 @@ public class PDT_PolicyBenefitCategoryPage extends Base {
 	
 	public boolean verifyIsPolicyBenefitCategoryChecked(String benefitCategoryName) {
 		int index = BusinessFunctions.returnindexItemFromListUsingText(driver, _lblChkBoxPolicyBenefitCategory, benefitCategoryName);		
-		Log.info("DomProperty=="+_inputBenefitCategory.get(index).getDomProperty("checked"));
+		//For debugging purpose Log.info("DomProperty=="+_inputBenefitCategory.get(index).getDomProperty("checked"));
 		if(_inputBenefitCategory.get(index).getAttribute("checked").equalsIgnoreCase("true")) {
 			Reporter.addStepLog(MessageFormat.format(PDTConstants.VERIFIED_BENEFIT_CATEGORY_IS_SELECTED, CoreConstants.PASS, benefitCategoryName));
 			return true;
@@ -148,5 +159,23 @@ public class PDT_PolicyBenefitCategoryPage extends Base {
 		BusinessFunctions.fluentWaitForSpinnerToDisappear(driver, _progressBar);
 		timeAfterAction = new Date().getTime();
 		BusinessFunctions.printTimeTakenByPageToLoad(timeBeforeAction, timeAfterAction, benefitCategoryName);
+	}	
+	
+	public void iterateBenefitList(List<String> benefits) {
+		for (String benefitName : benefits) {
+			CoreFunctions.selectItemInListByText(driver, _lblChkBoxPolicyBenefitCategory, benefitName, true);
+			if(verifyIsPolicyBenefitCategoryChecked(benefitName)) {
+				selectedBenefitCategories.add(benefitName);				
+			}
+		}
+		timeBeforeAction = new Date().getTime();
+		CoreFunctions.clickUsingJS(driver, _btnNext, _btnNext.getText());
+		waitForProgressBarToDisappear();
+		timeAfterAction = new Date().getTime();
+		BusinessFunctions.printTimeTakenByPageToLoad(timeBeforeAction, timeAfterAction, selectedBenefitCategories.get(1));
+	}
+	
+	public ArrayList<String> getSelectedCategoriesName(){
+		return selectedBenefitCategories;
 	}
 }

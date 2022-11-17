@@ -2,17 +2,18 @@ package com.aires.pages.pdt;
 
 import java.text.MessageFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 
+import org.openqa.selenium.NoSuchElementException;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.How;
 import org.testng.Assert;
 
-import com.aires.businessrules.Base;
 import com.aires.businessrules.BusinessFunctions;
 import com.aires.businessrules.CoreFunctions;
 import com.aires.businessrules.constants.CoreConstants;
@@ -21,7 +22,9 @@ import com.aires.managers.FileReaderManager;
 import com.aires.testdatatypes.pdt.PDT_HouseHoldGoodsBenefit;
 import com.vimalselvam.cucumber.listener.Reporter;
 
-public class PDT_HouseHoldGoodsPage extends Base {
+import stepDefinitions.pdt.PDT_SharedSubBenefit_Steps;
+
+public class PDT_HouseHoldGoodsPage extends PDT_SharedSubBenefitPage {
 	public PDT_HouseHoldGoodsPage(WebDriver driver) {
 		super(driver);
 	}
@@ -427,6 +430,39 @@ public class PDT_HouseHoldGoodsPage extends Base {
 	
 	@FindBy(how = How.CSS, using = "app-permanant-storage input[type='number']")
 	private List<WebElement> _txtBoxPermStorageWtVolContainer;
+	
+	@FindBy(how = How.CSS, using = "div.ngx-progress-bar.ngx-progress-bar-ltr")
+	private WebElement _progressBar;
+	
+	@FindBy(how = How.CSS, using = "a[href='#collapseOne1']")
+	private WebElement _formHeaderUSDomVanlineShipment;
+	
+	@FindBy(how = How.CSS, using = "a[href='#collapseTwo']")
+	private WebElement _formHeaderAutoShipment;
+
+	@FindBy(how = How.CSS, using = "a[href='#collapseThree']")
+	private WebElement _formHeaderSelfMove;
+
+	@FindBy(how = How.CSS, using = "a[href='#collapseFour']")
+	private WebElement _formHeaderAirShipment;
+
+	@FindBy(how = How.CSS, using = "a[href='#collapseFive']")
+	private WebElement _formHeaderSeaShipment;
+
+	@FindBy(how = How.CSS, using = "a[href='#collapseSix']")
+	private WebElement _formHeaderNonUsInlandShipment;
+
+	@FindBy(how = How.CSS, using = "a[href='#collapseSeven']")
+	private WebElement _formHeaderPermanentStorage;
+	
+	@FindBy(how = How.CSS, using = "a[href='#collapseEight']")
+	private WebElement _formHeaderPetShipment;
+
+	@FindBy(how = How.CSS, using = "a[href='#collapseNine']")
+	private WebElement _formHeaderDiscardDonate;
+	
+	@FindBy(how = How.CSS, using = "div.form-check > label.form-check-label")
+	private List<WebElement> _subBenefitCategories;
 
 	LinkedHashMap<WebElement, String> seaWeightVolTxtBoxFieldsMap = new LinkedHashMap<WebElement, String>();
 	LinkedHashMap<WebElement, String> airWeightVolTxtBoxFieldsMap = new LinkedHashMap<WebElement, String>();
@@ -465,6 +501,19 @@ public class PDT_HouseHoldGoodsPage extends Base {
 	public String getContSizeTransfereeFamily() {
 		return contSizeTransfereeFamily;
 	}
+	
+	public void populateSubBenefitHeaderMap() {
+		subBenefitHeaderMap.put(PDTConstants.US_DOM_VANLINE_SHIPMENT, _formHeaderUSDomVanlineShipment);
+		subBenefitHeaderMap.put(PDTConstants.AUTO_SHIPMENT, _formHeaderAutoShipment);
+		subBenefitHeaderMap.put(PDTConstants.SELF_MOVE, _formHeaderSelfMove);
+		subBenefitHeaderMap.put(PDTConstants.AIR_SHIPMENT, _formHeaderAirShipment);
+		subBenefitHeaderMap.put(PDTConstants.SEA_SHIPMENT, _formHeaderSeaShipment);
+		subBenefitHeaderMap.put(PDTConstants.NONUS_INLAND_SHIPMENT, _formHeaderNonUsInlandShipment);
+		subBenefitHeaderMap.put(PDTConstants.PERMANENT_STORAGE, _formHeaderPermanentStorage);
+		subBenefitHeaderMap.put(PDTConstants.PET_SHIPMENT, _formHeaderPetShipment);
+		subBenefitHeaderMap.put(PDTConstants.DISCARD_DONATE, _formHeaderDiscardDonate);
+	}
+
 
 	public void populateAirShipHashMap() {
 		airWeightVolTxtBoxFieldsMap.put(_txtBoxAirShipWeightCap, PDTConstants.WEIGHT_CAP);
@@ -559,8 +608,14 @@ public class PDT_HouseHoldGoodsPage extends Base {
 			Assert.fail(MessageFormat.format(PDTConstants.WT_VOL_FIELDS_NOT_HIDDEN, CoreConstants.FAIL, subBenefitFormName));
 	}
 
-	public void fillUSDomesticForm(PDT_AddNewPolicyPage addNewPolicyPage, String subBenefitFormName) {
+	public void fillUSDomesticForm(PDT_AddNewPolicyPage addNewPolicyPage, String subBenefitFormName, String pageName) {
 		try {
+			populateSubBenefitHeaderMap();
+			Assert.assertTrue(BusinessFunctions.verifySubBenefitFormHeaderIsDisplayed(driver, subBenefitHeaderMap.get(subBenefitFormName), subBenefitFormName, pageName),
+					MessageFormat.format(PDTConstants.VERIFIED_FORM_IS_NOT_DISPLAYED, subBenefitFormName, pageName));
+			BusinessFunctions.expandSubBenefitIfCollapsed(subBenefitHeaderMap.get(subBenefitFormName), subBenefitFormName, driver);
+			if (CoreFunctions.isElementExist(driver, _progressBar, 3))
+				BusinessFunctions.fluentWaitForSpinnerToDisappear(driver, _progressBar);
 			CoreFunctions.explicitWaitTillElementVisibility(driver, _chkBoxNoWeighCostCap,
 					_chkBoxNoWeighCostCap.getText());
 			// Check the checkbox to hide the fields
@@ -589,7 +644,7 @@ public class PDT_HouseHoldGoodsPage extends Base {
 			CoreFunctions.selectItemInListByText(driver, _radioBtnInsuranceType,
 					houseHoldGoodsBenefitData.usDomesticVanlineShipment.insuranceType, PDTConstants.INSURANCE_TYPE,
 					PDTConstants.RADIO_BUTTON_LIST, true);
-			BusinessFunctions.verifyOtherTextBoxIsDisplayed(driver, addNewPolicyPage,
+			BusinessFunctions.verifyOtherTextBoxIsDisplayed(driver,
 					houseHoldGoodsBenefitData.usDomesticVanlineShipment.insuranceType,
 					_txtBoxInsuranceTypeOtherUsDomestic,
 					houseHoldGoodsBenefitData.usDomesticVanlineShipment.otherInsuranceType, subBenefitFormName,
@@ -602,7 +657,7 @@ public class PDT_HouseHoldGoodsPage extends Base {
 					houseHoldGoodsBenefitData.usDomesticVanlineShipment.reimbursedBy, PDTConstants.REIMBURSED_BY,
 					PDTConstants.RADIO_BUTTON_LIST, true);
 
-			BusinessFunctions.verifyOtherTextBoxIsDisplayed(driver, addNewPolicyPage,
+			BusinessFunctions.verifyOtherTextBoxIsDisplayed(driver,
 					houseHoldGoodsBenefitData.usDomesticVanlineShipment.reimbursedBy, _txtBoxReimbursedByOtherVanline,
 					houseHoldGoodsBenefitData.usDomesticVanlineShipment.reimbursedByOther, subBenefitFormName,
 					PDTConstants.REIMBURSED_BY_OTHER);
@@ -614,8 +669,12 @@ public class PDT_HouseHoldGoodsPage extends Base {
 		}
 	}
 
-	public void fillAutoShipmentForm(PDT_AddNewPolicyPage addNewPolicyPage, String subBenefitFormName) {
+	public void fillAutoShipmentForm(PDT_AddNewPolicyPage addNewPolicyPage, String subBenefitFormName, String pageName) {
 		try {
+			populateSubBenefitHeaderMap();
+			Assert.assertTrue(BusinessFunctions.verifySubBenefitFormHeaderIsDisplayed(driver, subBenefitHeaderMap.get(subBenefitFormName), subBenefitFormName, pageName),
+					MessageFormat.format(PDTConstants.VERIFIED_FORM_IS_NOT_DISPLAYED, subBenefitFormName, pageName));
+			BusinessFunctions.expandSubBenefitIfCollapsed(subBenefitHeaderMap.get(subBenefitFormName), subBenefitFormName, driver);
 			CoreFunctions.explicitWaitTillElementVisibility(driver, _txtBoxMaxNumOfAutos,
 					_txtBoxMaxNumOfAutos.getText());
 			CoreFunctions.clearAndSetText(driver, _txtBoxMaxNumOfAutos, _lblMaxNumOfAutos.getText(),
@@ -623,7 +682,7 @@ public class PDT_HouseHoldGoodsPage extends Base {
 			CoreFunctions.selectItemInListByText(driver, _radioBtnInsuranceTypeForAutoShipment,
 					houseHoldGoodsBenefitData.autoShipment.insuranceType, PDTConstants.INSURANCE_TYPE,
 					PDTConstants.RADIO_BUTTON_LIST, true);
-			BusinessFunctions.verifyOtherTextBoxIsDisplayed(driver, addNewPolicyPage,
+			BusinessFunctions.verifyOtherTextBoxIsDisplayed(driver,
 					houseHoldGoodsBenefitData.autoShipment.insuranceType, _txtBoxInsuranceTypeOther,
 					houseHoldGoodsBenefitData.autoShipment.otherInsuranceType, subBenefitFormName,
 					PDTConstants.OTHER_INSURANCE_TYPE);
@@ -638,7 +697,7 @@ public class PDT_HouseHoldGoodsPage extends Base {
 					houseHoldGoodsBenefitData.autoShipment.reimbursedBy, PDTConstants.REIMBURSED_BY,
 					PDTConstants.RADIO_BUTTON_LIST, true);
 
-			BusinessFunctions.verifyOtherTextBoxIsDisplayed(driver, addNewPolicyPage,
+			BusinessFunctions.verifyOtherTextBoxIsDisplayed(driver,
 					houseHoldGoodsBenefitData.autoShipment.reimbursedBy, _txtBoxReimbursedByOther,
 					houseHoldGoodsBenefitData.autoShipment.reimbursedByOther, subBenefitFormName,
 					PDTConstants.REIMBURSED_BY_OTHER);
@@ -651,8 +710,12 @@ public class PDT_HouseHoldGoodsPage extends Base {
 		}
 	}
 
-	public void fillSelfMoveForm(PDT_AddNewPolicyPage addNewPolicyPage, String subBenefitFormName) {
+	public void fillSelfMoveForm(PDT_AddNewPolicyPage addNewPolicyPage, String subBenefitFormName, String pageName) {
 		try {
+			populateSubBenefitHeaderMap();
+			Assert.assertTrue(BusinessFunctions.verifySubBenefitFormHeaderIsDisplayed(driver, subBenefitHeaderMap.get(subBenefitFormName), subBenefitFormName, pageName),
+					MessageFormat.format(PDTConstants.VERIFIED_FORM_IS_NOT_DISPLAYED, subBenefitFormName, pageName));
+			BusinessFunctions.expandSubBenefitIfCollapsed(subBenefitHeaderMap.get(subBenefitFormName), subBenefitFormName, driver);
 			CoreFunctions.explicitWaitTillElementVisibility(driver, _txtBoxMaxAmount, PDTConstants.MAX_AMOUNT);
 			CoreFunctions.clearAndSetText(driver, _txtBoxMaxAmount, PDTConstants.MAX_AMOUNT,
 					houseHoldGoodsBenefitData.selfMove.maxAmount);
@@ -668,7 +731,7 @@ public class PDT_HouseHoldGoodsPage extends Base {
 					houseHoldGoodsBenefitData.selfMove.reimbursedBy, PDTConstants.REIMBURSED_BY,
 					PDTConstants.RADIO_BUTTON_LIST, true);
 
-			BusinessFunctions.verifyOtherTextBoxIsDisplayed(driver, addNewPolicyPage,
+			BusinessFunctions.verifyOtherTextBoxIsDisplayed(driver,
 					houseHoldGoodsBenefitData.selfMove.reimbursedBy, _txtBoxReimbursedByOtherSelfMove,
 					houseHoldGoodsBenefitData.selfMove.reimbursedByOther, subBenefitFormName,
 					PDTConstants.REIMBURSED_BY_OTHER);
@@ -681,9 +744,12 @@ public class PDT_HouseHoldGoodsPage extends Base {
 		}
 	}
 
-	public void fillAirShipmentForm(PDT_AddNewPolicyPage addNewPolicyPage, String subBenefitFormName) {
+	public void fillAirShipmentForm(PDT_AddNewPolicyPage addNewPolicyPage, String subBenefitFormName, String pageName) {
 		try {
-			
+			populateSubBenefitHeaderMap();
+			Assert.assertTrue(BusinessFunctions.verifySubBenefitFormHeaderIsDisplayed(driver, subBenefitHeaderMap.get(subBenefitFormName), subBenefitFormName, pageName),
+					MessageFormat.format(PDTConstants.VERIFIED_FORM_IS_NOT_DISPLAYED, subBenefitFormName, pageName));
+			BusinessFunctions.expandSubBenefitIfCollapsed(subBenefitHeaderMap.get(subBenefitFormName), subBenefitFormName, driver);
 			CoreFunctions.explicitWaitTillElementVisibility(driver, _chkBoxAirShipWeighVolCap,
 					_chkBoxAirShipWeighVolCap.getText());
 			populateAirShipHashMap();
@@ -730,7 +796,7 @@ public class PDT_HouseHoldGoodsPage extends Base {
 			CoreFunctions.selectItemInListByText(driver, _radioBtnAirInsuranceType,
 					houseHoldGoodsBenefitData.airShipment.insuranceType, PDTConstants.INSURANCE_TYPE,
 					PDTConstants.RADIO_BUTTON_LIST, true);
-			BusinessFunctions.verifyOtherTextBoxIsDisplayed(driver, addNewPolicyPage,
+			BusinessFunctions.verifyOtherTextBoxIsDisplayed(driver,
 					houseHoldGoodsBenefitData.airShipment.insuranceType, _txtBoxAirInsTypeOther,
 					houseHoldGoodsBenefitData.airShipment.otherInsuranceType, subBenefitFormName,
 					PDTConstants.OTHER_INSURANCE_TYPE);
@@ -742,7 +808,7 @@ public class PDT_HouseHoldGoodsPage extends Base {
 					houseHoldGoodsBenefitData.airShipment.reimbursedBy, PDTConstants.REIMBURSED_BY,
 					PDTConstants.RADIO_BUTTON_LIST, true);
 
-			BusinessFunctions.verifyOtherTextBoxIsDisplayed(driver, addNewPolicyPage,
+			BusinessFunctions.verifyOtherTextBoxIsDisplayed(driver,
 					houseHoldGoodsBenefitData.airShipment.reimbursedBy, _txtBoxAirReimbursedByOther,
 					houseHoldGoodsBenefitData.airShipment.reimbursedByOther, subBenefitFormName,
 					PDTConstants.REIMBURSED_BY_OTHER);
@@ -755,8 +821,13 @@ public class PDT_HouseHoldGoodsPage extends Base {
 		}
 	}
 
-	public void fillSeaShipmentForm(PDT_AddNewPolicyPage addNewPolicyPage, String subBenefitFormName) {
+	public void fillSeaShipmentForm(PDT_AddNewPolicyPage addNewPolicyPage, String subBenefitFormName, String pageName) {
 		try {
+			populateSubBenefitHeaderMap();
+			Assert.assertTrue(BusinessFunctions.verifySubBenefitFormHeaderIsDisplayed(driver, subBenefitHeaderMap.get(subBenefitFormName), subBenefitFormName, pageName),
+					MessageFormat.format(PDTConstants.VERIFIED_FORM_IS_NOT_DISPLAYED, subBenefitFormName, pageName));
+			BusinessFunctions.expandSubBenefitIfCollapsed(subBenefitHeaderMap.get(subBenefitFormName), subBenefitFormName, driver);
+			
 			CoreFunctions.explicitWaitTillElementVisibility(driver, _chkBoxSeaShipWeighVolCap,
 					_chkBoxSeaShipWeighVolCap.getText());
 
@@ -797,7 +868,7 @@ public class PDT_HouseHoldGoodsPage extends Base {
 			CoreFunctions.selectItemInListByText(driver, _radioBtnSeaInsuranceType,
 					houseHoldGoodsBenefitData.seaShipment.insuranceType, PDTConstants.INSURANCE_TYPE,
 					PDTConstants.RADIO_BUTTON_LIST, true);
-			BusinessFunctions.verifyOtherTextBoxIsDisplayed(driver, addNewPolicyPage,
+			BusinessFunctions.verifyOtherTextBoxIsDisplayed(driver,
 					houseHoldGoodsBenefitData.seaShipment.insuranceType, _txtBoxSeaInsuranceTypeOther,
 					houseHoldGoodsBenefitData.seaShipment.otherInsuranceType, subBenefitFormName,
 					PDTConstants.OTHER_INSURANCE_TYPE);
@@ -809,7 +880,7 @@ public class PDT_HouseHoldGoodsPage extends Base {
 					houseHoldGoodsBenefitData.seaShipment.reimbursedBy, PDTConstants.REIMBURSED_BY,
 					PDTConstants.RADIO_BUTTON_LIST, true);
 
-			BusinessFunctions.verifyOtherTextBoxIsDisplayed(driver, addNewPolicyPage,
+			BusinessFunctions.verifyOtherTextBoxIsDisplayed(driver,
 					houseHoldGoodsBenefitData.seaShipment.reimbursedBy, _txtBoxSeaReimbursedByOther,
 					houseHoldGoodsBenefitData.seaShipment.reimbursedByOther, subBenefitFormName,
 					PDTConstants.REIMBURSED_BY_OTHER);
@@ -821,8 +892,12 @@ public class PDT_HouseHoldGoodsPage extends Base {
 		}
 	}
 
-	public void fillNonUsInlandShipmentForm(PDT_AddNewPolicyPage addNewPolicyPage, String subBenefitFormName) {
+	public void fillNonUsInlandShipmentForm(PDT_AddNewPolicyPage addNewPolicyPage, String subBenefitFormName, String pageName) {
 		try {
+			populateSubBenefitHeaderMap();
+			Assert.assertTrue(BusinessFunctions.verifySubBenefitFormHeaderIsDisplayed(driver, subBenefitHeaderMap.get(subBenefitFormName), subBenefitFormName, pageName),
+					MessageFormat.format(PDTConstants.VERIFIED_FORM_IS_NOT_DISPLAYED, subBenefitFormName, pageName));
+			BusinessFunctions.expandSubBenefitIfCollapsed(subBenefitHeaderMap.get(subBenefitFormName), subBenefitFormName, driver);
 			CoreFunctions.explicitWaitTillElementVisibility(driver, _chkBoxNoNonUsWeighVolCap,
 					_chkBoxNoNonUsWeighVolCap.getText());
 
@@ -850,7 +925,7 @@ public class PDT_HouseHoldGoodsPage extends Base {
 			CoreFunctions.selectItemInListByText(driver, _radioBtnNonusInsuranceType,
 					houseHoldGoodsBenefitData.nonUsInlandShipment.insuranceType, PDTConstants.INSURANCE_TYPE,
 					PDTConstants.RADIO_BUTTON_LIST, true);
-			BusinessFunctions.verifyOtherTextBoxIsDisplayed(driver, addNewPolicyPage,
+			BusinessFunctions.verifyOtherTextBoxIsDisplayed(driver,
 					houseHoldGoodsBenefitData.nonUsInlandShipment.insuranceType, _txtBoxNonUsInsuranceTypeOther,
 					houseHoldGoodsBenefitData.nonUsInlandShipment.insuranceType, subBenefitFormName,
 					PDTConstants.OTHER_INSURANCE_TYPE);
@@ -862,7 +937,7 @@ public class PDT_HouseHoldGoodsPage extends Base {
 					houseHoldGoodsBenefitData.nonUsInlandShipment.reimbursedBy, PDTConstants.REIMBURSED_BY,
 					PDTConstants.RADIO_BUTTON_LIST, true);
 
-			BusinessFunctions.verifyOtherTextBoxIsDisplayed(driver, addNewPolicyPage,
+			BusinessFunctions.verifyOtherTextBoxIsDisplayed(driver,
 					houseHoldGoodsBenefitData.nonUsInlandShipment.reimbursedBy, _txtBoxNonUsReimbursedByOther,
 					houseHoldGoodsBenefitData.nonUsInlandShipment.reimbursedByOther, subBenefitFormName,
 					PDTConstants.REIMBURSED_BY_OTHER);
@@ -874,8 +949,13 @@ public class PDT_HouseHoldGoodsPage extends Base {
 		}
 	}
 
-	public void fillPermanentStorageForm(PDT_AddNewPolicyPage addNewPolicyPage, String subBenefitFormName) {
+	public void fillPermanentStorageForm(PDT_AddNewPolicyPage addNewPolicyPage, String subBenefitFormName, String pageName) {
 		try {
+			populateSubBenefitHeaderMap();
+			Assert.assertTrue(BusinessFunctions.verifySubBenefitFormHeaderIsDisplayed(driver, subBenefitHeaderMap.get(subBenefitFormName), subBenefitFormName, pageName),
+					MessageFormat.format(PDTConstants.VERIFIED_FORM_IS_NOT_DISPLAYED, subBenefitFormName, pageName));
+			BusinessFunctions.expandSubBenefitIfCollapsed(subBenefitHeaderMap.get(subBenefitFormName), subBenefitFormName, driver);
+			
 			CoreFunctions.explicitWaitTillElementVisibility(driver, _chkBoxNoWeighVolCap,
 					_chkBoxNoWeighVolCap.getText());
 			
@@ -901,7 +981,7 @@ public class PDT_HouseHoldGoodsPage extends Base {
 			CoreFunctions.selectItemInListByText(driver, _radioBtnPermInsuranceType,
 					houseHoldGoodsBenefitData.permStorage.insuranceType, PDTConstants.INSURANCE_TYPE,
 					PDTConstants.RADIO_BUTTON_LIST, true);
-			BusinessFunctions.verifyOtherTextBoxIsDisplayed(driver, addNewPolicyPage, houseHoldGoodsBenefitData.permStorage.insuranceType, _txtBoxPermInsuranceTypeOther,
+			BusinessFunctions.verifyOtherTextBoxIsDisplayed(driver, houseHoldGoodsBenefitData.permStorage.insuranceType, _txtBoxPermInsuranceTypeOther,
 					houseHoldGoodsBenefitData.permStorage.otherInsuranceType, subBenefitFormName, PDTConstants.OTHER_INSURANCE_TYPE);
 			CoreFunctions.explicitWaitTillElementListClickable(driver, _radioBtnGrossUpPermStorage);
 			CoreFunctions.selectItemInListByText(driver, _radioBtnGrossUpPermStorage,
@@ -911,7 +991,7 @@ public class PDT_HouseHoldGoodsPage extends Base {
 					houseHoldGoodsBenefitData.permStorage.reimbursedBy, PDTConstants.REIMBURSED_BY,
 					PDTConstants.RADIO_BUTTON_LIST, true);
 
-			BusinessFunctions.verifyOtherTextBoxIsDisplayed(driver, addNewPolicyPage,
+			BusinessFunctions.verifyOtherTextBoxIsDisplayed(driver,
 					houseHoldGoodsBenefitData.permStorage.reimbursedBy, _txtBoxReimbursedByOtherPermStorage,
 					houseHoldGoodsBenefitData.permStorage.reimbursedByOther, subBenefitFormName,
 					PDTConstants.REIMBURSED_BY_OTHER);
@@ -923,8 +1003,12 @@ public class PDT_HouseHoldGoodsPage extends Base {
 		}
 	}
 
-	public void fillPetShipmentForm(PDT_AddNewPolicyPage addNewPolicyPage, String subBenefitFormName) {
+	public void fillPetShipmentForm(PDT_AddNewPolicyPage addNewPolicyPage, String subBenefitFormName, String pageName) {
 		try {
+			populateSubBenefitHeaderMap();
+			Assert.assertTrue(BusinessFunctions.verifySubBenefitFormHeaderIsDisplayed(driver, subBenefitHeaderMap.get(subBenefitFormName), subBenefitFormName, pageName),
+					MessageFormat.format(PDTConstants.VERIFIED_FORM_IS_NOT_DISPLAYED, subBenefitFormName, pageName));
+			BusinessFunctions.expandSubBenefitIfCollapsed(subBenefitHeaderMap.get(subBenefitFormName), subBenefitFormName, driver);
 			CoreFunctions.explicitWaitTillElementVisibility(driver, _txtBoxNumOfPets, _lblNumOfPets.getText());
 			CoreFunctions.clearAndSetText(driver, _txtBoxNumOfPets, _lblNumOfPets.getText(),
 					houseHoldGoodsBenefitData.petShipment.numberOfPets);
@@ -944,7 +1028,7 @@ public class PDT_HouseHoldGoodsPage extends Base {
 					houseHoldGoodsBenefitData.petShipment.reimbursedBy, PDTConstants.REIMBURSED_BY,
 					PDTConstants.RADIO_BUTTON_LIST, true);
 
-			BusinessFunctions.verifyOtherTextBoxIsDisplayed(driver, addNewPolicyPage,
+			BusinessFunctions.verifyOtherTextBoxIsDisplayed(driver,
 					houseHoldGoodsBenefitData.petShipment.reimbursedBy, _txtBoxReimbursedByOtherPetShipment,
 					houseHoldGoodsBenefitData.petShipment.reimbursedByOther, subBenefitFormName,
 					PDTConstants.REIMBURSED_BY_OTHER);
@@ -957,8 +1041,12 @@ public class PDT_HouseHoldGoodsPage extends Base {
 		}
 	}
 
-	public void fillDiscardDonateForm(PDT_AddNewPolicyPage addNewPolicyPage, String subBenefitFormName) {
+	public void fillDiscardDonateForm(PDT_AddNewPolicyPage addNewPolicyPage, String subBenefitFormName, String pageName) {
 		try {
+			populateSubBenefitHeaderMap();
+			Assert.assertTrue(BusinessFunctions.verifySubBenefitFormHeaderIsDisplayed(driver, subBenefitHeaderMap.get(subBenefitFormName), subBenefitFormName, pageName),
+					MessageFormat.format(PDTConstants.VERIFIED_FORM_IS_NOT_DISPLAYED, subBenefitFormName, pageName));
+			BusinessFunctions.expandSubBenefitIfCollapsed(subBenefitHeaderMap.get(subBenefitFormName), subBenefitFormName, driver);
 			CoreFunctions.explicitWaitTillElementListVisibility(driver, _radioBtnGrossUpDiscardDonate);
 			//CoreFunctions.explicitWaitTillElementListClickable(driver, _radioBtnGrossUpDiscardDonate);
 			CoreFunctions.selectItemInListByText(driver, _radioBtnGrossUpDiscardDonate,
@@ -968,7 +1056,7 @@ public class PDT_HouseHoldGoodsPage extends Base {
 					houseHoldGoodsBenefitData.discardDonate.reimbursedBy, PDTConstants.REIMBURSED_BY,
 					PDTConstants.RADIO_BUTTON_LIST, true);
 
-			BusinessFunctions.verifyOtherTextBoxIsDisplayed(driver, addNewPolicyPage,
+			BusinessFunctions.verifyOtherTextBoxIsDisplayed(driver,
 					houseHoldGoodsBenefitData.discardDonate.reimbursedBy, _txtBoxReimbursedByOtherDiscardDonate,
 					houseHoldGoodsBenefitData.discardDonate.reimbursedByOther, subBenefitFormName,
 					PDTConstants.REIMBURSED_BY_OTHER);
@@ -979,6 +1067,73 @@ public class PDT_HouseHoldGoodsPage extends Base {
 			e.printStackTrace();
 			Assert.fail(MessageFormat.format(PDTConstants.EXCEPTION_OCCURED_FILL_SUBBENEFIT_FORM, CoreConstants.FAIL,
 					subBenefitFormName));
+		}
+	}
+	
+	public void fillHouseHoldGoodsSubBenefit(String subBenefit, String pageName, PDT_AddNewPolicyPage addNewPolicyPage, PDT_SharedSubBenefitPage subBenefitPage) {		
+		switch (subBenefit) {
+		case PDTConstants.US_DOM_VANLINE_SHIPMENT:
+			fillUSDomesticForm(addNewPolicyPage, subBenefit, pageName);
+			break;
+		case PDTConstants.AUTO_SHIPMENT:
+			fillAutoShipmentForm(addNewPolicyPage, subBenefit, pageName);
+			break;
+		case PDTConstants.SELF_MOVE:
+			fillSelfMoveForm(addNewPolicyPage, subBenefit, pageName);
+			break;
+		case PDTConstants.AIR_SHIPMENT:
+			fillAirShipmentForm(addNewPolicyPage, subBenefit, pageName);
+			break;
+		case PDTConstants.SEA_SHIPMENT:
+			fillSeaShipmentForm(addNewPolicyPage, subBenefit, pageName);
+			break;
+		case PDTConstants.NONUS_INLAND_SHIPMENT:
+			fillNonUsInlandShipmentForm(addNewPolicyPage, subBenefit, pageName);
+			break;
+		case PDTConstants.PERMANENT_STORAGE:
+			fillPermanentStorageForm(addNewPolicyPage, subBenefit, pageName);
+			break;
+		case PDTConstants.PET_SHIPMENT:
+			fillPetShipmentForm(addNewPolicyPage, subBenefit, pageName);
+			break;
+		case PDTConstants.DISCARD_DONATE:
+			fillDiscardDonateForm(addNewPolicyPage,	subBenefit, pageName);
+			break;
+		default:
+			Assert.fail(MessageFormat.format(PDTConstants.SUBBENEFIT_NOT_FOUND, CoreConstants.FAIL, subBenefit, pageName));
+		}		
+	}
+	
+	/**
+	 * Iterate House Hold Goods sub-benefits and fill their corresponding form.
+	 * @param pageName
+	 * @param subBenefits
+	 * @param addNewPolicyPage
+	 * @param objStep
+	 * @param btnName
+	 * @param subBenefitPage 
+	 */
+	public void iterateAndFillHouseHoldGoodsSubBenefits(String pageName, List<String> subBenefits,
+			PDT_AddNewPolicyPage addNewPolicyPage, PDT_SharedSubBenefit_Steps objStep, String btnName, PDT_SharedSubBenefitPage subBenefitPage) {
+		CoreFunctions.explicitWaitTillElementListClickable(driver, _subBenefitCategories);			
+		populateBtnMap();
+		populateConfirmDialogbuttonMap();
+		WebElement btnToClick = (btnName != null) ?  buttonMap.get(btnName) : buttonMap.get(PDTConstants.SAVE);
+		for (String subBenefit : subBenefits) {
+			CoreFunctions.selectItemInListByText(driver, _subBenefitCategories, subBenefit, true);
+			timeBeforeAction = new Date().getTime();
+			BusinessFunctions.fluentWaitForSpinnerToDisappear(driver, _progressBar);
+			timeAfterAction = new Date().getTime();
+			BusinessFunctions.printTimeTakenByPageToLoad(timeBeforeAction, timeAfterAction, pageName, subBenefit);
+			fillHouseHoldGoodsSubBenefit(subBenefit, pageName, addNewPolicyPage, subBenefitPage);
+		}
+		try {
+			CoreFunctions.click(driver, btnToClick, btnToClick.getText());
+		} catch (NoSuchElementException e) {
+			Assert.fail(MessageFormat.format(PDTConstants.MISSING_BTN, CoreConstants.FAIL, btnName));
+		} catch (Exception e) {
+			e.printStackTrace();
+			Assert.fail(MessageFormat.format(PDTConstants.FAILED_TO_CLICK_ON_BTN, CoreConstants.FAIL, btnName));
 		}
 	}
 }

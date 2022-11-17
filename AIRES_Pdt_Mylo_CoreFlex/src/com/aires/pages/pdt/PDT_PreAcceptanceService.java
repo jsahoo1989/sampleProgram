@@ -1,49 +1,71 @@
 package com.aires.pages.pdt;
 
 import java.text.MessageFormat;
+import java.util.ArrayList;
+import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
+import java.util.stream.Collectors;
 
 import org.openqa.selenium.By;
+import org.openqa.selenium.NoSuchElementException;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.How;
 import org.testng.Assert;
 
-import com.aires.businessrules.Base;
 import com.aires.businessrules.BusinessFunctions;
 import com.aires.businessrules.CoreFunctions;
+import com.aires.businessrules.DbFunctions;
 import com.aires.businessrules.constants.CoreConstants;
 import com.aires.businessrules.constants.PDTConstants;
 import com.aires.managers.FileReaderManager;
 import com.aires.testdatatypes.pdt.PDT_PreAcceptanceServiceBenefit;
-import com.aires.utilities.Log;
 import com.vimalselvam.cucumber.listener.Reporter;
 
 import cucumber.api.DataTable;
+import stepDefinitions.pdt.PDT_SharedSubBenefit_Steps;
 
-public class PDT_PreAcceptanceService extends Base {
+public class PDT_PreAcceptanceService extends PDT_SharedSubBenefitPage {
 	public PDT_PreAcceptanceService(WebDriver driver) {
 		super(driver);
 	}
 
 	@FindBy(how = How.CSS, using = "div.form-check > label.form-check-label")
 	private List<WebElement> _subBenefitCategories;
+	
+	@FindBy(how = How.CSS, using = "div#headingOne > div.displayHeaderSection >h5")
+	private WebElement _headingFormCandSel;
 
-	@FindBy(how = How.CSS, using = "a[href='#collapseOne']")
-	private WebElement _formCandidateSelection;
+	@FindBy(how = How.CSS, using = "div#headingTwo > div.displayHeaderSection >h5")
+	private WebElement _headingFormPreTripTransport;
 
-	@FindBy(how = How.CSS, using = "a[href='#collapseTwo']")
-	private WebElement _formPreAcceptanceTripTransportation;
+	@FindBy(how = How.CSS, using = "div#headingThree > div.displayHeaderSection >h5")
+	private WebElement _headingFormPreTripLodging;
 
-	@FindBy(how = How.CSS, using = "a[href='#collapseThree']")
-	private WebElement _formPreAcceptanceTripLodging;
+	@FindBy(how = How.CSS, using = "div#headingFour > div.displayHeaderSection >h5")
+	private WebElement _headingFormPreTripMeals;
 
-	@FindBy(how = How.CSS, using = "a[href='#collapseFour']")
-	private WebElement _formPreAcceptanceTripMeals;
+	@FindBy(how = How.CSS, using = "a[data-target='#collapseOne']")
+	private WebElement _formHeaderCandidateSelection;
 
-	@FindBy(how = How.CSS, using = "div.card-header-info > h4.card-title")
-	private WebElement _subCategoryHeading;
+	@FindBy(how = How.CSS, using = "a[data-target='#collapseTwo']")	
+	private WebElement _formHeaderPreAcceptanceTripTransportation;
+
+	@FindBy(how = How.CSS, using = "a[data-target='#collapseThree']")
+	private WebElement _formHeaderPreAcceptanceTripLodging;
+
+	@FindBy(how = How.CSS, using = "a[data-target='#collapseFour']")	
+	private WebElement _formHeaderPreAcceptanceTripMeals;
+
+	//@FindBy(how = How.CSS, using = "div.card-header-info > h4.card-title")
+	@FindBy(how = How.CSS, using = "div.displayHeaderSection > h4.card-title")
+	private WebElement _benefitCatName;	 
+	
+	@FindBy(how = How.CSS, using = "div.card-header-info > h4.card-title")	
+	private WebElement _benefitCategoryName;
 
 	@FindBy(how = How.CSS, using = "#collapseOne label.form-check-label")
 	private List<WebElement> _radioBtnCandidateSelection;
@@ -93,16 +115,16 @@ public class PDT_PreAcceptanceService extends Base {
 	@FindBy(how = How.CSS, using = "input[formcontrolname='numOfNightsPerTrip']")
 	private WebElement _txtBoxNumOfNightsPerTrip;
 
-	@FindBy(how = How.CSS, using = "ng-select[formcontrolname='maxAmountPerNightCode']")
+	@FindBy(how = How.CSS, using = "ng-select[formcontrolname='maxAmountCode']")
 	private WebElement _drpDownMaxAmt;
 
-	@FindBy(how = How.CSS, using = "ng-select[formcontrolname='maxAmountPerNightCode'] span.ng-option-label")
+	@FindBy(how = How.CSS, using = "ng-select[formcontrolname='maxAmountCode'] span.ng-option-label")
 	private List<WebElement> _drpDownMaxAmtOptions;
 
-	@FindBy(how = How.CSS, using = "ng-select[formcontrolname='maxAmountPerNightCode'] span.ng-value-label")
+	@FindBy(how = How.CSS, using = "ng-select[formcontrolname='maxAmountCode'] span.ng-value-label")
 	private WebElement _drpDownMaxAmtSelectedOption;
 
-	@FindBy(how = How.CSS, using = "input[formcontrolname='flatAmountPerNight']")
+	@FindBy(how = How.CSS, using = "input[formcontrolname='flatAmount']")
 	private WebElement _txtBoxFlatAmtPerNight;
 
 	@FindBy(how = How.CSS, using = "ng-select[formcontrolname='currencyCode']")
@@ -132,7 +154,7 @@ public class PDT_PreAcceptanceService extends Base {
 	@FindBy(how = How.CSS, using = "ng-select[formcontrolname='maxAmountCode'] span.ng-option-label")
 	private List<WebElement> _drpDownMaxAmountOptions;
 
-	@FindBy(how = How.XPATH, using = "//ng-select[@formcontrolname='maxAmountCode']/descendant::span[contains(@class,'ng-value-label')]")
+	@FindBy(how = How.XPATH, using = "//app-pre-trip-meals//ng-select[@formcontrolname='maxAmountCode']/descendant::span[contains(@class,'ng-value-label')]")
 	private WebElement _drpDownMaxAmountSelectedVal;
 
 	@FindBy(how = How.CSS, using = "input[formcontrolname='maxAmountEe']")
@@ -216,18 +238,6 @@ public class PDT_PreAcceptanceService extends Base {
 	@FindBy(how = How.XPATH, using = "//label[text()='Type']")
 	private WebElement _lblType;
 
-	@FindBy(how = How.CSS, using = "button.btn-next[type='submit']")
-	private WebElement _btnSaveAndContinue;
-
-	@FindBy(how = How.CSS, using = "div.swal2-popup.swal2-modal.swal2-icon-success.swal2-show")
-	private WebElement _successPopUp;
-
-	@FindBy(how = How.CSS, using = "div.swal2-html-container")
-	private WebElement _successMsg;
-
-	@FindBy(how = How.CSS, using = "button.swal2-confirm.swal2-styled")
-	private WebElement _btnOkOnSuccessPopUp;
-
 	@FindBy(how = How.XPATH, using = "//app-pre-trip-meals//label[contains(text(), 'Max. Amount')]")
 	private WebElement _lblMaxAmtPreAcceptanceTripMeals;
 
@@ -237,7 +247,7 @@ public class PDT_PreAcceptanceService extends Base {
 	@FindBy(how = How.XPATH, using = "//app-pre-trip-meals//label[contains(text(), 'Other Adults')]")
 	private WebElement _lblMaxAmtOtherAdults;
 
-	@FindBy(how = How.XPATH, using = "//app-pre-trip-meals//label[contains(text(), 'Max Amount - Children')]")
+	@FindBy(how = How.XPATH, using = "//app-pre-trip-meals//label[contains(text(), 'Max. Amount - Children')]")
 	private WebElement _lblMaxAmtChildren;
 
 	@FindBy(how = How.XPATH, using = "//input[contains(@formcontrolname, 'candidateSelectionEmpTypeInd')]/parent::label")
@@ -282,14 +292,55 @@ public class PDT_PreAcceptanceService extends Base {
 	// Progress Bar
 	@FindBy(how = How.CSS, using = "div.ngx-progress-bar.ngx-progress-bar-ltr")
 	private WebElement _progressBar;
-
+	
+	@FindBy(how = How.CSS, using = "ng-select[formcontrolname='preAcceptanceCandidateSelectionExpenseCodeList']")
+	private WebElement _drpDownCandSelectionExpenseCode;
+	
+	@FindBy(how = How.CSS, using = "ng-select[formcontrolname='preAcceptanceCandidateSelectionExpenseCodeList'] span.ng-option-label.ng-star-inserted")
+	private List<WebElement> _drpDownOptionsCandSelectionExpenseCode;
+	
+	@FindBy(how = How.CSS, using = "ng-select[formcontrolname='preAcceptanceCandidateSelectionExpenseCodeList'] span.ng-value-label.ng-star-inserted")
+	private List<WebElement> _drpDownSelectedOptionsCandSelectionExpenseCode;
+	
+	@FindBy(how = How.CSS, using = "ng-select[formcontrolname='preAcceptanceTransportationExpenseCodeList']")
+	private WebElement _drpDownTransportationExpenseCode;
+	
+	@FindBy(how = How.CSS, using = "ng-select[formcontrolname='preAcceptanceTransportationExpenseCodeList'] span.ng-option-label.ng-star-inserted")
+	private List<WebElement> _drpDownOptionsTransportationExpenseCode;
+	
+	@FindBy(how = How.CSS, using = "ng-select[formcontrolname='preAcceptanceTransportationExpenseCodeList'] span.ng-value-label.ng-star-inserted")
+	private List<WebElement> _drpDownSelectedOptionsTransportationExpenseCode;
+	
+	@FindBy(how = How.CSS, using = "ng-select[formcontrolname='preAcceptanceLodgingExpenseCodeList']")
+	private WebElement _drpDownTripLodgingExpenseCode;
+	
+	@FindBy(how = How.CSS, using = "ng-select[formcontrolname='preAcceptanceLodgingExpenseCodeList'] span.ng-option-label.ng-star-inserted")
+	private List<WebElement> _drpDownOptionsLodgingExpenseCode;
+	
+	@FindBy(how = How.CSS, using = "ng-select[formcontrolname='preAcceptanceLodgingExpenseCodeList'] span.ng-value-label.ng-star-inserted")
+	private List<WebElement> _drpDownSelectedOptionsLodgingExpenseCode;
+	
+	@FindBy(how = How.CSS, using = "ng-select[formcontrolname='preAcceptanceMealsExpenseCodeList']")
+	private WebElement _drpDownTripMealsExpenseCode;
+	
+	@FindBy(how = How.CSS, using = "ng-select[formcontrolname='preAcceptanceMealsExpenseCodeList'] span.ng-option-label.ng-star-inserted")
+	private List<WebElement> _drpDownOptionsTripMealsExpenseCode;
+	
+	@FindBy(how = How.CSS, using = "ng-select[formcontrolname='preAcceptanceMealsExpenseCodeList'] span.ng-value-label.ng-star-inserted")
+	private List<WebElement> _drpDownSelectedOptionsTripMealsExpenseCode;
+	
 	final By _subBenefitCategoriesLocator = By.cssSelector("div.form-check > label.form-check-label");
 
 	PDT_PreAcceptanceServiceBenefit preAcceptanceSubBenefitData = FileReaderManager.getInstance().getJsonReader()
 			.getPreAcceptanceDataList("Pre-Acceptance Services");
 
 	private String transportType, accompanyingFamilyMemeber, maxAmtPreAcceptTripLodging, maxAmtPreAcceptTripMeals;
-
+	private ArrayList<String> _expenseCodeCandSelection = null;
+	private ArrayList<String> _expenseCodeTransportation = null;
+	private ArrayList<String> _expenseCodeTripLodging = null;
+	private ArrayList<String> _expenseCodeTripMeals = null;
+	
+	long timeBeforeAction, timeAfterAction;
 	public void setTransportType(String transType) {
 		transportType = transType;
 	}
@@ -321,33 +372,75 @@ public class PDT_PreAcceptanceService extends Base {
 	public String getMaxAmtPreAcceptTripMeals() {
 		return maxAmtPreAcceptTripMeals;
 	}
+	
+	public void setExpenseCodeCandSelection(ArrayList <String> expenseCode) {
+		this._expenseCodeCandSelection = expenseCode;
+	}
 
+	public ArrayList <String> getExpenseCodeCandSelection() {
+		return _expenseCodeCandSelection;
+	}
+	
+	public void setExpenseCodeTransportation(ArrayList <String> expenseCode) {
+		this._expenseCodeTransportation = expenseCode;
+	}
+
+	public ArrayList <String> getExpenseCodeTransportation() {
+		return _expenseCodeTransportation;
+	}
+
+	public void setExpenseCodeTripLodging(ArrayList <String> expenseCode) {
+		this._expenseCodeTripLodging = expenseCode;
+	}
+
+	public ArrayList <String> getExpenseCodeTripLodging() {
+		return _expenseCodeTripLodging;
+	}
+	
+	public void setExpenseCodeTripMeals(ArrayList <String> expenseCode) {
+		this._expenseCodeTripMeals = expenseCode;
+	}
+
+	public ArrayList <String> getExpenseCodeTripMeals() {
+		return _expenseCodeTripMeals;
+	}
+	
 	public WebElement getElementByName(String elementName) {
 		WebElement element = null;
-		switch (elementName) {
-		case PDTConstants.CANDIDATE_SELECTION:
-			element = _formCandidateSelection;
-			break;
-		case PDTConstants.PRE_ACCEPTANCE_TRIP_TRANSPORTATION:
-			element = _formPreAcceptanceTripTransportation;
-			break;
-		case PDTConstants.PRE_ACCEPTANCE_TRIP_LODGING:
-			element = _formPreAcceptanceTripLodging;
-			break;
-		case PDTConstants.PRE_ACCEPTANCE_TRIP_MEALS:
-			element = _formPreAcceptanceTripMeals;
-			break;
-		default:
+		populateSubBenefitHeaderMap();
+		try {
+			element = subBenefitHeaderMap.get(elementName);
+		} catch(Exception e) {
+			Assert.fail(MessageFormat.format(PDTConstants.ELEMENT_NOT_FOUND, CoreConstants.FAIL));
+		}
+		return element;
+	}
+	
+	public void populateTabListMap() {
+		tabListMap.put(PDTConstants.CANDIDATE_SELECTION, _tabOnCandidateSelectionForm);
+		tabListMap.put(PDTConstants.PRE_ACCEPTANCE_TRIP_TRANSPORTATION, _tabOnPreAcceptanceTripTransportation);
+		tabListMap.put(PDTConstants.PRE_ACCEPTANCE_TRIP_LODGING, _tabOnPreAcceptanceTripLodging);
+		tabListMap.put(PDTConstants.PRE_ACCEPTANCE_TRIP_MEALS, _tabOnPreAcceptanceTripMeals);
+	}
+	
+	public List<WebElement> getTabListByName(String elementName) {
+		List<WebElement> element = null;
+		populateTabListMap();
+		try {
+			element = tabListMap.get(elementName);
+		} catch(Exception e) {
 			Assert.fail(MessageFormat.format(PDTConstants.ELEMENT_NOT_FOUND, CoreConstants.FAIL));
 		}
 		return element;
 	}
 
-	public String getElementText(String elementName) {
+	public String getElementText(String elementName, String pageName) {
 		String elementText = null;
 		switch (elementName) {
 		case PDTConstants.HEADING:
-			elementText = _subCategoryHeading.getText();
+			elementText = pageName.trim().equalsIgnoreCase(PDTConstants.PRE_ACCEPTANCE_SERVICES)
+					? _benefitCatName.getText()
+					: _benefitCategoryName.getText();
 			break;
 		default:
 			Assert.fail(MessageFormat.format(PDTConstants.ELEMENT_NOT_FOUND, CoreConstants.FAIL));
@@ -374,9 +467,13 @@ public class PDT_PreAcceptanceService extends Base {
 	}
 
 	public boolean verifySubCategoryHeading(String pageName) {
-		CoreFunctions.waitHandler(3);
-		CoreFunctions.explicitWaitTillElementVisibility(driver, _subCategoryHeading, _subCategoryHeading.getText());
-		return CoreFunctions.verifyElementOnPage(driver, _subCategoryHeading, PDTConstants.heading, pageName, pageName,
+		if (CoreFunctions.isElementExist(driver, _progressBar, 3))
+			BusinessFunctions.fluentWaitForSpinnerToDisappear(driver, _progressBar);
+		WebElement element = pageName.trim().equalsIgnoreCase(PDTConstants.PRE_ACCEPTANCE_SERVICES)
+						? _benefitCatName
+						: _benefitCategoryName;
+		CoreFunctions.explicitWaitTillElementVisibility(driver, element, element.getText());
+		return CoreFunctions.verifyElementOnPage(driver, element, PDTConstants.heading, pageName, pageName,
 				true);
 	}
 
@@ -409,9 +506,46 @@ public class PDT_PreAcceptanceService extends Base {
 					MessageFormat.format(PDTConstants.VERIFIED_FORM_IS_NOT_HIDDEN, subBenefit, pageName));
 		}
 	}
+	
+	public void populateSubBenefitHeaderMap() {
+		subBenefitHeaderMap.put(PDTConstants.CANDIDATE_SELECTION, _formHeaderCandidateSelection);
+		subBenefitHeaderMap.put(PDTConstants.PRE_ACCEPTANCE_TRIP_TRANSPORTATION, _formHeaderPreAcceptanceTripTransportation);
+		subBenefitHeaderMap.put(PDTConstants.PRE_ACCEPTANCE_TRIP_LODGING, _formHeaderPreAcceptanceTripLodging);
+		subBenefitHeaderMap.put(PDTConstants.PRE_ACCEPTANCE_TRIP_MEALS, _formHeaderPreAcceptanceTripMeals);
+	}
+	
+	public void populateSubBenefitHomeOwnerTypeLabelMap() {
+		subBenefitHomeOwnerTypeLabelMap.put(PDTConstants.CANDIDATE_SELECTION, _lblCandidateSelHomeOwnerType);
+		subBenefitHomeOwnerTypeLabelMap.put(PDTConstants.PRE_ACCEPTANCE_TRIP_TRANSPORTATION, _lblPreAcceptTripTransportHomeOwnerType);
+		subBenefitHomeOwnerTypeLabelMap.put(PDTConstants.PRE_ACCEPTANCE_TRIP_LODGING, _lblPreAcceptTripLodgingHomeOwnerType);
+		subBenefitHomeOwnerTypeLabelMap.put(PDTConstants.PRE_ACCEPTANCE_TRIP_MEALS, _lblPreAcceptTripMealHomeOwnerType);
+	}
+	
+	public void populateSubBenefitEmpTypeLabelMap() {
+		subBenefitEmpTypeLabelMap.put(PDTConstants.CANDIDATE_SELECTION, _lblCandidateSelEmpType);
+		subBenefitEmpTypeLabelMap.put(PDTConstants.PRE_ACCEPTANCE_TRIP_TRANSPORTATION, _lblPreAcceptTripTransportEmpType);
+		subBenefitEmpTypeLabelMap.put(PDTConstants.PRE_ACCEPTANCE_TRIP_LODGING, _lblPreAcceptTripLodgingEmpType);
+		subBenefitEmpTypeLabelMap.put(PDTConstants.PRE_ACCEPTANCE_TRIP_MEALS, _lblPreAcceptTripMealEmpType);
+	}
+	
+	public void expandSubBenefitIfCollapsed(String subBenefitFormName, WebElement element) {
+		if (subBenefitHeaderMap.get(subBenefitFormName).getAttribute("class").equalsIgnoreCase("collapsed"))
+			CoreFunctions.clickElement(driver, element);
+	}
+	
+	public void populateSubBenefitHeadingMap() {
+		subBenefitHeadingMap.put(PDTConstants.CANDIDATE_SELECTION, _headingFormCandSel);
+		subBenefitHeadingMap.put(PDTConstants.PRE_ACCEPTANCE_TRIP_TRANSPORTATION, _headingFormPreTripTransport);
+		subBenefitHeadingMap.put(PDTConstants.PRE_ACCEPTANCE_TRIP_LODGING, _headingFormPreTripLodging);
+		subBenefitHeadingMap.put(PDTConstants.PRE_ACCEPTANCE_TRIP_MEALS, _headingFormPreTripMeals);
+	}
 
-	public void fillCandidateSelection(PDT_AddNewPolicyPage addNewPolicyPage, String subBenefitFormName) {
+	public void fillCandidateSelection(PDT_AddNewPolicyPage addNewPolicyPage, String subBenefitFormName, String pageName) {
 		try {
+			populateSubBenefitHeaderMap();
+			Assert.assertTrue(BusinessFunctions.verifySubBenefitFormHeaderIsDisplayed(driver, subBenefitHeaderMap.get(subBenefitFormName), subBenefitFormName, pageName),
+					MessageFormat.format(PDTConstants.VERIFIED_FORM_IS_NOT_DISPLAYED, subBenefitFormName, pageName));
+			expandSubBenefitIfCollapsed(subBenefitFormName, _headingFormCandSel );
 			CoreFunctions.explicitWaitTillElementListClickable(driver, _radioBtnCandidateSelection);
 			CoreFunctions.selectItemInListByText(driver, _radioBtnCandidateSelection,
 					preAcceptanceSubBenefitData.candidateSelection.grossUp, PDTConstants.GROSS_UP,
@@ -420,12 +554,23 @@ public class PDT_PreAcceptanceService extends Base {
 					preAcceptanceSubBenefitData.candidateSelection.reimbursedBy, PDTConstants.REIMBURSED_BY,
 					PDTConstants.RADIO_BUTTON_LIST, true);
 
-			BusinessFunctions.verifyOtherTextBoxIsDisplayed(driver, addNewPolicyPage,
+			BusinessFunctions.verifyOtherTextBoxIsDisplayed(driver,
 					preAcceptanceSubBenefitData.candidateSelection.reimbursedBy, _txtBoxCandidateSelReimbursedByOther,
 					preAcceptanceSubBenefitData.candidateSelection.reimbursedByOther, subBenefitFormName, PDTConstants.REIMBURSED_BY_OTHER);
 
 			CoreFunctions.clearAndSetText(driver, _txtAreaCandidateSelComment, PDTConstants.COMMENT,
 					preAcceptanceSubBenefitData.candidateSelection.comment);
+			
+			CoreFunctions.clickElement(driver, _drpDownCandSelectionExpenseCode);
+			Assert.assertTrue(
+					BusinessFunctions.verifyAllExpenseCodesArePopulatedForSubBenefit(driver,
+							PDTConstants.PRE_ACCEPTANCE_SERVICES, PDTConstants.CANDIDATE_SELECTION,
+							_drpDownOptionsCandSelectionExpenseCode),
+					MessageFormat.format(PDTConstants.VERIFIED_EXPENSE_CODE_OPTIONS_NOT_POPULATED, CoreConstants.FAIL,
+							PDTConstants.CANDIDATE_SELECTION, DbFunctions.getExpenseCodeListForBenefit(PDTConstants.PRE_ACCEPTANCE_SERVICES).toString(), CoreFunctions.getElementTextAndStoreInList(driver, _drpDownOptionsCandSelectionExpenseCode).toString()));
+			ArrayList <String> randExpenseCodeOptions = CoreFunctions.getMultipleRandomOptionsForDropDown(0, _drpDownOptionsCandSelectionExpenseCode.size(), 5, driver, _drpDownOptionsCandSelectionExpenseCode);
+			BusinessFunctions.selectRandomDropDownOption(driver, PDTConstants.EXPENSE_CODES, _drpDownCandSelectionExpenseCode, _drpDownOptionsCandSelectionExpenseCode, _drpDownSelectedOptionsCandSelectionExpenseCode, randExpenseCodeOptions, subBenefitFormName);
+			setExpenseCodeCandSelection(randExpenseCodeOptions);
 		} catch (Exception e) {
 			Assert.fail(MessageFormat.format(PDTConstants.EXCEPTION_OCCURED_FILL_SUBBENEFIT_FORM, CoreConstants.FAIL, subBenefitFormName));
 		}
@@ -460,8 +605,12 @@ public class PDT_PreAcceptanceService extends Base {
 		}
 	}
 
-	public void fillPreAcceptanceTripTransportation(PDT_AddNewPolicyPage addNewPolicyPage, String subBenefitFormName) {
+	public void fillPreAcceptanceTripTransportation(PDT_AddNewPolicyPage addNewPolicyPage, String subBenefitFormName, String pageName) {
 		try {
+			populateSubBenefitHeaderMap();
+			Assert.assertTrue(BusinessFunctions.verifySubBenefitFormHeaderIsDisplayed(driver, subBenefitHeaderMap.get(subBenefitFormName), subBenefitFormName, pageName),
+					MessageFormat.format(PDTConstants.VERIFIED_FORM_IS_NOT_DISPLAYED, subBenefitFormName, pageName));
+			expandSubBenefitIfCollapsed(subBenefitFormName, _headingFormPreTripTransport );
 			CoreFunctions.explicitWaitTillElementVisibility(driver, _txtBoxNumOfTrips, _lblNoOfTrips.getText());
 			CoreFunctions.clearAndSetText(driver, _txtBoxNumOfTrips, _lblNoOfTrips.getText(),
 					preAcceptanceSubBenefitData.preAcceptanceTripTransportation.numberOfTrips);
@@ -490,13 +639,25 @@ public class PDT_PreAcceptanceService extends Base {
 					preAcceptanceSubBenefitData.preAcceptanceTripTransportation.reimbursedBy,
 					PDTConstants.REIMBURSED_BY, PDTConstants.RADIO_BUTTON_LIST, true);
 
-			BusinessFunctions.verifyOtherTextBoxIsDisplayed(driver, addNewPolicyPage,
+			BusinessFunctions.verifyOtherTextBoxIsDisplayed(driver,
 					preAcceptanceSubBenefitData.preAcceptanceTripTransportation.reimbursedBy,
 					_txtBoxPreTripTransportReimbursedByOther,
 					preAcceptanceSubBenefitData.preAcceptanceTripTransportation.reimbursedByOther, subBenefitFormName, PDTConstants.REIMBURSED_BY_OTHER);
 
 			CoreFunctions.clearAndSetText(driver, _txtAreaPreTripTransportComment, PDTConstants.COMMENT,
 					preAcceptanceSubBenefitData.preAcceptanceTripTransportation.comment);
+			
+			CoreFunctions.clickElement(driver, _drpDownTransportationExpenseCode);
+			Assert.assertTrue(
+					BusinessFunctions.verifyAllExpenseCodesArePopulatedForSubBenefit(driver,
+							PDTConstants.PRE_ACCEPTANCE_SERVICES, PDTConstants.PRE_ACCEPTANCE_TRIP_TRANSPORTATION,
+							_drpDownOptionsTransportationExpenseCode),
+					MessageFormat.format(PDTConstants.VERIFIED_EXPENSE_CODE_OPTIONS_NOT_POPULATED, CoreConstants.FAIL,
+							PDTConstants.PRE_ACCEPTANCE_TRIP_TRANSPORTATION, DbFunctions.getExpenseCodeListForBenefit(PDTConstants.PRE_ACCEPTANCE_SERVICES).toString(), CoreFunctions.getElementTextAndStoreInList(driver, _drpDownOptionsTransportationExpenseCode).toString()));
+			ArrayList <String> randExpenseCodeOptions = CoreFunctions.getMultipleRandomOptionsForDropDown(0, _drpDownOptionsTransportationExpenseCode.size(), 5, driver, _drpDownOptionsTransportationExpenseCode);
+			BusinessFunctions.selectRandomDropDownOption(driver, PDTConstants.EXPENSE_CODES, _drpDownTransportationExpenseCode, _drpDownOptionsTransportationExpenseCode, _drpDownSelectedOptionsTransportationExpenseCode, randExpenseCodeOptions, subBenefitFormName);
+			setExpenseCodeTransportation(randExpenseCodeOptions);
+			
 		} catch (Exception e) {
 			Assert.fail(MessageFormat.format(PDTConstants.EXCEPTION_OCCURED_FILL_SUBBENEFIT_FORM, CoreConstants.FAIL, subBenefitFormName));
 		}
@@ -524,8 +685,12 @@ public class PDT_PreAcceptanceService extends Base {
 		}
 	}
 
-	public void fillPreAcceptanceTripLodging(PDT_AddNewPolicyPage addNewPolicyPage, String subBenefitFormName) {
+	public void fillPreAcceptanceTripLodging(PDT_AddNewPolicyPage addNewPolicyPage, String subBenefitFormName, String pageName) {
 		try {
+			populateSubBenefitHeaderMap();
+			Assert.assertTrue(BusinessFunctions.verifySubBenefitFormHeaderIsDisplayed(driver, subBenefitHeaderMap.get(subBenefitFormName), subBenefitFormName, pageName),
+					MessageFormat.format(PDTConstants.VERIFIED_FORM_IS_NOT_DISPLAYED, subBenefitFormName, pageName));
+			expandSubBenefitIfCollapsed(subBenefitFormName, _headingFormPreTripLodging);			
 			CoreFunctions.explicitWaitTillElementVisibility(driver, _txtBoxNumOfNightsPerTrip,
 					_lblNumOfNightsPerTrip.getText());
 			CoreFunctions.clearAndSetText(driver, _txtBoxNumOfNightsPerTrip, _lblNumOfNightsPerTrip.getText(),
@@ -546,21 +711,37 @@ public class PDT_PreAcceptanceService extends Base {
 					preAcceptanceSubBenefitData.preAcceptanceTripLodging.reimbursedBy, PDTConstants.REIMBURSED_BY,
 					PDTConstants.RADIO_BUTTON_LIST, true);
 
-			BusinessFunctions.verifyOtherTextBoxIsDisplayed(driver, addNewPolicyPage,
+			BusinessFunctions.verifyOtherTextBoxIsDisplayed(driver,
 					preAcceptanceSubBenefitData.preAcceptanceTripLodging.reimbursedBy,
 					_txtBoxPreTripLodgingReimbursedByOther,
 					preAcceptanceSubBenefitData.preAcceptanceTripLodging.reimbursedByOther, subBenefitFormName, PDTConstants.REIMBURSED_BY_OTHER);
 
 			CoreFunctions.clearAndSetText(driver, _txtAreaPreTripLodgingComment, PDTConstants.COMMENT,
 					preAcceptanceSubBenefitData.preAcceptanceTripLodging.comment);
+			
+			CoreFunctions.clickElement(driver, _drpDownTripLodgingExpenseCode);
+			Assert.assertTrue(
+					BusinessFunctions.verifyAllExpenseCodesArePopulatedForSubBenefit(driver,
+							PDTConstants.PRE_ACCEPTANCE_SERVICES, PDTConstants.PRE_ACCEPTANCE_TRIP_LODGING,
+							_drpDownOptionsLodgingExpenseCode),
+					MessageFormat.format(PDTConstants.VERIFIED_EXPENSE_CODE_OPTIONS_NOT_POPULATED, CoreConstants.FAIL,
+							PDTConstants.PRE_ACCEPTANCE_TRIP_LODGING, DbFunctions.getExpenseCodeListForBenefit(PDTConstants.PRE_ACCEPTANCE_SERVICES).toString(), CoreFunctions.getElementTextAndStoreInList(driver, _drpDownOptionsLodgingExpenseCode).toString()));
+			ArrayList <String> randExpenseCodeOptions = CoreFunctions.getMultipleRandomOptionsForDropDown(0, _drpDownOptionsLodgingExpenseCode.size(), 5, driver, _drpDownOptionsLodgingExpenseCode);
+			BusinessFunctions.selectRandomDropDownOption(driver, PDTConstants.EXPENSE_CODES, _drpDownTripLodgingExpenseCode, _drpDownOptionsLodgingExpenseCode, _drpDownSelectedOptionsLodgingExpenseCode, randExpenseCodeOptions, subBenefitFormName);
+			setExpenseCodeTripLodging(randExpenseCodeOptions);
 		} catch (Exception e) {
+			e.printStackTrace();
 			Assert.fail(MessageFormat.format(PDTConstants.EXCEPTION_OCCURED_FILL_SUBBENEFIT_FORM, CoreConstants.FAIL, subBenefitFormName));
 		}
 
 	}
 
-	public void fillPreAcceptanceTripMeals(PDT_AddNewPolicyPage addNewPolicyPage, String subBenefitFormName) {
+	public void fillPreAcceptanceTripMeals(PDT_AddNewPolicyPage addNewPolicyPage, String subBenefitFormName, String pageName) {
 		try {
+			populateSubBenefitHeaderMap();
+			Assert.assertTrue(BusinessFunctions.verifySubBenefitFormHeaderIsDisplayed(driver, subBenefitHeaderMap.get(subBenefitFormName), subBenefitFormName, pageName),
+					MessageFormat.format(PDTConstants.VERIFIED_FORM_IS_NOT_DISPLAYED, subBenefitFormName, pageName));
+			expandSubBenefitIfCollapsed(subBenefitFormName, _headingFormPreTripMeals);	
 			CoreFunctions.explicitWaitTillElementVisibility(driver, _txtBoxNumOfDaysPerMeal,
 					_lblNumOfDayPerMeal.getText());
 			CoreFunctions.clearAndSetText(driver, _txtBoxNumOfDaysPerMeal, _lblNumOfDayPerMeal.getText(),
@@ -585,13 +766,24 @@ public class PDT_PreAcceptanceService extends Base {
 					preAcceptanceSubBenefitData.preAcceptanceTripMeals.reimbursedBy, PDTConstants.REIMBURSED_BY,
 					PDTConstants.RADIO_BUTTON_LIST, true);
 
-			BusinessFunctions.verifyOtherTextBoxIsDisplayed(driver, addNewPolicyPage,
+			BusinessFunctions.verifyOtherTextBoxIsDisplayed(driver,
 					preAcceptanceSubBenefitData.preAcceptanceTripMeals.reimbursedBy,
 					_txtBoxPreTripMealReimbursedByOther,
 					preAcceptanceSubBenefitData.preAcceptanceTripMeals.reimbursedByOther, subBenefitFormName, PDTConstants.REIMBURSED_BY_OTHER);
 
 			CoreFunctions.clearAndSetText(driver, _txtAreaPreTripMealComment, PDTConstants.COMMENT,
 					preAcceptanceSubBenefitData.preAcceptanceTripMeals.comment);
+			
+			CoreFunctions.clickElement(driver, _drpDownTripMealsExpenseCode);
+			Assert.assertTrue(
+					BusinessFunctions.verifyAllExpenseCodesArePopulatedForSubBenefit(driver,
+							PDTConstants.PRE_ACCEPTANCE_SERVICES, PDTConstants.PRE_ACCEPTANCE_TRIP_MEALS,
+							_drpDownOptionsTripMealsExpenseCode),
+					MessageFormat.format(PDTConstants.VERIFIED_EXPENSE_CODE_OPTIONS_NOT_POPULATED, CoreConstants.FAIL,
+							PDTConstants.PRE_ACCEPTANCE_TRIP_MEALS, DbFunctions.getExpenseCodeListForBenefit(PDTConstants.PRE_ACCEPTANCE_SERVICES).toString(), CoreFunctions.getElementTextAndStoreInList(driver, _drpDownOptionsTripMealsExpenseCode).toString()));
+			ArrayList <String> randExpenseCodeOptions = CoreFunctions.getMultipleRandomOptionsForDropDown(0, _drpDownOptionsTripMealsExpenseCode.size(), 5, driver, _drpDownOptionsTripMealsExpenseCode);
+			BusinessFunctions.selectRandomDropDownOption(driver, PDTConstants.EXPENSE_CODES, _drpDownTripMealsExpenseCode, _drpDownOptionsTripMealsExpenseCode, _drpDownSelectedOptionsTripMealsExpenseCode, randExpenseCodeOptions, subBenefitFormName);
+			setExpenseCodeTripMeals(randExpenseCodeOptions);
 		} catch (Exception e) {
 			e.printStackTrace();
 			Assert.fail(MessageFormat.format(PDTConstants.EXCEPTION_OCCURED_FILL_SUBBENEFIT_FORM, CoreConstants.FAIL, subBenefitFormName));
@@ -671,18 +863,184 @@ public class PDT_PreAcceptanceService extends Base {
 		}
 	}
 
-	public boolean verifySaveSuccessMessage(String msg, String pageName, PDT_AddNewPolicyPage addNewPolicyPage) {
+	/**
+	 * @param subBenefit
+	 * @param pageName
+	 * @param addNewPolicyPage
+	 * Fill PreAcceptance Sub-benefit form depending on the sub-benefit passed.
+	 */
+	public void fillSubBenefitForm(String subBenefit, String pageName, PDT_AddNewPolicyPage addNewPolicyPage, PDT_SharedSubBenefit_Steps objStep) {		
+		switch (subBenefit) {
+		case PDTConstants.CANDIDATE_SELECTION:
+			fillCandidateSelection(addNewPolicyPage, subBenefit, pageName);
+			break;
+		case PDTConstants.PRE_ACCEPTANCE_TRIP_TRANSPORTATION:
+			fillPreAcceptanceTripTransportation(addNewPolicyPage, subBenefit
+					, pageName);
+			break;
+		case PDTConstants.PRE_ACCEPTANCE_TRIP_LODGING:
+			fillPreAcceptanceTripLodging(addNewPolicyPage, subBenefit, pageName);
+			break;
+		case PDTConstants.PRE_ACCEPTANCE_TRIP_MEALS:
+			fillPreAcceptanceTripMeals(addNewPolicyPage, subBenefit, pageName);
+			break;
+		default:
+			Assert.fail(MessageFormat.format(PDTConstants.SUBBENEFIT_NOT_FOUND, CoreConstants.FAIL, subBenefit, pageName));
+		}		
+	}
+	
+	public void iterateAndFillPreAcceptanceSubBenefits(String pageName, List<String> subBenefits,
+			PDT_AddNewPolicyPage addNewPolicyPage, PDT_SharedSubBenefit_Steps objStep, String btnName) {
+		CoreFunctions.explicitWaitTillElementListClickable(driver, _subBenefitCategories);			
+		populateBtnMap();
+		populateConfirmDialogbuttonMap();
+		WebElement btnToClick = (btnName != null) ?  buttonMap.get(btnName) : buttonMap.get(PDTConstants.SAVE);
+		for (String subBenefit : subBenefits) {
+			CoreFunctions.selectItemInListByText(driver, _subBenefitCategories, subBenefit, true);
+			timeBeforeAction = new Date().getTime();
+			waitForProgressBarToDisapper();
+			timeAfterAction = new Date().getTime();
+			BusinessFunctions.printTimeTakenByPageToLoad(timeBeforeAction, timeAfterAction, pageName, subBenefit);
+			fillSubBenefitForm(subBenefit, pageName, addNewPolicyPage, objStep);
+		}
 		try {
-			CoreFunctions.explicitWaitTillElementInVisibilityCustomTime(driver, _progressBar, 5);
-			if (CoreFunctions.isElementExist(driver, _successPopUp, 5) && _successMsg.getText().equalsIgnoreCase(msg)) {
-				Reporter.addStepLog(MessageFormat.format(PDTConstants.VERIFIED_SUCCESS_MSG, CoreConstants.PASS,
-						_successMsg.getText(), pageName));
-				CoreFunctions.clickElement(driver, _btnOkOnSuccessPopUp);
-				return true;
+			CoreFunctions.click(driver, btnToClick, btnToClick.getText());
+		} catch (NoSuchElementException e) {
+			Assert.fail(MessageFormat.format(PDTConstants.MISSING_BTN, CoreConstants.FAIL, btnName));
+		} catch (Exception e) {
+			e.printStackTrace();
+			Assert.fail(MessageFormat.format(PDTConstants.FAILED_TO_CLICK_ON_BTN, CoreConstants.FAIL, btnName));
+		}
+	}
+	
+	public void selectEmpTypeForSubBenefit(String subBenefit) {
+		populateSubBenefitEmpTypeLabelMap();
+		CoreFunctions.explicitWaitTillElementBecomesClickable(driver, subBenefitEmpTypeLabelMap.get(subBenefit),
+				subBenefitEmpTypeLabelMap.get(subBenefit).getText() + "(" + subBenefit+ ")");
+		CoreFunctions.clickUsingJS(driver, subBenefitEmpTypeLabelMap.get(subBenefit),
+				subBenefitEmpTypeLabelMap.get(subBenefit).getText() + "(" + subBenefit + ")");
+	}
+	
+	public void selectHomeOwnerTypeForSubBenefit(String subBenefit) {
+		populateSubBenefitHomeOwnerTypeLabelMap();
+		CoreFunctions.explicitWaitTillElementBecomesClickable(driver, subBenefitHomeOwnerTypeLabelMap.get(subBenefit),
+				subBenefitHomeOwnerTypeLabelMap.get(subBenefit).getText() + "(" + subBenefit + ")");
+		CoreFunctions.clickUsingJS(driver, subBenefitHomeOwnerTypeLabelMap.get(subBenefit),
+				subBenefitHomeOwnerTypeLabelMap.get(subBenefit).getText() + "(" + subBenefit + ")");
+	}
+	
+	public void selectSubBenefit(String subBenefitName, String pageName, PDT_AddNewPolicyPage addNewPolicyPage) {
+		try {
+			populateSubBenefitHeaderMap();
+			CoreFunctions.selectItemInListByText(driver, _subBenefitCategories, subBenefitName, true);
+			waitForProgressBarToDisapper();//
+			Assert.assertTrue(BusinessFunctions.verifySubBenefitFormHeaderIsDisplayed(driver, subBenefitHeaderMap.get(subBenefitName), subBenefitName, pageName),
+					MessageFormat.format(PDTConstants.VERIFIED_FORM_IS_NOT_DISPLAYED, subBenefitName, pageName));
+		} catch (Exception e) {
+			e.printStackTrace();
+			Assert.fail("Failed to select sub-benefit:-" + subBenefitName + " on " + pageName + "page.");
+		}
+	}
+
+	public void checkEmpType(String benefitDifferForEmpType, String subBenefitName, String pageName,
+			PDT_AddNewPolicyPage addNewPolicyPage) {
+		try {
+			if (benefitDifferForEmpType.equalsIgnoreCase(PDTConstants.YES)) {
+				selectEmpTypeForSubBenefit(subBenefitName);
 			}
 		} catch (Exception e) {
-			Assert.fail(MessageFormat.format(PDTConstants.FAILED_TO_VERIFY_SUCCESS_MSG, CoreConstants.FAIL, msg, pageName));
+			Assert.fail("Failed to select 'Benefit differs for employee Type' checkbox for sub-benefit:-"
+					+ subBenefitName + " on " + pageName + "page.");
 		}
-		return false;
+	}
+
+	public void checkHomeType(String benefitDifferForHomeType, String subBenefitName, String pageName,
+			PDT_AddNewPolicyPage addNewPolicyPage) {
+		try {
+			if (benefitDifferForHomeType.equalsIgnoreCase(PDTConstants.YES)) {
+				selectHomeOwnerTypeForSubBenefit(subBenefitName);
+			}
+		} catch (Exception e) {
+			Assert.fail("Failed to select 'Benefit differs for home owner Type' checkbox for sub-benefit:-"
+					+ subBenefitName + " on " + pageName + "page.");
+		}
+	}
+
+	public void selectEmployeeTypeHomeOwnerTypeForSubBenefit(String pageName, PDT_AddNewPolicyPage addNewPolicyPage,
+			DataTable subBenefitTable) {
+		List<Map<String, String>> subBenefits = subBenefitTable.asMaps(String.class, String.class);
+		try {
+			WebElement element = pageName.trim().equalsIgnoreCase(PDTConstants.PRE_ACCEPTANCE_SERVICES)
+					? _benefitCatName
+					: _benefitCategoryName;
+
+			CoreFunctions.explicitWaitForElementTextPresent(driver, element, pageName, 3);
+			waitForProgressBarToDisapper();
+			for (int i = 0; i < subBenefits.size(); i++) {
+				selectSubBenefit(subBenefits.get(i).get("SubBenefit"), pageName, addNewPolicyPage);
+				checkEmpType(subBenefits.get(i).get("Benefit_differs_for_Employee_type"),
+						subBenefits.get(i).get("SubBenefit"), pageName, addNewPolicyPage);
+				checkHomeType(subBenefits.get(i).get("Benefit_differs_for_Home_Owner_type"),
+						subBenefits.get(i).get("SubBenefit"), pageName, addNewPolicyPage);
+			}
+		} catch (Exception e) {
+			Assert.fail("Failed to select sub-benefit, employee type & home owner type.");
+		}
+	}
+	
+	public boolean iterateSubBenefitForTabs(String pageName, PDT_AddNewPolicyPage addNewPolicyPage,
+			DataTable subBenefitTable) {
+		List<Map<String, String>> subBenefits = subBenefitTable.asMaps(String.class, String.class);
+		HashMap<String, Boolean> resultMap = new HashMap<String, Boolean>();
+		populateSubBenefitHeadingMap();
+		try {
+			CoreFunctions.explicitWaitForElementTextPresent(driver, _txtSubBenefitName, pageName, 3);
+			waitForProgressBarToDisapper();
+			for (int i = 0; i < subBenefits.size(); i++) {
+				expandSubBenefitIfCollapsed(subBenefits.get(i).get("SubBenefit"), subBenefitHeadingMap.get(subBenefits.get(i).get("SubBenefit")));
+				resultMap.putAll(verifyTabName(subBenefits.get(i).get("SubBenefit"), subBenefits.get(i).get("Tabs"),
+						getTabListByName(subBenefits.get(i).get("SubBenefit")), addNewPolicyPage, pageName));
+			}
+			resultMapForTabNameNotMatch = getFilterMapWhereTabNameNotMatch(subBenefits.size(), resultMap);
+		} catch (Exception e) {
+		}
+		return resultMapForTabNameNotMatch.isEmpty();
+	}
+	
+	public HashMap<String, Boolean> getFilterMapWhereTabNameNotMatch(int countOfSubBenefits,
+			HashMap<String, Boolean> resultMap) {
+		Map<String, Boolean> filteredMap = new HashMap<>();
+		filteredMap = resultMap.entrySet().stream().filter(x -> x.getValue().equals(false))
+				.collect(Collectors.toMap(Map.Entry::getKey, Map.Entry::getValue));
+		return (HashMap<String, Boolean>) filteredMap;
+	}
+	
+	public HashMap<String, Boolean> verifyTabName(String subBenefit, String tabNameString, List<WebElement> tabList,
+			PDT_AddNewPolicyPage addNewPolicyPage, String pageName) {
+		HashMap<String, Boolean> map = new HashMap<>();
+		String[] tabNameArr = tabNameString.split(",");
+		for (int i = 0; i < tabNameArr.length; i++) {
+			if (CoreFunctions.searchElementExistsInListByTextIgnoreCase(driver, tabList, tabNameArr[i].trim())) {
+				Reporter.addStepLog(MessageFormat.format(PDTConstants.VERFIED_TAB_DISPLAYED, CoreConstants.PASS,
+						tabNameArr[i].trim(), subBenefit, pageName));
+				map.put(subBenefit + "_" + tabNameArr[i].trim(), true);
+			} else {
+				map.put(subBenefit + "_" + tabNameArr[i].trim(), false);
+				Reporter.addStepLog(MessageFormat.format(PDTConstants.VERFIED_TAB_NOT_DISPLAYED, CoreConstants.FAIL,
+						tabNameArr[i].trim(), subBenefit, pageName));
+			}
+		}
+		return map;
+	}
+	
+	public String getTabNameNotMatch(String pageName) {
+		String str = "";
+		for (@SuppressWarnings("rawtypes")
+		Map.Entry m : resultMapForTabNameNotMatch.entrySet()) {
+			String[] tabName = m.getKey().toString().split("_");
+			str += MessageFormat.format(PDTConstants.VERFIED_TAB_NOT_DISPLAYED, CoreConstants.FAIL, tabName[1],
+					tabName[0], pageName);
+		}
+		return str;
 	}
 }

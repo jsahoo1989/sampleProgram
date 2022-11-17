@@ -74,7 +74,7 @@ public class CoreFlex_GeneralInformation_Steps {
 			String tabName) throws Throwable {
 		testContext.getBasePage().invokeIrisApplication();
 		//_loginDetails = FileReaderManager.getInstance().getJsonReader().getLoginByApplication("IRIS");
-		_loginDetails = FileReaderManager.getInstance().getJsonReader().getLoginByApplication(CoreFunctions.getPropertyFromConfig("application").toLowerCase());
+		_loginDetails = FileReaderManager.getInstance().getJsonReader().getLoginByApplication(System.getProperty("application").toLowerCase());
 		testContext.getIrisPageManager().irisLoginPage = new IRIS_LoginPage();
 		testContext.getIrisPageManager().irisLoginPage.getIRISLoginAsPerEnvt(_loginDetails);
 		testContext.getIrisPageManager().irisWelcome12C = new IRIS_Welcome12C();
@@ -102,7 +102,7 @@ public class CoreFlex_GeneralInformation_Steps {
 		addNewPolicyPage.clickElementOfPage(COREFLEXConstants.LOGOUT);
 		Assert.assertTrue(loginPage.loginByUserType(PDTConstants.CSM, viewPolicyPage),
 				MessageFormat.format(PDTConstants.FAILED_TO_VERIFY_LOGGED_IN_USER, CoreConstants.FAIL));
-		viewPolicyPage.clickElementOfPage(PDTConstants.ADD_NEW_POLICY_FORM);
+		viewPolicyPage.clickElementOfPage(PDTConstants.ADD_NEW_POLICY_FORM, PDTConstants.VIEW_EDIT_POLICY_FORMS);
 		addNewPolicyPage.enterClientID(clientID);
 		Assert.assertTrue(addNewPolicyPage.verifyAndClickValidClientIDResult(clientID), MessageFormat
 				.format(PDTConstants.FAILED_TO_VERIFY_VALID_CLIENT_ID_DROPDOWN_OPTIONS, CoreConstants.FAIL));

@@ -4,7 +4,6 @@ import java.text.MessageFormat;
 
 import org.testng.Assert;
 
-import com.aires.businessrules.BusinessFunctions;
 import com.aires.businessrules.CoreFunctions;
 import com.aires.businessrules.DbFunctions;
 import com.aires.businessrules.constants.CoreConstants;
@@ -22,7 +21,8 @@ import com.aires.pages.pdt.PDT_AddNewPolicyPage;
 import com.aires.pages.pdt.PDT_LoginPage;
 import com.aires.pages.pdt.PDT_ViewPolicyPage;
 import com.aires.testdatatypes.pdt.PDT_LoginData;
-import com.aires.testdatatypes.pdt.PDT_LoginDetails;
+import com.aires.testdatatypes.pdt.PDT_LoginInfo;
+import com.aires.utilities.ClientPolicyDetails;
 import com.aires.utilities.Log;
 
 import cucumber.api.java.en.Given;
@@ -40,9 +40,9 @@ public class PDT_Iris_Corporation_Step {
 
 	PDT_LoginData loginData = FileReaderManager.getInstance().getJsonReader()
 			.getloginDetailsByUserFirstName(PDTConstants.USER_FIRST_NAME);
-	//private PDT_LoginDetails _loginDetailsApplication = FileReaderManager.getInstance().getJsonReader().getLoginByApplication(CoreFunctions.getPropertyFromConfig("application"));
-	private PDT_LoginDetails _loginDetailsApplication = FileReaderManager.getInstance().getJsonReader().getLoginByApplication(System.getProperty("application"));
-	
+
+	//private PDT_LoginInfo _loginDetailsApplication = FileReaderManager.getInstance().getJsonReader().getLoginByEnvt(CoreFunctions.getPropertyFromConfig("envt").toLowerCase());
+	private PDT_LoginInfo _loginDetailsApplication = FileReaderManager.getInstance().getJsonReader().getLoginByEnvt(System.getProperty("application"));
 	public PDT_Iris_Corporation_Step(TestContext context) {
 		testContext = context;
 	}
@@ -58,8 +58,7 @@ public class PDT_Iris_Corporation_Step {
 		switch (moduleName) {
 		case IRISConstants.CORPORATION_MODULE:
 			testContext.getIrisPageManager().irisCorporationMain = new IRIS_Corporation_Main();			
-			Log.info("pdtClientId="+BusinessFunctions.getClientAndPolicyDetails(_loginDetailsApplication)[0]);
-			testContext.getIrisPageManager().irisCorporationMain.queryCorporation(BusinessFunctions.getClientAndPolicyDetails(_loginDetailsApplication)[0]);
+			testContext.getIrisPageManager().irisCorporationMain.queryCorporation(_loginDetailsApplication.details.clientId);
 			break;
 		default:
 			Assert.fail(IRISConstants.PAGE_NOT_FOUND);
@@ -76,43 +75,36 @@ public class PDT_Iris_Corporation_Step {
 
 	@Given("^he logins to the PDT application as a \"([^\"]*)\" user$")
 	public void he_logins_to_the_PDT_application_as_a_user(String userType) throws Throwable {
-		webDriverManager = new WebDriverManager();
-		pageObjectManager = new PageObjectManager_Pdt(webDriverManager.getDriver());
-
-		webDriverManager.getDriver().navigate()
-				.to(FileReaderManager.getInstance().getConfigReader().getPDTApplicationUrl());
-		loginPage = pageObjectManager.getLoginPage();
+		testContext.getWebDriverManager().getDriver().navigate().to(_loginDetailsApplication.details.pdtUrl);
+		loginPage = testContext.getPageObjectManager().getLoginPage();
 		loginPage.openApplication();
 		Assert.assertTrue(pdtMyloCommonLoginPage.loginByUserType(userType, viewPolicyPage),
 				MessageFormat.format(PDTConstants.FAILED_TO_VERIFY_LOGGED_IN_USER, CoreConstants.FAIL));
-		/*loginPage.enterLoginCredentials(BusinessFunctions.getCSMCredentials(_loginDetailsApplication)[0], BusinessFunctions.getCSMCredentials(_loginDetailsApplication)[1]);
-		loginPage.clickLoginBtn();
-		loginPage.verifyLoginCredentials();*/
-		viewPolicyPage = pageObjectManager.getViewPolicyPage();
+		
+		viewPolicyPage = testContext.getPageObjectManager().getViewPolicyPage();
 		Assert.assertTrue(viewPolicyPage.verifyViewPolicyHeading(PDTConstants.VIEW_POLICY),
 				MessageFormat.format(PDTConstants.FAILED_TO_VERIFY_HEADING_ON_PAGE, CoreConstants.FAIL, PDTConstants.VIEW_POLICY,
 						PDTConstants.VIEW_EDIT_POLICY_FORMS, viewPolicyPage.getElementText(PDTConstants.HEADING)));
-		Assert.assertTrue(viewPolicyPage.verifyUserlogin(BusinessFunctions.getCSMCredentials(_loginDetailsApplication)[0], PDTConstants.VIEW_POLICY),
+		Assert.assertTrue(viewPolicyPage.verifyUserlogin(_loginDetailsApplication.details.firstName + " " + _loginDetailsApplication.details.lastName, PDTConstants.VIEW_POLICY),
 				MessageFormat.format(PDTConstants.FAILED_TO_VERIFY_USERNAME, CoreConstants.FAIL, PDTConstants.VIEW_POLICY,
-						BusinessFunctions.getCSMCredentials(_loginDetailsApplication)[0], viewPolicyPage.getUserName()));
+						_loginDetailsApplication.details.firstName + " " + _loginDetailsApplication.details.lastName, viewPolicyPage.getUserName()));
 	}
 
 	@When("^he searches the newly added policy for client Id in the \"([^\"]*)\" page$")
 	public void he_searches_the_newly_added_policy_for_client_Id_in_the_page(String pageName) throws Throwable {
-		viewPolicyPage.clickElementOfPage(PDTConstants.ADD_NEW_POLICY_FORM);
-		addNewPolicyPage = pageObjectManager.getAddNewPolicyPage();
+		viewPolicyPage.clickElementOfPage(PDTConstants.ADD_NEW_POLICY_FORM, PDTConstants.VIEW_EDIT_POLICY_FORMS);		
+		addNewPolicyPage = testContext.getPageObjectManager().getAddNewPolicyPage();
 		Assert.assertTrue(addNewPolicyPage.verifyAddNewPolicyHeading(pageName),
 				MessageFormat.format(PDTConstants.FAILED_TO_VERIFY_HEADING_ON_PAGE, CoreConstants.FAIL, pageName,
-						PDTConstants.ADD_NEW_POLICY_FORM, addNewPolicyPage.getElementText(PDTConstants.HEADING)));
-		addNewPolicyPage.selectClient(BusinessFunctions.getClientAndPolicyDetails(_loginDetailsApplication)[0], BusinessFunctions.getClientAndPolicyDetails(_loginDetailsApplication)[1]);
-		
+						PDTConstants.ADD_NEW_POLICY_FORM, addNewPolicyPage.getElementText(PDTConstants.HEADING)));		
+		addNewPolicyPage.selectClient(_loginDetailsApplication.details.clientId, _loginDetailsApplication.details.clientName);
 	}
 
 	@Then("^newly added Policy should be displayed in Policy drop down of \"([^\"]*)\" page$")
 	public void newly_added_Policy_should_be_displayed_in_Policy_drop_down_of_page(String arg1) throws Throwable {
 		addNewPolicyPage.selectPolicyName(CoreFunctions.getPropertyFromConfig("pdPolicyName"));
 		Assert.assertTrue(addNewPolicyPage.verifyPolicyName(CoreFunctions.getPropertyFromConfig("pdPolicyName")), MessageFormat.format(PDTConstants.VERIFIED_POLICY_NOT_DISPLAYED, CoreConstants.FAIL, CoreFunctions.getPropertyFromConfig("pdPolicyName")));
-		DbFunctions.deletePolicyByPolicyId(addNewPolicyPage.getPolicyId());
-		webDriverManager.closeDriver();
+		DbFunctions.deletePolicyByPolicyId(ClientPolicyDetails.getPolicyId());
+		testContext.getWebDriverManager().closeDriver();
 	}
 }

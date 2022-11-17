@@ -12,7 +12,11 @@
 			"clientName": "Dow Chemical Company (Global)",
 			"csmUserName": "mxssodev5@corp.aires.com",
 			"csmPassword": "F74#jd*187_NB",
-			"policy": "hDCC Repatriation (# 14724)"
+			"policy": "HR - EBT Program (# 6966)",
+			"mobilityxUserName": "0001159966@aires.com",
+			"mobilityxPassword": "Relonetng1",
+			"profileName": "Nicole Rickett",
+			"mobilityxUrl": "https://relonetqa.aires.com/mobilityx/faces/jsf/Login.jsf"
 		},
 		"dev": {
 			"irisUserName": "BBENEDU",
@@ -25,7 +29,11 @@
 			"clientName": "AIRES-CIS-DEMO&'TEST(CLIENT)",
 			"csmUserName": "mxssodev5@corp.aires.com",
 			"csmPassword": "F74#jd*187_NB",			
-			"policy": "Frequent Business Traveler (# 14614)"
+			"policy": "Frequent Business Traveler (# 14614)",
+			"mobilityxUserName": "0141754442@aires.com",
+			"mobilityxPassword": "relonetng",
+			"profileName": "Fannie Uddin",
+			"mobilityxUrl": "https://relonetqa.aires.com/mobilityx/faces/jsf/Login.jsf"
 		},
 		"prod": {
 			"irisUserName": "BBENEDU",
@@ -38,7 +46,11 @@
 			"clientName": "Sandbox, Inc (# 49214)",
 			"csmUserName": "LDESANZ",
 			"csmPassword": "LDESANZ",
-			"policy": "hDCC Repatriation (# 14724)"
+			"policy": "hDCC Repatriation (# 14724)",
+			"mobilityxUserName": "0141754442@aires.com",
+			"mobilityxPassword": "relonetng",
+			"profileName": "Fannie Uddin",
+			"mobilityxUrl": "https://samltest.aires.com/mobilityx/faces/jsf/Login.jsf"
 		},
 		"preProd": {
 			"irisUserName": "BBENEDU",
@@ -51,7 +63,11 @@
 			"clientName": "Dow Chemical Company (Global)",
 			"csmUserName": "mxssodev5@corp.aires.com",
 			"csmPassword": "F74#jd*187_NB",
-			"policy": "hDCC Repatriation (# 14724)"
+			"policy": "HR - EBT Program (# 6966)",
+			"mobilityxUserName": "0011857546@aires.com",
+			"mobilityxPassword": "Relonetng1",
+			"profileName": "Winnifred Tickell",
+			"mobilityxUrl": "https://relonettest2.aires.com/mobilityx/faces/jsf/Login.jsf"
 		},
 		"uat": {
 			"irisUserName": "BBENEDU",
@@ -64,7 +80,11 @@
 			"clientName": "Dow Chemical Company (Global)",
 			"csmUserName": "mxssodev5@corp.aires.com",
 			"csmPassword": "F74#jd*187_NB",
-			"policy": "hDCC Repatriation (# 14724)"
+			"policy": "HR - EBT Program (# 6966)",
+			"mobilityxUserName": "0001070721@aires.com",
+			"mobilityxPassword": "relonetng1",
+			"profileName": "Nicole Rickett",
+			"mobilityxUrl": "https://relonetdev3.aires.com/mobilityx/faces/jsf/Login.jsf"
 		}
 	},
 	

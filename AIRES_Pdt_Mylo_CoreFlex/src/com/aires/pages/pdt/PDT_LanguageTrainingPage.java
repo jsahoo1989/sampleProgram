@@ -1,28 +1,36 @@
 package com.aires.pages.pdt;
 
 import java.text.MessageFormat;
+import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
+import org.openqa.selenium.NoSuchElementException;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.How;
 import org.testng.Assert;
 
-import com.aires.businessrules.Base;
 import com.aires.businessrules.BusinessFunctions;
 import com.aires.businessrules.CoreFunctions;
+import com.aires.businessrules.DbFunctions;
 import com.aires.businessrules.constants.CoreConstants;
 import com.aires.businessrules.constants.PDTConstants;
 import com.aires.managers.FileReaderManager;
 import com.aires.testdatatypes.pdt.PDT_LanguageTrainingBenefit;
 
-public class PDT_LanguageTrainingPage extends Base {
+import stepDefinitions.pdt.PDT_SharedSubBenefit_Steps;
+
+public class PDT_LanguageTrainingPage extends PDT_SharedSubBenefitPage {
 
 	public PDT_LanguageTrainingPage(WebDriver driver) {
 		super(driver);
 	}
 
+	@FindBy(how = How.CSS, using = "div.form-check > label.form-check-label")
+	private List<WebElement> _subBenefitCategories;
+	
 	@FindBy(how = How.CSS, using = "app-employee input[formcontrolname='maxNumOfHours']")
 	private WebElement _txtBoxMaxNumOfHours;
 
@@ -58,38 +66,125 @@ public class PDT_LanguageTrainingPage extends Base {
 
 	@FindBy(how = How.XPATH, using = "//label[text()='Max. Number of Hours per Family ']")
 	private WebElement _lblMaxNumOfHoursPerFamily;
+	
+	@FindBy(how = How.CSS, using = "a[href='#collapseOne1']")
+	private WebElement _formHeaderLanguageTrainingEmployee;
+	
+	@FindBy(how = How.CSS, using = "a[href='#collapseTwo']")
+	private WebElement _formHeaderLanguageTrainingFamily;
+	
+	@FindBy(how = How.CSS, using = "ng-select[formcontrolname='languageTrainingEmployeeExpenseCodeList']")
+	private WebElement _drpDownLangTrainEmpExpenseCode;
+	
+	@FindBy(how = How.CSS, using = "ng-select[formcontrolname='languageTrainingEmployeeExpenseCodeList'] span.ng-option-label.ng-star-inserted")
+	private List<WebElement> _drpDownOptionsLangTrainEmpExpenseCode;
+	
+	@FindBy(how = How.CSS, using = "ng-select[formcontrolname='languageTrainingEmployeeExpenseCodeList'] span.ng-value-label.ng-star-inserted")
+	private List<WebElement> _drpDownSelectedOptionsLangTrainEmpExpenseCode;
+	
+	@FindBy(how = How.CSS, using = "ng-select[formcontrolname='languageTrainingFamilyExpenseCodeList']")
+	private WebElement _drpDownLangTrainFamilyExpenseCode;
+	
+	@FindBy(how = How.CSS, using = "ng-select[formcontrolname='languageTrainingFamilyExpenseCodeList'] span.ng-option-label.ng-star-inserted")
+	private List<WebElement> _drpDownOptionsLangTrainFamilyExpenseCode;
+	
+	@FindBy(how = How.CSS, using = "ng-select[formcontrolname='languageTrainingFamilyExpenseCodeList'] span.ng-value-label.ng-star-inserted")
+	private List<WebElement> _drpDownSelectedOptionsLangTrainFamilyExpenseCode;
+	
+	
 
 	PDT_LanguageTrainingBenefit languageTrainingBenefitData = FileReaderManager.getInstance().getJsonReader()
 			.getLanguageTrainingDataList("Language Training");
 	
+	private ArrayList<String> _expenseCodeLangTrainEmp = null;
+	private ArrayList<String> _expenseCodeLangTrainFamily = null;
+	
+	public void setExpenseCodeLangTrainEmp(ArrayList <String> expenseCode) {
+		this._expenseCodeLangTrainEmp = expenseCode;
+	}
 
-	public void fillLanguageTrainingEmployee(PDT_AddNewPolicyPage addNewPolicyPage, String subBenefitFormName) {
-		try {			
+	public ArrayList <String> getExpenseCodeLangTrainEmp() {
+		return _expenseCodeLangTrainEmp;
+	}
+	
+	public void setExpenseCodeLangTrainFamily(ArrayList <String> expenseCode) {
+		this._expenseCodeLangTrainFamily = expenseCode;
+	}
+
+	public ArrayList <String> getExpenseCodeLangTrainFamily() {
+		return _expenseCodeLangTrainFamily;
+	}
+	
+	/**
+	 * Add the Form Header of Language Training Employee & Language Training Family in Hash map i.e. subBenefitHeaderMap
+	 */
+	public void populateSubBenefitHeaderMap() {
+		subBenefitHeaderMap.put(PDTConstants.LANGUAGE_TRAINING_EMPLOYEE, _formHeaderLanguageTrainingEmployee);
+		subBenefitHeaderMap.put(PDTConstants.LANGUAGE_TRAINING_FAMILY, _formHeaderLanguageTrainingFamily);
+	}
+	
+
+	/**
+	 * Fill Language Training Employee Sub-benefit form.
+	 * @param addNewPolicyPage
+	 * @param subBenefitFormName
+	 * @param subBenefitPage
+	 * @param pageName
+	 */
+	public void fillLanguageTrainingEmployee(PDT_AddNewPolicyPage addNewPolicyPage, String subBenefitFormName, PDT_SharedSubBenefitPage subBenefitPage, String pageName) {
+		try {
+			populateSubBenefitHeaderMap();
+			Assert.assertTrue(BusinessFunctions.verifySubBenefitFormHeaderIsDisplayed(driver, subBenefitHeaderMap.get(subBenefitFormName), subBenefitFormName, pageName),
+					MessageFormat.format(PDTConstants.VERIFIED_FORM_IS_NOT_DISPLAYED, subBenefitFormName, pageName));
+			BusinessFunctions.expandSubBenefitIfCollapsed(subBenefitHeaderMap.get(subBenefitFormName), subBenefitFormName, driver);
 			CoreFunctions.explicitWaitTillElementVisibility(driver, _txtBoxMaxNumOfHours, _lblMaxNumOfHours.getText());
 			CoreFunctions.clearAndSetText(driver, _txtBoxMaxNumOfHours, _lblMaxNumOfHours.getText(),
 					languageTrainingBenefitData.languageTrainingEmployee.maxNumOfHours);
 
 			CoreFunctions.explicitWaitTillElementListClickable(driver, _radioBtnLangTrainingEmployee);
-			CoreFunctions.selectItemInListByText(driver, _radioBtnLangTrainingEmployee,
-					languageTrainingBenefitData.languageTrainingEmployee.grossUp, PDTConstants.GROSS_UP,
-					PDTConstants.RADIO_BUTTON_LIST, true);
+			if(subBenefitPage.getCompletePolicyState())
+				CoreFunctions.selectItemInListByText(driver, _radioBtnLangTrainingEmployee,
+						languageTrainingBenefitData.languageTrainingEmployee.grossUp, PDTConstants.GROSS_UP,
+						PDTConstants.RADIO_BUTTON_LIST, true);
 			CoreFunctions.selectItemInListByText(driver, _radioBtnLangTrainingEmployee,
 					languageTrainingBenefitData.languageTrainingEmployee.reimbursedBy, PDTConstants.REIMBURSED_BY,
 					PDTConstants.RADIO_BUTTON_LIST, true);
 
-			BusinessFunctions.verifyOtherTextBoxIsDisplayed(driver, addNewPolicyPage,
+			BusinessFunctions.verifyOtherTextBoxIsDisplayed(driver,
 					languageTrainingBenefitData.languageTrainingEmployee.reimbursedBy,
 					_txtBoxReimbursedByOtherForLangTrainingEmp,
 					languageTrainingBenefitData.languageTrainingEmployee.reimbursedByOther, subBenefitFormName, PDTConstants.REIMBURSED_BY_OTHER);
 			CoreFunctions.clearAndSetText(driver, _txtAreaCommentForLangTrainingEmp, PDTConstants.COMMENT,
 					languageTrainingBenefitData.languageTrainingEmployee.comments);
+			
+			CoreFunctions.clickElement(driver, _drpDownLangTrainEmpExpenseCode);
+			Assert.assertTrue(
+					BusinessFunctions.verifyAllExpenseCodesListForSubBenefit(driver,
+							PDTConstants.LANGUAGE_TRAINING, PDTConstants.LANGUAGE_TRAINING_EMPLOYEE,
+							_drpDownOptionsLangTrainEmpExpenseCode),
+					MessageFormat.format(PDTConstants.VERIFIED_EXPENSE_CODE_OPTIONS_NOT_POPULATED, CoreConstants.FAIL,
+							PDTConstants.LANGUAGE_TRAINING_EMPLOYEE, DbFunctions.getExpenseCodeListForBenefit(PDTConstants.LANGUAGE_TRAINING).toString(), CoreFunctions.getElementTextAndStoreInList(driver, _drpDownOptionsLangTrainEmpExpenseCode).toString()));
+			ArrayList <String> randExpenseCodeOptions = CoreFunctions.getMultipleRandomOptionsForDropDown(0, _drpDownOptionsLangTrainEmpExpenseCode.size(), 3, driver, _drpDownOptionsLangTrainEmpExpenseCode);
+			BusinessFunctions.selectRandomDropDownOption(driver, PDTConstants.EXPENSE_CODES, _drpDownLangTrainEmpExpenseCode, _drpDownOptionsLangTrainEmpExpenseCode, _drpDownSelectedOptionsLangTrainEmpExpenseCode, randExpenseCodeOptions, subBenefitFormName);
+			setExpenseCodeLangTrainEmp(randExpenseCodeOptions);
 		} catch (Exception e) {			
 			Assert.fail(MessageFormat.format(PDTConstants.EXCEPTION_OCCURED_FILL_SUBBENEFIT_FORM, CoreConstants.FAIL, subBenefitFormName));			
 		}
 	}
 
-	public void fillLanguageTrainingFamily(PDT_AddNewPolicyPage addNewPolicyPage, String subBenefitFormName) {
+	/**
+	 * Fill Language Training Family Sub-benefit form.
+	 * @param addNewPolicyPage
+	 * @param subBenefitFormName
+	 * @param subBenefitPage
+	 * @param pageName
+	 */
+	public void fillLanguageTrainingFamily(PDT_AddNewPolicyPage addNewPolicyPage, String subBenefitFormName, PDT_SharedSubBenefitPage subBenefitPage, String pageName) {
 		try {
+			populateSubBenefitHeaderMap();
+			Assert.assertTrue(BusinessFunctions.verifySubBenefitFormHeaderIsDisplayed(driver, subBenefitHeaderMap.get(subBenefitFormName), subBenefitFormName, pageName),
+					MessageFormat.format(PDTConstants.VERIFIED_FORM_IS_NOT_DISPLAYED, subBenefitFormName, pageName));
+			BusinessFunctions.expandSubBenefitIfCollapsed(subBenefitHeaderMap.get(subBenefitFormName), subBenefitFormName, driver);
 			CoreFunctions.explicitWaitTillElementVisibility(driver, _txtBoxMaxNumOfHoursPerPerson,
 					_lblMaxNumOfHoursPerPerson.getText());
 			CoreFunctions.clearAndSetText(driver, _txtBoxMaxNumOfHoursPerPerson, _lblMaxNumOfHoursPerPerson.getText(),
@@ -99,21 +194,86 @@ public class PDT_LanguageTrainingPage extends Base {
 					languageTrainingBenefitData.languageTrainingFamily.maxNumOfHrsPerFamily);
 
 			CoreFunctions.explicitWaitTillElementListClickable(driver, _radioBtnLangTrainingFamily);
-			CoreFunctions.selectItemInListByText(driver, _radioBtnLangTrainingFamily,
-					languageTrainingBenefitData.languageTrainingFamily.grossUp, PDTConstants.GROSS_UP,
-					PDTConstants.RADIO_BUTTON_LIST, true);
+			if(subBenefitPage.getCompletePolicyState())
+				CoreFunctions.selectItemInListByText(driver, _radioBtnLangTrainingFamily,
+						languageTrainingBenefitData.languageTrainingFamily.grossUp, PDTConstants.GROSS_UP,
+						PDTConstants.RADIO_BUTTON_LIST, true);
 			CoreFunctions.selectItemInListByText(driver, _radioBtnLangTrainingFamily,
 					languageTrainingBenefitData.languageTrainingFamily.reimbursedBy, PDTConstants.REIMBURSED_BY,
 					PDTConstants.RADIO_BUTTON_LIST, true);
 
-			BusinessFunctions.verifyOtherTextBoxIsDisplayed(driver, addNewPolicyPage,
+			BusinessFunctions.verifyOtherTextBoxIsDisplayed(driver,
 					languageTrainingBenefitData.languageTrainingFamily.reimbursedBy,
 					_txtBoxReimbursedByOtherForLangTrainingFamily,
 					languageTrainingBenefitData.languageTrainingFamily.reimbursedByOther, subBenefitFormName, PDTConstants.REIMBURSED_BY_OTHER);
 			CoreFunctions.clearAndSetText(driver, _txtAreaCommentForLangTrainingFamily, PDTConstants.COMMENT,
 					languageTrainingBenefitData.languageTrainingFamily.comments);
+			
+			CoreFunctions.clickElement(driver, _drpDownLangTrainFamilyExpenseCode);
+			Assert.assertTrue(
+					BusinessFunctions.verifyAllExpenseCodesListForSubBenefit(driver,
+							PDTConstants.LANGUAGE_TRAINING, PDTConstants.LANGUAGE_TRAINING_FAMILY,
+							_drpDownOptionsLangTrainFamilyExpenseCode),
+					MessageFormat.format(PDTConstants.VERIFIED_EXPENSE_CODE_OPTIONS_NOT_POPULATED, CoreConstants.FAIL,
+							PDTConstants.LANGUAGE_TRAINING_FAMILY, DbFunctions.getExpenseCodeListForBenefit(PDTConstants.LANGUAGE_TRAINING).toString(), CoreFunctions.getElementTextAndStoreInList(driver, _drpDownOptionsLangTrainFamilyExpenseCode).toString()));
+			ArrayList <String> randExpenseCodeOptions = CoreFunctions.getMultipleRandomOptionsForDropDown(0, _drpDownOptionsLangTrainFamilyExpenseCode.size(), 3, driver, _drpDownOptionsLangTrainFamilyExpenseCode);
+			BusinessFunctions.selectRandomDropDownOption(driver, PDTConstants.EXPENSE_CODES, _drpDownLangTrainFamilyExpenseCode, _drpDownOptionsLangTrainFamilyExpenseCode, _drpDownSelectedOptionsLangTrainFamilyExpenseCode, randExpenseCodeOptions, subBenefitFormName);
+			setExpenseCodeLangTrainFamily(randExpenseCodeOptions);
 		} catch (Exception e) {
 			Assert.fail(MessageFormat.format(PDTConstants.EXCEPTION_OCCURED_FILL_SUBBENEFIT_FORM, CoreConstants.FAIL, subBenefitFormName));
+		}
+	}
+	
+	/**
+	 * Fill Language Training Sub-benefit form depending on sub-benefit name.
+	 * @param subBenefit
+	 * @param pageName
+	 * @param addNewPolicyPage
+	 * @param subBenefitPage
+	 */
+	public void fillLanguageTrainingSubBenefit(String subBenefit, String pageName, PDT_AddNewPolicyPage addNewPolicyPage, PDT_SharedSubBenefitPage subBenefitPage) {		
+		switch (subBenefit) {
+		case PDTConstants.LANGUAGE_TRAINING_EMPLOYEE:
+			fillLanguageTrainingEmployee(addNewPolicyPage, subBenefit, subBenefitPage, pageName);
+			break;
+		case PDTConstants.LANGUAGE_TRAINING_FAMILY:
+			fillLanguageTrainingFamily(addNewPolicyPage, subBenefit, subBenefitPage, pageName);
+			break;
+		default:
+			Assert.fail(MessageFormat.format(PDTConstants.SUBBENEFIT_NOT_FOUND, CoreConstants.FAIL, subBenefit, pageName));
+		}		
+	}
+	
+	/**
+	 * Iterate Language Training sub-benefits and fill their corresponding form.
+	 * @param pageName
+	 * @param subBenefits
+	 * @param addNewPolicyPage
+	 * @param objStep
+	 * @param btnName
+	 * @param subBenefitPage 
+	 */
+	public void iterateAndFillLanguageTrainingSubBenefits(String pageName, List<String> subBenefits,
+			PDT_AddNewPolicyPage addNewPolicyPage, PDT_SharedSubBenefit_Steps objStep, String btnName, PDT_SharedSubBenefitPage subBenefitPage) {
+		CoreFunctions.explicitWaitTillElementListClickable(driver, _subBenefitCategories);			
+		populateBtnMap();
+		populateConfirmDialogbuttonMap();
+		WebElement btnToClick = (btnName != null) ?  buttonMap.get(btnName) : buttonMap.get(PDTConstants.SAVE);
+		for (String subBenefit : subBenefits) {
+			CoreFunctions.selectItemInListByText(driver, _subBenefitCategories, subBenefit, true);
+			timeBeforeAction = new Date().getTime();
+			waitForProgressBarToDisapper();
+			timeAfterAction = new Date().getTime();
+			BusinessFunctions.printTimeTakenByPageToLoad(timeBeforeAction, timeAfterAction, pageName, subBenefit);
+			fillLanguageTrainingSubBenefit(subBenefit, pageName, addNewPolicyPage, subBenefitPage);
+		}
+		try {
+			CoreFunctions.click(driver, btnToClick, btnToClick.getText());
+		} catch (NoSuchElementException e) {
+			Assert.fail(MessageFormat.format(PDTConstants.MISSING_BTN, CoreConstants.FAIL, btnName));
+		} catch (Exception e) {
+			e.printStackTrace();
+			Assert.fail(MessageFormat.format(PDTConstants.FAILED_TO_CLICK_ON_BTN, CoreConstants.FAIL, btnName));
 		}
 	}
 }

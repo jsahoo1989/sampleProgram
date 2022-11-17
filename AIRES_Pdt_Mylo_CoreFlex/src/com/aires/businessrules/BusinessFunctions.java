@@ -1239,7 +1239,30 @@ public class BusinessFunctions {
 			if(CoreFunctions.getElementTextAndStoreInList(driver, _drpDownOptionsExpenseCode).equals(DbFunctions.getExpenseCodeListForBenefit(benefitName))) {
 				Reporter.addStepLog(MessageFormat.format(PDTConstants.VERIFIED_EXPENSE_CODE_OPTIONS_POPULATED, CoreConstants.PASS, subBenefitName));
 				return true;
-			}				
+			}			
+			//Log.info(driver.findElements(By.cssSelector("ng-select[formcontrolname='culturalTrainingEmployeeExpenseCodeList'] span.ng-option-label.ng-star-inserted")).get(2).getText());
+		} catch (Exception e) {
+			Reporter.addStepLog("Exception occured while verifying expense code for sub-benefit:-"+subBenefitName);
+			return false;
+		}
+		return false;
+	}
+	
+	public static List<String> getExpenseCode(WebDriver driver, List<WebElement> _drpDownOptionsExpenseCode) {
+		List<String> drpDownOptions = CoreFunctions.getElementTextAndStoreInList(driver, _drpDownOptionsExpenseCode);
+		List<String> expenseCodesList = new ArrayList<String>();
+		for(String options : drpDownOptions){
+			expenseCodesList.add(options.substring(0, options.indexOf("-")-1).trim());
+		}
+		return expenseCodesList;
+	}
+	
+	public static boolean verifyAllExpenseCodesListForSubBenefit(WebDriver driver, String benefitName, String subBenefitName, List<WebElement> _drpDownOptionsExpenseCode) {
+		try {
+			if(getExpenseCode(driver, _drpDownOptionsExpenseCode).equals(DbFunctions.getExpenseCodeForBenefit(benefitName))) {
+				Reporter.addStepLog(MessageFormat.format(PDTConstants.VERIFIED_EXPENSE_CODE_OPTIONS_POPULATED, CoreConstants.PASS, subBenefitName));
+				return true;
+			}			
 		} catch (Exception e) {
 			Reporter.addStepLog("Exception occured while verifying expense code for sub-benefit:-"+subBenefitName);
 			return false;
@@ -1247,4 +1270,26 @@ public class BusinessFunctions {
 		return false;
 	}
 
+	public static void selectRandomDropDownOption(WebDriver driver, String dropDownName, WebElement _drpDown,
+			List<WebElement> _drpDownOptions, List<WebElement> _drpDownSelectedOptions, List<String> randOptions,
+			String subBenefitFormName) {
+		try {
+
+			for (String options : randOptions) {
+				CoreFunctions.selectItemInListByText(driver, _drpDownOptions, options.trim(), dropDownName,
+						PDTConstants.DROP_DOWN, true);
+			}
+			if (_drpDownSelectedOptions.size() > 1 && randOptions
+					.equals(CoreFunctions.getElementTextAndStoreInList(driver, _drpDownSelectedOptions).toString())) {
+				Reporter.addStepLog(MessageFormat.format(PDTConstants.VERIFIED_DROP_DOWN_MULTISELECT,
+						CoreConstants.PASS, dropDownName,
+						CoreFunctions.getElementTextAndStoreInList(driver, _drpDownSelectedOptions).toString()));
+			}
+
+		} catch (Exception e) {
+			Assert.fail(MessageFormat.format(PDTConstants.FAILED_TO_SELECT_MULTIPLE_OPTIONS, CoreConstants.FAIL,
+					dropDownName, subBenefitFormName));
+		}
+	}
+	
 }

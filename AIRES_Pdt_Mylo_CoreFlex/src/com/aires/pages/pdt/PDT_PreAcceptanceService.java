@@ -1,6 +1,7 @@
 package com.aires.pages.pdt;
 
 import java.text.MessageFormat;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
@@ -17,6 +18,7 @@ import org.testng.Assert;
 
 import com.aires.businessrules.BusinessFunctions;
 import com.aires.businessrules.CoreFunctions;
+import com.aires.businessrules.DbFunctions;
 import com.aires.businessrules.constants.CoreConstants;
 import com.aires.businessrules.constants.PDTConstants;
 import com.aires.managers.FileReaderManager;
@@ -300,13 +302,44 @@ public class PDT_PreAcceptanceService extends PDT_SharedSubBenefitPage {
 	@FindBy(how = How.CSS, using = "ng-select[formcontrolname='preAcceptanceCandidateSelectionExpenseCodeList'] span.ng-value-label.ng-star-inserted")
 	private List<WebElement> _drpDownSelectedOptionsCandSelectionExpenseCode;
 	
+	@FindBy(how = How.CSS, using = "ng-select[formcontrolname='preAcceptanceTransportationExpenseCodeList']")
+	private WebElement _drpDownTransportationExpenseCode;
+	
+	@FindBy(how = How.CSS, using = "ng-select[formcontrolname='preAcceptanceTransportationExpenseCodeList'] span.ng-option-label.ng-star-inserted")
+	private List<WebElement> _drpDownOptionsTransportationExpenseCode;
+	
+	@FindBy(how = How.CSS, using = "ng-select[formcontrolname='preAcceptanceTransportationExpenseCodeList'] span.ng-value-label.ng-star-inserted")
+	private List<WebElement> _drpDownSelectedOptionsTransportationExpenseCode;
+	
+	@FindBy(how = How.CSS, using = "ng-select[formcontrolname='preAcceptanceLodgingExpenseCodeList']")
+	private WebElement _drpDownTripLodgingExpenseCode;
+	
+	@FindBy(how = How.CSS, using = "ng-select[formcontrolname='preAcceptanceLodgingExpenseCodeList'] span.ng-option-label.ng-star-inserted")
+	private List<WebElement> _drpDownOptionsLodgingExpenseCode;
+	
+	@FindBy(how = How.CSS, using = "ng-select[formcontrolname='preAcceptanceLodgingExpenseCodeList'] span.ng-value-label.ng-star-inserted")
+	private List<WebElement> _drpDownSelectedOptionsLodgingExpenseCode;
+	
+	@FindBy(how = How.CSS, using = "ng-select[formcontrolname='preAcceptanceMealsExpenseCodeList']")
+	private WebElement _drpDownTripMealsExpenseCode;
+	
+	@FindBy(how = How.CSS, using = "ng-select[formcontrolname='preAcceptanceMealsExpenseCodeList'] span.ng-option-label.ng-star-inserted")
+	private List<WebElement> _drpDownOptionsTripMealsExpenseCode;
+	
+	@FindBy(how = How.CSS, using = "ng-select[formcontrolname='preAcceptanceMealsExpenseCodeList'] span.ng-value-label.ng-star-inserted")
+	private List<WebElement> _drpDownSelectedOptionsTripMealsExpenseCode;
+	
 	final By _subBenefitCategoriesLocator = By.cssSelector("div.form-check > label.form-check-label");
 
 	PDT_PreAcceptanceServiceBenefit preAcceptanceSubBenefitData = FileReaderManager.getInstance().getJsonReader()
 			.getPreAcceptanceDataList("Pre-Acceptance Services");
 
 	private String transportType, accompanyingFamilyMemeber, maxAmtPreAcceptTripLodging, maxAmtPreAcceptTripMeals;
-
+	private ArrayList<String> _expenseCodeCandSelection = null;
+	private ArrayList<String> _expenseCodeTransportation = null;
+	private ArrayList<String> _expenseCodeTripLodging = null;
+	private ArrayList<String> _expenseCodeTripMeals = null;
+	
 	long timeBeforeAction, timeAfterAction;
 	public void setTransportType(String transType) {
 		transportType = transType;
@@ -339,7 +372,39 @@ public class PDT_PreAcceptanceService extends PDT_SharedSubBenefitPage {
 	public String getMaxAmtPreAcceptTripMeals() {
 		return maxAmtPreAcceptTripMeals;
 	}
+	
+	public void setExpenseCodeCandSelection(ArrayList <String> expenseCode) {
+		this._expenseCodeCandSelection = expenseCode;
+	}
 
+	public ArrayList <String> getExpenseCodeCandSelection() {
+		return _expenseCodeCandSelection;
+	}
+	
+	public void setExpenseCodeTransportation(ArrayList <String> expenseCode) {
+		this._expenseCodeTransportation = expenseCode;
+	}
+
+	public ArrayList <String> getExpenseCodeTransportation() {
+		return _expenseCodeTransportation;
+	}
+
+	public void setExpenseCodeTripLodging(ArrayList <String> expenseCode) {
+		this._expenseCodeTripLodging = expenseCode;
+	}
+
+	public ArrayList <String> getExpenseCodeTripLodging() {
+		return _expenseCodeTripLodging;
+	}
+	
+	public void setExpenseCodeTripMeals(ArrayList <String> expenseCode) {
+		this._expenseCodeTripMeals = expenseCode;
+	}
+
+	public ArrayList <String> getExpenseCodeTripMeals() {
+		return _expenseCodeTripMeals;
+	}
+	
 	public WebElement getElementByName(String elementName) {
 		WebElement element = null;
 		populateSubBenefitHeaderMap();
@@ -502,7 +567,10 @@ public class PDT_PreAcceptanceService extends PDT_SharedSubBenefitPage {
 							PDTConstants.PRE_ACCEPTANCE_SERVICES, PDTConstants.CANDIDATE_SELECTION,
 							_drpDownOptionsCandSelectionExpenseCode),
 					MessageFormat.format(PDTConstants.VERIFIED_EXPENSE_CODE_OPTIONS_NOT_POPULATED, CoreConstants.FAIL,
-							PDTConstants.CANDIDATE_SELECTION));
+							PDTConstants.CANDIDATE_SELECTION, DbFunctions.getExpenseCodeListForBenefit(PDTConstants.PRE_ACCEPTANCE_SERVICES).toString(), CoreFunctions.getElementTextAndStoreInList(driver, _drpDownOptionsCandSelectionExpenseCode).toString()));
+			ArrayList <String> randExpenseCodeOptions = CoreFunctions.getMultipleRandomOptionsForDropDown(0, _drpDownOptionsCandSelectionExpenseCode.size(), 5, driver, _drpDownOptionsCandSelectionExpenseCode);
+			BusinessFunctions.selectRandomDropDownOption(driver, PDTConstants.EXPENSE_CODES, _drpDownCandSelectionExpenseCode, _drpDownOptionsCandSelectionExpenseCode, _drpDownSelectedOptionsCandSelectionExpenseCode, randExpenseCodeOptions, subBenefitFormName);
+			setExpenseCodeCandSelection(randExpenseCodeOptions);
 		} catch (Exception e) {
 			Assert.fail(MessageFormat.format(PDTConstants.EXCEPTION_OCCURED_FILL_SUBBENEFIT_FORM, CoreConstants.FAIL, subBenefitFormName));
 		}
@@ -578,6 +646,18 @@ public class PDT_PreAcceptanceService extends PDT_SharedSubBenefitPage {
 
 			CoreFunctions.clearAndSetText(driver, _txtAreaPreTripTransportComment, PDTConstants.COMMENT,
 					preAcceptanceSubBenefitData.preAcceptanceTripTransportation.comment);
+			
+			CoreFunctions.clickElement(driver, _drpDownTransportationExpenseCode);
+			Assert.assertTrue(
+					BusinessFunctions.verifyAllExpenseCodesArePopulatedForSubBenefit(driver,
+							PDTConstants.PRE_ACCEPTANCE_SERVICES, PDTConstants.PRE_ACCEPTANCE_TRIP_TRANSPORTATION,
+							_drpDownOptionsTransportationExpenseCode),
+					MessageFormat.format(PDTConstants.VERIFIED_EXPENSE_CODE_OPTIONS_NOT_POPULATED, CoreConstants.FAIL,
+							PDTConstants.PRE_ACCEPTANCE_TRIP_TRANSPORTATION, DbFunctions.getExpenseCodeListForBenefit(PDTConstants.PRE_ACCEPTANCE_SERVICES).toString(), CoreFunctions.getElementTextAndStoreInList(driver, _drpDownOptionsTransportationExpenseCode).toString()));
+			ArrayList <String> randExpenseCodeOptions = CoreFunctions.getMultipleRandomOptionsForDropDown(0, _drpDownOptionsTransportationExpenseCode.size(), 5, driver, _drpDownOptionsTransportationExpenseCode);
+			BusinessFunctions.selectRandomDropDownOption(driver, PDTConstants.EXPENSE_CODES, _drpDownTransportationExpenseCode, _drpDownOptionsTransportationExpenseCode, _drpDownSelectedOptionsTransportationExpenseCode, randExpenseCodeOptions, subBenefitFormName);
+			setExpenseCodeTransportation(randExpenseCodeOptions);
+			
 		} catch (Exception e) {
 			Assert.fail(MessageFormat.format(PDTConstants.EXCEPTION_OCCURED_FILL_SUBBENEFIT_FORM, CoreConstants.FAIL, subBenefitFormName));
 		}
@@ -638,6 +718,17 @@ public class PDT_PreAcceptanceService extends PDT_SharedSubBenefitPage {
 
 			CoreFunctions.clearAndSetText(driver, _txtAreaPreTripLodgingComment, PDTConstants.COMMENT,
 					preAcceptanceSubBenefitData.preAcceptanceTripLodging.comment);
+			
+			CoreFunctions.clickElement(driver, _drpDownTripLodgingExpenseCode);
+			Assert.assertTrue(
+					BusinessFunctions.verifyAllExpenseCodesArePopulatedForSubBenefit(driver,
+							PDTConstants.PRE_ACCEPTANCE_SERVICES, PDTConstants.PRE_ACCEPTANCE_TRIP_LODGING,
+							_drpDownOptionsLodgingExpenseCode),
+					MessageFormat.format(PDTConstants.VERIFIED_EXPENSE_CODE_OPTIONS_NOT_POPULATED, CoreConstants.FAIL,
+							PDTConstants.PRE_ACCEPTANCE_TRIP_LODGING, DbFunctions.getExpenseCodeListForBenefit(PDTConstants.PRE_ACCEPTANCE_SERVICES).toString(), CoreFunctions.getElementTextAndStoreInList(driver, _drpDownOptionsLodgingExpenseCode).toString()));
+			ArrayList <String> randExpenseCodeOptions = CoreFunctions.getMultipleRandomOptionsForDropDown(0, _drpDownOptionsLodgingExpenseCode.size(), 5, driver, _drpDownOptionsLodgingExpenseCode);
+			BusinessFunctions.selectRandomDropDownOption(driver, PDTConstants.EXPENSE_CODES, _drpDownTripLodgingExpenseCode, _drpDownOptionsLodgingExpenseCode, _drpDownSelectedOptionsLodgingExpenseCode, randExpenseCodeOptions, subBenefitFormName);
+			setExpenseCodeTripLodging(randExpenseCodeOptions);
 		} catch (Exception e) {
 			e.printStackTrace();
 			Assert.fail(MessageFormat.format(PDTConstants.EXCEPTION_OCCURED_FILL_SUBBENEFIT_FORM, CoreConstants.FAIL, subBenefitFormName));
@@ -682,6 +773,17 @@ public class PDT_PreAcceptanceService extends PDT_SharedSubBenefitPage {
 
 			CoreFunctions.clearAndSetText(driver, _txtAreaPreTripMealComment, PDTConstants.COMMENT,
 					preAcceptanceSubBenefitData.preAcceptanceTripMeals.comment);
+			
+			CoreFunctions.clickElement(driver, _drpDownTripMealsExpenseCode);
+			Assert.assertTrue(
+					BusinessFunctions.verifyAllExpenseCodesArePopulatedForSubBenefit(driver,
+							PDTConstants.PRE_ACCEPTANCE_SERVICES, PDTConstants.PRE_ACCEPTANCE_TRIP_MEALS,
+							_drpDownOptionsTripMealsExpenseCode),
+					MessageFormat.format(PDTConstants.VERIFIED_EXPENSE_CODE_OPTIONS_NOT_POPULATED, CoreConstants.FAIL,
+							PDTConstants.PRE_ACCEPTANCE_TRIP_MEALS, DbFunctions.getExpenseCodeListForBenefit(PDTConstants.PRE_ACCEPTANCE_SERVICES).toString(), CoreFunctions.getElementTextAndStoreInList(driver, _drpDownOptionsTripMealsExpenseCode).toString()));
+			ArrayList <String> randExpenseCodeOptions = CoreFunctions.getMultipleRandomOptionsForDropDown(0, _drpDownOptionsTripMealsExpenseCode.size(), 5, driver, _drpDownOptionsTripMealsExpenseCode);
+			BusinessFunctions.selectRandomDropDownOption(driver, PDTConstants.EXPENSE_CODES, _drpDownTripMealsExpenseCode, _drpDownOptionsTripMealsExpenseCode, _drpDownSelectedOptionsTripMealsExpenseCode, randExpenseCodeOptions, subBenefitFormName);
+			setExpenseCodeTripMeals(randExpenseCodeOptions);
 		} catch (Exception e) {
 			e.printStackTrace();
 			Assert.fail(MessageFormat.format(PDTConstants.EXCEPTION_OCCURED_FILL_SUBBENEFIT_FORM, CoreConstants.FAIL, subBenefitFormName));

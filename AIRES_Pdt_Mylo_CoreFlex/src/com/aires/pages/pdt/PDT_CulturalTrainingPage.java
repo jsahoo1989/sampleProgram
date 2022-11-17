@@ -1,6 +1,7 @@
 package com.aires.pages.pdt;
 
 import java.text.MessageFormat;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.LinkedHashMap;
 import java.util.List;
@@ -14,6 +15,7 @@ import org.testng.Assert;
 
 import com.aires.businessrules.BusinessFunctions;
 import com.aires.businessrules.CoreFunctions;
+import com.aires.businessrules.DbFunctions;
 import com.aires.businessrules.constants.CoreConstants;
 import com.aires.businessrules.constants.PDTConstants;
 import com.aires.managers.FileReaderManager;
@@ -93,11 +95,31 @@ public class PDT_CulturalTrainingPage extends PDT_SharedSubBenefitPage {
 	@FindBy(how = How.CSS, using = "div.ngx-progress-bar.ngx-progress-bar-ltr")
 	private WebElement _progressBar;
 	
+	@FindBy(how = How.CSS, using = "ng-select[formcontrolname='culturalTrainingEmployeeExpenseCodeList']")
+	private WebElement _drpDownCultTrainEmpExpenseCode;
+	
+	@FindBy(how = How.CSS, using = "ng-select[formcontrolname='culturalTrainingEmployeeExpenseCodeList'] span.ng-option-label.ng-star-inserted")
+	private List<WebElement> _drpDownOptionsCultTrainEmpExpenseCode;
+	
+	@FindBy(how = How.CSS, using = "ng-select[formcontrolname='culturalTrainingEmployeeExpenseCodeList'] span.ng-value-label.ng-star-inserted")
+	private List<WebElement> _drpDownSelectedOptionsCultTrainEmpExpenseCode;
+	
+	@FindBy(how = How.CSS, using = "ng-select[formcontrolname='culturalTrainingFamilyExpenseCodeList']")
+	private WebElement _drpDownCultTrainFamilyExpenseCode;
+	
+	@FindBy(how = How.CSS, using = "ng-select[formcontrolname='culturalTrainingFamilyExpenseCodeList'] span.ng-option-label.ng-star-inserted")
+	private List<WebElement> _drpDownOptionsCultTrainFamilyExpenseCode;
+	
+	@FindBy(how = How.CSS, using = "ng-select[formcontrolname='culturalTrainingFamilyExpenseCodeList'] span.ng-value-label.ng-star-inserted")
+	private List<WebElement> _drpDownSelectedOptionsCultTrainFamilyExpenseCode;
+	
 	PDT_CulturalTrainingBenefit culturalTrainingBenefitData = FileReaderManager.getInstance().getJsonReader()
 			.getCulturalTrainingDataList("Cultural Training");
 	
 	String numOfDaysForEmp, numOfDaysForFamily;
 	LinkedHashMap<String, WebElement> subBenefitHeaderMap = new LinkedHashMap<String, WebElement>();
+	private ArrayList<String> _expenseCodeCultTrainEmp = null;
+	private ArrayList<String> _expenseCodeCultTrainFamily = null;
 	
 	public void setNumOfDayForEmployee(String numOfDays) {
 		numOfDaysForEmp = numOfDays;
@@ -115,6 +137,21 @@ public class PDT_CulturalTrainingPage extends PDT_SharedSubBenefitPage {
 		return numOfDaysForFamily;
 	}
 	
+	public void setExpenseCodeCultTrainEmp(ArrayList <String> expenseCode) {
+		this._expenseCodeCultTrainEmp = expenseCode;
+	}
+
+	public ArrayList <String> getExpenseCodeCultTrainEmp() {
+		return _expenseCodeCultTrainEmp;
+	}
+	
+	public void setExpenseCodeCultTrainFamily(ArrayList <String> expenseCode) {
+		this._expenseCodeCultTrainFamily = expenseCode;
+	}
+
+	public ArrayList <String> getExpenseCodeCultTrainFamily() {
+		return _expenseCodeCultTrainFamily;
+	}
 	/**
 	 * Add the Form Header of Cultural Training Employee & Cultural Training Family in Hash map i.e. subBenefitHeaderMap
 	 */
@@ -166,6 +203,17 @@ public class PDT_CulturalTrainingPage extends PDT_SharedSubBenefitPage {
 					culturalTrainingBenefitData.culturalTrainingEmployee.reimbursedByOther, subBenefitFormName, PDTConstants.REIMBURSED_BY_OTHER);
 			CoreFunctions.clearAndSetText(driver, _txtAreaCommentForCultTrainingEmp, PDTConstants.COMMENT,
 					culturalTrainingBenefitData.culturalTrainingEmployee.comments);
+			
+			CoreFunctions.clickElement(driver, _drpDownCultTrainEmpExpenseCode);
+			Assert.assertTrue(
+					BusinessFunctions.verifyAllExpenseCodesListForSubBenefit(driver,
+							PDTConstants.CULTURAL_TRAINING, PDTConstants.CULTURAL_TRAINING_EMPLOYEE,
+							_drpDownOptionsCultTrainEmpExpenseCode),
+					MessageFormat.format(PDTConstants.VERIFIED_EXPENSE_CODE_OPTIONS_NOT_POPULATED, CoreConstants.FAIL,
+							PDTConstants.CULTURAL_TRAINING_EMPLOYEE, DbFunctions.getExpenseCodeListForBenefit(PDTConstants.CULT_TRAINING).toString(), CoreFunctions.getElementTextAndStoreInList(driver, _drpDownOptionsCultTrainEmpExpenseCode).toString()));
+			ArrayList <String> randExpenseCodeOptions = CoreFunctions.getMultipleRandomOptionsForDropDown(0, _drpDownOptionsCultTrainEmpExpenseCode.size(), 3, driver, _drpDownOptionsCultTrainEmpExpenseCode);
+			BusinessFunctions.selectRandomDropDownOption(driver, PDTConstants.EXPENSE_CODES, _drpDownCultTrainEmpExpenseCode, _drpDownOptionsCultTrainEmpExpenseCode, _drpDownSelectedOptionsCultTrainEmpExpenseCode, randExpenseCodeOptions, subBenefitFormName);
+			setExpenseCodeCultTrainEmp(randExpenseCodeOptions);
 		} catch (Exception e) {
 			Assert.fail(MessageFormat.format(PDTConstants.EXCEPTION_OCCURED_FILL_SUBBENEFIT_FORM, CoreConstants.FAIL, subBenefitFormName));
 		}
@@ -215,6 +263,17 @@ public class PDT_CulturalTrainingPage extends PDT_SharedSubBenefitPage {
 					culturalTrainingBenefitData.culturalTrainingFamily.reimbursedByOther, subBenefitFormName, PDTConstants.REIMBURSED_BY_OTHER);
 			CoreFunctions.clearAndSetText(driver, _txtAreaCommentForCultTrainingFamily, PDTConstants.COMMENT,
 					culturalTrainingBenefitData.culturalTrainingFamily.comments);
+			
+			CoreFunctions.clickElement(driver, _drpDownCultTrainFamilyExpenseCode);
+			Assert.assertTrue(
+					BusinessFunctions.verifyAllExpenseCodesListForSubBenefit(driver,
+							PDTConstants.CULTURAL_TRAINING, PDTConstants.CULTURAL_TRAINING_FAMILY,
+							_drpDownOptionsCultTrainFamilyExpenseCode),
+					MessageFormat.format(PDTConstants.VERIFIED_EXPENSE_CODE_OPTIONS_NOT_POPULATED, CoreConstants.FAIL,
+							PDTConstants.CULTURAL_TRAINING_FAMILY, DbFunctions.getExpenseCodeListForBenefit(PDTConstants.CULTURAL_TRAINING).toString(), CoreFunctions.getElementTextAndStoreInList(driver, _drpDownOptionsCultTrainFamilyExpenseCode).toString()));
+			ArrayList <String> randExpenseCodeOptions = CoreFunctions.getMultipleRandomOptionsForDropDown(0, _drpDownOptionsCultTrainFamilyExpenseCode.size(), 3, driver, _drpDownOptionsCultTrainFamilyExpenseCode);
+			BusinessFunctions.selectRandomDropDownOption(driver, PDTConstants.EXPENSE_CODES, _drpDownCultTrainFamilyExpenseCode, _drpDownOptionsCultTrainFamilyExpenseCode, _drpDownSelectedOptionsCultTrainFamilyExpenseCode, randExpenseCodeOptions, subBenefitFormName);
+			setExpenseCodeCultTrainFamily(randExpenseCodeOptions);
 		} catch (Exception e) {
 			Assert.fail(MessageFormat.format(PDTConstants.EXCEPTION_OCCURED_FILL_SUBBENEFIT_FORM, CoreConstants.FAIL, subBenefitFormName));
 		}

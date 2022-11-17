@@ -22,11 +22,10 @@ Feature: Silent Save
     When he clicks on 'Save & Continue' button on each benefit page after entering mandatory information for all sub-benefits of each selected benefit Category
     Then Saved indicator is displayed for all saved Policy Benefit Categories except the last Benefit Category on the left menu
 
-  @BLUE-03 @PDT-Regression @BLUE-309 @Pdt:218032 @multi @failure
+  @BLUE-03 @PDT-Regression @BLUE-309 @Pdt:218032
   Scenario: PDT - Validate Save & Submit functionality when Policy is in Complete State
     Given he is on "Policy Benefit Categories" Page after selecting Client/Policy information followed by filling information on "General Information" page
     And he has clicked on 'Next' button after selecting below categories on "Policy Benefit Categories" Page
-      #| Language Training | Cultural Training |
       | House Hunting Trip | Compensation Services |
     And he has clicked on 'Save & Continue' button on each benefit page after entering mandatory information for all sub-benefits of each selected benefit Category
     When he clicks on "SAVE & SUBMIT" button after entering mandatory information for all sub-benefits on last benefit category page
@@ -42,7 +41,7 @@ Feature: Silent Save
     Then "red" color 'exclamation mark' "error"  indicator is displayed on each sub-benefit tab header level where the mandatory field value is missing
     And an 'exclamation mark' "error" indicator icon is displayed on Left menu for the Benefit if any of its sub benefit is in Incomplete state
 
-  @BLUE-03 @BLUE-04 @PDT-Regression @BLUE-313 @Pdt:218034 @failure
+  @BLUE-03 @BLUE-04 @PDT-Regression @BLUE-313 @Pdt:218034
   Scenario: PDT - Validate Save & Continue button functionality when Policy is in InComplete State
     Given he is on the "Add New Policy" page after clicking on the link "Add New Policy Form" displayed under the left navigation menu on the 'View Policy' page
     And he has clicked on the 'Next' button after selecting client, policy information on the 'Add New Policy' page
@@ -52,7 +51,7 @@ Feature: Silent Save
     Then Policy status remains "Draft" on the last Benefit Page
     And Side bar menu shows an 'exclamation mark' "error" indicator icon for the Benefit if any of its sub benefit is in Incomplete state
 
-  @BLUE-03 @BLUE-04 @PDT-Regression @BLUE-313 @Pdt:218035 @INCOMP
+  @BLUE-03 @BLUE-04 @PDT-Regression @BLUE-313 @Pdt:218035
   Scenario: PDT - Validate Save & Submit functionality when Policy is in Incomplete State
     Given he is on "Policy Benefit Categories" Page after selecting Client/Policy information followed by filling information on "General Information" page
     And he has clicked on 'Next' button after selecting below categories on "Policy Benefit Categories" Page
@@ -63,7 +62,7 @@ Feature: Silent Save
       | Title                   | Message                                                                                                                                                                                                     |
       | Policy Incomplete State | This policy has one or more benefits in an Incomplete state. These sections are indicated by: . You must complete the required information fields before the policy can be saved and succesfully submitted. |
 
-  @BLUE-04 @PDT-Regression @BLUE-352 @Pdt:218036 @failure
+  @BLUE-04 @PDT-Regression @BLUE-352 @Pdt:218036
   Scenario: PDT - Validate Exit button functionality when information is saved on each benefit and not updated
     Given he is on "Policy Benefit Categories" Page after selecting Client/Policy information followed by filling information on "General Information" page
     And he has clicked on 'Next' button after selecting below categories on "Policy Benefit Categories" Page
@@ -73,7 +72,7 @@ Feature: Silent Save
     When he clicks on EXIT button on last benefit page
     Then he should navigate to "View/Edit Policy" Forms page
 
-  @BLUE-04 @PDT-Regression @BLUE-353 @Pdt:218037 @failure
+  @BLUE-04 @PDT-Regression @BLUE-353 @Pdt:218037
   Scenario: PDT - Validate Back button functionality when information is saved on each benefit and not updated
     Given he is on "Policy Benefit Categories" Page after selecting Client/Policy information followed by filling information on "General Information" page
     And he has clicked on 'Next' button after selecting below categories on "Policy Benefit Categories" Page
@@ -83,7 +82,7 @@ Feature: Silent Save
     When he clicks on BACK button on last benefit category each page
     Then he should navigate to previous page with same result on subsequent BACK button click
 
-  @BLUE-05 @PDT-Regression @ui-confirm @Pdt:218374
+  @BLUE-05 @PDT-Regression @Pdt:218374
   Scenario: PDT - Valdite the UI of Confirmation pop-up when Exit button is clicked after making Sub-benefit form dirty
     Given he is on "Policy Benefit Categories" Page after selecting Client/Policy information followed by filling information on "General Information" page
     And he has clicked on 'Next' button after selecting below categories on "Policy Benefit Categories" Page
@@ -129,7 +128,7 @@ Feature: Silent Save
     Then he should navigate back to "View/Edit Policy Forms" page without displaying exit modal after clicking on "EXIT/X" buttons on following pages
       | General Information | Policy Benefit Categories | Language Training | Cultural Training |
 
-  @BLUE-06 @PDT-Regression @BLUE-458 @multiple
+  @BLUE-06 @PDT-Regression @BLUE-458
   Scenario: PDT - Validate Save & Submit functionality for 16 multiple Policy benefit categories
     Given he is on "Policy Benefit Categories" Page after selecting Client/Policy information followed by filling information on "General Information" page
     And he has clicked on 'Next' button after selecting below categories on "Policy Benefit Categories" Page

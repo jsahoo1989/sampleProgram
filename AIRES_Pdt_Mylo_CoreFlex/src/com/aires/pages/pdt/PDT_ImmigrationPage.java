@@ -1,6 +1,7 @@
 package com.aires.pages.pdt;
 
 import java.text.MessageFormat;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
@@ -13,6 +14,7 @@ import org.testng.Assert;
 
 import com.aires.businessrules.BusinessFunctions;
 import com.aires.businessrules.CoreFunctions;
+import com.aires.businessrules.DbFunctions;
 import com.aires.businessrules.constants.CoreConstants;
 import com.aires.businessrules.constants.PDTConstants;
 import com.aires.managers.FileReaderManager;
@@ -49,6 +51,9 @@ public class PDT_ImmigrationPage extends PDT_SharedSubBenefitPage {
 	
 	@FindBy(how = How.CSS, using = "#collapseOne input[formcontrolname='paidByOther']")
 	private WebElement _txtBoxImmigrationFeesReimbursedByOther;
+	
+	@FindBy(how = How.CSS, using = "app-immigration-fees textarea[formcontrolname='benefitComment']")
+	private WebElement _txtAreaImmigrationFeesComment;	
 	
 	@FindBy(how = How.XPATH, using = "//label[text()='Number of Trips']")
 	private WebElement _lblNoOfTrips;
@@ -91,11 +96,31 @@ public class PDT_ImmigrationPage extends PDT_SharedSubBenefitPage {
 
 	@FindBy(how = How.CSS, using = "div.form-check > label.form-check-label")
 	private List<WebElement> _subBenefitCategories;
+	
+	@FindBy(how = How.CSS, using = "ng-select[formcontrolname='immigratFeeExpenseCodeList']")
+	private WebElement _drpDownImmigrationFeesExpenseCode;
+	
+	@FindBy(how = How.CSS, using = "ng-select[formcontrolname='immigratFeeExpenseCodeList'] span.ng-option-label.ng-star-inserted")
+	private List<WebElement> _drpDownOptionsImmigrationFeesExpenseCode;
+	
+	@FindBy(how = How.CSS, using = "ng-select[formcontrolname='immigratFeeExpenseCodeList'] span.ng-value-label.ng-star-inserted")
+	private List<WebElement> _drpDownSelectedOptionsImmigrationFeesExpenseCode;
+	
+	@FindBy(how = How.CSS, using = "ng-select[formcontrolname='immigratTravelExpenseCodeList']")
+	private WebElement _drpDownImmigrationTravelExpenseCode;
+	
+	@FindBy(how = How.CSS, using = "ng-select[formcontrolname='immigratTravelExpenseCodeList'] span.ng-option-label.ng-star-inserted")
+	private List<WebElement> _drpDownOptionsImmigrationTravelExpenseCode;
+	
+	@FindBy(how = How.CSS, using = "ng-select[formcontrolname='immigratTravelExpenseCodeList'] span.ng-value-label.ng-star-inserted")
+	private List<WebElement> _drpDownSelectedOptionsImmigrationTravelExpenseCode;
 
 	PDT_ImmigrationBenefit immigrationBenefitData = FileReaderManager.getInstance().getJsonReader()
 			.getImmigrationDataList("Immigration");
 	
 	private String authorizedFees, numberOfTrips, accompanyingFamilyMember;
+	private ArrayList<String> _expenseCodeImmiFees = null;
+	private ArrayList<String> _expenseCodeImmiTravel = null;
 	
 	public void setAuthorizedFees(String feeName) {
 		authorizedFees = feeName;
@@ -121,6 +146,21 @@ public class PDT_ImmigrationPage extends PDT_SharedSubBenefitPage {
 		return accompanyingFamilyMember;
 	}
 	
+	public void setExpenseCodeImmigrationFees(ArrayList <String> expenseCode) {
+		this._expenseCodeImmiFees = expenseCode;
+	}
+
+	public ArrayList <String> getExpenseCodeImmigrationFees() {
+		return _expenseCodeImmiFees;
+	}
+	
+	public void setExpenseCodeImmigrationTravel(ArrayList <String> expenseCode) {
+		this._expenseCodeImmiTravel = expenseCode;
+	}
+	
+	public ArrayList <String> getExpenseCodeImmigrationTravel() {
+		return _expenseCodeImmiTravel;
+	}
 	/**
 	 * Add the Form Header of Immigration Fees & Immigration Travel in Hash map i.e. subBenefitHeaderMap
 	 */
@@ -177,6 +217,19 @@ public class PDT_ImmigrationPage extends PDT_SharedSubBenefitPage {
 					PDTConstants.RADIO_BUTTON_LIST, true);
 
 			BusinessFunctions.verifyOtherTextBoxIsDisplayed(driver, immigrationBenefitData.immigrationFees.reimbursedBy, _txtBoxImmigrationFeesReimbursedByOther, immigrationBenefitData.immigrationFees.reimbursedByOther, subBenefitFormName, PDTConstants.REIMBURSED_BY_OTHER);
+		
+			CoreFunctions.clearAndSetText(driver, _txtAreaImmigrationFeesComment, PDTConstants.COMMENT,
+					immigrationBenefitData.immigrationFees.comment);
+			CoreFunctions.clickElement(driver, _drpDownImmigrationFeesExpenseCode);
+			Assert.assertTrue(
+					BusinessFunctions.verifyAllExpenseCodesArePopulatedForSubBenefit(driver,
+							PDTConstants.IMMIGRATION, PDTConstants.IMMIGRATION_FEES,
+							_drpDownOptionsImmigrationFeesExpenseCode),
+					MessageFormat.format(PDTConstants.VERIFIED_EXPENSE_CODE_OPTIONS_NOT_POPULATED, CoreConstants.FAIL,
+							PDTConstants.IMMIGRATION_FEES, DbFunctions.getExpenseCodeListForBenefit(PDTConstants.IMMIGRATION).toString(), CoreFunctions.getElementTextAndStoreInList(driver, _drpDownOptionsImmigrationFeesExpenseCode).toString()));
+			ArrayList <String> randExpenseCodeOptions = CoreFunctions.getMultipleRandomOptionsForDropDown(0, _drpDownOptionsImmigrationFeesExpenseCode.size(), 5, driver, _drpDownOptionsImmigrationFeesExpenseCode);
+			BusinessFunctions.selectRandomDropDownOption(driver, PDTConstants.EXPENSE_CODES, _drpDownImmigrationFeesExpenseCode, _drpDownOptionsImmigrationFeesExpenseCode, _drpDownSelectedOptionsImmigrationFeesExpenseCode, randExpenseCodeOptions, subBenefitFormName);
+			setExpenseCodeImmigrationFees(randExpenseCodeOptions);
 		} catch (Exception e) {
 			Assert.fail(MessageFormat.format(PDTConstants.EXCEPTION_OCCURED_FILL_SUBBENEFIT_FORM, CoreConstants.FAIL, subBenefitFormName));
 		}
@@ -243,6 +296,17 @@ public class PDT_ImmigrationPage extends PDT_SharedSubBenefitPage {
 			BusinessFunctions.verifyOtherTextBoxIsDisplayed(driver, immigrationBenefitData.immigrationTravel.reimbursedBy, _txtBoxImmigrationTravelReimbursedByOther, immigrationBenefitData.immigrationTravel.reimbursedByOther, subBenefitFormName, PDTConstants.REIMBURSED_BY_OTHER);
 			CoreFunctions.clearAndSetText(driver, _txtAreaImmigrationComment, PDTConstants.COMMENT,
 					immigrationBenefitData.immigrationTravel.comment);
+			
+			CoreFunctions.clickElement(driver, _drpDownImmigrationTravelExpenseCode);
+			Assert.assertTrue(
+					BusinessFunctions.verifyAllExpenseCodesArePopulatedForSubBenefit(driver,
+							PDTConstants.IMMIGRATION, PDTConstants.IMMIGRATION_TRAVEL,
+							_drpDownOptionsImmigrationTravelExpenseCode),
+					MessageFormat.format(PDTConstants.VERIFIED_EXPENSE_CODE_OPTIONS_NOT_POPULATED, CoreConstants.FAIL,
+							PDTConstants.IMMIGRATION_TRAVEL,  DbFunctions.getExpenseCodeListForBenefit(PDTConstants.IMMIGRATION).toString(), CoreFunctions.getElementTextAndStoreInList(driver, _drpDownOptionsImmigrationTravelExpenseCode).toString()));
+			ArrayList <String> randExpenseCodeOptions = CoreFunctions.getMultipleRandomOptionsForDropDown(0, _drpDownOptionsImmigrationTravelExpenseCode.size(), 5, driver, _drpDownOptionsImmigrationTravelExpenseCode);
+			BusinessFunctions.selectRandomDropDownOption(driver, PDTConstants.EXPENSE_CODES, _drpDownImmigrationTravelExpenseCode, _drpDownOptionsImmigrationTravelExpenseCode, _drpDownSelectedOptionsImmigrationTravelExpenseCode, randExpenseCodeOptions, subBenefitFormName);
+			setExpenseCodeImmigrationTravel(randExpenseCodeOptions);
 		} catch (Exception e) {
 			Assert.fail(MessageFormat.format(PDTConstants.EXCEPTION_OCCURED_FILL_SUBBENEFIT_FORM, CoreConstants.FAIL, subBenefitFormName));
 		}

@@ -1,6 +1,7 @@
 package com.aires.pages.pdt;
 
 import java.text.MessageFormat;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
@@ -13,6 +14,7 @@ import org.testng.Assert;
 
 import com.aires.businessrules.BusinessFunctions;
 import com.aires.businessrules.CoreFunctions;
+import com.aires.businessrules.DbFunctions;
 import com.aires.businessrules.constants.CoreConstants;
 import com.aires.businessrules.constants.PDTConstants;
 import com.aires.managers.FileReaderManager;
@@ -223,12 +225,66 @@ public class PDT_HouseHuntingTripPage extends PDT_SharedSubBenefitPage {
 	
 	@FindBy(how = How.CSS, using = "div.ngx-progress-bar.ngx-progress-bar-ltr")
 	private WebElement _progressBar;
+	
+	@FindBy(how = How.CSS, using = "ng-select[formcontrolname='houseHuntingTripTransportationExpenseCodeList']")
+	private WebElement _drpDownTransportationExpenseCode;
+	
+	@FindBy(how = How.CSS, using = "ng-select[formcontrolname='houseHuntingTripTransportationExpenseCodeList'] span.ng-option-label.ng-star-inserted")
+	private List<WebElement> _drpDownOptionsTransportationExpenseCode;
+	
+	@FindBy(how = How.CSS, using = "ng-select[formcontrolname='houseHuntingTripTransportationExpenseCodeList'] span.ng-value-label.ng-star-inserted")
+	private List<WebElement> _drpDownSelectedOptionsTransportationExpenseCode;
+	
+	@FindBy(how = How.CSS, using = "ng-select[formcontrolname='houseHuntingTripLodgingExpenseCodeList']")
+	private WebElement _drpDownLodgingExpenseCode;
+	
+	@FindBy(how = How.CSS, using = "ng-select[formcontrolname='houseHuntingTripLodgingExpenseCodeList'] span.ng-option-label.ng-star-inserted")
+	private List<WebElement> _drpDownOptionsLodgingExpenseCode;
+	
+	@FindBy(how = How.CSS, using = "ng-select[formcontrolname='houseHuntingTripLodgingExpenseCodeList'] span.ng-value-label.ng-star-inserted")
+	private List<WebElement> _drpDownSelectedOptionsLodgingExpenseCode;
+	
+	@FindBy(how = How.CSS, using = "ng-select[formcontrolname='houseHuntingTripMealsExpenseCodeList']")
+	private WebElement _drpDownMealsExpenseCode;
+	
+	@FindBy(how = How.CSS, using = "ng-select[formcontrolname='houseHuntingTripMealsExpenseCodeList'] span.ng-option-label.ng-star-inserted")
+	private List<WebElement> _drpDownOptionsMealsExpenseCode;
+	
+	@FindBy(how = How.CSS, using = "ng-select[formcontrolname='houseHuntingTripMealsExpenseCodeList'] span.ng-value-label.ng-star-inserted")
+	private List<WebElement> _drpDownSelectedOptionsMealsExpenseCode;
 
 	PDT_HouseHuntingTripBenefit houseHuntingTripBenefitData = FileReaderManager.getInstance().getJsonReader()
 			.getHouseHuntingTripDataList("House Hunting Trip");
 
 	private String transportType, accompanyingFamilyMemeber, maxAmtHouseHuntingTripLodging, maxAmtHouseHuntingTripMeals;
+	private ArrayList<String> _expenseCodeTransportation = null;
+	private ArrayList<String> _expenseCodeLodging = null;
+	private ArrayList<String> _expenseCodeMeals = null;
+	
+	public void setExpenseCodeTransportation(ArrayList <String> expenseCode) {
+		this._expenseCodeTransportation = expenseCode;
+	}
 
+	public ArrayList <String> getExpenseCodeTransportation() {
+		return _expenseCodeTransportation;
+	}
+	
+	public void setExpenseCodeLodging(ArrayList <String> expenseCode) {
+		this._expenseCodeLodging = expenseCode;
+	}
+
+	public ArrayList <String> getExpenseCodeLodging() {
+		return _expenseCodeLodging;
+	}
+	
+	public void setExpenseCodeMeals(ArrayList <String> expenseCode) {
+		this._expenseCodeMeals = expenseCode;
+	}
+
+	public ArrayList <String> getExpenseCodeMeals() {
+		return _expenseCodeMeals;
+	}
+	
 	public void setTransportType(String transType) {
 		transportType = transType;
 	}
@@ -339,6 +395,17 @@ public class PDT_HouseHuntingTripPage extends PDT_SharedSubBenefitPage {
 					houseHuntingTripBenefitData.houseHuntingTripTransportation.reimbursedByOther, subBenefitFormName, PDTConstants.REIMBURSED_BY_OTHER);
 			CoreFunctions.clearAndSetText(driver, _txtAreaHouseHuntingTripTransportComment, PDTConstants.COMMENT,
 					houseHuntingTripBenefitData.houseHuntingTripTransportation.comment);
+			
+			CoreFunctions.clickElement(driver, _drpDownTransportationExpenseCode);
+			Assert.assertTrue(
+					BusinessFunctions.verifyAllExpenseCodesArePopulatedForSubBenefit(driver,
+							PDTConstants.HOUSE_HUNTING_TRIP, PDTConstants.HOUSE_HUNTING_TRIP_TRANSPORTATION,
+							_drpDownOptionsTransportationExpenseCode),
+					MessageFormat.format(PDTConstants.VERIFIED_EXPENSE_CODE_OPTIONS_NOT_POPULATED, CoreConstants.FAIL,
+							PDTConstants.HOUSE_HUNTING_TRIP_TRANSPORTATION, DbFunctions.getExpenseCodeListForBenefit(PDTConstants.HOUSE_HUNTING_TRIP).toString(), CoreFunctions.getElementTextAndStoreInList(driver, _drpDownOptionsTransportationExpenseCode).toString()));
+			ArrayList <String> randExpenseCodeOptions = CoreFunctions.getMultipleRandomOptionsForDropDown(0, _drpDownOptionsTransportationExpenseCode.size(), 5, driver, _drpDownOptionsTransportationExpenseCode);
+			BusinessFunctions.selectRandomDropDownOption(driver, PDTConstants.EXPENSE_CODES, _drpDownTransportationExpenseCode, _drpDownOptionsTransportationExpenseCode, _drpDownSelectedOptionsTransportationExpenseCode, randExpenseCodeOptions, subBenefitFormName);
+			setExpenseCodeTransportation(randExpenseCodeOptions);
 		} catch (Exception e) {			
 			Assert.fail(MessageFormat.format(PDTConstants.EXCEPTION_OCCURED_FILL_SUBBENEFIT_FORM, CoreConstants.FAIL, subBenefitFormName));
 		}
@@ -407,6 +474,17 @@ public class PDT_HouseHuntingTripPage extends PDT_SharedSubBenefitPage {
 
 			CoreFunctions.clearAndSetText(driver, _txtAreaHouseHuntingTripLodgingComment, PDTConstants.COMMENT,
 					houseHuntingTripBenefitData.houseHuntingTripLodging.comment);
+			
+			CoreFunctions.clickElement(driver, _drpDownLodgingExpenseCode);
+			Assert.assertTrue(
+					BusinessFunctions.verifyAllExpenseCodesArePopulatedForSubBenefit(driver,
+							PDTConstants.HOUSE_HUNTING_TRIP, PDTConstants.HOUSE_HUNTING_TRIP_LODGING,
+							_drpDownOptionsLodgingExpenseCode),
+					MessageFormat.format(PDTConstants.VERIFIED_EXPENSE_CODE_OPTIONS_NOT_POPULATED, CoreConstants.FAIL,
+							PDTConstants.HOUSE_HUNTING_TRIP_LODGING, DbFunctions.getExpenseCodeListForBenefit(PDTConstants.HOUSE_HUNTING_TRIP).toString(), CoreFunctions.getElementTextAndStoreInList(driver, _drpDownOptionsLodgingExpenseCode).toString()));
+			ArrayList <String> randExpenseCodeOptions = CoreFunctions.getMultipleRandomOptionsForDropDown(0, _drpDownOptionsLodgingExpenseCode.size(), 5, driver, _drpDownOptionsLodgingExpenseCode);
+			BusinessFunctions.selectRandomDropDownOption(driver, PDTConstants.EXPENSE_CODES, _drpDownLodgingExpenseCode, _drpDownOptionsLodgingExpenseCode, _drpDownSelectedOptionsLodgingExpenseCode, randExpenseCodeOptions, subBenefitFormName);
+			setExpenseCodeLodging(randExpenseCodeOptions);
 		} catch (Exception e) {			
 			Assert.fail(MessageFormat.format(PDTConstants.EXCEPTION_OCCURED_FILL_SUBBENEFIT_FORM, CoreConstants.FAIL, subBenefitFormName));
 		}
@@ -537,9 +615,19 @@ public class PDT_HouseHuntingTripPage extends PDT_SharedSubBenefitPage {
 
 			CoreFunctions.clearAndSetText(driver, _txtAreaHouseHuntingTripMealComment, PDTConstants.COMMENT,
 					houseHuntingTripBenefitData.houseHuntingTripMeals.comment);
+			
+			CoreFunctions.clickElement(driver, _drpDownMealsExpenseCode);
+			Assert.assertTrue(
+					BusinessFunctions.verifyAllExpenseCodesArePopulatedForSubBenefit(driver,
+							PDTConstants.HOUSE_HUNTING_TRIP, PDTConstants.HOUSE_HUNTING_TRIP_MEALS,
+							_drpDownOptionsMealsExpenseCode),
+					MessageFormat.format(PDTConstants.VERIFIED_EXPENSE_CODE_OPTIONS_NOT_POPULATED, CoreConstants.FAIL,
+							PDTConstants.HOUSE_HUNTING_TRIP_MEALS, DbFunctions.getExpenseCodeListForBenefit(PDTConstants.HOUSE_HUNTING_TRIP).toString(), CoreFunctions.getElementTextAndStoreInList(driver, _drpDownOptionsMealsExpenseCode).toString()));
+			ArrayList <String> randExpenseCodeOptions = CoreFunctions.getMultipleRandomOptionsForDropDown(0, _drpDownOptionsMealsExpenseCode.size(), 5, driver, _drpDownOptionsMealsExpenseCode);
+			BusinessFunctions.selectRandomDropDownOption(driver, PDTConstants.EXPENSE_CODES, _drpDownMealsExpenseCode, _drpDownOptionsMealsExpenseCode, _drpDownSelectedOptionsMealsExpenseCode, randExpenseCodeOptions, subBenefitFormName);
+			setExpenseCodeMeals(randExpenseCodeOptions);
 
 		} catch (Exception e) {
-			e.printStackTrace();
 			Assert.fail(MessageFormat.format(PDTConstants.EXCEPTION_OCCURED_FILL_SUBBENEFIT_FORM, CoreConstants.FAIL, subBenefitFormName));
 		}
 	}

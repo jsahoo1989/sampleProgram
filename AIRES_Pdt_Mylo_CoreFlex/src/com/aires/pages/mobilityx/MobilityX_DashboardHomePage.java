@@ -372,9 +372,13 @@ public class MobilityX_DashboardHomePage extends Base{
 			BusinessFunctions.selectRadioAsPerLabelText(driver, _radioBtnProjectRelated,
 					transferInfo.projectRelated);	
 			BusinessFunctions.selectOptionValueFromDropdown(_relocationPolicy, ClientPolicyDetails.getPolicyName().replace("(", "").replace(")", "").split("#")[0].trim());
+			CoreFunctions.waitHandler(3);
 			CoreFunctions.clearAndSetText(driver, _txtBoxStartDateInNewLocation, CoreFunctions.getcurrentdate());
+			CoreFunctions.waitHandler(3);
 			CoreFunctions.clearAndSetText(driver, _txtBoxAssignmentEndDate, CoreFunctions.addDaysMonthYearToCurrentDate(MobilityXConstants.YEAR, "dd-MMM-yyyy", 1));
+			CoreFunctions.waitHandler(3);
 			CoreFunctions.clearAndSetText(driver, _txtBoxBusinessGroup, transferInfo.businessGroup);
+			CoreFunctions.waitHandler(3);
 			CoreFunctions.clearAndSetText(driver, _txtBoxJobFamily, transferInfo.jobFamily);
 			
 		} catch (Exception e) {
@@ -400,8 +404,11 @@ public class MobilityX_DashboardHomePage extends Base{
 			BusinessFunctions.selectValueFromDropdown(_drpDownPayRoll, financialInfo.payRoll);
 			BusinessFunctions.selectValueFromDropdown(_drpDownRFGL, financialInfo.rfgl);	
 			CoreFunctions.waitHandler(5);
-			if(CoreFunctions.isElementByLocatorClickable(driver, _costCenterByLocator, 10))
+			if(CoreFunctions.isElementByLocatorClickable(driver, _costCenterByLocator, 10)) {
+				CoreFunctions.waitHandler(3);
 				CoreFunctions.clearAndSetText(driver, _txtBoxCostCenter, financialInfo.costCenter);
+			}
+			CoreFunctions.waitHandler(3);
 			CoreFunctions.clearAndSetText(driver, _txtBoxTafCostCenter, financialInfo.tafCostCenter);	
 		} catch (Exception e) {
 			Log.info(CoreConstants.ERROR + e);

@@ -5,6 +5,7 @@ import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.LinkedHashMap;
 import java.util.List;
@@ -34,7 +35,8 @@ public class DbFunctions {
 			dbURL = "jdbc:oracle:thin:isisdba/irisdevisisdba@corptesvl300.corp.aires.com:1521:IRISDEV";
 			break;
 		case "test":
-			dbURL = "jdbc:oracle:thin:policydba/testpo@corptesvl300.corp.aires.com:1521:IRISTEST";
+			//dbURL = "jdbc:oracle:thin:policydba/testpo@corptesvl300.corp.aires.com:1521:IRISTEST";
+			dbURL = "jdbc:oracle:thin:isisdba/iristestisisdba@corptesvl300.corp.aires.com:1521:iristest";
 			break;
 		case "prod":
 			// For Production Envt. - Change username/Password & verify DB connection
@@ -58,12 +60,7 @@ public class DbFunctions {
 	public static void deletePolicyByPolicyId(int policyId) {
 		Connection connection = null;
 		try {
-			DriverManager.registerDriver(new oracle.jdbc.OracleDriver());
-			/*connection = DriverManager.getConnection(
-					getDBConnectionStringAsPerEnvt(CoreFunctions.getPropertyFromConfig("envt").toLowerCase()));*/
-			
-			connection = DriverManager.getConnection(
-					getDBConnectionStringAsPerEnvt(System.getProperty("envt").toLowerCase()));
+			connection = getConnection();
 			CallableStatement callableStatement = connection
 					.prepareCall(DbQueries.CALL_PROCEDURE_DELETE_POLICY_BY_ID);			
 			
@@ -204,11 +201,7 @@ public class DbFunctions {
 	public static void updateAssignmentStatus(String assignmentStatusCode, int policyId) {
 		Connection connection = null;
 		try {
-			DriverManager.registerDriver(new oracle.jdbc.OracleDriver());
-			/*connection = DriverManager.getConnection(
-					getDBConnectionStringAsPerEnvt(CoreFunctions.getPropertyFromConfig("envt").toLowerCase()));*/
-			connection = DriverManager.getConnection(
-					getDBConnectionStringAsPerEnvt(System.getProperty("envt").toLowerCase()));
+			connection = getConnection();
 			PreparedStatement pstChangeStatus = connection.prepareStatement(DbQueries.QUERY_UPDATE_ASSIGNMENT_STATUS);
 			pstChangeStatus.setString(1, assignmentStatusCode);
 			pstChangeStatus.setString(2, null);
@@ -219,7 +212,6 @@ public class DbFunctions {
 			pstChangeStatus.executeUpdate();	
 			connection.close();
 		} catch (Exception ex) {
-			ex.printStackTrace();
 			Assert.fail("SQL Query Failed");
 		}
 	}
@@ -227,6 +219,7 @@ public class DbFunctions {
 	public static void populatePDTExpenseCodeQueryStatements() {
 		pdtExpenseCodeQueryStatementMap.put(PDTConstants.PRE_ACCEPTANCE_SERVICES, DbQueries.QUERY_GET_PRE_ACCEPTANCE_EXPENSE_CODE);
 		pdtExpenseCodeQueryStatementMap.put(PDTConstants.IMMIGRATION, DbQueries.QUERY_GET_IMMIGRATION_EXPENSE_CODE);
+		pdtExpenseCodeQueryStatementMap.put(PDTConstants.HOUSE_HUNTING_TRIP, DbQueries.QUERY_GET_HOUSE_HUNTING_TRIP_EXPENSE_CODE);
 		pdtExpenseCodeQueryStatementMap.put(PDTConstants.LANGUAGE_TRAINING, DbQueries.QUERY_GET_LANG_TRAIN_EXPENSE_CODE);
 		pdtExpenseCodeQueryStatementMap.put(PDTConstants.CULTURAL_TRAINING, DbQueries.QUERY_GET_CULT_TRAIN_EXPENSE_CODE);
 	}
@@ -236,11 +229,7 @@ public class DbFunctions {
 		List<String> expenseCodeList = new ArrayList<String>();
 		Connection connection = null;		
 		try {
-			DriverManager.registerDriver(new oracle.jdbc.OracleDriver());
-			connection = DriverManager.getConnection(
-					getMyloDBConnectionStringAsPerEnvt(System.getProperty("envt")));	
-			/*connection = DriverManager.getConnection(
-					getDBConnectionStringAsPerEnvt(CoreFunctions.getPropertyFromConfig("envt")));*/			
+			connection = getConnection();		
 			PreparedStatement pst = connection.prepareStatement(pdtExpenseCodeQueryStatementMap.get(benefitName));
 			ResultSet resultset = pst.executeQuery();
 			while (resultset.next()) {
@@ -248,8 +237,48 @@ public class DbFunctions {
 			}
 		
 		} catch (Exception ex) {			
-			Log.info(CoreConstants.ERROR+ex.getMessage());
-			Log.info(CoreConstants.ERROR+ex.getStackTrace());			
+			Assert.fail(CoreConstants.SQL_QUERY_FAILED);
+		} finally {
+			try {
+				if(connection != null) {
+					connection.close();
+				}
+			}catch (Exception ex){
+				Log.info(CoreConstants.ERROR+ex.getMessage());
+				Log.info(CoreConstants.ERROR+ex.getStackTrace());
+			}
+		}
+		return expenseCodeList;
+	}
+	
+	public static Connection getConnection() {
+		Connection connection = null;	
+		try {
+			DriverManager.registerDriver(new oracle.jdbc.OracleDriver());
+			connection = DriverManager.getConnection(
+			getMyloDBConnectionStringAsPerEnvt(System.getProperty("envt")));
+			/*Kept the commented code for running in local environment
+			 * connection = DriverManager.getConnection(
+					getDBConnectionStringAsPerEnvt(CoreFunctions.getPropertyFromConfig("envt")));*/
+		} catch (SQLException e) {
+			Assert.fail("Failed to establish connection to the database");
+		}
+		return connection;
+	}
+	
+	public static List<String> getExpenseCodeForBenefit(String benefitName) {
+		populatePDTExpenseCodeQueryStatements();		
+		List<String> expenseCodeList = new ArrayList<String>();
+		Connection connection = null;		
+		try {
+			connection = getConnection();
+			PreparedStatement pst = connection.prepareStatement(pdtExpenseCodeQueryStatementMap.get(benefitName));
+			ResultSet resultset = pst.executeQuery();
+			while (resultset.next()) {
+				expenseCodeList.add(resultset.getString("EXPENSE_CODE"));
+			}
+		
+		} catch (Exception ex) {			
 			Assert.fail(CoreConstants.SQL_QUERY_FAILED);
 		} finally {
 			try {

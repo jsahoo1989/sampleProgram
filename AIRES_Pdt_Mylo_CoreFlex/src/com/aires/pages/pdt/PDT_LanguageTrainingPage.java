@@ -1,6 +1,7 @@
 package com.aires.pages.pdt;
 
 import java.text.MessageFormat;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
@@ -13,6 +14,7 @@ import org.testng.Assert;
 
 import com.aires.businessrules.BusinessFunctions;
 import com.aires.businessrules.CoreFunctions;
+import com.aires.businessrules.DbFunctions;
 import com.aires.businessrules.constants.CoreConstants;
 import com.aires.businessrules.constants.PDTConstants;
 import com.aires.managers.FileReaderManager;
@@ -70,9 +72,48 @@ public class PDT_LanguageTrainingPage extends PDT_SharedSubBenefitPage {
 	
 	@FindBy(how = How.CSS, using = "a[href='#collapseTwo']")
 	private WebElement _formHeaderLanguageTrainingFamily;
+	
+	@FindBy(how = How.CSS, using = "ng-select[formcontrolname='languageTrainingEmployeeExpenseCodeList']")
+	private WebElement _drpDownLangTrainEmpExpenseCode;
+	
+	@FindBy(how = How.CSS, using = "ng-select[formcontrolname='languageTrainingEmployeeExpenseCodeList'] span.ng-option-label.ng-star-inserted")
+	private List<WebElement> _drpDownOptionsLangTrainEmpExpenseCode;
+	
+	@FindBy(how = How.CSS, using = "ng-select[formcontrolname='languageTrainingEmployeeExpenseCodeList'] span.ng-value-label.ng-star-inserted")
+	private List<WebElement> _drpDownSelectedOptionsLangTrainEmpExpenseCode;
+	
+	@FindBy(how = How.CSS, using = "ng-select[formcontrolname='languageTrainingFamilyExpenseCodeList']")
+	private WebElement _drpDownLangTrainFamilyExpenseCode;
+	
+	@FindBy(how = How.CSS, using = "ng-select[formcontrolname='languageTrainingFamilyExpenseCodeList'] span.ng-option-label.ng-star-inserted")
+	private List<WebElement> _drpDownOptionsLangTrainFamilyExpenseCode;
+	
+	@FindBy(how = How.CSS, using = "ng-select[formcontrolname='languageTrainingFamilyExpenseCodeList'] span.ng-value-label.ng-star-inserted")
+	private List<WebElement> _drpDownSelectedOptionsLangTrainFamilyExpenseCode;
+	
+	
 
 	PDT_LanguageTrainingBenefit languageTrainingBenefitData = FileReaderManager.getInstance().getJsonReader()
 			.getLanguageTrainingDataList("Language Training");
+	
+	private ArrayList<String> _expenseCodeLangTrainEmp = null;
+	private ArrayList<String> _expenseCodeLangTrainFamily = null;
+	
+	public void setExpenseCodeLangTrainEmp(ArrayList <String> expenseCode) {
+		this._expenseCodeLangTrainEmp = expenseCode;
+	}
+
+	public ArrayList <String> getExpenseCodeLangTrainEmp() {
+		return _expenseCodeLangTrainEmp;
+	}
+	
+	public void setExpenseCodeLangTrainFamily(ArrayList <String> expenseCode) {
+		this._expenseCodeLangTrainFamily = expenseCode;
+	}
+
+	public ArrayList <String> getExpenseCodeLangTrainFamily() {
+		return _expenseCodeLangTrainFamily;
+	}
 	
 	/**
 	 * Add the Form Header of Language Training Employee & Language Training Family in Hash map i.e. subBenefitHeaderMap
@@ -115,6 +156,17 @@ public class PDT_LanguageTrainingPage extends PDT_SharedSubBenefitPage {
 					languageTrainingBenefitData.languageTrainingEmployee.reimbursedByOther, subBenefitFormName, PDTConstants.REIMBURSED_BY_OTHER);
 			CoreFunctions.clearAndSetText(driver, _txtAreaCommentForLangTrainingEmp, PDTConstants.COMMENT,
 					languageTrainingBenefitData.languageTrainingEmployee.comments);
+			
+			CoreFunctions.clickElement(driver, _drpDownLangTrainEmpExpenseCode);
+			Assert.assertTrue(
+					BusinessFunctions.verifyAllExpenseCodesListForSubBenefit(driver,
+							PDTConstants.LANGUAGE_TRAINING, PDTConstants.LANGUAGE_TRAINING_EMPLOYEE,
+							_drpDownOptionsLangTrainEmpExpenseCode),
+					MessageFormat.format(PDTConstants.VERIFIED_EXPENSE_CODE_OPTIONS_NOT_POPULATED, CoreConstants.FAIL,
+							PDTConstants.LANGUAGE_TRAINING_EMPLOYEE, DbFunctions.getExpenseCodeListForBenefit(PDTConstants.LANGUAGE_TRAINING).toString(), CoreFunctions.getElementTextAndStoreInList(driver, _drpDownOptionsLangTrainEmpExpenseCode).toString()));
+			ArrayList <String> randExpenseCodeOptions = CoreFunctions.getMultipleRandomOptionsForDropDown(0, _drpDownOptionsLangTrainEmpExpenseCode.size(), 3, driver, _drpDownOptionsLangTrainEmpExpenseCode);
+			BusinessFunctions.selectRandomDropDownOption(driver, PDTConstants.EXPENSE_CODES, _drpDownLangTrainEmpExpenseCode, _drpDownOptionsLangTrainEmpExpenseCode, _drpDownSelectedOptionsLangTrainEmpExpenseCode, randExpenseCodeOptions, subBenefitFormName);
+			setExpenseCodeLangTrainEmp(randExpenseCodeOptions);
 		} catch (Exception e) {			
 			Assert.fail(MessageFormat.format(PDTConstants.EXCEPTION_OCCURED_FILL_SUBBENEFIT_FORM, CoreConstants.FAIL, subBenefitFormName));			
 		}
@@ -156,6 +208,17 @@ public class PDT_LanguageTrainingPage extends PDT_SharedSubBenefitPage {
 					languageTrainingBenefitData.languageTrainingFamily.reimbursedByOther, subBenefitFormName, PDTConstants.REIMBURSED_BY_OTHER);
 			CoreFunctions.clearAndSetText(driver, _txtAreaCommentForLangTrainingFamily, PDTConstants.COMMENT,
 					languageTrainingBenefitData.languageTrainingFamily.comments);
+			
+			CoreFunctions.clickElement(driver, _drpDownLangTrainFamilyExpenseCode);
+			Assert.assertTrue(
+					BusinessFunctions.verifyAllExpenseCodesListForSubBenefit(driver,
+							PDTConstants.LANGUAGE_TRAINING, PDTConstants.LANGUAGE_TRAINING_FAMILY,
+							_drpDownOptionsLangTrainFamilyExpenseCode),
+					MessageFormat.format(PDTConstants.VERIFIED_EXPENSE_CODE_OPTIONS_NOT_POPULATED, CoreConstants.FAIL,
+							PDTConstants.LANGUAGE_TRAINING_FAMILY, DbFunctions.getExpenseCodeListForBenefit(PDTConstants.LANGUAGE_TRAINING).toString(), CoreFunctions.getElementTextAndStoreInList(driver, _drpDownOptionsLangTrainFamilyExpenseCode).toString()));
+			ArrayList <String> randExpenseCodeOptions = CoreFunctions.getMultipleRandomOptionsForDropDown(0, _drpDownOptionsLangTrainFamilyExpenseCode.size(), 3, driver, _drpDownOptionsLangTrainFamilyExpenseCode);
+			BusinessFunctions.selectRandomDropDownOption(driver, PDTConstants.EXPENSE_CODES, _drpDownLangTrainFamilyExpenseCode, _drpDownOptionsLangTrainFamilyExpenseCode, _drpDownSelectedOptionsLangTrainFamilyExpenseCode, randExpenseCodeOptions, subBenefitFormName);
+			setExpenseCodeLangTrainFamily(randExpenseCodeOptions);
 		} catch (Exception e) {
 			Assert.fail(MessageFormat.format(PDTConstants.EXCEPTION_OCCURED_FILL_SUBBENEFIT_FORM, CoreConstants.FAIL, subBenefitFormName));
 		}

@@ -624,5 +624,6 @@ public class PDTConstants {
 	public static final String VERIFIED_FIELD_IS_DISPLAYED = "{0}Verified ''{1}'' field is displayed";
 	public static final String VERIFIED_FIELD_IS_NOT_DISPLAYED = "{0}Verified ''{1}'' field is not displayed";
 	public static final String VERIFIED_EXPENSE_CODE_OPTIONS_POPULATED = "{0}Verified all expense code options are populated for ''{1}''";
-	public static final String VERIFIED_EXPENSE_CODE_OPTIONS_NOT_POPULATED = "{0}Failed to verify all expense code options are not populated for ''{1}''";
+	public static final String VERIFIED_EXPENSE_CODE_OPTIONS_NOT_POPULATED = "{0}Failed to verify all expense code options are not populated for ''{1}''. Expected Expense Code:-''{2}''. Actual expense code:-''{3}''";
+	public static final String EXPENSE_CODES = "Expense Codes";
 }

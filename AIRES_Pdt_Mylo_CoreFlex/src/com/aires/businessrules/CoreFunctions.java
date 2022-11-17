@@ -1521,7 +1521,7 @@ public class CoreFunctions {
 	}
 
 	public static List<String> getElementTextAndStoreInList(WebDriver driver, List<WebElement> elementList) {
-		return (elementList.stream().map(x -> x.getText()).collect(Collectors.toList()));
+		return (elementList.stream().map(x -> x.getText()).collect(Collectors.toList()));		
 	}
 
 	public static WebElement getElementFromListByText(List<WebElement> elementList, String text) {
@@ -1916,17 +1916,13 @@ public class CoreFunctions {
 		return format.format((tIME_BEFORE_ACTION - tIME_AFTER_ACTION) / 1000);
 	}
 	
-	public static ArrayList<String> getMultipleRandomOptionsForDropDown(int maxNum, int noOfRandDigits, WebDriver driver, List<WebElement> webElementList) {
-		Random randNum = new Random();
-		LinkedHashSet<Integer> set = new LinkedHashSet<Integer>();
+	public static ArrayList<String> getMultipleRandomOptionsForDropDown(int minNum, int maxNum, int count, WebDriver driver, List<WebElement> webElementList) {
+		Random random = new Random();
+		List<Integer> randomNumbers = random.ints(minNum, maxNum).distinct().limit(count).boxed().collect(Collectors.toList());
 		ArrayList<String> randWebElementList = new ArrayList<String>();
-		
-		while(set.size() < noOfRandDigits) {
-			set.add(randNum.nextInt(noOfRandDigits) + 1);
-		}
-		for(Integer index:set) {
+		for(Integer index:randomNumbers) {
 			randWebElementList.add(webElementList.get(index).getText());
 		}
-		return randWebElementList;		
+		return randWebElementList;
 	}
 }

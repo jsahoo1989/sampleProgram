@@ -9,7 +9,8 @@ public class PDT_ImmigrationBenefit {
 		public String authorizedFees;
 		public String grossUp;
 		public String reimbursedBy;
-		public String reimbursedByOther;		
+		public String reimbursedByOther;
+		public String comment;
 	}
 	
 	public class ImmigrationTravel {

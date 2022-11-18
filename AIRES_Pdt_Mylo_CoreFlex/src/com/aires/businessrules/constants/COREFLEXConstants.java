@@ -550,7 +550,7 @@ public class COREFLEXConstants {
 	public static final String POST = "Post";
 	public static final String PRE = "Pre";
 	public static final String SUCCESSFULLY_VERIFIED_POLICY_ICONS_ENABLED_DISABLED_STATUS_ON_VIEW_EDIT_POLICY_FORMS_PAGE = "{0}Successfully verified Policy icons Enabled/Disabled status on View/Edit Policy Forms page.";
-	public static final Object ACTIVE = "Active";
+	public static final String ACTIVE = "Active";
 	public static final String DISABLED = "Disabled";
 	public static final String ENABLED = "Enabled";
 	public static final String DELETE_ICON = "Delete";
@@ -885,4 +885,8 @@ public class COREFLEXConstants {
 	public static final String CASHOUT_DESCRIPTION = "Cashout Description";
 	public static final String EXCEPTION_OCCURED_WHILE_VALIDATING_SUBMITTED_FLEX_BENEFIT_DETAILS_ON_MY_BENEFITS_PAGE = "{0}Exception occured while validating Submitted Flex Benefits Details On My Benefits Page. Exception : ''{1}''.";
 	public static final String SUBMITTED_BENEFIT_DELETE_BUTTON = "Submitted Benefit Delete Button";
+	public static final String APPROVE_POLICY_DIALOG_HEADER = "Approve Policy Dialog Header";
+	public static final String APPROVE_POLICY_DIALOG_VERSION_TEXT = "Approve Policy Dialog Version Text";
+	public static final String APPROVE_POLICY_DIALOG_ASSIGNMENT_TEXT = "Approve Policy Dialog Assignment Text";
+	public static final String APPROVE_POLICY_DIALOG_CHECKBOX_OPTION = "Approve Policy Dialog Checkbox Option";
 }

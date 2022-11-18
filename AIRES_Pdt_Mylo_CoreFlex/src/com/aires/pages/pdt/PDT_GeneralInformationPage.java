@@ -817,7 +817,7 @@ public class PDT_GeneralInformationPage extends Base {
 			switch (fieldName) {
 			case PDTConstants.POLICY_STATUS:
 				if ((CoreFunctions.isElementExist(driver, _textPolicyStatus, 2))
-						&& ((CoreFunctions.getElementText(driver, _textPolicyStatus).replace("check_circle", "").trim())
+						&& ((CoreFunctions.getElementText(driver, _textPolicyStatus).replace("check_circle", "").replace("error", "").trim())
 								.equals(expectedDefaultValue)))
 					isFieldVerified = true;
 				break;
@@ -1178,6 +1178,7 @@ public class PDT_GeneralInformationPage extends Base {
 	 */
 	public boolean verifyPageNavigation(String expectedPageName) {
 		CoreFunctions.explicitWaitTillElementInVisibility(driver, _progressBar);
+		CoreFunctions.waitHandler(4);
 		return CoreFunctions.verifyElementOnPage(driver, _headerGeneralInfo, COREFLEXConstants.GENERAL_INFORMATION,
 				expectedPageName, expectedPageName, true);
 	}

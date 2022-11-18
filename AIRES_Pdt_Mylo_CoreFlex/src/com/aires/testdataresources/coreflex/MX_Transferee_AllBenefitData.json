@@ -7,7 +7,7 @@
 			"benefitDesc": "Automated Core Duplicate Housing Benefit Long Description. Setting up a CoreFlex Policy to be consumed by Client/Transferee to select Desired Benefits and track/Manage Points.",
 			"subBenefits": "Duplicate Housing",
 			"airesManagedService": "No",
-			"policyCreationGroup": "All Benefits,Cloning,Versioning,Client"
+			"policyCreationGroup": "All Benefits,Cloning,Client"
 		},
 		{
 			"benefitType": "Lump Sum",
@@ -16,7 +16,7 @@
 			"benefitDesc": "Automated Core Lump Sum Benefit Long Description. Setting up a CoreFlex Policy to be consumed by Client/Transferee to select Desired Benefits and track/Manage Points.",
 			"subBenefits": "Lump Sum",
 			"airesManagedService": "No",
-			"policyCreationGroup": "All Benefits,Cloning,Versioning,Client"
+			"policyCreationGroup": "All Benefits,Cloning,Client"
 		},
 		{
 			"benefitType": "Language Training",
@@ -26,7 +26,7 @@
 			"subBenefits": "Language Training Employee;Language Training Family",
 			"airesManagedService": "Yes",
 			"noOfMilestones": 2,
-			"policyCreationGroup": "All Benefits,Cloning,Versioning,Client,Aires Managed Benefits Cards"
+			"policyCreationGroup": "All Benefits,Cloning,Client,Aires Managed Benefits Cards"
 		},
 		{
 			"benefitType": "Temporary Living",
@@ -223,7 +223,7 @@
 			"subBenefits": "Concierge Home Cleaning Services Reimbursement",
 			"airesManagedService": "No",
 			"noOfMilestones": 50,
-			"policyCreationGroup": "All Benefits,Cloning,Versioning,Client"
+			"policyCreationGroup": "All Benefits,Cloning,Client"
 		},
 		{
 			"benefitType": "Child Care Services Reimbursement",
@@ -233,7 +233,7 @@
 			"subBenefits": "Child Care Services Reimbursement",
 			"airesManagedService": "Yes",
 			"noOfMilestones": 50,
-			"policyCreationGroup": "All Benefits,Cloning,Versioning,Client"
+			"policyCreationGroup": "All Benefits,Cloning,Client"
 		},
 		{
 			"benefitType": "Goods & Services Allowance",
@@ -243,7 +243,7 @@
 			"subBenefits": "Goods & Services Allowance",
 			"airesManagedService": "No",
 			"noOfMilestones": 50,
-			"policyCreationGroup": "All Benefits,Cloning,Versioning,Client"
+			"policyCreationGroup": "All Benefits,Cloning,Client"
 		}
 	],
 	"flexBenefits": [
@@ -267,7 +267,7 @@
 					"comment": "Test Flex Duplicate Housing Benefit Comment",
 					"payments": "Allowance/Cashout",
 					"multipleBenefitSubmission": false,
-					"policyCreationGroup": "All Benefits,Cloning,Versioning,Client",
+					"policyCreationGroup": "All Benefits,Cloning,Client",
 					"selectBenefitOnPBCPage": false,
 					"deselectBenefitOnPBCPage": false
 				},
@@ -288,7 +288,7 @@
 					"comment": "Test Other Housing Benefit Comment",
 					"payments": "Expense Reimbursement",
 					"multipleBenefitSubmission": false,
-					"policyCreationGroup": "All Benefits,Cloning,Versioning,Client",
+					"policyCreationGroup": "All Benefits,Cloning,Client",
 					"selectBenefitOnPBCPage": false,
 					"deselectBenefitOnPBCPage": false
 				},
@@ -381,20 +381,20 @@
 					"subServiceFunction": "Host Country Agent",
 					"compID": "49211",
 					"company": "AIRES-CIS-DEMO&'TEST(CLIENT)",
-					"initialTracingPrompt": "Book flight with travel agency/department",
+				    "initialTracingPrompt": "Start date of trip",
 					"postInitialTracingCardStatus": "Travel Requested",
-					"secondTracingPrompt": "*Confirm hotel booking/confirmation number with transferee",
-					"postSecondTracingCardStatus": "Travel Booked",
+					"secondTracingPrompt": "Confirm flight booking/confirmation number with transferee",
+					"postSecondTracingCardStatus": "Begin Tour",
 					"thirdTracingPrompt": "Start date of trip",
 					"postThirdTracingCardStatus": "Travel Begins",
 					"endTracingPrompt": "End date of trip",
-					"postEndTracingCardStatus": "Travel Complete",
+					"postEndTracingCardStatus": "Tour Complete",
 					"multipleBenefitSubmission": false,
 					"policyCreationGroup": "All Benefits,Aires Managed Benefits Cards",
 					"selectBenefitOnPBCPage": false,
 					"deselectBenefitOnPBCPage": false,
 					"noOfMilestones": 4,
-					"allMilestones": "Book flight with travel agency/department, Confirm flight booking/confirmation number with transferee, Start date of trip, End date of trip"
+					"allMilestones": "End date of trip,Book flight with travel agency/department,Confirm flight booking/confirmation number with transferee"
 				},
 				{
 					"benefitType": "Property Management",
@@ -456,7 +456,7 @@
 					"comment": "Test Flex Lump Sum Benefit Comment",
 					"payments": "Expense Reimbursement",
 					"multipleBenefitSubmission": false,
-					"policyCreationGroup": "All Benefits,Cloning,Versioning,Client",
+					"policyCreationGroup": "All Benefits,Cloning,Client",
 					"selectBenefitOnPBCPage": false,
 					"deselectBenefitOnPBCPage": false
 				},
@@ -477,7 +477,7 @@
 					"comment": "Test Flex Goods & Services Allowance Benefit Comment",
 					"payments": "Allowance/Cashout",
 					"multipleBenefitSubmission": false,
-					"policyCreationGroup": "All Benefits,Cloning,Versioning,Client",
+					"policyCreationGroup": "All Benefits,Cloning,Client",
 					"selectBenefitOnPBCPage": false,
 					"deselectBenefitOnPBCPage": false
 				},
@@ -543,15 +543,19 @@
 					"compID": "49211",
 					"company": "AIRES-CIS-DEMO&'TEST(CLIENT)",
 					"initialTracingPrompt": "Start date of trip",
-					"postInitialTracingCardStatus": "Travel Begins",
+					"postInitialTracingCardStatus": "Travel Requested",
+					"secondTracingPrompt": "Confirm flight booking/confirmation number with transferee",
+					"postSecondTracingCardStatus": "Begin Tour",
+					"thirdTracingPrompt": "Start date of trip",
+					"postThirdTracingCardStatus": "Travel Begins",
 					"endTracingPrompt": "End date of trip",
-					"postEndTracingCardStatus": "Travel Ends",
+					"postEndTracingCardStatus": "Tour Complete",
 					"multipleBenefitSubmission": false,
 					"policyCreationGroup": "All Benefits,Aires Managed Benefits Cards",
 					"selectBenefitOnPBCPage": false,
 					"deselectBenefitOnPBCPage": false,
 					"noOfMilestones": 4,
-					"allMilestones": "Book flight with travel agency/department, Confirm flight booking/confirmation number with transferee, Start date of trip, End date of trip"
+					"allMilestones": "End date of trip,Book flight with travel agency/department,Confirm flight booking/confirmation number with transferee"
 				},
 				{
 					"benefitType": "Home Leave",
@@ -576,20 +580,20 @@
 					"subServiceFunction": "NA",
 					"compID": "49211",
 					"company": "AIRES-CIS-DEMO&'TEST(CLIENT)",
-					"initialTracingPrompt": "Book flight with travel agency/department",
+					"initialTracingPrompt": "Start date of trip",
 					"postInitialTracingCardStatus": "Travel Requested",
-					"secondTracingPrompt": "*Confirm flight booking/confirmation number with transferee",
-					"postSecondTracingCardStatus": "Travel Booked",
+					"secondTracingPrompt": "Confirm flight booking/confirmation number with transferee",
+					"postSecondTracingCardStatus": "Begin Tour",
 					"thirdTracingPrompt": "Start date of trip",
 					"postThirdTracingCardStatus": "Travel Begins",
 					"endTracingPrompt": "End date of trip",
-					"postEndTracingCardStatus": "Travel Ends",
+					"postEndTracingCardStatus": "Tour Complete",
 					"multipleBenefitSubmission": false,
 					"policyCreationGroup": "All Benefits,Aires Managed Benefits Cards",
 					"selectBenefitOnPBCPage": false,
 					"deselectBenefitOnPBCPage": false,
 					"noOfMilestones": 4,
-					"allMilestones": "Book flight with travel agency/department, Confirm flight booking/confirmation number with transferee, Start date of trip, End date of trip"
+					"allMilestones": "End date of trip,Book flight with travel agency/department,Confirm flight booking/confirmation number with transferee"
 				},
 				{
 					"benefitType": "Air Shipment",
@@ -947,7 +951,7 @@
 					"endTracingPrompt": "End Date of Language Training",
 					"postEndTracingCardStatus": "Training complete",
 					"multipleBenefitSubmission": false,
-					"policyCreationGroup": "All Benefits,Cloning,Versioning,Client,Aires Managed Benefits Cards",
+					"policyCreationGroup": "All Benefits,Cloning,Client,Aires Managed Benefits Cards",
 					"selectBenefitOnPBCPage": false,
 					"deselectBenefitOnPBCPage": false,
 					"subbenefitToBeDeselected": "Language Training Family",
@@ -1108,7 +1112,7 @@
 					"subServiceFunction": "Host Country Agent",
 					"compID": "49211",
 					"company": "AIRES-CIS-DEMO&'TEST(CLIENT)",
-					"initialTracingPrompt": "Book flight with travel agency/ department",
+					"initialTracingPrompt": "Start date of trip",
 					"postInitialTracingCardStatus": "Travel Requested",
 					"secondTracingPrompt": "Confirm flight booking/confirmation number with transferee",
 					"postSecondTracingCardStatus": "Begin Tour",
@@ -1121,7 +1125,7 @@
 					"selectBenefitOnPBCPage": false,
 					"deselectBenefitOnPBCPage": false,
 					"noOfMilestones": 4,
-					"allMilestones": "Book flight with travel agency/department, Confirm flight booking/confirmation number with transferee, Start date of trip, End date of trip"
+					"allMilestones": "End date of trip,Book flight with travel agency/department,Confirm flight booking/confirmation number with transferee"
 				},
 				{
 					"benefitType": "Furniture Rental",
@@ -1211,7 +1215,7 @@
 					"comment": "Test Flex Concierge Home Cleaning Services Reimbursement Aires Managed Benefit Comment",
 					"payments": "Expense Reimbursement",
 					"multipleBenefitSubmission": false,
-					"policyCreationGroup": "All Benefits,Cloning,Versioning,Client",
+					"policyCreationGroup": "All Benefits,Cloning,Client",
 					"selectBenefitOnPBCPage": false,
 					"deselectBenefitOnPBCPage": false
 				},
@@ -1232,7 +1236,7 @@
 					"comment": "Test Flex Child Care Services Reimbursement Aires Managed Benefit Comment",
 					"payments": "Expense Reimbursement",
 					"multipleBenefitSubmission": false,
-					"policyCreationGroup": "All Benefits,Cloning,Versioning,Client",
+					"policyCreationGroup": "All Benefits,Cloning,Client",
 					"selectBenefitOnPBCPage": false,
 					"deselectBenefitOnPBCPage": false,
 					"noOfMilestones": 50

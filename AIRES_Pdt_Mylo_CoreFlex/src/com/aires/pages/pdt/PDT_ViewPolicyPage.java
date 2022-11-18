@@ -270,6 +270,10 @@ public class PDT_ViewPolicyPage extends Base {
 	@FindBy(how = How.CSS, using = "td.mat-column-ppc")
 	private WebElement _textAssignmentPPC;
 
+	// Assignment PPC
+	@FindBy(how = How.CSS, using = "ng-select[formcontrolname='toCorporationPolicyId'] input")
+	private WebElement _inputClonePolicy;
+
 	// Policy Dialog Description
 	@FindBy(how = How.CSS, using = "textarea[formcontrolname='description']")
 	private WebElement _txtAreaDescription;
@@ -630,8 +634,7 @@ public class PDT_ViewPolicyPage extends Base {
 	}
 
 	public void enterVersionControlDialogDescription() {
-		CoreFunctions.clearAndSetText(driver, _txtAreaDescription,
-				COREFLEXConstants.VERSION_CONTROL_DESCRIPTION);
+		CoreFunctions.clearAndSetText(driver, _txtAreaDescription, COREFLEXConstants.VERSION_CONTROL_DESCRIPTION);
 	}
 
 	public void navigateToGeneralInfoPage(String selectedPolicyName, String pageName) {
@@ -989,6 +992,7 @@ public class PDT_ViewPolicyPage extends Base {
 		if (!(CoreFunctions.getElementText(driver, _selectCloneToPolicyDefaultText))
 				.equals(COREFLEXConstants.NO_POLICY_AVAILABLE_FOR_SELECTION)) {
 			CoreFunctions.clickElement(driver, _selectCloneToPolicy);
+			CoreFunctions.clearAndSetText(driver, _inputClonePolicy, COREFLEXConstants.AUTOMATION_POLICY);
 			CoreFunctions.explicitWaitTillElementListVisibility(driver, _selectCloneToPolicyOptionsList);
 			CoreFunctions.writeToPropertiesFile("ClonedPolicy_Policy_Name",
 					_selectCloneToPolicyOptionsList.get(0).getText().split("\\(#")[0].trim());

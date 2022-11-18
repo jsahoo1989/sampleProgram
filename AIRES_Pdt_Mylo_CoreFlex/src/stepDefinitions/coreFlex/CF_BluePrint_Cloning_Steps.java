@@ -36,16 +36,14 @@ public class CF_BluePrint_Cloning_Steps {
 	private PDT_GeneralInformationPage generalInfoPage;
 	private CoreFlex_FlexPolicySetupPage flexPolicySetupPage;
 	private CoreFlex_PolicyBenefitsCategoriesPage coreFlexPolicyBenefitsCategoriesPage;
-	private CoreFlex_BenefitSummaryPage coreFlexBenefitSummaryPage;	
+	private CoreFlex_BenefitSummaryPage coreFlexBenefitSummaryPage;
 	private CoreFlex_PreviewTransfereePage coreFlexTransfereePreviewPage;
-	
-
 
 	public CF_BluePrint_Cloning_Steps(TestContext context) {
 		testContext = context;
 		CoreFlex_PolicyBenefitsCategoriesPage.pageObjectManager_CoreFlex = testContext.getCoreFlexPageObjectManager();
 		testContext.getCoreFlexPageObjectManager().initializeCoreFlexPageObjects();
-		coreFlexCustomBundlesPage = testContext.getCoreFlexPageObjectManager().getCoreFlexCustomBundlesPage();		
+		coreFlexCustomBundlesPage = testContext.getCoreFlexPageObjectManager().getCoreFlexCustomBundlesPage();
 		bluePrintCFLoginPage = testContext.getPageObjectManager().getBluePrintCoreFlexLoginPage();
 		viewPolicyPage = testContext.getPageObjectManager().getViewPolicyPage();
 		generalInfoPage = testContext.getPageObjectManager().getGeneralInfoPage();
@@ -60,7 +58,7 @@ public class CF_BluePrint_Cloning_Steps {
 				.getCoreFlexPolicyBenefitsCategoriesPage();
 		coreFlexCustomBundlesPage = testContext.getCoreFlexPageObjectManager().getCoreFlexCustomBundlesPage();
 		testContext.getCoreFlexPageObjectManager().initializeCoreFlexPageObjects();
-		coreFlexBenefitSummaryPage = testContext.getCoreFlexPageObjectManager().getCoreFlexBenefitSummaryPage();	
+		coreFlexBenefitSummaryPage = testContext.getCoreFlexPageObjectManager().getCoreFlexBenefitSummaryPage();
 		coreFlexTransfereePreviewPage = testContext.getCoreFlexPageObjectManager().getCoreFlexTransfereePreviewPage();
 		bluePrintCFLoginPage = testContext.getPageObjectManager().getBluePrintCoreFlexLoginPage();
 		coreFlexTransfereePreviewPage = testContext.getCoreFlexPageObjectManager().getCoreFlexTransfereePreviewPage();
@@ -184,8 +182,7 @@ public class CF_BluePrint_Cloning_Steps {
 						CoreConstants.FAIL));
 		generalInfoPage.clickElementOfPage(PDTConstants.NEXT);
 	}
-	
-	
+
 	@Then("^all the 'CoreFlex' benefits from the reference 'Points Based CoreFlex policy' should be copied over to the 'Cloned - Points based CoreFlex Policy'$")
 	public void all_the_CoreFlex_benefits_from_the_reference_Points_Based_CoreFlex_policy_should_be_copied_over_to_the_Cloned_Points_based_CoreFlex_Policy()
 			throws Throwable {
@@ -216,23 +213,12 @@ public class CF_BluePrint_Cloning_Steps {
 		Reporter.addStepLog("<b>Total time taken to navigate to <i>Blueprint - Policy Benefit Categories</i> page is :"
 				+ CoreFunctions.calculatePageLoadTime(CoreConstants.TIME_BEFORE_ACTION, CoreConstants.TIME_AFTER_ACTION)
 				+ " Seconds </b>");
-		Assert.assertTrue(coreFlexPolicyBenefitsCategoriesPage.verifyPolicyCategoriesBenefitsAndOrderPostCloning(),
-				MessageFormat.format(
-						COREFLEXConstants.FAILED_TO_VERIFY_POLICY_CATEGORIES_BENEFITS_AND_ORDER_ON_POLICY_BENEFITS_CATEGORIES_PAGE,
-						CoreConstants.FAIL));
 
-		Assert.assertTrue(
-				coreFlexPolicyBenefitsCategoriesPage.verifySelectedBenefitsPostVersioningCloning(
-						CoreFunctions.getPropertyFromConfig("CoreFlex_Policy_BenefitType"),
-						CoreFunctions.getPropertyFromConfig("CoreFlex_Policy_RequiredFor")),
-				MessageFormat.format(
-						COREFLEXConstants.FAILED_TO_VERIFY_SELECTED_BENEFITS_ON_POLICY_BENEFITS_CATEGORIES_PAGE,
-						CoreConstants.FAIL));
 		coreFlexPolicyBenefitsCategoriesPage.clickElementOfPage(PDTConstants.NEXT);
 		Assert.assertTrue(coreFlexPolicyBenefitsCategoriesPage.verifyInformationDialog(), MessageFormat.format(
 				COREFLEXConstants.FAILED_TO_VERIFY_INFORMATION_DIALOG_AFTER_SELECTING_BENEFITS_AND_CLICKING_NEXT_ON_POLICY_BENEFIT_CATEGORIES_PAGE,
 				CoreConstants.FAIL));
-		CoreConstants.TIME_BEFORE_ACTION = new Date().getTime();		
+		CoreConstants.TIME_BEFORE_ACTION = new Date().getTime();
 		Assert.assertTrue(
 				coreFlexPolicyBenefitsCategoriesPage.verifyBenefitsDisplayedOnLeftNavigation(
 						CoreFunctions.getPropertyFromConfig("CoreFlex_Policy_BenefitType"),
@@ -298,7 +284,46 @@ public class CF_BluePrint_Cloning_Steps {
 				MessageFormat.format(COREFLEXConstants.FAILED_TO_VERIFY_BENEFITS_DETAILS_ON_PREVIEW_TRANSFEREE_PAGE,
 						CoreConstants.FAIL));
 		coreFlexTransfereePreviewPage.clickElementOfPage(COREFLEXConstants.CLOSE_TRANSFEREE_PREVIEW);
-		CoreFunctions.writeToPropertiesFile("Assignment_Policy", CoreFunctions.getPropertyFromConfig("ClonedPolicy_Policy_Name"));
+
+		// Approving the Policy to be used in Assignment Association
+		coreFlexCustomBundlesPage.clickElementOfPage(COREFLEXConstants.SUBMIT);
+		Assert.assertTrue(
+				coreFlexCustomBundlesPage.verifyPolicySubmitStatus(COREFLEXConstants.POLICY_SUBMIT_STATUS_MESSAGE,
+						CoreFunctions.getPropertyFromConfig("ClonedPolicy_Policy_Name")),
+				MessageFormat.format(COREFLEXConstants.FAILED_TO_VERIFY_POLICY_SUBMIT_STATUS_ON_CUSTOM_BUNDLES_PAGE,
+						CoreConstants.FAIL));
+		coreFlexCustomBundlesPage.clickElementOfPage(COREFLEXConstants.OK);
+		Assert.assertTrue(coreFlexCustomBundlesPage.verifyPolicyStatusPostSubmission(COREFLEXConstants.SUBMITTED),
+				MessageFormat.format(
+						COREFLEXConstants.FAILED_TO_VERIFY_POLICY_STATUS_POST_POLICY_SUBMISSION_ON_CUSTOM_BUNDLES_PAGE,
+						CoreConstants.FAIL, COREFLEXConstants.CUSTOM_BUNDLES));
+		Assert.assertTrue(coreFlexCustomBundlesPage.verifyPolicyVersionPostSubmission(COREFLEXConstants.VERSION1),
+				MessageFormat.format(
+						COREFLEXConstants.FAILED_TO_VERIFY_POLICY_VERSION_POST_POLICY_SUBMISSION_ON_CUSTOM_BUNDLES_PAGE,
+						CoreConstants.FAIL, COREFLEXConstants.CUSTOM_BUNDLES));
+		Assert.assertTrue(coreFlexCustomBundlesPage.verifySubmitButtonDisabledPostSubmission(),
+				MessageFormat.format(
+						COREFLEXConstants.SUBMIT_BUTTON_NOT_DISABLED_AFTER_POLICY_SUBMISSION_ON_CUSTOM_BUNDLES_PAGE,
+						CoreConstants.FAIL, COREFLEXConstants.CUSTOM_BUNDLES));
+		coreFlexCustomBundlesPage.clickElementOfPage(COREFLEXConstants.APPROVE_POLICY);
+		Assert.assertTrue(coreFlexCustomBundlesPage.verifyApproveThisPolicyDialog(COREFLEXConstants.VERSION1),
+				MessageFormat.format(COREFLEXConstants.FAILED_TO_VERIFY_APPROVE_THIS_POLICY_DIALOG,
+						CoreConstants.FAIL));
+		coreFlexCustomBundlesPage.clickElementOfPage(COREFLEXConstants.ASSOCIATE_THIS_POLICY);
+		coreFlexCustomBundlesPage.clickElementOfPage(COREFLEXConstants.APPROVE);
+		Assert.assertTrue(viewPolicyPage.verifyPageNavigation(COREFLEXConstants.VIEW_EDIT_POLICY_FORMS),
+				MessageFormat.format(COREFLEXConstants.FAILED_TO_VERIFY_USER_NAVIGATION_TO_VIEW_EDIT_POLICY_PAGE,
+						CoreConstants.FAIL));
+		Assert.assertTrue(
+				viewPolicyPage.verifyApprovedPolicyStatusAndVersion(
+						CoreFunctions.getPropertyFromConfig("ClonedPolicy_Policy_Name"), COREFLEXConstants.ACTIVE,
+						COREFLEXConstants.VERSION1),
+				MessageFormat.format(
+						COREFLEXConstants.FAILED_TO_VERIFY_APPROVED_POLICY_STATUS_ON_VIEW_EDIT_POLICY_FORMS_PAGE,
+						CoreConstants.FAIL));
+		CoreFunctions.writeToPropertiesFile("Assignment_Policy",
+				CoreFunctions.getPropertyFromConfig("ClonedPolicy_Policy_Name"));
+
 	}
 
 }

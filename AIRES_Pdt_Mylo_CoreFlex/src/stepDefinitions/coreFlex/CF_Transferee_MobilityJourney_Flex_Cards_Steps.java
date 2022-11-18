@@ -754,6 +754,19 @@ public class CF_Transferee_MobilityJourney_Flex_Cards_Steps {
 		Reporter.addStepLog("<b>Total time taken to navigate to <i>My Benefits Bundle</i> page is :"
 				+ (CoreConstants.TIME_AFTER_ACTION - CoreConstants.TIME_BEFORE_ACTION) / 1000 + " Seconds </b>");
 	}
+	
+	@Given("^he has navigated to \"([^\"]*)\" page after selecting 'Aires Managed' benefits on \"([^\"]*)\" page$")
+	public void he_has_navigated_to_page_after_selecting_Aires_Managed_benefits_on_page(
+			String navigatedPage, String sourcePage) throws Throwable {
+		Assert.assertTrue(mxTransfereeFlexPlanningToolPage.selectBenefitsAndProceedToReviewAndSubmit(), MessageFormat
+				.format(MobilityXConstants.FAILED_TO_SELECT_BENEFITS_AND_PROCEED_TO_REVIEW_PAGE, CoreConstants.FAIL));
+		CoreConstants.TIME_BEFORE_ACTION = new Date().getTime();
+		Assert.assertTrue(mxTransfereeMyBenefitsBundlePage.isMyBundlePageDisplayed(),
+				MessageFormat.format(MobilityXConstants.FAILED_TO_DISPLAY_MY_BENEFIT_BUNDLE_PAGE, CoreConstants.FAIL));
+		CoreConstants.TIME_AFTER_ACTION = new Date().getTime();
+		Reporter.addStepLog("<b>Total time taken to navigate to <i>My Benefits Bundle</i> page is :"
+				+ (CoreConstants.TIME_AFTER_ACTION - CoreConstants.TIME_BEFORE_ACTION) / 1000 + " Seconds </b>");
+	}
 
 	@Given("^he has clicked on \"([^\"]*)\" button after validating 'Aires Managed' benefits with '([^\"]*)' Milestones listed under 'Selected Benefits' section on \"([^\"]*)\" page$")
 	public void he_has_clicked_on_button_after_validating_Aires_Managed_benefits_details_with_Milestones_listed_under_Selected_Benefits_section_on_page(

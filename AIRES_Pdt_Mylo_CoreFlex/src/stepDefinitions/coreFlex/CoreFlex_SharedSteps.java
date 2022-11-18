@@ -520,7 +520,7 @@ public class CoreFlex_SharedSteps {
 	@Given("^he has filled 'Description' after selecting following option on 'Approval this Policy' dialog of \"([^\"]*)\" Policy$")
 	public void he_has_filled_Description_after_selecting_following_option_on_Approval_this_Policy_dialog_of_Policy(String policyVersion,
 			DataTable dataTable) throws Throwable {
-		Assert.assertTrue(coreFlexCustomBundlesPage.verifyApproveThisPolicyDialog(policyVersion, dataTable),
+		Assert.assertTrue(coreFlexCustomBundlesPage.verifyApproveThisPolicyDialog(policyVersion),
 				MessageFormat.format(COREFLEXConstants.FAILED_TO_VERIFY_APPROVE_THIS_POLICY_DIALOG,
 						CoreConstants.FAIL));
 		coreFlexCustomBundlesPage.clickElementOfPage(COREFLEXConstants.ASSOCIATE_THIS_POLICY);
@@ -548,7 +548,6 @@ public class CoreFlex_SharedSteps {
 		Reporter.addStepLog("<b>Total time taken to navigate to <i>Blueprint - View/Edit Policy Forms</i> page is :"
 				+ CoreFunctions.calculatePageLoadTime(CoreConstants.TIME_BEFORE_ACTION, CoreConstants.TIME_AFTER_ACTION)
 				+ " Seconds </b>");
-//		viewPolicyPage.clickElementOfPage(PDTConstants.CLEAR_FILTER);
 		Assert.assertTrue(
 				viewPolicyPage.verifyApprovedPolicyStatusAndVersion(
 						CoreFunctions.getPropertyFromConfig("Assignment_Policy"), expectedStatus, expectedVersion),

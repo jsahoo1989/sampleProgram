@@ -424,26 +424,26 @@ public class CoreFlex_CustomBundlesPage extends Base {
 			return false;
 	}
 
-	public boolean verifyApproveThisPolicyDialog(String policyVersion, DataTable dataTable) {
-		boolean isDialogHeaderVerified, isDialogTextVerified, isDialogOptionsVerified,
-				isApproveThisPolicyDialogVerified;
+	public boolean verifyApproveThisPolicyDialog(String policyVersion) {
+		boolean isApproveThisPolicyDialogVerified;
 		String policyVersionNumber = policyVersion.replace("V", "").trim();
 		try {
-			isDialogHeaderVerified = CoreFunctions.getElementText(driver, _popUpApprovePolicyHeader)
-					.equals(COREFLEXConstants.EXPECTED_APPROVE_THIS_POLICY_DIALOG_HEADER);
-			isDialogTextVerified = CoreFunctions.getElementText(driver, _popUpApprovePolicyVersionText)
-					.equals((COREFLEXConstants.EXPECTED_APPROVE_THIS_POLICY_DIALOG_VERSION_TEXT).replace("VN",
-							policyVersionNumber))
-					&& CoreFunctions.getElementText(driver, _popUpApprovePolicyAssignmentText)
-							.equals((policyVersionNumber.equals("1"))
-									? COREFLEXConstants.EXPECTED_APPROVE_THIS_POLICY_DIALOG_ASSIGNMENT_TEXT_FIRST_VERSION
-									: COREFLEXConstants.EXPECTED_APPROVE_THIS_POLICY_DIALOG_ASSIGNMENT_TEXT_SECOND_VERSION);
-			isDialogOptionsVerified = (CoreFunctions.getElementText(driver, _popUpApprovePolicyCheckBox).trim())
-					.equals(COREFLEXConstants.EXPECTED_APPROVE_THIS_POLICY_DIALOG_CHECKBOX_SELECTION.trim());
-//					&& CoreFunctions.getAttributeText(_popUpApprovePolicyDefaultAssignmentDate, "min")
-//							.equals(CoreFunctions.getCurrentDateAsGivenFormat("YYYY-MM-dd"));
-			isApproveThisPolicyDialogVerified = isDialogHeaderVerified && isDialogTextVerified
-					&& isDialogOptionsVerified;
+			CoreFunctions.verifyText(CoreFunctions.getElementText(driver, _popUpApprovePolicyHeader),
+					COREFLEXConstants.EXPECTED_APPROVE_THIS_POLICY_DIALOG_HEADER,
+					COREFLEXConstants.APPROVE_POLICY_DIALOG_HEADER);
+			CoreFunctions.verifyText(CoreFunctions.getElementText(driver, _popUpApprovePolicyVersionText),
+					(COREFLEXConstants.EXPECTED_APPROVE_THIS_POLICY_DIALOG_VERSION_TEXT).replace("VN",
+							policyVersionNumber),
+					COREFLEXConstants.APPROVE_POLICY_DIALOG_VERSION_TEXT);
+			CoreFunctions.verifyText(CoreFunctions.getElementText(driver, _popUpApprovePolicyAssignmentText),
+					(policyVersionNumber.equals("1"))
+							? COREFLEXConstants.EXPECTED_APPROVE_THIS_POLICY_DIALOG_ASSIGNMENT_TEXT_FIRST_VERSION
+							: COREFLEXConstants.EXPECTED_APPROVE_THIS_POLICY_DIALOG_ASSIGNMENT_TEXT_SECOND_VERSION,
+					COREFLEXConstants.APPROVE_POLICY_DIALOG_ASSIGNMENT_TEXT);
+			CoreFunctions.verifyText(CoreFunctions.getElementText(driver, _popUpApprovePolicyCheckBox).trim(),
+					COREFLEXConstants.EXPECTED_APPROVE_THIS_POLICY_DIALOG_CHECKBOX_SELECTION.trim(),
+					COREFLEXConstants.APPROVE_POLICY_DIALOG_CHECKBOX_OPTION);
+			isApproveThisPolicyDialogVerified = true;
 		} catch (Exception e) {
 			Reporter.addStepLog(MessageFormat.format(
 					COREFLEXConstants.EXCEPTION_OCCURED_WHILE_ADDING_A_NEW_CUSTOM_BUNDLE_ON_CUSTOM_BUNDLES_PAGE,

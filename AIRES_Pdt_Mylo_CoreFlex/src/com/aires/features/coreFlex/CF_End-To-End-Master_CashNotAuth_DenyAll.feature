@@ -4,7 +4,7 @@ Feature: Validate MXTransferee Workflow and MJ Cards(Submitted,StartingSoon,InPr
   Scenario: CoreFlex - Validating policy status is updated to 'Active' on completion of Approval WorkFlow for Transferee-CashoutNotAuthorized MasterScript Policy Setup
     Given he has setup a new Points Based CoreFlex Policy with following selection in Blueprint application
       | Person Responsible For Benefit Selection | Flex Setup Type | Cashout Availability   | BenefitType | PolicyRequiredFor |
-      | Transferee                               | Static/Fixed    | Cashout Not Authorized | Both        | Client            |
+      | Transferee                               | Static/Fixed    | Cashout Not Authorized | Both        | All Benefits      |
     And he has clicked on "Submit" button to submit "V1" policy verison on "Custom Bundles" page
     And he has clicked on "Approve Policy" button to approve "V1" policy verison on "Custom Bundles" page
     And he has filled 'Description' after selecting following option on 'Approval this Policy' dialog of "V1" Policy
@@ -123,7 +123,7 @@ Feature: Validate MXTransferee Workflow and MJ Cards(Submitted,StartingSoon,InPr
       | WelcomeDialogSelection               |
       | No thanks, I prefer to do this later |
     And he has navigated to "FleX Planning Tool" after clicking on 'Manage my Points' button on "Mobility Journey Home" page
-    And he has navigated to "My Benefits Bundle" page after validating and selecting 'Aires Managed' benefits on "FleX Planning Tool" page
+    And he has navigated to "My Benefits Bundle" page after selecting 'Aires Managed' benefits on "FleX Planning Tool" page
     And he has clicked on "Review and Submit" button after validating all the benefit details listed under 'Selected Benefits' section on "My Benefits Bundle" page
     And he has clicked on "Yes - submit my bundle" button after entering Transferee name on "Submit Bundle Confirmation" dialog
     And he has clicked on "OK - Let Me See My Benefits!" button displayed on 'Success Flex' dialog

@@ -883,7 +883,7 @@ public class IRIS_ActivityAndFinancePage extends BasePage {
 							enterActDateForTracingPrompt(
 									IRIS_PageMaster.getTableObject(_IRIS,
 											"IRIS.Presentation.assignment.activityFinance.ActivityPanel$1"),
-									activity, IRISConstants.PERFORM_NEEDS_ASSESSMENT_TEXT, estDate);
+									activity, benefit.getInitialTracingPrompt(), estDate);
 						}
 					}
 					clickOnSaveBtn();
@@ -1047,30 +1047,12 @@ public class IRIS_ActivityAndFinancePage extends BasePage {
 					if (benefit.getIrisServiceName().equals("Shipment")) {
 						actualizeAllTracingPromptForShipmentService(_IRIS, activity, benefit);
 					} else {
-						selectServiceAndSubService(benefit);
-						displayActivityTable();
-						if (noOfMilestones == 2) {
-							enterActDateForTracingPrompt(
-									IRIS_PageMaster.getTableObject(_IRIS,
-											"IRIS.Presentation.assignment.activityFinance.ActivityPanel$1"),
-									activity, benefit.getEndTracingPrompt(), tracingDate);
-						}
-						if (noOfMilestones == 4) {
-							provideEstimatedDatesForAllTracingPrompts(noOfMilestones);
-							for (int i = 0; i < noOfMilestones; i++) {
-								String activityName = benefit.getAllMilestones().split(",")[i].trim();
-								enterActDateForTracingPrompt(
-										IRIS_PageMaster.getTableObject(_IRIS,
-												"IRIS.Presentation.assignment.activityFinance.ActivityPanel$1"),
-										activity, activityName, tracingDate);
-							}
-						}
+						actualizeTracingBasedOnMilestones(benefit, noOfMilestones, activity, tracingDate);
 					}
 					clickOnSaveBtn();
 					verifySaveSuccessfulMsg();
 					handleInactivateSubServiceError();
 				}
-
 			}
 			CoreFunctions.writeToPropertiesFile("irisWindowTitle", getIRISWindow().getTitle());
 		} catch (Exception e) {
@@ -1078,6 +1060,26 @@ public class IRIS_ActivityAndFinancePage extends BasePage {
 					IRISConstants.EXCEPTION_OCCURED_WHILE_ACTUALIZING_ADDED_SERVICES_TRACING_PROMPT_ON_IRIS_APPLICATION,
 					CoreConstants.FAIL, e.getMessage()));
 		}
+	}
+
+	private void actualizeTracingBasedOnMilestones(Benefit benefit, int noOfMilestones, String activity,
+			String tracingDate) throws Exception {
+		selectServiceAndSubService(benefit);
+		displayActivityTable();
+		if (noOfMilestones == 2) {
+			enterActDateForTracingPrompt(
+					IRIS_PageMaster.getTableObject(_IRIS,
+							"IRIS.Presentation.assignment.activityFinance.ActivityPanel$1"),
+					activity, benefit.getEndTracingPrompt(), tracingDate);
+		}
+		if (noOfMilestones == 4) {
+			provideEstimatedDatesForAllTracingPrompts(noOfMilestones, benefit);
+			enterActDateForTracingPrompt(
+					IRIS_PageMaster.getTableObject(_IRIS,
+							"IRIS.Presentation.assignment.activityFinance.ActivityPanel$1"),
+					activity, benefit.getEndTracingPrompt(), tracingDate);
+		}
+
 	}
 
 	private void actualizeAllTracingPromptForShipmentService(Window _IRIS, String activity, Benefit benefit)
@@ -1141,25 +1143,16 @@ public class IRIS_ActivityAndFinancePage extends BasePage {
 		}
 	}
 
-	private void provideEstimatedDatesForAllTracingPrompts(int noOfMilestones) throws Exception {
-		for (FlexBenefit benefitList : flexBenefits) {
-			for (Benefit benefit : benefitList.getBenefits()) {
-				if ((benefit.getSelectBenefitOnFPTPage()) && benefit.getAiresManagedService().equals("Yes")
-						&& benefit.getNoOfMilestones() != null && benefit.getNoOfMilestones() == noOfMilestones) {
-					selectServiceAndSubService(benefit);
-					displayActivityTable();
-					for (int i = 0; i < noOfMilestones; i++) {
-						String activityName = benefit.getAllMilestones().split(",")[i].trim();
-						System.out.println("name: " + activityName);
-						enterActDateForTracingPrompt(
-								IRIS_PageMaster.getTableObject(_IRIS,
-										"IRIS.Presentation.assignment.activityFinance.ActivityPanel$1"),
-								IRISConstants.ACTIVITY, activityName, IRISConstants.EST_DATE);
-						clickOnSaveBtn();
-						verifySaveSuccessfulMsg();
-					}
-				}
-			}
+	private void provideEstimatedDatesForAllTracingPrompts(int noOfMilestones, Benefit benefit) throws Exception {
+		for (int i = 0; i < (noOfMilestones - 1); i++) {
+			String activityName = benefit.getAllMilestones().split(",")[i].trim();
+			System.out.println("name: " + activityName);
+			enterActDateForTracingPrompt(
+					IRIS_PageMaster.getTableObject(_IRIS,
+							"IRIS.Presentation.assignment.activityFinance.ActivityPanel$1"),
+					IRISConstants.ACTIVITY, activityName, IRISConstants.EST_DATE);
+			clickOnSaveBtn();
+			verifySaveSuccessfulMsg();
 		}
 	}
 

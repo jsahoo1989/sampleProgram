@@ -12,8 +12,8 @@ Feature: Validate MXTransferee Workflow and MJ Cards(CancelledStatus) for Transf
       | Effective from booking date                             |
     When he clicks on "Approve" button to acknowledge 'Approve this Policy' dialog
     Then Policy Status and Version should be displayed as "Active" and "V1" respectively on "View/Edit Policy Forms" page
-
-  @Coreflex:218331 @CF_End-To-End_MasterScript @CF_Master_PortionApprove @CF_Master_PortionApprove_CloningToDifferentClientPolicy
+    
+     @Coreflex:218331 @CF_End-To-End_MasterScript @CF_Master_PortionApprove @CF_Master_PortionApprove_CloningToDifferentClientPolicy
   Scenario Outline: CoreFlex - Validating Cloned Policy contents for different Client reference selection and Policy with Submit/Active/Legacy status
     Given he has logged into 'BluePrint' application as 'CSM - SSO' user
     And he has clicked on 'Clone Policy' icon after searching for 'Points Based CoreFlex Policy' with Policy Status as "<PolicyStatus>"
@@ -62,8 +62,8 @@ Feature: Validate MXTransferee Workflow and MJ Cards(CancelledStatus) for Transf
     And 'Delete Request Pending' benefit request should be removed from 'Transferee Submission Details' list
     And "Approved" delete request Benefit_Cashout details should be displayed under 'Transferee History' section with "Deleted" status
     And benefit details should be updated in 'MXTransferee' application based on "Approved" 'Delete Request' on Transferee Submission
-
-  @Coreflex:218334 @CF_End-To-End_MasterScript @CF_Master_PortionApprove @CF_Master_PortionApprove_Cards_PF
+    
+    @Coreflex:218334 @CF_End-To-End_MasterScript @CF_Master_PortionApprove @CF_Master_PortionApprove_Cards_PF
   Scenario: CoreFlex - Setting up a New CoreFlex policy in 'CoreFlex Blueprint Application' with Both type 'Aires Managed' benefits
     Given he has setup a new Points Based CoreFlex Policy with following selection in Blueprint application
       | Person Responsible For Benefit Selection | Flex Setup Type | Cashout Availability | BenefitType | PolicyRequiredFor            |
@@ -94,3 +94,5 @@ Feature: Validate MXTransferee Workflow and MJ Cards(CancelledStatus) for Transf
     When he change status of the 'Aires Managed' benefit SubService to "Cancel" from Services tab of IRIS application
     Then submitted Aires Managed Benefit Flex and Core card status should be updated to "Cancelled" on "Mobility Journey Home" page
     And submitted Aires Managed Benefit status should be updated to "Cancelled" on "My Benefit Bundle" page
+
+    

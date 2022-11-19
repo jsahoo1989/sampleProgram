@@ -102,19 +102,14 @@ public class PDT_AddNewPolicyPage extends Base {
 	@FindBy(how = How.CSS, using = "ng-select[bindvalue='corporationPolicyId'] input")
 	private WebElement _inputPolicy;
 
-	private PDT_LoginDetails _loginDetailsApplication = FileReaderManager.getInstance().getJsonReader()
-			.getLoginByApplication(CoreFunctions.getPropertyFromConfig("application"));
-
 	final By _buttonNextByLocator = By.cssSelector("button.btn-next");
 
 	// Policy Name Field Default Text
 	@FindBy(how = How.XPATH, using = "//ng-select[@bindvalue='corporationPolicyId']//div[@class='ng-placeholder'][contains(text(),'No policy available for selection')]")
 	private WebElement _policyNameDefaultText;
-	
-	final By _buttonNextByLocator = By.cssSelector("button.btn-next");
 
-	//private PDT_LoginInfo _loginInfo = FileReaderManager.getInstance().getJsonReader().getLoginByEnvt(CoreFunctions.getPropertyFromConfig("envt").toLowerCase());
-	private PDT_LoginInfo _loginInfo = FileReaderManager.getInstance().getJsonReader().getLoginByEnvt(System.getProperty("envt").toLowerCase());
+	private PDT_LoginInfo _loginInfo = FileReaderManager.getInstance().getJsonReader().getLoginByEnvt(CoreFunctions.getPropertyFromConfig("envt").toLowerCase());
+//	private PDT_LoginInfo _loginInfo = FileReaderManager.getInstance().getJsonReader().getLoginByEnvt(System.getProperty("envt").toLowerCase());
 
 	public static String selectedPolicyName;
 	long timeBeforeAction, timeAfterAction;
@@ -503,6 +498,8 @@ public class PDT_AddNewPolicyPage extends Base {
 					CoreFunctions.clickElement(driver, element);
 					ClientPolicyDetails.setClientId(clientId);
 					ClientPolicyDetails.setClientName(clientName);
+					CoreFunctions.writeToPropertiesFile("Policy_ClientID", clientId);
+					CoreFunctions.writeToPropertiesFile("Policy_ClientName", clientName);
 					Reporter.addStepLog(MessageFormat.format(PDTConstants.VERIFY_VALUE_SELECTED_FROM_DROPDWON,
 							CoreConstants.PASS, PDTConstants.CLIENT_NAME, clientName));
 					break;

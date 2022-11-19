@@ -686,9 +686,9 @@ public class CoreFlex_Pet_Shipment_BenefitsPage extends BenefitPage {
 		switch (subBenefit) {
 		case COREFLEXConstants.PET_SHIPMENT:
 			expandSubBenefitIfCollapsed(getElementByName(COREFLEXConstants.PET_SHIPMENT));
-			if (benefitType.equals(COREFLEXConstants.FLEX_BENEFITS)) {
-				CoreFunctions.clickElement(driver, _headerPetShipment);
-			}
+//			if (benefitType.equals(COREFLEXConstants.FLEX_BENEFITS)) {
+//				CoreFunctions.clickElement(driver, _headerPetShipment);
+//			}
 			verifyPetShipmentSubBenefitForm(COREFLEXConstants.PET_SHIPMENT);
 			break;
 		default:

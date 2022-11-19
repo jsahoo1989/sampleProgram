@@ -170,7 +170,7 @@ public class CoreFlex_HomeLeave_BenefitsPage extends BenefitPage {
 	private WebElement _selectFrequencyOfTripSelectedValue;
 
 	@FindBy(how = How.CSS, using = "ng-select[formcontrolname='assignmentFreqOfTripCode'] span.ng-option-label.ng-star-inserted")
-	private List<WebElement> _selectFrequencyOfTripOptions;
+	private List<WebElement> _selectFrequencyOfTripOptions;	
 
 	@FindBy(how = How.CSS, using = "input[formcontrolname='assignmentFreqOfTripOther']")
 	private WebElement _inputFrequencyOfTripOther;
@@ -360,6 +360,9 @@ public class CoreFlex_HomeLeave_BenefitsPage extends BenefitPage {
 	
 	@FindBy(how = How.XPATH, using = "//span[contains(text(),'Core Benefits')]/ancestor::div[contains(@id,'firstItemDiv')]//div[contains(@class,'RXCFServicesMonitoringBorderPanel')]")
 	private List<WebElement> coreCardPanelList;
+	
+	@FindBy(how = How.CSS, using = "ng-dropdown-panel[role='listbox'] span[class*='ng-option-label']")
+	private List<WebElement> _selectDynamicDropdownOptions;	
 	
 	private By _serviceCompleted = By
 			.cssSelector("span[class='RXBigIconPrimary ServicesSuccessIcon icon-check-approved']");
@@ -578,26 +581,46 @@ public class CoreFlex_HomeLeave_BenefitsPage extends BenefitPage {
 		try {
 			CoreFunctions.clearAndSetText(driver, _inputAssignmentTrip,
 					movingBenefitData.homeLeaveTransportation.assignmentNumberOfTrips);
-			CoreFunctions.clickElement(driver, _selectFrequencyOfTrip);
-			CoreFunctions.selectItemInListByText(driver, _selectFrequencyOfTripOptions,
+			CoreFunctions.clickElement(driver, _selectFrequencyOfTrip);			
+			
+			
+			CoreFunctions.selectItemInListByText(driver, _selectDynamicDropdownOptions,
 					movingBenefitData.homeLeaveTransportation.frequencyTrip, true);
 			if (movingBenefitData.homeLeaveTransportation.frequencyTrip.equalsIgnoreCase(COREFLEXConstants.OTHER)) {
 				CoreFunctions.clearAndSetText(driver, _inputFrequencyOfTripOther,
 						movingBenefitData.homeLeaveTransportation.frequencyTripOther);
 			}
+			
+//			CoreFunctions.selectItemInListByText(driver, _selectFrequencyOfTripOptions,
+//					movingBenefitData.homeLeaveTransportation.frequencyTrip, true);
+//			if (movingBenefitData.homeLeaveTransportation.frequencyTrip.equalsIgnoreCase(COREFLEXConstants.OTHER)) {
+//				CoreFunctions.clearAndSetText(driver, _inputFrequencyOfTripOther,
+//						movingBenefitData.homeLeaveTransportation.frequencyTripOther);
+//			}
+			
+			CoreFunctions.clickElement(driver, _selectTransportationType);	
+			CoreFunctions.selectItemInListByText(driver, _selectDynamicDropdownOptions,
+					movingBenefitData.homeLeaveTransportation.transportationType, true);				
+//			CoreFunctions.selectItemInListByText(driver, _selectTransportationTypeOptions,
+//					movingBenefitData.homeLeaveTransportation.transportationType, true);			
 			CoreFunctions.clickElement(driver, _selectTransportationType);
-			CoreFunctions.selectItemInListByText(driver, _selectTransportationTypeOptions,
-					movingBenefitData.homeLeaveTransportation.transportationType, true);
-			CoreFunctions.clickElement(driver, _selectTransportationType);
+			
+			
 			CoreFunctions.clearAndSetText(driver, _inputMinMileageEconomy,
 					movingBenefitData.homeLeaveTransportation.minMilForEconomyAirTravel);
 			CoreFunctions.clearAndSetText(driver, _inputMinMileageBusiness,
 					movingBenefitData.homeLeaveTransportation.minMilForBusinessAirTravel);
 			CoreFunctions.clearAndSetText(driver, _inputMinFlightTimeExlLayovers,
 					movingBenefitData.homeLeaveTransportation.minFlightTimeExclLayovers);
+			
+			
 			CoreFunctions.clickElement(driver, _selectAccompanyingFamilyMemberCode);
-			CoreFunctions.selectItemInListByText(driver, _selectAccompanyingFamilyMemberCodeOptions,
+			CoreFunctions.selectItemInListByText(driver, _selectDynamicDropdownOptions,
 					movingBenefitData.homeLeaveTransportation.accompanyingFamilyMember, true);
+//			CoreFunctions.selectItemInListByText(driver, _selectAccompanyingFamilyMemberCodeOptions,
+//					movingBenefitData.homeLeaveTransportation.accompanyingFamilyMember, true);
+			
+			
 			CoreFunctions.selectItemInListByText(driver, _radioBtnExcessBaggageFees,
 					movingBenefitData.homeLeaveTransportation.excessBaggageFees, true);
 			CoreFunctions.clearAndSetText(driver, _inputMaxAmountPerPerson,
@@ -651,9 +674,13 @@ public class CoreFlex_HomeLeave_BenefitsPage extends BenefitPage {
 		try {
 			CoreFunctions.clearAndSetText(driver, _inputDurationInDays,
 					movingBenefitData.homeLeaveRentalCar.durationDays);
+			
 			CoreFunctions.clickElement(driver, _selectRentalCarSize);
-			CoreFunctions.selectItemInListByText(driver, _selectRentalCarSizeOptions,
+			CoreFunctions.selectItemInListByText(driver, _selectDynamicDropdownOptions,
 					movingBenefitData.homeLeaveRentalCar.rentalCarSize, true);
+//			CoreFunctions.selectItemInListByText(driver, _selectRentalCarSizeOptions,
+//					movingBenefitData.homeLeaveRentalCar.rentalCarSize, true);
+			
 			if (movingBenefitData.homeLeaveRentalCar.rentalCarSize.equalsIgnoreCase(COREFLEXConstants.OTHER)) {
 				CoreFunctions.clearAndSetText(driver, _inputRentalCarOtherSize,
 						movingBenefitData.homeLeaveRentalCar.rentalCarSizeOther);
@@ -686,25 +713,45 @@ public class CoreFlex_HomeLeave_BenefitsPage extends BenefitPage {
 			CoreFunctions.selectItemInListByText(driver, _radioBtnMealType, movingBenefitData.homeLeaveMeals.type,
 					true);
 			CoreFunctions.clickElement(driver, _selectMaxAmtMeals);
-			CoreFunctions.selectItemInListByText(driver, _selectMaxAmtMealsOptions,
+			CoreFunctions.selectItemInListByText(driver, _selectDynamicDropdownOptions,
 					movingBenefitData.homeLeaveMeals.maxAmount, true);
+//			CoreFunctions.selectItemInListByText(driver, _selectMaxAmtMealsOptions,
+//					movingBenefitData.homeLeaveMeals.maxAmount, true);			
+			
 			CoreFunctions.clearAndSetText(driver, _inputMaxAmtTransferee,
 					movingBenefitData.homeLeaveMeals.maxAmtTransferee);
+			
+			
 			CoreFunctions.clickElement(driver, _selectTransfereeCurrency);
-			CoreFunctions.selectItemInListByText(driver, _selectTransfereeCurrencyOptions,
+			CoreFunctions.selectItemInListByText(driver, _selectDynamicDropdownOptions,
 					movingBenefitData.homeLeaveMeals.maxAmtTransfereeCurrency, true);
+//			CoreFunctions.selectItemInListByText(driver, _selectTransfereeCurrencyOptions,
+//					movingBenefitData.homeLeaveMeals.maxAmtTransfereeCurrency, true);
+			
+			
+			
 			CoreFunctions.selectItemInListByText(driver, _radioDetailTransfereeCode,
 					movingBenefitData.homeLeaveMeals.maxAmtTransfereeDetail, true);
 			CoreFunctions.clearAndSetText(driver, _inputMaxAmtAdult, movingBenefitData.homeLeaveMeals.maxAmtAdult);
+			
 			CoreFunctions.clickElement(driver, _selectAdultCurrency);
-			CoreFunctions.selectItemInListByText(driver, _selectAdultCurrencyOptions,
+			CoreFunctions.selectItemInListByText(driver, _selectDynamicDropdownOptions,
 					movingBenefitData.homeLeaveMeals.maxAmtAdultCurrency, true);
+//			CoreFunctions.selectItemInListByText(driver, _selectAdultCurrencyOptions,
+//					movingBenefitData.homeLeaveMeals.maxAmtAdultCurrency, true);
+			
+			
 			CoreFunctions.selectItemInListByText(driver, _radioDetailAdult,
 					movingBenefitData.homeLeaveMeals.maxAmtAdultDetail, true);
 			CoreFunctions.clearAndSetText(driver, _inputMaxAmtChild, movingBenefitData.homeLeaveMeals.maxAmtChildren);
+			
+			
 			CoreFunctions.clickElement(driver, _selectCurrencyCodeChild);
-			CoreFunctions.selectItemInListByText(driver, _selectCurrencyCodeChildOptions,
+			CoreFunctions.selectItemInListByText(driver, _selectDynamicDropdownOptions,
 					movingBenefitData.homeLeaveMeals.maxAmtChildrenCurrency, true);
+//			CoreFunctions.selectItemInListByText(driver, _selectCurrencyCodeChildOptions,
+//					movingBenefitData.homeLeaveMeals.maxAmtChildrenCurrency, true);
+			
 			CoreFunctions.selectItemInListByText(driver, _radioDetailChild,
 					movingBenefitData.homeLeaveMeals.maxAmtChildrenDetail, true);
 			CoreFunctions.selectItemInListByText(driver, _radioBtnGrossUp, movingBenefitData.homeLeaveMeals.grossUp,

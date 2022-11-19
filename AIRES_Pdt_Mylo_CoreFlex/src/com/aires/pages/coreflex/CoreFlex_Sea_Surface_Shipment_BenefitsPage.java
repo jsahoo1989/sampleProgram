@@ -839,9 +839,9 @@ public class CoreFlex_Sea_Surface_Shipment_BenefitsPage extends BenefitPage {
 		switch (subBenefit) {
 		case COREFLEXConstants.SEA_OR_SURFACE_SHIPMENT:
 			expandSubBenefitIfCollapsed(getElementByName(COREFLEXConstants.SEA_OR_SURFACE_SHIPMENT));
-			if (benefitType.equals(COREFLEXConstants.FLEX_BENEFITS)) {
-				CoreFunctions.clickElement(driver, _headerSeaSurfaceShipment);
-			}
+//			if (benefitType.equals(COREFLEXConstants.FLEX_BENEFITS)) {
+//				CoreFunctions.clickElement(driver, _headerSeaSurfaceShipment);
+//			}
 			verifySeaSurfaceShipmentSubBenefitForm(COREFLEXConstants.SEA_OR_SURFACE_SHIPMENT);
 			break;
 		default:

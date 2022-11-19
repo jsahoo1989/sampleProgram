@@ -48,8 +48,8 @@ public class PDT_LoginPage extends Base {
 	@FindBy(how = How.XPATH, using = "//h1[text()='Aires Policy Tool']")
 	private WebElement _txtAiresPolicyTool;
 
-	//private PDT_LoginInfo _loginInfo = FileReaderManager.getInstance().getJsonReader().getLoginByEnvt(CoreFunctions.getPropertyFromConfig("envt").toLowerCase());
-	private PDT_LoginInfo _loginInfo = FileReaderManager.getInstance().getJsonReader().getLoginByEnvt(System.getProperty("envt").toLowerCase());
+	private PDT_LoginInfo _loginInfo = FileReaderManager.getInstance().getJsonReader().getLoginByEnvt(CoreFunctions.getPropertyFromConfig("envt").toLowerCase());
+//	private PDT_LoginInfo _loginInfo = FileReaderManager.getInstance().getJsonReader().getLoginByEnvt(System.getProperty("envt").toLowerCase());
 	
 	final By _imgAIRESLogoByLocator = By.cssSelector("img[src='assets/img/aires.png']");
 	final By _btnLoginByLocator = By.cssSelector("button[type='submit']");	

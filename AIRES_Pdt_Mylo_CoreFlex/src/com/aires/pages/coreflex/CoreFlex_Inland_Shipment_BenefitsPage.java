@@ -746,9 +746,9 @@ public class CoreFlex_Inland_Shipment_BenefitsPage extends BenefitPage {
 		switch (subBenefit) {
 		case COREFLEXConstants.INLAND_SHIPMENT:
 			expandSubBenefitIfCollapsed(getElementByName(COREFLEXConstants.INLAND_SHIPMENT));
-			if (benefitType.equals(COREFLEXConstants.FLEX_BENEFITS)) {
-				CoreFunctions.clickElement(driver, _headerInlandShipment);
-			}
+//			if (benefitType.equals(COREFLEXConstants.FLEX_BENEFITS)) {
+//				CoreFunctions.clickElement(driver, _headerInlandShipment);
+//			}
 			verifyInlandShipmentSubBenefitForm(COREFLEXConstants.INLAND_SHIPMENT);
 			break;
 		default:

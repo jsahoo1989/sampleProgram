@@ -1250,6 +1250,7 @@ public class CoreFlex_SharedSteps {
 		CoreFunctions.writeToPropertiesFile("CF_Transferee_CashoutCurrencySign", "");
 		CoreFunctions.writeToPropertiesFile("CF_Transferee_CashoutCurrencyCode", "");
 		CoreFunctions.writeToPropertiesFile("CF_Transferee_CashoutCurrencyText","");
+		CoreFunctions.writeToPropertiesFile("Policy_TracingSet","Assignment");
 	}
 	
 	@Given("^he has clicked on 'Next' floating button after verifying Benefits_Points details Submitted by Client on 'Flex Planning Tool' page$")

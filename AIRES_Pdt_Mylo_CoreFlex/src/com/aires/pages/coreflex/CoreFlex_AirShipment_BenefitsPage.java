@@ -811,9 +811,9 @@ public class CoreFlex_AirShipment_BenefitsPage extends BenefitPage {
 		switch (subBenefit) {
 		case COREFLEXConstants.AIR_SHIPMENT:
 			expandSubBenefitIfCollapsed(getElementByName(COREFLEXConstants.AIR_SHIPMENT));
-			if (benefitType.equals(COREFLEXConstants.FLEX_BENEFITS)) {
-				CoreFunctions.clickElement(driver, _headerAirShipment);
-			}
+//			if (benefitType.equals(COREFLEXConstants.FLEX_BENEFITS)) {
+//				CoreFunctions.clickElement(driver, _headerAirShipment);
+//			}
 			verifyAirShipmentSubBenefitForm(COREFLEXConstants.AIR_SHIPMENT);
 			break;
 		default:

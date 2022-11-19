@@ -20,12 +20,10 @@ import com.aires.businessrules.CoreFunctions;
 import com.aires.businessrules.constants.COREFLEXConstants;
 import com.aires.businessrules.constants.CoreConstants;
 import com.aires.businessrules.constants.IRISConstants;
+import com.aires.businessrules.constants.MobilityXConstants;
 import com.aires.businessrules.constants.PDTConstants;
 import com.aires.managers.FileReaderManager;
 import com.aires.testdatatypes.iris.IRIS_AssignmentData;
-import com.aires.businessrules.constants.MobilityXConstants;
-import com.aires.businessrules.constants.PDTConstants;
-import com.aires.utilities.Log;
 import com.gargoylesoftware.htmlunit.ElementNotFoundException;
 import com.vimalselvam.cucumber.listener.Reporter;
 
@@ -173,7 +171,7 @@ public class PDT_ViewPolicyPage extends Base {
 
 	@FindBy(how = How.CSS, using = "textarea[formcontrolname='description']")
 	private WebElement _txtAreaDescription;
-	
+
 	@FindBy(how = How.CSS, using = "input[formcontrolname='description']")
 	private WebElement _inputDescription;
 
@@ -200,7 +198,7 @@ public class PDT_ViewPolicyPage extends Base {
 
 	@FindBy(how = How.CSS, using = "img[src='assets/img/vectorApprove.png']")
 	private List<WebElement> _listApprovePolicyEnableIcon;
-	
+
 	// Policy Edit Icon List
 	@FindBy(how = How.CSS, using = "div.icons-action a[mattooltip='Edit Policy']>img")
 	private List<WebElement> _listEditIcon;
@@ -333,13 +331,9 @@ public class PDT_ViewPolicyPage extends Base {
 	@FindBy(how = How.CSS, using = "ng-select[formcontrolname='toCorporationPolicyId'] input")
 	private WebElement _inputClonePolicy;
 
-	// Policy Dialog Description
-	@FindBy(how = How.CSS, using = "textarea[formcontrolname='description']")
-	private WebElement _txtAreaDescription;
-	
 	@FindBy(how = How.XPATH, using = "//strong[contains(text(),'Version Number')]/parent::label/following-sibling::label")
 	private WebElement _versionNumber;
-	
+
 	// Approve Policy Icon List
 	@FindBy(how = How.CSS, using = "div.icons-action a[mattooltip='Approve Policy']>img")
 	private List<WebElement> _listApprovePolicyIcon;
@@ -354,23 +348,6 @@ public class PDT_ViewPolicyPage extends Base {
 
 	IRIS_AssignmentData assignmentOverviewData = FileReaderManager.getInstance().getIrisJsonReader()
 			.getAssignmentDataByTabName(IRISConstants.OVERVIEW);
-
-	public String getElementText(String elementName) {
-		String elementText = null;
-
-		switch (elementName) {
-		case PDTConstants.HEADING:
-			elementText = _headingViewEditPolicyForm.getText();
-			break;
-		case PDTConstants.USERNAME:
-			elementText = _userName.getText();
-			break;
-		default:
-			Assert.fail("Element not found");
-		}
-		return elementText;
-
-	}
 
 	public void clickElementOfPage(String elementName) {
 		switch (elementName) {
@@ -425,12 +402,12 @@ public class PDT_ViewPolicyPage extends Base {
 			Assert.fail("Element not found");
 		}
 	}
-	
+
 	public void populateIconMap() {
 		iconMap.put(PDTConstants.ICON_ASSIGNMENT_HISTORY, _listAssignmentHistoryEnableIcon);
 		iconMap.put(PDTConstants.ICON_EDIT, _listEditEnableIcon);
 	}
-	
+
 	public void initWebElementsMap() {
 		webElementsMap.put(PDTConstants.LOGOUT, _logout);
 		webElementsMap.put(PDTConstants.ADD_NEW_POLICY_FORM, _addNewPolicyForm);
@@ -439,15 +416,15 @@ public class PDT_ViewPolicyPage extends Base {
 
 	public void initWebElementsTextMap() {
 		webElementsTextMap.put(PDTConstants.HEADING, _headingViewEditPolicyForm.getText());
-		webElementsTextMap.put(PDTConstants.USERNAME, _userName.getText());		
+		webElementsTextMap.put(PDTConstants.USERNAME, _userName.getText());
 	}
-	
+
 	public String getElementText(String elementName) {
-		String elementText = null;		
+		String elementText = null;
 		initWebElementsTextMap();
 		try {
 			elementText = webElementsTextMap.get(elementName);
-		} catch(Exception e) {
+		} catch (Exception e) {
 			Assert.fail(MessageFormat.format(PDTConstants.ELEMENT_NOT_FOUND, CoreConstants.FAIL));
 		}
 		return elementText;
@@ -457,7 +434,7 @@ public class PDT_ViewPolicyPage extends Base {
 		try {
 			initWebElementsMap();
 			CoreFunctions.clickUsingJS(driver, webElementsMap.get(elementName), elementName);
-		} catch (Exception e){
+		} catch (Exception e) {
 			Assert.fail(MessageFormat.format(PDTConstants.FAILED_TO_CLICK, elementName, pageName));
 		}
 	}
@@ -466,15 +443,15 @@ public class PDT_ViewPolicyPage extends Base {
 		String userName = "";
 		try {
 			CoreFunctions.explicitWaitTillElementVisibility(driver, _userName, _userName.getText().split("\n")[1]);
-			userName = _userName.getText().substring(_userName.getText().indexOf("\n")+1, _userName.getText().length());
-		} catch(Exception e) {
+			userName = _userName.getText().substring(_userName.getText().indexOf("\n") + 1,
+					_userName.getText().length());
+		} catch (Exception e) {
 			Assert.fail("Failed to get username");
 		}
 		return userName;
 	}
 
-
-	public Boolean verifyUserlogin(String userName, String pageName) {	
+	public Boolean verifyUserlogin(String userName, String pageName) {
 		BusinessFunctions.fluentWaitForSpinnerToDisappear(driver, _progressBar);
 		CoreFunctions.explicitWaitTillElementVisibility(driver, _userName, _userName.getText().split("\n")[1]);
 		if (getUserName().contains(userName)) {
@@ -512,13 +489,13 @@ public class PDT_ViewPolicyPage extends Base {
 		}
 		return false;
 	}
-	
+
 	public void enterSearchCriteria(WebElement element, String searchText) {
 		try {
 			CoreFunctions.clearAndSetText(driver, element, searchText);
 			CoreFunctions.click(driver, _btnSearch, _btnSearch.getText());
 			BusinessFunctions.fluentWaitForSpinnerToDisappear(driver, _progressBar);
-		} catch(Exception e) {
+		} catch (Exception e) {
 			Assert.fail("Fail to enter search criteria");
 		}
 	}
@@ -1409,10 +1386,10 @@ public class PDT_ViewPolicyPage extends Base {
 
 	public void waitForProgressBarToDisapper() {
 		try {
-			if(CoreFunctions.isElementExist(driver, _progressBar, 5)) {		
-				BusinessFunctions.fluentWaitForSpinnerToDisappear(driver, _progressBar);			
-			}			
-		} catch(Exception e) {
+			if (CoreFunctions.isElementExist(driver, _progressBar, 5)) {
+				BusinessFunctions.fluentWaitForSpinnerToDisappear(driver, _progressBar);
+			}
+		} catch (Exception e) {
 			Assert.fail(MessageFormat.format(PDTConstants.FAIL_TO_WAIT_PROGRESS_BAR, CoreConstants.FAIL));
 		}
 	}
@@ -1495,7 +1472,7 @@ public class PDT_ViewPolicyPage extends Base {
 		CoreFunctions.clearAndSetText(driver, _inputPolicyName, policyName);
 		CoreFunctions.click(driver, _btnSearch, _btnSearch.getText());
 	}
-	
+
 	public boolean verifyAssignmentLinkedCount(String policyName, int expectedAssignmentLinked,
 			PDT_PolicyAssignmentPage _policyAssignmentPage) {
 		if (expectedAssignmentLinked == _policyAssignmentPage.getTransfereeCount()) {
@@ -1508,14 +1485,14 @@ public class PDT_ViewPolicyPage extends Base {
 
 	public void iterateAndVerifyIcons(String iconName, String status, String pageName) {
 		String[] iconNameArr = iconName.split(",");
-		for(int i=0; i<iconNameArr.length; i++) {
+		for (int i = 0; i < iconNameArr.length; i++) {
 			verifyIcon(iconNameArr[i].trim(), status, pageName);
 		}
 	}
 
-	public void verifyIcon(String iconName, String status, String pageName) {		
+	public void verifyIcon(String iconName, String status, String pageName) {
 		try {
-			switch(iconName) {
+			switch (iconName) {
 			case PDTConstants.ICON_EDIT:
 				verifyEditIcon(iconName, status, pageName);
 				break;
@@ -1531,75 +1508,79 @@ public class PDT_ViewPolicyPage extends Base {
 			case PDTConstants.ICON_APPROVE_POLICY:
 				approvePolicyIcon(iconName, status, pageName);
 				break;
-			}			
+			}
 
 		} catch (Exception e) {
 			Assert.fail(MessageFormat.format(PDTConstants.FAILED_TO_VERIFY_ICON, CoreConstants.FAIL, iconName, status,
 					pageName));
-		}		
+		}
 	}
 
 	public void verifyEditIcon(String iconName, String status, String pageName) {
 		String iconStatus = CoreFunctions.getAttributeText(_listEditIcon.get(policySearchIndex), "src")
-		.contains("Pencildisable") ? PDTConstants.DISABLED : PDTConstants.ENABLED;
-		if(iconStatus.equalsIgnoreCase(status)) {
+				.contains("Pencildisable") ? PDTConstants.DISABLED : PDTConstants.ENABLED;
+		if (iconStatus.equalsIgnoreCase(status)) {
 			CoreFunctions.highlightObject(driver, _listEditIcon.get(policySearchIndex));
-			Reporter.addStepLog(MessageFormat.format(PDTConstants.VERIFIED_ICON, CoreConstants.PASS, iconName, status, pageName));
+			Reporter.addStepLog(
+					MessageFormat.format(PDTConstants.VERIFIED_ICON, CoreConstants.PASS, iconName, status, pageName));
 		} else {
 			Assert.fail(MessageFormat.format(PDTConstants.FAILED_TO_VERIFY_ICON, CoreConstants.FAIL, iconName, status,
 					pageName));
-		}		
+		}
 	}
-	
+
 	public void verifyDeleteIcon(String iconName, String status, String pageName) {
 		String iconStatus = CoreFunctions.getAttributeText(_listDeleteIcon.get(policySearchIndex), "src")
 				.contains("Trash") ? PDTConstants.DISABLED : PDTConstants.ENABLED;
-		if(iconStatus.equalsIgnoreCase(status)) {
+		if (iconStatus.equalsIgnoreCase(status)) {
 			CoreFunctions.highlightObject(driver, _listDeleteIcon.get(policySearchIndex));
-			Reporter.addStepLog(MessageFormat.format(PDTConstants.VERIFIED_ICON, CoreConstants.PASS, iconName, status, pageName));
+			Reporter.addStepLog(
+					MessageFormat.format(PDTConstants.VERIFIED_ICON, CoreConstants.PASS, iconName, status, pageName));
 		} else {
 			Assert.fail(MessageFormat.format(PDTConstants.FAILED_TO_VERIFY_ICON, CoreConstants.FAIL, iconName, status,
 					pageName));
 		}
 	}
-	
+
 	public void verifyCloneIcon(String iconName, String status, String pageName) {
-		String iconStatus =  CoreFunctions.getAttributeText(_listCloneIcon.get(policySearchIndex), "src")
+		String iconStatus = CoreFunctions.getAttributeText(_listCloneIcon.get(policySearchIndex), "src")
 				.contains("cloneDisable") ? PDTConstants.DISABLED : PDTConstants.ENABLED;
-		if(iconStatus.equalsIgnoreCase(status)) {
+		if (iconStatus.equalsIgnoreCase(status)) {
 			CoreFunctions.highlightObject(driver, _listCloneIcon.get(policySearchIndex));
-			Reporter.addStepLog(MessageFormat.format(PDTConstants.VERIFIED_ICON, CoreConstants.PASS, iconName, status, pageName));
+			Reporter.addStepLog(
+					MessageFormat.format(PDTConstants.VERIFIED_ICON, CoreConstants.PASS, iconName, status, pageName));
 		} else {
 			Assert.fail(MessageFormat.format(PDTConstants.FAILED_TO_VERIFY_ICON, CoreConstants.FAIL, iconName, status,
 					pageName));
 		}
 	}
-	
+
 	public void verifyAssignmentHisoryIcon(String iconName, String status, String pageName) {
-		String iconStatus = CoreFunctions.getAttributeText(_listAssignmentHistoryIcon.get(policySearchIndex), "src").contains("disable")
-				? PDTConstants.DISABLED
-				: PDTConstants.ENABLED;
-		if(iconStatus.equalsIgnoreCase(status)) {
+		String iconStatus = CoreFunctions.getAttributeText(_listAssignmentHistoryIcon.get(policySearchIndex), "src")
+				.contains("disable") ? PDTConstants.DISABLED : PDTConstants.ENABLED;
+		if (iconStatus.equalsIgnoreCase(status)) {
 			CoreFunctions.highlightObject(driver, _listAssignmentHistoryIcon.get(policySearchIndex));
-			Reporter.addStepLog(MessageFormat.format(PDTConstants.VERIFIED_ICON, CoreConstants.PASS, iconName, status, pageName));
+			Reporter.addStepLog(
+					MessageFormat.format(PDTConstants.VERIFIED_ICON, CoreConstants.PASS, iconName, status, pageName));
 		} else {
 			Assert.fail(MessageFormat.format(PDTConstants.FAILED_TO_VERIFY_ICON, CoreConstants.FAIL, iconName, status,
 					pageName));
 		}
 	}
-	
+
 	public void approvePolicyIcon(String iconName, String status, String pageName) {
-		String iconStatus = CoreFunctions.getAttributeText(_listApprovePolicyIcon.get(policySearchIndex), "src").contains("Disable")
-		? PDTConstants.DISABLED : PDTConstants.ENABLED;
-		if(iconStatus.equalsIgnoreCase(status)) {
+		String iconStatus = CoreFunctions.getAttributeText(_listApprovePolicyIcon.get(policySearchIndex), "src")
+				.contains("Disable") ? PDTConstants.DISABLED : PDTConstants.ENABLED;
+		if (iconStatus.equalsIgnoreCase(status)) {
 			CoreFunctions.highlightObject(driver, _listApprovePolicyIcon.get(policySearchIndex));
-			Reporter.addStepLog(MessageFormat.format(PDTConstants.VERIFIED_ICON, CoreConstants.PASS, iconName, status, pageName));
+			Reporter.addStepLog(
+					MessageFormat.format(PDTConstants.VERIFIED_ICON, CoreConstants.PASS, iconName, status, pageName));
 		} else {
 			Assert.fail(MessageFormat.format(PDTConstants.FAILED_TO_VERIFY_ICON, CoreConstants.FAIL, iconName, status,
 					pageName));
 		}
 	}
-	
+
 	public boolean searchAndVerifyPolicyByNameVersionStatus(String policyName, String policyStatus,
 			String policyVersion, String pageName) {
 		try {
@@ -1624,18 +1605,19 @@ public class PDT_ViewPolicyPage extends Base {
 			return false;
 		}
 	}
-	
+
 	public void navigateAssignmentHistoryPage(PDT_PolicyAssignmentPage _policyAssignmentPage) {
 		CoreFunctions.click(driver, iconMap.get(PDTConstants.ICON_ASSIGNMENT_HISTORY).get(policySearchIndex),
 				PDTConstants.ICON_ASSIGNMENT_HISTORY);
 		_policyAssignmentPage.waitForProgressBarToDisapper();
 	}
-	
+
 	public void highlightAndClickIcon(String key) {
 		populateIconMap();
-		CoreFunctions.highlightElementAndClick(driver, iconMap.get(key).get(policySearchIndex), PDTConstants.CLEAR_FILTER);
+		CoreFunctions.highlightElementAndClick(driver, iconMap.get(key).get(policySearchIndex),
+				PDTConstants.CLEAR_FILTER);
 	}
-	
+
 	public void searchByPolicyNameAndClickPolicy(String policyName, String pageName) {
 		try {
 			populateIconMap();
@@ -1646,7 +1628,8 @@ public class PDT_ViewPolicyPage extends Base {
 			}
 			int index = BusinessFunctions.returnindexItemFromListUsingText(driver, _listPolicyName, policyName);
 			if (index != -1) {
-				CoreFunctions.highlightElementAndClick(driver, _listPolicyName.get(index), _listPolicyName.get(index).getText());
+				CoreFunctions.highlightElementAndClick(driver, _listPolicyName.get(index),
+						_listPolicyName.get(index).getText());
 			} else {
 				Assert.fail("Failed to search policy name");
 			}

@@ -185,7 +185,7 @@ public class CoreFlex_AutoShipment_BenefitsPage extends BenefitPage {
 	@FindBy(how = How.XPATH, using = "//h5[contains(text(),'Auto Shipment')]")
 	private WebElement _headerAutoShipment;
 
-	@FindBy(how = How.XPATH, using = "//input[@formcontrolname='insuranceType']/parent::label[@class='form-check-label']")
+	@FindBy(how = How.XPATH, using = "//input[@formcontrolname='insuranceType']/parent::label[contains(@class,'form-check-label')]")
 	private List<WebElement> _radioInsuranceType;
 
 	@FindBy(how = How.XPATH, using = "//label[contains(text(),'Insurance Type')]/following-sibling::div//input")
@@ -702,9 +702,9 @@ public class CoreFlex_AutoShipment_BenefitsPage extends BenefitPage {
 		switch (subBenefit) {
 		case COREFLEXConstants.AUTO_SHIPMENT:
 			expandSubBenefitIfCollapsed(getElementByName(COREFLEXConstants.AUTO_SHIPMENT));
-			if (benefitType.equals(COREFLEXConstants.FLEX_BENEFITS)) {
-				CoreFunctions.clickElement(driver, _headerAutoShipment);
-			}
+//			if (benefitType.equals(COREFLEXConstants.FLEX_BENEFITS)) {
+//				CoreFunctions.clickElement(driver, _headerAutoShipment);
+//			}
 			verifyAutoShipmentSubBenefitForm(COREFLEXConstants.AUTO_SHIPMENT);
 			break;
 		default:

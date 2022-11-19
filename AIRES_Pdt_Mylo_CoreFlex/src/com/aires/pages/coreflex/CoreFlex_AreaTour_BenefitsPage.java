@@ -224,6 +224,9 @@ public class CoreFlex_AreaTour_BenefitsPage extends BenefitPage {
 			"//span[contains(@class,'ServicesSuccessIcon ')]/ancestor::div[contains(@class,'ServicesTrain')]//span[contains(text(),'Tour complete')]");
 	private By tourCompleteEstimatedDate = By
 			.xpath(".//div[5]//span[not(contains(text(),'estimated'))][@class='RXSmallerTextMuted RXBold']");
+	
+	@FindBy(how = How.CSS, using = "ng-dropdown-panel[role='listbox'] span[class*='ng-option-label']")
+	private List<WebElement> _selectDynamicDropdownOptions;	
 
 	/*********************************************************************/
 
@@ -423,7 +426,7 @@ public class CoreFlex_AreaTour_BenefitsPage extends BenefitPage {
 	private void fillAreaTourSubBenefitForm(String subBenefitFormName) {
 		try {
 			CoreFunctions.clickElement(driver, _selectDurationDays);
-			CoreFunctions.selectItemInListByText(driver, _selectDurationDaysOptions,
+			CoreFunctions.selectItemInListByText(driver, _selectDynamicDropdownOptions,
 					settlingInBenefitData.areaTour.durationDays, true);
 			CoreFunctions.clearAndSetText(driver, _txtAreaComment, settlingInBenefitData.areaTour.comment);
 			CoreFunctions.selectItemInListByText(driver, _radioBtnGrossUp, settlingInBenefitData.areaTour.grossUp,

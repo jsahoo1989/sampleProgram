@@ -1,16 +1,17 @@
 package com.aires.pages.pdt;
 
 import java.text.MessageFormat;
+import java.util.Date;
 import java.util.List;
 
 import org.openqa.selenium.By;
+import org.openqa.selenium.NoSuchElementException;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.How;
 import org.testng.Assert;
 
-import com.aires.businessrules.Base;
 import com.aires.businessrules.BusinessFunctions;
 import com.aires.businessrules.CoreFunctions;
 import com.aires.businessrules.constants.CoreConstants;
@@ -18,7 +19,9 @@ import com.aires.businessrules.constants.PDTConstants;
 import com.aires.managers.FileReaderManager;
 import com.aires.testdatatypes.pdt.PDT_OneTimePaymentBenefit;
 
-public class PDT_OneTimePaymentReimbursemenPage extends Base {
+import stepDefinitions.pdt.PDT_SharedSubBenefit_Steps;
+
+public class PDT_OneTimePaymentReimbursemenPage extends PDT_SharedSubBenefitPage {
 	public PDT_OneTimePaymentReimbursemenPage(WebDriver driver) {
 		super(driver);
 	}
@@ -446,6 +449,30 @@ public class PDT_OneTimePaymentReimbursemenPage extends Base {
 
 	@FindBy(how = How.CSS, using = "app-other-onetime-payment textArea[formcontrolname='benefitComment']")
 	private WebElement _txtAreaOtherOneTimePaymentComment;
+	
+	@FindBy(how = How.CSS, using = "a[href='#collapseOne']")
+	private WebElement _formHeaderMiscRelocationAllowance;
+
+	@FindBy(how = How.CSS, using = "a[href='#collapseTwo']")
+	private WebElement _formHeaderLumpSum;
+
+	@FindBy(how = How.CSS, using = "a[href='#collapseThree']")
+	private WebElement _formHeaderLeaseBreak;
+
+	@FindBy(how = How.CSS, using = "a[href='#collapseFour']")
+	private WebElement _formHeaderApplianceAllowance;
+
+	@FindBy(how = How.CSS, using = "a[href='#collapseFive']")
+	private WebElement _formHeaderAutoRegistrationCost;
+
+	@FindBy(how = How.CSS, using = "a[href='#collapseSix']")
+	private WebElement _formHeaderAutoLossOnSale;
+
+	@FindBy(how = How.CSS, using = "a[href='#collapseSeven']")
+	private WebElement _formHeaderOtherOneTimePayment;
+	
+	@FindBy(how = How.CSS, using = "div.form-check > label.form-check-label")
+	private List<WebElement> _subBenefitCategories;
 
 	PDT_OneTimePaymentBenefit oneTimePaymentBenefitData = FileReaderManager.getInstance().getJsonReader()
 			.getOneTimePaymentBenefitDataList("One Time Payments and Reimbursements");
@@ -566,9 +593,23 @@ public class PDT_OneTimePaymentReimbursemenPage extends Base {
 	public String getFreqOtherOneTimePayment() {
 		return freqOtherOneTimePayment;
 	}
+	
+	public void populateSubBenefitHeaderMap() {
+		subBenefitHeaderMap.put(PDTConstants.MISC_RELOCATION_ALLOWANCE, _formHeaderMiscRelocationAllowance);
+		subBenefitHeaderMap.put(PDTConstants.LUMP_SUM, _formHeaderLumpSum);
+		subBenefitHeaderMap.put(PDTConstants.LEASE_BREAK, _formHeaderLeaseBreak);
+		subBenefitHeaderMap.put(PDTConstants.APPLIANCE_ALLOWANCE, _formHeaderApplianceAllowance);
+		subBenefitHeaderMap.put(PDTConstants.AUTO_REGISTRATION_COSTS, _formHeaderAutoRegistrationCost);
+		subBenefitHeaderMap.put(PDTConstants.AUTO_LOSS_ON_SALE, _formHeaderAutoLossOnSale);
+		subBenefitHeaderMap.put(PDTConstants.OTHER_ONE_TIME_PAYMENT, _formHeaderOtherOneTimePayment);
+	}
 
-	public void fillMiscRelocationAllowance(PDT_AddNewPolicyPage addNewPolicyPage, String subBenefitFormName) {
+	public void fillMiscRelocationAllowance(PDT_AddNewPolicyPage addNewPolicyPage, String subBenefitFormName, String pageName) {
 		try {
+			populateSubBenefitHeaderMap();
+			Assert.assertTrue(BusinessFunctions.verifySubBenefitFormHeaderIsDisplayed(driver, subBenefitHeaderMap.get(subBenefitFormName), subBenefitFormName, pageName),
+					MessageFormat.format(PDTConstants.VERIFIED_FORM_IS_NOT_DISPLAYED, subBenefitFormName, pageName));
+			BusinessFunctions.expandSubBenefitIfCollapsed(subBenefitHeaderMap.get(subBenefitFormName), subBenefitFormName, driver);
 			CoreFunctions.explicitWaitTillElementListVisibility(driver, _drpDownCalculationMethodOptions);
 			String randCalcMethod = BusinessFunctions.selectAndReturnRandomValueFromDropDown(driver, addNewPolicyPage,
 					subBenefitFormName, _drpDownCalculationMethod, _drpDownCalculationMethodOptions,
@@ -627,7 +668,7 @@ public class PDT_OneTimePaymentReimbursemenPage extends Base {
 					oneTimePaymentBenefitData.miscReloAllowance.reimbursedBy, PDTConstants.REIMBURSED_BY,
 					PDTConstants.RADIO_BUTTON_LIST, true);
 
-			BusinessFunctions.verifyOtherTextBoxIsDisplayed(driver, addNewPolicyPage,
+			BusinessFunctions.verifyOtherTextBoxIsDisplayed(driver,
 					oneTimePaymentBenefitData.miscReloAllowance.reimbursedBy, _txtBoxReimbursedByOther,
 					oneTimePaymentBenefitData.miscReloAllowance.reimbursedByOther, subBenefitFormName, PDTConstants.REIMBURSED_BY_OTHER);
 			CoreFunctions.clearAndSetText(driver, _txtAreaMiscRelocationAllowanceComment, PDTConstants.COMMENT,
@@ -638,8 +679,12 @@ public class PDT_OneTimePaymentReimbursemenPage extends Base {
 		}
 	}
 
-	public void fillLumpSum(PDT_AddNewPolicyPage addNewPolicyPage, String subBenefitFormName) {
+	public void fillLumpSum(PDT_AddNewPolicyPage addNewPolicyPage, String subBenefitFormName, String pageName) {
 		try {
+			populateSubBenefitHeaderMap();
+			Assert.assertTrue(BusinessFunctions.verifySubBenefitFormHeaderIsDisplayed(driver, subBenefitHeaderMap.get(subBenefitFormName), subBenefitFormName, pageName),
+					MessageFormat.format(PDTConstants.VERIFIED_FORM_IS_NOT_DISPLAYED, subBenefitFormName, pageName));
+			BusinessFunctions.expandSubBenefitIfCollapsed(subBenefitHeaderMap.get(subBenefitFormName), subBenefitFormName, driver);
 			CoreFunctions.explicitWaitTillElementListVisibility(driver, _drpDownLumpSumCalculationMethodOptions);
 			String randCalcMethodLumpSum = BusinessFunctions.selectAndReturnRandomValueFromDropDown(driver,
 					addNewPolicyPage, subBenefitFormName, _drpDownLumpSumCalculationMethod,
@@ -698,7 +743,7 @@ public class PDT_OneTimePaymentReimbursemenPage extends Base {
 					oneTimePaymentBenefitData.lumpSum.reimbursedBy, PDTConstants.REIMBURSED_BY,
 					PDTConstants.RADIO_BUTTON_LIST, true);
 
-			BusinessFunctions.verifyOtherTextBoxIsDisplayed(driver, addNewPolicyPage,
+			BusinessFunctions.verifyOtherTextBoxIsDisplayed(driver,
 					oneTimePaymentBenefitData.lumpSum.reimbursedBy, _txtBoxLumpSumReimbursedByOther,
 					oneTimePaymentBenefitData.lumpSum.reimbursedByOther, subBenefitFormName, PDTConstants.REIMBURSED_BY_OTHER);
 			CoreFunctions.clearAndSetText(driver, _txtAreaLumpSumComment, PDTConstants.COMMENT,
@@ -710,8 +755,12 @@ public class PDT_OneTimePaymentReimbursemenPage extends Base {
 
 	}
 
-	public void fillLeaseBreak(PDT_AddNewPolicyPage addNewPolicyPage, String subBenefitFormName) {
+	public void fillLeaseBreak(PDT_AddNewPolicyPage addNewPolicyPage, String subBenefitFormName, String pageName) {
 		try {
+			populateSubBenefitHeaderMap();
+			Assert.assertTrue(BusinessFunctions.verifySubBenefitFormHeaderIsDisplayed(driver, subBenefitHeaderMap.get(subBenefitFormName), subBenefitFormName, pageName),
+					MessageFormat.format(PDTConstants.VERIFIED_FORM_IS_NOT_DISPLAYED, subBenefitFormName, pageName));
+			BusinessFunctions.expandSubBenefitIfCollapsed(subBenefitHeaderMap.get(subBenefitFormName), subBenefitFormName, driver);
 			CoreFunctions.explicitWaitTillElementListVisibility(driver, _drpDownLeaseBreakMaxNumOfMonthsOptions);
 			String randMaxNumOfMonthsLeaseBreak = BusinessFunctions.selectAndReturnRandomValueFromDropDown(driver,
 					addNewPolicyPage, subBenefitFormName, _drpDownLeaseBreakMaxNumOfMonths,
@@ -746,7 +795,7 @@ public class PDT_OneTimePaymentReimbursemenPage extends Base {
 					oneTimePaymentBenefitData.leaseBreak.reimbursedBy, PDTConstants.REIMBURSED_BY,
 					PDTConstants.RADIO_BUTTON_LIST, true);
 
-			BusinessFunctions.verifyOtherTextBoxIsDisplayed(driver, addNewPolicyPage,
+			BusinessFunctions.verifyOtherTextBoxIsDisplayed(driver,
 					oneTimePaymentBenefitData.leaseBreak.reimbursedBy, _txtBoxLeaseBreakReimbursedByOther,
 					oneTimePaymentBenefitData.leaseBreak.reimbursedByOther, subBenefitFormName, PDTConstants.REIMBURSED_BY_OTHER);
 			CoreFunctions.clearAndSetText(driver, _txtAreaLeaseBreakComment, PDTConstants.COMMENT,
@@ -757,8 +806,12 @@ public class PDT_OneTimePaymentReimbursemenPage extends Base {
 		}
 	}
 
-	public void fillApplAllowance(PDT_AddNewPolicyPage addNewPolicyPage, String subBenefitFormName) {
+	public void fillApplAllowance(PDT_AddNewPolicyPage addNewPolicyPage, String subBenefitFormName, String pageName) {
 		try {
+			populateSubBenefitHeaderMap();
+			Assert.assertTrue(BusinessFunctions.verifySubBenefitFormHeaderIsDisplayed(driver, subBenefitHeaderMap.get(subBenefitFormName), subBenefitFormName, pageName),
+					MessageFormat.format(PDTConstants.VERIFIED_FORM_IS_NOT_DISPLAYED, subBenefitFormName, pageName));
+			BusinessFunctions.expandSubBenefitIfCollapsed(subBenefitHeaderMap.get(subBenefitFormName), subBenefitFormName, driver);
 			CoreFunctions.clearAndSetText(driver, _txtBoxApplAllowanceMaxAmount, _lblApplAllowanceMaxAmount.getText(),
 					oneTimePaymentBenefitData.applAllowance.maxAmount);
 			CoreFunctions.clickElement(driver, _drpDownApplAllowanceCurrency);
@@ -787,7 +840,7 @@ public class PDT_OneTimePaymentReimbursemenPage extends Base {
 					oneTimePaymentBenefitData.applAllowance.reimbursedBy, PDTConstants.REIMBURSED_BY,
 					PDTConstants.RADIO_BUTTON_LIST, true);
 
-			BusinessFunctions.verifyOtherTextBoxIsDisplayed(driver, addNewPolicyPage,
+			BusinessFunctions.verifyOtherTextBoxIsDisplayed(driver,
 					oneTimePaymentBenefitData.applAllowance.reimbursedBy, _txtBoxApplAllowanceReimbursedByOther,
 					oneTimePaymentBenefitData.applAllowance.reimbursedByOther, subBenefitFormName, PDTConstants.REIMBURSED_BY_OTHER);
 			CoreFunctions.clearAndSetText(driver, _txtAreaApplAllowanceComment, PDTConstants.COMMENT,
@@ -798,8 +851,12 @@ public class PDT_OneTimePaymentReimbursemenPage extends Base {
 		}
 	}
 
-	public void fillAutoRegistrationCost(PDT_AddNewPolicyPage addNewPolicyPage, String subBenefitFormName) {
+	public void fillAutoRegistrationCost(PDT_AddNewPolicyPage addNewPolicyPage, String subBenefitFormName, String pageName) {
 		try {
+			populateSubBenefitHeaderMap();
+			Assert.assertTrue(BusinessFunctions.verifySubBenefitFormHeaderIsDisplayed(driver, subBenefitHeaderMap.get(subBenefitFormName), subBenefitFormName, pageName),
+					MessageFormat.format(PDTConstants.VERIFIED_FORM_IS_NOT_DISPLAYED, subBenefitFormName, pageName));
+			BusinessFunctions.expandSubBenefitIfCollapsed(subBenefitHeaderMap.get(subBenefitFormName), subBenefitFormName, driver);
 			CoreFunctions.clearAndSetText(driver, _txtBoxAutoRegCostMaxAmount, _lblAutoRegCostMaxAmount.getText(),
 					oneTimePaymentBenefitData.autoRegCost.maxAmount);
 			CoreFunctions.clickElement(driver, _drpDownAutoRegCostCurrency);
@@ -820,7 +877,7 @@ public class PDT_OneTimePaymentReimbursemenPage extends Base {
 					oneTimePaymentBenefitData.autoRegCost.reimbursedBy, PDTConstants.REIMBURSED_BY,
 					PDTConstants.RADIO_BUTTON_LIST, true);
 
-			BusinessFunctions.verifyOtherTextBoxIsDisplayed(driver, addNewPolicyPage,
+			BusinessFunctions.verifyOtherTextBoxIsDisplayed(driver,
 					oneTimePaymentBenefitData.autoRegCost.reimbursedBy, _txtBoxAutoRegCostReimbursedByOther,
 					oneTimePaymentBenefitData.autoRegCost.reimbursedByOther, subBenefitFormName, PDTConstants.REIMBURSED_BY_OTHER);
 			CoreFunctions.clearAndSetText(driver, _txtAreaAutoRegCostComment, PDTConstants.COMMENT,
@@ -831,8 +888,12 @@ public class PDT_OneTimePaymentReimbursemenPage extends Base {
 		}
 	}
 
-	public void fillAutoLossOnSale(PDT_AddNewPolicyPage addNewPolicyPage, String subBenefitFormName) {
+	public void fillAutoLossOnSale(PDT_AddNewPolicyPage addNewPolicyPage, String subBenefitFormName, String pageName) {
 		try {
+			populateSubBenefitHeaderMap();
+			Assert.assertTrue(BusinessFunctions.verifySubBenefitFormHeaderIsDisplayed(driver, subBenefitHeaderMap.get(subBenefitFormName), subBenefitFormName, pageName),
+					MessageFormat.format(PDTConstants.VERIFIED_FORM_IS_NOT_DISPLAYED, subBenefitFormName, pageName));
+			BusinessFunctions.expandSubBenefitIfCollapsed(subBenefitHeaderMap.get(subBenefitFormName), subBenefitFormName, driver);
 			CoreFunctions.explicitWaitTillElementListVisibility(driver, _drpDownMaxNumOfAutosOptions);
 			String randMaxNumOfAutos = BusinessFunctions.selectAndReturnRandomValueFromDropDown(driver,
 					addNewPolicyPage, subBenefitFormName, _drpDownMaxNumOfAutos, _drpDownMaxNumOfAutosOptions,
@@ -858,7 +919,7 @@ public class PDT_OneTimePaymentReimbursemenPage extends Base {
 					oneTimePaymentBenefitData.autoLossOnSale.reimbursedBy, PDTConstants.REIMBURSED_BY,
 					PDTConstants.RADIO_BUTTON_LIST, true);
 
-			BusinessFunctions.verifyOtherTextBoxIsDisplayed(driver, addNewPolicyPage,
+			BusinessFunctions.verifyOtherTextBoxIsDisplayed(driver,
 					oneTimePaymentBenefitData.autoLossOnSale.reimbursedBy, _txtBoxAutoLossOnSaleReimbursedByOther,
 					oneTimePaymentBenefitData.autoLossOnSale.reimbursedByOther, subBenefitFormName, PDTConstants.REIMBURSED_BY_OTHER);
 			CoreFunctions.clearAndSetText(driver, _txtAreaAutoLossOnSaleComment, PDTConstants.COMMENT,
@@ -869,8 +930,12 @@ public class PDT_OneTimePaymentReimbursemenPage extends Base {
 		}
 	}
 
-	public void fillOtherOneTimePayment(PDT_AddNewPolicyPage addNewPolicyPage, String subBenefitFormName) {
+	public void fillOtherOneTimePayment(PDT_AddNewPolicyPage addNewPolicyPage, String subBenefitFormName, String pageName) {
 		try {
+			populateSubBenefitHeaderMap();
+			Assert.assertTrue(BusinessFunctions.verifySubBenefitFormHeaderIsDisplayed(driver, subBenefitHeaderMap.get(subBenefitFormName), subBenefitFormName, pageName),
+					MessageFormat.format(PDTConstants.VERIFIED_FORM_IS_NOT_DISPLAYED, subBenefitFormName, pageName));
+			BusinessFunctions.expandSubBenefitIfCollapsed(subBenefitHeaderMap.get(subBenefitFormName), subBenefitFormName, driver);
 			CoreFunctions.clearAndSetText(driver, _txtBoxPaymentDesc, _lblPaymentDesc.getText(),
 					oneTimePaymentBenefitData.otherOneTimePayment.paymentDesc);
 
@@ -897,7 +962,7 @@ public class PDT_OneTimePaymentReimbursemenPage extends Base {
 					oneTimePaymentBenefitData.otherOneTimePayment.reimbursedBy, PDTConstants.REIMBURSED_BY,
 					PDTConstants.RADIO_BUTTON_LIST, true);
 
-			BusinessFunctions.verifyOtherTextBoxIsDisplayed(driver, addNewPolicyPage,
+			BusinessFunctions.verifyOtherTextBoxIsDisplayed(driver,
 					oneTimePaymentBenefitData.otherOneTimePayment.reimbursedBy,
 					_txtBoxOtherOneTimePaymentReimbursedByOther,
 					oneTimePaymentBenefitData.otherOneTimePayment.reimbursedByOther, subBenefitFormName, PDTConstants.REIMBURSED_BY_OTHER);
@@ -908,5 +973,69 @@ public class PDT_OneTimePaymentReimbursemenPage extends Base {
 					subBenefitFormName));
 		}
 	}
-
+	
+	public void fillOneTimePaymentSubBenefit(String subBenefit, String pageName, PDT_AddNewPolicyPage addNewPolicyPage, PDT_SharedSubBenefitPage subBenefitPage) {		
+		switch (subBenefit) {
+		case PDTConstants.MISC_RELOCATION_ALLOWANCE:
+			fillMiscRelocationAllowance(addNewPolicyPage, PDTConstants.MISC_RELOCATION_ALLOWANCE, pageName);
+			break;
+		case PDTConstants.LUMP_SUM:
+			fillLumpSum(addNewPolicyPage, subBenefit, pageName);
+			break;
+		case PDTConstants.LEASE_BREAK:
+			fillLeaseBreak(addNewPolicyPage, subBenefit, pageName);
+			break;
+		case PDTConstants.APPLIANCE_ALLOWANCE:
+			fillApplAllowance(addNewPolicyPage,
+					subBenefit, pageName);
+			break;
+		case PDTConstants.AUTO_REGISTRATION_COSTS:
+			fillAutoRegistrationCost(addNewPolicyPage,
+					subBenefit, pageName);
+			break;
+		case PDTConstants.AUTO_LOSS_ON_SALE:
+			fillAutoLossOnSale(addNewPolicyPage,
+					subBenefit, pageName);
+			break;
+		case PDTConstants.OTHER_ONE_TIME_PAYMENT:
+			fillOtherOneTimePayment(addNewPolicyPage,
+					subBenefit, pageName);
+			break;
+		default:
+			Assert.fail(MessageFormat.format(PDTConstants.SUBBENEFIT_NOT_FOUND, CoreConstants.FAIL, subBenefit, pageName));
+		}		
+	}
+	
+	/**
+	 * Iterate OneTime Payment/Reimbursements sub-benefits and fill their corresponding form.
+	 * @param pageName
+	 * @param subBenefits
+	 * @param addNewPolicyPage
+	 * @param objStep
+	 * @param btnName
+	 * @param subBenefitPage 
+	 */
+	public void iterateAndFillOneTimePaymentsReimbursementsSubBenefits(String pageName, List<String> subBenefits,
+			PDT_AddNewPolicyPage addNewPolicyPage, PDT_SharedSubBenefit_Steps objStep, String btnName, PDT_SharedSubBenefitPage subBenefitPage) {
+		CoreFunctions.explicitWaitTillElementListClickable(driver, _subBenefitCategories);			
+		populateBtnMap();
+		populateConfirmDialogbuttonMap();
+		WebElement btnToClick = (btnName != null) ?  buttonMap.get(btnName) : buttonMap.get(PDTConstants.SAVE);
+		for (String subBenefit : subBenefits) {
+			CoreFunctions.selectItemInListByText(driver, _subBenefitCategories, subBenefit, true);
+			timeBeforeAction = new Date().getTime();
+			waitForProgressBarToDisapper();
+			timeAfterAction = new Date().getTime();
+			BusinessFunctions.printTimeTakenByPageToLoad(timeBeforeAction, timeAfterAction, pageName, subBenefit);
+			fillOneTimePaymentSubBenefit(subBenefit, pageName, addNewPolicyPage, subBenefitPage);
+		}
+		try {
+			CoreFunctions.click(driver, btnToClick, btnToClick.getText());
+		} catch (NoSuchElementException e) {
+			Assert.fail(MessageFormat.format(PDTConstants.MISSING_BTN, CoreConstants.FAIL, btnName));
+		} catch (Exception e) {
+			e.printStackTrace();
+			Assert.fail(MessageFormat.format(PDTConstants.FAILED_TO_CLICK_ON_BTN, CoreConstants.FAIL, btnName));
+		}
+	}
 }

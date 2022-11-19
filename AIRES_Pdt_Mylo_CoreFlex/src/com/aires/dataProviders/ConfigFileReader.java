@@ -23,8 +23,8 @@ import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
 import java.util.LinkedHashMap;
-import java.util.List;
 import java.util.Properties;
+
 import com.aires.businessrules.constants.CoreConstants;
 import com.aires.businessrules.constants.MYLOConstants;
 import java.util.Properties;
@@ -34,7 +34,6 @@ import com.aires.enums.EnvironmentType;
 public class ConfigFileReader {
 	private Properties properties;
 	private final String propertyFilePath = System.getProperty("user.dir") + "\\Configs\\Config.properties";
-//	private static String _url = null;
 	LinkedHashMap<String, String> mapEnvURL = new LinkedHashMap<String, String>();
 
 	public ConfigFileReader() {
@@ -104,22 +103,6 @@ public class ConfigFileReader {
 			}
 		}
 		return 30;
-	}
-
-	public String getPDTApplicationUrl() {
-		if (properties.getProperty("envt").equalsIgnoreCase("Test"))
-			return properties.getProperty("pdtTestURL");
-		else if (properties.getProperty("envt").equalsIgnoreCase("QA"))
-			return properties.getProperty("pdtQaURL");
-		else if (properties.getProperty("envt").equalsIgnoreCase("Prod"))
-			return properties.getProperty("pdtProdURL");
-		else if (properties.getProperty("envt").equalsIgnoreCase("Dev"))
-			return properties.getProperty("pdtDevURL");
-		else if (properties.getProperty("envt").equalsIgnoreCase("Uat"))
-			return properties.getProperty("pdtUatURL");
-		else
-			throw new RuntimeException(
-					"Application Url not specified in the Configuration.properties file for the Key:url");
 	}
 
 	public void mapApplicationURL() {

@@ -5,10 +5,13 @@ import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.LinkedHashMap;
 import java.util.List;
+
 import org.testng.Assert;
+
 import com.aires.businessrules.constants.CoreConstants;
 import com.aires.businessrules.constants.DbQueries;
 import com.aires.businessrules.constants.MYLOConstants;
@@ -19,18 +22,21 @@ public class DbFunctions {
 	
 	static LinkedHashMap<String, String> myloQueryStatementMap = new LinkedHashMap<String, String>();
 	static LinkedHashMap<String, String> myloQTableColumnFields = new LinkedHashMap<String, String>();
+	static LinkedHashMap<String, String> pdtExpenseCodeQueryStatementMap = new LinkedHashMap<String, String>();
 	
 	public static String getDBConnectionStringAsPerEnvt(String envt) {
 		String dbURL = null;
 		switch (envt) {
 		case "qa":
 			dbURL = "jdbc:oracle:thin:isisdba/irisqaisisdba@corpqavl300.corp.aires.com:1521:IRISQA";
+			//dbURL = "jdbc:oracle:thin:isisdba/irisnextisisdba@corptesvl300.corp.aires.com:1521:IRISNEXT";
 			break;
 		case "dev":
 			dbURL = "jdbc:oracle:thin:isisdba/irisdevisisdba@corptesvl300.corp.aires.com:1521:IRISDEV";
 			break;
 		case "test":
-			dbURL = "jdbc:oracle:thin:policydba/testpo@corptesvl300.corp.aires.com:1521:IRISTEST";
+			//dbURL = "jdbc:oracle:thin:policydba/testpo@corptesvl300.corp.aires.com:1521:IRISTEST";
+			dbURL = "jdbc:oracle:thin:isisdba/iristestisisdba@corptesvl300.corp.aires.com:1521:iristest";
 			break;
 		case "prod":
 			// For Production Envt. - Change username/Password & verify DB connection
@@ -54,18 +60,14 @@ public class DbFunctions {
 	public static void deletePolicyByPolicyId(int policyId) {
 		Connection connection = null;
 		try {
-			DriverManager.registerDriver(new oracle.jdbc.OracleDriver());
-			/*connection = DriverManager.getConnection(
-					getDBConnectionStringAsPerEnvt(CoreFunctions.getPropertyFromConfig("envt").toLowerCase()));*/
-			
-			connection = DriverManager.getConnection(
-					getDBConnectionStringAsPerEnvt(System.getProperty("envt").toLowerCase()));
+			connection = getConnection();
 			CallableStatement callableStatement = connection
 					.prepareCall(DbQueries.CALL_PROCEDURE_DELETE_POLICY_BY_ID);			
 			
 			callableStatement.setInt(1, policyId);
 			callableStatement.execute();
 		} catch (Exception ex) {
+			ex.printStackTrace();
 			Assert.fail(CoreConstants.ERROR + "Fail to call procedure");
 		} finally {
 			try {
@@ -252,5 +254,99 @@ public class DbFunctions {
 			}
 		}
 		return currencyCountry;
+	
+	public static void updateAssignmentStatus(String assignmentStatusCode, int policyId) {
+		Connection connection = null;
+		try {
+			connection = getConnection();
+			PreparedStatement pstChangeStatus = connection.prepareStatement(DbQueries.QUERY_UPDATE_ASSIGNMENT_STATUS);
+			pstChangeStatus.setString(1, assignmentStatusCode);
+			pstChangeStatus.setString(2, null);
+			pstChangeStatus.setInt(3, policyId);
+			pstChangeStatus.setString(4, CoreFunctions.getCurrentDateAsGivenFormat("dd-MM-yyyy"));
+			System.out.println("prepared statement query=="+pstChangeStatus.toString());
+			
+			pstChangeStatus.executeUpdate();	
+			connection.close();
+		} catch (Exception ex) {
+			Assert.fail("SQL Query Failed");
+		}
+	}
+	
+	public static void populatePDTExpenseCodeQueryStatements() {
+		pdtExpenseCodeQueryStatementMap.put(PDTConstants.PRE_ACCEPTANCE_SERVICES, DbQueries.QUERY_GET_PRE_ACCEPTANCE_EXPENSE_CODE);
+		pdtExpenseCodeQueryStatementMap.put(PDTConstants.IMMIGRATION, DbQueries.QUERY_GET_IMMIGRATION_EXPENSE_CODE);
+		pdtExpenseCodeQueryStatementMap.put(PDTConstants.HOUSE_HUNTING_TRIP, DbQueries.QUERY_GET_HOUSE_HUNTING_TRIP_EXPENSE_CODE);
+		pdtExpenseCodeQueryStatementMap.put(PDTConstants.LANGUAGE_TRAINING, DbQueries.QUERY_GET_LANG_TRAIN_EXPENSE_CODE);
+		pdtExpenseCodeQueryStatementMap.put(PDTConstants.CULTURAL_TRAINING, DbQueries.QUERY_GET_CULT_TRAIN_EXPENSE_CODE);
+	}
+	
+	public static List<String> getExpenseCodeListForBenefit(String benefitName) {
+		populatePDTExpenseCodeQueryStatements();		
+		List<String> expenseCodeList = new ArrayList<String>();
+		Connection connection = null;		
+		try {
+			connection = getConnection();		
+			PreparedStatement pst = connection.prepareStatement(pdtExpenseCodeQueryStatementMap.get(benefitName));
+			ResultSet resultset = pst.executeQuery();
+			while (resultset.next()) {
+				expenseCodeList.add(resultset.getString("EXPENSE_CODE")+" - "+ resultset.getString("DESCRIPTION"));
+			}
+		
+		} catch (Exception ex) {			
+			Assert.fail(CoreConstants.SQL_QUERY_FAILED);
+		} finally {
+			try {
+				if(connection != null) {
+					connection.close();
+				}
+			}catch (Exception ex){
+				Log.info(CoreConstants.ERROR+ex.getMessage());
+				Log.info(CoreConstants.ERROR+ex.getStackTrace());
+			}
+		}
+		return expenseCodeList;
+	}
+	
+	public static Connection getConnection() {
+		Connection connection = null;	
+		try {
+			DriverManager.registerDriver(new oracle.jdbc.OracleDriver());
+			connection = DriverManager.getConnection(
+			getMyloDBConnectionStringAsPerEnvt(System.getProperty("envt")));
+			/*Kept the commented code for running in local environment
+			 * connection = DriverManager.getConnection(
+					getDBConnectionStringAsPerEnvt(CoreFunctions.getPropertyFromConfig("envt")));*/
+		} catch (SQLException e) {
+			Assert.fail("Failed to establish connection to the database");
+		}
+		return connection;
+	}
+	
+	public static List<String> getExpenseCodeForBenefit(String benefitName) {
+		populatePDTExpenseCodeQueryStatements();		
+		List<String> expenseCodeList = new ArrayList<String>();
+		Connection connection = null;		
+		try {
+			connection = getConnection();
+			PreparedStatement pst = connection.prepareStatement(pdtExpenseCodeQueryStatementMap.get(benefitName));
+			ResultSet resultset = pst.executeQuery();
+			while (resultset.next()) {
+				expenseCodeList.add(resultset.getString("EXPENSE_CODE"));
+			}
+		
+		} catch (Exception ex) {			
+			Assert.fail(CoreConstants.SQL_QUERY_FAILED);
+		} finally {
+			try {
+				if(connection != null) {
+					connection.close();
+				}
+			}catch (Exception ex){
+				Log.info(CoreConstants.ERROR+ex.getMessage());
+				Log.info(CoreConstants.ERROR+ex.getStackTrace());
+			}
+		}
+		return expenseCodeList;
 	}
 }

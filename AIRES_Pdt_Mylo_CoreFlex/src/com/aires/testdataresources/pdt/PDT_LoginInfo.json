@@ -1,0 +1,109 @@
+[
+	{
+		"environment": "qa",
+		"details": {
+			"irisUserName": "BBENEDU",
+			"irisPassword": "qabb",
+			"irisDatabase": "Qa",
+			"irisBuildPath": "\\\\corpprdvw589\\rdev\\IRIS_Builds\\IRIS_QA_CAE - Copy (2)\\IRIS.exe",
+			"firstName": "mxsso",
+			"lastName": "dev5",
+			"clientId": "7403",
+			"clientName": "Dow Chemical Company (Global)",
+			"csmUserName": "mxssodev5@corp.aires.com",
+			"csmPassword": "F74#jd*187_NB",
+			"policy": "HR - EBT Program (# 6966)",
+			"mobilityxUserName": "0001159966@aires.com",
+			"mobilityxPassword": "Relonetng1",
+			"profileName": "Nicole Rickett",
+			"mobilityxUrl": "https://relonetqa.aires.com/mobilityx/faces/jsf/Login.jsf",
+			"pdtUrl": "https://blueprintqa.aires.com/blueprint/"
+		}
+	},
+	
+	{
+		"environment": "dev",
+		"details": {
+			"irisUserName": "BBENEDU",
+			"irisPassword": "devbb",
+			"irisDatabase": "Dev",
+			"irisBuildPath": "\\\\corpprdvw589\\rdev\\IRIS_Builds\\IRIS_Statler_QA\\IRIS.exe",
+			"firstName": "mxsso",
+			"lastName": "dev5",
+			"clientId": "49211",
+			"clientName": "AIRES-CIS-DEMO&'TEST(CLIENT)",
+			"csmUserName": "mxssodev5@corp.aires.com",
+			"csmPassword": "F74#jd*187_NB",			
+			"policy": "Frequent Business Traveler (# 14614)",
+			"mobilityxUserName": "0141754442@aires.com",
+			"mobilityxPassword": "relonetng",
+			"profileName": "Fannie Uddin",
+			"mobilityxUrl": "https://relonetqa.aires.com/mobilityx/faces/jsf/Login.jsf",
+			"pdtUrl": "https://blueprintqa.aires.com/blueprint/"
+		}
+	},
+	
+	{
+		"environment": "prod",
+		"details": {
+			"irisUserName": "BBENEDU",
+			"irisPassword": "prodbb",
+			"irisDatabase": "IRIS",
+			"irisBuildPath": "\\\\corpprdvw589\\rdev\\IRIS_Builds\\IRIS_Statler_QA\\IRIS.exe",
+			"firstName": "Chere",
+			"lastName": "kitts",
+			"clientId": "49214",
+			"clientName": "Sandbox, Inc (# 49214)",
+			"csmUserName": "LDESANZ",
+			"csmPassword": "LDESANZ",
+			"policy": "hDCC Repatriation (# 14724)",
+			"mobilityxUserName": "0141754442@aires.com",
+			"mobilityxPassword": "relonetng",
+			"profileName": "Fannie Uddin",
+			"mobilityxUrl": "https://samltest.aires.com/mobilityx/faces/jsf/Login.jsf",
+			"pdtUrl": "https://blueprint.aires.com/blueprint/"
+		}
+	},
+	{
+		"environment": "test",
+		"details": {
+			"irisUserName": "BBENEDU",
+			"irisPassword": "testbb",
+			"irisDatabase": "Training",
+			"irisBuildPath": "\\\\corpprdvw589\\rdev\\IRIS_Builds\\IRIS_PROD\\IRIS.exe",
+			"firstName": "mxsso",
+			"lastName": "dev5",
+			"clientId": "7403",
+			"clientName": "Dow Chemical Company (Global)",
+			"csmUserName": "mxssodev5@corp.aires.com",
+			"csmPassword": "F74#jd*187_NB",
+			"policy": "HR - EBT Program (# 6966)",
+			"mobilityxUserName": "0011857546@aires.com",
+			"mobilityxPassword": "Relonetng1",
+			"profileName": "Winnifred Tickell",
+			"mobilityxUrl": "https://relonettest2.aires.com/mobilityx/faces/jsf/Login.jsf",
+			"pdtUrl": "https://blueprinttest.aires.com/blueprint/"
+		}
+	},
+	{
+		"environment": "uat",
+		"details": {
+			"irisUserName": "BBENEDU",
+			"irisPassword": "uatbb",
+			"irisDatabase": "Uat",
+			"irisBuildPath": "\\\\corpprdvw589\\rdev\\IRIS_Builds\\IRIS_UAT_MYLO\\IRIS.exe",
+			"firstName": "mxsso",
+			"lastName": "dev5",
+			"clientId": "7403",
+			"clientName": "Dow Chemical Company (Global)",
+			"csmUserName": "mxssodev5@corp.aires.com",
+			"csmPassword": "F74#jd*187_NB",
+			"policy": "HR - EBT Program (# 6966)",
+			"mobilityxUserName": "0001070721@aires.com",
+			"mobilityxPassword": "relonetng1",
+			"profileName": "Nicole Rickett",
+			"mobilityxUrl": "https://relonetdev3.aires.com/mobilityx/faces/jsf/Login.jsf",
+			"pdtUrl": "https://blueprintuat.aires.com/blueprint/"
+		}
+	}
+]

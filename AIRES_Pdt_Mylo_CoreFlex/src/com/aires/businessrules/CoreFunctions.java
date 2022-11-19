@@ -42,6 +42,7 @@ import java.util.Collections;
 import java.util.Date;
 import java.util.GregorianCalendar;
 import java.util.LinkedHashMap;
+import java.util.LinkedHashSet;
 import java.util.List;
 import java.util.Map;
 import java.util.Properties;
@@ -1539,7 +1540,7 @@ public class CoreFunctions {
 	}
 
 	public static List<String> getElementTextAndStoreInList(WebDriver driver, List<WebElement> elementList) {
-		return (elementList.stream().map(x -> x.getText()).collect(Collectors.toList()));
+		return (elementList.stream().map(x -> x.getText()).collect(Collectors.toList()));		
 	}
 
 	public static WebElement getElementFromListByText(List<WebElement> elementList, String text) {
@@ -2034,5 +2035,15 @@ public class CoreFunctions {
 			Assert.fail(CoreConstants.FAILED_TO_SELECT_RANDOM_OPTION_FROM_THE_LIST);
 		}
 		
+	}
+	
+	public static ArrayList<String> getMultipleRandomOptionsForDropDown(int minNum, int maxNum, int count, WebDriver driver, List<WebElement> webElementList) {
+		Random random = new Random();
+		List<Integer> randomNumbers = random.ints(minNum, maxNum).distinct().limit(count).boxed().collect(Collectors.toList());
+		ArrayList<String> randWebElementList = new ArrayList<String>();
+		for(Integer index:randomNumbers) {
+			randWebElementList.add(webElementList.get(index).getText());
+		}
+		return randWebElementList;
 	}
 }

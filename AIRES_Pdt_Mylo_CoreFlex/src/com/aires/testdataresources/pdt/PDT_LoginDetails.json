@@ -5,14 +5,18 @@
 			"irisUserName": "BBENEDU",
 			"irisPassword": "qabb",
 			"irisDatabase": "Qa",
-			"irisBuildPath": "\\\\corpprdvw589\\rdev\\IRIS_Builds\\IRIS_Statler_QA\\IRIS.exe",
+			"irisBuildPath": "\\\\corpprdvw589\\rdev\\IRIS_Builds\\IRIS_QA_CAE - Copy (2)\\IRIS.exe",
 			"firstName": "mxsso",
 			"lastName": "dev5",
 			"clientId": "7403",
 			"clientName": "Dow Chemical Company (Global)",
 			"csmUserName": "mxssodev5@corp.aires.com",
 			"csmPassword": "F74#jd*187_NB",
-			"policy": "hDCC Repatriation (# 14724)"
+			"policy": "HR - EBT Program (# 6966)",
+			"mobilityxUserName": "0001159966@aires.com",
+			"mobilityxPassword": "Relonetng1",
+			"profileName": "Nicole Rickett",
+			"mobilityxUrl": "https://relonetqa.aires.com/mobilityx/faces/jsf/Login.jsf"
 		},
 		"dev": {
 			"irisUserName": "BBENEDU",
@@ -25,7 +29,11 @@
 			"clientName": "AIRES-CIS-DEMO&'TEST(CLIENT)",
 			"csmUserName": "mxssodev5@corp.aires.com",
 			"csmPassword": "F74#jd*187_NB",			
-			"policy": "Frequent Business Traveler (# 14614)"
+			"policy": "Frequent Business Traveler (# 14614)",
+			"mobilityxUserName": "0141754442@aires.com",
+			"mobilityxPassword": "relonetng",
+			"profileName": "Fannie Uddin",
+			"mobilityxUrl": "https://relonetqa.aires.com/mobilityx/faces/jsf/Login.jsf"
 		},
 		"prod": {
 			"irisUserName": "BBENEDU",
@@ -38,7 +46,11 @@
 			"clientName": "Sandbox, Inc (# 49214)",
 			"csmUserName": "LDESANZ",
 			"csmPassword": "LDESANZ",
-			"policy": "hDCC Repatriation (# 14724)"
+			"policy": "hDCC Repatriation (# 14724)",
+			"mobilityxUserName": "0141754442@aires.com",
+			"mobilityxPassword": "relonetng",
+			"profileName": "Fannie Uddin",
+			"mobilityxUrl": "https://samltest.aires.com/mobilityx/faces/jsf/Login.jsf"
 		},
 		"preProd": {
 			"irisUserName": "BBENEDU",
@@ -51,7 +63,11 @@
 			"clientName": "Dow Chemical Company (Global)",
 			"csmUserName": "mxssodev5@corp.aires.com",
 			"csmPassword": "F74#jd*187_NB",
-			"policy": "hDCC Repatriation (# 14724)"
+			"policy": "HR - EBT Program (# 6966)",
+			"mobilityxUserName": "0011857546@aires.com",
+			"mobilityxPassword": "Relonetng1",
+			"profileName": "Winnifred Tickell",
+			"mobilityxUrl": "https://relonettest2.aires.com/mobilityx/faces/jsf/Login.jsf"
 		},
 		"uat": {
 			"irisUserName": "BBENEDU",
@@ -64,7 +80,11 @@
 			"clientName": "Dow Chemical Company (Global)",
 			"csmUserName": "mxssodev5@corp.aires.com",
 			"csmPassword": "F74#jd*187_NB",
-			"policy": "hDCC Repatriation (# 14724)"
+			"policy": "HR - EBT Program (# 6966)",
+			"mobilityxUserName": "0001070721@aires.com",
+			"mobilityxPassword": "relonetng1",
+			"profileName": "Nicole Rickett",
+			"mobilityxUrl": "https://relonetdev3.aires.com/mobilityx/faces/jsf/Login.jsf"
 		}
 	},
 	
@@ -75,25 +95,22 @@
 			"irisPassword": "fndevvk",
 			"irisDatabase": "FnDEV",
 			"irisBuildPath": "\\\\corpprdvw589\\rdev\\IRIS_Builds\\IRIS_FnDEV_CORE_FLEX\\IRIS.exe",
-			"firstName": "mxsso",
-			"lastName": "dev5",
-			"clientId": "13951",
-			"clientName": "Boston Scientific",
+			"firstName": "Vladimir",
+			"lastName": "Kaminsky",
+			"clientId": "7403",
+			"clientName": "Dow Chemical Company (Global)",
 			"csmUserName": "mxssodev5@corp.aires.com",
 			"csmPassword": "F74#jd*187_NB",
 			"csmUserFirstName":"MXSSO DEV5",
-			"policy": "hDCC Repatriation (# 14724)",
-			"mxClientUserName":"0011934473@aires.com",
-			"mxClientPassword":"relonetng1",
-			"mxClientUserProfileName":"Jaspal March"
+			"policy": "hDCC Repatriation (# 14724)"
 		},
 		"dev": {
 			"irisUserName": "vkamins",
 			"irisPassword": "fndevvk",
 			"irisDatabase": "FnDEV",
 			"irisBuildPath": "\\\\corpprdvw589\\rdev\\IRIS_Builds\\IRIS_FnDEV_CORE_FLEX\\IRIS.exe",
-			"firstName": "mxsso",
-			"lastName": "dev5",
+			"firstName": "Chere",
+			"lastName": "kitts",
 			"clientId": "7403",
 			"clientName": "Dow Chemical Company (Global)",
 			"csmUserName": "mxssodev5@corp.aires.com",
@@ -117,37 +134,31 @@
 		},
 		"preProd": {
 			"irisUserName": "vkamins",
-			"irisPassword": "testvk",
-			"irisDatabase": "TRAINING",
-			"irisBuildPath": "\\\\corpprdvw589\\rdev\\IRIS_Builds\\IRIS_PRE_RELEASE_QA_ACCESS_ONLY\\IRIS.exe",
-			"firstName": "mxsso",
-			"lastName": "dev5",
-			"clientId": "13951",
-			"clientName": "Boston Scientific",
+			"irisPassword": "fndevvk",
+			"irisDatabase": "FnDEV",
+			"irisBuildPath": "\\\\corpprdvw589\\rdev\\IRIS_Builds\\IRIS_FnDEV_CORE_FLEX\\IRIS.exe",
+			"firstName": "Chere",
+			"lastName": "kitts",
+			"clientId": "7403",
+			"clientName": "Dow Chemical Company (Global)",
 			"csmUserName": "mxssodev5@corp.aires.com",
 			"csmPassword": "F74#jd*187_NB",
 			"csmUserFirstName":"MXSSO DEV5",
-			"policy": "hDCC Repatriation (# 14724)",
-			"mxClientUserName":"0011856826@aires.com",
-			"mxClientPassword":"relonetng",
-			"mxClientUserProfileName":"Josh Warwick"
+			"policy": "hDCC Repatriation (# 14724)"
 		},
 		"uat": {
 			"irisUserName": "vkamins",
 			"irisPassword": "uatvk",
 			"irisDatabase": "UAT",
 			"irisBuildPath": "\\\\corpprdvw589\\rdev\\IRIS_Builds\\IRIS_CoreFleX_UAT\\IRIS.exe",
-			"firstName": "mxsso",
-			"lastName": "dev5",
-			"clientId": "13951",
-			"clientName": "Boston Scientific",
+			"firstName": "Vladimir",
+			"lastName": "Kaminsky",
+			"clientId": "7403",
+			"clientName": "Dow Chemical Company (Global)",
 			"csmUserName": "mxssodev5@corp.aires.com",
 			"csmPassword": "F74#jd*187_NB",
 			"csmUserFirstName":"MXSSO DEV5",
-			"policy": "hDCC Repatriation (# 14724)",
-			"mxClientUserName":"jzmarzlak@aires.com",
-			"mxClientPassword":"relonetng",
-			"mxClientUserProfileName":"Judson Offner"
+			"policy": "hDCC Repatriation (# 14724)"
 		}
 	}
 ]

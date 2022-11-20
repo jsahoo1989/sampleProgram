@@ -559,6 +559,7 @@ public class PDT_GeneralInformationPage extends Base {
 		webElementsTextMap.put( PDTConstants.CLIENT_ID, _textClientID.getText().trim());
 		webElementsTextMap.put( PDTConstants.CLIENT_NAME, _textClientName.getText().trim());
 		webElementsTextMap.put( PDTConstants.POLICY_NAME, _headerPolicyInfo.getText().split(":")[1].trim());
+		webElementsTextMap.put( COREFLEXConstants.CORPORATION_POLICY_NUMBER, _textCorporationPolicyNum.getText().split(":")[1].trim());
 	}
 
 	public String getElementText(String elementName) {

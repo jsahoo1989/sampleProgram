@@ -606,7 +606,6 @@ public class CoreFlex_FlexPolicySetupPage extends Base {
 			CoreFunctions.verifyText(driver, _selectFlexSetupTypeSelectedValue,
 					CoreFunctions.getPropertyFromConfig("CoreFlex_Policy_FlexSetupType"),
 					COREFLEXConstants.FLEX_SETUP_TYPE);
-			System.out.println("Actual Display Name :" + _inputTotalPointsAvailable.getDomProperty("value"));
 			CoreFunctions.verifyText(_inputTotalPointsAvailable.getDomProperty("value"),
 					policySetupPageData.flexPolicySetupPage.StaticFixedTotalPointsAvailable,
 					COREFLEXConstants.TOTAL_POINTS_AVAILABLE);

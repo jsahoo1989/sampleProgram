@@ -758,8 +758,8 @@ public class CF_Transferee_MobilityJourney_Flex_Cards_Steps {
 	@Given("^he has navigated to \"([^\"]*)\" page after selecting 'Aires Managed' benefits on \"([^\"]*)\" page$")
 	public void he_has_navigated_to_page_after_selecting_Aires_Managed_benefits_on_page(
 			String navigatedPage, String sourcePage) throws Throwable {
-		Assert.assertTrue(mxTransfereeFlexPlanningToolPage.selectBenefitsAndProceedToReviewAndSubmit(), MessageFormat
-				.format(MobilityXConstants.FAILED_TO_SELECT_BENEFITS_AND_PROCEED_TO_REVIEW_PAGE, CoreConstants.FAIL));
+		Assert.assertTrue(mxTransfereeFlexPlanningToolPage.selectAiresManagedBenefitsAndProceedToReviewAndSubmit(), MessageFormat
+				.format(MobilityXConstants.FAILED_TO_SELECT_AIRES_MANAGED_BENEFITS_AND_PROCEED_TO_REVIEW_PAGE, CoreConstants.FAIL));
 		CoreConstants.TIME_BEFORE_ACTION = new Date().getTime();
 		Assert.assertTrue(mxTransfereeMyBenefitsBundlePage.isMyBundlePageDisplayed(),
 				MessageFormat.format(MobilityXConstants.FAILED_TO_DISPLAY_MY_BENEFIT_BUNDLE_PAGE, CoreConstants.FAIL));

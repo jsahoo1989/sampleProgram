@@ -25,6 +25,8 @@ public class IRIS_AssignmentData {
 		public String empNameMSPEC;
 		public String functionPPC;
 		public String empNamePPC;
+		public String functionPPCSPPRT;
+		public String empNamePPCSPPRT;
 	}
 
 	public class Authorization {

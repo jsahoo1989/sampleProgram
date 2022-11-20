@@ -775,5 +775,6 @@ public class MobilityXConstants {
 	public static final String EXCEPTION_OCCURED_WHILE_VALIDATING_SUBMITTED_CASHOUT_DETAILS_UNDER_SUBMITTED_BENEFITS_SECTION_OF_MBB_PAGE = "{0}Exception occured while validating Submitted Cashout Details under Submitted Benefits section of MBB page. Exception : ''{1}''.";
 	public static final String SUBMITTED_DATE = "Submitted Date";
 	public static final String EXCEPTION_OCCURED_WHILE_VALIDATING_DELETED_CASHOUT_DETAILS_UNDER_SUBMITTED_BENEFITS_SECTION_OF_MBB_PAGE = "{0}Exception occured while valiating deleted Cashout details under submitted benefits section of My Benefit Bundle Page.Exception : ''{1}''.";
+	public static final String FAILED_TO_VERIFY_SELECTED_AIRES_MANAGED_BENEFITS_ON_MY_BUNDLE_PAGE = "{0}Failed to verify selected Aires Managed benefits on My Bundles page under Selected Benefits Section.";
 
 }

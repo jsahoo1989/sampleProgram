@@ -1,19 +1,19 @@
 Feature: Validate the CoreFlex End-To-End Business Test Flow(BluePrint, MXClient, Transferee Submissions) for Both_MXClient_UserDefined_CashoutNotAuthorized_Delete_ApproveAll selection
 
-  @End-To-End_CoreFlex @CF_MXClient_UserDefined_CashNotAuth_Delete_Approve
+  @End-To-End_CoreFlex @CF_MXClient_UserDefined_CashNotAuth_Delete_Approve @CF_MXClient_UserDefined_CashNotAuth_Delete_Approve_PF
   Scenario: CoreFlex - Creating & Validating a new Active Points Based CoreFlex Policy with MXClient, UserDefined and CashNotAuth selection
     Given he has setup a new Points Based CoreFlex Policy with following selection in Blueprint application
-      | Person Responsible For Benefit Selection | Flex Setup Type | Cashout Availability   | BenefitType | PolicyRequiredFor | MileStones |
-      | Client Initiator                         | User Defined    | Cashout Not Authorized | Both        | Client            |          0 |
+      | Person Responsible For Benefit Selection | Flex Setup Type | Cashout Availability   | BenefitType | PolicyRequiredFor |
+      | Client Initiator                         | User Defined    | Cashout Not Authorized | Both        | Client            |
     And he has clicked on "Submit" button to submit "V1" policy verison on "Custom Bundles" page
     And he has clicked on "Approve Policy" button to approve "V1" policy verison on "Custom Bundles" page
-    And he has selected following options on 'Approval this Policy' dialog of "V1" Policy
+    And he has filled 'Description' after selecting following option on 'Approval this Policy' dialog of "V1" Policy
       | Associate this policy with a NEW authorization in IRIS? |
       | Effective from booking date                             |
     When he clicks on "Approve" button to acknowledge 'Approve this Policy' dialog
     Then Policy Status and Version should be displayed as "Active" and "V1" respectively on "View/Edit Policy Forms" page
 
-  @End-To-End_CoreFlex @CF_MXClient_UserDefined_CashNotAuth_Delete_Approve
+  @End-To-End_CoreFlex @CF_MXClient_UserDefined_CashNotAuth_Delete_Approve @CF_MXClient_UserDefined_CashNotAuth_Delete_Approve_CF
   Scenario: MXClient - Verifying Authorization Submission with UserDefined TotalPoints & Core/Flex Benefits for configured ClientInitiator BluePrint Policy
     Given he has logged into 'MobilityX' application as a 'Client' user
     And he has clicked on "Create an authorization" after validating Client details on 'Authorization Home Page'
@@ -56,7 +56,7 @@ Feature: Validate the CoreFlex End-To-End Business Test Flow(BluePrint, MXClient
     Then 'Auth Submit Success' growl message should be displayed on the navigated 'Advanced Authorization Search' page
     And 'Revised Mobility Initiation' email having submitted_deleted Benefit and Points details should be received
 
-  @End-To_End_CoreFlex @CF_MXClient_UserDefined_CashNotAuth_Delete_Approve 
+  @End-To_End_CoreFlex @CF_MXClient_UserDefined_CashNotAuth_Delete_Approve
   Scenario: TransfereeSubmissions - Verifying UserDefined Points, BenefitSubmissions and Delete Request ApprovalAll transaction for the request made by the Client
     Given he has logged into 'Transferee Submissions' application as a "MSPEC/PPC" user
     And he has navigated to "Transferee Submissions Dashboard" page having record of Bundle submitted by the Client

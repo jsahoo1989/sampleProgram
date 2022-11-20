@@ -507,4 +507,5 @@ public class IRISConstants {
 	public static final String SUB_SERVICE_DETAIL_SCREEN = "Sub-Service Detail Screen";
 	public static final String UPDATE = "Update";
 	public static final String EXCEPTION_OCCURED_WHILE_ADDING_RATING_TO_THE_ADDED_PARTICIPANT_ON_ACTIVITY_AND_FINANCE_TAB = "{0}Exception occured while adding rating to the added participant for ''{2}'' benefit on Activity & Finance tab. Exception : ''{1}''.";
+	public static final String FUNCTION_PPCSPPRT = "PPC SUPPORT";
 }

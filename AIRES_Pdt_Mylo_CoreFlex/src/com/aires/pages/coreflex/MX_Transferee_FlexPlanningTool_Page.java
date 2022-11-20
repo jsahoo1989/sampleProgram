@@ -1780,5 +1780,46 @@ public class MX_Transferee_FlexPlanningTool_Page extends Base {
 		}
 		return isElementPresentOnPage;
 	}
+	
+	public boolean selectAiresManagedBenefitsAndProceedToReviewAndSubmit() {
+		boolean benefitsSelectedSuccessfully = false;
+		totalSelectedPoints = 0;
+		try {
+			benefitsSelectedSuccessfully = selectAiresManagedFlexBenefitsonFPT() && selectCashOutOnFPT()
+					&& validatePointsAndClickOnNext();
+		} catch (Exception e) {
+			Reporter.addStepLog(MessageFormat.format(
+					MobilityXConstants.EXCEPTION_OCCURED_WHILE_SELECTING_BENEFITS_ON_FLEX_PLANNING_TOOL_PAGE,
+					CoreConstants.FAIL, e.getMessage()));
+		}
+		if (benefitsSelectedSuccessfully) {
+			Reporter.addStepLog(
+					MessageFormat.format(MobilityXConstants.SUCCESSFULLY_SELECTED_BENEFITS_AND_PROCEEDED_TO_REVIEW_PAGE,
+							CoreConstants.PASS));
+		}
+		return benefitsSelectedSuccessfully;
+	}
+	
+	private boolean selectAiresManagedFlexBenefitsonFPT() {
+		boolean benefitsSelection = false, benefitsSelectionPerformed = false;
+		for (Benefit benefit : getFlexBenefitsList(CoreFunctions.getPropertyFromConfig("CoreFlex_Policy_BenefitType"),
+				CoreFunctions.getPropertyFromConfig("CoreFlex_Policy_RequiredFor"))) {
+			if (benefit.getSelectBenefitOnFPTPage() && benefit.getAiresManagedService().equals("Yes") ) {
+				Log.info("Selecting " + benefit.getBenefitDisplayName() + " on FPT page.");
+				int indexBenefit = BusinessFunctions.returnindexItemFromListUsingText(driver, _textAddedBenefitNameList,
+						benefit.getBenefitDisplayName());
+				benefitsSelectionPerformed = performFlexBenefitSelection(benefit, indexBenefit);
+				if (!benefitsSelectionPerformed) {
+					return false;
+				} else {
+					benefitsSelection = benefitsSelectionPerformed;
+				}
+			} else {
+				benefitsSelection = true;
+			}
+		}
+		return benefitsSelection;
+	}
+
 
 }

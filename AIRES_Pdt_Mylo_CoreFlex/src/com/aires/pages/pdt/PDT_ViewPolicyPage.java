@@ -1118,20 +1118,13 @@ public class PDT_ViewPolicyPage extends Base {
 		try {
 			List<String> clientNamesList = _selectCloneToClientOptionsList.stream().map(x -> x.getText())
 					.collect(Collectors.toList());
-			for (String clientName : clientNamesList) {
-				if (!(clientName.contains(
-						CoreFunctions.getPropertyFromConfig("ClonePolicy_Reference_Client").split("\\(")[0].trim()))) {
-					CoreFunctions.clickElement(driver, _selectCloneToClient);
-					CoreFunctions.selectItemInListByText(driver, _selectCloneToClientOptionsList, clientName);
-					CoreFunctions.explicitWaitTillElementInVisibilityCustomTime(driver, _progressBar, 5);
-					if (!(CoreFunctions.getElementText(driver, _selectCloneToPolicyDefaultText))
-							.equals(COREFLEXConstants.NO_POLICY_AVAILABLE_FOR_SELECTION)) {
-						return;
-					} else {
-						CoreFunctions.clickElement(driver, _selectCloneToClient);
-						continue;
-					}
-				}
+			if ((clientNamesList.size() == 1) && ((clientNamesList.get(0)).contains(
+					CoreFunctions.getPropertyFromConfig("ClonePolicy_Reference_Client").split("\\(")[0].trim()))) {
+				Assert.fail(MessageFormat.format(
+						COREFLEXConstants.DIFFERENT_CLIENT_NOT_AVAILABLE_FOR_SELECTION_IN_CLONE_TO_CLIENT_LIST,
+						CoreConstants.FAIL));
+			} else {
+				selectDifferentClientForCloning(clientNamesList);
 			}
 		} catch (Exception e) {
 			Reporter.addStepLog(MessageFormat.format(
@@ -1141,6 +1134,25 @@ public class PDT_ViewPolicyPage extends Base {
 		Assert.fail(MessageFormat.format(
 				COREFLEXConstants.POLICY_NOT_AVAILABLE_FOR_SELECTION_FOR_ANY_CLIENT_EXCEPT_REFERENCE_CLIENT_ON_CLONE_POLICY_DIALOG,
 				CoreConstants.FAIL));
+	}
+
+	private void selectDifferentClientForCloning(List<String> clientNamesList) {
+		for (String clientName : clientNamesList) {
+			if (!(clientName.contains(
+					CoreFunctions.getPropertyFromConfig("ClonePolicy_Reference_Client").split("\\(")[0].trim()))) {
+				CoreFunctions.clickElement(driver, _selectCloneToClient);
+				CoreFunctions.selectItemInListByText(driver, _selectCloneToClientOptionsList, clientName);
+				CoreFunctions.explicitWaitTillElementInVisibilityCustomTime(driver, _progressBar, 5);
+				if (!(CoreFunctions.getElementText(driver, _selectCloneToPolicyDefaultText))
+						.equals(COREFLEXConstants.NO_POLICY_AVAILABLE_FOR_SELECTION)) {
+					return;
+				} else {
+					CoreFunctions.clickElement(driver, _selectCloneToClient);
+					continue;
+				}
+			}
+		}
+
 	}
 
 	public boolean verifyPolicyStatusForVersion(String selectedPolicyName, String expectedStatus,

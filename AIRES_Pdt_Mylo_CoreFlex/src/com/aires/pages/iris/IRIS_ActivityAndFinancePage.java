@@ -879,7 +879,7 @@ public class IRIS_ActivityAndFinancePage extends BasePage {
 											"IRIS.Presentation.assignment.activityFinance.ActivityPanel$1"),
 									activity, benefit.getInitialTracingPrompt(), IRISConstants.EST_DATE);
 						}
-						if (noOfMilestones == 4) {
+						if (noOfMilestones == 4 || noOfMilestones == 3) {
 							enterActDateForTracingPrompt(
 									IRIS_PageMaster.getTableObject(_IRIS,
 											"IRIS.Presentation.assignment.activityFinance.ActivityPanel$1"),
@@ -1072,7 +1072,7 @@ public class IRIS_ActivityAndFinancePage extends BasePage {
 							"IRIS.Presentation.assignment.activityFinance.ActivityPanel$1"),
 					activity, benefit.getEndTracingPrompt(), tracingDate);
 		}
-		if (noOfMilestones == 4) {
+		if (noOfMilestones == 4 || noOfMilestones == 3) {
 			provideEstimatedDatesForAllTracingPrompts(noOfMilestones, benefit);
 			enterActDateForTracingPrompt(
 					IRIS_PageMaster.getTableObject(_IRIS,

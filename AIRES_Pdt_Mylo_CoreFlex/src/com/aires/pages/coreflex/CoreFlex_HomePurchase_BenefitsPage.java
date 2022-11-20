@@ -5,6 +5,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
+import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
@@ -240,6 +241,31 @@ public class CoreFlex_HomePurchase_BenefitsPage extends BenefitPage {
 	@FindBy(how = How.XPATH, using = "//label[contains(text(),'if applicable')]")
 	private List<WebElement> _textIfApplicable;
 
+	@FindBy(how = How.XPATH, using = "//span[contains(text(),'Flex Benefits')]/ancestor::div[contains(@id,'secondItemDiv')]//div[contains(@class,'RXCFServicesMonitoringBorderPanel')]")
+	private List<WebElement> flexCardPanelList;
+
+	@FindBy(how = How.XPATH, using = "//span[contains(text(),'Core Benefits')]/ancestor::div[contains(@id,'firstItemDiv')]//div[contains(@class,'RXCFServicesMonitoringBorderPanel')]")
+	private List<WebElement> coreCardPanelList;
+
+	@FindBy(how = How.XPATH, using = "//span[contains(text(),'Core Benefits')]/ancestor::div[contains(@id,'firstItemDiv')]//table[contains(@class,'RXRightIconPanel')]//span[contains(text(),'Starting Soon')]")
+	private WebElement coreCardStartingSoonStatus;
+
+	private By flexCardBeginPropertySearchStatus = By
+			.xpath(".//span[contains(@class,'RXSmallerLink RXBold')][contains(text(),'Begin property search')]");
+	private By coreCardStartingSoonStatusBy = By
+			.xpath(".//table[contains(@class,'RXRightIconPanel')]//span[contains(text(),'Starting Soon')]");
+	private By coreCardBeginTrainingStatus = By
+			.xpath(".//span[contains(@class,'RXSmallerLink RXBold')][contains(text(),'Begin training')]");
+
+	private By beginPropertySearchStatusEstimatedDate = By.xpath(".//div[5]//span[not(contains(text(),'estimated'))]");
+	private By flexCardStartingSoonStatusBy = By
+			.xpath(".//table[contains(@class,'RXRightIconPanel')]//span[contains(text(),'Starting Soon')]");
+
+	private By flexCardClosingStatus = By.xpath(
+			".//span[contains(@class,'ServicesSuccessIcon ')]/ancestor::div[contains(@class,'ServicesTrain')]//span[contains(text(),'Closing')]");
+	private By trainingCompletedActualizedDate = By
+			.xpath(".//div[5]//span[not(contains(text(),'estimated'))][@class='RXSmallerTextMuted RXBold']");
+
 	/*********************************************************************/
 
 	CoreFlex_HousingBenefitsData housingBenefitData = FileReaderManager.getInstance().getCoreFlexJsonReader()
@@ -366,8 +392,8 @@ public class CoreFlex_HomePurchase_BenefitsPage extends BenefitPage {
 					benefitDisplayName, benefitAllowanceAmount, benefitDescription, aireManagedService);
 			selectSubBenefitsAndFillMandatoryFields(subBenefitNames, benefitType);
 		}
-		BusinessFunctions.verifyFieldNotPresentOnBenefitPage(driver, _textIfApplicable,
-				benefitDisplayName, COREFLEXConstants.IF_APPLICABLE);
+		BusinessFunctions.verifyFieldNotPresentOnBenefitPage(driver, _textIfApplicable, benefitDisplayName,
+				COREFLEXConstants.IF_APPLICABLE);
 		clickElementOfPage(COREFLEXConstants.SAVE_AND_CONTINUE);
 
 		if (CoreFunctions.isElementExist(driver, _errorDialogPolicyBenefitsDataMissing, 7)) {
@@ -844,28 +870,45 @@ public class CoreFlex_HomePurchase_BenefitsPage extends BenefitPage {
 		}
 	}
 
-	@Override
 	public boolean verifyFlexBenefitCardStatusAfterInitialActualization(int index, String expectedEstimatedDate) {
-		// TODO Auto-generated method stub
-		return false;
+		return (CoreFunctions.isElementExist(driver,
+				CoreFunctions.findSubElement(flexCardPanelList.get(index), flexCardBeginPropertySearchStatus), 3))
+				&& (CoreFunctions
+						.getElementText(driver,
+								CoreFunctions.findSubElement(flexCardPanelList.get(index), beginPropertySearchStatusEstimatedDate))
+						.equals(expectedEstimatedDate))
+				&& (!CoreFunctions.isElementExist(driver,
+						CoreFunctions.findSubElement(flexCardPanelList.get(index), flexCardStartingSoonStatusBy), 3));
 	}
 
 	@Override
 	protected boolean verifyFlexBenefitCardStatusAfterEndActualization(int index, String expectedEstimatedDate) {
-		// TODO Auto-generated method stub
-		return false;
+		return (CoreFunctions.isElementExist(driver,
+				CoreFunctions.findSubElement(flexCardPanelList.get(index), flexCardClosingStatus), 3))
+				&& (CoreFunctions.getElementText(driver,
+						CoreFunctions.findSubElement(flexCardPanelList.get(index), trainingCompletedActualizedDate))
+						.equals(expectedEstimatedDate))
+				&& (!CoreFunctions.isElementExist(driver,
+						CoreFunctions.findSubElement(flexCardPanelList.get(index), flexCardStartingSoonStatusBy), 3));
 	}
 
 	@Override
 	public boolean verifyCoreBenefitCardStatusAfterInitialActualization(int index, String expectedEstimatedDate) {
-		// TODO Auto-generated method stub
-		return false;
+		return CoreFunctions.isElementExist(driver,
+				CoreFunctions.findSubElement(coreCardPanelList.get(index), coreCardBeginTrainingStatus), 3)
+				&& (CoreFunctions
+						.getElementText(driver,
+								CoreFunctions.findSubElement(coreCardPanelList.get(index), beginPropertySearchStatusEstimatedDate))
+						.equals(expectedEstimatedDate))
+				&& (!CoreFunctions.isElementExist(driver,
+						CoreFunctions.findSubElement(coreCardPanelList.get(index), coreCardStartingSoonStatusBy), 3));
 	}
 
 	@Override
 	protected boolean verifyCoreBenefitCardStatusAfterEndActualization(int index, Benefit benefit) {
-		// TODO Auto-generated method stub
-		return false;
+		return (CoreFunctions.isElementExist(driver,
+				CoreFunctions.findSubElement(coreCardPanelList.get(index), flexCardClosingStatus), 3)
+				&& (!CoreFunctions.isElementExist(driver, coreCardStartingSoonStatus, 3)));
 	}
 
 	@Override

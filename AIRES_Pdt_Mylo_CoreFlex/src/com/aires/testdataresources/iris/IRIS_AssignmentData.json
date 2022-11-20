@@ -24,7 +24,9 @@
 			"functionMSPEC": "MSPEC",
 			"empNameMSPEC": "mxsso dev5",
 			"functionPPC": "PPC",
-			"empNamePPC": "mxsso dev5"
+			"empNamePPC": "mxsso dev5",
+			"functionPPCSPPRT": "PPCSPPRT",
+			"empNamePPCSPPRT": "mxsso dev5"
 		},
 		"originAddress": {
 			"street1": "1000 Test Lane Drive",

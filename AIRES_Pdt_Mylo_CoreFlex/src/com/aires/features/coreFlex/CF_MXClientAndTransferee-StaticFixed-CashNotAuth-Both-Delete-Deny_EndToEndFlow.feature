@@ -1,13 +1,13 @@
 Feature: Validate the CoreFlex End-To-End Business Test Flow(BluePrint, MXClientAndTransferee, Transferee Submissions) for Both_MXClientAndTransferee_StaticFixed_CashoutNotAuthorized_Delete_DenyAll selection
 
-  @End-To-End_CoreFlex @CF_MXClientAndTransferee_StaticFixed_CashNotAuth_Delete_Deny
+  @End-To-End_CoreFlex @CF_MXClientAndTransferee_StaticFixed_CashNotAuth_Delete_Deny @Test342323
   Scenario: CoreFlex - Creating & Validating a new Active Points Based CoreFlex Policy with MXClientAndTransferee, StaticFixed and CashNotAuth selection
     Given he has setup a new Points Based CoreFlex Policy with following selection in Blueprint application
       | Person Responsible For Benefit Selection | Flex Setup Type | Cashout Availability   | BenefitType | PolicyRequiredFor |
       | Client and Transferee                    | Static/Fixed    | Cashout Not Authorized | Both        | Client            |
     And he has clicked on "Submit" button to submit "V1" policy verison on "Custom Bundles" page
     And he has clicked on "Approve Policy" button to approve "V1" policy verison on "Custom Bundles" page
-    And he has selected following options on 'Approval this Policy' dialog of "V1" Policy
+    And he has filled 'Description' after selecting following option on 'Approval this Policy' dialog of "V1" Policy
       | Associate this policy with a NEW authorization in IRIS? |
       | Effective from booking date                             |
     When he clicks on "Approve" button to acknowledge 'Approve this Policy' dialog
@@ -32,7 +32,7 @@ Feature: Validate the CoreFlex End-To-End Business Test Flow(BluePrint, MXClient
     Then 'Auth Submit Success' growl message should be displayed on the navigated 'MobilityX Dashboard Home' page
     And 'New Initiation Submitted' email should be received having Transferee details along with assigned CoreFlex Total Points and Submitted Benefits Points
 
-  @End-To-End_CoreFlex @CF_MXClientAndTransferee_StaticFixed_CashNotAuth_Delete_Deny 
+  @End-To-End_CoreFlex @CF_MXClientAndTransferee_StaticFixed_CashNotAuth_Delete_Deny
   Scenario: MXTransferee - Selecting & Submitting Flex benefits available in MXClient configured policy and Tracking Available_Used Benefits Points
     Given he has logged into 'MobilityX' application after actualizing a new 'Transferee' through IRIS application and setting-up user profile in 'MobilityX' application
     And he has validated 'Assignment-Policy' details after selecting below option displayed on 'Welcome' dialog

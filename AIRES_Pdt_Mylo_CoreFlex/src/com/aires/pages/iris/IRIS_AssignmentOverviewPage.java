@@ -337,6 +337,8 @@ public class IRIS_AssignmentOverviewPage extends BasePage {
 		saveAssignment(1);
 		addAiresFileTeamHistoryDetails(IRISConstants.FUNCTION_MSPEC, overviewData.airesFileTeamHistory);
 		saveAssignment(1);
+		addAiresFileTeamHistoryDetails(IRISConstants.FUNCTION_PPCSPPRT, overviewData.airesFileTeamHistory);
+		saveAssignment(1);
 	}
 
 	/**
@@ -690,6 +692,10 @@ public class IRIS_AssignmentOverviewPage extends BasePage {
 			case IRISConstants.FUNCTION_PPC:
 				_jTableAiresTeamHistory.getCell(_rowCount - 1, "Function").setValue(airesFileTeamHistory.functionPPC);
 				_jTableAiresTeamHistory.getCell(_rowCount - 1, "Emp Name").setValue(airesFileTeamHistory.empNamePPC);
+				break;
+			case IRISConstants.FUNCTION_PPCSPPRT:
+				_jTableAiresTeamHistory.getCell(_rowCount - 1, "Function").setValue(airesFileTeamHistory.functionPPCSPPRT);
+				_jTableAiresTeamHistory.getCell(_rowCount - 1, "Emp Name").setValue(airesFileTeamHistory.empNamePPCSPPRT);
 				break;
 
 			default:

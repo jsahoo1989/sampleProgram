@@ -518,11 +518,10 @@ public class CoreFlex_SharedSteps {
 	}
 
 	@Given("^he has filled 'Description' after selecting following option on 'Approval this Policy' dialog of \"([^\"]*)\" Policy$")
-	public void he_has_filled_Description_after_selecting_following_option_on_Approval_this_Policy_dialog_of_Policy(String policyVersion,
-			DataTable dataTable) throws Throwable {
-		Assert.assertTrue(coreFlexCustomBundlesPage.verifyApproveThisPolicyDialog(policyVersion),
-				MessageFormat.format(COREFLEXConstants.FAILED_TO_VERIFY_APPROVE_THIS_POLICY_DIALOG,
-						CoreConstants.FAIL));
+	public void he_has_filled_Description_after_selecting_following_option_on_Approval_this_Policy_dialog_of_Policy(
+			String policyVersion, DataTable dataTable) throws Throwable {
+		Assert.assertTrue(coreFlexCustomBundlesPage.verifyApproveThisPolicyDialog(policyVersion), MessageFormat
+				.format(COREFLEXConstants.FAILED_TO_VERIFY_APPROVE_THIS_POLICY_DIALOG, CoreConstants.FAIL));
 		coreFlexCustomBundlesPage.clickElementOfPage(COREFLEXConstants.ASSOCIATE_THIS_POLICY);
 		Reporter.addStepLog(
 				MessageFormat.format(COREFLEXConstants.SUCCESSFULLY_CLICKED_ON_BUTTON_ON_APPROVE_THIS_POLICY_DIALOG,
@@ -602,14 +601,14 @@ public class CoreFlex_SharedSteps {
 		testContext.getIrisPageManager().irisAssignmentTransfereeAndFamilyPage
 				.verifyTransfereeAndFamilyTab(IRISConstants.TRANSFEREE_AND_FAMILY);
 		testContext.getIrisPageManager().irisAssignmentTransfereeAndFamilyPage
-				.addNewTransfereeDetails(assignmentTransfereeData);		
+				.addNewTransfereeDetails(assignmentTransfereeData);
 		Assert.assertTrue(
 				testContext.getIrisPageManager().irisAssignmentTransfereeAndFamilyPage
 						.saveTransferee(IRISConstants.NEW_TRANSFEREE_CREATED_SUCCESS_MSG),
 				IRISConstants.NEW_TRANSFEREE_CREATED_SUCCESS_MSG + " Message " + IRISConstants.IS_NOT_DISPLAYED);
 		testContext.getIrisPageManager().irisAssignmentTransfereeAndFamilyPage.addTransfereeIdentityDetails();
 		testContext.getIrisPageManager().irisAssignmentTransfereeAndFamilyPage
-		.addNewFamilyDetails(assignmentTransfereeData);
+				.addNewFamilyDetails(assignmentTransfereeData);
 		testContext.getIrisPageManager().irisAssignmentOverviewPage.switchTab(IRISConstants.ACTIVITY_FINANCE_TAB);
 		testContext.getIrisPageManager().irisActivityAndFinancePage = new IRIS_ActivityAndFinancePage();
 		Assert.assertTrue(testContext.getIrisPageManager().irisActivityAndFinancePage.verifyActivityAndFinanceTab(),
@@ -752,6 +751,15 @@ public class CoreFlex_SharedSteps {
 		mxTransfereeMyBenefitsBundlePage.clickReviewAndSubmit();
 		CoreConstants.TIME_BEFORE_ACTION = new Date().getTime();
 	}
+	
+	@Given("^he has clicked on \"([^\"]*)\" button after validating all the 'Aires Managed' benefit details listed under 'Selected Benefits' section on \"([^\"]*)\" page$")
+	public void he_has_clicked_on_button_after_validating_all_the_Aires_Managed_benefit_details_listed_under_Selected_Benefits_section_on_page(
+			String reviewAndSubmitButton, String pageName) throws Throwable {
+		Assert.assertTrue(mxTransfereeMyBenefitsBundlePage.verifySelectedAiresManagedBenefitDetails(), MessageFormat
+				.format(MobilityXConstants.FAILED_TO_VERIFY_SELECTED_AIRES_MANAGED_BENEFITS_ON_MY_BUNDLE_PAGE, CoreConstants.FAIL));
+		mxTransfereeMyBenefitsBundlePage.clickReviewAndSubmit();
+		CoreConstants.TIME_BEFORE_ACTION = new Date().getTime();
+	}
 
 	@Given("^he has clicked on \"([^\"]*)\" button after entering Transferee name on \"([^\"]*)\" dialog$")
 	public void he_has_clicked_on_button_after_entering_Transferee_name_on_dialog(String buttonName,
@@ -763,6 +771,27 @@ public class CoreFlex_SharedSteps {
 				+ CoreFunctions.calculatePageLoadTime(CoreConstants.TIME_BEFORE_ACTION, CoreConstants.TIME_AFTER_ACTION)
 				+ " Seconds </b>");
 		Assert.assertTrue(mxTransfereeMyBenefitsBundlePage.verifyBenefitsDetailsOnSubmissionDialog(),
+				MessageFormat.format(MobilityXConstants.POINTS_AND_BENEFIT_DETAILS_NOT_MATCHED_ON_SUBMIT_BUNDLE_POPUP,
+						CoreConstants.FAIL));
+		mxTransfereeMyBenefitsBundlePage.reviewAndConfirmBenefitSubmission(
+				MobilityXConstants.SUBMIT_BENEFITS_OPTIONAL_NOTES,
+				CoreFunctions.getPropertyFromConfig("Transferee_firstName") + " "
+						+ CoreFunctions.getPropertyFromConfig("Transferee_lastName"),
+				buttonName);
+		CoreConstants.TIME_BEFORE_ACTION = new Date().getTime();
+
+	}
+	
+	@Given("^he has clicked on \"([^\"]*)\" button after entering Transferee name on \"([^\"]*)\" dialog and validating 'Aires Managed' benefit details$")
+	public void he_has_clicked_on_button_after_entering_Transferee_name_on_dialog_and_validating_Aires_Managed_benefit_details(String buttonName,
+			String submissionDialog) throws Throwable {
+		Assert.assertTrue(mxTransfereeMyBenefitsBundlePage.isSubmitBundlePopupDisplayed(),
+				MessageFormat.format(MobilityXConstants.SUBMIT_BUNDLE_POPUP_NOT_DISPLAYED, CoreConstants.FAIL));
+		CoreConstants.TIME_AFTER_ACTION = new Date().getTime();
+		Reporter.addStepLog("<b>Total time taken to navigateTo/display <i>Submit Benefit Bundle</i> dialog is :"
+				+ CoreFunctions.calculatePageLoadTime(CoreConstants.TIME_BEFORE_ACTION, CoreConstants.TIME_AFTER_ACTION)
+				+ " Seconds </b>");
+		Assert.assertTrue(mxTransfereeMyBenefitsBundlePage.verifyAiresManagedBenefitDetailsOnSubmissionDialog(),
 				MessageFormat.format(MobilityXConstants.POINTS_AND_BENEFIT_DETAILS_NOT_MATCHED_ON_SUBMIT_BUNDLE_POPUP,
 						CoreConstants.FAIL));
 		mxTransfereeMyBenefitsBundlePage.reviewAndConfirmBenefitSubmission(
@@ -1249,12 +1278,18 @@ public class CoreFlex_SharedSteps {
 		CoreFunctions.writeToPropertiesFile("CF_Transferee_BenefitSubmitted", "false");
 		CoreFunctions.writeToPropertiesFile("CF_Transferee_CashoutCurrencySign", "");
 		CoreFunctions.writeToPropertiesFile("CF_Transferee_CashoutCurrencyCode", "");
-		CoreFunctions.writeToPropertiesFile("CF_Transferee_CashoutCurrencyText","");
-		CoreFunctions.writeToPropertiesFile("Policy_TracingSet","Assignment");
+		CoreFunctions.writeToPropertiesFile("CF_Transferee_CashoutCurrencyText", "");
+		CoreFunctions.writeToPropertiesFile("Policy_TracingSet", "Assignment");
+		CoreFunctions.writeToPropertiesFile("ClonePolicy_Reference_PolicyName", "");
+		CoreFunctions.writeToPropertiesFile("ClonePolicy_Reference_PolicyVersion", "");
+		CoreFunctions.writeToPropertiesFile("ClonePolicy_Reference_PolicyStatus", "");
+		CoreFunctions.writeToPropertiesFile("ClonePolicy_Reference_Client", "");
+
 	}
-	
+
 	@Given("^he has clicked on 'Next' floating button after verifying Benefits_Points details Submitted by Client on 'Flex Planning Tool' page$")
-	public void he_has_clicked_on_Next_floating_button_after_verifying_Benefits_Points_details_Submitted_by_Client_on_Flex_Planning_Tool_page() throws Throwable {
+	public void he_has_clicked_on_Next_floating_button_after_verifying_Benefits_Points_details_Submitted_by_Client_on_Flex_Planning_Tool_page()
+			throws Throwable {
 		Assert.assertTrue(
 				mxTransfereeFlexPlanningToolPage.verifyElementPresentOnPage(MobilityXConstants.EDIT_SUBMITTED_BENEFITS),
 				MessageFormat.format(MobilityXConstants.FAILED_TO_VERIFY_ELEMENT_PRESENT_ON_FLEX_PLANNING_TOOL_PAGE,
@@ -1274,9 +1309,10 @@ public class CoreFlex_SharedSteps {
 				MessageFormat.format(MobilityXConstants.SUBMITTED_POINTS_DETAILS_NOT_MATCHED_ON_FLEX_PLANNING_TOOL_PAGE,
 						CoreConstants.FAIL));
 	}
-	
+
 	@Given("^he has verified Benefits Submitted by Client details under 'Submitted Benefits' section of 'My Benefits Bundle' page$")
-	public void he_has_verified_Benefits_Submitted_by_Client_details_under_Submitted_Benefits_section_of_My_Benefits_Bundle_page() throws Throwable {
+	public void he_has_verified_Benefits_Submitted_by_Client_details_under_Submitted_Benefits_section_of_My_Benefits_Bundle_page()
+			throws Throwable {
 		CoreConstants.TIME_BEFORE_ACTION = new Date().getTime();
 		Assert.assertTrue(mxTransfereeMyBenefitsBundlePage.isMyBundlePageDisplayed(),
 				MessageFormat.format(MobilityXConstants.FAILED_TO_DISPLAY_MY_BENEFIT_BUNDLE_PAGE, CoreConstants.FAIL));

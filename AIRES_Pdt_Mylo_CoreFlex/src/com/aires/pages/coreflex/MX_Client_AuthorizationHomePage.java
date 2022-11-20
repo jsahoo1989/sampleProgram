@@ -282,7 +282,7 @@ public class MX_Client_AuthorizationHomePage extends Base {
 	@FindBy(how = How.XPATH, using = "//a[contains(@id,'inactiveWorkflowTab')]//span[contains(text(),'Collaboration')]")
 	private WebElement _linkCollaboration;
 
-	@FindBy(how = How.XPATH, using = "//span[contains(@class,'RXAuthFormAutoSaveText')][contains(text(),'Saved')] | //span[contains(@class,'TextMessageHandler')][contains(text(),'All changes saved')]")
+	@FindBy(how = How.XPATH, using = "//div[contains(@id,'floatingMenu')]//span[contains(@class,'RXAuthFormAutoSaveText')][contains(text(),'Saved')]")
 	private WebElement _txtAuthFormSaved;
 
 	@FindBy(how = How.XPATH, using = "//span[contains(@class,'TextMessageHandler')][contains(text(),'Not yet saved')]")
@@ -760,9 +760,7 @@ public class MX_Client_AuthorizationHomePage extends Base {
 		switch (linkName) {
 		case MobilityXConstants.SUBMIT_TO_AIRES:
 			CoreFunctions.waitHandler(3);
-			CoreFunctions.explicitWaitTillElementBecomesClickable(driver, _buttonSubmitToAires,
-					_buttonSubmitToAires.getText());
-			CoreFunctions.click(driver, _buttonSubmitToAires, MobilityXConstants.SUBMIT_TO_AIRES);
+			CoreFunctions.clickElement(driver, _buttonSubmitToAires);
 			CoreFunctions.waitUntilBrowserReady(driver);
 			break;
 		case MobilityXConstants.RESUBMIT_TO_AIRES:
@@ -894,6 +892,7 @@ public class MX_Client_AuthorizationHomePage extends Base {
 	private void fillAuthorizationEmployeeInfoForBSCDomesticForm(BscEmployeeInfo bscEmployeeInfo) {
 		BusinessFunctions.selectValueFromDropdown(driver, _relocationPolicy,
 				CoreFunctions.getPropertyFromConfig("Assignment_Policy"));
+		CoreFunctions.waitHandler(4);
 		CoreFunctions.clearAndSetText(driver, _txt_EmployeeID, bscEmployeeInfo.employeeID);
 		BusinessFunctions.selectRadioAsPerLabelText(driver, _homeStatusRadio, bscEmployeeInfo.homeStatus);
 		CoreFunctions.clearAndSetText(driver, _txt_OriginHomeAddress, bscEmployeeInfo.originHomeAddress);
@@ -907,6 +906,8 @@ public class MX_Client_AuthorizationHomePage extends Base {
 		CoreFunctions.waitHandler(3);
 		CoreFunctions.clearAndSetText(driver, _txt_mobileTelephone, bscEmployeeInfo.mobilePhone);
 		CoreFunctions.clearAndSetText(driver, _txt_employeeEmail, bscEmployeeInfo.emailOne);
+		BusinessFunctions.selectValueFromDropdown(driver, _relocationPolicy,
+				CoreFunctions.getPropertyFromConfig("Assignment_Policy"));
 	}
 
 	private void fillAuthorizationTypeInfoForBSCDomesticForm(AuthTypeInfo authTypeInfo) {

@@ -64,8 +64,9 @@
 			"benefitAmount": "Normal and customary home purchase closing costs assistance",
 			"benefitDesc": "The reimbursement or direct payment of normal and customary home purchase closing costs.",
 			"subBenefits": "Home Purchase Closing Costs;Home Purchase Points;Home Purchase Inspections",
-			"airesManagedService": "Yes",
-			"policyCreationGroup": "All Benefits"
+			"airesManagedService": "No",
+			"noOfMilestones": 3,
+			"policyCreationGroup": "All Benefits,Aires Managed Benefits Cards"
 		},
 		{
 			"benefitType": "Final Move",
@@ -104,6 +105,7 @@
 			"benefitDesc": "The pickup from the airport to new location accommodations.",
 			"subBenefits": "Airport Pickup",
 			"airesManagedService": "Yes",
+			"noOfMilestones": 2,
 			"policyCreationGroup": "All Benefits,Aires Managed Benefits Cards"
 		},
 		{
@@ -142,7 +144,8 @@
 			"benefitAmount": "Search for school(s) in new location",
 			"benefitDesc": "A tour of new country schools per a service provider.",
 			"subBenefits": "Education Assistance/School Search",
-			"airesManagedService": "Yes",
+			"airesManagedService": "No",
+			"noOfMilestones": 2,
 			"policyCreationGroup": "All Benefits"
 		},
 		{
@@ -161,7 +164,7 @@
 			"benefitAmount": "Transportation of goods by air to new location",
 			"benefitDesc": "The professional packing, air shipping, delivery, uncrating, unpacking, in-transit storage, if necessary, applicable moving insurance and import duties for the shipment of personal effects and furniture to new location.",
 			"subBenefits": "Air Shipment",
-			"airesManagedService": "Yes",
+			"airesManagedService": "No",
 			"noOfMilestones": 5,
 			"policyCreationGroup": "All Benefits"
 		},
@@ -171,7 +174,7 @@
 			"benefitAmount": "Shipment of automobile to new location",
 			"benefitDesc": "The transportation of personal automobile (car, truck, or SUV) from home location to new location.",
 			"subBenefits": "Auto Shipment",
-			"airesManagedService": "Yes",
+			"airesManagedService": "No",
 			"noOfMilestones": 5,
 			"policyCreationGroup": "All Benefits"
 		},
@@ -181,7 +184,7 @@
 			"benefitAmount": "Transportation of goods by sea to new location",
 			"benefitDesc": "TThe professional packing, sea shipping, delivery, uncrating, unpacking, in-transit storage, if necessary, applicable moving insurance and import duties for the shipment of personal effects and furniture to new location.",
 			"subBenefits": "Sea/Surface Shipment",
-			"airesManagedService": "Yes",
+			"airesManagedService": "No",
 			"noOfMilestones": 5,
 			"policyCreationGroup": "All Benefits"
 		},
@@ -191,7 +194,7 @@
 			"benefitAmount": "Shipment of households goods across land from home to host country.",
 			"benefitDesc": "Shipment of households goods across land from home to host country.",
 			"subBenefits": "Inland Shipment",
-			"airesManagedService": "Yes",
+			"airesManagedService": "No",
 			"noOfMilestones": 5,
 			"policyCreationGroup": "All Benefits"
 		},
@@ -201,7 +204,7 @@
 			"benefitAmount": "Shipment of pet to new location",
 			"benefitDesc": "The transportation of an employee's pet from the home location to the new location. Services are typically coordinated through a pet transportation company or the employee may be required to coordinate the transport themselves and receive reimbursement or an allowance intended to be applied towards the cost.",
 			"subBenefits": "Pet Shipment",
-			"airesManagedService": "Yes",
+			"airesManagedService": "No",
 			"noOfMilestones": 5,
 			"policyCreationGroup": "All Benefits"
 		},
@@ -211,7 +214,7 @@
 			"benefitAmount": "Placement of household goods in long-term storage facilities",
 			"benefitDesc": "The long term storage of employee¿s personal goods while on assignment if they had disposed of their home country housing, their home property is being leased or they have personal items which they are eligible to store.",
 			"subBenefits": "Permanent Storage",
-			"airesManagedService": "Yes",
+			"airesManagedService": "No",
 			"noOfMilestones": 50,
 			"policyCreationGroup": "NA"
 		},
@@ -231,7 +234,7 @@
 			"benefitAmount": "Core type - Up to $250 USD reimbursement",
 			"benefitDesc": "Core type - Reimbursement of child care services",
 			"subBenefits": "Child Care Services Reimbursement",
-			"airesManagedService": "Yes",
+			"airesManagedService": "No",
 			"noOfMilestones": 50,
 			"policyCreationGroup": "All Benefits,Cloning,Client"
 		},
@@ -332,7 +335,7 @@
 					"benefitDesc": "The reimbursement or direct payment of normal and customary home purchase closing costs.",
 					"points": "5",
 					"subBenefits": "Home Purchase Closing Costs;Home Purchase Points;Home Purchase Inspections",
-					"airesManagedService": "Yes",
+					"airesManagedService": "No",
 					"multipleBenefitSelection": "Yes",
 					"numberOfBenefitSelected": 3,
 					"selectBenefitOnFPTPage": true,
@@ -348,7 +351,7 @@
 					"subServiceFunction": "Third Party Agent",
 					"compID": "49211",
 					"company": "AIRES-CIS-DEMO&'TEST(CLIENT)",
-					"initialTracingPrompt": "EE submits offer to purchase new home",
+					"initialTracingPrompt": "Coordinate home purchase house hunting trip with transferee and partner",
 					"postInitialTracingCardStatus": "Begin property search",
 					"endTracingPrompt": "Closing Date",
 					"postEndTracingCardStatus": "Closing",
@@ -356,7 +359,8 @@
 					"policyCreationGroup": "All Benefits",
 					"selectBenefitOnPBCPage": false,
 					"deselectBenefitOnPBCPage": false,
-					"noOfMilestones": 0
+					"noOfMilestones": 3,
+					"allMilestones": "Review offer contract,Closing Date"
 				},
 				{
 					"benefitType": "House Hunting Trip",
@@ -403,7 +407,7 @@
 					"benefitDesc": "A trip to the new location taken after the employee has accepted the new position to identify housing and tour the area.",
 					"points": "5",
 					"subBenefits": "House Hunting Trip Transportation;House Hunting Trip Lodging;House Hunting Trip Rental Car;House Hunting Trip Meals",
-					"airesManagedService": "Yes",
+					"airesManagedService": "No",
 					"noOfMilestones": 50,
 					"multipleBenefitSelection": "Yes",
 					"numberOfBenefitSelected": 2,
@@ -602,7 +606,7 @@
 					"benefitDesc": "The professional packing, air shipping, delivery, uncrating, unpacking, in-transit storage, if necessary, applicable moving insurance and import duties for the shipment of personal effects and furniture to new location.",
 					"points": "15",
 					"subBenefits": "Air Shipment",
-					"airesManagedService": "Yes",
+					"airesManagedService": "No",
 					"noOfMilestones": 5,
 					"multipleBenefitSelection": "Yes",
 					"numberOfBenefitSelected": 2,
@@ -661,7 +665,7 @@
 					"benefitDesc": "Flex - The transportation of personal automobile (car, truck, or SUV) from home location to new location.",
 					"points": "15",
 					"subBenefits": "Auto Shipment",
-					"airesManagedService": "Yes",
+					"airesManagedService": "No",
 					"noOfMilestones": 5,
 					"multipleBenefitSelection": "Yes",
 					"numberOfBenefitSelected": 1,
@@ -715,7 +719,7 @@
 					"benefitDesc": "Flex - The professional packing, sea shipping, delivery, uncrating, unpacking, in-transit storage, if necessary, applicable moving insurance and import duties for the shipment of personal effects and furniture to new location.",
 					"points": "15",
 					"subBenefits": "Sea/Surface Shipment",
-					"airesManagedService": "Yes",
+					"airesManagedService": "No",
 					"noOfMilestones": 5,
 					"multipleBenefitSelection": "Yes",
 					"numberOfBenefitSelected": 1,
@@ -774,7 +778,7 @@
 					"benefitDesc": "Flex - Shipment of households goods across land from home to host country.",
 					"points": "15",
 					"subBenefits": "Inland Shipment",
-					"airesManagedService": "Yes",
+					"airesManagedService": "No",
 					"noOfMilestones": 5,
 					"multipleBenefitSelection": "Yes",
 					"numberOfBenefitSelected": 1,
@@ -833,7 +837,7 @@
 					"benefitDesc": "Flex - The transportation of an employee¿s pet from the home location to the new location. Services are typically coordinated through a pet transportation company or the employee may be required to coordinate the transport themselves and receive reimbursement or an allowance intended to be applied towards the cost.",
 					"points": "15",
 					"subBenefits": "Pet Shipment",
-					"airesManagedService": "Yes",
+					"airesManagedService": "No",
 					"noOfMilestones": 5,
 					"multipleBenefitSelection": "Yes",
 					"numberOfBenefitSelected": 1,
@@ -887,7 +891,7 @@
 					"benefitDesc": "Flex - The long term storage of employee¿s personal goods while on assignment if they had disposed of their home country housing, their home property is being leased or they have personal items which they are eligible to store. ",
 					"points": "15",
 					"subBenefits": "Permanent Storage",
-					"airesManagedService": "Yes",
+					"airesManagedService": "No",
 					"noOfMilestones": 50,
 					"multipleBenefitSelection": "Yes",
 					"numberOfBenefitSelected": 1,
@@ -1167,7 +1171,7 @@
 					"benefitDesc": "A tour of new country schools per a service provider.",
 					"points": "5",
 					"subBenefits": "Education Assistance/School Search",
-					"airesManagedService": "Yes",
+					"airesManagedService": "No",
 					"multipleBenefitSelection": "Yes",
 					"numberOfBenefitSelected": 2,
 					"selectBenefitOnFPTPage": true,

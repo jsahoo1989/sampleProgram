@@ -1429,9 +1429,9 @@ public class MX_Transferee_MyBenefitsBundlePage extends Base {
 		boolean isAiresManagedBenefitDetailsVerified = false;
 		boolean flag = false;
 		try {
-			for (FlexBenefit benefitList : flexBenefits) {
-				for (Benefit benefit : benefitList.getBenefits()) {
-					if (benefit.getSelectBenefitOnFPTPage()) {
+			for (Benefit benefit : getBenefits(CoreFunctions.getPropertyFromConfig("CoreFlex_Policy_BenefitType"),
+					CoreFunctions.getPropertyFromConfig("CoreFlex_Policy_RequiredFor"))) {
+					if (benefit.getSelectBenefitOnFPTPage() && (benefit.getAiresManagedService().equals("Yes"))) {
 						int indexBenefit = BusinessFunctions.returnindexItemFromListUsingText(driver,
 								_textAddedBenefitNameList, benefit.getBenefitDisplayName());
 						isAiresManagedBenefitDetailsVerified = verifySelectedBenefitDetailsOnConfirmationDialog(
@@ -1444,7 +1444,7 @@ public class MX_Transferee_MyBenefitsBundlePage extends Base {
 					} else {
 						isAiresManagedBenefitDetailsVerified = true;
 					}
-				}
+				
 			}
 		} catch (Exception e) {
 			Reporter.addStepLog(MessageFormat.format(
@@ -2088,4 +2088,59 @@ public class MX_Transferee_MyBenefitsBundlePage extends Base {
 		}
 		return false;
 	}
+
+	public boolean verifySelectedAiresManagedBenefitDetails() {
+		boolean isBenefitsAndPointsMatached = false;
+		try {
+			isBenefitsAndPointsMatached = verifyFlexAiresManagedBenefitsDetailsOnMBBPage()
+					&& (Double.parseDouble(CoreFunctions.getElementText(driver, _selectedPoints)) == (Double
+							.parseDouble(CoreFunctions.getPropertyFromConfig("CF_Transferee_TotalSelectedPoints"))))
+					&& ((CoreFunctions.getElementText(driver, _totalPoints))
+							.equals(CoreFunctions.getPropertyFromConfig("CF_Transferee_TotalAvailablePoints")));
+		} catch (Exception e) {
+			Reporter.addStepLog(MessageFormat.format(
+					MobilityXConstants.EXCEPTION_OCCURED_WHILE_REVIEWING_SELECTED_BENEFITS_ON_MY_BUNDLE_PAGE,
+					CoreConstants.FAIL, e.getMessage()));
+		}
+		if (isBenefitsAndPointsMatached)
+			Reporter.addStepLog(MessageFormat.format(
+					MobilityXConstants.SUCCESSFULLY_REVIEWED_SELECTED_BENEFITS_ON_MY_BUNDLE_PAGE, CoreConstants.PASS));
+		return isBenefitsAndPointsMatached;
+	}
+
+	public boolean verifyFlexAiresManagedBenefitsDetailsOnMBBPage() {
+		boolean isFlexBenefitDetailsOnMMBVerified = false;
+		boolean flag = false;
+		try {
+			for (Benefit benefit : getBenefits(CoreFunctions.getPropertyFromConfig("CoreFlex_Policy_BenefitType"),
+					CoreFunctions.getPropertyFromConfig("CoreFlex_Policy_RequiredFor"))) {
+				if (benefit.getSelectBenefitOnFPTPage() && (benefit.getAiresManagedService().equals("Yes"))) {
+					int indexBenefit = BusinessFunctions.returnindexItemFromListUsingText(driver,
+							_textAddedBenefitNameList, benefit.getBenefitDisplayName());
+					isFlexBenefitDetailsOnMMBVerified = verifyMyBenefitBundlesBenefitDetails(indexBenefit, benefit);
+					if (!isFlexBenefitDetailsOnMMBVerified) {
+						return false;
+					} else {
+						flag = true;
+					}
+				} else {
+					isFlexBenefitDetailsOnMMBVerified = true;
+				}
+
+			}
+		} catch (Exception e) {
+			Reporter.addStepLog(MessageFormat.format(
+					COREFLEXConstants.EXCEPTION_OCCURED_WHILE_VALIDATING_SELECTED_FLEX_BENEFIT_DETAILS_ON_MY_BENEFITS_PAGE,
+					CoreConstants.FAIL, e.getMessage()));
+		}
+		if (isFlexBenefitDetailsOnMMBVerified & flag) {
+			Reporter.addStepLog(MessageFormat.format(
+					COREFLEXConstants.SUCCESSFULLY_VERIFIED_SELECTED_FLEX_BENEFIT_DETAILS_ON_MY_BENEFITS_PAGE,
+					CoreConstants.PASS));
+		}
+		return isFlexBenefitDetailsOnMMBVerified;
+	}
+	
+	
+
 }

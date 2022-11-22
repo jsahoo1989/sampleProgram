@@ -1092,8 +1092,7 @@ public class BusinessFunctions {
 				expectedCashoutDescription = CoreFunctions.getPropertyFromConfig("CF_Transferee_CashoutCurrencySign")
 						+ " "
 						+ format.format(Double
-								.parseDouble(CoreFunctions.getPropertyFromConfig("CF_Client_SelectedCashOutPoints")))
-						+ " " + CoreFunctions.getPropertyFromConfig("CF_Transferee_CashoutCurrencyCode");
+								.parseDouble(CoreFunctions.getPropertyFromConfig("CF_Client_SelectedCashOutPoints")));
 			}
 		} catch (Exception e) {
 			Assert.fail(CoreConstants.ERROR + e.getMessage());
@@ -1105,8 +1104,15 @@ public class BusinessFunctions {
 		String expectedCashoutDescription = null;
 		DecimalFormat format = new DecimalFormat();
 		format.setDecimalSeparatorAlwaysShown(false);
+		DecimalFormat precesionFormat = new DecimalFormat("#.00");
 		try {
-			if (CoreFunctions.getPropertyFromConfig("CF_Transferee_CashoutCurrencySign").length() == 1) {
+			if (CoreFunctions.getPropertyFromConfig("CF_Transferee_CashoutCurrencyCode").equals("USD")) {
+				expectedCashoutDescription = MobilityXConstants.CLIENT_SUBMISSIONS_CASHOUT_DESCRIPTION + " "
+						+ CoreFunctions.getPropertyFromConfig("CF_Transferee_CashoutCurrencySign")
+						+ precesionFormat.format(Double
+								.parseDouble(CoreFunctions.getPropertyFromConfig("CF_Client_SelectedCashOutPoints")))
+						+ " " + CoreFunctions.getPropertyFromConfig("CF_Transferee_CashoutCurrencyCode");
+			} else if (CoreFunctions.getPropertyFromConfig("CF_Transferee_CashoutCurrencySign").length() == 1) {
 				expectedCashoutDescription = MobilityXConstants.CLIENT_SUBMISSIONS_CASHOUT_DESCRIPTION + " "
 						+ CoreFunctions.getPropertyFromConfig("CF_Transferee_CashoutCurrencySign")
 						+ format.format(Double
@@ -1114,8 +1120,8 @@ public class BusinessFunctions {
 						+ " " + CoreFunctions.getPropertyFromConfig("CF_Transferee_CashoutCurrencyCode");
 			} else {
 				expectedCashoutDescription = MobilityXConstants.CLIENT_SUBMISSIONS_CASHOUT_DESCRIPTION + " "
-						+ CoreFunctions.getPropertyFromConfig("CF_Transferee_CashoutCurrencySign") + " "
-						+ format.format(Double
+						+ CoreFunctions.getPropertyFromConfig("CF_Transferee_CashoutCurrencySign") 
+						+ precesionFormat.format(Double
 								.parseDouble(CoreFunctions.getPropertyFromConfig("CF_Client_SelectedCashOutPoints")))
 						+ " " + CoreFunctions.getPropertyFromConfig("CF_Transferee_CashoutCurrencyCode");
 			}

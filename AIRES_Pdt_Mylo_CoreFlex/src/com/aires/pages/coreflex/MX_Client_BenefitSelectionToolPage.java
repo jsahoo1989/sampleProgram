@@ -1086,6 +1086,9 @@ public class MX_Client_BenefitSelectionToolPage extends Base {
 
 	public boolean verifyInitialCashOutContentPostDeleteRequestOperation(String actionPerformed) {
 		try {
+			String expectedCashoutValue = null;
+			DecimalFormat format = new DecimalFormat();
+			format.setDecimalSeparatorAlwaysShown(false);
 			getAvailableCashoutPointsPostDeleteRequestOperation(actionPerformed);
 			CoreFunctions.explicitWaitTillElementVisibility(driver, _text_cashOutName,
 					MobilityXConstants.CUSTOM_CASHOUT_NAME);
@@ -1097,17 +1100,27 @@ public class MX_Client_BenefitSelectionToolPage extends Base {
 					MobilityXConstants.CASHOUT_SUGGESTION);
 			CoreFunctions.verifyText(CoreFunctions.getElementText(driver, _text_howManyPoints),
 					MobilityXConstants.HOW_MANY_POINTS_WOULD_YOU_LIKE_TO_CASH_OUT,
-					MobilityXConstants.HOW_MANY_POINTS_TEXT);
+					MobilityXConstants.HOW_MANY_POINTS_TEXT);			
 			CoreFunctions.verifyValue(
 					Double.parseDouble(CoreFunctions.getElementText(driver, _text_pointsAvailableForCashOut)),
 					cashoutPoints, MobilityXConstants.POINTS_AVAILABLE_FOR_CASHOUT);
-			String[] cashOutValue = CoreFunctions.getElementText(driver, _text_cashOutValue).split("\\(");
-			CoreFunctions.verifyValue(Double.parseDouble(cashOutValue[0].trim()), cashoutPoints,
-					MobilityXConstants.CASHOUT_VALUE);
+
+			String actualCashoutValue = CoreFunctions.getElementText(driver, _text_cashOutValue);
+
+			if (CoreFunctions.getPropertyFromConfig("CF_Transferee_CashoutCurrencySign").length() == 1) {
+				expectedCashoutValue = CoreFunctions.getPropertyFromConfig("CF_Transferee_CashoutCurrencySign")
+						+ format.format(cashoutPoints) + " ("
+						+ CoreFunctions.getPropertyFromConfig("CF_Transferee_CashoutCurrencyCode") + ")";
+			} else {
+				expectedCashoutValue = CoreFunctions.getPropertyFromConfig("CF_Transferee_CashoutCurrencySign") + " "
+						+ format.format(cashoutPoints) + " ("
+						+ CoreFunctions.getPropertyFromConfig("CF_Transferee_CashoutCurrencyCode") + ")";
+			}
+			CoreFunctions.verifyText(actualCashoutValue, expectedCashoutValue, MobilityXConstants.CASHOUT_VALUE);
 			CoreFunctions.verifyValue(Double.parseDouble(CoreFunctions.getAttributeText(_inputCashoutPoints, "value")),
-					cashoutPoints, MobilityXConstants.CASHOUT_INPUT_FIELD);
-			String[] cashOutInputText = CoreFunctions.getElementText(driver, _textInputCashoutPoints).split("\\(");
-			CoreFunctions.verifyValue(Double.parseDouble(cashOutInputText[0].trim()), cashoutPoints,
+					cashoutPoints, MobilityXConstants.CASHOUT_INPUT_FIELD);			
+			String actualCashOutInputText = CoreFunctions.getElementText(driver, _textInputCashoutPoints);
+			CoreFunctions.verifyText(actualCashOutInputText, expectedCashoutValue,
 					MobilityXConstants.CASHOUT_INPUT_FIELD_LABEL_VALUE);
 			if (cashoutPoints == 0.0 && actionPerformed.equals(MobilityXConstants.DENIED)
 					&& CoreFunctions.isElementExist(driver, _disabledSubmittedCashoutPointsButton, 2)) {

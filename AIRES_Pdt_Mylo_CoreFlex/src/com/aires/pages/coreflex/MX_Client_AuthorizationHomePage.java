@@ -892,7 +892,7 @@ public class MX_Client_AuthorizationHomePage extends Base {
 	private void fillAuthorizationEmployeeInfoForBSCDomesticForm(BscEmployeeInfo bscEmployeeInfo) {
 		BusinessFunctions.selectValueFromDropdown(driver, _relocationPolicy,
 				CoreFunctions.getPropertyFromConfig("Assignment_Policy"));
-		CoreFunctions.waitHandler(4);
+		CoreFunctions.waitHandler(3);
 		CoreFunctions.clearAndSetText(driver, _txt_EmployeeID, bscEmployeeInfo.employeeID);
 		BusinessFunctions.selectRadioAsPerLabelText(driver, _homeStatusRadio, bscEmployeeInfo.homeStatus);
 		CoreFunctions.clearAndSetText(driver, _txt_OriginHomeAddress, bscEmployeeInfo.originHomeAddress);
@@ -906,8 +906,8 @@ public class MX_Client_AuthorizationHomePage extends Base {
 		CoreFunctions.waitHandler(3);
 		CoreFunctions.clearAndSetText(driver, _txt_mobileTelephone, bscEmployeeInfo.mobilePhone);
 		CoreFunctions.clearAndSetText(driver, _txt_employeeEmail, bscEmployeeInfo.emailOne);
-		BusinessFunctions.selectValueFromDropdown(driver, _relocationPolicy,
-				CoreFunctions.getPropertyFromConfig("Assignment_Policy"));
+//		BusinessFunctions.selectValueFromDropdown(driver, _relocationPolicy,
+//				CoreFunctions.getPropertyFromConfig("Assignment_Policy"));
 	}
 
 	private void fillAuthorizationTypeInfoForBSCDomesticForm(AuthTypeInfo authTypeInfo) {
@@ -1456,12 +1456,10 @@ public class MX_Client_AuthorizationHomePage extends Base {
 
 	public boolean verifyInitiationBenefitsSubmissionEmail() {
 		try {
-//			String expEmailSubject = "New relocation authorization from "
-//					+ CoreFunctions.getPropertyFromConfig("Policy_ClientName") + " for "
-//					+ CoreFunctions.getPropertyFromConfig(MobilityXConstants.LAST_NAME_TEXT) + ", "
-//					+ CoreFunctions.getPropertyFromConfig(MobilityXConstants.FIRST_NAME_TEXT);
-			String expEmailSubject = "New Authorization from "
-					+ CoreFunctions.getPropertyFromConfig("Policy_ClientName");
+			String expEmailSubject = "New relocation authorization from "
+					+ CoreFunctions.getPropertyFromConfig("Policy_ClientName") + " for "
+					+ CoreFunctions.getPropertyFromConfig(MobilityXConstants.LAST_NAME_TEXT) + ", "
+					+ CoreFunctions.getPropertyFromConfig(MobilityXConstants.FIRST_NAME_TEXT);
 			return verifyFileIDPresent(expEmailSubject)
 					&& verifyBenefitPointsInInitiationSubmittedEmail(expEmailSubject)
 					&& verifyAuthFormSubmissionStatus(expEmailSubject);

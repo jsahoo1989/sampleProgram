@@ -57,6 +57,7 @@ public class CF_MX_Client_Steps {
 	private TransfereeSubmissions_DetailsPage transfereeSubmissionsDetailsPage;
 	private MX_Client_AuthorizationHome_CollaborationPage mxClientAuthCollaborationPage;
 	private MX_Client_AuthWorkflow_ApprovalActionPage mxClientAuthWFApprovalActionPage;
+	private CoreFlex_LoginInfo _coreFlexLoginInfo;
 
 	public CF_MX_Client_Steps(TestContext context) {
 		testContext = context;
@@ -76,6 +77,9 @@ public class CF_MX_Client_Steps {
 		mxClientAuthCollaborationPage = testContext.getCoreFlexPageObjectManager().getMXClientAuthCollaborationPage();
 		mxClientAuthWFApprovalActionPage = testContext.getCoreFlexPageObjectManager()
 				.getMXClientAuthWFApprovalActionPage();
+		_coreFlexLoginInfo = FileReaderManager.getInstance().getCoreFlexJsonReader()
+				.getLoginByEnvt(CoreFunctions.getPropertyFromConfig("envt").toLowerCase());
+//		_coreFlexLoginInfo = FileReaderManager.getInstance().getCoreFlexJsonReader().getLoginByEnvt(System.getProperty("envt").toLowerCase());
 	}
 
 	private TransfereeSubmissions_LoginData _transfereeSubmissionLoginData = FileReaderManager.getInstance()
@@ -1215,8 +1219,7 @@ public class CF_MX_Client_Steps {
 	@Then("^benefit details should be updated in 'MXClient' application based on \"([^\"]*)\" 'Delete Request' on Transferee Submission$")
 	public void benefit_details_should_be_updated_in_MXTransferee_application_based_on_Delete_Request_on_Transferee_Submission(
 			String actionPerformed) throws Throwable {
-		testContext.getWebDriverManager().getDriver().navigate()
-				.to(FileReaderManager.getInstance().getConfigReader().getMobilityXUrl());
+		testContext.getWebDriverManager().getDriver().navigate().to(_coreFlexLoginInfo.details.mobilityXURL);
 		Assert.assertTrue(mobilityXLoginPage.verifyPageNavigation(),
 				MessageFormat.format(COREFLEXConstants.FAILED_TO_NAVIGATE_TO_MOBILITYX_LOGIN_PAGE, CoreConstants.FAIL));
 		CoreConstants.TIME_AFTER_ACTION = new Date().getTime();

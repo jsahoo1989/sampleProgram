@@ -1096,7 +1096,7 @@ public class MX_Client_BenefitsBundlePage extends Base {
 					policySetupPageData.flexPolicySetupPage.customCashoutBenefitName, MobilityXConstants.CASHOUT_NAME);
 			CoreFunctions.verifyTextContains(
 					CoreFunctions.getItemsFromListByIndex(driver, _confirmationDialogAmountAllowanceMessage,
-							indexCashout, false),
+							indexDeleteBenefit, false),
 					BusinessFunctions.getMXClientExpectedCashoutDescription(),
 					MobilityXConstants.CLIENT_CASHOUT_DESCRIPTION);
 			CoreFunctions.verifyValue(

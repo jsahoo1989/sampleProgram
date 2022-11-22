@@ -1,6 +1,6 @@
 Feature: Validate the CoreFlex End-To-End Business Test Flow(BluePrint, MXClient, Transferee Submissions) for Both_MXClient_UserDefined_PortionCashout_Delete_DenyAll selection
 
-  @End-To-End_CoreFlex @CF_MXClient_UserDefined_PortionCashout_Delete_Deny_PF
+  @End-To-End_CoreFlex @CF_MXClient_UserDefined_PortionCashout_Delete_Deny @CF_MXClient_UserDefined_PortionCashout_Delete_Deny_PF
   Scenario: CoreFlex - Creating & Validating a new Active Points Based CoreFlex Policy with MXClient, UserDefined and PortionCahout selection
     Given he has setup a new Points Based CoreFlex Policy with following selection in Blueprint application
       | Person Responsible For Benefit Selection | Flex Setup Type | Cashout Availability | BenefitType | PolicyRequiredFor |
@@ -13,7 +13,7 @@ Feature: Validate the CoreFlex End-To-End Business Test Flow(BluePrint, MXClient
     When he clicks on "Approve" button to acknowledge 'Approve this Policy' dialog
     Then Policy Status and Version should be displayed as "Active" and "V1" respectively on "View/Edit Policy Forms" page
 
-  @End-To-End_CoreFlex @CF_MXClient_UserDefined_PortionCashout_Delete_Deny_CF
+  @End-To-End_CoreFlex @CF_MXClient_UserDefined_PortionCashout_Delete_Deny @CF_MXClient_UserDefined_PortionCashout_Delete_Deny_CF
   Scenario: MXClient - Verifying Authorization Submission with UserDefined TotalPoints, Core/Flex Benefits & PortionCashout for configured ClientInitiator BluePrint Policy
     Given he has logged into 'MobilityX' application as a 'Client' user
     And he has clicked on "Create an authorization" after validating Client details on 'Authorization Home Page'
@@ -35,7 +35,7 @@ Feature: Validate the CoreFlex End-To-End Business Test Flow(BluePrint, MXClient
     Then 'Auth Submit Success' growl message should be displayed on the navigated 'MobilityX Dashboard Home' page
     And 'New Initiation Submitted' email should be received having Transferee details along with assigned CoreFlex Total Points and Submitted Benefits Points
 
-  @End-To-End_CoreFlex @CF_MXClient_UserDefined_PortionCashout_Delete_Deny
+  @End-To-End_CoreFlex @CF_MXClient_UserDefined_PortionCashout_Delete_Deny @CF_MXClient_UserDefined_PortionCashout_Delete_Deny_IRCF
   Scenario: MXClient - Verifying Deleted Submitted Core/Flex Benefits & PortionCashout Status on MXClient Submitted Benefits
     Given he has logged into 'MobilityX' application as a 'Client' user
     And he has actualized the Transferee after selecting required 'MSPEC_PPC' user and setting file status as 'Active' in IRIS application
@@ -53,7 +53,7 @@ Feature: Validate the CoreFlex End-To-End Business Test Flow(BluePrint, MXClient
     Then 'Auth Submit Success' growl message should be displayed on the navigated 'Advanced Authorization Search' page
     And 'Revised Mobility Initiation' email having submitted_deleted Benefit and Points details should be received
 
-  @End-To_End_CoreFlex @CF_MXClient_UserDefined_PortionCashout_Delete_Deny
+  @End-To_End_CoreFlex @CF_MXClient_UserDefined_PortionCashout_Delete_Deny @CF_MXClient_UserDefined_PortionCashout_Delete_Deny_TSF
   Scenario: TransfereeSubmissions - Verifying UserDefined Points, Benefit_Cashout Submissions and Delete Request DenyAll transaction for the request made by the Client
     Given he has logged into 'Transferee Submissions' application as a "MSPEC/PPC" user
     And he has navigated to "Transferee Submissions Dashboard" page having record of Bundle submitted by the Client

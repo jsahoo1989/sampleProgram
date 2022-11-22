@@ -479,7 +479,9 @@ public class TransfereeSubmissions_DetailsPage extends Base {
 				WebElement allowanceAmount = CoreFunctions.findSubElement(_submittedBenefitNameList.get(indexCashout),
 						allowanceAmountMessage);
 				CoreFunctions.verifyText(driver, allowanceAmount,
-						BusinessFunctions.getExpectedCashoutDescriptionWithDecimalPrecesion(),
+						submittedBy.equals(MobilityXConstants.CLIENT)
+								? BusinessFunctions.getMXClientSubmissionsExpectedCashoutDescription()
+								: BusinessFunctions.getExpectedCashoutDescriptionWithDecimalPrecesion(),
 						COREFLEXConstants.CASHOUT_DESCRIPTION);
 				CoreFunctions.verifyValue(
 						Double.parseDouble(
@@ -641,7 +643,7 @@ public class TransfereeSubmissions_DetailsPage extends Base {
 
 	public boolean verifyBenefitDetailsOnRequestsDialog() {
 		try {
-			return verifyBenefitDetails() && verifyCashoutDetails();
+			return verifyBenefitDetails() && verifyCashoutDetails(COREFLEXConstants.TRANSFEREE);
 		} catch (Exception e) {
 			Reporter.addStepLog(MessageFormat.format(
 					COREFLEXConstants.EXCEPTION_OCCURED_WHILE_VERIFYING_DELETE_REQUEST_DETAILS_ON_REQUEST_DIALOG,
@@ -650,13 +652,24 @@ public class TransfereeSubmissions_DetailsPage extends Base {
 		return false;
 	}
 
-	private boolean verifyCashoutDetails() {
+	public boolean verifyBenefitDetailsOnRequestsDialogClient() {
+		try {
+			return verifyBenefitDetails() && verifyCashoutDetails(COREFLEXConstants.CLIENT);
+		} catch (Exception e) {
+			Reporter.addStepLog(MessageFormat.format(
+					COREFLEXConstants.EXCEPTION_OCCURED_WHILE_VERIFYING_DELETE_REQUEST_DETAILS_ON_REQUEST_DIALOG,
+					CoreConstants.FAIL, e.getMessage()));
+		}
+		return false;
+	}
+
+	private boolean verifyCashoutDetails(String submittedBy) {
 		boolean isCashoutDetailsVerified = false;
 		try {
 			if ((CoreFunctions.getPropertyFromConfig("PolicyCashoutType").equals(MobilityXConstants.PORTION_CASHOUT))
 					|| (CoreFunctions.getPropertyFromConfig("PolicyCashoutType")
 							.equals(MobilityXConstants.AFTER_RELOCATION_ONLY))) {
-				isCashoutDetailsVerified = iterateRequestDialogListAndVerifyCashout();
+				isCashoutDetailsVerified = iterateRequestDialogListAndVerifyCashout(submittedBy);
 			} else if (CoreFunctions.getPropertyFromConfig("PolicyCashoutType")
 					.equals(MobilityXConstants.CASHOUT_NOT_AUTHORIZED)) {
 				return true;
@@ -679,7 +692,7 @@ public class TransfereeSubmissions_DetailsPage extends Base {
 		return isCashoutDetailsVerified;
 	}
 
-	private boolean iterateRequestDialogListAndVerifyCashout() {
+	private boolean iterateRequestDialogListAndVerifyCashout(String submittedBy) {
 
 		for (WebElement element : _requestDialogBenefitNameList) {
 			if (element.getText().equals(policySetupPageData.flexPolicySetupPage.customCashoutBenefitName)) {
@@ -691,7 +704,9 @@ public class TransfereeSubmissions_DetailsPage extends Base {
 						COREFLEXConstants.SUBMITTED_CASHOUT_NAME);
 				CoreFunctions.verifyTextContains(
 						CoreFunctions.getElementText(driver, _requestDialogAllowanceAmountList.get(indexCashout)),
-						BusinessFunctions.getExpectedCashoutDescriptionWithDecimalPrecesion(),
+						submittedBy.equals(MobilityXConstants.CLIENT)
+								? BusinessFunctions.getMXClientSubmissionsExpectedCashoutDescription()
+								: BusinessFunctions.getExpectedCashoutDescriptionWithDecimalPrecesion(),
 						COREFLEXConstants.SUBMITTED_CASHOUT_ALLOWANCE_AMOUNT);
 				CoreFunctions.verifyValue(
 						Double.parseDouble(

@@ -677,8 +677,7 @@ public class BusinessFunctions {
 				CoreFunctions.clearAndSetText(driver, element, lblOtherTextBox, jsonReimbursedByOther);
 			}
 		} catch (Exception e) {
-			Assert.fail(MessageFormat.format(PDTConstants.FAILED_TO_FILL_FIELD, lblOtherTextBox,
-					SubBenefitFormName));
+			Assert.fail(MessageFormat.format(PDTConstants.FAILED_TO_FILL_FIELD, lblOtherTextBox, SubBenefitFormName));
 		}
 	}
 
@@ -718,8 +717,8 @@ public class BusinessFunctions {
 		String randValue = null;
 		try {
 			CoreFunctions.clickElement(driver, drpDownElement);
-			if(drpDownElementOptions.size() == 0)
-				Assert.fail("Drop down options are not populated for "+lblDropDown+" dropdown.");
+			if (drpDownElementOptions.size() == 0)
+				Assert.fail("Drop down options are not populated for " + lblDropDown + " dropdown.");
 			int index = CoreFunctions.getRandomNumber(0, drpDownElementOptions.size() - 1);
 			randValue = drpDownElementOptions.get(index).getText();
 			CoreFunctions.selectItemInListByText(driver, drpDownElementOptions, randValue, lblDropDown,
@@ -733,12 +732,12 @@ public class BusinessFunctions {
 
 	public static String[] getCSMCredentials(PDT_LoginDetails _loginDetailsApplication) {
 		String csmCredentials[] = new String[7];
-		//switch (CoreFunctions.getPropertyFromConfig("envt").toLowerCase()) {
+		// switch (CoreFunctions.getPropertyFromConfig("envt").toLowerCase()) {
 		switch (System.getProperty("envt").toLowerCase()) {
 		case CoreConstants.ENVT_DEV:
 			csmCredentials[0] = _loginDetailsApplication.dev.csmUserName;
 			csmCredentials[1] = _loginDetailsApplication.dev.csmPassword;
-			csmCredentials[2] = _loginDetailsApplication.dev.firstName+ " " + _loginDetailsApplication.dev.lastName;
+			csmCredentials[2] = _loginDetailsApplication.dev.firstName + " " + _loginDetailsApplication.dev.lastName;
 			csmCredentials[3] = _loginDetailsApplication.dev.mobilityxUrl;
 			csmCredentials[4] = _loginDetailsApplication.dev.mobilityxUserName;
 			csmCredentials[5] = _loginDetailsApplication.dev.mobilityxPassword;
@@ -747,7 +746,7 @@ public class BusinessFunctions {
 		case CoreConstants.ENVT_QA:
 			csmCredentials[0] = _loginDetailsApplication.qa.csmUserName;
 			csmCredentials[1] = _loginDetailsApplication.qa.csmPassword;
-			csmCredentials[2] = _loginDetailsApplication.qa.firstName+ " " + _loginDetailsApplication.qa.lastName;
+			csmCredentials[2] = _loginDetailsApplication.qa.firstName + " " + _loginDetailsApplication.qa.lastName;
 			csmCredentials[3] = _loginDetailsApplication.qa.mobilityxUrl;
 			csmCredentials[4] = _loginDetailsApplication.qa.mobilityxUserName;
 			csmCredentials[5] = _loginDetailsApplication.qa.mobilityxPassword;
@@ -756,7 +755,8 @@ public class BusinessFunctions {
 		case CoreConstants.ENVT_TEST:
 			csmCredentials[0] = _loginDetailsApplication.preProd.csmUserName;
 			csmCredentials[1] = _loginDetailsApplication.preProd.csmPassword;
-			csmCredentials[2] = _loginDetailsApplication.preProd.firstName+ " " + _loginDetailsApplication.preProd.lastName;
+			csmCredentials[2] = _loginDetailsApplication.preProd.firstName + " "
+					+ _loginDetailsApplication.preProd.lastName;
 			csmCredentials[3] = _loginDetailsApplication.preProd.mobilityxUrl;
 			csmCredentials[4] = _loginDetailsApplication.preProd.mobilityxUserName;
 			csmCredentials[5] = _loginDetailsApplication.preProd.mobilityxPassword;
@@ -765,7 +765,7 @@ public class BusinessFunctions {
 		case CoreConstants.ENVT_UAT:
 			csmCredentials[0] = _loginDetailsApplication.uat.csmUserName;
 			csmCredentials[1] = _loginDetailsApplication.uat.csmPassword;
-			csmCredentials[2] = _loginDetailsApplication.uat.firstName+ " " + _loginDetailsApplication.uat.lastName;
+			csmCredentials[2] = _loginDetailsApplication.uat.firstName + " " + _loginDetailsApplication.uat.lastName;
 			csmCredentials[3] = _loginDetailsApplication.uat.mobilityxUrl;
 			csmCredentials[4] = _loginDetailsApplication.uat.mobilityxUserName;
 			csmCredentials[5] = _loginDetailsApplication.uat.mobilityxPassword;
@@ -774,7 +774,7 @@ public class BusinessFunctions {
 		case CoreConstants.ENVT_PROD:
 			csmCredentials[0] = _loginDetailsApplication.prod.csmUserName;
 			csmCredentials[1] = _loginDetailsApplication.prod.csmPassword;
-			csmCredentials[2] = _loginDetailsApplication.prod.firstName+ " " + _loginDetailsApplication.prod.lastName;
+			csmCredentials[2] = _loginDetailsApplication.prod.firstName + " " + _loginDetailsApplication.prod.lastName;
 			csmCredentials[3] = _loginDetailsApplication.prod.mobilityxUrl;
 			csmCredentials[4] = _loginDetailsApplication.prod.mobilityxUserName;
 			csmCredentials[5] = _loginDetailsApplication.prod.mobilityxPassword;
@@ -1054,6 +1054,7 @@ public class BusinessFunctions {
 	public static String getExpectedCashoutDescription() {
 		String expectedCashoutDescription = null;
 		DecimalFormat format = new DecimalFormat();
+		format.setDecimalSeparatorAlwaysShown(false);
 		try {
 			if (CoreFunctions.getPropertyFromConfig("CF_Transferee_CashoutCurrencySign").length() == 1) {
 				expectedCashoutDescription = CoreFunctions.getPropertyFromConfig("CF_Transferee_CashoutCurrencySign")
@@ -1076,7 +1077,54 @@ public class BusinessFunctions {
 		}
 		return expectedCashoutDescription;
 	}
-	
+
+	public static String getMXClientExpectedCashoutDescription() {
+		String expectedCashoutDescription = null;
+		DecimalFormat format = new DecimalFormat();
+		format.setDecimalSeparatorAlwaysShown(false);
+		try {
+			if (CoreFunctions.getPropertyFromConfig("CF_Transferee_CashoutCurrencySign").length() == 1) {
+				expectedCashoutDescription = CoreFunctions.getPropertyFromConfig("CF_Transferee_CashoutCurrencySign")
+						+ format.format(Double
+								.parseDouble(CoreFunctions.getPropertyFromConfig("CF_Client_SelectedCashOutPoints")))
+						+ " " + CoreFunctions.getPropertyFromConfig("CF_Transferee_CashoutCurrencyCode");
+			} else {
+				expectedCashoutDescription = CoreFunctions.getPropertyFromConfig("CF_Transferee_CashoutCurrencySign")
+						+ " "
+						+ format.format(Double
+								.parseDouble(CoreFunctions.getPropertyFromConfig("CF_Client_SelectedCashOutPoints")))
+						+ " " + CoreFunctions.getPropertyFromConfig("CF_Transferee_CashoutCurrencyCode");
+			}
+		} catch (Exception e) {
+			Assert.fail(CoreConstants.ERROR + e.getMessage());
+		}
+		return expectedCashoutDescription;
+	}
+
+	public static String getMXClientSubmissionsExpectedCashoutDescription() {
+		String expectedCashoutDescription = null;
+		DecimalFormat format = new DecimalFormat();
+		format.setDecimalSeparatorAlwaysShown(false);
+		try {
+			if (CoreFunctions.getPropertyFromConfig("CF_Transferee_CashoutCurrencySign").length() == 1) {
+				expectedCashoutDescription = MobilityXConstants.CLIENT_SUBMISSIONS_CASHOUT_DESCRIPTION + " "
+						+ CoreFunctions.getPropertyFromConfig("CF_Transferee_CashoutCurrencySign")
+						+ format.format(Double
+								.parseDouble(CoreFunctions.getPropertyFromConfig("CF_Client_SelectedCashOutPoints")))
+						+ " " + CoreFunctions.getPropertyFromConfig("CF_Transferee_CashoutCurrencyCode");
+			} else {
+				expectedCashoutDescription = MobilityXConstants.CLIENT_SUBMISSIONS_CASHOUT_DESCRIPTION + " "
+						+ CoreFunctions.getPropertyFromConfig("CF_Transferee_CashoutCurrencySign") + " "
+						+ format.format(Double
+								.parseDouble(CoreFunctions.getPropertyFromConfig("CF_Client_SelectedCashOutPoints")))
+						+ " " + CoreFunctions.getPropertyFromConfig("CF_Transferee_CashoutCurrencyCode");
+			}
+		} catch (Exception e) {
+			Assert.fail(CoreConstants.ERROR + e.getMessage());
+		}
+		return expectedCashoutDescription;
+	}
+
 	public static String getExpectedCashoutDescriptionWithDecimalPrecesion() {
 		String expectedCashoutDescription = null;
 		DecimalFormat format = new DecimalFormat("#.00");
@@ -1103,13 +1151,11 @@ public class BusinessFunctions {
 		return expectedCashoutDescription;
 	}
 
-	
 	public static String selectAndReturnRandomValueFromList(WebDriver driver, PDT_AddNewPolicyPage addNewPolicyPage,
 			String subBenefitFormName, List<WebElement> webElementList, String labelText) {
 		String randValue = null;
-		try {			
-			randValue = webElementList.get(CoreFunctions.getRandomNumber(0, webElementList.size() - 1))
-					.getText();
+		try {
+			randValue = webElementList.get(CoreFunctions.getRandomNumber(0, webElementList.size() - 1)).getText();
 			CoreFunctions.selectItemInListByText(driver, webElementList, randValue, labelText,
 					PDTConstants.RADIO_BUTTON_LIST, true);
 		} catch (Exception e) {
@@ -1118,8 +1164,7 @@ public class BusinessFunctions {
 		}
 		return randValue.trim();
 	}
-	
-	
+
 	public static boolean verifyDefaultOptionIsSelectedInDrpDown(String selectedOptionText, String expectedOption,
 			String lblDrpDown) {
 		if (selectedOptionText.equalsIgnoreCase(expectedOption)) {
@@ -1138,34 +1183,36 @@ public class BusinessFunctions {
 			wait.until(ExpectedConditions.invisibilityOf(element));
 		}
 	}
-	
+
 	public static void printTimeTakenByPageToLoad(long timeBeforeAction, long timeAfterAction, String pageName) {
 		DecimalFormat pgToLoadformat = new DecimalFormat();
 		pgToLoadformat.setMaximumFractionDigits(3);
-		Reporter.addStepLog("<b>Time taken by '"+pageName+"' page to Load is :"
+		Reporter.addStepLog("<b>Time taken by '" + pageName + "' page to Load is :"
 				+ pgToLoadformat.format((timeAfterAction - timeBeforeAction) / 1000) + " Seconds </b>");
 	}
-	
-	public static void printTimeTakenByPageToLoad(long timeBeforeAction, long timeAfterAction, String pageName, String subBenefitName) {
+
+	public static void printTimeTakenByPageToLoad(long timeBeforeAction, long timeAfterAction, String pageName,
+			String subBenefitName) {
 		DecimalFormat pgToLoadformat = new DecimalFormat();
 		pgToLoadformat.setMaximumFractionDigits(3);
-		Reporter.addStepLog("<b>Time taken by sub-benefit:-'"+subBenefitName+"' to Load on '"+pageName+"' benefit page is:-"
-				+ pgToLoadformat.format((timeAfterAction - timeBeforeAction) / 1000) + " Seconds </b>");
+		Reporter.addStepLog(
+				"<b>Time taken by sub-benefit:-'" + subBenefitName + "' to Load on '" + pageName + "' benefit page is:-"
+						+ pgToLoadformat.format((timeAfterAction - timeBeforeAction) / 1000) + " Seconds </b>");
 	}
-	
+
 	public static ArrayList<String> getSubBenefitList(String key) {
 		ArrayList<String> langTraining = new ArrayList<String>();
 		langTraining.add(PDTConstants.LANGUAGE_TRAINING_EMPLOYEE);
 		langTraining.add(PDTConstants.LANGUAGE_TRAINING_FAMILY);
-		
+
 		ArrayList<String> cultTraining = new ArrayList<String>();
 		cultTraining.add(PDTConstants.CULTURAL_TRAINING_EMPLOYEE);
-		cultTraining.add(PDTConstants.CULTURAL_TRAINING_FAMILY);	
-		
+		cultTraining.add(PDTConstants.CULTURAL_TRAINING_FAMILY);
+
 		ArrayList<String> immigration = new ArrayList<String>();
 		immigration.add(PDTConstants.IMMIGRATION_FEES);
-		immigration.add(PDTConstants.IMMIGRATION_TRAVEL);	
-		
+		immigration.add(PDTConstants.IMMIGRATION_TRAVEL);
+
 		ArrayList<String> compServices = new ArrayList<String>();
 		compServices.add(PDTConstants.LETTER_OF_ASSIGNMENT);
 		compServices.add(PDTConstants.COST_ESTIMATE_WITH_TAX);
@@ -1174,17 +1221,17 @@ public class BusinessFunctions {
 		compServices.add(PDTConstants.ALLOWANCE_UPDATES);
 		compServices.add(PDTConstants.GLOBAL_DATA_COLLECTION);
 		compServices.add(PDTConstants.PAYROLL_INSTRUCTIONS);
-		
+
 		ArrayList<String> homeLeave = new ArrayList<String>();
 		homeLeave.add(PDTConstants.HOME_LEAVE_TRANSPORTATION);
 		homeLeave.add(PDTConstants.HOME_LEAVE_LODGING);
 		homeLeave.add(PDTConstants.HOME_LEAVE_MEALS);
-		
+
 		ArrayList<String> houseHuntingTrip = new ArrayList<String>();
 		houseHuntingTrip.add(PDTConstants.HOUSE_HUNTING_TRIP_TRANSPORTATION);
 		houseHuntingTrip.add(PDTConstants.HOUSE_HUNTING_TRIP_LODGING);
 		houseHuntingTrip.add(PDTConstants.HOUSE_HUNTING_TRIP_MEALS);
-		
+
 		ArrayList<String> oneTimePayments = new ArrayList<String>();
 		oneTimePayments.add(PDTConstants.MISC_RELOCATION_ALLOWANCE);
 		oneTimePayments.add(PDTConstants.LUMP_SUM);
@@ -1193,7 +1240,7 @@ public class BusinessFunctions {
 		oneTimePayments.add(PDTConstants.AUTO_REGISTRATION_COSTS);
 		oneTimePayments.add(PDTConstants.AUTO_LOSS_ON_SALE);
 		oneTimePayments.add(PDTConstants.OTHER_ONE_TIME_PAYMENT);
-		
+
 		ArrayList<String> houseHoldGoods = new ArrayList<String>();
 		houseHoldGoods.add(PDTConstants.US_DOM_VANLINE_SHIPMENT);
 		houseHoldGoods.add(PDTConstants.AUTO_SHIPMENT);
@@ -1203,13 +1250,13 @@ public class BusinessFunctions {
 		houseHoldGoods.add(PDTConstants.NONUS_INLAND_SHIPMENT);
 		houseHoldGoods.add(PDTConstants.PERMANENT_STORAGE);
 		houseHoldGoods.add(PDTConstants.PET_SHIPMENT);
-		houseHoldGoods.add(PDTConstants.DISCARD_DONATE);	
-		
+		houseHoldGoods.add(PDTConstants.DISCARD_DONATE);
+
 		ArrayList<String> finalMove = new ArrayList<String>();
 		finalMove.add(PDTConstants.FINAL_MOVE_TRANSPORTATION);
 		finalMove.add(PDTConstants.FINAL_MOVE_LODGING);
 		finalMove.add(PDTConstants.FINAL_MOVE_MEALS);
-		
+
 		ArrayList<String> destinationServices = new ArrayList<String>();
 		destinationServices.add(PDTConstants.AIRPORT_PICKUP);
 		destinationServices.add(PDTConstants.AREA_TOUR);
@@ -1222,17 +1269,17 @@ public class BusinessFunctions {
 		destinationServices.add(PDTConstants.SETTLING_IN_SERVICES);
 		destinationServices.add(PDTConstants.TRANSITION_ASSISTANCE_PROGRAM);
 		destinationServices.add(PDTConstants.TUTION_AND_EDUCATION);
-		
+
 		ArrayList<String> tempLiving = new ArrayList<String>();
 		tempLiving.add(PDTConstants.TEMPORARY_LIVING_LODGING);
 		tempLiving.add(PDTConstants.TEMPORARY_LIVING_MEALS);
 		tempLiving.add(PDTConstants.TEMPORARY_LIVING_TRANSPORTATION);
-		
+
 		ArrayList<String> assignmentHousing = new ArrayList<String>();
 		assignmentHousing.add(PDTConstants.ASSIGNMENT_HOUSING);
 		assignmentHousing.add(PDTConstants.SECURITY_DEPOSIT);
 		assignmentHousing.add(PDTConstants.ASSIGNMENT_FINDER_FEES);
-		
+
 		ArrayList<String> homePurchase = new ArrayList<String>();
 		homePurchase.add(PDTConstants.HOME_PURCHASE_CLOSING_COSTS);
 		homePurchase.add(PDTConstants.HOME_PURCHASE_POINTS);
@@ -1240,17 +1287,17 @@ public class BusinessFunctions {
 		homePurchase.add(PDTConstants.HOME_PURCHASE_BONUS);
 		homePurchase.add(PDTConstants.MORTGAGE_DIFFERENTIALS);
 		homePurchase.add(PDTConstants.MORTGAGE_SUBSIDY);
-		
+
 		ArrayList<String> rentalAssistance = new ArrayList<String>();
 		rentalAssistance.add(PDTConstants.RENTAL_TOUR);
 		rentalAssistance.add(PDTConstants.FINDER_FEES);
-		
+
 		ArrayList<String> preAcceptance = new ArrayList<String>();
 		preAcceptance.add(PDTConstants.CANDIDATE_SELECTION);
 		preAcceptance.add(PDTConstants.PRE_ACCEPTANCE_TRIP_TRANSPORTATION);
 		preAcceptance.add(PDTConstants.PRE_ACCEPTANCE_TRIP_LODGING);
 		preAcceptance.add(PDTConstants.PRE_ACCEPTANCE_TRIP_MEALS);
-		
+
 		ArrayList<String> ongoingPayment = new ArrayList<String>();
 		ongoingPayment.add(PDTConstants.COLA);
 		ongoingPayment.add(PDTConstants.PER_DIEM);
@@ -1270,9 +1317,9 @@ public class BusinessFunctions {
 		ongoingPayment.add(PDTConstants.HOUSEKEEPING_ALLOWANCE);
 		ongoingPayment.add(PDTConstants.UTILITY_ALLOWANCE);
 		ongoingPayment.add(PDTConstants.OTHER_ONGOING_ALLOWANCE);
-		
+
 		LinkedHashMap<String, ArrayList<String>> subBenefitMap = new LinkedHashMap<String, ArrayList<String>>();
-		
+
 		subBenefitMap.put(PDTConstants.LANG_TRAINING, langTraining);
 		subBenefitMap.put(PDTConstants.CULT_TRAINING, cultTraining);
 		subBenefitMap.put(PDTConstants.COMPENSATION_SERVICES, compServices);
@@ -1289,19 +1336,20 @@ public class BusinessFunctions {
 		subBenefitMap.put(PDTConstants.RENTAL_ASSISTANCE, rentalAssistance);
 		subBenefitMap.put(PDTConstants.PRE_ACCEPTANCE_SERVICES, preAcceptance);
 		subBenefitMap.put(PDTConstants.ONGOING_PAYMENTS_REIMBURSEMENTS, ongoingPayment);
-		return subBenefitMap.get(key);		
+		return subBenefitMap.get(key);
 	}
-	
+
 	public static boolean checkIfBenefitHaveEditLabelFunctionality(String pageName) {
 		ArrayList<String> benefitsHavingEditLabelFunct = new ArrayList<String>();
 		benefitsHavingEditLabelFunct.add(PDTConstants.PRE_ACCEPTANCE_SERVICES);
-		if(benefitsHavingEditLabelFunct.contains(pageName)) 
+		if (benefitsHavingEditLabelFunct.contains(pageName))
 			return true;
 		else
-			return false;		
+			return false;
 	}
-	
-	public static void expandSubBenefitIfCollapsed(WebElement subBenefitFormHeader, String subBenefitName, WebDriver driver) {
+
+	public static void expandSubBenefitIfCollapsed(WebElement subBenefitFormHeader, String subBenefitName,
+			WebDriver driver) {
 		try {
 			if (subBenefitFormHeader.getAttribute("class").equalsIgnoreCase("collapsed"))
 				CoreFunctions.clickElement(driver, subBenefitFormHeader);
@@ -1309,8 +1357,9 @@ public class BusinessFunctions {
 			Assert.fail("Failed to expand sub benefit form:-" + subBenefitName);
 		}
 	}
-	
-	public static boolean verifySubBenefitFormHeaderIsDisplayed(WebDriver driver, WebElement element, String subBenefitName, String pageName) {
+
+	public static boolean verifySubBenefitFormHeaderIsDisplayed(WebDriver driver, WebElement element,
+			String subBenefitName, String pageName) {
 		CoreFunctions.explicitWaitTillElementVisibility(driver, element, subBenefitName);
 		if (element.isDisplayed()) {
 			Reporter.addStepLog(MessageFormat.format(PDTConstants.VERIFIED_FORM_IS_DISPLAYED, CoreConstants.PASS,
@@ -1319,30 +1368,32 @@ public class BusinessFunctions {
 		}
 		return false;
 	}
-	
-	public static boolean verifySelectedPolicyBenefitCategoryName(WebDriver driver, WebElement element, String pageName) {
+
+	public static boolean verifySelectedPolicyBenefitCategoryName(WebDriver driver, WebElement element,
+			String pageName) {
 		try {
 			CoreFunctions.explicitWaitForElementTextPresent(driver, element, pageName, 3);
 			return CoreFunctions.verifyElementOnPage(driver, element, PDTConstants.POLICY_BENEFIT_CATEGORY, pageName,
 					pageName, true);
-		} catch (Exception e) {		
+		} catch (Exception e) {
 			Assert.fail(MessageFormat.format(PDTConstants.FAIL_TO_VERIFY_ELEMENT_VAL_ON_PAGE, CoreConstants.FAIL,
 					PDTConstants.POLICY_BENEFIT_CATEGORY, pageName, pageName, element.getText()));
 			return false;
 		}
 	}
-	
-	public static boolean verifySubBenefitCategoriesAreDisplayed(WebDriver driver, List<String> subBenefitsFromDataTable, String pageName, List<WebElement> _subBenefitCategories) {
+
+	public static boolean verifySubBenefitCategoriesAreDisplayed(WebDriver driver,
+			List<String> subBenefitsFromDataTable, String pageName, List<WebElement> _subBenefitCategories) {
 		CoreFunctions.explicitWaitTillElementListClickable(driver, _subBenefitCategories);
-		if (subBenefitsFromDataTable.equals(CoreFunctions.getElementTextAndStoreInList(driver, _subBenefitCategories))) {
+		if (subBenefitsFromDataTable
+				.equals(CoreFunctions.getElementTextAndStoreInList(driver, _subBenefitCategories))) {
 			Reporter.addStepLog(MessageFormat.format(PDTConstants.VERIFIED_SUB_BENEFITS_DISPLAYED, CoreConstants.PASS,
 					subBenefitsFromDataTable.toString(), pageName));
-			return true;			
-		}
-		else
-			return false;	
+			return true;
+		} else
+			return false;
 	}
-	
+
 	public static boolean verifyPopUpContent(WebDriver driver, WebElement element, String elementName,
 			String elementVal, String popupName, boolean displayMsgInReport) {
 		try {
@@ -1365,38 +1416,45 @@ public class BusinessFunctions {
 			return false;
 		}
 	}
-	
-	public static boolean verifyAllExpenseCodesArePopulatedForSubBenefit(WebDriver driver, String benefitName, String subBenefitName, List<WebElement> _drpDownOptionsExpenseCode) {
+
+	public static boolean verifyAllExpenseCodesArePopulatedForSubBenefit(WebDriver driver, String benefitName,
+			String subBenefitName, List<WebElement> _drpDownOptionsExpenseCode) {
 		try {
-			if(CoreFunctions.getElementTextAndStoreInList(driver, _drpDownOptionsExpenseCode).equals(DbFunctions.getExpenseCodeListForBenefit(benefitName))) {
-				Reporter.addStepLog(MessageFormat.format(PDTConstants.VERIFIED_EXPENSE_CODE_OPTIONS_POPULATED, CoreConstants.PASS, subBenefitName));
+			if (CoreFunctions.getElementTextAndStoreInList(driver, _drpDownOptionsExpenseCode)
+					.equals(DbFunctions.getExpenseCodeListForBenefit(benefitName))) {
+				Reporter.addStepLog(MessageFormat.format(PDTConstants.VERIFIED_EXPENSE_CODE_OPTIONS_POPULATED,
+						CoreConstants.PASS, subBenefitName));
 				return true;
-			}			
-			//Log.info(driver.findElements(By.cssSelector("ng-select[formcontrolname='culturalTrainingEmployeeExpenseCodeList'] span.ng-option-label.ng-star-inserted")).get(2).getText());
+			}
+			// Log.info(driver.findElements(By.cssSelector("ng-select[formcontrolname='culturalTrainingEmployeeExpenseCodeList']
+			// span.ng-option-label.ng-star-inserted")).get(2).getText());
 		} catch (Exception e) {
-			Reporter.addStepLog("Exception occured while verifying expense code for sub-benefit:-"+subBenefitName);
+			Reporter.addStepLog("Exception occured while verifying expense code for sub-benefit:-" + subBenefitName);
 			return false;
 		}
 		return false;
 	}
-	
+
 	public static List<String> getExpenseCode(WebDriver driver, List<WebElement> _drpDownOptionsExpenseCode) {
 		List<String> drpDownOptions = CoreFunctions.getElementTextAndStoreInList(driver, _drpDownOptionsExpenseCode);
 		List<String> expenseCodesList = new ArrayList<String>();
-		for(String options : drpDownOptions){
-			expenseCodesList.add(options.substring(0, options.indexOf("-")-1).trim());
+		for (String options : drpDownOptions) {
+			expenseCodesList.add(options.substring(0, options.indexOf("-") - 1).trim());
 		}
 		return expenseCodesList;
 	}
-	
-	public static boolean verifyAllExpenseCodesListForSubBenefit(WebDriver driver, String benefitName, String subBenefitName, List<WebElement> _drpDownOptionsExpenseCode) {
+
+	public static boolean verifyAllExpenseCodesListForSubBenefit(WebDriver driver, String benefitName,
+			String subBenefitName, List<WebElement> _drpDownOptionsExpenseCode) {
 		try {
-			if(getExpenseCode(driver, _drpDownOptionsExpenseCode).equals(DbFunctions.getExpenseCodeForBenefit(benefitName))) {
-				Reporter.addStepLog(MessageFormat.format(PDTConstants.VERIFIED_EXPENSE_CODE_OPTIONS_POPULATED, CoreConstants.PASS, subBenefitName));
+			if (getExpenseCode(driver, _drpDownOptionsExpenseCode)
+					.equals(DbFunctions.getExpenseCodeForBenefit(benefitName))) {
+				Reporter.addStepLog(MessageFormat.format(PDTConstants.VERIFIED_EXPENSE_CODE_OPTIONS_POPULATED,
+						CoreConstants.PASS, subBenefitName));
 				return true;
-			}			
+			}
 		} catch (Exception e) {
-			Reporter.addStepLog("Exception occured while verifying expense code for sub-benefit:-"+subBenefitName);
+			Reporter.addStepLog("Exception occured while verifying expense code for sub-benefit:-" + subBenefitName);
 			return false;
 		}
 		return false;

@@ -42,6 +42,7 @@ import com.aires.businessrules.constants.CoreConstants;
 import com.aires.businessrules.constants.PDTConstants;
 import com.aires.cucumber.TestContext;
 import com.aires.managers.FileReaderManager;
+import com.aires.testdatatypes.coreflex.CoreFlex_LoginInfo;
 import com.aires.testdatatypes.pdt.PDT_LoginInfo;
 import com.aires.utilities.ClientPolicyDetails;
 import com.aires.utilities.Log;
@@ -61,7 +62,9 @@ public class Hooks {
 	TestContext testContext;
 	public static int testResult;
 	public static Scenario scenarioName;
-	private PDT_LoginInfo _loginInfo;	
+	private PDT_LoginInfo _loginInfo;
+	private CoreFlex_LoginInfo _coreFlexLoginInfo;	
+
 
 	public Hooks(TestContext context) {
 		testContext = context;
@@ -71,8 +74,10 @@ public class Hooks {
 	public void BeforeSteps(Scenario scenario) throws Exception {
 		scenarioName = scenario;
 		Reporter.assignAuthor("AIRES - Automation - By : " + System.getProperty("user.name"));
-		//_loginInfo = FileReaderManager.getInstance().getJsonReader().getLoginByEnvt(CoreFunctions.getPropertyFromConfig("envt").toLowerCase());
-		_loginInfo = FileReaderManager.getInstance().getJsonReader().getLoginByEnvt(System.getProperty("envt").toLowerCase());
+		_loginInfo = FileReaderManager.getInstance().getJsonReader().getLoginByEnvt(CoreFunctions.getPropertyFromConfig("envt").toLowerCase());
+//		_loginInfo = FileReaderManager.getInstance().getJsonReader().getLoginByEnvt(System.getProperty("envt").toLowerCase());
+		_coreFlexLoginInfo = FileReaderManager.getInstance().getCoreFlexJsonReader().getLoginByEnvt(CoreFunctions.getPropertyFromConfig("envt").toLowerCase());
+//		_coreFlexLoginInfo = FileReaderManager.getInstance().getCoreFlexJsonReader().getLoginByEnvt(System.getProperty("envt").toLowerCase());
 		testContext.initializeWebManager(scenario.getName().contains("IRIS"));
 		
 		//testContext.initializeWebManager(CoreFunctions.getPropertyFromConfig("application"));//appName
@@ -92,28 +97,25 @@ public class Hooks {
 			testContext.getWebDriverManager().getDriver().navigate()
 					.to(FileReaderManager.getInstance().getConfigReader().getApplicationUrl("MYLO"));
 		} else if (scenario.getName().contains("CoreFlex")) {
-			Log.info(FileReaderManager.getInstance().getConfigReader().getCoreFlexPolicySetupApplicationUrl());
-			testContext.getWebDriverManager().getDriver().navigate()
-					.to(FileReaderManager.getInstance().getConfigReader().getCoreFlexPolicySetupApplicationUrl());
+			Log.info(_coreFlexLoginInfo.details.blueprintURL);
+			testContext.getWebDriverManager().getDriver().navigate().to(_coreFlexLoginInfo.details.blueprintURL);
 		}else if ((scenario.getName().contains("MXTransferee")) || (scenario.getName().contains("MXClient"))) {
-			Log.info(FileReaderManager.getInstance().getConfigReader().getMobilityXUrl());
-			testContext.getWebDriverManager().getDriver().navigate()
-					.to(FileReaderManager.getInstance().getConfigReader().getMobilityXUrl());
+			Log.info(_coreFlexLoginInfo.details.mobilityXURL);
+			testContext.getWebDriverManager().getDriver().navigate().to(_coreFlexLoginInfo.details.mobilityXURL);
 		}		else if (scenario.getName().contains("TransfereeSubmissions")) {
-			Log.info(FileReaderManager.getInstance().getConfigReader().getCoreFlexTransfereeSubmissionsApplicationUrl());
-			testContext.getWebDriverManager().getDriver().navigate()
-					.to(FileReaderManager.getInstance().getConfigReader().getCoreFlexTransfereeSubmissionsApplicationUrl());
+			Log.info(_coreFlexLoginInfo.details.transfereeSubmissionsURL);
+			testContext.getWebDriverManager().getDriver().navigate().to(_coreFlexLoginInfo.details.transfereeSubmissionsURL);
 		}
 		
 		/*else if (appName.equals(CoreConstants.COREFLEX)&& (scenario.getName().contains("MXTransferee")|| (scenario.getName().contains("MXClient")))) {
-			Log.info(FileReaderManager.getInstance().getConfigReader().getApplicationUrl("MXTransferee"));
+			Log.info(_coreFlexLoginInfo.details.mobilityXURL);
 			testContext.getWebDriverManager().getDriver().navigate()
-					.to(FileReaderManager.getInstance().getConfigReader().getApplicationUrl("MXTransferee"));
+					.to(_coreFlexLoginInfo.details.mobilityXURL);
 		}	
 		else if (appName.equals(CoreConstants.COREFLEX)&& scenario.getName().contains("TransfereeSubmissions")) {
-			Log.info(FileReaderManager.getInstance().getConfigReader().getApplicationUrl("TransfereeSubmissions"));
+			Log.info(_coreFlexLoginInfo.details.transfereeSubmissionsURL);
 			testContext.getWebDriverManager().getDriver().navigate()
-					.to(FileReaderManager.getInstance().getConfigReader().getApplicationUrl("TransfereeSubmissions"));
+					.to(_coreFlexLoginInfo.details.transfereeSubmissionsURL);
 		}
 		else {
 			Log.info(url);
@@ -201,7 +203,7 @@ public class Hooks {
 	}
 
 	
-	@After(order = 1)
+//	@After(order = 1)
 	public void updateResultInTestRail(Scenario scenario) {
 		String Case_ID = BusinessFunctions.getTestRailIdAsPerApplication(System.getProperty("application"),scenario.getSourceTagNames().toString());
 		//String Case_ID = BusinessFunctions.getTestRailIdAsPerApplication("PDT",scenario.getSourceTagNames().toString());
@@ -215,11 +217,10 @@ public class Hooks {
 
 	@After(order = 0)
 	public void AfterSteps(Scenario scenario) throws Exception {
-
 		if (scenario.getName().contains("IRIS")) {
 			testContext.getBasePage().cleanIrisProcesses();
 		} else {
-			quitDriver();			
+//			quitDriver();			
 		}		
 		Runtime.getRuntime().gc();
 	}

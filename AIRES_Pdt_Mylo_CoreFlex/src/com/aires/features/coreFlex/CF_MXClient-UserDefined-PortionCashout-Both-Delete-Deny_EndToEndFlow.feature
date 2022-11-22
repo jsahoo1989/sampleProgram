@@ -1,6 +1,6 @@
 Feature: Validate the CoreFlex End-To-End Business Test Flow(BluePrint, MXClient, Transferee Submissions) for Both_MXClient_UserDefined_PortionCashout_Delete_DenyAll selection
 
-  @End-To-End_CoreFlex @CF_MXClient_UserDefined_PortionCashout_Delete_Deny
+  @End-To-End_CoreFlex @CF_MXClient_UserDefined_PortionCashout_Delete_Deny_PF
   Scenario: CoreFlex - Creating & Validating a new Active Points Based CoreFlex Policy with MXClient, UserDefined and PortionCahout selection
     Given he has setup a new Points Based CoreFlex Policy with following selection in Blueprint application
       | Person Responsible For Benefit Selection | Flex Setup Type | Cashout Availability | BenefitType | PolicyRequiredFor |
@@ -13,7 +13,7 @@ Feature: Validate the CoreFlex End-To-End Business Test Flow(BluePrint, MXClient
     When he clicks on "Approve" button to acknowledge 'Approve this Policy' dialog
     Then Policy Status and Version should be displayed as "Active" and "V1" respectively on "View/Edit Policy Forms" page
 
-  @End-To-End_CoreFlex @CF_MXClient_UserDefined_PortionCashout_Delete_Deny
+  @End-To-End_CoreFlex @CF_MXClient_UserDefined_PortionCashout_Delete_Deny_CF
   Scenario: MXClient - Verifying Authorization Submission with UserDefined TotalPoints, Core/Flex Benefits & PortionCashout for configured ClientInitiator BluePrint Policy
     Given he has logged into 'MobilityX' application as a 'Client' user
     And he has clicked on "Create an authorization" after validating Client details on 'Authorization Home Page'
@@ -25,10 +25,6 @@ Feature: Validate the CoreFlex End-To-End Business Test Flow(BluePrint, MXClient
     And he has verified 'Error Growl Message' and 'Required Field Validation' displayed after clicking on "Submit to Aires" button with Blank/No 'Total Points' value
     And he has navigated to "Benefit Selection Tool" page after entering valid 'Total Points' value and clicking on "Start Benefit Selection" button
     And he has verified following details on "Benefit Selection Tool" page based on configured Points Based CoreFlex BluePrint Policy
-      | Available Point Balance | Core Benefits | Flex Benefits | Suggested Bundles | Cashout |
-    And he has clicked on 'Back to initiation' link on 'Benefit Selection Tool' to navigate to 'Authorization Form' page
-    And he has clicked on 'Start Benefit Selection' after increasing 'Benfit Total Points' value on 'Auth Form Template' page
-    And he has verified following details on "Benefit Selesction Tool" page based on configured Points Based CoreFlex BluePrint Policy
       | Available Point Balance | Core Benefits | Flex Benefits | Suggested Bundles | Cashout |
     And he has clicked on 'Back to benefits list' link to navigate to 'Benefit Selection Tool' page
     And he has verified 'Portion Cashout' details on 'Benefit Selection Tool' page
@@ -64,7 +60,7 @@ Feature: Validate the CoreFlex End-To-End Business Test Flow(BluePrint, MXClient
     And he has clicked on "Review" button for Bundle submitted by the Client on "Transferee Submissions Dashboard" page
     And he has navigated to "Transferee Submission Details" page having list of submitted Benefits_Cashout details by Client
     And he has clicked on "Check All" followed by "Resolve Multiple" button to resolve multiple 'Delete Request Pending' request of the Client
-    When he confirms request by selecting "Deny All" option after verifying 'Delete Request Pending' benefit request details on 'Requests' dialog
+    When he confirms request by selecting "Deny All" option after verifying 'Delete Request Pending' benefit request details on 'Requests' dialog by Client
     Then 'Action Completed' growl message for "Deny Request" should be displayed on "Transferee Submission Details" page
     And 'Delete Request Pending' Benefit_Cashout request status should be updated to 'Submitted' in 'Transferee Submission Details' list of the Client
     And benefit details should be updated in 'MXClient' application based on "Denied" 'Delete Request' on Transferee Submission

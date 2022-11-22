@@ -505,7 +505,6 @@ public class MobilityXConstants {
 	public static final String FLEX_BENEFIT_CLIENT_SECTION_TEXT = "Select the Flex benefits that the employee should receive:";
 	public static final String BACK_TO_INITIATION = "Back To Initiation";
 	public static final String PORTION_CASHOUT_DETAILS_NOT_MATCHED_ON_BENEFIT_SELECTION_TOOL_PAGE = "{0}Portion Cashout details not matched on Benefit Selection Tool page.";
-	public static final String MX_CLIENT_CASHOUT_SUGGESTION_TEXT = "If no additional benefits are required, the remaining points may be cashed out by selecting the block below to receive payment to the employee's bank account. The employee will be offered the full sum of their remaining points, but you can opt to cashout less if you want. ";
 	public static final String EXCEPTION_OCCURED_WHILE_VERIFYING_CASHOUT_DETAILS_ON_BENEFIT_SELECTION_TOOL_PAGE = "{0}Exception occured while verifying cashout details on Benefit selection tool page. Exception : ''{1}''.";
 	public static final String SUCCESSFULLY_VERIFIED_PORTION_CASHOUT_FUNCTIONALITY_ON_BENEFIT_SELECTION_TOOL_PAGE = "{0}Successfully verified portion cashout functionality on Benefit Selection tool page.";
 	public static final String FAILED_TO_SELECT_RELOCATION_POLICY_ON_AUTHORIZATION_FORM = "{0}Failed to select Relocation Policy on Auhtorization Form.";
@@ -776,5 +775,8 @@ public class MobilityXConstants {
 	public static final String SUBMITTED_DATE = "Submitted Date";
 	public static final String EXCEPTION_OCCURED_WHILE_VALIDATING_DELETED_CASHOUT_DETAILS_UNDER_SUBMITTED_BENEFITS_SECTION_OF_MBB_PAGE = "{0}Exception occured while valiating deleted Cashout details under submitted benefits section of My Benefit Bundle Page.Exception : ''{1}''.";
 	public static final String FAILED_TO_VERIFY_SELECTED_AIRES_MANAGED_BENEFITS_ON_MY_BUNDLE_PAGE = "{0}Failed to verify selected Aires Managed benefits on My Bundles page under Selected Benefits Section.";
+	public static final String MX_CLIENT_CASHOUT_SUGGESTION_TEXT_DEFAULT = "If no additional benefits are required, the remaining points may be cashed out by selecting the block below.";
+	public static final String CLIENT_CASHOUT_DESCRIPTION = "MXClient Cashout Description";
+	public static final String CLIENT_SUBMISSIONS_CASHOUT_DESCRIPTION = "The transferee will receive";
 
 }

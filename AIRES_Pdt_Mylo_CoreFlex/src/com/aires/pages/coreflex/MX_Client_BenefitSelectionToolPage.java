@@ -1027,14 +1027,17 @@ public class MX_Client_BenefitSelectionToolPage extends Base {
 
 	public boolean verifyInitialCashOutContent(boolean isBenefitsSubmitted) {
 		try {
+			String expectedCashoutValue = null;
+			DecimalFormat format = new DecimalFormat();
+			format.setDecimalSeparatorAlwaysShown(false);
 			getAvailableCashoutPoints(isBenefitsSubmitted);
 			CoreFunctions.explicitWaitTillElementVisibility(driver, _text_cashOutName,
 					MobilityXConstants.CUSTOM_CASHOUT_NAME);
 			CoreFunctions.verifyText(CoreFunctions.getElementText(driver, _text_cashOutName),
 					policySetupPageData.flexPolicySetupPage.customCashoutBenefitName,
 					MobilityXConstants.CUSTOM_CASHOUT_NAME);
-			CoreFunctions.verifyText((CoreFunctions.getElementText(driver, _text_cashOutSuggestion).trim()),
-					(MobilityXConstants.MX_CLIENT_CASHOUT_SUGGESTION_TEXT).trim(),
+			CoreFunctions.verifyText(CoreFunctions.getElementText(driver, _text_cashOutSuggestion),
+					MobilityXConstants.MX_CLIENT_CASHOUT_SUGGESTION_TEXT_DEFAULT,
 					MobilityXConstants.CASHOUT_SUGGESTION);
 			CoreFunctions.verifyText(CoreFunctions.getElementText(driver, _text_howManyPoints),
 					MobilityXConstants.HOW_MANY_POINTS_WOULD_YOU_LIKE_TO_CASH_OUT,
@@ -1042,13 +1045,24 @@ public class MX_Client_BenefitSelectionToolPage extends Base {
 			CoreFunctions.verifyValue(
 					Double.parseDouble(CoreFunctions.getElementText(driver, _text_pointsAvailableForCashOut)),
 					cashoutPoints, MobilityXConstants.POINTS_AVAILABLE_FOR_CASHOUT);
-			String[] cashOutValue = CoreFunctions.getElementText(driver, _text_cashOutValue).split("\\(");
-			CoreFunctions.verifyValue(Double.parseDouble(cashOutValue[0].trim()), cashoutPoints,
-					MobilityXConstants.CASHOUT_VALUE);
+
+			String actualCashoutValue = CoreFunctions.getElementText(driver, _text_cashOutValue);
+
+			if (CoreFunctions.getPropertyFromConfig("CF_Transferee_CashoutCurrencySign").length() == 1) {
+				expectedCashoutValue = CoreFunctions.getPropertyFromConfig("CF_Transferee_CashoutCurrencySign")
+						+ format.format(cashoutPoints) + " ("
+						+ CoreFunctions.getPropertyFromConfig("CF_Transferee_CashoutCurrencyCode") + ")";
+			} else {
+				expectedCashoutValue = CoreFunctions.getPropertyFromConfig("CF_Transferee_CashoutCurrencySign") + " "
+						+ format.format(cashoutPoints) + " ("
+						+ CoreFunctions.getPropertyFromConfig("CF_Transferee_CashoutCurrencyCode") + ")";
+			}
+
+			CoreFunctions.verifyText(actualCashoutValue, expectedCashoutValue, MobilityXConstants.CASHOUT_VALUE);
 			CoreFunctions.verifyValue(Double.parseDouble(CoreFunctions.getAttributeText(_inputCashoutPoints, "value")),
 					cashoutPoints, MobilityXConstants.CASHOUT_INPUT_FIELD);
-			String[] cashOutInputText = CoreFunctions.getElementText(driver, _textInputCashoutPoints).split("\\(");
-			CoreFunctions.verifyValue(Double.parseDouble(cashOutInputText[0].trim()), cashoutPoints,
+			String actualCashOutInputText = CoreFunctions.getElementText(driver, _textInputCashoutPoints);
+			CoreFunctions.verifyText(actualCashOutInputText, expectedCashoutValue,
 					MobilityXConstants.CASHOUT_INPUT_FIELD_LABEL_VALUE);
 			if (cashoutPoints == 0.0 && isBenefitsSubmitted
 					&& CoreFunctions.isElementExist(driver, _disabledSubmittedCashoutPointsButton, 2)) {
@@ -1077,9 +1091,9 @@ public class MX_Client_BenefitSelectionToolPage extends Base {
 					MobilityXConstants.CUSTOM_CASHOUT_NAME);
 			CoreFunctions.verifyText(CoreFunctions.getElementText(driver, _text_cashOutName),
 					policySetupPageData.flexPolicySetupPage.customCashoutBenefitName,
-					MobilityXConstants.CUSTOM_CASHOUT_NAME);
-			CoreFunctions.verifyText((CoreFunctions.getElementText(driver, _text_cashOutSuggestion).trim()),
-					(MobilityXConstants.MX_CLIENT_CASHOUT_SUGGESTION_TEXT).trim(),
+					MobilityXConstants.CUSTOM_CASHOUT_NAME);			
+			CoreFunctions.verifyText(CoreFunctions.getElementText(driver, _text_cashOutSuggestion).trim(),
+					MobilityXConstants.MX_CLIENT_CASHOUT_SUGGESTION_TEXT_DEFAULT,
 					MobilityXConstants.CASHOUT_SUGGESTION);
 			CoreFunctions.verifyText(CoreFunctions.getElementText(driver, _text_howManyPoints),
 					MobilityXConstants.HOW_MANY_POINTS_WOULD_YOU_LIKE_TO_CASH_OUT,
@@ -1252,9 +1266,13 @@ public class MX_Client_BenefitSelectionToolPage extends Base {
 	private boolean verifyPortionCashoutDetailsAfterBenefitCashoutSelectionDeselection(double selectedBenefitPoints,
 			boolean isCashoutSelected, double selectedCashoutPoints) {
 		try {
+			String expectedCashoutValue;
+			String expectedCashOutInputText;
 			double expectedCashOutPoints = 0;
 			double remainingPoints = Double
 					.parseDouble(CoreFunctions.getPropertyFromConfig("CF_Transferee_TotalAvailablePoints"));
+			DecimalFormat format = new DecimalFormat();
+			format.setDecimalSeparatorAlwaysShown(false);
 
 			if (isCashoutSelected && selectedBenefitPoints == 0) {
 				expectedCashOutPoints = cashoutPoints - selectedCashoutPoints;
@@ -1271,13 +1289,35 @@ public class MX_Client_BenefitSelectionToolPage extends Base {
 			CoreFunctions.verifyValue(
 					Double.parseDouble(CoreFunctions.getElementText(driver, _text_pointsAvailableForCashOut)),
 					expectedCashOutPoints, MobilityXConstants.POINTS_AVAILABLE_FOR_CASHOUT);
-			String[] cashOutValue = CoreFunctions.getElementText(driver, _text_cashOutValue).split("\\(");
-			CoreFunctions.verifyValue(Double.parseDouble(cashOutValue[0].trim()), expectedCashOutPoints,
-					MobilityXConstants.CASHOUT_VALUE);
+
+			String actualCashoutValue = CoreFunctions.getElementText(driver, _text_cashOutValue);
+			if (CoreFunctions.getPropertyFromConfig("CF_Transferee_CashoutCurrencySign").length() == 1) {
+				expectedCashoutValue = CoreFunctions.getPropertyFromConfig("CF_Transferee_CashoutCurrencySign")
+						+ format.format(expectedCashOutPoints) + " ("
+						+ CoreFunctions.getPropertyFromConfig("CF_Transferee_CashoutCurrencyCode") + ")";
+			} else {
+				expectedCashoutValue = CoreFunctions.getPropertyFromConfig("CF_Transferee_CashoutCurrencySign") + " "
+						+ format.format(expectedCashOutPoints) + " ("
+						+ CoreFunctions.getPropertyFromConfig("CF_Transferee_CashoutCurrencyCode") + ")";
+			}
+			CoreFunctions.verifyText(actualCashoutValue, expectedCashoutValue, MobilityXConstants.CASHOUT_VALUE);
+
 			CoreFunctions.verifyValue(Double.parseDouble(CoreFunctions.getAttributeText(_inputCashoutPoints, "value")),
 					selectedCashoutPoints, MobilityXConstants.CASHOUT_INPUT_FIELD);
-			String[] cashOutInputText = CoreFunctions.getElementText(driver, _textInputCashoutPoints).split("\\(");
-			CoreFunctions.verifyValue(Double.parseDouble(cashOutInputText[0].trim()), selectedCashoutPoints,
+
+			String actualCashOutInputText = CoreFunctions.getElementText(driver, _textInputCashoutPoints);
+
+			if (CoreFunctions.getPropertyFromConfig("CF_Transferee_CashoutCurrencySign").length() == 1) {
+				expectedCashOutInputText = CoreFunctions.getPropertyFromConfig("CF_Transferee_CashoutCurrencySign")
+						+ format.format(selectedCashoutPoints) + " ("
+						+ CoreFunctions.getPropertyFromConfig("CF_Transferee_CashoutCurrencyCode") + ")";
+			} else {
+				expectedCashOutInputText = CoreFunctions.getPropertyFromConfig("CF_Transferee_CashoutCurrencySign")
+						+ " " + format.format(selectedCashoutPoints) + " ("
+						+ CoreFunctions.getPropertyFromConfig("CF_Transferee_CashoutCurrencyCode") + ")";
+			}
+
+			CoreFunctions.verifyText(actualCashOutInputText, expectedCashOutInputText,
 					MobilityXConstants.CASHOUT_INPUT_FIELD_LABEL_VALUE);
 			return true;
 		} catch (Exception e) {

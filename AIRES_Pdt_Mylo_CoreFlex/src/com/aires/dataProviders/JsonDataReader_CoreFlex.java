@@ -412,5 +412,9 @@ public class JsonDataReader_CoreFlex {
 	public final CoreFlex_LoginInfo getLoginInfoByEnviroment(String env) {
 		return _loginInfoList.stream().filter(x -> x.environment.equalsIgnoreCase(env)).findAny().get();
 	}
+	
+	public final CoreFlex_LoginInfo getLoginByEnvt(String envt) {
+		return _loginInfoList.stream().filter(x -> x.environment.equalsIgnoreCase(envt)).findAny().get();
+	}
 
 }

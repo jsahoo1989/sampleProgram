@@ -21,6 +21,7 @@ import com.aires.pages.coreflex.MobilityX_LoginPage;
 import com.aires.pages.coreflex.TransfereeSubmissions_DashboardHomePage;
 import com.aires.pages.coreflex.TransfereeSubmissions_DetailsPage;
 import com.aires.pages.coreflex.TransfereeSubmissions_LoginPage;
+import com.aires.testdatatypes.coreflex.CoreFlex_LoginInfo;
 import com.aires.testdatatypes.coreflex.TransfereeSubmissions_LoginData;
 import com.vimalselvam.cucumber.listener.Reporter;
 
@@ -39,6 +40,7 @@ public class CF_Transferee_StaticFixedPoints_CashNotAuth_Both_EndToEndFlow_Steps
 	private MX_Transferee_MyBenefitsBundlePage mxTransfereeMyBenefitsBundlePage;
 	private MobilityX_LoginPage mobilityXLoginPage;
 	private TransfereeSubmissions_LoginPage transfereeSubmissionsLoginPage;
+	private CoreFlex_LoginInfo _coreFlexLoginInfo;
 
 	public static List<Map<String, String>> selectedBenefitDetails;
 
@@ -57,6 +59,10 @@ public class CF_Transferee_StaticFixedPoints_CashNotAuth_Both_EndToEndFlow_Steps
 				.getTransfereeSubmissionsDetailsPage();
 		mobilityXLoginPage = testContext.getCoreFlexPageObjectManager().getMobilityXLoginPage();
 		transfereeSubmissionsLoginPage = testContext.getCoreFlexPageObjectManager().getTransfereeSubmissionsLoginPage();
+
+		_coreFlexLoginInfo = FileReaderManager.getInstance().getCoreFlexJsonReader()
+				.getLoginByEnvt(CoreFunctions.getPropertyFromConfig("envt").toLowerCase());
+//		_coreFlexLoginInfo = FileReaderManager.getInstance().getCoreFlexJsonReader().getLoginByEnvt(System.getProperty("envt").toLowerCase());
 	}
 
 	private TransfereeSubmissions_LoginData _transfereeSubmissionLoginData = FileReaderManager.getInstance()
@@ -175,13 +181,13 @@ public class CF_Transferee_StaticFixedPoints_CashNotAuth_Both_EndToEndFlow_Steps
 		Assert.assertTrue(transfereeSubmissionsDetailsPage.verifySubmittedBenefitsDetails(), MessageFormat.format(
 				COREFLEXConstants.FAILED_TO_VERIFY_DENY_DELETE_REQUEST_UPDATED_TO_SUBMITTED_IN_TRANSFEREE_SUBMISSION_DETAILS_PAGE,
 				CoreConstants.FAIL));
-	}	
+	}
 
 	@Then("^benefit details should be updated in 'MXTransferee' application based on \"([^\"]*)\" 'Delete Request' on Transferee Submission$")
 	public void benefit_details_should_be_updated_in_MXTransferee_application_based_on_Delete_Request_on_Transferee_Submission(
 			String actionPerformed) throws Throwable {
-		testContext.getWebDriverManager().getDriver().navigate()
-				.to(FileReaderManager.getInstance().getConfigReader().getMobilityXUrl());
+
+		testContext.getWebDriverManager().getDriver().navigate().to(_coreFlexLoginInfo.details.mobilityXURL);
 		mobilityXLoginPage.enterUsernameAndPasswordForMobilityX(
 				CoreFunctions.getPropertyFromConfig("Transferee_UserNameInEMail"),
 				CoreFunctions.getPropertyFromConfig("Transferee_PasswordInEMail"));
@@ -201,10 +207,12 @@ public class CF_Transferee_StaticFixedPoints_CashNotAuth_Both_EndToEndFlow_Steps
 						CoreConstants.FAIL));
 		Assert.assertTrue(mxTransfereeFlexPlanningToolPage.verifySubmittedPointsDetails(),
 				MessageFormat.format(MobilityXConstants.SUBMITTED_POINTS_DETAILS_NOT_MATCHED_ON_FLEX_PLANNING_TOOL_PAGE,
-						CoreConstants.FAIL));		
-		Assert.assertTrue(mxTransfereeMyBenefitsBundlePage
-				.validateSubmittedBenefitDetailsPostDeleteRequestOperation(actionPerformed),
-				MessageFormat.format(MobilityXConstants.BENEFIT_CASHOUT_DETAILS_NOT_MATCHED_ON_MBB_PAGE, CoreConstants.FAIL));
+						CoreConstants.FAIL));
+		Assert.assertTrue(
+				mxTransfereeMyBenefitsBundlePage
+						.validateSubmittedBenefitDetailsPostDeleteRequestOperation(actionPerformed),
+				MessageFormat.format(MobilityXConstants.BENEFIT_CASHOUT_DETAILS_NOT_MATCHED_ON_MBB_PAGE,
+						CoreConstants.FAIL));
 
 	}
 
@@ -212,7 +220,7 @@ public class CF_Transferee_StaticFixedPoints_CashNotAuth_Both_EndToEndFlow_Steps
 	public void he_clicks_on_button_for_the_deleted_benefit_under_Submitted_Benefits_section_of_MXTransferee_application(
 			String action) throws Throwable {
 		testContext.getWebDriverManager().getDriver().navigate()
-				.to(FileReaderManager.getInstance().getConfigReader().getMobilityXUrl());
+				.to(_coreFlexLoginInfo.details.mobilityXURL);
 		mobilityXLoginPage.enterUsernameAndPasswordForMobilityX(
 				CoreFunctions.getPropertyFromConfig("Transferee_UserNameInEMail"),
 				CoreFunctions.getPropertyFromConfig("Transferee_PasswordInEMail"));
@@ -252,7 +260,7 @@ public class CF_Transferee_StaticFixedPoints_CashNotAuth_Both_EndToEndFlow_Steps
 	public void delete_Request_Pending_benefit_request_status_should_be_updated_to_Submitted_in_Transferee_Submission_Details_list_of_Transferee_Submissions_application()
 			throws Throwable {
 		testContext.getWebDriverManager().getDriver().navigate()
-				.to(FileReaderManager.getInstance().getConfigReader().getCoreFlexTransfereeSubmissionsApplicationUrl());
+				.to(_coreFlexLoginInfo.details.transfereeSubmissionsURL);
 		Assert.assertTrue(
 				transfereeSubmissionsDashboardHomePage.verifyUserLogin(
 						transfereeSubmissionsLoginPage.getCSMUserName(_transfereeSubmissionLoginData),

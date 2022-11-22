@@ -88,8 +88,8 @@
 			"petShipment": "No",
 			"propertyManagement": "No",
 			"applianceAllowance":"No",
-			"initialTotalPoints":"700",
-			"increasedTotalPoints":"800",
+			"initialTotalPoints":"800",
+			"increasedTotalPoints":"1000",
 			"decreasedTotalPoints":"600"
 		},
 		"preDecisionBenefitInfo": {

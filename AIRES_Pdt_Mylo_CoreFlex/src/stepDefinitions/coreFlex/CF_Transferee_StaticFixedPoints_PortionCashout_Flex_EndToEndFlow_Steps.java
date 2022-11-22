@@ -178,6 +178,16 @@ public class CF_Transferee_StaticFixedPoints_PortionCashout_Flex_EndToEndFlow_St
 		transfereeSubmissionsDetailsPage.clickElementOfPage(action);
 	}
 	
+	@When("^he confirms request by selecting \"([^\"]*)\" option after verifying 'Delete Request Pending' benefit request details on 'Requests' dialog by Client$")
+	public void he_confirms_request_by_selecting_option_after_verifying_Delete_Request_Pending_benefit_request_details_on_Requests_dialog_by_Client(
+			String action) throws Throwable {
+		Assert.assertTrue(transfereeSubmissionsDetailsPage.verifyBenefitDetailsOnRequestsDialogClient(),
+				MessageFormat.format(
+						COREFLEXConstants.FAILED_TO_VERIFY_DELETE_REQUEST_BENEFIT_DETAILS_ON_REQUESTS_DIALOG,
+						CoreConstants.FAIL));
+		transfereeSubmissionsDetailsPage.clickElementOfPage(action);
+	}
+	
 	@When("^\"([^\"]*)\" delete request Benefit_Cashout details should be displayed under 'Transferee History' section with \"([^\"]*)\" status$")
 	public void delete_request_Benefit_Cashout_details_should_be_displayed_under_Transferee_History_section_with_status(
 			String action, String expectedStatus) throws Throwable {

@@ -16,7 +16,10 @@
 			"policy": "hDCC Repatriation (# 14724)",
 			"mxClientUserName": "0011934473@aires.com",
 			"mxClientPassword": "relonetng1",
-			"mxClientUserProfileName": "Jaspal March"
+			"mxClientUserProfileName": "Jaspal March",
+			"blueprintURL": "https://relonetqa3.aires.com/policy-digitization-app/",
+			"mobilityXURL": "https://relonetuat2.aires.com/mobilityx/faces/jsf/Login.jsf",
+			"transfereeSubmissionsURL": "https://relonetqa3.aires.com/flex-review-app/"
 		}
 	},
 	{
@@ -70,7 +73,10 @@
 			"policy": "hDCC Repatriation (# 14724)",
 			"mxClientUserName": "0011856826@aires.com",
 			"mxClientPassword": "relonetng",
-			"mxClientUserProfileName": "Josh Warwick"
+			"mxClientUserProfileName": "Josh Warwick",
+			"blueprintURL": "https://blueprinttest.aires.com/blueprint ",
+			"mobilityXURL": "https://relonettest2.aires.com/mobilityx/faces/jsf/Login.jsf",
+			"transfereeSubmissionsURL": "https://blueprinttest.aires.com/flex-review-app/"
 		}
 	},
 	{
@@ -90,7 +96,10 @@
 			"policy": "hDCC Repatriation (# 14724)",
 			"mxClientUserName": "jzmarzlak@aires.com",
 			"mxClientPassword": "relonetng",
-			"mxClientUserProfileName": "Judson Offner"
+			"mxClientUserProfileName": "Judson Offner",
+			"blueprintURL": "https://relonetdev3.aires.com/policy-digitization-app/",
+			"mobilityXURL": "https://relonetdev3.aires.com/mobilityx/faces/jsf/Login.jsf",
+			"transfereeSubmissionsURL": "https://relonetdev3.aires.com/flex-review-app"
 		}
 	}
 ]

@@ -19,6 +19,9 @@ public class CoreFlex_LoginInfo {
 		public String policy;
 		public String mxClientUserName;
 		public String mxClientPassword;
-		public String mxClientUserProfileName;
+		public String mxClientUserProfileName;		
+		public String blueprintURL;
+		public String mobilityXURL;
+		public String transfereeSubmissionsURL;		
 	}
 }

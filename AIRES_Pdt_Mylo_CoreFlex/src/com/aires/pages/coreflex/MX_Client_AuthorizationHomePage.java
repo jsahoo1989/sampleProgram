@@ -1235,7 +1235,6 @@ public class MX_Client_AuthorizationHomePage extends Base {
 							.parseDouble(CoreFunctions.getPropertyFromConfig("CF_Client_TotalSelectedPoints")))
 					&& (Double.parseDouble(CoreFunctions.getElementText(driver, _totalPoints)) == (Double
 							.parseDouble(CoreFunctions.getPropertyFromConfig("CF_Transferee_TotalAvailablePoints"))));
-//					&& verifySelectedCashoutDetails();
 
 		} catch (Exception e) {
 			Reporter.addStepLog(MessageFormat.format(
@@ -1810,6 +1809,11 @@ public class MX_Client_AuthorizationHomePage extends Base {
 							.replace("pts", "").trim()))),
 					Double.parseDouble(CoreFunctions.getPropertyFromConfig("CF_Client_SelectedCashOutPoints")),
 					MobilityXConstants.CASHOUT_POINTS);
+			CoreFunctions.verifyText(
+					CoreFunctions.getItemsFromListByIndex(driver, _textSelectedFlexBenefitsAmountAllowanceList,
+							indexCashout, true),
+					BusinessFunctions.getMXClientExpectedCashoutDescription(),
+					MobilityXConstants.CLIENT_CASHOUT_DESCRIPTION);
 			return true;
 		} catch (Exception e) {
 			Reporter.addStepLog(MessageFormat.format(

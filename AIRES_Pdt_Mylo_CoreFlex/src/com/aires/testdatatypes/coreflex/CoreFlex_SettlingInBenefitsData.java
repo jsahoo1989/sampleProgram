@@ -80,8 +80,8 @@ public class CoreFlex_SettlingInBenefitsData {
 	public class PreAcceptanceTripTransportation{
 		public String numberOfTrips;
 		public String transportationType;
-		public String minMilForEconomyAirTravel;
-		public String minMilForBusinessAirTravel;
+		public String distance;
+		public String unitOfDistance;
 		public String minFlightTimeExclLayovers;
 		public String accompanyingFamilyMember;
 		public String excessBaggageFees;

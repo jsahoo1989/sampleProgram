@@ -165,11 +165,17 @@ public class CoreFlex_FinalMove_BenefitsPage extends BenefitPage {
 	@FindBy(how = How.CSS, using = "ng-select[formcontrolname='finalMoveTransportTypeList'] span[class*='ng-value-label']")
 	private WebElement _selectTransportationTypeSelectedValue;
 
-	@FindBy(how = How.CSS, using = "input[formcontrolname='minMileageEconomy']")
-	private WebElement _inputMinMileageEconomy;
+	@FindBy(how = How.CSS, using = "input[formcontrolname='minDistanceEconomyFm']")
+	private WebElement _inputDistanceEconomy;
 
-	@FindBy(how = How.CSS, using = "input[formcontrolname='minMileageBusiness']")
-	private WebElement _inputMinMileageBusiness;
+	@FindBy(how = How.XPATH, using = "//div[@class='collapse show']//input[@formcontrolname='unitOfEconomyCodeFm']/parent::label[@class='form-check-label']")
+	private List<WebElement> _radioBtnUnitOfDistanceEconomy;
+
+	@FindBy(how = How.XPATH, using = "//div[@class='collapse show']//input[@formcontrolname='unitOfEconomyCodeFm']")
+	private List<WebElement> _radioBtnUnitOfDistanceEconomyButtonList;
+
+	@FindBy(how = How.CSS, using = "input[formcontrolname='minDistanceEconomyHht']")
+	private WebElement _inputMinDistanceEconomy;
 
 	@FindBy(how = How.CSS, using = "input[formcontrolname='minHrsBusinsAtrvl']")
 	private WebElement _inputMinHrsForBusinessAirTravel;
@@ -356,13 +362,13 @@ public class CoreFlex_FinalMove_BenefitsPage extends BenefitPage {
 	// If Applicable Text
 	@FindBy(how = How.XPATH, using = "//label[contains(text(),'if applicable')]")
 	private List<WebElement> _textIfApplicable;
-	
+
 	@FindBy(how = How.XPATH, using = "//span[contains(text(),'Flex Benefits')]/ancestor::div[contains(@id,'secondItemDiv')]//div[contains(@class,'RXCFServicesMonitoringBorderPanel')]")
 	private List<WebElement> flexCardPanelList;
-	
+
 	@FindBy(how = How.XPATH, using = "//span[contains(text(),'Core Benefits')]/ancestor::div[contains(@id,'firstItemDiv')]//div[contains(@class,'RXCFServicesMonitoringBorderPanel')]")
 	private List<WebElement> coreCardPanelList;
-	
+
 	private By _serviceCompleted = By
 			.cssSelector("span[class='RXBigIconPrimary ServicesSuccessIcon icon-check-approved']");
 
@@ -578,12 +584,7 @@ public class CoreFlex_FinalMove_BenefitsPage extends BenefitPage {
 			CoreFunctions.selectItemInListByText(driver, _selectTransportationTypeOptions,
 					movingBenefitData.finalMoveTransportation.transportationType, true);
 			CoreFunctions.clickElement(driver, _selectTransportationType);
-			CoreFunctions.clearAndSetText(driver, _inputMinMileageEconomy,
-					movingBenefitData.finalMoveTransportation.minMilForEconomyAirTravel);
-			CoreFunctions.clearAndSetText(driver, _inputMinMileageBusiness,
-					movingBenefitData.finalMoveTransportation.minMilForBusinessAirTravel);
-			CoreFunctions.clearAndSetText(driver, _inputMinHrsForBusinessAirTravel,
-					movingBenefitData.finalMoveTransportation.minHrsForBusinessAirTravel);
+			fillTransportationTripBasedOnTypeSelection();
 			CoreFunctions.clearAndSetText(driver, _inputMinFlightTimeExlLayovers,
 					movingBenefitData.finalMoveTransportation.minFlightTimeExclLayovers);
 			CoreFunctions.clickElement(driver, _selectAccompanyingFamilyMemberCode);
@@ -605,6 +606,16 @@ public class CoreFlex_FinalMove_BenefitsPage extends BenefitPage {
 		} catch (Exception e) {
 			Assert.fail(MessageFormat.format(PDTConstants.EXCEPTION_OCCURED_FILL_SUBBENEFIT_FORM, CoreConstants.FAIL,
 					subBenefitFormName, e.getMessage()));
+		}
+	}
+
+	private void fillTransportationTripBasedOnTypeSelection() {
+		if ((movingBenefitData.finalMoveTransportation.transportationType)
+				.contains(COREFLEXConstants.ECONOMY_CLASS_AIRFARE)) {
+			CoreFunctions.clearAndSetText(driver, _inputDistanceEconomy,
+					movingBenefitData.finalMoveTransportation.minDistanceForEconomyAirTravel);
+			CoreFunctions.selectItemInListByText(driver, _radioBtnUnitOfDistanceEconomy,
+					movingBenefitData.finalMoveTransportation.unitOfEconomyDistance, true);
 		}
 	}
 
@@ -964,15 +975,16 @@ public class CoreFlex_FinalMove_BenefitsPage extends BenefitPage {
 			CoreFunctions.verifyText(driver, _selectTransportationTypeSelectedValue,
 					movingBenefitData.finalMoveTransportation.transportationType,
 					COREFLEXConstants.TRANSPORTATION_TYPE);
-			CoreFunctions.verifyText(_inputMinMileageEconomy.getDomProperty("value"),
-					movingBenefitData.finalMoveTransportation.minMilForEconomyAirTravel,
-					COREFLEXConstants.MIN_MILEAGE_FOR_ECONOMY_AIR_TRAVEL);
-			CoreFunctions.verifyText(_inputMinMileageBusiness.getDomProperty("value"),
-					movingBenefitData.finalMoveTransportation.minMilForBusinessAirTravel,
-					COREFLEXConstants.MIN_MILEAGE_FOR_BUSINESS_AIR_TRAVEL);
-			CoreFunctions.verifyText(_inputMinHrsForBusinessAirTravel.getDomProperty("value"),
-					movingBenefitData.finalMoveTransportation.minHrsForBusinessAirTravel,
-					COREFLEXConstants.MIN_HOURS_FOR_BUSINESS_AIR_TRAVEL);
+			if ((movingBenefitData.finalMoveTransportation.transportationType)
+					.contains(COREFLEXConstants.ECONOMY_CLASS_AIRFARE)) {
+				CoreFunctions.verifyText(_inputDistanceEconomy.getDomProperty("value"),
+						movingBenefitData.finalMoveTransportation.minDistanceForEconomyAirTravel,
+						COREFLEXConstants.ECONOMY_CLASS_AIRFARE);
+				CoreFunctions.verifyRadioButtonSelection(driver, _radioBtnUnitOfDistanceEconomy,
+						_radioBtnUnitOfDistanceEconomyButtonList,
+						movingBenefitData.finalMoveTransportation.unitOfEconomyDistance,
+						COREFLEXConstants.UNIT_OF_DISTANCE);
+			}
 			CoreFunctions.verifyText(_inputMinFlightTimeExlLayovers.getDomProperty("value"),
 					movingBenefitData.finalMoveTransportation.minFlightTimeExclLayovers,
 					COREFLEXConstants.MIN_FLIGHT_TIME_EXCL_LAYOVERS);

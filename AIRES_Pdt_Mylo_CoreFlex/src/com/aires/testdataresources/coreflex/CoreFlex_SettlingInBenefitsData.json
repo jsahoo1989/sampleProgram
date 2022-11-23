@@ -73,8 +73,8 @@
 		"preAcceptanceTripTransportation": {
 			"numberOfTrips": "10",
 			"transportationType": "Distance",
-			"minMilForEconomyAirTravel": "2000",
-			"minMilForBusinessAirTravel": "1000",
+			"distance": "2000",
+			"unitOfDistance":"Miles",
 			"minFlightTimeExclLayovers": "40",
 			"accompanyingFamilyMember": "Transferee + Spouse/Partner Only",
 			"excessBaggageFees": "Yes",

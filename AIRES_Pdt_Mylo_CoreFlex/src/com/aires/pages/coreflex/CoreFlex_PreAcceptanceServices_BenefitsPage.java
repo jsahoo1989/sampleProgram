@@ -172,11 +172,14 @@ public class CoreFlex_PreAcceptanceServices_BenefitsPage extends BenefitPage {
 	@FindBy(how = How.CSS, using = "ng-select[formcontrolname='preAcceptanceTransportTypeList'] span.ng-option-label")
 	private List<WebElement> _selectTransportationTypeOptions;
 
-	@FindBy(how = How.CSS, using = "input[formcontrolname='minMileageEconomy']")
-	private WebElement _inputMinMileageEconomy;
+	@FindBy(how = How.CSS, using = "input[formcontrolname='distance']")
+	private WebElement _inputDistance;
 
-	@FindBy(how = How.CSS, using = "input[formcontrolname='minMileageBusiness']")
-	private WebElement _inputMinMileageBusiness;
+	@FindBy(how = How.XPATH, using = "//div[@class='collapse show']//input[@formcontrolname='unitOfDistanceCode']/parent::label[@class='form-check-label']")
+	private List<WebElement> _radioBtnUnitOfDistance;
+
+	@FindBy(how = How.XPATH, using = "//div[@class='collapse show']//input[@formcontrolname='unitOfDistanceCode']")
+	private List<WebElement> _radioBtnUnitOfDistanceButtonList;
 
 	@FindBy(how = How.CSS, using = "input[formcontrolname='minFlightTimeExec']")
 	private WebElement _inputMinFlightTimeExlLayovers;
@@ -594,10 +597,13 @@ public class CoreFlex_PreAcceptanceServices_BenefitsPage extends BenefitPage {
 			CoreFunctions.selectItemInListByText(driver, _selectTransportationTypeOptions,
 					settlingInBenefitData.preAcceptanceTripTransportation.transportationType, true);
 			CoreFunctions.clickElement(driver, _selectTransportationType);
-			CoreFunctions.clearAndSetText(driver, _inputMinMileageEconomy,
-					settlingInBenefitData.preAcceptanceTripTransportation.minMilForEconomyAirTravel);
-			CoreFunctions.clearAndSetText(driver, _inputMinMileageBusiness,
-					settlingInBenefitData.preAcceptanceTripTransportation.minMilForBusinessAirTravel);
+			if ((settlingInBenefitData.preAcceptanceTripTransportation.transportationType)
+					.contains(COREFLEXConstants.DISTANCE)) {
+				CoreFunctions.clearAndSetText(driver, _inputDistance,
+						settlingInBenefitData.preAcceptanceTripTransportation.distance);
+				CoreFunctions.selectItemInListByText(driver, _radioBtnUnitOfDistance,
+						settlingInBenefitData.preAcceptanceTripTransportation.unitOfDistance, true);
+			}			
 			CoreFunctions.clearAndSetText(driver, _inputMinFlightTimeExlLayovers,
 					settlingInBenefitData.preAcceptanceTripTransportation.minFlightTimeExclLayovers);
 			CoreFunctions.clickElement(driver, _selectAccompanyingFamilyMemberCode);
@@ -1021,13 +1027,16 @@ public class CoreFlex_PreAcceptanceServices_BenefitsPage extends BenefitPage {
 			CoreFunctions.highlightObject(driver, _inputNumOfTrips);
 			CoreFunctions.verifyText(driver, _selectTransportationTypeSelectedValue,
 					settlingInBenefitData.preAcceptanceTripTransportation.transportationType,
-					COREFLEXConstants.TRANSPORTATION_TYPE);
-			CoreFunctions.verifyText(_inputMinMileageEconomy.getDomProperty("value"),
-					settlingInBenefitData.preAcceptanceTripTransportation.minMilForEconomyAirTravel,
-					COREFLEXConstants.MIN_MILEAGE_FOR_ECONOMY_AIR_TRAVEL);
-			CoreFunctions.verifyText(_inputMinMileageBusiness.getDomProperty("value"),
-					settlingInBenefitData.preAcceptanceTripTransportation.minMilForBusinessAirTravel,
-					COREFLEXConstants.MIN_MILEAGE_FOR_BUSINESS_AIR_TRAVEL);
+					COREFLEXConstants.TRANSPORTATION_TYPE);			
+			if ((settlingInBenefitData.preAcceptanceTripTransportation.transportationType)
+					.contains(COREFLEXConstants.DISTANCE)) {
+				CoreFunctions.verifyText(_inputDistance.getDomProperty("value"),
+						settlingInBenefitData.preAcceptanceTripTransportation.distance, COREFLEXConstants.DISTANCE);
+				CoreFunctions.verifyRadioButtonSelection(driver, _radioBtnUnitOfDistance,
+						_radioBtnUnitOfDistanceButtonList,
+						settlingInBenefitData.preAcceptanceTripTransportation.unitOfDistance,
+						COREFLEXConstants.UNIT_OF_DISTANCE);
+			}			
 			CoreFunctions.verifyText(_inputMinFlightTimeExlLayovers.getDomProperty("value"),
 					settlingInBenefitData.preAcceptanceTripTransportation.minFlightTimeExclLayovers,
 					COREFLEXConstants.MIN_FLIGHT_TIME_EXCL_LAYOVERS);

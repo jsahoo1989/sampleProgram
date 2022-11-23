@@ -82,8 +82,10 @@ public class CoreFlex_HousingBenefitsData {
 	public class HouseHuntingTripTransportation{
 		public String numberOfTrips;
 		public String transportationType;
-		public String minMilForEconomyAirTravel;
-		public String minMilForBusinessAirTravel;
+		public String distance;
+		public String unitOfDistance;
+		public String minDistanceForEconomyAirTravel;
+		public String unitOfEconomyDistance;
 		public String minFlightTimeExclLayovers;
 		public String accompanyingFamilyMember;
 		public String excessBaggageFees;

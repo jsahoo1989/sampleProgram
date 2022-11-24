@@ -12,7 +12,7 @@
 			"province": "NY",
 			"postalCode": "10014",
 			"country": "USA",
-			"accountClosingDate": "16 Feb 2023"
+			"accountClosingDate": "16 Feb 2025"
 		},
 		"wireTransferAccountType": {
 			"accountType": "Wire Transfer",
@@ -29,7 +29,7 @@
 			"bankCountry": "",
 			"accountIBAN": "12345",
 			"swiftRouting": "11301125",
-			"bankAccountClosingDate": "16 Nov 2023"
+			"bankAccountClosingDate": "16 Nov 2025"
 		}
 	}
 ]

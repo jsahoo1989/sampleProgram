@@ -19,9 +19,8 @@ public class CoreFlex_MovingBenefitsData {
 
 	public class FinalMoveTransportation {
 		public String transportationType;
-		public String minMilForEconomyAirTravel;
-		public String minMilForBusinessAirTravel;
-		public String minHrsForBusinessAirTravel;
+		public String minDistanceForEconomyAirTravel;
+		public String unitOfEconomyDistance;
 		public String minFlightTimeExclLayovers;
 		public String accompanyingFamilyMembers;
 		public String excessBaggageFees;
@@ -69,8 +68,8 @@ public class CoreFlex_MovingBenefitsData {
 		public String frequencyTrip;
 		public String frequencyTripOther;
 		public String transportationType;
-		public String minMilForEconomyAirTravel;
-		public String minMilForBusinessAirTravel;
+		public String distance;
+		public String unitOfDistance;
 		public String minFlightTimeExclLayovers;
 		public String accompanyingFamilyMember;
 		public String excessBaggageFees;

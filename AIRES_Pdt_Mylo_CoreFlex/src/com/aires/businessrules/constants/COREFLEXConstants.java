@@ -891,4 +891,7 @@ public class COREFLEXConstants {
 	public static final String APPROVE_POLICY_DIALOG_CHECKBOX_OPTION = "Approve Policy Dialog Checkbox Option";
 	public static final String DIFFERENT_CLIENT_NOT_AVAILABLE_FOR_SELECTION_IN_CLONE_TO_CLIENT_LIST = "{0}Different client not available for selection in Clone to Client List.";
 	public static final String IMPERSONATE_A_USER = "Impersonate";
+	public static final String DISTANCE = "Distance";
+	public static final String UNIT_OF_DISTANCE = "Unit Of Distance";
+	public static final String ECONOMY_CLASS_AIRFARE = "Economy Class Airfare";
 }

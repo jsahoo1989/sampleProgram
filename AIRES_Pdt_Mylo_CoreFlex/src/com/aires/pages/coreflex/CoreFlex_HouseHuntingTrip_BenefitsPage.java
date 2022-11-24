@@ -172,8 +172,17 @@ public class CoreFlex_HouseHuntingTrip_BenefitsPage extends BenefitPage {
 	@FindBy(how = How.CSS, using = "ng-select[formcontrolname='houseHuntingTripTransportTypeList'] span.ng-option-label")
 	private List<WebElement> _selectTransportationTypeOptions;
 
-	@FindBy(how = How.CSS, using = "input[formcontrolname='minMileageEconomy']")
-	private WebElement _inputMinMileageEconomy;
+	@FindBy(how = How.CSS, using = "input[formcontrolname='distanceHht']")
+	private WebElement _inputDistance;
+
+	@FindBy(how = How.XPATH, using = "//div[@class='collapse show']//input[@formcontrolname='unitOfDistanceCodeHht']/parent::label[@class='form-check-label']")
+	private List<WebElement> _radioBtnUnitOfDistance;
+
+	@FindBy(how = How.XPATH, using = "//div[@class='collapse show']//input[@formcontrolname='unitOfDistanceCodeHht']")
+	private List<WebElement> _radioBtnUnitOfDistanceButtonList;
+
+	@FindBy(how = How.CSS, using = "input[formcontrolname='minDistanceEconomyHht']")
+	private WebElement _inputMinDistanceEconomy;
 
 	@FindBy(how = How.CSS, using = "input[formcontrolname='minMileageBusiness']")
 	private WebElement _inputMinMileageBusiness;
@@ -375,7 +384,7 @@ public class CoreFlex_HouseHuntingTrip_BenefitsPage extends BenefitPage {
 
 	@FindBy(how = How.XPATH, using = "//span[contains(text(),'Core Benefits')]/ancestor::div[contains(@id,'firstItemDiv')]//div[contains(@class,'RXCFServicesMonitoringBorderPanel')]")
 	private List<WebElement> coreCardPanelList;
-	
+
 	private By _serviceCompleted = By
 			.cssSelector("span[class='RXBigIconPrimary ServicesSuccessIcon icon-check-approved']");
 
@@ -598,10 +607,7 @@ public class CoreFlex_HouseHuntingTrip_BenefitsPage extends BenefitPage {
 			CoreFunctions.selectItemInListByText(driver, _selectTransportationTypeOptions,
 					housingBenefitData.houseHuntingTripTransportation.transportationType, true);
 			CoreFunctions.clickElement(driver, _selectTransportationType);
-			CoreFunctions.clearAndSetText(driver, _inputMinMileageEconomy,
-					housingBenefitData.houseHuntingTripTransportation.minMilForEconomyAirTravel);
-			CoreFunctions.clearAndSetText(driver, _inputMinMileageBusiness,
-					housingBenefitData.houseHuntingTripTransportation.minMilForBusinessAirTravel);
+			fillTransportationTripBasedOnTypeSelection();
 			CoreFunctions.clearAndSetText(driver, _inputMinFlightTimeExlLayovers,
 					housingBenefitData.houseHuntingTripTransportation.minFlightTimeExclLayovers);
 			CoreFunctions.clickElement(driver, _selectAccompanyingFamilyMemberCode);
@@ -625,6 +631,16 @@ public class CoreFlex_HouseHuntingTrip_BenefitsPage extends BenefitPage {
 		} catch (Exception e) {
 			Assert.fail(MessageFormat.format(PDTConstants.EXCEPTION_OCCURED_FILL_SUBBENEFIT_FORM, CoreConstants.FAIL,
 					subBenefitFormName, e.getMessage()));
+		}
+	}
+
+	private void fillTransportationTripBasedOnTypeSelection() {
+		if ((housingBenefitData.houseHuntingTripTransportation.transportationType)
+				.contains(COREFLEXConstants.DISTANCE)) {
+			CoreFunctions.clearAndSetText(driver, _inputDistance,
+					housingBenefitData.houseHuntingTripTransportation.distance);
+			CoreFunctions.selectItemInListByText(driver, _radioBtnUnitOfDistance,
+					housingBenefitData.houseHuntingTripTransportation.unitOfDistance, true);
 		}
 	}
 
@@ -1023,12 +1039,15 @@ public class CoreFlex_HouseHuntingTrip_BenefitsPage extends BenefitPage {
 			CoreFunctions.verifyText(driver, _selectTransportationTypeSelectedValue,
 					housingBenefitData.houseHuntingTripTransportation.transportationType,
 					COREFLEXConstants.TRANSPORTATION_TYPE);
-			CoreFunctions.verifyText(_inputMinMileageEconomy.getDomProperty("value"),
-					housingBenefitData.houseHuntingTripTransportation.minMilForEconomyAirTravel,
-					COREFLEXConstants.MIN_MILEAGE_FOR_ECONOMY_AIR_TRAVEL);
-			CoreFunctions.verifyText(_inputMinMileageBusiness.getDomProperty("value"),
-					housingBenefitData.houseHuntingTripTransportation.minMilForBusinessAirTravel,
-					COREFLEXConstants.MIN_MILEAGE_FOR_BUSINESS_AIR_TRAVEL);
+			if ((housingBenefitData.houseHuntingTripTransportation.transportationType)
+					.contains(COREFLEXConstants.DISTANCE)) {
+				CoreFunctions.verifyText(_inputDistance.getDomProperty("value"),
+						housingBenefitData.houseHuntingTripTransportation.distance, COREFLEXConstants.DISTANCE);
+				CoreFunctions.verifyRadioButtonSelection(driver, _radioBtnUnitOfDistance,
+						_radioBtnUnitOfDistanceButtonList,
+						housingBenefitData.houseHuntingTripTransportation.unitOfDistance,
+						COREFLEXConstants.UNIT_OF_DISTANCE);
+			}
 			CoreFunctions.verifyText(_inputMinFlightTimeExlLayovers.getDomProperty("value"),
 					housingBenefitData.houseHuntingTripTransportation.minFlightTimeExclLayovers,
 					COREFLEXConstants.MIN_FLIGHT_TIME_EXCL_LAYOVERS);

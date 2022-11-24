@@ -46,6 +46,7 @@ import com.aires.testdatatypes.iris.IRIS_AssignmentData;
 import com.vimalselvam.cucumber.listener.Reporter;
 
 import cucumber.api.DataTable;
+import cucumber.api.java.en.And;
 import cucumber.api.java.en.Given;
 import cucumber.api.java.en.Then;
 import cucumber.api.java.en.When;
@@ -654,6 +655,18 @@ public class CoreFlex_SharedSteps {
 		mobilityXLoginPage.clickSignIn();
 		mxTransfereeJourneyHomePage.handle_Cookie_AfterLogin();
 		mxTransfereeJourneyHomePage.handle_points_expiry_reminder_popup();
+	}
+	
+	@And("^he has impersonated above created transferee after login as an admin$")
+	public void he_has_impersonated_above_created_transferee() {
+		
+	}
+	
+	@Given("^he has impersonated the user with below details from MobilityX dashboard$")
+	public void he_impersonates_a_user_with_below_details_from_MobilityX_Dashboard(DataTable table) {
+		mxTransfereeJourneyHomePage.clickElementOfDashboardPage(COREFLEXConstants.IMPERSONATE_A_USER);
+		mxTransfereeJourneyHomePage.verifyImpersonateDialogTitleAppear();
+		mxTransfereeJourneyHomePage.searchUserAndImpersonate(table);
 	}
 
 	@Given("^he has validated 'Assignment-Policy' details after selecting below option displayed on 'Welcome' dialog$")

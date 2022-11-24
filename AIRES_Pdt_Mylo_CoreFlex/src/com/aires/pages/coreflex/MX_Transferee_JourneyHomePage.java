@@ -32,6 +32,8 @@ import com.aires.utilities.EmailUtil;
 import com.aires.utilities.Log;
 import com.vimalselvam.cucumber.listener.Reporter;
 
+import cucumber.api.DataTable;
+
 public class MX_Transferee_JourneyHomePage extends Base {
 
 	public static PageObjectManager_CoreFlex pageObjectManager_CoreFlex;
@@ -279,10 +281,29 @@ public class MX_Transferee_JourneyHomePage extends Base {
 
 	@FindBy(how = How.CSS, using = "input[id*='dobWire']")
 	private WebElement _textAccountHolderDOB;
-	
+
 	@FindBy(how = How.CSS, using = "div[title='Submit'][id*='wire'] > a")
 	private WebElement _btnWireSubmit;
+
+	@FindBy(how = How.XPATH, using = "//span[text() ='Impersonate a User']")
+	private WebElement _impersonateAUserTile;
 	
+	@FindBy(how = How.ID, using = "rRegion:0:userTypeCombo::content")
+	private WebElement _userTypeDropdownSelector;
+
+	@FindBy(how = How.ID, using = "rRegion:0:edsocmv1::content")
+	private WebElement _clientListDropdownSelector;
+
+	@FindBy(how = How.CSS, using = "input[id='rRegion:0:it2::content']")
+	private WebElement _userNameText;
+
+	@FindBy(how = How.ID, using = "rRegion:0:impSearchButton")
+	private WebElement _searchButton;
+	
+	@FindBy(how = How.CSS, using = "a[class='RXLink RXBigLink RXBold RXWrappedText af_link p_AFTextOnly']")
+	private List<WebElement> _userNameList;
+
+	final By _impersonateDialogTitleAppear = By.xpath("//div[@id='rRegion']//span[text() = 'Impersonate a User']");
 
 	/*********************************************************************/
 
@@ -627,9 +648,9 @@ public class MX_Transferee_JourneyHomePage extends Base {
 				CoreFunctions.clearAndSetText(driver, _textBankCity, accountDetails.wireTransferAccountType.bankCity);
 				CoreFunctions.clearAndSetText(driver, _textBankZip,
 						accountDetails.wireTransferAccountType.bankPostalCode);
-				String bankCountry = DbFunctions.getCoreFlexCurrencyCountry(CoreFunctions.getPropertyFromConfig("CF_Transferee_CashoutCurrencyCode"));
-				CoreFunctions.selectByVisibleText(driver, _selectBankCountry,
-						bankCountry);				
+				String bankCountry = DbFunctions.getCoreFlexCurrencyCountry(
+						CoreFunctions.getPropertyFromConfig("CF_Transferee_CashoutCurrencyCode"));
+				CoreFunctions.selectByVisibleText(driver, _selectBankCountry, bankCountry);
 				CoreFunctions.waitHandler(1);
 				CoreFunctions.clearAndSetText(driver, _textBankIBAN,
 						accountDetails.wireTransferAccountType.accountIBAN);
@@ -1479,6 +1500,35 @@ public class MX_Transferee_JourneyHomePage extends Base {
 			}
 		}
 		return benefitNameList;
+	}
+
+	public void clickElementOfDashboardPage(String impersonateAUser) {
+		CoreFunctions.scrollVerticallyDownByGivenPixle(driver, 1000);
+		CoreFunctions.click(driver, _impersonateAUserTile, _impersonateAUserTile.getText());
+		CoreFunctions.waitForLoaderToDisappear(driver);
+	}
+
+	public boolean verifyImpersonateDialogTitleAppear() {
+		return CoreFunctions.isElementByLocatorExist(driver, _impersonateDialogTitleAppear, 20);
+	}
+
+	public void searchUserAndImpersonate(DataTable table) {
+		List<Map<String, String>> data = table.asMaps(String.class, String.class);
+		CoreFunctions.clearAndSetText(driver, _userNameText, CoreFunctions.getPropertyFromConfig("Transferee_UserNameInEMail"));
+		CoreFunctions.waitHandler(1);
+		BusinessFunctions.selectValueFromDropdown(driver, _clientListDropdownSelector,
+				data.get(0).get("Client").trim());
+		CoreFunctions.waitHandler(2);
+		BusinessFunctions.selectValueFromDropdown(driver, _userTypeDropdownSelector,
+				data.get(0).get("User Type").trim());
+		CoreFunctions.click(driver, _searchButton, "search icon");
+		clickUserNameFromList(data.get(0).get("User Name"));
+	}
+
+	private void clickUserNameFromList(String userName) {
+		CoreFunctions.explicitWaitTillElementListVisibility(driver, _userNameList);
+		CoreFunctions.selectItemInListByText(driver, _userNameList, CoreFunctions.getPropertyFromConfig("Transferee_UserNameInEMail"));
+		
 	}
 
 }

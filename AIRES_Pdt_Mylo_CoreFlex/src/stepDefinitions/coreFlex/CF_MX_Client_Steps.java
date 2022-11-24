@@ -90,6 +90,7 @@ public class CF_MX_Client_Steps {
 
 	@Given("^he has logged into 'MobilityX' application as a 'Client' user$")
 	public void he_is_logged_into_MobilityX_application_as_a_Client_user() throws Throwable {
+		mobilityXLoginPage.clickLogOut();
 		Assert.assertTrue(mobilityXLoginPage.verifyPageNavigation(),
 				MessageFormat.format(COREFLEXConstants.FAILED_TO_NAVIGATE_TO_MOBILITYX_LOGIN_PAGE, CoreConstants.FAIL));
 		CoreConstants.TIME_AFTER_ACTION = new Date().getTime();

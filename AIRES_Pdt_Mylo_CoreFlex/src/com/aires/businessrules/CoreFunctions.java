@@ -1540,7 +1540,7 @@ public class CoreFunctions {
 	}
 
 	public static List<String> getElementTextAndStoreInList(WebDriver driver, List<WebElement> elementList) {
-		return (elementList.stream().map(x -> x.getText()).collect(Collectors.toList()));		
+		return (elementList.stream().map(x -> x.getText()).collect(Collectors.toList()));
 	}
 
 	public static WebElement getElementFromListByText(List<WebElement> elementList, String text) {
@@ -1985,7 +1985,7 @@ public class CoreFunctions {
 			Assert.fail(CoreConstants.FAILED_TO_SELECT_RANDOM_OPTION_FROM_THE_LIST);
 		}
 	}
-	
+
 	public static void removeFileMatchingName(String downloadPath, String fileMatch) {
 		File directory = new File(downloadPath);
 		File[] files = directory.listFiles();
@@ -2012,7 +2012,7 @@ public class CoreFunctions {
 			break;
 		}
 	}
-	
+
 	public static void verifyTextContains(String actualText, String expectedText, String fieldName) {
 		if (actualText.contains(expectedText))
 			Reporter.addStepLog(
@@ -2025,8 +2025,8 @@ public class CoreFunctions {
 		}
 	}
 
-	public static void selectRandomOptionFromTheProvidedList(WebDriver driver,
-			List<WebElement> elementList, List<String> providedCurrencyList) {
+	public static void selectRandomOptionFromTheProvidedList(WebDriver driver, List<WebElement> elementList,
+			List<String> providedCurrencyList) {
 		String randomValue;
 		try {
 			randomValue = providedCurrencyList.get(getRandomNumber(0, providedCurrencyList.size() - 1));
@@ -2034,16 +2034,30 @@ public class CoreFunctions {
 		} catch (Exception e) {
 			Assert.fail(CoreConstants.FAILED_TO_SELECT_RANDOM_OPTION_FROM_THE_LIST);
 		}
-		
+
 	}
-	
-	public static ArrayList<String> getMultipleRandomOptionsForDropDown(int minNum, int maxNum, int count, WebDriver driver, List<WebElement> webElementList) {
+
+	public static ArrayList<String> getMultipleRandomOptionsForDropDown(int minNum, int maxNum, int count,
+			WebDriver driver, List<WebElement> webElementList) {
 		Random random = new Random();
-		List<Integer> randomNumbers = random.ints(minNum, maxNum).distinct().limit(count).boxed().collect(Collectors.toList());
+		List<Integer> randomNumbers = random.ints(minNum, maxNum).distinct().limit(count).boxed()
+				.collect(Collectors.toList());
 		ArrayList<String> randWebElementList = new ArrayList<String>();
-		for(Integer index:randomNumbers) {
+		for (Integer index : randomNumbers) {
 			randWebElementList.add(webElementList.get(index).getText());
 		}
 		return randWebElementList;
+	}
+
+	public static void waitForLoaderToDisappear(WebDriver driver) {
+		if (isElementByLocatorExist(driver, By.cssSelector("span[id='busyStateMessage']"), 5)) {
+			try {
+				WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(300));
+				wait.until(
+						ExpectedConditions.invisibilityOfElementLocated(By.cssSelector("span[id='busyStateMessage']")));
+			} catch (Exception e) {
+				Assert.fail(CoreConstants.ERROR + e.getMessage());
+			}
+		}
 	}
 }

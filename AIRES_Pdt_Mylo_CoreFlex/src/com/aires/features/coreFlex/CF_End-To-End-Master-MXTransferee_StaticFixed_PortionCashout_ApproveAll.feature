@@ -64,7 +64,7 @@ Feature: Validate MXTransferee Workflow and MJ Cards(CancelledStatus) for Transf
     And benefit details should be updated in 'MXTransferee' application based on "Approved" 'Delete Request' on Transferee Submission
 
   @Coreflex:218334 @CF_End-To-End_MasterScript @CF_Master_PortionApprove @CF_Master_PortionApprove_Cards_PF
-  Scenario: CoreFlex - Setting up a New CoreFlex policy in 'CoreFlex Blueprint Application' with Both type 'Aires Managed' benefits
+  Scenario: CoreFlex - Setting up a New CoreFlex policy in 'CoreFlex Blueprint Application' with Both type 'Aires Managed' benefits for validating MJ Cards Cancelled Status
     Given he has setup a new Points Based CoreFlex Policy with following selection in Blueprint application
       | Person Responsible For Benefit Selection | Flex Setup Type | Cashout Availability | BenefitType | PolicyRequiredFor            |
       | Transferee                               | Static/Fixed    | Portion Cashout      | Both        | Aires Managed Benefits Cards |
@@ -77,7 +77,7 @@ Feature: Validate MXTransferee Workflow and MJ Cards(CancelledStatus) for Transf
     Then Policy Status and Version should be displayed as "Active" and "V1" respectively on "View/Edit Policy Forms" page
 
   @Coreflex:218335 @CF_End-To-End_MasterScript @CF_Master_PortionApprove @MJ_Cards_Cancelled_StatusChecks
-  Scenario: MXTransferee - Verifying Flex_Core Cards details and (Cancelled) status of the submitted Aires Managed Benefit
+  Scenario: MXTransferee - Verifying MobilityJourney Cards Cancelled status for submitted Flex_Core Cards Aires Managed Benefit
     Given he has logged into 'MobilityX' application after creating a new 'Transferee' through IRIS application for policy setup in 'Policy Digitization Tool'
     And he has validated 'Assignment-Policy' details after selecting below option displayed on 'Welcome' dialog
       | WelcomeDialogSelection               |

@@ -317,6 +317,41 @@ public class MobilityX_LoginPage extends Base {
 
 		return false;
 	}
+	
+	public boolean readDelegateCredentialsFromMail() {
+		try {
+			// Reading Transferee Username and Password from email and writing to the Config
+			// Properties File
+			String host = "outlook.office365.com";
+			// Enter Your Email ID
+			String userName = "airesautomationtransferee@aires.com";
+			// Enter your email outlook password
+			String pwd = CoreConstants.AUTO_EMAIL_PWD;
+			// Enter expected From complete email address
+			String expFromUserName = "securelogin@aires.com";
+			// Enter expected email subject
+			String expEmailSubject = "MobilityX Username";
+			String resultUserName = EmailUtil.searchEmailAndReturnResult(host, userName, pwd, expFromUserName,
+					expEmailSubject, PDTConstants.TRANSFEREE_USER_NAME);
+			String userName_InEmail = resultUserName.trim();
+			String expFromPwd = "testrelonet@aires.com";
+			String expEmailSubjectPwd = "MobilityX Password";
+			String resultPassword = EmailUtil.searchEmailAndReturnResult(host, userName, pwd, expFromPwd,
+					expEmailSubjectPwd, PDTConstants.TRANSFEREE_PASSWORD);
+			CoreFunctions.writeToPropertiesFile("Delegate_PasswordInEMail", resultPassword);
+			CoreFunctions.writeToPropertiesFile("Delegate_UserNameInEMail", userName_InEmail);
+			Reporter.addStepLog(CoreConstants.PASS + CoreConstants.VRFIED_THAT
+					+ "UserName & Password Successfully received in Email for User : " + userName_InEmail);
+			return true;
+
+		} catch (Exception e) {
+			Reporter.addStepLog(
+					MessageFormat.format(COREFLEXConstants.EXCEPTION_OCCURED_WHILE_READING_CREDENTIALS_FROM_EMAIL,
+							CoreConstants.FAIL, e.getMessage()));
+		}
+
+		return false;
+	}
 
 	public boolean verifyBasePolicySubmitted() {
 		return Boolean.valueOf(CoreFunctions.getPropertyFromConfig("CoreFlexMultipleSubmissionFlag"));

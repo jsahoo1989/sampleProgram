@@ -233,8 +233,8 @@ public class EmailUtil {
 	private static List<Message> getRecentMessagesRecieved(String email, String password) {
 		try {
 			final UsernamePasswordCredential usernamePasswordCredential = new UsernamePasswordCredentialBuilder()
-					.clientId("724f1c20-511f-4f8f-a901-56daf6e0b4c5").username("airesautomation@aires.com")
-					.tenantId("4a76d546-bb2b-44d3-94e6-23c28e086165").password("Aut0Mati0nT34mNov").build();
+					.clientId("724f1c20-511f-4f8f-a901-56daf6e0b4c5").username(email)
+					.tenantId("4a76d546-bb2b-44d3-94e6-23c28e086165").password(password).build();
 
 			final TokenCredentialAuthProvider tokenCredentialAuthProvider = new TokenCredentialAuthProvider(
 					new ArrayList<String>() {

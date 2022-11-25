@@ -656,12 +656,32 @@ public class CoreFlex_SharedSteps {
 		mxTransfereeJourneyHomePage.handle_Cookie_AfterLogin();
 		mxTransfereeJourneyHomePage.handle_points_expiry_reminder_popup();
 	}
-	
-	@And("^he has impersonated above created transferee after login as an admin$")
-	public void he_has_impersonated_above_created_transferee() {
-		
+
+	@And("he has delegated flex benefit access to a different user")
+	public void he_has_delegated_flex_benefit_access_to_a_different_user() {
+		mxTransfereeJourneyHomePage.proceedToAccountSettingsPage();
+		mxTransfereeJourneyHomePage.delegateAccess();
+		mobilityXLoginPage.clickLogOut();
 	}
-	
+
+	@When("he logged into MobilityX application as delegated user")
+	public void he_logged_in_as_a_different_user() {
+		Assert.assertTrue(mobilityXLoginPage.readDelegateCredentialsFromMail(), MessageFormat
+				.format(MobilityXConstants.FAILED_TO_READ_USER_CREDENTIALS_FROM_GENERATED_EMAIL, CoreConstants.FAIL));
+		mobilityXLoginPage.enterUsernameAndPasswordForMobilityX(
+				CoreFunctions.getPropertyFromConfig("Delegate_UserNameInEMail"),
+				CoreFunctions.getPropertyFromConfig("Delegate_PasswordInEMail"));
+		mobilityXLoginPage.clickSignIn();
+		mxTransfereeMyProfilePage.setUpNewMobilityXTransferee();
+		mxTransfereeJourneyHomePage.handle_Cookie_AfterLogin();
+		mxTransfereeJourneyHomePage.handle_points_expiry_reminder_popup();
+	}
+
+	@Then("he should be able to access selected flex benefit details of the transferee")
+	public void validate_selected_benefits_as_a_delegated_user() {
+		mxTransfereeJourneyHomePage.validateDelegateUserBanner();
+	}
+
 	@Given("^he has impersonated the user with below details from MobilityX dashboard$")
 	public void he_impersonates_a_user_with_below_details_from_MobilityX_Dashboard(DataTable table) {
 		mxTransfereeJourneyHomePage.clickElementOfDashboardPage(COREFLEXConstants.IMPERSONATE_A_USER);
@@ -764,12 +784,14 @@ public class CoreFlex_SharedSteps {
 		mxTransfereeMyBenefitsBundlePage.clickReviewAndSubmit();
 		CoreConstants.TIME_BEFORE_ACTION = new Date().getTime();
 	}
-	
+
 	@Given("^he has clicked on \"([^\"]*)\" button after validating all the 'Aires Managed' benefit details listed under 'Selected Benefits' section on \"([^\"]*)\" page$")
 	public void he_has_clicked_on_button_after_validating_all_the_Aires_Managed_benefit_details_listed_under_Selected_Benefits_section_on_page(
 			String reviewAndSubmitButton, String pageName) throws Throwable {
-		Assert.assertTrue(mxTransfereeMyBenefitsBundlePage.verifySelectedAiresManagedBenefitDetails(), MessageFormat
-				.format(MobilityXConstants.FAILED_TO_VERIFY_SELECTED_AIRES_MANAGED_BENEFITS_ON_MY_BUNDLE_PAGE, CoreConstants.FAIL));
+		Assert.assertTrue(mxTransfereeMyBenefitsBundlePage.verifySelectedAiresManagedBenefitDetails(),
+				MessageFormat.format(
+						MobilityXConstants.FAILED_TO_VERIFY_SELECTED_AIRES_MANAGED_BENEFITS_ON_MY_BUNDLE_PAGE,
+						CoreConstants.FAIL));
 		mxTransfereeMyBenefitsBundlePage.clickReviewAndSubmit();
 		CoreConstants.TIME_BEFORE_ACTION = new Date().getTime();
 	}
@@ -794,10 +816,10 @@ public class CoreFlex_SharedSteps {
 		CoreConstants.TIME_BEFORE_ACTION = new Date().getTime();
 
 	}
-	
+
 	@Given("^he has clicked on \"([^\"]*)\" button after entering Transferee name on \"([^\"]*)\" dialog and validating 'Aires Managed' benefit details$")
-	public void he_has_clicked_on_button_after_entering_Transferee_name_on_dialog_and_validating_Aires_Managed_benefit_details(String buttonName,
-			String submissionDialog) throws Throwable {
+	public void he_has_clicked_on_button_after_entering_Transferee_name_on_dialog_and_validating_Aires_Managed_benefit_details(
+			String buttonName, String submissionDialog) throws Throwable {
 		Assert.assertTrue(mxTransfereeMyBenefitsBundlePage.isSubmitBundlePopupDisplayed(),
 				MessageFormat.format(MobilityXConstants.SUBMIT_BUNDLE_POPUP_NOT_DISPLAYED, CoreConstants.FAIL));
 		CoreConstants.TIME_AFTER_ACTION = new Date().getTime();

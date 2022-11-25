@@ -21,6 +21,7 @@ import com.aires.businessrules.DbFunctions;
 import com.aires.businessrules.constants.COREFLEXConstants;
 import com.aires.businessrules.constants.CoreConstants;
 import com.aires.businessrules.constants.MobilityXConstants;
+import com.aires.businessrules.constants.PDTConstants;
 import com.aires.managers.FileReaderManager;
 import com.aires.managers.PageObjectManager_CoreFlex;
 import com.aires.testdatatypes.coreflex.Benefit;
@@ -99,6 +100,9 @@ public class MX_Transferee_JourneyHomePage extends Base {
 
 	@FindBy(how = How.XPATH, using = "//span[text()='Banking']")
 	private WebElement _optionBanking;
+
+	@FindBy(how = How.XPATH, using = "//span[text()='Account Settings']")
+	private WebElement _optionAccountSettings;
 
 	@FindBy(how = How.XPATH, using = "//span[text()='Add payment account']")
 	private WebElement _link_addPaymentAccount;
@@ -287,7 +291,7 @@ public class MX_Transferee_JourneyHomePage extends Base {
 
 	@FindBy(how = How.XPATH, using = "//span[text() ='Impersonate a User']")
 	private WebElement _impersonateAUserTile;
-	
+
 	@FindBy(how = How.ID, using = "rRegion:0:userTypeCombo::content")
 	private WebElement _userTypeDropdownSelector;
 
@@ -299,9 +303,39 @@ public class MX_Transferee_JourneyHomePage extends Base {
 
 	@FindBy(how = How.ID, using = "rRegion:0:impSearchButton")
 	private WebElement _searchButton;
-	
+
 	@FindBy(how = How.CSS, using = "a[class='RXLink RXBigLink RXBold RXWrappedText af_link p_AFTextOnly']")
 	private List<WebElement> _userNameList;
+
+	@FindBy(how = How.CSS, using = "[id*='btndelegateheaderadd']")
+	private WebElement _btnNewDelegate;
+
+	@FindBy(how = How.CSS, using = "[id*='uRegion:0:delfname::content']")
+	private WebElement _inputDelFirstName;
+
+	@FindBy(how = How.CSS, using = "[id*='uRegion:0:dellname::content']")
+	private WebElement _inputDelLastName;
+
+	@FindBy(how = How.CSS, using = "[id*='uRegion:0:delemail::content']")
+	private WebElement _inputDelEmail;
+
+	@FindBy(how = How.CSS, using = "[id*='uRegion:0:raddcoreflextlpa::Label0']")
+	private WebElement _radioDelFlexAccess;
+
+	@FindBy(how = How.CSS, using = "[id*='dsubmitbtn']")
+	private WebElement _btnDelSubmit;
+
+	@FindBy(how = How.CSS, using = "[id*='dadpbtncont']")
+	private WebElement _btnDelContinue;
+
+	@FindBy(how = How.CSS, using = "input[id*='delastartdate']")
+	private WebElement _inputDelStartDate;
+
+	@FindBy(how = How.CSS, using = "input[id*='delaenddate']")
+	private WebElement _inputDelEndDate;
+
+	@FindBy(how = How.CSS, using = "[id*='otDelHeader2']")
+	private WebElement _userBanner;
 
 	final By _impersonateDialogTitleAppear = By.xpath("//div[@id='rRegion']//span[text() = 'Impersonate a User']");
 
@@ -685,6 +719,20 @@ public class MX_Transferee_JourneyHomePage extends Base {
 			CoreFunctions.clickElement(driver, _link_transferee_dropdown);
 			CoreFunctions.clickElement(driver, _optionBanking);
 			CoreFunctions.clickElement(driver, _link_addPaymentAccount);
+			Reporter.addStepLog(MessageFormat.format(MobilityXConstants.ACCOUNT_SETUP_PAGE_IS_DISPLAYED_SUCCESSFULLY,
+					CoreConstants.PASS));
+			return true;
+		} catch (Exception e) {
+			Reporter.addStepLog(MessageFormat.format(MobilityXConstants.FAILED_TO_LOAD_ACCOUNT_SETUP_FORM,
+					CoreConstants.FAIL, e.getMessage()));
+		}
+		return false;
+	}
+
+	public boolean proceedToAccountSettingsPage() {
+		try {
+			CoreFunctions.clickElement(driver, _link_transferee_dropdown);
+			CoreFunctions.clickElement(driver, _optionAccountSettings);
 			Reporter.addStepLog(MessageFormat.format(MobilityXConstants.ACCOUNT_SETUP_PAGE_IS_DISPLAYED_SUCCESSFULLY,
 					CoreConstants.PASS));
 			return true;
@@ -1514,7 +1562,8 @@ public class MX_Transferee_JourneyHomePage extends Base {
 
 	public void searchUserAndImpersonate(DataTable table) {
 		List<Map<String, String>> data = table.asMaps(String.class, String.class);
-		CoreFunctions.clearAndSetText(driver, _userNameText, CoreFunctions.getPropertyFromConfig("Transferee_UserNameInEMail"));
+		CoreFunctions.clearAndSetText(driver, _userNameText,
+				CoreFunctions.getPropertyFromConfig("Transferee_UserNameInEMail"));
 		CoreFunctions.waitHandler(1);
 		BusinessFunctions.selectValueFromDropdown(driver, _clientListDropdownSelector,
 				data.get(0).get("Client").trim());
@@ -1527,8 +1576,34 @@ public class MX_Transferee_JourneyHomePage extends Base {
 
 	private void clickUserNameFromList(String userName) {
 		CoreFunctions.explicitWaitTillElementListVisibility(driver, _userNameList);
-		CoreFunctions.selectItemInListByText(driver, _userNameList, CoreFunctions.getPropertyFromConfig("Transferee_UserNameInEMail"));
-		
+		CoreFunctions.selectItemInListByText(driver, _userNameList,
+				CoreFunctions.getPropertyFromConfig("Transferee_UserNameInEMail"));
+
+	}
+
+	public void delegateAccess() {
+		CoreFunctions.clickElement(driver, _btnNewDelegate);
+		CoreFunctions.writeToPropertiesFile("Delegate_firstName", CoreFunctions.generateRandomString(15));
+		CoreFunctions.writeToPropertiesFile("Delegate_lastName", CoreFunctions.generateRandomString(15));
+		CoreFunctions.setElementText(driver, _inputDelFirstName,
+				CoreFunctions.getPropertyFromConfig("Delegate_firstName"));
+		CoreFunctions.setElementText(driver, _inputDelLastName,
+				CoreFunctions.getPropertyFromConfig("Delegate_lastName"));
+		CoreFunctions.setElementText(driver, _inputDelEmail, "airesautomationtransferee@aires.com");
+		CoreFunctions.setElementText(driver, _inputDelStartDate, CoreFunctions.getcurrentdate());
+		CoreFunctions.setElementText(driver, _inputDelEndDate,
+				CoreFunctions.addDaysMonthYearToCurrentDate(PDTConstants.YEAR, "dd-MMM-yyyy", 1));
+		CoreFunctions.clickElement(driver, _radioDelFlexAccess);
+		CoreFunctions.clickElement(driver, _btnDelSubmit);
+		CoreFunctions.clickElement(driver, _btnDelContinue);
+	}
+
+	public boolean validateDelegateUserBanner() {
+		return CoreFunctions.getElementText(driver, _userBanner)
+				.contains("You are logged in as " + CoreFunctions.getPropertyFromConfig("Delegate_firstName") + " "
+						+ CoreFunctions.getPropertyFromConfig("Delegate_firstName")
+						+ " acting as a delegate on behalf of "
+						+ CoreFunctions.getPropertyFromConfig("Transferee_firstName"));
 	}
 
 }

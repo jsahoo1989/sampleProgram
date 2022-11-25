@@ -52,3 +52,10 @@ Feature: Validate MXTransferee Workflow and MJ Cards(Submitted,StartingSoon,InPr
     Then 'Action Completed' growl message for "Deny Request" should be displayed on "Transferee Submission Details" page
     And 'Delete Request Pending' benefit request status should be updated to 'Submitted' in 'Transferee Submission Details' list
     And benefit details should be updated in 'MXTransferee' application based on "Denied" 'Delete Request' on Transferee Submission
+
+  @Client_Transferee_Impersonate_Delegate_flow
+  Scenario: MXTransferee - Delegate access flow
+    Given he has logged into 'MobilityX' application with the 'Transferee' user
+    And he has delegated flex benefit access to a different user
+    When he logged into MobilityX application as delegated user
+    Then he should be able to access selected flex benefit details of the transferee

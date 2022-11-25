@@ -16,6 +16,7 @@ import com.aires.businessrules.CoreFunctions;
 import com.aires.businessrules.constants.CoreConstants;
 import com.aires.businessrules.constants.IRISConstants;
 import com.aires.managers.FileReaderManager;
+import com.aires.pages.iris.IRIS_PageMaster;
 import com.aires.testdatatypes.coreflex.CoreFlex_LoginInfo;
 import com.aires.testdatatypes.pdt.PDT_LoginDetails;
 import com.aires.utilities.Log;
@@ -52,7 +53,7 @@ public class BasePage {
 
 	private CoreFlex_LoginInfo _coreFlexLoginInfo = FileReaderManager.getInstance().getCoreFlexJsonReader()
 			.getLoginInfoByEnviroment((CoreFunctions.getPropertyFromConfig("envt").toLowerCase()));
-	
+
 //	private CoreFlex_LoginInfo _coreFlexLoginInfo = FileReaderManager.getInstance().getCoreFlexJsonReader()
 //			.getLoginInfoByEnviroment(System.getProperty("envt").toLowerCase());	
 
@@ -299,11 +300,16 @@ public class BasePage {
 	}
 
 	public void reLaunchIrisToAvoidFreezingIssue() throws Exception {
+		getPIDAndKillProces();
+		if (!getRunningStatus_LFTRuntimeEngine(_processName_uftRuntimeEngine)) {
+			invokeIrisApplication();
+			closeIRISLoginWindow();
+		}
 		ModifiableSDKConfiguration config = new ModifiableSDKConfiguration();
 		int portNumber = getPortNumberAsPerUserName();
 		config.setServerAddress(new URI("ws://localhost:" + portNumber));
 		SDK.init(config);
-		 String _path = getIrisPathForApplication(CoreFunctions.getPropertyFromConfig("application"));
+		String _path = getIrisPathForApplication(CoreFunctions.getPropertyFromConfig("application"));
 //		String _path = getIrisPathForApplication(System.getProperty("application"));
 		Runtime.getRuntime().exec(_path);
 		String _windowTitle = getWindowText.getActiveWindowText();
@@ -312,6 +318,13 @@ public class BasePage {
 			_windowTitle = getWindowText.getActiveWindowText();
 		}
 		Desktop.describe(Window.class, new WindowDescription.Builder().title(_windowTitle).build());
+	}
 
+	private void closeIRISLoginWindow() {
+		try {
+			IRIS_PageMaster.getWindowObject(IRISConstants.LOGIN_WINDOW_TITLE).close();
+		} catch (Exception e) {
+			Assert.fail(CoreConstants.ERROR + e.getMessage());
+		}
 	}
 }

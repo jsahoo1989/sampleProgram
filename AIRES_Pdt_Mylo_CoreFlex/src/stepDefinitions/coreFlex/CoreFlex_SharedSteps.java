@@ -579,8 +579,6 @@ public class CoreFlex_SharedSteps {
 				+ " Seconds </b>");
 
 		testContext.getBasePage().reLaunchIrisToAvoidFreezingIssue();
-//		testContext.getBasePage().invokeIrisApplication();
-//		testContext.getBasePage().killExistingBrowsers();
 		testContext.getIrisPageManager().irisLoginPage = new IRIS_LoginPage();
 		testContext.getIrisPageManager().irisLoginPage.getIRISLoginAsPerEnvt(_loginInfo);
 		testContext.getIrisPageManager().irisWelcome12C = new IRIS_Welcome12C();
@@ -659,6 +657,13 @@ public class CoreFlex_SharedSteps {
 
 	@And("he has delegated flex benefit access to a different user")
 	public void he_has_delegated_flex_benefit_access_to_a_different_user() {
+		mxTransfereeJourneyHomePage.proceedToAccountSettingsPage();
+		mxTransfereeJourneyHomePage.delegateAccess();
+		mobilityXLoginPage.clickLogOut();
+	}
+	
+	@And("he has provided 'Access to my Flex Benefits' delegate access to the newly created DelegateUser on 'Delegate Information' page")
+	public void he_has_provided_Access_to_my_Flex_Benefits_delegate_access_to_the_new_User_on_Delegate_Information_page() {
 		mxTransfereeJourneyHomePage.proceedToAccountSettingsPage();
 		mxTransfereeJourneyHomePage.delegateAccess();
 		mobilityXLoginPage.clickLogOut();
@@ -846,8 +851,23 @@ public class CoreFlex_SharedSteps {
 		Reporter.addStepLog("<b>Total time taken to navigateTo/display <i>Benefit Submit Success Flex</i> dialog is :"
 				+ CoreFunctions.calculatePageLoadTime(CoreConstants.TIME_BEFORE_ACTION, CoreConstants.TIME_AFTER_ACTION)
 				+ " Seconds </b>");
-//		Assert.assertTrue(mxTransfereeJourneyHomePage.verifyBenefitSubmissionEmail(), MessageFormat
-//				.format(MobilityXConstants.FAILED_TO_READ_USER_CREDENTIALS_FROM_GENERATED_EMAIL, CoreConstants.FAIL));
+		Assert.assertTrue(mxTransfereeJourneyHomePage.verifyBenefitSubmissionEmail(MobilityXConstants.TRANSFEREE_SUBMISSION), MessageFormat
+				.format(MobilityXConstants.FAILED_TO_VERIFY_MOBILITY_FLEX_BENEFIT_SUBMISSION_EMAIL, CoreConstants.FAIL));
+		mxTransfereeMyBenefitsBundlePage.viewSubmittedBenefits();
+		Assert.assertTrue(mxTransfereeMyBenefitsBundlePage.isMyBundlePageDisplayed(),
+				MessageFormat.format(MobilityXConstants.FAILED_TO_DISPLAY_MY_BENEFIT_BUNDLE_PAGE, CoreConstants.FAIL));
+	}
+	
+	@Given("^he has verified 'Benefit Submission Email' for Impersonated Transferee by Client after clicking on \"([^\"]*)\" button displayed on 'Success Flex' dialog$")
+	public void he_has_clicked_on_button_displayed_on_Success_Flex_dialog_for_Impersonated_User(String button) throws Throwable {
+		Assert.assertTrue(mxTransfereeMyBenefitsBundlePage.isBenefitSubmittedPopUpDisplayed(), MessageFormat.format(
+				MobilityXConstants.FAILED_TO_VERIFY_SUBMITTED_BENEFITS_SUCCESS_FLEX_DIALOG, CoreConstants.FAIL));
+		CoreConstants.TIME_AFTER_ACTION = new Date().getTime();
+		Reporter.addStepLog("<b>Total time taken to navigateTo/display <i>Benefit Submit Success Flex</i> dialog is :"
+				+ CoreFunctions.calculatePageLoadTime(CoreConstants.TIME_BEFORE_ACTION, CoreConstants.TIME_AFTER_ACTION)
+				+ " Seconds </b>");
+		Assert.assertTrue(mxTransfereeJourneyHomePage.verifyBenefitSubmissionEmail(MobilityXConstants.CLIENT_IMPERSONATION_SUBMISSION), MessageFormat
+				.format(MobilityXConstants.FAILED_TO_VERIFY_MOBILITY_FLEX_BENEFIT_SUBMISSION_IMPERSONATION_EMAIL, CoreConstants.FAIL));
 		mxTransfereeMyBenefitsBundlePage.viewSubmittedBenefits();
 		Assert.assertTrue(mxTransfereeMyBenefitsBundlePage.isMyBundlePageDisplayed(),
 				MessageFormat.format(MobilityXConstants.FAILED_TO_DISPLAY_MY_BENEFIT_BUNDLE_PAGE, CoreConstants.FAIL));

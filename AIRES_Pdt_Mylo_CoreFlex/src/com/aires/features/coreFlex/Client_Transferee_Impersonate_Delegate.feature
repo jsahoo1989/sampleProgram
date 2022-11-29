@@ -1,7 +1,7 @@
-Feature: Validate MXTransferee Workflow and MJ Cards(Submitted,StartingSoon,InProgress,Complete Status) for Transferee-CashoutNotAuthorized selection, Versioning & CloningToSameClient, Transferee Mobility Journey and Transferee Submissions DenyAll Operation
+Feature: Validate Impersonation & Delegate User functionality for Core/Flex benefits and Cashout Submission
 
-  @Client_Transferee_Impersonate_policySetup
-  Scenario: CoreFlex - Validating policy status is updated to 'Active' on completion of Approval WorkFlow for Transferee-CashoutNotAuthorized MasterScript Policy Setup
+  @Coreflex:218413 @CF_End-To-End_MasterScript @CF_ImpersonationDelegation @CF_ImpersonationDelegation_PolicySetup
+  Scenario: CoreFlex - Creating a new Active Points Based CoreFlex Policy with Transferee selection for Impersonation & Delegate User Verification
     Given he has setup a new Points Based CoreFlex Policy with following selection in Blueprint application
       | Person Responsible For Benefit Selection | Flex Setup Type | Cashout Availability   | BenefitType | PolicyRequiredFor |
       | Transferee                               | Static/Fixed    | Cashout Not Authorized | Both        | Client            |
@@ -13,8 +13,8 @@ Feature: Validate MXTransferee Workflow and MJ Cards(Submitted,StartingSoon,InPr
     When he clicks on "Approve" button to acknowledge 'Approve this Policy' dialog
     Then Policy Status and Version should be displayed as "Active" and "V1" respectively on "View/Edit Policy Forms" page
 
-  @Client_Transferee_Impersonate_submit_benefits
-  Scenario: MXTransferee - Verifying Flex_Core Cards details and (Submitted,StartingSoon,InProgress,Complete) status of the submitted Aires Managed Benefit
+  @Coreflex:218414 @CF_End-To-End_MasterScript @CF_ImpersonationDelegation @CF_Impersonation_MX
+  Scenario: MXTransferee - Verifying submission of Core/Flex Benefits by Transferee Impersonated by Client User
     Given he has logged into 'MobilityX' application after creating a new 'Transferee' through IRIS application for policy setup in 'Policy Digitization Tool'
     And he has validated 'Assignment-Policy' details after selecting below option displayed on 'Welcome' dialog
       | WelcomeDialogSelection               |
@@ -35,13 +35,13 @@ Feature: Validate MXTransferee Workflow and MJ Cards(Submitted,StartingSoon,InPr
     And he has navigated to "My Benefits Bundle" page after selecting required benefits on "FleX Planning Tool" page
     And he has clicked on "Review and Submit" button after validating all the benefit and Cashout details listed under 'Selected Benefits' section on "My Benefits Bundle" page
     And he has clicked on "Yes - submit my bundle" button after entering Transferee name on "Submit Bundle Confirmation" dialog
-    And he has clicked on "OK - Let Me See My Benefits!" button displayed on 'Success Flex' dialog
+    And he has verified 'Benefit Submission Email' for Impersonated Transferee by Client after clicking on "OK - Let Me See My Benefits!" button displayed on 'Success Flex' dialog
     And he has verified submitted points details on 'Mobility Journey Home' and 'Flex Planning Tool' page
     And he has verified submitted benefit details under 'Submitted Benefits' section of 'My Benefits Bundle' page
     When he 'Delete' submitted Benefits and confirms 'Remove Benefit Selection' dialog by entering username and clicking on "Yes-request to delete this benefit"
     Then 'Status' of the deleted benefit should be displayed as "Delete Request Pending" under 'Submitted Benefits' section of 'My Benefit Bundle' page
 
-  @Client_Transferee_Impersonate_CashNotAuthDeny_MSPEC_PPC_Flow
+  @Coreflex:218415 @CF_End-To-End_MasterScript @CF_ImpersonationDelegation @CF_Impersonation_TS
   Scenario: TransfereeSubmissions - Verifying Benefit_Points Details in TransfereeSubmissions & MobilityX application post Deny All Delete request selection by MSPEC/PPC User
     Given he has logged into 'Transferee Submissions' application as a "MSPEC/PPC" user
     And he has navigated to "Transferee Submissions Dashboard" page having record of Bundle submitted by the transferee
@@ -59,3 +59,12 @@ Feature: Validate MXTransferee Workflow and MJ Cards(Submitted,StartingSoon,InPr
     And he has delegated flex benefit access to a different user
     When he logged into MobilityX application as delegated user
     Then he should be able to access selected flex benefit details of the transferee
+    
+    
+    @Coreflex: @CF_End-To-End_MasterScript @CF_ImpersonationDelegation @CF_Delegation_MX
+    Scenario: MXTransferee - Verifying submission of Core/Flex Benefits by Delegated Transferee User
+    Given he has logged into 'MobilityX' application after creating a new 'Transferee' through IRIS application for policy setup in 'Policy Digitization Tool'
+    And he has validated 'Assignment-Policy' details after selecting below option displayed on 'Welcome' dialog
+      | WelcomeDialogSelection               |
+      | No thanks, I prefer to do this later |
+    And he has provided 'Access to my Flex Benefits' delegate access to the newly created DelegateUser on 'Delegate Information' page  

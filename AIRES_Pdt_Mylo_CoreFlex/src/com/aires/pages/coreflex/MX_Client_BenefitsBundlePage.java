@@ -1519,7 +1519,7 @@ public class MX_Client_BenefitsBundlePage extends Base {
 				&& CoreFunctions.getItemsFromListByIndex(driver, _benefitStatus, indexBenefit, true)
 						.equals(expectedStatus)
 				&& ((expectedStatus.equalsIgnoreCase(MobilityXConstants.COMPLETE)
-						|| expectedStatus.equalsIgnoreCase(MobilityXConstants.CANCELLED))
+						|| expectedStatus.equalsIgnoreCase(MobilityXConstants.CANCELED))
 								? (Boolean.valueOf(CoreFunctions
 										.getAttributeText(_buttonDeleteBenefitList.get(indexBenefit), "aria-disabled")))
 								: CoreFunctions.getItemsFromListByIndex(driver, _buttonDeleteSubmittedBenefitList,
@@ -1530,7 +1530,7 @@ public class MX_Client_BenefitsBundlePage extends Base {
 		switch (expectedStatus) {
 		case MobilityXConstants.COMPLETE:
 			return verifyCompetedBenefitDeleteButtonStatus(indexBenefit);
-		case MobilityXConstants.CANCELLED:
+		case MobilityXConstants.CANCELED:
 			return verifyCanceledBenefitDeleteButtonStatus(indexBenefit);
 		default:
 			return true;
@@ -1684,7 +1684,7 @@ public class MX_Client_BenefitsBundlePage extends Base {
 				&& CoreFunctions.getItemsFromListByIndex(driver, _benefitStatus, indexBenefit, true)
 						.equals(expectedStatus)
 				&& ((expectedStatus.equalsIgnoreCase(MobilityXConstants.COMPLETE)
-						|| expectedStatus.equalsIgnoreCase(MobilityXConstants.CANCELLED))
+						|| expectedStatus.equalsIgnoreCase(MobilityXConstants.CANCELED))
 								? (Boolean.valueOf(CoreFunctions
 										.getAttributeText(_buttonDeleteBenefitList.get(indexBenefit), "aria-disabled")))
 								: CoreFunctions.getItemsFromListByIndex(driver, _buttonDeleteSubmittedBenefitList,

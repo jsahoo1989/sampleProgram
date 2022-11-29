@@ -1802,6 +1802,7 @@ public class MX_Transferee_FlexPlanningTool_Page extends Base {
 	
 	private boolean selectAiresManagedFlexBenefitsonFPT() {
 		boolean benefitsSelection = false, benefitsSelectionPerformed = false;
+		CoreFunctions.writeToPropertiesFile("CoreFlex_Policy_RequiredFor", "Aires Managed Benefits Cards");
 		for (Benefit benefit : getFlexBenefitsList(CoreFunctions.getPropertyFromConfig("CoreFlex_Policy_BenefitType"),
 				CoreFunctions.getPropertyFromConfig("CoreFlex_Policy_RequiredFor"))) {
 			if (benefit.getSelectBenefitOnFPTPage() && benefit.getAiresManagedService().equals("Yes") ) {

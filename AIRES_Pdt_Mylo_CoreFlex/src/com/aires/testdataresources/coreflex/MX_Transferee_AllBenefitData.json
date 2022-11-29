@@ -66,7 +66,7 @@
 			"subBenefits": "Home Purchase Closing Costs;Home Purchase Points;Home Purchase Inspections",
 			"airesManagedService": "No",
 			"noOfMilestones": 3,
-			"policyCreationGroup": "All Benefits,Aires Managed Benefits Cards"
+			"policyCreationGroup": "NA"
 		},
 		{
 			"benefitType": "Final Move",
@@ -146,7 +146,7 @@
 			"subBenefits": "Education Assistance/School Search",
 			"airesManagedService": "No",
 			"noOfMilestones": 2,
-			"policyCreationGroup": "All Benefits"
+			"policyCreationGroup": "NA"
 		},
 		{
 			"benefitType": "House Hunting Trip",
@@ -164,7 +164,7 @@
 			"benefitAmount": "Transportation of goods by air to new location",
 			"benefitDesc": "The professional packing, air shipping, delivery, uncrating, unpacking, in-transit storage, if necessary, applicable moving insurance and import duties for the shipment of personal effects and furniture to new location.",
 			"subBenefits": "Air Shipment",
-			"airesManagedService": "No",
+			"airesManagedService": "Yes",
 			"noOfMilestones": 5,
 			"policyCreationGroup": "All Benefits"
 		},
@@ -174,7 +174,7 @@
 			"benefitAmount": "Shipment of automobile to new location",
 			"benefitDesc": "The transportation of personal automobile (car, truck, or SUV) from home location to new location.",
 			"subBenefits": "Auto Shipment",
-			"airesManagedService": "No",
+			"airesManagedService": "Yes",
 			"noOfMilestones": 5,
 			"policyCreationGroup": "All Benefits"
 		},
@@ -184,7 +184,7 @@
 			"benefitAmount": "Transportation of goods by sea to new location",
 			"benefitDesc": "TThe professional packing, sea shipping, delivery, uncrating, unpacking, in-transit storage, if necessary, applicable moving insurance and import duties for the shipment of personal effects and furniture to new location.",
 			"subBenefits": "Sea/Surface Shipment",
-			"airesManagedService": "No",
+			"airesManagedService": "Yes",
 			"noOfMilestones": 5,
 			"policyCreationGroup": "All Benefits"
 		},
@@ -194,7 +194,7 @@
 			"benefitAmount": "Shipment of households goods across land from home to host country.",
 			"benefitDesc": "Shipment of households goods across land from home to host country.",
 			"subBenefits": "Inland Shipment",
-			"airesManagedService": "No",
+			"airesManagedService": "Yes",
 			"noOfMilestones": 5,
 			"policyCreationGroup": "All Benefits"
 		},
@@ -204,7 +204,7 @@
 			"benefitAmount": "Shipment of pet to new location",
 			"benefitDesc": "The transportation of an employee's pet from the home location to the new location. Services are typically coordinated through a pet transportation company or the employee may be required to coordinate the transport themselves and receive reimbursement or an allowance intended to be applied towards the cost.",
 			"subBenefits": "Pet Shipment",
-			"airesManagedService": "No",
+			"airesManagedService": "Yes",
 			"noOfMilestones": 5,
 			"policyCreationGroup": "All Benefits"
 		},
@@ -356,7 +356,7 @@
 					"endTracingPrompt": "Closing Date",
 					"postEndTracingCardStatus": "Closing",
 					"multipleBenefitSubmission": false,
-					"policyCreationGroup": "All Benefits",
+					"policyCreationGroup": "NA",
 					"selectBenefitOnPBCPage": false,
 					"deselectBenefitOnPBCPage": false,
 					"noOfMilestones": 3,

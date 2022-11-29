@@ -15,7 +15,7 @@
 			"comment": "Final Move Transportation comment"
 		},
 		"finalMoveLodging": {
-			"duration": "Set # of nights",
+			"duration": "Set # of days",
 			"numberOfNights": "14",
 			"maxAmount": "Flat Amount",
 			"flatAmountPerNight": "200",

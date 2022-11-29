@@ -118,8 +118,8 @@ public class CF_Transferee_StaticFixedPoints_CashNotAuth_Flex_EndToEndFlow_Steps
 	
 	@Then("^'Mobility Flex Benefit\\(s\\) Submission' email should be generated for the submitted benefit bundle$")
 	public void mobility_Flex_Benefit_s_Submission_email_should_be_generated_for_the_submitted_benefit_bundle() throws Throwable {
-		Assert.assertTrue(mxTransfereeJourneyHomePage.verifyBenefitSubmissionEmail(), MessageFormat
-				.format(MobilityXConstants.FAILED_TO_READ_USER_CREDENTIALS_FROM_GENERATED_EMAIL, CoreConstants.FAIL));
+		Assert.assertTrue(mxTransfereeJourneyHomePage.verifyBenefitSubmissionEmail(MobilityXConstants.TRANSFEREE_SUBMISSION), MessageFormat
+				.format(MobilityXConstants.FAILED_TO_VERIFY_MOBILITY_FLEX_BENEFIT_SUBMISSION_EMAIL, CoreConstants.FAIL));
 	}
 
 	@Then("^point balance details should be upadted on \"([^\"]*)\" page$")

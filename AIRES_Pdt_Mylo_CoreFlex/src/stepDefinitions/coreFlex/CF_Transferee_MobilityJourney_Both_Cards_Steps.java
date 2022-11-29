@@ -214,23 +214,6 @@ public class CF_Transferee_MobilityJourney_Both_Cards_Steps {
 	@When("^he change status of the 'Aires Managed' benefit SubService to \"([^\"]*)\" from Services tab of IRIS application$")
 	public void he_change_status_of_the_Aires_Managed_benefit_SubService_to_from_Services_tab_of_IRIS_application(
 			String subServiceStatus) throws Throwable {
-		testContext.getBasePage().invokeIrisApplication();
-//		testContext.getBasePage().killExistingBrowsers();
-		testContext.getIrisPageManager().irisLoginPage = new IRIS_LoginPage();
-		testContext.getIrisPageManager().irisLoginPage.getIRISLoginAsPerEnvt(_loginInfo);
-		testContext.getIrisPageManager().irisWelcome12C = new IRIS_Welcome12C();
-		testContext.getIrisPageManager().irisWelcome12C.selectWelcomeWindowModule(IRISConstants.ASSIGNMENT_TAB);
-		testContext.getIrisPageManager().irisAssignmentOverviewPage = new IRIS_AssignmentOverviewPage();
-		Assert.assertTrue(testContext.getIrisPageManager().irisAssignmentOverviewPage.verifyOverviewTab(), MessageFormat
-				.format(IRISConstants.FAIL_TO_VERIFY_CURRENT_TAB, CoreConstants.FAIL, IRISConstants.OVERVIEW));
-		testContext.getIrisPageManager().irisAssignmentOverviewPage
-				.queryFile(CoreFunctions.getPropertyFromConfig("Assignment_FileID"));
-		testContext.getIrisPageManager().irisAssignmentOverviewPage.acceptFailedImageLoadDialog();
-		testContext.getIrisPageManager().irisAssignmentOverviewPage.switchTab(IRISConstants.SERVICE_TAB);
-		CoreFunctions.waitHandler(2);
-		testContext.getIrisPageManager().irisAssignmentServicePage = new IRIS_AssignmentServicePage();
-		Assert.assertTrue(testContext.getIrisPageManager().irisAssignmentServicePage.verifyServiceTab(), MessageFormat
-				.format(IRISConstants.FAIL_TO_VERIFY_CURRENT_TAB, CoreConstants.FAIL, IRISConstants.SERVICE));
 		testContext.getIrisPageManager().irisAssignmentServicePage.cancelAddedServices(subServiceStatus);
 		testContext.getBasePage().cleanIrisProcesses();
 	}

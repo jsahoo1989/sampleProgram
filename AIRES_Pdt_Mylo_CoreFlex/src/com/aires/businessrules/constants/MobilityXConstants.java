@@ -306,7 +306,7 @@ public class MobilityXConstants {
 	public static final String POLICY_FILE_ID = "Policy File ID";
 	public static final String COMPLETE = "Complete";
 	public static final String FLEX_CARD_DISPLAYED_FOR_NOT_SUBMITTED_AIRES_MANAGED_BENEFIT = "{0}Flex card is displayed for Not-Submitted Aires Managed Benefit on ''{1}'' page.";
-	public static final String CANCELLED = "Cancelled";
+	public static final String CANCELED = "Canceled";
 	public static final String FLEX_CARD_DISPLAYED_AFTER_CHANGING_COREFLEX_TYPE_SUBSERVICE_IN_IRIS = "{0}Flex card displayed on ''{1}'' Page even after changing Core/Flex Subservice type in IRIS application.";
 	public static final String CORE_CARD_DISPLAYED_AFTER_CHANGING_COREFLEX_TYPE_SUBSERVICE_IN_IRIS = "{0}Core card displayed on ''{1}'' Page even after changing Core/Flex Subservice type in IRIS application.";
 	public static final String PRE_INITIAL_TRACING = "Pre Initial Tracing";
@@ -778,5 +778,12 @@ public class MobilityXConstants {
 	public static final String MX_CLIENT_CASHOUT_SUGGESTION_TEXT_DEFAULT = "If no additional benefits are required, the remaining points may be cashed out by selecting the block below.";
 	public static final String CLIENT_CASHOUT_DESCRIPTION = "MXClient Cashout Description";
 	public static final String CLIENT_SUBMISSIONS_CASHOUT_DESCRIPTION = "The transferee will receive";
-
+	public static final String SUCCESSFULLY_VERIFIED_DYNAMIC_DOCUMENT_CONTENTS = "{0}Successfully verified added Core/Flex Benefits in ''{1}'' - Dynamic Document.";
+	public static final String FAILED_TO_VERIFY_MOBILITY_FLEX_BENEFIT_SUBMISSION_EMAIL = "{0}Failed to verify Mobility Flex Benefit Submission Email.";
+	public static final String FAILED_TO_VERIFY_MOBILITY_FLEX_BENEFIT_SUBMISSION_IMPERSONATION_EMAIL = "{0}Failed to verify Mobility Flex Benefit Submission Email for Benefits submitted by Impersonated Client User for Transferee.";
+	public static final String TRANSFEREE_SUBMISSION = "Transferee Submission";
+	public static final String CLIENT_IMPERSONATION_SUBMISSION = "Client Impersonation Submission";
+	public static final String FLEX_BENEFIT_SUBMISSION_EMAIL = "Flex Benefit Submission Email";
+	public static final String FLEX_BENEFITS_SUBMISSION_BY_TRANSFEREE_MESSAGE = "The attached document outlines the mobility flex benefit(s) that you have submitted. You have used used_points point(s) of your total_points-point allowance. Your current point balance is current_balance point(s).";
+	public static final String FLEX_BENEFITS_SUBMISSION_BY_CLIENT_IMPERSONATION_MESSAGE = "The attached document outlines the mobility flex benefit(s) that your company has submitted on your behalf. You have used used_points point(s) of your total_points-point allowance. Your current point balance is current_balance point(s).";
 }

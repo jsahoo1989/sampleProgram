@@ -812,7 +812,7 @@ public class COREFLEXConstants {
 	public static final String SUCCESSFULLY_VERIFIED_PORTION_CASHOUT_DETAILS_POST_ALL_CASHOUT_VALUE_SUBMISSION_ON_BENEFIT_SELECTION_TOOL_PAGE = "{0}Successfully verified Portion Cashout details Post All Cashout value submission on Benefit Selection Tool page.";
 	public static final String SUCCESSFULLY_VERIFIED_PORTION_CASHOUT_DETAILS_POST_DELETE_REQUEST_DENIED_ON_BENEFIT_SELECTION_TOOL_PAGE = "{0}Successfully verified Portion Cashout details Post Delete Request Denied for All Cashout value submission on Benefit Selection Tool page.";
 	public static final String EXCEPTION_OCCURED_WHILE_CLICKING_ON_POLICY_ACTION_ICON_ON_VIEW_EDIT_POLICY_FORMS_PAGE = "{0}Exception occured while clicking on ''{1}'' action icon of Policy Version : ''{2}'' on View/Edit Policy Forms page. Exception : ''{3}''.";
-	public static final String SUCCESSFULLY_VERIFIED_MOBILITY_FLEX_BENEFITS_SUBMISSION_EMAIL = "{0}Successfully verified Mobility Flex Benefit(s) Submission Email. Email Content Verified : ''{1}''.";
+	public static final String SUCCESSFULLY_VERIFIED_MOBILITY_FLEX_BENEFITS_SUBMISSION_EMAIL = "{0}Successfully verified Mobility Flex Benefit(s) Submission Email by ''{2}''. Email Content Verified : ''{1}''.";
 	public static final String SUCCESSFULLY_SELECTED_AND_FILLED_ADDED_BENEFIT = "{0}Successfully selected and filled ''{1}'' Benefit";
 	public static final String FAILED_TO_SELECT_AND_FILL_ADDED_BENEFIT = "{0}Failed to select and fill ''{1}'' Benefit";
 	public static final String WEIGHT_CAP = "Weight Cap";
@@ -894,4 +894,11 @@ public class COREFLEXConstants {
 	public static final String DISTANCE = "Distance";
 	public static final String UNIT_OF_DISTANCE = "Unit Of Distance";
 	public static final String ECONOMY_CLASS_AIRFARE = "Economy Class Airfare";
+	public static final String SELECTED_BENEFIT_NAME = "Selected Benefit Name";
+	public static final String SELECTED_BENEFIT_ALLOWANCE_AMOUNT = "Selected Benefit Allowance Amount";
+	public static final String SELECTED_BENEFIT_SELECTED_QUANTITY = "Selected Benefit Selected Quantity";
+	public static final String SELECTED_BENEFIT_POINTS = "Selected Benefit Points";
+	public static final String EXCEPTION_OCCURED_WHILE_VALIDATING_DYNAMIC_DOCUMENT_CONTENTS = "{0}Exception occured while validating ''{2}'' - Dynamic Document. Exception : ''{1}''.";
+	public static final String EXCEPTION_OCCURED_WHILE_VERIFYING_FLEX_BENEFITS_SUBMISSION_EMAIL = "{0}Exception occured while verifying Flex Benefits Submission Email, Submitted by : ''{2}''. Exception : ''{1}''.";
+	
 }

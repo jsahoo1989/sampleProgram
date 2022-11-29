@@ -9,6 +9,7 @@ import org.testng.Assert;
 
 import com.aires.businessrules.BusinessFunctions;
 import com.aires.businessrules.CoreFunctions;
+import com.aires.businessrules.DbFunctions;
 import com.aires.businessrules.constants.COREFLEXConstants;
 import com.aires.businessrules.constants.CoreConstants;
 import com.aires.businessrules.constants.IRISConstants;
@@ -154,7 +155,7 @@ public class CF_MX_Client_Steps {
 	@When("^he clicks on \"Create LOU\" to generate ([^\"]*) on 'What type of document would you like to add' pop-up dialog$")
 	public void he_clicks_on_Create_LOU_on_What_type_of_document_would_you_like_to_add_pop_up_dialog(
 			String documentName) {
-		BusinessFunctions.updateQuery(PDTConstants.FNDEV_DB_URL,
+		BusinessFunctions.updateQuery(DbFunctions.getCoreFlexDBConnectionStringAsPerEnvt(CoreFunctions.getPropertyFromConfig("envt")),
 				MessageFormat.format(PDTConstants.UPDATE_DYNAMIC_DOCUMENT_FORMAT,
 						CoreFunctions.getPropertyFromConfig("Assignment_Policy"), documentName.split("\\.")[1]));
 		Assert.assertTrue(mxClientAuthorizationHomePage.clickOnCreateLOU(),

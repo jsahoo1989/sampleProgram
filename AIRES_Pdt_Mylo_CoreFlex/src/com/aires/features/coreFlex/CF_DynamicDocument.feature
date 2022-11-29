@@ -1,20 +1,20 @@
-Feature: Validate the CoreFlex End-To-End Business Test Flow(BluePrint, MXClientAndTransferee, Transferee Submissions) for Both_MXClientAndTransferee_StaticFixed_CashoutNotAuthorized_Delete_DenyAll selection
+Feature: Validate the CoreFlex - Dynamic Document (pdf & docx) having Core/Flex Benefits submitted in Authorization Form
 
-  @End-To-End_CoreFlex @CF_DynamicDocument_PolicySetup
+  @Coreflex:218411 @CF_End-To-End_MasterScript @CF_DynamicDocument @CF_DynamicDocument_PolicySetup
   Scenario: CoreFlex - Creating a new Active Points Based CoreFlex Policy with MXClientAndTransferee selection for Dynamic Document Verification
     Given he has setup a new Points Based CoreFlex Policy with following selection in Blueprint application
       | Person Responsible For Benefit Selection | Flex Setup Type | Cashout Availability   | BenefitType | PolicyRequiredFor |
       | Client and Transferee                    | Static/Fixed    | Cashout Not Authorized | Both        | Client            |
     And he has clicked on "Submit" button to submit "V1" policy verison on "Custom Bundles" page
     And he has clicked on "Approve Policy" button to approve "V1" policy verison on "Custom Bundles" page
-     And he has filled 'Description' after selecting following option on 'Approval this Policy' dialog of "V1" Policy
+    And he has filled 'Description' after selecting following option on 'Approval this Policy' dialog of "V1" Policy
       | Associate this policy with a NEW authorization in IRIS? |
       | Effective from booking date                             |
     When he clicks on "Approve" button to acknowledge 'Approve this Policy' dialog
     Then Policy Status and Version should be displayed as "Active" and "V1" respectively on "View/Edit Policy Forms" page
 
-  @End-To-End_CoreFlex @CF_DynamicDocument_PDF @Test45633
-  Scenario Outline: MXClient - Verifying Core/Flex benefits details on Dymanic doc Preview page and PDF file submitted on Core/Flex benefits displayed on BenefitSelectionTool page for Client and Transferee BluePrint Policy Setup
+  @Coreflex:218412 @CF_End-To-End_MasterScript @CF_DynamicDocument @CF_DynamicDocument_ClientFlow
+  Scenario Outline: MXClient - Verifying Core/Flex benefits details on Dymanic doc Preview page and PDF file submitted with Core/Flex benefits for Client and Transferee BluePrint Policy Setup
     Given he has logged into 'MobilityX' application as a 'Client' user
     And he has clicked on "Create an authorization" after validating Client details on 'Authorization Home Page'
     And he has filled all the mandatory information on 'Authorization Form' after selecting following 'Assignment Option' with 'Auth Form Template' for an employee on 'Authorization Home Page'

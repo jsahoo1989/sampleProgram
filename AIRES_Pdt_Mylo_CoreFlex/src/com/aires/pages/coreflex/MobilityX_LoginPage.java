@@ -248,11 +248,15 @@ public class MobilityX_LoginPage extends Base {
 	}
 
 	public void clickLogOut() {
-		CoreFunctions.click(driver, _textTransfereeuserNameTitle, _textTransfereeuserNameTitle.getText());
-		CoreFunctions.click(driver, _linkLogout, COREFLEXConstants.LINK_LOGOUT);
-		CoreFunctions.waitHandler(2);
-		CoreFunctions.explicitWaitTillElementVisibility(driver, _inputUserName,
-				_inputUserName.getAttribute("placeholder"));
+		try {
+			CoreFunctions.click(driver, _textTransfereeuserNameTitle, _textTransfereeuserNameTitle.getText());
+			CoreFunctions.click(driver, _linkLogout, COREFLEXConstants.LINK_LOGOUT);
+			CoreFunctions.waitHandler(2);
+			CoreFunctions.explicitWaitTillElementVisibility(driver, _inputUserName,
+					_inputUserName.getAttribute("placeholder"));
+		} catch (Exception e) {
+
+		}
 	}
 
 	public Boolean verifyLogout() {
@@ -317,7 +321,7 @@ public class MobilityX_LoginPage extends Base {
 
 		return false;
 	}
-	
+
 	public boolean readDelegateCredentialsFromMail() {
 		try {
 			// Reading Transferee Username and Password from email and writing to the Config

@@ -1852,27 +1852,34 @@ public class MX_Client_AuthorizationHomePage extends Base {
 	}
 
 	public boolean validateDynamicDocumnet(String documentName) {
-		switchToiFrame_Authorization();
-		CoreFunctions.explicitWaitTillElementVisibility(driver, _documentHeading, "document heading");
-		Log.info(CoreFunctions.getElementText(driver, _documentHeading));
-		if (!Objects.equal(CoreFunctions.getElementText(driver, _documentHeading), documentName)) {
+		try {
+			switchToiFrame_Authorization();
+			CoreFunctions.explicitWaitTillElementVisibility(driver, _documentHeading, "document heading");
+			Log.info(CoreFunctions.getElementText(driver, _documentHeading));
+			if (!Objects.equal(CoreFunctions.getElementText(driver, _documentHeading), documentName)) {
+				return false;
+			}
+			CoreFunctions.removeFileMatchingName(System.getProperty("user.home") + "/Downloads/",
+					"Demo Dynamic Document");
+			CoreFunctions.clickElement(driver, _downloadDocument);
+			CoreFunctions.waitForAMatchingFileToBeDownloaded(System.getProperty("user.home") + "/Downloads/",
+					"Demo Dynamic Document");
+			String filePath = System.getProperty("user.home") + "/Downloads/" + documentName;
+			String file_content = documentName.contains(".docx") ? BusinessFunctions.getDocContent(filePath)
+					: BusinessFunctions.getPdfDocContent(filePath);
+			for (Benefit benefit : getBenefits(CoreFunctions.getPropertyFromConfig("CoreFlex_Policy_BenefitType"),
+					CoreFunctions.getPropertyFromConfig("CoreFlex_Policy_RequiredFor"), "0")) {
+				if (!(StringUtils.countMatches(file_content, benefit.getBenefitDisplayName()) == 1))
+					return false;
+			}
+			Reporter.addStepLog(MessageFormat.format(MobilityXConstants.SUCCESSFULLY_VERIFIED_DYNAMIC_DOCUMENT_CONTENTS,
+					CoreConstants.PASS, documentName));
+			return true;
+		} catch (Exception e) {
+			Reporter.addStepLog(
+					MessageFormat.format(COREFLEXConstants.EXCEPTION_OCCURED_WHILE_VALIDATING_DYNAMIC_DOCUMENT_CONTENTS,
+							CoreConstants.FAIL, e.getMessage(), documentName));
 			return false;
 		}
-		CoreFunctions.removeFileMatchingName(System.getProperty("user.home") + "/Downloads/", "Demo Dynamic Document");
-		CoreFunctions.clickElement(driver, _downloadDocument);
-		CoreFunctions.waitForAMatchingFileToBeDownloaded(System.getProperty("user.home") + "/Downloads/",
-				"Demo Dynamic Document");
-
-		String filePath = System.getProperty("user.home") + "/Downloads/" + documentName;
-
-		String file_content = documentName.contains(".docx") ? BusinessFunctions.getDocContent(filePath)
-				: BusinessFunctions.getPdfDocContent(filePath);
-
-		for (Benefit benefit : getBenefits(CoreFunctions.getPropertyFromConfig("CoreFlex_Policy_BenefitType"),
-				CoreFunctions.getPropertyFromConfig("CoreFlex_Policy_RequiredFor"), "0")) {
-			if (!(StringUtils.countMatches(file_content, benefit.getBenefitDisplayName()) == 1))
-				return false;
-		}
-		return true;
 	}
 }

@@ -1090,8 +1090,7 @@ public class BusinessFunctions {
 						+ " " + CoreFunctions.getPropertyFromConfig("CF_Transferee_CashoutCurrencyCode");
 			} else {
 				expectedCashoutDescription = CoreFunctions.getPropertyFromConfig("CF_Transferee_CashoutCurrencySign")
-						+ " "
-						+ format.format(Double
+						+ " " + format.format(Double
 								.parseDouble(CoreFunctions.getPropertyFromConfig("CF_Client_SelectedCashOutPoints")));
 			}
 		} catch (Exception e) {
@@ -1120,7 +1119,7 @@ public class BusinessFunctions {
 						+ " " + CoreFunctions.getPropertyFromConfig("CF_Transferee_CashoutCurrencyCode");
 			} else {
 				expectedCashoutDescription = MobilityXConstants.CLIENT_SUBMISSIONS_CASHOUT_DESCRIPTION + " "
-						+ CoreFunctions.getPropertyFromConfig("CF_Transferee_CashoutCurrencySign") 
+						+ CoreFunctions.getPropertyFromConfig("CF_Transferee_CashoutCurrencySign")
 						+ precesionFormat.format(Double
 								.parseDouble(CoreFunctions.getPropertyFromConfig("CF_Client_SelectedCashOutPoints")))
 						+ " " + CoreFunctions.getPropertyFromConfig("CF_Transferee_CashoutCurrencyCode");
@@ -1133,16 +1132,24 @@ public class BusinessFunctions {
 
 	public static String getExpectedCashoutDescriptionWithDecimalPrecesion() {
 		String expectedCashoutDescription = null;
-		DecimalFormat format = new DecimalFormat("#.00");
+		DecimalFormat precesionFormat = new DecimalFormat("#.00");
+		DecimalFormat format = new DecimalFormat();
+		format.setDecimalSeparatorAlwaysShown(false);
 		try {
-			if (CoreFunctions.getPropertyFromConfig("CF_Transferee_CashoutCurrencySign").length() == 1) {
+
+			if (CoreFunctions.getPropertyFromConfig("CF_Transferee_CashoutCurrencyCode").equals("USD")) {
+				expectedCashoutDescription = CoreFunctions.getPropertyFromConfig("CF_Transferee_CashoutCurrencySign")
+						+ precesionFormat.format(Double.parseDouble(
+								CoreFunctions.getPropertyFromConfig("CF_Transferee_SelectedCashOutPoints")))
+						+ " " + CoreFunctions.getPropertyFromConfig("CF_Transferee_CashoutCurrencyCode")
+						+ MobilityXConstants.TRANSFEREE_CASHOUT_DESCRIPTION_CHECK;
+
+			} else if (CoreFunctions.getPropertyFromConfig("CF_Transferee_CashoutCurrencySign").length() == 1) {
 				expectedCashoutDescription = CoreFunctions.getPropertyFromConfig("CF_Transferee_CashoutCurrencySign")
 						+ format.format(Double.parseDouble(
 								CoreFunctions.getPropertyFromConfig("CF_Transferee_SelectedCashOutPoints")))
 						+ " " + CoreFunctions.getPropertyFromConfig("CF_Transferee_CashoutCurrencyCode")
-						+ (CoreFunctions.getPropertyFromConfig("CF_Transferee_CashoutCurrencyCode").equals("USD")
-								? MobilityXConstants.TRANSFEREE_CASHOUT_DESCRIPTION_CHECK
-								: MobilityXConstants.TRANSFEREE_CASHOUT_DESCRIPTION_WIRE);
+						+ MobilityXConstants.TRANSFEREE_CASHOUT_DESCRIPTION_WIRE;
 			} else {
 				expectedCashoutDescription = CoreFunctions.getPropertyFromConfig("CF_Transferee_CashoutCurrencySign")
 						+ " "

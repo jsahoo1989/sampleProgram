@@ -791,4 +791,5 @@ public class MobilityXConstants {
 	public static final String DELEGATE_GENERIC_USERNAME_TEXT = "The email address given cannot be used as a username. Click submit to generate a generic username, or back to verify your delegate's information.";
 	public static final String FAILED_TO_VERIFY_LOGGED_IN_DELEGATE_USER = "{0}Failed to verify Logged-In delegate user.";
 	public static final String DELEGATED_USER_BANNER = "Delegated User Banner";
+	public static final String FAILED_TO_VERIFY_MOBILITY_FLEX_BENEFIT_DELETE_REQUEST_EMAIL = "{0}Failed to verify Mobility Flex Benefit Delete request Email for - ''{1}'' action.";
 }

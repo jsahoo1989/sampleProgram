@@ -109,7 +109,7 @@ public class TransfereeSubmissions_DetailsPage extends Base {
 	By clientSubmissionIcon = By.xpath("./span/img[contains(@src,'Company_Selected_Benefit_Icon')]");
 
 	// Expense Reimbursement Tracing Prompt List
-	@FindBy(how = How.XPATH, using = "//div[contains(@class,'tblBenefits')]//span[contains(@class,'GrayText')][not(contains(text(),'will be sent to the address provided'))]")
+	@FindBy(how = How.XPATH, using = "//div[contains(@class,'tblBenefits')]//span[@style='display: block;']//span[contains(@class,'GrayText')]")
 	private List<WebElement> _reimbursementAllowanceTracingList;
 
 	// Comments Benefit List
@@ -478,7 +478,7 @@ public class TransfereeSubmissions_DetailsPage extends Base {
 						COREFLEXConstants.SUBMITTED_CASHOUT_NAME);
 				WebElement allowanceAmount = CoreFunctions.findSubElement(_submittedBenefitNameList.get(indexCashout),
 						allowanceAmountMessage);
-				CoreFunctions.verifyText(driver, allowanceAmount,
+				CoreFunctions.verifyTextContains(CoreFunctions.getElementText(driver, allowanceAmount),
 						submittedBy.equals(MobilityXConstants.CLIENT)
 								? BusinessFunctions.getMXClientSubmissionsExpectedCashoutDescription()
 								: BusinessFunctions.getExpectedCashoutDescriptionWithDecimalPrecesion(),

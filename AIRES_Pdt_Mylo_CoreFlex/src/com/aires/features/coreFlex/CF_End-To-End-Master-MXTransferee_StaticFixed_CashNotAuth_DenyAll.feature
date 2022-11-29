@@ -24,7 +24,7 @@ Feature: Validate MXTransferee Workflow and MJ Cards(Submitted,StartingSoon,InPr
     And custom bundle created in Active BluePrint "Version1" Policy should be displayed on "Suggested Bundles" page
 
   @Coreflex:218323 @CF_End-To-End_MasterScript @CF_Master_CashNotAuthDeny @CF_Master_CashNotAuthDeny_CreatingNewVersion
-  Scenario: CoreFlex - Validating Assignment History & Status_Version of New Policy version created from ‘Active’ points based CoreFlex policy that has one or more assignments/files
+  Scenario: CoreFlex - Validating Assignment History & Status_Version of New Policy version created from ‘Active’ points based CF policy that has one or more assignments/files
     Given he has searched for "Active" points based CoreFlex policy that has one or more assignments/files on "View/Edit Policy Forms" page
     And he has verified following 'Assignment Details' after clicking on "Assignment History" icon of the searched "Active" points based CoreFlex policy
       | Assignment ID | Transferee Name | Assignment Status | Booked Date | Origin Country | Destination Country | MSPEC Name | PPC Name |

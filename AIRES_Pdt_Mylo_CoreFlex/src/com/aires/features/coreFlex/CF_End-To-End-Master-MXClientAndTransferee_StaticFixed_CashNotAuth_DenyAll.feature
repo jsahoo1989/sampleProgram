@@ -33,7 +33,7 @@ Feature: Validate the CoreFlex End-To-End Business Test Flow(BluePrint, MXClient
     And 'New Initiation Submitted' email should be received having Transferee details along with assigned CoreFlex Total Points and Submitted Benefits Points
 
   @Coreflex:218409 @CF_End-To-End_MasterScript @CF_Master_ClientAndTransferee_CashNotAuth_Deny @CF_Master_ClientAndTransferee_CashNotAuth_Deny_TF
-  Scenario: MXTransferee - Validating Selection & Submission of Flex benefits available in MXClient configured policy and Tracking Available_Used Benefits Points
+  Scenario: MXTransferee - Validating Selection & Submission of Flex benefits available in Client configured policy and Tracking Available_Used Benefits Points
     Given he has logged into 'MobilityX' application after actualizing a new 'Transferee' through IRIS application and setting-up user profile in 'MobilityX' application
     And he has validated 'Assignment-Policy' details after selecting below option displayed on 'Welcome' dialog
       | WelcomeDialogSelection               |

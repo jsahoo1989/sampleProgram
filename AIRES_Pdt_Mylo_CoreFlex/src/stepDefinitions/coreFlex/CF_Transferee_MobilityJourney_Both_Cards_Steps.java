@@ -31,8 +31,9 @@ public class CF_Transferee_MobilityJourney_Both_Cards_Steps {
 	private MX_Transferee_FlexPlanningTool_Page mxTransfereeFlexPlanningToolPage;
 	private MX_Transferee_MyBenefitsBundlePage mxTransfereeMyBenefitsBundlePage;
 	int _initialTableRowCount = 0;
-	private CoreFlex_LoginInfo _loginInfo = FileReaderManager.getInstance().getCoreFlexJsonReader()
-			.getLoginInfoByEnviroment((CoreFunctions.getPropertyFromConfig("envt").toLowerCase()));
+	private CoreFlex_LoginInfo _loginInfo;
+	
+	
 
 	public CF_Transferee_MobilityJourney_Both_Cards_Steps(TestContext context) {
 		testContext = context;
@@ -43,6 +44,10 @@ public class CF_Transferee_MobilityJourney_Both_Cards_Steps {
 				.getMXTransfereeFlexPlanningToolPage();
 		mxTransfereeMyBenefitsBundlePage = testContext.getCoreFlexPageObjectManager()
 				.getMXTransfereeMyBenefitsBundlePage();
+//		_loginInfo = FileReaderManager.getInstance().getCoreFlexJsonReader()
+//				.getLoginInfoByEnviroment((CoreFunctions.getPropertyFromConfig("envt").toLowerCase()));
+		_loginInfo = FileReaderManager.getInstance().getCoreFlexJsonReader().getLoginByEnvt(System.getProperty("envt").toLowerCase());
+		
 	}
 
 	/**********************************************************************/

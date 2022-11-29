@@ -323,7 +323,7 @@ public class MX_Transferee_JourneyHomePage extends Base {
 	private WebElement _radioDelFlexAccess;
 
 	@FindBy(how = How.CSS, using = "[id*='dsubmitbtn']")
-	private WebElement _btnDelSubmit;
+	private WebElement _btnDelegateSubmit;
 
 	@FindBy(how = How.CSS, using = "[id*='dadpbtncont']")
 	private WebElement _btnDelContinue;
@@ -336,6 +336,24 @@ public class MX_Transferee_JourneyHomePage extends Base {
 
 	@FindBy(how = How.CSS, using = "[id*='otDelHeader2']")
 	private WebElement _userBanner;
+
+	@FindBy(how = How.CSS, using = "td > div[id*='delegateNameMisMatch']")
+	private WebElement _popUpMatchingFile;
+
+	@FindBy(how = How.XPATH, using = "//td/div[contains(@id,'delegateNameMisMatch')]//span[contains(text(),'Confirm')]")
+	private WebElement _popUpMatchingFileConfirmButton;
+
+	@FindBy(how = How.XPATH, using = "//td/div[contains(@id,'delegateAuthDisclaimer')]//span[contains(@id,'title')]")
+	private WebElement _popUpDelegateAuthDisclaimer;
+
+	@FindBy(how = How.XPATH, using = "//td/div[contains(@id,'delegateAuthDisclaimer')]//span[contains(text(),'Confirm Delegate')]")
+	private WebElement _popUpDelegateAuthDisclaimerConfirmDelegateButton;
+
+	@FindBy(how = How.XPATH, using = "//td/div[contains(@id,'genericUsername')]//span[contains(@id,'title')]")
+	private WebElement _popUpDelegateGenericUsername;
+
+	@FindBy(how = How.XPATH, using = "//td/div[contains(@id,'genericUsername')]//span[contains(text(),'Submit')]")
+	private WebElement _popUpDelegateGenericUsernameSubmitButton;
 
 	final By _impersonateDialogTitleAppear = By.xpath("//div[@id='rRegion']//span[text() = 'Impersonate a User']");
 
@@ -719,11 +737,11 @@ public class MX_Transferee_JourneyHomePage extends Base {
 			CoreFunctions.clickElement(driver, _link_transferee_dropdown);
 			CoreFunctions.clickElement(driver, _optionBanking);
 			CoreFunctions.clickElement(driver, _link_addPaymentAccount);
-			Reporter.addStepLog(MessageFormat.format(MobilityXConstants.ACCOUNT_SETUP_PAGE_IS_DISPLAYED_SUCCESSFULLY,
-					CoreConstants.PASS));
+			Reporter.addStepLog(MessageFormat.format(
+					MobilityXConstants.MXTRANSFEREE_ACCOUNT_SETUP_PAGE_IS_DISPLAYED_SUCCESSFULLY, CoreConstants.PASS));
 			return true;
 		} catch (Exception e) {
-			Reporter.addStepLog(MessageFormat.format(MobilityXConstants.FAILED_TO_LOAD_ACCOUNT_SETUP_FORM,
+			Reporter.addStepLog(MessageFormat.format(MobilityXConstants.FAILED_TO_LOAD_MXTRANSFEREE_ACCOUNT_SETUP_FORM,
 					CoreConstants.FAIL, e.getMessage()));
 		}
 		return false;
@@ -733,11 +751,11 @@ public class MX_Transferee_JourneyHomePage extends Base {
 		try {
 			CoreFunctions.clickElement(driver, _link_transferee_dropdown);
 			CoreFunctions.clickElement(driver, _optionAccountSettings);
-			Reporter.addStepLog(MessageFormat.format(MobilityXConstants.ACCOUNT_SETUP_PAGE_IS_DISPLAYED_SUCCESSFULLY,
-					CoreConstants.PASS));
+			Reporter.addStepLog(MessageFormat.format(
+					MobilityXConstants.MXTRANSFEREE_ACCOUNT_SETUP_PAGE_IS_DISPLAYED_SUCCESSFULLY, CoreConstants.PASS));
 			return true;
 		} catch (Exception e) {
-			Reporter.addStepLog(MessageFormat.format(MobilityXConstants.FAILED_TO_LOAD_ACCOUNT_SETUP_FORM,
+			Reporter.addStepLog(MessageFormat.format(MobilityXConstants.FAILED_TO_LOAD_MXTRANSFEREE_ACCOUNT_SETUP_FORM,
 					CoreConstants.FAIL, e.getMessage()));
 		}
 		return false;
@@ -1593,29 +1611,60 @@ public class MX_Transferee_JourneyHomePage extends Base {
 
 	}
 
-	public void delegateAccess() {
-		CoreFunctions.clickElement(driver, _btnNewDelegate);
-		CoreFunctions.writeToPropertiesFile("Delegate_firstName", CoreFunctions.generateRandomString(15));
-		CoreFunctions.writeToPropertiesFile("Delegate_lastName", CoreFunctions.generateRandomString(15));
-		CoreFunctions.setElementText(driver, _inputDelFirstName,
-				CoreFunctions.getPropertyFromConfig("Delegate_firstName"));
-		CoreFunctions.setElementText(driver, _inputDelLastName,
-				CoreFunctions.getPropertyFromConfig("Delegate_lastName"));
-		CoreFunctions.setElementText(driver, _inputDelEmail, "airesautomationtransferee@aires.com");
-		CoreFunctions.setElementText(driver, _inputDelStartDate, CoreFunctions.getcurrentdate());
-		CoreFunctions.setElementText(driver, _inputDelEndDate,
-				CoreFunctions.addDaysMonthYearToCurrentDate(PDTConstants.YEAR, "dd-MMM-yyyy", 1));
-		CoreFunctions.clickElement(driver, _radioDelFlexAccess);
-		CoreFunctions.clickElement(driver, _btnDelSubmit);
-		CoreFunctions.clickElement(driver, _btnDelContinue);
+	public boolean delegateAccess() {
+		try {
+			CoreFunctions.clickElement(driver, _btnNewDelegate);
+			CoreFunctions.writeToPropertiesFile("CF_Delegate_FirstName", CoreFunctions.generateRandomString(15));
+			CoreFunctions.writeToPropertiesFile("CF_Delegate_LastName", CoreFunctions.generateRandomString(15));
+			CoreFunctions.setElementText(driver, _inputDelFirstName,
+					CoreFunctions.getPropertyFromConfig("CF_Delegate_FirstName"));
+			CoreFunctions.setElementText(driver, _inputDelLastName,
+					CoreFunctions.getPropertyFromConfig("CF_Delegate_LastName"));
+			CoreFunctions.setElementText(driver, _inputDelEmail, "airesautomationtransferee@aires.com");
+			CoreFunctions.setElementText(driver, _inputDelStartDate, CoreFunctions.getcurrentdate());
+			CoreFunctions.setElementText(driver, _inputDelEndDate,
+					CoreFunctions.addDaysMonthYearToCurrentDate(PDTConstants.YEAR, "dd-MMM-yyyy", 1));
+			CoreFunctions.clickElement(driver, _radioDelFlexAccess);
+			CoreFunctions.clickElement(driver, _btnDelegateSubmit);
+			if (CoreFunctions.isElementExist(driver, _popUpMatchingFile, 3)) {
+				CoreFunctions.clickElement(driver, _popUpMatchingFileConfirmButton);
+			}
+			if (CoreFunctions.getElementText(driver, _popUpDelegateGenericUsername)
+					.equalsIgnoreCase(MobilityXConstants.DELEGATE_GENERIC_USERNAME_TEXT)) {
+				CoreFunctions.clickElement(driver, _popUpDelegateGenericUsernameSubmitButton);
+			}
+			if (CoreFunctions.getElementText(driver, _popUpDelegateAuthDisclaimer)
+					.equalsIgnoreCase(MobilityXConstants.DELEGATE_CONSENT_TEXT)) {
+				CoreFunctions.clickElement(driver, _popUpDelegateAuthDisclaimerConfirmDelegateButton);
+				Reporter.addStepLog(MessageFormat.format(
+						COREFLEXConstants.SUCCESSFULLY_CREATED_A_NEW_DELEGATE_USER_ON_MOBILITYX_APPLICATION,
+						CoreConstants.PASS));
+				return true;
+			}
+		} catch (Exception e) {
+			Reporter.addStepLog(MessageFormat.format(
+					COREFLEXConstants.EXCEPTION_OCCURED_WHILE_CREATING_A_NEW_DELEGATE_USER_ON_MOBILITYX_APPLICATION,
+					CoreConstants.FAIL, e.getMessage()));
+
+		}
+		return false;
 	}
 
 	public boolean validateDelegateUserBanner() {
-		return CoreFunctions.getElementText(driver, _userBanner)
-				.contains("You are logged in as " + CoreFunctions.getPropertyFromConfig("Delegate_firstName") + " "
-						+ CoreFunctions.getPropertyFromConfig("Delegate_firstName")
-						+ " acting as a delegate on behalf of "
-						+ CoreFunctions.getPropertyFromConfig("Transferee_firstName"));
+		try {
+			CoreFunctions.verifyTextContains(CoreFunctions.getElementText(driver, _userBanner),
+					("You are logged in as " + CoreFunctions.getPropertyFromConfig("CF_Delegate_FirstName") + " "
+							+ CoreFunctions.getPropertyFromConfig("CF_Delegate_LastName")
+							+ " acting as a delegate on behalf of "
+							+ CoreFunctions.getPropertyFromConfig("Transferee_firstName")),
+					MobilityXConstants.DELEGATED_USER_BANNER);
+			return true;
+		} catch (Exception e) {
+			Reporter.addStepLog(MessageFormat.format(
+					COREFLEXConstants.EXCEPTION_OCCURED_WHILE_VALIDATING_LOGGED_IN_DELEGATE_USER_ON_MOBILITYX_APPLICATION,
+					CoreConstants.FAIL, e.getMessage()));
+		}
+		return false;
 	}
 
 }

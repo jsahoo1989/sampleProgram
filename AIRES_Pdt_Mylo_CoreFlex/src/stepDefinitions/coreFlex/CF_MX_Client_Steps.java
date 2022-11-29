@@ -78,9 +78,9 @@ public class CF_MX_Client_Steps {
 		mxClientAuthCollaborationPage = testContext.getCoreFlexPageObjectManager().getMXClientAuthCollaborationPage();
 		mxClientAuthWFApprovalActionPage = testContext.getCoreFlexPageObjectManager()
 				.getMXClientAuthWFApprovalActionPage();
-		_coreFlexLoginInfo = FileReaderManager.getInstance().getCoreFlexJsonReader()
-				.getLoginByEnvt(CoreFunctions.getPropertyFromConfig("envt").toLowerCase());
-//		_coreFlexLoginInfo = FileReaderManager.getInstance().getCoreFlexJsonReader().getLoginByEnvt(System.getProperty("envt").toLowerCase());
+//		_coreFlexLoginInfo = FileReaderManager.getInstance().getCoreFlexJsonReader()
+//				.getLoginByEnvt(CoreFunctions.getPropertyFromConfig("envt").toLowerCase());
+		_coreFlexLoginInfo = FileReaderManager.getInstance().getCoreFlexJsonReader().getLoginByEnvt(System.getProperty("envt").toLowerCase());
 	}
 
 	private TransfereeSubmissions_LoginData _transfereeSubmissionLoginData = FileReaderManager.getInstance()

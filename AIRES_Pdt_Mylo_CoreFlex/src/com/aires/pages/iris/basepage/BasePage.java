@@ -79,8 +79,8 @@ public class BasePage {
 		Log.info("Port Assigned to " + _userName + " is : " + portNumber);
 		config.setServerAddress(new URI("ws://localhost:" + portNumber));
 		SDK.init(config);
-		_path = getIrisPathForApplication(CoreFunctions.getPropertyFromConfig("application"));
-//		_path = getIrisPathForApplication(System.getProperty("application"));
+//		_path = getIrisPathForApplication(CoreFunctions.getPropertyFromConfig("application"));
+		_path = getIrisPathForApplication(System.getProperty("application"));
 		_process = Runtime.getRuntime().exec(_path);
 		_windowTitle = getWindowText.getActiveWindowText();
 		while (!_windowTitle.contains("Login")) {

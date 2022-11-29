@@ -72,8 +72,8 @@ public class MobilityXConstants {
 	public static final String SUGGESTED_BUNDLES = "Suggested Bundles";
 	public static final String FAILED_TO_VERIFY_CUSTOM_BUNDLE_DETAILS = "{0}Failed to verify custom bundle details. Exception - ''{1}''";
 	public static final String SUCCESSFULLY_VERIFIED_CUSTOM_BUNDLE_DETAILS = "{0}Successfully verified Custom bundle details on Suggested bundles Page.";
-	public static final String FAILED_TO_LOAD_ACCOUNT_SETUP_FORM = "{0}Failed to load account setup form. Exception - ''{1}''";
-	public static final String ACCOUNT_SETUP_PAGE_IS_DISPLAYED_SUCCESSFULLY = "{0}Account setup page is displayed successfully";
+	public static final String FAILED_TO_LOAD_MXTRANSFEREE_ACCOUNT_SETUP_FORM = "{0}Failed to load MXTransferee Account Setup form. Exception - ''{1}''";
+	public static final String MXTRANSFEREE_ACCOUNT_SETUP_PAGE_IS_DISPLAYED_SUCCESSFULLY = "{0}MXTransferee Account setup page is displayed successfully";
 	public static final String SUCCESSFULLY_SELECTED_ACCOUNT_TYPE = "{0}Successfully selected account type";
 	public static final String FAILED_TO_SELECT_ACCOUNT_TYPE = "{0}Failed to select account type. Exception - ''{1}''";
 	public static final String SUCCESSFULLY_ADDED_PAYMENT_ACCOUNT = "{0}Successfully added payment account";
@@ -786,4 +786,9 @@ public class MobilityXConstants {
 	public static final String FLEX_BENEFIT_SUBMISSION_EMAIL = "Flex Benefit Submission Email";
 	public static final String FLEX_BENEFITS_SUBMISSION_BY_TRANSFEREE_MESSAGE = "The attached document outlines the mobility flex benefit(s) that you have submitted. You have used used_points point(s) of your total_points-point allowance. Your current point balance is current_balance point(s).";
 	public static final String FLEX_BENEFITS_SUBMISSION_BY_CLIENT_IMPERSONATION_MESSAGE = "The attached document outlines the mobility flex benefit(s) that your company has submitted on your behalf. You have used used_points point(s) of your total_points-point allowance. Your current point balance is current_balance point(s).";
+	public static final String FAILED_TO_PROVIDE_FLEX_BENEFITS_DELEGATE_ACCESS_TO_DELEGATED_USER = "{0}Failed to provide Flex Benefits Delegate access to the delegated user.";
+	public static final String DELEGATE_CONSENT_TEXT = "By authorizing this delegate, it is important to understand that you are consenting to provide this individual with access to sensitive and personal information.";
+	public static final String DELEGATE_GENERIC_USERNAME_TEXT = "The email address given cannot be used as a username. Click submit to generate a generic username, or back to verify your delegate's information.";
+	public static final String FAILED_TO_VERIFY_LOGGED_IN_DELEGATE_USER = "{0}Failed to verify Logged-In delegate user.";
+	public static final String DELEGATED_USER_BANNER = "Delegated User Banner";
 }

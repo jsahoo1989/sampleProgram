@@ -75,8 +75,7 @@ public class CoreFlex_SharedSteps {
 	private MX_Transferee_MyProfilePage mxTransfereeMyProfilePage;
 
 	int _initialTableRowCount = 0;
-	private CoreFlex_LoginInfo _loginInfo = FileReaderManager.getInstance().getCoreFlexJsonReader()
-			.getLoginInfoByEnviroment((CoreFunctions.getPropertyFromConfig("envt").toLowerCase()));
+	private CoreFlex_LoginInfo _loginInfo;
 
 	public CoreFlex_SharedSteps(TestContext context) {
 		testContext = context;
@@ -106,8 +105,11 @@ public class CoreFlex_SharedSteps {
 		bluePrintCFLoginPage = testContext.getPageObjectManager().getBluePrintCoreFlexLoginPage();
 		transfereeSubmissionsDetailsPage = testContext.getCoreFlexPageObjectManager()
 				.getTransfereeSubmissionsDetailsPage();
-
 		mxTransfereeMyProfilePage = testContext.getCoreFlexPageObjectManager().getTransfereeMyProfilePage();
+//		_loginInfo = FileReaderManager.getInstance().getCoreFlexJsonReader()
+//		.getLoginInfoByEnviroment((CoreFunctions.getPropertyFromConfig("envt").toLowerCase()));
+_loginInfo = FileReaderManager.getInstance().getCoreFlexJsonReader().getLoginByEnvt(System.getProperty("envt").toLowerCase());
+
 	}
 
 	/**********************************************************************/
@@ -661,11 +663,14 @@ public class CoreFlex_SharedSteps {
 		mxTransfereeJourneyHomePage.delegateAccess();
 		mobilityXLoginPage.clickLogOut();
 	}
-	
+
 	@And("he has provided 'Access to my Flex Benefits' delegate access to the newly created DelegateUser on 'Delegate Information' page")
 	public void he_has_provided_Access_to_my_Flex_Benefits_delegate_access_to_the_new_User_on_Delegate_Information_page() {
 		mxTransfereeJourneyHomePage.proceedToAccountSettingsPage();
-		mxTransfereeJourneyHomePage.delegateAccess();
+		Assert.assertTrue(mxTransfereeJourneyHomePage.delegateAccess(),
+				MessageFormat.format(
+						MobilityXConstants.FAILED_TO_PROVIDE_FLEX_BENEFITS_DELEGATE_ACCESS_TO_DELEGATED_USER,
+						CoreConstants.FAIL));
 		mobilityXLoginPage.clickLogOut();
 	}
 
@@ -680,6 +685,21 @@ public class CoreFlex_SharedSteps {
 		mxTransfereeMyProfilePage.setUpNewMobilityXTransferee();
 		mxTransfereeJourneyHomePage.handle_Cookie_AfterLogin();
 		mxTransfereeJourneyHomePage.handle_points_expiry_reminder_popup();
+	}
+
+	@Given("he has logged into MobilityX application as a delegated user")
+	public void he_has_logged_into_MobilityX_application_as_a_delegated_user() {
+		Assert.assertTrue(mobilityXLoginPage.readDelegateCredentialsFromMail(), MessageFormat
+				.format(MobilityXConstants.FAILED_TO_READ_USER_CREDENTIALS_FROM_GENERATED_EMAIL, CoreConstants.FAIL));
+		mobilityXLoginPage.enterUsernameAndPasswordForMobilityX(
+				CoreFunctions.getPropertyFromConfig("Delegate_UserNameInEMail"),
+				CoreFunctions.getPropertyFromConfig("Delegate_PasswordInEMail"));
+		mobilityXLoginPage.clickSignIn();
+		mxTransfereeMyProfilePage.setUpNewMobilityXTransferee();
+		mxTransfereeJourneyHomePage.handle_Cookie_AfterLogin();
+		mxTransfereeJourneyHomePage.handle_points_expiry_reminder_popup();
+		Assert.assertTrue(mxTransfereeJourneyHomePage.validateDelegateUserBanner(),
+				MessageFormat.format(MobilityXConstants.FAILED_TO_VERIFY_LOGGED_IN_DELEGATE_USER, CoreConstants.FAIL));
 	}
 
 	@Then("he should be able to access selected flex benefit details of the transferee")
@@ -851,23 +871,30 @@ public class CoreFlex_SharedSteps {
 		Reporter.addStepLog("<b>Total time taken to navigateTo/display <i>Benefit Submit Success Flex</i> dialog is :"
 				+ CoreFunctions.calculatePageLoadTime(CoreConstants.TIME_BEFORE_ACTION, CoreConstants.TIME_AFTER_ACTION)
 				+ " Seconds </b>");
-		Assert.assertTrue(mxTransfereeJourneyHomePage.verifyBenefitSubmissionEmail(MobilityXConstants.TRANSFEREE_SUBMISSION), MessageFormat
-				.format(MobilityXConstants.FAILED_TO_VERIFY_MOBILITY_FLEX_BENEFIT_SUBMISSION_EMAIL, CoreConstants.FAIL));
+		Assert.assertTrue(
+				mxTransfereeJourneyHomePage.verifyBenefitSubmissionEmail(MobilityXConstants.TRANSFEREE_SUBMISSION),
+				MessageFormat.format(MobilityXConstants.FAILED_TO_VERIFY_MOBILITY_FLEX_BENEFIT_SUBMISSION_EMAIL,
+						CoreConstants.FAIL));
 		mxTransfereeMyBenefitsBundlePage.viewSubmittedBenefits();
 		Assert.assertTrue(mxTransfereeMyBenefitsBundlePage.isMyBundlePageDisplayed(),
 				MessageFormat.format(MobilityXConstants.FAILED_TO_DISPLAY_MY_BENEFIT_BUNDLE_PAGE, CoreConstants.FAIL));
 	}
-	
+
 	@Given("^he has verified 'Benefit Submission Email' for Impersonated Transferee by Client after clicking on \"([^\"]*)\" button displayed on 'Success Flex' dialog$")
-	public void he_has_clicked_on_button_displayed_on_Success_Flex_dialog_for_Impersonated_User(String button) throws Throwable {
+	public void he_has_clicked_on_button_displayed_on_Success_Flex_dialog_for_Impersonated_User(String button)
+			throws Throwable {
 		Assert.assertTrue(mxTransfereeMyBenefitsBundlePage.isBenefitSubmittedPopUpDisplayed(), MessageFormat.format(
 				MobilityXConstants.FAILED_TO_VERIFY_SUBMITTED_BENEFITS_SUCCESS_FLEX_DIALOG, CoreConstants.FAIL));
 		CoreConstants.TIME_AFTER_ACTION = new Date().getTime();
 		Reporter.addStepLog("<b>Total time taken to navigateTo/display <i>Benefit Submit Success Flex</i> dialog is :"
 				+ CoreFunctions.calculatePageLoadTime(CoreConstants.TIME_BEFORE_ACTION, CoreConstants.TIME_AFTER_ACTION)
 				+ " Seconds </b>");
-		Assert.assertTrue(mxTransfereeJourneyHomePage.verifyBenefitSubmissionEmail(MobilityXConstants.CLIENT_IMPERSONATION_SUBMISSION), MessageFormat
-				.format(MobilityXConstants.FAILED_TO_VERIFY_MOBILITY_FLEX_BENEFIT_SUBMISSION_IMPERSONATION_EMAIL, CoreConstants.FAIL));
+		Assert.assertTrue(
+				mxTransfereeJourneyHomePage
+						.verifyBenefitSubmissionEmail(MobilityXConstants.CLIENT_IMPERSONATION_SUBMISSION),
+				MessageFormat.format(
+						MobilityXConstants.FAILED_TO_VERIFY_MOBILITY_FLEX_BENEFIT_SUBMISSION_IMPERSONATION_EMAIL,
+						CoreConstants.FAIL));
 		mxTransfereeMyBenefitsBundlePage.viewSubmittedBenefits();
 		Assert.assertTrue(mxTransfereeMyBenefitsBundlePage.isMyBundlePageDisplayed(),
 				MessageFormat.format(MobilityXConstants.FAILED_TO_DISPLAY_MY_BENEFIT_BUNDLE_PAGE, CoreConstants.FAIL));

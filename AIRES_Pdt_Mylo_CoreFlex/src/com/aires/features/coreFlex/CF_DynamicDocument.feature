@@ -1,7 +1,7 @@
 Feature: Validate the CoreFlex - Dynamic Document (pdf & docx) having Core/Flex Benefits submitted in Authorization Form
 
   @Coreflex:218411 @CF_End-To-End_MasterScript @CF_DynamicDocument @CF_DynamicDocument_PolicySetup
-  Scenario: CoreFlex - Creating a new Active Points Based CoreFlex Policy with MXClientAndTransferee selection for Dynamic Document Verification
+  Scenario: CoreFlex - Creating a new Active Points Based CoreFlex Policy for Dynamic Document Verification
     Given he has setup a new Points Based CoreFlex Policy with following selection in Blueprint application
       | Person Responsible For Benefit Selection | Flex Setup Type | Cashout Availability   | BenefitType | PolicyRequiredFor |
       | Client and Transferee                    | Static/Fixed    | Cashout Not Authorized | Both        | Client            |

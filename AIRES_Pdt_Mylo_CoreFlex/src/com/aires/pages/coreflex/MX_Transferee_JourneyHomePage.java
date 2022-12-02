@@ -614,10 +614,13 @@ public class MX_Transferee_JourneyHomePage extends Base {
 	}
 
 	public void progressOrSkipMobilityJourneyHomePage(String action) {
-		if (action.equals(MobilityXConstants.ROUTE_TO_TRANSFEREE_JOURNEY_HOME_PAGE)) {
-			routeToTransfereeJourney();
-		} else {
-			routeToFlexPlanningTool();
+		try {
+			if (action.equals(MobilityXConstants.ROUTE_TO_TRANSFEREE_JOURNEY_HOME_PAGE)) {
+				routeToTransfereeJourney();
+			} else {
+				routeToFlexPlanningTool();
+			}
+		} catch (Exception e) {
 		}
 	}
 

@@ -51,15 +51,15 @@ Feature: Validate Impersonation & Delegate User functionality for Core/Flex bene
     When he confirms request by selecting "Deny All" option after verifying 'Delete Request Pending' benefit request details on 'Requests' dialog
     Then 'Action Completed' growl message for "Deny Request" should be displayed on "Transferee Submission Details" page
     And 'Delete Request Pending' benefit request status should be updated to 'Submitted' in 'Transferee Submission Details' list
-    And benefit details should be updated in 'MXTransferee' application based on "Denied" 'Delete Request' on Transferee Submission    
-    
-    @Coreflex: @CF_End-To-End_MasterScript @CF_ImpersonationDelegation @CF_Delegation_MX
-    Scenario: MXTransferee - Verifying submission of Core/Flex Benefits by Delegated Transferee User
+    And benefit details should be updated in 'MXTransferee' application based on "Denied" 'Delete Request' on Transferee Submission
+
+  #@Coreflex: @CF_End-To-End_MasterScript @CF_ImpersonationDelegation @CF_Delegation_MX
+  Scenario: MXTransferee - Verifying submission of Core/Flex Benefits by Delegated Transferee User
     Given he has logged into 'MobilityX' application after creating a new 'Transferee' through IRIS application for policy setup in 'Policy Digitization Tool'
     And he has validated 'Assignment-Policy' details after selecting below option displayed on 'Welcome' dialog
       | WelcomeDialogSelection               |
       | No thanks, I prefer to do this later |
-    And he has provided 'Access to my Flex Benefits' delegate access to the newly created DelegateUser on 'Delegate Information' page  
+    And he has provided 'Access to my Flex Benefits' delegate access to the newly created DelegateUser on 'Delegate Information' page
     And he has logged into MobilityX application as a delegated user
     And he has navigated to "FleX Planning Tool" page after clicking on 'Manage my Points' button on "Mobility Journey Home" page
     And he has verified Benefits details displayed under 'Core Benefits' and 'Flex Benefits' section on "FleX Planning Tool" page
@@ -75,11 +75,10 @@ Feature: Validate Impersonation & Delegate User functionality for Core/Flex bene
     And he has verified submitted benefit details under 'Submitted Benefits' section of 'My Benefits Bundle' page
     When he 'Delete' submitted Benefits and confirms 'Remove Benefit Selection' dialog by entering username and clicking on "Yes-request to delete this benefit"
     Then 'Status' of the deleted benefit should be displayed as "Delete Request Pending" under 'Submitted Benefits' section of 'My Benefit Bundle' page
-    
-    
-    @Coreflex: @CF_End-To-End_MasterScript @CF_ImpersonationDelegation @CF_Delegation_TS
+
+  #@Coreflex: @CF_End-To-End_MasterScript @CF_ImpersonationDelegation @CF_Delegation_TS
   Scenario: TransfereeSubmissions - Verifying Benefit_Cashout_Points Details in TransfereeSubmissions & MobilityX application post Approve All Delete request selection by MSPEC/PPC User
-   Given he has logged into 'Transferee Submissions' application as a "MSPEC/PPC" user
+    Given he has logged into 'Transferee Submissions' application as a "MSPEC/PPC" user
     And he has navigated to "Transferee Submissions Dashboard" page having record of Bundle submitted by the transferee
     And he has clicked on "Review" button for Bundle submitted by the transferee on "Transferee Submissions Dashboard" page
     And he has navigated to "Transferee Submission Details" page having list of submitted benefits details

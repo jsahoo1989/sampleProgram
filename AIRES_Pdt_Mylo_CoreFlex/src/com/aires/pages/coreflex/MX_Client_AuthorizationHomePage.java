@@ -1471,6 +1471,37 @@ public class MX_Client_AuthorizationHomePage extends Base {
 		return false;
 	}
 
+	public boolean verifyRevisedBenefitsSubmissionEmail() {
+		try {
+			String expEmailSubject = "Revised mobility initiation from "
+					+ CoreFunctions.getPropertyFromConfig("Policy_ClientName") + " for  "
+					+ CoreFunctions.getPropertyFromConfig(MobilityXConstants.LAST_NAME_TEXT) + ", "
+					+ CoreFunctions.getPropertyFromConfig(MobilityXConstants.FIRST_NAME_TEXT);
+			return verifyFileIDPresent(expEmailSubject)
+					&& verifyBenefitPointsInRevisedInitiationSubmittedEmail(expEmailSubject)
+					&& verifyAuthFormSubmissionStatus(expEmailSubject);
+		} catch (Exception e) {
+			Reporter.addStepLog(MessageFormat.format(
+					COREFLEXConstants.EXCEPTION_OCCURED_WHILE_READING_REVISED_INITIATION_SUBMITTED_EMAIL,
+					CoreConstants.FAIL, e.getMessage()));
+		}
+		return false;
+	}
+
+	public boolean verifyMobilityApprovalSubmissionEmail() {
+		try {
+			String expEmailSubject = "Mobility Initiation for "
+					+ CoreFunctions.getPropertyFromConfig(MobilityXConstants.FIRST_NAME_TEXT) + " "
+					+ CoreFunctions.getPropertyFromConfig(MobilityXConstants.LAST_NAME_TEXT) + " has been submitted";
+			return verifyBenefitPointsInInitiationSubmittedEmail(expEmailSubject);
+		} catch (Exception e) {
+			Reporter.addStepLog(
+					MessageFormat.format(COREFLEXConstants.EXCEPTION_OCCURED_WHILE_READING_MOBILITY_SUBMITTED_EMAIL,
+							CoreConstants.FAIL, e.getMessage()));
+		}
+		return false;
+	}
+
 	private boolean verifyFileIDPresent(String expEmailSubject) {
 		boolean isFileIDVerified = false;
 		String actualResultFileID = null;
@@ -1524,6 +1555,33 @@ public class MX_Client_AuthorizationHomePage extends Base {
 					CoreConstants.PASS));
 		}
 		return isBenefitPointsVerified;
+	}
+
+	private boolean verifyBenefitPointsInRevisedInitiationSubmittedEmail(String expectedEmailSubject) {
+		try {
+			String actualResultBenefitTotalPoints = EmailUtil.searchEmailAndReturnResult(MobilityXConstants.HOST,
+					MobilityXConstants.AUTH_FORM_SUBMISSION_USER_EMAILID, MobilityXConstants.AUTO_EMAIL_PWD,
+					MobilityXConstants.AUTH_FORM_SUBMISSION_EMAIL_SENDER, expectedEmailSubject,
+					MobilityXConstants.NEW_INITIATION_SUBMISSION_BENEFIT_TOTAL_POINTS_AND_SUBMITTED_POINTS);
+
+			actualResultBenefitTotalPoints = actualResultBenefitTotalPoints.trim()
+					.replace("<span style=\"color:Red\">", "").replace("<span style=\"\">", "").replace("</span>", "");
+			String actualResultBenefitPoints[] = actualResultBenefitTotalPoints.split("/");
+
+			CoreFunctions.verifyValue(Double.parseDouble(actualResultBenefitPoints[0].trim()),
+					Double.parseDouble(CoreFunctions.getPropertyFromConfig("CF_Client_TotalSelectedPoints")),
+					MobilityXConstants.TOTAL_SUBMITTED_POINTS);
+			CoreFunctions.verifyValue(Double.parseDouble(actualResultBenefitPoints[1].trim()),
+					Double.parseDouble(CoreFunctions.getPropertyFromConfig("CF_Transferee_TotalAvailablePoints")),
+					MobilityXConstants.TOTAL_AVAILABLE_POINTS);
+
+			return true;
+		} catch (Exception e) {
+			Reporter.addStepLog(MessageFormat.format(
+					COREFLEXConstants.EXCEPTION_OCCURED_WHILE_READING_REVISED_MOBILITY_INITIATION_EMAIL,
+					CoreConstants.FAIL, e.getMessage()));
+		}
+		return false;
 	}
 
 	private boolean verifyAuthFormSubmissionStatus(String expectedEmailSubject) {

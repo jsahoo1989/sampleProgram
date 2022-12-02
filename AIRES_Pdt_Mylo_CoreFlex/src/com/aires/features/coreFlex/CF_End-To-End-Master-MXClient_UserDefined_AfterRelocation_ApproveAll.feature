@@ -13,7 +13,7 @@ Feature: Validate the CoreFlex End-To-End Business Test Flow(BluePrint, MXClient
     When he clicks on "Approve" button to acknowledge 'Approve this Policy' dialog
     Then Policy Status and Version should be displayed as "Active" and "V1" respectively on "View/Edit Policy Forms" page
 
-  @Coreflex:218392 @CF_End-To-End_MasterScript @CF_Master_Client_UserDefined_AfterRelocation_Approve @CF_Master_Client_UserDefined_AfterRelocation_Approve_CF
+  @Coreflex:218392 @CF_End-To-End_MasterScript @CF_Master_Client_UserDefined_AfterRelocation_Approve @CF_Master_Client_UserDefined_AfterRelocation_Approve_CF 
   Scenario: MXClient - Verifying Authorization Submission with UserDefined TotalPoints, Core/Flex Benefits & AfterRelocationCashout for configured Client-UserDefined-PortionCashout BluePrint CF Policy
     Given he has logged into 'MobilityX' application as a 'Client' user
     And he has clicked on "Create an authorization" after validating Client details on 'Authorization Home Page'
@@ -34,7 +34,7 @@ Feature: Validate the CoreFlex End-To-End Business Test Flow(BluePrint, MXClient
     Then 'Auth Submit Success' growl message should be displayed on the navigated 'MobilityX Dashboard Home' page
     And 'New Initiation Submitted' email should be received having Transferee details along with assigned CoreFlex Total Points and Submitted Benefits Points
 
-  @Coreflex:218393 @CF_End-To-End_MasterScript @CF_Master_Client_UserDefined_AfterRelocation_Approve @CF_Master_Client_UserDefined_AfterRelocation_Approve_CF
+  @Coreflex:218393 @CF_End-To-End_MasterScript @CF_Master_Client_UserDefined_AfterRelocation_Approve @CF_Master_Client_UserDefined_AfterRelocation_Approve_CF 
   Scenario: MXClient - Verifying Deleted Submitted Core/Flex Benefits, AfterRelocation Status on MXClient Submitted Benefits & Revised Mobility Initiation email post AuthForm Submission
     Given he has logged into 'MobilityX' application as a 'Client' user
     And he has selected required 'MSPEC_PPC' user after setting Assignment File status as 'Active' in IRIS application
@@ -78,7 +78,7 @@ Feature: Validate the CoreFlex End-To-End Business Test Flow(BluePrint, MXClient
     And he has clicked on "Review" button for Bundle submitted by the Client on "Transferee Submissions Dashboard" page
     And he has navigated to "Transferee Submission Details" page having list of submitted Benefits_Cashout details by Client
     And he has clicked on "Check All" followed by "Resolve Multiple" button to resolve multiple 'Delete Request Pending' request of the Client
-    When he confirms request by selecting "Approve All" option after verifying 'Delete Request Pending' benefit request details on 'Requests' dialog
+    When he confirms request by selecting "Approve All" option after verifying 'Delete Request Pending' benefit request details on 'Requests' dialog by Client
     Then 'Action Completed' growl message for "Approve Request" should be displayed on "Transferee Submission Details" page
     And 'Delete Request Pending' benefit request should be removed from 'Transferee Submission Details' list
     And benefit details should be updated in 'MXClient' application based on "Approved" 'Delete Request' on Transferee Submission

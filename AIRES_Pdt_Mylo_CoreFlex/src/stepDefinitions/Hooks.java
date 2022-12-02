@@ -74,40 +74,40 @@ public class Hooks {
 	public void BeforeSteps(Scenario scenario) throws Exception {
 		scenarioName = scenario;
 		Reporter.assignAuthor("AIRES - Automation - By : " + System.getProperty("user.name"));
-//		_loginInfo = FileReaderManager.getInstance().getJsonReader().getLoginByEnvt(CoreFunctions.getPropertyFromConfig("envt").toLowerCase());
-		_loginInfo = FileReaderManager.getInstance().getJsonReader().getLoginByEnvt(System.getProperty("envt").toLowerCase());
-//		_coreFlexLoginInfo = FileReaderManager.getInstance().getCoreFlexJsonReader().getLoginByEnvt(CoreFunctions.getPropertyFromConfig("envt").toLowerCase());
-		_coreFlexLoginInfo = FileReaderManager.getInstance().getCoreFlexJsonReader().getLoginByEnvt(System.getProperty("envt").toLowerCase());
+		_loginInfo = FileReaderManager.getInstance().getJsonReader().getLoginByEnvt(CoreFunctions.getPropertyFromConfig("envt").toLowerCase());
+//		_loginInfo = FileReaderManager.getInstance().getJsonReader().getLoginByEnvt(System.getProperty("envt").toLowerCase());
+		_coreFlexLoginInfo = FileReaderManager.getInstance().getCoreFlexJsonReader().getLoginByEnvt(CoreFunctions.getPropertyFromConfig("envt").toLowerCase());
+//		_coreFlexLoginInfo = FileReaderManager.getInstance().getCoreFlexJsonReader().getLoginByEnvt(System.getProperty("envt").toLowerCase());
 		testContext.initializeWebManager(scenario.getName().contains("IRIS"));
 		
-		testContext.initializeWebManager(CoreFunctions.getPropertyFromConfig("application"));//appName
-		String appName=System.getProperty("application");
-		String url=System.getProperty("testURL");
-		if (scenario.getName().contains("IRIS")) {
-			testContext.getBasePage().invokeIrisApplication();
-			testContext.getBasePage().killExistingBrowsers();
-		}
-		//Commented Code is for debugging purpose in local
-//		if (scenario.getName().contains("PDT")) {
-//			Log.info(_loginInfo.details.pdtUrl);
-//			testContext.getWebDriverManager().getDriver().navigate().to(_loginInfo.details.pdtUrl);
-//			CoreFunctions.writeToPropertiesFile("assignmentSubmitStatus", "false");
-//		} else if (scenario.getName().contains("Mylo")) {
-//			Log.info(FileReaderManager.getInstance().getConfigReader().getApplicationUrl("MYLO"));
-//			testContext.getWebDriverManager().getDriver().navigate()
-//					.to(FileReaderManager.getInstance().getConfigReader().getApplicationUrl("MYLO"));
-//		} else if (scenario.getName().contains("CoreFlex")) {
-//			Log.info(_coreFlexLoginInfo.details.blueprintURL);
-//			testContext.getWebDriverManager().getDriver().navigate().to(_coreFlexLoginInfo.details.blueprintURL);
-//		}else if ((scenario.getName().contains("MXTransferee")) || (scenario.getName().contains("MXClient"))) {
-//			Log.info(_coreFlexLoginInfo.details.mobilityXURL);
-//			testContext.getWebDriverManager().getDriver().navigate().to(_coreFlexLoginInfo.details.mobilityXURL);
-//		}		else if (scenario.getName().contains("TransfereeSubmissions")) {
-//			Log.info(_coreFlexLoginInfo.details.transfereeSubmissionsURL);
-//			testContext.getWebDriverManager().getDriver().navigate().to(_coreFlexLoginInfo.details.transfereeSubmissionsURL);
+//		testContext.initializeWebManager(CoreFunctions.getPropertyFromConfig("application"));//appName
+//		String appName=System.getProperty("application");
+//		String url=System.getProperty("testURL");
+//		if (scenario.getName().contains("IRIS")) {
+//			testContext.getBasePage().invokeIrisApplication();
+//			testContext.getBasePage().killExistingBrowsers();
 //		}
+		//Commented Code is for debugging purpose in local
+		if (scenario.getName().contains("PDT")) {
+			Log.info(_loginInfo.details.pdtUrl);
+			testContext.getWebDriverManager().getDriver().navigate().to(_loginInfo.details.pdtUrl);
+			CoreFunctions.writeToPropertiesFile("assignmentSubmitStatus", "false");
+		} else if (scenario.getName().contains("Mylo")) {
+			Log.info(FileReaderManager.getInstance().getConfigReader().getApplicationUrl("MYLO"));
+			testContext.getWebDriverManager().getDriver().navigate()
+					.to(FileReaderManager.getInstance().getConfigReader().getApplicationUrl("MYLO"));
+		} else if (scenario.getName().contains("CoreFlex")) {
+			Log.info(_coreFlexLoginInfo.details.blueprintURL);
+			testContext.getWebDriverManager().getDriver().navigate().to(_coreFlexLoginInfo.details.blueprintURL);
+		}else if ((scenario.getName().contains("MXTransferee")) || (scenario.getName().contains("MXClient"))) {
+			Log.info(_coreFlexLoginInfo.details.mobilityXURL);
+			testContext.getWebDriverManager().getDriver().navigate().to(_coreFlexLoginInfo.details.mobilityXURL);
+		}		else if (scenario.getName().contains("TransfereeSubmissions")) {
+			Log.info(_coreFlexLoginInfo.details.transfereeSubmissionsURL);
+			testContext.getWebDriverManager().getDriver().navigate().to(_coreFlexLoginInfo.details.transfereeSubmissionsURL);
+		}
 		
-		else if (appName.equals(CoreConstants.COREFLEX)&& (scenario.getName().contains("MXTransferee")|| (scenario.getName().contains("MXClient")))) {
+		/*else if (appName.equals(CoreConstants.COREFLEX)&& (scenario.getName().contains("MXTransferee")|| (scenario.getName().contains("MXClient")))) {
 			Log.info(_coreFlexLoginInfo.details.mobilityXURL);
 			testContext.getWebDriverManager().getDriver().navigate()
 					.to(_coreFlexLoginInfo.details.mobilityXURL);
@@ -120,7 +120,7 @@ public class Hooks {
 		else {
 			Log.info(url);
 			testContext.getWebDriverManager().getDriver().navigate().to(url);
-		}
+		}*/
 	}
 
 	@After(order = 2)
@@ -203,7 +203,7 @@ public class Hooks {
 	}
 
 	
-	@After(order = 1)
+//	@After(order = 1)
 	public void updateResultInTestRail(Scenario scenario) {
 		String Case_ID = BusinessFunctions.getTestRailIdAsPerApplication(System.getProperty("application"),scenario.getSourceTagNames().toString());
 		//String Case_ID = BusinessFunctions.getTestRailIdAsPerApplication("PDT",scenario.getSourceTagNames().toString());
@@ -220,7 +220,7 @@ public class Hooks {
 		if (scenario.getName().contains("IRIS")) {
 			testContext.getBasePage().cleanIrisProcesses();
 		} else {
-			quitDriver();			
+//			quitDriver();			
 		}		
 		Runtime.getRuntime().gc();
 	}

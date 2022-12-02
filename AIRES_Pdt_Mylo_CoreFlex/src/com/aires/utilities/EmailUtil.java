@@ -65,7 +65,7 @@ public class EmailUtil {
 			_searchTag[1] = "</th>";
 			break;
 		case MobilityXConstants.REVISED_MOBILITY_INITIATION_SUBMISSION_BENEFIT_TOTAL_POINTS:
-			_searchTag[0] = "Benefits Total Points: <span style=\"\">0</span> / <span style=\"color:Red\">";
+			_searchTag[0] = "Benefits Total Points: <span style=\"color:Red\">";
 			_searchTag[1] = "</span></th>";
 			break;
 		case MobilityXConstants.MOBILITY_APPROVAL_REQUEST:
@@ -73,15 +73,15 @@ public class EmailUtil {
 			_searchTag[1] = "Please see below";
 			break;
 		case MobilityXConstants.APPROVAL_EMAIL_TRANSFEREE_FIRST_NAME:
-			_searchTag[0] = "Legal First Name</td><td width=\"60%\" style=\"font-family:century gothic, Helvetica, Calibri, Roboto;font-size:14px;text-align:left;padding-left:10px;border:1px solid #E7F2F5;\">";
+			_searchTag[0] = "Legal First Name</td><td width=\"60%\" style=\"font-family:century gothic,Helvetica,Calibri,Roboto; font-size:14px; text-align:left; padding-left:10px; border:1px solid #E7F2F5\">";
 			_searchTag[1] = "</td></tr>";
 			break;
 		case MobilityXConstants.APPROVAL_EMAIL_TRANSFEREE_LAST_NAME:
-			_searchTag[0] = "Legal Last Name</td><td width=\"60%\" style=\"font-family:century gothic, Helvetica, Calibri, Roboto;font-size:14px;text-align:left;padding-left:10px;border:1px solid #E7F2F5;\">";
+			_searchTag[0] = "Legal Last Name</td><td width=\"60%\" style=\"font-family:century gothic,Helvetica,Calibri,Roboto; font-size:14px; text-align:left; padding-left:10px; border:1px solid #E7F2F5\">";
 			_searchTag[1] = "</td></tr>";
 			break;
 		case MobilityXConstants.APPROVAL_EMAIL_RELOCATION_POLICY:
-			_searchTag[0] = "Relocation Policy</td><td width=\"60%\" style=\"font-family:century gothic, Helvetica, Calibri, Roboto;font-size:14px;text-align:left;padding-left:10px;border:1px solid #E7F2F5;\">";
+			_searchTag[0] = "Relocation Policy</td><td width=\"60%\" style=\"font-family:century gothic,Helvetica,Calibri,Roboto; font-size:14px; text-align:left; padding-left:10px; border:1px solid #E7F2F5\">";
 			_searchTag[1] = "</td></tr>";
 			break;
 		case MobilityXConstants.SUBMIT_MY_RESPONSE:

@@ -13,7 +13,7 @@
 			"lockTheBenefitsPointsSelection": "Not Applicable",
 			"benefitsExpirationTracingPrompt": "First Contact Date",
 			"benefitsExpirationDate": "First Contact Date + 6 Months",
-			"StaticFixedTotalPointsAvailable": "400",
+			"StaticFixedTotalPointsAvailable": "800",
 			"customCashoutBenefitName": "TestCustomCashoutBenefit",
 			"maxPortionCashoutPercent": "50",
 			"pointExchangeRate": "1"

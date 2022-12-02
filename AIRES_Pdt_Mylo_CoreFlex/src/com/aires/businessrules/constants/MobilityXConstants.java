@@ -116,7 +116,7 @@ public class MobilityXConstants {
 	public static final String EMAIL_USERNAME = "airesautomation@aires.com";
 	public static final String EMAIL_PWD = "FebMarch2019!";
 	public static final String AUTH_FORM_SUBMISSION_USER_EMAILID = "airesautomation@aires.com";
-	public static final String AUTO_EMAIL_PWD = "Aut0Mati0nT34mAug";
+	public static final String AUTO_EMAIL_PWD = "Aut0Mati0nT34mNov";
 	public static final String AUTO_RULEBASED_EMAIL_PWD = "P@ssword1234!";
 	public static final String EXCEPTION_EMAIL_SENDER = "testrelonet@aires.com";
 	public static final String AUTH_FORM_SUBMISSION_EMAIL_SENDER = "testrelonet@aires.com";
@@ -792,4 +792,5 @@ public class MobilityXConstants {
 	public static final String FAILED_TO_VERIFY_LOGGED_IN_DELEGATE_USER = "{0}Failed to verify Logged-In delegate user.";
 	public static final String DELEGATED_USER_BANNER = "Delegated User Banner";
 	public static final String FAILED_TO_VERIFY_MOBILITY_FLEX_BENEFIT_DELETE_REQUEST_EMAIL = "{0}Failed to verify Mobility Flex Benefit Delete request Email for - ''{1}'' action.";
+	public static final String FAILED_TO_VERIFY_REVISED_BENEFITS_SUBMISSION_EMAIL = "{0}Failed to verify Revised Benefits Submission email.";
 }

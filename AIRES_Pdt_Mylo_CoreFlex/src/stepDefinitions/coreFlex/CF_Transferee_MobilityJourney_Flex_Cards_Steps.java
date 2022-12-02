@@ -54,9 +54,9 @@ public class CF_Transferee_MobilityJourney_Flex_Cards_Steps {
 		mxTransfereeMyBenefitsBundlePage = testContext.getCoreFlexPageObjectManager()
 				.getMXTransfereeMyBenefitsBundlePage();
 		mobilityXLoginPage = testContext.getCoreFlexPageObjectManager().getMobilityXLoginPage();
-//		_loginInfo = FileReaderManager.getInstance().getCoreFlexJsonReader()
-//		.getLoginInfoByEnviroment((CoreFunctions.getPropertyFromConfig("envt").toLowerCase()));
-_loginInfo = FileReaderManager.getInstance().getCoreFlexJsonReader().getLoginByEnvt(System.getProperty("envt").toLowerCase());
+		_loginInfo = FileReaderManager.getInstance().getCoreFlexJsonReader()
+		.getLoginInfoByEnviroment((CoreFunctions.getPropertyFromConfig("envt").toLowerCase()));
+//_loginInfo = FileReaderManager.getInstance().getCoreFlexJsonReader().getLoginByEnvt(System.getProperty("envt").toLowerCase());
 
 	}
 

@@ -1325,7 +1325,7 @@ public class MX_Client_AuthorizationHome_CollaborationPage extends Base {
 				MobilityXConstants.EMAIL_FROM_APPROVAL_REQUEST, expectedEmailSubject,
 				MobilityXConstants.SUBMIT_MY_RESPONSE);
 		String submitMyResponseURL = submitMyResponseEmailText.substring(1, submitMyResponseEmailText.length() - 1);
-		String submitMyResponseURLArr[] = submitMyResponseURL.split("\"><font");
+		String submitMyResponseURLArr[] = submitMyResponseURL.split("\" style=\"float:right\"><font color=\"#228EA7\">View Full Details");
 		testContext.getWebDriverManager().getDriver().navigate().to(submitMyResponseURLArr[0]);
 	}
 

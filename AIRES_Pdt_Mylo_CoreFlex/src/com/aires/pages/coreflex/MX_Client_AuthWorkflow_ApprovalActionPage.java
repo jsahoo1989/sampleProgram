@@ -187,8 +187,6 @@ public class MX_Client_AuthWorkflow_ApprovalActionPage extends Base {
 		try {
 			CoreFunctions.verifyText(driver, _textTotalPointsHeader, MobilityXConstants.TOTAL_POINTS,
 					MobilityXConstants.TOTAL_POINTS);
-			CoreFunctions.verifyText(driver, _labelTotalPointsInputHint, MobilityXConstants.TOTAL_POINTS_INPUT_HINT,
-					MobilityXConstants.TOTAL_POINTS_HINT);
 			return true;
 		} catch (Exception e) {
 			Log.info(e.getMessage());

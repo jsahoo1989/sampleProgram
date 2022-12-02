@@ -191,14 +191,14 @@ public class MX_Transferee_FlexPlanningTool_Page extends Base {
 	@FindBy(how = How.XPATH, using = "//span[text()='Back to benefits list']")
 	private WebElement _link_backToBenefitList;
 
-	@FindBy(how = How.CSS, using = "div[class='RXBold af_panelGroupLayout']")
+	@FindBy(how = How.CSS, using = "div[class='RXBold af_panelGroupLayout'] span[class*='RXCFBiggerText']")
 	private WebElement _textTotalPointBalance;
 
 	@FindBy(how = How.CSS, using = "table[id*='pglmms']")
 	private WebElement _textAvailablePointBalance;
 
 	// Added Benefit Name List
-	@FindBy(how = How.CSS, using = "span[class='RXCFText RXBold RXMineShaft']")
+	@FindBy(how = How.CSS, using = "span[class*='RXCFText RXBold RXMineShaft']")
 	private List<WebElement> _textAddedBenefitNameList;
 
 	// Added Benefit Group List
@@ -742,9 +742,12 @@ public class MX_Transferee_FlexPlanningTool_Page extends Base {
 		format.setDecimalSeparatorAlwaysShown(false);
 		totalPointsOnPolicy = Double
 				.parseDouble(CoreFunctions.getElementText(driver, total_points).replace("/", "").trim());
-		return CoreFunctions.getElementText(driver, _textTotalPointBalance)
-				.contains(MobilityXConstants.AVAILABLE_POINTS_TEXT.replace("available_points", format.format(Double
-						.parseDouble(CoreFunctions.getPropertyFromConfig("CF_Transferee_TotalAvailablePoints")))));
+		CoreFunctions.verifyTextContains(CoreFunctions.getElementText(driver, _textTotalPointBalance),
+				MobilityXConstants.AVAILABLE_POINTS_TEXT.replace("available_points",
+						format.format(Double.parseDouble(
+								CoreFunctions.getPropertyFromConfig("CF_Transferee_TotalAvailablePoints")))),
+				MobilityXConstants.AVAILABLE_POINTS_TEXT);
+		return true;
 	}
 
 	public boolean verifyAvailablePointsMessageAfterSubmission() {
@@ -772,6 +775,8 @@ public class MX_Transferee_FlexPlanningTool_Page extends Base {
 					CoreConstants.PASS, CoreFunctions.getElementText(driver, _textTotalPointBalance)));
 			CoreFunctions.writeToPropertiesFile("CF_Transferee_TotalSelectedPoints",
 					CoreFunctions.getPropertyFromConfig("CF_Client_TotalSelectedPoints"));
+			CoreFunctions.writeToPropertiesFile("CF_Transferee_BenefitSubmitted",
+					CoreFunctions.getPropertyFromConfig("CF_Client_BenefitSubmitted"));
 			return true;
 		} catch (Exception e) {
 			Reporter.addStepLog(MessageFormat.format(
@@ -1640,6 +1645,9 @@ public class MX_Transferee_FlexPlanningTool_Page extends Base {
 
 	public boolean verifyInitialCashOutContentBeforeActTracing(boolean isBenefitsSubmitted) {
 		try {
+			String expectedCashoutValue = null;
+			DecimalFormat format = new DecimalFormat();
+			format.setDecimalSeparatorAlwaysShown(false);
 			getAvailableCashoutPoints(isBenefitsSubmitted);
 			CoreFunctions.explicitWaitTillElementVisibility(driver, _text_cashOutName,
 					MobilityXConstants.CUSTOM_CASHOUT_NAME);
@@ -1647,21 +1655,37 @@ public class MX_Transferee_FlexPlanningTool_Page extends Base {
 					policySetupPageData.flexPolicySetupPage.customCashoutBenefitName,
 					MobilityXConstants.CUSTOM_CASHOUT_NAME);
 			CoreFunctions.verifyText(CoreFunctions.getElementText(driver, _text_cashOutSuggestion),
-					MobilityXConstants.CASHOUT_SUGGESTION_TEXT, MobilityXConstants.CASHOUT_SUGGESTION);
+					(!(CoreFunctions.getPropertyFromConfig("CF_Transferee_CashoutCurrencyCode").equalsIgnoreCase("USD"))
+							? MobilityXConstants.CASHOUT_SUGGESTION_TEXT_WIRE
+							: MobilityXConstants.CASHOUT_SUGGESTION_TEXT),
+					MobilityXConstants.CASHOUT_SUGGESTION);
 			CoreFunctions.verifyText(CoreFunctions.getElementText(driver, _text_howManyPoints),
 					MobilityXConstants.HOW_MANY_POINTS_WOULD_YOU_LIKE_TO_CASH_OUT,
 					MobilityXConstants.HOW_MANY_POINTS_TEXT);
 			CoreFunctions.verifyValue(
 					Double.parseDouble(CoreFunctions.getElementText(driver, _text_pointsAvailableForCashOut)),
 					cashoutPoints, MobilityXConstants.POINTS_AVAILABLE_FOR_CASHOUT);
-			String[] cashOutValue = CoreFunctions.getElementText(driver, _text_cashOutValue).split("\\(");
-			CoreFunctions.verifyValue(Double.parseDouble(cashOutValue[0].trim()), cashoutPoints,
-					MobilityXConstants.CASHOUT_VALUE);
+
+			String actualCashoutValue = CoreFunctions.getElementText(driver, _text_cashOutValue);
+
+			if (CoreFunctions.getPropertyFromConfig("CF_Transferee_CashoutCurrencySign").length() == 1) {
+				expectedCashoutValue = CoreFunctions.getPropertyFromConfig("CF_Transferee_CashoutCurrencySign")
+						+ format.format(cashoutPoints) + " ("
+						+ CoreFunctions.getPropertyFromConfig("CF_Transferee_CashoutCurrencyCode") + ")";
+			} else {
+				expectedCashoutValue = CoreFunctions.getPropertyFromConfig("CF_Transferee_CashoutCurrencySign") + " "
+						+ format.format(cashoutPoints) + " ("
+						+ CoreFunctions.getPropertyFromConfig("CF_Transferee_CashoutCurrencyCode") + ")";
+			}
+
+			CoreFunctions.verifyText(actualCashoutValue, expectedCashoutValue, MobilityXConstants.CASHOUT_VALUE);
 			CoreFunctions.verifyValue(Double.parseDouble(CoreFunctions.getAttributeText(_inputCashoutPoints, "value")),
 					cashoutPoints, MobilityXConstants.CASHOUT_INPUT_FIELD);
-			String[] cashOutInputText = CoreFunctions.getElementText(driver, _textInputCashoutPoints).split("\\(");
-			CoreFunctions.verifyValue(Double.parseDouble(cashOutInputText[0].trim()), cashoutPoints,
+
+			String actualCashOutInputText = CoreFunctions.getElementText(driver, _textInputCashoutPoints);
+			CoreFunctions.verifyText(actualCashOutInputText, expectedCashoutValue,
 					MobilityXConstants.CASHOUT_INPUT_FIELD_LABEL_VALUE);
+
 			if ((CoreFunctions.getAttributeText(_selectSelectAccount, "title")
 					.contains(CoreFunctions.getPropertyFromConfig("CF_Transferee_CashoutCurrencyCode")))
 					&& CoreFunctions.isElementExist(driver, _buttonDisabledSelectThisCashoutPoints, 2)) {
@@ -1745,14 +1769,13 @@ public class MX_Transferee_FlexPlanningTool_Page extends Base {
 	}
 
 	private void expandBenefitDescriptionOnFPT() {
+
 		for (int i = 0; i <= _moreLinkBenefitDesc.size(); i++) {
 			try {
 				CoreFunctions.waitHandler(2);
 				CoreFunctions.scrollClickUsingJS(driver, _moreLinkBenefitDesc.get(0), "More");
 			} catch (Exception e) {
-				Reporter.addStepLog(MessageFormat.format(
-						MobilityXConstants.EXCEPTION_OCCURED_WHILE_CLICKING_ON_MORE_LINK_TO_EXPAND_BENEFIT_DESCRIPTION_ON_FLEX_PLANNING_TOOL_PAGE,
-						CoreConstants.FAIL, e.getMessage()));
+
 			}
 		}
 	}
@@ -1780,7 +1803,7 @@ public class MX_Transferee_FlexPlanningTool_Page extends Base {
 		}
 		return isElementPresentOnPage;
 	}
-	
+
 	public boolean selectAiresManagedBenefitsAndProceedToReviewAndSubmit() {
 		boolean benefitsSelectedSuccessfully = false;
 		totalSelectedPoints = 0;
@@ -1799,13 +1822,13 @@ public class MX_Transferee_FlexPlanningTool_Page extends Base {
 		}
 		return benefitsSelectedSuccessfully;
 	}
-	
+
 	private boolean selectAiresManagedFlexBenefitsonFPT() {
 		boolean benefitsSelection = false, benefitsSelectionPerformed = false;
 		CoreFunctions.writeToPropertiesFile("CoreFlex_Policy_RequiredFor", "Aires Managed Benefits Cards");
 		for (Benefit benefit : getFlexBenefitsList(CoreFunctions.getPropertyFromConfig("CoreFlex_Policy_BenefitType"),
 				CoreFunctions.getPropertyFromConfig("CoreFlex_Policy_RequiredFor"))) {
-			if (benefit.getSelectBenefitOnFPTPage() && benefit.getAiresManagedService().equals("Yes") ) {
+			if (benefit.getSelectBenefitOnFPTPage() && benefit.getAiresManagedService().equals("Yes")) {
 				Log.info("Selecting " + benefit.getBenefitDisplayName() + " on FPT page.");
 				int indexBenefit = BusinessFunctions.returnindexItemFromListUsingText(driver, _textAddedBenefitNameList,
 						benefit.getBenefitDisplayName());
@@ -1821,6 +1844,5 @@ public class MX_Transferee_FlexPlanningTool_Page extends Base {
 		}
 		return benefitsSelection;
 	}
-
 
 }

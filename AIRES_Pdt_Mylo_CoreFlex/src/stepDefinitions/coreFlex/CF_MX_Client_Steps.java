@@ -78,9 +78,9 @@ public class CF_MX_Client_Steps {
 		mxClientAuthCollaborationPage = testContext.getCoreFlexPageObjectManager().getMXClientAuthCollaborationPage();
 		mxClientAuthWFApprovalActionPage = testContext.getCoreFlexPageObjectManager()
 				.getMXClientAuthWFApprovalActionPage();
-//		_coreFlexLoginInfo = FileReaderManager.getInstance().getCoreFlexJsonReader()
-//				.getLoginByEnvt(CoreFunctions.getPropertyFromConfig("envt").toLowerCase());
-		_coreFlexLoginInfo = FileReaderManager.getInstance().getCoreFlexJsonReader().getLoginByEnvt(System.getProperty("envt").toLowerCase());
+		_coreFlexLoginInfo = FileReaderManager.getInstance().getCoreFlexJsonReader()
+				.getLoginByEnvt(CoreFunctions.getPropertyFromConfig("envt").toLowerCase());
+//		_coreFlexLoginInfo = FileReaderManager.getInstance().getCoreFlexJsonReader().getLoginByEnvt(System.getProperty("envt").toLowerCase());
 	}
 
 	private TransfereeSubmissions_LoginData _transfereeSubmissionLoginData = FileReaderManager.getInstance()
@@ -155,7 +155,8 @@ public class CF_MX_Client_Steps {
 	@When("^he clicks on \"Create LOU\" to generate ([^\"]*) on 'What type of document would you like to add' pop-up dialog$")
 	public void he_clicks_on_Create_LOU_on_What_type_of_document_would_you_like_to_add_pop_up_dialog(
 			String documentName) {
-		BusinessFunctions.updateQuery(DbFunctions.getCoreFlexDBConnectionStringAsPerEnvt(CoreFunctions.getPropertyFromConfig("envt")),
+		BusinessFunctions.updateQuery(
+				DbFunctions.getCoreFlexDBConnectionStringAsPerEnvt(CoreFunctions.getPropertyFromConfig("envt")),
 				MessageFormat.format(PDTConstants.UPDATE_DYNAMIC_DOCUMENT_FORMAT,
 						CoreFunctions.getPropertyFromConfig("Assignment_Policy"), documentName.split("\\.")[1]));
 		Assert.assertTrue(mxClientAuthorizationHomePage.clickOnCreateLOU(),
@@ -484,6 +485,13 @@ public class CF_MX_Client_Steps {
 
 	@When("^he clicks on \"([^\"]*)\" button from right floating menu of 'Authorization Form' page$")
 	public void he_clicks_on_button_from_right_floating_menu_of_Authorization_Form_page(String buttonName)
+			throws Throwable {
+		mxClientAuthorizationHomePage.clickOnElementsOfFloatingMenu(buttonName);
+		mxClientAuthorizationHomePage.clickOnElementOnAuthorizationPage(MobilityXConstants.SUBMIT);
+	}
+	
+	@Given("^he has clicked on \"([^\"]*)\" button from right floating menu of 'Authorization Form' page to Resubmit Auth Form$")
+	public void he_has_clicked_on_button_from_right_floating_menu_of_Authorization_Form_page_to_Resubmit_Auth_Form(String buttonName)
 			throws Throwable {
 		mxClientAuthorizationHomePage.clickOnElementsOfFloatingMenu(buttonName);
 		mxClientAuthorizationHomePage.clickOnElementOnAuthorizationPage(MobilityXConstants.SUBMIT);
@@ -968,6 +976,13 @@ public class CF_MX_Client_Steps {
 			throws Throwable {
 		Assert.assertTrue(mxClientAuthorizationHomePage.verifyInitiationBenefitsSubmissionEmail(), MessageFormat
 				.format(MobilityXConstants.FAILED_TO_VERIFY_INITIATION_BENEFITS_SUBMISSION_EMAIL, CoreConstants.FAIL));
+	}
+	
+	@Given("^he has verified 'Revised Initiation Submitted' email having Transferee details along with assigned CoreFlex Total Points and Submitted Benefits Points$")
+	public void he_has_verified_Revised_Initiation_Submitted_email_having_Transferee_details_along_with_assigned_CoreFlex_Total_Points_and_Submitted_Benefits_Points()
+			throws Throwable {
+		Assert.assertTrue(mxClientAuthorizationHomePage.verifyRevisedBenefitsSubmissionEmail(), MessageFormat
+				.format(MobilityXConstants.FAILED_TO_VERIFY_REVISED_BENEFITS_SUBMISSION_EMAIL, CoreConstants.FAIL));
 	}
 
 	@Then("'New Initiation Submitted' email should be received having Transferee details along with assigned CoreFlex Total Points and Submitted Benefits Points$")
@@ -1620,6 +1635,16 @@ public class CF_MX_Client_Steps {
 	public void authorization_Form_status_should_be_displayed_as_Submitted_on_MXClient_Authorization_Form_page()
 			throws Throwable {
 		Assert.assertTrue(mxClientAuthorizationHomePage.verifyInitiationBenefitsSubmissionEmail(), MessageFormat
+				.format(MobilityXConstants.FAILED_TO_VERIFY_INITIATION_BENEFITS_SUBMISSION_EMAIL, CoreConstants.FAIL));
+		CoreFunctions.writeToPropertiesFile("CF_Transferee_AvailablePoints", String
+				.valueOf((Double.parseDouble(CoreFunctions.getPropertyFromConfig("CF_Transferee_TotalAvailablePoints")))
+						- (Double.parseDouble(CoreFunctions.getPropertyFromConfig("CF_Client_TotalSelectedPoints")))));
+	}
+	
+	@Then("^'Authorization Form' status should be displayed as 'Submitted' in 'Mobility Submitted' email$")
+	public void authorization_Form_status_should_be_displayed_as_Submitted_in_Mobility_Submitted_email()
+			throws Throwable {
+		Assert.assertTrue(mxClientAuthorizationHomePage.verifyMobilityApprovalSubmissionEmail(), MessageFormat
 				.format(MobilityXConstants.FAILED_TO_VERIFY_INITIATION_BENEFITS_SUBMISSION_EMAIL, CoreConstants.FAIL));
 		CoreFunctions.writeToPropertiesFile("CF_Transferee_AvailablePoints", String
 				.valueOf((Double.parseDouble(CoreFunctions.getPropertyFromConfig("CF_Transferee_TotalAvailablePoints")))

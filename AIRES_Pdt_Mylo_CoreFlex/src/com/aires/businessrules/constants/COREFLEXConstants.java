@@ -903,5 +903,6 @@ public class COREFLEXConstants {
 	public static final String SUCCESSFULLY_CREATED_A_NEW_DELEGATE_USER_ON_MOBILITYX_APPLICATION = "{0}Successfully created a new delegate user on MobilityX Application.";
 	public static final String EXCEPTION_OCCURED_WHILE_CREATING_A_NEW_DELEGATE_USER_ON_MOBILITYX_APPLICATION = "{0}Exception occured while creating a New Delegate User on MobilityX application. Exception : ''{1}''.";
 	public static final String EXCEPTION_OCCURED_WHILE_VALIDATING_LOGGED_IN_DELEGATE_USER_ON_MOBILITYX_APPLICATION = "{0}Exception occured while validating Logged-In Delegate User on MobilityX application. Exception : ''{1}''.";
-	
+	public static final String EXCEPTION_OCCURED_WHILE_READING_MOBILITY_SUBMITTED_EMAIL = "{0}Exception occured while reading Mobility Submitted Email. Exception : ''{1}''.";
+	public static final String EXCEPTION_OCCURED_WHILE_READING_REVISED_INITIATION_SUBMITTED_EMAIL = "{0}Exception occured while reading Revised Initiation Submitted Email. Exception : ''{1}''.";
 }

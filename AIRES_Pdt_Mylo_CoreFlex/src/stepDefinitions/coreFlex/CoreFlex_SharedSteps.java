@@ -106,9 +106,9 @@ public class CoreFlex_SharedSteps {
 		transfereeSubmissionsDetailsPage = testContext.getCoreFlexPageObjectManager()
 				.getTransfereeSubmissionsDetailsPage();
 		mxTransfereeMyProfilePage = testContext.getCoreFlexPageObjectManager().getTransfereeMyProfilePage();
-//		_loginInfo = FileReaderManager.getInstance().getCoreFlexJsonReader()
-//		.getLoginInfoByEnviroment((CoreFunctions.getPropertyFromConfig("envt").toLowerCase()));
-_loginInfo = FileReaderManager.getInstance().getCoreFlexJsonReader().getLoginByEnvt(System.getProperty("envt").toLowerCase());
+		_loginInfo = FileReaderManager.getInstance().getCoreFlexJsonReader()
+		.getLoginInfoByEnviroment((CoreFunctions.getPropertyFromConfig("envt").toLowerCase()));
+//_loginInfo = FileReaderManager.getInstance().getCoreFlexJsonReader().getLoginByEnvt(System.getProperty("envt").toLowerCase());
 
 	}
 
@@ -888,16 +888,16 @@ _loginInfo = FileReaderManager.getInstance().getCoreFlexJsonReader().getLoginByE
 		CoreConstants.TIME_AFTER_ACTION = new Date().getTime();
 		Reporter.addStepLog("<b>Total time taken to navigateTo/display <i>Benefit Submit Success Flex</i> dialog is :"
 				+ CoreFunctions.calculatePageLoadTime(CoreConstants.TIME_BEFORE_ACTION, CoreConstants.TIME_AFTER_ACTION)
-				+ " Seconds </b>");
+				+ " Seconds </b>");		
+		mxTransfereeMyBenefitsBundlePage.viewSubmittedBenefits();
+		Assert.assertTrue(mxTransfereeMyBenefitsBundlePage.isMyBundlePageDisplayed(),
+				MessageFormat.format(MobilityXConstants.FAILED_TO_DISPLAY_MY_BENEFIT_BUNDLE_PAGE, CoreConstants.FAIL));
 		Assert.assertTrue(
 				mxTransfereeJourneyHomePage
 						.verifyBenefitSubmissionEmail(MobilityXConstants.CLIENT_IMPERSONATION_SUBMISSION),
 				MessageFormat.format(
 						MobilityXConstants.FAILED_TO_VERIFY_MOBILITY_FLEX_BENEFIT_SUBMISSION_IMPERSONATION_EMAIL,
 						CoreConstants.FAIL));
-		mxTransfereeMyBenefitsBundlePage.viewSubmittedBenefits();
-		Assert.assertTrue(mxTransfereeMyBenefitsBundlePage.isMyBundlePageDisplayed(),
-				MessageFormat.format(MobilityXConstants.FAILED_TO_DISPLAY_MY_BENEFIT_BUNDLE_PAGE, CoreConstants.FAIL));
 	}
 
 	@When("^he clicks on \"([^\"]*)\" button displayed on 'Success Flex' dialog$")

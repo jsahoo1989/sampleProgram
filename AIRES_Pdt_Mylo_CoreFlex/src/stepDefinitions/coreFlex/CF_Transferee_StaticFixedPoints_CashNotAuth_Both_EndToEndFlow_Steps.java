@@ -60,9 +60,9 @@ public class CF_Transferee_StaticFixedPoints_CashNotAuth_Both_EndToEndFlow_Steps
 		mobilityXLoginPage = testContext.getCoreFlexPageObjectManager().getMobilityXLoginPage();
 		transfereeSubmissionsLoginPage = testContext.getCoreFlexPageObjectManager().getTransfereeSubmissionsLoginPage();
 
-//		_coreFlexLoginInfo = FileReaderManager.getInstance().getCoreFlexJsonReader()
-//				.getLoginByEnvt(CoreFunctions.getPropertyFromConfig("envt").toLowerCase());
-		_coreFlexLoginInfo = FileReaderManager.getInstance().getCoreFlexJsonReader().getLoginByEnvt(System.getProperty("envt").toLowerCase());
+		_coreFlexLoginInfo = FileReaderManager.getInstance().getCoreFlexJsonReader()
+				.getLoginByEnvt(CoreFunctions.getPropertyFromConfig("envt").toLowerCase());
+//		_coreFlexLoginInfo = FileReaderManager.getInstance().getCoreFlexJsonReader().getLoginByEnvt(System.getProperty("envt").toLowerCase());
 	}
 
 	private TransfereeSubmissions_LoginData _transfereeSubmissionLoginData = FileReaderManager.getInstance()
@@ -163,7 +163,7 @@ public class CF_Transferee_StaticFixedPoints_CashNotAuth_Both_EndToEndFlow_Steps
 						COREFLEXConstants.FAILED_TO_VERIFY_ACTION_COMPLETED_GROWL_MESSAGE_ON_TRANSFEREE_SUBMISSION_DETAILS_PAGE,
 						CoreConstants.FAIL));
 //		Assert.assertTrue(transfereeSubmissionsDetailsPage.verifyBenefitDeleteRequestEmail(actionPerformed), MessageFormat
-//				.format(MobilityXConstants.FAILED_TO_READ_USER_CREDENTIALS_FROM_GENERATED_EMAIL, CoreConstants.FAIL));
+//				.format(MobilityXConstants.FAILED_TO_VERIFY_MOBILITY_FLEX_BENEFIT_DELETE_REQUEST_EMAIL, CoreConstants.FAIL,actionPerformed));
 	}
 
 	@Then("^'Delete Request Pending' benefit request should be removed from 'Transferee Submission Details' list$")
@@ -194,6 +194,7 @@ public class CF_Transferee_StaticFixedPoints_CashNotAuth_Both_EndToEndFlow_Steps
 		mobilityXLoginPage.clickSignIn();
 		mxTransfereeJourneyHomePage.handle_Cookie_AfterLogin();
 		mxTransfereeJourneyHomePage.handle_points_expiry_reminder_popup();
+		mxTransfereeJourneyHomePage.progressOrSkipMobilityJourneyHomePage(MobilityXConstants.ROUTE_TO_TRANSFEREE_JOURNEY_HOME_PAGE);
 		Assert.assertTrue(mxTransfereeJourneyHomePage.verifySubmittedPointsDetails(),
 				MessageFormat.format(
 						MobilityXConstants.REMAINING_AVAILABLE_POINTS_DETAILS_NOT_MATCHED_ON_JOURNEY_HOME_PAGE,

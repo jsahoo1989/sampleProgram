@@ -1,6 +1,6 @@
 Feature: Validate the CoreFlex End-To-End Business Test Flow(BluePrint,MXClient,MXTransferee,Transferee Submissions) for Both_Transferee_UserDefined_AfterRelocation_Delete_DenyAll selection
 
-  @Coreflex:218380 @CF_End-To-End_MasterScript @CF_MXTransferee_UserDefined_AfterRelocation @CF_MXTransferee_UserDefined_AfterRelocation_PF
+  @Coreflex:218380 @CF_End-To-End_MasterScript @CF_Master_MXTransferee_UserDefined_AfterRelocation @CF_MXTransferee_UserDefined_AfterRelocation_PF
   Scenario: CoreFlex - Validating policy status is updated to 'Active' on completion of Approval WorkFlow for Transferee-UserDefined-AfterRelocation MasterScript Policy Setup
     Given he has setup a new Points Based CoreFlex Policy with following selection in Blueprint application
       | Person Responsible For Benefit Selection | Flex Setup Type | Cashout Availability  | BenefitType | PolicyRequiredFor |
@@ -13,7 +13,7 @@ Feature: Validate the CoreFlex End-To-End Business Test Flow(BluePrint,MXClient,
     When he clicks on "Approve" button to acknowledge 'Approve this Policy' dialog
     Then Policy Status and Version should be displayed as "Active" and "V1" respectively on "View/Edit Policy Forms" page
 
-  @Coreflex:218381 @CF_End-To-End_MasterScript @CF_MXTransferee_UserDefined_AfterRelocation @CF_MXTransferee_UserDefined_AfterRelocation_CF
+  @Coreflex:218381 @CF_End-To-End_MasterScript @CF_Master_MXTransferee_UserDefined_AfterRelocation @CF_MXTransferee_UserDefined_AfterRelocation_CF
   Scenario: MXClient - Validating Creation & Configuration of new Authorization with the Points Based CF policy and assigning Total Flex Points for UserDefined Policy Selection  
     Given he has logged into 'MobilityX' application as a 'Client' user
     And he has clicked on "Create an authorization" after validating Client details on 'Authorization Home Page'
@@ -39,7 +39,7 @@ Feature: Validate the CoreFlex End-To-End Business Test Flow(BluePrint,MXClient,
     And 'Auth Submit Success' growl message should be displayed on the navigated 'View all initiation' page on confirmation of the last dialog
     And Revised 'New Initiation Submitted' email having updated Transferee and Benefit Points details should be received
 
-  @Coreflex:218382 @CF_End-To-End_MasterScript @CF_MXTransferee_UserDefined_AfterRelocation @CF_MXTransferee_UserDefined_AfterRelocation_TF
+  @Coreflex:218382 @CF_End-To-End_MasterScript @CF_Master_MXTransferee_UserDefined_AfterRelocation @CF_MXTransferee_UserDefined_AfterRelocation_TF
   Scenario: MXTransferee - Verifying AfterRelocation Cashout selection, Flex benefits, Available_Used Benefits Points & Cashout Post Delete Operation
     Given he has logged into 'MobilityX' application after actualizing a new 'Transferee' through IRIS application and setting-up user profile in 'MobilityX' application
     And he has validated 'Assignment-Policy' details after selecting below option displayed on 'Welcome' dialog
@@ -65,7 +65,7 @@ Feature: Validate the CoreFlex End-To-End Business Test Flow(BluePrint,MXClient,
     When he 'Delete' submitted Benefit_Cashout and confirms 'Remove Benefit Selection' dialog by entering username and clicking on "Yes-request to delete this benefit"
     Then 'Status' of the deleted benefit_cashout should be displayed as "Delete Request Pending" under 'Submitted Benefits' section of 'My Benefit Bundle' page
 
-  @Coreflex:218383 @CF_End-To-End_MasterScript @CF_MXTransferee_UserDefined_AfterRelocation @CF_MXTransferee_UserDefined_AfterRelocation_SF
+  @Coreflex:218383 @CF_End-To-End_MasterScript @CF_Master_MXTransferee_UserDefined_AfterRelocation @CF_MXTransferee_UserDefined_AfterRelocation_SF
   Scenario: TransfereeSubmissions - Verifying Benefit_Cashout_Points Details in TransfereeSubmissions & MobilityX application post Deny All Delete request selection by MSPEC/PPC User for Transferee-UserDefined-AfterRelocation MasterScript Policy Setup
     Given he has logged into 'Transferee Submissions' application as a "MSPEC/PPC" user
     And he has navigated to "Transferee Submissions Dashboard" page having record of Bundle submitted by the transferee

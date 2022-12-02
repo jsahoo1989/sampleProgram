@@ -38,7 +38,7 @@ Feature: Validate the MXClient Auth Form Sequential-ApprovalWF and CoreFlex End-
     And 'Cancel Routing' and 'Resubmit to Aires' buttons should be displayed on right floating menu of 'Authorization Form' page
     And Email notification should be sent to First Approver "Test ApproverOne" for approval but not to Second Approver "Test ApproverTwo"
 
- @Coreflex:218403 @CF_End-To-End_MasterScript @CF_MXClient_ApprovalWF_Sequential_UserDefined_PortionCashout @CF_MXClient_ApprovalWF_Sequential_UserDefined_PortionCashout_AF1
+  @Coreflex:218403 @CF_End-To-End_MasterScript @CF_MXClient_ApprovalWF_Sequential_UserDefined_PortionCashout @CF_MXClient_ApprovalWF_Sequential_UserDefined_PortionCashout_AF1
   Scenario: MXClient - Validating Email Contents received in Approver Review Required Email and Approval of Authorization by ApproverOne
     Given "Test ApproverOne" has received 'Approver Review Required' email
     And "Test ApproverOne" has verified 'CoreFlex Assignment' details in the received 'Approver Review Required' email before 'Approving' request
@@ -48,7 +48,7 @@ Feature: Validate the MXClient Auth Form Sequential-ApprovalWF and CoreFlex End-
     Then 'Auth Form' status should be displayed as "Approved" on "AuthWorkFlowAction" page
     And Email notification should be sent to Second Approver "Test ApproverTwo" for approval
 
-@Coreflex:218404 @CF_End-To-End_MasterScript @CF_MXClient_ApprovalWF_Sequential_UserDefined_PortionCashout @CF_MXClient_ApprovalWF_Sequential_UserDefined_PortionCashout_AF2
+  @Coreflex:218404 @CF_End-To-End_MasterScript @CF_MXClient_ApprovalWF_Sequential_UserDefined_PortionCashout @CF_MXClient_ApprovalWF_Sequential_UserDefined_PortionCashout_AF2
   Scenario: MXClient - Validating Email Contents received in Approver Review Required Email and Approval of Authorization by ApproverTwo
     Given "Test ApproverTwo" has received 'Approver Review Required' email
     And "Test ApproverTwo" has verified 'CoreFlex Assignment' details in the received 'Approver Review Required' email before 'Approving' request
@@ -56,13 +56,17 @@ Feature: Validate the MXClient Auth Form Sequential-ApprovalWF and CoreFlex End-
     And he has verified CoreFlex 'Benefits_Cashout' and 'BenefitsTotalPoints' details on 'Authorization Form' displayed on the "AuthWorkFlowAction" page
     When "Test ApproverTwo" clicks on "Approve" button on 'Authorization Form'
     Then 'Auth Form' status should be displayed as "Approved" on "AuthWorkFlowAction" page
-    And 'Authorization Form' status should be displayed as 'Submitted' in 'New Initiation Submitted' email
+    And 'Authorization Form' status should be displayed as 'Submitted' in 'Mobility Submitted' email
 
- @Coreflex:218405 @CF_End-To-End_MasterScript @CF_MXClient_ApprovalWF_Sequential_UserDefined_PortionCashout @CF_MXClient_ApprovalWF_Sequential_UserDefined_PortionCashout_CF2
+  @Coreflex:218405 @CF_End-To-End_MasterScript @CF_MXClient_ApprovalWF_Sequential_UserDefined_PortionCashout @CF_MXClient_ApprovalWF_Sequential_UserDefined_PortionCashout_CF2
   Scenario: MXClient - Verifying Authorization Submission after Deleting Submitted Core/Flex Benefits Status on MXClient Submitted Benefits
     Given he has logged into 'MobilityX' application as a 'Client' user
-    And he has actualized the Transferee after selecting required 'MSPEC_PPC' user and setting file status as 'Active' in IRIS application
     And he has clicked on "View all initiations" link on 'Authorization Home Page' to navigate to 'View all initiation' page
+    And he has clicked 'Transferee Name' from 'All Initiations' List on 'View all initiation' page
+    And he has clicked on "Resubmit to Aires" button from right floating menu of 'Authorization Form' page to Resubmit Auth Form
+    And he has verified 'Auth Submit Success' growl message displayed on the navigated 'Advanced Authorization Search' page
+    And he has verified 'Revised Initiation Submitted' email having Transferee details along with assigned CoreFlex Total Points and Submitted Benefits Points
+    And he has actualized the Transferee after selecting required 'MSPEC_PPC' user and setting file status as 'Active' in IRIS application
     And he has clicked 'Transferee Name' from 'All Initiations' List on 'View all initiation' page
     And he has navigated to 'Benefit Selection Tool' page after clicking on 'Manage Benefit Selection' button
     And he has verified following details on 'Benefit Selection Tool' page post Authorization form submission
@@ -83,7 +87,7 @@ Feature: Validate the MXClient Auth Form Sequential-ApprovalWF and CoreFlex End-
     And he has clicked on "Review" button for Bundle submitted by the Client on "Transferee Submissions Dashboard" page
     And he has navigated to "Transferee Submission Details" page having list of submitted Benefits_Cashout details by Client
     And he has clicked on "Check All" followed by "Resolve Multiple" button to resolve multiple 'Delete Request Pending' request of the Client
-    When he confirms request by selecting "Deny All" option after verifying 'Delete Request Pending' benefit request details on 'Requests' dialog
+    When he confirms request by selecting "Deny All" option after verifying 'Delete Request Pending' benefit request details on 'Requests' dialog by Client
     Then 'Action Completed' growl message for "Deny Request" should be displayed on "Transferee Submission Details" page
     And 'Delete Request Pending' Benefit_Cashout request status should be updated to 'Submitted' in 'Transferee Submission Details' list of the Client
     And benefit details should be updated in 'MXClient' application based on "Denied" 'Delete Request' on Transferee Submission

@@ -55,13 +55,17 @@ Feature: Validate the MXClient Auth Form NonSequential-ApprovalWF and CoreFlex E
     And he has verified CoreFlex 'Benefits' and 'BenefitsTotalPoints' details on 'Authorization Form' displayed on the "AuthWorkFlowAction" page
     When "Test ApproverOne" clicks on "Approve" button on 'Authorization Form'
     Then 'Auth Form' status should be displayed as "Approved" on "AuthWorkFlowAction" page
-    And 'Authorization Form' status should be displayed as 'Submitted' in 'New Initiation Submitted' email
+    And 'Authorization Form' status should be displayed as 'Submitted' in 'Mobility Submitted' email
 
   @Coreflex:218399 @CF_End-To-End_MasterScript @CF_MXClient_ApprovalWF_NonSequential_UserDefined_CashNotAuth @CF_MXClient_ApprovalWF_NonSequential_UserDefined_CashNotAuth_CF2
   Scenario: MXClient - Verifying Authorization Submission after Deleting Submitted Core/Flex Benefits Status on MXClient Submitted Benefits
     Given he has logged into 'MobilityX' application as a 'Client' user
-    And he has actualized the Transferee after selecting required 'MSPEC_PPC' user and setting file status as 'Active' in IRIS application
     And he has clicked on "View all initiations" link on 'Authorization Home Page' to navigate to 'View all initiation' page
+    And he has clicked 'Transferee Name' from 'All Initiations' List on 'View all initiation' page
+    And he has clicked on "Resubmit to Aires" button from right floating menu of 'Authorization Form' page to Resubmit Auth Form
+    And he has verified 'Auth Submit Success' growl message displayed on the navigated 'Advanced Authorization Search' page
+    And he has verified 'Revised Initiation Submitted' email having Transferee details along with assigned CoreFlex Total Points and Submitted Benefits Points
+    And he has actualized the Transferee after selecting required 'MSPEC_PPC' user and setting file status as 'Active' in IRIS application
     And he has clicked 'Transferee Name' from 'All Initiations' List on 'View all initiation' page
     And he has navigated to 'Benefit Selection Tool' page after clicking on 'Manage Benefit Selection' button
     And he has verified following details on 'Benefit Selection Tool' page post Authorization form submission
@@ -82,7 +86,7 @@ Feature: Validate the MXClient Auth Form NonSequential-ApprovalWF and CoreFlex E
     And he has clicked on "Review" button for Bundle submitted by the Client on "Transferee Submissions Dashboard" page
     And he has navigated to "Transferee Submission Details" page having list of submitted benefits details by Client
     And he has clicked on "Check All" followed by "Resolve Multiple" button to resolve multiple 'Delete Request Pending' request of the Client
-    When he confirms request by selecting "Approve All" option after verifying 'Delete Request Pending' benefit request details on 'Requests' dialog
+    When he confirms request by selecting "Approve All" option after verifying 'Delete Request Pending' benefit request details on 'Requests' dialog by Client
     Then 'Action Completed' growl message for "Approve Request" should be displayed on "Transferee Submission Details" page
     And 'Delete Request Pending' benefit request should be removed from 'Transferee Submission Details' list
     And benefit details should be updated in 'MXClient' application based on "Approved" 'Delete Request' on Transferee Submission

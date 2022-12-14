@@ -142,8 +142,7 @@ public class PDT_ApprovePolicyVersioning_Steps {
 		List<List<String>> data = popUpInfo.raw();
 		String[] chkBoxExistAuth = data.get(3).get(1).split("_");
 		String[] chkBoxNewAuth = data.get(4).get(1).split("_");
-		//String[] buttonsArr = data.get(6).get(1).split(", ");
-		String[] buttonsArr = data.get(5).get(1).split(", ");
+		String[] buttonsArr = data.get(6).get(1).split(", ");
 		String[] buttonApprove = buttonsArr[0].split("_");
 		String[] buttonCancel = buttonsArr[1].split("_");
 		subBenefitPage.verifyHeadingAndMsgOfPopUp(data);
@@ -156,7 +155,7 @@ public class PDT_ApprovePolicyVersioning_Steps {
 						chkBoxNewAuth[0], chkBoxNewAuth[1]),
 				MessageFormat.format(PDTConstants.FAILED_TO_VERIFY_CHECKBOX, CoreConstants.FAIL, chkBoxNewAuth[0],
 						chkBoxNewAuth[1]));
-		//Assert.assertTrue(subBenefitPage.verifyDescription(), MessageFormat.format(PDTConstants.VERIFIED_FIELD_IS_NOT_DISPLAYED, CoreConstants.PASS, data.get(5).get(0)));
+		Assert.assertTrue(subBenefitPage.verifyDescription(), MessageFormat.format(PDTConstants.VERIFIED_FIELD_IS_NOT_DISPLAYED, CoreConstants.PASS, data.get(5).get(0)));
 		Assert.assertTrue(subBenefitPage.verifyButton(buttonApprove[0], buttonApprove[1]),
 				MessageFormat.format(PDTConstants.FAILED_TO_VERIFY_BTN_STATE, CoreConstants.FAIL, buttonApprove[0], buttonApprove[1]));
 		Assert.assertTrue(subBenefitPage.verifyButton(buttonCancel[0], buttonCancel[1]),
@@ -164,13 +163,13 @@ public class PDT_ApprovePolicyVersioning_Steps {
 
 	}
 
-	@When("^he selects the checkbox having label 'Associate this policy with a NEW authorization in IRIS\\?' followed by entering description on 'Approve Policy' pop-up$")
+	@When("^he selects the checkbox having label 'Link this policy with a NEW authorization in IRIS\\?' followed by entering description on 'Approve Policy' pop-up$")
 	public void he_selects_the_checkbox_having_label_Associate_this_policy_with_a_NEW_authorization_in_IRIS_on_Approve_Policy_pop_ups() {
 		subBenefitPage.clickAssociateWithNewAuth();
 		subBenefitPage.enterVersionDescription();
 	}
 	
-	@When("^he selects the checkbox having label 'Associate this policy with a NEW authorization in IRIS\\?' on 'Approve Policy' pop-up$")
+	@When("^he selects the checkbox having label 'Link this policy with a NEW authorization in IRIS\\?' on 'Approve Policy' pop-up$")
 	public void he_selects_the_checkbox_having_label_Associate_this_policy_with_a_NEW_authorization_in_IRIS_on_Approve_Policy_pop_up() {
 		subBenefitPage.clickAssociateWithNewAuth();		
 	}
@@ -236,7 +235,7 @@ public class PDT_ApprovePolicyVersioning_Steps {
 		List<String> subBenefits = subBenefitTable.asList(String.class);
 		subBenefitPage.verifySelectedPolicyBenefitCategoryName(benefitCategory);
 		subBenefitPage.verifySubBenefitCategoriesAreDisplayed(subBenefits, benefitCategory);
-		subBenefitPage.navigateBenefitCategory(subBenefits, addNewPolicyPage, objStep, benefitCategory, PDTConstants.PDT_BTN_SAVE_SUBMIT);
+		subBenefitPage.navigateBenefitCategory(subBenefits, addNewPolicyPage, objStep, benefitCategory, PDTConstants.PDT_BTN_SAVE_SUBMIT, generalInfoPage);
 		
 		Assert.assertTrue(
 				subBenefitPage.verifyStatusAndVersionOfPolicy(ClientPolicyDetails.getPolicyName().split("\\(#")[0].trim(),
@@ -245,7 +244,7 @@ public class PDT_ApprovePolicyVersioning_Steps {
 		subBenefitPage.clickElementOfPage(PDTConstants.BTN_APPROVE_POLICY, PDTConstants.POLICY_BENEFIT);
 
 		subBenefitPage.clickAssociateWithNewAuth();
-		//subBenefitPage.enterVersionDescription();
+		subBenefitPage.enterVersionDescription();
 		subBenefitPage.clickButtonOnApprovePolicyPopUp(PDTConstants.BTN_APPROVE, PDTConstants.POLICY_BENEFIT);
 
 		Assert.assertTrue(
@@ -380,10 +379,10 @@ public class PDT_ApprovePolicyVersioning_Steps {
 		subBenefitPage.navigateBenefitCategories(benefitCategory);
 		subBenefitPage.verifySelectedPolicyBenefitCategoryName(benefitCategory);
 		subBenefitPage.verifySubBenefitCategoriesAreDisplayed(subBenefits, benefitCategory);
-		subBenefitPage.navigateBenefitCategory(subBenefits, addNewPolicyPage, objStep, benefitCategory, PDTConstants.PDT_BTN_SAVE_SUBMIT);
+		subBenefitPage.navigateBenefitCategory(subBenefits, addNewPolicyPage, objStep, benefitCategory, PDTConstants.PDT_BTN_SAVE_SUBMIT, generalInfoPage);
 	}
 
-	@When("^he approves the policy after selecting the checkbox having label 'Associate this policy with a NEW authorization in IRIS\\?' on 'Approve Policy' pop-up with Default Date on \"([^\"]*)\" page$")
+	@When("^he approves the policy after selecting the checkbox having label 'Link this policy with a NEW authorization in IRIS\\?' on 'Approve Policy' pop-up with Default Date on \"([^\"]*)\" page$")
 	public void he_approves_the_policy_after_selecting_the_checkbox_having_label_Associate_this_policy_with_a_NEW_authorization_in_IRIS_on_Approve_Policy_pop_up_with_Default_Date(
 			String pageName) throws Throwable {
 		Assert.assertTrue(
@@ -394,7 +393,7 @@ public class PDT_ApprovePolicyVersioning_Steps {
 		subBenefitPage.clickButtonOnApprovePolicyPopUp(PDTConstants.BTN_APPROVE, PDTConstants.POLICY_BENEFIT);
 	}
 	
-	@When("^he approves the updated policy after selecting the checkbox having label 'Associate this policy with a NEW authorization in IRIS\\?' on 'Approve Policy' pop-up with Default Date on \"([^\"]*)\" page$")
+	@When("^he approves the updated policy after selecting the checkbox having label 'Link this policy with a NEW authorization in IRIS\\?' on 'Approve Policy' pop-up with Default Date on \"([^\"]*)\" page$")
 	public void he_approves_the_updated_policy_after_selecting_the_checkbox_having_label_Associate_this_policy_with_a_NEW_authorization_in_IRIS_on_Approve_Policy_pop_up_with_Default_Date(
 			String pageName) throws Throwable {
 		Assert.assertTrue(
@@ -432,7 +431,7 @@ public class PDT_ApprovePolicyVersioning_Steps {
 		testContext.getWebDriverManager().closeDriver();
 	}
 	
-	@When("^he approves the policy after selecting selecting the checkbox having label 'Associate this policy with an existing authorization in IRIS\\?' on 'Approve Policy' pop-up with Default Date$")
+	@When("^he approves the policy after selecting selecting the checkbox having label 'Link this policy with an existing authorization in IRIS\\?' on 'Approve Policy' pop-up with Default Date$")
 	public void he_approves_the_policy_after_selecting_selecting_the_checkbox_having_label_Associate_this_policy_with_an_existing_authorization_in_IRIS_on_Approve_Policy_pop_up_with_Default_Date() throws Throwable {
 		Assert.assertTrue(
 				subBenefitPage.verifyStatusAndVersionOfPolicy(ClientPolicyDetails.getPolicyName().split("\\(#")[0].trim(),
@@ -475,9 +474,7 @@ public class PDT_ApprovePolicyVersioning_Steps {
 		subBenefitPage.navigateBenefitCategories(benefitCategory);
 		subBenefitPage.verifySelectedPolicyBenefitCategoryName(benefitCategory);
 		subBenefitPage.verifySubBenefitCategoriesAreDisplayed(subBenefits, benefitCategory);
-		/*subBenefitPage.iterateAndSelectSubBenefits(benefitCategory, subBenefits, addNewPolicyPage, objStep,
-				PDTConstants.PDT_BTN_SAVE_SUBMIT);*/
-		subBenefitPage.navigateBenefitCategory(subBenefits, addNewPolicyPage, objStep, benefitCategory, PDTConstants.PDT_BTN_SAVE_SUBMIT);
+		subBenefitPage.navigateBenefitCategory(subBenefits, addNewPolicyPage, objStep, benefitCategory, PDTConstants.PDT_BTN_SAVE_SUBMIT, generalInfoPage);
 	}
 
 	@Then("^version of policy should remain \"([^\"]*)\" on \"([^\"]*)\" page with below information$")
@@ -541,7 +538,7 @@ public class PDT_ApprovePolicyVersioning_Steps {
 		subBenefitPage.verifySubBenefitCategoriesAreDisplayed(subBenefits, benefitCategory);
 		/*subBenefitPage.iterateAndSelectSubBenefits(benefitCategory, subBenefits, addNewPolicyPage, objStep,
 				PDTConstants.PDT_BTN_SAVE_SUBMIT);*/
-		subBenefitPage.navigateBenefitCategory(subBenefits, addNewPolicyPage, objStep, benefitCategory, PDTConstants.PDT_BTN_SAVE_SUBMIT);
+		subBenefitPage.navigateBenefitCategory(subBenefits, addNewPolicyPage, objStep, benefitCategory, PDTConstants.PDT_BTN_SAVE_SUBMIT, generalInfoPage);
 		Assert.assertTrue(
 				subBenefitPage.verifyStatusAndVersionOfPolicy(ClientPolicyDetails.getPolicyName().split("\\(#")[0].trim(),
 						PDTConstants.STATUS_SUBMITTED, PDTConstants.VERSION_V1, PDTConstants.POLICY_BENEFIT));
@@ -549,6 +546,7 @@ public class PDT_ApprovePolicyVersioning_Steps {
 		subBenefitPage.clickElementOfPage(PDTConstants.BTN_APPROVE_POLICY, PDTConstants.POLICY_BENEFIT);
 
 		subBenefitPage.clickAssociateWithNewAuth();
+		subBenefitPage.enterVersionDescription();
 		subBenefitPage.clickButtonOnApprovePolicyPopUp(PDTConstants.BTN_APPROVE, PDTConstants.POLICY_BENEFIT);
 		Assert.assertTrue(
 				viewPolicyPage.searchAndVerifyPolicyByNameVersionStatus(ClientPolicyDetails.getPolicyName().split("\\(#")[0].trim(),

@@ -1916,6 +1916,15 @@ public class CoreFunctions {
 		return format.format((tIME_BEFORE_ACTION - tIME_AFTER_ACTION) / 1000);
 	}
 	
+	/**
+	 * Return random multiple dropdown options
+	 * @param minNum
+	 * @param maxNum
+	 * @param count
+	 * @param driver
+	 * @param webElementList
+	 * @return
+	 */
 	public static ArrayList<String> getMultipleRandomOptionsForDropDown(int minNum, int maxNum, int count, WebDriver driver, List<WebElement> webElementList) {
 		Random random = new Random();
 		List<Integer> randomNumbers = random.ints(minNum, maxNum).distinct().limit(count).boxed().collect(Collectors.toList());
@@ -1924,5 +1933,37 @@ public class CoreFunctions {
 			randWebElementList.add(webElementList.get(index).getText());
 		}
 		return randWebElementList;
+	}
+	
+	public static boolean verifyElementPresentOnPage(WebElement element, String elementType, String name) {
+		boolean flag = false;
+		try {
+			if (element.isDisplayed()) {
+				Reporter.addStepLog(MessageFormat.format(PDTConstants.VRFIED_ELE_TYPE_ON_PAGE, CoreConstants.PASS, elementType, name));
+				flag = true;
+			} else {
+				flag = false;
+				Reporter.addStepLog(
+						MessageFormat.format(PDTConstants.VRFIED_ELE_TYPE_NOT_ON_PAGE, CoreConstants.FAIL, elementType, name));
+			}
+		} catch (NoSuchElementException e) {
+			e.printStackTrace();
+			Log.info(CoreConstants.VRFIED_THAT + name + CoreConstants.ELE_NOT_PRESNT);
+		}
+		return flag;
+	}
+	
+	public static boolean verifyTextForMaxLength(String actualText, String expectedText, String fieldName, int enteredLength, int maxLength) {
+		if ((enteredLength <= maxLength) && actualText.equalsIgnoreCase(expectedText) && (actualText.length()==expectedText.length())) {
+			Reporter.addStepLog(MessageFormat.format(PDTConstants.VERIFIED_FIELD_FOR_MAX_CHARACTERS, CoreConstants.PASS, fieldName, enteredLength, actualText, expectedText));
+			return true;
+		}
+		else if(!(actualText.equalsIgnoreCase(expectedText)) && enteredLength > maxLength && (expectedText.substring(0, enteredLength-(enteredLength-maxLength))).equalsIgnoreCase(actualText)){
+			Reporter.addStepLog(MessageFormat.format(PDTConstants.VERIFIED_FIELD_NOT_ACCEPTING_ALL_ENTERED_CHARACTERS, CoreConstants.PASS, fieldName, maxLength, Integer.toString(enteredLength), actualText, expectedText));
+			return true;
+		} else {
+			Reporter.addStepLog(MessageFormat.format(PDTConstants.FAILED_TO_VERIFY_FIELD_ACCEPTING_MAX_CHARACTERS, CoreConstants.FAIL, fieldName, maxLength, actualText, expectedText));
+			return false;
+		}
 	}
 }

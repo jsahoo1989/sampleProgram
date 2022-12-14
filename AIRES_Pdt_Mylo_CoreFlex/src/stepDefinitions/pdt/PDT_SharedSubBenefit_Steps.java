@@ -36,6 +36,7 @@ import com.aires.pages.pdt.PDT_SharedSubBenefitPage;
 import com.aires.pages.pdt.PDT_TemporaryLivingPage;
 import com.aires.pages.pdt.PDT_ViewPolicyPage;
 import com.aires.utilities.ClientPolicyDetails;
+import com.aires.utilities.CustomSoftAssert;
 
 import cucumber.api.DataTable;
 import cucumber.api.java.en.Given;
@@ -67,6 +68,7 @@ public class PDT_SharedSubBenefit_Steps {
 	private PDT_HomePurchasePage homePurchasePage;
 	private PDT_HouseHoldGoodsPage houseHoldGoodsPage;
 	private PDT_PolicyBenefitCategoryPage policyBenefitCategoryPage;
+	private CustomSoftAssert _softAssert;
 	long timeBeforeAction, timeAfterAction;
 	
 	public PDT_SharedSubBenefit_Steps(TestContext context) {
@@ -94,6 +96,7 @@ public class PDT_SharedSubBenefit_Steps {
 		homePurchasePage = testContext.getPageObjectManager().getHomePurchasePage();
 		houseHoldGoodsPage =  testContext.getPageObjectManager().getHouseHoldGoodsPage();
 		policyBenefitCategoryPage = testContext.getPageObjectManager().getpolicyBenefitCategoryPage();
+		_softAssert = testContext.getSoftAssertObject();
 	}
 	
 	public PDT_PreAcceptanceService getPreAcceptServicePage() {
@@ -172,6 +175,10 @@ public class PDT_SharedSubBenefit_Steps {
 		return houseHoldGoodsPage;
 	}
 	
+	public CustomSoftAssert getCustomSoftAssertObj() {
+		return _softAssert;
+	}
+	
 	@When("^he clicks on 'SUBMIT' button after entering mandatory information for all the below selected sub benefits on \"([^\"]*)\" page$")
 	public void he_clicks_on_SUBMIT_button_after_entering_mandatory_information_for_all_the_below_selected_sub_benefits_on_page(
 			String policyBenefitPgName, DataTable subBenefitTable) {
@@ -191,6 +198,7 @@ public class PDT_SharedSubBenefit_Steps {
 				MessageFormat.format(PDTConstants.FAILED_TO_VERIFY_ELEMENT_DISPLAYED_ON_PAGE, CoreConstants.FAIL, PDTConstants.POLICY_NAME,
 						ClientPolicyDetails.getPolicyName(), pageName, viewPolicyPage.getPolicyList()));
 		DbFunctions.deletePolicyByPolicyId(ClientPolicyDetails.getPolicyId());
+		_softAssert.assertAll();
 	}
 	
 	@When("^he selects 'Benefit differs for Employee type', 'Benefit differs for Homeowner type' for below Sub benefits on \"([^\"]*)\" page$")
@@ -220,7 +228,7 @@ public class PDT_SharedSubBenefit_Steps {
 		List<String> subBenefits = subBenefitTable.asList(String.class);
 		subBenefitPage.verifySelectedPolicyBenefitCategoryName(policyBenefitPgName);
 		subBenefitPage.verifySubBenefitCategoriesAreDisplayed(subBenefits, policyBenefitPgName);
-		subBenefitPage.navigateBenefitCategory(subBenefits, addNewPolicyPage, objStep, policyBenefitPgName, btnName);
+		subBenefitPage.navigateBenefitCategory(subBenefits, addNewPolicyPage, objStep, policyBenefitPgName, btnName, generalInfoPage);
 	}
 
 	@When("^he clicks on \"([^\"]*)\" button of 'Confirmation' dialog on \"([^\"]*)\" page$")
@@ -254,7 +262,7 @@ public class PDT_SharedSubBenefit_Steps {
 
 	@When("^he views the newly created policy$")
 	public void he_views_the_newly_created_policy() throws Throwable {
-		viewPolicyPage.verifySubmittedPolicyStatus(ClientPolicyDetails.getPolicyName().split("\\(#")[0].trim(), PDTConstants.DRAFT);
+		viewPolicyPage.verifySubmittedPolicyStatus(ClientPolicyDetails.getPolicyName().split("\\(#")[0].trim(), PDTConstants.DRAFT_ERR);
 		viewPolicyPage.navigateToGeneralInfoPage(ClientPolicyDetails.getPolicyName().split("\\(#")[0].trim(), PDTConstants.GENERAL_INFORMATION);
 		generalInfoPage.verifyGeneralInfoAndPolicyBenefitPage(policyBenefitCategoryPage);
 		policyBenefitCategoryPage.navigateToSubbenefitPage(policyBenefitCategoryPage.getBenefitCategoryName());
@@ -272,5 +280,24 @@ public class PDT_SharedSubBenefit_Steps {
 	public void policy_Status_should_be_changed_to_along_with_Version_on_the_page(String policyStatus, String policyVersion, String pageName) throws Throwable {
 		Assert.assertTrue(subBenefitPage.verifyStatusAndVersionOfPolicy(
 				ClientPolicyDetails.getPolicyName().split("\\(#")[0].trim(), policyStatus, policyVersion, pageName));
+	}
+	
+	@Given("^the sub-benefit form of above benefit categories displays the default selected option for Gross-Up, Reimbursed by fields$")
+	public void the_sub_benefit_form_of_above_benefit_categories_displays_the_default_selected_option_for_Gross_Up_Reimbursed_by_fields() throws Throwable {
+		subBenefitPage.iterateEachBenefitCategory(policyBenefitCategoryPage.getSelectedCategoriesName(), testContext,
+				subBenefitPage, addNewPolicyPage, generalInfoPage);
+		/*subBenefitPage.clickOnBtn(saveBtn);
+		subBenefitPage.waitForProgressBarToDisapper();
+		subBenefitPage.clickOnBtn(exitBtn);*/
+	}
+
+	@When("^he clicks on \"([^\"]*)\" button after entering mandatory information for all the sub-benefit forms$")
+	public void he_clicks_on_button_after_entering_mandatory_information_for_all_the_sub_benefit_forms(String arg1) throws Throwable {
+
+	}
+
+	@Then("^updated value of Gross-Up, Reimbursed by fields should be displayed on all sub-benefit forms$")
+	public void updated_value_of_Gross_Up_Reimbursed_by_fields_should_be_displayed_on_all_sub_benefit_forms() throws Throwable {
+
 	}
 }

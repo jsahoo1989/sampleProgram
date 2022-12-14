@@ -44,7 +44,8 @@ public class DbFunctions {
 			dbURL = "jdbc:oracle:thin:isisdba/iristestisisdba@corpprdl200.corp.aires.com:1521:IRIS";
 			break;
 		case "uat":
-			dbURL = "jdbc:oracle:thin:policydba/uatpo@corpqavl300.corp.aires.com:1521:IRISUAT";
+			//dbURL = "jdbc:oracle:thin:policydba/uatpo@corpqavl300.corp.aires.com:1521:IRISUAT";
+			dbURL = "jdbc:oracle:thin:isisdba/irisuatisisdba@corpqavl300.corp.aires.com:1521:IRISUAT";
 			break;
 		case "preprod":
 			dbURL = "jdbc:oracle:thin:isisdba/iristestisisdba@corptesvl300.corp.aires.com:1521:iristest";
@@ -236,7 +237,7 @@ public class DbFunctions {
 				expenseCodeList.add(resultset.getString("EXPENSE_CODE")+" - "+ resultset.getString("DESCRIPTION"));
 			}
 		
-		} catch (Exception ex) {			
+		} catch (Exception ex) {
 			Assert.fail(CoreConstants.SQL_QUERY_FAILED);
 		} finally {
 			try {
@@ -256,9 +257,9 @@ public class DbFunctions {
 		try {
 			DriverManager.registerDriver(new oracle.jdbc.OracleDriver());
 			connection = DriverManager.getConnection(
-			getMyloDBConnectionStringAsPerEnvt(System.getProperty("envt")));
-			/*Kept the commented code for running in local environment
-			 * connection = DriverManager.getConnection(
+					getDBConnectionStringAsPerEnvt(System.getProperty("envt")));
+			//Kept the commented code for running in local environment*/
+			/*connection = DriverManager.getConnection(
 					getDBConnectionStringAsPerEnvt(CoreFunctions.getPropertyFromConfig("envt")));*/
 		} catch (SQLException e) {
 			Assert.fail("Failed to establish connection to the database");

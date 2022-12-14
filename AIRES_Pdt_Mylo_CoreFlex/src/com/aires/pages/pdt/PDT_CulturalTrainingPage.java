@@ -167,7 +167,7 @@ public class PDT_CulturalTrainingPage extends PDT_SharedSubBenefitPage {
 	 * @param sharedSubBenefitPage
 	 * @param pageName
 	 */
-	public void fillCulturalTrainingEmployee(PDT_AddNewPolicyPage addNewPolicyPage, String subBenefitFormName, PDT_SharedSubBenefitPage sharedSubBenefitPage, String pageName) {
+	public void fillCulturalTrainingEmployee(PDT_AddNewPolicyPage addNewPolicyPage, String subBenefitFormName, PDT_SharedSubBenefitPage sharedSubBenefitPage, String pageName, PDT_GeneralInformationPage generalInfoPage) {
 		try {	
 			populateSubBenefitHeaderMap();
 			Assert.assertTrue(BusinessFunctions.verifySubBenefitFormHeaderIsDisplayed(driver, subBenefitHeaderMap.get(subBenefitFormName), subBenefitFormName, pageName),
@@ -226,7 +226,7 @@ public class PDT_CulturalTrainingPage extends PDT_SharedSubBenefitPage {
 	 * @param sharedSubBenefitPage
 	 * @param pageName
 	 */
-	public void fillCulturalTrainingFamily(PDT_AddNewPolicyPage addNewPolicyPage, String subBenefitFormName,  PDT_SharedSubBenefitPage sharedSubBenefitPage, String pageName) {
+	public void fillCulturalTrainingFamily(PDT_AddNewPolicyPage addNewPolicyPage, String subBenefitFormName,  PDT_SharedSubBenefitPage sharedSubBenefitPage, String pageName, PDT_GeneralInformationPage generalInfoPage) {
 		try {
 			populateSubBenefitHeaderMap();
 			Assert.assertTrue(BusinessFunctions.verifySubBenefitFormHeaderIsDisplayed(driver, subBenefitHeaderMap.get(subBenefitFormName), subBenefitFormName, pageName),
@@ -286,13 +286,13 @@ public class PDT_CulturalTrainingPage extends PDT_SharedSubBenefitPage {
 	 * @param addNewPolicyPage
 	 * @param sharedSubBenefitPage
 	 */
-	public void fillCulturalTrainingSubBenefit(String subBenefit, String pageName, PDT_AddNewPolicyPage addNewPolicyPage, PDT_SharedSubBenefitPage sharedSubBenefitPage) {		
+	public void fillCulturalTrainingSubBenefit(String subBenefit, String pageName, PDT_AddNewPolicyPage addNewPolicyPage, PDT_SharedSubBenefitPage sharedSubBenefitPage, PDT_GeneralInformationPage generalInfoPage) {		
 		switch (subBenefit) {
 		case PDTConstants.CULTURAL_TRAINING_EMPLOYEE:
-			fillCulturalTrainingEmployee(addNewPolicyPage, subBenefit, sharedSubBenefitPage, pageName);
+			fillCulturalTrainingEmployee(addNewPolicyPage, subBenefit, sharedSubBenefitPage, pageName, generalInfoPage);
 			break;
 		case PDTConstants.CULTURAL_TRAINING_FAMILY:
-			fillCulturalTrainingFamily(addNewPolicyPage, subBenefit, sharedSubBenefitPage, pageName);
+			fillCulturalTrainingFamily(addNewPolicyPage, subBenefit, sharedSubBenefitPage, pageName, generalInfoPage);
 			break;
 		default:
 			Assert.fail(MessageFormat.format(PDTConstants.SUBBENEFIT_NOT_FOUND, CoreConstants.FAIL, subBenefit, pageName));
@@ -309,7 +309,7 @@ public class PDT_CulturalTrainingPage extends PDT_SharedSubBenefitPage {
 	 * @param subBenefitPage 
 	 */
 	public void iterateAndFillCulturalTrainingSubBenefits(String pageName, List<String> subBenefits,
-			PDT_AddNewPolicyPage addNewPolicyPage, PDT_SharedSubBenefit_Steps objStep, String btnName, PDT_SharedSubBenefitPage subBenefitPage) {
+			PDT_AddNewPolicyPage addNewPolicyPage, PDT_SharedSubBenefit_Steps objStep, String btnName, PDT_SharedSubBenefitPage subBenefitPage, PDT_GeneralInformationPage generalInfoPage) {
 		CoreFunctions.explicitWaitTillElementListClickable(driver, _subBenefitCategories);			
 		populateBtnMap();
 		populateConfirmDialogbuttonMap();
@@ -320,7 +320,7 @@ public class PDT_CulturalTrainingPage extends PDT_SharedSubBenefitPage {
 			BusinessFunctions.fluentWaitForSpinnerToDisappear(driver, _progressBar);
 			timeAfterAction = new Date().getTime();
 			BusinessFunctions.printTimeTakenByPageToLoad(timeBeforeAction, timeAfterAction, pageName, subBenefit);
-			fillCulturalTrainingSubBenefit(subBenefit, pageName, addNewPolicyPage, subBenefitPage);
+			fillCulturalTrainingSubBenefit(subBenefit, pageName, addNewPolicyPage, subBenefitPage, generalInfoPage);
 		}
 		try {
 			if(btnName != null)

@@ -56,7 +56,7 @@ public class PDT_SilentSave_Steps {
 		policyStatusBeforeSave = subBenefitPage.getPolicyStatus();
 		subBenefitPage.verifySelectedPolicyBenefitCategoryName(benefitCategory);
 		subBenefitPage.verifySubBenefitCategoriesAreDisplayed(subBenefits, benefitCategory);
-		subBenefitPage.navigateBenefitCategory(subBenefits, addNewPolicyPage, objStep, benefitCategory, PDTConstants.SAVE);
+		subBenefitPage.navigateBenefitCategory(subBenefits, addNewPolicyPage, objStep, benefitCategory, PDTConstants.SAVE, generalInfoPage);
 	}
 
 	@Then("^Saved indicator is displayed for saved Policy Benefit Category on the left menu$")
@@ -109,7 +109,7 @@ public class PDT_SilentSave_Steps {
 	public void he_clicks_on_Save_Continue_button_after_entering_mandatory_information_for_all_sub_benefits_of_selected_Policy_benefit_categories()
 			throws Throwable {
 		subBenefitPage.iterateEachBenefitCategory(policyBenefitCategoryPage.getSelectedCategoriesName(), testContext,
-				subBenefitPage, addNewPolicyPage);
+				subBenefitPage, addNewPolicyPage, generalInfoPage);
 	}
 
 	@Then("^he navigates to the next Policy Benefit Category page without any change in policy status$")
@@ -207,7 +207,7 @@ public class PDT_SilentSave_Steps {
 		subBenefitPage.verifySelectedPolicyBenefitCategoryName(benefitCategory);
 		subBenefitPage.verifySubBenefitCategoriesAreDisplayed(subBenefits, benefitCategory);
 		subBenefitPage.setCompletePolicyState(false);
-		subBenefitPage.navigateBenefitCategory(subBenefits, addNewPolicyPage, objStep, benefitCategory, PDTConstants.SAVE);
+		subBenefitPage.navigateBenefitCategory(subBenefits, addNewPolicyPage, objStep, benefitCategory, PDTConstants.SAVE, generalInfoPage);
 	}
 
 	@Then("^\"([^\"]*)\" color 'exclamation mark' \"([^\"]*)\"  indicator is displayed on each sub-benefit tab header level where the mandatory field value is missing$")
@@ -234,7 +234,7 @@ public class PDT_SilentSave_Steps {
 	public void he_clicks_on_Save_Continue_button_on_each_benefit_page_after_entering_mandatory_information_for_some_of_the_field_values_of_sub_benefits() {
 		policyStatusBeforeSave = subBenefitPage.getPolicyStatus();
 		subBenefitPage.iterateEachBenefitCat(policyBenefitCategoryPage.getSelectedCategoriesName(), testContext,
-				subBenefitPage, addNewPolicyPage);
+				subBenefitPage, addNewPolicyPage, generalInfoPage);
 	}
 
 	@Then("^Policy status remains \"([^\"]*)\" on the last Benefit Page$")
@@ -317,7 +317,7 @@ public class PDT_SilentSave_Steps {
 		Assert.assertTrue(subBenefitPage.verifyOkBtnFunctionality(viewPolicyPage, data.get(0).get(0), popUpName), "Failed to verify Ok btn functionality");
 		String benefitCategory = policyBenefitCategoryPage.getSelectedCategoriesName().get((policyBenefitCategoryPage.getSelectedCategoriesName().size()-1));
 		String benefitCatPageNameBeforeEXITOperation = subBenefitPage.getCurrentBenefitCategoryName(benefitCategory);
-		Assert.assertTrue(subBenefitPage.verifyCancelBtnFunctionality(viewPolicyPage, addNewPolicyPage, benefitCategory, testContext, benefitCatPageNameBeforeEXITOperation, data.get(1).get(0), PDTConstants.EXIT, popUpName), "Failed to verify Cancel btn functionality");
+		Assert.assertTrue(subBenefitPage.verifyCancelBtnFunctionality(viewPolicyPage, addNewPolicyPage, benefitCategory, testContext, benefitCatPageNameBeforeEXITOperation, data.get(1).get(0), PDTConstants.EXIT, popUpName, generalInfoPage), "Failed to verify Cancel btn functionality");
 		Assert.assertTrue(subBenefitPage.verifySaveBtnFunctionality(viewPolicyPage, data.get(2).get(0), benefitCategory, generalInfoPage, popUpName), "Failed to verify Save btn functionality");
 	}
 
@@ -327,14 +327,14 @@ public class PDT_SilentSave_Steps {
 		String currentBenefitCategory = policyBenefitCategoryPage.getSelectedCategoriesName().get((policyBenefitCategoryPage.getSelectedCategoriesName().size()-1));
 		Assert.assertTrue(subBenefitPage.verifyOkBtnFunctionalityOnClickingBackBtn(viewPolicyPage, data.get(0).get(0), popUpName, currentBenefitCategory), "Failed to verify Ok btn functionality");
 		String benefitCatPageNameBeforeBACKOperation = subBenefitPage.getCurrentBenefitCategoryName(currentBenefitCategory);
-		Assert.assertTrue(subBenefitPage.verifyCancelBtnFunctionality(viewPolicyPage, addNewPolicyPage, currentBenefitCategory, testContext, benefitCatPageNameBeforeBACKOperation, data.get(1).get(0), PDTConstants.BACK, popUpName), "Failed to verify Cancel btn functionality");
+		Assert.assertTrue(subBenefitPage.verifyCancelBtnFunctionality(viewPolicyPage, addNewPolicyPage, currentBenefitCategory, testContext, benefitCatPageNameBeforeBACKOperation, data.get(1).get(0), PDTConstants.BACK, popUpName, generalInfoPage), "Failed to verify Cancel btn functionality");
 		Assert.assertTrue(subBenefitPage.verifySaveBtnFunctionalityOnClickingBACKBtn(viewPolicyPage, data.get(2).get(0), currentBenefitCategory, generalInfoPage, popUpName), "Failed to verify Save btn functionality");
 	}
 	
 	@Given("^he has clicked on \"([^\"]*)\" button followed by \"([^\"]*)\" button after entering mandatory information for all sub-benefits of each selected benefit Category$")
 	public void he_has_clicked_on_button_followed_by_button_after_entering_mandatory_information_for_all_sub_benefits_of_each_selected_benefit_Category(String saveBtn, String exitBtn) {
 		subBenefitPage.iterateEachBenefitCategory(policyBenefitCategoryPage.getSelectedCategoriesName(), testContext,
-				subBenefitPage, addNewPolicyPage);
+				subBenefitPage, addNewPolicyPage, generalInfoPage);
 		subBenefitPage.clickOnBtn(saveBtn);
 		subBenefitPage.waitForProgressBarToDisapper();
 		subBenefitPage.clickOnBtn(exitBtn);

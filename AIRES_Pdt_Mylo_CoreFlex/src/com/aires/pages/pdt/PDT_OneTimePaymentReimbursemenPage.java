@@ -450,29 +450,50 @@ public class PDT_OneTimePaymentReimbursemenPage extends PDT_SharedSubBenefitPage
 	@FindBy(how = How.CSS, using = "app-other-onetime-payment textArea[formcontrolname='benefitComment']")
 	private WebElement _txtAreaOtherOneTimePaymentComment;
 	
-	@FindBy(how = How.CSS, using = "a[href='#collapseOne']")
+	@FindBy(how = How.CSS, using = "a[data-target='#collapseOne']")
 	private WebElement _formHeaderMiscRelocationAllowance;
 
-	@FindBy(how = How.CSS, using = "a[href='#collapseTwo']")
+	@FindBy(how = How.CSS, using = "a[data-target='#collapseTwo']")
 	private WebElement _formHeaderLumpSum;
 
-	@FindBy(how = How.CSS, using = "a[href='#collapseThree']")
+	@FindBy(how = How.CSS, using = "a[data-target='#collapseThree']")
 	private WebElement _formHeaderLeaseBreak;
 
-	@FindBy(how = How.CSS, using = "a[href='#collapseFour']")
+	@FindBy(how = How.CSS, using = "a[data-target='#collapseFour']")
 	private WebElement _formHeaderApplianceAllowance;
 
-	@FindBy(how = How.CSS, using = "a[href='#collapseFive']")
+	@FindBy(how = How.CSS, using = "a[data-target='#collapseFive']")
 	private WebElement _formHeaderAutoRegistrationCost;
 
-	@FindBy(how = How.CSS, using = "a[href='#collapseSix']")
+	@FindBy(how = How.CSS, using = "a[data-target='#collapseSix']")
 	private WebElement _formHeaderAutoLossOnSale;
 
-	@FindBy(how = How.CSS, using = "a[href='#collapseSeven']")
+	@FindBy(how = How.CSS, using = "a[data-target='#collapseSeven']")
 	private WebElement _formHeaderOtherOneTimePayment;
 	
 	@FindBy(how = How.CSS, using = "div.form-check > label.form-check-label")
 	private List<WebElement> _subBenefitCategories;
+	
+	@FindBy(how = How.CSS, using = "div#headingOne > div.displayHeaderSection >h5")
+	private WebElement _headingMiscRelocationAllowance;
+	
+	@FindBy(how = How.CSS, using = "div#headingTwo > div.displayHeaderSection >h5")
+	private WebElement _headingLumpSum;
+	
+	@FindBy(how = How.CSS, using = "div#headingThree > div.displayHeaderSection >h5")
+	private WebElement _headingLeaseBreak;
+	
+	@FindBy(how = How.CSS, using = "div#headingFour > div.displayHeaderSection >h5")
+	private WebElement _headingApplianceAllowance;	
+	
+	@FindBy(how = How.CSS, using = "div#headingFour > div.displayHeaderSection >h5")
+	private WebElement _headingAutoRegCost;
+	
+	@FindBy(how = How.CSS, using = "div#headingFour > div.displayHeaderSection >h5")
+	private WebElement _headingAutoLossOnSale;
+	
+	@FindBy(how = How.CSS, using = "div#headingFour > div.displayHeaderSection >h5")
+	private WebElement _headingOtherOneTimePayment;
 
 	PDT_OneTimePaymentBenefit oneTimePaymentBenefitData = FileReaderManager.getInstance().getJsonReader()
 			.getOneTimePaymentBenefitDataList("One Time Payments and Reimbursements");
@@ -603,7 +624,23 @@ public class PDT_OneTimePaymentReimbursemenPage extends PDT_SharedSubBenefitPage
 		subBenefitHeaderMap.put(PDTConstants.AUTO_LOSS_ON_SALE, _formHeaderAutoLossOnSale);
 		subBenefitHeaderMap.put(PDTConstants.OTHER_ONE_TIME_PAYMENT, _formHeaderOtherOneTimePayment);
 	}
+	
+	public void populateSubBenefitHeadingMap() {
+		subBenefitHeadingMap.put(PDTConstants.MISC_RELOCATION_ALLOWANCE, _headingMiscRelocationAllowance);
+		subBenefitHeadingMap.put(PDTConstants.LUMP_SUM, _headingLumpSum);
+		subBenefitHeadingMap.put(PDTConstants.LEASE_BREAK, _headingLeaseBreak);
+		subBenefitHeadingMap.put(PDTConstants.APPLIANCE_ALLOWANCE, _headingApplianceAllowance);
+		subBenefitHeadingMap.put(PDTConstants.AUTO_REGISTRATION_COSTS, _headingAutoRegCost);
+		subBenefitHeadingMap.put(PDTConstants.AUTO_LOSS_ON_SALE, _headingAutoLossOnSale);
+		subBenefitHeadingMap.put(PDTConstants.OTHER_ONE_TIME_PAYMENT, _headingOtherOneTimePayment);
+		
+	}
 
+	public void expandSubBenefitIfCollapsed(String subBenefitFormName, WebElement element) {
+		if (subBenefitHeaderMap.get(subBenefitFormName).getAttribute("class").equalsIgnoreCase("collapsed"))
+			CoreFunctions.clickElement(driver, element);
+	}
+	
 	public void fillMiscRelocationAllowance(PDT_AddNewPolicyPage addNewPolicyPage, String subBenefitFormName, String pageName) {
 		try {
 			populateSubBenefitHeaderMap();

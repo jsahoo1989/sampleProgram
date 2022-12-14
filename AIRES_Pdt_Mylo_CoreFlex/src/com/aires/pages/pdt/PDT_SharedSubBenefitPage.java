@@ -270,7 +270,7 @@ public class PDT_SharedSubBenefitPage extends Base {
 	}
 
 	public void navigateBenefitCategory(List<String> subBenefits, PDT_AddNewPolicyPage addNewPolicyPage,
-			PDT_SharedSubBenefit_Steps subBenefitSteps, String pageName, String btnName) {
+			PDT_SharedSubBenefit_Steps subBenefitSteps, String pageName, String btnName, PDT_GeneralInformationPage generalInfoPage) {
 		switch (pageName) {
 		case PDTConstants.PRE_ACCEPTANCE_SERVICES:
 			subBenefitSteps.getPreAcceptServicePage().iterateAndFillPreAcceptanceSubBenefits(pageName, subBenefits,
@@ -278,11 +278,11 @@ public class PDT_SharedSubBenefitPage extends Base {
 			break;
 		case PDTConstants.CULTURAL_TRAINING:
 			subBenefitSteps.getCulturalTrainingPage().iterateAndFillCulturalTrainingSubBenefits(pageName, subBenefits,
-					addNewPolicyPage, subBenefitSteps, btnName, this);
+					addNewPolicyPage, subBenefitSteps, btnName, this, generalInfoPage);
 			break;
 		case PDTConstants.LANGUAGE_TRAINING:
 			subBenefitSteps.getLanguageTrainingPage().iterateAndFillLanguageTrainingSubBenefits(pageName, subBenefits,
-					addNewPolicyPage, subBenefitSteps, btnName, this);
+					addNewPolicyPage, subBenefitSteps, btnName, this, generalInfoPage);
 			break;
 		case PDTConstants.IMMIGRATION:
 			subBenefitSteps.getImmigrationPage().iterateAndFillImmigrationSubBenefits(pageName, subBenefits, subBenefitSteps, btnName, this);
@@ -392,7 +392,7 @@ public class PDT_SharedSubBenefitPage extends Base {
 	public void verifySelectedPolicyBenefitCategoryName(String pageName) {
 		waitForProgressBarToDisapper();
 		try {
-			WebElement element = pageName.trim().equalsIgnoreCase(PDTConstants.PRE_ACCEPTANCE_SERVICES)
+			WebElement element = pageName.trim().equalsIgnoreCase(PDTConstants.PRE_ACCEPTANCE_SERVICES) || pageName.trim().equalsIgnoreCase(PDTConstants.ONE_TIME_PAYMENTS_REIMBURSEMENTS)
 					? _benefitCatName
 					: _benefitCategoryName;
 
@@ -624,8 +624,8 @@ public class PDT_SharedSubBenefitPage extends Base {
 	public boolean verifyStatusAndVersionOfPolicy(String selectedPolicyName, String expectedPolicyStatus,
 			String expectedPolicyVersion, String pageName) {
 		waitForProgressBarToDisapper();
-		CoreFunctions.scrollToElementUsingJS(driver, _policyStatus, _policyStatusText.getText());
-		CoreFunctions.explicitWaitForElementTextPresent(driver, _policyStatusText, _policyStatusText.getText(), 10);
+		CoreFunctions.scrollToElementUsingJS(driver, _policyStatusText, _policyStatusText.getText());
+		CoreFunctions.explicitWaitForElementTextPresent(driver, _policyStatus, expectedPolicyStatus, 20);
 		if (expectedPolicyStatus.equalsIgnoreCase(_policyStatus.getText().trim())
 				&& expectedPolicyVersion.equalsIgnoreCase(_policyVersion.getText().trim())) {
 			CoreFunctions.highlightObject(driver, _policyStatus);
@@ -715,7 +715,7 @@ public class PDT_SharedSubBenefitPage extends Base {
 	}
 
 	public void iterateEachBenefitCategory(List<String> benefitsList, TestContext testContext,
-			PDT_SharedSubBenefitPage subBenefitPage, PDT_AddNewPolicyPage addNewPolicyPage) {
+			PDT_SharedSubBenefitPage subBenefitPage, PDT_AddNewPolicyPage addNewPolicyPage, PDT_GeneralInformationPage generalInfoPage) {
 		for (String benefitCategory : benefitsList) {
 			List<String> subBenefits = BusinessFunctions.getSubBenefitList(benefitCategory);
 			PDT_SharedSubBenefit_Steps objStep = new PDT_SharedSubBenefit_Steps(testContext);
@@ -723,9 +723,9 @@ public class PDT_SharedSubBenefitPage extends Base {
 			verifySubBenefitCategoriesAreDisplayed(subBenefits, benefitCategory);
 			if (benefitsList.get(benefitsList.size() - 1).equalsIgnoreCase(benefitCategory))
 				//iterateAndSelectSubBenefits(benefitCategory, subBenefits, addNewPolicyPage, objStep);
-				navigateBenefitCategory(subBenefits, addNewPolicyPage, objStep, benefitCategory, null);
+				navigateBenefitCategory(subBenefits, addNewPolicyPage, objStep, benefitCategory, null, generalInfoPage);
 			else {
-				navigateBenefitCategory(subBenefits, addNewPolicyPage, objStep, benefitCategory, PDTConstants.SAVE_AND_CONTINUE);
+				navigateBenefitCategory(subBenefits, addNewPolicyPage, objStep, benefitCategory, PDTConstants.SAVE_AND_CONTINUE, generalInfoPage);
 			}		
 		}
 	}
@@ -836,7 +836,7 @@ public class PDT_SharedSubBenefitPage extends Base {
 	}
 
 	public void iterateEachBenefitCat(List<String> benefitsList, TestContext testContext,
-			PDT_SharedSubBenefitPage subBenefitPage, PDT_AddNewPolicyPage addNewPolicyPage) {
+			PDT_SharedSubBenefitPage subBenefitPage, PDT_AddNewPolicyPage addNewPolicyPage, PDT_GeneralInformationPage generalInfoPage) {
 		for (String benefitCategory : benefitsList) {
 			List<String> subBenefits = BusinessFunctions.getSubBenefitList(benefitCategory);
 			PDT_SharedSubBenefit_Steps objStep = new PDT_SharedSubBenefit_Steps(testContext);
@@ -844,9 +844,9 @@ public class PDT_SharedSubBenefitPage extends Base {
 			verifySubBenefitCategoriesAreDisplayed(subBenefits, benefitCategory);
 			subBenefitPage.setCompletePolicyState(false);
 			if (benefitsList.get(benefitsList.size() - 1).equalsIgnoreCase(benefitCategory))				
-				navigateBenefitCategory(subBenefits, addNewPolicyPage, objStep, benefitCategory, null);
+				navigateBenefitCategory(subBenefits, addNewPolicyPage, objStep, benefitCategory, null, generalInfoPage);
 			else
-				navigateBenefitCategory(subBenefits, addNewPolicyPage, objStep, benefitCategory, PDTConstants.SAVE_AND_CONTINUE);
+				navigateBenefitCategory(subBenefits, addNewPolicyPage, objStep, benefitCategory, PDTConstants.SAVE_AND_CONTINUE, generalInfoPage);
 				
 		}
 	}
@@ -1077,10 +1077,10 @@ public class PDT_SharedSubBenefitPage extends Base {
 		}
 	}
 	
-	public boolean verifyCancelBtnFunctionality(PDT_ViewPolicyPage viewPolicyPage, PDT_AddNewPolicyPage addNewPolicyPage, String benefitCategory, TestContext testContext, String expectedPageName, String btnName, String btnToClickAfterEnteringData, String popUpName) {
+	public boolean verifyCancelBtnFunctionality(PDT_ViewPolicyPage viewPolicyPage, PDT_AddNewPolicyPage addNewPolicyPage, String benefitCategory, TestContext testContext, String expectedPageName, String btnName, String btnToClickAfterEnteringData, String popUpName, PDT_GeneralInformationPage generalInfoPage) {
 		PDT_SharedSubBenefit_Steps objStep = new PDT_SharedSubBenefit_Steps(testContext);
 		List<String> subBenefits = BusinessFunctions.getSubBenefitList(benefitCategory);		
-		navigateBenefitCategory(subBenefits, addNewPolicyPage, objStep, benefitCategory, btnToClickAfterEnteringData.toUpperCase());
+		navigateBenefitCategory(subBenefits, addNewPolicyPage, objStep, benefitCategory, btnToClickAfterEnteringData.toUpperCase(), generalInfoPage);
 		clickOnConfirmDialogBtn(btnName);
 		if (expectedPageName.equalsIgnoreCase(getCurrentBenefitCategoryName(expectedPageName))) {
 			Reporter.addStepLog(MessageFormat.format(PDTConstants.VERIFIED_STAYS_ON_SAME_PAGE_AFTER_CANCEL, CoreConstants.PASS,

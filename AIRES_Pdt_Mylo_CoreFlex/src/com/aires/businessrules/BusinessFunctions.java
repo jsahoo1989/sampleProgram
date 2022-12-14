@@ -1270,6 +1270,16 @@ public class BusinessFunctions {
 		return false;
 	}
 
+	/**
+	 * Select random Multiple drop down options
+	 * @param driver
+	 * @param dropDownName
+	 * @param _drpDown
+	 * @param _drpDownOptions
+	 * @param _drpDownSelectedOptions
+	 * @param randOptions
+	 * @param subBenefitFormName
+	 */
 	public static void selectRandomDropDownOption(WebDriver driver, String dropDownName, WebElement _drpDown,
 			List<WebElement> _drpDownOptions, List<WebElement> _drpDownSelectedOptions, List<String> randOptions,
 			String subBenefitFormName) {
@@ -1292,4 +1302,47 @@ public class BusinessFunctions {
 		}
 	}
 	
+	/**
+	 * Select and Return single random drop down option 
+	 * @param driver
+	 * @param _drpDown
+	 * @param _drpDownOptions
+	 * @param _lblDrpDown
+	 * @return
+	 */
+	public static String selectAndReturnRandomOptionFromDropDown(WebDriver driver,WebElement _drpDown, List<WebElement> _drpDownOptions, WebElement _lblDrpDown) {
+		String randOptionDrpDown = null;
+		try {
+			CoreFunctions.clickElement(driver, _drpDown);
+			CoreFunctions.explicitWaitTillElementListVisibility(driver, _drpDownOptions);
+			randOptionDrpDown = _drpDownOptions
+					.get(CoreFunctions.getRandomNumber(0, _drpDownOptions.size() - 1)).getText();
+			CoreFunctions.selectItemInListByText(driver, _drpDownOptions, randOptionDrpDown,
+					_lblDrpDown.getText(), PDTConstants.DROP_DOWN, true);
+			
+		} catch(Exception e) {
+			Assert.fail("Failed to select random option from drop down:-"+_lblDrpDown.getText());
+		}
+		return randOptionDrpDown;
+	}
+	
+	/**
+	 * Select and return random value from radio button.
+	 * @param driver
+	 * @param radioButtonList
+	 * @param lblRadioButton
+	 * @return
+	 */
+	public static String selectAndReturnRandomValFromRadioButton(WebDriver driver, List<WebElement> radioButtonList, WebElement lblRadioButton) {
+		String randRadioButton = null;
+		try {
+			randRadioButton = radioButtonList
+					.get(CoreFunctions.getRandomNumber(0, radioButtonList.size() - 1)).getText();
+			CoreFunctions.selectItemInListByText(driver, radioButtonList, randRadioButton,
+					lblRadioButton.getText(), PDTConstants.RADIO_BUTTON_LIST, true);			
+		} catch (Exception e) {			
+			Assert.fail("Failed to select random value from radio button:-"+lblRadioButton.getText());
+		}
+		return randRadioButton;
+	}
 }

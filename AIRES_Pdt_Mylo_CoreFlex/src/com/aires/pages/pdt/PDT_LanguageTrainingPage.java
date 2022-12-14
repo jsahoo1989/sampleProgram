@@ -254,7 +254,7 @@ public class PDT_LanguageTrainingPage extends PDT_SharedSubBenefitPage {
 	 * @param subBenefitPage 
 	 */
 	public void iterateAndFillLanguageTrainingSubBenefits(String pageName, List<String> subBenefits,
-			PDT_AddNewPolicyPage addNewPolicyPage, PDT_SharedSubBenefit_Steps objStep, String btnName, PDT_SharedSubBenefitPage subBenefitPage) {
+			PDT_AddNewPolicyPage addNewPolicyPage, PDT_SharedSubBenefit_Steps objStep, String btnName, PDT_SharedSubBenefitPage subBenefitPage, PDT_GeneralInformationPage generalInfoPage) {
 		CoreFunctions.explicitWaitTillElementListClickable(driver, _subBenefitCategories);			
 		populateBtnMap();
 		populateConfirmDialogbuttonMap();
@@ -272,7 +272,6 @@ public class PDT_LanguageTrainingPage extends PDT_SharedSubBenefitPage {
 		} catch (NoSuchElementException e) {
 			Assert.fail(MessageFormat.format(PDTConstants.MISSING_BTN, CoreConstants.FAIL, btnName));
 		} catch (Exception e) {
-			e.printStackTrace();
 			Assert.fail(MessageFormat.format(PDTConstants.FAILED_TO_CLICK_ON_BTN, CoreConstants.FAIL, btnName));
 		}
 	}

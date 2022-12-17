@@ -183,7 +183,7 @@ public class PDT_Mylo_CoreFlex_Common_LoginPage extends Base {
 		CoreFunctions.explicitWaitTillElementVisibility(driver, _anotherAccount, _anotherAccount.getText());
 		CoreFunctions.click(driver, _anotherAccount, _anotherAccount.getText());
 		if (userType.equals(MYLOConstants.USER_WITHOUT_RESOURCE15)||userType.equals(MYLOConstants.USER_WITHOUT_RESOURCE300096)) {
-			enterUserEmailAndPassword(loginData.MyloWithOutResource15UserName, loginData.MyloPassword);	
+			enterUserEmailAndPassword(loginData.MyloWithOutResource, loginData.MyloPassword);	
 		}
 		else {
 			enterUserEmailAndPassword(loginData.MyloUserName, loginData.MyloPassword);	

@@ -374,6 +374,7 @@ public class DbFunctions {
 			}
 		}
 		return requiredValue;
+	}
 	
 	public static void updateAssignmentStatus(String assignmentStatusCode, int policyId) {
 		Connection connection = null;

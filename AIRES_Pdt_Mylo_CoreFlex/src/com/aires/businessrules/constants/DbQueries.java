@@ -102,4 +102,10 @@ public class DbQueries {
 			"where SC.ASSIGNMENT_SERVICE_DESC=? and ST.ASSIGNMENT_STATUS_DESC= ?";
 	
 	public static final String QUERY_GET_ASSIGNMENT_FIELD_VALUES="SELECT TRANSFEREE_ID as TransfereeID FROM ISISDBA.ASSIGNMENT A where A.ASSIGNMENT_ID=?";
+	public static final String QUERY_UPDATE_ASSIGNMENT_STATUS = "update isisdba.assignment set assignment_status_code = ?, policy_benefits_config_id = ? where corporation_policy_id = ? and TO_CHAR(book_date, 'DD-MM-YYYY') = ?";
+	public static final String QUERY_GET_PRE_ACCEPTANCE_EXPENSE_CODE = "select EXPENSECODE as EXPENSE_CODE, DESCRIPTION from grossup.expensecodes ec, rmsdba.rms_report_code rrc where rrc.expense_code = ec.expensecode and rrc.BLUEPRINT_CATEGORY_CODE = 'PREACCEPTENCE' and ec.clientid = '999999' order by ec.expensecode";
+	public static final String QUERY_GET_IMMIGRATION_EXPENSE_CODE = "select EXPENSECODE as EXPENSE_CODE, DESCRIPTION from grossup.expensecodes ec, rmsdba.rms_report_code rrc where rrc.expense_code = ec.expensecode and rrc.BLUEPRINT_CATEGORY_CODE = 'IMMIGRATION' and ec.clientid = '999999' order by ec.expensecode";
+	public static final String QUERY_GET_LANG_TRAIN_EXPENSE_CODE = "select EXPENSECODE as EXPENSE_CODE, DESCRIPTION from grossup.expensecodes ec, rmsdba.rms_report_code rrc where rrc.expense_code = ec.expensecode and rrc.BLUEPRINT_CATEGORY_CODE = 'LANGUAGETRAINING' and ec.clientid = '999999' order by ec.expensecode";
+	public static final String QUERY_GET_CULT_TRAIN_EXPENSE_CODE = "select EXPENSECODE as EXPENSE_CODE, DESCRIPTION from grossup.expensecodes ec, rmsdba.rms_report_code rrc where rrc.expense_code = ec.expensecode and rrc.BLUEPRINT_CATEGORY_CODE = 'CULTURALTRAINING' and ec.clientid = '999999' order by ec.expensecode";
+	public static final String QUERY_GET_HOUSE_HUNTING_TRIP_EXPENSE_CODE = "select EXPENSECODE as EXPENSE_CODE, DESCRIPTION from grossup.expensecodes ec, rmsdba.rms_report_code rrc where rrc.expense_code = ec.expensecode and rrc.BLUEPRINT_CATEGORY_CODE = 'HOUSEHUNTINGTRIP' and ec.clientid = '999999' order by ec.expensecode";
 }

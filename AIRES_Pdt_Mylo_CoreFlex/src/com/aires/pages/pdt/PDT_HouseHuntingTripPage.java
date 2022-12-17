@@ -1,24 +1,29 @@
 package com.aires.pages.pdt;
 
 import java.text.MessageFormat;
+import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
+import org.openqa.selenium.NoSuchElementException;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.How;
 import org.testng.Assert;
 
-import com.aires.businessrules.Base;
 import com.aires.businessrules.BusinessFunctions;
 import com.aires.businessrules.CoreFunctions;
+import com.aires.businessrules.DbFunctions;
 import com.aires.businessrules.constants.CoreConstants;
 import com.aires.businessrules.constants.PDTConstants;
 import com.aires.managers.FileReaderManager;
 import com.aires.testdatatypes.pdt.PDT_HouseHuntingTripBenefit;
 import com.vimalselvam.cucumber.listener.Reporter;
 
-public class PDT_HouseHuntingTripPage extends Base {
+import stepDefinitions.pdt.PDT_SharedSubBenefit_Steps;
+
+public class PDT_HouseHuntingTripPage extends PDT_SharedSubBenefitPage {
 	public PDT_HouseHuntingTripPage(WebDriver driver) {
 		super(driver);
 	}
@@ -194,35 +199,92 @@ public class PDT_HouseHuntingTripPage extends Base {
 	@FindBy(how = How.XPATH, using = "//label[text()='Type']")
 	private WebElement _lblType;
 
-	@FindBy(how = How.CSS, using = "button.btn-next[type='submit']")
-	private WebElement _btnSaveAndContinue;
-
-	@FindBy(how = How.CSS, using = "div.swal2-popup.swal2-modal.swal2-icon-success.swal2-show")
-	private WebElement _successPopUp;
-
-	@FindBy(how = How.CSS, using = "div.swal2-html-container")
-	private WebElement _successMsg;
-
-	@FindBy(how = How.CSS, using = "button.swal2-confirm.swal2-styled")
-	private WebElement _btnOkOnSuccessPopUp;
-	
 	@FindBy(how = How.XPATH, using = "//app-trip-meals//label[contains(text(), 'Max. Amount')]")
 	private WebElement _lblMaxAmtHouseHuntingTripMeals;
 
-	@FindBy(how = How.XPATH, using = "//app-trip-meals//label[contains(text(), 'Max Amount - Transferee')]")
+	@FindBy(how = How.XPATH, using = "//app-trip-meals//label[contains(text(), 'Max. Amount - Transferee')]")
 	private WebElement _lblMaxAmtTransferee;
 
-	@FindBy(how = How.XPATH, using = "//app-trip-meals//label[contains(text(), 'Max Amount - Other Adults')]")
+	@FindBy(how = How.XPATH, using = "//app-trip-meals//label[contains(text(), 'Max. Amount - Other Adults')]")
 	private WebElement _lblMaxAmtOtherAdults;
 
-	@FindBy(how = How.XPATH, using = "//app-trip-meals//label[contains(text(), 'Max Amount - Children')]")
+	@FindBy(how = How.XPATH, using = "//app-trip-meals//label[contains(text(), 'Max. Amount - Children')]")
 	private WebElement _lblMaxAmtChildren;
+	
+	@FindBy(how = How.CSS, using = "div.form-check > label.form-check-label")
+	private List<WebElement> _subBenefitCategories;
+	
+	@FindBy(how = How.CSS, using = "a[href='#collapseOne1']")
+	private WebElement _formHeaderHouseHuntingTripTransportation;
+	
+	@FindBy(how = How.CSS, using = "a[href='#collapseTwo']")
+	private WebElement _formHeaderHouseHuntingTripLodging;
+
+	@FindBy(how = How.CSS, using = "a[href='#collapseThree']")
+	private WebElement _formHeaderHouseHuntingTripMeals;
+	
+	@FindBy(how = How.CSS, using = "div.ngx-progress-bar.ngx-progress-bar-ltr")
+	private WebElement _progressBar;
+	
+	@FindBy(how = How.CSS, using = "ng-select[formcontrolname='houseHuntingTripTransportationExpenseCodeList']")
+	private WebElement _drpDownTransportationExpenseCode;
+	
+	@FindBy(how = How.CSS, using = "ng-select[formcontrolname='houseHuntingTripTransportationExpenseCodeList'] span.ng-option-label.ng-star-inserted")
+	private List<WebElement> _drpDownOptionsTransportationExpenseCode;
+	
+	@FindBy(how = How.CSS, using = "ng-select[formcontrolname='houseHuntingTripTransportationExpenseCodeList'] span.ng-value-label.ng-star-inserted")
+	private List<WebElement> _drpDownSelectedOptionsTransportationExpenseCode;
+	
+	@FindBy(how = How.CSS, using = "ng-select[formcontrolname='houseHuntingTripLodgingExpenseCodeList']")
+	private WebElement _drpDownLodgingExpenseCode;
+	
+	@FindBy(how = How.CSS, using = "ng-select[formcontrolname='houseHuntingTripLodgingExpenseCodeList'] span.ng-option-label.ng-star-inserted")
+	private List<WebElement> _drpDownOptionsLodgingExpenseCode;
+	
+	@FindBy(how = How.CSS, using = "ng-select[formcontrolname='houseHuntingTripLodgingExpenseCodeList'] span.ng-value-label.ng-star-inserted")
+	private List<WebElement> _drpDownSelectedOptionsLodgingExpenseCode;
+	
+	@FindBy(how = How.CSS, using = "ng-select[formcontrolname='houseHuntingTripMealsExpenseCodeList']")
+	private WebElement _drpDownMealsExpenseCode;
+	
+	@FindBy(how = How.CSS, using = "ng-select[formcontrolname='houseHuntingTripMealsExpenseCodeList'] span.ng-option-label.ng-star-inserted")
+	private List<WebElement> _drpDownOptionsMealsExpenseCode;
+	
+	@FindBy(how = How.CSS, using = "ng-select[formcontrolname='houseHuntingTripMealsExpenseCodeList'] span.ng-value-label.ng-star-inserted")
+	private List<WebElement> _drpDownSelectedOptionsMealsExpenseCode;
 
 	PDT_HouseHuntingTripBenefit houseHuntingTripBenefitData = FileReaderManager.getInstance().getJsonReader()
 			.getHouseHuntingTripDataList("House Hunting Trip");
 
 	private String transportType, accompanyingFamilyMemeber, maxAmtHouseHuntingTripLodging, maxAmtHouseHuntingTripMeals;
+	private ArrayList<String> _expenseCodeTransportation = null;
+	private ArrayList<String> _expenseCodeLodging = null;
+	private ArrayList<String> _expenseCodeMeals = null;
+	
+	public void setExpenseCodeTransportation(ArrayList <String> expenseCode) {
+		this._expenseCodeTransportation = expenseCode;
+	}
 
+	public ArrayList <String> getExpenseCodeTransportation() {
+		return _expenseCodeTransportation;
+	}
+	
+	public void setExpenseCodeLodging(ArrayList <String> expenseCode) {
+		this._expenseCodeLodging = expenseCode;
+	}
+
+	public ArrayList <String> getExpenseCodeLodging() {
+		return _expenseCodeLodging;
+	}
+	
+	public void setExpenseCodeMeals(ArrayList <String> expenseCode) {
+		this._expenseCodeMeals = expenseCode;
+	}
+
+	public ArrayList <String> getExpenseCodeMeals() {
+		return _expenseCodeMeals;
+	}
+	
 	public void setTransportType(String transType) {
 		transportType = transType;
 	}
@@ -255,6 +317,14 @@ public class PDT_HouseHuntingTripPage extends Base {
 		return maxAmtHouseHuntingTripMeals;
 	}
 
+	/**
+	 * Add the Form Header of House Hunting Trip Transportation, House Hunting Trip Lodging & House Hunting Trip Meals in Hash map i.e. subBenefitHeaderMap
+	 */
+	public void populateSubBenefitHeaderMap() {
+		subBenefitHeaderMap.put(PDTConstants.HOUSE_HUNTING_TRIP_TRANSPORTATION, _formHeaderHouseHuntingTripTransportation);
+		subBenefitHeaderMap.put(PDTConstants.HOUSE_HUNTING_TRIP_LODGING, _formHeaderHouseHuntingTripLodging);
+		subBenefitHeaderMap.put(PDTConstants.HOUSE_HUNTING_TRIP_MEALS, _formHeaderHouseHuntingTripMeals);
+	}
 
 	public void selectRandomTransportTypeOption(PDT_AddNewPolicyPage addNewPolicyPage, String subBenefitFormName) {
 		try {
@@ -278,9 +348,19 @@ public class PDT_HouseHuntingTripPage extends Base {
 		}
 	}
 
+	/**
+	 * Fll HouseHuntingTrip Transportation Form.
+	 * @param addNewPolicyPage
+	 * @param subBenefitFormName
+	 * @param pageName
+	 */
 	public void fillHouseHuntingTripTransportationForm(PDT_AddNewPolicyPage addNewPolicyPage,
-			String subBenefitFormName) {
+			String subBenefitFormName, String pageName) {
 		try {
+			populateSubBenefitHeaderMap();
+			Assert.assertTrue(BusinessFunctions.verifySubBenefitFormHeaderIsDisplayed(driver, subBenefitHeaderMap.get(subBenefitFormName), subBenefitFormName, pageName),
+					MessageFormat.format(PDTConstants.VERIFIED_FORM_IS_NOT_DISPLAYED, subBenefitFormName, pageName));
+			BusinessFunctions.expandSubBenefitIfCollapsed(subBenefitHeaderMap.get(subBenefitFormName), subBenefitFormName, driver);
 			CoreFunctions.explicitWaitTillElementVisibility(driver, _txtBoxNumOfTrips, _lblNoOfTrips.getText());
 			CoreFunctions.clearAndSetText(driver, _txtBoxNumOfTrips, _lblNoOfTrips.getText(),
 					houseHuntingTripBenefitData.houseHuntingTripTransportation.numberOfTrips);
@@ -309,12 +389,23 @@ public class PDT_HouseHuntingTripPage extends Base {
 					houseHuntingTripBenefitData.houseHuntingTripTransportation.reimbursedBy, PDTConstants.REIMBURSED_BY,
 					PDTConstants.RADIO_BUTTON_LIST, true);
 
-			BusinessFunctions.verifyOtherTextBoxIsDisplayed(driver, addNewPolicyPage,
+			BusinessFunctions.verifyOtherTextBoxIsDisplayed(driver,
 					houseHuntingTripBenefitData.houseHuntingTripTransportation.reimbursedBy,
 					_txtBoxHouseHuntingTripTransportReimbursedByOther,
 					houseHuntingTripBenefitData.houseHuntingTripTransportation.reimbursedByOther, subBenefitFormName, PDTConstants.REIMBURSED_BY_OTHER);
 			CoreFunctions.clearAndSetText(driver, _txtAreaHouseHuntingTripTransportComment, PDTConstants.COMMENT,
 					houseHuntingTripBenefitData.houseHuntingTripTransportation.comment);
+			
+			CoreFunctions.clickElement(driver, _drpDownTransportationExpenseCode);
+			Assert.assertTrue(
+					BusinessFunctions.verifyAllExpenseCodesArePopulatedForSubBenefit(driver,
+							PDTConstants.HOUSE_HUNTING_TRIP, PDTConstants.HOUSE_HUNTING_TRIP_TRANSPORTATION,
+							_drpDownOptionsTransportationExpenseCode),
+					MessageFormat.format(PDTConstants.VERIFIED_EXPENSE_CODE_OPTIONS_NOT_POPULATED, CoreConstants.FAIL,
+							PDTConstants.HOUSE_HUNTING_TRIP_TRANSPORTATION, DbFunctions.getExpenseCodeListForBenefit(PDTConstants.HOUSE_HUNTING_TRIP).toString(), CoreFunctions.getElementTextAndStoreInList(driver, _drpDownOptionsTransportationExpenseCode).toString()));
+			ArrayList <String> randExpenseCodeOptions = CoreFunctions.getMultipleRandomOptionsForDropDown(0, _drpDownOptionsTransportationExpenseCode.size(), 5, driver, _drpDownOptionsTransportationExpenseCode);
+			BusinessFunctions.selectRandomDropDownOption(driver, PDTConstants.EXPENSE_CODES, _drpDownTransportationExpenseCode, _drpDownOptionsTransportationExpenseCode, _drpDownSelectedOptionsTransportationExpenseCode, randExpenseCodeOptions, subBenefitFormName);
+			setExpenseCodeTransportation(randExpenseCodeOptions);
 		} catch (Exception e) {			
 			Assert.fail(MessageFormat.format(PDTConstants.EXCEPTION_OCCURED_FILL_SUBBENEFIT_FORM, CoreConstants.FAIL, subBenefitFormName));
 		}
@@ -343,8 +434,18 @@ public class PDT_HouseHuntingTripPage extends Base {
 		}
 	}
 
-	public void fillHouseHuntingTripLodgingForm(PDT_AddNewPolicyPage addNewPolicyPage, String subBenefitFormName) {
+	/**
+	 * Fill House Hunting Trip Lodging form.
+	 * @param addNewPolicyPage
+	 * @param subBenefitFormName
+	 * @param pageName
+	 */
+	public void fillHouseHuntingTripLodgingForm(PDT_AddNewPolicyPage addNewPolicyPage, String subBenefitFormName, String pageName) {
 		try {
+			populateSubBenefitHeaderMap();
+			Assert.assertTrue(BusinessFunctions.verifySubBenefitFormHeaderIsDisplayed(driver, subBenefitHeaderMap.get(subBenefitFormName), subBenefitFormName, pageName),
+					MessageFormat.format(PDTConstants.VERIFIED_FORM_IS_NOT_DISPLAYED, subBenefitFormName, pageName));
+			BusinessFunctions.expandSubBenefitIfCollapsed(subBenefitHeaderMap.get(subBenefitFormName), subBenefitFormName, driver);
 			CoreFunctions.explicitWaitTillElementVisibility(driver, _txtBoxNumOfNightsPerTrip,
 					_lblNumOfNightsPerTrip.getText());
 			CoreFunctions.clearAndSetText(driver, _txtBoxNumOfNightsPerTrip, _lblNumOfNightsPerTrip.getText(),
@@ -366,13 +467,24 @@ public class PDT_HouseHuntingTripPage extends Base {
 					houseHuntingTripBenefitData.houseHuntingTripLodging.reimbursedBy, PDTConstants.REIMBURSED_BY,
 					PDTConstants.RADIO_BUTTON_LIST, true);
 
-			BusinessFunctions.verifyOtherTextBoxIsDisplayed(driver, addNewPolicyPage,
+			BusinessFunctions.verifyOtherTextBoxIsDisplayed(driver,
 					houseHuntingTripBenefitData.houseHuntingTripLodging.reimbursedBy,
 					_txtBoxHouseHuntingTripLodgingReimbursedByOther,
 					houseHuntingTripBenefitData.houseHuntingTripLodging.reimbursedByOther, subBenefitFormName, PDTConstants.REIMBURSED_BY_OTHER);
 
 			CoreFunctions.clearAndSetText(driver, _txtAreaHouseHuntingTripLodgingComment, PDTConstants.COMMENT,
 					houseHuntingTripBenefitData.houseHuntingTripLodging.comment);
+			
+			CoreFunctions.clickElement(driver, _drpDownLodgingExpenseCode);
+			Assert.assertTrue(
+					BusinessFunctions.verifyAllExpenseCodesArePopulatedForSubBenefit(driver,
+							PDTConstants.HOUSE_HUNTING_TRIP, PDTConstants.HOUSE_HUNTING_TRIP_LODGING,
+							_drpDownOptionsLodgingExpenseCode),
+					MessageFormat.format(PDTConstants.VERIFIED_EXPENSE_CODE_OPTIONS_NOT_POPULATED, CoreConstants.FAIL,
+							PDTConstants.HOUSE_HUNTING_TRIP_LODGING, DbFunctions.getExpenseCodeListForBenefit(PDTConstants.HOUSE_HUNTING_TRIP).toString(), CoreFunctions.getElementTextAndStoreInList(driver, _drpDownOptionsLodgingExpenseCode).toString()));
+			ArrayList <String> randExpenseCodeOptions = CoreFunctions.getMultipleRandomOptionsForDropDown(0, _drpDownOptionsLodgingExpenseCode.size(), 5, driver, _drpDownOptionsLodgingExpenseCode);
+			BusinessFunctions.selectRandomDropDownOption(driver, PDTConstants.EXPENSE_CODES, _drpDownLodgingExpenseCode, _drpDownOptionsLodgingExpenseCode, _drpDownSelectedOptionsLodgingExpenseCode, randExpenseCodeOptions, subBenefitFormName);
+			setExpenseCodeLodging(randExpenseCodeOptions);
 		} catch (Exception e) {			
 			Assert.fail(MessageFormat.format(PDTConstants.EXCEPTION_OCCURED_FILL_SUBBENEFIT_FORM, CoreConstants.FAIL, subBenefitFormName));
 		}
@@ -460,8 +572,18 @@ public class PDT_HouseHuntingTripPage extends Base {
 		}
 	}
 
-	public void fillHouseHuntingTripMealForm(PDT_AddNewPolicyPage addNewPolicyPage, String subBenefitFormName) {
+	/**
+	 * Fill House Hunting Trip Meal form.
+	 * @param addNewPolicyPage
+	 * @param subBenefitFormName
+	 * @param pageName
+	 */
+	public void fillHouseHuntingTripMealForm(PDT_AddNewPolicyPage addNewPolicyPage, String subBenefitFormName, String pageName) {
 		try {
+			populateSubBenefitHeaderMap();
+			Assert.assertTrue(BusinessFunctions.verifySubBenefitFormHeaderIsDisplayed(driver, subBenefitHeaderMap.get(subBenefitFormName), subBenefitFormName, pageName),
+					MessageFormat.format(PDTConstants.VERIFIED_FORM_IS_NOT_DISPLAYED, subBenefitFormName, pageName));
+			BusinessFunctions.expandSubBenefitIfCollapsed(subBenefitHeaderMap.get(subBenefitFormName), subBenefitFormName, driver);
 			CoreFunctions.explicitWaitTillElementVisibility(driver, _txtBoxDurationPerTrip,
 					_lblDurationPerTrip.getText());
 			CoreFunctions.clearAndSetText(driver, _txtBoxDurationPerTrip, _lblDurationPerTrip.getText(),
@@ -486,18 +608,82 @@ public class PDT_HouseHuntingTripPage extends Base {
 					houseHuntingTripBenefitData.houseHuntingTripMeals.reimbursedBy, PDTConstants.REIMBURSED_BY,
 					PDTConstants.RADIO_BUTTON_LIST, true);
 
-			BusinessFunctions.verifyOtherTextBoxIsDisplayed(driver, addNewPolicyPage,
+			BusinessFunctions.verifyOtherTextBoxIsDisplayed(driver,
 					houseHuntingTripBenefitData.houseHuntingTripMeals.reimbursedBy,
 					_txtBoxHouseHuntingTripReimbursedByOther,
 					houseHuntingTripBenefitData.houseHuntingTripMeals.reimbursedByOther, subBenefitFormName, PDTConstants.REIMBURSED_BY_OTHER);
 
 			CoreFunctions.clearAndSetText(driver, _txtAreaHouseHuntingTripMealComment, PDTConstants.COMMENT,
 					houseHuntingTripBenefitData.houseHuntingTripMeals.comment);
+			
+			CoreFunctions.clickElement(driver, _drpDownMealsExpenseCode);
+			Assert.assertTrue(
+					BusinessFunctions.verifyAllExpenseCodesArePopulatedForSubBenefit(driver,
+							PDTConstants.HOUSE_HUNTING_TRIP, PDTConstants.HOUSE_HUNTING_TRIP_MEALS,
+							_drpDownOptionsMealsExpenseCode),
+					MessageFormat.format(PDTConstants.VERIFIED_EXPENSE_CODE_OPTIONS_NOT_POPULATED, CoreConstants.FAIL,
+							PDTConstants.HOUSE_HUNTING_TRIP_MEALS, DbFunctions.getExpenseCodeListForBenefit(PDTConstants.HOUSE_HUNTING_TRIP).toString(), CoreFunctions.getElementTextAndStoreInList(driver, _drpDownOptionsMealsExpenseCode).toString()));
+			ArrayList <String> randExpenseCodeOptions = CoreFunctions.getMultipleRandomOptionsForDropDown(0, _drpDownOptionsMealsExpenseCode.size(), 5, driver, _drpDownOptionsMealsExpenseCode);
+			BusinessFunctions.selectRandomDropDownOption(driver, PDTConstants.EXPENSE_CODES, _drpDownMealsExpenseCode, _drpDownOptionsMealsExpenseCode, _drpDownSelectedOptionsMealsExpenseCode, randExpenseCodeOptions, subBenefitFormName);
+			setExpenseCodeMeals(randExpenseCodeOptions);
 
 		} catch (Exception e) {
-			e.printStackTrace();
 			Assert.fail(MessageFormat.format(PDTConstants.EXCEPTION_OCCURED_FILL_SUBBENEFIT_FORM, CoreConstants.FAIL, subBenefitFormName));
 		}
 	}
 
+	/**
+	 * Fill House Hunting Trip sub-benefit based on sub-benefit name 
+	 * @param subBenefit
+	 * @param pageName
+	 * @param addNewPolicyPage
+	 */
+	public void fillHouseHuntinTripSubBenefit(String subBenefit, String pageName, PDT_AddNewPolicyPage addNewPolicyPage, PDT_SharedSubBenefitPage subBenefitPage) {		
+		switch (subBenefit) {
+		case PDTConstants.HOUSE_HUNTING_TRIP_TRANSPORTATION:
+			fillHouseHuntingTripTransportationForm(addNewPolicyPage, subBenefit, pageName);
+			break;
+		case PDTConstants.HOUSE_HUNTING_TRIP_LODGING:
+			fillHouseHuntingTripLodgingForm(addNewPolicyPage, subBenefit, pageName);
+			break;
+		case PDTConstants.HOUSE_HUNTING_TRIP_MEALS:
+			fillHouseHuntingTripMealForm(addNewPolicyPage, subBenefit, pageName);
+			break;
+		default:
+			Assert.fail(MessageFormat.format(PDTConstants.SUBBENEFIT_NOT_FOUND, CoreConstants.FAIL, subBenefit, pageName));
+		}		
+	}
+	
+	/**
+	 * Iterate House Hunting sub-benefits and fill their corresponding form.
+	 * @param pageName
+	 * @param subBenefits
+	 * @param addNewPolicyPage
+	 * @param objStep
+	 * @param btnName
+	 * @param subBenefitPage 
+	 */
+	public void iterateAndFillHouseHuntingSubBenefits(String pageName, List<String> subBenefits,
+			PDT_AddNewPolicyPage addNewPolicyPage, PDT_SharedSubBenefit_Steps objStep, String btnName, PDT_SharedSubBenefitPage subBenefitPage) {
+		CoreFunctions.explicitWaitTillElementListClickable(driver, _subBenefitCategories);			
+		populateBtnMap();
+		populateConfirmDialogbuttonMap();
+		WebElement btnToClick = (btnName != null) ?  buttonMap.get(btnName) : buttonMap.get(PDTConstants.SAVE);
+		for (String subBenefit : subBenefits) {
+			CoreFunctions.selectItemInListByText(driver, _subBenefitCategories, subBenefit, true);
+			timeBeforeAction = new Date().getTime();
+			waitForProgressBarToDisapper();
+			timeAfterAction = new Date().getTime();
+			BusinessFunctions.printTimeTakenByPageToLoad(timeBeforeAction, timeAfterAction, pageName, subBenefit);
+			fillHouseHuntinTripSubBenefit(subBenefit, pageName, addNewPolicyPage, subBenefitPage);
+		}
+		try {
+			CoreFunctions.click(driver, btnToClick, btnToClick.getText());
+		} catch (NoSuchElementException e) {
+			Assert.fail(MessageFormat.format(PDTConstants.MISSING_BTN, CoreConstants.FAIL, btnName));
+		} catch (Exception e) {
+			e.printStackTrace();
+			Assert.fail(MessageFormat.format(PDTConstants.FAILED_TO_CLICK_ON_BTN, CoreConstants.FAIL, btnName));
+		}
+	}
 }

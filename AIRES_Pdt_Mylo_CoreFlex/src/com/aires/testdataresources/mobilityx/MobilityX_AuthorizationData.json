@@ -1,0 +1,50 @@
+[
+	{
+		"module": "Authorization",
+		"globalReloEmpIdentificationInfo": {
+			"employeeId": "76543",
+			"officePhone": "9876542130",
+			"email": "aireautomation@aires.com",
+			"gender": "Female",
+			"originCity": "Pittsburgh",
+			"originCountry": "USA",
+			"destinationCountry": "USA",
+			"empCurrentlyOnAssignment": "Yes",
+			"homeCountry": "INDIA",
+			"dualCitizenShip": "No"
+		},
+		"globalReloTransferInfo": {
+			"receivingRegion": "EU",
+			"projectRelated": "Yes",
+			"relocationPolicy": "HR - EBT Program",
+			"startDateInNewLocation": "",
+			"assignmentEndDate": "",
+			"businessGroup": "Tata Group",
+			"jobFamily": "Business"
+		},
+		"globalReloFinancialInfo": {
+			"payRoll": "A18",
+			"rfgl": "0027",
+			"costCenter": "Test Cost Center",
+			"tafCostCenter": "Demo Cost Center"
+		},
+		"globalReloFamilyInfo": {
+			"maritalStatus": "Married",
+			"greenCardHolder": "No",
+			"isSpouseEmployed": "Yes"
+		},
+		"globalReloAuthInfo": {
+			"authorizedBy": "npant",
+			"homeMobilityPartner": "Rita Kaluza",
+			"levelOneManagerName": "Neeraj Pant",
+			"levelOneManagerEmail": "airesautomation@aires.com",
+			"levelOneManagerId": "98765",
+			"hrManagerName": "Sunil Kashyap",
+			"hrManagerEmail": "airesautomation@aires.com",
+			"hrManagerId": "56789",
+			"sponsorName": "Intersoft",
+			"sponsorEmail": "airesautomation@aires.com",
+			"sponsorId": "654321"
+		}
+	}
+]

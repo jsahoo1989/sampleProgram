@@ -37,6 +37,7 @@ import com.aires.pages.pdt.PDT_LanguageTrainingPage;
 import com.aires.pages.pdt.PDT_LoginPage;
 import com.aires.pages.pdt.PDT_OneTimePaymentReimbursemenPage;
 import com.aires.pages.pdt.PDT_OngoingPaymentReimbursementPage;
+import com.aires.pages.pdt.PDT_PolicyAssignmentPage;
 import com.aires.pages.pdt.PDT_PolicyBenefitCategoryPage;
 import com.aires.pages.pdt.PDT_PreAcceptanceService;
 import com.aires.pages.pdt.PDT_PropertyManagementPage;
@@ -74,6 +75,7 @@ public class PageObjectManager_Pdt {
 	private PDT_HomePurchasePage _homePurchasePage;
 	private CoreFlex_BluePrint_LoginPage _bluePrintCFLoginPage;
 	private PDT_HouseHoldGoodsPage _houseHoldGoodsPage;
+	private PDT_PolicyAssignmentPage _policyAssigmentPage;
 	
 	public PageObjectManager_Pdt(WebDriver driver) {
 		this._driver = driver;
@@ -181,5 +183,9 @@ public class PageObjectManager_Pdt {
 	
 	public PDT_HouseHoldGoodsPage getHouseHoldGoodsPage() {
 		return (_houseHoldGoodsPage == null ) ? _houseHoldGoodsPage = new PDT_HouseHoldGoodsPage(_driver) : _houseHoldGoodsPage;
+	}
+	
+	public PDT_PolicyAssignmentPage getPolicyAssignmentPage() {
+		return (_policyAssigmentPage == null ) ? _policyAssigmentPage = new PDT_PolicyAssignmentPage(_driver) : _policyAssigmentPage;
 	}
 }

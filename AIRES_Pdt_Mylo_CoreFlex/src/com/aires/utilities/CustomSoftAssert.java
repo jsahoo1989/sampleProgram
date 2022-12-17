@@ -3,7 +3,6 @@ package com.aires.utilities;
 import org.testng.asserts.SoftAssert;
 
 public class CustomSoftAssert extends SoftAssert {
-	
 	protected String getErrorDetails(Throwable error) {    
 		StringBuilder sb = new StringBuilder();
 		sb.append(error.getMessage().split("expected")[0]);
@@ -14,5 +13,4 @@ public class CustomSoftAssert extends SoftAssert {
 	    }
 	    return sb.toString();
 	  }
-	
 }

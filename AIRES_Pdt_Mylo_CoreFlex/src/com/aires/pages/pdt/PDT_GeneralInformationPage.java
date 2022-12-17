@@ -3,6 +3,7 @@ package com.aires.pages.pdt;
 import java.text.MessageFormat;
 import java.util.Arrays;
 import java.util.Date;
+import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -218,7 +219,20 @@ public class PDT_GeneralInformationPage extends Base {
 	// Capped Policy Error Dialog OK Button
 	@FindBy(how = How.CSS, using = "button[class*='swal2-confirm']")
 	private WebElement _cappedPolicyErrorDialogOKButton;
+	
+	@FindBy(how = How.XPATH, using = "//strong[text()='Policy Status:']/parent::label/following-sibling::label[not(self::span/i)]")
+	private WebElement _policyStatus;
+	
+	@FindBy(how = How.XPATH, using = "//strong[text()='Policy Status:']")
+	private WebElement _policyStatusText;
+	
+	@FindBy(how = How.XPATH, using = "//strong[text()='Version Number:']/parent::label/following-sibling::label")
+	private WebElement _policyVersion;
+	
+	@FindBy(how = How.XPATH, using = "//span/i/ancestor::label")
+	private WebElement _policyStat;
 
+	LinkedHashMap<String, String> webElementsTextMap = new LinkedHashMap<String, String>();
 	/*********************************************************************/
 
 	CoreFlex_PolicySetupPagesData policySetupPageData = FileReaderManager.getInstance().getCoreFlexJsonReader()
@@ -451,6 +465,7 @@ public class PDT_GeneralInformationPage extends Base {
 	}
 
 	public void explicitWaitForGeneralInfoHeading() {
+		BusinessFunctions.fluentWaitForSpinnerToDisappear(driver, _progressBar);
 		CoreFunctions.explicitWaitTillElementVisibility(driver, _headerGeneralInfo, PDTConstants.GENERAL_INFORMATION);
 	}
 
@@ -477,20 +492,20 @@ public class PDT_GeneralInformationPage extends Base {
 		}
 		return false;
 	}
+	
+	
+	public void populateWebElementsTextMap() {
+		webElementsTextMap.put( PDTConstants.CLIENT_ID, _textClientID.getText().trim());
+		webElementsTextMap.put( PDTConstants.CLIENT_NAME, _textClientName.getText().trim());
+		webElementsTextMap.put( PDTConstants.POLICY_NAME, _headerPolicyInfo.getText().split(":")[1].trim());
+	}
 
 	public String getElementText(String elementName) {
 		String elementText = null;
-		switch (elementName) {
-		case PDTConstants.CLIENT_ID:
-			elementText = _textClientID.getText().trim();
-			break;
-		case PDTConstants.CLIENT_NAME:
-			elementText = _textClientName.getText().trim();
-			break;
-		case PDTConstants.POLICY_NAME:
-			elementText = _headerPolicyInfo.getText().split(":")[1].trim();
-			break;
-		default:
+		populateWebElementsTextMap();
+		try {
+			elementText = webElementsTextMap.get(elementName);
+		} catch(Exception e) {
 			Assert.fail(MessageFormat.format(PDTConstants.ELEMENT_NOT_FOUND, CoreConstants.FAIL));
 		}
 		return elementText;
@@ -552,10 +567,19 @@ public class PDT_GeneralInformationPage extends Base {
 		tracingPrompt = _drpDownTracingSetSelectedVal.getText();
 	}
 
+	public void waitForProgressBarToDisappear() {
+		try {
+			if(CoreFunctions.isElementExist(driver, _progressBar, 5)) {		
+				BusinessFunctions.fluentWaitForSpinnerToDisappear(driver, _progressBar);			
+			}			
+		} catch(Exception e) {
+			Assert.fail(MessageFormat.format(PDTConstants.FAIL_TO_WAIT_PROGRESS_BAR, CoreConstants.FAIL));
+		}
+	}
+	
 	public void enterGeneralInformationFields() {
 		try {
-			if(CoreFunctions.isElementExist(driver,  _progressBar, 4))
-				BusinessFunctions.fluentWaitForSpinnerToDisappear(driver, _progressBar);
+			waitForProgressBarToDisappear();
 			setTracingPrompt();			
 			CoreFunctions.clickElement(driver, _drpDwnPolicyType);
 			CoreFunctions.explicitWaitTillElementListVisibility(driver, _drpDwnPolicyTypeOptions);
@@ -598,11 +622,10 @@ public class PDT_GeneralInformationPage extends Base {
 					_lblExpenseMgmtClient.getText(), PDTConstants.RADIO_BUTTON_LIST, true);
 			timeBeforeAction = new Date().getTime();
 			CoreFunctions.click(driver, _btnNext, _btnNext.getText());
-			BusinessFunctions.fluentWaitForSpinnerToDisappear(driver, _progressBar);
+			waitForProgressBarToDisappear();
 			timeAfterAction = new Date().getTime();	
 			BusinessFunctions.printTimeTakenByPageToLoad(timeBeforeAction, timeAfterAction, PDTConstants.POLICY_BENEFIT_CATEGORIES);
-		} catch (Exception e) {
-			e.printStackTrace();
+		} catch (Exception e) {			
 			Assert.fail(PDTConstants.FAILED_TO_FILL_GENERAL_INFO_FORM);
 		}
 
@@ -1111,5 +1134,27 @@ public class PDT_GeneralInformationPage extends Base {
 		Assert.assertTrue(policyBenefitCategoryPage.verifyPolicyBenefitCategoryHeading(PDTConstants.POLICY_BENEFIT),
 				MessageFormat.format(PDTConstants.FAIL_TO_VERIFY_ELEMENT_VAL_ON_PAGE, CoreConstants.FAIL, PDTConstants.heading, PDTConstants.POLICY_BENEFIT_CATEGORIES, PDTConstants.POLICY_BENEFIT, policyBenefitCategoryPage.getElementText(PDTConstants.HEADING)));
 		Assert.assertTrue(policyBenefitCategoryPage.verifyIsPolicyBenefitCategoryChecked(policyBenefitCategoryPage.getBenefitCategoryName()), MessageFormat.format(PDTConstants.BENEFIT_CATEGORY_IS_NOT_SELECTED, CoreConstants.FAIL, policyBenefitCategoryPage.getBenefitCategoryName()));
+	}
+	
+	public boolean verifyStatusAndVersionOfPolicy(String selectedPolicyName, String expectedPolicyStatus, String expectedPolicyVersion, String pageName) {
+		if (CoreFunctions.isElementExist(driver, _progressBar, 7))
+			BusinessFunctions.fluentWaitForSpinnerToDisappear(driver, _progressBar);
+		CoreFunctions.scrollToElementUsingJS(driver, _policyStatus, _policyStatusText.getText());
+		CoreFunctions.explicitWaitForElementTextPresent(driver, _policyStatusText, _policyStatusText.getText(), 10);
+		if(expectedPolicyStatus.equalsIgnoreCase(_policyStatus.getText().trim()) && expectedPolicyVersion.equalsIgnoreCase(_policyVersion.getText().trim())) {
+			CoreFunctions.highlightObject(driver, _policyStatus);
+			CoreFunctions.highlightObject(driver, _policyVersion);
+			Reporter.addStepLog(MessageFormat.format(PDTConstants.VERIFIED_POLICY_VERSION_STATUS, CoreConstants.PASS, selectedPolicyName, expectedPolicyVersion, expectedPolicyStatus, pageName));
+			return true;
+		} else {
+			Reporter.addStepLog(MessageFormat.format(
+					PDTConstants.FAILED_TO_VERIFY_POLICY_VERSION_STATUS, CoreConstants.FAIL,
+					selectedPolicyName, expectedPolicyVersion, _policyVersion.getText().trim(), expectedPolicyStatus, _policyStatus.getText().trim(), pageName));
+			return false;
+		}		
+	}
+	
+	public String getPolicyStatus() {
+		return _policyStat.getText();
 	}
 }

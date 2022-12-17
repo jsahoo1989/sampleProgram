@@ -5,7 +5,8 @@
 		"authorizedFees": "Medical Exams for Family, Immunizations for Family",
 		"grossUp": "Yes",
 		"reimbursedBy": "Other",
-		"reimbursedByOther": "Reimbursed by other"
+		"reimbursedByOther": "Reimbursed by other",
+		"comment": "Immigration Fees comment"	
 		},
 		"immigrationTravel": {
 		"numberOfTrips": "2",

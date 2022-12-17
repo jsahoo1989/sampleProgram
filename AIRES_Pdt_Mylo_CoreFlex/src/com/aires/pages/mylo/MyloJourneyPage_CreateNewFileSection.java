@@ -126,6 +126,15 @@ public class MyloJourneyPage_CreateNewFileSection extends Base {
 	
 	@FindBy(how = How.XPATH, using = "//button[text()='Ok']")
 	private WebElement _okButtonPopUp;
+	
+	@FindBy(how = How.CSS, using = "app-lead-informtion input")
+	private WebElement _leadCompanyIDSection;
+	
+	@FindBy(how = How.CSS, using = "app-lead-informtion button label")
+	private List<WebElement> _leadCompanyButtonLabels;
+
+	@FindBy(how = How.CSS, using = "app-lead-informtion button:not([class*='address-spacing'])")
+	private List<WebElement> _leadCompanyButtons;
 
 	final By _dropdownOptions = By.cssSelector("div[role='option']>span");
 
@@ -546,8 +555,8 @@ public class MyloJourneyPage_CreateNewFileSection extends Base {
 		setNewFileFields(MYLOConstants.TRANSFEREE_FIRSTNAME, transfereeFirstName, MYLOConstants.VALUE);
 		setNewFileFields(MYLOConstants.TRANSFEREE_LASTNAME, transfereeLastName, MYLOConstants.VALUE);
 		setClient(client);
-		String policyType = setPolicyType(MYLOConstants.RANDOM);
-		setNewFileDropdownValues(MYLOConstants.TAX_TREATMENT, MYLOConstants.TAX_TREATMENT_VALUE);
+		String policyValue=(client.equals(MYLOConstants.VENDOR_CLIENT_ID))?MYLOConstants.SELECT_ONE:MYLOConstants.RANDOM;
+		String policyType = setPolicyType(policyValue);
 		setNewFileDropdownValues(MYLOConstants.JOURNEY_TYPE, MYLOConstants.JOURNEY_TYPE_VALUE);
 		String officeType = setNewFileDropdownValues(MYLOConstants.OFFICE, MYLOConstants.RANDOM);
 		setRepatInd(true);
@@ -556,6 +565,24 @@ public class MyloJourneyPage_CreateNewFileSection extends Base {
 		String fileId = CoreFunctions.getElementText(driver, _purpleBubbleSectionFileId);
 		setNewFileFields(transfereeFirstName, transfereeLastName, policyType, MYLOConstants.TAX_TREATMENT_VALUE,
 				MYLOConstants.JOURNEY_TYPE_VALUE, officeType, fileId, client);
+	}
+	
+	public void setLeadCompanyID(String leadCompanyID) {
+		if(MyloNewFileUtil.get_leadCompanyID()==null) {
+		CoreFunctions.scrollToElementUsingJS(driver, _leadCompanyIDSection, MYLOConstants.LEAD_COMPANY_ID_SECTION);
+		clickLeadCompanySectionButtons(MYLOConstants.EDIT_BUTTON);
+		MyloNewFileUtil.set_leadCompanyID(BusinessFunctions.setMyloInputFields(driver, MYLOConstants.LEAD_COMPANY_ID_SECTION, MYLOConstants.AUTOMATION_CLIENT_ID, _leadCompanyIDSection, MYLOConstants.VALUE));
+		CoreFunctions.hoverAndClick(driver, CoreFunctions.getElementByLocator(driver, _dropdownOptions), leadCompanyID);
+		clickLeadCompanySectionButtons(MYLOConstants.SAVE_BUTTON);
+		}
+	}
+	
+	public void clickLeadCompanySectionButtons(String buttonName) {
+		CoreFunctions.click(driver,
+			_leadCompanyButtons.get(
+						BusinessFunctions.returnindexItemFromListUsingText(driver, _leadCompanyButtonLabels, buttonName)),
+				buttonName);
+		BusinessFunctions.fluentWaitForMyloSpinnerToDisappear(driver, _spinner);
 	}
 
 	

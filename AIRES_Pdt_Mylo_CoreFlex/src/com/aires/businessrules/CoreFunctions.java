@@ -613,6 +613,16 @@ public class CoreFunctions {
 		Random random = new Random();
 		return Integer.toString(random.nextInt(max - min) + min);
 	}
+	
+	public static String generateRandomNumberOfLength(int numLength) {
+		String reqWord = new String();
+		Random rnd = new Random();
+		for (int i = 0; i < numLength; i++) {
+			char reqChar = CoreConstants.NUMBERS.charAt(rnd.nextInt(CoreConstants.NUMBERS.length()));
+			reqWord = reqWord + Character.toString(reqChar);
+		}
+		return reqWord;
+	}
 
 	public static void explicitWaitWithLocatorTillElementDisappears(WebDriver driver, By byElement) {
 		WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(40));
@@ -2042,5 +2052,17 @@ public class CoreFunctions {
 			Reporter.addStepLog("Could not get element text");
 		}
 		return text;
+	}
+	
+	public static void clickButtonsUsingSendKeys(WebDriver driver, String btnName, WebElement element,
+			String sectionName, String pageName) {
+		try {
+			CoreFunctions.isElementVisible(element);
+			CoreFunctions.highlightObject(driver, element);
+			CoreFunctions.sendKeysUsingAction(driver, element, btnName);
+		} catch (Exception e) {
+			Assert.fail(MessageFormat.format(MYLOConstants.BUTTON_NOT_PRESENT, CoreConstants.FAIL, btnName, sectionName,
+					pageName));
+		}
 	}
 }

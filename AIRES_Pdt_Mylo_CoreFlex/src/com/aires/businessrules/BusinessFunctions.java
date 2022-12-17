@@ -92,7 +92,7 @@ public class BusinessFunctions {
 		CoreFunctions.waitForBrowserToLoad(driver);
 		CoreFunctions.waitHandler(3);
 		for (WebElement row : WebElementList) {
-			String text=row.getText();
+			String text = row.getText();
 			Log.info(CoreConstants.ACTUAL_ITEM_NAME_IS + text);
 			if (row.getText().equals(itemName)) {
 				CoreFunctions.clickUsingJS(driver, row, itemName);
@@ -445,7 +445,7 @@ public class BusinessFunctions {
 		}
 		return value;
 	}
-	
+
 	public static String getTestRailIdAsPerEnvt(String tagValue, String scenarioTagName) {
 		String value = null;
 		switch (tagValue) {
@@ -468,13 +468,15 @@ public class BusinessFunctions {
 	}
 
 	public static int getTestRailSectionIDAsPerApplication() {
-		int sectionID = 0;		
-		//Commented Code is for debugging purpose
-		/*String propertyFilePath = System.getProperty("user.dir") + "\\Configs\\Config.properties";
-		Properties properties = new Properties();
-		properties.load(new FileReader(propertyFilePath));
-		String applicationName=properties.getProperty("application");*/
-		String applicationName=System.getProperty("application");
+		int sectionID = 0;
+		// Commented Code is for debugging purpose
+		/*
+		 * String propertyFilePath = System.getProperty("user.dir") +
+		 * "\\Configs\\Config.properties"; Properties properties = new Properties();
+		 * properties.load(new FileReader(propertyFilePath)); String
+		 * applicationName=properties.getProperty("application");
+		 */
+		String applicationName = System.getProperty("application");
 		switch (applicationName) {
 		case CoreConstants.MYLO:
 			sectionID = 49911;
@@ -555,6 +557,7 @@ public class BusinessFunctions {
 			String itemName) {
 		try {
 			for (WebElement row : WebElementList) {
+				CoreFunctions.hover(driver, row);
 				Log.info(CoreConstants.ACTUAL_ITEM_NAME_IS + row.getText());
 				if (row.getText().equals(itemName)) {
 					CoreFunctions.highlightObject(driver, row);
@@ -644,9 +647,9 @@ public class BusinessFunctions {
 		return listToBeSorted;
 	}
 
-	public static void verifyOtherTextBoxIsDisplayed(WebDriver driver,
-			PDT_AddNewPolicyPage addNewPolicyPage, String jsonReimbursedBy, WebElement element,
-			String jsonReimbursedByOther, String SubBenefitFormName, String lblOtherTextBox) {
+	public static void verifyOtherTextBoxIsDisplayed(WebDriver driver, PDT_AddNewPolicyPage addNewPolicyPage,
+			String jsonReimbursedBy, WebElement element, String jsonReimbursedByOther, String SubBenefitFormName,
+			String lblOtherTextBox) {
 		try {
 			if (jsonReimbursedBy.equalsIgnoreCase(PDTConstants.OTHER)
 					&& CoreFunctions.isElementExist(driver, element, 1)) {
@@ -655,8 +658,7 @@ public class BusinessFunctions {
 				CoreFunctions.clearAndSetText(driver, element, lblOtherTextBox, jsonReimbursedByOther);
 			}
 		} catch (Exception e) {
-			Assert.fail(MessageFormat.format(PDTConstants.FAILED_TO_FILL_FIELD, lblOtherTextBox,
-					SubBenefitFormName));
+			Assert.fail(MessageFormat.format(PDTConstants.FAILED_TO_FILL_FIELD, lblOtherTextBox, SubBenefitFormName));
 		}
 	}
 
@@ -709,7 +711,7 @@ public class BusinessFunctions {
 
 	public static String[] getClientAndPolicyDetails(PDT_LoginDetails _loginDetailsApplication) {
 		String clientAndPolicyDetailsArr[] = new String[3];
-		//switch (CoreFunctions.getPropertyFromConfig("envt").toLowerCase()) {
+		// switch (CoreFunctions.getPropertyFromConfig("envt").toLowerCase()) {
 		switch (System.getProperty("envt").toLowerCase()) {
 		case CoreConstants.ENVT_DEV:
 			clientAndPolicyDetailsArr[0] = _loginDetailsApplication.dev.clientId;
@@ -742,32 +744,33 @@ public class BusinessFunctions {
 
 	public static String[] getCSMCredentials(PDT_LoginDetails _loginDetailsApplication) {
 		String csmCredentials[] = new String[3];
-		//switch (CoreFunctions.getPropertyFromConfig("envt").toLowerCase()) {
+		// switch (CoreFunctions.getPropertyFromConfig("envt").toLowerCase()) {
 		switch (System.getProperty("envt").toLowerCase()) {
 		case CoreConstants.ENVT_DEV:
 			csmCredentials[0] = _loginDetailsApplication.dev.csmUserName;
 			csmCredentials[1] = _loginDetailsApplication.dev.csmPassword;
-			csmCredentials[2] = _loginDetailsApplication.dev.firstName+ " " + _loginDetailsApplication.dev.lastName;
+			csmCredentials[2] = _loginDetailsApplication.dev.firstName + " " + _loginDetailsApplication.dev.lastName;
 			break;
 		case CoreConstants.ENVT_QA:
 			csmCredentials[0] = _loginDetailsApplication.qa.csmUserName;
 			csmCredentials[1] = _loginDetailsApplication.qa.csmPassword;
-			csmCredentials[2] = _loginDetailsApplication.qa.firstName+ " " + _loginDetailsApplication.qa.lastName;
+			csmCredentials[2] = _loginDetailsApplication.qa.firstName + " " + _loginDetailsApplication.qa.lastName;
 			break;
 		case CoreConstants.ENVT_TEST:
 			csmCredentials[0] = _loginDetailsApplication.preProd.csmUserName;
 			csmCredentials[1] = _loginDetailsApplication.preProd.csmPassword;
-			csmCredentials[2] = _loginDetailsApplication.preProd.firstName+ " " + _loginDetailsApplication.preProd.lastName;
+			csmCredentials[2] = _loginDetailsApplication.preProd.firstName + " "
+					+ _loginDetailsApplication.preProd.lastName;
 			break;
 		case CoreConstants.ENVT_UAT:
 			csmCredentials[0] = _loginDetailsApplication.uat.csmUserName;
 			csmCredentials[1] = _loginDetailsApplication.uat.csmPassword;
-			csmCredentials[2] = _loginDetailsApplication.uat.firstName+ " " + _loginDetailsApplication.uat.lastName;
+			csmCredentials[2] = _loginDetailsApplication.uat.firstName + " " + _loginDetailsApplication.uat.lastName;
 			break;
 		case CoreConstants.ENVT_PROD:
 			csmCredentials[0] = _loginDetailsApplication.prod.csmUserName;
 			csmCredentials[1] = _loginDetailsApplication.prod.csmPassword;
-			csmCredentials[2] = _loginDetailsApplication.prod.firstName+ " " + _loginDetailsApplication.prod.lastName;
+			csmCredentials[2] = _loginDetailsApplication.prod.firstName + " " + _loginDetailsApplication.prod.lastName;
 			break;
 		}
 		return csmCredentials;
@@ -792,18 +795,18 @@ public class BusinessFunctions {
 					PDTConstants.OTHER, lblDrpDown, subBenefitFormName));
 		}
 	}
-	
+
 	public static void selectValueFromListUsingIndex(WebDriver driver, List<WebElement> listWebElement, int index) {
 		try {
-		CoreFunctions.explicitWaitTillElementListClickable(driver, listWebElement);		
-		listWebElement.get(index).click();
-		CoreFunctions.waitHandler(5);		
-		}catch (Exception e) {
-			Assert.fail(MessageFormat.format(MobilityXConstants.EXCEPTION_OCCURED_WHILE_CLICKING_ON_ELEMENT_FROM_LIST, CoreConstants.FAIL,
-					e.getMessage(),listWebElement.get(index).getText()));
+			CoreFunctions.explicitWaitTillElementListClickable(driver, listWebElement);
+			listWebElement.get(index).click();
+			CoreFunctions.waitHandler(5);
+		} catch (Exception e) {
+			Assert.fail(MessageFormat.format(MobilityXConstants.EXCEPTION_OCCURED_WHILE_CLICKING_ON_ELEMENT_FROM_LIST,
+					CoreConstants.FAIL, e.getMessage(), listWebElement.get(index).getText()));
 		}
 	}
-	
+
 	public static int returnindexItemFromListUsingText(WebDriver driver, List<WebElement> WebElementList,
 			String itemName, boolean flag) {
 		try {
@@ -813,12 +816,13 @@ public class BusinessFunctions {
 					return WebElementList.indexOf(row);
 			}
 		} catch (ElementNotFoundException e) {
-			Assert.fail(MessageFormat.format(MobilityXConstants.EXCEPTION_OCCURED_WHILE_RETURNING_INDEX_ITEM_FROM_LIST_USING_TEXT, CoreConstants.FAIL,
-					e.getMessage()));
+			Assert.fail(MessageFormat.format(
+					MobilityXConstants.EXCEPTION_OCCURED_WHILE_RETURNING_INDEX_ITEM_FROM_LIST_USING_TEXT,
+					CoreConstants.FAIL, e.getMessage()));
 		}
 		return -1;
 	}
-	
+
 	public static void checkValidationBasedOnInput(boolean isValidationMessageDisplayed, String fieldName,
 			String inputValue) {
 
@@ -832,13 +836,11 @@ public class BusinessFunctions {
 			} else if ((Double.parseDouble(inputValue) < 0.5 || Double.parseDouble(inputValue) > 999.5)
 					&& !isValidationMessageDisplayed) {
 				Reporter.addStepLog(MessageFormat.format(
-						COREFLEXConstants.VALIDATION_MESSAGE_NOT_DISPLAYED_FOR_INVALID_RANGE,
-						CoreConstants.FAIL, COREFLEXConstants.POINT_FIVE_TO_NINE_NINE_NINE_POINT_FIVE_RANGE, inputValue,
-						fieldName));
+						COREFLEXConstants.VALIDATION_MESSAGE_NOT_DISPLAYED_FOR_INVALID_RANGE, CoreConstants.FAIL,
+						COREFLEXConstants.POINT_FIVE_TO_NINE_NINE_NINE_POINT_FIVE_RANGE, inputValue, fieldName));
 				throw new RuntimeException(MessageFormat.format(
-						COREFLEXConstants.VALIDATION_MESSAGE_NOT_DISPLAYED_FOR_INVALID_RANGE,
-						CoreConstants.FAIL, COREFLEXConstants.POINT_FIVE_TO_NINE_NINE_NINE_POINT_FIVE_RANGE, inputValue,
-						fieldName));
+						COREFLEXConstants.VALIDATION_MESSAGE_NOT_DISPLAYED_FOR_INVALID_RANGE, CoreConstants.FAIL,
+						COREFLEXConstants.POINT_FIVE_TO_NINE_NINE_NINE_POINT_FIVE_RANGE, inputValue, fieldName));
 			} else if ((Double.parseDouble(inputValue) >= 0.5 || Double.parseDouble(inputValue) <= 999.5)
 					&& !isValidationMessageDisplayed) {
 				Reporter.addStepLog(MessageFormat.format(
@@ -847,14 +849,12 @@ public class BusinessFunctions {
 						fieldName));
 			} else if ((Double.parseDouble(inputValue) >= 0.5 || Double.parseDouble(inputValue) <= 999.5)
 					&& isValidationMessageDisplayed) {
-				Reporter.addStepLog(MessageFormat.format(
-						COREFLEXConstants.VALIDATION_MESSAGE_DISPLAYED_FOR_VALID_RANGE,
+				Reporter.addStepLog(MessageFormat.format(COREFLEXConstants.VALIDATION_MESSAGE_DISPLAYED_FOR_VALID_RANGE,
 						CoreConstants.FAIL, COREFLEXConstants.POINT_FIVE_TO_NINE_NINE_NINE_POINT_FIVE_RANGE, inputValue,
 						fieldName));
 				throw new RuntimeException(MessageFormat.format(
-						COREFLEXConstants.VALIDATION_MESSAGE_DISPLAYED_FOR_VALID_RANGE,
-						CoreConstants.FAIL, COREFLEXConstants.POINT_FIVE_TO_NINE_NINE_NINE_POINT_FIVE_RANGE, inputValue,
-						fieldName));
+						COREFLEXConstants.VALIDATION_MESSAGE_DISPLAYED_FOR_VALID_RANGE, CoreConstants.FAIL,
+						COREFLEXConstants.POINT_FIVE_TO_NINE_NINE_NINE_POINT_FIVE_RANGE, inputValue, fieldName));
 			}
 		} catch (NumberFormatException e) {
 			if (isValidationMessageDisplayed) {
@@ -895,17 +895,15 @@ public class BusinessFunctions {
 		} else if ((Double.parseDouble(inputValue) >= 1) && (Double.parseDouble(inputValue) <= 100)
 				&& ((validationMessage.equals(COREFLEXConstants.FIELD_VALUE_CANNOT_BE_LESS_THAN_ONE))
 						|| (validationMessage.equals(COREFLEXConstants.FIELD_VALUE_CANNOT_BE_GREATER_THAN_HUNDRED)))) {
-			Reporter.addStepLog(MessageFormat.format(
-					COREFLEXConstants.VALIDATION_MESSAGE_DISPLAYED_FOR_VALID_RANGE,
+			Reporter.addStepLog(MessageFormat.format(COREFLEXConstants.VALIDATION_MESSAGE_DISPLAYED_FOR_VALID_RANGE,
 					CoreConstants.FAIL, validationMessage, inputValue, fieldName));
-			throw new RuntimeException(MessageFormat.format(
-					COREFLEXConstants.VALIDATION_MESSAGE_DISPLAYED_FOR_VALID_RANGE,
-					CoreConstants.FAIL, validationMessage, inputValue, fieldName));
+			throw new RuntimeException(
+					MessageFormat.format(COREFLEXConstants.VALIDATION_MESSAGE_DISPLAYED_FOR_VALID_RANGE,
+							CoreConstants.FAIL, validationMessage, inputValue, fieldName));
 		}
 	}
-	
-	
-	public static int returnindexItemFromListUsingText(WebDriver driver, List<WebElement> WebElementList,boolean flag,
+
+	public static int returnindexItemFromListUsingText(WebDriver driver, List<WebElement> WebElementList, boolean flag,
 			String itemName) {
 		try {
 			for (WebElement row : WebElementList) {
@@ -985,13 +983,12 @@ public class BusinessFunctions {
 					drpDownVal, lblDropDown, subBenefitFormName));
 		}
 	}
-	
+
 	public static String selectAndReturnRandomValueFromList(WebDriver driver, PDT_AddNewPolicyPage addNewPolicyPage,
 			String subBenefitFormName, List<WebElement> webElementList, String labelText) {
 		String randValue = null;
-		try {			
-			randValue = webElementList.get(CoreFunctions.getRandomNumber(0, webElementList.size() - 1))
-					.getText();
+		try {
+			randValue = webElementList.get(CoreFunctions.getRandomNumber(0, webElementList.size() - 1)).getText();
 			CoreFunctions.selectItemInListByText(driver, webElementList, randValue, labelText,
 					PDTConstants.RADIO_BUTTON_LIST, true);
 		} catch (Exception e) {
@@ -1000,8 +997,7 @@ public class BusinessFunctions {
 		}
 		return randValue.trim();
 	}
-	
-	
+
 	public static boolean verifyDefaultOptionIsSelectedInDrpDown(String selectedOptionText, String expectedOption,
 			String lblDrpDown) {
 		if (selectedOptionText.equalsIgnoreCase(expectedOption)) {
@@ -1018,50 +1014,53 @@ public class BusinessFunctions {
 				.ignoring(NoSuchElementException.class);
 		wait.until(ExpectedConditions.invisibilityOf(element));
 	}
-	
+
 	public static void printTimeTakenByPageToLoad(long timeBeforeAction, long timeAfterAction, String pageName) {
 		DecimalFormat pgToLoadformat = new DecimalFormat();
 		pgToLoadformat.setMaximumFractionDigits(3);
-		Reporter.addStepLog("<b>Time taken by '"+pageName+"' page to Load is :"
+		Reporter.addStepLog("<b>Time taken by '" + pageName + "' page to Load is :"
 				+ pgToLoadformat.format((timeAfterAction - timeBeforeAction) / 1000) + " Seconds </b>");
 	}
-	
-	public static void printTimeTakenByPageToLoad(long timeBeforeAction, long timeAfterAction, String pageName, String subBenefitName) {
+
+	public static void printTimeTakenByPageToLoad(long timeBeforeAction, long timeAfterAction, String pageName,
+			String subBenefitName) {
 		DecimalFormat pgToLoadformat = new DecimalFormat();
 		pgToLoadformat.setMaximumFractionDigits(3);
-		Reporter.addStepLog("<b>Time taken by sub-benefit:-'"+subBenefitName+"' to Load on '"+pageName+"' benefit page is:-"
-				+ pgToLoadformat.format((timeAfterAction - timeBeforeAction) / 1000) + " Seconds </b>");
+		Reporter.addStepLog(
+				"<b>Time taken by sub-benefit:-'" + subBenefitName + "' to Load on '" + pageName + "' benefit page is:-"
+						+ pgToLoadformat.format((timeAfterAction - timeBeforeAction) / 1000) + " Seconds </b>");
 	}
-	
+
 	/**
 	 * @param msg
 	 * @param sectionType
-	 * @return
-	 * Verify Toast Messages appearing for Different Sections
+	 * @return Verify Toast Messages appearing for Different Sections
 	 */
-	public static boolean verifyMyloToastMessage(WebDriver driver,WebElement element,String msg, String sectionType) {
+	public static boolean verifyMyloToastMessage(WebDriver driver, WebElement element, String msg, String sectionType) {
 		boolean flag = false;
 		try {
 			CoreFunctions.isElementVisible(element);
 			CoreFunctions.highlightObject(driver, element);
 			flag = (element.getAttribute("innerHTML").split("<")[0].equals(msg));
 		} catch (Exception e) {
-			Reporter.addStepLog(MessageFormat.format(CoreConstants.FAIL_TO_VERIFY_ELEMENT_ON_SECTION, CoreConstants.FAIL,
-					MYLOConstants.ALERT_MESSAGE, sectionType));
+			Reporter.addStepLog(MessageFormat.format(CoreConstants.FAIL_TO_VERIFY_ELEMENT_ON_SECTION,
+					CoreConstants.FAIL, MYLOConstants.ALERT_MESSAGE, sectionType));
 		}
 		if (flag)
 			Reporter.addStepLog(MessageFormat.format(MYLOConstants.VERIFIED_ALERT_MESSAGE_DISPLAYED, CoreConstants.PASS,
 					msg, MYLOConstants.JOURNEY));
+		else
+			Reporter.addStepLog(MessageFormat.format(MYLOConstants.VERIFIED_ALERT_MESSAGE_NOT_DISPLAYED, CoreConstants.FAIL,
+					msg, MYLOConstants.JOURNEY));
 		return flag;
 	}
-	
+
 	/**
 	 * @param msg
 	 * @param sectionType
-	 * @return
-	 * Verify Toast Messages appearing for Different Sections
+	 * @return Verify Toast Messages appearing for Different Sections
 	 */
-	public static boolean verifyMyloPopUpMessage(WebDriver driver,WebElement element,String msg, String pageName) {
+	public static boolean verifyMyloPopUpMessage(WebDriver driver, WebElement element, String msg, String pageName) {
 		boolean flag = false;
 		try {
 			CoreFunctions.explicitWaitTillElementVisibility(driver, element, element.getText(), 60);
@@ -1078,22 +1077,23 @@ public class BusinessFunctions {
 			Reporter.addStepLog(MessageFormat.format(MYLOConstants.EXPECTED_MESSAGE_DISPLAYED, CoreConstants.FAIL, msg,
 					element.getText(), pageName));
 		return flag;
-		
+
 	}
-	
-	public static boolean verifyMyloValidationMessage(String expectedMessage, String actualMessage,String sectionName) {
+
+	public static boolean verifyMyloValidationMessage(String expectedMessage, String actualMessage,
+			String sectionName) {
 		boolean flag = actualMessage.equalsIgnoreCase(expectedMessage);
 		String msg = (flag)
-				? MessageFormat.format(MYLOConstants.VERIFIED_MESSAGE_DISPLAYED, CoreConstants.PASS,
-						actualMessage, sectionName)
+				? MessageFormat.format(MYLOConstants.VERIFIED_MESSAGE_DISPLAYED, CoreConstants.PASS, actualMessage,
+						sectionName)
 				: MessageFormat.format(MYLOConstants.EXPECTED_MESSAGE_DISPLAYED, CoreConstants.FAIL, expectedMessage,
 						actualMessage, sectionName);
 		Reporter.addStepLog(msg);
 		return flag;
 	}
-	
-	public static void verifyMyloButtonEnabilityStatus(String type, WebElement element, String btnName, String sectionName,
-			String pageName) {
+
+	public static void verifyMyloButtonEnabilityStatus(String type, WebElement element, String btnName,
+			String sectionName, String pageName) {
 		boolean flag = false;
 		List<String> disableTypeList = Stream.of(MYLOConstants.CANCELED, MYLOConstants.CLOSED,
 				MYLOConstants.PAYMENT_CUT_OFF_COMPLETION, MYLOConstants.DISABLE).collect(Collectors.toList());
@@ -1103,7 +1103,7 @@ public class BusinessFunctions {
 			Reporter.addStepLog(MessageFormat.format(CoreConstants.FAIL_TO_VERIFY_ELEMENT_ON_SECTION,
 					CoreConstants.FAIL, element, sectionName));
 		}
-		if (disableTypeList.contains(type)||type.contains(MYLOConstants.WITHOUT)) {
+		if (disableTypeList.contains(type) || type.contains(MYLOConstants.WITHOUT)) {
 			Assert.assertFalse(flag, MessageFormat.format(MYLOConstants.BUTTON_ENABLED, CoreConstants.FAIL, btnName,
 					sectionName, pageName));
 			Reporter.addStepLog(MessageFormat.format(MYLOConstants.BUTTON_DISABLED, CoreConstants.PASS, btnName,
@@ -1115,9 +1115,11 @@ public class BusinessFunctions {
 					sectionName, pageName));
 		}
 	}
-	
+
 	/**
-	 * Set any Mylo Input fields based on the parameter passed for fieldName, fieldValue, element,type and returns the UpdatedValue
+	 * Set any Mylo Input fields based on the parameter passed for fieldName,
+	 * fieldValue, element,type and returns the UpdatedValue
+	 * 
 	 * @param driver
 	 * @param fieldName
 	 * @param fieldValue
@@ -1131,10 +1133,10 @@ public class BusinessFunctions {
 		type = (fieldValue.equals(MYLOConstants.BLANK)) ? MYLOConstants.BLANK : type;
 		switch (type) {
 		case MYLOConstants.RANDOM_STRING:
-			updatedValue = CoreFunctions.generateRandomCharacters(Integer.parseInt(fieldValue),0);
+			updatedValue = CoreFunctions.generateRandomCharacters(Integer.parseInt(fieldValue), 0);
 			break;
 		case MYLOConstants.RANDOM_INTEGER:
-			updatedValue = CoreFunctions.generateRandomNumberAsGivenLength((Integer.parseInt(fieldValue)));
+			updatedValue = String.valueOf(CoreFunctions.generateRandomNumberOfLength(Integer.parseInt(fieldValue)));
 			break;
 		case MYLOConstants.BLANK:
 			updatedValue = CoreFunctions.setBlankField(driver, element, fieldName);
@@ -1151,9 +1153,11 @@ public class BusinessFunctions {
 		CoreFunctions.clearAndSetText(driver, element, fieldName, updatedValue);
 		return updatedValue;
 	}
-	
+
 	/**
-	 * Set any Mylo Dropdown fields based on the parameter passed for fieldValue,locator,type and returns the UpdatedValue
+	 * Set any Mylo Dropdown fields based on the parameter passed for
+	 * fieldValue,locator,type and returns the UpdatedValue
+	 * 
 	 * @param driver
 	 * @param locator
 	 * @param fieldValue
@@ -1175,18 +1179,34 @@ public class BusinessFunctions {
 		}
 		return updatedValue;
 	}
-	
+
 	/**
 	 * Wait for Mylo Spinner to disappear
+	 * 
 	 * @param driver
 	 * @param element
 	 */
-	public static void fluentWaitForMyloSpinnerToDisappear(WebDriver driver,WebElement element) {
-		if(CoreFunctions.isElementExist(driver, element, 5)) {
+	public static void fluentWaitForMyloSpinnerToDisappear(WebDriver driver, WebElement element) {
+		if (CoreFunctions.isElementExist(driver, element, 5)) {
 			FluentWait<WebDriver> wait = new FluentWait<>(driver).withTimeout(Duration.ofSeconds(90))
 					.pollingEvery(Duration.ofMillis(1000)).withMessage("Timeout occured!")
 					.ignoring(NoSuchElementException.class);
 			wait.until(ExpectedConditions.invisibilityOf(element));
+		}
+	}
+
+	public static WebElement returnElementFromListUsingAttribute(WebDriver driver, List<WebElement> WebElementList,
+			String itemName, String attribute) {
+		try {
+			for (WebElement row : WebElementList) {
+				Log.info("The Actual Item Name is :" + row.getAttribute(attribute));
+				if (row.getAttribute(attribute).toLowerCase().contains(itemName.toLowerCase().replace(" ", "")))
+					return row;
 			}
+		} catch (Exception ex) {
+			Log.info(CoreConstants.ERROR + ex.getMessage());
+			Assert.fail(CoreConstants.ERROR + PDTConstants.ELEMENT_NOT_FOUND);
+		}
+		return null;
 	}
 }

@@ -80,4 +80,26 @@ public class DbQueries {
 			"      inner join ISISDBA.ASSIGNMENT_status_code S on A.ASSIGNMENT_STATUS_CODE=S.ASSIGNMENT_STATUS_CODE \r\n" + 
 			"      left join ISISDBA.ASSIGNMENT_type_code AT on A.ASSIGNMENT_TYPE_CODE=AT.ASSIGNMENT_TYPE_CODE\r\n" + 
 			"      where E.EMP_NO=? and S.ASSIGNMENT_STATUS_DESC = ?";
+	
+	public static final String QUERY_GET_ACCOUNTING_FILES_INFO_BY_SERVICE_AND_SERVICE_STATUS="Select A.ASSIGNMENT_ID as FileID,C.COMPANY_NAME as ClientName,(T.last_name || ', ' || T.first_name) as TransfereeName\r\n" + 
+			" from ISISDBA.Assignment A\r\n" + 
+			"inner join ISISDBA.CMPNY C on A.COMPANY_ID=C.COMPANY_ID\r\n"+
+			"inner join ISISDBA.TRANSFEREE T on A.TRANSFEREE_ID=T.Transferee_Id\r\n" + 
+			"inner join ISISDBA.ASSIGNMENT_SERVICE S on A.Assignment_Id=S.ASSIGNMENT_ID\r\n" + 
+			"inner join ISISDBA.ASSIGNMENT_Service_code SC on S.ASSIGNMENT_SERVICE_CODE=SC.ASSIGNMENT_SERVICE_CODE \r\n" + 
+			"inner join ISISDBA.ASSIGNMENT_status_code ST on S.service_status_code=ST.ASSIGNMENT_STATUS_CODE\r\n" + 
+			"where SC.ASSIGNMENT_SERVICE_DESC=? and ST.ASSIGNMENT_STATUS_DESC= ?\r\n" + 
+			" order by TransfereeName asc,FileID asc";
+	
+	public static final String QUERY_GET_ACCOUNTING_FILES_INFO_BY_SERVICE_AND_STATUS_AND_SORT_ORDER="Select A.ASSIGNMENT_ID as FileID,Lower(C.COMPANY_NAME) as ClientName,(T.last_name || ', ' || T.first_name) as TransfereeName\r\n" + 
+			",LOWER(A.ORIGIN_COUNTRY_NAME) as Origin,LOWER(A.DEST_COUNTRY_NAME) as Destination,A.ASSIGNMENT_STATUS_CODE as Status, AT.ASSIGNMENT_TYPE_DESC as JourneyType,A.BOOK_DATE as Booked from ISISDBA.Assignment A\r\n" + 
+			"inner join ISISDBA.CMPNY C on A.COMPANY_ID=C.COMPANY_ID\r\n"+
+			"inner join ISISDBA.TRANSFEREE T on A.TRANSFEREE_ID=T.Transferee_Id\r\n" + 
+			"inner join ISISDBA.ASSIGNMENT_SERVICE S on A.Assignment_Id=S.ASSIGNMENT_ID\r\n" + 
+			"inner join ISISDBA.ASSIGNMENT_Service_code SC on S.ASSIGNMENT_SERVICE_CODE=SC.ASSIGNMENT_SERVICE_CODE \r\n" + 
+			"inner join ISISDBA.ASSIGNMENT_status_code ST on S.service_status_code=ST.ASSIGNMENT_STATUS_CODE\r\n" + 
+			"left join ISISDBA.ASSIGNMENT_type_code AT on A.ASSIGNMENT_TYPE_CODE=AT.ASSIGNMENT_TYPE_CODE\r\n" + 
+			"where SC.ASSIGNMENT_SERVICE_DESC=? and ST.ASSIGNMENT_STATUS_DESC= ?";
+	
+	public static final String QUERY_GET_ASSIGNMENT_FIELD_VALUES="SELECT TRANSFEREE_ID as TransfereeID FROM ISISDBA.ASSIGNMENT A where A.ASSIGNMENT_ID=?";
 }

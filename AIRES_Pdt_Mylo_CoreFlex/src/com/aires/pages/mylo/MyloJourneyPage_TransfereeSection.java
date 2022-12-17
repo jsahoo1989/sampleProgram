@@ -20,6 +20,7 @@ import com.aires.businessrules.CoreFunctions;
 import com.aires.businessrules.DbFunctions;
 import com.aires.businessrules.constants.CoreConstants;
 import com.aires.businessrules.constants.MYLOConstants;
+import com.aires.utilities.MyloNewFileUtil;
 import com.vimalselvam.cucumber.listener.Reporter;
 
 import cucumber.api.DataTable;
@@ -114,10 +115,10 @@ public class MyloJourneyPage_TransfereeSection extends Base {
 	@FindBy(how = How.CSS, using = "ng-select[name='P_Orig']")
 	private List<WebElement> _transfereePhoneOrgDestDropdown;
 
-	@FindBy(how = How.CSS, using = "ng-select[name='P_Orig'] span[class='ng-value-label ng-star-inserted']")
+	@FindBy(how = How.CSS, using = "ng-select[name='P_Orig'] span[class='ng-arrow-wrapper']")
 	private List<WebElement> _transfereePhoneOrgDestDropdownValue;
 
-	@FindBy(how = How.CSS, using = "ng-select[name='P_Type'] span[class='ng-value-label ng-star-inserted']")
+	@FindBy(how = How.CSS, using = "ng-select[name='P_Type'] span[class='ng-arrow-wrapper']")
 	private List<WebElement> _transfereePhoneTypeDropdownValue;
 
 	@FindBy(how = How.CSS, using = "ng-select[name='T_Type2'] span[class='ng-value-label ng-star-inserted']")
@@ -393,7 +394,7 @@ public class MyloJourneyPage_TransfereeSection extends Base {
 			//CoreFunctions.explicitWaitTillElementVisibility(driver, _transfereeSaveBtn, MYLOConstants.SAVE_BUTTON);
 			CoreFunctions.explicitWaitTillElementInVisibilityCustomTime(driver, _spinner, 180);
 			CoreFunctions.highlightElementAndClick(driver, _transfereeSaveBtn, MYLOConstants.SAVE_BUTTON);
-			CoreFunctions.explicitWaitTillElementInVisibilityCustomTime(driver, _spinner, 60);
+			BusinessFunctions.fluentWaitForMyloSpinnerToDisappear(driver, _spinner);
 		} catch (Exception e) {
 			Reporter.addStepLog(MessageFormat.format(MYLOConstants.BUTTON_NOT_PRESENT, CoreConstants.FAIL,
 					MYLOConstants.SAVE_BUTTON, MYLOConstants.TRANSFEREE_FAMILY, MYLOConstants.JOURNEY));
@@ -961,5 +962,32 @@ public class MyloJourneyPage_TransfereeSection extends Base {
 					msg, MYLOConstants.TRANSFEREE));
 		return flag;
 
+	}
+	
+	public void addTransfereePhoneEmailDetails() {
+		if(MyloNewFileUtil.get_transfereeEmail()==null) {
+		CoreFunctions.scrollToElementUsingJavaScript(driver, _transfereeFamilyDetailsButton,
+				MYLOConstants.TRANSFEREE_FAMILY);
+		CoreFunctions.click(driver, _transfereeEditButton, MYLOConstants.EDIT_BUTTON);
+		CoreFunctions.scrollClickUsingJS(driver, _transfereeAddPhone, MYLOConstants.TRANSFEREE_ADD_PHONE);
+		MyloNewFileUtil.set_transfereePhoneNo(
+				BusinessFunctions.setMyloInputFields(driver, MYLOConstants.TRANSFEREE_PHONE_NUMBER, "10",
+						_transfereePhoneNumber.get(0), MYLOConstants.RANDOM_INTEGER));
+		CoreFunctions.click(driver, _transfereePhoneOrgDestDropdownValue.get(0), MYLOConstants.TRANSFEREE_ORGDEST);
+		BusinessFunctions.setMyloDropdownFields(driver, _dropdownOptions, MYLOConstants.RANDOM,
+				MYLOConstants.TRANSFEREE_ORGDEST);
+		CoreFunctions.click(driver, _transfereePhoneTypeDropdownValue.get(0), MYLOConstants.TRANSFEREE_PHONE_TYPE);
+		BusinessFunctions.setMyloDropdownFields(driver, _dropdownOptions, MYLOConstants.RANDOM,
+				MYLOConstants.TRANSFEREE_PHONE_TYPE);
+		CoreFunctions.scrollClickUsingJS(driver, _transfereeAddEmail, MYLOConstants.TRANSFEREE_ADD_EMAIL);
+		MyloNewFileUtil.set_transfereeEmail(
+				BusinessFunctions.setMyloInputFields(driver, MYLOConstants.TRANSFEREE_EMAIL_ADDRESS,
+						"airesautomation@aires.com", _transfereeEmailAddress.get(0), MYLOConstants.VALUE));
+		CoreFunctions.click(driver, _transfereeEmailTypeDropdownValue.get(0), MYLOConstants.TRANSFEREE_EMAIL_TYPE);
+		BusinessFunctions.setMyloDropdownFields(driver, _dropdownOptions, MYLOConstants.RANDOM,
+				MYLOConstants.TRANSFEREE_EMAIL_TYPE);
+		clickTransfereeSaveButton();
+		}
+		
 	}
 }

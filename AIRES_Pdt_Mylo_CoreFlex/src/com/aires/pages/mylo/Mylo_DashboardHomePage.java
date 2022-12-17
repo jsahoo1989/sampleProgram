@@ -419,6 +419,13 @@ public class Mylo_DashboardHomePage extends Base {
 			myloNewFileSection.createNewFile(clientID);
 		}
 	}
+	
+	public void createNewFileIfNotCreated(String clientID, MyloJourneyPage_CreateNewFileSection myloNewFileSection) {
+		if (MyloNewFileUtil.getFileID() == null) {
+			selectOptionsFromAssignmentMenu(MYLOConstants.NEW_FILE_BUTTON);
+			myloNewFileSection.createNewFile(clientID);
+		} 
+	}
 
 	/**
 	 * Verify File ParametersPopUpMessage After Clicking on Execute Button
@@ -764,7 +771,6 @@ public class Mylo_DashboardHomePage extends Base {
 	}
 
 	public void loadAlternateFiles() {
-		// String ctr = System.getProperty("noOfTimes");
 		String ctr = "5";
 		int max = Integer.parseInt(ctr);
 		for (int i = 0; i < max; i++) {

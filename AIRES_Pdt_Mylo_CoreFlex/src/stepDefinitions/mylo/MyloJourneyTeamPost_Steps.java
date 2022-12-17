@@ -10,6 +10,7 @@ import com.aires.pages.mylo.MyloJourneyPage_TeamPostSection;
 import com.aires.pages.mylo.Mylo_DashboardHomePage;
 import com.aires.pages.mylo.Mylo_JourneyPage;
 import com.aires.utilities.CustomSoftAssert;
+import com.aires.utilities.MyloNewFileUtil;
 import com.vimalselvam.cucumber.listener.Reporter;
 
 import cucumber.api.DataTable;
@@ -161,7 +162,7 @@ public class MyloJourneyTeamPost_Steps {
 	@When("^he clicks on \"([^\"]*)\" button after entering 'Comments' for the selected \"([^\"]*)\" on 'Team Post' section$")
 	public void he_clicks_on_button_after_entering_Comments_for_the_selected_on_Team_Post_section(String btnName,
 			String postType) {
-		myloJourneyPageTeamPostSection.setTeamPostCommentField("10", MYLOConstants.RANDOM_STRING);
+		myloJourneyPageTeamPostSection.setTeamPostCommentField(MYLOConstants.COMMENT_FIELD_LENGTH, MYLOConstants.RANDOM_STRING);
 		myloJourneyPageTeamPostSection.selectTeamPostTypeField(postType);
 		myloJourneyPageTeamPostSection.clickButtonsOnTeamPostSection(btnName);
 	}
@@ -174,7 +175,8 @@ public class MyloJourneyTeamPost_Steps {
 	 */
 	@Then("^\"([^\"]*)\" post should be successfully saved with respective 'Color Codes' on 'Team Post' section$")
 	public void post_should_be_successfully_saved_with_respective_Color_Codes_on_Team_Post_section(String postType) {
-		myloJourneyPage.verifyToastMessage(MYLOConstants.SAVE_SUCCESS_MESSAGE);
+		Assert.assertTrue(myloJourneyPage.verifyToastMessage(MYLOConstants.SAVE_SUCCESS_MESSAGE),MessageFormat.format(MYLOConstants.VERIFIED_MESSAGE_NOT_DISPLAYED, CoreConstants.FAIL,
+				MYLOConstants.SAVE_SUCCESS_MESSAGE, MYLOConstants.JOURNEY));
 		Assert.assertTrue(myloJourneyPageTeamPostSection.verifyTeamPostDisplayed(postType, MYLOConstants.TEAM_POSTS),
 				MessageFormat.format(MYLOConstants.VERIFIED_SECTION_NOT_DISPLAYED, CoreConstants.FAIL,
 						postType + MYLOConstants.TEAM_POST_TYPE, MYLOConstants.TEAM_POSTS));
@@ -197,7 +199,8 @@ public class MyloJourneyTeamPost_Steps {
 		myloJourneyPageTeamPostSection.selectTeamPost(postType);
 		myloJourneyPageTeamPostSection.isTeamPostBtnEnabled(btnName, MYLOConstants.ENABLE);
 		myloJourneyPageTeamPostSection.clickButtonsOnTeamPostSection(btnName);
-		myloJourneyPage.verifyToastMessage(MYLOConstants.ARCHIVE_SUCCESS_MESSAGE);
+		Assert.assertTrue(myloJourneyPage.verifyToastMessage(MYLOConstants.ARCHIVE_SUCCESS_MESSAGE),MessageFormat.format(MYLOConstants.VERIFIED_MESSAGE_NOT_DISPLAYED, CoreConstants.FAIL,
+				MYLOConstants.ARCHIVE_SUCCESS_MESSAGE, MYLOConstants.JOURNEY));
 		myloJourneyPageTeamPostSection.clickButtonsOnTeamPostSection(MYLOConstants.VIEW_ARCHIVE);
 		Assert.assertTrue(myloJourneyPageTeamPostSection.verifyTeamPostDisplayed(postType, MYLOConstants.VIEW_ARCHIVE),
 				MessageFormat.format(MYLOConstants.VERIFIED_SECTION_NOT_DISPLAYED, CoreConstants.FAIL,
@@ -327,7 +330,7 @@ public class MyloJourneyTeamPost_Steps {
 
 	@Then("^\"([^\"]*)\" button should be enabled after he made changes to 'Comments' or 'Post Type' on 'Team Post' section$")
 	public void button_should_be_enabled_after_he_made_changes_to_Comments_or_Post_Type_on_Team_Post_section(String btnName) {
-		myloJourneyPageTeamPostSection.setTeamPostCommentField(MYLOConstants.RANDOM, MYLOConstants.RANDOM_STRING);
+		myloJourneyPageTeamPostSection.setTeamPostCommentField(MYLOConstants.COMMENT_FIELD_LENGTH, MYLOConstants.RANDOM_STRING);
 		myloJourneyPageTeamPostSection.isTeamPostBtnEnabled(btnName, MYLOConstants.ENABLE);
 		myloJourneyPageTeamPostSection.selectTeamPostTypeField(MYLOConstants.RANDOM);
 	}

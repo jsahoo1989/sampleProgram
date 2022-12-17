@@ -18,6 +18,7 @@ import com.aires.businessrules.BusinessFunctions;
 import com.aires.businessrules.CoreFunctions;
 import com.aires.businessrules.constants.CoreConstants;
 import com.aires.businessrules.constants.MYLOConstants;
+import com.aires.utilities.MyloNewFileUtil;
 import com.vimalselvam.cucumber.listener.Reporter;
 import cucumber.api.DataTable;
 
@@ -83,6 +84,9 @@ public class MyloJourneyPage_AuthTrackSection extends Base {
 	
 	@FindBy(how = How.CSS, using = "app-authorization-tracking a")
 	private WebElement _noAuthTrackLink;
+	
+	@FindBy(how = How.CSS, using = "app-authorization-tracking")
+	private WebElement _authTrackSection;
 	
 	private final By _dropdownOptions = By.cssSelector("div[role='option']>span");
 	
@@ -213,6 +217,22 @@ public class MyloJourneyPage_AuthTrackSection extends Base {
 			}
 		}
 		return flag;
+	}
+	
+	public void addAuthTrackDataIfNotPresent() {
+		if (MyloNewFileUtil.get_trackingNumber() == null) {
+			BusinessFunctions.fluentWaitForMyloSpinnerToDisappear(driver, _spinner);
+			CoreFunctions.scrollToElementUsingJS(driver, _authTrackSection, MYLOConstants.AUTH_TRACK_SECTION);
+			CoreFunctions.highlightObject(driver, _authTrackSection);
+			CoreFunctions.highlightElementAndClick(driver, _authTrackAddBtn, MYLOConstants.ADD_BUTTON);
+			clickFieldsOnAuthTrackSection(MYLOConstants.AUTH_TRACK_TYPE, 0);
+			setTypeDropDownField(MYLOConstants.AUTH_TRACK_TYPE, MYLOConstants.RANDOM, 0);
+			String trackingNumber=BusinessFunctions.setMyloInputFields(driver, MYLOConstants.AUTH_TRACK_NUMBER, "10",
+					_authTrackNumbers.get(0), MYLOConstants.RANDOM_INTEGER);
+			setAuthTrackFields(MYLOConstants.AUTH_TRACK_COMMENT, "10", 0);
+			clickFieldsOnAuthTrackSection(MYLOConstants.SAVE_BUTTON, 0);
+			MyloNewFileUtil.set_trackingNumber(trackingNumber);
+		}
 	}
 	
 	public void setAuthTrackFields(String fieldName, String fieldValue,int index) {

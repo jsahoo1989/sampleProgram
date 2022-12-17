@@ -169,8 +169,10 @@ public class MyloJourneyPage_TeamPostSection extends Base {
 	 * @param type
 	 */
 	public void setTeamPostCommentField(String fieldValue, String type) {
+		CoreFunctions.explicitWaitTillElementVisibility(driver, _teamPostCommentSection, MYLOConstants.TEAM_POST_COMMENTS);
 		updatedCommentsValue = BusinessFunctions.setMyloInputFields(driver, MYLOConstants.TEAM_POST_COMMENTS,
 				fieldValue, _teamPostCommentSection, type);
+		CoreFunctions.click(driver, _teamPostCommentSection, MYLOConstants.TEAM_POST_COMMENTS);
 	}
 
 	/**
@@ -381,9 +383,10 @@ public class MyloJourneyPage_TeamPostSection extends Base {
 	
 	public void searchTeamPostComments() {
 		try {
+			BusinessFunctions.fluentWaitForMyloSpinnerToDisappear(driver, _spinner);
 			List<String> listKeys = new ArrayList<String>(teamPostUpdatedValuesMap.keySet());
 			String randomPostType = listKeys
-					.get(CoreFunctions.getRandomNumber(0, teamPostUpdatedValuesMap.keySet().size()));
+					.get(CoreFunctions.getRandomNumber(0, teamPostUpdatedValuesMap.keySet().size()-1));
 			String randomComments = teamPostUpdatedValuesMap.get(randomPostType);
 			int beginIndex = CoreFunctions.getRandomNumber(0, randomComments.length() - 4);
 			searchedText = randomComments.substring(beginIndex, beginIndex + 3);

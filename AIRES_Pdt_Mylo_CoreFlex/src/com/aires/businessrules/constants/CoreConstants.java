@@ -29,6 +29,7 @@ public class CoreConstants {
 	public static final String TXT_ACTUAL = "Actual Text : ";
 	public static final String TXT_EXPECTED = "Expected Text : ";
 	public static final String ALPHABET = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ";
+	public static final String NUMBERS = "0123456789";
 	public static final String SPECIAL_CHARACTERS = "^^<>";
 	public static final String JSON_FILE_NOT_FOUND_AT_PATH = "Json file not found at path : ";
 	public static final String TAG_VALUE = "@Pre-Prod";

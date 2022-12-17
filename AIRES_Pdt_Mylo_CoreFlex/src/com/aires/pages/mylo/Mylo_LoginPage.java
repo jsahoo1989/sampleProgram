@@ -183,9 +183,13 @@ public class Mylo_LoginPage extends Base {
 		try {
 			CoreFunctions.explicitWaitTillElementVisibility(driver, _userProfileImg, MYLOConstants.USER_PROFILE_IMAGE, 60);
 			CoreFunctions.clickUsingJS(driver, _userProfileImg, MYLOConstants.USER_PROFILE_IMAGE);
+			CoreFunctions.waitHandler(5);
 			CoreFunctions.pressEnter();
-			CoreFunctions.explicitWaitTillElementVisibility(driver, _logoutUserImg, MYLOConstants.LOGOUT_IMAGE, 60);
-			CoreFunctions.click(driver, _logoutUserImg, MYLOConstants.LOGOUT_IMAGE);
+			CoreFunctions.waitHandler(5);
+			//CoreFunctions.explicitWaitTillElementVisibility(driver, _logoutUserImg, MYLOConstants.LOGOUT_IMAGE, 60);		
+			if(CoreFunctions.isElementExist(driver, _logoutUserImg, 60))
+				CoreFunctions.click(driver, _logoutUserImg, MYLOConstants.LOGOUT_IMAGE);
+			
 		} catch (Exception e) {
 			Assert.fail(MessageFormat.format(CoreConstants.FAIL_TO_VERIFY_ELEMENT_ON_SECTION, CoreConstants.FAIL,
 					MYLOConstants.USER_PROFILE_IMAGE + MYLOConstants.AND + MYLOConstants.LOGOUT_IMAGE,

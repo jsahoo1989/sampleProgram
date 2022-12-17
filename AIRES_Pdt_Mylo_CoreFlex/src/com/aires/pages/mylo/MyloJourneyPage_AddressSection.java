@@ -20,6 +20,7 @@ import com.aires.businessrules.BusinessFunctions;
 import com.aires.businessrules.CoreFunctions;
 import com.aires.businessrules.constants.CoreConstants;
 import com.aires.businessrules.constants.MYLOConstants;
+import com.aires.utilities.MyloNewFileUtil;
 import com.vimalselvam.cucumber.listener.Reporter;
 
 import cucumber.api.DataTable;
@@ -30,6 +31,13 @@ public class MyloJourneyPage_AddressSection extends Base {
 		super(driver);
 	}
 
+	
+	@FindBy(how = How.XPATH, using = "//a[text()='Add Origin Address']")
+	private WebElement _addOrgnAddressLink;
+	
+	@FindBy(how = How.XPATH, using = "//a[text()='Add Destination Address']")
+	private WebElement _addDestAddressLink;
+	
 	@FindBy(how = How.CSS, using = "button[aria-controls='collapseoriginAddress']")
 	private WebElement _orgnAddressDetailsBtn;
 
@@ -152,7 +160,28 @@ public class MyloJourneyPage_AddressSection extends Base {
 
 	@FindBy(how = How.CSS, using = "button[aria-label='Close this dialog']")
 	private WebElement _closePopUpIcon;
-
+	
+	@FindBy(how = How.CSS, using = "ng-select[name='popupcountry']")
+	private WebElement _Country;
+	
+	@FindBy(how = How.XPATH, using = "//ng-select[@name='popupcountry']/following::ng-select[@name='state']")
+	private WebElement _State;
+	
+	@FindBy(how = How.CSS, using = "input[id*='popupcity']")
+	private WebElement _city;
+	
+	@FindBy(how = How.CSS, using = "input[id*='popupzipCode']")
+	private WebElement _zipCode;
+	
+	@FindBy(how = How.CSS, using = "input[id*='popupaddress1']")
+	private WebElement _address1;
+	
+	@FindBy(how = How.CSS, using = "input[id*='popupaddress2']")
+	private WebElement _address2;
+	
+	@FindBy(how = How.XPATH, using = "//button[text()='Save']")
+	private WebElement _saveBtn;
+	
 	final By _dropdownOptions = By.xpath("//div[@role='option']/span");
 	final By _originCopyBtn = By.xpath("//button[contains(@class,'copy-active')]");
 
@@ -338,6 +367,50 @@ public class MyloJourneyPage_AddressSection extends Base {
 							data.get(i).get(MYLOConstants.MESSAGE), _alertMessage.getText(), MYLOConstants.JOURNEY));
 			closeToastmessage();
 			setAddressFieldValues(fieldName, MYLOConstants.TEST, MYLOConstants.VALUE, sectionType);
+		}
+	}
+	
+	public String setCountryStateField(WebElement element,String fieldValue,String section) {
+		CoreFunctions.highlightElementAndClick(driver, element, section);
+		List<WebElement> dropdownList = CoreFunctions.getElementListByLocator(driver, _dropdownOptions);
+		String updatedValue=(fieldValue.equals(MYLOConstants.RANDOM))?CoreFunctions.getRandomElementValueFromList(driver, dropdownList):fieldValue;
+		BusinessFunctions.selectItemFromListUsingText(driver, dropdownList, updatedValue);
+		return updatedValue;
+	}
+	
+	public void addOriginAddressIfNotPresent() {
+		if (MyloNewFileUtil.get_orgAddress1() == null) {
+			BusinessFunctions.fluentWaitForMyloSpinnerToDisappear(driver, _spinner);
+			CoreFunctions.scrollClickUsingJS(driver, _addOrgnAddressLink, MYLOConstants.ADD_ORIGIN_ADDRESS);
+			MyloNewFileUtil.set_orgCountry(setCountryStateField(_Country,MYLOConstants.USA_STATE,MYLOConstants.ORIGIN_COUNTRY));
+			MyloNewFileUtil.set_orgState(setCountryStateField(_State,MYLOConstants.RANDOM,MYLOConstants.ORIGIN_STATE));
+			MyloNewFileUtil.set_orgCity(BusinessFunctions.setMyloInputFields(driver,
+					MYLOConstants.ORIGIN_CITY, "8", _city, MYLOConstants.RANDOM_STRING));
+			MyloNewFileUtil.set_orgZipCode(BusinessFunctions.setMyloInputFields(driver,
+					MYLOConstants.ORIGIN_ZIPCODE, "8", _zipCode, MYLOConstants.RANDOM_INTEGER));
+			MyloNewFileUtil.set_orgAddress1(BusinessFunctions.setMyloInputFields(driver,
+					MYLOConstants.ORIGIN_ADDRESS1, "15", _address1, MYLOConstants.RANDOM_STRING));
+			MyloNewFileUtil.set_orgAddress2(BusinessFunctions.setMyloInputFields(driver,
+					MYLOConstants.ORIGIN_ADDRESS2, "15", _address2, MYLOConstants.RANDOM_STRING));
+			CoreFunctions.highlightElementAndClick(driver, _saveBtn, MYLOConstants.ORIGIN_ADDRESS_SAVE_BUTTON);
+		}
+	}
+		
+	public void addDestinationAddressIfNotPresent() {
+		if (MyloNewFileUtil.get_destAddress1() == null) {
+			BusinessFunctions.fluentWaitForMyloSpinnerToDisappear(driver, _spinner);
+			CoreFunctions.scrollClickUsingJS(driver, _addDestAddressLink, MYLOConstants.ADD_DESTINATION_ADDRESS);
+			MyloNewFileUtil.set_destCountry(setCountryStateField(_Country,MYLOConstants.USA_STATE,MYLOConstants.DESTINATION_COUNTRY));
+			MyloNewFileUtil.set_destState(setCountryStateField(_State,MYLOConstants.RANDOM,MYLOConstants.DESTINATION_STATE));
+			MyloNewFileUtil.set_destCity(BusinessFunctions.setMyloInputFields(driver,
+					MYLOConstants.DESTINATION_CITY, "8", _city, MYLOConstants.RANDOM_STRING));
+			MyloNewFileUtil.set_destZipCode(BusinessFunctions.setMyloInputFields(
+					driver, MYLOConstants.DESTINATION_ZIPCODE, "8", _zipCode, MYLOConstants.RANDOM_INTEGER));
+			MyloNewFileUtil.set_destAddress1(BusinessFunctions.setMyloInputFields(
+					driver, MYLOConstants.DESTINATION_ADDRESS1, "15", _address1, MYLOConstants.RANDOM_STRING));
+			MyloNewFileUtil.set_destAddress2(BusinessFunctions.setMyloInputFields(
+					driver, MYLOConstants.DESTINATION_ADDRESS2, "15", _address2, MYLOConstants.RANDOM_STRING));
+			CoreFunctions.highlightElementAndClick(driver, _saveBtn, MYLOConstants.DESTINATION_ADDRESS_SAVE_BUTTON);
 		}
 	}
 

@@ -121,7 +121,7 @@ public class MYLOConstants {
 	public static final String VERIFIED_ALERT_MESSAGE_DISPLAYED = "{0}Verified Alert message is displayed as ''{1}''  on  ''{2}'' page";
 	public static final String VERIFIED_MESSAGE_DISPLAYED = "{0}Verified Message is displayed as ''{1}''  on  ''{2}'' page";
 	public static final String VERIFIED_MESSAGE_NOT_DISPLAYED = "{0}Verified Message is not displayed as ''{1}''  on  ''{2}'' page";
-	public static final String VERIFIED_ALERT_MESSAGE_NOT_DISPLAYED = "{0}Verified Alert message is not displayed as ''{1}''  on  ''{2}'' page";
+	public static final String VERIFIED_ALERT_MESSAGE_NOT_DISPLAYED = "<font color='red'>{0}Verified Alert message is not displayed as ''{1}''  on  ''{2}'' page</font>";
 	public static final String VERIFIED_POPUP_MESSAGE_DISPLAYED = "{0}Verified Pop up message is displayed as ''{1}''  on  ''{2}'' section";
 	public static final String VERIFIED_POPUP_MESSAGE_NOT_DISPLAYED = "{0}Verified Pop up message is not displayed as ''{1}''  on  ''{2}'' section";
 	public static final String VERIFIED_FIELD_HIGHLIGHTED = "{0}Verified ''{1}'' field is highlighted with Red background on  ''{2}'' section";
@@ -142,7 +142,8 @@ public class MYLOConstants {
 	public static final String VERIFIED_DATA_AVAILABLE = "{0}Verified that data available under ''{1}'' on ''{2}'' section";
 	public static final String VERIFIED_DATA_NOT_AVAILABLE = "{0}Verified that data not available under ''{1}'' on ''{2}'' section";
 	public static final String VALUE_UPDATED_ON_SECTION = "{0} Value: ''{1}'' is updated for :- ''{2}'' in ''{3}'' section on ''{4}'' page";
-	public static final String VALUE_NOT_UPDATED_ON_SECTION = "{0} Value: ''{1}'' is not updated for :- ''{2}'' in ''{3}'' section on ''{4}'' page";
+	public static final String VALUE_NOT_UPDATED_ON_SECTION = "<font color='red'>{0} Value: ''{1}'' is not updated for :- ''{2}'' in ''{3}'' section on ''{4}'' page</font>";
+	public static final String FIELDS_NOT_UPDATED_ON_SECTION = "{0} ''{1}'' is not updated on ''{3}'' section";
 	public static final String VERIFIED_ALL_VALUES_UPDATED_ON_SECTION = "{0} Verified all values for ''{1}'' fields is updated in ''{2}'' section on ''{3}'' page";
 	public static final String VERIFIED_NO_VALUES_UPDATED_ON_SECTION = "{0} Verified that values for ''{1}'' fields is not updated in ''{2}'' section on ''{3}'' page";
 	public static final String FIELD_NAME_VALUE_DISPLAYED = "{0} FieldName- ''{1}'' value is displayed as :- ''{2}'' in ''{3}'' section on ''{4}'' page";
@@ -196,7 +197,9 @@ public class MYLOConstants {
 	public static final String ADDRESS1 = "address1";
 	public static final String ADDRESS2 = "address2";
 	public static final String ADD_MAILING_ADDRESS = "Add Mailing Address";
+	public static final String ADD_ORIGIN_ADDRESS = "Add Origin Address";
 	public static final String ADD_TEMPORARY_ADDRESS = "Add Temporary Address";
+	public static final String ADD_DESTINATION_ADDRESS = "Add Destination Address";
 	public static final String ALERT_MESSAGE = "Alert Message";
 	public static final String FROMDATE = "FromDate";
 	public static final String COMMENTS = "Comments";
@@ -616,6 +619,7 @@ public class MYLOConstants {
 	public static final String ARCHIVE_SUCCESS_MESSAGE = "Successfully Archived!";
 	public static final String TAX_TREATMENT_VALUE="Foreign national leaving the US";
 	public static final String AUTOMATION_CLIENT_ID="49226";
+	public static final String VENDOR_CLIENT_ID="49206";
 	public static final String TEAM_POST_EXPANDED = "Team Post Expanded";
 	public static final String INCORRECT_BG_COLOR = "{0}Incorrect Background color of ''{1}'' on ''{2}'' section";
 	public static final String POSTS_NOT_FILTERED = "{0}<font color='red'>All Posts displayed are not as per filtered Post Type : ''{1}'' on ''{2}'' section</font>";
@@ -645,6 +649,7 @@ public class MYLOConstants {
 	public static final String EVIP = "EVIP";
 	public static final String CONFIDENTIAL = "Confidential";
 	public static final String NO_SUCH_FILE_FOUND_STATUS_CHECKBOX="No such file found for ''{1}'' status with ''{2}'' checkbox selected";
+	public static final String NO_SUCH_FILE_FOUND_SERVICE_SERVICESTATUS="No such file found for ''{1}'' service with ''{2}'' service status selected";
 	public static final String SINGLE_FILE_FOUND_STATUS_CHECKBOX="{0}Single file of FileID:-''{1}''  found for ''{2}'' status with ''{3}'' checkbox selected";
 	public static final String CHECKBOX = "Checkbox";
 	public static final String MY_FILES_QUERY_RESULT = "My Files Query result";
@@ -654,13 +659,17 @@ public class MYLOConstants {
 	public static final String QUERY_POPUP = "Query PopUp";
 	public static final String NONE = "None";
 	public static final String VERIFIED_RESULTS_MATCH_WITH_DATABSE = "{0}Verified ''{1}'' column values of ''{2}'' result matches with database as per status:- ''{3}'' with checkbox:-''{4}'' selected";
-	public static final String VERIFIED_RESULTS_MISMATCH_WITH_DATABSE = "{0}Verified ''{1}'' column values of ''{2}'' result does not match with database";
+	public static final String VERIFIED_QUERY_RESULTS_MATCH_WITH_DATABASE = "{0}Verified ''{1}'' column values of ''{2}'' result matches with database as per ''{3}'':- ''{4}'' with ''{5}'':-''{6}'' selected";
+	public static final String VERIFIED_QUERY_RESULTS_MISMATCH_WITH_DATABASE = "{0}Verified ''{1}'' column values of ''{2}'' result does not matches with database as per ''{3}'':- ''{4}'' with ''{5}'':-''{6}'' selected";
+	public static final String VERIFIED_RESULTS_MISMATCH_WITH_DATABASE = "{0}Verified ''{1}'' column values of ''{2}'' result does not match with database";
 	public static final String MY_FILES_HEADER="Query Your Files by Status";
 	public static final String MY_FILES_RESULT_HEADER="Please select a file from your query results below or run a new query.";
 	public static final String NO_OF_RECORDS="noOfRecords";
 	public static final String INACTIVE = "Inactive";
 	public static final String CLIENT__NAME = "Client Name";
 	public static final String ACCOUNTING = "Accounting";
+	public static final String COMMENT_FIELD_LENGTH="10";
+	public static final String SPOUSE = "Spouse";
 	
 	//Constants related to Accounting Query Section
 	public static final String ASSIGNMENT_ID = "Assignment ID";
@@ -685,6 +694,40 @@ public class MYLOConstants {
 	public static final String DESTINATION_ADDRESS_COUNTRY = "Destination Address Country";
 	public static final String DESTINATION_ADDRESS_STATE = "Destination Address State";
 	public static final String ACCOUNTING_QUERY = "Accounting Query";
+	public static final String ACCOUNTING_QUERY_RESULT = "Accounting Query result";
+	
+	//Constants related to Advanced Query Section
+	public static final String PLACEHOLDER = "placeholder";
+	public static final String ADVANCED_QUERY = "Advanced Query";
+	public static final String FORMCONTROLNAME = "formcontrolname";
+	public static final String ADVANCED = "Advanced";
+	public static final String STREET1 = "Street 1";
+	public static final String STREET2 = "Street 2";
+	public static final String ZIP_POSTAL = "Zip/Postal Code";
+	public static final String STATEPROVINCE = "State/Province";
+	public static final String REAL_ESTATE = "Real Estate";
+	public static final String ID = "ID";
+	public static final String SHIPMENT = "Shipment";
+	public static final String LEAD_COMPANY_ID="Lead Company ID";
+	public static final String LEAD_COMPANY_ID_SECTION = "Lead Company Id Section";
+	public static final String TRANSFEREE_ID = "Transferee ID";
+	public static final String TRANSFEREEID="TransfereeID";
+	public static final String TRANSFEREE_FIRST_NAME = "Transferee First Name";
+	
+	
+	//Constants related to File Team Section
+	public static final String ROLE = "role";
+	public static final String MSPEC = "MSPEC";
+	public static final String TRANSFEREE_LAST_NAME = "Transferee Last Name";
+	public static final String EMAIL = "Email";
+	public static final String MSpec = "MSpec";
+	public static final String FAMILY_FIRST_NAME = "Family First Name";
+	public static final String FAMILY_LAST_NAME = "Family Last Name";
+	public static final String PHONE_NUMBER="Phone Number";
+	
+	
+	
+
 	
 	
 	public static long TIME_BEFORE_ACTION;

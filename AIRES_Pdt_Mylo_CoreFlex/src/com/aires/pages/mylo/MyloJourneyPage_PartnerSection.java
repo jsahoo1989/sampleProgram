@@ -20,6 +20,7 @@ import com.aires.businessrules.CoreFunctions;
 import com.aires.businessrules.DbFunctions;
 import com.aires.businessrules.constants.CoreConstants;
 import com.aires.businessrules.constants.MYLOConstants;
+import com.aires.utilities.MyloNewFileUtil;
 import com.vimalselvam.cucumber.listener.Reporter;
 
 import cucumber.api.DataTable;
@@ -83,6 +84,9 @@ public class MyloJourneyPage_PartnerSection extends Base {
 	
 	@FindBy(how = How.CSS, using = "app-transferee-family button[aria-controls='collapseOneTransferee']")
 	private WebElement _transfereeAndFamilySection;
+	
+	@FindBy(how = How.CSS, using = "app-transferee-family span[class$='accordian-caret-icon']")
+	private WebElement _transfereeAndFamilyDetailsBtn;
 	
 	@FindBy(how = How.CSS, using = "h2[class*='accchildhead']")
 	private List<WebElement> _transfereeAndFamilySectionHeaders;
@@ -838,5 +842,24 @@ public class MyloJourneyPage_PartnerSection extends Base {
 			Reporter.addStepLog(MessageFormat.format(MYLOConstants.VERIFIED_CHECKBOX_NOT_SELECTED, CoreConstants.PASS,
 					number, MYLOConstants.PREFERRED, section, MYLOConstants.PARTNER));
 		return flag;
+	}
+	
+	public void addPartnerDetailsIfNotPresent() {
+		if (MyloNewFileUtil.get_partnerFName() == null) {
+			BusinessFunctions.fluentWaitForMyloSpinnerToDisappear(driver, _spinner);
+			CoreFunctions.scrollToElementUsingJavaScript(driver, _transfereeAndFamilySection,
+					MYLOConstants.TRANSFEREE_FAMILY);
+			CoreFunctions.scrollClickUsingJS(driver, _transfereeAndFamilyDetailsBtn, MYLOConstants.DETAILS_CARROT_BUTTON);
+			CoreFunctions.scrollClickUsingJS(driver, _addPartnerLink, MYLOConstants.ADD_PARTNER_LINK);
+			MyloNewFileUtil.set_partnerFName(BusinessFunctions.setMyloInputFields(driver,
+					MYLOConstants.PARTNER_FIRSTNAME, "10", _partnerFirstName, MYLOConstants.RANDOM_STRING));
+			MyloNewFileUtil.set_partnerLName(BusinessFunctions.setMyloInputFields(driver,
+					MYLOConstants.PARTNER_LASTNAME, "10", _partnerLastName, MYLOConstants.RANDOM_STRING));
+			clickDropdownFieldsOnPartnerSection(MYLOConstants.RELATIONSHIP, 0);
+			BusinessFunctions.setMyloDropdownFields(driver, _dropdownOptions, MYLOConstants.SPOUSE,
+					MYLOConstants.RELATIONSHIP);
+			CoreFunctions.click(driver, _partnerSaveButton, MYLOConstants.SAVE_BUTTON);
+			BusinessFunctions.fluentWaitForMyloSpinnerToDisappear(driver, _spinner);
+		}
 	}
 }

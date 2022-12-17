@@ -4,8 +4,8 @@ Feature: Validate the functionality of Mylo Accounting Query
 Background: Login to  Mylo application
     Given he has logged into the 'Mylo' application
     
-@IRIS-2145 @218346 
-Scenario:  Mylo-Validate Warning Toast Messages due to SpecialCharacters for mentioned fields of Mylo Accounting Query section
+@IRIS-2145 @218346 @Mylo:218518 @Mylo-Regression
+Scenario: Mylo-Validate Tag Script Validation Messages for mentioned fields of Mylo Accounting Query section
 Given he is on "Accounting Query" popup by selecting "Accounting" option available on "Query" section
 Then tag script messages should be displayed for entering 'specialCharacters' on below fields after clicking on "Execute" button on "Accounting Query" section
 |Field Name                    |Message                                                    |
@@ -15,16 +15,16 @@ Then tag script messages should be displayed for entering 'specialCharacters' on
 |Origin Address Street1        |Tag Scripts are not allowed in origin street 1.            |
 |Origin Address Street2        |Tag Scripts are not allowed in origin street 2.            |
 |Origin Address City           |Tag Scripts are not allowed in origin city.                |
-|Origin Address ZipCode         |Tag Scripts are not allowed in origin zip code.           |    
-|Origin Address State Text      |Tag Scripts are not allowed in  origin State/Province.    |
+|Origin Address ZipCode        |Tag Scripts are not allowed in origin zip code.            |    
+|Origin Address State Text     |Tag Scripts are not allowed in  origin State/Province.     |
 |Destination Address Street1   |Tag Scripts are not allowed in destination street 1.       |
 |Destination Address Street2   |Tag Scripts are not allowed in destination street 2.       |
 |Destination Address City      |Tag Scripts are not allowed in destination city.           |
 |Destination Address ZipCode   |Tag Scripts are not allowed in destination zip code.       |
 |Destination Address State Text|Tag Scripts are not allowed in  destination State/Province.|
 
-@IRIS-21451 @218347 
-Scenario:  Mylo-Validate Warning Toast Messages due to SpecialCharacters for mentioned fields of Mylo Accounting Query section
+@IRIS-2145 @218347 @Mylo:218519 @Mylo-Regression
+Scenario: Mylo-Validate Boundary Conditions of Character Limit for mentioned fields of Mylo Accounting Query section
 Given he is on "Accounting Query" popup by selecting "Accounting" option available on "Query" section
 When he enters data beyond character limit for different fields under "Accounting Query" section
 |Field Name                    |CharacterLength |
@@ -64,3 +64,38 @@ Then values should be successfully entered as per below character limit set for 
 |Destination Address City      |60              |
 |Destination Address ZipCode   |10              |
 |Destination Address State Text|60              |
+
+@IRIS-2183 @218314 @218318 @218319 @Mylo:218520 @Mylo-Regression
+Scenario: Mylo-Validate Warning Toast Message on Mandatory Field to enter & Cancel button functionality in Mylo Accounting Query section
+Given he is on "Accounting Query" popup by selecting "Accounting" option available on "Query" section
+When he clicks on "Execute" button without entering any parameters on "Accounting Query" popup
+Then an error popup message "Please input a query parameter." should be displayed for 'Accounting Query' section on Journey page
+And search popup should get closed after clicking on "Cancel" button on 'Accounting Query' section
+
+@IRIS-2183 @218313 @Mylo:218521 @Mylo-Regression
+Scenario Outline: Mylo-Validate Single Search Result for valid parameters (AssignmentID, TransfereeName, Tracking No, Origin & Destination Address) on Mylo Accounting Query section
+Given he has added "Origin Address","Destination Address","Authorization Tracking" information for newly created file on Mylo Journey page
+When he clicks on "Execute" button after entering "<Field Name>" values on "Accounting Query" popup
+Then journey page should be displayed for resulting 'File' matching the "<Field Name>" entered from "Accounting Query" popup
+Examples:
+|Field Name           |
+|Assignment ID        |
+|Transferee Name      |
+|Tracking Number      |
+|Origin Address       |
+|Destination Address  |
+
+@IRIS-2183 @218313 @Mylo:218522 @Mylo-Regression
+Scenario: Mylo-Validate Query results with random selection of Service & SubService Status available on Accounting section
+Given he is on "Accounting Query" popup by selecting "Accounting" option available on "Query" section
+When he clicks on "Execute" button after random selection of "Service" with "Service Status" on 'Accounting' section
+Then related files should get appear into the query result modal as per the selected 'Service' with 'Service Status'
+
+@IRIS-2183 @218315 @218316 @Mylo:218523 @Mylo-Regression
+Scenario: Mylo-Validate Sorting for different columns in Accounting query result modal
+Given he is on "Accounting Query result" modal after random selection of "Service" with "Service Status" on 'Accounting' section
+When he clicks on a 'caret' next to any column on 'Accounting Query result' modal
+Then that column should be sorted in ascending order with caret pointing upwards on 'Accounting Query result' modal
+And that column should be sorted in descending order by again clicking on 'caret' next to it on 'Accounting Query result' modal
+And "Please Select a Query Type to Search for a User File" should be displayed after he clicks on "New Query" button on "Accounting Query result" modal
+

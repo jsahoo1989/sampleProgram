@@ -121,7 +121,7 @@ public class MyloJourneyPage_TransfereeSection extends Base {
 	@FindBy(how = How.CSS, using = "ng-select[name='P_Type'] span[class='ng-arrow-wrapper']")
 	private List<WebElement> _transfereePhoneTypeDropdownValue;
 
-	@FindBy(how = How.CSS, using = "ng-select[name='T_Type2'] span[class='ng-value-label ng-star-inserted']")
+	@FindBy(how = How.CSS, using = "ng-select[name='T_Type2'] span[class='ng-arrow-wrapper']")
 	private List<WebElement> _transfereeEmailTypeDropdownValue;
 
 	@FindBy(how = How.CSS, using = "div[role='alert']")
@@ -973,6 +973,8 @@ public class MyloJourneyPage_TransfereeSection extends Base {
 		MyloNewFileUtil.set_transfereePhoneNo(
 				BusinessFunctions.setMyloInputFields(driver, MYLOConstants.TRANSFEREE_PHONE_NUMBER, "10",
 						_transfereePhoneNumber.get(0), MYLOConstants.RANDOM_INTEGER));
+		CoreFunctions.scrollToElementUsingJavaScript(driver, _transfereeAge,
+				MYLOConstants.TRANSFEREE_AGE);
 		CoreFunctions.click(driver, _transfereePhoneOrgDestDropdownValue.get(0), MYLOConstants.TRANSFEREE_ORGDEST);
 		BusinessFunctions.setMyloDropdownFields(driver, _dropdownOptions, MYLOConstants.RANDOM,
 				MYLOConstants.TRANSFEREE_ORGDEST);
@@ -983,6 +985,8 @@ public class MyloJourneyPage_TransfereeSection extends Base {
 		MyloNewFileUtil.set_transfereeEmail(
 				BusinessFunctions.setMyloInputFields(driver, MYLOConstants.TRANSFEREE_EMAIL_ADDRESS,
 						"airesautomation@aires.com", _transfereeEmailAddress.get(0), MYLOConstants.VALUE));
+		CoreFunctions.scrollToElementUsingJavaScript(driver, _transfereeAge,
+				MYLOConstants.TRANSFEREE_AGE);
 		CoreFunctions.click(driver, _transfereeEmailTypeDropdownValue.get(0), MYLOConstants.TRANSFEREE_EMAIL_TYPE);
 		BusinessFunctions.setMyloDropdownFields(driver, _dropdownOptions, MYLOConstants.RANDOM,
 				MYLOConstants.TRANSFEREE_EMAIL_TYPE);

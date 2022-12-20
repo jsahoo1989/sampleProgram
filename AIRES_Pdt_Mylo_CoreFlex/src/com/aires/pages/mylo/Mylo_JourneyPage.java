@@ -36,6 +36,9 @@ public class Mylo_JourneyPage extends Base {
 	@FindBy(how = How.CSS, using = "app-aires-file-information h2")
 	private WebElement _fileInformationSection;
 
+	@FindBy(how = How.CSS, using = "app-aires-file-teams")
+	private WebElement _fileTeam;
+
 	@FindBy(how = How.CSS, using = "ng-select[name='office']")
 	private WebElement _fileInformationOffice;
 
@@ -123,7 +126,7 @@ public class Mylo_JourneyPage extends Base {
 	@FindBy(how = How.CSS, using = "div[class='sk-three-strings']")
 	private WebElement _spinner;
 
-	String environment= System.getProperty("envt");
+	private String environment= System.getProperty("envt");
 
 	//private String environment = CoreFunctions.getPropertyFromConfig("envt");
 	private LinkedHashMap<String, WebElement> journeyWebElementsMap = new LinkedHashMap<String, WebElement>();
@@ -146,6 +149,7 @@ public class Mylo_JourneyPage extends Base {
 		journeyWebElementsMap.put(MYLOConstants.QUERY_POPUP, _queryPopUpHeader);
 		journeyWebElementsMap.put(MYLOConstants.ACCOUNTING, _queryPopUpHeader);
 		journeyWebElementsMap.put(MYLOConstants.ADVANCED, _queryPopUpHeader);
+		journeyWebElementsMap.put(MYLOConstants.AIRES_FILE_TEAM, _fileTeam);
 	}
 
 	/**

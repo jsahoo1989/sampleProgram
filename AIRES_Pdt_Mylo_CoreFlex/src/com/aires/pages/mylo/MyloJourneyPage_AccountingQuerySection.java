@@ -137,6 +137,9 @@ public class MyloJourneyPage_AccountingQuerySection extends Base {
 
 	@FindBy(how = How.CSS, using = ".errortext")
 	private WebElement _errorPopUpText;
+	
+	@FindBy(how = How.CSS, using = "div[role='dialog']")
+	private WebElement _popUp;
 
 	// Query Result Section
 
@@ -470,6 +473,7 @@ public class MyloJourneyPage_AccountingQuerySection extends Base {
 					CoreConstants.PASS, accountingFieldsUpdatedValueMap.get(MYLOConstants.SERVICE),
 					accountingFieldsUpdatedValueMap.get(MYLOConstants.SERVICE_STATUS)));
 			CoreFunctions.clickUsingJS(driver, _OKButtonPopUp, MYLOConstants.OK_BUTTON);
+			CoreFunctions.explicitWaitTillElementInVisibility(driver, _popUp);
 			BusinessFunctions.fluentWaitForMyloSpinnerToDisappear(driver, _spinner);
 		}
 	}

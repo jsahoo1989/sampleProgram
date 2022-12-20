@@ -670,6 +670,7 @@ public class MYLOConstants {
 	public static final String ACCOUNTING = "Accounting";
 	public static final String COMMENT_FIELD_LENGTH="10";
 	public static final String SPOUSE = "Spouse";
+	public static final String TRANSFEREE_AGE = "Transferee Age";
 	
 	//Constants related to Accounting Query Section
 	public static final String ASSIGNMENT_ID = "Assignment ID";

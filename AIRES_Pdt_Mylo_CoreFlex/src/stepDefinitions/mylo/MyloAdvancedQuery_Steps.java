@@ -94,6 +94,7 @@ public class MyloAdvancedQuery_Steps {
 		myloJourneyPageAuthTrack.addAuthTrackDataIfNotPresent();
 		myloJourneyTransfereeSection.addTransfereePhoneEmailDetails();
 		myloJourneyPartnerSection.addPartnerDetailsIfNotPresent();
+		myloJourneyPage.scrollToJourneySection(MYLOConstants.AIRES_FILE_TEAM, MYLOConstants.JOURNEY);
 		myloJourneyFileTeamSection.addFileTeamDetailsIfNotPresent();
 		myloNewFileSection.setLeadCompanyID(MYLOConstants.AUTOMATION_CLIENT_ID);
 	}

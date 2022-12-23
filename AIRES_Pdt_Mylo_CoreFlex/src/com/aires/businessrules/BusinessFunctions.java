@@ -29,6 +29,10 @@
  ***********************************Header End*********************************************************************************/
 package com.aires.businessrules;
 
+import java.math.RoundingMode;
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.Statement;
 import java.text.DecimalFormat;
 import java.text.MessageFormat;
 import java.time.Duration;
@@ -54,6 +58,7 @@ import com.aires.businessrules.constants.MYLOConstants;
 import com.aires.businessrules.constants.MobilityXConstants;
 import com.aires.businessrules.constants.PDTConstants;
 import com.aires.pages.pdt.PDT_AddNewPolicyPage;
+import com.aires.pages.pdt.PDT_GeneralInformationPage;
 import com.aires.testdatatypes.pdt.PDT_LoginDetails;
 import com.aires.utilities.EmailUtil;
 import com.aires.utilities.Log;
@@ -62,6 +67,8 @@ import com.hp.lft.sdk.GeneralLeanFtException;
 import com.hp.lft.sdk.java.Dialog;
 import com.hp.lft.sdk.java.Editor;
 import com.vimalselvam.cucumber.listener.Reporter;
+
+import stepDefinitions.pdt.PDT_SharedSubBenefit_Steps;
 
 public class BusinessFunctions {
 	public static int count = 0;
@@ -229,20 +236,6 @@ public class BusinessFunctions {
 		return sectionID;
 	}
 
-	public static void getUserNameAndPasswordFromEmail() throws Exception {
-
-		String userID = EmailUtil.searchEmailAndReturnResult(PDTConstants.HOST_EMAIL_DOMAIN,
-				PDTConstants.EMAIL_USERNAME, PDTConstants.AUTO_EMAIL_PWD, PDTConstants.EXCEPTION_EMAIL_SENDER,
-				PDTConstants.EMAIL_USERNAME_SUBJECT, PDTConstants.TRANSFEREE_USER_NAME);
-		passwordValue = EmailUtil.searchEmailAndReturnResult(PDTConstants.HOST_EMAIL_DOMAIN,
-				PDTConstants.EMAIL_USERNAME, PDTConstants.AUTO_EMAIL_PWD, PDTConstants.EXCEPTION_EMAIL_SENDER,
-				PDTConstants.EMAIL_PASSWORD_SUBJECT, PDTConstants.TRANSFEREE_PASSWORD);
-		String s1 = userID.replace("in main script result==", "");
-		String s2 = s1.replace(":", "").trim();
-		userNameValue = s2.replace("</span>", "").trim();
-		CoreFunctions.writeToPropertiesFile("Transferee_UserNameInEMail", userNameValue);
-	}
-
 	public static int returnindexItemFromListUsingText(WebDriver driver, List<WebElement> WebElementList,
 			String itemName) {
 		try {
@@ -324,8 +317,8 @@ public class BusinessFunctions {
 
 	public static String[] getCSMCredentials(PDT_LoginDetails _loginDetailsApplication) {
 		String csmCredentials[] = new String[7];
-		// switch (CoreFunctions.getPropertyFromConfig("envt").toLowerCase()) {
-		switch (System.getProperty("envt").toLowerCase()) {
+		//switch (CoreFunctions.getPropertyFromConfig("envt").toLowerCase()) {
+		 switch (System.getProperty("envt").toLowerCase()) {
 		case CoreConstants.ENVT_DEV:
 			csmCredentials[0] = _loginDetailsApplication.dev.csmUserName;
 			csmCredentials[1] = _loginDetailsApplication.dev.csmPassword;
@@ -936,6 +929,15 @@ public class BusinessFunctions {
 		return subBenefitMap.get(key);
 	}
 
+	public static boolean checkIfBenefitHaveEditLabelFunctionality(String pageName) {
+		ArrayList<String> benefitsHavingEditLabelFunct = new ArrayList<String>();
+		benefitsHavingEditLabelFunct.add(PDTConstants.PRE_ACCEPTANCE_SERVICES);
+		if (benefitsHavingEditLabelFunct.contains(pageName))
+			return true;
+		else
+			return false;
+	}
+
 	public static void expandSubBenefitIfCollapsed(WebElement subBenefitFormHeader, String subBenefitName,
 			WebDriver driver) {
 		try {
@@ -955,6 +957,31 @@ public class BusinessFunctions {
 			return true;
 		}
 		return false;
+	}
+
+	public static boolean verifySelectedPolicyBenefitCategoryName(WebDriver driver, WebElement element,
+			String pageName) {
+		try {
+			CoreFunctions.explicitWaitForElementTextPresent(driver, element, pageName, 3);
+			return CoreFunctions.verifyElementOnPage(driver, element, PDTConstants.POLICY_BENEFIT_CATEGORY, pageName,
+					pageName, true);
+		} catch (Exception e) {
+			Assert.fail(MessageFormat.format(PDTConstants.FAIL_TO_VERIFY_ELEMENT_VAL_ON_PAGE, CoreConstants.FAIL,
+					PDTConstants.POLICY_BENEFIT_CATEGORY, pageName, pageName, element.getText()));
+			return false;
+		}
+	}
+
+	public static boolean verifySubBenefitCategoriesAreDisplayed(WebDriver driver,
+			List<String> subBenefitsFromDataTable, String pageName, List<WebElement> _subBenefitCategories) {
+		CoreFunctions.explicitWaitTillElementListClickable(driver, _subBenefitCategories);
+		if (subBenefitsFromDataTable
+				.equals(CoreFunctions.getElementTextAndStoreInList(driver, _subBenefitCategories))) {
+			Reporter.addStepLog(MessageFormat.format(PDTConstants.VERIFIED_SUB_BENEFITS_DISPLAYED, CoreConstants.PASS,
+					subBenefitsFromDataTable.toString(), pageName));
+			return true;
+		} else
+			return false;
 	}
 
 	public static boolean verifyPopUpContent(WebDriver driver, WebElement element, String elementName,
@@ -1023,6 +1050,17 @@ public class BusinessFunctions {
 		return false;
 	}
 
+	/**
+	 * Select random Multiple drop down options
+	 * 
+	 * @param driver
+	 * @param dropDownName
+	 * @param _drpDown
+	 * @param _drpDownOptions
+	 * @param _drpDownSelectedOptions
+	 * @param randOptions
+	 * @param subBenefitFormName
+	 */
 	public static void selectRandomDropDownOption(WebDriver driver, String dropDownName, WebElement _drpDown,
 			List<WebElement> _drpDownOptions, List<WebElement> _drpDownSelectedOptions, List<String> randOptions,
 			String subBenefitFormName) {
@@ -1057,5 +1095,81 @@ public class BusinessFunctions {
 			BusinessFunctions.selectItemFromListUsingText(driver, optionList, fieldValue);
 		}
 		return updatedValue;
+	}
+
+
+	/**
+	 * Select and Return single random drop down option
+	 * 
+	 * @param driver
+	 * @param _drpDown
+	 * @param _drpDownOptions
+	 * @param _lblDrpDown
+	 * @return
+	 */
+	public static String selectAndReturnRandomOptionFromDropDown(WebDriver driver, WebElement _drpDown,
+			List<WebElement> _drpDownOptions, WebElement _lblDrpDown) {
+		String randOptionDrpDown = null;
+		try {
+			CoreFunctions.clickElement(driver, _drpDown);
+			CoreFunctions.explicitWaitTillElementListVisibility(driver, _drpDownOptions);
+			randOptionDrpDown = _drpDownOptions.get(CoreFunctions.getRandomNumber(0, _drpDownOptions.size() - 1))
+					.getText();
+			CoreFunctions.selectItemInListByText(driver, _drpDownOptions, randOptionDrpDown, _lblDrpDown.getText(),
+					PDTConstants.DROP_DOWN, true);
+
+		} catch (Exception e) {
+			Assert.fail("Failed to select random option from drop down:-" + _lblDrpDown.getText());
+		}
+		return randOptionDrpDown;
+	}
+
+	/**
+	 * Select and return random value from radio button.
+	 * 
+	 * @param driver
+	 * @param radioButtonList
+	 * @param lblRadioButton
+	 * @return
+	 */
+	public static String selectAndReturnRandomValFromRadioButton(WebDriver driver, List<WebElement> radioButtonList,
+			WebElement lblRadioButton) {
+		String randRadioButton = null;
+		try {
+			randRadioButton = radioButtonList.get(CoreFunctions.getRandomNumber(0, radioButtonList.size() - 1))
+					.getText().trim();
+			CoreFunctions.selectItemInListByText(driver, radioButtonList, randRadioButton, lblRadioButton.getText(),
+					PDTConstants.RADIO_BUTTON_LIST, true);
+		} catch (Exception e) {
+			Assert.fail("Failed to select random value from radio button:-" + lblRadioButton.getText());
+		}
+		return randRadioButton;
+	}
+
+	public static boolean verifyRadioButtonIsSelected(WebDriver driver, List<WebElement> _radioLabelList,
+			List<WebElement> _radioButtonList, String expectedSelection, String fieldName, String lblSelectedText) {
+		int index = BusinessFunctions.returnindexItemFromListUsingText(driver, _radioLabelList, expectedSelection);
+		if (_radioButtonList.get(index).getAttribute("checked").equalsIgnoreCase("true")) {
+			CoreFunctions.highlightObject(driver, _radioButtonList.get(index));
+			Reporter.addStepLog(MessageFormat.format(PDTConstants.VERIFIED_SELECTED_VAL_FOR_RADIO_BTN,
+					CoreConstants.PASS, lblSelectedText, fieldName, expectedSelection));
+			return true;
+		} else {
+			Reporter.addStepLog(MessageFormat.format(PDTConstants.FAILED_TO_VERIFY_SELECTED_VAL_FOR_RADIO_BTN,
+					CoreConstants.PASS, lblSelectedText, fieldName, expectedSelection));
+			return false;
+		}
+	}
+
+	public static void verifyDefaultSelectedRadioButtonForField(WebDriver driver, List<WebElement> _radioLabelList,
+			List<WebElement> _radioButtonList, String fieldName, String expectedSelection,
+			PDT_GeneralInformationPage generalInfoPage, PDT_SharedSubBenefit_Steps sharedSubBenefitStep) {
+		if (generalInfoPage.getExpenseMgmt().equalsIgnoreCase(PDTConstants.YES)) {
+			sharedSubBenefitStep.getCustomSoftAssertObj().assertTrue(
+					verifyRadioButtonIsSelected(driver, _radioLabelList, _radioButtonList, expectedSelection, fieldName,
+							PDTConstants.DEFAULT_SELECTED),
+					MessageFormat.format(PDTConstants.FAILED_TO_VERIFY_RADIO_BTN, CoreConstants.FAIL, PDTConstants.DEFAULT_SELECTED, fieldName,
+							expectedSelection));
+		}
 	}
 }

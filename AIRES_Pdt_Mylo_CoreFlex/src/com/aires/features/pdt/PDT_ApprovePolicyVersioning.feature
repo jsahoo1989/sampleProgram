@@ -23,20 +23,19 @@ Feature: Approve Policy to create new version
     Then below information should be displayed on 'Approve Policy' Pop-up
       | Heading   | Do you want to proceed with the approval of this policy?                                                                                                                                          |
       | Message1  | You are approving version 1 of this policy. If approved, the policy state will change from Submitted to Active and indicates that you have reviewed the policy benefits and approve them for use. |
-      | Message2  | There are currently 0 Assignments or Files associated with this policy in IRIS. The following options are only effective for the client of this policy if Blueprint has been enabled in IRIS Corp:    |
-      | Checkbox1 | Associate this policy with an EXISTING authorization in IRIS?_Disabled                                                                                                                                 |
-      | Checkbox2 | Associate this policy with a NEW authorization in IRIS?_Enabled                                                                                                                                        |
-      #| TextArea  | Description                                                                                                                                                                                       |
+      | Message2  | There are currently 0 Assignments or Files linked with this policy in IRIS. The following options are only effective for the client of this policy if Blueprint has been enabled in IRIS Corp:    |
+      | Checkbox1 | Link this policy with an EXISTING authorization in IRIS?_Disabled                                                                                                                                 |
+      | Checkbox2 | Link this policy with a NEW authorization in IRIS?_Enabled                                                                                                                                        |
+      | TextArea  | Description                                                                                                                                                                                       |
       | button    | Approve_disabled, Cancel_Enabled                                                                                                                                                                  |
 
   @Sprint-29 @PDT-Regression @PDT-1115 @Pdt:217685
-  Scenario: PDT - Validate 'Approve' button on 'Approve Policy' pop-up becomes enabled after selecting checkbox 'Associate this policy with a NEW authorization' on Policy benefit page
+  Scenario: PDT - Validate 'Approve' button on 'Approve Policy' pop-up becomes enabled after selecting checkbox 'Link this policy with a NEW authorization' on Policy benefit page
     Given he is on the "Policy Benefit" page after selecting "House Hunting Trip" as Benefit Category;
     And he clicks on "SAVE & SUBMIT" button after entering mandatory information for all the below selected sub benefits on "House Hunting Trip" page
       | House Hunting Trip Transportation | House Hunting Trip Lodging | House Hunting Trip Meals |
-    And he clicks on 'Approve Policy' button after verifying status "Submitted" on header section of "Policy Benefit" page
-    When he selects the checkbox having label 'Associate this policy with a NEW authorization in IRIS?' on 'Approve Policy' pop-up
-    #When he selects the checkbox having label 'Associate this policy with a NEW authorization in IRIS?' followed by entering description on 'Approve Policy' pop-up
+    And he clicks on 'Approve Policy' button after verifying status "Submitted" on header section of "Policy Benefit" page    
+    When he selects the checkbox having label 'Link this policy with a NEW authorization in IRIS?' followed by entering description on 'Approve Policy' pop-up
     Then "Approve" button should become "enabled" on 'Approve Policy' pop-up
 
   @Sprint-29 @PDT-Regression @PDT-1115 @Pdt:217686
@@ -45,8 +44,7 @@ Feature: Approve Policy to create new version
     And he clicks on "SAVE & SUBMIT" button after entering mandatory information for all the below selected sub benefits on "House Hunting Trip" page
       | House Hunting Trip Transportation | House Hunting Trip Lodging | House Hunting Trip Meals |
     And he clicks on 'Approve Policy' button after verifying status "Submitted" on header section of "Policy Benefit" page
-    And he selects the checkbox having label 'Associate this policy with a NEW authorization in IRIS?' on 'Approve Policy' pop-up
-    #And he selects the checkbox having label 'Associate this policy with a NEW authorization in IRIS?' followed by entering description on 'Approve Policy' pop-up
+    And he selects the checkbox having label 'Link this policy with a NEW authorization in IRIS?' followed by entering description on 'Approve Policy' pop-up
     When he clicks on "Approve" button on 'Approve Policy' pop-up on "Policy Benefit" page
     Then Version "V1" of Policy should be displayed on "View/Edit Policy Forms" page with "Active" status
 
@@ -56,8 +54,7 @@ Feature: Approve Policy to create new version
     And he clicks on "SAVE & SUBMIT" button after entering mandatory information for all the below selected sub benefits on "House Hunting Trip" page
       | House Hunting Trip Transportation | House Hunting Trip Lodging | House Hunting Trip Meals |
     And he clicks on 'Approve Policy' button after verifying status "Submitted" on header section of "Policy Benefit" page
-    And he selects the checkbox having label 'Associate this policy with a NEW authorization in IRIS?' on 'Approve Policy' pop-up
-    #And he selects the checkbox having label 'Associate this policy with a NEW authorization in IRIS?' followed by entering description on 'Approve Policy' pop-up
+    And he selects the checkbox having label 'Link this policy with a NEW authorization in IRIS?' followed by entering description on 'Approve Policy' pop-up
     When he clicks on "Cancel" button on 'Approve Policy' pop-up on "Policy Benefit" page
     Then Status of Policy should remain "Submitted" with Version "V1" on "Policy Benefit" Page
 
@@ -90,7 +87,7 @@ Feature: Approve Policy to create new version
     And he has submitted a new authorization form in MobilityX application using template "Global Relocation Authorization"
     And he has navigated to 'General Information page' of PDT application followed by selection of "Cultural Training" as Benefit Category on "Policy Benefit" page after clicking on "Edit" icon on "View/Edit Policy Forms" page
     And he has submitted the mandatory information for "Cultural Training" sub-benefit forms
-    When he approves the policy after selecting the checkbox having label 'Associate this policy with a NEW authorization in IRIS?' on 'Approve Policy' pop-up with Default Date on "Cultural Training" page
+    When he approves the policy after selecting the checkbox having label 'Link this policy with a NEW authorization in IRIS?' on 'Approve Policy' pop-up with Default Date on "Cultural Training" page
     Then both versions "V1, V2" of Policy should be displayed on "View/Edit" Policy Forms with below information
       | Version | Status | EnabledIcon                     | DisabledIcon                 | Assignments_Linked |
       | V2      | Active | Edit, Clone, Assignment History | Delete, Approve Policy       |                  0 |
@@ -103,7 +100,7 @@ Feature: Approve Policy to create new version
     And he has submitted a new authorization form in MobilityX application using template "Global Relocation Authorization"
     And he has navigated to 'General Information page' of PDT application followed by selection of "Cultural Training" as Benefit Category on "Policy Benefit" page after clicking on "Edit" icon on "View/Edit Policy Forms" page
     And he has submitted the mandatory information for "Cultural Training" sub-benefit forms
-    When he approves the policy after selecting selecting the checkbox having label 'Associate this policy with an existing authorization in IRIS?' on 'Approve Policy' pop-up with Default Date
+    When he approves the policy after selecting selecting the checkbox having label 'Link this policy with an existing authorization in IRIS?' on 'Approve Policy' pop-up with Default Date
     Then both versions "V1, V2" of Policy should be displayed on "View/Edit" Policy Forms with below information
       | Version | Status   | EnabledIcon                     | DisabledIcon                 | Assignments_Linked |
       | V2      | Active   | Edit, Clone, Assignment History | Delete, Approve Policy       |                  1 |
@@ -115,7 +112,7 @@ Feature: Approve Policy to create new version
       | Language Training Employee | Language Training Family |
     And he has updated information on 'General Information page' of PDT application after clicking on "Edit" icon on "View/Edit Policy Forms" page
     And he has submitted the mandatory information for 'Cultural Training' sub-benefit forms after selecting "Cultural Training" as Benefit Category on "Policy Benefit" page
-    When he approves the updated policy after selecting the checkbox having label 'Associate this policy with a NEW authorization in IRIS?' on 'Approve Policy' pop-up with Default Date on "Cultural Training" page
+    When he approves the updated policy after selecting the checkbox having label 'Link this policy with a NEW authorization in IRIS?' on 'Approve Policy' pop-up with Default Date on "Cultural Training" page
     Then version of policy should remain "V1" on "View/Edit Policy Forms" page with below information
       | Version | Status | EnabledIcon                     | DisabledIcon           | Assignments_Linked |
       | V1      | Active | Edit, Clone, Assignment History | Delete, Approve Policy |                  0 |

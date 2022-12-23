@@ -113,7 +113,10 @@ public class PDT_GeneralInformationPage extends Base {
 	@FindBy(how = How.CSS, using = "ng-select[formcontrolname='cappedPolicyCode'] span.ng-option-label")
 	private List<WebElement> _drpDwnCappedPolicyOptions;
 
-	@FindBy(how = How.CSS, using = "label[class='form-check-label']")
+/*	@FindBy(how = How.CSS, using = "label[class='form-check-label']")
+	private List<WebElement> _radioBtnExpenseManagementClient;*/
+	
+	@FindBy(how = How.XPATH, using = "//input[@formcontrolname='expnMgmtInd']/parent::label")
 	private List<WebElement> _radioBtnExpenseManagementClient;
 
 	@FindBy(how = How.CSS, using = "button.btn-next")
@@ -231,6 +234,36 @@ public class PDT_GeneralInformationPage extends Base {
 	
 	@FindBy(how = How.XPATH, using = "//span/i/ancestor::label")
 	private WebElement _policyStat;
+	
+	@FindBy(how = How.XPATH, using = "//input[@formcontrolname='expnRcptReqInd']/ancestor::div/preceding-sibling::label")
+	private WebElement _lblExpenseReciptReqReimbursement;
+	
+	@FindBy(how = How.XPATH, using = "//input[@formcontrolname='expnRcptReqInd']/parent::label")
+	private List<WebElement> _expenseReceiptReqReimbursement;
+	
+	@FindBy(how = How.XPATH, using = "//input[@formcontrolname='grossUpInd']/ancestor::div/preceding-sibling::label")
+	private WebElement _lblGrossUp;	
+	
+	@FindBy(how = How.XPATH, using = "//input[@formcontrolname='grossUpInd']/parent::label")
+	private List<WebElement> _grossUpInd;
+	
+	@FindBy(how = How.XPATH, using = "//input[@formcontrolname='paidByCode']/ancestor::div/preceding-sibling::label")
+	private WebElement _lblReimbursedBy;	
+	
+	@FindBy(how = How.XPATH, using = "//input[@formcontrolname='paidByCode']/parent::label")
+	private List<WebElement> _reimbursedBy;
+	
+	@FindBy(how = How.XPATH, using = "//input[@formcontrolname='bankFeeInd']/ancestor::div/preceding-sibling::label")
+	private WebElement _lblBankFeeReimbursable;
+	
+	@FindBy(how = How.XPATH, using = "//input[@formcontrolname='bankFeeInd']/parent::label")
+	private List<WebElement> _bankFeeReimbursable;
+	
+	@FindBy(how = How.XPATH, using = "//input[@formcontrolname='exchgLossInd']/ancestor::div/preceding-sibling::label")
+	private WebElement _lblCurrencyExchangeLoss;
+	
+	@FindBy(how = How.XPATH, using = "//input[@formcontrolname='exchgLossInd']/parent::label")
+	private List<WebElement> _currencyExchangeLoss;
 
 	LinkedHashMap<String, String> webElementsTextMap = new LinkedHashMap<String, String>();
 	/*********************************************************************/
@@ -241,7 +274,7 @@ public class PDT_GeneralInformationPage extends Base {
 	/*********************************************************************/
 
 	private String policyType, employeeType, homeOwnerType, benefitPackageType, cappedPolicy, expenseMgmt,
-			tracingPrompt;
+			tracingPrompt, _recieptReqReimbursement, _grossUp, _reimburseBy, _bankFeeReimburse, _currExchangeLoss ;
 	long timeBeforeAction, timeAfterAction;
 
 	public boolean validateGeneralInfo(String pageName, DataTable dataTable, String selectedPolicyName) {
@@ -566,20 +599,50 @@ public class PDT_GeneralInformationPage extends Base {
 	public void setTracingPrompt() {
 		tracingPrompt = _drpDownTracingSetSelectedVal.getText();
 	}
+	
+	public String getReceiptReqReimbursement() {
+		return _recieptReqReimbursement;
+	}
 
-	public void waitForProgressBarToDisappear() {
-		try {
-			if(CoreFunctions.isElementExist(driver, _progressBar, 5)) {		
-				BusinessFunctions.fluentWaitForSpinnerToDisappear(driver, _progressBar);			
-			}			
-		} catch(Exception e) {
-			Assert.fail(MessageFormat.format(PDTConstants.FAIL_TO_WAIT_PROGRESS_BAR, CoreConstants.FAIL));
-		}
+	public void setReceiptReqReimbursement(String receiptReq) {
+		_recieptReqReimbursement = receiptReq;
 	}
 	
+	public String getGrossUp() {
+		return _grossUp;
+	}
+
+	public void setGrossUp(String grossUpVal) {
+		_grossUp = grossUpVal;
+	}
+	
+	public String getReimbursedBy() {
+		return _reimburseBy;
+	}
+
+	public void setReimbursedBy(String reimburseByVal) {
+		_reimburseBy = reimburseByVal;
+	}
+	
+	public String getBankFeeReimbursedBy() {
+		return _bankFeeReimburse;
+	}
+
+	public void setBankFeeReimbursedBy(String bankFeeReimbursedByVal) {
+		_bankFeeReimburse = bankFeeReimbursedByVal;
+	}
+	
+	public String getCurrenyExchangeLoss() {
+		return _currExchangeLoss;
+	}
+
+	public void setCurrencyExchangeLoss(String currencyExchangeVal) {
+		_currExchangeLoss = currencyExchangeVal;
+	}
+
 	public void enterGeneralInformationFields() {
 		try {
-			waitForProgressBarToDisappear();
+			BusinessFunctions.fluentWaitForSpinnerToDisappear(driver, _progressBar);
 			setTracingPrompt();			
 			CoreFunctions.clickElement(driver, _drpDwnPolicyType);
 			CoreFunctions.explicitWaitTillElementListVisibility(driver, _drpDwnPolicyTypeOptions);
@@ -620,12 +683,14 @@ public class PDT_GeneralInformationPage extends Base {
 			CoreFunctions.explicitWaitTillElementListClickable(driver, _radioBtnExpenseManagementClient);
 			CoreFunctions.selectItemInListByText(driver, _radioBtnExpenseManagementClient, "No",
 					_lblExpenseMgmtClient.getText(), PDTConstants.RADIO_BUTTON_LIST, true);
+			setExpenseMgmt("No");
 			timeBeforeAction = new Date().getTime();
 			CoreFunctions.click(driver, _btnNext, _btnNext.getText());
-			waitForProgressBarToDisappear();
+			BusinessFunctions.fluentWaitForSpinnerToDisappear(driver, _progressBar);
 			timeAfterAction = new Date().getTime();	
 			BusinessFunctions.printTimeTakenByPageToLoad(timeBeforeAction, timeAfterAction, PDTConstants.POLICY_BENEFIT_CATEGORIES);
-		} catch (Exception e) {			
+		} catch (Exception e) {	
+			e.printStackTrace();
 			Assert.fail(PDTConstants.FAILED_TO_FILL_GENERAL_INFO_FORM);
 		}
 
@@ -634,8 +699,7 @@ public class PDT_GeneralInformationPage extends Base {
 	public void enterGeneralInformationFields(DataTable generalInfoTable) {
 		List<Map<String, String>> generalInfo = generalInfoTable.asMaps(String.class, String.class);
 		try {
-			if(CoreFunctions.isElementExist(driver,  _progressBar, 4))
-				BusinessFunctions.fluentWaitForSpinnerToDisappear(driver, _progressBar);
+			BusinessFunctions.fluentWaitForSpinnerToDisappear(driver, _progressBar);
 			CoreFunctions.clickElement(driver, _drpDwnPolicyType);
 			CoreFunctions.selectItemInListByText(driver, _drpDwnPolicyTypeOptions, generalInfo.get(0).get("PolicyType"),
 					_lblPolicyType.getText(), PDTConstants.DROP_DOWN, true);
@@ -1157,4 +1221,57 @@ public class PDT_GeneralInformationPage extends Base {
 	public String getPolicyStatus() {
 		return _policyStat.getText();
 	}
+	
+	public void enterGeneralInformationFieldsWithExpenseCode() {
+		String randOption = null;
+		try {
+			BusinessFunctions.fluentWaitForSpinnerToDisappear(driver, _progressBar);
+			setTracingPrompt();	
+			randOption = BusinessFunctions.selectAndReturnRandomOptionFromDropDown(driver, _drpDwnPolicyType, _drpDwnPolicyTypeOptions, _lblPolicyType);
+			setPolicyType(randOption);
+			
+			randOption = BusinessFunctions.selectAndReturnRandomOptionFromDropDown(driver, _drpDwnEmployeeType, _drpDwnEmployeeTypeOptions, _lblEmployeeType);
+			setEmployeeType(randOption);
+
+			randOption = BusinessFunctions.selectAndReturnRandomOptionFromDropDown(driver, _drpDwnHomeOwnerType, _drpDwnHomeOwnerTypeOptions, _lblHomeOwnerType);
+			setHomeOwnerType(randOption);
+
+			randOption = BusinessFunctions.selectAndReturnRandomOptionFromDropDown(driver, _selectBenefitPackageType, _selectBenefitPackageTypeOptions, _lblBenefitPackageType);
+			setBenefitPackageType(randOption);
+			
+			randOption = BusinessFunctions.selectAndReturnRandomOptionFromDropDown(driver, _drpDwnCappedPolicy, _drpDwnCappedPolicyOptions, _lblCappedPolicy);
+			setCappedPolicy(randOption);
+
+			CoreFunctions.explicitWaitTillElementListClickable(driver, _radioBtnExpenseManagementClient);
+			CoreFunctions.selectItemInListByText(driver, _radioBtnExpenseManagementClient, "Yes",
+					_lblExpenseMgmtClient.getText(), PDTConstants.RADIO_BUTTON_LIST, true);
+			setExpenseMgmt("Yes");
+			
+			randOption = BusinessFunctions.selectAndReturnRandomValFromRadioButton(driver, _expenseReceiptReqReimbursement, _lblExpenseReciptReqReimbursement);
+			setReceiptReqReimbursement(randOption);
+			
+			randOption = BusinessFunctions.selectAndReturnRandomValFromRadioButton(driver, _grossUpInd, _lblGrossUp);
+			setGrossUp(randOption);	
+			
+			randOption = BusinessFunctions.selectAndReturnRandomValFromRadioButton(driver, _reimbursedBy, _lblReimbursedBy);
+			setReimbursedBy(randOption);
+			
+			randOption = BusinessFunctions.selectAndReturnRandomValFromRadioButton(driver, _bankFeeReimbursable, _lblBankFeeReimbursable);
+			setBankFeeReimbursedBy(randOption);
+			
+			randOption = BusinessFunctions.selectAndReturnRandomValFromRadioButton(driver, _currencyExchangeLoss, _lblCurrencyExchangeLoss);
+			setCurrencyExchangeLoss(randOption);
+			
+			timeBeforeAction = new Date().getTime();			
+			CoreFunctions.click(driver, _btnNext, _btnNext.getText());
+			BusinessFunctions.fluentWaitForSpinnerToDisappear(driver, _progressBar);
+			timeAfterAction = new Date().getTime();	
+			BusinessFunctions.printTimeTakenByPageToLoad(timeBeforeAction, timeAfterAction, PDTConstants.POLICY_BENEFIT_CATEGORIES);
+		} catch (Exception e) {			
+			Assert.fail(PDTConstants.FAILED_TO_FILL_GENERAL_INFO_FORM);
+		}
+
+	}
+
+
 }

@@ -1,0 +1,16 @@
+[
+	{
+		"fileType": "Create New File",
+		"newFile": {
+			"firstName" : "AutoAires",
+			"lastName" : "TestAires",
+			"clientName": "Aires QA Automation Client",
+			"office": "CRO",
+			"policyType": "Domestic Policy",
+			"journeyType": "Long-Term",
+			"taxTreatment":"Foreign national leaving the US",
+			"fileGrossprofit":"$0",
+			"affinityEnabledClient":"92265"
+		}			
+	}
+]

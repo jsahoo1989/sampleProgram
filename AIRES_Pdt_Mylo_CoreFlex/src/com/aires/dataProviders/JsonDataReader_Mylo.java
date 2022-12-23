@@ -25,24 +25,22 @@ import java.util.Arrays;
 import java.util.List;
 import com.aires.businessrules.constants.CoreConstants;
 import com.aires.managers.FileReaderManager;
-import com.aires.testdatatypes.mylo.MyloAssignmentDetails;
 import com.aires.testdatatypes.mylo.MyloCAStates;
+import com.aires.testdatatypes.mylo.MyloFileInformationDetails;
 import com.aires.testdatatypes.mylo.MyloIndiaStates;
+import com.aires.testdatatypes.mylo.MyloMemoryCapacityFileIds;
 import com.aires.testdatatypes.mylo.MyloUSStates;
-import com.aires.testdatatypes.mylo.Mylo_AssignmentShipmentDetails;
+import com.aires.testdatatypes.mylo.Mylo_Assignment_HistoryDetails_DEV5;
 import com.aires.testdatatypes.mylo.Mylo_Assignment_HistoryDetails_PREPROD;
 import com.aires.testdatatypes.mylo.Mylo_Assignment_HistoryDetails_UAT;
+import com.aires.testdatatypes.mylo.Mylo_DropDownFieldData;
+import com.aires.testdatatypes.mylo.Mylo_FileData;
 import com.aires.testdatatypes.mylo.Mylo_LoginData;
 import com.google.gson.Gson;
 
 public class JsonDataReader_Mylo {
 	private final String _loginDataFilePath = FileReaderManager.getInstance().getConfigReader()
 			.getTestDataResourcePath() + "mylo/Mylo_LoginData.json";	
-	
-	private final String _AssignmentDetailsFilePath = FileReaderManager.getInstance().getConfigReader()
-			.getTestDataResourcePath() + "mylo/Mylo_AssignmentDetais.json";
-	private final String _AssignmentDetailsShipmentFilePath = FileReaderManager.getInstance().getConfigReader()
-			.getTestDataResourcePath() + "mylo/Mylo_AssignmentShipmentDetails.json";
 	private final String _MyloUSStatesFilePath = FileReaderManager.getInstance().getConfigReader()
 			.getTestDataResourcePath() + "mylo/Mylo_USStates.json";
 	private final String _MyloCAStatesFilePath = FileReaderManager.getInstance().getConfigReader()
@@ -53,24 +51,41 @@ public class JsonDataReader_Mylo {
 			.getTestDataResourcePath() + "mylo/Mylo_Assignment_HistoryDetails_UAT.json";
 	private final String _MyloHistoryDetailsPREPRODFilePath = FileReaderManager.getInstance().getConfigReader()
 			.getTestDataResourcePath() + "mylo/Mylo_Assignment_HistoryDetails_PREPROD.json";
+	private final String _MyloHistoryDetailsDEV5FilePath = FileReaderManager.getInstance().getConfigReader()
+			.getTestDataResourcePath() + "mylo/Mylo_Assignment_HistoryDetails_DEV5.json";
+	private final String _MylofileDataFilePath = FileReaderManager.getInstance().getConfigReader()
+			.getTestDataResourcePath() + "mylo/Mylo_FileData.json";
+	private final String _MyloMemoryCapacityFileIdPath = FileReaderManager.getInstance().getConfigReader()
+			.getTestDataResourcePath() + "mylo/MyloMemoryCapacityFileIds.json";
+	private final String _MyloDropDownFieldsDataPath = FileReaderManager.getInstance().getConfigReader()
+			.getTestDataResourcePath() + "mylo/Mylo_DropDownFieldData.json";
+	private final String _MyloFileInformationPath = FileReaderManager.getInstance().getConfigReader()
+			.getTestDataResourcePath() + "mylo/MyloFileInformationDetails.json";
+	
 	private List<Mylo_LoginData> _loginDataList;
-	private List<MyloAssignmentDetails> _assignmentDetailsList;
-	private List<Mylo_AssignmentShipmentDetails> _assignmentShipmentDetailsList;
 	private List<MyloUSStates> _USStatesList;
 	private List<MyloCAStates> _CAStatesList;
 	private List<MyloIndiaStates> _IndiaStatesList;
 	private List<Mylo_Assignment_HistoryDetails_UAT> _myloAssignHistoryDet_UAT;
 	private List<Mylo_Assignment_HistoryDetails_PREPROD> _myloAssignHistoryDet_PREPROD;
+	private List<Mylo_Assignment_HistoryDetails_DEV5> _myloAssignHistoryDet_DEV5;
+	private List<Mylo_DropDownFieldData> _dropdownList;
+	private List<Mylo_FileData> _fileDataList;
+	private List<MyloMemoryCapacityFileIds> _fileIdDetailsList;
+	private List<MyloFileInformationDetails> _fileInfolist;
 	
 	public JsonDataReader_Mylo() {
 		_loginDataList = getUserData();
-		_assignmentDetailsList = getAssignmentDetails();
-		_assignmentShipmentDetailsList = getAssignmentShipmentDetails();
 		_USStatesList=getUSStates();
 		_CAStatesList=getCAStates();
 		_IndiaStatesList=getIndiaStates();
 		_myloAssignHistoryDet_UAT = getMyloHistoryDetails_UAT();
 		_myloAssignHistoryDet_PREPROD = getMyloHistoryDetails_PREPROD();
+		_myloAssignHistoryDet_DEV5 = getMyloHistoryDetails_DEV5();
+		_fileDataList=getFileData();
+		_fileIdDetailsList=getFileDetailsData();
+		_dropdownList=getDropdownData();
+		_fileInfolist=getMyloFileDetails();
 	}
 	private List<Mylo_LoginData> getUserData() {
 		Gson gson = new Gson();
@@ -90,15 +105,15 @@ public class JsonDataReader_Mylo {
 		}
 	}
 	
-	private List<MyloAssignmentDetails> getAssignmentDetails() {
+	private List<MyloFileInformationDetails> getMyloFileDetails() {
 		Gson gson = new Gson();
 		BufferedReader bufferReader = null;
 		try {
-			bufferReader = new BufferedReader(new FileReader(_AssignmentDetailsFilePath));
-			MyloAssignmentDetails[] application = gson.fromJson(bufferReader, MyloAssignmentDetails[].class);
+			bufferReader = new BufferedReader(new FileReader(_MyloFileInformationPath));
+			MyloFileInformationDetails[] application = gson.fromJson(bufferReader, MyloFileInformationDetails[].class);
 			return Arrays.asList(application);
 		} catch (FileNotFoundException e) {
-			throw new RuntimeException(CoreConstants.JSON_FILE_NOT_FOUND_AT_PATH + _AssignmentDetailsFilePath);
+			throw new RuntimeException(CoreConstants.JSON_FILE_NOT_FOUND_AT_PATH + _MyloFileInformationPath);
 		} finally {
 			try {
 				if (bufferReader != null)
@@ -108,15 +123,15 @@ public class JsonDataReader_Mylo {
 		}
 	}
 	
-	private List<Mylo_AssignmentShipmentDetails> getAssignmentShipmentDetails() {
+	private List<Mylo_DropDownFieldData> getDropdownData() {
 		Gson gson = new Gson();
 		BufferedReader bufferReader = null;
 		try {
-			bufferReader = new BufferedReader(new FileReader(_AssignmentDetailsShipmentFilePath));
-			Mylo_AssignmentShipmentDetails[] application = gson.fromJson(bufferReader, Mylo_AssignmentShipmentDetails[].class);
+			bufferReader = new BufferedReader(new FileReader(_MyloDropDownFieldsDataPath));
+			Mylo_DropDownFieldData[] application = gson.fromJson(bufferReader, Mylo_DropDownFieldData[].class);
 			return Arrays.asList(application);
 		} catch (FileNotFoundException e) {
-			throw new RuntimeException(CoreConstants.JSON_FILE_NOT_FOUND_AT_PATH + _AssignmentDetailsShipmentFilePath);
+			throw new RuntimeException(CoreConstants.JSON_FILE_NOT_FOUND_AT_PATH + _MyloDropDownFieldsDataPath);
 		} finally {
 			try {
 				if (bufferReader != null)
@@ -125,6 +140,7 @@ public class JsonDataReader_Mylo {
 			}
 		}
 	}
+	
 	
 	private List<MyloUSStates> getUSStates() {
 		Gson gson = new Gson();
@@ -143,7 +159,7 @@ public class JsonDataReader_Mylo {
 			}
 		}
 	}
-	
+
 	private List<MyloCAStates> getCAStates() {
 		Gson gson = new Gson();
 		BufferedReader bufferReader = null;
@@ -216,16 +232,66 @@ public class JsonDataReader_Mylo {
 		}
 	}
 	
+	private List<Mylo_Assignment_HistoryDetails_DEV5> getMyloHistoryDetails_DEV5() {
+		Gson gson = new Gson();
+		BufferedReader bufferReader = null;
+		try {
+			bufferReader = new BufferedReader(new FileReader(_MyloHistoryDetailsDEV5FilePath));
+			Mylo_Assignment_HistoryDetails_DEV5[] application = gson.fromJson(bufferReader, Mylo_Assignment_HistoryDetails_DEV5[].class);
+			return Arrays.asList(application);
+		} catch (FileNotFoundException e) {
+			throw new RuntimeException(CoreConstants.JSON_FILE_NOT_FOUND_AT_PATH + _MyloHistoryDetailsUATFilePath);
+		} finally {
+			try {
+				if (bufferReader != null)
+					bufferReader.close();
+			} catch (IOException ignore) {
+			}
+		}
+	}
+	
+	private List<Mylo_FileData> getFileData() {
+		Gson gson = new Gson();
+		BufferedReader bufferReader = null;
+		try {
+			bufferReader = new BufferedReader(new FileReader(_MylofileDataFilePath));
+			Mylo_FileData[] data = gson.fromJson(bufferReader, Mylo_FileData[].class);
+			return Arrays.asList(data);
+		} catch (FileNotFoundException e) {
+			throw new RuntimeException(CoreConstants.JSON_FILE_NOT_FOUND_AT_PATH + _MylofileDataFilePath);
+		} finally {
+			try {
+				if (bufferReader != null)
+					bufferReader.close();
+			} catch (IOException ignore) {
+			}
+		}
+	}
+	
+	private List<MyloMemoryCapacityFileIds> getFileDetailsData() {
+		Gson gson = new Gson();
+		BufferedReader bufferReader = null;
+		try {
+			bufferReader = new BufferedReader(new FileReader(_MyloMemoryCapacityFileIdPath));
+			MyloMemoryCapacityFileIds[] data = gson.fromJson(bufferReader, MyloMemoryCapacityFileIds[].class);
+			return Arrays.asList(data);
+		} catch (FileNotFoundException e) {
+			throw new RuntimeException(CoreConstants.JSON_FILE_NOT_FOUND_AT_PATH + _MyloMemoryCapacityFileIdPath);
+		} finally {
+			try {
+				if (bufferReader != null)
+					bufferReader.close();
+			} catch (IOException ignore) {
+			}
+		}
+	}
+	
 	public final Mylo_LoginData getloginDetailsByUserProfileName(String userProfileName) {
 		return _loginDataList.stream().filter(x -> x.MyloProfileName.equalsIgnoreCase(userProfileName)).findAny().get();
 	}
 	
-	public final MyloAssignmentDetails getAssignmentDetailsByApplication(String applicationName) {
-		return _assignmentDetailsList.stream().filter(x -> x.application.equalsIgnoreCase(applicationName)).findAny().get();
-	}
-	
-	public final Mylo_AssignmentShipmentDetails getAssignmentShipmentDetailsByEnv(String envName) {
-		return _assignmentShipmentDetailsList.stream().filter(x -> x.environment.equalsIgnoreCase(envName)).findAny().get();
+	public final Mylo_FileData getFileDataByFileType(String fileType) {
+		return _fileDataList.stream().filter(x -> x.fileType.equalsIgnoreCase(fileType)).findAny().get();
 	}
 	
 	public final List<MyloUSStates> getMyloUSStates() {
@@ -242,5 +308,20 @@ public class JsonDataReader_Mylo {
 	}
 	public final List<Mylo_Assignment_HistoryDetails_PREPROD> getMyloAssignmentPREPRODHistoryDetails() {
 		return _myloAssignHistoryDet_PREPROD;
+	}
+	public final List<Mylo_Assignment_HistoryDetails_DEV5> getMyloAssignmentDEV5HistoryDetails() {
+		return _myloAssignHistoryDet_DEV5;
+	}
+	
+	public final MyloMemoryCapacityFileIds getFileIdListByEnv(String environmentName) {
+		return _fileIdDetailsList.stream().filter(x -> x.environment.equalsIgnoreCase(environmentName)).findAny().get();
+	}
+	
+	public final Mylo_DropDownFieldData getDropDownListByFieldName(String fieldName) {
+		return _dropdownList.stream().filter(x -> x.field.equalsIgnoreCase(fieldName)).findAny().get();
+	}
+	
+	public final MyloFileInformationDetails getFileInformationDetails(String environment) {
+		return _fileInfolist.stream().filter(x -> x.environment.equalsIgnoreCase(environment)).findAny().get();
 	}
 }

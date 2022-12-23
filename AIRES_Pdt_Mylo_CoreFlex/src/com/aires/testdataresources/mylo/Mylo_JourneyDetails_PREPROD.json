@@ -1,0 +1,76 @@
+[	
+		{
+		"fileType": "activeAssignment",
+		"fileInfo": "547198;1148;Ericsson, Inc.;Active;FNLH;AIRES;Permanent;GCRO"
+		},
+		
+		{
+		"fileType": "affinityEnabled",
+		"fileInfo": "549316;96512;Affinity - AIRES-CIS-DEMO&'TEST(CLIENT);Booked;20487;AIRESIBO;Non-Relo;CORP"
+		},
+		
+		{
+		"fileType": "affinityNotEnabled",
+		"fileInfo": "323209;96512;Affinity - AIRES-CIS-DEMO&'TEST(CLIENT);Booked;20487;AIRESIBO;Non-Relo;CORP"
+		},
+		
+		{
+		"fileType": "airesshProvider",
+		"fileInfo": "323419;49212;Test Client;Active;Domestic;AIRESSH;Long-Term;CRO"
+		},
+		
+		{
+		"fileType": "notairesshProvider",
+		"fileInfo": "547198;1148;Ericsson, Inc.;Active;FNLH  Foreign National Local Hire;AIRES;Permanent;GCRO"
+		},
+		
+		{
+		"fileType": "canceledFile",
+		"fileInfo": "7;44501;Vastera;Canceled;Executive;AI;Permanent;CRO"
+		},
+		
+		{
+		"fileType": "closedFile",
+		"fileInfo": "582080;22050;Progressive Corp;Closed;Progressive Relocation Plan;AI;Permanent;NERO"
+		},
+		
+		
+		{
+		"fileType": "relocationPolicyType",
+		"fileInfo": "517075;92265;MobilityX Inc.;Active;International Long Term Assignment;AIRESIBO;Long Term;CRO"
+		},
+		
+		{
+		"fileType": "lumpSumpPlanPolicyType",
+		"fileInfo": "541274;92265;MobilityX Inc.;Booked;Lump Sum Plan;AIRES;Long Term;CRO"
+		},
+		
+		{
+		"fileType": "domesticPolicyType",
+		"fileInfo": "485545;92265;MobilityX Inc.;Active;Domestic Policy;AIRES;Permanent;CRO"
+		},
+		
+		{
+		"fileType": "closedFileIdentDoc",
+		"fileInfo": "94803;1201;International Paper Company;Cancelled;Domestic Policy;AI;Long Term;CRO"
+		},
+		
+		{
+		"fileType": "transfereeWithFamily",
+		"fileInfo": "575015;49212;Test Client;Active;Domestic Non Custom;AIRESSH;Long Term;CRO"
+		},
+		{
+		"fileType": "transfereeWithOtherFamilyMembers",
+		"fileInfo": "590662;92265;MobilityX Inc.;Active;Domestic Policy;AIRES;Commuter;CRO"
+		},
+		
+		{
+		"fileType": "transfereeMemberDetails",
+		"fileInfo": "626703;92265;MobilityX Inc.;Booked;Domestic Policy;AIRES;Long-Term;CRO"
+		},
+		
+		{
+		"fileType": "transfereeAllMemberDetails",
+		"fileInfo": "626704;92265;MobilityX Inc.;Booked;Domestic Policy;AIRES;Long-Term;CRO"
+		}
+]

@@ -1,0 +1,106 @@
+[
+	{
+		"environment": "UAT",
+		"journeyDetails":
+				[
+					{"fileType": "activeAssignment","fileId": "639028","clientId": "49226","clientName": "Aires QA Automation Client","policyType": "Domestic Policy"},
+					{"fileType": "affinityEnabled","fileId": "549316","clientId": "96512","clientName": "Affinity - AIRES-CIS-DEMO&'TEST(CLIENT)","policyType": "20487"},
+					{"fileType": "affinityNotEnabled","fileId": "323209","clientId": "96512","clientName": "Affinity - AIRES-CIS-DEMO&'TEST(CLIENT)","policyType": "20487"},
+					{"fileType": "airesshProvider","fileId": "323419","clientId": "49212","clientName": "Test Client","policyType": "Domestic Policy"},
+					{"fileType": "notairesshProvider","fileId": "547198","clientId": "1148","clientName": "Ericsson, Inc.","policyType": "FNLH  Foreign National Local Hire"},
+					{"fileType": "canceledFile","fileId": "7","clientId": "44501","clientName": "Vastera","policyType": "Executive"},
+					{"fileType": "canceledFile_withAuthTrack","fileId": "483893","clientId": "70519","clientName": "Ericsson Canada","policyType": "Executive"},
+					{"fileType": "closedFile","fileId": "208973","clientId": "49076","clientName": "Electric Boat - Puget Sound","policyType": "SSGN B - Renter (Non-Homeowner)"},
+					{"fileType": "closedFile_withAuthTrack","fileId": "540016","clientId": "78223","clientName": "Northrop Grumman-One Source Accounting","policyType": "SSGN B - Renter (Non-Homeowner)"},
+					{"fileType": "relocationPolicyType","fileId": "611086","clientId": "92265","clientName": "MobilityX Inc.","policyType": "Long Term Assignment"},
+					{"fileType": "lumpSumpPlanPolicyType","fileId": "611090","clientId": "92265","clientName": "MobilityX Inc.","policyType": "Lump Sum Plan"},
+					{"fileType": "domesticPolicyType","fileId": "611094","clientId": "92265","clientName": "MobilityX Inc.","policyType": "Domestic Policy"},
+					{"fileType": "closedFileIdentDoc","fileId": "91003","clientId": "13606","clientName": "Orange Business Services (France Telecom)","policyType": "Domestic Policy"},
+					{"fileType": "transfereeWithFamily","fileId": "575015","clientId": "49212","clientName": "Test Client","policyType": "Domestic Non Custom"},
+					{"fileType": "transfereeWithOtherFamilyMembers","fileId": "590662","clientId": "92265","clientName": "MobilityX Inc.","policyType": "Domestic Policy"},
+					{"fileType": "transfereeMemberDetails","fileId": "639580","clientId": "92265","clientName": "MobilityX Inc.","policyType": "Baxter Repay Test"},
+					{"fileType": "transfereeAllMemberDetails","fileId": "639582","clientId": "92265","clientName": "MobilityX Inc.","policyType": "Domestic Policy"},
+					{"fileType": "TRANSSCH","fileId": "645961","clientId": "8472","clientName": "Verizon","policyType": "Domestic Policy"},
+					{"fileType": "TRANSSCH_withoutEmail","fileId": "646058","clientId": "8472","clientName": "Verizon","policyType": "Domestic Policy"},
+					{"fileType": "TRANSSCH_duplicateEmailActualizedTransferee","fileId": "646084","clientId": "8472","clientName": "Verizon","policyType": "Domestic Policy"},
+					{"fileType": "TRANSSCH_uniqueEmailActualizedTransferee","fileId": "646164","clientId": "8472","clientName": "Verizon","policyType": "Domestic Policy"},
+					{"fileType": "TRANSSCH_ActualizedTransferee","fileId": "646082","clientId": "8472","clientName": "Verizon","policyType": "Domestic Policy"},
+					{"fileType": "TRANSSCH_IDENTCHALLENGE","fileId": "646131","clientId": "8472","clientName": "Verizon","policyType": "Domestic Policy"},
+					{"fileType": "CLIENT_TRANSFEREE_SSOENABLED","fileId": "646154","clientId": "25568","clientName": "FedEx Ground","policyType": "Domestic Policy"},
+					{"fileType": "TRANSFEREE_WITH_MULTIPLE_EMAIL","fileId": "646155","clientId": "49226","clientName": "Aires QA Automation Client","policyType": "Domestic Policy"},
+					{"fileType": "TRANSFEREE_FILELINK","fileId": "646165","clientId": "49226","clientName": "Aires QA Automation Client","policyType": "Domestic Policy"},
+					{"fileType": "existingAuthTrackData","fileId": "646236","clientId": "49226","clientName": "Aires QA Automation Client","policyType": "Domestic Policy"},
+					{"fileType": "paymentCutOffDateCompletion","fileId": "261205","clientId": "47090","clientName": "Diageo NA","policyType": "Current Employee Homeowner Band 5"},
+					{"fileType": "addressExist","fileId": "646365","clientId": "49226","clientName": "Aires QA Automation Client","policyType": "Domestic Policy"},
+					{"fileType": "mailingAddressNotExist","fileId": "646406","clientId": "49226","clientName": "Aires QA Automation Client","policyType": "Domestic Policy"},
+					{"fileType": "noExistingTeamPost","fileId": "647019","clientId": "49226","clientName": "Aires QA Automation Client","policyType": "Domestic Policy"},
+					{"fileType": "multipleTeamPosts","fileId": "648494","clientId": "49226","clientName": "Aires QA Automation Client","policyType": "Domestic Policy"}
+				]
+	},
+	
+	{
+		"environment": "QA",
+		"journeyDetails": 
+				[
+					{"fileType": "activeAssignment","fileId": "626307","clientId": "92265","clientName": "MobilityX Inc.","policyType": "Domestic Policy"},
+					{"fileType": "affinityEnabled","fileId": "549316","clientId": "96512","clientName": "Affinity - AIRES-CIS-DEMO&'TEST(CLIENT)","policyType": "20487"},
+					{"fileType": "affinityNotEnabled","fileId": "323209","clientId": "96512","clientName": "Affinity - AIRES-CIS-DEMO&'TEST(CLIENT)","policyType": "20487"},
+					{"fileType": "airesshProvider","fileId": "323419","clientId": "49212","clientName": "Test Client","policyType": "Domestic"},
+					{"fileType": "notairesshProvider","fileId": "547198","clientId": "1148","clientName": "Ericsson, Inc.","policyType": "FNLH  Foreign National Local Hire"},
+					{"fileType": "canceledFile","fileId": "7","clientId": "44501","clientName": "Vastera","policyType": "Executive"},
+					{"fileType": "closedFile","fileId": "208973","clientId": "49076","clientName": "Electric Boat - Puget Sound","policyType": "SSGN B - Renter (Non-Homeowner)"},
+					{"fileType": "relocationPolicyType","fileId": "517323","clientId": "92265","clientName": "MobilityX Inc.","policyType": "International Long Term Assignment"},
+					{"fileType": "lumpSumpPlanPolicyType","fileId": "541274","clientId": "92265","clientName": "MobilityX Inc.","policyType": "Lump Sum Plan"},
+					{"fileType": "domesticPolicyType","fileId": "485545","clientId": "92265","clientName": "MobilityX Inc.","policyType": "Domestic Policy"},
+					{"fileType": "closedFileIdentDoc","fileId": "94803","clientId": "1201","clientName": "International Paper Company","policyType": "Domestic Policy"},
+					{"fileType": "transfereeWithFamily","fileId": "575015","clientId": "49212","clientName": "Test Client","policyType": "Domestic Non Custom"},
+					{"fileType": "transfereeWithOtherFamilyMembers","fileId": "590662","clientId": "92265","clientName": "MobilityX Inc.","policyType": "Domestic Policy"},
+					{"fileType": "transfereeMemberDetails","fileId": "639580","clientId": "92265","clientName": "MobilityX Inc.","policyType": "Baxter Repay Test"},
+					{"fileType": "transfereeAllMemberDetails","fileId": "639582","clientId": "92265","clientName": "MobilityX Inc.","policyType": "Domestic Policy"}
+				]
+	},
+	
+	{
+		"environment": "PREPROD",
+		"journeyDetails": 
+				[
+					{"fileType": "activeAssignment","fileId": "547198","clientId": "1148","clientName": "Ericsson, Inc.","policyType": "FNLH  Foreign National Local Hire"},
+					{"fileType": "affinityEnabled","fileId": "549316","clientId": "96512","clientName": "Affinity - AIRES-CIS-DEMO&'TEST(CLIENT)","policyType": "20487"},
+					{"fileType": "affinityNotEnabled","fileId": "323209","clientId": "96512","clientName": "Affinity - AIRES-CIS-DEMO&'TEST(CLIENT)","policyType": "20487"},
+					{"fileType": "airesshProvider","fileId": "323419","clientId": "49212","clientName": "Test Client","policyType": "Domestic"},		
+					{"fileType": "notairesshProvider","fileId": "547198","clientId": "1148","clientName": "Ericsson, Inc.","policyType": "FNLH  Foreign National Local Hire"},
+					{"fileType": "canceledFile","fileId": "7","clientId": "44501","clientName": "Vastera","policyType": "Executive"},
+					{"fileType": "closedFile","fileId": "582080","clientId": "22050","clientName": "Progressive Corp","policyType": "Progressive Relocation Plan"},
+					{"fileType": "relocationPolicyType","fileId": "517075;","clientId": "92265","clientName": "MobilityX Inc.","policyType": "International Long Term Assignment"},
+					{"fileType": "lumpSumpPlanPolicyType","fileId": "541274","clientId": "92265","clientName": "MobilityX Inc.","policyType": "Lump Sum Plan"},
+					{"fileType": "domesticPolicyType","fileId": "485545","clientId": "92265","clientName": "MobilityX Inc.","policyType": "Domestic Policy"},
+					{"fileType": "closedFileIdentDoc","fileId": "94803","clientId": "1201","clientName": "International Paper Company","policyType": "Domestic Policy"},
+					{"fileType": "transfereeWithFamily","fileId": "575015","clientId": "49212","clientName": "Test Client","policyType": "Domestic Non Custom"},
+					{"fileType": "transfereeWithOtherFamilyMembers","fileId": "590662","clientId": "92265","clientName": "MobilityX Inc.","policyType": "Domestic Policy"},
+					{"fileType": "transfereeMemberDetails","fileId": "626703","clientId": "92265","clientName": "MobilityX Inc.","policyType": "Domestic Policy"},
+					{"fileType": "transfereeAllMemberDetails","fileId": "626704","clientId": "92265","clientName": "MobilityX Inc.","policyType": "Domestic Policy"}
+				]
+	},
+	
+	{
+		"environment": "DEV5",
+		"journeyDetails": 
+				[
+					{"fileType": "activeAssignment","fileId": "626307","clientId": "92265","clientName": "MobilityX Inc.","policyType": "Domestic Policy"},
+					{"fileType": "affinityEnabled","fileId": "549316","clientId": "96512","clientName": "Affinity - AIRES-CIS-DEMO&'TEST(CLIENT)","policyType": "20487"},
+					{"fileType": "affinityNotEnabled","fileId": "323209","clientId": "96512","clientName": "Affinity - AIRES-CIS-DEMO&'TEST(CLIENT)","policyType": "20487"},
+					{"fileType": "airesshProvider","fileId": "323419","clientId": "49212","clientName": "Test Client","policyType": "Domestic"},		
+					{"fileType": "notairesshProvider","fileId": "547198","clientId": "1148","clientName": "Ericsson, Inc.","policyType": "FNLH  Foreign National Local Hire"},
+					{"fileType": "canceledFile","fileId": "7","clientId": "44501","clientName": "Vastera","policyType": "Executive"},
+					{"fileType": "closedFile","fileId": "208973","clientId": "49076","clientName": "Electric Boat - Puget Sound","policyType": "SSGN B - Renter (Non-Homeowner)"},
+					{"fileType": "relocationPolicyType","fileId": "517323;","clientId": "92265","clientName": "MobilityX Inc.","policyType": "International Long Term Assignment"},
+					{"fileType": "lumpSumpPlanPolicyType","fileId": "541274","clientId": "92265","clientName": "MobilityX Inc.","policyType": "Lump Sum Plan"},
+					{"fileType": "domesticPolicyType","fileId": "485545","clientId": "92265","clientName": "MobilityX Inc.","policyType": "Domestic Policy"},
+					{"fileType": "closedFileIdentDoc","fileId": "94803","clientId": "1201","clientName": "International Paper Company","policyType": "Domestic Policy"},
+					{"fileType": "transfereeWithFamily","fileId": "575015","clientId": "49212","clientName": "Test Client","policyType": "Domestic Non Custom"},
+					{"fileType": "transfereeWithOtherFamilyMembers","fileId": "590662","clientId": "92265","clientName": "MobilityX Inc.","policyType": "Domestic Policy"},
+					{"fileType": "transfereeMemberDetails","fileId": "626309","clientId": "92265","clientName": "MobilityX Inc.","policyType": "Baxter Repay Test"},
+					{"fileType": "transfereeAllMemberDetails","fileId": "626312","clientId": "92265","clientName": "MobilityX Inc.","policyType": "Domestic Policy"}
+				]
+	}
+]

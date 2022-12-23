@@ -233,6 +233,7 @@ public class PDT_SharedSubBenefitPage extends Base {
 	LinkedHashMap<String, WebElement> subBenefitEmpTypeLabelMap = new LinkedHashMap<String, WebElement>();
 	LinkedHashMap<String, WebElement> subBenefitHeadingMap = new LinkedHashMap<String, WebElement>();
 	LinkedHashMap<String, List<WebElement>> tabListMap = new LinkedHashMap<String, List<WebElement>>();
+	LinkedHashMap<String, PDT_SharedSubBenefit_Steps> formMap1 = new LinkedHashMap<String, PDT_SharedSubBenefit_Steps>();
 	HashMap<String, Boolean> resultMapForTabNameNotMatch = new HashMap<>();
 	
 	ArrayList<String> failedSubBenefits = new ArrayList<String>();
@@ -1228,5 +1229,49 @@ public class PDT_SharedSubBenefitPage extends Base {
 			for(int j = 0; j<pagesList.get(i).size(); j++)
 				verifyPageNameAndClickOnBtn(pagesList.get(i).get(j), btn, viewPolicyPage);
 		}
+	}
+	
+
+	public boolean iterateBenefitCategoriesAndVerifyGrossUpReimbursedBy(ArrayList<String> benefitCategories, PDT_SharedSubBenefit_Steps subBenefitStep) {		
+		ArrayList<Boolean> resultBenefitCatList = new ArrayList<Boolean>();
+		populateBtnMap();
+		Collections.reverse(benefitCategories);
+		for(String bc : benefitCategories) {
+			resultBenefitCatList.addAll(iterateBenefitsAndVerifyGrossUpReimbursedBy(bc, BusinessFunctions.getSubBenefitList(bc), subBenefitStep));
+			CoreFunctions.clickUsingJS(driver, buttonMap.get(PDTConstants.BACK), PDTConstants.BACK);
+			BusinessFunctions.fluentWaitForSpinnerToDisappear(driver, _progressBar);
+		}
+		boolean result = resultBenefitCatList.stream().allMatch(t->t.equals(true))? true : false;
+		return result;
+	}
+	
+	public ArrayList<Boolean> iterateBenefitsAndVerifyGrossUpReimbursedBy(String benefitCategory, ArrayList<String> benefits, PDT_SharedSubBenefit_Steps subBenefitStep) {
+		ArrayList<Boolean> result = new ArrayList<Boolean>();
+		for(String benefit : benefits) {
+			Log.info("Benefit=="+benefit);			
+			result.add(verifyEachBenefitForGrossUpAndReimbursedBy(benefitCategory, benefit, subBenefitStep));
+		}
+		return result;
+	}
+	
+	public boolean verifyEachBenefitForGrossUpAndReimbursedBy(String benefitCategory, String benefit, PDT_SharedSubBenefit_Steps subBenefitStep) {
+		boolean verificationResult = false;
+		switch(benefit) {
+		case(PDTConstants.CULTURAL_TRAINING_EMPLOYEE):
+			verificationResult = subBenefitStep.getCulturalTrainingPage().verifyGrossUpAndReimbursedByForEmployee(benefitCategory, benefit);
+			break;
+		case(PDTConstants.CULTURAL_TRAINING_FAMILY):
+			verificationResult = subBenefitStep.getCulturalTrainingPage().verifyGrossUpAndReimbursedByForFamily(benefitCategory, benefit);
+			break;
+		case(PDTConstants.LANGUAGE_TRAINING_EMPLOYEE):
+			verificationResult = subBenefitStep.getLanguageTrainingPage().verifyGrossUpAndReimbursedByForEmployee(benefitCategory, benefit);
+			break;
+		case(PDTConstants.LANGUAGE_TRAINING_FAMILY):
+			verificationResult = subBenefitStep.getLanguageTrainingPage().verifyGrossUpAndReimbursedByForFamily(benefitCategory, benefit);
+			break;
+		default:
+			Assert.fail("Functionality not implemented for:-"+benefit);
+		}
+		return verificationResult;
 	}
 }

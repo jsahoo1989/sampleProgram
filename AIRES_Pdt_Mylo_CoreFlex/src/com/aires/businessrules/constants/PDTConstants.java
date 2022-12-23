@@ -659,4 +659,11 @@ public class PDTConstants {
 	public static final String MAX_LENGTH_FOR_DISTANCE_BUS_AIR_TRAVEL = "10";
 	public static final String MAX_LENGTH_FOR_ECO_AIR_TRAVEL = "10";
 	public static final String MAX_LENGTH_FOR_DISTANCE = "10";
+	public static final String VERIFIED_SELECTED_VAL_FOR_RADIO_BTN = "{0}Verified {1} value for ''{2}'' is ''{3}''.";
+	public static final String FAILED_TO_VERIFY_SELECTED_VAL_FOR_RADIO_BTN = "<font color='red'>{0}Failed to verify {1} value for ''{2}'' is ''{3}''.</font>";
+	public static final String FAILED_TO_VERIFY_RADIO_BTN = "{0}Failed to verify {1} value for ''{2}'' is ''{3}''.";
+	public static final String DEFAULT_SELECTED = "default selected";
+	public static final String SELECTED = "selected";
+	public static final String SUBMITTED = "submitted";
+	public static final String FAILED_TO_VERIFY_GROSSUP_REIMBURSED_BY = "{0}Failed to verify Gross-Up and Reimbursed by for benefits.";
 }

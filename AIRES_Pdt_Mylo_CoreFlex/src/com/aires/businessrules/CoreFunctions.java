@@ -1947,7 +1947,6 @@ public class CoreFunctions {
 						MessageFormat.format(PDTConstants.VRFIED_ELE_TYPE_NOT_ON_PAGE, CoreConstants.FAIL, elementType, name));
 			}
 		} catch (NoSuchElementException e) {
-			e.printStackTrace();
 			Log.info(CoreConstants.VRFIED_THAT + name + CoreConstants.ELE_NOT_PRESNT);
 		}
 		return flag;

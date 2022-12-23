@@ -112,7 +112,7 @@ public class PDT_GeneralInfo_Steps {
 		Assert.assertTrue(generalInfoPage.verifyPolicyName(ClientPolicyDetails.getPolicyName()),
 				MessageFormat.format(PDTConstants.FAILED_TO_VERIFY_POLICY_NAME, CoreConstants.FAIL, ClientPolicyDetails.getPolicyName(), generalInfoPage.getElementText(PDTConstants.POLICY_NAME)));
 		
-		generalInfoPage.enterGeneralInformationFields();
+		generalInfoPage.enterGeneralInformationFieldsWithExpenseCode();
 		Assert.assertTrue(policyBenefitCategoryPage.verifyPolicyBenefitCategoryHeading(policyBenefitPage),
 				MessageFormat.format(PDTConstants.FAIL_TO_VERIFY_ELEMENT_VAL_ON_PAGE, CoreConstants.FAIL, PDTConstants.heading, PDTConstants.POLICY_BENEFIT_CATEGORIES, policyBenefitPage, policyBenefitCategoryPage.getElementText(PDTConstants.HEADING)));
 		//policyBenefitCategoryPage.selectPolicyBenefitCategory(benefitCategory);

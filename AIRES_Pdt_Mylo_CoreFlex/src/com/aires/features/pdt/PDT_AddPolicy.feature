@@ -240,12 +240,14 @@ Feature: Add new Policy form with Benefit Categories
     Then information should not be saved for below sub-benefits of "Cultural Training" page
       | Cultural Training Employee | Cultural Training Family |
 
-  @BLUE-07 @BLUE-432
+  @BLUE-07 @BLUE-432 @exp
   Scenario: PDT - Add new Policy form using Expense Management Category as Yes and validate that Gross-Up/Reimbursed by field should display their updated values after any udpates
     Given he is on the "Add New Policy" page after clicking on the link "Add New Policy Form" displayed under the left navigation menu on the 'View Policy' page
     And he has clicked on the 'Next' button after selecting client, policy information on the 'Add New Policy' page
     And he has entered mandatory information on 'General Information' page with 'Expense Management client' as 'Yes' followed by selection of below categories on "Policy Benefit Category" page
       | Language Training | Cultural Training |
-    And the sub-benefit form of above benefit categories displays the default selected option for Gross-Up, Reimbursed by fields
-    When he clicks on "SAVE & SUBMIT" button after entering mandatory information for all the sub-benefit forms
-    Then updated value of Gross-Up, Reimbursed by fields should be displayed on all sub-benefit forms
+    And he has entered mandatory information for all the benefit forms after verifying the default selected option for Gross-Up, Reimbursed by fields on each benefit
+    #And the sub-benefit form of above benefit categories displays the default selected option for Gross-Up, Reimbursed by fields
+    #When he clicks on "SAVE & SUBMIT" button after entering mandatory information for all the sub-benefit forms
+    When he clicks on "SAVE & SUBMIT" button on last benefit page
+    Then submitted value of Gross-Up, Reimbursed by fields should be displayed on all sub-benefit forms

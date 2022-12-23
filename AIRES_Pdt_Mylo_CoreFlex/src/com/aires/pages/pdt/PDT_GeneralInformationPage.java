@@ -683,6 +683,7 @@ public class PDT_GeneralInformationPage extends Base {
 			CoreFunctions.explicitWaitTillElementListClickable(driver, _radioBtnExpenseManagementClient);
 			CoreFunctions.selectItemInListByText(driver, _radioBtnExpenseManagementClient, "No",
 					_lblExpenseMgmtClient.getText(), PDTConstants.RADIO_BUTTON_LIST, true);
+			setExpenseMgmt("No");
 			timeBeforeAction = new Date().getTime();
 			CoreFunctions.click(driver, _btnNext, _btnNext.getText());
 			BusinessFunctions.fluentWaitForSpinnerToDisappear(driver, _progressBar);
@@ -1256,10 +1257,10 @@ public class PDT_GeneralInformationPage extends Base {
 			setReimbursedBy(randOption);
 			
 			randOption = BusinessFunctions.selectAndReturnRandomValFromRadioButton(driver, _bankFeeReimbursable, _lblBankFeeReimbursable);
-			setReimbursedBy(randOption);
+			setBankFeeReimbursedBy(randOption);
 			
 			randOption = BusinessFunctions.selectAndReturnRandomValFromRadioButton(driver, _currencyExchangeLoss, _lblCurrencyExchangeLoss);
-			setReimbursedBy(randOption);
+			setCurrencyExchangeLoss(randOption);
 			
 			timeBeforeAction = new Date().getTime();			
 			CoreFunctions.click(driver, _btnNext, _btnNext.getText());

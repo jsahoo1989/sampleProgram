@@ -1,6 +1,7 @@
 package stepDefinitions.pdt;
 
 import java.text.MessageFormat;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
@@ -11,7 +12,6 @@ import com.aires.businessrules.DbFunctions;
 import com.aires.businessrules.constants.CoreConstants;
 import com.aires.businessrules.constants.PDTConstants;
 import com.aires.cucumber.TestContext;
-import com.aires.managers.PageObjectManager_Pdt;
 import com.aires.pages.pdt.PDT_AddNewPolicyPage;
 import com.aires.pages.pdt.PDT_AssignmentHousingPage;
 import com.aires.pages.pdt.PDT_CompensationServicesPage;
@@ -182,7 +182,6 @@ public class PDT_SharedSubBenefit_Steps {
 	@When("^he clicks on 'SUBMIT' button after entering mandatory information for all the below selected sub benefits on \"([^\"]*)\" page$")
 	public void he_clicks_on_SUBMIT_button_after_entering_mandatory_information_for_all_the_below_selected_sub_benefits_on_page(
 			String policyBenefitPgName, DataTable subBenefitTable) {
-		PDT_SharedSubBenefit_Steps objStep = new PDT_SharedSubBenefit_Steps(testContext);
 		List<String> subBenefits = subBenefitTable.asList(String.class);
 		subBenefitPage.verifySelectedPolicyBenefitCategoryName(policyBenefitPgName);
 		subBenefitPage.verifySubBenefitCategoriesAreDisplayed(subBenefits, policyBenefitPgName);
@@ -282,22 +281,25 @@ public class PDT_SharedSubBenefit_Steps {
 				ClientPolicyDetails.getPolicyName().split("\\(#")[0].trim(), policyStatus, policyVersion, pageName));
 	}
 	
-	@Given("^the sub-benefit form of above benefit categories displays the default selected option for Gross-Up, Reimbursed by fields$")
-	public void the_sub_benefit_form_of_above_benefit_categories_displays_the_default_selected_option_for_Gross_Up_Reimbursed_by_fields() throws Throwable {
+	
+	@Given("^he has entered mandatory information for all the benefit forms after verifying the default selected option for Gross-Up, Reimbursed by fields on each benefit$")
+	public void he_has_entered_mandatory_information_for_all_the_benefit_forms_after_verifying_the_default_selected_option_for_Gross_Up_Reimbursed_by_fields_on_each_benefit() {
 		subBenefitPage.iterateEachBenefitCategory(policyBenefitCategoryPage.getSelectedCategoriesName(), testContext,
 				subBenefitPage, addNewPolicyPage, generalInfoPage);
-		/*subBenefitPage.clickOnBtn(saveBtn);
+	}
+
+	@When("^he clicks on \"([^\"]*)\" button on last benefit page$")
+	public void he_clicks_on_button_on_last_benefit_page(String btnName) {
+		subBenefitPage.clickOnBtn(btnName);
 		subBenefitPage.waitForProgressBarToDisapper();
-		subBenefitPage.clickOnBtn(exitBtn);*/
 	}
 
-	@When("^he clicks on \"([^\"]*)\" button after entering mandatory information for all the sub-benefit forms$")
-	public void he_clicks_on_button_after_entering_mandatory_information_for_all_the_sub_benefit_forms(String arg1) throws Throwable {
-
-	}
-
-	@Then("^updated value of Gross-Up, Reimbursed by fields should be displayed on all sub-benefit forms$")
+	@Then("^submitted value of Gross-Up, Reimbursed by fields should be displayed on all sub-benefit forms$")
 	public void updated_value_of_Gross_Up_Reimbursed_by_fields_should_be_displayed_on_all_sub_benefit_forms() throws Throwable {
+		ArrayList<String> benefitCategories = policyBenefitCategoryPage.getSelectedCategoriesName();
+		Assert.assertTrue(subBenefitPage.iterateBenefitCategoriesAndVerifyGrossUpReimbursedBy(benefitCategories, this), MessageFormat.format(PDTConstants.FAILED_TO_VERIFY_GROSSUP_REIMBURSED_BY, CoreConstants.FAIL));
+		_softAssert.assertAll();
 
 	}
+	
 }

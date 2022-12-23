@@ -433,6 +433,7 @@ public class MyloJourneyPage_AccountingQuerySection extends Base {
 
 	public boolean verifySearchedSingleFile(String fieldName, Map<String, String> fieldValues) {
 		boolean flag = false;
+		BusinessFunctions.fluentWaitForMyloSpinnerToDisappear(driver, _spinner);
 		switch (fieldName) {
 		case MYLOConstants.ASSIGNMENT_ID:
 			flag = fieldValues.get(fieldName).equals(MyloNewFileUtil.getFileID());
@@ -490,7 +491,7 @@ public class MyloJourneyPage_AccountingQuerySection extends Base {
 	public boolean verifyAccountingFilesResultFromDB(String reqColumnValue) {
 		mapQueryResultColumnWebElements();
 		boolean flag = false;
-		String noOfRecordsToValidate = CoreFunctions.getPropertyFromConfig("noOfRecords");
+		String noOfRecordsToValidate = CoreFunctions.getPropertyFromConfig(MYLOConstants.MAX_RECORDS_TO_VALIDATE);
 		try {
 			List<String> DBList = DbFunctions.getAccountingFilesInfoByServiceAndServiceStatus(
 					accountingFieldsUpdatedValueMap.get(MYLOConstants.SERVICE),
@@ -520,7 +521,7 @@ public class MyloJourneyPage_AccountingQuerySection extends Base {
 		mapQueryResultColumnWebElements();
 		mapDatabaseColumnNames();
 		boolean flag = false;
-		String noOfRecordsToValidate = CoreFunctions.getPropertyFromConfig(MYLOConstants.NO_OF_RECORDS);
+		String noOfRecordsToValidate = CoreFunctions.getPropertyFromConfig(MYLOConstants.MAX_RECORDS_TO_VALIDATE);
 		try {
 			List<String> DBList = DbFunctions.getAccountingSortResult(
 					accountingFieldsUpdatedValueMap.get(MYLOConstants.SERVICE),

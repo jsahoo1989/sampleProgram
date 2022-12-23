@@ -127,7 +127,6 @@ public class Mylo_JourneyPage extends Base {
 	private WebElement _spinner;
 
 	private String environment= System.getProperty("envt");
-
 	//private String environment = CoreFunctions.getPropertyFromConfig("envt");
 	private LinkedHashMap<String, WebElement> journeyWebElementsMap = new LinkedHashMap<String, WebElement>();
 

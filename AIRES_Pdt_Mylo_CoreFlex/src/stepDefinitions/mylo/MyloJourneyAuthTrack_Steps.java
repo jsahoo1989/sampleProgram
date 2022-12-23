@@ -95,7 +95,7 @@ public class MyloJourneyAuthTrack_Steps {
 	@Given("^he has provided all mandatory information with below Character Limit for mentioned fields after clicking on \"([^\"]*)\" icon on Authorization/Tracking section$")
 	public void he_has_provided_all_mandatory_information_with_below_Character_Limit_for_mentioned_fields_after_clicking_on_icon_on_Authorization_Tracking_section(String btnName, DataTable table) {
 		myloJourneyPage.scrollToJourneySection(MYLOConstants.AUTH_TRACK_SECTION, MYLOConstants.JOURNEY);
-		myloJourneyPageAuthTrack.clickFieldsOnAuthTrackSection(btnName, 0);
+		myloJourneyPageAuthTrack.clickAddIcon();
 		myloJourneyPageAuthTrack.clickFieldsOnAuthTrackSection(MYLOConstants.AUTH_TRACK_TYPE, 0);
 		myloJourneyPageAuthTrack.setTypeDropDownField(MYLOConstants.AUTH_TRACK_TYPE, MYLOConstants.RANDOM, 0);
 		java.util.List<Map<String, String>> data = table.asMaps(String.class, String.class);
@@ -114,7 +114,7 @@ public class MyloJourneyAuthTrack_Steps {
 	@Then("^Saved data should get deleted after clicking on \"([^\"]*)\" icon under Authorization/Tracking section$")
 	public void saved_data_should_get_deleted_after_clicking_on_icon_under_Authorization_Tracking_section(String btnName) {
 		myloJourneyPageAuthTrack.clickFieldsOnAuthTrackSection(MYLOConstants.EDIT_BUTTON, 0);
-		myloJourneyPageAuthTrack.deleteAuthTrackaData(2);
+		myloJourneyPageAuthTrack.deleteAuthTrackaData(1);
 		myloJourneyPageAuthTrack.clickFieldsOnAuthTrackSection(MYLOConstants.YES_BUTTON, 0);
 	}
 	

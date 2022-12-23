@@ -136,7 +136,6 @@ public class CoreFunctions {
 	public static void highlightObject(WebDriver driver, WebElement element) {
 		try {
 			if (driver != null) {
-				waitHandler(1);
 				JavascriptExecutor javascript = (JavascriptExecutor) driver;
 				javascript.executeScript("arguments[0].setAttribute('style', arguments[1]);", element,
 						"color: green; border: 3px solid green;");
@@ -318,7 +317,6 @@ public class CoreFunctions {
 		explicitWaitTillElementBecomesClickable(driver, Element, name);
 		Log.info("Clicking using JS on: " + name);
 		try {
-			CoreFunctions.waitHandler(2);
 			JavascriptExecutor executor = (JavascriptExecutor) driver;
 			executor.executeScript("arguments[0].click();", Element);
 			Log.info("Pass: " + name + " :is clicked");
@@ -357,7 +355,6 @@ public class CoreFunctions {
 	}
 
 	public static void explicitWaitTillElementListVisibility(WebDriver driver, List<WebElement> Element) {
-		waitHandler(1);
 		WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(25));
 		for (WebElement ele : Element) {
 			wait.until(ExpectedConditions.visibilityOf(ele));
@@ -1378,7 +1375,6 @@ public class CoreFunctions {
 	}
 
 	public static void hover(WebDriver driver, WebElement element) {
-		waitHandler(2);
 		Actions action = new Actions(driver);
 		action.moveToElement(element).build().perform();
 	}
@@ -1401,7 +1397,6 @@ public class CoreFunctions {
 	}
 
 	public static void switchToTab(WebDriver driver) {
-		CoreFunctions.waitHandler(5);
 		String currentWindow = driver.getWindowHandle();
 		Set<String> handles = driver.getWindowHandles();
 		for (String actualWin : handles) {
@@ -1460,7 +1455,6 @@ public class CoreFunctions {
 			}
 			if (downloadinFilePresence) {
 				for (; downloadinFilePresence;) {
-					waitHandler(5);
 					continue LOOP;
 				}
 			} else {
@@ -1919,6 +1913,7 @@ public class CoreFunctions {
 			executor.executeScript("arguments[0].scrollIntoView(true);", Element);
 			Log.info("Pass: " + name + " :is Visible");
 			Reporter.addStepLog(MessageFormat.format(CoreConstants.VRFIED_ELE_PAGE, CoreConstants.PASS, name));
+			highlightObject(driver, Element);
 		} catch (Exception e) {
 			Log.info("Fail:Could not find: " + name);
 			Assert.fail(MessageFormat.format(CoreConstants.FAIL_TO_VERIFY_ELEMENT_ON_PAGE, Element));
@@ -1951,20 +1946,6 @@ public class CoreFunctions {
 					CoreConstants.FAIL, fieldName, CoreConstants.MYLO));
 		}
 		return MYLOConstants.BLANK;
-	}
-
-	public static String setDifferentDropDownFieldsForMylo(WebDriver driver, String fieldValue,
-			List<WebElement> optionList) {
-		String updatedValue = null;
-		if (fieldValue.equals(MYLOConstants.RANDOM)) {
-			optionList.remove(0);
-			updatedValue = CoreFunctions.getRandomElementValueFromList(driver, optionList);
-			BusinessFunctions.selectItemFromListUsingText(driver, optionList, updatedValue);
-		} else {
-			updatedValue = fieldValue;
-			BusinessFunctions.selectItemFromListUsingText(driver, optionList, fieldValue);
-		}
-		return updatedValue;
 	}
 
 	public static String calculatePageLoadTime(double tIME_BEFORE_ACTION, double tIME_AFTER_ACTION) {
@@ -2065,11 +2046,15 @@ public class CoreFunctions {
 	public static ArrayList<String> getMultipleRandomOptionsForDropDown(int minNum, int maxNum, int count,
 			WebDriver driver, List<WebElement> webElementList) {
 		Random random = new Random();
-		List<Integer> randomNumbers = random.ints(minNum, maxNum).distinct().limit(count).boxed()
-				.collect(Collectors.toList());
 		ArrayList<String> randWebElementList = new ArrayList<String>();
-		for (Integer index : randomNumbers) {
-			randWebElementList.add(webElementList.get(index).getText());
+		try {
+			List<Integer> randomNumbers = random.ints(minNum, maxNum).distinct().limit(count).boxed()
+					.collect(Collectors.toList());
+			for (Integer index : randomNumbers) {
+				randWebElementList.add(webElementList.get(index).getText());
+			}
+		} catch (Exception e) {
+			Assert.fail("Fail to select multiple options");
 		}
 		return randWebElementList;
 	}

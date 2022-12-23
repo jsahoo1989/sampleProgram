@@ -23,8 +23,7 @@ public class DbFunctions {
 	static LinkedHashMap<String, String> myloQueryStatementMap = new LinkedHashMap<String, String>();
 	static LinkedHashMap<String, String> myloQTableColumnFields = new LinkedHashMap<String, String>();
 	static String environment = System.getProperty("envt").toLowerCase();
-	// static String environment =
-	// CoreFunctions.getPropertyFromConfig("envt").toLowerCase();
+	//static String environment =CoreFunctions.getPropertyFromConfig("envt").toLowerCase();
 
 	static LinkedHashMap<String, String> pdtExpenseCodeQueryStatementMap = new LinkedHashMap<String, String>();
 	
@@ -48,7 +47,7 @@ public class DbFunctions {
 			dbURL = "jdbc:oracle:thin:isisdba/iristestisisdba@corpprdl200.corp.aires.com:1521:IRIS";
 			break;
 		case "uat":
-			dbURL = "jdbc:oracle:thin:policydba/uatpo@corpqavl300.corp.aires.com:1521:IRISUAT";
+			dbURL = "jdbc:oracle:thin:isisdba/irisuatisisdba@corpqavl300.corp.aires.com:1521:IRISUAT";
 			break;
 		case "preprod":
 			dbURL = "jdbc:oracle:thin:isisdba/iristestisisdba@corptesvl300.corp.aires.com:1521:iristest";
@@ -434,10 +433,10 @@ public class DbFunctions {
 		try {
 			DriverManager.registerDriver(new oracle.jdbc.OracleDriver());
 			connection = DriverManager.getConnection(
-			getMyloDBConnectionStringAsPerEnvt(System.getProperty("envt")));
-			/*Kept the commented code for running in local environment
-			 * connection = DriverManager.getConnection(
-					getDBConnectionStringAsPerEnvt(CoreFunctions.getPropertyFromConfig("envt")));*/
+					getDBConnectionStringAsPerEnvt(System.getProperty("envt")));
+			//Kept the commented code for running in local environment
+			  //connection = DriverManager.getConnection(
+				//	getDBConnectionStringAsPerEnvt(CoreFunctions.getPropertyFromConfig("envt")));
 		} catch (SQLException e) {
 			Assert.fail("Failed to establish connection to the database");
 		}

@@ -580,7 +580,7 @@ public class MyloJourneyPage_DependentSection extends Base {
 		String updatedValue = null;
 		try {
 			List<WebElement> optionList = CoreFunctions.getElementListByLocator(driver, _dropdownOptions);
-			updatedValue = CoreFunctions.setDifferentDropDownFieldsForMylo(driver, fieldValue, optionList);
+			updatedValue = BusinessFunctions.setDifferentDropDownFieldsForMylo(driver, fieldValue, optionList);
 			dependentUpdatedDropdownFieldValuesMap.put(fieldName, updatedValue);
 			dependentUpdatedFieldValuesMap.put(fieldName, updatedValue);
 		} catch (Exception e) {

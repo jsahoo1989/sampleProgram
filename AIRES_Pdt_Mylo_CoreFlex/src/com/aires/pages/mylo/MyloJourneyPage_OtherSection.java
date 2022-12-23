@@ -584,7 +584,7 @@ public class MyloJourneyPage_OtherSection extends Base {
 		String updatedValue = null;
 		try {
 			List<WebElement> optionList = CoreFunctions.getElementListByLocator(driver, _dropdownOptions);
-			updatedValue = CoreFunctions.setDifferentDropDownFieldsForMylo(driver, fieldValue, optionList);
+			updatedValue = BusinessFunctions.setDifferentDropDownFieldsForMylo(driver, fieldValue, optionList);
 			otherUpdatedDropdownFieldValuesMap.put(fieldName, updatedValue);
 			otherUpdatedFieldValuesMap.put(fieldName, updatedValue);
 		} catch (Exception e) {

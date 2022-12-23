@@ -107,9 +107,17 @@ public class MyloJourneyPage_AuthTrackSection extends Base {
 		authTrackWebElementsMap.put(MYLOConstants.SORT_BY, _sortBy);
 	}
 	
+	public void mapAuthTrackBtnWebElements() {
+		authTrackWebElementsMap.put(MYLOConstants.ADD_BUTTON, _authTrackAddBtn);
+		authTrackWebElementsMap.put(MYLOConstants.EDIT_BUTTON, _authTrackEditBtn);
+		authTrackWebElementsMap.put(MYLOConstants.SAVE_BUTTON, _authTrackSaveBtn);
+		authTrackWebElementsMap.put(MYLOConstants.YES_BUTTON, _YesButton);
+		authTrackWebElementsMap.put(MYLOConstants.SORT_BY, _sortBy);
+	}
+	
 	public void deleteAuthTrackaData(int index) {
 		try {
-			CoreFunctions.highlightElementAndClick(driver, _authTrackDeleteIcon.get(index), MYLOConstants.DELETE_BUTTON);
+			CoreFunctions.scrollClickUsingJS(driver, _authTrackDeleteIcon.get(index), MYLOConstants.DELETE_BUTTON);
 			CoreFunctions.waitForMyloSpinnnerInvisibilityIfExist(driver, _spinner);
 		} catch (Exception e) {
 			Reporter.addStepLog(MessageFormat.format(CoreConstants.FAIL_TO_VERIFY_ELEMENT_ON_SECTION,
@@ -137,7 +145,7 @@ public class MyloJourneyPage_AuthTrackSection extends Base {
 	}
 
 	public void authTrackButtonEnabilityStatus(String type, String btnName) {
-		mapAuthTrackWebElements(0);
+		mapAuthTrackBtnWebElements();
 		BusinessFunctions.verifyMyloButtonEnabilityStatus(type, authTrackWebElementsMap.get(btnName), btnName,
 				MYLOConstants.AUTH_TRACK_SECTION, MYLOConstants.JOURNEY);
 	}
@@ -235,6 +243,11 @@ public class MyloJourneyPage_AuthTrackSection extends Base {
 		}
 	}
 	
+	public void clickAddIcon() {
+		CoreFunctions.highlightElementAndClick(driver, _authTrackAddBtn, MYLOConstants.ADD_BUTTON);
+		BusinessFunctions.fluentWaitForMyloSpinnerToDisappear(driver, _spinner);
+	}
+	
 	public void setAuthTrackFields(String fieldName, String fieldValue,int index) {
 		mapAuthTrackWebElements(index);
 		try {
@@ -255,7 +268,7 @@ public class MyloJourneyPage_AuthTrackSection extends Base {
 		mapAuthTrackWebElements(index);
 		try {
 			List<WebElement> optionList = CoreFunctions.getElementListByLocator(driver, _dropdownOptions);
-			updatedValue = CoreFunctions.setDifferentDropDownFieldsForMylo(driver, fieldValue, optionList);
+			updatedValue = BusinessFunctions.setDifferentDropDownFieldsForMylo(driver, fieldValue, optionList);
 			authTrackUpdatedFieldValuesMap.put(fieldName, updatedValue);
 		} catch (Exception e) {
 			Reporter.addStepLog(MessageFormat.format(CoreConstants.FAIL_TO_VERIFY_ELEMENT_ON_SECTION,
@@ -355,7 +368,7 @@ public class MyloJourneyPage_AuthTrackSection extends Base {
 			clickFieldsOnAuthTrackSection(MYLOConstants.SORT_BY, 0);
 			optionList = CoreFunctions.getElementListByLocator(driver, _dropdownOptions);
 		}
-		CoreFunctions.setDifferentDropDownFieldsForMylo(driver, selectDropdown, optionList);
+		BusinessFunctions.setDifferentDropDownFieldsForMylo(driver, selectDropdown, optionList);
 	}
 	
 	public boolean verifyAuthTrackTypeSortingOrder(String fieldName, String order) {

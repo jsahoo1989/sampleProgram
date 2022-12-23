@@ -159,6 +159,9 @@ public class MyloJourneyPage_TransfereeSection extends Base {
 
 	@FindBy(how = How.CSS, using = "input[id='T_Preferred2']+ span")
 	private List<WebElement> _transfereeEmailPreferredSelect;
+	
+	@FindBy(how = How.XPATH, using = "//app-transferee-family//h2[contains(text(),'Transferee')]")
+	private WebElement _transfereeHeader;
 
 	final By _dropdownOptions = By.cssSelector("div[role='option']>span");
 	final By _genderDropdownOptions = By.cssSelector("div[role='option']>div");
@@ -427,6 +430,7 @@ public class MyloJourneyPage_TransfereeSection extends Base {
 	 * Set Value of different fields on Transferee section
 	 */
 	public void setTransfereeFields(String fieldName, String fieldValue) {
+		CoreFunctions.scrollToElementUsingJavaScript(driver, _transfereeHeader, MYLOConstants.JOURNEY);
 		mapTransfereeWebElementFields();
 		try {
 			WebElement reqWebElement = transfereeWebElementsMap.get(fieldName);
@@ -453,7 +457,7 @@ public class MyloJourneyPage_TransfereeSection extends Base {
 		String updatedValue = null;
 		try {
 			List<WebElement> optionList = CoreFunctions.getElementListByLocator(driver, _dropdownOptions);
-			updatedValue = CoreFunctions.setDifferentDropDownFieldsForMylo(driver, fieldValue, optionList);
+			updatedValue = BusinessFunctions.setDifferentDropDownFieldsForMylo(driver, fieldValue, optionList);
 			transfereeUpdatedDropdownFieldValuesMap.put(fieldName, updatedValue);
 			transfereeUpdatedFieldValuesMap.put(fieldName, updatedValue);
 		} catch (Exception e) {
@@ -626,6 +630,7 @@ public class MyloJourneyPage_TransfereeSection extends Base {
 		boolean flag = false;
 		java.util.List<Map<String, String>> data = table.asMaps(String.class, String.class);
 		for (int i = 0; i < data.size(); i++) {
+			CoreFunctions.scrollToElementUsingJavaScript(driver, _transfereeHeader, MYLOConstants.JOURNEY);
 			setTransfereeFields(MYLOConstants.TRANSFEREE_FIRSTNAME,
 					data.get(i).get(MYLOConstants.TRANSFEREE_FIRSTNAME));
 			setTransfereeFields(MYLOConstants.TRANSFEREE_LASTNAME, data.get(i).get(MYLOConstants.TRANSFEREE_LASTNAME));
@@ -838,6 +843,7 @@ public class MyloJourneyPage_TransfereeSection extends Base {
 	 */
 	public boolean verifyDifferentTransfereeEmailFieldsUpdatedValue(DataTable table, int index) {
 		boolean flag = false;
+		CoreFunctions.scrollToElementUsingJavaScript(driver, _transfereeHeader, MYLOConstants.JOURNEY);
 		java.util.List<Map<String, String>> data = table.asMaps(String.class, String.class);
 		for (int i = 0; i < data.size(); i++) {
 			flag = ((verifyTransfereeEmailFieldsUpdatedValue(data.get(i).get(MYLOConstants.FIELD_NAME), index)));

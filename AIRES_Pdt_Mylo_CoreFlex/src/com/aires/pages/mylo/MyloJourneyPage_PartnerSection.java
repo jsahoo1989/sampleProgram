@@ -148,6 +148,9 @@ public class MyloJourneyPage_PartnerSection extends Base {
 	@FindBy(how = How.CSS, using = "button[class*='swal2-confirm btn']")
 	private WebElement _YesButton;
 	
+	@FindBy(how = How.XPATH, using = "//app-transferee-family//h2[contains(text(),'Partner')]")
+	private WebElement _partnerHeader;
+	
 	final By _dropdownOptions = By.cssSelector("div[role='option']>span");
 	final By _genderDropdownOptions = By.cssSelector("div[role='option']>div");
 	
@@ -352,7 +355,7 @@ public class MyloJourneyPage_PartnerSection extends Base {
 		String updatedValue = null;
 		try {
 			List<WebElement> optionList = CoreFunctions.getElementListByLocator(driver, _dropdownOptions);
-			updatedValue = CoreFunctions.setDifferentDropDownFieldsForMylo(driver, fieldValue, optionList);
+			updatedValue = BusinessFunctions.setDifferentDropDownFieldsForMylo(driver, fieldValue, optionList);
 			partnerUpdatedDropdownFieldValuesMap.put(fieldName, updatedValue);
 			partnerUpdatedFieldValuesMap.put(fieldName, updatedValue);
 		} catch (Exception e) {
@@ -522,6 +525,7 @@ public class MyloJourneyPage_PartnerSection extends Base {
 		boolean flag = false;
 		java.util.List<Map<String, String>> data = table.asMaps(String.class, String.class);
 		for (int i = 0; i < data.size(); i++) {
+			CoreFunctions.scrollToElementUsingJavaScript(driver, _partnerHeader, MYLOConstants.PARTNER);
 			setPartnerFields(MYLOConstants.PARTNER_FIRSTNAME,
 					data.get(i).get(MYLOConstants.PARTNER_FIRSTNAME));
 			setPartnerFields(MYLOConstants.PARTNER_LASTNAME, data.get(i).get(MYLOConstants.PARTNER_LASTNAME));

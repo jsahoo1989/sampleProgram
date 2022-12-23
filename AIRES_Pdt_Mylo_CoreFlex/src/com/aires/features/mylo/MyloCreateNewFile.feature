@@ -7,7 +7,7 @@ Background: Login to  Mylo application
 @IRIS-1674 @217630 @Mylo:217696 @Mylo-Regression
 Scenario: Mylo-Validate Toast Messages for Mandatory fields of Create New File section
 Given he is on CreateNewFile section after clicking on "New File" displayed in left panel under "Journey" section
-Then he enters below fields under CreateNewFile section
+Then following validation messages should be displayed, if leaving below mandatory fields blank under "CreateNewFile" section
 |TransfereeFirstName|TransfereeLastName|Client name               |Office    |Policy Type    |Tax Treatment|Message                  | 
 |                   |AutoMyloLastName  |Aires QA Automation Client|CRO       |Select One     |Select One   |First name is required.  |
 |AutoMyloFirstName  |                  |Aires QA Automation Client|CRO       |Select One     |Select One   |Last name is required.   |

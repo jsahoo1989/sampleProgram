@@ -269,7 +269,7 @@ public class MyloJourneyPage_TaxReportingSection extends Base {
 		clickFieldsOnTaxReportingSection(fieldName);
 		try {
 			List<WebElement> optionList = CoreFunctions.getElementListByLocator(driver, _dropdownOptions);
-			updatedValue = CoreFunctions.setDifferentDropDownFieldsForMylo(driver, fieldValue, optionList);
+			updatedValue = BusinessFunctions.setDifferentDropDownFieldsForMylo(driver, fieldValue, optionList);
 			taxReportingUpdatedFieldsValueMap.put(fieldName, updatedValue);
 		} catch (Exception e) {
 			Reporter.addStepLog(MessageFormat.format(CoreConstants.FAIL_TO_VERIFY_ELEMENT_ON_SECTION,

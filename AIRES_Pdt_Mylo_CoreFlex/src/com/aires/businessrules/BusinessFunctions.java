@@ -29,20 +29,12 @@
  ***********************************Header End*********************************************************************************/
 package com.aires.businessrules;
 
-import java.math.RoundingMode;
-import java.sql.Connection;
-import java.sql.DriverManager;
-import java.sql.Statement;
 import java.text.DecimalFormat;
 import java.text.MessageFormat;
 import java.time.Duration;
 import java.util.ArrayList;
-import java.util.Collections;
-import java.util.Comparator;
 import java.util.LinkedHashMap;
 import java.util.List;
-import java.util.Random;
-import java.util.concurrent.ThreadLocalRandom;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
@@ -51,7 +43,6 @@ import org.apache.log4j.Logger;
 import org.openqa.selenium.NoSuchElementException;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
-import org.openqa.selenium.interactions.Actions;
 import org.openqa.selenium.By;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.FluentWait;
@@ -66,20 +57,13 @@ import com.aires.pages.pdt.PDT_AddNewPolicyPage;
 import com.aires.testdatatypes.pdt.PDT_LoginDetails;
 import com.aires.utilities.EmailUtil;
 import com.aires.utilities.Log;
-import com.aires.utilities.getWindowText;
 import com.gargoylesoftware.htmlunit.ElementNotFoundException;
-import com.hp.lft.sdk.Desktop;
 import com.hp.lft.sdk.GeneralLeanFtException;
 import com.hp.lft.sdk.java.Dialog;
 import com.hp.lft.sdk.java.Editor;
-import com.hp.lft.sdk.java.EditorDescription;
-import com.hp.lft.sdk.java.Window;
-import com.hp.lft.sdk.java.WindowDescription;
 import com.vimalselvam.cucumber.listener.Reporter;
 
 public class BusinessFunctions {
-	private static String windowTitle;
-	private static Editor editor;
 	public static int count = 0;
 	static Logger LOG = Logger.getLogger(BusinessFunctions.class);
 	public static String userNameValue, passwordValue;
@@ -92,7 +76,6 @@ public class BusinessFunctions {
 
 	public static void selectItemFromListUsingText(WebDriver driver, List<WebElement> WebElementList, String itemName) {
 		CoreFunctions.waitForBrowserToLoad(driver);
-		CoreFunctions.waitHandler(3);
 		for (WebElement row : WebElementList) {
 			String text = row.getText();
 			Log.info(CoreConstants.ACTUAL_ITEM_NAME_IS + text);
@@ -104,101 +87,13 @@ public class BusinessFunctions {
 		}
 	}
 
-	public static Boolean verifyItemExistsInList(WebDriver driver, List<WebElement> webElementList, String itemName) {
-		Boolean isExists = false;
-		CoreFunctions.explicitWaitTillElementListVisibility(driver, webElementList);
-		try {
-			for (WebElement row : webElementList) {
-				if (row.getText().equals(itemName)) {
-					isExists = true;
-					CoreFunctions.highlightObject(driver, row);
-					CoreFunctions.hover(driver, row);
-					Reporter.addStepLog(CoreConstants.PASS + row.getText() + PDTConstants.IS_DISPLAYED);
-					break;
-				}
-			}
-		} catch (ElementNotFoundException e) {
-			e.printStackTrace();
-		}
-		return isExists;
-	}
-
-	public static Boolean verifyItemExistsInList(WebDriver driver, List<WebElement> webElementList, String elementName,
-			String elementVal, String pageName, boolean displayMsgInReport) {
-		Boolean isExists = false;
-		CoreFunctions.explicitWaitTillElementListVisibility(driver, webElementList);
-		try {
-			for (WebElement row : webElementList) {
-				if (row.getText().equals(elementVal)) {
-					isExists = true;
-					CoreFunctions.highlightObject(driver, row);
-					Reporter.addStepLog(MessageFormat.format(PDTConstants.VERIFY_ELEMENT_VALUE_ON_PAGE,
-							CoreConstants.PASS, elementName, elementVal, pageName));
-					break;
-				}
-			}
-		} catch (ElementNotFoundException e) {
-			e.printStackTrace();
-		}
-		return isExists;
-	}
-
-	public static void selectItemFromListUsingAttribute(WebDriver driver, List<WebElement> WebElementList,
-			String itemName, String attributeValue) {
-		CoreFunctions.waitHandler(2);
-		for (WebElement row : WebElementList) {
-			Log.info(CoreConstants.ACTUAL_ITEM_NAME_IS + row.getText());
-			if (row.getAttribute(attributeValue).equals(itemName)) {
-				Reporter.addStepLog(CoreConstants.PASS + row.getAttribute(attributeValue) + PDTConstants.IS_CLICKED);
-				CoreFunctions.click(driver, row, itemName);
-				break;
-			} else {
-				System.out.println("Attribute value in else--" + row.getAttribute(attributeValue));
-				System.out.println("Itemname in else--" + row.getAttribute(itemName));
-			}
-		}
-	}
-
 	public static void selectRadioAsPerLabelText(WebDriver driver, List<WebElement> WebElementList_Label,
 			String labelName) {
-		CoreFunctions.waitHandler(2);
 		System.out.println("inside radio as per label text");
 		System.out.println("count--" + WebElementList_Label.size());
 		for (WebElement row : WebElementList_Label) {
 			Log.info(CoreConstants.ACTUAL_ITEM_NAME_IS + row.getText());
 			if ((row.getText().trim()).equals(labelName)) {
-				CoreFunctions.click(driver, row, labelName);
-				Reporter.addStepLog(CoreConstants.PASS + row.getText() + PDTConstants.IS_CLICKED);
-				break;
-			}
-		}
-	}
-
-	public static void selectRadioAsPerLabelText(WebDriver driver, List<WebElement> WebElementList_Label,
-			String labelName, String radioBtnLabel) {
-		CoreFunctions.waitHandler(2);
-		System.out.println("inside radio as per label text");
-		System.out.println("count--" + WebElementList_Label.size());
-		for (WebElement row : WebElementList_Label) {
-			Log.info(CoreConstants.ACTUAL_ITEM_NAME_IS + row.getText());
-			if (row.getText().equals(labelName)) {
-				CoreFunctions.clickElement(driver, row);
-				Reporter.addStepLog(MessageFormat.format(PDTConstants.VERIFIED_OPTION_CHOSEN_FOR_RADIO_BTN,
-						CoreConstants.PASS, radioBtnLabel, row.getText()));
-				break;
-			}
-		}
-	}
-
-	public static void selectCheckBoxFromListAsPerLabelText(WebDriver driver, List<WebElement> WebElementList_Label,
-			String labelName) {
-		CoreFunctions.waitHandler(2);
-		System.out.println("inside radio as per label text");
-		System.out.println("count--" + WebElementList_Label.size());
-		for (WebElement row : WebElementList_Label) {
-			Log.info(CoreConstants.ACTUAL_ITEM_NAME_IS + row.getText());
-			if (row.getText().equals(labelName)) {
-				CoreFunctions.highlightObject(driver, row);
 				CoreFunctions.click(driver, row, labelName);
 				Reporter.addStepLog(CoreConstants.PASS + row.getText() + PDTConstants.IS_CLICKED);
 				break;
@@ -225,81 +120,6 @@ public class BusinessFunctions {
 		else
 			Reporter.addStepLog(MessageFormat.format(PDTConstants.FAIL_TO_SELECT_VALUE_IN_DROPDOWN, CoreConstants.FAIL,
 					drpdwnValue, elementName));
-	}
-
-	public static Boolean verifyCompanyNameAfterSearch(String expectedCompanyName) throws Exception {
-		Boolean isExists = false;
-		windowTitle = getWindowText.getActiveWindowText();
-		Log.info(windowTitle);
-		Window window = Desktop.describe(Window.class, new WindowDescription.Builder().title(windowTitle).build());
-		editor = window.describe(Editor.class, new EditorDescription.Builder().attachedText("Name*").build());
-		if (editor.getText().equalsIgnoreCase(expectedCompanyName)) {
-			isExists = true;
-			Reporter.addStepLog(CoreConstants.PASS + CoreConstants.PARTNER_TAB + CoreConstants.EDITOR_NAME
-					+ CoreConstants.IS_DISPLAYED_AS + editor.getText());
-		} else {
-			Reporter.addStepLog(CoreConstants.FAIL + CoreConstants.PARTNER_TAB + CoreConstants.EDITOR_NAME
-					+ PDTConstants.IS_NOT_DISPLAYED);
-			Assert.fail(CoreConstants.PARTNER_TAB + CoreConstants.EDITOR_NAME + PDTConstants.IS_NOT_DISPLAYED);
-		}
-		return isExists;
-	}
-
-	public static void closeModuleWindow() throws GeneralLeanFtException {
-		windowTitle = getWindowText.getActiveWindowText();
-		Window window = Desktop.describe(Window.class, new WindowDescription.Builder().title(windowTitle).build());
-		window.close();
-	}
-
-	public static void selectCheckBoxAsPerLabelText(WebDriver driver, WebElement WebElementList_Label,
-			String labelName) {
-		CoreFunctions.waitHandler(2);
-		Log.info(CoreConstants.ACTUAL_ITEM_NAME_IS + WebElementList_Label.getText());
-		if (WebElementList_Label.getText().equals(labelName)) {
-			CoreFunctions.click(driver, WebElementList_Label, labelName);
-			Reporter.addStepLog(CoreConstants.PASS + WebElementList_Label.getText() + PDTConstants.IS_CLICKED);
-		}
-	}
-
-	public static WebElement returnItemIfExistsInList(WebDriver driver, List<WebElement> _delElementList,
-			List<WebElement> _uploadDocumentFileList, String itemName) {
-		WebElement element = null;
-		CoreFunctions.explicitWaitTillElementListVisibility(driver, _uploadDocumentFileList);
-		try {
-			for (WebElement row : _uploadDocumentFileList) {
-				if (row.getText().equals(itemName)) {
-					return element = _delElementList.get(_uploadDocumentFileList.indexOf(row));
-				}
-			}
-		} catch (ElementNotFoundException e) {
-			e.printStackTrace();
-		}
-		return element;
-	}
-
-	public static WebElement returnItemIfExistsInListUsingAttributeValue(WebDriver driver,
-			List<WebElement> _delIconList, List<WebElement> _itemList, String itemName) {
-		WebElement element = null;
-		CoreFunctions.explicitWaitTillElementListVisibility(driver, _itemList);
-		try {
-			for (WebElement row : _itemList) {
-				if (row.getAttribute("value").equalsIgnoreCase(itemName)) {
-					return element = _delIconList.get(_itemList.indexOf(row));
-				}
-			}
-		} catch (ElementNotFoundException e) {
-			e.printStackTrace();
-		}
-		return element;
-	}
-
-	public static void selectValueFromDropdownWithoutReporting(WebElement element, String drpdwnValue) {
-		Select dropDown = new Select(element);
-		dropDown.selectByVisibleText(drpdwnValue);
-	}
-
-	public static void selectValueFromDropdownList(List<WebElement> listWebElement, int index) {
-		listWebElement.get(index).click();
 	}
 
 	/**
@@ -349,44 +169,6 @@ public class BusinessFunctions {
 		return null;
 	}
 
-	public static void selectItemFromListUsingJs(WebDriver driver, List<WebElement> WebElementList, String itemName) {
-		CoreFunctions.waitForBrowserToLoad(driver);
-		CoreFunctions.waitHandler(3);
-		for (WebElement row : WebElementList) {
-			Log.info(CoreConstants.ACTUAL_ITEM_NAME_IS + row.getText());
-			if (row.getText().equals(itemName)) {
-				CoreFunctions.clickUsingJS(driver, row, itemName);
-				Reporter.addStepLog(CoreConstants.PASS + row.getText() + PDTConstants.IS_CLICKED);
-				break;
-			}
-		}
-	}
-
-	public static boolean verifySelectedValueInDropdown(WebElement element, String drpdwnValue) {
-		if (element.getAttribute("title").equalsIgnoreCase(drpdwnValue)) {
-			Reporter.addStepLog(
-					MessageFormat.format(PDTConstants.VERIFY_VALUE_IN_DROPDOWN, CoreConstants.PASS, drpdwnValue));
-			return true;
-		} else {
-			Reporter.addStepLog(MessageFormat.format(PDTConstants.FAIL_TO_VERIFY_VALUE_IN_DROPDOWN, CoreConstants.FAIL,
-					drpdwnValue));
-			return false;
-		}
-	}
-
-	public static boolean verifyValueInTextFieldByAttribute(WebDriver driver, WebElement element, String drpdwnValue) {
-		if (element.getAttribute("value").equalsIgnoreCase(drpdwnValue)) {
-			Reporter.addStepLog(
-					MessageFormat.format(PDTConstants.VERIFY_VALUE_IN_TEXTFIELD, CoreConstants.PASS, drpdwnValue));
-			CoreFunctions.highlightObject(driver, element);
-			return true;
-		} else {
-			Reporter.addStepLog(MessageFormat.format(PDTConstants.FAIL_TO_VERIFY_VALUE_IN_TEXTFIELD, CoreConstants.FAIL,
-					drpdwnValue));
-			return false;
-		}
-	}
-
 	public static void selectOptionValueFromDropdown(WebElement element, String drpdwnValue) {
 		Select dropDown = new Select(element);
 		String elementName = element.getAttribute("value");
@@ -398,33 +180,6 @@ public class BusinessFunctions {
 		else
 			Reporter.addStepLog(MessageFormat.format(PDTConstants.FAIL_TO_SELECT_VALUE_IN_DROPDOWN, CoreConstants.FAIL,
 					drpdwnValue, elementName));
-	}
-
-	public static void updateQuery(String url, String query) {
-		Connection connection = null;
-		try {
-			DriverManager.registerDriver(new oracle.jdbc.OracleDriver());
-			connection = DriverManager.getConnection(url);
-			Statement st = connection.createStatement();
-			CoreFunctions.waitHandler(2);
-			st.executeUpdate(query);
-			CoreFunctions.waitHandler(2);
-			st.executeUpdate("commit");
-			CoreFunctions.waitHandler(5);
-			if (true) {
-				Log.info("executed successfully : " + query);
-			}
-			connection.close();
-		} catch (Exception ex) {
-			Log.info(CoreConstants.ERROR + ex);
-		}
-	}
-
-	public static void selectOptionValueFromDropdown(WebElement element, int index) {
-		Select dropDown = new Select(element);
-		dropDown.selectByIndex(index);
-		Reporter.addStepLog(MessageFormat.format(PDTConstants.VERIFY_VALUE_SELECTED_IN_DROPDWON, CoreConstants.PASS,
-				element.getAttribute("title")));
 	}
 
 	public static String getTestRailIdAsPerApplication(String appName, String scenarioTagName) {
@@ -444,27 +199,6 @@ public class BusinessFunctions {
 			break;
 		default:
 			Assert.fail(appName + PDTConstants.NOT_EXIST);
-		}
-		return value;
-	}
-
-	public static String getTestRailIdAsPerEnvt(String tagValue, String scenarioTagName) {
-		String value = null;
-		switch (tagValue) {
-		case CoreConstants.VALUE_AT_PRE_PROD:
-			value = scenarioTagName.substring(scenarioTagName.indexOf("Pre:") + 4,
-					scenarioTagName.lastIndexOf("Pre:") + 10);
-			break;
-		case CoreConstants.VALUE_AT_POST_PROD:
-			value = scenarioTagName.substring(scenarioTagName.indexOf("Post:") + 5,
-					scenarioTagName.lastIndexOf("Post:") + 11);
-			break;
-		case CoreConstants.VALUE_AT_PERFORMANCE:
-			value = scenarioTagName.substring(scenarioTagName.indexOf("Perf:") + 5,
-					scenarioTagName.lastIndexOf("Perf:") + 11);
-			break;
-		default:
-			Assert.fail(tagValue + PDTConstants.NOT_EXIST);
 		}
 		return value;
 	}
@@ -495,38 +229,6 @@ public class BusinessFunctions {
 		return sectionID;
 	}
 
-	public static int getRandomNumberFromList(int size) {
-		Random rand = new Random();
-		return rand.nextInt(size);
-	}
-
-	public static Boolean verifyTextExistsInList(WebDriver driver, List<WebElement> webElementList, String itemName) {
-		Boolean isExists = false;
-		CoreFunctions.explicitWaitTillElementListVisibility(driver, webElementList);
-		try {
-			for (WebElement row : webElementList) {
-				if (row.getText().contains(itemName)) {
-					isExists = true;
-					CoreFunctions.highlightObject(driver, row);
-					Reporter.addStepLog(MessageFormat.format(PDTConstants.VERIFIED_EMPL_HEADING_POPUP,
-							CoreConstants.PASS, row.getText()));
-					break;
-				}
-			}
-		} catch (ElementNotFoundException e) {
-			e.printStackTrace();
-		}
-		return isExists;
-	}
-
-	public static String setMoneyFormat(double amount) {
-		DecimalFormat df = new DecimalFormat("0.00");
-		df.setRoundingMode(RoundingMode.UP);
-		df.setGroupingUsed(true);
-		df.setGroupingSize(3);
-		return df.format(amount);
-	}
-
 	public static void getUserNameAndPasswordFromEmail() throws Exception {
 
 		String userID = EmailUtil.searchEmailAndReturnResult(PDTConstants.HOST_EMAIL_DOMAIN,
@@ -539,20 +241,6 @@ public class BusinessFunctions {
 		String s2 = s1.replace(":", "").trim();
 		userNameValue = s2.replace("</span>", "").trim();
 		CoreFunctions.writeToPropertiesFile("Transferee_UserNameInEMail", userNameValue);
-		CoreFunctions.waitHandler(20);
-
-	}
-
-	public static void selectItemFromListUsingTextAndDoubleClick(WebDriver driver, List<WebElement> WebElementList,
-			String itemName) {
-		for (WebElement element : WebElementList) {
-			Log.info(CoreConstants.ACTUAL_ITEM_NAME_IS + element.getText());
-			if (element.getText().contains(itemName) && CoreFunctions.verifyElementPresentOnPage(element, itemName)) {
-				CoreFunctions.highlightObject(driver, element);
-				Actions act = new Actions(driver);
-				act.moveToElement(element).doubleClick().build().perform();
-			}
-		}
 	}
 
 	public static int returnindexItemFromListUsingText(WebDriver driver, List<WebElement> WebElementList,
@@ -570,83 +258,6 @@ public class BusinessFunctions {
 			e.printStackTrace();
 		}
 		return -1;
-	}
-
-	public static void clickItemFromListUsingText(WebDriver driver, List<WebElement> WebElementList, String itemName) {
-		CoreFunctions.waitHandler(8);
-		for (WebElement row : WebElementList) {
-			Log.info(CoreConstants.ACTUAL_ITEM_NAME_IS + row.getText());
-			if (row.getText().equals(itemName)) {
-				CoreFunctions.click(driver, row, row.getText());
-				Reporter.addStepLog(CoreConstants.PASS + row.getText() + PDTConstants.IS_CLICKED);
-				break;
-			}
-		}
-	}
-
-	public static void selectOptValueFromDropdown(WebElement element, String drpdwnValue) {
-		CoreFunctions.waitHandler(5);
-		Select dropDown = new Select(element);
-		dropDown.selectByValue(drpdwnValue);
-	}
-
-	public static WebElement returnReportNameIfContainsInList(WebDriver driver, List<WebElement> _elementList,
-			String itemName) {
-		for (WebElement element : _elementList) {
-			Log.info(CoreConstants.ACTUAL_ITEM_NAME_IS + element.getText());
-			System.out
-					.println("Substring Report Name " + element.getText().substring(0, element.getText().indexOf('.')));
-			if (itemName.contains(element.getText().substring(0, element.getText().indexOf('.')))) {
-				return element;
-			}
-		}
-		return null;
-	}
-
-	public static WebElement returnItemIfContainsInList(WebDriver driver, List<WebElement> _elementList,
-			String itemName) {
-		for (WebElement element : _elementList) {
-			Log.info(CoreConstants.ACTUAL_ITEM_NAME_IS + element.getText());
-			if (element.getText().contains(itemName)) {
-				return element;
-			}
-		}
-		return null;
-	}
-
-	public static String selectRandomValueFormDropDown(WebDriver driver, List<WebElement> dropDownList) {
-		WebElement selectedOption = dropDownList.get(ThreadLocalRandom.current().nextInt(1, dropDownList.size()));
-		selectedOption.click();
-		return selectedOption.getText();
-	}
-
-	public static boolean compareList(List<String> actualList, List<String> expectedList) {
-		if (actualList.equals(expectedList)) {
-			return true;
-		} else {
-			return false;
-		}
-	}
-
-	public static List<String> sortList(List<String> listToBeSorted, String sortingOrder) {
-		try {
-			Comparator<String> c = null;
-			switch (sortingOrder) {
-			case PDTConstants.DESCENDING:
-				c = (I1, I2) -> (I2.compareTo(I1));
-				break;
-			case PDTConstants.ASCENDING:
-				c = (I1, I2) -> (I1.compareTo(I2));
-				break;
-			default:
-				Assert.fail(PDTConstants.INVALID_SORT_OPERATION);
-			}
-			Collections.sort(listToBeSorted, c);
-		} catch (Exception ex) {
-			Log.info(CoreConstants.ERROR + ex.getMessage());
-			Assert.fail(CoreConstants.ERROR + PDTConstants.UNABLE_TO_SORT_LIST);
-		}
-		return listToBeSorted;
 	}
 
 	public static void verifyOtherTextBoxIsDisplayed(WebDriver driver, String jsonReimbursedBy, WebElement element,
@@ -679,7 +290,6 @@ public class BusinessFunctions {
 
 	public static WebElement returnItemFromListUsingAttribute(WebDriver driver, List<WebElement> WebElementList,
 			String itemName, String attribute) {
-		CoreFunctions.waitHandler(3);
 		try {
 			for (WebElement row : WebElementList) {
 				Log.info("The Actual Item Name is :" + row.getAttribute(attribute));
@@ -710,39 +320,6 @@ public class BusinessFunctions {
 					randValue, lblDropDown, PDTConstants.DROP_DOWN));
 		}
 		return randValue;
-	}
-
-	public static String[] getClientAndPolicyDetails(PDT_LoginDetails _loginDetailsApplication) {
-		String clientAndPolicyDetailsArr[] = new String[3];
-		// switch (CoreFunctions.getPropertyFromConfig("envt").toLowerCase()) {
-		switch (System.getProperty("envt").toLowerCase()) {
-		case CoreConstants.ENVT_DEV:
-			clientAndPolicyDetailsArr[0] = _loginDetailsApplication.dev.clientId;
-			clientAndPolicyDetailsArr[1] = _loginDetailsApplication.dev.clientName;
-			clientAndPolicyDetailsArr[2] = _loginDetailsApplication.dev.policy;
-			break;
-		case CoreConstants.ENVT_QA:
-			clientAndPolicyDetailsArr[0] = _loginDetailsApplication.qa.clientId;
-			clientAndPolicyDetailsArr[1] = _loginDetailsApplication.qa.clientName;
-			clientAndPolicyDetailsArr[2] = _loginDetailsApplication.qa.policy;
-			break;
-		case CoreConstants.ENVT_TEST:
-			clientAndPolicyDetailsArr[0] = _loginDetailsApplication.preProd.clientId;
-			clientAndPolicyDetailsArr[1] = _loginDetailsApplication.preProd.clientName;
-			clientAndPolicyDetailsArr[2] = _loginDetailsApplication.preProd.policy;
-			break;
-		case CoreConstants.ENVT_UAT:
-			clientAndPolicyDetailsArr[0] = _loginDetailsApplication.uat.clientId;
-			clientAndPolicyDetailsArr[1] = _loginDetailsApplication.uat.clientName;
-			clientAndPolicyDetailsArr[2] = _loginDetailsApplication.uat.policy;
-			break;
-		case CoreConstants.ENVT_PROD:
-			clientAndPolicyDetailsArr[0] = _loginDetailsApplication.prod.clientId;
-			clientAndPolicyDetailsArr[1] = _loginDetailsApplication.prod.clientName;
-			clientAndPolicyDetailsArr[2] = _loginDetailsApplication.prod.policy;
-			break;
-		}
-		return clientAndPolicyDetailsArr;
 	}
 
 	public static String[] getCSMCredentials(PDT_LoginDetails _loginDetailsApplication) {
@@ -823,7 +400,6 @@ public class BusinessFunctions {
 		try {
 			CoreFunctions.explicitWaitTillElementListClickable(driver, listWebElement);
 			listWebElement.get(index).click();
-			CoreFunctions.waitHandler(5);
 		} catch (Exception e) {
 			Assert.fail(MessageFormat.format(MobilityXConstants.EXCEPTION_OCCURED_WHILE_CLICKING_ON_ELEMENT_FROM_LIST,
 					CoreConstants.FAIL, e.getMessage(), listWebElement.get(index).getText()));
@@ -1005,20 +581,6 @@ public class BusinessFunctions {
 			Assert.fail(MessageFormat.format(PDTConstants.FAILED_TO_VERIFY_AND_SELECT_DRP_DOWN, CoreConstants.FAIL,
 					drpDownVal, lblDropDown, subBenefitFormName));
 		}
-	}
-
-	public static String selectAndReturnRandomValueFromList(WebDriver driver, PDT_AddNewPolicyPage addNewPolicyPage,
-			String subBenefitFormName, List<WebElement> webElementList, String labelText) {
-		String randValue = null;
-		try {
-			randValue = webElementList.get(CoreFunctions.getRandomNumber(0, webElementList.size() - 1)).getText();
-			CoreFunctions.selectItemInListByText(driver, webElementList, randValue, labelText,
-					PDTConstants.RADIO_BUTTON_LIST, true);
-		} catch (Exception e) {
-			Assert.fail(MessageFormat.format(PDTConstants.FAIL_TO_SELECT_VALUE_FROM_FIELD, CoreConstants.FAIL,
-					randValue, labelText, PDTConstants.RADIO_BUTTON_LIST));
-		}
-		return randValue.trim();
 	}
 
 	public static boolean verifyDefaultOptionIsSelectedInDrpDown(String selectedOptionText, String expectedOption,
@@ -1374,15 +936,6 @@ public class BusinessFunctions {
 		return subBenefitMap.get(key);
 	}
 
-	public static boolean checkIfBenefitHaveEditLabelFunctionality(String pageName) {
-		ArrayList<String> benefitsHavingEditLabelFunct = new ArrayList<String>();
-		benefitsHavingEditLabelFunct.add(PDTConstants.PRE_ACCEPTANCE_SERVICES);
-		if (benefitsHavingEditLabelFunct.contains(pageName))
-			return true;
-		else
-			return false;
-	}
-
 	public static void expandSubBenefitIfCollapsed(WebElement subBenefitFormHeader, String subBenefitName,
 			WebDriver driver) {
 		try {
@@ -1402,31 +955,6 @@ public class BusinessFunctions {
 			return true;
 		}
 		return false;
-	}
-
-	public static boolean verifySelectedPolicyBenefitCategoryName(WebDriver driver, WebElement element,
-			String pageName) {
-		try {
-			CoreFunctions.explicitWaitForElementTextPresent(driver, element, pageName, 3);
-			return CoreFunctions.verifyElementOnPage(driver, element, PDTConstants.POLICY_BENEFIT_CATEGORY, pageName,
-					pageName, true);
-		} catch (Exception e) {
-			Assert.fail(MessageFormat.format(PDTConstants.FAIL_TO_VERIFY_ELEMENT_VAL_ON_PAGE, CoreConstants.FAIL,
-					PDTConstants.POLICY_BENEFIT_CATEGORY, pageName, pageName, element.getText()));
-			return false;
-		}
-	}
-
-	public static boolean verifySubBenefitCategoriesAreDisplayed(WebDriver driver,
-			List<String> subBenefitsFromDataTable, String pageName, List<WebElement> _subBenefitCategories) {
-		CoreFunctions.explicitWaitTillElementListClickable(driver, _subBenefitCategories);
-		if (subBenefitsFromDataTable
-				.equals(CoreFunctions.getElementTextAndStoreInList(driver, _subBenefitCategories))) {
-			Reporter.addStepLog(MessageFormat.format(PDTConstants.VERIFIED_SUB_BENEFITS_DISPLAYED, CoreConstants.PASS,
-					subBenefitsFromDataTable.toString(), pageName));
-			return true;
-		} else
-			return false;
 	}
 
 	public static boolean verifyPopUpContent(WebDriver driver, WebElement element, String elementName,
@@ -1515,5 +1043,19 @@ public class BusinessFunctions {
 			Assert.fail(MessageFormat.format(PDTConstants.FAILED_TO_SELECT_MULTIPLE_OPTIONS, CoreConstants.FAIL,
 					dropDownName, subBenefitFormName));
 		}
+	}
+	
+	public static String setDifferentDropDownFieldsForMylo(WebDriver driver, String fieldValue,
+			List<WebElement> optionList) {
+		String updatedValue = null;
+		if (fieldValue.equals(MYLOConstants.RANDOM)) {
+			optionList.remove(0);
+			updatedValue = CoreFunctions.getRandomElementValueFromList(driver, optionList);
+			BusinessFunctions.selectItemFromListUsingText(driver, optionList, updatedValue);
+		} else {
+			updatedValue = fieldValue;
+			BusinessFunctions.selectItemFromListUsingText(driver, optionList, fieldValue);
+		}
+		return updatedValue;
 	}
 }

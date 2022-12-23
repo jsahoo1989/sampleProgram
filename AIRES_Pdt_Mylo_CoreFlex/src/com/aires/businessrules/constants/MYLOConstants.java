@@ -664,7 +664,7 @@ public class MYLOConstants {
 	public static final String VERIFIED_RESULTS_MISMATCH_WITH_DATABASE = "{0}Verified ''{1}'' column values of ''{2}'' result does not match with database";
 	public static final String MY_FILES_HEADER="Query Your Files by Status";
 	public static final String MY_FILES_RESULT_HEADER="Please select a file from your query results below or run a new query.";
-	public static final String NO_OF_RECORDS="noOfRecords";
+	public static final String MAX_RECORDS_TO_VALIDATE="maxRecordsToValidate";
 	public static final String INACTIVE = "Inactive";
 	public static final String CLIENT__NAME = "Client Name";
 	public static final String ACCOUNTING = "Accounting";

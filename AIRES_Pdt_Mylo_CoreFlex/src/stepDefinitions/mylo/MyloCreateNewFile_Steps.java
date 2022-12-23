@@ -38,9 +38,9 @@ public class MyloCreateNewFile_Steps {
 		myloDashboardPage.clickOptionFromMainMenu(MYLOConstants.JOURNEY);
 		myloDashboardPage.selectOptionsFromAssignmentMenu(buttonName);
 	}
-
-	@Then("^he enters below fields under CreateNewFile section$")
-	public void he_enters_below_fields_under_CreateNewFile_section(DataTable table) {
+	
+	@Then("^following validation messages should be displayed, if leaving below mandatory fields blank under \"([^\"]*)\" section$")
+	public void following_validation_messages_should_be_displayed_if_leaving_below_mandatory_fields_blank_under_section(String arg1, DataTable table){
 		java.util.List<Map<String, String>> data = table.asMaps(String.class, String.class);
 		for (int i = 0; i < data.size(); i++) {
 			Assert.assertTrue(
@@ -52,6 +52,7 @@ public class MyloCreateNewFile_Steps {
 					MessageFormat.format(MYLOConstants.VERIFIED_MESSAGE_NOT_DISPLAYED, CoreConstants.FAIL,
 							data.get(i).get(MYLOConstants.MESSAGE), MYLOConstants.CREATE_NEW_FILE));
 		}
+	
 	}
 
 	@Then("^messages corresponding to below fields should be displayed after entering \"([^\"]*)\" for different fields of New File section$")

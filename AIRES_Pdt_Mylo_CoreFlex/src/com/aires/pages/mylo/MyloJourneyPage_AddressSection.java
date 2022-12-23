@@ -182,6 +182,12 @@ public class MyloJourneyPage_AddressSection extends Base {
 	@FindBy(how = How.XPATH, using = "//button[text()='Save']")
 	private WebElement _saveBtn;
 	
+	@FindBy(how = How.XPATH, using = "//button[text()=' Destination ']")
+	private WebElement _destinationAddressHeader;
+	
+	@FindBy(how = How.XPATH, using = "//button[text()=' Origin ']")
+	private WebElement _originAddressHeader;
+	
 	final By _dropdownOptions = By.xpath("//div[@role='option']/span");
 	final By _originCopyBtn = By.xpath("//button[contains(@class,'copy-active')]");
 
@@ -275,6 +281,7 @@ public class MyloJourneyPage_AddressSection extends Base {
 
 	public void setAddressFieldValues(String fieldName, String fieldValue, String type, String sectionType) {
 		String updatedValue = "";
+		scrollToSection(sectionType);
 		updatedValue = (fieldName.contains(MYLOConstants.COUNTRY) || fieldName.equals(MYLOConstants.ORIGIN_STATE)
 				|| fieldName.equals(MYLOConstants.DESTINATION_STATE))
 						? setAddressCountryStateDropdown(fieldName, fieldValue, sectionType)
@@ -413,10 +420,18 @@ public class MyloJourneyPage_AddressSection extends Base {
 			CoreFunctions.highlightElementAndClick(driver, _saveBtn, MYLOConstants.DESTINATION_ADDRESS_SAVE_BUTTON);
 		}
 	}
+	
+	public void scrollToSection(String sectionName) {
+		if(sectionName.equals(MYLOConstants.DESTINATION_ADDRESS))
+			CoreFunctions.scrollToElementUsingJavaScript(driver, _destinationAddressHeader, MYLOConstants.DESTINATION_ADDRESS);
+		else
+			CoreFunctions.scrollToElementUsingJavaScript(driver, _originAddressHeader, MYLOConstants.ORIGIN_ADDRESS);
+	}
 
 	public void verifyMandatoryFieldsToastMessagesAddressSection(String sectionType, DataTable table) {
 		java.util.List<Map<String, String>> data = table.asMaps(String.class, String.class);
 		for (int i = 0; i < data.size(); i++) {
+			scrollToSection(sectionType);
 			setAddressMandatoryFields(data.get(i).get(MYLOConstants.COUNTRY),
 					data.get(i).get(MYLOConstants.STATE_TEXT_FIELD), data.get(i).get(MYLOConstants.CITY), sectionType,
 					MYLOConstants.RANDOM_STRING);

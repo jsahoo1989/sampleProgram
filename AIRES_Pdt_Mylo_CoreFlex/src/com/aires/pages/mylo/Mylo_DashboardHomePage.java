@@ -575,7 +575,7 @@ public class Mylo_DashboardHomePage extends Base {
 	public boolean verifyMyFilesResultFromDB(String empNo, String reqColumnValue, String type) {
 		mapQueryResultColumnWebElements();
 		boolean flag = false;
-		String noOfRecordsToValidate = CoreFunctions.getPropertyFromConfig("noOfRecords");
+		String noOfRecordsToValidate = CoreFunctions.getPropertyFromConfig(MYLOConstants.MAX_RECORDS_TO_VALIDATE);
 		updatedCheckboxValue = (updatedCheckboxValue.equals(MYLOConstants.BLANK)) ? MYLOConstants.NONE
 				: updatedCheckboxValue;
 		try {
@@ -679,7 +679,7 @@ public class Mylo_DashboardHomePage extends Base {
 	public boolean verifyMyFilesSortResultFromDB(String empNo, String sortingOrder) {
 		mapDatabaseColumnNames();
 		boolean flag = false;
-		String noOfRecordsToValidate = CoreFunctions.getPropertyFromConfig(MYLOConstants.NO_OF_RECORDS);
+		String noOfRecordsToValidate = CoreFunctions.getPropertyFromConfig(MYLOConstants.MAX_RECORDS_TO_VALIDATE);
 		try {
 			List<String> DBList = DbFunctions.getMyFilesSortResult(empNo, updatedStatusValue,
 					databaseColNameMap.get(sortColName), sortingOrder, noOfRecordsToValidate);

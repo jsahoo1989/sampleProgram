@@ -9,7 +9,6 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.LinkedHashMap;
 import java.util.List;
-
 import org.testng.Assert;
 
 import com.aires.businessrules.constants.CoreConstants;
@@ -20,10 +19,12 @@ import com.aires.utilities.Log;
 
 public class DbFunctions {
 
-	static LinkedHashMap<String, String> myloQueryStatementMap = new LinkedHashMap<String, String>();
-	static LinkedHashMap<String, String> myloQTableColumnFields = new LinkedHashMap<String, String>();
-	static String environment = System.getProperty("envt").toLowerCase();
-	//static String environment =CoreFunctions.getPropertyFromConfig("envt").toLowerCase();
+	private static LinkedHashMap<String, String> myloQueryStatementMap = new LinkedHashMap<String, String>();
+	private static LinkedHashMap<String, String> myloQTableColumnFields = new LinkedHashMap<String, String>();
+	private static String environment = System.getProperty("envt").toLowerCase();
+	//private static String environment =CoreFunctions.getPropertyFromConfig("envt").toLowerCase();
+	private static String maxRows =CoreFunctions.getPropertyFromConfig("maxRecordsToValidate").toLowerCase();
+	
 
 	static LinkedHashMap<String, String> pdtExpenseCodeQueryStatementMap = new LinkedHashMap<String, String>();
 	
@@ -32,13 +33,11 @@ public class DbFunctions {
 		switch (envt) {
 		case "qa":
 			dbURL = "jdbc:oracle:thin:isisdba/irisqaisisdba@corpqavl300.corp.aires.com:1521:IRISQA";
-			//dbURL = "jdbc:oracle:thin:isisdba/irisnextisisdba@corptesvl300.corp.aires.com:1521:IRISNEXT";
 			break;
 		case "dev":
 			dbURL = "jdbc:oracle:thin:isisdba/irisdevisisdba@corptesvl300.corp.aires.com:1521:IRISDEV";
 			break;
 		case "test":
-			//dbURL = "jdbc:oracle:thin:policydba/testpo@corptesvl300.corp.aires.com:1521:IRISTEST";
 			dbURL = "jdbc:oracle:thin:isisdba/iristestisisdba@corptesvl300.corp.aires.com:1521:iristest";
 			break;
 		case "prod":
@@ -243,7 +242,7 @@ public class DbFunctions {
 			pst.setString(1, service);
 			pst.setString(2, serviceStatus);
 			ResultSet resultset = pst.executeQuery();
-			requiredList = getRequiredResultSet(resultset, noOfRecords, reqColumn);
+			requiredList = getRequiredResultSet(resultset, reqColumn);
 		} catch (Exception ex) {
 			Log.info(CoreConstants.ERROR + ex.getMessage());
 			Log.info(CoreConstants.ERROR + ex.getStackTrace());
@@ -261,15 +260,11 @@ public class DbFunctions {
 		return requiredList;
 	}
 
-	public static List<String> getRequiredResultSet(ResultSet resultset, String noOfRecords, String reqColumn) {
+	public static List<String> getRequiredResultSet(ResultSet resultset, String reqColumn) {
 		List<String> requiredList = new ArrayList<String>();
-		int flag = 1;
 		try {
 			while (resultset.next()) {
 				requiredList.add(resultset.getString(reqColumn));
-				if (flag == Integer.parseInt(noOfRecords))
-					break;
-				flag++;
 			}
 		} catch (SQLException e) {
 			Assert.fail(e.getMessage());
@@ -289,6 +284,7 @@ public class DbFunctions {
 							+ " " + sortOrder + ",FILEID asc");
 			pst.setString(1, empNo);
 			pst.setString(2, status);
+			pst.setMaxRows(Integer.parseInt(maxRows));
 			ResultSet resultset = pst.executeQuery();
 			int flag = 1;
 			int maxRow = Integer.parseInt(noOfRecords);
@@ -327,8 +323,9 @@ public class DbFunctions {
 							+ " ORDER BY " + colName + " " + sortOrder + ",FILEID asc");
 			pst.setString(1, service);
 			pst.setString(2, serviceStatus);
+			pst.setMaxRows(Integer.parseInt(maxRows));
 			ResultSet resultset = pst.executeQuery();
-			requiredList = getRequiredResultSet(resultset, noOfRecords, MYLOConstants.FILEID);
+			requiredList = getRequiredResultSet(resultset, MYLOConstants.FILEID);
 		} catch (Exception ex) {
 			Log.info(CoreConstants.ERROR + ex.getMessage());
 			Log.info(CoreConstants.ERROR + ex.getStackTrace());
@@ -470,4 +467,21 @@ public class DbFunctions {
 		}
 		return expenseCodeList;
 	}
+	
+	public static Connection getMyloConnection() {
+		Connection connection = null;	
+		try {
+			DriverManager.registerDriver(new oracle.jdbc.OracleDriver());
+			//connection = DriverManager.getConnection(
+				//	getDBConnectionStringAsPerEnvt(System.getProperty("envt")));
+
+			//Kept the commented code for running in local environment
+			  connection = DriverManager.getConnection(
+				getMyloDBConnectionStringAsPerEnvt(environment));
+		} catch (SQLException e) {
+			Assert.fail("Failed to establish connection to the database");
+		}
+		return connection;
+	}
 }
+	

@@ -224,7 +224,7 @@ public class MYLOConstants {
 	public static final String RED_COLOR_HEXCODE="#f37474";
 	public static final String BORDER_COLOR="border-color";
 	public static final String BACKGROUND_COLOR="background-color";
-	public static final String ASSIGNMENT_QUERYTYPE_HEADER="Please Select a Query Type to Search for a User File";
+	public static final String JOURNEY_QUERYTYPE_HEADER="Please Select a Query Type to Search for a User File";
 	public static final String ASSIGNMENT_PARAMETERTYPE_HEADER="Please select parameters for your query.";
 	public static final String VALUE_NOT_UPDATED = " Value is not updated";
 	public static final String QA = "QA";
@@ -477,7 +477,7 @@ public class MYLOConstants {
 	public static final String IC_QUESTION_VALUE="What is the name of the elementary/primary school you attended?";
 	public static final String SEND_LOGIN_CREDENTIALS = "Send Login Credentials";
 	public static final String DUPLICATE_EMAIL_MSG="The email address entered has been previously used as a username.For ease of use, the ReloNet username is defaulted to the transferee email address.Please provide a different email address, or click No generate a generic username.";
-	public static final String VRFIED_POPUP_NOT_ON_PAGE = "{0} Verified ''{1}'' popUp is not present on ''{2}'' Page ";
+	public static final String VERIFIED_POPUP_NOT_ON_PAGE = "{0} Verified ''{1}'' popUp is not present on ''{2}'' Page ";
 	public static final String VRFIED_POPUP_DISPLAYED_ON_PAGE = "{0} Verified ''{1}'' popUp is present on ''{2}'' Page ";
 	public static final String EMAIL1 = "Email1";
 	public static final String SUBMIT_BUTTON = "Submit";
@@ -726,6 +726,12 @@ public class MYLOConstants {
 	public static final String FAMILY_LAST_NAME = "Family Last Name";
 	public static final String PHONE_NUMBER="Phone Number";
 	
+	//Constants related to Transferee Name Query Section
+	public static final String TRANSFEREE_NAME_QUERY = "Transferee Name Query";
+	public static final String FIRST_NAME = "First Name";
+	public static final String LAST_NAME = "Last Name";
+	public static final String VERIFIED_QUERY_RESULTS_VALUES_MATCHED = "{0}Verified ''{1}'' column values of ''{2}'' result matches as per searched ''{3}'':- ''{4}'' with ''{5}'':-''{6}'' ";
+	public static final String VERIFIED_QUERY_RESULTS_VALUES_MISMATCH = "{0}Verified ''{1}'' column values of ''{2}'' result does not matched as per searched ''{3}'':- ''{4}'' with ''{5}'':-''{6}'' ";
 	
 	
 

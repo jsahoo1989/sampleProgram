@@ -148,6 +148,7 @@ public class Mylo_JourneyPage extends Base {
 		journeyWebElementsMap.put(MYLOConstants.QUERY_POPUP, _queryPopUpHeader);
 		journeyWebElementsMap.put(MYLOConstants.ACCOUNTING, _queryPopUpHeader);
 		journeyWebElementsMap.put(MYLOConstants.ADVANCED, _queryPopUpHeader);
+		journeyWebElementsMap.put(MYLOConstants.TRANSFEREE_NAME, _queryPopUpHeader);
 		journeyWebElementsMap.put(MYLOConstants.AIRES_FILE_TEAM, _fileTeam);
 	}
 
@@ -299,9 +300,10 @@ public class Mylo_JourneyPage extends Base {
 					? CoreFunctions.getRandomOutOfSelectedElementValueFromList(driver, _queryResultColHeader,
 							valuesToIgnore)
 					: colName;
+			int index= (colName.equals(MYLOConstants.RANDOM))?colHeader.indexOf(colHeader) + 1:colHeader.indexOf(colHeader);
 			sortColName = CoreFunctions.getElementText(driver,
-					_queryResultColHeader.get(colHeader.indexOf(colHeader) + 1));
-			CoreFunctions.click(driver, _columnCaretBtn.get(colHeader.indexOf(colHeader) + 1), sortColName);
+					_queryResultColHeader.get(index));
+			CoreFunctions.click(driver, _columnCaretBtn.get(index), sortColName);
 			BusinessFunctions.fluentWaitForMyloSpinnerToDisappear(driver, _spinner);
 		} catch (Exception e) {
 			Assert.fail(MessageFormat.format(CoreConstants.FAILD_CLCK_ELE, colName));

@@ -74,7 +74,7 @@ public class MyloAccountingQuerySteps {
 		Assert.assertFalse(myloJourneyPageAccountingQuerySection.verifyAccountingQueryPopUpDisplayed(),
 				MessageFormat.format(MYLOConstants.VRFIED_POPUP_DISPLAYED_ON_PAGE, CoreConstants.FAIL,
 						MYLOConstants.ACCOUNTING_QUERY, MYLOConstants.JOURNEY));
-		Reporter.addStepLog(MessageFormat.format(MYLOConstants.VRFIED_POPUP_NOT_ON_PAGE, CoreConstants.PASS,
+		Reporter.addStepLog(MessageFormat.format(MYLOConstants.VERIFIED_POPUP_NOT_ON_PAGE, CoreConstants.PASS,
 				MYLOConstants.ACCOUNTING_QUERY, MYLOConstants.JOURNEY));
 	}
 

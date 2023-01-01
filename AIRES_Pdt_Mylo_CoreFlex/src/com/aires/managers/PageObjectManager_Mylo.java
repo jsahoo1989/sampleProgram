@@ -29,6 +29,7 @@ import com.aires.pages.mylo.MyloJourneyPage_FileTeamSection;
 import com.aires.pages.mylo.MyloJourneyPage_IdentityChallengeSection;
 import com.aires.pages.mylo.MyloJourneyPage_OtherSection;
 import com.aires.pages.mylo.MyloJourneyPage_PartnerSection;
+import com.aires.pages.mylo.MyloJourneyPage_QueryByServiceID;
 import com.aires.pages.mylo.MyloJourneyPage_SendLoginCredentials;
 import com.aires.pages.mylo.MyloJourneyPage_TaxReportingSection;
 import com.aires.pages.mylo.MyloJourneyPage_TeamPostSection;
@@ -61,7 +62,8 @@ public class PageObjectManager_Mylo {
 	private MyloJourneyPage_TeamPostSection _journeyPage_TeamPostSection;
 	private MyloJourneyPage_AccountingQuerySection _journeyPage_AccountingQuerySection;
 	private MyloJourneyPage_AdvancedQuerySection _journeyPage_AdvancedQuerySection;
-	private MyloJourneyPage_FileTeamSection _journeyPage_FileTeamSection;
+	private MyloJourneyPage_FileTeamSection _journeyPage_FileTeamSection;	
+	private MyloJourneyPage_QueryByServiceID _journeyPage_QueryByServiceID;
 
 	private MyloNewFileUtil _myloNewFileUtil;
 
@@ -174,5 +176,10 @@ public class PageObjectManager_Mylo {
 		return (_journeyPage_FileTeamSection == null)
 				? _journeyPage_FileTeamSection = new MyloJourneyPage_FileTeamSection(_driver)
 				: _journeyPage_FileTeamSection;
+	}
+	
+	public MyloJourneyPage_QueryByServiceID getJourneyQueryByServiceID() {
+		return (_journeyPage_QueryByServiceID == null) ? _journeyPage_QueryByServiceID = new MyloJourneyPage_QueryByServiceID(_driver)
+				: _journeyPage_QueryByServiceID;
 	}
 }

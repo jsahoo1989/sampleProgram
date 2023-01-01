@@ -22,8 +22,8 @@ public class DbFunctions {
 
 	static LinkedHashMap<String, String> myloQueryStatementMap = new LinkedHashMap<String, String>();
 	static LinkedHashMap<String, String> myloQTableColumnFields = new LinkedHashMap<String, String>();
-	static String environment = System.getProperty("envt").toLowerCase();
-	//static String environment =CoreFunctions.getPropertyFromConfig("envt").toLowerCase();
+	//static String environment = System.getProperty("envt").toLowerCase();
+	static String environment =CoreFunctions.getPropertyFromConfig("envt").toLowerCase();
 
 	static LinkedHashMap<String, String> pdtExpenseCodeQueryStatementMap = new LinkedHashMap<String, String>();
 	
@@ -432,12 +432,12 @@ public class DbFunctions {
 		Connection connection = null;	
 		try {
 			DriverManager.registerDriver(new oracle.jdbc.OracleDriver());
-			connection = DriverManager.getConnection(
-					getDBConnectionStringAsPerEnvt(System.getProperty("envt")));
+			//connection = DriverManager.getConnection(
+				//	getDBConnectionStringAsPerEnvt(System.getProperty("envt")));
 
 			//Kept the commented code for running in local environment
-			  //connection = DriverManager.getConnection(
-				//	getDBConnectionStringAsPerEnvt(CoreFunctions.getPropertyFromConfig("envt")));
+			  connection = DriverManager.getConnection(
+				getDBConnectionStringAsPerEnvt(CoreFunctions.getPropertyFromConfig("envt")));
 		} catch (SQLException e) {
 			Assert.fail("Failed to establish connection to the database");
 		}
@@ -470,4 +470,41 @@ public class DbFunctions {
 		}
 		return expenseCodeList;
 	}
+	
+	public static String getSubServiceID(String shipmentType) {
+				
+		String subSericeID = null;
+		String DBQuery = null;
+		Connection connection = null;		
+		try {
+			connection = getConnection();
+			switch (shipmentType) {
+			case MYLOConstants.SHIPMENT:
+				DBQuery = DbQueries.QUERY_GET_SHIPMENT_SUBSERVICEID;
+				break;
+			case MYLOConstants.NON_SHIPMENT:
+				DBQuery = DbQueries.QUERY_GET_NONSHIPMENT_SUBSERVICEID;
+				break;
+			}			
+			PreparedStatement pst = connection.prepareStatement(DBQuery);
+			ResultSet resultset = pst.executeQuery();
+			while (resultset.next()) {
+				subSericeID = resultset.getString("assign_sub_service_id");
+				break;
+			}
+		} catch (Exception ex) {			
+			Assert.fail(CoreConstants.SQL_QUERY_FAILED);
+		} finally {
+			try {
+				if(connection != null) {
+					connection.close();
+				}
+			}catch (Exception ex){
+				Log.info(CoreConstants.ERROR+ex.getMessage());
+				Log.info(CoreConstants.ERROR+ex.getStackTrace());
+			}
+		}
+		return subSericeID;
+	}
+	
 }

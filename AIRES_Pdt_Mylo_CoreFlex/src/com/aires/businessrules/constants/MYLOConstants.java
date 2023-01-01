@@ -733,4 +733,10 @@ public class MYLOConstants {
 	
 	public static long TIME_BEFORE_ACTION;
 	public static long TIME_AFTER_ACTION;
+	
+	//Query By SubServiceID Popup
+	public static final String QUERY_BY_SUB_SERVICE_ID="Query By Sub-Service ID";
+	public static final String NON_SHIPMENT="Non-Shipment";
+	public static final String CLOSE = "Close";
+	public static final String FAILED_TO_GET_VALUE_FROM_ELEMET = "FAILED : Unable to get element Value - ''{0}''";
 }

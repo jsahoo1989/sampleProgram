@@ -489,7 +489,7 @@ public class DbFunctions {
 			PreparedStatement pst = connection.prepareStatement(DBQuery);
 			ResultSet resultset = pst.executeQuery();
 			while (resultset.next()) {
-				subSericeID = resultset.getString("assign_sub_service_id");
+				subSericeID = resultset.getString("ASSIGN_SUB_SERVICE_ID");
 				break;
 			}
 		} catch (Exception ex) {			

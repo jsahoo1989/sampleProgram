@@ -11,7 +11,6 @@ import com.aires.businessrules.constants.CoreConstants;
 import com.aires.businessrules.constants.MYLOConstants;
 import com.aires.cucumber.TestContext;
 import com.aires.pages.mylo.MyloJourneyPage_QueryByServiceID;
-import com.aires.pages.mylo.Mylo_DashboardHomePage;
 import cucumber.api.DataTable;
 import cucumber.api.java.en.Given;
 import cucumber.api.java.en.Then;
@@ -20,23 +19,14 @@ import cucumber.api.java.en.When;
 
 public class MyloJourneyQuery_Steps {
 	private TestContext testContext;
-	private Mylo_DashboardHomePage myloDashboardPage;
 	private MyloJourneyPage_QueryByServiceID myloJourneyPageQueryByServiceID;
 	
 
 	public MyloJourneyQuery_Steps(TestContext context) {
 		testContext = context;
-		myloDashboardPage = testContext.getMyloPageObjectManager().getDashboardHomePage();
 		myloJourneyPageQueryByServiceID = testContext.getMyloPageObjectManager().getJourneyQueryByServiceID();
 	}
 
-
-@Given("^he is on \"([^\"]*)\" after selecting \"([^\"]*)\" section under Journey available on left panel of Mylo Home Page$")
-public void he_is_on_after_selecting_section_under_Journey_available_on_left_panel_of_Mylo_Home_Page(String arg1, String arg2) throws Throwable {
-	myloDashboardPage.clickOptionFromMainMenu(MYLOConstants.JOURNEY);
-	myloDashboardPage.selectOptionsFromAssignmentMenu(MYLOConstants.QUERY_FILE);
-    
-}
 
 @Given("^he enters valid \"([^\"]*)\" subServiceId in the \"([^\"]*)\" field on QueryBySub-ServiceID section$")
 public void he_enters_valid_subServiceId_in_the_field_on_QueryBySub_ServiceID_section(String subServiceIDType, String fieldName) throws Throwable {
@@ -56,7 +46,7 @@ public void he_should_be_taken_to_the_Summary_Overview_section_for_that_subservi
 
 @Then("^he should be taken to the Summary Overview of associate file with shipment sidescreen being displayed$")
 public void he_should_be_taken_to_the_Summary_Overview_of_associate_file_with_shipment_sidescreen_being_displayed() throws Throwable {
-	Assert.assertTrue(myloJourneyPageQueryByServiceID.isShipmentSubServiceDisplayed(),MessageFormat.format(CoreConstants.FAIL_TO_VERIFY_ELEMENT_ON_SECTION, MYLOConstants.SHIPMENT_WEBSWING));
+	Assert.assertTrue(myloJourneyPageQueryByServiceID.isShipmentSubServiceScreenDisplayed(),MessageFormat.format(CoreConstants.FAIL_TO_VERIFY_ELEMENT_ON_SECTION, MYLOConstants.SHIPMENT_WEBSWING));
 	Assert.assertTrue(myloJourneyPageQueryByServiceID.isFileInformationSidePanelExist(),MessageFormat.format(CoreConstants.FAIL_TO_VERIFY_ELEMENT_ON_SECTION,
     		 MYLOConstants.FILE_INFORMATION_SECTION));   
 }
@@ -78,7 +68,7 @@ public void values_should_be_successfully_entered_as_per_below_number_limit_set_
 @Then("^he should not be able to enter any character in \"([^\"]*)\" field under \"([^\"]*)\" section$")
 public void he_should_not_be_able_to_enter_any_character_in_field_under_section(String arg1, String arg2, DataTable table) throws Throwable {
 	java.util.List<Map<String, String>> dataList = table.asMaps(String.class, String.class);	
-	myloJourneyPageQueryByServiceID.setRandomCharInSubServiceID(Integer.valueOf(dataList.get(0).get("StringLength")));
+	myloJourneyPageQueryByServiceID.setRandomStringInSubServiceID(Integer.valueOf(dataList.get(0).get("StringLength")));
 	CoreFunctions.verifyText(myloJourneyPageQueryByServiceID.getSubServiceIDValue(), "");
 }
 
@@ -90,8 +80,9 @@ public void modal_should_be_closed_after_clicking_on_button(String popUp, String
 }
 
 @When("^he clicks on \"([^\"]*)\" button after entering an invalid sub-service id in the \"([^\"]*)\" field on \"([^\"]*)\" section$")
-public void he_clicks_on_button_after_entering_an_invalid_sub_service_id_in_the_field_on_section(String button, String field, String section) throws Throwable {
-	myloJourneyPageQueryByServiceID.setRandomSubServiceIDValue(10);
+public void he_clicks_on_button_after_entering_an_invalid_sub_service_id_in_the_field_on_section(String button, String field, String section, DataTable table) throws Throwable {
+	java.util.List<Map<String, String>> dataList = table.asMaps(String.class, String.class);
+	myloJourneyPageQueryByServiceID.setRandomSubServiceIDValue(Integer.valueOf(dataList.get(0).get("NumberLength")));
 	myloJourneyPageQueryByServiceID.clickExecuteButton();
 }
 

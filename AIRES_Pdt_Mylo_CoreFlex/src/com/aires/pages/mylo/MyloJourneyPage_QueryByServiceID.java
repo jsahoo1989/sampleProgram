@@ -1,15 +1,6 @@
 package com.aires.pages.mylo;
 
 import java.text.MessageFormat;
-import java.util.Arrays;
-import java.util.HashMap;
-import java.util.LinkedHashMap;
-import java.util.List;
-import java.util.Map;
-import java.util.stream.Collectors;
-import java.util.stream.Stream;
-
-import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
@@ -19,15 +10,9 @@ import org.testng.Assert;
 import com.aires.businessrules.Base;
 import com.aires.businessrules.BusinessFunctions;
 import com.aires.businessrules.CoreFunctions;
-import com.aires.businessrules.DbFunctions;
 import com.aires.businessrules.constants.CoreConstants;
 import com.aires.businessrules.constants.MYLOConstants;
-import com.aires.utilities.CustomSoftAssert;
-import com.aires.utilities.Log;
-import com.aires.utilities.MyloNewFileUtil;
-import com.vimalselvam.cucumber.listener.Reporter;
 
-import cucumber.api.DataTable;
 
 public class MyloJourneyPage_QueryByServiceID extends Base {
 
@@ -60,10 +45,10 @@ public class MyloJourneyPage_QueryByServiceID extends Base {
 	@FindBy(how = How.CSS, using = "div[class='sk-three-strings']")
 	private WebElement _spinner;
 	
-	@FindBy(how = How.CSS, using = "//div[class*='mylocontent']")
+	@FindBy(how = How.CSS, using = "div[class*='mylocontent']")
 	private WebElement _summaryPage;
 	
-	@FindBy(how = How.CSS, using = "//div[class='webswing-banner']")
+	@FindBy(how = How.CSS, using = "div[class='webswing-banner']")
 	private WebElement _shipmentSubScreen;
 	
 	@FindBy(how = How.CSS, using = "h2[id='headingOne']")
@@ -83,8 +68,11 @@ public class MyloJourneyPage_QueryByServiceID extends Base {
 		}
 	}
 	
+	
 	/**
-	 * Enter value in SubServiceID input field
+	 * Enter value in subservice ID input field 
+	 * 
+	 * @param fieldValue
 	 */
 	public void setSubServiceIDValue(String fieldValue) {
 		try {
@@ -97,8 +85,11 @@ public class MyloJourneyPage_QueryByServiceID extends Base {
 	}
 	
 	/**
-	 * Enter random in SubServiceID input field
+	 * Enter random in SubServiceID input field 
+	 * 
+	 *  @param length
 	 */
+	
 	public void setRandomSubServiceIDValue(int length) {
 		try {
 			CoreFunctions.verifyElementPresentOnPage(_txtSubServiceID, MYLOConstants.SUB_SERVICE_ID);
@@ -111,9 +102,11 @@ public class MyloJourneyPage_QueryByServiceID extends Base {
 	
 	
 	/**
-	 * Enter random character in SubServiceID input field
+	 * Enter random String in SubServiceID input field
+	 * 
+	 * @param stringLength
 	 */
-	public void setRandomCharInSubServiceID(int stringLength) {
+	public void setRandomStringInSubServiceID(int stringLength) {
 		try {
 			CoreFunctions.verifyElementPresentOnPage(_txtSubServiceID, MYLOConstants.SUB_SERVICE_ID);
 			CoreFunctions.setElementText(driver, _txtSubServiceID, CoreFunctions.generateRandomString(stringLength));
@@ -125,6 +118,8 @@ public class MyloJourneyPage_QueryByServiceID extends Base {
 	
 	/**
 	 * Verify if no such file pop-up is displayed
+	 * 
+	 * @return
 	 */
 	public boolean isNoSuchFilePopUpExist() {
 		boolean isExists = false;
@@ -174,6 +169,8 @@ public class MyloJourneyPage_QueryByServiceID extends Base {
 	
 	/**
 	 * Return SubServiceID field value
+	 * 
+	 * @return
 	 */
 	public String getSubServiceIDValue() {		
 		String subSericeIDValue ="";
@@ -187,7 +184,9 @@ public class MyloJourneyPage_QueryByServiceID extends Base {
 	}
 	
 	/**
-	 * Verify if query by serice id popup is displayed
+	 * Verify if query by service id popup is displayed
+	 * 
+	 * @return
 	 */
 	public boolean isQueryBySubServiceIDPopUpExist() {
 		boolean isExists = false;
@@ -203,6 +202,8 @@ public class MyloJourneyPage_QueryByServiceID extends Base {
 	
 	/**
 	 * Verify if summary overview is displayed
+	 *
+	 * @return
 	 */
 	public boolean isSummaryDisplayed() {
 		boolean isExists = false;
@@ -217,9 +218,11 @@ public class MyloJourneyPage_QueryByServiceID extends Base {
 	
 	
 	/**
-	 * Verify if ShipmentSubService is displayed
+	 * Verify if ShipmentSubService Screen is displayed
+	 * 
+	 * @return
 	 */
-	public boolean isShipmentSubServiceDisplayed() {
+	public boolean isShipmentSubServiceScreenDisplayed() {
 		boolean isExists = false;
 		try {
 			isExists = CoreFunctions.isElementExist(driver, _shipmentSubScreen, 5);	
@@ -234,6 +237,8 @@ public class MyloJourneyPage_QueryByServiceID extends Base {
 	
 	/**
 	 * Verify if file information side panel is displayed
+	 * 
+	 * @return
 	 */
 	public boolean isFileInformationSidePanelExist() {
 		boolean isExists = false;

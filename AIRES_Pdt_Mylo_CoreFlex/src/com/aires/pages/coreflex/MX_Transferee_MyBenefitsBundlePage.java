@@ -194,6 +194,9 @@ public class MX_Transferee_MyBenefitsBundlePage extends Base {
 	@FindBy(how = How.CSS, using = "div[id*='deleteOwnedBenefits::content'] span[class='RXCFSmallText RXMineShaft RXCFWordwrap']")
 	private List<WebElement> _deleteCashoutDescriptionText;
 
+	private By _denyBenefitRequestDisabledDeleteButtonHoverTextSubElement = By.xpath(
+			".//span[contains(text(),'Unable to delete benefit. Please see comments in the History section below for more information.')]");
+
 	/*********************************************************************/
 
 	public static int hoverIndex = 0;
@@ -1332,17 +1335,26 @@ public class MX_Transferee_MyBenefitsBundlePage extends Base {
 		boolean isDeleteHoverTextVerified = false;
 		if (benefit.getDeleteBenefitOnMBBPage()) {
 			try {
-				isDeleteButtonDisabled = Boolean.valueOf(
-						CoreFunctions.getAttributeText(_buttonDeleteBenefitList.get(indexBenefit), "aria-disabled"));
-				CoreFunctions.moveToElement(driver, _buttonDeleteBenefitList.get(indexBenefit));
+				isDeleteButtonDisabled = Boolean.valueOf(CoreFunctions.getAttributeText(
+						CoreFunctions.findSubElement(_submittedBenefitfRow.get(indexBenefit), _deleteButtonSubElement),
+						"aria-disabled"));
+				CoreFunctions.scrollToElementUsingJS(driver,
+						CoreFunctions.findSubElement(_submittedBenefitfRow.get(indexBenefit), _deleteButtonSubElement),
+						COREFLEXConstants.DELETE_BUTTON);
+				CoreFunctions.moveToElement(driver,
+						CoreFunctions.findSubElement(_submittedBenefitfRow.get(indexBenefit), _deleteButtonSubElement));
 				isDeleteHoverTextVerified = CoreFunctions.isElementExist(driver,
-						_disabledDeleteButtonHoverText.get(indexBenefit), 5);
-				CoreFunctions.highlightObject(driver, _disabledDeleteButtonHoverText.get(indexBenefit));
-				CoreFunctions.moveToElement(driver, _textSubmittedBenefitNameList.get(indexBenefit));
+						CoreFunctions.findSubElement(_submittedBenefitfRow.get(indexBenefit),
+								_denyBenefitRequestDisabledDeleteButtonHoverTextSubElement),
+						5);
+				CoreFunctions.highlightObject(driver,
+						CoreFunctions.findSubElement(_submittedBenefitfRow.get(indexBenefit),
+								_denyBenefitRequestDisabledDeleteButtonHoverTextSubElement));
 				if (isDeleteButtonDisabled && isDeleteHoverTextVerified) {
 					Reporter.addStepLog(MessageFormat.format(
 							COREFLEXConstants.SUCCESSFULLY_VERIFIED_DELETE_BUTTON_IS_DISABLED_AND_DISABLED_DELETE_HOVER_TEXT_POST_DELETE_REQUEST_DENIED_BY_MSPEC_PPC_USER,
 							CoreConstants.PASS));
+					CoreFunctions.moveToElement(driver, _textSubmittedBenefitNameList.get(indexBenefit));
 					return true;
 				} else {
 					Reporter.addStepLog(MessageFormat.format(

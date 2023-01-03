@@ -80,5 +80,6 @@ Feature: Validate the CoreFlex End-To-End Business Test Flow(BluePrint, MXClient
     And he has clicked on "Check All" followed by "Resolve Multiple" button to resolve multiple 'Delete Request Pending' request of the Client
     When he confirms request by selecting "Approve All" option after verifying 'Delete Request Pending' benefit request details on 'Requests' dialog by Client
     Then 'Action Completed' growl message for "Approve Request" should be displayed on "Transferee Submission Details" page
+    And "Mobility Benefit Delete Request has been Approved" email should be sent to Client for benefit "Approve Request" action by "MSPEC/PPC" user
     And 'Delete Request Pending' benefit request should be removed from 'Transferee Submission Details' list
     And benefit details should be updated in 'MXClient' application based on "Approved" 'Delete Request' on Transferee Submission

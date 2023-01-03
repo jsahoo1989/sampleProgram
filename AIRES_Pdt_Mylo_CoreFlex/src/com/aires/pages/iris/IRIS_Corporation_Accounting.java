@@ -146,7 +146,8 @@ public class IRIS_Corporation_Accounting extends BasePage {
 				if (policyName.equals(table.getCell(rowCount, "Policy").getValue().toString())) {
 					performCoreFlexCheckboxSelectionBasedOnUserInput(table, rowCount, columnName, policyName,
 							checkboxSelection);
-					CoreFunctions.writeToPropertiesFile("Policy_TracingSet", (table.getCell(rowCount, "Tracing Set").getValue().toString()));
+					CoreFunctions.writeToPropertiesFile("Policy_TracingSet",
+							(table.getCell(rowCount, "Tracing Set").getValue().toString()));
 					break;
 				}
 			}
@@ -180,7 +181,7 @@ public class IRIS_Corporation_Accounting extends BasePage {
 		default:
 			Assert.fail(IRISConstants.NO_VALID_SELECTION);
 		}
-		
+
 	}
 
 	/**
@@ -396,41 +397,67 @@ public class IRIS_Corporation_Accounting extends BasePage {
 		return false;
 	}
 
-	
 	public void addPolicy() throws GeneralLeanFtException, Exception {
-		Helpers.clickButton(IRIS_PageMaster.getButtonObject(_IRIS, "Add", 0), IRIS_PageMaster.getButtonObject(_IRIS, "Add", 0).getAttachedText());
+		Helpers.clickButton(IRIS_PageMaster.getButtonObject(_IRIS, "Add", 0),
+				IRIS_PageMaster.getButtonObject(_IRIS, "Add", 0).getAttachedText());
 		Table policyTable = IRIS_PageMaster.getTableObject(_IRIS,
 				"com.aires.iris.view.corporation.accounting.PolicyPanel$1");
-		String policyName = IRISConstants.AUTO_TEST_POLICY+CoreFunctions.generateRandomString(5);
-		policyTable.getCell(policyTable.getRows().size()-1, PDTConstants.POLICY).setValue(policyName);
-		policyTable.getCell(policyTable.getRows().size()-1, "Tax Assistance Policy").setValue("No w/h No GUP|None");
-		policyTable.getCell(policyTable.getRows().size()-1, "Tracing Set").setValue("Transfer");
-		Helpers.clickButton(IRIS_PageMaster.getButtonObject(_IRIS, "Save"), IRIS_PageMaster.getButtonObject(_IRIS, "Save").getAttachedText());
+		String policyName = IRISConstants.AUTO_TEST_POLICY + CoreFunctions.generateRandomString(5);
+		policyTable.getCell(policyTable.getRows().size() - 1, PDTConstants.POLICY).setValue(policyName);
+		policyTable.getCell(policyTable.getRows().size() - 1, "Tax Assistance Policy").setValue("No w/h No GUP|None");
+		policyTable.getCell(policyTable.getRows().size() - 1, "Tracing Set").setValue("Transfer");
+		Helpers.clickButton(IRIS_PageMaster.getButtonObject(_IRIS, "Save"),
+				IRIS_PageMaster.getButtonObject(_IRIS, "Save").getAttachedText());
 		Reporter.addStepLog(MessageFormat.format(IRISConstants.VERIFIED_BUTTON_CLICKED, CoreConstants.PASS,
 				IRIS_PageMaster.getButtonObjectFromLabel(_IRIS, "Save").getLabel()));
 		acceptSaveConfirmation();
 		searchAndVerifyNewlyAddedPolicyNameInPolicyTable(policyTable, PDTConstants.POLICY, policyName);
 	}
-	
-	private void searchAndVerifyNewlyAddedPolicyNameInPolicyTable(Table table, String columnName, String policyName) throws GeneralLeanFtException {
+
+	private void searchAndVerifyNewlyAddedPolicyNameInPolicyTable(Table table, String columnName, String policyName)
+			throws GeneralLeanFtException {
 		try {
 			boolean policyFound = false;
 			for (int rowCount = 0; rowCount < table.getRows().size(); rowCount++) {
 				if (policyName.equals(table.getCell(rowCount, "Policy").getValue().toString())) {
-					Reporter.addStepLog(MessageFormat.format(IRISConstants.VERIFIED_NEWLY_ADDED_POLICY_NAME, CoreConstants.PASS,
-							policyName));
+					Reporter.addStepLog(MessageFormat.format(IRISConstants.VERIFIED_NEWLY_ADDED_POLICY_NAME,
+							CoreConstants.PASS, policyName));
 					policyFound = true;
 					CoreFunctions.writeToPropertiesFile("pdtPolicyName", policyName);
 					break;
 				}
 			}
-			if(!policyFound) {
+			if (!policyFound) {
 				Assert.fail(MessageFormat.format(IRISConstants.FAILED_TO_FIND_POLICY, CoreConstants.FAIL, policyName));
 			}
 		} catch (Exception e) {
 			Reporter.addStepLog(MessageFormat.format(
 					IRISConstants.EXCEPTION_OCCURED_WHILE_SEARCHING_REQUIRED_POLICY_IN_POLICY_TABLE_OF_ACCOUNTING_TAB,
 					CoreConstants.FAIL, e.getMessage()));
+		}
+	}
+
+	public void addNewOnPointAutomationPolicies() throws Exception {
+		for (int counter = 0; counter < 15; counter++) {
+			Helpers.clickButton(IRIS_PageMaster.getButtonObject(_IRIS, "Add", 0),
+					IRIS_PageMaster.getButtonObject(_IRIS, "Add", 0).getAttachedText());
+			Table policyTable = IRIS_PageMaster.getTableObject(_IRIS,
+					"com.aires.iris.view.corporation.accounting.PolicyPanel$1");
+			String policyName = IRISConstants.ONPOINT_AUTOMATION_POLICY + CoreFunctions.generateRandomString(5);
+			policyTable.getCell(policyTable.getRows().size() - 1, PDTConstants.POLICY).setValue(policyName);
+			policyTable.getCell(policyTable.getRows().size() - 1, "Tax Assistance Policy")
+					.setValue("US Expat State & FICA only");
+			policyTable.getCell(policyTable.getRows().size() - 1, "Tracing Set").setValue("Assignment");
+
+			if ((policyTable.getCell(policyTable.getRows().size() - 1, "OnPoint Enabled").getValue().toString())
+					.equals("0.0"))
+				policyTable.getCell(policyTable.getRows().size() - 1, "OnPoint Enabled").click();
+
+			Helpers.clickButton(IRIS_PageMaster.getButtonObject(_IRIS, "Save"),
+					IRIS_PageMaster.getButtonObject(_IRIS, "Save").getAttachedText());
+			Reporter.addStepLog(MessageFormat.format(IRISConstants.VERIFIED_BUTTON_CLICKED, CoreConstants.PASS,
+					IRIS_PageMaster.getButtonObjectFromLabel(_IRIS, "Save").getLabel()));
+			acceptSaveConfirmation();
 		}
 	}
 }

@@ -99,8 +99,8 @@ public class CoreFlex_PreviewTransfereePage extends Base {
 	private List<WebElement> _textTracingPrompt;
 
 	// Flex Planning Tool Label
-	@FindBy(how = How.XPATH, using = "//div[contains(@class,'flex-tool')][contains(text(),'Flex Planning Tool')]")
-	private WebElement _textFlexPlanningTool;
+	@FindBy(how = How.XPATH, using = "//div[contains(@class,'flex-tool')][contains(text(),'OnPoint Planning Tool')]")
+	private WebElement _textOnPointPlanningTool;
 
 	// Preview Transferee Experience Button
 	@FindBy(how = How.XPATH, using = "//button[contains(text(),'Preview Transferee Experience')]")
@@ -125,7 +125,7 @@ public class CoreFlex_PreviewTransfereePage extends Base {
 				COREFLEXConstants.CLOSE_TRANSFEREE_PREVIEW);
 		return (CoreFunctions.getElementText(driver, _buttonCloseTransfereePreviewPage)
 				.equals(COREFLEXConstants.CLOSE_TRANSFEREE_PREVIEW)
-				&& (CoreFunctions.isElementExist(driver, _textFlexPlanningTool, 5)));
+				&& (CoreFunctions.isElementExist(driver, _textOnPointPlanningTool, 5)));
 	}
 
 	/**
@@ -201,33 +201,35 @@ public class CoreFlex_PreviewTransfereePage extends Base {
 			}
 		} catch (Exception e) {
 			Reporter.addStepLog(MessageFormat.format(
-					COREFLEXConstants.EXCEPTION_OCCURED_WHILE_VERIFYING_PORTION_CASHOUT_ON_PREVIEW_TRANSFEREE_PAGE,
+					COREFLEXConstants.EXCEPTION_OCCURED_WHILE_VERIFYING_CASHOUT_DETAILS_ON_PREVIEW_TRANSFEREE_PAGE,
 					CoreConstants.FAIL, e.getMessage()));
 		}
 		if (isPortionCashoutVerified) {
 			Reporter.addStepLog(MessageFormat.format(
-					COREFLEXConstants.SUCCESSFULLY_VERIFIED_PORTION_CASHOUT_ON_PREVIEW_TRANSFEREE_PAGE,
+					COREFLEXConstants.SUCCESSFULLY_VERIFIED_CASHOUT_DETAILS_ON_PREVIEW_TRANSFEREE_PAGE,
 					CoreConstants.PASS));
+		} else {
+			Reporter.addStepLog(MessageFormat.format(
+					COREFLEXConstants.FAILED_TO_VERIFY_CASHOUT_DETAILS_ON_PREVIEW_TRANSFEREE_PAGE, CoreConstants.FAIL));
 		}
 		return isPortionCashoutVerified;
 	}
 
-	public boolean verifyBenefitDetailsOnPreviewTransfereePage(String policyType, String policyRequiredFor,
-			String numberOfMilestones) {
+	public boolean verifyBenefitDetailsOnPreviewTransfereePage(String policyType, String policyRequiredFor) {
 		switch (policyType) {
 		case COREFLEXConstants.FLEX:
-			return verifyFlexBenefitsDetails(policyRequiredFor, numberOfMilestones);
+			return verifyFlexBenefitsDetails(policyRequiredFor);
 		case COREFLEXConstants.CORE:
 			return verifyCoreBenefitName();
 		case COREFLEXConstants.BOTH:
-			return verifyCoreBenefitName() && verifyFlexBenefitsDetails(policyRequiredFor, numberOfMilestones);
+			return verifyCoreBenefitName() && verifyFlexBenefitsDetails(policyRequiredFor);
 		default:
 			Assert.fail(COREFLEXConstants.INVALID_OPTION);
 		}
 		return false;
 	}
 
-	private boolean verifyFlexBenefitsDetails(String policyRequiredFor, String numberOfMilestones) {
+	private boolean verifyFlexBenefitsDetails(String policyRequiredFor) {
 		boolean isFlexBenefitPreviewVerified = false;
 		try {
 			for (WebElement element : _moreLinkBenefitDesc) {
@@ -237,11 +239,11 @@ public class CoreFlex_PreviewTransfereePage extends Base {
 			case COREFLEXConstants.CLONING:
 			case COREFLEXConstants.VERSIONING:
 			case COREFLEXConstants.CLIENT:
-				isFlexBenefitPreviewVerified = verifyCloningFlexBenefitDetails();
+				isFlexBenefitPreviewVerified = verifyCloningFlexBenefitDetails(policyRequiredFor);
 				break;
 			case COREFLEXConstants.AIRES_MANAGED_BENEFITS_CARDS:
 			case COREFLEXConstants.ALL_BENEFITS:
-				isFlexBenefitPreviewVerified = verifyAllFlexBenefitDetails(policyRequiredFor, numberOfMilestones);
+				isFlexBenefitPreviewVerified = verifyAllFlexBenefitDetails(policyRequiredFor);
 				break;
 			default:
 				Assert.fail(COREFLEXConstants.BLUEPRINT_POLICY_REQUIRED_FOR_OPTION_NOT_PRESENT_IN_THE_LIST);
@@ -262,13 +264,11 @@ public class CoreFlex_PreviewTransfereePage extends Base {
 		return isFlexBenefitPreviewVerified;
 	}
 
-	private boolean verifyCloningFlexBenefitDetails() {
+	private boolean verifyCloningFlexBenefitDetails(String policyRequiredFor) {
 		boolean isFlexBenefitPreviewVerified = false;
 		for (FlexBenefit benefitList : flexBenefits) {
 			for (Benefit benefit : benefitList.getBenefits()) {
-				if ((benefit.getPolicyCreationGroup().contains(COREFLEXConstants.CLONING))
-						|| (benefit.getPolicyCreationGroup().contains(COREFLEXConstants.VERSIONING))
-						|| (benefit.getPolicyCreationGroup().contains(COREFLEXConstants.CLIENT))) {
+				if ((benefit.getPolicyCreationGroup().contains(policyRequiredFor))) {
 					int indexBenefit = BusinessFunctions.returnindexItemFromListUsingText(driver,
 							_textAddedBenefitNameList, benefit.getBenefitDisplayName());
 					int indexCategory = BusinessFunctions.returnindexItemFromListUsingText(driver,
@@ -286,12 +286,11 @@ public class CoreFlex_PreviewTransfereePage extends Base {
 		return isFlexBenefitPreviewVerified;
 	}
 
-	private boolean verifyAllFlexBenefitDetails(String policyRequiredFor, String numberOfMilestones) {
+	private boolean verifyAllFlexBenefitDetails(String policyRequiredFor) {
 		boolean isFlexBenefitPreviewVerified = false;
 		for (FlexBenefit benefitList : flexBenefits) {
 			for (Benefit benefit : benefitList.getBenefits()) {
-				if ((policyRequiredFor.equals(COREFLEXConstants.ALL_BENEFITS))
-						&& (benefit.getPolicyCreationGroup().contains(COREFLEXConstants.ALL_BENEFITS))) {
+				if (benefit.getPolicyCreationGroup().contains(policyRequiredFor)) {
 					int indexBenefit = BusinessFunctions.returnindexItemFromListUsingText(driver,
 							_textAddedBenefitNameList, benefit.getBenefitDisplayName());
 					int indexCategory = BusinessFunctions.returnindexItemFromListUsingText(driver,
@@ -300,23 +299,8 @@ public class CoreFlex_PreviewTransfereePage extends Base {
 							.getItemsFromListByIndex(driver, _textAddedBenefitGroupList, indexCategory, true)
 							.equals(benefitList.getCategory()))
 							&& verifyFlexPlanningToolBenefitDetails(indexBenefit, benefit);
-					if (!isFlexBenefitPreviewVerified) {
+					if (!isFlexBenefitPreviewVerified)
 						break;
-					}
-				} else if ((policyRequiredFor.equals(COREFLEXConstants.AIRES_MANAGED_BENEFITS_CARDS))
-						&& (benefit.getAiresManagedService().equals("Yes"))
-						&& (benefit.getNoOfMilestones() == Integer.parseInt(numberOfMilestones))) {
-					int indexBenefit = BusinessFunctions.returnindexItemFromListUsingText(driver,
-							_textAddedBenefitNameList, benefit.getBenefitDisplayName());
-					int indexCategory = BusinessFunctions.returnindexItemFromListUsingText(driver,
-							_textAddedBenefitGroupList, benefitList.getCategory(), true);
-					isFlexBenefitPreviewVerified = (CoreFunctions
-							.getItemsFromListByIndex(driver, _textAddedBenefitGroupList, indexCategory, true)
-							.equals(benefitList.getCategory()))
-							&& verifyFlexPlanningToolBenefitDetails(indexBenefit, benefit);
-					if (!isFlexBenefitPreviewVerified) {
-						break;
-					}
 				}
 			}
 		}
@@ -335,19 +319,19 @@ public class CoreFlex_PreviewTransfereePage extends Base {
 	}
 
 	public boolean verifyCashOutContent(double cashoutPoints) {
-		return Objects.equals(CoreFunctions.getElementText(driver, _textCashOutName),
-				policySetupPageData.flexPolicySetupPage.customCashoutBenefitName)
-				&& Objects.equals(CoreFunctions.getElementText(driver, _textCashOutSuggestion),
-						MobilityXConstants.CASHOUT_SUGGESTION_TEXT_PREVIEW_TRANSFEREE)
-				&& Objects.equals(
-						Double.parseDouble(CoreFunctions.getElementText(driver, _textPointsAvailableForCashOut)),
-						(cashoutPoints))
-				&& CoreFunctions.getElementText(driver, _textCashOutValue).contains(String.valueOf(cashoutPoints));
+		CoreFunctions.verifyText(CoreFunctions.getElementText(driver, _textCashOutName),
+				policySetupPageData.flexPolicySetupPage.customCashoutBenefitName);
+		CoreFunctions.verifyText(CoreFunctions.getElementText(driver, _textCashOutSuggestion),
+				MobilityXConstants.CASHOUT_SUGGESTION_TEXT_PREVIEW_TRANSFEREE);
+		CoreFunctions.verifyValue(driver, _textPointsAvailableForCashOut, cashoutPoints,
+				COREFLEXConstants.POINTS_AVAILABLE_FOR_CASHOUT);
+		CoreFunctions.verifyText(CoreFunctions.getElementText(driver, _textCashOutValue),
+				BusinessFunctions.getExpectedCashoutValue(cashoutPoints), COREFLEXConstants.CASHOUT_VALUE);
+		return true;
 	}
 
-	public boolean verifyPreviewTransfereeExperience(String policyType, String policyRequiredFor,
-			String numberOfMilestones) {
-		return verifyBenefitDetailsOnPreviewTransfereePage(policyType, policyRequiredFor, numberOfMilestones)
+	public boolean verifyPreviewTransfereeExperience(String policyType, String policyRequiredFor) {
+		return verifyBenefitDetailsOnPreviewTransfereePage(policyType, policyRequiredFor)
 				&& validatePortionCashOutSection();
 	}
 

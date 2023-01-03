@@ -81,7 +81,7 @@ public class TransfereeSubmissions_DashboardHomePage extends Base {
 	private WebElement _progressBar;
 
 	// AIRES Flex Logo Image
-	@FindBy(how = How.CSS, using = "img[src='assets/img/AiresFleXLogo.png']")
+	@FindBy(how = How.CSS, using = "img[src='assets/img/AiresOnPointLogo.png']")
 	private WebElement _imgAIRESFlexLogo;
 
 	@FindBy(how = How.CSS, using = "div[class='sk-three-strings']")

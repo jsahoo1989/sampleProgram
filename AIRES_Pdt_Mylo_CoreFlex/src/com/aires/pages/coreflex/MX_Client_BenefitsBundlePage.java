@@ -1026,6 +1026,8 @@ public class MX_Client_BenefitsBundlePage extends Base {
 	private boolean deleteSubmittedBenefitDetails(String buttonName) {
 		boolean isSubmittedBenefitDeleted = false;
 		try {
+			CoreFunctions.scrollToElementUsingJS(driver, _textSubmittedBenefitsTitle,
+					MobilityXConstants.SUBMITTED_BENEFITS_SECTION);
 			for (Benefit benefit : getBenefits(CoreFunctions.getPropertyFromConfig("CoreFlex_Policy_BenefitType"),
 					CoreFunctions.getPropertyFromConfig("CoreFlex_Policy_RequiredFor"), "0")) {
 				if (benefit.getSelectBenefitOnFPTPage() && benefit.getDeleteBenefitOnMBBPage()) {
@@ -1119,6 +1121,8 @@ public class MX_Client_BenefitsBundlePage extends Base {
 			Reporter.addStepLog(MessageFormat.format(
 					MobilityXConstants.SUCCESSFULLY_DELETED_SUBMITTED_CASHOUT_FROM_BENEFITS_BUNDLE_PAGE,
 					CoreConstants.PASS));
+			CoreFunctions.scrollToElementUsingJS(driver, _textSubmittedBenefitsTitle,
+					MobilityXConstants.SUBMITTED_BENEFITS_SECTION);
 		}
 		return isSubmittedCashoutDeleted;
 	}

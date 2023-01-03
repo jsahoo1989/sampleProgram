@@ -2060,4 +2060,14 @@ public class CoreFunctions {
 			}
 		}
 	}
+
+	public static String getWindowTitle(WebDriver driver) {
+		try {
+			return driver.getTitle();
+		} catch (Exception e) {
+			Assert.fail(CoreConstants.ERROR + e.getMessage());
+			return null;
+		}
+	}
+
 }

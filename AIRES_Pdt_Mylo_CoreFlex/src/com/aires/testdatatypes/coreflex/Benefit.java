@@ -48,6 +48,15 @@ public class Benefit {
 	private String partners;
 	private List<TracingPromptToBeSelected> tracingPromptsToBeSelected;
 	private String partnerForInitialTracingPrompt;
+	private boolean benefitResubmissionOnBST;
+
+	public boolean isBenefitResubmissionOnBST() {
+		return benefitResubmissionOnBST;
+	}
+
+	public void setBenefitResubmissionOnBST(boolean benefitResubmissionOnBST) {
+		this.benefitResubmissionOnBST = benefitResubmissionOnBST;
+	}
 
 	public String getPartnerForInitialTracingPrompt() {
 		return partnerForInitialTracingPrompt;

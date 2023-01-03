@@ -203,7 +203,7 @@ public class CoreFlex_Pet_Shipment_BenefitsPage extends BenefitPage {
 	@FindBy(how = How.CSS, using = "ng-select[formcontrolname='petCurrency'] span[class*='ng-value-label']")
 	private WebElement _selectCurrencyCodeSelectedValue;
 
-	@FindBy(how = How.CSS, using = "ng-select[formcontrolname='petCurrency'] span.ng-option-label")
+	@FindBy(how = How.CSS, using = "ng-dropdown-panel span[class*='ng-option-label']")
 	private List<WebElement> _selectCurrencyCodeOptions;
 
 	@FindBy(how = How.XPATH, using = "//span[contains(text(),'Flex Benefits')]/ancestor::div[contains(@id,'secondItemDiv')]//div[contains(@class,'RXCFServicesMonitoringBorderPanel')]")
@@ -298,9 +298,9 @@ public class CoreFlex_Pet_Shipment_BenefitsPage extends BenefitPage {
 				CoreFunctions.selectItemInListByText(driver, _leftNavigationTitleList,
 						COREFLEXConstants.GENERAL_INFORMATION);
 				break;
-			case COREFLEXConstants.FLEX_POLICY_SETUP:
+			case COREFLEXConstants.POINT_POLICY_SETUP:
 				CoreFunctions.selectItemInListByText(driver, _leftNavigationTitleList,
-						COREFLEXConstants.FLEX_POLICY_SETUP);
+						COREFLEXConstants.POINT_POLICY_SETUP);
 				break;
 			case COREFLEXConstants.POLICY_BENEFIT_CATEGORIES:
 				CoreFunctions.selectItemInListByText(driver, _leftNavigationTitleList,

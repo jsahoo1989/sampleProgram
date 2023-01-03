@@ -118,7 +118,7 @@ public class CoreFlex_LumpSum_BenefitsPage extends BenefitPage {
 	private WebElement _selectCalculationMethod;
 
 	// Calculation Method Select Field Options
-	@FindBy(how = How.XPATH, using = "//ng-select[@formcontrolname='oneTimeCalMethodCode']//div[@role='option']/span")
+	@FindBy(how = How.CSS, using = "ng-dropdown-panel span[class*='ng-option-label']")
 	private List<WebElement> _selectCalculationMethodOptions;
 
 	// Calculation Method Select Field Selected Value
@@ -146,7 +146,7 @@ public class CoreFlex_LumpSum_BenefitsPage extends BenefitPage {
 	private WebElement _selectCurrency;
 
 	// Currency Select Field Options
-	@FindBy(how = How.XPATH, using = "//ng-select[@formcontrolname='currencyCode']//div[@role='option']")
+	@FindBy(how = How.CSS, using = "ng-dropdown-panel span[class*='ng-option-label']")
 	private List<WebElement> _selectCurrencyOptions;
 
 	// Currency Select Field Selected Value
@@ -158,7 +158,7 @@ public class CoreFlex_LumpSum_BenefitsPage extends BenefitPage {
 	private WebElement _selectFrequency;
 
 	// Frequency Select Field Options
-	@FindBy(how = How.XPATH, using = "//ng-select[@formcontrolname='frequencyCode']//div[@role='option']/span")
+	@FindBy(how = How.CSS, using = "ng-dropdown-panel span[class*='ng-option-label']")
 	private List<WebElement> _selectFrequencyOptions;
 
 	// Frequency Select Field Selected Value
@@ -170,7 +170,7 @@ public class CoreFlex_LumpSum_BenefitsPage extends BenefitPage {
 	private WebElement _selectWhenToMakePayment;
 
 	// WhenToMakePayment Select Field Options
-	@FindBy(how = How.XPATH, using = "//ng-select[@formcontrolname='pmtTimeCode']//div[@role='option']")
+	@FindBy(how = How.CSS, using = "ng-dropdown-panel span[class*='ng-option-label']")
 	private List<WebElement> _selectWhenToMakePaymentOptions;
 
 	// WhenToMakePayment Select Field Selected Value
@@ -182,7 +182,7 @@ public class CoreFlex_LumpSum_BenefitsPage extends BenefitPage {
 	private WebElement _selectIndicateNumberOfWeeks;
 
 	// IndicateNumberOfWeeks Select Field Options
-	@FindBy(how = How.XPATH, using = "//ng-select[@formcontrolname='pmtTimeWeeksBeforeCode']//div[@role='option']")
+	@FindBy(how = How.CSS, using = "ng-dropdown-panel span[class*='ng-option-label']")
 	private List<WebElement> _selectIndicateNumberOfWeeksOptions;
 
 	// IndicateNumberOfWeeks Select Field SelectedValue

@@ -62,5 +62,6 @@ Feature: Validate the CoreFlex End-To-End Business Test Flow(BluePrint, MXClient
     And he has clicked on "Check All" followed by "Resolve Multiple" button to resolve multiple 'Delete Request Pending' request of the Client
     When he confirms request by selecting "Deny All" option after verifying 'Delete Request Pending' benefit request details on 'Requests' dialog by Client
     Then 'Action Completed' growl message for "Deny Request" should be displayed on "Transferee Submission Details" page
+    And "Mobility Benefit Delete Request has been Denied" email should be sent to Client for benefit "Deny Request" action by "MSPEC/PPC" user
     And 'Delete Request Pending' Benefit_Cashout request status should be updated to 'Submitted' in 'Transferee Submission Details' list of the Client
     And benefit details should be updated in 'MXClient' application based on "Denied" 'Delete Request' on Transferee Submission

@@ -26,17 +26,17 @@ Feature: Validate Impersonation & Delegate User functionality for Core/Flex bene
     And he has validated 'Assignment-Policy' details after selecting below option displayed on 'Welcome' dialog
       | WelcomeDialogSelection               |
       | No thanks, I prefer to do this later |
-    And he has navigated to "FleX Planning Tool" page after clicking on 'Manage my Points' button on "Mobility Journey Home" page
-    And he has verified Benefits details displayed under 'Core Benefits' and 'Flex Benefits' section on "FleX Planning Tool" page
-    And he has navigated to "Suggested Bundles" page after clicking on following link on "FleX Planning Tool" page
+    And he has navigated to "OnPoint Planning Tool" page after clicking on 'Manage my Points' button on "Mobility Journey Home" page
+    And he has verified Benefits details displayed under 'Core Benefits' and 'Flex Benefits' section on "OnPoint Planning Tool" page
+    And he has navigated to "Suggested Bundles" page after clicking on following link on "OnPoint Planning Tool" page
       | Take a look at some suggested options! |
     And he has verified 'Custom Bundle' Benefit details displayed under 'Recommended Bundle' section on "Suggested Bundles" page
-    And he has navigated back to "FleX Planning Tool" page after clicking on 'Back to benefits list' button
-    And he has navigated to "My Benefits Bundle" page after selecting required benefits on "FleX Planning Tool" page
+    And he has navigated back to "OnPoint Planning Tool" page after clicking on 'Back to benefits list' button
+    And he has navigated to "My Benefits Bundle" page after selecting required benefits on "OnPoint Planning Tool" page
     And he has clicked on "Review and Submit" button after validating all the benefit and Cashout details listed under 'Selected Benefits' section on "My Benefits Bundle" page
     And he has clicked on "Yes - submit my bundle" button after entering Transferee name on "Submit Bundle Confirmation" dialog
     And he has verified 'Benefit Submission Email' for Impersonated Transferee by Client after clicking on "OK - Let Me See My Benefits!" button displayed on 'Success Flex' dialog
-    And he has verified submitted points details on 'Mobility Journey Home' and 'Flex Planning Tool' page
+    And he has verified submitted points details on 'Mobility Journey Home' and 'OnPoint Planning Tool' page
     And he has verified submitted benefit details under 'Submitted Benefits' section of 'My Benefits Bundle' page
     When he 'Delete' submitted Benefits and confirms 'Remove Benefit Selection' dialog by entering username and clicking on "Yes-request to delete this benefit"
     Then 'Status' of the deleted benefit should be displayed as "Delete Request Pending" under 'Submitted Benefits' section of 'My Benefit Bundle' page
@@ -59,7 +59,7 @@ Feature: Validate Impersonation & Delegate User functionality for Core/Flex bene
     And he has validated 'Assignment-Policy' details after selecting below option displayed on 'Welcome' dialog
       | WelcomeDialogSelection               |
       | No thanks, I prefer to do this later |
-    And he has provided 'Access to my Flex Benefits' delegate access to the newly created DelegateUser on 'Delegate Information' page
+    And he has provided 'Access to OnPoint' delegate access to the newly created DelegateUser on 'Delegate Information' page
     And he has logged into MobilityX application as a delegated user
     And he has navigated to "FleX Planning Tool" page after clicking on 'Manage my Points' button on "Mobility Journey Home" page
     And he has verified Benefits details displayed under 'Core Benefits' and 'Flex Benefits' section on "FleX Planning Tool" page
@@ -71,7 +71,7 @@ Feature: Validate Impersonation & Delegate User functionality for Core/Flex bene
     And he has clicked on "Review and Submit" button after validating all the benefit and Cashout details listed under 'Selected Benefits' section on "My Benefits Bundle" page
     And he has clicked on "Yes - submit my bundle" button after entering Transferee name on "Submit Bundle Confirmation" dialog
     And he has verified 'Benefit Submission Email' for Impersonated Transferee by Client after clicking on "OK - Let Me See My Benefits!" button displayed on 'Success Flex' dialog
-    And he has verified submitted points details on 'Mobility Journey Home' and 'Flex Planning Tool' page
+    And he has verified submitted points details on 'Mobility Journey Home' and 'OnPoint Planning Tool' page
     And he has verified submitted benefit details under 'Submitted Benefits' section of 'My Benefits Bundle' page
     When he 'Delete' submitted Benefits and confirms 'Remove Benefit Selection' dialog by entering username and clicking on "Yes-request to delete this benefit"
     Then 'Status' of the deleted benefit should be displayed as "Delete Request Pending" under 'Submitted Benefits' section of 'My Benefit Bundle' page

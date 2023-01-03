@@ -13,7 +13,7 @@ Feature: Validate MXTransferee Workflow and MJ Cards(CancelledStatus) for Transf
     When he clicks on "Approve" button to acknowledge 'Approve this Policy' dialog
     Then Policy Status and Version should be displayed as "Active" and "V1" respectively on "View/Edit Policy Forms" page
 
-  @Coreflex:218331 @CF_End-To-End_MasterScript @CF_Master_Transferee_PortionApprova1 @CF_Master_PortionApprove_CloningToDifferentClientPolicy
+  @Coreflex:218331 @CF_End-To-End_MasterScript @CF_Master_Transferee_PortionApprova1Ignore @CF_Master_PortionApprove_CloningToDifferentClientPolicy
   Scenario Outline: CoreFlex - Validating Cloned Policy contents for different Client reference selection and Policy with Submit/Active/Legacy status
     Given he has logged into 'BluePrint' application as 'CSM - SSO' user
     And he has clicked on 'Clone Policy' icon after searching for 'Points Based CoreFlex Policy' with Policy Status as "<PolicyStatus>"
@@ -45,7 +45,8 @@ Feature: Validate MXTransferee Workflow and MJ Cards(CancelledStatus) for Transf
     And he has clicked on "Review and Submit" button after validating all the benefit and Cashout details listed under 'Selected Benefits' section on "My Benefits Bundle" page
     And he has clicked on "Yes - submit my bundle" button after entering Transferee name on "Submit Bundle Confirmation" dialog
     And he has clicked on "OK - Let Me See My Benefits!" button displayed on 'Success Flex' dialog
-    And he has verified submitted points details on 'Mobility Journey Home' and 'Flex Planning Tool' page
+    And he has verified 'Mobility Benefits Submission' email generated upon OnPoint Benefits Submission
+    And he has verified submitted points details on 'Mobility Journey Home' and 'OnPoint Planning Tool' page
     And he has verified submitted benefit details under 'Submitted Benefits' section of 'My Benefits Bundle' page
     When he 'Delete' submitted Benefit_Cashout and confirms 'Remove Benefit Selection' dialog by entering username and clicking on "Yes-request to delete this benefit"
     Then 'Status' of the deleted benefit_cashout should be displayed as "Delete Request Pending" under 'Submitted Benefits' section of 'My Benefit Bundle' page
@@ -59,6 +60,7 @@ Feature: Validate MXTransferee Workflow and MJ Cards(CancelledStatus) for Transf
     And he has clicked on "Check All" followed by "Resolve Multiple" button to resolve multiple 'Delete Request Pending' request of the Transferee
     When he confirms request by selecting "Approve All" option after verifying 'Delete Request Pending' benefit request details on 'Requests' dialog
     Then 'Action Completed' growl message for "Approve Request" should be displayed on "Transferee Submission Details" page
+    And "Delete Request Approved" email should be sent to Transferee for benefit "Approve Request" action by "MSPEC/PPC" user
     And 'Delete Request Pending' benefit request should be removed from 'Transferee Submission Details' list
     And "Approved" delete request Benefit_Cashout details should be displayed under 'Transferee History' section with "Deleted" status
     And benefit details should be updated in 'MXTransferee' application based on "Approved" 'Delete Request' on Transferee Submission

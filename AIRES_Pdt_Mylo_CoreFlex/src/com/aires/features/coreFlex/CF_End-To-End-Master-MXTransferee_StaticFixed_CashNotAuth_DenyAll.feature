@@ -19,8 +19,8 @@ Feature: Validate MXTransferee Workflow and MJ Cards(Submitted,StartingSoon,InPr
     And he has validated 'Assignment-Policy' details after selecting below option displayed on 'Welcome' dialog
       | WelcomeDialogSelection               |
       | No thanks, I prefer to do this later |
-    When he navigates to "FleX Planning Tool" after clicking on 'Manage my Points' button on "Mobility Journey Home" page
-    Then benefits selected on Active BluePrint "Version1" Policy should be displayed on "FleX Planning Tool" page
+    When he navigates to "OnPoint Planning Tool" after clicking on 'Manage my Points' button on "Mobility Journey Home" page
+    Then benefits selected on Active BluePrint "Version1" Policy should be displayed on "OnPoint Planning Tool" page
     And custom bundle created in Active BluePrint "Version1" Policy should be displayed on "Suggested Bundles" page
 
   @Coreflex:218323 @CF_End-To-End_MasterScript @CF_Master_CashNotAuthDeny @CF_Master_CashNotAuthDeny_CreatingNewVersion
@@ -41,7 +41,7 @@ Feature: Validate MXTransferee Workflow and MJ Cards(Submitted,StartingSoon,InPr
     And he has verified 'Enabled/Disabled' status of searched 'Points Based CoreFlex Policy' Icons - "Post" Versioning on "View/Edit Policy Forms" page
       | PolicyVersion | PolicyStatus | EditIcon | DeleteIcon | CloneIcon | AssignmentHistoryIcon |
       | V1            | Active       | Disabled | Disabled   | Enabled   | Enabled               |
-      | V2            | Draft        | Enabled  | Enabled    | Disabled  | Disabled              |
+      | V2            | Draft        | Enabled  | Enabled    | Enabled   | Disabled              |
     And he has clicked on "Edit" icon of "V2" - "Draft" version of the searched points based CoreFlex policy
     And he has navigated to "General Information" page of 'New Version' policy in 'Editable' mode having CoreFlex Policy Status displayed as "Draft"
     And he has verified 'Policy-Benefits-SubBenefits' details of "V2" - "Draft" version Policy matches with "V1" policy selections
@@ -76,17 +76,18 @@ Feature: Validate MXTransferee Workflow and MJ Cards(Submitted,StartingSoon,InPr
     And he has validated 'Assignment-Policy' details after selecting below option displayed on 'Welcome' dialog
       | WelcomeDialogSelection               |
       | No thanks, I prefer to do this later |
-    And he has navigated to "FleX Planning Tool" page after clicking on 'Manage my Points' button on "Mobility Journey Home" page
-    And he has verified Benefits details displayed under 'Core Benefits' and 'Flex Benefits' section on "FleX Planning Tool" page
-    And he has navigated to "Suggested Bundles" page after clicking on following link on "FleX Planning Tool" page
+    And he has navigated to "OnPoint Planning Tool" page after clicking on 'Manage my Points' button on "Mobility Journey Home" page
+    And he has verified Benefits details displayed under 'Core Benefits' and 'Flex Benefits' section on "OnPoint Planning Tool" page
+    And he has navigated to "Suggested Bundles" page after clicking on following link on "OnPoint Planning Tool" page
       | Take a look at some suggested options! |
     And he has verified 'Custom Bundle' Benefit details displayed under 'Recommended Bundle' section on "Suggested Bundles" page
-    And he has navigated back to "FleX Planning Tool" page after clicking on 'Back to benefits list' button
-    And he has navigated to "My Benefits Bundle" page after selecting required benefits on "FleX Planning Tool" page
+    And he has navigated back to "OnPoint Planning Tool" page after clicking on 'Back to benefits list' button
+    And he has navigated to "My Benefits Bundle" page after selecting required benefits on "OnPoint Planning Tool" page
     And he has clicked on "Review and Submit" button after validating all the benefit and Cashout details listed under 'Selected Benefits' section on "My Benefits Bundle" page
     And he has clicked on "Yes - submit my bundle" button after entering Transferee name on "Submit Bundle Confirmation" dialog
     And he has clicked on "OK - Let Me See My Benefits!" button displayed on 'Success Flex' dialog
-    And he has verified submitted points details on 'Mobility Journey Home' and 'Flex Planning Tool' page
+    And he has verified 'Mobility Benefits Submission' email generated upon OnPoint Benefits Submission
+    And he has verified submitted points details on 'Mobility Journey Home' and 'OnPoint Planning Tool' page
     And he has verified submitted benefit details under 'Submitted Benefits' section of 'My Benefits Bundle' page
     When he 'Delete' submitted Benefits and confirms 'Remove Benefit Selection' dialog by entering username and clicking on "Yes-request to delete this benefit"
     Then 'Status' of the deleted benefit should be displayed as "Delete Request Pending" under 'Submitted Benefits' section of 'My Benefit Bundle' page
@@ -100,17 +101,18 @@ Feature: Validate MXTransferee Workflow and MJ Cards(Submitted,StartingSoon,InPr
     And he has clicked on "Check All" followed by "Resolve Multiple" button to resolve multiple 'Delete Request Pending' request of the Transferee
     When he confirms request by selecting "Deny All" option after verifying 'Delete Request Pending' benefit request details on 'Requests' dialog
     Then 'Action Completed' growl message for "Deny Request" should be displayed on "Transferee Submission Details" page
+    And "Delete Request Denied" email should be sent to Transferee for benefit "Deny Request" action by "MSPEC/PPC" user
     And 'Delete Request Pending' benefit request status should be updated to 'Submitted' in 'Transferee Submission Details' list
     And benefit details should be updated in 'MXTransferee' application based on "Denied" 'Delete Request' on Transferee Submission
 
-  @Coreflex:218329 @CF_End-To-End_MasterScript @CF_Master_CashNotAuthDeny @CF_Master_MobilityJourneyCards_StatusCheck
+  @Coreflex:218329 @CF_End-To-End_MasterScript @CF_Master_CashNotAuthDeny_Ignore @CF_Master_MobilityJourneyCards_StatusCheck
   Scenario: MXTransferee - Verifying Flex_Core Cards details and (Submitted,StartingSoon,InProgress,Complete) status of the submitted Aires Managed Benefit
     Given he has logged into 'MobilityX' application after creating a new 'Transferee' through IRIS application for policy setup in 'Policy Digitization Tool'
     And he has validated 'Assignment-Policy' details after selecting below option displayed on 'Welcome' dialog
       | WelcomeDialogSelection               |
       | No thanks, I prefer to do this later |
-    And he has navigated to "FleX Planning Tool" after clicking on 'Manage my Points' button on "Mobility Journey Home" page
-    And he has navigated to "My Benefits Bundle" page after selecting 'Aires Managed' benefits on "FleX Planning Tool" page
+    And he has navigated to "OnPoint Planning Tool" after clicking on 'Manage my Points' button on "Mobility Journey Home" page
+    And he has navigated to "My Benefits Bundle" page after selecting 'Aires Managed' benefits on "OnPoint Planning Tool" page
     And he has clicked on "Review and Submit" button after validating all the 'Aires Managed' benefit details listed under 'Selected Benefits' section on "My Benefits Bundle" page
     And he has clicked on "Yes - submit my bundle" button after entering Transferee name on "Submit Bundle Confirmation" dialog and validating 'Aires Managed' benefit details
     And he has clicked on "OK - Let Me See My Benefits!" button displayed on 'Success Flex' dialog
@@ -126,14 +128,14 @@ Feature: Validate MXTransferee Workflow and MJ Cards(Submitted,StartingSoon,InPr
     Then submitted Aires Managed Benefits Status - should be changed to "Complete" on "Mobility Journey Home" page - "Post End Tracing"
     And submitted Aires Managed Benefits Status - should be changed to "Complete" on "My Benefit Bundle" page
 
-  @Coreflex:218335 @CF_End-To-End_MasterScript @CF_Master_CashNotAuthDeny @CF_Master_MobilityJourneyCards_CancelledStatusCheck
+  @Coreflex:218335 @CF_End-To-End_MasterScript @CF_Master_CashNotAuthDeny_Ignore @CF_Master_MobilityJourneyCards_CancelledStatusCheck
   Scenario: MXTransferee - Verifying MobilityJourney Cards Cancelled status for submitted Flex_Core Cards Aires Managed Benefit
     Given he has logged into 'MobilityX' application after creating a new 'Transferee' through IRIS application for policy setup in 'Policy Digitization Tool'
     And he has validated 'Assignment-Policy' details after selecting below option displayed on 'Welcome' dialog
       | WelcomeDialogSelection               |
       | No thanks, I prefer to do this later |
-    And he has navigated to "FleX Planning Tool" after clicking on 'Manage my Points' button on "Mobility Journey Home" page
-    And he has navigated to "My Benefits Bundle" page after selecting 'Aires Managed' benefits on "FleX Planning Tool" page
+    And he has navigated to "OnPoint Planning Tool" after clicking on 'Manage my Points' button on "Mobility Journey Home" page
+    And he has navigated to "My Benefits Bundle" page after selecting 'Aires Managed' benefits on "OnPoint Planning Tool" page
     And he has clicked on "Review and Submit" button after validating 'Aires Managed' benefit details listed under 'Selected Benefits' section on "My Benefits Bundle" page
     And he has clicked on "Yes - submit my bundle" button after entering Transferee name on "Submit Bundle Confirmation" dialog and validating 'Aires Managed' benefit details
     And he has clicked on "OK - Let Me See My Benefits!" button displayed on 'Success Flex' dialog

@@ -156,13 +156,11 @@ public class IRIS_AssignmentTransfereeNFamilyPage extends BasePage {
 		try {
 			CoreFunctions.waitHandler(2);
 			clickSaveButton();
-			Helpers.clickButton(
-					IRIS_PageMaster.getButtonObject(IRIS_PageMaster.getDialogObject(_IRIS, "Saved"), "OK",
-							"javax.swing.plaf.basic.BasicOptionPaneUI$ButtonFactory$ConstrainedButton"),
-					IRIS_PageMaster
-							.getButtonObject(IRIS_PageMaster.getDialogObject(_IRIS, "Saved"), "OK",
-									"javax.swing.plaf.basic.BasicOptionPaneUI$ButtonFactory$ConstrainedButton")
-							.getLabel());
+			Dialog saveSucceededDialog = IRIS_PageMaster.getDialogObject(_IRIS, "Saved");
+			saveSucceededDialog.waitUntilVisible();
+			Button saveSucceedoKButton = saveSucceededDialog.describe(Button.class,
+					new ButtonDescription.Builder().label("OK").build());
+			Helpers.clickButton(saveSucceedoKButton, saveSucceedoKButton.getLabel());
 		} catch (AWTException e) {
 		}
 	}

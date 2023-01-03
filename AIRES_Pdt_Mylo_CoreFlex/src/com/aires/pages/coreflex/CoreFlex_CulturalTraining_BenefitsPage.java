@@ -126,7 +126,7 @@ public class CoreFlex_CulturalTraining_BenefitsPage extends BenefitPage {
 	private WebElement _selectEmployeeDuration;
 
 	// Employee Duration List
-	@FindBy(how = How.XPATH, using = "//ng-select[@formcontrolname='employeeNoOfDays']//div[@role='option']")
+	@FindBy(how = How.CSS, using = "ng-dropdown-panel span[class*='ng-option-label']")
 	private List<WebElement> _selectEmployeeDurationList;
 
 	// Employee Duration Days Select Field
@@ -146,7 +146,7 @@ public class CoreFlex_CulturalTraining_BenefitsPage extends BenefitPage {
 	private WebElement _selectFamilyDurationSelectedValue;
 
 	// Family Duration List
-	@FindBy(how = How.XPATH, using = "//ng-select[@formcontrolname='familyNoOfDays']//div[@role='option']")
+	@FindBy(how = How.CSS, using = "ng-dropdown-panel span[class*='ng-option-label']")
 	private List<WebElement> _selectFamilyDurationList;
 
 	// Other Duration Family Input Field
@@ -323,9 +323,9 @@ public class CoreFlex_CulturalTraining_BenefitsPage extends BenefitPage {
 				CoreFunctions.selectItemInListByText(driver, _leftNavigationTitleList,
 						COREFLEXConstants.GENERAL_INFORMATION);
 				break;
-			case COREFLEXConstants.FLEX_POLICY_SETUP:
+			case COREFLEXConstants.POINT_POLICY_SETUP:
 				CoreFunctions.selectItemInListByText(driver, _leftNavigationTitleList,
-						COREFLEXConstants.FLEX_POLICY_SETUP);
+						COREFLEXConstants.POINT_POLICY_SETUP);
 				break;
 			case COREFLEXConstants.POLICY_BENEFIT_CATEGORIES:
 				CoreFunctions.selectItemInListByText(driver, _leftNavigationTitleList,

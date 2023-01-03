@@ -6,6 +6,7 @@ public class CoreFlex_AllowancesBenefitsData {
 	public LumpSum lumpSum;
 	public AutoRentalDuringAssignment autoRentalDuringAssignment;
 	public GoodsAndServicesAllowance goodsAndServicesAllowance;
+	public MobilityPremium mobilityPremium;
 	
 	public class LumpSum{
 		public String calculationMethod;
@@ -15,6 +16,17 @@ public class CoreFlex_AllowancesBenefitsData {
 		public String frequency;
 		public String whenToMakePayment;
 		public String indicateNumberOfWeeksBeforeTransferDate;
+		public String reimbursedBy;
+		public String reimbursedByOther;
+		public String comment;
+	}
+	
+	public class MobilityPremium{
+		public String calculationMethod;
+		public String grossUp;
+		public String maxAmount;
+		public String currency;
+		public String frequency;
 		public String reimbursedBy;
 		public String reimbursedByOther;
 		public String comment;

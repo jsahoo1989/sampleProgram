@@ -1078,6 +1078,14 @@ public class BusinessFunctions {
 		return expectedCashoutDescription;
 	}
 
+	public static String getExpectedCashoutValue(double cashoutPoints) {
+		DecimalFormat format = new DecimalFormat();
+		format.setDecimalSeparatorAlwaysShown(false);
+		return CoreFunctions.getPropertyFromConfig("CF_Transferee_CashoutCurrencySign") + " "
+				+ format.format(cashoutPoints) + " ("
+				+ CoreFunctions.getPropertyFromConfig("CF_Transferee_CashoutCurrencyCode") + ")";
+	}
+
 	public static String getMXClientExpectedCashoutDescription() {
 		String expectedCashoutDescription = null;
 		DecimalFormat format = new DecimalFormat();
@@ -1108,7 +1116,7 @@ public class BusinessFunctions {
 			if (CoreFunctions.getPropertyFromConfig("CF_Transferee_CashoutCurrencyCode").equals("USD")) {
 				expectedCashoutDescription = MobilityXConstants.CLIENT_SUBMISSIONS_CASHOUT_DESCRIPTION + " "
 						+ CoreFunctions.getPropertyFromConfig("CF_Transferee_CashoutCurrencySign")
-						+ precesionFormat.format(Double
+						+ format.format(Double
 								.parseDouble(CoreFunctions.getPropertyFromConfig("CF_Client_SelectedCashOutPoints")))
 						+ " " + CoreFunctions.getPropertyFromConfig("CF_Transferee_CashoutCurrencyCode");
 			} else if (CoreFunctions.getPropertyFromConfig("CF_Transferee_CashoutCurrencySign").length() == 1) {
@@ -1139,7 +1147,7 @@ public class BusinessFunctions {
 
 			if (CoreFunctions.getPropertyFromConfig("CF_Transferee_CashoutCurrencyCode").equals("USD")) {
 				expectedCashoutDescription = CoreFunctions.getPropertyFromConfig("CF_Transferee_CashoutCurrencySign")
-						+ precesionFormat.format(Double.parseDouble(
+						+ format.format(Double.parseDouble(
 								CoreFunctions.getPropertyFromConfig("CF_Transferee_SelectedCashOutPoints")))
 						+ " " + CoreFunctions.getPropertyFromConfig("CF_Transferee_CashoutCurrencyCode")
 						+ MobilityXConstants.TRANSFEREE_CASHOUT_DESCRIPTION_CHECK;
@@ -1493,6 +1501,24 @@ public class BusinessFunctions {
 			Assert.fail(MessageFormat.format(PDTConstants.FAILED_TO_SELECT_MULTIPLE_OPTIONS, CoreConstants.FAIL,
 					dropDownName, subBenefitFormName));
 		}
+	}
+
+	public static boolean verifyFlexWordNotDisplayed(WebDriver driver, WebElement flexWord, String pageName) {
+		boolean isFlexWordDisplayed = false;
+		try {
+			isFlexWordDisplayed = CoreFunctions.isElementExist(driver, flexWord, 5);
+		} catch (Exception e) {
+			Assert.fail(
+					MessageFormat.format(COREFLEXConstants.EXCEPTION_OCCURED_WHILE_VALIDATING_FLEX_WORD_NOT_DISPLAYED,
+							CoreConstants.FAIL, e.getMessage(), pageName));
+			return false;
+		}
+		if (!isFlexWordDisplayed) {
+			Reporter.addStepLog(MessageFormat.format(COREFLEXConstants.SUCCESSFULLY_VERIFIED_FLEX_WORD_NOT_DISPLAYED,
+					CoreConstants.PASS, pageName));
+			return true;
+		} else
+			return false;
 	}
 
 }

@@ -19,7 +19,7 @@
 			"mxClientUserProfileName": "Jaspal March",
 			"blueprintURL": "https://relonetqa3.aires.com/policy-digitization-app/",
 			"mobilityXURL": "https://relonetuat2.aires.com/mobilityx/faces/jsf/Login.jsf",
-			"transfereeSubmissionsURL": "https://relonetqa3.aires.com/flex-review-app/"
+			"transfereeSubmissionsURL": "https://relonetqa3.aires.com/onpoint-review-app/"
 		}
 	},
 	{
@@ -76,7 +76,7 @@
 			"mxClientUserProfileName": "Josh Warwick",
 			"blueprintURL": "https://blueprinttest.aires.com/blueprint ",
 			"mobilityXURL": "https://relonettest2.aires.com/mobilityx/faces/jsf/Login.jsf",
-			"transfereeSubmissionsURL": "https://blueprinttest.aires.com/flex-review-app/"
+			"transfereeSubmissionsURL": "https://blueprinttest.aires.com/onpoint-review-app/"
 		}
 	},
 	{
@@ -99,7 +99,7 @@
 			"mxClientUserProfileName": "Judson Offner",
 			"blueprintURL": "https://relonetdev3.aires.com/policy-digitization-app/",
 			"mobilityXURL": "https://relonetdev3.aires.com/mobilityx/faces/jsf/Login.jsf",
-			"transfereeSubmissionsURL": "https://relonetdev3.aires.com/flex-review-app"
+			"transfereeSubmissionsURL": "https://relonetdev3.aires.com/onpoint-review-app"
 		}
 	}
 ]

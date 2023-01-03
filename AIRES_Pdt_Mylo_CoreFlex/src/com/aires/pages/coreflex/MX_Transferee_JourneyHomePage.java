@@ -75,7 +75,7 @@ public class MX_Transferee_JourneyHomePage extends Base {
 	@FindBy(how = How.XPATH, using = "//span[text()='No thanks, I prefer to do this later']")
 	private WebElement _linkSkipProceedToJourneyHome;
 
-	@FindBy(how = How.XPATH, using = "//span[contains(.,'Start the FleX Planning Tool')]")
+	@FindBy(how = How.XPATH, using = "//span[contains(.,'Start the OnPoint Planning Tool')]")
 	private WebElement _btn_proceedToFlexTool;
 
 	@FindBy(how = How.XPATH, using = "//span[text()='Remind me later']")
@@ -83,7 +83,7 @@ public class MX_Transferee_JourneyHomePage extends Base {
 
 	final By _link_remindLaterLocater = By.xpath("//span[text()='Remind me later']");
 
-	@FindBy(how = How.XPATH, using = "//span[text()='Start the FleX Planning Tool']")
+	@FindBy(how = How.XPATH, using = "//span[text()='Start the OnPoint Planning Tool']")
 	private WebElement _btn_startFlexPlanning;
 
 	@FindBy(how = How.CSS, using = "a.RXCFPointLink.af_link.p_AFTextOnly > span")
@@ -776,7 +776,7 @@ public class MX_Transferee_JourneyHomePage extends Base {
 			// Enter expected From complete email address
 			String expFromUserName = "testrelonet@aires.com";
 			// Enter expected email subject
-			String expEmailSubject = "Mobility Flex Benefit(s) Submission";
+			String expEmailSubject = "Mobility Benefit(s) Submission";
 			String actualResultSubmissionDetails = EmailUtil.searchEmailAndReturnResult(host, userName, pwd,
 					expFromUserName, expEmailSubject, MobilityXConstants.FLEX_BENEFIT_SUBMISSION);
 			actualResultSubmissionDetails = actualResultSubmissionDetails.replace("<span>", "").replace("</span>", "")
@@ -801,7 +801,7 @@ public class MX_Transferee_JourneyHomePage extends Base {
 	private String submittedPointsEmailMessage(String submittedBy) {
 		DecimalFormat format = new DecimalFormat();
 		format.setDecimalSeparatorAlwaysShown(false);
-		String total = policySetupPageData.flexPolicySetupPage.StaticFixedTotalPointsAvailable;
+		String total = CoreFunctions.getPropertyFromConfig("CF_Transferee_TotalAvailablePoints");
 		double remaining = Double.parseDouble(CoreFunctions.getPropertyFromConfig("CF_Transferee_AvailablePoints"));
 		double consumed = Double.parseDouble(CoreFunctions.getPropertyFromConfig("CF_Transferee_TotalSelectedPoints"));
 		String expectedSubmittedMessageText = null;
@@ -813,6 +813,7 @@ public class MX_Transferee_JourneyHomePage extends Base {
 			break;
 
 		case MobilityXConstants.CLIENT_IMPERSONATION_SUBMISSION:
+		case MobilityXConstants.CLIENT_SUBMISSION:
 			expectedSubmittedMessageText = MobilityXConstants.FLEX_BENEFITS_SUBMISSION_BY_CLIENT_IMPERSONATION_MESSAGE
 					.replace("used_points", String.valueOf(format.format(consumed))).replace("total_points", total)
 					.replace("current_balance", String.valueOf(format.format(remaining)));

@@ -14,6 +14,7 @@ import com.aires.businessrules.BusinessFunctions;
 import com.aires.businessrules.CoreFunctions;
 import com.aires.businessrules.constants.COREFLEXConstants;
 import com.aires.businessrules.constants.CoreConstants;
+import com.aires.businessrules.constants.PDTConstants;
 import com.aires.managers.FileReaderManager;
 import com.aires.testdatatypes.coreflex.Benefit;
 import com.aires.testdatatypes.coreflex.CoreFlex_AllowancesBenefitsData;
@@ -92,6 +93,10 @@ public class CoreFlex_BenefitSummaryPage extends Base {
 	// Policy Status
 	@FindBy(how = How.XPATH, using = "//strong[contains(text(),'Policy Status')]/parent::label/following-sibling::label")
 	private WebElement _textPolicyStatus;
+
+	// Flex Text
+	@FindBy(how = How.XPATH, using = "//p[@class='flex-corePoint'][contains(text(),'Flex')]")
+	private WebElement _textCoreFlex;
 
 	/*********************************************************************/
 
@@ -350,6 +355,10 @@ public class CoreFlex_BenefitSummaryPage extends Base {
 					CoreConstants.FAIL, CoreFunctions.getElementText(driver, _textPolicyStatus), expectedPolicyStatus));
 			return false;
 		}
+	}
+
+	public boolean verifyFlexWordNotDisplayed() {
+		return BusinessFunctions.verifyFlexWordNotDisplayed(driver, _textCoreFlex, COREFLEXConstants.BENEFIT_SUMMARY);
 	}
 
 }

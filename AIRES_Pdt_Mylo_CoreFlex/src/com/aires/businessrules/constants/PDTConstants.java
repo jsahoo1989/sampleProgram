@@ -631,4 +631,5 @@ public class PDTConstants {
 	public static final String VERIFIED_EXPENSE_CODE_OPTIONS_POPULATED = "{0}Verified all expense code options are populated for ''{1}''";
 	public static final String VERIFIED_EXPENSE_CODE_OPTIONS_NOT_POPULATED = "{0}Failed to verify all expense code options are not populated for ''{1}''. Expected Expense Code:-''{2}''. Actual expense code:-''{3}''";
 	public static final String EXPENSE_CODES = "Expense Codes";
+	public static final String FAILED_TO_NAVIGATE_TO_EDIT_POLICY_BENEFIT_PAGE = "{0}Failed to navigate to Edit Policy Benefit page.";
 }

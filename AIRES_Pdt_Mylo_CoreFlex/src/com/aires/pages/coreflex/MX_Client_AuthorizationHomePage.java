@@ -1677,8 +1677,9 @@ public class MX_Client_AuthorizationHomePage extends Base {
 					.getPropertyFromConfig("CF_Transferee_TotalAvailablePoints");
 			if ((actualResultBenefitTotalPoints).equals(expectedTotalBenefitPoints)) {
 				isBenefitTotalPointsVerified = true;
-				Reporter.addStepLog(CoreConstants.PASS
-						+ "Successfully verified Benefit Total Points displayed in Revised mobility Initiation Submitted Email.");
+				Reporter.addStepLog(MessageFormat.format(
+						COREFLEXConstants.SUCCESSFULLY_VERIFIED_REVISED_MOBILITY_INITIATION_SUBMISSION_EMAIL_CONTENTS,
+						CoreConstants.PASS));
 			}
 			return isBenefitTotalPointsVerified;
 		} catch (Exception e) {
@@ -1940,4 +1941,5 @@ public class MX_Client_AuthorizationHomePage extends Base {
 			return false;
 		}
 	}
+	
 }

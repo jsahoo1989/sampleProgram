@@ -3,7 +3,7 @@ package com.aires.businessrules.constants;
 public class COREFLEXConstants {
 	// Common Constants
 	public static final String GENERAL_INFORMATION = "General Information";
-	public static final String FLEX_POLICY_SETUP = "Flex Policy Setup";
+	public static final String POINT_POLICY_SETUP = "Point Policy Setup";
 	public static final String POLICY_BENEFIT_CATEGORIES = "Policy Benefit Categories";
 	public static final String BENEFIT_SUMMARY = "Benefit Summary";
 	public static final String CUSTOM_BUNDLES = "Custom Bundles";
@@ -18,7 +18,7 @@ public class COREFLEXConstants {
 	// Flex Policy Setup Page Constants
 	public static final String EXCEPTION_OCCURED_WHILE_CLICKING_ON_AN_ELEMENT_OF_PAGE = "{0}Exception occured while clicking on ''{1}'' element on Page. Exception Message - ''{2}''";
 	public static final String EXCEPTION_OCCURED_WHILE_CLICKING_ON_LEFTNAVIGATION_ELEMENT_OF_PAGE = "{0}Exception occured while clicking on ''{1}'' Left Navigation element on Page. Exception Message - ''{2}''";
-	public static final String FAILED_TO_VERIFY_USER_NAVIGATION_TO_FLEX_POLICY_SETUP_PAGE = "{0}Failed to verify user navigation to Flex Policy Setup Page.";
+	public static final String FAILED_TO_VERIFY_USER_NAVIGATION_TO_POINT_POLICY_SETUP_PAGE = "{0}Failed to verify user navigation to Point Policy Setup Page.";
 	public static final String FLEX_ALLOWANCE_TYPE = "Flex Allowance Type";
 	public static final String PERSON_RESPONSIBLE_FOR_BENEFIT_SELECTION = "Person Responsible For Benefit Selection";
 	public static final String FLEX_SETUP_TYPE = "Flex Setup Type";
@@ -141,7 +141,7 @@ public class COREFLEXConstants {
 	public static final String SUCCESSFULLY_SELECTED_AND_FILLED_ADDED_FLEX_BENEFITS = "{0}Successfully selected and filled all the added FLEX Benefits";
 	public static final String SUCCESSFULLY_SELECTED_AND_FILLED_ADDED_OTHER_BENEFITS = "{0}Successfully selected and filled all the added Other Benefits";
 	public static final String FAILED_TO_SELECT_AND_FILL_ADDED_BENEFITS = "{0}Failed to select and fill added benefits.";
-	public static final String POLICY_SUBMIT_STATUS_MESSAGE = "The PolicyName FleX setup has been saved!";
+	public static final String POLICY_SUBMIT_STATUS_MESSAGE = "The PolicyName OnPoint setup has been saved!";
 	public static final String POLICY_SUBMIT_STATUS_MESSAGE_UAT = "The PolicyName Has Been Saved Successfully.";
 	public static final String LOCK_THE_BENEFITS_POINTS_SELECTION = "Lock the benefits points selection";
 	public static final String POLICY_BENEFITS_BENEFIT_SUMMARY = "Policy Benefits / Benefit Summary";
@@ -343,7 +343,7 @@ public class COREFLEXConstants {
 	public static final String ACTION_COMPLETED_MESSAGE = "The action has been completed.";
 	public static final String SUCCESSFULLY_VERIFIED_APPROVED_GROWL_ACTION_COMPLETED_MESSAGE_ON_TRANSFEREE_SUBMISSION_DETAILS_PAGE = "{0}Successfully verified Approved Request Growl action completed message ''{1}'' on transferee submission details page.";
 	public static final String SUCCESSFULLY_VERIFIED_DENY_GROWL_ACTION_COMPLETED_MESSAGE_ON_TRANSFEREE_SUBMISSION_DETAILS_PAGE = "{0}Successfully verified Deny Request Growl action completed message ''{1}'' on transferee submission details page.";
-	public static final String TRACING_EXPECTED_MESSAGE = "Actualize Tracing, FleX – Review transferee submission";
+	public static final String TRACING_EXPECTED_MESSAGE = "Actualize Tracing, OnPoint – Review transferee submission";
 	public static final String FAILED_TO_VERIFY_DENY_DELETE_REQUEST_UPDATED_TO_SUBMITTED_IN_TRANSFEREE_SUBMISSION_DETAILS_PAGE = "{0}Failed to verify denied delete request status updated to 'Submitted' in transferee submission details page.";
 	public static final String FAILED_TO_VERIFY_BENEFITS_DETAILS_POST_DENY_DELETE_BENEFIT_REQUEST_OPERATION_ON_TRANSFEREE_SUBMISSIONS_DETAILS_PAGE = "{0}Failed to verify Benefit details post delete benefit request operation on Transferee Submissions Details Page.";
 	public static final String SUCCESSFULLY_VALIDATED_SUBMITTED_BENEFITS_DETAILS_ON_SUBMISSION_DETAILS_PAGE_POST_DENYING_DELETE_BENEFIT_REQUEST = "{0}Successfully validated Submitted Benefits Details Post Denying Benefit Delete Request on Transferee Submission Details page.";
@@ -468,7 +468,7 @@ public class COREFLEXConstants {
 	public static final String FAILED_TO_VERIFY_APPROVE_THIS_POLICY_DIALOG = "{0}Failed to verify Approve this Policy dialog contents.";
 	public static final String EXPECTED_APPROVE_THIS_POLICY_DIALOG_HEADER = "Do you want to proceed with the approval of this policy?";
 	public static final String EXPECTED_APPROVE_THIS_POLICY_DIALOG_VERSION_TEXT = "You are approving version VN of this policy. If approved, the policy state will change from Submitted to Active and indicates that you have reviewed the policy benefits and approve them for use.";
-	public static final String EXPECTED_APPROVE_THIS_POLICY_DIALOG_ASSIGNMENT_TEXT_FIRST_VERSION = "There are currently 0 Assignments or Files linked with this version of the points based CoreFlex policy in IRIS. The following option is only effective for the client of this policy if Blueprint has been enabled in IRIS Corp:";
+	public static final String EXPECTED_APPROVE_THIS_POLICY_DIALOG_ASSIGNMENT_TEXT_FIRST_VERSION = "There are currently 0 Assignments or Files linked with this version of the point based policy in IRIS. The following option is only effective for the client of this policy if Blueprint has been enabled in IRIS Corp:";
 	public static final String SUCCESSFULLY_VERIFIED_APPROVE_THIS_POLICY_DIALOG_HEADER_VERSION_ASSIGNMENT_TEXT_AND_FIELDS = "{0}Successfully verified Approve this Policy Dialog header, version & assignment text.";
 	public static final String EXPECTED_APPROVE_THIS_POLICY_DIALOG_CHECKBOX_SELECTION = "Link this policy with a NEW authorization in IRIS? ";
 	public static final String ASSOCIATE_THIS_POLICY = "Associate this policy with a NEW authorization in IRIS? ";
@@ -639,7 +639,7 @@ public class COREFLEXConstants {
 	public static final String POLICY_ADDITIONAL_DETAILS = "Policy Additional Details";
 	public static final String EMPLOYEE_TYPE = "Employee Type";
 	public static final String SUCCESSFULLY_CLICKED_ON_BUTTON_ON_CUSTOM_BUNDLES_PAGE = "{0}Successfully clicked on ''{1}'' button on Custom Bundles page.";
-	public static final String EXPECTED_APPROVE_THIS_POLICY_DIALOG_ASSIGNMENT_TEXT_SECOND_VERSION = "*If you would like to link any of the 1 existing Assignments or Files with this version of the points based CoreFlex policy in IRIS then all required updates will need to be manual.";
+	public static final String EXPECTED_APPROVE_THIS_POLICY_DIALOG_ASSIGNMENT_TEXT_SECOND_VERSION = "*If you would like to link any of the 1 existing Assignments or Files with this version of the point based policy in IRIS then all required updates will need to be manual.";
 	public static final String SUCCESSFULLY_CLICKED_ON_BUTTON_ON_APPROVE_THIS_POLICY_DIALOG = "{0}Successfully clicked on ''{1}'' button on Approve this Policy Dialog.";
 	public static final String FAILED_TO_SEARCH_POLICY_WITH_POLICY_STATUS = "{0}Failed to seacrh policy with Policy Status : ''{1}''.";
 	public static final String EXCEPTION_OCCURED_WHILE_SEARCHING_POLICY_WITH_STATUS = "{0}Exception occured while validating policy with ''{2}'' status. Exception : ''{1}''.";
@@ -905,4 +905,44 @@ public class COREFLEXConstants {
 	public static final String EXCEPTION_OCCURED_WHILE_VALIDATING_LOGGED_IN_DELEGATE_USER_ON_MOBILITYX_APPLICATION = "{0}Exception occured while validating Logged-In Delegate User on MobilityX application. Exception : ''{1}''.";
 	public static final String EXCEPTION_OCCURED_WHILE_READING_MOBILITY_SUBMITTED_EMAIL = "{0}Exception occured while reading Mobility Submitted Email. Exception : ''{1}''.";
 	public static final String EXCEPTION_OCCURED_WHILE_READING_REVISED_INITIATION_SUBMITTED_EMAIL = "{0}Exception occured while reading Revised Initiation Submitted Email. Exception : ''{1}''.";
+	public static final String MOBILITY_PREMIUM = "Mobility Premium";
+	public static final String MOBILITY_PREMIUM_BENEFITS_PAGE = "Mobility Premium Benefits Page";
+	public static final String FAILED_TO_FILL_LUMP_SUM_SUB_BENEFITS_FORM = "Failed to fill Lump Sum SubBenefits form.";
+	public static final String FAILED_TO_FILL_MOBILITY_PREMIUM_SUB_BENEFITS_FORM = "Failed to fill Mobility Premium SubBenefits form.";
+	public static final String FAILED_TO_VERIFY_MOBILITY_PREMIUM_SUB_BENEFITS_FORM = "{0}Failed to verify Mobility Premium SubBenefits form.";
+	public static final String FLEX_WORD_DISPLAYED_ON_GENERAL_INFORMATION_PAGE = "{0}Flex word displayed on General Information Page.";
+	public static final String EXCEPTION_OCCURED_WHILE_VALIDATING_FLEX_WORD_NOT_DISPLAYED = "{0}Exception occured while validating Flex word not displayed on ''{2}'' page. Exception : ''{1}''.";
+	public static final String SUCCESSFULLY_VERIFIED_FLEX_WORD_NOT_DISPLAYED = "{0}Successfully verified Flex word not displayed on ''{1}'' page.";
+	public static final String FLEX_WORD_DISPLAYED_ON_BENEFIT_SUMMARY_PAGE = "{0}Flex word displayed on Benefit Summary Page.";
+	public static final String FLEX_WORD_DISPLAYED_ON_VIEW_EDIT_POLICY_FORMS_PAGE = "{0}Flex word displayed on View Edit Policy Forms page.";
+	public static final String EXCEPTION_OCCURED_WHILE_ADDING_NEW_POLICIES_IN_ACCOUNTING_TAB_FOR_CLIENT = "{0}Exception occured while adding new policies in Accounting tab for ''{2}'' Client. Exception : ''{1}''.";
+	public static final String MORE_THAN_5_AUTOMATION_POLICIES_ALREADY_PRESENT_IN_ACCOUNTING_TAB_FOR_CLIENT = "{0}More than 5 Automation Policies already present in Accounting tab for ''{1}'' Client.";
+	public static final String SUCCESSFULLY_ADDED_15_ADDITIONAL_AUTOMATION_POLICIES_IN_ACCOUNTING_TAB_FOR_CLIENT = "{0}Successfully added 15 additional Automation Policies in Accounting tab for ''{1}'' client.";
+	public static final String DENY_DIALOG_COMMENT_SELECTION = "Your request to delete this benefit has been denied because the payment is in process.";
+	public static final String SUCCESSFULLY_VERIFIED_MOBILITY_BENEFIT_DELETE_REQUEST_DENIED_EMAIL_CONTENTS = "{0}Successfully verified 'Mobility Benefit Delete Request has been Denied' Email contents";
+	public static final String EXCEPTION_OCCURED_WHILE_READING_DENIED_DELETE_REQUEST_EMAIL = "{0}Exception occured while reading Denied Delete Request Email. Exception : ''{1}''.";
+	public static final String FAILED_TO_VERIFY_CASHOUT_DETAILS_ON_PREVIEW_TRANSFEREE_PAGE = "{0}Failed to verify Cashout Details on Preview Transferee Page.";
+	public static final String POINTS_AVAILABLE_FOR_CASHOUT = "Points Available For Cashout";
+	public static final String CASHOUT_VALUE = "Cashout Value";
+	public static final String EXCEPTION_OCCURED_WHILE_VERIFYING_CASHOUT_DETAILS_ON_PREVIEW_TRANSFEREE_PAGE = "{0}Exception occured while verifying Cashout Details on Preview Transferee Page. Exception : ''{1}''.";
+	public static final String SUCCESSFULLY_VERIFIED_CASHOUT_DETAILS_ON_PREVIEW_TRANSFEREE_PAGE = "{0}Successfully verified Cashout details on Preview Transferee Page.";
+	public static final String SUCCESSFULLY_VERIFIED_MOBILITY_BENEFIT_DELETE_REQUEST_APPROVED_EMAIL_CONTENTS = "{0}Successfully verified 'Mobility Benefit Delete Request has been Approved' Email contents";
+	public static final String SUCCESSFULLY_VERIFIED_REVISED_MOBILITY_INITIATION_SUBMISSION_EMAIL_CONTENTS = "{0}Successfully verified Revised Mobility Initiation Submission Email Contents.";
+	public static final String APPROVED_DELETE_REQUEST_EXPECTED_TEXT = "We have approved the delete request(s) below that you have made for TransfereeFN TransfereeLN.";
+	public static final String DENIED_DELETE_REQUEST_EXPECTED_TEXT = "We have reviewed the delete request(s) below that you have made for TransfereeFN TransfereeLN and are unable to approve your request(s).";
+	public static final String RED_INDICATOR = "Red Indicator";
+	public static final String POLICY_INCOMPLETE = "Policy incomplete. Please complete missing information";
+	public static final String DRAFT_POLICY_STATUS_INDICATOR = "Draft Policy Status Indicator";
+	public static final String GREEN_INDICATOR = "Green Indicator";
+	public static final String DRAFT_POLICY_STATUS_INDICATOR_HOVER_TEXT = "Draft Policy Status Indicator Hover Text";
+	public static final String FAILED_TO_VERIFY_ONPOINT_POLICY_DRAFT_STATUS_INDICATOR_ON_GENERAL_INFORMATION_PAGE = "{0}Failed to verify OnPoint Policy Draft Status Indicator on General Information page.";
+	public static final String POLICY_STATUS = "Policy Status";
+	public static final String SUCCESSFULLY_VERIFIED_DRAFT_POLICY_STATUS_INDICATOR_AND_HOVER_TEXT = "{0}Successfully verified Draft Policy Status Indicator - ''{1}'' and Hover Text - ''{2}'' on ''{3}'' page.";
+	public static final String FAILED_TO_VERIFY_ONPOINT_POLICY_DRAFT_STATUS_INDICATOR = "{0}Failed to verify OnPoint Policy Draft Status Indicator on ''{1}'' page.";
+	public static final String EXCEPTION_OCCURED_WHILE_VERIFYING_POLICY_STATUS_INDICATOR = "{0}Exception occured while verifying Policy Status indicator on ''{2}'' page. Exception : ''{1}''.";
+	public static final String ASSIGNMENT_POLICY = "Assignment Policy";
+	public static final String CREATE_NEW_POLICY_BENEFIT_GENERAL_INFORMATION = "Create New Policy Benefit - General Information";
+	public static final String VIEW_POLICY_BENEFIT_GENERAL_INFORMATION = "View Policy Benefit - General Information";
+	public static final String EDIT_POLICY_BENEFIT_GENERAL_INFORMATION = "Edit Policy Benefit - General Information";
+	public static final String EDIT_POLICY_BENEFIT = "Edit Policy Benefit";
 }

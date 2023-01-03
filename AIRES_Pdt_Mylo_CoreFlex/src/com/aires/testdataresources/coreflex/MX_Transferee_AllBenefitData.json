@@ -19,6 +19,15 @@
 			"policyCreationGroup": "All Benefits,Cloning,Client"
 		},
 		{
+			"benefitType": "Mobility Premium",
+			"benefitDisplayName": "Automated Core Type Mobility Premium Display Name",
+			"benefitAmount": "Test Core Type Mobility Premium Amount",
+			"benefitDesc": "Automated Core Mobility Premium Money given to the employee to relocate for the company.",
+			"subBenefits": "Mobility Premium",
+			"airesManagedService": "No",
+			"policyCreationGroup": "All Benefits,Cloning,Client"
+		},
+		{
 			"benefitType": "Language Training",
 			"benefitDisplayName": "Automated Core Type Language Training Display Name",
 			"benefitAmount": "Core - Max 4 hours or Self Learning App Subscription up to 1000$",
@@ -66,7 +75,7 @@
 			"subBenefits": "Home Purchase Closing Costs;Home Purchase Points;Home Purchase Inspections",
 			"airesManagedService": "No",
 			"noOfMilestones": 3,
-			"policyCreationGroup": "NA"
+			"policyCreationGroup": "All Benefits"
 		},
 		{
 			"benefitType": "Final Move",
@@ -146,7 +155,7 @@
 			"subBenefits": "Education Assistance/School Search",
 			"airesManagedService": "No",
 			"noOfMilestones": 2,
-			"policyCreationGroup": "NA"
+			"policyCreationGroup": "All Benefits"
 		},
 		{
 			"benefitType": "House Hunting Trip",
@@ -272,7 +281,8 @@
 					"multipleBenefitSubmission": false,
 					"policyCreationGroup": "All Benefits,Cloning,Client",
 					"selectBenefitOnPBCPage": false,
-					"deselectBenefitOnPBCPage": false
+					"deselectBenefitOnPBCPage": false,
+					"benefitResubmissionOnBST":true
 				},
 				{
 					"benefitType": "Other Housing Benefit",
@@ -293,7 +303,8 @@
 					"multipleBenefitSubmission": false,
 					"policyCreationGroup": "All Benefits,Cloning,Client",
 					"selectBenefitOnPBCPage": false,
-					"deselectBenefitOnPBCPage": false
+					"deselectBenefitOnPBCPage": false,
+					"benefitResubmissionOnBST":false
 				},
 				{
 					"benefitType": "Temporary Living",
@@ -326,7 +337,8 @@
 					"policyCreationGroup": "All Benefits,Aires Managed Benefits Cards",
 					"selectBenefitOnPBCPage": false,
 					"deselectBenefitOnPBCPage": false,
-					"noOfMilestones": 2
+					"noOfMilestones": 2,
+					"benefitResubmissionOnBST":false
 				},
 				{
 					"benefitType": "Home Purchase",
@@ -356,11 +368,12 @@
 					"endTracingPrompt": "Closing Date",
 					"postEndTracingCardStatus": "Closing",
 					"multipleBenefitSubmission": false,
-					"policyCreationGroup": "NA",
+					"policyCreationGroup": "All Benefits",
 					"selectBenefitOnPBCPage": false,
 					"deselectBenefitOnPBCPage": false,
 					"noOfMilestones": 3,
-					"allMilestones": "Review offer contract,Closing Date"
+					"allMilestones": "Review offer contract,Closing Date",
+					"benefitResubmissionOnBST":false
 				},
 				{
 					"benefitType": "House Hunting Trip",
@@ -385,7 +398,7 @@
 					"subServiceFunction": "Host Country Agent",
 					"compID": "49211",
 					"company": "AIRES-CIS-DEMO&'TEST(CLIENT)",
-				    "initialTracingPrompt": "Start date of trip",
+					"initialTracingPrompt": "Start date of trip",
 					"postInitialTracingCardStatus": "Travel Requested",
 					"secondTracingPrompt": "Confirm flight booking/confirmation number with transferee",
 					"postSecondTracingCardStatus": "Begin Tour",
@@ -398,45 +411,8 @@
 					"selectBenefitOnPBCPage": false,
 					"deselectBenefitOnPBCPage": false,
 					"noOfMilestones": 4,
-					"allMilestones": "End date of trip,Book flight with travel agency/department,Confirm flight booking/confirmation number with transferee"
-				},
-				{
-					"benefitType": "Property Management",
-					"benefitDisplayName": "Automated Flex Property Management Display Name",
-					"benefitAmount": "Upto 3 Days 4 Nights",
-					"benefitDesc": "A trip to the new location taken after the employee has accepted the new position to identify housing and tour the area.",
-					"points": "5",
-					"subBenefits": "House Hunting Trip Transportation;House Hunting Trip Lodging;House Hunting Trip Rental Car;House Hunting Trip Meals",
-					"airesManagedService": "No",
-					"noOfMilestones": 50,
-					"multipleBenefitSelection": "Yes",
-					"numberOfBenefitSelected": 2,
-					"selectBenefitOnFPTPage": false,
-					"deleteBenefitOnMBBPage": false,
-					"grossUp": "Yes",
-					"reimbursedBy": "Aires",
-					"comment": "Test Flex House Hunting Trip Benefit Comment",
-					"irisServiceName": "Destination Services",
-					"irisSubserviceType": "Travel Home Search/Post Acceptance",
-					"irisSubserviceName": "Custom House Hunting Trip Name",
-					"irisSubserviceID": "0",
-					"subServiceActivityFinance": "(ACTV) Custom House Hunting Trip Name",
-					"subServiceFunction": "Host Country Agent",
-					"compID": "49211",
-					"company": "AIRES-CIS-DEMO&'TEST(CLIENT)",
-					"allMilestones": "Book flight with travel agency/department, Confirm flight booking/confirmation number with transferee, Start date of trip, End date of trip",
-					"initialTracingPrompt": "Book flight with travel agency/department",
-					"postInitialTracingCardStatus": "Travel Requested",
-					"secondTracingPrompt": "*Confirm hotel booking/confirmation number with transferee",
-					"postSecondTracingCardStatus": "Travel Booked",
-					"thirdTracingPrompt": "Start date of trip",
-					"postThirdTracingCardStatus": "Travel Begins",
-					"endTracingPrompt": "End date of trip",
-					"postEndTracingCardStatus": "Travel Complete",
-					"multipleBenefitSubmission": false,
-					"policyCreationGroup": "NA",
-					"selectBenefitOnPBCPage": false,
-					"deselectBenefitOnPBCPage": false
+					"allMilestones": "End date of trip,Book flight with travel agency/department,Confirm flight booking/confirmation number with transferee",
+					"benefitResubmissionOnBST":false
 				}
 			]
 		},
@@ -462,7 +438,8 @@
 					"multipleBenefitSubmission": false,
 					"policyCreationGroup": "All Benefits,Cloning,Client",
 					"selectBenefitOnPBCPage": false,
-					"deselectBenefitOnPBCPage": false
+					"deselectBenefitOnPBCPage": false,
+					"benefitResubmissionOnBST":false
 				},
 				{
 					"benefitType": "Goods & Services Allowance",
@@ -483,7 +460,8 @@
 					"multipleBenefitSubmission": false,
 					"policyCreationGroup": "All Benefits,Cloning,Client",
 					"selectBenefitOnPBCPage": false,
-					"deselectBenefitOnPBCPage": false
+					"deselectBenefitOnPBCPage": false,
+					"benefitResubmissionOnBST":false
 				},
 				{
 					"benefitType": "Auto Rental During Assignment",
@@ -516,7 +494,30 @@
 					"policyCreationGroup": "All Benefits,Aires Managed Benefits Cards",
 					"selectBenefitOnPBCPage": false,
 					"deselectBenefitOnPBCPage": false,
-					"noOfMilestones": 2
+					"noOfMilestones": 2,
+					"benefitResubmissionOnBST":false
+				},
+				{
+					"benefitType": "Mobility Premium",
+					"benefitDisplayName": "Automated Flex Mobility Premium Display Name",
+					"benefitAmount": "Test Mobility Premium Amount",
+					"benefitDesc": "Money given to the employee to relocate for the company.",
+					"points": "10",
+					"subBenefits": "Mobility Premium",
+					"airesManagedService": "No",
+					"multipleBenefitSelection": "Yes",
+					"numberOfBenefitSelected": 2,
+					"selectBenefitOnFPTPage": true,
+					"deleteBenefitOnMBBPage": true,
+					"grossUp": "Yes",
+					"reimbursedBy": "Aires",
+					"comment": "Test Flex Mobility Premium Benefit Comment",
+					"payments": "Allowance/Cashout",
+					"multipleBenefitSubmission": false,
+					"policyCreationGroup": "All Benefits,Cloning,Client",
+					"selectBenefitOnPBCPage": false,
+					"deselectBenefitOnPBCPage": false,
+					"benefitResubmissionOnBST":false
 				}
 			]
 		},
@@ -559,7 +560,8 @@
 					"selectBenefitOnPBCPage": false,
 					"deselectBenefitOnPBCPage": false,
 					"noOfMilestones": 4,
-					"allMilestones": "End date of trip,Book flight with travel agency/department,Confirm flight booking/confirmation number with transferee"
+					"allMilestones": "End date of trip,Book flight with travel agency/department,Confirm flight booking/confirmation number with transferee",
+					"benefitResubmissionOnBST":false
 				},
 				{
 					"benefitType": "Home Leave",
@@ -597,7 +599,8 @@
 					"selectBenefitOnPBCPage": false,
 					"deselectBenefitOnPBCPage": false,
 					"noOfMilestones": 4,
-					"allMilestones": "End date of trip,Book flight with travel agency/department,Confirm flight booking/confirmation number with transferee"
+					"allMilestones": "End date of trip,Book flight with travel agency/department,Confirm flight booking/confirmation number with transferee",
+					"benefitResubmissionOnBST":false
 				},
 				{
 					"benefitType": "Air Shipment",
@@ -656,7 +659,8 @@
 					"multipleBenefitSubmission": false,
 					"policyCreationGroup": "All Benefits",
 					"selectBenefitOnPBCPage": false,
-					"deselectBenefitOnPBCPage": false
+					"deselectBenefitOnPBCPage": false,
+					"benefitResubmissionOnBST":false
 				},
 				{
 					"benefitType": "Auto Shipment",
@@ -710,7 +714,8 @@
 					"multipleBenefitSubmission": false,
 					"policyCreationGroup": "All Benefits",
 					"selectBenefitOnPBCPage": false,
-					"deselectBenefitOnPBCPage": false
+					"deselectBenefitOnPBCPage": false,
+					"benefitResubmissionOnBST":false
 				},
 				{
 					"benefitType": "Sea/Surface Shipment",
@@ -769,7 +774,8 @@
 					"multipleBenefitSubmission": false,
 					"policyCreationGroup": "All Benefits",
 					"selectBenefitOnPBCPage": false,
-					"deselectBenefitOnPBCPage": false
+					"deselectBenefitOnPBCPage": false,
+					"benefitResubmissionOnBST":false
 				},
 				{
 					"benefitType": "Inland Shipment",
@@ -828,7 +834,8 @@
 					"multipleBenefitSubmission": false,
 					"policyCreationGroup": "All Benefits",
 					"selectBenefitOnPBCPage": false,
-					"deselectBenefitOnPBCPage": false
+					"deselectBenefitOnPBCPage": false,
+					"benefitResubmissionOnBST":false
 				},
 				{
 					"benefitType": "Pet Shipment",
@@ -882,7 +889,8 @@
 					"multipleBenefitSubmission": false,
 					"policyCreationGroup": "All Benefits",
 					"selectBenefitOnPBCPage": false,
-					"deselectBenefitOnPBCPage": false
+					"deselectBenefitOnPBCPage": false,
+					"benefitResubmissionOnBST":false
 				},
 				{
 					"benefitType": "Permanent Storage",
@@ -920,7 +928,8 @@
 					"multipleBenefitSubmission": false,
 					"policyCreationGroup": "NA",
 					"selectBenefitOnPBCPage": false,
-					"deselectBenefitOnPBCPage": false
+					"deselectBenefitOnPBCPage": false,
+					"benefitResubmissionOnBST":false
 				}
 			]
 		},
@@ -959,7 +968,8 @@
 					"selectBenefitOnPBCPage": false,
 					"deselectBenefitOnPBCPage": false,
 					"subbenefitToBeDeselected": "Language Training Family",
-					"noOfMilestones": 2
+					"noOfMilestones": 2,
+					"benefitResubmissionOnBST":false
 				},
 				{
 					"benefitType": "Cultural Training",
@@ -992,7 +1002,8 @@
 					"policyCreationGroup": "All Benefits,Aires Managed Benefits Cards",
 					"selectBenefitOnPBCPage": true,
 					"deselectBenefitOnPBCPage": true,
-					"noOfMilestones": 2
+					"noOfMilestones": 2,
+					"benefitResubmissionOnBST":false
 				},
 				{
 					"benefitType": "Concierge Services",
@@ -1025,7 +1036,8 @@
 					"policyCreationGroup": "All Benefits,Aires Managed Benefits Cards",
 					"selectBenefitOnPBCPage": false,
 					"deselectBenefitOnPBCPage": false,
-					"noOfMilestones": 2
+					"noOfMilestones": 2,
+					"benefitResubmissionOnBST":false
 				},
 				{
 					"benefitType": "Area Tour",
@@ -1058,7 +1070,8 @@
 					"policyCreationGroup": "All Benefits,Aires Managed Benefits Cards",
 					"selectBenefitOnPBCPage": false,
 					"deselectBenefitOnPBCPage": false,
-					"noOfMilestones": 2
+					"noOfMilestones": 2,
+					"benefitResubmissionOnBST":false
 				},
 				{
 					"benefitType": "Airport Pickup",
@@ -1091,7 +1104,8 @@
 					"policyCreationGroup": "All Benefits,Aires Managed Benefits Cards",
 					"selectBenefitOnPBCPage": false,
 					"deselectBenefitOnPBCPage": false,
-					"noOfMilestones": 2
+					"noOfMilestones": 2,
+					"benefitResubmissionOnBST":false
 				},
 				{
 					"benefitType": "Pre-Acceptance Services",
@@ -1129,7 +1143,8 @@
 					"selectBenefitOnPBCPage": false,
 					"deselectBenefitOnPBCPage": false,
 					"noOfMilestones": 4,
-					"allMilestones": "End date of trip,Book flight with travel agency/department,Confirm flight booking/confirmation number with transferee"
+					"allMilestones": "End date of trip,Book flight with travel agency/department,Confirm flight booking/confirmation number with transferee",
+					"benefitResubmissionOnBST":false
 				},
 				{
 					"benefitType": "Furniture Rental",
@@ -1162,7 +1177,8 @@
 					"policyCreationGroup": "All Benefits,Aires Managed Benefits Cards",
 					"selectBenefitOnPBCPage": false,
 					"deselectBenefitOnPBCPage": false,
-					"noOfMilestones": 2
+					"noOfMilestones": 2,
+					"benefitResubmissionOnBST":false
 				},
 				{
 					"benefitType": "Education Assistance/School Search",
@@ -1195,7 +1211,8 @@
 					"policyCreationGroup": "All Benefits",
 					"selectBenefitOnPBCPage": false,
 					"deselectBenefitOnPBCPage": false,
-					"noOfMilestones": 0
+					"noOfMilestones": 0,
+					"benefitResubmissionOnBST":false
 				}
 			]
 		},
@@ -1221,7 +1238,8 @@
 					"multipleBenefitSubmission": false,
 					"policyCreationGroup": "All Benefits,Cloning,Client",
 					"selectBenefitOnPBCPage": false,
-					"deselectBenefitOnPBCPage": false
+					"deselectBenefitOnPBCPage": false,
+					"benefitResubmissionOnBST":false
 				},
 				{
 					"benefitType": "Child Care Services Reimbursement",
@@ -1243,7 +1261,8 @@
 					"policyCreationGroup": "All Benefits,Cloning,Client",
 					"selectBenefitOnPBCPage": false,
 					"deselectBenefitOnPBCPage": false,
-					"noOfMilestones": 50
+					"noOfMilestones": 50,
+					"benefitResubmissionOnBST":false
 				}
 			]
 		}

@@ -169,7 +169,7 @@ public class CoreFlex_PreAcceptanceServices_BenefitsPage extends BenefitPage {
 	@FindBy(how = How.CSS, using = "ng-select[formcontrolname='preAcceptanceTransportTypeList'] span[class*='ng-value-label']")
 	private WebElement _selectTransportationTypeSelectedValue;
 
-	@FindBy(how = How.CSS, using = "ng-select[formcontrolname='preAcceptanceTransportTypeList'] span.ng-option-label")
+	@FindBy(how = How.CSS, using = "ng-dropdown-panel span[class*='ng-option-label']")
 	private List<WebElement> _selectTransportationTypeOptions;
 
 	@FindBy(how = How.CSS, using = "input[formcontrolname='distance']")
@@ -190,7 +190,7 @@ public class CoreFlex_PreAcceptanceServices_BenefitsPage extends BenefitPage {
 	@FindBy(how = How.CSS, using = "ng-select[formcontrolname='accompanyingFamilyMemberCode'] span[class*='ng-value-label']")
 	private WebElement _selectAccompanyingFamilyMemberCodeSelectedValue;
 
-	@FindBy(how = How.CSS, using = "ng-select[formcontrolname='accompanyingFamilyMemberCode'] span.ng-option-label")
+	@FindBy(how = How.CSS, using = "ng-dropdown-panel span[class*='ng-option-label']")
 	private List<WebElement> _selectAccompanyingFamilyMemberCodeOptions;
 
 	@FindBy(how = How.XPATH, using = "//div[@class='collapse show']//input[@formcontrolname='excessBaggageFeesInd']/parent::label[@class='form-check-label']")
@@ -208,7 +208,7 @@ public class CoreFlex_PreAcceptanceServices_BenefitsPage extends BenefitPage {
 	@FindBy(how = How.CSS, using = "ng-select[formcontrolname='maxAmountCode'] span[class*='ng-value-label']")
 	private WebElement _selectMaxAmountLodgingSelectedValue;
 
-	@FindBy(how = How.CSS, using = "ng-select[formcontrolname='maxAmountCode'] span.ng-option-label")
+	@FindBy(how = How.CSS, using = "ng-dropdown-panel span[class*='ng-option-label']")
 	private List<WebElement> _selectAmountOptions;
 
 	@FindBy(how = How.CSS, using = "input[formcontrolname='flatAmount']")
@@ -220,7 +220,7 @@ public class CoreFlex_PreAcceptanceServices_BenefitsPage extends BenefitPage {
 	@FindBy(how = How.CSS, using = "ng-select[formcontrolname='currencyCode'] span[class*='ng-value-label']")
 	private WebElement _selectCurrencySelectedValue;
 
-	@FindBy(how = How.CSS, using = "ng-select[formcontrolname='currencyCode'] span.ng-option-label")
+	@FindBy(how = How.CSS, using = "ng-dropdown-panel span[class*='ng-option-label']")
 	private List<WebElement> _selectCurrencyOptions;
 
 	@FindBy(how = How.XPATH, using = "//div[@class='collapse show']//input[@formcontrolname='numOfDays']")
@@ -232,7 +232,7 @@ public class CoreFlex_PreAcceptanceServices_BenefitsPage extends BenefitPage {
 	@FindBy(how = How.CSS, using = "ng-select[formcontrolname='classSizeCode'] span[class*='ng-value-label']")
 	private WebElement _selectRentalCarSizeSelectedValue;
 
-	@FindBy(how = How.CSS, using = "ng-select[formcontrolname='classSizeCode'] span.ng-option-label")
+	@FindBy(how = How.CSS, using = "ng-dropdown-panel span[class*='ng-option-label']")
 	private List<WebElement> _selectRentalCarSizeOptions;
 
 	@FindBy(how = How.CSS, using = "input[formcontrolname='classSizeOther']")
@@ -247,7 +247,7 @@ public class CoreFlex_PreAcceptanceServices_BenefitsPage extends BenefitPage {
 	@FindBy(how = How.CSS, using = "app-pre-trip-meals ng-select[formcontrolname='maxAmountCode']")
 	private WebElement _selectMaxAmtMeals;
 
-	@FindBy(how = How.CSS, using = "app-pre-trip-meals ng-select[formcontrolname='maxAmountCode'] span[class*=ng-option-label]")
+	@FindBy(how = How.CSS, using = "ng-dropdown-panel span[class*='ng-option-label']")
 	private List<WebElement> _selectMaxAmtMealsOptions;
 
 	@FindBy(how = How.CSS, using = "input[formcontrolname='maxAmountEe']")
@@ -259,7 +259,7 @@ public class CoreFlex_PreAcceptanceServices_BenefitsPage extends BenefitPage {
 	@FindBy(how = How.CSS, using = "ng-select[formcontrolname='currencyCodeEe']")
 	private WebElement _selectTransfereeCurrency;
 
-	@FindBy(how = How.CSS, using = "ng-select[formcontrolname='currencyCodeEe'] span.ng-option-label")
+	@FindBy(how = How.CSS, using = "ng-dropdown-panel span[class*='ng-option-label']")
 	private List<WebElement> _selectTransfereeCurrencyOptions;
 
 	@FindBy(how = How.CSS, using = "input[formcontrolname='maxAmountAdult']")
@@ -271,7 +271,7 @@ public class CoreFlex_PreAcceptanceServices_BenefitsPage extends BenefitPage {
 	@FindBy(how = How.CSS, using = "ng-select[formcontrolname='currencyCodeAdult']")
 	private WebElement _selectAdultCurrency;
 
-	@FindBy(how = How.CSS, using = "ng-select[formcontrolname='currencyCodeAdult'] span.ng-option-label")
+	@FindBy(how = How.CSS, using = "ng-dropdown-panel span[class*='ng-option-label']")
 	private List<WebElement> _selectAdultCurrencyOptions;
 
 	@FindBy(how = How.CSS, using = "input[formcontrolname='maxAmountChild']")
@@ -283,7 +283,7 @@ public class CoreFlex_PreAcceptanceServices_BenefitsPage extends BenefitPage {
 	@FindBy(how = How.CSS, using = "ng-select[formcontrolname='currencyCodeChild']")
 	private WebElement _selectCurrencyCodeChild;
 
-	@FindBy(how = How.CSS, using = "ng-select[formcontrolname='currencyCodeChild'] span.ng-option-label")
+	@FindBy(how = How.CSS, using = "ng-dropdown-panel span[class*='ng-option-label']")
 	private List<WebElement> _selectCurrencyCodeChildOptions;
 
 	// Aires Managed Benefit Radio Label Selection
@@ -450,9 +450,9 @@ public class CoreFlex_PreAcceptanceServices_BenefitsPage extends BenefitPage {
 				CoreFunctions.selectItemInListByText(driver, _leftNavigationTitleList,
 						COREFLEXConstants.GENERAL_INFORMATION);
 				break;
-			case COREFLEXConstants.FLEX_POLICY_SETUP:
+			case COREFLEXConstants.POINT_POLICY_SETUP:
 				CoreFunctions.selectItemInListByText(driver, _leftNavigationTitleList,
-						COREFLEXConstants.FLEX_POLICY_SETUP);
+						COREFLEXConstants.POINT_POLICY_SETUP);
 				break;
 			case COREFLEXConstants.POLICY_BENEFIT_CATEGORIES:
 				CoreFunctions.selectItemInListByText(driver, _leftNavigationTitleList,

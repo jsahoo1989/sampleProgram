@@ -286,9 +286,9 @@ public class CoreFlex_ChildCareServicesReimbursement_BenefitsPage extends Benefi
 				CoreFunctions.selectItemInListByText(driver, _leftNavigationTitleList,
 						COREFLEXConstants.GENERAL_INFORMATION);
 				break;
-			case COREFLEXConstants.FLEX_POLICY_SETUP:
+			case COREFLEXConstants.POINT_POLICY_SETUP:
 				CoreFunctions.selectItemInListByText(driver, _leftNavigationTitleList,
-						COREFLEXConstants.FLEX_POLICY_SETUP);
+						COREFLEXConstants.POINT_POLICY_SETUP);
 				break;
 			case COREFLEXConstants.POLICY_BENEFIT_CATEGORIES:
 				CoreFunctions.selectItemInListByText(driver, _leftNavigationTitleList,

@@ -108,23 +108,24 @@ public class PDT_AddNewPolicyPage extends Base {
 	@FindBy(how = How.XPATH, using = "//ng-select[@bindvalue='corporationPolicyId']//div[@class='ng-placeholder'][contains(text(),'No policy available for selection')]")
 	private WebElement _policyNameDefaultText;
 
-	private PDT_LoginInfo _loginInfo = FileReaderManager.getInstance().getJsonReader().getLoginByEnvt(CoreFunctions.getPropertyFromConfig("envt").toLowerCase());
+	private PDT_LoginInfo _loginInfo = FileReaderManager.getInstance().getJsonReader()
+			.getLoginByEnvt(CoreFunctions.getPropertyFromConfig("envt").toLowerCase());
 //	private PDT_LoginInfo _loginInfo = FileReaderManager.getInstance().getJsonReader().getLoginByEnvt(System.getProperty("envt").toLowerCase());
 
 	public static String selectedPolicyName;
 	long timeBeforeAction, timeAfterAction;
 
 	LinkedHashMap<String, WebElement> webElementsMap = new LinkedHashMap<String, WebElement>();
-	
+
 	public void initWebElementsMap() {
 		webElementsMap.put(PDTConstants.HEADING, _headingAddNewPolicyForm);
-		webElementsMap.put(PDTConstants.POLICY, _selectedPolicy);		
+		webElementsMap.put(PDTConstants.POLICY, _selectedPolicy);
 	}
-	
+
 	public void waitForProgressBarToDisappear() {
 		try {
-				BusinessFunctions.fluentWaitForSpinnerToDisappear(driver, _progressBar);
-		} catch(Exception e) {
+			BusinessFunctions.fluentWaitForSpinnerToDisappear(driver, _progressBar);
+		} catch (Exception e) {
 			Assert.fail(MessageFormat.format(PDTConstants.FAIL_TO_WAIT_PROGRESS_BAR, CoreConstants.FAIL));
 		}
 	}
@@ -132,21 +133,22 @@ public class PDT_AddNewPolicyPage extends Base {
 	public String getElementText(String elementName) {
 		String elementText = null;
 		initWebElementsMap();
-		try {			
+		try {
 			elementText = CoreFunctions.getElementText(driver, webElementsMap.get(elementName));
-		} catch(Exception e) {
-			Assert.fail(MessageFormat.format(PDTConstants.FAIL_TO_GET_TEXT_FOR_ELEMENT, CoreConstants.FAIL, elementName));
+		} catch (Exception e) {
+			Assert.fail(
+					MessageFormat.format(PDTConstants.FAIL_TO_GET_TEXT_FOR_ELEMENT, CoreConstants.FAIL, elementName));
 		}
 		return elementText;
 	}
 
 	public boolean verifyAddNewPolicyHeading(String pageName) {
 		waitForProgressBarToDisappear();
-		if(!CoreFunctions.verifyElementOnPage(driver, _headingAddNewPolicyForm, PDTConstants.heading,
+		if (!CoreFunctions.verifyElementOnPage(driver, _headingAddNewPolicyForm, PDTConstants.heading,
 				PDTConstants.ADD_NEW_POLICY_FORM, pageName, true))
-				Reporter.addStepLog(MessageFormat.format(PDTConstants.FAILED_TO_VERIFY_HEADING_ON_PAGE, CoreConstants.FAIL,
-						PDTConstants.ADD_NEW_POLICY, PDTConstants.ADD_NEW_POLICY_FORM,
-						getElementText(PDTConstants.HEADING)));
+			Reporter.addStepLog(MessageFormat.format(PDTConstants.FAILED_TO_VERIFY_HEADING_ON_PAGE, CoreConstants.FAIL,
+					PDTConstants.ADD_NEW_POLICY, PDTConstants.ADD_NEW_POLICY_FORM,
+					getElementText(PDTConstants.HEADING)));
 		return CoreFunctions.verifyElementOnPage(driver, _headingAddNewPolicyForm, PDTConstants.heading,
 				PDTConstants.ADD_NEW_POLICY_FORM, pageName, true);
 	}
@@ -388,25 +390,25 @@ public class PDT_AddNewPolicyPage extends Base {
 	}
 
 	public void enterClientPolicyDetails() {
-		selectClient(_loginInfo.details.clientId);		
+		selectClient(_loginInfo.details.clientId);
 		waitForProgressBarToDisappear();
 		selectPolicy(_loginInfo.details.policy);
 		CoreFunctions.explicitWaitTillElementVisibility(driver, _buttonNext, "Next", 7);
 		timeBeforeAction = new Date().getTime();
-		CoreFunctions.click(driver, _buttonNext, _buttonNext.getText());		
+		CoreFunctions.click(driver, _buttonNext, _buttonNext.getText());
 		waitForProgressBarToDisappear();
-		timeAfterAction = new Date().getTime();	
-		BusinessFunctions.printTimeTakenByPageToLoad(timeBeforeAction, timeAfterAction, PDTConstants.GENERAL_INFORMATION);
+		timeAfterAction = new Date().getTime();
+		BusinessFunctions.printTimeTakenByPageToLoad(timeBeforeAction, timeAfterAction,
+				PDTConstants.GENERAL_INFORMATION);
 	}
 
 	public void selectClient(String clientIdFromJson) {
-		CoreFunctions.clearAndSetText(driver, _inputClientID, PDTConstants.CLIENT_ID,
-				clientIdFromJson);
+		CoreFunctions.clearAndSetText(driver, _inputClientID, PDTConstants.CLIENT_ID, clientIdFromJson);
 		CoreFunctions.explicitWaitTillElementListVisibilityCustomTime(driver, _optionsClientID, 90);
 		CoreFunctions.explicitWaitTillElementListClickable(driver, _optionsClientID);
 		if (_optionsClientID.size() > 0
 				&& !_optionsClientID.get(0).getText().equalsIgnoreCase(PDTConstants.NO_ITEMS_FOUND)) {
-			selectClientFromClientDropDown(clientIdFromJson,_loginInfo.details.clientName);
+			selectClientFromClientDropDown(clientIdFromJson, _loginInfo.details.clientName);
 		} else if (checkErrorPopUpExistsForClientId()) {
 			String errorMsg = _popUpErrorMessage.getText();
 			CoreFunctions.clickElement(driver, _buttonPopUpErrorOk);
@@ -810,8 +812,28 @@ public class PDT_AddNewPolicyPage extends Base {
 				CoreFunctions.clearAndSetText(driver, _inputPolicy, COREFLEXConstants.AUTOMATION_POLICY);
 				CoreFunctions.explicitWaitTillElementListVisibility(driver, _optionsPolicyName);
 				setSelectedPolicyName(_optionsPolicyName.get(0).getText());
-				CoreFunctions.selectItemInListByText(driver, _optionsPolicyName, _optionsPolicyName.get(0).getText(), true);
+				CoreFunctions.selectItemInListByText(driver, _optionsPolicyName, _optionsPolicyName.get(0).getText(),
+						true);
 				return true;
+			} else if (CoreFunctions.isElementExist(driver, _popUpError, 2)) {
+				Reporter.addStepLog(MessageFormat.format(PDTConstants.ERROR_POP_UP_DISPLAYED_FOR_VALID_CLIENTID,
+						CoreConstants.FAIL, CoreFunctions.getElementText(driver, _popUpErrorMessage)));
+			}
+		} catch (Exception e) {
+			Reporter.addStepLog(MessageFormat.format(PDTConstants.EXCEPTION_OCCURED_WHILE_VALIDATING_POLICY_NAME_FIELD,
+					CoreConstants.FAIL, e.getMessage()));
+		}
+		return false;
+	}
+
+	public boolean verifyAutomationPolicyPresent() {
+		try {
+			if (CoreFunctions.isElementExist(driver, _selectPolicyName, 5)) {
+				CoreFunctions.clickElement(driver, _selectPolicyName);
+				CoreFunctions.clearAndSetText(driver, _inputPolicy, COREFLEXConstants.AUTOMATION_POLICY);
+				CoreFunctions.explicitWaitTillElementListVisibility(driver, _optionsPolicyName);
+				return (_optionsPolicyName.size() >= 5) ? true : false;
+
 			} else if (CoreFunctions.isElementExist(driver, _popUpError, 2)) {
 				Reporter.addStepLog(MessageFormat.format(PDTConstants.ERROR_POP_UP_DISPLAYED_FOR_VALID_CLIENTID,
 						CoreConstants.FAIL, CoreFunctions.getElementText(driver, _popUpErrorMessage)));

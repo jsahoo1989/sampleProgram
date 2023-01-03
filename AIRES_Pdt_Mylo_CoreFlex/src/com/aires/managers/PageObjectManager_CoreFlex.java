@@ -47,6 +47,7 @@ import com.aires.pages.coreflex.CoreFlex_HouseHuntingTrip_BenefitsPage;
 import com.aires.pages.coreflex.CoreFlex_Inland_Shipment_BenefitsPage;
 import com.aires.pages.coreflex.CoreFlex_LanguageTraining_BenefitsPage;
 import com.aires.pages.coreflex.CoreFlex_LumpSum_BenefitsPage;
+import com.aires.pages.coreflex.CoreFlex_MobilityPremium_BenefitsPage;
 import com.aires.pages.coreflex.CoreFlex_OtherHousing_BenefitsPage;
 import com.aires.pages.coreflex.CoreFlex_PermanentStorage_BenefitsPage;
 import com.aires.pages.coreflex.CoreFlex_Pet_Shipment_BenefitsPage;
@@ -116,11 +117,13 @@ public class PageObjectManager_CoreFlex {
 	private CoreFlex_ConciergeHomeCleaningServicesReimbursement_BenefitsPage _coreFlexConciergeHomeCleaningServicesReimbursementBenefitsPage;
 	private CoreFlex_ChildCareServicesReimbursement_BenefitsPage _coreFlexChildCareServicesReimbursementBenefitsPage;
 	private CoreFlex_GoodsServicesAllowance_BenefitsPage _coreFlexGoodsServicesAllowanceBenefitsPage;
+	
 
 	private static Map<String, BenefitPage> benefitPageObjects = new HashMap<String, BenefitPage>();
 
 	private MX_Client_AuthorizationHome_CollaborationPage _mxClientAuthCollaborationPage;
 	private MX_Client_AuthWorkflow_ApprovalActionPage _mxClientAuthWFApprovalActionPage;
+	private CoreFlex_MobilityPremium_BenefitsPage _coreFlexMobilityPremiumBenefitsPage;
 
 	public PageObjectManager_CoreFlex(WebDriver driver) {
 		this._driver = driver;
@@ -147,6 +150,12 @@ public class PageObjectManager_CoreFlex {
 		return (_coreFlexLumpSumBenefitsPage == null)
 				? _coreFlexLumpSumBenefitsPage = new CoreFlex_LumpSum_BenefitsPage(_driver)
 				: _coreFlexLumpSumBenefitsPage;
+	}
+	
+	public CoreFlex_MobilityPremium_BenefitsPage getCoreFlexMobilityPremiumBenefitsPage() {
+		return (_coreFlexMobilityPremiumBenefitsPage == null)
+				? _coreFlexMobilityPremiumBenefitsPage = new CoreFlex_MobilityPremium_BenefitsPage(_driver)
+				: _coreFlexMobilityPremiumBenefitsPage;
 	}
 
 	public CoreFlex_LanguageTraining_BenefitsPage getCoreFlexLanguageTrainingBenefitsPage() {
@@ -417,6 +426,7 @@ public class PageObjectManager_CoreFlex {
 		benefitPageObjects.put(COREFLEXConstants.CHILD_CARE_SERVICES_REIMBURSEMENT,
 				_coreFlexChildCareServicesReimbursementBenefitsPage);
 		benefitPageObjects.put(COREFLEXConstants.GOODS_SERVICES_ALLOWANCE, _coreFlexGoodsServicesAllowanceBenefitsPage);
+		benefitPageObjects.put(COREFLEXConstants.MOBILITY_PREMIUM, _coreFlexMobilityPremiumBenefitsPage);
 		return benefitPageObjects;
 	}
 
@@ -449,6 +459,7 @@ public class PageObjectManager_CoreFlex {
 		_coreFlexChildCareServicesReimbursementBenefitsPage = this
 				.getCoreFlexChildCareServicesReimbursementBenefitsPage();
 		_coreFlexGoodsServicesAllowanceBenefitsPage = this.getCoreFlexGoodsServicesAllowanceBenefitsPage();
+		_coreFlexMobilityPremiumBenefitsPage = this.getCoreFlexMobilityPremiumBenefitsPage();
 	}
 
 	public MX_Client_AuthorizationHome_CollaborationPage getMXClientAuthCollaborationPage() {

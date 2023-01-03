@@ -191,7 +191,7 @@ public class MX_Transferee_FlexPlanningTool_Page extends Base {
 	@FindBy(how = How.XPATH, using = "//span[text()='Back to benefits list']")
 	private WebElement _link_backToBenefitList;
 
-	@FindBy(how = How.CSS, using = "div[class='RXBold af_panelGroupLayout'] span[class*='RXCFBiggerText']")
+	@FindBy(how = How.CSS, using = "div[class='RXBold af_panelGroupLayout']")
 	private WebElement _textTotalPointBalance;
 
 	@FindBy(how = How.CSS, using = "table[id*='pglmms']")
@@ -346,8 +346,8 @@ public class MX_Transferee_FlexPlanningTool_Page extends Base {
 
 	public boolean isFlexPlanningToolHomePageDisplayed() {
 		CoreFunctions.explicitWaitTillElementVisibility(driver, flexHomePageTitle,
-				MobilityXConstants.FLEX_PLANNING_TOOL);
-		return CoreFunctions.getElementText(driver, flexHomePageTitle).equals(MobilityXConstants.FLEX_PLANNING_TOOL);
+				MobilityXConstants.ONPOINT_PLANNING_TOOL);
+		return CoreFunctions.getElementText(driver, flexHomePageTitle).equals(MobilityXConstants.ONPOINT_PLANNING_TOOL);
 	}
 
 	public void verifyFlexPlanningToolHomePageContent() {
@@ -763,13 +763,15 @@ public class MX_Transferee_FlexPlanningTool_Page extends Base {
 			DecimalFormat format = new DecimalFormat();
 			format.setDecimalSeparatorAlwaysShown(false);
 			CoreFunctions
-					.verifyText(CoreFunctions.getElementText(driver, _textTotalPointBalance),
+					.verifyTextContains(CoreFunctions.getElementText(driver, _textTotalPointBalance),
 							(MobilityXConstants.AVAILABLE_POINTS_AFTER_CLIENT_SUBMISSION_TEXT
 									.replace("available_points",
 											format.format(Double.parseDouble(CoreFunctions
 													.getPropertyFromConfig("CF_Transferee_AvailablePoints"))))
-									.replace("spent_points", format.format(Double.parseDouble(
-											CoreFunctions.getPropertyFromConfig("CF_Client_TotalSelectedPoints"))))));
+									.replace("spent_points",
+											format.format(Double.parseDouble(CoreFunctions
+													.getPropertyFromConfig("CF_Client_TotalSelectedPoints"))))),
+							MobilityXConstants.AVAILABLE_POINTS_BALANCE_TEXT);
 			Reporter.addStepLog(MessageFormat.format(
 					MobilityXConstants.SUCCESSFULLY_VERIFIED_AVAILABLE_POINTS_MESSAGE_TEXT_ON_FLEX_PLANNING_TOOL_PAGE,
 					CoreConstants.PASS, CoreFunctions.getElementText(driver, _textTotalPointBalance)));
@@ -848,7 +850,7 @@ public class MX_Transferee_FlexPlanningTool_Page extends Base {
 	private boolean performFlexBenefitSelection(Benefit benefit, int indexBenefit) {
 		boolean isBenefitSelected = false;
 		try {
-			CoreFunctions.scrollToElementUsingJS(driver, flexHomePageTitle, MobilityXConstants.FLEX_PLANNING_TOOL);
+			CoreFunctions.scrollToElementUsingJS(driver, flexHomePageTitle, MobilityXConstants.ONPOINT_PLANNING_TOOL);
 			CoreFunctions.waitHandler(5);
 			double points = Double.parseDouble(benefit.getPoints());
 			if ((benefit.getMultipleBenefitSelection()).equals("Yes")) {
@@ -871,7 +873,7 @@ public class MX_Transferee_FlexPlanningTool_Page extends Base {
 				totalSelectedPoints += points;
 				isBenefitSelected = true;
 			}
-			CoreFunctions.scrollToElementUsingJS(driver, flexHomePageTitle, MobilityXConstants.FLEX_PLANNING_TOOL);
+			CoreFunctions.scrollToElementUsingJS(driver, flexHomePageTitle, MobilityXConstants.ONPOINT_PLANNING_TOOL);
 			CoreFunctions.waitHandler(5);
 		} catch (Exception e) {
 			Reporter.addStepLog(MessageFormat.format(
@@ -1287,7 +1289,7 @@ public class MX_Transferee_FlexPlanningTool_Page extends Base {
 			CoreFunctions.clickElement(driver, _buttonSelectThisCashoutPoints);
 			CoreFunctions.explicitWaitTillElementVisibility(driver, _buttonSelectedCashoutPoints,
 					MobilityXConstants.CASHOUT_SELECTED);
-			CoreFunctions.scrollToElementUsingJS(driver, flexHomePageTitle, MobilityXConstants.FLEX_PLANNING_TOOL);
+			CoreFunctions.scrollToElementUsingJS(driver, flexHomePageTitle, MobilityXConstants.ONPOINT_PLANNING_TOOL);
 			Benefit duplicateHosuingBenefit = allBenefits.stream()
 					.filter(b -> b.getBenefitType().equals(COREFLEXConstants.DUPLICATE_HOUSING)).findAny().orElse(null);
 			int indexBenefit = BusinessFunctions.returnindexItemFromListUsingText(driver, _textAddedBenefitNameList,
@@ -1328,7 +1330,7 @@ public class MX_Transferee_FlexPlanningTool_Page extends Base {
 			CoreFunctions.explicitWaitTillElementListVisibility(driver, _buttonSelected);
 			Benefit lumpSumBenefit = allBenefits.stream()
 					.filter(b -> b.getBenefitType().equals(COREFLEXConstants.LUMP_SUM)).findAny().orElse(null);
-			CoreFunctions.scrollToElementUsingJS(driver, flexHomePageTitle, MobilityXConstants.FLEX_PLANNING_TOOL);
+			CoreFunctions.scrollToElementUsingJS(driver, flexHomePageTitle, MobilityXConstants.ONPOINT_PLANNING_TOOL);
 			CoreFunctions.waitHandler(5);
 			int indexLumpSumBenefit = BusinessFunctions.returnindexItemFromListUsingText(driver,
 					_textAddedBenefitNameList, lumpSumBenefit.getBenefitDisplayName());
@@ -1362,7 +1364,8 @@ public class MX_Transferee_FlexPlanningTool_Page extends Base {
 				CoreFunctions.clickElement(driver, _buttonSelectedCashoutPoints);
 				CoreFunctions.explicitWaitTillElementVisibility(driver, _buttonSelectThisCashoutPoints,
 						MobilityXConstants.SELECT_CASHOUT);
-				CoreFunctions.scrollToElementUsingJS(driver, flexHomePageTitle, MobilityXConstants.FLEX_PLANNING_TOOL);
+				CoreFunctions.scrollToElementUsingJS(driver, flexHomePageTitle,
+						MobilityXConstants.ONPOINT_PLANNING_TOOL);
 			}
 			deselectAllBenefitsonFPTPage();
 			return true;
@@ -1843,6 +1846,21 @@ public class MX_Transferee_FlexPlanningTool_Page extends Base {
 			}
 		}
 		return benefitsSelection;
+	}
+
+	public boolean verifyWindowTitle() {
+		try {
+			CoreFunctions.verifyText(CoreFunctions.getWindowTitle(driver), MobilityXConstants.ON_POINT,
+					MobilityXConstants.WINDOW_TITLE);
+			Reporter.addStepLog(
+					MessageFormat.format(MobilityXConstants.SUCCESSFULLY_VERIFIED_WINDOW_TITLE_DISPLAYED_AS_ON_POINT,
+							CoreConstants.PASS, MobilityXConstants.ONPOINT_PLANNING_TOOL));
+			return true;
+		} catch (Exception e) {
+			Reporter.addStepLog(MessageFormat.format(MobilityXConstants.EXCEPTION_OCCURED_WHILE_VERIFYING_PAGE_TITLE,
+					CoreConstants.FAIL, e.getMessage(), MobilityXConstants.ONPOINT_PLANNING_TOOL));
+		}
+		return false;
 	}
 
 }

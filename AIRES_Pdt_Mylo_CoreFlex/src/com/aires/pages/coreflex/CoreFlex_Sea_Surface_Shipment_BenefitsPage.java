@@ -192,7 +192,7 @@ public class CoreFlex_Sea_Surface_Shipment_BenefitsPage extends BenefitPage {
 	@FindBy(how = How.CSS, using = "div[class='collapse show'] ng-select[formcontrolname='tempStorageDurationCode'] span[class*='ng-value-label']")
 	private WebElement _selectTempStorageDurationSelectedValue;
 
-	@FindBy(how = How.CSS, using = "ng-select[formcontrolname='tempStorageDurationCode'] span.ng-option-label")
+	@FindBy(how = How.CSS, using = "ng-dropdown-panel span[class*='ng-option-label']")
 	private List<WebElement> _selectTempStorageDurationOptions;
 
 	@FindBy(how = How.XPATH, using = "//input[@formcontrolname='insuranceType']/parent::label[@class='form-check-label']")
@@ -254,7 +254,7 @@ public class CoreFlex_Sea_Surface_Shipment_BenefitsPage extends BenefitPage {
 	@FindBy(how = How.CSS, using = "div[class='collapse show'] ng-select[formcontrolname='seaShipmentContainerCodeList'] span[class*='ng-value-label']")
 	private WebElement _selectContainerSizeTransfereeOnlySelectedValue;
 
-	@FindBy(how = How.CSS, using = "ng-select[formcontrolname='seaShipmentContainerCodeList'] span.ng-option-label")
+	@FindBy(how = How.CSS, using = "ng-dropdown-panel span[class*='ng-option-label']")
 	private List<WebElement> _selectContainerSizeTransfereeOnlyOptions;
 
 	@FindBy(how = How.CSS, using = "ng-select[formcontrolname='quantityCodeTransfereeOnly']")
@@ -263,7 +263,7 @@ public class CoreFlex_Sea_Surface_Shipment_BenefitsPage extends BenefitPage {
 	@FindBy(how = How.CSS, using = "div[class='collapse show'] ng-select[formcontrolname='quantityCodeTransfereeOnly'] span[class*='ng-value-label']")
 	private WebElement _selectContainerSizeTransfereeOnlyQuantitySelectedValue;
 
-	@FindBy(how = How.CSS, using = "ng-select[formcontrolname='quantityCodeTransfereeOnly'] span.ng-option-label")
+	@FindBy(how = How.CSS, using = "ng-dropdown-panel span[class*='ng-option-label']")
 	private List<WebElement> _selectContainerSizeTransfereeOnlyQuantityOptions;
 
 	@FindBy(how = How.CSS, using = "ng-select[formcontrolname='seaShipmentPartnerCodeList']")
@@ -272,7 +272,7 @@ public class CoreFlex_Sea_Surface_Shipment_BenefitsPage extends BenefitPage {
 	@FindBy(how = How.CSS, using = "div[class='collapse show'] ng-select[formcontrolname='seaShipmentPartnerCodeList'] span[class*='ng-value-label']")
 	private WebElement _selectContainerSizeTransfereePartnerSelectedValue;
 
-	@FindBy(how = How.CSS, using = "ng-select[formcontrolname='seaShipmentPartnerCodeList'] span.ng-option-label")
+	@FindBy(how = How.CSS, using = "ng-dropdown-panel span[class*='ng-option-label']")
 	private List<WebElement> _selectContainerSizeTransfereePartnerOptions;
 
 	@FindBy(how = How.CSS, using = "ng-select[formcontrolname='quantityCodeTransfereePartner']")
@@ -281,7 +281,7 @@ public class CoreFlex_Sea_Surface_Shipment_BenefitsPage extends BenefitPage {
 	@FindBy(how = How.CSS, using = "div[class='collapse show'] ng-select[formcontrolname='quantityCodeTransfereePartner'] span[class*='ng-value-label']")
 	private WebElement _selectContainerSizeTransfereePartnerQuantitySelectedValue;
 
-	@FindBy(how = How.CSS, using = "ng-select[formcontrolname='quantityCodeTransfereePartner'] span.ng-option-label")
+	@FindBy(how = How.CSS, using = "ng-dropdown-panel span[class*='ng-option-label']")
 	private List<WebElement> _selectContainerSizeTransfereePartnerQuantityOptions;
 
 	@FindBy(how = How.CSS, using = "ng-select[formcontrolname='seaShipmentFamilyCodeList']")
@@ -290,7 +290,7 @@ public class CoreFlex_Sea_Surface_Shipment_BenefitsPage extends BenefitPage {
 	@FindBy(how = How.CSS, using = "div[class='collapse show'] ng-select[formcontrolname='seaShipmentFamilyCodeList'] span[class*='ng-value-label']")
 	private WebElement _selectContainerSizeTransfereeFamilySelectedValue;
 
-	@FindBy(how = How.CSS, using = "ng-select[formcontrolname='seaShipmentFamilyCodeList'] span.ng-option-label")
+	@FindBy(how = How.CSS, using = "ng-dropdown-panel span[class*='ng-option-label']")
 	private List<WebElement> _selectContainerSizeTransfereeFamilyOptions;
 
 	@FindBy(how = How.CSS, using = "ng-select[formcontrolname='quantityCodeTransfereeFamily']")
@@ -299,7 +299,7 @@ public class CoreFlex_Sea_Surface_Shipment_BenefitsPage extends BenefitPage {
 	@FindBy(how = How.CSS, using = "div[class='collapse show'] ng-select[formcontrolname='quantityCodeTransfereeFamily'] span[class*='ng-value-label']")
 	private WebElement _selectContainerSizeTransfereeFamilyQuantitySelectedValue;
 
-	@FindBy(how = How.CSS, using = "ng-select[formcontrolname='quantityCodeTransfereeFamily'] span.ng-option-label")
+	@FindBy(how = How.CSS, using = "ng-dropdown-panel span[class*='ng-option-label']")
 	private List<WebElement> _selectContainerSizeTransfereeFamilyQuantityOptions;
 
 	@FindBy(how = How.CSS, using = "input[formcontrolname='quantityOtherTransfereeFamily']")
@@ -326,7 +326,7 @@ public class CoreFlex_Sea_Surface_Shipment_BenefitsPage extends BenefitPage {
 	@FindBy(how = How.CSS, using = "ng-select[formcontrolname='seaShipmentTradedCodeList']")
 	private WebElement _selectSeaShipmentTraded;
 
-	@FindBy(how = How.CSS, using = "ng-select[formcontrolname='seaShipmentTradedCodeList'] span.ng-option-label")
+	@FindBy(how = How.CSS, using = "ng-dropdown-panel span[class*='ng-option-label']")
 	private List<WebElement> _selectSeaShipmentTradedOptions;
 
 	@FindBy(how = How.CSS, using = "div[class='collapse show'] ng-select[formcontrolname='seaShipmentTradedCodeList'] span[class*='ng-value-label']")
@@ -398,9 +398,9 @@ public class CoreFlex_Sea_Surface_Shipment_BenefitsPage extends BenefitPage {
 				CoreFunctions.selectItemInListByText(driver, _leftNavigationTitleList,
 						COREFLEXConstants.GENERAL_INFORMATION);
 				break;
-			case COREFLEXConstants.FLEX_POLICY_SETUP:
+			case COREFLEXConstants.POINT_POLICY_SETUP:
 				CoreFunctions.selectItemInListByText(driver, _leftNavigationTitleList,
-						COREFLEXConstants.FLEX_POLICY_SETUP);
+						COREFLEXConstants.POINT_POLICY_SETUP);
 				break;
 			case COREFLEXConstants.POLICY_BENEFIT_CATEGORIES:
 				CoreFunctions.selectItemInListByText(driver, _leftNavigationTitleList,

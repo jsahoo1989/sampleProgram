@@ -135,7 +135,7 @@ public class CoreFlex_AreaTour_BenefitsPage extends BenefitPage {
 	@FindBy(how = How.CSS, using = "ng-select[formcontrolname='durationCode'] span[class*='ng-value-label']")
 	private WebElement _selectDurationDaysSelectedValue;
 
-	@FindBy(how = How.CSS, using = "ng-select[formcontrolname='durationCode'] span.ng-option-label")
+	@FindBy(how = How.CSS, using = "ng-dropdown-panel span[class*='ng-option-label']")
 	private List<WebElement> _selectDurationDaysOptions;
 
 	// Comment Text Area
@@ -225,7 +225,7 @@ public class CoreFlex_AreaTour_BenefitsPage extends BenefitPage {
 	private By tourCompleteEstimatedDate = By
 			.xpath(".//div[5]//span[not(contains(text(),'estimated'))][@class='RXSmallerTextMuted RXBold']");
 	
-	@FindBy(how = How.CSS, using = "ng-dropdown-panel[role='listbox'] span[class*='ng-option-label']")
+	@FindBy(how = How.CSS, using = "ng-dropdown-panel span[class*='ng-option-label']")
 	private List<WebElement> _selectDynamicDropdownOptions;	
 
 	/*********************************************************************/
@@ -294,9 +294,9 @@ public class CoreFlex_AreaTour_BenefitsPage extends BenefitPage {
 				CoreFunctions.selectItemInListByText(driver, _leftNavigationTitleList,
 						COREFLEXConstants.GENERAL_INFORMATION);
 				break;
-			case COREFLEXConstants.FLEX_POLICY_SETUP:
+			case COREFLEXConstants.POINT_POLICY_SETUP:
 				CoreFunctions.selectItemInListByText(driver, _leftNavigationTitleList,
-						COREFLEXConstants.FLEX_POLICY_SETUP);
+						COREFLEXConstants.POINT_POLICY_SETUP);
 				break;
 			case COREFLEXConstants.POLICY_BENEFIT_CATEGORIES:
 				CoreFunctions.selectItemInListByText(driver, _leftNavigationTitleList,

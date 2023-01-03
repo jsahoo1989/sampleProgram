@@ -24,6 +24,7 @@ import com.aires.pages.coreflex.MX_Client_AuthorizationHome_CollaborationPage;
 import com.aires.pages.coreflex.MX_Client_BenefitSelectionToolPage;
 import com.aires.pages.coreflex.MX_Client_BenefitsBundlePage;
 import com.aires.pages.coreflex.MX_Client_ViewAllInitiationsPage;
+import com.aires.pages.coreflex.MX_Transferee_JourneyHomePage;
 import com.aires.pages.coreflex.MobilityX_LoginPage;
 import com.aires.pages.coreflex.TransfereeSubmissions_DashboardHomePage;
 import com.aires.pages.coreflex.TransfereeSubmissions_DetailsPage;
@@ -59,6 +60,7 @@ public class CF_MX_Client_Steps {
 	private MX_Client_AuthorizationHome_CollaborationPage mxClientAuthCollaborationPage;
 	private MX_Client_AuthWorkflow_ApprovalActionPage mxClientAuthWFApprovalActionPage;
 	private CoreFlex_LoginInfo _coreFlexLoginInfo;
+	private MX_Transferee_JourneyHomePage mxTransfereeJourneyHomePage;
 
 	public CF_MX_Client_Steps(TestContext context) {
 		testContext = context;
@@ -80,14 +82,14 @@ public class CF_MX_Client_Steps {
 				.getMXClientAuthWFApprovalActionPage();
 		_coreFlexLoginInfo = FileReaderManager.getInstance().getCoreFlexJsonReader()
 				.getLoginByEnvt(CoreFunctions.getPropertyFromConfig("envt").toLowerCase());
-//		_coreFlexLoginInfo = FileReaderManager.getInstance().getCoreFlexJsonReader().getLoginByEnvt(System.getProperty("envt").toLowerCase());
+		mxTransfereeJourneyHomePage = testContext.getCoreFlexPageObjectManager().getMXTransfereeJourneyHomePage();
 	}
 
 	private TransfereeSubmissions_LoginData _transfereeSubmissionLoginData = FileReaderManager.getInstance()
 			.getCoreFlexJsonReader().getTransfereeSubmissionLoginDataList(COREFLEXConstants.TRANSFEREE_SUBMISSIONS);
 
-	private CoreFlex_LoginInfo _loginInfo = FileReaderManager.getInstance().getCoreFlexJsonReader()
-			.getLoginInfoByEnviroment((CoreFunctions.getPropertyFromConfig("envt").toLowerCase()));
+//	private CoreFlex_LoginInfo _loginInfo = FileReaderManager.getInstance().getCoreFlexJsonReader()
+//			.getLoginInfoByEnviroment((CoreFunctions.getPropertyFromConfig("envt").toLowerCase()));
 
 	@Given("^he has logged into 'MobilityX' application as a 'Client' user$")
 	public void he_is_logged_into_MobilityX_application_as_a_Client_user() throws Throwable {
@@ -98,8 +100,8 @@ public class CF_MX_Client_Steps {
 		Reporter.addStepLog("<b>Total time taken to navigate to <i>MobilityX Login</i> page is :"
 				+ CoreFunctions.calculatePageLoadTime(CoreConstants.TIME_BEFORE_ACTION, CoreConstants.TIME_AFTER_ACTION)
 				+ " Seconds </b>");
-		mobilityXLoginPage.enterUsernameAndPasswordForMobilityX(_loginInfo.details.mxClientUserName,
-				_loginInfo.details.mxClientPassword);
+		mobilityXLoginPage.enterUsernameAndPasswordForMobilityX(_coreFlexLoginInfo.details.mxClientUserName,
+				_coreFlexLoginInfo.details.mxClientPassword);
 		mobilityXLoginPage.clickSignIn();
 		mxClientAuthorizationHomePage.handle_Cookie_AfterLogin();
 
@@ -116,8 +118,8 @@ public class CF_MX_Client_Steps {
 	public void he_has_clicked_on_after_validating_Client_details_on_Authorization_Home_Page(String createAuthButton)
 			throws Throwable {
 		Assert.assertTrue(
-				mxClientAuthorizationHomePage.verifyClientDetails(_loginInfo.details.mxClientUserProfileName,
-						_loginInfo.details.clientName),
+				mxClientAuthorizationHomePage.verifyClientDetails(_coreFlexLoginInfo.details.mxClientUserProfileName,
+						_coreFlexLoginInfo.details.clientName),
 				MessageFormat.format(MobilityXConstants.CLIENT_DETAILS_NOT_MATCHED_ON_MOBILITYX_CLIENT_HOME_PAGE,
 						CoreConstants.FAIL));
 		mxClientAuthorizationHomePage.clickOnElementOnAuthorizationPage(createAuthButton);
@@ -131,8 +133,8 @@ public class CF_MX_Client_Steps {
 		String authFormTemplate = dataMap.get(0).get("Authorization Form Template");
 		mxClientAuthorizationHomePage.enterEmpFirstAndLastNameForNewAuthorization();
 		mxClientAuthorizationHomePage.selectAuthorizationOptionForEmployee(assignmentOption);
-		mxClientAuthorizationHomePage.selectAuthorizationFormTemplate(_loginInfo.details.clientId,
-				_loginInfo.details.clientName, authFormTemplate);
+		mxClientAuthorizationHomePage.selectAuthorizationFormTemplate(_coreFlexLoginInfo.details.clientId,
+				_coreFlexLoginInfo.details.clientName, authFormTemplate);
 		CoreConstants.TIME_BEFORE_ACTION = new Date().getTime();
 		Assert.assertTrue(mxClientAuthorizationHomePage.verifyPageNavigationToAuthForm(), MessageFormat
 				.format(MobilityXConstants.FAILED_TO_VERIFY_USER_NAVIGATION_TO_MXCLIENT_HOME_PAGE, CoreConstants.FAIL));
@@ -237,6 +239,9 @@ public class CF_MX_Client_Steps {
 	@Given("^he has verified following details on \"([^\"]*)\" page based on configured Points Based CoreFlex BluePrint Policy$")
 	public void he_has_verified_following_details_on_page_based_on_configured_Points_Based_CoreFlex_BluePrint_Policy(
 			String arg1, DataTable arg2) throws Throwable {
+		Assert.assertTrue(mxClientBenefitSelectionToolPage.verifyWindowTitle(), MessageFormat.format(
+				MobilityXConstants.FAILED_TO_VALIDATE_BENEFIT_SELECTION_TOOL_PAGE_TITLE,
+				CoreConstants.FAIL));		
 		Assert.assertTrue(mxClientBenefitSelectionToolPage.verifyInitiationForText(), MessageFormat.format(
 				MobilityXConstants.FAILED_TO_VALIDATE_INITIATION_FOR_TEXT_ON_MXCLIENT_BENEFIT_SELECTION_TOOL_PAGE,
 				CoreConstants.FAIL));
@@ -528,6 +533,16 @@ public class CF_MX_Client_Steps {
 		Assert.assertTrue(mxClientAuthorizationHomePage.verifyPageNavigation(), MessageFormat
 				.format(MobilityXConstants.FAILED_TO_VERIFY_USER_NAVIGATION_TO_MXCLIENT_HOME_PAGE, CoreConstants.FAIL));
 	}
+	
+	@Then("^'New Initiation Submitted' email should be received having Transferee details along with assigned CoreFlex Total Points$")
+	public void New_Initiation_Submitted_email_should_be_received_having_Transferee_details_along_with_assigned_CoreFlex_Total_Points()
+			throws Throwable {
+		bscAuthorizationData = FileReaderManager.getInstance().getCoreFlexJsonReader()
+				.getBscDataByModuleName("DomesticAuthorizationFormData");
+		Assert.assertTrue(mxClientAuthorizationHomePage.verifyInitiationSubmissionEmail(bscAuthorizationData),
+				MessageFormat.format(MobilityXConstants.FAILED_TO_VERIFY_INITIATION_SUBMISSION_EMAIL,
+						CoreConstants.FAIL));
+	}
 
 	@Given("^he has verified 'New Initiation Submitted' email having Transferee details along with assigned CoreFlex Total Points$")
 	public void he_has_verified_New_Initiation_Submitted_email_having_Transferee_details_along_with_assigned_CoreFlex_Total_Points()
@@ -544,7 +559,7 @@ public class CF_MX_Client_Steps {
 //		testContext.getBasePage().reLaunchIrisToAvoidFreezingIssue();
 		testContext.getBasePage().invokeIrisApplication();
 		testContext.getIrisPageManager().irisLoginPage = new IRIS_LoginPage();
-		testContext.getIrisPageManager().irisLoginPage.getIRISLoginAsPerEnvt(_loginInfo);
+		testContext.getIrisPageManager().irisLoginPage.getIRISLoginAsPerEnvt(_coreFlexLoginInfo);
 		testContext.getIrisPageManager().irisAssignmentOverviewPage = new IRIS_AssignmentOverviewPage();
 		testContext.getIrisPageManager().irisWelcome12C = new IRIS_Welcome12C();
 		testContext.getIrisPageManager().irisWelcome12C.selectWelcomeWindowModule(IRISConstants.ASSIGNMENT_TAB);
@@ -997,7 +1012,7 @@ public class CF_MX_Client_Steps {
 			throws Throwable {
 		testContext.getBasePage().reLaunchIrisToAvoidFreezingIssue();
 		testContext.getIrisPageManager().irisLoginPage = new IRIS_LoginPage();
-		testContext.getIrisPageManager().irisLoginPage.getIRISLoginAsPerEnvt(_loginInfo);
+		testContext.getIrisPageManager().irisLoginPage.getIRISLoginAsPerEnvt(_coreFlexLoginInfo);
 		testContext.getIrisPageManager().irisWelcome12C = new IRIS_Welcome12C();
 		testContext.getIrisPageManager().irisWelcome12C.selectWelcomeWindowModule(IRISConstants.ASSIGNMENT_TAB);
 		testContext.getIrisPageManager().irisAssignmentOverviewPage = new IRIS_AssignmentOverviewPage();
@@ -1032,6 +1047,28 @@ public class CF_MX_Client_Steps {
 		testContext.getBasePage().cleanIrisProcesses();
 	}
 
+	@Given("^he has selected required 'MSPEC_PPC' user after setting file status as 'Active' in IRIS application$")
+	public void he_has_selected_required_MSPEC_PPC_user_after_setting_file_status_as_Active_in_IRIS_application()
+			throws Throwable {
+		testContext.getBasePage().reLaunchIrisToAvoidFreezingIssue();
+		testContext.getIrisPageManager().irisLoginPage = new IRIS_LoginPage();
+		testContext.getIrisPageManager().irisLoginPage.getIRISLoginAsPerEnvt(_coreFlexLoginInfo);
+		testContext.getIrisPageManager().irisWelcome12C = new IRIS_Welcome12C();
+		testContext.getIrisPageManager().irisWelcome12C.selectWelcomeWindowModule(IRISConstants.ASSIGNMENT_TAB);
+		testContext.getIrisPageManager().irisAssignmentOverviewPage = new IRIS_AssignmentOverviewPage();
+		testContext.getIrisPageManager().irisAssignmentOverviewPage
+				.queryFile(CoreFunctions.getPropertyFromConfig("Assignment_FileID"));
+		testContext.getIrisPageManager().irisAssignmentOverviewPage.acceptFailedImageLoadDialog();
+		testContext.getIrisPageManager().irisAssignmentOverviewPage.acceptLinkSuggestionDialog();
+		testContext.getIrisPageManager().irisAssignmentOverviewPage.setFileStatus(IRISConstants.ACTIVATE);
+		testContext.getIrisPageManager().irisAssignmentOverviewPage.switchTab(IRISConstants.OVERVIEW);
+		IRIS_AssignmentData assignmentOverviewData = FileReaderManager.getInstance().getIrisJsonReader()
+				.getAssignmentDataByTabName(IRISConstants.OVERVIEW);
+		testContext.getIrisPageManager().irisAssignmentOverviewPage
+				.addAiresTeamDetailsOnOverviewTab(assignmentOverviewData);
+		testContext.getBasePage().cleanIrisProcesses();
+	}
+	
 	@Given("^he has verified following details on 'Benefit Selection Tool' page post Authorization form submission$")
 	public void he_has_verified_following_details_on_Benefit_Selection_Tool_page_post_Authorization_form_submission(
 			DataTable dataTable) throws Throwable {
@@ -1094,11 +1131,11 @@ public class CF_MX_Client_Steps {
 
 	@Given("^he has 'Deleted' submitted Benefit_Cashout on Benefits Bundle page and confirmed 'Remove Benefit Selection' dialog by entering username and clicking on \"([^\"]*)\"$")
 	public void he_has_Deleted_submited_Benefit_Cashout_on_Benefits_Bundle_page_and_confirmed_Remove_Benefit_Selection_dialog_by_entering_username_and_clicking_on(
-			String buttonName) throws Throwable {
-		Assert.assertTrue(mxClientBenefitsBundlePage.deleteSubmittedCashoutDetails(buttonName), MessageFormat.format(
-				MobilityXConstants.FAILED_TO_DELETE_SUBMITTED_CASHOUT_ON_BENEFITS_BUNDLE_PAGE, CoreConstants.FAIL));
+			String buttonName) throws Throwable {		
 		Assert.assertTrue(mxClientBenefitsBundlePage.deleteSubmittedBenefit(buttonName), MessageFormat.format(
 				MobilityXConstants.FAILED_TO_DELETE_SUBMITTED_BENEFIT_ON_BENEFITS_BUNDLE_PAGE, CoreConstants.FAIL));
+		Assert.assertTrue(mxClientBenefitsBundlePage.deleteSubmittedCashoutDetails(buttonName), MessageFormat.format(
+				MobilityXConstants.FAILED_TO_DELETE_SUBMITTED_CASHOUT_ON_BENEFITS_BUNDLE_PAGE, CoreConstants.FAIL));
 	}
 
 	@Given("^he has verified 'Status' of the deleted benefit displayed as \"([^\"]*)\" under 'Submitted Benefits' section of 'Benefits Bundle' page$")
@@ -1243,8 +1280,8 @@ public class CF_MX_Client_Steps {
 		Reporter.addStepLog("<b>Total time taken to navigate to <i>MobilityX Login</i> page is :"
 				+ CoreFunctions.calculatePageLoadTime(CoreConstants.TIME_BEFORE_ACTION, CoreConstants.TIME_AFTER_ACTION)
 				+ " Seconds </b>");
-		mobilityXLoginPage.enterUsernameAndPasswordForMobilityX(_loginInfo.details.mxClientUserName,
-				_loginInfo.details.mxClientPassword);
+		mobilityXLoginPage.enterUsernameAndPasswordForMobilityX(_coreFlexLoginInfo.details.mxClientUserName,
+				_coreFlexLoginInfo.details.mxClientPassword);
 		mobilityXLoginPage.clickSignIn();
 		mxClientAuthorizationHomePage.handle_Cookie_AfterLogin();
 
@@ -1391,7 +1428,7 @@ public class CF_MX_Client_Steps {
 
 		testContext.getBasePage().reLaunchIrisToAvoidFreezingIssue();
 		testContext.getIrisPageManager().irisLoginPage = new IRIS_LoginPage();
-		testContext.getIrisPageManager().irisLoginPage.getIRISLoginAsPerEnvt(_loginInfo);
+		testContext.getIrisPageManager().irisLoginPage.getIRISLoginAsPerEnvt(_coreFlexLoginInfo);
 		testContext.getIrisPageManager().irisWelcome12C = new IRIS_Welcome12C();
 		testContext.getIrisPageManager().irisWelcome12C.selectWelcomeWindowModule(IRISConstants.ASSIGNMENT_TAB);
 		testContext.getIrisPageManager().irisAssignmentOverviewPage = new IRIS_AssignmentOverviewPage();
@@ -1433,7 +1470,7 @@ public class CF_MX_Client_Steps {
 			throws Throwable {
 		testContext.getBasePage().reLaunchIrisToAvoidFreezingIssue();
 		testContext.getIrisPageManager().irisLoginPage = new IRIS_LoginPage();
-		testContext.getIrisPageManager().irisLoginPage.getIRISLoginAsPerEnvt(_loginInfo);
+		testContext.getIrisPageManager().irisLoginPage.getIRISLoginAsPerEnvt(_coreFlexLoginInfo);
 		testContext.getIrisPageManager().irisWelcome12C = new IRIS_Welcome12C();
 		testContext.getIrisPageManager().irisWelcome12C.selectWelcomeWindowModule(IRISConstants.ASSIGNMENT_TAB);
 		testContext.getIrisPageManager().irisAssignmentOverviewPage = new IRIS_AssignmentOverviewPage();
@@ -1649,6 +1686,48 @@ public class CF_MX_Client_Steps {
 		CoreFunctions.writeToPropertiesFile("CF_Transferee_AvailablePoints", String
 				.valueOf((Double.parseDouble(CoreFunctions.getPropertyFromConfig("CF_Transferee_TotalAvailablePoints")))
 						- (Double.parseDouble(CoreFunctions.getPropertyFromConfig("CF_Client_TotalSelectedPoints")))));
+	}
+	
+	@Given("^he has navigated to \"([^\"]*)\" page after selecting Flex Benefits for resubmission on 'Benefit Selection Tool' page$")
+	public void he_has_navigated_to_page_after_selecting_Flex_Benefits_for_resubmission_on_Benefit_Selection_Tool_page(
+			String navigatedPageName) throws Throwable {
+		Assert.assertTrue(mxClientBenefitSelectionToolPage.selectBenefitsForResubmissionAndProceedToSaveAndExit(), MessageFormat
+				.format(MobilityXConstants.FAILED_TO_SELECT_BENEFITS_AND_PROCEED_TO_REVIEW_PAGE, CoreConstants.FAIL));
+		CoreConstants.TIME_BEFORE_ACTION = new Date().getTime();
+		Assert.assertTrue(mxClientBenefitsBundlePage.isBenefitsBundlePageDisplayed(), MessageFormat
+				.format(MobilityXConstants.FAILED_TO_DISPLAY_MX_CLIENT_BENEFITS_BUNDLE_PAGE, CoreConstants.FAIL));
+		CoreConstants.TIME_AFTER_ACTION = new Date().getTime();
+		Reporter.addStepLog("<b>Total time taken to navigate to <i>MX Client Benefits Bundle</i> page is :"
+				+ CoreFunctions.calculatePageLoadTime(CoreConstants.TIME_BEFORE_ACTION, CoreConstants.TIME_AFTER_ACTION)
+				+ " Seconds </b>");
+	}
+	
+	@Then("^'Revised Initiation Submitted' email having Transferee details along with assigned CoreFlex Total Points and Submitted Benefits Points should be received$")
+	public void Revised_Initiation_Submitted_email_having_Transferee_details_along_with_assigned_CoreFlex_Total_Points_and_Submitted_Benefits_Points_should_be_received()
+			throws Throwable {
+		Assert.assertTrue(mxClientAuthorizationHomePage.verifyRevisedBenefitsSubmissionEmail(), MessageFormat
+				.format(MobilityXConstants.FAILED_TO_VERIFY_REVISED_BENEFITS_SUBMISSION_EMAIL, CoreConstants.FAIL));
+	}
+	
+	@Then("^'Mobility Benefits Submission' email having mobility benefit information that company has submitted on behalf of transferee should be received$")
+	public void Mobility_Benefits_Submission_email_having_mobility_flex_benefits_that_company_has_submitted_on_behalf_of_transferee_should_be_received()
+			throws Throwable {
+		Assert.assertTrue(mxTransfereeJourneyHomePage.verifyBenefitSubmissionEmail(MobilityXConstants.CLIENT_SUBMISSION), MessageFormat
+				.format(MobilityXConstants.FAILED_TO_VERIFY_MOBILITY_BENEFIT_SUBMISSION_EMAIL, CoreConstants.FAIL));
+	}
+	
+	
+	@Then("^'Auth Submit Success' growl message should be displayed on the navigated 'View all initiation' page$")
+	public void Auth_Submit_Success_growl_message_should_be_displayed_on_the_navigated_View_all_initiation_page()
+			throws Throwable {
+		Assert.assertTrue(mxClientAuthorizationHomePage.verifyInitiationSubmittedSuccessGrowlMessage(),
+				MessageFormat.format(MobilityXConstants.FAILED_TO_VERIFY_INITIATION_SUBMITTED_SUCCESS_GROWL_MESSAGE,
+						CoreConstants.FAIL));
+		Assert.assertTrue(mxClientViewAllInitiationsPage.verifyPageNavigation(),
+				MessageFormat.format(
+						MobilityXConstants.FAILED_TO_VERIFY_USER_NAVIGATION_TO_MXCLIENT_VIEW_ALL_INITIATONS_PAGE,
+						CoreConstants.FAIL));
+
 	}
 
 }

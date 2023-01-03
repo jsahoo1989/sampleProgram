@@ -1153,15 +1153,16 @@ public class IRIS_AssignmentOverviewPage extends BasePage {
 				new MenuDescription.Builder().label("Change File Status").build());
 		Menu activateMenu = changeFileStatusMenu.describe(Menu.class,
 				new MenuDescription.Builder().label(fileStatus).build());
-//		CoreFunctions.waitHandler(2);
 		activateMenu.select();
 		CoreFunctions.waitHandler(2);
 		acceptFailedImageLoadDialog();
 		CoreFunctions.waitHandler(2);
 		Robot robot = new Robot();
 		robot.setAutoDelay(250);
-		robot.keyPress(KeyEvent.VK_ENTER);
-		robot.keyRelease(KeyEvent.VK_ENTER);
+//		robot.keyPress(KeyEvent.VK_ENTER);
+//		robot.keyRelease(KeyEvent.VK_ENTER);
+		robot.keyPress(KeyEvent.VK_ESCAPE);
+		robot.keyRelease(KeyEvent.VK_ESCAPE);
 	}
 
 	public void setSubServiceStatus(String fileStatus) throws Exception {

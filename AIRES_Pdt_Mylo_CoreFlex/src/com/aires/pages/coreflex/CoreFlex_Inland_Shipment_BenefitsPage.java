@@ -191,7 +191,7 @@ public class CoreFlex_Inland_Shipment_BenefitsPage extends BenefitPage {
 	@FindBy(how = How.CSS, using = "div[class='collapse show'] ng-select[formcontrolname='tempStorageDurationCode'] span[class*='ng-value-label']")
 	private WebElement _selectTempStorageDurationSelectedValue;
 
-	@FindBy(how = How.CSS, using = "ng-select[formcontrolname='tempStorageDurationCode'] span.ng-option-label")
+	@FindBy(how = How.CSS, using = "ng-dropdown-panel span[class*='ng-option-label']")
 	private List<WebElement> _selectTempStorageDurationOptions;
 
 	@FindBy(how = How.XPATH, using = "//input[@formcontrolname='insuranceType']/parent::label[contains(@class,'form-check-label')]")
@@ -250,7 +250,7 @@ public class CoreFlex_Inland_Shipment_BenefitsPage extends BenefitPage {
 	@FindBy(how = How.CSS, using = "ng-select[formcontrolname='inlandShipmentTradedCodeList']")
 	private WebElement _selectInlandShipmentTraded;
 
-	@FindBy(how = How.CSS, using = "ng-select[formcontrolname='inlandShipmentTradedCodeList'] span.ng-option-label")
+	@FindBy(how = How.CSS, using = "ng-dropdown-panel span[class*='ng-option-label']")
 	private List<WebElement> _selectInlandShipmentTradedOptions;
 
 	@FindBy(how = How.CSS, using = "div[class='collapse show'] ng-select[formcontrolname='inlandShipmentTradedCodeList'] span[class*='ng-value-label']")
@@ -341,9 +341,9 @@ public class CoreFlex_Inland_Shipment_BenefitsPage extends BenefitPage {
 				CoreFunctions.selectItemInListByText(driver, _leftNavigationTitleList,
 						COREFLEXConstants.GENERAL_INFORMATION);
 				break;
-			case COREFLEXConstants.FLEX_POLICY_SETUP:
+			case COREFLEXConstants.POINT_POLICY_SETUP:
 				CoreFunctions.selectItemInListByText(driver, _leftNavigationTitleList,
-						COREFLEXConstants.FLEX_POLICY_SETUP);
+						COREFLEXConstants.POINT_POLICY_SETUP);
 				break;
 			case COREFLEXConstants.POLICY_BENEFIT_CATEGORIES:
 				CoreFunctions.selectItemInListByText(driver, _leftNavigationTitleList,

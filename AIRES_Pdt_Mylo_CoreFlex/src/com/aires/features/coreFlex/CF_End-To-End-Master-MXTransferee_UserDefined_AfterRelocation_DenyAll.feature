@@ -14,7 +14,7 @@ Feature: Validate the CoreFlex End-To-End Business Test Flow(BluePrint,MXClient,
     Then Policy Status and Version should be displayed as "Active" and "V1" respectively on "View/Edit Policy Forms" page
 
   @Coreflex:218381 @CF_End-To-End_MasterScript @CF_Master_MXTransferee_UserDefined_AfterRelocation @CF_MXTransferee_UserDefined_AfterRelocation_CF
-  Scenario: MXClient - Validating Creation & Configuration of new Authorization with the Points Based CF policy and assigning Total Flex Points for UserDefined Policy Selection  
+  Scenario: MXClient - Validating Creation & Configuration of new Authorization with the Points Based CF policy and assigning Total Flex Points for UserDefined Policy Selection
     Given he has logged into 'MobilityX' application as a 'Client' user
     And he has clicked on "Create an authorization" after validating Client details on 'Authorization Home Page'
     And he has filled all the mandatory information on 'Authorization Form' after selecting following 'Assignment Option' with 'Auth Form Template' for an employee on 'Authorization Home Page'
@@ -60,7 +60,8 @@ Feature: Validate the CoreFlex End-To-End Business Test Flow(BluePrint,MXClient,
     And he has clicked on "Review and Submit" button after validating all the benefit and Cashout details listed under 'Selected Benefits' section on "My Benefits Bundle" page
     And he has clicked on "Yes - submit my bundle" button after entering Transferee name on "Submit Bundle Confirmation" dialog
     And he has clicked on "OK - Let Me See My Benefits!" button displayed on 'Success Flex' dialog
-    And he has verified submitted points details on 'Mobility Journey Home' and 'Flex Planning Tool' page
+    And he has verified 'Mobility Benefits Submission' email generated upon OnPoint Benefits Submission
+    And he has verified submitted points details on 'Mobility Journey Home' and 'OnPoint Planning Tool' page
     And he has verified submitted benefit details under 'Submitted Benefits' section of 'My Benefits Bundle' page
     When he 'Delete' submitted Benefit_Cashout and confirms 'Remove Benefit Selection' dialog by entering username and clicking on "Yes-request to delete this benefit"
     Then 'Status' of the deleted benefit_cashout should be displayed as "Delete Request Pending" under 'Submitted Benefits' section of 'My Benefit Bundle' page
@@ -74,5 +75,6 @@ Feature: Validate the CoreFlex End-To-End Business Test Flow(BluePrint,MXClient,
     And he has clicked on "Check All" followed by "Resolve Multiple" button to resolve multiple 'Delete Request Pending' request of the Transferee
     When he confirms request by selecting "Deny All" option after verifying 'Delete Request Pending' benefit request details on 'Requests' dialog
     Then 'Action Completed' growl message for "Deny Request" should be displayed on "Transferee Submission Details" page
+    And "Delete Request Denied" email should be sent to Transferee for benefit "Deny Request" action by "MSPEC/PPC" user
     And 'Delete Request Pending' benefit request status should be updated to 'Submitted' in 'Transferee Submission Details' list
     And benefit details should be updated in 'MXTransferee' application based on "Denied" 'Delete Request' on Transferee Submission

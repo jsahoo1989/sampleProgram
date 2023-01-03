@@ -59,7 +59,7 @@ public class PDT_GeneralInformationPage extends Base {
 	private WebElement _selectCoreFlexPolicy;
 
 	// CoreFlex Policy Select Field Default Value
-	@FindBy(how = How.CSS, using = "ng-select[formcontrolname='coreFlexInd'] span[class*='ng-value-label']")
+	@FindBy(how = How.XPATH, using = "//label[contains(string(),'Point Policy')]/following-sibling::ng-select[@formcontrolname='coreFlexInd']//span[contains(@class,'ng-value-label')]")
 	private WebElement _selectCoreFlexPolicyDefaultValue;
 
 	// Benefit Package Type Select Field
@@ -83,7 +83,7 @@ public class PDT_GeneralInformationPage extends Base {
 	private WebElement _selectPointsBasedFlexPolicy;
 
 	// Points Based Flex Policy Select Options
-	@FindBy(how = How.XPATH, using = "//label[contains(string(),'Points Based Flex Policy')]/following-sibling::ng-select/descendant::div[@role='option']")
+	@FindBy(how = How.XPATH, using = "//label[contains(string(),'Point Based Policy')]/following-sibling::ng-select/descendant::div[@role='option']")
 	private List<WebElement> _selectPointsBasedFlexPolicyOptions;
 
 	@FindBy(how = How.CSS, using = "input[formcontrolname='policyName']")
@@ -243,16 +243,16 @@ public class PDT_GeneralInformationPage extends Base {
 	// Capped Policy Error Dialog OK Button
 	@FindBy(how = How.CSS, using = "button[class*='swal2-confirm']")
 	private WebElement _cappedPolicyErrorDialogOKButton;
-	
+
 	@FindBy(how = How.XPATH, using = "//strong[text()='Policy Status:']/parent::label/following-sibling::label[not(self::span/i)]")
 	private WebElement _policyStatus;
-	
+
 	@FindBy(how = How.XPATH, using = "//strong[text()='Policy Status:']")
 	private WebElement _policyStatusText;
-	
+
 	@FindBy(how = How.XPATH, using = "//strong[text()='Version Number:']/parent::label/following-sibling::label")
 	private WebElement _policyVersion;
-	
+
 	@FindBy(how = How.XPATH, using = "//span/i/ancestor::label")
 	private WebElement _policyStat;
 
@@ -281,7 +281,7 @@ public class PDT_GeneralInformationPage extends Base {
 	private WebElement _textPolicyVersion;
 
 	// Points Based Flex Policy
-	@FindBy(how = How.XPATH, using = "//strong[contains(text(),'Points Based Flex Policy')]/parent::label/following-sibling::label")
+	@FindBy(how = How.XPATH, using = "//strong[contains(text(),'Point Based Policy')]/parent::label/following-sibling::label")
 	private WebElement _textPointsBasedFlexPolicy;
 
 	// Corporation Policy Number
@@ -291,6 +291,13 @@ public class PDT_GeneralInformationPage extends Base {
 	// OK Button
 	@FindBy(how = How.XPATH, using = "//button[contains(text(),'OK')]")
 	private WebElement _buttonOk;
+
+	// Core Flex Word
+	@FindBy(how = How.XPATH, using = "//*[contains(text(),'Core')] | //*[contains(text(),'Flex')]")
+	private WebElement _textCoreFlex;
+
+	@FindBy(how = How.XPATH, using = "//strong[text()='Policy Status:']/parent::label/following-sibling::label/span/i")
+	private WebElement _policyStatusIndicator;
 
 	LinkedHashMap<String, String> webElementsTextMap = new LinkedHashMap<String, String>();
 	/*********************************************************************/
@@ -505,14 +512,14 @@ public class PDT_GeneralInformationPage extends Base {
 	}
 
 	public boolean verifyBenefitPackageType(DataTable benefitPackageTypeTable) {
-		if(CoreFunctions.isElementExist(driver,  _progressBar, 4))
+		if (CoreFunctions.isElementExist(driver, _progressBar, 4))
 			BusinessFunctions.fluentWaitForSpinnerToDisappear(driver, _progressBar);
 		CoreFunctions.moveToElement(driver, _selectBenefitPackageType);
 		CoreFunctions.click(driver, _selectBenefitPackageType, PDTConstants.BENEFIT_PACKAGE_TYPE);
 		List<String> expectedOptions = benefitPackageTypeTable.asList(String.class);
 		List<String> actualOptions = CoreFunctions.getElementTextAndStoreInList(driver,
 				_selectBenefitPackageTypeOptions);
-		Log.info("actualOptions="+actualOptions);
+		Log.info("actualOptions=" + actualOptions);
 		if (actualOptions.equals(expectedOptions)) {
 			Reporter.addStepLog(MessageFormat.format(PDTConstants.VERIFIED_BENEFIT_PACKAGE_TYPE, CoreConstants.PASS,
 					expectedOptions));
@@ -553,13 +560,13 @@ public class PDT_GeneralInformationPage extends Base {
 		}
 		return false;
 	}
-	
-	
+
 	public void populateWebElementsTextMap() {
-		webElementsTextMap.put( PDTConstants.CLIENT_ID, _textClientID.getText().trim());
-		webElementsTextMap.put( PDTConstants.CLIENT_NAME, _textClientName.getText().trim());
-		webElementsTextMap.put( PDTConstants.POLICY_NAME, _headerPolicyInfo.getText().split(":")[1].trim());
-		webElementsTextMap.put( COREFLEXConstants.CORPORATION_POLICY_NUMBER, _textCorporationPolicyNum.getText().split(":")[1].trim());
+		webElementsTextMap.put(PDTConstants.CLIENT_ID, _textClientID.getText().trim());
+		webElementsTextMap.put(PDTConstants.CLIENT_NAME, _textClientName.getText().trim());
+		webElementsTextMap.put(PDTConstants.POLICY_NAME, _headerPolicyInfo.getText().split(":")[1].trim());
+		webElementsTextMap.put(COREFLEXConstants.CORPORATION_POLICY_NUMBER,
+				_textCorporationPolicyNum.getText().split(":")[1].trim());
 	}
 
 	public String getElementText(String elementName) {
@@ -567,7 +574,7 @@ public class PDT_GeneralInformationPage extends Base {
 		populateWebElementsTextMap();
 		try {
 			elementText = webElementsTextMap.get(elementName);
-		} catch(Exception e) {
+		} catch (Exception e) {
 			Assert.fail(MessageFormat.format(PDTConstants.ELEMENT_NOT_FOUND, CoreConstants.FAIL));
 		}
 		return elementText;
@@ -631,18 +638,18 @@ public class PDT_GeneralInformationPage extends Base {
 
 	public void waitForProgressBarToDisappear() {
 		try {
-			if(CoreFunctions.isElementExist(driver, _progressBar, 5)) {		
-				BusinessFunctions.fluentWaitForSpinnerToDisappear(driver, _progressBar);			
-			}			
-		} catch(Exception e) {
+			if (CoreFunctions.isElementExist(driver, _progressBar, 5)) {
+				BusinessFunctions.fluentWaitForSpinnerToDisappear(driver, _progressBar);
+			}
+		} catch (Exception e) {
 			Assert.fail(MessageFormat.format(PDTConstants.FAIL_TO_WAIT_PROGRESS_BAR, CoreConstants.FAIL));
 		}
 	}
-	
+
 	public void enterGeneralInformationFields() {
 		try {
 			waitForProgressBarToDisappear();
-			setTracingPrompt();			
+			setTracingPrompt();
 
 			CoreFunctions.clickElement(driver, _drpDwnPolicyType);
 			CoreFunctions.explicitWaitTillElementListVisibility(driver, _drpDwnPolicyTypeOptions);
@@ -686,9 +693,10 @@ public class PDT_GeneralInformationPage extends Base {
 			timeBeforeAction = new Date().getTime();
 			CoreFunctions.click(driver, _btnNext, _btnNext.getText());
 			waitForProgressBarToDisappear();
-			timeAfterAction = new Date().getTime();	
-			BusinessFunctions.printTimeTakenByPageToLoad(timeBeforeAction, timeAfterAction, PDTConstants.POLICY_BENEFIT_CATEGORIES);
-		} catch (Exception e) {			
+			timeAfterAction = new Date().getTime();
+			BusinessFunctions.printTimeTakenByPageToLoad(timeBeforeAction, timeAfterAction,
+					PDTConstants.POLICY_BENEFIT_CATEGORIES);
+		} catch (Exception e) {
 			Assert.fail(PDTConstants.FAILED_TO_FILL_GENERAL_INFO_FORM);
 		}
 
@@ -697,7 +705,7 @@ public class PDT_GeneralInformationPage extends Base {
 	public void enterGeneralInformationFields(DataTable generalInfoTable) {
 		List<Map<String, String>> generalInfo = generalInfoTable.asMaps(String.class, String.class);
 		try {
-			if(CoreFunctions.isElementExist(driver,  _progressBar, 4))
+			if (CoreFunctions.isElementExist(driver, _progressBar, 4))
 				BusinessFunctions.fluentWaitForSpinnerToDisappear(driver, _progressBar);
 			CoreFunctions.clickElement(driver, _drpDwnPolicyType);
 			CoreFunctions.selectItemInListByText(driver, _drpDwnPolicyTypeOptions, generalInfo.get(0).get("PolicyType"),
@@ -837,8 +845,8 @@ public class PDT_GeneralInformationPage extends Base {
 			switch (fieldName) {
 			case PDTConstants.POLICY_STATUS:
 				if ((CoreFunctions.isElementExist(driver, _textPolicyStatus, 2))
-						&& ((CoreFunctions.getElementText(driver, _textPolicyStatus).replace("check_circle", "").replace("error", "").trim())
-								.equals(expectedDefaultValue)))
+						&& ((CoreFunctions.getElementText(driver, _textPolicyStatus).replace("check_circle", "")
+								.replace("error", "").trim()).equals(expectedDefaultValue)))
 					isFieldVerified = true;
 				break;
 			case COREFLEXConstants.POLICY_VERSION:
@@ -1198,7 +1206,6 @@ public class PDT_GeneralInformationPage extends Base {
 	 */
 	public boolean verifyPageNavigation(String expectedPageName) {
 		CoreFunctions.explicitWaitTillElementInVisibility(driver, _progressBar);
-		CoreFunctions.waitHandler(4);
 		return CoreFunctions.verifyElementOnPage(driver, _headerGeneralInfo, COREFLEXConstants.GENERAL_INFORMATION,
 				expectedPageName, expectedPageName, true);
 	}
@@ -1354,26 +1361,62 @@ public class PDT_GeneralInformationPage extends Base {
 		}
 		return isCoreFlexGeneralInfoVerified;
 	}
-	
-	public boolean verifyStatusAndVersionOfPolicy(String selectedPolicyName, String expectedPolicyStatus, String expectedPolicyVersion, String pageName) {
+
+	public boolean verifyStatusAndVersionOfPolicy(String selectedPolicyName, String expectedPolicyStatus,
+			String expectedPolicyVersion, String pageName) {
 		if (CoreFunctions.isElementExist(driver, _progressBar, 7))
 			BusinessFunctions.fluentWaitForSpinnerToDisappear(driver, _progressBar);
 		CoreFunctions.scrollToElementUsingJS(driver, _policyStatus, _policyStatusText.getText());
 		CoreFunctions.explicitWaitForElementTextPresent(driver, _policyStatusText, _policyStatusText.getText(), 10);
-		if(expectedPolicyStatus.equalsIgnoreCase(_policyStatus.getText().trim()) && expectedPolicyVersion.equalsIgnoreCase(_policyVersion.getText().trim())) {
+		if (expectedPolicyStatus.equalsIgnoreCase(_policyStatus.getText().trim())
+				&& expectedPolicyVersion.equalsIgnoreCase(_policyVersion.getText().trim())) {
 			CoreFunctions.highlightObject(driver, _policyStatus);
 			CoreFunctions.highlightObject(driver, _policyVersion);
-			Reporter.addStepLog(MessageFormat.format(PDTConstants.VERIFIED_POLICY_VERSION_STATUS, CoreConstants.PASS, selectedPolicyName, expectedPolicyVersion, expectedPolicyStatus, pageName));
+			Reporter.addStepLog(MessageFormat.format(PDTConstants.VERIFIED_POLICY_VERSION_STATUS, CoreConstants.PASS,
+					selectedPolicyName, expectedPolicyVersion, expectedPolicyStatus, pageName));
 			return true;
 		} else {
-			Reporter.addStepLog(MessageFormat.format(
-					PDTConstants.FAILED_TO_VERIFY_POLICY_VERSION_STATUS, CoreConstants.FAIL,
-					selectedPolicyName, expectedPolicyVersion, _policyVersion.getText().trim(), expectedPolicyStatus, _policyStatus.getText().trim(), pageName));
+			Reporter.addStepLog(MessageFormat.format(PDTConstants.FAILED_TO_VERIFY_POLICY_VERSION_STATUS,
+					CoreConstants.FAIL, selectedPolicyName, expectedPolicyVersion, _policyVersion.getText().trim(),
+					expectedPolicyStatus, _policyStatus.getText().trim(), pageName));
 			return false;
-		}		
+		}
 	}
-	
+
 	public String getPolicyStatus() {
 		return _policyStat.getText();
+	}
+
+	/**
+	 * Method to verify Flex word not displayed on General Information Page
+	 * Reference JIRA : CF-4178
+	 */
+	public boolean verifyFlexWordNotDisplayed() {
+		return BusinessFunctions.verifyFlexWordNotDisplayed(driver, _textCoreFlex, PDTConstants.GENERAL_INFORMATION);
+	}
+
+	public boolean verifyOnPointPolicyStatusIndicator(String expectedPolicyStatusIndicator,
+			String expectedPolicyStatusHoverText,String pageName) {
+		try {
+			CoreFunctions.verifyText(getActualPolicyStatusIndicator(), expectedPolicyStatusIndicator,
+					COREFLEXConstants.DRAFT_POLICY_STATUS_INDICATOR);
+			CoreFunctions.verifyText(CoreFunctions.getAttributeText(_policyStatusIndicator, "mattooltip"), expectedPolicyStatusHoverText,
+					COREFLEXConstants.DRAFT_POLICY_STATUS_INDICATOR_HOVER_TEXT);
+			Reporter.addStepLog(MessageFormat.format(COREFLEXConstants.SUCCESSFULLY_VERIFIED_DRAFT_POLICY_STATUS_INDICATOR_AND_HOVER_TEXT,
+					CoreConstants.PASS,expectedPolicyStatusIndicator,expectedPolicyStatusHoverText,pageName));
+			return true;
+		} catch (Exception e) {
+			Reporter.addStepLog(MessageFormat.format(COREFLEXConstants.EXCEPTION_OCCURED_WHILE_VERIFYING_POLICY_STATUS_INDICATOR,
+					CoreConstants.FAIL, e.getMessage(),pageName));
+			return false;
+		}
+	}
+
+	private String getActualPolicyStatusIndicator() {
+		return CoreFunctions.getElementText(driver, _policyStatusIndicator).equalsIgnoreCase("error")
+				? COREFLEXConstants.RED_INDICATOR
+				: (CoreFunctions.getElementText(driver, _policyStatusIndicator).equalsIgnoreCase("check_circle")
+						? COREFLEXConstants.GREEN_INDICATOR
+						: null);
 	}
 }

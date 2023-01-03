@@ -122,7 +122,7 @@ public class CoreFlex_DuplicateHousing_BenefitsPage extends BenefitPage {
 	@FindBy(how = How.CSS, using = "ng-select[formcontrolname='durationCode']")
 	private WebElement _selectDuration;
 
-	@FindBy(how = How.XPATH, using = "//ng-select[@formcontrolname='durationCode']//div[@role='option']")
+	@FindBy(how = How.CSS, using = "ng-dropdown-panel span[class*='option-label']")
 	private List<WebElement> _selectDurationOptions;
 
 	@FindBy(how = How.CSS, using = "ng-select[formcontrolname='durationCode'] span[class*='ng-value-label']")
@@ -280,9 +280,9 @@ public class CoreFlex_DuplicateHousing_BenefitsPage extends BenefitPage {
 				CoreFunctions.selectItemInListByText(driver, _leftNavigationTitleList,
 						COREFLEXConstants.GENERAL_INFORMATION);
 				break;
-			case COREFLEXConstants.FLEX_POLICY_SETUP:
+			case COREFLEXConstants.POINT_POLICY_SETUP:
 				CoreFunctions.selectItemInListByText(driver, _leftNavigationTitleList,
-						COREFLEXConstants.FLEX_POLICY_SETUP);
+						COREFLEXConstants.POINT_POLICY_SETUP);
 				break;
 			case COREFLEXConstants.POLICY_BENEFIT_CATEGORIES:
 				CoreFunctions.selectItemInListByText(driver, _leftNavigationTitleList,

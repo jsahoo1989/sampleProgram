@@ -34,7 +34,7 @@ Feature: Validate the CoreFlex End-To-End Business Test Flow(BluePrint, MXClient
     And he has clicked on "SUBMIT" button on the 'Do you want to submit it without the required approvals?' dialog
     And he has verified 'Auth Submit Success' growl message displayed on the navigated 'MobilityX Dashboard Home' page
     And he has verified 'New Initiation Submitted' email having Transferee details along with assigned CoreFlex Total Points and Submitted Benefits Points
-    And he has actualized the Transferee after selecting required 'MSPEC_PPC' user and setting file status as 'Active' in IRIS application
+    And he has selected required 'MSPEC_PPC' user after setting file status as 'Active' in IRIS application
     And he has clicked on "View all initiations" link on 'Authorization Home Page' to navigate to 'View all initiation' page
     And he has clicked 'Transferee Name' from 'All Initiations' List on 'View all initiation' page
     And he has navigated to 'Benefit Selection Tool' page after clicking on 'Manage Benefit Selection' button
@@ -58,5 +58,6 @@ Feature: Validate the CoreFlex End-To-End Business Test Flow(BluePrint, MXClient
     And he has clicked on "Check All" followed by "Resolve Multiple" button to resolve multiple 'Delete Request Pending' request of the Client
     When he confirms request by selecting "Approve All" option after verifying 'Delete Request Pending' benefit request details on 'Requests' dialog
     Then 'Action Completed' growl message for "Approve Request" should be displayed on "Transferee Submission Details" page
+    And "Mobility Benefit Delete Request has been Approved" email should be sent to Client for benefit "Approve Request" action by "MSPEC/PPC" user
     And 'Delete Request Pending' benefit request should be removed from 'Transferee Submission Details' list
     And benefit details should be updated in 'MXClient' application based on "Approved" 'Delete Request' on Transferee Submission

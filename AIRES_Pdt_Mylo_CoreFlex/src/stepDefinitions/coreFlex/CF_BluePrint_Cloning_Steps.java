@@ -187,8 +187,8 @@ public class CF_BluePrint_Cloning_Steps {
 	public void all_the_CoreFlex_benefits_from_the_reference_Points_Based_CoreFlex_policy_should_be_copied_over_to_the_Cloned_Points_based_CoreFlex_Policy()
 			throws Throwable {
 		CoreConstants.TIME_BEFORE_ACTION = new Date().getTime();
-		Assert.assertTrue(flexPolicySetupPage.verifyPageNavigation(COREFLEXConstants.FLEX_POLICY_SETUP),
-				MessageFormat.format(COREFLEXConstants.FAILED_TO_VERIFY_USER_NAVIGATION_TO_FLEX_POLICY_SETUP_PAGE,
+		Assert.assertTrue(flexPolicySetupPage.verifyPageNavigation(COREFLEXConstants.POINT_POLICY_SETUP),
+				MessageFormat.format(COREFLEXConstants.FAILED_TO_VERIFY_USER_NAVIGATION_TO_POINT_POLICY_SETUP_PAGE,
 						CoreConstants.FAIL));
 		CoreConstants.TIME_AFTER_ACTION = new Date().getTime();
 		Reporter.addStepLog("<b>Total time taken to navigate to <i>Blueprint - Flex Policy Setup</i> page is :"
@@ -280,7 +280,7 @@ public class CF_BluePrint_Cloning_Steps {
 		Assert.assertTrue(
 				coreFlexTransfereePreviewPage.verifyPreviewTransfereeExperience(
 						CoreFunctions.getPropertyFromConfig("CoreFlex_Policy_BenefitType"),
-						CoreFunctions.getPropertyFromConfig("CoreFlex_Policy_RequiredFor"), "0"),
+						CoreFunctions.getPropertyFromConfig("CoreFlex_Policy_RequiredFor")),
 				MessageFormat.format(COREFLEXConstants.FAILED_TO_VERIFY_BENEFITS_DETAILS_ON_PREVIEW_TRANSFEREE_PAGE,
 						CoreConstants.FAIL));
 		coreFlexTransfereePreviewPage.clickElementOfPage(COREFLEXConstants.CLOSE_TRANSFEREE_PREVIEW);

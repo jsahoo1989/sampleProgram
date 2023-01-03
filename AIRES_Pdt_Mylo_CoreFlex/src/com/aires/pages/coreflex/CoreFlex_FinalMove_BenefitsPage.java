@@ -159,7 +159,7 @@ public class CoreFlex_FinalMove_BenefitsPage extends BenefitPage {
 	@FindBy(how = How.CSS, using = "ng-select[formcontrolname='finalMoveTransportTypeList']")
 	private WebElement _selectTransportationType;
 
-	@FindBy(how = How.CSS, using = "ng-select[formcontrolname='finalMoveTransportTypeList'] span.ng-option-label")
+	@FindBy(how = How.CSS, using = "ng-dropdown-panel span[class*='ng-option-label']")
 	private List<WebElement> _selectTransportationTypeOptions;
 
 	@FindBy(how = How.CSS, using = "ng-select[formcontrolname='finalMoveTransportTypeList'] span[class*='ng-value-label']")
@@ -189,7 +189,7 @@ public class CoreFlex_FinalMove_BenefitsPage extends BenefitPage {
 	@FindBy(how = How.CSS, using = "ng-select[formcontrolname='accompanyingFamilyMemberCode'] span[class*='ng-value-label']")
 	private WebElement _selectAccompanyingFamilyMemberCodeSelectedValue;
 
-	@FindBy(how = How.CSS, using = "ng-select[formcontrolname='accompanyingFamilyMemberCode'] span.ng-option-label")
+	@FindBy(how = How.CSS, using = "ng-dropdown-panel span[class*='ng-option-label']")
 	private List<WebElement> _selectAccompanyingFamilyMemberCodeOptions;
 
 	@FindBy(how = How.XPATH, using = "//div[@class='collapse show']//input[@formcontrolname='excessBaggageFeesInd']/parent::label[@class='form-check-label']")
@@ -210,7 +210,7 @@ public class CoreFlex_FinalMove_BenefitsPage extends BenefitPage {
 	@FindBy(how = How.CSS, using = "div[class='collapse show'] ng-select[formcontrolname='finalMoveDurationCode'] span[class*='ng-value-label']")
 	private WebElement _selectDurationSelectedValue;
 
-	@FindBy(how = How.XPATH, using = "//div[@class='collapse show']//ng-select[@formcontrolname='finalMoveDurationCode']//div[@role='option']")
+	@FindBy(how = How.CSS, using = "ng-dropdown-panel span[class*='ng-option-label']")
 	private List<WebElement> _selectDurationOptions;
 
 	@FindBy(how = How.XPATH, using = "//div[@class='collapse show']//ng-select[@formcontrolname='maxAmountCode']")
@@ -219,7 +219,7 @@ public class CoreFlex_FinalMove_BenefitsPage extends BenefitPage {
 	@FindBy(how = How.CSS, using = "div[class='collapse show'] ng-select[formcontrolname='maxAmountCode'] span[class*='ng-value-label']")
 	private WebElement _selectMaxAmtSelectedValue;
 
-	@FindBy(how = How.XPATH, using = "//div[@class='collapse show']//ng-select[@formcontrolname='maxAmountCode']//div[@role='option']")
+	@FindBy(how = How.CSS, using = "ng-dropdown-panel span[class*='ng-option-label']")
 	private List<WebElement> _selectMaxAmtOptions;
 
 	@FindBy(how = How.CSS, using = "input[formcontrolname='numOfNight']")
@@ -234,7 +234,7 @@ public class CoreFlex_FinalMove_BenefitsPage extends BenefitPage {
 	@FindBy(how = How.CSS, using = "ng-select[formcontrolname='currencyCode'] span[class*='ng-value-label']")
 	private WebElement _selectCurrencyCodeSelectedValue;
 
-	@FindBy(how = How.CSS, using = "ng-select[formcontrolname='currencyCode'] span.ng-option-label")
+	@FindBy(how = How.CSS, using = "ng-dropdown-panel span[class*='ng-option-label']")
 	private List<WebElement> _selectCurrencyCodeOptions;
 
 	@FindBy(how = How.XPATH, using = "//div[@class='collapse show']//ng-select[@formcontrolname='finalMoveDurationCode']")
@@ -243,7 +243,7 @@ public class CoreFlex_FinalMove_BenefitsPage extends BenefitPage {
 	@FindBy(how = How.CSS, using = "div[class='collapse show'] ng-select[formcontrolname='finalMoveDurationCode'] span[class*='ng-value-label']")
 	private WebElement _selectNumberOfDaysForMealsSelectedValue;
 
-	@FindBy(how = How.XPATH, using = "//div[@class='collapse show']//ng-select[@formcontrolname='finalMoveDurationCode']//div[@role='option']")
+	@FindBy(how = How.CSS, using = "ng-dropdown-panel span[class*='ng-option-label']")
 	private List<WebElement> _selectNumberOfDaysForMealsOptions;
 
 	@FindBy(how = How.CSS, using = "input[formcontrolname='numOfDay']")
@@ -270,7 +270,7 @@ public class CoreFlex_FinalMove_BenefitsPage extends BenefitPage {
 	@FindBy(how = How.CSS, using = "ng-select[formcontrolname='currencyCodeEe'] span[class*='ng-value-label']")
 	private WebElement _selectTransfereeCurrencySelectedValue;
 
-	@FindBy(how = How.CSS, using = "ng-select[formcontrolname='currencyCodeEe'] span.ng-option-label")
+	@FindBy(how = How.CSS, using = "ng-dropdown-panel span[class*='ng-option-label']")
 	private List<WebElement> _selectTransfereeCurrencyOptions;
 
 	@FindBy(how = How.CSS, using = "input[formcontrolname='maxAmountAdult']")
@@ -291,7 +291,7 @@ public class CoreFlex_FinalMove_BenefitsPage extends BenefitPage {
 	@FindBy(how = How.CSS, using = "ng-select[formcontrolname='currencyCodeAdult'] span[class*='ng-value-label']")
 	private WebElement _selectAdultCurrencySelectedValue;
 
-	@FindBy(how = How.CSS, using = "ng-select[formcontrolname='currencyCodeAdult'] span.ng-option-label")
+	@FindBy(how = How.CSS, using = "ng-dropdown-panel span[class*='ng-option-label']")
 	private List<WebElement> _selectAdultCurrencyOptions;
 
 	@FindBy(how = How.CSS, using = "input[formcontrolname='maxAmountChild']")
@@ -312,7 +312,7 @@ public class CoreFlex_FinalMove_BenefitsPage extends BenefitPage {
 	@FindBy(how = How.CSS, using = "ng-select[formcontrolname='currencyCodeChild'] span[class*='ng-value-label']")
 	private WebElement _selectCurrencyCodeChildSelectedValue;
 
-	@FindBy(how = How.CSS, using = "ng-select[formcontrolname='currencyCodeChild'] span.ng-option-label")
+	@FindBy(how = How.CSS, using = "ng-dropdown-panel span[class*='ng-option-label']")
 	private List<WebElement> _selectCurrencyCodeChildOptions;
 
 	// Aires Managed Benefit Radio Label Selection
@@ -443,9 +443,9 @@ public class CoreFlex_FinalMove_BenefitsPage extends BenefitPage {
 				CoreFunctions.selectItemInListByText(driver, _leftNavigationTitleList,
 						COREFLEXConstants.GENERAL_INFORMATION);
 				break;
-			case COREFLEXConstants.FLEX_POLICY_SETUP:
+			case COREFLEXConstants.POINT_POLICY_SETUP:
 				CoreFunctions.selectItemInListByText(driver, _leftNavigationTitleList,
-						COREFLEXConstants.FLEX_POLICY_SETUP);
+						COREFLEXConstants.POINT_POLICY_SETUP);
 				break;
 			case COREFLEXConstants.POLICY_BENEFIT_CATEGORIES:
 				CoreFunctions.selectItemInListByText(driver, _leftNavigationTitleList,

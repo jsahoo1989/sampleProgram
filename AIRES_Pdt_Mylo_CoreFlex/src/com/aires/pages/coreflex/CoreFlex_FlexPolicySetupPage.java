@@ -111,7 +111,7 @@ public class CoreFlex_FlexPolicySetupPage extends Base {
 	private List<WebElement> _sectionCashoutAvailabilityButtonList;
 
 	// Flex Allowance Type
-	@FindBy(how = How.XPATH, using = "//input[@formcontrolname='allowanceTypeCode']/parent::label")
+	@FindBy(how = How.XPATH, using = "//label[contains(string(),'Allowance Type')]/ancestor::form//input[@formcontrolname='allowanceTypeCode']/parent::label")
 	private List<WebElement> _radioFlexAllowanceType;
 
 	// Flex Allowance Type Radio Button List
@@ -211,7 +211,9 @@ public class CoreFlex_FlexPolicySetupPage extends Base {
 	CoreFlex_PolicySetupPagesData policySetupPageData = FileReaderManager.getInstance().getCoreFlexJsonReader()
 			.getPolicySetupPagesDataList(COREFLEXConstants.POLICY_SETUP);
 
-	private List<String> providedCurrencyList = Arrays.asList("U.S. Dollar", "Japanese Yen", "Moroccan Dirham");
+//	private List<String> providedCurrencyList = Arrays.asList("U.S. Dollar", "Japanese Yen", "Moroccan Dirham");
+	
+	private List<String> providedCurrencyList = Arrays.asList("Japanese Yen", "Moroccan Dirham");
 
 	/*********************************************************************/
 
@@ -223,7 +225,7 @@ public class CoreFlex_FlexPolicySetupPage extends Base {
 	 */
 	public boolean verifyPageNavigation(String expectedPageName) {
 		CoreFunctions.explicitWaitTillElementInVisibility(driver, _progressBar);
-		return CoreFunctions.verifyElementOnPage(driver, _headerPage, COREFLEXConstants.FLEX_POLICY_SETUP,
+		return CoreFunctions.verifyElementOnPage(driver, _headerPage, COREFLEXConstants.POINT_POLICY_SETUP,
 				expectedPageName, expectedPageName, true);
 	}
 
@@ -250,7 +252,7 @@ public class CoreFlex_FlexPolicySetupPage extends Base {
 	 */
 	public String getPageHeaderTitle() {
 		try {
-			CoreFunctions.explicitWaitTillElementVisibility(driver, _headerPage, COREFLEXConstants.FLEX_POLICY_SETUP);
+			CoreFunctions.explicitWaitTillElementVisibility(driver, _headerPage, COREFLEXConstants.POINT_POLICY_SETUP);
 			return CoreFunctions.getElementText(driver, _headerPage);
 		} catch (Exception e) {
 			Reporter.addStepLog(
@@ -307,9 +309,9 @@ public class CoreFlex_FlexPolicySetupPage extends Base {
 				CoreFunctions.selectItemInListByText(driver, _leftNavigationTitleList,
 						COREFLEXConstants.GENERAL_INFORMATION);
 				break;
-			case COREFLEXConstants.FLEX_POLICY_SETUP:
+			case COREFLEXConstants.POINT_POLICY_SETUP:
 				CoreFunctions.selectItemInListByText(driver, _leftNavigationTitleList,
-						COREFLEXConstants.FLEX_POLICY_SETUP);
+						COREFLEXConstants.POINT_POLICY_SETUP);
 				break;
 			case COREFLEXConstants.POLICY_BENEFIT_CATEGORIES:
 				CoreFunctions.selectItemInListByText(driver, _leftNavigationTitleList,

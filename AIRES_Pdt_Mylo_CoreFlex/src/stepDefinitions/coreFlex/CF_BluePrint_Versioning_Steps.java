@@ -110,9 +110,9 @@ public class CF_BluePrint_Versioning_Steps {
 		mxTransfereeJourneyHomePage.clickElementOfPage(MobilityXConstants.MANAGE_MY_POINTS);
 		CoreConstants.TIME_BEFORE_ACTION = new Date().getTime();
 		Assert.assertTrue(mxTransfereeFlexPlanningToolPage.isFlexPlanningToolHomePageDisplayed(),
-				MessageFormat.format(MobilityXConstants.FLEX_PLANNING_TOOL_PAGE_NOT_DISPLAYED, CoreConstants.FAIL));
+				MessageFormat.format(MobilityXConstants.ONPOINT_PLANNING_TOOL_PAGE_NOT_DISPLAYED, CoreConstants.FAIL));
 		CoreConstants.TIME_AFTER_ACTION = new Date().getTime();
-		Reporter.addStepLog("<b>Total time taken to navigate to <i>Flex Planning Tool Home</i> page is :"
+		Reporter.addStepLog("<b>Total time taken to navigate to <i>OnPoint Planning Tool Home</i> page is :"
 				+ CoreFunctions.calculatePageLoadTime(CoreConstants.TIME_BEFORE_ACTION, CoreConstants.TIME_AFTER_ACTION)
 				+ " Seconds </b>");
 	}
@@ -331,8 +331,8 @@ public class CF_BluePrint_Versioning_Steps {
 			String newPolicyVersion, String newPolicyStatus, String oldPolicyVersion) throws Throwable {
 
 		CoreConstants.TIME_BEFORE_ACTION = new Date().getTime();
-		Assert.assertTrue(flexPolicySetupPage.verifyPageNavigation(COREFLEXConstants.FLEX_POLICY_SETUP),
-				MessageFormat.format(COREFLEXConstants.FAILED_TO_VERIFY_USER_NAVIGATION_TO_FLEX_POLICY_SETUP_PAGE,
+		Assert.assertTrue(flexPolicySetupPage.verifyPageNavigation(COREFLEXConstants.POINT_POLICY_SETUP),
+				MessageFormat.format(COREFLEXConstants.FAILED_TO_VERIFY_USER_NAVIGATION_TO_POINT_POLICY_SETUP_PAGE,
 						CoreConstants.FAIL));
 		CoreConstants.TIME_AFTER_ACTION = new Date().getTime();
 		Reporter.addStepLog("<b>Total time taken to navigate to <i>Blueprint - Flex Policy Setup</i> page is :"
@@ -441,7 +441,7 @@ public class CF_BluePrint_Versioning_Steps {
 		Assert.assertTrue(
 				coreFlexTransfereePreviewPage.verifyPreviewTransfereeExperience(
 						CoreFunctions.getPropertyFromConfig("CoreFlex_Policy_BenefitType"),
-						CoreFunctions.getPropertyFromConfig("CoreFlex_Policy_RequiredFor"), "0"),
+						CoreFunctions.getPropertyFromConfig("CoreFlex_Policy_RequiredFor")),
 				MessageFormat.format(COREFLEXConstants.FAILED_TO_VERIFY_BENEFITS_DETAILS_ON_PREVIEW_TRANSFEREE_PAGE,
 						CoreConstants.FAIL));
 		coreFlexTransfereePreviewPage.clickElementOfPage(COREFLEXConstants.CLOSE_TRANSFEREE_PREVIEW);
@@ -451,8 +451,8 @@ public class CF_BluePrint_Versioning_Steps {
 	@Given("^he has navigated to \"([^\"]*)\" page from Left Navigation$")
 	public void he_has_navigated_to_page_from_Left_Navigation(String pageName) throws Throwable {
 		CoreConstants.TIME_BEFORE_ACTION = new Date().getTime();
-		Assert.assertTrue(flexPolicySetupPage.verifyPageNavigation(COREFLEXConstants.FLEX_POLICY_SETUP),
-				MessageFormat.format(COREFLEXConstants.FAILED_TO_VERIFY_USER_NAVIGATION_TO_FLEX_POLICY_SETUP_PAGE,
+		Assert.assertTrue(flexPolicySetupPage.verifyPageNavigation(COREFLEXConstants.POINT_POLICY_SETUP),
+				MessageFormat.format(COREFLEXConstants.FAILED_TO_VERIFY_USER_NAVIGATION_TO_POINT_POLICY_SETUP_PAGE,
 						CoreConstants.FAIL));
 		CoreConstants.TIME_AFTER_ACTION = new Date().getTime();
 		Reporter.addStepLog("<b>Total time taken to navigate to <i>Blueprint - Flex Policy Setup</i> page is :"
@@ -760,8 +760,8 @@ public class CF_BluePrint_Versioning_Steps {
 			String changedPolicyType) throws Throwable {
 		generalInfoPage.clickElementOfPage(PDTConstants.NEXT);
 		CoreConstants.TIME_BEFORE_ACTION = new Date().getTime();
-		Assert.assertTrue(flexPolicySetupPage.verifyPageNavigation(COREFLEXConstants.FLEX_POLICY_SETUP),
-				MessageFormat.format(COREFLEXConstants.FAILED_TO_VERIFY_USER_NAVIGATION_TO_FLEX_POLICY_SETUP_PAGE,
+		Assert.assertTrue(flexPolicySetupPage.verifyPageNavigation(COREFLEXConstants.POINT_POLICY_SETUP),
+				MessageFormat.format(COREFLEXConstants.FAILED_TO_VERIFY_USER_NAVIGATION_TO_POINT_POLICY_SETUP_PAGE,
 						CoreConstants.FAIL));
 		CoreConstants.TIME_AFTER_ACTION = new Date().getTime();
 		Reporter.addStepLog("<b>Total time taken to navigate to <i>Blueprint - Flex Policy Setup</i> page is :"
@@ -812,7 +812,7 @@ public class CF_BluePrint_Versioning_Steps {
 		generalInfoPage.clickElementOfPage(buttonName);
 		CoreConstants.TIME_BEFORE_ACTION = new Date().getTime();
 		Assert.assertTrue(flexPolicySetupPage.verifyPageNavigation(navigatedPageName), MessageFormat.format(
-				COREFLEXConstants.FAILED_TO_VERIFY_USER_NAVIGATION_TO_FLEX_POLICY_SETUP_PAGE, CoreConstants.FAIL));
+				COREFLEXConstants.FAILED_TO_VERIFY_USER_NAVIGATION_TO_POINT_POLICY_SETUP_PAGE, CoreConstants.FAIL));
 		CoreConstants.TIME_AFTER_ACTION = new Date().getTime();
 		Reporter.addStepLog("<b>Total time taken to navigate to <i>Blueprint - Flex Policy Setup</i> page is :"
 				+ CoreFunctions.calculatePageLoadTime(CoreConstants.TIME_BEFORE_ACTION, CoreConstants.TIME_AFTER_ACTION)

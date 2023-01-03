@@ -15,6 +15,19 @@
 		}			
 	},
 	{
+		"benefitName": "Mobility Premium",
+		"mobilityPremium": {
+			"calculationMethod" : "Flat Amount",			
+			"grossUp": "Yes",
+			"maxAmount" : "50000",
+			"currency": "U.S. Dollar",
+			"frequency": "One Time",
+			"reimbursedBy": "Other",
+			"reimbursedByOther": "Reimbursed by other",
+			"comment": "Mobility Premium comment"
+		}			
+	},
+	{
 		"benefitName": "Goods & Services Allowance",
 		"goodsAndServicesAllowance": {
 			"calculationMethod" : "Flat Amount",			

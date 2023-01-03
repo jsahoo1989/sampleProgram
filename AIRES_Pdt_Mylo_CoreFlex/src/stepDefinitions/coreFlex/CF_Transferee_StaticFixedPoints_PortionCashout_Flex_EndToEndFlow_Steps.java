@@ -97,7 +97,7 @@ public class CF_Transferee_StaticFixedPoints_PortionCashout_Flex_EndToEndFlow_St
 				CoreConstants.FAIL));
 		mxTransfereeJourneyHomePage.clickElementOfPage(MobilityXConstants.MANAGE_MY_POINTS);
 		Assert.assertTrue(mxTransfereeFlexPlanningToolPage.isFlexPlanningToolHomePageDisplayed(),
-				MessageFormat.format(MobilityXConstants.FLEX_PLANNING_TOOL_PAGE_NOT_DISPLAYED, CoreConstants.FAIL));
+				MessageFormat.format(MobilityXConstants.ONPOINT_PLANNING_TOOL_PAGE_NOT_DISPLAYED, CoreConstants.FAIL));
 		Assert.assertTrue(mxTransfereeFlexPlanningToolPage.verifyCashoutDetailsOnFPT(),
 				MessageFormat.format(
 						MobilityXConstants.AFTER_RELOCATION_CASHOUT_DETAILS_NOT_MATCHED_ON_FLEX_PLANNING_TOOL_PAGE,
@@ -171,7 +171,7 @@ public class CF_Transferee_StaticFixedPoints_PortionCashout_Flex_EndToEndFlow_St
 	@When("^he confirms request by selecting \"([^\"]*)\" option after verifying 'Delete Request Pending' benefit request details on 'Requests' dialog$")
 	public void he_confirms_request_by_selecting_option_after_verifying_Delete_Request_Pending_benefit_request_details_on_Requests_dialog(
 			String action) throws Throwable {
-		Assert.assertTrue(transfereeSubmissionsDetailsPage.verifyBenefitDetailsOnRequestsDialog(),
+		Assert.assertTrue(transfereeSubmissionsDetailsPage.verifyBenefitDetailsOnRequestsDialog(action),
 				MessageFormat.format(
 						COREFLEXConstants.FAILED_TO_VERIFY_DELETE_REQUEST_BENEFIT_DETAILS_ON_REQUESTS_DIALOG,
 						CoreConstants.FAIL));
@@ -181,7 +181,7 @@ public class CF_Transferee_StaticFixedPoints_PortionCashout_Flex_EndToEndFlow_St
 	@When("^he confirms request by selecting \"([^\"]*)\" option after verifying 'Delete Request Pending' benefit request details on 'Requests' dialog by Client$")
 	public void he_confirms_request_by_selecting_option_after_verifying_Delete_Request_Pending_benefit_request_details_on_Requests_dialog_by_Client(
 			String action) throws Throwable {
-		Assert.assertTrue(transfereeSubmissionsDetailsPage.verifyBenefitDetailsOnRequestsDialogClient(),
+		Assert.assertTrue(transfereeSubmissionsDetailsPage.verifyBenefitDetailsOnRequestsDialogClient(action),
 				MessageFormat.format(
 						COREFLEXConstants.FAILED_TO_VERIFY_DELETE_REQUEST_BENEFIT_DETAILS_ON_REQUESTS_DIALOG,
 						CoreConstants.FAIL));

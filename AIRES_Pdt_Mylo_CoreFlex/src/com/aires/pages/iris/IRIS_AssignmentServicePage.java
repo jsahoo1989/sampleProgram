@@ -717,6 +717,7 @@ public class IRIS_AssignmentServicePage extends BasePage {
 					CoreFunctions.getPropertyFromConfig("CoreFlex_Policy_RequiredFor"))) {
 				if ((benefit.getSelectBenefitOnFPTPage()) && (benefit.getAiresManagedService().equals("Yes"))
 						&& benefit.getNoOfMilestones() != null) {
+					
 					addService(benefit.getIrisServiceName());
 					clickOnAddSubServiceButton();
 					pageObjectManager_CoreFlex.getPageObjects().get(benefit.getBenefitType()).addSubService(_IRIS,

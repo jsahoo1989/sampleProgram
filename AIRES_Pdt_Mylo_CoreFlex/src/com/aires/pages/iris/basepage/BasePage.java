@@ -113,6 +113,7 @@ public class BasePage {
 	public static Window getIRISWindow() throws Exception {
 		Thread.sleep(8000);
 		_windowTitle = getWindowText.getActiveWindowText();
+		System.out.println("WindowTitle : "+_windowTitle);
 		return Desktop.describe(Window.class, new WindowDescription.Builder().title(_windowTitle).build());
 	}
 

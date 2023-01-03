@@ -334,6 +334,17 @@ public class PDT_ViewPolicyPage extends Base {
 	@FindBy(how = How.XPATH, using = "//strong[contains(text(),'Version Number')]/parent::label/following-sibling::label")
 	private WebElement _versionNumber;
 
+	// Core Flex Word
+	@FindBy(how = How.XPATH, using = "//p[contains(text(),'Points Based Flex Policy')]")
+	private WebElement _textCoreFlex;
+
+	@FindBy(how = How.XPATH, using = "//strong[text()='Policy Status:']/parent::h6/span/i | //strong[text()='Policy Status:']/parent::h6[contains(text(),'Active')] | //strong[text()='Policy Status:']/parent::h6[contains(text(),'Legacy')]")
+	private List<WebElement> _policyStatusIndicator;
+
+	// Edit Policy benefit page Header
+	@FindBy(how = How.CSS, using = "div.sidebar-wrapper li.nav-item a.nav-link > p")
+	private WebElement _headingEditPolicyBenefit;
+
 	// Approve Policy Icon List
 	@FindBy(how = How.CSS, using = "div.icons-action a[mattooltip='Approve Policy']>img")
 	private List<WebElement> _listApprovePolicyIcon;
@@ -397,6 +408,10 @@ public class PDT_ViewPolicyPage extends Base {
 		case COREFLEXConstants.OK:
 			CoreFunctions.clickElement(driver, _btnOK);
 			CoreFunctions.explicitWaitTillElementInVisibilityCustomTime(driver, _progressBar, 5);
+			break;
+		case COREFLEXConstants.ASSIGNMENT_POLICY:
+			CoreFunctions.clickElement(driver, CoreFunctions.getElementFromListByText(_listPolicyName,
+					CoreFunctions.getPropertyFromConfig("Assignment_Policy")));
 			break;
 		default:
 			Assert.fail("Element not found");
@@ -1648,6 +1663,63 @@ public class PDT_ViewPolicyPage extends Base {
 		} catch (Exception e) {
 			Assert.fail("Failed to search policy name");
 		}
+	}
+
+	public boolean verifyFlexWordNotDisplayed() {
+		return BusinessFunctions.verifyFlexWordNotDisplayed(driver, _textCoreFlex, PDTConstants.VIEW_EDIT_POLICY_FORMS);
+	}
+
+	public boolean verifyOnPointPolicyStatusIndicator(String expectedPolicyStatusIndicator,
+			String expectedPolicyStatusHoverText, String selectedPolicyName, String expectedPolicyStatus,
+			String expectedPolicyVersion) {
+		try {
+			CoreFunctions.explicitWaitTillElementInVisibility(driver, _progressBar);
+			int index = BusinessFunctions.returnindexItemFromListUsingText(driver, _listPolicyName, selectedPolicyName);
+			String actualPolicyStatusList = _listPolicyStatus.get(index).getText();
+			String actualPolicyVersionList = _listPolicyVersion.get(index).getText();
+			CoreFunctions.highlightObject(driver,
+					CoreFunctions.getElementFromListByText(_listPolicyName, selectedPolicyName));
+			CoreFunctions.verifyTextContains(actualPolicyStatusList.split(":")[1].trim(), expectedPolicyStatus,
+					COREFLEXConstants.POLICY_STATUS);
+			CoreFunctions.highlightObject(driver, _listPolicyStatus.get(index));
+			CoreFunctions.verifyText(actualPolicyVersionList.split(":")[1].trim(), expectedPolicyVersion,
+					COREFLEXConstants.POLICY_VERSION);
+			CoreFunctions.highlightObject(driver, _listPolicyVersion.get(index));
+			CoreFunctions.verifyText(getActualPolicyStatusIndicator(index), expectedPolicyStatusIndicator,
+					COREFLEXConstants.DRAFT_POLICY_STATUS_INDICATOR);
+			CoreFunctions.highlightObject(driver, _policyStatusIndicator.get(index));
+			CoreFunctions.verifyText(CoreFunctions.getAttributeText(_policyStatusIndicator.get(index), "mattooltip"),
+					expectedPolicyStatusHoverText, COREFLEXConstants.DRAFT_POLICY_STATUS_INDICATOR_HOVER_TEXT);
+			Reporter.addStepLog(MessageFormat.format(
+					COREFLEXConstants.SUCCESSFULLY_VERIFIED_DRAFT_POLICY_STATUS_INDICATOR_AND_HOVER_TEXT,
+					CoreConstants.PASS, expectedPolicyStatusIndicator, expectedPolicyStatusHoverText,
+					COREFLEXConstants.VIEW_EDIT_POLICY_FORMS));
+			return true;
+		} catch (Exception e) {
+			Reporter.addStepLog(
+					MessageFormat.format(COREFLEXConstants.EXCEPTION_OCCURED_WHILE_VERIFYING_POLICY_STATUS_INDICATOR,
+							CoreConstants.FAIL, e.getMessage(), COREFLEXConstants.VIEW_EDIT_POLICY_FORMS));
+			return false;
+		}
+	}
+
+	private String getActualPolicyStatusIndicator(int index) {
+		return CoreFunctions.getElementText(driver, _policyStatusIndicator.get(index)).equalsIgnoreCase("error")
+				? COREFLEXConstants.RED_INDICATOR
+				: (CoreFunctions.getElementText(driver, _policyStatusIndicator.get(index))
+						.equalsIgnoreCase("check_circle") ? COREFLEXConstants.GREEN_INDICATOR : null);
+	}
+	
+	/**
+	 * Method to verify navigated Page Header Title
+	 * 
+	 * @param expectedPageName
+	 * @return
+	 */
+	public boolean verifyEditPolicyBenefitPageNavigation() {
+		CoreFunctions.explicitWaitTillElementInVisibility(driver, _progressBar);
+		return CoreFunctions.verifyElementOnPage(driver, _headingEditPolicyBenefit,
+				COREFLEXConstants.EDIT_POLICY_BENEFIT);
 	}
 
 }

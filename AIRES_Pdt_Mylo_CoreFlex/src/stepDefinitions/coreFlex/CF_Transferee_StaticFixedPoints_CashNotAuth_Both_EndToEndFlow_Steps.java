@@ -148,7 +148,7 @@ public class CF_Transferee_StaticFixedPoints_CashNotAuth_Both_EndToEndFlow_Steps
 								CoreConstants.TIME_AFTER_ACTION)
 						+ " Seconds </b>");
 
-		Assert.assertTrue(transfereeSubmissionsDetailsPage.verifyBenefitDetailsOnRequestsDialog(),
+		Assert.assertTrue(transfereeSubmissionsDetailsPage.verifyBenefitDetailsOnRequestsDialog(action),
 				MessageFormat.format(
 						COREFLEXConstants.FAILED_TO_VERIFY_DELETE_REQUEST_BENEFIT_DETAILS_ON_REQUESTS_DIALOG,
 						CoreConstants.FAIL));
@@ -162,8 +162,22 @@ public class CF_Transferee_StaticFixedPoints_CashNotAuth_Both_EndToEndFlow_Steps
 				MessageFormat.format(
 						COREFLEXConstants.FAILED_TO_VERIFY_ACTION_COMPLETED_GROWL_MESSAGE_ON_TRANSFEREE_SUBMISSION_DETAILS_PAGE,
 						CoreConstants.FAIL));
-//		Assert.assertTrue(transfereeSubmissionsDetailsPage.verifyBenefitDeleteRequestEmail(actionPerformed), MessageFormat
-//				.format(MobilityXConstants.FAILED_TO_VERIFY_MOBILITY_FLEX_BENEFIT_DELETE_REQUEST_EMAIL, CoreConstants.FAIL,actionPerformed));
+	}
+
+	@When("^\"([^\"]*)\" email should be sent to Transferee for benefit \"([^\"]*)\" action by \"([^\"]*)\" user$")
+	public void Delete_Request_Denied_email_should_be_sent_to_Transferee_for_benefit_action_by_user(String emailSubject,
+			String actionPerformed, String user) throws Throwable {
+		Assert.assertTrue(transfereeSubmissionsDetailsPage.verifyBenefitDeleteRequestEmail(actionPerformed),
+				MessageFormat.format(MobilityXConstants.FAILED_TO_VERIFY_MOBILITY_FLEX_BENEFIT_DELETE_REQUEST_EMAIL,
+						CoreConstants.FAIL, actionPerformed, emailSubject));
+	}
+
+	@When("^\"([^\"]*)\" email should be sent to Client for benefit \"([^\"]*)\" action by \"([^\"]*)\" user$")
+	public void Delete_Request_Denied_email_should_be_sent_to_Client_for_benefit_action_by_user(String emailSubject,
+			String actionPerformed, String user) throws Throwable {
+		Assert.assertTrue(transfereeSubmissionsDetailsPage.verifyBenefitDeleteRequestEmailClient(actionPerformed),
+				MessageFormat.format(MobilityXConstants.FAILED_TO_VERIFY_MOBILITY_FLEX_BENEFIT_DELETE_REQUEST_EMAIL,
+						CoreConstants.FAIL, actionPerformed, emailSubject));
 	}
 
 	@Then("^'Delete Request Pending' benefit request should be removed from 'Transferee Submission Details' list$")
@@ -194,14 +208,15 @@ public class CF_Transferee_StaticFixedPoints_CashNotAuth_Both_EndToEndFlow_Steps
 		mobilityXLoginPage.clickSignIn();
 		mxTransfereeJourneyHomePage.handle_Cookie_AfterLogin();
 		mxTransfereeJourneyHomePage.handle_points_expiry_reminder_popup();
-		mxTransfereeJourneyHomePage.progressOrSkipMobilityJourneyHomePage(MobilityXConstants.ROUTE_TO_TRANSFEREE_JOURNEY_HOME_PAGE);
+		mxTransfereeJourneyHomePage
+				.progressOrSkipMobilityJourneyHomePage(MobilityXConstants.ROUTE_TO_TRANSFEREE_JOURNEY_HOME_PAGE);
 		Assert.assertTrue(mxTransfereeJourneyHomePage.verifySubmittedPointsDetails(),
 				MessageFormat.format(
 						MobilityXConstants.REMAINING_AVAILABLE_POINTS_DETAILS_NOT_MATCHED_ON_JOURNEY_HOME_PAGE,
 						CoreConstants.FAIL));
 		mxTransfereeJourneyHomePage.clickElementOfPage(MobilityXConstants.MANAGE_MY_POINTS);
 		Assert.assertTrue(mxTransfereeFlexPlanningToolPage.isFlexPlanningToolHomePageDisplayed(),
-				MessageFormat.format(MobilityXConstants.FLEX_PLANNING_TOOL_PAGE_NOT_DISPLAYED, CoreConstants.FAIL));
+				MessageFormat.format(MobilityXConstants.ONPOINT_PLANNING_TOOL_PAGE_NOT_DISPLAYED, CoreConstants.FAIL));
 		Assert.assertTrue(mxTransfereeFlexPlanningToolPage.verifyAvailablePointsMessageAfterSubmission(),
 				MessageFormat.format(
 						MobilityXConstants.FAILED_TO_VALIDATE_AVAILABLE_POINTS_MESSAGE_ON_FLEX_PLANNING_TOOL_PAGE,
@@ -220,8 +235,7 @@ public class CF_Transferee_StaticFixedPoints_CashNotAuth_Both_EndToEndFlow_Steps
 	@When("^he clicks on \"([^\"]*)\" button for the deleted benefit under 'Submitted Benefits' section of 'MXTransferee' application$")
 	public void he_clicks_on_button_for_the_deleted_benefit_under_Submitted_Benefits_section_of_MXTransferee_application(
 			String action) throws Throwable {
-		testContext.getWebDriverManager().getDriver().navigate()
-				.to(_coreFlexLoginInfo.details.mobilityXURL);
+		testContext.getWebDriverManager().getDriver().navigate().to(_coreFlexLoginInfo.details.mobilityXURL);
 		mobilityXLoginPage.enterUsernameAndPasswordForMobilityX(
 				CoreFunctions.getPropertyFromConfig("Transferee_UserNameInEMail"),
 				CoreFunctions.getPropertyFromConfig("Transferee_PasswordInEMail"));

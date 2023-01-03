@@ -543,6 +543,8 @@ public class MX_Client_BenefitSelectionToolPage extends Base {
 			Reporter.addStepLog(MessageFormat.format(
 					MobilityXConstants.SUCCESSFULLY_SELECTED_PORTION_CASHOUT_ON_BENEFIT_SELECTION_TOOL_PAGE,
 					CoreConstants.PASS));
+			CoreFunctions.writeToPropertiesFile("CF_Transferee_SelectedCashOutPoints",
+					CoreFunctions.getPropertyFromConfig("CF_Client_SelectedCashOutPoints"));
 //			setReimAccountType(CoreFunctions.getAttributeText(_selectSelectAccount, "title"));
 		}
 		return isPortionCashoutSelected;
@@ -2237,6 +2239,109 @@ public class MX_Client_BenefitSelectionToolPage extends Base {
 		} catch (Exception e) {
 			Reporter.addStepLog(MessageFormat.format(
 					MobilityXConstants.EXCEPTION_OCCURED_WHILE_VERIFYING_AFTER_RELOCATION_CASHOUT_NOTE_NOT_DISPLAYED_ON_BENEFIT_SELECTION_TOOL_PAGE_AFTER_ACTUALIZING_TRACING,
+					CoreConstants.FAIL, e.getMessage()));
+		}
+		return false;
+	}
+
+	public boolean verifyWindowTitle() {
+		try {
+			CoreFunctions.verifyText(CoreFunctions.getWindowTitle(driver), MobilityXConstants.ON_POINT,
+					MobilityXConstants.WINDOW_TITLE);
+			Reporter.addStepLog(
+					MessageFormat.format(MobilityXConstants.SUCCESSFULLY_VERIFIED_WINDOW_TITLE_DISPLAYED_AS_ON_POINT,
+							CoreConstants.PASS, MobilityXConstants.BENEFIT_SELECTION_TOOL));
+			return true;
+		} catch (Exception e) {
+			Reporter.addStepLog(MessageFormat.format(MobilityXConstants.EXCEPTION_OCCURED_WHILE_VERIFYING_PAGE_TITLE,
+					CoreConstants.FAIL, e.getMessage(), MobilityXConstants.BENEFIT_SELECTION_TOOL));
+		}
+		return false;
+	}
+
+	public boolean selectBenefitsForResubmissionAndProceedToSaveAndExit() {
+		boolean benefitsSelectedSuccessfully = false;
+		totalSelectedPoints = 0;
+		try {
+			benefitsSelectedSuccessfully = selectFlexBenefitsForResubmissiononBST()
+					&& validatePointsOnResubmissionAndClickOnNext();
+		} catch (Exception e) {
+			Reporter.addStepLog(MessageFormat.format(
+					MobilityXConstants.EXCEPTION_OCCURED_WHILE_SELECTING_BENEFITS_ON_BENEFIT_SELECTION_TOOL_PAGE,
+					CoreConstants.FAIL, e.getMessage()));
+		}
+		if (benefitsSelectedSuccessfully) {
+			Reporter.addStepLog(MessageFormat.format(
+					MobilityXConstants.SUCCESSFULLY_SELECTED_BENEFITS_AND_PROCEEDED_TO_BENEFITS_BUNDLE_PAGE,
+					CoreConstants.PASS));
+		}
+		return benefitsSelectedSuccessfully;
+	}
+
+	private boolean selectFlexBenefitsForResubmissiononBST() {
+		boolean benefitsSelection = false, benefitsSelectionPerformed = false;
+		for (Benefit benefit : getBenefits(CoreFunctions.getPropertyFromConfig("CoreFlex_Policy_BenefitType"),
+				CoreFunctions.getPropertyFromConfig("CoreFlex_Policy_RequiredFor"))) {
+			if (benefit.isBenefitResubmissionOnBST()) {
+				Log.info("Selecting " + benefit.getBenefitDisplayName() + " on BST page.");
+				int indexBenefit = BusinessFunctions.returnindexItemFromListUsingText(driver, _textAddedBenefitNameList,
+						benefit.getBenefitDisplayName());
+				benefitsSelectionPerformed = performFlexBenefitSelectionForResubmission(benefit, indexBenefit);
+				if (!benefitsSelectionPerformed) {
+					return false;
+				} else {
+					benefitsSelection = benefitsSelectionPerformed;
+				}
+			} else {
+				benefitsSelection = true;
+			}
+		}
+		return benefitsSelection;
+	}
+
+	private boolean performFlexBenefitSelectionForResubmission(Benefit benefit, int indexBenefit) {
+		boolean isBenefitSelected = false;
+		try {
+			CoreFunctions.scrollToElementUsingJS(driver, benefitSelectionToolPageTitle,
+					MobilityXConstants.BENEFIT_SELECTION_TOOL);
+			CoreFunctions.waitHandler(5);
+			double points = Double.parseDouble(benefit.getPoints());
+			CoreFunctions.scrollClickUsingJS(driver, _buttonSelectThis.get(indexBenefit),
+					benefit.getBenefitDisplayName() + " - Select This button");
+			CoreFunctions.waitHandler(3);
+			totalSelectedPoints += points;
+			CoreFunctions.scrollToElementUsingJS(driver, benefitSelectionToolPageTitle,
+					MobilityXConstants.BENEFIT_SELECTION_TOOL);
+			isBenefitSelected = true;
+		} catch (Exception e) {
+			Reporter.addStepLog(MessageFormat.format(
+					MobilityXConstants.EXCEPTION_OCCURED_WHILE_SELECTING_BENEFITS_ON_BENEFIT_SELECTION_TOOL_PAGE,
+					CoreConstants.FAIL, e.getMessage()));
+		}
+		return isBenefitSelected;
+	}
+
+	public boolean validatePointsOnResubmissionAndClickOnNext() {
+		try {
+			CoreFunctions.waitHandler(3);
+			if (Double.parseDouble(CoreFunctions.getElementText(driver, selectedPoints)) == totalSelectedPoints) {
+				CoreFunctions.clickElement(driver, _btn_next);
+				CoreFunctions.writeToPropertiesFile("CF_Client_TotalSelectedPoints", String.valueOf(
+						(Double.parseDouble(CoreFunctions.getPropertyFromConfig("CF_Client_TotalSelectedPoints")))
+								+ totalSelectedPoints));
+				CoreFunctions.writeToPropertiesFile("CF_Client_AvailablePoints", String.valueOf((Double
+						.parseDouble(CoreFunctions.getPropertyFromConfig("CF_Transferee_TotalAvailablePoints")))
+						- (Double.parseDouble(CoreFunctions.getPropertyFromConfig("CF_Client_TotalSelectedPoints")))));
+
+				CoreFunctions.writeToPropertiesFile("CF_Transferee_TotalSelectedPoints",
+						CoreFunctions.getPropertyFromConfig("CF_Client_TotalSelectedPoints"));
+				CoreFunctions.writeToPropertiesFile("CF_Transferee_AvailablePoints",
+						CoreFunctions.getPropertyFromConfig("CF_Client_AvailablePoints"));
+				return true;
+			}
+		} catch (Exception e) {
+			Reporter.addStepLog(MessageFormat.format(
+					MobilityXConstants.EXCEPTION_OCCURED_WHILE_VALIDATING_POINTS_AND_CLICKING_ON_NEXT_BUTTON_ON_FPT_PAGE,
 					CoreConstants.FAIL, e.getMessage()));
 		}
 		return false;

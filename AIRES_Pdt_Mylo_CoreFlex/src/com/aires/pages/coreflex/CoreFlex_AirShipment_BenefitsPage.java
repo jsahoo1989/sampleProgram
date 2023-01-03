@@ -246,7 +246,7 @@ public class CoreFlex_AirShipment_BenefitsPage extends BenefitPage {
 	@FindBy(how = How.CSS, using = "ng-select[formcontrolname='airShipmentTradedCodeList']")
 	private WebElement _selectAirShipmentTraded;
 
-	@FindBy(how = How.CSS, using = "ng-select[formcontrolname='airShipmentTradedCodeList'] span.ng-option-label")
+	@FindBy(how = How.CSS, using = "ng-dropdown-panel span[class*='ng-option-label']")
 	private List<WebElement> _selectAirShipmentTradedOptions;
 
 	@FindBy(how = How.CSS, using = "div[class='collapse show'] ng-select[formcontrolname='airShipmentTradedCodeList'] span[class*='ng-value-label']")
@@ -255,7 +255,7 @@ public class CoreFlex_AirShipment_BenefitsPage extends BenefitPage {
 	@FindBy(how = How.CSS, using = "ng-select[formcontrolname='tempStorageDurationCode']")
 	private WebElement _selectTempStorageDuration;
 
-	@FindBy(how = How.CSS, using = "ng-select[formcontrolname='tempStorageDurationCode'] span.ng-option-label")
+	@FindBy(how = How.CSS, using = "ng-dropdown-panel span[class*='ng-option-label']")
 	private List<WebElement> _selectTempStorageDurationOptions;
 
 	@FindBy(how = How.CSS, using = "div[class='collapse show'] ng-select[formcontrolname='tempStorageDurationCode'] span[class*='ng-value-label']")
@@ -386,9 +386,9 @@ public class CoreFlex_AirShipment_BenefitsPage extends BenefitPage {
 				CoreFunctions.selectItemInListByText(driver, _leftNavigationTitleList,
 						COREFLEXConstants.GENERAL_INFORMATION);
 				break;
-			case COREFLEXConstants.FLEX_POLICY_SETUP:
+			case COREFLEXConstants.POINT_POLICY_SETUP:
 				CoreFunctions.selectItemInListByText(driver, _leftNavigationTitleList,
-						COREFLEXConstants.FLEX_POLICY_SETUP);
+						COREFLEXConstants.POINT_POLICY_SETUP);
 				break;
 			case COREFLEXConstants.POLICY_BENEFIT_CATEGORIES:
 				CoreFunctions.selectItemInListByText(driver, _leftNavigationTitleList,

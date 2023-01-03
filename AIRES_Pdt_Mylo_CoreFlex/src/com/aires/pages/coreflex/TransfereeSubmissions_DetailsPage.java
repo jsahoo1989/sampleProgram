@@ -20,6 +20,7 @@ import com.aires.businessrules.constants.CoreConstants;
 import com.aires.businessrules.constants.MobilityXConstants;
 import com.aires.managers.FileReaderManager;
 import com.aires.testdatatypes.coreflex.Benefit;
+import com.aires.testdatatypes.coreflex.CoreFlex_LoginInfo;
 import com.aires.testdatatypes.coreflex.CoreFlex_PolicySetupPagesData;
 import com.aires.testdatatypes.coreflex.FlexBenefit;
 import com.aires.utilities.EmailUtil;
@@ -216,6 +217,14 @@ public class TransfereeSubmissions_DetailsPage extends Base {
 	@FindBy(how = How.CSS, using = "app-transferee-history  mat-cell[class*='column-Quantity']")
 	private List<WebElement> _transfereeHistoryBenefitQuantityList;
 
+	// Deny Request Dialog Request Comment Select List
+	@FindBy(how = How.CSS, using = "mat-select[formcontrolname='reasonList']")
+	private WebElement _denyRequestDialogCommentSelect;
+
+	// Deny Request Dialog Request Comment Select List Options
+	@FindBy(how = How.CSS, using = "span[class='mat-option-text']")
+	private List<WebElement> _denyRequestDialogCommentSelectList;
+
 	/**********************************************************************/
 
 	CoreFlex_PolicySetupPagesData policySetupPageData = FileReaderManager.getInstance().getCoreFlexJsonReader()
@@ -287,6 +296,8 @@ public class TransfereeSubmissions_DetailsPage extends Base {
 				break;
 			case COREFLEXConstants.APPROVE_ALL:
 				CoreFunctions.clickElement(driver, _requestDialogApproveRadioButton);
+				CoreFunctions.clearAndSetText(driver, _requestDialogCommentBox,
+						COREFLEXConstants.REQUESTS_DIALOG_COMMENT);
 				CoreFunctions.clickElement(driver, _requestDialogConfirmButton);
 				break;
 			case COREFLEXConstants.DENY_REQUEST:
@@ -295,6 +306,9 @@ public class TransfereeSubmissions_DetailsPage extends Base {
 				break;
 			case COREFLEXConstants.DENY_ALL:
 				CoreFunctions.clickElement(driver, _requestDialogDenyRadioButton);
+				CoreFunctions.clickElement(driver, _denyRequestDialogCommentSelect);
+				CoreFunctions.selectItemInListByText(driver, _denyRequestDialogCommentSelectList,
+						COREFLEXConstants.DENY_DIALOG_COMMENT_SELECTION);
 				CoreFunctions.clickElement(driver, _requestDialogConfirmButton);
 				break;
 			case COREFLEXConstants.TRANSFEREE_HISTORY_SECTION:
@@ -641,9 +655,9 @@ public class TransfereeSubmissions_DetailsPage extends Base {
 		}
 	}
 
-	public boolean verifyBenefitDetailsOnRequestsDialog() {
+	public boolean verifyBenefitDetailsOnRequestsDialog(String action) {
 		try {
-			return verifyBenefitDetails() && verifyCashoutDetails(COREFLEXConstants.TRANSFEREE);
+			return verifyBenefitDetails(action) && verifyCashoutDetails(COREFLEXConstants.TRANSFEREE);
 		} catch (Exception e) {
 			Reporter.addStepLog(MessageFormat.format(
 					COREFLEXConstants.EXCEPTION_OCCURED_WHILE_VERIFYING_DELETE_REQUEST_DETAILS_ON_REQUEST_DIALOG,
@@ -652,9 +666,9 @@ public class TransfereeSubmissions_DetailsPage extends Base {
 		return false;
 	}
 
-	public boolean verifyBenefitDetailsOnRequestsDialogClient() {
+	public boolean verifyBenefitDetailsOnRequestsDialogClient(String action) {
 		try {
-			return verifyBenefitDetails() && verifyCashoutDetails(COREFLEXConstants.CLIENT);
+			return verifyBenefitDetails(action) && verifyCashoutDetails(COREFLEXConstants.CLIENT);
 		} catch (Exception e) {
 			Reporter.addStepLog(MessageFormat.format(
 					COREFLEXConstants.EXCEPTION_OCCURED_WHILE_VERIFYING_DELETE_REQUEST_DETAILS_ON_REQUEST_DIALOG,
@@ -726,7 +740,7 @@ public class TransfereeSubmissions_DetailsPage extends Base {
 		return false;
 	}
 
-	private boolean verifyBenefitDetails() {
+	private boolean verifyBenefitDetails(String action) {
 		boolean isBenefitDetailsVerified = false;
 		try {
 			for (Benefit benefit : getBenefits(CoreFunctions.getPropertyFromConfig("CoreFlex_Policy_BenefitType"),
@@ -773,7 +787,6 @@ public class TransfereeSubmissions_DetailsPage extends Base {
 		if (isBenefitDetailsVerified) {
 			CoreFunctions.writeToPropertiesFile("CF_Transferee_DeleteRequestTotalPoints",
 					String.valueOf(deleteRequestTotalPoints));
-			CoreFunctions.clearAndSetText(driver, _requestDialogCommentBox, COREFLEXConstants.REQUESTS_DIALOG_COMMENT);
 			Reporter.addStepLog(MessageFormat.format(
 					COREFLEXConstants.SUCCESSFULLY_VERIFIED_BENEFIT_DETAILS_ON_REQUEST_DIALOG, CoreConstants.PASS));
 		}
@@ -864,8 +877,6 @@ public class TransfereeSubmissions_DetailsPage extends Base {
 
 	public boolean verifyBenefitDeleteRequestEmail(String actionPerformed) {
 		try {
-			// Reading Transferee Username and Password from email and writing to the Config
-			// Properties File
 			String host = "outlook.office365.com";
 			// Enter Your Email ID
 			String userName = "airesautomation@aires.com";
@@ -892,38 +903,55 @@ public class TransfereeSubmissions_DetailsPage extends Base {
 		return false;
 	}
 
+	/**
+	 * Method to verify Delete request Denied Email Contents -- EmailSubject,
+	 * TransfereeName Requested Delete Operation, Benefits Name, Deny Request
+	 * Comment added by MSPEC and Available/Total points
+	 * 
+	 * @param host
+	 * @param userName
+	 * @param pwd
+	 * @param expFromUserName
+	 * @return
+	 */
 	private boolean verifyDeleteRequestDeniedEmail(String host, String userName, String pwd, String expFromUserName) {
 		try {
 			// Enter expected email subject
-			String expEmailSubject = "Mobility Flex Benefit Delete Request has been Denied";
+			String expEmailSubject = "Mobility Benefit Delete Request has been Denied";
 			String actualResultSubmissionDetails = EmailUtil.searchEmailAndReturnResult(host, userName, pwd,
 					expFromUserName, expEmailSubject, MobilityXConstants.DELETE_REQUEST_DENIED);
-			actualResultSubmissionDetails = actualResultSubmissionDetails.replace("<span>", "").replace("</span>", "")
-					.replace("\t", "").replace("\r\n", "").replace("<br>", "").trim();
+			actualResultSubmissionDetails = removeHTMLTagsFromEmailContent(actualResultSubmissionDetails);
 			if (verifyDeniedDeleteRequestEmailContents(actualResultSubmissionDetails)) {
-				Reporter.addStepLog(CoreConstants.PASS
-						+ "Successfully verified 'Mobility Flex Benefit Delete Request has been Approved' Email.");
+				Reporter.addStepLog(MessageFormat.format(
+						COREFLEXConstants.SUCCESSFULLY_VERIFIED_MOBILITY_BENEFIT_DELETE_REQUEST_DENIED_EMAIL_CONTENTS,
+						CoreConstants.PASS));
 				return true;
 			}
 		} catch (Exception e) {
-			Reporter.addStepLog(MessageFormat.format(
-					COREFLEXConstants.EXCEPTION_OCCURED_WHILE_READING_APPROVED_DELETE_REQUEST_EMAIL, CoreConstants.FAIL,
-					e.getMessage()));
+			Reporter.addStepLog(
+					MessageFormat.format(COREFLEXConstants.EXCEPTION_OCCURED_WHILE_READING_DENIED_DELETE_REQUEST_EMAIL,
+							CoreConstants.FAIL, e.getMessage()));
 		}
 		return false;
+	}
+
+	private String removeHTMLTagsFromEmailContent(String actualResultSubmissionDetails) {
+		return actualResultSubmissionDetails.replace("<span>", "").replace("</span>", "").replace("\t", "")
+				.replace("\r\n", "").replace("<br>", "").replace("<ul>", "").replace("<li>", "").replace("</ul>", "")
+				.replace("<li style=\"word-break:break-all\">", "").replace("</li>", "").replace("</p>", "").trim();
 	}
 
 	private boolean verifyDeleteRequestApprovedEmail(String host, String userName, String pwd, String expFromUserName) {
 		try {
 			// Enter expected email subject
-			String expEmailSubject = "Mobility Flex Benefit Delete Request has been Approved";
+			String expEmailSubject = "Mobility Benefit Delete Request has been Approved";
 			String actualResultSubmissionDetails = EmailUtil.searchEmailAndReturnResult(host, userName, pwd,
 					expFromUserName, expEmailSubject, MobilityXConstants.DELETE_REQUEST_APPROVED);
-			actualResultSubmissionDetails = actualResultSubmissionDetails.replace("<span>", "").replace("</span>", "")
-					.replace("\t", "").replace("\r\n", "").replace("<br>", "").trim();
+			actualResultSubmissionDetails = removeHTMLTagsFromEmailContent(actualResultSubmissionDetails);
 			if (verifyApprovedDeleteRequestEmailContents(actualResultSubmissionDetails)) {
-				Reporter.addStepLog(CoreConstants.PASS
-						+ "Successfully verified 'Mobility Flex Benefit Delete Request has been Approved' Email.");
+				Reporter.addStepLog(MessageFormat.format(
+						COREFLEXConstants.SUCCESSFULLY_VERIFIED_MOBILITY_BENEFIT_DELETE_REQUEST_APPROVED_EMAIL_CONTENTS,
+						CoreConstants.PASS));
 				return true;
 			}
 		} catch (Exception e) {
@@ -937,32 +965,26 @@ public class TransfereeSubmissions_DetailsPage extends Base {
 	private boolean verifyApprovedDeleteRequestEmailContents(String actualResultSubmissionDetails) {
 		String emailContent[] = actualResultSubmissionDetails.split(",");
 		String actualUserName = emailContent[0];
-		String actualEmailContentBenefitDetails[] = emailContent[1].split("</ul>");
-		String deleteApprovedBenefitPointDetails[] = actualEmailContentBenefitDetails[0].replace("<ul>", "")
-				.replace("<li>", "").replace("</ul>", "").split("</li>");
-		String actualDeleteApprovedBenefitPointText = deleteApprovedBenefitPointDetails[0].trim();
-		String actualDeleteCommentText = deleteApprovedBenefitPointDetails[1].replace("</li>", "").trim();
-		String actualRemainingPointsText = actualEmailContentBenefitDetails[2].trim();
+		String actualEmailContentBenefitDetails = emailContent[1];
 		CoreFunctions.verifyText(actualUserName, CoreFunctions.getPropertyFromConfig("Transferee_firstName"));
-		CoreFunctions.verifyText(actualDeleteApprovedBenefitPointText, getExpectedDeleteApprovedBenefitPointText());
-		CoreFunctions.verifyText(actualDeleteCommentText, COREFLEXConstants.REQUESTS_DIALOG_COMMENT);
-		CoreFunctions.verifyText(actualRemainingPointsText, getExpectedRemainingPointsToUseText());
+		CoreFunctions.verifyTextContains(actualEmailContentBenefitDetails, getExpectedDeleteApprovedBenefitPointText(),
+				MobilityXConstants.APPROVED_DELETE_REQUEST_REMAINING_POINTS_TO_USE);
+		CoreFunctions.verifyTextContains(actualEmailContentBenefitDetails, COREFLEXConstants.REQUESTS_DIALOG_COMMENT,
+				MobilityXConstants.APPROVE_DIALOG_COMMENT);
+		verifyDeniedApprovedDeleteRequestEmailBenefits(actualEmailContentBenefitDetails);
 		return true;
+
 	}
 
 	private String getExpectedDeleteApprovedBenefitPointText() {
 		DecimalFormat format = new DecimalFormat();
 		format.setDecimalSeparatorAlwaysShown(false);
-		return MobilityXConstants.DELETE_REQUEST_APPROVED_BENEFIT_POINT_MESSAGE
-				.replace("benefit_name", approvedDeleteRequestBenefitName)
-				.replace("delete_request_points", String.valueOf(format.format(deleteRequestTotalPoints)));
-	}
-
-	private String getExpectedRemainingPointsToUseText() {
-		DecimalFormat format = new DecimalFormat();
-		format.setDecimalSeparatorAlwaysShown(false);
-		return MobilityXConstants.DELETE_REQUEST_REMAINING_POINTS_TO_USE_MESSAGE.replace("current_balance",
-				CoreFunctions.getPropertyFromConfig("CF_Transferee_AvailablePoints"));
+		return MobilityXConstants.APPROVE_DELETE_REQUEST_REMAINING_POINTS_TO_USE_MESSAGE
+				.replace("current_balance",
+						format.format(Double
+								.parseDouble(CoreFunctions.getPropertyFromConfig("CF_Transferee_AvailablePoints"))))
+				.replace("total_points", format.format(
+						Double.parseDouble(CoreFunctions.getPropertyFromConfig("CF_Transferee_TotalAvailablePoints"))));
 	}
 
 	public boolean verifyApprovedDeleteRequestRemovedFromList() {
@@ -997,34 +1019,36 @@ public class TransfereeSubmissions_DetailsPage extends Base {
 	private boolean verifyDeniedDeleteRequestEmailContents(String actualResultSubmissionDetails) {
 		String emailContent[] = actualResultSubmissionDetails.split(",");
 		String actualUserName = emailContent[0];
-		String actualEmailContentBenefitDetails[] = emailContent[1].split("</ul>");
-		String deleteDeniedBenefitPointDetails[] = actualEmailContentBenefitDetails[0].replace("<ul>", "")
-				.replace("<li>", "").replace("</ul>", "").split("</li>");
-		String actualDeleteDeniedBenefitPointText = deleteDeniedBenefitPointDetails[0].trim();
-		String actualDeleteCommentText = deleteDeniedBenefitPointDetails[1].replace("</li>", "").trim();
-		String[] actualRemainingPointsText = actualEmailContentBenefitDetails[2].split("If");
+		String actualEmailContentBenefitDetails = emailContent[1];
 		CoreFunctions.verifyText(actualUserName, CoreFunctions.getPropertyFromConfig("Transferee_firstName"));
-		CoreFunctions.verifyText(actualDeleteDeniedBenefitPointText, getExpectedDeleteDeniedBenefitPointText());
-		CoreFunctions.verifyText(actualDeleteCommentText, COREFLEXConstants.REQUESTS_DIALOG_COMMENT);
-		CoreFunctions.verifyText(actualRemainingPointsText[0].trim(),
-				getExpectedRemainingPointsToUseTextPostDeniedRequest());
+		CoreFunctions.verifyTextContains(actualEmailContentBenefitDetails,
+				getExpectedRemainingPointsToUseTextPostDeniedRequest(),
+				MobilityXConstants.DENIED_DELETE_REQUEST_REMAINING_POINTS_TO_USE);
+		CoreFunctions.verifyTextContains(actualEmailContentBenefitDetails,
+				COREFLEXConstants.DENY_DIALOG_COMMENT_SELECTION, MobilityXConstants.DENY_DIALOG_COMMENT);
+		verifyDeniedApprovedDeleteRequestEmailBenefits(actualEmailContentBenefitDetails);
 		return true;
 	}
 
-	private String getExpectedDeleteDeniedBenefitPointText() {
-		DecimalFormat format = new DecimalFormat();
-		format.setDecimalSeparatorAlwaysShown(false);
-		return MobilityXConstants.DELETE_REQUEST_DENIED_BENEFIT_POINT_MESSAGE
-				.replace("benefit_name", approvedDeleteRequestBenefitName)
-				.replace("delete_request_points", String.valueOf(format.format(deleteRequestTotalPoints)));
+	private void verifyDeniedApprovedDeleteRequestEmailBenefits(String actualEmailContentBenefitDetails) {
+		for (Benefit benefit : getBenefits(CoreFunctions.getPropertyFromConfig("CoreFlex_Policy_BenefitType"),
+				CoreFunctions.getPropertyFromConfig("CoreFlex_Policy_RequiredFor"))) {
+			if (benefit.getSelectBenefitOnFPTPage() && benefit.getDeleteBenefitOnMBBPage()) {
+				CoreFunctions.verifyTextContains(actualEmailContentBenefitDetails, benefit.getBenefitDisplayName(),
+						MobilityXConstants.DELETE_REQUEST_BENEFIT);
+			}
+		}
 	}
 
 	private String getExpectedRemainingPointsToUseTextPostDeniedRequest() {
 		DecimalFormat format = new DecimalFormat();
 		format.setDecimalSeparatorAlwaysShown(false);
-		return MobilityXConstants.DENIED_DELETE_REQUEST_REMAINING_POINTS_TO_USE_MESSAGE.replace("current_balance",
-				CoreFunctions.getPropertyFromConfig("CF_Transferee_AvailablePoints").replace("total_points",
-						CoreFunctions.getPropertyFromConfig("CF_Transferee_TotalAvailablePoints")));
+		return MobilityXConstants.DENIED_DELETE_REQUEST_REMAINING_POINTS_TO_USE_MESSAGE
+				.replace("current_balance",
+						format.format(Double
+								.parseDouble(CoreFunctions.getPropertyFromConfig("CF_Transferee_AvailablePoints"))))
+				.replace("total_points", format.format(
+						Double.parseDouble(CoreFunctions.getPropertyFromConfig("CF_Transferee_TotalAvailablePoints"))));
 	}
 
 	public boolean verifyRequestsDialogDisplayed() {
@@ -1270,4 +1294,156 @@ public class TransfereeSubmissions_DetailsPage extends Base {
 		return false;
 	}
 
+	public boolean verifyBenefitDeleteRequestEmailClient(String actionPerformed) {
+		try {
+			String host = "outlook.office365.com";
+			// Enter Your Email ID
+			String userName = "airesautomation@aires.com";
+			// Enter your email outlook password
+			String pwd = CoreConstants.AUTO_EMAIL_PWD;
+			// Enter expected From complete email address
+			String expFromUserName = "testrelonet@aires.com";
+
+			switch (actionPerformed) {
+			case COREFLEXConstants.APPROVE_REQUEST:
+				return verifyDeleteRequestApprovedEmailClient(host, userName, pwd, expFromUserName);
+			case COREFLEXConstants.DENY_REQUEST:
+				return verifyDeleteRequestDeniedEmailClient(host, userName, pwd, expFromUserName);
+			default:
+				Assert.fail(COREFLEXConstants.INVALID_OPTION);
+
+			}
+
+		} catch (Exception e) {
+			Reporter.addStepLog(
+					MessageFormat.format(COREFLEXConstants.EXCEPTION_OCCURED_WHILE_READING_CREDENTIALS_FROM_EMAIL,
+							CoreConstants.FAIL, e.getMessage()));
+		}
+		return false;
+	}
+
+	private boolean verifyDeleteRequestApprovedEmailClient(String host, String userName, String pwd,
+			String expFromUserName) {
+		try {
+			// Enter expected email subject
+			String expEmailSubject = "Mobility Benefit Delete Request has been Approved";
+			String actualResultSubmissionDetails = EmailUtil.searchEmailAndReturnResult(host, userName, pwd,
+					expFromUserName, expEmailSubject, MobilityXConstants.DELETE_REQUEST_APPROVED);
+			actualResultSubmissionDetails = removeHTMLTagsFromEmailContent(actualResultSubmissionDetails);
+			if (verifyApprovedDeleteRequestClientEmailContents(actualResultSubmissionDetails)) {
+				Reporter.addStepLog(MessageFormat.format(
+						COREFLEXConstants.SUCCESSFULLY_VERIFIED_MOBILITY_BENEFIT_DELETE_REQUEST_APPROVED_EMAIL_CONTENTS,
+						CoreConstants.PASS));
+				return true;
+			}
+		} catch (Exception e) {
+			Reporter.addStepLog(MessageFormat.format(
+					COREFLEXConstants.EXCEPTION_OCCURED_WHILE_READING_APPROVED_DELETE_REQUEST_EMAIL, CoreConstants.FAIL,
+					e.getMessage()));
+		}
+		return false;
+	}
+
+	private boolean verifyApprovedDeleteRequestClientEmailContents(String actualResultSubmissionDetails) {
+		CoreFlex_LoginInfo _loginInfo = FileReaderManager.getInstance().getCoreFlexJsonReader()
+				.getLoginInfoByEnviroment((CoreFunctions.getPropertyFromConfig("envt").toLowerCase()));
+		String emailContent[] = actualResultSubmissionDetails.split(",");
+		String actualUserName = emailContent[0];
+		String actualEmailContentBenefitDetails = emailContent[1];
+		CoreFunctions.verifyText(actualUserName, (_loginInfo.details.mxClientUserProfileName).split(" ")[0]);
+		CoreFunctions.verifyTextContains(actualEmailContentBenefitDetails,
+				COREFLEXConstants.APPROVED_DELETE_REQUEST_EXPECTED_TEXT
+						.replace("TransfereeFN", CoreFunctions.getPropertyFromConfig("Transferee_firstName"))
+						.replace("TransfereeLN", CoreFunctions.getPropertyFromConfig("Transferee_lastName")),
+				MobilityXConstants.APPROVED_DELETE_REQUEST_TEXT);
+		CoreFunctions.verifyTextContains(actualEmailContentBenefitDetails,
+				getExpectedClientDeleteApprovedBenefitPointText(),
+				MobilityXConstants.APPROVED_DELETE_REQUEST_REMAINING_POINTS_TO_USE);
+		CoreFunctions.verifyTextContains(actualEmailContentBenefitDetails, COREFLEXConstants.REQUESTS_DIALOG_COMMENT,
+				MobilityXConstants.APPROVE_DIALOG_COMMENT);
+		verifyDeniedApprovedDeleteRequestEmailBenefits(actualEmailContentBenefitDetails);
+		return true;
+	}
+
+	private String getExpectedClientDeleteApprovedBenefitPointText() {
+		DecimalFormat format = new DecimalFormat();
+		format.setDecimalSeparatorAlwaysShown(false);
+		return MobilityXConstants.APPROVE_DELETE_REQUEST_REMAINING_POINTS_TO_USE_MESSAGE_CLIENT
+				.replace("current_balance",
+						format.format(Double
+								.parseDouble(CoreFunctions.getPropertyFromConfig("CF_Transferee_AvailablePoints"))))
+				.replace("total_points",
+						format.format(Double.parseDouble(
+								CoreFunctions.getPropertyFromConfig("CF_Transferee_TotalAvailablePoints"))))
+				.replace("TransfereeFN", CoreFunctions.getPropertyFromConfig("Transferee_firstName"))
+				.replace("TransfereeLN", CoreFunctions.getPropertyFromConfig("Transferee_lastName"));
+	}
+
+	/**
+	 * Method to verify Delete request Denied Email Client Contents -- EmailSubject,
+	 * TransfereeName Requested Delete Operation, Benefits Name, Deny Request
+	 * Comment added by MSPEC and Available/Total points
+	 * 
+	 * @param host
+	 * @param userName
+	 * @param pwd
+	 * @param expFromUserName
+	 * @return
+	 */
+	private boolean verifyDeleteRequestDeniedEmailClient(String host, String userName, String pwd,
+			String expFromUserName) {
+		try {
+			// Enter expected email subject
+			String expEmailSubject = "Mobility Benefit Delete Request has been Denied";
+			String actualResultSubmissionDetails = EmailUtil.searchEmailAndReturnResult(host, userName, pwd,
+					expFromUserName, expEmailSubject, MobilityXConstants.DELETE_REQUEST_DENIED);
+			actualResultSubmissionDetails = removeHTMLTagsFromEmailContent(actualResultSubmissionDetails);
+			if (verifyDeniedDeleteRequestClientEmailContents(actualResultSubmissionDetails)) {
+				Reporter.addStepLog(MessageFormat.format(
+						COREFLEXConstants.SUCCESSFULLY_VERIFIED_MOBILITY_BENEFIT_DELETE_REQUEST_DENIED_EMAIL_CONTENTS,
+						CoreConstants.PASS));
+				return true;
+			}
+		} catch (Exception e) {
+			Reporter.addStepLog(
+					MessageFormat.format(COREFLEXConstants.EXCEPTION_OCCURED_WHILE_READING_DENIED_DELETE_REQUEST_EMAIL,
+							CoreConstants.FAIL, e.getMessage()));
+		}
+		return false;
+	}
+
+	private boolean verifyDeniedDeleteRequestClientEmailContents(String actualResultSubmissionDetails) {
+		CoreFlex_LoginInfo _loginInfo = FileReaderManager.getInstance().getCoreFlexJsonReader()
+				.getLoginInfoByEnviroment((CoreFunctions.getPropertyFromConfig("envt").toLowerCase()));
+		String emailContent[] = actualResultSubmissionDetails.split(",");
+		String actualUserName = emailContent[0];
+		String actualEmailContentBenefitDetails = emailContent[1];
+		CoreFunctions.verifyText(actualUserName, (_loginInfo.details.mxClientUserProfileName).split(" ")[0]);
+		CoreFunctions.verifyTextContains(actualEmailContentBenefitDetails,
+				COREFLEXConstants.DENIED_DELETE_REQUEST_EXPECTED_TEXT
+						.replace("TransfereeFN", CoreFunctions.getPropertyFromConfig("Transferee_firstName"))
+						.replace("TransfereeLN", CoreFunctions.getPropertyFromConfig("Transferee_lastName")),
+				MobilityXConstants.DENIED_DELETE_REQUEST_TEXT);
+		CoreFunctions.verifyTextContains(actualEmailContentBenefitDetails,
+				getExpectedClientDeleteDeniedBenefitPointText(),
+				MobilityXConstants.DENIED_DELETE_REQUEST_REMAINING_POINTS_TO_USE);
+		CoreFunctions.verifyTextContains(actualEmailContentBenefitDetails,
+				COREFLEXConstants.DENY_DIALOG_COMMENT_SELECTION, MobilityXConstants.DENY_DIALOG_COMMENT);
+		verifyDeniedApprovedDeleteRequestEmailBenefits(actualEmailContentBenefitDetails);
+		return true;
+	}
+	
+	private String getExpectedClientDeleteDeniedBenefitPointText() {
+		DecimalFormat format = new DecimalFormat();
+		format.setDecimalSeparatorAlwaysShown(false);
+		return MobilityXConstants.DENIED_DELETE_REQUEST_REMAINING_POINTS_TO_USE_MESSAGE_CLIENT
+				.replace("current_balance",
+						format.format(Double
+								.parseDouble(CoreFunctions.getPropertyFromConfig("CF_Transferee_AvailablePoints"))))
+				.replace("total_points",
+						format.format(Double.parseDouble(
+								CoreFunctions.getPropertyFromConfig("CF_Transferee_TotalAvailablePoints"))))
+				.replace("TransfereeFN", CoreFunctions.getPropertyFromConfig("Transferee_firstName"))
+				.replace("TransfereeLN", CoreFunctions.getPropertyFromConfig("Transferee_lastName"));
+	}
 }

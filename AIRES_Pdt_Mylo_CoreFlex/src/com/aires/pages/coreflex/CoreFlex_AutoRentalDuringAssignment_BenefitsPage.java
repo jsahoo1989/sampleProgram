@@ -136,7 +136,7 @@ public class CoreFlex_AutoRentalDuringAssignment_BenefitsPage extends BenefitPag
 	@FindBy(how = How.CSS, using = "ng-select[formcontrolname='carTypeCode'] span[class*='ng-value-label']")
 	private WebElement _selectRentalCarTypeSelectedValue;
 
-	@FindBy(how = How.CSS, using = "ng-select[formcontrolname='carTypeCode'] span.ng-option-label")
+	@FindBy(how = How.CSS, using = "ng-dropdown-panel span[class*='ng-option-label']")
 	private List<WebElement> _selectRentalCarTypeOptions;
 
 	@FindBy(how = How.CSS, using = "input[formcontrolname='carTypeOther']")
@@ -300,9 +300,9 @@ public class CoreFlex_AutoRentalDuringAssignment_BenefitsPage extends BenefitPag
 				CoreFunctions.selectItemInListByText(driver, _leftNavigationTitleList,
 						COREFLEXConstants.GENERAL_INFORMATION);
 				break;
-			case COREFLEXConstants.FLEX_POLICY_SETUP:
+			case COREFLEXConstants.POINT_POLICY_SETUP:
 				CoreFunctions.selectItemInListByText(driver, _leftNavigationTitleList,
-						COREFLEXConstants.FLEX_POLICY_SETUP);
+						COREFLEXConstants.POINT_POLICY_SETUP);
 				break;
 			case COREFLEXConstants.POLICY_BENEFIT_CATEGORIES:
 				CoreFunctions.selectItemInListByText(driver, _leftNavigationTitleList,

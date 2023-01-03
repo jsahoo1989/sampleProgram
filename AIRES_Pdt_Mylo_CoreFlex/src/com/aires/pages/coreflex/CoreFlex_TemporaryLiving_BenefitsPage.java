@@ -127,7 +127,7 @@ public class CoreFlex_TemporaryLiving_BenefitsPage extends BenefitPage {
 	private WebElement _inputDurationDays;
 
 	// Transportation Type Dropdown
-	@FindBy(how = How.XPATH, using = "//ng-select[@formcontrolname='tempLivingTransportTypeList']//div[@role='option']")
+	@FindBy(how = How.CSS, using = "ng-dropdown-panel span[class*='ng-option-label']")
 	private List<WebElement> _selectTransportationTypeList;
 
 	// Transportation Type Field
@@ -167,7 +167,7 @@ public class CoreFlex_TemporaryLiving_BenefitsPage extends BenefitPage {
 	private WebElement _inputReimbursedBy;
 
 	// Max. Amount Dropdown
-	@FindBy(how = How.CSS, using = "div[class='collapse show'] ng-select[formcontrolname='maxAmountPerNightCode'] div[role='option']")
+	@FindBy(how = How.CSS, using = "ng-dropdown-panel span[class*='ng-option-label']")
 	private List<WebElement> _selectMaxAmountList;
 
 	// Max. Amount Select Field
@@ -179,7 +179,7 @@ public class CoreFlex_TemporaryLiving_BenefitsPage extends BenefitPage {
 	private WebElement _selectMaxAmountSelectedValue;
 
 	// Max. Amount Dropdown
-	@FindBy(how = How.CSS, using = "div[class='collapse show'] ng-select[formcontrolname='maxAmountCode'] div[role='option']")
+	@FindBy(how = How.CSS, using = "ng-dropdown-panel span[class*='ng-option-label']")
 	private List<WebElement> _selectMaxAmountMealsList;
 
 	// Max. Amount Select Field
@@ -342,9 +342,9 @@ public class CoreFlex_TemporaryLiving_BenefitsPage extends BenefitPage {
 				CoreFunctions.selectItemInListByText(driver, _leftNavigationTitleList,
 						COREFLEXConstants.GENERAL_INFORMATION);
 				break;
-			case COREFLEXConstants.FLEX_POLICY_SETUP:
+			case COREFLEXConstants.POINT_POLICY_SETUP:
 				CoreFunctions.selectItemInListByText(driver, _leftNavigationTitleList,
-						COREFLEXConstants.FLEX_POLICY_SETUP);
+						COREFLEXConstants.POINT_POLICY_SETUP);
 				break;
 			case COREFLEXConstants.POLICY_BENEFIT_CATEGORIES:
 				CoreFunctions.selectItemInListByText(driver, _leftNavigationTitleList,

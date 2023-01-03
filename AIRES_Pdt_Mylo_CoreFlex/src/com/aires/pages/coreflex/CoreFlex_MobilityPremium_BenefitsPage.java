@@ -15,20 +15,17 @@ import com.aires.businessrules.BusinessFunctions;
 import com.aires.businessrules.CoreFunctions;
 import com.aires.businessrules.constants.COREFLEXConstants;
 import com.aires.businessrules.constants.CoreConstants;
-import com.aires.businessrules.constants.IRISConstants;
 import com.aires.businessrules.constants.PDTConstants;
-import com.aires.iris.helpers.Helpers;
 import com.aires.managers.FileReaderManager;
 import com.aires.testdatatypes.coreflex.Benefit;
 import com.aires.testdatatypes.coreflex.CoreFlex_AllowancesBenefitsData;
-import com.aires.utilities.Log;
 import com.hp.lft.sdk.java.Table;
 import com.hp.lft.sdk.java.Window;
 import com.vimalselvam.cucumber.listener.Reporter;
 
-public class CoreFlex_GoodsServicesAllowance_BenefitsPage extends BenefitPage {
+public class CoreFlex_MobilityPremium_BenefitsPage extends BenefitPage {
 
-	public CoreFlex_GoodsServicesAllowance_BenefitsPage(WebDriver driver) {
+	public CoreFlex_MobilityPremium_BenefitsPage(WebDriver driver) {
 		super(driver);
 	}
 
@@ -111,8 +108,8 @@ public class CoreFlex_GoodsServicesAllowance_BenefitsPage extends BenefitPage {
 	private List<WebElement> _subBenefitList;
 
 	// SubBenefit Collapsable Secation
-	@FindBy(how = How.XPATH, using = "//h5[contains(text(),'Goods & Services Allowance')]/ancestor::a[contains(@href,'collapse')]")
-	private WebElement _formGoodsServicesAllowance;
+	@FindBy(how = How.XPATH, using = "//h5[contains(text(),'Mobility Premium')]/ancestor::a[contains(@href,'collapse')]")
+	private WebElement _formMobilityPremium;
 
 	// Calculation Method Select Field
 	@FindBy(how = How.CSS, using = "ng-select[formcontrolname='calculationMethod']")
@@ -129,14 +126,14 @@ public class CoreFlex_GoodsServicesAllowance_BenefitsPage extends BenefitPage {
 	// Radio Button List
 	@FindBy(how = How.XPATH, using = " //div[@class='collapse show']//label[@class='form-check-label']")
 	private List<WebElement> _radioBtnCandidateSelection;
-	
-	// Gross Up - Radio Button Selection
-	@FindBy(how = How.XPATH, using = "//div[@class='collapse show']//input[@formcontrolname='grossedUpInd']/parent::label[@class='form-check-label']")
-	private List<WebElement> _radioBtnGrossUp;
 
-	// Calculation Method Other - Input field
-	@FindBy(how = How.CSS, using = "input[formcontrolname='calculationMethodOther']")
-	private WebElement _inputCalculationMethodOther;
+	// Reimbursed By Text Field
+	@FindBy(how = How.CSS, using = "input[formcontrolname='paidByOther']")
+	private WebElement _inputReimbursedBy;
+
+	// Benefit Comment Text Area
+	@FindBy(how = How.CSS, using = "textarea[formcontrolname='benefitComment']")
+	private WebElement _txtAreaComment;
 
 	// Max Amount Input Field
 	@FindBy(how = How.CSS, using = "input[formcontrolname='maxAmount']")
@@ -153,14 +150,6 @@ public class CoreFlex_GoodsServicesAllowance_BenefitsPage extends BenefitPage {
 	// Currency Select Field Selected Value
 	@FindBy(how = How.CSS, using = "ng-select[formcontrolname='currencyCode'] span[class*='ng-value-label']")
 	private WebElement _selectCurrencySelectedValue;
-
-	// Reimbursed By Text Field
-	@FindBy(how = How.CSS, using = "input[formcontrolname='paidByOther']")
-	private WebElement _inputReimbursedByOther;
-
-	// Benefit Comment Text Area
-	@FindBy(how = How.CSS, using = "textarea[formcontrolname='benefitComment']")
-	private WebElement _txtAreaComment;
 
 	// Frequency Select Field
 	@FindBy(how = How.CSS, using = "ng-select[formcontrolname='frequencyCode']")
@@ -235,7 +224,7 @@ public class CoreFlex_GoodsServicesAllowance_BenefitsPage extends BenefitPage {
 	private List<WebElement> _radioReimbursedByButtonList;
 
 	// Flex Policy Setup Page Header
-	@FindBy(how = How.XPATH, using = "//h4[@class='card-title'][contains(text(),'Goods & Services Allowance')]")
+	@FindBy(how = How.XPATH, using = "//h4[@class='card-title'][contains(text(),'Mobility Premium')]")
 	private WebElement _headerPageName;
 
 	// If Applicable Text
@@ -245,7 +234,7 @@ public class CoreFlex_GoodsServicesAllowance_BenefitsPage extends BenefitPage {
 	/*********************************************************************/
 
 	CoreFlex_AllowancesBenefitsData allowancesBenefitData = FileReaderManager.getInstance().getCoreFlexJsonReader()
-			.getAllowanceBenefitDataList(COREFLEXConstants.GOODS_SERVICES_ALLOWANCE);
+			.getAllowanceBenefitDataList(COREFLEXConstants.MOBILITY_PREMIUM);
 
 	public static final List<Benefit> coreBenefits = FileReaderManager.getInstance().getCoreFlexJsonReader()
 			.getMXTransfereeCoreBenefitDetails();
@@ -259,8 +248,8 @@ public class CoreFlex_GoodsServicesAllowance_BenefitsPage extends BenefitPage {
 	 * @return
 	 */
 	public boolean verifyPageNavigation(String expectedPageName) {
-		return CoreFunctions.verifyElementOnPage(driver, _headerPage, COREFLEXConstants.GOODS_SERVICES_ALLOWANCE, expectedPageName,
-				expectedPageName, true);
+		return CoreFunctions.verifyElementOnPage(driver, _headerPage, COREFLEXConstants.MOBILITY_PREMIUM,
+				expectedPageName, expectedPageName, true);
 	}
 
 	/**
@@ -331,7 +320,7 @@ public class CoreFlex_GoodsServicesAllowance_BenefitsPage extends BenefitPage {
 			String multipleBenefitSelection, String flexPoints, String benefitDisplayName,
 			String benefitAllowanceAmount, String benefitDescription, String paymentOption) {
 		CoreFunctions.explicitWaitTillElementVisibility(driver, _headerPageName,
-				COREFLEXConstants.GOODS_SERVICES_ALLOWANCE_BENEFITS_PAGE);
+				COREFLEXConstants.MOBILITY_PREMIUM_BENEFITS_PAGE);
 		if (benefitType.equals(COREFLEXConstants.BOTH)) {
 			selectBenefitTypeAndFillMandatoryFields(benefitType, multipleBenefitSelection, flexPoints,
 					benefitDisplayName, benefitAllowanceAmount, benefitDescription, paymentOption);
@@ -377,9 +366,9 @@ public class CoreFlex_GoodsServicesAllowance_BenefitsPage extends BenefitPage {
 				fillSubBenefit(subBenefit);
 			} else {
 				Reporter.addStepLog(MessageFormat.format(COREFLEXConstants.SUB_BENEFIT_FORM_NOT_DISPLAYED,
-						CoreConstants.FAIL, subBenefit, COREFLEXConstants.GOODS_SERVICES_ALLOWANCE_BENEFITS_PAGE));
+						CoreConstants.FAIL, subBenefit, COREFLEXConstants.MOBILITY_PREMIUM_BENEFITS_PAGE));
 				throw new RuntimeException(MessageFormat.format(COREFLEXConstants.SUB_BENEFIT_FORM_NOT_DISPLAYED,
-						CoreConstants.FAIL, subBenefit, COREFLEXConstants.GOODS_SERVICES_ALLOWANCE_BENEFITS_PAGE));
+						CoreConstants.FAIL, subBenefit, COREFLEXConstants.MOBILITY_PREMIUM_BENEFITS_PAGE));
 			}
 		}
 
@@ -392,9 +381,9 @@ public class CoreFlex_GoodsServicesAllowance_BenefitsPage extends BenefitPage {
 	 */
 	public void fillSubBenefit(String subBenefit) {
 		switch (subBenefit) {
-		case COREFLEXConstants.GOODS_SERVICES_ALLOWANCE:
-			expandSubBenefitIfCollapsed(getElementByName(COREFLEXConstants.GOODS_SERVICES_ALLOWANCE));
-			fillGoodsServicesAllowanceSubBenefitForm(subBenefit);
+		case COREFLEXConstants.MOBILITY_PREMIUM:
+			expandSubBenefitIfCollapsed(getElementByName(COREFLEXConstants.MOBILITY_PREMIUM));
+			fillMobilityPremiumSubBenefitForm();
 			break;
 		default:
 			Assert.fail(MessageFormat.format(COREFLEXConstants.ELEMENT_NOT_FOUND, CoreConstants.FAIL));
@@ -404,38 +393,37 @@ public class CoreFlex_GoodsServicesAllowance_BenefitsPage extends BenefitPage {
 	/**
 	 * Method to Fill SubBenefit Form
 	 */
-	private void fillGoodsServicesAllowanceSubBenefitForm(String subBenefit) {
+	private void fillMobilityPremiumSubBenefitForm() {
 		try {
 			CoreFunctions.explicitWaitTillElementBecomesClickable(driver, _selectCalculationMethod,
 					COREFLEXConstants.CALCULATION_METHOD);
 			CoreFunctions.clickElement(driver, _selectCalculationMethod);
-			Log.info("Calculation Method : "+allowancesBenefitData.goodsAndServicesAllowance.calculationMethod);
 			CoreFunctions.selectItemInListByText(driver, _selectCalculationMethodOptions,
-					allowancesBenefitData.goodsAndServicesAllowance.calculationMethod, true, COREFLEXConstants.CALCULATION_METHOD);
-			if (allowancesBenefitData.goodsAndServicesAllowance.calculationMethod.equalsIgnoreCase(COREFLEXConstants.FLAT_AMOUNT)) {
+					allowancesBenefitData.mobilityPremium.calculationMethod, true,
+					COREFLEXConstants.CALCULATION_METHOD);
+			if (allowancesBenefitData.mobilityPremium.calculationMethod
+					.equalsIgnoreCase(COREFLEXConstants.FLAT_AMOUNT)) {
 				CoreFunctions.clearAndSetTextUsingKeys(driver, _inputMaxAmount,
-						allowancesBenefitData.goodsAndServicesAllowance.maxAmountIfApplicable, COREFLEXConstants.MAX_AMOUNT);
+						allowancesBenefitData.mobilityPremium.maxAmount, COREFLEXConstants.MAX_AMOUNT);
 				CoreFunctions.clickElement(driver, _selectCurrency);
 				CoreFunctions.selectItemInListByText(driver, _selectCurrencyOptions,
-						allowancesBenefitData.goodsAndServicesAllowance.currency, true, COREFLEXConstants.CURRENCY);
-				CoreFunctions.clickElement(driver, _selectFrequency);
-				CoreFunctions.selectItemInListByText(driver, _selectFrequencyOptions,
-						allowancesBenefitData.goodsAndServicesAllowance.frequency, true, COREFLEXConstants.FREQUENCY);
+						allowancesBenefitData.mobilityPremium.currency, true, COREFLEXConstants.CURRENCY);
 			}
-			CoreFunctions.selectItemInListByText(driver, _radioBtnGrossUp,
-					allowancesBenefitData.goodsAndServicesAllowance.grossUp, true, COREFLEXConstants.GROSS_UP);
+			CoreFunctions.clickElement(driver, _selectFrequency);
+			CoreFunctions.selectItemInListByText(driver, _selectFrequencyOptions,
+					allowancesBenefitData.mobilityPremium.frequency, true, COREFLEXConstants.FREQUENCY);
 			CoreFunctions.selectItemInListByText(driver, _radioBtnCandidateSelection,
-					allowancesBenefitData.goodsAndServicesAllowance.reimbursedBy, true, COREFLEXConstants.REIMBURSED_BY);
-			if (allowancesBenefitData.goodsAndServicesAllowance.reimbursedBy.equalsIgnoreCase(COREFLEXConstants.OTHER)) {
-				CoreFunctions.clearAndSetTextUsingKeys(driver, _inputReimbursedByOther,
-						allowancesBenefitData.goodsAndServicesAllowance.reimbursedByOther, COREFLEXConstants.REIMBURSED_BY_OTHER);
+					allowancesBenefitData.mobilityPremium.grossUp, true, COREFLEXConstants.GROSS_UP);
+			CoreFunctions.selectItemInListByText(driver, _radioBtnCandidateSelection,
+					allowancesBenefitData.mobilityPremium.reimbursedBy, true, COREFLEXConstants.REIMBURSED_BY);
+			if (allowancesBenefitData.mobilityPremium.reimbursedBy.equalsIgnoreCase(COREFLEXConstants.OTHER)) {
+				CoreFunctions.clearAndSetTextUsingKeys(driver, _inputReimbursedBy,
+						allowancesBenefitData.mobilityPremium.reimbursedByOther, COREFLEXConstants.REIMBURSED_BY_OTHER);
 			}
-			CoreFunctions.clearAndSetTextUsingKeys(driver, _txtAreaComment, allowancesBenefitData.goodsAndServicesAllowance.comment,
-					COREFLEXConstants.COMMENT);
+			CoreFunctions.clearAndSetTextUsingKeys(driver, _txtAreaComment,
+					allowancesBenefitData.mobilityPremium.comment, COREFLEXConstants.COMMENT);
 		} catch (Exception e) {
-			Reporter.addStepLog(
-					MessageFormat.format(COREFLEXConstants.EXCEPTION_OCCURED_WHILE_FILLING_SUB_BENEFIT_FORM,
-							CoreConstants.FAIL, e.getMessage(),subBenefit));
+			Assert.fail(COREFLEXConstants.FAILED_TO_FILL_MOBILITY_PREMIUM_SUB_BENEFITS_FORM);
 		}
 	}
 
@@ -459,8 +447,8 @@ public class CoreFlex_GoodsServicesAllowance_BenefitsPage extends BenefitPage {
 	public WebElement getElementByName(String elementName) {
 		WebElement element = null;
 		switch (elementName) {
-		case COREFLEXConstants.GOODS_SERVICES_ALLOWANCE:
-			element = _formGoodsServicesAllowance;
+		case COREFLEXConstants.MOBILITY_PREMIUM:
+			element = _formMobilityPremium;
 			break;
 		default:
 			Assert.fail(MessageFormat.format(COREFLEXConstants.ELEMENT_NOT_FOUND, CoreConstants.FAIL));
@@ -481,13 +469,13 @@ public class CoreFlex_GoodsServicesAllowance_BenefitsPage extends BenefitPage {
 	public void selectBenefitTypeAndFillMandatoryFields(String benefitType, String multipleBenefitSelection,
 			String flexPoints, String benefitDisplayName, String benefitAllowanceAmount, String benefitDescription,
 			String paymentOption) {
-		Benefit goodsServicesAllowanceBenefit = coreBenefits.stream()
-				.filter(b -> b.getBenefitType().equals(COREFLEXConstants.GOODS_SERVICES_ALLOWANCE)).findAny().orElse(null);
+		Benefit mobilityPremiumBenefit = coreBenefits.stream()
+				.filter(b -> b.getBenefitType().equals(COREFLEXConstants.MOBILITY_PREMIUM)).findAny().orElse(null);
 		switch (benefitType) {
 		case COREFLEXConstants.CORE:
 			CoreFunctions.clickElement(driver, _textCore);
-			fillManadatoryDetails(benefitType, multipleBenefitSelection, goodsServicesAllowanceBenefit.getBenefitDisplayName(),
-					goodsServicesAllowanceBenefit.getBenefitAmount(), goodsServicesAllowanceBenefit.getBenefitDesc(), paymentOption);
+			fillManadatoryDetails(benefitType, multipleBenefitSelection, mobilityPremiumBenefit.getBenefitDisplayName(),
+					mobilityPremiumBenefit.getBenefitAmount(), mobilityPremiumBenefit.getBenefitDesc(), paymentOption);
 			break;
 		case COREFLEXConstants.FLEX:
 			CoreFunctions.clickElement(driver, _textFlex);
@@ -498,8 +486,8 @@ public class CoreFlex_GoodsServicesAllowance_BenefitsPage extends BenefitPage {
 			break;
 		case COREFLEXConstants.CORE_BENEFITS:
 			CoreFunctions.clickElement(driver, _textCoreBenefits);
-			fillManadatoryDetails(benefitType, multipleBenefitSelection, goodsServicesAllowanceBenefit.getBenefitDisplayName(),
-					goodsServicesAllowanceBenefit.getBenefitAmount(), goodsServicesAllowanceBenefit.getBenefitDesc(), paymentOption);
+			fillManadatoryDetails(benefitType, multipleBenefitSelection, mobilityPremiumBenefit.getBenefitDisplayName(),
+					mobilityPremiumBenefit.getBenefitAmount(), mobilityPremiumBenefit.getBenefitDesc(), paymentOption);
 			break;
 		case COREFLEXConstants.FLEX_BENEFITS:
 			CoreFunctions.clickElement(driver, _textFlexBenefits);
@@ -541,7 +529,7 @@ public class CoreFlex_GoodsServicesAllowance_BenefitsPage extends BenefitPage {
 		CoreFunctions.clearAndSetTextUsingKeys(driver, _textAreaBenefitLongDescription, benefitDescription,
 				COREFLEXConstants.BENEFIT_LONG_DESCRIPTION);
 	}
-	
+
 	public boolean verifyAddedBenefitsAndSubBenefitDetails(String benefitType, String subBenefitNames,
 			String multipleBenefitSelection, String flexPoints, String benefitDisplayName,
 			String benefitAllowanceAmount, String benefitDescription, String paymentOption,
@@ -566,13 +554,13 @@ public class CoreFlex_GoodsServicesAllowance_BenefitsPage extends BenefitPage {
 	private void verifyBenefitsMandatoryDetails(String benefitType, String multipleBenefitSelection, String flexPoints,
 			String benefitDisplayName, String benefitAllowanceAmount, String benefitDescription, String paymentOption,
 			String airesManagedService) {
-		Benefit goodsServicesAllowanceBenefit = coreBenefits.stream()
-				.filter(b -> b.getBenefitType().equals(COREFLEXConstants.GOODS_SERVICES_ALLOWANCE)).findAny().orElse(null);
+		Benefit mobilityPremiumBenefit = coreBenefits.stream()
+				.filter(b -> b.getBenefitType().equals(COREFLEXConstants.MOBILITY_PREMIUM)).findAny().orElse(null);
 		switch (benefitType) {
 		case COREFLEXConstants.CORE:
 			CoreFunctions.clickElement(driver, _textCore);
-			verifyManadatoryDetails(benefitType, multipleBenefitSelection, goodsServicesAllowanceBenefit.getBenefitDisplayName(),
-					goodsServicesAllowanceBenefit.getBenefitAmount(), goodsServicesAllowanceBenefit.getBenefitDesc(), paymentOption,
+			verifyManadatoryDetails(benefitType, multipleBenefitSelection, mobilityPremiumBenefit.getBenefitDisplayName(),
+					mobilityPremiumBenefit.getBenefitAmount(), mobilityPremiumBenefit.getBenefitDesc(), paymentOption,
 					airesManagedService);
 			break;
 		case COREFLEXConstants.FLEX:
@@ -585,8 +573,8 @@ public class CoreFlex_GoodsServicesAllowance_BenefitsPage extends BenefitPage {
 			break;
 		case COREFLEXConstants.CORE_BENEFITS:
 			CoreFunctions.clickElement(driver, _textCoreBenefits);
-			verifyManadatoryDetails(benefitType, multipleBenefitSelection, goodsServicesAllowanceBenefit.getBenefitDisplayName(),
-					goodsServicesAllowanceBenefit.getBenefitAmount(), goodsServicesAllowanceBenefit.getBenefitDesc(), paymentOption,
+			verifyManadatoryDetails(benefitType, multipleBenefitSelection, mobilityPremiumBenefit.getBenefitDisplayName(),
+					mobilityPremiumBenefit.getBenefitAmount(), mobilityPremiumBenefit.getBenefitDesc(), paymentOption,
 					airesManagedService);
 			break;
 		case COREFLEXConstants.FLEX_BENEFITS:
@@ -630,15 +618,15 @@ public class CoreFlex_GoodsServicesAllowance_BenefitsPage extends BenefitPage {
 	}
 
 	/**
-	 * Method to Expand and call verifyGoods&ServicesAllowanceSubBenefitForm method
+	 * Method to Expand and call verifyMobilityPremiumSubBenefitForm method
 	 * 
 	 * @param subBenefit
 	 */
 	private void verifySubBenefitDetails(String subBenefit) {
 		switch (subBenefit) {
-		case COREFLEXConstants.GOODS_SERVICES_ALLOWANCE:
-			expandSubBenefitIfCollapsed(getElementByName(COREFLEXConstants.GOODS_SERVICES_ALLOWANCE));
-			verifyGoodsServicesAllowanceSubBenefitForm();
+		case COREFLEXConstants.MOBILITY_PREMIUM:
+			expandSubBenefitIfCollapsed(getElementByName(COREFLEXConstants.MOBILITY_PREMIUM));
+			verifyMobilityPremiumSubBenefitForm();
 			break;
 		default:
 			Assert.fail(MessageFormat.format(COREFLEXConstants.ELEMENT_NOT_FOUND, CoreConstants.FAIL));
@@ -648,34 +636,35 @@ public class CoreFlex_GoodsServicesAllowance_BenefitsPage extends BenefitPage {
 	/**
 	 * Method to Verify SubBenefit Form
 	 */
-	private void verifyGoodsServicesAllowanceSubBenefitForm() {
+	private void verifyMobilityPremiumSubBenefitForm() {
 		try {
 			CoreFunctions.verifyText(driver, _selectCalculationMethodSelectedValue,
-					allowancesBenefitData.goodsAndServicesAllowance.calculationMethod, COREFLEXConstants.CALCULATION_METHOD);
-			if (allowancesBenefitData.goodsAndServicesAllowance.calculationMethod.equalsIgnoreCase(COREFLEXConstants.FLAT_AMOUNT)) {
+					allowancesBenefitData.mobilityPremium.calculationMethod, COREFLEXConstants.CALCULATION_METHOD);
+			if (allowancesBenefitData.mobilityPremium.calculationMethod
+					.equalsIgnoreCase(COREFLEXConstants.FLAT_AMOUNT)) {
 				CoreFunctions.verifyText(_inputMaxAmount.getDomProperty("value"),
-						allowancesBenefitData.goodsAndServicesAllowance.maxAmountIfApplicable, COREFLEXConstants.MAX_AMOUNT);
+						allowancesBenefitData.mobilityPremium.maxAmount, COREFLEXConstants.MAX_AMOUNT);
 				CoreFunctions.highlightObject(driver, _inputMaxAmount);
-				CoreFunctions.verifyText(driver, _selectCurrencySelectedValue, allowancesBenefitData.goodsAndServicesAllowance.currency,
-						COREFLEXConstants.CURRENCY);				
+				CoreFunctions.verifyText(driver, _selectCurrencySelectedValue,
+						allowancesBenefitData.mobilityPremium.currency, COREFLEXConstants.CURRENCY);
 			}
-			CoreFunctions.verifyText(driver, _selectFrequencySelectedValue, allowancesBenefitData.goodsAndServicesAllowance.frequency,
-					COREFLEXConstants.FREQUENCY);
+			CoreFunctions.verifyText(driver, _selectFrequencySelectedValue,
+					allowancesBenefitData.mobilityPremium.frequency, COREFLEXConstants.FREQUENCY);
 			CoreFunctions.verifyRadioButtonSelection(driver, _radioGrossUpLabelList, _radioGrossUpButtonList,
-					allowancesBenefitData.goodsAndServicesAllowance.grossUp, COREFLEXConstants.GROSS_UP);
+					allowancesBenefitData.mobilityPremium.grossUp, COREFLEXConstants.GROSS_UP);
 			CoreFunctions.verifyRadioButtonSelection(driver, _radioReimbursedByLabelList, _radioReimbursedByButtonList,
-					allowancesBenefitData.goodsAndServicesAllowance.reimbursedBy, COREFLEXConstants.REIMBURSED_BY);
-			if (allowancesBenefitData.goodsAndServicesAllowance.reimbursedBy.equalsIgnoreCase(COREFLEXConstants.OTHER)) {
-				CoreFunctions.verifyText(_inputReimbursedByOther.getDomProperty("value"),
-						allowancesBenefitData.goodsAndServicesAllowance.reimbursedByOther, COREFLEXConstants.REIMBURSED_BY_OTHER);
-				CoreFunctions.highlightObject(driver, _inputReimbursedByOther);
+					allowancesBenefitData.mobilityPremium.reimbursedBy, COREFLEXConstants.REIMBURSED_BY);
+			if (allowancesBenefitData.mobilityPremium.reimbursedBy.equalsIgnoreCase(COREFLEXConstants.OTHER)) {
+				CoreFunctions.verifyText(_inputReimbursedBy.getDomProperty("value"),
+						allowancesBenefitData.mobilityPremium.reimbursedByOther, COREFLEXConstants.REIMBURSED_BY_OTHER);
+				CoreFunctions.highlightObject(driver, _inputReimbursedBy);
 			}
-			CoreFunctions.verifyText(_txtAreaComment.getDomProperty("value"), allowancesBenefitData.goodsAndServicesAllowance.comment,
-					COREFLEXConstants.COMMENT);
+			CoreFunctions.verifyText(_txtAreaComment.getDomProperty("value"),
+					allowancesBenefitData.mobilityPremium.comment, COREFLEXConstants.COMMENT);
 			CoreFunctions.highlightObject(driver, _txtAreaComment);
 
 		} catch (Exception e) {
-			Assert.fail(COREFLEXConstants.FAILED_TO_VERIFY_LUMP_SUM_SUB_BENEFITS_FORM);
+			Assert.fail(COREFLEXConstants.FAILED_TO_VERIFY_MOBILITY_PREMIUM_SUB_BENEFITS_FORM);
 		}
 
 	}
@@ -719,18 +708,6 @@ public class CoreFlex_GoodsServicesAllowance_BenefitsPage extends BenefitPage {
 
 	@Override
 	public void addSubService(Window _IRIS, Table table, Benefit benefit, String coreFlexType) {
-		try {
-			table.waitUntilVisible();
-			int rowCount = Helpers.getTableRowCount(table);
-			table.getCell(rowCount - 1, "Type").setValue(benefit.getIrisSubserviceType());
-			table.getCell(rowCount - 1, "Name").setValue(benefit.getIrisSubserviceName());
-			CoreFunctions.waitHandler(1);
-			table.getCell(rowCount - 1, "Core/Flex").setValue(coreFlexType);
-		} catch (Exception e) {
-			Reporter.addStepLog(MessageFormat.format(
-					IRISConstants.EXCEPTION_OCCURED_WHILE_ADDING_SERVICE_SUBSERVICE_ON_SERVICES_TAB_OF_IRIS_APPLICATION,
-					CoreConstants.FAIL, benefit.getIrisSubserviceType(), e.getMessage()));
-		}
-
+		// TODO Auto-generated method stub
 	}
 }

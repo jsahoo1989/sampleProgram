@@ -14,7 +14,6 @@ import com.aires.pages.mylo.Mylo_DashboardHomePage;
 import com.aires.pages.mylo.Mylo_JourneyPage;
 import com.aires.pages.mylo.Mylo_LoginPage;
 import com.aires.testdatatypes.mylo.Mylo_LoginData;
-
 import cucumber.api.java.en.Given;
 import cucumber.api.java.en.Then;
 import cucumber.api.java.en.When;
@@ -81,6 +80,7 @@ public class MyloJourneyQueryBySubServiceID_Steps {
 		_myloJourneyPageQueryBySubServiceID.clickButtonInQueryBySubServiceIDPopUp(MYLOConstants.SUBMIT_BUTTON);
 		Assert.assertTrue(_myloJourneyPageQueryBySubServiceID.isShipmentSubServiceScreenDisplayed(),
 				MessageFormat.format(CoreConstants.FAIL_TO_VERIFY_ELEMENT_ON_SECTION, MYLOConstants.SHIPMENT_WEBSWING));
+		
 	}
 
 	@Then("^he should be taken to the Summary Overview section for that subservice without shipment sidescreen being displayed on Mylo Journey page$")
@@ -97,7 +97,7 @@ public class MyloJourneyQueryBySubServiceID_Steps {
 				String.valueOf(MYLOConstants.SUB_SERVICE_ID_FIELD_LIMIT + 1), MYLOConstants.RANDOM_INTEGER);
 	}
 
-	@Then("^values should be successfully entered as per number 10 limit set for \"([^\"]*)\" field under \"([^\"]*)\" section$")
+	@Then("^values should be successfully entered as per number limit 10 set for \"([^\"]*)\" field under \"([^\"]*)\" section$")
 	public void values_should_be_successfully_entered_as_per_below_number_limit_set_for_field_under_section(
 			String field, String section) {
 		Assert.assertTrue(_myloJourneyPageQueryBySubServiceID.verifySubServiceIDMaxLength(), MessageFormat.format(
@@ -110,6 +110,7 @@ public class MyloJourneyQueryBySubServiceID_Steps {
 				String.valueOf(MYLOConstants.SUB_SERVICE_ID_FIELD_LIMIT), MYLOConstants.RANDOM_STRING);
 		Assert.assertTrue(_myloJourneyPageQueryBySubServiceID.isSubServiceIDFieldEmpty(), MessageFormat.format(
 				MYLOConstants.INCORRECT_FIELD_VALUE, CoreConstants.FAIL, MYLOConstants.QUERY_BY_SUB_SERVICE_ID));
+		
 	}
 
 	@Then("^\"([^\"]*)\" modal should be closed after clicking on \"([^\"]*)\" button$")
@@ -118,6 +119,7 @@ public class MyloJourneyQueryBySubServiceID_Steps {
 		Assert.assertFalse(_myloJourneyPageQueryBySubServiceID.isQueryBySubServiceIDPopUpExist(),
 				MessageFormat.format(CoreConstants.FAIL_TO_VERIFY_ELEMENT_ON_SECTION, CoreConstants.FAIL, popUp,
 						MYLOConstants.QUERY_BY_SUB_SERVICE_ID));
+		
 	}
 
 	@When("^he clicks on \"([^\"]*)\" button after entering an invalid sub-service id in the \"([^\"]*)\" field on \"([^\"]*)\" section$")

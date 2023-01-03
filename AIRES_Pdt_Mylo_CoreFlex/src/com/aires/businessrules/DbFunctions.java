@@ -22,8 +22,8 @@ public class DbFunctions {
 
 	static LinkedHashMap<String, String> myloQueryStatementMap = new LinkedHashMap<String, String>();
 	static LinkedHashMap<String, String> myloQTableColumnFields = new LinkedHashMap<String, String>();
-	// static String environment = System.getProperty("envt").toLowerCase();
-	static String environment = CoreFunctions.getPropertyFromConfig("envt").toLowerCase();
+	 static String environment = System.getProperty("envt").toLowerCase();
+	//static String environment = CoreFunctions.getPropertyFromConfig("envt").toLowerCase();
 
 	static LinkedHashMap<String, String> pdtExpenseCodeQueryStatementMap = new LinkedHashMap<String, String>();
 

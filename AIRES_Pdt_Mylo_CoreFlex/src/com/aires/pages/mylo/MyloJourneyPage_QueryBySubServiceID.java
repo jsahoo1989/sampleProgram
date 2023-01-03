@@ -14,6 +14,7 @@ import com.aires.businessrules.BusinessFunctions;
 import com.aires.businessrules.CoreFunctions;
 import com.aires.businessrules.constants.CoreConstants;
 import com.aires.businessrules.constants.MYLOConstants;
+import com.vimalselvam.cucumber.listener.Reporter;
 
 public class MyloJourneyPage_QueryBySubServiceID extends Base {
 
@@ -55,7 +56,8 @@ public class MyloJourneyPage_QueryBySubServiceID extends Base {
 
 	private boolean _isExists = false;
 	private String _subServiceIDUpdatedValue = "";
-
+    private boolean _isSubServiceIDEmpty=false;
+    
 	/**
 	 * Enter value in subservice ID input field
 	 * 
@@ -84,7 +86,7 @@ public class MyloJourneyPage_QueryBySubServiceID extends Base {
 			_isExists = CoreFunctions.isElementExist(driver, _noSuchFilePopup, MYLOConstants.WAIT);
 			if (_isExists) {
 				CoreFunctions.verifyText(driver, _noSuchFilePopupHeader, MYLOConstants.NO_SUCH_FILE_FOUND,
-						MYLOConstants.NO_SUCH_FILE_FOUND);
+						MYLOConstants.POP_UP);
 				BusinessFunctions.fluentWaitForMyloSpinnerToDisappear(driver, _spinner);
 				CoreFunctions.clickElement(driver, _noSuchFilePopupOkButton);
 			}
@@ -120,6 +122,9 @@ public class MyloJourneyPage_QueryBySubServiceID extends Base {
 
 		try {
 			_isExists = CoreFunctions.isElementExist(driver, _queryByServiceIDPopup, MYLOConstants.WAIT);
+			if(_isExists)
+				Reporter.addStepLog(MessageFormat.format(MYLOConstants.VERIFIED_POP_UP_CLOSED, CoreConstants.PASS,
+						MYLOConstants.QUERY_BY_SUB_SERVICE_ID));
 		} catch (Exception e) {
 			Assert.fail(MessageFormat.format(CoreConstants.FAIL_TO_VERIFY_ELEMENT_ON_SECTION, CoreConstants.FAIL,
 					_queryByServiceIDPopup, MYLOConstants.QUERY_BY_SUB_SERVICE_ID));
@@ -136,6 +141,9 @@ public class MyloJourneyPage_QueryBySubServiceID extends Base {
 
 		try {
 			_isExists = CoreFunctions.isElementExist(driver, _summaryPage, MYLOConstants.WAIT);
+			if(_isExists)
+				Reporter.addStepLog(
+						MessageFormat.format(MYLOConstants.VERIFIED_SUMMARY_SCREEN_DISPLAYED, CoreConstants.PASS));		
 		} catch (Exception e) {
 			Assert.fail(MessageFormat.format(CoreConstants.FAIL_TO_VERIFY_ELEMENT_ON_SECTION, CoreConstants.FAIL,
 					_summaryPage, MYLOConstants.SUMMARY));
@@ -152,6 +160,9 @@ public class MyloJourneyPage_QueryBySubServiceID extends Base {
 
 		try {
 			_isExists = CoreFunctions.isElementExist(driver, _shipmentSubScreen, MYLOConstants.WAIT);
+			if(_isExists)
+				Reporter.addStepLog(
+						MessageFormat.format(MYLOConstants.VERIFIED_SHIPMENT_SUBSERVICE_SCREEN_DISPLAYED, CoreConstants.PASS));
 		} catch (Exception e) {
 			Assert.fail(MessageFormat.format(CoreConstants.FAIL_TO_VERIFY_ELEMENT_ON_SECTION, CoreConstants.FAIL,
 					_shipmentSubScreen, MYLOConstants.SHIPMENT_WEBSWING));
@@ -185,7 +196,6 @@ public class MyloJourneyPage_QueryBySubServiceID extends Base {
 				_subServiceIDUpdatedValue.substring(0, MYLOConstants.SUB_SERVICE_ID_FIELD_LIMIT),
 				MYLOConstants.QUERY_BY_SUB_SERVICE_ID, getSubServiceIDValue().length(),
 				MYLOConstants.SUB_SERVICE_ID_FIELD_LIMIT);
-
 	}
 
 	/**
@@ -194,7 +204,11 @@ public class MyloJourneyPage_QueryBySubServiceID extends Base {
 	 * @return
 	 */
 	public boolean isSubServiceIDFieldEmpty() {
-		return getSubServiceIDValue().equalsIgnoreCase("");
+		_isSubServiceIDEmpty = getSubServiceIDValue().equals("");
+		if (_isSubServiceIDEmpty) 
+			Reporter.addStepLog(MessageFormat.format(MYLOConstants.VERIFIED_CHARACTERS_CANNOT_BE_ENTERED_IN,
+					CoreConstants.PASS, MYLOConstants.QUERY_BY_SUB_SERVICE_ID));		
+		return _isSubServiceIDEmpty;
 	}
 
 }

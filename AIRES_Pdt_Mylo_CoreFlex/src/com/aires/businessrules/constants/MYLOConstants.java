@@ -735,5 +735,11 @@ public class MYLOConstants {
 	public static final int SUB_SERVICE_ID_FIELD_LIMIT = 10;
 	public static final int WAIT = 10;
 	public static final String INCORRECT_FIELD_VALUE = "Incorrect value displayed - ''{0}''";
+	public static final String VERIFIED_POP_UP_CLOSED = "{0} Verified PopUp - ''{1}'' is Closed ";
+	public static final String VERIFIED_POP_UP_IS_DISPLAYED = "{0} Verified PopUp - ''{1}'' is displayed";
+	public static final String POP_UP = "PopUp";
+	public static final String VERIFIED_SHIPMENT_SUBSERVICE_SCREEN_DISPLAYED = "Verified Shipment Sub Service screen is displayed";
+	public static final String VERIFIED_SUMMARY_SCREEN_DISPLAYED = "Verified Shipment Sub Service screen is displayed";
+	public static final String VERIFIED_CHARACTERS_CANNOT_BE_ENTERED_IN = " {0} Verified characters cannot be entered in ''{1}''";
 
 }

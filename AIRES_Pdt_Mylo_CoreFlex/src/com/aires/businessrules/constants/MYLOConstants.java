@@ -126,7 +126,7 @@ public class MYLOConstants {
 	public static final String VERIFIED_POPUP_MESSAGE_NOT_DISPLAYED = "{0}Verified Pop up message is not displayed as ''{1}''  on  ''{2}'' section";
 	public static final String VERIFIED_FIELD_HIGHLIGHTED = "{0}Verified ''{1}'' field is highlighted with Red background on  ''{2}'' section";
 	public static final String VERIFIED_FIELD_NOT_HIGHLIGHTED = "{0}Verified ''{1}'' field is not highlighted with Red background on  ''{2}'' section";
-	public static final String EXPECTED_MESSAGE_DISPLAYED = "{0}Expected message to display:  ''{1}''  but found:  ''{2}'' on ''{3}'' section";
+	public static final String EXPECTED_MESSAGE_DISPLAYED = "<font color='red'>{0}Expected message to display:  ''{1}''  but found:  ''{2}'' on ''{3}'' section</font>";
 	public static final String VERIFIED_VALUE_SUCCESSFULLY_SAVED = "{0}Verified Value  ''{1}'' is successfully saved for ''{2}'' field on  ''{3}'' section";
 	public static final String FAILED_TO_VERIFY_UPDATED_VALUE = "{0}Failed to Verify Update Value for ''{1}'' field on  ''{2}'' section";
 	public static final String VERIFY_UPDATED_FIELD_VALUE = "{0}Verified Value updated for ''{1}'' field is ''{2}'' on ''{3}'' section";
@@ -731,8 +731,14 @@ public class MYLOConstants {
 	public static final String FIRST_NAME = "First Name";
 	public static final String LAST_NAME = "Last Name";
 	public static final String VERIFIED_QUERY_RESULTS_VALUES_MATCHED = "{0}Verified ''{1}'' column values of ''{2}'' result matches as per searched ''{3}'':- ''{4}'' with ''{5}'':-''{6}'' ";
-	public static final String VERIFIED_QUERY_RESULTS_VALUES_MISMATCH = "{0}Verified ''{1}'' column values of ''{2}'' result does not matched as per searched ''{3}'':- ''{4}'' with ''{5}'':-''{6}'' ";
-	
+	public static final String VERIFIED_QUERY_RESULTS_VALUES_MISMATCH = "<font color='red'>{0}Verified ''{1}'' column values of ''{2}'' result does not matched as per searched ''{3}'':- ''{4}'' with ''{5}'':-''{6}'' </font>";
+	public static final String VERIFIED_QUERY_RESULT_FILES_MISMATCH = "{0}Verified Files displayed on Query result does is not as per searched ''{1}'' from ''{2}'' section";
+	public static final String FAIL_TO_VERIFY_TAG_SCRIPT_VALIDATION_MESSAGE_SECTION = "{0}Fail to verify Tag Script validation message for section {1}";
+	public static final String FAIL_TO_VERIFY_POP_UP_MESSAGE_SECTION = "{0}Fail to verify Pop Up message:{1}  for section {2}";
+	public static final int CUSTOM_WAIT_TIME = 30;
+	public static final int TRANSFEREE_FIRST_NAME_CHAR_LIMIT = 30;
+	public static final int TRANSFEREE_LAST_NAME_CHAR_LIMIT = 60;
+	public static final String CHARACTER_LIMIT = "CharacterLimit";
 	
 
 	

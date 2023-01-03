@@ -317,7 +317,7 @@ public class Mylo_DashboardHomePage extends Base {
 	public void selectOptionsFromAssignmentMenu(String optionName) {
 		try {
 			BusinessFunctions.fluentWaitForMyloSpinnerToDisappear(driver, _spinner);
-			CoreFunctions.isElementByLocatorExist(driver, _journeySubSections, 30);
+			CoreFunctions.isElementByLocatorExist(driver, _journeySubSections, MYLOConstants.CUSTOM_WAIT_TIME);
 			List<WebElement> journeySubSectionList = CoreFunctions.getElementListByLocator(driver, _journeySubSections);
 			CoreFunctions.selectItemInListByText(driver, journeySubSectionList, optionName);
 			BusinessFunctions.fluentWaitForMyloSpinnerToDisappear(driver, _spinner);

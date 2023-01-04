@@ -1439,8 +1439,8 @@ public class PDT_ViewPolicyPage extends Base {
 
 		CoreFunctions.verifyText(driver, _msgVersionPopUp.get(1), data.get(1).get(1), data.get(1).get(0));
 		CoreFunctions.verifyText(driver, _versionText, data.get(2).get(1), data.get(2).get(0));
-		if (CoreFunctions.isElementVisible(_inputDescription)) {
-			CoreFunctions.highlightObject(driver, _inputDescription);
+		if (CoreFunctions.isElementVisible(_txtAreaDescription)) {
+			CoreFunctions.highlightObject(driver, _txtAreaDescription);
 			Reporter.addStepLog(MessageFormat.format(PDTConstants.VERIFIED_ELEMENT_VISIBLE, CoreConstants.PASS,
 					PDTConstants.TXTAREA, PDTConstants.DESCRIPTION));
 		} else
@@ -1450,7 +1450,7 @@ public class PDT_ViewPolicyPage extends Base {
 	}
 
 	public boolean enterDescriptionAndVerifyCreateBtn(String btnName, String btnStatus) {
-		CoreFunctions.clearAndSetText(driver, _inputDescription, PDTConstants.DESCRIPTION,
+		CoreFunctions.clearAndSetText(driver, _txtAreaDescription, PDTConstants.DESCRIPTION,
 				"Version 2 is getting created");
 		if (verifyButton(btnName, btnStatus))
 			return true;
@@ -1478,8 +1478,8 @@ public class PDT_ViewPolicyPage extends Base {
 
 		CoreFunctions.verifyText(driver, _msgVersionPopUp.get(1), PDTConstants.MESSAGE2, "Message2");
 		CoreFunctions.verifyText(driver, _versionText, PDTConstants.VERSION_V2, "Version");
-		if (CoreFunctions.isElementVisible(_inputDescription)) {
-			CoreFunctions.highlightObject(driver, _inputDescription);
+		if (CoreFunctions.isElementVisible(_txtAreaDescription)) {
+			CoreFunctions.highlightObject(driver, _txtAreaDescription);
 			Reporter.addStepLog(MessageFormat.format(PDTConstants.VERIFIED_ELEMENT_VISIBLE, CoreConstants.PASS,
 					PDTConstants.TXTBOX, PDTConstants.DESCRIPTION));
 		} else
@@ -1489,7 +1489,7 @@ public class PDT_ViewPolicyPage extends Base {
 	}
 
 	public void enterDescription() {
-		CoreFunctions.clearAndSetText(driver, _inputDescription, PDTConstants.DESCRIPTION,
+		CoreFunctions.clearAndSetText(driver, _txtAreaDescription, PDTConstants.DESCRIPTION,
 				"Version V2 is getting created");
 		CoreFunctions.click(driver, _btnCreate, _btnCreate.getText());
 		waitForProgressBarToDisapper();

@@ -1,19 +1,22 @@
 package stepDefinitions.mylo;
 
+import java.text.MessageFormat;
+import java.util.Map;
 import org.testng.Assert;
-
+import com.aires.businessrules.constants.CoreConstants;
+import com.aires.businessrules.constants.MYLOConstants;
 import com.aires.cucumber.TestContext;
 import com.aires.pages.mylo.Mylo_DashboardHomePage;
 import com.aires.pages.mylo.Mylo_LoginPage;
-
+import cucumber.api.DataTable;
 import cucumber.api.java.en.Given;
 import cucumber.api.java.en.Then;
 import cucumber.api.java.en.When;
 
 public class Mylo_LoginPage_Steps {
-	TestContext testContext;
-	Mylo_LoginPage loginPage;
-	Mylo_DashboardHomePage myloDashboardPage;
+	private TestContext testContext;
+	private Mylo_LoginPage loginPage;
+	private Mylo_DashboardHomePage myloDashboardPage;
 
 	public Mylo_LoginPage_Steps(TestContext context) {
 		testContext = context;
@@ -39,6 +42,34 @@ public class Mylo_LoginPage_Steps {
 	@Then("^he should successfuly redirected onto the Dashboard home page of Mylo Application with \"([^\"]*)\" getting displayed$")
 	public void he_should_successfuly_redirected_onto_the_Dashboard_home_page_of_Mylo_Application_with_getting_displayed(
 			String userName) {
-		myloDashboardPage.verifyUserName(userName);
+		Assert.assertTrue(myloDashboardPage.verifyUserName(userName),
+				MessageFormat.format(MYLOConstants.VERIFIED_SECTION_NOT_DISPLAYED, CoreConstants.FAIL, userName,
+						MYLOConstants.MYLO_DASHBOARD_HOME_PAGE));
+	}
+	
+	@Then("^messages corresponding to different usernames mentioned below should be displayed on Mylo login page$")
+	public void messages_corresponding_to_different_usernames_mentioned_below_should_be_displayed_on_Mylo_login_page(
+			DataTable table) {
+		java.util.List<Map<String, String>> data = table.asMaps(String.class, String.class);
+		for (int i = 0; i < data.size(); i++) {
+			Assert.assertTrue(
+					loginPage.verifyUserNameErrorMessage(data.get(i).get(MYLOConstants.USER_EMAIL),
+							data.get(i).get(MYLOConstants.MESSAGE)),
+					MessageFormat.format(MYLOConstants.VERIFIED_MESSAGE_NOT_DISPLAYED, CoreConstants.FAIL,
+							data.get(i).get(MYLOConstants.MESSAGE), MYLOConstants.LOGIN));
+		}
+	}
+	
+	@Then("^messages corresponding to different combination of username password mentioned below should be displayed on Mylo login page$")
+	public void messages_corresponding_to_different_combination_of_username_password_mentioned_below_should_be_displayed_on_Mylo_login_page(
+			DataTable table) {
+		java.util.List<Map<String, String>> data = table.asMaps(String.class, String.class);
+		for (int i = 0; i < data.size(); i++) {
+			Assert.assertTrue(
+					loginPage.verifyPasswordErrorMessage(data.get(i).get(MYLOConstants.USER_EMAIL),
+							data.get(i).get(MYLOConstants.PASSWORD), data.get(i).get(MYLOConstants.MESSAGE)),
+					MessageFormat.format(MYLOConstants.VERIFIED_MESSAGE_NOT_DISPLAYED, CoreConstants.FAIL,
+							data.get(i).get(MYLOConstants.MESSAGE), MYLOConstants.LOGIN));
+		}
 	}
 }

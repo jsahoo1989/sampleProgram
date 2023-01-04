@@ -29,6 +29,7 @@ public class CoreConstants {
 	public static final String TXT_ACTUAL = "Actual Text : ";
 	public static final String TXT_EXPECTED = "Expected Text : ";
 	public static final String ALPHABET = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ";
+	public static final String NUMBERS = "0123456789";
 	public static final String SPECIAL_CHARACTERS = "^^<>";
 	public static final String JSON_FILE_NOT_FOUND_AT_PATH = "Json file not found at path : ";
 	public static final String TAG_VALUE = "@Pre-Prod";
@@ -129,4 +130,5 @@ public class CoreConstants {
 	public static final String EMAIL_NOT_FOUND = "Email Not Found";
 	public static final String VEIRFY_CONTIRBUTOR_NOT_RECEIVED_NOTIFICATION = "{0}Failed to verify Contributor not received Notification.";
 	public static final String FAILED_TO_SELECT_RANDOM_OPTION_FROM_THE_LIST = "{0}Failed to select random option from the list.";
+
 }

@@ -56,8 +56,8 @@ public class TestContext {
 			_pageObjectManagerPDT = new PageObjectManager_Pdt(_webDriverManager.getDriver());
 			_pageObjectManagerMylo = new PageObjectManager_Mylo(_webDriverManager.getDriver());
 			_pageObjectManagerCoreFlex = new PageObjectManager_CoreFlex(_webDriverManager.getDriver());
-			_pageObjectManagerMobilityX = new PageObjectManager_MobilityX(_webDriverManager.getDriver());	
 			_customSoftAssert = new CustomSoftAssert();
+			_pageObjectManagerMobilityX = new PageObjectManager_MobilityX(_webDriverManager.getDriver());	
 		}
 	}
 	

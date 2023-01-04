@@ -1,0 +1,15 @@
+[
+	{
+		"fileType": "New File",
+		"newFile": {
+			"firstName" : "AutoMyloFirstName",			
+			"lastName": "AutoMyloLastName",
+			"clientName" : "Aires QA Automation Client",
+			"office": "CRO",
+			"policyType": "Domestic Policy",
+			"taxTreatment" : "Foreign national leaving the US",
+			"journeyType": "Long-Term",
+			"fileGrossProfit": "$0"
+		}			
+	}
+]

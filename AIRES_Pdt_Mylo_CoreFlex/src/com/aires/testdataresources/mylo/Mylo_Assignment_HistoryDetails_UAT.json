@@ -1,91 +1,91 @@
 [
 	{
 		"fileId": "482350",
-		"historyDetails": "Virginia Woolf;482350 (AIRES-CIS-DEMO&'TEST(CLIENT));Hartford, DC to test, AC"
+		"historyDetails": "Woolf, Virginia;482350 (MobilityX Inc.);test, AL to test, CO"
 	},
 	{
 		"fileId": "482352",
-		"historyDetails": " Orlando Greene;482352 (MobilityX Inc.);test to tester"
+		"historyDetails": "Greene, Orlando;482352 (MobilityX Inc.);test to tester"
 	},
 	{
 		"fileId": "412403",
-		"historyDetails": "Jane Doe;412403 (Test Client);London, UK to Madrid, ES"
+		"historyDetails": "Doe, Jane;412403 (Test Client);London, UK to Madrid, ES"
 	},
 	{
 		"fileId": "313669",
-		"historyDetails": " Josh Saunders ;313669 (AIRES-CIS-DEMO&'TEST(CLIENT));test, DZ to test, AI"
+		"historyDetails": "Saunders, Josh;313669 (AIRES-CIS-DEMO&'TEST(CLIENT));test, DZ to test, AI"
 	},
 	{
 		"fileId": "482351",
-		"historyDetails": "Patrick McMurphy;482351 (MobilityX Inc.);St. Paul, MN to Boston, MA"
+		"historyDetails": "McMurphy, Patrick;482351 (MobilityX Inc.);St. Paul, MN to Boston, MA"
 	},
 	{
 		"fileId": "639625",
-		"historyDetails": "AutoMyloTransfereeFirstName AutoMyloTransfereeLastName;639625 (Aires QA Automation Client); Soldotna, AK to Mumbai, IN"
+		"historyDetails": "AutoMyloTransfereeLastName, AutoMyloTransfereeFirstName;639625 (Aires QA Automation Client); Soldotna, AK to Mumbai, IN"
 	},
 	{
 		"fileId": "482354",
-		"historyDetails": "Tom Ripley;482354 (MobilityX Inc.);Bangalore, IN to Brussels, BE"
+		"historyDetails": "Ripley, Tom;482354 (MobilityX Inc.);Bangalore, IN to Brussels, BE"
 	},
 	{
 		"fileId": "483947",
-		"historyDetails": "Janet Lawson;483947 (MobilityX Inc.);Pittsburgh, PA to Chicago, IL"
+		"historyDetails": "Lawson, Janet;483947 (MobilityX Inc.);Pittsburgh, PA to Chicago, IL"
 	},
 	{
 		"fileId": "483948",
-		"historyDetails": "Ian Roberts;483948 (MobilityX Inc.);Tampa, FL to Houston, TX"
+		"historyDetails": "Roberts, Ian;483948 (MobilityX Inc.);Tampa, FL to Houston, TX"
 	},
 	{
 		"fileId": "529617",
-		"historyDetails": "John Buck;529617 (MobilityX Inc.);Miami, AK to Bozeman, MT"
+		"historyDetails": "Buck, John;529617 (MobilityX Inc.);Miami, AK to Bozeman, MT"
 	},
 	{
 		"fileId": "541276",
-		"historyDetails": "Joey Smithers;541276 (AIRES-CIS-DEMO&'TEST(CLIENT));eretert, BS to sdfsfdsfs, AZ"
+		"historyDetails": "Smithers, Joey;541276 (AIRES-CIS-DEMO&'TEST(CLIENT));eretert, BS to sdfsfdsfs, AZ"
 	},
 	{
 		"fileId": "413453",
-		"historyDetails": "Rob Kubitz;413453 (Test Client);Pittsburgh, PA to Pittsburgh, PA"
+		"historyDetails": "Kubitz, Rob;413453 (Test Client);Pittsburgh, PA to Pittsburgh, PA"
 	},
 	{
 		"fileId": "453681",
-		"historyDetails": "Bill Brooks;453681 (Test Client);Pittsburhg, PA to Boston, MA"
+		"historyDetails": "Brooks, Bill;453681 (Test Client);Pittsburhg, PA to Boston, MA"
 	},
 	{
 		"fileId": "209522",
-		"historyDetails": "John Smith;209522 (MobilityX Inc.);Pittsburgh to New City City11"
+		"historyDetails": "Smith, Johnn;209522 (MobilityX Inc.);Pittsburgh, PA to New City City11, PA"
 	},
 	{
 		"fileId": "517323",
-		"historyDetails": "Aaron XMR;517323 (MobilityX Inc.);testing, TN to atesting, UT"
+		"historyDetails": "XMR, Aaron;517323 (MobilityX Inc.);testing, TN to atesting, UT"
 	},
 	{
 		"fileId": "430925",
-		"historyDetails": "Amanda Gonzalez;430925 (MobilityX Sandbox);London, UK to Pittsburgh, PA"
+		"historyDetails": "Gonzalez, Amanda;430925 (MobilityX Sandbox);London, UK to Pittsburgh, PA"
 	},
 	{
 		"fileId": "481040",
-		"historyDetails": "Madleen Bretschneider;481040 (MobilityX Sandbox);Columbus, OH to Knoxville, TN"
+		"historyDetails": "Bretschneider, Madleen;481040 (MobilityX Sandbox);Columbus, OH to Knoxville, TN"
 	},
 	{
 		"fileId": "481265",
-		"historyDetails": "Fares Sakli;481265 (Societe Generale);France, FR to New York City, NY"
+		"historyDetails": "Sakli, Fares;481265 (Societe Generale);France, FR to New York City, NY"
 	},
 	{
 		"fileId": "481280",
-		"historyDetails": "Wang Xiu Ying;481280 (MobilityX Sandbox);Beijing, CN to San Francisco, CA"
+		"historyDetails": "Xiu Ying, Wang;481280 (MobilityX Sandbox);Beijing, CN to San Francisco, CA"
 	},
 	{
 		"fileId": "481282",
-		"historyDetails": "Amelia Patton;481282 (MobilityX Sandbox);Denver, CO to Phoenix, AZ"
+		"historyDetails": "Patton, Amelia;481282 (MobilityX Sandbox);Denver, CO to Phoenix, AZ"
 	},
 	{
 		"fileId": "510657",
-		"historyDetails": "Freya Watson;510657 (MobilityX Sandbox);Geneva, CH to Singapore, SG"
+		"historyDetails": "Watson, Freya;510657 (MobilityX Sandbox);Geneva, CH to Singapore, SG"
 	},
 	{
 		"fileId": "514244",
-		"historyDetails": "Ryan Romanosky;514244 (MobilityX Sandbox);Pittsburgh, PA to Berlin, DE"
+		"historyDetails": "Romanosky, Ryan;514244 (MobilityX Sandbox);Pittsburgh, PA to Berlin, DE"
 	}
 	
 ]

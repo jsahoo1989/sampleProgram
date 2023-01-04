@@ -10,6 +10,7 @@ import org.testng.Assert;
 
 import com.aires.businessrules.CoreFunctions;
 import com.aires.businessrules.constants.CoreConstants;
+import com.aires.businessrules.constants.MYLOConstants;
 import com.aires.businessrules.constants.MobilityXConstants;
 import com.aires.businessrules.constants.PDTConstants;
 import com.azure.identity.UsernamePasswordCredential;
@@ -38,6 +39,14 @@ public class EmailUtil {
 		case PDTConstants.TRANSFEREE_PASSWORD:
 			_searchTag[0] = "Password: </span></b><span style=\"font-family:century gothic,Helvetica,Calibri,Roboto\">";
 			_searchTag[1] = "</span> </p>";
+		break;			
+		case MYLOConstants.MYLO_TRANSFEREE_USER_NAME:
+			_searchTag[0] = "<strong>Username</strong> : <span>";
+			_searchTag[1] = "</span> </span></p>";
+			break;		
+		case MYLOConstants.MYLO_TRANSFEREE_PASSWORD:
+			_searchTag[0] = "</span></b><span style=\"font-family:century gothic,Helvetica,Calibri,Roboto\"><span>";
+			_searchTag[1] = "</span></span></p>";
 			break;
 		case MobilityXConstants.FLEX_BENEFIT_SUBMISSION:
 			_searchTag[0] = "journey!<br><br></p><p>";
@@ -235,7 +244,6 @@ public class EmailUtil {
 			final UsernamePasswordCredential usernamePasswordCredential = new UsernamePasswordCredentialBuilder()
 					.clientId("724f1c20-511f-4f8f-a901-56daf6e0b4c5").username(email)
 					.tenantId("4a76d546-bb2b-44d3-94e6-23c28e086165").password(password).build();
-
 			final TokenCredentialAuthProvider tokenCredentialAuthProvider = new TokenCredentialAuthProvider(
 					new ArrayList<String>() {
 						{
@@ -260,5 +268,4 @@ public class EmailUtil {
 		}
 		return null;
 	}
-
 }

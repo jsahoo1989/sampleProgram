@@ -29,8 +29,6 @@
  ***********************************Header End*********************************************************************************/
 package com.aires.businessrules;
 
-import java.io.File;
-import java.io.IOException;
 import java.math.RoundingMode;
 import java.sql.Connection;
 import java.sql.DriverManager;
@@ -39,51 +37,44 @@ import java.text.DecimalFormat;
 import java.text.MessageFormat;
 import java.time.Duration;
 import java.util.ArrayList;
-import java.util.Collections;
-import java.util.Comparator;
 import java.util.LinkedHashMap;
 import java.util.List;
-import java.util.Random;
-import java.util.concurrent.ThreadLocalRandom;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 import org.apache.commons.codec.binary.Base64;
 import org.apache.log4j.Logger;
 import org.openqa.selenium.NoSuchElementException;
-import org.openqa.selenium.StaleElementReferenceException;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
-import org.openqa.selenium.interactions.Actions;
+import org.openqa.selenium.By;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.FluentWait;
 import org.openqa.selenium.support.ui.Select;
-import org.openqa.selenium.support.ui.WebDriverWait;
 import org.testng.Assert;
-
 import com.aires.businessrules.constants.COREFLEXConstants;
 import com.aires.businessrules.constants.CoreConstants;
+import com.aires.businessrules.constants.MYLOConstants;
 import com.aires.businessrules.constants.MobilityXConstants;
 import com.aires.businessrules.constants.PDTConstants;
 import com.aires.pages.pdt.PDT_AddNewPolicyPage;
+import com.aires.pages.pdt.PDT_GeneralInformationPage;
 import com.aires.testdatatypes.pdt.PDT_LoginDetails;
 import com.aires.utilities.EmailUtil;
 import com.aires.utilities.Log;
-import com.aires.utilities.getWindowText;
 import com.gargoylesoftware.htmlunit.ElementNotFoundException;
-import com.hp.lft.sdk.Desktop;
 import com.hp.lft.sdk.GeneralLeanFtException;
 import com.hp.lft.sdk.java.Dialog;
 import com.hp.lft.sdk.java.Editor;
-import com.hp.lft.sdk.java.EditorDescription;
-import com.hp.lft.sdk.java.Window;
-import com.hp.lft.sdk.java.WindowDescription;
 import com.vimalselvam.cucumber.listener.Reporter;
-
 import org.apache.pdfbox.pdmodel.PDDocument;
 import org.apache.pdfbox.text.PDFTextStripper;
 import org.apache.poi.xwpf.extractor.XWPFWordExtractor;
 import org.apache.poi.xwpf.usermodel.XWPFDocument;
 import java.nio.file.Files;
 import java.nio.file.Paths;
+
+import stepDefinitions.pdt.PDT_SharedSubBenefit_Steps;
 
 public class BusinessFunctions {
 	private static String windowTitle;
@@ -100,7 +91,6 @@ public class BusinessFunctions {
 
 	public static void selectItemFromListUsingText(WebDriver driver, List<WebElement> WebElementList, String itemName) {
 		CoreFunctions.waitForBrowserToLoad(driver);
-		CoreFunctions.waitHandler(3);
 		for (WebElement row : WebElementList) {
 			String text = row.getText();
 			Log.info(CoreConstants.ACTUAL_ITEM_NAME_IS + text);
@@ -112,102 +102,13 @@ public class BusinessFunctions {
 		}
 	}
 
-	public static Boolean verifyItemExistsInList(WebDriver driver, List<WebElement> webElementList, String itemName) {
-		Boolean isExists = false;
-		CoreFunctions.explicitWaitTillElementListVisibility(driver, webElementList);
-		try {
-			for (WebElement row : webElementList) {
-				if (row.getText().equals(itemName)) {
-					isExists = true;
-					CoreFunctions.highlightObject(driver, row);
-					CoreFunctions.hover(driver, row);
-					Reporter.addStepLog(CoreConstants.PASS + row.getText() + PDTConstants.IS_DISPLAYED);
-					break;
-				}
-			}
-		} catch (ElementNotFoundException e) {
-			e.printStackTrace();
-		}
-		return isExists;
-	}
-
-	public static Boolean verifyItemExistsInList(WebDriver driver, List<WebElement> webElementList, String elementName,
-			String elementVal, String pageName, boolean displayMsgInReport) {
-		Boolean isExists = false;
-		CoreFunctions.explicitWaitTillElementListVisibility(driver, webElementList);
-		try {
-			for (WebElement row : webElementList) {
-				if (row.getText().equals(elementVal)) {
-					isExists = true;
-					CoreFunctions.highlightObject(driver, row);
-					Reporter.addStepLog(MessageFormat.format(PDTConstants.VERIFY_ELEMENT_VALUE_ON_PAGE,
-							CoreConstants.PASS, elementName, elementVal, pageName));
-					break;
-				}
-			}
-		} catch (ElementNotFoundException e) {
-			e.printStackTrace();
-		}
-		return isExists;
-	}
-
-	public static void selectItemFromListUsingAttribute(WebDriver driver, List<WebElement> WebElementList,
-			String itemName, String attributeValue) {
-		CoreFunctions.waitHandler(2);
-		for (WebElement row : WebElementList) {
-			Log.info(CoreConstants.ACTUAL_ITEM_NAME_IS + row.getText());
-			if (row.getAttribute(attributeValue).equals(itemName)) {
-				Reporter.addStepLog(CoreConstants.PASS + row.getAttribute(attributeValue) + PDTConstants.IS_CLICKED);
-				CoreFunctions.click(driver, row, itemName);
-				break;
-			} else {
-				System.out.println("Attribute value in else--" + row.getAttribute(attributeValue));
-				System.out.println("Itemname in else--" + row.getAttribute(itemName));
-			}
-		}
-	}
-
 	public static void selectRadioAsPerLabelText(WebDriver driver, List<WebElement> WebElementList_Label,
 			String labelName) {
-		CoreFunctions.waitHandler(1);
 		System.out.println("inside radio as per label text");
 		System.out.println("count--" + WebElementList_Label.size());
 		for (WebElement row : WebElementList_Label) {
 			Log.info(CoreConstants.ACTUAL_ITEM_NAME_IS + row.getText());
 			if ((row.getText().trim()).equals(labelName)) {
-//				CoreFunctions.click(driver, row, labelName);
-				CoreFunctions.clickElement(driver, row);
-				Reporter.addStepLog(CoreConstants.PASS + row.getText() + PDTConstants.IS_CLICKED);
-				break;
-			}
-		}
-	}
-
-	public static void selectRadioAsPerLabelText(WebDriver driver, List<WebElement> WebElementList_Label,
-			String labelName, String radioBtnLabel) {
-		CoreFunctions.waitHandler(2);
-		System.out.println("inside radio as per label text");
-		System.out.println("count--" + WebElementList_Label.size());
-		for (WebElement row : WebElementList_Label) {
-			Log.info(CoreConstants.ACTUAL_ITEM_NAME_IS + row.getText());
-			if (row.getText().equals(labelName)) {
-				CoreFunctions.clickElement(driver, row);
-				Reporter.addStepLog(MessageFormat.format(PDTConstants.VERIFIED_OPTION_CHOSEN_FOR_RADIO_BTN,
-						CoreConstants.PASS, radioBtnLabel, row.getText()));
-				break;
-			}
-		}
-	}
-
-	public static void selectCheckBoxFromListAsPerLabelText(WebDriver driver, List<WebElement> WebElementList_Label,
-			String labelName) {
-		CoreFunctions.waitHandler(2);
-		System.out.println("inside radio as per label text");
-		System.out.println("count--" + WebElementList_Label.size());
-		for (WebElement row : WebElementList_Label) {
-			Log.info(CoreConstants.ACTUAL_ITEM_NAME_IS + row.getText());
-			if (row.getText().equals(labelName)) {
-				CoreFunctions.highlightObject(driver, row);
 				CoreFunctions.click(driver, row, labelName);
 				Reporter.addStepLog(CoreConstants.PASS + row.getText() + PDTConstants.IS_CLICKED);
 				break;
@@ -224,6 +125,7 @@ public class BusinessFunctions {
 		CoreFunctions.writeToPropertiesFile(PDTConstants.EMP_ID_TEXT, PDTConstants.EMP_ID + randomString);
 	}
 
+	
 	public static void selectValueFromDropdown(WebDriver driver, WebElement element, String drpdwnValue) {
 		String elementName = "";
 		boolean failedToSelect = false;
@@ -243,81 +145,6 @@ public class BusinessFunctions {
 		else
 			Reporter.addStepLog(MessageFormat.format(PDTConstants.FAIL_TO_SELECT_VALUE_IN_DROPDOWN, CoreConstants.FAIL,
 					drpdwnValue, elementName));
-	}
-
-	public static Boolean verifyCompanyNameAfterSearch(String expectedCompanyName) throws Exception {
-		Boolean isExists = false;
-		windowTitle = getWindowText.getActiveWindowText();
-		Log.info(windowTitle);
-		Window window = Desktop.describe(Window.class, new WindowDescription.Builder().title(windowTitle).build());
-		editor = window.describe(Editor.class, new EditorDescription.Builder().attachedText("Name*").build());
-		if (editor.getText().equalsIgnoreCase(expectedCompanyName)) {
-			isExists = true;
-			Reporter.addStepLog(CoreConstants.PASS + CoreConstants.PARTNER_TAB + CoreConstants.EDITOR_NAME
-					+ CoreConstants.IS_DISPLAYED_AS + editor.getText());
-		} else {
-			Reporter.addStepLog(CoreConstants.FAIL + CoreConstants.PARTNER_TAB + CoreConstants.EDITOR_NAME
-					+ PDTConstants.IS_NOT_DISPLAYED);
-			Assert.fail(CoreConstants.PARTNER_TAB + CoreConstants.EDITOR_NAME + PDTConstants.IS_NOT_DISPLAYED);
-		}
-		return isExists;
-	}
-
-	public static void closeModuleWindow() throws GeneralLeanFtException {
-		windowTitle = getWindowText.getActiveWindowText();
-		Window window = Desktop.describe(Window.class, new WindowDescription.Builder().title(windowTitle).build());
-		window.close();
-	}
-
-	public static void selectCheckBoxAsPerLabelText(WebDriver driver, WebElement WebElementList_Label,
-			String labelName) {
-		CoreFunctions.waitHandler(2);
-		Log.info(CoreConstants.ACTUAL_ITEM_NAME_IS + WebElementList_Label.getText());
-		if (WebElementList_Label.getText().equals(labelName)) {
-			CoreFunctions.click(driver, WebElementList_Label, labelName);
-			Reporter.addStepLog(CoreConstants.PASS + WebElementList_Label.getText() + PDTConstants.IS_CLICKED);
-		}
-	}
-
-	public static WebElement returnItemIfExistsInList(WebDriver driver, List<WebElement> _delElementList,
-			List<WebElement> _uploadDocumentFileList, String itemName) {
-		WebElement element = null;
-		CoreFunctions.explicitWaitTillElementListVisibility(driver, _uploadDocumentFileList);
-		try {
-			for (WebElement row : _uploadDocumentFileList) {
-				if (row.getText().equals(itemName)) {
-					return element = _delElementList.get(_uploadDocumentFileList.indexOf(row));
-				}
-			}
-		} catch (ElementNotFoundException e) {
-			e.printStackTrace();
-		}
-		return element;
-	}
-
-	public static WebElement returnItemIfExistsInListUsingAttributeValue(WebDriver driver,
-			List<WebElement> _delIconList, List<WebElement> _itemList, String itemName) {
-		WebElement element = null;
-		CoreFunctions.explicitWaitTillElementListVisibility(driver, _itemList);
-		try {
-			for (WebElement row : _itemList) {
-				if (row.getAttribute("value").equalsIgnoreCase(itemName)) {
-					return element = _delIconList.get(_itemList.indexOf(row));
-				}
-			}
-		} catch (ElementNotFoundException e) {
-			e.printStackTrace();
-		}
-		return element;
-	}
-
-	public static void selectValueFromDropdownWithoutReporting(WebElement element, String drpdwnValue) {
-		Select dropDown = new Select(element);
-		dropDown.selectByVisibleText(drpdwnValue);
-	}
-
-	public static void selectValueFromDropdownList(List<WebElement> listWebElement, int index) {
-		listWebElement.get(index).click();
 	}
 
 	/**
@@ -367,44 +194,6 @@ public class BusinessFunctions {
 		return null;
 	}
 
-	public static void selectItemFromListUsingJs(WebDriver driver, List<WebElement> WebElementList, String itemName) {
-		CoreFunctions.waitForBrowserToLoad(driver);
-		CoreFunctions.waitHandler(3);
-		for (WebElement row : WebElementList) {
-			Log.info(CoreConstants.ACTUAL_ITEM_NAME_IS + row.getText());
-			if (row.getText().equals(itemName)) {
-				CoreFunctions.clickUsingJS(driver, row, itemName);
-				Reporter.addStepLog(CoreConstants.PASS + row.getText() + PDTConstants.IS_CLICKED);
-				break;
-			}
-		}
-	}
-
-	public static boolean verifySelectedValueInDropdown(WebElement element, String drpdwnValue) {
-		if (element.getAttribute("title").equalsIgnoreCase(drpdwnValue)) {
-			Reporter.addStepLog(
-					MessageFormat.format(PDTConstants.VERIFY_VALUE_IN_DROPDOWN, CoreConstants.PASS, drpdwnValue));
-			return true;
-		} else {
-			Reporter.addStepLog(MessageFormat.format(PDTConstants.FAIL_TO_VERIFY_VALUE_IN_DROPDOWN, CoreConstants.FAIL,
-					drpdwnValue));
-			return false;
-		}
-	}
-
-	public static boolean verifyValueInTextFieldByAttribute(WebDriver driver, WebElement element, String drpdwnValue) {
-		if (element.getAttribute("value").equalsIgnoreCase(drpdwnValue)) {
-			Reporter.addStepLog(
-					MessageFormat.format(PDTConstants.VERIFY_VALUE_IN_TEXTFIELD, CoreConstants.PASS, drpdwnValue));
-			CoreFunctions.highlightObject(driver, element);
-			return true;
-		} else {
-			Reporter.addStepLog(MessageFormat.format(PDTConstants.FAIL_TO_VERIFY_VALUE_IN_TEXTFIELD, CoreConstants.FAIL,
-					drpdwnValue));
-			return false;
-		}
-	}
-
 	public static void selectOptionValueFromDropdown(WebElement element, String drpdwnValue) {
 		Select dropDown = new Select(element);
 		String elementName = element.getAttribute("value");
@@ -416,35 +205,6 @@ public class BusinessFunctions {
 		else
 			Reporter.addStepLog(MessageFormat.format(PDTConstants.FAIL_TO_SELECT_VALUE_IN_DROPDOWN, CoreConstants.FAIL,
 					drpdwnValue, elementName));
-	}
-
-	public static void updateQuery(String url, String query) {
-		Connection connection = null;
-		try {
-			DriverManager.registerDriver(new oracle.jdbc.OracleDriver());
-			connection = DriverManager.getConnection(url);
-			Statement st = connection.createStatement();
-			CoreFunctions.waitHandler(2);
-			st.executeUpdate(query);
-			CoreFunctions.waitHandler(2);
-			st.executeUpdate("commit");
-//			connection.commit();
-			CoreFunctions.waitHandler(5);
-			if (true) {
-				Log.info("executed successfully : " + query);
-			}
-			connection.close();
-		} catch (Exception ex) {
-			ex.printStackTrace();
-			Log.info(CoreConstants.ERROR + ex);
-		}
-	}
-
-	public static void selectOptionValueFromDropdown(WebElement element, int index) {
-		Select dropDown = new Select(element);
-		dropDown.selectByIndex(index);
-		Reporter.addStepLog(MessageFormat.format(PDTConstants.VERIFY_VALUE_SELECTED_IN_DROPDWON, CoreConstants.PASS,
-				element.getAttribute("title")));
 	}
 
 	public static String getTestRailIdAsPerApplication(String appName, String scenarioTagName) {
@@ -464,27 +224,6 @@ public class BusinessFunctions {
 			break;
 		default:
 			Assert.fail(appName + PDTConstants.NOT_EXIST);
-		}
-		return value;
-	}
-
-	public static String getTestRailIdAsPerEnvt(String tagValue, String scenarioTagName) {
-		String value = null;
-		switch (tagValue) {
-		case CoreConstants.VALUE_AT_PRE_PROD:
-			value = scenarioTagName.substring(scenarioTagName.indexOf("Pre:") + 4,
-					scenarioTagName.lastIndexOf("Pre:") + 10);
-			break;
-		case CoreConstants.VALUE_AT_POST_PROD:
-			value = scenarioTagName.substring(scenarioTagName.indexOf("Post:") + 5,
-					scenarioTagName.lastIndexOf("Post:") + 11);
-			break;
-		case CoreConstants.VALUE_AT_PERFORMANCE:
-			value = scenarioTagName.substring(scenarioTagName.indexOf("Perf:") + 5,
-					scenarioTagName.lastIndexOf("Perf:") + 11);
-			break;
-		default:
-			Assert.fail(tagValue + PDTConstants.NOT_EXIST);
 		}
 		return value;
 	}
@@ -515,72 +254,14 @@ public class BusinessFunctions {
 		return sectionID;
 	}
 
-	public static int getRandomNumberFromList(int size) {
-		Random rand = new Random();
-		return rand.nextInt(size);
-	}
-
-	public static Boolean verifyTextExistsInList(WebDriver driver, List<WebElement> webElementList, String itemName) {
-		Boolean isExists = false;
-		CoreFunctions.explicitWaitTillElementListVisibility(driver, webElementList);
-		try {
-			for (WebElement row : webElementList) {
-				if (row.getText().contains(itemName)) {
-					isExists = true;
-					CoreFunctions.highlightObject(driver, row);
-					Reporter.addStepLog(MessageFormat.format(PDTConstants.VERIFIED_EMPL_HEADING_POPUP,
-							CoreConstants.PASS, row.getText()));
-					break;
-				}
-			}
-		} catch (ElementNotFoundException e) {
-			e.printStackTrace();
-		}
-		return isExists;
-	}
-
-	public static String setMoneyFormat(double amount) {
-		DecimalFormat df = new DecimalFormat("0.00");
-		df.setRoundingMode(RoundingMode.UP);
-		df.setGroupingUsed(true);
-		df.setGroupingSize(3);
-		return df.format(amount);
-	}
-
-	public static void getUserNameAndPasswordFromEmail() throws Exception {
-
-		String userID = EmailUtil.searchEmailAndReturnResult(PDTConstants.HOST_EMAIL_DOMAIN,
-				PDTConstants.EMAIL_USERNAME, PDTConstants.AUTO_EMAIL_PWD, PDTConstants.EXCEPTION_EMAIL_SENDER,
-				PDTConstants.EMAIL_USERNAME_SUBJECT, PDTConstants.TRANSFEREE_USER_NAME);
-		passwordValue = EmailUtil.searchEmailAndReturnResult(PDTConstants.HOST_EMAIL_DOMAIN,
-				PDTConstants.EMAIL_USERNAME, PDTConstants.AUTO_EMAIL_PWD, PDTConstants.EXCEPTION_EMAIL_SENDER,
-				PDTConstants.EMAIL_PASSWORD_SUBJECT, PDTConstants.TRANSFEREE_PASSWORD);
-		String s1 = userID.replace("in main script result==", "");
-		String s2 = s1.replace(":", "").trim();
-		userNameValue = s2.replace("</span>", "").trim();
-		CoreFunctions.writeToPropertiesFile("Transferee_UserNameInEMail", userNameValue);
-		CoreFunctions.waitHandler(20);
-
-	}
-
-	public static void selectItemFromListUsingTextAndDoubleClick(WebDriver driver, List<WebElement> WebElementList,
-			String itemName) {
-		for (WebElement element : WebElementList) {
-			Log.info(CoreConstants.ACTUAL_ITEM_NAME_IS + element.getText());
-			if (element.getText().contains(itemName) && CoreFunctions.verifyElementPresentOnPage(element, itemName)) {
-				CoreFunctions.highlightObject(driver, element);
-				Actions act = new Actions(driver);
-				act.moveToElement(element).doubleClick().build().perform();
-			}
-		}
-	}
-
 	public static int returnindexItemFromListUsingText(WebDriver driver, List<WebElement> WebElementList,
 			String itemName) {
 		try {
 			for (WebElement row : WebElementList) {
+				CoreFunctions.hover(driver, row);
 				Log.info(CoreConstants.ACTUAL_ITEM_NAME_IS + row.getText());
-				if (row.getText().trim().equals(itemName.trim())) {
+				if (row.getText().equals(itemName)) {
+					CoreFunctions.highlightObject(driver, row);
 					return WebElementList.indexOf(row);
 				}
 			}
@@ -588,83 +269,6 @@ public class BusinessFunctions {
 			e.printStackTrace();
 		}
 		return -1;
-	}
-
-	public static void clickItemFromListUsingText(WebDriver driver, List<WebElement> WebElementList, String itemName) {
-		CoreFunctions.waitHandler(8);
-		for (WebElement row : WebElementList) {
-			Log.info(CoreConstants.ACTUAL_ITEM_NAME_IS + row.getText());
-			if (row.getText().equals(itemName)) {
-				CoreFunctions.click(driver, row, row.getText());
-				Reporter.addStepLog(CoreConstants.PASS + row.getText() + PDTConstants.IS_CLICKED);
-				break;
-			}
-		}
-	}
-
-	public static void selectOptValueFromDropdown(WebElement element, String drpdwnValue) {
-		CoreFunctions.waitHandler(5);
-		Select dropDown = new Select(element);
-		dropDown.selectByValue(drpdwnValue);
-	}
-
-	public static WebElement returnReportNameIfContainsInList(WebDriver driver, List<WebElement> _elementList,
-			String itemName) {
-		for (WebElement element : _elementList) {
-			Log.info(CoreConstants.ACTUAL_ITEM_NAME_IS + element.getText());
-			System.out
-					.println("Substring Report Name " + element.getText().substring(0, element.getText().indexOf('.')));
-			if (itemName.contains(element.getText().substring(0, element.getText().indexOf('.')))) {
-				return element;
-			}
-		}
-		return null;
-	}
-
-	public static WebElement returnItemIfContainsInList(WebDriver driver, List<WebElement> _elementList,
-			String itemName) {
-		for (WebElement element : _elementList) {
-			Log.info(CoreConstants.ACTUAL_ITEM_NAME_IS + element.getText());
-			if (element.getText().contains(itemName)) {
-				return element;
-			}
-		}
-		return null;
-	}
-
-	public static String selectRandomValueFormDropDown(WebDriver driver, List<WebElement> dropDownList) {
-		WebElement selectedOption = dropDownList.get(ThreadLocalRandom.current().nextInt(1, dropDownList.size()));
-		selectedOption.click();
-		return selectedOption.getText();
-	}
-
-	public static boolean compareList(List<String> actualList, List<String> expectedList) {
-		if (actualList.equals(expectedList)) {
-			return true;
-		} else {
-			return false;
-		}
-	}
-
-	public static List<String> sortList(List<String> listToBeSorted, String sortingOrder) {
-		try {
-			Comparator<String> c = null;
-			switch (sortingOrder) {
-			case PDTConstants.DESCENDING:
-				c = (I1, I2) -> (I2.compareTo(I1));
-				break;
-			case PDTConstants.ASCENDING:
-				c = (I1, I2) -> (I1.compareTo(I2));
-				break;
-			default:
-				Assert.fail(PDTConstants.INVALID_SORT_OPERATION);
-			}
-			Collections.sort(listToBeSorted, c);
-		} catch (Exception ex) {
-			Log.info(CoreConstants.ERROR + ex.getMessage());
-			Assert.fail(CoreConstants.ERROR + PDTConstants.UNABLE_TO_SORT_LIST);
-		}
-		return listToBeSorted;
 	}
 
 	public static void verifyOtherTextBoxIsDisplayed(WebDriver driver, String jsonReimbursedBy, WebElement element,
@@ -697,7 +301,6 @@ public class BusinessFunctions {
 
 	public static WebElement returnItemFromListUsingAttribute(WebDriver driver, List<WebElement> WebElementList,
 			String itemName, String attribute) {
-		CoreFunctions.waitHandler(3);
 		try {
 			for (WebElement row : WebElementList) {
 				Log.info("The Actual Item Name is :" + row.getAttribute(attribute));
@@ -732,8 +335,8 @@ public class BusinessFunctions {
 
 	public static String[] getCSMCredentials(PDT_LoginDetails _loginDetailsApplication) {
 		String csmCredentials[] = new String[7];
-		// switch (CoreFunctions.getPropertyFromConfig("envt").toLowerCase()) {
-		switch (System.getProperty("envt").toLowerCase()) {
+		//switch (CoreFunctions.getPropertyFromConfig("envt").toLowerCase()) {
+		 switch (System.getProperty("envt").toLowerCase()) {
 		case CoreConstants.ENVT_DEV:
 			csmCredentials[0] = _loginDetailsApplication.dev.csmUserName;
 			csmCredentials[1] = _loginDetailsApplication.dev.csmPassword;
@@ -808,7 +411,6 @@ public class BusinessFunctions {
 		try {
 			CoreFunctions.explicitWaitTillElementListClickable(driver, listWebElement);
 			listWebElement.get(index).click();
-			CoreFunctions.waitHandler(5);
 		} catch (Exception e) {
 			Assert.fail(MessageFormat.format(MobilityXConstants.EXCEPTION_OCCURED_WHILE_CLICKING_ON_ELEMENT_FROM_LIST,
 					CoreConstants.FAIL, e.getMessage(), listWebElement.get(index).getText()));
@@ -819,15 +421,9 @@ public class BusinessFunctions {
 			String itemName, boolean flag) {
 		try {
 			for (WebElement row : WebElementList) {
-				try {
-					if ((row.getText().trim()).contains(itemName))
-						return WebElementList.indexOf(row);
-				} catch (StaleElementReferenceException e) {
-					WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(60));
-					wait.until(ExpectedConditions.refreshed(ExpectedConditions.visibilityOf(row)));
-					if ((row.getText().trim()).contains(itemName))
-						return WebElementList.indexOf(row);
-				}
+				Log.info(CoreConstants.ACTUAL_ITEM_NAME_IS + row.getText());
+				if ((row.getText().trim()).contains(itemName))
+					return WebElementList.indexOf(row);
 			}
 		} catch (ElementNotFoundException e) {
 			Assert.fail(MessageFormat.format(
@@ -837,9 +433,8 @@ public class BusinessFunctions {
 		return -1;
 	}
 
-	public static void checkValidationBasedOnInput(boolean isValidationMessageDisplayed, String fieldName,
+public static void checkValidationBasedOnInput(boolean isValidationMessageDisplayed, String fieldName,
 			String inputValue) {
-
 		try {
 			if ((Double.parseDouble(inputValue) < 0.5 || Double.parseDouble(inputValue) > 1000)
 					&& isValidationMessageDisplayed) {
@@ -882,6 +477,7 @@ public class BusinessFunctions {
 			}
 		}
 	}
+
 
 	public static void checkValidationBasedOnInput(String validationMessage, String fieldName, String inputValue) {
 
@@ -992,200 +588,6 @@ public class BusinessFunctions {
 		}
 	}
 
-	public static void verifyFieldNotPresentOnBenefitPage(WebDriver driver, List<WebElement> elementList,
-			String benefitName, String fieldName) {
-		try {
-//			System.out.println(benefitName + " If Applicable List Size : " + elementList.size());
-			if (elementList.size() > 0) {
-				Assert.fail((MessageFormat.format(COREFLEXConstants.FIELD_DISPLAYED_ON_BENEFIT_PAGE, CoreConstants.FAIL,
-						benefitName, COREFLEXConstants.IF_APPLICABLE)));
-			} else {
-				Reporter.addStepLog(MessageFormat.format(
-						COREFLEXConstants.SUCCESSFULLY_VERIFIED_FIELD_NOT_DISPLAYED_ON_BENEFIT_PAGE, CoreConstants.PASS,
-						benefitName, COREFLEXConstants.IF_APPLICABLE));
-			}
-		} catch (Exception e) {
-			Reporter.addStepLog(
-					MessageFormat.format(COREFLEXConstants.EXCEPTION_OCCURED_WHILE_VERIFYING_FIELD_ON_BENEFIT_PAGE,
-							CoreConstants.FAIL, e.getMessage(), benefitName, fieldName));
-		}
-	}
-
-	public static void selectValueFromDropdown(WebElement element, String drpdwnValue) {
-		Select dropDown = new Select(element);
-		String elementName = element.getAttribute("title");
-		dropDown.selectByVisibleText(drpdwnValue);
-		if (element.getAttribute("title").equalsIgnoreCase(drpdwnValue))
-			Reporter.addStepLog(MessageFormat.format(PDTConstants.VERIFY_VALUE_SELECTED_IN_DROPDWON, CoreConstants.PASS,
-					elementName, drpdwnValue));
-		else
-			Reporter.addStepLog(MessageFormat.format(PDTConstants.FAIL_TO_SELECT_VALUE_IN_DROPDOWN, CoreConstants.FAIL,
-					drpdwnValue, elementName));
-	}
-
-	public static String getPdfDocContent(String fileName) {
-		PDDocument document;
-		try {
-			File file = new File(fileName);
-			document = PDDocument.load(file);
-			PDFTextStripper pdfStripper = new PDFTextStripper();
-			String text = pdfStripper.getText(document);
-			document.close();
-			return text;
-		} catch (IOException e) {
-			Assert.fail(CoreConstants.ERROR + e.getMessage());
-		}
-		return null;
-	}
-
-	public static String getDocContent(String fileName) {
-		try {
-			XWPFDocument doc = new XWPFDocument(Files.newInputStream(Paths.get(fileName)));
-			XWPFWordExtractor xwpfWordExtractor = new XWPFWordExtractor(doc);
-			String docText = xwpfWordExtractor.getText();
-			xwpfWordExtractor.close();
-			return docText;
-		} catch (IOException e) {
-			Assert.fail(CoreConstants.ERROR + e.getMessage());
-		}
-		return null;
-	}
-
-	public static String getExpectedCashoutDescription() {
-		String expectedCashoutDescription = null;
-		DecimalFormat format = new DecimalFormat();
-		format.setDecimalSeparatorAlwaysShown(false);
-		try {
-			if (CoreFunctions.getPropertyFromConfig("CF_Transferee_CashoutCurrencySign").length() == 1) {
-				expectedCashoutDescription = CoreFunctions.getPropertyFromConfig("CF_Transferee_CashoutCurrencySign")
-						+ format.format(Double.parseDouble(
-								CoreFunctions.getPropertyFromConfig("CF_Transferee_SelectedCashOutPoints")))
-						+ " " + CoreFunctions.getPropertyFromConfig("CF_Transferee_CashoutCurrencyCode")
-						+ (CoreFunctions.getPropertyFromConfig("CF_Transferee_CashoutCurrencyCode").equals("USD")
-								? MobilityXConstants.TRANSFEREE_CASHOUT_DESCRIPTION_CHECK
-								: MobilityXConstants.TRANSFEREE_CASHOUT_DESCRIPTION_WIRE);
-			} else {
-				expectedCashoutDescription = CoreFunctions.getPropertyFromConfig("CF_Transferee_CashoutCurrencySign")
-						+ " "
-						+ format.format(Double.parseDouble(
-								CoreFunctions.getPropertyFromConfig("CF_Transferee_SelectedCashOutPoints")))
-						+ " " + CoreFunctions.getPropertyFromConfig("CF_Transferee_CashoutCurrencyCode")
-						+ MobilityXConstants.TRANSFEREE_CASHOUT_DESCRIPTION_WIRE;
-			}
-		} catch (Exception e) {
-			Assert.fail(CoreConstants.ERROR + e.getMessage());
-		}
-		return expectedCashoutDescription;
-	}
-
-	public static String getExpectedCashoutValue(double cashoutPoints) {
-		DecimalFormat format = new DecimalFormat();
-		format.setDecimalSeparatorAlwaysShown(false);
-		return CoreFunctions.getPropertyFromConfig("CF_Transferee_CashoutCurrencySign") + " "
-				+ format.format(cashoutPoints) + " ("
-				+ CoreFunctions.getPropertyFromConfig("CF_Transferee_CashoutCurrencyCode") + ")";
-	}
-
-	public static String getMXClientExpectedCashoutDescription() {
-		String expectedCashoutDescription = null;
-		DecimalFormat format = new DecimalFormat();
-		format.setDecimalSeparatorAlwaysShown(false);
-		try {
-			if (CoreFunctions.getPropertyFromConfig("CF_Transferee_CashoutCurrencySign").length() == 1) {
-				expectedCashoutDescription = CoreFunctions.getPropertyFromConfig("CF_Transferee_CashoutCurrencySign")
-						+ format.format(Double
-								.parseDouble(CoreFunctions.getPropertyFromConfig("CF_Client_SelectedCashOutPoints")))
-						+ " " + CoreFunctions.getPropertyFromConfig("CF_Transferee_CashoutCurrencyCode");
-			} else {
-				expectedCashoutDescription = CoreFunctions.getPropertyFromConfig("CF_Transferee_CashoutCurrencySign")
-						+ " " + format.format(Double
-								.parseDouble(CoreFunctions.getPropertyFromConfig("CF_Client_SelectedCashOutPoints")));
-			}
-		} catch (Exception e) {
-			Assert.fail(CoreConstants.ERROR + e.getMessage());
-		}
-		return expectedCashoutDescription;
-	}
-
-	public static String getMXClientSubmissionsExpectedCashoutDescription() {
-		String expectedCashoutDescription = null;
-		DecimalFormat format = new DecimalFormat();
-		format.setDecimalSeparatorAlwaysShown(false);
-		DecimalFormat precesionFormat = new DecimalFormat("#.00");
-		try {
-			if (CoreFunctions.getPropertyFromConfig("CF_Transferee_CashoutCurrencyCode").equals("USD")) {
-				expectedCashoutDescription = MobilityXConstants.CLIENT_SUBMISSIONS_CASHOUT_DESCRIPTION + " "
-						+ CoreFunctions.getPropertyFromConfig("CF_Transferee_CashoutCurrencySign")
-						+ format.format(Double
-								.parseDouble(CoreFunctions.getPropertyFromConfig("CF_Client_SelectedCashOutPoints")))
-						+ " " + CoreFunctions.getPropertyFromConfig("CF_Transferee_CashoutCurrencyCode");
-			} else if (CoreFunctions.getPropertyFromConfig("CF_Transferee_CashoutCurrencySign").length() == 1) {
-				expectedCashoutDescription = MobilityXConstants.CLIENT_SUBMISSIONS_CASHOUT_DESCRIPTION + " "
-						+ CoreFunctions.getPropertyFromConfig("CF_Transferee_CashoutCurrencySign")
-						+ format.format(Double
-								.parseDouble(CoreFunctions.getPropertyFromConfig("CF_Client_SelectedCashOutPoints")))
-						+ " " + CoreFunctions.getPropertyFromConfig("CF_Transferee_CashoutCurrencyCode");
-			} else {
-				expectedCashoutDescription = MobilityXConstants.CLIENT_SUBMISSIONS_CASHOUT_DESCRIPTION + " "
-						+ CoreFunctions.getPropertyFromConfig("CF_Transferee_CashoutCurrencySign")
-						+ precesionFormat.format(Double
-								.parseDouble(CoreFunctions.getPropertyFromConfig("CF_Client_SelectedCashOutPoints")))
-						+ " " + CoreFunctions.getPropertyFromConfig("CF_Transferee_CashoutCurrencyCode");
-			}
-		} catch (Exception e) {
-			Assert.fail(CoreConstants.ERROR + e.getMessage());
-		}
-		return expectedCashoutDescription;
-	}
-
-	public static String getExpectedCashoutDescriptionWithDecimalPrecesion() {
-		String expectedCashoutDescription = null;
-		DecimalFormat precesionFormat = new DecimalFormat("#.00");
-		DecimalFormat format = new DecimalFormat();
-		format.setDecimalSeparatorAlwaysShown(false);
-		try {
-
-			if (CoreFunctions.getPropertyFromConfig("CF_Transferee_CashoutCurrencyCode").equals("USD")) {
-				expectedCashoutDescription = CoreFunctions.getPropertyFromConfig("CF_Transferee_CashoutCurrencySign")
-						+ format.format(Double.parseDouble(
-								CoreFunctions.getPropertyFromConfig("CF_Transferee_SelectedCashOutPoints")))
-						+ " " + CoreFunctions.getPropertyFromConfig("CF_Transferee_CashoutCurrencyCode")
-						+ MobilityXConstants.TRANSFEREE_CASHOUT_DESCRIPTION_CHECK;
-
-			} else if (CoreFunctions.getPropertyFromConfig("CF_Transferee_CashoutCurrencySign").length() == 1) {
-				expectedCashoutDescription = CoreFunctions.getPropertyFromConfig("CF_Transferee_CashoutCurrencySign")
-						+ format.format(Double.parseDouble(
-								CoreFunctions.getPropertyFromConfig("CF_Transferee_SelectedCashOutPoints")))
-						+ " " + CoreFunctions.getPropertyFromConfig("CF_Transferee_CashoutCurrencyCode")
-						+ MobilityXConstants.TRANSFEREE_CASHOUT_DESCRIPTION_WIRE;
-			} else {
-				expectedCashoutDescription = CoreFunctions.getPropertyFromConfig("CF_Transferee_CashoutCurrencySign")
-						+ " "
-						+ format.format(Double.parseDouble(
-								CoreFunctions.getPropertyFromConfig("CF_Transferee_SelectedCashOutPoints")))
-						+ " " + CoreFunctions.getPropertyFromConfig("CF_Transferee_CashoutCurrencyCode")
-						+ MobilityXConstants.TRANSFEREE_CASHOUT_DESCRIPTION_WIRE;
-			}
-		} catch (Exception e) {
-			Assert.fail(CoreConstants.ERROR + e.getMessage());
-		}
-		return expectedCashoutDescription;
-	}
-
-	public static String selectAndReturnRandomValueFromList(WebDriver driver, PDT_AddNewPolicyPage addNewPolicyPage,
-			String subBenefitFormName, List<WebElement> webElementList, String labelText) {
-		String randValue = null;
-		try {
-			randValue = webElementList.get(CoreFunctions.getRandomNumber(0, webElementList.size() - 1)).getText();
-			CoreFunctions.selectItemInListByText(driver, webElementList, randValue, labelText,
-					PDTConstants.RADIO_BUTTON_LIST, true);
-		} catch (Exception e) {
-			Assert.fail(MessageFormat.format(PDTConstants.FAIL_TO_SELECT_VALUE_FROM_FIELD, CoreConstants.FAIL,
-					randValue, labelText, PDTConstants.RADIO_BUTTON_LIST));
-		}
-		return randValue.trim();
-	}
-
 	public static boolean verifyDefaultOptionIsSelectedInDrpDown(String selectedOptionText, String expectedOption,
 			String lblDrpDown) {
 		if (selectedOptionText.equalsIgnoreCase(expectedOption)) {
@@ -1219,6 +621,185 @@ public class BusinessFunctions {
 		Reporter.addStepLog(
 				"<b>Time taken by sub-benefit:-'" + subBenefitName + "' to Load on '" + pageName + "' benefit page is:-"
 						+ pgToLoadformat.format((timeAfterAction - timeBeforeAction) / 1000) + " Seconds </b>");
+	}
+
+	/**
+	 * @param msg
+	 * @param sectionType
+	 * @return Verify Toast Messages appearing for Different Sections
+	 */
+	public static boolean verifyMyloToastMessage(WebDriver driver, WebElement element, String msg, String sectionType) {
+		boolean flag = false;
+		try {
+			CoreFunctions.isElementVisible(element);
+			CoreFunctions.highlightObject(driver, element);
+			flag = (element.getAttribute("innerHTML").split("<")[0].equals(msg));
+		} catch (Exception e) {
+			Reporter.addStepLog(MessageFormat.format(CoreConstants.FAIL_TO_VERIFY_ELEMENT_ON_SECTION,
+					CoreConstants.FAIL, MYLOConstants.ALERT_MESSAGE, sectionType));
+		}
+		if (flag)
+			Reporter.addStepLog(MessageFormat.format(MYLOConstants.VERIFIED_ALERT_MESSAGE_DISPLAYED, CoreConstants.PASS,
+					msg, MYLOConstants.JOURNEY));
+		else
+			Reporter.addStepLog(MessageFormat.format(MYLOConstants.VERIFIED_ALERT_MESSAGE_NOT_DISPLAYED,
+					CoreConstants.FAIL, msg, MYLOConstants.JOURNEY));
+		return flag;
+	}
+
+	/**
+	 * @param msg
+	 * @param sectionType
+	 * @return Verify Toast Messages appearing for Different Sections
+	 */
+	public static boolean verifyMyloPopUpMessage(WebDriver driver, WebElement element, String msg, String pageName) {
+		boolean flag = false;
+		try {
+			CoreFunctions.explicitWaitTillElementVisibility(driver, element, element.getText(), 60);
+			CoreFunctions.highlightObject(driver, element);
+			flag = (element.getText().equals(msg));
+		} catch (Exception e) {
+			Assert.fail(MessageFormat.format(CoreConstants.FAIL_TO_VERIFY_ELEMENT_ON_PAGE, CoreConstants.FAIL,
+					MYLOConstants.EXPECTED_POPUP_MESSAGE+msg, pageName));
+		}
+		if (flag)
+			Reporter.addStepLog(MessageFormat.format(MYLOConstants.VERIFIED_POPUP_MESSAGE_DISPLAYED, CoreConstants.PASS,
+					msg, pageName));
+		else
+			Reporter.addStepLog(MessageFormat.format(MYLOConstants.EXPECTED_MESSAGE_DISPLAYED, CoreConstants.FAIL, msg,
+					element.getText(), pageName));
+		return flag;
+
+	}
+
+	public static boolean verifyMyloValidationMessage(String expectedMessage, String actualMessage,
+			String sectionName) {
+		boolean flag = actualMessage.equalsIgnoreCase(expectedMessage);
+		String msg = (flag)
+				? MessageFormat.format(MYLOConstants.VERIFIED_MESSAGE_DISPLAYED, CoreConstants.PASS, actualMessage,
+						sectionName)
+				: MessageFormat.format(MYLOConstants.EXPECTED_MESSAGE_DISPLAYED, CoreConstants.FAIL, expectedMessage,
+						actualMessage, sectionName);
+		Reporter.addStepLog(msg);
+		return flag;
+	}
+
+	public static void verifyMyloButtonEnabilityStatus(String type, WebElement element, String btnName,
+			String sectionName, String pageName) {
+		boolean flag = false;
+		List<String> disableTypeList = Stream.of(MYLOConstants.CANCELED, MYLOConstants.CLOSED,
+				MYLOConstants.PAYMENT_CUT_OFF_COMPLETION, MYLOConstants.DISABLE).collect(Collectors.toList());
+		try {
+			flag = CoreFunctions.isElementVisible(element);
+		} catch (Exception e) {
+			Reporter.addStepLog(MessageFormat.format(CoreConstants.FAIL_TO_VERIFY_ELEMENT_ON_SECTION,
+					CoreConstants.FAIL, element, sectionName));
+		}
+		if (disableTypeList.contains(type) || type.contains(MYLOConstants.WITHOUT)) {
+			Assert.assertFalse(flag, MessageFormat.format(MYLOConstants.BUTTON_ENABLED, CoreConstants.FAIL, btnName,
+					sectionName, pageName));
+			Reporter.addStepLog(MessageFormat.format(MYLOConstants.BUTTON_DISABLED, CoreConstants.PASS, btnName,
+					sectionName, pageName));
+		} else {
+			Assert.assertTrue(flag, MessageFormat.format(MYLOConstants.BUTTON_DISABLED, CoreConstants.FAIL, btnName,
+					sectionName, pageName));
+			Reporter.addStepLog(MessageFormat.format(MYLOConstants.BUTTON_ENABLED, CoreConstants.PASS, btnName,
+					sectionName, pageName));
+		}
+	}
+
+	/**
+	 * Set any Mylo Input fields based on the parameter passed for fieldName,
+	 * fieldValue, element,type and returns the UpdatedValue
+	 * 
+	 * @param driver
+	 * @param fieldName
+	 * @param fieldValue
+	 * @param element
+	 * @param type
+	 * @return
+	 */
+	public static String setMyloInputFields(WebDriver driver, String fieldName, String fieldValue, WebElement element,
+			String type) {
+		String updatedValue = "";
+		type = (fieldValue.equals(MYLOConstants.BLANK)) ? MYLOConstants.BLANK : type;
+		switch (type) {
+		case MYLOConstants.RANDOM_STRING:
+			updatedValue = CoreFunctions.generateRandomCharacters(Integer.parseInt(fieldValue), 0);
+			break;
+		case MYLOConstants.RANDOM_INTEGER:
+			updatedValue = String.valueOf(CoreFunctions.generateRandomNumberOfLength(Integer.parseInt(fieldValue)));
+			break;
+		case MYLOConstants.BLANK:
+			updatedValue = CoreFunctions.setBlankField(driver, element, fieldName);
+			break;
+		case MYLOConstants.SPECIAL_CHARACTERS_STRING:
+			updatedValue = CoreFunctions.generateRandomCharacters(4, 2);
+			break;
+		case MYLOConstants.VALUE:
+			updatedValue = fieldValue;
+			break;
+		default:
+			Assert.fail(MYLOConstants.ENTER_CORRECT_TYPE);
+		}
+		CoreFunctions.clearAndSetText(driver, element, fieldName, updatedValue);
+		return updatedValue;
+	}
+
+	/**
+	 * Set any Mylo Dropdown fields based on the parameter passed for
+	 * fieldValue,locator,type and returns the UpdatedValue
+	 * 
+	 * @param driver
+	 * @param locator
+	 * @param fieldValue
+	 * @return
+	 */
+	public static String setMyloDropdownFields(WebDriver driver, By locator, String fieldType, String fieldName) {
+		String updatedValue = null;
+		List<WebElement> optionList = CoreFunctions.getElementListByLocator(driver, locator);
+		try {
+			if (fieldType.equals(MYLOConstants.RANDOM)) {
+				optionList.remove(0);
+				updatedValue = CoreFunctions.getRandomElementValueFromList(driver, optionList);
+			} else
+				updatedValue = fieldType;
+			selectItemFromListUsingText(driver, optionList, updatedValue);
+		} catch (Exception e) {
+			Assert.fail(MessageFormat.format(CoreConstants.FAIL_TO_SELECT_VALUE_FROM_DROPDOWN, CoreConstants.FAIL,
+					fieldType, fieldName));
+		}
+		return updatedValue;
+	}
+
+	/**
+	 * Wait for Mylo Spinner to disappear
+	 * 
+	 * @param driver
+	 * @param element
+	 */
+	public static void fluentWaitForMyloSpinnerToDisappear(WebDriver driver, WebElement element) {
+		if (CoreFunctions.isElementExist(driver, element, 5)) {
+			FluentWait<WebDriver> wait = new FluentWait<>(driver).withTimeout(Duration.ofSeconds(90))
+					.pollingEvery(Duration.ofMillis(1000)).withMessage("Timeout occured!")
+					.ignoring(NoSuchElementException.class);
+			wait.until(ExpectedConditions.invisibilityOf(element));
+		}
+	}
+
+	public static WebElement returnElementFromListUsingAttribute(WebDriver driver, List<WebElement> WebElementList,
+			String itemName, String attribute) {
+		try {
+			for (WebElement row : WebElementList) {
+				Log.info("The Actual Item Name is :" + row.getAttribute(attribute));
+				if (row.getAttribute(attribute).toLowerCase().contains(itemName.toLowerCase().replace(" ", "")))
+					return row;
+			}
+		} catch (Exception ex) {
+			Log.info(CoreConstants.ERROR + ex.getMessage());
+			Assert.fail(CoreConstants.ERROR + PDTConstants.ELEMENT_NOT_FOUND);
+		}
+		return null;
 	}
 
 	public static ArrayList<String> getSubBenefitList(String key) {
@@ -1481,6 +1062,17 @@ public class BusinessFunctions {
 		return false;
 	}
 
+	/**
+	 * Select random Multiple drop down options
+	 * 
+	 * @param driver
+	 * @param dropDownName
+	 * @param _drpDown
+	 * @param _drpDownOptions
+	 * @param _drpDownSelectedOptions
+	 * @param randOptions
+	 * @param subBenefitFormName
+	 */
 	public static void selectRandomDropDownOption(WebDriver driver, String dropDownName, WebElement _drpDown,
 			List<WebElement> _drpDownOptions, List<WebElement> _drpDownSelectedOptions, List<String> randOptions,
 			String subBenefitFormName) {
@@ -1502,7 +1094,97 @@ public class BusinessFunctions {
 					dropDownName, subBenefitFormName));
 		}
 	}
+	
+	public static String setDifferentDropDownFieldsForMylo(WebDriver driver, String fieldValue,
+			List<WebElement> optionList) {
+		String updatedValue = null;
+		if (fieldValue.equals(MYLOConstants.RANDOM)) {
+			optionList.remove(0);
+			updatedValue = CoreFunctions.getRandomElementValueFromList(driver, optionList);
+			BusinessFunctions.selectItemFromListUsingText(driver, optionList, updatedValue);
+		} else {
+			updatedValue = fieldValue;
+			BusinessFunctions.selectItemFromListUsingText(driver, optionList, fieldValue);
+		}
+		return updatedValue;
+	}
 
+
+	/**
+	 * Select and Return single random drop down option
+	 * 
+	 * @param driver
+	 * @param _drpDown
+	 * @param _drpDownOptions
+	 * @param _lblDrpDown
+	 * @return
+	 */
+	public static String selectAndReturnRandomOptionFromDropDown(WebDriver driver, WebElement _drpDown,
+			List<WebElement> _drpDownOptions, WebElement _lblDrpDown) {
+		String randOptionDrpDown = null;
+		try {
+			CoreFunctions.clickElement(driver, _drpDown);
+			CoreFunctions.explicitWaitTillElementListVisibility(driver, _drpDownOptions);
+			randOptionDrpDown = _drpDownOptions.get(CoreFunctions.getRandomNumber(0, _drpDownOptions.size() - 1))
+					.getText();
+			CoreFunctions.selectItemInListByText(driver, _drpDownOptions, randOptionDrpDown, _lblDrpDown.getText(),
+					PDTConstants.DROP_DOWN, true);
+
+		} catch (Exception e) {
+			Assert.fail("Failed to select random option from drop down:-" + _lblDrpDown.getText());
+		}
+		return randOptionDrpDown;
+	}
+
+	/**
+	 * Select and return random value from radio button.
+	 * 
+	 * @param driver
+	 * @param radioButtonList
+	 * @param lblRadioButton
+	 * @return
+	 */
+	public static String selectAndReturnRandomValFromRadioButton(WebDriver driver, List<WebElement> radioButtonList,
+			WebElement lblRadioButton) {
+		String randRadioButton = null;
+		try {
+			randRadioButton = radioButtonList.get(CoreFunctions.getRandomNumber(0, radioButtonList.size() - 1))
+					.getText().trim();
+			CoreFunctions.selectItemInListByText(driver, radioButtonList, randRadioButton, lblRadioButton.getText(),
+					PDTConstants.RADIO_BUTTON_LIST, true);
+		} catch (Exception e) {
+			Assert.fail("Failed to select random value from radio button:-" + lblRadioButton.getText());
+		}
+		return randRadioButton;
+	}
+
+	public static boolean verifyRadioButtonIsSelected(WebDriver driver, List<WebElement> _radioLabelList,
+			List<WebElement> _radioButtonList, String expectedSelection, String fieldName, String lblSelectedText) {
+		int index = BusinessFunctions.returnindexItemFromListUsingText(driver, _radioLabelList, expectedSelection);
+		if (_radioButtonList.get(index).getAttribute("checked").equalsIgnoreCase("true")) {
+			CoreFunctions.highlightObject(driver, _radioButtonList.get(index));
+			Reporter.addStepLog(MessageFormat.format(PDTConstants.VERIFIED_SELECTED_VAL_FOR_RADIO_BTN,
+					CoreConstants.PASS, lblSelectedText, fieldName, expectedSelection));
+			return true;
+		} else {
+			Reporter.addStepLog(MessageFormat.format(PDTConstants.FAILED_TO_VERIFY_SELECTED_VAL_FOR_RADIO_BTN,
+					CoreConstants.PASS, lblSelectedText, fieldName, expectedSelection));
+			return false;
+		}
+	}
+
+	public static void verifyDefaultSelectedRadioButtonForField(WebDriver driver, List<WebElement> _radioLabelList,
+			List<WebElement> _radioButtonList, String fieldName, String expectedSelection,
+			PDT_GeneralInformationPage generalInfoPage, PDT_SharedSubBenefit_Steps sharedSubBenefitStep) {
+		if (generalInfoPage.getExpenseMgmt().equalsIgnoreCase(PDTConstants.YES)) {
+			sharedSubBenefitStep.getCustomSoftAssertObj().assertTrue(
+					verifyRadioButtonIsSelected(driver, _radioLabelList, _radioButtonList, expectedSelection, fieldName,
+							PDTConstants.DEFAULT_SELECTED),
+					MessageFormat.format(PDTConstants.FAILED_TO_VERIFY_RADIO_BTN, CoreConstants.FAIL, PDTConstants.DEFAULT_SELECTED, fieldName,
+							expectedSelection));
+		}
+	}
+	
 	public static boolean verifyFlexWordNotDisplayed(WebDriver driver, WebElement flexWord, String pageName) {
 		boolean isFlexWordDisplayed = false;
 		try {
@@ -1519,6 +1201,310 @@ public class BusinessFunctions {
 			return true;
 		} else
 			return false;
+	}
+	
+	public static Boolean verifyCompanyNameAfterSearch(String expectedCompanyName) throws Exception {
+		Boolean isExists = false;
+		windowTitle = getWindowText.getActiveWindowText();
+		Log.info(windowTitle);
+		Window window = Desktop.describe(Window.class, new WindowDescription.Builder().title(windowTitle).build());
+		editor = window.describe(Editor.class, new EditorDescription.Builder().attachedText("Name*").build());
+		if (editor.getText().equalsIgnoreCase(expectedCompanyName)) {
+			isExists = true;
+			Reporter.addStepLog(CoreConstants.PASS + CoreConstants.PARTNER_TAB + CoreConstants.EDITOR_NAME
+					+ CoreConstants.IS_DISPLAYED_AS + editor.getText());
+		} else {
+			Reporter.addStepLog(CoreConstants.FAIL + CoreConstants.PARTNER_TAB + CoreConstants.EDITOR_NAME
+					+ PDTConstants.IS_NOT_DISPLAYED);
+			Assert.fail(CoreConstants.PARTNER_TAB + CoreConstants.EDITOR_NAME + PDTConstants.IS_NOT_DISPLAYED);
+		}
+		return isExists;
+	}
+	public static void closeModuleWindow() throws GeneralLeanFtException {
+		windowTitle = getWindowText.getActiveWindowText();
+		Window window = Desktop.describe(Window.class, new WindowDescription.Builder().title(windowTitle).build());
+		window.close();
+	}
+	public static void selectCheckBoxAsPerLabelText(WebDriver driver, WebElement WebElementList_Label,
+			String labelName) {
+		CoreFunctions.waitHandler(2);
+		Log.info(CoreConstants.ACTUAL_ITEM_NAME_IS + WebElementList_Label.getText());
+		if (WebElementList_Label.getText().equals(labelName)) {
+			CoreFunctions.click(driver, WebElementList_Label, labelName);
+			Reporter.addStepLog(CoreConstants.PASS + WebElementList_Label.getText() + PDTConstants.IS_CLICKED);
+		}
+	}
+	public static WebElement returnItemIfExistsInList(WebDriver driver, List<WebElement> _delElementList,
+			List<WebElement> _uploadDocumentFileList, String itemName) {
+		WebElement element = null;
+		CoreFunctions.explicitWaitTillElementListVisibility(driver, _uploadDocumentFileList);
+		try {
+			for (WebElement row : _uploadDocumentFileList) {
+				if (row.getText().equals(itemName)) {
+					return element = _delElementList.get(_uploadDocumentFileList.indexOf(row));
+				}
+			}
+		} catch (ElementNotFoundException e) {
+			e.printStackTrace();
+		}
+		return element;
+	}
+	public static WebElement returnItemIfExistsInListUsingAttributeValue(WebDriver driver,
+			List<WebElement> _delIconList, List<WebElement> _itemList, String itemName) {
+		WebElement element = null;
+		CoreFunctions.explicitWaitTillElementListVisibility(driver, _itemList);
+		try {
+			for (WebElement row : _itemList) {
+				if (row.getAttribute("value").equalsIgnoreCase(itemName)) {
+					return element = _delIconList.get(_itemList.indexOf(row));
+				}
+			}
+		} catch (ElementNotFoundException e) {
+			e.printStackTrace();
+		}
+		return element;
+	}
+	public static void selectValueFromDropdownWithoutReporting(WebElement element, String drpdwnValue) {
+		Select dropDown = new Select(element);
+		dropDown.selectByVisibleText(drpdwnValue);
+	}
+	public static void selectValueFromDropdownList(List<WebElement> listWebElement, int index) {
+		listWebElement.get(index).click();
+	}
+	
+	public static void selectItemFromListUsingJs(WebDriver driver, List<WebElement> WebElementList, String itemName) {
+		CoreFunctions.waitForBrowserToLoad(driver);
+		CoreFunctions.waitHandler(3);
+		for (WebElement row : WebElementList) {
+			Log.info(CoreConstants.ACTUAL_ITEM_NAME_IS + row.getText());
+			if (row.getText().equals(itemName)) {
+				CoreFunctions.clickUsingJS(driver, row, itemName);
+				Reporter.addStepLog(CoreConstants.PASS + row.getText() + PDTConstants.IS_CLICKED);
+				break;
+			}
+		}
+	}
+	public static boolean verifySelectedValueInDropdown(WebElement element, String drpdwnValue) {
+		if (element.getAttribute("title").equalsIgnoreCase(drpdwnValue)) {
+			Reporter.addStepLog(
+					MessageFormat.format(PDTConstants.VERIFY_VALUE_IN_DROPDOWN, CoreConstants.PASS, drpdwnValue));
+			return true;
+		} else {
+			Reporter.addStepLog(MessageFormat.format(PDTConstants.FAIL_TO_VERIFY_VALUE_IN_DROPDOWN, CoreConstants.FAIL,
+					drpdwnValue));
+			return false;
+		}
+	}
+	public static boolean verifyValueInTextFieldByAttribute(WebDriver driver, WebElement element, String drpdwnValue) {
+		if (element.getAttribute("value").equalsIgnoreCase(drpdwnValue)) {
+			Reporter.addStepLog(
+					MessageFormat.format(PDTConstants.VERIFY_VALUE_IN_TEXTFIELD, CoreConstants.PASS, drpdwnValue));
+			CoreFunctions.highlightObject(driver, element);
+			return true;
+		} else {
+			Reporter.addStepLog(MessageFormat.format(PDTConstants.FAIL_TO_VERIFY_VALUE_IN_TEXTFIELD, CoreConstants.FAIL,
+					drpdwnValue));
+			return false;
+		}
+	}
+
+public static void updateQuery(String url, String query) {
+		Connection connection = null;
+		try {
+			DriverManager.registerDriver(new oracle.jdbc.OracleDriver());
+			connection = DriverManager.getConnection(url);
+			Statement st = connection.createStatement();
+			CoreFunctions.waitHandler(2);
+			st.executeUpdate(query);
+			CoreFunctions.waitHandler(2);
+			st.executeUpdate("commit");
+//			connection.commit();
+			CoreFunctions.waitHandler(5);
+			if (true) {
+				Log.info("executed successfully : " + query);
+			}
+			connection.close();
+		} catch (Exception ex) {
+			ex.printStackTrace();
+			Log.info(CoreConstants.ERROR + ex);
+		}
+	}
+	public static void selectOptionValueFromDropdown(WebElement element, int index) {
+		Select dropDown = new Select(element);
+		dropDown.selectByIndex(index);
+		Reporter.addStepLog(MessageFormat.format(PDTConstants.VERIFY_VALUE_SELECTED_IN_DROPDWON, CoreConstants.PASS,
+				element.getAttribute("title")));
+	}
+	
+	public static void verifyFieldNotPresentOnBenefitPage(WebDriver driver, List<WebElement> elementList,
+			String benefitName, String fieldName) {
+		try {
+//			System.out.println(benefitName + " If Applicable List Size : " + elementList.size());
+			if (elementList.size() > 0) {
+				Assert.fail((MessageFormat.format(COREFLEXConstants.FIELD_DISPLAYED_ON_BENEFIT_PAGE, CoreConstants.FAIL,
+						benefitName, COREFLEXConstants.IF_APPLICABLE)));
+			} else {
+				Reporter.addStepLog(MessageFormat.format(
+						COREFLEXConstants.SUCCESSFULLY_VERIFIED_FIELD_NOT_DISPLAYED_ON_BENEFIT_PAGE, CoreConstants.PASS,
+						benefitName, COREFLEXConstants.IF_APPLICABLE));
+			}
+		} catch (Exception e) {
+			Reporter.addStepLog(
+					MessageFormat.format(COREFLEXConstants.EXCEPTION_OCCURED_WHILE_VERIFYING_FIELD_ON_BENEFIT_PAGE,
+							CoreConstants.FAIL, e.getMessage(), benefitName, fieldName));
+		}
+	}
+	public static void selectValueFromDropdown(WebElement element, String drpdwnValue) {
+		Select dropDown = new Select(element);
+		String elementName = element.getAttribute("title");
+		dropDown.selectByVisibleText(drpdwnValue);
+		if (element.getAttribute("title").equalsIgnoreCase(drpdwnValue))
+			Reporter.addStepLog(MessageFormat.format(PDTConstants.VERIFY_VALUE_SELECTED_IN_DROPDWON, CoreConstants.PASS,
+					elementName, drpdwnValue));
+		else
+			Reporter.addStepLog(MessageFormat.format(PDTConstants.FAIL_TO_SELECT_VALUE_IN_DROPDOWN, CoreConstants.FAIL,
+					drpdwnValue, elementName));
+	}
+	public static String getPdfDocContent(String fileName) {
+		PDDocument document;
+		try {
+			File file = new File(fileName);
+			document = PDDocument.load(file);
+			PDFTextStripper pdfStripper = new PDFTextStripper();
+			String text = pdfStripper.getText(document);
+			document.close();
+			return text;
+		} catch (IOException e) {
+			Assert.fail(CoreConstants.ERROR + e.getMessage());
+		}
+		return null;
+	}
+	public static String getDocContent(String fileName) {
+		try {
+			XWPFDocument doc = new XWPFDocument(Files.newInputStream(Paths.get(fileName)));
+			XWPFWordExtractor xwpfWordExtractor = new XWPFWordExtractor(doc);
+			String docText = xwpfWordExtractor.getText();
+			xwpfWordExtractor.close();
+			return docText;
+		} catch (IOException e) {
+			Assert.fail(CoreConstants.ERROR + e.getMessage());
+		}
+		return null;
+	}
+	public static String getExpectedCashoutDescription() {
+		String expectedCashoutDescription = null;
+		DecimalFormat format = new DecimalFormat();
+		format.setDecimalSeparatorAlwaysShown(false);
+		try {
+			if (CoreFunctions.getPropertyFromConfig("CF_Transferee_CashoutCurrencySign").length() == 1) {
+				expectedCashoutDescription = CoreFunctions.getPropertyFromConfig("CF_Transferee_CashoutCurrencySign")
+						+ format.format(Double.parseDouble(
+								CoreFunctions.getPropertyFromConfig("CF_Transferee_SelectedCashOutPoints")))
+						+ " " + CoreFunctions.getPropertyFromConfig("CF_Transferee_CashoutCurrencyCode")
+						+ (CoreFunctions.getPropertyFromConfig("CF_Transferee_CashoutCurrencyCode").equals("USD")
+								? MobilityXConstants.TRANSFEREE_CASHOUT_DESCRIPTION_CHECK
+								: MobilityXConstants.TRANSFEREE_CASHOUT_DESCRIPTION_WIRE);
+			} else {
+				expectedCashoutDescription = CoreFunctions.getPropertyFromConfig("CF_Transferee_CashoutCurrencySign")
+						+ " "
+						+ format.format(Double.parseDouble(
+								CoreFunctions.getPropertyFromConfig("CF_Transferee_SelectedCashOutPoints")))
+						+ " " + CoreFunctions.getPropertyFromConfig("CF_Transferee_CashoutCurrencyCode")
+						+ MobilityXConstants.TRANSFEREE_CASHOUT_DESCRIPTION_WIRE;
+			}
+		} catch (Exception e) {
+			Assert.fail(CoreConstants.ERROR + e.getMessage());
+		}
+		return expectedCashoutDescription;
+	}
+	public static String getExpectedCashoutValue(double cashoutPoints) {
+		DecimalFormat format = new DecimalFormat();
+		format.setDecimalSeparatorAlwaysShown(false);
+		return CoreFunctions.getPropertyFromConfig("CF_Transferee_CashoutCurrencySign") + " "
+				+ format.format(cashoutPoints) + " ("
+				+ CoreFunctions.getPropertyFromConfig("CF_Transferee_CashoutCurrencyCode") + ")";
+	}
+	public static String getMXClientExpectedCashoutDescription() {
+		String expectedCashoutDescription = null;
+		DecimalFormat format = new DecimalFormat();
+		format.setDecimalSeparatorAlwaysShown(false);
+		try {
+			if (CoreFunctions.getPropertyFromConfig("CF_Transferee_CashoutCurrencySign").length() == 1) {
+				expectedCashoutDescription = CoreFunctions.getPropertyFromConfig("CF_Transferee_CashoutCurrencySign")
+						+ format.format(Double
+								.parseDouble(CoreFunctions.getPropertyFromConfig("CF_Client_SelectedCashOutPoints")))
+						+ " " + CoreFunctions.getPropertyFromConfig("CF_Transferee_CashoutCurrencyCode");
+			} else {
+				expectedCashoutDescription = CoreFunctions.getPropertyFromConfig("CF_Transferee_CashoutCurrencySign")
+						+ " " + format.format(Double
+								.parseDouble(CoreFunctions.getPropertyFromConfig("CF_Client_SelectedCashOutPoints")));
+			}
+		} catch (Exception e) {
+			Assert.fail(CoreConstants.ERROR + e.getMessage());
+		}
+		return expectedCashoutDescription;
+	}
+	
+	public static String getMXClientSubmissionsExpectedCashoutDescription() {
+		String expectedCashoutDescription = null;
+		DecimalFormat format = new DecimalFormat();
+		format.setDecimalSeparatorAlwaysShown(false);
+		DecimalFormat precesionFormat = new DecimalFormat("#.00");
+		try {
+			if (CoreFunctions.getPropertyFromConfig("CF_Transferee_CashoutCurrencyCode").equals("USD")) {
+				expectedCashoutDescription = MobilityXConstants.CLIENT_SUBMISSIONS_CASHOUT_DESCRIPTION + " "
+						+ CoreFunctions.getPropertyFromConfig("CF_Transferee_CashoutCurrencySign")
+						+ format.format(Double
+								.parseDouble(CoreFunctions.getPropertyFromConfig("CF_Client_SelectedCashOutPoints")))
+						+ " " + CoreFunctions.getPropertyFromConfig("CF_Transferee_CashoutCurrencyCode");
+			} else if (CoreFunctions.getPropertyFromConfig("CF_Transferee_CashoutCurrencySign").length() == 1) {
+				expectedCashoutDescription = MobilityXConstants.CLIENT_SUBMISSIONS_CASHOUT_DESCRIPTION + " "
+						+ CoreFunctions.getPropertyFromConfig("CF_Transferee_CashoutCurrencySign")
+						+ format.format(Double
+								.parseDouble(CoreFunctions.getPropertyFromConfig("CF_Client_SelectedCashOutPoints")))
+						+ " " + CoreFunctions.getPropertyFromConfig("CF_Transferee_CashoutCurrencyCode");
+			} else {
+				expectedCashoutDescription = MobilityXConstants.CLIENT_SUBMISSIONS_CASHOUT_DESCRIPTION + " "
+						+ CoreFunctions.getPropertyFromConfig("CF_Transferee_CashoutCurrencySign")
+						+ precesionFormat.format(Double
+								.parseDouble(CoreFunctions.getPropertyFromConfig("CF_Client_SelectedCashOutPoints")))
+						+ " " + CoreFunctions.getPropertyFromConfig("CF_Transferee_CashoutCurrencyCode");
+			}
+		} catch (Exception e) {
+			Assert.fail(CoreConstants.ERROR + e.getMessage());
+		}
+		return expectedCashoutDescription;
+	}
+	public static String getExpectedCashoutDescriptionWithDecimalPrecesion() {
+		String expectedCashoutDescription = null;
+		DecimalFormat precesionFormat = new DecimalFormat("#.00");
+		DecimalFormat format = new DecimalFormat();
+		format.setDecimalSeparatorAlwaysShown(false);
+		try {
+			if (CoreFunctions.getPropertyFromConfig("CF_Transferee_CashoutCurrencyCode").equals("USD")) {
+				expectedCashoutDescription = CoreFunctions.getPropertyFromConfig("CF_Transferee_CashoutCurrencySign")
+						+ format.format(Double.parseDouble(
+								CoreFunctions.getPropertyFromConfig("CF_Transferee_SelectedCashOutPoints")))
+						+ " " + CoreFunctions.getPropertyFromConfig("CF_Transferee_CashoutCurrencyCode")
+						+ MobilityXConstants.TRANSFEREE_CASHOUT_DESCRIPTION_CHECK;
+			} else if (CoreFunctions.getPropertyFromConfig("CF_Transferee_CashoutCurrencySign").length() == 1) {
+				expectedCashoutDescription = CoreFunctions.getPropertyFromConfig("CF_Transferee_CashoutCurrencySign")
+						+ format.format(Double.parseDouble(
+								CoreFunctions.getPropertyFromConfig("CF_Transferee_SelectedCashOutPoints")))
+						+ " " + CoreFunctions.getPropertyFromConfig("CF_Transferee_CashoutCurrencyCode")
+						+ MobilityXConstants.TRANSFEREE_CASHOUT_DESCRIPTION_WIRE;
+			} else {
+				expectedCashoutDescription = CoreFunctions.getPropertyFromConfig("CF_Transferee_CashoutCurrencySign")
+						+ " "
+						+ format.format(Double.parseDouble(
+								CoreFunctions.getPropertyFromConfig("CF_Transferee_SelectedCashOutPoints")))
+						+ " " + CoreFunctions.getPropertyFromConfig("CF_Transferee_CashoutCurrencyCode")
+						+ MobilityXConstants.TRANSFEREE_CASHOUT_DESCRIPTION_WIRE;
+			}
+		} catch (Exception e) {
+			Assert.fail(CoreConstants.ERROR + e.getMessage());
+		}
+		return expectedCashoutDescription;
 	}
 
 }

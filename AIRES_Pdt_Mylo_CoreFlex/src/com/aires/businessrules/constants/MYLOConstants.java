@@ -8,10 +8,10 @@ public class MYLOConstants {
 	public static final String LOGIN_BUTTON = "Login Button";
 	public static final String USER_PROFILE_IMAGE = "User Profile Image";
 	public static final String LOGOUT_IMAGE = "Logout Image";
-	public static final String OTHER="Other";
-	public static final String AND="and";
+	public static final String OTHER = "Other";
+	public static final String AND = "and";
 	public static final String USER_PROFILE_NAME = "mxsso!";
-	public static final String INCORRECT_QUERY_PARAMETERS= "Incorrect Select Query Parameters";
+	public static final String INCORRECT_QUERY_PARAMETERS = "Incorrect Select Query Parameters";
 	public static final String HAMBURGER_MENU_NOT_APPEARING = "Hamburger Menu Not Appearing";
 	public static final String FILE_ID = "File ID";
 	public static final String CLIENT_ID = "Client ID";
@@ -39,7 +39,7 @@ public class MYLOConstants {
 	public static final String SAVE_BUTTON = "Save";
 	public static final String OTHER_ADDRESS_SAVE_BUTTON = "Other Address Save";
 	public static final String OTHER_ADDRESS = "Other Address";
-	public static final String AS_FIRST_COUNTRY="as first country";
+	public static final String AS_FIRST_COUNTRY = "as first country";
 	public static final String CANCEL_BUTTON = "Cancel";
 	public static final String NO_BUTTON = "No";
 	public static final String YES_BUTTON = "Yes";
@@ -81,26 +81,26 @@ public class MYLOConstants {
 	public static final String ROW_DIDNOT_UPDATED = "Row did not update";
 	public static final String EXISTING_TEAM_MEMBER_APPEARING_IN_DROPDOWN = "Existing Team member appearing in the dropdown";
 	public static final String EXPECTED_POPUP_MESSAGE = "Expected Popup message: ";
-	public static final String RECORDS_NOT_READONLY="All records are not readonly";
-	public static final String INVALID_ROLE_ACCESS_FOR="Invalid Role access for";
-	public static final String POLICY_TYPE="Policy Type";
-	public static final String POLICY_TYPE_READONLY="Policy Type Read Only Field";
-	public static final String POLICY_TYPE_VALUE="International Long Term Assignment";
-	public static final String TRANSFER_TYPE="Transfer Type";
-	public static final String JOURNEY_TYPE="Journey Type";
-	public static final String JOURNEY_TYPE_VALUE="Short-Term EE Only";
-	public static final String JOURNEY_TYPE2_VALUE="Intern";
-	public static final String HOMESTATUS="Homestatus";
-	public static final String HOMESTATUS_VALUE="Other";
-	public static final String HOMESTATUS2_VALUE="Own";
-	public static final String ENTER_CORRECT_FIELD_NAME="Please enter correct field name";
-	public static final String ENTER_CORRECT_SECTION_NAME="Please enter correct section name";
-	public static final String ENTER_CORRECT_COUNTRY_NAME="Please enter correct country name";
-	public static final String ENTER_CORRECT_SCENARIO_TYPE="Please enter correct scenario type";
-	public static final String ENTER_CORRECT_ELEMENT_NAME="Please enter correct element name";
-	public static final String ENTER_CORRECT_BUTTON_NAME="Please enter correct button name";
-	public static final String SUCCESS_MESSAGE="Success Message";
-	public static final String FILE_INFO_SUCCESS_MESSAGE= "Your changes have been successfully saved!";
+	public static final String RECORDS_NOT_READONLY = "All records are not readonly";
+	public static final String INVALID_ROLE_ACCESS_FOR = "Invalid Role access for";
+	public static final String POLICY_TYPE = "Policy Type";
+	public static final String POLICY_TYPE_READONLY = "Policy Type Read Only Field";
+	public static final String POLICY_TYPE_VALUE = "International Long Term Assignment";
+	public static final String TRANSFER_TYPE = "Transfer Type";
+	public static final String JOURNEY_TYPE = "Journey Type";
+	public static final String JOURNEY_TYPE_VALUE = "Short-Term EE Only";
+	public static final String JOURNEY_TYPE2_VALUE = "Intern";
+	public static final String HOMESTATUS = "Homestatus";
+	public static final String HOMESTATUS_VALUE = "Other";
+	public static final String HOMESTATUS2_VALUE = "Own";
+	public static final String ENTER_CORRECT_FIELD_NAME = "Please enter correct field name";
+	public static final String ENTER_CORRECT_SECTION_NAME = "Please enter correct section name";
+	public static final String ENTER_CORRECT_COUNTRY_NAME = "Please enter correct country name";
+	public static final String ENTER_CORRECT_SCENARIO_TYPE = "Please enter correct scenario type";
+	public static final String ENTER_CORRECT_ELEMENT_NAME = "Please enter correct element name";
+	public static final String ENTER_CORRECT_BUTTON_NAME = "Please enter correct button name";
+	public static final String SUCCESS_MESSAGE = "Success Message";
+	public static final String FILE_INFO_SUCCESS_MESSAGE = "Your changes have been successfully saved!";
 	public static final String IRIS = "IRIS";
 	public static final String AFFINITY_ENABLED = "affinityEnabled";
 	public static final String NOT_AFFINITY_ENABLED = "affinityNotEnabled";
@@ -131,8 +131,8 @@ public class MYLOConstants {
 	public static final String FAILED_TO_VERIFY_UPDATED_VALUE = "{0}Failed to Verify Update Value for ''{1}'' field on  ''{2}'' section";
 	public static final String VERIFY_UPDATED_FIELD_VALUE = "{0}Verified Value updated for ''{1}'' field is ''{2}'' on ''{3}'' section";
 	public static final String VERIFY_UPDATED_USER_DATE = "{0}Verified Updated By User is ''{1}'' and date as ''{2}'' on ''{3}'' section";
-	public static final String VERIFIED_STATES_APPEARING= "{0}Verified States appearing in the dropdown belongs to ''{1}'' country under ''{2}'' section";
-	public static final String VERIFIED_DIFFERENT_STATES_APPEARING= "{0}Verified States appearing in the dropdown does not belongs to ''{1}'' country under ''{2}'' section";
+	public static final String VERIFIED_STATES_APPEARING = "{0}Verified States appearing in the dropdown belongs to ''{1}'' country under ''{2}'' section";
+	public static final String VERIFIED_DIFFERENT_STATES_APPEARING = "{0}Verified States appearing in the dropdown does not belongs to ''{1}'' country under ''{2}'' section";
 	public static final String VERIFIED_COUNTRIES_PRESENT = "{0}Verified countries present in ''{1}'' section are in ascending order under ''{2}'' section";
 	public static final String VERIFIED_COUNTRIES_NOT_PRESENT = "{0}Verified countries present is not in ''{1}'' section are in ascending order under ''{2}'' section";
 	public static final String VERIFIED_DROPDOWN_VALUE_APPEARING = "{0}Verified DropDown value ''{1}'' is appearing under ''{2}'' dropdown on ''{3}'' section";
@@ -148,14 +148,14 @@ public class MYLOConstants {
 	public static final String VERIFIED_NO_VALUES_UPDATED_ON_SECTION = "{0} Verified that values for ''{1}'' fields is not updated in ''{2}'' section on ''{3}'' page";
 	public static final String FIELD_NAME_VALUE_DISPLAYED = "{0} FieldName- ''{1}'' value is displayed as :- ''{2}'' in ''{3}'' section on ''{4}'' page";
 	public static final String FIELD_VALUE_CSSPROPERTY_DISPLAYED = "{0} FieldName- ''{1}'' property:-''{2}'' code is displayed as :- ''{3}'' in ''{4}'' section on ''{5}'' page";
-	public static final String FILE_ID_DATA_UPDATION="611072";
-	public static final String INCORRECT_FIELD_VALUES_IN_FILEINFO="Incorrect value displayed for FileID,ClientID and PolicyType on FileInformation section on Mylo Assignment page";
-	public static final String ADDITIONAL_FIELDS_FILEINFO_NOT_DISPLAYED="Additional Fields not getting displayed in File Information section on Assignment Page";
-	public static final String MISMATCH_VALUE="Mismatch value for";
-	public static final String INHERITED_FILE="inheritedFile";
-	public static final String CHECKBOX_NOT_SELECTED="Checkbox is not selected";
-	public static final String CHECKED="checked";
-	public static final String UNCHHECKED="unchecked";
+	public static final String FILE_ID_DATA_UPDATION = "611072";
+	public static final String INCORRECT_FIELD_VALUES_IN_FILEINFO = "Incorrect value displayed for FileID,ClientID and PolicyType on FileInformation section on Mylo Assignment page";
+	public static final String ADDITIONAL_FIELDS_FILEINFO_NOT_DISPLAYED = "Additional Fields not getting displayed in File Information section on Assignment Page";
+	public static final String MISMATCH_VALUE = "Mismatch value for";
+	public static final String INHERITED_FILE = "inheritedFile";
+	public static final String CHECKBOX_NOT_SELECTED = "Checkbox is not selected";
+	public static final String CHECKED = "checked";
+	public static final String UNCHHECKED = "unchecked";
 	public static final String ENTER_CORRECT_LIST_TYPE = "Enter Correct List Type";
 	public static final String ASCENDING = "Ascending";
 	public static final String DESCENDING = "Descending";
@@ -183,7 +183,7 @@ public class MYLOConstants {
 	public static final String USA_STATE = "USA";
 	public static final String CANADA_STATE = "Canada";
 	public static final String INDIA_STATE = "India";
-	public static final String SELECT_ONE="Select One";
+	public static final String SELECT_ONE = "Select One";
 	public static final String DELETE_SUCCESS_MESSAGE = "The address has been deleted successfully!";
 	public static final String COUNTRY_DROPDOWN_NOT_IN_ASCENDING_ORDER = "Countries appearing in Country Dropdown are not in ascending order";
 	public static final String STATES_APPEARING_DOESNOT_BELONG = "States appearing in the dropdown doesn't belong to the country";
@@ -209,9 +209,9 @@ public class MYLOConstants {
 	public static final String MESSAGE = "Message";
 	public static final String VALID_TEXT = "Valid Text";
 	public static final String STATE_TEXT_FIELD = "State Text Field";
-	public static final String MAILING="Mailing";
-	public static final String TEMPORARY="Temporary";
-	public static final String CITY_ALASKA="Alaska";
+	public static final String MAILING = "Mailing";
+	public static final String TEMPORARY = "Temporary";
+	public static final String CITY_ALASKA = "Alaska";
 	public static final String OTHER_ADDDRESS_SAVED_MESSAGE = "Your changes have been successfully saved.";
 	public static final String DOT = ".";
 	public static final String SPACE = " ";
@@ -256,7 +256,7 @@ public class MYLOConstants {
 	public static final String HISTORYCARD_IS_PRESENT = "History Card is present";
 	public static final String HISTORYCARD_PRESENT = "{0}History Card is present on top of ''{1}'' page";
 	public static final String HISTORYCARD_NOT_PRESENT = "{0}History Card is not present on top of ''{1}'' page";
-	public static final String IDENTIFICATION_AND_DOCUMENTATION="Identification & Documentation";
+	public static final String IDENTIFICATION_AND_DOCUMENTATION = "Identification & Documentation";
 	public static final String IDENTITY_TYPE_DROPDOWN = "Identity Type";
 	public static final String NUMBER = "Number";
 	public static final String IDENTITY_TYPE = "IdentityType";
@@ -267,30 +267,30 @@ public class MYLOConstants {
 	public static final String BUTTON_DISABLED = "{0} ''{1}'' button is disabled for ''{2}'' section on ''{3}'' page";
 	public static final String BUTTON_NOT_PRESENT = "{0} ''{1}'' button is not present for ''{2}'' section on ''{3}'' page";
 	public static final String VERIFIED_ELEMENT_DISPLAYED_IDENTDOC_SECTION = "{0}Verified Type is displayed as ''{1}'' , Number is displayed as ''{2}'' and FromDate is displayed as ''{3}'' on Identification & Documentation section";
-	public static final String EXPECTED_FIELD_VALUE_NOTDISPLAYED="Expected Field Value is not displayed";
+	public static final String EXPECTED_FIELD_VALUE_NOTDISPLAYED = "Expected Field Value is not displayed";
 	public static final String TODATE = "ToDate";
-	
-	public static final String FIELD_NAME_EXIST_IN_RESPONSE="{0}FieldName: ''{1}''  exists in Response";
-	public static final String PRIMARY_CONTACT_CARD_OBJECT="primaryContactCardObject";
-	public static final String ASSIGNMENT_EMPLOYEE_RESPONSE_LIST="assignmentEmployeeResponseList";
-	public static final String GET="GET";
-	public static final String POST="POST";
-	public static final String MYLO_ASSIGNMENT_BASEURI="https://corpuatvl204.aires.com:9015/aires-assignment-api";
-	public static final String CREATE_ASSIGNMENT_API_ENDPOINT="/assignment/new-assignment";
-	public static final String CREATE_NEW_ASSIGNMENT="Create New Assignment";
-	public static final String GET_ASSIGNMENT="Get Assignment";
-	public static final String GET_ASSIGNMENT_API_ENDPOINT="/assignment/";
-	public static final String ENTER_CORRECT_HTTPMETHOD_NAME="Please enter correct HttpMethod name";
+
+	public static final String FIELD_NAME_EXIST_IN_RESPONSE = "{0}FieldName: ''{1}''  exists in Response";
+	public static final String PRIMARY_CONTACT_CARD_OBJECT = "primaryContactCardObject";
+	public static final String ASSIGNMENT_EMPLOYEE_RESPONSE_LIST = "assignmentEmployeeResponseList";
+	public static final String GET = "GET";
+	public static final String POST = "POST";
+	public static final String MYLO_ASSIGNMENT_BASEURI = "https://corpuatvl204.aires.com:9015/aires-assignment-api";
+	public static final String CREATE_ASSIGNMENT_API_ENDPOINT = "/assignment/new-assignment";
+	public static final String CREATE_NEW_ASSIGNMENT = "Create New Assignment";
+	public static final String GET_ASSIGNMENT = "Get Assignment";
+	public static final String GET_ASSIGNMENT_API_ENDPOINT = "/assignment/";
+	public static final String ENTER_CORRECT_HTTPMETHOD_NAME = "Please enter correct HttpMethod name";
 	public static final Object ROW = "Row";
 	public static final String REMOVE_BUTTON = "Remove";
 	public static final String TRANSFEREE_WITH_FAMILY_MEMBER = "Transferee With Family Member";
 	public static final String TRANSFEREE_WITH_OTHER_FAMILY_MEMBERS = "Transferee With Other Family Members";
-	public static final String SUCCESSFULLY_REMOVED="Successfully Removed";
-	public static final String IDENTDOC_TYPE="Cedula";
-	public static final String IDENTDOC_NUMBER="Cedula";
-	public static final String IDENTDOC_COUNTRY="USA";
-	public static final String IDENTDOC_FROMDATE="01/01/2022";
-	public static final String IDENTDOC_TODATE="04/01/2022";
+	public static final String SUCCESSFULLY_REMOVED = "Successfully Removed";
+	public static final String IDENTDOC_TYPE = "Cedula";
+	public static final String IDENTDOC_NUMBER = "Cedula";
+	public static final String IDENTDOC_COUNTRY = "USA";
+	public static final String IDENTDOC_FROMDATE = "01/01/2022";
+	public static final String IDENTDOC_TODATE = "04/01/2022";
 	public static final String TRANSFEREE_DRODOWN_ARROW = "Transferee Dropdown arrow";
 	public static final String TRANSFEREE_FAMILY_DETAILS_BUTTON = "Transferee and Family Details button";
 	public static final String TRANSFEREE_FAMILY = "Transferee and Family";
@@ -304,14 +304,14 @@ public class MYLOConstants {
 	public static final String TRANSFEREE_GRADE_CHAR_LIMIT = "60";
 	public static final String TRANSFEREE_MAIDEN_NAME_CHAR_LIMIT = "60";
 	public static final String TRANSFEREE_TITLE_CHAR_LIMIT = "100";
-	
+
 	public static final String TRANSFEREE_LASTNAME = "TransfereeLastName";
 	public static final String BLANK = "";
 	public static final String TRANSFEREE_MIDDLENAME = "TransfereeMiddleName";
 	public static final String TRANSFEREE_SUFFIX = "TransfereeSufix";
 	public static final String TRANSFEREE_GRADE = "TransfereeGrade";
 	public static final String CHARACTER_LENGTH = "CharacterLength";
-	public static final String SAVE_SUCCESS_MESSAGE= "Your changes have been successfully saved.";
+	public static final String SAVE_SUCCESS_MESSAGE = "Your changes have been successfully saved.";
 	public static final String TRANSFEREE_MAIDEN_NAME = "TransfereeMaidenName";
 	public static final String TRANSFEREE_TITLE = "TransfereeTitle";
 	public static final String MARITAL_STATUS = "Marital Status";
@@ -325,7 +325,7 @@ public class MYLOConstants {
 	public static final String PRONOUN_COLUMN = "PRONOUN_DESCRIPTION";
 	public static final String EMAIL_TYPE_COLUMN = "EMAIL_TYPE_DESC";
 	public static final String PHONE_TYPE_COLUMN = "CONTACT_PF_TYPE_DESC";
-	public static final String TEST="Test";
+	public static final String TEST = "Test";
 	public static final String VERIFIED_DROPDOWN_OPTIONS_MATCH = "{0}Verified ''{1}'' dropdown values available on ''{2}'' section matches with the database";
 	public static final String VERIFIED_DROPDOWN_OPTIONS_MISMATCH = "{0}Verified ''{1}'' dropdown values available on ''{2}'' section does not match with the database";
 	public static final String TRANSFEREE_ALLDATA = "Transferee All Data";
@@ -406,7 +406,7 @@ public class MYLOConstants {
 	public static final String DEPENDENT_PHONE_PREFERRED = "Dependent Phone Preferred";
 	public static final String DEPENDENT_EMAIL_PREFERRED = "Dependent Email Preferred";
 	public static final String DEPENDENT_EMAIL_ADDRESS = "Dependent Email Address";
-	
+
 	public static final String ADD_OTHER_LINK = "Add Other";
 	public static final String OTHER_FIRSTNAME = "OtherFirstName";
 	public static final String OTHER_LASTNAME = "OtherLastName";
@@ -427,13 +427,12 @@ public class MYLOConstants {
 	public static final String OTHER_PHONE_PREFERRED = "Other Phone Preferred";
 	public static final String OTHER_EMAIL_PREFERRED = "Other Email Preferred";
 	public static final String OTHER_EMAIL_ADDRESS = "Other Email Address";
-	
-	
+
 	public static final String DEV5 = "DEV5";
 	public static final String ENTER_CORRECT_ENVIRONMENT_NAME = "Please enter correct Environment name";
 	public static final String PROVIDER = "Provider";
 	public static final String SPINNER_ICON = "Spinner Icon";
-	public static final String MYLO_DASHBOARD_HOME_PAGE = "Mylo Dashboard home page" ;
+	public static final String MYLO_DASHBOARD_HOME_PAGE = "Mylo Dashboard home page";
 	public static final String VERIFIED_SECTION_NOT_DISPLAYED = "{0}Verified ''{1}'' is not displayed on  ''{2}''";
 	public static final String VERIFIED_SECTION_DISPLAYED = "{0}Verified ''{1}'' is displayed on  ''{2}'' ";
 	public static final String VERIFIED_DISPLAYED = "{0}Verified ''{1}'' is displayed for ''{2}'' on ''{3}'' section ";
@@ -457,7 +456,7 @@ public class MYLOConstants {
 	public static final String CLIENT_NAME_VALUE = "Aires QA Automation Client";
 	public static final String OFFICE_VALUE = "CRO";
 	public static final String PURPLE_BUBBLE_SECTION = "Purple bubble";
-	public static final String TOP_RIGHT_CORNER_SECTION ="Top right corner";
+	public static final String TOP_RIGHT_CORNER_SECTION = "Top right corner";
 	public static final String FILE_INFORMATION_SECTION = "File Information";
 	public static final String PRIMARY_CONTACT_SECTION = "Primary Contact";
 	public static final String BENEFITS_AT_A_GLANCE = "Benefits At A Glance";
@@ -471,10 +470,10 @@ public class MYLOConstants {
 	public static final String LOGIN = "Login";
 	public static final String PASSWORD = "password";
 	public static final String APPLICATION = "application";
-	public static final String IDENTITY_CHALLENGE_QUESTION ="Identity Challenge Question";
-	public static final String IC_QUESTION ="IC Question";
-	public static final String IC_ANSWER ="IC Answer";
-	public static final String IC_QUESTION_VALUE="What is the name of the elementary/primary school you attended?";
+	public static final String IDENTITY_CHALLENGE_QUESTION = "Identity Challenge Question";
+	public static final String IC_QUESTION = "IC Question";
+	public static final String IC_ANSWER = "IC Answer";
+	public static final String IC_QUESTION_VALUE = "What is the name of the elementary/primary school you attended?";
 	public static final String SEND_LOGIN_CREDENTIALS = "Send Login Credentials";
 	public static final String DUPLICATE_EMAIL_MSG="The email address entered has been previously used as a username.For ease of use, the ReloNet username is defaulted to the transferee email address.Please provide a different email address, or click No generate a generic username.";
 	public static final String VERIFIED_POPUP_NOT_ON_PAGE = "{0} Verified ''{1}'' popUp is not present on ''{2}'' Page ";
@@ -484,10 +483,10 @@ public class MYLOConstants {
 	public static final String MYLO_TRANSFEREE_USER_NAME = "Mylo Transferee User Name";
 	public static final String MYLO_TRANSFEREE_PASSWORD = "Mylo Transferee Password";
 	public static final String SEND_USERNAME_PSWD = "Send UserName Password";
-	public static final String DATA_INTEGRITY_MSG1="Link as NEW JOURNEY if this is a new transfer for someone we have previously relocated. They will see all moves with their MobilityX login.";
-	public static final String DATA_INTEGRITY_MSG2="Link to EXISTING JOURNEY if this is one of multiple legs in a single long-term or rotational assignment. They will see all moves with their MobilityX login.";
-	public static final String DATA_INTEGRITY_MSG3="You will not be able to begin the Initial Consultation for this transferee until you decide whether or not this file should be linked.";
-	public static final String FILE_LINKING_HEADER="We found transferees with the same name, employee ID, or primary email address (highlighted in red). Is this the same person?";
+	public static final String DATA_INTEGRITY_MSG1 = "Link as NEW JOURNEY if this is a new transfer for someone we have previously relocated. They will see all moves with their MobilityX login.";
+	public static final String DATA_INTEGRITY_MSG2 = "Link to EXISTING JOURNEY if this is one of multiple legs in a single long-term or rotational assignment. They will see all moves with their MobilityX login.";
+	public static final String DATA_INTEGRITY_MSG3 = "You will not be able to begin the Initial Consultation for this transferee until you decide whether or not this file should be linked.";
+	public static final String FILE_LINKING_HEADER = "We found transferees with the same name, employee ID, or primary email address (highlighted in red). Is this the same person?";
 	public static final String FILE_LINKING_POPUP = "File Linking Popup";
 	public static final String LINK_TO_NEW_JOURNEY = "Same person, Link as a New Journey";
 	public static final String LINK_TO_EXISTING_JOURNEY = "Same Person, Link to Existing Journey";
@@ -495,9 +494,9 @@ public class MYLOConstants {
 	public static final String DIFFERENT_PERSON_DONOT_LINK = "Different Person Do not Link";
 	public static final String AUTH_TRACK_SECTION = "Authorization/Tracking";
 	public static final String WITHOUT = "Without";
-	public static final String AUTH_TRACK_TYPE="Type";
-	public static final String AUTH_TRACK_NUMBER="Number";
-	public static final String AUTH_TRACK_COMMENT="Comment";
+	public static final String AUTH_TRACK_TYPE = "Type";
+	public static final String AUTH_TRACK_NUMBER = "Number";
+	public static final String AUTH_TRACK_COMMENT = "Comment";
 	public static final String HISTORY = "history";
 	public static final String AUTH_TRACK_HISTORY = "Authorization Tracking History PopUp Section";
 	public static final String HEADER = "Header";
@@ -509,7 +508,7 @@ public class MYLOConstants {
 	public static final String VERIFIED_FIELDS_SORTED = "{0} Verified ''{1}'' sorted by the ''{2}'' in ''{3}'' order";
 	public static final String VERIFIED_FIELDS_NOT_SORTED = "{0} Verified ''{1}'' not sorted by the ''{2}'' in ''{3}'' order";
 	public static final String NO_AUTHTRACK_FILE = "No Authorization / Tracking on File";
-	public static final String NOAUTHTRACK_FILE_NOT_PRESENT="AuthTrackFile Link is not present on Authorization/Tracking section";
+	public static final String NOAUTHTRACK_FILE_NOT_PRESENT = "AuthTrackFile Link is not present on Authorization/Tracking section";
 	public static final String HISTORY_DETAILS_MISMATCH = "{0} History details didn't get matched: expected- ''{1}'' but found: ''{2}'' ";
 	public static final String TAX_REPORTING_SECTION = "Tax Reporting Information";
 	public static final String DEDUCTION_METHOD = "Deduction Method";
@@ -520,8 +519,8 @@ public class MYLOConstants {
 	public static final String TOTAL_NUMBER_OF_DEPENDENT = "Total Number of Dependents";
 	public static final String FAMILY_SIZE = "Family Size";
 	public static final String EXPENSE_MANAGEMENT_CHECKBOX = "Expense Management Checkbox";
-	public static final String EXPENSE_MANAGEMENT = "Expense Management";  
-	public static final String PAYMENT_CUT_OFF_COMPLETION="Payment Cutoff Completion";
+	public static final String EXPENSE_MANAGEMENT = "Expense Management";
+	public static final String PAYMENT_CUT_OFF_COMPLETION = "Payment Cutoff Completion";
 	public static final String VERIFIED_DROPDOWN_OPTIONS_MATCHES = "{0}Dropdown options available for ''{1}'' field on ''{2}'' section matches with the expected value";
 	public static final String VERIFIED_DROPDOWN_OPTIONS_DOESNT_MATCH = "{0}Dropdown options available for ''{1}'' field on ''{2}'' section does not match with the expected value";
 	public static final String VERIFIED_CHECKBOX_OPTIONS_MATCHES = "{0}CheckBox options available on ''{1}'' section matches with the expected value";
@@ -557,7 +556,7 @@ public class MYLOConstants {
 	public static final String DESTINATION_CITY = "Destination City";
 	public static final String DESTINATION_STATE = "Destination State";
 	public static final String ORIGIN_ZIPCODE = "Origin Zip Code";
-	public static final String DESTINATION_ZIPCODE =  "Destination Zip Code";
+	public static final String DESTINATION_ZIPCODE = "Destination Zip Code";
 	public static final String ORIGIN_ADDRESS1 = "Origin address1";
 	public static final String DESTINATION_ADDRESS1 = "Destination address1";
 	public static final String ORIGIN_ADDRESS2 = "Origin address2";
@@ -582,15 +581,15 @@ public class MYLOConstants {
 	public static final String NEXT_BUTTON = "Next Button";
 	public static final String STAY_SIGNED_IN = "Stay signed in?";
 	public static final String STAY_SIGNED_IN_MESSAGE = "Do this to reduce the number of times you are asked to sign in.";
-	public static final String UNABLE_TO_SIGN_IN_MYLO= "Unable to Sign in Mylo application";
+	public static final String UNABLE_TO_SIGN_IN_MYLO = "Unable to Sign in Mylo application";
 	public static final String FAIL_TO_VERIFY_ERROR_MESSAGE_ON_SECTION = "{0}Failed to verify ''{1}'' error message on ''{2}'' section";
 	public static final String FAIL_TO_VERIFY_ERROR_MESSAGE_ON_API_SERVICE = "{0}Failed to verify ''{1}'' error message on ''{2}'' API Service";
 	public static final String TEAM_POSTS = "Team Posts";
 	public static final String ADD_ICON = "Add icon";
 	public static final String TEAM_POST_COMMENTS = "Team Post Comments";
 	public static final String TEAM_POST_TYPE = "Team Post Type";
-	public static final String ARCHIVE_ICON ="Archive icon";
-	public static final String VIEW_ARCHIVE ="View Archive";
+	public static final String ARCHIVE_ICON = "Archive icon";
+	public static final String VIEW_ARCHIVE = "View Archive";
 	public static final String EXPAND_ICON = "Expand";
 	public static final String GENERAL = "General";
 	public static final String TEAM_POST_RADIO_BUTTONS = "Team Post Radio Buttons";
@@ -598,11 +597,11 @@ public class MYLOConstants {
 	public static final String BUTTON_EXISTS = "{0} ''{1}'' button is present for ''{2}'' userType ''{3}'' section";
 	public static final String ENABLE = "Enable";
 	public static final String DISABLE = "Disable";
-	
-	public static final String GENERAL_POST_TYPE_HEXCODE="#f9ca7b";
-	public static final String OPERATIONS_POST_TYPE_HEXCODE="#d3bffa";
-	public static final String EXPENSE_POST_TYPE_HEXCODE="#a6d9ff";
-	public static final String RATES_POST_TYPE_HEXCODE="#aae2d8";
+
+	public static final String GENERAL_POST_TYPE_HEXCODE = "#f9ca7b";
+	public static final String OPERATIONS_POST_TYPE_HEXCODE = "#d3bffa";
+	public static final String EXPENSE_POST_TYPE_HEXCODE = "#a6d9ff";
+	public static final String RATES_POST_TYPE_HEXCODE = "#aae2d8";
 	public static final String OPERATIONS = "Operations";
 	public static final String EXPENSE = "Expense";
 	public static final String RATES = "Rates";
@@ -617,9 +616,9 @@ public class MYLOConstants {
 	public static final String MISMATCH_HEADERTEXT_SECTION = "{0}Mismatch Header Text of ''{1}'' section";
 	public static final String ENTER_CORRECT_TYPE = "Please enter correct type";
 	public static final String ARCHIVE_SUCCESS_MESSAGE = "Successfully Archived!";
-	public static final String TAX_TREATMENT_VALUE="Foreign national leaving the US";
-	public static final String AUTOMATION_CLIENT_ID="49226";
-	public static final String VENDOR_CLIENT_ID="49206";
+	public static final String TAX_TREATMENT_VALUE = "Foreign national leaving the US";
+	public static final String AUTOMATION_CLIENT_ID = "49226";
+	public static final String VENDOR_CLIENT_ID = "49206";
 	public static final String TEAM_POST_EXPANDED = "Team Post Expanded";
 	public static final String INCORRECT_BG_COLOR = "{0}Incorrect Background color of ''{1}'' on ''{2}'' section";
 	public static final String POSTS_NOT_FILTERED = "{0}<font color='red'>All Posts displayed are not as per filtered Post Type : ''{1}'' on ''{2}'' section</font>";
@@ -630,7 +629,7 @@ public class MYLOConstants {
 	public static final String VERIFED_SEARCH_COMMENT_CHARACTERS_BOLD = "{0}Verified Post Comment searched characters : ''{1}'' are displayed in bold on ''{2}'' section";
 	public static final String SEARCH_COMMENT_CHARACTERS_NOT_BOLD = "{0}<font color='red'>Post Comment searched characters : ''{1}'' are not displayed in bold on ''{2}'' section</font>";
 	public static final String SEARCHED_TEXT = "Searched Text";
-	public static final String SEARCHED_TEXT_NOT_BOLD= "{0}Searched Text are displayed in Bold format on ''{1}'' section";
+	public static final String SEARCHED_TEXT_NOT_BOLD = "{0}Searched Text are displayed in Bold format on ''{1}'' section";
 	public static final String SORT = "Sort";
 	public static final String TEAM_POSTS_DATES = "Team Post Dates";
 	public static final String TEAM_POST_EXPANDED_DATES = "Team Post Expanded Section Dates";
@@ -642,15 +641,15 @@ public class MYLOConstants {
 	public static final String TRANSFEREENAME = "TransfereeName";
 	public static final String JOURNEYTYPE = "JourneyType";
 	public static final String BOOKED = "Booked";
-	public static final String MXSSO_DEV5_EMP_NO="2230";
-	public static final String NO_SUCH_FILE_FOUND="No such file found";
+	public static final String MXSSO_DEV5_EMP_NO = "2230";
+	public static final String NO_SUCH_FILE_FOUND = "No such file found";
 	public static final String CHECKBOXES = "Checkbox";
 	public static final String VIP = "VIP";
 	public static final String EVIP = "EVIP";
 	public static final String CONFIDENTIAL = "Confidential";
-	public static final String NO_SUCH_FILE_FOUND_STATUS_CHECKBOX="No such file found for ''{1}'' status with ''{2}'' checkbox selected";
-	public static final String NO_SUCH_FILE_FOUND_SERVICE_SERVICESTATUS="No such file found for ''{1}'' service with ''{2}'' service status selected";
-	public static final String SINGLE_FILE_FOUND_STATUS_CHECKBOX="{0}Single file of FileID:-''{1}''  found for ''{2}'' status with ''{3}'' checkbox selected";
+	public static final String NO_SUCH_FILE_FOUND_STATUS_CHECKBOX = "No such file found for ''{1}'' status with ''{2}'' checkbox selected";
+	public static final String NO_SUCH_FILE_FOUND_SERVICE_SERVICESTATUS = "No such file found for ''{1}'' service with ''{2}'' service status selected";
+	public static final String SINGLE_FILE_FOUND_STATUS_CHECKBOX = "{0}Single file of FileID:-''{1}''  found for ''{2}'' status with ''{3}'' checkbox selected";
 	public static final String CHECKBOX = "Checkbox";
 	public static final String MY_FILES_QUERY_RESULT = "My Files Query result";
 	public static final String ASC = "asc";
@@ -662,17 +661,17 @@ public class MYLOConstants {
 	public static final String VERIFIED_QUERY_RESULTS_MATCH_WITH_DATABASE = "{0}Verified ''{1}'' column values of ''{2}'' result matches with database as per ''{3}'':- ''{4}'' with ''{5}'':-''{6}'' selected";
 	public static final String VERIFIED_QUERY_RESULTS_MISMATCH_WITH_DATABASE = "{0}Verified ''{1}'' column values of ''{2}'' result does not matches with database as per ''{3}'':- ''{4}'' with ''{5}'':-''{6}'' selected";
 	public static final String VERIFIED_RESULTS_MISMATCH_WITH_DATABASE = "{0}Verified ''{1}'' column values of ''{2}'' result does not match with database";
-	public static final String MY_FILES_HEADER="Query Your Files by Status";
-	public static final String MY_FILES_RESULT_HEADER="Please select a file from your query results below or run a new query.";
-	public static final String MAX_RECORDS_TO_VALIDATE="maxRecordsToValidate";
+	public static final String MY_FILES_HEADER = "Query Your Files by Status";
+	public static final String MY_FILES_RESULT_HEADER = "Please select a file from your query results below or run a new query.";
+	public static final String MAX_RECORDS_TO_VALIDATE = "maxRecordsToValidate";
 	public static final String INACTIVE = "Inactive";
 	public static final String CLIENT__NAME = "Client Name";
 	public static final String ACCOUNTING = "Accounting";
-	public static final String COMMENT_FIELD_LENGTH="10";
+	public static final String COMMENT_FIELD_LENGTH = "10";
 	public static final String SPOUSE = "Spouse";
 	public static final String TRANSFEREE_AGE = "Transferee Age";
-	
-	//Constants related to Accounting Query Section
+
+	// Constants related to Accounting Query Section
 	public static final String ASSIGNMENT_ID = "Assignment ID";
 	public static final String SUB_SERVICE_ID = "Sub-Service ID";
 	public static final String TRACKING_NUMBER = "Tracking Number";
@@ -696,8 +695,8 @@ public class MYLOConstants {
 	public static final String DESTINATION_ADDRESS_STATE = "Destination Address State";
 	public static final String ACCOUNTING_QUERY = "Accounting Query";
 	public static final String ACCOUNTING_QUERY_RESULT = "Accounting Query result";
-	
-	//Constants related to Advanced Query Section
+
+	// Constants related to Advanced Query Section
 	public static final String PLACEHOLDER = "placeholder";
 	public static final String ADVANCED_QUERY = "Advanced Query";
 	public static final String FORMCONTROLNAME = "formcontrolname";
@@ -709,14 +708,13 @@ public class MYLOConstants {
 	public static final String REAL_ESTATE = "Real Estate";
 	public static final String ID = "ID";
 	public static final String SHIPMENT = "Shipment";
-	public static final String LEAD_COMPANY_ID="Lead Company ID";
+	public static final String LEAD_COMPANY_ID = "Lead Company ID";
 	public static final String LEAD_COMPANY_ID_SECTION = "Lead Company Id Section";
 	public static final String TRANSFEREE_ID = "Transferee ID";
-	public static final String TRANSFEREEID="TransfereeID";
+	public static final String TRANSFEREEID = "TransfereeID";
 	public static final String TRANSFEREE_FIRST_NAME = "Transferee First Name";
-	
-	
-	//Constants related to File Team Section
+
+	// Constants related to File Team Section
 	public static final String ROLE = "role";
 	public static final String MSPEC = "MSPEC";
 	public static final String TRANSFEREE_LAST_NAME = "Transferee Last Name";
@@ -739,10 +737,23 @@ public class MYLOConstants {
 	public static final int TRANSFEREE_FIRST_NAME_CHAR_LIMIT = 30;
 	public static final int TRANSFEREE_LAST_NAME_CHAR_LIMIT = 60;
 	public static final String CHARACTER_LIMIT = "CharacterLimit";
-	
 
-	
-	
 	public static long TIME_BEFORE_ACTION;
 	public static long TIME_AFTER_ACTION;
+
+	// Query By SubServiceID Popup
+	public static final String QUERY_BY_SUB_SERVICE_ID = "Query By Sub-Service ID";
+	public static final String NON_SHIPMENT = "Non-Shipment";
+	public static final String CLOSE = "Close";
+	public static final String FAILED_TO_GET_VALUE_FROM_ELEMENT = "FAILED : Unable to get element Value - ''{0}''";
+	public static final int SUB_SERVICE_ID_FIELD_LIMIT = 10;
+	public static final int WAIT = 10;
+	public static final String INCORRECT_FIELD_VALUE = "Incorrect value displayed - ''{0}''";
+	public static final String VERIFIED_POP_UP_CLOSED = "{0} Verified PopUp - ''{1}'' is Closed ";
+	public static final String VERIFIED_POP_UP_IS_DISPLAYED = "{0} Verified PopUp - ''{1}'' is displayed";
+	public static final String POP_UP = "PopUp";
+	public static final String VERIFIED_SHIPMENT_SUBSERVICE_SCREEN_DISPLAYED = "Verified Shipment Sub Service screen is displayed";
+	public static final String VERIFIED_SUMMARY_SCREEN_DISPLAYED = "Verified Shipment Sub Service screen is displayed";
+	public static final String VERIFIED_CHARACTERS_CANNOT_BE_ENTERED_IN = " {0} Verified characters cannot be entered in ''{1}''";
+
 }

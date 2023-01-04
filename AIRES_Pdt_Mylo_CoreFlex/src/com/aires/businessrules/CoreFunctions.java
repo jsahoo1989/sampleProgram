@@ -2075,18 +2075,6 @@ public class CoreFunctions {
 
 	}
 
-	public static ArrayList<String> getMultipleRandomOptionsForDropDown(int minNum, int maxNum, int count,
-			WebDriver driver, List<WebElement> webElementList) {
-		Random random = new Random();
-		List<Integer> randomNumbers = random.ints(minNum, maxNum).distinct().limit(count).boxed()
-				.collect(Collectors.toList());
-		ArrayList<String> randWebElementList = new ArrayList<String>();
-		for (Integer index : randomNumbers) {
-			randWebElementList.add(webElementList.get(index).getText());
-		}
-		return randWebElementList;
-	}
-
 	public static void waitForLoaderToDisappear(WebDriver driver) {
 		if (isElementByLocatorExist(driver, By.cssSelector("span[id='busyStateMessage']"), 5)) {
 			try {

@@ -29,7 +29,10 @@
  ***********************************Header End*********************************************************************************/
 package com.aires.businessrules;
 
-import java.math.RoundingMode;
+import java.io.File;
+import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Paths;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.Statement;
@@ -44,14 +47,21 @@ import java.util.stream.Stream;
 
 import org.apache.commons.codec.binary.Base64;
 import org.apache.log4j.Logger;
+import org.apache.pdfbox.pdmodel.PDDocument;
+import org.apache.pdfbox.text.PDFTextStripper;
+import org.apache.poi.xwpf.extractor.XWPFWordExtractor;
+import org.apache.poi.xwpf.usermodel.XWPFDocument;
+import org.openqa.selenium.By;
 import org.openqa.selenium.NoSuchElementException;
+import org.openqa.selenium.StaleElementReferenceException;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
-import org.openqa.selenium.By;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.FluentWait;
 import org.openqa.selenium.support.ui.Select;
+import org.openqa.selenium.support.ui.WebDriverWait;
 import org.testng.Assert;
+
 import com.aires.businessrules.constants.COREFLEXConstants;
 import com.aires.businessrules.constants.CoreConstants;
 import com.aires.businessrules.constants.MYLOConstants;
@@ -60,19 +70,17 @@ import com.aires.businessrules.constants.PDTConstants;
 import com.aires.pages.pdt.PDT_AddNewPolicyPage;
 import com.aires.pages.pdt.PDT_GeneralInformationPage;
 import com.aires.testdatatypes.pdt.PDT_LoginDetails;
-import com.aires.utilities.EmailUtil;
 import com.aires.utilities.Log;
+import com.aires.utilities.getWindowText;
 import com.gargoylesoftware.htmlunit.ElementNotFoundException;
+import com.hp.lft.sdk.Desktop;
 import com.hp.lft.sdk.GeneralLeanFtException;
 import com.hp.lft.sdk.java.Dialog;
 import com.hp.lft.sdk.java.Editor;
+import com.hp.lft.sdk.java.EditorDescription;
+import com.hp.lft.sdk.java.Window;
+import com.hp.lft.sdk.java.WindowDescription;
 import com.vimalselvam.cucumber.listener.Reporter;
-import org.apache.pdfbox.pdmodel.PDDocument;
-import org.apache.pdfbox.text.PDFTextStripper;
-import org.apache.poi.xwpf.extractor.XWPFWordExtractor;
-import org.apache.poi.xwpf.usermodel.XWPFDocument;
-import java.nio.file.Files;
-import java.nio.file.Paths;
 
 import stepDefinitions.pdt.PDT_SharedSubBenefit_Steps;
 
@@ -1477,7 +1485,7 @@ public static void updateQuery(String url, String query) {
 	}
 	public static String getExpectedCashoutDescriptionWithDecimalPrecesion() {
 		String expectedCashoutDescription = null;
-		DecimalFormat precesionFormat = new DecimalFormat("#.00");
+//		DecimalFormat precesionFormat = new DecimalFormat("#.00");
 		DecimalFormat format = new DecimalFormat();
 		format.setDecimalSeparatorAlwaysShown(false);
 		try {
@@ -1506,5 +1514,45 @@ public static void updateQuery(String url, String query) {
 		}
 		return expectedCashoutDescription;
 	}
+	
+	public static Boolean verifyItemExistsInList(WebDriver driver, List<WebElement> webElementList, String itemName) {
+		Boolean isExists = false;
+		CoreFunctions.explicitWaitTillElementListVisibility(driver, webElementList);
+		try {
+			for (WebElement row : webElementList) {
+				if (row.getText().equals(itemName)) {
+					isExists = true;
+					CoreFunctions.highlightObject(driver, row);
+					CoreFunctions.hover(driver, row);
+					Reporter.addStepLog(CoreConstants.PASS + row.getText() + PDTConstants.IS_DISPLAYED);
+					break;
+				}
+			}
+		} catch (ElementNotFoundException e) {
+			e.printStackTrace();
+		}
+		return isExists;
+	}
+
+	public static Boolean verifyItemExistsInList(WebDriver driver, List<WebElement> webElementList, String elementName,
+			String elementVal, String pageName, boolean displayMsgInReport) {
+		Boolean isExists = false;
+		CoreFunctions.explicitWaitTillElementListVisibility(driver, webElementList);
+		try {
+			for (WebElement row : webElementList) {
+				if (row.getText().equals(elementVal)) {
+					isExists = true;
+					CoreFunctions.highlightObject(driver, row);
+					Reporter.addStepLog(MessageFormat.format(PDTConstants.VERIFY_ELEMENT_VALUE_ON_PAGE,
+							CoreConstants.PASS, elementName, elementVal, pageName));
+					break;
+				}
+			}
+		} catch (ElementNotFoundException e) {
+			e.printStackTrace();
+		}
+		return isExists;
+	}
+
 
 }

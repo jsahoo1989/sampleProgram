@@ -42,6 +42,7 @@ import com.aires.businessrules.constants.CoreConstants;
 import com.aires.businessrules.constants.PDTConstants;
 import com.aires.cucumber.TestContext;
 import com.aires.managers.FileReaderManager;
+import com.aires.testdatatypes.coreflex.CoreFlex_LoginInfo;
 import com.aires.testdatatypes.pdt.PDT_LoginInfo;
 import com.aires.utilities.ClientPolicyDetails;
 import com.aires.utilities.Log;
@@ -62,6 +63,7 @@ public class Hooks {
 	public static int testResult;
 	public static Scenario scenarioName;
 	private PDT_LoginInfo _loginInfo;
+	private CoreFlex_LoginInfo _coreFlexLoginInfo;
 
 	public Hooks(TestContext context) {
 		testContext = context;
@@ -77,8 +79,8 @@ public class Hooks {
 			testContext.getBasePage().invokeIrisApplication();
 			testContext.getBasePage().killExistingBrowsers();
 		} else
-			url=remoteGetURL(scenario);
-			//url = localGetURL(scenario);
+			url = remoteGetURL(scenario);
+//			url = localGetURL(scenario);
 
 		Log.info(url);
 		testContext.getWebDriverManager().getDriver().navigate().to(url);
@@ -143,32 +145,36 @@ public class Hooks {
 		}
 		Runtime.getRuntime().gc();
 	}
-	
+
 	public String remoteGetURL(Scenario scenario) {
 		String appName = System.getProperty("application");
-		return (appName.equals(CoreConstants.COREFLEX) && (scenario.getName().contains("MXTransferee")|| scenario.getName().contains("MXClient"))
-				? FileReaderManager.getInstance().getConfigReader().getApplicationUrl("MXTransferee")
-				: (appName.equals(CoreConstants.COREFLEX) && scenario.getName().contains("TransfereeSubmissions"))
-						? FileReaderManager.getInstance().getConfigReader().getApplicationUrl("TransfereeSubmissions")
-						: System.getProperty("testURL");
+		_coreFlexLoginInfo = FileReaderManager.getInstance().getCoreFlexJsonReader()
+				.getLoginByEnvt(System.getProperty("envt").toLowerCase());
+		return (appName.equals(CoreConstants.COREFLEX)
+				&& (scenario.getName().contains("MXTransferee") || scenario.getName().contains("MXClient"))
+						? _coreFlexLoginInfo.details.mobilityXURL
+						: (appName.equals(CoreConstants.COREFLEX)
+								&& scenario.getName().contains("TransfereeSubmissions"))
+										? _coreFlexLoginInfo.details.transfereeSubmissionsURL
+										: System.getProperty("testURL"));
 
 	}
 
 	public String localGetURL(Scenario scenario) {
 		_loginInfo = FileReaderManager.getInstance().getJsonReader()
 				.getLoginByEnvt(CoreFunctions.getPropertyFromConfig("envt").toLowerCase());
+		_coreFlexLoginInfo = FileReaderManager.getInstance().getCoreFlexJsonReader()
+				.getLoginByEnvt(CoreFunctions.getPropertyFromConfig("envt").toLowerCase());
 		return (scenario.getName().contains("PDT")) ? _loginInfo.details.pdtUrl
 				: (scenario.getName().contains("Mylo"))
 						? FileReaderManager.getInstance().getConfigReader().getMyloApplicationUrl()
-						: (scenario.getName().contains("CoreFlex"))
-								? FileReaderManager.getInstance().getConfigReader()
-										.getCoreFlexPolicySetupApplicationUrl()
-								: (scenario.getName().contains("MXTransferee") || scenario.getName().contains("MXClient"))
-										? FileReaderManager.getInstance().getConfigReader().getMobilityXUrl()
-										: FileReaderManager.getInstance().getConfigReader()
-												.getCoreFlexTransfereeSubmissionsApplicationUrl();
+						: (scenario.getName().contains("CoreFlex")) ? _coreFlexLoginInfo.details.blueprintURL
+								: (scenario.getName().contains("MXTransferee")
+										|| scenario.getName().contains("MXClient"))
+												? _coreFlexLoginInfo.details.mobilityXURL
+												: _coreFlexLoginInfo.details.transfereeSubmissionsURL;
 	}
-	
+
 	private void dataCleanUp() {
 		if (ClientPolicyDetails.getPolicyId() != null)
 			DbFunctions.deletePolicyByPolicyId(ClientPolicyDetails.getPolicyId());

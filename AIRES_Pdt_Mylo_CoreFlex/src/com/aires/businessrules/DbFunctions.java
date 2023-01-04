@@ -491,7 +491,7 @@ public class DbFunctions {
 		Connection connection = null;
 		try {
 			DriverManager.registerDriver(new oracle.jdbc.OracleDriver());
-			connection = DriverManager.getConnection(getMyloDBConnectionStringAsPerEnvt(environment));
+			connection = DriverManager.getConnection(getMyloDBConnectionStringAsPerEnvt(_environment));
 
 			switch (shipmentType) {
 			case MYLOConstants.SHIPMENT:

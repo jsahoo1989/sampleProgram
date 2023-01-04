@@ -22,23 +22,25 @@ public class DbFunctions {
 
 	static LinkedHashMap<String, String> myloQueryStatementMap = new LinkedHashMap<String, String>();
 	static LinkedHashMap<String, String> myloQTableColumnFields = new LinkedHashMap<String, String>();
-	static String environment = System.getProperty("envt").toLowerCase();
-	//static String environment =CoreFunctions.getPropertyFromConfig("envt").toLowerCase();
+	 static String environment = System.getProperty("envt").toLowerCase();
+	//static String environment = CoreFunctions.getPropertyFromConfig("envt").toLowerCase();
 
 	static LinkedHashMap<String, String> pdtExpenseCodeQueryStatementMap = new LinkedHashMap<String, String>();
-	
+
 	public static String getDBConnectionStringAsPerEnvt(String envt) {
 		String dbURL = null;
 		switch (envt) {
 		case "qa":
 			dbURL = "jdbc:oracle:thin:isisdba/irisqaisisdba@corpqavl300.corp.aires.com:1521:IRISQA";
-			//dbURL = "jdbc:oracle:thin:isisdba/irisnextisisdba@corptesvl300.corp.aires.com:1521:IRISNEXT";
+			// dbURL =
+			// "jdbc:oracle:thin:isisdba/irisnextisisdba@corptesvl300.corp.aires.com:1521:IRISNEXT";
 			break;
 		case "dev":
 			dbURL = "jdbc:oracle:thin:isisdba/irisdevisisdba@corptesvl300.corp.aires.com:1521:IRISDEV";
 			break;
 		case "test":
-			//dbURL = "jdbc:oracle:thin:policydba/testpo@corptesvl300.corp.aires.com:1521:IRISTEST";
+			// dbURL =
+			// "jdbc:oracle:thin:policydba/testpo@corptesvl300.corp.aires.com:1521:IRISTEST";
 			dbURL = "jdbc:oracle:thin:isisdba/iristestisisdba@corptesvl300.corp.aires.com:1521:iristest";
 			break;
 		case "prod":
@@ -63,8 +65,7 @@ public class DbFunctions {
 		Connection connection = null;
 		try {
 			connection = getConnection();
-			CallableStatement callableStatement = connection
-					.prepareCall(DbQueries.CALL_PROCEDURE_DELETE_POLICY_BY_ID);			
+			CallableStatement callableStatement = connection.prepareCall(DbQueries.CALL_PROCEDURE_DELETE_POLICY_BY_ID);
 			callableStatement.setInt(1, policyId);
 			callableStatement.execute();
 		} catch (Exception ex) {
@@ -374,7 +375,7 @@ public class DbFunctions {
 		}
 		return requiredValue;
 	}
-	
+
 	public static void updateAssignmentStatus(String assignmentStatusCode, int policyId) {
 		Connection connection = null;
 		try {
@@ -384,70 +385,74 @@ public class DbFunctions {
 			pstChangeStatus.setString(2, null);
 			pstChangeStatus.setInt(3, policyId);
 			pstChangeStatus.setString(4, CoreFunctions.getCurrentDateAsGivenFormat("dd-MM-yyyy"));
-			System.out.println("prepared statement query=="+pstChangeStatus.toString());
-			
-			pstChangeStatus.executeUpdate();	
+			System.out.println("prepared statement query==" + pstChangeStatus.toString());
+
+			pstChangeStatus.executeUpdate();
 			connection.close();
 		} catch (Exception ex) {
 			Assert.fail("SQL Query Failed");
 		}
 	}
-	
+
 	public static void populatePDTExpenseCodeQueryStatements() {
-		pdtExpenseCodeQueryStatementMap.put(PDTConstants.PRE_ACCEPTANCE_SERVICES, DbQueries.QUERY_GET_PRE_ACCEPTANCE_EXPENSE_CODE);
+		pdtExpenseCodeQueryStatementMap.put(PDTConstants.PRE_ACCEPTANCE_SERVICES,
+				DbQueries.QUERY_GET_PRE_ACCEPTANCE_EXPENSE_CODE);
 		pdtExpenseCodeQueryStatementMap.put(PDTConstants.IMMIGRATION, DbQueries.QUERY_GET_IMMIGRATION_EXPENSE_CODE);
-		pdtExpenseCodeQueryStatementMap.put(PDTConstants.HOUSE_HUNTING_TRIP, DbQueries.QUERY_GET_HOUSE_HUNTING_TRIP_EXPENSE_CODE);
-		pdtExpenseCodeQueryStatementMap.put(PDTConstants.LANGUAGE_TRAINING, DbQueries.QUERY_GET_LANG_TRAIN_EXPENSE_CODE);
-		pdtExpenseCodeQueryStatementMap.put(PDTConstants.CULTURAL_TRAINING, DbQueries.QUERY_GET_CULT_TRAIN_EXPENSE_CODE);
+		pdtExpenseCodeQueryStatementMap.put(PDTConstants.HOUSE_HUNTING_TRIP,
+				DbQueries.QUERY_GET_HOUSE_HUNTING_TRIP_EXPENSE_CODE);
+		pdtExpenseCodeQueryStatementMap.put(PDTConstants.LANGUAGE_TRAINING,
+				DbQueries.QUERY_GET_LANG_TRAIN_EXPENSE_CODE);
+		pdtExpenseCodeQueryStatementMap.put(PDTConstants.CULTURAL_TRAINING,
+				DbQueries.QUERY_GET_CULT_TRAIN_EXPENSE_CODE);
 	}
-	
+
 	public static List<String> getExpenseCodeListForBenefit(String benefitName) {
-		populatePDTExpenseCodeQueryStatements();		
+		populatePDTExpenseCodeQueryStatements();
 		List<String> expenseCodeList = new ArrayList<String>();
-		Connection connection = null;		
+		Connection connection = null;
 		try {
-			connection = getConnection();		
+			connection = getConnection();
 			PreparedStatement pst = connection.prepareStatement(pdtExpenseCodeQueryStatementMap.get(benefitName));
 			ResultSet resultset = pst.executeQuery();
 			while (resultset.next()) {
-				expenseCodeList.add(resultset.getString("EXPENSE_CODE")+" - "+ resultset.getString("DESCRIPTION"));
+				expenseCodeList.add(resultset.getString("EXPENSE_CODE") + " - " + resultset.getString("DESCRIPTION"));
 			}
-		
+
 		} catch (Exception ex) {
 			Assert.fail(CoreConstants.SQL_QUERY_FAILED);
 		} finally {
 			try {
-				if(connection != null) {
+				if (connection != null) {
 					connection.close();
 				}
-			}catch (Exception ex){
-				Log.info(CoreConstants.ERROR+ex.getMessage());
-				Log.info(CoreConstants.ERROR+ex.getStackTrace());
+			} catch (Exception ex) {
+				Log.info(CoreConstants.ERROR + ex.getMessage());
+				Log.info(CoreConstants.ERROR + ex.getStackTrace());
 			}
 		}
 		return expenseCodeList;
 	}
-	
+
 	public static Connection getConnection() {
-		Connection connection = null;	
+		Connection connection = null;
 		try {
 			DriverManager.registerDriver(new oracle.jdbc.OracleDriver());
 			connection = DriverManager.getConnection(
-					getDBConnectionStringAsPerEnvt(System.getProperty("envt")));
+			 getDBConnectionStringAsPerEnvt(System.getProperty("envt")));
 
-			//Kept the commented code for running in local environment
-			  //connection = DriverManager.getConnection(
-				//	getDBConnectionStringAsPerEnvt(CoreFunctions.getPropertyFromConfig("envt")));
+			// Kept the commented code for running in local environment
+			connection = DriverManager
+					.getConnection(getDBConnectionStringAsPerEnvt(CoreFunctions.getPropertyFromConfig("envt")));
 		} catch (SQLException e) {
 			Assert.fail("Failed to establish connection to the database");
 		}
 		return connection;
 	}
-	
+
 	public static List<String> getExpenseCodeForBenefit(String benefitName) {
-		populatePDTExpenseCodeQueryStatements();		
+		populatePDTExpenseCodeQueryStatements();
 		List<String> expenseCodeList = new ArrayList<String>();
-		Connection connection = null;		
+		Connection connection = null;
 		try {
 			connection = getConnection();
 			PreparedStatement pst = connection.prepareStatement(pdtExpenseCodeQueryStatementMap.get(benefitName));
@@ -455,19 +460,58 @@ public class DbFunctions {
 			while (resultset.next()) {
 				expenseCodeList.add(resultset.getString("EXPENSE_CODE"));
 			}
-		
-		} catch (Exception ex) {			
+
+		} catch (Exception ex) {
 			Assert.fail(CoreConstants.SQL_QUERY_FAILED);
 		} finally {
 			try {
-				if(connection != null) {
+				if (connection != null) {
 					connection.close();
 				}
-			}catch (Exception ex){
-				Log.info(CoreConstants.ERROR+ex.getMessage());
-				Log.info(CoreConstants.ERROR+ex.getStackTrace());
+			} catch (Exception ex) {
+				Log.info(CoreConstants.ERROR + ex.getMessage());
+				Log.info(CoreConstants.ERROR + ex.getStackTrace());
 			}
 		}
 		return expenseCodeList;
 	}
+
+	public static String getSubServiceID(String shipmentType) {
+
+		String subSericeID = null;
+		String dbQuery = null;
+		Connection connection = null;
+		try {
+			DriverManager.registerDriver(new oracle.jdbc.OracleDriver());
+			connection = DriverManager.getConnection(getMyloDBConnectionStringAsPerEnvt(environment));
+
+			switch (shipmentType) {
+			case MYLOConstants.SHIPMENT:
+				dbQuery = DbQueries.QUERY_GET_SHIPMENT_SUBSERVICEID;
+				break;
+			case MYLOConstants.NON_SHIPMENT:
+				dbQuery = DbQueries.QUERY_GET_NONSHIPMENT_SUBSERVICEID;
+				break;
+			}
+			PreparedStatement pst = connection.prepareStatement(dbQuery);
+			ResultSet resultset = pst.executeQuery();
+			while (resultset.next()) {
+				subSericeID = resultset.getString("ASSIGN_SUB_SERVICE_ID");
+				break;
+			}
+		} catch (Exception ex) {
+			Assert.fail(CoreConstants.SQL_QUERY_FAILED);
+		} finally {
+			try {
+				if (connection != null) {
+					connection.close();
+				}
+			} catch (Exception ex) {
+				Log.info(CoreConstants.ERROR + ex.getMessage());
+				Log.info(CoreConstants.ERROR + ex.getStackTrace());
+			}
+		}
+		return subSericeID;
+	}
+
 }

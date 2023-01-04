@@ -108,4 +108,13 @@ public class DbQueries {
 	public static final String QUERY_GET_LANG_TRAIN_EXPENSE_CODE = "select EXPENSECODE as EXPENSE_CODE, DESCRIPTION from grossup.expensecodes ec, rmsdba.rms_report_code rrc where rrc.expense_code = ec.expensecode and rrc.BLUEPRINT_CATEGORY_CODE = 'LANGUAGETRAINING' and ec.clientid = '999999' order by ec.expensecode";
 	public static final String QUERY_GET_CULT_TRAIN_EXPENSE_CODE = "select EXPENSECODE as EXPENSE_CODE, DESCRIPTION from grossup.expensecodes ec, rmsdba.rms_report_code rrc where rrc.expense_code = ec.expensecode and rrc.BLUEPRINT_CATEGORY_CODE = 'CULTURALTRAINING' and ec.clientid = '999999' order by ec.expensecode";
 	public static final String QUERY_GET_HOUSE_HUNTING_TRIP_EXPENSE_CODE = "select EXPENSECODE as EXPENSE_CODE, DESCRIPTION from grossup.expensecodes ec, rmsdba.rms_report_code rrc where rrc.expense_code = ec.expensecode and rrc.BLUEPRINT_CATEGORY_CODE = 'HOUSEHUNTINGTRIP' and ec.clientid = '999999' order by ec.expensecode";
+	public static final String QUERY_GET_SHIPMENT_SUBSERVICEID = "select ASSIGN_SUB_SERVICE_ID from isisdba.assignment_sub_service  \r\n" + 
+			"where\r\n" + 
+			" assignment_service_code = 'SHIPMENT' \r\n" + 
+			" order by assignment_service_code desc";
+	public static final String QUERY_GET_NONSHIPMENT_SUBSERVICEID = " select ASSIGN_SUB_SERVICE_ID from isisdba.assignment_sub_service  \r\n" + 
+			"where\r\n" + 
+			" assignment_service_code <> 'SHIPMENT' \r\n" + 
+			" order by assignment_service_code desc";
+
 }

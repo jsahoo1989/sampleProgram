@@ -149,6 +149,7 @@ public class Mylo_JourneyPage extends Base {
 		journeyWebElementsMap.put(MYLOConstants.ACCOUNTING, _queryPopUpHeader);
 		journeyWebElementsMap.put(MYLOConstants.ADVANCED, _queryPopUpHeader);
 		journeyWebElementsMap.put(MYLOConstants.AIRES_FILE_TEAM, _fileTeam);
+		journeyWebElementsMap.put(MYLOConstants.SUB_SERVICE_ID, _queryPopUpHeader);
 	}
 
 	/**

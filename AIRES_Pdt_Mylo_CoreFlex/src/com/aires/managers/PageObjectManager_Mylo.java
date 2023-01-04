@@ -33,6 +33,7 @@ import com.aires.pages.mylo.MyloJourneyPage_QueryBySubServiceID;
 import com.aires.pages.mylo.MyloJourneyPage_SendLoginCredentials;
 import com.aires.pages.mylo.MyloJourneyPage_TaxReportingSection;
 import com.aires.pages.mylo.MyloJourneyPage_TeamPostSection;
+import com.aires.pages.mylo.MyloJourneyPage_TransfereeNameQuerySection;
 import com.aires.pages.mylo.MyloJourneyPage_TransfereeSection;
 import com.aires.pages.mylo.Mylo_AssignmentPage;
 import com.aires.pages.mylo.Mylo_DashboardHomePage;
@@ -62,9 +63,9 @@ public class PageObjectManager_Mylo {
 	private MyloJourneyPage_TeamPostSection _journeyPage_TeamPostSection;
 	private MyloJourneyPage_AccountingQuerySection _journeyPage_AccountingQuerySection;
 	private MyloJourneyPage_AdvancedQuerySection _journeyPage_AdvancedQuerySection;
-	private MyloJourneyPage_FileTeamSection _journeyPage_FileTeamSection;	
+	private MyloJourneyPage_FileTeamSection _journeyPage_FileTeamSection;
+	private MyloJourneyPage_TransfereeNameQuerySection _journeyPage_TransfereeNameQuerySection;	
 	private MyloJourneyPage_QueryBySubServiceID _journeyPage_QueryBySubServiceID;
-
 	private MyloNewFileUtil _myloNewFileUtil;
 
 	public PageObjectManager_Mylo(WebDriver driver) {
@@ -164,6 +165,12 @@ public class PageObjectManager_Mylo {
 		return (_journeyPage_AccountingQuerySection == null)
 				? _journeyPage_AccountingQuerySection = new MyloJourneyPage_AccountingQuerySection(_driver)
 				: _journeyPage_AccountingQuerySection;
+	}
+	
+	public MyloJourneyPage_TransfereeNameQuerySection getJourneyTransfereeNameQuery() {
+		return (_journeyPage_TransfereeNameQuerySection == null)
+				? _journeyPage_TransfereeNameQuerySection = new MyloJourneyPage_TransfereeNameQuerySection(_driver)
+				: _journeyPage_TransfereeNameQuerySection;
 	}
 
 	public MyloJourneyPage_AdvancedQuerySection getJourneyAdvancedQuery() {

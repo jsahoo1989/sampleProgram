@@ -168,11 +168,11 @@ public class MyloJourneyPage_AuthTrackSection extends Base {
 			Assert.assertFalse(CoreFunctions.isElementExist(driver, _myloPopUp, 5),
 					MessageFormat.format(MYLOConstants.VRFIED_POPUP_DISPLAYED_ON_PAGE, CoreConstants.FAIL,
 							MYLOConstants.AUTH_TRACK_SECTION, MYLOConstants.JOURNEY));
-			Reporter.addStepLog(MessageFormat.format(MYLOConstants.VRFIED_POPUP_NOT_ON_PAGE, CoreConstants.PASS,
+			Reporter.addStepLog(MessageFormat.format(MYLOConstants.VERIFIED_POPUP_NOT_ON_PAGE, CoreConstants.PASS,
 					MYLOConstants.AUTH_TRACK_SECTION, MYLOConstants.JOURNEY));
 		} else {
 			Assert.assertTrue(CoreFunctions.isElementExist(driver, _myloPopUp, 5),
-					MessageFormat.format(MYLOConstants.VRFIED_POPUP_NOT_ON_PAGE, CoreConstants.FAIL,
+					MessageFormat.format(MYLOConstants.VERIFIED_POPUP_NOT_ON_PAGE, CoreConstants.FAIL,
 							MYLOConstants.AUTH_TRACK_SECTION, MYLOConstants.JOURNEY));
 			Reporter.addStepLog(MessageFormat.format(MYLOConstants.VRFIED_POPUP_DISPLAYED_ON_PAGE, CoreConstants.PASS,
 					MYLOConstants.AUTH_TRACK_SECTION, MYLOConstants.JOURNEY));

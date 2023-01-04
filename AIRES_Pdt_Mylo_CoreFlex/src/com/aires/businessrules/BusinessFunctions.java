@@ -648,7 +648,7 @@ public class BusinessFunctions {
 			flag = (element.getText().equals(msg));
 		} catch (Exception e) {
 			Assert.fail(MessageFormat.format(CoreConstants.FAIL_TO_VERIFY_ELEMENT_ON_PAGE, CoreConstants.FAIL,
-					MYLOConstants.EXPECTED_POPUP_MESSAGE, pageName));
+					MYLOConstants.EXPECTED_POPUP_MESSAGE+msg, pageName));
 		}
 		if (flag)
 			Reporter.addStepLog(MessageFormat.format(MYLOConstants.VERIFIED_POPUP_MESSAGE_DISPLAYED, CoreConstants.PASS,

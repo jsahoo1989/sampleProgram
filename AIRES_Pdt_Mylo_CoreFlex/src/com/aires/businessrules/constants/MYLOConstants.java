@@ -126,7 +126,7 @@ public class MYLOConstants {
 	public static final String VERIFIED_POPUP_MESSAGE_NOT_DISPLAYED = "{0}Verified Pop up message is not displayed as ''{1}''  on  ''{2}'' section";
 	public static final String VERIFIED_FIELD_HIGHLIGHTED = "{0}Verified ''{1}'' field is highlighted with Red background on  ''{2}'' section";
 	public static final String VERIFIED_FIELD_NOT_HIGHLIGHTED = "{0}Verified ''{1}'' field is not highlighted with Red background on  ''{2}'' section";
-	public static final String EXPECTED_MESSAGE_DISPLAYED = "{0}Expected message to display:  ''{1}''  but found:  ''{2}'' on ''{3}'' section";
+	public static final String EXPECTED_MESSAGE_DISPLAYED = "<font color='red'>{0}Expected message to display:  ''{1}''  but found:  ''{2}'' on ''{3}'' section</font>";
 	public static final String VERIFIED_VALUE_SUCCESSFULLY_SAVED = "{0}Verified Value  ''{1}'' is successfully saved for ''{2}'' field on  ''{3}'' section";
 	public static final String FAILED_TO_VERIFY_UPDATED_VALUE = "{0}Failed to Verify Update Value for ''{1}'' field on  ''{2}'' section";
 	public static final String VERIFY_UPDATED_FIELD_VALUE = "{0}Verified Value updated for ''{1}'' field is ''{2}'' on ''{3}'' section";
@@ -221,11 +221,11 @@ public class MYLOConstants {
 	public static final String ADDRESS2_VALUE = "PO BOX 1";
 	public static final String STATE_VALUE = "Hawaii";
 	public static final String CURRENT = "current";
-	public static final String RED_COLOR_HEXCODE = "#f37474";
-	public static final String BORDER_COLOR = "border-color";
-	public static final String BACKGROUND_COLOR = "background-color";
-	public static final String ASSIGNMENT_QUERYTYPE_HEADER = "Please Select a Query Type to Search for a User File";
-	public static final String ASSIGNMENT_PARAMETERTYPE_HEADER = "Please select parameters for your query.";
+	public static final String RED_COLOR_HEXCODE="#f37474";
+	public static final String BORDER_COLOR="border-color";
+	public static final String BACKGROUND_COLOR="background-color";
+	public static final String JOURNEY_QUERYTYPE_HEADER="Please Select a Query Type to Search for a User File";
+	public static final String ASSIGNMENT_PARAMETERTYPE_HEADER="Please select parameters for your query.";
 	public static final String VALUE_NOT_UPDATED = " Value is not updated";
 	public static final String QA = "QA";
 	public static final String UAT = "UAT";
@@ -475,8 +475,8 @@ public class MYLOConstants {
 	public static final String IC_ANSWER = "IC Answer";
 	public static final String IC_QUESTION_VALUE = "What is the name of the elementary/primary school you attended?";
 	public static final String SEND_LOGIN_CREDENTIALS = "Send Login Credentials";
-	public static final String DUPLICATE_EMAIL_MSG = "The email address entered has been previously used as a username.For ease of use, the ReloNet username is defaulted to the transferee email address.Please provide a different email address, or click No generate a generic username.";
-	public static final String VRFIED_POPUP_NOT_ON_PAGE = "{0} Verified ''{1}'' popUp is not present on ''{2}'' Page ";
+	public static final String DUPLICATE_EMAIL_MSG="The email address entered has been previously used as a username.For ease of use, the ReloNet username is defaulted to the transferee email address.Please provide a different email address, or click No generate a generic username.";
+	public static final String VERIFIED_POPUP_NOT_ON_PAGE = "{0} Verified ''{1}'' popUp is not present on ''{2}'' Page ";
 	public static final String VRFIED_POPUP_DISPLAYED_ON_PAGE = "{0} Verified ''{1}'' popUp is present on ''{2}'' Page ";
 	public static final String EMAIL1 = "Email1";
 	public static final String SUBMIT_BUTTON = "Submit";
@@ -722,7 +722,21 @@ public class MYLOConstants {
 	public static final String MSpec = "MSpec";
 	public static final String FAMILY_FIRST_NAME = "Family First Name";
 	public static final String FAMILY_LAST_NAME = "Family Last Name";
-	public static final String PHONE_NUMBER = "Phone Number";
+	public static final String PHONE_NUMBER="Phone Number";
+	
+	//Constants related to Transferee Name Query Section
+	public static final String TRANSFEREE_NAME_QUERY = "Transferee Name Query";
+	public static final String FIRST_NAME = "First Name";
+	public static final String LAST_NAME = "Last Name";
+	public static final String VERIFIED_QUERY_RESULTS_VALUES_MATCHED = "{0}Verified ''{1}'' column values of ''{2}'' result matches as per searched ''{3}'':- ''{4}'' with ''{5}'':-''{6}'' ";
+	public static final String VERIFIED_QUERY_RESULTS_VALUES_MISMATCH = "<font color='red'>{0}Verified ''{1}'' column values of ''{2}'' result does not matched as per searched ''{3}'':- ''{4}'' with ''{5}'':-''{6}'' </font>";
+	public static final String VERIFIED_QUERY_RESULT_FILES_MISMATCH = "{0}Verified Files displayed on Query result does is not as per searched ''{1}'' from ''{2}'' section";
+	public static final String FAIL_TO_VERIFY_TAG_SCRIPT_VALIDATION_MESSAGE_SECTION = "{0}Fail to verify Tag Script validation message for section {1}";
+	public static final String FAIL_TO_VERIFY_POP_UP_MESSAGE_SECTION = "{0}Fail to verify Pop Up message:{1}  for section {2}";
+	public static final int CUSTOM_WAIT_TIME = 30;
+	public static final int TRANSFEREE_FIRST_NAME_CHAR_LIMIT = 30;
+	public static final int TRANSFEREE_LAST_NAME_CHAR_LIMIT = 60;
+	public static final String CHARACTER_LIMIT = "CharacterLimit";
 
 	public static long TIME_BEFORE_ACTION;
 	public static long TIME_AFTER_ACTION;

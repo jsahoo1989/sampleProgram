@@ -205,13 +205,14 @@ public class MyloDashboard_Steps {
 	}
 
 	@Given("^he is on \"([^\"]*)\" popup by selecting \"([^\"]*)\" option available on \"([^\"]*)\" section$")
-	public void he_is_on_popup_by_selecting_option_available_on_section(String popUpHeader, String subSection,
-			String section) {
-		myloDashboardPage.clickOptionFromMainMenu(MYLOConstants.JOURNEY);
-		myloDashboardPage.selectOptionsFromAssignmentMenu(section);
-		myloDashboardPage.selectParameterFromQueryScreen(subSection);
-		Assert.assertTrue(myloJourneyPage.verifySectionHeader(subSection, popUpHeader), MessageFormat
-				.format(MYLOConstants.VERIFIED_HEADER_TEXT_NOT_DISPLAYED, CoreConstants.FAIL, popUpHeader, subSection));
+	public void he_is_on_popup_by_selecting_option_available_on_section(String popUpHeader, String queryOption,
+			String popUpName) {
+		Assert.assertTrue(myloJourneyPage.verifySectionHeader(popUpName, MYLOConstants.JOURNEY_QUERYTYPE_HEADER),
+				MessageFormat.format(MYLOConstants.VERIFIED_HEADER_TEXT_NOT_DISPLAYED, CoreConstants.FAIL,
+						MYLOConstants.JOURNEY_QUERYTYPE_HEADER, popUpName));
+		myloDashboardPage.selectParameterFromQueryScreen(queryOption);
+		Assert.assertTrue(myloJourneyPage.verifySectionHeader(queryOption, popUpHeader), MessageFormat.format(
+				MYLOConstants.VERIFIED_HEADER_TEXT_NOT_DISPLAYED, CoreConstants.FAIL, popUpHeader, queryOption));
 	}
 
 	@Then("^following check boxes should get appear under 'My Files' section$")
@@ -320,8 +321,20 @@ public class MyloDashboard_Steps {
 		Assert.assertFalse(myloDashboardPage.verifyMyFilesPopUpDisplayed(),
 				MessageFormat.format(MYLOConstants.VRFIED_POPUP_DISPLAYED_ON_PAGE, CoreConstants.FAIL,
 						MYLOConstants.MY_FILES, MYLOConstants.JOURNEY));
-		Reporter.addStepLog(MessageFormat.format(MYLOConstants.VRFIED_POPUP_NOT_ON_PAGE, CoreConstants.PASS,
+		Reporter.addStepLog(MessageFormat.format(MYLOConstants.VERIFIED_POPUP_NOT_ON_PAGE, CoreConstants.PASS,
 				MYLOConstants.MY_FILES, MYLOConstants.JOURNEY));
 	}
 
+	@Given("^he selects \"([^\"]*)\" option under \"([^\"]*)\" section available on left panel of Home Page after successfully logging into the 'Mylo' application$")
+	public void he_selects_option_under_section_available_on_left_panel_of_Home_Page_after_successfully_logging_into_the_Mylo_application(
+			String option, String section) throws Throwable {
+		loginPage.openApplication();
+		loginPage.enterUserEmailAndPasswordForMylo(loginData.MyloUserName, loginData.MyloPassword);
+		loginPage.clickSignIn();
+		Assert.assertTrue(myloDashboardPage.verifyUserName(loginData.MyloProfileName),
+				MessageFormat.format(MYLOConstants.VERIFIED_SECTION_NOT_DISPLAYED, CoreConstants.FAIL,
+						loginData.MyloProfileName, MYLOConstants.MYLO_DASHBOARD_HOME_PAGE));
+		myloDashboardPage.clickOptionFromMainMenu(MYLOConstants.JOURNEY);
+		myloDashboardPage.selectOptionsFromAssignmentMenu(option);
+	}
 }

@@ -1942,4 +1942,33 @@ public class MX_Client_AuthorizationHomePage extends Base {
 		}
 	}
 	
+	
+	public void enterEmpFirstAndLastNameForClonedAuthorization() {
+		try {
+			BusinessFunctions.generateUniqueValuesAndWriteToConfig(5);
+			switchToiFrame_Authorization();
+			CoreFunctions.explicitWaitTillElementVisibility(driver, _button_Continue,
+					MobilityXConstants.CONTINUE_BUTTON);
+			if (!selectUploadOrManualOption()) {
+				Assert.assertEquals(CoreFunctions.getElementText(driver, _titleText_dialogEmployeeName),
+						MobilityXConstants.EXPECTED_EMP_NAME_TITLE,
+						MobilityXConstants.EMPLOYEE_NAME + MobilityXConstants.IS_NOT_DISPLAYED);
+			}
+			// Enter Employee First Name and Last Name
+			CoreFunctions.clearAndSetText(driver, _txt_EmpFirstName,
+					CoreFunctions.getPropertyFromConfig(MobilityXConstants.FIRST_NAME_TEXT));
+			CoreFunctions.writeToPropertiesFile("Transferee_firstName",
+					CoreFunctions.getPropertyFromConfig(MobilityXConstants.FIRST_NAME_TEXT));
+
+			CoreFunctions.clearAndSetText(driver, _txt_EmpLastName,
+					CoreFunctions.getPropertyFromConfig(MobilityXConstants.LAST_NAME_TEXT));
+			CoreFunctions.writeToPropertiesFile("Transferee_lastName",
+					CoreFunctions.getPropertyFromConfig(MobilityXConstants.LAST_NAME_TEXT));
+			// Click Continue button
+			CoreFunctions.click(driver, _button_Continue, MobilityXConstants.CONTINUE_BUTTON);
+		} catch (Exception e) {
+			Log.info(CoreConstants.ERROR + e);
+		}
+	}
+	
 }

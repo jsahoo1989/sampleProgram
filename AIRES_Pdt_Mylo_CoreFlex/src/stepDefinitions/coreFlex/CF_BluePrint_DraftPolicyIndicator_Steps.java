@@ -2,6 +2,8 @@ package stepDefinitions.coreFlex;
 
 import java.text.MessageFormat;
 import java.util.Date;
+import java.util.List;
+import java.util.Map;
 
 import org.testng.Assert;
 
@@ -60,32 +62,25 @@ public class CF_BluePrint_DraftPolicyIndicator_Steps {
 //_loginInfo = FileReaderManager.getInstance().getCoreFlexJsonReader().getLoginByEnvt(System.getProperty("envt").toLowerCase());
 	}
 
+	private static int searchedPolicyIndex;
+
 	@Given("^he has logged in to 'OnPoint-Blueprint' application as a 'CSM' user$")
 	public void he_has_logged_in_to_OnPoint_Blueprint_application_as_a_CSM_user() throws Throwable {
 		Assert.assertTrue(bluePrintCFLoginPage.verifyLoginPageNavigation(), MessageFormat.format(
 				PDTConstants.FAILED_TO_NAVIGATE_TO_COREFLEX_BLUE_PRINT_APPLICATION_LOGIN_PAGE, CoreConstants.FAIL));
-		CoreConstants.TIME_AFTER_ACTION = new Date().getTime();
-		Reporter.addStepLog("<b>Total time taken to navigate to <i>OnPoint BluePrint Application Login</i> page is :"
-				+ CoreFunctions.calculatePageLoadTime(CoreConstants.TIME_BEFORE_ACTION, CoreConstants.TIME_AFTER_ACTION)
-				+ " Seconds </b>");
 		Assert.assertTrue(bluePrintCFLoginPage.loginByUserType(PDTConstants.CSM, viewPolicyPage),
 				MessageFormat.format(PDTConstants.FAILED_TO_VERIFY_LOGGED_IN_USER, CoreConstants.FAIL));
-
 	}
 
 	@Given("^he has clicked on \"([^\"]*)\" button after selecting Client and a new Points Based CoreFlex Policy on 'Add New Policy Forms' page$")
 	public void he_has_clicked_on_button_after_selecting_Client_and_a_new_Points_Based_CoreFlex_Policy_on_Add_New_Policy_Forms_page(
 			String arg1) throws Throwable {
-		CoreConstants.TIME_BEFORE_ACTION = new Date().getTime();
+
 		viewPolicyPage.clickElementOfPage(PDTConstants.ADD_NEW_POLICY_FORM);
 		Assert.assertTrue(addNewPolicyPage.verifyAddNewPolicyHeading(COREFLEXConstants.ADD_NEW_POLICY_PAGE),
 				MessageFormat.format(PDTConstants.FAILED_TO_VERIFY_HEADING_ON_PAGE, CoreConstants.FAIL,
 						COREFLEXConstants.ADD_NEW_POLICY_PAGE, PDTConstants.ADD_NEW_POLICY_FORM,
 						addNewPolicyPage.getElementText(PDTConstants.HEADING)));
-		CoreConstants.TIME_AFTER_ACTION = new Date().getTime();
-		Reporter.addStepLog("<b>Total time taken to navigate to <i>Blueprint - Add New Policy </i> page is :"
-				+ CoreFunctions.calculatePageLoadTime(CoreConstants.TIME_BEFORE_ACTION, CoreConstants.TIME_AFTER_ACTION)
-				+ " Seconds </b>");
 		addNewPolicyPage.selectClient(_loginInfo.details.clientId, _loginInfo.details.clientName);
 		addNewPoliciesForClientInIRIS(_loginInfo.details.clientId, addNewPolicyPage.verifyAutomationPolicyPresent());
 
@@ -98,15 +93,10 @@ public class CF_BluePrint_DraftPolicyIndicator_Steps {
 	@Given("^he has verified 'Red Indicator' is displayed beside Draft Policy status to indicate 'Incomplete Policy' on the navigated 'General Information' page$")
 	public void he_has_verified_Red_Indicator_is_displayed_beside_Draft_Policy_status_to_indicate_Incomplete_Policy_on_the_navigated_General_Information_page()
 			throws Throwable {
-		CoreConstants.TIME_BEFORE_ACTION = new Date().getTime();
 		addNewPolicyPage.clickElementOfPage(PDTConstants.NEXT);
 		Assert.assertTrue(generalInfoPage.verifyPageNavigation(COREFLEXConstants.GENERAL_INFORMATION_PAGE),
 				MessageFormat.format(PDTConstants.FAILED_TO_NAVIGATE_TO_COREFLEX_GENERAL_INFORMATION_PAGE,
 						CoreConstants.FAIL));
-		CoreConstants.TIME_AFTER_ACTION = new Date().getTime();
-		Reporter.addStepLog("<b>Total time taken to navigate to <i>Blueprint - General Information</i> page is :"
-				+ CoreFunctions.calculatePageLoadTime(CoreConstants.TIME_BEFORE_ACTION, CoreConstants.TIME_AFTER_ACTION)
-				+ " Seconds </b>");
 		Assert.assertTrue(generalInfoPage.verifyOnPointPolicyStatusIndicator(COREFLEXConstants.RED_INDICATOR,
 				COREFLEXConstants.POLICY_INCOMPLETE, COREFLEXConstants.CREATE_NEW_POLICY_BENEFIT_GENERAL_INFORMATION),
 				MessageFormat.format(COREFLEXConstants.FAILED_TO_VERIFY_ONPOINT_POLICY_DRAFT_STATUS_INDICATOR,
@@ -258,6 +248,74 @@ public class CF_BluePrint_DraftPolicyIndicator_Steps {
 		Assert.assertTrue(viewPolicyPage.verifyPageNavigation(COREFLEXConstants.VIEW_EDIT_POLICY_FORMS),
 				MessageFormat.format(COREFLEXConstants.FAILED_TO_VERIFY_USER_NAVIGATION_TO_VIEW_EDIT_POLICY_PAGE,
 						CoreConstants.FAIL));
+	}
+
+	@Given("^he has clicked on 'Clone Policy' icon after searching for 'Points Based CoreFlex Policy' with \"([^\"]*)\" Policy Status$")
+	public void he_has_clicked_on_Clone_Policy_icon_after_searching_for_Points_Based_CoreFlex_Policy_with_Policy_Status(
+			String policyStatus) throws Throwable {
+		viewPolicyPage.searchPolicy(COREFLEXConstants.AUTOMATION_POLICY);
+		searchedPolicyIndex = viewPolicyPage.searchPolicyByStatus(policyStatus.split("-")[0].trim(),
+				policyStatus.split("-")[1].trim());
+		viewPolicyPage.captureCorporationPolicyValue(searchedPolicyIndex, policyStatus, generalInfoPage);
+		viewPolicyPage.searchPolicy(CoreFunctions.getPropertyFromConfig("ClonePolicy_Reference_PolicyName"));
+		viewPolicyPage.clickCloneIconOfReferencePolicy(policyStatus);
+	}
+	
+
+	@Then("^he should be navigated to \"([^\"]*)\" page of new 'Cloned - Points based CoreFlex Policy' having following values$")
+	public void he_should_be_navigated_to_page_of_new_Cloned_Points_based_CoreFlex_Policy_having_following_values(
+			String navigatedPageName, DataTable dataTable) throws Throwable {
+
+		List<Map<String, String>> dataMap = dataTable.asMaps(String.class, String.class);
+		String expectedClonedPolicyStatus = dataMap.get(0).get("Policy Status");
+		String expectedClonedPolicyVersion = dataMap.get(0).get("Policy Version");
+		String expectedClonedPolicyStatusIndicator = dataMap.get(0).get("Policy Status Indicator");
+		String expectedClonedPolicyStatusIndicatorHoverText = dataMap.get(0).get("Policy Status Indicator Hover Text");
+
+		Assert.assertTrue(generalInfoPage.verifyPageNavigation(COREFLEXConstants.GENERAL_INFORMATION_PAGE),
+				MessageFormat.format(PDTConstants.FAILED_TO_NAVIGATE_TO_COREFLEX_GENERAL_INFORMATION_PAGE,
+						CoreConstants.FAIL));
+		Assert.assertTrue(
+				generalInfoPage.validateClientAndPolicyDetailsOnGeneralInfo(COREFLEXConstants.GENERAL_INFORMATION_PAGE,
+						CoreFunctions.getPropertyFromConfig("ClonedPolicy_Client_ID"),
+						CoreFunctions.getPropertyFromConfig("ClonedPolicy_Policy_Name")),
+				MessageFormat.format(PDTConstants.FAILED_TO_VALIDATE_CLIENT_POLICY_DATA_ON_GENERAL_INFORMATION_PAGE,
+						CoreConstants.FAIL));
+		Assert.assertTrue(
+				generalInfoPage.verifyGeneralInfoFieldDefaultValue(PDTConstants.POLICY_STATUS,
+						expectedClonedPolicyStatus),
+				MessageFormat.format(PDTConstants.FAILED_TO_VERIFY_DEFAULT_VALUE_OF_GENERAL_INFORMATION_PAGE_FIELD,
+						CoreConstants.FAIL, PDTConstants.POLICY_STATUS));
+
+		Assert.assertTrue(
+				generalInfoPage.verifyOnPointPolicyStatusIndicator(expectedClonedPolicyStatusIndicator,
+						expectedClonedPolicyStatusIndicatorHoverText,
+						COREFLEXConstants.CREATE_NEW_POLICY_BENEFIT_GENERAL_INFORMATION),
+				MessageFormat.format(COREFLEXConstants.FAILED_TO_VERIFY_ONPOINT_POLICY_DRAFT_STATUS_INDICATOR,
+						CoreConstants.FAIL, COREFLEXConstants.CREATE_NEW_POLICY_BENEFIT_GENERAL_INFORMATION));
+
+		Assert.assertTrue(
+				generalInfoPage.verifyGeneralInfoFieldDefaultValue(COREFLEXConstants.POLICY_VERSION,
+						expectedClonedPolicyVersion),
+				MessageFormat.format(PDTConstants.FAILED_TO_VERIFY_DEFAULT_VALUE_OF_GENERAL_INFORMATION_PAGE_FIELD,
+						CoreConstants.FAIL, COREFLEXConstants.POLICY_VERSION));
+		Assert.assertTrue(
+				generalInfoPage.verifyGeneralInfoFieldDefaultValue(PDTConstants.TRACING_SET,
+						CoreFunctions.getPropertyFromConfig("Policy_TracingSet")),
+				MessageFormat.format(PDTConstants.FAILED_TO_VERIFY_DEFAULT_VALUE_OF_GENERAL_INFORMATION_PAGE_FIELD,
+						CoreConstants.FAIL, PDTConstants.TRACING_SET));
+		Assert.assertTrue(
+				generalInfoPage.verifyGeneralInfoFieldDefaultValue(PDTConstants.POINTS_BASED_FLEX_POLICY,
+						COREFLEXConstants.YES),
+				MessageFormat.format(PDTConstants.FAILED_TO_VERIFY_DEFAULT_VALUE_OF_GENERAL_INFORMATION_PAGE_FIELD,
+						CoreConstants.FAIL, PDTConstants.POINTS_BASED_FLEX_POLICY));
+		Assert.assertTrue(generalInfoPage.verifyGeneralInfoAdditionalPolicyDetails(),
+				MessageFormat.format(
+						COREFLEXConstants.FAILED_TO_VERIFY_ADDITIONAL_POLICY_DETAILS_ON_GENERAL_INFORMATION_PAGE,
+						CoreConstants.FAIL));
+		CoreFunctions.writeToPropertiesFile("Assignment_Policy",
+				CoreFunctions.getPropertyFromConfig("ClonedPolicy_Policy_Name"));
+		generalInfoPage.clickElementOfPage(COREFLEXConstants.EXIT);
 	}
 
 	/**

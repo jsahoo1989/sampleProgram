@@ -1727,7 +1727,30 @@ public class CF_MX_Client_Steps {
 				MessageFormat.format(
 						MobilityXConstants.FAILED_TO_VERIFY_USER_NAVIGATION_TO_MXCLIENT_VIEW_ALL_INITIATONS_PAGE,
 						CoreConstants.FAIL));
-
+	}
+	
+	@Given("^he has filled all the mandatory information on 'Authorization Form' after selecting following 'Assignment Option' with 'Auth Form Template' for a Cloned Employee on 'Authorization Home Page'$")
+	public void he_has_filled_all_the_mandatory_information_on_Authorization_Form_after_selecting_following_Assignment_Option_with_Auth_Form_Template_for_a_Cloned_Employee_on_Authorization_Home_Page(
+			DataTable dataTable) throws Throwable {
+		List<Map<String, String>> dataMap = dataTable.asMaps(String.class, String.class);
+		String assignmentOption = dataMap.get(0).get("Assignment Option");
+		String authFormTemplate = dataMap.get(0).get("Authorization Form Template");
+		mxClientAuthorizationHomePage.enterEmpFirstAndLastNameForNewAuthorization();
+		mxClientAuthorizationHomePage.selectAuthorizationOptionForEmployee(assignmentOption);
+		mxClientAuthorizationHomePage.selectAuthorizationFormTemplate(_coreFlexLoginInfo.details.clientId,
+				_coreFlexLoginInfo.details.clientName, authFormTemplate);
+		CoreConstants.TIME_BEFORE_ACTION = new Date().getTime();
+		Assert.assertTrue(mxClientAuthorizationHomePage.verifyPageNavigationToAuthForm(), MessageFormat
+				.format(MobilityXConstants.FAILED_TO_VERIFY_USER_NAVIGATION_TO_MXCLIENT_HOME_PAGE, CoreConstants.FAIL));
+		CoreConstants.TIME_AFTER_ACTION = new Date().getTime();
+		Reporter.addStepLog("<b>Total time taken to navigate to <i>MobilityX Client Auth Form</i> page is :"
+				+ CoreFunctions.calculatePageLoadTime(CoreConstants.TIME_BEFORE_ACTION, CoreConstants.TIME_AFTER_ACTION)
+				+ " Seconds </b>");
+		bscAuthorizationData = FileReaderManager.getInstance().getCoreFlexJsonReader()
+				.getBscDataByModuleName("DomesticAuthorizationFormData");
+		mxClientAuthorizationHomePage.fillAuthorizationForBSCDomesticForm(bscAuthorizationData);
+		Assert.assertTrue(mxClientAuthorizationHomePage.verifyAuthFormChangesAutoSaved(), MessageFormat.format(
+				MobilityXConstants.CHANGES_NOT_AUTO_SAVED_AFTER_FILLING_AUTHORIZATION_FORM, CoreConstants.FAIL));
 	}
 
 }

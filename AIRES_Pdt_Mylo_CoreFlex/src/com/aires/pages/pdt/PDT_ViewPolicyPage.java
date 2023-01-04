@@ -1709,7 +1709,7 @@ public class PDT_ViewPolicyPage extends Base {
 				: (CoreFunctions.getElementText(driver, _policyStatusIndicator.get(index))
 						.equalsIgnoreCase("check_circle") ? COREFLEXConstants.GREEN_INDICATOR : null);
 	}
-	
+
 	/**
 	 * Method to verify navigated Page Header Title
 	 * 
@@ -1720,6 +1720,38 @@ public class PDT_ViewPolicyPage extends Base {
 		CoreFunctions.explicitWaitTillElementInVisibility(driver, _progressBar);
 		return CoreFunctions.verifyElementOnPage(driver, _headingEditPolicyBenefit,
 				COREFLEXConstants.EDIT_POLICY_BENEFIT);
+	}
+
+	public int searchPolicyByStatus(String policyStatus, String policyIndicator) {
+		int policyIndex = -1;
+		try {
+			policyIndex = BusinessFunctions.returnindexItemFromListUsingText(driver, _policyStatusIndicator,
+							getPolicyIndicatorText(policyIndicator), true);
+			if (policyIndex == -1) {
+				while (policyIndex == -1) {
+					clickElementOfPage(COREFLEXConstants.NEXT);
+					policyIndex = BusinessFunctions.returnindexItemFromListUsingText(driver, _policyStatusIndicator,
+							getPolicyIndicatorText(policyIndicator), true);
+					if (policyIndex != -1) {
+						captureReferencePolicyValues(policyIndex);
+						return policyIndex;
+					}
+				}
+			} else {
+				CoreFunctions.highlightObject(driver, _policyStatusIndicator.get(policyIndex));
+				captureReferencePolicyValues(policyIndex);
+				return policyIndex;
+			}
+		} catch (Exception e) {
+			Reporter.addStepLog(
+					MessageFormat.format(COREFLEXConstants.EXCEPTION_OCCURED_WHILE_SEARCHING_POLICY_WITH_STATUS,
+							CoreConstants.FAIL, e.getMessage(), policyStatus));
+		}
+		return policyIndex;
+	}
+
+	private String getPolicyIndicatorText(String policyIndicator) {
+		return (policyIndicator.equalsIgnoreCase("Incomplete") ? "error" : "check_circle");
 	}
 
 }

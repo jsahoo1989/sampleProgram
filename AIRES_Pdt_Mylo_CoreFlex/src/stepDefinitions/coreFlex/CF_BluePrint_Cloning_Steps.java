@@ -50,20 +50,8 @@ public class CF_BluePrint_Cloning_Steps {
 		flexPolicySetupPage = testContext.getCoreFlexPageObjectManager().getFlexPolicySetupPage();
 		coreFlexPolicyBenefitsCategoriesPage = testContext.getCoreFlexPageObjectManager()
 				.getCoreFlexPolicyBenefitsCategoriesPage();
-		testContext = context;
-		viewPolicyPage = testContext.getPageObjectManager().getViewPolicyPage();
-		generalInfoPage = testContext.getPageObjectManager().getGeneralInfoPage();
-		flexPolicySetupPage = testContext.getCoreFlexPageObjectManager().getFlexPolicySetupPage();
-		coreFlexPolicyBenefitsCategoriesPage = testContext.getCoreFlexPageObjectManager()
-				.getCoreFlexPolicyBenefitsCategoriesPage();
-		coreFlexCustomBundlesPage = testContext.getCoreFlexPageObjectManager().getCoreFlexCustomBundlesPage();
-		testContext.getCoreFlexPageObjectManager().initializeCoreFlexPageObjects();
 		coreFlexBenefitSummaryPage = testContext.getCoreFlexPageObjectManager().getCoreFlexBenefitSummaryPage();
 		coreFlexTransfereePreviewPage = testContext.getCoreFlexPageObjectManager().getCoreFlexTransfereePreviewPage();
-		bluePrintCFLoginPage = testContext.getPageObjectManager().getBluePrintCoreFlexLoginPage();
-		coreFlexTransfereePreviewPage = testContext.getCoreFlexPageObjectManager().getCoreFlexTransfereePreviewPage();
-		bluePrintCFLoginPage = testContext.getPageObjectManager().getBluePrintCoreFlexLoginPage();
-
 	}
 
 	private static int searchedPolicyIndex;
@@ -72,12 +60,6 @@ public class CF_BluePrint_Cloning_Steps {
 	public void he_has_logged_into_BluePrint_application_as_CSM_SSO_user() throws Throwable {
 		Assert.assertTrue(bluePrintCFLoginPage.verifyLoginPageNavigation(), MessageFormat.format(
 				PDTConstants.FAILED_TO_NAVIGATE_TO_COREFLEX_BLUE_PRINT_APPLICATION_LOGIN_PAGE, CoreConstants.FAIL));
-		CoreConstants.TIME_AFTER_ACTION = new Date().getTime();
-		Reporter.addStepLog(
-				"<b>Total time taken to navigate to <i>CoreFlex Policy BluePrint Application Login</i> page is :"
-						+ CoreFunctions.calculatePageLoadTime(CoreConstants.TIME_BEFORE_ACTION,
-								CoreConstants.TIME_AFTER_ACTION)
-						+ " Seconds </b>");
 		Assert.assertTrue(bluePrintCFLoginPage.loginByUserType(PDTConstants.CSM, viewPolicyPage),
 				MessageFormat.format(PDTConstants.FAILED_TO_VERIFY_LOGGED_IN_USER, CoreConstants.FAIL));
 	}
@@ -142,14 +124,10 @@ public class CF_BluePrint_Cloning_Steps {
 	public void he_should_be_navigated_to_page_of_new_Cloned_Points_based_CoreFlex_Policy_saved_as_with_Policy_Version_as(
 			String navigatedPageName, String expectedClonedPolicyStatus, String expectedClonedPolicyVersion)
 			throws Throwable {
-		CoreConstants.TIME_BEFORE_ACTION = new Date().getTime();
+		
 		Assert.assertTrue(generalInfoPage.verifyPageNavigation(COREFLEXConstants.GENERAL_INFORMATION_PAGE),
 				MessageFormat.format(PDTConstants.FAILED_TO_NAVIGATE_TO_COREFLEX_GENERAL_INFORMATION_PAGE,
 						CoreConstants.FAIL));
-		CoreConstants.TIME_AFTER_ACTION = new Date().getTime();
-		Reporter.addStepLog("<b>Total time taken to navigate to <i>Blueprint - General Information</i> page is :"
-				+ CoreFunctions.calculatePageLoadTime(CoreConstants.TIME_BEFORE_ACTION, CoreConstants.TIME_AFTER_ACTION)
-				+ " Seconds </b>");
 		Assert.assertTrue(
 				generalInfoPage.validateClientAndPolicyDetailsOnGeneralInfo(COREFLEXConstants.GENERAL_INFORMATION_PAGE,
 						CoreFunctions.getPropertyFromConfig("ClonedPolicy_Client_ID"),
@@ -186,14 +164,9 @@ public class CF_BluePrint_Cloning_Steps {
 	@Then("^all the 'CoreFlex' benefits from the reference 'Points Based CoreFlex policy' should be copied over to the 'Cloned - Points based CoreFlex Policy'$")
 	public void all_the_CoreFlex_benefits_from_the_reference_Points_Based_CoreFlex_policy_should_be_copied_over_to_the_Cloned_Points_based_CoreFlex_Policy()
 			throws Throwable {
-		CoreConstants.TIME_BEFORE_ACTION = new Date().getTime();
 		Assert.assertTrue(flexPolicySetupPage.verifyPageNavigation(COREFLEXConstants.POINT_POLICY_SETUP),
 				MessageFormat.format(COREFLEXConstants.FAILED_TO_VERIFY_USER_NAVIGATION_TO_POINT_POLICY_SETUP_PAGE,
 						CoreConstants.FAIL));
-		CoreConstants.TIME_AFTER_ACTION = new Date().getTime();
-		Reporter.addStepLog("<b>Total time taken to navigate to <i>Blueprint - Flex Policy Setup</i> page is :"
-				+ CoreFunctions.calculatePageLoadTime(CoreConstants.TIME_BEFORE_ACTION, CoreConstants.TIME_AFTER_ACTION)
-				+ " Seconds </b>");
 		Assert.assertTrue(flexPolicySetupPage.verifyBenfitExpirationLockBenefitTooltip(), MessageFormat.format(
 				COREFLEXConstants.FAILED_TO_VERIFY_BENEFIT_EXPIRATION_AND_LOCK_BENEFITS_TOOLTIP_ON_FLEX_POLICY_SETUP_PAGE,
 				CoreConstants.FAIL));
@@ -202,23 +175,15 @@ public class CF_BluePrint_Cloning_Steps {
 						COREFLEXConstants.FIELDS_VALIDATION_FAILED_ON_FLEX_POLICY_SETUP_PAGE_POST_VERSIONING_CLONING,
 						CoreConstants.FAIL));
 		flexPolicySetupPage.clickElementOfPage(PDTConstants.NEXT);
-
-		CoreConstants.TIME_BEFORE_ACTION = new Date().getTime();
 		Assert.assertTrue(
 				coreFlexPolicyBenefitsCategoriesPage.verifyPageNavigation(COREFLEXConstants.POLICY_BENEFIT_CATEGORIES),
 				MessageFormat.format(
 						COREFLEXConstants.FAILED_TO_VERIFY_USER_NAVIGATION_TO_POLICY_BENEFITS_CATEGORIES_PAGE,
 						CoreConstants.FAIL));
-		CoreConstants.TIME_AFTER_ACTION = new Date().getTime();
-		Reporter.addStepLog("<b>Total time taken to navigate to <i>Blueprint - Policy Benefit Categories</i> page is :"
-				+ CoreFunctions.calculatePageLoadTime(CoreConstants.TIME_BEFORE_ACTION, CoreConstants.TIME_AFTER_ACTION)
-				+ " Seconds </b>");
-
 		coreFlexPolicyBenefitsCategoriesPage.clickElementOfPage(PDTConstants.NEXT);
 		Assert.assertTrue(coreFlexPolicyBenefitsCategoriesPage.verifyInformationDialog(), MessageFormat.format(
 				COREFLEXConstants.FAILED_TO_VERIFY_INFORMATION_DIALOG_AFTER_SELECTING_BENEFITS_AND_CLICKING_NEXT_ON_POLICY_BENEFIT_CATEGORIES_PAGE,
 				CoreConstants.FAIL));
-		CoreConstants.TIME_BEFORE_ACTION = new Date().getTime();
 		Assert.assertTrue(
 				coreFlexPolicyBenefitsCategoriesPage.verifyBenefitsDisplayedOnLeftNavigation(
 						CoreFunctions.getPropertyFromConfig("CoreFlex_Policy_BenefitType"),
@@ -226,10 +191,6 @@ public class CF_BluePrint_Cloning_Steps {
 				MessageFormat.format(
 						COREFLEXConstants.FAILED_TO_VERIFY_SELECTED_BENEFITS_ON_LEFT_NAVIGATION_POST_VERSIONING_CLONING,
 						CoreConstants.FAIL));
-		CoreConstants.TIME_AFTER_ACTION = new Date().getTime();
-		Reporter.addStepLog("<b>Total time taken to navigate to <i>Selected Benefits</i> page is :"
-				+ CoreFunctions.calculatePageLoadTime(CoreConstants.TIME_BEFORE_ACTION, CoreConstants.TIME_AFTER_ACTION)
-				+ " Seconds </b>");
 		Assert.assertTrue(
 				coreFlexPolicyBenefitsCategoriesPage.verifyAddedBenefitDetailsPostVersioningCloning(
 						CoreFunctions.getPropertyFromConfig("CoreFlex_Policy_BenefitType"),
@@ -237,15 +198,11 @@ public class CF_BluePrint_Cloning_Steps {
 				MessageFormat.format(COREFLEXConstants.FAILED_TO_SELECT_AND_FILL_ADDED_BENEFITS, CoreConstants.FAIL));
 
 		coreFlexPolicyBenefitsCategoriesPage.clickLeftNavigationMenuOfPage(COREFLEXConstants.BENEFIT_SUMMARY);
-		CoreConstants.TIME_BEFORE_ACTION = new Date().getTime();
+		
 		Assert.assertTrue(
 				coreFlexBenefitSummaryPage.verifyPageNavigation(COREFLEXConstants.POLICY_BENEFITS_BENEFIT_SUMMARY),
 				MessageFormat.format(COREFLEXConstants.FAILED_TO_VERIFY_USER_NAVIGATION_TO_BENEFIT_SUMMARY_PAGE,
 						CoreConstants.FAIL));
-		CoreConstants.TIME_AFTER_ACTION = new Date().getTime();
-		Reporter.addStepLog("<b>Total time taken to navigate to <i>Blueprint - Benefit Summary</i> page is :"
-				+ CoreFunctions.calculatePageLoadTime(CoreConstants.TIME_BEFORE_ACTION, CoreConstants.TIME_AFTER_ACTION)
-				+ " Seconds </b>");
 
 		Assert.assertTrue(
 				coreFlexBenefitSummaryPage.iterateAndVerifyBenefitSummaryDetails(
@@ -254,14 +211,10 @@ public class CF_BluePrint_Cloning_Steps {
 						COREFLEXConstants.FAILED_TO_VERIFY_BENEFIT_SUBBENEFIT_DETAILS_ON_BENEFIT_SUMMARY_PAGE,
 						CoreConstants.FAIL));
 		coreFlexBenefitSummaryPage.clickElementOfPage(COREFLEXConstants.CONTINUE);
-		CoreConstants.TIME_BEFORE_ACTION = new Date().getTime();
+		
 		Assert.assertTrue(coreFlexCustomBundlesPage.verifyPageNavigation(COREFLEXConstants.CUSTOM_BUNDLES),
 				MessageFormat.format(COREFLEXConstants.FAILED_TO_VERIFY_USER_NAVIGATION_TO_CUSTOM_BUNDLES_PAGE,
 						CoreConstants.FAIL));
-		CoreConstants.TIME_AFTER_ACTION = new Date().getTime();
-		Reporter.addStepLog("<b>Total time taken to navigate to <i>Blueprint - Custom Bundles</i> page is :"
-				+ CoreFunctions.calculatePageLoadTime(CoreConstants.TIME_BEFORE_ACTION, CoreConstants.TIME_AFTER_ACTION)
-				+ " Seconds </b>");
 
 		Assert.assertTrue(
 				coreFlexCustomBundlesPage.verifyAddedCustomBundlePostVersioningCloning(
@@ -269,13 +222,9 @@ public class CF_BluePrint_Cloning_Steps {
 				MessageFormat.format(COREFLEXConstants.FAILED_TO_VERIFY_ADDED_CUSTOM_BUNDLE_ON_CUSTOM_BUNDLES_PAGE,
 						CoreConstants.FAIL));
 		coreFlexCustomBundlesPage.clickElementOfPage(COREFLEXConstants.PREVIEW_TRANSFEREE_EXPERIENCE);
-		CoreConstants.TIME_BEFORE_ACTION = new Date().getTime();
+		
 		Assert.assertTrue(coreFlexTransfereePreviewPage.isPreviewTransfereePageDisplayed(), MessageFormat
 				.format(COREFLEXConstants.FAILED_TO_VERIFY_NAVIGATION_TO_TRANSFEREE_PREVIEW_PAGE, CoreConstants.FAIL));
-		CoreConstants.TIME_AFTER_ACTION = new Date().getTime();
-		Reporter.addStepLog("<b>Total time taken to navigate to <i>Blueprint - Transfere Preview</i> page is :"
-				+ CoreFunctions.calculatePageLoadTime(CoreConstants.TIME_BEFORE_ACTION, CoreConstants.TIME_AFTER_ACTION)
-				+ " Seconds </b>");
 
 		Assert.assertTrue(
 				coreFlexTransfereePreviewPage.verifyPreviewTransfereeExperience(

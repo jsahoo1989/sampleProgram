@@ -1,7 +1,6 @@
 package stepDefinitions.coreFlex;
 
 import java.text.MessageFormat;
-import java.util.Date;
 import java.util.List;
 import java.util.Map;
 
@@ -23,7 +22,6 @@ import com.aires.pages.coreflex.TransfereeSubmissions_DetailsPage;
 import com.aires.pages.coreflex.TransfereeSubmissions_LoginPage;
 import com.aires.testdatatypes.coreflex.CoreFlex_LoginInfo;
 import com.aires.testdatatypes.coreflex.TransfereeSubmissions_LoginData;
-import com.vimalselvam.cucumber.listener.Reporter;
 
 import cucumber.api.java.en.Given;
 import cucumber.api.java.en.Then;
@@ -64,16 +62,19 @@ public class CF_Transferee_StaticFixedPoints_CashNotAuth_Both_EndToEndFlow_Steps
 				.getLoginByEnvt(CoreFunctions.getPropertyFromConfig("envt").toLowerCase());
 //		_coreFlexLoginInfo = FileReaderManager.getInstance().getCoreFlexJsonReader().getLoginByEnvt(System.getProperty("envt").toLowerCase());
 	}
+	
+	/********************************************************************************************/
 
 	private TransfereeSubmissions_LoginData _transfereeSubmissionLoginData = FileReaderManager.getInstance()
 			.getCoreFlexJsonReader().getTransfereeSubmissionLoginDataList(COREFLEXConstants.TRANSFEREE_SUBMISSIONS);
+	
+	/********************************************************************************************/
 
 	@Given("^he has clicked on \"([^\"]*)\" button for a benefit under 'Submitted Benefits' section$")
 	public void he_has_clicked_on_button_for_a_benefit_under_Submitted_Benefits_section(String action)
 			throws Throwable {
 		Assert.assertTrue(mxTransfereeMyBenefitsBundlePage.performSubmittedBenefitAction(action),
 				MessageFormat.format(MobilityXConstants.FAILED_TO_DELETE_SUBMITTED_BENEFIT, CoreConstants.FAIL));
-		CoreConstants.TIME_BEFORE_ACTION = new Date().getTime();
 	}
 
 	@When("^he confirms 'Remove Benefit Selection' dialog by entering username and clicking on \"([^\"]*)\"$")
@@ -81,10 +82,6 @@ public class CF_Transferee_StaticFixedPoints_CashNotAuth_Both_EndToEndFlow_Steps
 			throws Throwable {
 		Assert.assertTrue(mxTransfereeMyBenefitsBundlePage.isDeleteBenefitPopupDisplayed(), MessageFormat
 				.format(MobilityXConstants.REMOVE_BENEFIT_SELECTION_POPUP_NOT_DISPLAYED, CoreConstants.FAIL));
-		CoreConstants.TIME_AFTER_ACTION = new Date().getTime();
-		Reporter.addStepLog("<b>Total time taken to navigateTo/display <i>Delete Benefit</i> page is :"
-				+ CoreFunctions.calculatePageLoadTime(CoreConstants.TIME_BEFORE_ACTION, CoreConstants.TIME_AFTER_ACTION)
-				+ " Seconds </b>");
 		Assert.assertTrue(mxTransfereeMyBenefitsBundlePage.deleteSubmittedBenefitAndCashout(buttonName), MessageFormat
 				.format(MobilityXConstants.FAILED_TO_DELETE_SUBMITTED_BENEFIT_AND_CASHOUT, CoreConstants.FAIL));
 	}
@@ -106,7 +103,7 @@ public class CF_Transferee_StaticFixedPoints_CashNotAuth_Both_EndToEndFlow_Steps
 	public void he_has_clicked_on_button_for_Bundle_submitted_by_the_transferee_on_page(String btnName, String pageName)
 			throws Throwable {
 		transfereeSubmissionsDashboardHomePage.clickElementOfPage(btnName);
-		CoreConstants.TIME_BEFORE_ACTION = new Date().getTime();
+		
 	}
 
 	@Given("^he has navigated to \"([^\"]*)\" page having list of submitted benefits details$")
@@ -114,10 +111,6 @@ public class CF_Transferee_StaticFixedPoints_CashNotAuth_Both_EndToEndFlow_Steps
 		Assert.assertTrue(transfereeSubmissionsDetailsPage.verifiyPageNavigation(pageName),
 				MessageFormat.format(COREFLEXConstants.FAILED_TO_NAVIGATE_TO_TRANSFEREE_SUBMISSIONS_DETAILS_PAGE,
 						CoreConstants.FAIL, pageName));
-		CoreConstants.TIME_AFTER_ACTION = new Date().getTime();
-		Reporter.addStepLog("<b>Total time taken to navigate to <i>Transferee Submissions Detail</i> page is :"
-				+ CoreFunctions.calculatePageLoadTime(CoreConstants.TIME_BEFORE_ACTION, CoreConstants.TIME_AFTER_ACTION)
-				+ " Seconds </b>");
 
 		Assert.assertTrue(transfereeSubmissionsDetailsPage.verifyTransfereeAndPointsDetails(), MessageFormat.format(
 				COREFLEXConstants.FAILED_TO_VERIFY_TRANSFEREE_AND_POINTS_DETAILS_ON_TRANSFEREE_SUBMISSIONS_DETAILS_PAGE,
@@ -131,7 +124,6 @@ public class CF_Transferee_StaticFixedPoints_CashNotAuth_Both_EndToEndFlow_Steps
 	public void he_has_clicked_on_button_for_Delete_Request_Pending_request_of_the_Transferee(String btnName)
 			throws Throwable {
 		transfereeSubmissionsDetailsPage.clickElementOfPage(btnName);
-		CoreConstants.TIME_BEFORE_ACTION = new Date().getTime();
 	}
 
 	@When("^he confirms the \"([^\"]*)\" after verifying 'Delete Request Pending' benefit request details and adding comments on 'Requests' dialog$")
@@ -141,12 +133,6 @@ public class CF_Transferee_StaticFixedPoints_CashNotAuth_Both_EndToEndFlow_Steps
 				MessageFormat.format(
 						COREFLEXConstants.FAILED_TO_VERIFY_REQUESTS_DIALOG_ON_TRANSFEREE_SUBMISSIONS_DETAILS_PAGE,
 						CoreConstants.FAIL));
-		CoreConstants.TIME_AFTER_ACTION = new Date().getTime();
-		Reporter.addStepLog(
-				"<b>Total time taken to navigate to <i>Requests Dialog on Transferee Submission Details</i> page is :"
-						+ CoreFunctions.calculatePageLoadTime(CoreConstants.TIME_BEFORE_ACTION,
-								CoreConstants.TIME_AFTER_ACTION)
-						+ " Seconds </b>");
 
 		Assert.assertTrue(transfereeSubmissionsDetailsPage.verifyBenefitDetailsOnRequestsDialog(action),
 				MessageFormat.format(

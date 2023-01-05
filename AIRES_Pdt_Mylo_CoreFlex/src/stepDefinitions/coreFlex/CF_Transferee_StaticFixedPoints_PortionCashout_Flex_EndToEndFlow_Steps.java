@@ -1,7 +1,6 @@
 package stepDefinitions.coreFlex;
 
 import java.text.MessageFormat;
-import java.util.Date;
 import java.util.List;
 import java.util.Map;
 
@@ -24,7 +23,6 @@ import com.aires.pages.iris.IRIS_AssignmentOverviewPage;
 import com.aires.pages.iris.IRIS_LoginPage;
 import com.aires.pages.iris.IRIS_Welcome12C;
 import com.aires.testdatatypes.coreflex.CoreFlex_LoginInfo;
-import com.vimalselvam.cucumber.listener.Reporter;
 
 import cucumber.api.DataTable;
 import cucumber.api.java.en.Given;
@@ -118,13 +116,8 @@ public class CF_Transferee_StaticFixedPoints_PortionCashout_Flex_EndToEndFlow_St
 			String navigatedPage, String sourcePage) throws Throwable {
 		Assert.assertTrue(mxTransfereeFlexPlanningToolPage.selectBenefitsAndProceedToReviewAndSubmit(), MessageFormat
 				.format(MobilityXConstants.FAILED_TO_SELECT_BENEFITS_AND_PROCEED_TO_REVIEW_PAGE, CoreConstants.FAIL));
-		CoreConstants.TIME_BEFORE_ACTION = new Date().getTime();
 		Assert.assertTrue(mxTransfereeMyBenefitsBundlePage.isMyBundlePageDisplayed(),
 				MessageFormat.format(MobilityXConstants.FAILED_TO_DISPLAY_MY_BENEFIT_BUNDLE_PAGE, CoreConstants.FAIL));
-		CoreConstants.TIME_AFTER_ACTION = new Date().getTime();
-		Reporter.addStepLog("<b>Total time taken to navigate to <i>My Benefits Bundle</i> page is :"
-				+ CoreFunctions.calculatePageLoadTime(CoreConstants.TIME_BEFORE_ACTION, CoreConstants.TIME_AFTER_ACTION)
-				+ " Seconds </b>");
 	}
 
 	@Given("^he has clicked on \"([^\"]*)\" button after validating all the benefit and Cashout details listed under 'Selected Benefits' section on \"([^\"]*)\" page$")
@@ -137,7 +130,6 @@ public class CF_Transferee_StaticFixedPoints_PortionCashout_Flex_EndToEndFlow_St
 		Assert.assertTrue(mxTransfereeMyBenefitsBundlePage.verifySelectedBenefitDetails(), MessageFormat
 				.format(MobilityXConstants.FAILED_TO_VERIFY_SELECTED_BENEFITS_ON_MY_BUNDLE_PAGE, CoreConstants.FAIL));
 		mxTransfereeMyBenefitsBundlePage.clickReviewAndSubmit();
-		CoreConstants.TIME_BEFORE_ACTION = new Date().getTime();
 	}
 
 	@When("^he 'Delete' submitted Benefit_Cashout and confirms 'Remove Benefit Selection' dialog by entering username and clicking on \"([^\"]*)\"$")

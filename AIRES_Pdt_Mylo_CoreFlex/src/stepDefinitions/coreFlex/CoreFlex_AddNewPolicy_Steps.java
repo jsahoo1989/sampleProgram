@@ -8,9 +8,6 @@ import com.aires.businessrules.constants.CoreConstants;
 import com.aires.businessrules.constants.PDTConstants;
 import com.aires.cucumber.TestContext;
 import com.aires.pages.pdt.PDT_AddNewPolicyPage;
-import com.aires.pages.pdt.PDT_LoginPage;
-import com.aires.pages.pdt.PDT_ViewPolicyPage;
-import com.aires.testdatatypes.pdt.PDT_LoginDetails;
 
 import cucumber.api.java.en.Given;
 import cucumber.api.java.en.Then;
@@ -19,16 +16,12 @@ import cucumber.api.java.en.When;
 public class CoreFlex_AddNewPolicy_Steps {
 
 	private TestContext testContext;
-	private PDT_ViewPolicyPage viewPolicyPage;
 	private PDT_AddNewPolicyPage addNewPolicyPage;
-	private PDT_LoginDetails _loginDetails;
-	private PDT_LoginPage loginPage;
+	
 
 	public CoreFlex_AddNewPolicy_Steps(TestContext context) {
 		testContext = context;
-		viewPolicyPage = testContext.getPageObjectManager().getViewPolicyPage();
 		addNewPolicyPage = testContext.getPageObjectManager().getAddNewPolicyPage();
-		loginPage = testContext.getPageObjectManager().getLoginPage();
 	}
 
 	@When("^he enters the following 'Valid/Invalid' \"([^\"]*)\" value for the Client ID field$")

@@ -1,7 +1,6 @@
 package stepDefinitions.coreFlex;
 
 import java.text.MessageFormat;
-import java.util.Date;
 import java.util.Map;
 
 import org.testng.Assert;
@@ -62,19 +61,14 @@ public class CF_Transferee_MobilityJourney_Flex_Cards_Steps {
 
 	/**********************************************************************/
 
-	/**********************************************************************/
-
 	@Given("^he has navigated to \"([^\"]*)\" after clicking on 'Manage my Points' button on \"([^\"]*)\" page$")
 	public void he_has_navigated_to_after_clicking_on_Manage_my_Points_button_on_page(String navigatedPage,
 			String sourcePage) throws Throwable {
 		mxTransfereeJourneyHomePage.clickElementOfPage(MobilityXConstants.MANAGE_MY_POINTS);
-		CoreConstants.TIME_BEFORE_ACTION = new Date().getTime();
+
 		Assert.assertTrue(mxTransfereeFlexPlanningToolPage.isFlexPlanningToolHomePageDisplayed(),
 				MessageFormat.format(MobilityXConstants.ONPOINT_PLANNING_TOOL_PAGE_NOT_DISPLAYED, CoreConstants.FAIL));
-		CoreConstants.TIME_AFTER_ACTION = new Date().getTime();
-		Reporter.addStepLog("<b>Total time taken to navigate to <i>Flex Planning Tool Home</i> page is :"
-				+ CoreFunctions.calculatePageLoadTime(CoreConstants.TIME_BEFORE_ACTION, CoreConstants.TIME_AFTER_ACTION)
-				+ " Seconds </b>");
+		
 		Assert.assertTrue(mxTransfereeFlexPlanningToolPage.verifyAvailablePointsMessage(),
 				MessageFormat.format(
 						MobilityXConstants.FAILED_TO_VALIDATE_AVAILABLE_POINTS_MESSAGE_ON_FLEX_PLANNING_TOOL_PAGE,
@@ -93,27 +87,11 @@ public class CF_Transferee_MobilityJourney_Flex_Cards_Steps {
 						CoreConstants.FAIL));
 		Assert.assertTrue(mxTransfereeFlexPlanningToolPage.selectBenefitsAndProceedToReviewAndSubmit(), MessageFormat
 				.format(MobilityXConstants.FAILED_TO_SELECT_BENEFITS_AND_PROCEED_TO_REVIEW_PAGE, CoreConstants.FAIL));
-		CoreConstants.TIME_BEFORE_ACTION = new Date().getTime();
+		
 		Assert.assertTrue(mxTransfereeMyBenefitsBundlePage.isMyBundlePageDisplayed(),
 				MessageFormat.format(MobilityXConstants.FAILED_TO_DISPLAY_MY_BENEFIT_BUNDLE_PAGE, CoreConstants.FAIL));
-		CoreConstants.TIME_AFTER_ACTION = new Date().getTime();
-		Reporter.addStepLog("<b>Total time taken to navigate to <i>My Benefits Bundle</i> page is :"
-				+ (CoreConstants.TIME_AFTER_ACTION - CoreConstants.TIME_BEFORE_ACTION) / 1000 + " Seconds </b>");
+		
 	}
-//	
-//	@Given("^he has navigated to \"([^\"]*)\" page after validating and selecting 'Aires Managed' benefit for 'Multiple Date Submission' on \"([^\"]*)\" page$")
-//	public void he_has_navigated_to_page_after_validating_and_selecting_Aires_Managed_benefit_for_Multiple_Date_Submission_on_page(
-//			String navigatedPage, String sourcePage) throws Throwable {
-//		Assert.assertTrue(mxTransfereeFlexPlanningToolPage.selectBenefitsForMultipleSubmission(), MessageFormat
-//				.format(MobilityXConstants.FAILED_TO_SELECT_BENEFITS_AND_PROCEED_TO_REVIEW_PAGE, CoreConstants.FAIL));
-//		
-//		CoreConstants.TIME_BEFORE_ACTION = new Date().getTime();
-//		Assert.assertTrue(mxTransfereeMyBenefitsBundlePage.isMyBundlePageDisplayed(),
-//				MessageFormat.format(MobilityXConstants.FAILED_TO_DISPLAY_MY_BENEFIT_BUNDLE_PAGE, CoreConstants.FAIL));
-//		CoreConstants.TIME_AFTER_ACTION = new Date().getTime();
-//		Reporter.addStepLog("<b>Total time taken to navigate to <i>My Benefits Bundle</i> page is :"
-//				+ (CoreConstants.TIME_AFTER_ACTION - CoreConstants.TIME_BEFORE_ACTION) / 1000 + " Seconds </b>");
-//	}
 
 	@Given("^he has clicked on \"([^\"]*)\" button after validating 'Aires Managed' benefit details listed under 'Selected Benefits' section on \"([^\"]*)\" page$")
 	public void he_has_clicked_on_button_after_validating_Aires_Managed_benefit_details_listed_under_Selected_Benefits_section_on_page(
@@ -121,17 +99,8 @@ public class CF_Transferee_MobilityJourney_Flex_Cards_Steps {
 		Assert.assertTrue(mxTransfereeMyBenefitsBundlePage.verifySelectedBenefitDetails(), MessageFormat
 				.format(MobilityXConstants.FAILED_TO_VERIFY_SELECTED_BENEFITS_ON_MY_BUNDLE_PAGE, CoreConstants.FAIL));
 		mxTransfereeMyBenefitsBundlePage.clickReviewAndSubmit();
-		CoreConstants.TIME_BEFORE_ACTION = new Date().getTime();
+		
 	}
-
-//	@Given("^he has clicked on \"([^\"]*)\" button after validating 'Aires Managed Benefit' details listed under 'Selected Benefits' section on \"([^\"]*)\" page$")
-//	public void he_has_clicked_on_button_after_validating_Aires_Managed_Benefit_details_listed_under_Selected_Benefits_section_on_page(
-//			String button, String pageName) throws Throwable {
-//		Assert.assertTrue(mxTransfereeMyBenefitsBundlePage.verifySelectedMultipleSubmissionBenefitDetails(), MessageFormat
-//				.format(MobilityXConstants.FAILED_TO_VERIFY_SELECTED_BENEFITS_ON_MY_BUNDLE_PAGE, CoreConstants.FAIL));
-//		mxTransfereeMyBenefitsBundlePage.clickReviewAndSubmit();
-//		CoreConstants.TIME_BEFORE_ACTION = new Date().getTime();
-//	}
 
 	@Given("^he has validated 'Aires Managed' benefit details listed under 'Selected Benefits' section on \"([^\"]*)\" page$")
 	public void he_has_validated_Aires_Managed_benefit_details_listed_under_Selected_Benefits_section_on_page(
@@ -154,7 +123,7 @@ public class CF_Transferee_MobilityJourney_Flex_Cards_Steps {
 			String buttonName, String submissionDialog) throws Throwable {
 		Assert.assertTrue(mxTransfereeMyBenefitsBundlePage.isSubmitBundlePopupDisplayed(),
 				MessageFormat.format(MobilityXConstants.SUBMIT_BUNDLE_POPUP_NOT_DISPLAYED, CoreConstants.FAIL));
-		CoreConstants.TIME_AFTER_ACTION = new Date().getTime();
+		
 		Reporter.addStepLog("<b>Total time taken to navigateTo/display <i>Submit Benefit Bundle</i> dialog is :"
 				+ CoreFunctions.calculatePageLoadTime(CoreConstants.TIME_BEFORE_ACTION, CoreConstants.TIME_AFTER_ACTION)
 				+ " Seconds </b>");
@@ -183,7 +152,7 @@ public class CF_Transferee_MobilityJourney_Flex_Cards_Steps {
 //			String buttonName, String submissionDialog) throws Throwable {
 //		Assert.assertTrue(mxTransfereeMyBenefitsBundlePage.isSubmitBundlePopupDisplayed(),
 //				MessageFormat.format(MobilityXConstants.SUBMIT_BUNDLE_POPUP_NOT_DISPLAYED, CoreConstants.FAIL));
-//		CoreConstants.TIME_AFTER_ACTION = new Date().getTime();
+//		
 //		Reporter.addStepLog("<b>Total time taken to navigateTo/display <i>Submit Benefit Bundle</i> dialog is :"
 //				+ CoreFunctions.calculatePageLoadTime(CoreConstants.TIME_BEFORE_ACTION, CoreConstants.TIME_AFTER_ACTION)
 //				+ " Seconds </b>");
@@ -496,10 +465,7 @@ public class CF_Transferee_MobilityJourney_Flex_Cards_Steps {
 						CoreConstants.FAIL));
 		Assert.assertTrue(mobilityXLoginPage.verifyPageNavigation(),
 				MessageFormat.format(COREFLEXConstants.FAILED_TO_NAVIGATE_TO_MOBILITYX_LOGIN_PAGE, CoreConstants.FAIL));
-		CoreConstants.TIME_AFTER_ACTION = new Date().getTime();
-		Reporter.addStepLog("<b>Total time taken to navigate to <i>MobilityX Login</i> page is :"
-				+ CoreFunctions.calculatePageLoadTime(CoreConstants.TIME_BEFORE_ACTION, CoreConstants.TIME_AFTER_ACTION)
-				+ " Seconds </b>");
+		
 		mobilityXLoginPage.enterUsernameAndPasswordForMobilityX(submittedPolicyDetails.get(" AssignmentUserName"),
 				submittedPolicyDetails.get(" AssignmentPassword"));
 		mobilityXLoginPage.clickSignIn();
@@ -729,12 +695,9 @@ public class CF_Transferee_MobilityJourney_Flex_Cards_Steps {
 						CoreConstants.FAIL));
 		Assert.assertTrue(mxTransfereeFlexPlanningToolPage.selectBenefitsAndProceedToReviewAndSubmit(), MessageFormat
 				.format(MobilityXConstants.FAILED_TO_SELECT_BENEFITS_AND_PROCEED_TO_REVIEW_PAGE, CoreConstants.FAIL));
-		CoreConstants.TIME_BEFORE_ACTION = new Date().getTime();
+		
 		Assert.assertTrue(mxTransfereeMyBenefitsBundlePage.isMyBundlePageDisplayed(),
 				MessageFormat.format(MobilityXConstants.FAILED_TO_DISPLAY_MY_BENEFIT_BUNDLE_PAGE, CoreConstants.FAIL));
-		CoreConstants.TIME_AFTER_ACTION = new Date().getTime();
-		Reporter.addStepLog("<b>Total time taken to navigate to <i>My Benefits Bundle</i> page is :"
-				+ (CoreConstants.TIME_AFTER_ACTION - CoreConstants.TIME_BEFORE_ACTION) / 1000 + " Seconds </b>");
 	}
 
 	@Given("^he has navigated to \"([^\"]*)\" page after validating and selecting 'Aires Managed' benefits on \"([^\"]*)\" page$")
@@ -750,12 +713,9 @@ public class CF_Transferee_MobilityJourney_Flex_Cards_Steps {
 						CoreConstants.FAIL));
 		Assert.assertTrue(mxTransfereeFlexPlanningToolPage.selectBenefitsAndProceedToReviewAndSubmit(), MessageFormat
 				.format(MobilityXConstants.FAILED_TO_SELECT_BENEFITS_AND_PROCEED_TO_REVIEW_PAGE, CoreConstants.FAIL));
-		CoreConstants.TIME_BEFORE_ACTION = new Date().getTime();
+		
 		Assert.assertTrue(mxTransfereeMyBenefitsBundlePage.isMyBundlePageDisplayed(),
 				MessageFormat.format(MobilityXConstants.FAILED_TO_DISPLAY_MY_BENEFIT_BUNDLE_PAGE, CoreConstants.FAIL));
-		CoreConstants.TIME_AFTER_ACTION = new Date().getTime();
-		Reporter.addStepLog("<b>Total time taken to navigate to <i>My Benefits Bundle</i> page is :"
-				+ (CoreConstants.TIME_AFTER_ACTION - CoreConstants.TIME_BEFORE_ACTION) / 1000 + " Seconds </b>");
 	}
 	
 	@Given("^he has navigated to \"([^\"]*)\" page after selecting 'Aires Managed' benefits on \"([^\"]*)\" page$")
@@ -763,12 +723,9 @@ public class CF_Transferee_MobilityJourney_Flex_Cards_Steps {
 			String navigatedPage, String sourcePage) throws Throwable {
 		Assert.assertTrue(mxTransfereeFlexPlanningToolPage.selectAiresManagedBenefitsAndProceedToReviewAndSubmit(), MessageFormat
 				.format(MobilityXConstants.FAILED_TO_SELECT_AIRES_MANAGED_BENEFITS_AND_PROCEED_TO_REVIEW_PAGE, CoreConstants.FAIL));
-		CoreConstants.TIME_BEFORE_ACTION = new Date().getTime();
+		
 		Assert.assertTrue(mxTransfereeMyBenefitsBundlePage.isMyBundlePageDisplayed(),
 				MessageFormat.format(MobilityXConstants.FAILED_TO_DISPLAY_MY_BENEFIT_BUNDLE_PAGE, CoreConstants.FAIL));
-		CoreConstants.TIME_AFTER_ACTION = new Date().getTime();
-		Reporter.addStepLog("<b>Total time taken to navigate to <i>My Benefits Bundle</i> page is :"
-				+ (CoreConstants.TIME_AFTER_ACTION - CoreConstants.TIME_BEFORE_ACTION) / 1000 + " Seconds </b>");
 	}
 
 	@Given("^he has clicked on \"([^\"]*)\" button after validating 'Aires Managed' benefits with '([^\"]*)' Milestones listed under 'Selected Benefits' section on \"([^\"]*)\" page$")
@@ -778,56 +735,7 @@ public class CF_Transferee_MobilityJourney_Flex_Cards_Steps {
 				MessageFormat.format(MobilityXConstants.FAILED_TO_VERIFY_SELECTED_BENEFITS_ON_MY_BUNDLE_PAGE,
 						CoreConstants.FAIL));
 		mxTransfereeMyBenefitsBundlePage.clickReviewAndSubmit();
-		CoreConstants.TIME_BEFORE_ACTION = new Date().getTime();
 	}
-
-//	@Given("^he has clicked on \"([^\"]*)\" button after entering Transferee name on \"([^\"]*)\" dialog to submit 'Aires Managed' benefits with '([^\"]*)' tracing prompts$")
-//	public void he_has_clicked_on_button_after_entering_Transferee_name_on_dialog_to_submit_Aires_Managed_benefits_with_tracing_prompts(
-//			String buttonName, String submissionDialog, String noOfTracingPrompts) throws Throwable {
-//		Assert.assertTrue(mxTransfereeMyBenefitsBundlePage.isSubmitBundlePopupDisplayed(),
-//				MessageFormat.format(MobilityXConstants.SUBMIT_BUNDLE_POPUP_NOT_DISPLAYED, CoreConstants.FAIL));
-//		CoreConstants.TIME_AFTER_ACTION = new Date().getTime();
-//		Reporter.addStepLog("<b>Total time taken to navigateTo/display <i>Submit Benefit Bundle</i> dialog is :"
-//				+ CoreFunctions.calculatePageLoadTime(CoreConstants.TIME_BEFORE_ACTION, CoreConstants.TIME_AFTER_ACTION)
-//				+ " Seconds </b>");
-//		Assert.assertTrue(
-//				mxTransfereeMyBenefitsBundlePage
-//						.verifyAiresManagedBenefitsDetailsOnSubmissionDialog(Integer.parseInt(noOfTracingPrompts)),
-//				MessageFormat.format(MobilityXConstants.POINTS_AND_BENEFIT_DETAILS_NOT_MATCHED_ON_SUBMIT_BUNDLE_POPUP,
-//						CoreConstants.FAIL));
-//		mxTransfereeMyBenefitsBundlePage.reviewAndConfirmBenefitSubmission(
-//				MobilityXConstants.SUBMIT_BENEFITS_OPTIONAL_NOTES,
-//				CoreFunctions.getPropertyFromConfig("Transferee_firstName") + " "
-//						+ CoreFunctions.getPropertyFromConfig("Transferee_lastName"),
-//				buttonName);
-//		mxTransfereeMyBenefitsBundlePage.viewSubmittedBenefits();
-//
-////		if (CoreFunctions.getPropertyFromConfig("envt").equalsIgnoreCase("PreProd")) {
-////			mxTransfereeJourneyHomePage.clickElementOfPage(MobilityXConstants.MANAGE_MY_POINTS);
-////			Assert.assertTrue(mxTransfereeFlexPlanningToolPage.isFlexPlanningToolHomePageDisplayed(),
-////					MessageFormat.format(MobilityXConstants.ONPOINT_PLANNING_TOOL_PAGE_NOT_DISPLAYED, CoreConstants.FAIL));
-////			mxTransfereeFlexPlanningToolPage.clickElementOfPage(MobilityXConstants.NEXT);
-////			Assert.assertTrue(mxTransfereeMyBenefitsBundlePage.isMyBundlePageDisplayed(), MessageFormat
-////					.format(MobilityXConstants.FAILED_TO_DISPLAY_MY_BENEFIT_BUNDLE_PAGE, CoreConstants.FAIL));
-////		}
-//	}
-
-//	@Given("^he has verified submitted Aires Managed Benefits with '([^\"]*)' Milestones Status - changed to \"([^\"]*)\" on \"([^\"]*)\" page$")
-//	public void he_has_verified_submitted_Aires_Managed_Benefits_with_milestones_status_updated_to_on_page(
-//			String noOfTracingPrompts, String expectedStatus, String pageName) throws Throwable {
-//		Assert.assertTrue(
-//				mxTransfereeMyBenefitsBundlePage.validateSubmittedAiresManagedBenefitDetails(expectedStatus,
-//						Integer.parseInt(noOfTracingPrompts)),
-//				MessageFormat.format(MobilityXConstants.SUBMITTED_AIRES_MANAGED_BENEFIT_DETAILS_NOT_MATCHED,
-//						CoreConstants.FAIL, pageName));
-//		mxTransfereeMyBenefitsBundlePage.clickElementOfPage(MobilityXConstants.BACK_TO_BENEFITS_LIST);
-//		Assert.assertTrue(mxTransfereeFlexPlanningToolPage.isFlexPlanningToolHomePageDisplayed(),
-//				MessageFormat.format(MobilityXConstants.ONPOINT_PLANNING_TOOL_PAGE_NOT_DISPLAYED, CoreConstants.FAIL));
-//		mxTransfereeFlexPlanningToolPage.clickElementOfPage(MobilityXConstants.BACK_TO_MOBILITY_JOURNEY);
-//		Assert.assertTrue(mxTransfereeJourneyHomePage.verifyUserNavigationToJourneyHomePage(), MessageFormat.format(
-//				MobilityXConstants.FALIED_TO_VALIDATE_USER_NAVIGATION_TO_MOBILITYX_JOURNEY_HOME_PAGE_AFTER_BENEFIT_SUBMISSION,
-//				CoreConstants.FAIL));
-//	}
 
 	@Given("^he has verified submitted Aires Managed Benefits Status - changed to \"([^\"]*)\" on \"([^\"]*)\" page$")
 	public void he_has_verified_submitted_Aires_Managed_Benefits_with_milestones_status_updated_to_on_page(

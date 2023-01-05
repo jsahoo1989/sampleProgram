@@ -1,7 +1,6 @@
 package stepDefinitions.coreFlex;
 
 import java.text.MessageFormat;
-import java.util.Date;
 
 import org.testng.Assert;
 
@@ -57,23 +56,7 @@ public class CF_BluePrint_Versioning_Steps {
 		flexPolicySetupPage = testContext.getCoreFlexPageObjectManager().getFlexPolicySetupPage();
 		coreFlexPolicyBenefitsCategoriesPage = testContext.getCoreFlexPageObjectManager()
 				.getCoreFlexPolicyBenefitsCategoriesPage();
-		testContext = context;
-		viewPolicyPage = testContext.getPageObjectManager().getViewPolicyPage();
-		generalInfoPage = testContext.getPageObjectManager().getGeneralInfoPage();
-		flexPolicySetupPage = testContext.getCoreFlexPageObjectManager().getFlexPolicySetupPage();
-		coreFlexPolicyBenefitsCategoriesPage = testContext.getCoreFlexPageObjectManager()
-				.getCoreFlexPolicyBenefitsCategoriesPage();
-		coreFlexCustomBundlesPage = testContext.getCoreFlexPageObjectManager().getCoreFlexCustomBundlesPage();
-		testContext.getCoreFlexPageObjectManager().initializeCoreFlexPageObjects();
-		coreFlexBenefitSummaryPage = testContext.getCoreFlexPageObjectManager().getCoreFlexBenefitSummaryPage();
-
-		mxTransfereeJourneyHomePage = testContext.getCoreFlexPageObjectManager().getMXTransfereeJourneyHomePage();
-		mxTransfereeFlexPlanningToolPage = testContext.getCoreFlexPageObjectManager()
-				.getMXTransfereeFlexPlanningToolPage();
 		coreFlexTransfereePreviewPage = testContext.getCoreFlexPageObjectManager().getCoreFlexTransfereePreviewPage();
-		bluePrintCFLoginPage = testContext.getPageObjectManager().getBluePrintCoreFlexLoginPage();
-		coreFlexTransfereePreviewPage = testContext.getCoreFlexPageObjectManager().getCoreFlexTransfereePreviewPage();
-		bluePrintCFLoginPage = testContext.getPageObjectManager().getBluePrintCoreFlexLoginPage();
 	}
 
 	@When("^he clicks on \"([^\"]*)\" button to close 'Approve this Policy' dialog$")
@@ -108,13 +91,9 @@ public class CF_BluePrint_Versioning_Steps {
 	public void he_navigates_to_after_clicking_on_Manage_my_Points_button_on_page(String navigatedPage,
 			String sourcePage) throws Throwable {
 		mxTransfereeJourneyHomePage.clickElementOfPage(MobilityXConstants.MANAGE_MY_POINTS);
-		CoreConstants.TIME_BEFORE_ACTION = new Date().getTime();
+		
 		Assert.assertTrue(mxTransfereeFlexPlanningToolPage.isFlexPlanningToolHomePageDisplayed(),
 				MessageFormat.format(MobilityXConstants.ONPOINT_PLANNING_TOOL_PAGE_NOT_DISPLAYED, CoreConstants.FAIL));
-		CoreConstants.TIME_AFTER_ACTION = new Date().getTime();
-		Reporter.addStepLog("<b>Total time taken to navigate to <i>OnPoint Planning Tool Home</i> page is :"
-				+ CoreFunctions.calculatePageLoadTime(CoreConstants.TIME_BEFORE_ACTION, CoreConstants.TIME_AFTER_ACTION)
-				+ " Seconds </b>");
 	}
 
 	@Then("^benefits selected on Active BluePrint \"([^\"]*)\" Policy should be displayed on \"([^\"]*)\" page$")
@@ -139,13 +118,10 @@ public class CF_BluePrint_Versioning_Steps {
 			String pageName) throws Throwable {
 
 		mxTransfereeFlexPlanningToolPage.clickElementOfPage(MobilityXConstants.SUGGESTED_OPTIONS_LINK);
-		CoreConstants.TIME_BEFORE_ACTION = new Date().getTime();
+		
 		Assert.assertTrue(mxTransfereeFlexPlanningToolPage.verifyUserNavigationToSuggestedBundlesPage(), MessageFormat
 				.format(MobilityXConstants.FAILED_TO_NAVIGATE_TO_SUGGESTED_BUNDLES_PAGE, CoreConstants.FAIL));
-		CoreConstants.TIME_AFTER_ACTION = new Date().getTime();
-		Reporter.addStepLog("<b>Total time taken to navigate to <i>Suggested Bundles</i> page is :"
-				+ CoreFunctions.calculatePageLoadTime(CoreConstants.TIME_BEFORE_ACTION, CoreConstants.TIME_AFTER_ACTION)
-				+ " Seconds </b>");
+		
 		Assert.assertTrue(
 				mxTransfereeFlexPlanningToolPage.verifySuggestedBundlesDetailsBasedOnPolicyRequiredFor(
 						CoreFunctions.getPropertyFromConfig("CoreFlex_Policy_RequiredFor"),
@@ -160,12 +136,7 @@ public class CF_BluePrint_Versioning_Steps {
 			String policyStatus, String pageName) throws Throwable {
 		Assert.assertTrue(bluePrintCFLoginPage.verifyLoginPageNavigation(), MessageFormat.format(
 				PDTConstants.FAILED_TO_NAVIGATE_TO_COREFLEX_BLUE_PRINT_APPLICATION_LOGIN_PAGE, CoreConstants.FAIL));
-		CoreConstants.TIME_AFTER_ACTION = new Date().getTime();
-		Reporter.addStepLog(
-				"<b>Total time taken to navigate to <i>CoreFlex Policy BluePrint Application Login</i> page is :"
-						+ CoreFunctions.calculatePageLoadTime(CoreConstants.TIME_BEFORE_ACTION,
-								CoreConstants.TIME_AFTER_ACTION)
-						+ " Seconds </b>");
+		
 		Assert.assertTrue(bluePrintCFLoginPage.loginByUserType(PDTConstants.CSM, viewPolicyPage),
 				MessageFormat.format(PDTConstants.FAILED_TO_VERIFY_LOGGED_IN_USER, CoreConstants.FAIL));
 		viewPolicyPage.searchAndVerifyPolicy(CoreFunctions.getPropertyFromConfig("Assignment_Policy"), pageName);
@@ -175,7 +146,7 @@ public class CF_BluePrint_Versioning_Steps {
 	public void he_has_clicked_on_icon_of_the_searched_points_based_CoreFlex_policy(String editIcon,
 			String policyStatus) throws Throwable {
 		viewPolicyPage.clickElementOfPage(editIcon);
-		CoreConstants.TIME_BEFORE_ACTION = new Date().getTime();
+		
 	}
 
 	@Given("^he has searched for \"([^\"]*)\" points based CoreFlex policy on \"([^\"]*)\" page$")
@@ -188,16 +159,11 @@ public class CF_BluePrint_Versioning_Steps {
 	public void he_has_verified_following_Assignment_Details_after_clicking_on_AssignmentHistoryIcon_icon_of_the_searched_points_based_CoreFlex_policy(
 			String assignmentHistoryIcon, String policyStatus, DataTable dataTable) throws Throwable {
 		viewPolicyPage.clickElementOfPage(assignmentHistoryIcon);
-		CoreConstants.TIME_BEFORE_ACTION = new Date().getTime();
+		
 		Assert.assertTrue(viewPolicyPage.verifyViewPolicyPageNavigation(COREFLEXConstants.VIEW_POLICY_BENEFIT),
 				MessageFormat.format(PDTConstants.FAILED_TO_NAVIGATE_TO_ASSIGNMENT_HISTORY_VIEW_POLICY_PAGE,
 						CoreConstants.FAIL));
-		CoreConstants.TIME_AFTER_ACTION = new Date().getTime();
-		Reporter.addStepLog(
-				"<b>Total time taken to navigate to <i>View Policy Benefit - Assignment History</i> page is :"
-						+ CoreFunctions.calculatePageLoadTime(CoreConstants.TIME_BEFORE_ACTION,
-								CoreConstants.TIME_AFTER_ACTION)
-						+ " Seconds </b>");
+		
 		Assert.assertTrue(viewPolicyPage.verifyRecordForAssignmentAssociation(dataTable), MessageFormat.format(
 				PDTConstants.FAILED_TO_VERIFY_ASSIGNMENT_HISTORY_FOR_NO_ASSIGNMENT_ASSOCIATION, CoreConstants.FAIL));
 		viewPolicyPage.clickElementOfPage(COREFLEXConstants.EXIT);
@@ -213,10 +179,7 @@ public class CF_BluePrint_Versioning_Steps {
 				MessageFormat.format(
 						COREFLEXConstants.FAILED_TO_DISPLAY_VERSION_CONTROL_DIALOG_ON_VIEW_EDIT_POLICY_FORMS_PAGE,
 						CoreConstants.FAIL));
-		CoreConstants.TIME_AFTER_ACTION = new Date().getTime();
-		Reporter.addStepLog("<b>Total time taken to display to <i>Version Control</i> dialog is :"
-				+ CoreFunctions.calculatePageLoadTime(CoreConstants.TIME_BEFORE_ACTION, CoreConstants.TIME_AFTER_ACTION)
-				+ " Seconds </b>");
+		
 		Assert.assertTrue(viewPolicyPage.verifyVersionControlDialog(),
 				MessageFormat.format(
 						COREFLEXConstants.FAILED_TO_VERIFY_VERSION_CONTROL_DIALOG_ON_VIEW_EDIT_POLICY_FORMS_PAGE,
@@ -330,14 +293,11 @@ public class CF_BluePrint_Versioning_Steps {
 	public void he_has_verified_Policy_Benefits_SubBenefits_details_of_version_Policy_matches_with_policy_selections(
 			String newPolicyVersion, String newPolicyStatus, String oldPolicyVersion) throws Throwable {
 
-		CoreConstants.TIME_BEFORE_ACTION = new Date().getTime();
+		
 		Assert.assertTrue(flexPolicySetupPage.verifyPageNavigation(COREFLEXConstants.POINT_POLICY_SETUP),
 				MessageFormat.format(COREFLEXConstants.FAILED_TO_VERIFY_USER_NAVIGATION_TO_POINT_POLICY_SETUP_PAGE,
 						CoreConstants.FAIL));
-		CoreConstants.TIME_AFTER_ACTION = new Date().getTime();
-		Reporter.addStepLog("<b>Total time taken to navigate to <i>Blueprint - Flex Policy Setup</i> page is :"
-				+ CoreFunctions.calculatePageLoadTime(CoreConstants.TIME_BEFORE_ACTION, CoreConstants.TIME_AFTER_ACTION)
-				+ " Seconds </b>");
+		
 		Assert.assertTrue(flexPolicySetupPage.verifyBenfitExpirationLockBenefitTooltip(), MessageFormat.format(
 				COREFLEXConstants.FAILED_TO_VERIFY_BENEFIT_EXPIRATION_AND_LOCK_BENEFITS_TOOLTIP_ON_FLEX_POLICY_SETUP_PAGE,
 				CoreConstants.FAIL));
@@ -347,16 +307,13 @@ public class CF_BluePrint_Versioning_Steps {
 						CoreConstants.FAIL));
 		flexPolicySetupPage.clickElementOfPage(PDTConstants.NEXT);
 
-		CoreConstants.TIME_BEFORE_ACTION = new Date().getTime();
+		
 		Assert.assertTrue(
 				coreFlexPolicyBenefitsCategoriesPage.verifyPageNavigation(COREFLEXConstants.POLICY_BENEFIT_CATEGORIES),
 				MessageFormat.format(
 						COREFLEXConstants.FAILED_TO_VERIFY_USER_NAVIGATION_TO_POLICY_BENEFITS_CATEGORIES_PAGE,
 						CoreConstants.FAIL));
-		CoreConstants.TIME_AFTER_ACTION = new Date().getTime();
-		Reporter.addStepLog("<b>Total time taken to navigate to <i>Blueprint - Policy Benefit Categories</i> page is :"
-				+ CoreFunctions.calculatePageLoadTime(CoreConstants.TIME_BEFORE_ACTION, CoreConstants.TIME_AFTER_ACTION)
-				+ " Seconds </b>");
+		
 //		Assert.assertTrue(coreFlexPolicyBenefitsCategoriesPage.verifyPolicyCategoriesBenefitsAndOrder(),
 //				MessageFormat.format(
 //						COREFLEXConstants.FAILED_TO_VERIFY_POLICY_CATEGORIES_BENEFITS_AND_ORDER_ON_POLICY_BENEFITS_CATEGORIES_PAGE,
@@ -374,7 +331,7 @@ public class CF_BluePrint_Versioning_Steps {
 				COREFLEXConstants.FAILED_TO_VERIFY_INFORMATION_DIALOG_AFTER_SELECTING_BENEFITS_AND_CLICKING_NEXT_ON_POLICY_BENEFIT_CATEGORIES_PAGE,
 				CoreConstants.FAIL));
 
-		CoreConstants.TIME_BEFORE_ACTION = new Date().getTime();
+		
 		Assert.assertTrue(
 				coreFlexPolicyBenefitsCategoriesPage.verifyBenefitsDisplayedOnLeftNavigation(
 						CoreFunctions.getPropertyFromConfig("CoreFlex_Policy_BenefitType"),
@@ -382,10 +339,7 @@ public class CF_BluePrint_Versioning_Steps {
 				MessageFormat.format(
 						COREFLEXConstants.FAILED_TO_VERIFY_SELECTED_BENEFITS_ON_LEFT_NAVIGATION_POST_VERSIONING_CLONING,
 						CoreConstants.FAIL));
-		CoreConstants.TIME_AFTER_ACTION = new Date().getTime();
-		Reporter.addStepLog("<b>Total time taken to navigate to <i>Selected Benefits</i> page is :"
-				+ CoreFunctions.calculatePageLoadTime(CoreConstants.TIME_BEFORE_ACTION, CoreConstants.TIME_AFTER_ACTION)
-				+ " Seconds </b>");
+		
 		Assert.assertTrue(
 				coreFlexPolicyBenefitsCategoriesPage.verifyAddedBenefitDetailsPostVersioningCloning(
 						CoreFunctions.getPropertyFromConfig("CoreFlex_Policy_BenefitType"),
@@ -398,15 +352,11 @@ public class CF_BluePrint_Versioning_Steps {
 			String newPolicyVersion, String newPolicyStatus, String oldPolicyVersion, String oldPolicyStatus)
 			throws Throwable {
 		coreFlexPolicyBenefitsCategoriesPage.clickLeftNavigationMenuOfPage(COREFLEXConstants.BENEFIT_SUMMARY);
-		CoreConstants.TIME_BEFORE_ACTION = new Date().getTime();
+		
 		Assert.assertTrue(
 				coreFlexBenefitSummaryPage.verifyPageNavigation(COREFLEXConstants.POLICY_BENEFITS_BENEFIT_SUMMARY),
 				MessageFormat.format(COREFLEXConstants.FAILED_TO_VERIFY_USER_NAVIGATION_TO_BENEFIT_SUMMARY_PAGE,
 						CoreConstants.FAIL));
-		CoreConstants.TIME_AFTER_ACTION = new Date().getTime();
-		Reporter.addStepLog("<b>Total time taken to navigate to <i>Blueprint - Benefit Summary</i> page is :"
-				+ CoreFunctions.calculatePageLoadTime(CoreConstants.TIME_BEFORE_ACTION, CoreConstants.TIME_AFTER_ACTION)
-				+ " Seconds </b>");
 
 		Assert.assertTrue(
 				coreFlexBenefitSummaryPage.iterateAndVerifyBenefitSummaryDetails(
@@ -415,14 +365,10 @@ public class CF_BluePrint_Versioning_Steps {
 						COREFLEXConstants.FAILED_TO_VERIFY_BENEFIT_SUBBENEFIT_DETAILS_ON_BENEFIT_SUMMARY_PAGE,
 						CoreConstants.FAIL));
 		coreFlexBenefitSummaryPage.clickElementOfPage(COREFLEXConstants.CONTINUE);
-		CoreConstants.TIME_BEFORE_ACTION = new Date().getTime();
+		
 		Assert.assertTrue(coreFlexCustomBundlesPage.verifyPageNavigation(COREFLEXConstants.CUSTOM_BUNDLES),
 				MessageFormat.format(COREFLEXConstants.FAILED_TO_VERIFY_USER_NAVIGATION_TO_CUSTOM_BUNDLES_PAGE,
 						CoreConstants.FAIL));
-		CoreConstants.TIME_AFTER_ACTION = new Date().getTime();
-		Reporter.addStepLog("<b>Total time taken to navigate to <i>Blueprint - Custom Bundles</i> page is :"
-				+ CoreFunctions.calculatePageLoadTime(CoreConstants.TIME_BEFORE_ACTION, CoreConstants.TIME_AFTER_ACTION)
-				+ " Seconds </b>");
 
 		Assert.assertTrue(
 				coreFlexCustomBundlesPage.verifyAddedCustomBundlePostVersioningCloning(
@@ -430,13 +376,9 @@ public class CF_BluePrint_Versioning_Steps {
 				MessageFormat.format(COREFLEXConstants.FAILED_TO_VERIFY_ADDED_CUSTOM_BUNDLE_ON_CUSTOM_BUNDLES_PAGE,
 						CoreConstants.FAIL));
 		coreFlexCustomBundlesPage.clickElementOfPage(COREFLEXConstants.PREVIEW_TRANSFEREE_EXPERIENCE);
-		CoreConstants.TIME_BEFORE_ACTION = new Date().getTime();
+		
 		Assert.assertTrue(coreFlexTransfereePreviewPage.isPreviewTransfereePageDisplayed(), MessageFormat
 				.format(COREFLEXConstants.FAILED_TO_VERIFY_NAVIGATION_TO_TRANSFEREE_PREVIEW_PAGE, CoreConstants.FAIL));
-		CoreConstants.TIME_AFTER_ACTION = new Date().getTime();
-		Reporter.addStepLog("<b>Total time taken to navigate to <i>Blueprint - Transfere Preview</i> page is :"
-				+ CoreFunctions.calculatePageLoadTime(CoreConstants.TIME_BEFORE_ACTION, CoreConstants.TIME_AFTER_ACTION)
-				+ " Seconds </b>");
 
 		Assert.assertTrue(
 				coreFlexTransfereePreviewPage.verifyPreviewTransfereeExperience(
@@ -450,23 +392,15 @@ public class CF_BluePrint_Versioning_Steps {
 
 	@Given("^he has navigated to \"([^\"]*)\" page from Left Navigation$")
 	public void he_has_navigated_to_page_from_Left_Navigation(String pageName) throws Throwable {
-		CoreConstants.TIME_BEFORE_ACTION = new Date().getTime();
+		
 		Assert.assertTrue(flexPolicySetupPage.verifyPageNavigation(COREFLEXConstants.POINT_POLICY_SETUP),
 				MessageFormat.format(COREFLEXConstants.FAILED_TO_VERIFY_USER_NAVIGATION_TO_POINT_POLICY_SETUP_PAGE,
 						CoreConstants.FAIL));
-		CoreConstants.TIME_AFTER_ACTION = new Date().getTime();
-		Reporter.addStepLog("<b>Total time taken to navigate to <i>Blueprint - Flex Policy Setup</i> page is :"
-				+ CoreFunctions.calculatePageLoadTime(CoreConstants.TIME_BEFORE_ACTION, CoreConstants.TIME_AFTER_ACTION)
-				+ " Seconds </b>");
 		flexPolicySetupPage.clickLeftNavigationMenuOfPage(pageName);
-		CoreConstants.TIME_BEFORE_ACTION = new Date().getTime();
+		
 		Assert.assertTrue(coreFlexCustomBundlesPage.verifyPageNavigation(COREFLEXConstants.CUSTOM_BUNDLES),
 				MessageFormat.format(COREFLEXConstants.FAILED_TO_VERIFY_USER_NAVIGATION_TO_CUSTOM_BUNDLES_PAGE,
 						CoreConstants.FAIL));
-		CoreConstants.TIME_AFTER_ACTION = new Date().getTime();
-		Reporter.addStepLog("<b>Total time taken to navigate to <i>Blueprint - Custom Bundles</i> page is :"
-				+ CoreFunctions.calculatePageLoadTime(CoreConstants.TIME_BEFORE_ACTION, CoreConstants.TIME_AFTER_ACTION)
-				+ " Seconds </b>");
 	}
 
 	@Given("^he has acknowledged 'Submit Success' dialog after clicking on \"([^\"]*)\" button on \"([^\"]*)\" page$")
@@ -478,17 +412,17 @@ public class CF_BluePrint_Versioning_Steps {
 		coreFlexCustomBundlesPage.clickElementOfPage(COREFLEXConstants.SUBMIT);
 		Reporter.addStepLog(MessageFormat.format(
 				COREFLEXConstants.SUCCESSFULLY_CLICKED_ON_SUBMIT_BUTTON_ON_CUSTOM_BUNDLES_PAGE, CoreConstants.PASS));
-		CoreConstants.TIME_BEFORE_ACTION = new Date().getTime();
+		
 		Assert.assertTrue(
 				coreFlexCustomBundlesPage.verifyPolicySubmitStatus(COREFLEXConstants.POLICY_SUBMIT_STATUS_MESSAGE,
 						CoreFunctions.getPropertyFromConfig("Assignment_Policy")),
 				MessageFormat.format(COREFLEXConstants.FAILED_TO_VERIFY_POLICY_SUBMIT_STATUS_ON_CUSTOM_BUNDLES_PAGE,
 						CoreConstants.FAIL));
-		CoreConstants.TIME_AFTER_ACTION = new Date().getTime();
+		
 		Reporter.addStepLog("<b>Total time taken to verify <i>Policy Submit Status</i> is :"
 				+ CoreFunctions.calculatePageLoadTime(CoreConstants.TIME_BEFORE_ACTION, CoreConstants.TIME_AFTER_ACTION)
 				+ " Seconds </b>");
-		CoreConstants.TIME_BEFORE_ACTION = new Date().getTime();
+		
 		coreFlexCustomBundlesPage.clickElementOfPage(COREFLEXConstants.OK);
 	}
 
@@ -497,7 +431,7 @@ public class CF_BluePrint_Versioning_Steps {
 			String pageName) throws Throwable {
 		Assert.assertTrue(bluePrintCFLoginPage.verifyLoginPageNavigation(), MessageFormat.format(
 				PDTConstants.FAILED_TO_NAVIGATE_TO_COREFLEX_BLUE_PRINT_APPLICATION_LOGIN_PAGE, CoreConstants.FAIL));
-		CoreConstants.TIME_AFTER_ACTION = new Date().getTime();
+		
 		Reporter.addStepLog(
 				"<b>Total time taken to navigate to <i>CoreFlex Policy BluePrint Application Login</i> page is :"
 						+ CoreFunctions.calculatePageLoadTime(CoreConstants.TIME_BEFORE_ACTION,
@@ -518,10 +452,10 @@ public class CF_BluePrint_Versioning_Steps {
 	@Then("^he should be navigated to the searched policy \"([^\"]*)\" - 'Assignment History' page$")
 	public void he_should_be_navigated_to_the_searched_policy_Assignment_History_page(String pageName)
 			throws Throwable {
-		CoreConstants.TIME_BEFORE_ACTION = new Date().getTime();
+		
 		Assert.assertTrue(viewPolicyPage.verifyViewPolicyPageNavigation(pageName), MessageFormat
 				.format(PDTConstants.FAILED_TO_NAVIGATE_TO_ASSIGNMENT_HISTORY_VIEW_POLICY_PAGE, CoreConstants.FAIL));
-		CoreConstants.TIME_AFTER_ACTION = new Date().getTime();
+		
 		Reporter.addStepLog(
 				"<b>Total time taken to navigate to <i>View Policy Benefit - Assignment History</i> page is :"
 						+ CoreFunctions.calculatePageLoadTime(CoreConstants.TIME_BEFORE_ACTION,
@@ -664,27 +598,20 @@ public class CF_BluePrint_Versioning_Steps {
 	@Then("^he should be navigated to \"([^\"]*)\" page having following buttons displayed in enabled state and 'APPROVE POLICY' button should not be displayed$")
 	public void he_should_be_navigated_to_page_having_and_displayed_in_enabled_state_and_Approve_Policy_button_should_not_be_displayed(
 			String navigatedPageName, DataTable dataTable) throws Throwable {
-		CoreConstants.TIME_BEFORE_ACTION = new Date().getTime();
+		
 		Assert.assertTrue(coreFlexCustomBundlesPage.verifyPageNavigation(navigatedPageName), MessageFormat
 				.format(COREFLEXConstants.FAILED_TO_VERIFY_USER_NAVIGATION_TO_CUSTOM_BUNDLES_PAGE, CoreConstants.FAIL));
-		CoreConstants.TIME_AFTER_ACTION = new Date().getTime();
-		Reporter.addStepLog("<b>Total time taken to navigate to <i>Blueprint - Custom Bundles</i> page is :"
-				+ CoreFunctions.calculatePageLoadTime(CoreConstants.TIME_BEFORE_ACTION, CoreConstants.TIME_AFTER_ACTION)
-				+ " Seconds </b>");
+		
 		Assert.assertTrue(coreFlexCustomBundlesPage.verifyButtonDisplayedOnDraftPolicyStatus(), MessageFormat.format(
 				COREFLEXConstants.FAILED_TO_VERIFY_BUTTONS_DISPLAYED_ON_DRAFT_POLICY_STATUS, CoreConstants.FAIL));
 	}
 
 	@When("^he clicks on \"([^\"]*)\" button on 'Custom Bundles' page$")
 	public void he_clicks_on_button_on_Custom_Bundles_page(String buttonName) throws Throwable {
-		CoreConstants.TIME_BEFORE_ACTION = new Date().getTime();
+		
 		Assert.assertTrue(coreFlexCustomBundlesPage.verifyPageNavigation(COREFLEXConstants.CUSTOM_BUNDLES),
 				MessageFormat.format(COREFLEXConstants.FAILED_TO_VERIFY_USER_NAVIGATION_TO_CUSTOM_BUNDLES_PAGE,
 						CoreConstants.FAIL));
-		CoreConstants.TIME_AFTER_ACTION = new Date().getTime();
-		Reporter.addStepLog("<b>Total time taken to navigate to <i>Blueprint - Custom Bundles</i> page is :"
-				+ CoreFunctions.calculatePageLoadTime(CoreConstants.TIME_BEFORE_ACTION, CoreConstants.TIME_AFTER_ACTION)
-				+ " Seconds </b>");
 		coreFlexCustomBundlesPage.clickElementOfPage(buttonName);
 		Reporter.addStepLog(
 				MessageFormat.format(COREFLEXConstants.SUCCESSFULLY_CLICKED_ON_BUTTON_ON_CUSTOM_BUNDLES_PAGE,
@@ -726,16 +653,13 @@ public class CF_BluePrint_Versioning_Steps {
 	@Given("^he has deselected an existing Benefit on 'Policy Benefit Categories' page$")
 	public void he_has_deselected_an_existing_Benefit_on_Policy_Benefit_Categories_page() throws Throwable {
 		flexPolicySetupPage.clickLeftNavigationMenuOfPage(COREFLEXConstants.POLICY_BENEFIT_CATEGORIES);
-		CoreConstants.TIME_BEFORE_ACTION = new Date().getTime();
+		
 		Assert.assertTrue(
 				coreFlexPolicyBenefitsCategoriesPage.verifyPageNavigation(COREFLEXConstants.POLICY_BENEFIT_CATEGORIES),
 				MessageFormat.format(
 						COREFLEXConstants.FAILED_TO_VERIFY_USER_NAVIGATION_TO_POLICY_BENEFITS_CATEGORIES_PAGE,
 						CoreConstants.FAIL));
-		CoreConstants.TIME_AFTER_ACTION = new Date().getTime();
-		Reporter.addStepLog("<b>Total time taken to navigate to <i>Blueprint - Policy Benefit Categories</i> page is :"
-				+ CoreFunctions.calculatePageLoadTime(CoreConstants.TIME_BEFORE_ACTION, CoreConstants.TIME_AFTER_ACTION)
-				+ " Seconds </b>");
+		
 		Assert.assertTrue(coreFlexPolicyBenefitsCategoriesPage.deselectSelectedBenefit(), MessageFormat.format(
 				COREFLEXConstants.FAILED_TO_DESELECT_BENEFIT_ON_POLICY_BENEFIT_CATEGORIES_PAGE, CoreConstants.FAIL));
 		coreFlexPolicyBenefitsCategoriesPage.clickElementOfPage(PDTConstants.NEXT);
@@ -748,25 +672,17 @@ public class CF_BluePrint_Versioning_Steps {
 	public void he_has_changed_Benefit_type_of_added_Benefits_from_to(String previousPolicyType,
 			String changedPolicyType) throws Throwable {
 		generalInfoPage.clickElementOfPage(PDTConstants.NEXT);
-		CoreConstants.TIME_BEFORE_ACTION = new Date().getTime();
+		
 		Assert.assertTrue(flexPolicySetupPage.verifyPageNavigation(COREFLEXConstants.POINT_POLICY_SETUP),
 				MessageFormat.format(COREFLEXConstants.FAILED_TO_VERIFY_USER_NAVIGATION_TO_POINT_POLICY_SETUP_PAGE,
 						CoreConstants.FAIL));
-		CoreConstants.TIME_AFTER_ACTION = new Date().getTime();
-		Reporter.addStepLog("<b>Total time taken to navigate to <i>Blueprint - Flex Policy Setup</i> page is :"
-				+ CoreFunctions.calculatePageLoadTime(CoreConstants.TIME_BEFORE_ACTION, CoreConstants.TIME_AFTER_ACTION)
-				+ " Seconds </b>");
 		flexPolicySetupPage.clickLeftNavigationMenuOfPage(COREFLEXConstants.POLICY_BENEFIT_CATEGORIES);
-		CoreConstants.TIME_BEFORE_ACTION = new Date().getTime();
+		
 		Assert.assertTrue(
 				coreFlexPolicyBenefitsCategoriesPage.verifyPageNavigation(COREFLEXConstants.POLICY_BENEFIT_CATEGORIES),
 				MessageFormat.format(
 						COREFLEXConstants.FAILED_TO_VERIFY_USER_NAVIGATION_TO_POLICY_BENEFITS_CATEGORIES_PAGE,
 						CoreConstants.FAIL));
-		CoreConstants.TIME_AFTER_ACTION = new Date().getTime();
-		Reporter.addStepLog("<b>Total time taken to navigate to <i>Blueprint - Policy Benefit Categories</i> page is :"
-				+ CoreFunctions.calculatePageLoadTime(CoreConstants.TIME_BEFORE_ACTION, CoreConstants.TIME_AFTER_ACTION)
-				+ " Seconds </b>");
 		Assert.assertTrue(
 				coreFlexPolicyBenefitsCategoriesPage.iterateAndChangePolicyBenefitType(previousPolicyType,
 						changedPolicyType),

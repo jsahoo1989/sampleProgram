@@ -267,7 +267,7 @@ public class BusinessFunctions {
 			for (WebElement row : WebElementList) {
 				CoreFunctions.hover(driver, row);
 				Log.info(CoreConstants.ACTUAL_ITEM_NAME_IS + row.getText());
-				if (row.getText().equals(itemName)) {
+				if (row.getText().trim().equals(itemName.trim())) {
 					CoreFunctions.highlightObject(driver, row);
 					return WebElementList.indexOf(row);
 				}

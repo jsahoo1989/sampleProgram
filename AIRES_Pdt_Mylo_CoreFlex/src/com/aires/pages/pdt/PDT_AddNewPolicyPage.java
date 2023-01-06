@@ -104,6 +104,10 @@ public class PDT_AddNewPolicyPage extends Base {
 
 	final By _buttonNextByLocator = By.cssSelector("button.btn-next");
 
+	// ClientID Select Field
+	@FindBy(how = How.XPATH, using = "//label[contains(string(),'Client ID')]/following-sibling::ng-select")
+	private WebElement _selectClientID;
+
 	// Policy Name Field Default Text
 	@FindBy(how = How.XPATH, using = "//ng-select[@bindvalue='corporationPolicyId']//div[@class='ng-placeholder'][contains(text(),'No policy available for selection')]")
 	private WebElement _policyNameDefaultText;
@@ -143,7 +147,7 @@ public class PDT_AddNewPolicyPage extends Base {
 	}
 
 	public boolean verifyAddNewPolicyHeading(String pageName) {
-		waitForProgressBarToDisappear();
+//		waitForProgressBarToDisappear();
 		if (!CoreFunctions.verifyElementOnPage(driver, _headingAddNewPolicyForm, PDTConstants.heading,
 				PDTConstants.ADD_NEW_POLICY_FORM, pageName, true))
 			Reporter.addStepLog(MessageFormat.format(PDTConstants.FAILED_TO_VERIFY_HEADING_ON_PAGE, CoreConstants.FAIL,
@@ -533,6 +537,9 @@ public class PDT_AddNewPolicyPage extends Base {
 				CoreFunctions.clickElement(driver, _buttonBack);
 				CoreFunctions.explicitWaitTillElementInVisibility(driver, _progressBar);
 				break;
+			case PDTConstants.CLIENT_ID:
+				CoreFunctions.clickElement(driver, _selectClientID);
+				break;
 			case PDTConstants.EXIT:
 				CoreFunctions.clickElement(driver, _buttonExit);
 				break;
@@ -720,6 +727,7 @@ public class PDT_AddNewPolicyPage extends Base {
 		if (_optionsClientID.size() > 0
 				&& !_optionsClientID.get(0).getText().equalsIgnoreCase(PDTConstants.NO_ITEMS_FOUND)) {
 			selectClientFromClientDropDown(clientId, clientName);
+			CoreFunctions.explicitWaitTillElementInVisibilityCustomTime(driver, _progressBar, 5);
 		} else if (checkErrorPopUpExistsForClientId()) {
 			String errorMsg = _popUpErrorMessage.getText();
 			CoreFunctions.clickElement(driver, _buttonPopUpErrorOk);
@@ -828,7 +836,7 @@ public class PDT_AddNewPolicyPage extends Base {
 
 	public boolean verifyAutomationPolicyPresent() {
 		try {
-			if (CoreFunctions.isElementExist(driver, _selectPolicyName, 5)) {
+			if (CoreFunctions.isElementExist(driver, _selectPolicyName, 10)) {
 				CoreFunctions.clickElement(driver, _selectPolicyName);
 				CoreFunctions.clearAndSetText(driver, _inputPolicy, COREFLEXConstants.AUTOMATION_POLICY);
 				CoreFunctions.explicitWaitTillElementListVisibility(driver, _optionsPolicyName);

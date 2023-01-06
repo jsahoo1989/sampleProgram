@@ -672,4 +672,5 @@ public class PDTConstants {
 	public static final String SUBMITTED = "submitted";
 	public static final String FAILED_TO_VERIFY_GROSSUP_REIMBURSED_BY = "{0}Failed to verify Gross-Up and Reimbursed by for benefits.";
 	public static final String FAILED_TO_NAVIGATE_TO_EDIT_POLICY_BENEFIT_PAGE = "{0}Failed to navigate to Edit Policy Benefit page.";
+	public static final String FAILED_TO_VERIFY_POLICY_STATUS = "{0}Failed to verify ''{1}'' policy status on ''{2}'' page.";
 }

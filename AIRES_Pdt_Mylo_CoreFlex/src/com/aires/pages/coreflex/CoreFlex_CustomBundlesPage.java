@@ -22,8 +22,6 @@ import com.aires.testdatatypes.coreflex.CoreFlex_PolicySetupPagesData;
 import com.aires.testdatatypes.coreflex.FlexBenefit;
 import com.vimalselvam.cucumber.listener.Reporter;
 
-import cucumber.api.DataTable;
-
 public class CoreFlex_CustomBundlesPage extends Base {
 
 	public CoreFlex_CustomBundlesPage(WebDriver driver) {
@@ -179,6 +177,9 @@ public class CoreFlex_CustomBundlesPage extends Base {
 	// Approve This Policy Dialog Description
 	@FindBy(how = How.CSS, using = "textarea[formcontrolname='versionDescription']")
 	private WebElement _txtAreaDescription;
+	
+	@FindBy(how = How.XPATH, using = "//strong[text()='Policy Status:']/parent::label/following-sibling::label/span/i")
+	private WebElement _policyStatusIndicator;
 
 	/*********************************************************************/
 
@@ -257,7 +258,8 @@ public class CoreFlex_CustomBundlesPage extends Base {
 				CoreFunctions.clickElement(driver, _popUpApprovePolicyCheckBox);
 				break;
 			case COREFLEXConstants.ADD_NEW_CUSTOM_BUNDLE:
-				CoreFunctions.clickElement(driver, _buttonAddNewCustomBundle);
+//				CoreFunctions.clickElement(driver, _buttonAddNewCustomBundle);
+				CoreFunctions.clickUsingJS(driver, _buttonAddNewCustomBundle, COREFLEXConstants.ADD_NEW_CUSTOM_BUNDLE);
 				break;
 			case COREFLEXConstants.SAVE_CUSTOM_BUNDLE:
 				CoreFunctions.clickUsingJS(driver, _buttonSaveCustomBundle, COREFLEXConstants.SAVE_CUSTOM_BUNDLE);
@@ -649,6 +651,31 @@ public class CoreFlex_CustomBundlesPage extends Base {
 					CoreConstants.FAIL, CoreFunctions.getElementText(driver, _textPolicyStatus), expectedPolicyStatus));
 			return false;
 		}
+	}
+	
+	public boolean verifyOnPointPolicyStatusIndicator(String expectedPolicyStatusIndicator,
+			String expectedPolicyStatusHoverText,String pageName) {
+		try {
+			CoreFunctions.verifyText(getActualPolicyStatusIndicator(), expectedPolicyStatusIndicator,
+					COREFLEXConstants.DRAFT_POLICY_STATUS_INDICATOR);
+			CoreFunctions.verifyText(CoreFunctions.getAttributeText(_policyStatusIndicator, "mattooltip"), expectedPolicyStatusHoverText,
+					COREFLEXConstants.DRAFT_POLICY_STATUS_INDICATOR_HOVER_TEXT);
+			Reporter.addStepLog(MessageFormat.format(COREFLEXConstants.SUCCESSFULLY_VERIFIED_DRAFT_POLICY_STATUS_INDICATOR_AND_HOVER_TEXT,
+					CoreConstants.PASS,expectedPolicyStatusIndicator,expectedPolicyStatusHoverText,pageName));
+			return true;
+		} catch (Exception e) {
+			Reporter.addStepLog(MessageFormat.format(COREFLEXConstants.EXCEPTION_OCCURED_WHILE_VERIFYING_POLICY_STATUS_INDICATOR,
+					CoreConstants.FAIL, e.getMessage(),pageName));
+			return false;
+		}
+	}
+
+	private String getActualPolicyStatusIndicator() {
+		return CoreFunctions.getElementText(driver, _policyStatusIndicator).equalsIgnoreCase("error")
+				? COREFLEXConstants.RED_INDICATOR
+				: (CoreFunctions.getElementText(driver, _policyStatusIndicator).equalsIgnoreCase("check_circle")
+						? COREFLEXConstants.GREEN_INDICATOR
+						: null);
 	}
 
 }

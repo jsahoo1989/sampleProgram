@@ -16,7 +16,7 @@
 			"benefitDesc": "Automated Core Lump Sum Benefit Long Description. Setting up a CoreFlex Policy to be consumed by Client/Transferee to select Desired Benefits and track/Manage Points.",
 			"subBenefits": "Lump Sum",
 			"airesManagedService": "No",
-			"policyCreationGroup": "All Benefits,Cloning,Client"
+			"policyCreationGroup": "All Benefits,Cloning"
 		},
 		{
 			"benefitType": "Mobility Premium",
@@ -235,7 +235,7 @@
 			"subBenefits": "Concierge Home Cleaning Services Reimbursement",
 			"airesManagedService": "No",
 			"noOfMilestones": 50,
-			"policyCreationGroup": "All Benefits,Cloning,Client"
+			"policyCreationGroup": "All Benefits,Cloning"
 		},
 		{
 			"benefitType": "Child Care Services Reimbursement",
@@ -245,7 +245,7 @@
 			"subBenefits": "Child Care Services Reimbursement",
 			"airesManagedService": "No",
 			"noOfMilestones": 50,
-			"policyCreationGroup": "All Benefits,Cloning,Client"
+			"policyCreationGroup": "All Benefits,Cloning"
 		},
 		{
 			"benefitType": "Goods & Services Allowance",
@@ -436,7 +436,7 @@
 					"comment": "Test Flex Lump Sum Benefit Comment",
 					"payments": "Expense Reimbursement",
 					"multipleBenefitSubmission": false,
-					"policyCreationGroup": "All Benefits,Cloning,Client",
+					"policyCreationGroup": "All Benefits,Cloning",
 					"selectBenefitOnPBCPage": false,
 					"deselectBenefitOnPBCPage": false,
 					"benefitResubmissionOnBST":false
@@ -1236,7 +1236,7 @@
 					"comment": "Test Flex Concierge Home Cleaning Services Reimbursement Aires Managed Benefit Comment",
 					"payments": "Expense Reimbursement",
 					"multipleBenefitSubmission": false,
-					"policyCreationGroup": "All Benefits,Cloning,Client",
+					"policyCreationGroup": "All Benefits,Cloning",
 					"selectBenefitOnPBCPage": false,
 					"deselectBenefitOnPBCPage": false,
 					"benefitResubmissionOnBST":false
@@ -1258,7 +1258,7 @@
 					"comment": "Test Flex Child Care Services Reimbursement Aires Managed Benefit Comment",
 					"payments": "Expense Reimbursement",
 					"multipleBenefitSubmission": false,
-					"policyCreationGroup": "All Benefits,Cloning,Client",
+					"policyCreationGroup": "All Benefits,Cloning",
 					"selectBenefitOnPBCPage": false,
 					"deselectBenefitOnPBCPage": false,
 					"noOfMilestones": 50,

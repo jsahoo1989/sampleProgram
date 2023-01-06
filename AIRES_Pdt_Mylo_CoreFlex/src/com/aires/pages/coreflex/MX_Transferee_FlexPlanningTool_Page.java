@@ -416,6 +416,7 @@ public class MX_Transferee_FlexPlanningTool_Page extends Base {
 	}
 
 	public boolean verifyPointBalanceTooltipContent() {
+		CoreFunctions.waitHandler(1);
 		CoreFunctions.clickElement(driver, pointBalance_tooltip);
 		Log.info(CoreFunctions.getElementText(driver, pointBalance_tooltip_content));
 		Log.info(pointBalanceDetails());
@@ -1473,7 +1474,7 @@ public class MX_Transferee_FlexPlanningTool_Page extends Base {
 		boolean isFlexBenefitDetailsOnFTPVerified = false;
 		try {
 			expandBenefitDescriptionOnFPT();
-			CoreFunctions.explicitWaitTillElementListVisibility(driver, _textAddedBenefitNameList);
+			CoreFunctions.explicitWaitTillElementListVisibilityWithTime(driver, _textAddedBenefitNameList, 5);
 			for (Benefit benefit : getFlexBenefitsList(benefitType, policyRequiredFor)) {
 				int indexBenefit = BusinessFunctions.returnindexItemFromListUsingText(driver, _textAddedBenefitNameList,
 						benefit.getBenefitDisplayName());
@@ -1772,11 +1773,12 @@ public class MX_Transferee_FlexPlanningTool_Page extends Base {
 	}
 
 	private void expandBenefitDescriptionOnFPT() {
-
-		for (int i = 0; i <= _moreLinkBenefitDesc.size(); i++) {
+		int listSize = _moreLinkBenefitDesc.size();
+		for (int i = 0; i < listSize ; ) {
 			try {
+				CoreFunctions.clickUsingJS(driver, _moreLinkBenefitDesc.get(0), "More");
 				CoreFunctions.waitHandler(2);
-				CoreFunctions.scrollClickUsingJS(driver, _moreLinkBenefitDesc.get(0), "More");
+				listSize = _moreLinkBenefitDesc.size();				
 			} catch (Exception e) {
 
 			}

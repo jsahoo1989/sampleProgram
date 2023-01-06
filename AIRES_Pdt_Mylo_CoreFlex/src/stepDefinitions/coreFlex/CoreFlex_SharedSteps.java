@@ -1159,9 +1159,11 @@ public class CoreFlex_SharedSteps {
 						COREFLEXConstants.ADD_NEW_POLICY_PAGE, PDTConstants.ADD_NEW_POLICY_FORM,
 						addNewPolicyPage.getElementText(PDTConstants.HEADING)));
 
+		addNewPolicyPage.clickElementOfPage(PDTConstants.CLIENT_ID);
 		addNewPolicyPage.selectClient(_loginInfo.details.clientId, _loginInfo.details.clientName);
 		addNewPoliciesForClientInIRIS(_loginInfo.details.clientId, addNewPolicyPage.verifyAutomationPolicyPresent());
 
+		addNewPolicyPage.clickElementOfPage(PDTConstants.CLIENT_ID);
 		addNewPolicyPage.selectClient(_loginInfo.details.clientId, _loginInfo.details.clientName);
 		Assert.assertTrue(addNewPolicyPage.selectAutomationPolicy(),
 				MessageFormat.format(PDTConstants.FAILED_TO_SELECT_POLICY_FROM_POLICY_NAME_FIELD, CoreConstants.FAIL));
@@ -1339,6 +1341,7 @@ public class CoreFlex_SharedSteps {
 		CoreFunctions.writeToPropertiesFile("ClonePolicy_Reference_PolicyVersion", "");
 		CoreFunctions.writeToPropertiesFile("ClonePolicy_Reference_PolicyStatus", "");
 		CoreFunctions.writeToPropertiesFile("ClonePolicy_Reference_Client", "");
+		CoreFunctions.writeToPropertiesFile("application", CoreConstants.APP_COREFLEX);
 
 	}
 

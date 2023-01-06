@@ -701,7 +701,7 @@ public class COREFLEXConstants {
 	public static final String SIGNIFICANT_CHANGE = "Significant Change";
 	public static final String EXCEPTION_OCCURED_WHILE_SELECTING_AND_FILLING_ADDED_ADDITIONAL_FLEX_BENEFITS = "{0}Exception occured while selecting and Filling added Additional FLEX Benefits. Exception - ''{1}''. ";
 	public static final String SUCCESSFULLY_SELECTED_AND_FILLED_ADDED_ADDITIONAL_FLEX_BENEFITS = "{0}Successfully selected and filled Additional added FLEX Benefits";
-	public static final String SUCCESSFULLY_VERIFIED_POLICY_STATUS = "{0}Successfully verified Policy Status - ''{1}'' on Benefit Summary Page.";
+	public static final String SUCCESSFULLY_VERIFIED_POLICY_STATUS = "{0}Successfully verified Policy Status - ''{1}'' on ''{2}'' Page.";
 	public static final String FAILED_TO_VERIFY_POLICY_STATUS = "{0}Failed to verify Policy Status on Benefit Summary Page. Actual : ''{1}'' | Expected : ''{2}''.";
 	public static final String SUCCESSFULLY_VERIFIED_BUTTONS_DISPLAYED_IN_DRAFT_POLICY_STATUS_ON_CUSTOM_BUNDLES_PAGE = "{0}Successfully verified Submit,Save As Draft, Preview Transferee buttons are displayed and Approve Policy button not displayed for Draft Policy on Custom Bundles page.";
 	public static final String FAILED_TO_VERIFY_POLICY_SAVE_AS_DRAFT_DIALOG_STATUS_ON_CUSTOM_BUNDLES_PAGE = "{0}Failed to verify Policy Save As Draft Dialog Status on Custom Bundles Page.";
@@ -942,7 +942,11 @@ public class COREFLEXConstants {
 	public static final String EXCEPTION_OCCURED_WHILE_VERIFYING_POLICY_STATUS_INDICATOR = "{0}Exception occured while verifying Policy Status indicator on ''{2}'' page. Exception : ''{1}''.";
 	public static final String ASSIGNMENT_POLICY = "Assignment Policy";
 	public static final String CREATE_NEW_POLICY_BENEFIT_GENERAL_INFORMATION = "Create New Policy Benefit - General Information";
+	public static final String CREATE_NEW_POLICY_POINT_POLICY_SETUP = "Create New Policy Benefit - Point Policy Setup";
 	public static final String VIEW_POLICY_BENEFIT_GENERAL_INFORMATION = "View Policy Benefit - General Information";
 	public static final String EDIT_POLICY_BENEFIT_GENERAL_INFORMATION = "Edit Policy Benefit - General Information";
 	public static final String EDIT_POLICY_BENEFIT = "Edit Policy Benefit";
+	public static final String ALLOWANCE_TYPE = "Allowance Type";
+	public static final String POLICY_COMPLETE = "Policy complete. Ready for submission";
+	public static final String EXCEPTION_OCCURED_WHILE_VERIFYING_POLICY_STATUS = "{0}Exception occured while verifying Policy Status on ''{2}'' page. Exception : ''{1}''.";
 }

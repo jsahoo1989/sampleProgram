@@ -141,7 +141,7 @@ public class CoreFlex_AirShipment_BenefitsPage extends BenefitPage {
 	@FindBy(how = How.XPATH, using = "//div[@class='collapse show']//input[@formcontrolname='grossedUpInd']/parent::label[@class='form-check-label']")
 	private List<WebElement> _radioBtnGrossUp;
 
-	@FindBy(how = How.XPATH, using = "//label[contains(text(),'Gross-Up')]/following-sibling::div//input")
+	@FindBy(how = How.XPATH, using = "//div[@class='collapse show']//label[contains(text(),'Gross-Up')]/following-sibling::div//input")
 	private List<WebElement> _radioBtnGrossUpButtonList;
 
 	// Radio Button Selection From Entire SubBenefit Section
@@ -152,7 +152,7 @@ public class CoreFlex_AirShipment_BenefitsPage extends BenefitPage {
 	@FindBy(how = How.XPATH, using = "//div[@class='collapse show']//input[@formcontrolname='paidByCode']/parent::label[@class='form-check-label']")
 	private List<WebElement> _radioReimbursedBy;
 
-	@FindBy(how = How.XPATH, using = "//label[contains(text(),'Reimbursed By')]/following-sibling::div//input")
+	@FindBy(how = How.XPATH, using = "//div[@class='collapse show']//label[contains(text(),'Reimbursed By')]/following-sibling::div//input")
 	private List<WebElement> _radioReimbursedByButtonList;
 
 	// Reimbursed By Other Input

@@ -175,6 +175,9 @@ public class CoreFlex_PolicyBenefitsCategoriesPage extends Base {
 	@FindBy(how = How.XPATH, using = "//button[contains(text(),'CONTINUE')]")
 	private WebElement _dialogContinueButton;
 
+	@FindBy(how = How.XPATH, using = "//strong[text()='Policy Status:']/parent::label/following-sibling::label/span/i")
+	private WebElement _policyStatusIndicator;
+
 	/*********************************************************************/
 
 	public static final List<Benefit> coreBenefits = FileReaderManager.getInstance().getCoreFlexJsonReader()
@@ -1144,6 +1147,33 @@ public class CoreFlex_PolicyBenefitsCategoriesPage extends Base {
 					CoreConstants.PASS));
 		}
 		return isPolicyCategoriesBenefitsAndOrderVerified;
+	}
+
+	public boolean verifyOnPointPolicyStatusIndicator(String expectedPolicyStatusIndicator,
+			String expectedPolicyStatusHoverText, String pageName) {
+		try {
+			CoreFunctions.verifyText(getActualPolicyStatusIndicator(), expectedPolicyStatusIndicator,
+					COREFLEXConstants.DRAFT_POLICY_STATUS_INDICATOR);
+			CoreFunctions.verifyText(CoreFunctions.getAttributeText(_policyStatusIndicator, "mattooltip"),
+					expectedPolicyStatusHoverText, COREFLEXConstants.DRAFT_POLICY_STATUS_INDICATOR_HOVER_TEXT);
+			Reporter.addStepLog(MessageFormat.format(
+					COREFLEXConstants.SUCCESSFULLY_VERIFIED_DRAFT_POLICY_STATUS_INDICATOR_AND_HOVER_TEXT,
+					CoreConstants.PASS, expectedPolicyStatusIndicator, expectedPolicyStatusHoverText, pageName));
+			return true;
+		} catch (Exception e) {
+			Reporter.addStepLog(
+					MessageFormat.format(COREFLEXConstants.EXCEPTION_OCCURED_WHILE_VERIFYING_POLICY_STATUS_INDICATOR,
+							CoreConstants.FAIL, e.getMessage(), pageName));
+			return false;
+		}
+	}
+
+	private String getActualPolicyStatusIndicator() {
+		return CoreFunctions.getElementText(driver, _policyStatusIndicator).equalsIgnoreCase("error")
+				? COREFLEXConstants.RED_INDICATOR
+				: (CoreFunctions.getElementText(driver, _policyStatusIndicator).equalsIgnoreCase("check_circle")
+						? COREFLEXConstants.GREEN_INDICATOR
+						: null);
 	}
 
 }

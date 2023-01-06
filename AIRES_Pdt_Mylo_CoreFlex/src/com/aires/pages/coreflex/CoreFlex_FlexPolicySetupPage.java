@@ -206,14 +206,19 @@ public class CoreFlex_FlexPolicySetupPage extends Base {
 	@FindBy(how = How.CSS, using = "ng-select[formcontrolname='currencyCode'] div[class='ng-value ng-star-inserted']")
 	private WebElement _selectCashoutCurrencySelectedValue;
 
+	@FindBy(how = How.XPATH, using = "//strong[text()='Policy Status:']/parent::label/following-sibling::label/span/i")
+	private WebElement _policyStatusIndicator;
+
+	// Policy Status - General Information
+	@FindBy(how = How.XPATH, using = "//label[contains(string(),'Policy Status:')]/following-sibling::label")
+	private WebElement _textPolicyStatus;
+
 	/*********************************************************************/
 
 	CoreFlex_PolicySetupPagesData policySetupPageData = FileReaderManager.getInstance().getCoreFlexJsonReader()
 			.getPolicySetupPagesDataList(COREFLEXConstants.POLICY_SETUP);
 
-//	private List<String> providedCurrencyList = Arrays.asList("U.S. Dollar", "Japanese Yen", "Moroccan Dirham");
-	
-	private List<String> providedCurrencyList = Arrays.asList("Japanese Yen", "Moroccan Dirham");
+	private List<String> providedCurrencyList = Arrays.asList("U.S. Dollar", "Japanese Yen", "Moroccan Dirham");
 
 	/*********************************************************************/
 
@@ -591,7 +596,7 @@ public class CoreFlex_FlexPolicySetupPage extends Base {
 	public boolean verifyFPTFieldValuesPostVersioningCloning() {
 		try {
 			CoreFunctions.verifyRadioButtonSelection(driver, _radioFlexAllowanceType, _radioFlexAllowanceTypeButtonList,
-					policySetupPageData.flexPolicySetupPage.flexAllowanceType, COREFLEXConstants.FLEX_ALLOWANCE_TYPE);
+					policySetupPageData.flexPolicySetupPage.flexAllowanceType, COREFLEXConstants.ALLOWANCE_TYPE);
 			CoreFunctions.verifyRadioButtonSelection(driver, _radioPersonResponsibleForBenefitSelection,
 					_radioPersonResponsibleForBenefitSelectionButtonList,
 					CoreFunctions.getPropertyFromConfig("CoreFlex_Policy_PersonResponsible"),
@@ -649,5 +654,50 @@ public class CoreFlex_FlexPolicySetupPage extends Base {
 							CoreConstants.FAIL, e.getMessage()));
 		}
 		return false;
+	}
+
+	public boolean verifyOnPointPolicyStatusIndicator(String expectedPolicyStatusIndicator,
+			String expectedPolicyStatusHoverText, String pageName) {
+		try {
+			CoreFunctions.verifyText(getActualPolicyStatusIndicator(), expectedPolicyStatusIndicator,
+					COREFLEXConstants.DRAFT_POLICY_STATUS_INDICATOR);
+			CoreFunctions.verifyText(CoreFunctions.getAttributeText(_policyStatusIndicator, "mattooltip"),
+					expectedPolicyStatusHoverText, COREFLEXConstants.DRAFT_POLICY_STATUS_INDICATOR_HOVER_TEXT);
+			Reporter.addStepLog(MessageFormat.format(
+					COREFLEXConstants.SUCCESSFULLY_VERIFIED_DRAFT_POLICY_STATUS_INDICATOR_AND_HOVER_TEXT,
+					CoreConstants.PASS, expectedPolicyStatusIndicator, expectedPolicyStatusHoverText, pageName));
+			return true;
+		} catch (Exception e) {
+			Reporter.addStepLog(
+					MessageFormat.format(COREFLEXConstants.EXCEPTION_OCCURED_WHILE_VERIFYING_POLICY_STATUS_INDICATOR,
+							CoreConstants.FAIL, e.getMessage(), pageName));
+			return false;
+		}
+	}
+
+	private String getActualPolicyStatusIndicator() {
+		return CoreFunctions.getElementText(driver, _policyStatusIndicator).equalsIgnoreCase("error")
+				? COREFLEXConstants.RED_INDICATOR
+				: (CoreFunctions.getElementText(driver, _policyStatusIndicator).equalsIgnoreCase("check_circle")
+						? COREFLEXConstants.GREEN_INDICATOR
+						: null);
+	}
+
+	public boolean verifyPolicyStatus(String expectedPolicyStatus, String pageName) {
+		try {
+			CoreFunctions
+					.verifyText(
+							(CoreFunctions.getElementText(driver, _textPolicyStatus).replace("check_circle", "")
+									.replace("error", "").trim()),
+							expectedPolicyStatus, COREFLEXConstants.POLICY_STATUS);
+			Reporter.addStepLog(MessageFormat.format(COREFLEXConstants.SUCCESSFULLY_VERIFIED_POLICY_STATUS,
+					CoreConstants.PASS, expectedPolicyStatus, pageName));
+			return true;
+		}catch(Exception e) {
+			Reporter.addStepLog(
+					MessageFormat.format(COREFLEXConstants.EXCEPTION_OCCURED_WHILE_VERIFYING_POLICY_STATUS,
+							CoreConstants.FAIL, e.getMessage(), pageName));
+			return false;
+		}		
 	}
 }

@@ -306,19 +306,19 @@ public class CoreFlex_HouseHuntingTrip_BenefitsPage extends BenefitPage {
 	private List<WebElement> _inputMultiAddBenefitButton;
 
 	// Gross Up Radio Label Selection
-	@FindBy(how = How.XPATH, using = "//label[contains(text(),'Gross-Up')]/following-sibling::div/label[@class='form-check-label']")
+	@FindBy(how = How.XPATH, using = "//div[@class='collapse show']//label[contains(text(),'Gross-Up')]/following-sibling::div/label[@class='form-check-label']")
 	private List<WebElement> _radioGrossUpLabelList;
 
 	// Gross Up Radio Button Selection
-	@FindBy(how = How.XPATH, using = "//label[contains(text(),'Gross-Up')]/following-sibling::div//input")
+	@FindBy(how = How.XPATH, using = "//div[@class='collapse show']//label[contains(text(),'Gross-Up')]/following-sibling::div//input")
 	private List<WebElement> _radioGrossUpButtonList;
 
 	// Reimbursed By Radio Label Selection
-	@FindBy(how = How.XPATH, using = "//label[contains(text(),'Reimbursed By')]/following-sibling::div/label[@class='form-check-label']")
+	@FindBy(how = How.XPATH, using = "//div[@class='collapse show']//label[contains(text(),'Reimbursed By')]/following-sibling::div/label[@class='form-check-label']")
 	private List<WebElement> _radioReimbursedByLabelList;
 
 	// Reimbursed By Radio Button Selection
-	@FindBy(how = How.XPATH, using = "//label[contains(text(),'Reimbursed By')]/following-sibling::div//input")
+	@FindBy(how = How.XPATH, using = "//div[@class='collapse show']//label[contains(text(),'Reimbursed By')]/following-sibling::div//input")
 	private List<WebElement> _radioReimbursedByButtonList;
 
 	// Type - Radio Button Selection - Label List
@@ -768,7 +768,6 @@ public class CoreFlex_HouseHuntingTrip_BenefitsPage extends BenefitPage {
 	public void expandSubBenefitIfCollapsed(WebElement subBenefitForm) {
 		if (subBenefitForm.getAttribute("class").equalsIgnoreCase("collapsed")) {
 			CoreFunctions.clickElement(driver, subBenefitForm);
-			CoreFunctions.waitHandler(1);
 		}
 	}
 
@@ -796,6 +795,7 @@ public class CoreFlex_HouseHuntingTrip_BenefitsPage extends BenefitPage {
 		default:
 			Assert.fail(MessageFormat.format(COREFLEXConstants.ELEMENT_NOT_FOUND, CoreConstants.FAIL));
 		}
+		CoreFunctions.waitHandler(1);
 		return element;
 	}
 

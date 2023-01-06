@@ -366,7 +366,9 @@ public class PDT_ViewPolicyPage extends Base {
 			CoreFunctions.clickElement(driver, _logout);
 			break;
 		case PDTConstants.ADD_NEW_POLICY_FORM:
-			CoreFunctions.clickUsingJS(driver, _addNewPolicyForm, PDTConstants.ADD_NEW_POLICY_FORM);
+			CoreFunctions.explicitWaitTillElementListVisibility(driver, _listPolicyName);
+//			CoreFunctions.clickUsingJS(driver, _addNewPolicyForm, PDTConstants.ADD_NEW_POLICY_FORM);
+			CoreFunctions.clickElement(driver, _addNewPolicyForm);
 			if (CoreFunctions.isElementExist(driver, _progressBar, 4))
 				BusinessFunctions.fluentWaitForSpinnerToDisappear(driver, _progressBar);
 			break;
@@ -962,6 +964,7 @@ public class PDT_ViewPolicyPage extends Base {
 	}
 
 	public void searchPolicy(String policyName) {
+		CoreFunctions.waitHandler(2);
 		CoreFunctions.clearAndSetText(driver, _inputPolicyName, policyName);
 		clickElementOfPage(COREFLEXConstants.SEARCH);
 	}
@@ -1068,10 +1071,11 @@ public class PDT_ViewPolicyPage extends Base {
 		try {
 			CoreFunctions.clickElement(driver, _listPolicyName.get(searchedPolicyIndex));
 			CoreFunctions.explicitWaitTillElementInVisibility(driver, _progressBar);
-			CoreFunctions.waitHandler(4);
+			CoreFunctions.waitHandler(2);
 			String corporationPolicyValue = generalInfoPage.getElementText(COREFLEXConstants.CORPORATION_POLICY_NUMBER);
 			CoreFunctions.writeToPropertiesFile("ClonePolicy_Reference_CorporationPolicyNum", corporationPolicyValue);
 			generalInfoPage.clickElementOfPage(COREFLEXConstants.EXIT);
+			CoreFunctions.waitHandler(2);
 		} catch (Exception e) {
 			Reporter.addStepLog(MessageFormat.format(
 					COREFLEXConstants.FAILED_TO_CAPTURE_CORPORATION_POLICY_NUMBER_FOR_SELECTED_POLICY_WITH_STATUS,

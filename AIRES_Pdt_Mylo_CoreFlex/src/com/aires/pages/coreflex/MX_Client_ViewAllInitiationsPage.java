@@ -10,6 +10,7 @@ import org.openqa.selenium.support.How;
 import org.testng.Assert;
 
 import com.aires.businessrules.Base;
+import com.aires.businessrules.BusinessFunctions;
 import com.aires.businessrules.CoreFunctions;
 import com.aires.businessrules.constants.COREFLEXConstants;
 import com.aires.businessrules.constants.CoreConstants;
@@ -30,6 +31,9 @@ public class MX_Client_ViewAllInitiationsPage extends Base {
 
 	@FindBy(how = How.CSS, using = "div[class*='RXBigLink RXBold'] span")
 	private List<WebElement> _linkTransfereeNameList;
+
+	@FindBy(how = How.XPATH, using = "//span[contains(text(),'Clone authorization')]")
+	private List<WebElement> _buttonCloneAuthorization;
 
 	/*********************************************************************/
 
@@ -62,6 +66,13 @@ public class MX_Client_ViewAllInitiationsPage extends Base {
 				CoreFunctions.selectItemInListByText(driver, _linkTransfereeNameList,
 						CoreFunctions.getPropertyFromConfig("FirstName") + " "
 								+ CoreFunctions.getPropertyFromConfig("LastName"));
+				break;
+			case MobilityXConstants.CLONE_AUTHORIZATION:
+				int elementindex = BusinessFunctions.returnindexItemFromListUsingText(driver, _linkTransfereeNameList,
+						CoreFunctions.getPropertyFromConfig("Transferee_firstName") + " "
+								+ CoreFunctions.getPropertyFromConfig("Transferee_lastName"));
+				CoreFunctions.hoverAndClick(driver, _buttonCloneAuthorization.get(elementindex),
+						MobilityXConstants.CLONE_AUTHORIZATION);
 				break;
 			default:
 				Assert.fail(COREFLEXConstants.INVALID_ELEMENT);

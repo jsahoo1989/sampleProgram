@@ -175,15 +175,7 @@ public class IRIS_AssignmentServicePage extends BasePage {
 	public void clickSaveButton() throws Exception {
 		Helpers.clickButton(IRIS_PageMaster.getButtonObjectFromLabel(_IRIS, "Save"),
 				IRIS_PageMaster.getButtonObjectFromLabel(_IRIS, "Save").getLabel());
-//		if (IRIS_PageMaster.getDialogObject(_IRIS, "Warning").exists()) {
-//			Helpers.clickButton(
-//					IRIS_PageMaster.getButtonObject(IRIS_PageMaster.getDialogObject(_IRIS, "Warning"), "OK",
-//							"javax.swing.plaf.basic.BasicOptionPaneUI$ButtonFactory$ConstrainedButton"),
-//					IRIS_PageMaster
-//							.getButtonObject(IRIS_PageMaster.getDialogObject(_IRIS, "Warning"), "OK",
-//									"javax.swing.plaf.basic.BasicOptionPaneUI$ButtonFactory$ConstrainedButton")
-//							.getAttachedText());
-//		}
+
 		if (!IRIS_PageMaster.getDialogObject(_IRIS, "Saved").exists()) {
 			String _newTransfereeWindowTitle = MessageFormat.format(IRISConstants.TRANSFEREE_TITLE_TO_APPEND_SERVICE,
 					CoreFunctions.getPropertyFromConfig("Assignment_FileID"),
@@ -192,15 +184,12 @@ public class IRIS_AssignmentServicePage extends BasePage {
 			_IRIS = IRIS_PageMaster.getWindowObject(_newTransfereeWindowTitle);
 		}
 		try {
-			Helpers.clickButton(
-					IRIS_PageMaster.getButtonObject(IRIS_PageMaster.getDialogObject(_IRIS, "Saved"), "OK",
-							"javax.swing.plaf.basic.BasicOptionPaneUI$ButtonFactory$ConstrainedButton"),
-					IRIS_PageMaster
-							.getButtonObject(IRIS_PageMaster.getDialogObject(_IRIS, "Saved"), "OK",
-									"javax.swing.plaf.basic.BasicOptionPaneUI$ButtonFactory$ConstrainedButton")
-							.getLabel());
+//			Helpers.clickButton(IRIS_PageMaster.getButtonObject(IRIS_PageMaster.getDialogObject(_IRIS, "Saved"), "OK",
+//					"javax.swing.plaf.basic.BasicOptionPaneUI$ButtonFactory$ConstrainedButton"), "OK");
+			IRIS_PageMaster.getButtonObjectFromLabel(IRIS_PageMaster.getDialogObject(_IRIS, "Saved"), "OK")
+			.click();
 		} catch (GeneralLeanFtException e) {
-			try {
+			try {								
 				if (IRIS_PageMaster.getDialogObject(_IRIS, "Failed").exists()) {
 					IRIS_PageMaster.getButtonObjectFromLabel(IRIS_PageMaster.getDialogObject(_IRIS, "Failed"), "OK")
 							.click();
@@ -717,7 +706,7 @@ public class IRIS_AssignmentServicePage extends BasePage {
 					CoreFunctions.getPropertyFromConfig("CoreFlex_Policy_RequiredFor"))) {
 				if ((benefit.getSelectBenefitOnFPTPage()) && (benefit.getAiresManagedService().equals("Yes"))
 						&& benefit.getNoOfMilestones() != null) {
-					
+
 					addService(benefit.getIrisServiceName());
 					clickOnAddSubServiceButton();
 					pageObjectManager_CoreFlex.getPageObjects().get(benefit.getBenefitType()).addSubService(_IRIS,
@@ -727,7 +716,6 @@ public class IRIS_AssignmentServicePage extends BasePage {
 					Helpers.setTableCellValue(IRIS_PageMaster.getTableObjectWithIndex(_IRIS, "javax.swing.JTable", 1),
 							rowCount - 1, "Core/Flex", "Both");
 					clickSaveButton();
-					CoreFunctions.waitHandler(2);
 					addAdditionalDetailIfRequired(benefit);
 					benefit.setIrisSubserviceID(String
 							.valueOf(new Double(IRIS_PageMaster.getTableObjectWithIndex(_IRIS, "javax.swing.JTable", 1)
@@ -796,15 +784,12 @@ public class IRIS_AssignmentServicePage extends BasePage {
 				Helpers.setEditorText(IRIS_PageMaster.getEditorObject(_subServiceDetailScreen, "Updated By"), "Test",
 						"Updated By");
 				Helpers.clickButton(IRIS_PageMaster.getButtonObject(_IRIS, IRISConstants.UPDATE, 2),
-						IRIS_PageMaster.getButtonObject(_IRIS, IRISConstants.UPDATE, 2).getAttachedText());
-
-				Helpers.clickButton(
-						IRIS_PageMaster.getButtonObject(IRIS_PageMaster.getDialogObject(_IRIS, "Save succeeded"), "OK",
-								"javax.swing.plaf.basic.BasicOptionPaneUI$ButtonFactory$ConstrainedButton"),
-						IRIS_PageMaster
-								.getButtonObject(IRIS_PageMaster.getDialogObject(_IRIS, "Save succeeded"), "OK",
-										"javax.swing.plaf.basic.BasicOptionPaneUI$ButtonFactory$ConstrainedButton")
-								.getLabel());
+						IRISConstants.UPDATE);				
+				Dialog saveSucceededDialog = _subServiceDetailScreen.describe(Dialog.class, new DialogDescription.Builder()
+						.title("Save succeeded").build());
+				Button oKButton = saveSucceededDialog.describe(Button.class, new ButtonDescription.Builder()
+						.label("OK").build());
+				oKButton.click();				
 				break;
 			case COREFLEXConstants.EDUCATION_ASSISTANCE:
 				Dialog _subServiceDetailScreenEducation = _IRIS.describe(Dialog.class,

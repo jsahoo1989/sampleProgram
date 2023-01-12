@@ -114,7 +114,7 @@ public class MX_Transferee_MyBenefitsBundlePage extends Base {
 	@FindBy(how = How.CSS, using = "div[class*='Benefit'] span[class='RXCFText RXBold RXAiresSeaglass']")
 	private List<WebElement> _textSubmittedBenefitsPointsList;
 
-	@FindBy(how = How.CSS, using = "div[id*='SubmitBenefit'] span[class='RXBolder RXCFSmallText']")
+	@FindBy(how = How.XPATH, using = "//div[contains(@id,'SubmitBenefit')]//span[@class='RXBolder RXCFSmallText'] | //div[contains(@id,'innerDivCashoutSubmitCashoutBenefit')]//span[contains(text(),'Cashout')]")
 	private List<WebElement> _textSubmittedBenefitQuantityList;
 
 	@FindBy(how = How.CSS, using = "span[class='RXCFSmallerItalicText RXAiresCharcoal']")
@@ -246,7 +246,7 @@ public class MX_Transferee_MyBenefitsBundlePage extends Base {
 	}
 
 	public void clickReviewAndSubmit() {
-		CoreFunctions.clickElement(driver, _btn_reviewAndSubmit);
+		CoreFunctions.clickUsingJS(driver, _btn_reviewAndSubmit, MobilityXConstants.REVIEW_AND_SUBMIT);
 		CoreFunctions.writeToPropertiesFile("CF_Transferee_BenefitSubmitted", "true");
 	}
 
@@ -999,7 +999,9 @@ public class MX_Transferee_MyBenefitsBundlePage extends Base {
 			CoreFunctions.verifyTextContains(
 					CoreFunctions.getItemsFromListByIndex(driver, _textSubmittedAllowanceAmountList, indexCashout,
 							true),
-					BusinessFunctions.getExpectedCashoutDescription(),
+					CoreFunctions.getPropertyFromConfig("CoreFlex_Policy_PersonResponsible").contains(
+							COREFLEXConstants.CLIENT) ? BusinessFunctions.getMXClientExpectedCashoutDescription()
+									: BusinessFunctions.getExpectedCashoutDescription(),
 					MobilityXConstants.TRANSFEREE_CASHOUT_DESCRIPTION_FIELD);
 			return true;
 		} catch (Exception e) {

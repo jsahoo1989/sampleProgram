@@ -972,12 +972,6 @@ public class CoreFlex_SharedSteps {
 	public void he_has_verified_submitted_benefit_details_under_Submitted_Benefits_section_of_my_benefits_bundle_page() {
 		Assert.assertTrue(mxTransfereeMyBenefitsBundlePage.isMyBundlePageDisplayed(),
 				MessageFormat.format(MobilityXConstants.FAILED_TO_DISPLAY_MY_BENEFIT_BUNDLE_PAGE, CoreConstants.FAIL));
-		
-		Reporter.addStepLog(
-				"<b>Total time taken to navigate to <i>My Benefits Bundle page after Benefit Submission</i> is :"
-						+ CoreFunctions.calculatePageLoadTime(CoreConstants.TIME_BEFORE_ACTION,
-								CoreConstants.TIME_AFTER_ACTION)
-						+ " Seconds </b>");
 		Assert.assertTrue(mxTransfereeMyBenefitsBundlePage.validateSubmittedBenefitDetails(),
 				MobilityXConstants.SUBMITTED_BENEFIT_DETAILS_NOT_MATCHED);
 	}
@@ -986,12 +980,6 @@ public class CoreFlex_SharedSteps {
 	public void he_has_verified_submitted_Benefit_Cashout_details_under_Submitted_Benefits_section_of_my_benefits_bundle_page() {
 		Assert.assertTrue(mxTransfereeMyBenefitsBundlePage.isMyBundlePageDisplayed(),
 				MessageFormat.format(MobilityXConstants.FAILED_TO_DISPLAY_MY_BENEFIT_BUNDLE_PAGE, CoreConstants.FAIL));
-		
-		Reporter.addStepLog(
-				"<b>Total time taken to navigate to <i>My Benefits Bundle page after Benefit Submission</i> is :"
-						+ CoreFunctions.calculatePageLoadTime(CoreConstants.TIME_BEFORE_ACTION,
-								CoreConstants.TIME_AFTER_ACTION)
-						+ " Seconds </b>");
 		Assert.assertTrue(mxTransfereeMyBenefitsBundlePage.validateSubmittedBenefitDetails(),
 				MobilityXConstants.SUBMITTED_BENEFIT_DETAILS_NOT_MATCHED);
 	}
@@ -1411,5 +1399,22 @@ public class CoreFlex_SharedSteps {
 		Assert.assertTrue(mxTransfereeMyBenefitsBundlePage.validateSubmittedBenefitDetails(),
 				MobilityXConstants.SUBMITTED_BENEFIT_DETAILS_NOT_MATCHED);
 	}
-
+	
+	@When("he provides 'Access to OnPoint' delegate access to the newly created DelegateUser on 'Delegate Information' page")
+	public void he_provides_Access_to_OnPoint_delegate_access_to_the_new_User_on_Delegate_Information_page() {
+		mxTransfereeJourneyHomePage.proceedToAccountSettingsPage();
+		Assert.assertTrue(mxTransfereeJourneyHomePage.delegateAccess(),
+				MessageFormat.format(
+						MobilityXConstants.FAILED_TO_PROVIDE_FLEX_BENEFITS_DELEGATE_ACCESS_TO_DELEGATED_USER,
+						CoreConstants.FAIL));
+	}
+	
+	@Then("^'MobilityX Delegate Access Granted' email having permissions granted should be sent to the delegate user$")
+	public void MobilityX_Delegate_Access_Granted_email_having_permissions_granted_should_be_sent_to_the_delegate_user()
+			throws Throwable {		
+		Assert.assertTrue(
+				mxTransfereeJourneyHomePage.verifyDelegateAccessGrantedEmail(),
+				MessageFormat.format(MobilityXConstants.FAILED_TO_VERIFY_MOBILITYX_DELEGATE_ACCESS_GRANTED_EMAIL,
+						CoreConstants.FAIL));
+	}
 }

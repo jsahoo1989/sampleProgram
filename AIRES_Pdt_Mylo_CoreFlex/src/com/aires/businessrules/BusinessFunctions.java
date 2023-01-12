@@ -135,18 +135,18 @@ public class BusinessFunctions {
 	
 	public static void selectValueFromDropdown(WebDriver driver, WebElement element, String drpdwnValue) {
 		String elementName = "";
-		boolean failedToSelect = false;
+		boolean valueSelected = false;
 		try {
 			Select dropDown = new Select(element);
 			elementName = element.getAttribute("title");
 			dropDown.selectByVisibleText(drpdwnValue);
-			failedToSelect = element.getAttribute("title").equalsIgnoreCase(drpdwnValue);
+			valueSelected = element.getAttribute("title").equalsIgnoreCase(drpdwnValue);
 		} catch (StaleElementReferenceException e) {
 			WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(60));
 			wait.until(ExpectedConditions.refreshed(ExpectedConditions.visibilityOf(element)));
-			failedToSelect = element.getAttribute("title").equalsIgnoreCase(drpdwnValue);
+			valueSelected = element.getAttribute("title").equalsIgnoreCase(drpdwnValue);
 		}
-		if (!failedToSelect)
+		if (valueSelected)
 			Reporter.addStepLog(MessageFormat.format(PDTConstants.VERIFY_VALUE_SELECTED_IN_DROPDWON, CoreConstants.PASS,
 					elementName, drpdwnValue));
 		else
@@ -1497,6 +1497,22 @@ public static void updateQuery(String url, String query) {
 			e.printStackTrace();
 		}
 		return isExists;
+	}
+	
+	public static int returnindexItemFromListUsingTextWithoutHighlight(WebDriver driver, List<WebElement> WebElementList,
+			String itemName) {
+		try {
+			for (WebElement row : WebElementList) {
+				CoreFunctions.hover(driver, row);
+				Log.info(CoreConstants.ACTUAL_ITEM_NAME_IS + row.getText());
+				if (row.getText().trim().equals(itemName.trim())) {
+					return WebElementList.indexOf(row);
+				}
+			}
+		} catch (ElementNotFoundException e) {
+			e.printStackTrace();
+		}
+		return -1;
 	}
 
 

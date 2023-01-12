@@ -686,6 +686,7 @@ public class PDT_ViewPolicyPage extends Base {
 
 	public boolean searchAndVerifyPolicy(String policyName, String pageName) {
 		try {
+			CoreFunctions.waitHandler(3);
 			CoreFunctions.clearAndSetText(driver, _inputPolicyName, policyName);
 			clickElementOfPage(COREFLEXConstants.SEARCH);
 			CoreFunctions.explicitWaitTillElementListVisibility(driver, _listPolicyName);
@@ -964,7 +965,7 @@ public class PDT_ViewPolicyPage extends Base {
 	}
 
 	public void searchPolicy(String policyName) {
-		CoreFunctions.waitHandler(2);
+		CoreFunctions.waitHandler(4);
 		CoreFunctions.clearAndSetText(driver, _inputPolicyName, policyName);
 		clickElementOfPage(COREFLEXConstants.SEARCH);
 	}

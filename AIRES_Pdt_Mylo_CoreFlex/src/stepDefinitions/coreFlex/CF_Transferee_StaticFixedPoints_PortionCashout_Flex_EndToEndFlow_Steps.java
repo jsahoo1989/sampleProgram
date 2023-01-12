@@ -102,8 +102,8 @@ public class CF_Transferee_StaticFixedPoints_PortionCashout_Flex_EndToEndFlow_St
 						CoreConstants.FAIL));
 	}
 
-	@Given("^he has verified Cashout details displayed on 'FleX Planning Tool' page before actualizing Assignment_Transfer 'Tracing' in IRIS application$")
-	public void he_has_verified_Cashout_details_displayed_on_Flex_Planning_Tool_page_before_actualizing_Assignment_Transfer_Tracing_in_IRIS_application()
+	@Given("^he has verified Cashout details displayed on 'OnPoint Planning Tool' page before actualizing Assignment_Transfer 'Tracing' in IRIS application$")
+	public void he_has_verified_Cashout_details_displayed_on_OnPoint_Planning_Tool_page_before_actualizing_Assignment_Transfer_Tracing_in_IRIS_application()
 			throws Throwable {
 		Assert.assertTrue(mxTransfereeFlexPlanningToolPage.verifyCashoutDetailsOnFPTBeforeTracingAct(),
 				MessageFormat.format(

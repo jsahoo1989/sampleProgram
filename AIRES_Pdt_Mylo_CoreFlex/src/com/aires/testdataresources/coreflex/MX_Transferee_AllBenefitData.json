@@ -16,7 +16,7 @@
 			"benefitDesc": "Automated Core Lump Sum Benefit Long Description. Setting up a CoreFlex Policy to be consumed by Client/Transferee to select Desired Benefits and track/Manage Points.",
 			"subBenefits": "Lump Sum",
 			"airesManagedService": "No",
-			"policyCreationGroup": "All Benefits,Cloning"
+			"policyCreationGroup": "All Benefits,Cloning,Client"
 		},
 		{
 			"benefitType": "Mobility Premium",
@@ -436,7 +436,7 @@
 					"comment": "Test Flex Lump Sum Benefit Comment",
 					"payments": "Expense Reimbursement",
 					"multipleBenefitSubmission": false,
-					"policyCreationGroup": "All Benefits,Cloning",
+					"policyCreationGroup": "All Benefits,Cloning,Client",
 					"selectBenefitOnPBCPage": false,
 					"deselectBenefitOnPBCPage": false,
 					"benefitResubmissionOnBST":false

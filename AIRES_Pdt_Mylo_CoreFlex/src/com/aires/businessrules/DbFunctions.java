@@ -20,8 +20,8 @@ import com.aires.utilities.Log;
 public class DbFunctions {
 	private static LinkedHashMap<String, String> _myloQueryStatementMap = new LinkedHashMap<String, String>();
 	private static LinkedHashMap<String, String> _myloQTableColumnFields = new LinkedHashMap<String, String>();
-	private static String _environment = System.getProperty("envt").toLowerCase();
-	//private static String _environment =CoreFunctions.getPropertyFromConfig("envt").toLowerCase();
+//	private static String _environment = System.getProperty("envt").toLowerCase();
+	private static String _environment =CoreFunctions.getPropertyFromConfig("envt").toLowerCase();
 	private static String _maxRows =CoreFunctions.getPropertyFromConfig("maxRecordsToValidate").toLowerCase();
 	static LinkedHashMap<String, String> _pdtExpenseCodeQueryStatementMap = new LinkedHashMap<String, String>();
 

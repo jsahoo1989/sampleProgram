@@ -426,6 +426,8 @@ public class TransfereeSubmissions_DetailsPage extends Base {
 		boolean isSubmittedBenefitStatusMatched = false;
 		benefitCount = 0;
 		try {
+			CoreFunctions.explicitWaitTillElementBecomesClickable(driver, _linkBackToTransfereeList,
+					COREFLEXConstants.BACK_TO_TRANSFEREES_LIST);
 			for (Benefit benefit : getBenefits(CoreFunctions.getPropertyFromConfig("CoreFlex_Policy_BenefitType"),
 					CoreFunctions.getPropertyFromConfig("CoreFlex_Policy_RequiredFor"))) {
 				isSubmittedBenefitStatusMatched = verifyBenefitDetails(benefit, MobilityXConstants.TRANSFEREE);
@@ -990,6 +992,8 @@ public class TransfereeSubmissions_DetailsPage extends Base {
 	public boolean verifyApprovedDeleteRequestRemovedFromList() {
 		boolean isBenefitRemovedFromList = false;
 		try {
+			CoreFunctions.explicitWaitTillElementBecomesClickable(driver, _linkBackToTransfereeList,
+					COREFLEXConstants.BACK_TO_TRANSFEREES_LIST);
 			for (Benefit benefit : getBenefits(CoreFunctions.getPropertyFromConfig("CoreFlex_Policy_BenefitType"),
 					CoreFunctions.getPropertyFromConfig("CoreFlex_Policy_RequiredFor"))) {
 				if (benefit.getSelectBenefitOnFPTPage() && benefit.getDeleteBenefitOnMBBPage()) {
@@ -1197,7 +1201,7 @@ public class TransfereeSubmissions_DetailsPage extends Base {
 		try {
 			for (Benefit benefit : getBenefits(CoreFunctions.getPropertyFromConfig("CoreFlex_Policy_BenefitType"),
 					CoreFunctions.getPropertyFromConfig("CoreFlex_Policy_RequiredFor"))) {
-				int index = BusinessFunctions.returnindexItemFromListUsingText(driver,
+				int index = BusinessFunctions.returnindexItemFromListUsingTextWithoutHighlight(driver,
 						_transfereeHistoryBenefitNameList, benefit.getBenefitDisplayName());
 				if (benefit.getSelectBenefitOnFPTPage() && benefit.getDeleteBenefitOnMBBPage()
 						&& (_transfereeHistoryBenefitNameList.get(index).getText())
@@ -1270,7 +1274,7 @@ public class TransfereeSubmissions_DetailsPage extends Base {
 	private boolean iterateHistorySectionListAndVerifyCashout(String action) {
 		for (WebElement element : _transfereeHistoryBenefitNameList) {
 			if (element.getText().equals(policySetupPageData.flexPolicySetupPage.customCashoutBenefitName)) {
-				int indexCashout = BusinessFunctions.returnindexItemFromListUsingText(driver,
+				int indexCashout = BusinessFunctions.returnindexItemFromListUsingTextWithoutHighlight(driver,
 						_transfereeHistoryBenefitNameList,
 						policySetupPageData.flexPolicySetupPage.customCashoutBenefitName);
 				CoreFunctions.verifyText(_transfereeHistoryBenefitNameList.get(indexCashout).getText(),

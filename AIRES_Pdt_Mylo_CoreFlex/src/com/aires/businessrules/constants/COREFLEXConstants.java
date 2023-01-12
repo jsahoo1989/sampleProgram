@@ -929,7 +929,7 @@ public class COREFLEXConstants {
 	public static final String SUCCESSFULLY_VERIFIED_MOBILITY_BENEFIT_DELETE_REQUEST_APPROVED_EMAIL_CONTENTS = "{0}Successfully verified 'Mobility Benefit Delete Request has been Approved' Email contents";
 	public static final String SUCCESSFULLY_VERIFIED_REVISED_MOBILITY_INITIATION_SUBMISSION_EMAIL_CONTENTS = "{0}Successfully verified Revised Mobility Initiation Submission Email Contents.";
 	public static final String APPROVED_DELETE_REQUEST_EXPECTED_TEXT = "We have approved the delete request(s) below that you have made for TransfereeFN TransfereeLN.";
-	public static final String DENIED_DELETE_REQUEST_EXPECTED_TEXT = "We have reviewed the delete request(s) below that you have made for TransfereeFN TransfereeLN and are unable to approve your request(s).";
+	public static final String DENIED_DELETE_REQUEST_EXPECTED_TEXT = "We have reviewed the delete request(s) below that you have made for TransfereeFN TransfereeLN and are unable to approve your request(s)";
 	public static final String RED_INDICATOR = "Red Indicator";
 	public static final String POLICY_INCOMPLETE = "Policy incomplete. Please complete missing information";
 	public static final String DRAFT_POLICY_STATUS_INDICATOR = "Draft Policy Status Indicator";
@@ -949,4 +949,6 @@ public class COREFLEXConstants {
 	public static final String ALLOWANCE_TYPE = "Allowance Type";
 	public static final String POLICY_COMPLETE = "Policy complete. Ready for submission";
 	public static final String EXCEPTION_OCCURED_WHILE_VERIFYING_POLICY_STATUS = "{0}Exception occured while verifying Policy Status on ''{2}'' page. Exception : ''{1}''.";
+	public static final String EXCEPTION_OCCURED_WHILE_VERIFYING_MOBILITYX_DELEGATE_ACCESS_GRANTED_EMAIL = "{0}Exception occured while verifying MobilityX Delegate Access Granted email contents. Exception : ''{1}''.";
+	public static final String SUCCESSFULLY_VERIFIED_MOBILITYX_DELEGATE_ACCESS_GRANTED_EMAIL_CONTENTS = "{0}Successfully verified MobilityX Delegate Access Granted Email contents.";
 }

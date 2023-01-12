@@ -1026,8 +1026,9 @@ public class MX_Client_BenefitsBundlePage extends Base {
 	private boolean deleteSubmittedBenefitDetails(String buttonName) {
 		boolean isSubmittedBenefitDeleted = false;
 		try {
-			CoreFunctions.scrollToElementUsingJS(driver, _textSubmittedBenefitsTitle,
-					MobilityXConstants.SUBMITTED_BENEFITS_SECTION);
+			CoreFunctions.scrollUpUsigActions(driver);
+			CoreFunctions.scrollToElementUsingJS(driver, _textMyBenefitsBundleTitle,
+					MobilityXConstants.MY_BENEFITS_BUNDLE);	
 			for (Benefit benefit : getBenefits(CoreFunctions.getPropertyFromConfig("CoreFlex_Policy_BenefitType"),
 					CoreFunctions.getPropertyFromConfig("CoreFlex_Policy_RequiredFor"), "0")) {
 				if (benefit.getSelectBenefitOnFPTPage() && benefit.getDeleteBenefitOnMBBPage()) {
@@ -1078,6 +1079,8 @@ public class MX_Client_BenefitsBundlePage extends Base {
 			Reporter.addStepLog(MessageFormat.format(
 					MobilityXConstants.SUCCESSFULLY_DELETED_SUBMITTED_BENEFIT_FROM_BENEFITS_BUNDLE_PAGE,
 					CoreConstants.PASS));
+			CoreFunctions.scrollToElementUsingJS(driver, _textSubmittedBenefitsTitle,
+					MobilityXConstants.SUBMITTED_BENEFITS_SECTION);
 		}
 		return isSubmittedBenefitDeleted;
 	}
@@ -1085,6 +1088,9 @@ public class MX_Client_BenefitsBundlePage extends Base {
 	public boolean deleteSubmittedCashoutDetails(String buttonName) {
 		boolean isSubmittedCashoutDeleted = false;
 		try {
+			CoreFunctions.scrollUpUsigActions(driver);
+			CoreFunctions.scrollToElementUsingJS(driver, _textMyBenefitsBundleTitle,
+					MobilityXConstants.MY_BENEFITS_BUNDLE);			
 			int indexCashout = BusinessFunctions.returnindexItemFromListUsingText(driver, _textSubmittedBenefitNameList,
 					policySetupPageData.flexPolicySetupPage.customCashoutBenefitName);
 			BusinessFunctions.selectValueFromListUsingIndex(driver, _buttonDeleteSubmittedBenefitList, indexCashout);

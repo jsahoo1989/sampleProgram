@@ -558,6 +558,7 @@ public class MX_Transferee_JourneyHomePage extends Base {
 		boolean isSubmittedSpentPointsValid = false;
 		double spentPointsAfterBenefitSubmission = 0;
 		try {
+			CoreFunctions.waitHandler(2);
 			CoreFunctions.explicitWaitTillElementBecomesClickable(driver, _textInitialSpentAndTotalPoints,
 					MobilityXConstants.TRANSFEREE_JOURNEY_POINTS_LINK);
 			String spentPointsAfterBenefitSubmissionWithText[] = CoreFunctions
@@ -1669,6 +1670,49 @@ public class MX_Transferee_JourneyHomePage extends Base {
 					CoreConstants.FAIL, e.getMessage()));
 		}
 		return false;
+	}
+
+	public boolean verifyDelegateAccessGrantedEmail() {
+		try {
+			String host = "outlook.office365.com";
+			// Enter Your Email ID
+			String userName = "airesautomationtransferee@aires.com";
+			// Enter your email outlook password
+			String pwd = CoreConstants.AUTO_EMAIL_PWD;
+			// Enter expected From complete email address
+			String expFromUserName = "mxssodev5@aires.com";
+			// Enter expected email subject
+			String expEmailSubject = "MobilityX Delegate Access Granted";
+			String actualResultDelegateDetails = EmailUtil.searchEmailAndReturnResult(host, userName, pwd,
+					expFromUserName, expEmailSubject, MobilityXConstants.DELEGATE_ACCESS_GRANTED);
+			actualResultDelegateDetails = removeHTMLTagsFromEmailContent(actualResultDelegateDetails);
+			Log.info("ActualEmailText:" + actualResultDelegateDetails);
+			Log.info("ExpectEmailText:" + getExpectedDelegateEmailText());
+			CoreFunctions.verifyTextContains(actualResultDelegateDetails, getExpectedDelegateEmailText(),
+					MobilityXConstants.DELEGATE_ACCESS_GRANTED_EMAIL_CONTENTS);
+			Reporter.addStepLog(MessageFormat.format(
+					COREFLEXConstants.SUCCESSFULLY_VERIFIED_MOBILITYX_DELEGATE_ACCESS_GRANTED_EMAIL_CONTENTS,
+					CoreConstants.PASS));
+			return true;
+		} catch (Exception e) {
+			Reporter.addStepLog(MessageFormat.format(
+					COREFLEXConstants.EXCEPTION_OCCURED_WHILE_VERIFYING_MOBILITYX_DELEGATE_ACCESS_GRANTED_EMAIL,
+					CoreConstants.FAIL, e.getMessage()));
+			return false;
+		}
+	}
+
+	private String getExpectedDelegateEmailText() {
+		return MobilityXConstants.EXPECTED_DELEGATE_EMAIL_TEXT
+				.replace("transfereeFN", CoreFunctions.getPropertyFromConfig("Transferee_firstName"))
+				.replace("transfereeLN", CoreFunctions.getPropertyFromConfig("Transferee_lastName"));
+	}
+
+	private String removeHTMLTagsFromEmailContent(String actualResultSubmissionDetails) {
+		return actualResultSubmissionDetails.replace("<span>", "").replace("</span>", "").replace("\t", "")
+				.replace("\r\n", "").replace("<br>", "").replace("<ul>", "").replace("<li>", "").replace("</ul>", "")
+				.replace("<font color=\"#208DA6\">", "").replace("</li>", "").replace("</font>", "")
+				.replace("<input checked=\"true\" type=\"checkbox\"><font style=\"font-weight:bold\">", "").trim();
 	}
 
 }

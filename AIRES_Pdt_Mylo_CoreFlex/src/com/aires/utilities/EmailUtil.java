@@ -101,6 +101,10 @@ public class EmailUtil {
 			_searchTag[0] = "Status of the Initiation </td><td width=\"60%\" style=\"font-family:century gothic,Helvetica,Calibri,Roboto; font-size:14px; text-align:left; padding-left:10px; border:1px solid #E7F2F5\">";
 			_searchTag[1] = "</td></tr></tbody></table>";
 			break;
+		case MobilityXConstants.DELEGATE_ACCESS_GRANTED:
+			_searchTag[0] = "Hello";
+			_searchTag[1] = "Thank you";
+			break;
 		default:
 			Assert.fail(MobilityXConstants.INFORMATION_NOT_FOUND_IN_EMAIL);
 		}

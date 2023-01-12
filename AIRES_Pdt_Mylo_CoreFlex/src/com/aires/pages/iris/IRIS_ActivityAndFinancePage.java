@@ -481,6 +481,7 @@ public class IRIS_ActivityAndFinancePage extends BasePage {
 				IRIS_PageMaster.getButtonObjectFromLabel(_IRIS, "Save").getLabel());
 		Reporter.addStepLog(MessageFormat.format(IRISConstants.VERIFIED_BUTTON_CLICKED, CoreConstants.PASS,
 				IRIS_PageMaster.getButtonObjectFromLabel(_IRIS, "Save").getLabel()));
+		CoreFunctions.waitHandler(1);
 	}
 
 	public void selectServiceAndSubService(DataTable table) {
@@ -710,25 +711,23 @@ public class IRIS_ActivityAndFinancePage extends BasePage {
 	public void clickOKUsingRobot() throws AWTException {
 		Robot robot = new Robot();
 		robot.setAutoDelay(1000);
-		robot.keyPress(KeyEvent.VK_ENTER);
-		robot.keyRelease(KeyEvent.VK_ENTER);
+		robot.keyPress(KeyEvent.VK_ESCAPE);
+		robot.keyRelease(KeyEvent.VK_ESCAPE);
 	}
 
 	public void verifySaveSuccessfulMsg() throws GeneralLeanFtException, Exception {
-		if (IRIS_PageMaster.getDialogObject(_IRIS, "Saved").isVisible())
-//				&& BusinessFunctions.verifyMsgOnDialog(IRIS_PageMaster.getDialogObject(_IRIS, "Saved"),
-//						IRISConstants.MESSAGE_SAVESUCCESSFULL, IRISConstants.SAVED_TEXT)) 
-		{
-			Dialog actFinanceSavedDialog = IRIS_PageMaster.getDialogObject(_IRIS, "Saved");
-			Helpers.clickButton(
-					IRIS_PageMaster.getButtonObject(actFinanceSavedDialog, "OK",
-							"javax.swing.plaf.basic.BasicOptionPaneUI$ButtonFactory$ConstrainedButton"),
-					IRIS_PageMaster
-							.getButtonObject(actFinanceSavedDialog, "OK",
-									"javax.swing.plaf.basic.BasicOptionPaneUI$ButtonFactory$ConstrainedButton")
-							.getLabel());
-		} else {
-			Assert.fail("Failed to verify save successful message.");
+		try {
+			if (IRIS_PageMaster.getDialogObject(_IRIS, "Saved").isVisible())
+			{
+				Dialog savedDialog = IRIS_PageMaster.getDialogObject(_IRIS, "Saved");
+				Button oKButton = savedDialog.describe(Button.class,
+						new ButtonDescription.Builder().label("OK").build());
+				oKButton.click();
+			} else {
+				Assert.fail("Failed to verify save successful message.");
+			}
+		} catch (Exception e) {
+			clickOKUsingRobot();
 		}
 	}
 

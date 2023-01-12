@@ -416,10 +416,10 @@ public class MX_Transferee_FlexPlanningTool_Page extends Base {
 	}
 
 	public boolean verifyPointBalanceTooltipContent() {
-		CoreFunctions.waitHandler(1);
 		CoreFunctions.clickElement(driver, pointBalance_tooltip);
-		Log.info(CoreFunctions.getElementText(driver, pointBalance_tooltip_content));
-		Log.info(pointBalanceDetails());
+		CoreFunctions.waitHandler(3);
+		Log.info("Actual   Text: "+CoreFunctions.getElementText(driver, pointBalance_tooltip_content));
+		Log.info("Expected Text: "+pointBalanceDetails());
 		return CoreFunctions.getElementText(driver, pointBalance_tooltip_content).equals(pointBalanceDetails());
 	}
 

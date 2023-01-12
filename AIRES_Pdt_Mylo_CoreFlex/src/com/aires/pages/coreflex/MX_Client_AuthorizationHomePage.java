@@ -282,7 +282,7 @@ public class MX_Client_AuthorizationHomePage extends Base {
 	@FindBy(how = How.XPATH, using = "//a[contains(@id,'inactiveWorkflowTab')]//span[contains(text(),'Collaboration')]")
 	private WebElement _linkCollaboration;
 
-	@FindBy(how = How.XPATH, using = "//div[contains(@id,'floatingMenu')]//span[contains(@class,'RXAuthFormAutoSaveText')][contains(text(),'Saved')]")
+	@FindBy(how = How.XPATH, using = "//div[contains(@id,'floatingMenu')]//span[contains(@class,'RXAuthFormAutoSaveText')][contains(text(),'Saved')] | //div[contains(@id,'floatingMenu')]//span[contains(@class,'RXAuthFormAutoSaveText')][contains(text(),'All changes saved')]")
 	private WebElement _txtAuthFormSaved;
 
 	@FindBy(how = How.XPATH, using = "//span[contains(@class,'TextMessageHandler')][contains(text(),'Not yet saved')]")
@@ -389,6 +389,48 @@ public class MX_Client_AuthorizationHomePage extends Base {
 
 	@FindBy(how = How.XPATH, using = "//span[text()='Send document to employee to begin relocation']")
 	private WebElement _linkSendDocumentToEmployee;
+
+	@FindBy(how = How.CSS, using = "select[id*='exlop']")
+	private WebElement _selectEmployeeName;
+
+	@FindBy(how = How.CSS, using = "form[action*='AuthFormClonePopup'] span[class='RXBiggerText']")
+	private WebElement _dialogCloneAuthFormFieldSelectionHeading;
+
+	@FindBy(how = How.CSS, using = "span[id*='relocationPolicy']")
+	private WebElement _textRelocationPolicyCloneAuthFormFieldDialog;
+
+	@FindBy(how = How.CSS, using = "span[id*='homeStatus']")
+	private WebElement _textHomeStatusCloneAuthFormFieldDialog;
+
+	@FindBy(how = How.CSS, using = "span[id*='mobileTelephone']")
+	private WebElement _textMobilePhoneCloneAuthFormFieldDialog;
+
+	@FindBy(how = How.CSS, using = "span[id*='email']")
+	private WebElement _textEmailCloneAuthFormFieldDialog;
+
+	@FindBy(how = How.CSS, using = "span[id*='transferType']")
+	private WebElement _textTransferTypeCloneAuthFormFieldDialog;
+
+	@FindBy(how = How.CSS, using = "span[id*='assignmentType']")
+	private WebElement _textAssignmentTypeCloneAuthFormFieldDialog;
+
+	@FindBy(how = How.CSS, using = "input[id*='relocationPolicy_chk']")
+	private WebElement _checkBoxRelocationPolicy;
+
+	@FindBy(how = How.CSS, using = "input[id*='globalMobilityInd_chk']")
+	private WebElement _checkBoxGlobalMobilityAssesment;
+
+	@FindBy(how = How.CSS, using = "input[id*='authorizationType_chk']")
+	private WebElement _checkBoxAiresInstructions;
+
+	@FindBy(how = How.CSS, using = "input[id*='costEstimateReqInd_chk']")
+	private WebElement _checkBoxCostEstimateRequired;
+
+	@FindBy(how = How.CSS, using = "input[id*='selectall']")
+	private List<WebElement> _checkBoxSelectAllList;
+
+	@FindBy(how = How.XPATH, using = "//input[contains(@id,'flexBenefits_chk')]//ancestor::table[@id='flexBenefits']")
+	private WebElement _checkBoxFlexBenefits;
 
 	/**************************************************************************************************************/
 
@@ -918,7 +960,7 @@ public class MX_Client_AuthorizationHomePage extends Base {
 
 	public boolean verifyAuthFormChangesAutoSaved() {
 		try {
-			return CoreFunctions.isElementExist(driver, _txtAuthFormSaved, 30);
+			return CoreFunctions.isElementExist(driver, _txtAuthFormSaved, 60);
 		} catch (Exception e) {
 			Reporter.addStepLog(
 					MessageFormat.format(MobilityXConstants.EXCEPTION_OCCURED_WHILE_VALIDATING_AUTO_SAVE_AUTH_FORM,
@@ -1913,6 +1955,7 @@ public class MX_Client_AuthorizationHomePage extends Base {
 	public boolean validateDynamicDocumnet(String documentName) {
 		try {
 			switchToiFrame_Authorization();
+			CoreFunctions.waitHandler(3);
 			CoreFunctions.explicitWaitTillElementVisibility(driver, _documentHeading, "document heading");
 			Log.info(CoreFunctions.getElementText(driver, _documentHeading));
 			if (!Objects.equal(CoreFunctions.getElementText(driver, _documentHeading), documentName)) {
@@ -1941,19 +1984,15 @@ public class MX_Client_AuthorizationHomePage extends Base {
 			return false;
 		}
 	}
-	
-	
+
 	public void enterEmpFirstAndLastNameForClonedAuthorization() {
 		try {
 			BusinessFunctions.generateUniqueValuesAndWriteToConfig(5);
 			switchToiFrame_Authorization();
 			CoreFunctions.explicitWaitTillElementVisibility(driver, _button_Continue,
 					MobilityXConstants.CONTINUE_BUTTON);
-			if (!selectUploadOrManualOption()) {
-				Assert.assertEquals(CoreFunctions.getElementText(driver, _titleText_dialogEmployeeName),
-						MobilityXConstants.EXPECTED_EMP_NAME_TITLE,
-						MobilityXConstants.EMPLOYEE_NAME + MobilityXConstants.IS_NOT_DISPLAYED);
-			}
+			BusinessFunctions.selectValueFromDropdown(driver, _selectEmployeeName,
+					MobilityXConstants.A_DIFFERENT_EMPLOYEE);
 			// Enter Employee First Name and Last Name
 			CoreFunctions.clearAndSetText(driver, _txt_EmpFirstName,
 					CoreFunctions.getPropertyFromConfig(MobilityXConstants.FIRST_NAME_TEXT));
@@ -1970,5 +2009,132 @@ public class MX_Client_AuthorizationHomePage extends Base {
 			Log.info(CoreConstants.ERROR + e);
 		}
 	}
-	
+
+	/**
+	 * Method to verify page navigation to CloneAuthForm field selection dialog page
+	 */
+	public boolean verifyPageNavigationToCloneAuthFormFieldSelectionDialog() {
+		try {
+			switchToiFrame_Authorization();
+			CoreFunctions.waitHandler(3);
+			CoreFunctions.explicitWaitTillElementVisibility(driver, _dialogCloneAuthFormFieldSelectionHeading,
+					MobilityXConstants.CLONE_AUTH_FORM_FIELD_SELECTION_DIALOG_HEADING);
+			CoreFunctions.verifyText(CoreFunctions.getElementText(driver, _dialogCloneAuthFormFieldSelectionHeading),
+					MobilityXConstants.CLONE_AUTH_FORM_FIELD_SELECTION_DIALOG_HEADING);
+			Reporter.addStepLog(MessageFormat.format(
+					MobilityXConstants.SUCCESSFULLY_NAVIGATED_TO_CLONE_AUTH_FORM_FIELD_SELECTION_DIALOG,
+					CoreConstants.PASS));
+			return true;
+		} catch (Exception e) {
+			Reporter.addStepLog(MessageFormat.format(
+					MobilityXConstants.EXCEPTION_OCCURED_WHILE_NAVIGATING_TO_CLONE_AUTH_FORM_FIELD_SELECTION_DIALOG,
+					CoreConstants.FAIL, e.getMessage()));
+			return false;
+		}
+
+	}
+
+	public void verifyCloneAuthFormFieldValues(MX_Client_Dashboard_BscData authorizationData, String fieldName) {
+		try {
+			switch (fieldName) {
+			case MobilityXConstants.RELOCATION_POLICY:
+				CoreFunctions.verifyText(
+						CoreFunctions.getElementText(driver, _textRelocationPolicyCloneAuthFormFieldDialog),
+						CoreFunctions.getPropertyFromConfig("Assignment_Policy"), MobilityXConstants.RELOCATION_POLICY);
+				break;
+			case MobilityXConstants.HOME_STATUS:
+				CoreFunctions.verifyText(CoreFunctions.getElementText(driver, _textHomeStatusCloneAuthFormFieldDialog),
+						authorizationData.bscEmployeeInfo.homeStatus, MobilityXConstants.HOME_STATUS);
+				break;
+			case MobilityXConstants.MOBILE_PHONE:
+				CoreFunctions.verifyText(CoreFunctions.getElementText(driver, _textMobilePhoneCloneAuthFormFieldDialog),
+						authorizationData.bscEmployeeInfo.mobilePhone, MobilityXConstants.MOBILE_PHONE);
+				break;
+			case MobilityXConstants.EMAIL:
+				CoreFunctions.verifyText(CoreFunctions.getElementText(driver, _textEmailCloneAuthFormFieldDialog),
+						authorizationData.bscEmployeeInfo.emailOne, MobilityXConstants.EMAIL);
+				break;
+			case MobilityXConstants.TRANSFER_TYPE:
+				CoreFunctions.verifyText(
+						CoreFunctions.getElementText(driver, _textTransferTypeCloneAuthFormFieldDialog),
+						authorizationData.relocationInfo.transferType, MobilityXConstants.TRANSFER_TYPE);
+				break;
+			case MobilityXConstants.ASSIGNMENT_TYPE:
+				CoreFunctions.verifyText(
+						CoreFunctions.getElementText(driver, _textAssignmentTypeCloneAuthFormFieldDialog),
+						authorizationData.relocationInfo.assignmentType, MobilityXConstants.ASSIGNMENT_TYPE);
+				break;
+			default:
+				Assert.fail(COREFLEXConstants.INVALID_OPTION);
+			}
+
+		} catch (Exception e) {
+			Reporter.addStepLog(MessageFormat.format(
+					MobilityXConstants.EXCEPTION_OCCURED_WHILE_VERIFYING_CLONE_AUTH_FORM_DIALOG_DEFAULT_POPULATED_FIELD_VALUE,
+					CoreConstants.FAIL, e.getMessage(), fieldName));
+		}
+
+	}
+
+	public void selectCloneAuthFormFieldCheckbox(String checkBoxName) {
+		try {
+			switch (checkBoxName) {
+			case MobilityXConstants.RELOCATION_POLICY:
+				CoreFunctions.hoverAndClick(driver, _checkBoxRelocationPolicy, MobilityXConstants.RELOCATION_POLICY);
+				break;
+			case MobilityXConstants.FLEX_BENEFITS:
+				CoreFunctions.hoverAndClick(driver, _checkBoxFlexBenefits, MobilityXConstants.FLEX_BENEFITS);
+				break;
+			case MobilityXConstants.AUTHORIZATION_TYPE:
+				CoreFunctions.hoverAndClick(driver, _checkBoxGlobalMobilityAssesment,
+						MobilityXConstants.GLOBAL_MOBILITY_ASSESMENT);
+				CoreFunctions.hoverAndClick(driver, _checkBoxAiresInstructions, MobilityXConstants.AIRES_INSTRUCTIONS);
+				CoreFunctions.hoverAndClick(driver, _checkBoxCostEstimateRequired,
+						MobilityXConstants.COST_ESTIMATE_REQUIRED);
+				break;
+			case MobilityXConstants.SELECT_ALL:
+				for (int index = 0; index < _checkBoxSelectAllList.size(); index++) {
+					CoreFunctions.hoverAndClick(driver, _checkBoxSelectAllList.get(index),
+							MobilityXConstants.SELECT_ALL);
+				}
+				break;
+			default:
+				Assert.fail(COREFLEXConstants.INVALID_OPTION);
+			}
+
+		} catch (Exception e) {
+			Reporter.addStepLog(MessageFormat.format(
+					MobilityXConstants.EXCEPTION_OCCURED_WHILE_VERIFYING_CLONE_AUTH_FORM_DIALOG_DEFAULT_POPULATED_FIELD_VALUE,
+					CoreConstants.FAIL, e.getMessage(), checkBoxName));
+		}
+
+	}
+
+	public boolean verifyFlexBenefitsFieldDisplayed() {
+		try {
+			CoreFunctions.waitHandler(2);			
+//			CoreFunctions.explicitWaitTillElementVisibility(driver, _checkBoxFlexBenefits, MobilityXConstants.FLEX_BENEFITS_CHECKBOX, 15);
+			CoreFunctions.hover(driver, _checkBoxFlexBenefits);
+			Log.info(CoreFunctions.getAttributeText(_checkBoxFlexBenefits, "style"));
+			if (CoreFunctions.getAttributeText(_checkBoxFlexBenefits, "style").contains("display:none")) {
+				Reporter.addStepLog(MessageFormat.format(
+						MobilityXConstants.FLEX_BENEFIT_FIELD_NOT_DISPLAYED_POST_RELOCATION_POLICY_SELECTION_ON_CLONE_AUTH_FORM_DIALOG,
+						CoreConstants.FAIL));
+				return false;
+			} else {
+				Reporter.addStepLog(MessageFormat.format(
+						MobilityXConstants.SUCCESSFULLY_VERIFIED_FLEX_BENEFIT_FIELD_DISPLAYED_POST_RELOCATION_POLICY_SELECTION_ON_CLONE_AUTH_FORM_DIALOG,
+						CoreConstants.PASS));
+				selectCloneAuthFormFieldCheckbox(MobilityXConstants.FLEX_BENEFITS);
+				return true;
+			}
+		} catch (Exception e) {
+			Reporter.addStepLog(MessageFormat.format(
+					MobilityXConstants.EXCEPTION_OCCURED_WHILE_VERIFYING_FLEX_BENEFIT_FIELD_DISPLAYED_POST_RELOCATION_POLICY_SELECTION_ON_CLONE_AUTH_FORM_DIALOG,
+					CoreConstants.FAIL, e.getMessage()));
+			return false;
+		}
+
+	}
+
 }

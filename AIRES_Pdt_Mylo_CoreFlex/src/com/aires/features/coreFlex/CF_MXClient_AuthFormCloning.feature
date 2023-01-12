@@ -13,7 +13,7 @@ Feature: Validate the OnPoint MXClient Auth Form Cloning Functionality
     When he clicks on "Approve" button to acknowledge 'Approve this Policy' dialog
     Then Policy Status and Version should be displayed as "Active" and "V1" respectively on "View/Edit Policy Forms" page
 
- @CF_End-To-End_MasterScript @CF_MXClient_AuthFormCloning @CF_MXClient_AuthFormCloning_PostSubmitScenario @CF_MXClient_PostSubmitScenario_AuthForm
+  @CF_End-To-End_MasterScript @CF_MXClient_AuthFormCloning @CF_MXClient_AuthFormCloning_PostSubmitScenario @CF_MXClient_PostSubmitScenario_AuthForm
   Scenario: MXClient - Verifying Authorization Submission with UserDefined TotalPoints, Core/Flex Benefits & PortionCashout for configured AuthForm Cloning BluePrint CF Policy
     Given he has logged into 'MobilityX' application as a 'Client' user
     And he has clicked on "Create an authorization" after validating Client details on 'Authorization Home Page'
@@ -26,7 +26,6 @@ Feature: Validate the OnPoint MXClient Auth Form Cloning Functionality
     And he has verified following details on "Benefit Selection Tool" page based on configured Points Based CoreFlex BluePrint Policy
       | Available Point Balance | Core Benefits | Flex Benefits | Suggested Bundles | Cashout |
     And he has clicked on 'Back to benefits list' link to navigate to 'Benefit Selection Tool' page
-    And he has verified 'Portion Cashout' details on 'Benefit Selection Tool' page
     And he has navigated to "Benefits Bundle" page after selecting required Flex Benefits and Cashout on 'Benefit Selection Tool' page
     And he has clicked on "Save & Exit" button after validating selected FlexBenefit and Cashout details listed under 'Selected Benefits' section on "Benefits Bundle" page
     And he has verified entered 'Total Points' value and selected 'Core_Flex Benefit' along with 'Cashout' details displayed on the navigated 'Authorization Form' page
@@ -34,23 +33,23 @@ Feature: Validate the OnPoint MXClient Auth Form Cloning Functionality
     Then 'Auth Submit Success' growl message should be displayed on the navigated 'MobilityX Dashboard Home' page
     And 'New Initiation Submitted' email should be received having Transferee details along with assigned CoreFlex Total Points and Submitted Benefits Points
 
-@CF_End-To-End_MasterScript @CF_MXClient_AuthFormCloning @CF_MXClient_AuthFormCloning_PostSubmitScenario @CF_MXClient_PostSubmitScenario_ClonedAuthForm
- Scenario: MXClient - Validating Cloned Auth Form Contents and Flex Benefits_Cashout selections post Clone Auth Form Operation
+  @CF_End-To-End_MasterScript @CF_MXClient_AuthFormCloning @CF_MXClient_AuthFormCloning_PostSubmitScenario @CF_MXClient_PostSubmitScenario_ClonedAuthForm
+  Scenario: MXClient - Validating Cloned Auth Form Contents and Flex Benefits_Cashout selections post Clone Auth Form Operation
     Given he has logged into 'MobilityX' application as a 'Client' user
     And he has clicked on "View all initiations" link on 'Authorization Home Page' to navigate to 'View all initiation' page
-    And he has hovered and clicked on "Clone authorization" button next to 'Submitted' status Authorization created in the above scenario
-     And he has filled all the mandatory information on 'Authorization Form' after selecting following 'Assignment Option' with 'Auth Form Template' for a Cloned Employee on 'Authorization Home Page'
+    And he has hovered and clicked on "Clone authorization" button next to Authorization 'Submitted' in the above scenario
+    And he has filled all the mandatory information on 'Authorization Form' after selecting following 'Assignment Option' with 'Auth Form Template' for a Cloned Employee on 'Authorization Home Page'
       | Assignment Option            | Authorization Form Template |
       | A new transfer or assignment | Domestic Authorization Form |
-    
-    
-    
-    
-    And he has clicked 'Transferee Name' from 'All Initiations' List on 'View all initiation' page
-    And he has navigated to 'Benefit Selection Tool' page after clicking on 'Manage Benefit Selection' button
-    And he has navigated to "Benefits Bundle" page after selecting Flex Benefits for resubmission on 'Benefit Selection Tool' page
-    And he has clicked on "Save & Exit" button on "Benefits Bundle" page
-    When he clicks on "Resubmit to Aires" button from right floating menu of 'Authorization Form' page without routing it to Approvers
-    Then 'Auth Submit Success' growl message should be displayed on the navigated 'View all initiation' page
-    And 'Revised Initiation Submitted' email having Transferee details along with assigned CoreFlex Total Points and Submitted Benefits Points should be received
-    And 'Mobility Benefits Submission' email having mobility benefit information that company has submitted on behalf of transferee should be received
+    And he had verified following information of 'Submitted' Authorization is populated correctly on 'Clone Auth Form' dialog
+    | Relocation Policy | Home Status | Mobile Phone | Email | Transfer Type | Assignment Type |
+    And he has verified 'Flex Benefits' checkbox field is displayed when 'Relocation Policy' checkbox is checked for 'Points Based Flex Policy' on 'Clone Auth Form' dialog
+    And he has clicked on "COMPLETE CLONING" button after selecting required fields for Cloning on 'Clone Auth Form' dialog
+    #And he has clicked 'Transferee Name' from 'All Initiations' List on 'View all initiation' page
+    #And he has navigated to 'Benefit Selection Tool' page after clicking on 'Manage Benefit Selection' button
+    #And he has navigated to "Benefits Bundle" page after selecting Flex Benefits for resubmission on 'Benefit Selection Tool' page
+    #And he has clicked on "Save & Exit" button on "Benefits Bundle" page
+    #When he clicks on "Resubmit to Aires" button from right floating menu of 'Authorization Form' page without routing it to Approvers
+    #Then 'Auth Submit Success' growl message should be displayed on the navigated 'View all initiation' page
+    #And 'Revised Initiation Submitted' email having Transferee details along with assigned CoreFlex Total Points and Submitted Benefits Points should be received
+    #And 'Mobility Benefits Submission' email having mobility benefit information that company has submitted on behalf of transferee should be received

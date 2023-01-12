@@ -332,6 +332,8 @@ public class MyloJourneyPage_PartnerSection extends Base {
 		mapPartnerWebElementFields();
 		try {
 			WebElement reqWebElement = partnerWebElementsMap.get(fieldName);
+			CoreFunctions.scrollToElementUsingJavaScript(driver, reqWebElement,
+					fieldName);
 			CoreFunctions.explicitWaitTillElementVisibility(driver, reqWebElement, fieldName);
 			if (fieldValue.equals(""))
 				CoreFunctions.scrollToElementUsingJavaScript(driver, _transfereeAndFamilySection,

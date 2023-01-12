@@ -116,5 +116,10 @@ public class DbQueries {
 			"where\r\n" + 
 			" assignment_service_code <> 'SHIPMENT' \r\n" + 
 			" order by assignment_service_code desc";
-
+	
+	public static final String QUERY_GET_CLIENT_CONTACT_ASSIGNMENT_ID_BY_FILE_STATUS="Select A.ASSIGNMENT_ID as FileID\r\n" + 
+			"from ISISDBA.Assignment A\r\n" + 
+			"inner join ISISDBA.ASSIGNMENT_status_code S on A.ASSIGNMENT_STATUS_CODE=S.ASSIGNMENT_STATUS_CODE\r\n"+
+			"inner join ISISDBA.ASSIGNMENT_CONTACT C on A.ASSIGNMENT_ID=C.ASSIGNMENT_ID\r\n" +
+			"where S.ASSIGNMENT_STATUS_DESC=?";
 }

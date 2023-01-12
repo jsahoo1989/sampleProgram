@@ -316,11 +316,12 @@ public class MyloJourneyIdentificationDocumentation_Steps {
 				MessageFormat.format(MYLOConstants.VERIFIED_FIELD_HIGHLIGHTED, CoreConstants.PASS,
 						MYLOConstants.IDENTITY_TYPE, MYLOConstants.IDENTIFICATION_AND_DOCUMENTATION));
 		myloAssignmentPage.highlightSectionHeader(MYLOConstants.IDENTIFICATION_AND_DOCUMENTATION);
-		myloAssignmentPage.clickButtonOnIentificationAndDocumentationSection(MYLOConstants.CANCEL_BUTTON);
 		Assert.assertFalse(myloAssignmentPage.verifyAlertMessagesPresent(),
-				MessageFormat.format(MYLOConstants.TOAST_MESSAGE_NOT_PRESENT, CoreConstants.FAIL,
+				MessageFormat.format(MYLOConstants.TOAST_MESSAGE_PRESENT, CoreConstants.FAIL,
 						MYLOConstants.IDENTIFICATION_AND_DOCUMENTATION, MYLOConstants.JOURNEY));
+		myloAssignmentPage.clickButtonOnIentificationAndDocumentationSection(MYLOConstants.CANCEL_BUTTON);
 		myloAssignmentPage.clickButtonOnIentificationAndDocumentationSection(MYLOConstants.YES_BUTTON);
+		
 	}
 
 	@Given("^below toast messages are displayed by clicking on \"([^\"]*)\" button after removing mandatory fields for existing data of \"([^\"]*)\" section$")

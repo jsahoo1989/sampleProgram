@@ -672,7 +672,7 @@ public class BusinessFunctions {
 		return flag;
 	}
 
-	public static void verifyMyloButtonEnabilityStatus(String type, WebElement element, String btnName,
+	public static boolean verifyMyloButtonEnabilityStatus(String type, WebElement element, String btnName,
 			String sectionName, String pageName) {
 		boolean flag = false;
 		List<String> disableTypeList = Stream.of(MYLOConstants.CANCELED, MYLOConstants.CLOSED,
@@ -683,7 +683,7 @@ public class BusinessFunctions {
 			Reporter.addStepLog(MessageFormat.format(CoreConstants.FAIL_TO_VERIFY_ELEMENT_ON_SECTION,
 					CoreConstants.FAIL, element, sectionName));
 		}
-		if (disableTypeList.contains(type) || type.contains(MYLOConstants.WITHOUT)) {
+		if (disableTypeList.contains(type)||type.contains(MYLOConstants.WITHOUT)) {
 			Assert.assertFalse(flag, MessageFormat.format(MYLOConstants.BUTTON_ENABLED, CoreConstants.FAIL, btnName,
 					sectionName, pageName));
 			Reporter.addStepLog(MessageFormat.format(MYLOConstants.BUTTON_DISABLED, CoreConstants.PASS, btnName,
@@ -694,6 +694,7 @@ public class BusinessFunctions {
 			Reporter.addStepLog(MessageFormat.format(MYLOConstants.BUTTON_ENABLED, CoreConstants.PASS, btnName,
 					sectionName, pageName));
 		}
+		return flag;
 	}
 
 	/**

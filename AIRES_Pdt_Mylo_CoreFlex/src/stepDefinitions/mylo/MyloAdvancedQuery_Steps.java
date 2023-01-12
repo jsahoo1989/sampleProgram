@@ -89,14 +89,15 @@ public class MyloAdvancedQuery_Steps {
 	
 	@Given("^he has added \"([^\"]*)\",\"([^\"]*)\",\"([^\"]*)\",\"([^\"]*)\" information for newly created Vendor file on Mylo Journey page$")
 	public void he_has_added_information_for_newly_created_Vendor_file_on_Mylo_Journey_page(String arg1, String arg2, String arg3, String arg4)  {
-		myloDashboardPage.clickOptionFromMainMenu(MYLOConstants.JOURNEY);
+		myloDashboardPage.closePopUp();
 		myloDashboardPage.createNewFileIfNotExists(MYLOConstants.VENDOR_CLIENT_ID, myloNewFileSection);
+		myloNewFileSection.setLeadCompanyID(MYLOConstants.AUTOMATION_CLIENT_ID);
 		myloJourneyPageAuthTrack.addAuthTrackDataIfNotPresent();
 		myloJourneyTransfereeSection.addTransfereePhoneEmailDetails();
 		myloJourneyPartnerSection.addPartnerDetailsIfNotPresent();
 		myloJourneyPage.scrollToJourneySection(MYLOConstants.AIRES_FILE_TEAM, MYLOConstants.JOURNEY);
 		myloJourneyFileTeamSection.addFileTeamDetailsIfNotPresent();
-		myloNewFileSection.setLeadCompanyID(MYLOConstants.AUTOMATION_CLIENT_ID);
+		
 	}
 
 	@When("^he clicks on \"([^\"]*)\" button after entering \"([^\"]*)\" values on 'Advanced Query' popup$")

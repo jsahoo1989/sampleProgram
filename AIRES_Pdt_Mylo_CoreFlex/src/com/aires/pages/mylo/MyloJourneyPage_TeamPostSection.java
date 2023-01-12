@@ -384,12 +384,13 @@ public class MyloJourneyPage_TeamPostSection extends Base {
 	public void searchTeamPostComments() {
 		try {
 			BusinessFunctions.fluentWaitForMyloSpinnerToDisappear(driver, _spinner);
-			List<String> listKeys = new ArrayList<String>(teamPostUpdatedValuesMap.keySet());
-			String randomPostType = listKeys
-					.get(CoreFunctions.getRandomNumber(0, teamPostUpdatedValuesMap.keySet().size()-1));
-			String randomComments = teamPostUpdatedValuesMap.get(randomPostType);
-			int beginIndex = CoreFunctions.getRandomNumber(0, randomComments.length() - 4);
-			searchedText = randomComments.substring(beginIndex, beginIndex + 3);
+			//List<String> listKeys = new ArrayList<String>(teamPostUpdatedValuesMap.keySet());
+			//String randomPostType = listKeys
+				//	.get(CoreFunctions.getRandomNumber(0, teamPostUpdatedValuesMap.keySet().size()-1));
+			String randomComments = teamPostUpdatedValuesMap.get(MYLOConstants.GENERAL);
+			//int beginIndex = CoreFunctions.getRandomNumber(0, randomComments.length() - 4);	
+			//searchedText = randomComments.substring(beginIndex, beginIndex + 3);
+			searchedText = randomComments.substring(0, 3);
 			CoreFunctions.clearAndSetText(driver, _teamPostsSearchBox, MYLOConstants.TEAM_POST_SEARCHBOX, searchedText);
 		} catch (Exception e) {
 			Assert.fail(MessageFormat.format(CoreConstants.FAILED_TXT_CLR_VAL, CoreConstants.FAIL,

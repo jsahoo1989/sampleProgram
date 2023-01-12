@@ -23,6 +23,7 @@ import com.aires.pages.mylo.MyloJourneyPage_AccountingQuerySection;
 import com.aires.pages.mylo.MyloJourneyPage_AddressSection;
 import com.aires.pages.mylo.MyloJourneyPage_AdvancedQuerySection;
 import com.aires.pages.mylo.MyloJourneyPage_AuthTrackSection;
+import com.aires.pages.mylo.MyloJourneyPage_ClientContactSection;
 import com.aires.pages.mylo.MyloJourneyPage_CreateNewFileSection;
 import com.aires.pages.mylo.MyloJourneyPage_DependentSection;
 import com.aires.pages.mylo.MyloJourneyPage_FileTeamSection;
@@ -66,6 +67,7 @@ public class PageObjectManager_Mylo {
 	private MyloJourneyPage_FileTeamSection _journeyPage_FileTeamSection;
 	private MyloJourneyPage_TransfereeNameQuerySection _journeyPage_TransfereeNameQuerySection;	
 	private MyloJourneyPage_QueryBySubServiceID _journeyPage_QueryBySubServiceID;
+	private MyloJourneyPage_ClientContactSection _journeyPage_ClientContactSection;	
 	private MyloNewFileUtil _myloNewFileUtil;
 
 	public PageObjectManager_Mylo(WebDriver driver) {
@@ -171,6 +173,12 @@ public class PageObjectManager_Mylo {
 		return (_journeyPage_TransfereeNameQuerySection == null)
 				? _journeyPage_TransfereeNameQuerySection = new MyloJourneyPage_TransfereeNameQuerySection(_driver)
 				: _journeyPage_TransfereeNameQuerySection;
+	}
+	
+	public MyloJourneyPage_ClientContactSection getJourneyClientContact() {
+		return (_journeyPage_ClientContactSection == null)
+				? _journeyPage_ClientContactSection = new MyloJourneyPage_ClientContactSection(_driver)
+				: _journeyPage_ClientContactSection;
 	}
 
 	public MyloJourneyPage_AdvancedQuerySection getJourneyAdvancedQuery() {

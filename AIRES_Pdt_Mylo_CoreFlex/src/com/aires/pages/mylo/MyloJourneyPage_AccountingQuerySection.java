@@ -1,9 +1,11 @@
 package com.aires.pages.mylo;
 
 import java.text.MessageFormat;
+import java.util.ArrayList;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 import org.openqa.selenium.By;
@@ -140,6 +142,12 @@ public class MyloJourneyPage_AccountingQuerySection extends Base {
 	
 	@FindBy(how = How.CSS, using = "div[role='dialog']")
 	private WebElement _popUp;
+	
+	@FindBy(how = How.XPATH, using = "//a[text()='Query']")
+	private WebElement _querySubSection;
+	
+	@FindBy(how = How.XPATH, using = "//button[text()='Accounting']")
+	private WebElement _accountingBtn;
 
 	// Query Result Section
 
@@ -467,7 +475,6 @@ public class MyloJourneyPage_AccountingQuerySection extends Base {
 	}
 
 	public void clickOKButtonIfNoFileFound() {
-		if (CoreFunctions.isElementExist(driver, _OKButtonPopUp, 2)) {
 			Assert.assertEquals(CoreFunctions.getElementText(driver, _errorPopUpText),
 					MYLOConstants.NO_SUCH_FILE_FOUND);
 			Reporter.addStepLog(MessageFormat.format(MYLOConstants.NO_SUCH_FILE_FOUND_SERVICE_SERVICESTATUS,
@@ -476,12 +483,17 @@ public class MyloJourneyPage_AccountingQuerySection extends Base {
 			CoreFunctions.clickUsingJS(driver, _OKButtonPopUp, MYLOConstants.OK_BUTTON);
 			CoreFunctions.explicitWaitTillElementInVisibility(driver, _popUp);
 			BusinessFunctions.fluentWaitForMyloSpinnerToDisappear(driver, _spinner);
-		}
 	}
 
 	public void checkAccountingResultModalAppears(String serviceValue, String serviceStatusValue) {
 		while (!(CoreFunctions.isElementExist(driver, _queryResultPopUp, 5))) {
+			if (CoreFunctions.isElementExist(driver, _OKButtonPopUp, 2)) {
 			clickOKButtonIfNoFileFound();
+			}
+			else {
+				CoreFunctions.click(driver, _querySubSection, MYLOConstants.QUERY);
+				CoreFunctions.click(driver, _accountingBtn, MYLOConstants.ACCOUNTING);
+			}
 			setAccountingDropdownValues(MYLOConstants.SERVICE, serviceValue);
 			setAccountingDropdownValues(MYLOConstants.SERVICE_STATUS, serviceStatusValue);
 			clickButtonsOnAccountingQuerySection(MYLOConstants.EXECUTE);
@@ -493,12 +505,14 @@ public class MyloJourneyPage_AccountingQuerySection extends Base {
 		boolean flag = false;
 		String noOfRecordsToValidate = CoreFunctions.getPropertyFromConfig(MYLOConstants.MAX_RECORDS_TO_VALIDATE);
 		try {
-			List<String> DBList = DbFunctions.getAccountingFilesInfoByServiceAndServiceStatus(
+			Set<String> reqDBValues = DbFunctions.getAccountingFilesInfoByServiceAndServiceStatus(
 					accountingFieldsUpdatedValueMap.get(MYLOConstants.SERVICE),
 					accountingFieldsUpdatedValueMap.get(MYLOConstants.SERVICE_STATUS), reqColumnValue,
 					noOfRecordsToValidate);
-			flag = DBList.equals(queryResultWebElementsMap.get(reqColumnValue).stream().limit(DBList.size())
-					.map(x -> CoreFunctions.getElementText(driver, x)).collect(Collectors.toList()));
+			List<String> expectedValues = new ArrayList<>(reqDBValues);
+			List<String> actualValues = queryResultWebElementsMap.get(reqColumnValue).stream().limit(reqDBValues.size())
+			.map(x -> CoreFunctions.getElementText(driver, x)).collect(Collectors.toList());
+			flag = expectedValues.equals(actualValues);
 
 		} catch (Exception e) {
 			Assert.fail(MessageFormat.format(CoreConstants.FAILED_TO_VERFY, MYLOConstants.QUERY_RESULTS));
@@ -523,14 +537,16 @@ public class MyloJourneyPage_AccountingQuerySection extends Base {
 		boolean flag = false;
 		String noOfRecordsToValidate = CoreFunctions.getPropertyFromConfig(MYLOConstants.MAX_RECORDS_TO_VALIDATE);
 		try {
-			List<String> DBList = DbFunctions.getAccountingSortResult(
+			Set<String> reqDBValues = DbFunctions.getAccountingSortResult(
 					accountingFieldsUpdatedValueMap.get(MYLOConstants.SERVICE),
 					accountingFieldsUpdatedValueMap.get(MYLOConstants.SERVICE_STATUS),
 					databaseColNameMap.get(sortColName), sortingOrder, noOfRecordsToValidate);
 			BusinessFunctions.fluentWaitForMyloSpinnerToDisappear(driver, _spinner);
+			List<String> expectedValues = new ArrayList<>(reqDBValues);
 			List<WebElement> _resultFileIDs = CoreFunctions.getElementListByLocator(driver, _queryResultFileIds);
-			flag = DBList.equals(_resultFileIDs.stream().limit(DBList.size())
-					.map(x -> CoreFunctions.getElementText(driver, x)).collect(Collectors.toList()));
+			List<String> actualValues = _resultFileIDs.stream().limit(expectedValues.size())
+			.map(x -> CoreFunctions.getElementText(driver, x)).collect(Collectors.toList());
+			flag = expectedValues.equals(actualValues);
 		} catch (Exception e) {
 			Assert.fail(MessageFormat.format(CoreConstants.FAILED_TO_VERFY, MYLOConstants.QUERY_RESULTS));
 		}

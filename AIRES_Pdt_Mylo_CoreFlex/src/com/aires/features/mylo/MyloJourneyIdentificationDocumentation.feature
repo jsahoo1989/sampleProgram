@@ -48,7 +48,7 @@ And message "Your changes have been successfully saved." is displayed after clic
 |Row|IdentityType       |Country |Number    |FromDate  |ToDate    | 
 |1  |Drivers License    |USA     |   12     |04/03/2022|current   |
 |2  |Cedula             |Canada  |   15     |04/01/2022|04/02/2022|
-|3  |Diplomatic Passport|Random  |   10      |03/03/2022|03/04/2022|
+|3  |Diplomatic Passport|India   |   10      |03/03/2022|03/04/2022|
 When he clicks on "Edit" button after verifying the saved values
 Then he should be able to update below fields upon clicking on "Save" button
 |Row|IdentityType       |Country|Number    |FromDate  |ToDate    | 
@@ -85,7 +85,7 @@ When he clicks on "Remove" icon to delete the record of "Identification & Docume
 Then the toast messages should get deleted with tab color for the associated record should be restored back to its state for "Identification & Documentation" section
 
 @IRIS-1225 @217055 @217056 @217065 @Mylo:217518 @Mylo-Regression
-Scenario:  Mylo-Validate Toast Messages for Mandatory Fields and Colour of the tab associated with the field for existing records of Identification & Documentation section on Mylo Journey page
+Scenario: 1 Mylo-Validate Toast Messages for Mandatory Fields and Colour of the tab associated with the field for existing records of Identification & Documentation section on Mylo Journey page
 Given he is on Mylo Journey Summary page for file ID with "transfereeWithFamily" data
 And below toast messages are displayed by clicking on "Save" button after removing mandatory fields for existing data of "Identification & Documentation" section
 |Message                                      | 

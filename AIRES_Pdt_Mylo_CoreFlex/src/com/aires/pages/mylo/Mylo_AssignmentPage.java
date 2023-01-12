@@ -11,6 +11,7 @@ import java.util.Map;
 import java.util.stream.Collectors;
 import org.openqa.selenium.By;
 import org.openqa.selenium.Keys;
+import org.openqa.selenium.StaleElementReferenceException;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.Color;
@@ -92,7 +93,10 @@ public class Mylo_AssignmentPage extends Base {
 
 	@FindBy(how = How.XPATH, using = "//button[text()='Cancel']")
 	private WebElement _CancelButton;
-
+	
+	@FindBy(how = How.XPATH, using = "//label[text()='Cancel']/parent::button")
+	private WebElement _addressCancelBtn;
+	
 	@FindBy(how = How.CSS, using = "input[placeholder='FILE ID']")
 	private WebElement _fileInfoFileId;
 
@@ -461,6 +465,7 @@ public class Mylo_AssignmentPage extends Base {
 	final By _fileInfoOfficeDropdownReadOnly = By.xpath("//ng-select[@name='office']//descendant::input[@disabled='']");
 	final By _fileInfoPolicyTypeDropdownReadOnly = By.xpath("//ng-select[@name='policyType']//input[@disabled]");
 	final By _assignmentSubMenus = By.xpath("//div[contains(@class,'navlist__container')]/li/descendant::a");
+	final By _mailingAddressDrpDwn = By.xpath("//button[@aria-controls='collapsemailingAddress']");
 
 	//String environment = CoreFunctions.getPropertyFromConfig("envt");
 	String environment = System.getProperty("envt");
@@ -1187,6 +1192,12 @@ public class Mylo_AssignmentPage extends Base {
 					MYLOConstants.MAIL_EDIT_BUTTON);
 			CoreFunctions.click(driver, _mailEditButton, elementName);
 			break;
+			
+		case MYLOConstants.ADDRESS_CANCEL_BUTTON:
+			CoreFunctions.explicitWaitTillElementVisibility(driver, _addressCancelBtn, elementName);
+			CoreFunctions.scrollClickUsingJS(driver, _addressCancelBtn, elementName);
+			break;
+			
 		case MYLOConstants.TEMP_ADDRESS_COUNTRY:
 			CoreFunctions.explicitWaitTillElementVisibility(driver, _tempAddressCountryDropdown,
 					MYLOConstants.TEMP_ADDRESS_COUNTRY);
@@ -1228,16 +1239,20 @@ public class Mylo_AssignmentPage extends Base {
 			typeDropDownList = CoreFunctions.getElementListByLocator(driver, _dropdownOptions);
 			break;
 		case MYLOConstants.TEMPORARY_ADDRESS_DROPDOWN:
-			if (!(CoreFunctions.isElementExist(driver, _tempAddressDropdown, 10)))
-				CoreFunctions.refreshPage(driver);
+			BusinessFunctions.fluentWaitForMyloSpinnerToDisappear(driver, _spinner);
+			while (!(CoreFunctions.isElementExist(driver, _tempAddressDropdown, 10))) {
+			CoreFunctions.refreshPage(driver);
+			}
 			CoreFunctions.waitForMyloSpinnnerInvisibilityIfExist(driver, _spinner);
 			CoreFunctions.scrollClickUsingJS(driver, _tempAddressDropdown, MYLOConstants.TEMPORARY_ADDRESS_DROPDOWN);
 			mapOtherAddresssWebElementFields();
 			break;
 		case MYLOConstants.MAILING_ADDRESS_DROPDOWN:
-			if (!(CoreFunctions.isElementExist(driver, _mailAddressDropdown, 10)))
-				CoreFunctions.refreshPage(driver);
-			CoreFunctions.waitForMyloSpinnnerInvisibilityIfExist(driver, _spinner);
+			BusinessFunctions.fluentWaitForMyloSpinnerToDisappear(driver, _spinner);
+			while (!(CoreFunctions.isElementExist(driver, _mailAddressDropdown, 10))) {
+				CoreFunctions.refreshPage(driver);	
+			}
+			BusinessFunctions.fluentWaitForMyloSpinnerToDisappear(driver, _spinner);
 			CoreFunctions.scrollClickUsingJS(driver, _mailAddressDropdown, MYLOConstants.MAILING_ADDRESS_DROPDOWN);
 			mapOtherAddresssWebElementFields();
 			break;
@@ -1607,6 +1622,7 @@ public class Mylo_AssignmentPage extends Base {
 		case MYLOConstants.MAIL_ADDRESS_COUNTRY:
 		case MYLOConstants.TEMP_ADDRESS_STATE_DROPDOWN:
 		case MYLOConstants.MAIL_ADDRESS_STATE_DROPDOWN:
+			CoreFunctions.scrollToElementUsingJS(driver, fieldElement, fieldName);
 			CoreFunctions.explicitWaitTillElementVisibility(driver, fieldElement, fieldElement.getText());
 			CoreFunctions.highlightObject(driver, fieldElement);
 			valueToBeReturned = CoreFunctions.getElementText(driver, fieldElement);
@@ -2674,7 +2690,9 @@ public class Mylo_AssignmentPage extends Base {
 	 */
 	public boolean verifyAlertMessagesPresent() {
 		boolean flag;
+		BusinessFunctions.fluentWaitForMyloSpinnerToDisappear(driver, _spinner);
 		flag = CoreFunctions.isElementListExist(driver, _alertMessageList, 5);
+		//flag = (_alertMessageList.size()>0);
 
 		if (flag)
 			Reporter.addStepLog(MessageFormat.format(MYLOConstants.TOAST_MESSAGE_PRESENT, CoreConstants.PASS,

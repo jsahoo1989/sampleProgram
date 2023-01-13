@@ -2,6 +2,7 @@ package com.aires.pages.pdt;
 
 import java.text.MessageFormat;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
@@ -23,6 +24,7 @@ import com.aires.businessrules.constants.CoreConstants;
 import com.aires.businessrules.constants.PDTConstants;
 import com.aires.managers.FileReaderManager;
 import com.aires.testdatatypes.pdt.PDT_PreAcceptanceServiceBenefit;
+import com.aires.utilities.Log;
 import com.vimalselvam.cucumber.listener.Reporter;
 
 import cucumber.api.DataTable;
@@ -376,10 +378,37 @@ public class PDT_PreAcceptanceService extends PDT_SharedSubBenefitPage {
 	@FindBy(how = How.CSS, using = "input[formcontrolname='minTimeBusiness']")
 	private WebElement _txtBoxMinTimeForBusinessAirTravel;
 	
+	//@FindBy(how = How.CSS, using = "ng-select[formcontrolname='preAcceptanceTransportTypeList'] span.ng-value-icon.left")
+	@FindBy(how = How.CSS, using = "ng-select[formcontrolname='preAcceptanceTransportTypeList'] span[title='Clear all']")
+	private WebElement _iconClearTransportationType;	
+	
 	@FindBy(how = How.CSS, using = "ng-select[formcontrolname='unitOfBusinessCode'] span[title='Clear all']")
 	private WebElement _iconClearBusinessAirTravel;
-	
 
+	@FindBy(how = How.XPATH, using = "//input[@formcontrolname='excessBaggageFeesInd']/parent::label")
+	private List<WebElement> _lblRadioOptionsExcessBaggageFees;
+	
+	@FindBy(how = How.XPATH, using = "//input[@formcontrolname='excessBaggageFeesInd']/parent::label/parent::div/preceding-sibling::label")
+	private WebElement _lblExcessBaggageFees;
+	
+	@FindBy(how = How.CSS, using = "input[formcontrolname='maxAmountPerPerson']")
+	private WebElement _txtBoxMaxAmountPerPerson;
+	
+	@FindBy(how = How.XPATH, using = "//input[@formcontrolname='maxAmountPerPerson']/preceding-sibling::label")
+	private WebElement _lblMaxAmtPerPerson;
+	
+	@FindBy(how = How.CSS, using = "ng-select[formcontrolname='currencyCodeExcessBagage']")
+	private WebElement _drpDownExcessBaggageCurrencyCode;	
+
+	@FindBy(how = How.CSS, using = "span.ng-option-label.ng-star-inserted")
+	private WebElement _dropDownOptions;
+	
+	@FindBy(how = How.CSS, using = "ng-select[formcontrolname='currencyCodeExcessBagage'] span.ng-value-label.ng-star-inserted")
+	private WebElement _currencyOptionSelected;
+	
+	@FindBy(how = How.CSS, using = "//ng-select[@formcontrolname='currencyCodeExcessBagage']/preceding-sibling::label")
+	private WebElement _lblCurrencyCode;	
+	
 	final By _subBenefitCategoriesLocator = By.cssSelector("div.form-check > label.form-check-label");
 
 	PDT_PreAcceptanceServiceBenefit preAcceptanceSubBenefitData = FileReaderManager.getInstance().getJsonReader()
@@ -390,12 +419,15 @@ public class PDT_PreAcceptanceService extends PDT_SharedSubBenefitPage {
 	private ArrayList<String> _expenseCodeTransportation = null;
 	private ArrayList<String> _expenseCodeTripLodging = null;
 	private ArrayList<String> _expenseCodeTripMeals = null;
-	private ArrayList<String> _transportType = null;
+	private ArrayList<String> _transportType = null;	
+	private List<String> _expectedAccompFamilyMembersList;
+	String [] _expectedAccompFamilyMembersArr = new String[] {PDTConstants.TRANSFEREE_ONLY, PDTConstants.TRANSFEREE_AND_FAMILY_MEMBER, PDTConstants.TRANSFEREE_AND_FAMILY};
+	
 
 	long timeBeforeAction, timeAfterAction;
 
 	public void setTransportType(ArrayList<String> transportTypeOptions) {
-		this._transportType = transportTypeOptions;
+		this._transportType = transportTypeOptions;		
 	}
 
 	public ArrayList<String> getTransportType() {
@@ -456,6 +488,14 @@ public class PDT_PreAcceptanceService extends PDT_SharedSubBenefitPage {
 
 	public ArrayList<String> getExpenseCodeTripMeals() {
 		return _expenseCodeTripMeals;
+	}
+	
+	public void setExpectedAccompFamilyMembersList(){
+		_expectedAccompFamilyMembersList = Arrays.asList(_expectedAccompFamilyMembersArr);
+	}
+	
+	public List<String> getExpectedAccompFamilyMembersList(){
+		return _expectedAccompFamilyMembersList;
 	}
 
 	public WebElement getElementByName(String elementName) {
@@ -676,7 +716,12 @@ public class PDT_PreAcceptanceService extends PDT_SharedSubBenefitPage {
 
 			selectAllTransportTypeOptions(addNewPolicyPage, subBenefitFormName, objStep);
 
+			setExpectedAccompFamilyMembersList();
 			CoreFunctions.clickElement(driver, _drpDownAccompanyingFamilyMemberCode);
+			if (CoreFunctions.getElementTextAndStoreInList(driver, _drpDownAccompanyingFamilyMemberCodeOptions)
+					.equals(getExpectedAccompFamilyMembersList())) {
+				Reporter.addStepLog("Verified Accompanying Family Members drop down contains "+ getExpectedAccompFamilyMembersList().toString()+" options");
+			}
 			String randAccompanyingFamilMember = _drpDownAccompanyingFamilyMemberCodeOptions
 					.get(CoreFunctions.getRandomNumber(0, _drpDownAccompanyingFamilyMemberCodeOptions.size() - 1))
 					.getText();
@@ -688,6 +733,11 @@ public class PDT_PreAcceptanceService extends PDT_SharedSubBenefitPage {
 			CoreFunctions.selectItemInListByText(driver, _radioBtnPreTripTransport,
 					preAcceptanceSubBenefitData.preAcceptanceTripTransportation.grossUp, PDTConstants.GROSS_UP,
 					PDTConstants.RADIO_BUTTON_LIST, true);
+			
+			/*CoreFunctions.selectItemInListByText(driver, _lblRadioOptionsExcessBaggageFees,
+					preAcceptanceSubBenefitData.preAcceptanceTripTransportation.excessBaggageFees, _lblExcessBaggageFees.getText(),
+					PDTConstants.RADIO_BUTTON_LIST, true);*/
+			
 			CoreFunctions.selectItemInListByText(driver, _radioBtnPreTripTransport,
 					preAcceptanceSubBenefitData.preAcceptanceTripTransportation.reimbursedBy,
 					PDTConstants.REIMBURSED_BY, PDTConstants.RADIO_BUTTON_LIST, true);
@@ -722,6 +772,43 @@ public class PDT_PreAcceptanceService extends PDT_SharedSubBenefitPage {
 		} catch (Exception e) {
 			Assert.fail(MessageFormat.format(PDTConstants.EXCEPTION_OCCURED_FILL_SUBBENEFIT_FORM, CoreConstants.FAIL,
 					subBenefitFormName));
+		}
+	}
+	
+	public void verifyAndFillMaxAmtIfExcessBaggageIsYes() {
+		int index = BusinessFunctions.returnindexItemFromListUsingText(driver, _lblRadioOptionsExcessBaggageFees, "Yes");		
+		//For debugging purpose Log.info("DomProperty=="+_inputBenefitCategory.get(index).getDomProperty("checked"));
+		if(_lblRadioOptionsExcessBaggageFees.get(index).getAttribute("checked").equalsIgnoreCase("true")) {
+			Reporter.addStepLog(MessageFormat.format(PDTConstants.VERIFIED_EXCESS_BAGGAGE_CHOSEN, CoreConstants.PASS, _lblRadioOptionsExcessBaggageFees.get(0).getText()));
+			verifyAndFillMaxAmt();
+			verifyCurrencyFieldIsDisplayed();
+		}
+		
+	}
+	
+	public void verifyAndFillMaxAmt() {
+		if(CoreFunctions.verifyElementPresentOnPage(_txtBoxMaxAmountPerPerson, PDTConstants.TEXTBOX, _lblMaxAmtPerPerson.getText())) {
+			CoreFunctions.clearAndSetText(driver, _txtBoxMaxAmountPerPerson, _lblMaxAmtPerPerson.getText(),
+					preAcceptanceSubBenefitData.preAcceptanceTripTransportation.maxAmtPerPerson);
+		} else {
+			Assert.fail("Max Amount per person field not persent on page.");
+		}
+	}
+	
+	public void verifyCurrencyFieldIsDisplayed() {
+		if(CoreFunctions.verifyElementPresentOnPage(_drpDownExcessBaggageCurrencyCode, PDTConstants.DROP_DOWN, _lblCurrencyCode.getText())) {
+			verifyDefaultUSCurrencySelected();
+		} else {
+			Assert.fail("Failed Currency field not persent on page.");
+		}
+	}
+	
+	public void verifyDefaultUSCurrencySelected() {
+		if(_currencyOptionSelected.getText().trim().equalsIgnoreCase("U.S. Dollar")) {
+			Reporter.addStepLog("Verified default currency selected is "+_currencyOptionSelected.getText().trim());
+		}
+		else {
+			Assert.fail("Failed to verify default selected currency is U.S. Dollar. Actual currency selected is "+_currencyOptionSelected.getText());
 		}
 	}
 
@@ -1210,7 +1297,7 @@ public class PDT_PreAcceptanceService extends PDT_SharedSubBenefitPage {
 													_lblUnitOfDistanceForEconomyAirTravel.get(_lblUnitOfDistanceForEconomyAirTravel.indexOf(btn))
 													.getText().trim()));
 				}
-				CoreFunctions.selectItemInListByText(driver, _lblUnitOfDistanceForEconomyAirTravel, PDTConstants.MI);
+				CoreFunctions.selectItemInListByText(driver, _lblUnitOfDistanceForEconomyAirTravel, PDTConstants.MILES);
 			}
 		} catch (Exception e) {			
 			Assert.fail("Failed to verify Economy Class AirFare options field");
@@ -1274,7 +1361,7 @@ public class PDT_PreAcceptanceService extends PDT_SharedSubBenefitPage {
 
 	public void verifyKmMilesHours(PDT_SharedSubBenefit_Steps sharedSubBenefitStep, String option) {
 		if (option.equalsIgnoreCase(PDTConstants.KM)
-				|| option.equalsIgnoreCase(PDTConstants.MI)) {
+				|| option.equalsIgnoreCase(PDTConstants.MILES)) {
 			verifyKmMiles(sharedSubBenefitStep);
 		} else if (option.equalsIgnoreCase(PDTConstants.HOURS)) {
 			verifyHours(sharedSubBenefitStep);
@@ -1308,4 +1395,447 @@ public class PDT_PreAcceptanceService extends PDT_SharedSubBenefitPage {
 			Assert.fail("Failed to verify Business Class AirFare options field");
 		}
 	}
+	
+	public boolean verifyPreAcceptanceSubBenefitForTransportType(String pageName, String subBenefit,
+			DataTable resultTable) {
+		boolean result = false;
+		CoreFunctions.explicitWaitTillElementListClickable(driver, _subBenefitCategories);
+		populateBtnMap();
+		populateConfirmDialogbuttonMap();
+		//WebElement btnToClick = (btnName != null) ? buttonMap.get(btnName) : buttonMap.get(PDTConstants.SAVE);
+			CoreFunctions.selectItemInListByText(driver, _subBenefitCategories, subBenefit, true);
+			timeBeforeAction = new Date().getTime();
+			waitForProgressBarToDisapper();
+			timeAfterAction = new Date().getTime();
+			BusinessFunctions.printTimeTakenByPageToLoad(timeBeforeAction, timeAfterAction, pageName, subBenefit);
+			//fillSubBenefitForm(subBenefit, pageName, addNewPolicyPage, objStep);
+			result = verifyPreAcceptanceTripTransportationOptions(subBenefit, pageName, resultTable);
+		try {
+			CoreFunctions.click(driver, buttonMap.get(PDTConstants.SAVE_AND_CONTINUE), buttonMap.get(PDTConstants.SAVE_AND_CONTINUE).getText());
+		} catch (NoSuchElementException e) {
+			Assert.fail(MessageFormat.format(PDTConstants.MISSING_BTN, CoreConstants.FAIL, PDTConstants.SAVE_AND_CONTINUE));
+		} catch (Exception e) {
+			e.printStackTrace();
+			Assert.fail(MessageFormat.format(PDTConstants.FAILED_TO_CLICK_ON_BTN, CoreConstants.FAIL, PDTConstants.SAVE_AND_CONTINUE));
+		}
+		return result;
+	}
+	
+	public boolean verifyPreAcceptanceTripTransportationOptions(String subBenefitFormName,
+			String pageName, DataTable resultTable) {
+		boolean result = false;
+		try {
+			populateSubBenefitHeaderMap();
+			Assert.assertTrue(
+					BusinessFunctions.verifySubBenefitFormHeaderIsDisplayed(driver,
+							subBenefitHeaderMap.get(subBenefitFormName), subBenefitFormName, pageName),
+					MessageFormat.format(PDTConstants.VERIFIED_FORM_IS_NOT_DISPLAYED, subBenefitFormName, pageName));
+			expandSubBenefitIfCollapsed(subBenefitFormName, _headingFormPreTripTransport);
+			CoreFunctions.explicitWaitTillElementVisibility(driver, _txtBoxNumOfTrips, _lblNoOfTrips.getText());
+			CoreFunctions.clearAndSetText(driver, _txtBoxNumOfTrips, _lblNoOfTrips.getText(),
+					preAcceptanceSubBenefitData.preAcceptanceTripTransportation.numberOfTrips);
+
+			//selectAllTransportTypeOptions(addNewPolicyPage, subBenefitFormName, objStep);
+			result = verifyEachTransportationTypeOption(resultTable, pageName, subBenefitFormName);
+
+
+		} catch (Exception e) {
+			e.printStackTrace();
+			Assert.fail("Exception occured while trying to verify Transportation type for "+pageName+" -> "+subBenefitFormName);
+		}
+		return result;
+	}
+	
+	public boolean verifyEachTransportationTypeOption(DataTable resultTable,  String benefitCategory, String benefit) {
+		ArrayList<Boolean> result = new ArrayList<Boolean>();
+		List<Map<String, String>> resultTableMap = resultTable.asMaps(String.class, String.class);
+		CoreFunctions.clickElement(driver, _drpDownTransportationType);
+		for(int i=0; i<resultTableMap.size(); i++) {
+			result.add(verifyTransportTypeOptions(resultTableMap.get(i), benefitCategory, benefit));
+		}
+		return result.stream().allMatch(t -> t.equals(true)) ? true : false;
+	}
+	
+	public boolean verifyTransportTypeOptions(Map<String, String> resultTableMap, String benefitCategory, String benefit) {
+		boolean result = false;
+		switch(resultTableMap.get("Transportation_Type_Option")) {
+		case PDTConstants.DISTANCE:
+			result = verifyDistanceOptionFieldsForVisibilty(resultTableMap, benefitCategory, benefit) && verifyDistanceOptionFieldsForInvisibilty(resultTableMap, benefitCategory, benefit);
+			break;
+		case PDTConstants.ECONOMY_CLASS_AIRFARE:
+			result = verifyEconomyClassFieldsForVisibilty(resultTableMap, benefitCategory, benefit) && verifyEconomyClassFieldsForInvisibilty(resultTableMap, benefitCategory, benefit);
+			break;
+		case PDTConstants.BUSINESS_CLASS_AIRFARE:
+			result = verifyBusinessClassForVisibilty(resultTableMap, benefitCategory, benefit) && verifyBusinessClassFieldsForInvisibilty(resultTableMap, benefitCategory, benefit);;
+			break;
+		default:
+			Assert.fail("Not valid transportation type option");
+		}
+		return result;
+	}
+	
+	public void printMessageForFieldVisibility(boolean result, String fieldName, String benefitCategory, String benefit) {
+		if(result)
+			Reporter.addStepLog(MessageFormat.format(PDTConstants.VERIFIED_TRANSPORTATION_TYPE_OPTION_VISIBILITY, CoreConstants.PASS, fieldName, benefit));
+		else
+			Reporter.addStepLog(MessageFormat.format(PDTConstants.FAIL_TO_VERIFY_TRANSPORTATION_TYPE_OPTION_VISIBILITY, CoreConstants.FAIL, fieldName, benefit));
+	}
+	
+	public void printMessageForFieldInVisibility(boolean result, String fieldName, String benefitCategory, String benefit) {
+		if(result)
+			Reporter.addStepLog(MessageFormat.format(PDTConstants.VERIFIED_TRANSPORTATION_TYPE_OPTION_INVISIBILITY, CoreConstants.PASS, fieldName, benefit));
+		else
+			Reporter.addStepLog(MessageFormat.format(PDTConstants.FAIL_TO_VERIFY_TRANSPORTATION_TYPE_OPTION_INVISIBILITY, CoreConstants.FAIL, fieldName, benefit));
+	}
+	
+	public boolean verifyDistanceOptionFieldsForVisibilty(Map<String, String> resultTableMap, String benefitCategory, String benefit) {
+		boolean result = false;
+		ArrayList<Boolean> resultElementVisible = new ArrayList<Boolean>();
+		try {
+			CoreFunctions.clickElement(driver, _drpDownTransportationType);
+			CoreFunctions.selectItemInListByText(driver, _drpDownTransportationTypeOptions, resultTableMap.get("Transportation_Type_Option"),
+					_lblTransportationType.getText(), PDTConstants.DROP_DOWN, true);
+			CoreFunctions.clickElement(driver, _lblDistance);
+			resultElementVisible.add(CoreFunctions.verifyElementPresentOnPage(_lblDistance, PDTConstants.LABEL, PDTConstants.DISTANCE));
+			resultElementVisible.add(CoreFunctions.verifyElementPresentOnPage(_txtBoxDistance, PDTConstants.TEXTBOX, PDTConstants.DISTANCE));
+			resultElementVisible.add(CoreFunctions.verifyElementPresentOnPage(_lblUnitOfDistance, PDTConstants.LABEL, PDTConstants.UNIT_OF_DISTANCE));
+			for (WebElement btn : _radioBtnUnitOfDistanceLabel) {
+				resultElementVisible.add(CoreFunctions.verifyElementPresentOnPage(btn, PDTConstants.RADIOBTN,
+								_radioBtnUnitOfDistanceLabel.get(_radioBtnUnitOfDistanceLabel.indexOf(btn))
+										.getText().trim()));
+			}			
+		} catch(Exception e) {
+			Assert.fail("Exception occured while trying to verify Distance fields for Visibility");
+		}
+		result = resultElementVisible.stream().allMatch(t -> t.equals(true)) ? true : false;
+		printMessageForFieldVisibility(result, resultTableMap.get("Transportation_Type_Option"), benefitCategory, benefit);
+		return result;
+	}
+
+	public boolean verifyDistanceOptionFieldsForInvisibilty(Map<String, String> resultTableMap, String benefitCategory, String benefit) {
+		boolean result = false;
+		ArrayList<Boolean> resultElementInVisible = new ArrayList<Boolean>();
+		try {
+			CoreFunctions.hoverAndSingleClick(driver, _iconClearTransportationType, "Clear Transport Type Option");
+			CoreFunctions.explicitWaitTillElementInVisibility(driver, _txtBoxDistance);
+			resultElementInVisible.add(CoreFunctions.verifyElementNotPresentOnPage(_lblDistance, PDTConstants.LABEL, PDTConstants.DISTANCE));
+			resultElementInVisible.add(CoreFunctions.verifyElementNotPresentOnPage(_txtBoxDistance, PDTConstants.TEXTBOX, PDTConstants.DISTANCE));
+			resultElementInVisible.add(CoreFunctions.verifyElementNotPresentOnPage(_lblUnitOfDistance, PDTConstants.LABEL, PDTConstants.UNIT_OF_DISTANCE));		
+			resultElementInVisible.add(CoreFunctions.verifyListElementNotPresentOnPage(_radioBtnUnitOfDistanceLabel, PDTConstants.RADIOBTN, PDTConstants.KM));
+			resultElementInVisible.add(CoreFunctions.verifyListElementNotPresentOnPage(_radioBtnUnitOfDistanceLabel, PDTConstants.RADIOBTN, PDTConstants.MILES));
+		} catch(Exception e) {
+			Assert.fail("Failed to verify Distance fields for invisibilty after deselecting the Distance option from Transportation Type dropdown.");
+		}
+		result = resultElementInVisible.stream().allMatch(t -> t.equals(true)) ? true : false;		
+		printMessageForFieldInVisibility(result, resultTableMap.get("Transportation_Type_Option"), benefitCategory, benefit);
+		return result;
+	}
+	
+	public boolean verifyEconomyClassFieldsForVisibilty(Map<String, String> resultTableMap, String benefitCategory, String benefit) {
+		boolean result = false;
+		ArrayList<Boolean> resultElementVisible = new ArrayList<Boolean>();
+		try {
+			CoreFunctions.clickElement(driver, _drpDownTransportationType);
+			CoreFunctions.selectItemInListByText(driver, _drpDownTransportationTypeOptions, resultTableMap.get("Transportation_Type_Option"),
+					_lblTransportationType.getText(), PDTConstants.DROP_DOWN, true);
+			CoreFunctions.clickElement(driver, _lblMinDistanceForEconomyTravel);
+			CoreFunctions.explicitWaitForElementTextPresent(driver, _lblUnitOfDistanceForEconomyCode, PDTConstants.UNIT_OF_DISTANCE, 5);
+			resultElementVisible.add(CoreFunctions.verifyElementPresentOnPage(_lblMinDistanceForEconomyTravel, PDTConstants.LABEL, PDTConstants.MIN_DISTANCE_FOR_ECONOMY_AIR_TRAVEL));
+			resultElementVisible.add(CoreFunctions.verifyElementPresentOnPage(_txtBoxMinDistanceEconomy, PDTConstants.TEXTBOX, PDTConstants.MIN_DISTANCE_FOR_ECONOMY_AIR_TRAVEL));
+			resultElementVisible.add(CoreFunctions.verifyElementPresentOnPage(_lblUnitOfDistanceForEconomyCode, PDTConstants.LABEL, PDTConstants.UNIT_OF_DISTANCE));
+			for (WebElement btn : _lblUnitOfDistanceForEconomyAirTravel) {
+				resultElementVisible.add(CoreFunctions.verifyElementPresentOnPage(btn, PDTConstants.RADIOBTN,
+						_lblUnitOfDistanceForEconomyAirTravel.get(_lblUnitOfDistanceForEconomyAirTravel.indexOf(btn))
+										.getText().trim()));
+			}
+		} catch(Exception e) {
+			e.printStackTrace();
+			Assert.fail("Failed to verify Economy fields for Visibility");
+		}
+		result = resultElementVisible.stream().allMatch(t -> t.equals(true)) ? true : false;
+		printMessageForFieldVisibility(result, resultTableMap.get("Transportation_Type_Option"), benefitCategory, benefit);
+		return result;
+	}
+
+	public boolean verifyEconomyClassFieldsForInvisibilty(Map<String, String> resultTableMap, String benefitCategory, String benefit) {
+		boolean result = false;
+		ArrayList<Boolean> resultElementInVisible = new ArrayList<Boolean>();
+		try {
+			CoreFunctions.hoverAndSingleClick(driver, _iconClearTransportationType, "Clear Transport Type Option");
+			CoreFunctions.explicitWaitTillElementInVisibility(driver, _txtBoxMinDistanceEconomy);
+			resultElementInVisible.add(CoreFunctions.verifyElementNotPresentOnPage(_lblMinDistanceForEconomyTravel, PDTConstants.LABEL, PDTConstants.MIN_DISTANCE_FOR_ECONOMY_AIR_TRAVEL));
+			resultElementInVisible.add(CoreFunctions.verifyElementNotPresentOnPage(_txtBoxMinDistanceEconomy, PDTConstants.TEXTBOX, PDTConstants.MIN_DISTANCE_FOR_ECONOMY_AIR_TRAVEL));
+			resultElementInVisible.add(CoreFunctions.verifyElementNotPresentOnPage(_lblUnitOfDistanceForEconomyCode, PDTConstants.LABEL, PDTConstants.UNIT_OF_DISTANCE));
+			resultElementInVisible.add(CoreFunctions.verifyListElementNotPresentOnPage(_lblUnitOfDistanceForEconomyAirTravel, PDTConstants.RADIOBTN, PDTConstants.KM));
+			resultElementInVisible.add(CoreFunctions.verifyListElementNotPresentOnPage(_lblUnitOfDistanceForEconomyAirTravel, PDTConstants.RADIOBTN, PDTConstants.MILES));		
+		} catch(Exception e) {
+			e.printStackTrace();
+			Assert.fail("Exception occured while trying to verify Economy Class fields for invisibilty after deselecting the Economy Class Airfare option from Transportation Type dropdown.");
+		}
+		result = resultElementInVisible.stream().allMatch(t -> t.equals(true)) ? true : false;		
+		printMessageForFieldInVisibility(result, resultTableMap.get("Transportation_Type_Option"), benefitCategory, benefit);
+		return result;
+	}
+	
+	public boolean verifyBusinessClassForVisibilty(Map<String, String> resultTableMap, String benefitCategory, String benefit) {
+		boolean result = false;
+		ArrayList<Boolean> resultElementVisible = new ArrayList<Boolean>();
+		List<String> businessAirFareUnit = new ArrayList<String>();
+		List<String> expectedBusinessAirFareUnit = new ArrayList<String>();
+		expectedBusinessAirFareUnit.add(PDTConstants.KM);
+		expectedBusinessAirFareUnit.add(PDTConstants.MILES);
+		expectedBusinessAirFareUnit.add(PDTConstants.HOURS);
+		try {
+			CoreFunctions.clickElement(driver, _drpDownTransportationType);
+			CoreFunctions.selectItemInListByText(driver, _drpDownTransportationTypeOptions, resultTableMap.get("Transportation_Type_Option"),
+					_lblTransportationType.getText(), PDTConstants.DROP_DOWN, true);
+			CoreFunctions.clickElement(driver, _lblBusinessClassAirFareUnit);
+			
+			resultElementVisible.add(CoreFunctions.verifyElementPresentOnPage(
+					_lblBusinessClassAirFareUnit, PDTConstants.LABEL, PDTConstants.BUSINESS_CLASS_AIRFARE_UNIT));
+			resultElementVisible.add(CoreFunctions.verifyElementPresentOnPage(_drpDownBusinessClassAirfareUnit,
+							PDTConstants.DROP_DOWN, PDTConstants.BUSINESS_CLASS_AIRFARE_UNIT));
+
+			CoreFunctions.clickElement(driver, _drpDownBusinessClassAirfareUnit);
+			businessAirFareUnit = CoreFunctions.getElementTextAndStoreInList(driver, _drpDownOptionsBusinessClassAirfareUnit);
+			Log.info("business class air fare unit=="+businessAirFareUnit);
+			Log.info("expected business class air fare unit=="+expectedBusinessAirFareUnit);
+			if(expectedBusinessAirFareUnit.equals(businessAirFareUnit)) {
+				Reporter.addStepLog(MessageFormat.format(PDTConstants.VERIFIED_BUSINESS_CLASS_DRP_OPTION, CoreConstants.PASS, businessAirFareUnit));
+				resultElementVisible.add(true);
+			} else {
+				Reporter.addStepLog(MessageFormat.format(PDTConstants.FAILED_TO_VERIFY_BUSINESS_CLASS_DRP_OPTION, CoreConstants.FAIL, expectedBusinessAirFareUnit));
+				resultElementVisible.add(false);
+			}
+			
+			for (String option : businessAirFareUnit) {					
+				CoreFunctions.clickElement(driver, _drpDownBusinessClassAirfareUnit);
+				CoreFunctions.selectItemInListByText(driver, _drpDownOptionsBusinessClassAirfareUnit,
+						option, _lblBusinessClassAirFareUnit.getText(), PDTConstants.DROP_DOWN, true);
+				resultElementVisible.add(verifyKmMilesHoursForVisibility(option));
+			}			
+		}catch(Exception e) {
+			Assert.fail("Exception occured while trying to verify Business Class Airfare Option for Transportation drop down.");
+		}
+		result = resultElementVisible.stream().allMatch(t -> t.equals(true)) ? true : false;		
+		printMessageForFieldVisibility(result, resultTableMap.get("Transportation_Type_Option"), benefitCategory, benefit);
+		return result;
+	}
+	
+	public boolean verifyBusinessClassFieldsForInvisibilty(Map<String, String> resultTableMap, String benefitCategory, String benefit) {
+		boolean result = false;
+		ArrayList<Boolean> resultElementInVisible = new ArrayList<Boolean>();
+		try {
+			CoreFunctions.hoverAndSingleClick(driver, _iconClearTransportationType, "Clear Transport Type Option");
+			CoreFunctions.explicitWaitTillElementInVisibility(driver, _lblBusinessClassAirFareUnit);
+			resultElementInVisible.add(CoreFunctions.verifyElementNotPresentOnPage(_lblBusinessClassAirFareUnit, PDTConstants.LABEL, PDTConstants.BUSINESS_CLASS_AIRFARE_UNIT));
+			resultElementInVisible.add(CoreFunctions.verifyElementNotPresentOnPage(_drpDownBusinessClassAirfareUnit, PDTConstants.DROP_DOWN, PDTConstants.BUSINESS_CLASS_AIRFARE_UNIT));
+		} catch(Exception e) {
+			Assert.fail("Exception occured while trying to verify Business Class fields for invisibilty after deselecting the Economy Class Airfare option from Transportation Type dropdown.");
+		}
+		result = resultElementInVisible.stream().allMatch(t -> t.equals(true)) ? true : false;		
+		printMessageForFieldInVisibility(result, resultTableMap.get("Transportation_Type_Option"), benefitCategory, benefit);
+		return result;
+	}
+
+	public boolean verifyKmMilesForVisibility() {
+		ArrayList<Boolean> resultElementVisible = new ArrayList<Boolean>();
+		try {
+			resultElementVisible.add(CoreFunctions.verifyElementPresentOnPage(_lblMinDistanceForBusinessAirTravel,
+					PDTConstants.LABEL, _lblMinDistanceForBusinessAirTravel.getText()));
+			
+			resultElementVisible.add(CoreFunctions.verifyElementPresentOnPage(
+			_txtBoxMinDistanceForBusinessAirTravel, PDTConstants.TEXTBOX, _lblMinDistanceForBusinessAirTravel.getText()));
+		
+
+		} catch(Exception e) {
+			Assert.fail("Exception occured while trying to verify Min. Distance for Business Air Travel.");
+		}
+		return  resultElementVisible.stream().allMatch(t -> t.equals(true)) ? true : false;
+	}
+	
+	public boolean verifyHoursForVisibility() {
+		ArrayList<Boolean> resultElementVisible = new ArrayList<Boolean>();
+		try {
+			resultElementVisible.add(CoreFunctions.verifyElementPresentOnPage(
+					_lblMinTimeForBusinessAirTravel, PDTConstants.LABEL, _lblMinTimeForBusinessAirTravel.getText()));
+			
+			resultElementVisible.add(CoreFunctions.verifyElementPresentOnPage(
+					_txtBoxMinTimeForBusinessAirTravel, PDTConstants.TEXTBOX, _lblMinTimeForBusinessAirTravel.getText()));
+		
+		} catch(Exception e) {
+			Assert.fail("Exception occured while trying to verify Hours for Business Air Travel.");
+		}
+		return  resultElementVisible.stream().allMatch(t -> t.equals(true)) ? true : false;
+	}
+
+	public boolean verifyKmMilesHoursForVisibility(String option) {
+		boolean result = false;
+		if (option.equalsIgnoreCase(PDTConstants.KM)
+				|| option.equalsIgnoreCase(PDTConstants.MI) || option.equalsIgnoreCase(PDTConstants.MILES)) {
+			result = verifyKmMilesForVisibility();
+		} else if (option.equalsIgnoreCase(PDTConstants.HOURS)) {
+			result = verifyHoursForVisibility();
+		} else {
+			Assert.fail("Not a valid option for Business Air Travel");
+		}
+		return result;
+	}
+
+	
+/*	public void verifyDistanceForVisibilty(Map<String, String> resultTableMap, PDT_SharedSubBenefit_Steps sharedSubBenefitStep) {
+		try {
+			CoreFunctions.clickElement(driver, _drpDownTransportationType);
+			CoreFunctions.selectItemInListByText(driver, _drpDownTransportationTypeOptions, resultTableMap.get("Transportation_Type_Option"),
+					_lblTransportationType.getText(), PDTConstants.DROP_DOWN, true);
+			CoreFunctions.clickElement(driver, _lblDistance);
+			sharedSubBenefitStep.getCustomSoftAssertObj().assertTrue(CoreFunctions
+					.verifyElementPresentOnPage(_lblDistance, PDTConstants.LABEL, PDTConstants.DISTANCE), MessageFormat.format(PDTConstants.VRFIED_ELE_TYPE_NOT_AVAILABLE, CoreConstants.FAIL, PDTConstants.LABEL, PDTConstants.DISTANCE));
+			sharedSubBenefitStep.getCustomSoftAssertObj().assertTrue(CoreFunctions
+					.verifyElementPresentOnPage(_txtBoxDistance, PDTConstants.TEXTBOX, PDTConstants.DISTANCE), MessageFormat.format(PDTConstants.VRFIED_ELE_TYPE_NOT_AVAILABLE, CoreConstants.FAIL, PDTConstants.TEXTBOX, PDTConstants.DISTANCE));
+			sharedSubBenefitStep.getCustomSoftAssertObj().assertTrue(CoreFunctions.verifyElementPresentOnPage(
+					_lblUnitOfDistance, PDTConstants.LABEL, PDTConstants.UNIT_OF_DISTANCE), MessageFormat.format(PDTConstants.VRFIED_ELE_TYPE_NOT_AVAILABLE, CoreConstants.FAIL, PDTConstants.LABEL, PDTConstants.UNIT_OF_DISTANCE));
+			for (WebElement btn : _radioBtnUnitOfDistanceLabel) {
+				sharedSubBenefitStep.getCustomSoftAssertObj()
+						.assertTrue(CoreFunctions.verifyElementPresentOnPage(btn, PDTConstants.RADIOBTN,
+								_radioBtnUnitOfDistanceLabel.get(_radioBtnUnitOfDistanceLabel.indexOf(btn))
+										.getText().trim()), MessageFormat.format(PDTConstants.VRFIED_ELE_TYPE_NOT_AVAILABLE, CoreConstants.FAIL, PDTConstants.RADIOBTN,
+												_radioBtnUnitOfDistanceLabel.get(_radioBtnUnitOfDistanceLabel.indexOf(btn))
+												.getText().trim()));
+			}
+		} catch(Exception e) {
+			Assert.fail("Failed to verify Distance fields for Visibility");
+		}
+	}*/
+		
+/*	public void verifyDistanceForInvisibilty(PDT_SharedSubBenefit_Steps sharedSubBenefitStep) {
+		CoreFunctions.clickUsingJS(driver, _iconClearTransportationType, "Clear Transport Type Option");
+		CoreFunctions.explicitWaitTillElementInVisibility(driver, _txtBoxDistance);
+		sharedSubBenefitStep.getCustomSoftAssertObj().assertTrue(CoreFunctions
+				.verifyElementNotPresentOnPage(_lblDistance, PDTConstants.LABEL, PDTConstants.DISTANCE), MessageFormat.format(PDTConstants.FAILED_TO_VERIFY_ELE_TYPE_NOT_AVAILABLE, CoreConstants.FAIL, PDTConstants.LABEL, PDTConstants.DISTANCE));
+		sharedSubBenefitStep.getCustomSoftAssertObj().assertTrue(CoreFunctions
+				.verifyElementNotPresentOnPage(_txtBoxDistance, PDTConstants.TEXTBOX, PDTConstants.DISTANCE), MessageFormat.format(PDTConstants.FAILED_TO_VERIFY_ELE_TYPE_NOT_AVAILABLE, CoreConstants.FAIL, PDTConstants.TEXTBOX, PDTConstants.DISTANCE));
+		sharedSubBenefitStep.getCustomSoftAssertObj().assertTrue(CoreFunctions.verifyElementNotPresentOnPage(
+				_lblUnitOfDistance, PDTConstants.LABEL, PDTConstants.UNIT_OF_DISTANCE), MessageFormat.format(PDTConstants.FAILED_TO_VERIFY_ELE_TYPE_NOT_AVAILABLE, CoreConstants.FAIL, PDTConstants.LABEL, PDTConstants.UNIT_OF_DISTANCE));
+		
+		sharedSubBenefitStep.getCustomSoftAssertObj()
+					.assertTrue(CoreFunctions.verifyListElementNotPresentOnPage(_radioBtnUnitOfDistanceLabel, PDTConstants.RADIOBTN,
+							PDTConstants.KM), MessageFormat.format(PDTConstants.FAILED_TO_VERIFY_ELE_TYPE_NOT_AVAILABLE, CoreConstants.FAIL, PDTConstants.RADIOBTN,
+											PDTConstants.KM));
+		sharedSubBenefitStep.getCustomSoftAssertObj()
+		.assertTrue(CoreFunctions.verifyListElementNotPresentOnPage(_radioBtnUnitOfDistanceLabel, PDTConstants.RADIOBTN,
+				PDTConstants.MILES), MessageFormat.format(PDTConstants.FAILED_TO_VERIFY_ELE_TYPE_NOT_AVAILABLE, CoreConstants.FAIL, PDTConstants.RADIOBTN,
+								PDTConstants.MILES));
+			
+		
+	}*/
+	
+	/*
+	 	public void verifyEconomyClassForVisibilty(Map<String, String> resultTableMap, PDT_SharedSubBenefit_Steps sharedSubBenefitStep) {
+		CoreFunctions.clickElement(driver, _drpDownTransportationType);
+		CoreFunctions.selectItemInListByText(driver, _drpDownTransportationTypeOptions, resultTableMap.get("Transportation_Type_Option"),
+				_lblTransportationType.getText(), PDTConstants.DROP_DOWN, true);
+		CoreFunctions.clickElement(driver, _lblMinDistanceForEconomyTravel);
+		sharedSubBenefitStep.getCustomSoftAssertObj().assertTrue(CoreFunctions
+				.verifyElementPresentOnPage(_lblMinDistanceForEconomyTravel, PDTConstants.LABEL, PDTConstants.MIN_DISTANCE_FOR_ECONOMY_AIR_TRAVEL), MessageFormat.format(PDTConstants.VRFIED_ELE_TYPE_NOT_AVAILABLE, CoreConstants.FAIL, PDTConstants.LABEL, PDTConstants.DISTANCE));
+		sharedSubBenefitStep.getCustomSoftAssertObj().assertTrue(CoreFunctions
+				.verifyElementPresentOnPage(_txtBoxMinDistanceEconomy, PDTConstants.TEXTBOX, PDTConstants.MIN_DISTANCE_FOR_ECONOMY_AIR_TRAVEL), MessageFormat.format(PDTConstants.VRFIED_ELE_TYPE_NOT_AVAILABLE, CoreConstants.FAIL, PDTConstants.TEXTBOX, PDTConstants.DISTANCE));
+		sharedSubBenefitStep.getCustomSoftAssertObj().assertTrue(CoreFunctions.verifyElementPresentOnPage(
+				_lblUnitOfDistance, PDTConstants.LABEL, PDTConstants.UNIT_OF_DISTANCE), MessageFormat.format(PDTConstants.VRFIED_ELE_TYPE_NOT_AVAILABLE, CoreConstants.FAIL, PDTConstants.LABEL, PDTConstants.UNIT_OF_DISTANCE));
+		for (WebElement btn : _radioBtnUnitOfDistanceLabel) {
+			sharedSubBenefitStep.getCustomSoftAssertObj()
+					.assertTrue(CoreFunctions.verifyElementPresentOnPage(btn, PDTConstants.RADIOBTN,
+							_radioBtnUnitOfDistanceLabel.get(_radioBtnUnitOfDistanceLabel.indexOf(btn))
+									.getText().trim()), MessageFormat.format(PDTConstants.VRFIED_ELE_TYPE_NOT_AVAILABLE, CoreConstants.FAIL, PDTConstants.RADIOBTN,
+											_radioBtnUnitOfDistanceLabel.get(_radioBtnUnitOfDistanceLabel.indexOf(btn))
+											.getText().trim()));
+		}
+	}
+ */
+
+	/*
+	 	public void verifyEconomyClassForInvisibilty(PDT_SharedSubBenefit_Steps sharedSubBenefitStep) {
+		CoreFunctions.clickUsingJS(driver, _iconClearTransportationType, "Clear Transport Type Option");
+		CoreFunctions.explicitWaitTillElementInVisibility(driver, _txtBoxMinDistanceEconomy);
+		sharedSubBenefitStep.getCustomSoftAssertObj().assertTrue(CoreFunctions
+				.verifyElementNotPresentOnPage(_lblMinDistanceForEconomyTravel, PDTConstants.LABEL, PDTConstants.MIN_DISTANCE_FOR_ECONOMY_AIR_TRAVEL), MessageFormat.format(PDTConstants.FAILED_TO_VERIFY_ELE_TYPE_NOT_AVAILABLE, CoreConstants.FAIL, PDTConstants.LABEL, PDTConstants.MIN_DISTANCE_FOR_ECONOMY_AIR_TRAVEL));
+		sharedSubBenefitStep.getCustomSoftAssertObj().assertTrue(CoreFunctions
+				.verifyElementNotPresentOnPage(_txtBoxMinDistanceEconomy, PDTConstants.TEXTBOX, PDTConstants.MIN_DISTANCE_FOR_ECONOMY_AIR_TRAVEL), MessageFormat.format(PDTConstants.FAILED_TO_VERIFY_ELE_TYPE_NOT_AVAILABLE, CoreConstants.FAIL, PDTConstants.TEXTBOX, PDTConstants.MIN_DISTANCE_FOR_ECONOMY_AIR_TRAVEL));
+		sharedSubBenefitStep.getCustomSoftAssertObj().assertTrue(CoreFunctions.verifyElementNotPresentOnPage(
+				_lblUnitOfDistanceForEconomyCode, PDTConstants.LABEL, PDTConstants.UNIT_OF_DISTANCE), MessageFormat.format(PDTConstants.FAILED_TO_VERIFY_ELE_TYPE_NOT_AVAILABLE, CoreConstants.FAIL, PDTConstants.LABEL, PDTConstants.UNIT_OF_DISTANCE));
+		
+		sharedSubBenefitStep.getCustomSoftAssertObj()
+					.assertTrue(CoreFunctions.verifyListElementNotPresentOnPage(_lblUnitOfDistanceForEconomyAirTravel, PDTConstants.RADIOBTN,
+							PDTConstants.KM), MessageFormat.format(PDTConstants.FAILED_TO_VERIFY_ELE_TYPE_NOT_AVAILABLE, CoreConstants.FAIL, PDTConstants.RADIOBTN,
+											PDTConstants.KM));
+		sharedSubBenefitStep.getCustomSoftAssertObj()
+		.assertTrue(CoreFunctions.verifyListElementNotPresentOnPage(_lblUnitOfDistanceForEconomyAirTravel, PDTConstants.RADIOBTN,
+				PDTConstants.MILES), MessageFormat.format(PDTConstants.FAILED_TO_VERIFY_ELE_TYPE_NOT_AVAILABLE, CoreConstants.FAIL, PDTConstants.RADIOBTN,
+								PDTConstants.MILES));		
+	}
+	 */
+	
+/*	public void verifyBusinessClassForVisibilty(Map<String, String> resultTableMap, PDT_SharedSubBenefit_Steps sharedSubBenefitStep) {
+		List<String> businessAirFareUnit = new ArrayList<String>();
+		List<String> expectedBusinessAirFareUnit = new ArrayList<String>();
+		expectedBusinessAirFareUnit.add(PDTConstants.KM);
+		expectedBusinessAirFareUnit.add(PDTConstants.MILES);
+		expectedBusinessAirFareUnit.add(PDTConstants.HOURS);
+		CoreFunctions.clickElement(driver, _drpDownTransportationType);
+		CoreFunctions.selectItemInListByText(driver, _drpDownTransportationTypeOptions, resultTableMap.get("Transportation_Type_Option"),
+				_lblTransportationType.getText(), PDTConstants.DROP_DOWN, true);
+		CoreFunctions.clickElement(driver, _lblBusinessClassAirFareUnit);
+		
+		sharedSubBenefitStep.getCustomSoftAssertObj().assertTrue(CoreFunctions.verifyElementPresentOnPage(
+				_lblBusinessClassAirFareUnit, PDTConstants.LABEL, PDTConstants.BUSINESS_CLASS_AIRFARE_UNIT), MessageFormat.format(PDTConstants.VRFIED_ELE_TYPE_NOT_AVAILABLE, CoreConstants.FAIL, PDTConstants.LABEL, PDTConstants.BUSINESS_CLASS_AIRFARE_UNIT));
+		sharedSubBenefitStep.getCustomSoftAssertObj()
+				.assertTrue(CoreFunctions.verifyElementPresentOnPage(_drpDownBusinessClassAirfareUnit,
+						PDTConstants.DROP_DOWN, PDTConstants.BUSINESS_CLASS_AIRFARE_UNIT), MessageFormat.format(PDTConstants.VRFIED_ELE_TYPE_NOT_AVAILABLE, CoreConstants.FAIL, PDTConstants.DROP_DOWN, PDTConstants.BUSINESS_CLASS_AIRFARE_UNIT));
+
+		CoreFunctions.clickElement(driver, _drpDownBusinessClassAirfareUnit);
+		businessAirFareUnit = CoreFunctions.getElementTextAndStoreInList(driver, _drpDownOptionsBusinessClassAirfareUnit);
+		Log.info("business class air fare unit=="+businessAirFareUnit);
+		Log.info("expected business class air fare unit=="+expectedBusinessAirFareUnit);
+		if(expectedBusinessAirFareUnit.equals(businessAirFareUnit)) {
+			Reporter.addStepLog(MessageFormat.format(PDTConstants.VERIFIED_BUSINESS_CLASS_DRP_OPTION, CoreConstants.PASS, businessAirFareUnit));
+		} else {
+			Reporter.addStepLog(MessageFormat.format(PDTConstants.FAILED_TO_VERIFY_BUSINESS_CLASS_DRP_OPTION, CoreConstants.FAIL, expectedBusinessAirFareUnit));
+		}
+		
+		for (String option : businessAirFareUnit) {					
+			CoreFunctions.clickElement(driver, _drpDownBusinessClassAirfareUnit);
+			CoreFunctions.selectItemInListByText(driver, _drpDownOptionsBusinessClassAirfareUnit,
+					option, _lblBusinessClassAirFareUnit.getText(), PDTConstants.DROP_DOWN, true);
+			verifyKmMilesHoursForVisibility(sharedSubBenefitStep, option);
+		}
+	}*/
+		
+/*	public void verifyKmMilesForVisibility(PDT_SharedSubBenefit_Steps sharedSubBenefitStep) {
+		try {
+			sharedSubBenefitStep.getCustomSoftAssertObj()
+			.assertTrue(CoreFunctions.verifyElementPresentOnPage(_lblMinDistanceForBusinessAirTravel,
+					PDTConstants.LABEL, _lblMinDistanceForBusinessAirTravel.getText()), MessageFormat.format(PDTConstants.VRFIED_ELE_TYPE_NOT_AVAILABLE, CoreConstants.FAIL, PDTConstants.LABEL, _lblMinDistanceForBusinessAirTravel.getText()));
+			
+			sharedSubBenefitStep.getCustomSoftAssertObj().assertTrue(CoreFunctions.verifyElementPresentOnPage(
+			_txtBoxMinDistanceForBusinessAirTravel, PDTConstants.TEXTBOX, _lblMinDistanceForBusinessAirTravel.getText()), MessageFormat.format(PDTConstants.VRFIED_ELE_TYPE_NOT_AVAILABLE, CoreConstants.FAIL, PDTConstants.TEXTBOX, _lblMinDistanceForBusinessAirTravel.getText()));
+		
+
+		} catch(Exception e) {
+			Assert.fail("Failed to verify Min. Distance for Business Air Travel.");
+		}
+	}*/
+	
+/*	public void verifyHoursForVisibility(PDT_SharedSubBenefit_Steps sharedSubBenefitStep) {
+		try {
+			sharedSubBenefitStep.getCustomSoftAssertObj().assertTrue(CoreFunctions.verifyElementPresentOnPage(
+					_lblMinTimeForBusinessAirTravel, PDTConstants.LABEL, _lblMinTimeForBusinessAirTravel.getText()), MessageFormat.format(PDTConstants.VRFIED_ELE_TYPE_NOT_AVAILABLE, CoreConstants.FAIL, PDTConstants.LABEL, _lblMinTimeForBusinessAirTravel.getText()));
+			
+			sharedSubBenefitStep.getCustomSoftAssertObj().assertTrue(CoreFunctions.verifyElementPresentOnPage(
+					_txtBoxMinTimeForBusinessAirTravel, PDTConstants.TEXTBOX, _lblMinTimeForBusinessAirTravel.getText()), MessageFormat.format(PDTConstants.VRFIED_ELE_TYPE_NOT_AVAILABLE, CoreConstants.FAIL, PDTConstants.TEXTBOX, _lblMinTimeForBusinessAirTravel.getText()));
+			
+		
+		} catch(Exception e) {
+			Assert.fail("Failed to verify Hours for Business Air Travel.");
+		}	
+	}*/
 }

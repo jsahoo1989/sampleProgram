@@ -54,12 +54,12 @@ public class LoginToPDT_Steps {
 		pdtMyloCommonLoginPage.clickSignIn();
 	}
 
-/*	@Then("^he should be redirected to \"([^\"]*)\" page$")
+	@Then("^he should be redirected to \"([^\"]*)\" page$")
 	public void he_should_be_redirected_to_page(String pageName) throws Throwable {
 		Assert.assertTrue(viewPolicyPage.verifyViewPolicyHeading(pageName),
 				MessageFormat.format(PDTConstants.FAILED_TO_VERIFY_HEADING_ON_PAGE, CoreConstants.FAIL, pageName,
 						PDTConstants.VIEW_EDIT_POLICY_FORMS, viewPolicyPage.getElementText(PDTConstants.HEADING)));
-	}*/
+	}
 
 	@Then("^below userName should be displayed on \"([^\"]*)\" page$")
 	public void below_userName_should_be_displayed_on_page(String pageName, DataTable dataTable) throws Throwable {
@@ -81,12 +81,12 @@ public class LoginToPDT_Steps {
 		pdtMyloCommonLoginPage.enterUserEmailAndPassword(userEmail, password);
 	}
 
-/*	@Then("^below \"([^\"]*)\" should be displayed on \"([^\"]*)\" page$")
+	@Then("^below \"([^\"]*)\" should be displayed on \"([^\"]*)\" page$")
 	public void below_should_be_displayed_on_page(String userName, String pageName) throws Throwable {
 		Assert.assertTrue(viewPolicyPage.verifyUserlogin(userName, pageName),
 				MessageFormat.format(PDTConstants.FAILED_TO_VERIFY_USERNAME, CoreConstants.FAIL, pageName, userName,
 						viewPolicyPage.getUserName()));
-	}*/
+	}
 	
 	@Then("^Policies should be displayed on \"([^\"]*)\" page$")
 	public void policies_should_be_displayed_on_page(String pageName) throws Throwable {

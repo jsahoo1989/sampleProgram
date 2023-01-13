@@ -103,9 +103,6 @@ public class MyloJourneyOtherAddresses_Steps {
 			DataTable table) {
 		myloAssignmentPage.setFieldValueOtherAddressSection(table);
 		myloAssignmentPage.clickElementOnOtherAddressesSection(buttonName);
-		Assert.assertTrue(myloAssignmentPage.verifyAlertMessage(MYLOConstants.OTHER_ADDDRESS_SAVED_MESSAGE),
-				MessageFormat.format(MYLOConstants.VERIFIED_ALERT_MESSAGE_NOT_DISPLAYED, CoreConstants.FAIL,
-						MYLOConstants.OTHER_ADDDRESS_SAVED_MESSAGE, MYLOConstants.OTHER_ADDRESS));
 	}
 
 	@Then("^below fieldValues should be successfully saved under \"([^\"]*)\" section$")

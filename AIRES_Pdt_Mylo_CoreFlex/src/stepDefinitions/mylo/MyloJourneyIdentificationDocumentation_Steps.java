@@ -239,6 +239,8 @@ public class MyloJourneyIdentificationDocumentation_Steps {
 		Assert.assertTrue(myloAssignmentPage.verifyIdentityTypeValuesListFromDB(),
 				MessageFormat.format(MYLOConstants.VERIFIED_DROPDOWN_OPTIONS_MISMATCH, CoreConstants.FAIL,
 						MYLOConstants.IDENTITY_TYPE, MYLOConstants.IDENTIFICATION_AND_DOCUMENTATION));
+		myloAssignmentPage.setIdentityDocMembersTypeValue(MYLOConstants.RANDOM);
+		
 	}
 
 	@When("^he clicks on \"([^\"]*)\" dropdown field$")

@@ -283,6 +283,11 @@ public class MyloJourneyTeamPost_Steps {
 	@When("^he enters first (\\d+) characters in the \"([^\"]*)\" field of 'Team Post' section on Mylo Journey Page$")
 	public void he_enters_first_characters_in_the_field_of_Team_Post_section_on_Mylo_Journey_Page(int arg1,
 			String arg2) {
+		Assert.assertTrue(
+				myloJourneyPage.verifySectionHeader(MYLOConstants.TEAM_POSTS,
+						MYLOConstants.TEAM_POSTS + MYLOConstants.COLON),
+				MessageFormat.format(MYLOConstants.VERIFIED_HEADER_TEXT_NOT_DISPLAYED, CoreConstants.FAIL,
+						MYLOConstants.TEAM_POSTS + MYLOConstants.COLON,MYLOConstants.TEAM_POSTS));
 		myloJourneyPageTeamPostSection.searchTeamPostComments();
 	}
 

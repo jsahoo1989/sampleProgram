@@ -46,7 +46,7 @@ Scenario:  Mylo-Validate Save and Update functionality for Multiple Rows of Iden
 Given he is on Mylo Journey Summary page for file ID with "relocationPolicyType" data
 And message "Your changes have been successfully saved." is displayed after clicking on "Save" button with below valid data for multiple rows of "Identification & Documentation" section
 |Row|IdentityType       |Country |Number    |FromDate  |ToDate    | 
-|1  |Drivers License    |USA     |   12     |04/03/2022|current   |
+|1  |Drivers License    |USA     |   12     |04/03/2022|01/12/2023   |
 |2  |Cedula             |Canada  |   15     |04/01/2022|04/02/2022|
 |3  |Diplomatic Passport|India   |   10      |03/03/2022|03/04/2022|
 When he clicks on "Edit" button after verifying the saved values
@@ -61,8 +61,8 @@ Scenario:  Mylo-Validate Warning Messages for Invalid ToDate with Multiple Rows 
 Given he is on Mylo Journey Summary page for file ID with "activeAssignment" data
 When he clicks on "Save" button after entering below invalid ToDate data for multiple rows of "Identification & Documentation" section
 |Row|IdentityType       |Country |Number    |FromDate  |ToDate    | 
-|1  |Random             |Canada  |   15     |04/01/2022|32/02/2022|
-|2  |Random             |Canada  |   15     |04/01/2022|03/02/2022|
+|1  |Random             |USA     |   15     |04/01/2022|32/02/2022|
+|2  |Random             |USA     |   15     |04/01/2022|03/02/2022|
 Then "Invalid To Date!" message should get displayed for multiple records
 
 @IRIS-1225 @217057 @217058 @Mylo:217516 @Mylo-Regression

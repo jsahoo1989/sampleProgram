@@ -1244,7 +1244,8 @@ public class Mylo_AssignmentPage extends Base {
 			CoreFunctions.refreshPage(driver);
 			}
 			CoreFunctions.waitForMyloSpinnnerInvisibilityIfExist(driver, _spinner);
-			CoreFunctions.scrollClickUsingJS(driver, _tempAddressDropdown, MYLOConstants.TEMPORARY_ADDRESS_DROPDOWN);
+			CoreFunctions.scrollToElementUsingJS(driver, _tempAddressDropdown, elementName);
+			CoreFunctions.highlightElementAndClick(driver, _tempAddressDropdown, elementName);
 			mapOtherAddresssWebElementFields();
 			break;
 		case MYLOConstants.MAILING_ADDRESS_DROPDOWN:
@@ -1253,7 +1254,8 @@ public class Mylo_AssignmentPage extends Base {
 				CoreFunctions.refreshPage(driver);	
 			}
 			BusinessFunctions.fluentWaitForMyloSpinnerToDisappear(driver, _spinner);
-			CoreFunctions.scrollClickUsingJS(driver, _mailAddressDropdown, MYLOConstants.MAILING_ADDRESS_DROPDOWN);
+			CoreFunctions.scrollToElementUsingJS(driver, _mailAddressDropdown, elementName);
+			CoreFunctions.highlightElementAndClick(driver, _mailAddressDropdown, elementName);
 			mapOtherAddresssWebElementFields();
 			break;
 		case MYLOConstants.DELETE_BUTTON:
@@ -1268,6 +1270,8 @@ public class Mylo_AssignmentPage extends Base {
 			Reporter.addStepLog(CoreConstants.FAIL + MYLOConstants.ENTER_CORRECT_FIELD_NAME);
 			Assert.fail(MYLOConstants.ENTER_CORRECT_FIELD_NAME);
 		}
+		
+		BusinessFunctions.fluentWaitForMyloSpinnerToDisappear(driver, _spinner);
 	}
 
 	/**
@@ -1492,6 +1496,7 @@ public class Mylo_AssignmentPage extends Base {
 			Reporter.addStepLog(CoreConstants.FAIL + MYLOConstants.ENTER_CORRECT_FIELD_NAME);
 			Assert.fail(MYLOConstants.ENTER_CORRECT_FIELD_NAME);
 		}
+		BusinessFunctions.fluentWaitForMyloSpinnerToDisappear(driver, _spinner);
 	}
 
 	/**
@@ -2104,8 +2109,8 @@ public class Mylo_AssignmentPage extends Base {
 					.addAll(myloDev5HistoryDetails.stream().map(x -> x.historyDetails).collect(Collectors.toList()));
 			break;
 		default:
-			Reporter.addStepLog(CoreConstants.FAIL + MYLOConstants.ENTER_CORRECT_COUNTRY_NAME);
-			Assert.fail(MYLOConstants.ENTER_CORRECT_COUNTRY_NAME);
+			Reporter.addStepLog(CoreConstants.FAIL + MYLOConstants.ENTER_CORRECT_ENVIRONMENT_NAME);
+			Assert.fail(MYLOConstants.ENTER_CORRECT_ENVIRONMENT_NAME);
 		}
 		return historyfileIds;
 	}
@@ -2263,10 +2268,11 @@ public class Mylo_AssignmentPage extends Base {
 			break;
 		case MYLOConstants.YES_BUTTON:
 			CoreFunctions.click(driver, _YesButton, _YesButton.getText());
-			CoreFunctions.explicitWaitTillElementInVisibilityCustomTime(driver, _spinner, 180);
+			BusinessFunctions.fluentWaitForMyloSpinnerToDisappear(driver, _spinner);
 			break;
 		case MYLOConstants.NO_BUTTON:
 			CoreFunctions.click(driver, _NoButton, _NoButton.getText());
+			BusinessFunctions.fluentWaitForMyloSpinnerToDisappear(driver, _spinner);
 			break;
 		case MYLOConstants.CLOSE_BUTTON:
 			CoreFunctions.isElementVisible(_closeBtn);
@@ -2275,11 +2281,13 @@ public class Mylo_AssignmentPage extends Base {
 			break;
 		case MYLOConstants.REMOVE_BUTTON:
 			CoreFunctions.click(driver, _removeButton.get(0), MYLOConstants.REMOVE_BUTTON);
+			BusinessFunctions.fluentWaitForMyloSpinnerToDisappear(driver, _spinner);
 			break;
 		default:
 			Reporter.addStepLog(CoreConstants.FAIL + MYLOConstants.ENTER_CORRECT_ELEMENT_NAME);
 			Assert.fail(MYLOConstants.ENTER_CORRECT_ELEMENT_NAME);
 		}
+	
 	}
 
 	/**
@@ -2293,16 +2301,19 @@ public class Mylo_AssignmentPage extends Base {
 		case MYLOConstants.IDENTITY_TYPE_DROPDOWN:
 			CoreFunctions.explicitWaitTillElementListVisibility(driver, _identDocTypeDropdowns);
 			CoreFunctions.highlightObject(driver, _identDocTypeDropdowns.get(index));
-			CoreFunctions.click(driver, _identDocTypeDropdowns.get(index), MYLOConstants.IDENTITY_TYPE_DROPDOWN);
-			CoreFunctions.explicitWaitTillElementVisibility(driver, _identDocTypeDropdowns.get(index),
-					MYLOConstants.IDENTITY_TYPE_DROPDOWN);
-			identityTypeList = CoreFunctions.getElementListByLocator(driver, _dropdownOptions);
+			identityTypeList =clickOnElementTillDropdownListAppears(_identDocTypeDropdowns.get(index), elementName);
+			
+			//CoreFunctions.click(driver, _identDocTypeDropdowns.get(index), MYLOConstants.IDENTITY_TYPE_DROPDOWN);
+			//CoreFunctions.explicitWaitTillElementVisibility(driver, _identDocTypeDropdowns.get(index),
+				//	MYLOConstants.IDENTITY_TYPE_DROPDOWN);
+			//identityTypeList = CoreFunctions.getElementListByLocator(driver, _dropdownOptions);
 			break;
 		case MYLOConstants.COUNTRY:
 			CoreFunctions.explicitWaitTillElementVisibility(driver, _identDocCountryDropdowns.get(index),
 					MYLOConstants.COUNTRY);
-			CoreFunctions.click(driver, _identDocCountryDropdowns.get(index), MYLOConstants.COUNTRY);
-			countryList = CoreFunctions.getElementListByLocator(driver, _dropdownOptions);
+			//CoreFunctions.click(driver, _identDocCountryDropdowns.get(index), MYLOConstants.COUNTRY);
+			//countryList = CoreFunctions.getElementListByLocator(driver, _dropdownOptions);
+			countryList =clickOnElementTillDropdownListAppears(_identDocCountryDropdowns.get(index), elementName);
 			break;
 		case MYLOConstants.REMOVE_BUTTON:
 			CoreFunctions.click(driver, _removeButton.get(index), MYLOConstants.REMOVE_BUTTON);
@@ -2316,11 +2327,21 @@ public class Mylo_AssignmentPage extends Base {
 			Assert.fail(MYLOConstants.ENTER_CORRECT_ELEMENT_NAME);
 		}
 	}
+	
+	public List<WebElement> clickOnElementTillDropdownListAppears(WebElement element, String elementName) {
+		CoreFunctions.explicitWaitTillElementVisibility(driver, element,elementName);
+		while(!(CoreFunctions.isElementByLocatorExist(driver, _dropdownOptions, 5))) {
+			CoreFunctions.click(driver, element, elementName);
+			BusinessFunctions.fluentWaitForMyloSpinnerToDisappear(driver, _spinner);
+		}
+		return CoreFunctions.getElementListByLocator(driver, _dropdownOptions);
+	}
 
 	/**
 	 * @param fieldValue Set Type value on Identification & Documentation section
 	 */
 	public String setIdentityDocMembersTypeValue(String fieldValue) {
+		try {
 		if (fieldValue.equals(MYLOConstants.RANDOM)) {
 			identityTypeList.remove(0);
 			updatedTypeValue = CoreFunctions.getRandomElementValueFromList(driver, identityTypeList);
@@ -2328,6 +2349,10 @@ public class Mylo_AssignmentPage extends Base {
 		} else {
 			updatedTypeValue = fieldValue;
 			BusinessFunctions.selectItemFromListUsingText(driver, identityTypeList, fieldValue);
+		}
+		}
+		catch(Exception e) {
+			Assert.fail(MessageFormat.format(MYLOConstants.FAILED_TO_GET_VALUE_FROM_ELEMENT, fieldValue));
 		}
 
 		return updatedTypeValue;
@@ -2590,7 +2615,7 @@ public class Mylo_AssignmentPage extends Base {
 	 */
 	public boolean verifyMultipleRowsFieldValuesIdentDocSection() {
 		boolean flag = true;
-		CoreFunctions.explicitWaitTillElementInVisibilityCustomTime(driver, _spinner, 240);
+		BusinessFunctions.fluentWaitForMyloSpinnerToDisappear(driver, _spinner);
 		for (int i = 0; i < _identDocTypeDropdowns.size(); i++) {
 			String updatedFromDate = CoreFunctions.getStringDateInFormat(
 					getFieldValuesIdentificationAndDocumentationSection(MYLOConstants.FROMDATE, i), "dd MMM yyyy",

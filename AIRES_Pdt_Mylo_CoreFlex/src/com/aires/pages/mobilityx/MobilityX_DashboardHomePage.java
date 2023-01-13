@@ -370,7 +370,8 @@ public class MobilityX_DashboardHomePage extends Base{
 		try {
 			BusinessFunctions.selectValueFromDropdown(_drpDownReceivingRegion, transferInfo.receivingRegion);
 			BusinessFunctions.selectRadioAsPerLabelText(driver, _radioBtnProjectRelated,
-					transferInfo.projectRelated);	
+					transferInfo.projectRelated);
+			CoreFunctions.waitHandler(3);			
 			BusinessFunctions.selectOptionValueFromDropdown(_relocationPolicy, ClientPolicyDetails.getPolicyName().replace("(", "").replace(")", "").split("#")[0].trim());
 			CoreFunctions.waitHandler(3);
 			CoreFunctions.clearAndSetText(driver, _txtBoxStartDateInNewLocation, CoreFunctions.getcurrentdate());

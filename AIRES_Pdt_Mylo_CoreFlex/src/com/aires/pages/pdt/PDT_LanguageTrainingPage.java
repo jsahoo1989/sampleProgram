@@ -164,12 +164,14 @@ public class PDT_LanguageTrainingPage extends PDT_SharedSubBenefitPage {
 					languageTrainingBenefitData.languageTrainingEmployee.maxNumOfHours);
 
 			CoreFunctions.explicitWaitTillElementListClickable(driver, _radioBtnLabelGrossUpEmp);
-			BusinessFunctions.verifyDefaultSelectedRadioButtonForField(driver, _radioBtnLabelGrossUpEmp,
-					_radioBtnGrossUpLangTrainEmp, PDTConstants.GROSS_UP, generalInfoPage.getGrossUp(), generalInfoPage,
-					sharedSubBenefitStep);
-			BusinessFunctions.verifyDefaultSelectedRadioButtonForField(driver, _radioBtnLabelReimbursedByEmp,
-					_radioBtnReimbByLangTrainEmp, PDTConstants.REIMBURSED_BY, generalInfoPage.getReimbursedBy(),
-					generalInfoPage, sharedSubBenefitStep);
+			if (CoreFunctions.getPropertyFromConfig("expenseMgmt").equalsIgnoreCase("Yes")) {
+				BusinessFunctions.verifyDefaultSelectedRadioButtonForField(driver, _radioBtnLabelGrossUpEmp,
+						_radioBtnGrossUpLangTrainEmp, PDTConstants.GROSS_UP, generalInfoPage.getGrossUp(),
+						generalInfoPage, sharedSubBenefitStep);
+				BusinessFunctions.verifyDefaultSelectedRadioButtonForField(driver, _radioBtnLabelReimbursedByEmp,
+						_radioBtnReimbByLangTrainEmp, PDTConstants.REIMBURSED_BY, generalInfoPage.getReimbursedBy(),
+						generalInfoPage, sharedSubBenefitStep);
+			}
 			if (subBenefitPage.getCompletePolicyState())
 				CoreFunctions.selectItemInListByText(driver, _radioBtnLabelGrossUpEmp,
 						languageTrainingBenefitData.languageTrainingEmployee.grossUp, PDTConstants.GROSS_UP,
@@ -237,12 +239,14 @@ public class PDT_LanguageTrainingPage extends PDT_SharedSubBenefitPage {
 					languageTrainingBenefitData.languageTrainingFamily.maxNumOfHrsPerFamily);
 
 			CoreFunctions.explicitWaitTillElementListClickable(driver, _radioBtnLabelGrossUpFamily);
-			BusinessFunctions.verifyDefaultSelectedRadioButtonForField(driver, _radioBtnLabelGrossUpFamily,
-					_radioBtnGrossUpLangTrainFam, PDTConstants.GROSS_UP, generalInfoPage.getGrossUp(), generalInfoPage,
-					sharedSubBenefitStep);
-			BusinessFunctions.verifyDefaultSelectedRadioButtonForField(driver, _radioBtnLabelReimbByFamily,
-					_radioBtnReimbByLangTrainFam, PDTConstants.REIMBURSED_BY, generalInfoPage.getReimbursedBy(),
-					generalInfoPage, sharedSubBenefitStep);
+			if (CoreFunctions.getPropertyFromConfig("expenseMgmt").equalsIgnoreCase("Yes")) {
+				BusinessFunctions.verifyDefaultSelectedRadioButtonForField(driver, _radioBtnLabelGrossUpFamily,
+						_radioBtnGrossUpLangTrainFam, PDTConstants.GROSS_UP, generalInfoPage.getGrossUp(),
+						generalInfoPage, sharedSubBenefitStep);
+				BusinessFunctions.verifyDefaultSelectedRadioButtonForField(driver, _radioBtnLabelReimbByFamily,
+						_radioBtnReimbByLangTrainFam, PDTConstants.REIMBURSED_BY, generalInfoPage.getReimbursedBy(),
+						generalInfoPage, sharedSubBenefitStep);
+			}
 			if (subBenefitPage.getCompletePolicyState())
 				CoreFunctions.selectItemInListByText(driver, _radioBtnLabelGrossUpFamily,
 						languageTrainingBenefitData.languageTrainingFamily.grossUp, PDTConstants.GROSS_UP,
@@ -353,7 +357,7 @@ public class PDT_LanguageTrainingPage extends PDT_SharedSubBenefitPage {
 
 	public boolean verifyReimbursedByForLangTrainEmpolyee() {
 		return BusinessFunctions.verifyRadioButtonIsSelected(driver, _radioBtnLabelReimbursedByEmp,
-				_radioBtnReimbByLangTrainEmp, languageTrainingBenefitData.languageTrainingFamily.reimbursedBy,
+				_radioBtnReimbByLangTrainEmp, languageTrainingBenefitData.languageTrainingEmployee.reimbursedBy,
 				PDTConstants.REIMBURSED_BY, PDTConstants.SUBMITTED);
 	}
 

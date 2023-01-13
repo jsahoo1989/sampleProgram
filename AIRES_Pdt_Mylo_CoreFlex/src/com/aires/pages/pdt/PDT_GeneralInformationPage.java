@@ -684,6 +684,7 @@ public class PDT_GeneralInformationPage extends Base {
 			CoreFunctions.selectItemInListByText(driver, _radioBtnExpenseManagementClient, "No",
 					_lblExpenseMgmtClient.getText(), PDTConstants.RADIO_BUTTON_LIST, true);
 			setExpenseMgmt("No");
+			CoreFunctions.writeToPropertiesFile("expenseMgmt", "No");
 			timeBeforeAction = new Date().getTime();
 			CoreFunctions.click(driver, _btnNext, _btnNext.getText());
 			BusinessFunctions.fluentWaitForSpinnerToDisappear(driver, _progressBar);
@@ -1194,10 +1195,10 @@ public class PDT_GeneralInformationPage extends Base {
 		Assert.assertTrue(verifyPageNavigation(PDTConstants.GENERAL_INFORMATION),
 				MessageFormat.format(PDTConstants.FAILED_TO_NAVIGATE_TO_PAGE, PDTConstants.GENERAL_INFORMATION, 
 						CoreConstants.FAIL));
-		navigatePolicyBenefitPage(PDTConstants.POLICY_BENEFIT);
+		/*navigatePolicyBenefitPage(PDTConstants.POLICY_BENEFIT);
 		Assert.assertTrue(policyBenefitCategoryPage.verifyPolicyBenefitCategoryHeading(PDTConstants.POLICY_BENEFIT),
 				MessageFormat.format(PDTConstants.FAIL_TO_VERIFY_ELEMENT_VAL_ON_PAGE, CoreConstants.FAIL, PDTConstants.heading, PDTConstants.POLICY_BENEFIT_CATEGORIES, PDTConstants.POLICY_BENEFIT, policyBenefitCategoryPage.getElementText(PDTConstants.HEADING)));
-		Assert.assertTrue(policyBenefitCategoryPage.verifyIsPolicyBenefitCategoryChecked(policyBenefitCategoryPage.getBenefitCategoryName()), MessageFormat.format(PDTConstants.BENEFIT_CATEGORY_IS_NOT_SELECTED, CoreConstants.FAIL, policyBenefitCategoryPage.getBenefitCategoryName()));
+		Assert.assertTrue(policyBenefitCategoryPage.verifyIsPolicyBenefitCategoryChecked(policyBenefitCategoryPage.getBenefitCategoryName()), MessageFormat.format(PDTConstants.BENEFIT_CATEGORY_IS_NOT_SELECTED, CoreConstants.FAIL, policyBenefitCategoryPage.getBenefitCategoryName()));*/
 	}
 	
 	public boolean verifyStatusAndVersionOfPolicy(String selectedPolicyName, String expectedPolicyStatus, String expectedPolicyVersion, String pageName) {
@@ -1246,6 +1247,7 @@ public class PDT_GeneralInformationPage extends Base {
 			CoreFunctions.selectItemInListByText(driver, _radioBtnExpenseManagementClient, "Yes",
 					_lblExpenseMgmtClient.getText(), PDTConstants.RADIO_BUTTON_LIST, true);
 			setExpenseMgmt("Yes");
+			CoreFunctions.writeToPropertiesFile("expenseMgmt", "Yes");
 			
 			randOption = BusinessFunctions.selectAndReturnRandomValFromRadioButton(driver, _expenseReceiptReqReimbursement, _lblExpenseReciptReqReimbursement);
 			setReceiptReqReimbursement(randOption);

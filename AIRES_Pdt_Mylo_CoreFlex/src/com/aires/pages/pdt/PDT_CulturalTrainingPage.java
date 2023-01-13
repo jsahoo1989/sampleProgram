@@ -243,12 +243,14 @@ public class PDT_CulturalTrainingPage extends PDT_SharedSubBenefitPage {
 			}
 
 			CoreFunctions.explicitWaitTillElementListClickable(driver, _radioBtnLblGrossUpEmp);
-			BusinessFunctions.verifyDefaultSelectedRadioButtonForField(driver, _radioBtnLblGrossUpEmp,
-					_radioBtnCulTrainEmployee, PDTConstants.GROSS_UP, generalInfoPage.getGrossUp(), generalInfoPage,
-					sharedSubBenefitStep);
-			BusinessFunctions.verifyDefaultSelectedRadioButtonForField(driver, _radioBtnLblReimbByEmp,
-					_radioBtnCulTrainEmployee, PDTConstants.REIMBURSED_BY, generalInfoPage.getReimbursedBy(),
-					generalInfoPage, sharedSubBenefitStep);
+			if (CoreFunctions.getPropertyFromConfig("expenseMgmt").equalsIgnoreCase("Yes")) {
+				BusinessFunctions.verifyDefaultSelectedRadioButtonForField(driver, _radioBtnLblGrossUpEmp,
+						_radioBtnCulTrainEmployee, PDTConstants.GROSS_UP, generalInfoPage.getGrossUp(), generalInfoPage,
+						sharedSubBenefitStep);
+				BusinessFunctions.verifyDefaultSelectedRadioButtonForField(driver, _radioBtnLblReimbByEmp,
+						_radioBtnCulTrainEmployee, PDTConstants.REIMBURSED_BY, generalInfoPage.getReimbursedBy(),
+						generalInfoPage, sharedSubBenefitStep);
+			}
 			if (sharedSubBenefitPage.getCompletePolicyState())
 				CoreFunctions.selectItemInListByText(driver, _radioBtnLblGrossUpEmp,
 						culturalTrainingBenefitData.culturalTrainingEmployee.grossUp, PDTConstants.GROSS_UP,
@@ -283,6 +285,7 @@ public class PDT_CulturalTrainingPage extends PDT_SharedSubBenefitPage {
 					_drpDownSelectedOptionsCultTrainEmpExpenseCode, randExpenseCodeOptions, subBenefitFormName);
 			setExpenseCodeCultTrainEmp(randExpenseCodeOptions);
 		} catch (Exception e) {
+			e.printStackTrace();
 			Assert.fail(MessageFormat.format(PDTConstants.EXCEPTION_OCCURED_FILL_SUBBENEFIT_FORM, CoreConstants.FAIL,
 					subBenefitFormName));
 		}
@@ -326,12 +329,14 @@ public class PDT_CulturalTrainingPage extends PDT_SharedSubBenefitPage {
 			}
 
 			CoreFunctions.explicitWaitTillElementListClickable(driver, _radioBtnLblGrossUpFamily);
-			BusinessFunctions.verifyDefaultSelectedRadioButtonForField(driver, _radioBtnLblGrossUpFamily,
-					_radioBtnCulTrainFamily, PDTConstants.GROSS_UP, generalInfoPage.getGrossUp(), generalInfoPage,
-					sharedSubBenefitStep);
-			BusinessFunctions.verifyDefaultSelectedRadioButtonForField(driver, _radioBtnLblReimbursedByFamily,
-					_radioBtnCulTrainFamily, PDTConstants.REIMBURSED_BY, generalInfoPage.getReimbursedBy(),
-					generalInfoPage, sharedSubBenefitStep);
+			if (CoreFunctions.getPropertyFromConfig("expenseMgmt").equalsIgnoreCase("Yes")) {
+				BusinessFunctions.verifyDefaultSelectedRadioButtonForField(driver, _radioBtnLblGrossUpFamily,
+						_radioBtnCulTrainFamily, PDTConstants.GROSS_UP, generalInfoPage.getGrossUp(), generalInfoPage,
+						sharedSubBenefitStep);
+				BusinessFunctions.verifyDefaultSelectedRadioButtonForField(driver, _radioBtnLblReimbursedByFamily,
+						_radioBtnCulTrainFamily, PDTConstants.REIMBURSED_BY, generalInfoPage.getReimbursedBy(),
+						generalInfoPage, sharedSubBenefitStep);
+			}
 			if (sharedSubBenefitPage.getCompletePolicyState())
 				CoreFunctions.selectItemInListByText(driver, _radioBtnLblGrossUpFamily,
 						culturalTrainingBenefitData.culturalTrainingFamily.grossUp, PDTConstants.GROSS_UP,

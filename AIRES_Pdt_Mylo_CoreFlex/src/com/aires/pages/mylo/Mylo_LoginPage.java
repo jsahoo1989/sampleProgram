@@ -71,8 +71,8 @@ public class Mylo_LoginPage extends Base {
 	@FindBy(how = How.ID, using = "passwordError")
 	private WebElement _passwordError;
 
-	@FindBy(how = How.XPATH, using = "//img[contains(@src,'login-with-office-365.jpg')]")
-	private WebElement _loginImg;
+	@FindBy(how = How.CSS, using = "button[class*='btn mylo-login-btn']")
+	private WebElement _loginBtn;
 
 	private final By _txtPassword = By.cssSelector("input[type='password']");
 
@@ -88,8 +88,8 @@ public class Mylo_LoginPage extends Base {
 				.getApplicationUrl(System.getProperty(MYLOConstants.APPLICATION)));
 		CoreFunctions.waitForBrowserToLoad(driver);
 		verifyMYLOLogo();
-		CoreFunctions.explicitWaitTillElementVisibility(driver, _loginImg, MYLOConstants.LOGIN_IMAGE, 10);
-		CoreFunctions.hoverAndClick(driver, _loginImg, MYLOConstants.LOGIN_IMAGE);
+		CoreFunctions.explicitWaitTillElementVisibility(driver, _loginBtn, MYLOConstants.LOGIN_IMAGE, 10);
+		CoreFunctions.hoverAndClick(driver, _loginBtn, MYLOConstants.LOGIN_IMAGE);
 		CoreFunctions.switchToNewTab(driver);
 	}
 
@@ -166,8 +166,8 @@ public class Mylo_LoginPage extends Base {
 			while (!(CoreFunctions.isElementExist(driver, _userProfile, 3))) {
 				CoreFunctions.refreshPage(driver);
 				CoreFunctions.waitForBrowserToLoad(driver);
-				CoreFunctions.explicitWaitTillElementVisibility(driver, _loginImg, MYLOConstants.LOGIN_IMAGE, 10);
-				CoreFunctions.hoverAndClick(driver, _loginImg, MYLOConstants.LOGIN_IMAGE);
+				CoreFunctions.explicitWaitTillElementVisibility(driver, _loginBtn, MYLOConstants.LOGIN_IMAGE, 10);
+				CoreFunctions.hoverAndClick(driver, _loginBtn, MYLOConstants.LOGIN_IMAGE);
 				BusinessFunctions.fluentWaitForMyloSpinnerToDisappear(driver, _spinner);
 			}
 			CoreFunctions.highlightObject(driver, _userProfile);

@@ -572,9 +572,8 @@ public class MyloJourneyPage_CreateNewFileSection extends Base {
 	
 	public void setLeadCompanyID(String leadCompanyID) {
 		if(MyloNewFileUtil.get_leadCompanyID()==null) {
-			BusinessFunctions.fluentWaitForMyloSpinnerToDisappear(driver, _spinner);	
-			CoreFunctions.scrollToElementUsingJS(driver, _leadCompanyIDInput, MYLOConstants.LEAD_COMPANY_ID_SECTION);
-			//CoreFunctions.scrollToElementUsingJS(driver, _leadCompanyIDSection, MYLOConstants.LEAD_COMPANY_ID_SECTION);
+		BusinessFunctions.fluentWaitForMyloSpinnerToDisappear(driver, _spinner);	
+		CoreFunctions.scrollToElementUsingJS(driver, _leadCompanyIDSection, MYLOConstants.LEAD_COMPANY_ID_SECTION);
 		clickLeadCompanySectionButtons(MYLOConstants.EDIT_BUTTON);
 		MyloNewFileUtil.set_leadCompanyID(BusinessFunctions.setMyloInputFields(driver, MYLOConstants.LEAD_COMPANY_ID_SECTION, MYLOConstants.AUTOMATION_CLIENT_ID, _leadCompanyIDInput, MYLOConstants.VALUE));
 		CoreFunctions.hoverAndClick(driver, CoreFunctions.getElementByLocator(driver, _dropdownOptions), leadCompanyID);

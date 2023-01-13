@@ -654,7 +654,7 @@ public class CoreFunctions {
 	public static void clickElement(WebDriver driver, WebElement Element) {
 		waitTillElementClickable(driver, Element, 60);
 		try {
-			highlightObject(driver, Element);
+			//highlightObject(driver, Element);
 			Element.click();
 		} catch (Exception e) {
 			Assert.fail(MessageFormat.format(CoreConstants.FAILD_CLCK_ELE, Element));
@@ -1096,6 +1096,12 @@ public class CoreFunctions {
 	public static void hoverAndClick(WebDriver driver, WebElement element, String name) {
 		Actions action = new Actions(driver);
 		action.moveToElement(element).doubleClick().build().perform();
+		Reporter.addStepLog(CoreConstants.PASS + MessageFormat.format(CoreConstants.VRFIED_ELE_CLCKED, name));
+	}
+	
+	public static void hoverAndSingleClick(WebDriver driver, WebElement element, String name) {
+		Actions action = new Actions(driver);
+		action.moveToElement(element).click().build().perform();
 		Reporter.addStepLog(CoreConstants.PASS + MessageFormat.format(CoreConstants.VRFIED_ELE_CLCKED, name));
 	}
 
@@ -1549,7 +1555,7 @@ public class CoreFunctions {
 	}
 
 	public static List<String> getElementTextAndStoreInList(WebDriver driver, List<WebElement> elementList) {
-		return (elementList.stream().map(x -> x.getText()).collect(Collectors.toList()));
+		return (elementList.stream().map(x -> x.getText().trim()).collect(Collectors.toList()));
 	}
 
 	public static WebElement getElementFromListByText(List<WebElement> elementList, String text) {
@@ -2096,5 +2102,44 @@ public class CoreFunctions {
 			Reporter.addStepLog(MessageFormat.format(PDTConstants.FAILED_TO_VERIFY_FIELD_ACCEPTING_MAX_CHARACTERS, CoreConstants.FAIL, fieldName, maxLength, actualText, expectedText));
 			return false;
 		}
+	}
+	
+	public static boolean verifyElementNotPresentOnPage(WebElement element, String elementType, String name) {
+		boolean flag = false;
+		try {
+			if (element.isDisplayed()) {
+				Reporter.addStepLog(MessageFormat.format(PDTConstants.FAILED_VRFIED_ELE_TYPE_ON_PAGE, CoreConstants.FAIL, elementType, name));
+				flag = false;
+			} else {
+				flag = true;
+				Reporter.addStepLog(
+						MessageFormat.format(PDTConstants.PASS_VRFIED_ELE_TYPE_NOT_ON_PAGE, CoreConstants.PASS, elementType, name));
+			}
+		} catch (NoSuchElementException e) {
+			//Log.info(CoreConstants.VRFIED_THAT + name + CoreConstants.ELE_NOT_PRESNT);
+			flag = true;
+			Reporter.addStepLog(
+					MessageFormat.format(PDTConstants.PASS_VRFIED_ELE_TYPE_NOT_ON_PAGE, CoreConstants.PASS, elementType, name));
+		}
+		return flag;
+	}
+	
+	public static boolean verifyListElementNotPresentOnPage(List<WebElement> element, String elementType, String name) {
+		boolean flag = false;
+		try {
+			if (element.size() > 0) {
+				Reporter.addStepLog(MessageFormat.format(PDTConstants.FAILED_VRFIED_ELE_TYPE_ON_PAGE, CoreConstants.FAIL, elementType, name));
+				flag = false;
+			} else {
+				flag = true;
+				Reporter.addStepLog(
+						MessageFormat.format(PDTConstants.PASS_VRFIED_ELE_TYPE_NOT_ON_PAGE, CoreConstants.PASS, elementType, name));
+			}
+		} catch (NoSuchElementException e) {			
+			flag = true;
+			Reporter.addStepLog(
+					MessageFormat.format(PDTConstants.PASS_VRFIED_ELE_TYPE_NOT_ON_PAGE, CoreConstants.PASS, elementType, name));
+		}
+		return flag;
 	}
 }

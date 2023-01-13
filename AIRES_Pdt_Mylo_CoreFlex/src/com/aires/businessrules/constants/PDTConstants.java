@@ -666,4 +666,17 @@ public class PDTConstants {
 	public static final String SELECTED = "selected";
 	public static final String SUBMITTED = "submitted";
 	public static final String FAILED_TO_VERIFY_GROSSUP_REIMBURSED_BY = "{0}Failed to verify Gross-Up and Reimbursed by for benefits.";
+	public static final String FAILED_VRFIED_ELE_TYPE_ON_PAGE = "<font color=''red''>{0} Verified {1} - ''{2}'' is Present On Page</font>";
+	public static final String PASS_VRFIED_ELE_TYPE_NOT_ON_PAGE = "{0} Verified {1} - ''{2}'' is not Present On Page.</font>";
+	public static final String FAILED_TO_VERIFY_ELE_TYPE_NOT_AVAILABLE = "{0} Failed to verify {1} - ''{2}'' is not Present On Page.";
+	public static final String VERIFIED_BUSINESS_CLASS_DRP_OPTION = "{0} Verified Business AirFare options ''{1}'' are present in Business Class Airefare Unit drop down.";
+	public static final String FAILED_TO_VERIFY_BUSINESS_CLASS_DRP_OPTION = "<font color='red'>{0} Failed to verify Business AirFare options ''{1}'' are present in Business Class Airefare Unit drop down.</font>";
+	public static final String VERIFIED_TRANSPORTATION_TYPE_OPTION_VISIBILITY = "{0} Verified {1} option fields are visible after selecting {1} option from Transportation type drop down on {2} benefit.";
+	public static final String FAIL_TO_VERIFY_TRANSPORTATION_TYPE_OPTION_VISIBILITY = "<font color='red'>{0} Failed to verify {1} option fields are visible after selecting {1} option from Transportation type drop down on {2} benefit.</font>";
+	public static final String VERIFIED_TRANSPORTATION_TYPE_OPTION_INVISIBILITY = "{0} Verified {1} option fields are invisible after deselecting {1} option from Transportation type drop down on {2} benefit.";
+	public static final String FAIL_TO_VERIFY_TRANSPORTATION_TYPE_OPTION_INVISIBILITY = "<font color='red'>{0} Failed to verify {1} option fields are invisible after deselecting {1} option from Transportation type drop down on {2} benefit.</font>";
+	public static final String TRANSFEREE_ONLY = "Transferee Only";
+	public static final String TRANSFEREE_AND_FAMILY_MEMBER = "Transferee & Family Member";
+	public static final String TRANSFEREE_AND_FAMILY = "Transferee & Family";
+	public static final String VERIFIED_EXCESS_BAGGAGE_CHOSEN = "{0} Verified '{0}' option is chosen for Excess Baggage";
 }

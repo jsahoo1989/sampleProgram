@@ -15,6 +15,9 @@
 			"minMileageBusinessAir": "200",
 			"accompanyingFamilyMember": "Transferee + Family",
 			"grossUp": "Yes",
+			"excessBaggageFees": "Yes",
+			"maxAmtPerPerson": "10",
+			"currency" : "U.S. Dollar",
 			"reimbursedBy": "Aires",
 			"reimbursedByOther": "Reimbursed by other",
 			"comment": "Pre-Acceptance Trip Transportation comment"

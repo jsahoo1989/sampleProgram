@@ -717,8 +717,7 @@ public class IRIS_ActivityAndFinancePage extends BasePage {
 
 	public void verifySaveSuccessfulMsg() throws GeneralLeanFtException, Exception {
 		try {
-			if (IRIS_PageMaster.getDialogObject(_IRIS, "Saved").isVisible())
-			{
+			if (IRIS_PageMaster.getDialogObject(_IRIS, "Saved").isVisible()) {
 				Dialog savedDialog = IRIS_PageMaster.getDialogObject(_IRIS, "Saved");
 				Button oKButton = savedDialog.describe(Button.class,
 						new ButtonDescription.Builder().label("OK").build());
@@ -861,9 +860,11 @@ public class IRIS_ActivityAndFinancePage extends BasePage {
 					CoreFunctions.getPropertyFromConfig("CoreFlex_Policy_RequiredFor"))) {
 				if ((benefit.getSelectBenefitOnFPTPage()) && (benefit.getAiresManagedService().equals("Yes"))) {
 					int noOfMilestones = benefit.getNoOfMilestones();
-					if (benefit.getIrisServiceName().equals("Shipment"))
+					if (benefit.getIrisServiceName().equals("Shipment")) {
 						actualizeInitialTracingPromptForShipmentService(_IRIS, activity, benefit);
-					else {
+						Helpers.selectTabControl(IRIS_PageMaster.getTabControlObject(_IRIS, 0),
+								IRISConstants.ACTIVITY_FINANCE_TAB);
+					} else {
 						selectServiceAndSubService(benefit);
 						displayActivityTable();
 						if (noOfMilestones == 2) {
@@ -1045,6 +1046,7 @@ public class IRIS_ActivityAndFinancePage extends BasePage {
 					int noOfMilestones = benefit.getNoOfMilestones();
 					if (benefit.getIrisServiceName().equals("Shipment")) {
 						actualizeAllTracingPromptForShipmentService(_IRIS, activity, benefit);
+						Helpers.selectTabControl(IRIS_PageMaster.getTabControlObject(_IRIS, 0), IRISConstants.ACTIVITY_FINANCE_TAB);
 					} else {
 						actualizeTracingBasedOnMilestones(benefit, noOfMilestones, activity, tracingDate);
 					}

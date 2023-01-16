@@ -254,8 +254,8 @@ public class CoreFlex_HomePurchase_BenefitsPage extends BenefitPage {
 			.xpath(".//span[contains(@class,'RXSmallerLink RXBold')][contains(text(),'Begin property search')]");
 	private By coreCardStartingSoonStatusBy = By
 			.xpath(".//table[contains(@class,'RXRightIconPanel')]//span[contains(text(),'Starting Soon')]");
-	private By coreCardBeginTrainingStatus = By
-			.xpath(".//span[contains(@class,'RXSmallerLink RXBold')][contains(text(),'Begin training')]");
+	private By coreCardBeginPropertySearchStatus = By
+			.xpath(".//span[contains(@class,'RXSmallerLink RXBold')][contains(text(),'Begin property search')]");
 
 	private By beginPropertySearchStatusEstimatedDate = By.xpath(".//div[5]//span[not(contains(text(),'estimated'))]");
 	private By flexCardStartingSoonStatusBy = By
@@ -874,9 +874,9 @@ public class CoreFlex_HomePurchase_BenefitsPage extends BenefitPage {
 	public boolean verifyFlexBenefitCardStatusAfterInitialActualization(int index, String expectedEstimatedDate) {
 		return (CoreFunctions.isElementExist(driver,
 				CoreFunctions.findSubElement(flexCardPanelList.get(index), flexCardBeginPropertySearchStatus), 3))
-				&& (CoreFunctions
-						.getElementText(driver,
-								CoreFunctions.findSubElement(flexCardPanelList.get(index), beginPropertySearchStatusEstimatedDate))
+				&& (CoreFunctions.getElementText(driver,
+						CoreFunctions.findSubElement(flexCardPanelList.get(index),
+								beginPropertySearchStatusEstimatedDate))
 						.equals(expectedEstimatedDate))
 				&& (!CoreFunctions.isElementExist(driver,
 						CoreFunctions.findSubElement(flexCardPanelList.get(index), flexCardStartingSoonStatusBy), 3));
@@ -895,11 +895,12 @@ public class CoreFlex_HomePurchase_BenefitsPage extends BenefitPage {
 
 	@Override
 	public boolean verifyCoreBenefitCardStatusAfterInitialActualization(int index, String expectedEstimatedDate) {
+
 		return CoreFunctions.isElementExist(driver,
-				CoreFunctions.findSubElement(coreCardPanelList.get(index), coreCardBeginTrainingStatus), 3)
-				&& (CoreFunctions
-						.getElementText(driver,
-								CoreFunctions.findSubElement(coreCardPanelList.get(index), beginPropertySearchStatusEstimatedDate))
+				CoreFunctions.findSubElement(coreCardPanelList.get(index), coreCardBeginPropertySearchStatus), 3)
+				&& (CoreFunctions.getElementText(driver,
+						CoreFunctions.findSubElement(coreCardPanelList.get(index),
+								beginPropertySearchStatusEstimatedDate))
 						.equals(expectedEstimatedDate))
 				&& (!CoreFunctions.isElementExist(driver,
 						CoreFunctions.findSubElement(coreCardPanelList.get(index), coreCardStartingSoonStatusBy), 3));

@@ -423,7 +423,7 @@ public class MX_Client_AuthorizationHomePage extends Base {
 	@FindBy(how = How.CSS, using = "input[id*='authorizationType_chk']")
 	private WebElement _checkBoxAiresInstructions;
 
-	@FindBy(how = How.CSS, using = "input[id*='costEstimateReqInd_chk']")
+	@FindBy(how = How.CSS, using = "input[id*='costEstimateReqInd_chk'")
 	private WebElement _checkBoxCostEstimateRequired;
 
 	@FindBy(how = How.CSS, using = "input[id*='selectall']")
@@ -432,6 +432,17 @@ public class MX_Client_AuthorizationHomePage extends Base {
 	@FindBy(how = How.XPATH, using = "//input[contains(@id,'flexBenefits_chk')]//ancestor::table[@id='flexBenefits']")
 	private WebElement _checkBoxFlexBenefits;
 
+	@FindBy(how = How.CSS, using = "input[id*='hrManager_chk']")
+	private WebElement _checkBoxHrManagerName;
+
+	@FindBy(how = How.CSS, using = "input[id*='hiringManager_chk']")
+	private WebElement _checkBoxHiringManagerName;
+
+	@FindBy(how = How.CSS, using = "input[id*='fundECName_chk']")
+	private WebElement _checkBoxFundingEcMember;
+
+	@FindBy(how = How.XPATH, using = "//span[contains(text(),'Complete cloning')]")
+	private WebElement _btnCompleteCloning;
 	/**************************************************************************************************************/
 
 	CoreFlex_PolicySetupPagesData policySetupPageData = FileReaderManager.getInstance().getCoreFlexJsonReader()
@@ -880,13 +891,17 @@ public class MX_Client_AuthorizationHomePage extends Base {
 			break;
 		case MobilityXConstants.START_BENEFIT_SELECTION:
 		case MobilityXConstants.MANAGE_BENEFIT_SELECTION:
-			CoreFunctions.clickElement(driver, _btnFlexBenefitSelection);
+			CoreFunctions.hoverAndClick(driver, _btnFlexBenefitSelection,tabName);
 			break;
 		case MobilityXConstants.VIEW_ALL_INITIATIONS:
 			CoreFunctions.clickElement(driver, _linkViewAllInitiations);
 			break;
 		case MobilityXConstants.RESUBMIT_WITH_CHANGES_MADE_TO_LETTER_POLICY_DOCUMENTS:
 			CoreFunctions.clickElement(driver, _buttonLetterPolicyDocuments);
+			break;
+		case MobilityXConstants.COMPLETE_CLONING:
+			CoreFunctions.click(driver, _btnCompleteCloning, tabName);
+			driver.switchTo().defaultContent();
 			break;
 		default:
 			Assert.fail(tabName + MobilityXConstants.NOT_EXIST);
@@ -2098,6 +2113,11 @@ public class MX_Client_AuthorizationHomePage extends Base {
 							MobilityXConstants.SELECT_ALL);
 				}
 				break;
+			case MobilityXConstants.AUTHORIZATION_INFORMATION:
+				CoreFunctions.hoverAndClick(driver, _checkBoxHrManagerName, MobilityXConstants.HR_MANAGER_NAME);
+				CoreFunctions.hoverAndClick(driver, _checkBoxHiringManagerName, MobilityXConstants.HIRING_MANAGER_NAME);
+				CoreFunctions.hoverAndClick(driver, _checkBoxFundingEcMember, MobilityXConstants.FUNDING_EC_MEMBER);
+				break;
 			default:
 				Assert.fail(COREFLEXConstants.INVALID_OPTION);
 			}
@@ -2112,8 +2132,9 @@ public class MX_Client_AuthorizationHomePage extends Base {
 
 	public boolean verifyFlexBenefitsFieldDisplayed() {
 		try {
-			CoreFunctions.waitHandler(2);			
-//			CoreFunctions.explicitWaitTillElementVisibility(driver, _checkBoxFlexBenefits, MobilityXConstants.FLEX_BENEFITS_CHECKBOX, 15);
+			CoreFunctions.waitHandler(2);
+			CoreFunctions.scrollDownUsigActions(driver);
+//			CoreFunctions.scrollToElementUsingJS(driver, _checkBoxFlexBenefits, COREFLEXConstants.FLEX_BENEFITS);;
 			CoreFunctions.hover(driver, _checkBoxFlexBenefits);
 			Log.info(CoreFunctions.getAttributeText(_checkBoxFlexBenefits, "style"));
 			if (CoreFunctions.getAttributeText(_checkBoxFlexBenefits, "style").contains("display:none")) {
@@ -2135,6 +2156,92 @@ public class MX_Client_AuthorizationHomePage extends Base {
 			return false;
 		}
 
+	}
+
+	public boolean verifyAuthFormPopulatedPostCloning(MX_Client_Dashboard_BscData authorizationData) {
+		try {
+			CoreFunctions.verifyText(CoreFunctions.getAttributeText(_inputEmpFirstName, "value"),
+					CoreFunctions.getPropertyFromConfig(MobilityXConstants.FIRST_NAME_TEXT),
+					MobilityXConstants.FIRST_NAME_TEXT);
+			CoreFunctions.highlightObject(driver, _inputEmpFirstName);
+			CoreFunctions.verifyText(CoreFunctions.getAttributeText(_inputEmpLastName, "value"),
+					CoreFunctions.getPropertyFromConfig(MobilityXConstants.LAST_NAME_TEXT),
+					MobilityXConstants.LAST_NAME_TEXT);
+			CoreFunctions.highlightObject(driver, _inputEmpLastName);
+			CoreFunctions.verifyText(CoreFunctions.getAttributeText(_relocationPolicy, "title"),
+					CoreFunctions.getPropertyFromConfig("Assignment_Policy"), MobilityXConstants.RELOCATION_POLICY);
+			CoreFunctions.highlightObject(driver, _relocationPolicy);
+			return true;
+		} catch (Exception e) {
+			Reporter.addStepLog(MessageFormat.format(
+					COREFLEXConstants.EXCEPTION_OCCURED_WHILE_VERIFYING_AUTH_FORM_FIELDS_POPULATED_POST_CLONING,
+					CoreConstants.FAIL, e.getMessage()));
+		}
+		return false;
+	}
+
+	public boolean verifyTotalPointsSectionPostCloning() {
+		boolean isTotalPointsSectionVerified = false, flag = false;
+		try {
+			switch (CoreFunctions.getPropertyFromConfig("CoreFlex_Policy_FlexSetupType")) {
+			case COREFLEXConstants.USER_DEFINED:
+				if (CoreFunctions.isElementExist(driver, _inputTotalPoints, 3)) {
+					Reporter.addStepLog(MessageFormat.format(
+							MobilityXConstants.TOTAL_POINTS_SECTION_DISPLAYED_ON_AUTH_FORM_FOR_USER_DEFINED_POLICY_TYPE_SELECTION_IN_BLUEPRINT_APPLICATION,
+							CoreConstants.PASS));
+					isTotalPointsSectionVerified = verifyTotalPointsContents() && verifyTotalPointsValue();
+					flag = true;
+				} else {
+					Reporter.addStepLog(MessageFormat.format(
+							MobilityXConstants.TOTAL_POINTS_SECTION_NOT_DISPLAYED_ON_AUTH_FORM_FOR_USER_DEFINED_POLICY_TYPE_SELECTION_IN_BLUEPRINT_APPLICATION,
+							CoreConstants.FAIL));
+					isTotalPointsSectionVerified = false;
+				}
+				break;
+			case COREFLEXConstants.STATIC_FIXED:
+				if (CoreFunctions.isElementExist(driver, _inputTotalPoints, 3)) {
+					Reporter.addStepLog(MessageFormat.format(
+							MobilityXConstants.TOTAL_POINTS_SECTION_DISPLAYED_ON_AUTH_FORM_FOR_STATIC_FIXED_FLEX_POLICY_TYPE_SELECTION_IN_BLUEPRINT_APPLICATION,
+							CoreConstants.FAIL));
+					isTotalPointsSectionVerified = false;
+				} else {
+					Reporter.addStepLog(MessageFormat.format(
+							MobilityXConstants.SUCCESSFULLY_VERIFIED_TOTAL_POINTS_SECTION_NOT_DISPLAYED_ON_AUTH_FORM_FOR_STATIC_FIXED_FLEX_POLICY_TYPE_SELECTION_IN_BLUEPRINT_APPLICATION,
+							CoreConstants.PASS));
+					isTotalPointsSectionVerified = true;
+				}
+				break;
+			default:
+				Assert.fail(COREFLEXConstants.INVALID_OPTION);
+			}
+		} catch (Exception e) {
+			Reporter.addStepLog(MessageFormat.format(
+					MobilityXConstants.EXCEPTION_OCCURED_WHILE_VALIDATING_TOTAL_POINTS_SECTION_ON_AUTH_FORM,
+					CoreConstants.FAIL, e.getMessage()));
+			Log.info(e.getMessage());
+		}
+		if(isTotalPointsSectionVerified && flag) {
+			Reporter.addStepLog(MessageFormat.format(
+					MobilityXConstants.SUCCESSFULLY_VERIFIED_TOTAL_POINTS_SECTION_AND_VALUE_ON_AUTH_FORM_POST_CLONING,
+					CoreConstants.PASS));
+		}
+		return isTotalPointsSectionVerified;
+	}
+
+	private boolean verifyTotalPointsValue() {
+		try {
+			CoreFunctions.verifyText(CoreFunctions.getAttributeText(_inputTotalPoints, "value"),
+					CoreFunctions.getPropertyFromConfig("CF_Transferee_TotalAvailablePoints"),
+					MobilityXConstants.TOTAL_POINTS);
+			CoreFunctions.highlightObject(driver, _inputTotalPoints);
+			Reporter.addStepLog(MessageFormat.format(
+					MobilityXConstants.SUCCESSFULLY_VERIFIED_TOTAL_POINTS_VALUE_POST_AUTH_FORM_CLONING,
+					CoreConstants.PASS));
+			return true;
+		} catch (Exception e) {
+			Log.info(e.getMessage());
+			return false;
+		}
 	}
 
 }

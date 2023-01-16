@@ -1,5 +1,8 @@
 package com.aires.pages.coreflex;
 
+import java.awt.Robot;
+import java.awt.event.KeyEvent;
+
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 
@@ -110,10 +113,17 @@ public abstract class BenefitPage extends Base {
 				rowId, "Act. Date", CoreFunctions.getCurrentDateAsGivenFormat("MM/dd/yyyy"));
 		Button saveButton = IRIS_PageMaster.getButtonObjectFromLabel(_IRIS, "Save");
 		saveButton.click();
-		Dialog messageDialog = Desktop.describe(Dialog.class, new DialogDescription.Builder().title("Message").build());
-		Button oKButton = messageDialog.describe(Button.class, new ButtonDescription.Builder().label("OK").build());
-		oKButton.click();
+		try {
+			Dialog messageDialog = Desktop.describe(Dialog.class,
+					new DialogDescription.Builder().title("Message").build());
+			Button oKButton = messageDialog.describe(Button.class, new ButtonDescription.Builder().label("OK").build());
+			oKButton.click();
+		} catch (Exception e) {
+			Robot robot = new Robot();
+			robot.setAutoDelay(1000);
+			robot.keyPress(KeyEvent.VK_ESCAPE);
+			robot.keyRelease(KeyEvent.VK_ESCAPE);
+		}
 	}
-
 
 }

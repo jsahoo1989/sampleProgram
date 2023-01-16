@@ -840,4 +840,21 @@ public class MobilityXConstants {
 	public static final String DELEGATE_ACCESS_GRANTED = "Delegate Access Granted";
 	public static final String DELEGATE_ACCESS_GRANTED_EMAIL_CONTENTS = "Delegate Access Granted Email Contents";
 	public static final String EXPECTED_DELEGATE_EMAIL_TEXT = "You have been assigned delegate access to transfereeFN transfereeLN's MobilityX account. MobilityX is the online tool from Aires that will support transfereeFN throughout the relocation process. As someone who may assist with relocation-related activities, transfereeFN transfereeLN has granted you the following permissions on their behalf";
+	public static final String AUTHORIZATION_INFORMATION = "Authorization Information";
+	public static final String HR_MANAGER_NAME = "HR Manager Name";
+	public static final String HIRING_MANAGER_NAME = "Hiring Manager Name";
+	public static final String FUNDING_EC_MEMBER = "Funding EC Member";
+	public static final String COMPLETE_CLONING = "COMPLETE CLONING";
+	public static final String AUTH_FORM_FIELDS_NOT_POPULATED_POST_CLONING = "{0}Auth Form fields not populated post cloning.";
+	public static final String TOTAL_POINTS_FIELD_VALUE_NOT_MATCHED_POST_AUTH_FORM_CLONING = "{0}Total Points field value not matched post Auth Form Cloning.";
+	public static final String SUCCESSFULLY_VERIFIED_TOTAL_POINTS_VALUE_POST_AUTH_FORM_CLONING = "{0}Successfully verified Total Points value post Auth Form Cloning.";
+	public static final String SUCCESSFULLY_VERIFIED_TOTAL_POINTS_SECTION_AND_VALUE_ON_AUTH_FORM_POST_CLONING = "{0}Successfully verified Total Points Section and value on Auth Form post Cloning.";
+	public static final String TOTAL_SELECTED_POINTS = "Total Selected Points";
+	public static final String SUCCESSFULLY_VERIFIED_TOTAL_SELECTED_POINTS_ON_BST_PAGE_POST_CLONING = "{0}Successfully verified Total Selected Points on Benefit Selection Tool page Post Auth Form Cloning.";
+	public static final String FAILED_TO_VERIFY_SELECTED_POINTS_ON_BST_PAGE_AND_PROCEED_TO_REVIEW_PAGE = "{0}Failed to verify Total Selected Points on Benefit Selection Tool page and proceed to Review page.";
+	public static final String FAILED_TO_VERIFY_SELECTED_CASHOUT_DETAILS_ON_BENEFITS_BUNDLE_PAGE_POST_CLONING = "{0}Failed to verify selected Cashout details on Benefits Bundle Page - Post Cloning.";
+	public static final String FAILED_TO_VERIFY_SELECTED_BENEFITS_ON_BENEFITS_BUNDLE_PAGE_POST_CLONING = "{0}Failed to verify selected benefits on Benefits Bundle page under Selected Benefits Section - Post Cloning.";
+	public static final String EXCEPTION_OCCURED_WHILE_VERIFYING_CASHOUT_DETAILS_ON_BENEFIT_SELECTION_TOOL_PAGE_POST_AUTH_FORM_CLONING = "{0}Exception occured while verifying cashout details on Benefit selection tool page - Post Auth Form Cloning. Exception : ''{1}''.";
+	public static final String SUCCESSFULLY_VERIFIED_CASHOUT_DETAILS_ON_BENEFIT_SELECTION_TOOL_PAGE_POST_AUTH_FORM_CLONING = "{0}Successfully verified cashout details on Benefit Selection tool page - Post Auth Form Cloning.";
+	
 }

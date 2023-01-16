@@ -1073,6 +1073,7 @@ public class MX_Transferee_JourneyHomePage extends Base {
 					benefit.getBenefitAmount(), MobilityXConstants.FLEX_CARD_BENEFIT_ALLOWANCE_AMOUNT);
 			if (benefit.getNumberOfBenefitSelected() > 1) {
 				CoreFunctions.scrollToElementUsingJS(driver, flexCardSectionHeader, MobilityXConstants.FLEX_CARD_PANEL);
+				CoreFunctions.waitHandler(1);
 				CoreFunctions.verifyText(driver,
 						CoreFunctions.findSubElement(flexCardPanelList.get(indexBenefitCard),
 								flexCardNumberOfBenefitSelectedSubElement),
@@ -1131,7 +1132,6 @@ public class MX_Transferee_JourneyHomePage extends Base {
 					}
 				}
 			}
-
 		} catch (Exception e) {
 			Reporter.addStepLog(
 					MessageFormat.format(COREFLEXConstants.EXCEPTION_OCCURED_WHILE_VERIFYING_CORE_BENEFIT_CARD_DETAILS,
@@ -1147,6 +1147,7 @@ public class MX_Transferee_JourneyHomePage extends Base {
 
 	private boolean verifyCoreCardDetails(int indexBenefitCard, Benefit benefit) {
 		try {
+			CoreFunctions.scrollUpUsigActions(driver);
 			CoreFunctions.scrollToElementUsingJS(driver, _textPolicyFileID, MobilityXConstants.POLICY_FILE_ID);
 			CoreFunctions.verifyText(driver, coreCardBenefitDisplayName.get(indexBenefitCard),
 					benefit.getBenefitDisplayName(), MobilityXConstants.CORE_CARD_BENEFIT_DISPLAY_NAME);
@@ -1198,12 +1199,15 @@ public class MX_Transferee_JourneyHomePage extends Base {
 					MessageFormat.format(COREFLEXConstants.EXCEPTION_OCCURED_WHILE_VERIFYING_CORE_BENEFIT_CARD_STATUS,
 							CoreConstants.FAIL, e.getMessage()));
 		}
+		if (isCoreBenefitCardStatusVerified) {
+			Reporter.addStepLog(MessageFormat.format(COREFLEXConstants.SUCCESSFULLY_VERIFIED_CORE_BENEFIT_CARD_STATUS,
+					CoreConstants.PASS, benefit.getBenefitDisplayName()));
+		}
 		return isCoreBenefitCardStatusVerified;
 	}
 
 	private boolean verifyCoreBenefitCardStatusAfterInitialActualization(int indexBenefitCard, Benefit benefit) {
 		boolean isCoreCardStatusVerified = false;
-//		String expectedEstimatedDate = CoreFunctions.addDaysInCurrentDate("dd-MMM-yyyy", -1);
 		String expectedEstimatedDate = CoreFunctions.getCurrentDateAsGivenFormat("dd-MMM-yyyy");
 		try {
 			isCoreCardStatusVerified = pageObjectManager_CoreFlex.getPageObjects().get(benefit.getBenefitType())

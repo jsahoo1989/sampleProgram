@@ -413,7 +413,7 @@ public class COREFLEXConstants {
 	public static final String EXCEPTION_OCCURED_WHILE_VERIFYING_CORE_BENEFIT_CARD_STATUS = "{0}Exception occured while verifying Core Benefit card Status on Mobility Journey Home Page. Exception : ''{1}''.";
 	public static final String SUCCESSFULLY_VERIFIED_FLEX_BENEFIT_CARD_STATUS = "{0}Successfully verified ''{1}'' - Flex benefit Card Status.";
 	public static final String SUCCESSFULLY_VERIFIED_CORE_BENEFIT_CARD_STATUS = "{0}Successfully verified ''{1}'' - Core benefit Card Status.";
-	public static final String SUCCESSFULLY_VERIFIED_CORE_BENEFIT_CARD_DETAILS = "{0}Successfully verified Core benefit Card Details.";
+	public static final String SUCCESSFULLY_VERIFIED_CORE_BENEFIT_CARD_DETAILS = "{0}Successfully verified Core benefit Card - ''{1}'' Details.";
 	public static final String SUCCESSFULLY_VERIFIED_FLEX_BENEFIT_CARD_DETAILS = "{0}Successfully verified Flex benefit Card Details.";
 	public static final String FAILED_TO_SELECT_AND_FILL_AIRES_MANAGED_BENEFITS = "{0}Failed to select and fill Aires Managed benefits.";
 	public static final String EXCEPTION_OCCURED_WHILE_SELECTING_AND_FILLING_AIRES_MANAGED_BENEFITS = "{0}Exception occured while selecting and Filling Aires Managed Benefits. Exception - ''{1}''. ";
@@ -951,4 +951,8 @@ public class COREFLEXConstants {
 	public static final String EXCEPTION_OCCURED_WHILE_VERIFYING_POLICY_STATUS = "{0}Exception occured while verifying Policy Status on ''{2}'' page. Exception : ''{1}''.";
 	public static final String EXCEPTION_OCCURED_WHILE_VERIFYING_MOBILITYX_DELEGATE_ACCESS_GRANTED_EMAIL = "{0}Exception occured while verifying MobilityX Delegate Access Granted email contents. Exception : ''{1}''.";
 	public static final String SUCCESSFULLY_VERIFIED_MOBILITYX_DELEGATE_ACCESS_GRANTED_EMAIL_CONTENTS = "{0}Successfully verified MobilityX Delegate Access Granted Email contents.";
+	public static final String EXCEPTION_OCCURED_WHILE_VERIFYING_AUTH_FORM_FIELDS_POPULATED_POST_CLONING = "{0}Exception occured while verifying Auth Form fields populated - Post Cloning";
+	public static final String SUCCESSFULLY_VERIFIED_DEFAULT_CASHOUT_DETAILS_ON_BENEFIT_SELECTION_TOOL_PAGE_POST_AUTH_FORM_CLONING = "{0}Successfully verified Cashout details on Benefit Selection Tool page - Post Auth Form Cloning.";
+	public static final String EXCEPTION_OCCURED_WHILE_VERIFYING_CASHOUT_DETAILS_ON_BENEFIT_SELECTION_TOOL_PAGE_POST_AUTH_FORM_CLONING = "{0}Exception occured while verifying Cashout Details on Benefit Selection Tool Page - Post Auth Form Cloning. Exception : ''{1}''.";
+	
 }

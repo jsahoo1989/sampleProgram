@@ -663,7 +663,7 @@ public class MX_Client_BenefitSelectionToolPage extends Base {
 		for (WebElement element : _suggestedBenefitsPointsList) {
 			calculatedTotalPoints += Double.parseDouble(element.getText().replace("pts", "").trim());
 		}
-		
+
 		String expectedCustomBundleTotalPoints = String.valueOf(format.format(calculatedTotalPoints)) + "/"
 				+ CoreFunctions.getPropertyFromConfig("CF_Transferee_TotalAvailablePoints") + " pts";
 		String actualCustomBundleTotalPoints = CoreFunctions.getElementText(driver, _textCustomBundleTotalPoints);
@@ -2324,6 +2324,127 @@ public class MX_Client_BenefitSelectionToolPage extends Base {
 		} catch (Exception e) {
 			Reporter.addStepLog(MessageFormat.format(
 					MobilityXConstants.EXCEPTION_OCCURED_WHILE_VALIDATING_POINTS_AND_CLICKING_ON_NEXT_BUTTON_ON_FPT_PAGE,
+					CoreConstants.FAIL, e.getMessage()));
+		}
+		return false;
+	}
+
+	public boolean validatePointsAfterAuthCloningAndClickOnNext() {
+		try {
+			CoreFunctions.waitHandler(3);
+			CoreFunctions.verifyValue(Double.parseDouble(CoreFunctions.getElementText(driver, selectedPoints)),
+					Double.parseDouble(CoreFunctions.getPropertyFromConfig("CF_Client_TotalSelectedPoints")),
+					MobilityXConstants.TOTAL_SELECTED_POINTS);
+			CoreFunctions.clickElement(driver, _btn_next);
+			Reporter.addStepLog(MessageFormat.format(
+					MobilityXConstants.SUCCESSFULLY_VERIFIED_TOTAL_SELECTED_POINTS_ON_BST_PAGE_POST_CLONING,
+					CoreConstants.PASS));
+			return true;
+
+		} catch (Exception e) {
+			Reporter.addStepLog(MessageFormat.format(
+					MobilityXConstants.EXCEPTION_OCCURED_WHILE_VALIDATING_POINTS_AND_CLICKING_ON_NEXT_BUTTON_ON_BST_PAGE,
+					CoreConstants.FAIL, e.getMessage()));
+		}
+		return false;
+	}
+
+	public boolean verifyCashoutSectionDetailsPostCloningOnBST() {
+		boolean isPortionCashoutVerified = false, flag = false;
+		try {
+			if ((CoreFunctions.getPropertyFromConfig("PolicyCashoutType").equals(MobilityXConstants.PORTION_CASHOUT))
+					|| (CoreFunctions.getPropertyFromConfig("PolicyCashoutType")
+							.equals(MobilityXConstants.AFTER_RELOCATION_ONLY))) {
+				isPortionCashoutVerified = verifyCashOutContentPostAuthFormCloning();
+				flag = true;
+			} else if (CoreFunctions.getPropertyFromConfig("PolicyCashoutType")
+					.equals(MobilityXConstants.CASHOUT_NOT_AUTHORIZED)) {
+				isPortionCashoutVerified = true;
+				flag = false;
+			} else {
+				return false;
+			}
+		} catch (Exception e) {
+			Reporter.addStepLog(MessageFormat.format(
+					MobilityXConstants.EXCEPTION_OCCURED_WHILE_VERIFYING_CASHOUT_DETAILS_ON_BENEFIT_SELECTION_TOOL_PAGE_POST_AUTH_FORM_CLONING,
+					CoreConstants.FAIL, e.getMessage()));
+		}
+		if (isPortionCashoutVerified & flag) {
+			Reporter.addStepLog(MessageFormat.format(
+					MobilityXConstants.SUCCESSFULLY_VERIFIED_CASHOUT_DETAILS_ON_BENEFIT_SELECTION_TOOL_PAGE_POST_AUTH_FORM_CLONING,
+					CoreConstants.PASS));
+		}
+		return isPortionCashoutVerified;
+	}
+
+	public boolean verifyCashOutContentPostAuthFormCloning() {
+		try {
+			String expectedCashoutValue = null;
+			DecimalFormat format = new DecimalFormat();
+			format.setDecimalSeparatorAlwaysShown(false);
+			getAvailableCashoutPoints(true);
+			CoreFunctions.explicitWaitTillElementVisibility(driver, _text_cashOutName,
+					MobilityXConstants.CUSTOM_CASHOUT_NAME);
+			CoreFunctions.verifyText(CoreFunctions.getElementText(driver, _text_cashOutName),
+					policySetupPageData.flexPolicySetupPage.customCashoutBenefitName,
+					MobilityXConstants.CUSTOM_CASHOUT_NAME);
+			CoreFunctions.verifyText(CoreFunctions.getElementText(driver, _text_cashOutSuggestion),
+					MobilityXConstants.MX_CLIENT_CASHOUT_SUGGESTION_TEXT_DEFAULT,
+					MobilityXConstants.CASHOUT_SUGGESTION);
+			CoreFunctions.verifyText(CoreFunctions.getElementText(driver, _text_howManyPoints),
+					MobilityXConstants.HOW_MANY_POINTS_WOULD_YOU_LIKE_TO_CASH_OUT,
+					MobilityXConstants.HOW_MANY_POINTS_TEXT);
+			CoreFunctions.verifyValue(
+					Double.parseDouble(CoreFunctions.getElementText(driver, _text_pointsAvailableForCashOut)),
+					cashoutPoints, MobilityXConstants.POINTS_AVAILABLE_FOR_CASHOUT);
+
+			String actualCashoutValue = CoreFunctions.getElementText(driver, _text_cashOutValue);
+
+			if (CoreFunctions.getPropertyFromConfig("CF_Transferee_CashoutCurrencySign").length() == 1) {
+				expectedCashoutValue = CoreFunctions.getPropertyFromConfig("CF_Transferee_CashoutCurrencySign")
+						+ format.format(cashoutPoints) + " ("
+						+ CoreFunctions.getPropertyFromConfig("CF_Transferee_CashoutCurrencyCode") + ")";
+			} else {
+				expectedCashoutValue = CoreFunctions.getPropertyFromConfig("CF_Transferee_CashoutCurrencySign") + " "
+						+ format.format(cashoutPoints) + " ("
+						+ CoreFunctions.getPropertyFromConfig("CF_Transferee_CashoutCurrencyCode") + ")";
+			}
+
+			CoreFunctions.verifyText(actualCashoutValue, expectedCashoutValue, MobilityXConstants.CASHOUT_VALUE);
+			CoreFunctions.verifyValue(Double.parseDouble(CoreFunctions.getAttributeText(_inputCashoutPoints, "value")),
+					Double.parseDouble(CoreFunctions.getPropertyFromConfig("CF_Client_SelectedCashOutPoints")),
+					MobilityXConstants.CASHOUT_INPUT_FIELD);
+
+			if (CoreFunctions.getPropertyFromConfig("CF_Transferee_CashoutCurrencySign").length() == 1) {
+				expectedCashoutValue = CoreFunctions.getPropertyFromConfig("CF_Transferee_CashoutCurrencySign")
+						+ format.format(Double
+								.parseDouble(CoreFunctions.getPropertyFromConfig("CF_Client_SelectedCashOutPoints")))
+						+ " (" + CoreFunctions.getPropertyFromConfig("CF_Transferee_CashoutCurrencyCode") + ")";
+			} else {
+				expectedCashoutValue = CoreFunctions.getPropertyFromConfig("CF_Transferee_CashoutCurrencySign") + " "
+						+ format.format(Double
+								.parseDouble(CoreFunctions.getPropertyFromConfig("CF_Client_SelectedCashOutPoints")))
+						+ " (" + CoreFunctions.getPropertyFromConfig("CF_Transferee_CashoutCurrencyCode") + ")";
+			}
+
+			String actualCashOutInputText = CoreFunctions.getElementText(driver, _textInputCashoutPoints);
+			CoreFunctions.verifyText(actualCashOutInputText, expectedCashoutValue,
+					MobilityXConstants.CASHOUT_INPUT_FIELD_LABEL_VALUE);
+			if (cashoutPoints == 0.0
+					&& CoreFunctions.isElementExist(driver, _disabledSubmittedCashoutPointsButton, 2)) {
+				Reporter.addStepLog(MessageFormat.format(
+						COREFLEXConstants.SUCCESSFULLY_VERIFIED_PORTION_CASHOUT_DETAILS_POST_ALL_CASHOUT_VALUE_SUBMISSION_ON_BENEFIT_SELECTION_TOOL_PAGE,
+						CoreConstants.PASS));
+				return true;
+			} else if (CoreFunctions.isElementExist(driver, _buttonSelectedCashoutPoints, 2)) {
+				Reporter.addStepLog(MessageFormat.format(
+						COREFLEXConstants.SUCCESSFULLY_VERIFIED_DEFAULT_CASHOUT_DETAILS_ON_BENEFIT_SELECTION_TOOL_PAGE_POST_AUTH_FORM_CLONING,
+						CoreConstants.PASS));
+				return true;
+			}
+		} catch (Exception e) {
+			Reporter.addStepLog(MessageFormat.format(
+					COREFLEXConstants.EXCEPTION_OCCURED_WHILE_VERIFYING_CASHOUT_DETAILS_ON_BENEFIT_SELECTION_TOOL_PAGE_POST_AUTH_FORM_CLONING,
 					CoreConstants.FAIL, e.getMessage()));
 		}
 		return false;

@@ -73,9 +73,9 @@
 			"benefitAmount": "Normal and customary home purchase closing costs assistance",
 			"benefitDesc": "The reimbursement or direct payment of normal and customary home purchase closing costs.",
 			"subBenefits": "Home Purchase Closing Costs;Home Purchase Points;Home Purchase Inspections",
-			"airesManagedService": "No",
+			"airesManagedService": "Yes",
 			"noOfMilestones": 3,
-			"policyCreationGroup": "All Benefits"
+			"policyCreationGroup": "All Benefits,Aires Managed Benefits Cards"
 		},
 		{
 			"benefitType": "Final Move",
@@ -175,7 +175,7 @@
 			"subBenefits": "Air Shipment",
 			"airesManagedService": "Yes",
 			"noOfMilestones": 5,
-			"policyCreationGroup": "All Benefits"
+			"policyCreationGroup": "All Benefits,Aires Managed Benefits Cards"
 		},
 		{
 			"benefitType": "Auto Shipment",
@@ -185,7 +185,7 @@
 			"subBenefits": "Auto Shipment",
 			"airesManagedService": "Yes",
 			"noOfMilestones": 5,
-			"policyCreationGroup": "All Benefits"
+			"policyCreationGroup": "All Benefits,Aires Managed Benefits Cards"
 		},
 		{
 			"benefitType": "Sea/Surface Shipment",
@@ -195,7 +195,7 @@
 			"subBenefits": "Sea/Surface Shipment",
 			"airesManagedService": "Yes",
 			"noOfMilestones": 5,
-			"policyCreationGroup": "All Benefits"
+			"policyCreationGroup": "All Benefits,Aires Managed Benefits Cards"
 		},
 		{
 			"benefitType": "Inland Shipment",
@@ -205,7 +205,7 @@
 			"subBenefits": "Inland Shipment",
 			"airesManagedService": "Yes",
 			"noOfMilestones": 5,
-			"policyCreationGroup": "All Benefits"
+			"policyCreationGroup": "All Benefits,Aires Managed Benefits Cards"
 		},
 		{
 			"benefitType": "Pet Shipment",
@@ -215,7 +215,7 @@
 			"subBenefits": "Pet Shipment",
 			"airesManagedService": "Yes",
 			"noOfMilestones": 5,
-			"policyCreationGroup": "All Benefits"
+			"policyCreationGroup": "All Benefits,Aires Managed Benefits Cards"
 		},
 		{
 			"benefitType": "Permanent Storage",
@@ -368,7 +368,7 @@
 					"endTracingPrompt": "Closing Date",
 					"postEndTracingCardStatus": "Closing",
 					"multipleBenefitSubmission": false,
-					"policyCreationGroup": "All Benefits",
+					"policyCreationGroup": "All Benefits,Aires Managed Benefits Cards",
 					"selectBenefitOnPBCPage": false,
 					"deselectBenefitOnPBCPage": false,
 					"noOfMilestones": 3,
@@ -657,7 +657,7 @@
 					"endTracingPrompt": "End date of trip",
 					"postEndTracingCardStatus": "Travel Ends",
 					"multipleBenefitSubmission": false,
-					"policyCreationGroup": "All Benefits",
+					"policyCreationGroup": "All Benefits,Aires Managed Benefits Cards",
 					"selectBenefitOnPBCPage": false,
 					"deselectBenefitOnPBCPage": false,
 					"benefitResubmissionOnBST":false
@@ -712,7 +712,7 @@
 					"endTracingPrompt": "End date of trip",
 					"postEndTracingCardStatus": "Travel Ends",
 					"multipleBenefitSubmission": false,
-					"policyCreationGroup": "All Benefits",
+					"policyCreationGroup": "All Benefits,Aires Managed Benefits Cards",
 					"selectBenefitOnPBCPage": false,
 					"deselectBenefitOnPBCPage": false,
 					"benefitResubmissionOnBST":false
@@ -741,7 +741,7 @@
 					"subServiceFunction": "NA",
 					"compID": "49211",
 					"company": "AIRES-CIS-DEMO&'TEST(CLIENT)",
-					"partners": "AI, OA, DA, INS, IMVR",
+					"partners": "AI,IMVR",
 					"tracingPromptsToBeSelected": [
 						{
 							"partner": "IMVR",
@@ -772,7 +772,7 @@
 					"endTracingPrompt": "End date of trip",
 					"postEndTracingCardStatus": "Travel Ends",
 					"multipleBenefitSubmission": false,
-					"policyCreationGroup": "All Benefits",
+					"policyCreationGroup": "All Benefits,Aires Managed Benefits Cards",
 					"selectBenefitOnPBCPage": false,
 					"deselectBenefitOnPBCPage": false,
 					"benefitResubmissionOnBST":false
@@ -801,7 +801,7 @@
 					"subServiceFunction": "NA",
 					"compID": "49211",
 					"company": "AIRES-CIS-DEMO&'TEST(CLIENT)",
-					"partners": "AI, OA, DA, IMVR",
+					"partners": "AI,IMVR",
 					"tracingPromptsToBeSelected": [
 						{
 							"partner": "IMVR",
@@ -832,7 +832,7 @@
 					"endTracingPrompt": "End date of trip",
 					"postEndTracingCardStatus": "Travel Ends",
 					"multipleBenefitSubmission": false,
-					"policyCreationGroup": "All Benefits",
+					"policyCreationGroup": "All Benefits,Aires Managed Benefits Cards",
 					"selectBenefitOnPBCPage": false,
 					"deselectBenefitOnPBCPage": false,
 					"benefitResubmissionOnBST":false
@@ -887,7 +887,7 @@
 					"endTracingPrompt": "End date of trip",
 					"postEndTracingCardStatus": "Travel Ends",
 					"multipleBenefitSubmission": false,
-					"policyCreationGroup": "All Benefits",
+					"policyCreationGroup": "All Benefits,Aires Managed Benefits Cards",
 					"selectBenefitOnPBCPage": false,
 					"deselectBenefitOnPBCPage": false,
 					"benefitResubmissionOnBST":false

@@ -44,12 +44,20 @@ Feature: Validate the OnPoint MXClient Auth Form Cloning Functionality
     And he had verified following information of 'Submitted' Authorization is populated correctly on 'Clone Auth Form' dialog
     | Relocation Policy | Home Status | Mobile Phone | Email | Transfer Type | Assignment Type |
     And he has verified 'Flex Benefits' checkbox field is displayed when 'Relocation Policy' checkbox is checked for 'Points Based Flex Policy' on 'Clone Auth Form' dialog
-    And he has clicked on "COMPLETE CLONING" button after selecting required fields for Cloning on 'Clone Auth Form' dialog
-    #And he has clicked 'Transferee Name' from 'All Initiations' List on 'View all initiation' page
-    #And he has navigated to 'Benefit Selection Tool' page after clicking on 'Manage Benefit Selection' button
-    #And he has navigated to "Benefits Bundle" page after selecting Flex Benefits for resubmission on 'Benefit Selection Tool' page
-    #And he has clicked on "Save & Exit" button on "Benefits Bundle" page
-    #When he clicks on "Resubmit to Aires" button from right floating menu of 'Authorization Form' page without routing it to Approvers
-    #Then 'Auth Submit Success' growl message should be displayed on the navigated 'View all initiation' page
-    #And 'Revised Initiation Submitted' email having Transferee details along with assigned CoreFlex Total Points and Submitted Benefits Points should be received
-    #And 'Mobility Benefits Submission' email having mobility benefit information that company has submitted on behalf of transferee should be received
+    When he clicks on "COMPLETE CLONING" button after selecting required fields for Cloning on 'Clone Auth Form' dialog
+    Then he should be navigated to 'Authorization Form' page of the Cloned Authorization having all fields populated based on 'Clone Auth Form' dialog selection
+    And submitted TotalPoints CoreFlexBenefit and Cashout details should be displayed on the navigated Cloned 'Authorization Form' page
+    And TotalPoint Balance along with Available and Submitted Benefit_Cashout details should be displayed on 'Benefit Selection Tool' page post Auth Form Cloning
+    And Submitted Benefit_Cashout details should be displayed under 'Benefits Bundle' section along with enabled 'Save & Exit' button
+    
+    @CF_End-To-End_MasterScript @CF_MXClient_AuthFormCloning @CF_MXClient_AuthFormCloning_PostSubmitScenario @CF_MXClient_PostSubmitScenario_SubmittingClonedAuthForm
+  Scenario: MXClient - Submitting Cloned Auth Form Contents and Flex Benefits_Cashout selections post Clone Auth Form Operation
+    Given he has logged into 'MobilityX' application as a 'Client' user
+    And he has clicked on "View all initiations" link on 'Authorization Home Page' to navigate to 'View all initiation' page
+    And he has clicked 'Transferee Name' from 'All Initiations' List on 'View all initiation' page
+    And he has navigated to 'Benefit Selection Tool' page after clicking on 'Manage Benefit Selection' button
+    And he has navigated to "Benefits Bundle" page after clicking on 'Next' button on 'Benefit Selection Tool' page
+    And he has clicked on "Save & Exit" button on "Benefits Bundle" page
+    When he clicks on "Submit to Aires" button from right floating menu of 'Authorization Form' page without routing it to Approvers
+    Then 'Auth Submit Success' growl message should be displayed on the navigated 'View all initiation' page
+    And 'New Initiation Submitted' email should be received having Transferee details along with assigned CoreFlex Total Points and Submitted Benefits Points

@@ -208,17 +208,10 @@ public class CF_MX_Client_Steps {
 				.getBscDataByModuleName("DomesticAuthorizationFormData");
 		mxClientAuthorizationHomePage.enterValidInitialTotalPointsValue(bscAuthorizationData);
 		mxClientAuthorizationHomePage.clickOnElementOnAuthorizationPage(MobilityXConstants.START_BENEFIT_SELECTION);
-
 		Assert.assertTrue(mxClientBenefitSelectionToolPage.verifyPageNavigation(),
 				MessageFormat.format(
 						MobilityXConstants.FAILED_TO_VERIFY_USER_NAVIGATION_TO_MXCLIENT_BENEFIT_SELECTION_TOOL_PAGE,
 						CoreConstants.FAIL));
-
-		Reporter.addStepLog(
-				"<b>Total time taken to navigate to <i>MobilityX Client Benefit Selection Tool</i> page is :"
-						+ CoreFunctions.calculatePageLoadTime(CoreConstants.TIME_BEFORE_ACTION,
-								CoreConstants.TIME_AFTER_ACTION)
-						+ " Seconds </b>");
 
 	}
 
@@ -702,17 +695,10 @@ public class CF_MX_Client_Steps {
 	public void he_has_clicked_on_Back_to_benefits_list_link_to_navigate_to_Benefit_Selection_Tool_page()
 			throws Throwable {
 		mxClientBenefitSelectionToolPage.clickElementOfPage(MobilityXConstants.BACK_TO_BENEFITS_LIST);
-
 		Assert.assertTrue(mxClientBenefitSelectionToolPage.verifyPageNavigation(),
 				MessageFormat.format(
 						MobilityXConstants.FAILED_TO_VERIFY_USER_NAVIGATION_TO_MXCLIENT_BENEFIT_SELECTION_TOOL_PAGE,
 						CoreConstants.FAIL));
-
-		Reporter.addStepLog(
-				"<b>Total time taken to navigate to <i>MobilityX Client Benefit Selection Tool</i> page is :"
-						+ CoreFunctions.calculatePageLoadTime(CoreConstants.TIME_BEFORE_ACTION,
-								CoreConstants.TIME_AFTER_ACTION)
-						+ " Seconds </b>");
 	}
 
 	@Given("^he has verified following confirmation dialogs after increasing 'Benfit Total Points' value displayed in sequence on acceptance of current dialog$")
@@ -1661,11 +1647,109 @@ public class CF_MX_Client_Steps {
 				CoreConstants.FAIL));
 	}
 	
-	@Given("^he has clicked on \"([^\"]*)\" button after selecting required fields for Cloning on 'Clone Auth Form' dialog$")
-	public void he_has_clicked_on_button_after_selecting_required_fields_for_Cloning_on_Clone_Auth_Form_dialog(String buttonName)
+	@When("^he clicks on \"([^\"]*)\" button after selecting required fields for Cloning on 'Clone Auth Form' dialog$")
+	public void he_clicks_on_button_after_selecting_required_fields_for_Cloning_on_Clone_Auth_Form_dialog(String buttonName)
 			throws Throwable {
 		mxClientAuthorizationHomePage.selectCloneAuthFormFieldCheckbox(MobilityXConstants.AUTHORIZATION_TYPE);
 		mxClientAuthorizationHomePage.selectCloneAuthFormFieldCheckbox(MobilityXConstants.SELECT_ALL);
+		mxClientAuthorizationHomePage.selectCloneAuthFormFieldCheckbox(MobilityXConstants.AUTHORIZATION_INFORMATION);		
+		mxClientAuthorizationHomePage.clickOnElementOnAuthorizationPage(buttonName);
+	}
+	
+	@Then("^he should be navigated to 'Authorization Form' page of the Cloned Authorization having all fields populated based on 'Clone Auth Form' dialog selection$")
+	public void he_should_be_navigated_to_Authorization_Form_page_of_the_Cloned_Authorization_having_all_fields_populated_based_on_Clone_Auth_Form_dialog_selection() throws Throwable {
+		Assert.assertTrue(mxClientAuthorizationHomePage.verifyPageNavigationToAuthForm(), MessageFormat
+				.format(MobilityXConstants.FAILED_TO_VERIFY_USER_NAVIGATION_TO_MXCLIENT_HOME_PAGE, CoreConstants.FAIL));		
+		bscAuthorizationData = FileReaderManager.getInstance().getCoreFlexJsonReader()
+				.getBscDataByModuleName("DomesticAuthorizationFormData");
+		Assert.assertTrue(
+				mxClientAuthorizationHomePage.verifyAuthFormPopulatedPostCloning(bscAuthorizationData),
+				MessageFormat.format(MobilityXConstants.AUTH_FORM_FIELDS_NOT_POPULATED_POST_CLONING,
+						CoreConstants.FAIL));
+	}
+
+	@Then("^submitted TotalPoints CoreFlexBenefit and Cashout details should be displayed on the navigated Cloned 'Authorization Form' page$")
+	public void submitted_TotalPoints_CoreFlexBenefit_and_Cashout_details_should_be_displayed_on_the_navigated_Cloned_Authorization_Form_page() throws Throwable {
+		
+		Assert.assertTrue(
+				mxClientAuthorizationHomePage.verifyTotalPointsSectionPostCloning(),
+				MessageFormat.format(MobilityXConstants.TOTAL_POINTS_FIELD_VALUE_NOT_MATCHED_POST_AUTH_FORM_CLONING,
+						CoreConstants.FAIL));		
+		Assert.assertTrue(
+				mxClientAuthorizationHomePage.verifyFlexBenefitsSectionPostBenefitSelection(
+						CoreFunctions.getPropertyFromConfig("CoreFlex_Policy_PersonResponsible")),
+				MessageFormat.format(MobilityXConstants.FAILED_TO_VERIFY_FLEX_BENEFITS_SECTION_ON_AUTHORIZATION_FORM,
+						CoreConstants.FAIL));
+		Assert.assertTrue(mxClientAuthorizationHomePage.verifyCashoutSelectionOnAuthForm(), MessageFormat.format(
+				MobilityXConstants.FAILED_TO_VERIFY_PORTION_CAHOUT_SELECTION_UNDER_FLEX_BENEFITS_SECTION_ON_AUTHORIZATION_FORM,
+				CoreConstants.FAIL));		
+		mxClientAuthorizationHomePage.clickOnElementOnAuthorizationPage(MobilityXConstants.START_BENEFIT_SELECTION);
+		Assert.assertTrue(mxClientBenefitSelectionToolPage.verifyPageNavigation(),
+				MessageFormat.format(
+						MobilityXConstants.FAILED_TO_VERIFY_USER_NAVIGATION_TO_MXCLIENT_BENEFIT_SELECTION_TOOL_PAGE,
+						CoreConstants.FAIL));
+	}
+	
+	@Then("^TotalPoint Balance along with Available and Submitted Benefit_Cashout details should be displayed on 'Benefit Selection Tool' page post Auth Form Cloning$")
+	public void totalpoint_Balance_along_with_Available_and_Submitted_Benefit_Cashout_details_should_be_displayed_on_Benefit_Selection_Tool_page_post_Auth_Form_Cloning() throws Throwable {
+		
+		Assert.assertTrue(mxClientBenefitSelectionToolPage.verifyWindowTitle(), MessageFormat
+				.format(MobilityXConstants.FAILED_TO_VALIDATE_BENEFIT_SELECTION_TOOL_PAGE_TITLE, CoreConstants.FAIL));
+		Assert.assertTrue(mxClientBenefitSelectionToolPage.verifyInitiationForText(), MessageFormat.format(
+				MobilityXConstants.FAILED_TO_VALIDATE_INITIATION_FOR_TEXT_ON_MXCLIENT_BENEFIT_SELECTION_TOOL_PAGE,
+				CoreConstants.FAIL));
+		Assert.assertTrue(mxClientBenefitSelectionToolPage.verifyAvailablePointsMessage(), MessageFormat.format(
+				MobilityXConstants.FAILED_TO_VALIDATE_AVAILABLE_POINTS_MESSAGE_ON_MXCLIENT_BENEFIT_SELECTION_TOOL_PAGE,
+				CoreConstants.FAIL));
+		Assert.assertTrue(
+				mxClientBenefitSelectionToolPage.verifyBenefitDetailsOnBSTBasedOnPolicyRequiredFor(
+						CoreFunctions.getPropertyFromConfig("CoreFlex_Policy_RequiredFor"),
+						CoreFunctions.getPropertyFromConfig("CoreFlex_Policy_BenefitType")),
+				MessageFormat.format(
+						MobilityXConstants.BENEFIT_DETAILS_ON_BENEFIT_SELECTION_TOOL_PAGE_OF_MXCLIENT_NOT_MATCHED_WITH_BENEFITS_DETAILS_SET_IN_BLUEPRINT_APPLICATION,
+						CoreConstants.FAIL));
+		Assert.assertTrue(mxClientBenefitSelectionToolPage.verifyCashoutSectionDetailsPostCloningOnBST(),
+				MessageFormat.format(MobilityXConstants.CASHOUT_DETAILS_NOT_MATCHED_ON_BENEFIT_SELECTION_TOOL_PAGE,
+						CoreConstants.FAIL));
+
+		mxClientBenefitSelectionToolPage.clickElementOfPage(MobilityXConstants.SUGGESTED_OPTIONS_LINK);
+
+		Assert.assertTrue(mxClientBenefitSelectionToolPage.verifyUserNavigationToSuggestedBundlesPage(), MessageFormat
+				.format(MobilityXConstants.FAILED_TO_NAVIGATE_TO_SUGGESTED_BUNDLES_PAGE, CoreConstants.FAIL));
+
+		Assert.assertTrue(
+				mxClientBenefitSelectionToolPage.verifySuggestedBundlesDetailsBasedOnPolicyRequiredFor(
+						CoreFunctions.getPropertyFromConfig("CoreFlex_Policy_RequiredFor"),
+						CoreFunctions.getPropertyFromConfig("CoreFlex_Policy_BenefitType")),
+				MessageFormat.format(MobilityXConstants.CUSTOM_BUNDLE_DETAILS_NOT_MATCHED_ON_SUGGESTED_BUNDLES_PAGE,
+						CoreConstants.FAIL));
+		mxClientBenefitSelectionToolPage.clickElementOfPage(MobilityXConstants.BACK_TO_BENEFITS_LIST);
+		Assert.assertTrue(mxClientBenefitSelectionToolPage.verifyPageNavigation(),
+				MessageFormat.format(
+						MobilityXConstants.FAILED_TO_VERIFY_USER_NAVIGATION_TO_MXCLIENT_BENEFIT_SELECTION_TOOL_PAGE,
+						CoreConstants.FAIL));
+	}
+
+	@Then("^Submitted Benefit_Cashout details should be displayed under 'Benefits Bundle' section along with enabled 'Save & Exit' button$")
+	public void submitted_Benefit_Cashout_details_should_be_displayed_under_Benefits_Bundle_section_along_with_enabled_Save_Exit_button() throws Throwable {
+		Assert.assertTrue(mxClientBenefitSelectionToolPage.validatePointsAfterAuthCloningAndClickOnNext(), MessageFormat
+				.format(MobilityXConstants.FAILED_TO_VERIFY_SELECTED_POINTS_ON_BST_PAGE_AND_PROCEED_TO_REVIEW_PAGE, CoreConstants.FAIL));
+		Assert.assertTrue(mxClientBenefitsBundlePage.isBenefitsBundlePageDisplayed(), MessageFormat
+				.format(MobilityXConstants.FAILED_TO_DISPLAY_MX_CLIENT_BENEFITS_BUNDLE_PAGE, CoreConstants.FAIL));
+		Assert.assertTrue(mxClientBenefitsBundlePage.verifySelectedBenefitDetails(), MessageFormat.format(
+				MobilityXConstants.FAILED_TO_VERIFY_SELECTED_BENEFITS_ON_BENEFITS_BUNDLE_PAGE, CoreConstants.FAIL));
+		Assert.assertTrue(mxClientBenefitsBundlePage.verifySelectedCashoutDetails(),
+				MessageFormat.format(
+						MobilityXConstants.FAILED_TO_VERIFY_SELECTED_CASHOUT_DETAILS_ON_BENEFITS_BUNDLE_PAGE,
+						CoreConstants.FAIL));
+	}
+	
+	
+	@Given("^he has navigated to \"([^\"]*)\" page after clicking on 'Next' button on 'Benefit Selection Tool' page$")
+	public void he_has_navigated_to_page_after_clicking_on_Next_button_on_Benefit_Selection_Tool_page(String arg1) throws Throwable {
+		mxClientBenefitSelectionToolPage.clickElementOfPage(MobilityXConstants.NEXT);
+		Assert.assertTrue(mxClientBenefitsBundlePage.isBenefitsBundlePageDisplayed(), MessageFormat
+				.format(MobilityXConstants.FAILED_TO_DISPLAY_MX_CLIENT_BENEFITS_BUNDLE_PAGE, CoreConstants.FAIL));
 	}
 
 }

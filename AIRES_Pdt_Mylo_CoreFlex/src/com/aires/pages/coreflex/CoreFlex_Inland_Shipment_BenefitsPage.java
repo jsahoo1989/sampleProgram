@@ -1,5 +1,8 @@
 package com.aires.pages.coreflex;
 
+import java.awt.AWTException;
+import java.awt.Robot;
+import java.awt.event.KeyEvent;
 import java.text.MessageFormat;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
@@ -26,7 +29,6 @@ import com.aires.pages.iris.IRIS_PageMaster;
 import com.aires.testdatatypes.coreflex.Benefit;
 import com.aires.testdatatypes.coreflex.CoreFlex_MovingBenefitsData;
 import com.aires.utilities.Log;
-import com.hp.lft.sdk.Desktop;
 import com.hp.lft.sdk.java.Button;
 import com.hp.lft.sdk.java.ButtonDescription;
 import com.hp.lft.sdk.java.Dialog;
@@ -34,7 +36,6 @@ import com.hp.lft.sdk.java.DialogDescription;
 import com.hp.lft.sdk.java.Menu;
 import com.hp.lft.sdk.java.TabControl;
 import com.hp.lft.sdk.java.Table;
-import com.hp.lft.sdk.java.TableDescription;
 import com.hp.lft.sdk.java.Window;
 import com.vimalselvam.cucumber.listener.Reporter;
 
@@ -246,7 +247,7 @@ public class CoreFlex_Inland_Shipment_BenefitsPage extends BenefitPage {
 
 	@FindBy(how = How.XPATH, using = "//label[contains(text(),'Unit of Volume Cap')]/following-sibling::div//input")
 	private List<WebElement> _radioUnitOfVolumeCapButtonList;
-	
+
 	@FindBy(how = How.CSS, using = "ng-select[formcontrolname='inlandShipmentTradedCodeList']")
 	private WebElement _selectInlandShipmentTraded;
 
@@ -255,7 +256,7 @@ public class CoreFlex_Inland_Shipment_BenefitsPage extends BenefitPage {
 
 	@FindBy(how = How.CSS, using = "div[class='collapse show'] ng-select[formcontrolname='inlandShipmentTradedCodeList'] span[class*='ng-value-label']")
 	private WebElement _selectInlandShipmentTradedSelectedValue;
-	
+
 	@FindBy(how = How.XPATH, using = "//input[@formcontrolname='exceValDueToWeight']/parent::label[@class='form-check-label']")
 	private List<WebElement> _radioExcesValDueToWeight;
 
@@ -273,7 +274,6 @@ public class CoreFlex_Inland_Shipment_BenefitsPage extends BenefitPage {
 
 	@FindBy(how = How.CSS, using = "input[formcontrolname='exceValDueToValueOther']")
 	private WebElement _inputExcesValDueToValueOther;
-
 
 	/*********************************************************************/
 
@@ -470,19 +470,19 @@ public class CoreFlex_Inland_Shipment_BenefitsPage extends BenefitPage {
 		try {
 			CoreFunctions.clearAndSetText(driver, _inputWeightCap, inlandShipmentBenefitData.inlandShipment.weightCap);
 			CoreFunctions.selectItemInListByText(driver, _radioUnitOfWeightCap,
-					inlandShipmentBenefitData.inlandShipment.unitOfWeightCap, true);									
+					inlandShipmentBenefitData.inlandShipment.unitOfWeightCap, true);
 			CoreFunctions.clearAndSetText(driver, _inputVolumeCap, inlandShipmentBenefitData.inlandShipment.volumeCap);
 			CoreFunctions.selectItemInListByText(driver, _radioUnitOfVolumeCap,
 					inlandShipmentBenefitData.inlandShipment.unitOfVolumeCap, true);
 			CoreFunctions.clickElement(driver, _selectTempStorageDuration);
 			CoreFunctions.selectItemInListByText(driver, _selectTempStorageDurationOptions,
-					inlandShipmentBenefitData.inlandShipment.temporaryStorageDuration, true);	
+					inlandShipmentBenefitData.inlandShipment.temporaryStorageDuration, true);
 			CoreFunctions.selectItemInListByText(driver, _radioExcesValDueToWeight,
 					inlandShipmentBenefitData.inlandShipment.excessValuationDueToWeightPaid, true);
 			CoreFunctions.selectItemInListByText(driver, _radioExcesValDueToValue,
 					inlandShipmentBenefitData.inlandShipment.excessValuationDueToValuePaid, true);
 			CoreFunctions.selectItemInListByText(driver, _radioInsuranceType,
-					inlandShipmentBenefitData.inlandShipment.insuranceType, true);			
+					inlandShipmentBenefitData.inlandShipment.insuranceType, true);
 			if (inlandShipmentBenefitData.inlandShipment.insuranceType.equalsIgnoreCase(COREFLEXConstants.OTHER)) {
 				CoreFunctions.clearAndSetText(driver, _inputInsuranceTypeOther,
 						inlandShipmentBenefitData.inlandShipment.insuranceTypeOther);
@@ -768,7 +768,7 @@ public class CoreFlex_Inland_Shipment_BenefitsPage extends BenefitPage {
 			CoreFunctions.verifyText(_inputVolumeCap.getDomProperty("value"),
 					inlandShipmentBenefitData.inlandShipment.volumeCap, COREFLEXConstants.VOLUME_CAP);
 			CoreFunctions.verifyRadioButtonSelection(driver, _radioUnitOfVolumeCap, _radioUnitOfVolumeCapButtonList,
-					inlandShipmentBenefitData.inlandShipment.unitOfVolumeCap, COREFLEXConstants.UNIT_OF_VOLUME_CAP);			
+					inlandShipmentBenefitData.inlandShipment.unitOfVolumeCap, COREFLEXConstants.UNIT_OF_VOLUME_CAP);
 			CoreFunctions.verifyRadioButtonSelection(driver, _radioExcesValDueToWeight,
 					_radioExcesValDueToWeightButtonList,
 					inlandShipmentBenefitData.inlandShipment.excessValuationDueToWeightPaid,
@@ -776,7 +776,7 @@ public class CoreFlex_Inland_Shipment_BenefitsPage extends BenefitPage {
 			CoreFunctions.verifyRadioButtonSelection(driver, _radioExcesValDueToValue,
 					_radioExcesValDueToValueButtonList,
 					inlandShipmentBenefitData.inlandShipment.excessValuationDueToValuePaid,
-					COREFLEXConstants.EXCESS_VALUATION_DUE_TO_VALUE_PAID);			
+					COREFLEXConstants.EXCESS_VALUATION_DUE_TO_VALUE_PAID);
 			CoreFunctions.verifyText(driver, _selectTempStorageDurationSelectedValue,
 					inlandShipmentBenefitData.inlandShipment.temporaryStorageDuration,
 					COREFLEXConstants.TEMPORARY_STORAGE_SIT_DURATION);
@@ -955,178 +955,44 @@ public class CoreFlex_Inland_Shipment_BenefitsPage extends BenefitPage {
 		Table activityFinanceTable = IRIS_PageMaster.getTableObject(_IRIS,
 				"com.aires.iris.shipment.activityfinance.ActivityFinancePanel$3");
 		int rowId = Helpers.getRowIdMatchingCellValue(activityFinanceTable, "Co. Name", "Aires");
-		activityFinanceTable.selectRows(rowId);
+		Button saveButton = _IRIS.describe(Button.class, new ButtonDescription.Builder().label("Save").build());
 
 		for (String partner : benefit.getPartners().split(",")) {
 
-			Button selectPartnerButton = IRIS_PageMaster.getButtonObjectFromLabel(_IRIS, "Select Partner");
-			selectPartnerButton.click();
-
-			Dialog partnerRecommendationDialog = IRIS_PageMaster.getDialogObject(_IRIS, "Partner Recommendation");
-
-			if (partner.trim().equals("OA")) {
-				partnerRecommendationDialog.waitUntilVisible();
-				Helpers.selectFromList(IRIS_PageMaster.getListObject(partnerRecommendationDialog,
-						"Select a participant, then select a partner"), "Origin Agent", "");
-
-				Helpers.setTableCellValue(IRIS_PageMaster.getTableObject(partnerRecommendationDialog), 0, "Partner ID",
-						"0");
-
-				IRIS_PageMaster.getTableObject(partnerRecommendationDialog).getCell(0, "Partner Name").click();
-
-				IRIS_PageMaster.getButtonObjectFromLabel(partnerRecommendationDialog, "...").click();
-
-				Dialog companyLookupDialog = IRIS_PageMaster.getDialogObject(partnerRecommendationDialog,
-						"Company Lookup");
-				Table companyLookupTableTable = IRIS_PageMaster.getTableObject(companyLookupDialog);
-				Helpers.selectTableRow(companyLookupTableTable, 0);
-
-				Button selectButton = IRIS_PageMaster.getButtonObjectFromLabel(companyLookupDialog, "Select");
-				selectButton.click();
-
-				Button selectPartnerButton1 = IRIS_PageMaster.getButtonObjectFromLabel(partnerRecommendationDialog,
-						"Select Partner");
-				selectPartnerButton1.click();
-
-				Button saveButton = IRIS_PageMaster.getButtonObjectFromLabel(partnerRecommendationDialog, "Save");
+			if (partner.trim().equals("AI") && rowId != -1) {
+				activityFinanceTable.selectRows(rowId);
+				continue;
+			} else {
+				IRIS_PageMaster.getButtonObject(_IRIS, "Add", 1).click();
+				activityFinanceTable.getCell(activityFinanceTable.getRows().size() - 1, "Type").setValue(partner);
+				activityFinanceTable.getCell(activityFinanceTable.getRows().size() - 1, "Co. ID").setValue("1");
 				saveButton.click();
-
-				Dialog participantTracingDialog = IRIS_PageMaster.getDialogObject(partnerRecommendationDialog,
-						"Participant Tracing");
-				Button yesButton = IRIS_PageMaster.getButtonObjectFromLabel(participantTracingDialog, "Yes");
+				Dialog participantTracingDialog = _IRIS.describe(Dialog.class,
+						new DialogDescription.Builder().title("Participant Tracing").build());
+				Button yesButton = participantTracingDialog.describe(Button.class,
+						new ButtonDescription.Builder().label("Yes").build());
 				yesButton.click();
-
-				Dialog reportingRequirementsDialog = IRIS_PageMaster.getDialogObject(partnerRecommendationDialog,
-						"Reporting Requirements");
-				Button saveButton1 = IRIS_PageMaster.getButtonObjectFromLabel(reportingRequirementsDialog, "Save");
-				saveButton1.click();
-
-				Dialog messageDialog = IRIS_PageMaster.getDialogObject(_IRIS, "Message");
-				Button oKButton = IRIS_PageMaster.getButtonObject(messageDialog, "OK",
-						"javax.swing.plaf.basic.BasicOptionPaneUI$ButtonFactory$ConstrainedButton");
+				try {
+				Dialog reportingRequirementsDialog = _IRIS.describe(Dialog.class,
+						new DialogDescription.Builder().title("Reporting Requirements").build());
+				reportingRequirementsDialog.close();
+				Dialog messageDialog = _IRIS.describe(Dialog.class,
+						new DialogDescription.Builder().title("Message").build());
+				Button oKButton = messageDialog.describe(Button.class,
+						new ButtonDescription.Builder().label("OK").build());
 				oKButton.click();
-
-				if (benefit.getPartners().contains("DA")) {
-					selectPartnerButton.click();
-					partnerRecommendationDialog = IRIS_PageMaster.getDialogObject(_IRIS, "Partner Recommendation");
-					Helpers.selectFromList(IRIS_PageMaster.getListObject(partnerRecommendationDialog,
-							"Select a participant, then select a partner"), "Destination Agent", "");
-
-					Helpers.selectTableRow(IRIS_PageMaster.getTableObject(partnerRecommendationDialog), 1);
-
-					selectPartnerButton1.click();
-
-					saveButton.click();
-
-					yesButton.click();
-
-					Table tonnagePanel1Table = reportingRequirementsDialog.describe(Table.class,
-							new TableDescription());
-					tonnagePanel1Table.selectRows(1);
-
-					saveButton1.click();
-
-					oKButton.click();
+				} catch (Exception e) {
+					clickOKUsingRobot();
 				}
-				Button saveButton2 = IRIS_PageMaster.getButtonObjectFromLabel(_IRIS, "Save");
-				saveButton2.click();
-
-				oKButton.click();
 			}
-
-			if (partner.trim().equals("IMVR")) {
-				partnerRecommendationDialog.waitUntilVisible();
-				Helpers.selectFromList(IRIS_PageMaster.getListObject(partnerRecommendationDialog,
-						"Select a participant, then select a partner"), "International Mover", "");
-
-				Helpers.setTableCellValue(IRIS_PageMaster.getTableObject(partnerRecommendationDialog), 0, "Partner ID",
-						"0");
-
-				IRIS_PageMaster.getTableObject(partnerRecommendationDialog).getCell(0, "Partner Name").click();
-
-				IRIS_PageMaster.getButtonObjectFromLabel(partnerRecommendationDialog, "...").click();
-
-				Dialog companyLookupDialog = IRIS_PageMaster.getDialogObject(partnerRecommendationDialog,
-						"Company Lookup");
-				Table companyLookupTableTable = IRIS_PageMaster.getTableObject(companyLookupDialog);
-
-				rowId = Helpers.getRowIdMatchingCellValue(companyLookupTableTable, "Partner ID", "98392");
-
-				companyLookupTableTable.activateRow(rowId);
-
-				Button selectButton = companyLookupDialog.describe(Button.class,
-						new ButtonDescription.Builder().label("Select").build());
-				selectButton.click();
-
-				Button selectPartnerButton1 = IRIS_PageMaster.getButtonObjectFromLabel(partnerRecommendationDialog,
-						"Select Partner");
-				selectPartnerButton1.click();
-
-				Button saveButton = partnerRecommendationDialog.describe(Button.class,
-						new ButtonDescription.Builder().label("Save").build());
-				saveButton.click();
-
-				Dialog participantTracingDialog = partnerRecommendationDialog.describe(Dialog.class,
-						new DialogDescription.Builder().title("Participant Tracing").build());
-				Button yesButton = participantTracingDialog.describe(Button.class,
-						new ButtonDescription.Builder().label("Yes").build());
-				yesButton.click();
-
-				Dialog messageDialog = Desktop.describe(Dialog.class,
-						new DialogDescription.Builder().title("Message").build());
-				Button oKButton = messageDialog.describe(Button.class,
-						new ButtonDescription.Builder().label("OK").build());
-				oKButton.click();
-			}
-
-			if (partner.trim().equals("INS")) {
-				partnerRecommendationDialog.waitUntilVisible();
-				Helpers.selectFromList(IRIS_PageMaster.getListObject(partnerRecommendationDialog,
-						"Select a participant, then select a partner"), "Insurance", "");
-
-				Table showPartnersForTable = partnerRecommendationDialog.describe(Table.class, new TableDescription());
-				showPartnersForTable.getCell(0, "Partner ID").setValue("0");
-
-				IRIS_PageMaster.getTableObject(partnerRecommendationDialog).getCell(0, "Partner Name").click();
-
-				IRIS_PageMaster.getButtonObjectFromLabel(partnerRecommendationDialog, "...").click();
-
-				Dialog companyLookupDialog = partnerRecommendationDialog.describe(Dialog.class,
-						new DialogDescription.Builder().title("Company Lookup").build());
-				Table companyLookupTableTable = companyLookupDialog.describe(Table.class, new TableDescription());
-				companyLookupTableTable.selectColumnHeader("Partner ID");
-
-				rowId = Helpers.getRowIdMatchingCellValue(companyLookupTableTable, "Partner ID", "89685");
-
-				companyLookupTableTable.activateRow(rowId);
-
-				Button selectButton = companyLookupDialog.describe(Button.class,
-						new ButtonDescription.Builder().label("Select").build());
-				selectButton.click();
-
-				Button selectPartnerButton1 = IRIS_PageMaster.getButtonObjectFromLabel(partnerRecommendationDialog,
-						"Select Partner");
-				selectPartnerButton1.click();
-
-				Button saveButton = partnerRecommendationDialog.describe(Button.class,
-						new ButtonDescription.Builder().label("Save").build());
-				saveButton.click();
-
-				Dialog participantTracingDialog = partnerRecommendationDialog.describe(Dialog.class,
-						new DialogDescription.Builder().title("Participant Tracing").build());
-				Button yesButton = participantTracingDialog.describe(Button.class,
-						new ButtonDescription.Builder().label("Yes").build());
-				yesButton.click();
-
-				Dialog messageDialog = Desktop.describe(Dialog.class,
-						new DialogDescription.Builder().title("Message").build());
-				Button oKButton = messageDialog.describe(Button.class,
-						new ButtonDescription.Builder().label("OK").build());
-				oKButton.click();
-			}
-			if (partnerRecommendationDialog.exists())
-				partnerRecommendationDialog.close();
 		}
+	}
+	
+	public static void clickOKUsingRobot() throws AWTException {
+		Robot robot = new Robot();
+		robot.setAutoDelay(1000);
+		robot.keyPress(KeyEvent.VK_ESCAPE);
+		robot.keyRelease(KeyEvent.VK_ESCAPE);
 	}
 
 }

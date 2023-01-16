@@ -740,6 +740,9 @@ public class MYLOConstants {
 
 	public static long TIME_BEFORE_ACTION;
 	public static long TIME_AFTER_ACTION;
+	
+	
+	
 
 	// Query By SubServiceID Popup
 	public static final String QUERY_BY_SUB_SERVICE_ID = "Query By Sub-Service ID";
@@ -756,4 +759,55 @@ public class MYLOConstants {
 	public static final String VERIFIED_SUMMARY_SCREEN_DISPLAYED = "Verified Shipment Sub Service screen is displayed";
 	public static final String VERIFIED_CHARACTERS_CANNOT_BE_ENTERED_IN = " {0} Verified characters cannot be entered in ''{1}''";
 
+	//Add Secondary Contact
+	public static final String SECONDARY_CONTACT_INCORRECT_SELECTION_ERROR="The contact selected is already designated as the Primary Contact on this file. A contact may not be both the Primary and Secondary Contact.";
+	public static final String CHANGE_BUTTON = "Change Button";
+	public static final String WARNING_POPUP="Warning Popup";
+	public static final String SELECT_SECONDARY_CONTACT_LINK = "Select Secondary Contact Link";
+	public static final String SELECT_SECONDARY_CONTACT_POPUP = "Select Secondary Contact Popup";
+	public static final String EXPAND_PRIMARY_CONTACT_SECTION = "Expand Primary Contact Section";
+	public static final String FAILED_TO_VERIFY_POPUP = "Failed to verify popup - ''{0}''";
+	public static final int WAIT_5SECS = 5;
+	public static final String SECONDARY_CONTACT_NAME="Secondary Contact Name";
+	public static final String PARENT = "Parent";
+	public static final String CHILD = "Child";
+	public static final String DOMESTIC_PARTNER = "Domestic Partner";
+	public static final String PREFER_NOT_TO_ANSWER = "Prefer not to answer";
+	public static final String TEXT="text";
+	public static final boolean TRUE = true;
+	public static final String RELATIONSHIP_FORM_CONTROL="relationshipCode";
+	public static final String PRONOUN_FORM_CONTROL="pronounCode";
+	public static final String ADD_PHONE = "Add Phone";
+	public static final String ADD_EMAIL = "Add Email";
+	public static final String EMAIL_ADDRESS="Email Address";
+	public static final String ORIG_DEST="Orig/Dest";
+	public static final String TYPE = "Type";
+	public static final String CELL_PHONE="Cell Phone";
+	public static final String FIRST_NAME_TEST = "Test_FirstName";
+	public static final String LAST_NAME_TEST ="Test_LastName";
+	public static final String PHONE_NUMBER_TEST = "1234567890";
+	public static final String EMAIL_ADDRESS_TEST = "test@autoaires.com";
+	public static final String SPOUSE_PERSONAL = "Spouse Personal";
+	public static final String OTHER_EDIT = "Other Edit";
+	public static final String FAILED_TO_SELECT_SECONDARY_CONTACT = "Failed to select secondary contact - ''{0}''";
+	public static final String FAILED_TO_SELECT_SECONDARY_CONTACT_AT_INDEX = "Failed to select secondary contact at index - ''{0}''";
+	public static final String FAILED_TO_SELECT_PRIMARY_CONTACT = "Failed To Select Primary Contact Popup";
+	public static final String FAIL_TO_GET_ELEMENT_TEXT = "Fail to get element text - ''{0}''";
+	public static final String SELECTED_SECONDARY_CONTACT_EMAIL = "Selected Secondary Contact email";
+	public static final String SELECTED_SECONDARY_CONTACT_PHONE ="Selected Secondary Contact phone";
+	public static final String SELECTED_SECONDARY_CONTACT_NAME = "Selected Secondary Contact Name";
+	public static final String SELECTED_SECONDARY_CONTACT_RELATION = "Selected Secondary Contact relation";
+	public static final String SELECTED_SECONDARY_CONTACT_PRONOUN ="Selected Secondary Contact pronoun";
+	public static final String FAILED_TO_CLICK_LINK ="Failed to click link - ''{0}''";
+	public static final String FAILED_TO_ENTER_TEXT ="Failed to enter text - ''{0}''";
+	public static final String FAILED_TO_SELECT_VALUE_FROM_DROPDOWN = "Failed to Select value from drop down - ''{0}''";
+	public static final String FAILED_TO_ADD_PARTNER = "Failed To Add Partner - ''{0}''";
+	public static final String FAILED_TO_ADD_DEPENDENT = "Failed To Add Dependent - ''{0}''";
+	public static final String FAILED_TO_ADD_OTHER_MEMBER = "Failed To Add Other Member - ''{0}''";
+	public static final String FAILED_TO_ENTER_VALUES = "Failed To enter values - ''{0}''";
+	public static final String PHONE_DETAILS = "phone details";
+	public static final String EMAIL_DETAILS = "email details";
+
+
+	
 }

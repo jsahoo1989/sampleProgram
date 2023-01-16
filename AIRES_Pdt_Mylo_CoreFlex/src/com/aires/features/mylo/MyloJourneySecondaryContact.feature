@@ -4,7 +4,7 @@ Feature: Validate the functionality of Mylo Journey Secondary Contact section
   Background: Login to  Mylo application
     Given he selects "New File" option under "Journey" section available on left panel of Home Page after successfully logging into the 'Mylo' application
 
-  @C218551 @C218570 @Mylo-Regression
+  @C218551 @C218570 @Mylo-Regression @C218612
   Scenario: Mylo-Validate adding and changing members from transferee and family details to secondary contact section
     Given he is on Mylo Journey Summary page by clicking on "Create File" button on 'Create New File' popup after entering all mandatory fields
     And he adds below members in the 'Transferee and Family Details' Section after clicking on "Transferee and Family Dropdown arrow" displayed in the right panel
@@ -21,7 +21,7 @@ Feature: Validate the functionality of Mylo Journey Secondary Contact section
       | The contact selected is already designated as the Primary Contact on this file. A contact may not be both the Primary and Secondary Contact. |
     And clicking 'save' buttton after selecting a different member should change the contact in 'Secondary Contact' section
 
-  @C218548 @C218555 @Mylo-Regression
+  @C218548 @C218555 @Mylo-Regression @C218613
   Scenario: Mylo-Validate Removing Secondary Contact From a File under Secondary Contact module and the warning message when user tries to select primary contact as secondary contact in Mylo Journey File Information panel
     Given he is on Mylo Journey Summary page by clicking on "Create File" button on 'Create New File' popup after entering all mandatory fields
     And he adds members in the 'Transferee and Family Details' Section after clicking on "Transferee and Family Dropdown arrow" displayed in the right panel
@@ -34,12 +34,12 @@ Feature: Validate the functionality of Mylo Journey Secondary Contact section
       | The contact selected is already designated as the Primary Contact on this file. A contact may not be both the Primary and Secondary Contact. |
     And he should be able to add the removed member again after selecting same member on 'Please select a Secondary Contact' popup
 
-  @C218561 @Mylo-Regression
+  @C218561 @Mylo-Regression @C218614
   Scenario Outline: Mylo-Validate if the contact information is updated in transferee and family section, the details are updated on Secondary contact
     Given he is on Mylo Journey Summary page by clicking on "Create File" button on 'Create New File' popup after entering all mandatory fields
-    And he adds <Member> in the 'Transferee and Family Details' Section after clicking on "Transferee and Family Dropdown arrow" displayed in the right panel
-    And he has saved the <Memeber> by clicking on "Select Secondary Contact" link under Secondary Contact Section that is displayed by clicking Primary contact details drop down arrow
-    When he updates the below fields of the selected secondary contact information in the 'Transferee and Family Section' after clicking on "Transferee and Family Dropdown arrow"
+    And he adds "<Member>" in the 'Transferee and Family Details' Section after clicking on "Transferee and Family Dropdown arrow" displayed in the right panel
+    And he has saved the "<Member>" by clicking on "Select Secondary Contact" link under Secondary Contact Section that is displayed by clicking Primary contact details drop down arrow
+    When he updates the below fields of the selected "<Member>" in the 'Transferee and Family Section' after clicking on "Transferee and Family Dropdown arrow"
       | Fields       |
       | First Name   |
       | Last Name    |
@@ -47,7 +47,7 @@ Feature: Validate the functionality of Mylo Journey Secondary Contact section
       | Relationship |
       | Number       |
       | Email        |
-    Then the updated information should be displayed for the secondary contact in the secondary contact section
+    Then the updated information of the "<Member>" should be displayed for the secondary contact in the secondary contact section
 
     Examples: 
       | Member    |

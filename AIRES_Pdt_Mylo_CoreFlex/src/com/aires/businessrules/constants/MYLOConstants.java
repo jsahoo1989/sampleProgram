@@ -741,9 +741,6 @@ public class MYLOConstants {
 	public static long TIME_BEFORE_ACTION;
 	public static long TIME_AFTER_ACTION;
 	
-	
-	
-
 	// Query By SubServiceID Popup
 	public static final String QUERY_BY_SUB_SERVICE_ID = "Query By Sub-Service ID";
 	public static final String NON_SHIPMENT = "Non-Shipment";
@@ -761,8 +758,9 @@ public class MYLOConstants {
 
 	//Add Secondary Contact
 	public static final String SECONDARY_CONTACT_INCORRECT_SELECTION_ERROR="The contact selected is already designated as the Primary Contact on this file. A contact may not be both the Primary and Secondary Contact.";
-	public static final String CHANGE_BUTTON = "Change Button";
+	public static final String CHANGE_BUTTON = "Change";
 	public static final String WARNING_POPUP="Warning Popup";
+	public static final String SELECT_SECONDARY_CONTACT = "Select Secondary Contact";
 	public static final String SELECT_SECONDARY_CONTACT_LINK = "Select Secondary Contact Link";
 	public static final String SELECT_SECONDARY_CONTACT_POPUP = "Select Secondary Contact Popup";
 	public static final String EXPAND_PRIMARY_CONTACT_SECTION = "Expand Primary Contact Section";
@@ -807,6 +805,9 @@ public class MYLOConstants {
 	public static final String FAILED_TO_ENTER_VALUES = "Failed To enter values - ''{0}''";
 	public static final String PHONE_DETAILS = "phone details";
 	public static final String EMAIL_DETAILS = "email details";
+	public static final String OUTER_TEXT = "outerText";
+	public static final String PRONOUN = "Pronoun";
+	public static final String FAILED_TO_VERIFY_PARTNER_NAME = "Failed to verify partner name";
 
 
 	

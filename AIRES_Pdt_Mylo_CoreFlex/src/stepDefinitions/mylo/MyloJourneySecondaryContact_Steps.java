@@ -3,26 +3,19 @@ package stepDefinitions.mylo;
 import java.text.MessageFormat;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Map;
 
 import org.testng.Assert;
 
-import com.aires.businessrules.BusinessFunctions;
 import com.aires.businessrules.CoreFunctions;
 import com.aires.businessrules.constants.CoreConstants;
 import com.aires.businessrules.constants.MYLOConstants;
 import com.aires.cucumber.TestContext;
 import com.aires.managers.FileReaderManager;
 import com.aires.pages.mylo.MyloJourneyPage_CreateNewFileSection;
-import com.aires.pages.mylo.MyloJourneyPage_DependentSection;
-import com.aires.pages.mylo.MyloJourneyPage_OtherSection;
 import com.aires.pages.mylo.MyloJourneyPage_PartnerSection;
 import com.aires.pages.mylo.MyloJourneyPage_SecondaryContact;
 import com.aires.pages.mylo.MyloJourneyPage_TransfereeAndFamilySection;
 import com.aires.pages.mylo.MyloJourneyPage_TransfereeSection;
-import com.aires.pages.mylo.Mylo_DashboardHomePage;
-import com.aires.pages.mylo.Mylo_JourneyPage;
-import com.aires.pages.mylo.Mylo_LoginPage;
 import com.aires.testdatatypes.mylo.Mylo_LoginData;
 
 import cucumber.api.DataTable;
@@ -32,15 +25,10 @@ import cucumber.api.java.en.When;
 
 public class MyloJourneySecondaryContact_Steps {
 	private TestContext _testContext;
-	private Mylo_DashboardHomePage _myloDashboardPage;
-	private Mylo_JourneyPage _myloJourneyPage;
-	private Mylo_LoginPage _loginPage;
 	private MyloJourneyPage_SecondaryContact _myloJourneyPage_SecondaryContact;
 	private MyloJourneyPage_CreateNewFileSection _myloNewFileSection;
 	private MyloJourneyPage_TransfereeSection _myloJourneyPageTransfereeSection;
 	private MyloJourneyPage_PartnerSection _myloJourneyPagePartnerSection;
-	private MyloJourneyPage_OtherSection _myloJourneyPageOtherSection;
-	private MyloJourneyPage_DependentSection _myloJourneyPageDependentSection;
 	private MyloJourneyPage_TransfereeAndFamilySection _myloJourneyPageTransfereeAndFamilySection;
 
 	public List<String> memberRelation = new ArrayList<String>();
@@ -58,15 +46,15 @@ public class MyloJourneySecondaryContact_Steps {
 
 	public MyloJourneySecondaryContact_Steps(TestContext context) {
 		_testContext = context;
-		_myloDashboardPage = _testContext.getMyloPageObjectManager().getDashboardHomePage();
-		_myloJourneyPage = _testContext.getMyloPageObjectManager().getJourneyPage();
-		_loginPage = _testContext.getMyloPageObjectManager().getLoginPage();
+		_testContext.getMyloPageObjectManager().getDashboardHomePage();
+		_testContext.getMyloPageObjectManager().getJourneyPage();
+		_testContext.getMyloPageObjectManager().getLoginPage();
 		_myloJourneyPage_SecondaryContact = _testContext.getMyloPageObjectManager().getJourneyPageSecondaryContact();
 		_myloNewFileSection = _testContext.getMyloPageObjectManager().getJourneyPageCreateNewFileSection();
 		_myloJourneyPageTransfereeSection = _testContext.getMyloPageObjectManager().getJourneyPageTransfereeSection();
 		_myloJourneyPagePartnerSection = _testContext.getMyloPageObjectManager().getJourneyPagePartnerSection();
-		_myloJourneyPageOtherSection = _testContext.getMyloPageObjectManager().getJourneyPageOtherSection();
-		_myloJourneyPageDependentSection = _testContext.getMyloPageObjectManager().getJourneyPageDependentSection();
+		_testContext.getMyloPageObjectManager().getJourneyPageOtherSection();
+		_testContext.getMyloPageObjectManager().getJourneyPageDependentSection();
 		_myloJourneyPageTransfereeAndFamilySection = _testContext.getMyloPageObjectManager()
 				.getJourneyPageTransfereeAndFamilySection();
 	}
@@ -87,8 +75,8 @@ public class MyloJourneySecondaryContact_Steps {
 						MYLOConstants.TRANSFEREE_FAMILY));
 		_myloJourneyPageTransfereeAndFamilySection.addTransfereeAndFamily(table);
 	}
-
-	@When("^he clicks the \"([^\"]*)\" link in the 'Secondary Contact' module after clicking 'Primary Contact Details' dropdown arrow displayed in the right panel$")
+		
+	@When("^he clicks on the \"([^\"]*)\" link displayed under the 'Secondary Contact' section after expanding the 'Primary Contact Details' section in the right panel$")
 	public void he_clicks_the_link_in_the_Secondary_Contact_module_after_clicking_Primary_Contact_Details_dropdown_arrow_displayed_in_the_right_panel(
 			String link) {
 		_myloJourneyPage_SecondaryContact.expandPrimaryContactDetailsSection();
@@ -98,18 +86,16 @@ public class MyloJourneySecondaryContact_Steps {
 						MYLOConstants.SELECT_SECONDARY_CONTACT_POPUP));
 
 	}
-
-	@Then("^clicking 'save' buttton after selecting above created members individually should display the contact in 'Secondary Contact' section$")
+	@Then("^clicking 'save' buttton on 'Please select a Secondary Contact' popup after selecting the above created members individually should display the contact in 'Secondary Contact' section$")
 	public void clicking_save_buttton_after_selecting_above_created_members_individually_should_display_the_contact_in_Secondary_Contact_section() {
 		_myloJourneyPage_SecondaryContact.selectAndVerifySecondaryContact();
 	}
-
-	@Then("^by clicking on 'change' button on the selected Secondary Contact card below \"([^\"]*)\" should appear upon clicking 'save' button after selecting primary contact on 'Please select a Secondary Contact' popup$")
+	@Then("^following warning message should be displayed after replacing the secondary contact with the primary contact upon clicking the 'change' button displayed under \"([^\"]*)\" section$")
 	public void by_clicking_on_change_button_on_the_selected_Secondary_Contact_card_below_should_appear_upon_clicking_save_button_after_selecting_primary_contact_on_Please_select_a_Secondary_Contact_popup(
-			String button, DataTable table) {
+			String section, DataTable table) {
 		_myloJourneyPage_SecondaryContact.selectSecondaryContactOnPopup(1);
 		_myloJourneyPage_SecondaryContact.clickButtonInSelectSecondaryContactDialog(MYLOConstants.SUBMIT_BUTTON);
-		_myloJourneyPage_SecondaryContact.clickChangeButton();
+		_myloJourneyPage_SecondaryContact.clickButtonInSecondaryContactCard(MYLOConstants.CHANGE_BUTTON);
 		_myloJourneyPage_SecondaryContact.selectPrimaryContactOnSecondaryContactPopup();
 		_myloJourneyPage_SecondaryContact.clickButtonInSelectSecondaryContactDialog(MYLOConstants.SUBMIT_BUTTON);
 		Assert.assertTrue(_myloJourneyPage_SecondaryContact.isErrorDialogDisplayed(),
@@ -122,7 +108,8 @@ public class MyloJourneySecondaryContact_Steps {
 		_myloJourneyPage_SecondaryContact.selectSecondaryContactOnPopup(1);
 		String secondaryContactName = _myloJourneyPage_SecondaryContact.getContactNameOnPopUp(1);
 		_myloJourneyPage_SecondaryContact.clickButtonInSelectSecondaryContactDialog(MYLOConstants.SUBMIT_BUTTON);
-		CoreFunctions.verifyText(_myloJourneyPage_SecondaryContact.getSelectedSecondaryContactName(),
+		CoreFunctions.verifyText(
+				_myloJourneyPage_SecondaryContact.getSelectedSecondaryContactDetails(MYLOConstants.NAME),
 				secondaryContactName, MYLOConstants.SECONDARY_CONTACT_NAME);
 
 	}
@@ -135,7 +122,8 @@ public class MyloJourneySecondaryContact_Steps {
 		Assert.assertTrue(_myloJourneyPageTransfereeSection.verifySectionHeader(MYLOConstants.TRANSFEREE_FAMILY),
 				MessageFormat.format(MYLOConstants.VERIFIED_SECTION_NOT_DISPLAYED, CoreConstants.FAIL,
 						MYLOConstants.TRANSFEREE_FAMILY));
-		_myloJourneyPageTransfereeAndFamilySection.addPartnerWithMandatoryFields(MYLOConstants.DOMESTIC_PARTNER);;
+		_myloJourneyPageTransfereeAndFamilySection.addPartnerWithMandatoryFields(MYLOConstants.DOMESTIC_PARTNER);
+		;
 	}
 
 	@Given("^he has clicked 'Save' button after selecting a member on 'Please select Secondary contat' popup in 'Secondary contact' section$")
@@ -148,7 +136,7 @@ public class MyloJourneySecondaryContact_Steps {
 
 	@When("^he clicks on the 'remove' button on the secondary contact card under 'Secondary Contact' section$")
 	public void he_clicks_on_the_remove_button_on_the_secondary_contact_card_under_Secondary_Contact_section() {
-		_myloJourneyPage_SecondaryContact.clickRemoveButton();
+		_myloJourneyPage_SecondaryContact.clickButtonInSecondaryContactCard(MYLOConstants.REMOVE_BUTTON);
 	}
 
 	@Then("^the secondary contact should be removed from the file with the secondary contact section displaying as \"([^\"]*)\"$")
@@ -161,7 +149,11 @@ public class MyloJourneySecondaryContact_Steps {
 
 	@Then("^the removed contact should still be presented in the 'Transferee & Family' section$")
 	public void the_removed_contact_should_still_be_presented_in_the_Transferee_Family_section() {
-		Assert.assertTrue(_myloJourneyPagePartnerSection.isPartnerExist());
+		_myloJourneyPage_SecondaryContact.clickSelectSecondaryContactLink();
+		_myloJourneyPage_SecondaryContact.selectSecondaryContactOnPopup(1);
+		String partnerName = _myloJourneyPage_SecondaryContact.getContactNameOnPopUp(1);
+		_myloJourneyPage_SecondaryContact.clickButtonInSelectSecondaryContactDialog(MYLOConstants.CANCEL_BUTTON);
+		_myloJourneyPagePartnerSection.verifyPartnerExist(partnerName);
 	}
 
 	@Then("^below \"([^\"]*)\" should appear upon clicking \"([^\"]*)\" button after selecting primary contact on 'Please select a Secondary Contact' popup displayed by clicking \"([^\"]*)\" link$")
@@ -181,7 +173,8 @@ public class MyloJourneySecondaryContact_Steps {
 		_myloJourneyPage_SecondaryContact.selectSecondaryContactOnPopup(1);
 		String secondaryContactName = _myloJourneyPage_SecondaryContact.getContactNameOnPopUp(1);
 		_myloJourneyPage_SecondaryContact.clickButtonInSelectSecondaryContactDialog(MYLOConstants.SUBMIT_BUTTON);
-		CoreFunctions.verifyText(_myloJourneyPage_SecondaryContact.getSelectedSecondaryContactName(),
+		CoreFunctions.verifyText(
+				_myloJourneyPage_SecondaryContact.getSelectedSecondaryContactDetails(MYLOConstants.NAME),
 				secondaryContactName, MYLOConstants.SECONDARY_CONTACT_NAME);
 
 	}

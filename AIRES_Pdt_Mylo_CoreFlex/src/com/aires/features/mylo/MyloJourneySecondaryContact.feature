@@ -5,7 +5,7 @@ Feature: Validate the functionality of Mylo Journey Secondary Contact section
     Given he selects "New File" option under "Journey" section available on left panel of Home Page after successfully logging into the 'Mylo' application
 
   @C218551 @C218570 @Mylo-Regression @C218612
-  Scenario: Mylo-Validate adding and changing members from transferee and family details to secondary contact section
+  Scenario: Mylo - Validate add secondary contact and change functionality on secondary contact section
     Given he is on Mylo Journey Summary page by clicking on "Create File" button on 'Create New File' popup after entering all mandatory fields
     And he adds below members in the 'Transferee and Family Details' Section after clicking on "Transferee and Family Dropdown arrow" displayed in the right panel
       | Member    | Relationship     |
@@ -14,9 +14,9 @@ Feature: Validate the functionality of Mylo Journey Secondary Contact section
       | Dependent | Parent           |
       | Dependent | Child            |
       | Other     | Other            |
-    When he clicks the "Select Secondary Contact" link in the 'Secondary Contact' module after clicking 'Primary Contact Details' dropdown arrow displayed in the right panel
-    Then clicking 'save' buttton after selecting above created members individually should display the contact in 'Secondary Contact' section
-    And by clicking on 'change' button on the selected Secondary Contact card below "warning message" should appear upon clicking 'save' button after selecting primary contact on 'Please select a Secondary Contact' popup
+    When he clicks on the "Select Secondary Contact" link displayed under the 'Secondary Contact' section after expanding the 'Primary Contact Details' section in the right panel
+    Then clicking 'save' buttton on 'Please select a Secondary Contact' popup after selecting the above created members individually should display the contact in 'Secondary Contact' section
+    And following warning message should be displayed after replacing the secondary contact with the primary contact upon clicking the 'change' button displayed under "Secondary Contact" section
       | Warning Message                                                                                                                              |
       | The contact selected is already designated as the Primary Contact on this file. A contact may not be both the Primary and Secondary Contact. |
     And clicking 'save' buttton after selecting a different member should change the contact in 'Secondary Contact' section

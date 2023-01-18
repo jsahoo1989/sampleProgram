@@ -42,7 +42,7 @@ public class MyloJourneyPage_TransfereeAndFamilySection extends Base {
 	@FindBy(how = How.CSS, using = "i[class='icon-FloppyDisk_Open']")
 	private WebElement _saveIcon;
 
-	@FindBy(how = How.XPATH, using = "//button[text()='Save']")
+	@FindBy(how = How.CSS, using = "app-transferee-family-add-popup  button[class*='submit']")
 	private WebElement _saveButton;
 
 	@FindBy(how = How.CSS, using = "app-partner i[class='icon-Pencil_Open']")
@@ -282,7 +282,6 @@ public class MyloJourneyPage_TransfereeAndFamilySection extends Base {
 			CoreFunctions.explicitWaitTillElementVisibility(driver, fieldElement, fieldName);
 			CoreFunctions.explicitWaitTillElementBecomesClickable(driver, fieldElement, fieldName);
 			CoreFunctions.click(driver, fieldElement, fieldName);
-			CoreFunctions.waitHandler(MYLOConstants.WAIT_5SECS);
 			CoreFunctions.selectItemInListByText(driver, _editTransfereeDropDownOptions, fieldValue,
 					MYLOConstants.TRUE);
 		} catch (Exception e) {
@@ -305,7 +304,7 @@ public class MyloJourneyPage_TransfereeAndFamilySection extends Base {
 			editPronoun(MYLOConstants.PREFER_NOT_TO_ANSWER);
 			editPartnerOrDependentRelationship(MYLOConstants.SPOUSE);
 			addPhoneDetails();
-			addEmailDetails();
+			addEmailDetails(MYLOConstants.SPOUSE_PERSONAL);
 			clickSaveInEditMember();
 			break;
 		case (MYLOConstants.DEPENDENT):
@@ -314,7 +313,7 @@ public class MyloJourneyPage_TransfereeAndFamilySection extends Base {
 			editPronoun(MYLOConstants.PREFER_NOT_TO_ANSWER);
 			editPartnerOrDependentRelationship(MYLOConstants.CHILD);
 			addPhoneDetails();
-			addEmailDetails();
+			addEmailDetails(MYLOConstants.OTHER);
 			clickSaveInEditMember();
 			break;
 		case (MYLOConstants.OTHER):
@@ -392,12 +391,12 @@ public class MyloJourneyPage_TransfereeAndFamilySection extends Base {
 	/**
 	 * add Email details
 	 */
-	public void addEmailDetails() {
+	public void addEmailDetails(String emailType) {
 		try {
 			clickAddLink(MYLOConstants.ADD_EMAIL);
 			enterTextEditTransfereeFamily(MYLOConstants.EMAIL_ADDRESS, MYLOConstants.EMAIL_ADDRESS_TEST);
 			CoreFunctions.click(driver, _emailTypeDropdown, MYLOConstants.EMAIL_TYPE_COLUMN);
-			CoreFunctions.selectItemInListByText(driver, _editTransfereeDropDownOptions, MYLOConstants.SPOUSE_PERSONAL,
+			CoreFunctions.selectItemInListByText(driver, _editTransfereeDropDownOptions, emailType,
 					MYLOConstants.TRUE);
 		} catch (Exception e) {
 			Assert.fail(MessageFormat.format(MYLOConstants.FAILED_TO_ENTER_VALUES, MYLOConstants.EMAIL_DETAILS));
@@ -409,10 +408,11 @@ public class MyloJourneyPage_TransfereeAndFamilySection extends Base {
 	 */
 	public void addPhoneDetailsInOther() {
 		try {
-			clickAddLink(MYLOConstants.ADD_PHONE);
+			
 			WebElement fieldElement = BusinessFunctions.returnElementFromListUsingAttribute(driver,
 					_editTransfereeDropDown, MYLOConstants.CITIZENSHIP, MYLOConstants.FORMCONTROLNAME);
 			CoreFunctions.scrollToElementUsingJavaScript(driver, fieldElement, MYLOConstants.CITIZENSHIP);
+			clickAddLink(MYLOConstants.ADD_PHONE);
 			selectPhoneEmailValueFromDropdown(MYLOConstants.ORIG_DEST, MYLOConstants.ORIGIN);
 			selectPhoneEmailValueFromDropdown(MYLOConstants.TYPE, MYLOConstants.CELL_PHONE);
 			enterTextEditTransfereeFamily(MYLOConstants.NUMBER, MYLOConstants.PHONE_NUMBER_TEST);
@@ -426,10 +426,11 @@ public class MyloJourneyPage_TransfereeAndFamilySection extends Base {
 	 */
 	public void addEmailDetailsInOther() {
 		try {
-			clickAddLink(MYLOConstants.ADD_EMAIL);
+			
 			WebElement fieldElement = BusinessFunctions.returnElementFromListUsingAttribute(driver,
 					_editTransfereeDropDown, MYLOConstants.CITIZENSHIP, MYLOConstants.FORMCONTROLNAME);
 			CoreFunctions.scrollToElementUsingJavaScript(driver, fieldElement, MYLOConstants.CITIZENSHIP);
+			clickAddLink(MYLOConstants.ADD_EMAIL);
 			enterTextEditTransfereeFamily(MYLOConstants.EMAIL_ADDRESS, MYLOConstants.EMAIL_ADDRESS_TEST);
 			CoreFunctions.click(driver, _emailTypeDropdown, MYLOConstants.EMAIL_TYPE_COLUMN);
 			CoreFunctions.waitHandler(MYLOConstants.WAIT_5SECS);

@@ -153,12 +153,12 @@ public class MyloJourneyPage_PartnerSection extends Base {
 	@FindBy(how = How.XPATH, using = "//app-transferee-family//h2[contains(text(),'Partner')]")
 	private WebElement _partnerHeader;
 
-	@FindBy(how = How.XPATH, using = "//div[@id='collapseOneTransferee']//app-partner")
+	@FindBy(how = How.CSS, using = "div[@id='collapseOneTransferee'] app-partner")
 	private List<WebElement> _partnerList;
-
-	@FindBy(how = How.XPATH, using = "//label[text()='Save']")
-	private WebElement _partnerSaveButtonEditMode;
-
+	
+	@FindBy(how = How.CSS, using = "app-partner div[class*='usertitle']")
+	private WebElement _partnerName;
+			
 	final By _dropdownOptions = By.cssSelector("div[role='option']>span");
 	final By _genderDropdownOptions = By.cssSelector("div[role='option']>div");
 	final By _existingPartnerName = By.cssSelector("div[class*='usertitle']");
@@ -287,10 +287,6 @@ public class MyloJourneyPage_PartnerSection extends Base {
 			break;
 		case MYLOConstants.RELATIONSHIP:
 			CoreFunctions.click(driver, _partnerRelationship, elementName);
-			break;
-		case MYLOConstants.PRONOUNS:
-			CoreFunctions.explicitWaitTillElementBecomesClickable(driver, _partnerPronouns, MYLOConstants.PRONOUNS);
-			CoreFunctions.click(driver, _partnerPronouns, elementName);
 			break;
 		default:
 			Reporter.addStepLog(CoreConstants.FAIL + MYLOConstants.ENTER_CORRECT_ELEMENT_NAME);
@@ -857,10 +853,11 @@ public class MyloJourneyPage_PartnerSection extends Base {
 		}
 	}
 
-	public boolean isPartnerExist() {
-		if (_partnerList.size() == 1)
-			_isExist = true;
-		return _isExist;
+	public void verifyPartnerExist(String partnerName) {
+		try {
+			CoreFunctions.verifyText(CoreFunctions.getElementText(driver, _partnerName), partnerName);
+		} catch (Exception e) {
+			Assert.fail(MessageFormat.format(MYLOConstants.FAILED_TO_VERIFY_PARTNER_NAME, CoreConstants.FAIL));
+		}
 	}
-
 }

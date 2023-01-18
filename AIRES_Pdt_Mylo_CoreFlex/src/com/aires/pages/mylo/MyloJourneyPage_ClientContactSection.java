@@ -35,10 +35,13 @@ public class MyloJourneyPage_ClientContactSection extends Base {
 	@FindBy(how = How.CSS, using = "app-client-contact button")
 	private List<WebElement> _clientContactButtons;
 
+	@FindBy(how = How.CSS, using = "app-client-contact button[class$='collapsed']")
+	private WebElement _clientContactDetailsButton;
+
 	@FindBy(how = How.CSS, using = "app-client-contact p")
 	private WebElement _addClientContactLink;
 
-	@FindBy(how = How.CSS, using = "app-client-contact-form ng-select[name='Client_Pronouns']")
+	@FindBy(how = How.CSS, using = "ng-select[name='Client_Pronouns']")
 	private WebElement _pronounsDropdown;
 
 	@FindBy(how = How.CSS, using = "app-client-popup ng-select[name='Client_Pronouns']")
@@ -86,10 +89,10 @@ public class MyloJourneyPage_ClientContactSection extends Base {
 					: _clientContactButtons;
 			WebElement element = BusinessFunctions.returnItemIfExistsInList(driver, _clientContactBtns, btnName);
 			CoreFunctions.explicitWaitTillElementVisibility(driver, element, btnName, MYLOConstants.CUSTOM_WAIT_TIME);
-			// CoreFunctions.scrollClickUsingJS(driver, element, btnName);
 			CoreFunctions.scrollToElementUsingJS(driver, element, btnName);
-			CoreFunctions.click(driver, element, btnName);
-			BusinessFunctions.fluentWaitForMyloSpinnerToDisappear(driver, _spinner);
+			CoreFunctions.moveToElement(driver, element);
+			CoreFunctions.clickUsingJS(driver, element, btnName);
+			// BusinessFunctions.fluentWaitForMyloSpinnerToDisappear(driver, _spinner);
 		} catch (Exception e) {
 			Assert.fail(MessageFormat.format(CoreConstants.FAILD_CLCK_ELE, btnName));
 		}
@@ -109,6 +112,22 @@ public class MyloJourneyPage_ClientContactSection extends Base {
 		} catch (Exception e) {
 			Assert.fail(MessageFormat.format(CoreConstants.FAILD_CLCK_ELE, linkName));
 		}
+	}
+
+	/**
+	 * Click on Details button available under Client Contact section
+	 */
+	public void clickClientContactDetailsBtn() {
+		try {
+			BusinessFunctions.fluentWaitForMyloSpinnerToDisappear(driver, _spinner);
+			CoreFunctions.explicitWaitTillElementVisibility(driver, _clientContactDetailsButton, MYLOConstants.DETAILS,
+					MYLOConstants.CUSTOM_WAIT_TIME);
+			CoreFunctions.scrollToElementUsingJS(driver, _clientContactDetailsButton, MYLOConstants.DETAILS);
+			CoreFunctions.click(driver, _clientContactDetailsButton, MYLOConstants.DETAILS);
+		} catch (Exception e) {
+			Assert.fail(MessageFormat.format(CoreConstants.FAILD_CLCK_ELE, MYLOConstants.DETAILS));
+		}
+
 	}
 
 	/**
@@ -258,7 +277,7 @@ public class MyloJourneyPage_ClientContactSection extends Base {
 			CoreFunctions.explicitWaitTillElementVisibility(driver, _pronounsDropdown, MYLOConstants.PRONOUNS);
 			CoreFunctions.scrollToElementUsingJS(driver, _pronounsDropdown, MYLOConstants.PRONOUNS);
 			CoreFunctions.highlightObject(driver, _pronounsDropdown);
-			requiredValue = CoreFunctions.getAttributeText(_pronounsDropdown, MYLOConstants.TITLE);
+			requiredValue = CoreFunctions.getElementText(driver, _pronounsDropdown);
 		} catch (Exception e) {
 			Assert.fail(MessageFormat.format(CoreConstants.FAIL_TO_VERIFY_ELEMENT_ON_SECTION, CoreConstants.FAIL,
 					MYLOConstants.PRONOUNS, MYLOConstants.CLIENT_CONTACT));
@@ -275,21 +294,29 @@ public class MyloJourneyPage_ClientContactSection extends Base {
 	 */
 	public boolean verifyClientContactUpdated(DataTable table) {
 		boolean flag = true;
-		java.util.List<Map<String, String>> dataList = table.asMaps(String.class, String.class);
-		for (Map<String, String> data : dataList) {
-			String fieldName = data.get(MYLOConstants.FIELD_NAME);
-			String actualValue = (fieldName.equals(MYLOConstants.PRONOUNS)) ? getPronounFieldDropdownValue()
-					: getClientContact(fieldName, MYLOConstants.CLIENT_CONTACT);
-			String expectedValue = (fieldName.equals(MYLOConstants.UPDATED_BY)) ? MYLOConstants.MXSSODEV5
-					: (fieldName.contains(MYLOConstants.DATE)) ? CoreFunctions.getCurrentDateAsGivenFormat("d MMM YYY")
-							: _clientContactFieldsUpdatedValueMap.get(fieldName);
-			if (!(actualValue.equals(expectedValue))) {
-				Reporter.addStepLog(MessageFormat.format(MYLOConstants.VALUE_NOT_UPDATED_ON_SECTION, CoreConstants.FAIL,
-						expectedValue, fieldName, MYLOConstants.CLIENT_CONTACT, MYLOConstants.JOURNEY));
-				flag = false;
-			} else
-				Reporter.addStepLog(MessageFormat.format(MYLOConstants.VALUE_UPDATED_ON_SECTION, CoreConstants.PASS,
-						expectedValue, fieldName, MYLOConstants.CLIENT_CONTACT, MYLOConstants.JOURNEY));
+		try {
+			BusinessFunctions.fluentWaitForMyloSpinnerToDisappear(driver, _spinner);
+			java.util.List<Map<String, String>> dataList = table.asMaps(String.class, String.class);
+			for (Map<String, String> data : dataList) {
+				String fieldName = data.get(MYLOConstants.FIELD_NAME);
+				String actualValue = (fieldName.equals(MYLOConstants.PRONOUNS)) ? getPronounFieldDropdownValue()
+						: getClientContact(fieldName, MYLOConstants.CLIENT_CONTACT);
+				String expectedValue = (fieldName.equals(MYLOConstants.UPDATED_BY)) ? MYLOConstants.MXSSODEV5
+						: (fieldName.contains(MYLOConstants.DATE))
+								? CoreFunctions.getCurrentDateAsGivenFormat("d MMM YYY")
+								: _clientContactFieldsUpdatedValueMap.get(fieldName);
+				if (!(actualValue.equals(expectedValue))) {
+					Reporter.addStepLog(
+							MessageFormat.format(MYLOConstants.VALUE_NOT_UPDATED_ON_SECTION, CoreConstants.FAIL,
+									expectedValue, fieldName, MYLOConstants.CLIENT_CONTACT, MYLOConstants.JOURNEY));
+					flag = false;
+				} else
+					Reporter.addStepLog(MessageFormat.format(MYLOConstants.VALUE_UPDATED_ON_SECTION, CoreConstants.PASS,
+							expectedValue, fieldName, MYLOConstants.CLIENT_CONTACT, MYLOConstants.JOURNEY));
+			}
+		} catch (Exception e) {
+			Assert.fail(MessageFormat.format(MYLOConstants.FAILED_TO_VERIFY_UPDATED_VALUE_SECTION, CoreConstants.FAIL,
+					MYLOConstants.CLIENT_CONTACT));
 		}
 		return flag;
 	}
@@ -302,13 +329,21 @@ public class MyloJourneyPage_ClientContactSection extends Base {
 	 */
 	public boolean verifyClientContactFieldValuesEntered(DataTable table) {
 		boolean flag = true;
-		java.util.List<Map<String, String>> dataList = table.asMaps(String.class, String.class);
-		for (Map<String, String> data : dataList) {
-			String fieldName = data.get(MYLOConstants.FIELD_NAME);
-			int fieldCharLimit = Integer.parseInt(data.get(MYLOConstants.CHARACTER_LIMIT));
-			if (!(CoreFunctions.verifyTextForMaxLength(getClientContact(fieldName, MYLOConstants.ADD_CLIENT_CONTACT),
-					_clientContactFieldsUpdatedValueMap.get(fieldName), fieldName, fieldCharLimit + 1, fieldCharLimit)))
-				flag = false;
+		try {
+			java.util.List<Map<String, String>> dataList = table.asMaps(String.class, String.class);
+			for (Map<String, String> data : dataList) {
+
+				String fieldName = data.get(MYLOConstants.FIELD_NAME);
+				int fieldCharLimit = Integer.parseInt(data.get(MYLOConstants.CHARACTER_LIMIT));
+				if (!(CoreFunctions.verifyTextForMaxLength(
+						getClientContact(fieldName, MYLOConstants.ADD_CLIENT_CONTACT),
+						_clientContactFieldsUpdatedValueMap.get(fieldName), fieldName, fieldCharLimit + 1,
+						fieldCharLimit)))
+					flag = false;
+			}
+		} catch (Exception e) {
+			Assert.fail(MessageFormat.format(MYLOConstants.FAILED_TO_VERIFY_UPDATED_VALUE_SECTION, CoreConstants.FAIL,
+					MYLOConstants.CLIENT_CONTACT));
 		}
 		return flag;
 	}
@@ -359,22 +394,28 @@ public class MyloJourneyPage_ClientContactSection extends Base {
 	 */
 	public boolean verifyClientContactTagSciptToastMsg(DataTable table, String btnName) {
 		boolean flag = true;
-		java.util.List<Map<String, String>> dataList = table.asMaps(String.class, String.class);
-		for (Map<String, String> data : dataList) {
-			String fieldName = data.get(MYLOConstants.FIELD_NAME);
-			setClientContactInformation(fieldName, MYLOConstants.RANDOM, MYLOConstants.SPECIAL_CHARACTERS_STRING,
-					MYLOConstants.ADD_CLIENT_CONTACT);
-			clickButtonsOnClientContactSection(btnName, MYLOConstants.ADD_CLIENT_CONTACT);
-			if (!(BusinessFunctions.verifyMyloToastMessage(driver, _alertMessage, data.get(MYLOConstants.MESSAGE),
-					MYLOConstants.CLIENT_CONTACT)))
-				flag = false;
-			CoreFunctions.clickButtonsUsingSendKeys(driver, MYLOConstants.CLOSE_BUTTON, _toastMessageCloseBtn,
-					MYLOConstants.CLIENT_CONTACT, MYLOConstants.JOURNEY);
-			setClientContactInformation(fieldName, MYLOConstants.BLANK, MYLOConstants.BLANK,
-					MYLOConstants.ADD_CLIENT_CONTACT);
-			setMandatoryClientContactFields(String.valueOf(MYLOConstants.CUSTOM_FIELD_LENGTH),
-					String.valueOf(MYLOConstants.CUSTOM_FIELD_LENGTH), MYLOConstants.RANDOM_STRING,
-					MYLOConstants.ADD_CLIENT_CONTACT);
+		try {
+			java.util.List<Map<String, String>> dataList = table.asMaps(String.class, String.class);
+			for (Map<String, String> data : dataList) {
+				String fieldName = data.get(MYLOConstants.FIELD_NAME);
+				setClientContactInformation(fieldName, MYLOConstants.RANDOM, MYLOConstants.SPECIAL_CHARACTERS_STRING,
+						MYLOConstants.ADD_CLIENT_CONTACT);
+				clickButtonsOnClientContactSection(btnName, MYLOConstants.ADD_CLIENT_CONTACT);
+				if (!(BusinessFunctions.verifyMyloToastMessage(driver, _alertMessage, data.get(MYLOConstants.MESSAGE),
+						MYLOConstants.CLIENT_CONTACT)))
+					flag = false;
+				CoreFunctions.clickButtonsUsingSendKeys(driver, MYLOConstants.CLOSE_BUTTON, _toastMessageCloseBtn,
+						MYLOConstants.CLIENT_CONTACT, MYLOConstants.JOURNEY);
+				setClientContactInformation(fieldName, MYLOConstants.BLANK, MYLOConstants.BLANK,
+						MYLOConstants.ADD_CLIENT_CONTACT);
+				setMandatoryClientContactFields(String.valueOf(MYLOConstants.CUSTOM_FIELD_LENGTH),
+						String.valueOf(MYLOConstants.CUSTOM_FIELD_LENGTH), MYLOConstants.RANDOM_STRING,
+						MYLOConstants.ADD_CLIENT_CONTACT);
+			}
+
+		} catch (Exception e) {
+			Assert.fail(MessageFormat.format(MYLOConstants.FAILED_TO_VERIFY_ALERT_MESSAGE_SECTION, CoreConstants.FAIL,
+					MYLOConstants.CLIENT_CONTACT));
 		}
 		return flag;
 	}
@@ -389,24 +430,29 @@ public class MyloJourneyPage_ClientContactSection extends Base {
 	 */
 	public boolean verifyClientContactMandatoryFieldsToastMessage(DataTable table, String btnName) {
 		boolean flag = true;
-		java.util.List<Map<String, String>> dataList = table.asMaps(String.class, String.class);
-		for (Map<String, String> data : dataList) {
-			String firstName = !(data.get(MYLOConstants.FIRST_NAME).equals(MYLOConstants.BLANK))
-					? String.valueOf(MYLOConstants.CUSTOM_FIELD_LENGTH)
-					: MYLOConstants.BLANK;
-			String lastName = !(data.get(MYLOConstants.LAST_NAME).equals(MYLOConstants.BLANK))
-					? String.valueOf(MYLOConstants.CUSTOM_FIELD_LENGTH)
-					: MYLOConstants.BLANK;
-			setMandatoryClientContactFields(firstName, lastName, MYLOConstants.RANDOM_STRING,
-					MYLOConstants.ADD_CLIENT_CONTACT);
-			setClientContactInformation(MYLOConstants.EMAIL, data.get(MYLOConstants.EMAIL), MYLOConstants.VALUE,
-					MYLOConstants.ADD_CLIENT_CONTACT);
-			clickButtonsOnClientContactSection(btnName, MYLOConstants.ADD_CLIENT_CONTACT);
-			if (!(BusinessFunctions.verifyMyloToastMessage(driver, _alertMessage, data.get(MYLOConstants.MESSAGE),
-					MYLOConstants.CLIENT_CONTACT)))
-				flag = false;
-			CoreFunctions.clickButtonsUsingSendKeys(driver, MYLOConstants.CLOSE_BUTTON, _toastMessageCloseBtn,
-					MYLOConstants.CLIENT_CONTACT, MYLOConstants.JOURNEY);
+		try {
+			java.util.List<Map<String, String>> dataList = table.asMaps(String.class, String.class);
+			for (Map<String, String> data : dataList) {
+				String firstName = !(data.get(MYLOConstants.FIRST_NAME).equals(MYLOConstants.BLANK))
+						? String.valueOf(MYLOConstants.CUSTOM_FIELD_LENGTH)
+						: MYLOConstants.BLANK;
+				String lastName = !(data.get(MYLOConstants.LAST_NAME).equals(MYLOConstants.BLANK))
+						? String.valueOf(MYLOConstants.CUSTOM_FIELD_LENGTH)
+						: MYLOConstants.BLANK;
+				setMandatoryClientContactFields(firstName, lastName, MYLOConstants.RANDOM_STRING,
+						MYLOConstants.ADD_CLIENT_CONTACT);
+				setClientContactInformation(MYLOConstants.EMAIL, data.get(MYLOConstants.EMAIL), MYLOConstants.VALUE,
+						MYLOConstants.ADD_CLIENT_CONTACT);
+				clickButtonsOnClientContactSection(btnName, MYLOConstants.ADD_CLIENT_CONTACT);
+				if (!(BusinessFunctions.verifyMyloToastMessage(driver, _alertMessage, data.get(MYLOConstants.MESSAGE),
+						MYLOConstants.CLIENT_CONTACT)))
+					flag = false;
+				CoreFunctions.clickButtonsUsingSendKeys(driver, MYLOConstants.CLOSE_BUTTON, _toastMessageCloseBtn,
+						MYLOConstants.CLIENT_CONTACT, MYLOConstants.JOURNEY);
+			}
+		} catch (Exception e) {
+			Assert.fail(MessageFormat.format(MYLOConstants.FAILED_TO_VERIFY_ALERT_MESSAGE_SECTION, CoreConstants.FAIL,
+					MYLOConstants.CLIENT_CONTACT));
 		}
 		return flag;
 	}
@@ -430,10 +476,17 @@ public class MyloJourneyPage_ClientContactSection extends Base {
 	 * @return
 	 */
 	public boolean verifyRecentClientContactCardDisplayed() {
-		BusinessFunctions.fluentWaitForMyloSpinnerToDisappear(driver, _spinner);
-		String cardName = _clientContactFieldsUpdatedValueMap.get(MYLOConstants.FIRST_NAME) + MYLOConstants.SPACE
-				+ _clientContactFieldsUpdatedValueMap.get(MYLOConstants.LAST_NAME);
-		return (CoreFunctions.getElementText(driver, _clientContactCardNames.get(0)).equals(cardName));
+		boolean flag = false;
+		try {
+			BusinessFunctions.fluentWaitForMyloSpinnerToDisappear(driver, _spinner);
+			String cardName = _clientContactFieldsUpdatedValueMap.get(MYLOConstants.FIRST_NAME) + MYLOConstants.SPACE
+					+ _clientContactFieldsUpdatedValueMap.get(MYLOConstants.LAST_NAME);
+			flag = (CoreFunctions.getElementText(driver, _clientContactCardNames.get(0)).equals(cardName));
+		} catch (Exception e) {
+			Assert.fail(MessageFormat.format(CoreConstants.FAIL_TO_VERIFY_ELEMENT_ON_SECTION, CoreConstants.FAIL,
+					MYLOConstants.CLIENT_CONTACT_CARD, MYLOConstants.CLIENT_CONTACT));
+		}
+		return flag;
 	}
 
 }

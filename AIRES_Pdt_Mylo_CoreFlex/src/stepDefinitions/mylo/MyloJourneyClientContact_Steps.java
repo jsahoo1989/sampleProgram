@@ -50,6 +50,13 @@ public class MyloJourneyClientContact_Steps {
 						_loginData.MyloProfileName, MYLOConstants.MYLO_DASHBOARD_HOME_PAGE));
 	}
 
+	/**
+	 * Pre-requisite: Logged into Mylo application with user having resource300096
+	 * Search existing File ID having Client contact information
+	 * @param sectionName
+	 * @param fileStatus
+	 * @param fileInfo
+	 */
 	@Given("^he is on \"([^\"]*)\" section for \"([^\"]*)\" file having \"([^\"]*)\" information on Mylo Journey Summary Page$")
 	public void he_is_on_section_for_file_having_information_on_Mylo_Journey_Summary_Page(String sectionName,
 			String fileStatus, String fileInfo) {
@@ -153,6 +160,13 @@ public class MyloJourneyClientContact_Steps {
 		_softAssert.assertAll();
 	}
 
+	/**
+	 * Pre-requisite: Logged into Mylo application with user having resource300096
+	 * Search any existing active File ID 
+	 * @param linkName
+	 * @param sectionName
+	 * @param fileStatus
+	 */
 	@Given("^he clicks on \"([^\"]*)\" link available under \"([^\"]*)\" section on Mylo Journey Summary page for an existing \"([^\"]*)\" file$")
 	public void he_clicks_on_link_available_under_section_on_Mylo_Journey_Summary_page_for_an_existing_file(
 			String linkName, String sectionName, String fileStatus) {
@@ -177,10 +191,9 @@ public class MyloJourneyClientContact_Steps {
 				MessageFormat.format(MYLOConstants.FAIL_TO_VERIFY_MANDATORY_FIELDS_VALIDATION_MESSAGE_SECTION,
 						CoreConstants.FAIL, MYLOConstants.CLIENT_CONTACT));
 	}
-
-	@Then("^tag script toast message should be displayed for entering 'specialCharacters' on below fields after clicking on \"([^\"]*)\" button under 'Add Client Contact' section$")
-	public void tag_script_toast_message_should_be_displayed_for_entering_specialCharacters_on_below_fields_after_clicking_on_button_under_Add_Client_Contact_section(
-			String btnName, DataTable table) {
+	
+	@Given("^tag script toast message should be displayed for entering \"([^\"]*)\" specialCharacters on below fields after clicking on \"([^\"]*)\" button under 'Add Client Contact' section$")
+	public void tag_script_toast_message_should_be_displayed_for_entering_specialCharacters_on_below_fields_after_clicking_on_button_under_Add_Client_Contact_section(String arg1, String btnName, DataTable table) {
 		_softAssert.assertTrue(_myloJourneyPageClientContactSection.verifyClientContactTagSciptToastMsg(table, btnName),
 				MessageFormat.format(MYLOConstants.FAIL_TO_VERIFY_TAG_SCRIPT_VALIDATION_MESSAGE_SECTION,
 						CoreConstants.FAIL, MYLOConstants.CLIENT_CONTACT));
@@ -228,15 +241,14 @@ public class MyloJourneyClientContact_Steps {
 
 	@Then("^all below fields should be successfully saved under 'Client Contact' section$")
 	public void all_below_fields_should_be_successfully_saved_under_Client_Contact_section(DataTable table) {
-		_myloJourneyPageClientContactSection.clickButtonsOnClientContactSection(MYLOConstants.DETAILS,
-				MYLOConstants.CLIENT_CONTACT);
+		_myloJourneyPageClientContactSection.clickClientContactDetailsBtn();
 		_softAssert.assertTrue(_myloJourneyPageClientContactSection.verifyClientContactUpdated(table),
 				MessageFormat.format(MYLOConstants.FAILED_TO_VERIFY_UPDATED_VALUE_SECTION, CoreConstants.FAIL,
 						MYLOConstants.CLIENT_CONTACT));
 	}
 
-	@Then("^all below fields should be updated successfully on clicking \"([^\"]*)\" button after updating all the field with random values in \"([^\"]*)\" mode$")
-	public void all_below_fields_should_be_updated_successfully_on_clicking_button_after_updating_all_the_field_with_random_values_in_mode(
+	@Then("^all the below fields should be updated successfully on clicking the \"([^\"]*)\" button after updating all the fields with random values in \"([^\"]*)\" mode$")
+	public void all_the_below_fields_should_be_updated_successfully_on_clicking_the_button_after_updating_all_the_fields_with_random_values_in_mode(
 			String btnName, String btn, DataTable table) {
 		_myloJourneyPageClientContactSection.clickButtonsOnClientContactSection(btn, MYLOConstants.CLIENT_CONTACT);
 		_myloJourneyPageClientContactSection.setAllClientContactFieldWithRandomValues(MYLOConstants.CLIENT_CONTACT);
@@ -244,8 +256,6 @@ public class MyloJourneyClientContact_Steps {
 		_softAssert.assertTrue(_myloJourneyPage.verifyToastMessage(MYLOConstants.SAVE_SUCCESS_MESSAGE),
 				MessageFormat.format(MYLOConstants.VERIFIED_ALERT_MESSAGE_NOT_DISPLAYED, CoreConstants.FAIL,
 						MYLOConstants.SAVE_SUCCESS_MESSAGE, MYLOConstants.JOURNEY));
-		_myloJourneyPageClientContactSection.clickButtonsOnClientContactSection(MYLOConstants.DETAILS,
-				MYLOConstants.CLIENT_CONTACT);
 		_softAssert.assertTrue(_myloJourneyPageClientContactSection.verifyClientContactUpdated(table),
 				MessageFormat.format(MYLOConstants.FAILED_TO_VERIFY_UPDATED_VALUE_SECTION, CoreConstants.FAIL,
 						MYLOConstants.CLIENT_CONTACT));

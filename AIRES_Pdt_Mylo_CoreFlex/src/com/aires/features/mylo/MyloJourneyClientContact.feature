@@ -19,14 +19,14 @@ Feature: Validate the functionality of Mylo Client Contact Section
     Then "Add","Edit","Delete" buttons of Client Contact section should be disabled for "Canceled" file
 
   @MYLO2-183 @218559 @218563 @218564 @Mylo:218608 @Mylo-Regression
-  Scenario: Mylo-Verify all(Tag Script,Mandatory & Email Field) Toast Messages validation for mentioned fields under Client Contact section
+  Scenario: Mylo - Validate all Toast Messages i.e. Tag Script, Mandatory & Email for the fields displayed under the Client Contact section
     Given he clicks on "Add Client Contact" link available under "Client Contact" section on Mylo Journey Summary page for an existing "Active" file
     Then toast message should be displayed on clicking "Save" button after entering below field values under "Add Client Contact" section
       | First Name | Last Name | Email | Message                         |
       | Random     | Random    | test  | Email address (test) is invalid |
       |            | Random    |       | First name is required.         |
       | Random     |           |       | Last name is required.          |
-    And tag script toast message should be displayed for entering 'specialCharacters' on below fields after clicking on "Save" button under 'Add Client Contact' section
+    And tag script toast message should be displayed for entering "^^<>" specialCharacters on below fields after clicking on "Save" button under 'Add Client Contact' section
       | Field Name              | Message                                       |
       | First Name              | Tag Scripts are not allowed in first name     |
       | Last Name               | Tag Scripts are not allowed in last name      |
@@ -62,7 +62,7 @@ Feature: Validate the functionality of Mylo Client Contact Section
       | Start Date              |
       | Updated Date            |
       | Updated By              |
-    And all below fields should be updated successfully on clicking "Save" button after updating all the field with random values in "Edit" mode
+    And all the below fields should be updated successfully on clicking the "Save" button after updating all the fields with random values in "Edit" mode
       | Field Name              |
       | First Name              |
       | Last Name               |
@@ -80,6 +80,6 @@ Feature: Validate the functionality of Mylo Client Contact Section
     Given he is on "Client Contact" section for "Active" file having "Client Contact" information on Mylo Journey Summary Page
     And new Client Contact card should be displayed under "Client Contact" section by clicking on "Save" button after adding another Client Contact card
     When he clicks on "Delete" button on newly added Client Contact card on "Client Contact" section
-    Then pop up message "You are about to delete this Client Contact. Are you sure you want to proceed?" should be displayed on Mylo Journey Summary Page  
+    Then pop up message "You are about to delete this Client Contact. Are you sure you want to proceed?" should be displayed on Mylo Journey Summary Page
     And addded client contact card should not be deleted from "Client Contact" section by clicking on "No" or "Close" button in pop up section
     And added client contact should be successfully deleted by clicking "Yes" button after clicking on "Delete" icon on client contact card

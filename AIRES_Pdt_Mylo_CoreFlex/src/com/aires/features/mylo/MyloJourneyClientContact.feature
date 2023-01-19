@@ -72,6 +72,7 @@ Feature: Validate the functionality of Mylo Client Contact Section
       | Phone Number            |
       | Comment                 |
       | Start Date              |
+      | End Date                |
       | Updated Date            |
       | Updated By              |
 

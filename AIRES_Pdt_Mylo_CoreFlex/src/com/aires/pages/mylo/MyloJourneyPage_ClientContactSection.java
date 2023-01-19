@@ -35,8 +35,11 @@ public class MyloJourneyPage_ClientContactSection extends Base {
 	@FindBy(how = How.CSS, using = "app-client-contact button")
 	private List<WebElement> _clientContactButtons;
 
-	@FindBy(how = How.CSS, using = "app-client-contact button[class$='collapsed']")
+	@FindBy(how = How.CSS, using = "app-client-contact button[class*='accordion-button']")
 	private WebElement _clientContactDetailsButton;
+	
+	@FindBy(how = How.CSS, using = "app-client-contact h2[class$='cursor-default']")
+	private WebElement _clientContactHeader;
 
 	@FindBy(how = How.CSS, using = "app-client-contact p")
 	private WebElement _addClientContactLink;
@@ -122,7 +125,7 @@ public class MyloJourneyPage_ClientContactSection extends Base {
 			BusinessFunctions.fluentWaitForMyloSpinnerToDisappear(driver, _spinner);
 			CoreFunctions.explicitWaitTillElementVisibility(driver, _clientContactDetailsButton, MYLOConstants.DETAILS,
 					MYLOConstants.CUSTOM_WAIT_TIME);
-			CoreFunctions.scrollToElementUsingJS(driver, _clientContactDetailsButton, MYLOConstants.DETAILS);
+			CoreFunctions.scrollToElementUsingJS(driver, _clientContactHeader, MYLOConstants.CLIENT_CONTACT);
 			CoreFunctions.click(driver, _clientContactDetailsButton, MYLOConstants.DETAILS);
 		} catch (Exception e) {
 			Assert.fail(MessageFormat.format(CoreConstants.FAILD_CLCK_ELE, MYLOConstants.DETAILS));
@@ -203,6 +206,18 @@ public class MyloJourneyPage_ClientContactSection extends Base {
 				MYLOConstants.RANDOM_INTEGER, sectionName);
 		setClientContactInformation(MYLOConstants.COMMENT, MYLOConstants.CUSTOM_FIELD_LENGTH,
 				MYLOConstants.RANDOM_STRING, sectionName);
+	}
+	
+	/**
+	 * Set Client Contact End Date
+	 * @param fieldValue
+	 */
+	public void setClientContactEndDate(String fieldValue) {
+		String endDateValue = (fieldValue.equals(MYLOConstants.RANDOM))
+				? CoreFunctions.getCurrentDateAsGivenFormat("MM/DD/YYYY")
+				: fieldValue;
+		setClientContactInformation(MYLOConstants.END_DATE, endDateValue, MYLOConstants.VALUE,
+				MYLOConstants.CLIENT_CONTACT);
 	}
 
 	/**
@@ -309,6 +324,7 @@ public class MyloJourneyPage_ClientContactSection extends Base {
 					Reporter.addStepLog(
 							MessageFormat.format(MYLOConstants.VALUE_NOT_UPDATED_ON_SECTION, CoreConstants.FAIL,
 									expectedValue, fieldName, MYLOConstants.CLIENT_CONTACT, MYLOConstants.JOURNEY));
+					System.out.println("Actual value is:"+ actualValue+"Expected Value is :"+ expectedValue);
 					flag = false;
 				} else
 					Reporter.addStepLog(MessageFormat.format(MYLOConstants.VALUE_UPDATED_ON_SECTION, CoreConstants.PASS,

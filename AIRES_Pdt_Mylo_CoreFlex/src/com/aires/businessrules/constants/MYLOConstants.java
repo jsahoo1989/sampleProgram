@@ -772,11 +772,13 @@ public class MYLOConstants {
 	public static final String UPDATED_BY = "Updated By";
 	public static final String BUTTON = "Button";
 	public static final String CLIENT_CONTACT_CARD = "Client Contact Card";
+	public static final String END_DATE = "End Date";
 	public static final String RECENT_CLIENT_CONTACT_CARD_DISPLAYED = "{0}Recent Client Contact Card is displayed at the top in Client Contact section";
 	public static final String RECENT_CLIENT_CONTACT_CARD_NOT_DISPLAYED = "{0}Recent Client Contact Card is not displayed at the top in Client Contact section";
 	public static final String VERIFIED_SECTION_DELETED = "{0}Verified ''{1}'' is deleted from ''{2}'' section by clicking on ''{3}'' button";
 	public static final String VERIFIED_SECTION_NOT_DELETED = "{0}Verified ''{1}'' is not deleted from ''{2}'' section by clicking on ''{3}'' button";
 	public static final String VERIFIED_VALUE_SET = "Verified value - ''{0}'' is set for {1} field";
+	
 	
 	//Character Limit Set
 	public static final int FIRST_NAME_CHAR_LIMIT = 30;
@@ -786,6 +788,7 @@ public class MYLOConstants {
 	public static final int PHONE_NUMBER_CHAR_LIMIT = 30;
 	public static final int COMMENT_CHAR_LIMIT = 500;
 	public static final String ADDRESS_CANCEL_BUTTON = "Address";
+	
 	
 	
 	

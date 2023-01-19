@@ -252,10 +252,13 @@ public class MyloJourneyClientContact_Steps {
 			String btnName, String btn, DataTable table) {
 		_myloJourneyPageClientContactSection.clickButtonsOnClientContactSection(btn, MYLOConstants.CLIENT_CONTACT);
 		_myloJourneyPageClientContactSection.setAllClientContactFieldWithRandomValues(MYLOConstants.CLIENT_CONTACT);
+		_myloJourneyPageClientContactSection.setClientContactEndDate(MYLOConstants.RANDOM);
 		_myloJourneyPageClientContactSection.clickButtonsOnClientContactSection(btnName, MYLOConstants.CLIENT_CONTACT);
 		_softAssert.assertTrue(_myloJourneyPage.verifyToastMessage(MYLOConstants.SAVE_SUCCESS_MESSAGE),
 				MessageFormat.format(MYLOConstants.VERIFIED_ALERT_MESSAGE_NOT_DISPLAYED, CoreConstants.FAIL,
 						MYLOConstants.SAVE_SUCCESS_MESSAGE, MYLOConstants.JOURNEY));
+		_myloJourneyPageClientContactSection.clickClientContactDetailsBtn();
+		_myloJourneyPageClientContactSection.clickClientContactDetailsBtn();
 		_softAssert.assertTrue(_myloJourneyPageClientContactSection.verifyClientContactUpdated(table),
 				MessageFormat.format(MYLOConstants.FAILED_TO_VERIFY_UPDATED_VALUE_SECTION, CoreConstants.FAIL,
 						MYLOConstants.CLIENT_CONTACT));

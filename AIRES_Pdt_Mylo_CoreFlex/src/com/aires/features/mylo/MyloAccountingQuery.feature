@@ -2,7 +2,7 @@ Feature: Validate the functionality of Mylo Accounting Query
   I want to test the  functionlity of Mylo Accounting Query
 
 Background: Login to  Mylo application
-    Given he has logged into the 'Mylo' application
+    Given he selects "Query" option under "Journey" section available on left panel of Home Page after successfully logging into the 'Mylo' application
     
 @IRIS-2145 @218346 @Mylo:218518 @Mylo-Regression
 Scenario: Mylo-Validate Tag Script Validation Messages for mentioned fields of Mylo Accounting Query section

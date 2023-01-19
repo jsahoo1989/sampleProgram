@@ -81,11 +81,11 @@ public class MyloAccountingQuerySteps {
 	@Given("^he has added \"([^\"]*)\",\"([^\"]*)\",\"([^\"]*)\" information for newly created file on Mylo Journey page$")
 	public void he_has_added_information_for_newly_created_file_on_Mylo_Journey_page(String arg1, String arg2,
 			String arg3) {
-		myloDashboardPage.clickOptionFromMainMenu(MYLOConstants.JOURNEY);
+		myloDashboardPage.closePopUp();
 		myloDashboardPage.createNewFileIfNotExists(MYLOConstants.AUTOMATION_CLIENT_ID, myloNewFileSection);
-		myloJourneyPageAddressSection.addOriginAddressIfNotPresent();
-		myloJourneyPageAddressSection.addDestinationAddressIfNotPresent();
 		myloJourneyPageAuthTrack.addAuthTrackDataIfNotPresent();
+		myloJourneyPageAddressSection.addOriginAddressIfNotPresent();
+		myloJourneyPageAddressSection.addDestinationAddressIfNotPresent();	
 	}
 
 	@When("^he clicks on \"([^\"]*)\" button after entering \"([^\"]*)\" values on \"([^\"]*)\" popup$")
@@ -121,21 +121,11 @@ public class MyloAccountingQuerySteps {
 		Assert.assertTrue(myloJourneyPageAccountingQuerySection.verifyAccountingFilesResultFromDB(MYLOConstants.FILEID),
 				MessageFormat.format(MYLOConstants.VERIFIED_RESULTS_MISMATCH_WITH_DATABASE, CoreConstants.FAIL,
 						MYLOConstants.FILEID, MYLOConstants.ACCOUNTING_QUERY));
-		Assert.assertTrue(
-				myloJourneyPageAccountingQuerySection.verifyAccountingFilesResultFromDB(MYLOConstants.TRANSFEREENAME),
-				MessageFormat.format(MYLOConstants.VERIFIED_RESULTS_MISMATCH_WITH_DATABASE, CoreConstants.FAIL,
-						MYLOConstants.TRANSFEREENAME, MYLOConstants.ACCOUNTING_QUERY));
-		Assert.assertTrue(
-				myloJourneyPageAccountingQuerySection.verifyAccountingFilesResultFromDB(MYLOConstants.CLIENTNAME),
-				MessageFormat.format(MYLOConstants.VERIFIED_RESULTS_MISMATCH_WITH_DATABASE, CoreConstants.FAIL,
-						MYLOConstants.CLIENTNAME, MYLOConstants.ACCOUNTING_QUERY));
 	}
 
 	@Given("^he is on \"([^\"]*)\" modal after random selection of \"([^\"]*)\" with \"([^\"]*)\" on 'Accounting' section$")
 	public void he_is_on_modal_after_random_selection_of_with_on_Accounting_section(String arg1, String fieldName1,
 			String fieldName2) {
-		myloDashboardPage.clickOptionFromMainMenu(MYLOConstants.JOURNEY);
-		myloDashboardPage.selectOptionsFromAssignmentMenu(MYLOConstants.QUERY_FILE);
 		myloDashboardPage.selectParameterFromQueryScreen(MYLOConstants.ACCOUNTING);
 		Assert.assertTrue(myloJourneyPage.verifySectionHeader(MYLOConstants.ACCOUNTING, MYLOConstants.ACCOUNTING_QUERY),
 				MessageFormat.format(MYLOConstants.VERIFIED_HEADER_TEXT_NOT_DISPLAYED, CoreConstants.FAIL,

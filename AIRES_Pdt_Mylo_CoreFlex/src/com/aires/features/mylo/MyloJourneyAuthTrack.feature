@@ -60,7 +60,7 @@ Then below toast messages should be displayed for respective mandatory fields on
 
 @IRIS-1868 @217954 @217957 @217958 @Mylo:217981 @Mylo-Regression
 Scenario:  Mylo-Validate Character Limit Boundary Conditions for fields of Authorization/Tracking section on Mylo Journey page
-Given he is on Mylo Journey Summary page for file ID with "activeAssignment"
+Given he is on Mylo Journey Summary page for newly created file
 And he has provided all mandatory information with below Character Limit for mentioned fields after clicking on "Add" icon on Authorization/Tracking section
 |Field Name |CharacterLength |
 |Number     |201             |

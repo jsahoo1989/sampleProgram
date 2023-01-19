@@ -94,7 +94,7 @@ public class MyloJourneyPage_AdvancedQuerySection extends Base {
 		String updatedValue = "";
 		try {
 			WebElement fieldElement = BusinessFunctions.returnElementFromListUsingAttribute(driver,
-					_advancedQueryDropdownFields, fieldName, MYLOConstants.FORMCONTROLNAME);
+					_advancedQueryDropdownFields, fieldName.replace(" ", ""), MYLOConstants.FORMCONTROLNAME);
 			CoreFunctions.scrollToElementUsingJS(driver, fieldElement, fieldName);
 			CoreFunctions.highlightElementAndClick(driver, fieldElement, fieldName);
 			updatedValue = BusinessFunctions.setMyloDropdownFields(driver, _dropdownOptions, fieldValue, fieldName);

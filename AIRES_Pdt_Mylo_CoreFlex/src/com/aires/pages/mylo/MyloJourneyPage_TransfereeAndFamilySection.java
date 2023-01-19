@@ -29,6 +29,9 @@ public class MyloJourneyPage_TransfereeAndFamilySection extends Base {
 
 	@FindBy(how = How.CSS, using = "div#accordionExampleTransferee a")
 	private List<WebElement> _addTransfereeAndFamilyLinks;
+	
+	@FindBy(how = How.CSS, using = "app-transferee-family h2[class*='accchildhead']")
+	private List<WebElement> _addTransfereeAndFamilyHeaders;
 
 	@FindBy(how = How.CSS, using = "app-transferee-family-add-popup input")
 	private List<WebElement> _addTransfereeInput;
@@ -186,10 +189,12 @@ public class MyloJourneyPage_TransfereeAndFamilySection extends Base {
 	 * @param linkName
 	 */
 	private void clickAddLink(String linkName) {
-		try {
+		try {		
+			WebElement scrollElement = CoreFunctions.returnItemInListByText(driver, _addTransfereeAndFamilyHeaders, linkName.replaceAll(MYLOConstants.ADD_BUTTON, ""));
 			WebElement fieldElement = BusinessFunctions.returnElementFromListUsingAttribute(driver,
 					_addTransfereeAndFamilyLinks, linkName, MYLOConstants.TEXT);
-			CoreFunctions.scrollClickUsingJS(driver, fieldElement, linkName);
+			CoreFunctions.scrollToElementUsingJS(driver, scrollElement, linkName);
+			CoreFunctions.click(driver, fieldElement, linkName);
 			BusinessFunctions.fluentWaitForMyloSpinnerToDisappear(driver, _spinner);
 		} catch (Exception e) {
 			Assert.fail(MessageFormat.format(MYLOConstants.FAILED_TO_CLICK_LINK, linkName));

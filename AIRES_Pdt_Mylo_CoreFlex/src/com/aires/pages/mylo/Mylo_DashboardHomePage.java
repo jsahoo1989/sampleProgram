@@ -278,7 +278,7 @@ public class Mylo_DashboardHomePage extends Base {
 		try {
 			BusinessFunctions.fluentWaitForMyloSpinnerToDisappear(driver, _spinner);
 			CoreFunctions.explicitWaitTillElementVisibility(driver, _popupModal, _popupModal.getText(), 10L);
-			CoreFunctions.highlightElementAndClick(driver, _closeButton, _closeButton.getText());
+			CoreFunctions.highlightElementAndClick(driver, _closeButton, MYLOConstants.CLOSE_POPUP);
 		} catch (Exception e) {
 			Assert.fail(MessageFormat.format(CoreConstants.FAILD_CLCK_ELE, MYLOConstants.CLOSE_POPUP));
 		}
@@ -388,15 +388,18 @@ public class Mylo_DashboardHomePage extends Base {
 	 * @param optionValue
 	 */
 	public void selectOptionsForFileParameters(String option, String optionValue) {
+		String updatedValue = optionValue;
 		CoreFunctions.explicitWaitTillElementVisibility(driver, _fileParameterPopUp,
 				MYLOConstants.FILE_PARAMETERS_POPUP, 30);
 		int index = BusinessFunctions.returnindexItemFromListUsingText(driver, _fileParameterOptions, option);
 		try {
 			if (fileParameterDropdownFields.contains(option)) {
 				CoreFunctions.click(driver, _fileParameterList.get(index), option);
-				BusinessFunctions.setMyloDropdownFields(driver, _dropdownOptions, optionValue, option);
+				updatedValue = BusinessFunctions.setMyloDropdownFields(driver, _dropdownOptions, optionValue, option);
 			} else
 				CoreFunctions.sendKeysUsingAction(driver, _fileParameterList.get(index), optionValue);
+			Reporter.addStepLog(
+					CoreConstants.PASS + MessageFormat.format(MYLOConstants.VERIFIED_VALUE_SET, updatedValue, option));
 		} catch (Exception e) {
 			Assert.fail(MessageFormat.format(CoreConstants.FAILD_CLCK_ELE, option));
 		}
@@ -420,12 +423,12 @@ public class Mylo_DashboardHomePage extends Base {
 			myloNewFileSection.createNewFile(clientID);
 		}
 	}
-	
+
 	public void createNewFileIfNotCreated(String clientID, MyloJourneyPage_CreateNewFileSection myloNewFileSection) {
 		if (MyloNewFileUtil.getFileID() == null) {
 			selectOptionsFromAssignmentMenu(MYLOConstants.NEW_FILE_BUTTON);
 			myloNewFileSection.createNewFile(clientID);
-		} 
+		}
 	}
 
 	/**
@@ -541,8 +544,9 @@ public class Mylo_DashboardHomePage extends Base {
 			BusinessFunctions.fluentWaitForMyloSpinnerToDisappear(driver, _spinner);
 		} else {
 			BusinessFunctions.fluentWaitForMyloSpinnerToDisappear(driver, _spinner);
-			Reporter.addStepLog(MessageFormat.format(MYLOConstants.SINGLE_FILE_FOUND_STATUS_CHECKBOX,
-					CoreConstants.PASS,CoreFunctions.getElementText(driver, _fileID) , updatedStatusValue, updatedCheckboxValue));
+			Reporter.addStepLog(
+					MessageFormat.format(MYLOConstants.SINGLE_FILE_FOUND_STATUS_CHECKBOX, CoreConstants.PASS,
+							CoreFunctions.getElementText(driver, _fileID), updatedStatusValue, updatedCheckboxValue));
 			selectOptionsFromAssignmentMenu(MYLOConstants.QUERY_FILE);
 			selectParameterFromQueryScreen(MYLOConstants.MY_FILES);
 		}
@@ -772,7 +776,7 @@ public class Mylo_DashboardHomePage extends Base {
 	}
 
 	public void loadAlternateFiles() {
-		String ctr = "5";
+		String ctr = "10";
 		int max = Integer.parseInt(ctr);
 		for (int i = 0; i < max; i++) {
 			CoreFunctions.explicitWaitTillElementListClickable(driver, _historyCards);

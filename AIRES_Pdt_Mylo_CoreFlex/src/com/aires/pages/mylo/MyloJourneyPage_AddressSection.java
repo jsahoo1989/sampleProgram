@@ -364,6 +364,7 @@ public class MyloJourneyPage_AddressSection extends Base {
 		for (int i = 0; i < data.size(); i++) {
 			String fieldName = data.get(i).get(MYLOConstants.FIELD_NAME);
 			String fieldValue = data.get(i).get(MYLOConstants.CHARACTER_LENGTH);
+			CoreFunctions.scrollToElementUsingJS(driver, _originAddressHeader, sectionType);
 			BusinessFunctions.setMyloInputFields(driver, fieldName, fieldValue,
 					addressWebElementsMap.get(fieldName), MYLOConstants.RANDOM_STRING);
 			clickSaveBtn(sectionType);

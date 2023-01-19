@@ -9,7 +9,9 @@ import com.aires.businessrules.constants.CoreConstants;
 import com.aires.businessrules.constants.MYLOConstants;
 import com.aires.cucumber.TestContext;
 import com.aires.pages.mylo.MyloJourneyPage_AuthTrackSection;
+import com.aires.pages.mylo.MyloJourneyPage_CreateNewFileSection;
 import com.aires.pages.mylo.Mylo_AssignmentPage;
+import com.aires.pages.mylo.Mylo_DashboardHomePage;
 import com.aires.pages.mylo.Mylo_JourneyPage;
 
 import cucumber.api.DataTable;
@@ -23,12 +25,16 @@ public class MyloJourneyAuthTrack_Steps {
 	private Mylo_JourneyPage myloJourneyPage;
 	private Mylo_AssignmentPage myloAssignmentPage;
 	private MyloJourneyPage_AuthTrackSection myloJourneyPageAuthTrack;
+	private Mylo_DashboardHomePage _myloDashboardPage;
+	private MyloJourneyPage_CreateNewFileSection _myloNewFileSection;
 
 	public MyloJourneyAuthTrack_Steps(TestContext context) {
 		testContext = context;
 		myloAssignmentPage = testContext.getMyloPageObjectManager().getAssignmentPage();
 		myloJourneyPage = testContext.getMyloPageObjectManager().getJourneyPage();
 		myloJourneyPageAuthTrack=testContext.getMyloPageObjectManager().getJourneyPageAuthTrackSection();
+		_myloDashboardPage = testContext.getMyloPageObjectManager().getDashboardHomePage();
+		_myloNewFileSection = testContext.getMyloPageObjectManager().getJourneyPageCreateNewFileSection();
 	}
 	
 	@When("^he views \"([^\"]*)\" section$")
@@ -114,7 +120,7 @@ public class MyloJourneyAuthTrack_Steps {
 	@Then("^Saved data should get deleted after clicking on \"([^\"]*)\" icon under Authorization/Tracking section$")
 	public void saved_data_should_get_deleted_after_clicking_on_icon_under_Authorization_Tracking_section(String btnName) {
 		myloJourneyPageAuthTrack.clickFieldsOnAuthTrackSection(MYLOConstants.EDIT_BUTTON, 0);
-		myloJourneyPageAuthTrack.deleteAuthTrackaData(1);
+		myloJourneyPageAuthTrack.deleteAuthTrackaData(0);
 		myloJourneyPageAuthTrack.clickFieldsOnAuthTrackSection(MYLOConstants.YES_BUTTON, 0);
 	}
 	
@@ -138,6 +144,12 @@ public class MyloJourneyAuthTrack_Steps {
 	@Then("^a new row is added with below fields on Authorization/Tracking section$")
 	public void a_new_row_is_added_with_below_fields_on_Authorization_Tracking_section(DataTable table) {
 		Assert.assertTrue(myloJourneyPageAuthTrack.verifyFieldsAvailableOnAuthTrackSection(table));
+	}
+	
+	@Given("^he is on Mylo Journey Summary page for newly created file$")
+	public void he_is_on_Mylo_Journey_Summary_page_for_newly_created_file() {
+		_myloDashboardPage.clickOptionFromMainMenu(MYLOConstants.JOURNEY);
+		_myloDashboardPage.createNewFileIfNotExists(MYLOConstants.AUTOMATION_CLIENT_ID, _myloNewFileSection);
 	}
 
 }

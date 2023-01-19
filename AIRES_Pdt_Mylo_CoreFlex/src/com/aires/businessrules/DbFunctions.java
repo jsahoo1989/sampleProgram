@@ -7,8 +7,13 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.LinkedHashMap;
+import java.util.LinkedHashSet;
 import java.util.List;
+import java.util.Set;
+
+import org.glassfish.grizzly.utils.ArraySet;
 import org.testng.Assert;
 
 import com.aires.businessrules.constants.CoreConstants;
@@ -230,10 +235,10 @@ public class DbFunctions {
 		return requiredList;
 	}
 
-	public static List<String> getAccountingFilesInfoByServiceAndServiceStatus(String service, String serviceStatus,
+	public static Set<String> getAccountingFilesInfoByServiceAndServiceStatus(String service, String serviceStatus,
 			String reqColumn, String noOfRecords) {
 		Connection connection = null;
-		List<String> requiredList = new ArrayList<String>();
+		Set<String> requiredSet = new LinkedHashSet<String>();
 		try {
 			DriverManager.registerDriver(new oracle.jdbc.OracleDriver());
 			connection = DriverManager.getConnection(getMyloDBConnectionStringAsPerEnvt(_environment));
@@ -241,8 +246,10 @@ public class DbFunctions {
 					.prepareStatement(DbQueries.QUERY_GET_ACCOUNTING_FILES_INFO_BY_SERVICE_AND_SERVICE_STATUS);
 			pst.setString(1, service);
 			pst.setString(2, serviceStatus);
+			pst.setMaxRows(Integer.parseInt(_maxRows));
 			ResultSet resultset = pst.executeQuery();
-			requiredList = getRequiredResultSet(resultset, reqColumn);
+			List<String> requiredResultSet = getRequiredResultSet(resultset, reqColumn);
+			requiredSet.addAll(requiredResultSet);
 		} catch (Exception ex) {
 			Log.info(CoreConstants.ERROR + ex.getMessage());
 			Log.info(CoreConstants.ERROR + ex.getStackTrace());
@@ -257,7 +264,7 @@ public class DbFunctions {
 				Log.info(CoreConstants.ERROR + ex.getStackTrace());
 			}
 		}
-		return requiredList;
+		return requiredSet;
 	}
 
 	public static List<String> getRequiredResultSet(ResultSet resultset, String reqColumn) {
@@ -311,10 +318,11 @@ public class DbFunctions {
 		return requiredList;
 	}
 
-	public static List<String> getAccountingSortResult(String service, String serviceStatus, String colName,
+	public static Set<String> getAccountingSortResult(String service, String serviceStatus, String colName,
 			String sortOrder, String noOfRecords) {
 		Connection connection = null;
-		List<String> requiredList = new ArrayList<String>();
+		Set<String> requiredSet = new LinkedHashSet<String>();
+		 new ArrayList<String>();
 		try {
 			DriverManager.registerDriver(new oracle.jdbc.OracleDriver());
 			connection = DriverManager.getConnection(getMyloDBConnectionStringAsPerEnvt(_environment));
@@ -325,7 +333,8 @@ public class DbFunctions {
 			pst.setString(2, serviceStatus);
 			pst.setMaxRows(Integer.parseInt(_maxRows));
 			ResultSet resultset = pst.executeQuery();
-			requiredList = getRequiredResultSet(resultset, MYLOConstants.FILEID);
+			List<String> requiredResultSet = getRequiredResultSet(resultset, MYLOConstants.FILEID);
+			requiredSet.addAll(requiredResultSet);
 		} catch (Exception ex) {
 			Log.info(CoreConstants.ERROR + ex.getMessage());
 			Log.info(CoreConstants.ERROR + ex.getStackTrace());
@@ -340,7 +349,7 @@ public class DbFunctions {
 				Log.info(CoreConstants.ERROR + ex.getStackTrace());
 			}
 		}
-		return requiredList;
+		return requiredSet;
 	}
 
 	public static String getMyloAssignmentRequiredFieldValues(String assignmentID, String colName) {
@@ -430,11 +439,7 @@ public class DbFunctions {
 		try {
 			DriverManager.registerDriver(new oracle.jdbc.OracleDriver());
 			connection = DriverManager.getConnection(
-			 getDBConnectionStringAsPerEnvt(System.getProperty("envt")));
-
-			// Kept the commented code for running in local environment
-			connection = DriverManager
-					.getConnection(getDBConnectionStringAsPerEnvt(CoreFunctions.getPropertyFromConfig("envt")));
+			 getDBConnectionStringAsPerEnvt(_environment));
 		} catch (SQLException e) {
 			Assert.fail("Failed to establish connection to the database");
 		}
@@ -469,15 +474,11 @@ public class DbFunctions {
 	}
 	
 	public static Connection getMyloConnection() {
-		Connection connection = null;	
+		Connection connection = null;
 		try {
 			DriverManager.registerDriver(new oracle.jdbc.OracleDriver());
-			//connection = DriverManager.getConnection(
-				//	getDBConnectionStringAsPerEnvt(System.getProperty("envt")));
-
-			//Kept the commented code for running in local environment
-			  connection = DriverManager.getConnection(
-				getMyloDBConnectionStringAsPerEnvt(_environment));
+			connection = DriverManager.getConnection(
+					getMyloDBConnectionStringAsPerEnvt(_environment));
 		} catch (SQLException e) {
 			Assert.fail("Failed to establish connection to the database");
 		}
@@ -520,6 +521,37 @@ public class DbFunctions {
 			}
 		}
 		return subSericeID;
+	}
+	
+	public static String getFileIdForClientContact(String fileStatus) {
+		Connection connection =null;
+		String assignmentId = null;
+
+		try {
+			//DriverManager.registerDriver(new oracle.jdbc.OracleDriver());
+			//connection = DriverManager.getConnection(getMyloDBConnectionStringAsPerEnvt(_environment));		
+			connection =getMyloConnection();
+			PreparedStatement pst = connection.prepareStatement(DbQueries.QUERY_GET_CLIENT_CONTACT_ASSIGNMENT_ID_BY_FILE_STATUS);
+			pst.setString(1, fileStatus);
+			pst.setMaxRows(Integer.parseInt(_maxRows));
+			ResultSet resultset = pst.executeQuery();
+			while (resultset.next()) {
+				assignmentId = resultset.getString(MYLOConstants.FILEID);
+				break;
+			}
+		} catch (Exception ex) {
+			Assert.fail(CoreConstants.SQL_QUERY_FAILED);
+		} finally {
+			try {
+				if (connection != null) {
+					connection.close();
+				}
+			} catch (Exception ex) {
+				Log.info(CoreConstants.ERROR + ex.getMessage());
+				Log.info(CoreConstants.ERROR + ex.getStackTrace());
+			}
+		}
+		return assignmentId;
 	}
 
 }

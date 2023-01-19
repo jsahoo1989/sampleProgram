@@ -121,7 +121,7 @@ public class MyloJourneyPage_TransfereeSection extends Base {
 	@FindBy(how = How.CSS, using = "ng-select[name='P_Type'] span[class='ng-arrow-wrapper']")
 	private List<WebElement> _transfereePhoneTypeDropdownValue;
 
-	@FindBy(how = How.CSS, using = "ng-select[name='T_Type2'] span[class='ng-arrow-wrapper']")
+	@FindBy(how = How.CSS, using = "ng-select[name='T_Type2'] span[class*='ng-value-label']")
 	private List<WebElement> _transfereeEmailTypeDropdownValue;
 
 	@FindBy(how = How.CSS, using = "div[role='alert']")
@@ -320,8 +320,9 @@ public class MyloJourneyPage_TransfereeSection extends Base {
 	public void clickFieldsOnTransfereeSection(String fieldName) {
 		mapTransfereeWebElementFields();
 		try {
+			BusinessFunctions.fluentWaitForMyloSpinnerToDisappear(driver, _spinner);
 			WebElement element = transfereeWebElementsMap.get(fieldName);
-			CoreFunctions.explicitWaitTillElementInVisibilityCustomTime(driver, _spinner, 180);
+			BusinessFunctions.fluentWaitForMyloSpinnerToDisappear(driver, _spinner);
 			CoreFunctions.explicitWaitTillElementVisibility(driver, element, fieldName,100);
 			CoreFunctions.highlightElementAndClick(driver, element, fieldName);
 		} catch (Exception e) {
@@ -993,7 +994,7 @@ public class MyloJourneyPage_TransfereeSection extends Base {
 						"airesautomation@aires.com", _transfereeEmailAddress.get(0), MYLOConstants.VALUE));
 		CoreFunctions.scrollToElementUsingJavaScript(driver, _transfereeAge,
 				MYLOConstants.TRANSFEREE_AGE);
-		CoreFunctions.click(driver, _transfereeEmailTypeDropdownValue.get(0), MYLOConstants.TRANSFEREE_EMAIL_TYPE);
+		CoreFunctions.click(driver, _transfereeEmailTypeDropdown.get(0), MYLOConstants.TRANSFEREE_EMAIL_TYPE);
 		BusinessFunctions.setMyloDropdownFields(driver, _dropdownOptions, MYLOConstants.RANDOM,
 				MYLOConstants.TRANSFEREE_EMAIL_TYPE);
 		clickTransfereeSaveButton();

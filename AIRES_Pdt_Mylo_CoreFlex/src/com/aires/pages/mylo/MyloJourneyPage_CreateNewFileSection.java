@@ -128,6 +128,9 @@ public class MyloJourneyPage_CreateNewFileSection extends Base {
 	private WebElement _okButtonPopUp;
 	
 	@FindBy(how = How.CSS, using = "app-lead-informtion input")
+	private WebElement _leadCompanyIDInput;
+	
+	@FindBy(how = How.CSS, using = "app-lead-informtion")
 	private WebElement _leadCompanyIDSection;
 	
 	@FindBy(how = How.CSS, using = "app-lead-informtion button label")
@@ -569,10 +572,10 @@ public class MyloJourneyPage_CreateNewFileSection extends Base {
 	
 	public void setLeadCompanyID(String leadCompanyID) {
 		if(MyloNewFileUtil.get_leadCompanyID()==null) {
-			BusinessFunctions.fluentWaitForMyloSpinnerToDisappear(driver, _spinner);
-			CoreFunctions.scrollToElementUsingJS(driver, _leadCompanyIDSection, MYLOConstants.LEAD_COMPANY_ID_SECTION);
+		BusinessFunctions.fluentWaitForMyloSpinnerToDisappear(driver, _spinner);	
+		CoreFunctions.scrollToElementUsingJS(driver, _leadCompanyIDSection, MYLOConstants.LEAD_COMPANY_ID_SECTION);
 		clickLeadCompanySectionButtons(MYLOConstants.EDIT_BUTTON);
-		MyloNewFileUtil.set_leadCompanyID(BusinessFunctions.setMyloInputFields(driver, MYLOConstants.LEAD_COMPANY_ID_SECTION, MYLOConstants.AUTOMATION_CLIENT_ID, _leadCompanyIDSection, MYLOConstants.VALUE));
+		MyloNewFileUtil.set_leadCompanyID(BusinessFunctions.setMyloInputFields(driver, MYLOConstants.LEAD_COMPANY_ID_SECTION, MYLOConstants.AUTOMATION_CLIENT_ID, _leadCompanyIDInput, MYLOConstants.VALUE));
 		CoreFunctions.hoverAndClick(driver, CoreFunctions.getElementByLocator(driver, _dropdownOptions), leadCompanyID);
 		clickLeadCompanySectionButtons(MYLOConstants.SAVE_BUTTON);
 		}

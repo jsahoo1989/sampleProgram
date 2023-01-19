@@ -388,8 +388,9 @@ public class MyloJourneyPage_TeamPostSection extends Base {
 			String randomPostType = listKeys
 					.get(CoreFunctions.getRandomNumber(0, teamPostUpdatedValuesMap.keySet().size()-1));
 			String randomComments = teamPostUpdatedValuesMap.get(randomPostType);
-			int beginIndex = CoreFunctions.getRandomNumber(0, randomComments.length() - 4);
+			int beginIndex = CoreFunctions.getRandomNumber(0, randomComments.length() - 4);	
 			searchedText = randomComments.substring(beginIndex, beginIndex + 3);
+			CoreFunctions.highlightElementAndClick(driver, _teamPostsSearchBox, MYLOConstants.TEAM_POST_SEARCHBOX);
 			CoreFunctions.clearAndSetText(driver, _teamPostsSearchBox, MYLOConstants.TEAM_POST_SEARCHBOX, searchedText);
 		} catch (Exception e) {
 			Assert.fail(MessageFormat.format(CoreConstants.FAILED_TXT_CLR_VAL, CoreConstants.FAIL,

@@ -26,6 +26,9 @@ public class MyloJourneyPage_SecondaryContact extends Base {
 	@FindBy(how = How.CSS, using = "button[aria-controls='collapseOneContact']")
 	private WebElement _expandPrimaryContactSection;
 
+	@FindBy(how = How.CSS, using = "app-aires-file-information h2")
+	private WebElement _fileInformationSection;
+	
 	@FindBy(how = How.CSS, using = "div#secondaryContact a")
 	private List<WebElement> _secondaryContactSectionLinks;
 
@@ -178,6 +181,8 @@ public class MyloJourneyPage_SecondaryContact extends Base {
 	 */
 	public void expandPrimaryContactDetailsSection() {
 		try {
+			CoreFunctions.scrollToElementUsingJS(driver, _fileInformationSection,
+					MYLOConstants.FILE_INFORMATION_SECTION);
 			CoreFunctions.highlightElementAndClick(driver, _expandPrimaryContactSection,
 					MYLOConstants.EXPAND_PRIMARY_CONTACT_SECTION);
 			BusinessFunctions.fluentWaitForMyloSpinnerToDisappear(driver, _spinner);

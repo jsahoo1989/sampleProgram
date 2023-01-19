@@ -15,6 +15,7 @@ import org.testng.Assert;
 import com.aires.businessrules.Base;
 import com.aires.businessrules.BusinessFunctions;
 import com.aires.businessrules.CoreFunctions;
+import com.aires.businessrules.DbFunctions;
 import com.aires.businessrules.constants.CoreConstants;
 import com.aires.businessrules.constants.MYLOConstants;
 import com.aires.managers.FileReaderManager;
@@ -68,7 +69,10 @@ public class Mylo_JourneyPage extends Base {
 
 	@FindBy(how = How.CSS, using = "h4 b")
 	private WebElement _fileId;
-
+	
+	@FindBy(how = How.CSS, using = "app-client-contact h2[class$='default']")
+	private WebElement _clientContact;
+			
 	@FindBy(how = How.CSS, using = "#M_number")
 	private WebElement _trackNo;
 
@@ -145,12 +149,13 @@ public class Mylo_JourneyPage extends Base {
 		journeyWebElementsMap.put(MYLOConstants.TEAM_POSTS, _teamPostsHeader);
 		journeyWebElementsMap.put(MYLOConstants.MY_FILES, _queryPopUpHeader);
 		journeyWebElementsMap.put(MYLOConstants.MY_FILES_QUERY_RESULT, _queryPopUpHeader);
-		journeyWebElementsMap.put(MYLOConstants.QUERY_POPUP, _queryPopUpHeader);
+		journeyWebElementsMap.put(MYLOConstants.QUERY, _queryPopUpHeader);
 		journeyWebElementsMap.put(MYLOConstants.ACCOUNTING, _queryPopUpHeader);
 		journeyWebElementsMap.put(MYLOConstants.ADVANCED, _queryPopUpHeader);
 		journeyWebElementsMap.put(MYLOConstants.TRANSFEREE_NAME, _queryPopUpHeader);
 		journeyWebElementsMap.put(MYLOConstants.AIRES_FILE_TEAM, _fileTeam);
 		journeyWebElementsMap.put(MYLOConstants.SUB_SERVICE_ID, _queryPopUpHeader);
+		journeyWebElementsMap.put(MYLOConstants.CLIENT_CONTACT, _clientContact);
 	}
 
 	/**
@@ -195,6 +200,11 @@ public class Mylo_JourneyPage extends Base {
 							CoreFunctions.getElementText(driver, journeyWebElementsMap.get(sectionName)), sectionName));
 
 		return flag;
+	}
+	
+	
+	public String getClientContactFileIDFromDB(String fileStatus) {
+		return DbFunctions.getFileIdForClientContact(fileStatus);
 	}
 
 	/**
@@ -279,6 +289,7 @@ public class Mylo_JourneyPage extends Base {
 
 	private Map<String, String> getOriginAddressDetails() {
 		Map<String, String> orgAddressDetails = new LinkedHashMap<String, String>();
+		BusinessFunctions.fluentWaitForMyloSpinnerToDisappear(driver, _spinner);
 		CoreFunctions.scrollClickUsingJS(driver, _orgDetailsBtn, MYLOConstants.ORIGIN_ADDRESS_DETAILS_BUTTON);
 		orgAddressDetails.put(MYLOConstants.ORIGIN_COUNTRY, CoreFunctions.getElementText(driver, _orgCountry));
 		orgAddressDetails.put(MYLOConstants.ORIGIN_STATE, CoreFunctions.getElementText(driver, _orgState));
@@ -301,7 +312,9 @@ public class Mylo_JourneyPage extends Base {
 					? CoreFunctions.getRandomOutOfSelectedElementValueFromList(driver, _queryResultColHeader,
 							valuesToIgnore)
 					: colName;
-			int index= (colName.equals(MYLOConstants.RANDOM))?colHeader.indexOf(colHeader) + 1:colHeader.indexOf(colHeader);
+			//int index= (colName.equals(MYLOConstants.RANDOM))?colHeader.indexOf(colHeader) + 1:colHeader.indexOf(colHeader);
+			
+			int index=BusinessFunctions.returnindexItemFromListUsingText(driver, _queryResultColHeader, colHeader);
 			sortColName = CoreFunctions.getElementText(driver,
 					_queryResultColHeader.get(index));
 			CoreFunctions.click(driver, _columnCaretBtn.get(index), sortColName);

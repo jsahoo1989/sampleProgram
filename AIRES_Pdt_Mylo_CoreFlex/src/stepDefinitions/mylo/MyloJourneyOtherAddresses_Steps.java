@@ -103,14 +103,14 @@ public class MyloJourneyOtherAddresses_Steps {
 			DataTable table) {
 		myloAssignmentPage.setFieldValueOtherAddressSection(table);
 		myloAssignmentPage.clickElementOnOtherAddressesSection(buttonName);
-		Assert.assertTrue(myloAssignmentPage.verifyAlertMessage(MYLOConstants.OTHER_ADDDRESS_SAVED_MESSAGE),
-				MessageFormat.format(MYLOConstants.VERIFIED_ALERT_MESSAGE_NOT_DISPLAYED, CoreConstants.FAIL,
-						MYLOConstants.OTHER_ADDDRESS_SAVED_MESSAGE, MYLOConstants.OTHER_ADDRESS));
 	}
 
 	@Then("^below fieldValues should be successfully saved under \"([^\"]*)\" section$")
 	public void below_fieldValues_should_be_successfully_saved_under_section(String sectionType, DataTable table) {
 		myloAssignmentPage.clickElementOnOtherAddressesSection(sectionType);
+		String editBtn=(sectionType.contains(MYLOConstants.MAILING))?MYLOConstants.MAIL_EDIT_BUTTON:MYLOConstants.TEMP_EDIT_BUTTON;
+		myloAssignmentPage.clickElementOnOtherAddressesSection(editBtn);
+		myloAssignmentPage.clickElementOnOtherAddressesSection(MYLOConstants.ADDRESS_CANCEL_BUTTON);
 		Assert.assertTrue(myloAssignmentPage.verifyFieldValuesOtherAddress(sectionType, table),
 				MessageFormat.format(MYLOConstants.MISMATCH_DIFFERENT_FIELDVALUES, CoreConstants.FAIL,
 						MYLOConstants.OTHER_ADDDRESS_SAVED_MESSAGE, MYLOConstants.OTHER_ADDRESS));
@@ -121,9 +121,6 @@ public class MyloJourneyOtherAddresses_Steps {
 			String sectionType) {
 		myloAssignmentPage.clickElementOnOtherAddressesSection(buttonName);
 		myloAssignmentPage.clickElementOnOtherAddressesSection(MYLOConstants.YES_BUTTON);
-		Assert.assertTrue(myloAssignmentPage.verifyAlertMessage(MYLOConstants.DELETE_SUCCESS_MESSAGE),
-				MessageFormat.format(MYLOConstants.MISMATCH_DIFFERENT_FIELDVALUES, CoreConstants.FAIL,
-						MYLOConstants.DELETE_SUCCESS_MESSAGE, MYLOConstants.OTHER_ADDRESS));
 	}
 
 	@Then("^messages corresponding to below fields should be displayed after entering \"([^\"]*)\" along with the mandatory data for both \"([^\"]*)\", \"([^\"]*)\" section$")

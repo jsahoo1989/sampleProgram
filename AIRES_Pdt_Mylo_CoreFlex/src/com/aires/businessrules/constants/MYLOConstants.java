@@ -141,8 +141,8 @@ public class MYLOConstants {
 	public static final String VERIFIED_FIELD_LABEL_NOT_UPDATED = "{0}Verified that ''{1}'' field label is not updated to  ''{2}'' under ''{3}'' section";
 	public static final String VERIFIED_DATA_AVAILABLE = "{0}Verified that data available under ''{1}'' on ''{2}'' section";
 	public static final String VERIFIED_DATA_NOT_AVAILABLE = "{0}Verified that data not available under ''{1}'' on ''{2}'' section";
-	public static final String VALUE_UPDATED_ON_SECTION = "{0} Value: ''{1}'' is updated for :- ''{2}'' in ''{3}'' section on ''{4}'' page";
-	public static final String VALUE_NOT_UPDATED_ON_SECTION = "<font color='red'>{0} Value: ''{1}'' is not updated for :- ''{2}'' in ''{3}'' section on ''{4}'' page</font>";
+	public static final String VALUE_UPDATED_ON_SECTION = "{0} Verified Value: ''{1}'' is updated for :- ''{2}'' in ''{3}'' section on ''{4}'' page";
+	public static final String VALUE_NOT_UPDATED_ON_SECTION = "<font color='red'>{0} Verified Value: ''{1}'' is not updated for :- ''{2}'' in ''{3}'' section on ''{4}'' page</font>";
 	public static final String FIELDS_NOT_UPDATED_ON_SECTION = "{0} ''{1}'' is not updated on ''{3}'' section";
 	public static final String VERIFIED_ALL_VALUES_UPDATED_ON_SECTION = "{0} Verified all values for ''{1}'' fields is updated in ''{2}'' section on ''{3}'' page";
 	public static final String VERIFIED_NO_VALUES_UPDATED_ON_SECTION = "{0} Verified that values for ''{1}'' fields is not updated in ''{2}'' section on ''{3}'' page";
@@ -732,6 +732,7 @@ public class MYLOConstants {
 	public static final String VERIFIED_QUERY_RESULTS_VALUES_MISMATCH = "<font color='red'>{0}Verified ''{1}'' column values of ''{2}'' result does not matched as per searched ''{3}'':- ''{4}'' with ''{5}'':-''{6}'' </font>";
 	public static final String VERIFIED_QUERY_RESULT_FILES_MISMATCH = "{0}Verified Files displayed on Query result does is not as per searched ''{1}'' from ''{2}'' section";
 	public static final String FAIL_TO_VERIFY_TAG_SCRIPT_VALIDATION_MESSAGE_SECTION = "{0}Fail to verify Tag Script validation message for section {1}";
+	public static final String FAIL_TO_VERIFY_MANDATORY_FIELDS_VALIDATION_MESSAGE_SECTION = "{0}Fail to verify Mandatory fields validation message for section {1}";
 	public static final String FAIL_TO_VERIFY_POP_UP_MESSAGE_SECTION = "{0}Fail to verify Pop Up message:{1}  for section {2}";
 	public static final int CUSTOM_WAIT_TIME = 30;
 	public static final int TRANSFEREE_FIRST_NAME_CHAR_LIMIT = 30;
@@ -755,7 +756,29 @@ public class MYLOConstants {
 	public static final String VERIFIED_SHIPMENT_SUBSERVICE_SCREEN_DISPLAYED = "Verified Shipment Sub Service screen is displayed";
 	public static final String VERIFIED_SUMMARY_SCREEN_DISPLAYED = "Verified Shipment Sub Service screen is displayed";
 	public static final String VERIFIED_CHARACTERS_CANNOT_BE_ENTERED_IN = " {0} Verified characters cannot be entered in ''{1}''";
-
+	public static final String QUERY = "Query";
+	
+	// Client Contact Section
+	public static final String CLIENT_CONTACT = "Client Contact";
+	public static final String PHONETIC_PREFERRED_NAME = "Phonetic/Preferred Name";
+	public static final String COMMENT = "Comment";
+	public static final String ADD_CLIENT_CONTACT = "Add Client Contact";
+	public static final String DISABLED = "disabled";
+	public static final String CUSTOM_FIELD_LENGTH = "10";
+	public static final String AUTOMATION_EMAIL="airesautomation@aires.com";
+	public static final String DETAILS="Details";
+	public static final String CURRENT_DATE = "Current Date";
+	public static final String DATE = "Date";
+	public static final String UPDATED_BY = "Updated By";
+	public static final String BUTTON = "Button";
+	public static final String CLIENT_CONTACT_CARD = "Client Contact Card";
+	public static final String END_DATE = "End Date";
+	public static final String RECENT_CLIENT_CONTACT_CARD_DISPLAYED = "{0}Recent Client Contact Card is displayed at the top in Client Contact section";
+	public static final String RECENT_CLIENT_CONTACT_CARD_NOT_DISPLAYED = "{0}Recent Client Contact Card is not displayed at the top in Client Contact section";
+	public static final String VERIFIED_SECTION_DELETED = "{0}Verified ''{1}'' is deleted from ''{2}'' section by clicking on ''{3}'' button";
+	public static final String VERIFIED_SECTION_NOT_DELETED = "{0}Verified ''{1}'' is not deleted from ''{2}'' section by clicking on ''{3}'' button";
+	public static final String VERIFIED_VALUE_SET = "Verified value - ''{0}'' is set for {1} field";
+	
 	//Add Secondary Contact
 	public static final String SECONDARY_CONTACT_INCORRECT_SELECTION_ERROR="The contact selected is already designated as the Primary Contact on this file. A contact may not be both the Primary and Secondary Contact.";
 	public static final String CHANGE_BUTTON = "Change";
@@ -808,7 +831,13 @@ public class MYLOConstants {
 	public static final String OUTER_TEXT = "outerText";
 	public static final String PRONOUN = "Pronoun";
 	public static final String FAILED_TO_VERIFY_PARTNER_NAME = "Failed to verify partner name";
-
-
 	
+	//Character Limit Set
+	public static final int FIRST_NAME_CHAR_LIMIT = 30;
+	public static final int LAST_NAME_CHAR_LIMIT = 60;
+	public static final int PREFERRED_NAME_CHAR_LIMIT = 60;
+	public static final int EMAIL_CHAR_LIMIT = 100;
+	public static final int PHONE_NUMBER_CHAR_LIMIT = 30;
+	public static final int COMMENT_CHAR_LIMIT = 500;
+	public static final String ADDRESS_CANCEL_BUTTON = "Address";
 }

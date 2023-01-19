@@ -35,7 +35,7 @@ public class MyloDashboard_Steps {
 	Mylo_LoginData loginData = FileReaderManager.getInstance().getMyloJsonReader()
 			.getloginDetailsByUserProfileName(MYLOConstants.USER_PROFILE_NAME);
 	MyloMemoryCapacityFileIds myloFileIdDetails = FileReaderManager.getInstance().getMyloJsonReader()
-			.getFileIdListByEnv("DEV5");
+			.getFileIdListByEnv("DEV");
 
 	public MyloDashboard_Steps(TestContext context) {
 		testContext = context;
@@ -214,6 +214,18 @@ public class MyloDashboard_Steps {
 		Assert.assertTrue(myloJourneyPage.verifySectionHeader(queryOption, popUpHeader), MessageFormat.format(
 				MYLOConstants.VERIFIED_HEADER_TEXT_NOT_DISPLAYED, CoreConstants.FAIL, popUpHeader, queryOption));
 	}
+	
+	@Given("^he is on \"([^\"]*)\" popup by selecting \"([^\"]*)\" option available on \"([^\"]*)\" section under \"([^\"]*)\" category$")
+	public void he_is_on_popup_by_selecting_option_available_on_section_under_category(String popUpHeader, String queryOption, String popUpName, String category) {
+		myloDashboardPage.clickOptionFromMainMenu(category);
+		myloDashboardPage.selectOptionsFromAssignmentMenu(popUpName);
+		Assert.assertTrue(myloJourneyPage.verifySectionHeader(popUpName, MYLOConstants.JOURNEY_QUERYTYPE_HEADER),
+				MessageFormat.format(MYLOConstants.VERIFIED_HEADER_TEXT_NOT_DISPLAYED, CoreConstants.FAIL,
+						MYLOConstants.JOURNEY_QUERYTYPE_HEADER, popUpName));
+		myloDashboardPage.selectParameterFromQueryScreen(queryOption);
+		Assert.assertTrue(myloJourneyPage.verifySectionHeader(queryOption, popUpHeader), MessageFormat.format(
+				MYLOConstants.VERIFIED_HEADER_TEXT_NOT_DISPLAYED, CoreConstants.FAIL, popUpHeader, queryOption));
+	}
 
 	@Then("^following check boxes should get appear under 'My Files' section$")
 	public void following_check_boxes_should_get_appear_under_My_Files_section(DataTable table) {
@@ -303,7 +315,7 @@ public class MyloDashboard_Steps {
 	public void should_be_displayed_after_he_clicks_on_button_on_modal(String headerText, String btnName,
 			String sectionName) {
 		myloDashboardPage.clickFieldsOnMyFilesSection(MYLOConstants.NEW_QUERY);
-		Assert.assertTrue(myloJourneyPage.verifySectionHeader(MYLOConstants.QUERY_POPUP, headerText),
+		Assert.assertTrue(myloJourneyPage.verifySectionHeader(MYLOConstants.QUERY, headerText),
 				MessageFormat.format(MYLOConstants.VERIFIED_HEADER_TEXT_NOT_DISPLAYED, CoreConstants.FAIL, headerText,
 						MYLOConstants.QUERY_POPUP));
 	}

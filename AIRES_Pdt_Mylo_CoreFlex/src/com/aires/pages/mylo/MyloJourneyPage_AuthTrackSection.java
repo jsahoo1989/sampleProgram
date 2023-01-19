@@ -201,8 +201,9 @@ public class MyloJourneyPage_AuthTrackSection extends Base {
 		mapAuthTrackWebElements(index);
 		try {
 			WebElement element = authTrackWebElementsMap.get(fieldName);
-			CoreFunctions.highlightElementAndClick(driver, element, fieldName);
-			CoreFunctions.waitForMyloSpinnnerInvisibilityIfExist(driver, _spinner);
+			CoreFunctions.moveToElement(driver, element);
+			CoreFunctions.click(driver, element, fieldName);
+			BusinessFunctions.fluentWaitForMyloSpinnerToDisappear(driver, _spinner);
 		} catch (Exception e) {
 			Reporter.addStepLog(MessageFormat.format(CoreConstants.FAIL_TO_VERIFY_ELEMENT_ON_SECTION,
 					CoreConstants.FAIL, fieldName, MYLOConstants.AUTH_TRACK_SECTION));

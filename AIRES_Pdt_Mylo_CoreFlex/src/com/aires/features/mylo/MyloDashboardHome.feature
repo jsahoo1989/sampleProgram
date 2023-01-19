@@ -26,7 +26,7 @@ Then Query results should appear based on the parameter provided sorted by File 
 
 @IRIS-2114 @218300 @218301 @Mylo:218369 @Mylo-Regression
 Scenario: Mylo-Validate Dropdown Options available for File Status field on 'My Files' section.
-Given he is on "Query Your Files by Status" popup by selecting "My Files" option available on "Query" section
+Given he is on "Query Your Files by Status" popup by selecting "My Files" option available on "Query" section under "Journey" category
 When he clicks on "File Status" dropdown on 'My Files' section
 Then "File Status" dropdown should display the below options on "My Files" section
 |Status          |
@@ -48,19 +48,19 @@ And following check boxes should get appear under 'My Files' section
 
 @IRIS-2114 @218302 @Mylo:218370 @Mylo-Regression
 Scenario: Mylo-Validate MyFiles query result with random selection of File Status available on MyFiles section
-Given he is on "Query Your Files by Status" popup by selecting "My Files" option available on "Query" section
+Given he is on "Query Your Files by Status" popup by selecting "My Files" option available on "Query" section under "Journey" category
 When he clicks on 'Execute' button after selecting any 'Status' from 'FileStatus'dropdown on 'Query Your Files by Status' popup
 Then related files should get appear into the query result modal as per the selected 'Status'
 
 @IRIS-2114 @218303 @Mylo:218371 @Mylo-Regression
 Scenario: Mylo-Validate MyFiles query result with random selection of File Status & CheckBox available on MyFiles section
-Given he is on "Query Your Files by Status" popup by selecting "My Files" option available on "Query" section
+Given he is on "Query Your Files by Status" popup by selecting "My Files" option available on "Query" section under "Journey" category
 When he clicks on "Execute" button after random selection of 'checkbox' with 'File Status' on 'My Files' section
 Then related files should get appear into the query result modal as per the selected 'Status' with 'checkbox'
 
 @IRIS-2114 @218304 @Mylo:218372 @Mylo-Regression
 Scenario: Mylo-Validate Cancel button functionality available on MyFiles section
-Given he is on "Query Your Files by Status" popup by selecting "My Files" option available on "Query" section
+Given he is on "Query Your Files by Status" popup by selecting "My Files" option available on "Query" section under "Journey" category
 When he clicks on "Cancel" button after random selection of 'checkbox' with 'File Status' on 'My Files' section
 Then "Query Your Files by Status" popup should get closed
 

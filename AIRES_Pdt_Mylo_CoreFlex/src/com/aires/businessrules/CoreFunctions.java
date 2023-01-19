@@ -524,7 +524,7 @@ public class CoreFunctions {
 		try {
 			for (WebElement row : WebElementList) {
 				Log.info(CoreConstants.ACTUAL_ITEM_NAME_IS + row.getText());
-				if (row.getText().contains(searchText)) {
+				if (row.getText().trim().contains(searchText.trim())) {
 					return row;
 				}
 			}

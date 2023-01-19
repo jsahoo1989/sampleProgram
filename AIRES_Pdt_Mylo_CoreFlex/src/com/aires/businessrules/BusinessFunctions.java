@@ -780,8 +780,8 @@ public class BusinessFunctions {
 			String itemName, String attribute) {
 		try {
 			for (WebElement row : WebElementList) {
-				Log.info("The Actual Item Name is :" + row.getAttribute(attribute));
-				if (row.getAttribute(attribute).toLowerCase().contains(itemName.toLowerCase().replace(" ", "")))
+				Log.info("The Actual Item Name is :" + row.getAttribute(attribute).toLowerCase());
+				if (row.getAttribute(attribute).toLowerCase().replace(" ", "").contains(itemName.toLowerCase().replace(" ", "")))
 					return row;
 			}
 		} catch (Exception ex) {

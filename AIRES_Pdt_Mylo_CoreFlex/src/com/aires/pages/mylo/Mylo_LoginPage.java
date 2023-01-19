@@ -71,7 +71,13 @@ public class Mylo_LoginPage extends Base {
 	@FindBy(how = How.ID, using = "passwordError")
 	private WebElement _passwordError;
 
-	@FindBy(how = How.XPATH, using = "//img[contains(@src,'login-with-office-365.jpg')]")
+	/*
+	 * @FindBy(how = How.XPATH, using =
+	 * "//img[contains(@src,'login-with-office-365.jpg')]") private WebElement
+	 * _loginImg;
+	 */
+	
+	@FindBy(how = How.CSS, using = "button[class*='mylo-login-btn']")
 	private WebElement _loginImg;
 
 	private final By _txtPassword = By.cssSelector("input[type='password']");

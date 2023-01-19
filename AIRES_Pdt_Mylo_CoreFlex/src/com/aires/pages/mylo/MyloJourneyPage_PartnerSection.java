@@ -20,95 +20,97 @@ import com.aires.businessrules.CoreFunctions;
 import com.aires.businessrules.DbFunctions;
 import com.aires.businessrules.constants.CoreConstants;
 import com.aires.businessrules.constants.MYLOConstants;
+import com.aires.managers.FileReaderManager;
+import com.aires.testdatatypes.mylo.Mylo_FileData;
 import com.aires.utilities.MyloNewFileUtil;
 import com.vimalselvam.cucumber.listener.Reporter;
 
 import cucumber.api.DataTable;
 
 public class MyloJourneyPage_PartnerSection extends Base {
-	
+
 	public MyloJourneyPage_PartnerSection(WebDriver driver) {
 		super(driver);
 	}
-	
+
 	@FindBy(how = How.CSS, using = "div[class='sk-three-strings']")
 	private WebElement _spinner;
-	
+
 	@FindBy(how = How.XPATH, using = "//a[text()='Add Partner ']")
 	private WebElement _addPartnerLink;
-	
+
 	@FindBy(how = How.CSS, using = "ng-select[name='P_Gender']")
 	private WebElement _partnerGender;
-	
+
 	@FindBy(how = How.CSS, using = "ng-select[name='P_Title']")
 	private WebElement _partnerRelationship;
-	
+
 	@FindBy(how = How.CSS, using = "ng-select[name='P_Dest']")
 	private WebElement _partnerNewDestination;
-	
+
 	@FindBy(how = How.CSS, using = "ng-select[name='P_Citizenship']")
 	private WebElement _partnerCitizenship;
-	
+
 	@FindBy(how = How.ID, using = "P_firstname")
 	private WebElement _partnerFirstName;
-	
+
 	@FindBy(how = How.ID, using = "P_middlename")
 	private WebElement _partnerMiddleName;
-	
+
 	@FindBy(how = How.ID, using = "P_lastname")
 	private WebElement _partnerLastName;
-	
+
 	@FindBy(how = How.ID, using = "P_Suffix")
 	private WebElement _partnerSuffix;
-	
+
 	@FindBy(how = How.ID, using = "P_MaidenName")
 	private WebElement _partnerMaidenName;
-	
+
 	@FindBy(how = How.ID, using = "P_preferredname")
 	private WebElement _partnerPreferredName;
-	
+
 	@FindBy(how = How.CSS, using = "ng-select[name='P_Pronouns']")
 	private WebElement _partnerPronouns;
-	
+
 	@FindBy(how = How.ID, using = "P_Age")
 	private WebElement _partnerAge;
-	
+
 	@FindBy(how = How.ID, using = "P_DOB")
 	private WebElement _partnerDateOfBirth;
-	
+
 	@FindBy(how = How.XPATH, using = "//a[text()=' Add Phone ']")
 	private WebElement _partnerAddPhone;
 
 	@FindBy(how = How.XPATH, using = "//a[text()=' Add Email ']")
 	private WebElement _partnerAddEmail;
-	
+
 	@FindBy(how = How.CSS, using = "app-transferee-family button[aria-controls='collapseOneTransferee']")
 	private WebElement _transfereeAndFamilySection;
-	
+
 	@FindBy(how = How.CSS, using = "app-transferee-family span[class$='accordian-caret-icon']")
 	private WebElement _transfereeAndFamilyDetailsBtn;
-	
+
 	@FindBy(how = How.CSS, using = "h2[class*='accchildhead']")
 	private List<WebElement> _transfereeAndFamilySectionHeaders;
-	
+
 	@FindBy(how = How.CSS, using = "div[role='alert']")
 	private WebElement _alertMessage;
-	
+
 	@FindBy(how = How.CSS, using = "i[class='icon-FloppyDisk_Open']")
 	private WebElement _partnerSaveIcon;
-	
+
 	@FindBy(how = How.XPATH, using = "//button[text()='Save']")
 	private WebElement _partnerSaveButton;
-	
+
 	@FindBy(how = How.CSS, using = "app-partner i[class='icon-Pencil_Open']")
 	private WebElement _partnerEditButton;
-	
+
 	@FindBy(how = How.CSS, using = "h2[id='headingChildThree'] button")
 	private WebElement _expandPartnerSection;
-	
+
 	@FindBy(how = How.CSS, using = "button[class*='toast-close-btn']")
 	private WebElement _closeBtn;
-	
+
 	@FindBy(how = How.CSS, using = "ng-select[name='T_Type2']")
 	private List<WebElement> _partnerEmailTypeDropdown;
 
@@ -126,34 +128,42 @@ public class MyloJourneyPage_PartnerSection extends Base {
 
 	@FindBy(how = How.CSS, using = "ng-select[name='T_Type2'] span[class='ng-value-label ng-star-inserted']")
 	private List<WebElement> _partnerEmailTypeDropdownValue;
-	
+
 	@FindBy(how = How.CSS, using = "input[id='P_Preferred']")
 	private List<WebElement> _partnerPhonePreferred;
 
 	@FindBy(how = How.CSS, using = "input[id='P_Preferred']+span")
 	private List<WebElement> _partnerPhonePreferredSelect;
-	
+
 	@FindBy(how = How.CSS, using = "input[id='T_Preferred2']")
 	private List<WebElement> _partnerEmailPreferred;
 
 	@FindBy(how = How.CSS, using = "input[id='T_Preferred2']+ span")
 	private List<WebElement> _partnerEmailPreferredSelect;
-	
+
 	@FindBy(how = How.ID, using = "P_Number")
 	private List<WebElement> _partnerPhoneNumber;
 
 	@FindBy(how = How.ID, using = "T_Email")
 	private List<WebElement> _partnerEmailAddress;
-	
+
 	@FindBy(how = How.CSS, using = "button[class*='swal2-confirm btn']")
 	private WebElement _YesButton;
-	
+
 	@FindBy(how = How.XPATH, using = "//app-transferee-family//h2[contains(text(),'Partner')]")
 	private WebElement _partnerHeader;
+
+	@FindBy(how = How.CSS, using = "div[@id='collapseOneTransferee'] app-partner")
+	private List<WebElement> _partnerList;
 	
+	@FindBy(how = How.CSS, using = "app-partner div[class*='usertitle']")
+	private WebElement _partnerName;
+			
 	final By _dropdownOptions = By.cssSelector("div[role='option']>span");
 	final By _genderDropdownOptions = By.cssSelector("div[role='option']>div");
-	
+	final By _existingPartnerName = By.cssSelector("div[class*='usertitle']");
+	final By _existingPartnerRelationship = By.cssSelector("div[class*='userdesignation']");
+
 	LinkedHashMap<String, WebElement> partnerWebElementsMap = new LinkedHashMap<String, WebElement>();
 	LinkedHashMap<String, List<String>> partnerDropdownFieldOptions = new LinkedHashMap<String, List<String>>();
 	LinkedHashMap<String, String> partnerUpdatedFieldValuesMap = new LinkedHashMap<String, String>();
@@ -163,7 +173,8 @@ public class MyloJourneyPage_PartnerSection extends Base {
 	List<String> originDestOption = new ArrayList<String>();
 	List<String> phoneTypeOption = new ArrayList<String>();
 	List<String> emailTypeOption = new ArrayList<String>();
-	
+	private boolean _isExist = false;
+
 	/**
 	 * Map all Partner Web Elements with Name
 	 */
@@ -189,25 +200,22 @@ public class MyloJourneyPage_PartnerSection extends Base {
 		partnerWebElementsMap.put(MYLOConstants.YES_BUTTON, _YesButton);
 		partnerWebElementsMap.put(MYLOConstants.SAVE_BUTTON, _partnerSaveButton);
 	}
-	
+
 	/**
 	 * Map all Character Limits with respective Fields
 	 */
 	public void mapPartnerFieldsCharacterLimitMap() {
-		partnerFieldCharacterLimitMap.put(MYLOConstants.PARTNER_FIRSTNAME,
-				MYLOConstants.PARTNER_FIRSTNAME_CHAR_LIMIT);
-		partnerFieldCharacterLimitMap.put(MYLOConstants.PARTNER_LASTNAME,
-				MYLOConstants.PARTNER_LASTNAME_CHAR_LIMIT);
+		partnerFieldCharacterLimitMap.put(MYLOConstants.PARTNER_FIRSTNAME, MYLOConstants.PARTNER_FIRSTNAME_CHAR_LIMIT);
+		partnerFieldCharacterLimitMap.put(MYLOConstants.PARTNER_LASTNAME, MYLOConstants.PARTNER_LASTNAME_CHAR_LIMIT);
 		partnerFieldCharacterLimitMap.put(MYLOConstants.PARTNER_MIDDLENAME,
 				MYLOConstants.PARTNER_MIDDLENAME_CHAR_LIMIT);
-		partnerFieldCharacterLimitMap.put(MYLOConstants.PARTNER_SUFFIX,
-				MYLOConstants.PARTNER_SUFFIX_CHAR_LIMIT);
+		partnerFieldCharacterLimitMap.put(MYLOConstants.PARTNER_SUFFIX, MYLOConstants.PARTNER_SUFFIX_CHAR_LIMIT);
 		partnerFieldCharacterLimitMap.put(MYLOConstants.PARTNER_MAIDENNAME,
 				MYLOConstants.PARTNER_MAIDENNAME_CHAR_LIMIT);
 		partnerFieldCharacterLimitMap.put(MYLOConstants.PARTNER_PHONE_NUMBER,
 				MYLOConstants.PARTNER_PHONE_NUMBER_CHAR_LIMIT);
 	}
-	
+
 	/**
 	 * Map all Partner Phone/Email Field Values
 	 */
@@ -218,16 +226,14 @@ public class MyloJourneyPage_PartnerSection extends Base {
 		partnerPhoneEmailFieldsMap.put(MYLOConstants.PARTNER_EMAIL_ADDRESS, _partnerEmailAddress);
 		partnerPhoneEmailFieldsMap.put(MYLOConstants.PARTNER_EMAIL_TYPE, _partnerEmailTypeDropdownValue);
 	}
-	
+
 	/**
-	 * @param elementName
-	 * Scroll to respective element of Partner Fields 
+	 * @param elementName Scroll to respective element of Partner Fields
 	 */
 	public void scrollToPartnerElement(String elementName) {
 		mapPartnerWebElementFields();
 		try {
-			CoreFunctions.scrollToElementUsingJavaScript(driver, partnerWebElementsMap.get(elementName),
-					elementName);
+			CoreFunctions.scrollToElementUsingJavaScript(driver, partnerWebElementsMap.get(elementName), elementName);
 		} catch (Exception e) {
 			Reporter.addStepLog(MessageFormat.format(CoreConstants.FAIL_TO_VERIFY_ELEMENT_ON_SECTION,
 					CoreConstants.FAIL, elementName, MYLOConstants.PARTNER));
@@ -235,17 +241,16 @@ public class MyloJourneyPage_PartnerSection extends Base {
 					elementName, MYLOConstants.PARTNER));
 		}
 	}
-	
+
 	/**
-	 * @param fieldName
-	 * Click respective fields of Partner section
+	 * @param fieldName Click respective fields of Partner section
 	 */
 	public void clickFieldsOnPartnerSection(String fieldName) {
 		mapPartnerWebElementFields();
 		try {
 			WebElement element = partnerWebElementsMap.get(fieldName);
 			CoreFunctions.explicitWaitTillElementInVisibilityCustomTime(driver, _spinner, 180);
-			CoreFunctions.explicitWaitTillElementVisibility(driver, element, fieldName,100);
+			CoreFunctions.explicitWaitTillElementVisibility(driver, element, fieldName, 100);
 			CoreFunctions.highlightElementAndClick(driver, element, fieldName);
 			CoreFunctions.explicitWaitTillElementInVisibilityCustomTime(driver, _spinner, 180);
 		} catch (Exception e) {
@@ -255,14 +260,14 @@ public class MyloJourneyPage_PartnerSection extends Base {
 					fieldName, MYLOConstants.PARTNER));
 		}
 	}
-	
+
 	/**
 	 * @param elementName
-	 * @param index
-	 * Click respective dropdown fields of Partner section
+	 * @param index       Click respective dropdown fields of Partner section
 	 */
 	public void clickDropdownFieldsOnPartnerSection(String elementName, int index) {
-		CoreFunctions.scrollToElementUsingJavaScript(driver, _partnerPreferredName, MYLOConstants.PARTNER_PREFERREDNAME);
+		CoreFunctions.scrollToElementUsingJavaScript(driver, _partnerPreferredName,
+				MYLOConstants.PARTNER_PREFERREDNAME);
 		switch (elementName) {
 		case MYLOConstants.PARTNER_ORGDEST:
 			originDestOption = returnDropDownOptionsList(_partnerPhoneOrgDestDropdown.get(index), elementName);
@@ -288,7 +293,7 @@ public class MyloJourneyPage_PartnerSection extends Base {
 			Assert.fail(MYLOConstants.ENTER_CORRECT_ELEMENT_NAME);
 		}
 	}
-	
+
 	/**
 	 * Click on Close Icon of Toast Message
 	 */
@@ -322,11 +327,10 @@ public class MyloJourneyPage_PartnerSection extends Base {
 					MYLOConstants.SAVE_BUTTON, MYLOConstants.PARTNER, MYLOConstants.JOURNEY));
 		}
 	}
-	
+
 	/**
 	 * @param fieldName
-	 * @param fieldValue
-	 * Set Value of different fields on Partner section
+	 * @param fieldValue Set Value of different fields on Partner section
 	 */
 	public void setPartnerFields(String fieldName, String fieldValue) {
 		mapPartnerWebElementFields();
@@ -345,11 +349,10 @@ public class MyloJourneyPage_PartnerSection extends Base {
 					fieldName, MYLOConstants.PARTNER));
 		}
 	}
-	
+
 	/**
 	 * @param fieldName
-	 * @param fieldValue
-	 * Set Value of different dropdown fields on Partner section
+	 * @param fieldValue Set Value of different dropdown fields on Partner section
 	 */
 	public void setDifferentDropDownFields(String fieldName, String fieldValue) {
 		String updatedValue = null;
@@ -365,12 +368,12 @@ public class MyloJourneyPage_PartnerSection extends Base {
 					fieldName, MYLOConstants.PARTNER));
 		}
 	}
-	
+
 	/**
 	 * @param fieldName
 	 * @param fieldValue
-	 * @param index
-	 * Set Value of different Phone/Email fields on Partner section
+	 * @param index      Set Value of different Phone/Email fields on Partner
+	 *                   section
 	 */
 	public void setPartnerPhoneEmailFields(String fieldName, String fieldValue, int index) {
 		mapPartnerPhoneEmailField();
@@ -389,11 +392,10 @@ public class MyloJourneyPage_PartnerSection extends Base {
 					fieldName, MYLOConstants.PARTNER));
 		}
 	}
-	
+
 	/**
 	 * @param table
-	 * @param index
-	 * Set Value of all Phone fields on Partner section
+	 * @param index Set Value of all Phone fields on Partner section
 	 */
 	public void setMandatoryFieldsPartnerPhoneSection(DataTable table, int index) {
 		java.util.List<Map<String, String>> data = table.asMaps(String.class, String.class);
@@ -401,18 +403,16 @@ public class MyloJourneyPage_PartnerSection extends Base {
 			setPartnerPhoneEmailFields(data.get(i).get(MYLOConstants.FIELD_NAME),
 					data.get(i).get(MYLOConstants.CHARACTER_LENGTH), index);
 			clickDropdownFieldsOnPartnerSection(MYLOConstants.PARTNER_ORGDEST, index);
-			setDifferentDropDownFields(MYLOConstants.PARTNER_ORGDEST,
-					data.get(i).get(MYLOConstants.PARTNER_ORGDEST));
+			setDifferentDropDownFields(MYLOConstants.PARTNER_ORGDEST, data.get(i).get(MYLOConstants.PARTNER_ORGDEST));
 			clickDropdownFieldsOnPartnerSection(MYLOConstants.PARTNER_PHONE_TYPE, index);
 			setDifferentDropDownFields(MYLOConstants.PARTNER_PHONE_TYPE,
 					data.get(i).get(MYLOConstants.PARTNER_PHONE_TYPE));
 		}
 	}
-	
+
 	/**
 	 * @param table
-	 * @param index
-	 * Set Value of all Email fields on Partner section
+	 * @param index Set Value of all Email fields on Partner section
 	 */
 	public void setMandatoryFieldsPartnerEmailSection(DataTable table, int index) {
 		java.util.List<Map<String, String>> data = table.asMaps(String.class, String.class);
@@ -424,11 +424,10 @@ public class MyloJourneyPage_PartnerSection extends Base {
 					data.get(i).get(MYLOConstants.PARTNER_EMAIL_TYPE));
 		}
 	}
-	
+
 	/**
 	 * @param table
-	 * @param buttonName
-	 * Set Value of all Phone/Email fields on Partner section
+	 * @param buttonName Set Value of all Phone/Email fields on Partner section
 	 */
 	public void setFieldsPartnerPhoneEmailSection(DataTable table, String buttonName) {
 		if (buttonName.equals(MYLOConstants.PARTNER_ADD_PHONE))
@@ -436,21 +435,23 @@ public class MyloJourneyPage_PartnerSection extends Base {
 		else
 			setMandatoryFieldsPartnerEmailSection(table, 0);
 	}
-	
+
 	/**
 	 * @param element
 	 * @param elementName
-	 * @return
-	 * It returns the list of all options available in Partner Dropdown field
+	 * @return It returns the list of all options available in Partner Dropdown
+	 *         field
 	 */
 	public List<String> returnDropDownOptionsList(WebElement element, String elementName) {
 		List<String> requiredList = new ArrayList<String>();
 		try {
 			CoreFunctions.explicitWaitTillElementVisibility(driver, element, elementName);
 			CoreFunctions.highlightElementAndClick(driver, element, elementName);
-			requiredList = (elementName.equals(MYLOConstants.GENDER))?CoreFunctions.getElementListByLocator(driver, _genderDropdownOptions).stream()
-					.map(x -> x.getText()).collect(Collectors.toList()):CoreFunctions.getElementListByLocator(driver, _dropdownOptions).stream()
-					.map(x -> x.getText()).collect(Collectors.toList());
+			requiredList = (elementName.equals(MYLOConstants.GENDER))
+					? CoreFunctions.getElementListByLocator(driver, _genderDropdownOptions).stream()
+							.map(x -> x.getText()).collect(Collectors.toList())
+					: CoreFunctions.getElementListByLocator(driver, _dropdownOptions).stream().map(x -> x.getText())
+							.collect(Collectors.toList());
 		} catch (Exception e) {
 			Reporter.addStepLog(MessageFormat.format(CoreConstants.FAIL_TO_VERIFY_ELEMENT_ON_SECTION,
 					CoreConstants.FAIL, elementName, MYLOConstants.PARTNER));
@@ -459,11 +460,10 @@ public class MyloJourneyPage_PartnerSection extends Base {
 		}
 		return requiredList;
 	}
-	
+
 	/**
 	 * @param fieldName
-	 * @return
-	 * Get the Field Value of all Fields available on Partner section
+	 * @return Get the Field Value of all Fields available on Partner section
 	 */
 	public String getPartnerFields(String fieldName) {
 		mapPartnerWebElementFields();
@@ -476,8 +476,7 @@ public class MyloJourneyPage_PartnerSection extends Base {
 			CoreFunctions.explicitWaitTillElementVisibility(driver, partnerWebElementsMap.get(fieldName), fieldName);
 			requiredValue = (dropdownFields.contains(fieldName))
 					? CoreFunctions.getElementText(driver, partnerWebElementsMap.get(fieldName))
-					: CoreFunctions.getAttributeText(partnerWebElementsMap.get(fieldName),
-							MYLOConstants.TITLE);
+					: CoreFunctions.getAttributeText(partnerWebElementsMap.get(fieldName), MYLOConstants.TITLE);
 		} catch (Exception e) {
 			Reporter.addStepLog(MessageFormat.format(CoreConstants.FAIL_TO_VERIFY_ELEMENT_ON_SECTION,
 					CoreConstants.FAIL, fieldName, MYLOConstants.PARTNER));
@@ -486,12 +485,12 @@ public class MyloJourneyPage_PartnerSection extends Base {
 		}
 		return requiredValue;
 	}
-	
+
 	/**
 	 * @param fieldName
 	 * @param index
-	 * @return
-	 * Get the Field Value of all Phone/Email Fields available on Partner section
+	 * @return Get the Field Value of all Phone/Email Fields available on Partner
+	 *         section
 	 */
 	public String getPartnerPhoneEmailFields(String fieldName, int index) {
 		mapPartnerPhoneEmailField();
@@ -515,48 +514,44 @@ public class MyloJourneyPage_PartnerSection extends Base {
 		}
 		return requiredValue;
 	}
-	
+
 	/**
 	 * @param table
-	 * @return
-	 * Verify Toast Messages for Mandatory Fields of Partner section
+	 * @return Verify Toast Messages for Mandatory Fields of Partner section
 	 */
 	public boolean verifyMandatoryFieldsToastMessagesPartnerSection(DataTable table) {
 		boolean flag = false;
 		java.util.List<Map<String, String>> data = table.asMaps(String.class, String.class);
 		for (int i = 0; i < data.size(); i++) {
 			CoreFunctions.scrollToElementUsingJavaScript(driver, _partnerHeader, MYLOConstants.PARTNER);
-			setPartnerFields(MYLOConstants.PARTNER_FIRSTNAME,
-					data.get(i).get(MYLOConstants.PARTNER_FIRSTNAME));
+			setPartnerFields(MYLOConstants.PARTNER_FIRSTNAME, data.get(i).get(MYLOConstants.PARTNER_FIRSTNAME));
 			setPartnerFields(MYLOConstants.PARTNER_LASTNAME, data.get(i).get(MYLOConstants.PARTNER_LASTNAME));
 			clickPartnerSaveButton();
 			flag = (verifyToastMessage(data.get(i).get(MYLOConstants.MESSAGE), MYLOConstants.TRANSFEREE_FAMILY));
 		}
 		return flag;
 	}
-	
+
 	/**
 	 * @param table
-	 * @return
-	 * Verify Toast Messages for Mandatory Fields of Partner section
+	 * @return Verify Toast Messages for Mandatory Fields of Partner section
 	 */
 	public boolean verifyMandatoryToastMessageNewPartnerSection(DataTable table) {
 		boolean flag = false;
 		java.util.List<Map<String, String>> data = table.asMaps(String.class, String.class);
 		for (int i = 0; i < data.size(); i++) {
-			setPartnerFields(MYLOConstants.PARTNER_FIRSTNAME,
-					data.get(i).get(MYLOConstants.PARTNER_FIRSTNAME));
+			setPartnerFields(MYLOConstants.PARTNER_FIRSTNAME, data.get(i).get(MYLOConstants.PARTNER_FIRSTNAME));
 			setPartnerFields(MYLOConstants.PARTNER_LASTNAME, data.get(i).get(MYLOConstants.PARTNER_LASTNAME));
 			clickFieldsOnPartnerSection(MYLOConstants.SAVE_BUTTON);
 			flag = (verifyToastMessage(data.get(i).get(MYLOConstants.MESSAGE), MYLOConstants.TRANSFEREE_FAMILY));
 		}
 		return flag;
 	}
-	
+
 	/**
 	 * @param table
-	 * @return
-	 * 	Verify Toast Messages for Special Characters entered in fields of Partner section
+	 * @return Verify Toast Messages for Special Characters entered in fields of
+	 *         Partner section
 	 */
 	public boolean verifySpecialCharacterToastMessagesPartnerSection(DataTable table) {
 		boolean flag = false;
@@ -571,11 +566,10 @@ public class MyloJourneyPage_PartnerSection extends Base {
 		}
 		return flag;
 	}
-	
+
 	/**
 	 * @param table
-	 * @return
-	 * 	Verify Toast Messages for Mandatory Fields of Partner Phone section
+	 * @return Verify Toast Messages for Mandatory Fields of Partner Phone section
 	 */
 	public boolean verifyMandatoryFieldsToastMessagesPartnerPhoneSection(DataTable table) {
 		boolean flag = false;
@@ -584,8 +578,7 @@ public class MyloJourneyPage_PartnerSection extends Base {
 			setPartnerPhoneEmailFields(MYLOConstants.PARTNER_PHONE_NUMBER,
 					data.get(i).get(MYLOConstants.PARTNER_PHONE_NUMBER), 0);
 			clickDropdownFieldsOnPartnerSection(MYLOConstants.PARTNER_ORGDEST, 0);
-			setDifferentDropDownFields(MYLOConstants.PARTNER_ORGDEST,
-					data.get(i).get(MYLOConstants.PARTNER_ORGDEST));
+			setDifferentDropDownFields(MYLOConstants.PARTNER_ORGDEST, data.get(i).get(MYLOConstants.PARTNER_ORGDEST));
 			clickDropdownFieldsOnPartnerSection(MYLOConstants.PARTNER_PHONE_TYPE, 0);
 			setDifferentDropDownFields(MYLOConstants.PARTNER_PHONE_TYPE,
 					data.get(i).get(MYLOConstants.PARTNER_PHONE_TYPE));
@@ -594,11 +587,10 @@ public class MyloJourneyPage_PartnerSection extends Base {
 		}
 		return flag;
 	}
-	
+
 	/**
 	 * @param table
-	 * @return
-	 * Verify Toast Messages for Mandatory Fields of Partner Email section
+	 * @return Verify Toast Messages for Mandatory Fields of Partner Email section
 	 */
 	public boolean verifyMandatoryFieldsToastMessagesPartnerEmailSection(DataTable table) {
 		boolean flag = false;
@@ -615,12 +607,12 @@ public class MyloJourneyPage_PartnerSection extends Base {
 		}
 		return flag;
 	}
-	
+
 	/**
 	 * @param table
 	 * @param buttonName
-	 * @return
-	 * Verify Toast Messages for Mandatory Fields of Partner Phone/Email section
+	 * @return Verify Toast Messages for Mandatory Fields of Partner Phone/Email
+	 *         section
 	 */
 	public boolean verifyMandatoryFieldsToastMessagesPartnerPhoneEmailSection(DataTable table, String buttonName) {
 		boolean flag = false;
@@ -629,11 +621,10 @@ public class MyloJourneyPage_PartnerSection extends Base {
 				: verifyMandatoryFieldsToastMessagesPartnerEmailSection(table);
 		return flag;
 	}
-	
+
 	/**
 	 * @param fieldName
-	 * @return
-	 * Verify Updated Values in respective fields of Partner section
+	 * @return Verify Updated Values in respective fields of Partner section
 	 */
 	public boolean verifyPartnerFieldsUpdatedValue(String fieldName) {
 		boolean flag = false;
@@ -659,12 +650,11 @@ public class MyloJourneyPage_PartnerSection extends Base {
 					fieldName, MYLOConstants.PARTNER));
 		return flag;
 	}
-	
+
 	/**
 	 * @param fieldName
 	 * @param index
-	 * @return
-	 * Verify Updated Values in respective fields of Partner Phone section
+	 * @return Verify Updated Values in respective fields of Partner Phone section
 	 */
 	public boolean verifyPartnerPhoneFieldsUpdatedValue(String fieldName, int index) {
 		boolean flag = false;
@@ -690,12 +680,11 @@ public class MyloJourneyPage_PartnerSection extends Base {
 					fieldName, MYLOConstants.PARTNER));
 		return flag;
 	}
-	
+
 	/**
 	 * @param fieldName
 	 * @param index
-	 * @return
-	 * Verify Updated Values in respective fields of Partner Email section
+	 * @return Verify Updated Values in respective fields of Partner Email section
 	 */
 	public boolean verifyPartnerEmailFieldsUpdatedValue(String fieldName, int index) {
 		boolean flag = false;
@@ -717,11 +706,10 @@ public class MyloJourneyPage_PartnerSection extends Base {
 					fieldName, MYLOConstants.PARTNER));
 		return flag;
 	}
-	
+
 	/**
 	 * @param table
-	 * @return
-	 * Verify Updated Values in respective fields of Partner section
+	 * @return Verify Updated Values in respective fields of Partner section
 	 */
 	public boolean verifyDifferentPartnerFieldsUpdatedValue(DataTable table) {
 		boolean flag = false;
@@ -731,12 +719,11 @@ public class MyloJourneyPage_PartnerSection extends Base {
 		}
 		return flag;
 	}
-	
+
 	/**
 	 * @param table
 	 * @param index
-	 * @return
-	 * Verify Updated Values in respective fields of Partner Phone section
+	 * @return Verify Updated Values in respective fields of Partner Phone section
 	 */
 	public boolean verifyDifferentPartnerPhoneFieldsUpdatedValue(DataTable table, int index) {
 		boolean flag = false;
@@ -746,12 +733,11 @@ public class MyloJourneyPage_PartnerSection extends Base {
 		}
 		return flag;
 	}
-	
+
 	/**
 	 * @param table
 	 * @param index
-	 * @return
-	 * Verify Updated Values in respective fields of Partner Email section
+	 * @return Verify Updated Values in respective fields of Partner Email section
 	 */
 	public boolean verifyDifferentPartnerEmailFieldsUpdatedValue(DataTable table, int index) {
 		boolean flag = false;
@@ -761,21 +747,19 @@ public class MyloJourneyPage_PartnerSection extends Base {
 		}
 		return flag;
 	}
-	
+
 	/**
 	 * @param msg
 	 * @param sectionType
-	 * @return
-	 * Verify Toast Messages appearing for Partner Section
+	 * @return Verify Toast Messages appearing for Partner Section
 	 */
 	public boolean verifyToastMessage(String msg, String sectionType) {
 		return BusinessFunctions.verifyMyloToastMessage(driver, _alertMessage, msg, sectionType);
 	}
-	
+
 	/**
 	 * @param fieldName
-	 * @return
-	 * Verify DropDownList values from Database
+	 * @return Verify DropDownList values from Database
 	 */
 	public boolean verifyPartnerFieldDropdownListOptions(String fieldName) {
 		boolean flag = false;
@@ -789,10 +773,11 @@ public class MyloJourneyPage_PartnerSection extends Base {
 		valuesFromUI.remove(MYLOConstants.SELECT_ONE);
 		valuesFromUI.remove(MYLOConstants.USA_STATE);
 		try {
-			flag=(fieldName.equals(MYLOConstants.NEW_DESTINATION))?destinationOption.equals(valuesFromUI):
-				(fieldName.equals(MYLOConstants.RELATIONSHIP))?partnerRelationshipOption.equals(valuesFromUI):
-					(fieldName.equals(MYLOConstants.CITIZENSHIP))?getCountryDBValues(fieldName).equals(valuesFromUI):
-					DbFunctions.getTransfereeDropdownListValues(fieldName).equals(valuesFromUI);
+			flag = (fieldName.equals(MYLOConstants.NEW_DESTINATION)) ? destinationOption.equals(valuesFromUI)
+					: (fieldName.equals(MYLOConstants.RELATIONSHIP)) ? partnerRelationshipOption.equals(valuesFromUI)
+							: (fieldName.equals(MYLOConstants.CITIZENSHIP))
+									? getCountryDBValues(fieldName).equals(valuesFromUI)
+									: DbFunctions.getTransfereeDropdownListValues(fieldName).equals(valuesFromUI);
 
 		} catch (Exception e) {
 			Reporter.addStepLog(MessageFormat.format(CoreConstants.FAIL_TO_VERIFY_ELEMENT_ON_SECTION,
@@ -808,30 +793,30 @@ public class MyloJourneyPage_PartnerSection extends Base {
 					CoreConstants.FAIL, fieldName, MYLOConstants.PARTNER));
 		return flag;
 	}
-	
+
 	public void saveDropdownListOptionsOnPartnerSection(String fieldName) {
 		mapPartnerWebElementFields();
-		partnerDropdownFieldOptions.put(fieldName, returnDropDownOptionsList(partnerWebElementsMap.get(fieldName), fieldName));
+		partnerDropdownFieldOptions.put(fieldName,
+				returnDropDownOptionsList(partnerWebElementsMap.get(fieldName), fieldName));
 	}
-	
+
 	public List<String> getCountryDBValues(String fieldName) {
 		List<String> countryDBValues = DbFunctions.getTransfereeDropdownListValues(fieldName);
 		countryDBValues.remove(MYLOConstants.USA_STATE);
 		return countryDBValues;
 	}
-	
+
 	/**
 	 * @param section
 	 * @param index
 	 * @param number
-	 * @return
-	 * Check whether Preferred checkbox is selected for Partner Phone/Email section
+	 * @return Check whether Preferred checkbox is selected for Partner Phone/Email
+	 *         section
 	 */
 	public boolean isPreferredChecked(String section, int index, String number) {
-		boolean flag=false;
+		boolean flag = false;
 		try {
-			flag = (section.equals(MYLOConstants.PARTNER_PHONE_NUMBER))
-					? _partnerPhonePreferred.get(index).isSelected()
+			flag = (section.equals(MYLOConstants.PARTNER_PHONE_NUMBER)) ? _partnerPhonePreferred.get(index).isSelected()
 					: _partnerEmailPreferred.get(index).isSelected();
 		} catch (Exception e) {
 			Reporter.addStepLog(MessageFormat.format(CoreConstants.FAIL_TO_VERIFY_ELEMENT_ON_SECTION,
@@ -847,13 +832,14 @@ public class MyloJourneyPage_PartnerSection extends Base {
 					number, MYLOConstants.PREFERRED, section, MYLOConstants.PARTNER));
 		return flag;
 	}
-	
+
 	public void addPartnerDetailsIfNotPresent() {
 		if (MyloNewFileUtil.get_partnerFName() == null) {
 			BusinessFunctions.fluentWaitForMyloSpinnerToDisappear(driver, _spinner);
 			CoreFunctions.scrollToElementUsingJavaScript(driver, _transfereeAndFamilySection,
 					MYLOConstants.TRANSFEREE_FAMILY);
-			CoreFunctions.scrollClickUsingJS(driver, _transfereeAndFamilyDetailsBtn, MYLOConstants.DETAILS_CARROT_BUTTON);
+			CoreFunctions.scrollClickUsingJS(driver, _transfereeAndFamilyDetailsBtn,
+					MYLOConstants.DETAILS_CARROT_BUTTON);
 			CoreFunctions.scrollClickUsingJS(driver, _addPartnerLink, MYLOConstants.ADD_PARTNER_LINK);
 			MyloNewFileUtil.set_partnerFName(BusinessFunctions.setMyloInputFields(driver,
 					MYLOConstants.PARTNER_FIRSTNAME, "10", _partnerFirstName, MYLOConstants.RANDOM_STRING));
@@ -864,6 +850,14 @@ public class MyloJourneyPage_PartnerSection extends Base {
 					MYLOConstants.RELATIONSHIP);
 			CoreFunctions.click(driver, _partnerSaveButton, MYLOConstants.SAVE_BUTTON);
 			BusinessFunctions.fluentWaitForMyloSpinnerToDisappear(driver, _spinner);
+		}
+	}
+
+	public void verifyPartnerExist(String partnerName) {
+		try {
+			CoreFunctions.verifyText(CoreFunctions.getElementText(driver, _partnerName), partnerName);
+		} catch (Exception e) {
+			Assert.fail(MessageFormat.format(MYLOConstants.FAILED_TO_VERIFY_PARTNER_NAME, CoreConstants.FAIL));
 		}
 	}
 }

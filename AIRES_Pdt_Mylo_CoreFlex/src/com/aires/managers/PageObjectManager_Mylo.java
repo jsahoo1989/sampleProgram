@@ -30,9 +30,11 @@ import com.aires.pages.mylo.MyloJourneyPage_IdentityChallengeSection;
 import com.aires.pages.mylo.MyloJourneyPage_OtherSection;
 import com.aires.pages.mylo.MyloJourneyPage_PartnerSection;
 import com.aires.pages.mylo.MyloJourneyPage_QueryBySubServiceID;
+import com.aires.pages.mylo.MyloJourneyPage_SecondaryContact;
 import com.aires.pages.mylo.MyloJourneyPage_SendLoginCredentials;
 import com.aires.pages.mylo.MyloJourneyPage_TaxReportingSection;
 import com.aires.pages.mylo.MyloJourneyPage_TeamPostSection;
+import com.aires.pages.mylo.MyloJourneyPage_TransfereeAndFamilySection;
 import com.aires.pages.mylo.MyloJourneyPage_TransfereeNameQuerySection;
 import com.aires.pages.mylo.MyloJourneyPage_TransfereeSection;
 import com.aires.pages.mylo.Mylo_AssignmentPage;
@@ -66,6 +68,9 @@ public class PageObjectManager_Mylo {
 	private MyloJourneyPage_FileTeamSection _journeyPage_FileTeamSection;
 	private MyloJourneyPage_TransfereeNameQuerySection _journeyPage_TransfereeNameQuerySection;	
 	private MyloJourneyPage_QueryBySubServiceID _journeyPage_QueryBySubServiceID;
+	private MyloJourneyPage_SecondaryContact _journeyPage_SecondaryContact;
+	private MyloJourneyPage_TransfereeAndFamilySection _journeyPage_TransfereeAndFamilySection;
+
 	private MyloNewFileUtil _myloNewFileUtil;
 
 	public PageObjectManager_Mylo(WebDriver driver) {
@@ -188,5 +193,15 @@ public class PageObjectManager_Mylo {
 	public MyloJourneyPage_QueryBySubServiceID getJourneyQueryBySubServiceID() {
 		return (_journeyPage_QueryBySubServiceID == null) ? _journeyPage_QueryBySubServiceID = new MyloJourneyPage_QueryBySubServiceID(_driver)
 				: _journeyPage_QueryBySubServiceID;
+	}
+
+	public MyloJourneyPage_SecondaryContact getJourneyPageSecondaryContact() {
+		return (_journeyPage_SecondaryContact == null) ? _journeyPage_SecondaryContact = new MyloJourneyPage_SecondaryContact(_driver)
+				: _journeyPage_SecondaryContact;
+	}
+	
+	public MyloJourneyPage_TransfereeAndFamilySection getJourneyPageTransfereeAndFamilySection() {
+		return (_journeyPage_TransfereeAndFamilySection == null) ? _journeyPage_TransfereeAndFamilySection = new MyloJourneyPage_TransfereeAndFamilySection(_driver)
+				: _journeyPage_TransfereeAndFamilySection;
 	}
 }

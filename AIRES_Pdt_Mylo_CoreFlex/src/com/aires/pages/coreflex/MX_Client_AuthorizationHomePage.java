@@ -2382,13 +2382,13 @@ public class MX_Client_AuthorizationHomePage extends Base {
 		return false;
 	}
 
-	public boolean verifyFlexPdfDownloadedDocument(String documentName, String submittedBy, String clientName,
+	public boolean verifyFlexPdfDownloadedDocument(String documentName, String clientName,
 			String clientUserName) {
 		try {
 			String filePath = System.getProperty("user.home") + "/Downloads/" + documentName;
 			String file_content = BusinessFunctions.getPdfDocContent(filePath);
 
-			if (verifyPointSummaryPDFContents(documentName, submittedBy, file_content, clientName, clientUserName)) {
+			if (verifyPointSummaryPDFContents(documentName, file_content, clientName, clientUserName)) {
 				Reporter.addStepLog(MessageFormat.format(
 						MobilityXConstants.SUCCESSFULLY_VERIFIED_SUBMITTED_BENEFITS_AND_POINTS_DETAILS_BY_CLIENT_ON_FLEX_PDF_DOWNLOADED_DOCUMENT,
 						CoreConstants.PASS, documentName));
@@ -2403,8 +2403,8 @@ public class MX_Client_AuthorizationHomePage extends Base {
 		return false;
 	}
 
-	private boolean verifyPointSummaryPDFContents(String documentName, String submittedBy, String actualFileContent,
-			String clientName, String clientUserName) {
+	private boolean verifyPointSummaryPDFContents(String documentName, String actualFileContent, String clientName,
+			String clientUserName) {
 		DecimalFormat format = new DecimalFormat();
 		format.setDecimalSeparatorAlwaysShown(false);
 		try {
@@ -2428,12 +2428,10 @@ public class MX_Client_AuthorizationHomePage extends Base {
 									.parseDouble(CoreFunctions.getPropertyFromConfig("CF_Client_AvailablePoints")))),
 					MobilityXConstants.CURRENT_POINT_BALANCE);
 
-			if (submittedBy.equalsIgnoreCase(MobilityXConstants.CLIENT)) {
-				CoreFunctions.verifyTextContains(
-						actualFileContent, MobilityXConstants.EXPECTED_POINTS_SUBMITTED_BY_CLIENT_PDF_DOCUMENT
-								.replace("CN", clientName).replace("CUN", clientUserName),
-						MobilityXConstants.POINTS_SUBMITTED_BY_CLIENT_TEXT);
-			}
+			CoreFunctions.verifyTextContains(
+					actualFileContent, MobilityXConstants.EXPECTED_POINTS_SUBMITTED_BY_CLIENT_PDF_DOCUMENT
+							.replace("CN", clientName).replace("CUN", clientUserName),
+					MobilityXConstants.POINTS_SUBMITTED_BY_CLIENT_TEXT);
 
 			for (Benefit benefit : getBenefits(CoreFunctions.getPropertyFromConfig("CoreFlex_Policy_BenefitType"),
 					CoreFunctions.getPropertyFromConfig("CoreFlex_Policy_RequiredFor"))) {

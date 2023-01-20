@@ -708,8 +708,17 @@ public class MX_Transferee_JourneyHomePage extends Base {
 						CoreFunctions.getPropertyFromConfig("CF_Transferee_CashoutCurrencyCode"));
 				CoreFunctions.selectByVisibleText(driver, _selectBankCountry, bankCountry);
 				CoreFunctions.waitHandler(1);
-				CoreFunctions.clearAndSetText(driver, _textBankIBAN,
-						accountDetails.wireTransferAccountType.accountIBAN);
+
+				if (CoreFunctions.getPropertyFromConfig("CF_Transferee_CashoutCurrencyCode").equalsIgnoreCase("GBP")) {
+					CoreFunctions.clearAndSetText(driver, _textBankIBAN, "GB12345");
+				} else if (CoreFunctions.getPropertyFromConfig("CF_Transferee_CashoutCurrencyCode")
+						.equalsIgnoreCase("DKK")) {
+					CoreFunctions.clearAndSetText(driver, _textBankIBAN, "DK12345");
+				} else {
+					CoreFunctions.clearAndSetText(driver, _textBankIBAN,
+							accountDetails.wireTransferAccountType.accountIBAN);
+				}
+
 				CoreFunctions.clearAndSetText(driver, _textBankSwift,
 						accountDetails.wireTransferAccountType.swiftRouting);
 				CoreFunctions.clearAndSetText(driver, _textBankAccountClosingDate,
@@ -1717,6 +1726,88 @@ public class MX_Transferee_JourneyHomePage extends Base {
 				.replace("\r\n", "").replace("<br>", "").replace("<ul>", "").replace("<li>", "").replace("</ul>", "")
 				.replace("<font color=\"#208DA6\">", "").replace("</li>", "").replace("</font>", "")
 				.replace("<input checked=\"true\" type=\"checkbox\"><font style=\"font-weight:bold\">", "").trim();
+	}
+
+	public boolean verifyFlexPdfDownloadedDocument(String documentName) {
+		try {
+			String filePath = System.getProperty("user.home") + "/Downloads/" + documentName;
+			String file_content = BusinessFunctions.getPdfDocContent(filePath);
+
+			if (verifyPointSummaryPDFContents(documentName, file_content)) {
+				Reporter.addStepLog(MessageFormat.format(
+						MobilityXConstants.SUCCESSFULLY_VERIFIED_SUBMITTED_BENEFITS_AND_POINTS_DETAILS_BY_CLIENT_ON_FLEX_PDF_DOWNLOADED_DOCUMENT,
+						CoreConstants.PASS, documentName));
+				return true;
+			}
+		} catch (Exception e) {
+			Reporter.addStepLog(MessageFormat.format(
+					MobilityXConstants.EXCEPTION_OCCURED_WHILE_VALIDATING_SUBMITTED_BENEFITS_AND_POINTS_DETAILS_BY_CLIENT_ON_FLEX_PDF_DOWNLOADED_DOCUMENT,
+					CoreConstants.FAIL, e.getMessage(), documentName));
+			return false;
+		}
+		return false;
+	}
+
+	private boolean verifyPointSummaryPDFContents(String documentName, String actualFileContent) {
+		DecimalFormat format = new DecimalFormat();
+		format.setDecimalSeparatorAlwaysShown(false);
+		try {
+			CoreFunctions.verifyTextContainsIgnoreCase(actualFileContent,
+					(CoreFunctions.getPropertyFromConfig("Transferee_firstName") + " "
+							+ CoreFunctions.getPropertyFromConfig("Transferee_lastName")),
+					MobilityXConstants.TRANSFEREE_NAME);
+			CoreFunctions
+					.verifyTextContains(actualFileContent,
+							MobilityXConstants.EXPECTED_SPENT_POINTS_TEXT_PDF_DOCUMENT
+									.replace("SP",
+											format.format(Double.parseDouble(CoreFunctions
+													.getPropertyFromConfig("CF_Transferee_TotalSelectedPoints"))))
+									.replace("TP",
+											format.format(Double.parseDouble(CoreFunctions
+													.getPropertyFromConfig("CF_Transferee_TotalAvailablePoints")))),
+							MobilityXConstants.SPENT_AND_TOTAL_POINTS);
+			CoreFunctions.verifyTextContains(actualFileContent,
+					MobilityXConstants.EXPECTED_CURRENT_POINT_BALANCE_TEXT_PDF_DOCUMENT.replace("CB",
+							format.format(Double.parseDouble(
+									CoreFunctions.getPropertyFromConfig("CF_Transferee_AvailablePoints")))),
+					MobilityXConstants.CURRENT_POINT_BALANCE);
+
+			for (Benefit benefit : getBenefits(CoreFunctions.getPropertyFromConfig("CoreFlex_Policy_BenefitType"),
+					CoreFunctions.getPropertyFromConfig("CoreFlex_Policy_RequiredFor"))) {
+				if (benefit.getSelectBenefitOnFPTPage()) {
+					CoreFunctions.verifyTextContains(actualFileContent, benefit.getBenefitDisplayName(),
+							MobilityXConstants.BENEFIT_DISPLAY_NAME);
+					CoreFunctions.verifyTextContains(actualFileContent, benefit.getBenefitAmount(),
+							MobilityXConstants.BENEFIT_ALLOWANCE_AMOUNT);
+					CoreFunctions.verifyTextContains(actualFileContent,
+							format.format(
+									Double.parseDouble(benefit.getPoints()) * benefit.getNumberOfBenefitSelected()),
+							MobilityXConstants.BENEFIT_POINTS);
+				} else {
+					continue;
+				}
+			}
+			if ((CoreFunctions.getPropertyFromConfig("PolicyCashoutType").equals(MobilityXConstants.PORTION_CASHOUT))
+					|| (CoreFunctions.getPropertyFromConfig("PolicyCashoutType")
+							.equals(MobilityXConstants.AFTER_RELOCATION_ONLY))) {
+				CoreFunctions.verifyTextContains(actualFileContent,
+						policySetupPageData.flexPolicySetupPage.customCashoutBenefitName,
+						MobilityXConstants.CUSTOM_CASHOUT_NAME);
+				CoreFunctions.verifyTextContains(actualFileContent,
+						format.format(Double.parseDouble(
+								CoreFunctions.getPropertyFromConfig("CF_Transferee_SelectedCashOutPoints"))),
+						MobilityXConstants.CASHOUT_POINTS);
+				CoreFunctions.verifyTextContains(actualFileContent, BusinessFunctions.getExpectedCashoutDescription(),
+						MobilityXConstants.TRANSFEREE_CASHOUT_DESCRIPTION);
+			}
+
+			return true;
+		} catch (Exception e) {
+			Reporter.addStepLog(MessageFormat.format(
+					MobilityXConstants.EXCEPTION_OCCURED_WHILE_VALIDATING_SUBMITTED_BENEFITS_AND_POINTS_DETAILS_BY_CLIENT_ON_FLEX_PDF_DOWNLOADED_DOCUMENT,
+					CoreConstants.FAIL, e.getMessage(), documentName));
+			return false;
+		}
 	}
 
 }

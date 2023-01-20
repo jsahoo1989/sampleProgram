@@ -893,4 +893,5 @@ public class MobilityXConstants {
 	public static final String NEW_INITIATION_SUBMISSION_BENEFIT_CASHOUT_DETAILS = "New Initiation Submission Benefit Cashout Details";
 	public static final String SUCCESSFULLY_VERIFIED_SUBMITTED_BENEFITS_AND_CASHOUT_DETAILS_IN_NEW_INITIATION_SUBMITTED_EMAIL = "{0}Successfully verified Submitted Benefit and Cashout Details in New Intiation Submitted Email.";
 	public static final String EXCEPTION_OCCURED_WHILE_VERIFYING_SUBMITTED_BENEFITS_AND_CASHOUT_DETAILS_IN_NEW_INITIATION_SUBMITTED_EMAIL = "{0}Exception occured while verifying Submitted Benefit and Cashout Details in New Intiation Submitted Email. Exception : ''{1}''.";
+	public static final String TRANSFEREE_CASHOUT_DESCRIPTION = "MXTransferee Cashout Description";
 }

@@ -1809,11 +1809,11 @@ public class CF_MX_Client_Steps {
 		mxClientAuthorizationHomePage.clickOnElementOnAuthorizationPage(downloadDocument);
 	}
 
-	@Then("^\"([^\"]*)\" document should downloaded having submitted 'Benefits' and 'Points' details by \"([^\"]*)\"$")
-	public void document_should_downloaded_having_submitted_Benefits_and_Points_details_by(String documentName,
-			String submittedBy) throws Throwable {
+	@Then("^\"([^\"]*)\" document should downloaded having submitted 'Benefits' and 'Points' details by 'Client'$")
+	public void document_should_downloaded_having_submitted_Benefits_and_Points_details_by_Client(String documentName)
+			throws Throwable {
 		Assert.assertTrue(
-				mxClientAuthorizationHomePage.verifyFlexPdfDownloadedDocument(documentName, submittedBy,
+				mxClientAuthorizationHomePage.verifyFlexPdfDownloadedDocument(documentName,
 						_coreFlexLoginInfo.details.clientName, _coreFlexLoginInfo.details.mxClientUserProfileName),
 				MessageFormat.format(
 						MobilityXConstants.FAILED_TO_VERIFY_SUBMITTED_BENEFITS_AND_POINTS_DETAILS_ON_FLEX_PDF_DOWNLOADED_DOCUMENT,

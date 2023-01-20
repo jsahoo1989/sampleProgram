@@ -859,25 +859,11 @@ public class CoreFlex_SharedSteps {
 		Assert.assertTrue(mxTransfereeJourneyHomePage.verifyUserNavigationToJourneyHomePage(), MessageFormat.format(
 				MobilityXConstants.FALIED_TO_VALIDATE_USER_NAVIGATION_TO_MOBILITYX_JOURNEY_HOME_PAGE_AFTER_BENEFIT_SUBMISSION,
 				CoreConstants.FAIL));
-		
-		Reporter.addStepLog(
-				"<b>Total time taken to navigate to <i>MobilityX Journey Home page after Benefit Submission</i>  is :"
-						+ CoreFunctions.calculatePageLoadTime(CoreConstants.TIME_BEFORE_ACTION,
-								CoreConstants.TIME_AFTER_ACTION)
-						+ " Seconds </b>");
 		Assert.assertTrue(mxTransfereeJourneyHomePage.verifySubmittedPointsDetails(), MessageFormat.format(
 				MobilityXConstants.SUBMITTED_POINTS_DETAILS_NOT_MATCHED_ON_JOURNEY_HOME_PAGE, CoreConstants.FAIL));
-		mxTransfereeJourneyHomePage.clickElementOfPage(MobilityXConstants.MANAGE_MY_POINTS);
-
-		
+		mxTransfereeJourneyHomePage.clickElementOfPage(MobilityXConstants.MANAGE_MY_POINTS);		
 		Assert.assertTrue(mxTransfereeFlexPlanningToolPage.isFlexPlanningToolHomePageDisplayed(),
 				MessageFormat.format(MobilityXConstants.ONPOINT_PLANNING_TOOL_PAGE_NOT_DISPLAYED, CoreConstants.FAIL));
-		
-		Reporter.addStepLog(
-				"<b>Total time taken to navigate to <i>Flex Planning Tool Home page after Benefit Submission</i> is :"
-						+ CoreFunctions.calculatePageLoadTime(CoreConstants.TIME_BEFORE_ACTION,
-								CoreConstants.TIME_AFTER_ACTION)
-						+ " Seconds </b>");
 		Assert.assertTrue(
 				mxTransfereeFlexPlanningToolPage.verifyElementPresentOnPage(MobilityXConstants.EDIT_SUBMITTED_BENEFITS),
 				MessageFormat.format(MobilityXConstants.FAILED_TO_VERIFY_ELEMENT_PRESENT_ON_FLEX_PLANNING_TOOL_PAGE,
@@ -1415,6 +1401,30 @@ public class CoreFlex_SharedSteps {
 		Assert.assertTrue(
 				mxTransfereeJourneyHomePage.verifyDelegateAccessGrantedEmail(),
 				MessageFormat.format(MobilityXConstants.FAILED_TO_VERIFY_MOBILITYX_DELEGATE_ACCESS_GRANTED_EMAIL,
+						CoreConstants.FAIL));
+	}
+	
+	@Given("^he has verified submitted points details after navigating to 'Mobility Journey Home'$")
+	public void he_has_verified_submitted_points_details_after_navigating_to_Mobility_Journey_Home_page()
+			throws Throwable {
+		mxTransfereeMyBenefitsBundlePage.clickElementOfPage(MobilityXConstants.BACK_TO_BENEFITS_LIST);
+		Assert.assertTrue(mxTransfereeFlexPlanningToolPage.isFlexPlanningToolHomePageDisplayed(),
+				MessageFormat.format(MobilityXConstants.ONPOINT_PLANNING_TOOL_PAGE_NOT_DISPLAYED, CoreConstants.FAIL));
+		mxTransfereeFlexPlanningToolPage.clickElementOfPage(MobilityXConstants.BACK_TO_MOBILITY_JOURNEY);
+		Assert.assertTrue(mxTransfereeJourneyHomePage.verifyUserNavigationToJourneyHomePage(), MessageFormat.format(
+				MobilityXConstants.FALIED_TO_VALIDATE_USER_NAVIGATION_TO_MOBILITYX_JOURNEY_HOME_PAGE_AFTER_BENEFIT_SUBMISSION,
+				CoreConstants.FAIL));
+		Assert.assertTrue(mxTransfereeJourneyHomePage.verifySubmittedPointsDetails(), MessageFormat.format(
+				MobilityXConstants.SUBMITTED_POINTS_DETAILS_NOT_MATCHED_ON_JOURNEY_HOME_PAGE, CoreConstants.FAIL));
+	}
+	
+	@Then("^\"([^\"]*)\" document should downloaded having submitted 'Benefits' and 'Points' details by 'Transferee'$")
+	public void document_should_downloaded_having_submitted_Benefits_and_Points_details_by_Transferee(String documentName)
+			throws Throwable {
+		Assert.assertTrue(
+				mxTransfereeJourneyHomePage.verifyFlexPdfDownloadedDocument(documentName),
+				MessageFormat.format(
+						MobilityXConstants.FAILED_TO_VERIFY_SUBMITTED_BENEFITS_AND_POINTS_DETAILS_ON_FLEX_PDF_DOWNLOADED_DOCUMENT,
 						CoreConstants.FAIL));
 	}
 }

@@ -1,6 +1,6 @@
 Feature: Validate the FleX PDF - DocMan Attachment template for submitted Flex benefits by Client, Transferee, Impersonator and Delegate user
 
-  @CF_End-To-End_MasterScript @CF_FlexPDF_DocManAttachment @CF_FlexPDF_DocManAttachment_PS
+  @CF_End-To-End_MasterScript @CF_FlexPDF_DocManAttachment @CF_FlexPDF_DocManAttachment_PS_Client
   Scenario: CoreFlex - Validating policy status is updated to 'Active' on completion of Approval WorkFlow for FleX PDF - DocMan Attachment Policy Setup
     Given he has setup a new Points Based CoreFlex Policy with following selection in Blueprint application
       | Person Responsible For Benefit Selection | Flex Setup Type | Cashout Availability | BenefitType | PolicyRequiredFor |
@@ -35,4 +35,43 @@ Feature: Validate the FleX PDF - DocMan Attachment template for submitted Flex b
     And he has clicked on "Point Summary.pdf" document under 'Documents' section
     And "Point Summary.pdf" document should be opened in preview mode having submitted 'Benefits' and 'Points' details
     When he clicks on "Download document" link on the preview summary page of 'Point Summary.pdf' document
-    Then "Point Summary.pdf" document should downloaded having submitted 'Benefits' and 'Points' details by "Client"
+    Then "Point Summary.pdf" document should downloaded having submitted 'Benefits' and 'Points' details by 'Client'
+
+  @CF_End-To-End_MasterScript @CF_FlexPDF_DocManAttachment @CF_FlexPDF_DocManAttachment_PS_Transf
+  Scenario: CoreFlex - Validating policy status is updated to 'Active' on completion of Approval WorkFlow for FleX PDF - DocMan Attachment Policy Setup
+    Given he has setup a new Points Based CoreFlex Policy with following selection in Blueprint application
+      | Person Responsible For Benefit Selection | Flex Setup Type | Cashout Availability | BenefitType | PolicyRequiredFor |
+      | Transferee                               | Static/Fixed    | Portion Cashout      | Both        | Client            |
+    And he has clicked on "Submit" button to submit "V1" policy verison on "Custom Bundles" page
+    And he has clicked on "Approve Policy" button to approve "V1" policy verison on "Custom Bundles" page
+    And he has filled 'Description' after selecting following option on 'Approval this Policy' dialog of "V1" Policy
+      | Associate this policy with a NEW authorization in IRIS? |
+      | Effective from booking date                             |
+    When he clicks on "Approve" button to acknowledge 'Approve this Policy' dialog
+    Then Policy Status and Version should be displayed as "Active" and "V1" respectively on "View/Edit Policy Forms" page
+
+  @CF_End-To-End_MasterScript @CF_FlexPDF_DocManAttachment @CF_FlexPDF_DocManAttachment_Transferee
+  Scenario: MXTransferee - Verifying submitted Benefits and Points details by Transferee on downloaded Point Summary PDF document
+    Given he has logged into 'MobilityX' application after creating a new 'Transferee' through IRIS application for policy setup in 'Policy Digitization Tool'
+    And he has validated 'Assignment-Policy' details after selecting below option displayed on 'Welcome' dialog
+      | WelcomeDialogSelection               |
+      | No thanks, I prefer to do this later |
+    And he has navigated to "OnPoint Planning Tool" page after clicking on 'Manage my Points' button on "Mobility Journey Home" page
+    And he has verified Benefits details displayed under 'Core Benefits' and 'Flex Benefits' section on "OnPoint Planning Tool" page
+    And he has navigated to "Suggested Bundles" page after clicking on following link on "OnPoint Planning Tool" page
+      | Take a look at some suggested options! |
+    And he has verified 'Custom Bundle' Benefit details displayed under 'Recommended Bundle' section on "Suggested Bundles" page
+    And he has navigated back to "OnPoint Planning Tool" page after clicking on 'Back to benefits list' button
+    And he has navigated to "My Benefits Bundle" page after selecting required benefits on "OnPoint Planning Tool" page
+    And he has clicked on "Review and Submit" button after validating all the benefit and Cashout details listed under 'Selected Benefits' section on "My Benefits Bundle" page
+    And he has clicked on "Yes - submit my bundle" button after entering Transferee name on "Submit Bundle Confirmation" dialog
+    And he has clicked on "OK - Let Me See My Benefits!" button displayed on 'Success Flex' dialog
+    And he has verified 'Mobility Benefits Submission' email generated upon OnPoint Benefits Submission
+    And he has verified submitted points details after navigating to 'Mobility Journey Home'    
+    And he has verified 'Point Summary.pdf' document and following details of 'Flex PDF' displayed under "Documents" section of 'Mobility Journey Home' page
+      | FileName          | Category             | Service    |
+      | Point Summary.pdf | Authorizations/Forms | Assignment |
+    And he has clicked on "Point Summary.pdf" document under 'Documents' section
+    And "Point Summary.pdf" document should be opened in preview mode having submitted 'Benefits' and 'Points' details
+    When he clicks on "Download document" link on the preview summary page of 'Point Summary.pdf' document
+    Then "Point Summary.pdf" document should downloaded having submitted 'Benefits' and 'Points' details by 'Transferee'

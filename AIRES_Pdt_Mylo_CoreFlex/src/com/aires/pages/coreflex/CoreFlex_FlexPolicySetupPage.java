@@ -218,7 +218,7 @@ public class CoreFlex_FlexPolicySetupPage extends Base {
 	CoreFlex_PolicySetupPagesData policySetupPageData = FileReaderManager.getInstance().getCoreFlexJsonReader()
 			.getPolicySetupPagesDataList(COREFLEXConstants.POLICY_SETUP);
 
-	private List<String> providedCurrencyList = Arrays.asList("U.S. Dollar", "Japanese Yen", "Moroccan Dirham");
+	private List<String> providedCurrencyList = Arrays.asList("U.S. Dollar", "British Pound", "Danish Krone", "Euro");
 
 	/*********************************************************************/
 
@@ -693,11 +693,10 @@ public class CoreFlex_FlexPolicySetupPage extends Base {
 			Reporter.addStepLog(MessageFormat.format(COREFLEXConstants.SUCCESSFULLY_VERIFIED_POLICY_STATUS,
 					CoreConstants.PASS, expectedPolicyStatus, pageName));
 			return true;
-		}catch(Exception e) {
-			Reporter.addStepLog(
-					MessageFormat.format(COREFLEXConstants.EXCEPTION_OCCURED_WHILE_VERIFYING_POLICY_STATUS,
-							CoreConstants.FAIL, e.getMessage(), pageName));
+		} catch (Exception e) {
+			Reporter.addStepLog(MessageFormat.format(COREFLEXConstants.EXCEPTION_OCCURED_WHILE_VERIFYING_POLICY_STATUS,
+					CoreConstants.FAIL, e.getMessage(), pageName));
 			return false;
-		}		
+		}
 	}
 }

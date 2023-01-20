@@ -856,5 +856,41 @@ public class MobilityXConstants {
 	public static final String FAILED_TO_VERIFY_SELECTED_BENEFITS_ON_BENEFITS_BUNDLE_PAGE_POST_CLONING = "{0}Failed to verify selected benefits on Benefits Bundle page under Selected Benefits Section - Post Cloning.";
 	public static final String EXCEPTION_OCCURED_WHILE_VERIFYING_CASHOUT_DETAILS_ON_BENEFIT_SELECTION_TOOL_PAGE_POST_AUTH_FORM_CLONING = "{0}Exception occured while verifying cashout details on Benefit selection tool page - Post Auth Form Cloning. Exception : ''{1}''.";
 	public static final String SUCCESSFULLY_VERIFIED_CASHOUT_DETAILS_ON_BENEFIT_SELECTION_TOOL_PAGE_POST_AUTH_FORM_CLONING = "{0}Successfully verified cashout details on Benefit Selection tool page - Post Auth Form Cloning.";
-	
+	public static final String CANCEL_ROUTING = "Cancel Routing";
+	public static final String FAILED_TO_VERIFY_ASSIGNMENT_SUBMITTED_POINTS_DETAILS_ON_EMPLOYEE_JOURNEY_PAGE = "{0}Failed to verify Assignment Submitted Points details on Employee Journey home page.";
+	public static final String TRANSFEREE_NAME = "Transferee Name";
+	public static final String TOTAL_SPENT_POINTS = "Total Spent Points";
+	public static final String ASSIGNMENT_SUBMITTED_POINTS_DETAIL_MATCHED_ON_MOBILITY_JOURNEY_HOME_PAGE = "{0}Assignment Submitted Points detail matched on Mobility Journey Home page.";
+	public static final String EXCEPTION_OCCURED_WHILE_VALIDATING_ASSIGNMENT_SUBMITTED_POINTS_DETAIL_ON_MOBILITY_JOURNEY_HOME_PAGE = "{0}Exception occured while validating Assignment Submitted points detail on Mobility Journey Home page. Exception : ''{1}''.";
+	public static final String FAILED_TO_VERIFY_POINT_SUMMARY_FLEX_PDF_DOCUMENT_DETAILS_UNDER_DOCUMENTS_SECTION_OF_MOBILITY_JOURNEY_PAGE = "{0}Failed to verify Point Summary Flex PDF document details under Documents section of Mobility Journey page.";
+	public static final String EXCEPTION_OCCURED_WHILE_VALIDATING_POINT_SUMMARY_FLEX_PDF_DOCUMENT_DETAILS_UNDER_DOCUMENTS_SECTION_OF_MOBILITY_JOURNEY_PAGE = "{0}Exception occured while validating Point Summary PDF document details under Documents section of Mobility Journey page. Exception : ''{1}''.";
+	public static final String UPLOAD_A_DOCUMENT = "Upload a document";
+	public static final String FLEX_PDF_DOCUMENT_FILE_NAME = "Flex PDF Document File Name";
+	public static final String FLEX_PDF_DOCUMENT_CATEGORY = "Flex PDF Document Category";
+	public static final String FLEX_PDF_DOCUMENT_SERVICE = "Flex PDF Document Service";
+	public static final String SUCCESSFULLY_VERIFIED_POINT_SUMMARY_FLEX_PDF_DOCUMENT_DETAILS_UNDER_DOCUMENTS_SECTION_OF_MOBILITY_JOURNEY_PAGE = "{0}Successfully verified Point Summary PDF document details under Documents section of Mobility Journey page.";
+	public static final String DOCUMENTS = "Documents";
+	public static final String FLEX_PDF_DOCUMENT_UPLOAD_DATE = "Flex PDF Document Upload Date";
+	public static final String POINT_SUMMARY_PDF = "Point Summary.pdf";
+	public static final String FAILED_TO_VERIFY_POINT_SUMMARY_FLEX_PDF_DOCUMENT_OPENED_IN_PREVIEW_MODE_ON_MOBILITY_JOURNEY_PAGE = "{0}Failed to verify Point Summary PDF document opened in Preview Mode on Mobility Journey page.";
+	public static final String SUCCESSFULLY_VERIFIED_POINT_SUMMARY_FLEX_PDF_DOCUMENT_OPENED_IN_PREVIEW_MODE_ON_MOBILITY_JOURNEY_PAGE = "{0}Successfully verified Point Summary PDF document opened in Preview Mode on Mobility Journey page.";
+	public static final String EXCEPTION_OCCURED_WHILE_VALIDATING_POINT_SUMMARY_FLEX_PDF_DOCUMENT_OPENED_IN_PREVIEW_MODE_ON_MOBILITY_JOURNEY_PAGE = "{0}Exception occured while validating Point Summary PDF document opened in Preview Mode on Mobility Journey page. Exception : ''{1}''.";
+	public static final String FLEX_PDF_DOCUMENT_FILE_NAME_PREVIEW_PAGE ="Flex PDF Document File Name - Preview page";
+	public static final String AUTHORIZATION_FORMS = "Authorizations/Forms";
+	public static final String FLEX_PDF_DOCUMENT_TYPE_PREVIEW_PAGE = "Flex PDF Document Type - Preview page";
+	public static final String DOWNLOAD_DOCUMENT = "Download document";
+	public static final String FAILED_TO_VERIFY_SUBMITTED_BENEFITS_AND_POINTS_DETAILS_ON_FLEX_PDF_DOWNLOADED_DOCUMENT = "{0}Failed to verify Submitted Benefits and Points details on Flex PDF Downloaded document.";
+	public static final String SUCCESSFULLY_VERIFIED_SUBMITTED_BENEFITS_AND_POINTS_DETAILS_BY_CLIENT_ON_FLEX_PDF_DOWNLOADED_DOCUMENT = "{0}Successfully verified Submitted Benefits and Points details by Client on downloaded Flex PDF document - ''{1}''. ";
+	public static final String EXCEPTION_OCCURED_WHILE_VALIDATING_SUBMITTED_BENEFITS_AND_POINTS_DETAILS_BY_CLIENT_ON_FLEX_PDF_DOWNLOADED_DOCUMENT = "{0}Exception occured while validating Submitted Benefits and Points details by Client on downloaded Flex PDF document - ''{2}''. Exception : ''{1}''.";
+	public static final String EXPECTED_SPENT_POINTS_TEXT_PDF_DOCUMENT = "SP of TP points have been used.";
+	public static final String SPENT_AND_TOTAL_POINTS = "Spent and Total Points";
+	public static final String EXPECTED_CURRENT_POINT_BALANCE_TEXT_PDF_DOCUMENT = "The current point balance is CB.";
+	public static final String CURRENT_POINT_BALANCE = "Current Point Balance";
+	public static final String BENEFIT_DISPLAY_NAME = "Benefit Display Name";
+	public static final String EXPECTED_POINTS_SUBMITTED_BY_CLIENT_PDF_DOCUMENT = "Your company CN - CUN has submitted benefit(s) on your\r\n" + 
+			"behalf.";
+	public static final String POINTS_SUBMITTED_BY_CLIENT_TEXT = "Points Submitted By Client Text";
+	public static final String NEW_INITIATION_SUBMISSION_BENEFIT_CASHOUT_DETAILS = "New Initiation Submission Benefit Cashout Details";
+	public static final String SUCCESSFULLY_VERIFIED_SUBMITTED_BENEFITS_AND_CASHOUT_DETAILS_IN_NEW_INITIATION_SUBMITTED_EMAIL = "{0}Successfully verified Submitted Benefit and Cashout Details in New Intiation Submitted Email.";
+	public static final String EXCEPTION_OCCURED_WHILE_VERIFYING_SUBMITTED_BENEFITS_AND_CASHOUT_DETAILS_IN_NEW_INITIATION_SUBMITTED_EMAIL = "{0}Exception occured while verifying Submitted Benefit and Cashout Details in New Intiation Submitted Email. Exception : ''{1}''.";
 }

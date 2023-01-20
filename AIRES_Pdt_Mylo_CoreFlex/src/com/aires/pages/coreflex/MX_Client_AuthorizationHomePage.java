@@ -1,10 +1,13 @@
 package com.aires.pages.coreflex;
 
+import java.text.DecimalFormat;
 import java.text.MessageFormat;
 import java.util.ArrayList;
 import java.util.List;
-import org.apache.commons.lang3.StringUtils;
+import java.util.Map;
 
+import org.apache.commons.lang3.StringUtils;
+import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
@@ -32,6 +35,8 @@ import com.aires.utilities.Log;
 import com.gargoylesoftware.htmlunit.ElementNotFoundException;
 import com.google.common.base.Objects;
 import com.vimalselvam.cucumber.listener.Reporter;
+
+import cucumber.api.DataTable;
 
 public class MX_Client_AuthorizationHomePage extends Base {
 
@@ -443,6 +448,38 @@ public class MX_Client_AuthorizationHomePage extends Base {
 
 	@FindBy(how = How.XPATH, using = "//span[contains(text(),'Complete cloning')]")
 	private WebElement _btnCompleteCloning;
+
+	@FindBy(how = How.CSS, using = "input[name='fname']")
+	private WebElement _inputSearchEmployee;
+
+	@FindBy(how = How.CSS, using = "ul[class='aircomplete-list']>li")
+	private List<WebElement> _searchedEmployeeList;
+
+	@FindBy(how = How.CSS, using = "span[id*='mRegion'][class='RXHeaderText RXBold RXWrappedText']")
+	private WebElement _textTransfereeUserNameTitle;
+
+	@FindBy(how = How.XPATH, using = "//span[contains(text(),'Policy')]/parent::div/following-sibling::div/span")
+	private WebElement _textPolicyName;
+
+	@FindBy(how = How.CSS, using = "a[class*='RXCFPointLink'] > span")
+	private WebElement _textInitialSpentAndTotalPoints;
+
+	@FindBy(how = How.XPATH, using = "//span[@class='RXHeaderText'][contains(text(),'Documents')]")
+	private WebElement _headingDocuments;
+
+	@FindBy(how = How.XPATH, using = "//span[@class='RXHeaderText'][contains(text(),'Documents')]/ancestor::table[contains(@class,'RXMobilityJourneySection')]//div[contains(@class,'RXLightGreyBorder RXThinBorder RXBottomBorder')]//span[@class='RXSmallText RXBolder RXWrappedText']")
+	private List<WebElement> _linkDocumentsFileName;
+
+	@FindBy(how = How.XPATH, using = "//span[@class='RXHeaderText'][contains(text(),'Documents')]/ancestor::table[contains(@class,'RXMobilityJourneySection')]//div[contains(@class,'RXLightGreyBorder RXThinBorder RXBottomBorder')]")
+	private List<WebElement> _linkDocumentsParentElementList;
+
+	By _textDocumentsFileName = By.xpath(".//span[@class='RXSmallText RXBolder RXWrappedText']");
+
+	By _textDocumentsCategoryService = By.xpath(".//span[@class='RXSmallerTextMuted RXWrappedText']");
+
+	@FindBy(how = How.CSS, using = "span[class='RXSmallTextMuted'][id*='otatt']")
+	private WebElement _documentType;
+
 	/**************************************************************************************************************/
 
 	CoreFlex_PolicySetupPagesData policySetupPageData = FileReaderManager.getInstance().getCoreFlexJsonReader()
@@ -873,10 +910,10 @@ public class MX_Client_AuthorizationHomePage extends Base {
 		return empName;
 	}
 
-	public void clickOnElementOnAuthorizationPage(String tabName) {
-		switch (tabName) {
+	public void clickOnElementOnAuthorizationPage(String element) {
+		switch (element) {
 		case MobilityXConstants.SUBMIT_APPROVED_INITIATION:
-			CoreFunctions.click(driver, _btnSubmitApprover, tabName);
+			CoreFunctions.click(driver, _btnSubmitApprover, element);
 			break;
 		case MobilityXConstants.SUBMIT_TO_AIRES:
 			CoreFunctions.explicitWaitTillElementBecomesClickable(driver, _buttonSubmitToAires,
@@ -891,7 +928,7 @@ public class MX_Client_AuthorizationHomePage extends Base {
 			break;
 		case MobilityXConstants.START_BENEFIT_SELECTION:
 		case MobilityXConstants.MANAGE_BENEFIT_SELECTION:
-			CoreFunctions.hoverAndClick(driver, _btnFlexBenefitSelection,tabName);
+			CoreFunctions.hoverAndClick(driver, _btnFlexBenefitSelection, element);
 			break;
 		case MobilityXConstants.VIEW_ALL_INITIATIONS:
 			CoreFunctions.clickElement(driver, _linkViewAllInitiations);
@@ -900,11 +937,23 @@ public class MX_Client_AuthorizationHomePage extends Base {
 			CoreFunctions.clickElement(driver, _buttonLetterPolicyDocuments);
 			break;
 		case MobilityXConstants.COMPLETE_CLONING:
-			CoreFunctions.click(driver, _btnCompleteCloning, tabName);
+			CoreFunctions.click(driver, _btnCompleteCloning, element);
 			driver.switchTo().defaultContent();
 			break;
+		case MobilityXConstants.POINT_SUMMARY_PDF:
+			int documentIndex = BusinessFunctions.returnindexItemFromListUsingText(driver, _linkDocumentsFileName,
+					element);
+			CoreFunctions.clickElement(driver, _linkDocumentsFileName.get(documentIndex));
+			break;
+		case MobilityXConstants.DOWNLOAD_DOCUMENT:
+			Log.info(System.getProperty("user.home"));
+			CoreFunctions.removeFileMatchingName(System.getProperty("user.home") + "/Downloads/", "Point Summary");
+			CoreFunctions.clickElement(driver, _downloadDocument);
+			CoreFunctions.waitForAMatchingFileToBeDownloaded(System.getProperty("user.home") + "/Downloads/",
+					"Point Summary");
+			break;
 		default:
-			Assert.fail(tabName + MobilityXConstants.NOT_EXIST);
+			Assert.fail(element + MobilityXConstants.NOT_EXIST);
 		}
 	}
 
@@ -1375,7 +1424,7 @@ public class MX_Client_AuthorizationHomePage extends Base {
 		boolean flag = false;
 		try {
 			for (Benefit benefit : getBenefits(CoreFunctions.getPropertyFromConfig("CoreFlex_Policy_BenefitType"),
-					CoreFunctions.getPropertyFromConfig("CoreFlex_Policy_RequiredFor"), "0")) {
+					CoreFunctions.getPropertyFromConfig("CoreFlex_Policy_RequiredFor"))) {
 				if (benefit.getSelectBenefitOnFPTPage()) {
 					int indexBenefit = BusinessFunctions.returnindexItemFromListUsingText(driver,
 							_textSelectedFlexBenefitsNameList, benefit.getBenefitDisplayName());
@@ -1402,24 +1451,13 @@ public class MX_Client_AuthorizationHomePage extends Base {
 		return isFlexBenefitDetailsVerified;
 	}
 
-	private List<Benefit> getBenefits(String policyType, String policyRequiredFor, String numberOfMilestones) {
+	private List<Benefit> getBenefits(String policyType, String policyRequiredFor) {
 		List<Benefit> benefitNameList = new ArrayList<Benefit>();
 		if (policyType.equals(COREFLEXConstants.FLEX) || policyType.equals(COREFLEXConstants.BOTH)) {
 			for (FlexBenefit benefit : flexBenefits) {
 				for (Benefit ben : benefit.getBenefits()) {
-					if ((policyRequiredFor.equals(COREFLEXConstants.ALL_BENEFITS))
-							&& (ben.getPolicyCreationGroup().contains(policyRequiredFor))) {
+					if (ben.getPolicyCreationGroup().contains(policyRequiredFor))
 						benefitNameList.add(ben);
-					} else if ((policyRequiredFor.equals(COREFLEXConstants.AIRES_MANAGED_BENEFITS_CARDS))
-							&& (ben.getAiresManagedService().equals("Yes"))
-							&& (ben.getNoOfMilestones() == Integer.parseInt(numberOfMilestones))) {
-						benefitNameList.add(ben);
-					} else if (((policyRequiredFor.equals(COREFLEXConstants.CLONING))
-							|| (policyRequiredFor.equals(COREFLEXConstants.VERSIONING))
-							|| (policyRequiredFor.equals(COREFLEXConstants.CLIENT)))
-							&& (ben.getPolicyCreationGroup().contains(policyRequiredFor))) {
-						benefitNameList.add(ben);
-					}
 				}
 			}
 		}
@@ -1519,7 +1557,8 @@ public class MX_Client_AuthorizationHomePage extends Base {
 					+ CoreFunctions.getPropertyFromConfig(MobilityXConstants.FIRST_NAME_TEXT);
 			return verifyFileIDPresent(expEmailSubject)
 					&& verifyBenefitPointsInInitiationSubmittedEmail(expEmailSubject)
-					&& verifyAuthFormSubmissionStatus(expEmailSubject);
+					&& verifyAuthFormSubmissionStatus(expEmailSubject)
+					&& verifyBenefitsAndCashoutDetails(expEmailSubject);
 		} catch (Exception e) {
 			Reporter.addStepLog(MessageFormat.format(
 					COREFLEXConstants.EXCEPTION_OCCURED_WHILE_READING_NEW_INITIATION_SUBMITTED_EMAIL,
@@ -1970,7 +2009,7 @@ public class MX_Client_AuthorizationHomePage extends Base {
 	public boolean validateDynamicDocumnet(String documentName) {
 		try {
 			switchToiFrame_Authorization();
-			CoreFunctions.waitHandler(3);
+			CoreFunctions.waitHandler(5);
 			CoreFunctions.explicitWaitTillElementVisibility(driver, _documentHeading, "document heading");
 			Log.info(CoreFunctions.getElementText(driver, _documentHeading));
 			if (!Objects.equal(CoreFunctions.getElementText(driver, _documentHeading), documentName)) {
@@ -1985,7 +2024,7 @@ public class MX_Client_AuthorizationHomePage extends Base {
 			String file_content = documentName.contains(".docx") ? BusinessFunctions.getDocContent(filePath)
 					: BusinessFunctions.getPdfDocContent(filePath);
 			for (Benefit benefit : getBenefits(CoreFunctions.getPropertyFromConfig("CoreFlex_Policy_BenefitType"),
-					CoreFunctions.getPropertyFromConfig("CoreFlex_Policy_RequiredFor"), "0")) {
+					CoreFunctions.getPropertyFromConfig("CoreFlex_Policy_RequiredFor"))) {
 				if (!(StringUtils.countMatches(file_content, benefit.getBenefitDisplayName()) == 1))
 					return false;
 			}
@@ -2220,7 +2259,7 @@ public class MX_Client_AuthorizationHomePage extends Base {
 					CoreConstants.FAIL, e.getMessage()));
 			Log.info(e.getMessage());
 		}
-		if(isTotalPointsSectionVerified && flag) {
+		if (isTotalPointsSectionVerified && flag) {
 			Reporter.addStepLog(MessageFormat.format(
 					MobilityXConstants.SUCCESSFULLY_VERIFIED_TOTAL_POINTS_SECTION_AND_VALUE_ON_AUTH_FORM_POST_CLONING,
 					CoreConstants.PASS));
@@ -2241,6 +2280,249 @@ public class MX_Client_AuthorizationHomePage extends Base {
 		} catch (Exception e) {
 			Log.info(e.getMessage());
 			return false;
+		}
+	}
+
+	public void searchAndSelectEmployee(String employeeName) {
+		CoreFunctions.waitForBrowserToLoad(driver);
+		CoreFunctions.waitUntilBrowserReady(driver);
+		CoreFunctions.clearAndSetText(driver, _inputSearchEmployee, employeeName);
+		CoreFunctions.explicitWaitTillElementListVisibility(driver, _searchedEmployeeList);
+		CoreFunctions.selectItemInListByText(driver, _searchedEmployeeList, employeeName);
+		CoreFunctions.waitUntilBrowserReady(driver);
+	}
+
+	public boolean verifyAssignmentSubmittedPointsDetails() {
+		try {
+			CoreFunctions.explicitWaitTillElementVisibility(driver, _textTransfereeUserNameTitle,
+					MobilityXConstants.TRANSFEREE_NAME);
+			String actualPointsWithText[] = CoreFunctions.getElementText(driver, _textInitialSpentAndTotalPoints)
+					.split(" ");
+			String actualSpentAndTotalPoints[] = actualPointsWithText[0].split("/");
+			CoreFunctions.verifyText(CoreFunctions.getElementText(driver, _textClientName),
+					CoreFunctions.getPropertyFromConfig("Policy_ClientName"), MobilityXConstants.CLIENT_NAME);
+			CoreFunctions.verifyText(CoreFunctions.getElementText(driver, _textTransfereeUserNameTitle),
+					(CoreFunctions.getPropertyFromConfig("Transferee_firstName") + " "
+							+ CoreFunctions.getPropertyFromConfig("Transferee_lastName")),
+					MobilityXConstants.TRANSFEREE_NAME);
+
+			CoreFunctions.verifyValue(Double.parseDouble(actualSpentAndTotalPoints[0]),
+					Double.parseDouble(CoreFunctions.getPropertyFromConfig("CF_Client_TotalSelectedPoints")),
+					MobilityXConstants.TOTAL_SPENT_POINTS);
+
+			CoreFunctions.verifyValue(Double.parseDouble(actualSpentAndTotalPoints[1]),
+					Double.parseDouble(CoreFunctions.getPropertyFromConfig("CF_Transferee_TotalAvailablePoints")),
+					MobilityXConstants.TOTAL_AVAILABLE_POINTS);
+			Reporter.addStepLog(MessageFormat.format(
+					MobilityXConstants.ASSIGNMENT_SUBMITTED_POINTS_DETAIL_MATCHED_ON_MOBILITY_JOURNEY_HOME_PAGE,
+					CoreConstants.PASS));
+			return true;
+
+		} catch (Exception e) {
+			Reporter.addStepLog(MessageFormat.format(
+					MobilityXConstants.EXCEPTION_OCCURED_WHILE_VALIDATING_ASSIGNMENT_SUBMITTED_POINTS_DETAIL_ON_MOBILITY_JOURNEY_HOME_PAGE,
+					CoreConstants.FAIL, e.getMessage()));
+		}
+
+		return false;
+	}
+
+	public boolean verifyFlexPdfUnderDocumentsSection(String sectionTitle, DataTable dataTable) {
+		try {
+			List<Map<String, String>> dataMap = dataTable.asMaps(String.class, String.class);
+			CoreFunctions.scrollToElementUsingJS(driver, _headingDocuments, MobilityXConstants.DOCUMENTS);
+			int documentIndex = BusinessFunctions.returnindexItemFromListUsingText(driver, _linkDocumentsFileName,
+					dataMap.get(0).get("FileName"));
+			CoreFunctions.verifyText(
+					CoreFunctions.getElementText(driver,
+							CoreFunctions.findSubElement(_linkDocumentsParentElementList.get(documentIndex),
+									_textDocumentsFileName)),
+					dataMap.get(0).get("FileName"), MobilityXConstants.FLEX_PDF_DOCUMENT_FILE_NAME);
+			CoreFunctions.verifyTextContains(
+					CoreFunctions.getElementText(driver, _linkDocumentsParentElementList.get(documentIndex)),
+					dataMap.get(0).get("Category"), MobilityXConstants.FLEX_PDF_DOCUMENT_CATEGORY);
+			CoreFunctions.verifyTextContains(
+					CoreFunctions.getElementText(driver, _linkDocumentsParentElementList.get(documentIndex)),
+					dataMap.get(0).get("Service"), MobilityXConstants.FLEX_PDF_DOCUMENT_SERVICE);
+			CoreFunctions.verifyTextContains(
+					CoreFunctions.getElementText(driver, _linkDocumentsParentElementList.get(documentIndex)),
+					CoreFunctions.getCurrentDateAsGivenFormat("dd-MMM-yyyy"),
+					MobilityXConstants.FLEX_PDF_DOCUMENT_UPLOAD_DATE);
+			Reporter.addStepLog(MessageFormat.format(
+					MobilityXConstants.SUCCESSFULLY_VERIFIED_POINT_SUMMARY_FLEX_PDF_DOCUMENT_DETAILS_UNDER_DOCUMENTS_SECTION_OF_MOBILITY_JOURNEY_PAGE,
+					CoreConstants.PASS));
+			return true;
+		} catch (Exception e) {
+			Reporter.addStepLog(MessageFormat.format(
+					MobilityXConstants.EXCEPTION_OCCURED_WHILE_VALIDATING_POINT_SUMMARY_FLEX_PDF_DOCUMENT_DETAILS_UNDER_DOCUMENTS_SECTION_OF_MOBILITY_JOURNEY_PAGE,
+					CoreConstants.FAIL, e.getMessage()));
+		}
+		return false;
+	}
+
+	public boolean verifyFlexPdfPreviewScreen(String documentName) {
+		try {
+			switchToiFrame_Authorization();
+			CoreFunctions.waitHandler(2);
+			CoreFunctions.explicitWaitTillElementVisibility(driver, _documentHeading, "document heading");
+			Log.info(CoreFunctions.getElementText(driver, _documentHeading));
+			CoreFunctions.verifyText(CoreFunctions.getElementText(driver, _documentHeading), documentName,
+					MobilityXConstants.FLEX_PDF_DOCUMENT_FILE_NAME_PREVIEW_PAGE);
+			CoreFunctions.verifyText(CoreFunctions.getElementText(driver, _documentType),
+					MobilityXConstants.AUTHORIZATION_FORMS, MobilityXConstants.FLEX_PDF_DOCUMENT_TYPE_PREVIEW_PAGE);
+			Reporter.addStepLog(MessageFormat.format(
+					MobilityXConstants.SUCCESSFULLY_VERIFIED_POINT_SUMMARY_FLEX_PDF_DOCUMENT_OPENED_IN_PREVIEW_MODE_ON_MOBILITY_JOURNEY_PAGE,
+					CoreConstants.PASS));
+			return true;
+		} catch (Exception e) {
+			Reporter.addStepLog(MessageFormat.format(
+					MobilityXConstants.EXCEPTION_OCCURED_WHILE_VALIDATING_POINT_SUMMARY_FLEX_PDF_DOCUMENT_OPENED_IN_PREVIEW_MODE_ON_MOBILITY_JOURNEY_PAGE,
+					CoreConstants.FAIL, e.getMessage()));
+		}
+		return false;
+	}
+
+	public boolean verifyFlexPdfDownloadedDocument(String documentName, String submittedBy, String clientName,
+			String clientUserName) {
+		try {
+			String filePath = System.getProperty("user.home") + "/Downloads/" + documentName;
+			String file_content = BusinessFunctions.getPdfDocContent(filePath);
+
+			if (verifyPointSummaryPDFContents(documentName, submittedBy, file_content, clientName, clientUserName)) {
+				Reporter.addStepLog(MessageFormat.format(
+						MobilityXConstants.SUCCESSFULLY_VERIFIED_SUBMITTED_BENEFITS_AND_POINTS_DETAILS_BY_CLIENT_ON_FLEX_PDF_DOWNLOADED_DOCUMENT,
+						CoreConstants.PASS, documentName));
+				return true;
+			}
+		} catch (Exception e) {
+			Reporter.addStepLog(MessageFormat.format(
+					MobilityXConstants.EXCEPTION_OCCURED_WHILE_VALIDATING_SUBMITTED_BENEFITS_AND_POINTS_DETAILS_BY_CLIENT_ON_FLEX_PDF_DOWNLOADED_DOCUMENT,
+					CoreConstants.FAIL, e.getMessage(), documentName));
+			return false;
+		}
+		return false;
+	}
+
+	private boolean verifyPointSummaryPDFContents(String documentName, String submittedBy, String actualFileContent,
+			String clientName, String clientUserName) {
+		DecimalFormat format = new DecimalFormat();
+		format.setDecimalSeparatorAlwaysShown(false);
+		try {
+			CoreFunctions.verifyTextContainsIgnoreCase(actualFileContent,
+					(CoreFunctions.getPropertyFromConfig("Transferee_firstName") + " "
+							+ CoreFunctions.getPropertyFromConfig("Transferee_lastName")),
+					MobilityXConstants.TRANSFEREE_NAME);
+			CoreFunctions
+					.verifyTextContains(actualFileContent,
+							MobilityXConstants.EXPECTED_SPENT_POINTS_TEXT_PDF_DOCUMENT
+									.replace("SP",
+											format.format(Double.parseDouble(CoreFunctions
+													.getPropertyFromConfig("CF_Client_TotalSelectedPoints"))))
+									.replace("TP",
+											format.format(Double.parseDouble(CoreFunctions
+													.getPropertyFromConfig("CF_Transferee_TotalAvailablePoints")))),
+							MobilityXConstants.SPENT_AND_TOTAL_POINTS);
+			CoreFunctions.verifyTextContains(actualFileContent,
+					MobilityXConstants.EXPECTED_CURRENT_POINT_BALANCE_TEXT_PDF_DOCUMENT.replace("CB",
+							format.format(Double
+									.parseDouble(CoreFunctions.getPropertyFromConfig("CF_Client_AvailablePoints")))),
+					MobilityXConstants.CURRENT_POINT_BALANCE);
+
+			if (submittedBy.equalsIgnoreCase(MobilityXConstants.CLIENT)) {
+				CoreFunctions.verifyTextContains(
+						actualFileContent, MobilityXConstants.EXPECTED_POINTS_SUBMITTED_BY_CLIENT_PDF_DOCUMENT
+								.replace("CN", clientName).replace("CUN", clientUserName),
+						MobilityXConstants.POINTS_SUBMITTED_BY_CLIENT_TEXT);
+			}
+
+			for (Benefit benefit : getBenefits(CoreFunctions.getPropertyFromConfig("CoreFlex_Policy_BenefitType"),
+					CoreFunctions.getPropertyFromConfig("CoreFlex_Policy_RequiredFor"))) {
+				if (benefit.getSelectBenefitOnFPTPage()) {
+					CoreFunctions.verifyTextContains(actualFileContent, benefit.getBenefitDisplayName(),
+							MobilityXConstants.BENEFIT_DISPLAY_NAME);
+					CoreFunctions.verifyTextContains(actualFileContent, benefit.getBenefitAmount(),
+							MobilityXConstants.BENEFIT_ALLOWANCE_AMOUNT);
+					CoreFunctions.verifyTextContains(actualFileContent,
+							format.format(
+									Double.parseDouble(benefit.getPoints()) * benefit.getNumberOfBenefitSelected()),
+							MobilityXConstants.BENEFIT_POINTS);
+				} else {
+					continue;
+				}
+			}
+			if ((CoreFunctions.getPropertyFromConfig("PolicyCashoutType").equals(MobilityXConstants.PORTION_CASHOUT))
+					|| (CoreFunctions.getPropertyFromConfig("PolicyCashoutType")
+							.equals(MobilityXConstants.AFTER_RELOCATION_ONLY))) {
+				CoreFunctions.verifyTextContains(actualFileContent,
+						policySetupPageData.flexPolicySetupPage.customCashoutBenefitName,
+						MobilityXConstants.CUSTOM_CASHOUT_NAME);
+				CoreFunctions.verifyTextContains(actualFileContent,
+						format.format(Double
+								.parseDouble(CoreFunctions.getPropertyFromConfig("CF_Client_SelectedCashOutPoints"))),
+						MobilityXConstants.CASHOUT_POINTS);
+				CoreFunctions.verifyTextContains(actualFileContent,
+						BusinessFunctions.getMXClientExpectedCashoutDescription(),
+						MobilityXConstants.CLIENT_CASHOUT_DESCRIPTION);
+			}
+
+			return true;
+		} catch (Exception e) {
+			Reporter.addStepLog(MessageFormat.format(
+					MobilityXConstants.EXCEPTION_OCCURED_WHILE_VALIDATING_SUBMITTED_BENEFITS_AND_POINTS_DETAILS_BY_CLIENT_ON_FLEX_PDF_DOWNLOADED_DOCUMENT,
+					CoreConstants.FAIL, e.getMessage(), documentName));
+			return false;
+		}
+	}
+
+	private boolean verifyBenefitsAndCashoutDetails(String expectedEmailSubject) {
+		try {
+			String actualResultBenefitsAndCashoutDetails = EmailUtil.searchEmailAndReturnResult(MobilityXConstants.HOST,
+					MobilityXConstants.AUTH_FORM_SUBMISSION_USER_EMAILID, MobilityXConstants.AUTO_EMAIL_PWD,
+					MobilityXConstants.AUTH_FORM_SUBMISSION_EMAIL_SENDER, expectedEmailSubject,
+					MobilityXConstants.NEW_INITIATION_SUBMISSION_BENEFIT_CASHOUT_DETAILS);
+			verifyBenefitCashoutDetailsInEmail(actualResultBenefitsAndCashoutDetails);
+			Reporter.addStepLog(MessageFormat.format(
+					MobilityXConstants.SUCCESSFULLY_VERIFIED_SUBMITTED_BENEFITS_AND_CASHOUT_DETAILS_IN_NEW_INITIATION_SUBMITTED_EMAIL,
+					CoreConstants.PASS));
+			return true;
+
+		} catch (Exception e) {
+			Reporter.addStepLog(MessageFormat.format(
+					MobilityXConstants.EXCEPTION_OCCURED_WHILE_VERIFYING_SUBMITTED_BENEFITS_AND_CASHOUT_DETAILS_IN_NEW_INITIATION_SUBMITTED_EMAIL,
+					CoreConstants.FAIL, e.getMessage()));
+			return false;
+		}
+	}
+
+	private void verifyBenefitCashoutDetailsInEmail(String actualText) {
+		DecimalFormat format = new DecimalFormat();
+		format.setDecimalSeparatorAlwaysShown(false);
+		for (Benefit benefit : getBenefits(CoreFunctions.getPropertyFromConfig("CoreFlex_Policy_BenefitType"),
+				CoreFunctions.getPropertyFromConfig("CoreFlex_Policy_RequiredFor"))) {
+			if (benefit.getSelectBenefitOnFPTPage()) {
+				CoreFunctions.verifyTextContains(actualText, benefit.getBenefitDisplayName(),
+						MobilityXConstants.BENEFIT_DISPLAY_NAME);
+				CoreFunctions.verifyTextContains(actualText, benefit.getBenefitAmount(),
+						MobilityXConstants.BENEFIT_ALLOWANCE_AMOUNT);
+				CoreFunctions.verifyTextContains(actualText,
+						format.format(Double.parseDouble(benefit.getPoints()) * benefit.getNumberOfBenefitSelected()),
+						MobilityXConstants.BENEFIT_POINTS);
+			} else {
+				continue;
+			}
+		}
+		if ((CoreFunctions.getPropertyFromConfig("PolicyCashoutType").equals(MobilityXConstants.PORTION_CASHOUT))
+				|| (CoreFunctions.getPropertyFromConfig("PolicyCashoutType")
+						.equals(MobilityXConstants.AFTER_RELOCATION_ONLY))) {
+			CoreFunctions.verifyTextContains(actualText,
+					policySetupPageData.flexPolicySetupPage.customCashoutBenefitName,
+					MobilityXConstants.CUSTOM_CASHOUT_NAME);
+			CoreFunctions.verifyTextContains(actualText,
+					format.format(
+							Double.parseDouble(CoreFunctions.getPropertyFromConfig("CF_Client_SelectedCashOutPoints"))),
+					MobilityXConstants.CASHOUT_POINTS);
+//			CoreFunctions.verifyTextContains(actualText, BusinessFunctions.getMXClientExpectedCashoutDescription(),
+//					MobilityXConstants.CLIENT_CASHOUT_DESCRIPTION);
 		}
 	}
 

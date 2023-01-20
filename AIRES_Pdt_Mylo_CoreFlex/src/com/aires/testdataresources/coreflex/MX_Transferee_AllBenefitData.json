@@ -249,7 +249,7 @@
 		},
 		{
 			"benefitType": "Goods & Services Allowance",
-			"benefitDisplayName": "Automated Core Type Goods & Services Allowance Display Name",
+			"benefitDisplayName": "Automated Core Type Goods and Services Allowance Display Name",
 			"benefitAmount": "Core type - Goods & Services Allowance",
 			"benefitDesc": "Core type - An allowance to cover the increase in goods and services from home to host country.",
 			"subBenefits": "Goods & Services Allowance",
@@ -443,8 +443,8 @@
 				},
 				{
 					"benefitType": "Goods & Services Allowance",
-					"benefitDisplayName": "Automated Flex Goods & Services Allowance Display Name",
-					"benefitAmount": "Allowance cover increase in goods and services from home to hos",
+					"benefitDisplayName": "Automated Flex Goods and Services Allowance Display Name",
+					"benefitAmount": "Allowance cover increase in goods and services from home",
 					"benefitDesc": "Automated Flex Goods & Services Allowance - An allowance to cover the increase in goods and services from home to host country.test",
 					"points": "10",
 					"subBenefits": "Goods & Services Allowance",

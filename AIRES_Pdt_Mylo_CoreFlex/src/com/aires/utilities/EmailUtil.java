@@ -54,7 +54,7 @@ public class EmailUtil {
 			break;
 		case MobilityXConstants.DELETE_REQUEST_APPROVED:
 			_searchTag[0] = "Hello";
-			_searchTag[1] = "Please use the link below to login";
+			_searchTag[1] = "Please use the link below to log";
 			break;
 		case MobilityXConstants.DELETE_REQUEST_DENIED:
 			_searchTag[0] = "Hello";
@@ -101,6 +101,10 @@ public class EmailUtil {
 			_searchTag[0] = "Status of the Initiation </td><td width=\"60%\" style=\"font-family:century gothic,Helvetica,Calibri,Roboto; font-size:14px; text-align:left; padding-left:10px; border:1px solid #E7F2F5\">";
 			_searchTag[1] = "</td></tr></tbody></table>";
 			break;
+		case MobilityXConstants.NEW_INITIATION_SUBMISSION_BENEFIT_CASHOUT_DETAILS:
+			_searchTag[0] = "Flex Benefits";
+			_searchTag[1] = "Benefits Total Points";
+			break;
 		case MobilityXConstants.DELEGATE_ACCESS_GRANTED:
 			_searchTag[0] = "Hello";
 			_searchTag[1] = "Thank you";
@@ -139,12 +143,14 @@ public class EmailUtil {
 						return (searchText.trim());
 					}
 				}
-				if (iterationCount < 30)
+				if (iterationCount < 4)
 					CoreFunctions.waitHandler(10);
 				else
 					break;
 			}
 			Log.info("No Email Received within " + iterationCount * 60 + " minutes From:" + expFrom + " with subject:"
+					+ expEmailSubject);
+			Assert.fail("No Email Received within " + iterationCount * 60 + " minutes From:" + expFrom + " with subject:"
 					+ expEmailSubject);
 			return CoreConstants.EMAIL_NOT_FOUND;
 		} catch (Exception e) {

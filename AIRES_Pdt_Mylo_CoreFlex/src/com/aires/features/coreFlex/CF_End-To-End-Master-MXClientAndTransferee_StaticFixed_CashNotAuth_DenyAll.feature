@@ -1,4 +1,4 @@
-Feature: Validate the CoreFlex End-To-End Business Test Flow(BluePrint, MXClientAndTransferee, Transferee Submissions) for Both_MXClientAndTransferee_StaticFixed_CashoutNotAuthorized_Delete_DenyAll selection
+Feature: Validate the OnPoint End-To-End Business Test Flow(BluePrint, MXClientAndTransferee, Transferee Submissions) for Both_MXClientAndTransferee_StaticFixed_CashoutNotAuthorized_Delete_DenyAll selection
 
   @Coreflex:218407 @CF_End-To-End_MasterScript @CF_Master_ClientAndTransferee_CashNotAuth_Deny @CF_Master_ClientAndTransferee_CashNotAuth_Deny_PS
   Scenario: CoreFlex - Validating policy status is updated to 'Active' on completion of Approval WorkFlow for ClientAndTransferee-CashoutNotAuthorized MasterScript Policy Setup

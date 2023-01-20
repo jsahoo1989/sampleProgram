@@ -1157,6 +1157,8 @@ public class MX_Client_AuthorizationHome_CollaborationPage extends Base {
 
 	public boolean verifyFloatingButtonsPostStartRouting() {
 		try {
+			CoreFunctions.explicitWaitTillElementBecomesClickable(driver, _buttonCancelRouting, MobilityXConstants.CANCEL_ROUTING);
+			CoreFunctions.waitHandler(2);
 			if ((CoreFunctions.isElementExist(driver, _buttonCancelRouting, 2))
 					&& (CoreFunctions.isElementExist(driver, _floatingButtonSubmitToAires, 2))) {
 				Reporter.addStepLog(MessageFormat.format(

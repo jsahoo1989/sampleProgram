@@ -132,7 +132,6 @@ public class BusinessFunctions {
 		CoreFunctions.writeToPropertiesFile(PDTConstants.EMP_ID_TEXT, PDTConstants.EMP_ID + randomString);
 	}
 
-	
 	public static void selectValueFromDropdown(WebDriver driver, WebElement element, String drpdwnValue) {
 		String elementName = "";
 		boolean valueSelected = false;
@@ -386,7 +385,7 @@ public class BusinessFunctions {
 		return -1;
 	}
 
-public static void checkValidationBasedOnInput(boolean isValidationMessageDisplayed, String fieldName,
+	public static void checkValidationBasedOnInput(boolean isValidationMessageDisplayed, String fieldName,
 			String inputValue) {
 		try {
 			if ((Double.parseDouble(inputValue) < 0.5 || Double.parseDouble(inputValue) > 1000)
@@ -430,7 +429,6 @@ public static void checkValidationBasedOnInput(boolean isValidationMessageDispla
 			}
 		}
 	}
-
 
 	public static void checkValidationBasedOnInput(String validationMessage, String fieldName, String inputValue) {
 
@@ -613,7 +611,7 @@ public static void checkValidationBasedOnInput(boolean isValidationMessageDispla
 			flag = (element.getText().equals(msg));
 		} catch (Exception e) {
 			Assert.fail(MessageFormat.format(CoreConstants.FAIL_TO_VERIFY_ELEMENT_ON_PAGE, CoreConstants.FAIL,
-					MYLOConstants.EXPECTED_POPUP_MESSAGE+msg, pageName));
+					MYLOConstants.EXPECTED_POPUP_MESSAGE + msg, pageName));
 		}
 		if (flag)
 			Reporter.addStepLog(MessageFormat.format(MYLOConstants.VERIFIED_POPUP_MESSAGE_DISPLAYED, CoreConstants.PASS,
@@ -1047,7 +1045,7 @@ public static void checkValidationBasedOnInput(boolean isValidationMessageDispla
 					dropDownName, subBenefitFormName));
 		}
 	}
-	
+
 	public static String setDifferentDropDownFieldsForMylo(WebDriver driver, String fieldValue,
 			List<WebElement> optionList) {
 		String updatedValue = null;
@@ -1061,7 +1059,6 @@ public static void checkValidationBasedOnInput(boolean isValidationMessageDispla
 		}
 		return updatedValue;
 	}
-
 
 	/**
 	 * Select and Return single random drop down option
@@ -1133,11 +1130,11 @@ public static void checkValidationBasedOnInput(boolean isValidationMessageDispla
 			sharedSubBenefitStep.getCustomSoftAssertObj().assertTrue(
 					verifyRadioButtonIsSelected(driver, _radioLabelList, _radioButtonList, expectedSelection, fieldName,
 							PDTConstants.DEFAULT_SELECTED),
-					MessageFormat.format(PDTConstants.FAILED_TO_VERIFY_RADIO_BTN, CoreConstants.FAIL, PDTConstants.DEFAULT_SELECTED, fieldName,
-							expectedSelection));
+					MessageFormat.format(PDTConstants.FAILED_TO_VERIFY_RADIO_BTN, CoreConstants.FAIL,
+							PDTConstants.DEFAULT_SELECTED, fieldName, expectedSelection));
 		}
 	}
-	
+
 	public static boolean verifyFlexWordNotDisplayed(WebDriver driver, WebElement flexWord, String pageName) {
 		boolean isFlexWordDisplayed = false;
 		try {
@@ -1155,7 +1152,7 @@ public static void checkValidationBasedOnInput(boolean isValidationMessageDispla
 		} else
 			return false;
 	}
-	
+
 	public static Boolean verifyCompanyNameAfterSearch(String expectedCompanyName) throws Exception {
 		Boolean isExists = false;
 		windowTitle = getWindowText.getActiveWindowText();
@@ -1173,11 +1170,13 @@ public static void checkValidationBasedOnInput(boolean isValidationMessageDispla
 		}
 		return isExists;
 	}
+
 	public static void closeModuleWindow() throws GeneralLeanFtException {
 		windowTitle = getWindowText.getActiveWindowText();
 		Window window = Desktop.describe(Window.class, new WindowDescription.Builder().title(windowTitle).build());
 		window.close();
 	}
+
 	public static void selectCheckBoxAsPerLabelText(WebDriver driver, WebElement WebElementList_Label,
 			String labelName) {
 		CoreFunctions.waitHandler(2);
@@ -1187,6 +1186,7 @@ public static void checkValidationBasedOnInput(boolean isValidationMessageDispla
 			Reporter.addStepLog(CoreConstants.PASS + WebElementList_Label.getText() + PDTConstants.IS_CLICKED);
 		}
 	}
+
 	public static WebElement returnItemIfExistsInList(WebDriver driver, List<WebElement> _delElementList,
 			List<WebElement> _uploadDocumentFileList, String itemName) {
 		WebElement element = null;
@@ -1202,6 +1202,7 @@ public static void checkValidationBasedOnInput(boolean isValidationMessageDispla
 		}
 		return element;
 	}
+
 	public static WebElement returnItemIfExistsInListUsingAttributeValue(WebDriver driver,
 			List<WebElement> _delIconList, List<WebElement> _itemList, String itemName) {
 		WebElement element = null;
@@ -1217,14 +1218,16 @@ public static void checkValidationBasedOnInput(boolean isValidationMessageDispla
 		}
 		return element;
 	}
+
 	public static void selectValueFromDropdownWithoutReporting(WebElement element, String drpdwnValue) {
 		Select dropDown = new Select(element);
 		dropDown.selectByVisibleText(drpdwnValue);
 	}
+
 	public static void selectValueFromDropdownList(List<WebElement> listWebElement, int index) {
 		listWebElement.get(index).click();
 	}
-	
+
 	public static void selectItemFromListUsingJs(WebDriver driver, List<WebElement> WebElementList, String itemName) {
 		CoreFunctions.waitForBrowserToLoad(driver);
 		CoreFunctions.waitHandler(3);
@@ -1237,6 +1240,7 @@ public static void checkValidationBasedOnInput(boolean isValidationMessageDispla
 			}
 		}
 	}
+
 	public static boolean verifySelectedValueInDropdown(WebElement element, String drpdwnValue) {
 		if (element.getAttribute("title").equalsIgnoreCase(drpdwnValue)) {
 			Reporter.addStepLog(
@@ -1248,6 +1252,7 @@ public static void checkValidationBasedOnInput(boolean isValidationMessageDispla
 			return false;
 		}
 	}
+
 	public static boolean verifyValueInTextFieldByAttribute(WebDriver driver, WebElement element, String drpdwnValue) {
 		if (element.getAttribute("value").equalsIgnoreCase(drpdwnValue)) {
 			Reporter.addStepLog(
@@ -1261,7 +1266,7 @@ public static void checkValidationBasedOnInput(boolean isValidationMessageDispla
 		}
 	}
 
-public static void updateQuery(String url, String query) {
+	public static void updateQuery(String url, String query) {
 		Connection connection = null;
 		try {
 			DriverManager.registerDriver(new oracle.jdbc.OracleDriver());
@@ -1282,13 +1287,14 @@ public static void updateQuery(String url, String query) {
 			Log.info(CoreConstants.ERROR + ex);
 		}
 	}
+
 	public static void selectOptionValueFromDropdown(WebElement element, int index) {
 		Select dropDown = new Select(element);
 		dropDown.selectByIndex(index);
 		Reporter.addStepLog(MessageFormat.format(PDTConstants.VERIFY_VALUE_SELECTED_IN_DROPDWON, CoreConstants.PASS,
 				element.getAttribute("title")));
 	}
-	
+
 	public static void verifyFieldNotPresentOnBenefitPage(WebDriver driver, List<WebElement> elementList,
 			String benefitName, String fieldName) {
 		try {
@@ -1307,6 +1313,7 @@ public static void updateQuery(String url, String query) {
 							CoreConstants.FAIL, e.getMessage(), benefitName, fieldName));
 		}
 	}
+
 	public static void selectValueFromDropdown(WebElement element, String drpdwnValue) {
 		Select dropDown = new Select(element);
 		String elementName = element.getAttribute("title");
@@ -1318,6 +1325,7 @@ public static void updateQuery(String url, String query) {
 			Reporter.addStepLog(MessageFormat.format(PDTConstants.FAIL_TO_SELECT_VALUE_IN_DROPDOWN, CoreConstants.FAIL,
 					drpdwnValue, elementName));
 	}
+
 	public static String getPdfDocContent(String fileName) {
 		PDDocument document;
 		try {
@@ -1332,6 +1340,7 @@ public static void updateQuery(String url, String query) {
 		}
 		return null;
 	}
+
 	public static String getDocContent(String fileName) {
 		try {
 			XWPFDocument doc = new XWPFDocument(Files.newInputStream(Paths.get(fileName)));
@@ -1344,6 +1353,7 @@ public static void updateQuery(String url, String query) {
 		}
 		return null;
 	}
+
 	public static String getExpectedCashoutDescription() {
 		String expectedCashoutDescription = null;
 		DecimalFormat format = new DecimalFormat();
@@ -1370,6 +1380,7 @@ public static void updateQuery(String url, String query) {
 		}
 		return expectedCashoutDescription;
 	}
+
 	public static String getExpectedCashoutValue(double cashoutPoints) {
 		DecimalFormat format = new DecimalFormat();
 		format.setDecimalSeparatorAlwaysShown(false);
@@ -1377,6 +1388,7 @@ public static void updateQuery(String url, String query) {
 				+ format.format(cashoutPoints) + " ("
 				+ CoreFunctions.getPropertyFromConfig("CF_Transferee_CashoutCurrencyCode") + ")";
 	}
+
 	public static String getMXClientExpectedCashoutDescription() {
 		String expectedCashoutDescription = null;
 		DecimalFormat format = new DecimalFormat();
@@ -1389,15 +1401,17 @@ public static void updateQuery(String url, String query) {
 						+ " " + CoreFunctions.getPropertyFromConfig("CF_Transferee_CashoutCurrencyCode");
 			} else {
 				expectedCashoutDescription = CoreFunctions.getPropertyFromConfig("CF_Transferee_CashoutCurrencySign")
-						+ " " + format.format(Double
-								.parseDouble(CoreFunctions.getPropertyFromConfig("CF_Client_SelectedCashOutPoints")));
+						+ " "
+						+ format.format(Double
+								.parseDouble(CoreFunctions.getPropertyFromConfig("CF_Client_SelectedCashOutPoints")))
+						+ " " + CoreFunctions.getPropertyFromConfig("CF_Transferee_CashoutCurrencyCode");
 			}
 		} catch (Exception e) {
 			Assert.fail(CoreConstants.ERROR + e.getMessage());
 		}
 		return expectedCashoutDescription;
 	}
-	
+
 	public static String getMXClientSubmissionsExpectedCashoutDescription() {
 		String expectedCashoutDescription = null;
 		DecimalFormat format = new DecimalFormat();
@@ -1428,6 +1442,7 @@ public static void updateQuery(String url, String query) {
 		}
 		return expectedCashoutDescription;
 	}
+
 	public static String getExpectedCashoutDescriptionWithDecimalPrecesion() {
 		String expectedCashoutDescription = null;
 //		DecimalFormat precesionFormat = new DecimalFormat("#.00");
@@ -1459,7 +1474,7 @@ public static void updateQuery(String url, String query) {
 		}
 		return expectedCashoutDescription;
 	}
-	
+
 	public static Boolean verifyItemExistsInList(WebDriver driver, List<WebElement> webElementList, String itemName) {
 		Boolean isExists = false;
 		CoreFunctions.explicitWaitTillElementListVisibility(driver, webElementList);
@@ -1498,9 +1513,9 @@ public static void updateQuery(String url, String query) {
 		}
 		return isExists;
 	}
-	
-	public static int returnindexItemFromListUsingTextWithoutHighlight(WebDriver driver, List<WebElement> WebElementList,
-			String itemName) {
+
+	public static int returnindexItemFromListUsingTextWithoutHighlight(WebDriver driver,
+			List<WebElement> WebElementList, String itemName) {
 		try {
 			for (WebElement row : WebElementList) {
 				CoreFunctions.hover(driver, row);
@@ -1514,6 +1529,5 @@ public static void updateQuery(String url, String query) {
 		}
 		return -1;
 	}
-
 
 }

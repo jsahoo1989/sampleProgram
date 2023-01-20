@@ -50,6 +50,8 @@ import java.util.Properties;
 import java.util.Random;
 import java.util.Set;
 import java.util.stream.Collectors;
+
+import org.apache.commons.lang3.StringUtils;
 import org.openqa.selenium.Alert;
 import org.openqa.selenium.By;
 import org.openqa.selenium.JavascriptExecutor;
@@ -2260,6 +2262,18 @@ public class CoreFunctions {
 		Actions action = new Actions(driver);
 		action.moveToElement(element).doubleClick().build().perform();
 		Reporter.addStepLog(CoreConstants.PASS + MessageFormat.format(CoreConstants.VRFIED_ELE_CLCKED, name));
+	}
+	
+	public static void verifyTextContainsIgnoreCase(String actualText, String expectedText, String fieldName) {
+		if (StringUtils.containsIgnoreCase(actualText, expectedText))
+			Reporter.addStepLog(
+					CoreConstants.PASS + MobilityXConstants.VERIFIED_FIELD_TEXT + fieldName + " : " + expectedText);
+		else {
+			Reporter.addStepLog(CoreConstants.FAIL + MobilityXConstants.FAILED_TO_VERIFY + fieldName + " | "
+					+ CoreConstants.VAL_ACTUAL + actualText + " " + CoreConstants.VAL_EXPECTED + expectedText);
+			Assert.fail("Failed to verify the fields " + fieldName + " Text: Actual Text = " + actualText
+					+ " Contains Expected Text = " + expectedText);
+		}
 	}
 
 }

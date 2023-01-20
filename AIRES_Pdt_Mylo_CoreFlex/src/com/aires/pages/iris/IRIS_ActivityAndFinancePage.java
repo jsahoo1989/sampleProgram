@@ -1175,17 +1175,16 @@ public class IRIS_ActivityAndFinancePage extends BasePage {
 
 	public void acceptSavedSuccessDialog() throws GeneralLeanFtException, Exception {
 		try {
-			_isExists = (IRIS_PageMaster.getDialogObject(_IRIS, "Saved").isVisible());
-			if (_isExists) {
-				Helpers.clickButton(
-						IRIS_PageMaster.getDialogObject(_IRIS, "Saved").describe(Button.class,
-								new ButtonDescription.Builder().label("OK").build()),
-						IRIS_PageMaster.getDialogObject(_IRIS, "Saved")
-								.describe(Button.class, new ButtonDescription.Builder().label("OK").build())
-								.getLabel());
+			if (IRIS_PageMaster.getDialogObject(_IRIS, "Saved").isVisible()) {
+				Dialog savedDialog = IRIS_PageMaster.getDialogObject(_IRIS, "Saved");
+				Button oKButton = savedDialog.describe(Button.class,
+						new ButtonDescription.Builder().label("OK").build());
+				oKButton.click();
+			} else {
+				Assert.fail("Failed to verify save successful message.");
 			}
 		} catch (Exception e) {
-
+			clickOKUsingRobot();
 		}
 	}
 

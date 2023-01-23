@@ -1,7 +1,6 @@
 package stepDefinitions.coreFlex;
 
 import java.text.MessageFormat;
-import java.util.Date;
 
 import org.testng.Assert;
 
@@ -18,7 +17,6 @@ import com.aires.pages.coreflex.CoreFlex_PolicyBenefitsCategoriesPage;
 import com.aires.pages.coreflex.CoreFlex_PreviewTransfereePage;
 import com.aires.pages.pdt.PDT_GeneralInformationPage;
 import com.aires.pages.pdt.PDT_ViewPolicyPage;
-import com.vimalselvam.cucumber.listener.Reporter;
 
 import cucumber.api.DataTable;
 import cucumber.api.java.en.Given;

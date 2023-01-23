@@ -147,6 +147,7 @@ public class Hooks {
 	}
 
 	public String remoteGetURL(Scenario scenario) {
+		CoreFunctions.writeToPropertiesFile("ExecutionType", "remote");
 		String appName = System.getProperty("application");
 		_coreFlexLoginInfo = FileReaderManager.getInstance().getCoreFlexJsonReader()
 				.getLoginByEnvt(System.getProperty("envt").toLowerCase());
@@ -161,6 +162,7 @@ public class Hooks {
 	}
 
 	public String localGetURL(Scenario scenario) {
+		CoreFunctions.writeToPropertiesFile("ExecutionType", "local");
 		_loginInfo = FileReaderManager.getInstance().getJsonReader()
 				.getLoginByEnvt(CoreFunctions.getPropertyFromConfig("envt").toLowerCase());
 		_coreFlexLoginInfo = FileReaderManager.getInstance().getCoreFlexJsonReader()

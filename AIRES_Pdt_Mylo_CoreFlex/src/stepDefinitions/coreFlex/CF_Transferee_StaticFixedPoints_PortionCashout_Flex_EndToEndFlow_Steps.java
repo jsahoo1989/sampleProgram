@@ -6,6 +6,7 @@ import java.util.Map;
 
 import org.testng.Assert;
 
+import com.aires.businessrules.BusinessFunctions;
 import com.aires.businessrules.CoreFunctions;
 import com.aires.businessrules.constants.COREFLEXConstants;
 import com.aires.businessrules.constants.CoreConstants;
@@ -36,14 +37,8 @@ public class CF_Transferee_StaticFixedPoints_PortionCashout_Flex_EndToEndFlow_St
 	private MX_Transferee_FlexPlanningTool_Page mxTransfereeFlexPlanningToolPage;
 	private MX_Transferee_MyBenefitsBundlePage mxTransfereeMyBenefitsBundlePage;
 	private MX_Transferee_JourneyHomePage mxTransfereeJourneyHomePage;
-
+	private CoreFlex_LoginInfo _loginInfo;
 	public static List<Map<String, String>> selectedBenefitDetails;
-
-	private CoreFlex_LoginInfo _loginInfo = FileReaderManager.getInstance().getCoreFlexJsonReader()
-			.getLoginByEnvt(System.getProperty("envt").toLowerCase());
-
-//	private CoreFlex_LoginInfo _loginInfo = FileReaderManager.getInstance().getCoreFlexJsonReader()
-//			.getLoginInfoByEnviroment((CoreFunctions.getPropertyFromConfig("envt").toLowerCase()));
 
 	public CF_Transferee_StaticFixedPoints_PortionCashout_Flex_EndToEndFlow_Steps(TestContext context) {
 		testContext = context;
@@ -56,6 +51,9 @@ public class CF_Transferee_StaticFixedPoints_PortionCashout_Flex_EndToEndFlow_St
 		transfereeSubmissionsDetailsPage = testContext.getCoreFlexPageObjectManager()
 				.getTransfereeSubmissionsDetailsPage();
 		mxTransfereeJourneyHomePage = testContext.getCoreFlexPageObjectManager().getMXTransfereeJourneyHomePage();
+
+		_loginInfo = FileReaderManager.getInstance().getCoreFlexJsonReader()
+				.getLoginByEnvt(BusinessFunctions.getEnvBasedOnExecutionType().toLowerCase());
 	}
 
 	@Given("^he has verified 'Portion Cashout' details on \"([^\"]*)\" page$")

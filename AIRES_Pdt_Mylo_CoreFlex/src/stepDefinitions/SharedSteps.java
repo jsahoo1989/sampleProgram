@@ -1,5 +1,6 @@
 package stepDefinitions;
 
+import com.aires.businessrules.BusinessFunctions;
 import com.aires.cucumber.TestContext;
 import com.aires.managers.FileReaderManager;
 import com.aires.pages.iris.IRIS_Corporation_Main;
@@ -12,12 +13,8 @@ public class SharedSteps {
 	TestContext testContext;
 	IRIS_Corporation_Main irisCorporation_Main;
 
-//	private CoreFlex_LoginInfo _loginInfo = FileReaderManager.getInstance().getCoreFlexJsonReader()
-//			.getLoginInfoByEnviroment((CoreFunctions.getPropertyFromConfig("envt").toLowerCase()));
-
 	private CoreFlex_LoginInfo _loginInfo = FileReaderManager.getInstance().getCoreFlexJsonReader()
-			.getLoginByEnvt(System.getProperty("envt").toLowerCase());
-
+			.getLoginByEnvt(BusinessFunctions.getEnvBasedOnExecutionType().toLowerCase());	
 	// private PDT_LoginInfo _loginInfo =
 	// FileReaderManager.getInstance().getJsonReader().getLoginByEnvt(CoreFunctions.getPropertyFromConfig("envt").toLowerCase());
 //	private PDT_LoginInfo _loginInfo = FileReaderManager.getInstance().getJsonReader().getLoginByEnvt(System.getProperty("envt").toLowerCase());

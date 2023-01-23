@@ -1530,4 +1530,10 @@ public class BusinessFunctions {
 		return -1;
 	}
 
+	public static String getEnvBasedOnExecutionType() {
+		return (CoreFunctions.getPropertyFromConfig("ExecutionType").equalsIgnoreCase("remote")
+				? System.getProperty("envt")
+				: CoreFunctions.getPropertyFromConfig("envt"));
+	}
+
 }

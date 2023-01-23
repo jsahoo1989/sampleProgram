@@ -36,7 +36,6 @@ import com.aires.testdatatypes.coreflex.CoreFlex_LoginInfo;
 import com.aires.testdatatypes.coreflex.MX_Client_Dashboard_BscData;
 import com.aires.testdatatypes.coreflex.TransfereeSubmissions_LoginData;
 import com.aires.testdatatypes.iris.IRIS_AssignmentData;
-import com.vimalselvam.cucumber.listener.Reporter;
 
 import cucumber.api.DataTable;
 import cucumber.api.java.en.And;
@@ -80,11 +79,9 @@ public class CF_MX_Client_Steps {
 		mxClientAuthWFApprovalActionPage = testContext.getCoreFlexPageObjectManager()
 				.getMXClientAuthWFApprovalActionPage();
 		mxTransfereeJourneyHomePage = testContext.getCoreFlexPageObjectManager().getMXTransfereeJourneyHomePage();
-//		_coreFlexLoginInfo = FileReaderManager.getInstance().getCoreFlexJsonReader()
-//				.getLoginByEnvt(CoreFunctions.getPropertyFromConfig("envt").toLowerCase());		
-		_coreFlexLoginInfo = FileReaderManager.getInstance().getCoreFlexJsonReader()
-				.getLoginByEnvt(System.getProperty("envt").toLowerCase());
 
+		_coreFlexLoginInfo = FileReaderManager.getInstance().getCoreFlexJsonReader()
+				.getLoginByEnvt(BusinessFunctions.getEnvBasedOnExecutionType().toLowerCase());
 	}
 
 	private TransfereeSubmissions_LoginData _transfereeSubmissionLoginData = FileReaderManager.getInstance()

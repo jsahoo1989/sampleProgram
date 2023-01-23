@@ -5,7 +5,7 @@ import java.util.Map;
 
 import org.testng.Assert;
 
-import com.aires.businessrules.CoreFunctions;
+import com.aires.businessrules.BusinessFunctions;
 import com.aires.businessrules.constants.IRISConstants;
 import com.aires.cucumber.TestContext;
 import com.aires.managers.FileReaderManager;
@@ -27,15 +27,12 @@ public class IRIS_Corporation_Accounting_Steps {
 	private TestContext _testContext;
 	WebDriverManager _webDriverManager;
 	PageObjectManager_Pdt _pageObjectManager;
-	
-//	private CoreFlex_LoginInfo _loginInfo = FileReaderManager.getInstance().getCoreFlexJsonReader()
-//			.getLoginInfoByEnviroment((CoreFunctions.getPropertyFromConfig("envt").toLowerCase()));
-	
-	private CoreFlex_LoginInfo _loginInfo = FileReaderManager.getInstance().getCoreFlexJsonReader()
-			.getLoginByEnvt(System.getProperty("envt").toLowerCase());
+	private CoreFlex_LoginInfo _loginInfo;
 
 	public IRIS_Corporation_Accounting_Steps(TestContext testContext) {
 		_testContext = testContext;
+		_loginInfo = FileReaderManager.getInstance().getCoreFlexJsonReader()
+				.getLoginByEnvt(BusinessFunctions.getEnvBasedOnExecutionType().toLowerCase());
 	}
 
 	@Given("^he has queried \"([^\"]*)\" corporation in \"([^\"]*)\" module from \"([^\"]*)\" window$")

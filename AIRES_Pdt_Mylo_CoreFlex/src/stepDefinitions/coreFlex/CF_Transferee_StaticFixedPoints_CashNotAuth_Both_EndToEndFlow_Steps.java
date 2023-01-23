@@ -6,6 +6,7 @@ import java.util.Map;
 
 import org.testng.Assert;
 
+import com.aires.businessrules.BusinessFunctions;
 import com.aires.businessrules.CoreFunctions;
 import com.aires.businessrules.constants.COREFLEXConstants;
 import com.aires.businessrules.constants.CoreConstants;
@@ -59,15 +60,18 @@ public class CF_Transferee_StaticFixedPoints_CashNotAuth_Both_EndToEndFlow_Steps
 		transfereeSubmissionsLoginPage = testContext.getCoreFlexPageObjectManager().getTransfereeSubmissionsLoginPage();
 
 //		_coreFlexLoginInfo = FileReaderManager.getInstance().getCoreFlexJsonReader()
-//				.getLoginByEnvt(CoreFunctions.getPropertyFromConfig("envt").toLowerCase());
-		_coreFlexLoginInfo = FileReaderManager.getInstance().getCoreFlexJsonReader().getLoginByEnvt(System.getProperty("envt").toLowerCase());
+//		.getLoginInfoByEnviroment((CoreFunctions.getPropertyFromConfig("envt").toLowerCase()));
+//_coreFlexLoginInfo = FileReaderManager.getInstance().getCoreFlexJsonReader()
+//		.getLoginByEnvt(System.getProperty("envt").toLowerCase());
+		_coreFlexLoginInfo = FileReaderManager.getInstance().getCoreFlexJsonReader()
+				.getLoginByEnvt(BusinessFunctions.getEnvBasedOnExecutionType().toLowerCase());
 	}
-	
+
 	/********************************************************************************************/
 
 	private TransfereeSubmissions_LoginData _transfereeSubmissionLoginData = FileReaderManager.getInstance()
 			.getCoreFlexJsonReader().getTransfereeSubmissionLoginDataList(COREFLEXConstants.TRANSFEREE_SUBMISSIONS);
-	
+
 	/********************************************************************************************/
 
 	@Given("^he has clicked on \"([^\"]*)\" button for a benefit under 'Submitted Benefits' section$")
@@ -103,7 +107,7 @@ public class CF_Transferee_StaticFixedPoints_CashNotAuth_Both_EndToEndFlow_Steps
 	public void he_has_clicked_on_button_for_Bundle_submitted_by_the_transferee_on_page(String btnName, String pageName)
 			throws Throwable {
 		transfereeSubmissionsDashboardHomePage.clickElementOfPage(btnName);
-		
+
 	}
 
 	@Given("^he has navigated to \"([^\"]*)\" page having list of submitted benefits details$")

@@ -6,6 +6,7 @@ import java.util.Map;
 
 import org.testng.Assert;
 
+import com.aires.businessrules.BusinessFunctions;
 import com.aires.businessrules.constants.COREFLEXConstants;
 import com.aires.businessrules.constants.CoreConstants;
 import com.aires.businessrules.constants.PDTConstants;
@@ -36,12 +37,7 @@ public class CoreFlex_GeneralInformation_Steps {
 	private PDT_GeneralInformationPage generalInfoPage;
 	private CoreFlex_FlexPolicySetupPage flexPolicySetupPage;
 	private PDT_PolicyBenefitCategoryPage pdtPolicyBenefitCategoryPage;
-	
-//	private CoreFlex_LoginInfo _loginInfo = FileReaderManager.getInstance().getCoreFlexJsonReader()
-//			.getLoginInfoByEnviroment((CoreFunctions.getPropertyFromConfig("envt").toLowerCase()));
-	
-	private CoreFlex_LoginInfo _loginInfo = FileReaderManager.getInstance().getCoreFlexJsonReader()
-			.getLoginByEnvt(System.getProperty("envt").toLowerCase());
+	private CoreFlex_LoginInfo _coreFlexLoginInfo;
 
 	public CoreFlex_GeneralInformation_Steps(TestContext context) {
 		testContext = context;
@@ -51,6 +47,8 @@ public class CoreFlex_GeneralInformation_Steps {
 		generalInfoPage = testContext.getPageObjectManager().getGeneralInfoPage();
 		flexPolicySetupPage = testContext.getCoreFlexPageObjectManager().getFlexPolicySetupPage();
 		pdtPolicyBenefitCategoryPage = testContext.getPageObjectManager().getpolicyBenefitCategoryPage();
+		_coreFlexLoginInfo = FileReaderManager.getInstance().getCoreFlexJsonReader()
+				.getLoginByEnvt(BusinessFunctions.getEnvBasedOnExecutionType().toLowerCase());
 	}
 
 	@Then("^user should be navigated to the \"([^\"]*)\" page of the selected Client Policy$")
@@ -78,7 +76,7 @@ public class CoreFlex_GeneralInformation_Steps {
 			String tabName) throws Throwable {
 		testContext.getBasePage().invokeIrisApplication();
 		testContext.getIrisPageManager().irisLoginPage = new IRIS_LoginPage();
-		testContext.getIrisPageManager().irisLoginPage.getIRISLoginAsPerEnvt(_loginInfo);
+		testContext.getIrisPageManager().irisLoginPage.getIRISLoginAsPerEnvt(_coreFlexLoginInfo);
 		testContext.getIrisPageManager().irisWelcome12C = new IRIS_Welcome12C();
 		testContext.getIrisPageManager().irisWelcome12C.selectWelcomeWindowModule(tabName);
 		testContext.getIrisPageManager().irisCorporationMain = new IRIS_Corporation_Main();
@@ -158,9 +156,10 @@ public class CoreFlex_GeneralInformation_Steps {
 	public void he_should_be_navigated_to_page_having_based_on_selection(String expectedPageTitle,
 			String expectedLeftNavigationTitle, String pointsBasedFlexSelection) throws Throwable {
 		Assert.assertTrue(
-				generalInfoPage.verifyPageNavigationBasedOnPointsBasedFlexPolicySelection(pointsBasedFlexSelection, expectedPageTitle,
-						expectedLeftNavigationTitle, flexPolicySetupPage, pdtPolicyBenefitCategoryPage),
+				generalInfoPage.verifyPageNavigationBasedOnPointsBasedFlexPolicySelection(pointsBasedFlexSelection,
+						expectedPageTitle, expectedLeftNavigationTitle, flexPolicySetupPage,
+						pdtPolicyBenefitCategoryPage),
 				MessageFormat.format(PDTConstants.FAILED_TO_VERIFY_USER_NAVIGATION_PAST_GENERAL_INFORMATION,
 						CoreConstants.FAIL));
-	}	
+	}
 }

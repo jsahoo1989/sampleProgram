@@ -6,6 +6,7 @@ import java.util.Map;
 
 import org.testng.Assert;
 
+import com.aires.businessrules.BusinessFunctions;
 import com.aires.businessrules.CoreFunctions;
 import com.aires.businessrules.constants.COREFLEXConstants;
 import com.aires.businessrules.constants.CoreConstants;
@@ -59,10 +60,9 @@ public class CF_BluePrint_DraftPolicyIndicator_Steps {
 				.getCoreFlexPolicyBenefitsCategoriesPage();
 		coreFlexBenefitSummaryPage = testContext.getCoreFlexPageObjectManager().getCoreFlexBenefitSummaryPage();
 		coreFlexCustomBundlesPage = testContext.getCoreFlexPageObjectManager().getCoreFlexCustomBundlesPage();
-//		_loginInfo = FileReaderManager.getInstance().getCoreFlexJsonReader()
-//				.getLoginInfoByEnviroment((CoreFunctions.getPropertyFromConfig("envt").toLowerCase()));
+
 		_loginInfo = FileReaderManager.getInstance().getCoreFlexJsonReader()
-				.getLoginByEnvt(System.getProperty("envt").toLowerCase());
+				.getLoginByEnvt(BusinessFunctions.getEnvBasedOnExecutionType().toLowerCase());
 	}
 
 	private static int searchedPolicyIndex;

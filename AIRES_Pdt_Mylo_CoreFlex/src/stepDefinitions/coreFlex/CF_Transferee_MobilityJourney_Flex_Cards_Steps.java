@@ -5,6 +5,7 @@ import java.util.Map;
 
 import org.testng.Assert;
 
+import com.aires.businessrules.BusinessFunctions;
 import com.aires.businessrules.CoreFunctions;
 import com.aires.businessrules.constants.COREFLEXConstants;
 import com.aires.businessrules.constants.CoreConstants;
@@ -54,9 +55,10 @@ public class CF_Transferee_MobilityJourney_Flex_Cards_Steps {
 		mobilityXLoginPage = testContext.getCoreFlexPageObjectManager().getMobilityXLoginPage();
 //		_loginInfo = FileReaderManager.getInstance().getCoreFlexJsonReader()
 //				.getLoginInfoByEnviroment((CoreFunctions.getPropertyFromConfig("envt").toLowerCase()));
+//		_loginInfo = FileReaderManager.getInstance().getCoreFlexJsonReader()
+//				.getLoginByEnvt(System.getProperty("envt").toLowerCase());
 		_loginInfo = FileReaderManager.getInstance().getCoreFlexJsonReader()
-				.getLoginByEnvt(System.getProperty("envt").toLowerCase());
-
+				.getLoginByEnvt(BusinessFunctions.getEnvBasedOnExecutionType().toLowerCase());
 	}
 
 	/**********************************************************************/
@@ -149,7 +151,6 @@ public class CF_Transferee_MobilityJourney_Flex_Cards_Steps {
 		Assert.assertTrue(mxTransfereeJourneyHomePage.verifyAiresManagedBenefitCardNotDisplayed(), MessageFormat.format(
 				MobilityXConstants.AIRES_MANAGED_BENEFIT_CARD_DISPLAYED_ON_MOBILITY_JOURNEY_PAGE, CoreConstants.FAIL));
 	}
-
 
 	@When("^he creates Service and SubService for 'Aires Managed' benefits having '([^\"]*)' Milestones of CoreFlex type \"([^\"]*)\" in Services tab of IRIS application$")
 	public void he_creates_Service_and_SubService_for_Aires_Managed_benefit_having_Milestones_of_CoreFlex_type_in_Services_tab_of_IRIS_application(

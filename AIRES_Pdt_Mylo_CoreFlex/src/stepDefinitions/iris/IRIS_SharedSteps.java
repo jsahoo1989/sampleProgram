@@ -4,6 +4,7 @@ import java.text.MessageFormat;
 
 import org.testng.Assert;
 
+import com.aires.businessrules.BusinessFunctions;
 import com.aires.businessrules.CoreFunctions;
 import com.aires.businessrules.constants.CoreConstants;
 import com.aires.businessrules.constants.IRISConstants;
@@ -23,26 +24,22 @@ import cucumber.api.java.en.Then;
 import cucumber.api.java.en.When;
 
 public class IRIS_SharedSteps {
-	
+
 	private TestContext testContext;
-	
-	int _initialTableRowCount=0;
-	
-//	private CoreFlex_LoginInfo _loginInfo = FileReaderManager.getInstance().getCoreFlexJsonReader()
-//			.getLoginInfoByEnviroment((CoreFunctions.getPropertyFromConfig("envt").toLowerCase()));
-	
-	private CoreFlex_LoginInfo _loginInfo = FileReaderManager.getInstance().getCoreFlexJsonReader()
-			.getLoginByEnvt(System.getProperty("envt").toLowerCase());
-	
+	private CoreFlex_LoginInfo _loginInfo;
+
+	int _initialTableRowCount = 0;
+
 	public IRIS_SharedSteps(TestContext context) {
 		testContext = context;
+		_loginInfo = FileReaderManager.getInstance().getCoreFlexJsonReader()
+				.getLoginByEnvt(BusinessFunctions.getEnvBasedOnExecutionType().toLowerCase());
 	}
 
 	@Given("^he has Created and Actualized a 'New' Transferee in 'Assignment' module of IRIS Application$")
 	public void he_has_Created_and_Actualized_a_New_Transferee_in_Assignment_module_of_IRIS_Application()
 			throws Throwable {
-		// Creating and actualizing a new Transferee		
-//		_loginDetails = FileReaderManager.getInstance().getJsonReader().getLoginByApplication("IRIS");
+		// Creating and actualizing a new Transferee
 		testContext.getIrisPageManager().irisLoginPage = new IRIS_LoginPage();
 		testContext.getIrisPageManager().irisLoginPage.getIRISLoginAsPerEnvt(_loginInfo);
 		testContext.getIrisPageManager().irisWelcome12C = new IRIS_Welcome12C();
@@ -108,6 +105,6 @@ public class IRIS_SharedSteps {
 				MessageFormat.format(IRISConstants.FAILED_TO_VERIFY_MESSAGE, CoreConstants.FAIL,
 						IRISConstants.SUCCESS_MSG));
 		testContext.getBasePage().cleanIrisProcesses();
-		
+
 	}
 }

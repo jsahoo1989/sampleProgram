@@ -20,9 +20,10 @@ import com.aires.utilities.Log;
 public class DbFunctions {
 	private static LinkedHashMap<String, String> _myloQueryStatementMap = new LinkedHashMap<String, String>();
 	private static LinkedHashMap<String, String> _myloQTableColumnFields = new LinkedHashMap<String, String>();
-	private static String _environment = System.getProperty("envt").toLowerCase();
-//	private static String _environment =CoreFunctions.getPropertyFromConfig("envt").toLowerCase();
-	private static String _maxRows =CoreFunctions.getPropertyFromConfig("maxRecordsToValidate").toLowerCase();
+//	private static String _environment = System.getProperty("envt").toLowerCase();
+//	private static String _environment = CoreFunctions.getPropertyFromConfig("envt").toLowerCase();
+	private static String _environment = BusinessFunctions.getEnvBasedOnExecutionType().toLowerCase();
+	private static String _maxRows = CoreFunctions.getPropertyFromConfig("maxRecordsToValidate").toLowerCase();
 	static LinkedHashMap<String, String> _pdtExpenseCodeQueryStatementMap = new LinkedHashMap<String, String>();
 
 	public static String getDBConnectionStringAsPerEnvt(String envt) {
@@ -201,7 +202,7 @@ public class DbFunctions {
 		case "qa":
 		case "QA":
 			dbURL = "jdbc:oracle:thin:isisdba/irsfndevisisdba@corpuatvl303.corp.aires.com:1516:IRSFNDEV";
-			break;		
+			break;
 		case "uat":
 		case "UAT":
 			dbURL = "jdbc:oracle:thin:isisdba/irisuatisisdba@corpqavl300.corp.aires.com:1521:irisuat";
@@ -213,7 +214,7 @@ public class DbFunctions {
 		case "prod":
 		case "PROD":
 			dbURL = "";
-			break;					
+			break;
 		default:
 			Assert.fail(PDTConstants.DATABASE_CONNECTION + PDTConstants.NOT_EXIST);
 		}
@@ -225,8 +226,12 @@ public class DbFunctions {
 		Connection connection = null;
 		try {
 			DriverManager.registerDriver(new oracle.jdbc.OracleDriver());
-				connection = DriverManager.getConnection(
-						getCoreFlexDBConnectionStringAsPerEnvt(System.getProperty("envt")));			
+
+			connection = DriverManager.getConnection(
+					getCoreFlexDBConnectionStringAsPerEnvt(BusinessFunctions.getEnvBasedOnExecutionType()));
+
+//				connection = DriverManager.getConnection(
+//				getCoreFlexDBConnectionStringAsPerEnvt(System.getProperty("envt")));				
 //			connection = DriverManager
 //					.getConnection(getCoreFlexDBConnectionStringAsPerEnvt(CoreFunctions.getPropertyFromConfig("envt")));
 			PreparedStatement pst = connection.prepareStatement(DbQueries.QUERY_GET_CURRENCYCOUNTRY);
@@ -240,7 +245,7 @@ public class DbFunctions {
 			Log.info(CoreConstants.ERROR + ex.getMessage());
 			Log.info(CoreConstants.ERROR + ex.getStackTrace());
 			Assert.fail(CoreConstants.SQL_QUERY_FAILED);
-			} finally {
+		} finally {
 			try {
 				if (connection != null) {
 					connection.close();
@@ -250,7 +255,7 @@ public class DbFunctions {
 				Log.info(CoreConstants.ERROR + ex.getStackTrace());
 			}
 		}
-			return currencyCountry;
+		return currencyCountry;
 	}
 
 	public static List<String> getMyFilesInfoByStatusAndCheckBox(String empNo, String status, String checkbox,
@@ -440,11 +445,15 @@ public class DbFunctions {
 	}
 
 	public static void populatePDTExpenseCodeQueryStatements() {
-		_pdtExpenseCodeQueryStatementMap.put(PDTConstants.PRE_ACCEPTANCE_SERVICES, DbQueries.QUERY_GET_PRE_ACCEPTANCE_EXPENSE_CODE);
+		_pdtExpenseCodeQueryStatementMap.put(PDTConstants.PRE_ACCEPTANCE_SERVICES,
+				DbQueries.QUERY_GET_PRE_ACCEPTANCE_EXPENSE_CODE);
 		_pdtExpenseCodeQueryStatementMap.put(PDTConstants.IMMIGRATION, DbQueries.QUERY_GET_IMMIGRATION_EXPENSE_CODE);
-		_pdtExpenseCodeQueryStatementMap.put(PDTConstants.HOUSE_HUNTING_TRIP, DbQueries.QUERY_GET_HOUSE_HUNTING_TRIP_EXPENSE_CODE);
-		_pdtExpenseCodeQueryStatementMap.put(PDTConstants.LANGUAGE_TRAINING, DbQueries.QUERY_GET_LANG_TRAIN_EXPENSE_CODE);
-		_pdtExpenseCodeQueryStatementMap.put(PDTConstants.CULTURAL_TRAINING, DbQueries.QUERY_GET_CULT_TRAIN_EXPENSE_CODE);
+		_pdtExpenseCodeQueryStatementMap.put(PDTConstants.HOUSE_HUNTING_TRIP,
+				DbQueries.QUERY_GET_HOUSE_HUNTING_TRIP_EXPENSE_CODE);
+		_pdtExpenseCodeQueryStatementMap.put(PDTConstants.LANGUAGE_TRAINING,
+				DbQueries.QUERY_GET_LANG_TRAIN_EXPENSE_CODE);
+		_pdtExpenseCodeQueryStatementMap.put(PDTConstants.CULTURAL_TRAINING,
+				DbQueries.QUERY_GET_CULT_TRAIN_EXPENSE_CODE);
 	}
 
 	public static List<String> getExpenseCodeListForBenefit(String benefitName) {
@@ -452,7 +461,7 @@ public class DbFunctions {
 		List<String> expenseCodeList = new ArrayList<String>();
 		Connection connection = null;
 		try {
-			connection = getConnection();		
+			connection = getConnection();
 			PreparedStatement pst = connection.prepareStatement(_pdtExpenseCodeQueryStatementMap.get(benefitName));
 			ResultSet resultset = pst.executeQuery();
 			while (resultset.next()) {
@@ -478,12 +487,12 @@ public class DbFunctions {
 		Connection connection = null;
 		try {
 			DriverManager.registerDriver(new oracle.jdbc.OracleDriver());
-			connection = DriverManager.getConnection(
-			 getDBConnectionStringAsPerEnvt(System.getProperty("envt")));
-
-			// Kept the commented code for running in local environment
+//			connection = DriverManager.getConnection(getDBConnectionStringAsPerEnvt(System.getProperty("envt")));
+//			// Kept the commented code for running in local environment
+//			connection = DriverManager
+//					.getConnection(getDBConnectionStringAsPerEnvt(CoreFunctions.getPropertyFromConfig("envt")));			
 			connection = DriverManager
-					.getConnection(getDBConnectionStringAsPerEnvt(CoreFunctions.getPropertyFromConfig("envt")));
+					.getConnection(getDBConnectionStringAsPerEnvt(BusinessFunctions.getEnvBasedOnExecutionType()));
 		} catch (SQLException e) {
 			Assert.fail("Failed to establish connection to the database");
 		}
@@ -516,17 +525,16 @@ public class DbFunctions {
 		}
 		return expenseCodeList;
 	}
-	
+
 	public static Connection getMyloConnection() {
-		Connection connection = null;	
+		Connection connection = null;
 		try {
 			DriverManager.registerDriver(new oracle.jdbc.OracleDriver());
-			//connection = DriverManager.getConnection(
-				//	getDBConnectionStringAsPerEnvt(System.getProperty("envt")));
+			// connection = DriverManager.getConnection(
+			// getDBConnectionStringAsPerEnvt(System.getProperty("envt")));
 
-			//Kept the commented code for running in local environment
-			  connection = DriverManager.getConnection(
-				getMyloDBConnectionStringAsPerEnvt(_environment));
+			// Kept the commented code for running in local environment
+			connection = DriverManager.getConnection(getMyloDBConnectionStringAsPerEnvt(_environment));
 		} catch (SQLException e) {
 			Assert.fail("Failed to establish connection to the database");
 		}

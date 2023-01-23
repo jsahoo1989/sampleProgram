@@ -39,6 +39,12 @@ public class CF_Transferee_StaticFixedPoints_PortionCashout_Flex_EndToEndFlow_St
 
 	public static List<Map<String, String>> selectedBenefitDetails;
 
+	private CoreFlex_LoginInfo _loginInfo = FileReaderManager.getInstance().getCoreFlexJsonReader()
+			.getLoginByEnvt(System.getProperty("envt").toLowerCase());
+
+//	private CoreFlex_LoginInfo _loginInfo = FileReaderManager.getInstance().getCoreFlexJsonReader()
+//			.getLoginInfoByEnviroment((CoreFunctions.getPropertyFromConfig("envt").toLowerCase()));
+
 	public CF_Transferee_StaticFixedPoints_PortionCashout_Flex_EndToEndFlow_Steps(TestContext context) {
 		testContext = context;
 		CoreFlex_PolicyBenefitsCategoriesPage.pageObjectManager_CoreFlex = testContext.getCoreFlexPageObjectManager();
@@ -51,9 +57,6 @@ public class CF_Transferee_StaticFixedPoints_PortionCashout_Flex_EndToEndFlow_St
 				.getTransfereeSubmissionsDetailsPage();
 		mxTransfereeJourneyHomePage = testContext.getCoreFlexPageObjectManager().getMXTransfereeJourneyHomePage();
 	}
-
-	private CoreFlex_LoginInfo _loginInfo = FileReaderManager.getInstance().getCoreFlexJsonReader()
-			.getLoginInfoByEnviroment((CoreFunctions.getPropertyFromConfig("envt").toLowerCase()));
 
 	@Given("^he has verified 'Portion Cashout' details on \"([^\"]*)\" page$")
 	public void he_has_verified_Portion_Cashout_details_on_page(String sourcePage) throws Throwable {
@@ -112,8 +115,8 @@ public class CF_Transferee_StaticFixedPoints_PortionCashout_Flex_EndToEndFlow_St
 	}
 
 	@Given("^he has navigated to \"([^\"]*)\" page after selecting required Benefits and Cashout on \"([^\"]*)\" page$")
-	public void he_has_navigated_to_page_after_selecting_required_Benefits_and_Cashout_on_page(
-			String navigatedPage, String sourcePage) throws Throwable {
+	public void he_has_navigated_to_page_after_selecting_required_Benefits_and_Cashout_on_page(String navigatedPage,
+			String sourcePage) throws Throwable {
 		Assert.assertTrue(mxTransfereeFlexPlanningToolPage.selectBenefitsAndProceedToReviewAndSubmit(), MessageFormat
 				.format(MobilityXConstants.FAILED_TO_SELECT_BENEFITS_AND_PROCEED_TO_REVIEW_PAGE, CoreConstants.FAIL));
 		Assert.assertTrue(mxTransfereeMyBenefitsBundlePage.isMyBundlePageDisplayed(),
@@ -123,10 +126,8 @@ public class CF_Transferee_StaticFixedPoints_PortionCashout_Flex_EndToEndFlow_St
 	@Given("^he has clicked on \"([^\"]*)\" button after validating all the benefit and Cashout details listed under 'Selected Benefits' section on \"([^\"]*)\" page$")
 	public void he_has_clicked_on_button_after_validating_all_the_benefit_and_Cashout_details_listed_under_Selected_Benefits_section_on_page(
 			String reviewAndSubmitButton, String pageName) throws Throwable {
-		Assert.assertTrue(mxTransfereeMyBenefitsBundlePage.verifySelectedCashoutDetails(),
-				MessageFormat.format(
-						MobilityXConstants.FAILED_TO_VERIFY_SELECTED_CASHOUT_DETAILS_ON_MY_BUNDLE_PAGE,
-						CoreConstants.FAIL));
+		Assert.assertTrue(mxTransfereeMyBenefitsBundlePage.verifySelectedCashoutDetails(), MessageFormat.format(
+				MobilityXConstants.FAILED_TO_VERIFY_SELECTED_CASHOUT_DETAILS_ON_MY_BUNDLE_PAGE, CoreConstants.FAIL));
 		Assert.assertTrue(mxTransfereeMyBenefitsBundlePage.verifySelectedBenefitDetails(), MessageFormat
 				.format(MobilityXConstants.FAILED_TO_VERIFY_SELECTED_BENEFITS_ON_MY_BUNDLE_PAGE, CoreConstants.FAIL));
 		mxTransfereeMyBenefitsBundlePage.clickReviewAndSubmit();
@@ -138,7 +139,7 @@ public class CF_Transferee_StaticFixedPoints_PortionCashout_Flex_EndToEndFlow_St
 		Assert.assertTrue(mxTransfereeMyBenefitsBundlePage.deleteSubmittedBenefitAndCashout(buttonName), MessageFormat
 				.format(MobilityXConstants.FAILED_TO_DELETE_SUBMITTED_BENEFIT_AND_CASHOUT, CoreConstants.FAIL));
 	}
-	
+
 	@When("^he 'Delete' submitted Benefits and confirms 'Remove Benefit Selection' dialog by entering username and clicking on \"([^\"]*)\"$")
 	public void he_Delete_submited_Benefits_and_confirms_Remove_Benefit_Selection_dialog_by_entering_username_and_clicking_on(
 			String buttonName) throws Throwable {
@@ -169,7 +170,7 @@ public class CF_Transferee_StaticFixedPoints_PortionCashout_Flex_EndToEndFlow_St
 						CoreConstants.FAIL));
 		transfereeSubmissionsDetailsPage.clickElementOfPage(action);
 	}
-	
+
 	@When("^he confirms request by selecting \"([^\"]*)\" option after verifying 'Delete Request Pending' benefit request details on 'Requests' dialog by Client$")
 	public void he_confirms_request_by_selecting_option_after_verifying_Delete_Request_Pending_benefit_request_details_on_Requests_dialog_by_Client(
 			String action) throws Throwable {
@@ -179,15 +180,14 @@ public class CF_Transferee_StaticFixedPoints_PortionCashout_Flex_EndToEndFlow_St
 						CoreConstants.FAIL));
 		transfereeSubmissionsDetailsPage.clickElementOfPage(action);
 	}
-	
+
 	@When("^\"([^\"]*)\" delete request Benefit_Cashout details should be displayed under 'Transferee History' section with \"([^\"]*)\" status$")
 	public void delete_request_Benefit_Cashout_details_should_be_displayed_under_Transferee_History_section_with_status(
 			String action, String expectedStatus) throws Throwable {
 		transfereeSubmissionsDetailsPage.clickElementOfPage(COREFLEXConstants.TRANSFEREE_HISTORY_SECTION);
-		Assert.assertTrue(transfereeSubmissionsDetailsPage.verifyTransfereeHistorySection(action),
-				MessageFormat.format(
-						COREFLEXConstants.FAILED_TO_VERIFY_BENEFIT_CASHOUT_DETAILS_DISPLAYED_UNDER_HISTORY_SECTION_ON_TRANSFEREE_SUBMISSIONS_DETAILS_PAGE,
-						CoreConstants.FAIL,action));
+		Assert.assertTrue(transfereeSubmissionsDetailsPage.verifyTransfereeHistorySection(action), MessageFormat.format(
+				COREFLEXConstants.FAILED_TO_VERIFY_BENEFIT_CASHOUT_DETAILS_DISPLAYED_UNDER_HISTORY_SECTION_ON_TRANSFEREE_SUBMISSIONS_DETAILS_PAGE,
+				CoreConstants.FAIL, action));
 	}
 
 }

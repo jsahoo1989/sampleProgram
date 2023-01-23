@@ -6,7 +6,6 @@ import java.util.Map;
 
 import org.testng.Assert;
 
-import com.aires.businessrules.CoreFunctions;
 import com.aires.businessrules.constants.COREFLEXConstants;
 import com.aires.businessrules.constants.CoreConstants;
 import com.aires.businessrules.constants.PDTConstants;
@@ -38,8 +37,11 @@ public class CoreFlex_GeneralInformation_Steps {
 	private CoreFlex_FlexPolicySetupPage flexPolicySetupPage;
 	private PDT_PolicyBenefitCategoryPage pdtPolicyBenefitCategoryPage;
 	
+//	private CoreFlex_LoginInfo _loginInfo = FileReaderManager.getInstance().getCoreFlexJsonReader()
+//			.getLoginInfoByEnviroment((CoreFunctions.getPropertyFromConfig("envt").toLowerCase()));
+	
 	private CoreFlex_LoginInfo _loginInfo = FileReaderManager.getInstance().getCoreFlexJsonReader()
-			.getLoginInfoByEnviroment((CoreFunctions.getPropertyFromConfig("envt").toLowerCase()));
+			.getLoginByEnvt(System.getProperty("envt").toLowerCase());
 
 	public CoreFlex_GeneralInformation_Steps(TestContext context) {
 		testContext = context;

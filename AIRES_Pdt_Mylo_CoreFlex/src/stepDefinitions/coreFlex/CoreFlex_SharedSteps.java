@@ -105,9 +105,10 @@ public class CoreFlex_SharedSteps {
 		transfereeSubmissionsDetailsPage = testContext.getCoreFlexPageObjectManager()
 				.getTransfereeSubmissionsDetailsPage();
 		mxTransfereeMyProfilePage = testContext.getCoreFlexPageObjectManager().getTransfereeMyProfilePage();
+//		_loginInfo = FileReaderManager.getInstance().getCoreFlexJsonReader()
+//				.getLoginInfoByEnviroment((CoreFunctions.getPropertyFromConfig("envt").toLowerCase()));
 		_loginInfo = FileReaderManager.getInstance().getCoreFlexJsonReader()
-				.getLoginInfoByEnviroment((CoreFunctions.getPropertyFromConfig("envt").toLowerCase()));
-//_loginInfo = FileReaderManager.getInstance().getCoreFlexJsonReader().getLoginByEnvt(System.getProperty("envt").toLowerCase());
+				.getLoginByEnvt(System.getProperty("envt").toLowerCase());
 
 	}
 
@@ -236,7 +237,7 @@ public class CoreFlex_SharedSteps {
 
 		Assert.assertTrue(bluePrintCFLoginPage.verifyLoginPageNavigation(), MessageFormat.format(
 				PDTConstants.FAILED_TO_NAVIGATE_TO_COREFLEX_BLUE_PRINT_APPLICATION_LOGIN_PAGE, CoreConstants.FAIL));
-		
+
 		Reporter.addStepLog(
 				"<b>Total time taken to navigate to <i>CoreFlex Policy BluePrint Application Login</i> page is :"
 						+ CoreFunctions.calculatePageLoadTime(CoreConstants.TIME_BEFORE_ACTION,
@@ -245,7 +246,7 @@ public class CoreFlex_SharedSteps {
 
 		Assert.assertTrue(bluePrintCFLoginPage.loginByUserType(PDTConstants.CSM, viewPolicyPage),
 				MessageFormat.format(PDTConstants.FAILED_TO_VERIFY_LOGGED_IN_USER, CoreConstants.FAIL));
-		
+
 		viewPolicyPage.clickElementOfPage(PDTConstants.ADD_NEW_POLICY_FORM);
 		Assert.assertTrue(addNewPolicyPage.verifyAddNewPolicyHeading(COREFLEXConstants.ADD_NEW_POLICY_PAGE),
 				MessageFormat.format(PDTConstants.FAILED_TO_VERIFY_HEADING_ON_PAGE, CoreConstants.FAIL,
@@ -281,7 +282,7 @@ public class CoreFlex_SharedSteps {
 
 		// Setting up a CoreFlex Enabled Policy
 		addNewPolicyPage.clickElementOfPage(PDTConstants.NEXT);
-		
+
 		Assert.assertTrue(generalInfoPage.verifyPageNavigation(COREFLEXConstants.GENERAL_INFORMATION_PAGE),
 				MessageFormat.format(PDTConstants.FAILED_TO_NAVIGATE_TO_COREFLEX_GENERAL_INFORMATION_PAGE,
 						CoreConstants.FAIL));
@@ -314,11 +315,10 @@ public class CoreFlex_SharedSteps {
 						CoreConstants.FAIL));
 		generalInfoPage.clickElementOfPage(PDTConstants.NEXT);
 
-		
 		Assert.assertTrue(flexPolicySetupPage.verifyPageNavigation(COREFLEXConstants.POINT_POLICY_SETUP),
 				MessageFormat.format(COREFLEXConstants.FAILED_TO_VERIFY_USER_NAVIGATION_TO_POINT_POLICY_SETUP_PAGE,
 						CoreConstants.FAIL));
-		
+
 		Assert.assertTrue(flexPolicySetupPage.verifyBenfitExpirationLockBenefitTooltip(), MessageFormat.format(
 				COREFLEXConstants.FAILED_TO_VERIFY_BENEFIT_EXPIRATION_AND_LOCK_BENEFITS_TOOLTIP_ON_FLEX_POLICY_SETUP_PAGE,
 				CoreConstants.FAIL));
@@ -330,7 +330,6 @@ public class CoreFlex_SharedSteps {
 						CoreConstants.FAIL));
 		flexPolicySetupPage.clickElementOfPage(PDTConstants.NEXT);
 
-		
 		Assert.assertTrue(
 				coreFlexPolicyBenefitsCategoriesPage.verifyPageNavigation(COREFLEXConstants.POLICY_BENEFIT_CATEGORIES),
 				MessageFormat.format(
@@ -348,24 +347,20 @@ public class CoreFlex_SharedSteps {
 				COREFLEXConstants.FAILED_TO_VERIFY_INFORMATION_DIALOG_AFTER_SELECTING_BENEFITS_AND_CLICKING_NEXT_ON_POLICY_BENEFIT_CATEGORIES_PAGE,
 				CoreConstants.FAIL));
 
-		
 		Assert.assertTrue(
 				coreFlexPolicyBenefitsCategoriesPage.verifyBenefitsDisplayedOnLeftNavigation(benefitType,
 						policyRequiredFor),
 				MessageFormat.format(COREFLEXConstants.FAILED_TO_VERIFY_BENEFITS_DISPLAYED_ON_LEFT_NAVIGATION,
 						CoreConstants.FAIL));
-		
+
 		Assert.assertTrue(
 				coreFlexPolicyBenefitsCategoriesPage.selectAndFillAddedBenefits(benefitType, policyRequiredFor),
 				MessageFormat.format(COREFLEXConstants.FAILED_TO_SELECT_AND_FILL_ADDED_BENEFITS, CoreConstants.FAIL));
 
-		
 		Assert.assertTrue(
 				coreFlexBenefitSummaryPage.verifyPageNavigation(COREFLEXConstants.POLICY_BENEFITS_BENEFIT_SUMMARY),
 				MessageFormat.format(COREFLEXConstants.FAILED_TO_VERIFY_USER_NAVIGATION_TO_BENEFIT_SUMMARY_PAGE,
 						CoreConstants.FAIL));
-		
-
 
 		Assert.assertTrue(coreFlexBenefitSummaryPage.iterateAndVerifyBenefitSummaryDetails(policyRequiredFor),
 				MessageFormat.format(
@@ -373,7 +368,6 @@ public class CoreFlex_SharedSteps {
 						CoreConstants.FAIL));
 		coreFlexBenefitSummaryPage.clickElementOfPage(COREFLEXConstants.CONTINUE);
 
-		
 		Assert.assertTrue(coreFlexCustomBundlesPage.verifyPageNavigation(COREFLEXConstants.CUSTOM_BUNDLES),
 				MessageFormat.format(COREFLEXConstants.FAILED_TO_VERIFY_USER_NAVIGATION_TO_CUSTOM_BUNDLES_PAGE,
 						CoreConstants.FAIL));
@@ -385,7 +379,6 @@ public class CoreFlex_SharedSteps {
 						CoreConstants.FAIL));
 		coreFlexCustomBundlesPage.clickElementOfPage(COREFLEXConstants.PREVIEW_TRANSFEREE_EXPERIENCE);
 
-		
 		Assert.assertTrue(coreFlexTransfereePreviewPage.isPreviewTransfereePageDisplayed(), MessageFormat
 				.format(COREFLEXConstants.FAILED_TO_VERIFY_NAVIGATION_TO_TRANSFEREE_PREVIEW_PAGE, CoreConstants.FAIL));
 
@@ -426,17 +419,17 @@ public class CoreFlex_SharedSteps {
 		coreFlexCustomBundlesPage.clickElementOfPage(COREFLEXConstants.SUBMIT);
 		Reporter.addStepLog(MessageFormat.format(
 				COREFLEXConstants.SUCCESSFULLY_CLICKED_ON_SUBMIT_BUTTON_ON_CUSTOM_BUNDLES_PAGE, CoreConstants.PASS));
-		
+
 		Assert.assertTrue(
 				coreFlexCustomBundlesPage.verifyPolicySubmitStatus(COREFLEXConstants.POLICY_SUBMIT_STATUS_MESSAGE,
 						CoreFunctions.getPropertyFromConfig("Assignment_Policy")),
 				MessageFormat.format(COREFLEXConstants.FAILED_TO_VERIFY_POLICY_SUBMIT_STATUS_ON_CUSTOM_BUNDLES_PAGE,
 						CoreConstants.FAIL));
-		
+
 		Reporter.addStepLog("<b>Total time taken to verify <i>Policy Submit Status</i> is :"
 				+ CoreFunctions.calculatePageLoadTime(CoreConstants.TIME_BEFORE_ACTION, CoreConstants.TIME_AFTER_ACTION)
 				+ " Seconds </b>");
-		
+
 		coreFlexCustomBundlesPage.clickElementOfPage(COREFLEXConstants.OK);
 	}
 
@@ -599,7 +592,7 @@ public class CoreFlex_SharedSteps {
 	public void he_has_logged_into_MobilityX_application_with_the_Transferee_user() throws Throwable {
 		Assert.assertTrue(mobilityXLoginPage.verifyPageNavigation(),
 				MessageFormat.format(COREFLEXConstants.FAILED_TO_NAVIGATE_TO_MOBILITYX_LOGIN_PAGE, CoreConstants.FAIL));
-	
+
 		mobilityXLoginPage.enterUsernameAndPasswordForMobilityX(
 				CoreFunctions.getPropertyFromConfig("Transferee_UserNameInEMail"),
 				CoreFunctions.getPropertyFromConfig("Transferee_PasswordInEMail"));
@@ -668,7 +661,7 @@ public class CoreFlex_SharedSteps {
 	@Given("^he has validated 'Assignment-Policy' details after selecting below option displayed on 'Welcome' dialog$")
 	public void he_has_validated_Assignment_Policy_details_after_selecting_below_option_displayed_on_Welcome_dialog(
 			DataTable dataTable) throws Throwable {
-		
+
 		Assert.assertTrue(mxTransfereeJourneyHomePage.isWelcomePopupDisplayed(),
 				MessageFormat.format(MobilityXConstants.FAILED_TO_DISPLAY_WELCOME_POPUP_ON_TRANSFEREE_JOURNEY_HOME_PAGE,
 						CoreConstants.FAIL));
@@ -685,7 +678,7 @@ public class CoreFlex_SharedSteps {
 	public void he_has_navigated_to_page_after_clicking_on_Manage_my_Points_button_on_page(String navigatedPage,
 			String sourcePage) throws Throwable {
 		mxTransfereeJourneyHomePage.clickElementOfPage(MobilityXConstants.MANAGE_MY_POINTS);
-		
+
 		Assert.assertTrue(mxTransfereeFlexPlanningToolPage.isFlexPlanningToolHomePageDisplayed(),
 				MessageFormat.format(MobilityXConstants.ONPOINT_PLANNING_TOOL_PAGE_NOT_DISPLAYED, CoreConstants.FAIL));
 	}
@@ -693,10 +686,9 @@ public class CoreFlex_SharedSteps {
 	@Given("^he has verified Benefits details displayed under 'Core Benefits' and 'Flex Benefits' section on \"([^\"]*)\" page$")
 	public void he_has_verified_Benefits_details_displayed_under_Core_Benefits_and_Flex_Benefits_section_on_page(
 			String pageName) throws Throwable {
-		
-		Assert.assertTrue(mxTransfereeFlexPlanningToolPage.verifyWindowTitle(), MessageFormat.format(
-				MobilityXConstants.FAILED_TO_VALIDATE_ONPOINT_PLANNING_TOOL_PAGE_TITLE,
-				CoreConstants.FAIL));
+
+		Assert.assertTrue(mxTransfereeFlexPlanningToolPage.verifyWindowTitle(), MessageFormat
+				.format(MobilityXConstants.FAILED_TO_VALIDATE_ONPOINT_PLANNING_TOOL_PAGE_TITLE, CoreConstants.FAIL));
 		Assert.assertTrue(mxTransfereeFlexPlanningToolPage.verifyAvailablePointsMessage(),
 				MessageFormat.format(
 						MobilityXConstants.FAILED_TO_VALIDATE_AVAILABLE_POINTS_MESSAGE_ON_FLEX_PLANNING_TOOL_PAGE,
@@ -714,10 +706,10 @@ public class CoreFlex_SharedSteps {
 	public void he_has_navigated_to_page_after_clicking_on_following_link_on_page(String navigatedPageName,
 			String sourcePageName, DataTable dataTable) throws Throwable {
 		mxTransfereeFlexPlanningToolPage.clickElementOfPage(MobilityXConstants.SUGGESTED_OPTIONS_LINK);
-		
+
 		Assert.assertTrue(mxTransfereeFlexPlanningToolPage.verifyUserNavigationToSuggestedBundlesPage(), MessageFormat
 				.format(MobilityXConstants.FAILED_TO_NAVIGATE_TO_SUGGESTED_BUNDLES_PAGE, CoreConstants.FAIL));
-		
+
 	}
 
 	@Given("^he has verified 'Custom Bundle' Benefit details displayed under 'Recommended Bundle' section on \"([^\"]*)\" page$")
@@ -735,7 +727,7 @@ public class CoreFlex_SharedSteps {
 	public void he_has_navigated_back_to_page_after_clicking_on_Back_to_benefits_list_button_on_page(
 			String navigatedPage) throws Throwable {
 		mxTransfereeFlexPlanningToolPage.clickElementOfPage(MobilityXConstants.BACK_TO_BENEFITS_LIST);
-		
+
 		Assert.assertTrue(mxTransfereeFlexPlanningToolPage.isFlexPlanningToolHomePageDisplayed(),
 				MessageFormat.format(MobilityXConstants.ONPOINT_PLANNING_TOOL_PAGE_NOT_DISPLAYED, CoreConstants.FAIL));
 	}
@@ -746,7 +738,7 @@ public class CoreFlex_SharedSteps {
 		Assert.assertTrue(mxTransfereeMyBenefitsBundlePage.verifySelectedBenefitDetails(), MessageFormat
 				.format(MobilityXConstants.FAILED_TO_VERIFY_SELECTED_BENEFITS_ON_MY_BUNDLE_PAGE, CoreConstants.FAIL));
 		mxTransfereeMyBenefitsBundlePage.clickReviewAndSubmit();
-		
+
 	}
 
 	@Given("^he has clicked on \"([^\"]*)\" button after validating all the 'Aires Managed' benefit details listed under 'Selected Benefits' section on \"([^\"]*)\" page$")
@@ -757,7 +749,7 @@ public class CoreFlex_SharedSteps {
 						MobilityXConstants.FAILED_TO_VERIFY_SELECTED_AIRES_MANAGED_BENEFITS_ON_MY_BUNDLE_PAGE,
 						CoreConstants.FAIL));
 		mxTransfereeMyBenefitsBundlePage.clickReviewAndSubmit();
-		
+
 	}
 
 	@Given("^he has clicked on \"([^\"]*)\" button after entering Transferee name on \"([^\"]*)\" dialog$")
@@ -765,7 +757,7 @@ public class CoreFlex_SharedSteps {
 			String submissionDialog) throws Throwable {
 		Assert.assertTrue(mxTransfereeMyBenefitsBundlePage.isSubmitBundlePopupDisplayed(),
 				MessageFormat.format(MobilityXConstants.SUBMIT_BUNDLE_POPUP_NOT_DISPLAYED, CoreConstants.FAIL));
-		
+
 		Reporter.addStepLog("<b>Total time taken to navigateTo/display <i>Submit Benefit Bundle</i> dialog is :"
 				+ CoreFunctions.calculatePageLoadTime(CoreConstants.TIME_BEFORE_ACTION, CoreConstants.TIME_AFTER_ACTION)
 				+ " Seconds </b>");
@@ -777,7 +769,6 @@ public class CoreFlex_SharedSteps {
 				CoreFunctions.getPropertyFromConfig("Transferee_firstName") + " "
 						+ CoreFunctions.getPropertyFromConfig("Transferee_lastName"),
 				buttonName);
-		
 
 	}
 
@@ -786,7 +777,7 @@ public class CoreFlex_SharedSteps {
 			String buttonName, String submissionDialog) throws Throwable {
 		Assert.assertTrue(mxTransfereeMyBenefitsBundlePage.isSubmitBundlePopupDisplayed(),
 				MessageFormat.format(MobilityXConstants.SUBMIT_BUNDLE_POPUP_NOT_DISPLAYED, CoreConstants.FAIL));
-		
+
 		Reporter.addStepLog("<b>Total time taken to navigateTo/display <i>Submit Benefit Bundle</i> dialog is :"
 				+ CoreFunctions.calculatePageLoadTime(CoreConstants.TIME_BEFORE_ACTION, CoreConstants.TIME_AFTER_ACTION)
 				+ " Seconds </b>");
@@ -798,7 +789,6 @@ public class CoreFlex_SharedSteps {
 				CoreFunctions.getPropertyFromConfig("Transferee_firstName") + " "
 						+ CoreFunctions.getPropertyFromConfig("Transferee_lastName"),
 				buttonName);
-		
 
 	}
 
@@ -806,7 +796,7 @@ public class CoreFlex_SharedSteps {
 	public void he_has_clicked_on_button_displayed_on_Success_Flex_dialog(String button) throws Throwable {
 		Assert.assertTrue(mxTransfereeMyBenefitsBundlePage.isBenefitSubmittedPopUpDisplayed(), MessageFormat.format(
 				MobilityXConstants.FAILED_TO_VERIFY_SUBMITTED_BENEFITS_SUCCESS_FLEX_DIALOG, CoreConstants.FAIL));
-		
+
 		Reporter.addStepLog("<b>Total time taken to navigateTo/display <i>Benefit Submit Success Flex</i> dialog is :"
 				+ CoreFunctions.calculatePageLoadTime(CoreConstants.TIME_BEFORE_ACTION, CoreConstants.TIME_AFTER_ACTION)
 				+ " Seconds </b>");
@@ -829,7 +819,7 @@ public class CoreFlex_SharedSteps {
 			throws Throwable {
 		Assert.assertTrue(mxTransfereeMyBenefitsBundlePage.isBenefitSubmittedPopUpDisplayed(), MessageFormat.format(
 				MobilityXConstants.FAILED_TO_VERIFY_SUBMITTED_BENEFITS_SUCCESS_FLEX_DIALOG, CoreConstants.FAIL));
-		
+
 		Reporter.addStepLog("<b>Total time taken to navigateTo/display <i>Benefit Submit Success Flex</i> dialog is :"
 				+ CoreFunctions.calculatePageLoadTime(CoreConstants.TIME_BEFORE_ACTION, CoreConstants.TIME_AFTER_ACTION)
 				+ " Seconds </b>");
@@ -861,7 +851,7 @@ public class CoreFlex_SharedSteps {
 				CoreConstants.FAIL));
 		Assert.assertTrue(mxTransfereeJourneyHomePage.verifySubmittedPointsDetails(), MessageFormat.format(
 				MobilityXConstants.SUBMITTED_POINTS_DETAILS_NOT_MATCHED_ON_JOURNEY_HOME_PAGE, CoreConstants.FAIL));
-		mxTransfereeJourneyHomePage.clickElementOfPage(MobilityXConstants.MANAGE_MY_POINTS);		
+		mxTransfereeJourneyHomePage.clickElementOfPage(MobilityXConstants.MANAGE_MY_POINTS);
 		Assert.assertTrue(mxTransfereeFlexPlanningToolPage.isFlexPlanningToolHomePageDisplayed(),
 				MessageFormat.format(MobilityXConstants.ONPOINT_PLANNING_TOOL_PAGE_NOT_DISPLAYED, CoreConstants.FAIL));
 		Assert.assertTrue(
@@ -887,7 +877,7 @@ public class CoreFlex_SharedSteps {
 		Assert.assertTrue(mxTransfereeJourneyHomePage.verifyUserNavigationToJourneyHomePage(), MessageFormat.format(
 				MobilityXConstants.FALIED_TO_VALIDATE_USER_NAVIGATION_TO_MOBILITYX_JOURNEY_HOME_PAGE_AFTER_BENEFIT_SUBMISSION,
 				CoreConstants.FAIL));
-		
+
 		Reporter.addStepLog(
 				"<b>Total time taken to navigate to <i>MobilityX Journey Home page after Benefit Submission</i>  is :"
 						+ CoreFunctions.calculatePageLoadTime(CoreConstants.TIME_BEFORE_ACTION,
@@ -897,10 +887,9 @@ public class CoreFlex_SharedSteps {
 				MobilityXConstants.SUBMITTED_POINTS_DETAILS_NOT_MATCHED_ON_JOURNEY_HOME_PAGE, CoreConstants.FAIL));
 		mxTransfereeJourneyHomePage.clickElementOfPage(MobilityXConstants.MANAGE_MY_POINTS);
 
-		
 		Assert.assertTrue(mxTransfereeFlexPlanningToolPage.isFlexPlanningToolHomePageDisplayed(),
 				MessageFormat.format(MobilityXConstants.ONPOINT_PLANNING_TOOL_PAGE_NOT_DISPLAYED, CoreConstants.FAIL));
-		
+
 		Reporter.addStepLog(
 				"<b>Total time taken to navigate to <i>Flex Planning Tool Home page after Benefit Submission</i> is :"
 						+ CoreFunctions.calculatePageLoadTime(CoreConstants.TIME_BEFORE_ACTION,
@@ -919,10 +908,10 @@ public class CoreFlex_SharedSteps {
 	public void he_has_logged_into_Transferee_Submissions_application_as_a_user(String userType) throws Throwable {
 		Assert.assertTrue(transfereeSubmissionsLoginPage.verifyPageNavigation(),
 				MessageFormat.format(COREFLEXConstants.FAILED_TO_NAVIGATE_TO_MOBILITYX_LOGIN_PAGE, CoreConstants.FAIL));
-		
+
 		Assert.assertTrue(transfereeSubmissionsLoginPage.loginByUserType(userType), MessageFormat
 				.format(COREFLEXConstants.FAILED_TO_LOGIN_INTO_TRANSFEREE_SUBMISSIONS_APPLICATION, CoreConstants.FAIL));
-		
+
 	}
 
 	@Given("^he has navigated to \"([^\"]*)\" page having record of Bundle submitted by the transferee$")
@@ -951,7 +940,7 @@ public class CoreFlex_SharedSteps {
 	public void he_clicks_on_button_for_Bundle_submitted_by_the_transferee_on_page(String btnName, String pageName)
 			throws Throwable {
 		transfereeSubmissionsDashboardHomePage.clickElementOfPage(btnName);
-		
+
 	}
 
 	@Given("^he has verified submitted benefit details under 'Submitted Benefits' section of 'My Benefits Bundle' page$")
@@ -1123,7 +1112,7 @@ public class CoreFlex_SharedSteps {
 
 		Assert.assertTrue(bluePrintCFLoginPage.verifyLoginPageNavigation(), MessageFormat.format(
 				PDTConstants.FAILED_TO_NAVIGATE_TO_COREFLEX_BLUE_PRINT_APPLICATION_LOGIN_PAGE, CoreConstants.FAIL));
-		
+
 		Assert.assertTrue(bluePrintCFLoginPage.loginByUserType(PDTConstants.CSM, viewPolicyPage),
 				MessageFormat.format(PDTConstants.FAILED_TO_VERIFY_LOGGED_IN_USER, CoreConstants.FAIL));
 
@@ -1178,7 +1167,7 @@ public class CoreFlex_SharedSteps {
 
 		coreFlexPolicyBenefitsCategoriesPage.selectBenefits(benefitType, policyRequiredFor);
 		coreFlexPolicyBenefitsCategoriesPage.clickElementOfPage(PDTConstants.NEXT);
-		
+
 		Assert.assertTrue(coreFlexPolicyBenefitsCategoriesPage.verifyInformationDialog(), MessageFormat.format(
 				COREFLEXConstants.FAILED_TO_VERIFY_INFORMATION_DIALOG_AFTER_SELECTING_BENEFITS_AND_CLICKING_NEXT_ON_POLICY_BENEFIT_CATEGORIES_PAGE,
 				CoreConstants.FAIL));
@@ -1187,7 +1176,7 @@ public class CoreFlex_SharedSteps {
 						policyRequiredFor),
 				MessageFormat.format(COREFLEXConstants.FAILED_TO_VERIFY_BENEFITS_DISPLAYED_ON_LEFT_NAVIGATION,
 						CoreConstants.FAIL));
-		
+
 		coreFlexPolicyBenefitsCategoriesPage.clickLeftNavigationMenuOfPage(COREFLEXConstants.GENERAL_INFORMATION);
 		Assert.assertTrue(generalInfoPage.verifyPageNavigation(COREFLEXConstants.GENERAL_INFORMATION_PAGE),
 				MessageFormat.format(PDTConstants.FAILED_TO_NAVIGATE_TO_COREFLEX_GENERAL_INFORMATION_PAGE,
@@ -1341,8 +1330,7 @@ public class CoreFlex_SharedSteps {
 				MessageFormat.format(MobilityXConstants.SUBMITTED_POINTS_DETAILS_NOT_MATCHED_ON_FLEX_PLANNING_TOOL_PAGE,
 						CoreConstants.FAIL));
 	}
-	
-	
+
 	@When("^he clicks on 'Next' floating button after verifying Benefits_Points details Submitted by Client on 'OnPoint Planning Tool' page$")
 	public void he_clicks_on_Next_floating_button_after_verifying_Benefits_Points_details_Submitted_by_Client_on_OnPoint_Planning_Tool_page()
 			throws Throwable {
@@ -1369,23 +1357,23 @@ public class CoreFlex_SharedSteps {
 	@Given("^he has verified Benefits Submitted by Client details under 'Submitted Benefits' section of 'My Benefits Bundle' page$")
 	public void he_has_verified_Benefits_Submitted_by_Client_details_under_Submitted_Benefits_section_of_My_Benefits_Bundle_page()
 			throws Throwable {
-		
+
 		Assert.assertTrue(mxTransfereeMyBenefitsBundlePage.isMyBundlePageDisplayed(),
 				MessageFormat.format(MobilityXConstants.FAILED_TO_DISPLAY_MY_BENEFIT_BUNDLE_PAGE, CoreConstants.FAIL));
 		Assert.assertTrue(mxTransfereeMyBenefitsBundlePage.validateSubmittedBenefitDetails(),
 				MobilityXConstants.SUBMITTED_BENEFIT_DETAILS_NOT_MATCHED);
 	}
-	
+
 	@Then("^Benefits Submitted by Client should be displayed under 'Submitted Benefits' section of 'My Benefits Bundle' page$")
 	public void Benefits_Submitted_by_Client_should_be_displayed_under_Submitted_Benefits_section_of_My_Benefits_Bundle_page()
 			throws Throwable {
-		
+
 		Assert.assertTrue(mxTransfereeMyBenefitsBundlePage.isMyBundlePageDisplayed(),
 				MessageFormat.format(MobilityXConstants.FAILED_TO_DISPLAY_MY_BENEFIT_BUNDLE_PAGE, CoreConstants.FAIL));
 		Assert.assertTrue(mxTransfereeMyBenefitsBundlePage.validateSubmittedBenefitDetails(),
 				MobilityXConstants.SUBMITTED_BENEFIT_DETAILS_NOT_MATCHED);
 	}
-	
+
 	@When("he provides 'Access to OnPoint' delegate access to the newly created DelegateUser on 'Delegate Information' page")
 	public void he_provides_Access_to_OnPoint_delegate_access_to_the_new_User_on_Delegate_Information_page() {
 		mxTransfereeJourneyHomePage.proceedToAccountSettingsPage();
@@ -1394,16 +1382,14 @@ public class CoreFlex_SharedSteps {
 						MobilityXConstants.FAILED_TO_PROVIDE_FLEX_BENEFITS_DELEGATE_ACCESS_TO_DELEGATED_USER,
 						CoreConstants.FAIL));
 	}
-	
+
 	@Then("^'MobilityX Delegate Access Granted' email having permissions granted should be sent to the delegate user$")
 	public void MobilityX_Delegate_Access_Granted_email_having_permissions_granted_should_be_sent_to_the_delegate_user()
-			throws Throwable {		
-		Assert.assertTrue(
-				mxTransfereeJourneyHomePage.verifyDelegateAccessGrantedEmail(),
-				MessageFormat.format(MobilityXConstants.FAILED_TO_VERIFY_MOBILITYX_DELEGATE_ACCESS_GRANTED_EMAIL,
-						CoreConstants.FAIL));
+			throws Throwable {
+		Assert.assertTrue(mxTransfereeJourneyHomePage.verifyDelegateAccessGrantedEmail(), MessageFormat.format(
+				MobilityXConstants.FAILED_TO_VERIFY_MOBILITYX_DELEGATE_ACCESS_GRANTED_EMAIL, CoreConstants.FAIL));
 	}
-	
+
 	@Given("^he has verified submitted points details after navigating to 'Mobility Journey Home'$")
 	public void he_has_verified_submitted_points_details_after_navigating_to_Mobility_Journey_Home_page()
 			throws Throwable {
@@ -1417,12 +1403,11 @@ public class CoreFlex_SharedSteps {
 		Assert.assertTrue(mxTransfereeJourneyHomePage.verifySubmittedPointsDetails(), MessageFormat.format(
 				MobilityXConstants.SUBMITTED_POINTS_DETAILS_NOT_MATCHED_ON_JOURNEY_HOME_PAGE, CoreConstants.FAIL));
 	}
-	
+
 	@Then("^\"([^\"]*)\" document should downloaded having submitted 'Benefits' and 'Points' details by 'Transferee'$")
-	public void document_should_downloaded_having_submitted_Benefits_and_Points_details_by_Transferee(String documentName)
-			throws Throwable {
-		Assert.assertTrue(
-				mxTransfereeJourneyHomePage.verifyFlexPdfDownloadedDocument(documentName),
+	public void document_should_downloaded_having_submitted_Benefits_and_Points_details_by_Transferee(
+			String documentName) throws Throwable {
+		Assert.assertTrue(mxTransfereeJourneyHomePage.verifyFlexPdfDownloadedDocument(documentName),
 				MessageFormat.format(
 						MobilityXConstants.FAILED_TO_VERIFY_SUBMITTED_BENEFITS_AND_POINTS_DETAILS_ON_FLEX_PDF_DOWNLOADED_DOCUMENT,
 						CoreConstants.FAIL));

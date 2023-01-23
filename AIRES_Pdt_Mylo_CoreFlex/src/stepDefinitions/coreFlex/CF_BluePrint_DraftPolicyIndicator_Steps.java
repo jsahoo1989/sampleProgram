@@ -59,9 +59,10 @@ public class CF_BluePrint_DraftPolicyIndicator_Steps {
 				.getCoreFlexPolicyBenefitsCategoriesPage();
 		coreFlexBenefitSummaryPage = testContext.getCoreFlexPageObjectManager().getCoreFlexBenefitSummaryPage();
 		coreFlexCustomBundlesPage = testContext.getCoreFlexPageObjectManager().getCoreFlexCustomBundlesPage();
+//		_loginInfo = FileReaderManager.getInstance().getCoreFlexJsonReader()
+//				.getLoginInfoByEnviroment((CoreFunctions.getPropertyFromConfig("envt").toLowerCase()));
 		_loginInfo = FileReaderManager.getInstance().getCoreFlexJsonReader()
-				.getLoginInfoByEnviroment((CoreFunctions.getPropertyFromConfig("envt").toLowerCase()));
-//_loginInfo = FileReaderManager.getInstance().getCoreFlexJsonReader().getLoginByEnvt(System.getProperty("envt").toLowerCase());
+				.getLoginByEnvt(System.getProperty("envt").toLowerCase());
 	}
 
 	private static int searchedPolicyIndex;
@@ -106,41 +107,43 @@ public class CF_BluePrint_DraftPolicyIndicator_Steps {
 				MessageFormat.format(COREFLEXConstants.FAILED_TO_VERIFY_ONPOINT_POLICY_DRAFT_STATUS_INDICATOR,
 						CoreConstants.FAIL, COREFLEXConstants.CREATE_NEW_POLICY_BENEFIT_GENERAL_INFORMATION));
 	}
-	
+
 	@Given("^he has verified 'Red Indicator' is displayed beside Draft Policy status to indicate 'Incomplete Policy' on the navigated 'Point Policy Setup' page$")
 	public void he_has_verified_Red_Indicator_is_displayed_beside_Draft_Policy_status_to_indicate_Incomplete_Policy_on_the_navigated_Point_Policy_Setup_page()
 			throws Throwable {
-		Assert.assertTrue(flexPolicySetupPage.verifyOnPointPolicyStatusIndicator(COREFLEXConstants.RED_INDICATOR,
-				COREFLEXConstants.POLICY_INCOMPLETE, COREFLEXConstants.CREATE_NEW_POLICY_POINT_POLICY_SETUP),
+		Assert.assertTrue(
+				flexPolicySetupPage.verifyOnPointPolicyStatusIndicator(COREFLEXConstants.RED_INDICATOR,
+						COREFLEXConstants.POLICY_INCOMPLETE, COREFLEXConstants.CREATE_NEW_POLICY_POINT_POLICY_SETUP),
 				MessageFormat.format(COREFLEXConstants.FAILED_TO_VERIFY_ONPOINT_POLICY_DRAFT_STATUS_INDICATOR,
 						CoreConstants.FAIL, COREFLEXConstants.CREATE_NEW_POLICY_POINT_POLICY_SETUP));
 	}
-	
+
 	@Given("^he has verified 'Red Indicator' is displayed beside Draft Policy status to indicate 'Incomplete Policy' on the navigated 'Policy Benefits Categories' page$")
 	public void he_has_verified_Red_Indicator_is_displayed_beside_Draft_Policy_status_to_indicate_Incomplete_Policy_on_the_navigated_Policy_Benefits_Categories_page()
 			throws Throwable {
-		
-		
+
 		Assert.assertTrue(
 				coreFlexPolicyBenefitsCategoriesPage.verifyPageNavigation(COREFLEXConstants.POLICY_BENEFIT_CATEGORIES),
 				MessageFormat.format(
 						COREFLEXConstants.FAILED_TO_VERIFY_USER_NAVIGATION_TO_POLICY_BENEFITS_CATEGORIES_PAGE,
 						CoreConstants.FAIL));
-		
-		Assert.assertTrue(coreFlexPolicyBenefitsCategoriesPage.verifyOnPointPolicyStatusIndicator(COREFLEXConstants.RED_INDICATOR,
-				COREFLEXConstants.POLICY_INCOMPLETE, COREFLEXConstants.POLICY_BENEFIT_CATEGORIES),
+
+		Assert.assertTrue(
+				coreFlexPolicyBenefitsCategoriesPage.verifyOnPointPolicyStatusIndicator(COREFLEXConstants.RED_INDICATOR,
+						COREFLEXConstants.POLICY_INCOMPLETE, COREFLEXConstants.POLICY_BENEFIT_CATEGORIES),
 				MessageFormat.format(COREFLEXConstants.FAILED_TO_VERIFY_ONPOINT_POLICY_DRAFT_STATUS_INDICATOR,
 						CoreConstants.FAIL, COREFLEXConstants.POLICY_BENEFIT_CATEGORIES));
 	}
-	
+
 	@Then("^'Green Indicator' should be displayed beside Draft Policy status to indicate 'Complete Policy' on the navigated 'Custom Bundles' page$")
 	public void Green_Indicator_should_be_displayed_beside_Draft_Policy_status_to_indicate_Complete_Policy_on_the_navigated_Custom_Bundles_page()
 			throws Throwable {
 		Assert.assertTrue(coreFlexCustomBundlesPage.verifyPageNavigation(COREFLEXConstants.CUSTOM_BUNDLES),
 				MessageFormat.format(COREFLEXConstants.FAILED_TO_VERIFY_USER_NAVIGATION_TO_CUSTOM_BUNDLES_PAGE,
 						CoreConstants.FAIL));
-		Assert.assertTrue(coreFlexCustomBundlesPage.verifyOnPointPolicyStatusIndicator(COREFLEXConstants.GREEN_INDICATOR,
-				COREFLEXConstants.POLICY_COMPLETE, COREFLEXConstants.CUSTOM_BUNDLES),
+		Assert.assertTrue(
+				coreFlexCustomBundlesPage.verifyOnPointPolicyStatusIndicator(COREFLEXConstants.GREEN_INDICATOR,
+						COREFLEXConstants.POLICY_COMPLETE, COREFLEXConstants.CUSTOM_BUNDLES),
 				MessageFormat.format(COREFLEXConstants.FAILED_TO_VERIFY_ONPOINT_POLICY_DRAFT_STATUS_INDICATOR,
 						CoreConstants.FAIL, COREFLEXConstants.CUSTOM_BUNDLES));
 		coreFlexCustomBundlesPage.clickElementOfPage(PDTConstants.EXIT);
@@ -148,14 +151,12 @@ public class CF_BluePrint_DraftPolicyIndicator_Steps {
 				MessageFormat.format(COREFLEXConstants.FAILED_TO_VERIFY_USER_NAVIGATION_TO_VIEW_EDIT_POLICY_PAGE,
 						CoreConstants.FAIL));
 	}
-	
-	
+
 	@Given("^he has verified Policy Status displayed as \"([^\"]*)\" on \"([^\"]*)\" page$")
 	public void he_has_verified_Policy_Status_displayed_as_on_page(String expectedPolicyStatus, String pageName)
 			throws Throwable {
-		Assert.assertTrue(flexPolicySetupPage.verifyPolicyStatus(expectedPolicyStatus, pageName),
-				MessageFormat.format(PDTConstants.FAILED_TO_VERIFY_POLICY_STATUS,
-						CoreConstants.FAIL,expectedPolicyStatus,pageName));
+		Assert.assertTrue(flexPolicySetupPage.verifyPolicyStatus(expectedPolicyStatus, pageName), MessageFormat.format(
+				PDTConstants.FAILED_TO_VERIFY_POLICY_STATUS, CoreConstants.FAIL, expectedPolicyStatus, pageName));
 	}
 
 	@Given("^he has clicked on \"([^\"]*)\" button after filling all the mandatory fields on 'General Information' page$")
@@ -196,7 +197,7 @@ public class CF_BluePrint_DraftPolicyIndicator_Steps {
 
 		coreFlexPolicyBenefitsCategoriesPage.selectBenefits(COREFLEXConstants.FLEX, COREFLEXConstants.CLIENT);
 		coreFlexPolicyBenefitsCategoriesPage.clickElementOfPage(PDTConstants.NEXT);
-		
+
 		Assert.assertTrue(coreFlexPolicyBenefitsCategoriesPage.verifyInformationDialog(), MessageFormat.format(
 				COREFLEXConstants.FAILED_TO_VERIFY_INFORMATION_DIALOG_AFTER_SELECTING_BENEFITS_AND_CLICKING_NEXT_ON_POLICY_BENEFIT_CATEGORIES_PAGE,
 				CoreConstants.FAIL));
@@ -291,7 +292,6 @@ public class CF_BluePrint_DraftPolicyIndicator_Steps {
 		viewPolicyPage.searchPolicy(CoreFunctions.getPropertyFromConfig("ClonePolicy_Reference_PolicyName"));
 		viewPolicyPage.clickCloneIconOfReferencePolicy(policyStatus);
 	}
-	
 
 	@Then("^he should be navigated to \"([^\"]*)\" page of new 'Cloned - Points based CoreFlex Policy' having following values$")
 	public void he_should_be_navigated_to_page_of_new_Cloned_Points_based_CoreFlex_Policy_having_following_values(

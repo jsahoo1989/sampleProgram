@@ -28,8 +28,11 @@ public class IRIS_SharedSteps {
 	
 	int _initialTableRowCount=0;
 	
+//	private CoreFlex_LoginInfo _loginInfo = FileReaderManager.getInstance().getCoreFlexJsonReader()
+//			.getLoginInfoByEnviroment((CoreFunctions.getPropertyFromConfig("envt").toLowerCase()));
+	
 	private CoreFlex_LoginInfo _loginInfo = FileReaderManager.getInstance().getCoreFlexJsonReader()
-			.getLoginInfoByEnviroment((CoreFunctions.getPropertyFromConfig("envt").toLowerCase()));
+			.getLoginByEnvt(System.getProperty("envt").toLowerCase());
 	
 	public IRIS_SharedSteps(TestContext context) {
 		testContext = context;

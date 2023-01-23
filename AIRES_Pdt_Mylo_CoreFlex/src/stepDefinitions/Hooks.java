@@ -190,6 +190,7 @@ public class Hooks {
 			testContext.getWebDriverManager().closeDriver();
 	}
 
+	@SuppressWarnings("unchecked")
 	private static String logError(Scenario scenario) {
 		String getErrorResult = null;
 		Field field = FieldUtils.getField(((ScenarioImpl) scenario).getClass(), "stepResults", true);

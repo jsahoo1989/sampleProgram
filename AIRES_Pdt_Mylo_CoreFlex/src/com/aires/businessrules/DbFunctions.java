@@ -20,8 +20,8 @@ import com.aires.utilities.Log;
 public class DbFunctions {
 	private static LinkedHashMap<String, String> _myloQueryStatementMap = new LinkedHashMap<String, String>();
 	private static LinkedHashMap<String, String> _myloQTableColumnFields = new LinkedHashMap<String, String>();
-//	private static String _environment = System.getProperty("envt").toLowerCase();
-	private static String _environment =CoreFunctions.getPropertyFromConfig("envt").toLowerCase();
+	private static String _environment = System.getProperty("envt").toLowerCase();
+//	private static String _environment =CoreFunctions.getPropertyFromConfig("envt").toLowerCase();
 	private static String _maxRows =CoreFunctions.getPropertyFromConfig("maxRecordsToValidate").toLowerCase();
 	static LinkedHashMap<String, String> _pdtExpenseCodeQueryStatementMap = new LinkedHashMap<String, String>();
 
@@ -225,10 +225,10 @@ public class DbFunctions {
 		Connection connection = null;
 		try {
 			DriverManager.registerDriver(new oracle.jdbc.OracleDriver());
-//				connection = DriverManager.getConnection(
-//						getCoreFlexDBConnectionStringAsPerEnvt(System.getProperty("envt")));			
-			connection = DriverManager
-					.getConnection(getCoreFlexDBConnectionStringAsPerEnvt(CoreFunctions.getPropertyFromConfig("envt")));
+				connection = DriverManager.getConnection(
+						getCoreFlexDBConnectionStringAsPerEnvt(System.getProperty("envt")));			
+//			connection = DriverManager
+//					.getConnection(getCoreFlexDBConnectionStringAsPerEnvt(CoreFunctions.getPropertyFromConfig("envt")));
 			PreparedStatement pst = connection.prepareStatement(DbQueries.QUERY_GET_CURRENCYCOUNTRY);
 			pst.setString(1, currencyCode);
 			ResultSet resultset = pst.executeQuery();

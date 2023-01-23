@@ -28,8 +28,11 @@ public class IRIS_Corporation_Accounting_Steps {
 	WebDriverManager _webDriverManager;
 	PageObjectManager_Pdt _pageObjectManager;
 	
+//	private CoreFlex_LoginInfo _loginInfo = FileReaderManager.getInstance().getCoreFlexJsonReader()
+//			.getLoginInfoByEnviroment((CoreFunctions.getPropertyFromConfig("envt").toLowerCase()));
+	
 	private CoreFlex_LoginInfo _loginInfo = FileReaderManager.getInstance().getCoreFlexJsonReader()
-			.getLoginInfoByEnviroment((CoreFunctions.getPropertyFromConfig("envt").toLowerCase()));
+			.getLoginByEnvt(System.getProperty("envt").toLowerCase());
 
 	public IRIS_Corporation_Accounting_Steps(TestContext testContext) {
 		_testContext = testContext;

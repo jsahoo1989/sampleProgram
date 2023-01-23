@@ -2330,7 +2330,7 @@ public class MX_Client_AuthorizationHomePage extends Base {
 	public boolean verifyFlexPdfUnderDocumentsSection(String sectionTitle, DataTable dataTable) {
 		try {
 			List<Map<String, String>> dataMap = dataTable.asMaps(String.class, String.class);
-			CoreFunctions.scrollToElementUsingJS(driver, _headingDocuments, MobilityXConstants.DOCUMENTS);
+//			CoreFunctions.scrollToElementUsingJS(driver, _headingDocuments, MobilityXConstants.DOCUMENTS);
 			int documentIndex = BusinessFunctions.returnindexItemFromListUsingText(driver, _linkDocumentsFileName,
 					dataMap.get(0).get("FileName"));
 			CoreFunctions.verifyText(

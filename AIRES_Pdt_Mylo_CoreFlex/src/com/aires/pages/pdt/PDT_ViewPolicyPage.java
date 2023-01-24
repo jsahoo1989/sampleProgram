@@ -95,7 +95,7 @@ public class PDT_ViewPolicyPage extends Base {
 	private WebElement _btnEditIcon;
 
 	// Exit Button
-	@FindBy(how = How.XPATH, using = "//span[contains(text(),'EXIT')]/parent::button")
+	@FindBy(how = How.XPATH, using = "//button[contains(text(),'EXIT')]")
 	private WebElement _btnExit;
 
 	// OK Button

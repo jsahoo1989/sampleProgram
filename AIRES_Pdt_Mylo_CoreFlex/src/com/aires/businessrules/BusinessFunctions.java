@@ -225,6 +225,7 @@ public class BusinessFunctions {
 					scenarioTagName.lastIndexOf("Pdt:") + 10);
 			break;
 		case CoreConstants.COREFLEX:
+		case CoreConstants.APP_COREFLEX:
 			value = scenarioTagName.substring(scenarioTagName.indexOf("Coreflex:") + 9,
 					scenarioTagName.lastIndexOf("Coreflex:") + 15);
 			break;
@@ -1463,7 +1464,6 @@ public class BusinessFunctions {
 						+ MobilityXConstants.TRANSFEREE_CASHOUT_DESCRIPTION_WIRE;
 			} else {
 				expectedCashoutDescription = CoreFunctions.getPropertyFromConfig("CF_Transferee_CashoutCurrencySign")
-						+ " "
 						+ format.format(Double.parseDouble(
 								CoreFunctions.getPropertyFromConfig("CF_Transferee_SelectedCashOutPoints")))
 						+ " " + CoreFunctions.getPropertyFromConfig("CF_Transferee_CashoutCurrencyCode")

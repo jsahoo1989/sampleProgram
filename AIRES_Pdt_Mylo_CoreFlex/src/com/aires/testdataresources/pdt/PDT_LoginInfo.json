@@ -44,7 +44,7 @@
 	},
 	
 	{
-		"environment": "prod",
+		"environment": "preprod",
 		"details": {
 			"irisUserName": "BBENEDU",
 			"irisPassword": "prodbb",

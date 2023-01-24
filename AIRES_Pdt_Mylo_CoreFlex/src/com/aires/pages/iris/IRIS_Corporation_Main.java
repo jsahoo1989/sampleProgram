@@ -122,6 +122,7 @@ public class IRIS_Corporation_Main extends BasePage {
 		Helpers.setEditorText(IRIS_PageMaster.getEditorObject(queryCorporationDialog, "ID:"), id, IRISConstants.ID);
 		Helpers.clickButton(IRIS_PageMaster.getButtonObjectFromLabel(queryCorporationDialog, IRISConstants.BTN_EXECUTE),
 				IRISConstants.BTN_EXECUTE);
+		CoreFunctions.waitHandler(5);
 	}
 
 	public void selectContactListFromTree() throws Exception {
@@ -176,7 +177,7 @@ public class IRIS_Corporation_Main extends BasePage {
 	public void selectCorporationModules(String moduleName) throws Exception {
 		_IRIS = getIRISWindow();
 		_IRIS.maximize();
-		Thread.sleep(3000);
+		_IRIS = getIRISWindow();
 		jTabbedPaneTabControl = _IRIS.describe(TabControl.class,
 				new TabControlDescription.Builder().nativeClass("javax.swing.JTabbedPane").index(0).build());
 		System.out.println(moduleName);	

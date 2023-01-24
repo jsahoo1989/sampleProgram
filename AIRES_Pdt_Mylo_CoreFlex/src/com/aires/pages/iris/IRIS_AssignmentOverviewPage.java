@@ -1159,8 +1159,6 @@ public class IRIS_AssignmentOverviewPage extends BasePage {
 		CoreFunctions.waitHandler(2);
 		Robot robot = new Robot();
 		robot.setAutoDelay(250);
-//		robot.keyPress(KeyEvent.VK_ENTER);
-//		robot.keyRelease(KeyEvent.VK_ENTER);
 		robot.keyPress(KeyEvent.VK_ESCAPE);
 		robot.keyRelease(KeyEvent.VK_ESCAPE);
 	}

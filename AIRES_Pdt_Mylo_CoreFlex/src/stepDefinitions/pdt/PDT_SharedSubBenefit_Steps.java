@@ -4,6 +4,7 @@ import java.text.MessageFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+import java.util.Map;
 
 import org.testng.Assert;
 
@@ -70,6 +71,7 @@ public class PDT_SharedSubBenefit_Steps {
 	private PDT_PolicyBenefitCategoryPage policyBenefitCategoryPage;
 	private CustomSoftAssert _softAssert;
 	long timeBeforeAction, timeAfterAction;
+	List<Map<String, String>> benefitsMap;
 	
 	public PDT_SharedSubBenefit_Steps(TestContext context) {
 		testContext = context;
@@ -300,6 +302,18 @@ public class PDT_SharedSubBenefit_Steps {
 		Assert.assertTrue(subBenefitPage.iterateBenefitCategoriesAndVerifyGrossUpReimbursedBy(benefitCategories, this), MessageFormat.format(PDTConstants.FAILED_TO_VERIFY_GROSSUP_REIMBURSED_BY, CoreConstants.FAIL));
 		_softAssert.assertAll();
 
+	}
+	
+	//@Given("^he has selected below benefits on each Benefit Category page$")
+	@Given("^below benefits on each benefit category page is getting selected successively$")
+	public void he_has_selected_below_benefits_on_each_Benefit_Category_page(DataTable benefitsTable) {
+		benefitsMap = benefitsTable.asMaps(String.class, String.class);
+	}
+
+	@Then("^for above selected Benefit of each Benefit Categories below fields should appear/disappear after selecting/deselecting below options from Transportation Type drop down$")
+	public void for_above_selected_Benefit_of_each_Benefit_Categories_below_fields_should_appear_disappear_after_selecting_deselecting_below_options_from_Transportation_Type_drop_down(DataTable resultTable) {
+		PDT_SharedSubBenefit_Steps objStep = new PDT_SharedSubBenefit_Steps(testContext);
+		Assert.assertTrue(subBenefitPage.iterateBenefits(benefitsMap, objStep, subBenefitPage, generalInfoPage, resultTable), "Failed to verify Transport type options for visibility/invisibilty");
 	}
 	
 }

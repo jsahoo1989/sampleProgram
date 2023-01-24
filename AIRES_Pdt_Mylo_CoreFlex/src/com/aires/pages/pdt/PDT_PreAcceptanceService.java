@@ -86,7 +86,7 @@ public class PDT_PreAcceptanceService extends PDT_SharedSubBenefitPage {
 	@FindBy(how = How.CSS, using = "ng-select[formcontrolname='preAcceptanceTransportTypeList']")
 	private WebElement _drpDownTransportationType;
 
-	@FindBy(how = How.CSS, using = "ng-select[formcontrolname='preAcceptanceTransportTypeList'] span.ng-option-label")
+	@FindBy(how = How.CSS, using = "span.ng-option-label.ng-star-inserted")
 	private List<WebElement> _drpDownTransportationTypeOptions;
 
 	@FindBy(how = How.CSS, using = "ng-select[formcontrolname='preAcceptanceTransportTypeList'] span.ng-value-label")
@@ -98,7 +98,7 @@ public class PDT_PreAcceptanceService extends PDT_SharedSubBenefitPage {
 	@FindBy(how = How.CSS, using = "ng-select[formcontrolname='accompanyingFamilyMemberCode']")
 	private WebElement _drpDownAccompanyingFamilyMemberCode;
 
-	@FindBy(how = How.CSS, using = "ng-select[formcontrolname='accompanyingFamilyMemberCode'] span.ng-option-label")
+	@FindBy(how = How.CSS, using = "span.ng-option-label.ng-star-inserted")
 	private List<WebElement> _drpDownAccompanyingFamilyMemberCodeOptions;
 
 	@FindBy(how = How.CSS, using = "#collapseTwo label.form-check-label")
@@ -116,7 +116,7 @@ public class PDT_PreAcceptanceService extends PDT_SharedSubBenefitPage {
 	@FindBy(how = How.CSS, using = "ng-select[formcontrolname='maxAmountCode']")
 	private WebElement _drpDownMaxAmt;
 
-	@FindBy(how = How.CSS, using = "ng-select[formcontrolname='maxAmountCode'] span.ng-option-label")
+	@FindBy(how = How.CSS, using = "span.ng-option-label.ng-star-inserted")
 	private List<WebElement> _drpDownMaxAmtOptions;
 
 	@FindBy(how = How.CSS, using = "ng-select[formcontrolname='maxAmountCode'] span.ng-value-label")
@@ -128,7 +128,7 @@ public class PDT_PreAcceptanceService extends PDT_SharedSubBenefitPage {
 	@FindBy(how = How.CSS, using = "ng-select[formcontrolname='currencyCode']")
 	private WebElement _drpDownCurrencyCode;
 
-	@FindBy(how = How.CSS, using = "ng-select[formcontrolname='currencyCode'] span.ng-option-label")
+	@FindBy(how = How.CSS, using = "span.ng-option-label.ng-star-inserted")
 	private List<WebElement> _drpDownCurrencyCodeOptions;
 
 	@FindBy(how = How.CSS, using = "#collapseThree label.form-check-label")
@@ -149,7 +149,7 @@ public class PDT_PreAcceptanceService extends PDT_SharedSubBenefitPage {
 	@FindBy(how = How.CSS, using = "#collapseFour ng-select[formcontrolname='maxAmountCode']")
 	private WebElement _drpDownMaxAmount;
 
-	@FindBy(how = How.CSS, using = "ng-select[formcontrolname='maxAmountCode'] span.ng-option-label")
+	@FindBy(how = How.CSS, using = "span.ng-option-label.ng-star-inserted")
 	private List<WebElement> _drpDownMaxAmountOptions;
 
 	@FindBy(how = How.XPATH, using = "//app-pre-trip-meals//ng-select[@formcontrolname='maxAmountCode']/descendant::span[contains(@class,'ng-value-label')]")
@@ -164,7 +164,7 @@ public class PDT_PreAcceptanceService extends PDT_SharedSubBenefitPage {
 	@FindBy(how = How.CSS, using = "ng-select[formcontrolname='currencyCodeEe']")
 	private WebElement _drpDownTransfereeCurrency;
 
-	@FindBy(how = How.CSS, using = "ng-select[formcontrolname='currencyCodeEe'] span.ng-option-label")
+	@FindBy(how = How.CSS, using = "span.ng-option-label.ng-star-inserted")
 	private List<WebElement> _drpDownTransfereeCurrencyOptions;
 
 	@FindBy(how = How.CSS, using = "input[formcontrolname='maxAmountAdult']")
@@ -176,7 +176,7 @@ public class PDT_PreAcceptanceService extends PDT_SharedSubBenefitPage {
 	@FindBy(how = How.CSS, using = "ng-select[formcontrolname='currencyCodeAdult']")
 	private WebElement _drpDownAdultCurrency;
 
-	@FindBy(how = How.CSS, using = "ng-select[formcontrolname='currencyCodeAdult'] span.ng-option-label")
+	@FindBy(how = How.CSS, using = "span.ng-option-label.ng-star-inserted")
 	private List<WebElement> _drpDownAdultCurrencyOptions;
 
 	@FindBy(how = How.CSS, using = "input[formcontrolname='maxAmountChild']")
@@ -188,7 +188,7 @@ public class PDT_PreAcceptanceService extends PDT_SharedSubBenefitPage {
 	@FindBy(how = How.CSS, using = "ng-select[formcontrolname='currencyCodeChild']")
 	private WebElement _drpDownCurrencyCodeChild;
 
-	@FindBy(how = How.CSS, using = "ng-select[formcontrolname='currencyCodeChild'] span.ng-option-label")
+	@FindBy(how = How.CSS, using = "span.ng-option-label.ng-star-inserted")
 	private List<WebElement> _drpDownCurrencyCodeChildOptions;
 
 	@FindBy(how = How.CSS, using = "#collapseFour label.form-check-label")
@@ -291,7 +291,7 @@ public class PDT_PreAcceptanceService extends PDT_SharedSubBenefitPage {
 	@FindBy(how = How.CSS, using = "ng-select[formcontrolname='preAcceptanceCandidateSelectionExpenseCodeList']")
 	private WebElement _drpDownCandSelectionExpenseCode;
 
-	@FindBy(how = How.CSS, using = "ng-select[formcontrolname='preAcceptanceCandidateSelectionExpenseCodeList'] span.ng-option-label.ng-star-inserted")
+	@FindBy(how = How.CSS, using = "span.ng-option-label.ng-star-inserted")
 	private List<WebElement> _drpDownOptionsCandSelectionExpenseCode;
 
 	@FindBy(how = How.CSS, using = "ng-select[formcontrolname='preAcceptanceCandidateSelectionExpenseCodeList'] span.ng-value-label.ng-star-inserted")
@@ -300,7 +300,7 @@ public class PDT_PreAcceptanceService extends PDT_SharedSubBenefitPage {
 	@FindBy(how = How.CSS, using = "ng-select[formcontrolname='preAcceptanceTransportationExpenseCodeList']")
 	private WebElement _drpDownTransportationExpenseCode;
 
-	@FindBy(how = How.CSS, using = "ng-select[formcontrolname='preAcceptanceTransportationExpenseCodeList'] span.ng-option-label.ng-star-inserted")
+	@FindBy(how = How.CSS, using = "span.ng-option-label.ng-star-inserted")
 	private List<WebElement> _drpDownOptionsTransportationExpenseCode;
 
 	@FindBy(how = How.CSS, using = "ng-select[formcontrolname='preAcceptanceTransportationExpenseCodeList'] span.ng-value-label.ng-star-inserted")
@@ -309,7 +309,7 @@ public class PDT_PreAcceptanceService extends PDT_SharedSubBenefitPage {
 	@FindBy(how = How.CSS, using = "ng-select[formcontrolname='preAcceptanceLodgingExpenseCodeList']")
 	private WebElement _drpDownTripLodgingExpenseCode;
 
-	@FindBy(how = How.CSS, using = "ng-select[formcontrolname='preAcceptanceLodgingExpenseCodeList'] span.ng-option-label.ng-star-inserted")
+	@FindBy(how = How.CSS, using = "span.ng-option-label.ng-star-inserted")
 	private List<WebElement> _drpDownOptionsLodgingExpenseCode;
 
 	@FindBy(how = How.CSS, using = "ng-select[formcontrolname='preAcceptanceLodgingExpenseCodeList'] span.ng-value-label.ng-star-inserted")
@@ -318,7 +318,7 @@ public class PDT_PreAcceptanceService extends PDT_SharedSubBenefitPage {
 	@FindBy(how = How.CSS, using = "ng-select[formcontrolname='preAcceptanceMealsExpenseCodeList']")
 	private WebElement _drpDownTripMealsExpenseCode;
 
-	@FindBy(how = How.CSS, using = "ng-select[formcontrolname='preAcceptanceMealsExpenseCodeList'] span.ng-option-label.ng-star-inserted")
+	@FindBy(how = How.CSS, using = "span.ng-option-label.ng-star-inserted")
 	private List<WebElement> _drpDownOptionsTripMealsExpenseCode;
 
 	@FindBy(how = How.CSS, using = "ng-select[formcontrolname='preAcceptanceMealsExpenseCodeList'] span.ng-value-label.ng-star-inserted")
@@ -363,7 +363,7 @@ public class PDT_PreAcceptanceService extends PDT_SharedSubBenefitPage {
 	@FindBy(how = How.CSS, using = "ng-select[formcontrolname='unitOfBusinessCode'] span.ng-value-label")
 	private WebElement _drpDownOptionSelectedBusinessClassAirfareUnit;
 
-	@FindBy(how = How.CSS, using = "ng-select[formcontrolname='unitOfBusinessCode'] span.ng-option-label")
+	@FindBy(how = How.CSS, using = "span.ng-option-label.ng-star-inserted")
 	private List<WebElement> _drpDownOptionsBusinessClassAirfareUnit;
 
 	@FindBy(how = How.XPATH, using = "//input[@formcontrolname='minDistanceBusiness']/preceding-sibling::label")
@@ -388,6 +388,9 @@ public class PDT_PreAcceptanceService extends PDT_SharedSubBenefitPage {
 	@FindBy(how = How.XPATH, using = "//input[@formcontrolname='excessBaggageFeesInd']/parent::label")
 	private List<WebElement> _lblRadioOptionsExcessBaggageFees;
 	
+	@FindBy(how = How.CSS, using = "label > input[formcontrolname='excessBaggageFeesInd']")
+	private List<WebElement> _radioButtonExcessBaggageFees;
+	
 	@FindBy(how = How.XPATH, using = "//input[@formcontrolname='excessBaggageFeesInd']/parent::label/parent::div/preceding-sibling::label")
 	private WebElement _lblExcessBaggageFees;
 	
@@ -406,7 +409,7 @@ public class PDT_PreAcceptanceService extends PDT_SharedSubBenefitPage {
 	@FindBy(how = How.CSS, using = "ng-select[formcontrolname='currencyCodeExcessBagage'] span.ng-value-label.ng-star-inserted")
 	private WebElement _currencyOptionSelected;
 	
-	@FindBy(how = How.CSS, using = "//ng-select[@formcontrolname='currencyCodeExcessBagage']/preceding-sibling::label")
+	@FindBy(how = How.XPATH, using = "//ng-select[@formcontrolname='currencyCodeExcessBagage']/preceding-sibling::label")
 	private WebElement _lblCurrencyCode;	
 	
 	final By _subBenefitCategoriesLocator = By.cssSelector("div.form-check > label.form-check-label");
@@ -625,7 +628,7 @@ public class PDT_PreAcceptanceService extends PDT_SharedSubBenefitPage {
 
 	public void expandSubBenefitIfCollapsed(String subBenefitFormName, WebElement element) {
 		if (subBenefitHeaderMap.get(subBenefitFormName).getAttribute("class").equalsIgnoreCase("collapsed"))
-			CoreFunctions.clickElement(driver, element);
+			CoreFunctions.clickUsingJS(driver, element, element.getText());
 	}
 
 	public void populateSubBenefitHeadingMap() {
@@ -734,9 +737,11 @@ public class PDT_PreAcceptanceService extends PDT_SharedSubBenefitPage {
 					preAcceptanceSubBenefitData.preAcceptanceTripTransportation.grossUp, PDTConstants.GROSS_UP,
 					PDTConstants.RADIO_BUTTON_LIST, true);
 			
-			/*CoreFunctions.selectItemInListByText(driver, _lblRadioOptionsExcessBaggageFees,
+			CoreFunctions.selectItemInListByText(driver, _lblRadioOptionsExcessBaggageFees,
 					preAcceptanceSubBenefitData.preAcceptanceTripTransportation.excessBaggageFees, _lblExcessBaggageFees.getText(),
-					PDTConstants.RADIO_BUTTON_LIST, true);*/
+					PDTConstants.RADIO_BUTTON_LIST, true);
+			
+			verifyAndFillMaxAmtIfExcessBaggageIsYes();
 			
 			CoreFunctions.selectItemInListByText(driver, _radioBtnPreTripTransport,
 					preAcceptanceSubBenefitData.preAcceptanceTripTransportation.reimbursedBy,
@@ -769,7 +774,7 @@ public class PDT_PreAcceptanceService extends PDT_SharedSubBenefitPage {
 					_drpDownSelectedOptionsTransportationExpenseCode, randExpenseCodeOptions, subBenefitFormName);
 			setExpenseCodeTransportation(randExpenseCodeOptions);
 
-		} catch (Exception e) {
+		} catch (Exception e) {			
 			Assert.fail(MessageFormat.format(PDTConstants.EXCEPTION_OCCURED_FILL_SUBBENEFIT_FORM, CoreConstants.FAIL,
 					subBenefitFormName));
 		}
@@ -777,8 +782,9 @@ public class PDT_PreAcceptanceService extends PDT_SharedSubBenefitPage {
 	
 	public void verifyAndFillMaxAmtIfExcessBaggageIsYes() {
 		int index = BusinessFunctions.returnindexItemFromListUsingText(driver, _lblRadioOptionsExcessBaggageFees, "Yes");		
-		//For debugging purpose Log.info("DomProperty=="+_inputBenefitCategory.get(index).getDomProperty("checked"));
-		if(_lblRadioOptionsExcessBaggageFees.get(index).getAttribute("checked").equalsIgnoreCase("true")) {
+		//For debugging purpose 
+		Log.info("DomProperty=="+_radioButtonExcessBaggageFees.get(index).getAttribute("checked").equalsIgnoreCase("true"));
+		if(_radioButtonExcessBaggageFees.get(index).getAttribute("checked").equalsIgnoreCase("true")) {
 			Reporter.addStepLog(MessageFormat.format(PDTConstants.VERIFIED_EXCESS_BAGGAGE_CHOSEN, CoreConstants.PASS, _lblRadioOptionsExcessBaggageFees.get(0).getText()));
 			verifyAndFillMaxAmt();
 			verifyCurrencyFieldIsDisplayed();
@@ -1297,7 +1303,7 @@ public class PDT_PreAcceptanceService extends PDT_SharedSubBenefitPage {
 													_lblUnitOfDistanceForEconomyAirTravel.get(_lblUnitOfDistanceForEconomyAirTravel.indexOf(btn))
 													.getText().trim()));
 				}
-				CoreFunctions.selectItemInListByText(driver, _lblUnitOfDistanceForEconomyAirTravel, PDTConstants.MILES);
+				CoreFunctions.selectItemInListByText(driver, _lblUnitOfDistanceForEconomyAirTravel, PDTConstants.MI);
 			}
 		} catch (Exception e) {			
 			Assert.fail("Failed to verify Economy Class AirFare options field");
@@ -1361,7 +1367,7 @@ public class PDT_PreAcceptanceService extends PDT_SharedSubBenefitPage {
 
 	public void verifyKmMilesHours(PDT_SharedSubBenefit_Steps sharedSubBenefitStep, String option) {
 		if (option.equalsIgnoreCase(PDTConstants.KM)
-				|| option.equalsIgnoreCase(PDTConstants.MILES)) {
+				|| option.equalsIgnoreCase(PDTConstants.MI)) {
 			verifyKmMiles(sharedSubBenefitStep);
 		} else if (option.equalsIgnoreCase(PDTConstants.HOURS)) {
 			verifyHours(sharedSubBenefitStep);
@@ -1391,7 +1397,7 @@ public class PDT_PreAcceptanceService extends PDT_SharedSubBenefitPage {
 					verifyKmMilesHours(sharedSubBenefitStep, option);
 				}
 			}
-		} catch (Exception e) {			
+		} catch (Exception e) {
 			Assert.fail("Failed to verify Business Class AirFare options field");
 		}
 	}
@@ -1583,7 +1589,7 @@ public class PDT_PreAcceptanceService extends PDT_SharedSubBenefitPage {
 		List<String> businessAirFareUnit = new ArrayList<String>();
 		List<String> expectedBusinessAirFareUnit = new ArrayList<String>();
 		expectedBusinessAirFareUnit.add(PDTConstants.KM);
-		expectedBusinessAirFareUnit.add(PDTConstants.MILES);
+		expectedBusinessAirFareUnit.add(PDTConstants.MI);
 		expectedBusinessAirFareUnit.add(PDTConstants.HOURS);
 		try {
 			CoreFunctions.clickElement(driver, _drpDownTransportationType);

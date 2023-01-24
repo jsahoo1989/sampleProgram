@@ -37,7 +37,7 @@ public class PDT_HouseHuntingTripPage extends PDT_SharedSubBenefitPage {
 	@FindBy(how = How.CSS, using = "ng-select[formcontrolname='houseHuntingTripTransportTypeList']")
 	private WebElement _drpDownTransportationType;
 
-	@FindBy(how = How.CSS, using = "ng-select[formcontrolname='houseHuntingTripTransportTypeList'] span.ng-option-label")
+	@FindBy(how = How.CSS, using = "span.ng-option-label.ng-star-inserted")
 	private List<WebElement> _drpDownTransportationTypeOptions;
 
 	@FindBy(how = How.CSS, using = "ng-select[formcontrolname='houseHuntingTripTransportTypeList'] span.ng-value-label")
@@ -46,7 +46,7 @@ public class PDT_HouseHuntingTripPage extends PDT_SharedSubBenefitPage {
 	@FindBy(how = How.CSS, using = "ng-select[formcontrolname='accompanyingFamilyMemberCode']")
 	private WebElement _drpDownAccompanyingFamilyMemberCode;
 
-	@FindBy(how = How.CSS, using = "ng-select[formcontrolname='accompanyingFamilyMemberCode'] span.ng-option-label")
+	@FindBy(how = How.CSS, using = "span.ng-option-label.ng-star-inserted")
 	private List<WebElement> _drpDownAccompanyingFamilyMemberCodeOptions;
 
 	@FindBy(how = How.CSS, using = "#collapseOne1 label.form-check-label")
@@ -64,7 +64,7 @@ public class PDT_HouseHuntingTripPage extends PDT_SharedSubBenefitPage {
 	@FindBy(how = How.CSS, using = "ng-select[formcontrolname='maxAmountPerNightCode']")
 	private WebElement _drpDownMaxAmt;
 
-	@FindBy(how = How.CSS, using = "ng-select[formcontrolname='maxAmountPerNightCode'] span.ng-option-label")
+	@FindBy(how = How.CSS, using = "span.ng-option-label.ng-star-inserted")
 	private List<WebElement> _drpDownMaxAmtOptions;
 
 	@FindBy(how = How.CSS, using = "ng-select[formcontrolname='maxAmountPerNightCode'] span.ng-value-label")
@@ -76,7 +76,7 @@ public class PDT_HouseHuntingTripPage extends PDT_SharedSubBenefitPage {
 	@FindBy(how = How.CSS, using = "ng-select[formcontrolname='currencyCode']")
 	private WebElement _drpDownCurrencyCode;
 
-	@FindBy(how = How.CSS, using = "ng-select[formcontrolname='currencyCode'] span.ng-option-label")
+	@FindBy(how = How.CSS, using = "span.ng-option-label.ng-star-inserted")
 	private List<WebElement> _drpDownCurrencyCodeOptions;
 
 	@FindBy(how = How.CSS, using = "ng-select[formcontrolname='currencyCode'] span.ng-value-label")
@@ -100,7 +100,7 @@ public class PDT_HouseHuntingTripPage extends PDT_SharedSubBenefitPage {
 	@FindBy(how = How.CSS, using = "#collapseThree ng-select[formcontrolname='maxAmountCode']")
 	private WebElement _drpDownMaxAmount;
 
-	@FindBy(how = How.CSS, using = "ng-select[formcontrolname='maxAmountCode'] span.ng-option-label")
+	@FindBy(how = How.CSS, using = "span.ng-option-label.ng-star-inserted")
 	private List<WebElement> _drpDownMaxAmountOptions;
 
 	@FindBy(how = How.XPATH, using = "//ng-select[@formcontrolname='maxAmountCode']/descendant::span[contains(@class,'ng-value-label')]")
@@ -115,7 +115,7 @@ public class PDT_HouseHuntingTripPage extends PDT_SharedSubBenefitPage {
 	@FindBy(how = How.CSS, using = "ng-select[formcontrolname='currencyCodeEe']")
 	private WebElement _drpDownTransfereeCurrency;
 
-	@FindBy(how = How.CSS, using = "ng-select[formcontrolname='currencyCodeEe'] span.ng-option-label")
+	@FindBy(how = How.CSS, using = "span.ng-option-label.ng-star-inserted")
 	private List<WebElement> _drpDownTransfereeCurrencyOptions;
 
 	@FindBy(how = How.CSS, using = "ng-select[formcontrolname='currencyCodeEe']  span.ng-value-label")
@@ -130,7 +130,7 @@ public class PDT_HouseHuntingTripPage extends PDT_SharedSubBenefitPage {
 	@FindBy(how = How.CSS, using = "ng-select[formcontrolname='currencyCodeAdult']")
 	private WebElement _drpDownAdultCurrency;
 
-	@FindBy(how = How.CSS, using = "ng-select[formcontrolname='currencyCodeAdult'] span.ng-option-label")
+	@FindBy(how = How.CSS, using = "span.ng-option-label.ng-star-inserted")
 	private List<WebElement> _drpDownAdultCurrencyOptions;
 
 	@FindBy(how = How.CSS, using = "ng-select[formcontrolname='currencyCodeAdult'] span.ng-value-label")
@@ -145,7 +145,7 @@ public class PDT_HouseHuntingTripPage extends PDT_SharedSubBenefitPage {
 	@FindBy(how = How.CSS, using = "ng-select[formcontrolname='currencyCodeChild']")
 	private WebElement _drpDownCurrencyCodeChild;
 
-	@FindBy(how = How.CSS, using = "ng-select[formcontrolname='currencyCodeChild'] span.ng-option-label")
+	@FindBy(how = How.CSS, using = "span.ng-option-label.ng-star-inserted")
 	private List<WebElement> _drpDownCurrencyCodeChildOptions;
 
 	@FindBy(how = How.CSS, using = "ng-select[formcontrolname='currencyCodeChild'] span.ng-value-label")
@@ -217,7 +217,7 @@ public class PDT_HouseHuntingTripPage extends PDT_SharedSubBenefitPage {
 	@FindBy(how = How.CSS, using = "ng-select[formcontrolname='houseHuntingTripTransportationExpenseCodeList']")
 	private WebElement _drpDownTransportationExpenseCode;
 	
-	@FindBy(how = How.CSS, using = "ng-select[formcontrolname='houseHuntingTripTransportationExpenseCodeList'] span.ng-option-label.ng-star-inserted")
+	@FindBy(how = How.CSS, using = "span.ng-option-label.ng-star-inserted")
 	private List<WebElement> _drpDownOptionsTransportationExpenseCode;
 	
 	@FindBy(how = How.CSS, using = "ng-select[formcontrolname='houseHuntingTripTransportationExpenseCodeList'] span.ng-value-label.ng-star-inserted")
@@ -226,7 +226,7 @@ public class PDT_HouseHuntingTripPage extends PDT_SharedSubBenefitPage {
 	@FindBy(how = How.CSS, using = "ng-select[formcontrolname='houseHuntingTripLodgingExpenseCodeList']")
 	private WebElement _drpDownLodgingExpenseCode;
 	
-	@FindBy(how = How.CSS, using = "ng-select[formcontrolname='houseHuntingTripLodgingExpenseCodeList'] span.ng-option-label.ng-star-inserted")
+	@FindBy(how = How.CSS, using = "span.ng-option-label.ng-star-inserted")
 	private List<WebElement> _drpDownOptionsLodgingExpenseCode;
 	
 	@FindBy(how = How.CSS, using = "ng-select[formcontrolname='houseHuntingTripLodgingExpenseCodeList'] span.ng-value-label.ng-star-inserted")
@@ -235,7 +235,7 @@ public class PDT_HouseHuntingTripPage extends PDT_SharedSubBenefitPage {
 	@FindBy(how = How.CSS, using = "ng-select[formcontrolname='houseHuntingTripMealsExpenseCodeList']")
 	private WebElement _drpDownMealsExpenseCode;
 	
-	@FindBy(how = How.CSS, using = "ng-select[formcontrolname='houseHuntingTripMealsExpenseCodeList'] span.ng-option-label.ng-star-inserted")
+	@FindBy(how = How.CSS, using = "span.ng-option-label.ng-star-inserted")
 	private List<WebElement> _drpDownOptionsMealsExpenseCode;
 	
 	@FindBy(how = How.CSS, using = "ng-select[formcontrolname='houseHuntingTripMealsExpenseCodeList'] span.ng-value-label.ng-star-inserted")
@@ -280,7 +280,7 @@ public class PDT_HouseHuntingTripPage extends PDT_SharedSubBenefitPage {
 	@FindBy(how = How.CSS, using = "ng-select[formcontrolname='unitOfBusinessCodeHht'] span.ng-value-label")
 	private WebElement _drpDownOptionSelectedBusinessClassAirfareUnit;
 
-	@FindBy(how = How.CSS, using = "ng-select[formcontrolname='unitOfBusinessCodeHht'] span.ng-option-label")
+	@FindBy(how = How.CSS, using = "span.ng-option-label.ng-star-inserted")
 	private List<WebElement> _drpDownOptionsBusinessClassAirfareUnit;
 
 	@FindBy(how = How.XPATH, using = "//input[@formcontrolname='minDistanceBusinessHht']/preceding-sibling::label")
@@ -813,10 +813,9 @@ public class PDT_HouseHuntingTripPage extends PDT_SharedSubBenefitPage {
 									_lblUnitOfDistanceForEconomyAirTravel
 											.get(_lblUnitOfDistanceForEconomyAirTravel.indexOf(btn)).getText().trim()));
 				}
-				CoreFunctions.selectItemInListByText(driver, _lblUnitOfDistanceForEconomyAirTravel, PDTConstants.MILES);
+				CoreFunctions.selectItemInListByText(driver, _lblUnitOfDistanceForEconomyAirTravel, PDTConstants.MI);
 			}
 		} catch (Exception e) {
-			e.printStackTrace();
 			Assert.fail("Failed to verify Economy Class AirFare options field");
 		}
 	}
@@ -878,7 +877,7 @@ public class PDT_HouseHuntingTripPage extends PDT_SharedSubBenefitPage {
 
 	public void verifyKmMilesHours(PDT_SharedSubBenefit_Steps sharedSubBenefitStep, String option) {
 		if (option.equalsIgnoreCase(PDTConstants.KM)
-				|| option.equalsIgnoreCase(PDTConstants.MILES)) {
+				|| option.equalsIgnoreCase(PDTConstants.MI)) {
 			verifyKmMiles(sharedSubBenefitStep);
 		} else if (option.equalsIgnoreCase(PDTConstants.HOURS)) {
 			verifyHours(sharedSubBenefitStep);
@@ -1099,7 +1098,7 @@ public class PDT_HouseHuntingTripPage extends PDT_SharedSubBenefitPage {
 		List<String> businessAirFareUnit = new ArrayList<String>();
 		List<String> expectedBusinessAirFareUnit = new ArrayList<String>();
 		expectedBusinessAirFareUnit.add(PDTConstants.KM);
-		expectedBusinessAirFareUnit.add(PDTConstants.MILES);
+		expectedBusinessAirFareUnit.add(PDTConstants.MI);
 		expectedBusinessAirFareUnit.add(PDTConstants.HOURS);
 		try {
 			CoreFunctions.clickElement(driver, _drpDownTransportationType);

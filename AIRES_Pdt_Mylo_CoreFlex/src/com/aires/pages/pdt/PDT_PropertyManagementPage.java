@@ -26,7 +26,7 @@ public class PDT_PropertyManagementPage extends Base {
 	@FindBy(how = How.CSS, using = "ng-select[formcontrolname='calculationMethod']")
 	private WebElement _drpDownCalculationMethod;
 
-	@FindBy(how = How.CSS, using = "ng-select[formcontrolname='calculationMethod'] span.ng-option-label")
+	@FindBy(how = How.CSS, using = "span.ng-option-label.ng-star-inserted")
 	private List<WebElement> _drpDownCalculationMethodOptions;
 
 	@FindBy(how = How.CSS, using = "ng-select[formcontrolname='calculationMethod'] span.ng-value-label")
@@ -41,7 +41,7 @@ public class PDT_PropertyManagementPage extends Base {
 	@FindBy(how = How.CSS, using = "ng-select[formcontrolname='currencyCode']")
 	private WebElement _drpDownCurrency;
 
-	@FindBy(how = How.CSS, using = "ng-select[formcontrolname='currencyCode'] span.ng-option-label")
+	@FindBy(how = How.CSS, using = "span.ng-option-label.ng-star-inserted")
 	private List<WebElement> _drpDownCurrencyOptions;
 
 	@FindBy(how = How.CSS, using = "ng-select[formcontrolname='currencyCode'] span.ng-value-label")
@@ -50,7 +50,7 @@ public class PDT_PropertyManagementPage extends Base {
 	@FindBy(how = How.CSS, using = "ng-select[formcontrolname='frequencyCode']")
 	private WebElement _drpDownFrequency;
 
-	@FindBy(how = How.CSS, using = "ng-select[formcontrolname='frequencyCode'] span.ng-option-label")
+	@FindBy(how = How.CSS, using = "span.ng-option-label.ng-star-inserted")
 	private List<WebElement> _drpDownFrequencyOptions;
 
 	@FindBy(how = How.CSS, using = "ng-select[formcontrolname='frequencyCode'] span.ng-value-label")

@@ -36,7 +36,7 @@ public class PDT_AssignmentHousingPage extends PDT_SharedSubBenefitPage {
 	@FindBy(how = How.CSS, using = "ng-select[formcontrolname='assignCurrency']")
 	private WebElement _drpDownCurrency;
 	
-	@FindBy(how = How.CSS, using = "ng-select[formcontrolname='assignCurrency'] span.ng-option-label")
+	@FindBy(how = How.CSS, using = "span.ng-option-label.ng-star-inserted")
 	private List<WebElement> _drpDownCurrencyOptions;
 	
 	@FindBy(how = How.CSS, using = "ng-select[formcontrolname='assignCurrency'] span.ng-value-label")

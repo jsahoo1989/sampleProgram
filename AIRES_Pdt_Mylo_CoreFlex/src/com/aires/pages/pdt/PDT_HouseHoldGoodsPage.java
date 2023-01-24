@@ -128,7 +128,7 @@ public class PDT_HouseHoldGoodsPage extends PDT_SharedSubBenefitPage {
 	@FindBy(how = How.CSS, using = "app-self-move ng-select[formcontrolname='selfCurrency']")
 	private WebElement _drpDownCurrency;
 
-	@FindBy(how = How.CSS, using = "app-self-move ng-select[formcontrolname='selfCurrency'] span.ng-option-label")
+	@FindBy(how = How.CSS, using = "span.ng-option-label.ng-star-inserted")
 	private List<WebElement> _drpDownCurrencyOptions;
 
 	@FindBy(how = How.CSS, using = "app-self-move ng-select[formcontrolname='selfCurrency'] span.ng-value-label")
@@ -244,7 +244,7 @@ public class PDT_HouseHoldGoodsPage extends PDT_SharedSubBenefitPage {
 	@FindBy(how = How.CSS, using = "ng-select[formcontrolname='seaContainerSizeTransfereeOnly']")
 	private WebElement _drpDownContTransferee;
 
-	@FindBy(how = How.CSS, using = "ng-select[formcontrolname='seaContainerSizeTransfereeOnly'] span.ng-option-label")
+	@FindBy(how = How.CSS, using = "span.ng-option-label.ng-star-inserted")
 	private List<WebElement> _drpDownContTransfereeOptions;
 
 	@FindBy(how = How.CSS, using = "ng-select[formcontrolname='seaContainerSizeTransfereeOnly'] span.ng-value-label")
@@ -256,7 +256,7 @@ public class PDT_HouseHoldGoodsPage extends PDT_SharedSubBenefitPage {
 	@FindBy(how = How.CSS, using = "ng-select[formcontrolname='seaContainerSizeTransfereePartner']")
 	private WebElement _drpDownContTransfereePartner;
 
-	@FindBy(how = How.CSS, using = "ng-select[formcontrolname='seaContainerSizeTransfereePartner'] span.ng-option-label")
+	@FindBy(how = How.CSS, using = "span.ng-option-label.ng-star-inserted")
 	private List<WebElement> _drpDownContTransfereePartnerOptions;
 
 	@FindBy(how = How.CSS, using = "ng-select[formcontrolname='seaContainerSizeTransfereePartner'] span.ng-value-label")
@@ -268,7 +268,7 @@ public class PDT_HouseHoldGoodsPage extends PDT_SharedSubBenefitPage {
 	@FindBy(how = How.CSS, using = "ng-select[formcontrolname='seaContainerSizeTransfereeFamily']")
 	private WebElement _drpDownContTransfereeFamily;
 
-	@FindBy(how = How.CSS, using = "ng-select[formcontrolname='seaContainerSizeTransfereeFamily'] span.ng-option-label")
+	@FindBy(how = How.CSS, using = "span.ng-option-label.ng-star-inserted")
 	private List<WebElement> _drpDownContTransfereeFamilyOptions;
 
 	@FindBy(how = How.CSS, using = "ng-select[formcontrolname='seaContainerSizeTransfereeFamily'] span.ng-value-label")
@@ -382,7 +382,7 @@ public class PDT_HouseHoldGoodsPage extends PDT_SharedSubBenefitPage {
 	@FindBy(how = How.CSS, using = "app-pet-shipment ng-select[formcontrolname='petCurrency']")
 	private WebElement _drpDownCurrencyPetShip;
 
-	@FindBy(how = How.CSS, using = "app-pet-shipment ng-select[formcontrolname='petCurrency'] span.ng-option-label")
+	@FindBy(how = How.CSS, using = "span.ng-option-label.ng-star-inserted")
 	private List<WebElement> _drpDownCurrencyOptionsPetShip;
 
 	@FindBy(how = How.CSS, using = "app-pet-shipment ng-select[formcontrolname='petCurrency'] span.ng-value-label")

@@ -31,7 +31,7 @@ public class PDT_RentalAssistancePage extends PDT_SharedSubBenefitPage {
 	@FindBy(how = How.CSS, using = "ng-select[formcontrolname='usRentDurationCode']")
 	private WebElement _drpDownDurationLodging;
 	
-	@FindBy(how = How.CSS, using = "ng-select[formcontrolname='usRentDurationCode'] span.ng-option-label")
+	@FindBy(how = How.CSS, using = "span.ng-option-label.ng-star-inserted")
 	private List<WebElement> _drpDownDurationLodgingOptions;
 	
 	@FindBy(how = How.CSS, using = "ng-select[formcontrolname='usRentDurationCode'] span.ng-value-label")
@@ -62,7 +62,7 @@ public class PDT_RentalAssistancePage extends PDT_SharedSubBenefitPage {
 	@FindBy(how = How.CSS, using = "ng-select[formcontrolname='currencyCode']")
 	private WebElement _drpDownCurrency;
 	
-	@FindBy(how = How.CSS, using = "ng-select[formcontrolname='currencyCode'] span.ng-option-label")
+	@FindBy(how = How.CSS, using = "span.ng-option-label.ng-star-inserted")
 	private List<WebElement> _drpDownCurrencyOptions;
 	
 	@FindBy(how = How.CSS, using = "ng-select[formcontrolname='currencyCode'] span.ng-value-label")

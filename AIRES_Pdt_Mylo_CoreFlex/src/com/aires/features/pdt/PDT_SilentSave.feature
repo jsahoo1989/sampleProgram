@@ -51,7 +51,7 @@ Feature: Silent Save
     Then Policy status remains "Draft" on the last Benefit Page
     And Side bar menu shows an 'exclamation mark' "error" indicator icon for the Benefit if any of its sub benefit is in Incomplete state
 
-  @BLUE-03 @BLUE-04 @PDT-Regression @BLUE-313 @Pdt:218035 @incomp
+  @BLUE-03 @BLUE-04 @PDT-Regression @BLUE-313 @Pdt:218035
   Scenario: PDT - Validate Save & Submit functionality when Policy is in Incomplete State
     Given he is on "Policy Benefit Categories" Page after selecting Client/Policy information followed by filling information on "General Information" page
     And he has clicked on 'Next' button after selecting below categories on "Policy Benefit Categories" Page
@@ -126,9 +126,10 @@ Feature: Silent Save
     And he has clicked on "SAVE & SUBMIT" button followed by "EXIT" button after entering mandatory information for all sub-benefits of each selected benefit Category
     When he clicks on newly added Policy after searching it on "View/Edit Policy Forms" page
     Then he should navigate back to "View/Edit Policy Forms" page without displaying exit modal after clicking on "EXIT/X" buttons on following pages
-      | General Information | Policy Benefit Categories | Language Training | Cultural Training |
+      #| General Information | Policy Benefit Categories | Language Training | Cultural Training |
+      | General Information | Language Training | Cultural Training |
 
-  @BLUE-06 @PDT-Regression @BLUE-458
+  @BLUE-06 @BLUE-458 @PDT-Regression @Pdt:218378
   Scenario: PDT - Validate Save & Submit functionality for 16 multiple Policy benefit categories
     Given he is on "Policy Benefit Categories" Page after selecting Client/Policy information followed by filling information on "General Information" page
     And he has clicked on 'Next' button after selecting below categories on "Policy Benefit Categories" Page

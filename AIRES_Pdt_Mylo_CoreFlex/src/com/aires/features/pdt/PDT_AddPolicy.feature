@@ -195,7 +195,8 @@ Feature: Add new Policy form with Benefit Categories
     And he has clicked on the 'Next' button after selecting client, policy information on the 'Add New Policy' page
     And he has entered mandatory information on 'General Information' page followed by selection of "Ongoing Payments/Reimbursements" as Benefit Category on "Policy Benefit" page
     When he clicks on "SAVE & SUBMIT" button after entering mandatory information for all the below selected sub benefits on "Ongoing Payments/Reimbursements" page
-      | COLA | Per Diem | Mobility Premium | Transportation Allowance | Housing Allowance | Home Maintenance Allowance | Furniture Allowance | Hardship Allowance | Banking Allowance | At Sea Allowance | Commuter Allowance | Differential Allowance | Goods & Services Allowance | Home Leave Allowance | Home Retention Allowance | Housekeeping Allowance | Utility Allowance | Other Ongoing Allowance |
+      #| COLA | Per Diem | Mobility Premium | Transportation Allowance | Housing Allowance | Home Maintenance Allowance | Furniture Allowance | Hardship Allowance | Banking Allowance | At Sea Allowance | Commuter Allowance | Differential Allowance | Goods & Services Allowance | Home Leave Allowance | Home Retention Allowance | Housekeeping Allowance | Utility Allowance | Other Ongoing Allowance |
+    | COLA | Per Diem | Mobility Premium | Transportation Allowance | Housing Allowance | Home Maintenance Allowance | Furniture Allowance | Banking Allowance | At Sea Allowance | Commuter Allowance | Differential Allowance | Goods & Services Allowance | Home Leave Allowance | Home Retention Allowance | Housekeeping Allowance | Utility Allowance | Other Ongoing Allowance |
     Then Policy Status should be changed to "Submitted" along with Version "V1" on the "Policy Benefit" page
     And newly created Policy should be displayed under "View Policy" page after clicking on 'EXIT' button
 
@@ -240,14 +241,47 @@ Feature: Add new Policy form with Benefit Categories
     Then information should not be saved for below sub-benefits of "Cultural Training" page
       | Cultural Training Employee | Cultural Training Family |
 
-  @BLUE-07 @BLUE-432 @exp
+  @BLUE-07 @BLUE-432 @exp @PDT-Regression @Pdt:218718
   Scenario: PDT - Add new Policy form using Expense Management Category as Yes and validate that Gross-Up/Reimbursed by field should display their updated values after any udpates
     Given he is on the "Add New Policy" page after clicking on the link "Add New Policy Form" displayed under the left navigation menu on the 'View Policy' page
     And he has clicked on the 'Next' button after selecting client, policy information on the 'Add New Policy' page
     And he has entered mandatory information on 'General Information' page with 'Expense Management client' as 'Yes' followed by selection of below categories on "Policy Benefit Category" page
       | Language Training | Cultural Training |
     And he has entered mandatory information for all the benefit forms after verifying the default selected option for Gross-Up, Reimbursed by fields on each benefit
-    #And the sub-benefit form of above benefit categories displays the default selected option for Gross-Up, Reimbursed by fields
-    #When he clicks on "SAVE & SUBMIT" button after entering mandatory information for all the sub-benefit forms
     When he clicks on "SAVE & SUBMIT" button on last benefit page
     Then submitted value of Gross-Up, Reimbursed by fields should be displayed on all sub-benefit forms
+    
+	@BLUE-11 @BLUE-654 @transport @PDT-Regression @Pdt:218719
+	Scenario: PDT - Validate that on de-selecting the transportation type options, their corresponding fields should be removed on Pre-Acceptance Trip, House Hunting Trip, Final Move, Home Leave Transportation benefits
+    Given he is on the "Add New Policy" page after clicking on the link "Add New Policy Form" displayed under the left navigation menu on the 'View Policy' page
+    And he has clicked on the 'Next' button after selecting client, policy information on the 'Add New Policy' page    
+    And he has entered mandatory information on 'General Information' page followed by selection of below Benefit Categories on "Policy Benefit" page
+      |Pre-Acceptance Services| House Hunting Trip| Final Move| Home Leave|
+    And below benefits on each benefit category page is getting selected successively
+      | BenefitCategories       | Benefit                            |
+      | Pre-Acceptance Services | Pre-Acceptance Trip Transportation |
+      | House Hunting Trip      | House Hunting Trip Transportation  |
+      | Final Move              | Final Move Transportation          |
+      | Home Leave              | Home Leave Transportation          |
+    Then for above selected Benefit of each Benefit Categories below fields should appear/disappear after selecting/deselecting below options from Transportation Type drop down
+      | Transportation_Type_Option | Text_box                             | Radio_button     | Radio_button_options | Drop_down                   |
+      | Distance                   | Distance                             | Unit of Distance | Km, Miles            | N/A                         |
+      | Economy Class Airfare      | Min. Distance for Economy Air Travel | Unit of Distance | Km, Miles            | N/A                         |
+      | Business Class Airfare     | N/A                                  | N/A              | N/A                  | Business Class Airfare Unit | 
+      
+  Scenario: PDT - Validate missing mandatory information for selected Transportation Type option will display Incomplete error indicator on  Pre-Acceptance Trip, House Hunting Trip, Final Move, Home Leave Transportation header form, Left Menu
+   Given he is on the "Add New Policy" page after clicking on the link "Add New Policy Form" displayed under the left navigation menu on the 'View Policy' page
+    And he has clicked on the 'Next' button after selecting client, policy information on the 'Add New Policy' page
+    And he has entered mandatory information on 'General Information' page followed by selection of below Benefit Categories on "Policy Benefit" page
+      |Pre-Acceptance Services| House Hunting Trip| Final Move| Home Leave|
+    And below benefits on each benefit category page is getting selected successively
+      | BenefitCategories       | Benefit                            |
+      | Pre-Acceptance Services | Pre-Acceptance Trip Transportation |
+      | House Hunting Trip      | House Hunting Trip Transportation  |
+      | Final Move              | Final Move Transportation          |
+      | Home Leave              | Home Leave Transportation          |    
+		And he has selected below Transportation Type options on each benefit category page
+		|Distance|Economy Class Airfare|Business Class Airfare|
+		When he clicks on "SAVE & SUBMIT" button after entering mandatory information for all fields except the fields which are displayed after clicking on Transportation Type options
+		Then "red" color 'exclamation mark' "error"  indicator is displayed on each benefit category header form
+    And an 'exclamation mark' "error" indicator icon is displayed on Left menu for the Benefit category if any of its benefit is in Incomplete state

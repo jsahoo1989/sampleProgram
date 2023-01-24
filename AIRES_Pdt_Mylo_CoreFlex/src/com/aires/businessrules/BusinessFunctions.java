@@ -29,10 +29,6 @@
  ***********************************Header End*********************************************************************************/
 package com.aires.businessrules;
 
-import java.math.RoundingMode;
-import java.sql.Connection;
-import java.sql.DriverManager;
-import java.sql.Statement;
 import java.text.DecimalFormat;
 import java.text.MessageFormat;
 import java.time.Duration;
@@ -44,10 +40,10 @@ import java.util.stream.Stream;
 
 import org.apache.commons.codec.binary.Base64;
 import org.apache.log4j.Logger;
+import org.openqa.selenium.By;
 import org.openqa.selenium.NoSuchElementException;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
-import org.openqa.selenium.By;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.FluentWait;
 import org.openqa.selenium.support.ui.Select;
@@ -60,7 +56,6 @@ import com.aires.businessrules.constants.PDTConstants;
 import com.aires.pages.pdt.PDT_AddNewPolicyPage;
 import com.aires.pages.pdt.PDT_GeneralInformationPage;
 import com.aires.testdatatypes.pdt.PDT_LoginDetails;
-import com.aires.utilities.EmailUtil;
 import com.aires.utilities.Log;
 import com.gargoylesoftware.htmlunit.ElementNotFoundException;
 import com.hp.lft.sdk.GeneralLeanFtException;
@@ -242,7 +237,7 @@ public class BusinessFunctions {
 			for (WebElement row : WebElementList) {
 				CoreFunctions.hover(driver, row);
 				Log.info(CoreConstants.ACTUAL_ITEM_NAME_IS + row.getText());
-				if (row.getText().equals(itemName)) {
+				if (row.getText().trim().equals(itemName)) {
 					CoreFunctions.highlightObject(driver, row);
 					return WebElementList.indexOf(row);
 				}
@@ -1164,12 +1159,12 @@ public class BusinessFunctions {
 	public static void verifyDefaultSelectedRadioButtonForField(WebDriver driver, List<WebElement> _radioLabelList,
 			List<WebElement> _radioButtonList, String fieldName, String expectedSelection,
 			PDT_GeneralInformationPage generalInfoPage, PDT_SharedSubBenefit_Steps sharedSubBenefitStep) {
-		if (generalInfoPage.getExpenseMgmt().equalsIgnoreCase(PDTConstants.YES)) {
+		//if (generalInfoPage.getExpenseMgmt().equalsIgnoreCase(PDTConstants.YES)) {
 			sharedSubBenefitStep.getCustomSoftAssertObj().assertTrue(
 					verifyRadioButtonIsSelected(driver, _radioLabelList, _radioButtonList, expectedSelection, fieldName,
 							PDTConstants.DEFAULT_SELECTED),
 					MessageFormat.format(PDTConstants.FAILED_TO_VERIFY_RADIO_BTN, CoreConstants.FAIL, PDTConstants.DEFAULT_SELECTED, fieldName,
 							expectedSelection));
-		}
+		//}
 	}
 }

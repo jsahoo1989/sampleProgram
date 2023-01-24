@@ -82,7 +82,7 @@ public class PDT_LanguageTrainingPage extends PDT_SharedSubBenefitPage {
 	@FindBy(how = How.CSS, using = "ng-select[formcontrolname='languageTrainingEmployeeExpenseCodeList']")
 	private WebElement _drpDownLangTrainEmpExpenseCode;
 
-	@FindBy(how = How.CSS, using = "ng-select[formcontrolname='languageTrainingEmployeeExpenseCodeList'] span.ng-option-label.ng-star-inserted")
+	@FindBy(how = How.CSS, using = "span.ng-option-label.ng-star-inserted")
 	private List<WebElement> _drpDownOptionsLangTrainEmpExpenseCode;
 
 	@FindBy(how = How.CSS, using = "ng-select[formcontrolname='languageTrainingEmployeeExpenseCodeList'] span.ng-value-label.ng-star-inserted")
@@ -91,7 +91,7 @@ public class PDT_LanguageTrainingPage extends PDT_SharedSubBenefitPage {
 	@FindBy(how = How.CSS, using = "ng-select[formcontrolname='languageTrainingFamilyExpenseCodeList']")
 	private WebElement _drpDownLangTrainFamilyExpenseCode;
 
-	@FindBy(how = How.CSS, using = "ng-select[formcontrolname='languageTrainingFamilyExpenseCodeList'] span.ng-option-label.ng-star-inserted")
+	@FindBy(how = How.CSS, using = "span.ng-option-label.ng-star-inserted")
 	private List<WebElement> _drpDownOptionsLangTrainFamilyExpenseCode;
 
 	@FindBy(how = How.CSS, using = "ng-select[formcontrolname='languageTrainingFamilyExpenseCodeList'] span.ng-value-label.ng-star-inserted")

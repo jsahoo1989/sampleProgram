@@ -48,7 +48,7 @@ public class PDT_HomeLeavePage extends PDT_SharedSubBenefitPage {
 	@FindBy(how = How.CSS, using = "ng-select[formcontrolname='assignmentFreqOfTripCode']")
 	private WebElement _drpDownFrequencyOfTrip;
 	
-	@FindBy(how = How.CSS, using = "ng-select[formcontrolname='assignmentFreqOfTripCode'] span.ng-option-label")
+	@FindBy(how = How.CSS, using = "span.ng-option-label.ng-star-inserted")
 	private List<WebElement> _drpDownFrequencyOfTripOptions;
 
 	@FindBy(how = How.CSS, using = "ng-select[formcontrolname='assignmentFreqOfTripCode'] span.ng-value-label")
@@ -64,7 +64,7 @@ public class PDT_HomeLeavePage extends PDT_SharedSubBenefitPage {
 	@FindBy(how = How.CSS, using = "ng-select[formcontrolname='homeLeaveTransportTypeList']")
 	private WebElement _drpDownTransportationType;
 
-	@FindBy(how = How.CSS, using = "ng-select[formcontrolname='homeLeaveTransportTypeList'] span.ng-option-label")
+	@FindBy(how = How.CSS, using = "span.ng-option-label.ng-star-inserted")
 	private List<WebElement> _drpDownTransportationTypeOptions;
 
 	@FindBy(how = How.CSS, using = "ng-select[formcontrolname='homeLeaveTransportTypeList'] span.ng-value-label")
@@ -76,7 +76,7 @@ public class PDT_HomeLeavePage extends PDT_SharedSubBenefitPage {
 	@FindBy(how = How.CSS, using = "ng-select[formcontrolname='accompanyingFamilyMemberCode']")
 	private WebElement _drpDownAccompFamilyMember;
 
-	@FindBy(how = How.CSS, using = "ng-select[formcontrolname='accompanyingFamilyMemberCode'] span.ng-option-label")
+	@FindBy(how = How.CSS, using = "span.ng-option-label.ng-star-inserted")
 	private List<WebElement> _drpDownAccompFamilyMemberOptions;
 
 	@FindBy(how = How.CSS, using = "ng-select[formcontrolname='accompanyingFamilyMemberCode'] span.ng-value-label")
@@ -122,7 +122,7 @@ public class PDT_HomeLeavePage extends PDT_SharedSubBenefitPage {
 	@FindBy(how = How.CSS, using = "ng-select[formcontrolname='maxAmountCode']")
 	private WebElement _drpDownMaxAmtMeals;
 
-	@FindBy(how = How.CSS, using = "ng-select[formcontrolname='maxAmountCode'] span.ng-option-label")
+	@FindBy(how = How.CSS, using = "span.ng-option-label.ng-star-inserted")
 	private List<WebElement> _drpDownMaxAmtMealsOptions;
 
 	@FindBy(how = How.CSS, using = "ng-select[formcontrolname='maxAmountCode'] span.ng-value-label")
@@ -140,7 +140,7 @@ public class PDT_HomeLeavePage extends PDT_SharedSubBenefitPage {
 	@FindBy(how = How.CSS, using = "ng-select[formcontrolname='currencyCodeEe']")
 	private WebElement _drpDownTransfereeCurrency;
 
-	@FindBy(how = How.CSS, using = "ng-select[formcontrolname='currencyCodeEe'] span.ng-option-label")
+	@FindBy(how = How.CSS, using = "span.ng-option-label.ng-star-inserted")
 	private List<WebElement> _drpDownTransfereeCurrencyOptions;
 
 	@FindBy(how = How.CSS, using = "ng-select[formcontrolname='currencyCodeEe'] span.ng-value-label")
@@ -158,7 +158,7 @@ public class PDT_HomeLeavePage extends PDT_SharedSubBenefitPage {
 	@FindBy(how = How.CSS, using = "ng-select[formcontrolname='currencyCodeAdult']")
 	private WebElement _drpDownAdultCurrency;
 
-	@FindBy(how = How.CSS, using = "ng-select[formcontrolname='currencyCodeAdult'] span.ng-option-label")
+	@FindBy(how = How.CSS, using = "span.ng-option-label.ng-star-inserted")
 	private List<WebElement> _drpDownAdultCurrencyOptions;
 
 	@FindBy(how = How.CSS, using = "ng-select[formcontrolname='currencyCodeAdult'] span.ng-value-label")
@@ -176,7 +176,7 @@ public class PDT_HomeLeavePage extends PDT_SharedSubBenefitPage {
 	@FindBy(how = How.CSS, using = "ng-select[formcontrolname='currencyCodeChild']")
 	private WebElement _drpDownCurrencyCodeChild;
 
-	@FindBy(how = How.CSS, using = "ng-select[formcontrolname='currencyCodeChild'] span.ng-option-label")
+	@FindBy(how = How.CSS, using = "span.ng-option-label.ng-star-inserted")
 	private List<WebElement> _drpDownCurrencyCodeChildOptions;
 
 	@FindBy(how = How.CSS, using = "ng-select[formcontrolname='currencyCodeChild'] span.ng-value-label")
@@ -245,7 +245,7 @@ public class PDT_HomeLeavePage extends PDT_SharedSubBenefitPage {
 	@FindBy(how = How.CSS, using = "ng-select[formcontrolname='unitOfBusinessCodeHl'] span.ng-value-label")
 	private WebElement _drpDownOptionSelectedBusinessClassAirfareUnit;
 
-	@FindBy(how = How.CSS, using = "ng-select[formcontrolname='unitOfBusinessCodeHl'] span.ng-option-label")
+	@FindBy(how = How.CSS, using = "span.ng-option-label.ng-star-inserted")
 	private List<WebElement> _drpDownOptionsBusinessClassAirfareUnit;
 
 	@FindBy(how = How.XPATH, using = "//input[@formcontrolname='minDistanceBusinessHl']/preceding-sibling::label")
@@ -743,10 +743,9 @@ public class PDT_HomeLeavePage extends PDT_SharedSubBenefitPage {
 											_lblUnitOfDistanceForEconomyAirTravel.get(_lblUnitOfDistanceForEconomyAirTravel.indexOf(btn))
 											.getText().trim()));
 		}
-		CoreFunctions.selectItemInListByText(driver, _lblUnitOfDistanceForEconomyAirTravel, PDTConstants.MILES);
+		CoreFunctions.selectItemInListByText(driver, _lblUnitOfDistanceForEconomyAirTravel, PDTConstants.MI);
 			}
 		} catch (Exception e) {
-			e.printStackTrace();
 			Assert.fail("Failed to verify Economy Class AirFare options field");
 		}
 	}
@@ -808,7 +807,7 @@ public class PDT_HomeLeavePage extends PDT_SharedSubBenefitPage {
 
 	public void verifyKmMilesHours(PDT_SharedSubBenefit_Steps sharedSubBenefitStep, String option) {
 		if (option.equalsIgnoreCase(PDTConstants.KM)
-				|| option.equalsIgnoreCase(PDTConstants.MILES)) {
+				|| option.equalsIgnoreCase(PDTConstants.MI)) {
 			verifyKmMiles(sharedSubBenefitStep);
 		} else if (option.equalsIgnoreCase(PDTConstants.HOURS)) {
 			verifyHours(sharedSubBenefitStep);
@@ -1051,7 +1050,7 @@ public class PDT_HomeLeavePage extends PDT_SharedSubBenefitPage {
 		List<String> businessAirFareUnit = new ArrayList<String>();
 		List<String> expectedBusinessAirFareUnit = new ArrayList<String>();
 		expectedBusinessAirFareUnit.add(PDTConstants.KM);
-		expectedBusinessAirFareUnit.add(PDTConstants.MILES);
+		expectedBusinessAirFareUnit.add(PDTConstants.MI);
 		expectedBusinessAirFareUnit.add(PDTConstants.HOURS);
 		try {
 			CoreFunctions.clickElement(driver, _drpDownTransportationType);

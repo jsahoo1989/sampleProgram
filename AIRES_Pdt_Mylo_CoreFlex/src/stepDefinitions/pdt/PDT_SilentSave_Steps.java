@@ -294,6 +294,7 @@ public class PDT_SilentSave_Steps {
 	
 	@When("^he clicks on BACK button on last benefit category each page$")
 	public void he_clicks_on_BACK_button_on_last_benefit_category_each_page() {
+		subBenefitPage.waitForProgressBarToDisapper();
 		subBenefitPage.clickOnBtn(PDTConstants.BACK.toUpperCase());
 	}
 

@@ -56,7 +56,7 @@ public class PDT_DestinationServicesPage extends PDT_SharedSubBenefitPage {
 	@FindBy(how = How.CSS, using = "ng-select[formcontrolname='carTypeCode']")
 	private WebElement _drpDownCarType;
 
-	@FindBy(how = How.CSS, using = "ng-select[formcontrolname='carTypeCode'] div.ng-option")
+	@FindBy(how = How.CSS, using = "span.ng-option-label.ng-star-inserted")
 	private List<WebElement> _drpDownCarTypeOptions;
 
 	@FindBy(how = How.CSS, using = "ng-select[formcontrolname='carTypeCode'] span.ng-value-label")
@@ -94,7 +94,7 @@ public class PDT_DestinationServicesPage extends PDT_SharedSubBenefitPage {
 	@FindBy(how = How.CSS, using = "app-departure-service ng-select[formcontrolname='noOfDayCode']")
 	private WebElement _drpDownNoOfDays;
 
-	@FindBy(how = How.CSS, using = "app-departure-service ng-select[formcontrolname='noOfDayCode'] div.ng-option")
+	@FindBy(how = How.CSS, using = "span.ng-option-label.ng-star-inserted")
 	private List<WebElement> _drpDownNoOfDaysOptions;
 
 	@FindBy(how = How.CSS, using = "app-departure-service ng-select[formcontrolname='noOfDayCode'] span.ng-value-label")
@@ -122,7 +122,7 @@ public class PDT_DestinationServicesPage extends PDT_SharedSubBenefitPage {
 	@FindBy(how = How.CSS, using = "ng-select[formcontrolname='durationCode']")
 	private WebElement _drpDownDuration;
 
-	@FindBy(how = How.CSS, using = "ng-select[formcontrolname='durationCode'] div.ng-option")
+	@FindBy(how = How.CSS, using = "span.ng-option-label.ng-star-inserted")
 	private List<WebElement> _drpDownDurationOptions;
 
 	@FindBy(how = How.CSS, using = "ng-select[formcontrolname='durationCode'] span.ng-value-label")
@@ -201,7 +201,7 @@ public class PDT_DestinationServicesPage extends PDT_SharedSubBenefitPage {
 	@FindBy(how = How.CSS, using = "app-transition-assistance-program ng-select[formcontrolname='currencyCode']")
 	private WebElement _drpDownCurrencyTransitionAssistanceProg;
 
-	@FindBy(how = How.CSS, using = "app-transition-assistance-program ng-select[formcontrolname='currencyCode'] span.ng-option-label")
+	@FindBy(how = How.CSS, using = "span.ng-option-label.ng-star-inserted")
 	private List<WebElement> _drpDownCurrencyOptionsTransitionAssistanceProg;
 
 	@FindBy(how = How.CSS, using = "app-transition-assistance-program ng-select[formcontrolname='currencyCode'] span.ng-value-label")
@@ -226,7 +226,7 @@ public class PDT_DestinationServicesPage extends PDT_SharedSubBenefitPage {
 	@FindBy(how = How.CSS, using = "app-tution-and-education ng-select[formcontrolname='currencyCode']")
 	private WebElement _drpDownCurrencyTutionAndEduction;
 
-	@FindBy(how = How.CSS, using = "app-tution-and-education ng-select[formcontrolname='currencyCode'] span.ng-option-label")
+	@FindBy(how = How.CSS, using = "span.ng-option-label.ng-star-inserted")
 	private List<WebElement> _drpDownCurrencyOptionsTutionAndEduction;
 
 	@FindBy(how = How.CSS, using = "app-tution-and-education ng-select[formcontrolname='currencyCode'] span.ng-value-label")

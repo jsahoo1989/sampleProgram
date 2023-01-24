@@ -36,7 +36,7 @@ public class PDT_FinalMovePage extends PDT_SharedSubBenefitPage {
 	@FindBy(how = How.CSS, using = "ng-select[formcontrolname='finalMoveTransportTypeList']")
 	private WebElement _drpDownTransportationType;
 
-	@FindBy(how = How.CSS, using = "ng-select[formcontrolname='finalMoveTransportTypeList'] span.ng-option-label")
+	@FindBy(how = How.CSS, using = "span.ng-option-label.ng-star-inserted")
 	private List<WebElement> _drpDownTransportationTypeOptions;
 
 	@FindBy(how = How.CSS, using = "ng-select[formcontrolname='finalMoveTransportTypeList'] span.ng-value-label")
@@ -48,7 +48,7 @@ public class PDT_FinalMovePage extends PDT_SharedSubBenefitPage {
 	@FindBy(how = How.CSS, using = "ng-select[formcontrolname='accompanyingFamilyMemberCode']")
 	private WebElement _drpDownAccompanyingFamilyMemberCode;
 
-	@FindBy(how = How.CSS, using = "ng-select[formcontrolname='accompanyingFamilyMemberCode'] span.ng-option-label")
+	@FindBy(how = How.CSS, using = "span.ng-option-label.ng-star-inserted")
 	private List<WebElement> _drpDownAccompanyingFamilyMemberCodeOptions;
 
 	@FindBy(how = How.CSS, using = "ng-select[formcontrolname='accompanyingFamilyMemberCode'] span.ng-value-label.ng-star-inserted")
@@ -69,14 +69,14 @@ public class PDT_FinalMovePage extends PDT_SharedSubBenefitPage {
 	@FindBy(how = How.CSS, using = "ng-select[formcontrolname='finalMoveDurationCode']")
 	private WebElement _drpDownDuration;
 
-	@FindBy(how = How.CSS, using = "ng-select[formcontrolname='finalMoveDurationCode'] span.ng-option-label")
+	@FindBy(how = How.CSS, using = "span.ng-option-label.ng-star-inserted")
 	private List<WebElement> _drpDownDurationOptions;
 
 	@FindBy(how = How.CSS, using = "ng-select[formcontrolname='finalMoveDurationCode'] span.ng-value-label")
 	private WebElement _drpDownDurationOptionsSelected;
 
-	@FindBy(how = How.XPATH, using = "//label[text()='Number of Nights']")
-	private WebElement _lblNumberOfNights;
+	@FindBy(how = How.XPATH, using = "//input[@formcontrolname='numOfNight']/preceding-sibling::label")
+	private WebElement _lblNumberOfDays;
 
 	@FindBy(how = How.CSS, using = "input[formcontrolname='numOfNight']")
 	private WebElement _txtBoxNumberOfNights;
@@ -87,7 +87,7 @@ public class PDT_FinalMovePage extends PDT_SharedSubBenefitPage {
 	@FindBy(how = How.CSS, using = "ng-select[formcontrolname='maxAmountCode']")
 	private WebElement _drpDownMaxAmt;
 
-	@FindBy(how = How.CSS, using = "ng-select[formcontrolname='maxAmountCode'] span.ng-option-label")
+	@FindBy(how = How.CSS, using = "span.ng-option-label.ng-star-inserted")
 	private List<WebElement> _drpDownMaxAmtOptions;
 
 	@FindBy(how = How.CSS, using = "ng-select[formcontrolname='maxAmountCode'] span.ng-value-label")
@@ -105,7 +105,7 @@ public class PDT_FinalMovePage extends PDT_SharedSubBenefitPage {
 	@FindBy(how = How.CSS, using = "ng-select[formcontrolname='currencyCode']")
 	private WebElement _drpDownCurrencyCode;
 
-	@FindBy(how = How.CSS, using = "ng-select[formcontrolname='currencyCode'] span.ng-option-label")
+	@FindBy(how = How.CSS, using = "span.ng-option-label.ng-star-inserted")
 	private List<WebElement> _drpDownCurrencyCodeOptions;
 
 	@FindBy(how = How.CSS, using = "ng-select[formcontrolname='currencyCode'] span.ng-value-label")
@@ -127,7 +127,7 @@ public class PDT_FinalMovePage extends PDT_SharedSubBenefitPage {
 	@FindBy(how = How.CSS, using = "#collapseThree ng-select[formcontrolname='finalMoveDurationCode']")
 	private WebElement _drpDownNumOfDaysForMeals;
 
-	@FindBy(how = How.CSS, using = "#collapseThree ng-select[formcontrolname='finalMoveDurationCode'] span.ng-option-label")
+	@FindBy(how = How.CSS, using = "span.ng-option-label.ng-star-inserted")
 	private List<WebElement> _drpDownNumOfDaysForMealsOptions;
 
 	@FindBy(how = How.CSS, using = "#collapseThree ng-select[formcontrolname='finalMoveDurationCode'] span.ng-value-label")
@@ -151,7 +151,7 @@ public class PDT_FinalMovePage extends PDT_SharedSubBenefitPage {
 	@FindBy(how = How.CSS, using = "#collapseThree ng-select[formcontrolname='maxAmountCode']")
 	private WebElement _drpDownMaxAmountMeals;
 
-	@FindBy(how = How.CSS, using = "#collapseThree ng-select[formcontrolname='maxAmountCode'] span.ng-option-label")
+	@FindBy(how = How.CSS, using = "span.ng-option-label.ng-star-inserted")
 	private List<WebElement> _drpDownMaxAmountMealsOptions;
 
 	@FindBy(how = How.CSS, using = "#collapseThree ng-select[formcontrolname='maxAmountCode'] span.ng-value-label")
@@ -166,7 +166,7 @@ public class PDT_FinalMovePage extends PDT_SharedSubBenefitPage {
 	@FindBy(how = How.CSS, using = "ng-select[formcontrolname='currencyCodeEe']")
 	private WebElement _drpDownTransfereeCurrency;
 
-	@FindBy(how = How.CSS, using = "ng-select[formcontrolname='currencyCodeEe'] span.ng-option-label")
+	@FindBy(how = How.CSS, using = "span.ng-option-label.ng-star-inserted")
 	private List<WebElement> _drpDownTransfereeCurrencyOptions;
 
 	@FindBy(how = How.CSS, using = "ng-select[formcontrolname='currencyCodeEe'] span.ng-value-label.ng-star-inserted")
@@ -181,7 +181,7 @@ public class PDT_FinalMovePage extends PDT_SharedSubBenefitPage {
 	@FindBy(how = How.CSS, using = "ng-select[formcontrolname='currencyCodeAdult']")
 	private WebElement _drpDownAdultCurrency;
 
-	@FindBy(how = How.CSS, using = "ng-select[formcontrolname='currencyCodeAdult'] span.ng-option-label")
+	@FindBy(how = How.CSS, using = "span.ng-option-label.ng-star-inserted")
 	private List<WebElement> _drpDownAdultCurrencyOptions;
 
 	@FindBy(how = How.CSS, using = "ng-select[formcontrolname='currencyCodeAdult'] span.ng-value-label.ng-star-inserted")
@@ -196,7 +196,7 @@ public class PDT_FinalMovePage extends PDT_SharedSubBenefitPage {
 	@FindBy(how = How.CSS, using = "ng-select[formcontrolname='currencyCodeChild']")
 	private WebElement _drpDownCurrencyCodeChild;
 
-	@FindBy(how = How.CSS, using = "ng-select[formcontrolname='currencyCodeChild'] span.ng-option-label")
+	@FindBy(how = How.CSS, using = "span.ng-option-label.ng-star-inserted")
 	private List<WebElement> _drpDownCurrencyCodeChildOptions;
 
 	@FindBy(how = How.CSS, using = "ng-select[formcontrolname='currencyCodeChild'] span.ng-value-label.ng-star-inserted")
@@ -273,7 +273,7 @@ public class PDT_FinalMovePage extends PDT_SharedSubBenefitPage {
 	@FindBy(how = How.CSS, using = "ng-select[formcontrolname='unitOfBusinessCodeFm'] span.ng-value-label")
 	private WebElement _drpDownOptionSelectedBusinessClassAirfareUnit;
 
-	@FindBy(how = How.CSS, using = "ng-select[formcontrolname='unitOfBusinessCodeFm'] span.ng-option-label")
+	@FindBy(how = How.CSS, using = "span.ng-option-label")
 	private List<WebElement> _drpDownOptionsBusinessClassAirfareUnit;
 
 	@FindBy(how = How.XPATH, using = "//input[@formcontrolname='minDistanceBusinessFm']/preceding-sibling::label")
@@ -452,14 +452,14 @@ public class PDT_FinalMovePage extends PDT_SharedSubBenefitPage {
 			if (_drpDownDurationOptionsSelected.getText().equalsIgnoreCase(PDTConstants.SET_OF_DAYS)
 					&& CoreFunctions.isElementExist(driver, _txtBoxNumberOfNights, 1)) {
 				Reporter.addStepLog(MessageFormat.format(PDTConstants.VERIFIED_TEXT_BOX_FIELD_DISPLAYED,
-						CoreConstants.PASS, _lblNumberOfNights.getText(), subBenefitFormName));
+						CoreConstants.PASS, _lblNumberOfDays.getText(), subBenefitFormName));
 				CoreFunctions.clickElement(driver, _txtBoxNumberOfNights);
-				CoreFunctions.clearAndSetText(driver, _txtBoxNumberOfNights, _lblNumberOfNights.getText(),
+				CoreFunctions.clearAndSetText(driver, _txtBoxNumberOfNights, _lblNumberOfDays.getText(),
 						finalMoveBenefitData.finalMoveLodging.numberOfNights);
 			}
 		} catch (Exception e) {
 			Assert.fail(MessageFormat.format(PDTConstants.FAILED_TO_FILL_VALUE_IN_TEXTBOX, CoreConstants.FAIL,
-					_lblNumberOfNights.getText(), subBenefitFormName));
+					_lblNumberOfDays.getText(), subBenefitFormName));
 		}
 	}
 
@@ -880,7 +880,7 @@ public class PDT_FinalMovePage extends PDT_SharedSubBenefitPage {
 									PDTConstants.RADIOBTN, _lblUnitOfDistanceForEconomyAirTravel
 											.get(_lblUnitOfDistanceForEconomyAirTravel.indexOf(btn)).getText().trim()));
 				}
-				CoreFunctions.selectItemInListByText(driver, _lblUnitOfDistanceForEconomyAirTravel, PDTConstants.MILES);
+				CoreFunctions.selectItemInListByText(driver, _lblUnitOfDistanceForEconomyAirTravel, PDTConstants.MI);
 			}
 		} catch (Exception e) {			
 			Assert.fail("Failed to verify Economy Class AirFare options field");
@@ -1011,7 +1011,7 @@ public class PDT_FinalMovePage extends PDT_SharedSubBenefitPage {
 	}
 
 	public void verifyKmMilesHours(PDT_SharedSubBenefit_Steps sharedSubBenefitStep, String option) {
-		if (option.equalsIgnoreCase(PDTConstants.KM) || option.equalsIgnoreCase(PDTConstants.MILES)) {
+		if (option.equalsIgnoreCase(PDTConstants.KM) || option.equalsIgnoreCase(PDTConstants.MI)) {
 			verifyKmMiles(sharedSubBenefitStep);
 		} else if (option.equalsIgnoreCase(PDTConstants.HOURS)) {
 			verifyHours(sharedSubBenefitStep);
@@ -1235,7 +1235,7 @@ public class PDT_FinalMovePage extends PDT_SharedSubBenefitPage {
 		List<String> businessAirFareUnit = new ArrayList<String>();
 		List<String> expectedBusinessAirFareUnit = new ArrayList<String>();
 		expectedBusinessAirFareUnit.add(PDTConstants.KM);
-		expectedBusinessAirFareUnit.add(PDTConstants.MILES);
+		expectedBusinessAirFareUnit.add(PDTConstants.MI);
 		expectedBusinessAirFareUnit.add(PDTConstants.HOURS);
 		try {
 			CoreFunctions.clickElement(driver, _drpDownTransportationType);

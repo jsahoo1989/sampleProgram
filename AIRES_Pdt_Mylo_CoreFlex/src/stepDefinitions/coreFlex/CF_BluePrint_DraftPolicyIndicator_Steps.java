@@ -69,6 +69,7 @@ public class CF_BluePrint_DraftPolicyIndicator_Steps {
 
 	@Given("^he has logged in to 'OnPoint-Blueprint' application as a 'CSM' user$")
 	public void he_has_logged_in_to_OnPoint_Blueprint_application_as_a_CSM_user() throws Throwable {
+		BusinessFunctions.resetPropertiesValue();
 		Assert.assertTrue(bluePrintCFLoginPage.verifyLoginPageNavigation(), MessageFormat.format(
 				PDTConstants.FAILED_TO_NAVIGATE_TO_COREFLEX_BLUE_PRINT_APPLICATION_LOGIN_PAGE, CoreConstants.FAIL));
 		Assert.assertTrue(bluePrintCFLoginPage.loginByUserType(PDTConstants.CSM, viewPolicyPage),

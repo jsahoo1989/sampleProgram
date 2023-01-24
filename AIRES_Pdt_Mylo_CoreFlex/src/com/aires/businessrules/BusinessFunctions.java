@@ -1541,5 +1541,40 @@ public class BusinessFunctions {
 				? CoreFunctions.getPropertyFromConfig("application")
 				: CoreFunctions.getPropertyFromConfig("application"));
 	}
+	
+	/**
+	 * Method to Reset all Properties values while setting-up a new policy for each
+	 * End-To-End Test Run
+	 */
+	public static void resetPropertiesValue() {
+		CoreFunctions.writeToPropertiesFile("CF_Client_AvailablePoints", "0");
+		CoreFunctions.writeToPropertiesFile("CF_Transferee_SelectedCashOutPoints", "0");
+		CoreFunctions.writeToPropertiesFile("CF_Transferee_TotalAvailablePoints", "0");
+		CoreFunctions.writeToPropertiesFile("CF_Client_SelectedCashOutPoints", "0");
+		CoreFunctions.writeToPropertiesFile("CF_Transferee_DeleteRequestTotalPoints", "0");
+		CoreFunctions.writeToPropertiesFile("CF_Transferee_AvailablePoints", "0");
+		CoreFunctions.writeToPropertiesFile("CF_Transferee_TotalSelectedPoints", "0");
+		CoreFunctions.writeToPropertiesFile("CF_Client_TotalSelectedPoints", "0");
+		CoreFunctions.writeToPropertiesFile("CF_Transferee_DeleteRequestDenied", "false");
+		CoreFunctions.writeToPropertiesFile("CF_Client_DeleteRequestDenied", "false");
+		CoreFunctions.writeToPropertiesFile("CF_Transferee_UndoDeleteBenefit", "false");
+		CoreFunctions.writeToPropertiesFile("CF_Transferee_DeleteRequestApproved", "false");
+		CoreFunctions.writeToPropertiesFile("CF_Client_DeleteRequestApproved", "false");
+		CoreFunctions.writeToPropertiesFile("CF_Client_UndoDeleteBenefit", "false");
+		CoreFunctions.writeToPropertiesFile("CF_Transferee_BenefitDeletedFlag", "false");
+		CoreFunctions.writeToPropertiesFile("CF_Transferee_BenefitUndoFlag", "false");
+		CoreFunctions.writeToPropertiesFile("CF_Client_BenefitSubmitted", "false");
+		CoreFunctions.writeToPropertiesFile("CF_Transferee_BenefitSubmitted", "false");
+		CoreFunctions.writeToPropertiesFile("CF_Transferee_CashoutCurrencySign", "");
+		CoreFunctions.writeToPropertiesFile("CF_Transferee_CashoutCurrencyCode", "");
+		CoreFunctions.writeToPropertiesFile("CF_Transferee_CashoutCurrencyText", "");
+		CoreFunctions.writeToPropertiesFile("Policy_TracingSet", "Assignment");
+		CoreFunctions.writeToPropertiesFile("ClonePolicy_Reference_PolicyName", "");
+		CoreFunctions.writeToPropertiesFile("ClonePolicy_Reference_PolicyVersion", "");
+		CoreFunctions.writeToPropertiesFile("ClonePolicy_Reference_PolicyStatus", "");
+		CoreFunctions.writeToPropertiesFile("ClonePolicy_Reference_Client", "");
+		CoreFunctions.writeToPropertiesFile("application", CoreConstants.APP_COREFLEX);
+
+	}
 
 }

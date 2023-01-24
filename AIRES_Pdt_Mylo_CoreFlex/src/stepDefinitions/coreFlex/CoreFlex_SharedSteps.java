@@ -1059,7 +1059,7 @@ public class CoreFlex_SharedSteps {
 	public void he_has_setup_a_new_Points_Based_CoreFlex_Policy_with_following_selection_in_Blueprint_application(
 			DataTable dataTable) throws Throwable {
 
-		resetPropertiesValue();
+		BusinessFunctions.resetPropertiesValue();
 		List<Map<String, String>> dataMap = dataTable.asMaps(String.class, String.class);
 		String policyRequiredFor = dataMap.get(0).get("PolicyRequiredFor");
 		String benefitType = dataMap.get(0).get("BenefitType");
@@ -1371,5 +1371,26 @@ public class CoreFlex_SharedSteps {
 				MessageFormat.format(
 						MobilityXConstants.FAILED_TO_VERIFY_SUBMITTED_BENEFITS_AND_POINTS_DETAILS_ON_FLEX_PDF_DOWNLOADED_DOCUMENT,
 						CoreConstants.FAIL));
+	}
+	
+	
+	@Given("^he has created new 'OnPoint Enabled' policies for \"([^\"]*)\" client in IRIS application$")
+	public void he_has_created_new_OnPoint_Enabled_policies_in_IRIS_application(String clientId)
+			throws Throwable {
+		testContext.getBasePage().reLaunchIrisToAvoidFreezingIssue();
+		testContext.getIrisPageManager().irisLoginPage = new IRIS_LoginPage();
+		testContext.getIrisPageManager().irisLoginPage.getIRISLoginAsPerEnvt(_loginInfo);
+		testContext.getIrisPageManager().irisWelcome12C = new IRIS_Welcome12C();
+		testContext.getIrisPageManager().irisWelcome12C
+				.selectWelcomeWindowModule(IRISConstants.CORPORATION_MODULE);
+		testContext.getIrisPageManager().irisCorporationMain = new IRIS_Corporation_Main();
+		testContext.getIrisPageManager().irisCorporationMain.queryCorporation(clientId);
+		testContext.getIrisPageManager().irisCorporationMain.selectCorporationModules(IRISConstants.ACCOUNTING);
+		testContext.getIrisPageManager().irisCorporationAccounting = new IRIS_Corporation_Accounting();
+		testContext.getIrisPageManager().irisCorporationAccounting.verifyAccountingTab();
+		testContext.getIrisPageManager().irisCorporationAccounting.addNewOnPointAutomationPolicies();
+		testContext.getIrisPageManager().irisCorporationAccounting.clickOnSaveBtn();
+		testContext.getBasePage().cleanIrisProcesses();
+		
 	}
 }

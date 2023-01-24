@@ -52,9 +52,6 @@ public class BasePage {
 	private PDT_LoginDetails _loginDetails;
 	LinkedHashMap<String, Integer> userPortMap = new LinkedHashMap<String, Integer>();
 
-	private CoreFlex_LoginInfo _coreFlexLoginInfo = FileReaderManager.getInstance().getCoreFlexJsonReader()
-			.getLoginInfoByEnviroment((BusinessFunctions.getEnvBasedOnExecutionType().toLowerCase()));	
-
 	public BasePage() throws Exception {
 		Thread.sleep(2000);
 		_windowTitle = getWindowText.getActiveWindowText();
@@ -76,7 +73,7 @@ public class BasePage {
 		int portNumber = getPortNumberAsPerUserName();
 		Log.info("Port Assigned to " + _userName + " is : " + portNumber);
 		config.setServerAddress(new URI("ws://localhost:" + portNumber));
-		SDK.init(config);		
+		SDK.init(config);
 //		_path = getIrisPathForApplication(CoreFunctions.getPropertyFromConfig("application"));
 //		_path = getIrisPathForApplication(System.getProperty("application"));
 		_path = getIrisPathForApplication(BusinessFunctions.getApplicationBasedOnExecutionType());
@@ -112,7 +109,7 @@ public class BasePage {
 	public static Window getIRISWindow() throws Exception {
 		Thread.sleep(8000);
 		_windowTitle = getWindowText.getActiveWindowText();
-		System.out.println("WindowTitle : "+_windowTitle);
+		System.out.println("WindowTitle : " + _windowTitle);
 		return Desktop.describe(Window.class, new WindowDescription.Builder().title(_windowTitle).build());
 	}
 
@@ -231,13 +228,16 @@ public class BasePage {
 	}
 
 	public String getIrisPathForApplication(String appName) {
+		CoreFlex_LoginInfo _coreFlexLoginInfo = FileReaderManager.getInstance().getCoreFlexJsonReader()
+				.getLoginInfoByEnviroment((BusinessFunctions.getEnvBasedOnExecutionType().toLowerCase()));
 		String irisBuildPath = null;
 		Log.info("appName=" + appName);
 		switch (appName) {
 		case CoreConstants.APP_PDT:
 			_loginDetails = FileReaderManager.getInstance().getJsonReader()
 					.getLoginByApplication(CoreConstants.APP_PDT);
-			irisBuildPath = getIRISPathAsPerEnvtForPDT(_loginDetails, BusinessFunctions.getEnvBasedOnExecutionType().toLowerCase());
+			irisBuildPath = getIRISPathAsPerEnvtForPDT(_loginDetails,
+					BusinessFunctions.getEnvBasedOnExecutionType().toLowerCase());
 			break;
 		case CoreConstants.APP_COREFLEX:
 			_loginDetails = FileReaderManager.getInstance().getJsonReader()
@@ -245,7 +245,8 @@ public class BasePage {
 			irisBuildPath = getIRISPathAsPerEnvtForCoreFlex(_coreFlexLoginInfo);
 			break;
 		default:
-			Assert.fail(MessageFormat.format(CoreConstants.INVALID_APPLICATION, BusinessFunctions.getApplicationBasedOnExecutionType()));
+			Assert.fail(MessageFormat.format(CoreConstants.INVALID_APPLICATION,
+					BusinessFunctions.getApplicationBasedOnExecutionType()));
 		}
 		return irisBuildPath;
 	}

@@ -240,6 +240,7 @@ public class BasePage {
 					BusinessFunctions.getEnvBasedOnExecutionType().toLowerCase());
 			break;
 		case CoreConstants.APP_COREFLEX:
+		case CoreConstants.COREFLEX:
 			_loginDetails = FileReaderManager.getInstance().getJsonReader()
 					.getLoginByApplication(CoreConstants.APP_COREFLEX);
 			irisBuildPath = getIRISPathAsPerEnvtForCoreFlex(_coreFlexLoginInfo);
@@ -288,7 +289,7 @@ public class BasePage {
 	}
 
 	public void reLaunchIrisToAvoidFreezingIssue() throws Exception {
-		getPIDAndKillProces();
+//		getPIDAndKillProces();
 		if (!getRunningStatus_LFTRuntimeEngine(_processName_uftRuntimeEngine)) {
 			invokeIrisApplication();
 			closeIRISLoginWindow();
@@ -311,7 +312,7 @@ public class BasePage {
 
 	private void closeIRISLoginWindow() {
 		try {
-			IRIS_PageMaster.getWindowObject(IRISConstants.LOGIN_WINDOW_TITLE).close();
+			IRIS_PageMaster.getWindowObject(getWindowText.getActiveWindowText()).close();
 		} catch (Exception e) {
 			Assert.fail(CoreConstants.ERROR + e.getMessage());
 		}

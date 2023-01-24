@@ -31,7 +31,7 @@ public class CoreFlex_FlexPolicySetupPage extends Base {
 	/****************** Page Objects *************************************/
 
 	// Next Button
-	@FindBy(how = How.CSS, using = "button[class*='btn-next']")
+	@FindBy(how = How.XPATH, using = "//button[contains(text(),'NEXT')]")
 	private WebElement _buttonNext;
 
 	// Back Button
@@ -203,7 +203,7 @@ public class CoreFlex_FlexPolicySetupPage extends Base {
 	private List<WebElement> _selectCashoutCurrencyOptions;
 
 	// Cashout Currency Select Field Selected Value
-	@FindBy(how = How.CSS, using = "ng-select[formcontrolname='currencyCode'] div[class='ng-value']")
+	@FindBy(how = How.CSS, using = "ng-select[formcontrolname='currencyCode'] div[class='ng-value ng-star-inserted']")
 	private WebElement _selectCashoutCurrencySelectedValue;
 
 	@FindBy(how = How.XPATH, using = "//strong[text()='Policy Status:']/parent::label/following-sibling::label/span/i")

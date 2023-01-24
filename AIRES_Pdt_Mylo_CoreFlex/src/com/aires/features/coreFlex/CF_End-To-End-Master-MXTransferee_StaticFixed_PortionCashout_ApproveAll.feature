@@ -1,6 +1,6 @@
 Feature: Validate MXTransferee Workflow for Transferee-PortionCashout selection, CloningToDifferentClient, Transferee Mobility Journey, PortionCashout and Transferee Submissions ApproveAll Operation
 
-  @Coreflex:218330 @CF_End-To-End_MasterScript @CF_Master_Transferee_PortionApprova1 @CF_Master_PortionApprove_PolicySetup
+  @Coreflex:218330 @CF_End-To-End_MasterScript @CF_Master_Transferee_PortionApprove @CF_Master_PortionApprove_PolicySetup
   Scenario: CoreFlex - Validating policy status is updated to 'Active' on completion of Approval WorkFlow for Transferee-PortionCashout MasterScript Policy Setup
     Given he has setup a new Points Based CoreFlex Policy with following selection in Blueprint application
       | Person Responsible For Benefit Selection | Flex Setup Type | Cashout Availability | BenefitType | PolicyRequiredFor |
@@ -13,7 +13,7 @@ Feature: Validate MXTransferee Workflow for Transferee-PortionCashout selection,
     When he clicks on "Approve" button to acknowledge 'Approve this Policy' dialog
     Then Policy Status and Version should be displayed as "Active" and "V1" respectively on "View/Edit Policy Forms" page
 
-  @Coreflex:218331 @CF_End-To-End_MasterScript @CF_Master_Transferee_PortionApprova1 @CF_Master_PortionApprove_CloningToDifferentClientPolicy
+  @Coreflex:218331 @CF_End-To-End_MasterScript @CF_Master_Transferee_PortionApproveIgnore @CF_Master_PortionApprove_CloningToDifferentClientPolicy
   Scenario Outline: CoreFlex - Validating Cloned Policy contents for different Client reference selection and Policy with Submit/Active/Legacy status
     Given he has logged into 'BluePrint' application as 'CSM - SSO' user
     And he has clicked on 'Clone Policy' icon after searching for 'Points Based CoreFlex Policy' with Policy Status as "<PolicyStatus>"
@@ -28,7 +28,7 @@ Feature: Validate MXTransferee Workflow for Transferee-PortionCashout selection,
       | PolicyStatus |
       | Active       |
 
-  @Coreflex:218332 @CF_End-To-End_MasterScript @CF_Master_Transferee_PortionApprova1 @CF_Master_PortionApprove_MXTransfereeFlow
+  @Coreflex:218332 @CF_End-To-End_MasterScript @CF_Master_Transferee_PortionApprove @CF_Master_PortionApprove_MXTransfereeFlow
   Scenario: MXTransferee - Submitting Flex benefits_PortionCashout available in configured policy and Validating Available_Used Benefits Points and Cashout Post Delete Operation
     Given he has logged into 'MobilityX' application after creating a new 'Transferee' through IRIS application for policy setup in 'Policy Digitization Tool'
     And he has validated 'Assignment-Policy' details after selecting below option displayed on 'Welcome' dialog
@@ -51,7 +51,7 @@ Feature: Validate MXTransferee Workflow for Transferee-PortionCashout selection,
     When he 'Delete' submitted Benefit_Cashout and confirms 'Remove Benefit Selection' dialog by entering username and clicking on "Yes-request to delete this benefit"
     Then 'Status' of the deleted benefit_cashout should be displayed as "Delete Request Pending" under 'Submitted Benefits' section of 'My Benefit Bundle' page
 
-  @Coreflex:C218333 @CF_End-To-End_MasterScript @CF_Master_Transferee_PortionApprova1 @CF_Master_PortionApprove_MSPEC_PPC_Flow
+  @Coreflex:C218333 @CF_End-To-End_MasterScript @CF_Master_Transferee_PortionApprove @CF_Master_PortionApprove_MSPEC_PPC_Flow
   Scenario: TransfereeSubmissions - Verifying Benefit_Cashout_Points Details in TransfereeSubmissions & MobilityX application post Approve All Delete request selection by MSPEC/PPC User
     Given he has logged into 'Transferee Submissions' application as a "MSPEC/PPC" user
     And he has navigated to "Transferee Submissions Dashboard" page having record of Bundle submitted by the transferee

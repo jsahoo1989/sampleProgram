@@ -149,6 +149,9 @@ public class Hooks {
 	public String remoteGetURL(Scenario scenario) {
 		CoreFunctions.writeToPropertiesFile("ExecutionType", "remote");
 		String appName = System.getProperty("application");
+		CoreFunctions.writeToPropertiesFile("application", appName);
+		String enviroment = System.getProperty("envt");
+		CoreFunctions.writeToPropertiesFile("envt", enviroment);
 		_coreFlexLoginInfo = FileReaderManager.getInstance().getCoreFlexJsonReader()
 				.getLoginByEnvt(System.getProperty("envt").toLowerCase());
 		return (appName.equals(CoreConstants.COREFLEX)

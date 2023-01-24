@@ -1532,13 +1532,13 @@ public class BusinessFunctions {
 
 	public static String getEnvBasedOnExecutionType() {
 		return (CoreFunctions.getPropertyFromConfig("ExecutionType").equalsIgnoreCase("remote")
-				? System.getProperty("envt")
+				? CoreFunctions.getPropertyFromConfig("envt")
 				: CoreFunctions.getPropertyFromConfig("envt"));
 	}
 	
 	public static String getApplicationBasedOnExecutionType() {
 		return (CoreFunctions.getPropertyFromConfig("ExecutionType").equalsIgnoreCase("remote")
-				? System.getProperty("application")
+				? CoreFunctions.getPropertyFromConfig("application")
 				: CoreFunctions.getPropertyFromConfig("application"));
 	}
 

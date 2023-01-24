@@ -12,6 +12,7 @@ import java.util.LinkedHashMap;
 
 import org.testng.Assert;
 
+import com.aires.businessrules.BusinessFunctions;
 import com.aires.businessrules.CoreFunctions;
 import com.aires.businessrules.constants.CoreConstants;
 import com.aires.businessrules.constants.IRISConstants;
@@ -52,10 +53,7 @@ public class BasePage {
 	LinkedHashMap<String, Integer> userPortMap = new LinkedHashMap<String, Integer>();
 
 	private CoreFlex_LoginInfo _coreFlexLoginInfo = FileReaderManager.getInstance().getCoreFlexJsonReader()
-			.getLoginInfoByEnviroment((CoreFunctions.getPropertyFromConfig("envt").toLowerCase()));
-
-//	private CoreFlex_LoginInfo _coreFlexLoginInfo = FileReaderManager.getInstance().getCoreFlexJsonReader()
-//			.getLoginInfoByEnviroment(System.getProperty("envt").toLowerCase());	
+			.getLoginInfoByEnviroment((BusinessFunctions.getEnvBasedOnExecutionType().toLowerCase()));	
 
 	public BasePage() throws Exception {
 		Thread.sleep(2000);
@@ -69,7 +67,7 @@ public class BasePage {
 	}
 
 	public void invokeIrisApplication() throws Exception {
-//		getPIDAndKillProces();
+		getPIDAndKillProces();
 		CoreFunctions.waitHandler(2);
 		allocateUFTPortToUsers();
 		runLFTEngineAsPerStatus();
@@ -78,9 +76,10 @@ public class BasePage {
 		int portNumber = getPortNumberAsPerUserName();
 		Log.info("Port Assigned to " + _userName + " is : " + portNumber);
 		config.setServerAddress(new URI("ws://localhost:" + portNumber));
-		SDK.init(config);
-		_path = getIrisPathForApplication(CoreFunctions.getPropertyFromConfig("application"));
+		SDK.init(config);		
+//		_path = getIrisPathForApplication(CoreFunctions.getPropertyFromConfig("application"));
 //		_path = getIrisPathForApplication(System.getProperty("application"));
+		_path = getIrisPathForApplication(BusinessFunctions.getApplicationBasedOnExecutionType());
 		_process = Runtime.getRuntime().exec(_path);
 		_windowTitle = getWindowText.getActiveWindowText();
 		while (!_windowTitle.contains("Login")) {
@@ -94,8 +93,8 @@ public class BasePage {
 //		int port = 0;
 		// String userName = System.getProperty("user.name").toLowerCase();
 		String computerName = InetAddress.getLocalHost().getHostName();
-		if (computerName.equalsIgnoreCase("corpprdvw270") || _userName.equalsIgnoreCase("vmallah"))
-			return 5090;
+		if (computerName.equalsIgnoreCase("corpprdvw270"))
+			return 5095;
 		else
 			return userPortMap.get(_userName);
 	}
@@ -152,7 +151,7 @@ public class BasePage {
 	}
 
 	public void cleanIrisProcesses() throws Exception {
-//		killExistingBrowsers();
+		killExistingBrowsers();
 		closeIRISApplication();
 	}
 
@@ -238,11 +237,7 @@ public class BasePage {
 		case CoreConstants.APP_PDT:
 			_loginDetails = FileReaderManager.getInstance().getJsonReader()
 					.getLoginByApplication(CoreConstants.APP_PDT);
-			/*
-			 * irisBuildPath = getIRISPathAsPerEnvtForPDT(_loginDetails,
-			 * CoreFunctions.getPropertyFromConfig("envt").toLowerCase());
-			 */
-			irisBuildPath = getIRISPathAsPerEnvtForPDT(_loginDetails, System.getProperty("envt").toLowerCase());
+			irisBuildPath = getIRISPathAsPerEnvtForPDT(_loginDetails, BusinessFunctions.getEnvBasedOnExecutionType().toLowerCase());
 			break;
 		case CoreConstants.APP_COREFLEX:
 			_loginDetails = FileReaderManager.getInstance().getJsonReader()
@@ -250,11 +245,7 @@ public class BasePage {
 			irisBuildPath = getIRISPathAsPerEnvtForCoreFlex(_coreFlexLoginInfo);
 			break;
 		default:
-			/*
-			 * Assert.fail(MessageFormat.format(CoreConstants.INVALID_APPLICATION,
-			 * CoreFunctions.getPropertyFromConfig("application")));
-			 */
-			Assert.fail(MessageFormat.format(CoreConstants.INVALID_APPLICATION, System.getProperty("application")));
+			Assert.fail(MessageFormat.format(CoreConstants.INVALID_APPLICATION, BusinessFunctions.getApplicationBasedOnExecutionType()));
 		}
 		return irisBuildPath;
 	}
@@ -279,11 +270,7 @@ public class BasePage {
 			break;
 		default:
 			Assert.fail(MessageFormat.format(CoreConstants.INVALID_ENVIRONMENT,
-					CoreFunctions.getPropertyFromConfig("application")));
-			/*
-			 * Assert.fail(MessageFormat.format(CoreConstants.INVALID_ENVIRONMENT,
-			 * System.getProperty("application")));
-			 */
+					BusinessFunctions.getApplicationBasedOnExecutionType()));
 		}
 		return irisBuildPath;
 	}
@@ -300,7 +287,7 @@ public class BasePage {
 	}
 
 	public void reLaunchIrisToAvoidFreezingIssue() throws Exception {
-//		getPIDAndKillProces();
+		getPIDAndKillProces();
 		if (!getRunningStatus_LFTRuntimeEngine(_processName_uftRuntimeEngine)) {
 			invokeIrisApplication();
 			closeIRISLoginWindow();
@@ -309,8 +296,9 @@ public class BasePage {
 		int portNumber = getPortNumberAsPerUserName();
 		config.setServerAddress(new URI("ws://localhost:" + portNumber));
 		SDK.init(config);
-		String _path = getIrisPathForApplication(CoreFunctions.getPropertyFromConfig("application"));
+//		String _path = getIrisPathForApplication(CoreFunctions.getPropertyFromConfig("application"));
 //		String _path = getIrisPathForApplication(System.getProperty("application"));
+		String _path = getIrisPathForApplication(BusinessFunctions.getApplicationBasedOnExecutionType());
 		Runtime.getRuntime().exec(_path);
 		String _windowTitle = getWindowText.getActiveWindowText();
 		while (!_windowTitle.contains("Login")) {

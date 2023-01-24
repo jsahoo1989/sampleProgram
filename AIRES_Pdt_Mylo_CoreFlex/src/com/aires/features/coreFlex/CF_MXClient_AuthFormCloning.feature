@@ -1,6 +1,6 @@
 Feature: Validate the OnPoint MXClient Auth Form Cloning Functionality
 
-  @CF_End-To-End_MasterScript @CF_MXClient_AuthFormCloning @CF_MXClient_AuthFormCloning_PS
+  @Coreflex:218632 @CF_End-To-End_MasterScript @CF_MXClient_AuthFormCloning @CF_MXClient_AuthFormCloning_PS
   Scenario: CoreFlex - Validating policy status is updated to 'Active' on completion of Approval WorkFlow for AuthForm Cloning Policy Setup
     Given he has setup a new Points Based CoreFlex Policy with following selection in Blueprint application
       | Person Responsible For Benefit Selection | Flex Setup Type | Cashout Availability | BenefitType | PolicyRequiredFor |
@@ -13,7 +13,7 @@ Feature: Validate the OnPoint MXClient Auth Form Cloning Functionality
     When he clicks on "Approve" button to acknowledge 'Approve this Policy' dialog
     Then Policy Status and Version should be displayed as "Active" and "V1" respectively on "View/Edit Policy Forms" page
 
-  @CF_End-To-End_MasterScript @CF_MXClient_AuthFormCloning @CF_MXClient_AuthFormCloning_PostSubmitScenario @CF_MXClient_PostSubmitScenario_AuthForm
+  @Coreflex:218633 @CF_End-To-End_MasterScript @CF_MXClient_AuthFormCloning @CF_MXClient_AuthFormCloning_PostSubmitScenario @CF_MXClient_PostSubmitScenario_AuthForm
   Scenario: MXClient - Verifying Authorization Submission with UserDefined TotalPoints, Core/Flex Benefits & PortionCashout for configured AuthForm Cloning BluePrint CF Policy
     Given he has logged into 'MobilityX' application as a 'Client' user
     And he has clicked on "Create an authorization" after validating Client details on 'Authorization Home Page'
@@ -33,7 +33,7 @@ Feature: Validate the OnPoint MXClient Auth Form Cloning Functionality
     Then 'Auth Submit Success' growl message should be displayed on the navigated 'MobilityX Dashboard Home' page
     And 'New Initiation Submitted' email should be received having Transferee details along with assigned CoreFlex Total Points and Submitted Benefits Points
 
-  @CF_End-To-End_MasterScript @CF_MXClient_AuthFormCloning @CF_MXClient_AuthFormCloning_PostSubmitScenario @CF_MXClient_PostSubmitScenario_ClonedAuthForm
+  @Coreflex:218634 @CF_End-To-End_MasterScript @CF_MXClient_AuthFormCloning @CF_MXClient_AuthFormCloning_PostSubmitScenario @CF_MXClient_PostSubmitScenario_ClonedAuthForm
   Scenario: MXClient - Validating Cloned Auth Form Contents and Flex Benefits_Cashout selections post Clone Auth Form Operation
     Given he has logged into 'MobilityX' application as a 'Client' user
     And he has clicked on "View all initiations" link on 'Authorization Home Page' to navigate to 'View all initiation' page
@@ -42,15 +42,15 @@ Feature: Validate the OnPoint MXClient Auth Form Cloning Functionality
       | Assignment Option            | Authorization Form Template |
       | A new transfer or assignment | Domestic Authorization Form |
     And he had verified following information of 'Submitted' Authorization is populated correctly on 'Clone Auth Form' dialog
-    | Relocation Policy | Home Status | Mobile Phone | Email | Transfer Type | Assignment Type |
+      | Relocation Policy | Home Status | Mobile Phone | Email | Transfer Type | Assignment Type |
     And he has verified 'Flex Benefits' checkbox field is displayed when 'Relocation Policy' checkbox is checked for 'Points Based Flex Policy' on 'Clone Auth Form' dialog
     When he clicks on "COMPLETE CLONING" button after selecting required fields for Cloning on 'Clone Auth Form' dialog
     Then he should be navigated to 'Authorization Form' page of the Cloned Authorization having all fields populated based on 'Clone Auth Form' dialog selection
     And submitted TotalPoints CoreFlexBenefit and Cashout details should be displayed on the navigated Cloned 'Authorization Form' page
     And TotalPoint Balance along with Available and Submitted Benefit_Cashout details should be displayed on 'Benefit Selection Tool' page post Auth Form Cloning
     And Submitted Benefit_Cashout details should be displayed under 'Benefits Bundle' section along with enabled 'Save & Exit' button
-    
-    @CF_End-To-End_MasterScript @CF_MXClient_AuthFormCloning @CF_MXClient_AuthFormCloning_PostSubmitScenario @CF_MXClient_PostSubmitScenario_SubmittingClonedAuthForm
+
+  @Coreflex:218635 @CF_End-To-End_MasterScript @CF_MXClient_AuthFormCloning @CF_MXClient_AuthFormCloning_PostSubmitScenario @CF_MXClient_PostSubmitScenario_SubmittingClonedAuthForm
   Scenario: MXClient - Submitting Cloned Auth Form Contents and Flex Benefits_Cashout selections post Clone Auth Form Operation
     Given he has logged into 'MobilityX' application as a 'Client' user
     And he has clicked on "View all initiations" link on 'Authorization Home Page' to navigate to 'View all initiation' page

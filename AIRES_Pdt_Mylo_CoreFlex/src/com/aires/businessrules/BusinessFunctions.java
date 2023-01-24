@@ -1535,5 +1535,11 @@ public class BusinessFunctions {
 				? System.getProperty("envt")
 				: CoreFunctions.getPropertyFromConfig("envt"));
 	}
+	
+	public static String getApplicationBasedOnExecutionType() {
+		return (CoreFunctions.getPropertyFromConfig("ExecutionType").equalsIgnoreCase("remote")
+				? System.getProperty("application")
+				: CoreFunctions.getPropertyFromConfig("application"));
+	}
 
 }

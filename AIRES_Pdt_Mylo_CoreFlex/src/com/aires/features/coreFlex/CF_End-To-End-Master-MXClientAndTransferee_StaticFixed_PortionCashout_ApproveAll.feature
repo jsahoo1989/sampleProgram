@@ -1,6 +1,6 @@
 Feature: Validate the CoreFlex End-To-End Business Test Flow(BluePrint, MXClientAndTransferee, Transferee Submissions) for Both_MXClientAndTransferee_StaticFixed_PortionCashout_Delete_ApproveAll selection
 
-  @CF_End-To-End_MasterScript @CF_Master_ClientAndTransferee_PortionCashout_ApproveAll @CF_Master_ClientAndTransferee_PortionCashout_ApproveAll_PS
+  @Coreflex:218615 @CF_End-To-End_MasterScript @CF_Master_ClientAndTransferee_PortionCashout_ApproveAll @CF_Master_ClientAndTransferee_PortionCashout_ApproveAll_PS
   Scenario: CoreFlex - Validating policy status is updated to 'Active' on completion of Approval WorkFlow for ClientAndTransferee-PortionCashout MasterScript Policy Setup
     Given he has setup a new Points Based CoreFlex Policy with following selection in Blueprint application
       | Person Responsible For Benefit Selection | Flex Setup Type | Cashout Availability | BenefitType | PolicyRequiredFor |
@@ -13,7 +13,7 @@ Feature: Validate the CoreFlex End-To-End Business Test Flow(BluePrint, MXClient
     When he clicks on "Approve" button to acknowledge 'Approve this Policy' dialog
     Then Policy Status and Version should be displayed as "Active" and "V1" respectively on "View/Edit Policy Forms" page
 
-  @CF_End-To-End_MasterScript @CF_Master_ClientAndTransferee_PortionCashout_ApproveAll @CF_Master_ClientAndTransferee_PortionCashout_ApproveAll_CF1
+  @Coreflex:218616 @CF_End-To-End_MasterScript @CF_Master_ClientAndTransferee_PortionCashout_ApproveAll @CF_Master_ClientAndTransferee_PortionCashout_ApproveAll_CF1
   Scenario: MXClient - Validating Total Points Section & Core/Flex benefits displayed on BenefitSelectionTool page for Client and Transferee BluePrint Policy Setup
     Given he has logged into 'MobilityX' application as a 'Client' user
     And he has clicked on "Create an authorization" after validating Client details on 'Authorization Home Page'
@@ -33,7 +33,7 @@ Feature: Validate the CoreFlex End-To-End Business Test Flow(BluePrint, MXClient
     Then 'Auth Submit Success' growl message should be displayed on the navigated 'MobilityX Dashboard Home' page
     And 'New Initiation Submitted' email should be received having Transferee details along with assigned CoreFlex Total Points and Submitted Benefits Points
 
-  @CF_End-To-End_MasterScript @CF_Master_ClientAndTransferee_PortionCashout_ApproveAll @CF_Master_ClientAndTransferee_PortionCashout_ApproveAll_TF
+  @Coreflex:218617 @CF_End-To-End_MasterScript @CF_Master_ClientAndTransferee_PortionCashout_ApproveAll @CF_Master_ClientAndTransferee_PortionCashout_ApproveAll_TF
   Scenario: MXTransferee - Validating Selection & Submission of Flex benefits available in Client configured policy and Tracking Available_Used Benefits Points
     Given he has logged into 'MobilityX' application after actualizing a new 'Transferee' through IRIS application and setting-up user profile in 'MobilityX' application
     And he has validated 'Assignment-Policy' details after selecting below option displayed on 'Welcome' dialog
@@ -43,7 +43,7 @@ Feature: Validate the CoreFlex End-To-End Business Test Flow(BluePrint, MXClient
     When he clicks on 'Next' floating button after verifying Benefits_Points details Submitted by Client on 'OnPoint Planning Tool' page
     Then Benefits Submitted by Client should be displayed under 'Submitted Benefits' section of 'My Benefits Bundle' page
 
-  @CF_End-To-End_MasterScript @CF_Master_ClientAndTransferee_PortionCashout_ApproveAll @CF_Master_ClientAndTransferee_PortionCashout_ApproveAll_CF2
+  @Coreflex:218618 @CF_End-To-End_MasterScript @CF_Master_ClientAndTransferee_PortionCashout_ApproveAll @CF_Master_ClientAndTransferee_PortionCashout_ApproveAll_CF2
   Scenario: MXClient - Validating Revised Initiation Submitted and Mobility Benefits Submission emails is generated upon resubmission of Flex benefits Auth Form
     Given he has logged into 'MobilityX' application as a 'Client' user
     And he has clicked on "View all initiations" link on 'Authorization Home Page' to navigate to 'View all initiation' page

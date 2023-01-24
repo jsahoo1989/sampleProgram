@@ -13,7 +13,7 @@ Feature: Validate MXTransferee Workflow for Transferee-PortionCashout selection,
     When he clicks on "Approve" button to acknowledge 'Approve this Policy' dialog
     Then Policy Status and Version should be displayed as "Active" and "V1" respectively on "View/Edit Policy Forms" page
 
-  @Coreflex:218331 @CF_End-To-End_MasterScript @CF_Master_Transferee_PortionApprova1Ignore @CF_Master_PortionApprove_CloningToDifferentClientPolicy
+  @Coreflex:218331 @CF_End-To-End_MasterScript @CF_Master_Transferee_PortionApprova1 @CF_Master_PortionApprove_CloningToDifferentClientPolicy
   Scenario Outline: CoreFlex - Validating Cloned Policy contents for different Client reference selection and Policy with Submit/Active/Legacy status
     Given he has logged into 'BluePrint' application as 'CSM - SSO' user
     And he has clicked on 'Clone Policy' icon after searching for 'Points Based CoreFlex Policy' with Policy Status as "<PolicyStatus>"

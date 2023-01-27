@@ -1247,7 +1247,7 @@ public class PDT_SharedSubBenefitPage extends Base {
 				waitForProgressBarToDisapper();
 				verifyPageName(pageName);
 				clickOnBtn(btn);
-				if (verifyExitDialogNotDisplayed())
+				if (!verifyExitDialogNotDisplayed())
 					Reporter.addStepLog(
 							MessageFormat.format(PDTConstants.VERIFIED_EXIT_MODAL_NOT_DISPLAYED, CoreConstants.PASS));
 				else

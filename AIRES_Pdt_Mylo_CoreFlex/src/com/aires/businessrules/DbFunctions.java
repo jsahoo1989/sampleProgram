@@ -400,6 +400,9 @@ public class DbFunctions {
 		pdtExpenseCodeQueryStatementMap.put(PDTConstants.HOUSE_HUNTING_TRIP, DbQueries.QUERY_GET_HOUSE_HUNTING_TRIP_EXPENSE_CODE);
 		pdtExpenseCodeQueryStatementMap.put(PDTConstants.LANGUAGE_TRAINING, DbQueries.QUERY_GET_LANG_TRAIN_EXPENSE_CODE);
 		pdtExpenseCodeQueryStatementMap.put(PDTConstants.CULTURAL_TRAINING, DbQueries.QUERY_GET_CULT_TRAIN_EXPENSE_CODE);
+		pdtExpenseCodeQueryStatementMap.put(PDTConstants.FINAL_MOVE, DbQueries.QUERY_GET_FINAL_MOVE_EXPENSE_CODE);
+		pdtExpenseCodeQueryStatementMap.put(PDTConstants.HOME_LEAVE, DbQueries.QUERY_GET_HOME_LEAVE_EXPENSE_CODE);
+		pdtExpenseCodeQueryStatementMap.put(PDTConstants.ONE_TIME_PAYMENTS_REIMBURSEMENTS, DbQueries.QUERY_GET_ONE_TIME_PAYMENT_EXPENSE_CODE);
 	}
 	
 	public static List<String> getExpenseCodeListForBenefit(String benefitName) {

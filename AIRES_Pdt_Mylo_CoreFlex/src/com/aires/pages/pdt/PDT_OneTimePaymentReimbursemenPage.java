@@ -1,6 +1,7 @@
 package com.aires.pages.pdt;
 
 import java.text.MessageFormat;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
@@ -14,6 +15,7 @@ import org.testng.Assert;
 
 import com.aires.businessrules.BusinessFunctions;
 import com.aires.businessrules.CoreFunctions;
+import com.aires.businessrules.DbFunctions;
 import com.aires.businessrules.constants.CoreConstants;
 import com.aires.businessrules.constants.PDTConstants;
 import com.aires.managers.FileReaderManager;
@@ -93,7 +95,7 @@ public class PDT_OneTimePaymentReimbursemenPage extends PDT_SharedSubBenefitPage
 	@FindBy(how = How.CSS, using = "ng-select[formcontrolname='pmtTimeWeeksBeforeCode']")
 	private WebElement _drpDownIndicateNumOfWeeksBefore;
 
-	@FindBy(how = How.CSS, using = "ng-select[formcontrolname='pmtTimeWeeksBeforeCode'] span.ng-option-label")
+	@FindBy(how = How.CSS, using = "span.ng-option-label.ng-star-inserted")
 	private List<WebElement> _drpDownIndicateNumOfWeeksBeforeOptions;
 
 	@FindBy(how = How.CSS, using = "ng-select[formcontrolname='pmtTimeWeeksBeforeCode'] span.ng-value-label")
@@ -494,6 +496,69 @@ public class PDT_OneTimePaymentReimbursemenPage extends PDT_SharedSubBenefitPage
 	
 	@FindBy(how = How.CSS, using = "div#headingFour > div.displayHeaderSection >h5")
 	private WebElement _headingOtherOneTimePayment;
+	
+	@FindBy(how = How.CSS, using = "ng-select[formcontrolname='miscReloExpenseCodeList']")
+	private WebElement _drpDownMiscReloExpenseCodeList;
+	
+	@FindBy(how = How.CSS, using = "span.ng-option-label.ng-star-inserted")
+	private List<WebElement> _drpDownOptionsMiscReloExpenseCodeList;
+	
+	@FindBy(how = How.CSS, using = "ng-select[formcontrolname='miscReloExpenseCodeList'] span.ng-value-label.ng-star-inserted")
+	private List<WebElement> _drpDownSelectedOptionsMiscReloExpenseCodeList;
+	
+	@FindBy(how = How.CSS, using = "ng-select[formcontrolname='lumpSumExpenseCodeList']")
+	private WebElement _drpDownLumpSumExpenseCode;
+	
+	@FindBy(how = How.CSS, using = "span.ng-option-label.ng-star-inserted")
+	private List<WebElement> _drpDownOptionsLumpSumExpenseCode;
+	
+	@FindBy(how = How.CSS, using = "ng-select[formcontrolname='lumpSumExpenseCodeList'] span.ng-value-label.ng-star-inserted")
+	private List<WebElement> _drpDownSelectedOptionsLumpSumExpenseCode;
+	
+	@FindBy(how = How.CSS, using = "ng-select[formcontrolname='leaseBreakExpenseCodeList']")
+	private WebElement _drpDownLeaseBreakExpenseCode;
+	
+	@FindBy(how = How.CSS, using = "span.ng-option-label.ng-star-inserted")
+	private List<WebElement> _drpDownOptionsLeaseBreakExpenseCode;
+	
+	@FindBy(how = How.CSS, using = "ng-select[formcontrolname='leaseBreakExpenseCodeList'] span.ng-value-label.ng-star-inserted")
+	private List<WebElement> _drpDownSelectedOptionsLeaseBreakExpenseCode;
+	
+	@FindBy(how = How.CSS, using = "ng-select[formcontrolname='appAllowanceExpenseCodeList']")
+	private WebElement _drpDownApplAllowExpenseCode;
+	
+	@FindBy(how = How.CSS, using = "span.ng-option-label.ng-star-inserted")
+	private List<WebElement> _drpDownOptionsApplAllowExpenseCode;
+	
+	@FindBy(how = How.CSS, using = "ng-select[formcontrolname='appAllowanceExpenseCodeList'] span.ng-value-label.ng-star-inserted")
+	private List<WebElement> _drpDownSelectedOptionsApplAllowExpenseCode;
+	
+	@FindBy(how = How.CSS, using = "ng-select[formcontrolname='autoRegCostsExpenseCodeList']")
+	private WebElement _drpDownAutoRegCostExpenseCode;
+	
+	@FindBy(how = How.CSS, using = "span.ng-option-label.ng-star-inserted")
+	private List<WebElement> _drpDownOptionsAutoRegCostExpenseCode;
+	
+	@FindBy(how = How.CSS, using = "ng-select[formcontrolname='autoRegCostsExpenseCodeList'] span.ng-value-label.ng-star-inserted")
+	private List<WebElement> _drpDownSelectedOptionsAutoRegCostExpenseCode;
+	
+	@FindBy(how = How.CSS, using = "ng-select[formcontrolname='autoLossSaleExpenseCodeList']")
+	private WebElement _drpDownAutoLossSaleExpenseCode;
+	
+	@FindBy(how = How.CSS, using = "span.ng-option-label.ng-star-inserted")
+	private List<WebElement> _drpDownOptionsAutoLossSaleExpenseCode;
+	
+	@FindBy(how = How.CSS, using = "ng-select[formcontrolname='autoLossSaleExpenseCodeList'] span.ng-value-label.ng-star-inserted")
+	private List<WebElement> _drpDownSelectedOptionsAutoLossSaleExpenseCode;
+	
+	@FindBy(how = How.CSS, using = "ng-select[formcontrolname='otherExpenseCodeList']")
+	private WebElement _drpDownOtherExpenseCode;
+	
+	@FindBy(how = How.CSS, using = "span.ng-option-label.ng-star-inserted")
+	private List<WebElement> _drpDownOptionsOtherExpenseCode;
+	
+	@FindBy(how = How.CSS, using = "ng-select[formcontrolname='otherExpenseCodeList'] span.ng-value-label.ng-star-inserted")
+	private List<WebElement> _drpDownSelectedOptionsOtherExpenseCode;
 
 	PDT_OneTimePaymentBenefit oneTimePaymentBenefitData = FileReaderManager.getInstance().getJsonReader()
 			.getOneTimePaymentBenefitDataList("One Time Payments and Reimbursements");
@@ -502,6 +567,14 @@ public class PDT_OneTimePaymentReimbursemenPage extends PDT_SharedSubBenefitPage
 			indicateNumOfWeeksBeforeMuscReloAllowance, calcMethodLumpSum, freqLumpSum, whenToMakePaymentLumpSum,
 			numOfWeeksForLumpSum, maxNumOfMonthsLeaseBreak, freqLeaseBreak, freqApplAllowance, freqAutoRegCost,
 			maxNumOfAutos, freqOtherOneTimePayment;
+	
+	private ArrayList<String> _expenseCodeMiscReloAllowance = null;
+	private ArrayList<String> _expenseCodeLumpSum = null;
+	private ArrayList<String> _expenseCodeLeaseBreak = null;
+	private ArrayList<String> _expenseCodeApplAllowance = null;
+	private ArrayList<String> _expenseCodeAutoRegCost = null;
+	private ArrayList<String> _expenseCodeAutoLossOnSale = null;
+	private ArrayList<String> _expenseCodeOtherOneTimePayment = null;
 
 	public void setCalcMethod(String calcMethodSelected) {
 		calcMethod = calcMethodSelected;
@@ -615,6 +688,62 @@ public class PDT_OneTimePaymentReimbursemenPage extends PDT_SharedSubBenefitPage
 		return freqOtherOneTimePayment;
 	}
 	
+	public void setExpenseCodeMiscReloAllowance(ArrayList <String> expenseCode) {
+		this._expenseCodeMiscReloAllowance = expenseCode;
+	}
+
+	public ArrayList <String> getExpenseCodeMiscReloAllowance() {
+		return _expenseCodeMiscReloAllowance;
+	}
+	
+	public void setExpenseCodeLumpSum(ArrayList <String> expenseCode) {
+		this._expenseCodeLumpSum = expenseCode;
+	}
+
+	public ArrayList <String> getExpenseCodeLumpSum() {
+		return _expenseCodeLumpSum;
+	}
+	
+	public void setExpenseCodeLeaseBreak(ArrayList <String> expenseCode) {
+		this._expenseCodeLeaseBreak = expenseCode;
+	}
+
+	public ArrayList <String> getExpenseCodeLeaseBreak() {
+		return _expenseCodeLeaseBreak;
+	}
+	
+	public void setExpenseCodeApplAllowance(ArrayList <String> expenseCode) {
+		this._expenseCodeApplAllowance = expenseCode;
+	}
+
+	public ArrayList <String> getExpenseCodeApplAllowance() {
+		return _expenseCodeApplAllowance;
+	}
+	
+	public void setExpenseCodeAutoRegCost(ArrayList <String> expenseCode) {
+		this._expenseCodeAutoRegCost = expenseCode;
+	}
+
+	public ArrayList <String> getExpenseCodeAutoRegCost() {
+		return _expenseCodeAutoRegCost;
+	}
+	
+	public void setExpenseCodeAutoLossOnSale(ArrayList <String> expenseCode) {
+		this._expenseCodeAutoLossOnSale = expenseCode;
+	}
+
+	public ArrayList <String> getExpenseCodeAutoLossOnSale() {
+		return _expenseCodeAutoLossOnSale;
+	}
+	
+	public void setExpenseCodeOtherOneTimePayment(ArrayList <String> expenseCode) {
+		this._expenseCodeOtherOneTimePayment = expenseCode;
+	}
+
+	public ArrayList <String> getExpenseCodeOtherOneTimePayment() {
+		return _expenseCodeOtherOneTimePayment;
+	}
+	
 	public void populateSubBenefitHeaderMap() {
 		subBenefitHeaderMap.put(PDTConstants.MISC_RELOCATION_ALLOWANCE, _formHeaderMiscRelocationAllowance);
 		subBenefitHeaderMap.put(PDTConstants.LUMP_SUM, _formHeaderLumpSum);
@@ -710,7 +839,19 @@ public class PDT_OneTimePaymentReimbursemenPage extends PDT_SharedSubBenefitPage
 					oneTimePaymentBenefitData.miscReloAllowance.reimbursedByOther, subBenefitFormName, PDTConstants.REIMBURSED_BY_OTHER);
 			CoreFunctions.clearAndSetText(driver, _txtAreaMiscRelocationAllowanceComment, PDTConstants.COMMENT,
 					oneTimePaymentBenefitData.miscReloAllowance.comment);
-		} catch (Exception e) {			
+			
+			CoreFunctions.clickElement(driver, _drpDownMiscReloExpenseCodeList);
+			Assert.assertTrue(
+					BusinessFunctions.verifyAllExpenseCodesArePopulatedForSubBenefit(driver,
+							PDTConstants.ONE_TIME_PAYMENTS_REIMBURSEMENTS, PDTConstants.MISC_RELOCATION_ALLOWANCE,
+							_drpDownOptionsMiscReloExpenseCodeList),
+					MessageFormat.format(PDTConstants.VERIFIED_EXPENSE_CODE_OPTIONS_NOT_POPULATED, CoreConstants.FAIL,
+							PDTConstants.MISC_RELOCATION_ALLOWANCE, DbFunctions.getExpenseCodeListForBenefit(PDTConstants.ONE_TIME_PAYMENTS_REIMBURSEMENTS).toString(), CoreFunctions.getElementTextAndStoreInList(driver, _drpDownOptionsMiscReloExpenseCodeList).toString()));
+			ArrayList <String> randExpenseCodeOptions = CoreFunctions.getMultipleRandomOptionsForDropDown(0, _drpDownOptionsMiscReloExpenseCodeList.size(), 5, driver, _drpDownOptionsMiscReloExpenseCodeList);
+			BusinessFunctions.selectRandomDropDownOption(driver, PDTConstants.EXPENSE_CODES, _drpDownMiscReloExpenseCodeList, _drpDownOptionsMiscReloExpenseCodeList, _drpDownSelectedOptionsMiscReloExpenseCodeList, randExpenseCodeOptions, subBenefitFormName);
+			setExpenseCodeMiscReloAllowance(randExpenseCodeOptions);
+		} catch (Exception e) {
+			e.printStackTrace();
 			Assert.fail(MessageFormat.format(PDTConstants.EXCEPTION_OCCURED_FILL_SUBBENEFIT_FORM, CoreConstants.FAIL,
 					subBenefitFormName));
 		}
@@ -785,6 +926,17 @@ public class PDT_OneTimePaymentReimbursemenPage extends PDT_SharedSubBenefitPage
 					oneTimePaymentBenefitData.lumpSum.reimbursedByOther, subBenefitFormName, PDTConstants.REIMBURSED_BY_OTHER);
 			CoreFunctions.clearAndSetText(driver, _txtAreaLumpSumComment, PDTConstants.COMMENT,
 					oneTimePaymentBenefitData.lumpSum.comment);
+			
+			CoreFunctions.clickElement(driver, _drpDownLumpSumExpenseCode);
+			Assert.assertTrue(
+					BusinessFunctions.verifyAllExpenseCodesArePopulatedForSubBenefit(driver,
+							PDTConstants.ONE_TIME_PAYMENTS_REIMBURSEMENTS, PDTConstants.LUMP_SUM,
+							_drpDownOptionsLumpSumExpenseCode),
+					MessageFormat.format(PDTConstants.VERIFIED_EXPENSE_CODE_OPTIONS_NOT_POPULATED, CoreConstants.FAIL,
+							PDTConstants.LUMP_SUM, DbFunctions.getExpenseCodeListForBenefit(PDTConstants.ONE_TIME_PAYMENTS_REIMBURSEMENTS).toString(), CoreFunctions.getElementTextAndStoreInList(driver, _drpDownOptionsLumpSumExpenseCode).toString()));
+			ArrayList <String> randExpenseCodeOptions = CoreFunctions.getMultipleRandomOptionsForDropDown(0, _drpDownOptionsLumpSumExpenseCode.size(), 5, driver, _drpDownOptionsLumpSumExpenseCode);
+			BusinessFunctions.selectRandomDropDownOption(driver, PDTConstants.EXPENSE_CODES, _drpDownLumpSumExpenseCode, _drpDownOptionsLumpSumExpenseCode, _drpDownSelectedOptionsLumpSumExpenseCode, randExpenseCodeOptions, subBenefitFormName);
+			setExpenseCodeLumpSum(randExpenseCodeOptions);
 		} catch (Exception e) {
 			Assert.fail(MessageFormat.format(PDTConstants.EXCEPTION_OCCURED_FILL_SUBBENEFIT_FORM, CoreConstants.FAIL,
 					subBenefitFormName));
@@ -837,6 +989,17 @@ public class PDT_OneTimePaymentReimbursemenPage extends PDT_SharedSubBenefitPage
 					oneTimePaymentBenefitData.leaseBreak.reimbursedByOther, subBenefitFormName, PDTConstants.REIMBURSED_BY_OTHER);
 			CoreFunctions.clearAndSetText(driver, _txtAreaLeaseBreakComment, PDTConstants.COMMENT,
 					oneTimePaymentBenefitData.leaseBreak.comment);
+			
+			CoreFunctions.clickElement(driver, _drpDownLeaseBreakExpenseCode);
+			Assert.assertTrue(
+					BusinessFunctions.verifyAllExpenseCodesArePopulatedForSubBenefit(driver,
+							PDTConstants.ONE_TIME_PAYMENTS_REIMBURSEMENTS, PDTConstants.LEASE_BREAK,
+							_drpDownOptionsLeaseBreakExpenseCode),
+					MessageFormat.format(PDTConstants.VERIFIED_EXPENSE_CODE_OPTIONS_NOT_POPULATED, CoreConstants.FAIL,
+							PDTConstants.LEASE_BREAK, DbFunctions.getExpenseCodeListForBenefit(PDTConstants.ONE_TIME_PAYMENTS_REIMBURSEMENTS).toString(), CoreFunctions.getElementTextAndStoreInList(driver, _drpDownOptionsLeaseBreakExpenseCode).toString()));
+			ArrayList <String> randExpenseCodeOptions = CoreFunctions.getMultipleRandomOptionsForDropDown(0, _drpDownOptionsLeaseBreakExpenseCode.size(), 5, driver, _drpDownOptionsLeaseBreakExpenseCode);
+			BusinessFunctions.selectRandomDropDownOption(driver, PDTConstants.EXPENSE_CODES, _drpDownLeaseBreakExpenseCode, _drpDownOptionsLeaseBreakExpenseCode, _drpDownSelectedOptionsLeaseBreakExpenseCode, randExpenseCodeOptions, subBenefitFormName);
+			setExpenseCodeLeaseBreak(randExpenseCodeOptions);
 		} catch (Exception e) {
 			Assert.fail(MessageFormat.format(PDTConstants.EXCEPTION_OCCURED_FILL_SUBBENEFIT_FORM, CoreConstants.FAIL,
 					subBenefitFormName));
@@ -882,6 +1045,17 @@ public class PDT_OneTimePaymentReimbursemenPage extends PDT_SharedSubBenefitPage
 					oneTimePaymentBenefitData.applAllowance.reimbursedByOther, subBenefitFormName, PDTConstants.REIMBURSED_BY_OTHER);
 			CoreFunctions.clearAndSetText(driver, _txtAreaApplAllowanceComment, PDTConstants.COMMENT,
 					oneTimePaymentBenefitData.applAllowance.comment);
+			
+			CoreFunctions.clickElement(driver, _drpDownApplAllowExpenseCode);
+			Assert.assertTrue(
+					BusinessFunctions.verifyAllExpenseCodesArePopulatedForSubBenefit(driver,
+							PDTConstants.ONE_TIME_PAYMENTS_REIMBURSEMENTS, PDTConstants.APPLIANCE_ALLOWANCE,
+							_drpDownOptionsApplAllowExpenseCode),
+					MessageFormat.format(PDTConstants.VERIFIED_EXPENSE_CODE_OPTIONS_NOT_POPULATED, CoreConstants.FAIL,
+							PDTConstants.APPLIANCE_ALLOWANCE, DbFunctions.getExpenseCodeListForBenefit(PDTConstants.ONE_TIME_PAYMENTS_REIMBURSEMENTS).toString(), CoreFunctions.getElementTextAndStoreInList(driver, _drpDownOptionsApplAllowExpenseCode).toString()));
+			ArrayList <String> randExpenseCodeOptions = CoreFunctions.getMultipleRandomOptionsForDropDown(0, _drpDownOptionsApplAllowExpenseCode.size(), 5, driver, _drpDownOptionsApplAllowExpenseCode);
+			BusinessFunctions.selectRandomDropDownOption(driver, PDTConstants.EXPENSE_CODES, _drpDownApplAllowExpenseCode, _drpDownOptionsApplAllowExpenseCode, _drpDownSelectedOptionsApplAllowExpenseCode, randExpenseCodeOptions, subBenefitFormName);
+			setExpenseCodeApplAllowance(randExpenseCodeOptions);
 		} catch (Exception e) {
 			Assert.fail(MessageFormat.format(PDTConstants.EXCEPTION_OCCURED_FILL_SUBBENEFIT_FORM, CoreConstants.FAIL,
 					subBenefitFormName));
@@ -919,6 +1093,17 @@ public class PDT_OneTimePaymentReimbursemenPage extends PDT_SharedSubBenefitPage
 					oneTimePaymentBenefitData.autoRegCost.reimbursedByOther, subBenefitFormName, PDTConstants.REIMBURSED_BY_OTHER);
 			CoreFunctions.clearAndSetText(driver, _txtAreaAutoRegCostComment, PDTConstants.COMMENT,
 					oneTimePaymentBenefitData.autoRegCost.comment);
+			
+			CoreFunctions.clickElement(driver, _drpDownAutoRegCostExpenseCode);
+			Assert.assertTrue(
+					BusinessFunctions.verifyAllExpenseCodesArePopulatedForSubBenefit(driver,
+							PDTConstants.ONE_TIME_PAYMENTS_REIMBURSEMENTS, PDTConstants.AUTO_REGISTRATION_COSTS,
+							_drpDownOptionsAutoRegCostExpenseCode),
+					MessageFormat.format(PDTConstants.VERIFIED_EXPENSE_CODE_OPTIONS_NOT_POPULATED, CoreConstants.FAIL,
+							PDTConstants.AUTO_REGISTRATION_COSTS, DbFunctions.getExpenseCodeListForBenefit(PDTConstants.ONE_TIME_PAYMENTS_REIMBURSEMENTS).toString(), CoreFunctions.getElementTextAndStoreInList(driver, _drpDownOptionsAutoRegCostExpenseCode).toString()));
+			ArrayList <String> randExpenseCodeOptions = CoreFunctions.getMultipleRandomOptionsForDropDown(0, _drpDownOptionsAutoRegCostExpenseCode.size(), 5, driver, _drpDownOptionsAutoRegCostExpenseCode);
+			BusinessFunctions.selectRandomDropDownOption(driver, PDTConstants.EXPENSE_CODES, _drpDownAutoRegCostExpenseCode, _drpDownOptionsAutoRegCostExpenseCode, _drpDownSelectedOptionsAutoRegCostExpenseCode, randExpenseCodeOptions, subBenefitFormName);
+			setExpenseCodeAutoRegCost(randExpenseCodeOptions);
 		} catch (Exception e) {
 			Assert.fail(MessageFormat.format(PDTConstants.EXCEPTION_OCCURED_FILL_SUBBENEFIT_FORM, CoreConstants.FAIL,
 					subBenefitFormName));
@@ -961,6 +1146,17 @@ public class PDT_OneTimePaymentReimbursemenPage extends PDT_SharedSubBenefitPage
 					oneTimePaymentBenefitData.autoLossOnSale.reimbursedByOther, subBenefitFormName, PDTConstants.REIMBURSED_BY_OTHER);
 			CoreFunctions.clearAndSetText(driver, _txtAreaAutoLossOnSaleComment, PDTConstants.COMMENT,
 					oneTimePaymentBenefitData.autoLossOnSale.comment);
+			
+			CoreFunctions.clickElement(driver, _drpDownAutoLossSaleExpenseCode);
+			Assert.assertTrue(
+					BusinessFunctions.verifyAllExpenseCodesArePopulatedForSubBenefit(driver,
+							PDTConstants.ONE_TIME_PAYMENTS_REIMBURSEMENTS, PDTConstants.AUTO_LOSS_ON_SALE,
+							_drpDownOptionsAutoLossSaleExpenseCode),
+					MessageFormat.format(PDTConstants.VERIFIED_EXPENSE_CODE_OPTIONS_NOT_POPULATED, CoreConstants.FAIL,
+							PDTConstants.AUTO_LOSS_ON_SALE, DbFunctions.getExpenseCodeListForBenefit(PDTConstants.ONE_TIME_PAYMENTS_REIMBURSEMENTS).toString(), CoreFunctions.getElementTextAndStoreInList(driver, _drpDownOptionsAutoLossSaleExpenseCode).toString()));
+			ArrayList <String> randExpenseCodeOptions = CoreFunctions.getMultipleRandomOptionsForDropDown(0, _drpDownOptionsAutoLossSaleExpenseCode.size(), 5, driver, _drpDownOptionsAutoLossSaleExpenseCode);
+			BusinessFunctions.selectRandomDropDownOption(driver, PDTConstants.EXPENSE_CODES, _drpDownAutoLossSaleExpenseCode, _drpDownOptionsAutoLossSaleExpenseCode, _drpDownSelectedOptionsAutoLossSaleExpenseCode, randExpenseCodeOptions, subBenefitFormName);
+			setExpenseCodeAutoLossOnSale(randExpenseCodeOptions);
 		} catch (Exception e) {
 			Assert.fail(MessageFormat.format(PDTConstants.EXCEPTION_OCCURED_FILL_SUBBENEFIT_FORM, CoreConstants.FAIL,
 					subBenefitFormName));
@@ -1005,6 +1201,17 @@ public class PDT_OneTimePaymentReimbursemenPage extends PDT_SharedSubBenefitPage
 					oneTimePaymentBenefitData.otherOneTimePayment.reimbursedByOther, subBenefitFormName, PDTConstants.REIMBURSED_BY_OTHER);
 			CoreFunctions.clearAndSetText(driver, _txtAreaOtherOneTimePaymentComment, PDTConstants.COMMENT,
 					oneTimePaymentBenefitData.otherOneTimePayment.comment);
+			
+			CoreFunctions.clickElement(driver, _drpDownOtherExpenseCode);
+			Assert.assertTrue(
+					BusinessFunctions.verifyAllExpenseCodesArePopulatedForSubBenefit(driver,
+							PDTConstants.ONE_TIME_PAYMENTS_REIMBURSEMENTS, PDTConstants.OTHER_ONE_TIME_PAYMENT,
+							_drpDownOptionsOtherExpenseCode),
+					MessageFormat.format(PDTConstants.VERIFIED_EXPENSE_CODE_OPTIONS_NOT_POPULATED, CoreConstants.FAIL,
+							PDTConstants.OTHER_ONE_TIME_PAYMENT, DbFunctions.getExpenseCodeListForBenefit(PDTConstants.ONE_TIME_PAYMENTS_REIMBURSEMENTS).toString(), CoreFunctions.getElementTextAndStoreInList(driver, _drpDownOptionsOtherExpenseCode).toString()));
+			ArrayList <String> randExpenseCodeOptions = CoreFunctions.getMultipleRandomOptionsForDropDown(0, _drpDownOptionsOtherExpenseCode.size(), 5, driver, _drpDownOptionsOtherExpenseCode);
+			BusinessFunctions.selectRandomDropDownOption(driver, PDTConstants.EXPENSE_CODES, _drpDownOtherExpenseCode, _drpDownOptionsOtherExpenseCode, _drpDownSelectedOptionsOtherExpenseCode, randExpenseCodeOptions, subBenefitFormName);
+			setExpenseCodeOtherOneTimePayment(randExpenseCodeOptions);
 		} catch (Exception e) {
 			Assert.fail(MessageFormat.format(PDTConstants.EXCEPTION_OCCURED_FILL_SUBBENEFIT_FORM, CoreConstants.FAIL,
 					subBenefitFormName));

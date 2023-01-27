@@ -15,6 +15,7 @@ import org.testng.Assert;
 
 import com.aires.businessrules.BusinessFunctions;
 import com.aires.businessrules.CoreFunctions;
+import com.aires.businessrules.DbFunctions;
 import com.aires.businessrules.constants.CoreConstants;
 import com.aires.businessrules.constants.PDTConstants;
 import com.aires.managers.FileReaderManager;
@@ -290,8 +291,38 @@ public class PDT_FinalMovePage extends PDT_SharedSubBenefitPage {
 	
 	@FindBy(how = How.CSS, using = "ng-select[formcontrolname='finalMoveTransportTypeList'] span.ng-value-icon.left")
 	private WebElement _iconClearTransportationType;
+	
+	@FindBy(how = How.CSS, using = "ng-select[formcontrolname='finalMoveTransportationExpenseCodeList']")
+	private WebElement _drpDownTransportationExpenseCode;
+	
+	@FindBy(how = How.CSS, using = "span.ng-option-label.ng-star-inserted")
+	private List<WebElement> _drpDownOptionsTransportationExpenseCode;
+	
+	@FindBy(how = How.CSS, using = "ng-select[formcontrolname='finalMoveTransportationExpenseCodeList'] span.ng-value-label.ng-star-inserted")
+	private List<WebElement> _drpDownSelectedOptionsTransportationExpenseCode;
+	
+	@FindBy(how = How.CSS, using = "ng-select[formcontrolname='finalMoveLodgingExpenseCodeList']")
+	private WebElement _drpDownLodgingExpenseCode;
+	
+	@FindBy(how = How.CSS, using = "span.ng-option-label.ng-star-inserted")
+	private List<WebElement> _drpDownOptionsLodgingExpenseCode;
+	
+	@FindBy(how = How.CSS, using = "ng-select[formcontrolname='finalMoveLodgingExpenseCodeList'] span.ng-value-label.ng-star-inserted")
+	private List<WebElement> _drpDownSelectedOptionsLodgingExpenseCode;
+	
+	@FindBy(how = How.CSS, using = "ng-select[formcontrolname='finalMoveMealsExpenseCodeList']")
+	private WebElement _drpDownMealsExpenseCode;
+	
+	@FindBy(how = How.CSS, using = "span.ng-option-label.ng-star-inserted")
+	private List<WebElement> _drpDownOptionsMealsExpenseCode;
+	
+	@FindBy(how = How.CSS, using = "ng-select[formcontrolname='finalMoveMealsExpenseCodeList'] span.ng-value-label.ng-star-inserted")
+	private List<WebElement> _drpDownSelectedOptionsMealsExpenseCode;
 
 	private ArrayList<String> _transportType = null;
+	private ArrayList<String> _expenseCodeTransportation = null;
+	private ArrayList<String> _expenseCodeLodging = null;
+	private ArrayList<String> _expenseCodeMeals = null;
 
 	PDT_FinalMoveBenefit finalMoveBenefitData = FileReaderManager.getInstance().getJsonReader()
 			.getFinalMoveDataList("Final Move");
@@ -344,6 +375,30 @@ public class PDT_FinalMovePage extends PDT_SharedSubBenefitPage {
 
 	public String getMaxAmtFinalMoveMeals() {
 		return maxAmtFinalMoveMeals;
+	}
+	
+	public void setExpenseCodeTransportation(ArrayList <String> expenseCode) {
+		this._expenseCodeTransportation = expenseCode;
+	}
+
+	public ArrayList <String> getExpenseCodeTransportation() {
+		return _expenseCodeTransportation;
+	}
+	
+	public void setExpenseCodeLodging(ArrayList <String> expenseCode) {
+		this._expenseCodeLodging = expenseCode;
+	}
+
+	public ArrayList <String> getExpenseCodeLodging() {
+		return _expenseCodeLodging;
+	}
+	
+	public void setExpenseCodeMeals(ArrayList <String> expenseCode) {
+		this._expenseCodeMeals = expenseCode;
+	}
+
+	public ArrayList <String> getExpenseCodeMeals() {
+		return _expenseCodeMeals;
 	}
 
 	/**
@@ -418,6 +473,17 @@ public class PDT_FinalMovePage extends PDT_SharedSubBenefitPage {
 					PDTConstants.REIMBURSED_BY_OTHER);
 			CoreFunctions.clearAndSetText(driver, _txtAreaFinalMoveTransportComment, PDTConstants.COMMENT,
 					finalMoveBenefitData.finalMoveTransportation.comment);
+			
+			CoreFunctions.clickElement(driver, _drpDownTransportationExpenseCode);
+			Assert.assertTrue(
+					BusinessFunctions.verifyAllExpenseCodesArePopulatedForSubBenefit(driver,
+							PDTConstants.FINAL_MOVE, PDTConstants.FINAL_MOVE_TRANSPORTATION,
+							_drpDownOptionsTransportationExpenseCode),
+					MessageFormat.format(PDTConstants.VERIFIED_EXPENSE_CODE_OPTIONS_NOT_POPULATED, CoreConstants.FAIL,
+							PDTConstants.FINAL_MOVE_TRANSPORTATION, DbFunctions.getExpenseCodeListForBenefit(PDTConstants.FINAL_MOVE).toString(), CoreFunctions.getElementTextAndStoreInList(driver, _drpDownOptionsTransportationExpenseCode).toString()));
+			ArrayList <String> randExpenseCodeOptions = CoreFunctions.getMultipleRandomOptionsForDropDown(0, _drpDownOptionsTransportationExpenseCode.size(), 5, driver, _drpDownOptionsTransportationExpenseCode);
+			BusinessFunctions.selectRandomDropDownOption(driver, PDTConstants.EXPENSE_CODES, _drpDownTransportationExpenseCode, _drpDownOptionsTransportationExpenseCode, _drpDownSelectedOptionsTransportationExpenseCode, randExpenseCodeOptions, subBenefitFormName);
+			setExpenseCodeTransportation(randExpenseCodeOptions);
 		} catch (Exception e) {
 			Assert.fail(MessageFormat.format(PDTConstants.EXCEPTION_OCCURED_FILL_SUBBENEFIT_FORM, CoreConstants.FAIL,
 					subBenefitFormName));
@@ -519,6 +585,16 @@ public class PDT_FinalMovePage extends PDT_SharedSubBenefitPage {
 					subBenefitFormName, PDTConstants.REIMBURSED_BY_OTHER);
 			CoreFunctions.clearAndSetText(driver, _txtAreaFinalMoveLodgingComment, PDTConstants.COMMENT,
 					finalMoveBenefitData.finalMoveLodging.comment);
+			CoreFunctions.clickElement(driver, _drpDownLodgingExpenseCode);
+			Assert.assertTrue(
+					BusinessFunctions.verifyAllExpenseCodesArePopulatedForSubBenefit(driver,
+							PDTConstants.FINAL_MOVE, PDTConstants.FINAL_MOVE_LODGING,
+							_drpDownOptionsLodgingExpenseCode),
+					MessageFormat.format(PDTConstants.VERIFIED_EXPENSE_CODE_OPTIONS_NOT_POPULATED, CoreConstants.FAIL,
+							PDTConstants.FINAL_MOVE_LODGING, DbFunctions.getExpenseCodeListForBenefit(PDTConstants.FINAL_MOVE).toString(), CoreFunctions.getElementTextAndStoreInList(driver, _drpDownOptionsLodgingExpenseCode).toString()));
+			ArrayList <String> randExpenseCodeOptions = CoreFunctions.getMultipleRandomOptionsForDropDown(0, _drpDownOptionsLodgingExpenseCode.size(), 5, driver, _drpDownOptionsLodgingExpenseCode);
+			BusinessFunctions.selectRandomDropDownOption(driver, PDTConstants.EXPENSE_CODES, _drpDownLodgingExpenseCode, _drpDownOptionsLodgingExpenseCode, _drpDownSelectedOptionsLodgingExpenseCode, randExpenseCodeOptions, subBenefitFormName);
+			setExpenseCodeLodging(randExpenseCodeOptions);
 		} catch (Exception e) {
 			Assert.fail(MessageFormat.format(PDTConstants.EXCEPTION_OCCURED_FILL_SUBBENEFIT_FORM, CoreConstants.FAIL,
 					subBenefitFormName));
@@ -651,6 +727,17 @@ public class PDT_FinalMovePage extends PDT_SharedSubBenefitPage {
 
 			CoreFunctions.clearAndSetText(driver, _txtAreaFinalMoveMealComment, PDTConstants.COMMENT,
 					finalMoveBenefitData.finalMoveMeals.comment);
+			
+			CoreFunctions.clickElement(driver, _drpDownMealsExpenseCode);
+			Assert.assertTrue(
+					BusinessFunctions.verifyAllExpenseCodesArePopulatedForSubBenefit(driver,
+							PDTConstants.FINAL_MOVE, PDTConstants.FINAL_MOVE_MEALS,
+							_drpDownOptionsMealsExpenseCode),
+					MessageFormat.format(PDTConstants.VERIFIED_EXPENSE_CODE_OPTIONS_NOT_POPULATED, CoreConstants.FAIL,
+							PDTConstants.FINAL_MOVE_MEALS, DbFunctions.getExpenseCodeListForBenefit(PDTConstants.FINAL_MOVE).toString(), CoreFunctions.getElementTextAndStoreInList(driver, _drpDownOptionsMealsExpenseCode).toString()));
+			ArrayList <String> randExpenseCodeOptions = CoreFunctions.getMultipleRandomOptionsForDropDown(0, _drpDownOptionsMealsExpenseCode.size(), 5, driver, _drpDownOptionsMealsExpenseCode);
+			BusinessFunctions.selectRandomDropDownOption(driver, PDTConstants.EXPENSE_CODES, _drpDownMealsExpenseCode, _drpDownOptionsMealsExpenseCode, _drpDownSelectedOptionsMealsExpenseCode, randExpenseCodeOptions, subBenefitFormName);
+			setExpenseCodeMeals(randExpenseCodeOptions);
 
 		} catch (Exception e) {			
 			Assert.fail(MessageFormat.format(PDTConstants.EXCEPTION_OCCURED_FILL_SUBBENEFIT_FORM, CoreConstants.FAIL,

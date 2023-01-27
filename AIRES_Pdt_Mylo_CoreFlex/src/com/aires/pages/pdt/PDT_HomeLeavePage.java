@@ -15,6 +15,7 @@ import org.testng.Assert;
 
 import com.aires.businessrules.BusinessFunctions;
 import com.aires.businessrules.CoreFunctions;
+import com.aires.businessrules.DbFunctions;
 import com.aires.businessrules.constants.CoreConstants;
 import com.aires.businessrules.constants.PDTConstants;
 import com.aires.managers.FileReaderManager;
@@ -262,12 +263,42 @@ public class PDT_HomeLeavePage extends PDT_SharedSubBenefitPage {
 	
 	@FindBy(how = How.CSS, using = "ng-select[formcontrolname='homeLeaveTransportTypeList'] span.ng-value-icon.left")
 	private WebElement _iconClearTransportationType;
+	
+	@FindBy(how = How.CSS, using = "ng-select[formcontrolname='homeLeaveTransportationExpenseCodeList']")
+	private WebElement _drpDownTransportationExpenseCode;
+	
+	@FindBy(how = How.CSS, using = "span.ng-option-label.ng-star-inserted")
+	private List<WebElement> _drpDownOptionsTransportationExpenseCode;
+	
+	@FindBy(how = How.CSS, using = "ng-select[formcontrolname='homeLeaveTransportationExpenseCodeList'] span.ng-value-label.ng-star-inserted")
+	private List<WebElement> _drpDownSelectedOptionsTransportationExpenseCode;
+	
+	@FindBy(how = How.CSS, using = "ng-select[formcontrolname='homeLeaveLodgingExpenseCodeList']")
+	private WebElement _drpDownLodgingExpenseCode;
+	
+	@FindBy(how = How.CSS, using = "span.ng-option-label.ng-star-inserted")
+	private List<WebElement> _drpDownOptionsLodgingExpenseCode;
+	
+	@FindBy(how = How.CSS, using = "ng-select[formcontrolname='homeLeaveLodgingExpenseCodeList'] span.ng-value-label.ng-star-inserted")
+	private List<WebElement> _drpDownSelectedOptionsLodgingExpenseCode;
+	
+	@FindBy(how = How.CSS, using = "ng-select[formcontrolname='homeLeaveMealsExpenseCodeList']")
+	private WebElement _drpDownMealsExpenseCode;
+	
+	@FindBy(how = How.CSS, using = "span.ng-option-label.ng-star-inserted")
+	private List<WebElement> _drpDownOptionsMealsExpenseCode;
+	
+	@FindBy(how = How.CSS, using = "ng-select[formcontrolname='homeLeaveMealsExpenseCodeList'] span.ng-value-label.ng-star-inserted")
+	private List<WebElement> _drpDownSelectedOptionsMealsExpenseCode;
 
 	PDT_HomeLeaveBenefit homeLeaveBenefitData = FileReaderManager.getInstance().getJsonReader()
 			.getHomeLeaveDataList("Home Leave");
 
 	private String accompanyingFamilyMemeber, maxAmtHomeLeaveMeals, frequencyOfTrips;
 	private ArrayList<String> _transportType = null;
+	private ArrayList<String> _expenseCodeTransportation = null;
+	private ArrayList<String> _expenseCodeLodging = null;
+	private ArrayList<String> _expenseCodeMeals = null;
 
 	public void setTransportType(ArrayList<String> transportTypeOptions) {
 		this._transportType = transportTypeOptions;
@@ -299,6 +330,30 @@ public class PDT_HomeLeavePage extends PDT_SharedSubBenefitPage {
 
 	public String getFrequencyOfTrips() {
 		return frequencyOfTrips;
+	}
+	
+	public void setExpenseCodeTransportation(ArrayList <String> expenseCode) {
+		this._expenseCodeTransportation = expenseCode;
+	}
+
+	public ArrayList <String> getExpenseCodeTransportation() {
+		return _expenseCodeTransportation;
+	}
+	
+	public void setExpenseCodeLodging(ArrayList <String> expenseCode) {
+		this._expenseCodeLodging = expenseCode;
+	}
+
+	public ArrayList <String> getExpenseCodeLodging() {
+		return _expenseCodeLodging;
+	}
+	
+	public void setExpenseCodeMeals(ArrayList <String> expenseCode) {
+		this._expenseCodeMeals = expenseCode;
+	}
+
+	public ArrayList <String> getExpenseCodeMeals() {
+		return _expenseCodeMeals;
 	}
 
 	/**
@@ -443,6 +498,17 @@ public class PDT_HomeLeavePage extends PDT_SharedSubBenefitPage {
 					homeLeaveBenefitData.homeLeaveTransportation.reimbursedByOther, subBenefitFormName, PDTConstants.REIMBURSED_BY_OTHER);
 			CoreFunctions.clearAndSetText(driver, _txtAreaHomeLeaveTransportComment, PDTConstants.COMMENT,
 					homeLeaveBenefitData.homeLeaveTransportation.comment);
+			
+			CoreFunctions.clickElement(driver, _drpDownTransportationExpenseCode);
+			Assert.assertTrue(
+					BusinessFunctions.verifyAllExpenseCodesArePopulatedForSubBenefit(driver,
+							PDTConstants.HOME_LEAVE, PDTConstants.HOME_LEAVE_TRANSPORTATION,
+							_drpDownOptionsTransportationExpenseCode),
+					MessageFormat.format(PDTConstants.VERIFIED_EXPENSE_CODE_OPTIONS_NOT_POPULATED, CoreConstants.FAIL,
+							PDTConstants.HOME_LEAVE_TRANSPORTATION, DbFunctions.getExpenseCodeListForBenefit(PDTConstants.HOME_LEAVE).toString(), CoreFunctions.getElementTextAndStoreInList(driver, _drpDownOptionsTransportationExpenseCode).toString()));
+			ArrayList <String> randExpenseCodeOptions = CoreFunctions.getMultipleRandomOptionsForDropDown(0, _drpDownOptionsTransportationExpenseCode.size(), 5, driver, _drpDownOptionsTransportationExpenseCode);
+			BusinessFunctions.selectRandomDropDownOption(driver, PDTConstants.EXPENSE_CODES, _drpDownTransportationExpenseCode, _drpDownOptionsTransportationExpenseCode, _drpDownSelectedOptionsTransportationExpenseCode, randExpenseCodeOptions, subBenefitFormName);
+			setExpenseCodeTransportation(randExpenseCodeOptions);
 		} catch (Exception e) {
 			Assert.fail(MessageFormat.format(PDTConstants.EXCEPTION_OCCURED_FILL_SUBBENEFIT_FORM, CoreConstants.FAIL, subBenefitFormName));
 		}
@@ -477,6 +543,17 @@ public class PDT_HomeLeavePage extends PDT_SharedSubBenefitPage {
 					homeLeaveBenefitData.homeLeaveLodging.reimbursedByOther, subBenefitFormName, PDTConstants.REIMBURSED_BY_OTHER);
 			CoreFunctions.clearAndSetText(driver, _txtAreaHomeLeaveLodgingComment, PDTConstants.COMMENT,
 					homeLeaveBenefitData.homeLeaveLodging.comment);
+			
+			CoreFunctions.clickElement(driver, _drpDownLodgingExpenseCode);
+			Assert.assertTrue(
+					BusinessFunctions.verifyAllExpenseCodesArePopulatedForSubBenefit(driver,
+							PDTConstants.HOME_LEAVE, PDTConstants.HOME_LEAVE_LODGING,
+							_drpDownOptionsLodgingExpenseCode),
+					MessageFormat.format(PDTConstants.VERIFIED_EXPENSE_CODE_OPTIONS_NOT_POPULATED, CoreConstants.FAIL,
+							PDTConstants.HOME_LEAVE_LODGING, DbFunctions.getExpenseCodeListForBenefit(PDTConstants.HOME_LEAVE).toString(), CoreFunctions.getElementTextAndStoreInList(driver, _drpDownOptionsLodgingExpenseCode).toString()));
+			ArrayList <String> randExpenseCodeOptions = CoreFunctions.getMultipleRandomOptionsForDropDown(0, _drpDownOptionsLodgingExpenseCode.size(), 5, driver, _drpDownOptionsLodgingExpenseCode);
+			BusinessFunctions.selectRandomDropDownOption(driver, PDTConstants.EXPENSE_CODES, _drpDownLodgingExpenseCode, _drpDownOptionsLodgingExpenseCode, _drpDownSelectedOptionsLodgingExpenseCode, randExpenseCodeOptions, subBenefitFormName);
+			setExpenseCodeLodging(randExpenseCodeOptions);
 		} catch (Exception e) {
 			Assert.fail(MessageFormat.format(PDTConstants.EXCEPTION_OCCURED_FILL_SUBBENEFIT_FORM, CoreConstants.FAIL, subBenefitFormName));
 		}
@@ -605,6 +682,17 @@ public class PDT_HomeLeavePage extends PDT_SharedSubBenefitPage {
 
 			CoreFunctions.clearAndSetText(driver, _txtAreaHomeLeaveMealsComment, PDTConstants.COMMENT,
 					homeLeaveBenefitData.homeLeaveMeals.comment);
+			
+			CoreFunctions.clickElement(driver, _drpDownMealsExpenseCode);
+			Assert.assertTrue(
+					BusinessFunctions.verifyAllExpenseCodesArePopulatedForSubBenefit(driver,
+							PDTConstants.HOME_LEAVE, PDTConstants.HOME_LEAVE_MEALS,
+							_drpDownOptionsMealsExpenseCode),
+					MessageFormat.format(PDTConstants.VERIFIED_EXPENSE_CODE_OPTIONS_NOT_POPULATED, CoreConstants.FAIL,
+							PDTConstants.HOME_LEAVE_MEALS, DbFunctions.getExpenseCodeListForBenefit(PDTConstants.HOME_LEAVE).toString(), CoreFunctions.getElementTextAndStoreInList(driver, _drpDownOptionsMealsExpenseCode).toString()));
+			ArrayList <String> randExpenseCodeOptions = CoreFunctions.getMultipleRandomOptionsForDropDown(0, _drpDownOptionsMealsExpenseCode.size(), 5, driver, _drpDownOptionsMealsExpenseCode);
+			BusinessFunctions.selectRandomDropDownOption(driver, PDTConstants.EXPENSE_CODES, _drpDownMealsExpenseCode, _drpDownOptionsMealsExpenseCode, _drpDownSelectedOptionsMealsExpenseCode, randExpenseCodeOptions, subBenefitFormName);
+			setExpenseCodeMeals(randExpenseCodeOptions);
 
 		} catch (Exception e) {
 			Assert.fail(MessageFormat.format(PDTConstants.EXCEPTION_OCCURED_FILL_SUBBENEFIT_FORM, CoreConstants.FAIL, subBenefitFormName));

@@ -91,8 +91,6 @@ public class BusinessFunctions {
 
 	public static void selectRadioAsPerLabelText(WebDriver driver, List<WebElement> WebElementList_Label,
 			String labelName) {
-		System.out.println("inside radio as per label text");
-		System.out.println("count--" + WebElementList_Label.size());
 		for (WebElement row : WebElementList_Label) {
 			Log.info(CoreConstants.ACTUAL_ITEM_NAME_IS + row.getText());
 			if ((row.getText().trim()).equals(labelName)) {
@@ -891,7 +889,7 @@ public class BusinessFunctions {
 		ongoingPayment.add(PDTConstants.HOUSING_ALLOWANCE);
 		ongoingPayment.add(PDTConstants.HOME_MAINTENANCE_ALLOWANCE);
 		ongoingPayment.add(PDTConstants.FURNITURE_ALLOWANCE);
-		ongoingPayment.add(PDTConstants.HARDSHIP_ALLOWANCE);
+		//ongoingPayment.add(PDTConstants.HARDSHIP_ALLOWANCE);
 		ongoingPayment.add(PDTConstants.BANKING_ALLOWANCE);
 		ongoingPayment.add(PDTConstants.AT_SEA_ALLOWANCE);
 		ongoingPayment.add(PDTConstants.COMMUTER_ALLOWANCE);
@@ -1159,12 +1157,10 @@ public class BusinessFunctions {
 	public static void verifyDefaultSelectedRadioButtonForField(WebDriver driver, List<WebElement> _radioLabelList,
 			List<WebElement> _radioButtonList, String fieldName, String expectedSelection,
 			PDT_GeneralInformationPage generalInfoPage, PDT_SharedSubBenefit_Steps sharedSubBenefitStep) {
-		//if (generalInfoPage.getExpenseMgmt().equalsIgnoreCase(PDTConstants.YES)) {
 			sharedSubBenefitStep.getCustomSoftAssertObj().assertTrue(
 					verifyRadioButtonIsSelected(driver, _radioLabelList, _radioButtonList, expectedSelection, fieldName,
 							PDTConstants.DEFAULT_SELECTED),
 					MessageFormat.format(PDTConstants.FAILED_TO_VERIFY_RADIO_BTN, CoreConstants.FAIL, PDTConstants.DEFAULT_SELECTED, fieldName,
 							expectedSelection));
-		//}
 	}
 }

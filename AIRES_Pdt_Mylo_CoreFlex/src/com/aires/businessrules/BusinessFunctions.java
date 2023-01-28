@@ -245,6 +245,23 @@ public class BusinessFunctions {
 		}
 		return -1;
 	}
+	
+	public static int returnindexFromListUsingText(WebDriver driver, List<WebElement> WebElementList,
+			String itemName) {
+		try {
+			for (WebElement row : WebElementList) {
+				CoreFunctions.scrollToElementUsingJS(driver, row, row.getText());
+				Log.info(CoreConstants.ACTUAL_ITEM_NAME_IS + row.getText());
+				if (row.getText().trim().equals(itemName)) {
+					CoreFunctions.highlightObject(driver, row);
+					return WebElementList.indexOf(row);
+				}
+			}
+		} catch (ElementNotFoundException e) {
+			e.printStackTrace();
+		}
+		return -1;
+	}
 
 	public static void verifyOtherTextBoxIsDisplayed(WebDriver driver, String jsonReimbursedBy, WebElement element,
 			String jsonReimbursedByOther, String SubBenefitFormName, String lblOtherTextBox) {

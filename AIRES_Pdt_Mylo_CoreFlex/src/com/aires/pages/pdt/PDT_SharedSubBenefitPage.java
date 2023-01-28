@@ -740,7 +740,7 @@ public class PDT_SharedSubBenefitPage extends Base {
 		populateIconIndicatorMap();
 		BusinessFunctions.fluentWaitForSpinnerToDisappear(driver, _progressBar);
 		for (String benefitCategoryName : benefitCategoryList) {
-			int index = BusinessFunctions.returnindexItemFromListUsingText(driver, _listBenefitCategoryNameOnLeftMenu,
+			int index = BusinessFunctions.returnindexFromListUsingText(driver, _listBenefitCategoryNameOnLeftMenu,
 					benefitCategoryName);
 			if (_listIconOnLeftmenu.get(index).getText().equalsIgnoreCase(iconIndicator)) {
 				CoreFunctions.highlightObject(driver, _listIconWithBenefitCategoryNameOnLeftmenu.get(index));

@@ -128,4 +128,7 @@ public class CoreConstants {
 	public static final String TRANSMISSION_SUBMISSION_PREPROD = "TransfereeSubmissions_PREPROD";
 	public static final String EMAIL_NOT_FOUND = "Email Not Found";
     public static final String VEIRFY_CONTIRBUTOR_NOT_RECEIVED_NOTIFICATION = "{0}Failed to verify Contributor not received Notification.";
+	public static final String UNABLE_TO_GET_PARTNER_DETAILS = "Unable to get partner details {0}";
+	public static final String UNABLE_TO_GET_OTHER_DETAILS = "Unable to get other details {0}";
+	public static final String UNABLE_TO_GET_DEPENDENT_DETAILS = "Unable to get dependent details {0}";
 }

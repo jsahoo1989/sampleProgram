@@ -765,7 +765,6 @@ public class MYLOConstants {
 	public static final String SELECT_SECONDARY_CONTACT_POPUP = "Select Secondary Contact Popup";
 	public static final String EXPAND_PRIMARY_CONTACT_SECTION = "Expand Primary Contact Section";
 	public static final String FAILED_TO_VERIFY_POPUP = "Failed to verify popup - ''{0}''";
-	public static final int WAIT_5SECS = 5;
 	public static final String SECONDARY_CONTACT_NAME="Secondary Contact Name";
 	public static final String PARENT = "Parent";
 	public static final String CHILD = "Child";
@@ -781,10 +780,7 @@ public class MYLOConstants {
 	public static final String ORIG_DEST="Orig/Dest";
 	public static final String TYPE = "Type";
 	public static final String CELL_PHONE="Cell Phone";
-	public static final String FIRST_NAME_TEST = "Test_FirstName";
-	public static final String LAST_NAME_TEST ="Test_LastName";
-	public static final String PHONE_NUMBER_TEST = "1234567890";
-	public static final String EMAIL_ADDRESS_TEST = "test@autoaires.com";
+	public static final String EMAIL_ADDRESS_TEST = "@autoaires.com";
 	public static final String SPOUSE_PERSONAL = "Spouse Personal";
 	public static final String OTHER_EDIT = "Other Edit";
 	public static final String FAILED_TO_SELECT_SECONDARY_CONTACT = "Failed to select secondary contact - ''{0}''";
@@ -808,7 +804,11 @@ public class MYLOConstants {
 	public static final String OUTER_TEXT = "outerText";
 	public static final String PRONOUN = "Pronoun";
 	public static final String FAILED_TO_VERIFY_PARTNER_NAME = "Failed to verify partner name";
-
+	public static final String SELECT_PRIMARY_CONTACT_POPUP = "Select Primary Contact Popup";
+	public static final String PRIMARY_CONTACT_NAME = "Primary Contact Name";
+	public static final String PREFERREDNAME = "preferredName";
+	public static final String GENDER_CODE = "genderCode";
+	public static final String SUFFIX_FORM_CONTROL="suffixCode";
 
 	
 }

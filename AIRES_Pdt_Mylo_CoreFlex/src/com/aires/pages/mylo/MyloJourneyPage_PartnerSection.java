@@ -155,10 +155,12 @@ public class MyloJourneyPage_PartnerSection extends Base {
 
 	@FindBy(how = How.CSS, using = "div[@id='collapseOneTransferee'] app-partner")
 	private List<WebElement> _partnerList;
-	
+
 	@FindBy(how = How.CSS, using = "app-partner div[class*='usertitle']")
-	private WebElement _partnerName;
-			
+	private List<WebElement> _savedPartnerNames;
+
+
+
 	final By _dropdownOptions = By.cssSelector("div[role='option']>span");
 	final By _genderDropdownOptions = By.cssSelector("div[role='option']>div");
 	final By _existingPartnerName = By.cssSelector("div[class*='usertitle']");
@@ -853,11 +855,14 @@ public class MyloJourneyPage_PartnerSection extends Base {
 		}
 	}
 
+	/**
+	 * verify partner exist in list
+	 * 
+	 * @param partnerName
+	 */
 	public void verifyPartnerExist(String partnerName) {
-		try {
-			CoreFunctions.verifyText(CoreFunctions.getElementText(driver, _partnerName), partnerName);
-		} catch (Exception e) {
-			Assert.fail(MessageFormat.format(MYLOConstants.FAILED_TO_VERIFY_PARTNER_NAME, CoreConstants.FAIL));
-		}
+		Assert.assertTrue(CoreFunctions.searchElementExistsInListByText(driver, _savedPartnerNames, partnerName, true),
+				MessageFormat.format(MYLOConstants.FAILED_TO_VERIFY_PARTNER_NAME, CoreConstants.FAIL));
 	}
+
 }

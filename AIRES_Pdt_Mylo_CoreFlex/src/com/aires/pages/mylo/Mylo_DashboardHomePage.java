@@ -396,7 +396,7 @@ public class Mylo_DashboardHomePage extends Base {
 				CoreFunctions.click(driver, _fileParameterList.get(index), option);
 				BusinessFunctions.setMyloDropdownFields(driver, _dropdownOptions, optionValue, option);
 			} else
-				CoreFunctions.sendKeysUsingAction(driver, _fileParameterList.get(index), optionValue);
+			CoreFunctions.sendKeysUsingAction(driver, _fileParameterList.get(index), optionValue);
 		} catch (Exception e) {
 			Assert.fail(MessageFormat.format(CoreConstants.FAILD_CLCK_ELE, option));
 		}
@@ -420,12 +420,12 @@ public class Mylo_DashboardHomePage extends Base {
 			myloNewFileSection.createNewFile(clientID);
 		}
 	}
-	
+
 	public void createNewFileIfNotCreated(String clientID, MyloJourneyPage_CreateNewFileSection myloNewFileSection) {
 		if (MyloNewFileUtil.getFileID() == null) {
 			selectOptionsFromAssignmentMenu(MYLOConstants.NEW_FILE_BUTTON);
 			myloNewFileSection.createNewFile(clientID);
-		} 
+		}
 	}
 
 	/**
@@ -541,8 +541,9 @@ public class Mylo_DashboardHomePage extends Base {
 			BusinessFunctions.fluentWaitForMyloSpinnerToDisappear(driver, _spinner);
 		} else {
 			BusinessFunctions.fluentWaitForMyloSpinnerToDisappear(driver, _spinner);
-			Reporter.addStepLog(MessageFormat.format(MYLOConstants.SINGLE_FILE_FOUND_STATUS_CHECKBOX,
-					CoreConstants.PASS,CoreFunctions.getElementText(driver, _fileID) , updatedStatusValue, updatedCheckboxValue));
+			Reporter.addStepLog(
+					MessageFormat.format(MYLOConstants.SINGLE_FILE_FOUND_STATUS_CHECKBOX, CoreConstants.PASS,
+							CoreFunctions.getElementText(driver, _fileID), updatedStatusValue, updatedCheckboxValue));
 			selectOptionsFromAssignmentMenu(MYLOConstants.QUERY_FILE);
 			selectParameterFromQueryScreen(MYLOConstants.MY_FILES);
 		}
@@ -783,4 +784,45 @@ public class Mylo_DashboardHomePage extends Base {
 		}
 	}
 
+	/**
+	 * Check if No File Popup is displayed after clicking execute
+	 * @param message
+	 * @return
+	 */
+	public boolean isNoFileFoundPopUpDisplayedAfterExecute(String message) {
+		boolean flag = false;
+		try {
+			CoreFunctions.explicitWaitTillElementVisibility(driver, _executeButton, _executeButton.getText(), 20);
+			CoreFunctions.highlightElementAndClick(driver, _executeButton, _executeButton.getText());
+			BusinessFunctions.fluentWaitForMyloSpinnerToDisappear(driver, _spinner);
+			if (CoreFunctions.isElementExist(driver, _popUpMessage, 5)) {
+				flag = CoreFunctions.getElementText(driver, _popUpMessage).equals(message);
+				CoreFunctions.clickElement(driver, _OKButtonPopUp);
+				BusinessFunctions.fluentWaitForMyloSpinnerToDisappear(driver, _spinner);
+			}
+		} catch (Exception e) {
+			Assert.fail(MessageFormat.format(MYLOConstants.FAILED_TO_VERIFY_POPUP_MESSAGE_PAGE, MYLOConstants.JOURNEY));
+		}
+		return flag;
+	}
+
+	/**
+	 * Create New File If existing File is not found
+	 * @param fileID
+	 * @param clientID
+	 * @param _myloNewFileSection
+	 */
+	public void createNewFileIfNotFound(String fileID, String clientID,
+			MyloJourneyPage_CreateNewFileSection _myloNewFileSection) {
+  		if (isNoFileFoundPopUpDisplayedAfterExecute(MYLOConstants.NO_SUCH_FILE_FOUND)) {
+				closePopUp();
+				selectOptionsFromAssignmentMenu(MYLOConstants.NEW_FILE_BUTTON);
+				_myloNewFileSection.createNewFile(MYLOConstants.AUTOMATION_CLIENT_ID);
+				CoreFunctions.writeToPropertiesFile("FileID", MyloNewFileUtil.getFileID());
+				CoreFunctions.writeToPropertiesFile(MYLOConstants.TRANSFEREE_FIRSTNAME,
+						MyloNewFileUtil.getTransfereeFirstName());
+				CoreFunctions.writeToPropertiesFile(MYLOConstants.TRANSFEREE_LASTNAME,
+						MyloNewFileUtil.getTransfereeLastName());
+			}
+	}
 }

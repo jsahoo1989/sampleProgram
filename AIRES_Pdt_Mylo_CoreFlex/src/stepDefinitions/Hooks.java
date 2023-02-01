@@ -77,8 +77,8 @@ public class Hooks {
 			testContext.getBasePage().invokeIrisApplication();
 			testContext.getBasePage().killExistingBrowsers();
 		} else
-			url=remoteGetURL(scenario);
-			//url = localGetURL(scenario);
+			//url=remoteGetURL(scenario);
+			url = localGetURL(scenario);
 
 		Log.info(url);
 		testContext.getWebDriverManager().getDriver().navigate().to(url);
@@ -123,7 +123,7 @@ public class Hooks {
 		}
 	}
 
-	//@After(order = 1)
+	@After(order = 1)
 	public void updateResultInTestRail(Scenario scenario) {
 		String Case_ID = BusinessFunctions.getTestRailIdAsPerApplication(System.getProperty("application"),
 				scenario.getSourceTagNames().toString());

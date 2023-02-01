@@ -1,6 +1,8 @@
 package com.aires.pages.mylo;
 
 import java.text.MessageFormat;
+
+import org.openqa.selenium.Alert;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
@@ -77,6 +79,7 @@ public class Mylo_LoginPage extends Base {
 
 	/**
 	 * Open Mylo Application
+	 * 
 	 * @throws InterruptedException
 	 */
 	public void openApplication() throws InterruptedException {
@@ -106,11 +109,15 @@ public class Mylo_LoginPage extends Base {
 
 	/**
 	 * Enter Mylo Login Credentials
+	 * 
 	 * @param userName
 	 * @param password
 	 */
 	public void enterUserEmailAndPasswordForMylo(String userName, String password) {
 		try {
+			clickAnotherAccountIfPresent();
+			CoreFunctions.explicitWaitTillElementVisibility(driver, _txtUserEmail, MYLOConstants.USER_EMAIL,
+					MYLOConstants.CUSTOM_WAIT_TIME);
 			CoreFunctions.clearAndSetText(driver, _txtUserEmail, MYLOConstants.USER_EMAIL, userName);
 			CoreFunctions.clickUsingJS(driver, _submit, MYLOConstants.NEXT_BUTTON);
 			WebElement pswdElement = CoreFunctions.getElementByLocator(driver, _txtPassword);
@@ -119,6 +126,11 @@ public class Mylo_LoginPage extends Base {
 			Assert.fail(MessageFormat.format(CoreConstants.FAIL_TO_VERIFY_ELEMENT_ON_SECTION, CoreConstants.FAIL,
 					MYLOConstants.USER_EMAIL + MYLOConstants.AND + MYLOConstants.PASSWORD, MYLOConstants.LOGIN));
 		}
+	}
+
+	public void clickAnotherAccountIfPresent() {
+		if (CoreFunctions.isElementExist(driver, _anotherAccount, 4))
+			CoreFunctions.click(driver, _anotherAccount, MYLOConstants.ANOTHER_ACCOUNT);
 	}
 
 	/**
@@ -138,7 +150,8 @@ public class Mylo_LoginPage extends Base {
 	}
 
 	/**
-	 * Clicks on Stay Signed In Yes button and verify the message and header Text of Stay Signed In section if appears
+	 * Clicks on Stay Signed In Yes button and verify the message and header Text of
+	 * Stay Signed In section if appears
 	 */
 	public void clickStaySignedIn() {
 		if (CoreFunctions.isElementExist(driver, _staySignedInYes, 8)) {
@@ -155,7 +168,8 @@ public class Mylo_LoginPage extends Base {
 	}
 
 	/**
-	 * Navigate to Mylo Home Page if Login Page appears after successful login with valid credentials
+	 * Navigate to Mylo Home Page if Login Page appears after successful login with
+	 * valid credentials
 	 */
 	public void navigateToMyloHomePage() {
 		try {
@@ -177,15 +191,12 @@ public class Mylo_LoginPage extends Base {
 	 */
 	public void logout() {
 		try {
-			CoreFunctions.explicitWaitTillElementVisibility(driver, _userProfileImg, MYLOConstants.USER_PROFILE_IMAGE, 60);
+			CoreFunctions.explicitWaitTillElementVisibility(driver, _userProfileImg, MYLOConstants.USER_PROFILE_IMAGE,
+					60);
 			CoreFunctions.clickUsingJS(driver, _userProfileImg, MYLOConstants.USER_PROFILE_IMAGE);
-			CoreFunctions.waitHandler(5);
-			CoreFunctions.pressEnter();
-			CoreFunctions.waitHandler(5);
-			//CoreFunctions.explicitWaitTillElementVisibility(driver, _logoutUserImg, MYLOConstants.LOGOUT_IMAGE, 60);		
-			if(CoreFunctions.isElementExist(driver, _logoutUserImg, 60))
-				CoreFunctions.click(driver, _logoutUserImg, MYLOConstants.LOGOUT_IMAGE);
-			
+			CoreFunctions.handleAlert(driver);
+			CoreFunctions.click(driver, _logoutUserImg, MYLOConstants.LOGOUT_IMAGE);
+
 		} catch (Exception e) {
 			Assert.fail(MessageFormat.format(CoreConstants.FAIL_TO_VERIFY_ELEMENT_ON_SECTION, CoreConstants.FAIL,
 					MYLOConstants.USER_PROFILE_IMAGE + MYLOConstants.AND + MYLOConstants.LOGOUT_IMAGE,
@@ -193,16 +204,16 @@ public class Mylo_LoginPage extends Base {
 		}
 	}
 
-
 	/**
 	 * Logout and then Relogin to Mylo application for given userType
+	 * 
 	 * @param userType
 	 */
 	public void loginWithUser(String userType) {
 		try {
 			logout();
 			openApplication();
-			CoreFunctions.click(driver, _anotherAccount, MYLOConstants.ANOTHER_ACCOUNT);
+			//CoreFunctions.click(driver, _anotherAccount, MYLOConstants.ANOTHER_ACCOUNT);
 			if (userType.contains(MYLOConstants.WITHOUT))
 				enterUserEmailAndPasswordForMylo(loginData.MyloWithOutResource, loginData.MyloPassword);
 			else
@@ -215,6 +226,7 @@ public class Mylo_LoginPage extends Base {
 
 	/**
 	 * Verify all the error message associated with Mylo user email
+	 * 
 	 * @param userName
 	 * @param msg
 	 * @return
@@ -235,6 +247,7 @@ public class Mylo_LoginPage extends Base {
 
 	/**
 	 * Verify all the error message associated with Mylo password
+	 * 
 	 * @param userName
 	 * @param password
 	 * @param msg
@@ -249,13 +262,15 @@ public class Mylo_LoginPage extends Base {
 		} catch (Exception e) {
 			Assert.fail(MessageFormat.format(MYLOConstants.FAIL_TO_VERIFY_ERROR_MESSAGE_ON_SECTION, CoreConstants.FAIL,
 					MYLOConstants.PASSWORD, MYLOConstants.LOGIN));
-			
+
 		}
 		return (BusinessFunctions.verifyMyloValidationMessage(msg, errorTextDisplayed, MYLOConstants.LOGIN));
 	}
 
 	/**
-	 * Read MobilityX Transferee UserName and Password from Mail sent from Mylo application
+	 * Read MobilityX Transferee UserName and Password from Mail sent from Mylo
+	 * application
+	 * 
 	 * @return
 	 */
 	public boolean readCredentialsFromMail() {

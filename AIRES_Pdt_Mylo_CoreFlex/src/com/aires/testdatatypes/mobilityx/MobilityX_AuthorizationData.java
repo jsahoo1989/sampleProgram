@@ -7,6 +7,7 @@ public class MobilityX_AuthorizationData {
 	public GlobalReloFinancialInfo globalReloFinancialInfo;
 	public GlobalReloFamilyInfo globalReloFamilyInfo;
 	public GlobalReloAuthorizationInfo globalReloAuthInfo;
+	public DefaultAuthForm defaultAuthForm;
 	
 	public class GlobalReloEmpIdentificationInfo {
 		public String employeeId;
@@ -56,5 +57,15 @@ public class MobilityX_AuthorizationData {
 		public String sponsorName;
 		public String sponsorEmail;
 		public String sponsorId;
+	}
+	
+	public class DefaultAuthForm{
+		public String relocationPolicy;
+		public String originCity;
+		public String originCountry;
+		public String destinationCity;
+		public String destinationCountry;
+		public String homeStatus;
+		public String email;
 	}
 }

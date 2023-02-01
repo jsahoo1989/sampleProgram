@@ -2,8 +2,8 @@
 	{
 		"fileType": "Create New File",
 		"newFile": {
-			"firstName" : "AutoAires",
-			"lastName" : "TestAires",
+			"firstName" : "Automation",
+			"lastName" : "TestAutomation",
 			"clientName": "Aires QA Automation Client",
 			"office": "CRO",
 			"policyType": "Domestic Policy",

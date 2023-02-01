@@ -23,13 +23,15 @@ import com.aires.dataProviders.JsonDataReader_Iris;
 import com.aires.dataProviders.JsonDataReader_Mylo;
 
 import com.aires.dataProviders.JsonDataReader_Pdt;
+import com.aires.dataProviders.JsonDataWriter_Mylo;
 
 public class FileReaderManager {
 	private static FileReaderManager fileReaderManager = new FileReaderManager();
 	private static ConfigFileReader configFileReader;
 	private static JsonDataReader_Pdt jsonDataReader;
 	private static JsonDataReader_CoreFlex jsonDataReaderCoreFlex;
-	private static JsonDataReader_Mylo MylojsonDataReader;
+	private static JsonDataReader_Mylo mylojsonDataReader;
+	private static JsonDataWriter_Mylo mylojsonDataWriter;
 	private static JsonDataReader_Iris jsonDataReaderIris;
 
 	private FileReaderManager() {
@@ -52,7 +54,11 @@ public class FileReaderManager {
 	 }
 		 
   	public JsonDataReader_Mylo getMyloJsonReader(){
-		 return (jsonDataReader == null) ? new JsonDataReader_Mylo() : MylojsonDataReader;
+		 return (mylojsonDataReader == null) ? new JsonDataReader_Mylo() : mylojsonDataReader;
+	}
+  	
+  	public JsonDataWriter_Mylo getMyloJsonWriter(){
+		 return (mylojsonDataWriter == null) ? new JsonDataWriter_Mylo() : mylojsonDataWriter;
 	}
   	
   	public JsonDataReader_Iris getIrisJsonReader() {

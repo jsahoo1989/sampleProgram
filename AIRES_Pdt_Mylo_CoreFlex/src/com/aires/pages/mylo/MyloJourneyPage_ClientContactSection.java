@@ -348,7 +348,6 @@ public class MyloJourneyPage_ClientContactSection extends Base {
 		try {
 			java.util.List<Map<String, String>> dataList = table.asMaps(String.class, String.class);
 			for (Map<String, String> data : dataList) {
-
 				String fieldName = data.get(MYLOConstants.FIELD_NAME);
 				int fieldCharLimit = Integer.parseInt(data.get(MYLOConstants.CHARACTER_LIMIT));
 				if (!(CoreFunctions.verifyTextForMaxLength(

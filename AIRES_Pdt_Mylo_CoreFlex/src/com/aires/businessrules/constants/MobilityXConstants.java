@@ -276,8 +276,8 @@ public class MobilityXConstants {
 	public static final String EXCEPTION_OCCURED_WHILE_VALIDATING_USER_NAVIGATION_TO_MOBILITYX_JOURNEY_HOME_PAGE = "{0}Exception occured while validating user navigation to MobilityX Journey Home Page. Exception : ''{1}''.";
 	public static final String FALIED_TO_VALIDATE_USER_NAVIGATION_TO_MOBILITYX_JOURNEY_HOME_PAGE_AFTER_BENEFIT_SUBMISSION = "{0}Failed to validate user navigation to MobilityX Journey Home page after Benefit Submission.";
 	public static final String EXCEPTION_OCCURED_WHILE_VALIDATING_REQUEST_DIALOG_ON_TRANSFEREE_SUBMISSIONS_DETAILS_PAGE = "{0}Exception occured while validating Requests Dialog on Transferee Submissions Details Page. Exception : ''{1}''.";
-	
-	//MobilityX Login Page
+
+	// MobilityX Login Page
 	public static final String AIRESLOGO_TEXT = "AiresLogo";
 	public static final String AIRES_LOGO_DISPLAYED = "{0}Verified AIRES Logo is displayed on MobilityX Application";
 	public static final String AIRES_LOGO_NOT_DISPLAYED = "{0}Failed to veriy Aires Logo on MobilityX application.";
@@ -285,8 +285,8 @@ public class MobilityXConstants {
 	public static final String FAILED_TO_ENTER_LOGIN_CREDENTIALS = "{0}Failed to enter login credentials on Mobilityx application.";
 	public static final String USER_NAME_NOT_EXIST = "{0} username ''{1}'' does not exist";
 	public static final String FAILED_TO_VERIFY_FIRST_AND_LAST_NAME = "{0} : Failed to verify firstname ''{1}'' and lastname ''{2}'' on {3} page";
-	
-	//MobilityX Dashboard Page
+
+	// MobilityX Dashboard Page
 	public static final String HOME_PAGE = "Home";
 	public static final String CREATE_AN_AUTHORIZATION = "Create an authorization";
 	public static final String EXPECTED_EMP_NAME_TITLE = "Please provide the employee name.";
@@ -313,4 +313,14 @@ public class MobilityXConstants {
 	public static final String SUCCESS_MESSAGE_TEXT = "Success Message";
 	public static final String GROWL_MESSAGE_NOT_MATCHED = "{0}Message ''{1}'' does not match with message in header section.";
 	public static final String SUCCESS_DIALOG = "Success Dialog ";
+	
+	
+	//For Mylo Testing
+	public static final String DEFAULT_AUTH_FORM = "Default Auth Form";
+	public static final String AUTHORIZATION_PAGE = "Authorization Page";
+	public static final String RELOCATION_POLICY = "Relocation Policy";
+	public static final String AUTH_FORM_SUBMIT_MSG= "The initiation for {0} is in the submission process. You will receive an email notification when the initiation has been successfully submitted.";
+	public static final String SEARCH_EMPLOYEE_NAME = "Search Employee Name";
+	public static final String EMPLOYEE_DETAILS = "Employee Details";
+	public static final String ADVANCED_SEARCH = "Advanced Search";
 }

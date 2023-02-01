@@ -12,6 +12,7 @@ import org.testng.Assert;
 import com.aires.businessrules.Base;
 import com.aires.businessrules.CoreFunctions;
 import com.aires.businessrules.constants.CoreConstants;
+import com.aires.businessrules.constants.MYLOConstants;
 import com.aires.businessrules.constants.MobilityXConstants;
 import com.aires.utilities.Log;
 import com.gargoylesoftware.htmlunit.ElementNotFoundException;
@@ -19,65 +20,54 @@ import com.vimalselvam.cucumber.listener.Reporter;
 
 public class MobilityX_LoginPage extends Base {
 	
-	// AIRES Logo Image
+	// Mobility Login Page Locators
 	@FindBy(how = How.CSS, using = "img[id*='logoicon']")
 	private WebElement _img_AIRESLogo;
 	
-	//Next Button
 	@FindBy(how = How.CSS, using = "div#nextButton")
 	private WebElement _btnNext;
 	
-	//Username	
 	@FindBy(how = How.CSS, using = "input[id='username::content']")
 	private WebElement _inputUserName;	
 
-	//Password
 	@FindBy(how = How.CSS, using = "input[id='password::content']")
 	private WebElement _inputPassword;
 	
-	// Sign In Button
 	@FindBy(how = How.CSS, using = "div#loginButton")
 	private WebElement _btnLogin;
 	
 	@FindBy(how = How.ID, using = "cookiePupupButtonId")
 	private WebElement _btnOkOnSiteCookieAfterLogin;
 	
-	@FindBy(how = How.XPATH, using = "//span[contains(@id,'openUserProfileText')]")
-	private WebElement _txtUserNameTitle;
-	
-	final By _btnOkOnSiteCookieAfterLoginByLocator = By.id("cookiePupupButtonId");
-	final By _txtUserNameTitleByLocator = By.xpath("//*[contains(@id,'openUserProfileText')]");
-	
-	
+	@FindBy(how = How.CSS, using = "span[id$='openUserProfileText']")
+	private WebElement _txtUserNameTitle;	
 	
 	public MobilityX_LoginPage(WebDriver driver) {
 		super(driver);
 	}
-	
-	//public void openApplication() throws InterruptedException {
+
 	public void openApplication() {
 		try {
 			CoreFunctions.waitForBrowserToLoad(driver);
 			VerifyAIRESLogo();
 			CoreFunctions.explicitWaitTillElementBecomesClickable(driver, _btnNext, _btnNext.getText());
-			
 		} catch(Exception e) {
 			Assert.fail(MessageFormat.format(CoreConstants.FAIL, MobilityXConstants.APPLICATION_FAILED_TO_LAUNCH));
 		}
-
 	}
 	
+	/**
+	 * Verify Aires Logo on MobilityX Login Page
+	 */
 	public void VerifyAIRESLogo() {
 		try {
 			CoreFunctions.explicitWaitTillElementVisibility(driver, _img_AIRESLogo, MobilityXConstants.AIRESLOGO_TEXT);
-			if (_img_AIRESLogo.isDisplayed())			
-				Reporter.addStepLog(MessageFormat.format(CoreConstants.PASS, MobilityXConstants.AIRES_LOGO_DISPLAYED));
-			else
-				Assert.fail(MessageFormat.format(CoreConstants.FAIL, MobilityXConstants.AIRES_LOGO_NOT_DISPLAYED));
-		} catch (ElementNotFoundException e) {
-			Assert.fail(MessageFormat.format(CoreConstants.FAIL, MobilityXConstants.AIRES_LOGO_NOT_DISPLAYED));
+			Assert.assertTrue(CoreFunctions.isElementVisible(_img_AIRESLogo), MobilityXConstants.AIRES_LOGO_NOT_DISPLAYED);
+			CoreFunctions.highlightObject(driver, _img_AIRESLogo);
+			Reporter.addStepLog(MessageFormat.format(CoreConstants.PASS, MobilityXConstants.AIRES_LOGO_DISPLAYED));
+		} catch (Exception e) {
+			Assert.fail((MessageFormat.format(CoreConstants.FAIL, MobilityXConstants.AIRES_LOGO_NOT_DISPLAYED)));
 		}
-
 	}
 	
 	public void enterUsernameAndPasswordForMobilityX(String userName, String password) {
@@ -100,7 +90,7 @@ public class MobilityX_LoginPage extends Base {
 	}
 	
 	public void handle_Cookie_AfterLogin() {
-		if (CoreFunctions.isElementByLocatorExist(driver, _btnOkOnSiteCookieAfterLoginByLocator, 45)) {
+		if (CoreFunctions.isElementExist(driver, _btnOkOnSiteCookieAfterLogin, MYLOConstants.CUSTOM_WAIT_TIME)) {
 			HandleCookiePopUp(_btnOkOnSiteCookieAfterLogin);
 		}
 	}
@@ -119,7 +109,7 @@ public class MobilityX_LoginPage extends Base {
 	
 	public Boolean verifyUserlogin(String profileName) {
 		Boolean isExists = false;
-		if (CoreFunctions.isElementByLocatorExist(driver, _txtUserNameTitleByLocator, 15)
+		if (CoreFunctions.isElementExist(driver, _txtUserNameTitle, MYLOConstants.CUSTOM_WAIT_TIME)
 				&& _txtUserNameTitle.getText().equalsIgnoreCase(profileName)) {
 			isExists = true;
 			Reporter.addStepLog(CoreConstants.PASS + MobilityXConstants.VERIFIED + MobilityXConstants.USER_NAME

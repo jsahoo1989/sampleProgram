@@ -6,6 +6,7 @@ public class MyloNewFileUtil {
 	private static String _transfereeEmail;
 	private static String _transfereePhoneNo;
 	private static String _fileID;
+	private static String _mxfileID;
 	private static String _clientID;
 	private static String _policyType;
 	private static String _journeyType;
@@ -30,6 +31,14 @@ public class MyloNewFileUtil {
 	private static String _ppc;
 	private static String _mspec;
 	private static String _leadCompanyID;
+	
+	public static String getMxfileID() {
+		return _mxfileID;
+	}
+
+	public static void setMxfileID(String _mxfileID) {
+		MyloNewFileUtil._mxfileID = _mxfileID;
+	}
 
 	public static String get_partnerFName() {
 		return _partnerFName;

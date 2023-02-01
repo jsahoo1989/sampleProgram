@@ -20,6 +20,7 @@ import com.aires.businessrules.CoreFunctions;
 import com.aires.businessrules.DbFunctions;
 import com.aires.businessrules.constants.CoreConstants;
 import com.aires.businessrules.constants.MYLOConstants;
+import com.aires.businessrules.constants.PDTConstants;
 import com.aires.utilities.MyloNewFileUtil;
 import com.vimalselvam.cucumber.listener.Reporter;
 
@@ -195,7 +196,7 @@ public class Mylo_DashboardHomePage extends Base {
 
 	private final By _queryResultColumns = By.xpath("./li");
 	private final By _journeySubSections = By.cssSelector("#collapseSummary a");
-	private final By _queryResultFileIds = By.xpath("//ul[@class='even ng-star-inserted']/li[1]");
+	private final By _queryResultFileIds = By.xpath("//ul[@class='ng-star-inserted']/li[1]");
 	private final By _dropdownOptions = By.cssSelector("div[role='option']>span");
 	private List<String> fileParameterDropdownFields = Arrays.asList(MYLOConstants.STATUS, MYLOConstants.OFFICE,
 			MYLOConstants.ORIGIN_COUNTRY, MYLOConstants.DESTINATION_COUNTRY, MYLOConstants.ORIGIN_STATE,
@@ -325,6 +326,16 @@ public class Mylo_DashboardHomePage extends Base {
 			Assert.fail(MessageFormat.format(CoreConstants.FAILD_CLCK_ELE, MYLOConstants.OK_BUTTON));
 		}
 	}
+	
+	public void changeFileStatus(String status) {
+		BusinessFunctions.fluentWaitForMyloSpinnerToDisappear(driver, _spinner);
+		CoreFunctions.isElementByLocatorExist(driver, _journeySubSections, MYLOConstants.CUSTOM_WAIT_TIME);
+		List<WebElement> journeySubSectionList = CoreFunctions.getElementListByLocator(driver, _journeySubSections);
+		CoreFunctions.hover(driver, CoreFunctions.returnItemInListByText(driver, journeySubSectionList, "Options"));
+		CoreFunctions.hover(driver, CoreFunctions.returnItemInListByText(driver, journeySubSectionList,MYLOConstants.CHANGE_FILE_STATUS));
+		CoreFunctions.selectItemInListByText(driver, journeySubSectionList, status, MYLOConstants.CHANGE_FILE_STATUS, PDTConstants.DROP_DOWN, true);
+		BusinessFunctions.fluentWaitForMyloSpinnerToDisappear(driver, _spinner);
+	}
 
 	/**
 	 * Verify Options Available for Query Parameters
@@ -419,13 +430,6 @@ public class Mylo_DashboardHomePage extends Base {
 			selectOptionsForFileParameters(MYLOConstants.FILE_ID, MyloNewFileUtil.getFileID());
 			clickExecuteButton();
 		} else {
-			selectOptionsFromAssignmentMenu(MYLOConstants.NEW_FILE_BUTTON);
-			myloNewFileSection.createNewFile(clientID);
-		}
-	}
-
-	public void createNewFileIfNotCreated(String clientID, MyloJourneyPage_CreateNewFileSection myloNewFileSection) {
-		if (MyloNewFileUtil.getFileID() == null) {
 			selectOptionsFromAssignmentMenu(MYLOConstants.NEW_FILE_BUTTON);
 			myloNewFileSection.createNewFile(clientID);
 		}

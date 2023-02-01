@@ -22,6 +22,28 @@
 	},
 	
 	{
+		"environment": "preprod",
+		"details": {
+			"irisUserName": "BBENEDU",
+			"irisPassword": "qabb",
+			"irisDatabase": "Qa",
+			"irisBuildPath": "\\\\corpprdvw589\\rdev\\IRIS_Builds\\IRIS_QA_CAE - Copy (2)\\IRIS.exe",
+			"firstName": "mxsso",
+			"lastName": "dev5",
+			"clientId": "7403",
+			"clientName": "Dow Chemical Company (Global)",
+			"csmUserName": "mxssodev5@corp.aires.com",
+			"csmPassword": "F74#jd*187_NB",
+			"policy": "HR - EBT Program (# 6966)",
+			"mobilityxUserName": "0001159966@aires.com",
+			"mobilityxPassword": "Relonetng1",
+			"profileName": "Nicole Rickett",
+			"mobilityxUrl": "https://relonetqa.aires.com/mobilityx/faces/jsf/Login.jsf",
+			"pdtUrl": "https://blueprintqa.aires.com/blueprint/"
+		}
+	},
+	
+	{
 		"environment": "dev",
 		"details": {
 			"irisUserName": "BBENEDU",

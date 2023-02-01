@@ -28,6 +28,7 @@ import com.aires.pages.mylo.MyloJourneyPage_CreateNewFileSection;
 import com.aires.pages.mylo.MyloJourneyPage_DependentSection;
 import com.aires.pages.mylo.MyloJourneyPage_FileTeamSection;
 import com.aires.pages.mylo.MyloJourneyPage_IdentityChallengeSection;
+import com.aires.pages.mylo.MyloJourneyPage_LinkMobilityJourneySection;
 import com.aires.pages.mylo.MyloJourneyPage_OtherSection;
 import com.aires.pages.mylo.MyloJourneyPage_PartnerSection;
 import com.aires.pages.mylo.MyloJourneyPage_QueryBySubServiceID;
@@ -73,6 +74,7 @@ public class PageObjectManager_Mylo {
 	private MyloJourneyPage_SecondaryContact _journeyPage_SecondaryContact;
 	private MyloJourneyPage_TransfereeAndFamilySection _journeyPage_TransfereeAndFamilySection;
 	private MyloNewFileUtil _myloNewFileUtil;
+	private MyloJourneyPage_LinkMobilityJourneySection _journeyPage_LinkMobilityJourneySection;
 
 	public PageObjectManager_Mylo(WebDriver driver) {
 		this._driver = driver;
@@ -94,7 +96,7 @@ public class PageObjectManager_Mylo {
 	public Mylo_JourneyPage getJourneyPage() {
 		return (_journeyPage == null) ? _journeyPage = new Mylo_JourneyPage(_driver) : _journeyPage;
 	}
-
+	
 	public Mylo_RestApiRequest getRestApiRequest() {
 		return (_restApiRequest == null) ? _restApiRequest = new Mylo_RestApiRequest(_driver) : _restApiRequest;
 	}
@@ -183,6 +185,13 @@ public class PageObjectManager_Mylo {
 		return (_journeyPage_ClientContactSection == null)
 				? _journeyPage_ClientContactSection = new MyloJourneyPage_ClientContactSection(_driver)
 				: _journeyPage_ClientContactSection;
+	}
+	
+	
+	public MyloJourneyPage_LinkMobilityJourneySection getLinkMobJourneySection() {
+		return (_journeyPage_LinkMobilityJourneySection == null)
+				? _journeyPage_LinkMobilityJourneySection = new MyloJourneyPage_LinkMobilityJourneySection(_driver)
+				: _journeyPage_LinkMobilityJourneySection;
 	}
 
 	public MyloJourneyPage_AdvancedQuerySection getJourneyAdvancedQuery() {

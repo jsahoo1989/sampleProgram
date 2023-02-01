@@ -129,6 +129,9 @@ public class Mylo_JourneyPage extends Base {
 
 	@FindBy(how = How.CSS, using = "div[class='sk-three-strings']")
 	private WebElement _spinner;
+	
+	@FindBy(how = How.CSS, using = "button[class='btn-close']")
+	private WebElement _closePopUp;
 
 	private String environment= System.getProperty("envt");
 	//private String environment = CoreFunctions.getPropertyFromConfig("envt");
@@ -156,6 +159,7 @@ public class Mylo_JourneyPage extends Base {
 		journeyWebElementsMap.put(MYLOConstants.AIRES_FILE_TEAM, _fileTeam);
 		journeyWebElementsMap.put(MYLOConstants.SUB_SERVICE_ID, _queryPopUpHeader);
 		journeyWebElementsMap.put(MYLOConstants.CLIENT_CONTACT, _clientContact);
+		journeyWebElementsMap.put(MYLOConstants.LINK_MOBILITY_JOURNEY, _queryPopUpHeader);
 	}
 
 	/**
@@ -205,6 +209,10 @@ public class Mylo_JourneyPage extends Base {
 	
 	public String getClientContactFileIDFromDB(String fileStatus) {
 		return DbFunctions.getFileIdForClientContact(fileStatus);
+	}
+	
+	public String getFileIDFromDBByTransfereeName(String tFName,String tLName) {
+		return DbFunctions.getFileIdByTransfereeName(tFName,tLName);
 	}
 
 	/**
@@ -312,8 +320,6 @@ public class Mylo_JourneyPage extends Base {
 					? CoreFunctions.getRandomOutOfSelectedElementValueFromList(driver, _queryResultColHeader,
 							valuesToIgnore)
 					: colName;
-			//int index= (colName.equals(MYLOConstants.RANDOM))?colHeader.indexOf(colHeader) + 1:colHeader.indexOf(colHeader);
-			
 			int index=BusinessFunctions.returnindexItemFromListUsingText(driver, _queryResultColHeader, colHeader);
 			sortColName = CoreFunctions.getElementText(driver,
 					_queryResultColHeader.get(index));
@@ -323,6 +329,11 @@ public class Mylo_JourneyPage extends Base {
 			Assert.fail(MessageFormat.format(CoreConstants.FAILD_CLCK_ELE, colName));
 		}
 		return sortColName;
+	}
+	
+	public void closePopUp() {
+		CoreFunctions.explicitWaitTillElementVisibility(driver, _closePopUp, MYLOConstants.CLOSE_POPUP);
+		CoreFunctions.click(driver, _closePopUp, MYLOConstants.CLOSE_POPUP);
 	}
 
 }

@@ -25,34 +25,34 @@ public class MyloJourneyPage_CreateNewFileSection extends Base {
 		super(driver);
 	}
 
-	@FindBy(how = How.CSS, using = "input[formcontrolname='firstName']")
+	@FindBy(how = How.CSS, using = "app-create-new-file-popup input[formcontrolname='firstName']")
 	private WebElement _newFileFirstName;
 
-	@FindBy(how = How.CSS, using = "input[formcontrolname='lastName']")
+	@FindBy(how = How.CSS, using = "app-create-new-file-popup input[formcontrolname='lastName']")
 	private WebElement _newFileLastName;
 
-	@FindBy(how = How.CSS, using = "ng-select[formcontrolname='clientId'] input")
+	@FindBy(how = How.CSS, using = "app-create-new-file-popup ng-select[formcontrolname='clientId'] input")
 	private WebElement _newFileClientNameinput;
 
-	@FindBy(how = How.CSS, using = "ng-select[formcontrolname='officeCode']")
+	@FindBy(how = How.CSS, using = "app-create-new-file-popup ng-select[formcontrolname='officeCode']")
 	private WebElement _newFileOfficeDropdown;
 
-	@FindBy(how = How.CSS, using = "ng-select[formcontrolname='journeyTypeCode']")
+	@FindBy(how = How.CSS, using = "app-create-new-file-popup ng-select[formcontrolname='journeyTypeCode']")
 	private WebElement _newFileJourneyTypeDropdown;
 
-	@FindBy(how = How.CSS, using = "ng-select[formcontrolname='corporationPolicyId']")
+	@FindBy(how = How.CSS, using = "app-create-new-file-popup ng-select[formcontrolname='corporationPolicyId']")
 	private WebElement _newFilePolicyTypeDropdown;
 
 	@FindBy(how = How.CSS, using = "ng-select[name='corporationPolicyId'] input[disabled]")
 	private WebElement _newFilePolicyTypeDisabled;
 
-	@FindBy(how = How.CSS, using = "ng-select[formcontrolname='taxTreatment']")
+	@FindBy(how = How.CSS, using = "app-create-new-file-popup ng-select[formcontrolname='taxTreatment']")
 	private WebElement _newFileTaxTreatmentDropdown;
 
-	@FindBy(how = How.CSS, using = "input[formcontrolname='newRepatInd']+span")
+	@FindBy(how = How.CSS, using = "app-create-new-file-popup input[formcontrolname='newRepatInd']+span")
 	private WebElement _newFileRepatCheckbox;
 
-	@FindBy(how = How.XPATH, using = "//button[text()='Create File']")
+	@FindBy(how = How.CSS, using = "app-create-new-file-popup button[class='mylo-query-submit-btn']")
 	private WebElement _btnCreateFile;
 
 	@FindBy(how = How.CSS, using = "div[role='alert']")
@@ -553,8 +553,26 @@ public class MyloJourneyPage_CreateNewFileSection extends Base {
 	 * @param myloNewFileUtil 
 	 */
 	public void createNewFile(String client) {
-		String transfereeFirstName = myloNewFileData.newFile.firstName + CoreFunctions.generateRandomString(5);
-		String transfereeLastName = myloNewFileData.newFile.lastName + CoreFunctions.generateRandomString(5);
+		String transfereeFirstName = myloNewFileData.newFile.firstName + CoreFunctions.generateRandomString(9);
+		String transfereeLastName = myloNewFileData.newFile.lastName + CoreFunctions.generateRandomString(9);
+		setNewFileFields(MYLOConstants.TRANSFEREE_FIRSTNAME, transfereeFirstName, MYLOConstants.VALUE);
+		setNewFileFields(MYLOConstants.TRANSFEREE_LASTNAME, transfereeLastName, MYLOConstants.VALUE);
+		setClient(client);
+		String policyValue=(client.equals(MYLOConstants.VENDOR_CLIENT_ID))?MYLOConstants.SELECT_ONE:MYLOConstants.RANDOM;
+		String policyType = setPolicyType(policyValue);
+		setNewFileDropdownValues(MYLOConstants.JOURNEY_TYPE, MYLOConstants.JOURNEY_TYPE_VALUE);
+		String officeType = setNewFileDropdownValues(MYLOConstants.OFFICE, MYLOConstants.RANDOM);
+		setRepatInd(true);
+		clickFieldsOnNewFileSection(MYLOConstants.CREATE_NEW_FILE);
+		clickOkIfPopUpExist();
+		String fileId = CoreFunctions.getElementText(driver, _purpleBubbleSectionFileId);
+		setNewFileFields(transfereeFirstName, transfereeLastName, policyType, MYLOConstants.TAX_TREATMENT_VALUE,
+				MYLOConstants.JOURNEY_TYPE_VALUE, officeType, fileId, client);
+	}
+	
+	public void createNewFileByClientIDAndTName(String tName,String client) {
+		String transfereeFirstName = tName.split(" ")[0];
+		String transfereeLastName = tName.split(" ")[1];
 		setNewFileFields(MYLOConstants.TRANSFEREE_FIRSTNAME, transfereeFirstName, MYLOConstants.VALUE);
 		setNewFileFields(MYLOConstants.TRANSFEREE_LASTNAME, transfereeLastName, MYLOConstants.VALUE);
 		setClient(client);
@@ -573,7 +591,8 @@ public class MyloJourneyPage_CreateNewFileSection extends Base {
 	public void setLeadCompanyID(String leadCompanyID) {
 		if(MyloNewFileUtil.get_leadCompanyID()==null) {
 		BusinessFunctions.fluentWaitForMyloSpinnerToDisappear(driver, _spinner);	
-		CoreFunctions.scrollToElementUsingJS(driver, _leadCompanyIDSection, MYLOConstants.LEAD_COMPANY_ID_SECTION);
+		//CoreFunctions.scrollToElementUsingJS(driver, _leadCompanyIDSection, MYLOConstants.LEAD_COMPANY_ID_SECTION);
+		CoreFunctions.moveToElement(driver, _leadCompanyIDInput);
 		clickLeadCompanySectionButtons(MYLOConstants.EDIT_BUTTON);
 		MyloNewFileUtil.set_leadCompanyID(BusinessFunctions.setMyloInputFields(driver, MYLOConstants.LEAD_COMPANY_ID_SECTION, MYLOConstants.AUTOMATION_CLIENT_ID, _leadCompanyIDInput, MYLOConstants.VALUE));
 		CoreFunctions.hoverAndClick(driver, CoreFunctions.getElementByLocator(driver, _dropdownOptions), leadCompanyID);

@@ -301,18 +301,6 @@ public class CoreFunctions {
 		}
 	}
 
-	public static void pressEnter() {
-		Robot robot;
-		try {
-			robot = new Robot();
-			robot.keyPress(KeyEvent.VK_ENTER);
-			robot.keyRelease(KeyEvent.VK_ENTER);
-			robot.delay(2000);
-		} catch (AWTException e) {
-			Assert.fail(MessageFormat.format(CoreConstants.FAILD_CLCK_ELE, "Enter"));
-		}
-	}
-
 	public static void clickUsingJS(WebDriver driver, WebElement Element, String name) {
 		explicitWaitTillElementBecomesClickable(driver, Element, name);
 		Log.info("Clicking using JS on: " + name);

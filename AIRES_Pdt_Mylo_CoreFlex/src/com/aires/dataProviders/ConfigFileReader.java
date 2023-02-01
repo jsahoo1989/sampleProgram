@@ -25,14 +25,23 @@ import java.io.IOException;
 import java.util.LinkedHashMap;
 import java.util.Properties;
 
+import com.aires.businessrules.CoreFunctions;
 import com.aires.businessrules.constants.CoreConstants;
 import com.aires.enums.DriverType;
 import com.aires.enums.EnvironmentType;
+import com.aires.managers.FileReaderManager;
+import com.aires.testdatatypes.mylo.MyloEnvironmentDetails;
+import com.aires.testdatatypes.pdt.PDT_LoginInfo;
+
+import cucumber.api.Scenario;
 
 public class ConfigFileReader {
 	private Properties properties;
 	private final String propertyFilePath = System.getProperty("user.dir") + "\\Configs\\Config.properties";
 	LinkedHashMap<String, String> mapEnvURL = new LinkedHashMap<String, String>();
+	private MyloEnvironmentDetails _myloEnvtDetails;
+	String _environment=System.getProperty("envt").toLowerCase();
+	//String _environment=CoreFunctions.getPropertyFromConfig("envt").toLowerCase();
 
 	public ConfigFileReader() {
 		BufferedReader reader;
@@ -129,14 +138,13 @@ public class ConfigFileReader {
 					"Application Url not specified in the Configuration.properties file for the Key:url");	*/
 	}
 
-	public String getMyloApplicationUrl() {
-		if (properties.getProperty("envt").equalsIgnoreCase("uat"))
-			return properties.getProperty("myloUATURL");
-		else if (properties.getProperty("envt").equalsIgnoreCase("relonetqa4"))
-			return properties.getProperty("myloRelonetQA4URL");
-		else
-			throw new RuntimeException(
-					"Application Url not specified in the Configuration.properties file for the Key:url");
+	public String getMyloApplicationUrl(Scenario scenario) {
+		_myloEnvtDetails = FileReaderManager.getInstance().getMyloJsonReader().getMyloLoginInfoByEnvt(_environment);
+		if (scenario.getName().contains("MX"))
+			return _myloEnvtDetails.details.mobilityXURL;
+		else 
+			return _myloEnvtDetails.details.myloURL;
+		
 	}
 	
 	public String getCoreFlexPolicySetupApplicationUrl() {
@@ -200,8 +208,8 @@ public class ConfigFileReader {
 	}
 
 	public DriverType getBrowser() {
-		//String browserName = properties.getProperty("browser").toLowerCase();
-		String browserName = System.getProperty("browser");
+		String browserName = properties.getProperty("browser").toLowerCase();
+		//String browserName = System.getProperty("browser");
 		switch (browserName) {
 		case "chrome":
 			return DriverType.CHROME;

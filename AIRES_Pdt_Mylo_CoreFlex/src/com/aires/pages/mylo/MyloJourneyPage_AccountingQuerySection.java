@@ -164,7 +164,7 @@ public class MyloJourneyPage_AccountingQuerySection extends Base {
 	private List<WebElement> _resultingStatus;
 
 	private final By _dropdownOptions = By.xpath("//div[@role='option']/span");
-	private final By _queryResultFileIds = By.xpath("//ul[@class='even ng-star-inserted']/li[1]");
+	private final By _queryResultFileIds = By.xpath("//ul[@class='ng-star-inserted']/li[1]");
 
 	LinkedHashMap<String, WebElement> accountingQueryFieldMap = new LinkedHashMap<String, WebElement>();
 	LinkedHashMap<String, String> accountingFieldsUpdatedValueMap = new LinkedHashMap<String, String>();

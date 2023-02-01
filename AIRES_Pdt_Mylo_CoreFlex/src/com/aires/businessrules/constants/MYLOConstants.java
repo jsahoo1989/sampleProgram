@@ -1,5 +1,7 @@
 package com.aires.businessrules.constants;
 
+import java.util.Collection;
+
 public class MYLOConstants {
 	public static final String APPLICATION_LAUNCHED_AND_LOGO_DISPLAYED = "MYLO Logo is displayed on Mylo Application";
 	public static final String MYLO_LOGO_NOT_DISPLAYED = "MYLO Logo is not displayed on Mylo Application";
@@ -734,7 +736,7 @@ public class MYLOConstants {
 	public static final String FAIL_TO_VERIFY_TAG_SCRIPT_VALIDATION_MESSAGE_SECTION = "{0}Fail to verify Tag Script validation message for section {1}";
 	public static final String FAIL_TO_VERIFY_MANDATORY_FIELDS_VALIDATION_MESSAGE_SECTION = "{0}Fail to verify Mandatory fields validation message for section {1}";
 	public static final String FAIL_TO_VERIFY_POP_UP_MESSAGE_SECTION = "{0}Fail to verify Pop Up message:{1}  for section {2}";
-	public static final int CUSTOM_WAIT_TIME = 30;
+	public static final int CUSTOM_WAIT_TIME = 60;
 	public static final int TRANSFEREE_FIRST_NAME_CHAR_LIMIT = 30;
 	public static final int TRANSFEREE_LAST_NAME_CHAR_LIMIT = 60;
 	public static final String CHARACTER_LIMIT = "CharacterLimit";
@@ -764,7 +766,6 @@ public class MYLOConstants {
 	public static final String COMMENT = "Comment";
 	public static final String ADD_CLIENT_CONTACT = "Add Client Contact";
 	public static final String DISABLED = "disabled";
-	public static final String CUSTOM_FIELD_LENGTH = "10";
 	public static final String AUTOMATION_EMAIL="airesautomation@aires.com";
 	public static final String DETAILS="Details";
 	public static final String CURRENT_DATE = "Current Date";
@@ -839,5 +840,15 @@ public class MYLOConstants {
 	public static final int EMAIL_CHAR_LIMIT = 100;
 	public static final int PHONE_NUMBER_CHAR_LIMIT = 30;
 	public static final int COMMENT_CHAR_LIMIT = 500;
+	public static final String CUSTOM_FIELD_LENGTH = "10";
 	public static final String ADDRESS_CANCEL_BUTTON = "Address";
+
+	
+	// Constants related to Link Mobility Journey Section
+	public static final String LINK_MOBILITY_JOURNEY = "link/Mobility Journey";
+	public static final String LINK_NEW_JOURNEY_MSG = "Link as NEW JOURNEY if this is a new transfer for someone we have previously relocated. They will see all moves with their MobilityX login.";
+	public static final String LINK_EXISTING_JOURNEY_MSG = "Link to EXISTING JOURNEY if this is one of multiple legs in a single long-term or rotational assignment. They will see all moves with their MobilityX login.";
+	public static final String DECISION_FOR_LINKING_MSG = "You will not be able to begin the Initial Consultation for this transferee until you decide whether or not this file should be linked.";
+	public static final String CHANGE_FILE_STATUS = "Change File Status";
+	public static final String REMIND_ME_LATER = "Remind Me Later";
 }

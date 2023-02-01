@@ -1,0 +1,54 @@
+[
+	{
+		"environment": "qa",
+		"details": {
+			"myloUserWithResources": "mxssodev5@corp.aires.com",
+			"myloUserWithoutResources": "mxssodev9@corp.aires.com",
+			"myloPassword": "F74#jd*187_NB",
+			"myloProfileName": "mxsso!",
+			"myloFileID": "611085",
+			"clientId": "49226",
+			"clientName": "Aires QA Automation Client",
+			"mxClientUserName": "testmylo123@aires.com",
+			"mxClientPassword": "relonetng11",
+			"mxClientUserProfileName": "Test Mylo",
+			"mobilityXURL": "https://relonetdev3.aires.com/mobilityx/faces/jsf/Login.jsf",
+			"myloURL": "https://relonetqa4.aires.com/mylo-app/#/login"
+		}
+	},
+	{
+		"environment": "dev",
+		"details": {
+			"myloUserWithResources": "mxssodev5@corp.aires.com",
+			"myloUserWithoutResources": "mxssodev9@corp.aires.com",
+			"myloPassword": "F74#jd*187_NB",
+			"myloProfileName": "mxsso!",
+			"myloFileID": "611085",
+			"clientId": "49226",
+			"clientName": "Aires QA Automation Client",
+			"mxClientUserName": "testmylo123@aires.com",
+			"mxClientPassword": "relonetng11",
+			"mxClientUserProfileName": "Test Mylo",
+			"mobilityXURL": "https://relonetdev3.aires.com/mobilityx/faces/jsf/Login.jsf",
+			"myloURL": "https://relonetdev5.aires.com/mylo-app/#/login"
+		}
+	},
+	{
+		"environment": "uat",
+		"details": {
+			"myloUserWithResources": "mxssodev5@corp.aires.com",
+			"myloUserWithoutResources": "mxssodev9@corp.aires.com",
+			"myloPassword": "F74#jd*187_NB",
+			"myloProfileName": "mxsso!",
+			"myloFileID": "999149",
+			"clientId": "49226",
+			"clientName": "Aires QA Automation Client",
+			"mxClientUserName": "testmylo123@aires.com",
+			"mxClientPassword": "relonetng11",
+			"mxClientUserProfileName": "Test Mylo",
+			"mobilityXURL": "https://relonetdev3.aires.com/mobilityx/faces/jsf/Login.jsf",
+			"myloURL": "https://relonetuat.aires.com/mylo-app/#/login",
+			"transfereeName":"AutomationFirstNameMylo AutomationLastNameMylo"
+		}
+	}
+]

@@ -262,6 +262,7 @@ public class MyloJourneyClientContact_Steps {
 		_softAssert.assertTrue(_myloJourneyPageClientContactSection.verifyClientContactUpdated(table),
 				MessageFormat.format(MYLOConstants.FAILED_TO_VERIFY_UPDATED_VALUE_SECTION, CoreConstants.FAIL,
 						MYLOConstants.CLIENT_CONTACT));
+		_myloDashboardPage.changeFileStatus(MYLOConstants.CANCEL_BUTTON);
 		_softAssert.assertAll();
 	}
 

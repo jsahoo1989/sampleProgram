@@ -45,6 +45,15 @@
 			"sponsorName": "Intersoft",
 			"sponsorEmail": "airesautomation@aires.com",
 			"sponsorId": "654321"
+		},
+		"defaultAuthForm": {
+			"relocationPolicy": "Domestic Policy",
+			"originCity": "Washington",
+			"originCountry": "US",
+			"destinationCity": "Mumbai",
+			"destinationCountry": "IN",
+			"homeStatus": "Homeowner",
+			"email": "aireautomation@aires.com"
 		}
 	}
 ]

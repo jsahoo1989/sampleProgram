@@ -123,7 +123,7 @@ public class Hooks {
 		}
 	}
 
-	@After(order = 1)
+	//@After(order = 1)
 	public void updateResultInTestRail(Scenario scenario) {
 		String Case_ID = BusinessFunctions.getTestRailIdAsPerApplication(System.getProperty("application"),
 				scenario.getSourceTagNames().toString());
@@ -147,10 +147,13 @@ public class Hooks {
 	public String remoteGetURL(Scenario scenario) {
 		String appName = System.getProperty("application");
 		return (appName.equals(CoreConstants.COREFLEX) && scenario.getName().contains("MXTransferee"))
-				? FileReaderManager.getInstance().getConfigReader().getApplicationUrl("MXTransferee")
-				: (appName.equals(CoreConstants.COREFLEX) && scenario.getName().contains("TransfereeSubmissions"))
-						? FileReaderManager.getInstance().getConfigReader().getApplicationUrl("TransfereeSubmissions")
-						: System.getProperty("testURL");
+				|| (appName.equals(CoreConstants.MYLO))
+						? FileReaderManager.getInstance().getConfigReader().getMyloApplicationUrl(scenario)
+						: (appName.equals(CoreConstants.COREFLEX)
+								&& scenario.getName().contains("TransfereeSubmissions"))
+										? FileReaderManager.getInstance().getConfigReader()
+												.getApplicationUrl("TransfereeSubmissions")
+										: System.getProperty("testURL");
 
 	}
 
@@ -159,7 +162,7 @@ public class Hooks {
 				.getLoginByEnvt(CoreFunctions.getPropertyFromConfig("envt").toLowerCase());
 		return (scenario.getName().contains("PDT")) ? _loginInfo.details.pdtUrl
 				: (scenario.getName().contains("Mylo"))
-						? FileReaderManager.getInstance().getConfigReader().getMyloApplicationUrl()
+						? FileReaderManager.getInstance().getConfigReader().getMyloApplicationUrl(scenario)
 						: (scenario.getName().contains("CoreFlex"))
 								? FileReaderManager.getInstance().getConfigReader()
 										.getCoreFlexPolicySetupApplicationUrl()
@@ -172,7 +175,7 @@ public class Hooks {
 	private void dataCleanUp() {
 		if (ClientPolicyDetails.getPolicyId() != null)
 			DbFunctions.deletePolicyByPolicyId(ClientPolicyDetails.getPolicyId());
-		if (CoreFunctions.getPropertyFromConfig("assignmentSubmitStatus").equalsIgnoreCase("true"))
+		if (CoreFunctions.getPropertyFromConfig("assignmentSubmitStatus").equalsIgnoreCase("true")&& scenarioName.getName().contains("PDT"))
 			DbFunctions.updateAssignmentStatus(PDTConstants.INACTIVE_ASSGN_STATUS_CODE,
 					ClientPolicyDetails.getPolicyId());
 	}

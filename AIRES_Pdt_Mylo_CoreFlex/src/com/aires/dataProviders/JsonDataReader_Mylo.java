@@ -26,6 +26,7 @@ import java.util.List;
 import com.aires.businessrules.constants.CoreConstants;
 import com.aires.managers.FileReaderManager;
 import com.aires.testdatatypes.mylo.MyloCAStates;
+import com.aires.testdatatypes.mylo.MyloEnvironmentDetails;
 import com.aires.testdatatypes.mylo.MyloFileInformationDetails;
 import com.aires.testdatatypes.mylo.MyloIndiaStates;
 import com.aires.testdatatypes.mylo.MyloMemoryCapacityFileIds;
@@ -36,6 +37,7 @@ import com.aires.testdatatypes.mylo.Mylo_Assignment_HistoryDetails_UAT;
 import com.aires.testdatatypes.mylo.Mylo_DropDownFieldData;
 import com.aires.testdatatypes.mylo.Mylo_FileData;
 import com.aires.testdatatypes.mylo.Mylo_LoginData;
+import com.aires.testdatatypes.pdt.PDT_LoginInfo;
 import com.google.gson.Gson;
 
 public class JsonDataReader_Mylo {
@@ -61,6 +63,8 @@ public class JsonDataReader_Mylo {
 			.getTestDataResourcePath() + "mylo/Mylo_DropDownFieldData.json";
 	private final String _MyloFileInformationPath = FileReaderManager.getInstance().getConfigReader()
 			.getTestDataResourcePath() + "mylo/MyloFileInformationDetails.json";
+	private final String _myloEnvDetailsFilePath = FileReaderManager.getInstance().getConfigReader()
+			.getTestDataResourcePath() + "mylo/MyloEnvironmentDetails.json";
 	
 	private List<Mylo_LoginData> _loginDataList;
 	private List<MyloUSStates> _USStatesList;
@@ -73,6 +77,7 @@ public class JsonDataReader_Mylo {
 	private List<Mylo_FileData> _fileDataList;
 	private List<MyloMemoryCapacityFileIds> _fileIdDetailsList;
 	private List<MyloFileInformationDetails> _fileInfolist;
+	private List<MyloEnvironmentDetails> _myloLoginInfoList;
 	
 	public JsonDataReader_Mylo() {
 		_loginDataList = getUserData();
@@ -86,6 +91,7 @@ public class JsonDataReader_Mylo {
 		_fileIdDetailsList=getFileDetailsData();
 		_dropdownList=getDropdownData();
 		_fileInfolist=getMyloFileDetails();
+		_myloLoginInfoList=getMyloEnvironmentDetails();
 	}
 	private List<Mylo_LoginData> getUserData() {
 		Gson gson = new Gson();
@@ -96,6 +102,24 @@ public class JsonDataReader_Mylo {
 			return Arrays.asList(customers);
 		} catch (FileNotFoundException e) {
 			throw new RuntimeException(CoreConstants.JSON_FILE_NOT_FOUND_AT_PATH + _loginDataFilePath);
+		} finally {
+			try {
+				if (bufferReader != null)
+					bufferReader.close();
+			} catch (IOException ignore) {
+			}
+		}
+	}
+	
+	private List<MyloEnvironmentDetails> getMyloEnvironmentDetails() {
+		Gson gson = new Gson();
+		BufferedReader bufferReader = null;
+		try {
+			bufferReader = new BufferedReader(new FileReader(_myloEnvDetailsFilePath));
+			MyloEnvironmentDetails[] loginInfo = gson.fromJson(bufferReader, MyloEnvironmentDetails[].class);
+			return Arrays.asList(loginInfo);
+		} catch (FileNotFoundException e) {
+			throw new RuntimeException(CoreConstants.JSON_FILE_NOT_FOUND_AT_PATH + _myloEnvDetailsFilePath);
 		} finally {
 			try {
 				if (bufferReader != null)
@@ -323,5 +347,9 @@ public class JsonDataReader_Mylo {
 	
 	public final MyloFileInformationDetails getFileInformationDetails(String environment) {
 		return _fileInfolist.stream().filter(x -> x.environment.equalsIgnoreCase(environment)).findAny().get();
+	}
+	
+	public final MyloEnvironmentDetails getMyloLoginInfoByEnvt(String envt) {
+		return _myloLoginInfoList.stream().filter(x -> x.environment.equalsIgnoreCase(envt)).findAny().get();
 	}
 }

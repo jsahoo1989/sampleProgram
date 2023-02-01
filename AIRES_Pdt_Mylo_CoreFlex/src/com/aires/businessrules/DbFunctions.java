@@ -527,12 +527,40 @@ public class DbFunctions {
 		Connection connection =null;
 		String assignmentId = null;
 
-		try {
-			//DriverManager.registerDriver(new oracle.jdbc.OracleDriver());
-			//connection = DriverManager.getConnection(getMyloDBConnectionStringAsPerEnvt(_environment));		
+		try {	
 			connection =getMyloConnection();
 			PreparedStatement pst = connection.prepareStatement(DbQueries.QUERY_GET_CLIENT_CONTACT_ASSIGNMENT_ID_BY_FILE_STATUS);
 			pst.setString(1, fileStatus);
+			pst.setMaxRows(Integer.parseInt(_maxRows));
+			ResultSet resultset = pst.executeQuery();
+			while (resultset.next()) {
+				assignmentId = resultset.getString(MYLOConstants.FILEID);
+				break;
+			}
+		} catch (Exception ex) {
+			Assert.fail(CoreConstants.SQL_QUERY_FAILED);
+		} finally {
+			try {
+				if (connection != null) {
+					connection.close();
+				}
+			} catch (Exception ex) {
+				Log.info(CoreConstants.ERROR + ex.getMessage());
+				Log.info(CoreConstants.ERROR + ex.getStackTrace());
+			}
+		}
+		return assignmentId;
+	}
+	
+	public static String getFileIdByTransfereeName(String tFName,String tLName) {
+		Connection connection =null;
+		String assignmentId = null;
+
+		try {		
+			connection =getMyloConnection();
+			PreparedStatement pst = connection.prepareStatement(DbQueries.QUERY_GET_ASSIGNMENT_ID_BY_TRANSFEREE_NAME);
+			pst.setString(1, tFName);
+			pst.setString(2, tLName);
 			pst.setMaxRows(Integer.parseInt(_maxRows));
 			ResultSet resultset = pst.executeQuery();
 			while (resultset.next()) {

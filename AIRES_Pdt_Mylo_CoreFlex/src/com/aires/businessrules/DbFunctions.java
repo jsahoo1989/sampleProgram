@@ -11,6 +11,7 @@ import java.util.LinkedHashMap;
 import java.util.List;
 import org.testng.Assert;
 
+import com.aires.businessrules.constants.COREFLEXConstants;
 import com.aires.businessrules.constants.CoreConstants;
 import com.aires.businessrules.constants.DbQueries;
 import com.aires.businessrules.constants.MYLOConstants;
@@ -198,25 +199,21 @@ public class DbFunctions {
 
 	public static String getCoreFlexDBConnectionStringAsPerEnvt(String envt) {
 		String dbURL = null;
-		switch (envt) {
+		switch (envt.toLowerCase()) {
 		case "qa":
-		case "QA":
 			dbURL = "jdbc:oracle:thin:isisdba/irsfndevisisdba@corpuatvl303.corp.aires.com:1516:IRSFNDEV";
 			break;
 		case "uat":
-		case "UAT":
 			dbURL = "jdbc:oracle:thin:isisdba/irisuatisisdba@corpqavl300.corp.aires.com:1521:irisuat";
 			break;
 		case "preprod":
-		case "PreProd":
 			dbURL = "jdbc:oracle:thin:isisdba/iristestisisdba@corptesvl300.corp.aires.com:1521:iristest";
 			break;
 		case "prod":
-		case "PROD":
 			dbURL = "";
 			break;
 		default:
-			Assert.fail(PDTConstants.DATABASE_CONNECTION + PDTConstants.NOT_EXIST);
+			Assert.fail(COREFLEXConstants.INVALID_OPTION + " : " + envt + " " + PDTConstants.DATABASE_CONNECTION + PDTConstants.NOT_EXIST);
 		}
 		return dbURL;
 	}

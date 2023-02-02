@@ -78,7 +78,7 @@ public class IRIS_AssignmentOverviewPage extends BasePage {
 		_IRIS = file12CWindow;
 		_IRIS.maximize();
 		try {
-			CoreFunctions.waitHandler(10);
+//			CoreFunctions.waitHandler(10);
 			if (IRIS_PageMaster.getTabControlObject(_IRIS, 0).getSelectedTab().equals(IRISConstants.OVERVIEW)) {
 				Reporter.addStepLog(MessageFormat.format(IRISConstants.VERIFIED_CURRENT_TAB, CoreConstants.PASS,
 						IRIS_PageMaster.getTabControlObject(_IRIS, 0).getSelectedTab()));
@@ -102,7 +102,6 @@ public class IRIS_AssignmentOverviewPage extends BasePage {
 			file12CWindow.waitUntilVisible();
 			_IRIS = file12CWindow;
 			_IRIS.maximize();
-
 			IRIS_PageMaster.getMenuObject(IRIS_PageMaster.getMenuObject(_IRIS, "Query"), "File").waitUntilEnabled();
 			Helpers.selectMenu(IRIS_PageMaster.getMenuObject(IRIS_PageMaster.getMenuObject(_IRIS, "Query"), "File"),
 					IRIS_PageMaster.getMenuObject(IRIS_PageMaster.getMenuObject(_IRIS, "Query"), "File").getLabel());
@@ -1154,9 +1153,9 @@ public class IRIS_AssignmentOverviewPage extends BasePage {
 		Menu activateMenu = changeFileStatusMenu.describe(Menu.class,
 				new MenuDescription.Builder().label(fileStatus).build());
 		activateMenu.select();
-		CoreFunctions.waitHandler(2);
+//		CoreFunctions.waitHandler(2);
 		acceptFailedImageLoadDialog();
-		CoreFunctions.waitHandler(2);
+//		CoreFunctions.waitHandler(2);
 		Robot robot = new Robot();
 		robot.setAutoDelay(250);
 		robot.keyPress(KeyEvent.VK_ESCAPE);

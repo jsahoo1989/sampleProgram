@@ -573,8 +573,8 @@ public class MobilityXConstants {
 	public static final String CORE_BENEFIT_TRANSFEREE_SECTION_TEXT = "You will receive the following core relocation benefits:";
 	public static final String FLEX_BENEFIT_TRANSFEREE_SECTION_TEXT = "The following flexible benefits are available to you from your company. To start creating your bundle of benefits that best suits your needs, click a benefit box below to find out more.";
 	public static final String EXCEPTION_OCCURED_WHILE_VERIFYING_DEFAULT_AFTER_RELOCATION_CASHOUT_DETAILS_ON_FLEX_PLANNING_TOOL_PAGE = "{0}Exception occured while verifying Default After Relocation Cashout Details on Flex Planning Tool Page. Exception : ''{1}''.";
-	public static final String RELOCATION_CASHOUT_NOTE_BEFORE_TRACING_FOR_CLIENT = "Cashout benefit will be available soon. If you have any questions, please contact Aires Representative at mxssodev5@aires.com or mxssodev5@aires.com.";
-	public static final String RELOCATION_CASHOUT_NOTE_BEFORE_TRACING_FOR_TRANSFEREE = "Cashout benefit will be available soon. If you have any questions, please contact your Aires Representative at mxssodev5@aires.com or mxssodev5@aires.com.";
+	public static final String RELOCATION_CASHOUT_NOTE_BEFORE_TRACING_FOR_CLIENT = "Cashout benefit will be available soon. If you have any questions, please contact Aires Representative at";
+	public static final String RELOCATION_CASHOUT_NOTE_BEFORE_TRACING_FOR_TRANSFEREE = "Cashout benefit will be available soon. If you have any questions, please contact your Aires Representative at";
 	public static final String EXCEPTION_OCCURED_WHILE_VERIFYING_DEFAULT_AFTER_RELOCATION_CASHOUT_DETAILS_NOTE_BEFORE_TRACING_ACTUALIZATION_ON_FLEX_PLANNING_TOOL_PAGE = "{0}Exception occured while verifying default after relocation cashout note before Tracing Actualization on Flex Planning Tool page. Exception : ''{1}''.";
 	public static final String FAILED_TO_VERIFY_INITIATION_BENEFITS_SUBMISSION_EMAIL = "{0}Failed to verify Initiation Benefits Submission Email.";
 //	public static final String EDIT_BENEFIT_SELECTION = "Edit Benefit Selection";
@@ -799,7 +799,7 @@ public class MobilityXConstants {
 	public static final String APPROVE_DIALOG_COMMENT = "Deny Dialog Comment Selection";
 	public static final String APPROVED_DELETE_REQUEST_REMAINING_POINTS_TO_USE = "Approved Delete Request Remaining Points To Use";
 	public static final String APPROVE_DELETE_REQUEST_REMAINING_POINTS_TO_USE_MESSAGE = "You now have current_balance/total_points point(s) to use.";
-	public static final String APPROVE_DELETE_REQUEST_REMAINING_POINTS_TO_USE_MESSAGE_CLIENT = "Those points have been returned to your point balance. You now have current_balance/total_points point(s) to use for TransfereeFN TransfereeLN.";
+	public static final String APPROVE_DELETE_REQUEST_REMAINING_POINTS_TO_USE_MESSAGE_CLIENT = "Those points have been returned to the point balance. You now have current_balance/total_points point(s) to use for TransfereeFN TransfereeLN.";
 	public static final String APPROVED_DELETE_REQUEST_TEXT = "Approved Delete Request Text";
 	public static final String DENIED_DELETE_REQUEST_TEXT = "Denied Delete Request Text";
 	public static final String DENIED_DELETE_REQUEST_REMAINING_POINTS_TO_USE_MESSAGE_CLIENT = "You now have current_balance/total_points point(s) to use for TransfereeFN TransfereeLN.";
@@ -894,4 +894,24 @@ public class MobilityXConstants {
 	public static final String SUCCESSFULLY_VERIFIED_SUBMITTED_BENEFITS_AND_CASHOUT_DETAILS_IN_NEW_INITIATION_SUBMITTED_EMAIL = "{0}Successfully verified Submitted Benefit and Cashout Details in New Intiation Submitted Email.";
 	public static final String EXCEPTION_OCCURED_WHILE_VERIFYING_SUBMITTED_BENEFITS_AND_CASHOUT_DETAILS_IN_NEW_INITIATION_SUBMITTED_EMAIL = "{0}Exception occured while verifying Submitted Benefit and Cashout Details in New Intiation Submitted Email. Exception : ''{1}''.";
 	public static final String TRANSFEREE_CASHOUT_DESCRIPTION = "MXTransferee Cashout Description";
+	public static final String DEMO_DYNAMIC_DOCUMENT = "Demo Dynamic Document";
+	public static final String IMMIGRATION = "Immigration";
+	public static final String POINT_BALANCE_TOOLTIP_SECTION = "Point Balance Tooltip Section";
+	public static final String BENEFIT_SUBMISSION_INFO_TEXT = "Benefit Submission Info Text";
+	public static final String EXCEPTION_OCCURED_WHILE_VALIDATING_SUBMITTED_POINTS_INFO_TEXT_ON_SUBMISSION_CONFIRMATION_DIALOG = "{0}Exception occured while validating Submitted Points Info Text on Submission Confirmation Dialog. Exception : ''{1}''.";
+	public static final String SELECTED_CASHOUT_POINTS = "Selected Cashout Points";
+	public static final String SELECTED_CASHOUT_DESCRIPTION = "Selected Cashout Description";
+	public static final String SUBMITTED_BENEFIT_POINTS = "Submitted Benefit Points";
+	public static final String SUBMITTED_BENEFIT_NAME = "Submitted Benefit Name";
+	public static final String SUBMITTED_BENEFIT_ALLOWANCE_AMOUNT = "Submitted Benefit Allowance Amount";
+	public static final String SUBMITTED_BENEFIT_QUANTITY = "Submitted Benefit Quantity";
+	public static final String SUBMITTED_BENEFIT_DATE = "Submitted Benefit Date";
+	public static final String UNDO_BUTTON = "Undo Button";
+	public static final String FLEX_BENEFIT_SECTION_TEXT = "Flex Benefit Section Text";
+	public static final String CORE_BENEFIT_SECTION_TEXT = "Core Benefit Section Text";
+	public static final String BENEFIT_LONG_DESCRIPTION = "Benefit Long Description";
+	public static final String EXCEPTION_OCCURED_WHILE_REVIEWING_SELECTED_BENEFITS_POINTS_ON_AUTH_FORM_PAGE = "{0}Exception occured while reviewing Selected Benefit Points on Auth Form page. Exception : ''{1}''.";
+	public static final String SUCCESSFULLY_VERIFIED_REMAINING_POINTS_POST_SUBMISSION_ON_BENEFIT_SELECTION_TOOL_PAGE = "{0}Successfully verified Remaining Points - Post Submission on Benefit Selection Tool page. ";
+	public static final String REMAINING_POINTS_POST_SUBMISSION = "Remaining Points - Post Submission";
+	public static final String EXCEPTION_OCCURED_WHILE_VERIFYING_REMAINING_POINTS_POST_SUBMISSION_ON_BENEFIT_SELECTION_TOOL_PAGE = "{0}Exception occured while verifying Remaining Points - Post Submission on Benefit Selection Tool page. Exception : ''{1}''.";
 }

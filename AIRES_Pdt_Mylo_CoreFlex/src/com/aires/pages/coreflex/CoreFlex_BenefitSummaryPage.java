@@ -14,7 +14,6 @@ import com.aires.businessrules.BusinessFunctions;
 import com.aires.businessrules.CoreFunctions;
 import com.aires.businessrules.constants.COREFLEXConstants;
 import com.aires.businessrules.constants.CoreConstants;
-import com.aires.businessrules.constants.PDTConstants;
 import com.aires.managers.FileReaderManager;
 import com.aires.testdatatypes.coreflex.Benefit;
 import com.aires.testdatatypes.coreflex.CoreFlex_AllowancesBenefitsData;
@@ -268,10 +267,20 @@ public class CoreFlex_BenefitSummaryPage extends Base {
 	}
 
 	private boolean verifyBenefitSummaryDetails(int indexBenefit, Benefit benefit) {
-		return (CoreFunctions.getItemsFromListByIndex(driver, _textAddedBenefitNameList, indexBenefit, true)
-				.equals(benefit.getBenefitDisplayName()))
-				&& ((CoreFunctions.getItemsFromListByIndex(driver, _benefitsPointsList, indexBenefit, true))
-						.equals(benefit.getPoints()));
+		try {
+			CoreFunctions.verifyText(
+					CoreFunctions.getItemsFromListByIndex(driver, _textAddedBenefitNameList, indexBenefit, true),
+					benefit.getBenefitDisplayName(), COREFLEXConstants.BENEFIT_DISPLAY_NAME);
+			CoreFunctions.verifyText(
+					CoreFunctions.getItemsFromListByIndex(driver, _benefitsPointsList, indexBenefit, true),
+					benefit.getPoints(), COREFLEXConstants.BENEFIT_POINTS);
+			return true;
+		} catch (Exception e) {
+			Reporter.addStepLog(MessageFormat.format(
+					COREFLEXConstants.EXCEPTION_OCCURED_WHILE_VALIDATING_FLEX_BENEFIT_CATEGORIES_AND_TYPE_ON_BENEFIT_SUMMARY_PAGE,
+					CoreConstants.FAIL, e.getMessage()));
+		}
+		return false;
 	}
 
 	private boolean iterateAndVerifyCloningBenefitsSummaryDetails() {

@@ -43,7 +43,7 @@ public class IRIS_Corporation_Accounting extends BasePage {
 	public boolean verifyAccountingTab() throws GeneralLeanFtException {
 		_IRIS.maximize();
 		try {
-			CoreFunctions.waitHandler(5);
+//			CoreFunctions.waitHandler(5);
 			if (IRIS_PageMaster.getTabControlObject(_IRIS, 0).getSelectedTab().equals(IRISConstants.ACCOUNTING)) {
 				Reporter.addStepLog(MessageFormat.format(IRISConstants.VERIFIED_CURRENT_TAB, CoreConstants.PASS,
 						IRIS_PageMaster.getTabControlObject(_IRIS, 0).getSelectedTab()));
@@ -242,7 +242,7 @@ public class IRIS_Corporation_Accounting extends BasePage {
 	public void clickOnSaveBtn() {
 		try {
 			if (!getCheckboxSelectionAlreadyPerformedStatus()) {
-				CoreFunctions.waitHandler(1);
+//				CoreFunctions.waitHandler(1);
 				IRIS_PageMaster.getButtonObjectFromLabel(_IRIS, "Save").waitUntilEnabled();
 				Helpers.clickButton(IRIS_PageMaster.getButtonObjectFromLabel(_IRIS, "Save"),
 						IRIS_PageMaster.getButtonObjectFromLabel(_IRIS, "Save").getLabel());
@@ -265,7 +265,7 @@ public class IRIS_Corporation_Accounting extends BasePage {
 	 * @throws Exception
 	 */
 	private void acceptSaveConfirmation() throws GeneralLeanFtException, Exception {
-		CoreFunctions.waitHandler(1);
+//		CoreFunctions.waitHandler(1);
 		if (IRIS_PageMaster.getDialogObject(_IRIS, "Saved").isVisible()) {
 			Helpers.clickButton(
 					IRIS_PageMaster.getButtonObjectFromLabel(IRIS_PageMaster.getDialogObject(_IRIS, "Saved"), "OK"),

@@ -388,7 +388,9 @@ public class MX_Transferee_JourneyHomePage extends Base {
 
 	public boolean verifyUserNavigationToJourneyHomePage() {
 		try {
-			return CoreFunctions.isElementExist(driver, _linkManageMyPoints, 10);
+			CoreFunctions.explicitWaitTillElementBecomesClickable(driver, _linkManageMyPoints,
+					MobilityXConstants.MANAGE_MY_POINTS);
+			return CoreFunctions.isElementExist(driver, _linkManageMyPoints, 20);
 		} catch (Exception e) {
 			Reporter.addStepLog(MessageFormat.format(
 					MobilityXConstants.EXCEPTION_OCCURED_WHILE_VALIDATING_USER_NAVIGATION_TO_MOBILITYX_JOURNEY_HOME_PAGE,
@@ -398,7 +400,7 @@ public class MX_Transferee_JourneyHomePage extends Base {
 	}
 
 	public void handle_Cookie_AfterLogin() {
-		CoreFunctions.waitForBrowserToLoad(driver);
+		CoreFunctions.explicitWaitTillElementBecomesClickable(driver, _btn_OkOnSiteCookieAfterLogin, MobilityXConstants.COOKIEDAILOG_OKBUTTON);
 		if (CoreFunctions.isElementExist(driver, _btn_OkOnSiteCookieAfterLogin, 15)) {
 			HandleCookiePopUp(_btn_OkOnSiteCookieAfterLogin);
 		}
@@ -432,12 +434,12 @@ public class MX_Transferee_JourneyHomePage extends Base {
 	}
 
 	public void routeToTransfereeJourney() {
-		if (CoreFunctions.isElementExist(driver, _linkSkipProceedToJourneyHome, 5))
+		if (CoreFunctions.isElementExist(driver, _linkSkipProceedToJourneyHome, 15))
 			CoreFunctions.clickElement(driver, _linkSkipProceedToJourneyHome);
 	}
 
 	public boolean isWelcomePopupDisplayed() {
-		return CoreFunctions.isElementExist(driver, _btn_startFlexPlanning, 10);
+		return CoreFunctions.isElementExist(driver, _btn_startFlexPlanning, 25);
 	}
 
 	public void routeToFlexPlanningTool() {
@@ -466,7 +468,7 @@ public class MX_Transferee_JourneyHomePage extends Base {
 		boolean isAssignmentClientDetailsMatched = false, isPolicyPointsDetailsMatched = false;
 		boolean isDetailsMatched = false;
 		try {
-			switchToTooltipIFrameAndPerformAction(MobilityXConstants.HIDE, 10);
+			switchToTooltipIFrameAndPerformAction(MobilityXConstants.HIDE, 5);
 			String actualClientName = CoreFunctions.getElementText(driver, _textClientName);
 			String actualTransfereeName = CoreFunctions.getElementText(driver, _textTransfereeUserNameTitle);
 			String actualpolicyAndFileId = CoreFunctions.getElementText(driver, _textPolicyFileID);
@@ -558,7 +560,7 @@ public class MX_Transferee_JourneyHomePage extends Base {
 		boolean isSubmittedSpentPointsValid = false;
 		double spentPointsAfterBenefitSubmission = 0;
 		try {
-			CoreFunctions.waitHandler(2);
+//			CoreFunctions.waitHandler(2);
 			CoreFunctions.explicitWaitTillElementBecomesClickable(driver, _textInitialSpentAndTotalPoints,
 					MobilityXConstants.TRANSFEREE_JOURNEY_POINTS_LINK);
 			String spentPointsAfterBenefitSubmissionWithText[] = CoreFunctions
@@ -648,10 +650,11 @@ public class MX_Transferee_JourneyHomePage extends Base {
 			CoreFunctions.clickElement(driver, _btn_continue);
 			Reporter.addStepLog(
 					MessageFormat.format(MobilityXConstants.SUCCESSFULLY_SELECTED_ACCOUNT_TYPE, CoreConstants.PASS));
-			CoreFunctions.waitHandler(2);
-			CoreFunctions.explicitWaitTillElementVisibility(driver, _titleAddPaymentAccount,
-					COREFLEXConstants.ADD_PAYMENT_ACCOUNT);
-			CoreFunctions.highlightObject(driver, _titleAddPaymentAccount);
+//			CoreFunctions.waitHandler(2);
+			CoreFunctions.explicitWaitTillElementBecomesClickable(driver, _btn_submit, MobilityXConstants.SUBMIT);
+//			CoreFunctions.explicitWaitTillElementVisibility(driver, _titleAddPaymentAccount,
+//					COREFLEXConstants.ADD_PAYMENT_ACCOUNT);
+//			CoreFunctions.highlightObject(driver, _titleAddPaymentAccount);
 			CoreFunctions.clearAndSetText(driver, _mailingAddress1, accountDetails.checkAccountType.address1);
 			CoreFunctions.clearAndSetText(driver, _accountHolderName,
 					accountDetails.checkAccountType.accountHoldersName);
@@ -688,7 +691,8 @@ public class MX_Transferee_JourneyHomePage extends Base {
 				CoreFunctions.clickElement(driver, _btn_continue);
 				Reporter.addStepLog(MessageFormat.format(MobilityXConstants.SUCCESSFULLY_SELECTED_ACCOUNT_TYPE,
 						CoreConstants.PASS));
-				CoreFunctions.waitHandler(2);
+//				CoreFunctions.waitHandler(2);
+				CoreFunctions.explicitWaitTillElementBecomesClickable(driver, _btnWireSubmit, MobilityXConstants.SUBMIT);
 				CoreFunctions.selectByVisibleText(driver, _selectCurrency,
 						CoreFunctions.getPropertyFromConfig("CF_Transferee_CashoutCurrencyText"));
 				CoreFunctions.clearAndSetText(driver, _accountHolderName,

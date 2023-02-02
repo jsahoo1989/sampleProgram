@@ -308,6 +308,17 @@ public class MX_Transferee_FlexPlanningTool_Page extends Base {
 	@FindBy(how = How.XPATH, using = "//span[contains(text(),'Edit Submitted Benefits')]")
 	private WebElement _buttonEditSubmittedBenefits;
 
+	@FindBy(how = How.CSS, using = "div.RXFlexHeaderTooltiptext")
+	private WebElement _pointBalanceTooltipSection;
+
+	// Browser Loading Symbol
+	@FindBy(how = How.XPATH, using = "//span[contains(@id,'ATStatus')][contains(text(),'Loading')]")
+	private WebElement _browserLoadingSymbol;
+
+	// Browser Cursor Wait Symbol
+	@FindBy(how = How.XPATH, using = "//body[contains(@style,'wait')]")
+	private WebElement _browserCursorWait;
+
 	/*********************************************************************/
 
 	CoreFlex_PolicySetupPagesData policySetupPageData = FileReaderManager.getInstance().getCoreFlexJsonReader()
@@ -347,6 +358,8 @@ public class MX_Transferee_FlexPlanningTool_Page extends Base {
 	public boolean isFlexPlanningToolHomePageDisplayed() {
 		CoreFunctions.explicitWaitTillElementVisibility(driver, flexHomePageTitle,
 				MobilityXConstants.ONPOINT_PLANNING_TOOL);
+		CoreFunctions.explicitWaitTillElementBecomesClickable(driver, _link_backToMobilityJourney,
+				MobilityXConstants.BACK_TO_MOBILITY_JOURNEY);
 		return CoreFunctions.getElementText(driver, flexHomePageTitle).equals(MobilityXConstants.ONPOINT_PLANNING_TOOL);
 	}
 
@@ -391,36 +404,45 @@ public class MX_Transferee_FlexPlanningTool_Page extends Base {
 	}
 
 	public boolean verifyPostSubmissionPointsBalanceSection() {
-		boolean isDefaultPointBalanceCorrect = false;
 		try {
 			if (CoreFunctions.isElementExist(driver, pointBalance, 10)) {
 				String defaultActualRemainingPointBalance = CoreFunctions.getElementText(driver, remaining_points);
 				String defaultActualTotalPointBalance = CoreFunctions.getElementText(driver, total_points)
 						.replace("/", "").trim();
-				isDefaultPointBalanceCorrect = (Double.parseDouble(CoreFunctions.getPropertyFromConfig(
-						"CF_Transferee_AvailablePoints")) == (Double.parseDouble(defaultActualRemainingPointBalance)))
-						&& ((CoreFunctions.getPropertyFromConfig("CF_Transferee_TotalAvailablePoints"))
-								.equals(defaultActualTotalPointBalance));
+				CoreFunctions.verifyValue((Double.parseDouble(defaultActualRemainingPointBalance)),
+						Double.parseDouble(CoreFunctions.getPropertyFromConfig("CF_Transferee_AvailablePoints")),
+						MobilityXConstants.AVAILABLE_POINTS_BALANCE_TEXT);
+				CoreFunctions.verifyText(defaultActualTotalPointBalance,
+						CoreFunctions.getPropertyFromConfig("CF_Transferee_TotalAvailablePoints"),
+						MobilityXConstants.TOTAL_AVAILABLE_POINTS);
+				Reporter.addStepLog(MessageFormat.format(
+						COREFLEXConstants.SUCCESSFULLY_VALIDATED_DEFAULT_REMAINING_AND_TOTAL_POINTS_BALANCE_FLEX_PLANNING_TOOL_PAGE,
+						CoreConstants.PASS));
+				return true;
 			}
 		} catch (Exception e) {
 			Reporter.addStepLog(MessageFormat.format(
 					COREFLEXConstants.EXCEPTION_OCCURED_WHILE_VALIDATING_DEFAULT_REMAINING_AND_TOTAL_POINTS_BALANCE_FLEX_PLANNING_TOOL_PAGE,
 					CoreConstants.FAIL, e.getMessage()));
 		}
-		if (isDefaultPointBalanceCorrect) {
-			Reporter.addStepLog(MessageFormat.format(
-					COREFLEXConstants.SUCCESSFULLY_VALIDATED_DEFAULT_REMAINING_AND_TOTAL_POINTS_BALANCE_FLEX_PLANNING_TOOL_PAGE,
-					CoreConstants.PASS));
-		}
-		return isDefaultPointBalanceCorrect;
+		return false;
 	}
 
 	public boolean verifyPointBalanceTooltipContent() {
-		CoreFunctions.clickElement(driver, pointBalance_tooltip);
-		CoreFunctions.waitHandler(3);
-		Log.info("Actual   Text: "+CoreFunctions.getElementText(driver, pointBalance_tooltip_content));
-		Log.info("Expected Text: "+pointBalanceDetails());
-		return CoreFunctions.getElementText(driver, pointBalance_tooltip_content).equals(pointBalanceDetails());
+		try {
+			CoreFunctions.clickElement(driver, pointBalance_tooltip);
+			CoreFunctions.waitHandler(2);
+			CoreFunctions.explicitWaitTillElementVisibility(driver, _pointBalanceTooltipSection,
+					MobilityXConstants.POINT_BALANCE_TOOLTIP_SECTION);
+			CoreFunctions.verifyText(CoreFunctions.getElementText(driver, pointBalance_tooltip_content),
+					pointBalanceDetails(), MobilityXConstants.POINT_BALANCE_TOOLTIP_SECTION);
+			return true;
+		} catch (Exception e) {
+			Reporter.addStepLog(MessageFormat.format(
+					COREFLEXConstants.EXCEPTION_OCCURED_WHILE_VALIDATING_DEFAULT_REMAINING_AND_TOTAL_POINTS_BALANCE_FLEX_PLANNING_TOOL_PAGE,
+					CoreConstants.FAIL, e.getMessage()));
+			return false;
+		}
 	}
 
 	public String pointBalanceDetails() {
@@ -528,7 +550,7 @@ public class MX_Transferee_FlexPlanningTool_Page extends Base {
 
 	public boolean validatePointsAndClickOnNext() {
 		try {
-			CoreFunctions.waitHandler(3);
+//			CoreFunctions.waitHandler(3);
 			if (Double.parseDouble(CoreFunctions.getElementText(driver, selectedPoints)) == totalSelectedPoints) {
 				CoreFunctions.clickElement(driver, _btn_next);
 				CoreFunctions.writeToPropertiesFile("CF_Transferee_TotalSelectedPoints",
@@ -603,6 +625,8 @@ public class MX_Transferee_FlexPlanningTool_Page extends Base {
 
 	public boolean verifyUserNavigationToSuggestedBundlesPage() {
 		try {
+			CoreFunctions.explicitWaitTillElementBecomesClickable(driver, _link_backToBenefitList,
+					MobilityXConstants.BACK_TO_BENEFITS_LIST);
 			return CoreFunctions.isElementExist(driver, _text_suggestedBundles, 5);
 		} catch (Exception e) {
 			Reporter.addStepLog(MessageFormat.format(
@@ -688,12 +712,24 @@ public class MX_Transferee_FlexPlanningTool_Page extends Base {
 	}
 
 	private boolean verifySuggestedBenefitDetails(int indexBenefit, Benefit benefit) {
-		return (CoreFunctions.getItemsFromListByIndex(driver, _suggestedBenefitNameList, indexBenefit, true)
-				.equals(benefit.getBenefitDisplayName()))
-				&& ((CoreFunctions.getItemsFromListByIndex(driver, _suggestedAllowanceAmountList, indexBenefit, true)
-						.replace("/", "").trim()).equals(benefit.getBenefitAmount()))
-				&& ((CoreFunctions.getItemsFromListByIndex(driver, _suggestedBenefitsPointsList, indexBenefit, true)
-						.replace("pts", "").trim()).equals(benefit.getPoints()));
+		try {
+			CoreFunctions.verifyText(
+					CoreFunctions.getItemsFromListByIndex(driver, _suggestedBenefitNameList, indexBenefit, true),
+					benefit.getBenefitDisplayName(), MobilityXConstants.BENEFIT_DISPLAY_NAME);
+			CoreFunctions.verifyText(
+					(CoreFunctions.getItemsFromListByIndex(driver, _suggestedAllowanceAmountList, indexBenefit, true)
+							.replace("/", "").trim()),
+					benefit.getBenefitAmount(), MobilityXConstants.BENEFIT_ALLOWANCE_AMOUNT);
+			CoreFunctions.verifyText(
+					(CoreFunctions.getItemsFromListByIndex(driver, _suggestedBenefitsPointsList, indexBenefit, true)
+							.replace("pts", "").trim()),
+					benefit.getPoints(), MobilityXConstants.BENEFIT_POINTS);
+			return true;
+		} catch (Exception e) {
+			Reporter.addStepLog(MessageFormat.format(MobilityXConstants.FAILED_TO_VERIFY_CUSTOM_BUNDLE_DETAILS,
+					CoreConstants.FAIL, e.getMessage()));
+			return false;
+		}
 	}
 
 	public boolean verifyUpdatedPointDetails() {
@@ -727,15 +763,16 @@ public class MX_Transferee_FlexPlanningTool_Page extends Base {
 	}
 
 	private boolean validatePointsAfterSubmissionAndClickOnNext() {
-		CoreFunctions.waitHandler(1);
+//		CoreFunctions.waitHandler(1);
 		DecimalFormat format = new DecimalFormat();
 		format.setDecimalSeparatorAlwaysShown(false);
 		if ((CoreFunctions.getElementText(driver, _afterSubmissionRemainingPoints)).equals(format
 				.format(Double.parseDouble(CoreFunctions.getPropertyFromConfig("CF_Transferee_AvailablePoints"))))) {
 			CoreFunctions.clickElement(driver, _btn_next);
 			return true;
+		} else {
+			return false;
 		}
-		return false;
 	}
 
 	public boolean verifyAvailablePointsMessage() {
@@ -754,9 +791,19 @@ public class MX_Transferee_FlexPlanningTool_Page extends Base {
 	public boolean verifyAvailablePointsMessageAfterSubmission() {
 		DecimalFormat format = new DecimalFormat();
 		format.setDecimalSeparatorAlwaysShown(false);
-		return CoreFunctions.getElementText(driver, _textTotalPointBalance)
-				.contains(MobilityXConstants.AVAILABLE_POINTS_TEXT.replace("available_points", format.format(
-						Double.parseDouble(CoreFunctions.getPropertyFromConfig("CF_Transferee_AvailablePoints")))));
+		try {
+			CoreFunctions.verifyTextContains(CoreFunctions.getElementText(driver, _textTotalPointBalance),
+					MobilityXConstants.AVAILABLE_POINTS_TEXT.replace("available_points",
+							format.format(Double.parseDouble(
+									CoreFunctions.getPropertyFromConfig("CF_Transferee_AvailablePoints")))),
+					MobilityXConstants.AVAILABLE_POINTS_BALANCE_TEXT);
+			return true;
+		} catch (Exception e) {
+			Reporter.addStepLog(MessageFormat.format(
+					MobilityXConstants.EXCEPTION_OCCURED_WHILE_VERIFYING_AVAILABLE_POINTS_MESSAGE_TEXT_ON_FLEX_PLANNING_TOOL_PAGE,
+					CoreConstants.FAIL, e.getMessage()));
+			return false;
+		}
 	}
 
 	public boolean verifyAvailablePointsMessageAfterClientSubmission() {
@@ -790,14 +837,27 @@ public class MX_Transferee_FlexPlanningTool_Page extends Base {
 	}
 
 	private boolean verifyFlexPlanningToolBenefitDetails(int indexBenefit, Benefit benefit) {
-		return (CoreFunctions.getItemsFromListByIndex(driver, _textAddedBenefitNameList, indexBenefit, true)
-				.equals(benefit.getBenefitDisplayName()))
-				&& (CoreFunctions.getItemsFromListByIndex(driver, _allowanceAmountList, indexBenefit, true)
-						.equals(benefit.getBenefitAmount()))
-				&& ((CoreFunctions.getItemsFromListByIndex(driver, _benefitDescList, indexBenefit, true))
-						.equals(benefit.getBenefitDesc()))
-				&& ((CoreFunctions.getItemsFromListByIndex(driver, _benefitsPointsList, indexBenefit, true))
-						.equals(benefit.getPoints()));
+		try {
+			CoreFunctions.verifyText(
+					CoreFunctions.getItemsFromListByIndex(driver, _textAddedBenefitNameList, indexBenefit, true),
+					benefit.getBenefitDisplayName(), MobilityXConstants.BENEFIT_DISPLAY_NAME);
+			CoreFunctions.verifyText(
+					CoreFunctions.getItemsFromListByIndex(driver, _allowanceAmountList, indexBenefit, true),
+					benefit.getBenefitAmount(), MobilityXConstants.BENEFIT_ALLOWANCE_AMOUNT);
+			CoreFunctions.verifyText(
+					CoreFunctions.getItemsFromListByIndex(driver, _benefitDescList, indexBenefit, true),
+					benefit.getBenefitDesc(), MobilityXConstants.BENEFIT_LONG_DESCRIPTION);
+			CoreFunctions.verifyText(
+					CoreFunctions.getItemsFromListByIndex(driver, _benefitsPointsList, indexBenefit, true),
+					benefit.getPoints(), MobilityXConstants.BENEFIT_POINTS);
+			return true;
+
+		} catch (Exception e) {
+			Reporter.addStepLog(MessageFormat.format(
+					COREFLEXConstants.EXCEPTION_OCCURED_WHILE_VALIDATING_FLEX_BENEFIT_DETAILS_ON_FLEX_PLANNING_TOOL_PAGE,
+					CoreConstants.FAIL, e.getMessage()));
+			return false;
+		}
 	}
 
 	public void clickElementOfPage(String elementName) {
@@ -852,30 +912,38 @@ public class MX_Transferee_FlexPlanningTool_Page extends Base {
 		boolean isBenefitSelected = false;
 		try {
 			CoreFunctions.scrollToElementUsingJS(driver, flexHomePageTitle, MobilityXConstants.ONPOINT_PLANNING_TOOL);
-			CoreFunctions.waitHandler(5);
+//			CoreFunctions.waitHandler(5);
+			CoreFunctions.highlightObject(driver, flexHomePageTitle);
 			double points = Double.parseDouble(benefit.getPoints());
 			if ((benefit.getMultipleBenefitSelection()).equals("Yes")) {
 				CoreFunctions.scrollClickUsingJS(driver, _buttonSelectThis.get(indexBenefit),
 						benefit.getBenefitDisplayName() + " - Select This button");
-				CoreFunctions.waitHandler(3);
+//				CoreFunctions.waitHandler(7);
+				CoreFunctions.explicitWaitTillElementInVisibility(driver, _browserCursorWait);
+				CoreFunctions.explicitWaitTillElementInVisibility(driver, _browserLoadingSymbol);
 				totalSelectedPoints += points;
 				isBenefitSelected = true;
 				for (int j = 1; j < benefit.getNumberOfBenefitSelected(); j++) {
-					CoreFunctions.waitHandler(3);
+//					CoreFunctions.waitHandler(7);
 					WebElement benefitSelectPlusButton = CoreFunctions
 							.findSubElement(flexBenefits_list.get(indexBenefit), _buttonSelectPlus);
 					CoreFunctions.scrollClickUsingJS(driver, benefitSelectPlusButton,
 							"Multiple Selection - Plus Button");
+					CoreFunctions.explicitWaitTillElementInVisibility(driver, _browserCursorWait);
+					CoreFunctions.explicitWaitTillElementInVisibility(driver, _browserLoadingSymbol);
 					totalSelectedPoints += points;
 					isBenefitSelected = true;
 				}
 			} else {
 				BusinessFunctions.selectValueFromListUsingIndex(driver, _buttonSelectThis, indexBenefit);
+				CoreFunctions.explicitWaitTillElementInVisibility(driver, _browserCursorWait);
+				CoreFunctions.explicitWaitTillElementInVisibility(driver, _browserLoadingSymbol);
 				totalSelectedPoints += points;
 				isBenefitSelected = true;
 			}
 			CoreFunctions.scrollToElementUsingJS(driver, flexHomePageTitle, MobilityXConstants.ONPOINT_PLANNING_TOOL);
-			CoreFunctions.waitHandler(5);
+//			CoreFunctions.waitHandler(5);
+			CoreFunctions.highlightObject(driver, flexHomePageTitle);
 		} catch (Exception e) {
 			Reporter.addStepLog(MessageFormat.format(
 					MobilityXConstants.EXCEPTION_OCCURED_WHILE_SELECTING_BENEFITS_ON_FLEX_PLANNING_TOOL_PAGE,
@@ -942,7 +1010,6 @@ public class MX_Transferee_FlexPlanningTool_Page extends Base {
 
 	public boolean verifyInitialCashOutContent(boolean isBenefitsSubmitted) {
 		try {
-			String expectedCashoutValue = null;
 			DecimalFormat format = new DecimalFormat();
 			format.setDecimalSeparatorAlwaysShown(false);
 			getAvailableCashoutPoints(isBenefitsSubmitted);
@@ -962,26 +1029,12 @@ public class MX_Transferee_FlexPlanningTool_Page extends Base {
 			CoreFunctions.verifyValue(
 					Double.parseDouble(CoreFunctions.getElementText(driver, _text_pointsAvailableForCashOut)),
 					cashoutPoints, MobilityXConstants.POINTS_AVAILABLE_FOR_CASHOUT);
-
-			String actualCashoutValue = CoreFunctions.getElementText(driver, _text_cashOutValue);
-
-			if (CoreFunctions.getPropertyFromConfig("CF_Transferee_CashoutCurrencySign").length() == 1) {
-				expectedCashoutValue = CoreFunctions.getPropertyFromConfig("CF_Transferee_CashoutCurrencySign")
-						+ format.format(cashoutPoints) + " ("
-						+ CoreFunctions.getPropertyFromConfig("CF_Transferee_CashoutCurrencyCode") + ")";
-			} else {
-				expectedCashoutValue = CoreFunctions.getPropertyFromConfig("CF_Transferee_CashoutCurrencySign") + " "
-						+ format.format(cashoutPoints) + " ("
-						+ CoreFunctions.getPropertyFromConfig("CF_Transferee_CashoutCurrencyCode") + ")";
-			}
-
-			CoreFunctions.verifyText(actualCashoutValue, expectedCashoutValue, MobilityXConstants.CASHOUT_VALUE);
+			CoreFunctions.verifyText(CoreFunctions.getElementText(driver, _text_cashOutValue),
+					getExpectedInputCashoutValue(cashoutPoints), MobilityXConstants.CASHOUT_VALUE);
 			CoreFunctions.verifyValue(Double.parseDouble(CoreFunctions.getAttributeText(_inputCashoutPoints, "value")),
 					cashoutPoints, MobilityXConstants.CASHOUT_INPUT_FIELD);
-
-			String actualCashOutInputText = CoreFunctions.getElementText(driver, _textInputCashoutPoints);
-			CoreFunctions.verifyText(actualCashOutInputText, expectedCashoutValue,
-					MobilityXConstants.CASHOUT_INPUT_FIELD_LABEL_VALUE);
+			CoreFunctions.verifyText(CoreFunctions.getElementText(driver, _textInputCashoutPoints),
+					getExpectedInputCashoutValue(cashoutPoints), MobilityXConstants.CASHOUT_INPUT_FIELD_LABEL_VALUE);
 
 			if ((CoreFunctions.getAttributeText(_selectSelectAccount, "title")
 					.contains(CoreFunctions.getPropertyFromConfig("CF_Transferee_CashoutCurrencyCode")))
@@ -999,6 +1052,22 @@ public class MX_Transferee_FlexPlanningTool_Page extends Base {
 		return false;
 	}
 
+	private String getExpectedInputCashoutValue(double expectedCashoutPoints) {
+		String expectedCashoutValue;
+		DecimalFormat format = new DecimalFormat();
+		format.setDecimalSeparatorAlwaysShown(false);
+		if (CoreFunctions.getPropertyFromConfig("CF_Transferee_CashoutCurrencySign").length() == 1) {
+			expectedCashoutValue = CoreFunctions.getPropertyFromConfig("CF_Transferee_CashoutCurrencySign")
+					+ format.format(expectedCashoutPoints) + " ("
+					+ CoreFunctions.getPropertyFromConfig("CF_Transferee_CashoutCurrencyCode") + ")";
+		} else {
+			expectedCashoutValue = CoreFunctions.getPropertyFromConfig("CF_Transferee_CashoutCurrencySign") + " "
+					+ format.format(expectedCashoutPoints) + " ("
+					+ CoreFunctions.getPropertyFromConfig("CF_Transferee_CashoutCurrencyCode") + ")";
+		}
+		return expectedCashoutValue;
+	}
+
 	private boolean verifyCashoutContentBySelectingPointsLessThanMaxPortionCashoutPercent() {
 		boolean isPortionCashoutVerified = false;
 		try {
@@ -1009,7 +1078,9 @@ public class MX_Transferee_FlexPlanningTool_Page extends Base {
 			CoreFunctions.explicitWaitTillElementBecomesClickable(driver, _buttonSelectThisBenefit,
 					MobilityXConstants.SELECT_THIS);
 			BusinessFunctions.selectValueFromListUsingIndex(driver, _buttonSelectThis, indexBenefit);
-			CoreFunctions.explicitWaitTillElementListVisibility(driver, _buttonSelected);
+			CoreFunctions.explicitWaitTillElementInVisibility(driver, _browserCursorWait);
+			CoreFunctions.explicitWaitTillElementInVisibility(driver, _browserLoadingSymbol);
+//			CoreFunctions.explicitWaitTillElementListVisibility(driver, _buttonSelected);
 			isPortionCashoutVerified = verifyPortionCashoutDetailsAfterBenefitCashoutSelectionDeselection(
 					Double.parseDouble(duplicateHosuingBenefit.getPoints()), false, 0);
 			CoreFunctions.explicitWaitTillElementBecomesClickable(driver, _buttonMinus,
@@ -1040,7 +1111,9 @@ public class MX_Transferee_FlexPlanningTool_Page extends Base {
 					break;
 				} else {
 					CoreFunctions.clickUsingJS(driver, _buttonPlus, COREFLEXConstants.PLUS_BUTTON);
-					CoreFunctions.waitHandler(3);
+//					CoreFunctions.waitHandler(7);
+					CoreFunctions.explicitWaitTillElementInVisibility(driver, _browserCursorWait);
+					CoreFunctions.explicitWaitTillElementInVisibility(driver, _browserLoadingSymbol);
 				}
 			}
 			if (isPortionCashoutVerified) {
@@ -1069,7 +1142,9 @@ public class MX_Transferee_FlexPlanningTool_Page extends Base {
 					break;
 				} else {
 					CoreFunctions.clickUsingJS(driver, _buttonPlus, COREFLEXConstants.PLUS_BUTTON);
-					CoreFunctions.waitHandler(3);
+//					CoreFunctions.waitHandler(7);
+					CoreFunctions.explicitWaitTillElementInVisibility(driver, _browserCursorWait);
+					CoreFunctions.explicitWaitTillElementInVisibility(driver, _browserLoadingSymbol);
 				}
 			}
 			if (isPortionCashoutVerified) {
@@ -1098,7 +1173,9 @@ public class MX_Transferee_FlexPlanningTool_Page extends Base {
 					break;
 				} else {
 					CoreFunctions.clickUsingJS(driver, _buttonPlus, COREFLEXConstants.PLUS_BUTTON);
-					CoreFunctions.waitHandler(3);
+//					CoreFunctions.waitHandler(7);
+					CoreFunctions.explicitWaitTillElementInVisibility(driver, _browserCursorWait);
+					CoreFunctions.explicitWaitTillElementInVisibility(driver, _browserLoadingSymbol);
 				}
 			}
 			if (isPortionCashoutVerified && verifyBenefitCashoutSelectionDisabled()) {
@@ -1136,8 +1213,6 @@ public class MX_Transferee_FlexPlanningTool_Page extends Base {
 	private boolean verifyPortionCashoutDetailsAfterBenefitCashoutSelectionDeselection(double selectedBenefitPoints,
 			boolean isCashoutSelected, double selectedCashoutPoints) {
 		try {
-			String expectedCashoutValue;
-			String expectedCashOutInputText;
 			double expectedCashOutPoints = 0;
 			double remainingPoints = Double.parseDouble(CoreFunctions.getElementText(driver, remaining_points));
 			DecimalFormat format = new DecimalFormat();
@@ -1154,41 +1229,16 @@ public class MX_Transferee_FlexPlanningTool_Page extends Base {
 						: (remainingPoints - selectedBenefitPoints);
 				selectedCashoutPoints = expectedCashOutPoints;
 			}
-			CoreFunctions.waitHandler(3);
 			CoreFunctions.verifyValue(
 					Double.parseDouble(CoreFunctions.getElementText(driver, _text_pointsAvailableForCashOut)),
 					expectedCashOutPoints, MobilityXConstants.POINTS_AVAILABLE_FOR_CASHOUT);
-
-			String actualCashoutValue = CoreFunctions.getElementText(driver, _text_cashOutValue);
-			if (CoreFunctions.getPropertyFromConfig("CF_Transferee_CashoutCurrencySign").length() == 1) {
-				expectedCashoutValue = CoreFunctions.getPropertyFromConfig("CF_Transferee_CashoutCurrencySign")
-						+ format.format(expectedCashOutPoints) + " ("
-						+ CoreFunctions.getPropertyFromConfig("CF_Transferee_CashoutCurrencyCode") + ")";
-			} else {
-				expectedCashoutValue = CoreFunctions.getPropertyFromConfig("CF_Transferee_CashoutCurrencySign") + " "
-						+ format.format(expectedCashOutPoints) + " ("
-						+ CoreFunctions.getPropertyFromConfig("CF_Transferee_CashoutCurrencyCode") + ")";
-			}
-			CoreFunctions.verifyText(actualCashoutValue, expectedCashoutValue, MobilityXConstants.CASHOUT_VALUE);
-
+			CoreFunctions.verifyText(CoreFunctions.getElementText(driver, _text_cashOutValue),
+					getExpectedInputCashoutValue(expectedCashOutPoints), MobilityXConstants.CASHOUT_VALUE);
 			CoreFunctions.verifyValue(Double.parseDouble(CoreFunctions.getAttributeText(_inputCashoutPoints, "value")),
 					selectedCashoutPoints, MobilityXConstants.CASHOUT_INPUT_FIELD);
-
-			String actualCashOutInputText = CoreFunctions.getElementText(driver, _textInputCashoutPoints);
-
-			if (CoreFunctions.getPropertyFromConfig("CF_Transferee_CashoutCurrencySign").length() == 1) {
-				expectedCashOutInputText = CoreFunctions.getPropertyFromConfig("CF_Transferee_CashoutCurrencySign")
-						+ format.format(selectedCashoutPoints) + " ("
-						+ CoreFunctions.getPropertyFromConfig("CF_Transferee_CashoutCurrencyCode") + ")";
-			} else {
-				expectedCashOutInputText = CoreFunctions.getPropertyFromConfig("CF_Transferee_CashoutCurrencySign")
-						+ " " + format.format(selectedCashoutPoints) + " ("
-						+ CoreFunctions.getPropertyFromConfig("CF_Transferee_CashoutCurrencyCode") + ")";
-			}
-
-			CoreFunctions.verifyText(actualCashOutInputText, expectedCashOutInputText,
+			CoreFunctions.verifyText(CoreFunctions.getElementText(driver, _textInputCashoutPoints),
+					getExpectedInputCashoutValue(selectedCashoutPoints),
 					MobilityXConstants.CASHOUT_INPUT_FIELD_LABEL_VALUE);
-
 			return true;
 		} catch (Exception e) {
 			Reporter.addStepLog(MessageFormat.format(
@@ -1237,13 +1287,15 @@ public class MX_Transferee_FlexPlanningTool_Page extends Base {
 			} else {
 				if (CoreFunctions.isElementExist(driver, _buttonMinus, 4)) {
 					CoreFunctions.clickElement(driver, _buttonMinus);
-					CoreFunctions.waitHandler(3);
-					CoreFunctions.waitForBrowserToLoad(driver);
+//					CoreFunctions.waitHandler(7);
+//					CoreFunctions.waitForBrowserToLoad(driver);					
 				} else if (CoreFunctions.isElementExist(driver, _buttonSelectedBenefit, 4)) {
 					CoreFunctions.clickElement(driver, _buttonSelectedBenefit);
-					CoreFunctions.waitHandler(3);
-					CoreFunctions.waitForBrowserToLoad(driver);
+//					CoreFunctions.waitHandler(7);
+//					CoreFunctions.waitForBrowserToLoad(driver);
 				}
+				CoreFunctions.explicitWaitTillElementInVisibility(driver, _browserCursorWait);
+				CoreFunctions.explicitWaitTillElementInVisibility(driver, _browserLoadingSymbol);
 			}
 		}
 	}
@@ -1328,16 +1380,20 @@ public class MX_Transferee_FlexPlanningTool_Page extends Base {
 			CoreFunctions.explicitWaitTillElementBecomesClickable(driver, _buttonSelectThisBenefit,
 					MobilityXConstants.SELECT_THIS);
 			BusinessFunctions.selectValueFromListUsingIndex(driver, _buttonSelectThis, indexOtherBenefit);
+			CoreFunctions.explicitWaitTillElementInVisibility(driver, _browserCursorWait);
+			CoreFunctions.explicitWaitTillElementInVisibility(driver, _browserLoadingSymbol);
 			CoreFunctions.explicitWaitTillElementListVisibility(driver, _buttonSelected);
 			Benefit lumpSumBenefit = allBenefits.stream()
 					.filter(b -> b.getBenefitType().equals(COREFLEXConstants.LUMP_SUM)).findAny().orElse(null);
 			CoreFunctions.scrollToElementUsingJS(driver, flexHomePageTitle, MobilityXConstants.ONPOINT_PLANNING_TOOL);
-			CoreFunctions.waitHandler(5);
+//			CoreFunctions.waitHandler(5);
 			int indexLumpSumBenefit = BusinessFunctions.returnindexItemFromListUsingText(driver,
 					_textAddedBenefitNameList, lumpSumBenefit.getBenefitDisplayName());
 			CoreFunctions.explicitWaitTillElementBecomesClickable(driver, _buttonSelectThisBenefit,
 					MobilityXConstants.SELECT_THIS);
 			BusinessFunctions.selectValueFromListUsingIndex(driver, _buttonSelectThis, indexLumpSumBenefit);
+			CoreFunctions.explicitWaitTillElementInVisibility(driver, _browserCursorWait);
+			CoreFunctions.explicitWaitTillElementInVisibility(driver, _browserLoadingSymbol);
 			double totalPointsAvailableForCashout = Double
 					.parseDouble(CoreFunctions.getAttributeText(_inputCashoutPoints, "value"));
 			isPortionCashoutVerified = verifyPortionCashoutDetailsAfterBenefitCashoutSelectionDeselection(
@@ -1709,7 +1765,7 @@ public class MX_Transferee_FlexPlanningTool_Page extends Base {
 	private boolean verifyAfterRelocationNoteBeforeTracing() {
 		try {
 			if (CoreFunctions.getElementText(driver, _textAfterRelocationNote)
-					.equals(MobilityXConstants.RELOCATION_CASHOUT_NOTE_BEFORE_TRACING_FOR_TRANSFEREE)) {
+					.contains(MobilityXConstants.RELOCATION_CASHOUT_NOTE_BEFORE_TRACING_FOR_TRANSFEREE)) {
 				Reporter.addStepLog(MessageFormat.format(
 						COREFLEXConstants.SUCCESSFULLY_VERIFIED_DEFAULT_AFTER_RELOCATION_CASHOUT_NOTE_BEFORE_TRACING_ACTUALIZATION_ON_FLEX_PLANNING_TOOL_PAGE,
 						CoreConstants.PASS));
@@ -1774,11 +1830,11 @@ public class MX_Transferee_FlexPlanningTool_Page extends Base {
 
 	private void expandBenefitDescriptionOnFPT() {
 		int listSize = _moreLinkBenefitDesc.size();
-		for (int i = 0; i < listSize ; ) {
+		for (int i = 0; i < listSize;) {
 			try {
 				CoreFunctions.clickUsingJS(driver, _moreLinkBenefitDesc.get(0), "More");
 				CoreFunctions.waitHandler(2);
-				listSize = _moreLinkBenefitDesc.size();				
+				listSize = _moreLinkBenefitDesc.size();
 			} catch (Exception e) {
 
 			}

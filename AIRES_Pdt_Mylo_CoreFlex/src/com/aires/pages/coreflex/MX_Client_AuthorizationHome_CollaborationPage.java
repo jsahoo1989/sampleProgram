@@ -466,6 +466,7 @@ public class MX_Client_AuthorizationHome_CollaborationPage extends Base {
 	 */
 	public boolean verifyPageNavigation() {
 		try {
+			CoreFunctions.explicitWaitTillElementVisibility(driver, _headingTextContributorWorkflow, MobilityXConstants.CONTRIBUTOR_WORKFLOW);
 			CoreFunctions.scrollToElementUsingJavaScript(driver, _headingTextContributorWorkflow,
 					MobilityXConstants.CONTRIBUTOR_WORKFLOW);
 			return CoreFunctions.isElementExist(driver, _headingTextContributorWorkflow, 5);
@@ -670,6 +671,9 @@ public class MX_Client_AuthorizationHome_CollaborationPage extends Base {
 
 	public boolean verifyApproverAdded(String ApproverName) {
 		CoreFunctions.waitHandler(2);
+		CoreFunctions.scrollToElementUsingJavaScript(driver, _headingTextContributorWorkflow, MobilityXConstants.CONTRIBUTOR_WORKFLOW);
+		CoreFunctions.scrollUpUsigActions(driver);
+		CoreFunctions.scrollToElementUsingJavaScript(driver, _headingTextContributorWorkflow, MobilityXConstants.CONTRIBUTOR_WORKFLOW);		
 		return BusinessFunctions.verifyItemExistsInList(driver, _list_Approver, ApproverName);
 	}
 

@@ -427,7 +427,7 @@ public class COREFLEXConstants {
 	public static final String FAILED_TO_VERIFY_FLEX_BENEFIT_CARD_DETAILS = "{0}Failed to verify ''{1}'' - Flex Benefit Card details.";
 	public static final String SUCCESSFULLY_VERIFIED_AIRES_MANAGED_BENEFIT_CATEGORIES_AND_TYPE_ON_BENEFIT_SUMMARY_PAGE = "{0}Successfully verified Aires Managed Benefit Category and Type on Benefit Summary Page.";
 	public static final String EXCEPTION_OCCURED_WHILE_VALIDATING_AIRES_MANAGED_BENEFIT_CATEGORIES_AND_TYPE_ON_BENEFIT_SUMMARY_PAGE = "{0}Exception occured while validating Aires Managed Benefit Category and Type on Benefit Sumamry Page. Exception : ''{1}''";
-	public static final String SUCCESSFULLY_VERIFIED_DELETE_BUTTON_IS_DISABLED_AND_DISABLED_DELETE_HOVER_TEXT_POST_BENEFIT_STATUS_COMPLETE= "{0}Successfully verified delete button is disabled & disabled delete button hover text post benefit status complete.";
+	public static final String SUCCESSFULLY_VERIFIED_DELETE_BUTTON_IS_DISABLED_AND_DISABLED_DELETE_HOVER_TEXT_POST_BENEFIT_STATUS_COMPLETE = "{0}Successfully verified delete button is disabled & disabled delete button hover text post benefit status complete.";
 	public static final String EXCEPTION_OCCURED_WHILE_FILLING_MANDATORY_FIELDS_OF_BENEFIT = "{0}Exception occured while filling Mandatory fields of ''{1}'' benefit.";
 	public static final String EXCEPTION_OCCURED_WHILE_SELECTING_AND_FILLING_AIRES_MANAGED_SUB_BENEFITS = "{0}Exception occured while selecting and Filling Aires Managed Sub-Benefits. Exception - ''{1}''. ";
 	public static final String EXCEPTION_OCCURED_WHILE_VERIFYING_FLEX_BENEFIT_CARD_FOR_NOT_SUBMITTED_AIRES_MANAGED_BENEFIT = "{0}Exception occured while verifying Flex Benefit Card for Not-Submitted Aires Managed Benefit. Exception : ''{1}''.";
@@ -448,7 +448,7 @@ public class COREFLEXConstants {
 	public static final String POLICY_FILE_ID = "Policy / File ID";
 	public static final String EXCEPTION_OCCURED_WHILE_VALIDATING_COMPLETED_BENEFIT_DELETE_BUTTON_ON_MY_BENEFITS_PAGE = "{0}Exception occured while validating Completed Benefit - Delete Button status on My Benefit Bundle page. Exception : ''{1}''.";
 	public static final String EXCEPTION_OCCURED_WHILE_VALIDATING_CANCELED_BENEFIT_DELETE_BUTTON_ON_MY_BENEFITS_PAGE = "{0}Exception occured while validating Canceled Benefit - Delete Button status on My Benefit Bundle page. Exception : ''{1}''.";
-	public static final String SUCCESSFULLY_VERIFIED_DELETE_BUTTON_IS_DISABLED_AND_DISABLED_DELETE_HOVER_TEXT_POST_BENEFIT_STATUS_CANCELED= "{0}Successfully verified delete button is disabled & disabled delete button hover text post benefit status canceled.";
+	public static final String SUCCESSFULLY_VERIFIED_DELETE_BUTTON_IS_DISABLED_AND_DISABLED_DELETE_HOVER_TEXT_POST_BENEFIT_STATUS_CANCELED = "{0}Successfully verified delete button is disabled & disabled delete button hover text post benefit status canceled.";
 	public static final String CULTURAL_TRAINING = "Cultural Training";
 	public static final String CULTURAL_TRAINING_BENEFITS_PAGE = "Cultural Training Benefits Page";
 	public static final String CULTURAL_TRAINING_EMPLOYEE = "Cultural Training Employee";
@@ -535,7 +535,7 @@ public class COREFLEXConstants {
 	public static final String PRE_ACCEPTANCE_TRIP_MEALS = "Pre-Acceptance Trip Meals";
 	public static final String FURNITURE_RENTAL = "Furniture Rental";
 	public static final String FURNITURE_RENTAL_BENEFITS_PAGE = "Furniture Rental Benefits Page";
-	public static final String AUTO_RENTAL_DURING_ASSIGNMENT = "Auto Rental During Assignment";	
+	public static final String AUTO_RENTAL_DURING_ASSIGNMENT = "Auto Rental During Assignment";
 	public static final String AUTO_RENTAL_DURING_ASSIGNMENT_BENEFITS_PAGE = "Auto Rental During Assignment Benefits Page";
 	public static final String EDUCATION_ASSISTANCE_SCHOOL_SEARCH = "Education Assistance/School Search";
 	public static final String EDUCATION_ASSISTANCE_SCHOOL_SEARCH_BENEFITS_PAGE = "Education Assistance/School Search Benefits Page";
@@ -753,10 +753,10 @@ public class COREFLEXConstants {
 	public static final String INFORMATION_DIALOG_CONTENT = "Information Dialog Content";
 	public static final String INFORMATION_DIALOG_CONTENT_TEXT = "If you are unable to complete all of the required fields for the selected benefit(s), please go back to the Policy Benefit Categories page and unselect those benefit(s).";
 	public static final String SUCCESSFULLY_VERIFIED_INFORMATION_DIALOG_ON_POLICY_BENEFIT_CATEGORIES_PAGE = "{0}Successfully verified Information Dialog on Policy Benefits Categories Page.";
-	public static final String CLIENT_INITIATOR = "Client Initiator";	
+	public static final String CLIENT_INITIATOR = "Client Initiator";
 	public static final String CLIENT_AND_TRANSFEREE = "Client and Transferee";
 	public static final String TRANSFEREE = "Transferee";
-	public static final String TOTAL_POINTS_VALUE = "Total Points";	
+	public static final String TOTAL_POINTS_VALUE = "Total Points";
 	public static final String EXCEPTION_OCCURED_WHILE_VERIFYING_TOTAL_POINTS_FIELD_VALIDATION_ON_AUTH_FORM_PAGE = "{0}Exception occured while verifying Total Points Field validation on Auth Form Page. Exception : ''{1}''.";
 	public static final String EXCEPTION_OCCURED_WHILE_VERIFYING_AVAILABLE_POINTS_MESSAGE_ON_BENEFIT_SELECTION_TOOL_PAGE = "{0}Exception occured while verifying Available Points Message on Benefit Selection Tool page. Exception : ''{1}''.";
 	public static final String EXCEPTION_OCCURED_WHILE_VERIFYING_INITIATION_FOR_TEXT_ON_BENEFIT_SELECTION_TOOL_PAGE = "{0}Exception occured while verifying Initiation For text on Benefit Selection Tool Page. Exception : ''{1}''.";
@@ -916,7 +916,7 @@ public class COREFLEXConstants {
 	public static final String FLEX_WORD_DISPLAYED_ON_BENEFIT_SUMMARY_PAGE = "{0}Flex word displayed on Benefit Summary Page.";
 	public static final String FLEX_WORD_DISPLAYED_ON_VIEW_EDIT_POLICY_FORMS_PAGE = "{0}Flex word displayed on View Edit Policy Forms page.";
 	public static final String EXCEPTION_OCCURED_WHILE_ADDING_NEW_POLICIES_IN_ACCOUNTING_TAB_FOR_CLIENT = "{0}Exception occured while adding new policies in Accounting tab for ''{2}'' Client. Exception : ''{1}''.";
-	public static final String MORE_THAN_5_AUTOMATION_POLICIES_ALREADY_PRESENT_IN_ACCOUNTING_TAB_FOR_CLIENT = "{0}More than 5 Automation Policies already present in Accounting tab for ''{1}'' Client.";
+	public static final String MORE_THAN_3_AUTOMATION_POLICIES_ALREADY_PRESENT_IN_ACCOUNTING_TAB_FOR_CLIENT = "{0}More than 3 Automation Policies already present in Accounting tab for ''{1}'' Client.";
 	public static final String SUCCESSFULLY_ADDED_15_ADDITIONAL_AUTOMATION_POLICIES_IN_ACCOUNTING_TAB_FOR_CLIENT = "{0}Successfully added 15 additional Automation Policies in Accounting tab for ''{1}'' client.";
 	public static final String DENY_DIALOG_COMMENT_SELECTION = "Your request to delete this benefit has been denied because the payment is in process.";
 	public static final String SUCCESSFULLY_VERIFIED_MOBILITY_BENEFIT_DELETE_REQUEST_DENIED_EMAIL_CONTENTS = "{0}Successfully verified 'Mobility Benefit Delete Request has been Denied' Email contents";
@@ -954,5 +954,11 @@ public class COREFLEXConstants {
 	public static final String EXCEPTION_OCCURED_WHILE_VERIFYING_AUTH_FORM_FIELDS_POPULATED_POST_CLONING = "{0}Exception occured while verifying Auth Form fields populated - Post Cloning";
 	public static final String SUCCESSFULLY_VERIFIED_DEFAULT_CASHOUT_DETAILS_ON_BENEFIT_SELECTION_TOOL_PAGE_POST_AUTH_FORM_CLONING = "{0}Successfully verified Cashout details on Benefit Selection Tool page - Post Auth Form Cloning.";
 	public static final String EXCEPTION_OCCURED_WHILE_VERIFYING_CASHOUT_DETAILS_ON_BENEFIT_SELECTION_TOOL_PAGE_POST_AUTH_FORM_CLONING = "{0}Exception occured while verifying Cashout Details on Benefit Selection Tool Page - Post Auth Form Cloning. Exception : ''{1}''.";
-	
+	public static final String EXCEPTION_OCCURED_WHILE_CREATING_A_NEW_TRANSFEREE_IN_IRIS_APPLICATION = "{0}Exception occured while creating a new Transferee in IRIS application. Exception : ''{1}''.";
+	public static final String BENEFIT_POINTS = "Benefit Points";
+	public static final String EXCEPTION_OCCURED_WHILE_VALIDATING_FLEX_BENEFIT_SECTION_TEXT_ON_BENEFIT_SELECTION_TOOL_PAGE = "{0}Exception occured while validating Flex Benefit Section text on Benefit Selection Tool Page. Exception : ''{1}''.";
+	public static final String EXCEPTION_OCCURED_WHILE_VALIDATING_CORE_BENEFIT_SECTION_TEXT_ON_BENEFIT_SELECTION_TOOL_PAGE = "{0}Exception occured while validating Core Benefit Section text on Benefit Selection Tool Page. Exception : ''{1}''.";
+	public static final String EXCEPTION_OCCURED_WHILE_VALIDATING_FLEX_BENEFIT_DETAILS_ON_BENEFIT_SELECTION_TOOL_PAGE = "{0}Exception occured while validating Flex Benefits on Benefit Selection Tool page of MXClient application. Exception : ''{1}''.";
+	public static final String EXCEPTION_OCCURED_WHILE_VALIDATING_CORE_BENEFIT_DETAILS_ON_BENEFIT_SELECTION_TOOL_PAGE = "{0}Exception occured while validating Core Benefits on Benefit Selection Tool page of MXClient application. Exception : ''{1}''.";
+	public static final String EXCEPTION_OCCURED_WHILE_VALIDATING_SUBMITTED_FLEX_BENEFIT_DETAILS_ON_BENEFITS_BUNDLE_PAGE = "{0}Exception occured while validating Submitted Flex Benefit Details On Benefits Bundle Page. Exception : ''{1}''.";
 }

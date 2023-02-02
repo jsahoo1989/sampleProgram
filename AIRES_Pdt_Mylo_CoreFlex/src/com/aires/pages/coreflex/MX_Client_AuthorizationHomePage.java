@@ -33,7 +33,6 @@ import com.aires.testdatatypes.coreflex.MX_Client_Dashboard_BscData.ReportingInf
 import com.aires.utilities.EmailUtil;
 import com.aires.utilities.Log;
 import com.gargoylesoftware.htmlunit.ElementNotFoundException;
-import com.google.common.base.Objects;
 import com.vimalselvam.cucumber.listener.Reporter;
 
 import cucumber.api.DataTable;
@@ -89,7 +88,7 @@ public class MX_Client_AuthorizationHomePage extends Base {
 	private WebElement _inputEmpLastName;
 
 	// Continue Button
-	@FindBy(how = How.CSS, using = "#stec1 > a")
+	@FindBy(how = How.CSS, using = "div#stec1")
 	private WebElement _button_Continue;
 
 	// Authorization Next Step dialog Title 'This new authorization for <First Name>
@@ -480,6 +479,21 @@ public class MX_Client_AuthorizationHomePage extends Base {
 	@FindBy(how = How.CSS, using = "span[class='RXSmallTextMuted'][id*='otatt']")
 	private WebElement _documentType;
 
+	@FindBy(how = How.CSS, using = "select[id*='destLocation'] > option")
+	private List<WebElement> _destinationOfficeCityStateList;
+
+	@FindBy(how = How.CSS, using = "select[id*='officeOrigin'] > option")
+	private List<WebElement> _originOfficeCityStateList;
+
+	@FindBy(how = How.CSS, using = "select[id*='legalEntity']")
+	private WebElement _legalEntity;
+
+	@FindBy(how = How.CSS, using = "select[id*='legalEntity'] > option")
+	private List<WebElement> _legalEntityList;
+
+	@FindBy(how = How.CSS, using = "input[id*='immigration_chk']")
+	private WebElement _checkBoxImmigration;
+
 	/**************************************************************************************************************/
 
 	CoreFlex_PolicySetupPagesData policySetupPageData = FileReaderManager.getInstance().getCoreFlexJsonReader()
@@ -555,27 +569,22 @@ public class MX_Client_AuthorizationHomePage extends Base {
 	}
 
 	public boolean verifyClientDetails(String userProfileName, String clientName) {
-		boolean isClientDetailsVerified = false;
 		try {
 			CoreFunctions.verifyText(driver, _textClientUserNameTitle, userProfileName,
 					MobilityXConstants.USER_PROFILE_NAME);
 			CoreFunctions.verifyText(driver, _textClientName, clientName, MobilityXConstants.CLIENT_NAME);
-			isClientDetailsVerified = true;
+			Reporter.addStepLog(MessageFormat.format(
+					MobilityXConstants.SUCCESSFULLY_VERIFIED_CLIENT_DETAILS_ON_MOBILITYX_CLIENT_HOME_PAGE,
+					CoreConstants.PASS));
+			return true;
 		} catch (Exception e) {
 			Reporter.addStepLog(MessageFormat.format(
 					MobilityXConstants.EXCEPTION_OCCURED_WHILE_VERIFYING_CLIENT_DETAILS_ON_MOBILITYX_CLIENT_HOME_PAGE,
 					CoreConstants.FAIL, e.getMessage()));
-			isClientDetailsVerified = false;
+			return false;
 		}
-		if (isClientDetailsVerified) {
-			Reporter.addStepLog(MessageFormat.format(
-					MobilityXConstants.SUCCESSFULLY_VERIFIED_CLIENT_DETAILS_ON_MOBILITYX_CLIENT_HOME_PAGE,
-					CoreConstants.PASS));
-		}
-		return isClientDetailsVerified;
 	}
 
-//	// Methods
 	public boolean selectUploadOrManualOption() {
 		_isDisplayed = CoreFunctions.verifyElementPresentOnPage(_radioButton_ManuallyInput,
 				MobilityXConstants.CREATE_AN_AUTHORIZATION);
@@ -621,7 +630,7 @@ public class MX_Client_AuthorizationHomePage extends Base {
 
 	public void switchToiFrame_Authorization() {
 		try {
-			CoreFunctions.waitHandler(2);
+			CoreFunctions.waitHandler(5);
 			CoreFunctions.explicitWaitTillElementVisibility(driver, _iframe_EmployeName, MobilityXConstants.IFRAME);
 			driver.switchTo().frame(_iframe_EmployeName);
 		} catch (ElementNotFoundException e) {
@@ -699,9 +708,11 @@ public class MX_Client_AuthorizationHomePage extends Base {
 
 	public void selectAuthorizationOptionForEmployee(String option) {
 		try {
-			CoreFunctions.waitHandler(3);
-			CoreFunctions.explicitWaitTillElementVisibility(driver, _titleText_AuthorizationNextStep,
-					MobilityXConstants.IFRAME_TITLE);
+//			CoreFunctions.waitHandler(3);
+//			CoreFunctions.explicitWaitTillElementVisibility(driver, _titleText_AuthorizationNextStep,
+//					MobilityXConstants.IFRAME_TITLE);
+			CoreFunctions.explicitWaitTillElementBecomesClickable(driver, _link_ANewTransfer,
+					MobilityXConstants.NEW_TRANSFER_ASSIGNMENT_LINK);
 			Assert.assertEquals(CoreFunctions.getElementText(driver, _titleText_AuthorizationNextStep),
 					MobilityXConstants.THIS_NEW_AUTHORIZATION_FOR_TEXT
 							+ CoreFunctions.getPropertyFromConfig(MobilityXConstants.FIRST_NAME_TEXT)
@@ -794,7 +805,9 @@ public class MX_Client_AuthorizationHomePage extends Base {
 	}
 
 	public boolean selectAuthorizationFormTemplate(String companyId, String companyName, String option) {
-		CoreFunctions.waitHandler(2);
+//		CoreFunctions.waitHandler(2);
+		CoreFunctions.explicitWaitTillElementBecomesClickable(driver, _btn_Continue_AuthorizationForm,
+				MobilityXConstants.CONTINUE_BUTTON);
 		_isDisplayed = CoreFunctions.isElementExist(driver, _titleAuthorizationForm, 10);
 		if (_isDisplayed) {
 			Reporter.addStepLog(
@@ -850,13 +863,15 @@ public class MX_Client_AuthorizationHomePage extends Base {
 		switch (linkName) {
 		case MobilityXConstants.SUBMIT_TO_AIRES:
 			CoreFunctions.waitHandler(3);
+			CoreFunctions.explicitWaitTillElementBecomesClickable(driver, _buttonSubmitToAires,
+					MobilityXConstants.SUBMIT_TO_AIRES);
 			CoreFunctions.clickElement(driver, _buttonSubmitToAires);
 			CoreFunctions.waitUntilBrowserReady(driver);
 			break;
 		case MobilityXConstants.RESUBMIT_TO_AIRES:
 			CoreFunctions.waitHandler(3);
 			CoreFunctions.explicitWaitTillElementBecomesClickable(driver, _buttonResubmitToAires,
-					_buttonResubmitToAires.getText());
+					MobilityXConstants.RESUBMIT_TO_AIRES);
 			CoreFunctions.click(driver, _buttonResubmitToAires, MobilityXConstants.RESUBMIT_TO_AIRES);
 			CoreFunctions.waitUntilBrowserReady(driver);
 			break;
@@ -934,7 +949,8 @@ public class MX_Client_AuthorizationHomePage extends Base {
 			CoreFunctions.clickElement(driver, _linkViewAllInitiations);
 			break;
 		case MobilityXConstants.RESUBMIT_WITH_CHANGES_MADE_TO_LETTER_POLICY_DOCUMENTS:
-			CoreFunctions.clickElement(driver, _buttonLetterPolicyDocuments);
+			if (!CoreFunctions.getPropertyFromConfig("envt").equalsIgnoreCase("PreProd"))
+				CoreFunctions.clickElement(driver, _buttonLetterPolicyDocuments);
 			break;
 		case MobilityXConstants.COMPLETE_CLONING:
 			CoreFunctions.click(driver, _btnCompleteCloning, element);
@@ -979,6 +995,9 @@ public class MX_Client_AuthorizationHomePage extends Base {
 		CoreFunctions.clearAndSetText(driver, _hrManagerTextField, authorisationInfo.hrManagerName);
 		CoreFunctions.clearAndSetText(driver, _hiringManagerName, authorisationInfo.hiringManagerName);
 		BusinessFunctions.selectValueFromDropdown(driver, _fundingECMember, authorisationInfo.fundingECMember);
+		if (CoreFunctions.getPropertyFromConfig("envt").equalsIgnoreCase("PreProd")) {
+			BusinessFunctions.selectOptionValueFromDropdown(_legalEntity, 2);
+		}
 	}
 
 	private void fillAuthorizationReportingInfoForBSCDomesticForm(ReportingInfo reportingInfo) {
@@ -1005,15 +1024,13 @@ public class MX_Client_AuthorizationHomePage extends Base {
 		CoreFunctions.clearAndSetText(driver, _txt_OriginCity, bscEmployeeInfo.originHomeCity);
 		BusinessFunctions.selectValueFromDropdown(driver, _originState, bscEmployeeInfo.originHomeState);
 		BusinessFunctions.selectValueFromDropdown(driver, _originCountry, bscEmployeeInfo.originHomeCountry.trim());
-		BusinessFunctions.selectValueFromDropdown(driver, _originOfficeCityState,
-				bscEmployeeInfo.officeOriginCityState);
-		BusinessFunctions.selectValueFromDropdown(driver, _destinationOfficeCityState,
-				bscEmployeeInfo.destinationOfficeLocation);
+		BusinessFunctions.selectOptionValueFromDropdown(_originOfficeCityState, 2);
+		BusinessFunctions.selectOptionValueFromDropdown(_destinationOfficeCityState, 2);
 		CoreFunctions.waitHandler(3);
+		CoreFunctions.explicitWaitTillElementBecomesClickable(driver, _txt_mobileTelephone, MobilityXConstants.MOBILE_PHONE);
 		CoreFunctions.clearAndSetText(driver, _txt_mobileTelephone, bscEmployeeInfo.mobilePhone);
 		CoreFunctions.clearAndSetText(driver, _txt_employeeEmail, bscEmployeeInfo.emailOne);
-//		BusinessFunctions.selectValueFromDropdown(driver, _relocationPolicy,
-//				CoreFunctions.getPropertyFromConfig("Assignment_Policy"));
+
 	}
 
 	private void fillAuthorizationTypeInfoForBSCDomesticForm(AuthTypeInfo authTypeInfo) {
@@ -1337,17 +1354,30 @@ public class MX_Client_AuthorizationHomePage extends Base {
 			isFlexBenefitSectionVerified = verifySelectedBenefitDetails(
 					CoreFunctions.getPropertyFromConfig("CoreFlex_Policy_RequiredFor"),
 					CoreFunctions.getPropertyFromConfig("CoreFlex_Policy_BenefitType"))
-					&& Double.parseDouble(CoreFunctions.getElementText(driver, _selectedPoints)) == (Double
-							.parseDouble(CoreFunctions.getPropertyFromConfig("CF_Client_TotalSelectedPoints")))
-					&& (Double.parseDouble(CoreFunctions.getElementText(driver, _totalPoints)) == (Double
-							.parseDouble(CoreFunctions.getPropertyFromConfig("CF_Transferee_TotalAvailablePoints"))));
-
+					&& verifySelectedPointsDetailsOnBBPage();
 		} catch (Exception e) {
 			Reporter.addStepLog(MessageFormat.format(
 					COREFLEXConstants.EXCEPTION_OCCURED_WHILE_VERIFYING_FLEX_BENEFIT_SECTION_DETAILS_ON_AUTH_FORM_POST_BENEFIT_CASHOUT_SELECTION,
 					CoreConstants.FAIL, e.getMessage()));
 		}
 		return isFlexBenefitSectionVerified;
+	}
+
+	private boolean verifySelectedPointsDetailsOnBBPage() {
+		try {
+			CoreFunctions.verifyValue(Double.parseDouble(CoreFunctions.getElementText(driver, _selectedPoints)),
+					Double.parseDouble(CoreFunctions.getPropertyFromConfig("CF_Client_TotalSelectedPoints")),
+					MobilityXConstants.TOTAL_SELECTED_POINTS);
+			CoreFunctions.verifyValue(Double.parseDouble(CoreFunctions.getElementText(driver, _totalPoints)),
+					Double.parseDouble(CoreFunctions.getPropertyFromConfig("CF_Transferee_TotalAvailablePoints")),
+					MobilityXConstants.TOTAL_AVAILABLE_POINTS);
+			return true;
+		} catch (Exception e) {
+			Reporter.addStepLog(MessageFormat.format(
+					MobilityXConstants.EXCEPTION_OCCURED_WHILE_REVIEWING_SELECTED_BENEFITS_POINTS_ON_AUTH_FORM_PAGE,
+					CoreConstants.FAIL, e.getMessage()));
+			return false;
+		}
 	}
 
 	private boolean verifySelectedBenefitDetails(String policyRequiredFor, String benefitType) {
@@ -1368,7 +1398,7 @@ public class MX_Client_AuthorizationHomePage extends Base {
 	private boolean verifyCoreBenefitsDetails(String policyRequiredFor, String benefitType) {
 		boolean isCoreBenefitDetailsOnAuthFormVerified = false;
 		try {
-			for (Benefit benefit : getCoreBenefits(benefitType, policyRequiredFor, "0")) {
+			for (Benefit benefit : getCoreBenefits(benefitType, policyRequiredFor)) {
 				int indexBenefit = BusinessFunctions.returnindexItemFromListUsingText(driver,
 						_textSelectedCoreBenefitsNameList, benefit.getBenefitDisplayName());
 				isCoreBenefitDetailsOnAuthFormVerified = verifyCorePlanningToolBenefitDetails(indexBenefit, benefit);
@@ -1390,30 +1420,28 @@ public class MX_Client_AuthorizationHomePage extends Base {
 	}
 
 	private boolean verifyCorePlanningToolBenefitDetails(int indexBenefit, Benefit benefit) {
-		return (CoreFunctions.getItemsFromListByIndex(driver, _textSelectedCoreBenefitsNameList, indexBenefit, true)
-				.equals(benefit.getBenefitDisplayName()))
-				&& (CoreFunctions.getItemsFromListByIndex(driver, _textCoreAllowanceAmountList, indexBenefit, true)
-						.equals(benefit.getBenefitAmount()));
+		try {
+			CoreFunctions.verifyText(CoreFunctions.getItemsFromListByIndex(driver, _textSelectedCoreBenefitsNameList,
+					indexBenefit, true), benefit.getBenefitDisplayName(), MobilityXConstants.BENEFIT_DISPLAY_NAME);
+			CoreFunctions.verifyText(
+					CoreFunctions.getItemsFromListByIndex(driver, _textCoreAllowanceAmountList, indexBenefit, true),
+					benefit.getBenefitAmount(), MobilityXConstants.BENEFIT_ALLOWANCE_AMOUNT);
+			return true;
+		} catch (Exception e) {
+			Reporter.addStepLog(MessageFormat.format(
+					MobilityXConstants.EXCEPTION_OCCURED_WHILE_VALIDATING_CORE_BENEFIT_DETAILS_ON_AUTH_FORM_PAGE,
+					CoreConstants.FAIL, e.getMessage()));
+			return false;
+		}
 	}
 
-	private List<Benefit> getCoreBenefits(String policyType, String policyRequiredFor, String numberOfMilestones) {
+	private List<Benefit> getCoreBenefits(String policyType, String policyRequiredFor) {
 		List<Benefit> benefitNameList = new ArrayList<Benefit>();
 		if (policyType.equals(COREFLEXConstants.FLEX) || policyType.equals(COREFLEXConstants.BOTH)) {
 			for (Benefit benefit : coreBenefits) {
-				if ((policyRequiredFor.equals(COREFLEXConstants.ALL_BENEFITS))
-						&& (benefit.getPolicyCreationGroup().contains(policyRequiredFor))) {
-					benefitNameList.add(benefit);
-				} else if ((policyRequiredFor.equals(COREFLEXConstants.AIRES_MANAGED_BENEFITS_CARDS))
-						&& (benefit.getAiresManagedService().equals("Yes"))
-						&& (benefit.getNoOfMilestones() == Integer.parseInt(numberOfMilestones))) {
-					benefitNameList.add(benefit);
-				} else if (((policyRequiredFor.equals(COREFLEXConstants.CLONING))
-						|| (policyRequiredFor.equals(COREFLEXConstants.VERSIONING))
-						|| (policyRequiredFor.equals(COREFLEXConstants.CLIENT)))
-						&& (benefit.getPolicyCreationGroup().contains(policyRequiredFor))) {
+				if (benefit.getPolicyCreationGroup().contains(policyRequiredFor)) {
 					benefitNameList.add(benefit);
 				}
-
 			}
 		}
 		return benefitNameList;
@@ -1465,17 +1493,30 @@ public class MX_Client_AuthorizationHomePage extends Base {
 	}
 
 	private boolean verifySelectedBenefitDetailsOnAuthForm(int indexBenefit, Benefit benefit) {
-		return (CoreFunctions.getItemsFromListByIndex(driver, _textSelectedFlexBenefitsNameList, indexBenefit, true)
-				.equals(benefit.getBenefitDisplayName()))
-				&& (CoreFunctions.getItemsFromListByIndex(driver, _textSelectedFlexBenefitsAmountAllowanceList,
-						indexBenefit, true).equals(benefit.getBenefitAmount()))
-				&& (CoreFunctions
-						.getItemsFromListByIndex(driver, _textSelectedFlexBenefitsQuantityList, indexBenefit, true)
-						.equals(String.valueOf(benefit.getNumberOfBenefitSelected())))
-				&& ((Double.parseDouble((CoreFunctions
-						.getItemsFromListByIndex(driver, _textSelectedFlexBenefitsPointsList, indexBenefit, true)
-						.replace("pts", "").trim()))) == ((Double.parseDouble(benefit.getPoints()))
-								* (benefit.getNumberOfBenefitSelected())));
+		try {
+			CoreFunctions.verifyText(CoreFunctions.getItemsFromListByIndex(driver, _textSelectedFlexBenefitsNameList,
+					indexBenefit, true), benefit.getBenefitDisplayName(), MobilityXConstants.BENEFIT_DISPLAY_NAME);
+			CoreFunctions.verifyText(
+					CoreFunctions.getItemsFromListByIndex(driver, _textSelectedFlexBenefitsAmountAllowanceList,
+							indexBenefit, true),
+					benefit.getBenefitAmount(), MobilityXConstants.BENEFIT_ALLOWANCE_AMOUNT);
+			CoreFunctions.verifyText(
+					CoreFunctions.getItemsFromListByIndex(driver, _textSelectedFlexBenefitsQuantityList, indexBenefit,
+							true),
+					String.valueOf(benefit.getNumberOfBenefitSelected()), MobilityXConstants.BENEFIT_QUANTITY);
+			CoreFunctions.verifyValue(
+					Double.parseDouble((CoreFunctions
+							.getItemsFromListByIndex(driver, _textSelectedFlexBenefitsPointsList, indexBenefit, true)
+							.replace("pts", "").trim())),
+					(Double.parseDouble(benefit.getPoints())) * (benefit.getNumberOfBenefitSelected()),
+					MobilityXConstants.BENEFIT_POINTS);
+			return true;
+		} catch (Exception e) {
+			Reporter.addStepLog(MessageFormat.format(
+					COREFLEXConstants.EXCEPTION_OCCURED_WHILE_VALIDATING_SELECTED_FLEX_BENEFIT_DETAILS_ON_SUBMISSION_CONFIRMATION_DIALOG,
+					CoreConstants.FAIL, e.getMessage()));
+			return false;
+		}
 	}
 
 	public boolean verifyInitiationSubmittedSuccessGrowlMessage() {
@@ -2008,13 +2049,13 @@ public class MX_Client_AuthorizationHomePage extends Base {
 
 	public boolean validateDynamicDocumnet(String documentName) {
 		try {
-			switchToiFrame_Authorization();
 			CoreFunctions.waitHandler(5);
-			CoreFunctions.explicitWaitTillElementVisibility(driver, _documentHeading, "document heading");
+			switchToiFrame_Authorization();
+			CoreFunctions.explicitWaitTillElementBecomesClickable(driver, _downloadDocument,
+					MobilityXConstants.DOWNLOAD_DOCUMENT);
 			Log.info(CoreFunctions.getElementText(driver, _documentHeading));
-			if (!Objects.equal(CoreFunctions.getElementText(driver, _documentHeading), documentName)) {
-				return false;
-			}
+			CoreFunctions.verifyText(CoreFunctions.getElementText(driver, _documentHeading), documentName,
+					MobilityXConstants.DEMO_DYNAMIC_DOCUMENT);
 			CoreFunctions.removeFileMatchingName(System.getProperty("user.home") + "/Downloads/",
 					"Demo Dynamic Document");
 			CoreFunctions.clickElement(driver, _downloadDocument);
@@ -2023,10 +2064,15 @@ public class MX_Client_AuthorizationHomePage extends Base {
 			String filePath = System.getProperty("user.home") + "/Downloads/" + documentName;
 			String file_content = documentName.contains(".docx") ? BusinessFunctions.getDocContent(filePath)
 					: BusinessFunctions.getPdfDocContent(filePath);
+			Log.info(file_content);
 			for (Benefit benefit : getBenefits(CoreFunctions.getPropertyFromConfig("CoreFlex_Policy_BenefitType"),
 					CoreFunctions.getPropertyFromConfig("CoreFlex_Policy_RequiredFor"))) {
-				if (!(StringUtils.countMatches(file_content, benefit.getBenefitDisplayName()) == 1))
-					return false;
+				if (benefit.getSelectBenefitOnFPTPage()) {
+					CoreFunctions.verifyTextContains(file_content, benefit.getBenefitDisplayName(),
+							MobilityXConstants.BENEFIT_DISPLAY_NAME);
+					if (!(StringUtils.countMatches(file_content, benefit.getBenefitDisplayName()) == 1))
+						return false;
+				}
 			}
 			Reporter.addStepLog(MessageFormat.format(MobilityXConstants.SUCCESSFULLY_VERIFIED_DYNAMIC_DOCUMENT_CONTENTS,
 					CoreConstants.PASS, documentName));
@@ -2150,12 +2196,16 @@ public class MX_Client_AuthorizationHomePage extends Base {
 				for (int index = 0; index < _checkBoxSelectAllList.size(); index++) {
 					CoreFunctions.hoverAndClick(driver, _checkBoxSelectAllList.get(index),
 							MobilityXConstants.SELECT_ALL);
+					CoreFunctions.waitHandler(1);
 				}
 				break;
 			case MobilityXConstants.AUTHORIZATION_INFORMATION:
 				CoreFunctions.hoverAndClick(driver, _checkBoxHrManagerName, MobilityXConstants.HR_MANAGER_NAME);
 				CoreFunctions.hoverAndClick(driver, _checkBoxHiringManagerName, MobilityXConstants.HIRING_MANAGER_NAME);
 				CoreFunctions.hoverAndClick(driver, _checkBoxFundingEcMember, MobilityXConstants.FUNDING_EC_MEMBER);
+				break;
+			case MobilityXConstants.IMMIGRATION:
+				CoreFunctions.hoverAndClick(driver, _checkBoxImmigration, MobilityXConstants.IMMIGRATION);
 				break;
 			default:
 				Assert.fail(COREFLEXConstants.INVALID_OPTION);
@@ -2382,8 +2432,7 @@ public class MX_Client_AuthorizationHomePage extends Base {
 		return false;
 	}
 
-	public boolean verifyFlexPdfDownloadedDocument(String documentName, String clientName,
-			String clientUserName) {
+	public boolean verifyFlexPdfDownloadedDocument(String documentName, String clientName, String clientUserName) {
 		try {
 			String filePath = System.getProperty("user.home") + "/Downloads/" + documentName;
 			String file_content = BusinessFunctions.getPdfDocContent(filePath);
@@ -2510,8 +2559,9 @@ public class MX_Client_AuthorizationHomePage extends Base {
 			}
 		}
 		if ((CoreFunctions.getPropertyFromConfig("PolicyCashoutType").equals(MobilityXConstants.PORTION_CASHOUT))
-				|| (CoreFunctions.getPropertyFromConfig("PolicyCashoutType")
-						.equals(MobilityXConstants.AFTER_RELOCATION_ONLY))) {
+				|| (((CoreFunctions.getPropertyFromConfig("PolicyCashoutType")
+						.equals(MobilityXConstants.AFTER_RELOCATION_ONLY)))
+						&& CoreFunctions.getPropertyFromConfig("CF_CashoutSubmitted_Flag").equalsIgnoreCase("true"))) {
 			CoreFunctions.verifyTextContains(actualText,
 					policySetupPageData.flexPolicySetupPage.customCashoutBenefitName,
 					MobilityXConstants.CUSTOM_CASHOUT_NAME);
@@ -2519,7 +2569,7 @@ public class MX_Client_AuthorizationHomePage extends Base {
 					format.format(
 							Double.parseDouble(CoreFunctions.getPropertyFromConfig("CF_Client_SelectedCashOutPoints"))),
 					MobilityXConstants.CASHOUT_POINTS);
-//			CoreFunctions.verifyTextContains(actualText, BusinessFunctions.getMXClientExpectedCashoutDescription(),
+//		CoreFunctions.verifyTextContains(actualText, BusinessFunctions.getMXClientExpectedCashoutDescription(),
 //					MobilityXConstants.CLIENT_CASHOUT_DESCRIPTION);
 		}
 	}

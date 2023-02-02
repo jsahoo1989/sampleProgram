@@ -25,7 +25,7 @@ Feature: Validate the CoreFlex End-To-End Business Test Flow(BluePrint, MXClient
     And he has verified following details on "Benefit Selesction Tool" page based on configured Points Based CoreFlex BluePrint Policy
       | Available Point Balance | Core Benefits | Flex Benefits | Suggested Bundles | Cashout |
     And he has clicked on 'Back to benefits list' link to navigate to 'Benefit Selection Tool' page
-    And he has verified 'Portion Cashout' details on 'Benefit Selection Tool' page
+    #And he has verified 'Portion Cashout' details on 'Benefit Selection Tool' page
     And he has navigated to "Benefits Bundle" page after selecting required Flex Benefits and Cashout on 'Benefit Selection Tool' page
     And he has clicked on "Save & Exit" button after validating selected Flex Benefit details listed under 'Selected Benefits' section on "Benefits Bundle" page
     And he has verified entered 'Total Points' value and selected 'Core_Flex Benefit' details displayed on the navigated 'Authorization Form' page

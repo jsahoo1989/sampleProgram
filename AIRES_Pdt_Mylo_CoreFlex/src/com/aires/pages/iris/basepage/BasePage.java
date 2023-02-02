@@ -65,10 +65,10 @@ public class BasePage {
 
 	public void invokeIrisApplication() throws Exception {
 		getPIDAndKillProces();
-		CoreFunctions.waitHandler(2);
+//		CoreFunctions.waitHandler(2);
 		allocateUFTPortToUsers();
 		runLFTEngineAsPerStatus();
-		CoreFunctions.waitHandler(3);
+//		CoreFunctions.waitHandler(3);
 		ModifiableSDKConfiguration config = new ModifiableSDKConfiguration();
 		int portNumber = getPortNumberAsPerUserName();
 		Log.info("Port Assigned to " + _userName + " is : " + portNumber);
@@ -80,7 +80,7 @@ public class BasePage {
 		_process = Runtime.getRuntime().exec(_path);
 		_windowTitle = getWindowText.getActiveWindowText();
 		while (!_windowTitle.contains("Login")) {
-			CoreFunctions.waitHandler(2);
+			CoreFunctions.waitHandler(1);
 			_windowTitle = getWindowText.getActiveWindowText();
 		}
 		_IRIS = Desktop.describe(Window.class, new WindowDescription.Builder().title(_windowTitle).build());
@@ -107,7 +107,7 @@ public class BasePage {
 	}
 
 	public static Window getIRISWindow() throws Exception {
-		Thread.sleep(8000);
+//		Thread.sleep(8000);
 		_windowTitle = getWindowText.getActiveWindowText();
 		System.out.println("WindowTitle : " + _windowTitle);
 		return Desktop.describe(Window.class, new WindowDescription.Builder().title(_windowTitle).build());
@@ -137,12 +137,12 @@ public class BasePage {
 	}
 
 	public void closeIRISApplication() throws Exception {
-		Thread.sleep(2000);
+//		Thread.sleep(2000);
 		_IRIS = Desktop.describe(Window.class, new WindowDescription.Builder().title("Welcome").build());
 		if (_IRIS.exists() && _IRIS.isVisible()) {
 			_IRIS.describe(Button.class, new ButtonDescription.Builder().label("exit_32").build()).click();
 		}
-		Thread.sleep(2000);
+//		Thread.sleep(2000);
 		_IRIS = null;
 		Runtime.getRuntime().gc();
 	}
@@ -289,11 +289,12 @@ public class BasePage {
 	}
 
 	public void reLaunchIrisToAvoidFreezingIssue() throws Exception {
-//		getPIDAndKillProces();
+		getPIDAndKillProces();
 		if (!getRunningStatus_LFTRuntimeEngine(_processName_uftRuntimeEngine)) {
 			invokeIrisApplication();
 			closeIRISLoginWindow();
 		}
+		allocateUFTPortToUsers();
 		ModifiableSDKConfiguration config = new ModifiableSDKConfiguration();
 		int portNumber = getPortNumberAsPerUserName();
 		config.setServerAddress(new URI("ws://localhost:" + portNumber));
@@ -304,7 +305,7 @@ public class BasePage {
 		Runtime.getRuntime().exec(_path);
 		String _windowTitle = getWindowText.getActiveWindowText();
 		while (!_windowTitle.contains("Login")) {
-			CoreFunctions.waitHandler(5);
+			CoreFunctions.waitHandler(1);
 			_windowTitle = getWindowText.getActiveWindowText();
 		}
 		Desktop.describe(Window.class, new WindowDescription.Builder().title(_windowTitle).build());

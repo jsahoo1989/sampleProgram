@@ -95,7 +95,7 @@ public class PDT_ViewPolicyPage extends Base {
 	private WebElement _btnEditIcon;
 
 	// Exit Button
-	@FindBy(how = How.XPATH, using = "//button[contains(text(),'EXIT')]")
+	@FindBy(how = How.XPATH, using = "//button[contains(text(),'EXIT')] | //button/span[contains(text(),'EXIT')] ")
 	private WebElement _btnExit;
 
 	// OK Button
@@ -344,6 +344,10 @@ public class PDT_ViewPolicyPage extends Base {
 	// Edit Policy benefit page Header
 	@FindBy(how = How.CSS, using = "div.sidebar-wrapper li.nav-item a.nav-link > p")
 	private WebElement _headingEditPolicyBenefit;
+
+	// Exit Button
+	@FindBy(how = How.CSS, using = "button[class*='btn-exit']")
+	private WebElement _buttonExit;
 
 	// Approve Policy Icon List
 	@FindBy(how = How.CSS, using = "div.icons-action a[mattooltip='Approve Policy']>img")
@@ -886,7 +890,6 @@ public class PDT_ViewPolicyPage extends Base {
 					}
 				}
 			} else {
-				CoreFunctions.highlightObject(driver, _listPolicyStatus.get(policyIndex));
 				captureReferencePolicyValues(policyIndex);
 				return policyIndex;
 			}
@@ -965,7 +968,7 @@ public class PDT_ViewPolicyPage extends Base {
 	}
 
 	public void searchPolicy(String policyName) {
-		CoreFunctions.waitHandler(4);
+		CoreFunctions.explicitWaitTillElementBecomesClickable(driver, _btnSearch, COREFLEXConstants.SEARCH);
 		CoreFunctions.clearAndSetText(driver, _inputPolicyName, policyName);
 		clickElementOfPage(COREFLEXConstants.SEARCH);
 	}
@@ -1072,11 +1075,12 @@ public class PDT_ViewPolicyPage extends Base {
 		try {
 			CoreFunctions.clickElement(driver, _listPolicyName.get(searchedPolicyIndex));
 			CoreFunctions.explicitWaitTillElementInVisibility(driver, _progressBar);
-			CoreFunctions.waitHandler(2);
+//			CoreFunctions.waitHandler(2);
+			CoreFunctions.explicitWaitTillElementBecomesClickable(driver, _buttonExit, COREFLEXConstants.EXIT);
 			String corporationPolicyValue = generalInfoPage.getElementText(COREFLEXConstants.CORPORATION_POLICY_NUMBER);
 			CoreFunctions.writeToPropertiesFile("ClonePolicy_Reference_CorporationPolicyNum", corporationPolicyValue);
 			generalInfoPage.clickElementOfPage(COREFLEXConstants.EXIT);
-			CoreFunctions.waitHandler(2);
+//			CoreFunctions.waitHandler(2);
 		} catch (Exception e) {
 			Reporter.addStepLog(MessageFormat.format(
 					COREFLEXConstants.FAILED_TO_CAPTURE_CORPORATION_POLICY_NUMBER_FOR_SELECTED_POLICY_WITH_STATUS,
@@ -1731,7 +1735,7 @@ public class PDT_ViewPolicyPage extends Base {
 		int policyIndex = -1;
 		try {
 			policyIndex = BusinessFunctions.returnindexItemFromListUsingText(driver, _policyStatusIndicator,
-							getPolicyIndicatorText(policyIndicator), true);
+					getPolicyIndicatorText(policyIndicator), true);
 			if (policyIndex == -1) {
 				while (policyIndex == -1) {
 					clickElementOfPage(COREFLEXConstants.NEXT);

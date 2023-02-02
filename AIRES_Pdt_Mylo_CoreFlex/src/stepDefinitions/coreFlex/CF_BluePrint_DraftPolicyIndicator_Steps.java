@@ -381,7 +381,7 @@ public class CF_BluePrint_DraftPolicyIndicator_Steps {
 				viewPolicyPage.clickElementOfPage(PDTConstants.ADD_NEW_POLICY_FORM);
 			} else {
 				Reporter.addStepLog(MessageFormat.format(
-						COREFLEXConstants.MORE_THAN_5_AUTOMATION_POLICIES_ALREADY_PRESENT_IN_ACCOUNTING_TAB_FOR_CLIENT,
+						COREFLEXConstants.MORE_THAN_3_AUTOMATION_POLICIES_ALREADY_PRESENT_IN_ACCOUNTING_TAB_FOR_CLIENT,
 						CoreConstants.PASS, clientId));
 			}
 		} catch (Exception e) {

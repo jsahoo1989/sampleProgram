@@ -203,7 +203,7 @@ public class CoreFlex_FlexPolicySetupPage extends Base {
 	private List<WebElement> _selectCashoutCurrencyOptions;
 
 	// Cashout Currency Select Field Selected Value
-	@FindBy(how = How.CSS, using = "ng-select[formcontrolname='currencyCode'] div[class='ng-value ng-star-inserted']")
+	@FindBy(how = How.XPATH, using = "//ng-select[@formcontrolname='currencyCode']//div[@class='ng-value ng-star-inserted'] | //ng-select[@formcontrolname='currencyCode']//div[@class='ng-value']")
 	private WebElement _selectCashoutCurrencySelectedValue;
 
 	@FindBy(how = How.XPATH, using = "//strong[text()='Policy Status:']/parent::label/following-sibling::label/span/i")

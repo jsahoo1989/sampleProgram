@@ -125,9 +125,9 @@ public class Hooks {
 		}
 	}
 
-	@After(order = 1)
+//	@After(order = 1)
 	public void updateResultInTestRail(Scenario scenario) {
-		String Case_ID = BusinessFunctions.getTestRailIdAsPerApplication(System.getProperty("application"),
+		String Case_ID = BusinessFunctions.getTestRailIdAsPerApplication(BusinessFunctions.getApplicationBasedOnExecutionType(),
 				scenario.getSourceTagNames().toString());
 		Log.info(Case_ID);
 		String testrailRunName = (CoreFunctions.getPropertyFromConfig("SniffSuite_TestRunId"));

@@ -690,6 +690,7 @@ public class CoreFunctions {
 
 	public static void clearAndSetText(WebDriver driver, WebElement element, String elementName, String textToEnter) {
 		explicitWaitTillElementVisibility(driver, element, elementName);
+		explicitWaitTillElementBecomesClickable(driver, element, elementName);
 		try {
 			element.clear();
 			highlightObject(driver, element);

@@ -2,7 +2,6 @@ package com.aires.pages.coreflex;
 
 import java.text.MessageFormat;
 import java.util.List;
-import java.util.Objects;
 import java.util.stream.Collectors;
 
 import org.openqa.selenium.WebDriver;
@@ -308,14 +307,26 @@ public class CoreFlex_PreviewTransfereePage extends Base {
 	}
 
 	private boolean verifyFlexPlanningToolBenefitDetails(int indexBenefit, Benefit benefit) {
-		return (CoreFunctions.getItemsFromListByIndex(driver, _textAddedBenefitNameList, indexBenefit, true)
-				.equals(benefit.getBenefitDisplayName()))
-				&& (CoreFunctions.getItemsFromListByIndex(driver, _allowanceAmountList, indexBenefit, true)
-						.equals(benefit.getBenefitAmount()))
-				&& ((CoreFunctions.getItemsFromListByIndex(driver, _benefitDescList, indexBenefit, true))
-						.equals(benefit.getBenefitDesc()))
-				&& ((CoreFunctions.getItemsFromListByIndex(driver, _benefitsPointsList, indexBenefit, true))
-						.equals(benefit.getPoints()));
+		try {
+			CoreFunctions.verifyText(
+					CoreFunctions.getItemsFromListByIndex(driver, _textAddedBenefitNameList, indexBenefit, true),
+					benefit.getBenefitDisplayName(), COREFLEXConstants.BENEFIT_DISPLAY_NAME);
+			CoreFunctions.verifyText(
+					CoreFunctions.getItemsFromListByIndex(driver, _allowanceAmountList, indexBenefit, true),
+					benefit.getBenefitAmount(), COREFLEXConstants.BENEFIT_ALLOWANCE_MESSAGE);
+			CoreFunctions.verifyText(
+					CoreFunctions.getItemsFromListByIndex(driver, _benefitDescList, indexBenefit, true),
+					benefit.getBenefitDesc(), COREFLEXConstants.BENEFIT_LONG_DESCRIPTION);
+			CoreFunctions.verifyText(
+					CoreFunctions.getItemsFromListByIndex(driver, _benefitsPointsList, indexBenefit, true),
+					benefit.getPoints(), COREFLEXConstants.BENEFIT_POINTS);
+			return true;
+		} catch (Exception e) {
+			Reporter.addStepLog(MessageFormat.format(
+					COREFLEXConstants.EXCEPTION_OCCURED_WHILE_VALIDATING_FLEX_BENEFIT_DETAILS_ON_PREVIEW_TRANSFEREE_PAGE,
+					CoreConstants.FAIL, e.getMessage()));
+			return false;
+		}
 	}
 
 	public boolean verifyCashOutContent(double cashoutPoints) {

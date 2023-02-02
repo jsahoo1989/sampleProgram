@@ -5,6 +5,7 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
+import org.apache.logging.log4j.core.Core;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
@@ -1117,8 +1118,7 @@ public class CoreFlex_PolicyBenefitsCategoriesPage extends Base {
 
 	public boolean verifyInformationDialog() {
 		if (CoreFunctions.isElementExist(driver, _dialogInformation, 5)) {
-			CoreFunctions.highlightObject(driver, _dialogInformation);
-			CoreFunctions.verifyText(driver, _dialogContent, COREFLEXConstants.INFORMATION_DIALOG_CONTENT_TEXT,
+			CoreFunctions.verifyText(CoreFunctions.getElementText(driver, _dialogContent), COREFLEXConstants.INFORMATION_DIALOG_CONTENT_TEXT,
 					COREFLEXConstants.INFORMATION_DIALOG_CONTENT);
 			CoreFunctions.clickElement(driver, _dialogContinueButton);
 			Reporter.addStepLog(MessageFormat.format(

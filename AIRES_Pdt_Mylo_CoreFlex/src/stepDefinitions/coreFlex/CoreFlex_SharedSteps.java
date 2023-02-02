@@ -514,57 +514,7 @@ public class CoreFlex_SharedSteps {
 
 		Assert.assertTrue(mobilityXLoginPage.verifyPageNavigation(),
 				MessageFormat.format(COREFLEXConstants.FAILED_TO_NAVIGATE_TO_MOBILITYX_LOGIN_PAGE, CoreConstants.FAIL));
-
-		testContext.getBasePage().reLaunchIrisToAvoidFreezingIssue();
-		testContext.getIrisPageManager().irisLoginPage = new IRIS_LoginPage();
-		testContext.getIrisPageManager().irisLoginPage.getIRISLoginAsPerEnvt(_loginInfo);
-		testContext.getIrisPageManager().irisWelcome12C = new IRIS_Welcome12C();
-		testContext.getIrisPageManager().irisWelcome12C.selectWelcomeWindowModule(IRISConstants.ASSIGNMENT_TAB);
-		testContext.getIrisPageManager().irisAssignmentOverviewPage = new IRIS_AssignmentOverviewPage();
-		Assert.assertTrue(testContext.getIrisPageManager().irisAssignmentOverviewPage.verifyOverviewTab(), MessageFormat
-				.format(IRISConstants.FAIL_TO_VERIFY_CURRENT_TAB, CoreConstants.FAIL, IRISConstants.OVERVIEW));
-		IRIS_AssignmentData assignmentOverviewData = FileReaderManager.getInstance().getIrisJsonReader()
-				.getAssignmentDataByTabName(IRISConstants.OVERVIEW);
-		testContext.getIrisPageManager().irisAssignmentOverviewPage.selectNewAssignmentFromFileMenu();
-		testContext.getIrisPageManager().irisAssignmentOverviewPage.addDetailsOnOverviewTabForNewAssignment(
-				assignmentOverviewData, CoreFunctions.getPropertyFromConfig("Policy_ClientID"),
-				CoreFunctions.getPropertyFromConfig("Assignment_Policy"));
-		IRIS_AssignmentData assignmentTransfereeData = FileReaderManager.getInstance().getIrisJsonReader()
-				.getAssignmentDataByTabName(IRISConstants.TRANSFEREE_AND_FAMILY);
-		testContext.getIrisPageManager().irisAssignmentOverviewPage.switchTab(IRISConstants.TRANSFEREE_AND_FAMILY);
-		testContext
-				.getIrisPageManager().irisAssignmentTransfereeAndFamilyPage = new IRIS_AssignmentTransfereeNFamilyPage();
-		testContext.getIrisPageManager().irisAssignmentTransfereeAndFamilyPage
-				.verifyTransfereeAndFamilyTab(IRISConstants.TRANSFEREE_AND_FAMILY);
-		testContext.getIrisPageManager().irisAssignmentTransfereeAndFamilyPage
-				.addNewTransfereeDetails(assignmentTransfereeData);
-		Assert.assertTrue(
-				testContext.getIrisPageManager().irisAssignmentTransfereeAndFamilyPage
-						.saveTransferee(IRISConstants.NEW_TRANSFEREE_CREATED_SUCCESS_MSG),
-				IRISConstants.NEW_TRANSFEREE_CREATED_SUCCESS_MSG + " Message " + IRISConstants.IS_NOT_DISPLAYED);
-		testContext.getIrisPageManager().irisAssignmentTransfereeAndFamilyPage.addTransfereeIdentityDetails();
-		testContext.getIrisPageManager().irisAssignmentTransfereeAndFamilyPage
-				.addNewFamilyDetails(assignmentTransfereeData);
-		testContext.getIrisPageManager().irisAssignmentOverviewPage.switchTab(IRISConstants.ACTIVITY_FINANCE_TAB);
-		testContext.getIrisPageManager().irisActivityAndFinancePage = new IRIS_ActivityAndFinancePage();
-		Assert.assertTrue(testContext.getIrisPageManager().irisActivityAndFinancePage.verifyActivityAndFinanceTab(),
-				MessageFormat.format(IRISConstants.FAIL_TO_VERIFY_CURRENT_TAB, CoreConstants.FAIL,
-						IRISConstants.ACTIVITY_AND_FINANCE));
-		testContext.getIrisPageManager().irisActivityAndFinancePage.displayActivityTable();
-		testContext.getIrisPageManager().irisActivityAndFinancePage.actualizeTracingPrompt(IRISConstants.ACT_DATE,
-				IRISConstants.ACTIVITY, IRISConstants.MAKE_FIRST_CONTACT);
-		testContext.getIrisPageManager().irisActivityAndFinancePage.clickOnSaveBtn();
-		testContext.getIrisPageManager().irisActivityAndFinancePage.sendLoginCredentials(IRISConstants.YES,
-				IRISConstants.SEND_CREDENTIALS, IRISConstants.SEND_USER_LOGIN_MSG);
-//		testContext.getIrisPageManager().irisActivityAndFinancePage.acceptIdentityChallengeQuestionDialog();
-		Assert.assertTrue(
-				testContext.getIrisPageManager().irisActivityAndFinancePage
-						.relonetCredentialsSent(IRISConstants.SUCCESS_MSG, IRISConstants.MESSAGE_DIALOG),
-				MessageFormat.format(IRISConstants.FAILED_TO_VERIFY_MESSAGE, CoreConstants.FAIL,
-						IRISConstants.SUCCESS_MSG));
-		testContext.getIrisPageManager().irisAssignmentOverviewPage.setFileStatus(IRISConstants.ACTIVATE);
-		testContext.getBasePage().cleanIrisProcesses();
-
+		createAnAssignmentInIRIS();
 		Assert.assertTrue(mobilityXLoginPage.readCredentialsFromMail(), MessageFormat
 				.format(MobilityXConstants.FAILED_TO_READ_USER_CREDENTIALS_FROM_GENERATED_EMAIL, CoreConstants.FAIL));
 		mobilityXLoginPage.enterUsernameAndPasswordForMobilityX(
@@ -574,6 +524,69 @@ public class CoreFlex_SharedSteps {
 		mxTransfereeMyProfilePage.setUpNewMobilityXTransferee();
 		mxTransfereeJourneyHomePage.handle_Cookie_AfterLogin();
 		mxTransfereeJourneyHomePage.handle_points_expiry_reminder_popup();
+	}
+
+	private void createAnAssignmentInIRIS() {
+		try {
+			testContext.getBasePage().reLaunchIrisToAvoidFreezingIssue();
+			testContext.getIrisPageManager().irisLoginPage = new IRIS_LoginPage();
+			testContext.getIrisPageManager().irisLoginPage.getIRISLoginAsPerEnvt(_loginInfo);
+			testContext.getIrisPageManager().irisWelcome12C = new IRIS_Welcome12C();
+			testContext.getIrisPageManager().irisWelcome12C.selectWelcomeWindowModule(IRISConstants.ASSIGNMENT_TAB);
+			testContext.getIrisPageManager().irisAssignmentOverviewPage = new IRIS_AssignmentOverviewPage();
+			Assert.assertTrue(testContext.getIrisPageManager().irisAssignmentOverviewPage.verifyOverviewTab(),
+					MessageFormat.format(IRISConstants.FAIL_TO_VERIFY_CURRENT_TAB, CoreConstants.FAIL,
+							IRISConstants.OVERVIEW));
+			IRIS_AssignmentData assignmentOverviewData = FileReaderManager.getInstance().getIrisJsonReader()
+					.getAssignmentDataByTabName(IRISConstants.OVERVIEW);
+			testContext.getIrisPageManager().irisAssignmentOverviewPage.selectNewAssignmentFromFileMenu();
+			testContext.getIrisPageManager().irisAssignmentOverviewPage.addDetailsOnOverviewTabForNewAssignment(
+					assignmentOverviewData, CoreFunctions.getPropertyFromConfig("Policy_ClientID"),
+					CoreFunctions.getPropertyFromConfig("Assignment_Policy"));
+			IRIS_AssignmentData assignmentTransfereeData = FileReaderManager.getInstance().getIrisJsonReader()
+					.getAssignmentDataByTabName(IRISConstants.TRANSFEREE_AND_FAMILY);
+			testContext.getIrisPageManager().irisAssignmentOverviewPage.switchTab(IRISConstants.TRANSFEREE_AND_FAMILY);
+			testContext
+					.getIrisPageManager().irisAssignmentTransfereeAndFamilyPage = new IRIS_AssignmentTransfereeNFamilyPage();
+			testContext.getIrisPageManager().irisAssignmentTransfereeAndFamilyPage
+					.verifyTransfereeAndFamilyTab(IRISConstants.TRANSFEREE_AND_FAMILY);
+			testContext.getIrisPageManager().irisAssignmentTransfereeAndFamilyPage
+					.addNewTransfereeDetails(assignmentTransfereeData);
+			Assert.assertTrue(
+					testContext.getIrisPageManager().irisAssignmentTransfereeAndFamilyPage
+							.saveTransferee(IRISConstants.NEW_TRANSFEREE_CREATED_SUCCESS_MSG),
+					IRISConstants.NEW_TRANSFEREE_CREATED_SUCCESS_MSG + " Message " + IRISConstants.IS_NOT_DISPLAYED);
+			testContext.getIrisPageManager().irisAssignmentTransfereeAndFamilyPage.addTransfereeIdentityDetails();
+			testContext.getIrisPageManager().irisAssignmentTransfereeAndFamilyPage
+					.addNewFamilyDetails(assignmentTransfereeData);
+			testContext.getIrisPageManager().irisAssignmentOverviewPage.switchTab(IRISConstants.ACTIVITY_FINANCE_TAB);
+			testContext.getIrisPageManager().irisActivityAndFinancePage = new IRIS_ActivityAndFinancePage();
+			Assert.assertTrue(testContext.getIrisPageManager().irisActivityAndFinancePage.verifyActivityAndFinanceTab(),
+					MessageFormat.format(IRISConstants.FAIL_TO_VERIFY_CURRENT_TAB, CoreConstants.FAIL,
+							IRISConstants.ACTIVITY_AND_FINANCE));
+			testContext.getIrisPageManager().irisActivityAndFinancePage.displayActivityTable();
+			testContext.getIrisPageManager().irisActivityAndFinancePage.actualizeTracingPrompt(IRISConstants.ACT_DATE,
+					IRISConstants.ACTIVITY, IRISConstants.MAKE_FIRST_CONTACT);
+			testContext.getIrisPageManager().irisActivityAndFinancePage.clickOnSaveBtn();
+			testContext.getIrisPageManager().irisActivityAndFinancePage.sendLoginCredentials(IRISConstants.YES,
+					IRISConstants.SEND_CREDENTIALS, IRISConstants.SEND_USER_LOGIN_MSG);
+//		testContext.getIrisPageManager().irisActivityAndFinancePage.acceptIdentityChallengeQuestionDialog();
+			Assert.assertTrue(
+					testContext.getIrisPageManager().irisActivityAndFinancePage
+							.relonetCredentialsSent(IRISConstants.SUCCESS_MSG, IRISConstants.MESSAGE_DIALOG),
+					MessageFormat.format(IRISConstants.FAILED_TO_VERIFY_MESSAGE, CoreConstants.FAIL,
+							IRISConstants.SUCCESS_MSG));
+			testContext.getIrisPageManager().irisAssignmentOverviewPage.setFileStatus(IRISConstants.ACTIVATE);
+			testContext.getBasePage().cleanIrisProcesses();
+		} catch (Exception e) {
+			Reporter.addStepLog(MessageFormat.format(
+					COREFLEXConstants.EXCEPTION_OCCURED_WHILE_CREATING_A_NEW_TRANSFEREE_IN_IRIS_APPLICATION,
+					CoreConstants.FAIL, e.getMessage()));
+			Assert.fail(MessageFormat.format(
+					COREFLEXConstants.EXCEPTION_OCCURED_WHILE_CREATING_A_NEW_TRANSFEREE_IN_IRIS_APPLICATION,
+					CoreConstants.FAIL, e.getMessage()));
+		}
+
 	}
 
 	@Given("^he has logged into 'MobilityX' application with the 'Transferee' user$")
@@ -649,11 +662,9 @@ public class CoreFlex_SharedSteps {
 	@Given("^he has validated 'Assignment-Policy' details after selecting below option displayed on 'Welcome' dialog$")
 	public void he_has_validated_Assignment_Policy_details_after_selecting_below_option_displayed_on_Welcome_dialog(
 			DataTable dataTable) throws Throwable {
-
 		Assert.assertTrue(mxTransfereeJourneyHomePage.isWelcomePopupDisplayed(),
 				MessageFormat.format(MobilityXConstants.FAILED_TO_DISPLAY_WELCOME_POPUP_ON_TRANSFEREE_JOURNEY_HOME_PAGE,
 						CoreConstants.FAIL));
-
 		List<Map<String, String>> action = dataTable.asMaps(String.class, String.class);
 		mxTransfereeJourneyHomePage.progressOrSkipMobilityJourneyHomePage(action.get(0).get("WelcomeDialogSelection"));
 		Assert.assertTrue(mxTransfereeJourneyHomePage.verifyAssignmentAndPolicyDetails(), MessageFormat.format(
@@ -666,7 +677,6 @@ public class CoreFlex_SharedSteps {
 	public void he_has_navigated_to_page_after_clicking_on_Manage_my_Points_button_on_page(String navigatedPage,
 			String sourcePage) throws Throwable {
 		mxTransfereeJourneyHomePage.clickElementOfPage(MobilityXConstants.MANAGE_MY_POINTS);
-
 		Assert.assertTrue(mxTransfereeFlexPlanningToolPage.isFlexPlanningToolHomePageDisplayed(),
 				MessageFormat.format(MobilityXConstants.ONPOINT_PLANNING_TOOL_PAGE_NOT_DISPLAYED, CoreConstants.FAIL));
 	}
@@ -674,7 +684,6 @@ public class CoreFlex_SharedSteps {
 	@Given("^he has verified Benefits details displayed under 'Core Benefits' and 'Flex Benefits' section on \"([^\"]*)\" page$")
 	public void he_has_verified_Benefits_details_displayed_under_Core_Benefits_and_Flex_Benefits_section_on_page(
 			String pageName) throws Throwable {
-
 		Assert.assertTrue(mxTransfereeFlexPlanningToolPage.verifyWindowTitle(), MessageFormat
 				.format(MobilityXConstants.FAILED_TO_VALIDATE_ONPOINT_PLANNING_TOOL_PAGE_TITLE, CoreConstants.FAIL));
 		Assert.assertTrue(mxTransfereeFlexPlanningToolPage.verifyAvailablePointsMessage(),
@@ -694,7 +703,6 @@ public class CoreFlex_SharedSteps {
 	public void he_has_navigated_to_page_after_clicking_on_following_link_on_page(String navigatedPageName,
 			String sourcePageName, DataTable dataTable) throws Throwable {
 		mxTransfereeFlexPlanningToolPage.clickElementOfPage(MobilityXConstants.SUGGESTED_OPTIONS_LINK);
-
 		Assert.assertTrue(mxTransfereeFlexPlanningToolPage.verifyUserNavigationToSuggestedBundlesPage(), MessageFormat
 				.format(MobilityXConstants.FAILED_TO_NAVIGATE_TO_SUGGESTED_BUNDLES_PAGE, CoreConstants.FAIL));
 
@@ -715,7 +723,6 @@ public class CoreFlex_SharedSteps {
 	public void he_has_navigated_back_to_page_after_clicking_on_Back_to_benefits_list_button_on_page(
 			String navigatedPage) throws Throwable {
 		mxTransfereeFlexPlanningToolPage.clickElementOfPage(MobilityXConstants.BACK_TO_BENEFITS_LIST);
-
 		Assert.assertTrue(mxTransfereeFlexPlanningToolPage.isFlexPlanningToolHomePageDisplayed(),
 				MessageFormat.format(MobilityXConstants.ONPOINT_PLANNING_TOOL_PAGE_NOT_DISPLAYED, CoreConstants.FAIL));
 	}
@@ -868,7 +875,6 @@ public class CoreFlex_SharedSteps {
 	public void he_has_logged_into_Transferee_Submissions_application_as_a_user(String userType) throws Throwable {
 		Assert.assertTrue(transfereeSubmissionsLoginPage.verifyPageNavigation(),
 				MessageFormat.format(COREFLEXConstants.FAILED_TO_NAVIGATE_TO_MOBILITYX_LOGIN_PAGE, CoreConstants.FAIL));
-
 		Assert.assertTrue(transfereeSubmissionsLoginPage.loginByUserType(userType), MessageFormat
 				.format(COREFLEXConstants.FAILED_TO_LOGIN_INTO_TRANSFEREE_SUBMISSIONS_APPLICATION, CoreConstants.FAIL));
 
@@ -1222,7 +1228,7 @@ public class CoreFlex_SharedSteps {
 				viewPolicyPage.clickElementOfPage(PDTConstants.ADD_NEW_POLICY_FORM);
 			} else {
 				Reporter.addStepLog(MessageFormat.format(
-						COREFLEXConstants.MORE_THAN_5_AUTOMATION_POLICIES_ALREADY_PRESENT_IN_ACCOUNTING_TAB_FOR_CLIENT,
+						COREFLEXConstants.MORE_THAN_3_AUTOMATION_POLICIES_ALREADY_PRESENT_IN_ACCOUNTING_TAB_FOR_CLIENT,
 						CoreConstants.PASS, clientId));
 			}
 		} catch (Exception e) {
@@ -1317,7 +1323,6 @@ public class CoreFlex_SharedSteps {
 	@Given("^he has verified Benefits Submitted by Client details under 'Submitted Benefits' section of 'My Benefits Bundle' page$")
 	public void he_has_verified_Benefits_Submitted_by_Client_details_under_Submitted_Benefits_section_of_My_Benefits_Bundle_page()
 			throws Throwable {
-
 		Assert.assertTrue(mxTransfereeMyBenefitsBundlePage.isMyBundlePageDisplayed(),
 				MessageFormat.format(MobilityXConstants.FAILED_TO_DISPLAY_MY_BENEFIT_BUNDLE_PAGE, CoreConstants.FAIL));
 		Assert.assertTrue(mxTransfereeMyBenefitsBundlePage.validateSubmittedBenefitDetails(),
@@ -1372,17 +1377,14 @@ public class CoreFlex_SharedSteps {
 						MobilityXConstants.FAILED_TO_VERIFY_SUBMITTED_BENEFITS_AND_POINTS_DETAILS_ON_FLEX_PDF_DOWNLOADED_DOCUMENT,
 						CoreConstants.FAIL));
 	}
-	
-	
+
 	@Given("^he has created new 'OnPoint Enabled' policies for \"([^\"]*)\" client in IRIS application$")
-	public void he_has_created_new_OnPoint_Enabled_policies_in_IRIS_application(String clientId)
-			throws Throwable {
+	public void he_has_created_new_OnPoint_Enabled_policies_in_IRIS_application(String clientId) throws Throwable {
 		testContext.getBasePage().reLaunchIrisToAvoidFreezingIssue();
 		testContext.getIrisPageManager().irisLoginPage = new IRIS_LoginPage();
 		testContext.getIrisPageManager().irisLoginPage.getIRISLoginAsPerEnvt(_loginInfo);
 		testContext.getIrisPageManager().irisWelcome12C = new IRIS_Welcome12C();
-		testContext.getIrisPageManager().irisWelcome12C
-				.selectWelcomeWindowModule(IRISConstants.CORPORATION_MODULE);
+		testContext.getIrisPageManager().irisWelcome12C.selectWelcomeWindowModule(IRISConstants.CORPORATION_MODULE);
 		testContext.getIrisPageManager().irisCorporationMain = new IRIS_Corporation_Main();
 		testContext.getIrisPageManager().irisCorporationMain.queryCorporation(clientId);
 		testContext.getIrisPageManager().irisCorporationMain.selectCorporationModules(IRISConstants.ACCOUNTING);
@@ -1391,6 +1393,6 @@ public class CoreFlex_SharedSteps {
 		testContext.getIrisPageManager().irisCorporationAccounting.addNewOnPointAutomationPolicies();
 		testContext.getIrisPageManager().irisCorporationAccounting.clickOnSaveBtn();
 		testContext.getBasePage().cleanIrisProcesses();
-		
+
 	}
 }

@@ -39,11 +39,11 @@ public class EmailUtil {
 		case PDTConstants.TRANSFEREE_PASSWORD:
 			_searchTag[0] = "Password: </span></b><span style=\"font-family:century gothic,Helvetica,Calibri,Roboto\">";
 			_searchTag[1] = "</span> </p>";
-		break;			
+			break;
 		case MYLOConstants.MYLO_TRANSFEREE_USER_NAME:
 			_searchTag[0] = "<strong>Username</strong> : <span>";
 			_searchTag[1] = "</span> </span></p>";
-			break;		
+			break;
 		case MYLOConstants.MYLO_TRANSFEREE_PASSWORD:
 			_searchTag[0] = "</span></b><span style=\"font-family:century gothic,Helvetica,Calibri,Roboto\"><span>";
 			_searchTag[1] = "</span></span></p>";
@@ -115,15 +115,16 @@ public class EmailUtil {
 		return _searchTag;
 	}
 
-	public static String searchEmailAndReturnResult(String host, final String userName, final String password, String expFrom,
-			String expEmailSubject, String infoToExtractFromMail) {
+	public static String searchEmailAndReturnResult(String host, final String userName, final String password,
+			String expFrom, String expEmailSubject, String infoToExtractFromMail) {
 		String searchText = "";
 		int iterationCount = 0;
 		Log.info("expected email subject: " + expEmailSubject);
 		_searchTag = getStartEndTagFromEmail(infoToExtractFromMail);
 		try {
-			CoreFunctions.waitHandler(10);
+			CoreFunctions.waitHandler(15);
 			List<Message> messages = getRecentMessagesRecieved(userName, password);
+			Log.info("Initial Message List : "+messages.size());
 			while (true) {
 				iterationCount++;
 				for (Message message : messages) {
@@ -139,19 +140,21 @@ public class EmailUtil {
 						Log.info("searchTag[0]==" + _searchTag[0]);
 						Log.info("searchTag[1]==" + _searchTag[1]);
 						searchText = StringUtils.substringBetween(messageText, _searchTag[0], _searchTag[1]);
-						Log.info("Searched Email Result :"+searchText);
+						Log.info("Searched Email Result :" + searchText);
 						return (searchText.trim());
-					}
+					}					
 				}
-				if (iterationCount < 4)
+				if (iterationCount < 10) {
+					Log.info("-------------------Inside Email Iteration--------------------------");
 					CoreFunctions.waitHandler(10);
-				else
+					messages = getRecentMessagesRecieved(userName, password);
+				} else
 					break;
 			}
 			Log.info("No Email Received within " + iterationCount * 60 + " minutes From:" + expFrom + " with subject:"
 					+ expEmailSubject);
-			Assert.fail("No Email Received within " + iterationCount * 60 + " minutes From:" + expFrom + " with subject:"
-					+ expEmailSubject);
+			Assert.fail("No Email Received within " + iterationCount * 60 + " minutes From:" + expFrom
+					+ " with subject:" + expEmailSubject);
 			return CoreConstants.EMAIL_NOT_FOUND;
 		} catch (Exception e) {
 			Assert.fail(CoreConstants.ERROR + e.getMessage());
@@ -231,11 +234,11 @@ public class EmailUtil {
 						Log.info("searchTag[0]==" + _searchTag[0]);
 						Log.info("searchTag[1]==" + _searchTag[1]);
 						searchText = StringUtils.substringBetween(messageText, _searchTag[0], _searchTag[1]);
-						Log.info("Searched Email Result :"+searchText);
+						Log.info("Searched Email Result :" + searchText);
 						return searchText;
 					}
 				}
-				if (iterationCount < 30)
+				if (iterationCount < 4)
 					CoreFunctions.waitHandler(10);
 				else
 					break;

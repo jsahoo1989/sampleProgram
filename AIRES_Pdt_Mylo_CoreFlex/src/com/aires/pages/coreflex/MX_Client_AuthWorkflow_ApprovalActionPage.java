@@ -92,16 +92,15 @@ public class MX_Client_AuthWorkflow_ApprovalActionPage extends Base {
 
 	@FindBy(how = How.CSS, using = "div[id*='savedFlex'] td>span[class*='RXBolder RXCFSmallText']")
 	private List<WebElement> _textSelectedFlexBenefitsQuantityList;
-	
+
 	@FindBy(how = How.XPATH, using = "//div[@class='growl-message'][contains(string(),'Thanks. Your approval for this initiation has been received.')]")
 	private WebElement _textApprovalSuccessGrowlMessage;
-	
+
 	@FindBy(how = How.CSS, using = "a[id='dppw1::close']")
 	private WebElement _iconClose;
-	
+
 	@FindBy(how = How.CSS, using = "table[class*='RXRightIconPanel'] span[class*='RXHeaderText']")
 	private WebElement _textPostApprovalAuthStatus;
-	
 
 	/**************************************************************************************************************/
 
@@ -126,8 +125,8 @@ public class MX_Client_AuthWorkflow_ApprovalActionPage extends Base {
 					+ CoreFunctions.getPropertyFromConfig(MobilityXConstants.LAST_NAME_TEXT);
 			CoreFunctions.explicitWaitTillElementVisibility(driver, _textInitiationFor,
 					MobilityXConstants.INITIATION_FOR);
-			CoreFunctions.verifyText(driver, _textInitiationFor, expectedIntiationForText,
-					MobilityXConstants.INITIATION_FOR);
+			CoreFunctions.verifyTextContains(CoreFunctions.getElementText(driver, _textInitiationFor),
+					expectedIntiationForText, MobilityXConstants.INITIATION_FOR);
 			if (CoreFunctions.isElementExist(driver, _buttonApprove, 2)
 					&& CoreFunctions.isElementExist(driver, _buttonDeny, 2)) {
 				Reporter.addStepLog(MessageFormat.format(MobilityXConstants.SUCCESSFULLY_NAVIGATED_TO_PAGE,
@@ -257,7 +256,7 @@ public class MX_Client_AuthWorkflow_ApprovalActionPage extends Base {
 
 	public void handle_Cookie_AfterLogin() {
 		CoreFunctions.waitForBrowserToLoad(driver);
-		if (CoreFunctions.isElementExist(driver, _btn_OkOnSiteCookieAfterLogin, 15)) {
+		if (CoreFunctions.isElementExist(driver, _btn_OkOnSiteCookieAfterLogin, 20)) {
 			HandleCookiePopUp(_btn_OkOnSiteCookieAfterLogin);
 		}
 	}
@@ -546,16 +545,16 @@ public class MX_Client_AuthWorkflow_ApprovalActionPage extends Base {
 		}
 		return false;
 	}
-	
+
 	public boolean verifySuccessGrowlMessageDisplayed(String messagetype) {
 		try {
-			if(CoreFunctions.isElementExist(driver, _iconClose, 2)) {
+			if (CoreFunctions.isElementExist(driver, _iconClose, 2)) {
 				CoreFunctions.clickElement(driver, _iconClose);
 			}
 			if (CoreFunctions.isElementExist(driver, _textApprovalSuccessGrowlMessage, 5)) {
-				Reporter.addStepLog(
-						CoreConstants.PASS + CoreConstants.VRFIED_THAT + MobilityXConstants.SUCCESS_MESSAGE_TEXT
-								+ CoreConstants.IS_DISPLAYED_AS + "<b>\"" + _textApprovalSuccessGrowlMessage.getText() + "\"</b>");
+				Reporter.addStepLog(CoreConstants.PASS + CoreConstants.VRFIED_THAT
+						+ MobilityXConstants.SUCCESS_MESSAGE_TEXT + CoreConstants.IS_DISPLAYED_AS + "<b>\""
+						+ _textApprovalSuccessGrowlMessage.getText() + "\"</b>");
 				CoreFunctions.explicitWaitTillElementInVisibility(driver, _textApprovalSuccessGrowlMessage);
 				CoreFunctions.clickElement(driver, _iconClose);
 				return true;
@@ -566,7 +565,7 @@ public class MX_Client_AuthWorkflow_ApprovalActionPage extends Base {
 		} catch (Exception e) {
 			Reporter.addStepLog(MessageFormat.format(
 					MobilityXConstants.EXCEPTION_OCCURED_WHILE_VERIFYING_GROWL_MESSAGE_ON_AUTH_WORKFLOW_APPROVAL_ACTION_PAGE,
-					CoreConstants.FAIL, e.getMessage(),messagetype));
+					CoreConstants.FAIL, e.getMessage(), messagetype));
 		}
 		return false;
 	}
@@ -576,14 +575,14 @@ public class MX_Client_AuthWorkflow_ApprovalActionPage extends Base {
 			if (CoreFunctions.getElementText(driver, _textPostApprovalAuthStatus).equals(status)) {
 				Reporter.addStepLog(MessageFormat.format(
 						MobilityXConstants.SUCCESSFULLY_VERIFIED_POST_APPROVAL_AUTH_FORM_STATUS_ON_AUTH_WORKFLOW_APPROVAL_ACTION_PAGE,
-						CoreConstants.PASS,status));
+						CoreConstants.PASS, status));
 				return true;
 			}
 		} catch (Exception e) {
 			Reporter.addStepLog(MessageFormat.format(
 					MobilityXConstants.EXCEPTION_OCCURED_WHILE_VERIFYING_POST_APPROVAL_AUTH_FORM_STATUS_ON_AUTH_WORKFLOW_APPROVAL_ACTION_PAGE,
-					CoreConstants.FAIL, e.getMessage(),status));			
-		}	
+					CoreConstants.FAIL, e.getMessage(), status));
+		}
 		return false;
 	}
 

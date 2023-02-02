@@ -273,6 +273,7 @@ public class MX_Transferee_MyBenefitsBundlePage extends Base {
 		CoreFunctions.setElementText(driver, input_transfereeName, transfereeName);
 		CoreFunctions.setElementText(driver, optionalComments, optionalNotes);
 		CoreFunctions.waitHandler(2);
+		CoreFunctions.explicitWaitTillElementBecomesClickable(driver, _btn_submitBundle, buttonName);
 		CoreFunctions.click(driver, _btn_submitBundle, buttonName);
 		CoreFunctions.writeToPropertiesFile("CF_Transferee_AvailablePoints", String.valueOf(
 				Double.parseDouble(CoreFunctions.getPropertyFromConfig("CF_Transferee_TotalAvailablePoints")) - Double
@@ -359,13 +360,18 @@ public class MX_Transferee_MyBenefitsBundlePage extends Base {
 				int indexCashout = BusinessFunctions.returnindexItemFromListUsingText(driver,
 						_confirmationDialogBenefitName,
 						policySetupPageData.flexPolicySetupPage.customCashoutBenefitName);
-				return (Double.parseDouble((CoreFunctions.getItemsFromListByIndex(driver,
-						_confirmationDialogBenefitPoint, indexCashout, false)))) == (Double.parseDouble(
-								CoreFunctions.getPropertyFromConfig("CF_Transferee_SelectedCashOutPoints")))
-						&& ((CoreFunctions
-								.getItemsFromListByIndex(driver, _confirmationDialogAmountAllowanceMessage,
-										indexCashout, false)
-								.contains(BusinessFunctions.getExpectedCashoutDescription())));
+				CoreFunctions.verifyValue(
+						(Double.parseDouble((CoreFunctions.getItemsFromListByIndex(driver,
+								_confirmationDialogBenefitPoint, indexCashout, false)))),
+						(Double.parseDouble(
+								CoreFunctions.getPropertyFromConfig("CF_Transferee_SelectedCashOutPoints"))),
+						MobilityXConstants.SELECTED_CASHOUT_POINTS);
+				CoreFunctions.verifyTextContains(
+						CoreFunctions.getItemsFromListByIndex(driver, _confirmationDialogAmountAllowanceMessage,
+								indexCashout, false),
+						BusinessFunctions.getExpectedCashoutDescription(),
+						MobilityXConstants.SELECTED_CASHOUT_DESCRIPTION);
+				return true;
 			}
 		}
 		return false;
@@ -374,14 +380,22 @@ public class MX_Transferee_MyBenefitsBundlePage extends Base {
 	private boolean validateSubmissionInfoText() {
 		DecimalFormat format = new DecimalFormat();
 		format.setDecimalSeparatorAlwaysShown(false);
-		return CoreFunctions.getElementText(driver, _testPointsConsumed)
-				.contains(
-						MobilityXConstants.POINTS_CONSUMED_TEXT
-								.replace("points_used",
-										(String.valueOf(format.format(Double.parseDouble(CoreFunctions
-												.getPropertyFromConfig("CF_Transferee_TotalSelectedPoints"))))))
-								.replace("total_points",
-										CoreFunctions.getPropertyFromConfig("CF_Transferee_TotalAvailablePoints")));
+		try {
+			CoreFunctions.verifyTextContains(CoreFunctions.getElementText(driver, _testPointsConsumed),
+					(MobilityXConstants.POINTS_CONSUMED_TEXT
+							.replace("points_used",
+									(String.valueOf(format.format(Double.parseDouble(CoreFunctions
+											.getPropertyFromConfig("CF_Transferee_TotalSelectedPoints"))))))
+							.replace("total_points",
+									CoreFunctions.getPropertyFromConfig("CF_Transferee_TotalAvailablePoints"))),
+					MobilityXConstants.BENEFIT_SUBMISSION_INFO_TEXT);
+			return true;
+		} catch (Exception e) {
+			Reporter.addStepLog(MessageFormat.format(
+					MobilityXConstants.EXCEPTION_OCCURED_WHILE_VALIDATING_SUBMITTED_POINTS_INFO_TEXT_ON_SUBMISSION_CONFIRMATION_DIALOG,
+					CoreConstants.FAIL, e.getMessage()));
+			return false;
+		}
 	}
 
 	public boolean verifyFlexBenefitsDetailsOnMBBPage() {
@@ -480,40 +494,70 @@ public class MX_Transferee_MyBenefitsBundlePage extends Base {
 	}
 
 	private boolean verifySelectedBenefitDetailsOnConfirmationDialog(int indexBenefit, Benefit benefit) {
-		return (CoreFunctions.getItemsFromListByIndex(driver, _confirmationDialogBenefitName, indexBenefit, false)
-				.equals(benefit.getBenefitDisplayName()))
-				&& (CoreFunctions
-						.getItemsFromListByIndex(driver, _confirmationDialogAmountAllowanceMessage, indexBenefit, false)
-						.equals(benefit.getBenefitAmount()))
-				&& (CoreFunctions.getItemsFromListByIndex(driver, _confirmationDialogBenefitSelectionQuantity,
-						indexBenefit, false).equals(String.valueOf(benefit.getNumberOfBenefitSelected())))
-				&& ((Double.parseDouble((CoreFunctions.getItemsFromListByIndex(driver, _confirmationDialogBenefitPoint,
-						indexBenefit, false)))) == ((Double.parseDouble(benefit.getPoints()))
-								* (Integer.parseInt(CoreFunctions.getItemsFromListByIndex(driver,
-										_confirmationDialogBenefitSelectionQuantity, indexBenefit, false)))));
+		try {
+			CoreFunctions.verifyText(
+					CoreFunctions.getItemsFromListByIndex(driver, _confirmationDialogBenefitName, indexBenefit, false),
+					benefit.getBenefitDisplayName(), MobilityXConstants.BENEFIT_DISPLAY_NAME);
+			CoreFunctions.verifyText(
+					CoreFunctions.getItemsFromListByIndex(driver, _confirmationDialogAmountAllowanceMessage,
+							indexBenefit, false),
+					benefit.getBenefitAmount(), MobilityXConstants.BENEFIT_ALLOWANCE_AMOUNT);
+			CoreFunctions.verifyText(
+					CoreFunctions.getItemsFromListByIndex(driver, _confirmationDialogBenefitSelectionQuantity,
+							indexBenefit, false),
+					(String.valueOf(benefit.getNumberOfBenefitSelected())), MobilityXConstants.BENEFIT_QUANTITY);
+			CoreFunctions.verifyValue(
+					(Double.parseDouble((CoreFunctions.getItemsFromListByIndex(driver, _confirmationDialogBenefitPoint,
+							indexBenefit, false)))),
+					((Double.parseDouble(benefit.getPoints()))
+							* (Integer.parseInt(CoreFunctions.getItemsFromListByIndex(driver,
+									_confirmationDialogBenefitSelectionQuantity, indexBenefit, false)))),
+					MobilityXConstants.BENEFIT_POINTS);
+			return true;
+		} catch (Exception e) {
+			Reporter.addStepLog(MessageFormat.format(
+					COREFLEXConstants.EXCEPTION_OCCURED_WHILE_VALIDATING_SELECTED_FLEX_BENEFIT_DETAILS_ON_SUBMISSION_CONFIRMATION_DIALOG,
+					CoreConstants.FAIL, e.getMessage()));
+			return false;
+		}
 	}
 
 	public boolean validateSubmittedBenefitDetails() {
-		boolean isBenefitsAndPointsMatched = false, isSubmittedBenefitDetailsVerified = false;
+		boolean isSubmittedBenefitDetailsVerified = false;
 		try {
 			isSubmittedBenefitDetailsVerified = verifySubmittedBenefitsSectionHeader()
-					&& verifySubmittedCashoutDetailsOnMBBPage() && verifySubmittedFlexBenefitsDetailsOnMBBPage();
-			isBenefitsAndPointsMatched = isSubmittedBenefitDetailsVerified
-					&& ((Double.parseDouble(CoreFunctions.getItemsFromListByIndex(driver, _textSubmittedBenefitsPoints,
-							0, true))) == (Double.parseDouble(
-									CoreFunctions.getPropertyFromConfig("CF_Transferee_TotalSelectedPoints"))))
-					&& ((CoreFunctions.getItemsFromListByIndex(driver, _textSubmittedBenefitsPoints, 1, true))
-							.equals(CoreFunctions.getPropertyFromConfig("CF_Transferee_TotalAvailablePoints")));
+					&& verifySubmittedCashoutDetailsOnMBBPage() && verifySubmittedFlexBenefitsDetailsOnMBBPage()
+					&& verifySubmittedPointsDetailsOnMBBPage();
 		} catch (Exception e) {
 			Reporter.addStepLog(
 					MessageFormat.format(MobilityXConstants.FAILED_TO_VERIFY_SUBMITTED_BENEFITS_ON_MY_BUNDLE_PAGE,
 							CoreConstants.FAIL, e.getMessage()));
 		}
-		if (isBenefitsAndPointsMatched)
+		if (isSubmittedBenefitDetailsVerified)
 			Reporter.addStepLog(MessageFormat.format(
 					MobilityXConstants.SUCCESSFULLY_VERIFIED_SUBMITTED_BENEFITS_ON_MY_BUNDLE_PAGE, CoreConstants.PASS));
 
-		return isBenefitsAndPointsMatched;
+		return isSubmittedBenefitDetailsVerified;
+	}
+
+	private boolean verifySubmittedPointsDetailsOnMBBPage() {
+		try {
+			CoreFunctions.verifyValue(
+					Double.parseDouble(
+							CoreFunctions.getItemsFromListByIndex(driver, _textSubmittedBenefitsPoints, 0, true)),
+					Double.parseDouble(CoreFunctions.getPropertyFromConfig("CF_Transferee_TotalSelectedPoints")),
+					MobilityXConstants.SUBMITTED_BENEFIT_POINTS);
+			CoreFunctions.verifyText(
+					CoreFunctions.getItemsFromListByIndex(driver, _textSubmittedBenefitsPoints, 1, true),
+					CoreFunctions.getPropertyFromConfig("CF_Transferee_TotalAvailablePoints"),
+					MobilityXConstants.TOTAL_AVAILABLE_POINTS);
+			return true;
+		} catch (Exception e) {
+			Reporter.addStepLog(
+					MessageFormat.format(MobilityXConstants.FAILED_TO_VERIFY_SUBMITTED_BENEFITS_ON_MY_BUNDLE_PAGE,
+							CoreConstants.FAIL, e.getMessage()));
+			return false;
+		}
 	}
 
 	private boolean verifySubmittedCashoutDetailsOnMBBPage() {
@@ -782,6 +826,7 @@ public class MX_Transferee_MyBenefitsBundlePage extends Base {
 			String buttonName) {
 		CoreFunctions.setElementText(driver, input_transfereeName, transfereeName);
 		CoreFunctions.setElementText(driver, optionalComments, optionalNotes);
+		CoreFunctions.waitHandler(2);
 		CoreFunctions.click(driver, _buttonDeleteThisBenefits, buttonName);
 	}
 
@@ -856,24 +901,42 @@ public class MX_Transferee_MyBenefitsBundlePage extends Base {
 	}
 
 	private boolean verifyDeleteBenefitStatus(int indexBenefit, Benefit benefit) {
-
-		return (CoreFunctions.getItemsFromListByIndex(driver, _textSubmittedBenefitNameList, indexBenefit, true)
-				.equals(benefit.getBenefitDisplayName()))
-				&& (CoreFunctions.getItemsFromListByIndex(driver, _textSubmittedAllowanceAmountList, indexBenefit, true)
-						.equals(benefit.getBenefitAmount()))
-				&& (CoreFunctions.getItemsFromListByIndex(driver, _textSubmittedBenefitQuantityList, indexBenefit, true)
-						.equals(String.valueOf(benefit.getNumberOfBenefitSelected())))
-				&& ((Double.parseDouble((CoreFunctions
-						.getItemsFromListByIndex(driver, _textSubmittedBenefitsPointsList, indexBenefit, true)
-						.replace("pts", "").trim()))) == (Double.parseDouble(benefit.getPoints())
-								* (Integer.parseInt(CoreFunctions.getItemsFromListByIndex(driver,
-										_textSubmittedBenefitQuantityList, indexBenefit, true)))))
-				&& (CoreFunctions.getItemsFromListByIndex(driver, _textSubmittedBenefitDate, indexBenefit, true)
-						.equals(CoreFunctions.getCurrentDateAsGivenFormat("dd-MMM-yyyy")))
-				&& CoreFunctions.getItemsFromListByIndex(driver, _buttonDeleteSubmittedBenefitList, indexBenefit, true)
-						.equals(MobilityXConstants.UNDO)
-				&& CoreFunctions.getItemsFromListByIndex(driver, _benefitStatus, indexBenefit, true)
-						.equals(MobilityXConstants.DELETE_REQUEST_PENDING);
+		try {
+			CoreFunctions.verifyText(
+					CoreFunctions.getItemsFromListByIndex(driver, _textSubmittedBenefitNameList, indexBenefit, true),
+					benefit.getBenefitDisplayName(), MobilityXConstants.SUBMITTED_BENEFIT_NAME);
+			CoreFunctions
+					.verifyText(
+							CoreFunctions.getItemsFromListByIndex(driver, _textSubmittedAllowanceAmountList,
+									indexBenefit, true),
+							benefit.getBenefitAmount(), MobilityXConstants.SUBMITTED_BENEFIT_ALLOWANCE_AMOUNT);
+			CoreFunctions.verifyText(
+					CoreFunctions.getItemsFromListByIndex(driver, _textSubmittedBenefitQuantityList, indexBenefit,
+							true),
+					String.valueOf(benefit.getNumberOfBenefitSelected()),
+					MobilityXConstants.SUBMITTED_BENEFIT_QUANTITY);
+			CoreFunctions.verifyValue(
+					(Double.parseDouble((CoreFunctions
+							.getItemsFromListByIndex(driver, _textSubmittedBenefitsPointsList, indexBenefit, true)
+							.replace("pts", "").trim()))),
+					(Double.parseDouble(benefit.getPoints()) * (Integer.parseInt(CoreFunctions
+							.getItemsFromListByIndex(driver, _textSubmittedBenefitQuantityList, indexBenefit, true)))),
+					MobilityXConstants.SUBMITTED_BENEFIT_POINTS);
+			CoreFunctions.verifyText(
+					CoreFunctions.getItemsFromListByIndex(driver, _textSubmittedBenefitDate, indexBenefit, true),
+					CoreFunctions.getCurrentDateAsGivenFormat("dd-MMM-yyyy"),
+					MobilityXConstants.SUBMITTED_BENEFIT_DATE);
+			CoreFunctions.verifyText(CoreFunctions.getItemsFromListByIndex(driver, _buttonDeleteSubmittedBenefitList,
+					indexBenefit, true), MobilityXConstants.UNDO, MobilityXConstants.UNDO_BUTTON);
+			CoreFunctions.verifyText(CoreFunctions.getItemsFromListByIndex(driver, _benefitStatus, indexBenefit, true),
+					MobilityXConstants.DELETE_REQUEST_PENDING, MobilityXConstants.DELETE_REQUEST_PENDING);
+			return true;
+		} catch (Exception e) {
+			Reporter.addStepLog(MessageFormat.format(
+					MobilityXConstants.EXCEPTION_OCCURED_WHILE_VALIDATING_DELETED_FLEX_BENEFIT_STATUS_UNDER_SUBMITTED_BENEFITS_SECTION_OF_MBB_PAGE,
+					CoreConstants.FAIL, e.getMessage()));
+		}
+		return false;
 	}
 
 	public boolean verifySelectedCashoutDetails() {
@@ -1032,7 +1095,7 @@ public class MX_Transferee_MyBenefitsBundlePage extends Base {
 					CoreFunctions.scrollToElementUsingJS(driver, _headerMyBenefitsBundle,
 							MobilityXConstants.MY_BENEFITS_BUNDLE);
 					flag = false;
-					CoreFunctions.waitHandler(2);
+//					CoreFunctions.waitHandler(2);
 					int indexBenefit = BusinessFunctions.returnindexItemFromListUsingText(driver,
 							_textSubmittedBenefitNameList, benefit.getBenefitDisplayName());
 					BusinessFunctions.selectValueFromListUsingIndex(driver, _buttonDeleteSubmittedBenefitList,

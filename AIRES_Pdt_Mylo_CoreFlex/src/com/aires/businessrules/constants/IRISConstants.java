@@ -511,4 +511,5 @@ public class IRISConstants {
 //	public static final String LOGIN_WINDOW_TITLE = "IRIS Login - Version 8.6.20";
 	public static final String LOGIN_WINDOW_TITLE = "IRIS Login - Version 8.7.7";
 	public static final String ONPOINT_AUTOMATION_POLICY = "Automation_Policy_OnPoint_";
+	public static final String SUCCESSFULLY_SWITCHED_TO_IRIS_WINDOW = "{0}Successfully switched to IRIS window.";
 }

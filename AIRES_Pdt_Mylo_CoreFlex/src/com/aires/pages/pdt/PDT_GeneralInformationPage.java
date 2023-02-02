@@ -919,7 +919,7 @@ public class PDT_GeneralInformationPage extends Base {
 		try {
 			switch (fieldName) {
 			case PDTConstants.POLICY_STATUS:
-				if ((CoreFunctions.isElementExist(driver, _textPolicyStatus, 2))
+				if ((CoreFunctions.isElementExist(driver, _textPolicyStatus, 2))						
 						&& ((CoreFunctions.getElementText(driver, _textPolicyStatus).replace("check_circle", "")
 								.replace("error", "").trim()).equals(expectedDefaultValue)))
 					isFieldVerified = true;
@@ -1270,7 +1270,6 @@ public class PDT_GeneralInformationPage extends Base {
 		selectFieldOption(PDTConstants.CAPPED_POLICY, policySetupPageData.generalInformationPage.cappedPolicy);
 		selectFieldOption(COREFLEXConstants.EXPENSE_MANAGEMENT_CLIENT,
 				policySetupPageData.generalInformationPage.expenseManagement);
-//		CoreFunctions.clickElement(driver, _radioExpenseManagementNoOption);
 	}
 
 	/**

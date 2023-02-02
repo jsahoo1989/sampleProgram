@@ -28,8 +28,6 @@ import com.hp.lft.sdk.java.Editor;
 import com.hp.lft.sdk.java.EditorDescription;
 import com.hp.lft.sdk.java.Label;
 import com.hp.lft.sdk.java.LabelDescription;
-import com.hp.lft.sdk.java.Table;
-import com.hp.lft.sdk.java.TableDescription;
 import com.hp.lft.sdk.java.UiObject;
 import com.hp.lft.sdk.java.UiObjectDescription;
 import com.hp.lft.sdk.java.Window;
@@ -80,18 +78,21 @@ public class IRIS_AssignmentTransfereeNFamilyPage extends BasePage {
 		}
 	}
 
-	public void linkTransferee(String btnName) throws Exception {
-		Table linkAssignmentDialogSimilarTransfereeTableTable = IRIS_PageMaster
-				.getDialogObject(_IRIS, "Link Suggestion").describe(Table.class, new TableDescription());
-		Button samePersonNewTransferOrAssignmentButton = IRIS_PageMaster.getDialogObject(_IRIS, "Link Suggestion")
-				.describe(Button.class,
-						new ButtonDescription.Builder().label("Same person, new transfer or assignment").build());
-		Button _oKButton = IRIS_PageMaster
-				.getDialogObject(IRIS_PageMaster.getDialogObject(_IRIS, "Link Suggestion"), "Link File")
-				.describe(Button.class, new ButtonDescription.Builder().label("OK").build());
-		linkAssignmentDialogSimilarTransfereeTableTable.selectRows(0);
-		samePersonNewTransferOrAssignmentButton.click();
-		Helpers.clickButton(_oKButton, _oKButton.getLabel());
+	public void linkTransferee() throws Exception {
+		try {
+			Button thisIsDifferentPersonButton = IRIS_PageMaster.getDialogObject(_IRIS, "Link Suggestion").describe(
+					Button.class, new ButtonDescription.Builder().label("This is a different person").build());
+			thisIsDifferentPersonButton.click();
+			Helpers.clickButton(
+					IRIS_PageMaster.getButtonObjectFromLabel(IRIS_PageMaster.getDialogObject(
+							IRIS_PageMaster.getDialogObject(_IRIS, "Link Suggestion"), "Confirm Link Files"), "OK"),
+					IRIS_PageMaster.getButtonObjectFromLabel(IRIS_PageMaster.getDialogObject(
+							IRIS_PageMaster.getDialogObject(_IRIS, "Link Suggestion"), "Confirm Link Files"), "OK")
+							.getLabel());
+		} catch (Exception e) {
+
+		}
+
 	}
 
 	public boolean verfiyLinkFileMessage(String msg) throws Exception {
@@ -137,12 +138,13 @@ public class IRIS_AssignmentTransfereeNFamilyPage extends BasePage {
 
 	public void addNewTransfereeDetails(IRIS_AssignmentData transfereeData) throws Exception {
 		addTransfereeFirstAndLastName(transfereeData);
+		linkTransferee();
 		Assert.assertTrue(verifyTransfereeNameAdded(), IRISConstants.TRANSFEREE_FIRST_AND_LAST_NAME_NOT_ADDED_TEXT);
 		addBasicInformationDetails(transfereeData.basicInformation);
 		addMiscInfoDetails(transfereeData.miscInformation);
 		System.out.println(_IRIS.getTitle());
 		try {
-			CoreFunctions.waitHandler(5);
+//			CoreFunctions.waitHandler(5);
 			clickSaveButton();
 			if (IRIS_PageMaster.getDialogObject(_IRIS, "Confirmation").waitUntilExists()) {
 				clickNoButton();
@@ -154,7 +156,7 @@ public class IRIS_AssignmentTransfereeNFamilyPage extends BasePage {
 	public void addNewFamilyDetails(IRIS_AssignmentData transfereeData) throws Exception {
 		addFamilyFirstAndLastName(transfereeData);
 		try {
-			CoreFunctions.waitHandler(2);
+//			CoreFunctions.waitHandler(2);
 			clickSaveButton();
 			Dialog saveSucceededDialog = IRIS_PageMaster.getDialogObject(_IRIS, "Saved");
 			saveSucceededDialog.waitUntilVisible();
@@ -167,7 +169,7 @@ public class IRIS_AssignmentTransfereeNFamilyPage extends BasePage {
 
 	public void addTransfereeIdentityDetails() {
 		try {
-			CoreFunctions.waitHandler(3);
+//			CoreFunctions.waitHandler(3);
 			addIdentityChallengeInfo();
 			clickSaveButton();
 			Dialog saveSucceededDialog = IRIS_PageMaster.getDialogObject(_IRIS, "Saved");
@@ -262,16 +264,13 @@ public class IRIS_AssignmentTransfereeNFamilyPage extends BasePage {
 				_isExists = true;
 			}
 		} catch (GeneralLeanFtException e) {
+			Log.info(e.getMessage());
 			e.printStackTrace();
 		}
 		return _isExists;
 	}
 
 	public void addBasicInformationDetails(BasicInformation basicInfo) throws Exception {
-		/*
-		 * _transfereeEmail = basicInfo.emailAddress +
-		 * CoreFunctions.generateRandomNumberAsGivenLength(6) + "@mailinator.com";
-		 */
 		_transfereeEmail = "airesautomation@aires.com";
 		try {
 			IRIS_PageMaster.getListObject(_IRIS, "Transfer Type").waitUntilEnabled();

@@ -1417,7 +1417,6 @@ public class BusinessFunctions {
 		String expectedCashoutDescription = null;
 		DecimalFormat format = new DecimalFormat();
 		format.setDecimalSeparatorAlwaysShown(false);
-		DecimalFormat precesionFormat = new DecimalFormat("#.00");
 		try {
 			if (CoreFunctions.getPropertyFromConfig("CF_Transferee_CashoutCurrencyCode").equals("USD")) {
 				expectedCashoutDescription = MobilityXConstants.CLIENT_SUBMISSIONS_CASHOUT_DESCRIPTION + " "
@@ -1434,7 +1433,7 @@ public class BusinessFunctions {
 			} else {
 				expectedCashoutDescription = MobilityXConstants.CLIENT_SUBMISSIONS_CASHOUT_DESCRIPTION + " "
 						+ CoreFunctions.getPropertyFromConfig("CF_Transferee_CashoutCurrencySign")
-						+ precesionFormat.format(Double
+						+ format.format(Double
 								.parseDouble(CoreFunctions.getPropertyFromConfig("CF_Client_SelectedCashOutPoints")))
 						+ " " + CoreFunctions.getPropertyFromConfig("CF_Transferee_CashoutCurrencyCode");
 			}
@@ -1531,15 +1530,11 @@ public class BusinessFunctions {
 	}
 
 	public static String getEnvBasedOnExecutionType() {
-		return (CoreFunctions.getPropertyFromConfig("ExecutionType").equalsIgnoreCase("remote")
-				? CoreFunctions.getPropertyFromConfig("envt")
-				: CoreFunctions.getPropertyFromConfig("envt"));
+		return CoreFunctions.getPropertyFromConfig("envt");
 	}
 	
 	public static String getApplicationBasedOnExecutionType() {
-		return (CoreFunctions.getPropertyFromConfig("ExecutionType").equalsIgnoreCase("remote")
-				? CoreFunctions.getPropertyFromConfig("application")
-				: CoreFunctions.getPropertyFromConfig("application"));
+		return CoreFunctions.getPropertyFromConfig("application");
 	}
 	
 	/**
@@ -1574,6 +1569,7 @@ public class BusinessFunctions {
 		CoreFunctions.writeToPropertiesFile("ClonePolicy_Reference_PolicyStatus", "");
 		CoreFunctions.writeToPropertiesFile("ClonePolicy_Reference_Client", "");
 		CoreFunctions.writeToPropertiesFile("application", CoreConstants.APP_COREFLEX);
+		CoreFunctions.writeToPropertiesFile("CF_CashoutSubmitted_Flag", "false");
 
 	}
 

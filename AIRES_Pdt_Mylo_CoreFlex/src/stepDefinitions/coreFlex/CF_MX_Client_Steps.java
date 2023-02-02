@@ -441,7 +441,7 @@ public class CF_MX_Client_Steps {
 	public void he_has_clicked_on_button_from_right_floating_menu_of_Authorization_Form_page_to_Resubmit_Auth_Form(
 			String buttonName) throws Throwable {
 		mxClientAuthorizationHomePage.clickOnElementsOfFloatingMenu(buttonName);
-		mxClientAuthorizationHomePage.clickOnElementOnAuthorizationPage(MobilityXConstants.SUBMIT);
+//		mxClientAuthorizationHomePage.clickOnElementOnAuthorizationPage(MobilityXConstants.SUBMIT);
 	}
 
 	@Given("^he has clicked on \"([^\"]*)\" button on the 'Do you want to submit it without the required approvals\\?' dialog$")
@@ -635,7 +635,6 @@ public class CF_MX_Client_Steps {
 			String navigatedPageName) throws Throwable {
 		Assert.assertTrue(mxClientBenefitSelectionToolPage.selectBenefitsCashoutAndProceedToSaveAndExit(), MessageFormat
 				.format(MobilityXConstants.FAILED_TO_SELECT_BENEFITS_AND_PROCEED_TO_REVIEW_PAGE, CoreConstants.FAIL));
-
 		Assert.assertTrue(mxClientBenefitsBundlePage.isBenefitsBundlePageDisplayed(), MessageFormat
 				.format(MobilityXConstants.FAILED_TO_DISPLAY_MX_CLIENT_BENEFITS_BUNDLE_PAGE, CoreConstants.FAIL));
 	}
@@ -721,7 +720,6 @@ public class CF_MX_Client_Steps {
 				.getBscDataByModuleName("DomesticAuthorizationFormData");
 		mxClientAuthorizationHomePage.enterValidIncreasedTotalPointsValue(bscAuthorizationData);
 		mxClientAuthorizationHomePage.clickOnElementOnAuthorizationPage(MobilityXConstants.START_BENEFIT_SELECTION);
-
 		Assert.assertTrue(mxClientBenefitSelectionToolPage.verifyPageNavigation(),
 				MessageFormat.format(
 						MobilityXConstants.FAILED_TO_VERIFY_USER_NAVIGATION_TO_MXCLIENT_BENEFIT_SELECTION_TOOL_PAGE,
@@ -830,11 +828,9 @@ public class CF_MX_Client_Steps {
 	@Given("^he has navigated to 'Benefit Selection Tool' page after clicking on 'Manage Benefit Selection' button$")
 	public void he_has_navigated_to_Benefit_Selection_Tool_page_after_clicking_on_Manage_Benefit_Selection_button()
 			throws Throwable {
-
 		Assert.assertTrue(mxClientAuthorizationHomePage.verifyPageNavigationToAuthForm(), MessageFormat
 				.format(MobilityXConstants.FAILED_TO_VERIFY_USER_NAVIGATION_TO_MXCLIENT_HOME_PAGE, CoreConstants.FAIL));
 		mxClientAuthorizationHomePage.clickOnElementOnAuthorizationPage(MobilityXConstants.MANAGE_BENEFIT_SELECTION);
-
 		Assert.assertTrue(mxClientBenefitSelectionToolPage.verifyPageNavigation(),
 				MessageFormat.format(
 						MobilityXConstants.FAILED_TO_VERIFY_USER_NAVIGATION_TO_MXCLIENT_BENEFIT_SELECTION_TOOL_PAGE,
@@ -961,7 +957,6 @@ public class CF_MX_Client_Steps {
 	public void he_has_clicked_on_Edit_Submitted_Benefits_button_to_navigate_to_Benefits_Bundle_page()
 			throws Throwable {
 		mxClientBenefitSelectionToolPage.clickElementOfPage(MobilityXConstants.EDIT_SUBMITTED_BENEFITS);
-
 		Assert.assertTrue(mxClientBenefitsBundlePage.isBenefitsBundlePageDisplayed(), MessageFormat
 				.format(MobilityXConstants.FAILED_TO_DISPLAY_MX_CLIENT_BENEFITS_BUNDLE_PAGE, CoreConstants.FAIL));
 	}
@@ -1470,6 +1465,9 @@ public class CF_MX_Client_Steps {
 		Assert.assertTrue(mxClientAuthWFApprovalActionPage.verifyAuthFormStatusPostAction(status), MessageFormat.format(
 				MobilityXConstants.FAILED_TO_VERIFY_AUTH_FORM_APPROVAL_STATUS_ON_AUTH_WORKFLOW_APPROVAL_ACTION_PAGE,
 				CoreConstants.FAIL, status));
+		CoreFunctions.writeToPropertiesFile("CF_Transferee_AvailablePoints", String
+				.valueOf((Double.parseDouble(CoreFunctions.getPropertyFromConfig("CF_Transferee_TotalAvailablePoints")))
+						- (Double.parseDouble(CoreFunctions.getPropertyFromConfig("CF_Client_TotalSelectedPoints")))));
 	}
 
 	@Then("^Email notification should be sent to Second Approver \"([^\"]*)\" for approval$")
@@ -1591,7 +1589,8 @@ public class CF_MX_Client_Steps {
 			String buttonName) throws Throwable {
 		mxClientAuthorizationHomePage.selectCloneAuthFormFieldCheckbox(MobilityXConstants.AUTHORIZATION_TYPE);
 		mxClientAuthorizationHomePage.selectCloneAuthFormFieldCheckbox(MobilityXConstants.SELECT_ALL);
-		mxClientAuthorizationHomePage.selectCloneAuthFormFieldCheckbox(MobilityXConstants.AUTHORIZATION_INFORMATION);
+		mxClientAuthorizationHomePage.selectCloneAuthFormFieldCheckbox(MobilityXConstants.IMMIGRATION);
+//		mxClientAuthorizationHomePage.selectCloneAuthFormFieldCheckbox(MobilityXConstants.AUTHORIZATION_INFORMATION);
 		mxClientAuthorizationHomePage.clickOnElementOnAuthorizationPage(buttonName);
 	}
 

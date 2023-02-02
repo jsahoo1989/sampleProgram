@@ -426,6 +426,7 @@ public class TransfereeSubmissions_DetailsPage extends Base {
 		boolean isSubmittedBenefitStatusMatched = false;
 		benefitCount = 0;
 		try {
+			CoreFunctions.waitHandler(2);
 			CoreFunctions.explicitWaitTillElementBecomesClickable(driver, _linkBackToTransfereeList,
 					COREFLEXConstants.BACK_TO_TRANSFEREES_LIST);
 			for (Benefit benefit : getBenefits(CoreFunctions.getPropertyFromConfig("CoreFlex_Policy_BenefitType"),

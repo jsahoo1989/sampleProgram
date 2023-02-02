@@ -1003,11 +1003,9 @@ public class MX_Transferee_MyProfilePage extends Base {
 	
 	public void setUpNewMobilityXTransferee() {
 		loginPasswaordSetup();
-		CoreFunctions.waitHandler(2);
+//		CoreFunctions.waitHandler(2);
 		privacyPolicySetup();
-		CoreFunctions.waitHandler(2);
 		manageSecurityQuestionsSetup();
-		CoreFunctions.waitHandler(2);
 	}
 
 	public void loginPasswaordSetup() {

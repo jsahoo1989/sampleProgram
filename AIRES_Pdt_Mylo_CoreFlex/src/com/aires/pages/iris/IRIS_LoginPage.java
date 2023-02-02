@@ -1,9 +1,14 @@
 package com.aires.pages.iris;
 
+import java.awt.Robot;
+import java.awt.event.KeyEvent;
+import java.text.MessageFormat;
+
 import org.testng.Assert;
 
 import com.aires.businessrules.BusinessFunctions;
 import com.aires.businessrules.CoreFunctions;
+import com.aires.businessrules.constants.CoreConstants;
 import com.aires.businessrules.constants.IRISConstants;
 import com.aires.iris.helpers.Helpers;
 import com.aires.pages.iris.basepage.BasePage;
@@ -11,6 +16,7 @@ import com.aires.testdatatypes.coreflex.CoreFlex_LoginInfo;
 import com.aires.utilities.Log;
 import com.aires.utilities.getWindowText;
 import com.hp.lft.sdk.Desktop;
+import com.hp.lft.sdk.GeneralLeanFtException;
 import com.hp.lft.sdk.java.Button;
 import com.hp.lft.sdk.java.ButtonDescription;
 import com.hp.lft.sdk.java.CheckBox;
@@ -69,15 +75,11 @@ public class IRIS_LoginPage extends BasePage {
 
 	public void loginToIRISApp(String userName, String password, String database) throws Exception {
 		try {
+//			Log.info("Checking Iris Window Title");
 			_IRIS = getIRISWindow();
-			// IRIS_PageMaster.getListObject(_IRIS, "Database: ", 0).waitUntilEnabled();
 			Log.info("username==" + userName + " pasword==" + password + " database==" + database);
-			/*
-			 * IRIS_PageMaster.getListObject(_IRIS, "Database:", 0).waitUntilEnabled();
-			 * Helpers.selectFromList(IRIS_PageMaster.getListObject(_IRIS, "Database:", 0),
-			 * database, IRISConstants.DATABASE_NAME);
-			 */
 			Log.info(_IRIS.getTitle());
+//			switchToIRISWindowIfNotActive(_IRIS.getTitle());
 			IRIS_PageMaster.getListObject(_IRIS, "Database:").waitUntilEnabled();
 			Helpers.selectFromList(IRIS_PageMaster.getListObject(_IRIS, "Database:"), database,
 					IRISConstants.DATABASE_NAME);
@@ -92,10 +94,30 @@ public class IRIS_LoginPage extends BasePage {
 		}
 	}
 
-	public void getIRISLoginAsPerEnvt(CoreFlex_LoginInfo loginInfo) throws Exception {	
+	private void switchToIRISWindowIfNotActive(String windowTitle) throws GeneralLeanFtException, Exception {
+		if (!windowTitle.contains("IRIS Login")) {
+			Robot robot = new Robot();
+		    robot.keyPress(KeyEvent.VK_ALT);
+		    robot.keyPress(KeyEvent.VK_CONTROL);
+		    robot.keyPress(KeyEvent.VK_TAB);
+		    robot.delay(100);
+		    robot.keyRelease(KeyEvent.VK_TAB);
+		    robot.keyRelease(KeyEvent.VK_CONTROL);
+		    robot.keyRelease(KeyEvent.VK_ALT);
+		    
+		    robot.keyPress(KeyEvent.VK_ENTER);
+		    robot.keyRelease(KeyEvent.VK_ENTER);
+		}
+		if(getIRISWindow().getTitle().contains("IRIS")) {
+			Log.info(MessageFormat.format(IRISConstants.SUCCESSFULLY_SWITCHED_TO_IRIS_WINDOW, CoreConstants.PASS));
+			Reporter.addStepLog(MessageFormat.format(IRISConstants.SUCCESSFULLY_SWITCHED_TO_IRIS_WINDOW, CoreConstants.PASS));
+		}
+	}
+
+	public void getIRISLoginAsPerEnvt(CoreFlex_LoginInfo loginInfo) throws Exception {
 		_userName = loginInfo.details.irisUserName;
 		_password = loginInfo.details.irisPassword;
-		_database = loginInfo.details.irisDatabase;		
+		_database = loginInfo.details.irisDatabase;
 		Log.info("User Name : " + _userName + "\nPassword : " + BusinessFunctions.encodedPassword(_password)
 				+ "\nDatabase : " + _database);
 		Reporter.addStepLog("Login Credentials Entered for IRIS Application are : \nUsername : " + _userName

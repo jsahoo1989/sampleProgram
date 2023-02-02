@@ -75,7 +75,7 @@
 			"subBenefits": "Home Purchase Closing Costs;Home Purchase Points;Home Purchase Inspections",
 			"airesManagedService": "Yes",
 			"noOfMilestones": 3,
-			"policyCreationGroup": "All Benefits,Aires Managed Benefits Cards"
+			"policyCreationGroup": "All Benefits"
 		},
 		{
 			"benefitType": "Final Move",
@@ -368,7 +368,7 @@
 					"endTracingPrompt": "Closing Date",
 					"postEndTracingCardStatus": "Closing",
 					"multipleBenefitSubmission": false,
-					"policyCreationGroup": "All Benefits,Aires Managed Benefits Cards",
+					"policyCreationGroup": "All Benefits",
 					"selectBenefitOnPBCPage": false,
 					"deselectBenefitOnPBCPage": false,
 					"noOfMilestones": 3,

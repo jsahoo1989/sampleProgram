@@ -53,8 +53,10 @@ public class getWindowText {
 				byte[] windowText = new byte[512];
 				user32.GetWindowTextA(hWnd, windowText, 512);
 				String wText = Native.toString(windowText).trim();
-				if (!wText.isEmpty() && wText.contains("IRIS Login")) {				
+				if (!wText.isEmpty() && wText.contains("IRIS Login")) {	
+					Log.info("------ Window Name : "+wText+"----- Window ID: "+hWnd.hashCode());
 					OS.SetForegroundWindow(hWnd.hashCode());
+					OS.SetFocus(hWnd.hashCode());
 				}
 				return true;				
 			}

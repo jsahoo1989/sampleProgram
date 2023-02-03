@@ -3,7 +3,6 @@ package com.aires.utilities;
 import org.eclipse.swt.internal.win32.OS;
 import org.eclipse.swt.internal.win32.TCHAR;
 
-import com.aires.utilities.TesProc.User32;
 import com.sun.jna.Native;
 import com.sun.jna.Pointer;
 import com.sun.jna.win32.StdCallLibrary;
@@ -23,8 +22,6 @@ public class getWindowText {
 	}
 
 	public static void main(String[] args) {
-		// TODO Auto-generated method stub
-
 		try {
 			Thread.sleep(1000L);
 		} catch (InterruptedException e) {
@@ -34,9 +31,7 @@ public class getWindowText {
 	}
 
 	static interface User32 extends StdCallLibrary {
-		@SuppressWarnings("deprecation")
-		User32 INSTANCE = (User32) Native.loadLibrary("user32", User32.class);
-
+		User32 INSTANCE = (User32) Native.load("user32", User32.class);
 		interface WNDENUMPROC extends StdCallCallback {
 			boolean callback(Pointer hWnd, Pointer arg);
 		}
@@ -65,5 +60,4 @@ public class getWindowText {
 			}
 		}, null);
 	}
-
 }

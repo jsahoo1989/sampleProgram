@@ -72,6 +72,16 @@
 	</build>
 	<dependencies>
 		<dependency>
+			<groupId>net.java.dev.jna</groupId>
+			<artifactId>jna</artifactId>
+			<version>5.5.0</version>
+		</dependency>
+		<dependency>
+			<groupId>net.java.dev.jna</groupId>
+			<artifactId>jna-platform</artifactId>
+			<version>5.5.0</version>
+		</dependency>
+		<dependency>
 			<groupId>com.microsoft.graph</groupId>
 			<artifactId>microsoft-graph</artifactId>
 			<version>5.5.0</version>
@@ -82,11 +92,11 @@
 			<artifactId>azure-identity</artifactId>
 			<version>1.6.1</version>
 		</dependency>
-		<!-- Guava required by azure spring -->	
-		<dependency>	
-			<groupId>com.google.guava</groupId>	
-			<artifactId>guava</artifactId>	
-			<version>31.0.1-jre</version>	
+		<!-- Guava required by azure spring -->
+		<dependency>
+			<groupId>com.google.guava</groupId>
+			<artifactId>guava</artifactId>
+			<version>31.0.1-jre</version>
 		</dependency>
 		<dependency>
 			<groupId>info.cukes</groupId>
@@ -343,9 +353,9 @@
 			<version>2.0</version>
 		</dependency>
 		<dependency>
-            <groupId>org.apache.commons</groupId>
-            <artifactId>commons-lang3</artifactId>
-            <version>3.12.0</version>
-</dependency>
+			<groupId>org.apache.commons</groupId>
+			<artifactId>commons-lang3</artifactId>
+			<version>3.12.0</version>
+		</dependency>
 	</dependencies>
 </project>

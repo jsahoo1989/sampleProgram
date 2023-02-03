@@ -514,9 +514,11 @@ public class CoreFlex_SharedSteps {
 
 		Assert.assertTrue(mobilityXLoginPage.verifyPageNavigation(),
 				MessageFormat.format(COREFLEXConstants.FAILED_TO_NAVIGATE_TO_MOBILITYX_LOGIN_PAGE, CoreConstants.FAIL));
+		mobilityXLoginPage.minimizeBrowserWindow();
 		createAnAssignmentInIRIS();
 		Assert.assertTrue(mobilityXLoginPage.readCredentialsFromMail(), MessageFormat
 				.format(MobilityXConstants.FAILED_TO_READ_USER_CREDENTIALS_FROM_GENERATED_EMAIL, CoreConstants.FAIL));
+		mobilityXLoginPage.maximizeBrowserWindow();
 		mobilityXLoginPage.enterUsernameAndPasswordForMobilityX(
 				CoreFunctions.getPropertyFromConfig("Transferee_UserNameInEMail"),
 				CoreFunctions.getPropertyFromConfig("Transferee_PasswordInEMail"));

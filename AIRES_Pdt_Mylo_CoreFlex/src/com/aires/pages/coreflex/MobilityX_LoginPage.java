@@ -366,12 +366,4 @@ public class MobilityX_LoginPage extends Base {
 				: true;
 	}
 
-	public void minimizeBrowserWindow() {
-		driver.manage().window().minimize();
-	}
-
-	public void maximizeBrowserWindow() {
-		driver.manage().window().maximize();		
-	}
-
 }

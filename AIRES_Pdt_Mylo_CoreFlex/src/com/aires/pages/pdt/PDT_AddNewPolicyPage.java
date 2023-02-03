@@ -852,12 +852,4 @@ public class PDT_AddNewPolicyPage extends Base {
 		}
 		return false;
 	}
-	
-	public void minimizeBrowserWindow() {
-		driver.manage().window().minimize();
-	}
-
-	public void maximizeBrowserWindow() {
-		driver.manage().window().maximize();		
-	}
 }

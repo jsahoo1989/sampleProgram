@@ -514,11 +514,9 @@ public class CoreFlex_SharedSteps {
 
 		Assert.assertTrue(mobilityXLoginPage.verifyPageNavigation(),
 				MessageFormat.format(COREFLEXConstants.FAILED_TO_NAVIGATE_TO_MOBILITYX_LOGIN_PAGE, CoreConstants.FAIL));
-		mobilityXLoginPage.minimizeBrowserWindow();
 		createAnAssignmentInIRIS();
 		Assert.assertTrue(mobilityXLoginPage.readCredentialsFromMail(), MessageFormat
 				.format(MobilityXConstants.FAILED_TO_READ_USER_CREDENTIALS_FROM_GENERATED_EMAIL, CoreConstants.FAIL));
-		mobilityXLoginPage.maximizeBrowserWindow();
 		mobilityXLoginPage.enterUsernameAndPasswordForMobilityX(
 				CoreFunctions.getPropertyFromConfig("Transferee_UserNameInEMail"),
 				CoreFunctions.getPropertyFromConfig("Transferee_PasswordInEMail"));
@@ -1209,7 +1207,6 @@ public class CoreFlex_SharedSteps {
 	private void addNewPoliciesForClientInIRIS(String clientId, boolean isAutomationPolicyPresent) {
 		try {
 			if (!isAutomationPolicyPresent) {
-				addNewPolicyPage.minimizeBrowserWindow();
 				testContext.getBasePage().reLaunchIrisToAvoidFreezingIssue();
 				testContext.getIrisPageManager().irisLoginPage = new IRIS_LoginPage();
 				testContext.getIrisPageManager().irisLoginPage.getIRISLoginAsPerEnvt(_loginInfo);
@@ -1227,7 +1224,6 @@ public class CoreFlex_SharedSteps {
 				Reporter.addStepLog(MessageFormat.format(
 						COREFLEXConstants.SUCCESSFULLY_ADDED_15_ADDITIONAL_AUTOMATION_POLICIES_IN_ACCOUNTING_TAB_FOR_CLIENT,
 						CoreConstants.PASS, clientId));
-				addNewPolicyPage.maximizeBrowserWindow();
 				viewPolicyPage.clickElementOfPage(PDTConstants.VIEW_EDIT_POLICY_FORMS);
 				viewPolicyPage.clickElementOfPage(PDTConstants.ADD_NEW_POLICY_FORM);
 			} else {

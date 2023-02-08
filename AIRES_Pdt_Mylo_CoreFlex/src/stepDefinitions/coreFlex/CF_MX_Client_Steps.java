@@ -427,7 +427,7 @@ public class CF_MX_Client_Steps {
 	public void he_clicks_on_button_from_right_floating_menu_of_Authorization_Form_page_without_routing_it_to_Approvers(
 			String buttonName) throws Throwable {
 		mxClientAuthorizationHomePage.clickOnElementsOfFloatingMenu(buttonName);
-		mxClientAuthorizationHomePage.clickOnElementOnAuthorizationPage(MobilityXConstants.SUBMIT);
+//		mxClientAuthorizationHomePage.clickOnElementOnAuthorizationPage(MobilityXConstants.SUBMIT);
 	}
 
 	@When("^he clicks on \"([^\"]*)\" button from right floating menu of 'Authorization Form' page$")

@@ -71,7 +71,7 @@ public class CoreFlex_CustomBundlesPage extends Base {
 	private WebElement _buttonLogout;
 
 	// Progress Bar
-	@FindBy(how = How.CSS, using = "div.ngx-progress-bar.ngx-progress-bar-ltr")
+	@FindBy(how = How.XPATH, using = "//div[contains(@class,'loading-foreground')] | //div[contains(@class,'foreground-closing')]")
 	private WebElement _progressBar;
 
 	// Policy Header
@@ -144,7 +144,7 @@ public class CoreFlex_CustomBundlesPage extends Base {
 
 	// Approve This Policy Dialog Header
 	@FindBy(how = How.CSS, using = "div.approve-header > p")
-	private WebElement _popUpApprovePolicyHeader;
+	private WebElement _popUpApprovePolicyAssignmentHeader;
 
 	// Approve This Policy Dialog Version Text
 	@FindBy(how = How.CSS, using = "div.msg-1 > p")
@@ -152,7 +152,7 @@ public class CoreFlex_CustomBundlesPage extends Base {
 
 	// Approve This Policy Dialog Assignment Text
 	@FindBy(how = How.CSS, using = "div.msg-2 > p")
-	private WebElement _popUpApprovePolicyAssignmentText;
+	private WebElement _popUpApprovePolicySelectDateText;
 
 	// Approve This Policy Checkbox Selection
 	@FindBy(how = How.CSS, using = "label.cbx-label")
@@ -177,7 +177,7 @@ public class CoreFlex_CustomBundlesPage extends Base {
 	// Approve This Policy Dialog Description
 	@FindBy(how = How.CSS, using = "textarea[formcontrolname='versionDescription']")
 	private WebElement _txtAreaDescription;
-	
+
 	@FindBy(how = How.XPATH, using = "//strong[text()='Policy Status:']/parent::label/following-sibling::label/span/i")
 	private WebElement _policyStatusIndicator;
 
@@ -430,19 +430,17 @@ public class CoreFlex_CustomBundlesPage extends Base {
 		boolean isApproveThisPolicyDialogVerified;
 		String policyVersionNumber = policyVersion.replace("V", "").trim();
 		try {
-			CoreFunctions.verifyText(CoreFunctions.getElementText(driver, _popUpApprovePolicyHeader),
-					COREFLEXConstants.EXPECTED_APPROVE_THIS_POLICY_DIALOG_HEADER,
-					COREFLEXConstants.APPROVE_POLICY_DIALOG_HEADER);
-			CoreFunctions.verifyText(CoreFunctions.getElementText(driver, _popUpApprovePolicyVersionText),
-					(COREFLEXConstants.EXPECTED_APPROVE_THIS_POLICY_DIALOG_VERSION_TEXT).replace("VN",
-							policyVersionNumber),
-					COREFLEXConstants.APPROVE_POLICY_DIALOG_VERSION_TEXT);
-			CoreFunctions.verifyText(CoreFunctions.getElementText(driver, _popUpApprovePolicyAssignmentText),
+			CoreFunctions.verifyText(CoreFunctions.getElementText(driver, _popUpApprovePolicyAssignmentHeader),
 					(policyVersionNumber.equals("1"))
-							? COREFLEXConstants.EXPECTED_APPROVE_THIS_POLICY_DIALOG_ASSIGNMENT_TEXT_FIRST_VERSION
-							: COREFLEXConstants.EXPECTED_APPROVE_THIS_POLICY_DIALOG_ASSIGNMENT_TEXT_SECOND_VERSION,
-					COREFLEXConstants.APPROVE_POLICY_DIALOG_ASSIGNMENT_TEXT);
-			CoreFunctions.verifyText(CoreFunctions.getElementText(driver, _popUpApprovePolicyCheckBox).trim(),
+							? (COREFLEXConstants.EXPECTED_APPROVE_THIS_POLICY_DIALOG_ASSIGNMENT_TEXT_FIRST_VERSION
+									.replace("VN", policyVersionNumber))
+							: (COREFLEXConstants.EXPECTED_APPROVE_THIS_POLICY_DIALOG_ASSIGNMENT_TEXT_SECOND_VERSION
+									.replace("VN", policyVersionNumber)),
+					COREFLEXConstants.APPROVE_POLICY_DIALOG_POLICY_ASSIGNMENT_TEXT);
+			CoreFunctions.verifyText(CoreFunctions.getElementText(driver, _popUpApprovePolicySelectDateText),
+					COREFLEXConstants.APPROVE_POLICY_DIALOG_SELECT_DATE,
+					COREFLEXConstants.APPROVE_POLICY_DIALOG_SELECT_DATE_TEXT);
+			CoreFunctions.verifyTextContains(CoreFunctions.getElementText(driver, _popUpApprovePolicyCheckBox).trim(),
 					COREFLEXConstants.EXPECTED_APPROVE_THIS_POLICY_DIALOG_CHECKBOX_SELECTION.trim(),
 					COREFLEXConstants.APPROVE_POLICY_DIALOG_CHECKBOX_OPTION);
 			isApproveThisPolicyDialogVerified = true;
@@ -652,20 +650,22 @@ public class CoreFlex_CustomBundlesPage extends Base {
 			return false;
 		}
 	}
-	
+
 	public boolean verifyOnPointPolicyStatusIndicator(String expectedPolicyStatusIndicator,
-			String expectedPolicyStatusHoverText,String pageName) {
+			String expectedPolicyStatusHoverText, String pageName) {
 		try {
 			CoreFunctions.verifyText(getActualPolicyStatusIndicator(), expectedPolicyStatusIndicator,
 					COREFLEXConstants.DRAFT_POLICY_STATUS_INDICATOR);
-			CoreFunctions.verifyText(CoreFunctions.getAttributeText(_policyStatusIndicator, "mattooltip"), expectedPolicyStatusHoverText,
-					COREFLEXConstants.DRAFT_POLICY_STATUS_INDICATOR_HOVER_TEXT);
-			Reporter.addStepLog(MessageFormat.format(COREFLEXConstants.SUCCESSFULLY_VERIFIED_DRAFT_POLICY_STATUS_INDICATOR_AND_HOVER_TEXT,
-					CoreConstants.PASS,expectedPolicyStatusIndicator,expectedPolicyStatusHoverText,pageName));
+			CoreFunctions.verifyText(CoreFunctions.getAttributeText(_policyStatusIndicator, "mattooltip"),
+					expectedPolicyStatusHoverText, COREFLEXConstants.DRAFT_POLICY_STATUS_INDICATOR_HOVER_TEXT);
+			Reporter.addStepLog(MessageFormat.format(
+					COREFLEXConstants.SUCCESSFULLY_VERIFIED_DRAFT_POLICY_STATUS_INDICATOR_AND_HOVER_TEXT,
+					CoreConstants.PASS, expectedPolicyStatusIndicator, expectedPolicyStatusHoverText, pageName));
 			return true;
 		} catch (Exception e) {
-			Reporter.addStepLog(MessageFormat.format(COREFLEXConstants.EXCEPTION_OCCURED_WHILE_VERIFYING_POLICY_STATUS_INDICATOR,
-					CoreConstants.FAIL, e.getMessage(),pageName));
+			Reporter.addStepLog(
+					MessageFormat.format(COREFLEXConstants.EXCEPTION_OCCURED_WHILE_VERIFYING_POLICY_STATUS_INDICATOR,
+							CoreConstants.FAIL, e.getMessage(), pageName));
 			return false;
 		}
 	}

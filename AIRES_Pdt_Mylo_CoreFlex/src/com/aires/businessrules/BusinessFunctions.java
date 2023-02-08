@@ -164,6 +164,7 @@ public class BusinessFunctions {
 	 */
 	public static boolean verifyMsgOnDialog(Dialog dialog, String msg, String dialogName)
 			throws GeneralLeanFtException {
+		Log.info(dialog.getVisibleText());
 		if (dialog.getVisibleText().contains(msg)) {
 			Reporter.addStepLog(MessageFormat.format(CoreConstants.VERIFIED_MESSAGE_ON_DIALOG, CoreConstants.PASS, msg,
 					dialogName));

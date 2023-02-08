@@ -32,6 +32,8 @@ import com.aires.testdatatypes.coreflex.MX_Transferee_AccountSetupDetails;
 import com.aires.utilities.Log;
 import com.vimalselvam.cucumber.listener.Reporter;
 
+import cucumber.api.DataTable;
+
 public class MX_Transferee_FlexPlanningTool_Page extends Base {
 
 	public MX_Transferee_FlexPlanningTool_Page(WebDriver driver) {
@@ -274,7 +276,7 @@ public class MX_Transferee_FlexPlanningTool_Page extends Base {
 	private List<WebElement> _moreLinkBenefitDesc;
 
 	// Progress Bar
-	@FindBy(how = How.CSS, using = "div.ngx-progress-bar.ngx-progress-bar-ltr")
+	@FindBy(how = How.XPATH, using = "//div[contains(@class,'loading-foreground')] | //div[contains(@class,'foreground-closing')]")
 	private WebElement _progressBar;
 
 	@FindBy(how = How.CSS, using = "table[id*='benefitsWrapper'] td[class='AFContentCell'] label")
@@ -319,6 +321,18 @@ public class MX_Transferee_FlexPlanningTool_Page extends Base {
 	@FindBy(how = How.XPATH, using = "//body[contains(@style,'wait')]")
 	private WebElement _browserCursorWait;
 
+	@FindBy(how = How.CSS, using = "iframe[class*='appcues-tooltip-container']")
+	private WebElement _tooltipIFrame;
+
+	@FindBy(how = How.CSS, using = "div[class*='appcues-actions-right'] > a")
+	private WebElement _tooltipIFrameNextButton;
+
+	@FindBy(how = How.CSS, using = "a[class='text-muted appcues-skip']")
+	private WebElement _tooltipIFrameHideLink;
+
+	@FindBy(how = How.CSS, using = "div.zone-content > div.rich-text")
+	private WebElement _tooltipIFrameText;
+
 	/*********************************************************************/
 
 	CoreFlex_PolicySetupPagesData policySetupPageData = FileReaderManager.getInstance().getCoreFlexJsonReader()
@@ -356,6 +370,7 @@ public class MX_Transferee_FlexPlanningTool_Page extends Base {
 	}
 
 	public boolean isFlexPlanningToolHomePageDisplayed() {
+		switchToTooltipIFrameAndPerformAction(MobilityXConstants.HIDE, 10);
 		CoreFunctions.explicitWaitTillElementVisibility(driver, flexHomePageTitle,
 				MobilityXConstants.ONPOINT_PLANNING_TOOL);
 		CoreFunctions.explicitWaitTillElementBecomesClickable(driver, _link_backToMobilityJourney,
@@ -625,6 +640,7 @@ public class MX_Transferee_FlexPlanningTool_Page extends Base {
 
 	public boolean verifyUserNavigationToSuggestedBundlesPage() {
 		try {
+			switchToTooltipIFrameAndPerformAction(MobilityXConstants.HIDE, 10);
 			CoreFunctions.explicitWaitTillElementBecomesClickable(driver, _link_backToBenefitList,
 					MobilityXConstants.BACK_TO_BENEFITS_LIST);
 			return CoreFunctions.isElementExist(driver, _text_suggestedBundles, 5);
@@ -1919,6 +1935,60 @@ public class MX_Transferee_FlexPlanningTool_Page extends Base {
 					CoreConstants.FAIL, e.getMessage(), MobilityXConstants.ONPOINT_PLANNING_TOOL));
 		}
 		return false;
+	}
+
+	public void switchToTooltipIFrameAndPerformAction(String action, int time) {
+		if (CoreFunctions.isElementExist(driver, _tooltipIFrame, time)) {
+			driver.switchTo().frame(_tooltipIFrame);
+			switch (action) {
+			case MobilityXConstants.NEXT:
+				CoreFunctions.clickElement(driver, _tooltipIFrameNextButton);
+				break;
+			case MobilityXConstants.HIDE:
+				CoreFunctions.clickElement(driver, _tooltipIFrameHideLink);
+				break;
+			default:
+				Assert.fail(MobilityXConstants.NO_ELEMENT_FOUND);
+				break;
+			}
+			driver.switchTo().defaultContent();
+		}
+	}
+
+	public boolean verifyAppCues(String pageName, DataTable dataTable) {
+		List<String> expectedAppCuesList = dataTable.asList(String.class);
+		String actualAppCueText = null;
+		int index=0;
+		try {
+			if (CoreFunctions.isElementExist(driver, _tooltipIFrame, 5)) {
+				while (index < expectedAppCuesList.size()) {
+					driver.switchTo().frame(_tooltipIFrame);
+					CoreFunctions.explicitWaitTillElementBecomesClickable(driver, _tooltipIFrameHideLink,
+							MobilityXConstants.HIDE);
+					actualAppCueText = CoreFunctions.getElementText(driver, _tooltipIFrameText);
+					CoreFunctions.verifyText(actualAppCueText, expectedAppCuesList.get(index), MobilityXConstants.APPCUES);
+					if (index == (expectedAppCuesList.size() - 1))
+						break;
+					else
+					CoreFunctions.clickElement(driver, _tooltipIFrameNextButton);
+					driver.switchTo().defaultContent();
+					CoreFunctions.waitHandler(4);
+					index++;
+				}
+				driver.switchTo().defaultContent();
+				Reporter.addStepLog(MessageFormat.format(MobilityXConstants.SUCCESSFULLY_VERIFIED_APPCUES,
+						CoreConstants.PASS, pageName));
+				return true;
+			} else {
+				Reporter.addStepLog(
+						MessageFormat.format(MobilityXConstants.APPCUES_NOT_DISPLAYED, CoreConstants.FAIL, pageName,expectedAppCuesList.get(index)));
+				return false;
+			}
+		} catch (Exception e) {
+			Reporter.addStepLog(MessageFormat.format(MobilityXConstants.EXCEPTION_OCCURED_WHILE_VALIDATING_APPCUES,
+					CoreConstants.FAIL, e.getMessage(), pageName));
+			return false;
+		}
 	}
 
 }

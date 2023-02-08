@@ -116,7 +116,7 @@ public class MobilityXConstants {
 	public static final String EMAIL_USERNAME = "airesautomation@aires.com";
 	public static final String EMAIL_PWD = "FebMarch2019!";
 	public static final String AUTH_FORM_SUBMISSION_USER_EMAILID = "airesautomation@aires.com";
-	public static final String AUTO_EMAIL_PWD = "Aut0Mati0nT34mNov";
+//	public static final String AUTO_EMAIL_PWD = "Aut0Mati0nT34mFeb";
 	public static final String AUTO_RULEBASED_EMAIL_PWD = "P@ssword1234!";
 	public static final String EXCEPTION_EMAIL_SENDER = "testrelonet@aires.com";
 	public static final String AUTH_FORM_SUBMISSION_EMAIL_SENDER = "testrelonet@aires.com";
@@ -875,7 +875,7 @@ public class MobilityXConstants {
 	public static final String FAILED_TO_VERIFY_POINT_SUMMARY_FLEX_PDF_DOCUMENT_OPENED_IN_PREVIEW_MODE_ON_MOBILITY_JOURNEY_PAGE = "{0}Failed to verify Point Summary PDF document opened in Preview Mode on Mobility Journey page.";
 	public static final String SUCCESSFULLY_VERIFIED_POINT_SUMMARY_FLEX_PDF_DOCUMENT_OPENED_IN_PREVIEW_MODE_ON_MOBILITY_JOURNEY_PAGE = "{0}Successfully verified Point Summary PDF document opened in Preview Mode on Mobility Journey page.";
 	public static final String EXCEPTION_OCCURED_WHILE_VALIDATING_POINT_SUMMARY_FLEX_PDF_DOCUMENT_OPENED_IN_PREVIEW_MODE_ON_MOBILITY_JOURNEY_PAGE = "{0}Exception occured while validating Point Summary PDF document opened in Preview Mode on Mobility Journey page. Exception : ''{1}''.";
-	public static final String FLEX_PDF_DOCUMENT_FILE_NAME_PREVIEW_PAGE ="Flex PDF Document File Name - Preview page";
+	public static final String FLEX_PDF_DOCUMENT_FILE_NAME_PREVIEW_PAGE = "Flex PDF Document File Name - Preview page";
 	public static final String AUTHORIZATION_FORMS = "Authorizations/Forms";
 	public static final String FLEX_PDF_DOCUMENT_TYPE_PREVIEW_PAGE = "Flex PDF Document Type - Preview page";
 	public static final String DOWNLOAD_DOCUMENT = "Download document";
@@ -887,8 +887,8 @@ public class MobilityXConstants {
 	public static final String EXPECTED_CURRENT_POINT_BALANCE_TEXT_PDF_DOCUMENT = "The current point balance is CB.";
 	public static final String CURRENT_POINT_BALANCE = "Current Point Balance";
 	public static final String BENEFIT_DISPLAY_NAME = "Benefit Display Name";
-	public static final String EXPECTED_POINTS_SUBMITTED_BY_CLIENT_PDF_DOCUMENT = "Your company CN - CUN has submitted benefit(s) on your\r\n" + 
-			"behalf.";
+	public static final String EXPECTED_POINTS_SUBMITTED_BY_CLIENT_PDF_DOCUMENT = "Your company CN - CUN has submitted benefit(s) on your\r\n"
+			+ "behalf.";
 	public static final String POINTS_SUBMITTED_BY_CLIENT_TEXT = "Points Submitted By Client Text";
 	public static final String NEW_INITIATION_SUBMISSION_BENEFIT_CASHOUT_DETAILS = "New Initiation Submission Benefit Cashout Details";
 	public static final String SUCCESSFULLY_VERIFIED_SUBMITTED_BENEFITS_AND_CASHOUT_DETAILS_IN_NEW_INITIATION_SUBMITTED_EMAIL = "{0}Successfully verified Submitted Benefit and Cashout Details in New Intiation Submitted Email.";
@@ -914,4 +914,17 @@ public class MobilityXConstants {
 	public static final String SUCCESSFULLY_VERIFIED_REMAINING_POINTS_POST_SUBMISSION_ON_BENEFIT_SELECTION_TOOL_PAGE = "{0}Successfully verified Remaining Points - Post Submission on Benefit Selection Tool page. ";
 	public static final String REMAINING_POINTS_POST_SUBMISSION = "Remaining Points - Post Submission";
 	public static final String EXCEPTION_OCCURED_WHILE_VERIFYING_REMAINING_POINTS_POST_SUBMISSION_ON_BENEFIT_SELECTION_TOOL_PAGE = "{0}Exception occured while verifying Remaining Points - Post Submission on Benefit Selection Tool page. Exception : ''{1}''.";
+	public static final String FAILED_TO_VERIFY_APPCUES = "{0}Failed to verify AppCues on ''{1}'' page.";
+	public static final String EXCEPTION_OCCURED_WHILE_VALIDATING_APPCUES = "{0}Exception occured while validating AppCues on ''{2}'' page. Exception : ''{1}''.";
+	public static final String APPCUES = "AppCues";
+	public static final String APPCUES_NOT_DISPLAYED = "{0}AppCue - ''{2}'' not displayed on ''{1}'' page.";
+	public static final String SUCCESSFULLY_VERIFIED_APPCUES = "{0}Successfully verified AppCues on ''{1}'' page.";
+	public static final String GET_HELP = "Get Help";
+	public static final String MOBILITY_JOURNEY_HOME = "Mobility Journey Home";
+	public static final String FAILED_TO_VERIFY_GET_HELP_SECTION_OPTIONS_ON_TRANSFEREE_JOURNEY_HOME_PAGE = "{0}Failed to verify Get Help section options on Transferee Journey Home page.";
+	public static final String EXCEPTION_OCCURED_WHILE_VALIDATING_APPCUES_OPTION_UNDER_GET_HELP_SECTION_ON = "{0}Exception occured while validating Appcues Option under Get Help section on ''{2}'' page. Exception : ''{1}''.";
+	public static final String GET_HELP_HEADER = "Get Help Header";
+	public static final String EXPECTED_MOBILITY_JOURNEY_HOME_APP_CUE_OPTION = "(QA) Transferee Points MobilityX Overview";
+	public static final String MOBILITY_JOURNEY_HOME_APP_CUE_OPTION = "Mobility Journey Home AppCue Option";
+	public static final String SUCCESSFULLY_VERIFIED_APPCUES_OPTION_UNDER_GET_HELP_SECTION = "{0}Successfully verified AppCues Option - ''{2}'', under Get Help Section on ''{1}'' page.";
 }

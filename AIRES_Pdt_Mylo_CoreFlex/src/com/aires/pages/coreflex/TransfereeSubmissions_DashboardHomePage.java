@@ -77,15 +77,12 @@ public class TransfereeSubmissions_DashboardHomePage extends Base {
 	private List<WebElement> _dashboardRecordsList;
 
 	// Progress Bar
-	@FindBy(how = How.CSS, using = "div.ngx-progress-bar.ngx-progress-bar-ltr")
+	@FindBy(how = How.XPATH, using = "//div[contains(@class,'loading-foreground')] | //div[contains(@class,'foreground-closing')]")
 	private WebElement _progressBar;
 
 	// AIRES Flex Logo Image
 	@FindBy(how = How.CSS, using = "img[src='assets/img/AiresOnPointLogo.png']")
 	private WebElement _imgAIRESFlexLogo;
-
-	@FindBy(how = How.CSS, using = "div[class='sk-three-strings']")
-	private WebElement _spinner;
 
 	@FindBy(how = How.XPATH, using = "//a[@class='page-link'][contains(text(),'Next')]")
 	private WebElement _linkNextPagination;
@@ -138,8 +135,7 @@ public class TransfereeSubmissions_DashboardHomePage extends Base {
 
 	public boolean verifyUserNavigationToDashboardPage() {
 		try {
-			if (CoreFunctions.isElementExist(driver, _spinner, 5))
-				CoreFunctions.explicitWaitTillElementInVisibilityCustomTime(driver, _spinner, 10);
+			CoreFunctions.explicitWaitTillElementInVisibilityCustomTime(driver, _progressBar, 10);
 			return CoreFunctions.isElementExist(driver, _txtApplicationTitle, 5);
 		} catch (Exception e) {
 			Reporter.addStepLog(MessageFormat.format(
@@ -150,8 +146,8 @@ public class TransfereeSubmissions_DashboardHomePage extends Base {
 	}
 
 	public boolean verifyUserLogin(String userName, String pageName) {
-		if (CoreFunctions.isElementExist(driver, _spinner, 5))
-			CoreFunctions.explicitWaitTillElementInVisibilityCustomTime(driver, _spinner, 30);
+		if (CoreFunctions.isElementExist(driver, _progressBar, 5))
+			CoreFunctions.explicitWaitTillElementInVisibilityCustomTime(driver, _progressBar, 30);
 		CoreFunctions.explicitWaitTillElementVisibility(driver, _txtApplicationTitle,
 				COREFLEXConstants.TRANSFEREE_SUBMISSIONS, 20);
 		if ((getUserName().equalsIgnoreCase(userName))
@@ -310,7 +306,7 @@ public class TransfereeSubmissions_DashboardHomePage extends Base {
 		try {
 			while (!(CoreFunctions.isElementExist(driver, _txtApplicationTitle, 5))) {
 				CoreFunctions.refreshPage(driver);
-				CoreFunctions.explicitWaitTillElementInVisibilityCustomTime(driver, _spinner, 10);
+				CoreFunctions.explicitWaitTillElementInVisibilityCustomTime(driver, _progressBar, 10);
 			}
 		} catch (Exception e) {
 		}

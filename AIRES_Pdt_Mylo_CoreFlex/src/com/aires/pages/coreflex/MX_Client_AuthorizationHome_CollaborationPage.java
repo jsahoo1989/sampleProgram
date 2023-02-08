@@ -1185,7 +1185,7 @@ public class MX_Client_AuthorizationHome_CollaborationPage extends Base {
 						+ CoreFunctions.getPropertyFromConfig(MobilityXConstants.LAST_NAME_TEXT).trim())
 				+ " requires your review";
 		String approverReceivedEmailText = ((EmailUtil.verifyEmailPresentAndReturnResult(MobilityXConstants.HOST,
-				getApproverEmailID(approverName), MobilityXConstants.AUTO_EMAIL_PWD,
+				getApproverEmailID(approverName), CoreConstants.AUTO_EMAIL_PWD,
 				MobilityXConstants.EMAIL_FROM_APPROVAL_REQUEST, expectedEmailSubject,
 				MobilityXConstants.MOBILITY_APPROVAL_REQUEST)));
 
@@ -1233,15 +1233,15 @@ public class MX_Client_AuthorizationHome_CollaborationPage extends Base {
 		boolean isTransfereePolicyDetailsVerified = false;
 		try {
 			String transfereeFirstName = EmailUtil.searchEmailAndReturnResult(MobilityXConstants.HOST,
-					getApproverEmailID(approverName), MobilityXConstants.AUTO_EMAIL_PWD,
+					getApproverEmailID(approverName), CoreConstants.AUTO_EMAIL_PWD,
 					MobilityXConstants.EMAIL_FROM_APPROVAL_REQUEST, expectedEmailSubject,
 					MobilityXConstants.APPROVAL_EMAIL_TRANSFEREE_FIRST_NAME);
 			String transfereeLastName = EmailUtil.searchEmailAndReturnResult(MobilityXConstants.HOST,
-					getApproverEmailID(approverName), MobilityXConstants.AUTO_EMAIL_PWD,
+					getApproverEmailID(approverName), CoreConstants.AUTO_EMAIL_PWD,
 					MobilityXConstants.EMAIL_FROM_APPROVAL_REQUEST, expectedEmailSubject,
 					MobilityXConstants.APPROVAL_EMAIL_TRANSFEREE_LAST_NAME);
 			String relocationPolicyName = EmailUtil.searchEmailAndReturnResult(MobilityXConstants.HOST,
-					getApproverEmailID(approverName), MobilityXConstants.AUTO_EMAIL_PWD,
+					getApproverEmailID(approverName), CoreConstants.AUTO_EMAIL_PWD,
 					MobilityXConstants.EMAIL_FROM_APPROVAL_REQUEST, expectedEmailSubject,
 					MobilityXConstants.APPROVAL_EMAIL_RELOCATION_POLICY);
 			CoreFunctions.verifyText(transfereeFirstName, CoreFunctions.getPropertyFromConfig("Transferee_firstName"),
@@ -1268,7 +1268,7 @@ public class MX_Client_AuthorizationHome_CollaborationPage extends Base {
 		boolean isBenefitPointsVerified = false;
 		try {
 			String actualResultBenefitTotalPoints = EmailUtil.searchEmailAndReturnResult(MobilityXConstants.HOST,
-					getApproverEmailID(approverName), MobilityXConstants.AUTO_EMAIL_PWD,
+					getApproverEmailID(approverName), CoreConstants.AUTO_EMAIL_PWD,
 					MobilityXConstants.EMAIL_FROM_APPROVAL_REQUEST, expectedEmailSubject,
 					MobilityXConstants.APPROVAL_EMAIL_BENEFIT_TOTAL_POINTS_AND_SUBMITTED_POINTS);
 			actualResultBenefitTotalPoints = actualResultBenefitTotalPoints.trim();
@@ -1327,7 +1327,7 @@ public class MX_Client_AuthorizationHome_CollaborationPage extends Base {
 						+ CoreFunctions.getPropertyFromConfig(MobilityXConstants.LAST_NAME_TEXT).trim())
 				+ " requires your review";
 		String submitMyResponseEmailText = EmailUtil.searchEmailAndReturnResult(MobilityXConstants.HOST,
-				getApproverEmailID(approverName), MobilityXConstants.AUTO_EMAIL_PWD,
+				getApproverEmailID(approverName), CoreConstants.AUTO_EMAIL_PWD,
 				MobilityXConstants.EMAIL_FROM_APPROVAL_REQUEST, expectedEmailSubject,
 				MobilityXConstants.SUBMIT_MY_RESPONSE);
 		String submitMyResponseURL = submitMyResponseEmailText.substring(1, submitMyResponseEmailText.length() - 1);

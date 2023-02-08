@@ -27,6 +27,8 @@ import com.aires.testdatatypes.coreflex.CoreFlex_SettlingInBenefitsData;
 import com.aires.testdatatypes.coreflex.FlexBenefit;
 import com.vimalselvam.cucumber.listener.Reporter;
 
+import cucumber.api.DataTable;
+
 public class MX_Transferee_MyBenefitsBundlePage extends Base {
 
 	public MX_Transferee_MyBenefitsBundlePage(WebDriver driver) {
@@ -196,6 +198,18 @@ public class MX_Transferee_MyBenefitsBundlePage extends Base {
 
 	private By _denyBenefitRequestDisabledDeleteButtonHoverTextSubElement = By.xpath(
 			".//span[contains(text(),'Unable to delete benefit. Please see comments in the History section below for more information.')]");
+	
+	@FindBy(how = How.CSS, using = "iframe[class*='appcues-tooltip-container']")
+	private WebElement _tooltipIFrame;
+
+	@FindBy(how = How.CSS, using = "div[class*='appcues-actions-right'] > a")
+	private WebElement _tooltipIFrameNextButton;
+
+	@FindBy(how = How.CSS, using = "a[class='text-muted appcues-skip']")
+	private WebElement _tooltipIFrameHideLink;
+	
+	@FindBy(how = How.CSS, using = "div.zone-content > div.rich-text")
+	private WebElement _tooltipIFrameText;
 
 	/*********************************************************************/
 
@@ -2231,6 +2245,39 @@ public class MX_Transferee_MyBenefitsBundlePage extends Base {
 					CoreConstants.PASS));
 		}
 		return isFlexBenefitDetailsOnMMBVerified;
+	}
+
+	public boolean verifyAppCues(String pageName, DataTable dataTable) {
+		List<String> expectedAppCuesList = dataTable.asList(String.class);
+		String actualAppCueText = null;
+		int index = 0;
+		try {
+			if (CoreFunctions.isElementExist(driver, _tooltipIFrame, 5)) {
+				while (index < expectedAppCuesList.size()) {
+					driver.switchTo().frame(_tooltipIFrame);
+					CoreFunctions.explicitWaitTillElementBecomesClickable(driver, _tooltipIFrameHideLink,
+							MobilityXConstants.HIDE);
+					actualAppCueText = CoreFunctions.getElementText(driver, _tooltipIFrameText);
+					CoreFunctions.verifyText(actualAppCueText, expectedAppCuesList.get(index), MobilityXConstants.APPCUES);
+					CoreFunctions.clickElement(driver, _tooltipIFrameNextButton);
+					driver.switchTo().defaultContent();
+					CoreFunctions.waitHandler(4);
+					index++;
+				}
+				driver.switchTo().defaultContent();
+				Reporter.addStepLog(MessageFormat.format(MobilityXConstants.SUCCESSFULLY_VERIFIED_APPCUES,
+						CoreConstants.PASS, pageName));
+				return true;
+			} else {
+				Reporter.addStepLog(
+						MessageFormat.format(MobilityXConstants.APPCUES_NOT_DISPLAYED, CoreConstants.FAIL, pageName,expectedAppCuesList.get(index)));
+				return false;
+			}
+		} catch (Exception e) {
+			Reporter.addStepLog(MessageFormat.format(MobilityXConstants.EXCEPTION_OCCURED_WHILE_VALIDATING_APPCUES,
+					CoreConstants.FAIL, e.getMessage(), pageName));
+			return false;
+		}
 	}
 
 }

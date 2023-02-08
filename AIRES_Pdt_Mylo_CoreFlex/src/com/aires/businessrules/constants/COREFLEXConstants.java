@@ -468,9 +468,9 @@ public class COREFLEXConstants {
 	public static final String FAILED_TO_VERIFY_APPROVE_THIS_POLICY_DIALOG = "{0}Failed to verify Approve this Policy dialog contents.";
 	public static final String EXPECTED_APPROVE_THIS_POLICY_DIALOG_HEADER = "Do you want to proceed with the approval of this policy?";
 	public static final String EXPECTED_APPROVE_THIS_POLICY_DIALOG_VERSION_TEXT = "You are approving version VN of this policy. If approved, the policy state will change from Submitted to Active and indicates that you have reviewed the policy benefits and approve them for use.";
-	public static final String EXPECTED_APPROVE_THIS_POLICY_DIALOG_ASSIGNMENT_TEXT_FIRST_VERSION = "There are currently 0 Assignments or Files linked with this version of the point based policy in IRIS. The following option is only effective for the client of this policy if Blueprint has been enabled in IRIS Corp:";
+	public static final String EXPECTED_APPROVE_THIS_POLICY_DIALOG_ASSIGNMENT_TEXT_FIRST_VERSION = "You are approving Version VN of this policy. There are currently 0 Assignments or Files linked with this policy in IRIS.";
 	public static final String SUCCESSFULLY_VERIFIED_APPROVE_THIS_POLICY_DIALOG_HEADER_VERSION_ASSIGNMENT_TEXT_AND_FIELDS = "{0}Successfully verified Approve this Policy Dialog header, version & assignment text.";
-	public static final String EXPECTED_APPROVE_THIS_POLICY_DIALOG_CHECKBOX_SELECTION = "Link this policy with a NEW authorization in IRIS? ";
+	public static final String EXPECTED_APPROVE_THIS_POLICY_DIALOG_CHECKBOX_SELECTION = "Effective dates from which new files or assignments in IRIS are linked with this policy:";
 	public static final String ASSOCIATE_THIS_POLICY = "Associate this policy with a NEW authorization in IRIS? ";
 	public static final String APPROVE = "Approve";
 	public static final String FAILED_TO_VERIFY_POLICY_STATUS_POST_POLICY_SUBMISSION_ON_CUSTOM_BUNDLES_PAGE = "{0}Failed to verify Policy Status post Policy Submission on Custom Bundles Page. Actual : ''{1}'' | Expected : ''{2}''.";
@@ -887,7 +887,7 @@ public class COREFLEXConstants {
 	public static final String SUBMITTED_BENEFIT_DELETE_BUTTON = "Submitted Benefit Delete Button";
 	public static final String APPROVE_POLICY_DIALOG_HEADER = "Approve Policy Dialog Header";
 	public static final String APPROVE_POLICY_DIALOG_VERSION_TEXT = "Approve Policy Dialog Version Text";
-	public static final String APPROVE_POLICY_DIALOG_ASSIGNMENT_TEXT = "Approve Policy Dialog Assignment Text";
+	public static final String APPROVE_POLICY_DIALOG_POLICY_ASSIGNMENT_TEXT = "Approve Policy Dialog Policy & Assignment Text";
 	public static final String APPROVE_POLICY_DIALOG_CHECKBOX_OPTION = "Approve Policy Dialog Checkbox Option";
 	public static final String DIFFERENT_CLIENT_NOT_AVAILABLE_FOR_SELECTION_IN_CLONE_TO_CLIENT_LIST = "{0}Different client not available for selection in Clone to Client List.";
 	public static final String IMPERSONATE_A_USER = "Impersonate";
@@ -961,4 +961,6 @@ public class COREFLEXConstants {
 	public static final String EXCEPTION_OCCURED_WHILE_VALIDATING_FLEX_BENEFIT_DETAILS_ON_BENEFIT_SELECTION_TOOL_PAGE = "{0}Exception occured while validating Flex Benefits on Benefit Selection Tool page of MXClient application. Exception : ''{1}''.";
 	public static final String EXCEPTION_OCCURED_WHILE_VALIDATING_CORE_BENEFIT_DETAILS_ON_BENEFIT_SELECTION_TOOL_PAGE = "{0}Exception occured while validating Core Benefits on Benefit Selection Tool page of MXClient application. Exception : ''{1}''.";
 	public static final String EXCEPTION_OCCURED_WHILE_VALIDATING_SUBMITTED_FLEX_BENEFIT_DETAILS_ON_BENEFITS_BUNDLE_PAGE = "{0}Exception occured while validating Submitted Flex Benefit Details On Benefits Bundle Page. Exception : ''{1}''.";
+	public static final String APPROVE_POLICY_DIALOG_SELECT_DATE = "Select the date that you would like to approve this policy.";
+	public static final String APPROVE_POLICY_DIALOG_SELECT_DATE_TEXT = "Approve Policy Select Date Text";
 }

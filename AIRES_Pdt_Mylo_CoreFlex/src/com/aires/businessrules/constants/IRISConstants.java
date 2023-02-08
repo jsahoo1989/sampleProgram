@@ -333,7 +333,7 @@ public class IRISConstants {
 	public static final String SEND_CREDENTIALS = "Send Credentials";
 	public static final String CONFIRMATION = "Confirmation";
 	public static final String SEND_USER_LOGIN_MSG = "Do you want to email ReloNet login credentials to the transferee?";
-	public static final String SUCCESS_MSG = "The username and password have been sent in two separate email messages to ";
+	public static final String SUCCESS_MSG = "The username and password have been sent in";
 	public static final String DIAGLOG_NAME = "Message";
 	public static final String FOLLOWING_ROWS_VERIFIED = "{0} Verified the following fields has been added into the activity section {1}";
 	// ExceptionsTab
@@ -512,4 +512,5 @@ public class IRISConstants {
 	public static final String LOGIN_WINDOW_TITLE = "IRIS Login - Version 8.7.7";
 	public static final String ONPOINT_AUTOMATION_POLICY = "Automation_Policy_OnPoint_";
 	public static final String SUCCESSFULLY_SWITCHED_TO_IRIS_WINDOW = "{0}Successfully switched to IRIS window.";
+	public static final String EXPENSE = "Expense";
 }

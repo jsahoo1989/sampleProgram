@@ -446,7 +446,7 @@ public class IRIS_Corporation_Accounting extends BasePage {
 			String policyName = IRISConstants.ONPOINT_AUTOMATION_POLICY + CoreFunctions.generateRandomString(5);
 			policyTable.getCell(policyTable.getRows().size() - 1, PDTConstants.POLICY).setValue(policyName);
 			policyTable.getCell(policyTable.getRows().size() - 1, "Tax Assistance Policy")
-					.setValue("US Expat State & FICA only");
+					.setValue("Standard Inverse Marginal");
 			policyTable.getCell(policyTable.getRows().size() - 1, "Tracing Set").setValue("Assignment");
 
 			if ((policyTable.getCell(policyTable.getRows().size() - 1, "OnPoint Enabled").getValue().toString())

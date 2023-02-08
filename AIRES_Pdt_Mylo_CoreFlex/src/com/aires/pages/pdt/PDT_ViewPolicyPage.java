@@ -47,7 +47,7 @@ public class PDT_ViewPolicyPage extends Base {
 	private WebElement _logout;
 
 	// Progress Bar
-	@FindBy(how = How.CSS, using = "div.ngx-progress-bar.ngx-progress-bar-ltr")
+	@FindBy(how = How.XPATH, using = "//div[contains(@class,'loading-foreground')] | //div[contains(@class,'foreground-closing')]")
 	private WebElement _progressBar;
 
 	// Edit Icon
@@ -208,7 +208,7 @@ public class PDT_ViewPolicyPage extends Base {
 	private List<WebElement> _listDeleteIcon;
 
 	// Policy Clone Icon List
-	@FindBy(how = How.CSS, using = "div.icons-action a[mattooltip='Clone Policy']>img")
+	@FindBy(how = How.CSS, using = "div.icons-action a[mattooltip*='Clone Policy']>img")
 	private List<WebElement> _listCloneIcon;
 
 	// Policy Assignment History Icon List
@@ -386,7 +386,7 @@ public class PDT_ViewPolicyPage extends Base {
 			break;
 		case COREFLEXConstants.CREATE:
 			CoreFunctions.clickElement(driver, _btnVersionControlCreate);
-			CoreFunctions.explicitWaitTillElementInVisibilityCustomTime(driver, _progressBar, 5);
+//			CoreFunctions.explicitWaitTillElementInVisibilityCustomTime(driver, _progressBar, 5);
 			break;
 		case COREFLEXConstants.NEXT:
 			CoreFunctions.clickElement(driver, _btnNextPolicyPage);

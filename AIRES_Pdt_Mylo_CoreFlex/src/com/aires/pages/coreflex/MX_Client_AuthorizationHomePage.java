@@ -815,9 +815,9 @@ public class MX_Client_AuthorizationHomePage extends Base {
 			Assert.assertEquals(CoreFunctions.getElementText(driver, _titleAuthorizationForm),
 					MobilityXConstants.AUTHORIZATION_FORM_TITLE_TEXT, MobilityXConstants.AUTHORIZATION_FORM_TITLE
 							+ MobilityXConstants.TITLE + MobilityXConstants.NOT_EXIST);
-			BusinessFunctions.selectValueFromDropdown(driver, _drpdownAuthorizationFormTemplateCompanyName,
-					companyName + " (" + companyId + ")");
-			CoreFunctions.waitHandler(2);
+//			BusinessFunctions.selectValueFromDropdown(driver, _drpdownAuthorizationFormTemplateCompanyName,
+//					companyName + " (" + companyId + ")");
+//			CoreFunctions.waitHandler(2);
 			BusinessFunctions.selectValueFromDropdown(driver, _drpdownAuthorizationFormTemplate, option);
 			CoreFunctions.click(driver, _btn_Continue_AuthorizationForm, MobilityXConstants.CONTINUE_BUTTON);
 			CoreFunctions.waitUntilBrowserReady(driver);
@@ -1644,7 +1644,7 @@ public class MX_Client_AuthorizationHomePage extends Base {
 		String actualResultFileID = null;
 		try {
 			actualResultFileID = EmailUtil.searchEmailAndReturnResult(MobilityXConstants.HOST,
-					MobilityXConstants.AUTH_FORM_SUBMISSION_USER_EMAILID, MobilityXConstants.AUTO_EMAIL_PWD,
+					MobilityXConstants.AUTH_FORM_SUBMISSION_USER_EMAILID, CoreConstants.AUTO_EMAIL_PWD,
 					MobilityXConstants.AUTH_FORM_SUBMISSION_EMAIL_SENDER, expEmailSubject,
 					MobilityXConstants.INITIATION_FILE_ID);
 			isFileIDVerified = !(actualResultFileID.isEmpty());
@@ -1667,7 +1667,7 @@ public class MX_Client_AuthorizationHomePage extends Base {
 		boolean isBenefitPointsVerified = true;
 		try {
 			String actualResultBenefitTotalPoints = EmailUtil.searchEmailAndReturnResult(MobilityXConstants.HOST,
-					MobilityXConstants.AUTH_FORM_SUBMISSION_USER_EMAILID, MobilityXConstants.AUTO_EMAIL_PWD,
+					MobilityXConstants.AUTH_FORM_SUBMISSION_USER_EMAILID, CoreConstants.AUTO_EMAIL_PWD,
 					MobilityXConstants.AUTH_FORM_SUBMISSION_EMAIL_SENDER, expectedEmailSubject,
 					MobilityXConstants.NEW_INITIATION_SUBMISSION_BENEFIT_TOTAL_POINTS_AND_SUBMITTED_POINTS);
 			actualResultBenefitTotalPoints = actualResultBenefitTotalPoints.trim();
@@ -1697,7 +1697,7 @@ public class MX_Client_AuthorizationHomePage extends Base {
 	private boolean verifyBenefitPointsInRevisedInitiationSubmittedEmail(String expectedEmailSubject) {
 		try {
 			String actualResultBenefitTotalPoints = EmailUtil.searchEmailAndReturnResult(MobilityXConstants.HOST,
-					MobilityXConstants.AUTH_FORM_SUBMISSION_USER_EMAILID, MobilityXConstants.AUTO_EMAIL_PWD,
+					MobilityXConstants.AUTH_FORM_SUBMISSION_USER_EMAILID, CoreConstants.AUTO_EMAIL_PWD,
 					MobilityXConstants.AUTH_FORM_SUBMISSION_EMAIL_SENDER, expectedEmailSubject,
 					MobilityXConstants.NEW_INITIATION_SUBMISSION_BENEFIT_TOTAL_POINTS_AND_SUBMITTED_POINTS);
 
@@ -1725,7 +1725,7 @@ public class MX_Client_AuthorizationHomePage extends Base {
 		boolean isSubmissionStatusVerified = true;
 		try {
 			String actualSubmissionStatus = EmailUtil.searchEmailAndReturnResult(MobilityXConstants.HOST,
-					MobilityXConstants.AUTH_FORM_SUBMISSION_USER_EMAILID, MobilityXConstants.AUTO_EMAIL_PWD,
+					MobilityXConstants.AUTH_FORM_SUBMISSION_USER_EMAILID, CoreConstants.AUTO_EMAIL_PWD,
 					MobilityXConstants.AUTH_FORM_SUBMISSION_EMAIL_SENDER, expectedEmailSubject,
 					MobilityXConstants.NEW_INITIATION_SUBMISSION_STATUS);
 			CoreFunctions.verifyText(actualSubmissionStatus, MobilityXConstants.SUBMITTED,
@@ -2524,7 +2524,7 @@ public class MX_Client_AuthorizationHomePage extends Base {
 	private boolean verifyBenefitsAndCashoutDetails(String expectedEmailSubject) {
 		try {
 			String actualResultBenefitsAndCashoutDetails = EmailUtil.searchEmailAndReturnResult(MobilityXConstants.HOST,
-					MobilityXConstants.AUTH_FORM_SUBMISSION_USER_EMAILID, MobilityXConstants.AUTO_EMAIL_PWD,
+					MobilityXConstants.AUTH_FORM_SUBMISSION_USER_EMAILID, CoreConstants.AUTO_EMAIL_PWD,
 					MobilityXConstants.AUTH_FORM_SUBMISSION_EMAIL_SENDER, expectedEmailSubject,
 					MobilityXConstants.NEW_INITIATION_SUBMISSION_BENEFIT_CASHOUT_DETAILS);
 			verifyBenefitCashoutDetailsInEmail(actualResultBenefitsAndCashoutDetails);

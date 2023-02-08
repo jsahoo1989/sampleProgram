@@ -31,6 +31,7 @@ import com.aires.pages.coreflex.TransfereeSubmissions_DetailsPage;
 import com.aires.pages.coreflex.TransfereeSubmissions_LoginPage;
 import com.aires.pages.iris.IRIS_ActivityAndFinancePage;
 import com.aires.pages.iris.IRIS_AssignmentOverviewPage;
+import com.aires.pages.iris.IRIS_AssignmentServicePage;
 import com.aires.pages.iris.IRIS_AssignmentTransfereeNFamilyPage;
 import com.aires.pages.iris.IRIS_Corporation_Accounting;
 import com.aires.pages.iris.IRIS_Corporation_Main;
@@ -1013,7 +1014,19 @@ public class CoreFlex_SharedSteps {
 			throws Throwable {
 		Assert.assertTrue(mobilityXLoginPage.verifyPageNavigation(),
 				MessageFormat.format(COREFLEXConstants.FAILED_TO_NAVIGATE_TO_MOBILITYX_LOGIN_PAGE, CoreConstants.FAIL));
+		actualizeTransfereeCreatedByClient();
+		Assert.assertTrue(mobilityXLoginPage.readCredentialsFromMail(), MessageFormat
+				.format(MobilityXConstants.FAILED_TO_READ_USER_CREDENTIALS_FROM_GENERATED_EMAIL, CoreConstants.FAIL));
+		mobilityXLoginPage.enterUsernameAndPasswordForMobilityX(
+				CoreFunctions.getPropertyFromConfig("Transferee_UserNameInEMail"),
+				CoreFunctions.getPropertyFromConfig("Transferee_PasswordInEMail"));
+		mobilityXLoginPage.clickSignIn();
+		mxTransfereeMyProfilePage.setUpNewMobilityXTransferee();
+		mxTransfereeJourneyHomePage.handle_Cookie_AfterLogin();
+		mxTransfereeJourneyHomePage.handle_points_expiry_reminder_popup();
+	}
 
+	private void actualizeTransfereeCreatedByClient() throws Exception {
 		testContext.getBasePage().reLaunchIrisToAvoidFreezingIssue();
 		testContext.getIrisPageManager().irisLoginPage = new IRIS_LoginPage();
 		testContext.getIrisPageManager().irisLoginPage.getIRISLoginAsPerEnvt(_loginInfo);
@@ -1041,24 +1054,19 @@ public class CoreFlex_SharedSteps {
 				testContext.getIrisPageManager().irisActivityAndFinancePage
 						.relonetCredentialsSent(IRISConstants.SUCCESS_MSG, IRISConstants.MESSAGE_DIALOG),
 				MessageFormat.format(IRISConstants.FAILED_TO_VERIFY_MESSAGE, CoreConstants.FAIL,
-						IRISConstants.SUCCESS_MSG));
-		testContext.getIrisPageManager().irisAssignmentOverviewPage.setFileStatus(IRISConstants.ACTIVATE);
+						IRISConstants.SUCCESS_MSG));		
 		testContext.getIrisPageManager().irisAssignmentOverviewPage.switchTab(IRISConstants.OVERVIEW);
 		IRIS_AssignmentData assignmentOverviewData = FileReaderManager.getInstance().getIrisJsonReader()
 				.getAssignmentDataByTabName(IRISConstants.OVERVIEW);
 		testContext.getIrisPageManager().irisAssignmentOverviewPage
-				.addAiresTeamDetailsOnOverviewTab(assignmentOverviewData);
+				.addAiresTeamDetailsOnOverviewTab(assignmentOverviewData);		
+		testContext.getIrisPageManager().irisAssignmentOverviewPage.switchTab(IRISConstants.SERVICE_TAB);
+		testContext.getIrisPageManager().irisAssignmentServicePage = new IRIS_AssignmentServicePage();
+		Assert.assertTrue(testContext.getIrisPageManager().irisAssignmentServicePage.verifyServiceTab(), MessageFormat
+				.format(IRISConstants.FAIL_TO_VERIFY_CURRENT_TAB, CoreConstants.FAIL, IRISConstants.SERVICE));		
+		testContext.getIrisPageManager().irisAssignmentServicePage.addService(IRISConstants.EXPENSE);
+		testContext.getIrisPageManager().irisAssignmentOverviewPage.setFileStatus(IRISConstants.ACTIVATE);
 		testContext.getBasePage().cleanIrisProcesses();
-
-		Assert.assertTrue(mobilityXLoginPage.readCredentialsFromMail(), MessageFormat
-				.format(MobilityXConstants.FAILED_TO_READ_USER_CREDENTIALS_FROM_GENERATED_EMAIL, CoreConstants.FAIL));
-		mobilityXLoginPage.enterUsernameAndPasswordForMobilityX(
-				CoreFunctions.getPropertyFromConfig("Transferee_UserNameInEMail"),
-				CoreFunctions.getPropertyFromConfig("Transferee_PasswordInEMail"));
-		mobilityXLoginPage.clickSignIn();
-		mxTransfereeMyProfilePage.setUpNewMobilityXTransferee();
-		mxTransfereeJourneyHomePage.handle_Cookie_AfterLogin();
-		mxTransfereeJourneyHomePage.handle_points_expiry_reminder_popup();
 	}
 
 	@Given("^he has setup a new Points Based CoreFlex Policy with following selection in Blueprint application$")
@@ -1395,4 +1403,5 @@ public class CoreFlex_SharedSteps {
 		testContext.getBasePage().cleanIrisProcesses();
 
 	}
+
 }

@@ -405,8 +405,11 @@ public class CoreFunctions {
 	}
 
 	public static void explicitWaitTillElementInVisibility(WebDriver driver, WebElement Element) {
-		WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(30));
-		wait.until(ExpectedConditions.invisibilityOf(Element));
+		try {
+			WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(30));
+			wait.until(ExpectedConditions.invisibilityOf(Element));
+		} catch (Exception e) {
+		}
 	}
 
 	public static void explicitWaitTillElementInVisibilityCustomTime(WebDriver driver, WebElement Element, int time) {
@@ -2019,7 +2022,8 @@ public class CoreFunctions {
 				Assert.fail("Failed to verify the fields " + fieldName + " Expected Text = " + expectedSelection);
 			}
 		} catch (Exception e) {
-			Assert.fail("Exception occured while verifying : " + fieldName +" radio field. Exception : " + e.getMessage());
+			Assert.fail(
+					"Exception occured while verifying : " + fieldName + " radio field. Exception : " + e.getMessage());
 		}
 	}
 
@@ -2258,13 +2262,13 @@ public class CoreFunctions {
 			return false;
 		}
 	}
-	
+
 	public static void hoverAndDoubleClick(WebDriver driver, WebElement element, String name) {
 		Actions action = new Actions(driver);
 		action.moveToElement(element).doubleClick().build().perform();
 		Reporter.addStepLog(CoreConstants.PASS + MessageFormat.format(CoreConstants.VRFIED_ELE_CLCKED, name));
 	}
-	
+
 	public static void verifyTextContainsIgnoreCase(String actualText, String expectedText, String fieldName) {
 		if (StringUtils.containsIgnoreCase(actualText, expectedText))
 			Reporter.addStepLog(

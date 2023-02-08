@@ -51,7 +51,7 @@ public class CoreFlex_EducationAssistanceSchoolSearch_BenefitsPage extends Benef
 	private WebElement _buttonLogout;
 
 	// Progress Bar
-	@FindBy(how = How.CSS, using = "div.ngx-progress-bar.ngx-progress-bar-ltr")
+	@FindBy(how = How.XPATH, using = "//div[contains(@class,'loading-foreground')] | //div[contains(@class,'foreground-closing')]")
 	private WebElement _progressBar;
 
 	// Policy Header

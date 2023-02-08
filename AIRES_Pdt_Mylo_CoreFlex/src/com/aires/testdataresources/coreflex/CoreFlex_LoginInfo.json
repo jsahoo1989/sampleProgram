@@ -8,35 +8,18 @@
 			"irisBuildPath": "\\\\corpprdvw589\\rdev\\IRIS_Builds\\IRIS_FnDEV_CORE_FLEX\\IRIS.exe",
 			"firstName": "mxsso",
 			"lastName": "dev5",
-			"clientId": "13951",
-			"clientName": "Boston Scientific",
+			"clientId": "49226",
+			"clientName": "Aires QA Automation Client",
 			"csmUserName": "mxssodev5@corp.aires.com",
 			"csmPassword": "F74#jd*187_NB",
 			"csmUserFirstName": "MXSSO DEV5",
 			"policy": "hDCC Repatriation (# 14724)",
-			"mxClientUserName": "0011934473@aires.com",
-			"mxClientPassword": "relonetng1",
-			"mxClientUserProfileName": "Jaspal March",
+			"mxClientUserName": "testonpoint@aires.com",
+			"mxClientPassword": "Relonetng1!",
+			"mxClientUserProfileName": "Test Onpoint",
 			"blueprintURL": "https://relonetqa3.aires.com/policy-digitization-app/",
 			"mobilityXURL": "https://relonetuat2.aires.com/mobilityx/faces/jsf/Login.jsf",
 			"transfereeSubmissionsURL": "https://relonetqa3.aires.com/onpoint-review-app/"
-		}
-	},
-	{
-		"environment": "dev",
-		"details": {
-			"irisUserName": "vkamins",
-			"irisPassword": "fndevvk",
-			"irisDatabase": "FnDEV",
-			"irisBuildPath": "\\\\corpprdvw589\\rdev\\IRIS_Builds\\IRIS_FnDEV_CORE_FLEX\\IRIS.exe",
-			"firstName": "mxsso",
-			"lastName": "dev5",
-			"clientId": "7403",
-			"clientName": "Dow Chemical Company (Global)",
-			"csmUserName": "mxssodev5@corp.aires.com",
-			"csmPassword": "F74#jd*187_NB",
-			"csmUserFirstName": "MXSSO DEV5",
-			"policy": "hDCC Repatriation (# 14724)"
 		}
 	},
 	{

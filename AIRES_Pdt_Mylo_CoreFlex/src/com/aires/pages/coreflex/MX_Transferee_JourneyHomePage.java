@@ -161,6 +161,9 @@ public class MX_Transferee_JourneyHomePage extends Base {
 	@FindBy(how = How.CSS, using = "iframe[class*='appcues-tooltip-container']")
 	private WebElement _tooltipIFrame;
 
+	@FindBy(how = How.CSS, using = "div.zone-content > div.rich-text")
+	private WebElement _tooltipIFrameText;
+
 	@FindBy(how = How.CSS, using = "div[class*='appcues-actions-right'] > a")
 	private WebElement _tooltipIFrameNextButton;
 
@@ -357,6 +360,15 @@ public class MX_Transferee_JourneyHomePage extends Base {
 
 	final By _impersonateDialogTitleAppear = By.xpath("//div[@id='rRegion']//span[text() = 'Impersonate a User']");
 
+	@FindBy(how = How.CSS, using = "img#appcuesImage")
+	private WebElement _linkGetHelp;
+
+	@FindBy(how = How.CSS, using = "div.appcues-widget-header > p")
+	private WebElement _headerGetHelp;
+
+	@FindBy(how = How.CSS, using = "div.appcues-widget-content a")
+	private WebElement _optionGetHelp;
+
 	/*********************************************************************/
 
 	CoreFlex_PolicySetupPagesData policySetupPageData = FileReaderManager.getInstance().getCoreFlexJsonReader()
@@ -381,6 +393,12 @@ public class MX_Transferee_JourneyHomePage extends Base {
 		case MobilityXConstants.MANAGE_MY_POINTS:
 			CoreFunctions.clickUsingJS(driver, _linkManageMyPoints, MobilityXConstants.MANAGE_MY_POINTS);
 			break;
+		case MobilityXConstants.GET_HELP:
+			CoreFunctions.clickElement(driver, _linkGetHelp);
+			break;
+		case MobilityXConstants.EXPECTED_MOBILITY_JOURNEY_HOME_APP_CUE_OPTION:
+			CoreFunctions.clickElement(driver, _optionGetHelp);
+			break;
 		default:
 			Assert.fail(COREFLEXConstants.INVALID_ELEMENT);
 		}
@@ -400,7 +418,8 @@ public class MX_Transferee_JourneyHomePage extends Base {
 	}
 
 	public void handle_Cookie_AfterLogin() {
-		CoreFunctions.explicitWaitTillElementBecomesClickable(driver, _btn_OkOnSiteCookieAfterLogin, MobilityXConstants.COOKIEDAILOG_OKBUTTON);
+		CoreFunctions.explicitWaitTillElementBecomesClickable(driver, _btn_OkOnSiteCookieAfterLogin,
+				MobilityXConstants.COOKIEDAILOG_OKBUTTON);
 		if (CoreFunctions.isElementExist(driver, _btn_OkOnSiteCookieAfterLogin, 15)) {
 			HandleCookiePopUp(_btn_OkOnSiteCookieAfterLogin);
 		}
@@ -692,7 +711,8 @@ public class MX_Transferee_JourneyHomePage extends Base {
 				Reporter.addStepLog(MessageFormat.format(MobilityXConstants.SUCCESSFULLY_SELECTED_ACCOUNT_TYPE,
 						CoreConstants.PASS));
 //				CoreFunctions.waitHandler(2);
-				CoreFunctions.explicitWaitTillElementBecomesClickable(driver, _btnWireSubmit, MobilityXConstants.SUBMIT);
+				CoreFunctions.explicitWaitTillElementBecomesClickable(driver, _btnWireSubmit,
+						MobilityXConstants.SUBMIT);
 				CoreFunctions.selectByVisibleText(driver, _selectCurrency,
 						CoreFunctions.getPropertyFromConfig("CF_Transferee_CashoutCurrencyText"));
 				CoreFunctions.clearAndSetText(driver, _accountHolderName,
@@ -1810,6 +1830,60 @@ public class MX_Transferee_JourneyHomePage extends Base {
 			Reporter.addStepLog(MessageFormat.format(
 					MobilityXConstants.EXCEPTION_OCCURED_WHILE_VALIDATING_SUBMITTED_BENEFITS_AND_POINTS_DETAILS_BY_CLIENT_ON_FLEX_PDF_DOWNLOADED_DOCUMENT,
 					CoreConstants.FAIL, e.getMessage(), documentName));
+			return false;
+		}
+	}
+
+	public boolean verifyAppCues(String pageName, DataTable dataTable) {
+		List<String> expectedAppCuesList = dataTable.asList(String.class);
+		String actualAppCueText = null;
+		int index = 0;
+		try {
+			if (CoreFunctions.isElementExist(driver, _tooltipIFrame, 15)) {
+				while (index < expectedAppCuesList.size()) {
+					driver.switchTo().frame(_tooltipIFrame);
+					CoreFunctions.explicitWaitTillElementBecomesClickable(driver, _tooltipIFrameHideLink,
+							MobilityXConstants.HIDE);
+					actualAppCueText = CoreFunctions.getElementText(driver, _tooltipIFrameText);
+					CoreFunctions.verifyText(actualAppCueText, expectedAppCuesList.get(index), MobilityXConstants.APPCUES);
+					CoreFunctions.clickElement(driver, _tooltipIFrameNextButton);
+					driver.switchTo().defaultContent();
+					CoreFunctions.waitHandler(4);
+					index++;
+				}
+				driver.switchTo().defaultContent();
+				Reporter.addStepLog(MessageFormat.format(MobilityXConstants.SUCCESSFULLY_VERIFIED_APPCUES,
+						CoreConstants.PASS, pageName));
+				return true;
+			} else {
+				Reporter.addStepLog(
+						MessageFormat.format(MobilityXConstants.APPCUES_NOT_DISPLAYED, CoreConstants.FAIL, pageName,expectedAppCuesList.get(index)));
+				return false;
+			}
+		} catch (Exception e) {
+			Reporter.addStepLog(MessageFormat.format(MobilityXConstants.EXCEPTION_OCCURED_WHILE_VALIDATING_APPCUES,
+					CoreConstants.FAIL, e.getMessage(), pageName));
+			return false;
+		}
+	}
+
+	public boolean verifyGetHelpSectionOptions() {
+		try {
+			CoreFunctions.moveToElement(driver, _headerGetHelp);
+			CoreFunctions.verifyText(CoreFunctions.getElementText(driver, _headerGetHelp), MobilityXConstants.GET_HELP,
+					MobilityXConstants.GET_HELP_HEADER);
+			CoreFunctions.verifyTextContains(CoreFunctions.getElementText(driver, _optionGetHelp),
+					MobilityXConstants.EXPECTED_MOBILITY_JOURNEY_HOME_APP_CUE_OPTION,
+					MobilityXConstants.MOBILITY_JOURNEY_HOME_APP_CUE_OPTION);
+			Reporter.addStepLog(
+					MessageFormat.format(MobilityXConstants.SUCCESSFULLY_VERIFIED_APPCUES_OPTION_UNDER_GET_HELP_SECTION,
+							CoreConstants.PASS, MobilityXConstants.MOBILITY_JOURNEY_HOME,
+							MobilityXConstants.EXPECTED_MOBILITY_JOURNEY_HOME_APP_CUE_OPTION));
+			return true;
+		} catch (Exception e) {
+			Reporter.addStepLog(MessageFormat.format(
+					MobilityXConstants.EXCEPTION_OCCURED_WHILE_VALIDATING_APPCUES_OPTION_UNDER_GET_HELP_SECTION_ON,
+					CoreConstants.FAIL, e.getMessage(), MobilityXConstants.MOBILITY_JOURNEY_HOME));
 			return false;
 		}
 	}

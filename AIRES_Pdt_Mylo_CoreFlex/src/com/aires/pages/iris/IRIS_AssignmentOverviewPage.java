@@ -644,21 +644,19 @@ public class IRIS_AssignmentOverviewPage extends BasePage {
 					0);
 			_rowCount = _jTableAiresTeamHistory.getRows().size();
 
-			switch (functionName) {
-			case IRISConstants.FUNCTION_PPC:
-				_jTableAiresTeamHistory.selectRows(1);
-				Button deleteButton = _assignmentWindow.describe(Button.class,
-						new ButtonDescription.Builder().label("Delete").build());
-				deleteButton.click();
-				Dialog deleteConfirmedDialog = _assignmentWindow.describe(Dialog.class,
-						new DialogDescription.Builder().title("Delete Confirmed").build());
-				Button oKButton = deleteConfirmedDialog.describe(Button.class,
-						new ButtonDescription.Builder().label("OK").build());
-				oKButton.click();
-				break;
-			default:
-				Assert.fail(IRISConstants.NO_FUNCTION_SELECTED);
+			for (int row = 0; row < _rowCount; row++) {
+				if (functionName.equals(_jTableAiresTeamHistory.getCell(row, "Function").getValue().toString()))
+					_jTableAiresTeamHistory.selectRows(row);
 			}
+			Button deleteButton = _assignmentWindow.describe(Button.class,
+					new ButtonDescription.Builder().label("Delete").build());
+			deleteButton.click();
+			Dialog deleteConfirmedDialog = _assignmentWindow.describe(Dialog.class,
+					new DialogDescription.Builder().title("Delete Confirmed").build());
+			Button oKButton = deleteConfirmedDialog.describe(Button.class,
+					new ButtonDescription.Builder().label("OK").build());
+			oKButton.click();
+
 		} catch (GeneralLeanFtException e) {
 			Log.info(CoreConstants.FAIL + e.getStackTrace());
 			Assert.fail(CoreConstants.FAIL
@@ -693,8 +691,10 @@ public class IRIS_AssignmentOverviewPage extends BasePage {
 				_jTableAiresTeamHistory.getCell(_rowCount - 1, "Emp Name").setValue(airesFileTeamHistory.empNamePPC);
 				break;
 			case IRISConstants.FUNCTION_PPCSPPRT:
-				_jTableAiresTeamHistory.getCell(_rowCount - 1, "Function").setValue(airesFileTeamHistory.functionPPCSPPRT);
-				_jTableAiresTeamHistory.getCell(_rowCount - 1, "Emp Name").setValue(airesFileTeamHistory.empNamePPCSPPRT);
+				_jTableAiresTeamHistory.getCell(_rowCount - 1, "Function")
+						.setValue(airesFileTeamHistory.functionPPCSPPRT);
+				_jTableAiresTeamHistory.getCell(_rowCount - 1, "Emp Name")
+						.setValue(airesFileTeamHistory.empNamePPCSPPRT);
 				break;
 
 			default:

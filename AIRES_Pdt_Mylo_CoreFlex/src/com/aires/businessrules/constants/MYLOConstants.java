@@ -1,7 +1,5 @@
 package com.aires.businessrules.constants;
 
-import java.util.Collection;
-
 public class MYLOConstants {
 	public static final String APPLICATION_LAUNCHED_AND_LOGO_DISPLAYED = "MYLO Logo is displayed on Mylo Application";
 	public static final String MYLO_LOGO_NOT_DISPLAYED = "MYLO Logo is not displayed on Mylo Application";
@@ -485,9 +483,6 @@ public class MYLOConstants {
 	public static final String MYLO_TRANSFEREE_USER_NAME = "Mylo Transferee User Name";
 	public static final String MYLO_TRANSFEREE_PASSWORD = "Mylo Transferee Password";
 	public static final String SEND_USERNAME_PSWD = "Send UserName Password";
-	public static final String DATA_INTEGRITY_MSG1 = "Link as NEW JOURNEY if this is a new transfer for someone we have previously relocated. They will see all moves with their MobilityX login.";
-	public static final String DATA_INTEGRITY_MSG2 = "Link to EXISTING JOURNEY if this is one of multiple legs in a single long-term or rotational assignment. They will see all moves with their MobilityX login.";
-	public static final String DATA_INTEGRITY_MSG3 = "You will not be able to begin the Initial Consultation for this transferee until you decide whether or not this file should be linked.";
 	public static final String FILE_LINKING_HEADER = "We found transferees with the same name, employee ID, or primary email address (highlighted in red). Is this the same person?";
 	public static final String FILE_LINKING_POPUP = "File Linking Popup";
 	public static final String LINK_TO_NEW_JOURNEY = "Same person, Link as a New Journey";
@@ -573,6 +568,7 @@ public class MYLOConstants {
 	public static final String COPY_BUTTON = "Copy";
 	public static final String UNABLE_TO_FIND_TEXT = "{0}Unable to find text: ''{1}'' on ''{2}'' section";
 	public static final String VERIFY_UPDATED_TEXT_VALUE = "{0}Verified Text updated for ''{1}'' field is ''{2}'' on ''{3}'' section";
+	public static final String VERIFY_NOT_UPDATED_TEXT = "<font color='red'>{0}Verified Text updated for ''{1}'' field is not ''{2}'' on ''{3}'' section</font>";
 	public static final String VERIFIED_COPIED_TEXT_VALUE = "{0}Verified Copied Text of ''{1}' section is displayed as ''{2}'' ";
 	public static final String VERIFIED_ADDRESS_COPIED = "{0}Verified ''{1}'' is copied to ''{2}'' on Journey page ";
 	public static final String VERIFIED_ADDRESS_NOT_COPIED = "{0}Verified ''{1}'' is not copied to ''{2}'' on Journey page ";
@@ -737,6 +733,7 @@ public class MYLOConstants {
 	public static final String FAIL_TO_VERIFY_MANDATORY_FIELDS_VALIDATION_MESSAGE_SECTION = "{0}Fail to verify Mandatory fields validation message for section {1}";
 	public static final String FAIL_TO_VERIFY_POP_UP_MESSAGE_SECTION = "{0}Fail to verify Pop Up message:{1}  for section {2}";
 	public static final int CUSTOM_WAIT_TIME = 60;
+	public static final int CUSTOM_DISSAPEAR_WAIT_TIME = 10;
 	public static final int TRANSFEREE_FIRST_NAME_CHAR_LIMIT = 30;
 	public static final int TRANSFEREE_LAST_NAME_CHAR_LIMIT = 60;
 	public static final String CHARACTER_LIMIT = "CharacterLimit";
@@ -851,4 +848,19 @@ public class MYLOConstants {
 	public static final String DECISION_FOR_LINKING_MSG = "You will not be able to begin the Initial Consultation for this transferee until you decide whether or not this file should be linked.";
 	public static final String CHANGE_FILE_STATUS = "Change File Status";
 	public static final String REMIND_ME_LATER = "Remind Me Later";
+	public static final String LINK_MOBILITY_JOURNEY_RADIO_BUTTON = "link/Mobility Journey Radio Button";
+	public static final String LINK_EXISTING_JOURNEY = "Link Existing Journey";
+	public static final String LINK = "Link";
+	public static final String LINK_MOBILITY_JOURNEY_CARD = "Link Mobility Journey Card";
+	public static final String LINK_DIFFERENT_JOURNEY_TYPE_MSG = "The current file and the selected journey do not have the same type. Okay to link?";
+	public static final String LINK_JOURNEY = "Link Journey";
+	public static final String OTHER_JOURNEYS = "Other Journeys";
+	public static final String LINK_MOBILITY_JOURNEY_HEADER="We found transferees with the same name, employee ID, or primary email address (highlighted in red). Is this the same person?";
+	public static final String FILES_ATTACHED_TRANSFEREE = "Files attached to transferee";
+	public static final String LINK_MOBILITY_JOURNEY_COLUMN_NAMES = "link/Mobility Journey Column Names";
+	public static final String LINKED_ASSIGNMENT_JOURNEY_INFO = "Linked Assignment Journey Information";
+	public static final String LINKED_ASSIGNMENT_FILE_ID = "Linked Assignment File ID";
+	public static final String DATA_INTEGRITY_MSG = "Data Integrity Message";
+	public static final String VERIFIED_NAVIGATED_TO_PAGE = "{0}Verified that file is navigated to ''{1}'' page";
+	public static final String VERIFIED_NOT_NAVIGATED_TO_PAGE = "{0}Verified that file is not navigated to ''{1}'' page";
 }

@@ -593,6 +593,7 @@ public class Mylo_AssignmentPage extends Base {
 		try {
 			CoreFunctions.click(driver, _memberNameSelectButtton,
 					_memberNameSelectButtton.getAttribute(MYLOConstants.NAME));
+			CoreFunctions.isElementPresent(driver, _dropdownOptions, MYLOConstants.CUSTOM_WAIT_TIME, roleName);
 			List<WebElement> optionsList = CoreFunctions.getElementListByLocator(driver, _dropdownOptions);
 			return CoreFunctions.searchElementExistsInListByText(driver, optionsList,
 					airesFileTeamExistingMembers.get(roleName));

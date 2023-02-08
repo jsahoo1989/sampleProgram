@@ -29,7 +29,7 @@ Then list of values displayed in the dropdown for below fields should match with
 |Field Name    |
 |Marital Status|
 |Pronouns      |
-|Transferee Email Type    |
+#|Transferee Email Type    |
 |Transferee Phone Type    |
 |Transferee OrgDest Type   |
 #|Citizenship  |

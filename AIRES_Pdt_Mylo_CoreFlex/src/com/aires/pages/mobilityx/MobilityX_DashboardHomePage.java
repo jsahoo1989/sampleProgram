@@ -381,7 +381,7 @@ public class MobilityX_DashboardHomePage extends Base {
 	}
 
 	public void fillDefaultAuthFormTemplate(DefaultAuthForm defaultAuthForm) {
-		BusinessFunctions.selectOptionValueFromDropdown(_relocationPolicy, defaultAuthForm.relocationPolicy);
+		BusinessFunctions.selectOptionValueFromDropdown(_relocationPolicy, defaultAuthForm.relocationPolicy,MYLOConstants.RELOCATION_POLICY);
 		CoreFunctions.clearAndSetText(driver, _txtBoxOriginCity, defaultAuthForm.originCity);
 		BusinessFunctions.selectValueFromDropdown(_drpDownoriginCountry, defaultAuthForm.originCountry);
 		CoreFunctions.clearAndSetText(driver, _txtBoxDestCity, defaultAuthForm.destinationCity);
@@ -425,7 +425,7 @@ public class MobilityX_DashboardHomePage extends Base {
 			BusinessFunctions.selectValueFromDropdown(_drpDownReceivingRegion, transferInfo.receivingRegion);
 			BusinessFunctions.selectRadioAsPerLabelText(driver, _radioBtnProjectRelated, transferInfo.projectRelated);
 			BusinessFunctions.selectOptionValueFromDropdown(_relocationPolicy,
-					ClientPolicyDetails.getPolicyName().replace("(", "").replace(")", "").split("#")[0].trim());
+					ClientPolicyDetails.getPolicyName().replace("(", "").replace(")", "").split("#")[0].trim(),MYLOConstants.RELOCATION_POLICY);
 			CoreFunctions.waitHandler(3);
 			CoreFunctions.clearAndSetText(driver, _txtBoxStartDateInNewLocation, CoreFunctions.getcurrentdate());
 			CoreFunctions.waitHandler(3);

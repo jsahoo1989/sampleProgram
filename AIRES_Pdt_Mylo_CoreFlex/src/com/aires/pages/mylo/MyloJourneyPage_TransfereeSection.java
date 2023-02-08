@@ -998,7 +998,25 @@ public class MyloJourneyPage_TransfereeSection extends Base {
 		BusinessFunctions.setMyloDropdownFields(driver, _dropdownOptions, MYLOConstants.RANDOM,
 				MYLOConstants.TRANSFEREE_EMAIL_TYPE);
 		clickTransfereeSaveButton();
-		}
-		
+		}		
+	}
+	
+	public void addTransfereeEmailDetails(String email) {
+		if(MyloNewFileUtil.get_transfereeEmail()==null) {
+		CoreFunctions.scrollToElementUsingJavaScript(driver, _transfereeFamilyDetailsButton,
+				MYLOConstants.TRANSFEREE_FAMILY);
+		CoreFunctions.click(driver, _transfereeEditButton, MYLOConstants.EDIT_BUTTON);
+		CoreFunctions.scrollClickUsingJS(driver, _transfereeAddEmail, MYLOConstants.TRANSFEREE_ADD_EMAIL);
+		MyloNewFileUtil.set_transfereeEmail(
+				BusinessFunctions.setMyloInputFields(driver, MYLOConstants.TRANSFEREE_EMAIL_ADDRESS,
+						email, _transfereeEmailAddress.get(0), MYLOConstants.VALUE));
+		CoreFunctions.scrollToElementUsingJavaScript(driver, _transfereeAge,
+				MYLOConstants.TRANSFEREE_AGE);
+		CoreFunctions.click(driver, _transfereeEmailTypeDropdown.get(0), MYLOConstants.TRANSFEREE_EMAIL_TYPE);
+		BusinessFunctions.setMyloDropdownFields(driver, _dropdownOptions, MYLOConstants.RANDOM,
+				MYLOConstants.TRANSFEREE_EMAIL_TYPE);
+		clickDropdownFieldsOnTransfereeSection(MYLOConstants.TRANSFEREE_EMAIL_PREFERRED, 0);
+		clickTransfereeSaveButton();
+		}		
 	}
 }

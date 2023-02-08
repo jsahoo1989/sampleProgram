@@ -323,4 +323,5 @@ public class MobilityXConstants {
 	public static final String SEARCH_EMPLOYEE_NAME = "Search Employee Name";
 	public static final String EMPLOYEE_DETAILS = "Employee Details";
 	public static final String ADVANCED_SEARCH = "Advanced Search";
+	public static final String NO_THIS_IS_DIFFERENT_EMPLOYEE="No, this is a different employee";
 }

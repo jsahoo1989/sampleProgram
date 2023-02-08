@@ -35,6 +35,9 @@ public class MobilityX_AuthorizationPage extends Base {
 
 	@FindBy(how = How.CSS, using = "input[name='homeStatus']+label")
 	private List<WebElement> _homeStatus;
+	
+	@FindBy(how = How.CSS, using = "input[id$='email::content']")
+	private WebElement _emailField;
 
 	@FindBy(how = How.XPATH, using = "//span[contains(text(),'Submit to Aires')]")
 	private WebElement _buttonSubmitToAires;
@@ -88,7 +91,7 @@ public class MobilityX_AuthorizationPage extends Base {
 		try {
 			WebElement fieldElement = BusinessFunctions.returnElementFromListUsingAttribute(driver,
 					_authPageDropdownFields, fieldName, MYLOConstants.TITLE);
-			BusinessFunctions.selectOptionValueFromDropdown(fieldElement, fieldValue);
+			BusinessFunctions.selectOptionValueFromDropdown(fieldElement, fieldValue,fieldName);
 		} catch (Exception e) {
 			Assert.fail(MessageFormat.format(CoreConstants.FAIL_TO_VERIFY_ELEMENT_ON_SECTION, CoreConstants.FAIL,
 					fieldName, MobilityXConstants.AUTHORIZATION_PAGE));
@@ -138,6 +141,15 @@ public class MobilityX_AuthorizationPage extends Base {
 				MobilityXConstants.AUTHORIZATION_PAGE);
 		setAuthPageDropdownValues(MYLOConstants.DESTINATION_COUNTRY, defaultAuthForm.destinationCountry);
 		BusinessFunctions.selectRadioAsPerLabelText(driver, _homeStatus, defaultAuthForm.homeStatus);
+	}
+	
+	public void addTransfereeEmail(String email) {
+		try {
+			BusinessFunctions.setMyloInputFields(driver, MYLOConstants.EMAIL, email, _emailField, MYLOConstants.VALUE);
+		} catch (Exception e) {
+			Assert.fail(MessageFormat.format(CoreConstants.FAIL_TO_VERIFY_ELEMENT_ON_SECTION, CoreConstants.FAIL,
+					MYLOConstants.EMAIL, MobilityXConstants.AUTHORIZATION_PAGE));
+		}
 	}
 
 	public void submitToAires() {

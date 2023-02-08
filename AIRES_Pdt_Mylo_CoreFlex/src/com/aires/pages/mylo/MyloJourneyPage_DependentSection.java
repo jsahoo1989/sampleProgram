@@ -187,10 +187,10 @@ public class MyloJourneyPage_DependentSection extends Base {
 		mapDependentWebElementFields();
 		try {
 			WebElement element = dependentWebElementsMap.get(fieldName);
-			CoreFunctions.explicitWaitTillElementInVisibilityCustomTime(driver, _spinner, 180);
+			BusinessFunctions.fluentWaitForMyloSpinnerToDisappear(driver, _spinner);
 			CoreFunctions.explicitWaitTillElementVisibility(driver, element, fieldName,100);
 			CoreFunctions.highlightElementAndClick(driver, element, fieldName);
-			CoreFunctions.explicitWaitTillElementInVisibilityCustomTime(driver, _spinner, 180);
+			BusinessFunctions.fluentWaitForMyloSpinnerToDisappear(driver, _spinner);
 		} catch (Exception e) {
 			Reporter.addStepLog(MessageFormat.format(CoreConstants.FAIL_TO_VERIFY_ELEMENT_ON_SECTION,
 					CoreConstants.FAIL, fieldName, MYLOConstants.DEPENDENT));

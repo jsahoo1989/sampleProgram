@@ -14,6 +14,7 @@ public class MyloEnvironmentDetails {
 		public String myloPassword;
 		public String myloProfileName;
 		public String myloFileID;
+		public String allAddressFileId;
 		public String clientId;
 		public String clientName;
 		public String mxClientUserName;

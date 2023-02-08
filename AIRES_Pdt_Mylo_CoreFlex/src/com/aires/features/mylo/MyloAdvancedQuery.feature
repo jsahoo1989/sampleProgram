@@ -9,7 +9,6 @@ Scenario: Mylo-Validate Tag Script Validation Messages for mentioned fields of M
 Given he is on "Advanced Query" popup by selecting "Advanced" option available on "Query" section
 Then tag script messages should be displayed for entering 'specialCharacters' on below fields after clicking on "Execute" button on 'Advanced Query' section
 |Field Name             |Message                                              |
-#|Transferee ID         |Tag Scripts are not allowed in transferee Id         |
 |Phone Number           |Tag Scripts are not allowed in phone number.         |
 |Tracking Number        |Tag Scripts are not allowed in tracking number.      |
 |Transferee First Name  |Tag Scripts are not allowed in transferee first name.|
@@ -89,9 +88,9 @@ When he clicks on "Execute" button after entering "<Field Name>" values on 'Adva
 Then journey page should be displayed for resulting 'File' matching the "Assignment ID" entered from "Advanced Query" popup
 Examples:
 |Field Name                                                     |
-|Client ID,Lead Company ID                                      |
+|Client ID,Lead Company ID,Phone Number                       |
 |Transferee First Name,Transferee Last Name,Email,PPC,MSpec     |
-|Tracking Number,Family First Name,Family Last Name,Phone Number|
+|Tracking Number,Family First Name,Family Last Name|
 
 
 

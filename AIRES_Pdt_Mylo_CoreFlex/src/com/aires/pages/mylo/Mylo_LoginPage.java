@@ -89,6 +89,14 @@ public class Mylo_LoginPage extends Base {
 		verifyMYLOLogo();
 		CoreFunctions.explicitWaitTillElementVisibility(driver, _loginBtn, MYLOConstants.LOGIN_IMAGE, 10);
 		CoreFunctions.hoverAndClick(driver, _loginBtn, MYLOConstants.LOGIN_IMAGE);
+		switchToNewTab();
+	}
+	
+	
+	public void switchToNewTab() {
+		while (!(CoreFunctions.isNewWindowExist(driver))) {
+			CoreFunctions.hoverAndClick(driver, _loginBtn, MYLOConstants.LOGIN_IMAGE);
+		}
 		CoreFunctions.switchToNewTab(driver);
 	}
 
@@ -173,7 +181,7 @@ public class Mylo_LoginPage extends Base {
 	 */
 	public void navigateToMyloHomePage() {
 		try {
-			while (!(CoreFunctions.isElementExist(driver, _userProfile, 3))) {
+			while (!(CoreFunctions.isElementExist(driver, _userProfile, 6))) {
 				CoreFunctions.refreshPage(driver);
 				CoreFunctions.waitForBrowserToLoad(driver);
 				CoreFunctions.explicitWaitTillElementVisibility(driver, _loginBtn, MYLOConstants.LOGIN_IMAGE, 10);

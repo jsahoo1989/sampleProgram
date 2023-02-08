@@ -2,13 +2,17 @@ package stepDefinitions.mylo;
 
 import java.text.MessageFormat;
 import org.testng.Assert;
+
+import com.aires.businessrules.CoreFunctions;
 import com.aires.businessrules.constants.CoreConstants;
 import com.aires.businessrules.constants.MYLOConstants;
 import com.aires.cucumber.TestContext;
+import com.aires.managers.FileReaderManager;
 import com.aires.pages.mylo.MyloJourneyPage_CreateNewFileSection;
 import com.aires.pages.mylo.MyloJourneyPage_TeamPostSection;
 import com.aires.pages.mylo.Mylo_DashboardHomePage;
 import com.aires.pages.mylo.Mylo_JourneyPage;
+import com.aires.testdatatypes.mylo.MyloEnvironmentDetails;
 import com.aires.utilities.CustomSoftAssert;
 import com.aires.utilities.MyloNewFileUtil;
 import com.vimalselvam.cucumber.listener.Reporter;
@@ -25,6 +29,10 @@ public class MyloJourneyTeamPost_Steps {
 	private MyloJourneyPage_TeamPostSection myloJourneyPageTeamPostSection;
 	private MyloJourneyPage_CreateNewFileSection myloNewFileSection;
 	private CustomSoftAssert softAssert;
+	// String _environment=System.getProperty("envt").toLowerCase();
+	private String _environment = CoreFunctions.getPropertyFromConfig("envt").toLowerCase();
+	private MyloEnvironmentDetails _myloEnvtDetails = FileReaderManager.getInstance().getMyloJsonReader()
+			.getMyloLoginInfoByEnvt(_environment);
 
 	public MyloJourneyTeamPost_Steps(TestContext context) {
 		testContext = context;

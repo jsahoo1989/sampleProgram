@@ -266,7 +266,7 @@ public class Mylo_DashboardHomePage extends Base {
 		try {
 			BusinessFunctions.fluentWaitForMyloSpinnerToDisappear(driver, _spinner);
 			CoreFunctions.explicitWaitTillElementListVisibility(driver, _firstMenuOptions);
-			CoreFunctions.selectItemInListByText(driver, _firstMenuOptions, option);
+			CoreFunctions.clickItemInListByText(driver, _firstMenuOptions, option);
 		} catch (Exception e) {
 			Assert.fail(MessageFormat.format(CoreConstants.FAILD_CLCK_ELE, option));
 		}

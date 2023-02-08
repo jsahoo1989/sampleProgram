@@ -6,7 +6,7 @@ Background: Login to  Mylo application
   
 @IRIS-687 @Mylo:217524 @Mylo-Regression
 Scenario Outline: Mylo-Validate No Option for Replacement of Mylo Journey Aires File Team member
-Given he is on Mylo Journey Summary page for file ID with "activeAssignment"
+Given he is on Mylo Journey Summary page for file ID with "Active"
 And he selects "<Role>" with random team member from the dropdown after clicking on "Add" button
 And row is not updated in the 'Aires File Team' section after clicking on "Cancel" button
 And he did not find the existing team member for specified "<Role>" in the dropdown section after clicking on "Add" button
@@ -22,7 +22,7 @@ Examples:
 
 @IRIS-687 @Mylo:217525 @Mylo-Regression
 Scenario:  Mylo-Validate Yes Option for Replacement of Mylo Journey Aires File Team member
-Given he is on Mylo Journey Summary page for file ID with "activeAssignment"
+Given he is on Mylo Journey Summary page for file ID with "Active"
 And he selects "Emac" as role in the dropdown section after clicking on "Add" button
 And pop up should appear with the message "A current EMAC already exists for this assignment. Do you want to replace this EMAC?" after clicking "Save" button on selecting different team member with "EMAC"
 When he clicks on "Yes" button in AiresFileTeam

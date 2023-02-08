@@ -176,17 +176,16 @@ public class BusinessFunctions {
 		return null;
 	}
 
-	public static void selectOptionValueFromDropdown(WebElement element, String drpdwnValue) {
+	public static void selectOptionValueFromDropdown(WebElement element, String drpdwnValue,String name) {
 		Select dropDown = new Select(element);
-		String elementName = element.getAttribute("value");
-		Log.info("elementName=" + elementName);
+		Log.info("elementName=" + name);
 		dropDown.selectByValue(drpdwnValue);
 		if (element.getAttribute("value").equalsIgnoreCase(drpdwnValue))
 			Reporter.addStepLog(MessageFormat.format(PDTConstants.VERIFY_VALUE_SELECTED_IN_DROPDWON, CoreConstants.PASS,
-					elementName, drpdwnValue));
+					name, drpdwnValue));
 		else
 			Reporter.addStepLog(MessageFormat.format(PDTConstants.FAIL_TO_SELECT_VALUE_IN_DROPDOWN, CoreConstants.FAIL,
-					drpdwnValue, elementName));
+					drpdwnValue, name));
 	}
 
 	public static String getTestRailIdAsPerApplication(String appName, String scenarioTagName) {

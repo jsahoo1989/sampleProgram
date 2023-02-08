@@ -552,6 +552,65 @@ public class DbFunctions {
 		return assignmentId;
 	}
 	
+	public static String getFileIdByStatus(String fileStatus) {
+		Connection connection =null;
+		String assignmentId = null;
+
+		try {	
+			connection =getMyloConnection();
+			PreparedStatement pst = connection.prepareStatement(DbQueries.QUERY_GET_ASSIGNMENT_ID_BY_FILE_STATUS);
+			pst.setString(1, fileStatus);
+			pst.setMaxRows(Integer.parseInt(_maxRows));
+			ResultSet resultset = pst.executeQuery();
+			while (resultset.next()) {
+				assignmentId = resultset.getString(MYLOConstants.FILEID);
+				break;
+			}
+		} catch (Exception ex) {
+			Assert.fail(CoreConstants.SQL_QUERY_FAILED);
+		} finally {
+			try {
+				if (connection != null) {
+					connection.close();
+				}
+			} catch (Exception ex) {
+				Log.info(CoreConstants.ERROR + ex.getMessage());
+				Log.info(CoreConstants.ERROR + ex.getStackTrace());
+			}
+		}
+		return assignmentId;
+	}
+	
+	public static String getFileIdByAddressAndStatus(String addressType, String fileStatus) {
+		Connection connection =null;
+		String assignmentId = null;
+
+		try {	
+			connection =getMyloConnection();
+			PreparedStatement pst = connection.prepareStatement(DbQueries.QUERY_GET_ASSIGNMENT_ID_BY_ADDRESS_FILE_STATUS);
+			pst.setString(1, addressType);
+			pst.setString(2, fileStatus);
+			pst.setMaxRows(Integer.parseInt(_maxRows));
+			ResultSet resultset = pst.executeQuery();
+			while (resultset.next()) {
+				assignmentId = resultset.getString(MYLOConstants.FILEID);
+				break;
+			}
+		} catch (Exception ex) {
+			Assert.fail(CoreConstants.SQL_QUERY_FAILED);
+		} finally {
+			try {
+				if (connection != null) {
+					connection.close();
+				}
+			} catch (Exception ex) {
+				Log.info(CoreConstants.ERROR + ex.getMessage());
+				Log.info(CoreConstants.ERROR + ex.getStackTrace());
+			}
+		}
+		return assignmentId;
+	}
+	
 	public static String getFileIdByTransfereeName(String tFName,String tLName) {
 		Connection connection =null;
 		String assignmentId = null;

@@ -122,6 +122,18 @@ public class DbQueries {
 			"inner join ISISDBA.ASSIGNMENT_status_code S on A.ASSIGNMENT_STATUS_CODE=S.ASSIGNMENT_STATUS_CODE\r\n"+
 			"inner join ISISDBA.ASSIGNMENT_CONTACT C on A.ASSIGNMENT_ID=C.ASSIGNMENT_ID\r\n" +
 			"where S.ASSIGNMENT_STATUS_DESC=?";
+	
+	public static final String QUERY_GET_ASSIGNMENT_ID_BY_FILE_STATUS="Select A.ASSIGNMENT_ID as FileID\r\n" + 
+			"from ISISDBA.Assignment A\r\n" + 
+			"inner join ISISDBA.ASSIGNMENT_status_code S on A.ASSIGNMENT_STATUS_CODE=S.ASSIGNMENT_STATUS_CODE\r\n"+
+			"where S.ASSIGNMENT_STATUS_DESC=?";
+	
+	public static final String QUERY_GET_ASSIGNMENT_ID_BY_ADDRESS_FILE_STATUS="Select A.ASSIGNMENT_ID as FileID\r\n" + 
+			"from ISISDBA.Assignment A\r\n" + 
+			"inner join ISISDBA.ASSIGNMENT_status_code S on A.ASSIGNMENT_STATUS_CODE=S.ASSIGNMENT_STATUS_CODE\r\n"+
+			"inner join ISISDBA.ASSIGNMENT_ADDRESS AD on A.ASSIGNMENT_ID=AD.ASSIGNMENT_ID\r\n"+
+			"where AD.LOCATION_TYPE_CODE=? and S.ASSIGNMENT_STATUS_DESC=?";
+	
 	public static final String QUERY_GET_ASSIGNMENT_ID_BY_TRANSFEREE_NAME="Select  A.ASSIGNMENT_ID as FileID\r\n" + 
 			" from ISISDBA.ASSIGNMENT A \r\n" + 
 			"inner join ISISDBA.TRANSFEREE T on A.TRANSFEREE_ID=T.Transferee_Id \r\n" + 

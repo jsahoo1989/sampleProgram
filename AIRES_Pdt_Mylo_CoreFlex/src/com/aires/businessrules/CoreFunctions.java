@@ -1115,6 +1115,10 @@ public class CoreFunctions {
 			e.printStackTrace();
 		}
 	}
+	
+	public static boolean isNewWindowExist(WebDriver driver) {
+		return 	driver.getWindowHandles().size()>1;
+	}
 
 	public static boolean verifyTextEditorValue(WebDriver driver, WebElement element, String textValue,
 			String textFieldName) {
@@ -2084,5 +2088,22 @@ public class CoreFunctions {
 			Reporter.addStepLog(MessageFormat.format(PDTConstants.FAILED_TO_VERIFY_FIELD_ACCEPTING_MAX_CHARACTERS, CoreConstants.FAIL, fieldName, maxLength, actualText, expectedText));
 			return false;
 		}
+	}
+	
+	public static void clickElementIfExist(WebDriver driver, WebElement element,String name) {
+		try {
+			if (isElementExist(driver, element, 10)) {
+				highlightObject(driver, element);
+				click(driver, element, name);
+			}
+		} catch (Exception e) {
+			Assert.fail(MessageFormat.format(CoreConstants.FAILD_CLCK_ELE, element));
+		}
+	}
+	
+	public static String getEnvironment() {
+		String _environment=System.getProperty("envt").toLowerCase();
+		//String _environment = CoreFunctions.getPropertyFromConfig("envt").toLowerCase();
+		return _environment;
 	}
 }

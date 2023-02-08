@@ -7,7 +7,7 @@ Background: Login to  Mylo application
 @IRIS-1868 @217945 @217946 @217948 @217949 @Mylo:217976 @Mylo-Regression
 Scenario Outline:  Mylo-Validate Edit/Add Option availability for Mylo Journey Authorization/Tracking section with different UserTypes
 Given he has logged into the Mylo application with mentioned userType "<UserType>" 
-And he is on Mylo Journey Summary page for file ID with "activeAssignment" 
+And he is on Mylo Journey Summary page for file ID with "Active" 
 When he views "Authorization/Tracking" section
 Then "Edit","Add" button should be enabled for Resource300139 or disabled for Without Resource300139 depending on "<UserType>"
 And he should be able to view the comments by hovering over to the Authorization/Tracking comments sections
@@ -26,19 +26,19 @@ Then a new row is added with below fields on Authorization/Tracking section
 
 @IRIS-1868 @217950 @217951 @Mylo:217978 @Mylo-Regression
 Scenario Outline:  Mylo-Validate Edit/Add Option availability of Mylo Journey Authorization/Tracking with respect to File Status
-Given he is on Mylo Journey Summary page for file ID with "<FileType>"
+Given he is on Mylo Journey Summary page for file ID with "<FileStatus>"
 And "Status" of the file should be "<FileStatus>"  after clicking on "Details Carrot" on FileInformation section
 When he views "Authorization/Tracking" section
 Then "Edit","Add" button should be disabled for both "<FileStatus>" status
 Examples:
-|FileType                  |FileStatus|
-|closedFile_withAuthTrack  |Closed    |
-|canceledFile_withAuthTrack|Canceled  |
+|FileStatus|
+|Closed    |
+|Canceled  |
 
 @IRIS-1868 @217952 @217953 @Mylo:217979 @Mylo-Regression
 Scenario Outline:  Mylo-Validate Number History for Mylo Journey Authorization/Tracking section with different UserTypes
 Given he has logged into the Mylo application with mentioned userType "<UserType>" 
-And he is on Mylo Journey Summary page for file ID with "activeAssignment" 
+And he is on Mylo Journey Summary page for file ID with "Active" 
 When he clicks on "history" label of "Authorization/Tracking" section
 Then popup should be displayed with below fields for Resource300139 or doesnot appear for Without Resource300139 depending on "<UserType>" logged in
 |History|Updated by|Update Date|
@@ -49,7 +49,7 @@ Examples:
 
 @IRIS-1868 @217955 @217956 @Mylo:217980 @Mylo-Regression
 Scenario:  Mylo-Validate Warning Messages for Mandatory fields of Authorization/Tracking section on Mylo Journey page
-Given he is on Mylo Journey Summary page for file ID with "activeAssignment"
+Given he is on Mylo Journey Summary page for file ID with "Active"
 And a new row is added with below fields after clicking on "Add" icon on Authorization/Tracking section
 |Type|Number|Auth Form Label|Comment|
 When he clicks on "Save" button on Authorization/Tracking section
@@ -74,7 +74,7 @@ And Saved data should get deleted after clicking on "Delete" icon under Authoriz
 
 @IRIS-1868 @217959 @217960 @Mylo:217982 @Mylo-Regression
 Scenario:  Mylo-Validate Sorting functionality of Mylo Journey Authorization/Tracking section with different categories and Sorting order
-Given he is on Mylo Journey Summary page for file ID with "existingAuthTrackData"
+Given he is on Mylo Journey Summary page for file ID with "Active"
 Then authTracking fields should be sorted as per the "<Category>" selected with "<Sorting Order>" from "Sort By" dropdown on Authorization/Tracking section
 |Field Name|Sorting Order| 
 |Type    |Ascending    |

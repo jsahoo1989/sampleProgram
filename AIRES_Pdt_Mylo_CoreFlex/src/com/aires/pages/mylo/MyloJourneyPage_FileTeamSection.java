@@ -7,12 +7,14 @@ import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.How;
+import org.testng.Assert;
 
 import com.aires.businessrules.Base;
 import com.aires.businessrules.BusinessFunctions;
 import com.aires.businessrules.CoreFunctions;
 import com.aires.businessrules.constants.MYLOConstants;
 import com.aires.utilities.MyloNewFileUtil;
+
 
 public class MyloJourneyPage_FileTeamSection extends Base {
 
@@ -54,9 +56,11 @@ public class MyloJourneyPage_FileTeamSection extends Base {
 	}
 
 	public String setFileTeamDropdownFields(String fieldName, String fieldValue) {
+		CoreFunctions.explicitWaitTillElementListVisibility(driver, _fileTeamDropdownFields);
 		WebElement fieldElement = BusinessFunctions.returnItemFromListUsingAttribute(driver, _fileTeamDropdownFields,
 				fieldName, MYLOConstants.FORMCONTROLNAME);
 		CoreFunctions.click(driver, fieldElement, fieldName);
+		Assert.assertTrue(CoreFunctions.isElementByLocatorExist(driver, _dropdownOptions, MYLOConstants.CUSTOM_WAIT_TIME));
 		return BusinessFunctions.setMyloDropdownFields(driver, _dropdownOptions, fieldValue, fieldName);
 	}
 
@@ -68,7 +72,7 @@ public class MyloJourneyPage_FileTeamSection extends Base {
 			setFileTeamDropdownFields(MYLOConstants.ROLE, MYLOConstants.PPC);
 			MyloNewFileUtil.set_ppc(setFileTeamDropdownFields(MYLOConstants.NAME, MYLOConstants.RANDOM));
 			clickFileTeamButtons(MYLOConstants.SAVE_BUTTON);
-			CoreFunctions.click(driver, _yesBtn, MYLOConstants.YES_BUTTON);
+			CoreFunctions.clickElementIfExist(driver, _yesBtn, MYLOConstants.YES_BUTTON);
 			BusinessFunctions.fluentWaitForMyloSpinnerToDisappear(driver, _spinner);
 			clickFileTeamButtons(MYLOConstants.EDIT_BUTTON);
 			clickFileTeamButtons(MYLOConstants.ADD_BUTTON);

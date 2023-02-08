@@ -214,6 +214,14 @@ public class Mylo_JourneyPage extends Base {
 	public String getFileIDFromDBByTransfereeName(String tFName,String tLName) {
 		return DbFunctions.getFileIdByTransfereeName(tFName,tLName);
 	}
+	
+	public String getFileIDByStatus(String fileStatus) {
+		return DbFunctions.getFileIdByStatus(fileStatus);
+	}
+	
+	public String getFileIDByAddressStatus(String addressType,String fileStatus) {
+		return DbFunctions.getFileIdByAddressAndStatus(addressType, fileStatus);
+	}
 
 	/**
 	 * Getting the required File Info from Json based on the parameters passed
@@ -334,6 +342,7 @@ public class Mylo_JourneyPage extends Base {
 	public void closePopUp() {
 		CoreFunctions.explicitWaitTillElementVisibility(driver, _closePopUp, MYLOConstants.CLOSE_POPUP);
 		CoreFunctions.click(driver, _closePopUp, MYLOConstants.CLOSE_POPUP);
+		BusinessFunctions.fluentWaitForMyloSpinnerToDisappear(driver, _spinner);
 	}
 
 }

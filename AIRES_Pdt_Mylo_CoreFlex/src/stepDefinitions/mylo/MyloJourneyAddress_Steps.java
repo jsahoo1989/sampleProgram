@@ -3,12 +3,17 @@ package stepDefinitions.mylo;
 import java.text.MessageFormat;
 import java.util.Map;
 import org.testng.Assert;
+
+import com.aires.businessrules.CoreFunctions;
 import com.aires.businessrules.constants.CoreConstants;
 import com.aires.businessrules.constants.MYLOConstants;
 import com.aires.cucumber.TestContext;
+import com.aires.managers.FileReaderManager;
 import com.aires.pages.mylo.MyloJourneyPage_AddressSection;
+import com.aires.pages.mylo.MyloJourneyPage_CreateNewFileSection;
 import com.aires.pages.mylo.Mylo_DashboardHomePage;
 import com.aires.pages.mylo.Mylo_JourneyPage;
+import com.aires.testdatatypes.mylo.MyloEnvironmentDetails;
 import com.vimalselvam.cucumber.listener.Reporter;
 
 import cucumber.api.DataTable;
@@ -21,12 +26,27 @@ public class MyloJourneyAddress_Steps {
 	private Mylo_DashboardHomePage myloDashboardPage;
 	private Mylo_JourneyPage myloJourneyPage;
 	private MyloJourneyPage_AddressSection myloJourneyPageAddressSection;
+	private MyloJourneyPage_CreateNewFileSection _myloNewFileSection;
+	// String _environment=System.getProperty("envt").toLowerCase();
+	private String _environment = CoreFunctions.getPropertyFromConfig("envt").toLowerCase();
+	private MyloEnvironmentDetails _myloEnvtDetails = FileReaderManager.getInstance().getMyloJsonReader()
+			.getMyloLoginInfoByEnvt(_environment);
 
 	public MyloJourneyAddress_Steps(TestContext context) {
 		testContext = context;
 		myloDashboardPage = testContext.getMyloPageObjectManager().getDashboardHomePage();
 		myloJourneyPage = testContext.getMyloPageObjectManager().getJourneyPage();
 		myloJourneyPageAddressSection = testContext.getMyloPageObjectManager().getJourneyPageAddressSection();
+		_myloNewFileSection = testContext.getMyloPageObjectManager().getJourneyPageCreateNewFileSection();
+	}
+	
+	@Given("^he is on Mylo Journey Summary page for file ID with \"([^\"]*)\" address type$")
+	public void he_is_on_Mylo_Journey_Summary_page_for_file_ID_with_address_type(String addressType) throws Throwable {
+		myloDashboardPage.clickOptionFromMainMenu(MYLOConstants.JOURNEY);
+		myloDashboardPage.selectOptionsFromAssignmentMenu(MYLOConstants.QUERY_FILE);
+		myloDashboardPage.selectParameterFromQueryScreen(MYLOConstants.FILE);
+		myloDashboardPage.selectOptionsForFileParameters(MYLOConstants.FILE_ID, myloJourneyPage.getFileIDByAddressStatus(addressType, MYLOConstants.ACTIVE));
+		myloDashboardPage.clickExecuteButton();
 	}
 
 	@When("^he views \"([^\"]*)\" section after clicking on \"([^\"]*)\" button$")
@@ -47,14 +67,47 @@ public class MyloJourneyAddress_Steps {
 		myloJourneyPageAddressSection.addressSectionButtonEnabilityStatus(type, btnName1, sectionName);
 		myloJourneyPageAddressSection.addressSectionButtonEnabilityStatus(type, btnName2, sectionName);
 	}
-
-	@Given("^he is on \"([^\"]*)\" section after clicking on \"([^\"]*)\" button displayed under it for file ID with \"([^\"]*)\"$")
-	public void he_is_on_section_after_clicking_on_button_displayed_under_it_for_file_ID_with(String sectionType,
-			String btnName, String fileType) {
+	
+	@Given("^he adds \"([^\"]*)\" for a newly created file on Mylo Journey page$")
+	public void he_adds_for_a_newly_created_file_on_Mylo_Journey_page(String sectionType) {
+		myloDashboardPage.clickOptionFromMainMenu(MYLOConstants.JOURNEY);
+		myloDashboardPage.createNewFileIfNotExists(MYLOConstants.AUTOMATION_CLIENT_ID, _myloNewFileSection);
+		myloJourneyPageAddressSection.addOriginAddressIfNotPresent();
+		myloJourneyPageAddressSection.addDestinationAddressIfNotPresent();
+		String detailsBtn = (sectionType.equals(MYLOConstants.ORIGIN_ADDRESS))
+				? MYLOConstants.ORIGIN_ADDRESS_DETAILS_BUTTON
+				: MYLOConstants.DESTINATION_ADDRESS_DETAILS_BUTTON;
+		String btnName = (sectionType.equals(MYLOConstants.ORIGIN_ADDRESS))
+				? MYLOConstants.ORIGIN_ADDRESS_EDIT_BUTTON
+				: MYLOConstants.DESTINATION_ADDRESS_EDIT_BUTTON;
+		myloJourneyPageAddressSection.clickFieldsOnAddressSection(detailsBtn, sectionType);
+		myloJourneyPageAddressSection.clickFieldsOnAddressSection(btnName, sectionType);
+	}
+	
+	@Given("^he is on \"([^\"]*)\" section for file ID with \"([^\"]*)\" on Mylo Journey page$")
+	public void he_is_on_section_for_file_ID_with_on_Mylo_Journey_page(String sectionType, String arg2)  {
 		myloDashboardPage.clickOptionFromMainMenu(MYLOConstants.JOURNEY);
 		myloDashboardPage.selectOptionsFromAssignmentMenu(MYLOConstants.QUERY_FILE);
 		myloDashboardPage.selectParameterFromQueryScreen(MYLOConstants.FILE);
-		myloDashboardPage.selectOptionsForFileParameters(MYLOConstants.FILE_ID, myloJourneyPage.getFileInfo(fileType,MYLOConstants.FILE_ID));
+		myloDashboardPage.selectOptionsForFileParameters(MYLOConstants.FILE_ID, _myloEnvtDetails.details.allAddressFileId);
+		myloDashboardPage.clickExecuteButton();
+		String detailsBtn = (sectionType.equals(MYLOConstants.ORIGIN_ADDRESS))
+				? MYLOConstants.ORIGIN_ADDRESS_DETAILS_BUTTON
+				: MYLOConstants.DESTINATION_ADDRESS_DETAILS_BUTTON;
+		String btnName = (sectionType.equals(MYLOConstants.ORIGIN_ADDRESS))
+				? MYLOConstants.ORIGIN_ADDRESS_EDIT_BUTTON
+				: MYLOConstants.DESTINATION_ADDRESS_EDIT_BUTTON;
+		myloJourneyPageAddressSection.clickFieldsOnAddressSection(detailsBtn, sectionType);
+		myloJourneyPageAddressSection.clickFieldsOnAddressSection(btnName, sectionType);
+	}
+
+	@Given("^he is on \"([^\"]*)\" section after clicking on \"([^\"]*)\" button displayed under it for file ID with \"([^\"]*)\"$")
+	public void he_is_on_section_after_clicking_on_button_displayed_under_it_for_file_ID_with(String sectionType,
+			String btnName, String addressType) {
+		myloDashboardPage.clickOptionFromMainMenu(MYLOConstants.JOURNEY);
+		myloDashboardPage.selectOptionsFromAssignmentMenu(MYLOConstants.QUERY_FILE);
+		myloDashboardPage.selectParameterFromQueryScreen(MYLOConstants.FILE);
+		myloDashboardPage.selectOptionsForFileParameters(MYLOConstants.FILE_ID, myloJourneyPage.getFileIDByAddressStatus(addressType, MYLOConstants.ACTIVE));
 		myloDashboardPage.clickExecuteButton();
 		myloJourneyPage.scrollToJourneySection(sectionType, MYLOConstants.JOURNEY);
 		String detailsBtn = (sectionType.equals(MYLOConstants.ORIGIN_ADDRESS))
@@ -136,6 +189,7 @@ public class MyloJourneyAddress_Steps {
 					MessageFormat.format(MYLOConstants.FAILED_TO_VERIFY_UPDATED_VALUE_SECTION, CoreConstants.FAIL,
 							sectionType));
 		}
+		myloDashboardPage.changeFileStatus(MYLOConstants.CANCEL_BUTTON);
 	}
 
 	@When("^he clicks on \"([^\"]*)\" button of \"([^\"]*)\" section after saving below data for respective fields$")
@@ -227,7 +281,7 @@ public class MyloJourneyAddress_Steps {
 		myloDashboardPage.clickOptionFromMainMenu(MYLOConstants.JOURNEY);
 		myloDashboardPage.selectOptionsFromAssignmentMenu(MYLOConstants.QUERY_FILE);
 		myloDashboardPage.selectParameterFromQueryScreen(MYLOConstants.FILE);
-		myloDashboardPage.selectOptionsForFileParameters(MYLOConstants.FILE_ID, myloJourneyPage.getFileInfo(fileType,MYLOConstants.FILE_ID));
+		myloDashboardPage.selectOptionsForFileParameters(MYLOConstants.FILE_ID, _myloEnvtDetails.details.allAddressFileId);
 		myloDashboardPage.clickExecuteButton();
 		myloJourneyPage.scrollToJourneySection(sectionType, MYLOConstants.JOURNEY);
 		String editBtn = (sectionType.equals(MYLOConstants.ORIGIN_ADDRESS)) ? MYLOConstants.ORIGIN_ADDRESS_EDIT_BUTTON

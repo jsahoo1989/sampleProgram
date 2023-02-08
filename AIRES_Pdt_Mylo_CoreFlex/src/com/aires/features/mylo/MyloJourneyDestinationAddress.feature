@@ -7,7 +7,7 @@ Background: Login to  Mylo application
 @IRIS-2037 @218009 @218010 @Mylo:218047 @Mylo-Regression
 Scenario Outline:  Mylo-Validate Edit Option availability for Mylo Journey Destination Address section with different UserTypes
 Given he has logged into the Mylo application with mentioned userType "<UserType>" 
-And he is on Mylo Journey Summary page for file ID with "addressExist" 
+And he is on Mylo Journey Summary page for file ID with "DEST" address type
 When he views "Destination Address" section after clicking on "Destination Address Details" button
 Then "Destination Address Edit" button should be "<Status>" depending on "<UserType>" for "Destination Address" section on Mylo Journey Page
 Examples:
@@ -17,18 +17,18 @@ Examples:
 
 @IRIS-2037 @218023 @218024 @Mylo:218048 @Mylo-Regression
 Scenario Outline:  Mylo-Validate Edit & CopyToMail Option availability of Mylo Journey Destination Address section with respect to File Status
-Given he is on Mylo Journey Summary page for file ID with "<FileType>"
+Given he is on Mylo Journey Summary page for file ID with "<FileStatus>"
 And "Status" of the file should be "<FileStatus>"  after clicking on "Details Carrot" on FileInformation section
 When he views "Destination Address" section after clicking on "Destination Address Details" button
 Then "Destination Address Edit", "Destination Address Copy to Mail" button should be disabled for both "<FileStatus>" status of "Destination Address" section
 Examples:
-|FileType    |FileStatus|
-|closedFile  |Closed    |
-|canceledFile|Canceled  |
+|FileStatus|
+|Closed    |
+|Canceled  |
 
 @IRIS-2037 @218012 @Mylo:218049 @Mylo-Regression
 Scenario:  Mylo-Validate Save functionality and Warning Messages for Boundary Conditions on City, ZipCode, Address1,Address2,and State field under Destination Address section on Mylo Journey page  
-Given he is on "Destination Address" section after clicking on "Destination Address Edit" button displayed under it for file ID with "addressExist"
+Given he is on "Destination Address" section after clicking on "Destination Address Edit" button displayed under it for file ID with "DEST"
 And he enters below invalid data for different fields with other mandatory data being provided for "Destination Address" section
 |Field Name                  |CharacterLength |Message                                                                   |
 |Destination City            |61              |Maximum length of City in destination address is 60 characters!           |
@@ -55,7 +55,7 @@ Then below fieldValues should be successfully saved under "Destination Address" 
 
 @IRIS-2037 @218013 @Mylo:218050 @Mylo-Regression
 Scenario:  Mylo-Validate Warning Messages for Mandatory fields of Destination Address section on Mylo Journey page 
-Given he is on "Destination Address" section after clicking on "Destination Address Edit" button displayed under it for file ID with "addressExist"
+Given he adds "Destination Address" for a newly created file on Mylo Journey page
 And he enters below invalid data combination of mandatory fields on "Destination Address" section
 |Country   |State Text Field|City |Message                                                    | 
 |Random    |60              |     |You need to fill in the city field in destination address! |
@@ -75,7 +75,7 @@ Then entered data for below fields should be successfully saved in "Destination 
 
 @IRIS-2054 @218014 @Mylo:218051 @Mylo-Regression
 Scenario:  Mylo-Validate Copy functionality of Destination Address section on Mylo Journey page 
-Given he is on "Destination Address" section after clicking on "Destination Address Edit" button displayed under it for file ID with "addressExist"
+Given he is on "Destination Address" section for file ID with "all addresses" on Mylo Journey page
 When he clicks on "Destination Address Copy" button of "Destination Address" section after saving below data for respective fields
 |Field Name                  |CharacterLength |
 |Destination Country         |Random          |
@@ -89,7 +89,7 @@ And copied "Destination Address" can be verified by pasting in the "Mailing Addr
 
 @IRIS-2054 @218015 @218016 @Mylo:218052 @Mylo-Regression
 Scenario:  Mylo-Validate CopyToMail functionality for Yes option of Destination Address section without existing Mailing address on Mylo Journey page 
-Given he is on "Destination Address" section after clicking on "Destination Address Edit" button displayed under it for file ID with "mailingAddressNotExist"
+Given he is on "Destination Address" section after clicking on "Destination Address Edit" button displayed under it for file ID with "DEST"
 When he clicks on "Destination Address Copy to Mail" button of "Destination Address" section after saving below data for respective fields
 |Field Name                  |CharacterLength |
 |Destination Country         |Random          |
@@ -104,7 +104,7 @@ And Saved data should get deleted after clicking on "Delete" button under "Maili
 
 @IRIS-2054 @218017 @218018 @Mylo:218053 @Mylo-Regression
 Scenario:  Mylo-Validate CopyToMail functionality for No option of Destination Address section without existing Mailing address on Mylo Journey page 
-Given he is on "Destination Address" section after clicking on "Destination Address Edit" button displayed under it for file ID with "mailingAddressNotExist"
+Given he is on "Destination Address" section after clicking on "Destination Address Edit" button displayed under it for file ID with "DEST"
 And he clicks on "Destination Address Copy to Mail" button of "Destination Address" section after saving below data for respective fields
 |Field Name                  |CharacterLength |
 |Destination Country         |Random          |
@@ -119,7 +119,7 @@ And "Destination Address" should not get updated in "Mailing address" section af
 
 @IRIS-2054 @218019 @218020 @Mylo:218054 @Mylo-Regression
 Scenario:  Mylo-Validate CopyToMail functionality for Yes option of Destination Address section with existing Mailing address on Mylo Journey page 
-Given he clicks on "Destination Address Copy to Mail" button of "Destination Address" section after saving below data for file ID with "addressExist"
+Given he clicks on "Destination Address Copy to Mail" button of "Destination Address" section after saving below data for file ID with "all addresses"
 |Field Name                  |CharacterLength |
 |Destination Country         |Random          |
 |Destination City            |5               |
@@ -133,7 +133,7 @@ And "Destination Address" should be updated in "Mailing address" section after c
 
 @IRIS-2054 @218021 @218022 @Mylo:218055 @Mylo-Regression
 Scenario:  Mylo-Validate CopyToMail functionality for No option of Destination Address section with existing Mailing address on Mylo Journey page 
-Given he clicks on "Destination Address Copy to Mail" button of "Destination Address" section after saving below data for file ID with "addressExist"
+Given he clicks on "Destination Address Copy to Mail" button of "Destination Address" section after saving below data for file ID with "all addresses"
 |Field Name                  |CharacterLength |
 |Destination Country         |Random          |
 |Destination City            |5               |

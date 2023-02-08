@@ -7,7 +7,7 @@ Background: Login to  Mylo application
 @IRIS-1997 @217988 @Mylo:218038 @Mylo-Regression
 Scenario Outline:  Mylo-Validate Edit Option availability for Mylo Journey Origin Address section with different UserTypes
 Given he has logged into the Mylo application with mentioned userType "<UserType>" 
-And he is on Mylo Journey Summary page for file ID with "addressExist" 
+And he is on Mylo Journey Summary page for file ID with "ORIG" address type
 When he views "Origin Address" section after clicking on "Origin Address Details" button
 Then "Origin Address Edit" button should be "<Status>" depending on "<UserType>" for "Origin Address" section on Mylo Journey Page
 Examples:
@@ -17,18 +17,18 @@ Examples:
 
 @IRIS-1997 @218001 @218002 @Mylo:218039 @Mylo-Regression
 Scenario Outline:  Mylo-Validate Edit & CopyToMail Option availability of Mylo Journey Origin Address section with respect to File Status
-Given he is on Mylo Journey Summary page for file ID with "<FileType>"
+Given he is on Mylo Journey Summary page for file ID with "<FileStatus>"
 And "Status" of the file should be "<FileStatus>"  after clicking on "Details Carrot" on FileInformation section
 When he views "Origin Address" section after clicking on "Origin Address Details" button
 Then "Origin Address Edit", "Origin Address Copy to Mail" button should be disabled for both "<FileStatus>" status of "Origin Address" section
 Examples:
-|FileType    |FileStatus|
-|closedFile  |Closed    |
-|canceledFile|Canceled  |
+|FileStatus|
+|Closed    |
+|Canceled  |
 
 @IRIS-1997 @217990 @Mylo:218040 @Mylo-Regression
 Scenario:  Mylo-Validate Save functionality and Warning Messages for Boundary Conditions on City, ZipCode, Address1,Address2,and State field under Origin Address section on Mylo Journey page  
-Given he is on "Origin Address" section after clicking on "Origin Address Edit" button displayed under it for file ID with "addressExist"
+Given he is on "Origin Address" section after clicking on "Origin Address Edit" button displayed under it for file ID with "ORIG"
 And he enters below invalid data for different fields with other mandatory data being provided for "Origin Address" section
 |Field Name             |CharacterLength |Message                                                              |
 |Origin City            |61          |Maximum length of City in origin address is 60 characters!           |
@@ -56,7 +56,7 @@ Then below fieldValues should be successfully saved under "Origin Address" Dropd
 
 @IRIS-1997 @217991 @Mylo:218041 @Mylo-Regression
 Scenario:  Mylo-Validate Warning Messages for Mandatory fields of Origin Address section on Mylo Journey page 
-Given he is on "Origin Address" section after clicking on "Origin Address Edit" button displayed under it for file ID with "addressExist"
+Given he adds "Origin Address" for a newly created file on Mylo Journey page
 And he enters below invalid data combination of mandatory fields on "Origin Address" section
 |Country   |State Text Field  |City |Message                                              | 
 |Random    |60                |     |You need to fill in the city field in origin address!|
@@ -76,7 +76,7 @@ Then entered data for below fields should be successfully saved in "Origin Addre
 
 @IRIS-2021 @217992 @Mylo:218042 @Mylo-Regression
 Scenario:  Mylo-Validate Copy functionality of Origin Address section on Mylo Journey page 
-Given he is on "Origin Address" section after clicking on "Origin Address Edit" button displayed under it for file ID with "addressExist"
+Given he is on "Origin Address" section for file ID with "all addresses" on Mylo Journey page
 When he clicks on "Origin Address Copy" button of "Origin Address" section after saving below data for respective fields
 |Field Name             |CharacterLength |
 |Origin Country         |Random          |
@@ -90,7 +90,7 @@ And copied "Origin Address" can be verified by pasting in the "Mailing Address a
 
 @IRIS-2021 @217994 @Mylo:218043 @Mylo-Regression
 Scenario: Mylo-Validate CopyToMail functionality for Yes option of Origin Address section without existing Mailing address on Mylo Journey page 
-Given he is on "Origin Address" section after clicking on "Origin Address Edit" button displayed under it for file ID with "mailingAddressNotExist"
+Given he is on "Origin Address" section after clicking on "Origin Address Edit" button displayed under it for file ID with "ORIG"
 When he clicks on "Origin Address Copy to Mail" button of "Origin Address" section after saving below data for respective fields
 |Field Name             |CharacterLength |
 |Origin Country         |Random          |
@@ -105,7 +105,7 @@ And Saved data should get deleted after clicking on "Delete" button under "Maili
 
 @IRIS-2021 @217995 @217996 @Mylo:218044 @Mylo-Regression
 Scenario:  Mylo-Validate CopyToMail functionality for No option of Origin Address section without existing Mailing address on Mylo Journey page 
-Given he is on "Origin Address" section after clicking on "Origin Address Edit" button displayed under it for file ID with "mailingAddressNotExist"
+Given he is on "Origin Address" section after clicking on "Origin Address Edit" button displayed under it for file ID with "ORIG"
 And he clicks on "Origin Address Copy to Mail" button of "Origin Address" section after saving below data for respective fields
 |Field Name             |CharacterLength |
 |Origin Country         |Random          |
@@ -120,7 +120,7 @@ And "Origin Address" should not get updated in "Mailing address" section after h
 
 @IRIS-2021 @217997 @217998 @Mylo:218045 @Mylo-Regression
 Scenario:  Mylo-Validate CopyToMail functionality for Yes option of Origin Address section with existing Mailing address on Mylo Journey page 
-Given he clicks on "Origin Address Copy to Mail" button of "Origin Address" section after saving below data for file ID with "addressExist"
+Given he clicks on "Origin Address Copy to Mail" button of "Origin Address" section after saving below data for file ID with "all address"
 |Field Name             |CharacterLength |
 |Origin Country         |Random          |
 |Origin City            |5               |
@@ -134,7 +134,7 @@ And "Origin Address" should be updated in "Mailing address" section after clicki
 
 @IRIS-2021 @Mylo:218046 @Mylo-Regression
 Scenario:  Mylo-Validate CopyToMail functionality for No option of Origin Address section with existing Mailing address on Mylo Journey page 
-Given he clicks on "Origin Address Copy to Mail" button of "Origin Address" section after saving below data for file ID with "addressExist"
+Given he clicks on "Origin Address Copy to Mail" button of "Origin Address" section after saving below data for file ID with "all address"
 |Field Name             |CharacterLength |
 |Origin Country         |Random          |
 |Origin City            |5               |

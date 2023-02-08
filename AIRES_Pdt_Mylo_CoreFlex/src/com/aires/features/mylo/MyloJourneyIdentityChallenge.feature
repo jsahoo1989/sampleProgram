@@ -15,7 +15,7 @@ And validation message "Tag Scripts are not allowed in Answer" should be display
 
 @IRIS-1762 @217701 @217703 @217704 @217705 @217706 @Mylo:217717 @Mylo-Regression
 Scenario:  Mylo-Validate Identity Challenge Question Answer Save Functionality on Mylo Journey page
-Given he is on "Identity Challenge Question" section on "Mylo Journey page" for fileID with client having the "TRANSSCH" requirement
+Given he is on "Identity Challenge Question" section on "Mylo Journey page" for fileID with client having the "TRANSSCH_IDENTCHALLENGE" requirement
 And answer entered is not saved by clicking on "Cancel" button after he made an entry in the Answer field
 And answer entered is not saved by clicking on "Close" popup after he made an entry in the Answer field
 When he clicks on "Save" button after entering more than "150" characters in the Answer field

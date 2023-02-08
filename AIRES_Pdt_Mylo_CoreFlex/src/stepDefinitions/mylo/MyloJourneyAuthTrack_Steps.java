@@ -122,6 +122,7 @@ public class MyloJourneyAuthTrack_Steps {
 		myloJourneyPageAuthTrack.clickFieldsOnAuthTrackSection(MYLOConstants.EDIT_BUTTON, 0);
 		myloJourneyPageAuthTrack.deleteAuthTrackaData(0);
 		myloJourneyPageAuthTrack.clickFieldsOnAuthTrackSection(MYLOConstants.YES_BUTTON, 0);
+		_myloDashboardPage.changeFileStatus(MYLOConstants.CANCEL_BUTTON);
 	}
 	
 	@Then("^authTracking fields should be sorted as per the \"([^\"]*)\" selected with \"([^\"]*)\" from \"([^\"]*)\" dropdown on Authorization/Tracking section$")

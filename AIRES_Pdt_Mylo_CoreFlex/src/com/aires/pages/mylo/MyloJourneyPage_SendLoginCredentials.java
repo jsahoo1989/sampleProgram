@@ -141,13 +141,13 @@ public class MyloJourneyPage_SendLoginCredentials extends Base {
 	public void verifyFileLinkingSection() {
 		BusinessFunctions.verifyMyloValidationMessage(MYLOConstants.FILE_LINKING_HEADER,
 				CoreFunctions.getElementText(driver, _fileLinkingHeader), MYLOConstants.FILE_LINKING_POPUP);
-		BusinessFunctions.verifyMyloValidationMessage(MYLOConstants.DATA_INTEGRITY_MSG1,
+		BusinessFunctions.verifyMyloValidationMessage(MYLOConstants.LINK_NEW_JOURNEY_MSG,
 				CoreFunctions.getElementText(driver, _fileLinkingDataIntegrityMessages.get(1)),
 				MYLOConstants.FILE_LINKING_POPUP);
-		BusinessFunctions.verifyMyloValidationMessage(MYLOConstants.DATA_INTEGRITY_MSG2,
+		BusinessFunctions.verifyMyloValidationMessage(MYLOConstants.LINK_EXISTING_JOURNEY_MSG,
 				CoreFunctions.getElementText(driver, _fileLinkingDataIntegrityMessages.get(2)),
 				MYLOConstants.FILE_LINKING_POPUP);
-		BusinessFunctions.verifyMyloValidationMessage(MYLOConstants.DATA_INTEGRITY_MSG3,
+		BusinessFunctions.verifyMyloValidationMessage(MYLOConstants.DECISION_FOR_LINKING_MSG,
 				CoreFunctions.getElementText(driver, _fileLinkingDataIntegrityMessages.get(3)),
 				MYLOConstants.FILE_LINKING_POPUP);
 	}

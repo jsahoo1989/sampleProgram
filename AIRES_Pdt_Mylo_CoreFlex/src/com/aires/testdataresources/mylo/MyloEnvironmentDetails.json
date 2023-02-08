@@ -7,10 +7,11 @@
 			"myloPassword": "F74#jd*187_NB",
 			"myloProfileName": "mxsso!",
 			"myloFileID": "611085",
+			"allAddressFileId": "999149",
 			"clientId": "49226",
 			"clientName": "Aires QA Automation Client",
-			"mxClientUserName": "testmylo123@aires.com",
-			"mxClientPassword": "relonetng11",
+			"mxClientUserName": "automationqauser@aires.com",
+			"mxClientPassword": "Relonetng1!",
 			"mxClientUserProfileName": "Test Mylo",
 			"mobilityXURL": "https://relonetdev3.aires.com/mobilityx/faces/jsf/Login.jsf",
 			"myloURL": "https://relonetqa4.aires.com/mylo-app/#/login"
@@ -24,9 +25,10 @@
 			"myloPassword": "F74#jd*187_NB",
 			"myloProfileName": "mxsso!",
 			"myloFileID": "611085",
+			"allAddressFileId": "999149",
 			"clientId": "49226",
 			"clientName": "Aires QA Automation Client",
-			"mxClientUserName": "testmylo123@aires.com",
+			"mxClientUserName": "automationdevuser@aires.com",
 			"mxClientPassword": "relonetng11",
 			"mxClientUserProfileName": "Test Mylo",
 			"mobilityXURL": "https://relonetdev3.aires.com/mobilityx/faces/jsf/Login.jsf",
@@ -41,14 +43,34 @@
 			"myloPassword": "F74#jd*187_NB",
 			"myloProfileName": "mxsso!",
 			"myloFileID": "999149",
+			"allAddressFileId": "999149",
 			"clientId": "49226",
 			"clientName": "Aires QA Automation Client",
-			"mxClientUserName": "testmylo123@aires.com",
-			"mxClientPassword": "relonetng11",
-			"mxClientUserProfileName": "Test Mylo",
+			"mxClientUserName": "automationuatuser@aires.com",
+			"mxClientPassword": "Relonetng1!",
+			"mxClientUserProfileName": "Automation Uatuser",
 			"mobilityXURL": "https://relonetdev3.aires.com/mobilityx/faces/jsf/Login.jsf",
 			"myloURL": "https://relonetuat.aires.com/mylo-app/#/login",
 			"transfereeName":"AutomationFirstNameMylo AutomationLastNameMylo"
+		}
+	},
+	{
+		"environment": "preprod",
+		"details": {
+			"myloUserWithResources": "mxssodev5@corp.aires.com",
+			"myloUserWithoutResources": "mxssodev9@corp.aires.com",
+			"myloPassword": "F74#jd*187_NB",
+			"myloProfileName": "mxsso!",
+			"myloFileID": "647576",
+			"allAddressFileId": "647568",
+			"clientId": "49226",
+			"clientName": "Aires QA Automation Client",
+			"mxClientUserName": "automationtestuser@aires.com",
+			"mxClientPassword": "Relonetng1",
+			"mxClientUserProfileName": "Automation Testuser",
+			"mobilityXURL": "https://relonettest2.aires.com/mobilityx/faces/jsf/Login.jsf",
+			"myloURL": "https://blueprinttest.aires.com/mylo-app",
+			"transfereeName":"AutomationTestvhngj TestAutomgdhbvjg"
 		}
 	}
 ]

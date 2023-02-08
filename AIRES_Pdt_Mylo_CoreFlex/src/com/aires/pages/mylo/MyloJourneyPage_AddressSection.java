@@ -401,6 +401,7 @@ public class MyloJourneyPage_AddressSection extends Base {
 			MyloNewFileUtil.set_orgAddress2(BusinessFunctions.setMyloInputFields(driver,
 					MYLOConstants.ORIGIN_ADDRESS2, "15", _address2, MYLOConstants.RANDOM_STRING));
 			CoreFunctions.highlightElementAndClick(driver, _saveBtn, MYLOConstants.ORIGIN_ADDRESS_SAVE_BUTTON);
+			BusinessFunctions.fluentWaitForMyloSpinnerToDisappear(driver, _spinner);
 		}
 	}
 		
@@ -419,6 +420,7 @@ public class MyloJourneyPage_AddressSection extends Base {
 			MyloNewFileUtil.set_destAddress2(BusinessFunctions.setMyloInputFields(
 					driver, MYLOConstants.DESTINATION_ADDRESS2, "15", _address2, MYLOConstants.RANDOM_STRING));
 			CoreFunctions.highlightElementAndClick(driver, _saveBtn, MYLOConstants.DESTINATION_ADDRESS_SAVE_BUTTON);
+			BusinessFunctions.fluentWaitForMyloSpinnerToDisappear(driver, _spinner);
 		}
 	}
 	

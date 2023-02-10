@@ -1551,6 +1551,10 @@ public class CoreFunctions {
 	public static List<String> getElementTextAndStoreInList(WebDriver driver, List<WebElement> elementList) {
 		return (elementList.stream().map(x -> x.getText()).collect(Collectors.toList()));
 	}
+	
+	public static List<String> getElementInnerTextAndStoreInList(WebDriver driver, List<WebElement> elementList) {
+		return (elementList.stream().map(x -> x.getAttribute("title")).collect(Collectors.toList()));
+	}
 
 	public static WebElement getElementFromListByText(List<WebElement> elementList, String text) {
 		try {

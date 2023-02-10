@@ -840,4 +840,13 @@ public class MYLOConstants {
 	public static final int PHONE_NUMBER_CHAR_LIMIT = 30;
 	public static final int COMMENT_CHAR_LIMIT = 500;
 	public static final String ADDRESS_CANCEL_BUTTON = "Address";
+	
+	//primary contact
+	public static final String SELECT_PRIMARY_CONTACT_POPUP = "Select Primary Contact Popup";
+	public static final String PRIMARY_CONTACT_NAME = "Primary Contact Name";
+	public static final String SUFFIX_FORM_CONTROL = "suffixCode";
+	public static final String PRIMARY_CONTACT_INCORRECT_SELECTION_ERROR="The contact selected is already designated as the Secondary Contact on this file. A contact may not be both the Primary and Secondary Contact.";
+	public static final Object FAILED_TO_VERIFY_MEMBER = "Failed to verify member";
+
+	
 }

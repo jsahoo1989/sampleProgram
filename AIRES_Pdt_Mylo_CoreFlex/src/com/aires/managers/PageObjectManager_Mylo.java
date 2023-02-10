@@ -30,8 +30,8 @@ import com.aires.pages.mylo.MyloJourneyPage_FileTeamSection;
 import com.aires.pages.mylo.MyloJourneyPage_IdentityChallengeSection;
 import com.aires.pages.mylo.MyloJourneyPage_OtherSection;
 import com.aires.pages.mylo.MyloJourneyPage_PartnerSection;
-import com.aires.pages.mylo.MyloJourneyPage_PrimarySecondaryContact;
 import com.aires.pages.mylo.MyloJourneyPage_QueryBySubServiceID;
+import com.aires.pages.mylo.MyloJourneyPage_SecondaryContact;
 import com.aires.pages.mylo.MyloJourneyPage_SendLoginCredentials;
 import com.aires.pages.mylo.MyloJourneyPage_TaxReportingSection;
 import com.aires.pages.mylo.MyloJourneyPage_TeamPostSection;
@@ -70,7 +70,7 @@ public class PageObjectManager_Mylo {
 	private MyloJourneyPage_TransfereeNameQuerySection _journeyPage_TransfereeNameQuerySection;	
 	private MyloJourneyPage_QueryBySubServiceID _journeyPage_QueryBySubServiceID;
 	private MyloJourneyPage_ClientContactSection _journeyPage_ClientContactSection;	
-	private MyloJourneyPage_PrimarySecondaryContact _journeyPage_PrimarySecondaryContact;
+	private MyloJourneyPage_SecondaryContact _journeyPage_SecondaryContact;
 	private MyloJourneyPage_TransfereeAndFamilySection _journeyPage_TransfereeAndFamilySection;
 	private MyloNewFileUtil _myloNewFileUtil;
 
@@ -202,9 +202,9 @@ public class PageObjectManager_Mylo {
 				: _journeyPage_QueryBySubServiceID;
 	}
 
-	public MyloJourneyPage_PrimarySecondaryContact getJourneyPagePrimarySecondaryContact() {
-		return (_journeyPage_PrimarySecondaryContact == null) ? _journeyPage_PrimarySecondaryContact = new MyloJourneyPage_PrimarySecondaryContact(_driver)
-				: _journeyPage_PrimarySecondaryContact;
+	public MyloJourneyPage_SecondaryContact getJourneyPageSecondaryContact() {
+		return (_journeyPage_SecondaryContact == null) ? _journeyPage_SecondaryContact = new MyloJourneyPage_SecondaryContact(_driver)
+				: _journeyPage_SecondaryContact;
 	}
 	
 	public MyloJourneyPage_TransfereeAndFamilySection getJourneyPageTransfereeAndFamilySection() {

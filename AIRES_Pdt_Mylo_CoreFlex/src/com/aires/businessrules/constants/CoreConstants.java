@@ -131,4 +131,5 @@ public class CoreConstants {
 	public static final String UNABLE_TO_GET_PARTNER_DETAILS = "Unable to get partner details {0}";
 	public static final String UNABLE_TO_GET_OTHER_DETAILS = "Unable to get other details {0}";
 	public static final String UNABLE_TO_GET_DEPENDENT_DETAILS = "Unable to get dependent details {0}";
+	public static final String UNABLE_TO_GET_TRANSFEREE_NAME = "Unable to get transferee name";
 }

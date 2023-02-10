@@ -3,6 +3,7 @@ package com.aires.pages.mylo;
 import java.text.MessageFormat;
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -32,7 +33,7 @@ public class MyloJourneyPage_TransfereeAndFamilySection extends Base {
 	@FindBy(how = How.CSS, using = "div[class='sk-three-strings']")
 	private WebElement _spinner;
 
-	@FindBy(how = How.CSS, using = "app-transferee-family button")
+	@FindBy(how = How.CSS, using = "button[aria-controls='collapseOneTransferee']")
 	private WebElement _appTransfereeAndFamilyExpandButton;
 
 	@FindBy(how = How.CSS, using = "div#accordionExampleTransferee a")
@@ -53,13 +54,12 @@ public class MyloJourneyPage_TransfereeAndFamilySection extends Base {
 	@FindBy(how = How.CSS, using = "app-transferee-family-add-popup  button[class*='submit']")
 	private WebElement _saveButton;
 
-
 	@FindBy(how = How.CSS, using = "app-partner i[class='icon-Pencil_Open']")
 	private List<WebElement> _partnerEditButtons;
 
 	@FindBy(how = How.CSS, using = "app-dependents i[class='icon-Pencil_Open']")
 	private List<WebElement> _dependentEditButtons;
-	
+
 	@FindBy(how = How.CSS, using = "app-others i[class='icon-Pencil_Open']")
 	private List<WebElement> _otherEditButtons;
 
@@ -146,6 +146,12 @@ public class MyloJourneyPage_TransfereeAndFamilySection extends Base {
 
 	@FindBy(how = How.CSS, using = "app-others i[class='icon-CaretUp_Open']")
 	private WebElement _otherCloseEditButton;
+
+	@FindBy(how = How.CSS, using = "app-transferee div[class*='usertitle']")
+	private List<WebElement> _savedTransfereeNames;
+
+	LinkedHashMap<String, WebElement> _transfereeSectionMapping = new LinkedHashMap<String, WebElement>();
+	LinkedHashMap<String, WebElement> _transfereeSectionCloseEditButtonMapping = new LinkedHashMap<String, WebElement>();
 
 	/**
 	 * add transferee
@@ -238,27 +244,6 @@ public class MyloJourneyPage_TransfereeAndFamilySection extends Base {
 	}
 
 	/**
-	 * add transferee and family based on member
-	 * 
-	 * @param member
-	 */
-	public void addTransfereeAndFamily(String member) {
-		BusinessFunctions.fluentWaitForMyloSpinnerToDisappear(driver, _spinner);
-		switch (member) {
-		case (MYLOConstants.PARTNER):
-			addPartnerWithMandatoryFields(MYLOConstants.DOMESTIC_PARTNER);
-			break;
-		case (MYLOConstants.DEPENDENT):
-			addDependentWithMandatoryFields(MYLOConstants.PARENT);
-			break;
-		case (MYLOConstants.OTHER):
-			addOtherMemberWithMandatoryFields(MYLOConstants.OTHER);
-		}
-		BusinessFunctions.fluentWaitForMyloSpinnerToDisappear(driver, _spinner);
-
-	}
-
-	/**
 	 * Click Add Links on transferee and Family Section
 	 * 
 	 * @param linkName
@@ -322,7 +307,6 @@ public class MyloJourneyPage_TransfereeAndFamilySection extends Base {
 			WebElement fieldElement = BusinessFunctions.returnElementFromListUsingAttribute(driver,
 					_editTransfereeInput, fieldName, MYLOConstants.PLACEHOLDER);
 			CoreFunctions.clearAndSetText(driver, fieldElement, fieldValue, MYLOConstants.TRUE);
-			CoreFunctions.waitHandler(MYLOConstants.WAIT);
 		} catch (Exception e) {
 			Assert.fail(MessageFormat.format(MYLOConstants.FAILED_TO_ENTER_TEXT, fieldName));
 		}
@@ -542,74 +526,11 @@ public class MyloJourneyPage_TransfereeAndFamilySection extends Base {
 	}
 
 	/**
-	 * Create Transferee and family if not exist
-	 * 
-	 * @param table
-	 * @return
-	 */
-	public boolean createTransfereeAndFamilyIfNotExist(DataTable table) {
-		BusinessFunctions.fluentWaitForMyloSpinnerToDisappear(driver, _spinner);
-		List<String> _existingPartnerRelationship = new ArrayList<String>();
-		List<String> _existingDependentRelationship = new ArrayList<String>();
-		List<String> _existingOtherRelationship = new ArrayList<String>();
-		_existingPartnerRelationship = CoreFunctions.getElementInnerTextAndStoreInList(driver,
-				_savedPartnerRelationships);
-		_existingDependentRelationship = CoreFunctions.getElementTextAndStoreInList(driver,
-				_savedDependentRelationships);
-		_existingOtherRelationship = CoreFunctions.getElementTextAndStoreInList(driver, _savedOtherMemberRelationships);
-
-		if (_existingPartnerRelationship.size() <= 2 && _existingOtherRelationship.size() <= 1
-				&& _existingDependentRelationship.size() <= 2) {
-			verifyAndCreatePartners(_existingPartnerRelationship);
-			verifyAndCreateDependents(_existingDependentRelationship);
-			verifyAndCreateOthers(_existingOtherRelationship);
-			return true;
-		}
-		return false;
-	}
-
-	/**
-	 * verify and Create Partners
-	 * 
-	 * @param _existingPartnerRelationship
-	 */
-	private void verifyAndCreatePartners(List<String> _existingPartnerRelationship) {
-		int spouseCount = Collections.frequency(_existingPartnerRelationship, MYLOConstants.SPOUSE);
-		int domesticPartnerCount = Collections.frequency(_existingPartnerRelationship, MYLOConstants.DOMESTIC_PARTNER);
-		if (_existingPartnerRelationship.size() == 2) {
-			if (spouseCount == 2) {
-				updateRandomPartnerRelationship(MYLOConstants.DOMESTIC_PARTNER);
-				CoreFunctions.scrollToElementUsingJavaScript(driver, _partnerSection, MYLOConstants.PARTNER);
-				clickSaveInEditMember();
-				CoreFunctions.scrollClickUsingJS(driver, _partnerCloseEditButton, MYLOConstants.EDIT_BUTTON);
-			} else if (domesticPartnerCount == 2) {
-				updateRandomPartnerRelationship(MYLOConstants.SPOUSE);
-				CoreFunctions.scrollToElementUsingJavaScript(driver, _partnerSection, MYLOConstants.PARTNER);
-				clickSaveInEditMember();
-				CoreFunctions.scrollClickUsingJS(driver, _partnerCloseEditButton, MYLOConstants.EDIT_BUTTON);
-			}
-		}
-		if (_existingPartnerRelationship.size() == 1) {
-			// var result =
-			// _existingPartnerRelationship.contains(MYLOConstants.DOMESTIC_PARTNER)?addPartnerWithMandatoryFields(MYLOConstants.SPOUSE):addPartnerWithMandatoryFields(MYLOConstants.DOMESTIC_PARTNER);
-			if (_existingPartnerRelationship.contains(MYLOConstants.DOMESTIC_PARTNER))
-				addPartnerWithMandatoryFields(MYLOConstants.SPOUSE);
-			else
-				addPartnerWithMandatoryFields(MYLOConstants.DOMESTIC_PARTNER);
-		}
-		if (_existingPartnerRelationship.size() == 0) {
-			addPartnerWithMandatoryFields(MYLOConstants.SPOUSE);
-			addPartnerWithMandatoryFields(MYLOConstants.DOMESTIC_PARTNER);
-		}
-
-	}
-
-	/**
 	 * update random partner relationship
 	 * 
 	 * @param partnerRelationship
 	 */
-	private void updateRandomPartnerRelationship(String partnerRelationship) {
+	public void updateRandomPartnerRelationship(String partnerRelationship) {
 		CoreFunctions.scrollToElementUsingJS(driver, _partnerSection, MYLOConstants.PARTNER);
 		CoreFunctions.clickUsingJS(driver, _partnerEditButtons.get(0), MYLOConstants.EDIT_BUTTON);
 		BusinessFunctions.fluentWaitForMyloSpinnerToDisappear(driver, _spinner);
@@ -617,51 +538,11 @@ public class MyloJourneyPage_TransfereeAndFamilySection extends Base {
 	}
 
 	/**
-	 * verify and create Dependents
-	 * 
-	 * @param _existingDependentRelationship
-	 */
-	public void verifyAndCreateDependents(List<String> _existingDependentRelationship) {
-		int parentCount = Collections.frequency(_existingDependentRelationship, MYLOConstants.PARENT);
-		int childCount = Collections.frequency(_existingDependentRelationship, MYLOConstants.CHILD);
-
-		if (_existingDependentRelationship.size() == 2) {
-			CoreFunctions.refreshPage(driver);
-			CoreFunctions.waitForBrowserToLoad(driver);
-			CoreFunctions.waitHandler(MYLOConstants.CUSTOM_WAIT_TIME);
-			CoreFunctions.click(driver, _appTransfereeAndFamilyExpandButton,
-					MYLOConstants.TRANSFEREE_FAMILY_DETAILS_BUTTON);
-			if (parentCount == 2) {
-				updateRandomDependentRelationship(MYLOConstants.CHILD);
-				CoreFunctions.scrollToElementUsingJavaScript(driver, _dependentSection, MYLOConstants.DEPENDENT);
-				clickSaveInEditMember();
-				CoreFunctions.scrollClickUsingJS(driver, _dependentCloseEditButton, MYLOConstants.EDIT_BUTTON);
-			} else if (childCount == 2) {
-				updateRandomDependentRelationship(MYLOConstants.PARENT);
-				CoreFunctions.scrollToElementUsingJavaScript(driver, _dependentSection, MYLOConstants.DEPENDENT);
-				clickSaveInEditMember();
-				CoreFunctions.scrollClickUsingJS(driver, _dependentCloseEditButton, MYLOConstants.EDIT_BUTTON);
-			}
-		}
-		if (_existingDependentRelationship.size() == 1) {
-			if (_existingDependentRelationship.contains(MYLOConstants.CHILD))
-				addDependentWithMandatoryFields(MYLOConstants.PARENT);
-			else
-				addDependentWithMandatoryFields(MYLOConstants.CHILD);
-		}
-		if (_existingDependentRelationship.size() == 0) {
-			addDependentWithMandatoryFields(MYLOConstants.PARENT);
-			addDependentWithMandatoryFields(MYLOConstants.CHILD);
-		}
-
-	}
-
-	/**
 	 * Update Random Dependent Relationship
 	 * 
 	 * @param dependentRelationship
 	 */
-	private void updateRandomDependentRelationship(String dependentRelationship) {
+	public void updateRandomDependentRelationship(String dependentRelationship) {
 		CoreFunctions.scrollToElementUsingJS(driver, _dependentSection, MYLOConstants.DEPENDENT);
 		CoreFunctions.clickUsingJS(driver, _dependentEditButtons.get(0), MYLOConstants.EDIT_BUTTON);
 		BusinessFunctions.fluentWaitForMyloSpinnerToDisappear(driver, _spinner);
@@ -670,29 +551,11 @@ public class MyloJourneyPage_TransfereeAndFamilySection extends Base {
 	}
 
 	/**
-	 * verify and create Others
-	 * 
-	 * @param _existingOtherRelationship
-	 */
-	public void verifyAndCreateOthers(List<String> _existingOtherRelationship) {
-		if (_existingOtherRelationship.size() == 1 && !_existingOtherRelationship.contains(MYLOConstants.OTHER)) {
-			updateOtherMemberRelationship(MYLOConstants.OTHER);
-			CoreFunctions.scrollToElementUsingJavaScript(driver, _otherSection, MYLOConstants.OTHER);
-			clickSaveInEditMember();
-			CoreFunctions.scrollClickUsingJS(driver, _otherCloseEditButton, MYLOConstants.EDIT_BUTTON);
-		}
-		if (_existingOtherRelationship.size() == 0) {
-			addOtherMemberWithMandatoryFields(MYLOConstants.OTHER);
-		}
-
-	}
-
-	/**
 	 * Update Other Member Relationship
 	 * 
 	 * @param Relationship
 	 */
-	private void updateOtherMemberRelationship(String relationship) {
+	public void updateOtherMemberRelationship(String relationship) {
 		CoreFunctions.scrollToElementUsingJS(driver, _otherSection, MYLOConstants.EDIT_BUTTON);
 		CoreFunctions.clickUsingJS(driver, _otherEditButtons.get(0), MYLOConstants.EDIT_BUTTON);
 		BusinessFunctions.fluentWaitForMyloSpinnerToDisappear(driver, _spinner);
@@ -785,11 +648,14 @@ public class MyloJourneyPage_TransfereeAndFamilySection extends Base {
 			BusinessFunctions.fluentWaitForMyloSpinnerToDisappear(driver, _spinner);
 			break;
 		case (MYLOConstants.DEPENDENT):
+
 			CoreFunctions.refreshPage(driver);
 			CoreFunctions.waitForBrowserToLoad(driver);
 			CoreFunctions.waitHandler(MYLOConstants.CUSTOM_WAIT_TIME);
 			CoreFunctions.click(driver, _appTransfereeAndFamilyExpandButton,
 					MYLOConstants.TRANSFEREE_FAMILY_DETAILS_BUTTON);
+
+			scrollToSection(MYLOConstants.DEPENDENT);
 			index = BusinessFunctions.returnindexItemFromListUsingAttribute(driver, _savedDependentNames, memberName,
 					MYLOConstants.OUTER_TEXT);
 			CoreFunctions.scrollToElementUsingJS(driver, _dependentEditButtons.get(index), MYLOConstants.EDIT_BUTTON);
@@ -806,11 +672,14 @@ public class MyloJourneyPage_TransfereeAndFamilySection extends Base {
 			BusinessFunctions.fluentWaitForMyloSpinnerToDisappear(driver, _spinner);
 			break;
 		case (MYLOConstants.OTHER):
+
 			CoreFunctions.refreshPage(driver);
 			CoreFunctions.waitForBrowserToLoad(driver);
 			CoreFunctions.waitHandler(MYLOConstants.CUSTOM_WAIT_TIME);
 			CoreFunctions.click(driver, _appTransfereeAndFamilyExpandButton,
 					MYLOConstants.TRANSFEREE_FAMILY_DETAILS_BUTTON);
+
+			scrollToSection(MYLOConstants.OTHER);
 			index = BusinessFunctions.returnindexItemFromListUsingAttribute(driver, _savedOtherMemberNames, memberName,
 					MYLOConstants.OUTER_TEXT);
 			CoreFunctions.scrollToElementUsingJS(driver, _otherEditButtons.get(index), MYLOConstants.EDIT_BUTTON);
@@ -837,14 +706,14 @@ public class MyloJourneyPage_TransfereeAndFamilySection extends Base {
 	public String getSavedPartnerName(String relationship) {
 		String partnerName = "";
 		try {
+			CoreFunctions.scrollToElementUsingJavaScript(driver, _partnerSection, MYLOConstants.PARTNER);
 			int index = BusinessFunctions.returnindexItemFromListUsingAttribute(driver, _savedPartnerRelationships,
 					relationship, MYLOConstants.TITLE);
 			partnerName = CoreFunctions.getAttributeText(_savedPartnerNames.get(index), MYLOConstants.OUTER_TEXT);
 		} catch (Exception e) {
-			Reporter.addStepLog(MessageFormat.format(CoreConstants.UNABLE_TO_GET_PARTNER_DETAILS, CoreConstants.FAIL,
-					relationship));
-			Assert.fail(MessageFormat.format(CoreConstants.UNABLE_TO_GET_PARTNER_DETAILS, CoreConstants.FAIL,
-					relationship));
+			Reporter.addStepLog(
+					MessageFormat.format(MYLOConstants.FAIL_TO_GET_ELEMENT_TEXT, CoreConstants.FAIL, relationship));
+			Assert.fail(MessageFormat.format(MYLOConstants.FAIL_TO_GET_ELEMENT_TEXT, CoreConstants.FAIL, relationship));
 		}
 		return partnerName;
 	}
@@ -856,15 +725,15 @@ public class MyloJourneyPage_TransfereeAndFamilySection extends Base {
 	public String getSavedDependentName(String relationship) {
 		String dependentName = "";
 		try {
+			CoreFunctions.scrollToElementUsingJavaScript(driver, _dependentSection, MYLOConstants.DEPENDENT);
 			int index = BusinessFunctions.returnindexItemFromListUsingAttribute(driver, _savedDependentRelationships,
 					relationship, MYLOConstants.TITLE);
 			dependentName = CoreFunctions.getAttributeText(_savedDependentNames.get(index), MYLOConstants.OUTER_TEXT);
 
 		} catch (Exception e) {
-			Reporter.addStepLog(MessageFormat.format(CoreConstants.UNABLE_TO_GET_DEPENDENT_DETAILS, CoreConstants.FAIL,
-					relationship));
-			Assert.fail(MessageFormat.format(CoreConstants.UNABLE_TO_GET_DEPENDENT_DETAILS, CoreConstants.FAIL,
-					relationship));
+			Reporter.addStepLog(
+					MessageFormat.format(MYLOConstants.FAIL_TO_GET_ELEMENT_TEXT, CoreConstants.FAIL, relationship));
+			Assert.fail(MessageFormat.format(MYLOConstants.FAIL_TO_GET_ELEMENT_TEXT, CoreConstants.FAIL, relationship));
 		}
 		return dependentName;
 
@@ -877,39 +746,106 @@ public class MyloJourneyPage_TransfereeAndFamilySection extends Base {
 	public String getSavedOtherName(String relationship) {
 		String otherName = "";
 		try {
+			CoreFunctions.scrollToElementUsingJavaScript(driver, _otherSection, MYLOConstants.OTHER);
 			int index = BusinessFunctions.returnindexItemFromListUsingAttribute(driver, _savedOtherMemberRelationships,
 					relationship, MYLOConstants.TITLE);
 			otherName = CoreFunctions.getAttributeText(_savedOtherMemberNames.get(index), MYLOConstants.OUTER_TEXT);
 		} catch (Exception e) {
 			Reporter.addStepLog(
-					MessageFormat.format(CoreConstants.UNABLE_TO_GET_OTHER_DETAILS, CoreConstants.FAIL, relationship));
-			Assert.fail(
-					MessageFormat.format(CoreConstants.UNABLE_TO_GET_OTHER_DETAILS, CoreConstants.FAIL, relationship));
+					MessageFormat.format(MYLOConstants.FAIL_TO_GET_ELEMENT_TEXT, CoreConstants.FAIL, relationship));
+			Assert.fail(MessageFormat.format(MYLOConstants.FAIL_TO_GET_ELEMENT_TEXT, CoreConstants.FAIL, relationship));
 		}
 		return otherName;
 
 	}
 
 	/**
-	 * verify and create Transferee and family if not exist
-	 * 
-	 * @param table
-	 * @param _myloDashboardPage
-	 * @param _myloNewFileSection
+	 * @param relationship
+	 * @return
 	 */
-	public void verifyAndCreateTransfereeAndFamilyIfNotExist(DataTable table, Mylo_DashboardHomePage _myloDashboardPage,
-			MyloJourneyPage_CreateNewFileSection _myloNewFileSection) {
-		if (!createTransfereeAndFamilyIfNotExist(table)) {
-			_myloDashboardPage.selectOptionsFromAssignmentMenu(MYLOConstants.NEW_FILE_BUTTON);
-			_myloNewFileSection.createNewFile(MYLOConstants.AUTOMATION_CLIENT_ID);
-			CoreFunctions.writeToPropertiesFile("FileID", MyloNewFileUtil.getFileID());
-			CoreFunctions.writeToPropertiesFile(MYLOConstants.TRANSFEREE_FIRSTNAME,
-					MyloNewFileUtil.getTransfereeFirstName());
-			CoreFunctions.writeToPropertiesFile(MYLOConstants.TRANSFEREE_LASTNAME,
-					MyloNewFileUtil.getTransfereeLastName());
-			addTransfereeAndFamily(table);
+	public String getSavedTransfereeName() {
+		String transfereeName = "";
+		try {
+			transfereeName = CoreFunctions.getAttributeText(_savedTransfereeNames.get(0), MYLOConstants.OUTER_TEXT);
+
+		} catch (Exception e) {
+			Reporter.addStepLog(MessageFormat.format(MYLOConstants.FAIL_TO_GET_ELEMENT_TEXT, CoreConstants.FAIL));
+			Assert.fail(MessageFormat.format(MYLOConstants.FAIL_TO_GET_ELEMENT_TEXT, CoreConstants.FAIL));
+		}
+		return transfereeName;
+
+	}
+
+	/**
+	 * Expand Tranferee details section
+	 * 
+	 */
+	public void expandTransfereeDetailsSection() {
+		CoreFunctions.click(driver, _appTransfereeAndFamilyExpandButton,
+				MYLOConstants.TRANSFEREE_FAMILY_DETAILS_BUTTON);
+		String expanded = CoreFunctions.getElementAttributeValue(driver, _appTransfereeAndFamilyExpandButton,
+				"aria-expanded");
+		if (expanded.equals("false"))
+			CoreFunctions.click(driver, _appTransfereeAndFamilyExpandButton,
+					MYLOConstants.TRANSFEREE_FAMILY_DETAILS_BUTTON);
+
+	}
+
+	/**
+	 * Verify TransfereeName
+	 * 
+	 * @return
+	 */
+	public void verifyTransfereeName(String expectedTransfereeName) {
+		try {
+			CoreFunctions.verifyText(getSavedTransfereeName(), expectedTransfereeName, MYLOConstants.TRANSFEREE_NAME);
+		} catch (Exception e) {
+			Reporter.addStepLog(MessageFormat.format(CoreConstants.FAILED_TO_VERFY, CoreConstants.FAIL,
+					MYLOConstants.TRANSFEREE_NAME));
+			Assert.fail(MessageFormat.format(CoreConstants.FAILED_TO_VERFY, CoreConstants.FAIL,
+					MYLOConstants.TRANSFEREE_NAME));
 		}
 
+	}
+
+	/**
+	 * Scroll to Section
+	 * 
+	 * @param sectionName
+	 */
+	public void scrollToSection(String sectionName) {
+		mapTransfereeSections();
+		CoreFunctions.scrollToElementUsingJS(driver, _transfereeSectionMapping.get(sectionName), sectionName);
+	}
+
+	/**
+	 * Transferee section Mapping
+	 */
+	public void mapTransfereeSections() {
+		_transfereeSectionMapping.put(MYLOConstants.PARTNER, _partnerSection);
+		_transfereeSectionMapping.put(MYLOConstants.DEPENDENT, _dependentSection);
+		_transfereeSectionMapping.put(MYLOConstants.OTHER, _otherSection);
+
+	}
+
+	/**
+	 * Transferee section Close Edit Button Mapping
+	 */
+	public void mapTransfereeSectionCloseEditButtons() {
+		_transfereeSectionCloseEditButtonMapping.put(MYLOConstants.PARTNER, _partnerCloseEditButton);
+		_transfereeSectionCloseEditButtonMapping.put(MYLOConstants.DEPENDENT, _dependentCloseEditButton);
+		_transfereeSectionCloseEditButtonMapping.put(MYLOConstants.OTHER, _otherCloseEditButton);
+
+	}
+
+	/**
+	 * close edit in transferee section
+	 */
+	public void closeEditModeInTransfereeSection(String sectionName) {
+		mapTransfereeSectionCloseEditButtons();
+		CoreFunctions.scrollClickUsingJS(driver, _transfereeSectionCloseEditButtonMapping.get(sectionName),
+				MYLOConstants.EDIT_BUTTON);
+		BusinessFunctions.fluentWaitForMyloSpinnerToDisappear(driver, _spinner);
 	}
 
 }

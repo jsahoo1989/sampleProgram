@@ -19,6 +19,7 @@ import com.aires.testdatatypes.mylo.Mylo_FileData;
 import com.aires.utilities.MyloNewFileUtil;
 import com.vimalselvam.cucumber.listener.Reporter;
 
+
 public class MyloJourneyPage_CreateNewFileSection extends Base {
 
 	public MyloJourneyPage_CreateNewFileSection(WebDriver driver) {
@@ -123,13 +124,13 @@ public class MyloJourneyPage_CreateNewFileSection extends Base {
 
 	@FindBy(how = How.CSS, using = "#repatriation")
 	private WebElement _fileInfoRepatriationCheckbox;
-	
+
 	@FindBy(how = How.XPATH, using = "//button[text()='Ok']")
 	private WebElement _okButtonPopUp;
-	
+
 	@FindBy(how = How.CSS, using = "app-lead-informtion input")
 	private WebElement _leadCompanyIDSection;
-	
+
 	@FindBy(how = How.CSS, using = "app-lead-informtion button label")
 	private List<WebElement> _leadCompanyButtonLabels;
 
@@ -158,7 +159,9 @@ public class MyloJourneyPage_CreateNewFileSection extends Base {
 	}
 
 	/**
-	 * Click on any Fields available on the New File section based on the fieldName passed as a parameter
+	 * Click on any Fields available on the New File section based on the fieldName
+	 * passed as a parameter
+	 * 
 	 * @param fieldName
 	 */
 	public void clickFieldsOnNewFileSection(String fieldName) {
@@ -174,14 +177,16 @@ public class MyloJourneyPage_CreateNewFileSection extends Base {
 					fieldName, MYLOConstants.CREATE_NEW_FILE));
 		}
 	}
-	
+
 	/**
-	 * Set Input Fields for New File section based on the fieldName passed as a parameter
+	 * Set Input Fields for New File section based on the fieldName passed as a
+	 * parameter
+	 * 
 	 * @param fieldName
 	 * @param fieldValue
 	 * @param type
 	 */
-	public void setNewFileFields(String fieldName, String fieldValue,String type) {
+	public void setNewFileFields(String fieldName, String fieldValue, String type) {
 		mapCreateNewFileWebElementFields();
 		try {
 			WebElement reqWebElement = newFileWebElementsMap.get(fieldName);
@@ -194,41 +199,43 @@ public class MyloJourneyPage_CreateNewFileSection extends Base {
 	}
 
 	/**
-	 * Set Dropdown Fields for New File section based on the fieldName passed as a parameter
+	 * Set Dropdown Fields for New File section based on the fieldName passed as a
+	 * parameter
+	 * 
 	 * @param fieldName
 	 * @param fieldValue
 	 * @return
 	 */
 	public String setNewFileDropdownValues(String fieldName, String fieldValue) {
 		clickFieldsOnNewFileSection(fieldName);
-		String updatedValue = BusinessFunctions.setMyloDropdownFields(driver, _dropdownOptions, fieldValue,fieldName);
+		String updatedValue = BusinessFunctions.setMyloDropdownFields(driver, _dropdownOptions, fieldValue, fieldName);
 		return updatedValue;
 	}
-	
+
 	public void setRepatInd(boolean repatInd) {
 		if (repatInd == Boolean.TRUE)
 			_newFileRepatCheckbox.click();
 	}
-	
+
 	public void setClient(String client) {
 		setNewFileFields(MYLOConstants.CLIENT_NAME, client, MYLOConstants.VALUE);
 		if (!(client.equals("")))
 			CoreFunctions.hoverAndClick(driver, CoreFunctions.getElementByLocator(driver, _dropdownOptions), client);
 	}
-	
+
 	public String setPolicyType(String policyType) {
-		String pType="";
+		String pType = "";
 		if (policyType != "")
-			pType=setNewFileDropdownValues(MYLOConstants.POLICY_TYPE, policyType);
+			pType = setNewFileDropdownValues(MYLOConstants.POLICY_TYPE, policyType);
 		return pType;
 	}
-	
-	public void enterAllFieldsForNewFile(String tFirstName, String tLastName, String client,
-			String office, String journeyType, String policyType, String taxTreatment, boolean repatInd) {
+
+	public void enterAllFieldsForNewFile(String tFirstName, String tLastName, String client, String office,
+			String journeyType, String policyType, String taxTreatment, boolean repatInd) {
 		setRepatInd(repatInd);
 		String tName = createTransfereeName(tFirstName, tLastName);
-		setNewFileFields(MYLOConstants.TRANSFEREE_FIRSTNAME, tName.split(" ")[0],MYLOConstants.VALUE);
-		setNewFileFields(MYLOConstants.TRANSFEREE_LASTNAME, tName.split(" ")[1],MYLOConstants.VALUE);
+		setNewFileFields(MYLOConstants.TRANSFEREE_FIRSTNAME, tName.split(" ")[0], MYLOConstants.VALUE);
+		setNewFileFields(MYLOConstants.TRANSFEREE_LASTNAME, tName.split(" ")[1], MYLOConstants.VALUE);
 		setClient(client);
 		setPolicyType(policyType);
 		setNewFileDropdownValues(MYLOConstants.TAX_TREATMENT, taxTreatment);
@@ -244,7 +251,9 @@ public class MyloJourneyPage_CreateNewFileSection extends Base {
 	}
 
 	/**
-	 * Verify the Toast Messages appearing for mandatory fields based on the parameters passed
+	 * Verify the Toast Messages appearing for mandatory fields based on the
+	 * parameters passed
+	 * 
 	 * @param firstName
 	 * @param lastName
 	 * @param office
@@ -268,19 +277,23 @@ public class MyloJourneyPage_CreateNewFileSection extends Base {
 	}
 
 	/**
-	 * Verify the Toast Messages appearing for fields having Special Characters based on the parameters passed
+	 * Verify the Toast Messages appearing for fields having Special Characters
+	 * based on the parameters passed
+	 * 
 	 * @param fieldName
 	 * @param msg
 	 * @return
 	 */
 	public boolean verifySpecialCharacterToastMessagesOtherSection(String fieldName, String msg) {
-		String fType,lType;
+		String fType, lType;
 		setClient(MYLOConstants.CLIENT_NAME_VALUE);
 		setNewFileDropdownValues(MYLOConstants.OFFICE, MYLOConstants.OFFICE_VALUE);
-		fType=(fieldName.equals(MYLOConstants.TRANSFEREE_FIRSTNAME))?MYLOConstants.SPECIAL_CHARACTERS_STRING:MYLOConstants.VALUE;
-		lType=(fieldName.equals(MYLOConstants.TRANSFEREE_LASTNAME))?MYLOConstants.SPECIAL_CHARACTERS_STRING:MYLOConstants.VALUE;
-		setNewFileFields(MYLOConstants.TRANSFEREE_FIRSTNAME, MYLOConstants.TEST,fType);
-		setNewFileFields(MYLOConstants.TRANSFEREE_LASTNAME, MYLOConstants.TEST,lType);
+		fType = (fieldName.equals(MYLOConstants.TRANSFEREE_FIRSTNAME)) ? MYLOConstants.SPECIAL_CHARACTERS_STRING
+				: MYLOConstants.VALUE;
+		lType = (fieldName.equals(MYLOConstants.TRANSFEREE_LASTNAME)) ? MYLOConstants.SPECIAL_CHARACTERS_STRING
+				: MYLOConstants.VALUE;
+		setNewFileFields(MYLOConstants.TRANSFEREE_FIRSTNAME, MYLOConstants.TEST, fType);
+		setNewFileFields(MYLOConstants.TRANSFEREE_LASTNAME, MYLOConstants.TEST, lType);
 		clickFieldsOnNewFileSection(MYLOConstants.CREATE_NEW_FILE);
 		return (BusinessFunctions.verifyMyloToastMessage(driver, _alertMessage, msg, MYLOConstants.CREATE_NEW_FILE));
 	}
@@ -293,7 +306,7 @@ public class MyloJourneyPage_CreateNewFileSection extends Base {
 	public boolean verifyPolicyTypeFieldReadonly() {
 		return CoreFunctions.isElementExist(driver, _newFilePolicyTypeDisabled, 5);
 	}
-	
+
 	public String getTransfereeValue(String fieldName, String fieldValue) {
 		String requiredValue;
 		try {
@@ -357,6 +370,7 @@ public class MyloJourneyPage_CreateNewFileSection extends Base {
 
 	/**
 	 * Verify all information for Newly Created File on Purple Bubble Section
+	 * 
 	 * @param expectedTransfereeName
 	 */
 	public void verifyFileInfoPurpleBubbleSection(String expectedTransfereeName) {
@@ -501,6 +515,7 @@ public class MyloJourneyPage_CreateNewFileSection extends Base {
 	/**
 	 * Verify No data created and default message displayed on Identification &
 	 * Document section available on Journey Page
+	 * 
 	 * @param msg
 	 * @return
 	 */
@@ -545,9 +560,11 @@ public class MyloJourneyPage_CreateNewFileSection extends Base {
 	}
 
 	/**
-	 * Creating a New File for client passed as a parameter with random selected values 
+	 * Creating a New File for client passed as a parameter with random selected
+	 * values
+	 * 
 	 * @param client
-	 * @param myloNewFileUtil 
+	 * @param myloNewFileUtil
 	 */
 	public void createNewFile(String client) {
 		String transfereeFirstName = myloNewFileData.newFile.firstName + CoreFunctions.generateRandomString(5);
@@ -555,7 +572,8 @@ public class MyloJourneyPage_CreateNewFileSection extends Base {
 		setNewFileFields(MYLOConstants.TRANSFEREE_FIRSTNAME, transfereeFirstName, MYLOConstants.VALUE);
 		setNewFileFields(MYLOConstants.TRANSFEREE_LASTNAME, transfereeLastName, MYLOConstants.VALUE);
 		setClient(client);
-		String policyValue=(client.equals(MYLOConstants.VENDOR_CLIENT_ID))?MYLOConstants.SELECT_ONE:MYLOConstants.RANDOM;
+		String policyValue = (client.equals(MYLOConstants.VENDOR_CLIENT_ID)) ? MYLOConstants.SELECT_ONE
+				: MYLOConstants.RANDOM;
 		String policyType = setPolicyType(policyValue);
 		setNewFileDropdownValues(MYLOConstants.JOURNEY_TYPE, MYLOConstants.JOURNEY_TYPE_VALUE);
 		String officeType = setNewFileDropdownValues(MYLOConstants.OFFICE, MYLOConstants.RANDOM);
@@ -566,30 +584,32 @@ public class MyloJourneyPage_CreateNewFileSection extends Base {
 		setNewFileFields(transfereeFirstName, transfereeLastName, policyType, MYLOConstants.TAX_TREATMENT_VALUE,
 				MYLOConstants.JOURNEY_TYPE_VALUE, officeType, fileId, client);
 	}
-	
+
 	public void setLeadCompanyID(String leadCompanyID) {
-		if(MyloNewFileUtil.get_leadCompanyID()==null) {
+		if (MyloNewFileUtil.get_leadCompanyID() == null) {
 			BusinessFunctions.fluentWaitForMyloSpinnerToDisappear(driver, _spinner);
 			CoreFunctions.scrollToElementUsingJS(driver, _leadCompanyIDSection, MYLOConstants.LEAD_COMPANY_ID_SECTION);
-		clickLeadCompanySectionButtons(MYLOConstants.EDIT_BUTTON);
-		MyloNewFileUtil.set_leadCompanyID(BusinessFunctions.setMyloInputFields(driver, MYLOConstants.LEAD_COMPANY_ID_SECTION, MYLOConstants.AUTOMATION_CLIENT_ID, _leadCompanyIDSection, MYLOConstants.VALUE));
-		CoreFunctions.hoverAndClick(driver, CoreFunctions.getElementByLocator(driver, _dropdownOptions), leadCompanyID);
-		clickLeadCompanySectionButtons(MYLOConstants.SAVE_BUTTON);
+			clickLeadCompanySectionButtons(MYLOConstants.EDIT_BUTTON);
+			MyloNewFileUtil.set_leadCompanyID(
+					BusinessFunctions.setMyloInputFields(driver, MYLOConstants.LEAD_COMPANY_ID_SECTION,
+							MYLOConstants.AUTOMATION_CLIENT_ID, _leadCompanyIDSection, MYLOConstants.VALUE));
+			CoreFunctions.hoverAndClick(driver, CoreFunctions.getElementByLocator(driver, _dropdownOptions),
+					leadCompanyID);
+			clickLeadCompanySectionButtons(MYLOConstants.SAVE_BUTTON);
 		}
 	}
-	
+
 	public void clickLeadCompanySectionButtons(String buttonName) {
-		CoreFunctions.click(driver,
-			_leadCompanyButtons.get(
-						BusinessFunctions.returnindexItemFromListUsingText(driver, _leadCompanyButtonLabels, buttonName)),
+		CoreFunctions.click(driver, _leadCompanyButtons
+				.get(BusinessFunctions.returnindexItemFromListUsingText(driver, _leadCompanyButtonLabels, buttonName)),
 				buttonName);
 		BusinessFunctions.fluentWaitForMyloSpinnerToDisappear(driver, _spinner);
 	}
 
-	
 	/**
 	 * Saving the New File details in MyloNewFileUtil object
-	 * @param myloNewFileUtil 
+	 * 
+	 * @param myloNewFileUtil
 	 * @param tFName
 	 * @param tLName
 	 * @param pType
@@ -598,7 +618,7 @@ public class MyloJourneyPage_CreateNewFileSection extends Base {
 	 * @param officeType
 	 * @param fileId
 	 * @param clientID
-	 * @return 
+	 * @return
 	 */
 	public void setNewFileFields(String tFName, String tLName, String pType, String taxTreatment, String jType,
 			String officeType, String fileId, String clientID) {
@@ -611,7 +631,7 @@ public class MyloJourneyPage_CreateNewFileSection extends Base {
 		MyloNewFileUtil.setFileID(fileId);
 		MyloNewFileUtil.setClientID(clientID);
 	}
-	
+
 	/**
 	 * Clicks on Ok Button if PopUp appears
 	 */
@@ -621,6 +641,22 @@ public class MyloJourneyPage_CreateNewFileSection extends Base {
 			CoreFunctions.clickUsingJS(driver, _okButtonPopUp, MYLOConstants.OK_BUTTON);
 			BusinessFunctions.fluentWaitForMyloSpinnerToDisappear(driver, _spinner);
 		}
+	}
+
+	/**
+	 * @return fileID
+	 */
+	public String getFileID() {
+		String fileID="";
+		try {
+			fileID= MyloNewFileUtil.getFileID();
+			if(fileID.equals(""))
+				fileID = CoreFunctions.getPropertyFromConfig(MYLOConstants.FILE_ID);
+		}
+		catch(Exception e) {
+			fileID = CoreFunctions.getPropertyFromConfig(MYLOConstants.FILE_ID);
+		}
+		return fileID;
 	}
 
 }

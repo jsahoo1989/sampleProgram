@@ -1,8 +1,13 @@
 package com.aires.pages.mylo;
 
 import java.text.MessageFormat;
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.LinkedHashMap;
 import java.util.List;
+import java.util.Map;
+import java.util.stream.Collectors;
+import java.util.stream.IntStream;
 
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
@@ -15,6 +20,8 @@ import com.aires.businessrules.BusinessFunctions;
 import com.aires.businessrules.CoreFunctions;
 import com.aires.businessrules.constants.CoreConstants;
 import com.aires.businessrules.constants.MYLOConstants;
+import com.aires.utilities.CustomSoftAssert;
+import com.aires.utilities.Log;
 import com.aires.utilities.MyloNewFileUtil;
 import com.vimalselvam.cucumber.listener.Reporter;
 
@@ -30,8 +37,8 @@ public class MyloJourneyPage_PrimarySecondaryContact extends Base {
 	@FindBy(how = How.CSS, using = "button[aria-controls='collapseOneContact']")
 	private WebElement _expandPrimaryContactSection;
 
-	@FindBy(how = How.CSS, using = "div#secondaryContact a")
-	private List<WebElement> _secondaryContactSectionLinks;
+	@FindBy(how = How.CSS, using = "div#secondaryContact p[class*='addinfo'] a")
+	private WebElement _selectSecondaryContactLink;
 
 	@FindBy(how = How.CSS, using = "mat-dialog-container[class*='mat-dialog']")
 	private WebElement _selectContactPopup;
@@ -100,6 +107,11 @@ public class MyloJourneyPage_PrimarySecondaryContact extends Base {
 	private WebElement _spinner;
 
 	private boolean _isExists = false;
+	/*
+	 * List<String> contactCardFields = new ArrayList<String>(); List<String>
+	 * primaryContactCardValues = new ArrayList<String>(); List<String>
+	 * secondaryContactCardValues = new ArrayList<String>();
+	 */
 	LinkedHashMap<String, String> primaryContactfieldValueMapping = new LinkedHashMap<String, String>();
 	LinkedHashMap<String, String> secondaryContactfieldValueMapping = new LinkedHashMap<String, String>();
 
@@ -110,7 +122,7 @@ public class MyloJourneyPage_PrimarySecondaryContact extends Base {
 	public void verifySecondaryErrorDialogDisplayed() {
 
 		try {
-			_isExists = CoreFunctions.isElementExist(driver, _errorDialog, MYLOConstants.WAIT);
+			_isExists = CoreFunctions.isElementExist(driver, _errorDialog, 5);
 			if (_isExists) {
 				_isExists = BusinessFunctions.verifyMyloPopUpMessage(driver, _errorDialogHeader,
 						MYLOConstants.SECONDARY_CONTACT_INCORRECT_SELECTION_ERROR,
@@ -132,7 +144,7 @@ public class MyloJourneyPage_PrimarySecondaryContact extends Base {
 	public void verifyPrimaryErrorDialogDisplayed() {
 
 		try {
-			_isExists = CoreFunctions.isElementExist(driver, _errorDialog, MYLOConstants.WAIT);
+			_isExists = CoreFunctions.isElementExist(driver, _errorDialog, 5);
 			if (_isExists) {
 				_isExists = BusinessFunctions.verifyMyloPopUpMessage(driver, _errorDialogHeader,
 						MYLOConstants.PRIMARY_CONTACT_INCORRECT_SELECTION_ERROR,
@@ -155,7 +167,7 @@ public class MyloJourneyPage_PrimarySecondaryContact extends Base {
 	public boolean isSelectSecondaryContactPopupDisplayed() {
 
 		try {
-			_isExists = CoreFunctions.isElementExist(driver, _selectContactPopup, MYLOConstants.WAIT);
+			_isExists = CoreFunctions.isElementExist(driver, _selectContactPopup, 5);
 			if (_isExists)
 				Reporter.addStepLog(
 						MessageFormat.format(MYLOConstants.SELECT_SECONDARY_CONTACT_POPUP, CoreConstants.PASS));
@@ -168,14 +180,12 @@ public class MyloJourneyPage_PrimarySecondaryContact extends Base {
 
 	/**
 	 * Verify if select secondary contact link is displayed
-	 *  
+	 * 
 	 */
 	public void verifySelectSecondaryContactLinkDisplayed() {
 
 		try {
-			WebElement element = BusinessFunctions.returnElementFromListUsingAttribute(driver,
-					_secondaryContactSectionLinks, MYLOConstants.SELECT_SECONDARY_CONTACT, MYLOConstants.TEXT);
-			_isExists = CoreFunctions.isElementExist(driver, element, MYLOConstants.WAIT);
+			_isExists = CoreFunctions.isElementExist(driver, _selectSecondaryContactLink, 5);
 			if (_isExists)
 				Reporter.addStepLog(
 						MessageFormat.format(MYLOConstants.SELECT_SECONDARY_CONTACT_LINK, CoreConstants.PASS));
@@ -206,9 +216,7 @@ public class MyloJourneyPage_PrimarySecondaryContact extends Base {
 	 */
 	public void clickSelectSecondaryContactLink() {
 		try {
-			WebElement element = BusinessFunctions.returnElementFromListUsingAttribute(driver,
-					_secondaryContactSectionLinks, MYLOConstants.SELECT_SECONDARY_CONTACT, MYLOConstants.TEXT);
-			CoreFunctions.click(driver, element, MYLOConstants.SELECT_SECONDARY_CONTACT);
+			CoreFunctions.click(driver, _selectSecondaryContactLink, MYLOConstants.SELECT_SECONDARY_CONTACT);
 		} catch (Exception e) {
 			Assert.fail(
 					MessageFormat.format(CoreConstants.FAILD_CLCK_ELE, MYLOConstants.SELECT_SECONDARY_CONTACT_LINK));
@@ -220,12 +228,9 @@ public class MyloJourneyPage_PrimarySecondaryContact extends Base {
 	 */
 	public void expandPrimaryContactDetailsSection() {
 		try {
-			CoreFunctions.clickUsingJS(driver, _expandPrimaryContactSection,
+			scrollToPrimaryContactSection();
+			CoreFunctions.scrollClickUsingJS(driver, _expandPrimaryContactSection,
 					MYLOConstants.EXPAND_PRIMARY_CONTACT_SECTION);
-			String expanded = CoreFunctions.getElementAttributeValue(driver, _expandPrimaryContactSection,
-					"aria-expanded");
-			if (expanded.equals("false"))
-				CoreFunctions.click(driver, _expandPrimaryContactSection, MYLOConstants.EXPAND_PRIMARY_CONTACT_SECTION);
 		} catch (Exception e) {
 			Assert.fail(
 					MessageFormat.format(CoreConstants.FAILD_CLCK_ELE, MYLOConstants.EXPAND_PRIMARY_CONTACT_SECTION));
@@ -283,40 +288,54 @@ public class MyloJourneyPage_PrimarySecondaryContact extends Base {
 				CoreFunctions.getAttributeText(_selectedSecondaryContactEmail, MYLOConstants.TITLE));
 
 	}
-	
+
 	/**
 	 * Verify if contact details are updated on Secondary Contact Card
 	 * 
 	 * @param member
 	 */
-	public void isSelectedSecondaryContactUpdated(String member) {
+	public void isSelectedSecondaryContactUpdated(String member, CustomSoftAssert softAssert) {
 		mapSelectedSecondaryContactDetails();
-		CoreFunctions.verifyText(secondaryContactfieldValueMapping.get(MYLOConstants.NAME),
-				MyloNewFileUtil.get_partnerFName() + " " + MyloNewFileUtil.get_partnerLName(),
-				MYLOConstants.SECONDARY_CONTACT_NAME);
-		CoreFunctions.verifyText(secondaryContactfieldValueMapping.get(MYLOConstants.PRONOUN),
-				MYLOConstants.PREFER_NOT_TO_ANSWER, MYLOConstants.PRONOUN);
-		CoreFunctions.verifyText(secondaryContactfieldValueMapping.get(MYLOConstants.PHONE_DETAILS),
-				MyloNewFileUtil.get_transfereePhoneNo() + " " + MYLOConstants.CELL_PHONE, MYLOConstants.PHONE_NUMBER);
+		softAssert.assertTrue(
+				secondaryContactfieldValueMapping.get(MYLOConstants.NAME).equalsIgnoreCase(
+						MyloNewFileUtil.get_partnerFName() + " " + MyloNewFileUtil.get_partnerLName()),
+				CoreConstants.FAILED_TO_VERFY + " " + MYLOConstants.NAME);
+		softAssert.assertTrue(
+				secondaryContactfieldValueMapping.get(MYLOConstants.PRONOUN)
+						.equalsIgnoreCase(MYLOConstants.PREFER_NOT_TO_ANSWER),
+				CoreConstants.FAILED_TO_VERFY + " " + MYLOConstants.PRONOUN);
+		softAssert.assertTrue(
+				secondaryContactfieldValueMapping.get(MYLOConstants.PHONE_DETAILS)
+						.equalsIgnoreCase(MyloNewFileUtil.get_transfereePhoneNo() + " " + MYLOConstants.CELL_PHONE),
+				CoreConstants.FAILED_TO_VERFY + " " + MYLOConstants.PHONE_NUMBER);
 
 		switch (member) {
 		case (MYLOConstants.PARTNER):
-			CoreFunctions.verifyText(secondaryContactfieldValueMapping.get(MYLOConstants.RELATIONSHIP),
-					MYLOConstants.SPOUSE, MYLOConstants.RELATIONSHIP);
-			CoreFunctions.verifyText(secondaryContactfieldValueMapping.get(MYLOConstants.EMAIL_DETAILS),
-					MyloNewFileUtil.get_transfereeEmail() + " " + MYLOConstants.SPOUSE_PERSONAL, MYLOConstants.EMAIL);
+			softAssert.assertTrue(secondaryContactfieldValueMapping.get(MYLOConstants.RELATIONSHIP).equalsIgnoreCase(
+					MYLOConstants.SPOUSE), CoreConstants.FAILED_TO_VERFY + " " + MYLOConstants.RELATIONSHIP);
+			softAssert.assertTrue(
+					secondaryContactfieldValueMapping.get(MYLOConstants.EMAIL_DETAILS).equalsIgnoreCase(
+							MyloNewFileUtil.get_transfereeEmail() + " " + MYLOConstants.SPOUSE_PERSONAL),
+					CoreConstants.FAILED_TO_VERFY + " " + MYLOConstants.EMAIL);
 			break;
 		case (MYLOConstants.DEPENDENT):
-			CoreFunctions.verifyText(secondaryContactfieldValueMapping.get(MYLOConstants.RELATIONSHIP),
-					MYLOConstants.CHILD, MYLOConstants.RELATIONSHIP);
-			CoreFunctions.verifyText(secondaryContactfieldValueMapping.get(MYLOConstants.EMAIL_DETAILS),
-					MyloNewFileUtil.get_transfereeEmail() + " " + MYLOConstants.OTHER, MYLOConstants.EMAIL);
+			softAssert.assertTrue(secondaryContactfieldValueMapping.get(MYLOConstants.RELATIONSHIP).equalsIgnoreCase(
+					MYLOConstants.CHILD), CoreConstants.FAILED_TO_VERFY + " " + MYLOConstants.RELATIONSHIP);
+			softAssert.assertTrue(
+					secondaryContactfieldValueMapping.get(MYLOConstants.EMAIL_DETAILS)
+							.equalsIgnoreCase(MyloNewFileUtil.get_transfereeEmail() + " " + MYLOConstants.OTHER),
+					CoreConstants.FAILED_TO_VERFY + " " + MYLOConstants.EMAIL);
 			break;
 		case (MYLOConstants.OTHER):
-			CoreFunctions.verifyText(secondaryContactfieldValueMapping.get(MYLOConstants.RELATIONSHIP),
-					MYLOConstants.OTHER_EDIT, MYLOConstants.RELATIONSHIP);
-			CoreFunctions.verifyText(secondaryContactfieldValueMapping.get(MYLOConstants.EMAIL_DETAILS),
-					MyloNewFileUtil.get_transfereeEmail() + " " + MYLOConstants.OTHER, MYLOConstants.EMAIL);
+			softAssert.assertTrue(
+					secondaryContactfieldValueMapping.get(MYLOConstants.RELATIONSHIP)
+							.equalsIgnoreCase(MYLOConstants.OTHER_EDIT),
+					CoreConstants.FAILED_TO_VERFY + " " + MYLOConstants.RELATIONSHIP);
+			softAssert.assertTrue(
+					secondaryContactfieldValueMapping.get(MYLOConstants.EMAIL_DETAILS)
+							.equalsIgnoreCase(MyloNewFileUtil.get_transfereeEmail() + " " + MYLOConstants.OTHER),
+					CoreConstants.FAILED_TO_VERFY + " " + MYLOConstants.EMAIL);
+
 			break;
 		}
 
@@ -328,7 +347,25 @@ public class MyloJourneyPage_PrimarySecondaryContact extends Base {
 	 * @param field
 	 * @return
 	 */
+
 	public void mapSelectedPrimaryContactDetails() {
+
+		
+		/*
+		 * List<String> contactCardFields = Arrays.asList(MYLOConstants.NAME,
+		 * MYLOConstants.RELATIONSHIP, MYLOConstants.PRONOUN,
+		 * MYLOConstants.PHONE_DETAILS, MYLOConstants.EMAIL_DETAILS); List<String>
+		 * primaryContactCardValues = Arrays.asList(
+		 * CoreFunctions.getElementText(driver, _selectedPrimaryContactName),
+		 * CoreFunctions.getElementText(driver, _selectedPrimaryContactRelationship),
+		 * CoreFunctions.getElementText(driver, _selectedPrimaryContactPronoun),
+		 * CoreFunctions.getAttributeText(_selectedPrimaryContactPhoneNumber,
+		 * MYLOConstants.TITLE),
+		 * CoreFunctions.getAttributeText(_selectedPrimaryContactEmail,
+		 * MYLOConstants.TITLE)); Map<String, String> hmap = IntStream.range(0,
+		 * contactCardFields.size()).boxed() .collect(Collectors.toMap(i ->
+		 * contactCardFields.get(i), i -> primaryContactCardValues.get(i)));
+		 */
 		primaryContactfieldValueMapping.put(MYLOConstants.NAME,
 				CoreFunctions.getElementText(driver, _selectedPrimaryContactName));
 		primaryContactfieldValueMapping.put(MYLOConstants.RELATIONSHIP,
@@ -339,6 +376,7 @@ public class MyloJourneyPage_PrimarySecondaryContact extends Base {
 				CoreFunctions.getAttributeText(_selectedPrimaryContactPhoneNumber, MYLOConstants.TITLE));
 		primaryContactfieldValueMapping.put(MYLOConstants.EMAIL_DETAILS,
 				CoreFunctions.getAttributeText(_selectedPrimaryContactEmail, MYLOConstants.TITLE));
+
 	}
 
 	/**
@@ -363,7 +401,7 @@ public class MyloJourneyPage_PrimarySecondaryContact extends Base {
 	public boolean isSelectPrimaryContactPopupDisplayed() {
 
 		try {
-			_isExists = CoreFunctions.isElementExist(driver, _selectContactPopup, MYLOConstants.WAIT);
+			_isExists = CoreFunctions.isElementExist(driver, _selectContactPopup, 5);
 			if (_isExists)
 				Reporter.addStepLog(
 						MessageFormat.format(MYLOConstants.SELECT_PRIMARY_CONTACT_POPUP, CoreConstants.PASS));
@@ -393,35 +431,50 @@ public class MyloJourneyPage_PrimarySecondaryContact extends Base {
 	 * Verify if contact details are updated on Primary Contact Card
 	 * 
 	 * @param member
+	 * @param _softAssert
 	 */
-	public void isSelectedPrimaryContactUpdated(String member) {
+	public void isSelectedPrimaryContactUpdated(String member, CustomSoftAssert softAssert) {
 		mapSelectedPrimaryContactDetails();
-		CoreFunctions.verifyText(primaryContactfieldValueMapping.get(MYLOConstants.NAME),
-				MyloNewFileUtil.get_partnerFName() + " " + MyloNewFileUtil.get_partnerLName(),
-				MYLOConstants.SECONDARY_CONTACT_NAME);
-		CoreFunctions.verifyText(primaryContactfieldValueMapping.get(MYLOConstants.PRONOUN),
-				MYLOConstants.PREFER_NOT_TO_ANSWER, MYLOConstants.PRONOUN);
-		CoreFunctions.verifyText(primaryContactfieldValueMapping.get(MYLOConstants.PHONE_DETAILS),
-				MyloNewFileUtil.get_transfereePhoneNo() + " " + MYLOConstants.CELL_PHONE, MYLOConstants.PHONE_NUMBER);
+		softAssert.assertTrue(
+				primaryContactfieldValueMapping.get(MYLOConstants.NAME).equalsIgnoreCase(
+						MyloNewFileUtil.get_partnerFName() + " " + MyloNewFileUtil.get_partnerLName()),
+				CoreConstants.FAILED_TO_VERFY + " " + MYLOConstants.NAME);
+		softAssert.assertTrue(
+				primaryContactfieldValueMapping.get(MYLOConstants.PRONOUN)
+						.equalsIgnoreCase(MYLOConstants.PREFER_NOT_TO_ANSWER),
+				CoreConstants.FAILED_TO_VERFY + " " + MYLOConstants.PRONOUN);
+		softAssert.assertTrue(
+				primaryContactfieldValueMapping.get(MYLOConstants.PHONE_DETAILS)
+						.equalsIgnoreCase(MyloNewFileUtil.get_transfereePhoneNo() + " " + MYLOConstants.CELL_PHONE),
+				CoreConstants.FAILED_TO_VERFY + " " + MYLOConstants.PHONE_NUMBER);
 
 		switch (member) {
 		case (MYLOConstants.PARTNER):
-			CoreFunctions.verifyText(primaryContactfieldValueMapping.get(MYLOConstants.RELATIONSHIP),
-					MYLOConstants.SPOUSE, MYLOConstants.RELATIONSHIP);
-			CoreFunctions.verifyText(primaryContactfieldValueMapping.get(MYLOConstants.EMAIL_DETAILS),
-					MyloNewFileUtil.get_transfereeEmail() + " " + MYLOConstants.SPOUSE_PERSONAL, MYLOConstants.EMAIL);
+			softAssert.assertTrue(primaryContactfieldValueMapping.get(MYLOConstants.RELATIONSHIP).equalsIgnoreCase(
+					MYLOConstants.SPOUSE), CoreConstants.FAILED_TO_VERFY + " " + MYLOConstants.RELATIONSHIP);
+			softAssert.assertTrue(
+					primaryContactfieldValueMapping.get(MYLOConstants.EMAIL_DETAILS).equalsIgnoreCase(
+							MyloNewFileUtil.get_transfereeEmail() + " " + MYLOConstants.SPOUSE_PERSONAL),
+					CoreConstants.FAILED_TO_VERFY + " " + MYLOConstants.EMAIL);
 			break;
 		case (MYLOConstants.DEPENDENT):
-			CoreFunctions.verifyText(primaryContactfieldValueMapping.get(MYLOConstants.RELATIONSHIP),
-					MYLOConstants.CHILD, MYLOConstants.RELATIONSHIP);
-			CoreFunctions.verifyText(primaryContactfieldValueMapping.get(MYLOConstants.EMAIL_DETAILS),
-					MyloNewFileUtil.get_transfereeEmail() + " " + MYLOConstants.OTHER, MYLOConstants.EMAIL);
+			softAssert.assertTrue(primaryContactfieldValueMapping.get(MYLOConstants.RELATIONSHIP).equalsIgnoreCase(
+					MYLOConstants.CHILD), CoreConstants.FAILED_TO_VERFY + " " + MYLOConstants.RELATIONSHIP);
+			softAssert.assertTrue(
+					primaryContactfieldValueMapping.get(MYLOConstants.EMAIL_DETAILS)
+							.equalsIgnoreCase(MyloNewFileUtil.get_transfereeEmail() + " " + MYLOConstants.OTHER),
+					CoreConstants.FAILED_TO_VERFY + " " + MYLOConstants.EMAIL);
 			break;
 		case (MYLOConstants.OTHER):
-			CoreFunctions.verifyText(primaryContactfieldValueMapping.get(MYLOConstants.RELATIONSHIP),
-					MYLOConstants.OTHER_EDIT, MYLOConstants.RELATIONSHIP);
-			CoreFunctions.verifyText(primaryContactfieldValueMapping.get(MYLOConstants.EMAIL_DETAILS),
-					MyloNewFileUtil.get_transfereeEmail() + " " + MYLOConstants.OTHER, MYLOConstants.EMAIL);
+			softAssert.assertTrue(
+					primaryContactfieldValueMapping.get(MYLOConstants.RELATIONSHIP)
+							.equalsIgnoreCase(MYLOConstants.OTHER_EDIT),
+					CoreConstants.FAILED_TO_VERFY + " " + MYLOConstants.RELATIONSHIP);
+			softAssert.assertTrue(
+					primaryContactfieldValueMapping.get(MYLOConstants.EMAIL_DETAILS)
+							.equalsIgnoreCase(MyloNewFileUtil.get_transfereeEmail() + " " + MYLOConstants.OTHER),
+					CoreConstants.FAILED_TO_VERFY + " " + MYLOConstants.EMAIL);
+
 			break;
 		}
 
@@ -431,7 +484,6 @@ public class MyloJourneyPage_PrimarySecondaryContact extends Base {
 	 * scroll to primary contact section
 	 */
 	public void scrollToPrimaryContactSection() {
-		CoreFunctions.waitHandler(MYLOConstants.WAIT);
 		CoreFunctions.scrollToElementUsingJS(driver, _primaryContactSection, MYLOConstants.PRIMARY_CONTACT_SECTION);
 	}
 
@@ -439,9 +491,7 @@ public class MyloJourneyPage_PrimarySecondaryContact extends Base {
 	 * Remove secondary contact if present
 	 */
 	public void verifyAndRemoveSecondaryContactIfPresent() {
-		expandPrimaryContactDetailsSection();
-		if (!CoreFunctions.searchElementExistsInListByText(driver, _secondaryContactSectionLinks,
-				MYLOConstants.SELECT_SECONDARY_CONTACT))
+		if (!CoreFunctions.isElementExist(driver, _selectSecondaryContactLink, 5))
 			clickButtonInSecondaryContactCard(MYLOConstants.REMOVE_BUTTON);
 	}
 
@@ -461,35 +511,38 @@ public class MyloJourneyPage_PrimarySecondaryContact extends Base {
 	}
 
 	/**
-	 * verify selected secondary contact name
-	 * 
-	 * @param name
-	 */
-	public void verifySelectedSecondaryContactName(String name) {
-		mapSelectedSecondaryContactDetails();
-		CoreFunctions.verifyText(secondaryContactfieldValueMapping.get(MYLOConstants.NAME), name,
-				MYLOConstants.SECONDARY_CONTACT_NAME);
-	}
-
-	/**
 	 * Verify Member Present on page
 	 * 
+	 * @param _softAssert
+	 * 
 	 * @param name
 	 */
-	public void verifyMembersPresentOnPopup(List<String> member) {
-		for (String name : member) 
-			CoreFunctions.searchElementExistsInListByText(driver, _contactNameOnPopup, name, true);		
+	public void verifyMembersPresentOnPopup(List<String> member, CustomSoftAssert _softAssert) {
+		for (String name : member)
+			_softAssert.assertTrue(
+					CoreFunctions.searchElementExistsInListByText(driver, _contactNameOnPopup, name, true),
+					MessageFormat.format(MYLOConstants.FAILED_TO_VERIFY_MEMBER_ON_POPUP, CoreConstants.FAIL, name));
 	}
-	
+
 	/**
 	 * verify selected Primary contact name
 	 * 
 	 * @param name
 	 */
-	public void verifySelectedPrimaryContactName(String name) {
+	public boolean verifySelectedPrimaryContactName(String name) {
 		mapSelectedPrimaryContactDetails();
-		CoreFunctions.verifyText(primaryContactfieldValueMapping.get(MYLOConstants.NAME), name,
-				MYLOConstants.PRIMARY_CONTACT_NAME);
+		if (primaryContactfieldValueMapping.get(MYLOConstants.NAME).equalsIgnoreCase(name)) {
+			Reporter.addStepLog(CoreConstants.PASS + CoreConstants.TXT_ACTUAL
+					+ primaryContactfieldValueMapping.get(MYLOConstants.NAME) + " " + CoreConstants.TXT_EXPECTED
+					+ name);
+			return true;
+		} else {
+			Log.info(CoreConstants.FAIL + CoreConstants.TXT_ACTUAL
+					+ primaryContactfieldValueMapping.get(MYLOConstants.NAME) + " " + CoreConstants.TXT_EXPECTED
+					+ name);
+			return false;
+		}
+
 	}
 
 }

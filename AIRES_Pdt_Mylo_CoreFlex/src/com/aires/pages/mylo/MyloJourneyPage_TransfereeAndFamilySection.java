@@ -386,25 +386,6 @@ public class MyloJourneyPage_TransfereeAndFamilySection extends Base {
 	}
 
 	/**
-	 * edit first name
-	 */
-	public void editToRandomFirstName() {
-		String firstNameValue = CoreFunctions.generateRandomString(5);
-		MyloNewFileUtil.set_partnerFName(firstNameValue);
-		enterTextEditTransfereeFamily(MYLOConstants.FIRST_NAME, firstNameValue);
-	}
-
-	/**
-	 * edit last name
-	 */
-	public void editToRandomLastName() {
-		scrollToSuffix();
-		String lastNameValue = CoreFunctions.generateRandomString(5);
-		MyloNewFileUtil.set_partnerLName(lastNameValue);
-		enterTextEditTransfereeFamily(MYLOConstants.LAST_NAME, lastNameValue);
-	}
-
-	/**
 	 * edit pronoun
 	 */
 	public void editPronoun(String pronoun) {
@@ -587,21 +568,9 @@ public class MyloJourneyPage_TransfereeAndFamilySection extends Base {
 			updatePartner(memberName, table);
 			break;
 		case (MYLOConstants.DEPENDENT):
-			CoreFunctions.refreshPage(driver);
-			CoreFunctions.waitForBrowserToLoad(driver);
-			BusinessFunctions.fluentWaitForMyloSpinnerToDisappear(driver, _spinner);
-			CoreFunctions.explicitWaitTillElementVisibility(driver, _transfereeAndFamilySection,
-					MYLOConstants.TRANSFEREE_FAMILY_HEADER);
-			expandTransfereeDetailsSection();
 			updateDependent(memberName, table);
 			break;
 		case (MYLOConstants.OTHER):
-			CoreFunctions.refreshPage(driver);
-			CoreFunctions.waitForBrowserToLoad(driver);
-			BusinessFunctions.fluentWaitForMyloSpinnerToDisappear(driver, _spinner);
-			CoreFunctions.explicitWaitTillElementVisibility(driver, _transfereeAndFamilySection,
-					MYLOConstants.TRANSFEREE_FAMILY_HEADER);
-			expandTransfereeDetailsSection();
 			updateOther(memberName, table);
 			break;
 		default:
@@ -616,36 +585,20 @@ public class MyloJourneyPage_TransfereeAndFamilySection extends Base {
 	 * @param table
 	 */
 	private void updateOther(String memberName, DataTable table) {
+		CoreFunctions.refreshPage(driver);
+		CoreFunctions.waitForBrowserToLoad(driver);
+		BusinessFunctions.fluentWaitForMyloSpinnerToDisappear(driver, _spinner);
+		CoreFunctions.explicitWaitTillElementVisibility(driver, _transfereeAndFamilySection,
+				MYLOConstants.TRANSFEREE_FAMILY_HEADER);
+		expandTransfereeDetailsSection();
 		scrollToSection(MYLOConstants.OTHER);
-		int index = BusinessFunctions.returnindexItemFromListUsingAttribute(driver, _savedOtherMemberNames, memberName,
-				MYLOConstants.OUTER_TEXT);
+		int index = BusinessFunctions.returnindexItemFromListUsingText(driver, _savedOtherMemberNames, memberName);
 		CoreFunctions.scrollToElementUsingJS(driver, _otherEditButtons.get(index), MYLOConstants.EDIT_BUTTON);
 		CoreFunctions.clickUsingJS(driver, _otherEditButtons.get(index), MYLOConstants.EDIT_BUTTON);
 		BusinessFunctions.fluentWaitForMyloSpinnerToDisappear(driver, _spinner);
 		java.util.List<Map<String, String>> dataList = table.asMaps(String.class, String.class);
 		for (Map<String, String> data : dataList) {
-			switch (data.get("Fields")) {
-			case (MYLOConstants.FIRST_NAME):
-				editToRandomFirstName();
-				break;
-			case (MYLOConstants.LAST_NAME):
-				editToRandomLastName();
-				break;
-			case (MYLOConstants.PRONOUN):
-				editPronoun(MYLOConstants.PREFER_NOT_TO_ANSWER);
-				break;
-			case (MYLOConstants.RELATIONSHIP):
-				editOtherRelationship(MYLOConstants.OTHER_EDIT);
-				break;
-			case (MYLOConstants.NUMBER):
-				addPhoneDetailsInOther();
-				break;
-			case (MYLOConstants.EMAIL):
-				addEmailDetailsInOther();
-				break;
-			default:
-				Assert.fail(data.get("Fields") + " " + MYLOConstants.NOT_EXIST);
-			}
+			updateOtherFields(data.get("Fields"));
 		}
 		CoreFunctions.scrollToElementUsingJavaScript(driver, _otherSection, MYLOConstants.OTHER);
 		clickSaveInEditMember();
@@ -655,47 +608,101 @@ public class MyloJourneyPage_TransfereeAndFamilySection extends Base {
 	}
 
 	/**
+	 * updateOtherFields
+	 * 
+	 * @param fieldName
+	 */
+	private void updateOtherFields(String fieldName) {
+		switch (fieldName) {
+		case (MYLOConstants.FIRST_NAME):
+			String firstName = CoreFunctions.generateRandomString(5);
+			MyloNewFileUtil.set_otherFName(firstName);
+			enterTextEditTransfereeFamily(MYLOConstants.FIRST_NAME, firstName);
+			break;
+		case (MYLOConstants.LAST_NAME):
+			String lastName = CoreFunctions.generateRandomString(5);
+			MyloNewFileUtil.set_otherLName(lastName);
+			scrollToSuffix();
+			enterTextEditTransfereeFamily(MYLOConstants.LAST_NAME, lastName);
+			break;
+		case (MYLOConstants.PRONOUN):
+			editPronoun(MYLOConstants.PREFER_NOT_TO_ANSWER);
+			break;
+		case (MYLOConstants.RELATIONSHIP):
+			editOtherRelationship(MYLOConstants.OTHER_EDIT);
+			break;
+		case (MYLOConstants.NUMBER):
+			addPhoneDetailsInOther();
+			break;
+		case (MYLOConstants.EMAIL):
+			addEmailDetailsInOther();
+			break;
+		default:
+			Assert.fail(fieldName + " " + MYLOConstants.NOT_EXIST);
+		}
+	}
+
+	/**
 	 * Update Dependent
 	 * 
 	 * @param memberName
 	 * @param table
 	 */
 	private void updateDependent(String memberName, DataTable table) {
+		CoreFunctions.refreshPage(driver);
+		CoreFunctions.waitForBrowserToLoad(driver);
+		BusinessFunctions.fluentWaitForMyloSpinnerToDisappear(driver, _spinner);
+		CoreFunctions.explicitWaitTillElementVisibility(driver, _transfereeAndFamilySection,
+				MYLOConstants.TRANSFEREE_FAMILY_HEADER);
+		expandTransfereeDetailsSection();
 		scrollToSection(MYLOConstants.DEPENDENT);
-		int index = BusinessFunctions.returnindexItemFromListUsingAttribute(driver, _savedDependentNames, memberName,
-				MYLOConstants.OUTER_TEXT);
+		int index = BusinessFunctions.returnindexItemFromListUsingText(driver, _savedDependentNames, memberName);
 		CoreFunctions.scrollToElementUsingJS(driver, _dependentEditButtons.get(index), MYLOConstants.EDIT_BUTTON);
 		CoreFunctions.clickUsingJS(driver, _dependentEditButtons.get(index), MYLOConstants.EDIT_BUTTON);
 		BusinessFunctions.fluentWaitForMyloSpinnerToDisappear(driver, _spinner);
 		java.util.List<Map<String, String>> dataList = table.asMaps(String.class, String.class);
 		for (Map<String, String> data : dataList) {
-			switch (data.get("Fields")) {
-			case (MYLOConstants.FIRST_NAME):
-				editToRandomFirstName();
-				break;
-			case (MYLOConstants.LAST_NAME):
-				editToRandomLastName();
-				break;
-			case (MYLOConstants.PRONOUN):
-				editPronoun(MYLOConstants.PREFER_NOT_TO_ANSWER);
-				break;
-			case (MYLOConstants.RELATIONSHIP):
-				editPartnerOrDependentRelationship(MYLOConstants.CHILD);
-				break;
-			case (MYLOConstants.NUMBER):
-				addPhoneDetails();
-				break;
-			case (MYLOConstants.EMAIL):
-				addEmailDetails(MYLOConstants.OTHER);
-				break;
-			default:
-				Assert.fail(data.get("Fields") + " " + MYLOConstants.NOT_EXIST);
-			}
+			updateDependendFields(data.get("Fields"));
 		}
 		CoreFunctions.scrollToElementUsingJavaScript(driver, _dependentSection, MYLOConstants.DEPENDENT);
 		clickSaveInEditMember();
 		CoreFunctions.scrollClickUsingJS(driver, _dependentCloseEditButton, MYLOConstants.EDIT_BUTTON);
 		BusinessFunctions.fluentWaitForMyloSpinnerToDisappear(driver, _spinner);
+	}
+
+	/**
+	 * updateDependendFields
+	 * 
+	 * @param fieldName
+	 */
+	private void updateDependendFields(String fieldName) {
+		switch (fieldName) {
+		case (MYLOConstants.FIRST_NAME):
+			String firstName = CoreFunctions.generateRandomString(5);
+			MyloNewFileUtil.set_dependentFName(firstName);
+			enterTextEditTransfereeFamily(MYLOConstants.FIRST_NAME, firstName);
+			break;
+		case (MYLOConstants.LAST_NAME):
+			String lastName = CoreFunctions.generateRandomString(5);
+			MyloNewFileUtil.set_dependentLName(lastName);
+			scrollToSuffix();
+			enterTextEditTransfereeFamily(MYLOConstants.LAST_NAME, lastName);
+			break;
+		case (MYLOConstants.PRONOUN):
+			editPronoun(MYLOConstants.PREFER_NOT_TO_ANSWER);
+			break;
+		case (MYLOConstants.RELATIONSHIP):
+			editPartnerOrDependentRelationship(MYLOConstants.CHILD);
+			break;
+		case (MYLOConstants.NUMBER):
+			addPhoneDetails();
+			break;
+		case (MYLOConstants.EMAIL):
+			addEmailDetails(MYLOConstants.OTHER);
+			break;
+		default:
+			Assert.fail(fieldName + " " + MYLOConstants.NOT_EXIST);
+		}
 	}
 
 	/**
@@ -705,41 +712,53 @@ public class MyloJourneyPage_TransfereeAndFamilySection extends Base {
 	 * @param table
 	 */
 	private void updatePartner(String memberName, DataTable table) {
-		System.out.println(_savedPartnerNames.get(0).getText());
-		int index = BusinessFunctions.returnindexItemFromListUsingAttribute(driver, _savedPartnerNames, memberName,
-				MYLOConstants.OUTER_TEXT);
+		int index = BusinessFunctions.returnindexItemFromListUsingText(driver, _savedPartnerNames, memberName);
 		CoreFunctions.scrollToElementUsingJS(driver, _partnerSection, MYLOConstants.EDIT_BUTTON);
 		CoreFunctions.clickUsingJS(driver, _partnerEditButtons.get(index), MYLOConstants.EDIT_BUTTON);
 		BusinessFunctions.fluentWaitForMyloSpinnerToDisappear(driver, _spinner);
 		java.util.List<Map<String, String>> dataList = table.asMaps(String.class, String.class);
 		for (Map<String, String> data : dataList) {
-			switch (data.get("Fields")) {
-			case (MYLOConstants.FIRST_NAME):
-				editToRandomFirstName();
-				break;
-			case (MYLOConstants.LAST_NAME):
-				editToRandomLastName();
-				break;
-			case (MYLOConstants.PRONOUN):
-				editPronoun(MYLOConstants.PREFER_NOT_TO_ANSWER);
-				break;
-			case (MYLOConstants.RELATIONSHIP):
-				editPartnerOrDependentRelationship(MYLOConstants.SPOUSE);
-				break;
-			case (MYLOConstants.NUMBER):
-				addPhoneDetails();
-				break;
-			case (MYLOConstants.EMAIL):
-				addEmailDetails(MYLOConstants.SPOUSE_PERSONAL);
-				break;
-			default:
-				Assert.fail(data.get("Fields") + " " + MYLOConstants.NOT_EXIST);
-			}
+			updatePartnerFields(data.get("Fields"));
 		}
 		CoreFunctions.scrollToElementUsingJavaScript(driver, _partnerSection, MYLOConstants.PARTNER);
 		clickSaveInEditMember();
 		CoreFunctions.scrollClickUsingJS(driver, _partnerCloseEditButton, MYLOConstants.EDIT_BUTTON);
 		BusinessFunctions.fluentWaitForMyloSpinnerToDisappear(driver, _spinner);
+	}
+
+	/**
+	 * updatePartnerFields
+	 * 
+	 * @param fieldName
+	 */
+	private void updatePartnerFields(String fieldName) {
+		switch (fieldName) {
+		case (MYLOConstants.FIRST_NAME):
+			String firstName = CoreFunctions.generateRandomString(5);
+			MyloNewFileUtil.set_partnerFName(firstName);
+			enterTextEditTransfereeFamily(MYLOConstants.FIRST_NAME, firstName);
+			break;
+		case (MYLOConstants.LAST_NAME):
+			String lastName = CoreFunctions.generateRandomString(5);
+			MyloNewFileUtil.set_partnerLName(lastName);
+			scrollToSuffix();
+			enterTextEditTransfereeFamily(MYLOConstants.LAST_NAME, lastName);
+			break;
+		case (MYLOConstants.PRONOUN):
+			editPronoun(MYLOConstants.PREFER_NOT_TO_ANSWER);
+			break;
+		case (MYLOConstants.RELATIONSHIP):
+			editPartnerOrDependentRelationship(MYLOConstants.SPOUSE);
+			break;
+		case (MYLOConstants.NUMBER):
+			addPhoneDetails();
+			break;
+		case (MYLOConstants.EMAIL):
+			addEmailDetails(MYLOConstants.SPOUSE_PERSONAL);
+			break;
+		default:
+			Assert.fail(fieldName + " " + MYLOConstants.NOT_EXIST);
+		}
 	}
 
 	/**
@@ -749,7 +768,7 @@ public class MyloJourneyPage_TransfereeAndFamilySection extends Base {
 	public String getSavedTransfereeName() {
 		String transfereeName = "";
 		try {
-			transfereeName = CoreFunctions.getAttributeText(_savedTransfereeNames.get(0), MYLOConstants.OUTER_TEXT);
+			transfereeName = CoreFunctions.getElementText(driver, _savedTransfereeNames.get(0));
 
 		} catch (Exception e) {
 			Reporter.addStepLog(MessageFormat.format(MYLOConstants.FAIL_TO_GET_ELEMENT_TEXT, CoreConstants.FAIL));

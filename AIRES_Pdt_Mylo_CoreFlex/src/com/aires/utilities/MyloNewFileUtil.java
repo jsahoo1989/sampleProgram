@@ -30,6 +30,10 @@ public class MyloNewFileUtil {
 	private static String _ppc;
 	private static String _mspec;
 	private static String _leadCompanyID;
+	private static String _dependentFName;
+	private static String _dependentLName;
+	private static String _otherFName;
+	private static String _otherLName;
 
 	public static String get_partnerFName() {
 		return _partnerFName;
@@ -263,5 +267,35 @@ public class MyloNewFileUtil {
 		MyloNewFileUtil._leadCompanyID = LeadCompanyID;
 	}
 
+	public static String get_dependentFName() {
+		return _dependentFName;
+	}
 
+	public static void set_dependentFName(String _dependentFName) {
+		MyloNewFileUtil._dependentFName = _dependentFName;
+	}
+
+	public static String get_dependentLName() {
+		return _dependentLName;
+	}
+
+	public static void set_dependentLName(String _dependentLName) {
+		MyloNewFileUtil._dependentLName = _dependentLName;
+	}
+
+	public static String get_otherFName() {
+		return _otherFName;
+	}
+
+	public static void set_otherFName(String _otherFName) {
+		MyloNewFileUtil._otherFName = _otherFName;
+	}
+
+	public static String get_otherLName() {
+		return _otherLName;
+	}
+
+	public static void set_otherLName(String _otherLName) {
+		MyloNewFileUtil._otherLName = _otherLName;
+	}
 }

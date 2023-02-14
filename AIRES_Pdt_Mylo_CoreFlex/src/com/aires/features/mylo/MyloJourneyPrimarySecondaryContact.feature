@@ -25,8 +25,8 @@ Feature: Validate the functionality of Mylo Journey Primary and Secondary Contac
       | Fields       |
       | First Name   |
       | Last Name    |
-      | Pronouns     |
-      | Relationship |
+      | Pronoun      |
+      | Relationships|
       | Number       |
       | Email        |
 
@@ -37,13 +37,16 @@ Feature: Validate the functionality of Mylo Journey Primary and Secondary Contac
       | Fields       |
       | First Name   |
       | Last Name    |
-      | Pronouns     |
-      | Relationship |
+      | Pronoun      |
+      | Relationships|
       | Number       |
       | Email        |
 
-  @C218548 @C218555 @Mylo:218613 @Mylo-Regression
+@C218548 @C218555 @Mylo:218613 @Mylo-Regression
   Scenario: Mylo - Validate error message for same primary  and secondary contact along with remove funcationality of secondary contact
     Given he is on Mylo Journey Summary page for an existing file with all transferee and family members
-    Then warning message should appear if he tries to select same contact in Primary and Secondary Contact section
+    When he selects same contact on "Please Select Secondary Contact" popup which is already selected on primary contact Section 
+    Then warning message should appear after clicking save button on "Please Select Secondary Contact" popup
+    And warning message should appear if he tries to select same contact on "Please Select Primary Contact" popup which is already selected on primary secondary Section
     And he should be able to remove the secondary contact by clicking remove on Secondary Contact Card
+    

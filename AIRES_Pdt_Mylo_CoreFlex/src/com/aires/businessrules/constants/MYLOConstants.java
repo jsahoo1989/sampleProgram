@@ -846,7 +846,10 @@ public class MYLOConstants {
 	public static final String PRIMARY_CONTACT_NAME = "Primary Contact Name";
 	public static final String SUFFIX_FORM_CONTROL = "suffixCode";
 	public static final String PRIMARY_CONTACT_INCORRECT_SELECTION_ERROR="The contact selected is already designated as the Secondary Contact on this file. A contact may not be both the Primary and Secondary Contact.";
-	public static final Object FAILED_TO_VERIFY_MEMBER = "Failed to verify member";
-
+	public static final String FAILED_TO_VERIFY_MEMBER = "Failed to verify member";
+	public static final String FAILED_TO_VERIFY_MEMBER_ON_POPUP = "Failed to verify member On Popup - ''{0}''";
+	public static final String NOT_EXIST = "not_exist";
+	public static final String PRIMARY_CONTACT = "Primary Contact";
+	public static final String SECONDARY_CONTACT = "Secondary Contact";
 	
 }

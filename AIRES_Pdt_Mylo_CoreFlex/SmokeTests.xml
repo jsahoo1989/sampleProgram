@@ -3,8 +3,8 @@
 <suite name="SmokeTests">
 	<test name="SmokeTests Execution">
 		<classes>
-			 <class name="com.aires.runner.CreateTestRun_InTestRail_Test" /> 
-			<class name="com.aires.runner.TestRunner" />
+			<!--  <class name="com.aires.runner.CreateTestRun_InTestRail_Test" /> -->
+			<class name="com.aires.runner.TestRunner" /> 
 			<!-- <class name="com.aires.runner.TestRunner_Rerun" /> -->
 			<!-- <class name="com.aires.runner.CloseTestRunInTestRail_AfterExecution_Test" /> -->
 			<!-- <class name="com.aires.utilities.SendAutomationReport_ViaMail_Test" /> -->

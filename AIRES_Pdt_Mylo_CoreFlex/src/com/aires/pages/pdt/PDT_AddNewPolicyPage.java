@@ -102,6 +102,12 @@ public class PDT_AddNewPolicyPage extends Base {
 	@FindBy(how = How.XPATH, using = "//ng-select[@bindvalue='corporationPolicyId']//div[@class='ng-placeholder'][contains(text(),'No policy available for selection')]")
 	private WebElement _policyNameDefaultText;
 	
+	@FindBy(how = How.CSS, using = "ng-select[bindvalue='corporationPolicyId'] span[title='Clear all']")
+	private WebElement _clearPolicy;
+	
+	@FindBy(how = How.XPATH, using = "//label[contains(string(),'Policy Name')]/following-sibling::ng-select/descendant::div[@class='ng-option ng-option-disabled']")
+	private List<WebElement> _optionNoItemFound;
+	
 	final By _buttonNextByLocator = By.cssSelector("button.btn-next");
 
 	//private PDT_LoginInfo _loginInfo = FileReaderManager.getInstance().getJsonReader().getLoginByEnvt(CoreFunctions.getPropertyFromConfig("envt").toLowerCase());
@@ -431,13 +437,13 @@ public class PDT_AddNewPolicyPage extends Base {
 
 	public void selectPolicy(String policyFromJson) {
 		String policyId;
+		policyId = policyFromJson.split("#")[1].trim();
 		CoreFunctions.clickElement(driver, _selectPolicyName);
 		CoreFunctions.clearAndSetText(driver, _inputPolicyName, PDTConstants.POLICY_NAME, policyFromJson);
 		if (_optionsPolicyName.size() > 0
 				&& !_optionsPolicyName.get(0).getText().equalsIgnoreCase(PDTConstants.NO_ITEMS_FOUND)) {
 			CoreFunctions.selectItemInListByText(driver, _optionsPolicyName, policyFromJson, _lblPolicyName.getText(),
 					PDTConstants.DROP_DOWN, true);
-			policyId = policyFromJson.split("#")[1].trim();
 			ClientPolicyDetails.setPolicyId((Integer.parseInt(policyId.substring(0, policyId.length() - 1))));
 			ClientPolicyDetails.setPolicyName(policyFromJson);
 		} else if (checkErrorPopUpExistsForPolicy(_loginInfo.details.clientId, policyFromJson)) {
@@ -789,5 +795,33 @@ public class PDT_AddNewPolicyPage extends Base {
 					CoreConstants.FAIL, e.getMessage()));
 		}
 		return false;
+	}
+	
+	public void enterNonBpClientPolicyDetails() {
+		selectNonBpClient(_loginInfo.details.nonBPClientId);		
+		waitForProgressBarToDisappear();
+		selectPolicy(_loginInfo.details.nonBPPolicy);
+		CoreFunctions.explicitWaitTillElementVisibility(driver, _buttonNext, "Next", 7);
+		timeBeforeAction = new Date().getTime();
+		CoreFunctions.click(driver, _buttonNext, _buttonNext.getText());		
+		waitForProgressBarToDisappear();
+		timeAfterAction = new Date().getTime();	
+		BusinessFunctions.printTimeTakenByPageToLoad(timeBeforeAction, timeAfterAction, PDTConstants.GENERAL_INFORMATION);
+	}
+	
+	public void selectNonBpClient(String clientIdFromJson) {
+		CoreFunctions.clearAndSetText(driver, _inputClientID, PDTConstants.CLIENT_ID,
+				clientIdFromJson);
+		CoreFunctions.explicitWaitTillElementListVisibilityCustomTime(driver, _optionsClientID, 90);
+		CoreFunctions.explicitWaitTillElementListClickable(driver, _optionsClientID);
+		if (_optionsClientID.size() > 0
+				&& !_optionsClientID.get(0).getText().equalsIgnoreCase(PDTConstants.NO_ITEMS_FOUND)) {
+			selectClientFromClientDropDown(clientIdFromJson,_loginInfo.details.nonBPClientName);
+		} else if (checkErrorPopUpExistsForClientId()) {
+			String errorMsg = _popUpErrorMessage.getText();
+			CoreFunctions.clickElement(driver, _buttonPopUpErrorOk);
+			Assert.fail(MessageFormat.format(PDTConstants.ERROR_POP_UP_DISPLAYED_FOR_CLIENTID, CoreConstants.FAIL,
+					clientIdFromJson, errorMsg));
+		}
 	}
 }

@@ -1,6 +1,7 @@
 package com.aires.pages.pdt;
 
 import java.text.MessageFormat;
+import java.util.Arrays;
 import java.util.Date;
 import java.util.List;
 
@@ -17,6 +18,7 @@ import com.aires.businessrules.constants.CoreConstants;
 import com.aires.businessrules.constants.PDTConstants;
 import com.aires.managers.FileReaderManager;
 import com.aires.testdatatypes.pdt.PDT_DestinationServicesBenefit;
+import com.vimalselvam.cucumber.listener.Reporter;
 
 import stepDefinitions.pdt.PDT_SharedSubBenefit_Steps;
 
@@ -56,7 +58,7 @@ public class PDT_DestinationServicesPage extends PDT_SharedSubBenefitPage {
 	@FindBy(how = How.CSS, using = "ng-select[formcontrolname='carTypeCode']")
 	private WebElement _drpDownCarType;
 
-	@FindBy(how = How.CSS, using = "span.ng-option-label.ng-star-inserted")
+	@FindBy(how = How.CSS, using = "span.ng-option-label")
 	private List<WebElement> _drpDownCarTypeOptions;
 
 	@FindBy(how = How.CSS, using = "ng-select[formcontrolname='carTypeCode'] span.ng-value-label")
@@ -94,7 +96,7 @@ public class PDT_DestinationServicesPage extends PDT_SharedSubBenefitPage {
 	@FindBy(how = How.CSS, using = "app-departure-service ng-select[formcontrolname='noOfDayCode']")
 	private WebElement _drpDownNoOfDays;
 
-	@FindBy(how = How.CSS, using = "span.ng-option-label.ng-star-inserted")
+	@FindBy(how = How.CSS, using = "span.ng-option-label")
 	private List<WebElement> _drpDownNoOfDaysOptions;
 
 	@FindBy(how = How.CSS, using = "app-departure-service ng-select[formcontrolname='noOfDayCode'] span.ng-value-label")
@@ -122,7 +124,7 @@ public class PDT_DestinationServicesPage extends PDT_SharedSubBenefitPage {
 	@FindBy(how = How.CSS, using = "ng-select[formcontrolname='durationCode']")
 	private WebElement _drpDownDuration;
 
-	@FindBy(how = How.CSS, using = "span.ng-option-label.ng-star-inserted")
+	@FindBy(how = How.CSS, using = "span.ng-option-label")
 	private List<WebElement> _drpDownDurationOptions;
 
 	@FindBy(how = How.CSS, using = "ng-select[formcontrolname='durationCode'] span.ng-value-label")
@@ -201,7 +203,7 @@ public class PDT_DestinationServicesPage extends PDT_SharedSubBenefitPage {
 	@FindBy(how = How.CSS, using = "app-transition-assistance-program ng-select[formcontrolname='currencyCode']")
 	private WebElement _drpDownCurrencyTransitionAssistanceProg;
 
-	@FindBy(how = How.CSS, using = "span.ng-option-label.ng-star-inserted")
+	@FindBy(how = How.CSS, using = "span.ng-option-label")
 	private List<WebElement> _drpDownCurrencyOptionsTransitionAssistanceProg;
 
 	@FindBy(how = How.CSS, using = "app-transition-assistance-program ng-select[formcontrolname='currencyCode'] span.ng-value-label")
@@ -226,7 +228,7 @@ public class PDT_DestinationServicesPage extends PDT_SharedSubBenefitPage {
 	@FindBy(how = How.CSS, using = "app-tution-and-education ng-select[formcontrolname='currencyCode']")
 	private WebElement _drpDownCurrencyTutionAndEduction;
 
-	@FindBy(how = How.CSS, using = "span.ng-option-label.ng-star-inserted")
+	@FindBy(how = How.CSS, using = "span.ng-option-label")
 	private List<WebElement> _drpDownCurrencyOptionsTutionAndEduction;
 
 	@FindBy(how = How.CSS, using = "app-tution-and-education ng-select[formcontrolname='currencyCode'] span.ng-value-label")
@@ -279,11 +281,19 @@ public class PDT_DestinationServicesPage extends PDT_SharedSubBenefitPage {
 	
 	@FindBy(how = How.CSS, using = "div.ngx-progress-bar.ngx-progress-bar-ltr")
 	private WebElement _progressBar;
+	
+	@FindBy(how = How.CSS, using = "input[formcontrolname='autoRentDuration']")
+	private WebElement _txtBoxAutoRentDurationInDays;
+	
+	@FindBy(how = How.XPATH, using = "//input[@formcontrolname='autoRentDuration']/preceding-sibling::label")
+	private WebElement _lblAutoRentDurationInDays;
 
 	PDT_DestinationServicesBenefit destinationServicesBenefitData = FileReaderManager.getInstance().getJsonReader()
 			.getDestinationServicesDataList("Destination Services");
 
 	private String carType, noOfDaysForDepartureServices, durationForFurntiureRental;
+	private List<String> _expectedSizeClassList;
+	String [] _sizeClassArr = new String[] {PDTConstants.MID_SIZE, PDTConstants.FULL_SIZE, PDTConstants.PREMIUM, PDTConstants.OTHER};
 
 	public void setCarType(String carTypeSelected) {
 		carType = carTypeSelected;
@@ -291,6 +301,14 @@ public class PDT_DestinationServicesPage extends PDT_SharedSubBenefitPage {
 
 	public String getCarType() {
 		return carType;
+	}
+	
+	public void setSizeClassList(){
+		_expectedSizeClassList = Arrays.asList(_sizeClassArr);
+	}
+	
+	public List<String> getExpectedSizeClassList(){
+		return _expectedSizeClassList;
 	}
 
 	public void setNoOfDaysForDepartureServices(String noOfDays) {
@@ -380,7 +398,7 @@ public class PDT_DestinationServicesPage extends PDT_SharedSubBenefitPage {
 		}
 	}
 
-	public void fillAutoRentalForm(PDT_AddNewPolicyPage addNewPolicyPage, String subBenefitFormName, String pageName) {
+	public void fillAutoRentalForm(PDT_AddNewPolicyPage addNewPolicyPage, String subBenefitFormName, String pageName, PDT_SharedSubBenefit_Steps sharedSubBenefitStep) {
 
 		try {
 			populateSubBenefitHeaderMap();
@@ -389,6 +407,12 @@ public class PDT_DestinationServicesPage extends PDT_SharedSubBenefitPage {
 			BusinessFunctions.expandSubBenefitIfCollapsed(subBenefitHeaderMap.get(subBenefitFormName), subBenefitFormName, driver);
 			CoreFunctions.explicitWaitTillElementListVisibility(driver, _drpDownCarTypeOptions);			
 
+			CoreFunctions.clickElement(driver, _drpDownCarType);
+			if (CoreFunctions.getElementTextAndStoreInList(driver, _drpDownCarTypeOptions)
+					.equals(getExpectedSizeClassList())) {
+				Reporter.addStepLog(MessageFormat.format(PDTConstants.VERIFIED_DROPDOWN, CoreConstants.PASS, _lblCarType.getText(), getExpectedSizeClassList().toString()));
+			}
+			
 			String randCarType = BusinessFunctions.selectAndReturnRandomValueFromDropDown(driver, addNewPolicyPage,
 					subBenefitFormName, _drpDownCarType, _drpDownCarTypeOptions, _drpDownCarTypeOptionSelected,
 					_lblCarType.getText());
@@ -396,6 +420,20 @@ public class PDT_DestinationServicesPage extends PDT_SharedSubBenefitPage {
 			BusinessFunctions.verifyAndFillOtherTextBoxForSubBenefitForm(driver, addNewPolicyPage, subBenefitFormName,
 					_drpDownCarTypeOptionSelected, _lblCarType.getText(), _txtBoxCarTypeOther,
 					PDTConstants.CAR_TYPE_OTHER, subBenefitFormName);
+			
+			// Boundary check for distance textbox
+			String random9DigitStr = CoreFunctions.generateRandomNumberAsGivenLength(9);
+			String random10DigitStr = CoreFunctions.generateRandomNumberAsGivenLength(10);
+		
+			CoreFunctions.clickElement(driver, _txtBoxAutoRentDurationInDays);
+			CoreFunctions.clearAndSetText(driver, _txtBoxAutoRentDurationInDays, _lblAutoRentDurationInDays.getText(), random9DigitStr);
+			sharedSubBenefitStep.getCustomSoftAssertObj().assertTrue(CoreFunctions.verifyTextForMaxLength(CoreFunctions.getAttributeText(_txtBoxAutoRentDurationInDays, "value"), random9DigitStr, _lblAutoRentDurationInDays.getText(), random9DigitStr.length(), Integer.valueOf(PDTConstants.MAX_LENGTH_FOR_DISTANCE)), MessageFormat.format(PDTConstants.FAILED_TO_VERIFY_FIELD_ACCEPTING_MAX_CHARACTERS, CoreConstants.FAIL, _lblAutoRentDurationInDays.getText(), random9DigitStr.length(), CoreFunctions.getAttributeText(_txtBoxAutoRentDurationInDays, "value"),random9DigitStr));
+					
+			CoreFunctions.clearAndSetText(driver, _txtBoxAutoRentDurationInDays, _lblAutoRentDurationInDays.getText(), PDTConstants.ELEVEN_DIGIT_STRING);
+			sharedSubBenefitStep.getCustomSoftAssertObj().assertTrue(CoreFunctions.verifyTextForMaxLength(CoreFunctions.getAttributeText(_txtBoxAutoRentDurationInDays, "value"), PDTConstants.ELEVEN_DIGIT_STRING, _lblAutoRentDurationInDays.getText(), PDTConstants.ELEVEN_DIGIT_STRING.length(), Integer.valueOf(PDTConstants.MAX_LENGTH_FOR_DISTANCE)), MessageFormat.format(PDTConstants.FAILED_TO_VERIFY_FIELD_ACCEPTING_MAX_CHARACTERS, CoreConstants.FAIL, _lblAutoRentDurationInDays.getText(), PDTConstants.ELEVEN_DIGIT_STRING.length(), CoreFunctions.getAttributeText(_txtBoxAutoRentDurationInDays, "value"),PDTConstants.ELEVEN_DIGIT_STRING));
+			
+			CoreFunctions.clearAndSetText(driver, _txtBoxAutoRentDurationInDays, _lblAutoRentDurationInDays.getText(), random10DigitStr);
+			sharedSubBenefitStep.getCustomSoftAssertObj().assertTrue(CoreFunctions.verifyTextForMaxLength(CoreFunctions.getAttributeText(_txtBoxAutoRentDurationInDays, "value"), random10DigitStr, _lblAutoRentDurationInDays.getText(), random10DigitStr.length(), Integer.valueOf(PDTConstants.MAX_LENGTH_FOR_DISTANCE)), MessageFormat.format(PDTConstants.FAILED_TO_VERIFY_FIELD_ACCEPTING_MAX_CHARACTERS, CoreConstants.FAIL, _lblAutoRentDurationInDays.getText(), random10DigitStr.length(), CoreFunctions.getAttributeText(_txtBoxAutoRentDurationInDays, "value"),random10DigitStr));
 
 			CoreFunctions.explicitWaitTillElementListClickable(driver, _radioBtnAutoRental);
 			CoreFunctions.selectItemInListByText(driver, _radioBtnAutoRental,
@@ -661,7 +699,7 @@ public class PDT_DestinationServicesPage extends PDT_SharedSubBenefitPage {
 		}
 	}
 
-	public void fillDestinationServicesSubBenefit(String subBenefit, String pageName, PDT_AddNewPolicyPage addNewPolicyPage, PDT_SharedSubBenefitPage subBenefitPage) {		
+	public void fillDestinationServicesSubBenefit(String subBenefit, String pageName, PDT_AddNewPolicyPage addNewPolicyPage, PDT_SharedSubBenefitPage subBenefitPage, PDT_SharedSubBenefit_Steps sharedSubBenefitStep) {		
 		switch (subBenefit) {
 		case PDTConstants.AIRPORT_PICKUP:
 			fillAirPortPickUpForm(addNewPolicyPage,	subBenefit, pageName);
@@ -670,7 +708,7 @@ public class PDT_DestinationServicesPage extends PDT_SharedSubBenefitPage {
 			fillAreaTourForm(addNewPolicyPage, subBenefit, pageName);
 			break;
 		case PDTConstants.AUTO_RENTAL_DURING_ASSIGNMENT:
-			fillAutoRentalForm(addNewPolicyPage, subBenefit, pageName);
+			fillAutoRentalForm(addNewPolicyPage, subBenefit, pageName, sharedSubBenefitStep);
 			break;
 		case PDTConstants.CONCIERGE_SERVICES:
 			fillConciergeServicesForm(addNewPolicyPage, subBenefit, pageName);
@@ -726,14 +764,13 @@ public class PDT_DestinationServicesPage extends PDT_SharedSubBenefitPage {
 			BusinessFunctions.fluentWaitForSpinnerToDisappear(driver, _progressBar);
 			timeAfterAction = new Date().getTime();
 			BusinessFunctions.printTimeTakenByPageToLoad(timeBeforeAction, timeAfterAction, pageName, subBenefit);
-			fillDestinationServicesSubBenefit(subBenefit, pageName, addNewPolicyPage, subBenefitPage);
+			fillDestinationServicesSubBenefit(subBenefit, pageName, addNewPolicyPage, subBenefitPage, objStep);
 		}
 		try {
 			CoreFunctions.click(driver, btnToClick, btnToClick.getText());
 		} catch (NoSuchElementException e) {
 			Assert.fail(MessageFormat.format(PDTConstants.MISSING_BTN, CoreConstants.FAIL, btnName));
 		} catch (Exception e) {
-			e.printStackTrace();
 			Assert.fail(MessageFormat.format(PDTConstants.FAILED_TO_CLICK_ON_BTN, CoreConstants.FAIL, btnName));
 		}
 	}

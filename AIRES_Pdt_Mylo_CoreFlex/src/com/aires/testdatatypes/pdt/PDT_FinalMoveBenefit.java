@@ -13,6 +13,9 @@ public class PDT_FinalMoveBenefit {
 		public String minMileageBusinessAir;
 		public String accompanyingFamilyMember;
 		public String grossUp;
+		public String excessBaggageFees;
+		public String maxAmtPerPerson;
+		public String currency;
 		public String reimbursedBy;
 		public String reimbursedByOther;
 		public String comment;		

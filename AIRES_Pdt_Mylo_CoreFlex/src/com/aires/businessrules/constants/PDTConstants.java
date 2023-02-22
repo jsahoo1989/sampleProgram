@@ -295,6 +295,7 @@ public class PDTConstants {
 	public static final String HOUSE_HUNTING_TRIP_TRANSPORTATION = "House Hunting Trip Transportation";
 	public static final String HOUSE_HUNTING_TRIP_LODGING = "House Hunting Trip Lodging";
 	public static final String HOUSE_HUNTING_TRIP_MEALS = "House Hunting Trip Meals";
+	public static final String HOUSE_HUNTING_TRIP_RENTAL_CAR = "House Hunting Trip Rental Car";
 	// language Training
 	public static final String LANGUAGE_TRAINING_EMPLOYEE = "Language Training Employee";
 	public static final String LANGUAGE_TRAINING_FAMILY = "Language Training Family";
@@ -323,6 +324,7 @@ public class PDTConstants {
 	public static final String HOME_LEAVE_TRANSPORTATION = "Home Leave Transportation";
 	public static final String HOME_LEAVE_LODGING = "Home Leave Lodging";
 	public static final String HOME_LEAVE_MEALS = "Home Leave Meals";
+	public static final String HOME_LEAVE_RENTAL_CAR = "Home Leave Rental Car";
 	public static final String TRANSFER = "Transfer";
 	public static final String ASSIGNMENT = "Assignment";
 	public static final String TRANSFER_NUMTRIPS_NOT_DISPLAYED = "Transfer - Number of Trips textbox field is not displayed";
@@ -354,7 +356,7 @@ public class PDTConstants {
 	public static final String EDUCATION_ASSISTANCE = "Education Assistance";
 	public static final String EDUCATION_ASSISTANT = "Education Assistant";
 	public static final String SETTLING_IN_SERVICES = "Settling In Services";
-	public static final String TRANSITION_ASSISTANCE_PROGRAM = "Transition Assistance Program";
+	public static final String TRANSITION_ASSISTANCE_PROGRAM = "Transition Assistance";
 	public static final String TUTION_AND_EDUCATION = "Tuition/Education Payments";
 	public static final String EXCEPTION_OCCURED_FILL_SUBBENEFIT_FORM = "{0} Exception occurred while filling data for ''{1}'' sub-benefit form.";
 	public static final String RENTAL_TOUR = "Rental Tour";
@@ -417,7 +419,7 @@ public class PDTConstants {
 	public static final String PROPERTY_MANAGEMENT = "Property Management";
 	public static final String DUPLICATE_HOUSING = "Duplicate Housing";
 	public static final String DURATION_OTHER = "Duration Other";
-	public static final String CAR_TYPE_OTHER = "Car Type Other";
+	public static final String CAR_TYPE_OTHER = "Size/Class Other";
 	public static final String OTHER_PAYMENT_TIME = "Other Payment Time";
 	
 	//Home Purchase
@@ -669,8 +671,8 @@ public class PDTConstants {
 	public static final String FAILED_VRFIED_ELE_TYPE_ON_PAGE = "<font color=''red''>{0} Verified {1} - ''{2}'' is Present On Page</font>";
 	public static final String PASS_VRFIED_ELE_TYPE_NOT_ON_PAGE = "{0} Verified {1} - ''{2}'' is not Present On Page.</font>";
 	public static final String FAILED_TO_VERIFY_ELE_TYPE_NOT_AVAILABLE = "{0} Failed to verify {1} - ''{2}'' is not Present On Page.";
-	public static final String VERIFIED_BUSINESS_CLASS_DRP_OPTION = "{0} Verified Business AirFare options ''{1}'' are present in Business Class Airefare Unit drop down.";
-	public static final String FAILED_TO_VERIFY_BUSINESS_CLASS_DRP_OPTION = "<font color='red'>{0} Failed to verify Business AirFare options ''{1}'' are present in Business Class Airefare Unit drop down.</font>";
+	public static final String VERIFIED_DRPDOWN_OPTION = "{0} Verified options ''{1}'' are present in {2} drop down.";
+	public static final String FAILED_TO_VERIFY_DRPDOWN_OPTION = "<font color='red'>{0} Failed to verify options ''{1}'' are present in {2} drop down.</font>";
 	public static final String VERIFIED_TRANSPORTATION_TYPE_OPTION_VISIBILITY = "{0} Verified {1} option fields are visible after selecting {1} option from Transportation type drop down on {2} benefit.";
 	public static final String FAIL_TO_VERIFY_TRANSPORTATION_TYPE_OPTION_VISIBILITY = "<font color='red'>{0} Failed to verify {1} option fields are visible after selecting {1} option from Transportation type drop down on {2} benefit.</font>";
 	public static final String VERIFIED_TRANSPORTATION_TYPE_OPTION_INVISIBILITY = "{0} Verified {1} option fields are invisible after deselecting {1} option from Transportation type drop down on {2} benefit.";
@@ -678,5 +680,40 @@ public class PDTConstants {
 	public static final String TRANSFEREE_ONLY = "Transferee Only";
 	public static final String TRANSFEREE_AND_FAMILY_MEMBER = "Transferee & Family Member";
 	public static final String TRANSFEREE_AND_FAMILY = "Transferee & Family";
-	public static final String VERIFIED_EXCESS_BAGGAGE_CHOSEN = "{0} Verified '{0}' option is chosen for Excess Baggage";
+	public static final String VERIFIED_EXCESS_BAGGAGE_CHOSEN = "{0} Verified ''{1}'' option is chosen for Excess Baggage";
+	public static final String ECONOMY_CLASS_AIRFARE_UNIT = "Economy Class Airfare Unit";
+	public static final String VERIFIED_ACCOMP_FAMILY_MEM = "{0}Verified Accompanying Family Members drop down contains ''{1}'' options";
+	public static final String VERIFIED_DEFAULT_CURRENCY = "{0}Verified default currency selected is ''{1}''";
+	public static final String VERIFIED_MSG_ON_POPUP = "{0}Verified message ''{1}'' is displayed on pop-up.";
+	public static final String FAILED_TO_VERIFY_MSG_ON_POPUP = "{0}Failed to verify message ''{0}'' is displayed on pop-up.";
+	public static final String IMAGE = "Image";
+	public static final String BLUEPRINT_ENABLED = "Blueprint enabled";
+	public static final String FAIL_VRFY_ELE_TYPE_NOT_PRESENT = "{0} Failed to verify {1} - ''{2}'' is not Present On Page.";
+	public static final String HEADINGPOPUP = "Heading";
+	public static final String MSG1 = "Message1";
+	public static final String NEW_AUTH_CHKBOX = "New Auth Checkbox";
+	public static final String FAILED_TO_VERIFY_TEXT = "<font color='red'>{0}Failed to verify {1}. Actual {1}:-''{2}''. Expected {1}:-''{3}''</font>";
+	public static final String FAILED_TO_VERFY_TEXT = "{0}Failed to verify {1}. Actual {1}:-''{2}''. Expected {1}:-''{3}''";
+	public static final String FAILED_TO_VERFY_CHECKBOX = "<font color='red'>{0}Failed to verify checkbox ''{1}'' with ''{2}'' state.</font>";
+	public static final String VERFIED_FIELD_IS_NOT_DISPLAYED = "<font color='red'>{0}Verified ''{1}'' field is not displayed</font>";
+	public static final String FAILED_TO_VERFY_BTN_STATE = "<font color='red'>{0}Failed to verify ''{1}'' button is in ''{2}'' state on Approve Policy Pop-up.</font>";
+	public static final String VERIFIED_CURRENT_DATE_SELECTED = "{0}Verified Current date:-''{1}'' is selected as default date in date picker.";
+	public static final String FAILED_TO_VERIFY_CURRENT_DATE_SELECTED = "{0}Failed to verify current date:-''{1}'' is selected as default date in date picker.";
+	public static final String FAILED_TO_VERFY_CURRENT_DATE_SELECTED = "<font color='red'>{0}Failed to verify current date:-''{1}'' is selected as default date in date picker.</font>";
+	public static final String PRE_ACCEPTANCE_TRIP_RENTAL_CAR = "Pre-Acceptance Trip Rental Car";
+	public static final String MID_SIZE = "Mid-size";
+	public static final String FULL_SIZE = "Full-size";
+	public static final String PREMIUM = "Premium";
+	public static final String VERIFIED_DROPDOWN = "{0}Verified {1} drop down contains ''{2}'' options";
+	public static final String VERIFIED_OPTION_CHOSEN_RADIOBTN = "{0} Verified ''{1}'' option is chosen for ''{2}''";
+	public static final String VERIFIED_SELF_LEARNING_TOOL_NOT_SELECTED = "{0} Verified Self Learning Tool is not selected";
+	public static final String VERIFIED_FLOATINGPT_NUMBER = "{0}Verified field {1} is accepting max {2} digit as integer and max {3} digit as decimal.";
+	public static final String FAILED_TO_VERIFY_FLOATINGPT_NUMBER = "<font color='red'>{0}Failed to verify field {1} is accepting {2} digit as integer and {3} digit as decimal. Expected String:-''{4}''. Actual String:-''{5}''.<font>";
+	public static final String FAILED_TO_VERIFY_FLOATPT_NUMBER = "{0}Failed to verify field {1} is accepting {2} digit as integer and {3} digit as decimal. Expected String:-''{4}''. Actual String:-''{5}''.";
+	public static final String VERIFIED_FLOATING_NUMBER = "{0}Verified field {1} is accepting only max {2} digit as integer and only max {3} digit as decimal. Expected String:-''{4}''. Actual String:-''{5}''.";
+	public static final String VALID_MAXAMT_STRING = "3000.78";
+	public static final String INVALID_MAXAMT_STRING = "504043216.789";
+	public static final String RENTAL_CAR = "Rental Car";
+	public static final String SIZE_CLASS = "Size/Class";
+	public static final String SIZE_CLASS_OTHER = "Size/Class Other";
 }

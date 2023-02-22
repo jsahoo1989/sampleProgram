@@ -35,7 +35,7 @@ public class PDT_OneTimePaymentReimbursemenPage extends PDT_SharedSubBenefitPage
 	@FindBy(how = How.CSS, using = "ng-select[formcontrolname='methodCode']")
 	private WebElement _drpDownCalculationMethod;
 
-	@FindBy(how = How.CSS, using = "span.ng-option-label.ng-star-inserted")
+	@FindBy(how = How.CSS, using = "div[role='option'] span")
 	private List<WebElement> _drpDownCalculationMethodOptions;
 
 	@FindBy(how = How.CSS, using = "ng-select[formcontrolname='methodCode'] span.ng-value-label")
@@ -59,7 +59,7 @@ public class PDT_OneTimePaymentReimbursemenPage extends PDT_SharedSubBenefitPage
 	@FindBy(how = How.CSS, using = "ng-select[formcontrolname='currencyCode']")
 	private WebElement _drpDownCurrency;
 
-	@FindBy(how = How.CSS, using = "span.ng-option-label.ng-star-inserted")
+	@FindBy(how = How.CSS, using = "div[role='option'] span")
 	private List<WebElement> _drpDownCurrencyOptions;
 
 	@FindBy(how = How.CSS, using = "ng-select[formcontrolname='currencyCode'] span.ng-value-label")
@@ -71,7 +71,7 @@ public class PDT_OneTimePaymentReimbursemenPage extends PDT_SharedSubBenefitPage
 	@FindBy(how = How.CSS, using = "ng-select[formcontrolname='frequencyCode']")
 	private WebElement _drpDownFrequency;
 
-	@FindBy(how = How.CSS, using = "span.ng-option-label.ng-star-inserted")
+	@FindBy(how = How.CSS, using = "div[role='option'] span")
 	private List<WebElement> _drpDownFrequencyOptions;
 
 	@FindBy(how = How.CSS, using = "ng-select[formcontrolname='frequencyCode'] span.ng-value-label")
@@ -83,7 +83,7 @@ public class PDT_OneTimePaymentReimbursemenPage extends PDT_SharedSubBenefitPage
 	@FindBy(how = How.CSS, using = "ng-select[formcontrolname='pmtTimeCode']")
 	private WebElement _drpDownWhenToMakePayment;
 
-	@FindBy(how = How.CSS, using = "span.ng-option-label.ng-star-inserted")
+	@FindBy(how = How.CSS, using = "div[role='option'] span")
 	private List<WebElement> _drpDownWhenToMakePaymentOptions;
 
 	@FindBy(how = How.CSS, using = "ng-select[formcontrolname='pmtTimeCode'] span.ng-value-label")
@@ -95,7 +95,7 @@ public class PDT_OneTimePaymentReimbursemenPage extends PDT_SharedSubBenefitPage
 	@FindBy(how = How.CSS, using = "ng-select[formcontrolname='pmtTimeWeeksBeforeCode']")
 	private WebElement _drpDownIndicateNumOfWeeksBefore;
 
-	@FindBy(how = How.CSS, using = "span.ng-option-label.ng-star-inserted")
+	@FindBy(how = How.CSS, using = "div[role='option'] span")
 	private List<WebElement> _drpDownIndicateNumOfWeeksBeforeOptions;
 
 	@FindBy(how = How.CSS, using = "ng-select[formcontrolname='pmtTimeWeeksBeforeCode'] span.ng-value-label")
@@ -129,7 +129,7 @@ public class PDT_OneTimePaymentReimbursemenPage extends PDT_SharedSubBenefitPage
 	@FindBy(how = How.CSS, using = "ng-select[formcontrolname='oneTimeCalMethodCode']")
 	private WebElement _drpDownLumpSumCalculationMethod;
 
-	@FindBy(how = How.CSS, using = "span.ng-option-label.ng-star-inserted")
+	@FindBy(how = How.CSS, using = "div[role='option'] span")
 	private List<WebElement> _drpDownLumpSumCalculationMethodOptions;
 
 	@FindBy(how = How.CSS, using = "ng-select[formcontrolname='oneTimeCalMethodCode'] span.ng-value-label")
@@ -153,7 +153,7 @@ public class PDT_OneTimePaymentReimbursemenPage extends PDT_SharedSubBenefitPage
 	@FindBy(how = How.CSS, using = "app-lump-sum ng-select[formcontrolname='currencyCode']")
 	private WebElement _drpDownLumpSumCurrency;
 
-	@FindBy(how = How.CSS, using = "span.ng-option-label.ng-star-inserted")
+	@FindBy(how = How.CSS, using = "div[role='option'] span")
 	private List<WebElement> _drpDownLumpSumCurrencyOptions;
 
 	@FindBy(how = How.CSS, using = "app-lump-sum ng-select[formcontrolname='currencyCode'] span.ng-value-label")
@@ -165,7 +165,7 @@ public class PDT_OneTimePaymentReimbursemenPage extends PDT_SharedSubBenefitPage
 	@FindBy(how = How.CSS, using = "app-lump-sum ng-select[formcontrolname='frequencyCode']")
 	private WebElement _drpDownLumpSumFrequency;
 
-	@FindBy(how = How.CSS, using = "span.ng-option-label.ng-star-inserted")
+	@FindBy(how = How.CSS, using = "div[role='option'] span")
 	private List<WebElement> _drpDownLumpSumFrequencyOptions;
 
 	@FindBy(how = How.CSS, using = "app-lump-sum ng-select[formcontrolname='frequencyCode'] span.ng-value-label")
@@ -183,7 +183,7 @@ public class PDT_OneTimePaymentReimbursemenPage extends PDT_SharedSubBenefitPage
 	@FindBy(how = How.CSS, using = "app-lump-sum ng-select[formcontrolname='pmtTimeCode']")
 	private WebElement _drpDownLumpSumWhenToMakePayment;
 
-	@FindBy(how = How.CSS, using = "span.ng-option-label.ng-star-inserted")
+	@FindBy(how = How.CSS, using = "div[role='option'] span")
 	private List<WebElement> _drpDownLumpSumWhenToMakePaymentOptions;
 
 	@FindBy(how = How.CSS, using = "app-lump-sum ng-select[formcontrolname='pmtTimeCode'] span.ng-value-label")
@@ -195,7 +195,7 @@ public class PDT_OneTimePaymentReimbursemenPage extends PDT_SharedSubBenefitPage
 	@FindBy(how = How.CSS, using = "app-lump-sum ng-select[formcontrolname='pmtTimeWeeksBeforeCode']")
 	private WebElement _drpDownLumpSumIndicateNumOfWeeksBefore;
 
-	@FindBy(how = How.CSS, using = "span.ng-option-label.ng-star-inserted")
+	@FindBy(how = How.CSS, using = "div[role='option'] span")
 	private List<WebElement> _drpDownLumpSumIndicateNumOfWeeksBeforeOptions;
 
 	@FindBy(how = How.CSS, using = "app-lump-sum ng-select[formcontrolname='pmtTimeWeeksBeforeCode'] span.ng-value-label")
@@ -223,7 +223,7 @@ public class PDT_OneTimePaymentReimbursemenPage extends PDT_SharedSubBenefitPage
 	@FindBy(how = How.CSS, using = "app-lease-break ng-select[formcontrolname='leaseBreakMaxMonthCode']")
 	private WebElement _drpDownLeaseBreakMaxNumOfMonths;
 
-	@FindBy(how = How.CSS, using = "span.ng-option-label.ng-star-inserted")
+	@FindBy(how = How.CSS, using = "div[role='option'] span")
 	private List<WebElement> _drpDownLeaseBreakMaxNumOfMonthsOptions;
 
 	@FindBy(how = How.CSS, using = "app-lease-break ng-select[formcontrolname='leaseBreakMaxMonthCode'] span.ng-value-label")
@@ -247,7 +247,7 @@ public class PDT_OneTimePaymentReimbursemenPage extends PDT_SharedSubBenefitPage
 	@FindBy(how = How.CSS, using = "app-lease-break ng-select[formcontrolname='currencyCode']")
 	private WebElement _drpDownLeaseBreakCurrency;
 
-	@FindBy(how = How.CSS, using = "span.ng-option-label.ng-star-inserted")
+	@FindBy(how = How.CSS, using = "div[role='option'] span")
 	private List<WebElement> _drpDownLeaseBreakCurrencyOptions;
 
 	@FindBy(how = How.CSS, using = "app-lease-break ng-select[formcontrolname='currencyCode'] span.ng-value-label")
@@ -259,7 +259,7 @@ public class PDT_OneTimePaymentReimbursemenPage extends PDT_SharedSubBenefitPage
 	@FindBy(how = How.CSS, using = "app-lease-break ng-select[formcontrolname='frequencyCode']")
 	private WebElement _drpDownLeaseBreakFrequency;
 
-	@FindBy(how = How.CSS, using = "span.ng-option-label.ng-star-inserted")
+	@FindBy(how = How.CSS, using = "div[role='option'] span")
 	private List<WebElement> _drpDownLeaseBreakFrequencyOptions;
 
 	@FindBy(how = How.CSS, using = "app-lease-break ng-select[formcontrolname='frequencyCode'] span.ng-value-label")
@@ -293,7 +293,7 @@ public class PDT_OneTimePaymentReimbursemenPage extends PDT_SharedSubBenefitPage
 	@FindBy(how = How.CSS, using = "app-appliance-allowance ng-select[formcontrolname='currencyCode']")
 	private WebElement _drpDownApplAllowanceCurrency;
 
-	@FindBy(how = How.CSS, using = "span.ng-option-label.ng-star-inserted")
+	@FindBy(how = How.CSS, using = "div[role='option'] span")
 	private List<WebElement> _drpDownApplAllowanceCurrencyOptions;
 
 	@FindBy(how = How.CSS, using = "app-appliance-allowance ng-select[formcontrolname='currencyCode'] span.ng-value-label")
@@ -305,7 +305,7 @@ public class PDT_OneTimePaymentReimbursemenPage extends PDT_SharedSubBenefitPage
 	@FindBy(how = How.CSS, using = "app-appliance-allowance ng-select[formcontrolname='frequencyCode']")
 	private WebElement _drpDownApplAllowanceFrequency;
 
-	@FindBy(how = How.CSS, using = "span.ng-option-label.ng-star-inserted")
+	@FindBy(how = How.CSS, using = "div[role='option'] span")
 	private List<WebElement> _drpDownApplAllowanceFrequencyOptions;
 
 	@FindBy(how = How.CSS, using = "app-appliance-allowance ng-select[formcontrolname='frequencyCode'] span.ng-value-label")
@@ -333,7 +333,7 @@ public class PDT_OneTimePaymentReimbursemenPage extends PDT_SharedSubBenefitPage
 	@FindBy(how = How.CSS, using = "app-auto-registration ng-select[formcontrolname='currencyCode']")
 	private WebElement _drpDownAutoRegCostCurrency;
 
-	@FindBy(how = How.CSS, using = "span.ng-option-label.ng-star-inserted")
+	@FindBy(how = How.CSS, using = "div[role='option'] span")
 	private List<WebElement> _drpDownAutoRegCostCurrencyOptions;
 
 	@FindBy(how = How.CSS, using = "app-auto-registration ng-select[formcontrolname='currencyCode'] span.ng-value-label")
@@ -345,7 +345,7 @@ public class PDT_OneTimePaymentReimbursemenPage extends PDT_SharedSubBenefitPage
 	@FindBy(how = How.CSS, using = "app-auto-registration ng-select[formcontrolname='frequencyCode']")
 	private WebElement _drpDownAutoRegCostFrequency;
 
-	@FindBy(how = How.CSS, using = "span.ng-option-label.ng-star-inserted")
+	@FindBy(how = How.CSS, using = "div[role='option'] span")
 	private List<WebElement> _drpDownAutoRegCostFrequencyOptions;
 
 	@FindBy(how = How.CSS, using = "app-auto-registration ng-select[formcontrolname='frequencyCode'] span.ng-value-label")
@@ -367,7 +367,7 @@ public class PDT_OneTimePaymentReimbursemenPage extends PDT_SharedSubBenefitPage
 	@FindBy(how = How.CSS, using = "app-auto-loss-on-sale ng-select[formcontrolname='maxNumOfAuto']")
 	private WebElement _drpDownMaxNumOfAutos;
 
-	@FindBy(how = How.CSS, using = "span.ng-option-label.ng-star-inserted")
+	@FindBy(how = How.CSS, using = "div[role='option'] span")
 	private List<WebElement> _drpDownMaxNumOfAutosOptions;
 
 	@FindBy(how = How.CSS, using = "app-auto-loss-on-sale ng-select[formcontrolname='maxNumOfAuto'] span.ng-value-label")
@@ -391,7 +391,7 @@ public class PDT_OneTimePaymentReimbursemenPage extends PDT_SharedSubBenefitPage
 	@FindBy(how = How.CSS, using = "app-auto-loss-on-sale ng-select[formcontrolname='currencyCode']")
 	private WebElement _drpDownAutoLossOnSaleCurrency;
 
-	@FindBy(how = How.CSS, using = "span.ng-option-label.ng-star-inserted")
+	@FindBy(how = How.CSS, using = "div[role='option'] span")
 	private List<WebElement> _drpDownAutoLossOnSaleCurrencyOptions;
 
 	@FindBy(how = How.CSS, using = "app-auto-loss-on-sale ng-select[formcontrolname='currencyCode'] span.ng-value-label")
@@ -425,7 +425,7 @@ public class PDT_OneTimePaymentReimbursemenPage extends PDT_SharedSubBenefitPage
 	@FindBy(how = How.CSS, using = "app-other-onetime-payment ng-select[formcontrolname='currencyCode']")
 	private WebElement _drpDownOtherOneTimePaymentCurrency;
 
-	@FindBy(how = How.CSS, using = "span.ng-option-label.ng-star-inserted")
+	@FindBy(how = How.CSS, using = "div[role='option'] span")
 	private List<WebElement> _drpDownOtherOneTimePaymentCurrencyOptions;
 
 	@FindBy(how = How.CSS, using = "app-other-onetime-payment ng-select[formcontrolname='currencyCode'] span.ng-value-label")
@@ -437,7 +437,7 @@ public class PDT_OneTimePaymentReimbursemenPage extends PDT_SharedSubBenefitPage
 	@FindBy(how = How.CSS, using = "app-other-onetime-payment ng-select[formcontrolname='frequencyCode']")
 	private WebElement _drpDownOtherOneTimePaymentFrequency;
 
-	@FindBy(how = How.CSS, using = "span.ng-option-label.ng-star-inserted")
+	@FindBy(how = How.CSS, using = "div[role='option'] span")
 	private List<WebElement> _drpDownOtherOneTimePaymentFrequencyOptions;
 
 	@FindBy(how = How.CSS, using = "app-other-onetime-payment ng-select[formcontrolname='frequencyCode'] span.ng-value-label")
@@ -500,64 +500,64 @@ public class PDT_OneTimePaymentReimbursemenPage extends PDT_SharedSubBenefitPage
 	@FindBy(how = How.CSS, using = "ng-select[formcontrolname='miscReloExpenseCodeList']")
 	private WebElement _drpDownMiscReloExpenseCodeList;
 	
-	@FindBy(how = How.CSS, using = "span.ng-option-label.ng-star-inserted")
+	@FindBy(how = How.CSS, using = "div[role='option'] span")
 	private List<WebElement> _drpDownOptionsMiscReloExpenseCodeList;
 	
-	@FindBy(how = How.CSS, using = "ng-select[formcontrolname='miscReloExpenseCodeList'] span.ng-value-label.ng-star-inserted")
+	@FindBy(how = How.CSS, using = "ng-select[formcontrolname='miscReloExpenseCodeList'] span.ng-value-label")
 	private List<WebElement> _drpDownSelectedOptionsMiscReloExpenseCodeList;
 	
 	@FindBy(how = How.CSS, using = "ng-select[formcontrolname='lumpSumExpenseCodeList']")
 	private WebElement _drpDownLumpSumExpenseCode;
 	
-	@FindBy(how = How.CSS, using = "span.ng-option-label.ng-star-inserted")
+	@FindBy(how = How.CSS, using = "div[role='option'] span")
 	private List<WebElement> _drpDownOptionsLumpSumExpenseCode;
 	
-	@FindBy(how = How.CSS, using = "ng-select[formcontrolname='lumpSumExpenseCodeList'] span.ng-value-label.ng-star-inserted")
+	@FindBy(how = How.CSS, using = "ng-select[formcontrolname='lumpSumExpenseCodeList'] span.ng-value-label")
 	private List<WebElement> _drpDownSelectedOptionsLumpSumExpenseCode;
 	
 	@FindBy(how = How.CSS, using = "ng-select[formcontrolname='leaseBreakExpenseCodeList']")
 	private WebElement _drpDownLeaseBreakExpenseCode;
 	
-	@FindBy(how = How.CSS, using = "span.ng-option-label.ng-star-inserted")
+	@FindBy(how = How.CSS, using = "div[role='option'] span")
 	private List<WebElement> _drpDownOptionsLeaseBreakExpenseCode;
 	
-	@FindBy(how = How.CSS, using = "ng-select[formcontrolname='leaseBreakExpenseCodeList'] span.ng-value-label.ng-star-inserted")
+	@FindBy(how = How.CSS, using = "ng-select[formcontrolname='leaseBreakExpenseCodeList'] span.ng-value-label")
 	private List<WebElement> _drpDownSelectedOptionsLeaseBreakExpenseCode;
 	
 	@FindBy(how = How.CSS, using = "ng-select[formcontrolname='appAllowanceExpenseCodeList']")
 	private WebElement _drpDownApplAllowExpenseCode;
 	
-	@FindBy(how = How.CSS, using = "span.ng-option-label.ng-star-inserted")
+	@FindBy(how = How.CSS, using = "div[role='option'] span")
 	private List<WebElement> _drpDownOptionsApplAllowExpenseCode;
 	
-	@FindBy(how = How.CSS, using = "ng-select[formcontrolname='appAllowanceExpenseCodeList'] span.ng-value-label.ng-star-inserted")
+	@FindBy(how = How.CSS, using = "ng-select[formcontrolname='appAllowanceExpenseCodeList'] span.ng-value-label")
 	private List<WebElement> _drpDownSelectedOptionsApplAllowExpenseCode;
 	
 	@FindBy(how = How.CSS, using = "ng-select[formcontrolname='autoRegCostsExpenseCodeList']")
 	private WebElement _drpDownAutoRegCostExpenseCode;
 	
-	@FindBy(how = How.CSS, using = "span.ng-option-label.ng-star-inserted")
+	@FindBy(how = How.CSS, using = "div[role='option'] span")
 	private List<WebElement> _drpDownOptionsAutoRegCostExpenseCode;
 	
-	@FindBy(how = How.CSS, using = "ng-select[formcontrolname='autoRegCostsExpenseCodeList'] span.ng-value-label.ng-star-inserted")
+	@FindBy(how = How.CSS, using = "ng-select[formcontrolname='autoRegCostsExpenseCodeList'] span.ng-value-label")
 	private List<WebElement> _drpDownSelectedOptionsAutoRegCostExpenseCode;
 	
 	@FindBy(how = How.CSS, using = "ng-select[formcontrolname='autoLossSaleExpenseCodeList']")
 	private WebElement _drpDownAutoLossSaleExpenseCode;
 	
-	@FindBy(how = How.CSS, using = "span.ng-option-label.ng-star-inserted")
+	@FindBy(how = How.CSS, using = "div[role='option'] span")
 	private List<WebElement> _drpDownOptionsAutoLossSaleExpenseCode;
 	
-	@FindBy(how = How.CSS, using = "ng-select[formcontrolname='autoLossSaleExpenseCodeList'] span.ng-value-label.ng-star-inserted")
+	@FindBy(how = How.CSS, using = "ng-select[formcontrolname='autoLossSaleExpenseCodeList'] span.ng-value-label")
 	private List<WebElement> _drpDownSelectedOptionsAutoLossSaleExpenseCode;
 	
 	@FindBy(how = How.CSS, using = "ng-select[formcontrolname='otherExpenseCodeList']")
 	private WebElement _drpDownOtherExpenseCode;
 	
-	@FindBy(how = How.CSS, using = "span.ng-option-label.ng-star-inserted")
+	@FindBy(how = How.CSS, using = "div[role='option'] span")
 	private List<WebElement> _drpDownOptionsOtherExpenseCode;
 	
-	@FindBy(how = How.CSS, using = "ng-select[formcontrolname='otherExpenseCodeList'] span.ng-value-label.ng-star-inserted")
+	@FindBy(how = How.CSS, using = "ng-select[formcontrolname='otherExpenseCodeList'] span.ng-value-label")
 	private List<WebElement> _drpDownSelectedOptionsOtherExpenseCode;
 
 	PDT_OneTimePaymentBenefit oneTimePaymentBenefitData = FileReaderManager.getInstance().getJsonReader()

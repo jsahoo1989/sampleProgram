@@ -46,6 +46,8 @@ import java.util.List;
 import java.util.Properties;
 import java.util.Random;
 import java.util.Set;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 import java.util.stream.Collectors;
 import org.openqa.selenium.Alert;
 import org.openqa.selenium.By;
@@ -2141,5 +2143,50 @@ public class CoreFunctions {
 					MessageFormat.format(PDTConstants.PASS_VRFIED_ELE_TYPE_NOT_ON_PAGE, CoreConstants.PASS, elementType, name));
 		}
 		return flag;
+	}
+	
+	public static boolean verifyElementText(String actualText, String expectedText, String fieldName) {
+		if (actualText.equalsIgnoreCase(expectedText)) {
+			Reporter.addStepLog(
+					CoreConstants.PASS + MobilityXConstants.VERIFIED_FIELD_TEXT + fieldName + " : " + expectedText);
+			return true;
+		} else {
+			Reporter.addStepLog(MessageFormat.format(PDTConstants.FAILED_TO_VERIFY_TEXT, CoreConstants.FAIL, fieldName, actualText, expectedText));
+			return false;
+		}
+	}
+
+	public static boolean verifyContainsElementText(String actualText, String expectedText, String fieldName) {
+		if (actualText.contains(expectedText)) {
+			Reporter.addStepLog(
+					CoreConstants.PASS + MobilityXConstants.VERIFIED_FIELD_TEXT + fieldName + " : " + expectedText);
+			return true;
+		} else {
+			Reporter.addStepLog(MessageFormat.format(PDTConstants.FAILED_TO_VERIFY_TEXT, CoreConstants.FAIL, fieldName, actualText, expectedText));
+			return false;
+		}
+	}
+	
+	public static boolean verifyFloatingPtNumberValidation(String integerPart, String decimalPart, String fieldName, String expectedString, String actualString) {
+		boolean result = false;
+		final String regex = "^(?![0.]*$)\\d{0,"+integerPart+"}(?:\\.\\d{1,"+decimalPart+"})?$";
+		final Pattern pattern = Pattern.compile(regex, Pattern.MULTILINE);
+
+		final Matcher matcher = pattern.matcher(actualString);
+
+		while (matcher.find()) {
+			System.out.println(matcher.group(0));
+			result = true;			
+		}
+		if(result==true && actualString.equals(expectedString)) {
+			Reporter.addStepLog(MessageFormat.format(PDTConstants.VERIFIED_FLOATINGPT_NUMBER, CoreConstants.PASS, fieldName, integerPart, decimalPart));
+			result = true;			
+		} else if(result==true && !actualString.equals(expectedString)) {
+			Reporter.addStepLog(MessageFormat.format(PDTConstants.VERIFIED_FLOATING_NUMBER, CoreConstants.PASS, fieldName, integerPart, decimalPart, expectedString, actualString));
+			result = true;
+		}
+		else
+			Reporter.addStepLog(MessageFormat.format(PDTConstants.FAILED_TO_VERIFY_FLOATINGPT_NUMBER, CoreConstants.PASS, fieldName, integerPart, decimalPart, expectedString, actualString));
+		return result;
 	}
 }

@@ -6,6 +6,7 @@ public class PDT_PreAcceptanceServiceBenefit {
 	public PreAcceptanceTripTransportation preAcceptanceTripTransportation;
 	public PreAcceptanceTripLodging preAcceptanceTripLodging;
 	public PreAcceptanceTripMeals preAcceptanceTripMeals;
+	public PreAcceptanceTripRentalCar preAcceptanceTripRentalCar;
 	public String comment;
 	
 	public class CandidateSelection {
@@ -55,6 +56,16 @@ public class PDT_PreAcceptanceServiceBenefit {
 		public String maxAmtChild;
 		public String maxAmtChildDetail;
 		public String maxAmtChildCurrency;		
+		public String grossUp;
+		public String reimbursedBy;
+		public String reimbursedByOther;
+		public String comment;		
+	}
+	
+	public class PreAcceptanceTripRentalCar {
+		public String duration;
+		public String sizeClass;
+		public String otherSizeClass;
 		public String grossUp;
 		public String reimbursedBy;
 		public String reimbursedByOther;

@@ -24,6 +24,7 @@ import com.aires.businessrules.constants.CoreConstants;
 import com.aires.businessrules.constants.PDTConstants;
 import com.aires.cucumber.TestContext;
 import com.aires.utilities.ClientPolicyDetails;
+import com.aires.utilities.CustomSoftAssert;
 import com.aires.utilities.Log;
 import com.vimalselvam.cucumber.listener.Reporter;
 
@@ -216,6 +217,12 @@ public class PDT_SharedSubBenefitPage extends Base {
 	@FindBy(how = How.XPATH, using = "//strong[contains(text(),'Version Number')]/parent::label/following-sibling::label")
 	private WebElement _versionNumber;
 
+	@FindBy(how = How.CSS, using = "label.form-check-label.cbx-label.date-label")
+	private WebElement _msgNewAuthEffectiveDate;
+
+	@FindBy(how = How.CSS, using = "input[formcontrolname='newAuthDate']")
+	private WebElement _txtBoxNewAuthDate;
+
 	LinkedHashMap<String, WebElement> formMap = new LinkedHashMap<String, WebElement>();
 	LinkedHashMap<String, String> subBenefitMap = new LinkedHashMap<String, String>();
 	LinkedHashMap<String, WebElement> subBenefitAncestorMap = new LinkedHashMap<String, WebElement>();
@@ -232,6 +239,7 @@ public class PDT_SharedSubBenefitPage extends Base {
 	LinkedHashMap<String, List<WebElement>> tabListMap = new LinkedHashMap<String, List<WebElement>>();
 	LinkedHashMap<String, PDT_SharedSubBenefit_Steps> formMap1 = new LinkedHashMap<String, PDT_SharedSubBenefit_Steps>();
 	HashMap<String, Boolean> resultMapForTabNameNotMatch = new HashMap<>();
+	public LinkedHashMap<String, WebElement> approvePolicyPopUpMap = new LinkedHashMap<String, WebElement>();
 
 	ArrayList<String> failedSubBenefits = new ArrayList<String>();
 	ArrayList<String> pdtPagesList = new ArrayList<String>();
@@ -382,7 +390,7 @@ public class PDT_SharedSubBenefitPage extends Base {
 		List<String> listSubBenefitCat = null;
 		CoreFunctions.explicitWaitTillElementListClickable(driver, _subBenefitCategories);
 		listSubBenefitCat = CoreFunctions.getElementTextAndStoreInList(driver, _subBenefitCategories);
-		if(pageName.equalsIgnoreCase(PDTConstants.ONGOING_PAYMENTS_REIMBURSEMENTS))
+		if (pageName.equalsIgnoreCase(PDTConstants.ONGOING_PAYMENTS_REIMBURSEMENTS))
 			listSubBenefitCat.remove(PDTConstants.HARDSHIP_ALLOWANCE);
 		if (subBenefitsFromDataTable.equals(listSubBenefitCat))
 			Reporter.addStepLog(MessageFormat.format(PDTConstants.VERIFIED_SUB_BENEFITS_DISPLAYED, CoreConstants.PASS,
@@ -397,7 +405,9 @@ public class PDT_SharedSubBenefitPage extends Base {
 		waitForProgressBarToDisapper();
 		try {
 			WebElement element = pageName.trim().equalsIgnoreCase(PDTConstants.PRE_ACCEPTANCE_SERVICES)
-					|| pageName.trim().equalsIgnoreCase(PDTConstants.ONE_TIME_PAYMENTS_REIMBURSEMENTS) || pageName.trim().equalsIgnoreCase(PDTConstants.ONGOING_PAYMENTS_REIMBURSEMENTS) ? _benefitCatName
+					//|| pageName.trim().equalsIgnoreCase(PDTConstants.FINAL_MOVE)
+					|| pageName.trim().equalsIgnoreCase(PDTConstants.ONE_TIME_PAYMENTS_REIMBURSEMENTS)
+					|| pageName.trim().equalsIgnoreCase(PDTConstants.ONGOING_PAYMENTS_REIMBURSEMENTS) ? _benefitCatName
 							: _benefitCategoryName;
 
 			CoreFunctions.explicitWaitForElementTextPresent(driver, element, pageName, 3);
@@ -560,6 +570,8 @@ public class PDT_SharedSubBenefitPage extends Base {
 			Assert.fail(MessageFormat.format(PDTConstants.VERIFIED_FIELD_IS_NOT_DISPLAYED, CoreConstants.PASS,
 					_lblDescription.getText()));
 		}
+		Reporter.addStepLog(MessageFormat.format(PDTConstants.VERFIED_FIELD_IS_NOT_DISPLAYED, CoreConstants.PASS,
+				_lblDescription.getText()));
 		return false;
 	}
 
@@ -588,7 +600,10 @@ public class PDT_SharedSubBenefitPage extends Base {
 			Assert.fail(MessageFormat.format(PDTConstants.FAILED_TO_VERIFY_BTN_STATE, CoreConstants.FAIL, btnName,
 					btnStatus));
 		}
+		Reporter.addStepLog(MessageFormat.format(PDTConstants.FAILED_TO_VERFY_BTN_STATE, CoreConstants.FAIL, btnName,
+				btnStatus));
 		return false;
+
 	}
 
 	public void clickAssociateWithNewAuth() {
@@ -1137,7 +1152,7 @@ public class PDT_SharedSubBenefitPage extends Base {
 			String popUpName, String currentBenefitCategory) {
 		clickOnConfirmDialogBtn(btnName);
 		waitForProgressBarToDisapper();
-		
+
 		verifyUserIsOnPrevPage(currentBenefitCategory);
 		verifyDraftIconWithUnsavedBenefitCategoryOnLeftMenu();
 		return verifySubBenefitCategoriesAreUnchecked(
@@ -1146,7 +1161,7 @@ public class PDT_SharedSubBenefitPage extends Base {
 
 	public void verifyUserIsOnPrevPage(String currentBenefitCategory) {
 		String prevCatName = getPreviousCategoryPagename(currentBenefitCategory);
-		
+
 		if (prevCatName.equalsIgnoreCase(getCurrentBenefitCategoryName(prevCatName))) {
 			Reporter.addStepLog(MessageFormat.format(PDTConstants.VERIFIED_NAVIGATED_TO_PREV_PAGE, CoreConstants.PASS,
 					prevCatName));
@@ -1161,7 +1176,7 @@ public class PDT_SharedSubBenefitPage extends Base {
 		try {
 			int index = BusinessFunctions.returnindexItemFromListUsingText(driver, _listBenefitCategoryNameOnLeftMenu,
 					currentBenefitCategory);
-			
+
 			if (index > 0)
 				prevPageName = _listBenefitCategoryNameOnLeftMenu.get(index - 1).getText();
 			else
@@ -1327,25 +1342,25 @@ public class PDT_SharedSubBenefitPage extends Base {
 		return verificationResult;
 	}
 
-	public boolean navigateBenefitCategory(String subBenefit,
-			PDT_SharedSubBenefit_Steps subBenefitSteps, String pageName,
-			PDT_GeneralInformationPage generalInfoPage, DataTable resultTable) {
+	public boolean navigateBenefitCategory(String subBenefit, PDT_SharedSubBenefit_Steps subBenefitSteps,
+			String pageName, PDT_GeneralInformationPage generalInfoPage, DataTable resultTable) {
 		boolean result = false;
 		switch (pageName) {
 		case PDTConstants.PRE_ACCEPTANCE_SERVICES:
-			result = subBenefitSteps.getPreAcceptServicePage().verifyPreAcceptanceSubBenefitForTransportType(pageName, subBenefit,
-					resultTable);
+			result = subBenefitSteps.getPreAcceptServicePage().verifyPreAcceptanceSubBenefitForTransportType(pageName,
+					subBenefit, resultTable);
 			break;
 		case PDTConstants.HOUSE_HUNTING_TRIP:
-			result = subBenefitSteps.getHouseHuntingTripPage().verifyHouseHuntingSubBenefitForTransportType(pageName, subBenefit,
-					resultTable);
+			result = subBenefitSteps.getHouseHuntingTripPage().verifyHouseHuntingSubBenefitForTransportType(pageName,
+					subBenefit, resultTable);
 			break;
 		case PDTConstants.FINAL_MOVE:
 			result = subBenefitSteps.getFinalMovePage().verifyFinalMoveSubBenefitForTransportType(pageName, subBenefit,
 					resultTable);
 			break;
 		case PDTConstants.HOME_LEAVE:
-			result = subBenefitSteps.getHomeLeavePage().verifyHomeLeaveSubBenefitForTransportType(pageName, subBenefit, resultTable);
+			result = subBenefitSteps.getHomeLeavePage().verifyHomeLeaveSubBenefitForTransportType(pageName, subBenefit,
+					resultTable);
 			break;
 		default:
 			Assert.fail(MessageFormat.format(PDTConstants.ELEMENT_NOT_FOUND, CoreConstants.FAIL));
@@ -1354,13 +1369,70 @@ public class PDT_SharedSubBenefitPage extends Base {
 	}
 
 	public boolean iterateBenefits(List<Map<String, String>> benefitsMap, PDT_SharedSubBenefit_Steps subBenefitSteps,
-			PDT_SharedSubBenefitPage subBenefitPage, PDT_GeneralInformationPage generalInfoPage, DataTable resultTable) {
+			PDT_SharedSubBenefitPage subBenefitPage, PDT_GeneralInformationPage generalInfoPage,
+			DataTable resultTable) {
 		ArrayList<Boolean> result = new ArrayList<Boolean>();
 		for (int i = 0; i < benefitsMap.size(); i++) {
 			verifySelectedPolicyBenefitCategoryName(benefitsMap.get(i).get("BenefitCategories"));
-			result.add(navigateBenefitCategory(benefitsMap.get(i).get("Benefit"),  subBenefitSteps,
+			result.add(navigateBenefitCategory(benefitsMap.get(i).get("Benefit"), subBenefitSteps,
 					benefitsMap.get(i).get("BenefitCategories"), generalInfoPage, resultTable));
 		}
-		return  result.stream().allMatch(t -> t.equals(true)) ? true : false;
+		return result.stream().allMatch(t -> t.equals(true)) ? true : false;
+	}
+
+	public boolean verifyNonBpMessage(String msg) {
+		if (CoreFunctions.isElementExist(driver, _dialogconfirmation, 1)
+				&& _messageOnConfirmationPopUp.getText().equalsIgnoreCase(msg)) {
+			Reporter.addStepLog(MessageFormat.format(PDTConstants.VERIFIED_MSG_ON_POPUP, CoreConstants.PASS, msg));
+			return true;
+		} else
+			return false;
+	}
+
+	public boolean verifyContentOfScheduledPopUp(String fieldName, String fieldValue) {
+		waitForProgressBarToDisapper();
+		//CoreFunctions.explicitWaitForElementTextPresent(driver, _headerApprovePopUp, fieldValue, 10);
+		populateApprovePolicyPopUpMap();
+		return CoreFunctions.verifyElementText(approvePolicyPopUpMap.get(fieldName).getText().trim(), fieldValue.trim(),
+				fieldName);
+	}
+
+	public void populateApprovePolicyPopUpMap() {
+		approvePolicyPopUpMap.put(PDTConstants.HEADINGPOPUP, _headerApprovePopUp);
+		approvePolicyPopUpMap.put(PDTConstants.MSG1, _msg2ApprovePopUp);
+		approvePolicyPopUpMap.put(PDTConstants.NEW_AUTH_CHKBOX, _msgNewAuthEffectiveDate);
+	}
+
+	public boolean verifyNewAuthCheckBoxDisabledAndReadOnly(String fieldName, String msg, String status, CustomSoftAssert softAssert) {
+		try {
+			//Log.info("_chkBoxNewDateInd read only=="+_chkBoxNewDateInd.getAttribute("readonly"));
+			Log.info("_chkBoxNewDateInd checked=="+_chkBoxNewDateInd.getAttribute("checked"));
+			Log.info("_chkBoxNewDateInd disabled=="+_chkBoxNewDateInd.getAttribute("disabled"));			
+			
+			if (_chkBoxNewDateInd.getAttribute("disabled").equalsIgnoreCase("true") && _chkBoxNewDateInd.getAttribute("checked").equalsIgnoreCase("true")) {
+				CoreFunctions.highlightObject(driver, _chkBoxNewDateInd);
+				softAssert.assertTrue(CoreFunctions.verifyContainsElementText(_msgNewAuthEffectiveDate.getText(), msg, fieldName), MessageFormat.format(PDTConstants.FAILED_TO_VERFY_TEXT, CoreConstants.FAIL, fieldName, approvePolicyPopUpMap.get(fieldName).getText(), msg));
+				Reporter.addStepLog(
+						MessageFormat.format(PDTConstants.VERIFIED_CHKBOX_MSG, CoreConstants.PASS, msg, status));
+				return true;
+			}			
+		} catch (Exception e) {
+			Assert.fail(MessageFormat.format(PDTConstants.FAILED_TO_VERFY_CHECKBOX, CoreConstants.FAIL, msg, status));
+		}
+		MessageFormat.format(PDTConstants.FAILED_TO_VERFY_CHECKBOX, CoreConstants.FAIL, msg, status);
+		return false;
+	}
+	
+	public boolean verifyCurrentDateIsSelectedInDatePicker() {
+		Log.info("Text box val=="+_txtBoxNewAuthDate.getAttribute("value"));
+		Log.info("Text box val dom attribute=="+_txtBoxNewAuthDate.getDomAttribute("value"));
+		Log.info("Text box get Text=="+_txtBoxNewAuthDate.getText());
+		if(_txtBoxNewAuthDate.getAttribute("value").equals(CoreFunctions.getCurrentDateAsGivenFormat("dd-MMM-yyyy"))) {
+			Reporter.addStepLog(MessageFormat.format(PDTConstants.VERIFIED_CURRENT_DATE_SELECTED, CoreConstants.PASS,
+					CoreFunctions.getCurrentDateAsGivenFormat("dd-MMM-yyyy")));
+			return true;
+		}
+		Reporter.addStepLog(MessageFormat.format(PDTConstants.FAILED_TO_VERFY_CURRENT_DATE_SELECTED, CoreConstants.FAIL, CoreFunctions.getCurrentDateAsGivenFormat("dd-MMM-yyyy")));
+		return false;
 	}
 }

@@ -7,6 +7,9 @@
 			"minMileageBusinessAir": "200",
 			"accompanyingFamilyMember": "Transferee + Spouse/Partner Only",
 			"grossUp": "Yes",
+			"excessBaggageFees": "Yes",
+			"maxAmtPerPerson": "30",
+			"currency" : "U.S. Dollar",
 			"reimbursedBy": "Aires",
 			"reimbursedByOther": "Reimbursed by other",
 			"comment": "Final Move Transportation comment"			

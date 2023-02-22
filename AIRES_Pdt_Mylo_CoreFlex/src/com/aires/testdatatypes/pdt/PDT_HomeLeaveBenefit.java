@@ -5,6 +5,7 @@ public class PDT_HomeLeaveBenefit {
 	public HomeLeaveTransportation homeLeaveTransportation;
 	public HomeLeaveLodging homeLeaveLodging;
 	public HomeLeaveMeals homeLeaveMeals;
+	public HomeLeaveRentalCar homeLeaveRentalCar;
 	public String comment;
 
 	public class HomeLeaveTransportation {
@@ -16,6 +17,9 @@ public class PDT_HomeLeaveBenefit {
 		public String minMileageEconomyAir;
 		public String minMileageBusinessAir;
 		public String accompanyingFamilyMember;
+		public String excessBaggageFees;
+		public String maxAmtPerPerson;
+		public String currency;
 		public String grossUp;
 		public String reimbursedBy;
 		public String reimbursedByOther;
@@ -48,6 +52,15 @@ public class PDT_HomeLeaveBenefit {
 		public String reimbursedByOther;
 		public String comment;		
 	}
-	
+
+	public class HomeLeaveRentalCar {
+		public String duration;
+		public String sizeClass;
+		public String otherSizeClass;
+		public String grossUp;
+		public String reimbursedBy;
+		public String reimbursedByOther;
+		public String comment;		
+	}
 
 }

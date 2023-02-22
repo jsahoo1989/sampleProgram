@@ -41,7 +41,7 @@ public class PDT_OngoingPaymentReimbursementPage extends PDT_SharedSubBenefitPag
 	@FindBy(how = How.CSS, using = "ng-select[formcontrolname='calculationMethod']")
 	private WebElement _drpDownColaCalcMethod;
 
-	@FindBy(how = How.CSS, using = "span.ng-option-label.ng-star-inserted")
+	@FindBy(how = How.CSS, using = "div[role='option'] span")
 	private List<WebElement> _drpDownColaCalcMethodOptions;
 
 	@FindBy(how = How.CSS, using = "ng-select[formcontrolname='calculationMethod'] span.ng-value-label")
@@ -65,7 +65,7 @@ public class PDT_OngoingPaymentReimbursementPage extends PDT_SharedSubBenefitPag
 	@FindBy(how = How.CSS, using = "ng-select[formcontrolname='frequencyCode']")
 	private WebElement _drpDownColaPaymentFrequency;
 
-	@FindBy(how = How.CSS, using = "span.ng-option-label.ng-star-inserted")
+	@FindBy(how = How.CSS, using = "div[role='option'] span")
 	private List<WebElement> _drpDownColaPaymentFrequencyOption;
 
 	@FindBy(how = How.CSS, using = "ng-select[formcontrolname='frequencyCode'] span.ng-value-label")
@@ -83,7 +83,7 @@ public class PDT_OngoingPaymentReimbursementPage extends PDT_SharedSubBenefitPag
 	@FindBy(how = How.CSS, using = "app-cola ng-select[formcontrolname='currencyCode']")
 	private WebElement _drpDownColaCurrency;
 
-	@FindBy(how = How.CSS, using = "span.ng-option-label.ng-star-inserted")
+	@FindBy(how = How.CSS, using = "div[role='option'] span")
 	private List<WebElement> _drpDownColaCurrencyOptions;
 
 	@FindBy(how = How.CSS, using = "app-cola ng-select[formcontrolname='currencyCode'] span.ng-value-label")
@@ -95,7 +95,7 @@ public class PDT_OngoingPaymentReimbursementPage extends PDT_SharedSubBenefitPag
 	@FindBy(how = How.CSS, using = "ng-select[formcontrolname='paymentDuration']")
 	private WebElement _drpDownColaPaymentDuration;
 
-	@FindBy(how = How.CSS, using = "span.ng-option-label.ng-star-inserted")
+	@FindBy(how = How.CSS, using = "div[role='option'] span")
 	private List<WebElement> _drpDownColaPaymentDurationOptions;
 
 	@FindBy(how = How.CSS, using = "ng-select[formcontrolname='paymentDuration'] span.ng-value-label")
@@ -123,7 +123,7 @@ public class PDT_OngoingPaymentReimbursementPage extends PDT_SharedSubBenefitPag
 	@FindBy(how = How.CSS, using = "app-per-diem ng-select[formcontrolname='calculationMethod']")
 	private WebElement _drpDownPerDiemCalcMethod;
 
-	@FindBy(how = How.CSS, using = "span.ng-option-label.ng-star-inserted")
+	@FindBy(how = How.CSS, using = "div[role='option'] span")
 	private List<WebElement> _drpDownPerDiemCalcMethodOptions;
 
 	@FindBy(how = How.CSS, using = "app-per-diem ng-select[formcontrolname='calculationMethod'] span.ng-value-label")
@@ -141,7 +141,7 @@ public class PDT_OngoingPaymentReimbursementPage extends PDT_SharedSubBenefitPag
 	@FindBy(how = How.CSS, using = "app-per-diem ng-select[formcontrolname='currencyCode']")
 	private WebElement _drpDownPerDiemCurrency;
 
-	@FindBy(how = How.CSS, using = "span.ng-option-label.ng-star-inserted")
+	@FindBy(how = How.CSS, using = "div[role='option'] span")
 	private List<WebElement> _drpDownPerDiemCurrencyOptions;
 
 	@FindBy(how = How.CSS, using = "app-per-diem ng-select[formcontrolname='currencyCode'] span.ng-value-label")
@@ -150,7 +150,7 @@ public class PDT_OngoingPaymentReimbursementPage extends PDT_SharedSubBenefitPag
 	@FindBy(how = How.CSS, using = "app-per-diem ng-select[formcontrolname='frequencyCode']")
 	private WebElement _drpDownPerDiemPaymentFrequency;
 
-	@FindBy(how = How.CSS, using = "span.ng-option-label.ng-star-inserted")
+	@FindBy(how = How.CSS, using = "div[role='option'] span")
 	private List<WebElement> _drpDownPerDiemPaymentFrequencyOption;
 
 	@FindBy(how = How.CSS, using = "app-per-diem ng-select[formcontrolname='frequencyCode'] span.ng-value-label")
@@ -175,7 +175,7 @@ public class PDT_OngoingPaymentReimbursementPage extends PDT_SharedSubBenefitPag
 	@FindBy(how = How.CSS, using = "app-mobility-premium ng-select[formcontrolname='calculationMethod']")
 	private WebElement _drpDownMobilityPremCalcMethod;
 
-	@FindBy(how = How.CSS, using = "span.ng-option-label.ng-star-inserted")
+	@FindBy(how = How.CSS, using = "div[role='option'] span")
 	private List<WebElement> _drpDownMobilityPremCalcMethodOptions;
 
 	@FindBy(how = How.CSS, using = "app-mobility-premium ng-select[formcontrolname='calculationMethod'] span.ng-value-label")
@@ -190,7 +190,7 @@ public class PDT_OngoingPaymentReimbursementPage extends PDT_SharedSubBenefitPag
 	@FindBy(how = How.CSS, using = "app-mobility-premium ng-select[formcontrolname='currencyCode']")
 	private WebElement _drpDownMobilityPremCurrency;
 
-	@FindBy(how = How.CSS, using = "span.ng-option-label.ng-star-inserted")
+	@FindBy(how = How.CSS, using = "div[role='option'] span")
 	private List<WebElement> _drpDownMobilityPremCurrencyOptions;
 
 	@FindBy(how = How.CSS, using = "app-mobility-premium ng-select[formcontrolname='currencyCode'] span.ng-value-label")
@@ -199,7 +199,7 @@ public class PDT_OngoingPaymentReimbursementPage extends PDT_SharedSubBenefitPag
 	@FindBy(how = How.CSS, using = "app-mobility-premium ng-select[formcontrolname='frequencyCode']")
 	private WebElement _drpDownMobilityPremPaymentFrequency;
 
-	@FindBy(how = How.CSS, using = "span.ng-option-label.ng-star-inserted")
+	@FindBy(how = How.CSS, using = "div[role='option'] span")
 	private List<WebElement> _drpDownMobilityPremPaymentFrequencyOption;
 
 	@FindBy(how = How.CSS, using = "app-mobility-premium ng-select[formcontrolname='frequencyCode'] span.ng-value-label")
@@ -224,7 +224,7 @@ public class PDT_OngoingPaymentReimbursementPage extends PDT_SharedSubBenefitPag
 	@FindBy(how = How.CSS, using = "app-transportation-allowance ng-select[formcontrolname='calculationMethod']")
 	private WebElement _drpDownTransportAllowCalcMethod;
 
-	@FindBy(how = How.CSS, using = "span.ng-option-label.ng-star-inserted")
+	@FindBy(how = How.CSS, using = "div[role='option'] span")
 	private List<WebElement> _drpDownTransportAllowCalcMethodOptions;
 
 	@FindBy(how = How.CSS, using = "app-transportation-allowance ng-select[formcontrolname='calculationMethod'] span.ng-value-label")
@@ -239,7 +239,7 @@ public class PDT_OngoingPaymentReimbursementPage extends PDT_SharedSubBenefitPag
 	@FindBy(how = How.CSS, using = "app-transportation-allowance ng-select[formcontrolname='currencyCode']")
 	private WebElement _drpDownTransportAllowCurrency;
 
-	@FindBy(how = How.CSS, using = "span.ng-option-label.ng-star-inserted")
+	@FindBy(how = How.CSS, using = "div[role='option'] span")
 	private List<WebElement> _drpDownTransportAllowCurrencyOptions;
 
 	@FindBy(how = How.CSS, using = "app-transportation-allowance ng-select[formcontrolname='currencyCode'] span.ng-value-label")
@@ -248,7 +248,7 @@ public class PDT_OngoingPaymentReimbursementPage extends PDT_SharedSubBenefitPag
 	@FindBy(how = How.CSS, using = "app-transportation-allowance ng-select[formcontrolname='frequencyCode']")
 	private WebElement _drpDownTransportAllowPaymentFrequency;
 
-	@FindBy(how = How.CSS, using = "span.ng-option-label.ng-star-inserted")
+	@FindBy(how = How.CSS, using = "div[role='option'] span")
 	private List<WebElement> _drpDownTransportAllowPaymentFrequencyOption;
 
 	@FindBy(how = How.CSS, using = "app-transportation-allowance ng-select[formcontrolname='frequencyCode'] span.ng-value-label")
@@ -273,7 +273,7 @@ public class PDT_OngoingPaymentReimbursementPage extends PDT_SharedSubBenefitPag
 	@FindBy(how = How.CSS, using = "app-housing-allowance ng-select[formcontrolname='calculationMethod']")
 	private WebElement _drpDownHousingAllowCalcMethod;
 
-	@FindBy(how = How.CSS, using = "span.ng-option-label.ng-star-inserted")
+	@FindBy(how = How.CSS, using = "div[role='option'] span")
 	private List<WebElement> _drpDownHousingAllowCalcMethodOptions;
 
 	@FindBy(how = How.CSS, using = "app-housing-allowance ng-select[formcontrolname='calculationMethod'] span.ng-value-label")
@@ -288,7 +288,7 @@ public class PDT_OngoingPaymentReimbursementPage extends PDT_SharedSubBenefitPag
 	@FindBy(how = How.CSS, using = "app-housing-allowance ng-select[formcontrolname='currencyCode']")
 	private WebElement _drpDownHousingAllowCurrency;
 
-	@FindBy(how = How.CSS, using = "span.ng-option-label.ng-star-inserted")
+	@FindBy(how = How.CSS, using = "div[role='option'] span")
 	private List<WebElement> _drpDownHousingAllowCurrencyOptions;
 
 	@FindBy(how = How.CSS, using = "app-housing-allowance ng-select[formcontrolname='currencyCode'] span.ng-value-label")
@@ -297,7 +297,7 @@ public class PDT_OngoingPaymentReimbursementPage extends PDT_SharedSubBenefitPag
 	@FindBy(how = How.CSS, using = "app-housing-allowance ng-select[formcontrolname='frequencyCode']")
 	private WebElement _drpDownHousingAllowPaymentFrequency;
 
-	@FindBy(how = How.CSS, using = "span.ng-option-label.ng-star-inserted")
+	@FindBy(how = How.CSS, using = "div[role='option'] span")
 	private List<WebElement> _drpDownHousingAllowPaymentFrequencyOption;
 
 	@FindBy(how = How.CSS, using = "app-housing-allowance ng-select[formcontrolname='frequencyCode'] span.ng-value-label")
@@ -322,7 +322,7 @@ public class PDT_OngoingPaymentReimbursementPage extends PDT_SharedSubBenefitPag
 	@FindBy(how = How.CSS, using = "app-home-maintenance-allowance ng-select[formcontrolname='calculationMethod']")
 	private WebElement _drpDownHomeMaintAllowCalcMethod;
 
-	@FindBy(how = How.CSS, using = "span.ng-option-label.ng-star-inserted")
+	@FindBy(how = How.CSS, using = "div[role='option'] span")
 	private List<WebElement> _drpDownHomeMaintAllowCalcMethodOptions;
 
 	@FindBy(how = How.CSS, using = "app-home-maintenance-allowance ng-select[formcontrolname='calculationMethod'] span.ng-value-label")
@@ -337,7 +337,7 @@ public class PDT_OngoingPaymentReimbursementPage extends PDT_SharedSubBenefitPag
 	@FindBy(how = How.CSS, using = "app-home-maintenance-allowance ng-select[formcontrolname='currencyCode']")
 	private WebElement _drpDownHomeMaintAllowCurrency;
 
-	@FindBy(how = How.CSS, using = "span.ng-option-label.ng-star-inserted")
+	@FindBy(how = How.CSS, using = "div[role='option'] span")
 	private List<WebElement> _drpDownHomeMaintAllowCurrencyOptions;
 
 	@FindBy(how = How.CSS, using = "app-home-maintenance-allowance ng-select[formcontrolname='currencyCode'] span.ng-value-label")
@@ -346,7 +346,7 @@ public class PDT_OngoingPaymentReimbursementPage extends PDT_SharedSubBenefitPag
 	@FindBy(how = How.CSS, using = "app-home-maintenance-allowance ng-select[formcontrolname='frequencyCode']")
 	private WebElement _drpDownHomeMaintAllowPaymentFrequency;
 
-	@FindBy(how = How.CSS, using = "span.ng-option-label.ng-star-inserted")
+	@FindBy(how = How.CSS, using = "div[role='option'] span")
 	private List<WebElement> _drpDownHomeMaintAllowPaymentFrequencyOption;
 
 	@FindBy(how = How.CSS, using = "app-home-maintenance-allowance ng-select[formcontrolname='frequencyCode'] span.ng-value-label")
@@ -371,7 +371,7 @@ public class PDT_OngoingPaymentReimbursementPage extends PDT_SharedSubBenefitPag
 	@FindBy(how = How.CSS, using = "app-furniture-allowance ng-select[formcontrolname='calculationMethod']")
 	private WebElement _drpDownFurnitureAllowCalcMethod;
 
-	@FindBy(how = How.CSS, using = "span.ng-option-label.ng-star-inserted")
+	@FindBy(how = How.CSS, using = "div[role='option'] span")
 	private List<WebElement> _drpDownFurnitureAllowCalcMethodOptions;
 
 	@FindBy(how = How.CSS, using = "app-furniture-allowance ng-select[formcontrolname='calculationMethod'] span.ng-value-label")
@@ -386,7 +386,7 @@ public class PDT_OngoingPaymentReimbursementPage extends PDT_SharedSubBenefitPag
 	@FindBy(how = How.CSS, using = "app-furniture-allowance ng-select[formcontrolname='currencyCode']")
 	private WebElement _drpDownFurnitureAllowCurrency;
 
-	@FindBy(how = How.CSS, using = "span.ng-option-label.ng-star-inserted")
+	@FindBy(how = How.CSS, using = "div[role='option'] span")
 	private List<WebElement> _drpDownFurnitureAllowCurrencyOptions;
 
 	@FindBy(how = How.CSS, using = "app-furniture-allowance ng-select[formcontrolname='currencyCode'] span.ng-value-label")
@@ -395,7 +395,7 @@ public class PDT_OngoingPaymentReimbursementPage extends PDT_SharedSubBenefitPag
 	@FindBy(how = How.CSS, using = "app-furniture-allowance ng-select[formcontrolname='frequencyCode']")
 	private WebElement _drpDownFurnitureAllowPaymentFrequency;
 
-	@FindBy(how = How.CSS, using = "span.ng-option-label.ng-star-inserted")
+	@FindBy(how = How.CSS, using = "div[role='option'] span")
 	private List<WebElement> _drpDownFurnitureAllowPaymentFrequencyOption;
 
 	@FindBy(how = How.CSS, using = "app-furniture-allowance ng-select[formcontrolname='frequencyCode'] span.ng-value-label")
@@ -420,7 +420,7 @@ public class PDT_OngoingPaymentReimbursementPage extends PDT_SharedSubBenefitPag
 	@FindBy(how = How.CSS, using = "app-hardship-allowance ng-select[formcontrolname='calculationMethod']")
 	private WebElement _drpDownHardshipAllowCalcMethod;
 
-	@FindBy(how = How.CSS, using = "span.ng-option-label.ng-star-inserted")
+	@FindBy(how = How.CSS, using = "div[role='option'] span")
 	private List<WebElement> _drpDownHardshipAllowCalcMethodOptions;
 
 	@FindBy(how = How.CSS, using = "app-hardship-allowance ng-select[formcontrolname='calculationMethod'] span.ng-value-label")
@@ -435,7 +435,7 @@ public class PDT_OngoingPaymentReimbursementPage extends PDT_SharedSubBenefitPag
 	@FindBy(how = How.CSS, using = "app-hardship-allowance ng-select[formcontrolname='currencyCode']")
 	private WebElement _drpDownHardshipAllowCurrency;
 
-	@FindBy(how = How.CSS, using = "span.ng-option-label.ng-star-inserted")
+	@FindBy(how = How.CSS, using = "div[role='option'] span")
 	private List<WebElement> _drpDownHardshipAllowCurrencyOptions;
 
 	@FindBy(how = How.CSS, using = "app-hardship-allowance ng-select[formcontrolname='currencyCode'] span.ng-value-label")
@@ -444,7 +444,7 @@ public class PDT_OngoingPaymentReimbursementPage extends PDT_SharedSubBenefitPag
 	@FindBy(how = How.CSS, using = "app-hardship-allowance ng-select[formcontrolname='frequencyCode']")
 	private WebElement _drpDownHardshipAllowPaymentFrequency;
 
-	@FindBy(how = How.CSS, using = "span.ng-option-label.ng-star-inserted")
+	@FindBy(how = How.CSS, using = "div[role='option'] span")
 	private List<WebElement> _drpDownHardshipAllowPaymentFrequencyOption;
 
 	@FindBy(how = How.CSS, using = "app-hardship-allowance ng-select[formcontrolname='frequencyCode'] span.ng-value-label")
@@ -469,7 +469,7 @@ public class PDT_OngoingPaymentReimbursementPage extends PDT_SharedSubBenefitPag
 	@FindBy(how = How.CSS, using = "app-banking-allowance ng-select[formcontrolname='calculationMethod']")
 	private WebElement _drpDownBankingAllowCalcMethod;
 
-	@FindBy(how = How.CSS, using = "span.ng-option-label.ng-star-inserted")
+	@FindBy(how = How.CSS, using = "div[role='option'] span")
 	private List<WebElement> _drpDownBankingAllowCalcMethodOptions;
 
 	@FindBy(how = How.CSS, using = "app-banking-allowance ng-select[formcontrolname='calculationMethod'] span.ng-value-label")
@@ -484,7 +484,7 @@ public class PDT_OngoingPaymentReimbursementPage extends PDT_SharedSubBenefitPag
 	@FindBy(how = How.CSS, using = "app-banking-allowance ng-select[formcontrolname='currencyCode']")
 	private WebElement _drpDownBankingAllowCurrency;
 
-	@FindBy(how = How.CSS, using = "span.ng-option-label.ng-star-inserted")
+	@FindBy(how = How.CSS, using = "div[role='option'] span")
 	private List<WebElement> _drpDownBankingAllowCurrencyOptions;
 
 	@FindBy(how = How.CSS, using = "app-banking-allowance ng-select[formcontrolname='currencyCode'] span.ng-value-label")
@@ -493,7 +493,7 @@ public class PDT_OngoingPaymentReimbursementPage extends PDT_SharedSubBenefitPag
 	@FindBy(how = How.CSS, using = "app-banking-allowance ng-select[formcontrolname='frequencyCode']")
 	private WebElement _drpDownBankingAllowPaymentFrequency;
 
-	@FindBy(how = How.CSS, using = "span.ng-option-label.ng-star-inserted")
+	@FindBy(how = How.CSS, using = "div[role='option'] span")
 	private List<WebElement> _drpDownBankingAllowPaymentFrequencyOption;
 
 	@FindBy(how = How.CSS, using = "app-banking-allowance ng-select[formcontrolname='frequencyCode'] span.ng-value-label")
@@ -518,7 +518,7 @@ public class PDT_OngoingPaymentReimbursementPage extends PDT_SharedSubBenefitPag
 	@FindBy(how = How.CSS, using = "app-at-sea-allowance ng-select[formcontrolname='calculationMethod']")
 	private WebElement _drpDownAtSeaAllowCalcMethod;
 
-	@FindBy(how = How.CSS, using = "span.ng-option-label.ng-star-inserted")
+	@FindBy(how = How.CSS, using = "div[role='option'] span")
 	private List<WebElement> _drpDownAtSeaAllowCalcMethodOptions;
 
 	@FindBy(how = How.CSS, using = "app-at-sea-allowance ng-select[formcontrolname='calculationMethod'] span.ng-value-label")
@@ -533,7 +533,7 @@ public class PDT_OngoingPaymentReimbursementPage extends PDT_SharedSubBenefitPag
 	@FindBy(how = How.CSS, using = "app-at-sea-allowance ng-select[formcontrolname='currencyCode']")
 	private WebElement _drpDownAtSeaAllowCurrency;
 
-	@FindBy(how = How.CSS, using = "span.ng-option-label.ng-star-inserted")
+	@FindBy(how = How.CSS, using = "div[role='option'] span")
 	private List<WebElement> _drpDownAtSeaAllowCurrencyOptions;
 
 	@FindBy(how = How.CSS, using = "app-at-sea-allowance ng-select[formcontrolname='currencyCode'] span.ng-value-label")
@@ -542,7 +542,7 @@ public class PDT_OngoingPaymentReimbursementPage extends PDT_SharedSubBenefitPag
 	@FindBy(how = How.CSS, using = "app-at-sea-allowance ng-select[formcontrolname='frequencyCode']")
 	private WebElement _drpDownAtSeaAllowPaymentFrequency;
 
-	@FindBy(how = How.CSS, using = "span.ng-option-label.ng-star-inserted")
+	@FindBy(how = How.CSS, using = "div[role='option'] span")
 	private List<WebElement> _drpDownAtSeaAllowPaymentFrequencyOption;
 
 	@FindBy(how = How.CSS, using = "app-at-sea-allowance ng-select[formcontrolname='frequencyCode'] span.ng-value-label")
@@ -567,7 +567,7 @@ public class PDT_OngoingPaymentReimbursementPage extends PDT_SharedSubBenefitPag
 	@FindBy(how = How.CSS, using = "app-commuter-allowance ng-select[formcontrolname='calculationMethod']")
 	private WebElement _drpDownCommuterAllowCalcMethod;
 
-	@FindBy(how = How.CSS, using = "span.ng-option-label.ng-star-inserted")
+	@FindBy(how = How.CSS, using = "div[role='option'] span")
 	private List<WebElement> _drpDownCommuterAllowCalcMethodOptions;
 
 	@FindBy(how = How.CSS, using = "app-commuter-allowance ng-select[formcontrolname='calculationMethod'] span.ng-value-label")
@@ -582,7 +582,7 @@ public class PDT_OngoingPaymentReimbursementPage extends PDT_SharedSubBenefitPag
 	@FindBy(how = How.CSS, using = "app-commuter-allowance ng-select[formcontrolname='currencyCode']")
 	private WebElement _drpDownCommuterAllowCurrency;
 
-	@FindBy(how = How.CSS, using = "span.ng-option-label.ng-star-inserted")
+	@FindBy(how = How.CSS, using = "div[role='option'] span")
 	private List<WebElement> _drpDownCommuterAllowCurrencyOptions;
 
 	@FindBy(how = How.CSS, using = "app-commuter-allowance ng-select[formcontrolname='currencyCode'] span.ng-value-label")
@@ -591,7 +591,7 @@ public class PDT_OngoingPaymentReimbursementPage extends PDT_SharedSubBenefitPag
 	@FindBy(how = How.CSS, using = "app-commuter-allowance ng-select[formcontrolname='frequencyCode']")
 	private WebElement _drpDownCommuterAllowPaymentFrequency;
 
-	@FindBy(how = How.CSS, using = "span.ng-option-label.ng-star-inserted")
+	@FindBy(how = How.CSS, using = "div[role='option'] span")
 	private List<WebElement> _drpDownCommuterAllowPaymentFrequencyOption;
 
 	@FindBy(how = How.CSS, using = "app-commuter-allowance ng-select[formcontrolname='frequencyCode'] span.ng-value-label")
@@ -616,7 +616,7 @@ public class PDT_OngoingPaymentReimbursementPage extends PDT_SharedSubBenefitPag
 	@FindBy(how = How.CSS, using = "app-differential-allowance ng-select[formcontrolname='calculationMethod']")
 	private WebElement _drpDownDiffAllowCalcMethod;
 
-	@FindBy(how = How.CSS, using = "span.ng-option-label.ng-star-inserted")
+	@FindBy(how = How.CSS, using = "div[role='option'] span")
 	private List<WebElement> _drpDownDiffAllowCalcMethodOptions;
 
 	@FindBy(how = How.CSS, using = "app-differential-allowance ng-select[formcontrolname='calculationMethod'] span.ng-value-label")
@@ -631,7 +631,7 @@ public class PDT_OngoingPaymentReimbursementPage extends PDT_SharedSubBenefitPag
 	@FindBy(how = How.CSS, using = "app-differential-allowance ng-select[formcontrolname='currencyCode']")
 	private WebElement _drpDownDiffAllowCurrency;
 
-	@FindBy(how = How.CSS, using = "span.ng-option-label.ng-star-inserted")
+	@FindBy(how = How.CSS, using = "div[role='option'] span")
 	private List<WebElement> _drpDownDiffAllowCurrencyOptions;
 
 	@FindBy(how = How.CSS, using = "app-differential-allowance ng-select[formcontrolname='currencyCode'] span.ng-value-label")
@@ -640,7 +640,7 @@ public class PDT_OngoingPaymentReimbursementPage extends PDT_SharedSubBenefitPag
 	@FindBy(how = How.CSS, using = "app-differential-allowance ng-select[formcontrolname='frequencyCode']")
 	private WebElement _drpDownDiffAllowPaymentFrequency;
 
-	@FindBy(how = How.CSS, using = "span.ng-option-label.ng-star-inserted")
+	@FindBy(how = How.CSS, using = "div[role='option'] span")
 	private List<WebElement> _drpDownDiffAllowPaymentFrequencyOption;
 
 	@FindBy(how = How.CSS, using = "app-differential-allowance ng-select[formcontrolname='frequencyCode'] span.ng-value-label")
@@ -665,7 +665,7 @@ public class PDT_OngoingPaymentReimbursementPage extends PDT_SharedSubBenefitPag
 	@FindBy(how = How.CSS, using = "app-goods-services-allowance ng-select[formcontrolname='calculationMethod']")
 	private WebElement _drpDownGoodAndServicesAllowCalcMethod;
 
-	@FindBy(how = How.CSS, using = "span.ng-option-label.ng-star-inserted")
+	@FindBy(how = How.CSS, using = "div[role='option'] span")
 	private List<WebElement> _drpDownGoodAndServicesAllowCalcMethodOptions;
 
 	@FindBy(how = How.CSS, using = "app-goods-services-allowance ng-select[formcontrolname='calculationMethod'] span.ng-value-label")
@@ -680,7 +680,7 @@ public class PDT_OngoingPaymentReimbursementPage extends PDT_SharedSubBenefitPag
 	@FindBy(how = How.CSS, using = "app-goods-services-allowance ng-select[formcontrolname='currencyCode']")
 	private WebElement _drpDownGoodAndServicesAllowCurrency;
 
-	@FindBy(how = How.CSS, using = "span.ng-option-label.ng-star-inserted")
+	@FindBy(how = How.CSS, using = "div[role='option'] span")
 	private List<WebElement> _drpDownGoodAndServicesAllowCurrencyOptions;
 
 	@FindBy(how = How.CSS, using = "app-goods-services-allowance ng-select[formcontrolname='currencyCode'] span.ng-value-label")
@@ -689,7 +689,7 @@ public class PDT_OngoingPaymentReimbursementPage extends PDT_SharedSubBenefitPag
 	@FindBy(how = How.CSS, using = "app-goods-services-allowance ng-select[formcontrolname='frequencyCode']")
 	private WebElement _drpDownGoodAndServicesAllowPaymentFrequency;
 
-	@FindBy(how = How.CSS, using = "span.ng-option-label.ng-star-inserted")
+	@FindBy(how = How.CSS, using = "div[role='option'] span")
 	private List<WebElement> _drpDownGoodAndServicesAllowPaymentFrequencyOption;
 
 	@FindBy(how = How.CSS, using = "app-goods-services-allowance ng-select[formcontrolname='frequencyCode'] span.ng-value-label")
@@ -714,7 +714,7 @@ public class PDT_OngoingPaymentReimbursementPage extends PDT_SharedSubBenefitPag
 	@FindBy(how = How.CSS, using = "app-home-leave-allowance ng-select[formcontrolname='calculationMethod']")
 	private WebElement _drpDownHomeLeaveAllowCalcMethod;
 
-	@FindBy(how = How.CSS, using = "span.ng-option-label.ng-star-inserted")
+	@FindBy(how = How.CSS, using = "div[role='option'] span")
 	private List<WebElement> _drpDownHomeLeaveAllowCalcMethodOptions;
 
 	@FindBy(how = How.CSS, using = "app-home-leave-allowance ng-select[formcontrolname='calculationMethod'] span.ng-value-label")
@@ -729,7 +729,7 @@ public class PDT_OngoingPaymentReimbursementPage extends PDT_SharedSubBenefitPag
 	@FindBy(how = How.CSS, using = "app-home-leave-allowance ng-select[formcontrolname='currencyCode']")
 	private WebElement _drpDownHomeLeaveAllowCurrency;
 
-	@FindBy(how = How.CSS, using = "span.ng-option-label.ng-star-inserted")
+	@FindBy(how = How.CSS, using = "div[role='option'] span")
 	private List<WebElement> _drpDownHomeLeaveAllowCurrencyOptions;
 
 	@FindBy(how = How.CSS, using = "app-home-leave-allowance ng-select[formcontrolname='currencyCode'] span.ng-value-label")
@@ -738,7 +738,7 @@ public class PDT_OngoingPaymentReimbursementPage extends PDT_SharedSubBenefitPag
 	@FindBy(how = How.CSS, using = "app-home-leave-allowance ng-select[formcontrolname='frequencyCode']")
 	private WebElement _drpDownHomeLeaveAllowPaymentFrequency;
 
-	@FindBy(how = How.CSS, using = "span.ng-option-label.ng-star-inserted")
+	@FindBy(how = How.CSS, using = "div[role='option'] span")
 	private List<WebElement> _drpDownHomeLeaveAllowPaymentFrequencyOption;
 
 	@FindBy(how = How.CSS, using = "app-home-leave-allowance ng-select[formcontrolname='frequencyCode'] span.ng-value-label")
@@ -763,7 +763,7 @@ public class PDT_OngoingPaymentReimbursementPage extends PDT_SharedSubBenefitPag
 	@FindBy(how = How.CSS, using = "app-home-retention-allowance ng-select[formcontrolname='calculationMethod']")
 	private WebElement _drpDownHomeRetentionAllowCalcMethod;
 
-	@FindBy(how = How.CSS, using = "span.ng-option-label.ng-star-inserted")
+	@FindBy(how = How.CSS, using = "div[role='option'] span")
 	private List<WebElement> _drpDownHomeRetentionAllowCalcMethodOptions;
 
 	@FindBy(how = How.CSS, using = "app-home-retention-allowance ng-select[formcontrolname='calculationMethod'] span.ng-value-label")
@@ -778,7 +778,7 @@ public class PDT_OngoingPaymentReimbursementPage extends PDT_SharedSubBenefitPag
 	@FindBy(how = How.CSS, using = "app-home-retention-allowance ng-select[formcontrolname='currencyCode']")
 	private WebElement _drpDownHomeRetentionAllowCurrency;
 
-	@FindBy(how = How.CSS, using = "span.ng-option-label.ng-star-inserted")
+	@FindBy(how = How.CSS, using = "div[role='option'] span")
 	private List<WebElement> _drpDownHomeRetentionAllowCurrencyOptions;
 
 	@FindBy(how = How.CSS, using = "app-home-retention-allowance ng-select[formcontrolname='currencyCode'] span.ng-value-label")
@@ -787,7 +787,7 @@ public class PDT_OngoingPaymentReimbursementPage extends PDT_SharedSubBenefitPag
 	@FindBy(how = How.CSS, using = "app-home-retention-allowance ng-select[formcontrolname='frequencyCode']")
 	private WebElement _drpDownHomeRetentionAllowPaymentFrequency;
 
-	@FindBy(how = How.CSS, using = "span.ng-option-label.ng-star-inserted")
+	@FindBy(how = How.CSS, using = "div[role='option'] span")
 	private List<WebElement> _drpDownHomeRetentionAllowPaymentFrequencyOption;
 
 	@FindBy(how = How.CSS, using = "app-home-retention-allowance ng-select[formcontrolname='frequencyCode'] span.ng-value-label")
@@ -812,7 +812,7 @@ public class PDT_OngoingPaymentReimbursementPage extends PDT_SharedSubBenefitPag
 	@FindBy(how = How.CSS, using = "app-housekeeping-allowance ng-select[formcontrolname='calculationMethod']")
 	private WebElement _drpDownHouseKeepingAllowCalcMethod;
 
-	@FindBy(how = How.CSS, using = "span.ng-option-label.ng-star-inserted")
+	@FindBy(how = How.CSS, using = "div[role='option'] span")
 	private List<WebElement> _drpDownHouseKeepingAllowCalcMethodOptions;
 
 	@FindBy(how = How.CSS, using = "app-housekeeping-allowance ng-select[formcontrolname='calculationMethod'] span.ng-value-label")
@@ -827,7 +827,7 @@ public class PDT_OngoingPaymentReimbursementPage extends PDT_SharedSubBenefitPag
 	@FindBy(how = How.CSS, using = "app-housekeeping-allowance ng-select[formcontrolname='currencyCode']")
 	private WebElement _drpDownHouseKeepingAllowCurrency;
 
-	@FindBy(how = How.CSS, using = "span.ng-option-label.ng-star-inserted")
+	@FindBy(how = How.CSS, using = "div[role='option'] span")
 	private List<WebElement> _drpDownHouseKeepingAllowCurrencyOptions;
 
 	@FindBy(how = How.CSS, using = "app-housekeeping-allowance ng-select[formcontrolname='currencyCode'] span.ng-value-label")
@@ -836,7 +836,7 @@ public class PDT_OngoingPaymentReimbursementPage extends PDT_SharedSubBenefitPag
 	@FindBy(how = How.CSS, using = "app-housekeeping-allowance ng-select[formcontrolname='frequencyCode']")
 	private WebElement _drpDownHouseKeepingAllowPaymentFrequency;
 
-	@FindBy(how = How.CSS, using = "span.ng-option-label.ng-star-inserted")
+	@FindBy(how = How.CSS, using = "div[role='option'] span")
 	private List<WebElement> _drpDownHouseKeepingAllowPaymentFrequencyOption;
 
 	@FindBy(how = How.CSS, using = "app-housekeeping-allowance ng-select[formcontrolname='frequencyCode'] span.ng-value-label")
@@ -861,7 +861,7 @@ public class PDT_OngoingPaymentReimbursementPage extends PDT_SharedSubBenefitPag
 	@FindBy(how = How.CSS, using = "app-utility-allowance ng-select[formcontrolname='calculationMethod']")
 	private WebElement _drpDownUtilityAllowCalcMethod;
 
-	@FindBy(how = How.CSS, using = "span.ng-option-label.ng-star-inserted")
+	@FindBy(how = How.CSS, using = "div[role='option'] span")
 	private List<WebElement> _drpDownUtilityAllowCalcMethodOptions;
 
 	@FindBy(how = How.CSS, using = "app-utility-allowance ng-select[formcontrolname='calculationMethod'] span.ng-value-label")
@@ -876,7 +876,7 @@ public class PDT_OngoingPaymentReimbursementPage extends PDT_SharedSubBenefitPag
 	@FindBy(how = How.CSS, using = "app-utility-allowance ng-select[formcontrolname='currencyCode']")
 	private WebElement _drpDownUtilityAllowCurrency;
 
-	@FindBy(how = How.CSS, using = "span.ng-option-label.ng-star-inserted")
+	@FindBy(how = How.CSS, using = "div[role='option'] span")
 	private List<WebElement> _drpDownUtilityAllowCurrencyOptions;
 
 	@FindBy(how = How.CSS, using = "app-utility-allowance ng-select[formcontrolname='currencyCode'] span.ng-value-label")
@@ -885,7 +885,7 @@ public class PDT_OngoingPaymentReimbursementPage extends PDT_SharedSubBenefitPag
 	@FindBy(how = How.CSS, using = "app-utility-allowance ng-select[formcontrolname='frequencyCode']")
 	private WebElement _drpDownUtilityAllowPaymentFrequency;
 
-	@FindBy(how = How.CSS, using = "span.ng-option-label.ng-star-inserted")
+	@FindBy(how = How.CSS, using = "div[role='option'] span")
 	private List<WebElement> _drpDownUtilityAllowPaymentFrequencyOption;
 
 	@FindBy(how = How.CSS, using = "app-utility-allowance ng-select[formcontrolname='frequencyCode'] span.ng-value-label")
@@ -916,7 +916,7 @@ public class PDT_OngoingPaymentReimbursementPage extends PDT_SharedSubBenefitPag
 	@FindBy(how = How.CSS, using = "app-other-ongoing-allowance ng-select[formcontrolname='calculationMethod']")
 	private WebElement _drpDownOthOngoingCalcMeth;
 
-	@FindBy(how = How.CSS, using = "span.ng-option-label.ng-star-inserted")
+	@FindBy(how = How.CSS, using = "div[role='option'] span")
 	private List<WebElement> _drpDownOthOngoingCalcMethOptions;
 
 	@FindBy(how = How.CSS, using = "app-other-ongoing-allowance ng-select[formcontrolname='calculationMethod'] span.ng-value-label")
@@ -931,7 +931,7 @@ public class PDT_OngoingPaymentReimbursementPage extends PDT_SharedSubBenefitPag
 	@FindBy(how = How.CSS, using = "app-other-ongoing-allowance ng-select[formcontrolname='currencyCode']")
 	private WebElement _drpDownOthOngoingCurr;
 
-	@FindBy(how = How.CSS, using = "span.ng-option-label.ng-star-inserted")
+	@FindBy(how = How.CSS, using = "div[role='option'] span")
 	private List<WebElement> _drpDownOthOngoingCurrOptions;
 
 	@FindBy(how = How.CSS, using = "app-other-ongoing-allowance ng-select[formcontrolname='currencyCode'] span.ng-value-label")
@@ -940,7 +940,7 @@ public class PDT_OngoingPaymentReimbursementPage extends PDT_SharedSubBenefitPag
 	@FindBy(how = How.CSS, using = "app-other-ongoing-allowance ng-select[formcontrolname='frequencyCode']")
 	private WebElement _drpDownOthOngoingFreq;
 
-	@FindBy(how = How.CSS, using = "span.ng-option-label.ng-star-inserted")
+	@FindBy(how = How.CSS, using = "div[role='option'] span")
 	private List<WebElement> _drpDownOthOngoingFreqOption;
 
 	@FindBy(how = How.CSS, using = "app-other-ongoing-allowance ng-select[formcontrolname='frequencyCode'] span.ng-value-label")

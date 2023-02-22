@@ -3,6 +3,9 @@
 		"benefitName": "Language Training",
 		"languageTrainingEmployee": {
 		"maxNumOfHours": "2",
+		"selfLearningTool": "Yes",
+		"maxAmt": "10005678.28",
+		"currency": "U.S. Dollar",
 		"grossUp": "Yes",
 		"reimbursedBy": "Other",
 		"reimbursedByOther": "Reimbursed by other",
@@ -11,6 +14,9 @@
 		"languageTrainingFamily": {
 		"maxNumOfHrsPerPerson": "2",
 		"maxNumOfHrsPerFamily": "10",
+		"selfLearningTool": "Yes",
+		"maxAmt": "40008765.25",
+		"currency": "U.S. Dollar",
 		"grossUp": "Yes",
 		"reimbursedBy": "Aires",
 		"reimbursedByOther": "Reimbursed by other",

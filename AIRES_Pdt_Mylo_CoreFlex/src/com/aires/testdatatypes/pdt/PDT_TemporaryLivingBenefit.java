@@ -43,6 +43,8 @@ public class PDT_TemporaryLivingBenefit {
 		public String durationInDays;
 		public String transportationType;
 		public String transportationTypeOther;
+		public String sizeClass;
+		public String sizeClassOther;
 		public String grossUp;
 		public String reimbursedBy;
 		public String reimbursedByOther;

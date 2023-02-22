@@ -49,6 +49,15 @@
 			"reimbursedBy": "Client",
 			"reimbursedByOther": "Reimbursed by other",
 			"comment": "Pre-Acceptance Trip Meal comment"
+		},
+		"preAcceptanceTripRentalCar": {
+			"duration": "9876543210",
+			"sizeClass": "Other",
+			"otherSizeClass": "OtherCar",
+			"grossUp": "Yes",
+			"reimbursedBy": "Other",
+			"reimbursedByOther": "Reimbursed by other",
+			"comment": "Pre-Acceptance Trip Rental Car comment"
 		}
 	}
 ]

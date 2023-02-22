@@ -34,4 +34,9 @@ public class PDT_AddNewPolicy_Steps {
 	public void he_clicks_on_the_Next_button_after_selecting_below_information_on_the_Add_New_Policy_page() {
 		addNewPolicyPage.enterClientPolicyDetails();
 	}
+	
+	@Given("^he has clicked on the 'Next' button after selecting non Blueprint enabled client, policy information on the 'Add New Policy' page$")
+	public void he_has_clicked_on_the_Next_button_after_selecting_non_Blueprint_enabled_client_policy_information_on_the_Add_New_Policy_page() {
+		addNewPolicyPage.enterNonBpClientPolicyDetails();
+	}
 }

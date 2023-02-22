@@ -313,4 +313,5 @@ public class MobilityXConstants {
 	public static final String SUCCESS_MESSAGE_TEXT = "Success Message";
 	public static final String GROWL_MESSAGE_NOT_MATCHED = "{0}Message ''{1}'' does not match with message in header section.";
 	public static final String SUCCESS_DIALOG = "Success Dialog ";
+	public static final String FAILED_TO_VERIFY_POP_INFO = "{0}Failed to verify {1}:-''{2}'' on Scheduled approve policy pop-up";
 }

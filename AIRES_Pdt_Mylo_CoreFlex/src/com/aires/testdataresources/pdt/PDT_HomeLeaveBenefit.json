@@ -11,6 +11,9 @@
 			"minMileageEconomyAir": "1000",
 			"minMileageBusinessAir": "2000",
 			"accompanyingFamilyMember": "Transferee + Spouse/Partner Only",
+			"excessBaggageFees": "Yes",
+			"maxAmtPerPerson": "50",
+			"currency" : "U.S. Dollar",
 			"grossUp": "Yes",
 			"reimbursedBy": "Aires",
 			"reimbursedByOther": "Reimbursed by other",
@@ -40,6 +43,15 @@
 			"reimbursedBy": "Client",
 			"reimbursedByOther": "Reimbursed by other",
 			"comment": "Home Leave Meal comment"
+		},
+		"homeLeaveRentalCar": {
+			"duration": "9876543210",
+			"sizeClass": "Other",
+			"otherSizeClass": "OtherCar",
+			"grossUp": "Yes",
+			"reimbursedBy": "Other",
+			"reimbursedByOther": "Reimbursed by other",
+			"comment": "HomeLeave Trip Rental Car comment"
 		}
 	}
 ]

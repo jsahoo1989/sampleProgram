@@ -70,6 +70,7 @@ public class PDT_GeneralInfo_Steps {
 	public void he_has_entered_mandatory_information_on_General_Information_page_followed_by_selection_of_as_Benefit_Category_on_page(String benefitCategory, String policyBenefitPage) {
 		generalInfoPage.explicitWaitForGeneralInfoHeading();
 		//Use soft assert
+		//generalInfoPage.verifyClientBluePrintEnabled(testContext.getSoftAssertObject());
 		Assert.assertTrue(generalInfoPage.verifyClientDetails(ClientPolicyDetails.getClientId(), ClientPolicyDetails.getClientName()),
 				MessageFormat.format(PDTConstants.FAILED_TO_VERIFY_CLIENT_DETAILS, CoreConstants.FAIL, ClientPolicyDetails.getClientId(), ClientPolicyDetails.getClientName(),
 						generalInfoPage.getElementText(PDTConstants.CLIENT_ID), generalInfoPage.getElementText(PDTConstants.CLIENT_NAME)));

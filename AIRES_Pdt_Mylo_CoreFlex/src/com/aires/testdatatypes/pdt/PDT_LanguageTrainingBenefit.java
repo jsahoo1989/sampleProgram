@@ -7,6 +7,9 @@ public class PDT_LanguageTrainingBenefit {
 	
 	public class LanguageTrainingEmployee {
 		public String maxNumOfHours;
+		public String selfLearningTool;
+		public String maxAmt;
+		public String currency;
 		public String grossUp;
 		public String reimbursedBy;
 		public String reimbursedByOther;
@@ -16,6 +19,9 @@ public class PDT_LanguageTrainingBenefit {
 	public class LanguageTrainingFamily {
 		public String maxNumOfHrsPerPerson;
 		public String maxNumOfHrsPerFamily;	
+		public String selfLearningTool;
+		public String maxAmt;
+		public String currency;
 		public String grossUp;
 		public String reimbursedBy;
 		public String reimbursedByOther;

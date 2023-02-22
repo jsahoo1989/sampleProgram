@@ -51,7 +51,7 @@ public class PDT_HomePurchasePage extends PDT_SharedSubBenefitPage {
 	@FindBy(how = How.CSS, using = "app-closing-costs ng-select[formcontrolname='currencyCode']")
 	private WebElement _drpDownCurrency;
 
-	@FindBy(how = How.CSS, using = "span.ng-option-label.ng-star-inserted")
+	@FindBy(how = How.CSS, using = "span.ng-option-label")
 	private List<WebElement> _drpDownCurrencyOptions;
 
 	@FindBy(how = How.CSS, using = "app-closing-costs ng-select[formcontrolname='currencyCode'] span.ng-value-label")
@@ -108,7 +108,7 @@ public class PDT_HomePurchasePage extends PDT_SharedSubBenefitPage {
 	@FindBy(how = How.CSS, using = "app-bonus ng-select[formcontrolname='currencyCode']")
 	private WebElement _drpDownCurrencyHomePurBonus;
 
-	@FindBy(how = How.CSS, using = "span.ng-option-label.ng-star-inserted")
+	@FindBy(how = How.CSS, using = "span.ng-option-label")
 	private List<WebElement> _drpDownCurrencyOptionsHomePurBonus;
 
 	@FindBy(how = How.CSS, using = "app-bonus ng-select[formcontrolname='currencyCode'] span.ng-value-label")

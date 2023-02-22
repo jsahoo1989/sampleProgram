@@ -22,6 +22,7 @@ import com.aires.businessrules.constants.PDTConstants;
 import com.aires.managers.FileReaderManager;
 import com.aires.pages.coreflex.CoreFlex_FlexPolicySetupPage;
 import com.aires.testdatatypes.coreflex.CoreFlex_PolicySetupPagesData;
+import com.aires.utilities.CustomSoftAssert;
 import com.aires.utilities.Log;
 import com.vimalselvam.cucumber.listener.Reporter;
 
@@ -264,6 +265,11 @@ public class PDT_GeneralInformationPage extends Base {
 	
 	@FindBy(how = How.XPATH, using = "//input[@formcontrolname='exchgLossInd']/parent::label")
 	private List<WebElement> _currencyExchangeLoss;
+	
+	@FindBy(how = How.CSS, using = "img[src='assets/img/Bp.png']")
+	private WebElement _imgBp;
+	
+	
 
 	LinkedHashMap<String, String> webElementsTextMap = new LinkedHashMap<String, String>();
 	/*********************************************************************/
@@ -1273,6 +1279,14 @@ public class PDT_GeneralInformationPage extends Base {
 			Assert.fail(PDTConstants.FAILED_TO_FILL_GENERAL_INFO_FORM);
 		}
 
+	}
+	
+	public void verifyClientBluePrintEnabled(CustomSoftAssert softAssert) {		
+		softAssert.assertTrue(
+				CoreFunctions.verifyElementNotPresentOnPage(_imgBp, PDTConstants.IMAGE,
+						PDTConstants.BLUEPRINT_ENABLED),
+				MessageFormat.format(PDTConstants.FAIL_VRFY_ELE_TYPE_NOT_PRESENT, CoreConstants.FAIL,
+						PDTConstants.IMAGE, PDTConstants.BLUEPRINT_ENABLED));
 	}
 
 

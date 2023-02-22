@@ -19,6 +19,7 @@ import com.aires.businessrules.constants.CoreConstants;
 import com.aires.businessrules.constants.PDTConstants;
 import com.aires.managers.FileReaderManager;
 import com.aires.testdatatypes.pdt.PDT_LanguageTrainingBenefit;
+import com.vimalselvam.cucumber.listener.Reporter;
 
 import stepDefinitions.pdt.PDT_SharedSubBenefit_Steps;
 
@@ -82,19 +83,19 @@ public class PDT_LanguageTrainingPage extends PDT_SharedSubBenefitPage {
 	@FindBy(how = How.CSS, using = "ng-select[formcontrolname='languageTrainingEmployeeExpenseCodeList']")
 	private WebElement _drpDownLangTrainEmpExpenseCode;
 
-	@FindBy(how = How.CSS, using = "span.ng-option-label.ng-star-inserted")
+	@FindBy(how = How.CSS, using = "div[role='option'] span")
 	private List<WebElement> _drpDownOptionsLangTrainEmpExpenseCode;
 
-	@FindBy(how = How.CSS, using = "ng-select[formcontrolname='languageTrainingEmployeeExpenseCodeList'] span.ng-value-label.ng-star-inserted")
+	@FindBy(how = How.CSS, using = "ng-select[formcontrolname='languageTrainingEmployeeExpenseCodeList'] span.ng-value-label")
 	private List<WebElement> _drpDownSelectedOptionsLangTrainEmpExpenseCode;
 
 	@FindBy(how = How.CSS, using = "ng-select[formcontrolname='languageTrainingFamilyExpenseCodeList']")
 	private WebElement _drpDownLangTrainFamilyExpenseCode;
 
-	@FindBy(how = How.CSS, using = "span.ng-option-label.ng-star-inserted")
+	@FindBy(how = How.CSS, using = "div[role='option'] span")
 	private List<WebElement> _drpDownOptionsLangTrainFamilyExpenseCode;
 
-	@FindBy(how = How.CSS, using = "ng-select[formcontrolname='languageTrainingFamilyExpenseCodeList'] span.ng-value-label.ng-star-inserted")
+	@FindBy(how = How.CSS, using = "ng-select[formcontrolname='languageTrainingFamilyExpenseCodeList'] span.ng-value-label")
 	private List<WebElement> _drpDownSelectedOptionsLangTrainFamilyExpenseCode;
 
 	@FindBy(how = How.CSS, using = "#collapseOne1 input[formcontrolname='grossedUpInd']")
@@ -108,6 +109,48 @@ public class PDT_LanguageTrainingPage extends PDT_SharedSubBenefitPage {
 
 	@FindBy(how = How.CSS, using = "#collapseTwo input[formcontrolname='paidByCode']")
 	private List<WebElement> _radioBtnReimbByLangTrainFam;
+	
+	@FindBy(how = How.XPATH, using = "//app-employee//input[@formcontrolname='selfLearningToolInd']/parent::label/parent::div/preceding-sibling::label")
+	private WebElement _lblSelfLearningToolEmployee;
+	
+	@FindBy(how = How.XPATH, using = "//app-employee//input[@formcontrolname='selfLearningToolInd']/parent::label")
+	private List<WebElement> _radioBtnOptionLabelSelfLearningToolEmployee;
+	
+	@FindBy(how = How.CSS, using = "app-employee input[formcontrolname='selfLearningToolInd']")
+	private List<WebElement> _radioBtnSelfLearningToolEmployee;
+	
+	@FindBy(how = How.CSS, using = "app-employee input[formcontrolname='languageMaxAmount']")
+	private WebElement _txtBoxMaxAmtEmp;
+	
+	@FindBy(how = How.CSS, using = "app-employee ng-select[formcontrolname='languageCurrency']")
+	private WebElement _drpDownCurrencyEmp;
+	
+	@FindBy(how = How.CSS, using = "app-employee div[role='option'] span")
+	private List<WebElement> _drpDownOptionsCurrencyEmp;
+	
+	@FindBy(how = How.CSS, using = "app-employee ng-select[formcontrolname='languageCurrency'] span.ng-value-label")
+	private WebElement _drpDownOptionSelectedCurrencyEmp;
+	
+	@FindBy(how = How.XPATH, using = "//app-family//input[@formcontrolname='selfLearningToolInd']/parent::label/parent::div/preceding-sibling::label")
+	private WebElement _lblSelfLearningToolFamily;
+	
+	@FindBy(how = How.XPATH, using = "//app-family//input[@formcontrolname='selfLearningToolInd']/parent::label")
+	private List<WebElement> _radioBtnOptionLabelSelfLearningToolFamily;
+	
+	@FindBy(how = How.CSS, using = "app-family input[formcontrolname='selfLearningToolInd']")
+	private List<WebElement> _radioBtnSelfLearningToolFamily;
+	
+	@FindBy(how = How.CSS, using = "app-family input[formcontrolname='languageMaxAmount']")
+	private WebElement _txtBoxMaxAmtFamily;
+	
+	@FindBy(how = How.CSS, using = "app-family ng-select[formcontrolname='languageCurrency']")
+	private WebElement _drpDownCurrencyFamily;
+	
+	@FindBy(how = How.CSS, using = "app-family div[role='option'] span")
+	private List<WebElement> _drpDownOptionsCurrencyFamily;
+	
+	@FindBy(how = How.CSS, using = "app-family ng-select[formcontrolname='languageCurrency'] span.ng-value-label")
+	private WebElement _drpDownOptionSelectedCurrencyFamily;
 
 	PDT_LanguageTrainingBenefit languageTrainingBenefitData = FileReaderManager.getInstance().getJsonReader()
 			.getLanguageTrainingDataList("Language Training");
@@ -163,6 +206,15 @@ public class PDT_LanguageTrainingPage extends PDT_SharedSubBenefitPage {
 			CoreFunctions.clearAndSetText(driver, _txtBoxMaxNumOfHours, _lblMaxNumOfHours.getText(),
 					languageTrainingBenefitData.languageTrainingEmployee.maxNumOfHours);
 
+			CoreFunctions.selectItemInListByText(driver, _radioBtnOptionLabelSelfLearningToolEmployee,
+					languageTrainingBenefitData.languageTrainingEmployee.selfLearningTool, _lblSelfLearningToolEmployee.getText(),
+					PDTConstants.RADIO_BUTTON_LIST, true);
+			
+			verifyAndFillMaxAmtIfSelfLearningToolIsYes(_radioBtnOptionLabelSelfLearningToolEmployee,
+					_radioBtnSelfLearningToolEmployee, _lblSelfLearningToolEmployee, _txtBoxMaxAmtEmp,
+					languageTrainingBenefitData.languageTrainingEmployee.maxAmt, _drpDownCurrencyEmp,
+					_drpDownOptionSelectedCurrencyEmp, sharedSubBenefitStep);
+			
 			CoreFunctions.explicitWaitTillElementListClickable(driver, _radioBtnLabelGrossUpEmp);
 			if (CoreFunctions.getPropertyFromConfig("expenseMgmt").equalsIgnoreCase("Yes")) {
 				BusinessFunctions.verifyDefaultSelectedRadioButtonForField(driver, _radioBtnLabelGrossUpEmp,
@@ -237,6 +289,15 @@ public class PDT_LanguageTrainingPage extends PDT_SharedSubBenefitPage {
 			CoreFunctions.clearAndSetText(driver, _txtBoxMaxNumOfHoursForLangTrainingFamily,
 					_lblMaxNumOfHoursPerFamily.getText(),
 					languageTrainingBenefitData.languageTrainingFamily.maxNumOfHrsPerFamily);
+			
+			CoreFunctions.selectItemInListByText(driver, _radioBtnOptionLabelSelfLearningToolFamily,
+					languageTrainingBenefitData.languageTrainingFamily.selfLearningTool, _lblSelfLearningToolEmployee.getText(),
+					PDTConstants.RADIO_BUTTON_LIST, true);
+			
+			verifyAndFillMaxAmtIfSelfLearningToolIsYes(_radioBtnOptionLabelSelfLearningToolFamily,
+					_radioBtnSelfLearningToolFamily, _lblSelfLearningToolEmployee, _txtBoxMaxAmtFamily,
+					languageTrainingBenefitData.languageTrainingFamily.maxAmt, _drpDownCurrencyFamily,
+					_drpDownOptionSelectedCurrencyFamily, sharedSubBenefitStep);
 
 			CoreFunctions.explicitWaitTillElementListClickable(driver, _radioBtnLabelGrossUpFamily);
 			if (CoreFunctions.getPropertyFromConfig("expenseMgmt").equalsIgnoreCase("Yes")) {
@@ -399,5 +460,83 @@ public class PDT_LanguageTrainingPage extends PDT_SharedSubBenefitPage {
 			return true;
 		else
 			return false;
+	}
+	
+	public void verifyAndFillMaxAmtIfSelfLearningToolIsYes(List<WebElement> radioBtnOptionLabel, List<WebElement> radioBtn, WebElement lblRadioBtn, WebElement txtBoxMaxAmt, String maxAmt, WebElement drpDowncurrency, WebElement drpDownCurrencySelected, PDT_SharedSubBenefit_Steps sharedSubBenefitStep) {
+		try {
+			int index = BusinessFunctions.returnindexItemFromListUsingText(driver, radioBtnOptionLabel, PDTConstants.YES);		
+			//For debugging purpose 
+			if(radioBtn.get(index).getAttribute("checked").equalsIgnoreCase("true")) {
+				Reporter.addStepLog(MessageFormat.format(PDTConstants.VERIFIED_OPTION_CHOSEN_RADIOBTN, CoreConstants.PASS, radioBtnOptionLabel.get(0).getText(), lblRadioBtn.getText()));
+				verifyAndFillMaxAmt(txtBoxMaxAmt, maxAmt, sharedSubBenefitStep);
+				verifyCurrencyFieldIsDisplayed(drpDowncurrency, drpDownCurrencySelected);
+			} else {
+				Reporter.addStepLog(MessageFormat.format(PDTConstants.VERIFIED_SELF_LEARNING_TOOL_NOT_SELECTED, CoreConstants.PASS));
+			}
+		}catch(Exception e) {
+			Assert.fail("Exception occurred while verifying if Self Learning tool is selected");
+		}
+		
+	}
+	
+	public void verifyAndFillMaxAmt(WebElement txtBoxMaxAmt, String maxAmt, PDT_SharedSubBenefit_Steps sharedSubBenefitStep) {
+		try {
+			if(CoreFunctions.verifyElementPresentOnPage(txtBoxMaxAmt, PDTConstants.TEXTBOX, PDTConstants.MAX_AMOUNT)) {
+
+				CoreFunctions.clearAndSetText(driver, txtBoxMaxAmt, PDTConstants.MAX_AMOUNT,
+						PDTConstants.VALID_MAXAMT_STRING);
+				sharedSubBenefitStep.getCustomSoftAssertObj().assertTrue(
+						CoreFunctions.verifyFloatingPtNumberValidation("8", "2", PDTConstants.MAX_AMOUNT,
+								PDTConstants.VALID_MAXAMT_STRING,
+								CoreFunctions.getAttributeText(txtBoxMaxAmt, "value")),
+						MessageFormat.format(PDTConstants.FAILED_TO_VERIFY_FLOATPT_NUMBER, PDTConstants.MAX_AMOUNT, "8",
+								"2", PDTConstants.VALID_MAXAMT_STRING,
+								CoreFunctions.getAttributeText(txtBoxMaxAmt, "value")));
+				CoreFunctions.clearAndSetText(driver, txtBoxMaxAmt, PDTConstants.MAX_AMOUNT,
+						PDTConstants.INVALID_MAXAMT_STRING);
+				sharedSubBenefitStep.getCustomSoftAssertObj().assertTrue(
+						CoreFunctions.verifyFloatingPtNumberValidation("8", "2", PDTConstants.MAX_AMOUNT,
+								PDTConstants.INVALID_MAXAMT_STRING,
+								CoreFunctions.getAttributeText(txtBoxMaxAmt, "value")),
+						MessageFormat.format(PDTConstants.FAILED_TO_VERIFY_FLOATPT_NUMBER, PDTConstants.MAX_AMOUNT, "8",
+								"2", PDTConstants.INVALID_MAXAMT_STRING,
+								CoreFunctions.getAttributeText(txtBoxMaxAmt, "value")));
+				CoreFunctions.clearAndSetText(driver, txtBoxMaxAmt, PDTConstants.MAX_AMOUNT,
+						maxAmt);
+				
+				sharedSubBenefitStep.getCustomSoftAssertObj().assertTrue(
+						CoreFunctions.verifyFloatingPtNumberValidation("8", "2", PDTConstants.MAX_AMOUNT,
+								maxAmt,
+								CoreFunctions.getAttributeText(txtBoxMaxAmt, "value")),
+						MessageFormat.format(PDTConstants.FAILED_TO_VERIFY_FLOATPT_NUMBER, PDTConstants.MAX_AMOUNT, "8",
+								"2", maxAmt,
+								CoreFunctions.getAttributeText(txtBoxMaxAmt, "value")));
+			} else {
+				Assert.fail("Max Amount per person field not persent on page.");
+			}
+		}catch(Exception e) {
+			Assert.fail("Exception occurred while verifying and filling Max Amt field.");
+		}
+	}
+	
+	public void verifyCurrencyFieldIsDisplayed(WebElement drpDowncurrency, WebElement drpDownCurrencySelected) {
+		if(CoreFunctions.verifyElementPresentOnPage(drpDowncurrency, PDTConstants.DROP_DOWN, PDTConstants.CURRENCY)) {
+			verifyDefaultUSCurrencySelected(drpDownCurrencySelected);
+		} else {
+			Assert.fail("Failed Currency field not persent on page.");
+		}
+	}
+	
+	public void verifyDefaultUSCurrencySelected(WebElement drpDownCurrencySelected) {
+		try {
+			if(drpDownCurrencySelected.getText().trim().equalsIgnoreCase("U.S. Dollar")) {
+				Reporter.addStepLog(MessageFormat.format(PDTConstants.VERIFIED_DEFAULT_CURRENCY, CoreConstants.PASS, drpDownCurrencySelected.getText().trim()));
+			}
+			else {
+				Assert.fail("Failed to verify default selected currency is U.S. Dollar. Actual currency selected is "+drpDownCurrencySelected.getText());
+			}
+		}catch(Exception e) {
+			Assert.fail("Exception occurred while verifying default US Currency is selected.");
+		}
 	}
 }

@@ -29,7 +29,7 @@ public class PDT_DuplicateHousingPage extends Base {
 	@FindBy(how = How.CSS, using = "ng-select[formcontrolname='durationCode']")
 	private WebElement _drpDownDuration;
 	
-	@FindBy(how = How.CSS, using = "span.ng-option-label.ng-star-inserted")
+	@FindBy(how = How.CSS, using = "span.ng-option-label")
 	private List<WebElement> _drpDownDurationOptions;
 	
 	@FindBy(how = How.CSS, using = "ng-select[formcontrolname='durationCode'] span.ng-value-label")

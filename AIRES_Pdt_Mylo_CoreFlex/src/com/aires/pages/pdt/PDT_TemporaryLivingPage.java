@@ -1,6 +1,8 @@
 package com.aires.pages.pdt;
 
 import java.text.MessageFormat;
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Date;
 import java.util.List;
 
@@ -38,7 +40,7 @@ public class PDT_TemporaryLivingPage extends PDT_SharedSubBenefitPage {
 	@FindBy(how = How.CSS, using = "app-temporary-living-lodging ng-select[formcontrolname='maxAmountPerNightCode']")
 	private WebElement _drpDownMaxAmtLodging;
 	
-	@FindBy(how = How.CSS, using = "span.ng-option-label.ng-star-inserted")
+	@FindBy(how = How.CSS, using = "div[role='option'] span")
 	private List<WebElement> _drpDownMaxAmtLodgingOptions;
 	
 	@FindBy(how = How.CSS, using = "app-temporary-living-lodging ng-select[formcontrolname='maxAmountPerNightCode'] span.ng-value-label")
@@ -53,13 +55,13 @@ public class PDT_TemporaryLivingPage extends PDT_SharedSubBenefitPage {
 	@FindBy(how = How.CSS, using = "ng-select[formcontrolname='currencyCode']")
 	private WebElement _drpDownCurrency;
 	
-	@FindBy(how = How.CSS, using = "span.ng-option-label.ng-star-inserted")
+	@FindBy(how = How.CSS, using = "div[role='option'] span")
 	private List<WebElement> _drpDownCurrencyOptions;
 	
 	@FindBy(how = How.CSS, using = "ng-select[formcontrolname='currencyCode'] span.ng-value-label")
 	private WebElement _drpDownCurrencyOptionsSelected;
 	
-	@FindBy(how = How.CSS, using = "ng-select[formcontrolname='currencyCode'] span.ng-clear-wrapper.ng-star-inserted")
+	@FindBy(how = How.CSS, using = "ng-select[formcontrolname='currencyCode'] span.ng-clear-wrapper")
 	private WebElement _clearCurrency;
 	
 	@FindBy(how = How.CSS, using = "app-temporary-living-lodging label.form-check-label")
@@ -88,7 +90,7 @@ public class PDT_TemporaryLivingPage extends PDT_SharedSubBenefitPage {
 	@FindBy(how = How.CSS, using = "app-temporary-living-meals ng-select[formcontrolname='maxAmountCode']")
 	private WebElement _drpDownMaxAmtMeals;
 	
-	@FindBy(how = How.CSS, using = "span.ng-option-label.ng-star-inserted")
+	@FindBy(how = How.CSS, using = "div[role='option'] span")
 	private List<WebElement> _drpDownMaxAmtMealsOptions;
 	
 	@FindBy(how = How.CSS, using = "app-temporary-living-meals ng-select[formcontrolname='maxAmountCode'] span.ng-value-label")
@@ -106,7 +108,7 @@ public class PDT_TemporaryLivingPage extends PDT_SharedSubBenefitPage {
 	@FindBy(how = How.CSS, using = "ng-select[formcontrolname='currencyCodeEe']")
 	private WebElement _drpDownTransfereeCurrency;
 	
-	@FindBy(how = How.CSS, using = "span.ng-option-label.ng-star-inserted")
+	@FindBy(how = How.CSS, using = "div[role='option'] span")
 	private List<WebElement> _drpDownTransfereeCurrencyOptions;
 
 	@FindBy(how = How.CSS, using = "ng-select[formcontrolname='currencyCodeEe'] span.ng-value-label")
@@ -124,7 +126,7 @@ public class PDT_TemporaryLivingPage extends PDT_SharedSubBenefitPage {
 	@FindBy(how = How.CSS, using = "ng-select[formcontrolname='currencyCodeAdult']")
 	private WebElement _drpDownAdultCurrency;
 	
-	@FindBy(how = How.CSS, using = "span.ng-option-label.ng-star-inserted")
+	@FindBy(how = How.CSS, using = "div[role='option'] span")
 	private List<WebElement> _drpDownAdultCurrencyOptions;
 
 	@FindBy(how = How.CSS, using = "ng-select[formcontrolname='currencyCodeAdult'] span.ng-value-label")
@@ -142,7 +144,7 @@ public class PDT_TemporaryLivingPage extends PDT_SharedSubBenefitPage {
 	@FindBy(how = How.CSS, using = "ng-select[formcontrolname='currencyCodeChild']")
 	private WebElement _drpDownCurrencyCodeChild;
 
-	@FindBy(how = How.CSS, using = "span.ng-option-label.ng-star-inserted")
+	@FindBy(how = How.CSS, using = "div[role='option'] span")
 	private List<WebElement> _drpDownCurrencyCodeChildOptions;
 
 	@FindBy(how = How.CSS, using = "ng-select[formcontrolname='currencyCodeChild'] span.ng-value-label")
@@ -171,8 +173,8 @@ public class PDT_TemporaryLivingPage extends PDT_SharedSubBenefitPage {
 	@FindBy(how = How.CSS, using = "ng-select[formcontrolname='tempLivingTransportTypeList']")
 	private WebElement _drpDownTransportationType;
 	
-	@FindBy(how = How.CSS, using = "span.ng-option-label.ng-star-inserted")
-	private List<WebElement> _drpDownTransportationTypeOptions;
+	@FindBy(how = How.CSS, using = "div[role='option'] span")
+	private List<WebElement> _drpDownOptions;
 	
 	@FindBy(how = How.CSS, using = "ng-select[formcontrolname='tempLivingTransportTypeList'] span.ng-value-label")
 	private List<WebElement> _drpDownTransportationTypeMultiSelectOptions;
@@ -201,33 +203,67 @@ public class PDT_TemporaryLivingPage extends PDT_SharedSubBenefitPage {
 	@FindBy(how = How.CSS, using = "div.form-check > label.form-check-label")
 	private List<WebElement> _subBenefitCategories;
 	
+	@FindBy(how = How.CSS, using = "ng-select[formcontrolname='classSizeCode']")
+	private WebElement _drpDownSizeClass;
+	
+	@FindBy(how = How.CSS, using = "ng-select[formcontrolname='classSizeCode'] span.ng-value-label")
+	private WebElement _drpDownSelectedSizeClass;
+	
+	@FindBy(how = How.CSS, using = "input[formcontrolname='classSizeOther']")
+	private WebElement _txtBoxOtherSizeClass;
+	
+	@FindBy(how = How.XPATH, using = "//ng-select[@formcontrolname='classSizeCode']/preceding-sibling::label")
+	private WebElement _lblSizeClass;
+	
+	@FindBy(how = How.XPATH, using = "//input[@formcontrolname='classSizeOther']/preceding-sibling::label")
+	private WebElement _lblSizeClassOther;
+	
 	PDT_TemporaryLivingBenefit tempLivingBenefitData = FileReaderManager.getInstance().getJsonReader()
 			.getTemporaryLivingDataList("Temporary Living");
 	
-	private String maxAmtTempLivingLodging, maxAmtTempLivingMeals, transportType;
+	private String _maxAmtTempLivingLodging, _maxAmtTempLivingMeals, _sizeClass;
+	private ArrayList<String> _transportType = null;
+	private List<String> _expectedSizeClassList;
+	String [] _sizeClassArr = new String[] {PDTConstants.MID_SIZE, PDTConstants.FULL_SIZE, PDTConstants.PREMIUM, PDTConstants.OTHER};
 	
 	public void setMaxAmtTempLivingLodging(String maxAmt) {
-		maxAmtTempLivingLodging = maxAmt;
+		_maxAmtTempLivingLodging = maxAmt;
 	}
 
 	public String getMaxAmtTempLivingLodging() {
-		return maxAmtTempLivingLodging;
+		return _maxAmtTempLivingLodging;
 	}
 	
 	public void setMaxAmtTempLivingMeals(String maxAmt) {
-		maxAmtTempLivingMeals = maxAmt;
+		_maxAmtTempLivingMeals = maxAmt;
 	}
 
 	public String getMaxAmtTempLivingMeals() {
-		return maxAmtTempLivingMeals;
+		return _maxAmtTempLivingMeals;
 	}
 	
-	public void setTransportType(String transType) {
-		transportType = transType;
+	public void setTransportType(ArrayList<String> transportTypeOptions) {
+		this._transportType = transportTypeOptions;
+	}
+
+	public ArrayList<String> getTransportType() {
+		return _transportType;
 	}
 	
-	public String getTransportType() {
-		return transportType;
+	public void setSizeClassList(){
+		_expectedSizeClassList = Arrays.asList(_sizeClassArr);
+	}
+	
+	public List<String> getExpectedSizeClassList(){
+		return _expectedSizeClassList;
+	}
+	
+	public void setSizeClass(String sizeClass) {
+		_sizeClass = sizeClass;
+	}
+
+	public String getSizeClass() {
+		return _sizeClass;
 	}
 	
 	/**
@@ -460,13 +496,12 @@ public class PDT_TemporaryLivingPage extends PDT_SharedSubBenefitPage {
 	public void selectRandomTransportTypeOption(PDT_AddNewPolicyPage addNewPolicyPage, String subBenefitFormName) {
 		try {
 			CoreFunctions.clickElement(driver, _drpDownTransportationType);
-			String randTransportTypeOption = CoreFunctions
-					.getRandomAndUniqueMultipleSelectDropDownOptions(_drpDownTransportationTypeOptions);
-			String[] transportationType = randTransportTypeOption.split(",");
-			for (int i = 0; i < transportationType.length; i++) {
-				CoreFunctions.selectItemInListByText(driver, _drpDownTransportationTypeOptions,
-						transportationType[i].trim(), _lblTransportationType.getText(), PDTConstants.DROP_DOWN, true);
-			}
+
+			ArrayList<String> randTransportTypeOption = CoreFunctions.getMultipleRandomOptionsForDropDown(0,
+					_drpDownOptions.size(), 4, driver, _drpDownOptions);
+			BusinessFunctions.selectRandomDropDownOption(driver, PDTConstants.TRANSPORTATION_TYPE,
+					_drpDownTransportationType, _drpDownOptions,
+					_drpDownTransportationTypeMultiSelectOptions, randTransportTypeOption, subBenefitFormName);
 			if (_drpDownTransportationTypeMultiSelectOptions.size() > 1) {
 				Reporter.addStepLog(MessageFormat.format(PDTConstants.VERIFIED_DROP_DOWN_MULTISELECT,
 						CoreConstants.PASS, _lblTransportationType.getText(),
@@ -474,15 +509,43 @@ public class PDT_TemporaryLivingPage extends PDT_SharedSubBenefitPage {
 								.toString()));
 			}
 			setTransportType(randTransportTypeOption);
-			if (_drpDownTransportationTypeMultiSelectOptions.contains(PDTConstants.OTHER) && CoreFunctions.isElementExist(driver, _txtBoxTransportationTypeOther, 1)) {
-				Reporter.addStepLog(MessageFormat.format(PDTConstants.VERIFIED_TEXT_BOX_FIELD_DISPLAYED,
-						CoreConstants.PASS, PDTConstants.OTHER, subBenefitFormName));
-				CoreFunctions.clearAndSetText(driver, _txtBoxTransportationTypeOther, PDTConstants.OTHER,
-						tempLivingBenefitData.temporaryLivingTransportation.transportationTypeOther);
-			}
 		} catch (Exception e) {
 			Assert.fail(MessageFormat.format(PDTConstants.FAILED_TO_SELECT_MULTIPLE_OPTIONS, CoreConstants.FAIL, _lblTransportationType.getText(), subBenefitFormName));
 		}
+	}
+	
+	public void verifyAndSelectSizeClassDropDown(PDT_SharedSubBenefit_Steps sharedSubBenefitStep, String subBenefitFormName) {
+		if (CoreFunctions.getElementTextAndStoreInList(driver, _drpDownTransportationTypeMultiSelectOptions)
+				.contains(PDTConstants.RENTAL_CAR)) {
+			sharedSubBenefitStep.getCustomSoftAssertObj().assertTrue(
+					CoreFunctions.verifyElementPresentOnPage(_lblSizeClass, PDTConstants.LABEL,
+							PDTConstants.SIZE_CLASS),
+					MessageFormat.format(PDTConstants.VRFIED_ELE_TYPE_NOT_AVAILABLE, CoreConstants.FAIL,
+							PDTConstants.LABEL, PDTConstants.SIZE_CLASS));
+			
+			sharedSubBenefitStep.getCustomSoftAssertObj()
+			.assertTrue(CoreFunctions.verifyElementPresentOnPage(_drpDownSizeClass,
+					PDTConstants.DROP_DOWN, PDTConstants.SIZE_CLASS), MessageFormat.format(PDTConstants.VRFIED_ELE_TYPE_NOT_AVAILABLE, CoreConstants.FAIL, PDTConstants.DROP_DOWN, PDTConstants.SIZE_CLASS));
+		
+			CoreFunctions.clickElement(driver, _drpDownSizeClass);
+			if (CoreFunctions.getElementTextAndStoreInList(driver, _drpDownOptions)
+					.equals(getExpectedSizeClassList())) {
+				Reporter.addStepLog(MessageFormat.format(PDTConstants.VERIFIED_DROPDOWN, CoreConstants.PASS, _lblSizeClass.getText(), getExpectedSizeClassList().toString()));
+			}
+			String randSizeClass = _drpDownOptions
+					.get(CoreFunctions.getRandomNumber(0, _drpDownOptions.size() - 1))
+					.getText();
+			CoreFunctions.selectItemInListByText(driver, _drpDownOptions,
+					randSizeClass, _lblSizeClass.getText(), PDTConstants.DROP_DOWN, true);
+			setSizeClass(randSizeClass);
+			
+			BusinessFunctions.verifyOtherTextBoxIsDisplayed(driver,
+					tempLivingBenefitData.temporaryLivingTransportation.sizeClass,
+					_txtBoxOtherSizeClass,
+					tempLivingBenefitData.temporaryLivingTransportation.sizeClassOther, subBenefitFormName,
+					PDTConstants.SIZE_CLASS_OTHER);
+		}
+		
 	}
 	
 	/**
@@ -491,7 +554,7 @@ public class PDT_TemporaryLivingPage extends PDT_SharedSubBenefitPage {
 	 * @param subBenefitFormName
 	 * @param pageName
 	 */
-	public void fillTemporaryLivingTransportationForm(PDT_AddNewPolicyPage addNewPolicyPage, String subBenefitFormName, String pageName) {
+	public void fillTemporaryLivingTransportationForm(PDT_AddNewPolicyPage addNewPolicyPage, String subBenefitFormName, String pageName, PDT_SharedSubBenefit_Steps sharedSubBenefitStep) {
 		try {
 			populateSubBenefitHeaderMap();
 			Assert.assertTrue(BusinessFunctions.verifySubBenefitFormHeaderIsDisplayed(driver, subBenefitHeaderMap.get(subBenefitFormName), subBenefitFormName, pageName),
@@ -501,6 +564,7 @@ public class PDT_TemporaryLivingPage extends PDT_SharedSubBenefitPage {
 			CoreFunctions.clearAndSetText(driver, _txtBoxTransportationDuration, _lblDurationTransportation.getText(),
 					tempLivingBenefitData.temporaryLivingTransportation.durationInDays);
 			selectRandomTransportTypeOption(addNewPolicyPage, subBenefitFormName);
+			verifyAndSelectSizeClassDropDown(sharedSubBenefitStep, subBenefitFormName);
 			
 			CoreFunctions.selectItemInListByText(driver, _radioBtnTempLivingTransportation,
 					tempLivingBenefitData.temporaryLivingTransportation.grossUp, PDTConstants.GROSS_UP,
@@ -528,10 +592,10 @@ public class PDT_TemporaryLivingPage extends PDT_SharedSubBenefitPage {
 	 * @param addNewPolicyPage
 	 * @param subBenefitPage
 	 */
-	public void fillTemporaryLivingSubBenefit(String subBenefit, String pageName, PDT_AddNewPolicyPage addNewPolicyPage, PDT_SharedSubBenefitPage subBenefitPage) {		
+	public void fillTemporaryLivingSubBenefit(String subBenefit, String pageName, PDT_AddNewPolicyPage addNewPolicyPage, PDT_SharedSubBenefitPage subBenefitPage, PDT_SharedSubBenefit_Steps objStep) {		
 		switch (subBenefit) {
 		case PDTConstants.TEMPORARY_LIVING_TRANSPORTATION:
-			fillTemporaryLivingTransportationForm(addNewPolicyPage, subBenefit, pageName);
+			fillTemporaryLivingTransportationForm(addNewPolicyPage, subBenefit, pageName, objStep);
 			break;
 		case PDTConstants.TEMPORARY_LIVING_LODGING:
 			fillTemporaryLivingLodgingForm(addNewPolicyPage, subBenefit, pageName);
@@ -565,14 +629,13 @@ public class PDT_TemporaryLivingPage extends PDT_SharedSubBenefitPage {
 			waitForProgressBarToDisapper();
 			timeAfterAction = new Date().getTime();
 			BusinessFunctions.printTimeTakenByPageToLoad(timeBeforeAction, timeAfterAction, pageName, subBenefit);
-			fillTemporaryLivingSubBenefit(subBenefit, pageName, addNewPolicyPage, subBenefitPage);
+			fillTemporaryLivingSubBenefit(subBenefit, pageName, addNewPolicyPage, subBenefitPage, objStep);
 		}
 		try {
 			CoreFunctions.click(driver, btnToClick, btnToClick.getText());
 		} catch (NoSuchElementException e) {
 			Assert.fail(MessageFormat.format(PDTConstants.MISSING_BTN, CoreConstants.FAIL, btnName));
 		} catch (Exception e) {
-			e.printStackTrace();
 			Assert.fail(MessageFormat.format(PDTConstants.FAILED_TO_CLICK_ON_BTN, CoreConstants.FAIL, btnName));
 		}
 	}

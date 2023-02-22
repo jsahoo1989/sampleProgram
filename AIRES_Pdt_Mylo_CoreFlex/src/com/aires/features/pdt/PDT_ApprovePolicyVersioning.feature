@@ -10,7 +10,7 @@ Feature: Approve Policy to create new version
     And he has clicked on the 'Next' button after selecting client, policy information on the 'Add New Policy' page
     And he has entered mandatory information on 'General Information' page followed by selection of "House Hunting Trip" as Benefit Category on "Policy Benefit" page
     When he clicks on "SAVE & SUBMIT" button after entering mandatory information for all the below selected sub benefits on "House Hunting Trip" page
-      | House Hunting Trip Transportation | House Hunting Trip Lodging | House Hunting Trip Meals |
+      | House Hunting Trip Transportation | House Hunting Trip Lodging | House Hunting Trip Meals | House Hunting Trip Rental Car |
     Then "Approve Policy" button should become visible on the 'Policy Benefit' page
     And "SAVE & SUBMIT" button should become disabled on the 'Policy Benefit' page
 
@@ -18,7 +18,7 @@ Feature: Approve Policy to create new version
   Scenario: PDT - Validate the UI of 'Approve Policy' pop-up displayed after clicking Approve Policy button on "Policy Benefit" page
     Given he is on the "Policy Benefit" page after selecting "House Hunting Trip" as Benefit Category;
     And he clicks on "SAVE & SUBMIT" button after entering mandatory information for all the below selected sub benefits on "House Hunting Trip" page
-      | House Hunting Trip Transportation | House Hunting Trip Lodging | House Hunting Trip Meals |
+      | House Hunting Trip Transportation | House Hunting Trip Lodging | House Hunting Trip Meals | House Hunting Trip Rental Car |
     When he clicks on 'Approve Policy' button after verifying status "Submitted" on header section of "Policy Benefit" page
     Then below information should be displayed on 'Approve Policy' Pop-up
       | Heading   | Do you want to proceed with the approval of this policy?                                                                                                                                          |
@@ -29,12 +29,13 @@ Feature: Approve Policy to create new version
       | TextArea  | Description                                                                                                                                                                                       |
       | button    | Approve_disabled, Cancel_Enabled                                                                                                                                                                  |
 
-  @Sprint-29 @PDT-Regression @PDT-1115 @Pdt:217685
+  @Sprint-29 @PDT-Regression @PDT-1115 @Pdt:217685 @tes
   Scenario: PDT - Validate 'Approve' button on 'Approve Policy' pop-up becomes enabled after selecting checkbox 'Link this policy with a NEW authorization' on Policy benefit page
-    Given he is on the "Policy Benefit" page after selecting "House Hunting Trip" as Benefit Category;
-    And he clicks on "SAVE & SUBMIT" button after entering mandatory information for all the below selected sub benefits on "House Hunting Trip" page
-      | House Hunting Trip Transportation | House Hunting Trip Lodging | House Hunting Trip Meals |
-    And he clicks on 'Approve Policy' button after verifying status "Submitted" on header section of "Policy Benefit" page    
+    Given he is on the "Policy Benefit" page after selecting "Language Training" as Benefit Category;
+    And he clicks on "SAVE & SUBMIT" button after entering mandatory information for all the below selected sub benefits on "Language Training" page
+      #| House Hunting Trip Transportation | House Hunting Trip Lodging | House Hunting Trip Meals | House Hunting Trip Rental Car |
+    | Language Training Employee | Language Training Family |
+    And he clicks on 'Approve Policy' button after verifying status "Submitted" on header section of "Policy Benefit" page
     When he selects the checkbox having label 'Link this policy with a NEW authorization in IRIS?' followed by entering description on 'Approve Policy' pop-up
     Then "Approve" button should become "enabled" on 'Approve Policy' pop-up
 
@@ -42,7 +43,7 @@ Feature: Approve Policy to create new version
   Scenario: PDT - Verify that status of a 'Submitted' Policy changes to 'Active' after clicking 'Approve' button on 'Approve Policy' pop-up
     Given he is on the "Policy Benefit" page after selecting "House Hunting Trip" as Benefit Category;
     And he clicks on "SAVE & SUBMIT" button after entering mandatory information for all the below selected sub benefits on "House Hunting Trip" page
-      | House Hunting Trip Transportation | House Hunting Trip Lodging | House Hunting Trip Meals |
+      | House Hunting Trip Transportation | House Hunting Trip Lodging | House Hunting Trip Meals | House Hunting Trip Rental Car |
     And he clicks on 'Approve Policy' button after verifying status "Submitted" on header section of "Policy Benefit" page
     And he selects the checkbox having label 'Link this policy with a NEW authorization in IRIS?' followed by entering description on 'Approve Policy' pop-up
     When he clicks on "Approve" button on 'Approve Policy' pop-up on "Policy Benefit" page
@@ -52,7 +53,7 @@ Feature: Approve Policy to create new version
   Scenario: PDT - Verify that Policy Status of a 'Submitted' Policy should not change after clicking 'Cancel' button on 'Approve Policy' pop-up
     Given he is on the "Policy Benefit" page after selecting "House Hunting Trip" as Benefit Category;
     And he clicks on "SAVE & SUBMIT" button after entering mandatory information for all the below selected sub benefits on "House Hunting Trip" page
-      | House Hunting Trip Transportation | House Hunting Trip Lodging | House Hunting Trip Meals |
+      | House Hunting Trip Transportation | House Hunting Trip Lodging | House Hunting Trip Meals | House Hunting Trip Rental Car |
     And he clicks on 'Approve Policy' button after verifying status "Submitted" on header section of "Policy Benefit" page
     And he selects the checkbox having label 'Link this policy with a NEW authorization in IRIS?' followed by entering description on 'Approve Policy' pop-up
     When he clicks on "Cancel" button on 'Approve Policy' pop-up on "Policy Benefit" page
@@ -116,3 +117,28 @@ Feature: Approve Policy to create new version
     Then version of policy should remain "V1" on "View/Edit Policy Forms" page with below information
       | Version | Status | EnabledIcon                     | DisabledIcon           | Assignments_Linked |
       | V1      | Active | Edit, Clone, Assignment History | Delete, Approve Policy |                  0 |
+
+  @non-bp @PDT-Regression
+  Scenario: PDT - Validate a hard stop pop-up modal is displayed when user clicks on Approve Policy button for non Blueprint enabled client
+    Given he is on the "Add New Policy" page after clicking on the link "Add New Policy Form" displayed under the left navigation menu on the 'View Policy' page
+    And he has clicked on the 'Next' button after selecting non Blueprint enabled client, policy information on the 'Add New Policy' page
+    And he has entered mandatory information on 'General Information' page followed by selection of "Cultural Training" as Benefit Category on "Policy Benefit" page
+    And he clicks on "SAVE & SUBMIT" button after entering mandatory information for all the below selected sub benefits on "Cultural Training" page
+      | Cultural Training Employee | Cultural Training Family |
+    When he clicks on 'Approve Policy' button after verifying status "Submitted" on header section of "Policy Benefit" page
+    Then below message is displayed on pop-up
+      | This client is not Blueprint Enabled in Iris. To proceed with approving this policy, please add the requirement Blueprint Enabled for this client in Iris under client requirements tab. |
+
+  @sch-ui @PDT-Regression
+  Scenario: PDT - Validate the UI of 'Scheduled Approve Policy' when there are no assignments linked with the policy.
+    Given he is on the "Policy Benefit" page after selecting "Cultural Training" as Benefit Category;
+    And he clicks on "SAVE & SUBMIT" button after entering mandatory information for all the below selected sub benefits on "Cultural Training" page
+      | Cultural Training Employee | Cultural Training Family |
+    When he clicks on 'Approve Policy' button after verifying status "Submitted" on header section of "Policy Benefit" page
+    Then below information should be displayed on 'Scheduled Approve Policy' Pop-up
+      | Heading             | You are approving Version 1 of this policy. There are currently 0 Assignments or Files linked with this policy in IRIS. |  |
+      | Message1            | Select the date that you would like to approve this policy.                                                             |  |
+      | New Auth Checkbox   | Disabled_Checked, Effective dates from which new files or assignments in IRIS are linked with this policy:               |  |
+      | New Auth DatePicker | Current date as default                                                                                                 |  |
+      | TextArea            | Description                                                                                                             |  |
+      | button              | Approve_disabled, Cancel_Enabled                                                                                        |  |

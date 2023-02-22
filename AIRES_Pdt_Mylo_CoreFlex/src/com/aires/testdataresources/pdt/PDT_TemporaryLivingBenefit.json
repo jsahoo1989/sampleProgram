@@ -34,6 +34,8 @@
 			"durationInDays": "3",
 			"transportationType": "Rental Car, Public Transport",
 			"transportationTypeOther": "Luxury Bus",
+			"sizeClass": "Premium",
+			"sizeClassOther": "sizeClassOther",
 			"grossUp": "No",
 			"reimbursedBy": "Client",
 			"reimbursedByOther": "Reimbursed by other",

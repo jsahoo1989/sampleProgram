@@ -13,10 +13,13 @@ public class PDT_LoginInfo {
 		public String lastName;
 		public String clientId;
 		public String clientName;
+		public String nonBPClientId;
+		public String nonBPClientName;
 		public String csmUserName;
 		public String csmPassword;
 		public String csmUserFirstName;
 		public String policy;
+		public String nonBPPolicy;
 		public String mobilityxUserName;
 		public String mobilityxPassword;
 		public String profileName;

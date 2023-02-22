@@ -35,7 +35,7 @@ public class PDT_CulturalTrainingPage extends PDT_SharedSubBenefitPage {
 	@FindBy(how = How.CSS, using = "ng-select[formcontrolname='employeeNoOfDays']")
 	private WebElement _drpDownEmployeNumOfDays;
 
-	@FindBy(how = How.CSS, using = "span.ng-option-label.ng-star-inserted")
+	@FindBy(how = How.CSS, using = "span.ng-option-label")
 	private List<WebElement> _drpDownEmployeNumOfDaysOptions;
 
 	@FindBy(how = How.CSS, using = "ng-select[formcontrolname='employeeNoOfDays'] div.ng-value")
@@ -65,7 +65,7 @@ public class PDT_CulturalTrainingPage extends PDT_SharedSubBenefitPage {
 	@FindBy(how = How.CSS, using = "ng-select[formcontrolname='familyNoOfDays']")
 	private WebElement _drpDownFamilyNumOfDays;
 
-	@FindBy(how = How.CSS, using = "span.ng-option-label.ng-star-inserted")
+	@FindBy(how = How.CSS, using = "span.ng-option-label")
 	private List<WebElement> _drpDownFamilyNumOfDaysOptions;
 
 	@FindBy(how = How.CSS, using = "ng-select[formcontrolname='familyNoOfDays'] div.ng-value")
@@ -104,19 +104,19 @@ public class PDT_CulturalTrainingPage extends PDT_SharedSubBenefitPage {
 	@FindBy(how = How.CSS, using = "ng-select[formcontrolname='culturalTrainingEmployeeExpenseCodeList']")
 	private WebElement _drpDownCultTrainEmpExpenseCode;
 
-	@FindBy(how = How.CSS, using = "span.ng-option-label.ng-star-inserted")
+	@FindBy(how = How.CSS, using = "span.ng-option-label")
 	private List<WebElement> _drpDownOptionsCultTrainEmpExpenseCode;
 
-	@FindBy(how = How.CSS, using = "ng-select[formcontrolname='culturalTrainingEmployeeExpenseCodeList'] span.ng-value-label.ng-star-inserted")
+	@FindBy(how = How.CSS, using = "ng-select[formcontrolname='culturalTrainingEmployeeExpenseCodeList'] span.ng-value-label")
 	private List<WebElement> _drpDownSelectedOptionsCultTrainEmpExpenseCode;
 
 	@FindBy(how = How.CSS, using = "ng-select[formcontrolname='culturalTrainingFamilyExpenseCodeList']")
 	private WebElement _drpDownCultTrainFamilyExpenseCode;
 
-	@FindBy(how = How.CSS, using = "span.ng-option-label.ng-star-inserted")
+	@FindBy(how = How.CSS, using = "span.ng-option-label")
 	private List<WebElement> _drpDownOptionsCultTrainFamilyExpenseCode;
 
-	@FindBy(how = How.CSS, using = "ng-select[formcontrolname='culturalTrainingFamilyExpenseCodeList'] span.ng-value-label.ng-star-inserted")
+	@FindBy(how = How.CSS, using = "ng-select[formcontrolname='culturalTrainingFamilyExpenseCodeList'] span.ng-value-label")
 	private List<WebElement> _drpDownSelectedOptionsCultTrainFamilyExpenseCode;
 
 	@FindBy(how = How.CSS, using = "#collapseOne1 input[formcontrolname='grossedUpInd']")

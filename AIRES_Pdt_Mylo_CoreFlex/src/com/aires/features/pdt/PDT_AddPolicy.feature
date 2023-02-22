@@ -38,7 +38,7 @@ Feature: Add new Policy form with Benefit Categories
     And he has clicked on the 'Next' button after selecting client, policy information on the 'Add New Policy' page
     And he has entered mandatory information on 'General Information' page followed by selection of "Pre-Acceptance Services" as Benefit Category on "Policy Benefit" page
     When he clicks on "SAVE & SUBMIT" button after entering mandatory information for all the below selected sub benefits on "Pre-Acceptance Services" page
-      | Candidate Selection | Pre-Acceptance Trip Transportation | Pre-Acceptance Trip Lodging | Pre-Acceptance Trip Meals |
+      | Candidate Selection | Pre-Acceptance Trip Transportation | Pre-Acceptance Trip Lodging | Pre-Acceptance Trip Meals | Pre-Acceptance Trip Rental Car |
     Then Policy Status should be changed to "Submitted" along with Version "V1" on the "Policy Benefit" page
     And newly created Policy should be displayed under "View Policy" page after clicking on 'EXIT' button
 
@@ -76,7 +76,7 @@ Feature: Add new Policy form with Benefit Categories
     And he has clicked on the 'Next' button after selecting client, policy information on the 'Add New Policy' page
     And he has entered mandatory information on 'General Information' page followed by selection of "House Hunting Trip" as Benefit Category on "Policy Benefit" page
     When he clicks on "SAVE & SUBMIT" button after entering mandatory information for all the below selected sub benefits on "House Hunting Trip" page
-      | House Hunting Trip Transportation | House Hunting Trip Lodging | House Hunting Trip Meals |
+      | House Hunting Trip Transportation | House Hunting Trip Lodging | House Hunting Trip Meals | House Hunting Trip Rental Car |
     Then Policy Status should be changed to "Submitted" along with Version "V1" on the "Policy Benefit" page
     And newly created Policy should be displayed under "View Policy" page after clicking on 'EXIT' button
 
@@ -126,7 +126,7 @@ Feature: Add new Policy form with Benefit Categories
     And he has clicked on the 'Next' button after selecting client, policy information on the 'Add New Policy' page
     And he has entered mandatory information on 'General Information' page followed by selection of "Home Leave" as Benefit Category on "Policy Benefit" page
     When he clicks on "SAVE & SUBMIT" button after entering mandatory information for all the below selected sub benefits on "Home Leave" page
-      | Home Leave Transportation | Home Leave Lodging | Home Leave Meals |
+      | Home Leave Transportation | Home Leave Lodging | Home Leave Meals | Home Leave Rental Car |
     Then Policy Status should be changed to "Submitted" along with Version "V1" on the "Policy Benefit" page
     And newly created Policy should be displayed under "View Policy" page after clicking on 'EXIT' button
 
@@ -136,7 +136,7 @@ Feature: Add new Policy form with Benefit Categories
     And he has clicked on the 'Next' button after selecting client, policy information on the 'Add New Policy' page
     And he has entered mandatory information on 'General Information' page followed by selection of "Destination Services" as Benefit Category on "Policy Benefit" page
     When he clicks on "SAVE & SUBMIT" button after entering mandatory information for all the below selected sub benefits on "Destination Services" page
-      | Airport Pickup | Area Tour | Auto Rental During Assignment | Concierge Services | Departure Services | Furniture Rental | Reimbursement of Membership Dues | Education Assistance | Settling In Services | Transition Assistance Program | Tuition/Education Payments |
+      | Airport Pickup | Area Tour | Auto Rental During Assignment | Concierge Services | Departure Services | Furniture Rental | Reimbursement of Membership Dues | Education Assistance | Settling In Services | Transition Assistance | Tuition/Education Payments |
     Then Policy Status should be changed to "Submitted" along with Version "V1" on the "Policy Benefit" page
     And newly created Policy should be displayed under "View Policy" page after clicking on 'EXIT' button
 
@@ -282,6 +282,6 @@ Feature: Add new Policy form with Benefit Categories
       | Home Leave              | Home Leave Transportation          |    
 		And he has selected below Transportation Type options on each benefit category page
 		|Distance|Economy Class Airfare|Business Class Airfare|
-		When he clicks on "SAVE & SUBMIT" button after entering mandatory information for all fields except the fields which are displayed after clicking on Transportation Type options
+		When he clicks on "SAVE" button after entering mandatory information for all fields except the fields which are displayed after clicking on Transportation Type options
 		Then "red" color 'exclamation mark' "error"  indicator is displayed on each benefit category header form
     And an 'exclamation mark' "error" indicator icon is displayed on Left menu for the Benefit category if any of its benefit is in Incomplete state

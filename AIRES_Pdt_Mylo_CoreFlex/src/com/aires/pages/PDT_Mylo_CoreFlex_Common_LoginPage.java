@@ -72,7 +72,8 @@ public class PDT_Mylo_CoreFlex_Common_LoginPage extends Base {
     @FindBy(how = How.CSS, using = "#KmsiDescription")
     private WebElement _staySignedInMsg;
 	
-	final By _loginImg = By.xpath("//img[contains(@src,'login-with-office-365')]");
+    final By _loginImg = By.cssSelector("button.btn-login");
+    //final By _loginImg = By.xpath("//img[contains(@src,'login-with-office-365')]");
 	final By _spinnerImg = By.cssSelector("div[class='sk-three-strings']");
 	final By _password = By.cssSelector("input[type='password']");
 	long timeBeforeAction, timeAfterAction;

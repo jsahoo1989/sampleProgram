@@ -123,8 +123,8 @@ public class Hooks {
 		}
 	}
 
-	@After(order = 1)
-	public void updateResultInTestRail(Scenario scenario) {
+	//@After(order = 1)
+	/*public void updateResultInTestRail(Scenario scenario) {
 		String Case_ID = BusinessFunctions.getTestRailIdAsPerApplication(System.getProperty("application"),
 				scenario.getSourceTagNames().toString());
 		Log.info(Case_ID);
@@ -132,7 +132,7 @@ public class Hooks {
 		TestRail.addResultForTestCase(Case_ID, testResult, testrailRunName, CoreConstants.TEST_RAIL_URL,
 				CoreConstants.testRailUseriD, CoreConstants.testRailPassword, logError(scenario));
 		Runtime.getRuntime().gc();
-	}
+	}*/
 
 	@After(order = 0)
 	public void AfterSteps(Scenario scenario) throws Exception {

@@ -90,26 +90,27 @@ public class MyloJourneyPrimarySecondaryContact_Steps {
 	public void he_clicks_on_change_button_available_under_primary_contact_section_on_journey_summary_page() {
 		_myloJourneyPage_PrimarySecondaryContact.scrollToPrimaryContactSection();
 		_myloJourneyPage_PrimarySecondaryContact.clickChangeButtonInPrimaryContactCard();
-		Assert.assertTrue(_myloJourneyPage_PrimarySecondaryContact.isSelectPrimaryContactPopupDisplayed(),
-				MessageFormat.format(CoreConstants.FAIL_TO_VERIFY_ELEMENT_ON_SECTION, CoreConstants.FAIL,
-						MYLOConstants.SELECT_PRIMARY_CONTACT_POPUP));
 	}
 
 	@Then("^all the added transferee and family members should be displayed on 'Please select a Primary Contact' popup$")
 	public void all_added_transferee_and_family_members_should_be_displayed_on_Please_select_a_Primary_Contact_popup() {
 		_myloJourneyPage_PrimarySecondaryContact.verifyMembersPresentOnPopup(_transfereeNames, _softAssert);
-		_myloJourneyPage_PrimarySecondaryContact.clickButtonInSelectContactDialog(MYLOConstants.CANCEL_BUTTON);
+		_softAssert.assertAll();
 	}
 
 	@Then("^all the added transferee and family members should be displayed on 'Please select a Secondary Contact' popup after clicking on \"([^\"]*)\" link displayed under the 'Secondary Contact' section$")
 	public void all_added_transferee_and_family_members_should_be_displayed_on_Please_select_a_Secondary_Contact_popup_after_clicking_on_link_displayed_under_the_Secondary_Contact_section(
 			String linkName) {
+		_myloJourneyPage_PrimarySecondaryContact.clickButtonInSelectContactDialog(MYLOConstants.CANCEL_BUTTON);
 		_myloJourneyPage_PrimarySecondaryContact.expandPrimaryContactDetailsSection();
 		_myloJourneyPage_PrimarySecondaryContact.clickSelectSecondaryContactLink();
-		Assert.assertTrue(_myloJourneyPage_PrimarySecondaryContact.isSelectSecondaryContactPopupDisplayed(),
+		Assert.assertTrue(
+				_myloJourneyPage_PrimarySecondaryContact
+						.isSelectContactPopupDisplayed(MYLOConstants.SELECT_SECONDARY_CONTACT_POPUP),
 				MessageFormat.format(CoreConstants.FAIL_TO_VERIFY_ELEMENT_ON_SECTION, CoreConstants.FAIL,
 						MYLOConstants.SELECT_SECONDARY_CONTACT_POPUP));
 		_myloJourneyPage_PrimarySecondaryContact.verifyMembersPresentOnPopup(_transfereeNames, _softAssert);
+		_softAssert.assertAll();
 	}
 
 	@Given("^he is on Mylo Journey Summary page for an existing file with all transferee and family members$")
@@ -121,130 +122,59 @@ public class MyloJourneyPrimarySecondaryContact_Steps {
 		_myloDashboardPage.clickExecuteButton();
 	}
 
-	@Then("^primary contact section should be updated after updating the below fields on selecting all the transferee and family members sucessively$")
-	public void primary_contact_section_should_be_updated_after_updating_the_below_fields_on_selecting_all_the_transferee_and_family_members_sucessviely(
+	@Then("^selected contact should be updated after updating the below fields on selecting all the transferee and family members successively for both primary and secondary contact section$")
+	public void selected_contact_should_be_updated_after_updating_the_below_fields_on_selecting_all_the_transferee_and_family_members_successively_for_both_primary_and_secondary_contact_section(
 			DataTable table) {
-		_myloJourneyPageTransfereeAndFamilySection.expandTransfereeDetailsSection();
-
 		String partnerName = _myloJourneyPageTransfereeAndFamilySection
 				.getSavedTransfereeMemberName(MYLOConstants.DOMESTIC_PARTNER, MYLOConstants.PARTNER);
-		_myloJourneyPage_PrimarySecondaryContact.scrollToPrimaryContactSection();
-		_myloJourneyPage_PrimarySecondaryContact.clickChangeButtonInPrimaryContactCard();
-		Assert.assertTrue(_myloJourneyPage_PrimarySecondaryContact.isSelectPrimaryContactPopupDisplayed(),
-				MessageFormat.format(CoreConstants.FAIL_TO_VERIFY_ELEMENT_ON_SECTION, CoreConstants.FAIL,
-						MYLOConstants.SELECT_PRIMARY_CONTACT_POPUP));
-		_myloJourneyPage_PrimarySecondaryContact.selectPrimaryContactOnPopup(partnerName, _softAssert);
-		_myloJourneyPage_PrimarySecondaryContact.clickButtonInSelectContactDialog(MYLOConstants.SUBMIT_BUTTON);
+		_myloJourneyPage_PrimarySecondaryContact.selectPrimaryContactOnPopup(partnerName);
+		_myloJourneyPage_PrimarySecondaryContact.expandPrimaryContactDetailsSection();
 		_myloJourneyPageTransfereeAndFamilySection.updateFields(MYLOConstants.PARTNER, partnerName, table);
-		_myloJourneyPage_PrimarySecondaryContact.scrollToPrimaryContactSection();
-		_myloJourneyPage_PrimarySecondaryContact.verifySelectedPartnerMemberUpdated(MYLOConstants.PRIMARY_CONTACT,
-				_softAssert);
+		_myloJourneyPage_PrimarySecondaryContact.verifyMemberUpdated(MYLOConstants.PRIMARY_CONTACT,
+				MYLOConstants.PARTNER, _softAssert);
 		_myloJourneyPageTransfereeAndFamilySection.updateRandomPartnerRelationship(MYLOConstants.DOMESTIC_PARTNER);
-		_myloJourneyPageTransfereeAndFamilySection.scrollToSection(MYLOConstants.PARTNER);
-		_myloJourneyPageTransfereeAndFamilySection.clickSaveInEditMember();
-		_myloJourneyPageTransfereeAndFamilySection.closeEditModeInTransfereeSection(MYLOConstants.PARTNER);
 
 		String dependentName = _myloJourneyPageTransfereeAndFamilySection
 				.getSavedTransfereeMemberName(MYLOConstants.PARENT, MYLOConstants.DEPENDENT);
-		_myloJourneyPage_PrimarySecondaryContact.scrollToPrimaryContactSection();
-		_myloJourneyPage_PrimarySecondaryContact.clickChangeButtonInPrimaryContactCard();
-		Assert.assertTrue(_myloJourneyPage_PrimarySecondaryContact.isSelectPrimaryContactPopupDisplayed(),
-				MessageFormat.format(CoreConstants.FAIL_TO_VERIFY_ELEMENT_ON_SECTION, CoreConstants.FAIL,
-						MYLOConstants.SELECT_PRIMARY_CONTACT_POPUP));
-		_myloJourneyPage_PrimarySecondaryContact.selectPrimaryContactOnPopup(dependentName, _softAssert);
-		_myloJourneyPage_PrimarySecondaryContact.clickButtonInSelectContactDialog(MYLOConstants.SUBMIT_BUTTON);
+		_myloJourneyPage_PrimarySecondaryContact.selectPrimaryContactOnPopup(dependentName);
 		_myloJourneyPageTransfereeAndFamilySection.updateFields(MYLOConstants.DEPENDENT, dependentName, table);
-		_myloJourneyPage_PrimarySecondaryContact.scrollToPrimaryContactSection();
-		_myloJourneyPage_PrimarySecondaryContact.verifySelectedDependentMemberUpdated(MYLOConstants.PRIMARY_CONTACT,
-				_softAssert);
+		_myloJourneyPage_PrimarySecondaryContact.verifyMemberUpdated(MYLOConstants.PRIMARY_CONTACT,
+				MYLOConstants.DEPENDENT, _softAssert);
 		_myloJourneyPageTransfereeAndFamilySection.updateRandomDependentRelationship(MYLOConstants.PARENT);
-		_myloJourneyPageTransfereeAndFamilySection.scrollToSection(MYLOConstants.DEPENDENT);
-		_myloJourneyPageTransfereeAndFamilySection.clickSaveInEditMember();
-		_myloJourneyPageTransfereeAndFamilySection.closeEditModeInTransfereeSection(MYLOConstants.DEPENDENT);
 
 		String otherName = _myloJourneyPageTransfereeAndFamilySection.getSavedTransfereeMemberName(MYLOConstants.OTHER,
 				MYLOConstants.OTHER);
-		_myloJourneyPage_PrimarySecondaryContact.clickChangeButtonInPrimaryContactCard();
-		Assert.assertTrue(_myloJourneyPage_PrimarySecondaryContact.isSelectPrimaryContactPopupDisplayed(),
-				MessageFormat.format(CoreConstants.FAIL_TO_VERIFY_ELEMENT_ON_SECTION, CoreConstants.FAIL,
-						MYLOConstants.SELECT_PRIMARY_CONTACT_POPUP));
-		_myloJourneyPage_PrimarySecondaryContact.selectPrimaryContactOnPopup(otherName, _softAssert);
-		_myloJourneyPage_PrimarySecondaryContact.clickButtonInSelectContactDialog(MYLOConstants.SUBMIT_BUTTON);
+		_myloJourneyPage_PrimarySecondaryContact.selectPrimaryContactOnPopup(otherName);
 		_myloJourneyPageTransfereeAndFamilySection.updateFields(MYLOConstants.OTHER, otherName, table);
-		_myloJourneyPage_PrimarySecondaryContact.scrollToPrimaryContactSection();
-		_myloJourneyPage_PrimarySecondaryContact.verifySelectedOtherMemberUpdated(MYLOConstants.PRIMARY_CONTACT,
+		_myloJourneyPage_PrimarySecondaryContact.verifyMemberUpdated(MYLOConstants.PRIMARY_CONTACT, MYLOConstants.OTHER,
 				_softAssert);
 		_myloJourneyPageTransfereeAndFamilySection.updateOtherMemberRelationship(MYLOConstants.OTHER);
-		_myloJourneyPageTransfereeAndFamilySection.scrollToSection(MYLOConstants.OTHER);
-		_myloJourneyPageTransfereeAndFamilySection.clickSaveInEditMember();
-		_myloJourneyPageTransfereeAndFamilySection.closeEditModeInTransfereeSection(MYLOConstants.OTHER);
 
-	}
+		_myloJourneyPage_PrimarySecondaryContact
+				.verifyAndUpdatePrimaryContact(_myloJourneyPageTransfereeAndFamilySection.getSavedTransfereeName());
 
-	@Then("^secondary contact section should be updated after updating the below fields on selecting all the transferee and family members sucessively$")
-	public void secondary_contact_section_should_be_updated_after_updating_the_below_fields_on_selecting_all_the_transferee_and_family_members_sucessively(
-			DataTable table) {
-		_myloJourneyPage_PrimarySecondaryContact.verifyAndUpdatePrimaryContact(
-				_myloJourneyPageTransfereeAndFamilySection.getSavedTransfereeName(), _softAssert);
-
-		_myloJourneyPageTransfereeAndFamilySection.expandTransfereeDetailsSection();
-
-		String partnerName = _myloJourneyPageTransfereeAndFamilySection
+		partnerName = _myloJourneyPageTransfereeAndFamilySection
 				.getSavedTransfereeMemberName(MYLOConstants.DOMESTIC_PARTNER, MYLOConstants.PARTNER);
-		_myloJourneyPage_PrimarySecondaryContact.scrollToPrimaryContactSection();
+		_myloJourneyPage_PrimarySecondaryContact.selectSecondaryContactOnPopup(partnerName);
 		_myloJourneyPage_PrimarySecondaryContact.expandPrimaryContactDetailsSection();
-		_myloJourneyPage_PrimarySecondaryContact.clickSelectSecondaryContactLink();
-		Assert.assertTrue(_myloJourneyPage_PrimarySecondaryContact.isSelectSecondaryContactPopupDisplayed(),
-				MessageFormat.format(CoreConstants.FAIL_TO_VERIFY_ELEMENT_ON_SECTION, CoreConstants.FAIL,
-						MYLOConstants.SELECT_SECONDARY_CONTACT_POPUP));
-		_myloJourneyPage_PrimarySecondaryContact.selectSecondaryContactOnPopup(partnerName, _softAssert);
-		_myloJourneyPage_PrimarySecondaryContact.clickButtonInSelectContactDialog(MYLOConstants.SUBMIT_BUTTON);
 		_myloJourneyPageTransfereeAndFamilySection.updateFields(MYLOConstants.PARTNER, partnerName, table);
-		_myloJourneyPage_PrimarySecondaryContact.verifySelectedPartnerMemberUpdated(MYLOConstants.SECONDARY_CONTACT,
-				_softAssert);
-		_myloJourneyPageTransfereeAndFamilySection.updateRandomPartnerRelationship(MYLOConstants.DOMESTIC_PARTNER);
-		_myloJourneyPageTransfereeAndFamilySection.scrollToSection(MYLOConstants.PARTNER);
-		_myloJourneyPageTransfereeAndFamilySection.clickSaveInEditMember();
-		_myloJourneyPageTransfereeAndFamilySection.closeEditModeInTransfereeSection(MYLOConstants.PARTNER);
+		_myloJourneyPage_PrimarySecondaryContact.verifyMemberUpdated(MYLOConstants.SECONDARY_CONTACT,
+				MYLOConstants.PARTNER, _softAssert);
 
-		String dependentName = _myloJourneyPageTransfereeAndFamilySection
-				.getSavedTransfereeMemberName(MYLOConstants.PARENT, MYLOConstants.DEPENDENT);
-		_myloJourneyPage_PrimarySecondaryContact.scrollToPrimaryContactSection();
-		_myloJourneyPage_PrimarySecondaryContact.clickButtonInSecondaryContactCard(MYLOConstants.CHANGE_BUTTON);
-		Assert.assertTrue(_myloJourneyPage_PrimarySecondaryContact.isSelectSecondaryContactPopupDisplayed(),
-				MessageFormat.format(CoreConstants.FAIL_TO_VERIFY_ELEMENT_ON_SECTION, CoreConstants.FAIL,
-						MYLOConstants.SELECT_SECONDARY_CONTACT_POPUP));
-		_myloJourneyPage_PrimarySecondaryContact.selectSecondaryContactOnPopup(dependentName, _softAssert);
-		_myloJourneyPage_PrimarySecondaryContact.clickButtonInSelectContactDialog(MYLOConstants.SUBMIT_BUTTON);
+		dependentName = _myloJourneyPageTransfereeAndFamilySection.getSavedTransfereeMemberName(MYLOConstants.PARENT,
+				MYLOConstants.DEPENDENT);
+		_myloJourneyPage_PrimarySecondaryContact.changeSecondaryContactOnPopup(dependentName);
 		_myloJourneyPageTransfereeAndFamilySection.updateFields(MYLOConstants.DEPENDENT, dependentName, table);
-		_myloJourneyPage_PrimarySecondaryContact.scrollToPrimaryContactSection();
-		_myloJourneyPage_PrimarySecondaryContact.expandPrimaryContactDetailsSection();
-		_myloJourneyPage_PrimarySecondaryContact.verifySelectedDependentMemberUpdated(MYLOConstants.SECONDARY_CONTACT,
-				_softAssert);
-		_myloJourneyPageTransfereeAndFamilySection.updateRandomDependentRelationship(MYLOConstants.PARENT);
-		_myloJourneyPageTransfereeAndFamilySection.scrollToSection(MYLOConstants.DEPENDENT);
-		_myloJourneyPageTransfereeAndFamilySection.clickSaveInEditMember();
-		_myloJourneyPageTransfereeAndFamilySection.closeEditModeInTransfereeSection(MYLOConstants.DEPENDENT);
+		_myloJourneyPage_PrimarySecondaryContact.verifyMemberUpdated(MYLOConstants.SECONDARY_CONTACT,
+				MYLOConstants.DEPENDENT, _softAssert);
 
-		String otherName = _myloJourneyPageTransfereeAndFamilySection.getSavedTransfereeMemberName(MYLOConstants.OTHER,
+		otherName = _myloJourneyPageTransfereeAndFamilySection.getSavedTransfereeMemberName(MYLOConstants.OTHER,
 				MYLOConstants.OTHER);
-		_myloJourneyPage_PrimarySecondaryContact.scrollToPrimaryContactSection();
-		_myloJourneyPage_PrimarySecondaryContact.clickButtonInSecondaryContactCard(MYLOConstants.CHANGE_BUTTON);
-		Assert.assertTrue(_myloJourneyPage_PrimarySecondaryContact.isSelectSecondaryContactPopupDisplayed(),
-				MessageFormat.format(CoreConstants.FAIL_TO_VERIFY_ELEMENT_ON_SECTION, CoreConstants.FAIL,
-						MYLOConstants.SELECT_SECONDARY_CONTACT_POPUP));
-		_myloJourneyPage_PrimarySecondaryContact.selectSecondaryContactOnPopup(otherName, _softAssert);
-		_myloJourneyPage_PrimarySecondaryContact.clickButtonInSelectContactDialog(MYLOConstants.SUBMIT_BUTTON);
+		_myloJourneyPage_PrimarySecondaryContact.changeSecondaryContactOnPopup(otherName);
 		_myloJourneyPageTransfereeAndFamilySection.updateFields(MYLOConstants.OTHER, otherName, table);
-		_myloJourneyPage_PrimarySecondaryContact.scrollToPrimaryContactSection();
-		_myloJourneyPage_PrimarySecondaryContact.expandPrimaryContactDetailsSection();
-		_myloJourneyPage_PrimarySecondaryContact.verifySelectedOtherMemberUpdated(MYLOConstants.SECONDARY_CONTACT,
-				_softAssert);
-		_myloJourneyPageTransfereeAndFamilySection.updateOtherMemberRelationship(MYLOConstants.OTHER);
-		_myloJourneyPageTransfereeAndFamilySection.scrollToSection(MYLOConstants.OTHER);
-		_myloJourneyPageTransfereeAndFamilySection.clickSaveInEditMember();
-		_myloJourneyPageTransfereeAndFamilySection.closeEditModeInTransfereeSection(MYLOConstants.OTHER);
-
+		_myloJourneyPage_PrimarySecondaryContact.verifyMemberUpdated(MYLOConstants.SECONDARY_CONTACT,
+				MYLOConstants.OTHER, _softAssert);
+		_softAssert.assertAll();
 	}
 
 	@When("^he selects same contact on \"([^\"]*)\" popup which is already selected on primary contact Section$")
@@ -252,48 +182,41 @@ public class MyloJourneyPrimarySecondaryContact_Steps {
 			String popupName) {
 		String _transfereeName = _myloJourneyPageTransfereeAndFamilySection.getSavedTransfereeName();
 		_myloJourneyPage_PrimarySecondaryContact.expandPrimaryContactDetailsSection();
-		_myloJourneyPage_PrimarySecondaryContact.verifyAndRemoveSecondaryContactIfPresent();
-		_myloJourneyPage_PrimarySecondaryContact.clickSelectSecondaryContactLink();
-		Assert.assertTrue(_myloJourneyPage_PrimarySecondaryContact.isSelectSecondaryContactPopupDisplayed(),
-				MessageFormat.format(CoreConstants.FAIL_TO_VERIFY_ELEMENT_ON_SECTION, CoreConstants.FAIL,
-						MYLOConstants.SELECT_SECONDARY_CONTACT_POPUP));
-		_myloJourneyPage_PrimarySecondaryContact.selectSecondaryContactOnPopup(_transfereeName, _softAssert);
+		_myloJourneyPage_PrimarySecondaryContact.changeSecondaryContactOnPopup(_transfereeName);
 	}
 
 	@Then("^warning message should appear after clicking save button on \"([^\"]*)\" popup$")
 	public void warning_message_should_appear_after_clicking_save_button_on_popup(String popupName) {
-		_myloJourneyPage_PrimarySecondaryContact.clickButtonInSelectContactDialog(MYLOConstants.SUBMIT_BUTTON);
-		_myloJourneyPage_PrimarySecondaryContact.verifySecondaryErrorDialogDisplayed();
-		_myloJourneyPage_PrimarySecondaryContact.clickButtonInSelectContactDialog(MYLOConstants.CANCEL_BUTTON);
-		_myloJourneyPageTransfereeAndFamilySection.expandTransfereeDetailsSection();
+		Assert.assertTrue(
+				_myloJourneyPage_PrimarySecondaryContact.isErrorDialogDisplayed(
+						MYLOConstants.SELECT_SECONDARY_CONTACT_POPUP,
+						MYLOConstants.SECONDARY_CONTACT_INCORRECT_SELECTION_ERROR),
+				MessageFormat.format(CoreConstants.FAIL_TO_VERIFY_ELEMENT_ON_PAGE, CoreConstants.FAIL,
+						MYLOConstants.SECONDARY_CONTACT_INCORRECT_SELECTION_ERROR));
 	}
 
 	@Then("^warning message should appear if he tries to select same contact on \"([^\"]*)\" popup which is already selected on primary secondary Section$")
 	public void warning_message_should_appear_if_he_tries_to_select_same_contact_on_popup_which_is_already_selected_on_primary_secondary_Section(
 			String popupName) {
+		_myloJourneyPage_PrimarySecondaryContact.clickButtonInSelectContactDialog(MYLOConstants.CANCEL_BUTTON);
+		_myloJourneyPageTransfereeAndFamilySection.expandTransfereeDetailsSection();
 		String partnerName = _myloJourneyPageTransfereeAndFamilySection
 				.getSavedTransfereeMemberName(MYLOConstants.DOMESTIC_PARTNER, MYLOConstants.PARTNER);
-		_myloJourneyPage_PrimarySecondaryContact.clickSelectSecondaryContactLink();
-		Assert.assertTrue(_myloJourneyPage_PrimarySecondaryContact.isSelectSecondaryContactPopupDisplayed(),
-				MessageFormat.format(CoreConstants.FAIL_TO_VERIFY_ELEMENT_ON_SECTION, CoreConstants.FAIL,
-						MYLOConstants.SELECT_SECONDARY_CONTACT_POPUP));
-		_myloJourneyPage_PrimarySecondaryContact.selectSecondaryContactOnPopup(partnerName, _softAssert);
-		_myloJourneyPage_PrimarySecondaryContact.clickButtonInSelectContactDialog(MYLOConstants.SUBMIT_BUTTON);
-
-		_myloJourneyPage_PrimarySecondaryContact.clickChangeButtonInPrimaryContactCard();
-		Assert.assertTrue(_myloJourneyPage_PrimarySecondaryContact.isSelectPrimaryContactPopupDisplayed(),
-				MessageFormat.format(CoreConstants.FAIL_TO_VERIFY_ELEMENT_ON_SECTION, CoreConstants.FAIL,
-						MYLOConstants.SELECT_PRIMARY_CONTACT_POPUP));
-		_myloJourneyPage_PrimarySecondaryContact.selectPrimaryContactOnPopup(partnerName, _softAssert);
-		_myloJourneyPage_PrimarySecondaryContact.clickButtonInSelectContactDialog(MYLOConstants.SUBMIT_BUTTON);
-		_myloJourneyPage_PrimarySecondaryContact.verifyPrimaryErrorDialogDisplayed();
-		_myloJourneyPage_PrimarySecondaryContact.clickButtonInSelectContactDialog(MYLOConstants.CANCEL_BUTTON);
+		_myloJourneyPage_PrimarySecondaryContact.selectSecondaryContactOnPopup(partnerName);
+		_myloJourneyPage_PrimarySecondaryContact.selectPrimaryContactOnPopup(partnerName);
+		Assert.assertTrue(_myloJourneyPage_PrimarySecondaryContact.isErrorDialogDisplayed(
+				MYLOConstants.SELECT_PRIMARY_CONTACT_POPUP, MYLOConstants.PRIMARY_CONTACT_INCORRECT_SELECTION_ERROR),
+				MessageFormat.format(CoreConstants.FAIL_TO_VERIFY_ELEMENT_ON_PAGE, CoreConstants.FAIL,
+						MYLOConstants.PRIMARY_CONTACT_INCORRECT_SELECTION_ERROR));
 	}
 
 	@Then("^he should be able to remove the secondary contact by clicking remove on Secondary Contact Card$")
 	public void clicking_change_button_on_secondary_contact_card_should_remove_the_contact_from_Secondary_Contact_section() {
+		_myloJourneyPage_PrimarySecondaryContact.clickButtonInSelectContactDialog(MYLOConstants.CANCEL_BUTTON);
 		_myloJourneyPage_PrimarySecondaryContact.clickButtonInSecondaryContactCard(MYLOConstants.REMOVE_BUTTON);
-		_myloJourneyPage_PrimarySecondaryContact.verifySelectSecondaryContactLinkDisplayed();
+		Assert.assertTrue(_myloJourneyPage_PrimarySecondaryContact.isSelectSecondaryContactLinkDisplayed(),
+				MessageFormat.format(CoreConstants.FAIL_TO_VERIFY_ELEMENT_ON_PAGE, CoreConstants.FAIL,
+						MYLOConstants.SELECT_SECONDARY_CONTACT_LINK));
 	}
 
 }

@@ -18,25 +18,13 @@ Feature: Validate the functionality of Mylo Journey Primary and Secondary Contac
     Then all the added transferee and family members should be displayed on 'Please select a Primary Contact' popup
     And all the added transferee and family members should be displayed on 'Please select a Secondary Contact' popup after clicking on "Select Secondary Contact" link displayed under the 'Secondary Contact' section
 
-  @C218569 @Mylo:218721 @Mylo-Regression
-  Scenario: Mylo-Validate primary contact is updated on updating the selected contact in transferee and family section
+   @C218569 @Mylo:218721 @C218561 @Mylo:218614 @Mylo-Regression
+  Scenario: Mylo-Validate primary , secondary contact is updated on updating the selected contact in transferee and family section
     Given he is on Mylo Journey Summary page for an existing file with all transferee and family members
-    Then primary contact section should be updated after updating the below fields on selecting all the transferee and family members sucessively
+    Then selected contact should be updated after updating the below fields on selecting all the transferee and family members successively for both primary and secondary contact section
       | Fields       |
-      | First Name   |
-      | Last Name    |
-      | Pronoun      |
-      | Relationships|
-      | Number       |
-      | Email        |
-
-  @C218561 @Mylo:218614 @Mylo-Regression
-  Scenario: Mylo - Validate secondary contact is updated on updating the selected contact in transferee and family section
-    Given he is on Mylo Journey Summary page for an existing file with all transferee and family members
-    Then secondary contact section should be updated after updating the below fields on selecting all the transferee and family members sucessively
-      | Fields       |
-      | First Name   |
-      | Last Name    |
+      | First Name   | 
+      | Last Name    | 
       | Pronoun      |
       | Relationships|
       | Number       |

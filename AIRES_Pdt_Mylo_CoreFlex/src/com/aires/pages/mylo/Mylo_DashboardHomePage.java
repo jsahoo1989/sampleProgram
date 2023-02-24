@@ -813,16 +813,13 @@ public class Mylo_DashboardHomePage extends Base {
 	 * @param _myloNewFileSection
 	 */
 	public void createNewFileIfNotFound(String fileID, String clientID,
-			MyloJourneyPage_CreateNewFileSection _myloNewFileSection) {
+			MyloJourneyPage_CreateNewFileSection _myloNewFileSection) {	
   		if (isNoFileFoundPopUpDisplayedAfterExecute(MYLOConstants.NO_SUCH_FILE_FOUND)) {
 				closePopUp();
 				selectOptionsFromAssignmentMenu(MYLOConstants.NEW_FILE_BUTTON);
 				_myloNewFileSection.createNewFile(MYLOConstants.AUTOMATION_CLIENT_ID);
 				CoreFunctions.writeToPropertiesFile("FileID", MyloNewFileUtil.getFileID());
-				CoreFunctions.writeToPropertiesFile(MYLOConstants.TRANSFEREE_FIRSTNAME,
-						MyloNewFileUtil.getTransfereeFirstName());
-				CoreFunctions.writeToPropertiesFile(MYLOConstants.TRANSFEREE_LASTNAME,
-						MyloNewFileUtil.getTransfereeLastName());
 			}
 	}
+	
 }

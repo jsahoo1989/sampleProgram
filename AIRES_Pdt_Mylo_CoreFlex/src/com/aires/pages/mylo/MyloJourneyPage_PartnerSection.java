@@ -159,8 +159,6 @@ public class MyloJourneyPage_PartnerSection extends Base {
 	@FindBy(how = How.CSS, using = "app-partner div[class*='usertitle']")
 	private List<WebElement> _savedPartnerNames;
 
-
-
 	final By _dropdownOptions = By.cssSelector("div[role='option']>span");
 	final By _genderDropdownOptions = By.cssSelector("div[role='option']>div");
 	final By _existingPartnerName = By.cssSelector("div[class*='usertitle']");

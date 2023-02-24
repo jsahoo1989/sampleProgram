@@ -272,7 +272,7 @@ public class BusinessFunctions {
 		try {
 			for (WebElement row : WebElementList) {
 				Log.info("The Actual Item Name is :" + row.getAttribute(attribute));
-				if (row.getAttribute(attribute).equals(itemName)) {
+				if (row.getAttribute(attribute).trim().equals(itemName)) {
 					return WebElementList.indexOf(row);
 				}
 			}

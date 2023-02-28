@@ -418,9 +418,10 @@ public class MX_Transferee_JourneyHomePage extends Base {
 	}
 
 	public void handle_Cookie_AfterLogin() {
-		CoreFunctions.explicitWaitTillElementBecomesClickable(driver, _btn_OkOnSiteCookieAfterLogin,
-				MobilityXConstants.COOKIEDAILOG_OKBUTTON);
-		if (CoreFunctions.isElementExist(driver, _btn_OkOnSiteCookieAfterLogin, 15)) {
+//		CoreFunctions.explicitWaitTillElementBecomesClickable(driver, _btn_OkOnSiteCookieAfterLogin,
+//				MobilityXConstants.COOKIEDAILOG_OKBUTTON);
+//		CoreFunctions.waitHandler(2);
+		if (CoreFunctions.isElementExist(driver, _btn_OkOnSiteCookieAfterLogin, 25)) {
 			HandleCookiePopUp(_btn_OkOnSiteCookieAfterLogin);
 		}
 	}
@@ -438,13 +439,17 @@ public class MX_Transferee_JourneyHomePage extends Base {
 	}
 
 	public void handle_points_expiry_reminder_popup() {
-		if (CoreFunctions.isElementExist(driver, _link_remindLater, 2)) {
-			if (CoreFunctions.verifyElementPresentOnPage(_link_remindLater, MobilityXConstants.REMIND_LATER)) {
-				CoreFunctions.click(driver, _link_remindLater, MobilityXConstants.REMIND_LATER);
-				Log.info(MobilityXConstants.VERIFIED + MobilityXConstants.REMINDER_POPUP
-						+ MobilityXConstants.IS_DISPLAYED + MobilityXConstants.ON_MOBILITYX_DASHBOARD_PAGE);
-			} else
-				Log.info(MobilityXConstants.REMINDER_POPUP_NOT_DISPLAYED);
+		try {
+			if (CoreFunctions.isElementExist(driver, _link_remindLater, 2)) {
+				if (CoreFunctions.verifyElementPresentOnPage(_link_remindLater, MobilityXConstants.REMIND_LATER)) {
+					CoreFunctions.click(driver, _link_remindLater, MobilityXConstants.REMIND_LATER);
+					Log.info(MobilityXConstants.VERIFIED + MobilityXConstants.REMINDER_POPUP
+							+ MobilityXConstants.IS_DISPLAYED + MobilityXConstants.ON_MOBILITYX_DASHBOARD_PAGE);
+				} else
+					Log.info(MobilityXConstants.REMINDER_POPUP_NOT_DISPLAYED);
+			}
+		} catch (Exception e) {
+
 		}
 	}
 
@@ -458,7 +463,7 @@ public class MX_Transferee_JourneyHomePage extends Base {
 	}
 
 	public boolean isWelcomePopupDisplayed() {
-		return CoreFunctions.isElementExist(driver, _btn_startFlexPlanning, 25);
+		return CoreFunctions.isElementExist(driver, _btn_startFlexPlanning, 45);
 	}
 
 	public void routeToFlexPlanningTool() {
@@ -487,7 +492,7 @@ public class MX_Transferee_JourneyHomePage extends Base {
 		boolean isAssignmentClientDetailsMatched = false, isPolicyPointsDetailsMatched = false;
 		boolean isDetailsMatched = false;
 		try {
-			switchToTooltipIFrameAndPerformAction(MobilityXConstants.HIDE, 5);
+			switchToTooltipIFrameAndPerformAction(MobilityXConstants.HIDE, 10);
 			String actualClientName = CoreFunctions.getElementText(driver, _textClientName);
 			String actualTransfereeName = CoreFunctions.getElementText(driver, _textTransfereeUserNameTitle);
 			String actualpolicyAndFileId = CoreFunctions.getElementText(driver, _textPolicyFileID);
@@ -663,17 +668,17 @@ public class MX_Transferee_JourneyHomePage extends Base {
 		return false;
 	}
 
+	/**
+	 * Method to Setup USD Check Account if USD currency selection is made in PortionCashout or AfterRelocation selection in OnPoint Policy setup 
+	 * @return
+	 */
 	private boolean setupUSDCheckAccountAndSave() {
 		try {
 			CoreFunctions.selectByVisibleText(driver, _select_accountType, accountDetails.checkAccountType.accountType);
 			CoreFunctions.clickElement(driver, _btn_continue);
 			Reporter.addStepLog(
 					MessageFormat.format(MobilityXConstants.SUCCESSFULLY_SELECTED_ACCOUNT_TYPE, CoreConstants.PASS));
-//			CoreFunctions.waitHandler(2);
 			CoreFunctions.explicitWaitTillElementBecomesClickable(driver, _btn_submit, MobilityXConstants.SUBMIT);
-//			CoreFunctions.explicitWaitTillElementVisibility(driver, _titleAddPaymentAccount,
-//					COREFLEXConstants.ADD_PAYMENT_ACCOUNT);
-//			CoreFunctions.highlightObject(driver, _titleAddPaymentAccount);
 			CoreFunctions.clearAndSetText(driver, _mailingAddress1, accountDetails.checkAccountType.address1);
 			CoreFunctions.clearAndSetText(driver, _accountHolderName,
 					accountDetails.checkAccountType.accountHoldersName);
@@ -701,6 +706,10 @@ public class MX_Transferee_JourneyHomePage extends Base {
 		return false;
 	}
 
+	/**
+	 * Method to Setup Wire Transferee Account if NON-USD currency selection is made in PortionCashout or AfterRelocation selection in OnPoint Policy setup 
+	 * @return
+	 */
 	private boolean setupWireTransferAccountBasedOnCurrencyAndSave() {
 		try {
 			if (!CoreFunctions.getPropertyFromConfig("CF_Transferee_CashoutCurrencyCode").equalsIgnoreCase("USD")) {
@@ -710,7 +719,6 @@ public class MX_Transferee_JourneyHomePage extends Base {
 				CoreFunctions.clickElement(driver, _btn_continue);
 				Reporter.addStepLog(MessageFormat.format(MobilityXConstants.SUCCESSFULLY_SELECTED_ACCOUNT_TYPE,
 						CoreConstants.PASS));
-//				CoreFunctions.waitHandler(2);
 				CoreFunctions.explicitWaitTillElementBecomesClickable(driver, _btnWireSubmit,
 						MobilityXConstants.SUBMIT);
 				CoreFunctions.selectByVisibleText(driver, _selectCurrency,
@@ -742,7 +750,6 @@ public class MX_Transferee_JourneyHomePage extends Base {
 					CoreFunctions.clearAndSetText(driver, _textBankIBAN,
 							accountDetails.wireTransferAccountType.accountIBAN);
 				}
-
 				CoreFunctions.clearAndSetText(driver, _textBankSwift,
 						accountDetails.wireTransferAccountType.swiftRouting);
 				CoreFunctions.clearAndSetText(driver, _textBankAccountClosingDate,
@@ -1845,7 +1852,8 @@ public class MX_Transferee_JourneyHomePage extends Base {
 					CoreFunctions.explicitWaitTillElementBecomesClickable(driver, _tooltipIFrameHideLink,
 							MobilityXConstants.HIDE);
 					actualAppCueText = CoreFunctions.getElementText(driver, _tooltipIFrameText);
-					CoreFunctions.verifyText(actualAppCueText, expectedAppCuesList.get(index), MobilityXConstants.APPCUES);
+					CoreFunctions.verifyText(actualAppCueText, expectedAppCuesList.get(index),
+							MobilityXConstants.APPCUES);
 					CoreFunctions.clickElement(driver, _tooltipIFrameNextButton);
 					driver.switchTo().defaultContent();
 					CoreFunctions.waitHandler(4);
@@ -1856,8 +1864,8 @@ public class MX_Transferee_JourneyHomePage extends Base {
 						CoreConstants.PASS, pageName));
 				return true;
 			} else {
-				Reporter.addStepLog(
-						MessageFormat.format(MobilityXConstants.APPCUES_NOT_DISPLAYED, CoreConstants.FAIL, pageName,expectedAppCuesList.get(index)));
+				Reporter.addStepLog(MessageFormat.format(MobilityXConstants.APPCUES_NOT_DISPLAYED, CoreConstants.FAIL,
+						pageName, expectedAppCuesList.get(index)));
 				return false;
 			}
 		} catch (Exception e) {

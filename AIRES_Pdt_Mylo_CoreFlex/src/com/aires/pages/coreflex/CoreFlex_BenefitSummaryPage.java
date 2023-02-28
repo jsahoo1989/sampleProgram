@@ -198,27 +198,8 @@ public class CoreFlex_BenefitSummaryPage extends Base {
 	 * page
 	 */
 	public boolean iterateAndVerifyBenefitSummaryDetails(String policyRequiredFor) {
-		boolean isBenefitSummaryDetailsVerified = false;
 		try {
-			switch (policyRequiredFor) {
-			case COREFLEXConstants.CLONING:
-			case COREFLEXConstants.VERSIONING:
-			case COREFLEXConstants.CLIENT:
-				isBenefitSummaryDetailsVerified = iterateAndVerifyCloningBenefitsSummaryDetails();
-				break;
-			case COREFLEXConstants.SIGNIFICANT_CHANGE:
-				isBenefitSummaryDetailsVerified = iterateAndVerifySignificantChangeBenefitsSummaryDetails();
-				break;
-			case COREFLEXConstants.ALL_BENEFITS:
-			case COREFLEXConstants.AIRES_MANAGED_BENEFITS_CARDS:
-			case COREFLEXConstants.END_TO_END:
-				isBenefitSummaryDetailsVerified = iterateAndVerifyAllBenefitsSummaryDetails(policyRequiredFor);
-				break;
-			default:
-				Assert.fail(COREFLEXConstants.BLUEPRINT_POLICY_REQUIRED_FOR_OPTION_NOT_PRESENT_IN_THE_LIST);
-			}
-
-			if (isBenefitSummaryDetailsVerified) {
+			if (iterateAndVerifyBenefitsSummaryDetails(policyRequiredFor)) {
 				Reporter.addStepLog(MessageFormat.format(
 						COREFLEXConstants.SUCCESSFULLY_VERIFIED_BENEFIT_CATEGORIES_AND_TYPE_ON_BENEFIT_SUMMARY_PAGE,
 						CoreConstants.PASS));
@@ -232,7 +213,7 @@ public class CoreFlex_BenefitSummaryPage extends Base {
 		return false;
 	}
 
-	private boolean iterateAndVerifyAllBenefitsSummaryDetails(String policyRequiredFor) {
+	private boolean iterateAndVerifyBenefitsSummaryDetails(String policyRequiredFor) {
 		boolean isFlexBenefitSummaryVerified = false;
 		try {
 			for (FlexBenefit benefitList : flexBenefits) {
@@ -264,7 +245,7 @@ public class CoreFlex_BenefitSummaryPage extends Base {
 					CoreConstants.PASS));
 		}
 		return isFlexBenefitSummaryVerified;
-	}
+	}	
 
 	private boolean verifyBenefitSummaryDetails(int indexBenefit, Benefit benefit) {
 		try {
@@ -281,77 +262,6 @@ public class CoreFlex_BenefitSummaryPage extends Base {
 					CoreConstants.FAIL, e.getMessage()));
 		}
 		return false;
-	}
-
-	private boolean iterateAndVerifyCloningBenefitsSummaryDetails() {
-		boolean isFlexBenefitSummaryVerified = false;
-		try {
-			for (FlexBenefit benefitList : flexBenefits) {
-				for (Benefit benefit : benefitList.getBenefits()) {
-					if ((benefit.getPolicyCreationGroup().contains(COREFLEXConstants.CLONING))
-							|| (benefit.getPolicyCreationGroup().contains(COREFLEXConstants.VERSIONING))
-							|| (benefit.getPolicyCreationGroup().contains(COREFLEXConstants.CLIENT))) {
-						int indexBenefit = BusinessFunctions.returnindexItemFromListUsingText(driver,
-								_textAddedBenefitNameList, benefit.getBenefitDisplayName());
-						int indexCategory = BusinessFunctions.returnindexItemFromListUsingText(driver,
-								_textAddedBenefitGroupList, benefitList.getCategory(), true);
-						isFlexBenefitSummaryVerified = (CoreFunctions
-								.getItemsFromListByIndex(driver, _textAddedBenefitGroupList, indexCategory, true)
-								.contains(benefitList.getCategory()))
-								&& verifyBenefitSummaryDetails(indexBenefit, benefit);
-						if (!isFlexBenefitSummaryVerified) {
-							break;
-						}
-					}
-				}
-			}
-		} catch (Exception e) {
-			Reporter.addStepLog(MessageFormat.format(
-					COREFLEXConstants.EXCEPTION_OCCURED_WHILE_VALIDATING_FLEX_BENEFIT_CATEGORIES_AND_TYPE_ON_BENEFIT_SUMMARY_PAGE,
-					CoreConstants.FAIL, e.getMessage()));
-		}
-
-		if (isFlexBenefitSummaryVerified) {
-			Reporter.addStepLog(MessageFormat.format(
-					COREFLEXConstants.SUCCESSFULLY_VERIFIED_FLEX_BENEFIT_CATEGORIES_AND_TYPE_ON_BENEFIT_SUMMARY_PAGE,
-					CoreConstants.PASS));
-		}
-		return isFlexBenefitSummaryVerified;
-	}
-
-	private boolean iterateAndVerifySignificantChangeBenefitsSummaryDetails() {
-		boolean isFlexBenefitSummaryVerified = false;
-		try {
-			for (FlexBenefit benefitList : flexBenefits) {
-				for (Benefit benefit : benefitList.getBenefits()) {
-					if (benefit.getPolicyCreationGroup().contains(COREFLEXConstants.VERSIONING)
-							|| benefit.isSelectBenefitOnPBCPage()) {
-						int indexBenefit = BusinessFunctions.returnindexItemFromListUsingText(driver,
-								_textAddedBenefitNameList, benefit.getBenefitDisplayName());
-						int indexCategory = BusinessFunctions.returnindexItemFromListUsingText(driver,
-								_textAddedBenefitGroupList, benefitList.getCategory(), true);
-						isFlexBenefitSummaryVerified = (CoreFunctions
-								.getItemsFromListByIndex(driver, _textAddedBenefitGroupList, indexCategory, true)
-								.contains(benefitList.getCategory()))
-								&& verifyBenefitSummaryDetails(indexBenefit, benefit);
-						if (!isFlexBenefitSummaryVerified) {
-							break;
-						}
-					}
-				}
-			}
-		} catch (Exception e) {
-			Reporter.addStepLog(MessageFormat.format(
-					COREFLEXConstants.EXCEPTION_OCCURED_WHILE_VALIDATING_FLEX_BENEFIT_CATEGORIES_AND_TYPE_ON_BENEFIT_SUMMARY_PAGE,
-					CoreConstants.FAIL, e.getMessage()));
-		}
-
-		if (isFlexBenefitSummaryVerified) {
-			Reporter.addStepLog(MessageFormat.format(
-					COREFLEXConstants.SUCCESSFULLY_VERIFIED_FLEX_BENEFIT_CATEGORIES_AND_TYPE_ON_BENEFIT_SUMMARY_PAGE,
-					CoreConstants.PASS));
-		}
-		return isFlexBenefitSummaryVerified;
 	}
 
 	public boolean verifyPolicyStatus(String expectedPolicyStatus) {

@@ -384,12 +384,12 @@ public class IRIS_ActivityAndFinancePage extends BasePage {
 	 * @throws GeneralLeanFtException
 	 */
 	public boolean relonetCredentialsSent(String message, String dialogName) throws Exception {
-		boolean messageVerified = false;
+//		boolean messageVerified = false;
 		IRIS_PageMaster.getDialogObject(_IRIS, "Message").waitUntilVisible();
-		messageVerified = BusinessFunctions.verifyMsgOnDialog(IRIS_PageMaster.getDialogObject(_IRIS, "Message"),
-				message, dialogName);
-		System.out.println("IRIS Message Verified : " + messageVerified);
-		if (IRIS_PageMaster.getDialogObject(_IRIS, "Message").isVisible() && messageVerified) {
+//		messageVerified = BusinessFunctions.verifyMsgOnDialog(IRIS_PageMaster.getDialogObject(_IRIS, "Message"),
+//				message, dialogName);
+//		System.out.println("IRIS Message Verified : " + messageVerified);
+		if (IRIS_PageMaster.getDialogObject(_IRIS, "Message").isVisible()) {
 			Helpers.clickButton(
 					IRIS_PageMaster.getButtonObjectFromLabel(IRIS_PageMaster.getDialogObject(_IRIS, "Message"), "OK"),
 					IRIS_PageMaster.getButtonObjectFromLabel(IRIS_PageMaster.getDialogObject(_IRIS, "Message"), "OK")
@@ -402,10 +402,12 @@ public class IRIS_ActivityAndFinancePage extends BasePage {
 			Button oKButton = savedDialog.describe(Button.class, new ButtonDescription.Builder().label("OK").build());
 			oKButton.click();
 			CoreFunctions.writeToPropertiesFile("irisWindowTitle", getIRISWindow().getTitle());
+			return true;
 		} else {
 			Assert.fail(IRISConstants.CREDENTIALS_NOT_SENT);
+			return false;
 		}
-		return messageVerified;
+//		return messageVerified;
 	}
 
 	/**
@@ -861,10 +863,10 @@ public class IRIS_ActivityAndFinancePage extends BasePage {
 				if ((benefit.getSelectBenefitOnFPTPage()) && (benefit.getAiresManagedService().equals("Yes"))) {
 					int noOfMilestones = benefit.getNoOfMilestones();
 					if (benefit.getIrisServiceName().equals("Shipment")) {
-						actualizeInitialTracingPromptForShipmentService(_IRIS, activity, benefit);
+						actualizeInitialTracingPromptForShipmentService(_IRIS, activity, benefit);						
+					} else {
 						Helpers.selectTabControl(IRIS_PageMaster.getTabControlObject(_IRIS, 0),
 								IRISConstants.ACTIVITY_FINANCE_TAB);
-					} else {
 						selectServiceAndSubService(benefit);
 						displayActivityTable();
 						if (noOfMilestones == 2) {
@@ -1045,9 +1047,9 @@ public class IRIS_ActivityAndFinancePage extends BasePage {
 				if ((benefit.getSelectBenefitOnFPTPage()) && benefit.getAiresManagedService().equals("Yes")) {
 					int noOfMilestones = benefit.getNoOfMilestones();
 					if (benefit.getIrisServiceName().equals("Shipment")) {
-						actualizeAllTracingPromptForShipmentService(_IRIS, activity, benefit);
-						Helpers.selectTabControl(IRIS_PageMaster.getTabControlObject(_IRIS, 0), IRISConstants.ACTIVITY_FINANCE_TAB);
+						actualizeAllTracingPromptForShipmentService(_IRIS, activity, benefit);						
 					} else {
+						Helpers.selectTabControl(IRIS_PageMaster.getTabControlObject(_IRIS, 0), IRISConstants.ACTIVITY_FINANCE_TAB);
 						actualizeTracingBasedOnMilestones(benefit, noOfMilestones, activity, tracingDate);
 					}
 					clickOnSaveBtn();

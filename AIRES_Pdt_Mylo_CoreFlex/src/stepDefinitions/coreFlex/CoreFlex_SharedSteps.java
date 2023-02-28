@@ -512,7 +512,6 @@ public class CoreFlex_SharedSteps {
 	@Given("^he has logged into 'MobilityX' application after creating a new 'Transferee' through IRIS application for policy setup in 'Policy Digitization Tool'$")
 	public void he_has_logged_into_MobilityX_application_after_creating_a_new_Transferee_through_IRIS_application_for_policy_setup_in_Policy_Digitization_Tool()
 			throws Throwable {
-
 		Assert.assertTrue(mobilityXLoginPage.verifyPageNavigation(),
 				MessageFormat.format(COREFLEXConstants.FAILED_TO_NAVIGATE_TO_MOBILITYX_LOGIN_PAGE, CoreConstants.FAIL));
 		createAnAssignmentInIRIS();
@@ -1207,7 +1206,7 @@ public class CoreFlex_SharedSteps {
 
 	/**
 	 * Method to add New Policies in IRIS application -> Accounting tab for
-	 * specified Client if available Automation Policy Count is <5
+	 * specified Client if available Automation Policy Count is <3
 	 * 
 	 * @param clientId
 	 * @param isAutomationPolicyPresent
@@ -1226,7 +1225,7 @@ public class CoreFlex_SharedSteps {
 				testContext.getIrisPageManager().irisCorporationMain.selectCorporationModules(IRISConstants.ACCOUNTING);
 				testContext.getIrisPageManager().irisCorporationAccounting = new IRIS_Corporation_Accounting();
 				testContext.getIrisPageManager().irisCorporationAccounting.verifyAccountingTab();
-				testContext.getIrisPageManager().irisCorporationAccounting.addNewOnPointAutomationPolicies();
+				testContext.getIrisPageManager().irisCorporationAccounting.addNewOnPointAutomationPolicies(clientId);
 				testContext.getIrisPageManager().irisCorporationAccounting.clickOnSaveBtn();
 				testContext.getBasePage().cleanIrisProcesses();
 				Reporter.addStepLog(MessageFormat.format(
@@ -1398,10 +1397,132 @@ public class CoreFlex_SharedSteps {
 		testContext.getIrisPageManager().irisCorporationMain.selectCorporationModules(IRISConstants.ACCOUNTING);
 		testContext.getIrisPageManager().irisCorporationAccounting = new IRIS_Corporation_Accounting();
 		testContext.getIrisPageManager().irisCorporationAccounting.verifyAccountingTab();
-		testContext.getIrisPageManager().irisCorporationAccounting.addNewOnPointAutomationPolicies();
+		testContext.getIrisPageManager().irisCorporationAccounting.addNewOnPointAutomationPolicies(clientId);
 		testContext.getIrisPageManager().irisCorporationAccounting.clickOnSaveBtn();
 		testContext.getBasePage().cleanIrisProcesses();
+	}
+	
+	@Given("^'Transferee' user has selected 'Benefit_Cashout' on 'OnPoint Planning Tool' page after logging into 'MobilityX' application$")
+	public void transferee_user_has_selected_Benefit_Cashout_on_OnPoint_Planning_Tool_page_after_logging_into_MobilityX_application()
+			throws Throwable {
+		testContext.getWebDriverManager().getDriver().navigate().to(_loginInfo.details.mobilityXURL);		
+		actualizeTransfereeCreatedByClient();
+		Assert.assertTrue(mobilityXLoginPage.readCredentialsFromMail(), MessageFormat
+				.format(MobilityXConstants.FAILED_TO_READ_USER_CREDENTIALS_FROM_GENERATED_EMAIL, CoreConstants.FAIL));
+		mobilityXLoginPage.enterUsernameAndPasswordForMobilityX(
+				CoreFunctions.getPropertyFromConfig("Transferee_UserNameInEMail"),
+				CoreFunctions.getPropertyFromConfig("Transferee_PasswordInEMail"));
+		mobilityXLoginPage.clickSignIn();
+		mxTransfereeMyProfilePage.setUpNewMobilityXTransferee();
+		mxTransfereeJourneyHomePage.handle_Cookie_AfterLogin();
+		mxTransfereeJourneyHomePage.handle_points_expiry_reminder_popup();
+		mxTransfereeJourneyHomePage.switchToTooltipIFrameAndPerformAction(MobilityXConstants.HIDE, 5);
+		Assert.assertTrue(mxTransfereeJourneyHomePage.isWelcomePopupDisplayed(),
+				MessageFormat.format(MobilityXConstants.FAILED_TO_DISPLAY_WELCOME_POPUP_ON_TRANSFEREE_JOURNEY_HOME_PAGE,
+						CoreConstants.FAIL));
+		mxTransfereeJourneyHomePage.progressOrSkipMobilityJourneyHomePage(MobilityXConstants.ROUTE_TO_TRANSFEREE_JOURNEY_HOME_PAGE);
+		Assert.assertTrue(mxTransfereeJourneyHomePage.verifyAssignmentAndPolicyDetails(), MessageFormat.format(
+				MobilityXConstants.ASSIGNMENT_DETAILS_NOT_MATCHED_ON_MOBILITY_JOURNEY_HOME_PAGE, CoreConstants.FAIL));
+		Assert.assertTrue(mxTransfereeJourneyHomePage.setUpPaymentAccount(),
+				MessageFormat.format(MobilityXConstants.FAILED_TO_SETUP_PAYMENT_ACCOUNT, CoreConstants.FAIL));
+		mxTransfereeJourneyHomePage.clickElementOfPage(MobilityXConstants.MANAGE_MY_POINTS);
+		Assert.assertTrue(mxTransfereeFlexPlanningToolPage.isFlexPlanningToolHomePageDisplayed(),
+				MessageFormat.format(MobilityXConstants.ONPOINT_PLANNING_TOOL_PAGE_NOT_DISPLAYED, CoreConstants.FAIL));
+		Assert.assertTrue(mxTransfereeFlexPlanningToolPage.selectCashOutOnFPT(), MessageFormat
+				.format(MobilityXConstants.FAILED_TO_SELECT_CASHOUT_ON_ONPOINT_PLANNING_TOOL_PAGE, CoreConstants.FAIL));
+		mxTransfereeFlexPlanningToolPage.clickElementOfPage(MobilityXConstants.NEXT);
+		Assert.assertTrue(mxTransfereeMyBenefitsBundlePage.isMyBundlePageDisplayed(),
+				MessageFormat.format(MobilityXConstants.FAILED_TO_DISPLAY_MY_BENEFIT_BUNDLE_PAGE, CoreConstants.FAIL));
+		Assert.assertTrue(mxTransfereeMyBenefitsBundlePage.verifySelectedCashoutDetails(), MessageFormat.format(
+				MobilityXConstants.FAILED_TO_VERIFY_SELECTED_CASHOUT_DETAILS_ON_MY_BUNDLE_PAGE, CoreConstants.FAIL));
+	}
+	
+	
+	@Given("^he has setup a new OnPoint Policy with following selection in Blueprint application$")
+	public void he_has_setup_a_new_OnPoint_Policy_with_following_selection_in_Blueprint_application(
+			DataTable dataTable) throws Throwable {
 
+		BusinessFunctions.resetPropertiesValue();
+		List<Map<String, String>> dataMap = dataTable.asMaps(String.class, String.class);
+		String policyRequiredFor = dataMap.get(0).get("PolicyRequiredFor");
+		String benefitType = dataMap.get(0).get("BenefitType");
+		String flexSetupType = dataMap.get(0).get("Flex Setup Type");
+		String personResponsibleForBenefitSelection = dataMap.get(0).get("Person Responsible For Benefit Selection");
+		CoreFunctions.writeToPropertiesFile("CoreFlex_Policy_RequiredFor", policyRequiredFor);
+		CoreFunctions.writeToPropertiesFile("CoreFlex_Policy_BenefitType", benefitType);
+		CoreFunctions.writeToPropertiesFile("CoreFlex_Policy_FlexSetupType", flexSetupType);
+		CoreFunctions.writeToPropertiesFile("CoreFlex_Policy_PersonResponsible", personResponsibleForBenefitSelection);
+
+		Assert.assertTrue(bluePrintCFLoginPage.verifyLoginPageNavigation(), MessageFormat.format(
+				PDTConstants.FAILED_TO_NAVIGATE_TO_COREFLEX_BLUE_PRINT_APPLICATION_LOGIN_PAGE, CoreConstants.FAIL));
+		Assert.assertTrue(bluePrintCFLoginPage.loginByUserType(PDTConstants.CSM, viewPolicyPage),
+				MessageFormat.format(PDTConstants.FAILED_TO_VERIFY_LOGGED_IN_USER, CoreConstants.FAIL));
+		viewPolicyPage.clickElementOfPage(PDTConstants.ADD_NEW_POLICY_FORM);
+		Assert.assertTrue(addNewPolicyPage.verifyAddNewPolicyHeading(COREFLEXConstants.ADD_NEW_POLICY_PAGE),
+				MessageFormat.format(PDTConstants.FAILED_TO_VERIFY_HEADING_ON_PAGE, CoreConstants.FAIL,
+						COREFLEXConstants.ADD_NEW_POLICY_PAGE, PDTConstants.ADD_NEW_POLICY_FORM,
+						addNewPolicyPage.getElementText(PDTConstants.HEADING)));
+		addNewPolicyPage.clickElementOfPage(PDTConstants.CLIENT_ID);
+		addNewPolicyPage.selectClient(_loginInfo.details.clientId, _loginInfo.details.clientName);
+		addNewPoliciesForClientInIRIS(_loginInfo.details.clientId, addNewPolicyPage.verifyAutomationPolicyPresent());
+		addNewPolicyPage.clickElementOfPage(PDTConstants.CLIENT_ID);
+		addNewPolicyPage.selectClient(_loginInfo.details.clientId, _loginInfo.details.clientName);
+		Assert.assertTrue(addNewPolicyPage.selectAutomationPolicy(),
+				MessageFormat.format(PDTConstants.FAILED_TO_SELECT_POLICY_FROM_POLICY_NAME_FIELD, CoreConstants.FAIL));
+		addNewPolicyPage.clickElementOfPage(PDTConstants.NEXT);
+		Assert.assertTrue(generalInfoPage.verifyPageNavigation(COREFLEXConstants.GENERAL_INFORMATION_PAGE),
+				MessageFormat.format(PDTConstants.FAILED_TO_NAVIGATE_TO_COREFLEX_GENERAL_INFORMATION_PAGE,
+						CoreConstants.FAIL));
+		generalInfoPage.fillOtherMandatoryFields();
+		Assert.assertTrue(
+				generalInfoPage.selectFieldOption(PDTConstants.POINTS_BASED_FLEX_POLICY, COREFLEXConstants.YES),
+				MessageFormat.format(PDTConstants.FAILED_TO_SELECT_FIELD_OPTIONS_ON_GENERAL_INFO_PAGE,
+						CoreConstants.FAIL));
+		generalInfoPage.clickElementOfPage(PDTConstants.NEXT);
+		Assert.assertTrue(flexPolicySetupPage.verifyPageNavigation(COREFLEXConstants.POINT_POLICY_SETUP),
+				MessageFormat.format(COREFLEXConstants.FAILED_TO_VERIFY_USER_NAVIGATION_TO_POINT_POLICY_SETUP_PAGE,
+						CoreConstants.FAIL));
+		flexPolicySetupPage.selectFlexPolicySetupPageFields(dataTable);
+		Assert.assertTrue(flexPolicySetupPage.verifyFlexSetupTypeSelection(),
+				MessageFormat.format(
+						COREFLEXConstants.FAILED_TO_VERIFY_FLEX_SETUP_TYPE_SELECTION_ON_FLEX_POLICY_SETUP_PAGE,
+						CoreConstants.FAIL));
+		flexPolicySetupPage.clickElementOfPage(PDTConstants.NEXT);
+		Assert.assertTrue(
+				coreFlexPolicyBenefitsCategoriesPage.verifyPageNavigation(COREFLEXConstants.POLICY_BENEFIT_CATEGORIES),
+				MessageFormat.format(
+						COREFLEXConstants.FAILED_TO_VERIFY_USER_NAVIGATION_TO_POLICY_BENEFITS_CATEGORIES_PAGE,
+						CoreConstants.FAIL));
+		coreFlexPolicyBenefitsCategoriesPage.selectBenefits(benefitType, policyRequiredFor);
+		coreFlexPolicyBenefitsCategoriesPage.clickElementOfPage(PDTConstants.NEXT);
+		Assert.assertTrue(coreFlexPolicyBenefitsCategoriesPage.verifyInformationDialog(), MessageFormat.format(
+				COREFLEXConstants.FAILED_TO_VERIFY_INFORMATION_DIALOG_AFTER_SELECTING_BENEFITS_AND_CLICKING_NEXT_ON_POLICY_BENEFIT_CATEGORIES_PAGE,
+				CoreConstants.FAIL));
+		Assert.assertTrue(
+				coreFlexPolicyBenefitsCategoriesPage.verifyBenefitsDisplayedOnLeftNavigation(benefitType,
+						policyRequiredFor),
+				MessageFormat.format(COREFLEXConstants.FAILED_TO_VERIFY_BENEFITS_DISPLAYED_ON_LEFT_NAVIGATION,
+						CoreConstants.FAIL));
+		Assert.assertTrue(
+				coreFlexPolicyBenefitsCategoriesPage.selectAndFillAddedBenefits(benefitType, policyRequiredFor),
+				MessageFormat.format(COREFLEXConstants.FAILED_TO_SELECT_AND_FILL_ADDED_BENEFITS, CoreConstants.FAIL));
+		Assert.assertTrue(
+				coreFlexBenefitSummaryPage.verifyPageNavigation(COREFLEXConstants.POLICY_BENEFITS_BENEFIT_SUMMARY),
+				MessageFormat.format(COREFLEXConstants.FAILED_TO_VERIFY_USER_NAVIGATION_TO_BENEFIT_SUMMARY_PAGE,
+						CoreConstants.FAIL));
+		Assert.assertTrue(coreFlexBenefitSummaryPage.iterateAndVerifyBenefitSummaryDetails(policyRequiredFor),
+				MessageFormat.format(
+						COREFLEXConstants.FAILED_TO_VERIFY_BENEFIT_SUBBENEFIT_DETAILS_ON_BENEFIT_SUMMARY_PAGE,
+						CoreConstants.FAIL));
+		coreFlexBenefitSummaryPage.clickElementOfPage(COREFLEXConstants.CONTINUE);
+		Assert.assertTrue(coreFlexCustomBundlesPage.verifyPageNavigation(COREFLEXConstants.CUSTOM_BUNDLES),
+				MessageFormat.format(COREFLEXConstants.FAILED_TO_VERIFY_USER_NAVIGATION_TO_CUSTOM_BUNDLES_PAGE,
+						CoreConstants.FAIL));
+		Assert.assertTrue(
+				coreFlexCustomBundlesPage.iterateAndAddNewCustomBundle(COREFLEXConstants.ADD_NEW_CUSTOM_BUNDLE,
+						benefitType, COREFLEXConstants.SAVE_CUSTOM_BUNDLE, policyRequiredFor),
+				MessageFormat.format(COREFLEXConstants.FAILED_TO_ADD_A_NEW_BUNDLE_ON_CUSTOM_BUNDLES_PAGE,
+						CoreConstants.FAIL));
 	}
 
 }

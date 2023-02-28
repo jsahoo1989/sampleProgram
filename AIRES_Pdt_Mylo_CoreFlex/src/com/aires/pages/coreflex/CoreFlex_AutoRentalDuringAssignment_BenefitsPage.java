@@ -210,10 +210,10 @@ public class CoreFlex_AutoRentalDuringAssignment_BenefitsPage extends BenefitPag
 
 	@FindBy(how = How.XPATH, using = "//span[contains(text(),'Core Benefits')]/ancestor::div[contains(@id,'firstItemDiv')]//div[contains(@class,'RXCFServicesMonitoringBorderPanel')]")
 	private List<WebElement> coreCardPanelList;
-	
+
 	@FindBy(how = How.XPATH, using = "//span[contains(text(),'Core Benefits')]/ancestor::div[contains(@id,'firstItemDiv')]//table[contains(@class,'RXRightIconPanel')]//span[contains(text(),'Starting Soon')]")
 	private WebElement coreCardStartingSoonStatus;
-	
+
 	private By coreCardAutoReturnStatus = By.xpath(
 			"//span[contains(@class,'ServicesSuccessIcon ')]/ancestor::div[contains(@class,'ServicesTrain')]//span[contains(text(),'Auto return')]");
 
@@ -233,6 +233,9 @@ public class CoreFlex_AutoRentalDuringAssignment_BenefitsPage extends BenefitPag
 			"//span[contains(@class,'ServicesSuccessIcon ')]/ancestor::div[contains(@class,'ServicesTrain')]//span[contains(text(),'Auto return')]");
 	private By autoReturnEstimatedDate = By
 			.xpath(".//div[5]//span[not(contains(text(),'estimated'))][@class='RXSmallerTextMuted RXBold']");
+
+	@FindBy(how = How.CSS, using = "input[formcontrolname='autoRentDuration']")
+	private WebElement _inputRentalDuration;
 
 	/*********************************************************************/
 
@@ -433,8 +436,13 @@ public class CoreFlex_AutoRentalDuringAssignment_BenefitsPage extends BenefitPag
 			CoreFunctions.clickElement(driver, _selectRentalCarType);
 			CoreFunctions.selectItemInListByText(driver, _selectRentalCarTypeOptions,
 					allowancesBenefitData.autoRentalDuringAssignment.rentalCarType, true);
-			CoreFunctions.clearAndSetText(driver, _inputRentalCarOtherType,
-					allowancesBenefitData.autoRentalDuringAssignment.rentalCarTypeOther);
+			if (allowancesBenefitData.autoRentalDuringAssignment.rentalCarType
+					.equalsIgnoreCase(COREFLEXConstants.OTHER)) {
+				CoreFunctions.clearAndSetText(driver, _inputRentalCarOtherType,
+						allowancesBenefitData.autoRentalDuringAssignment.rentalCarTypeOther);
+			}
+			CoreFunctions.clearAndSetText(driver, _inputRentalDuration,
+					allowancesBenefitData.autoRentalDuringAssignment.durationDays);
 			CoreFunctions.clearAndSetText(driver, _txtAreaComment,
 					allowancesBenefitData.autoRentalDuringAssignment.comment);
 			CoreFunctions.selectItemInListByText(driver, _radioBtnGrossUp,
@@ -718,6 +726,9 @@ public class CoreFlex_AutoRentalDuringAssignment_BenefitsPage extends BenefitPag
 						COREFLEXConstants.RENTAL_CAR_OTHER_SIZE_CLASS);
 				CoreFunctions.highlightObject(driver, _inputRentalCarOtherType);
 			}
+			CoreFunctions.verifyText(_inputRentalDuration.getDomProperty("value"),
+					allowancesBenefitData.autoRentalDuringAssignment.durationDays,
+					COREFLEXConstants.RENTAL_CAR_DURATION_DAYS);
 			CoreFunctions.verifyRadioButtonSelection(driver, _radioGrossUpLabelList, _radioGrossUpButtonList,
 					allowancesBenefitData.autoRentalDuringAssignment.grossUp, COREFLEXConstants.GROSS_UP);
 			CoreFunctions.verifyRadioButtonSelection(driver, _radioReimbursedByLabelList, _radioReimbursedByButtonList,
@@ -777,8 +788,8 @@ public class CoreFlex_AutoRentalDuringAssignment_BenefitsPage extends BenefitPag
 	@Override
 	protected boolean verifyCoreBenefitCardStatusAfterEndActualization(int index, Benefit benefit) {
 		return (CoreFunctions.isElementExist(driver,
-				CoreFunctions.findSubElement(coreCardPanelList.get(index), coreCardAutoReturnStatus),
-				3) && (!CoreFunctions.isElementExist(driver, coreCardStartingSoonStatus, 3)));
+				CoreFunctions.findSubElement(coreCardPanelList.get(index), coreCardAutoReturnStatus), 3)
+				&& (!CoreFunctions.isElementExist(driver, coreCardStartingSoonStatus, 3)));
 	}
 
 	@Override

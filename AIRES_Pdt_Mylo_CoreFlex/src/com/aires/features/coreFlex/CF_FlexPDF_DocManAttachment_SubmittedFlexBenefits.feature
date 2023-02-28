@@ -1,8 +1,8 @@
 Feature: Validate the FleX PDF - DocMan Attachment template for submitted Flex benefits by Client, Transferee, Impersonator and Delegate user
 
-  @Coreflex:218626 @CF_End-To-End_MasterScript @CF_FlexPDF_DocManAttachment @CF_FlexPDF_DocManAttachment_PS_Client
+  @OnPoint_Regression @CF_OnPoint_Feature @CF_FlexPDF_DocManAttachment @CF_FlexPDF_DocManAttachment_PS_Client
   Scenario: CoreFlex - Validating policy status is updated to 'Active' on completion of Approval WorkFlow for FleX PDF - DocMan Attachment Policy Setup
-    Given he has setup a new Points Based CoreFlex Policy with following selection in Blueprint application
+    Given he has setup a new OnPoint Policy with following selection in Blueprint application
       | Person Responsible For Benefit Selection | Flex Setup Type | Cashout Availability | BenefitType | PolicyRequiredFor |
       | Client Initiator                         | User Defined    | Portion Cashout      | Both        | Client            |
     And he has clicked on "Submit" button to submit "V1" policy verison on "Custom Bundles" page
@@ -13,7 +13,7 @@ Feature: Validate the FleX PDF - DocMan Attachment template for submitted Flex b
     When he clicks on "Approve" button to acknowledge 'Approve this Policy' dialog
     Then Policy Status and Version should be displayed as "Active" and "V1" respectively on "View/Edit Policy Forms" page
 
-  @Coreflex:218627 @CF_End-To-End_MasterScript @CF_FlexPDF_DocManAttachment @CF_FlexPDF_DocManAttachment_Client
+  @OnPoint_Regression @CF_OnPoint_Feature @CF_FlexPDF_DocManAttachment @CF_FlexPDF_DocManAttachment_Client
   Scenario: MXClient - Verifying submitted Benefits and Points details by Client on downloaded Point Summary PDF document
     Given he has logged into 'MobilityX' application as a 'Client' user
     And he has clicked on "Create an authorization" after validating Client details on 'Authorization Home Page'
@@ -37,9 +37,9 @@ Feature: Validate the FleX PDF - DocMan Attachment template for submitted Flex b
     When he clicks on "Download document" link on the preview summary page of 'Point Summary.pdf' document
     Then "Point Summary.pdf" document should downloaded having submitted 'Benefits' and 'Points' details by 'Client'
 
-  @Coreflex:218628 @CF_End-To-End_MasterScript @CF_FlexPDF_DocManAttachment @CF_FlexPDF_DocManAttachment_PS_Transf
+  @OnPoint_Regression @CF_OnPoint_Feature @CF_FlexPDF_DocManAttachment @CF_FlexPDF_DocManAttachment_PS_Transf
   Scenario: CoreFlex - Validating policy status is updated to 'Active' on completion of Approval WorkFlow for FleX PDF - DocMan Attachment Policy Setup
-    Given he has setup a new Points Based CoreFlex Policy with following selection in Blueprint application
+    Given he has setup a new OnPoint Policy with following selection in Blueprint application
       | Person Responsible For Benefit Selection | Flex Setup Type | Cashout Availability | BenefitType | PolicyRequiredFor |
       | Transferee                               | Static/Fixed    | Portion Cashout      | Both        | Client            |
     And he has clicked on "Submit" button to submit "V1" policy verison on "Custom Bundles" page
@@ -50,7 +50,7 @@ Feature: Validate the FleX PDF - DocMan Attachment template for submitted Flex b
     When he clicks on "Approve" button to acknowledge 'Approve this Policy' dialog
     Then Policy Status and Version should be displayed as "Active" and "V1" respectively on "View/Edit Policy Forms" page
 
-  @Coreflex:218629 @CF_End-To-End_MasterScript @CF_FlexPDF_DocManAttachment @CF_FlexPDF_DocManAttachment_Transferee
+  @OnPoint_Regression @CF_OnPoint_Feature @CF_FlexPDF_DocManAttachment @CF_FlexPDF_DocManAttachment_Transferee
   Scenario: MXTransferee - Verifying submitted Benefits and Points details by Transferee on downloaded Point Summary PDF document
     Given he has logged into 'MobilityX' application after creating a new 'Transferee' through IRIS application for policy setup in 'Policy Digitization Tool'
     And he has validated 'Assignment-Policy' details after selecting below option displayed on 'Welcome' dialog
@@ -58,10 +58,6 @@ Feature: Validate the FleX PDF - DocMan Attachment template for submitted Flex b
       | No thanks, I prefer to do this later |
     And he has navigated to "OnPoint Planning Tool" page after clicking on 'Manage my Points' button on "Mobility Journey Home" page
     And he has verified Benefits details displayed under 'Core Benefits' and 'Flex Benefits' section on "OnPoint Planning Tool" page
-    And he has navigated to "Suggested Bundles" page after clicking on following link on "OnPoint Planning Tool" page
-      | Take a look at some suggested options! |
-    And he has verified 'Custom Bundle' Benefit details displayed under 'Recommended Bundle' section on "Suggested Bundles" page
-    And he has navigated back to "OnPoint Planning Tool" page after clicking on 'Back to benefits list' button
     And he has navigated to "My Benefits Bundle" page after selecting required benefits on "OnPoint Planning Tool" page
     And he has clicked on "Review and Submit" button after validating all the benefit and Cashout details listed under 'Selected Benefits' section on "My Benefits Bundle" page
     And he has clicked on "Yes - submit my bundle" button after entering Transferee name on "Submit Bundle Confirmation" dialog
@@ -76,9 +72,9 @@ Feature: Validate the FleX PDF - DocMan Attachment template for submitted Flex b
     When he clicks on "Download document" link on the preview summary page of 'Point Summary.pdf' document
     Then "Point Summary.pdf" document should downloaded having submitted 'Benefits' and 'Points' details by 'Transferee'
 
-  @Coreflex:218630 @CF_End-To-End_MasterScript @CF_FlexPDF_DocManAttachment @CF_FlexPDF_DocManAttachment_PS_ClientImpersonatingTransferee
+  @OnPoint_Regression @CF_OnPoint_Feature @CF_FlexPDF_DocManAttachment @CF_FlexPDF_DocManAttachment_PS_ClientImpersonatingTransferee
   Scenario: CoreFlex - Validating policy status is updated to 'Active' on completion of Approval WorkFlow for FleX PDF - DocMan Attachment Policy Setup
-    Given he has setup a new Points Based CoreFlex Policy with following selection in Blueprint application
+    Given he has setup a new OnPoint Policy with following selection in Blueprint application
       | Person Responsible For Benefit Selection | Flex Setup Type | Cashout Availability   | BenefitType | PolicyRequiredFor |
       | Transferee                               | Static/Fixed    | Cashout Not Authorized | Both        | Client            |
     And he has clicked on "Submit" button to submit "V1" policy verison on "Custom Bundles" page
@@ -89,7 +85,7 @@ Feature: Validate the FleX PDF - DocMan Attachment template for submitted Flex b
     When he clicks on "Approve" button to acknowledge 'Approve this Policy' dialog
     Then Policy Status and Version should be displayed as "Active" and "V1" respectively on "View/Edit Policy Forms" page
 
-  @Coreflex:218631 @CF_End-To-End_MasterScript @CF_FlexPDF_DocManAttachment @CF_FlexPDF_DocManAttachment_ClientImpersonatingTransferee
+  @OnPoint_Regression @CF_OnPoint_Feature @CF_FlexPDF_DocManAttachment @CF_FlexPDF_DocManAttachment_ClientImpersonatingTransferee
   Scenario: MXClient - Verifying submitted Benefits and Points details by Transferee Impersonated by Client on downloaded Point Summary PDF document
     Given he has logged into 'MobilityX' application after creating a new 'Transferee' through IRIS application for policy setup in 'Policy Digitization Tool'
     And he has validated 'Assignment-Policy' details after selecting below option displayed on 'Welcome' dialog
@@ -97,8 +93,8 @@ Feature: Validate the FleX PDF - DocMan Attachment template for submitted Flex b
       | No thanks, I prefer to do this later |
     And he has logged into 'MobilityX' application as a 'Client' user
     And he has impersonated the user with below details from MobilityX dashboard
-      | Client                    | User Type  |
-      | Boston Scientific (13951) | Transferee |
+      | Client                             | User Type  |
+      | Aires QA Automation Client (49226) | Transferee |
     And he has validated 'Assignment-Policy' details after selecting below option displayed on 'Welcome' dialog
       | WelcomeDialogSelection               |
       | No thanks, I prefer to do this later |

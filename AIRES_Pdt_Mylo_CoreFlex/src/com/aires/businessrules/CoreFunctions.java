@@ -1875,8 +1875,8 @@ public class CoreFunctions {
 					CoreConstants.PASS + MobilityXConstants.VERIFIED_FIELD_TEXT + fieldName + " : " + expectedText);
 		else {
 			Reporter.addStepLog(CoreConstants.FAIL + MobilityXConstants.FAILED_TO_VERIFY + fieldName + " | "
-					+ CoreConstants.VAL_ACTUAL + actualText + " " + CoreConstants.VAL_EXPECTED + expectedText);
-			Assert.fail("Failed to verify the fields " + fieldName + " Text: Actual Text = " + actualText
+					+ CoreConstants.VAL_ACTUAL + actualText + " | " + CoreConstants.VAL_EXPECTED + expectedText);
+			Assert.fail("Failed to verify the fields " + fieldName + " Text: | Actual Text = " + actualText
 					+ " | Expected Text = " + expectedText);
 		}
 	}
@@ -1889,8 +1889,8 @@ public class CoreFunctions {
 					CoreConstants.PASS + MobilityXConstants.VERIFIED_FIELD_TEXT + fieldName + " : " + expectedText);
 		} else {
 			Reporter.addStepLog(CoreConstants.FAIL + MobilityXConstants.FAILED_TO_VERIFY + fieldName + " | "
-					+ CoreConstants.VAL_ACTUAL + actualText + " " + CoreConstants.VAL_EXPECTED + expectedText);
-			Assert.fail("Failed to verify the fields " + fieldName + " Text: Actual Text = " + actualText
+					+ CoreConstants.VAL_ACTUAL + actualText + " | " + CoreConstants.VAL_EXPECTED + expectedText);
+			Assert.fail("Failed to verify the fields " + fieldName + " Text: | Actual Text = " + actualText
 					+ " | Expected Text = " + expectedText);
 		}
 	}
@@ -1905,7 +1905,7 @@ public class CoreFunctions {
 			return true;
 		} else {
 			Reporter.addStepLog(CoreConstants.FAIL + MobilityXConstants.FAILED_TO_VERIFY + fieldName + " | "
-					+ CoreConstants.VAL_ACTUAL + actualText + " " + CoreConstants.VAL_EXPECTED + expectedText);
+					+ CoreConstants.VAL_ACTUAL + actualText + " | " + CoreConstants.VAL_EXPECTED + expectedText);
 			return false;
 		}
 	}
@@ -1916,8 +1916,8 @@ public class CoreFunctions {
 					CoreConstants.PASS + MobilityXConstants.VERIFIED_FIELD_TEXT + fieldName + " : " + expectedValue);
 		else {
 			Reporter.addStepLog(CoreConstants.FAIL + MobilityXConstants.FAILED_TO_VERIFY + fieldName + " | "
-					+ CoreConstants.VAL_ACTUAL + actualValue + " " + CoreConstants.VAL_EXPECTED + expectedValue);
-			Assert.fail("Failed to verify the fields " + fieldName + " Text: Actual Text = " + actualValue
+					+ CoreConstants.VAL_ACTUAL + actualValue + " | " + CoreConstants.VAL_EXPECTED + expectedValue);
+			Assert.fail("Failed to verify the fields " + fieldName + " Text: | Actual Text = " + actualValue
 					+ " | Expected Text = " + expectedValue);
 		}
 	}
@@ -1930,8 +1930,8 @@ public class CoreFunctions {
 					CoreConstants.PASS + MobilityXConstants.VERIFIED_FIELD_TEXT + fieldName + " : " + expectedValue);
 		} else {
 			Reporter.addStepLog(CoreConstants.FAIL + MobilityXConstants.FAILED_TO_VERIFY + fieldName + " | "
-					+ CoreConstants.VAL_ACTUAL + actualValue + " " + CoreConstants.VAL_EXPECTED + expectedValue);
-			Assert.fail("Failed to verify the fields " + fieldName + " Text: Actual Text = " + actualValue
+					+ CoreConstants.VAL_ACTUAL + actualValue + " | " + CoreConstants.VAL_EXPECTED + expectedValue);
+			Assert.fail("Failed to verify the fields " + fieldName + " Text: | Actual Text = " + actualValue
 					+ " | Expected Text = " + expectedValue);
 		}
 	}

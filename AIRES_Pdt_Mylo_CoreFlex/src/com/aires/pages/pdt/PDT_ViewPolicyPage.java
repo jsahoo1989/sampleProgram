@@ -220,7 +220,7 @@ public class PDT_ViewPolicyPage extends Base {
 	private WebElement _btnNextPolicyPage;
 
 	// Clone Policy Dialog
-	@FindBy(how = How.XPATH, using = "//app-dialog-overview//span[contains(text(),'Clone Policy:')]")
+	@FindBy(how = How.XPATH, using = "//app-dialog-overview//span[contains(text(),'Clone Policy')]")
 	private WebElement _dialogClonePolicy;
 
 	// Clone Policy Dialog - Reference Policy
@@ -232,7 +232,7 @@ public class PDT_ViewPolicyPage extends Base {
 	private WebElement _labelReferenceClient;
 
 	// Clone Policy Dialog - Clone to: Client Text
-	@FindBy(how = How.XPATH, using = "//app-dialog-overview//label[contains(text(),'Clone to: Client')]")
+	@FindBy(how = How.XPATH, using = "//app-dialog-overview//label[contains(text(),'Clone Policy Benefits to: Client')]")
 	private WebElement _labelCloneToClient;
 
 	// Clone Policy Dialog - Clone to: Client Select Field
@@ -252,7 +252,7 @@ public class PDT_ViewPolicyPage extends Base {
 	private WebElement _buttonCloseCloneToClientOptionsList;
 
 	// Clone Policy Dialog - Clone to: Policy Text
-	@FindBy(how = How.XPATH, using = "//app-dialog-overview//label[contains(text(),'Clone to: Policy')]")
+	@FindBy(how = How.XPATH, using = "//app-dialog-overview//label[contains(text(),'Clone Policy Benefits to: Policy')]")
 	private WebElement _labelCloneToPolicy;
 
 	// Clone Policy Dialog - Clone to: Policy Select Field
@@ -382,7 +382,7 @@ public class PDT_ViewPolicyPage extends Base {
 			break;
 		case COREFLEXConstants.SEARCH:
 			CoreFunctions.clickElement(driver, _btnSearch);
-			CoreFunctions.explicitWaitTillElementInVisibilityCustomTime(driver, _progressBar, 5);
+			CoreFunctions.explicitWaitTillElementInVisibilityCustomTime(driver, _progressBar, 15);
 			break;
 		case COREFLEXConstants.CREATE:
 			CoreFunctions.clickElement(driver, _btnVersionControlCreate);
@@ -393,7 +393,7 @@ public class PDT_ViewPolicyPage extends Base {
 			break;
 		case COREFLEXConstants.EDIT_ICON:
 			CoreFunctions.clickElement(driver, _btnEditIcon);
-			CoreFunctions.explicitWaitTillElementInVisibilityCustomTime(driver, _progressBar, 5);
+//			CoreFunctions.explicitWaitTillElementInVisibilityCustomTime(driver, _progressBar, 5);
 			break;
 		case COREFLEXConstants.ASSIGNMENT_HISTORY_ICON:
 			CoreFunctions.clickElement(driver, _btnAssignmentHistoryIcon);
@@ -968,6 +968,7 @@ public class PDT_ViewPolicyPage extends Base {
 	}
 
 	public void searchPolicy(String policyName) {
+		CoreFunctions.waitHandler(4);
 		CoreFunctions.explicitWaitTillElementBecomesClickable(driver, _btnSearch, COREFLEXConstants.SEARCH);
 		CoreFunctions.clearAndSetText(driver, _inputPolicyName, policyName);
 		clickElementOfPage(COREFLEXConstants.SEARCH);

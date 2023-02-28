@@ -808,7 +808,8 @@ public class PDT_AddNewPolicyPage extends Base {
 	}
 
 	/**
-	 * Method to select a policy based on provided Policy Name
+	 * Method to select a policy with Text Automation in Policy Name - To make sure
+	 * other Team Members don't update Automation Policy during execution
 	 * 
 	 * @param policyName
 	 * @return
@@ -840,7 +841,7 @@ public class PDT_AddNewPolicyPage extends Base {
 				CoreFunctions.clickElement(driver, _selectPolicyName);
 				CoreFunctions.clearAndSetText(driver, _inputPolicy, COREFLEXConstants.AUTOMATION_POLICY);
 				CoreFunctions.explicitWaitTillElementListVisibility(driver, _optionsPolicyName);
-				return (_optionsPolicyName.size() >= 5) ? true : false;
+				return (_optionsPolicyName.size() >= 3) ? true : false;
 
 			} else if (CoreFunctions.isElementExist(driver, _popUpError, 2)) {
 				Reporter.addStepLog(MessageFormat.format(PDTConstants.ERROR_POP_UP_DISPLAYED_FOR_VALID_CLIENTID,

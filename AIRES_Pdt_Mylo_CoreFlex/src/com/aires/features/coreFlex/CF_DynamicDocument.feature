@@ -1,8 +1,8 @@
 Feature: Validate the CoreFlex - Dynamic Document (pdf & docx) having Core/Flex Benefits submitted in Authorization Form
 
-  @Coreflex:218411 @CF_End-To-End_MasterScript @CF_DynamicDocument @CF_DynamicDocument_PolicySetup
+  @OnPoint_Regression @CF_OnPoint_Feature @CF_DynamicDocument @CF_DynamicDocument_PolicySetup
   Scenario: CoreFlex - Creating a new Active Points Based CoreFlex Policy for Dynamic Document Verification
-    Given he has setup a new Points Based CoreFlex Policy with following selection in Blueprint application
+    Given he has setup a new OnPoint Policy with following selection in Blueprint application
       | Person Responsible For Benefit Selection | Flex Setup Type | Cashout Availability   | BenefitType | PolicyRequiredFor |
       | Client and Transferee                    | Static/Fixed    | Cashout Not Authorized | Both        | Client            |
     And he has clicked on "Submit" button to submit "V1" policy verison on "Custom Bundles" page
@@ -13,7 +13,7 @@ Feature: Validate the CoreFlex - Dynamic Document (pdf & docx) having Core/Flex 
     When he clicks on "Approve" button to acknowledge 'Approve this Policy' dialog
     Then Policy Status and Version should be displayed as "Active" and "V1" respectively on "View/Edit Policy Forms" page
 
-  @Coreflex:218412 @CF_End-To-End_MasterScript @CF_DynamicDocument @CF_DynamicDocument_ClientFlow
+  @OnPoint_Regression @CF_OnPoint_Feature @CF_DynamicDocument @CF_DynamicDocument_ClientFlow
   Scenario Outline: MXClient - Verifying Core/Flex benefits details on Dymanic doc Preview page and PDF file submitted with Core/Flex benefits for Client and Transferee BluePrint Policy Setup
     Given he has logged into 'MobilityX' application as a 'Client' user
     And he has clicked on "Create an authorization" after validating Client details on 'Authorization Home Page'

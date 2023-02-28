@@ -392,7 +392,7 @@ public class MX_Client_BenefitsBundlePage extends Base {
 		boolean flag = false;
 		try {
 			for (Benefit benefit : getBenefits(CoreFunctions.getPropertyFromConfig("CoreFlex_Policy_BenefitType"),
-					CoreFunctions.getPropertyFromConfig("CoreFlex_Policy_RequiredFor"), "0")) {
+					CoreFunctions.getPropertyFromConfig("CoreFlex_Policy_RequiredFor"))) {
 				if (benefit.getSelectBenefitOnFPTPage()) {
 					int indexBenefit = BusinessFunctions.returnindexItemFromListUsingText(driver,
 							_textAddedBenefitNameList, benefit.getBenefitDisplayName());
@@ -452,7 +452,7 @@ public class MX_Client_BenefitsBundlePage extends Base {
 		boolean flag = false;
 		try {
 			for (Benefit benefit : getBenefits(CoreFunctions.getPropertyFromConfig("CoreFlex_Policy_BenefitType"),
-					CoreFunctions.getPropertyFromConfig("CoreFlex_Policy_RequiredFor"), "0")) {
+					CoreFunctions.getPropertyFromConfig("CoreFlex_Policy_RequiredFor"))) {
 				if (benefit.getSelectBenefitOnFPTPage()) {
 					int indexBenefit = BusinessFunctions.returnindexItemFromListUsingText(driver,
 							_textAddedBenefitNameList, benefit.getBenefitDisplayName());
@@ -512,7 +512,7 @@ public class MX_Client_BenefitsBundlePage extends Base {
 		return isSubmittedBenefitDetailsVerified;
 	}
 
-	private boolean verifySubmittedPointsDetailsOnBBPage() {
+	public boolean verifySubmittedPointsDetailsOnBBPage() {
 		try {
 			CoreFunctions.verifyValue(
 					Double.parseDouble(
@@ -523,6 +523,9 @@ public class MX_Client_BenefitsBundlePage extends Base {
 					CoreFunctions.getItemsFromListByIndex(driver, _textSubmittedBenefitsPoints, 1, true),
 					CoreFunctions.getPropertyFromConfig("CF_Transferee_TotalAvailablePoints"),
 					MobilityXConstants.TOTAL_AVAILABLE_POINTS);
+			Reporter.addStepLog(MessageFormat.format(
+					MobilityXConstants.SUCCESSFULLY_VERIFIED_SUBMITTED_POINTS_DETAILS_ON_BENEFITS_BUNDLE_PAGE,
+					CoreConstants.PASS));
 			return true;
 		} catch (Exception e) {
 			Reporter.addStepLog(
@@ -594,7 +597,7 @@ public class MX_Client_BenefitsBundlePage extends Base {
 		boolean flag = false;
 		try {
 			for (Benefit benefit : getBenefits(CoreFunctions.getPropertyFromConfig("CoreFlex_Policy_BenefitType"),
-					CoreFunctions.getPropertyFromConfig("CoreFlex_Policy_RequiredFor"), "0")) {
+					CoreFunctions.getPropertyFromConfig("CoreFlex_Policy_RequiredFor"))) {
 				if (benefit.getSelectBenefitOnFPTPage()) {
 					int indexBenefit = BusinessFunctions.returnindexItemFromListUsingText(driver,
 							_textSubmittedBenefitNameList, benefit.getBenefitDisplayName());
@@ -816,7 +819,7 @@ public class MX_Client_BenefitsBundlePage extends Base {
 			String buttonName) {
 		CoreFunctions.setElementText(driver, input_transfereeName, transfereeName);
 		CoreFunctions.setElementText(driver, optionalComments, optionalNotes);
-		CoreFunctions.waitHandler(3);
+		CoreFunctions.waitHandler(2);
 		CoreFunctions.click(driver, _buttonDeleteThisBenefits, buttonName);
 	}
 
@@ -863,7 +866,7 @@ public class MX_Client_BenefitsBundlePage extends Base {
 		boolean flag = false;
 		try {
 			for (Benefit benefit : getBenefits(CoreFunctions.getPropertyFromConfig("CoreFlex_Policy_BenefitType"),
-					CoreFunctions.getPropertyFromConfig("CoreFlex_Policy_RequiredFor"), "0")) {
+					CoreFunctions.getPropertyFromConfig("CoreFlex_Policy_RequiredFor"))) {
 				if (benefit.getDeleteBenefitOnMBBPage()) {
 					flag = false;
 					int indexBenefit = BusinessFunctions.returnindexItemFromListUsingText(driver,
@@ -894,7 +897,7 @@ public class MX_Client_BenefitsBundlePage extends Base {
 		return isFlexBenefitDeleteStatus;
 	}
 
-	private boolean verifyDeleteBenefitStatus(int indexBenefit, Benefit benefit) {		
+	private boolean verifyDeleteBenefitStatus(int indexBenefit, Benefit benefit) {
 		try {
 			CoreFunctions.verifyText(
 					CoreFunctions.getItemsFromListByIndex(driver, _textSubmittedBenefitNameList, indexBenefit, true),
@@ -931,14 +934,7 @@ public class MX_Client_BenefitsBundlePage extends Base {
 					CoreConstants.FAIL, e.getMessage()));
 		}
 		return false;
-		
-		
-		
-		
-		
-		
-		
-		
+
 	}
 
 	public boolean verifySelectedCashoutDetails() {
@@ -998,8 +994,9 @@ public class MX_Client_BenefitsBundlePage extends Base {
 			CoreFunctions.verifyValue(Double.parseDouble(CoreFunctions.getAttributeText(_inputCashoutPoints, "value")),
 					Double.parseDouble(CoreFunctions.getPropertyFromConfig("CF_Client_SelectedCashOutPoints")),
 					MobilityXConstants.CASHOUT_INPUT_FIELD);
-			CoreFunctions.verifyText(CoreFunctions.getElementText(driver, _textInputCashoutPoints), getExpectedInputCashoutValue(Double
-								.parseDouble(CoreFunctions.getPropertyFromConfig("CF_Client_SelectedCashOutPoints"))),
+			CoreFunctions.verifyText(CoreFunctions.getElementText(driver, _textInputCashoutPoints),
+					getExpectedInputCashoutValue(
+							Double.parseDouble(CoreFunctions.getPropertyFromConfig("CF_Client_SelectedCashOutPoints"))),
 					MobilityXConstants.CASHOUT_INPUT_FIELD_LABEL_VALUE);
 			CoreFunctions.verifyTextContains(
 					CoreFunctions.getItemsFromListByIndex(driver, _allowanceAmountList, indexCashout, true),
@@ -1095,8 +1092,9 @@ public class MX_Client_BenefitsBundlePage extends Base {
 			CoreFunctions.scrollUpUsigActions(driver);
 			CoreFunctions.scrollToElementUsingJS(driver, _textMyBenefitsBundleTitle,
 					MobilityXConstants.MY_BENEFITS_BUNDLE);
+//			CoreFunctions.waitHandler(4);
 			for (Benefit benefit : getBenefits(CoreFunctions.getPropertyFromConfig("CoreFlex_Policy_BenefitType"),
-					CoreFunctions.getPropertyFromConfig("CoreFlex_Policy_RequiredFor"), "0")) {
+					CoreFunctions.getPropertyFromConfig("CoreFlex_Policy_RequiredFor"))) {
 				if (benefit.getSelectBenefitOnFPTPage() && benefit.getDeleteBenefitOnMBBPage()) {
 					int indexBenefit = BusinessFunctions.returnindexItemFromListUsingText(driver,
 							_textSubmittedBenefitNameList, benefit.getBenefitDisplayName());
@@ -1126,12 +1124,14 @@ public class MX_Client_BenefitsBundlePage extends Base {
 									* (Integer.parseInt(CoreFunctions.getItemsFromListByIndex(driver,
 											_confirmationDialogBenefitSelectionQuantity, indexDeleteBenefit, false)))),
 							MobilityXConstants.BENEFIT_POINTS);
+//					CoreFunctions.waitHandler(2);
 					reviewAndConfirmRemoveBenefitSubmission(MobilityXConstants.SUBMIT_BENEFITS_OPTIONAL_NOTES,
 							CoreFunctions.getPropertyFromConfig("Transferee_firstName") + " "
 									+ CoreFunctions.getPropertyFromConfig("Transferee_lastName"),
 							buttonName);
 					isSubmittedBenefitDeleted = verifyRemoveBenefitRequestSuccessMessage();
 					CoreFunctions.explicitWaitTillElementInVisibility(driver, _deleteClientBenefitSentGrowlMessage);
+//					CoreFunctions.waitHandler(4);
 				} else if (!benefit.getDeleteBenefitOnMBBPage())
 					isSubmittedBenefitDeleted = true;
 			}
@@ -1262,7 +1262,8 @@ public class MX_Client_BenefitsBundlePage extends Base {
 		boolean isSubmittedBenefitDetailsVerified = false;
 		try {
 			isSubmittedBenefitDetailsVerified = verifySubmittedBenefitsSectionHeader()
-					&& verifySubmittedDetailsPostDeleteRequestOperationOnMBBPage(actionPerformed) && verifySubmittedPointsDetailsOnBBPage();
+					&& verifySubmittedDetailsPostDeleteRequestOperationOnMBBPage(actionPerformed)
+					&& verifySubmittedPointsDetailsOnBBPage();
 		} catch (Exception e) {
 			Reporter.addStepLog(
 					MessageFormat.format(MobilityXConstants.FAILED_TO_VERIFY_SUBMITTED_BENEFITS_ON_BENEFITS_BUNDLE_PAGE,
@@ -1274,8 +1275,8 @@ public class MX_Client_BenefitsBundlePage extends Base {
 					CoreConstants.PASS));
 
 		return isSubmittedBenefitDetailsVerified;
-	}	
-	
+	}
+
 	public boolean verifySubmittedDetailsPostDeleteRequestOperationOnMBBPage(String actionPerformed) {
 		boolean isSubmittedDetailsVerifiedOnMBBVerified = false;
 		try {
@@ -1341,7 +1342,7 @@ public class MX_Client_BenefitsBundlePage extends Base {
 		boolean flag = false;
 		try {
 			for (Benefit benefit : getBenefits(CoreFunctions.getPropertyFromConfig("CoreFlex_Policy_BenefitType"),
-					CoreFunctions.getPropertyFromConfig("CoreFlex_Policy_RequiredFor"), "0")) {
+					CoreFunctions.getPropertyFromConfig("CoreFlex_Policy_RequiredFor"))) {
 				if (benefit.getSelectBenefitOnFPTPage()) {
 					int indexBenefit = BusinessFunctions.returnindexItemFromListUsingText(driver,
 							_textSubmittedBenefitNameList, benefit.getBenefitDisplayName());
@@ -1398,7 +1399,7 @@ public class MX_Client_BenefitsBundlePage extends Base {
 		boolean isDeletedBenefitNotInSubmittedList = false;
 		try {
 			for (Benefit benefit : getBenefits(CoreFunctions.getPropertyFromConfig("CoreFlex_Policy_BenefitType"),
-					CoreFunctions.getPropertyFromConfig("CoreFlex_Policy_RequiredFor"), "0")) {
+					CoreFunctions.getPropertyFromConfig("CoreFlex_Policy_RequiredFor"))) {
 				if (benefit.getSelectBenefitOnFPTPage() && benefit.getDeleteBenefitOnMBBPage()) {
 					int index = BusinessFunctions.returnindexItemFromListUsingText(driver,
 							_textSubmittedBenefitNameList, benefit.getBenefitDisplayName());
@@ -2073,26 +2074,16 @@ public class MX_Client_BenefitsBundlePage extends Base {
 		return isSubmittedAiresManagedBenefitDetailsOnMBBVerified;
 	}
 
-	private List<Benefit> getBenefits(String policyType, String policyRequiredFor, String numberOfMilestones) {
+	private List<Benefit> getBenefits(String policyType, String policyRequiredFor) {
 		List<Benefit> benefitNameList = new ArrayList<Benefit>();
 		if (policyType.equals(COREFLEXConstants.FLEX) || policyType.equals(COREFLEXConstants.BOTH)) {
 			for (FlexBenefit benefit : flexBenefits) {
 				for (Benefit ben : benefit.getBenefits()) {
-					if ((policyRequiredFor.equals(COREFLEXConstants.ALL_BENEFITS))
-							&& (ben.getPolicyCreationGroup().contains(policyRequiredFor))) {
-						benefitNameList.add(ben);
-					} else if ((policyRequiredFor.equals(COREFLEXConstants.AIRES_MANAGED_BENEFITS_CARDS))
-							&& (ben.getAiresManagedService().equals("Yes"))
-							&& (ben.getNoOfMilestones() == Integer.parseInt(numberOfMilestones))) {
-						benefitNameList.add(ben);
-					} else if (((policyRequiredFor.equals(COREFLEXConstants.CLONING))
-							|| (policyRequiredFor.equals(COREFLEXConstants.VERSIONING))
-							|| (policyRequiredFor.equals(COREFLEXConstants.CLIENT)))
-							&& (ben.getPolicyCreationGroup().contains(policyRequiredFor))) {
+					if (ben.getPolicyCreationGroup().contains(policyRequiredFor)) {
 						benefitNameList.add(ben);
 					}
 				}
-			}
+			}			
 		}
 		return benefitNameList;
 	}
@@ -2119,7 +2110,7 @@ public class MX_Client_BenefitsBundlePage extends Base {
 				CoreConstants.PASS));
 		return true;
 	}
-	
+
 	private String getExpectedInputCashoutValue(double expectedCashoutPoints) {
 		String expectedCashoutValue;
 		DecimalFormat format = new DecimalFormat();

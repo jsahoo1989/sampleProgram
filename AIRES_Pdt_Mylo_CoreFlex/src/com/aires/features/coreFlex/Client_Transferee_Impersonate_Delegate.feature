@@ -1,8 +1,8 @@
 Feature: Validate Impersonation & Delegate User functionality for Core/Flex benefits and Cashout Submission
 
-  @Coreflex:218413 @CF_End-To-End_MasterScript @CF_ImpersonationDelegation @CF_ImpersonationDelegation_PolicySetup
+  @OnPoint_Regression @CF_OnPoint_Feature @CF_ImpersonationDelegation @CF_ImpersonationDelegation_PolicySetup
   Scenario: CoreFlex - Creating a new Active Points Based CoreFlex Policy with Transferee selection for Impersonation & Delegate User Verification
-    Given he has setup a new Points Based CoreFlex Policy with following selection in Blueprint application
+    Given he has setup a new OnPoint Policy with following selection in Blueprint application
       | Person Responsible For Benefit Selection | Flex Setup Type | Cashout Availability   | BenefitType | PolicyRequiredFor |
       | Transferee                               | Static/Fixed    | Cashout Not Authorized | Both        | Client            |
     And he has clicked on "Submit" button to submit "V1" policy verison on "Custom Bundles" page
@@ -13,7 +13,7 @@ Feature: Validate Impersonation & Delegate User functionality for Core/Flex bene
     When he clicks on "Approve" button to acknowledge 'Approve this Policy' dialog
     Then Policy Status and Version should be displayed as "Active" and "V1" respectively on "View/Edit Policy Forms" page
 
-  @Coreflex:218414 @CF_End-To-End_MasterScript @CF_ImpersonationDelegation @CF_Impersonation_MX
+  @OnPoint_Regression @CF_OnPoint_Feature @CF_ImpersonationDelegation @CF_Impersonation_MX
   Scenario: MXTransferee - Verifying submission of Core/Flex Benefits by Transferee Impersonated by Client User
     Given he has logged into 'MobilityX' application after creating a new 'Transferee' through IRIS application for policy setup in 'Policy Digitization Tool'
     And he has validated 'Assignment-Policy' details after selecting below option displayed on 'Welcome' dialog
@@ -21,8 +21,8 @@ Feature: Validate Impersonation & Delegate User functionality for Core/Flex bene
       | No thanks, I prefer to do this later |
     And he has logged into 'MobilityX' application as a 'Client' user
     And he has impersonated the user with below details from MobilityX dashboard
-      | Client                    | User Type  |
-      | Boston Scientific (13951) | Transferee |
+      | Client                             | User Type  |
+      | Aires QA Automation Client (49226) | Transferee |
     And he has validated 'Assignment-Policy' details after selecting below option displayed on 'Welcome' dialog
       | WelcomeDialogSelection               |
       | No thanks, I prefer to do this later |
@@ -41,7 +41,7 @@ Feature: Validate Impersonation & Delegate User functionality for Core/Flex bene
     When he 'Delete' submitted Benefits and confirms 'Remove Benefit Selection' dialog by entering username and clicking on "Yes-request to delete this benefit"
     Then 'Status' of the deleted benefit should be displayed as "Delete Request Pending" under 'Submitted Benefits' section of 'My Benefit Bundle' page
 
-  @Coreflex:218415 @CF_End-To-End_MasterScript @CF_ImpersonationDelegation @CF_Impersonation_TS
+  @OnPoint_Regression @CF_OnPoint_Feature @CF_ImpersonationDelegation @CF_Impersonation_TS
   Scenario: TransfereeSubmissions - Verifying Benefit_Points Details in TransfereeSubmissions & MobilityX application post Deny All Delete request selection by MSPEC/PPC User
     Given he has logged into 'Transferee Submissions' application as a "MSPEC/PPC" user
     And he has navigated to "Transferee Submissions Dashboard" page having record of Bundle submitted by the transferee
@@ -53,7 +53,7 @@ Feature: Validate Impersonation & Delegate User functionality for Core/Flex bene
     And 'Delete Request Pending' benefit request status should be updated to 'Submitted' in 'Transferee Submission Details' list
     And benefit details should be updated in 'MXTransferee' application based on "Denied" 'Delete Request' on Transferee Submission
 
-  @Coreflex:218619 @CF_End-To-End_MasterScript @CF_ImpersonationDelegation @CF_Delegation_MX
+  @OnPoint_Regression @CF_OnPoint_Feature @CF_ImpersonationDelegation @CF_Delegation_MX
   Scenario: MXTransferee - Verifying MobilityX Delegate Access Granted email is generated upon creation of Delegate User
     Given he has logged into 'MobilityX' application after creating a new 'Transferee' through IRIS application for policy setup in 'Policy Digitization Tool'
     And he has validated 'Assignment-Policy' details after selecting below option displayed on 'Welcome' dialog

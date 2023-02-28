@@ -1,8 +1,8 @@
 Feature: Validate the OnPoint End-To-End Business Test Flow(BluePrint, MXClientAndTransferee, Transferee Submissions) for Both_MXClientAndTransferee_StaticFixed_CashoutNotAuthorized_Delete_DenyAll selection
 
-  @Coreflex:218407 @CF_End-To-End_MasterScript @CF_Master_ClientAndTransferee_CashNotAuth_Deny @CF_Master_ClientAndTransferee_CashNotAuth_Deny_PS
+  @OnPoint_Regression @CF_End-To-End_MasterScript @CF_Master_ClientAndTransferee_CashNotAuth_Deny @CF_Master_ClientAndTransferee_CashNotAuth_Deny_PS
   Scenario: CoreFlex - Validating policy status is updated to 'Active' on completion of Approval WorkFlow for ClientAndTransferee-CashoutNotAuthorized MasterScript Policy Setup
-    Given he has setup a new Points Based CoreFlex Policy with following selection in Blueprint application
+    Given he has setup a new OnPoint Policy with following selection in Blueprint application
       | Person Responsible For Benefit Selection | Flex Setup Type | Cashout Availability   | BenefitType | PolicyRequiredFor |
       | Client and Transferee                    | Static/Fixed    | Cashout Not Authorized | Both        | Client            |
     And he has clicked on "Submit" button to submit "V1" policy verison on "Custom Bundles" page
@@ -13,7 +13,7 @@ Feature: Validate the OnPoint End-To-End Business Test Flow(BluePrint, MXClientA
     When he clicks on "Approve" button to acknowledge 'Approve this Policy' dialog
     Then Policy Status and Version should be displayed as "Active" and "V1" respectively on "View/Edit Policy Forms" page
 
-  @Coreflex:218408 @CF_End-To-End_MasterScript @CF_Master_ClientAndTransferee_CashNotAuth_Deny @CF_Master_ClientAndTransferee_CashNotAuth_Deny_CF
+  @OnPoint_Regression @CF_End-To-End_MasterScript @CF_Master_ClientAndTransferee_CashNotAuth_Deny @CF_Master_ClientAndTransferee_CashNotAuth_Deny_CF
   Scenario: MXClient - Validating Total Points Section & Core/Flex benefits displayed on BenefitSelectionTool page for Client and Transferee BluePrint Policy Setup
     Given he has logged into 'MobilityX' application as a 'Client' user
     And he has clicked on "Create an authorization" after validating Client details on 'Authorization Home Page'
@@ -32,7 +32,7 @@ Feature: Validate the OnPoint End-To-End Business Test Flow(BluePrint, MXClientA
     Then 'Auth Submit Success' growl message should be displayed on the navigated 'MobilityX Dashboard Home' page
     And 'New Initiation Submitted' email should be received having Transferee details along with assigned CoreFlex Total Points and Submitted Benefits Points
 
-  @Coreflex:218409 @CF_End-To-End_MasterScript @CF_Master_ClientAndTransferee_CashNotAuth_Deny @CF_Master_ClientAndTransferee_CashNotAuth_Deny_TF
+  @OnPoint_Regression @CF_End-To-End_MasterScript @CF_Master_ClientAndTransferee_CashNotAuth_Deny @CF_Master_ClientAndTransferee_CashNotAuth_Deny_TF
   Scenario: MXTransferee - Validating Selection & Submission of Flex benefits available in Client configured policy and Tracking Available_Used Benefits Points
     Given he has logged into 'MobilityX' application after actualizing a new 'Transferee' through IRIS application and setting-up user profile in 'MobilityX' application
     And he has validated 'Assignment-Policy' details after selecting below option displayed on 'Welcome' dialog
@@ -44,7 +44,7 @@ Feature: Validate the OnPoint End-To-End Business Test Flow(BluePrint, MXClientA
     When he 'Delete' submitted Benefits and confirms 'Remove Benefit Selection' dialog by entering username and clicking on "Yes-request to delete this benefit"
     Then 'Status' of the deleted benefit should be displayed as "Delete Request Pending" under 'Submitted Benefits' section of 'My Benefit Bundle' page
 
-  @Coreflex:218410 @CF_End-To-End_MasterScript @CF_Master_ClientAndTransferee_CashNotAuth_Deny @CF_Master_ClientAndTransferee_CashNotAuth_Deny_TS
+  @OnPoint_Regression @CF_End-To-End_MasterScript @CF_Master_ClientAndTransferee_CashNotAuth_Deny @CF_Master_ClientAndTransferee_CashNotAuth_Deny_TS
   Scenario: TransfereeSubmissions - Verifying StaticFixed Points, BenefitSubmissions and Delete Request Deny transaction for the request made by the Transferee
     Given he has logged into 'Transferee Submissions' application as a "MSPEC/PPC" user
     And he has navigated to "Transferee Submissions Dashboard" page having record of Bundle submitted by the transferee

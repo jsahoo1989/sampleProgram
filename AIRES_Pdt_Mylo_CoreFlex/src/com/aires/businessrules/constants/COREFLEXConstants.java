@@ -639,7 +639,7 @@ public class COREFLEXConstants {
 	public static final String POLICY_ADDITIONAL_DETAILS = "Policy Additional Details";
 	public static final String EMPLOYEE_TYPE = "Employee Type";
 	public static final String SUCCESSFULLY_CLICKED_ON_BUTTON_ON_CUSTOM_BUNDLES_PAGE = "{0}Successfully clicked on ''{1}'' button on Custom Bundles page.";
-	public static final String EXPECTED_APPROVE_THIS_POLICY_DIALOG_ASSIGNMENT_TEXT_SECOND_VERSION = "*If you would like to link any of the 1 existing Assignments or Files with this version of the point based policy in IRIS then all required updates will need to be manual.";
+	public static final String EXPECTED_APPROVE_THIS_POLICY_DIALOG_ASSIGNMENT_TEXT_SECOND_VERSION = "You are approving Version VN of this policy. There are currently 1 Assignments or Files linked with this policy in IRIS.";
 	public static final String SUCCESSFULLY_CLICKED_ON_BUTTON_ON_APPROVE_THIS_POLICY_DIALOG = "{0}Successfully clicked on ''{1}'' button on Approve this Policy Dialog.";
 	public static final String FAILED_TO_SEARCH_POLICY_WITH_POLICY_STATUS = "{0}Failed to seacrh policy with Policy Status : ''{1}''.";
 	public static final String EXCEPTION_OCCURED_WHILE_SEARCHING_POLICY_WITH_STATUS = "{0}Exception occured while validating policy with ''{2}'' status. Exception : ''{1}''.";
@@ -963,4 +963,10 @@ public class COREFLEXConstants {
 	public static final String EXCEPTION_OCCURED_WHILE_VALIDATING_SUBMITTED_FLEX_BENEFIT_DETAILS_ON_BENEFITS_BUNDLE_PAGE = "{0}Exception occured while validating Submitted Flex Benefit Details On Benefits Bundle Page. Exception : ''{1}''.";
 	public static final String APPROVE_POLICY_DIALOG_SELECT_DATE = "Select the date that you would like to approve this policy.";
 	public static final String APPROVE_POLICY_DIALOG_SELECT_DATE_TEXT = "Approve Policy Select Date Text";
+	public static final String RENTAL_CAR_DURATION_DAYS = "Rental Car Duration Days";
+	public static final String BUTTONS_DISPLAYED_IN_DRAFT_POLICY_STATUS_ON_CUSTOM_BUNDLES_PAGE_ARE_NOT_AS_EXPECTED = "{0}Submit,Save As Draft, Preview Transferee buttons are NOT displayed or are Disabled for Draft Policy on Custom Bundles page.";
+	public static final String EXCEPTION_OCCURED_WHILE_SETTING_UP_NEW_TRANSFEREE_PASSWORD = "{0}Exception occured while setting-up New Transferee password in MobilityX Application. Exception : ''{1}''.";
+	public static final String FAILED_TO_SETUP_NEW_TRANSFEREE_PASSWORD = "{0}Failed to setup New Transferee password in MobilityX Application.";
+	public static final String EXCEPTION_OCCURED_WHILE_VALIDATING_DEFAULT_REMAINING_AND_TOTAL_POINTS_BALANCE_ON_TOOLTIP_SECTION_ON_ONPOINT_PLANNING_TOOL_PAGE = "{0}Exception occured while validating default Remaining & Total Point Balance on ToolTip section on OnPoint Planning Tool Page. Exception : ''{1}''.";
+	
 }

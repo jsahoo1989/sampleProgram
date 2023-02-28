@@ -1,6 +1,6 @@
 Feature: Validate the Complete/InComplete Draft policy Indicator feature of Points Based CoreFlex policy in BluePrint Application
 
-  @Coreflex:218620 @CF_End-To-End_MasterScript @CF_BluePrint_DraftPolicyIndicator @CF_BluePrint_DraftPolicyIndicator_Incomplete
+  @OnPoint_Regression @CF_OnPoint_Feature @CF_BluePrint_DraftPolicyIndicator @CF_BluePrint_DraftPolicyIndicator_Incomplete
   Scenario: CoreFlex - Validating Red Indicator is displayed for Policy in Draft - Incomplete Status
     Given he has logged in to 'OnPoint-Blueprint' application as a 'CSM' user
     And he has clicked on "Next" button after selecting Client and a new Points Based CoreFlex Policy on 'Add New Policy Forms' page
@@ -16,7 +16,7 @@ Feature: Validate the Complete/InComplete Draft policy Indicator feature of Poin
     Then "Red Indicator" should be displayed beside Draft Policy status to indicate "Policy incomplete. Please complete missing information" on following pages
       | Vew/Edit Policy Forms | View Policy Benefit | Edit Policy Benefit |
 
-  @Coreflex:218621 @CF_End-To-End_MasterScript @CF_BluePrint_DraftPolicyIndicator @CF_BluePrint_DraftPolicyIndicator_CloningDraftInComplete
+  @OnPoint_Regression @CF_OnPoint_Feature @CF_BluePrint_DraftPolicyIndicator @CF_BluePrint_DraftPolicyIndicator_CloningDraftInComplete
   Scenario: CoreFlex - Validating Red Indicator is displayed for Cloned Policy in Draft - Incomplete Status
     Given he has logged in to 'OnPoint-Blueprint' application as a 'CSM' user
     And he has clicked on 'Clone Policy' icon after searching for 'Points Based CoreFlex Policy' with "Draft - Incomplete" Policy Status
@@ -28,7 +28,7 @@ Feature: Validate the Complete/InComplete Draft policy Indicator feature of Poin
     And "Red Indicator" should be displayed beside Draft Policy status to indicate "Policy incomplete. Please complete missing information" on following pages
       | Vew/Edit Policy Forms | View Policy Benefit | Edit Policy Benefit |
 
-  @Coreflex:218622 @CF_End-To-End_MasterScript @CF_BluePrint_DraftPolicyIndicator @CF_BluePrint_DraftPolicyIndicator_Complete
+  @OnPoint_Regression @CF_OnPoint_Feature @CF_BluePrint_DraftPolicyIndicator @CF_BluePrint_DraftPolicyIndicator_Complete
   Scenario: CoreFlex - Validating Green Indicator is displayed for Policy in Draft - Complete Status
     Given he has logged in to 'OnPoint-Blueprint' application as a 'CSM' user
     And he has clicked on "Next" button after selecting Client and a new Points Based CoreFlex Policy on 'Add New Policy Forms' page
@@ -45,7 +45,7 @@ Feature: Validate the Complete/InComplete Draft policy Indicator feature of Poin
     And "Green Indicator" should be displayed beside Draft Policy status to indicate "Policy complete. Ready for submission" on following pages
       | Vew/Edit Policy Forms | View Policy Benefit | Edit Policy Benefit |
 
-  @Coreflex:218623 @CF_End-To-End_MasterScript @CF_BluePrint_DraftPolicyIndicator @CF_BluePrint_DraftPolicyIndicator_CloningDraftComplete
+  @OnPoint_Regression @CF_OnPoint_Feature @CF_BluePrint_DraftPolicyIndicator @CF_BluePrint_DraftPolicyIndicator_CloningDraftComplete
   Scenario: CoreFlex - Validating Green Indicator is displayed for Cloned Policy in Draft - Complete Status
     Given he has logged in to 'OnPoint-Blueprint' application as a 'CSM' user
     And he has clicked on 'Clone Policy' icon after searching for 'Points Based CoreFlex Policy' with "Draft - Complete" Policy Status
@@ -57,15 +57,15 @@ Feature: Validate the Complete/InComplete Draft policy Indicator feature of Poin
     And "Green Indicator" should be displayed beside Draft Policy status to indicate "Policy complete. Ready for submission" on following pages
       | Vew/Edit Policy Forms | View Policy Benefit | Edit Policy Benefit |
 
-  @Coreflex:218624 @CF_End-To-End_MasterScript @CF_BluePrint_DraftPolicyIndicator @DPI_SubmittedPolicyDataCreationSignificantChange_PS
+  @OnPoint_Regression @CF_OnPoint_Feature @CF_BluePrint_DraftPolicyIndicator @DPI_SubmittedPolicyDataCreationSignificantChange_PS
   Scenario: CoreFlex - Creating a new Submitted Status policy as a part of Data Creation activity to validate Significant Change Functionality
-    Given he has setup a new Points Based CoreFlex Policy with following selection in Blueprint application
+    Given he has setup a new OnPoint Policy with following selection in Blueprint application
       | Person Responsible For Benefit Selection | Flex Setup Type | Cashout Availability   | BenefitType | PolicyRequiredFor |
       | Transferee                               | Static/Fixed    | Cashout Not Authorized | Flex        | Client            |
     When he clicks on "Submit" button to submit "V1" policy verison on "Custom Bundles" page
     Then Policy Status and Version should be displayed as "Submitted" and "V1" respectively on 'Custom Bundles' page
 
-  @Coreflex:218625 @CF_End-To-End_MasterScript @CF_BluePrint_DraftPolicyIndicator @DPI_AddBenefit_SubmittedToDraft
+  @OnPoint_Regression @CF_OnPoint_Feature @CF_BluePrint_DraftPolicyIndicator @DPI_AddBenefit_SubmittedToDraft
   Scenario: CoreFlex - Validate Submitted Policy Status Change to Draft after adding a new Benefit to the Policy having assignment(s) association
     Given he has logged in to 'OnPoint-Blueprint' application as a 'CSM' user
     And he has searched for "Submitted" points based CoreFlex policy on "View/Edit Policy Forms" page

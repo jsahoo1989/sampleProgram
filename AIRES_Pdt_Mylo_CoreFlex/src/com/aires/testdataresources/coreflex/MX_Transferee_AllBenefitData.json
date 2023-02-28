@@ -175,7 +175,7 @@
 			"subBenefits": "Air Shipment",
 			"airesManagedService": "Yes",
 			"noOfMilestones": 5,
-			"policyCreationGroup": "All Benefits"
+			"policyCreationGroup": "All Benefits,Aires Managed Benefits Cards"
 		},
 		{
 			"benefitType": "Auto Shipment",
@@ -185,7 +185,7 @@
 			"subBenefits": "Auto Shipment",
 			"airesManagedService": "Yes",
 			"noOfMilestones": 5,
-			"policyCreationGroup": "All Benefits"
+			"policyCreationGroup": "All Benefits,Aires Managed Benefits Cards"
 		},
 		{
 			"benefitType": "Sea/Surface Shipment",
@@ -195,7 +195,7 @@
 			"subBenefits": "Sea/Surface Shipment",
 			"airesManagedService": "Yes",
 			"noOfMilestones": 5,
-			"policyCreationGroup": "All Benefits"
+			"policyCreationGroup": "All Benefits,Aires Managed Benefits Cards"
 		},
 		{
 			"benefitType": "Inland Shipment",
@@ -205,7 +205,7 @@
 			"subBenefits": "Inland Shipment",
 			"airesManagedService": "Yes",
 			"noOfMilestones": 5,
-			"policyCreationGroup": "All Benefits"
+			"policyCreationGroup": "All Benefits,Aires Managed Benefits Cards"
 		},
 		{
 			"benefitType": "Pet Shipment",
@@ -215,7 +215,7 @@
 			"subBenefits": "Pet Shipment",
 			"airesManagedService": "Yes",
 			"noOfMilestones": 5,
-			"policyCreationGroup": "All Benefits"
+			"policyCreationGroup": "All Benefits,Aires Managed Benefits Cards"
 		},
 		{
 			"benefitType": "Permanent Storage",
@@ -657,7 +657,7 @@
 					"endTracingPrompt": "End date of trip",
 					"postEndTracingCardStatus": "Travel Ends",
 					"multipleBenefitSubmission": false,
-					"policyCreationGroup": "All Benefits",
+					"policyCreationGroup": "All Benefits,Aires Managed Benefits Cards",
 					"selectBenefitOnPBCPage": false,
 					"deselectBenefitOnPBCPage": false,
 					"benefitResubmissionOnBST":false
@@ -712,7 +712,7 @@
 					"endTracingPrompt": "End date of trip",
 					"postEndTracingCardStatus": "Travel Ends",
 					"multipleBenefitSubmission": false,
-					"policyCreationGroup": "All Benefits",
+					"policyCreationGroup": "All Benefits,Aires Managed Benefits Cards",
 					"selectBenefitOnPBCPage": false,
 					"deselectBenefitOnPBCPage": false,
 					"benefitResubmissionOnBST":false
@@ -735,7 +735,7 @@
 					"comment": "Test Flex Sea/Surface Shipment Aires Managed Benefit Comment",
 					"irisServiceName": "Shipment",
 					"irisSubserviceType": "Shipment",
-					"irisSubserviceName": "Custom Sea/Surface Shipment Name",
+					"irisSubserviceName": "Custom Sea Surface Shipment Name",
 					"irisSubserviceID": "0",
 					"subServiceActivityFinance": "(ACTV) Custom Travel Home Leave Name",
 					"subServiceFunction": "NA",
@@ -772,7 +772,7 @@
 					"endTracingPrompt": "End date of trip",
 					"postEndTracingCardStatus": "Travel Ends",
 					"multipleBenefitSubmission": false,
-					"policyCreationGroup": "All Benefits",
+					"policyCreationGroup": "All Benefits,Aires Managed Benefits Cards",
 					"selectBenefitOnPBCPage": false,
 					"deselectBenefitOnPBCPage": false,
 					"benefitResubmissionOnBST":false
@@ -832,7 +832,7 @@
 					"endTracingPrompt": "End date of trip",
 					"postEndTracingCardStatus": "Travel Ends",
 					"multipleBenefitSubmission": false,
-					"policyCreationGroup": "All Benefits",
+					"policyCreationGroup": "All Benefits,Aires Managed Benefits Cards",
 					"selectBenefitOnPBCPage": false,
 					"deselectBenefitOnPBCPage": false,
 					"benefitResubmissionOnBST":false
@@ -887,7 +887,7 @@
 					"endTracingPrompt": "End date of trip",
 					"postEndTracingCardStatus": "Travel Ends",
 					"multipleBenefitSubmission": false,
-					"policyCreationGroup": "All Benefits",
+					"policyCreationGroup": "All Benefits,Aires Managed Benefits Cards",
 					"selectBenefitOnPBCPage": false,
 					"deselectBenefitOnPBCPage": false,
 					"benefitResubmissionOnBST":false
@@ -999,7 +999,7 @@
 					"endTracingPrompt": "Cultural training end date",
 					"postEndTracingCardStatus": "Training complete",
 					"multipleBenefitSubmission": false,
-					"policyCreationGroup": "All Benefits,Aires Managed Benefits Cards",
+					"policyCreationGroup": "All Benefits,Aires Managed Benefits Cards,Significant Change",
 					"selectBenefitOnPBCPage": true,
 					"deselectBenefitOnPBCPage": true,
 					"noOfMilestones": 2,

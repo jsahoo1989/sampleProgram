@@ -561,7 +561,6 @@ public class MX_Client_BenefitSelectionToolPage extends Base {
 
 	public boolean validatePointsAndClickOnNext() {
 		try {
-//			CoreFunctions.waitHandler(3);
 			if (Double.parseDouble(CoreFunctions.getElementText(driver, selectedPoints)) == totalSelectedPoints) {
 				CoreFunctions.clickElement(driver, _btn_next);
 				CoreFunctions.writeToPropertiesFile("CF_Client_TotalSelectedPoints",
@@ -580,7 +579,6 @@ public class MX_Client_BenefitSelectionToolPage extends Base {
 
 	public boolean clickOnNext() {
 		try {
-//			CoreFunctions.waitHandler(3);
 			CoreFunctions.clickElement(driver, _btn_next);
 			CoreFunctions.writeToPropertiesFile("CF_Client_TotalSelectedPoints", String.valueOf(totalSelectedPoints));
 			CoreFunctions.writeToPropertiesFile("CF_Client_AvailablePoints", String.valueOf(Double
@@ -876,7 +874,6 @@ public class MX_Client_BenefitSelectionToolPage extends Base {
 					CoreFunctions.getItemsFromListByIndex(driver, _benefitsPointsList, indexBenefit, true),
 					benefit.getPoints(), MobilityXConstants.BENEFIT_POINTS);
 			return true;
-
 		} catch (Exception e) {
 			Reporter.addStepLog(MessageFormat.format(
 					COREFLEXConstants.EXCEPTION_OCCURED_WHILE_VALIDATING_FLEX_BENEFIT_DETAILS_ON_BENEFIT_SELECTION_TOOL_PAGE,
@@ -944,18 +941,16 @@ public class MX_Client_BenefitSelectionToolPage extends Base {
 		try {
 			CoreFunctions.scrollToElementUsingJS(driver, benefitSelectionToolPageTitle,
 					MobilityXConstants.BENEFIT_SELECTION_TOOL);
-//			CoreFunctions.waitHandler(5);
 			double points = Double.parseDouble(benefit.getPoints());
 			if ((benefit.getMultipleBenefitSelection()).equals("Yes")) {
 				CoreFunctions.scrollClickUsingJS(driver, _buttonSelectThis.get(indexBenefit),
 						benefit.getBenefitDisplayName() + " - Select This button");
-//				CoreFunctions.waitHandler(3);
+
 				CoreFunctions.explicitWaitTillElementInVisibility(driver, _browserCursorWait);
 				CoreFunctions.explicitWaitTillElementInVisibility(driver, _browserLoadingSymbol);
 				totalSelectedPoints += points;
 				isBenefitSelected = true;
 				for (int j = 1; j < benefit.getNumberOfBenefitSelected(); j++) {
-//					CoreFunctions.waitHandler(3);
 					WebElement benefitSelectPlusButton = CoreFunctions
 							.findSubElement(flexBenefits_list.get(indexBenefit), _buttonSelectPlus);
 					CoreFunctions.scrollClickUsingJS(driver, benefitSelectPlusButton,
@@ -967,12 +962,13 @@ public class MX_Client_BenefitSelectionToolPage extends Base {
 				}
 			} else {
 				BusinessFunctions.selectValueFromListUsingIndex(driver, _buttonSelectThis, indexBenefit);
+				CoreFunctions.explicitWaitTillElementInVisibility(driver, _browserCursorWait);
+				CoreFunctions.explicitWaitTillElementInVisibility(driver, _browserLoadingSymbol);
 				totalSelectedPoints += points;
 				isBenefitSelected = true;
 			}
 			CoreFunctions.scrollToElementUsingJS(driver, benefitSelectionToolPageTitle,
 					MobilityXConstants.BENEFIT_SELECTION_TOOL);
-//			CoreFunctions.waitHandler(5);
 		} catch (Exception e) {
 			Reporter.addStepLog(MessageFormat.format(
 					MobilityXConstants.EXCEPTION_OCCURED_WHILE_SELECTING_BENEFITS_ON_BENEFIT_SELECTION_TOOL_PAGE,

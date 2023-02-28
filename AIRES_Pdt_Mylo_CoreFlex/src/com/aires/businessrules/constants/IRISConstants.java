@@ -513,4 +513,6 @@ public class IRISConstants {
 	public static final String ONPOINT_AUTOMATION_POLICY = "Automation_Policy_OnPoint_";
 	public static final String SUCCESSFULLY_SWITCHED_TO_IRIS_WINDOW = "{0}Successfully switched to IRIS window.";
 	public static final String EXPENSE = "Expense";
+	public static final String SHIPMENT = "Shipment";
+	public static final String EXCEPTION_OCCURED_WHILE_SELECTING_ADDED_SERVICE_ON_SERVICES_TAB_OF_IRIS_APPLICATION = "{0}Exception occured while selecting added service on Services tab of IRIS application. Exception : ''{1}''.";
 }

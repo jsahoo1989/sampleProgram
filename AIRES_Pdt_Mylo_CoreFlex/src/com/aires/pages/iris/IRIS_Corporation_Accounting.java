@@ -437,7 +437,7 @@ public class IRIS_Corporation_Accounting extends BasePage {
 		}
 	}
 
-	public void addNewOnPointAutomationPolicies() throws Exception {
+	public void addNewOnPointAutomationPolicies(String clientId) throws Exception {
 		for (int counter = 0; counter < 15; counter++) {
 			Helpers.clickButton(IRIS_PageMaster.getButtonObject(_IRIS, "Add", 0),
 					IRIS_PageMaster.getButtonObject(_IRIS, "Add", 0).getAttachedText());
@@ -445,8 +445,13 @@ public class IRIS_Corporation_Accounting extends BasePage {
 					"com.aires.iris.view.corporation.accounting.PolicyPanel$1");
 			String policyName = IRISConstants.ONPOINT_AUTOMATION_POLICY + CoreFunctions.generateRandomString(5);
 			policyTable.getCell(policyTable.getRows().size() - 1, PDTConstants.POLICY).setValue(policyName);
-			policyTable.getCell(policyTable.getRows().size() - 1, "Tax Assistance Policy")
-					.setValue("Standard Inverse Marginal");
+			if (clientId.equals("49226")) {
+				policyTable.getCell(policyTable.getRows().size() - 1, "Tax Assistance Policy")
+						.setValue("Standard Inverse Marginal");
+			} else {
+				policyTable.getCell(policyTable.getRows().size() - 1, "Tax Assistance Policy")
+						.setValue("Standard Inverse Supplemental");
+			}
 			policyTable.getCell(policyTable.getRows().size() - 1, "Tracing Set").setValue("Assignment");
 
 			if ((policyTable.getCell(policyTable.getRows().size() - 1, "OnPoint Enabled").getValue().toString())

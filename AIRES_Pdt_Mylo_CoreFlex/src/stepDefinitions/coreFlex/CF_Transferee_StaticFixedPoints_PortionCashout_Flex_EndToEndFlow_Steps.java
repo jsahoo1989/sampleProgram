@@ -148,6 +148,8 @@ public class CF_Transferee_StaticFixedPoints_PortionCashout_Flex_EndToEndFlow_St
 	@Then("^'Status' of the deleted benefit_cashout should be displayed as \"([^\"]*)\" under 'Submitted Benefits' section of 'My Benefit Bundle' page$")
 	public void status_of_the_deleted_benefit_cashout_should_be_displayed_as_under_Submitted_Benefits_section_of_My_Benefit_Bundle_page(
 			String arg1) throws Throwable {
+		Assert.assertTrue(mxTransfereeMyBenefitsBundlePage.isMyBundlePageDisplayed(),
+				MessageFormat.format(MobilityXConstants.FAILED_TO_DISPLAY_MY_BENEFIT_BUNDLE_PAGE, CoreConstants.FAIL));
 		Assert.assertTrue(mxTransfereeMyBenefitsBundlePage.verifyDeletedBenefitCashoutStatus(), MessageFormat
 				.format(MobilityXConstants.FAILED_TO_VERIFY_DELETED_BENEFIT_AND_CASHOUT_STATUS, CoreConstants.FAIL));
 	}

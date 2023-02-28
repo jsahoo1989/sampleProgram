@@ -1,8 +1,8 @@
-Feature: Validate the CoreFlex End-To-End Business Test Flow(BluePrint, MXClient, Transferee Submissions) for Both_MXClient_StaticFixed_CashoutNotAuthorized_Delete_ApproveAll selection
+Feature: Validate the OnPoint End-To-End Business Test Flow(BluePrint, MXClient, Transferee Submissions) for Both_MXClient_StaticFixed_CashoutNotAuthorized_Delete_ApproveAll selection
 
-  @Coreflex:218388 @CF_End-To-End_MasterScript @CF_Master_Client_StaticFixedCashNotAuthApprove @CF_Master_Client_StaticFixedCashNotAuthApprove_PS
+  @OnPoint_Regression @CF_End-To-End_MasterScript @CF_Master_Client_StaticFixedCashNotAuthApprove @CF_Master_Client_StaticFixedCashNotAuthApprove_PS
   Scenario: CoreFlex - Validating policy status is updated to 'Active' on completion of Approval WorkFlow for Client-StaticFixed-CashNotAuth MasterScript Policy Setup
-    Given he has setup a new Points Based CoreFlex Policy with following selection in Blueprint application
+    Given he has setup a new OnPoint Policy with following selection in Blueprint application
       | Person Responsible For Benefit Selection | Flex Setup Type | Cashout Availability   | BenefitType | PolicyRequiredFor |
       | Client Initiator                         | Static/Fixed    | Cashout Not Authorized | Both        | Client            |
     And he has clicked on "Submit" button to submit "V1" policy verison on "Custom Bundles" page
@@ -13,7 +13,7 @@ Feature: Validate the CoreFlex End-To-End Business Test Flow(BluePrint, MXClient
     When he clicks on "Approve" button to acknowledge 'Approve this Policy' dialog
     Then Policy Status and Version should be displayed as "Active" and "V1" respectively on "View/Edit Policy Forms" page
 
-  @Coreflex:218389 @CF_End-To-End_MasterScript @CF_Master_Client_StaticFixedCashNotAuthApprove @CF_Master_Client_StaticFixedCashNotAuthApprove_CF
+  @OnPoint_Regression @CF_End-To-End_MasterScript @CF_Master_Client_StaticFixedCashNotAuthApprove @CF_Master_Client_StaticFixedCashNotAuthApprove_CF
   Scenario: MXClient - Validating Authorization Submission & Resubmission with StaticFixed TotalPoints & Core/Flex Benefits for configured Client-StaticFixed-CashNotAuth BluePrint CF Policy
     Given he has logged into 'MobilityX' application as a 'Client' user
     And he has clicked on "Create an authorization" after validating Client details on 'Authorization Home Page'
@@ -24,7 +24,7 @@ Feature: Validate the CoreFlex End-To-End Business Test Flow(BluePrint, MXClient
     And he has verified 'FleX Benefits' section displayed on 'Authorization Form' for "Client Initiator" - 'Person Responsible' selection in BluePrint CoreFlex Policy
     And he has verified 'Error Growl Message' and 'Required Field Validation' displayed after clicking on "Submit to Aires" button without selecting any FlexBenefits
     And he has clicked on 'Start Benefit Selection' on 'Auth Form Template' page to navigate to 'Benefit Selection Tool' page
-    And he has verified following details on "Benefit Selesction Tool" page based on configured Points Based CoreFlex BluePrint Policy
+    And he has verified following details on "Benefit Selection Tool" page based on configured Points Based CoreFlex BluePrint Policy
       | Available Point Balance | Core Benefits | Flex Benefits | Suggested Bundles | Cashout |
     And he has clicked on 'Back to benefits list' link to navigate to 'Benefit Selection Tool' page
     And he has navigated to "Benefits Bundle" page after selecting required Flex Benefits on 'Benefit Selection Tool' page
@@ -39,7 +39,7 @@ Feature: Validate the CoreFlex End-To-End Business Test Flow(BluePrint, MXClient
     And he has clicked 'Transferee Name' from 'All Initiations' List on 'View all initiation' page
     And he has navigated to 'Benefit Selection Tool' page after clicking on 'Manage Benefit Selection' button
     And he has verified following details on 'Benefit Selection Tool' page post Authorization form submission
-      | Available Point Balance | Edit Submitted Benefits | Cashout |
+      | Available Point Balance | Edit Submitted Benefits |
     And he has clicked on 'Edit Submitted Benefits' button to navigate to 'Benefits Bundle' page
     And he has verified submitted 'Core_Flex Benefit' details displayed under 'Submitted Benefits' section of 'Benefits Bundle' page
     And he has 'Deleted' submitted Benefit on Benefits Bundle page and confirmed 'Remove Benefit Selection' dialog by entering username and clicking on "Yes-request to delete this benefit"
@@ -49,7 +49,7 @@ Feature: Validate the CoreFlex End-To-End Business Test Flow(BluePrint, MXClient
     Then 'Auth Submit Success' growl message should be displayed on the navigated 'Advanced Authorization Search' page
     And 'Revised Mobility Initiation' email having submitted_deleted Benefit and Points details should be received
 
-  @Coreflex:218390 @CF_End-To-End_MasterScript @CF_Master_Client_StaticFixedCashNotAuthApprove @CF_Master_Client_StaticFixedCashNotAuthApprove_TS
+  @OnPoint_Regression @CF_End-To-End_MasterScript @CF_Master_Client_StaticFixedCashNotAuthApprove @CF_Master_Client_StaticFixedCashNotAuthApprove_TS
   Scenario: TransfereeSubmissions - Verifying StaticFixed Points, BenefitSubmissions and Delete Request ApproveAll transaction for the request made by the Client
     Given he has logged into 'Transferee Submissions' application as a "MSPEC/PPC" user
     And he has navigated to "Transferee Submissions Dashboard" page having record of Bundle submitted by the Client

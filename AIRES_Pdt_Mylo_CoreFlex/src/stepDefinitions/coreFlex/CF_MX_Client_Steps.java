@@ -82,6 +82,9 @@ public class CF_MX_Client_Steps {
 
 		_coreFlexLoginInfo = FileReaderManager.getInstance().getCoreFlexJsonReader()
 				.getLoginByEnvt(BusinessFunctions.getEnvBasedOnExecutionType().toLowerCase());
+
+		bscAuthorizationData = FileReaderManager.getInstance().getCoreFlexJsonReader()
+				.getBscDataByModuleName("DomesticAuthorizationFormData");
 	}
 
 	private TransfereeSubmissions_LoginData _transfereeSubmissionLoginData = FileReaderManager.getInstance()
@@ -121,12 +124,8 @@ public class CF_MX_Client_Steps {
 		mxClientAuthorizationHomePage.selectAuthorizationOptionForEmployee(assignmentOption);
 		mxClientAuthorizationHomePage.selectAuthorizationFormTemplate(_coreFlexLoginInfo.details.clientId,
 				_coreFlexLoginInfo.details.clientName, authFormTemplate);
-
 		Assert.assertTrue(mxClientAuthorizationHomePage.verifyPageNavigationToAuthForm(), MessageFormat
 				.format(MobilityXConstants.FAILED_TO_VERIFY_USER_NAVIGATION_TO_MXCLIENT_HOME_PAGE, CoreConstants.FAIL));
-
-		bscAuthorizationData = FileReaderManager.getInstance().getCoreFlexJsonReader()
-				.getBscDataByModuleName("DomesticAuthorizationFormData");
 		mxClientAuthorizationHomePage.fillAuthorizationForBSCDomesticForm(bscAuthorizationData);
 		Assert.assertTrue(mxClientAuthorizationHomePage.verifyAuthFormChangesAutoSaved(), MessageFormat.format(
 				MobilityXConstants.CHANGES_NOT_AUTO_SAVED_AFTER_FILLING_AUTHORIZATION_FORM, CoreConstants.FAIL));
@@ -201,8 +200,6 @@ public class CF_MX_Client_Steps {
 	@Given("^he has navigated to \"([^\"]*)\" page after entering valid 'Total Points' value and clicking on \"([^\"]*)\" button$")
 	public void he_has_navigated_to_page_after_entering_valid_Total_Points_value_and_clicking_on_button(String arg1,
 			String arg2) throws Throwable {
-		bscAuthorizationData = FileReaderManager.getInstance().getCoreFlexJsonReader()
-				.getBscDataByModuleName("DomesticAuthorizationFormData");
 		mxClientAuthorizationHomePage.enterValidInitialTotalPointsValue(bscAuthorizationData);
 		mxClientAuthorizationHomePage.clickOnElementOnAuthorizationPage(MobilityXConstants.START_BENEFIT_SELECTION);
 		Assert.assertTrue(mxClientBenefitSelectionToolPage.verifyPageNavigation(),
@@ -233,12 +230,9 @@ public class CF_MX_Client_Steps {
 		Assert.assertTrue(mxClientBenefitSelectionToolPage.verifyCashoutSectionDetailsOnBST(false),
 				MessageFormat.format(MobilityXConstants.CASHOUT_DETAILS_NOT_MATCHED_ON_BENEFIT_SELECTION_TOOL_PAGE,
 						CoreConstants.FAIL));
-
 		mxClientBenefitSelectionToolPage.clickElementOfPage(MobilityXConstants.SUGGESTED_OPTIONS_LINK);
-
 		Assert.assertTrue(mxClientBenefitSelectionToolPage.verifyUserNavigationToSuggestedBundlesPage(), MessageFormat
 				.format(MobilityXConstants.FAILED_TO_NAVIGATE_TO_SUGGESTED_BUNDLES_PAGE, CoreConstants.FAIL));
-
 		Assert.assertTrue(
 				mxClientBenefitSelectionToolPage.verifySuggestedBundlesDetailsBasedOnPolicyRequiredFor(
 						CoreFunctions.getPropertyFromConfig("CoreFlex_Policy_RequiredFor"),
@@ -250,7 +244,6 @@ public class CF_MX_Client_Steps {
 	@When("^he clicks on 'Back to initiation' link on \"([^\"]*)\" page$")
 	public void he_clicks_on_Back_to_initiation_link_on_page(String arg1) throws Throwable {
 		mxClientBenefitSelectionToolPage.clickElementOfPage(MobilityXConstants.BACK_TO_BENEFITS_LIST);
-
 		Assert.assertTrue(mxClientBenefitSelectionToolPage.verifyPageNavigation(),
 				MessageFormat.format(
 						MobilityXConstants.FAILED_TO_VERIFY_USER_NAVIGATION_TO_MXCLIENT_BENEFIT_SELECTION_TOOL_PAGE,
@@ -262,13 +255,11 @@ public class CF_MX_Client_Steps {
 	public void he_has_clicked_on_Back_to_initiation_link_on_to_navigate_to_Authorization_Form_page(String pageName)
 			throws Throwable {
 		mxClientBenefitSelectionToolPage.clickElementOfPage(MobilityXConstants.BACK_TO_BENEFITS_LIST);
-
 		Assert.assertTrue(mxClientBenefitSelectionToolPage.verifyPageNavigation(),
 				MessageFormat.format(
 						MobilityXConstants.FAILED_TO_VERIFY_USER_NAVIGATION_TO_MXCLIENT_BENEFIT_SELECTION_TOOL_PAGE,
 						CoreConstants.FAIL));
 		mxClientBenefitSelectionToolPage.clickElementOfPage(MobilityXConstants.BACK_TO_INITIATION);
-
 		Assert.assertTrue(mxClientAuthorizationHomePage.verifyPageNavigationToAuthForm(), MessageFormat
 				.format(MobilityXConstants.FAILED_TO_VERIFY_USER_NAVIGATION_TO_MXCLIENT_HOME_PAGE, CoreConstants.FAIL));
 
@@ -276,10 +267,8 @@ public class CF_MX_Client_Steps {
 
 	@Then("^he should be navigated back to 'Authorization Form' page$")
 	public void he_should_be_navigated_back_to_Authorization_Form_page() throws Throwable {
-
 		Assert.assertTrue(mxClientAuthorizationHomePage.verifyPageNavigationToAuthForm(), MessageFormat
 				.format(MobilityXConstants.FAILED_TO_VERIFY_USER_NAVIGATION_TO_MXCLIENT_HOME_PAGE, CoreConstants.FAIL));
-
 	}
 
 	@When("^he selects CoreFlex policy in the 'Relocation Policy' dropdown on the Authorization form$")
@@ -324,8 +313,6 @@ public class CF_MX_Client_Steps {
 	@Then("^all information entered before navigating to 'Benefit Selection Tool' page should be auto-saved on 'Authorization Form'$")
 	public void all_information_entered_before_navigating_to_Benefit_Selection_Tool_page_should_be_auto_saved_on_Authorization_Form()
 			throws Throwable {
-		bscAuthorizationData = FileReaderManager.getInstance().getCoreFlexJsonReader()
-				.getBscDataByModuleName("DomesticAuthorizationFormData");
 		Assert.assertTrue(
 				mxClientAuthorizationHomePage.verifyAuthFormAutoSavedAfterNavigation(bscAuthorizationData,
 						MobilityXConstants.INITIAL_BENEFIT_TOTAL_POINTS),
@@ -336,7 +323,6 @@ public class CF_MX_Client_Steps {
 	@Given("^he has clicked on 'Back to benefits list' to navigate to 'Benefit Selection Tool' page$")
 	public void he_has_clicked_on_Back_to_benefits_list_to_navigate_to_Benefit_Selection_Tool_page() throws Throwable {
 		mxClientBenefitSelectionToolPage.clickElementOfPage(MobilityXConstants.BACK_TO_BENEFITS_LIST);
-
 		Assert.assertTrue(mxClientBenefitSelectionToolPage.verifyPageNavigation(),
 				MessageFormat.format(
 						MobilityXConstants.FAILED_TO_VERIFY_USER_NAVIGATION_TO_MXCLIENT_BENEFIT_SELECTION_TOOL_PAGE,
@@ -355,14 +341,12 @@ public class CF_MX_Client_Steps {
 
 		Assert.assertTrue(mxClientBenefitsBundlePage.isBenefitsBundlePageDisplayed(), MessageFormat
 				.format(MobilityXConstants.FAILED_TO_DISPLAY_MX_CLIENT_BENEFITS_BUNDLE_PAGE, CoreConstants.FAIL));
-
 		Assert.assertTrue(mxClientBenefitsBundlePage.verifySelectedCashoutDetails(),
 				MessageFormat.format(
 						MobilityXConstants.FAILED_TO_VERIFY_SELECTED_CASHOUT_DETAILS_ON_BENEFITS_BUNDLE_PAGE,
 						CoreConstants.FAIL));
 		Assert.assertTrue(mxClientBenefitsBundlePage.verifySelectedBenefitDetails(), MessageFormat.format(
 				MobilityXConstants.FAILED_TO_VERIFY_SELECTED_BENEFITS_ON_BENEFITS_BUNDLE_PAGE, CoreConstants.FAIL));
-
 	}
 
 	@When("^he has clicked on \"([^\"]*)\" button on \"([^\"]*)\" page$")
@@ -373,10 +357,8 @@ public class CF_MX_Client_Steps {
 	@When("^he has navigated back to 'Authorization Form' page having Auth Form status displayed as \"([^\"]*)\"$")
 	public void he_has_navigated_back_to_Authorization_Form_page_having_Auth_Form_status_displayed_as(
 			String authFormStatus) throws Throwable {
-
 		Assert.assertTrue(mxClientAuthorizationHomePage.verifyPageNavigationToAuthForm(), MessageFormat
 				.format(MobilityXConstants.FAILED_TO_VERIFY_USER_NAVIGATION_TO_MXCLIENT_HOME_PAGE, CoreConstants.FAIL));
-
 		Assert.assertTrue(mxClientAuthorizationHomePage.verifyAuthFormStatus(authFormStatus), MessageFormat
 				.format(MobilityXConstants.FAILED_TO_VERIFY_AUTHORIZATION_FORM_STATUS, CoreConstants.FAIL));
 	}
@@ -395,11 +377,6 @@ public class CF_MX_Client_Steps {
 		mxClientAuthorizationHomePage.clickOnElementsOfFloatingMenu(MobilityXConstants.SUBMIT_TO_AIRES);
 	}
 
-	@Then("^an email should be sent to Aires team with authorization details$")
-	public void an_email_should_be_sent_to_Aires_team_with_authorization_details() throws Throwable {
-
-	}
-
 	@Given("^he has verified 'FleX Benefits' section not displayed on 'Authorization Form' for \"([^\"]*)\" - 'Person Responsible' selection in BluePrint CoreFlex Policy$")
 	public void he_has_verified_FleX_Benefits_section_not_displayed_on_Authorization_Form_for_Person_Responsible_selection_in_BluePrint_CoreFlex_Policy(
 			String personResponsible) throws Throwable {
@@ -411,8 +388,6 @@ public class CF_MX_Client_Steps {
 	@Given("^he has clicked on 'Submit to Aires' button from right floating menu of 'Authorization Form' after entering valid 'Total Points' value$")
 	public void he_has_clicked_on_Submit_to_Aires_button_from_right_floating_menu_of_Authorization_Form_after_entering_valid_Total_Points_value()
 			throws Throwable {
-		bscAuthorizationData = FileReaderManager.getInstance().getCoreFlexJsonReader()
-				.getBscDataByModuleName("DomesticAuthorizationFormData");
 		mxClientAuthorizationHomePage.enterValidInitialTotalPointsValue(bscAuthorizationData);
 		mxClientAuthorizationHomePage.clickOnElementsOfFloatingMenu(MobilityXConstants.SUBMIT_TO_AIRES);
 	}
@@ -427,7 +402,7 @@ public class CF_MX_Client_Steps {
 	public void he_clicks_on_button_from_right_floating_menu_of_Authorization_Form_page_without_routing_it_to_Approvers(
 			String buttonName) throws Throwable {
 		mxClientAuthorizationHomePage.clickOnElementsOfFloatingMenu(buttonName);
-//		mxClientAuthorizationHomePage.clickOnElementOnAuthorizationPage(MobilityXConstants.SUBMIT);
+		mxClientAuthorizationHomePage.clickOnElementOnAuthorizationPage(MobilityXConstants.SUBMIT);
 	}
 
 	@When("^he clicks on \"([^\"]*)\" button from right floating menu of 'Authorization Form' page$")
@@ -441,7 +416,7 @@ public class CF_MX_Client_Steps {
 	public void he_has_clicked_on_button_from_right_floating_menu_of_Authorization_Form_page_to_Resubmit_Auth_Form(
 			String buttonName) throws Throwable {
 		mxClientAuthorizationHomePage.clickOnElementsOfFloatingMenu(buttonName);
-//		mxClientAuthorizationHomePage.clickOnElementOnAuthorizationPage(MobilityXConstants.SUBMIT);
+		mxClientAuthorizationHomePage.clickOnElementOnAuthorizationPage(MobilityXConstants.SUBMIT);
 	}
 
 	@Given("^he has clicked on \"([^\"]*)\" button on the 'Do you want to submit it without the required approvals\\?' dialog$")
@@ -481,21 +456,22 @@ public class CF_MX_Client_Steps {
 	@Then("^'New Initiation Submitted' email should be received having Transferee details along with assigned CoreFlex Total Points$")
 	public void New_Initiation_Submitted_email_should_be_received_having_Transferee_details_along_with_assigned_CoreFlex_Total_Points()
 			throws Throwable {
-		bscAuthorizationData = FileReaderManager.getInstance().getCoreFlexJsonReader()
-				.getBscDataByModuleName("DomesticAuthorizationFormData");
-		Assert.assertTrue(mxClientAuthorizationHomePage.verifyInitiationSubmissionEmail(bscAuthorizationData),
-				MessageFormat.format(MobilityXConstants.FAILED_TO_VERIFY_INITIATION_SUBMISSION_EMAIL,
-						CoreConstants.FAIL));
+		Assert.assertTrue(mxClientAuthorizationHomePage.verifyInitiationBenefitsSubmissionEmail(), MessageFormat
+				.format(MobilityXConstants.FAILED_TO_VERIFY_INITIATION_SUBMISSION_EMAIL, CoreConstants.FAIL));
 	}
 
 	@Given("^he has verified 'New Initiation Submitted' email having Transferee details along with assigned CoreFlex Total Points$")
 	public void he_has_verified_New_Initiation_Submitted_email_having_Transferee_details_along_with_assigned_CoreFlex_Total_Points()
 			throws Throwable {
-		bscAuthorizationData = FileReaderManager.getInstance().getCoreFlexJsonReader()
-				.getBscDataByModuleName("DomesticAuthorizationFormData");
-		Assert.assertTrue(mxClientAuthorizationHomePage.verifyInitiationSubmissionEmail(bscAuthorizationData),
-				MessageFormat.format(MobilityXConstants.FAILED_TO_VERIFY_INITIATION_SUBMISSION_EMAIL,
-						CoreConstants.FAIL));
+		Assert.assertTrue(mxClientAuthorizationHomePage.verifyTotalPointsInInitiationSubmissionEmail(), MessageFormat
+				.format(MobilityXConstants.FAILED_TO_VERIFY_INITIATION_SUBMISSION_EMAIL, CoreConstants.FAIL));
+	}
+
+	@Given("^he has verified 'New Initiation Submitted' email having Transferee details along with assigned CoreFlex Total Points and Submitted Benefits$")
+	public void he_has_verified_New_Initiation_Submitted_email_having_Transferee_details_along_with_assigned_CoreFlex_Total_Points_and_Submitted_Benefits()
+			throws Throwable {
+		Assert.assertTrue(mxClientAuthorizationHomePage.verifyInitiationBenefitsSubmissionEmail(), MessageFormat
+				.format(MobilityXConstants.FAILED_TO_VERIFY_INITIATION_SUBMISSION_EMAIL, CoreConstants.FAIL));
 	}
 
 	@Given("^he has actualized the 'Authorization' created by the Client through IRIS application$")
@@ -540,24 +516,37 @@ public class CF_MX_Client_Steps {
 	@When("^he clicks on 'Resubmit to Aires' after increasing 'Benfit Total Points' value on 'Auth Form Template' page$")
 	public void he_clicks_on_Resubmit_to_Aires_after_increasing_Benfit_Total_Points_value_on_Auth_Form_Template_page()
 			throws Throwable {
-
 		Assert.assertTrue(mxClientAuthorizationHomePage.verifyPageNavigationToAuthForm(), MessageFormat
 				.format(MobilityXConstants.FAILED_TO_VERIFY_USER_NAVIGATION_TO_MXCLIENT_HOME_PAGE, CoreConstants.FAIL));
-
-		bscAuthorizationData = FileReaderManager.getInstance().getCoreFlexJsonReader()
-				.getBscDataByModuleName("DomesticAuthorizationFormData");
 		mxClientAuthorizationHomePage.enterValidIncreasedTotalPointsValue(bscAuthorizationData);
 		mxClientAuthorizationHomePage.clickOnElementsOfFloatingMenu(MobilityXConstants.RESUBMIT_TO_AIRES);
+	}
+
+	@Given("^he has clicked on 'Resubmit to Aires' after increasing 'Benfit Total Points' value on 'Auth Form Template' page$")
+	public void he_has_clicked_on_Resubmit_to_Aires_after_increasing_Benfit_Total_Points_value_on_Auth_Form_Template_page()
+			throws Throwable {
+		Assert.assertTrue(mxClientAuthorizationHomePage.verifyPageNavigationToAuthForm(), MessageFormat
+				.format(MobilityXConstants.FAILED_TO_VERIFY_USER_NAVIGATION_TO_MXCLIENT_HOME_PAGE, CoreConstants.FAIL));
+		mxClientAuthorizationHomePage.enterValidIncreasedTotalPointsValue(bscAuthorizationData);
+		mxClientAuthorizationHomePage.clickOnElementsOfFloatingMenu(MobilityXConstants.RESUBMIT_TO_AIRES);
+		mxClientAuthorizationHomePage.acceptDialogPostConfirmingPointsIncrease();
+	}
+
+	@Given("^he has clicked on \"([^\"]*)\" button after increasing 'Benfit Total Points' value on 'Auth Form Template' page$")
+	public void he_has_clicked_on_button_after_increasing_Benfit_Total_Points_value_on_Auth_Form_Template_page(
+			String buttonName) throws Throwable {
+		Assert.assertTrue(mxClientAuthorizationHomePage.verifyPageNavigationToAuthForm(), MessageFormat
+				.format(MobilityXConstants.FAILED_TO_VERIFY_USER_NAVIGATION_TO_MXCLIENT_HOME_PAGE, CoreConstants.FAIL));
+		mxClientAuthorizationHomePage.enterValidIncreasedTotalPointsValue(bscAuthorizationData);
+		mxClientAuthorizationHomePage.clickOnElementOnAuthorizationPage(buttonName);
+		mxClientAuthorizationHomePage.acceptDialogPostConfirmingPointsIncrease();
 	}
 
 	@Given("^he has clicked on 'Resubmit to Aires' after decreasing 'Benfit Total Points' value on 'Auth Form Template' page$")
 	public void he_has_clicked_on_Resubmit_to_Aires_after_decreasing_Benfit_Total_Points_value_on_Auth_Form_Template_page()
 			throws Throwable {
-
 		Assert.assertTrue(mxClientAuthorizationHomePage.verifyPageNavigationToAuthForm(), MessageFormat
 				.format(MobilityXConstants.FAILED_TO_VERIFY_USER_NAVIGATION_TO_MXCLIENT_HOME_PAGE, CoreConstants.FAIL));
-		bscAuthorizationData = FileReaderManager.getInstance().getCoreFlexJsonReader()
-				.getBscDataByModuleName("DomesticAuthorizationFormData");
 		mxClientAuthorizationHomePage.enterValidDecreasedTotalPointsValue(bscAuthorizationData);
 		mxClientAuthorizationHomePage.clickOnElementsOfFloatingMenu(MobilityXConstants.RESUBMIT_TO_AIRES);
 	}
@@ -568,9 +557,34 @@ public class CF_MX_Client_Steps {
 		Assert.assertTrue(mxClientAuthorizationHomePage.verifyAndAcceptIncreasedPointsDialog(), MessageFormat.format(
 				MobilityXConstants.FAILED_TO_VERIFY_AND_ACCEPT_INCREASED_POINTS_CONFIRMATION_DIALOG_ON_AUTH_FORM_PAGE,
 				CoreConstants.FAIL));
-		mxClientAuthorizationHomePage.clickOnElementOnAuthorizationPage(MobilityXConstants.SUBMIT);
-		mxClientAuthorizationHomePage.clickOnElementOnAuthorizationPage(
-				MobilityXConstants.RESUBMIT_WITH_CHANGES_MADE_TO_LETTER_POLICY_DOCUMENTS);
+		mxClientAuthorizationHomePage.acceptDialogPostConfirmingPointsIncrease();
+	}
+
+	@Then("^Increase Total Points confirmation dialog should be displayed on 'Authorization Form' page$")
+	public void Increase_Total_Points_confirmation_dialog_should_be_displayed_on_Authorization_Form_page()
+			throws Throwable {
+		Assert.assertTrue(mxClientAuthorizationHomePage.verifyAndAcceptIncreasedPointsDialog(), MessageFormat.format(
+				MobilityXConstants.FAILED_TO_VERIFY_AND_ACCEPT_INCREASED_POINTS_CONFIRMATION_DIALOG_ON_AUTH_FORM_PAGE,
+				CoreConstants.FAIL));
+		CoreFunctions.writeToPropertiesFile("CF_Client_AvailablePoints", String
+				.valueOf((Double.parseDouble(CoreFunctions.getPropertyFromConfig("CF_Transferee_TotalAvailablePoints")))
+						- (Double.parseDouble(CoreFunctions.getPropertyFromConfig("CF_Client_TotalSelectedPoints")))));
+		CoreFunctions.writeToPropertiesFile("CF_Transferee_AvailablePoints",
+				CoreFunctions.getPropertyFromConfig("CF_Client_AvailablePoints"));
+	}
+
+	@When("^he accepts 'Increase Total Points' confirmation dialog displayed on 'Authorization Form' page$")
+	public void he_accepts_Increase_Total_Points_confirmation_dialog_displayed_on_Authorization_Form_page()
+			throws Throwable {
+		Assert.assertTrue(mxClientAuthorizationHomePage.verifyAndAcceptIncreasedPointsDialog(), MessageFormat.format(
+				MobilityXConstants.FAILED_TO_VERIFY_AND_ACCEPT_INCREASED_POINTS_CONFIRMATION_DIALOG_ON_AUTH_FORM_PAGE,
+				CoreConstants.FAIL));
+		mxClientAuthorizationHomePage.acceptDialogPostConfirmingPointsIncrease();
+		CoreFunctions.writeToPropertiesFile("CF_Client_AvailablePoints", String
+				.valueOf((Double.parseDouble(CoreFunctions.getPropertyFromConfig("CF_Transferee_TotalAvailablePoints")))
+						- (Double.parseDouble(CoreFunctions.getPropertyFromConfig("CF_Client_TotalSelectedPoints")))));
+		CoreFunctions.writeToPropertiesFile("CF_Transferee_AvailablePoints",
+				CoreFunctions.getPropertyFromConfig("CF_Client_AvailablePoints"));
 	}
 
 	@Given("^'Auth Submit Success' growl message should be displayed on the navigated 'View all initiation' page on confirmation of the last dialog$")
@@ -583,14 +597,11 @@ public class CF_MX_Client_Steps {
 				MessageFormat.format(
 						MobilityXConstants.FAILED_TO_VERIFY_USER_NAVIGATION_TO_MXCLIENT_VIEW_ALL_INITIATONS_PAGE,
 						CoreConstants.FAIL));
-
 	}
 
 	@Then("^Revised 'New Initiation Submitted' email having updated Transferee and Benefit Points details should be received$")
 	public void Revised_New_Initiation_Submitted_email_having_updated_Transferee_and_Benefit_Points_details_should_be_displayed()
 			throws Throwable {
-		bscAuthorizationData = FileReaderManager.getInstance().getCoreFlexJsonReader()
-				.getBscDataByModuleName("DomesticAuthorizationFormData");
 		Assert.assertTrue(mxClientAuthorizationHomePage.verifyRevisedSubmissionEmail(bscAuthorizationData),
 				MessageFormat.format(MobilityXConstants.FAILED_TO_VERIFY_INITIATION_SUBMISSION_EMAIL,
 						CoreConstants.FAIL));
@@ -606,14 +617,11 @@ public class CF_MX_Client_Steps {
 				MessageFormat.format(
 						MobilityXConstants.FAILED_TO_VERIFY_USER_NAVIGATION_TO_MXCLIENT_VIEW_ALL_INITIATONS_PAGE,
 						CoreConstants.FAIL));
-
 	}
 
 	@Given("^he has verified Revised 'New Initiation Submitted' email received having updated Transferee and Benefit Points details$")
 	public void he_has_verified_Revised_New_Initiation_Submitted_email_received_having_updated_Transferee_and_Benefit_Points_details()
 			throws Throwable {
-		bscAuthorizationData = FileReaderManager.getInstance().getCoreFlexJsonReader()
-				.getBscDataByModuleName("DomesticAuthorizationFormData");
 		Assert.assertTrue(mxClientAuthorizationHomePage.verifyRevisedSubmissionEmail(bscAuthorizationData),
 				MessageFormat.format(MobilityXConstants.FAILED_TO_VERIFY_INITIATION_SUBMISSION_EMAIL,
 						CoreConstants.FAIL));
@@ -624,10 +632,8 @@ public class CF_MX_Client_Steps {
 			String navigatedPageName) throws Throwable {
 		Assert.assertTrue(mxClientBenefitSelectionToolPage.selectBenefitsAndProceedToSaveAndExit(), MessageFormat
 				.format(MobilityXConstants.FAILED_TO_SELECT_BENEFITS_AND_PROCEED_TO_REVIEW_PAGE, CoreConstants.FAIL));
-
 		Assert.assertTrue(mxClientBenefitsBundlePage.isBenefitsBundlePageDisplayed(), MessageFormat
 				.format(MobilityXConstants.FAILED_TO_DISPLAY_MX_CLIENT_BENEFITS_BUNDLE_PAGE, CoreConstants.FAIL));
-
 	}
 
 	@Given("^he has navigated to \"([^\"]*)\" page after selecting required Flex Benefits and Cashout on 'Benefit Selection Tool' page$")
@@ -644,7 +650,6 @@ public class CF_MX_Client_Steps {
 			String navigatedPageName) throws Throwable {
 		Assert.assertTrue(mxClientBenefitSelectionToolPage.selectCashoutAndProceedToSaveAndExit(), MessageFormat
 				.format(MobilityXConstants.FAILED_TO_SELECT_BENEFITS_AND_PROCEED_TO_REVIEW_PAGE, CoreConstants.FAIL));
-
 		Assert.assertTrue(mxClientBenefitsBundlePage.isBenefitsBundlePageDisplayed(), MessageFormat
 				.format(MobilityXConstants.FAILED_TO_DISPLAY_MX_CLIENT_BENEFITS_BUNDLE_PAGE, CoreConstants.FAIL));
 	}
@@ -653,13 +658,11 @@ public class CF_MX_Client_Steps {
 	public void he_has_clicked_on_Back_to_initiation_link_on_Benefit_Selection_Tool_to_navigate_to_Authorization_Form_page()
 			throws Throwable {
 		mxClientBenefitSelectionToolPage.clickElementOfPage(MobilityXConstants.BACK_TO_BENEFITS_LIST);
-
 		Assert.assertTrue(mxClientBenefitSelectionToolPage.verifyPageNavigation(),
 				MessageFormat.format(
 						MobilityXConstants.FAILED_TO_VERIFY_USER_NAVIGATION_TO_MXCLIENT_BENEFIT_SELECTION_TOOL_PAGE,
 						CoreConstants.FAIL));
 		mxClientBenefitSelectionToolPage.clickElementOfPage(MobilityXConstants.BACK_TO_INITIATION);
-
 		Assert.assertTrue(mxClientAuthorizationHomePage.verifyPageNavigationToAuthForm(), MessageFormat
 				.format(MobilityXConstants.FAILED_TO_VERIFY_USER_NAVIGATION_TO_MXCLIENT_HOME_PAGE, CoreConstants.FAIL));
 	}
@@ -680,19 +683,14 @@ public class CF_MX_Client_Steps {
 		Assert.assertTrue(mxClientAuthorizationHomePage.verifyAndAcceptIncreasedPointsDialog(), MessageFormat.format(
 				MobilityXConstants.FAILED_TO_VERIFY_AND_ACCEPT_INCREASED_POINTS_CONFIRMATION_DIALOG_ON_AUTH_FORM_PAGE,
 				CoreConstants.FAIL));
-		mxClientAuthorizationHomePage.clickOnElementOnAuthorizationPage(MobilityXConstants.SUBMIT);
-		mxClientAuthorizationHomePage.clickOnElementOnAuthorizationPage(
-				MobilityXConstants.RESUBMIT_WITH_CHANGES_MADE_TO_LETTER_POLICY_DOCUMENTS);
+		mxClientAuthorizationHomePage.acceptDialogPostConfirmingPointsIncrease();
 	}
 
 	@Given("^he has clicked on 'Start Benefit Selection' after decreasing 'Benfit Total Points' value on 'Auth Form Template' page$")
 	public void he_has_clicked_on_Start_Benefit_Selection_after_decreasing_Benfit_Total_Points_value_on_Auth_Form_Template_page()
 			throws Throwable {
-		bscAuthorizationData = FileReaderManager.getInstance().getCoreFlexJsonReader()
-				.getBscDataByModuleName("DomesticAuthorizationFormData");
 		mxClientAuthorizationHomePage.enterValidDecreasedTotalPointsValue(bscAuthorizationData);
 		mxClientAuthorizationHomePage.clickOnElementOnAuthorizationPage(MobilityXConstants.START_BENEFIT_SELECTION);
-
 		Assert.assertTrue(mxClientBenefitSelectionToolPage.verifyPageNavigation(),
 				MessageFormat.format(
 						MobilityXConstants.FAILED_TO_VERIFY_USER_NAVIGATION_TO_MXCLIENT_BENEFIT_SELECTION_TOOL_PAGE,
@@ -702,11 +700,8 @@ public class CF_MX_Client_Steps {
 	@Given("^he has clicked on 'Start Benefit Selection' after increasing 'Benfit Total Points' value on 'Auth Form Template' page$")
 	public void he_has_clicked_on_Start_Benefit_Selection_after_increasing_Benfit_Total_Points_value_on_Auth_Form_Template_page()
 			throws Throwable {
-		bscAuthorizationData = FileReaderManager.getInstance().getCoreFlexJsonReader()
-				.getBscDataByModuleName("DomesticAuthorizationFormData");
 		mxClientAuthorizationHomePage.enterValidIncreasedTotalPointsValue(bscAuthorizationData);
 		mxClientAuthorizationHomePage.clickOnElementOnAuthorizationPage(MobilityXConstants.START_BENEFIT_SELECTION);
-
 		Assert.assertTrue(mxClientBenefitSelectionToolPage.verifyPageNavigation(),
 				MessageFormat.format(
 						MobilityXConstants.FAILED_TO_VERIFY_USER_NAVIGATION_TO_MXCLIENT_BENEFIT_SELECTION_TOOL_PAGE,
@@ -716,14 +711,20 @@ public class CF_MX_Client_Steps {
 	@Given("^he has clicked on 'Start Benefit Selection' after entering valid 'Benfit Total Points' value on 'Auth Form Template' page$")
 	public void he_has_clicked_on_Start_Benefit_Selection_after_entering_valid_Benfit_Total_Points_value_on_Auth_Form_Template_page()
 			throws Throwable {
-		bscAuthorizationData = FileReaderManager.getInstance().getCoreFlexJsonReader()
-				.getBscDataByModuleName("DomesticAuthorizationFormData");
-		mxClientAuthorizationHomePage.enterValidIncreasedTotalPointsValue(bscAuthorizationData);
+		mxClientAuthorizationHomePage.enterValidInitialTotalPointsValue(bscAuthorizationData);
 		mxClientAuthorizationHomePage.clickOnElementOnAuthorizationPage(MobilityXConstants.START_BENEFIT_SELECTION);
 		Assert.assertTrue(mxClientBenefitSelectionToolPage.verifyPageNavigation(),
 				MessageFormat.format(
 						MobilityXConstants.FAILED_TO_VERIFY_USER_NAVIGATION_TO_MXCLIENT_BENEFIT_SELECTION_TOOL_PAGE,
 						CoreConstants.FAIL));
+	}
+
+	@Given("^he has clicked on \"([^\"]*)\" button after entering valid 'Benfit Total Points' value on 'Auth Form Template' page$")
+	public void he_has_clicked_on_after_entering_valid_Benfit_Total_Points_value_on_Auth_Form_Template_page(
+			String buttonName) throws Throwable {
+		mxClientAuthorizationHomePage.enterValidInitialTotalPointsValue(bscAuthorizationData);
+		mxClientAuthorizationHomePage.clickOnElementsOfFloatingMenu(buttonName);
+		mxClientAuthorizationHomePage.clickOnElementOnAuthorizationPage(MobilityXConstants.SUBMIT);
 	}
 
 	@Given("^he has clicked on \"([^\"]*)\" button after validating selected Flex Benefit details listed under 'Selected Benefits' section on \"([^\"]*)\" page$")
@@ -732,7 +733,6 @@ public class CF_MX_Client_Steps {
 		Assert.assertTrue(mxClientBenefitsBundlePage.verifySelectedBenefitDetails(), MessageFormat.format(
 				MobilityXConstants.FAILED_TO_VERIFY_SELECTED_BENEFITS_ON_BENEFITS_BUNDLE_PAGE, CoreConstants.FAIL));
 		mxClientBenefitsBundlePage.clickElementOfPage(saveAndExitButton);
-
 	}
 
 	@Given("^he has clicked on \"([^\"]*)\" button after validating selected Cashout details listed under 'Selected Benefits' section on \"([^\"]*)\" page$")
@@ -743,7 +743,6 @@ public class CF_MX_Client_Steps {
 						MobilityXConstants.FAILED_TO_VERIFY_SELECTED_CASHOUT_DETAILS_ON_BENEFITS_BUNDLE_PAGE,
 						CoreConstants.FAIL));
 		mxClientBenefitsBundlePage.clickElementOfPage(saveAndExitButton);
-
 	}
 
 	@Given("^he has clicked on \"([^\"]*)\" button after validating selected FlexBenefit and Cashout details listed under 'Selected Benefits' section on \"([^\"]*)\" page$")
@@ -756,7 +755,6 @@ public class CF_MX_Client_Steps {
 						MobilityXConstants.FAILED_TO_VERIFY_SELECTED_CASHOUT_DETAILS_ON_BENEFITS_BUNDLE_PAGE,
 						CoreConstants.FAIL));
 		mxClientBenefitsBundlePage.clickElementOfPage(saveAndExitButton);
-
 	}
 
 	@Given("^he has verified entered 'Total Points' value and selected 'Core_Flex Benefit' details displayed on the navigated 'Authorization Form' page$")
@@ -769,7 +767,6 @@ public class CF_MX_Client_Steps {
 						CoreFunctions.getPropertyFromConfig("CoreFlex_Policy_PersonResponsible")),
 				MessageFormat.format(MobilityXConstants.FAILED_TO_VERIFY_FLEX_BENEFITS_SECTION_ON_AUTHORIZATION_FORM,
 						CoreConstants.FAIL));
-
 	}
 
 	@Given("^he has verified entered 'Total Points' value and selected 'Core_Flex Benefit' along with 'Cashout' details displayed on the navigated 'Authorization Form' page$")
@@ -785,17 +782,13 @@ public class CF_MX_Client_Steps {
 		Assert.assertTrue(mxClientAuthorizationHomePage.verifyCashoutSelectionOnAuthForm(), MessageFormat.format(
 				MobilityXConstants.FAILED_TO_VERIFY_PORTION_CAHOUT_SELECTION_UNDER_FLEX_BENEFITS_SECTION_ON_AUTHORIZATION_FORM,
 				CoreConstants.FAIL));
-
 	}
 
 	@Given("^he has verified 'New Initiation Submitted' email having Transferee and selected 'Core_Flex Benefit' details along with assigned CoreFlex Total Points$")
 	public void he_has_verified_New_Initiation_Submitted_email_having_Transferee_and_selected_Core_Flex_Benefit_details_along_with_assigned_CoreFlex_Total_Points()
 			throws Throwable {
-		bscAuthorizationData = FileReaderManager.getInstance().getCoreFlexJsonReader()
-				.getBscDataByModuleName("DomesticAuthorizationFormData");
-		Assert.assertTrue(mxClientAuthorizationHomePage.verifyInitiationSubmissionEmail(bscAuthorizationData),
-				MessageFormat.format(MobilityXConstants.FAILED_TO_VERIFY_INITIATION_SUBMISSION_EMAIL,
-						CoreConstants.FAIL));
+		Assert.assertTrue(mxClientAuthorizationHomePage.verifyInitiationBenefitsSubmissionEmail(), MessageFormat
+				.format(MobilityXConstants.FAILED_TO_VERIFY_INITIATION_SUBMISSION_EMAIL, CoreConstants.FAIL));
 	}
 
 	@Given("^he has verified entered 'Total Points' value and selected 'Core_Flex Benefit' details displayed on the navigated 'Authorization Form' page post Auth form submission$")
@@ -1013,10 +1006,8 @@ public class CF_MX_Client_Steps {
 	@Given("^he has navigated to \"([^\"]*)\" page having record of Bundle submitted by the Client$")
 	public void he_has_navigated_to_page_having_record_of_Bundle_submitted_by_the_Client(String pageName)
 			throws Throwable {
-
 		// Remove this method when 3rd party redirection issue is fixed
 		transfereeSubmissionsDashboardHomePage.reloadApplicationIfNotLoaded();
-
 		Assert.assertTrue(transfereeSubmissionsDashboardHomePage.verifyUserNavigationToDashboardPage(),
 				MessageFormat.format(COREFLEXConstants.FAILED_TO_NAVIGATE_TO_TRANSFEREE_SUBMISSIONS_DASHBOARD_HOME_PAGE,
 						CoreConstants.FAIL));
@@ -1045,7 +1036,6 @@ public class CF_MX_Client_Steps {
 		Assert.assertTrue(transfereeSubmissionsDetailsPage.verifiyPageNavigation(pageName),
 				MessageFormat.format(COREFLEXConstants.FAILED_TO_NAVIGATE_TO_TRANSFEREE_SUBMISSIONS_DETAILS_PAGE,
 						CoreConstants.FAIL, pageName));
-
 		Assert.assertTrue(transfereeSubmissionsDetailsPage.verifyClientAndPointsDetails(), MessageFormat.format(
 				COREFLEXConstants.FAILED_TO_VERIFY_TRANSFEREE_AND_POINTS_DETAILS_ON_TRANSFEREE_SUBMISSIONS_DETAILS_PAGE,
 				CoreConstants.FAIL));
@@ -1061,7 +1051,6 @@ public class CF_MX_Client_Steps {
 		Assert.assertTrue(transfereeSubmissionsDetailsPage.verifiyPageNavigation(pageName),
 				MessageFormat.format(COREFLEXConstants.FAILED_TO_NAVIGATE_TO_TRANSFEREE_SUBMISSIONS_DETAILS_PAGE,
 						CoreConstants.FAIL, pageName));
-
 		Assert.assertTrue(transfereeSubmissionsDetailsPage.verifyClientAndPointsDetails(), MessageFormat.format(
 				COREFLEXConstants.FAILED_TO_VERIFY_TRANSFEREE_AND_POINTS_DETAILS_ON_TRANSFEREE_SUBMISSIONS_DETAILS_PAGE,
 				CoreConstants.FAIL));
@@ -1097,18 +1086,26 @@ public class CF_MX_Client_Steps {
 	@Then("^'Revised Mobility Initiation' email having submitted_deleted Benefit and Points details should be received$")
 	public void Revised_Mobility_Initiation_email_having_submitted_deleted_Benefit_Points_details_should_be_received()
 			throws Throwable {
-		bscAuthorizationData = FileReaderManager.getInstance().getCoreFlexJsonReader()
-				.getBscDataByModuleName("DomesticAuthorizationFormData");
 		Assert.assertTrue(mxClientAuthorizationHomePage.verifyRevisedBenefitsSubmissionEmail(bscAuthorizationData),
 				MessageFormat.format(MobilityXConstants.FAILED_TO_VERIFY_REVISED_MOBILITY_INITIATION_EMAIL,
 						CoreConstants.FAIL));
 	}
 
+	@Then("^'Revised Mobility Initiation' email having revised Available and Total Points details should be received on 'Resubmission' of Auth Form$")
+	public void Revised_Mobility_Initiation_email_having_revised_Available_and_Total_Points_details_should_be_received_on_Resubmission_of_Auth_Form()
+			throws Throwable {
+		mxClientAuthorizationHomePage.clickOnElementsOfFloatingMenu(MobilityXConstants.RESUBMIT_TO_AIRES);
+		mxClientAuthorizationHomePage.acceptDialogPostConfirmingPointsIncrease();
+		Assert.assertTrue(mxClientAuthorizationHomePage.verifyInitiationSubmittedSuccessGrowlMessage(),
+				MessageFormat.format(MobilityXConstants.FAILED_TO_VERIFY_INITIATION_SUBMITTED_SUCCESS_GROWL_MESSAGE,
+						CoreConstants.FAIL));
+		Assert.assertTrue(mxClientAuthorizationHomePage.verifyRevisedBenefitsSubmissionEmail(), MessageFormat
+				.format(MobilityXConstants.FAILED_TO_VERIFY_REVISED_MOBILITY_INITIATION_EMAIL, CoreConstants.FAIL));
+	}
+
 	@When("^he has verified 'Revised Mobility Initiation' email having submitted Benefit_Cashout and Points details$")
 	public void he_has_verified_Revised_Mobility_Initiation_email_having_submitted_Benefit_Cashout_and_Points_details()
 			throws Throwable {
-		bscAuthorizationData = FileReaderManager.getInstance().getCoreFlexJsonReader()
-				.getBscDataByModuleName("DomesticAuthorizationFormData");
 		Assert.assertTrue(mxClientAuthorizationHomePage.verifyRevisedBenefitsSubmissionEmail(bscAuthorizationData),
 				MessageFormat.format(MobilityXConstants.FAILED_TO_VERIFY_REVISED_MOBILITY_INITIATION_EMAIL,
 						CoreConstants.FAIL));
@@ -1124,27 +1121,21 @@ public class CF_MX_Client_Steps {
 				_coreFlexLoginInfo.details.mxClientPassword);
 		mobilityXLoginPage.clickSignIn();
 		mxClientAuthorizationHomePage.handle_Cookie_AfterLogin();
-
 		Assert.assertTrue(mxClientAuthorizationHomePage.verifyPageNavigation(), MessageFormat
 				.format(MobilityXConstants.FAILED_TO_VERIFY_USER_NAVIGATION_TO_MXCLIENT_HOME_PAGE, CoreConstants.FAIL));
-
 		mxClientAuthorizationHomePage.clickOnElementOnAuthorizationPage(MobilityXConstants.VIEW_ALL_INITIATIONS);
 		Assert.assertTrue(mxClientViewAllInitiationsPage.verifyPageNavigation(),
 				MessageFormat.format(
 						MobilityXConstants.FAILED_TO_VERIFY_USER_NAVIGATION_TO_MXCLIENT_VIEW_ALL_INITIATONS_PAGE,
 						CoreConstants.FAIL));
 		mxClientViewAllInitiationsPage.clickElementOfPage(MobilityXConstants.INITIATION);
-
 		Assert.assertTrue(mxClientAuthorizationHomePage.verifyPageNavigationToAuthForm(), MessageFormat
 				.format(MobilityXConstants.FAILED_TO_VERIFY_USER_NAVIGATION_TO_MXCLIENT_HOME_PAGE, CoreConstants.FAIL));
-
 		mxClientAuthorizationHomePage.clickOnElementOnAuthorizationPage(MobilityXConstants.MANAGE_BENEFIT_SELECTION);
-
 		Assert.assertTrue(mxClientBenefitSelectionToolPage.verifyPageNavigation(),
 				MessageFormat.format(
 						MobilityXConstants.FAILED_TO_VERIFY_USER_NAVIGATION_TO_MXCLIENT_BENEFIT_SELECTION_TOOL_PAGE,
 						CoreConstants.FAIL));
-
 		Assert.assertTrue(mxClientBenefitSelectionToolPage.verifyInitiationForText(), MessageFormat.format(
 				MobilityXConstants.FAILED_TO_VALIDATE_INITIATION_FOR_TEXT_ON_MXCLIENT_BENEFIT_SELECTION_TOOL_PAGE,
 				CoreConstants.FAIL));
@@ -1167,10 +1158,8 @@ public class CF_MX_Client_Steps {
 				MessageFormat.format(MobilityXConstants.FAILED_TO_VERIFY_ELEMENT_PRESENT_ON_BENEFIT_SELECTION_TOOL_PAGE,
 						CoreConstants.FAIL, MobilityXConstants.EDIT_SUBMITTED_BENEFITS));
 		mxClientBenefitSelectionToolPage.clickElementOfPage(MobilityXConstants.EDIT_SUBMITTED_BENEFITS);
-
 		Assert.assertTrue(mxClientBenefitsBundlePage.isBenefitsBundlePageDisplayed(), MessageFormat
 				.format(MobilityXConstants.FAILED_TO_DISPLAY_MX_CLIENT_BENEFITS_BUNDLE_PAGE, CoreConstants.FAIL));
-
 		Assert.assertTrue(
 				mxClientBenefitsBundlePage.validateSubmittedBenefitDetailsPostDeleteRequestOperation(actionPerformed),
 				MessageFormat.format(MobilityXConstants.BENEFIT_DETAILS_NOT_MATCHED_ON_BENEFITS_BUNDLE_PAGE,
@@ -1229,10 +1218,8 @@ public class CF_MX_Client_Steps {
 						MobilityXConstants.BENEFIT_DETAILS_ON_BENEFIT_SELECTION_TOOL_PAGE_OF_MXCLIENT_NOT_MATCHED_WITH_BENEFITS_DETAILS_SET_IN_BLUEPRINT_APPLICATION,
 						CoreConstants.FAIL));
 		mxClientBenefitSelectionToolPage.clickElementOfPage(MobilityXConstants.SUGGESTED_OPTIONS_LINK);
-
 		Assert.assertTrue(mxClientBenefitSelectionToolPage.verifyUserNavigationToSuggestedBundlesPage(), MessageFormat
 				.format(MobilityXConstants.FAILED_TO_NAVIGATE_TO_SUGGESTED_BUNDLES_PAGE, CoreConstants.FAIL));
-
 		Assert.assertTrue(
 				mxClientBenefitSelectionToolPage.verifySuggestedBundlesDetailsBasedOnPolicyRequiredFor(
 						CoreFunctions.getPropertyFromConfig("CoreFlex_Policy_RequiredFor"),
@@ -1247,7 +1234,6 @@ public class CF_MX_Client_Steps {
 
 		List<Map<String, String>> dataMap = dataTable.asMaps(String.class, String.class);
 		String tracingSetSelection = mxClientBenefitSelectionToolPage.getTracingSetSelection(dataMap);
-
 		testContext.getBasePage().reLaunchIrisToAvoidFreezingIssue();
 		testContext.getIrisPageManager().irisLoginPage = new IRIS_LoginPage();
 		testContext.getIrisPageManager().irisLoginPage.getIRISLoginAsPerEnvt(_coreFlexLoginInfo);
@@ -1269,7 +1255,6 @@ public class CF_MX_Client_Steps {
 		testContext.getIrisPageManager().irisActivityAndFinancePage.clickOnSaveBtn();
 		testContext.getIrisPageManager().irisActivityAndFinancePage.acceptSavedSuccessDialog();
 		testContext.getBasePage().cleanIrisProcesses();
-
 		mxClientBenefitSelectionToolPage.clickElementOfPage(MobilityXConstants.BACK_TO_INITIATION);
 		Assert.assertTrue(mxClientAuthorizationHomePage.verifyPageNavigationToAuthForm(), MessageFormat
 				.format(MobilityXConstants.FAILED_TO_VERIFY_USER_NAVIGATION_TO_MXCLIENT_HOME_PAGE, CoreConstants.FAIL));
@@ -1313,7 +1298,6 @@ public class CF_MX_Client_Steps {
 	public void he_has_clicked_on_Start_Benefit_Selection_on_Auth_Form_Template_page_to_navigate_to_Benefit_Selection_Tool_page()
 			throws Throwable {
 		mxClientAuthorizationHomePage.clickOnElementOnAuthorizationPage(MobilityXConstants.START_BENEFIT_SELECTION);
-
 		Assert.assertTrue(mxClientBenefitSelectionToolPage.verifyPageNavigation(),
 				MessageFormat.format(
 						MobilityXConstants.FAILED_TO_VERIFY_USER_NAVIGATION_TO_MXCLIENT_BENEFIT_SELECTION_TOOL_PAGE,
@@ -1324,7 +1308,6 @@ public class CF_MX_Client_Steps {
 	public void he_has_clicked_on_tab_on_Intiation_page_to_navigate_to_Collaboration_Workflow_page(String tabName)
 			throws Throwable {
 		mxClientAuthorizationHomePage.clickTabOnAuthorisationPage(tabName);
-
 		Assert.assertTrue(mxClientAuthCollaborationPage.verifyPageNavigation(),
 				MessageFormat.format(
 						MobilityXConstants.FAILED_TO_VERIFY_USER_NAVIGATION_TO_MXCLIENT_AUTH_COLLABORATION_PAGE,
@@ -1339,7 +1322,6 @@ public class CF_MX_Client_Steps {
 		mxClientAuthCollaborationPage.setAuthFormRoutingOrder(routingOrder);
 		Assert.assertTrue(mxClientAuthCollaborationPage.addContributorsAndApprovers(dataTable),
 				MessageFormat.format(MobilityXConstants.FAILED_TO_ADD_COLLABORATORS, CoreConstants.FAIL));
-
 	}
 
 	@Given("^he has verified 'Initiation routed for approver workflow' success dialog displayed on 'Authorization Form' page$")
@@ -1567,8 +1549,6 @@ public class CF_MX_Client_Steps {
 	@Given("^he had verified following information of 'Submitted' Authorization is populated correctly on 'Clone Auth Form' dialog$")
 	public void he_has_verified_following_infomation_of_Submitted_Authorization_is_populated_correctly_on_Clone_Auth_Form_dialog(
 			DataTable dataTable) throws Throwable {
-		bscAuthorizationData = FileReaderManager.getInstance().getCoreFlexJsonReader()
-				.getBscDataByModuleName("DomesticAuthorizationFormData");
 		List<List<String>> dataList = dataTable.asLists(String.class);
 		for (int i = 0; i < dataList.get(0).size(); i++) {
 			mxClientAuthorizationHomePage.verifyCloneAuthFormFieldValues(bscAuthorizationData, dataList.get(0).get(i));
@@ -1590,7 +1570,7 @@ public class CF_MX_Client_Steps {
 		mxClientAuthorizationHomePage.selectCloneAuthFormFieldCheckbox(MobilityXConstants.AUTHORIZATION_TYPE);
 		mxClientAuthorizationHomePage.selectCloneAuthFormFieldCheckbox(MobilityXConstants.SELECT_ALL);
 		mxClientAuthorizationHomePage.selectCloneAuthFormFieldCheckbox(MobilityXConstants.IMMIGRATION);
-//		mxClientAuthorizationHomePage.selectCloneAuthFormFieldCheckbox(MobilityXConstants.AUTHORIZATION_INFORMATION);
+		mxClientAuthorizationHomePage.selectCloneAuthFormFieldCheckbox(MobilityXConstants.AUTHORIZATION_INFORMATION);
 		mxClientAuthorizationHomePage.clickOnElementOnAuthorizationPage(buttonName);
 	}
 
@@ -1599,8 +1579,6 @@ public class CF_MX_Client_Steps {
 			throws Throwable {
 		Assert.assertTrue(mxClientAuthorizationHomePage.verifyPageNavigationToAuthForm(), MessageFormat
 				.format(MobilityXConstants.FAILED_TO_VERIFY_USER_NAVIGATION_TO_MXCLIENT_HOME_PAGE, CoreConstants.FAIL));
-		bscAuthorizationData = FileReaderManager.getInstance().getCoreFlexJsonReader()
-				.getBscDataByModuleName("DomesticAuthorizationFormData");
 		Assert.assertTrue(mxClientAuthorizationHomePage.verifyAuthFormPopulatedPostCloning(bscAuthorizationData),
 				MessageFormat.format(MobilityXConstants.AUTH_FORM_FIELDS_NOT_POPULATED_POST_CLONING,
 						CoreConstants.FAIL));
@@ -1609,7 +1587,6 @@ public class CF_MX_Client_Steps {
 	@Then("^submitted TotalPoints CoreFlexBenefit and Cashout details should be displayed on the navigated Cloned 'Authorization Form' page$")
 	public void submitted_TotalPoints_CoreFlexBenefit_and_Cashout_details_should_be_displayed_on_the_navigated_Cloned_Authorization_Form_page()
 			throws Throwable {
-
 		Assert.assertTrue(mxClientAuthorizationHomePage.verifyTotalPointsSectionPostCloning(), MessageFormat.format(
 				MobilityXConstants.TOTAL_POINTS_FIELD_VALUE_NOT_MATCHED_POST_AUTH_FORM_CLONING, CoreConstants.FAIL));
 		Assert.assertTrue(
@@ -1630,7 +1607,6 @@ public class CF_MX_Client_Steps {
 	@Then("^TotalPoint Balance along with Available and Submitted Benefit_Cashout details should be displayed on 'Benefit Selection Tool' page post Auth Form Cloning$")
 	public void totalpoint_Balance_along_with_Available_and_Submitted_Benefit_Cashout_details_should_be_displayed_on_Benefit_Selection_Tool_page_post_Auth_Form_Cloning()
 			throws Throwable {
-
 		Assert.assertTrue(mxClientBenefitSelectionToolPage.verifyWindowTitle(), MessageFormat
 				.format(MobilityXConstants.FAILED_TO_VALIDATE_BENEFIT_SELECTION_TOOL_PAGE_TITLE, CoreConstants.FAIL));
 		Assert.assertTrue(mxClientBenefitSelectionToolPage.verifyInitiationForText(), MessageFormat.format(
@@ -1649,12 +1625,9 @@ public class CF_MX_Client_Steps {
 		Assert.assertTrue(mxClientBenefitSelectionToolPage.verifyCashoutSectionDetailsPostCloningOnBST(),
 				MessageFormat.format(MobilityXConstants.CASHOUT_DETAILS_NOT_MATCHED_ON_BENEFIT_SELECTION_TOOL_PAGE,
 						CoreConstants.FAIL));
-
 		mxClientBenefitSelectionToolPage.clickElementOfPage(MobilityXConstants.SUGGESTED_OPTIONS_LINK);
-
 		Assert.assertTrue(mxClientBenefitSelectionToolPage.verifyUserNavigationToSuggestedBundlesPage(), MessageFormat
 				.format(MobilityXConstants.FAILED_TO_NAVIGATE_TO_SUGGESTED_BUNDLES_PAGE, CoreConstants.FAIL));
-
 		Assert.assertTrue(
 				mxClientBenefitSelectionToolPage.verifySuggestedBundlesDetailsBasedOnPolicyRequiredFor(
 						CoreFunctions.getPropertyFromConfig("CoreFlex_Policy_RequiredFor"),
@@ -1769,6 +1742,130 @@ public class CF_MX_Client_Steps {
 				MessageFormat.format(
 						MobilityXConstants.FAILED_TO_VERIFY_SUBMITTED_BENEFITS_AND_POINTS_DETAILS_ON_FLEX_PDF_DOWNLOADED_DOCUMENT,
 						CoreConstants.FAIL));
+	}
+
+	@Given("^'Available Points' and 'Total Points' should be updated on following pages based on increased 'Total Points'$")
+	public void Available_Points_should_be_updated_on_following_pages_based_on_increased_Total_Points(
+			DataTable dataTable) throws Throwable {
+		Assert.assertTrue(mxClientBenefitSelectionToolPage.verifyPageNavigation(),
+				MessageFormat.format(
+						MobilityXConstants.FAILED_TO_VERIFY_USER_NAVIGATION_TO_MXCLIENT_BENEFIT_SELECTION_TOOL_PAGE,
+						CoreConstants.FAIL));
+		Assert.assertTrue(mxClientBenefitSelectionToolPage.verifyInitiationForText(), MessageFormat.format(
+				MobilityXConstants.FAILED_TO_VALIDATE_INITIATION_FOR_TEXT_ON_MXCLIENT_BENEFIT_SELECTION_TOOL_PAGE,
+				CoreConstants.FAIL));
+		Assert.assertTrue(mxClientBenefitSelectionToolPage.verifyAvailablePointsMessageAfterBenefitSubmission(),
+				MessageFormat.format(
+						MobilityXConstants.FAILED_TO_VALIDATE_AVAILABLE_POINTS_MESSAGE_ON_MXCLIENT_BENEFIT_SELECTION_TOOL_PAGE,
+						CoreConstants.FAIL));
+		Assert.assertTrue(mxClientBenefitSelectionToolPage.verifyCashoutSectionDetailsOnBST(true),
+				MessageFormat.format(
+						MobilityXConstants.PORTION_CASHOUT_DETAILS_NOT_MATCHED_ON_BENEFIT_SELECTION_TOOL_PAGE,
+						CoreConstants.FAIL));
+		Assert.assertTrue(mxClientBenefitSelectionToolPage.validatePointsAfterSubmissionOnNextButton(),
+				MessageFormat.format(
+						MobilityXConstants.FAILED_TO_VERIFY_AVAILABLE_POINTS_ON_NEXT_BUTTON_ON_BENEFIT_SELECTION_TOOL_PAGE,
+						CoreConstants.FAIL));
+		Assert.assertTrue(
+				mxClientBenefitSelectionToolPage.verifyElementPresentOnPage(MobilityXConstants.EDIT_SUBMITTED_BENEFITS),
+				MessageFormat.format(MobilityXConstants.FAILED_TO_VERIFY_ELEMENT_PRESENT_ON_BENEFIT_SELECTION_TOOL_PAGE,
+						CoreConstants.FAIL, MobilityXConstants.EDIT_SUBMITTED_BENEFITS));
+		mxClientBenefitSelectionToolPage.clickElementOfPage(MobilityXConstants.EDIT_SUBMITTED_BENEFITS);
+		Assert.assertTrue(mxClientBenefitsBundlePage.isBenefitsBundlePageDisplayed(), MessageFormat
+				.format(MobilityXConstants.FAILED_TO_DISPLAY_MX_CLIENT_BENEFITS_BUNDLE_PAGE, CoreConstants.FAIL));
+		Assert.assertTrue(mxClientBenefitsBundlePage.verifySubmittedPointsDetailsOnBBPage(), MessageFormat.format(
+				MobilityXConstants.SUBMITTED_BENEFIT_DETAILS_NOT_MATCHED_ON_BENEFITS_BUNDLE_PAGE, CoreConstants.FAIL));
+		mxClientBenefitsBundlePage.clickElementOfPage(MobilityXConstants.BACK_TO_BENEFITS_LIST);
+		Assert.assertTrue(mxClientBenefitSelectionToolPage.verifyPageNavigation(),
+				MessageFormat.format(
+						MobilityXConstants.FAILED_TO_VERIFY_USER_NAVIGATION_TO_MXCLIENT_BENEFIT_SELECTION_TOOL_PAGE,
+						CoreConstants.FAIL));
+		mxClientBenefitSelectionToolPage.clickElementOfPage(MobilityXConstants.BACK_TO_INITIATION);
+		Assert.assertTrue(mxClientAuthorizationHomePage.verifyPageNavigationToAuthForm(), MessageFormat
+				.format(MobilityXConstants.FAILED_TO_VERIFY_USER_NAVIGATION_TO_MXCLIENT_HOME_PAGE, CoreConstants.FAIL));
+		Assert.assertTrue(mxClientAuthorizationHomePage.verifyTotalPointsValue(), MessageFormat.format(
+				MobilityXConstants.FAILED_TO_VERIFY_TOTAL_POINTS_VALUE_ON_AUTHORIZATION_FORM, CoreConstants.FAIL));
+		Assert.assertTrue(
+				mxClientAuthorizationHomePage.verifyFlexBenefitsSectionPostAuthFormSubmission(
+						CoreFunctions.getPropertyFromConfig("CoreFlex_Policy_PersonResponsible")),
+				MessageFormat.format(MobilityXConstants.FAILED_TO_VERIFY_FLEX_BENEFITS_SECTION_ON_AUTHORIZATION_FORM,
+						CoreConstants.FAIL));
+	}
+
+	@Given("^'Available Points' and 'Total Points' should be updated on 'Authorization Form' page based on increased 'Total Points' - post Transferee Activity$")
+	public void Available_Points_should_be_updated_on_Authorization_Form_page_based_on_increased_Total_Points_post_Transferee_Activity()
+			throws Throwable {
+		Assert.assertTrue(mxClientViewAllInitiationsPage.verifyPageNavigation(),
+				MessageFormat.format(
+						MobilityXConstants.FAILED_TO_VERIFY_USER_NAVIGATION_TO_MXCLIENT_VIEW_ALL_INITIATONS_PAGE,
+						CoreConstants.FAIL));
+		mxClientViewAllInitiationsPage.clickElementOfPage(MobilityXConstants.INITIATION);
+		Assert.assertTrue(mxClientAuthorizationHomePage.verifyPageNavigationToAuthForm(), MessageFormat
+				.format(MobilityXConstants.FAILED_TO_VERIFY_USER_NAVIGATION_TO_MXCLIENT_HOME_PAGE, CoreConstants.FAIL));
+		Assert.assertTrue(mxClientAuthorizationHomePage.verifyTotalPointsValue(), MessageFormat.format(
+				MobilityXConstants.FAILED_TO_VERIFY_TOTAL_POINTS_VALUE_ON_AUTHORIZATION_FORM, CoreConstants.FAIL));
+		Assert.assertTrue(
+				mxClientAuthorizationHomePage.verifyFlexBenefitsSectionPostAuthFormSubmission(
+						CoreFunctions.getPropertyFromConfig("CoreFlex_Policy_PersonResponsible")),
+				MessageFormat.format(MobilityXConstants.FAILED_TO_VERIFY_FLEX_BENEFITS_SECTION_ON_AUTHORIZATION_FORM,
+						CoreConstants.FAIL));		
+	}
+
+	@When("^he \"([^\"]*)\" - 'What would you like to do with the changes to the submitted authorization\\?' confirmation dialog displayed on 'Authorization Form' page$")
+	public void he_What_would_you_like_to_do_with_the_changes_to_the_submitted_authorization_confirmation_dialog_displayed_on_Authorization_Form_page(
+			String action) throws Throwable {
+		Assert.assertTrue(mxClientAuthorizationHomePage.verifyAndDiscardIncreasedTotalPointsAuth(bscAuthorizationData),
+				MessageFormat.format(
+						MobilityXConstants.FAILED_TO_VERIFY_AND_DISCARD_INCREASED_POINTS_CONFIRMATION_DIALOG_ON_AUTH_FORM_PAGE,
+						CoreConstants.FAIL));
+	}
+
+	@Then("^'Available Points' and 'Total Points' should not be updated on following pages based on discarded increased 'Total Points'$")
+	public void available_Points_and_Total_Points_should_not_be_updated_on_following_pages_based_on_discarded_increased_Total_Points(
+			DataTable dataTable) throws Throwable {
+		Assert.assertTrue(mxClientViewAllInitiationsPage.verifyPageNavigation(),
+				MessageFormat.format(
+						MobilityXConstants.FAILED_TO_VERIFY_USER_NAVIGATION_TO_MXCLIENT_VIEW_ALL_INITIATONS_PAGE,
+						CoreConstants.FAIL));
+		mxClientViewAllInitiationsPage.clickElementOfPage(MobilityXConstants.INITIATION);
+		Assert.assertTrue(mxClientAuthorizationHomePage.verifyPageNavigationToAuthForm(), MessageFormat
+				.format(MobilityXConstants.FAILED_TO_VERIFY_USER_NAVIGATION_TO_MXCLIENT_HOME_PAGE, CoreConstants.FAIL));
+		Assert.assertTrue(mxClientAuthorizationHomePage.verifyTotalPointsValue(), MessageFormat.format(
+				MobilityXConstants.FAILED_TO_VERIFY_TOTAL_POINTS_VALUE_ON_AUTHORIZATION_FORM, CoreConstants.FAIL));
+		Assert.assertTrue(
+				mxClientAuthorizationHomePage.verifyFlexBenefitsSectionPostAuthFormSubmission(
+						CoreFunctions.getPropertyFromConfig("CoreFlex_Policy_PersonResponsible")),
+				MessageFormat.format(MobilityXConstants.FAILED_TO_VERIFY_FLEX_BENEFITS_SECTION_ON_AUTHORIZATION_FORM,
+						CoreConstants.FAIL));
+		mxClientAuthorizationHomePage.clickOnElementOnAuthorizationPage(MobilityXConstants.MANAGE_BENEFIT_SELECTION);
+		Assert.assertTrue(mxClientBenefitSelectionToolPage.verifyPageNavigation(),
+				MessageFormat.format(
+						MobilityXConstants.FAILED_TO_VERIFY_USER_NAVIGATION_TO_MXCLIENT_BENEFIT_SELECTION_TOOL_PAGE,
+						CoreConstants.FAIL));
+		Assert.assertTrue(mxClientBenefitSelectionToolPage.verifyInitiationForText(), MessageFormat.format(
+				MobilityXConstants.FAILED_TO_VALIDATE_INITIATION_FOR_TEXT_ON_MXCLIENT_BENEFIT_SELECTION_TOOL_PAGE,
+				CoreConstants.FAIL));
+		Assert.assertTrue(mxClientBenefitSelectionToolPage.verifyAvailablePointsMessageAfterBenefitSubmission(),
+				MessageFormat.format(
+						MobilityXConstants.FAILED_TO_VALIDATE_AVAILABLE_POINTS_MESSAGE_ON_MXCLIENT_BENEFIT_SELECTION_TOOL_PAGE,
+						CoreConstants.FAIL));
+		Assert.assertTrue(mxClientBenefitSelectionToolPage.verifyCashoutSectionDetailsOnBST(true),
+				MessageFormat.format(
+						MobilityXConstants.PORTION_CASHOUT_DETAILS_NOT_MATCHED_ON_BENEFIT_SELECTION_TOOL_PAGE,
+						CoreConstants.FAIL));
+		Assert.assertTrue(mxClientBenefitSelectionToolPage.validatePointsAfterSubmissionOnNextButton(),
+				MessageFormat.format(
+						MobilityXConstants.FAILED_TO_VERIFY_AVAILABLE_POINTS_ON_NEXT_BUTTON_ON_BENEFIT_SELECTION_TOOL_PAGE,
+						CoreConstants.FAIL));
+		Assert.assertTrue(
+				mxClientBenefitSelectionToolPage.verifyElementPresentOnPage(MobilityXConstants.EDIT_SUBMITTED_BENEFITS),
+				MessageFormat.format(MobilityXConstants.FAILED_TO_VERIFY_ELEMENT_PRESENT_ON_BENEFIT_SELECTION_TOOL_PAGE,
+						CoreConstants.FAIL, MobilityXConstants.EDIT_SUBMITTED_BENEFITS));
+		mxClientBenefitSelectionToolPage.clickElementOfPage(MobilityXConstants.EDIT_SUBMITTED_BENEFITS);
+		Assert.assertTrue(mxClientBenefitsBundlePage.isBenefitsBundlePageDisplayed(), MessageFormat
+				.format(MobilityXConstants.FAILED_TO_DISPLAY_MX_CLIENT_BENEFITS_BUNDLE_PAGE, CoreConstants.FAIL));
+		Assert.assertTrue(mxClientBenefitsBundlePage.verifySubmittedPointsDetailsOnBBPage(), MessageFormat.format(
+				MobilityXConstants.SUBMITTED_BENEFIT_DETAILS_NOT_MATCHED_ON_BENEFITS_BUNDLE_PAGE, CoreConstants.FAIL));
 	}
 
 }

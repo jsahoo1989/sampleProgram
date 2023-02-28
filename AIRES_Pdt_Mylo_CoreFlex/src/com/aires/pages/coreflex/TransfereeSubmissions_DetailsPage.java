@@ -332,7 +332,6 @@ public class TransfereeSubmissions_DetailsPage extends Base {
 			Double availablePointsAfterSubmission = (Double
 					.parseDouble(CoreFunctions.getPropertyFromConfig("CF_Transferee_TotalAvailablePoints"))
 					- Double.parseDouble(CoreFunctions.getPropertyFromConfig("CF_Transferee_TotalSelectedPoints")));
-			MX_Transferee_MyBenefitsBundlePage.undoDeletedBenefitFlag = false;
 			CoreFunctions.verifyText(driver, _textTransfereeName,
 					CoreFunctions.getPropertyFromConfig("Transferee_firstName") + " "
 							+ CoreFunctions.getPropertyFromConfig("Transferee_lastName"),
@@ -383,6 +382,8 @@ public class TransfereeSubmissions_DetailsPage extends Base {
 	}
 
 	public boolean verifyPointBalancePostDeleteRequestAction(String action, String pageName) {
+		DecimalFormat format = new DecimalFormat();
+		format.setDecimalSeparatorAlwaysShown(false);
 		try {
 			String actualPointsSpent[] = CoreFunctions.getElementText(driver, _textPointsSpent).trim().split("of");
 			CoreFunctions.verifyValue(Double.parseDouble(actualPointsSpent[0].trim()),
@@ -398,8 +399,6 @@ public class TransfereeSubmissions_DetailsPage extends Base {
 					COREFLEXConstants.TOTAL_POINTS);
 			CoreFunctions.highlightObject(driver, _textTotalPoints);
 			CoreFunctions.clickElement(driver, _textPointsBalance);
-			DecimalFormat format = new DecimalFormat();
-			format.setDecimalSeparatorAlwaysShown(false);
 			CoreFunctions.verifyText(driver, _tooltipSpentPoints, COREFLEXConstants.EXPECTED_POINT_SPENT_TOOLTIP_TEXT
 					.replace("used_points", CoreFunctions.getPropertyFromConfig("CF_Transferee_TotalSelectedPoints"))
 					.replace("total_points", CoreFunctions.getPropertyFromConfig("CF_Transferee_TotalAvailablePoints")),
@@ -426,7 +425,7 @@ public class TransfereeSubmissions_DetailsPage extends Base {
 		boolean isSubmittedBenefitStatusMatched = false;
 		benefitCount = 0;
 		try {
-			CoreFunctions.waitHandler(2);
+//			CoreFunctions.waitHandler(2);
 			CoreFunctions.explicitWaitTillElementBecomesClickable(driver, _linkBackToTransfereeList,
 					COREFLEXConstants.BACK_TO_TRANSFEREES_LIST);
 			for (Benefit benefit : getBenefits(CoreFunctions.getPropertyFromConfig("CoreFlex_Policy_BenefitType"),
@@ -823,6 +822,8 @@ public class TransfereeSubmissions_DetailsPage extends Base {
 					CoreConstants.PASS, COREFLEXConstants.ACTION_COMPLETED_MESSAGE));
 			CoreFunctions.writeToPropertiesFile("CF_Transferee_DeleteRequestDenied", "true");
 			isDeleteRequestDenied = true;
+			CoreFunctions.explicitWaitTillElementBecomesClickable(driver, _linkBackToTransfereeList,
+					COREFLEXConstants.BACK_TO_TRANSFEREES_LIST);
 			return true;
 		} catch (Exception e) {
 			Reporter.addStepLog(MessageFormat.format(
@@ -1091,6 +1092,8 @@ public class TransfereeSubmissions_DetailsPage extends Base {
 	}
 
 	public boolean verifyClientAndPointsDetails() {
+		DecimalFormat format = new DecimalFormat();
+		format.setDecimalSeparatorAlwaysShown(false);
 		try {
 			isDeleteRequestDenied = false;
 			isDeleteRequestApproved = false;
@@ -1125,8 +1128,7 @@ public class TransfereeSubmissions_DetailsPage extends Base {
 					COREFLEXConstants.SUCCESSFULLY_VALIDATED_TRANSFEREE_DETAILS_ON_TRANSFEREE_SUBMISSION_DETAILS_PAGE,
 					CoreConstants.PASS));
 			CoreFunctions.clickElement(driver, _textPointsBalance);
-			DecimalFormat format = new DecimalFormat();
-			format.setDecimalSeparatorAlwaysShown(false);
+
 			CoreFunctions
 					.verifyText(driver, _tooltipSpentPoints,
 							COREFLEXConstants.EXPECTED_POINT_SPENT_TOOLTIP_TEXT
@@ -1158,6 +1160,7 @@ public class TransfereeSubmissions_DetailsPage extends Base {
 		boolean isSubmittedBenefitStatusMatched = false;
 		benefitCount = 0;
 		try {
+//			CoreFunctions.waitHandler(3);
 			for (Benefit benefit : getBenefits(CoreFunctions.getPropertyFromConfig("CoreFlex_Policy_BenefitType"),
 					CoreFunctions.getPropertyFromConfig("CoreFlex_Policy_RequiredFor"))) {
 				isSubmittedBenefitStatusMatched = verifyBenefitDetails(benefit, MobilityXConstants.CLIENT);
@@ -1437,7 +1440,7 @@ public class TransfereeSubmissions_DetailsPage extends Base {
 		verifyDeniedApprovedDeleteRequestEmailBenefits(actualEmailContentBenefitDetails);
 		return true;
 	}
-	
+
 	private String getExpectedClientDeleteDeniedBenefitPointText() {
 		DecimalFormat format = new DecimalFormat();
 		format.setDecimalSeparatorAlwaysShown(false);

@@ -198,7 +198,7 @@ public class MX_Transferee_MyBenefitsBundlePage extends Base {
 
 	private By _denyBenefitRequestDisabledDeleteButtonHoverTextSubElement = By.xpath(
 			".//span[contains(text(),'Unable to delete benefit. Please see comments in the History section below for more information.')]");
-	
+
 	@FindBy(how = How.CSS, using = "iframe[class*='appcues-tooltip-container']")
 	private WebElement _tooltipIFrame;
 
@@ -207,7 +207,7 @@ public class MX_Transferee_MyBenefitsBundlePage extends Base {
 
 	@FindBy(how = How.CSS, using = "a[class='text-muted appcues-skip']")
 	private WebElement _tooltipIFrameHideLink;
-	
+
 	@FindBy(how = How.CSS, using = "div.zone-content > div.rich-text")
 	private WebElement _tooltipIFrameText;
 
@@ -251,12 +251,14 @@ public class MX_Transferee_MyBenefitsBundlePage extends Base {
 
 	public boolean isMyBundlePageDisplayed() {
 		if (CoreFunctions.isElementExist(driver, _textMyBenefitsBundleTitle, 10)) {
-			Reporter.addStepLog(MessageFormat.format(MobilityXConstants.MY_BUNDLE_PAGE_DISPLAYED, CoreConstants.PASS));
+			Reporter.addStepLog(MessageFormat
+					.format(MobilityXConstants.SUCCESSFULLY_NAVIGATED_TO_MY_BENEFITS_BUNDLE_PAGE, CoreConstants.PASS));
 			return true;
+		} else {
+			Reporter.addStepLog(MessageFormat.format(MobilityXConstants.FAILED_TO_NAVIGATE_TO_MY_BENEFITS_BUNDLE_PAGE,
+					CoreConstants.FAIL));
+			return false;
 		}
-		Reporter.addStepLog(
-				MessageFormat.format(MobilityXConstants.MY_BUNDLE_PAGE_IS_NOT_DISPLAYED, CoreConstants.FAIL));
-		return false;
 	}
 
 	public void clickReviewAndSubmit() {
@@ -273,8 +275,8 @@ public class MX_Transferee_MyBenefitsBundlePage extends Base {
 
 	public boolean isBenefitSubmittedPopUpDisplayed() {
 		try {
-			CoreFunctions.waitHandler(3);
-			return CoreFunctions.isElementExist(driver, _btn_seeBenefits, 5);
+//			CoreFunctions.waitHandler(3);
+			return CoreFunctions.isElementExist(driver, _btn_seeBenefits, 15);
 		} catch (Exception e) {
 			Reporter.addStepLog(
 					MessageFormat.format(MobilityXConstants.EXCEPTION_OCCURED_WHILE_VALIDATING_SUBMISSION_SUCCESS_POPUP,
@@ -310,6 +312,7 @@ public class MX_Transferee_MyBenefitsBundlePage extends Base {
 		if (isBenefitsAndPointsMatached)
 			Reporter.addStepLog(MessageFormat.format(
 					MobilityXConstants.SUCCESSFULLY_REVIEWED_SELECTED_BENEFITS_ON_MY_BUNDLE_PAGE, CoreConstants.PASS));
+		CoreFunctions.writeToPropertiesFile("TransfereeActivity_Performed", "true");
 		return isBenefitsAndPointsMatached;
 	}
 
@@ -416,6 +419,7 @@ public class MX_Transferee_MyBenefitsBundlePage extends Base {
 		boolean isFlexBenefitDetailsOnMMBVerified = false;
 		boolean flag = false;
 		try {
+//			CoreFunctions.waitHandler(3);
 			for (Benefit benefit : getBenefits(CoreFunctions.getPropertyFromConfig("CoreFlex_Policy_BenefitType"),
 					CoreFunctions.getPropertyFromConfig("CoreFlex_Policy_RequiredFor"))) {
 				if (benefit.getSelectBenefitOnFPTPage()) {
@@ -840,7 +844,7 @@ public class MX_Transferee_MyBenefitsBundlePage extends Base {
 			String buttonName) {
 		CoreFunctions.setElementText(driver, input_transfereeName, transfereeName);
 		CoreFunctions.setElementText(driver, optionalComments, optionalNotes);
-		CoreFunctions.waitHandler(2);
+//		CoreFunctions.waitHandler(2);
 		CoreFunctions.click(driver, _buttonDeleteThisBenefits, buttonName);
 	}
 
@@ -976,6 +980,7 @@ public class MX_Transferee_MyBenefitsBundlePage extends Base {
 		boolean isSelectedPortionCashoutDetailsVerified = false;
 		for (WebElement element : _textAddedBenefitNameList) {
 			if (element.getText().equals(policySetupPageData.flexPolicySetupPage.customCashoutBenefitName)) {
+//				CoreFunctions.waitHandler(3);
 				int indexCashout = BusinessFunctions.returnindexItemFromListUsingText(driver, _textAddedBenefitNameList,
 						policySetupPageData.flexPolicySetupPage.customCashoutBenefitName);
 				isSelectedPortionCashoutDetailsVerified = verifyMyBenefitBundleCashoutDetails(indexCashout,
@@ -987,6 +992,7 @@ public class MX_Transferee_MyBenefitsBundlePage extends Base {
 			Reporter.addStepLog(MessageFormat.format(
 					MobilityXConstants.SUCCESSFULLY_VERIFIED_SELECTED_PORTION_CASHOUT_DETAILS_UNDER_MY_BENEFIT_BUNDLES_SECTION_OF_MBB_PAGE,
 					CoreConstants.PASS));
+			CoreFunctions.writeToPropertiesFile("TransfereeActivity_Performed", "true");
 		}
 		return isSelectedPortionCashoutDetailsVerified;
 	}
@@ -1109,7 +1115,7 @@ public class MX_Transferee_MyBenefitsBundlePage extends Base {
 					CoreFunctions.scrollToElementUsingJS(driver, _headerMyBenefitsBundle,
 							MobilityXConstants.MY_BENEFITS_BUNDLE);
 					flag = false;
-//					CoreFunctions.waitHandler(2);
+//					CoreFunctions.waitHandler(4);
 					int indexBenefit = BusinessFunctions.returnindexItemFromListUsingText(driver,
 							_textSubmittedBenefitNameList, benefit.getBenefitDisplayName());
 					BusinessFunctions.selectValueFromListUsingIndex(driver, _buttonDeleteSubmittedBenefitList,
@@ -1138,6 +1144,7 @@ public class MX_Transferee_MyBenefitsBundlePage extends Base {
 									* (Integer.parseInt(CoreFunctions.getItemsFromListByIndex(driver,
 											_confirmationDialogBenefitSelectionQuantity, indexDeleteBenefit, false)))),
 							MobilityXConstants.BENEFIT_POINTS);
+//					CoreFunctions.waitHandler(4);
 					reviewAndConfirmRemoveBenefitSubmission(MobilityXConstants.SUBMIT_BENEFITS_OPTIONAL_NOTES,
 							CoreFunctions.getPropertyFromConfig("Transferee_firstName") + " "
 									+ CoreFunctions.getPropertyFromConfig("Transferee_lastName"),
@@ -1146,6 +1153,7 @@ public class MX_Transferee_MyBenefitsBundlePage extends Base {
 					CoreFunctions.explicitWaitTillElementInVisibility(driver, _beleteBenefitSentGrowlMessage);
 					CoreFunctions.scrollToElementUsingJS(driver, _headerMyBenefitsBundle,
 							MobilityXConstants.MY_BENEFITS_BUNDLE);
+//					CoreFunctions.waitHandler(4);
 				} else if (!benefit.getDeleteBenefitOnMBBPage())
 					isSubmittedBenefitDeleted = true;
 			}
@@ -1159,6 +1167,7 @@ public class MX_Transferee_MyBenefitsBundlePage extends Base {
 			Reporter.addStepLog(MessageFormat.format(
 					MobilityXConstants.SUCCESSFULLY_DELETED_SUBMITTED_BENEFIT_FROM_MY_BENEFIT_BUNDLES_PAGE,
 					CoreConstants.PASS));
+			CoreFunctions.writeToPropertiesFile("TransfereeActivity_Performed", "true");
 		}
 		return isSubmittedBenefitDeleted;
 	}
@@ -1210,6 +1219,7 @@ public class MX_Transferee_MyBenefitsBundlePage extends Base {
 			Reporter.addStepLog(MessageFormat.format(
 					MobilityXConstants.SUCCESSFULLY_DELETED_SUBMITTED_CASHOUT_FROM_MY_BENEFIT_BUNDLES_PAGE,
 					CoreConstants.PASS));
+			CoreFunctions.writeToPropertiesFile("TransfereeActivity_Performed", "true");
 		}
 		return isSubmittedCashoutDeleted;
 	}
@@ -2252,13 +2262,14 @@ public class MX_Transferee_MyBenefitsBundlePage extends Base {
 		String actualAppCueText = null;
 		int index = 0;
 		try {
-			if (CoreFunctions.isElementExist(driver, _tooltipIFrame, 5)) {
+			if (CoreFunctions.isElementExist(driver, _tooltipIFrame, 15)) {
 				while (index < expectedAppCuesList.size()) {
 					driver.switchTo().frame(_tooltipIFrame);
 					CoreFunctions.explicitWaitTillElementBecomesClickable(driver, _tooltipIFrameHideLink,
 							MobilityXConstants.HIDE);
 					actualAppCueText = CoreFunctions.getElementText(driver, _tooltipIFrameText);
-					CoreFunctions.verifyText(actualAppCueText, expectedAppCuesList.get(index), MobilityXConstants.APPCUES);
+					CoreFunctions.verifyText(actualAppCueText, expectedAppCuesList.get(index),
+							MobilityXConstants.APPCUES);
 					CoreFunctions.clickElement(driver, _tooltipIFrameNextButton);
 					driver.switchTo().defaultContent();
 					CoreFunctions.waitHandler(4);
@@ -2269,8 +2280,8 @@ public class MX_Transferee_MyBenefitsBundlePage extends Base {
 						CoreConstants.PASS, pageName));
 				return true;
 			} else {
-				Reporter.addStepLog(
-						MessageFormat.format(MobilityXConstants.APPCUES_NOT_DISPLAYED, CoreConstants.FAIL, pageName,expectedAppCuesList.get(index)));
+				Reporter.addStepLog(MessageFormat.format(MobilityXConstants.APPCUES_NOT_DISPLAYED, CoreConstants.FAIL,
+						pageName, expectedAppCuesList.get(index)));
 				return false;
 			}
 		} catch (Exception e) {

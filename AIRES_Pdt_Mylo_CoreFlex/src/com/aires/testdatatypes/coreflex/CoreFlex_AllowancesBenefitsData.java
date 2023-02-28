@@ -50,5 +50,6 @@ public class CoreFlex_AllowancesBenefitsData {
 		public String reimbursedBy;
 		public String reimbursedByOther;
 		public String comment;
+		public String durationDays;
 	}
 }

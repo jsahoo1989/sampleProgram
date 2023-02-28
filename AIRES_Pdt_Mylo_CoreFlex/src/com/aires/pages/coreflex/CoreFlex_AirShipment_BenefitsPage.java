@@ -979,9 +979,7 @@ public class CoreFlex_AirShipment_BenefitsPage extends BenefitPage {
 
 			Helpers.clickButton(IRIS_PageMaster.getButtonObjectFromLabel(
 					IRIS_PageMaster.getDialogObject(_IRIS, IRISConstants.MESSAGE_DIALOG), IRISConstants.OK_BUTTON),
-					IRIS_PageMaster.getButtonObjectFromLabel(
-							IRIS_PageMaster.getDialogObject(_IRIS, IRISConstants.MESSAGE_DIALOG),
-							IRISConstants.OK_BUTTON).getAttachedText());
+					IRISConstants.OK_BUTTON);
 			CoreFunctions.writeToPropertiesFile("irisWindowTitle", "");
 
 			String assignmentWindowTitle = MessageFormat.format(

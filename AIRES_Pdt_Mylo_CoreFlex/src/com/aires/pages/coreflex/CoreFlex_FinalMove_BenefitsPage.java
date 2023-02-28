@@ -369,6 +369,15 @@ public class CoreFlex_FinalMove_BenefitsPage extends BenefitPage {
 	@FindBy(how = How.XPATH, using = "//span[contains(text(),'Core Benefits')]/ancestor::div[contains(@id,'firstItemDiv')]//div[contains(@class,'RXCFServicesMonitoringBorderPanel')]")
 	private List<WebElement> coreCardPanelList;
 
+	@FindBy(how = How.CSS, using = "ng-select[formcontrolname='unitOfEconomyCodeFm']")
+	private WebElement _selectUnitOfDistanceEconomy;
+
+	@FindBy(how = How.CSS, using = "ng-dropdown-panel span[class*='ng-option-label']")
+	private List<WebElement> _selectUnitOfDistanceEconomyOptions;
+
+	@FindBy(how = How.CSS, using = "ng-select[formcontrolname='unitOfEconomyCodeFm'] span[class*='ng-value-label']")
+	private WebElement _selectUnitOfDistanceEconomySelectedValue;
+
 	private By _serviceCompleted = By
 			.cssSelector("span[class='RXBigIconPrimary ServicesSuccessIcon icon-check-approved']");
 
@@ -612,10 +621,11 @@ public class CoreFlex_FinalMove_BenefitsPage extends BenefitPage {
 	private void fillTransportationTripBasedOnTypeSelection() {
 		if ((movingBenefitData.finalMoveTransportation.transportationType)
 				.contains(COREFLEXConstants.ECONOMY_CLASS_AIRFARE)) {
+			CoreFunctions.clickElement(driver, _selectUnitOfDistanceEconomy);
+			CoreFunctions.selectItemInListByText(driver, _selectUnitOfDistanceEconomyOptions,
+					movingBenefitData.finalMoveTransportation.unitOfEconomyDistance, true);
 			CoreFunctions.clearAndSetText(driver, _inputDistanceEconomy,
 					movingBenefitData.finalMoveTransportation.minDistanceForEconomyAirTravel);
-			CoreFunctions.selectItemInListByText(driver, _radioBtnUnitOfDistanceEconomy,
-					movingBenefitData.finalMoveTransportation.unitOfEconomyDistance, true);
 		}
 	}
 
@@ -978,13 +988,12 @@ public class CoreFlex_FinalMove_BenefitsPage extends BenefitPage {
 					COREFLEXConstants.TRANSPORTATION_TYPE);
 			if ((movingBenefitData.finalMoveTransportation.transportationType)
 					.contains(COREFLEXConstants.ECONOMY_CLASS_AIRFARE)) {
+				CoreFunctions.verifyText(driver, _selectUnitOfDistanceEconomySelectedValue,
+						movingBenefitData.finalMoveTransportation.unitOfEconomyDistance,
+						COREFLEXConstants.UNIT_OF_DISTANCE);
 				CoreFunctions.verifyText(_inputDistanceEconomy.getDomProperty("value"),
 						movingBenefitData.finalMoveTransportation.minDistanceForEconomyAirTravel,
 						COREFLEXConstants.ECONOMY_CLASS_AIRFARE);
-				CoreFunctions.verifyRadioButtonSelection(driver, _radioBtnUnitOfDistanceEconomy,
-						_radioBtnUnitOfDistanceEconomyButtonList,
-						movingBenefitData.finalMoveTransportation.unitOfEconomyDistance,
-						COREFLEXConstants.UNIT_OF_DISTANCE);
 			}
 			CoreFunctions.verifyText(_inputMinFlightTimeExlLayovers.getDomProperty("value"),
 					movingBenefitData.finalMoveTransportation.minFlightTimeExclLayovers,

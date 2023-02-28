@@ -13,6 +13,7 @@ import org.testng.Assert;
 import com.aires.businessrules.Base;
 import com.aires.businessrules.BusinessFunctions;
 import com.aires.businessrules.CoreFunctions;
+import com.aires.businessrules.constants.COREFLEXConstants;
 import com.aires.businessrules.constants.CoreConstants;
 import com.aires.businessrules.constants.MobilityXConstants;
 import com.aires.managers.FileReaderManager;
@@ -344,11 +345,7 @@ public class MX_Transferee_MyProfilePage extends Base {
 	@FindBy(how = How.CSS, using = "small.appcues-skip")
 	private WebElement _tooltipIFrameHideLink;
 
-	/** New Account Setup **/
-	/** Password Setup **/
-	// Welcome to Springboard Login Setup! text
-	@FindBy(how = How.XPATH, using = "//span[contains(@id,'nupwheaderot')]")
-	// @FindBy(how = How.XPATH, using = "//span[contains(@id,':s10:ot2')]")
+	@FindBy(how = How.CSS, using = "span[id*='nupwheaderot']")
 	private static WebElement _textLoginSetup;
 
 	// New Password:
@@ -629,12 +626,13 @@ public class MX_Transferee_MyProfilePage extends Base {
 
 	@FindBy(how = How.CLASS_NAME, using = "growl-xsmall-message")
 	private static WebElement _textInvalidCredential;
-	
+
 	@FindBy(how = How.CSS, using = "label.af_selectOneRadio_item-text")
 	private static WebElement _radioButtonLumpSumPayementByLocator;
-	
+
 	final By _textSetupIsCompleteByLocator = By.xpath("//span[text()='Setup is complete!']");
-	//final By _radioButtonLumpSumPayementByLocator = By.cssSelector("label.af_selectOneRadio_item-text");
+	// final By _radioButtonLumpSumPayementByLocator =
+	// By.cssSelector("label.af_selectOneRadio_item-text");
 	final By _iframePrivacyPolicyByLocator = By.cssSelector("iframe.af_inlineFrame");
 	final By _textLoginSetupByLocator = By.xpath("//span[contains(@id,'nupwheaderot')]");
 	final By _textMyProfileByLocator = By.xpath("//*[contains(@id,'lpt1:cBodFDC:lr1:')]/label");
@@ -651,10 +649,10 @@ public class MX_Transferee_MyProfilePage extends Base {
 	final By _popupTextSecurePaymentByLocator = By.xpath("//span[contains(text(),'transmitting and storing credit')]");
 
 	/******************************************************************************************/
-	
+
 	MX_Transferee_MyProfileData mxTransfereeMyProfileData = FileReaderManager.getInstance().getCoreFlexJsonReader()
 			.getMyProfileDataDataByUserFirstName(MobilityXConstants.USER_FIRST_NAME);
-	
+
 	/******************************************************************************************/
 	private String _uploadFilePath = System.getProperty(MobilityXConstants.USER_DIR) + MobilityXConstants.FILE_PATH;;
 
@@ -665,8 +663,8 @@ public class MX_Transferee_MyProfilePage extends Base {
 	MobilityX_LoginPage loginPage;
 
 	public boolean isInvalidCredentialMeesageDisplayed(String message) {
-		if (CoreFunctions.isElementByLocatorExist(driver, _invalidCredentialErrorMessageByLocator, MobilityXConstants.CUSTOM_TIME)
-				&& _textInvalidCredential.getText().contains(message)) {
+		if (CoreFunctions.isElementByLocatorExist(driver, _invalidCredentialErrorMessageByLocator,
+				MobilityXConstants.CUSTOM_TIME) && _textInvalidCredential.getText().contains(message)) {
 			return true;
 		}
 		return false;
@@ -687,28 +685,33 @@ public class MX_Transferee_MyProfilePage extends Base {
 				editPersonalInformationTile();
 				isPersonalInformationVerified = verifyPersonalInformationTile();
 				CoreFunctions.writeMessageToReport(isPersonalInformationVerified,
-						MobilityXConstants.VERIFIED_TILE_ON_MYPROFILE, MobilityXConstants.FAILED_TO_VERIFY_TILE_ON_MYPROFILE,
-						MobilityXConstants.PERSONAL_INFORMATION);
+						MobilityXConstants.VERIFIED_TILE_ON_MYPROFILE,
+						MobilityXConstants.FAILED_TO_VERIFY_TILE_ON_MYPROFILE, MobilityXConstants.PERSONAL_INFORMATION);
 				clickOnBackToMyProfileLink();
 				break;
 			case MobilityXConstants.MANAGE_PASSWORD:
 				editManagePasswordTile();
 				isManagePasswordVerified = verifyManagePasswordTile();
-				CoreFunctions.writeMessageToReport(isManagePasswordVerified, MobilityXConstants.VERIFIED_TILE_ON_MYPROFILE,
+				CoreFunctions.writeMessageToReport(isManagePasswordVerified,
+						MobilityXConstants.VERIFIED_TILE_ON_MYPROFILE,
 						MobilityXConstants.FAILED_TO_VERIFY_TILE_ON_MYPROFILE, MobilityXConstants.MANAGE_PASSWORD);
 				break;
 			case MobilityXConstants.MANAGE_SECURITY_QUESTION:
 				editManageSecurityQuestionsTile();
 				isManageSecurityVerified = verifyManageSecurityQuestionsTile();
-				CoreFunctions.writeMessageToReport(isManageSecurityVerified, MobilityXConstants.VERIFIED_TILE_ON_MYPROFILE,
-						MobilityXConstants.FAILED_TO_VERIFY_TILE_ON_MYPROFILE, MobilityXConstants.MANAGE_SECURITY_QUESTION);
+				CoreFunctions.writeMessageToReport(isManageSecurityVerified,
+						MobilityXConstants.VERIFIED_TILE_ON_MYPROFILE,
+						MobilityXConstants.FAILED_TO_VERIFY_TILE_ON_MYPROFILE,
+						MobilityXConstants.MANAGE_SECURITY_QUESTION);
 				clickOnBackToMyProfileLink();
 				break;
 			case MobilityXConstants.MANAGE_ACCOUNT_INFORMATION:
 				editManageAccountInformationTile();
 				isManageAccountVerified = verifyManageAccountInformationTile();
-				CoreFunctions.writeMessageToReport(isManageAccountVerified, MobilityXConstants.VERIFIED_TILE_ON_MYPROFILE,
-						MobilityXConstants.FAILED_TO_VERIFY_TILE_ON_MYPROFILE, MobilityXConstants.MANAGE_ACCOUNT_INFORMATION);
+				CoreFunctions.writeMessageToReport(isManageAccountVerified,
+						MobilityXConstants.VERIFIED_TILE_ON_MYPROFILE,
+						MobilityXConstants.FAILED_TO_VERIFY_TILE_ON_MYPROFILE,
+						MobilityXConstants.MANAGE_ACCOUNT_INFORMATION);
 				CoreFunctions.waitHandler(4);
 				clickOnBackToMyProfileLink();
 				break;
@@ -716,23 +719,28 @@ public class MX_Transferee_MyProfilePage extends Base {
 				editCreditCardPaymentToAiresTile();
 				isCreditCardVerified = verifyCreditCardPaymentToAiresTile();
 				CoreFunctions.writeMessageToReport(isCreditCardVerified, MobilityXConstants.VERIFIED_TILE_ON_MYPROFILE,
-						MobilityXConstants.FAILED_TO_VERIFY_TILE_ON_MYPROFILE, MobilityXConstants.CREDIT_CARD_PAYMENT_TO_AIRES);
+						MobilityXConstants.FAILED_TO_VERIFY_TILE_ON_MYPROFILE,
+						MobilityXConstants.CREDIT_CARD_PAYMENT_TO_AIRES);
 				clickOnBackToMyProfileLink();
 				break;
 			case MobilityXConstants.YEAR_END_TAX_INFORMATION:
 				editYearEndTaxInformationTiles();
 				clickOnBackToMyProfileLink();
 				isTaxInformationVerified = verifyYearEndTaxInformationTiles();
-				CoreFunctions.writeMessageToReport(isTaxInformationVerified, MobilityXConstants.VERIFIED_TILE_ON_MYPROFILE,
-						MobilityXConstants.FAILED_TO_VERIFY_TILE_ON_MYPROFILE, MobilityXConstants.YEAR_END_TAX_INFORMATION);
+				CoreFunctions.writeMessageToReport(isTaxInformationVerified,
+						MobilityXConstants.VERIFIED_TILE_ON_MYPROFILE,
+						MobilityXConstants.FAILED_TO_VERIFY_TILE_ON_MYPROFILE,
+						MobilityXConstants.YEAR_END_TAX_INFORMATION);
 				clickOnBackToMyProfileLink();
 				break;
 			case MobilityXConstants.EMAIL_REMAINDER_SETUP:
 				editEmailReminderSetupTiles();
 				clickOnBackToMyProfileLink();
 				isEmailReminderVerified = verifyEmailReminderSetupTiles();
-				CoreFunctions.writeMessageToReport(isEmailReminderVerified, MobilityXConstants.VERIFIED_TILE_ON_MYPROFILE,
-						MobilityXConstants.FAILED_TO_VERIFY_TILE_ON_MYPROFILE, MobilityXConstants.EMAIL_REMAINDER_SETUP);
+				CoreFunctions.writeMessageToReport(isEmailReminderVerified,
+						MobilityXConstants.VERIFIED_TILE_ON_MYPROFILE,
+						MobilityXConstants.FAILED_TO_VERIFY_TILE_ON_MYPROFILE,
+						MobilityXConstants.EMAIL_REMAINDER_SETUP);
 				clickOnBackToMyProfileLink();
 				break;
 			default:
@@ -779,7 +787,8 @@ public class MX_Transferee_MyProfilePage extends Base {
 		oldPassword = mxTransfereeMyProfileData.password1;
 		newPassword = mxTransfereeMyProfileData.password2;
 		enterPasswordAndClickOnSaveButton(oldPassword, newPassword);
-		if (CoreFunctions.isElementByLocatorExist(driver, _enterDifferentPasswordErrorMessageByLocator, MobilityXConstants.CUSTOM_TIME)) {
+		if (CoreFunctions.isElementByLocatorExist(driver, _enterDifferentPasswordErrorMessageByLocator,
+				MobilityXConstants.CUSTOM_TIME)) {
 			oldPassword = mxTransfereeMyProfileData.password2;
 			newPassword = mxTransfereeMyProfileData.password1;
 			enterPasswordAndClickOnSaveButton(oldPassword, newPassword);
@@ -830,14 +839,15 @@ public class MX_Transferee_MyProfilePage extends Base {
 		BusinessFunctions.selectRadioAsPerLabelText(driver, _radioButtonListPaymentType,
 				mxTransfereeMyProfileData.paymentType);
 		CoreFunctions.click(driver, _buttonAddAccount, _buttonAddAccount.getText());
-		BusinessFunctions.selectValueFromDropdown(driver,_dropdownAccountCurrency, mxTransfereeMyProfileData.accountCurrency);
+		BusinessFunctions.selectValueFromDropdown(driver, _dropdownAccountCurrency,
+				mxTransfereeMyProfileData.accountCurrency);
 		CoreFunctions.clearAndSetText(driver, _textBoxAddressOne, MobilityXConstants.ADDRESS,
 				mxTransfereeMyProfileData.addressOne);
 		CoreFunctions.clearAndSetText(driver, _textBoxCity, MobilityXConstants.CITY, mxTransfereeMyProfileData.city);
-		BusinessFunctions.selectValueFromDropdown(driver,_dropdownState, mxTransfereeMyProfileData.state);
+		BusinessFunctions.selectValueFromDropdown(driver, _dropdownState, mxTransfereeMyProfileData.state);
 		zipCode = CoreFunctions.generateRandomNumberAsGivenLength(5);
 		CoreFunctions.clearAndSetText(driver, _textBoxZipCode, MobilityXConstants.ZIPCODE, zipCode);
-		BusinessFunctions.selectValueFromDropdown(driver,_dropdownCountry, mxTransfereeMyProfileData.country);
+		BusinessFunctions.selectValueFromDropdown(driver, _dropdownCountry, mxTransfereeMyProfileData.country);
 		CoreFunctions.click(driver, _buttonSubmit, _buttonSubmit.getText());
 		CoreFunctions.click(driver, _buttonNo, _buttonNo.getText());
 		CoreFunctions.explicitWaitTillElementVisibility(driver, _textMessageAccountSaved,
@@ -847,14 +857,16 @@ public class MX_Transferee_MyProfilePage extends Base {
 	public boolean verifyManageAccountInformationTile() {
 		for (int i = 0; i <= _listPaymentType.size(); i++) {
 			if (_listPaymentType.get(i).getText().equalsIgnoreCase(mxTransfereeMyProfileData.paymentType)
-					&& _listPaymentUpdatedDate.get(i).getText()
-							.contains(CoreFunctions.getCurrentDateAsGivenFormat(MobilityXConstants.DATE_FORMAT_ddMMMyyyy))) {
+					&& _listPaymentUpdatedDate.get(i).getText().contains(
+							CoreFunctions.getCurrentDateAsGivenFormat(MobilityXConstants.DATE_FORMAT_ddMMMyyyy))) {
 				CoreFunctions.highlightObject(driver, _listPaymentType.get(i));
 				CoreFunctions.click(driver, _listPaymentType.get(i), _listPaymentType.get(i).getText());
 				CoreFunctions.click(driver, _linkDeleteAccount, _linkDeleteAccount.getText());
-				CoreFunctions.isElementByLocatorExist(driver, _deleteAccountOkButtonByLocator, MobilityXConstants.CUSTOM_TIME);
+				CoreFunctions.isElementByLocatorExist(driver, _deleteAccountOkButtonByLocator,
+						MobilityXConstants.CUSTOM_TIME);
 				CoreFunctions.click(driver, _deleteAccountOkButton, _deleteAccountOkButton.getText());
-				CoreFunctions.isElementByLocatorExist(driver, _accountSavedMessageByLocator, MobilityXConstants.CUSTOM_TIME);
+				CoreFunctions.isElementByLocatorExist(driver, _accountSavedMessageByLocator,
+						MobilityXConstants.CUSTOM_TIME);
 				return true;
 			}
 		}
@@ -864,7 +876,8 @@ public class MX_Transferee_MyProfilePage extends Base {
 	public void editCreditCardPaymentToAiresTile() {
 		CoreFunctions.click(driver, _linkCreditCardPaymenttoAires, _linkCreditCardPaymenttoAires.getText());
 		CoreFunctions.click(driver, _linkAddCard, _linkAddCard.getText());
-		if (CoreFunctions.isElementByLocatorExist(driver, _popupTextSecurePaymentByLocator, MobilityXConstants.CUSTOM_TIME)) {
+		if (CoreFunctions.isElementByLocatorExist(driver, _popupTextSecurePaymentByLocator,
+				MobilityXConstants.CUSTOM_TIME)) {
 //			CoreFunctions.explctWaitTillElementVisibility(driver, _popupTextSecurePayment,
 //					_popupTextSecurePayment.getText());
 			CoreFunctions.click(driver, _addCardOkButton, _addCardOkButton.getText());
@@ -877,7 +890,8 @@ public class MX_Transferee_MyProfilePage extends Base {
 	public boolean verifyCreditCardPaymentToAiresTile() {
 		boolean isElementDisplayed = false;
 		isElementDisplayed = CoreFunctions.isElementVisible(_textBoxCreditCardNumber);
-		CoreFunctions.explicitWaitTillElementVisibility(driver, _textCreditCardDetails, _textCreditCardDetails.getText());
+		CoreFunctions.explicitWaitTillElementVisibility(driver, _textCreditCardDetails,
+				_textCreditCardDetails.getText());
 		CoreFunctions.highlightObject(driver, _textCreditCardDetails);
 		CoreFunctions.explicitWaitTillElementVisibility(driver, _textBillingAddress, _textBillingAddress.getText());
 		CoreFunctions.highlightObject(driver, _textBillingAddress);
@@ -892,14 +906,17 @@ public class MX_Transferee_MyProfilePage extends Base {
 	public void editYearEndTaxInformationTiles() {
 		CoreFunctions.click(driver, _linkYearEndTaxInformation, _linkYearEndTaxInformation.getText());
 		CoreFunctions.explicitWaitTillElementVisibility(driver, _textTaxInformation, _textTaxInformation.getText());
-		BusinessFunctions.selectValueFromDropdown(driver,_dropdownFilingStatus, mxTransfereeMyProfileData.filingStatus);
-		BusinessFunctions.selectValueFromDropdown(driver,_dropdownDeductionMethod, mxTransfereeMyProfileData.deductionMethod);
+		BusinessFunctions.selectValueFromDropdown(driver, _dropdownFilingStatus,
+				mxTransfereeMyProfileData.filingStatus);
+		BusinessFunctions.selectValueFromDropdown(driver, _dropdownDeductionMethod,
+				mxTransfereeMyProfileData.deductionMethod);
 		CoreFunctions.clearAndSetText(driver, _textboxEstimatedAmount, _textEstimatedAmount.getText(),
 				CoreFunctions.generateRandomNumberAsGivenLength(5));
-		BusinessFunctions.selectValueFromDropdown(driver,_dropdownNumberOfDependents,
+		BusinessFunctions.selectValueFromDropdown(driver, _dropdownNumberOfDependents,
 				mxTransfereeMyProfileData.numberOfDependents);
 		CoreFunctions.click(driver, _buttonSave, _buttonSave.getText());
-		if (CoreFunctions.isElementByLocatorExist(driver, _textYearEndInformationByLocator, MobilityXConstants.CUSTOM_TIME)) {
+		if (CoreFunctions.isElementByLocatorExist(driver, _textYearEndInformationByLocator,
+				MobilityXConstants.CUSTOM_TIME)) {
 			CoreFunctions.explicitWaitTillElementVisibility(driver, _textYearEndInformationMessage,
 					_textYearEndInformationMessage.getText());
 			CoreFunctions.click(driver, _yearEndInformationOKButton, MobilityXConstants.BUTTON_OK);
@@ -921,10 +938,11 @@ public class MX_Transferee_MyProfilePage extends Base {
 		CoreFunctions.click(driver, _linkEmailReminderSetup, _linkEmailReminderSetup.getText());
 		CoreFunctions.explicitWaitTillElementVisibility(driver, _textEmailReminderPreference,
 				_textEmailReminderPreference.getText());
-		BusinessFunctions.selectValueFromDropdown(driver,_dropdownEmailReminderFrequency,
+		BusinessFunctions.selectValueFromDropdown(driver, _dropdownEmailReminderFrequency,
 				mxTransfereeMyProfileData.emailReminderFrequency);
 		CoreFunctions.click(driver, _buttonSave, _buttonSave.getText());
-		if (CoreFunctions.isElementByLocatorExist(driver, _emailReminderFrequencySavedMessageByLocator, MobilityXConstants.CUSTOM_TIME)) {
+		if (CoreFunctions.isElementByLocatorExist(driver, _emailReminderFrequencySavedMessageByLocator,
+				MobilityXConstants.CUSTOM_TIME)) {
 			CoreFunctions.explicitWaitTillElementVisibility(driver, _emailReminderFrequencySavedMessage,
 					_emailReminderFrequencySavedMessage.getText());
 			CoreFunctions.click(driver, _emailReminderFrequencyOKButton, MobilityXConstants.BUTTON_OK);
@@ -1000,34 +1018,35 @@ public class MX_Transferee_MyProfilePage extends Base {
 		CoreFunctions.writeToPropertiesFile("Transferee_SprintBoardUser_FullName", fullName);
 		return transfereeDetails;
 	}
-	
+
 	public void setUpNewMobilityXTransferee() {
 		loginPasswaordSetup();
-//		CoreFunctions.waitHandler(2);
 		privacyPolicySetup();
 		manageSecurityQuestionsSetup();
 	}
 
 	public void loginPasswaordSetup() {
-		if (CoreFunctions.isElementByLocatorExist(driver, _textLoginSetupByLocator, 10)) {
-			CoreFunctions.highlightObject(driver, _textLoginSetup);
-			CoreFunctions.clearAndSetText(driver, _textboxNewPassword, mxTransfereeMyProfileData.password1);
-			CoreFunctions.clearAndSetText(driver, _textboxVerifyNewPassword, mxTransfereeMyProfileData.password1);
-			CoreFunctions.waitHandler(2);
-			CoreFunctions.click(driver, _buttonSaveContinue, _buttonSaveContinue.getText());
-			CoreFunctions.writeToPropertiesFile("Transferee_PasswordInEMail", mxTransfereeMyProfileData.password1);
-			CoreFunctions.waitHandler(4);
-		}
-		if (CoreFunctions.isElementByLocatorExist(driver, _textLoginSetupByLocator, 10)) {
-			CoreFunctions.clearAndSetText(driver, _textboxNewPassword, mxTransfereeMyProfileData.password1);
-			CoreFunctions.clearAndSetText(driver, _textboxVerifyNewPassword, mxTransfereeMyProfileData.password1);
-			CoreFunctions.click(driver, _buttonSaveContinue, _buttonSaveContinue.getText());
-			CoreFunctions.writeToPropertiesFile("Transferee_PasswordInEMail", mxTransfereeMyProfileData.password1);
+		try {
+			if (CoreFunctions.isElementExist(driver, _textLoginSetup, 10)) {
+				CoreFunctions.highlightObject(driver, _textLoginSetup);
+				CoreFunctions.clearAndSetText(driver, _textboxNewPassword, mxTransfereeMyProfileData.password1);
+				CoreFunctions.waitHandler(1);
+				CoreFunctions.clearAndSetText(driver, _textboxVerifyNewPassword, mxTransfereeMyProfileData.password1);
+				CoreFunctions.waitHandler(1);
+				CoreFunctions.clickElement(driver, _buttonSaveContinue);
+				CoreFunctions.writeToPropertiesFile("Transferee_PasswordInEMail", mxTransfereeMyProfileData.password1);
+			}
+		} catch (Exception e) {
+			Reporter.addStepLog(
+					MessageFormat.format(COREFLEXConstants.EXCEPTION_OCCURED_WHILE_SETTING_UP_NEW_TRANSFEREE_PASSWORD,
+							CoreConstants.FAIL, e.getMessage()));
+			Assert.fail(MessageFormat.format(COREFLEXConstants.FAILED_TO_SETUP_NEW_TRANSFEREE_PASSWORD,
+					CoreConstants.FAIL));
 		}
 	}
 
 	public void privacyPolicySetup() {
-		if (CoreFunctions.isElementByLocatorExist(driver, _iframePrivacyPolicyByLocator, 10)) {
+		if (CoreFunctions.isElementByLocatorExist(driver, _iframePrivacyPolicyByLocator, 20)) {
 			driver.switchTo().frame(_iframePrivacyPolicy);
 			CoreFunctions.highlightObject(driver, _textAiresPrivacyPolicy);
 			driver.switchTo().defaultContent();
@@ -1040,21 +1059,21 @@ public class MX_Transferee_MyProfilePage extends Base {
 		CoreFunctions.waitHandler(3);
 		CoreFunctions.explicitWaitTillElementVisibility(driver, _textFewSecurityQuestions,
 				_textFewSecurityQuestions.getText());
-		BusinessFunctions.selectValueFromDropdown(driver,_securityQuestionOneNewUser,
+		BusinessFunctions.selectValueFromDropdown(driver, _securityQuestionOneNewUser,
 				mxTransfereeMyProfileData.securityQuestionOne);
 		CoreFunctions.waitHandler(3);
 		CoreFunctions.clearAndSetText(driver, _textBoxSecurityAnswerOneNewUser,
 				CoreFunctions.getAttributeText(_securityQuestionOneNewUser, MobilityXConstants.TITLE),
 				mxTransfereeMyProfileData.securityAnswerTwo);
 		CoreFunctions.waitHandler(3);
-		BusinessFunctions.selectValueFromDropdown(driver,_securityQuestionTwoNewUser,
+		BusinessFunctions.selectValueFromDropdown(driver, _securityQuestionTwoNewUser,
 				mxTransfereeMyProfileData.securityQuestionTwo);
 		CoreFunctions.waitHandler(3);
 		CoreFunctions.clearAndSetText(driver, _textBoxSecurityAnswerTwoNewUser,
 				CoreFunctions.getAttributeText(_securityQuestionTwoNewUser, MobilityXConstants.TITLE),
 				mxTransfereeMyProfileData.securityAnswerTwo);
 		CoreFunctions.waitHandler(3);
-		BusinessFunctions.selectValueFromDropdown(driver,_securityQuestionThreeNewUser,
+		BusinessFunctions.selectValueFromDropdown(driver, _securityQuestionThreeNewUser,
 				mxTransfereeMyProfileData.securityQuestionThree);
 		CoreFunctions.waitHandler(3);
 		CoreFunctions.clearAndSetText(driver, _textBoxSecurityAnswerThreeNewUser,
@@ -1076,8 +1095,9 @@ public class MX_Transferee_MyProfilePage extends Base {
 		CoreFunctions.click(driver, _buttonUpload, _buttonUpload.getText());
 		CoreFunctions.explicitWaitTillElementVisibility(driver, _iconDeleteProfilePicture,
 				CoreFunctions.getAttributeText(_iconDeleteProfilePicture, MobilityXConstants.TITLE));
-		CoreFunctions.writeMessageToReport(_iconDeleteProfilePicture.isDisplayed(), MobilityXConstants.VERIFY_FILE_UPLOADED,
-				MobilityXConstants.FAILED_TO_UPLOAD_FILE, mxTransfereeMyProfileData.uploadFileName);
+		CoreFunctions.writeMessageToReport(_iconDeleteProfilePicture.isDisplayed(),
+				MobilityXConstants.VERIFY_FILE_UPLOADED, MobilityXConstants.FAILED_TO_UPLOAD_FILE,
+				mxTransfereeMyProfileData.uploadFileName);
 		CoreFunctions.clearAndSetText(driver, _textboxPhoneNumber, MobilityXConstants.TEXT_PHONE_NUMBER,
 				CoreFunctions.generateRandomNumberAsGivenLength(10));
 		streetAddressTwo = mxTransfereeMyProfileData.streetAddressTwo + MobilityXConstants.BLANK_SPACE
@@ -1086,7 +1106,8 @@ public class MX_Transferee_MyProfilePage extends Base {
 				streetAddressTwo);
 		movingDate = CoreFunctions.addDaysInCurrentDate(MobilityXConstants.DATE_FORMAT_ddMMMyyyy, 45);
 		CoreFunctions.clearAndSetText(driver, _myMovingDate, _textMyMovingDate.getText(), movingDate);
-		fullName = CoreFunctions.getAttributeText(_textFirstName, MobilityXConstants.VALUE) + MobilityXConstants.BLANK_SPACE
+		fullName = CoreFunctions.getAttributeText(_textFirstName, MobilityXConstants.VALUE)
+				+ MobilityXConstants.BLANK_SPACE
 				+ CoreFunctions.getAttributeText(_textLastName, MobilityXConstants.VALUE);
 		address = CoreFunctions.getAttributeText(_textDestinationAddress, MobilityXConstants.VALUE);
 		CoreFunctions.click(driver, _buttonNext, _buttonNext.getText());
@@ -1102,7 +1123,8 @@ public class MX_Transferee_MyProfilePage extends Base {
 		CoreFunctions.selectItemInListByText(driver, _checkboxListServices, mxTransfereeMyProfileData.movingService);
 		CoreFunctions.waitHandler(1);
 		CoreFunctions.highlightObject(driver, _textSettlingIn);
-		CoreFunctions.selectItemInListByText(driver, _checkboxListServices, mxTransfereeMyProfileData.settlingInService);
+		CoreFunctions.selectItemInListByText(driver, _checkboxListServices,
+				mxTransfereeMyProfileData.settlingInService);
 		CoreFunctions.waitHandler(1);
 		CoreFunctions.checkCheckBox(driver, _checkboxGatherQuotes, _checkboxGatherQuotes.getText());
 		CoreFunctions.checkCheckBox(driver, _checkboxEmail, _checkboxEmail.getText());
@@ -1169,7 +1191,8 @@ public class MX_Transferee_MyProfilePage extends Base {
 	}
 
 	public void myAccountInformationModuleSetup() {
-		if (CoreFunctions.isElementExist(driver, _radioButtonLumpSumPayementByLocator, MobilityXConstants.CUSTOM_TIME)) {
+		if (CoreFunctions.isElementExist(driver, _radioButtonLumpSumPayementByLocator,
+				MobilityXConstants.CUSTOM_TIME)) {
 			CoreFunctions.highlightObject(driver, _textMyAccountInformationModule);
 			CoreFunctions.click(driver, _radioButtonLumpSumPayement, _radioButtonLumpSumPayement.getText());
 			CoreFunctions.click(driver, _buttonNext, _buttonNext.getText());
@@ -1184,17 +1207,19 @@ public class MX_Transferee_MyProfilePage extends Base {
 		CoreFunctions.explicitWaitTillElementVisibility(driver, _textAccountDetails, _textAccountDetails.getText());
 		CoreFunctions.clearAndSetText(driver, _textBoxAccountHolderNameACHAccount,
 				_textAccountHolderNameACHAccount.getText(), mxTransfereeMyProfileData.accountHolderName);
-		BusinessFunctions.selectValueFromDropdown(driver,_dropdownAccountTypeACHAccount, mxTransfereeMyProfileData.accountType);
+		BusinessFunctions.selectValueFromDropdown(driver, _dropdownAccountTypeACHAccount,
+				mxTransfereeMyProfileData.accountType);
 		CoreFunctions.clearAndSetText(driver, _textBoxBankNameACHAccount, _textBankNameACHAccount.getText(),
 				mxTransfereeMyProfileData.bankName);
 		CoreFunctions.clearAndSetText(driver, _textBoxAddressOneACHAccount, MobilityXConstants.ADDRESS,
 				mxTransfereeMyProfileData.addressOne);
 		CoreFunctions.clearAndSetText(driver, _textBoxCityACHAccount, MobilityXConstants.CITY,
 				mxTransfereeMyProfileData.city);
-		BusinessFunctions.selectValueFromDropdown(driver,_dropdownStateACHAccount, mxTransfereeMyProfileData.state);
+		BusinessFunctions.selectValueFromDropdown(driver, _dropdownStateACHAccount, mxTransfereeMyProfileData.state);
 		CoreFunctions.clearAndSetText(driver, _textBoxZipCodeACHAccount, MobilityXConstants.ZIPCODE,
 				CoreFunctions.generateRandomNumberAsGivenLength(5));
-		BusinessFunctions.selectValueFromDropdown(driver,_dropdownCountryACHAccount, mxTransfereeMyProfileData.country);
+		BusinessFunctions.selectValueFromDropdown(driver, _dropdownCountryACHAccount,
+				mxTransfereeMyProfileData.country);
 		CoreFunctions.clearAndSetText(driver, _textBoxSwiftRoutingACHAccount, _textSwiftRoutingACHAccount.getText(),
 				mxTransfereeMyProfileData.swiftRoutingNumber);
 		CoreFunctions.clearAndSetText(driver, _textBoxAccountIbanNumberACHAccount,
@@ -1203,7 +1228,8 @@ public class MX_Transferee_MyProfilePage extends Base {
 	}
 
 	public boolean finalSubmissionOnSpringBoardDashboard(DataTable table) {
-		if (CoreFunctions.isElementByLocatorExist(driver, _textSetupIsCompleteByLocator, MobilityXConstants.CUSTOM_TIME)) {
+		if (CoreFunctions.isElementByLocatorExist(driver, _textSetupIsCompleteByLocator,
+				MobilityXConstants.CUSTOM_TIME)) {
 			CoreFunctions.highlightObject(driver, _textSetupIsComplete);
 			CoreFunctions.click(driver, _buttonCheck, MobilityXConstants.BUTTON_OK);
 			Reporter.addStepLog(
@@ -1227,10 +1253,11 @@ public class MX_Transferee_MyProfilePage extends Base {
 		return false;
 	}
 
-	public void click(String btn_linkName) {		
-		switch(btn_linkName) {
+	public void click(String btn_linkName) {
+		switch (btn_linkName) {
 		case MobilityXConstants.MANAGE_ACCOUNT_INFORMATION:
-			CoreFunctions.clickWithoutReporting(driver, _linkManageAccountInformation, _linkManageAccountInformation.getText());
+			CoreFunctions.clickWithoutReporting(driver, _linkManageAccountInformation,
+					_linkManageAccountInformation.getText());
 			break;
 		case MobilityXConstants.MY_PROFILE:
 			CoreFunctions.clickWithoutReporting(driver, _linkMyProfile,
@@ -1239,6 +1266,6 @@ public class MX_Transferee_MyProfilePage extends Base {
 		default:
 			Assert.fail(MobilityXConstants.NO_ELEMENT_FOUND);
 			break;
-		}		
+		}
 	}
 }

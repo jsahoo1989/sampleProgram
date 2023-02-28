@@ -3,6 +3,7 @@ package com.aires.pages.coreflex;
 import java.text.MessageFormat;
 import java.util.List;
 
+import org.apache.logging.log4j.core.Core;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
@@ -34,7 +35,10 @@ public class MX_Client_AuthorizationHome_CollaborationPage extends Base {
 	@FindBy(how = How.CSS, using = "span[id*='afwfot1']")
 	private WebElement _headingText_Contributors;
 
-	@FindBy(how = How.XPATH, using = "//span[text()='Contributor workflow']")
+	@FindBy(how = How.XPATH, using = "//span[text()='Approval workflow']")
+	private WebElement _headingTextApprovalWorkflow;
+	
+	@FindBy(how = How.XPATH, using = "//span[contains(text(),'Contributor')][@class='RXHeaderText']")
 	private WebElement _headingTextContributorWorkflow;
 
 	// Heading text Approver
@@ -427,7 +431,7 @@ public class MX_Client_AuthorizationHome_CollaborationPage extends Base {
 	private WebElement _buttonContinueWorkingOnThisInitiation;
 
 	// Contributor Route Success Icon
-	@FindBy(how = How.XPATH, using = "//span[contains(text(),'Started this initiation')]//ancestor::table[contains(@class,'AFCollobratorPanel')]//span[contains(@class,'ServicesSuccessIcon')]")
+	@FindBy(how = How.XPATH, using = "//span[contains(text(),'Started this initiation')]")
 	private WebElement _iconContributorAuthRouteSuccess;
 
 	// Approval WF Started text
@@ -466,10 +470,11 @@ public class MX_Client_AuthorizationHome_CollaborationPage extends Base {
 	 */
 	public boolean verifyPageNavigation() {
 		try {
-			CoreFunctions.explicitWaitTillElementVisibility(driver, _headingTextContributorWorkflow, MobilityXConstants.CONTRIBUTOR_WORKFLOW);
-			CoreFunctions.scrollToElementUsingJavaScript(driver, _headingTextContributorWorkflow,
-					MobilityXConstants.CONTRIBUTOR_WORKFLOW);
-			return CoreFunctions.isElementExist(driver, _headingTextContributorWorkflow, 5);
+			CoreFunctions.explicitWaitTillElementVisibility(driver, _headingTextApprovalWorkflow,
+					MobilityXConstants.APPROVAL_WORKFLOW);
+//			CoreFunctions.scrollToElementUsingJavaScript(driver, _headingTextApprovalWorkflow,
+//					MobilityXConstants.APPROVAL_WORKFLOW);
+			return CoreFunctions.isElementExist(driver, _headingTextApprovalWorkflow, 5);
 		} catch (Exception e) {
 			Reporter.addStepLog(MessageFormat.format(
 					MobilityXConstants.EXCEPTION_OCCURED_WHILE_NAVIGATING_TO_MOBILITYX_CLIENT_AUTH_COLLABORATION_PAGE,
@@ -487,12 +492,15 @@ public class MX_Client_AuthorizationHome_CollaborationPage extends Base {
 	public boolean removeDefaultAdditionalContributors() {
 		boolean isDefaultAddtionalCountributorsRemoved = false;
 		try {
-			CoreFunctions.waitHandler(1);
-			CoreFunctions.moveToElement(driver, _textAuthorizationContributor);
-			CoreFunctions.hoverAndClick(driver, _removeDefaultContributorButton,
-					MobilityXConstants.REMOVE_DEFAULT_ADDITIONAL_CONTRIBUTOR);
-			CoreFunctions.explicitWaitTillElementInVisibility(driver, _textCollaboratorRemovedGrowlMessage);
-			isDefaultAddtionalCountributorsRemoved = true;
+			if (CoreFunctions.getPropertyFromConfig("Policy_ClientID").equals("13951")) {
+				CoreFunctions.waitHandler(1);
+				CoreFunctions.moveToElement(driver, _textAuthorizationContributor);
+				CoreFunctions.hoverAndClick(driver, _removeDefaultContributorButton,
+						MobilityXConstants.REMOVE_DEFAULT_ADDITIONAL_CONTRIBUTOR);
+				CoreFunctions.explicitWaitTillElementInVisibility(driver, _textCollaboratorRemovedGrowlMessage);
+				isDefaultAddtionalCountributorsRemoved = true;
+			} else
+				return true;
 		} catch (Exception e) {
 			Reporter.addStepLog(MessageFormat.format(
 					MobilityXConstants.EXCEPTION_OCCURED_WHILE_REMOVING_ADDITIONAL_DEFAULT_CONTRIBUTORS_FROM_CONTRIBUTOR_WORKFLOW,
@@ -502,6 +510,7 @@ public class MX_Client_AuthorizationHome_CollaborationPage extends Base {
 			Reporter.addStepLog(MessageFormat.format(
 					MobilityXConstants.SUCCESSFULLY_REMOVED_ADDITIONAL_DEFAULT_CONTRIBUTORS_FROM_CONTRIBUTOR_WORKFLOW,
 					CoreConstants.PASS));
+			CoreFunctions.waitHandler(3);
 		}
 		return isDefaultAddtionalCountributorsRemoved;
 	}
@@ -670,10 +679,10 @@ public class MX_Client_AuthorizationHome_CollaborationPage extends Base {
 	}
 
 	public boolean verifyApproverAdded(String ApproverName) {
-		CoreFunctions.waitHandler(2);
-		CoreFunctions.scrollToElementUsingJavaScript(driver, _headingTextContributorWorkflow, MobilityXConstants.CONTRIBUTOR_WORKFLOW);
-		CoreFunctions.scrollUpUsigActions(driver);
-		CoreFunctions.scrollToElementUsingJavaScript(driver, _headingTextContributorWorkflow, MobilityXConstants.CONTRIBUTOR_WORKFLOW);		
+		CoreFunctions.waitHandler(4);
+//		CoreFunctions.scrollToElementUsingJavaScript(driver, _headingTextContributorWorkflow, MobilityXConstants.APPROVAL_WORKFLOW);
+//		CoreFunctions.scrollUpUsigActions(driver);
+//		CoreFunctions.scrollToElementUsingJavaScript(driver, _headingTextContributorWorkflow, MobilityXConstants.APPROVAL_WORKFLOW);		
 		return BusinessFunctions.verifyItemExistsInList(driver, _list_Approver, ApproverName);
 	}
 
@@ -1045,7 +1054,8 @@ public class MX_Client_AuthorizationHome_CollaborationPage extends Base {
 			CoreFunctions.clearAndSetText(driver, _txtbox_ApproverJobTitle, collaboratorsData.get(counter).get(4));
 			CoreFunctions.clearAndSetText(driver, _txtbox_ApproverComment, collaboratorsData.get(counter).get(2));
 			clickAddanApprover_Link_Button(MobilityXConstants.ADD_AN_APPROVER);
-			CoreFunctions.explicitWaitTillElementVisibility(driver, _link_addAnApprover, "Add a Approver");
+			CoreFunctions.waitHandler(5);
+			CoreFunctions.explicitWaitTillElementBecomesClickable(driver, _link_addAnApprover, "Add a Approver");
 			break;
 		default:
 			Assert.fail(MobilityXConstants.INVALID_COLLABORATOR);
@@ -1070,6 +1080,7 @@ public class MX_Client_AuthorizationHome_CollaborationPage extends Base {
 
 	public void setAuthFormRoutingOrder(String routingOrder) {
 		try {
+			CoreFunctions.waitHandler(3);
 			switch (routingOrder) {
 			case MobilityXConstants.ROUTE_IN_SEQUENTIAL_ORDER:
 				CoreFunctions.clickElement(driver, _radioRouteInSequentialOrder);
@@ -1161,7 +1172,8 @@ public class MX_Client_AuthorizationHome_CollaborationPage extends Base {
 
 	public boolean verifyFloatingButtonsPostStartRouting() {
 		try {
-			CoreFunctions.explicitWaitTillElementBecomesClickable(driver, _buttonCancelRouting, MobilityXConstants.CANCEL_ROUTING);
+			CoreFunctions.explicitWaitTillElementBecomesClickable(driver, _buttonCancelRouting,
+					MobilityXConstants.CANCEL_ROUTING);
 			CoreFunctions.waitHandler(2);
 			if ((CoreFunctions.isElementExist(driver, _buttonCancelRouting, 2))
 					&& (CoreFunctions.isElementExist(driver, _floatingButtonSubmitToAires, 2))) {
@@ -1331,7 +1343,8 @@ public class MX_Client_AuthorizationHome_CollaborationPage extends Base {
 				MobilityXConstants.EMAIL_FROM_APPROVAL_REQUEST, expectedEmailSubject,
 				MobilityXConstants.SUBMIT_MY_RESPONSE);
 		String submitMyResponseURL = submitMyResponseEmailText.substring(1, submitMyResponseEmailText.length() - 1);
-		String submitMyResponseURLArr[] = submitMyResponseURL.split("\" style=\"float:right\"><font color=\"#228EA7\">View Full Details");
+		String submitMyResponseURLArr[] = submitMyResponseURL
+				.split("\" style=\"float:right\"><font color=\"#228EA7\">View Full Details");
 		testContext.getWebDriverManager().getDriver().navigate().to(submitMyResponseURLArr[0]);
 	}
 

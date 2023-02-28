@@ -32,8 +32,12 @@ import com.hp.lft.sdk.java.Button;
 import com.hp.lft.sdk.java.ButtonDescription;
 import com.hp.lft.sdk.java.Dialog;
 import com.hp.lft.sdk.java.DialogDescription;
+import com.hp.lft.sdk.java.Editor;
+import com.hp.lft.sdk.java.EditorDescription;
+import com.hp.lft.sdk.java.ListDescription;
 import com.hp.lft.sdk.java.Menu;
 import com.hp.lft.sdk.java.MenuDescription;
+import com.hp.lft.sdk.java.TabControl;
 import com.hp.lft.sdk.java.Table;
 import com.hp.lft.sdk.java.TableDescription;
 import com.hp.lft.sdk.java.Window;
@@ -186,10 +190,9 @@ public class IRIS_AssignmentServicePage extends BasePage {
 		try {
 //			Helpers.clickButton(IRIS_PageMaster.getButtonObject(IRIS_PageMaster.getDialogObject(_IRIS, "Saved"), "OK",
 //					"javax.swing.plaf.basic.BasicOptionPaneUI$ButtonFactory$ConstrainedButton"), "OK");
-			IRIS_PageMaster.getButtonObjectFromLabel(IRIS_PageMaster.getDialogObject(_IRIS, "Saved"), "OK")
-			.click();
+			IRIS_PageMaster.getButtonObjectFromLabel(IRIS_PageMaster.getDialogObject(_IRIS, "Saved"), "OK").click();
 		} catch (GeneralLeanFtException e) {
-			try {								
+			try {
 				if (IRIS_PageMaster.getDialogObject(_IRIS, "Failed").exists()) {
 					IRIS_PageMaster.getButtonObjectFromLabel(IRIS_PageMaster.getDialogObject(_IRIS, "Failed"), "OK")
 							.click();
@@ -484,11 +487,14 @@ public class IRIS_AssignmentServicePage extends BasePage {
 		CoreFunctions.waitHandler(1);
 	}
 
-	public void selectSubService(Table table, String columnName, String irisServiceName)
+	public void selectSubService(Table table, String columnName, String irisSubServiceName)
 			throws GeneralLeanFtException, Exception {
 		for (int rowCount = 0; rowCount < table.getRows().size(); rowCount++) {
-			if (table.getCell(rowCount, columnName).getValue().toString().contains(irisServiceName)) {
+			if (table.getCell(rowCount, columnName).getValue().toString().contains(irisSubServiceName)) {
+				Log.info("Selecting : "+table.getCell(rowCount, columnName).getValue().toString()+" sub-service");
 				Helpers.selectTableRow(table, rowCount);
+				CoreFunctions.writeToPropertiesFile("Assignment_subServiceID",
+						table.getCell(rowCount, IRISConstants.ID_TEXT).getValue().toString());
 				CoreFunctions.waitHandler(1);
 				break;
 			}
@@ -589,7 +595,7 @@ public class IRIS_AssignmentServicePage extends BasePage {
 							benefit.getIrisServiceName());
 					selectSubService(getTableName(IRISConstants.SUB_SERVICE), IRISConstants.NAME,
 							benefit.getIrisSubserviceName());
-					setSubServiceStatus(subServiceStatus);
+					setSubServiceStatus(subServiceStatus, benefit.getIrisServiceName());
 				}
 			}
 		} catch (Exception e) {
@@ -601,31 +607,77 @@ public class IRIS_AssignmentServicePage extends BasePage {
 
 	private void searchAndSelectAddedService(Table table, String columnName, String irisServiceName)
 			throws GeneralLeanFtException {
-		for (int rowCount = 0; rowCount < table.getRows().size(); rowCount++) {
-			if (table.getCell(rowCount, columnName).getValue().toString().contains(irisServiceName)) {
-				Helpers.selectTableRow(table, rowCount);
-				CoreFunctions.waitHandler(1);
-				break;
+		try {
+			for (int rowCount = 0; rowCount < table.getRows().size(); rowCount++) {
+				Log.info("Selecting : "+table.getCell(rowCount, columnName).getValue().toString()+" service");
+				if (table.getCell(rowCount, columnName).getValue().toString().contains(irisServiceName)) {
+					Helpers.selectTableRow(table, rowCount);
+					CoreFunctions.waitHandler(1);
+					break;
+				}
 			}
+		} catch (Exception e) {
+			Reporter.addStepLog(MessageFormat.format(
+					IRISConstants.EXCEPTION_OCCURED_WHILE_SELECTING_ADDED_SERVICE_ON_SERVICES_TAB_OF_IRIS_APPLICATION,
+					CoreConstants.FAIL, e.getMessage()));
 		}
 	}
 
-	public void setSubServiceStatus(String fileStatus) throws Exception {
-		_IRIS = getIRISWindow();
-		Menu optionsMenu = _IRIS.describe(Menu.class, new MenuDescription.Builder().label("Options").build());
-		Menu changeStatusMenu = optionsMenu.describe(Menu.class,
-				new MenuDescription.Builder().label("Change Status").build());
-		Menu changeFileStatusMenu = changeStatusMenu.describe(Menu.class,
-				new MenuDescription.Builder().label("Change Sub Service Status").build());
-		Menu activateMenu = changeFileStatusMenu.describe(Menu.class,
-				new MenuDescription.Builder().label(fileStatus).build());
-		CoreFunctions.waitHandler(2);
-		activateMenu.select();
-		CoreFunctions.waitHandler(2);
-		Robot robot = new Robot();
-		robot.setAutoDelay(250);
-		robot.keyPress(KeyEvent.VK_ENTER);
-		robot.keyRelease(KeyEvent.VK_ENTER);
+	public void setSubServiceStatus(String fileStatus, String irisServiceName) throws Exception {
+
+//			String subServiceWindow = MessageFormat.format(IRISConstants.SUB_SERVICE_TITLE_WITH_ID,
+//					CoreFunctions.getPropertyFromConfig("Assignment_subServiceID"),
+//					CoreFunctions.getPropertyFromConfig("Assignment_FileID"),
+//					CoreFunctions.getPropertyFromConfig("Transferee_firstName"),
+//					CoreFunctions.getPropertyFromConfig("Transferee_lastName"),
+//					CoreFunctions.getPropertyFromConfig("Assignment_ClientName"),
+//					CoreFunctions.getPropertyFromConfig("Assignment_ClientID"));
+//			_IRIS = IRIS_PageMaster.getWindowObject(subServiceWindow);
+//			Log.info(_IRIS.getTitle());
+
+		if (irisServiceName.equalsIgnoreCase(IRISConstants.SHIPMENT)) {
+			IRIS_PageMaster.getButtonObjectFromLabel(_IRIS, "Detail").click();
+			CoreFunctions.waitHandler(2);
+			_IRIS = getIRISWindow();
+			Log.info("--------------- Shipment Detail Title : " + _IRIS.getTitle());
+			Menu optionsMenu = _IRIS.describe(Menu.class, new MenuDescription.Builder().label("Options").build());
+			Menu changeShipmentStatusMenu = optionsMenu.describe(Menu.class,
+					new MenuDescription.Builder().label("Change Shipment Status").build());
+			Menu cancelMenu = changeShipmentStatusMenu.describe(Menu.class,
+					new MenuDescription.Builder().label("Cancel").build());
+			cancelMenu.select();
+			Dialog cancelDialog = Desktop.describe(Dialog.class,
+					new DialogDescription.Builder().title("Cancel").build());
+			IRIS_PageMaster.getDialogObject(_IRIS, "Cancel").waitUntilVisible();
+			Helpers.selectFromList(IRIS_PageMaster.getListObject(IRIS_PageMaster.getDialogObject(_IRIS, "Cancel"),
+					"Please select reason for cancellation*"), "Aires Pricing", "Cancel text");
+			Button oKButton = cancelDialog.describe(Button.class, new ButtonDescription.Builder().label("OK").build());
+			oKButton.click();
+			Dialog changeShipmentStatusDialog = _IRIS.describe(Dialog.class,
+					new DialogDescription.Builder().title("Change Shipment Status").build());
+			Button oKButton1 = changeShipmentStatusDialog.describe(Button.class,
+					new ButtonDescription.Builder().label("OK").build());
+			oKButton1.click();
+			_IRIS.close();
+			Log.info("Successfully closed IRIS - Shipment Detail Dislog");
+			CoreFunctions.waitHandler(5);
+		} else {
+			_IRIS = getIRISWindow();
+			Menu optionsMenu = _IRIS.describe(Menu.class, new MenuDescription.Builder().label("Options").build());
+			Menu changeStatusMenu = optionsMenu.describe(Menu.class,
+					new MenuDescription.Builder().label("Change Status").build());
+			Menu changeFileStatusMenu = changeStatusMenu.describe(Menu.class,
+					new MenuDescription.Builder().label("Change Sub Service Status").build());
+			Menu activateMenu = changeFileStatusMenu.describe(Menu.class,
+					new MenuDescription.Builder().label(fileStatus).build());
+			CoreFunctions.waitHandler(2);
+			activateMenu.select();
+			CoreFunctions.waitHandler(2);
+			Robot robot = new Robot();
+			robot.setAutoDelay(250);
+			robot.keyPress(KeyEvent.VK_ENTER);
+			robot.keyRelease(KeyEvent.VK_ENTER);
+		}
 	}
 
 	public void updateAddedServices(String columnName, String newSubserviceServiceType, int numberOfMilestones) {
@@ -706,7 +758,6 @@ public class IRIS_AssignmentServicePage extends BasePage {
 					CoreFunctions.getPropertyFromConfig("CoreFlex_Policy_RequiredFor"))) {
 				if ((benefit.getSelectBenefitOnFPTPage()) && (benefit.getAiresManagedService().equals("Yes"))
 						&& benefit.getNoOfMilestones() != null) {
-
 					addService(benefit.getIrisServiceName());
 					clickOnAddSubServiceButton();
 					pageObjectManager_CoreFlex.getPageObjects().get(benefit.getBenefitType()).addSubService(_IRIS,
@@ -715,6 +766,11 @@ public class IRIS_AssignmentServicePage extends BasePage {
 					int rowCount = Helpers.getTableRowCount(getTableName(IRISConstants.SUB_SERVICE));
 					Helpers.setTableCellValue(IRIS_PageMaster.getTableObjectWithIndex(_IRIS, "javax.swing.JTable", 1),
 							rowCount - 1, "Core/Flex", "Both");
+					if (benefit.getIrisSubserviceName().contains(IRISConstants.SHIPMENT)) {
+						Helpers.setTableCellValue(
+								IRIS_PageMaster.getTableObjectWithIndex(_IRIS, "javax.swing.JTable", 1), rowCount - 1,
+								"Name", benefit.getIrisSubserviceName());
+					}
 					clickSaveButton();
 					addAdditionalDetailIfRequired(benefit);
 					benefit.setIrisSubserviceID(String
@@ -784,12 +840,12 @@ public class IRIS_AssignmentServicePage extends BasePage {
 				Helpers.setEditorText(IRIS_PageMaster.getEditorObject(_subServiceDetailScreen, "Updated By"), "Test",
 						"Updated By");
 				Helpers.clickButton(IRIS_PageMaster.getButtonObject(_IRIS, IRISConstants.UPDATE, 2),
-						IRISConstants.UPDATE);				
-				Dialog saveSucceededDialog = _subServiceDetailScreen.describe(Dialog.class, new DialogDescription.Builder()
-						.title("Save succeeded").build());
-				Button oKButton = saveSucceededDialog.describe(Button.class, new ButtonDescription.Builder()
-						.label("OK").build());
-				oKButton.click();				
+						IRISConstants.UPDATE);
+				Dialog saveSucceededDialog = _subServiceDetailScreen.describe(Dialog.class,
+						new DialogDescription.Builder().title("Save succeeded").build());
+				Button oKButton = saveSucceededDialog.describe(Button.class,
+						new ButtonDescription.Builder().label("OK").build());
+				oKButton.click();
 				break;
 			case COREFLEXConstants.EDUCATION_ASSISTANCE:
 				Dialog _subServiceDetailScreenEducation = _IRIS.describe(Dialog.class,

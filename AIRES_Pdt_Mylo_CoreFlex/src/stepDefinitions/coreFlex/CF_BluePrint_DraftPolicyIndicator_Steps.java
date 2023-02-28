@@ -371,7 +371,7 @@ public class CF_BluePrint_DraftPolicyIndicator_Steps {
 				testContext.getIrisPageManager().irisCorporationMain.selectCorporationModules(IRISConstants.ACCOUNTING);
 				testContext.getIrisPageManager().irisCorporationAccounting = new IRIS_Corporation_Accounting();
 				testContext.getIrisPageManager().irisCorporationAccounting.verifyAccountingTab();
-				testContext.getIrisPageManager().irisCorporationAccounting.addNewOnPointAutomationPolicies();
+				testContext.getIrisPageManager().irisCorporationAccounting.addNewOnPointAutomationPolicies(clientId);
 				testContext.getIrisPageManager().irisCorporationAccounting.clickOnSaveBtn();
 				testContext.getBasePage().cleanIrisProcesses();
 				Reporter.addStepLog(MessageFormat.format(

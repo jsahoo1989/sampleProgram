@@ -1,8 +1,8 @@
 Feature: Validate the OnPoint MXClient Auth Form Cloning Functionality
 
-  @Coreflex:218632 @CF_End-To-End_MasterScript @CF_MXClient_AuthFormCloning @CF_MXClient_AuthFormCloning_PS
+  @OnPoint_Regression @CF_OnPoint_Feature @CF_MXClient_AuthFormCloning @CF_MXClient_AuthFormCloning_PS
   Scenario: CoreFlex - Validating policy status is updated to 'Active' on completion of Approval WorkFlow for AuthForm Cloning Policy Setup
-    Given he has setup a new Points Based CoreFlex Policy with following selection in Blueprint application
+    Given he has setup a new OnPoint Policy with following selection in Blueprint application
       | Person Responsible For Benefit Selection | Flex Setup Type | Cashout Availability | BenefitType | PolicyRequiredFor |
       | Client Initiator                         | User Defined    | Portion Cashout      | Both        | Client            |
     And he has clicked on "Submit" button to submit "V1" policy verison on "Custom Bundles" page
@@ -13,7 +13,7 @@ Feature: Validate the OnPoint MXClient Auth Form Cloning Functionality
     When he clicks on "Approve" button to acknowledge 'Approve this Policy' dialog
     Then Policy Status and Version should be displayed as "Active" and "V1" respectively on "View/Edit Policy Forms" page
 
-  @Coreflex:218633 @CF_End-To-End_MasterScript @CF_MXClient_AuthFormCloning @CF_MXClient_AuthFormCloning_PostSubmitScenario @CF_MXClient_PostSubmitScenario_AuthForm
+  @OnPoint_Regression @CF_OnPoint_Feature @CF_MXClient_AuthFormCloning @CF_MXClient_AuthFormCloning_PostSubmitScenario @CF_MXClient_PostSubmitScenario_AuthForm
   Scenario: MXClient - Verifying Authorization Submission with UserDefined TotalPoints, Core/Flex Benefits & PortionCashout for configured AuthForm Cloning BluePrint CF Policy
     Given he has logged into 'MobilityX' application as a 'Client' user
     And he has clicked on "Create an authorization" after validating Client details on 'Authorization Home Page'
@@ -33,7 +33,7 @@ Feature: Validate the OnPoint MXClient Auth Form Cloning Functionality
     Then 'Auth Submit Success' growl message should be displayed on the navigated 'MobilityX Dashboard Home' page
     And 'New Initiation Submitted' email should be received having Transferee details along with assigned CoreFlex Total Points and Submitted Benefits Points
 
-  @Coreflex:218634 @CF_End-To-End_MasterScript @CF_MXClient_AuthFormCloning @CF_MXClient_AuthFormCloning_PostSubmitScenario @CF_MXClient_PostSubmitScenario_ClonedAuthForm
+  @OnPoint_Regression @CF_OnPoint_Feature @CF_MXClient_AuthFormCloning @CF_MXClient_AuthFormCloning_PostSubmitScenario @CF_MXClient_PostSubmitScenario_ClonedAuthForm
   Scenario: MXClient - Validating Cloned Auth Form Contents and Flex Benefits_Cashout selections post Clone Auth Form Operation
     Given he has logged into 'MobilityX' application as a 'Client' user
     And he has clicked on "View all initiations" link on 'Authorization Home Page' to navigate to 'View all initiation' page
@@ -50,7 +50,7 @@ Feature: Validate the OnPoint MXClient Auth Form Cloning Functionality
     And TotalPoint Balance along with Available and Submitted Benefit_Cashout details should be displayed on 'Benefit Selection Tool' page post Auth Form Cloning
     And Submitted Benefit_Cashout details should be displayed under 'Benefits Bundle' section along with enabled 'Save & Exit' button
 
-  @Coreflex:218635 @CF_End-To-End_MasterScript @CF_MXClient_AuthFormCloning @CF_MXClient_AuthFormCloning_PostSubmitScenario @CF_MXClient_PostSubmitScenario_SubmittingClonedAuthForm
+  @OnPoint_Regression @CF_OnPoint_Feature @CF_MXClient_AuthFormCloning @CF_MXClient_AuthFormCloning_PostSubmitScenario @CF_MXClient_PostSubmitScenario_SubmittingClonedAuthForm
   Scenario: MXClient - Submitting Cloned Auth Form Contents and Flex Benefits_Cashout selections post Clone Auth Form Operation
     Given he has logged into 'MobilityX' application as a 'Client' user
     And he has clicked on "View all initiations" link on 'Authorization Home Page' to navigate to 'View all initiation' page

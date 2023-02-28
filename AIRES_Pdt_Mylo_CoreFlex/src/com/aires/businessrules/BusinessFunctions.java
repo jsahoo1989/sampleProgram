@@ -1571,7 +1571,7 @@ public class BusinessFunctions {
 		CoreFunctions.writeToPropertiesFile("ClonePolicy_Reference_Client", "");
 		CoreFunctions.writeToPropertiesFile("application", CoreConstants.APP_COREFLEX);
 		CoreFunctions.writeToPropertiesFile("CF_CashoutSubmitted_Flag", "false");
-
+		CoreFunctions.writeToPropertiesFile("TransfereeActivity_Performed", "false");
 	}
 
 }

@@ -547,13 +547,19 @@ public class CoreFlex_CustomBundlesPage extends Base {
 						COREFLEXConstants.SUCCESSFULLY_VERIFIED_BUTTONS_DISPLAYED_IN_DRAFT_POLICY_STATUS_ON_CUSTOM_BUNDLES_PAGE,
 						CoreConstants.PASS));
 				return true;
+			} else {
+				Reporter.addStepLog(MessageFormat.format(
+						COREFLEXConstants.BUTTONS_DISPLAYED_IN_DRAFT_POLICY_STATUS_ON_CUSTOM_BUNDLES_PAGE_ARE_NOT_AS_EXPECTED,
+						CoreConstants.FAIL));
+				return false;
 			}
 		} catch (Exception e) {
 			Reporter.addStepLog(MessageFormat.format(
 					COREFLEXConstants.EXCEPTION_OCCURED_WHILE_VALIDATING_BUTTONS_DISPLAYED_IN_DRAFT_POLICY_STATUS_ON_CUSTOM_BUNDLES_PAGE,
 					CoreConstants.FAIL, e.getMessage()));
+			return false;
 		}
-		return false;
+		
 	}
 
 	public boolean verifyPolicySaveAsDraftDialogStatus(String expectedDialogMessage) {
@@ -640,7 +646,8 @@ public class CoreFlex_CustomBundlesPage extends Base {
 	}
 
 	public boolean verifyPolicyStatus(String expectedPolicyStatus) {
-		if (CoreFunctions.getElementText(driver, _textPolicyStatus).equals(expectedPolicyStatus)) {
+		if ((CoreFunctions.getElementText(driver, _textPolicyStatus).replace("check_circle", "")
+				.replace("error", "").trim()).equals(expectedPolicyStatus)) {
 			Reporter.addStepLog(MessageFormat.format(COREFLEXConstants.SUCCESSFULLY_VERIFIED_POLICY_STATUS,
 					CoreConstants.PASS, expectedPolicyStatus));
 			return true;

@@ -43,12 +43,13 @@
 	{
 		"benefitName": "Auto Rental During Assignment",
 		"autoRentalDuringAssignment": {
-			"rentalCarType": "Other",
+			"rentalCarType": "Premium",
 			"rentalCarTypeOther": "SUV",
 			"grossUp": "Yes",
 			"reimbursedBy": "Aires",
 			"reimbursedByOther": "Reimbursed Auto Rental During Assignment by other",
-			"comment": "Auto Rental During Assignment comment"
+			"comment": "Auto Rental During Assignment comment",
+			"durationDays":"3"
 		}
 	}
 ]

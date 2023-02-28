@@ -23,6 +23,7 @@ import com.aires.pages.mylo.MyloJourneyPage_AccountingQuerySection;
 import com.aires.pages.mylo.MyloJourneyPage_AddressSection;
 import com.aires.pages.mylo.MyloJourneyPage_AdvancedQuerySection;
 import com.aires.pages.mylo.MyloJourneyPage_AuthTrackSection;
+import com.aires.pages.mylo.MyloJourneyPage_ChargeCode;
 import com.aires.pages.mylo.MyloJourneyPage_ClientContactSection;
 import com.aires.pages.mylo.MyloJourneyPage_CreateNewFileSection;
 import com.aires.pages.mylo.MyloJourneyPage_DependentSection;
@@ -72,6 +73,8 @@ public class PageObjectManager_Mylo {
 	private MyloJourneyPage_ClientContactSection _journeyPage_ClientContactSection;	
 	private MyloJourneyPage_SecondaryContact _journeyPage_SecondaryContact;
 	private MyloJourneyPage_TransfereeAndFamilySection _journeyPage_TransfereeAndFamilySection;
+	private MyloJourneyPage_ChargeCode _journeyPage_chargeCode;
+
 	private MyloNewFileUtil _myloNewFileUtil;
 
 	public PageObjectManager_Mylo(WebDriver driver) {
@@ -210,5 +213,10 @@ public class PageObjectManager_Mylo {
 	public MyloJourneyPage_TransfereeAndFamilySection getJourneyPageTransfereeAndFamilySection() {
 		return (_journeyPage_TransfereeAndFamilySection == null) ? _journeyPage_TransfereeAndFamilySection = new MyloJourneyPage_TransfereeAndFamilySection(_driver)
 				: _journeyPage_TransfereeAndFamilySection;
+	}
+	
+	public MyloJourneyPage_ChargeCode getJourneyPageChargeCode() {
+		return (_journeyPage_chargeCode == null) ? _journeyPage_chargeCode = new MyloJourneyPage_ChargeCode(_driver)
+				: _journeyPage_chargeCode;
 	}
 }

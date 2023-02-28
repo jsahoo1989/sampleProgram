@@ -840,4 +840,31 @@ public class MYLOConstants {
 	public static final int PHONE_NUMBER_CHAR_LIMIT = 30;
 	public static final int COMMENT_CHAR_LIMIT = 500;
 	public static final String ADDRESS_CANCEL_BUTTON = "Address";
+	
+	//ChargeCode
+		public static final String CHARGE_CODES_HEADER = "Charge Codes";
+		public static final String DIRECT_TAB = "Direct";
+		public static final String INDIRECT_TAB = "InDirect";
+		public static final String VIEW_CHARGE_CODE_HISTORY = "View Charge Code History";
+		public static final String CHARGE_CODES_POPUP = "Charge Codes Popup";
+		public static final String CHARGE_CODES = null;
+		public static final String ENTITY_CODE = "Entity Code";
+		public static final String COST_CENTER = "Cost Center";
+		public static final String START_DATE = "Start Date";
+		public static final String PERCENTAGE_OF_MOVE = "Percentage Of Move";
+		public static final String SERVICE_TYPE = "Service Type";
+		public static final String FAR = "FAR";
+		public static final String GL_NUMBER = "GL Number";
+		public static final String NETWORK_NUMBER = "Network Number";
+		public static final String ACTIVITY_CODE = "Activity Code";
+		public static final String CHARGE_CODE_NUMBER = "Charge Code Number";
+		public static final String ADD_CHARGE_CODE_BUTTON = "Add Charge Code";
+		public static final String DELETE_CHARGE_CODE_BUTTON = "Delete Charge Code";
+		public static final String SAVE_CHARGE_CODE_BUTTON = "Save Charge Code";
+		public static final String FUTURE_DATE = "Future Date";
+		public static final String TOAST_CLOSE_BUTTON = "Toast Close";
+		public static final String DATE_FORMART = "";
+		public static final String PAST_DATE =  "Past Date";
+		public static final String COLOR = "color";
+		public static final String WBS = "WBS";
 }

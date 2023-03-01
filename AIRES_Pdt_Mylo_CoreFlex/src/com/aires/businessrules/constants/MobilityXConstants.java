@@ -951,5 +951,9 @@ public class MobilityXConstants {
 	public static final String FLEX_BENEFIT_TRANSFEREE_SECTION = "Flex Benefit Transferee Section Header Text";
 	public static final String EXCEPTION_OCCURED_WHILE_VALIDATING_FLEX_BENEFIT_SECTION_HEADER_ON_ONPOINT_PLANNING_TOOL_PAGE = "{0}Exception occured while Validating Flex Benefit Section Header on OnPoint Planning Tool page. Exception : ''{1}''.";
 	public static final String SUCCESSFULLY_NAVIGATED_TO_MY_BENEFITS_BUNDLE_PAGE = "{0}Successfully Navigated to My Benefits Bundle page.";
-	public static final String FAILED_TO_NAVIGATE_TO_MY_BENEFITS_BUNDLE_PAGE = "{0}Failed to navigate to My Benefits Bundle page.";	
+	public static final String FAILED_TO_NAVIGATE_TO_MY_BENEFITS_BUNDLE_PAGE = "{0}Failed to navigate to My Benefits Bundle page.";
+	public static final String EXCEPTION_OCCURED_WHILE_VALIDATING_ASSIGNMENT_DETAILS_ON_MOBILITYX_JOURNEY_HOME_PAGE = "{0}Exception occured while validating Assignment details on Mobility Journey Home page.";
+	public static final String SUCCESSFULLY_NAVIGATED_TO_MOBILITY_JOURNEY_HOME_PAGE = "{0}Successfully Navigated to Mobility Journey Home Page.";
+	public static final String FAILED_TO_NAVIGATE_TO_MOBILITY_JOURNEY_HOME_PAGE = "{0}Failed to Navigate to Mobility Journey Home page.";
+	public static final String EXCEPTION_OCCURED_WHILE_NAVIGATING_TO_MOBILITY_JOURNEY_HOME_PAGE = "{0}Exception occured while navigating to Mobility Journey Home page. Exception : ''{1}''.";	
 }

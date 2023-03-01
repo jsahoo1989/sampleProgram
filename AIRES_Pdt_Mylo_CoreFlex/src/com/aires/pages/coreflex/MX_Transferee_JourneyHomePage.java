@@ -463,7 +463,21 @@ public class MX_Transferee_JourneyHomePage extends Base {
 	}
 
 	public boolean isWelcomePopupDisplayed() {
-		return CoreFunctions.isElementExist(driver, _btn_startFlexPlanning, 45);
+		try {
+			if (CoreFunctions.isElementExist(driver, _btn_startFlexPlanning, 45)) {
+				Reporter.addStepLog(MessageFormat.format(
+						MobilityXConstants.SUCCESSFULLY_NAVIGATED_TO_MOBILITY_JOURNEY_HOME_PAGE, CoreConstants.PASS));
+				return true;
+			} else {
+				Reporter.addStepLog(MessageFormat.format(
+						MobilityXConstants.FAILED_TO_NAVIGATE_TO_MOBILITY_JOURNEY_HOME_PAGE, CoreConstants.FAIL));
+				return false;
+			}
+		} catch (Exception e) {
+			Reporter.addStepLog(MessageFormat.format(
+					MobilityXConstants.EXCEPTION_OCCURED_WHILE_NAVIGATING_TO_MOBILITY_JOURNEY_HOME_PAGE, CoreConstants.FAIL,e.getMessage()));
+			return false;
+		}
 	}
 
 	public void routeToFlexPlanningTool() {
@@ -553,31 +567,23 @@ public class MX_Transferee_JourneyHomePage extends Base {
 	}
 
 	private boolean verifyAssignmentDetails(String actualClientName, String actualFileId, String actualTransfereeName) {
-		Log.info(CoreFunctions.getPropertyFromConfig("Assignment_ClientName").equals(actualClientName) + "");
-		Log.info(CoreFunctions.getPropertyFromConfig("Assignment_FileID").equals(actualFileId) + "");
-		Log.info((CoreFunctions.getPropertyFromConfig("Transferee_firstName") + " "
-				+ CoreFunctions.getPropertyFromConfig("Transferee_lastName")) + ":" + (actualTransfereeName) + "");
-
-		boolean isAssignmentClientDetailsMatched = (CoreFunctions.getPropertyFromConfig("Assignment_ClientName")
-				.equalsIgnoreCase(actualClientName)
-				& CoreFunctions.getPropertyFromConfig("Assignment_FileID").equals(actualFileId)
-				& (CoreFunctions.getPropertyFromConfig("Transferee_firstName") + " "
-						+ CoreFunctions.getPropertyFromConfig("Transferee_lastName"))
-								.equalsIgnoreCase(actualTransfereeName));
-
-		if (isAssignmentClientDetailsMatched) {
+		try {
+			CoreFunctions.verifyText(CoreFunctions.getPropertyFromConfig("Assignment_ClientName"), actualClientName);
+			CoreFunctions.verifyText(CoreFunctions.getPropertyFromConfig("Assignment_FileID"), actualFileId);
+			CoreFunctions
+					.verifyText(
+							(CoreFunctions.getPropertyFromConfig("Transferee_firstName") + " "
+									+ CoreFunctions.getPropertyFromConfig("Transferee_lastName")),
+							actualTransfereeName);
 			Reporter.addStepLog(MessageFormat.format(
 					MobilityXConstants.ASSIGNMENT_DETAILS_MATCHED_ON_MOBILITY_JOURNEY_HOME_PAGE, CoreConstants.PASS));
-		} else {
+			return true;
+		} catch (Exception e) {
 			Reporter.addStepLog(MessageFormat.format(
-					MobilityXConstants.ASSIGNMENT_DETAILS_NOT_MATCHED_ON_MOBILITYX_JOURNEY_HOME_PAGE,
-					CoreConstants.FAIL, actualFileId, CoreFunctions.getPropertyFromConfig("Assignment_FileID"),
-					actualTransfereeName, (CoreFunctions.getPropertyFromConfig("Transferee_firstName") + " "
-							+ CoreFunctions.getPropertyFromConfig("Transferee_lastName"))));
+					MobilityXConstants.EXCEPTION_OCCURED_WHILE_VALIDATING_ASSIGNMENT_DETAILS_ON_MOBILITYX_JOURNEY_HOME_PAGE,
+					CoreConstants.FAIL, e.getMessage()));
 		}
-
-		return isAssignmentClientDetailsMatched;
-
+		return false;
 	}
 
 	public boolean verifySubmittedPointsDetails() {
@@ -669,7 +675,9 @@ public class MX_Transferee_JourneyHomePage extends Base {
 	}
 
 	/**
-	 * Method to Setup USD Check Account if USD currency selection is made in PortionCashout or AfterRelocation selection in OnPoint Policy setup 
+	 * Method to Setup USD Check Account if USD currency selection is made in
+	 * PortionCashout or AfterRelocation selection in OnPoint Policy setup
+	 * 
 	 * @return
 	 */
 	private boolean setupUSDCheckAccountAndSave() {
@@ -707,7 +715,9 @@ public class MX_Transferee_JourneyHomePage extends Base {
 	}
 
 	/**
-	 * Method to Setup Wire Transferee Account if NON-USD currency selection is made in PortionCashout or AfterRelocation selection in OnPoint Policy setup 
+	 * Method to Setup Wire Transferee Account if NON-USD currency selection is made
+	 * in PortionCashout or AfterRelocation selection in OnPoint Policy setup
+	 * 
 	 * @return
 	 */
 	private boolean setupWireTransferAccountBasedOnCurrencyAndSave() {

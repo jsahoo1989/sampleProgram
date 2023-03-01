@@ -506,6 +506,7 @@ public class PDT_AddNewPolicyPage extends Base {
 					ClientPolicyDetails.setClientName(clientName);
 					CoreFunctions.writeToPropertiesFile("Policy_ClientID", clientId);
 					CoreFunctions.writeToPropertiesFile("Policy_ClientName", clientName);
+					CoreFunctions.writeToPropertiesFile("Assignment_ClientName", clientName);					
 					Reporter.addStepLog(MessageFormat.format(PDTConstants.VERIFY_VALUE_SELECTED_FROM_DROPDWON,
 							CoreConstants.PASS, PDTConstants.CLIENT_NAME, clientName));
 					break;

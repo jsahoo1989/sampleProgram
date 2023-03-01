@@ -913,7 +913,7 @@ public class CF_MX_Client_Steps {
 				.queryFile(CoreFunctions.getPropertyFromConfig("Assignment_FileID"));
 		testContext.getIrisPageManager().irisAssignmentOverviewPage.acceptFailedImageLoadDialog();
 		testContext.getIrisPageManager().irisAssignmentOverviewPage.acceptLinkSuggestionDialog();
-		testContext.getIrisPageManager().irisAssignmentOverviewPage.setFileStatus(IRISConstants.ACTIVATE);
+//		testContext.getIrisPageManager().irisAssignmentOverviewPage.setFileStatus(IRISConstants.ACTIVATE);
 		testContext.getIrisPageManager().irisAssignmentOverviewPage.switchTab(IRISConstants.OVERVIEW);
 		IRIS_AssignmentData assignmentOverviewData = FileReaderManager.getInstance().getIrisJsonReader()
 				.getAssignmentDataByTabName(IRISConstants.OVERVIEW);
@@ -1285,7 +1285,7 @@ public class CF_MX_Client_Steps {
 				.queryFile(CoreFunctions.getPropertyFromConfig("Assignment_FileID"));
 		testContext.getIrisPageManager().irisAssignmentOverviewPage.acceptFailedImageLoadDialog();
 		testContext.getIrisPageManager().irisAssignmentOverviewPage.acceptLinkSuggestionDialog();
-		testContext.getIrisPageManager().irisAssignmentOverviewPage.setFileStatus(IRISConstants.ACTIVATE);
+//		testContext.getIrisPageManager().irisAssignmentOverviewPage.setFileStatus(IRISConstants.ACTIVATE);
 		testContext.getIrisPageManager().irisAssignmentOverviewPage.switchTab(IRISConstants.OVERVIEW);
 		IRIS_AssignmentData assignmentOverviewData = FileReaderManager.getInstance().getIrisJsonReader()
 				.getAssignmentDataByTabName(IRISConstants.OVERVIEW);

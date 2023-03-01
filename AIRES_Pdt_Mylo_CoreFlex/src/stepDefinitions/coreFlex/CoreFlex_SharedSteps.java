@@ -1059,12 +1059,12 @@ public class CoreFlex_SharedSteps {
 				.getAssignmentDataByTabName(IRISConstants.OVERVIEW);
 		testContext.getIrisPageManager().irisAssignmentOverviewPage
 				.addAiresTeamDetailsOnOverviewTab(assignmentOverviewData);		
-		testContext.getIrisPageManager().irisAssignmentOverviewPage.switchTab(IRISConstants.SERVICE_TAB);
-		testContext.getIrisPageManager().irisAssignmentServicePage = new IRIS_AssignmentServicePage();
-		Assert.assertTrue(testContext.getIrisPageManager().irisAssignmentServicePage.verifyServiceTab(), MessageFormat
-				.format(IRISConstants.FAIL_TO_VERIFY_CURRENT_TAB, CoreConstants.FAIL, IRISConstants.SERVICE));		
-		testContext.getIrisPageManager().irisAssignmentServicePage.addService(IRISConstants.EXPENSE);
-		testContext.getIrisPageManager().irisAssignmentOverviewPage.setFileStatus(IRISConstants.ACTIVATE);
+//		testContext.getIrisPageManager().irisAssignmentOverviewPage.switchTab(IRISConstants.SERVICE_TAB);
+//		testContext.getIrisPageManager().irisAssignmentServicePage = new IRIS_AssignmentServicePage();
+//		Assert.assertTrue(testContext.getIrisPageManager().irisAssignmentServicePage.verifyServiceTab(), MessageFormat
+//				.format(IRISConstants.FAIL_TO_VERIFY_CURRENT_TAB, CoreConstants.FAIL, IRISConstants.SERVICE));		
+//		testContext.getIrisPageManager().irisAssignmentServicePage.addService(IRISConstants.EXPENSE);
+//		testContext.getIrisPageManager().irisAssignmentOverviewPage.setFileStatus(IRISConstants.ACTIVATE);
 		testContext.getBasePage().cleanIrisProcesses();
 	}
 

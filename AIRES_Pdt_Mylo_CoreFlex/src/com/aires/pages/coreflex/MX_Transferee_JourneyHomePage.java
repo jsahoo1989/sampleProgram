@@ -590,7 +590,7 @@ public class MX_Transferee_JourneyHomePage extends Base {
 		boolean isSubmittedSpentPointsValid = false;
 		double spentPointsAfterBenefitSubmission = 0;
 		try {
-//			CoreFunctions.waitHandler(2);
+			CoreFunctions.waitHandler(2);
 			CoreFunctions.explicitWaitTillElementBecomesClickable(driver, _textInitialSpentAndTotalPoints,
 					MobilityXConstants.TRANSFEREE_JOURNEY_POINTS_LINK);
 			String spentPointsAfterBenefitSubmissionWithText[] = CoreFunctions

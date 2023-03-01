@@ -148,7 +148,7 @@ public class BasePage {
 	}
 
 	public void cleanIrisProcesses() throws Exception {
-//		killExistingBrowsers();
+		killExistingBrowsers();
 		closeIRISApplication();
 	}
 

@@ -659,6 +659,7 @@ public class TransfereeSubmissions_DetailsPage extends Base {
 
 	public boolean verifyBenefitDetailsOnRequestsDialog(String action) {
 		try {
+			deleteRequestTotalPoints = 0.0;
 			return verifyBenefitDetails(action) && verifyCashoutDetails(COREFLEXConstants.TRANSFEREE);
 		} catch (Exception e) {
 			Reporter.addStepLog(MessageFormat.format(
@@ -670,6 +671,7 @@ public class TransfereeSubmissions_DetailsPage extends Base {
 
 	public boolean verifyBenefitDetailsOnRequestsDialogClient(String action) {
 		try {
+			deleteRequestTotalPoints = 0.0;
 			return verifyBenefitDetails(action) && verifyCashoutDetails(COREFLEXConstants.CLIENT);
 		} catch (Exception e) {
 			Reporter.addStepLog(MessageFormat.format(

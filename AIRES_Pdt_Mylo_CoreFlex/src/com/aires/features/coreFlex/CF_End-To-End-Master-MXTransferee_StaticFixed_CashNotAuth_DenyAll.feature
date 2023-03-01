@@ -53,7 +53,7 @@ Feature: Validate MXTransferee End-To-End Flow for Transferee-CashoutNotAuthoriz
       | Effective from booking date                             |
     When he clicks on "Approve" button to acknowledge 'Approve this Policy' dialog
     Then Policy Status and Version should be displayed as "Active" and "V2" respectively on "View/Edit Policy Forms" page
-    And Policy Status of Version "V1" policy should be displayed as "Legacy" on "View/Edit Policy Forms" page
+    And Policy Status of Version "V1" policy should be displayed as "Inactive" on "View/Edit Policy Forms" page
 
   @OnPoint_Regression @CF_End-To-End_MasterScript @CF_Master_Transferee_CashNotAuthDeny @CF_Master_CashNotAuthDeny_CloningToSameClientPolicy
   Scenario Outline: CoreFlex - Validating Cloned Policy contents for same Client reference selection and Policy with Submit/Active/Legacy/Inactive status
@@ -68,7 +68,7 @@ Feature: Validate MXTransferee End-To-End Flow for Transferee-CashoutNotAuthoriz
 
     Examples: 
       | PolicyStatus |
-      | Legacy       |
+      | Inactive     |
 
   @OnPoint_Regression @CF_End-To-End_MasterScript @CF_Master_Transferee_CashNotAuthDeny @CF_Master_CashNotAuthDeny_MXTransfereeFlow
   Scenario: MXTransferee - Submitting Flex benefits available in configured policy and Validating Available_Used Benefits Points Post Delete Operation

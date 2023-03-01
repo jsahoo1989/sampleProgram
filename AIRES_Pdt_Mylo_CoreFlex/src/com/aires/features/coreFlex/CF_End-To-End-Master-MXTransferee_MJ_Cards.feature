@@ -1,6 +1,6 @@
 Feature: Validate Transferee Mobility Journey Cards & Aires Managed Benefits - Submitted, StartingSoon, InProgress, Complete & Canceled Status
 
-  @OnPoint_Regression @CF_OnPoint_Feature @CF_Master_Transferee_Cards @CF_Master_Transferee_Cards_PolicySetup
+  @OnPoint_Regression @CF_End-To-End_MasterScript_LRS @CF_Master_Transferee_Cards @CF_Master_Transferee_Cards_PolicySetup
   Scenario: CoreFlex - Validating policy status is updated to 'Active' on completion of Approval WorkFlow for MJ Cards MasterScript Policy Setup
     Given he has setup a new OnPoint Policy with following selection in Blueprint application
       | Person Responsible For Benefit Selection | Flex Setup Type | Cashout Availability   | BenefitType | PolicyRequiredFor |
@@ -13,7 +13,7 @@ Feature: Validate Transferee Mobility Journey Cards & Aires Managed Benefits - S
     When he clicks on "Approve" button to acknowledge 'Approve this Policy' dialog
     Then Policy Status and Version should be displayed as "Active" and "V1" respectively on "View/Edit Policy Forms" page
 
-  @OnPoint_Regression @CF_OnPoint_Feature @CF_Master_Transferee_Cards @CF_Master_MobilityJourneyCards_StatusCheck
+  @OnPoint_Regression @CF_End-To-End_MasterScript_LRS @CF_Master_Transferee_Cards @CF_Master_MobilityJourneyCards_StatusCheck
   Scenario: MXTransferee - Verifying Flex_Core Cards details and (Submitted,StartingSoon,InProgress,Complete) status of the submitted Aires Managed Benefit
     Given he has logged into 'MobilityX' application after creating a new 'Transferee' through IRIS application for policy setup in 'Policy Digitization Tool'
     And he has validated 'Assignment-Policy' details after selecting below option displayed on 'Welcome' dialog
@@ -36,7 +36,7 @@ Feature: Validate Transferee Mobility Journey Cards & Aires Managed Benefits - S
     Then submitted Aires Managed Benefits Status - should be changed to "Complete" on "Mobility Journey Home" page - "Post End Tracing"
     And submitted Aires Managed Benefits Status - should be changed to "Complete" on "My Benefit Bundle" page
 
-  @OnPoint_Regression @CF_OnPoint_Feature @CF_Master_Transferee_CardsIgnore @CF_Master_MobilityJourneyCards_CancelledStatusCheck
+  @OnPoint_Regression @CF_End-To-End_MasterScript_LRS @CF_Master_Transferee_CardsIgnore @CF_Master_MobilityJourneyCards_CancelledStatusCheck
   Scenario: MXTransferee - Verifying MobilityJourney Cards Cancelled status for submitted Flex_Core Cards Aires Managed Benefit
     Given he has logged into 'MobilityX' application after creating a new 'Transferee' through IRIS application for policy setup in 'Policy Digitization Tool'
     And he has validated 'Assignment-Policy' details after selecting below option displayed on 'Welcome' dialog

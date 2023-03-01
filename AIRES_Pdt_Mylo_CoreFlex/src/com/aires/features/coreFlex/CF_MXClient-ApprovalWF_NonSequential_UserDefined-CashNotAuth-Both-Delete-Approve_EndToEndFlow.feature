@@ -1,6 +1,6 @@
 Feature: Validate the MXClient Auth Form NonSequential-ApprovalWF and CoreFlex End-To-End Business Test Flow(BluePrint, MXClient, Transferee Submissions) for Both_MXClient_UserDefined_CashNotAuth_Delete_ApproveAll selection
 
-  @OnPoint_Regression @CF_OnPoint_Feature @CF_MXClient_ApprovalWF_NonSequential_UserDefined_CashNotAuth_Ignore @CF_MXClient_ApprovalWF_NonSequential_UserDefined_CashNotAuth_PS
+  @OnPoint_Regression @CF_End-To-End_MasterScript_LRS @CF_MXClient_ApprovalWF_NonSequential_UserDefined_CashNotAuth_Ignore @CF_MXClient_ApprovalWF_NonSequential_UserDefined_CashNotAuth_PS
   Scenario: CoreFlex - Validating policy status is updated to 'Active' on completion of Approval WorkFlow for Client-NonSequentialWF-UserDefined-CashNotAuth_MasterScript Policy Setup
     Given he has setup a new OnPoint Policy with following selection in Blueprint application
       | Person Responsible For Benefit Selection | Flex Setup Type | Cashout Availability   | BenefitType | PolicyRequiredFor |
@@ -13,7 +13,7 @@ Feature: Validate the MXClient Auth Form NonSequential-ApprovalWF and CoreFlex E
     When he clicks on "Approve" button to acknowledge 'Approve this Policy' dialog
     Then Policy Status and Version should be displayed as "Active" and "V1" respectively on "View/Edit Policy Forms" page
 
-  @OnPoint_Regression @CF_OnPoint_Feature @CF_MXClient_ApprovalWF_NonSequential_UserDefined_CashNotAuth @CF_MXClient_ApprovalWF_NonSequential_UserDefined_CashNotAuth_CF
+  @OnPoint_Regression @CF_End-To-End_MasterScript_LRS @CF_MXClient_ApprovalWF_NonSequential_UserDefined_CashNotAuth @CF_MXClient_ApprovalWF_NonSequential_UserDefined_CashNotAuth_CF
   Scenario: MXClient - Validating Total Points Section & Core/Flex benefits displayed on BenefitSelectionTool page and ApprovalWF Options for Client Initiator BluePrint Policy Setup
     Given he has logged into 'MobilityX' application as a 'Client' user
     And he has clicked on "Create an authorization" after validating Client details on 'Authorization Home Page'
@@ -38,7 +38,7 @@ Feature: Validate the MXClient Auth Form NonSequential-ApprovalWF and CoreFlex E
     And 'Cancel Routing' and 'Resubmit to Aires' buttons should be displayed on right floating menu of 'Authorization Form' page
     And Email notification should be sent to both - First Approver "Test ApproverOne" and Second Approver "Test ApproverTwo" for approval
 
-  @OnPoint_Regression @CF_OnPoint_Feature @CF_MXClient_ApprovalWF_NonSequential_UserDefined_CashNotAuth @CF_MXClient_ApprovalWF_NonSequential_UserDefined_CashNotAuth_AF1
+  @OnPoint_Regression @CF_End-To-End_MasterScript_LRS @CF_MXClient_ApprovalWF_NonSequential_UserDefined_CashNotAuth @CF_MXClient_ApprovalWF_NonSequential_UserDefined_CashNotAuth_AF1
   Scenario: MXClient - Validating Email Contents received in Approver Review Required Email and Approval of Authorization by ApproverTwo
     Given "Test ApproverTwo" has received 'Approver Review Required' email
     And "Test ApproverTwo" has verified 'CoreFlex Assignment' details in the received 'Approver Review Required' email before 'Approving' request
@@ -47,7 +47,7 @@ Feature: Validate the MXClient Auth Form NonSequential-ApprovalWF and CoreFlex E
     When "Test ApproverTwo" clicks on "Approve" button on 'Authorization Form'
     Then 'Auth Form' status should be displayed as "Approved" on "AuthWorkFlowAction" page
 
-  @OnPoint_Regression @CF_OnPoint_Feature @CF_MXClient_ApprovalWF_NonSequential_UserDefined_CashNotAuth @CF_MXClient_ApprovalWF_NonSequential_UserDefined_CashNotAuth_AF2
+  @OnPoint_Regression @CF_End-To-End_MasterScript_LRS @CF_MXClient_ApprovalWF_NonSequential_UserDefined_CashNotAuth @CF_MXClient_ApprovalWF_NonSequential_UserDefined_CashNotAuth_AF2
   Scenario: MXClient - Validating Email Contents received in Approver Review Required Email and Approval of Authorization by ApproverOne
     Given "Test ApproverOne" has received 'Approver Review Required' email
     And "Test ApproverOne" has verified 'CoreFlex Assignment' details in the received 'Approver Review Required' email before 'Approving' request
@@ -57,7 +57,7 @@ Feature: Validate the MXClient Auth Form NonSequential-ApprovalWF and CoreFlex E
     Then 'Auth Form' status should be displayed as "Approved" on "AuthWorkFlowAction" page
 
   #And 'Authorization Form' status should be displayed as 'Submitted' in 'Mobility Submitted' email
-  @OnPoint_Regression @CF_OnPoint_Feature @CF_MXClient_ApprovalWF_NonSequential_UserDefined_CashNotAuth @CF_MXClient_ApprovalWF_NonSequential_UserDefined_CashNotAuth_CF2
+  @OnPoint_Regression @CF_End-To-End_MasterScript_LRS @CF_MXClient_ApprovalWF_NonSequential_UserDefined_CashNotAuth @CF_MXClient_ApprovalWF_NonSequential_UserDefined_CashNotAuth_CF2
   Scenario: MXClient - Verifying Authorization Submission after Deleting Submitted Core/Flex Benefits Status on MXClient Submitted Benefits
     Given he has logged into 'MobilityX' application as a 'Client' user
     And he has clicked on "View all initiations" link on 'Authorization Home Page' to navigate to 'View all initiation' page
@@ -79,7 +79,7 @@ Feature: Validate the MXClient Auth Form NonSequential-ApprovalWF and CoreFlex E
     Then 'Auth Submit Success' growl message should be displayed on the navigated 'Advanced Authorization Search' page
     And 'Revised Mobility Initiation' email having submitted_deleted Benefit and Points details should be received
 
-  @OnPoint_Regression @CF_OnPoint_Feature @CF_MXClient_ApprovalWF_NonSequential_UserDefined_CashNotAuth @CF_MXClient_ApprovalWF_NonSequential_UserDefined_CashNotAuth_TS
+  @OnPoint_Regression @CF_End-To-End_MasterScript_LRS @CF_MXClient_ApprovalWF_NonSequential_UserDefined_CashNotAuth @CF_MXClient_ApprovalWF_NonSequential_UserDefined_CashNotAuth_TS
   Scenario: TransfereeSubmissions - Verifying UserDefined Points, Benefit Submissions and Delete Request ApproveAll transaction for the request made by the Client
     Given he has logged into 'Transferee Submissions' application as a "MSPEC/PPC" user
     And he has navigated to "Transferee Submissions Dashboard" page having record of Bundle submitted by the Client

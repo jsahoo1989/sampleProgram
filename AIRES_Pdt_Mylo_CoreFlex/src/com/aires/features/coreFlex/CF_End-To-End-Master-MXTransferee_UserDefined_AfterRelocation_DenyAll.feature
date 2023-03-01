@@ -24,7 +24,7 @@ Feature: Validate the OnPoint End-To-End Business Test Flow(BluePrint,MXClient,M
     And he has verified 'FleX Benefits' section not displayed on 'Authorization Form' for "Transferee" - 'Person Responsible' selection in BluePrint CoreFlex Policy
     And he has verified 'Error Growl Message' and 'Required Field Validation' displayed after clicking on "Submit to Aires" button with Blank/No 'Total Points' value
     And he has clicked on 'Submit to Aires' button from right floating menu of 'Authorization Form' after entering valid 'Total Points' value
-    #And he has clicked on "SUBMIT" button on the 'Do you want to submit it without the required approvals?' dialog
+    And he has clicked on "SUBMIT" button on the 'Do you want to submit it without the required approvals?' dialog
     And he has verified 'Auth Submit Success' growl message displayed on the navigated 'MobilityX Dashboard Home' page
     And he has verified 'New Initiation Submitted' email having Transferee details along with assigned CoreFlex Total Points
     And he has clicked on "View all initiations" link on 'Authorization Home Page' to navigate to 'View all initiation' page

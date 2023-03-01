@@ -13,7 +13,7 @@ Feature: Validate Transferee Mobility Journey Cards & Aires Managed Benefits - S
     When he clicks on "Approve" button to acknowledge 'Approve this Policy' dialog
     Then Policy Status and Version should be displayed as "Active" and "V1" respectively on "View/Edit Policy Forms" page
 
-  @OnPoint_Regression @CF_OnPoint_Feature @CF_Master_Transferee_Cards @CF_Master_MobilityJourneyCards_StatusCheck @Test3513
+  @OnPoint_Regression @CF_OnPoint_Feature @CF_Master_Transferee_Cards @CF_Master_MobilityJourneyCards_StatusCheck
   Scenario: MXTransferee - Verifying Flex_Core Cards details and (Submitted,StartingSoon,InProgress,Complete) status of the submitted Aires Managed Benefit
     Given he has logged into 'MobilityX' application after creating a new 'Transferee' through IRIS application for policy setup in 'Policy Digitization Tool'
     And he has validated 'Assignment-Policy' details after selecting below option displayed on 'Welcome' dialog

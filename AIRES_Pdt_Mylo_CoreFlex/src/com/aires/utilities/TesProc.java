@@ -33,7 +33,7 @@ public class TesProc {
 				byte[] windowText = new byte[512];
 				user32.GetWindowTextA(hWnd, windowText, 512);
 				String wText = Native.toString(windowText).trim();
-				if (!wText.isEmpty() && wText.contains("IRIS Login")) {				
+				if (!wText.isEmpty() && wText.contains("IRIS Loin")) {				
 					OS.SetForegroundWindow(hWnd.hashCode());
 				}
 				return true;				

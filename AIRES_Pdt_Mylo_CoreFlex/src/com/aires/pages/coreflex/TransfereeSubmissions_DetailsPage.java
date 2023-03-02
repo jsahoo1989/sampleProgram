@@ -506,7 +506,7 @@ public class TransfereeSubmissions_DetailsPage extends Base {
 						COREFLEXConstants.SUBMITTED_BENEFIT_POINTS);
 				CoreFunctions.highlightObject(driver, _submittedBenefitPointsList.get(indexCashout));
 				CoreFunctions.verifyText(driver, _submittedBenefitRequestedSentDateList.get(indexCashout),
-						CoreFunctions.getCurrentDateAsGivenFormat("dd-MMM-yyyy"), COREFLEXConstants.SUBMITTED_DATE);
+						CoreFunctions.getPropertyFromConfig("CF_Benefit_SubmittedDate"), COREFLEXConstants.SUBMITTED_DATE);
 				verifyCashoutStatus(indexCashout);
 				if (submittedBy.equals(MobilityXConstants.CLIENT)) {
 					isClientSubmissionIconVerified = (CoreFunctions.verifyElementPresentOnPage(CoreFunctions
@@ -562,7 +562,7 @@ public class TransfereeSubmissions_DetailsPage extends Base {
 						String.valueOf(benefit.getNumberOfBenefitSelected()),
 						COREFLEXConstants.SUBMITTED_BENEFIT_SELECTED_QUANTITY);
 				CoreFunctions.verifyText(driver, _submittedBenefitRequestedSentDateList.get(index),
-						CoreFunctions.getCurrentDateAsGivenFormat("dd-MMM-yyyy"), COREFLEXConstants.SUBMITTED_DATE);
+						CoreFunctions.getPropertyFromConfig("CF_Benefit_SubmittedDate"), COREFLEXConstants.SUBMITTED_DATE);
 
 				if (submittedBy.equals(MobilityXConstants.CLIENT)) {
 					isClientSubmissionIconVerified = (CoreFunctions.verifyElementPresentOnPage(
@@ -737,7 +737,7 @@ public class TransfereeSubmissions_DetailsPage extends Base {
 				CoreFunctions.verifyText(driver, _requestDialogStatusList.get(indexCashout),
 						COREFLEXConstants.DELETE_REQUEST_PENDING, COREFLEXConstants.DELETE_REQUEST_PENDING_STATUS);
 				CoreFunctions.verifyText(driver, _requestDialogRequestedDateList.get(indexCashout),
-						CoreFunctions.getCurrentDateAsGivenFormat("dd-MMM-yyyy"), COREFLEXConstants.REQUEST_DATE);
+						CoreFunctions.getPropertyFromConfig("CF_Benefit_SubmittedDate"), COREFLEXConstants.REQUEST_DATE);
 				return true;
 			}
 		}
@@ -769,7 +769,7 @@ public class TransfereeSubmissions_DetailsPage extends Base {
 							COREFLEXConstants.DELETE_REQUEST_PENDING,
 							COREFLEXConstants.REQUEST_DIALOG_DELETE_REQUEST_PENDING_STATUS);
 					CoreFunctions.verifyText(driver, _requestDialogRequestedDateList.get(index),
-							CoreFunctions.getCurrentDateAsGivenFormat("dd-MMM-yyyy"), COREFLEXConstants.REQUEST_DATE);
+							CoreFunctions.getPropertyFromConfig("CF_Benefit_SubmittedDate"), COREFLEXConstants.REQUEST_DATE);
 					CoreFunctions.verifyText(driver, _requestDialogQuantityList.get(index),
 							String.valueOf(benefit.getNumberOfBenefitSelected()),
 							COREFLEXConstants.REQUEST_DIALOG_BENEFIT_SELECTED_QUANTITY);
@@ -1075,18 +1075,9 @@ public class TransfereeSubmissions_DetailsPage extends Base {
 		if (policyType.equals(COREFLEXConstants.FLEX) || policyType.equals(COREFLEXConstants.BOTH)) {
 			for (FlexBenefit benefit : flexBenefits) {
 				for (Benefit ben : benefit.getBenefits()) {
-					if ((policyRequiredFor.equals(COREFLEXConstants.ALL_BENEFITS))
-							&& (ben.getPolicyCreationGroup().contains(policyRequiredFor))) {
+					if (ben.getPolicyCreationGroup().contains(policyRequiredFor)) {
 						benefitNameList.add(ben);
-					} else if ((policyRequiredFor.equals(COREFLEXConstants.AIRES_MANAGED_BENEFITS_CARDS))
-							&& (ben.getAiresManagedService().equals("Yes"))) {
-						benefitNameList.add(ben);
-					} else if (((policyRequiredFor.equals(COREFLEXConstants.CLONING))
-							|| (policyRequiredFor.equals(COREFLEXConstants.VERSIONING))
-							|| ((policyRequiredFor.equals(COREFLEXConstants.CLIENT))))
-							&& (ben.getPolicyCreationGroup().contains(policyRequiredFor))) {
-						benefitNameList.add(ben);
-					}
+					} 
 				}
 			}
 		}

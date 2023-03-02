@@ -7,7 +7,7 @@
 			"benefitDesc": "Automated Core Duplicate Housing Benefit Long Description. Setting up a CoreFlex Policy to be consumed by Client/Transferee to select Desired Benefits and track/Manage Points.",
 			"subBenefits": "Duplicate Housing",
 			"airesManagedService": "No",
-			"policyCreationGroup": "All Benefits,Cloning,Client"
+			"policyCreationGroup": "All Benefits,Cloning,Client,SmokeTest"
 		},
 		{
 			"benefitType": "Lump Sum",
@@ -35,7 +35,7 @@
 			"subBenefits": "Language Training Employee;Language Training Family",
 			"airesManagedService": "Yes",
 			"noOfMilestones": 2,
-			"policyCreationGroup": "All Benefits,Cloning,Client,Aires Managed Benefits Cards"
+			"policyCreationGroup": "All Benefits,Cloning,Client,Aires Managed Benefits Cards,SmokeTest"
 		},
 		{
 			"benefitType": "Temporary Living",
@@ -279,7 +279,7 @@
 					"comment": "Test Flex Duplicate Housing Benefit Comment",
 					"payments": "Allowance/Cashout",
 					"multipleBenefitSubmission": false,
-					"policyCreationGroup": "All Benefits,Cloning,Client",
+					"policyCreationGroup": "All Benefits,Cloning,Client,SmokeTest",
 					"selectBenefitOnPBCPage": false,
 					"deselectBenefitOnPBCPage": false,
 					"benefitResubmissionOnBST":true
@@ -301,7 +301,7 @@
 					"comment": "Test Other Housing Benefit Comment",
 					"payments": "Expense Reimbursement",
 					"multipleBenefitSubmission": false,
-					"policyCreationGroup": "All Benefits,Cloning,Client",
+					"policyCreationGroup": "All Benefits,Cloning,Client,SmokeTest",
 					"selectBenefitOnPBCPage": false,
 					"deselectBenefitOnPBCPage": false,
 					"benefitResubmissionOnBST":false
@@ -964,7 +964,7 @@
 					"endTracingPrompt": "End Date of Language Training",
 					"postEndTracingCardStatus": "Training complete",
 					"multipleBenefitSubmission": false,
-					"policyCreationGroup": "All Benefits,Cloning,Client,Aires Managed Benefits Cards",
+					"policyCreationGroup": "All Benefits,Cloning,Client,Aires Managed Benefits Cards,SmokeTest",
 					"selectBenefitOnPBCPage": false,
 					"deselectBenefitOnPBCPage": false,
 					"subbenefitToBeDeselected": "Language Training Family",

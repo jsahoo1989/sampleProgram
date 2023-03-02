@@ -419,31 +419,16 @@ public class CoreFlex_PolicyBenefitsCategoriesPage extends Base {
 		boolean isBenefitSuccessfullySelectedAndFilled = false;
 		try {
 			if (benefitType.equals(COREFLEXConstants.FLEX) || benefitType.equals(COREFLEXConstants.BOTH)) {
-				switch (policyRequiredFor) {
-				case COREFLEXConstants.CLONING:
-				case COREFLEXConstants.VERSIONING:
-				case COREFLEXConstants.CLIENT:
-					isBenefitSuccessfullySelectedAndFilled = fillFlexBenefitDetailsForCloning(benefitType,
-							policyRequiredFor);
-					break;
-				case COREFLEXConstants.AIRES_MANAGED_BENEFITS_CARDS:
-				case COREFLEXConstants.ALL_BENEFITS:
-				case COREFLEXConstants.END_TO_END:
-					isBenefitSuccessfullySelectedAndFilled = fillAllFlexBenefitDetails(benefitType, policyRequiredFor);
-					break;
-				case COREFLEXConstants.SIGNIFICANT_CHANGE:
+				if (policyRequiredFor.equalsIgnoreCase(COREFLEXConstants.SIGNIFICANT_CHANGE)) {
 					isBenefitSuccessfullySelectedAndFilled = fillFlexBenefitDetailsForSignificantChange(benefitType,
 							policyRequiredFor);
-					break;
-
-				default:
-					Assert.fail(COREFLEXConstants.BLUEPRINT_POLICY_REQUIRED_FOR_OPTION_NOT_PRESENT_IN_THE_LIST);
+				} else {
+					isBenefitSuccessfullySelectedAndFilled = fillFlexBenefitDetailsBasedOnRequirement(benefitType,
+							policyRequiredFor);
 				}
-
 			} else if (benefitType.equals(COREFLEXConstants.CORE)) {
 				isBenefitSuccessfullySelectedAndFilled = fillAiresManagedCardCoreBenefitDetails(benefitType);
 			}
-
 		} catch (Exception e) {
 			Reporter.addStepLog(
 					MessageFormat.format(COREFLEXConstants.EXCEPTION_OCCURED_WHILE_SELECTING_AND_FILLING_ADDED_BENEFITS,
@@ -492,7 +477,7 @@ public class CoreFlex_PolicyBenefitsCategoriesPage extends Base {
 		return isFlexBenefitSuccessfullySelectedAndFilled;
 	}
 
-	private boolean fillFlexBenefitDetailsForCloning(String benefitType, String policyRequiredFor) {
+	private boolean fillFlexBenefitDetailsBasedOnRequirement(String benefitType, String policyRequiredFor) {
 		boolean isFlexBenefitSuccessfullySelectedAndFilled = false;
 		try {
 			for (Benefit benefit : getBenefits(benefitType, policyRequiredFor)) {
@@ -536,58 +521,6 @@ public class CoreFlex_PolicyBenefitsCategoriesPage extends Base {
 		return isFlexBenefitSuccessfullySelectedAndFilled;
 	}
 
-	private boolean fillAllFlexBenefitDetails(String policyType, String policyRequiredFor) {
-		boolean isFlexBenefitSuccessfullySelectedAndFilled = false;
-		try {
-			for (Benefit benefit : getBenefits(policyType, policyRequiredFor)) {
-				clickLeftNavigationMenuOfPage(benefit.getBenefitType());
-				if (benefit.getBenefitType().equals(COREFLEXConstants.OTHER_HOUSING_BENEFIT)) {
-					((CoreFlex_OtherHousing_BenefitsPage) pageObjectManager_CoreFlex.getPageObjects()
-							.get(benefit.getBenefitType())).verifyFieldTextUpdates();
-					((CoreFlex_OtherHousing_BenefitsPage) pageObjectManager_CoreFlex.getPageObjects()
-							.get(benefit.getBenefitType())).selectAndFillBenefitsDetails(
-									benefit.getBenefitDisplayName(), benefit.getPoints(),
-									benefit.getMultipleBenefitSelection(), benefit.getBenefitAmount(),
-									benefit.getBenefitDesc(), benefit.getComment(), benefit.getGrossUp(),
-									benefit.getReimbursedBy(), benefit.getPayments());
-					isFlexBenefitSuccessfullySelectedAndFilled = true;
-				} else if (benefit.getAiresManagedService().equals(COREFLEXConstants.YES)) {
-					pageObjectManager_CoreFlex.getPageObjects().get(benefit.getBenefitType())
-							.selectAndFillBenefitsAndSubBenefitDetails(policyType, benefit.getSubBenefits(),
-									benefit.getMultipleBenefitSelection(), benefit.getPoints(),
-									benefit.getBenefitDisplayName(), benefit.getBenefitAmount(),
-									benefit.getBenefitDesc(), benefit.getAiresManagedService());
-					isFlexBenefitSuccessfullySelectedAndFilled = true;
-				} else if (benefit.getAiresManagedService().equals(COREFLEXConstants.NO)) {
-					pageObjectManager_CoreFlex.getPageObjects().get(benefit.getBenefitType())
-							.selectAndFillBenefitsAndSubBenefitDetails(policyType, benefit.getSubBenefits(),
-									benefit.getMultipleBenefitSelection(), benefit.getPoints(),
-									benefit.getBenefitDisplayName(), benefit.getBenefitAmount(),
-									benefit.getBenefitDesc(), benefit.getPayments());
-					isFlexBenefitSuccessfullySelectedAndFilled = true;
-				}
-				if (isFlexBenefitSuccessfullySelectedAndFilled) {
-					Reporter.addStepLog(
-							MessageFormat.format(COREFLEXConstants.SUCCESSFULLY_SELECTED_AND_FILLED_ADDED_BENEFIT,
-									CoreConstants.PASS, benefit.getBenefitType()));
-					continue;
-				} else {
-					Reporter.addStepLog(MessageFormat.format(COREFLEXConstants.FAILED_TO_SELECT_AND_FILL_ADDED_BENEFIT,
-							CoreConstants.FAIL, benefit.getBenefitType()));
-					return false;
-				}
-			}
-		} catch (Exception e) {
-			Reporter.addStepLog(MessageFormat.format(
-					COREFLEXConstants.EXCEPTION_OCCURED_WHILE_SELECTING_AND_FILLING_ADDED_FLEX_BENEFITS,
-					CoreConstants.FAIL, e.getMessage()));
-		}
-		if (isFlexBenefitSuccessfullySelectedAndFilled) {
-			Reporter.addStepLog(MessageFormat.format(
-					COREFLEXConstants.SUCCESSFULLY_SELECTED_AND_FILLED_ADDED_FLEX_BENEFITS, CoreConstants.PASS));
-		}
-		return isFlexBenefitSuccessfullySelectedAndFilled;
-	}
 
 	public boolean verifyPolicyCategoriesBenefitsAndOrder() {
 		boolean isPolicyCategoriesBenefitsAndOrderVerified = false;
@@ -1117,8 +1050,8 @@ public class CoreFlex_PolicyBenefitsCategoriesPage extends Base {
 
 	public boolean verifyInformationDialog() {
 		if (CoreFunctions.isElementExist(driver, _dialogInformation, 5)) {
-			CoreFunctions.verifyText(CoreFunctions.getElementText(driver, _dialogContent), COREFLEXConstants.INFORMATION_DIALOG_CONTENT_TEXT,
-					COREFLEXConstants.INFORMATION_DIALOG_CONTENT);
+			CoreFunctions.verifyText(CoreFunctions.getElementText(driver, _dialogContent),
+					COREFLEXConstants.INFORMATION_DIALOG_CONTENT_TEXT, COREFLEXConstants.INFORMATION_DIALOG_CONTENT);
 			CoreFunctions.clickElement(driver, _dialogContinueButton);
 			Reporter.addStepLog(MessageFormat.format(
 					COREFLEXConstants.SUCCESSFULLY_VERIFIED_INFORMATION_DIALOG_ON_POLICY_BENEFIT_CATEGORIES_PAGE,

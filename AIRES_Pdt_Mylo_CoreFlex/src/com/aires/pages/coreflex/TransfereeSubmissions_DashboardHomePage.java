@@ -292,7 +292,7 @@ public class TransfereeSubmissions_DashboardHomePage extends Base {
 					COREFLEXConstants.TOTAL_POINTS);
 			CoreFunctions.highlightObject(driver, _totalPointsList.get(indexTransferee));
 			CoreFunctions.verifyText(driver, _submittedDateList.get(indexTransferee),
-					CoreFunctions.getCurrentDateAsGivenFormat("dd-MMM-yyyy"), COREFLEXConstants.SUBMITTED_DATE);
+					CoreFunctions.getPropertyFromConfig("CF_Benefit_SubmittedDate"), COREFLEXConstants.SUBMITTED_DATE);
 			return true;
 		} catch (Exception e) {
 			Reporter.addStepLog(MessageFormat.format(

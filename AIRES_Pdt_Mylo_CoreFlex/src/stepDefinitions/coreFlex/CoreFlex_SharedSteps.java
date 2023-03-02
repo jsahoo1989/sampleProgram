@@ -576,7 +576,7 @@ public class CoreFlex_SharedSteps {
 							.relonetCredentialsSent(IRISConstants.SUCCESS_MSG, IRISConstants.MESSAGE_DIALOG),
 					MessageFormat.format(IRISConstants.FAILED_TO_VERIFY_MESSAGE, CoreConstants.FAIL,
 							IRISConstants.SUCCESS_MSG));
-			testContext.getIrisPageManager().irisAssignmentOverviewPage.setFileStatus(IRISConstants.ACTIVATE);
+//			testContext.getIrisPageManager().irisAssignmentOverviewPage.setFileStatus(IRISConstants.ACTIVATE);
 			testContext.getBasePage().cleanIrisProcesses();
 		} catch (Exception e) {
 			Reporter.addStepLog(MessageFormat.format(

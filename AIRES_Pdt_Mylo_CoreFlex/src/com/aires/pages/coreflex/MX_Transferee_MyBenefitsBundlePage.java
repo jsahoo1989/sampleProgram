@@ -294,6 +294,7 @@ public class MX_Transferee_MyBenefitsBundlePage extends Base {
 		CoreFunctions.writeToPropertiesFile("CF_Transferee_AvailablePoints", String.valueOf(
 				Double.parseDouble(CoreFunctions.getPropertyFromConfig("CF_Transferee_TotalAvailablePoints")) - Double
 						.parseDouble(CoreFunctions.getPropertyFromConfig("CF_Transferee_TotalSelectedPoints"))));
+		CoreFunctions.writeToPropertiesFile("CF_Benefit_SubmittedDate", CoreFunctions.getCurrentDateAsGivenFormat("dd-MMM-yyyy"));
 	}
 
 	public boolean verifySelectedBenefitDetails() {
@@ -667,7 +668,7 @@ public class MX_Transferee_MyBenefitsBundlePage extends Base {
 					COREFLEXConstants.SUBMITTED_BENEFIT_SELECTED_QUANTITY);
 			CoreFunctions.verifyText(
 					CoreFunctions.getItemsFromListByIndex(driver, _textSubmittedBenefitDate, indexBenefit, true),
-					CoreFunctions.getCurrentDateAsGivenFormat("dd-MMM-yyyy"), COREFLEXConstants.SUBMITTED_DATE);
+					CoreFunctions.getPropertyFromConfig("CF_Benefit_SubmittedDate"), COREFLEXConstants.SUBMITTED_DATE);
 			CoreFunctions.verifyValue(
 					(Double.parseDouble((CoreFunctions
 							.getItemsFromListByIndex(driver, _textSubmittedBenefitsPointsList, indexBenefit, true)
@@ -942,7 +943,7 @@ public class MX_Transferee_MyBenefitsBundlePage extends Base {
 					MobilityXConstants.SUBMITTED_BENEFIT_POINTS);
 			CoreFunctions.verifyText(
 					CoreFunctions.getItemsFromListByIndex(driver, _textSubmittedBenefitDate, indexBenefit, true),
-					CoreFunctions.getCurrentDateAsGivenFormat("dd-MMM-yyyy"),
+					CoreFunctions.getPropertyFromConfig("CF_Benefit_SubmittedDate"),
 					MobilityXConstants.SUBMITTED_BENEFIT_DATE);
 			CoreFunctions.verifyText(CoreFunctions.getItemsFromListByIndex(driver, _buttonDeleteSubmittedBenefitList,
 					indexBenefit, true), MobilityXConstants.UNDO, MobilityXConstants.UNDO_BUTTON);
@@ -1287,7 +1288,7 @@ public class MX_Transferee_MyBenefitsBundlePage extends Base {
 					indexCashout, true), MobilityXConstants.UNDO, MobilityXConstants.UNDO);
 			CoreFunctions.verifyText(
 					CoreFunctions.getItemsFromListByIndex(driver, _textSubmittedBenefitDate, indexCashout, true),
-					CoreFunctions.getCurrentDateAsGivenFormat("dd-MMM-yyyy"), MobilityXConstants.SUBMITTED_DATE);
+					CoreFunctions.getPropertyFromConfig("CF_Benefit_SubmittedDate"), MobilityXConstants.SUBMITTED_DATE);
 			CoreFunctions.verifyTextContains(
 					CoreFunctions.getItemsFromListByIndex(driver, _textSubmittedAllowanceAmountList, indexCashout,
 							true),
@@ -1645,7 +1646,7 @@ public class MX_Transferee_MyBenefitsBundlePage extends Base {
 				&& (CoreFunctions.getItemsFromListByIndex(driver, _textSubmittedBenefitQuantityList, indexBenefit, true)
 						.equals(String.valueOf(benefit.getNumberOfBenefitSelected())))
 				&& (CoreFunctions.getItemsFromListByIndex(driver, _textSubmittedBenefitDate, indexBenefit, true)
-						.equals(CoreFunctions.getCurrentDateAsGivenFormat("dd-MMM-yyyy")))
+						.equals(CoreFunctions.getPropertyFromConfig("CF_Benefit_SubmittedDate")))
 				&& ((Double.parseDouble((CoreFunctions
 						.getItemsFromListByIndex(driver, _textSubmittedBenefitsPointsList, indexBenefit, true)
 						.replace("pts", "").trim()))) == ((Double.parseDouble(benefit.getPoints()))
@@ -2194,7 +2195,7 @@ public class MX_Transferee_MyBenefitsBundlePage extends Base {
 								.replace("pts", "").trim()))) == (Double.parseDouble(
 										CoreFunctions.getPropertyFromConfig("CF_Transferee_SelectedCashOutPoints"))))
 						&& (CoreFunctions.getItemsFromListByIndex(driver, _textSubmittedBenefitDate, indexCashout, true)
-								.equals(CoreFunctions.getCurrentDateAsGivenFormat("dd-MMM-yyyy")))
+								.equals(CoreFunctions.getPropertyFromConfig("CF_Benefit_SubmittedDate")))
 						&& CoreFunctions.getItemsFromListByIndex(driver, _benefitStatus, indexCashout, true)
 								.equals(MobilityXConstants.VIEW_PAYMENTS)
 						&& (CoreFunctions

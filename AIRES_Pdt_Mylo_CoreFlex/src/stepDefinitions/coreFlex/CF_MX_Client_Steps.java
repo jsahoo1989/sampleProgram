@@ -4,6 +4,7 @@ import java.text.MessageFormat;
 import java.util.List;
 import java.util.Map;
 
+import org.apache.logging.log4j.core.Core;
 import org.testng.Assert;
 
 import com.aires.businessrules.BusinessFunctions;
@@ -436,6 +437,8 @@ public class CF_MX_Client_Steps {
 						- Double.parseDouble(CoreFunctions.getPropertyFromConfig("CF_Client_TotalSelectedPoints"))));
 		CoreFunctions.writeToPropertiesFile("CF_Transferee_AvailablePoints",
 				CoreFunctions.getPropertyFromConfig("CF_Client_AvailablePoints"));
+		CoreFunctions.writeToPropertiesFile("CF_Benefit_SubmittedDate",
+				CoreFunctions.getCurrentDateAsGivenFormat("dd-MMM-yyyy"));
 		Assert.assertTrue(mxClientAuthorizationHomePage.verifyPageNavigation(), MessageFormat
 				.format(MobilityXConstants.FAILED_TO_VERIFY_USER_NAVIGATION_TO_MXCLIENT_HOME_PAGE, CoreConstants.FAIL));
 	}
@@ -449,6 +452,8 @@ public class CF_MX_Client_Steps {
 		CoreFunctions.writeToPropertiesFile("CF_Transferee_AvailablePoints", String
 				.valueOf(Double.parseDouble(CoreFunctions.getPropertyFromConfig("CF_Transferee_TotalAvailablePoints"))
 						- Double.parseDouble(CoreFunctions.getPropertyFromConfig("CF_Client_TotalSelectedPoints"))));
+		CoreFunctions.writeToPropertiesFile("CF_Benefit_SubmittedDate",
+				CoreFunctions.getCurrentDateAsGivenFormat("dd-MMM-yyyy"));
 		Assert.assertTrue(mxClientAuthorizationHomePage.verifyPageNavigation(), MessageFormat
 				.format(MobilityXConstants.FAILED_TO_VERIFY_USER_NAVIGATION_TO_MXCLIENT_HOME_PAGE, CoreConstants.FAIL));
 	}
@@ -1808,7 +1813,7 @@ public class CF_MX_Client_Steps {
 				mxClientAuthorizationHomePage.verifyFlexBenefitsSectionPostAuthFormSubmission(
 						CoreFunctions.getPropertyFromConfig("CoreFlex_Policy_PersonResponsible")),
 				MessageFormat.format(MobilityXConstants.FAILED_TO_VERIFY_FLEX_BENEFITS_SECTION_ON_AUTHORIZATION_FORM,
-						CoreConstants.FAIL));		
+						CoreConstants.FAIL));
 	}
 
 	@When("^he \"([^\"]*)\" - 'What would you like to do with the changes to the submitted authorization\\?' confirmation dialog displayed on 'Authorization Form' page$")

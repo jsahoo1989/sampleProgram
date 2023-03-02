@@ -1572,6 +1572,7 @@ public class BusinessFunctions {
 		CoreFunctions.writeToPropertiesFile("application", CoreConstants.APP_COREFLEX);
 		CoreFunctions.writeToPropertiesFile("CF_CashoutSubmitted_Flag", "false");
 		CoreFunctions.writeToPropertiesFile("TransfereeActivity_Performed", "false");
+		CoreFunctions.writeToPropertiesFile("CF_Benefit_SubmittedDate", "");
 	}
 
 }

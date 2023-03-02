@@ -843,11 +843,11 @@ public class MYLOConstants {
 	
 	//ChargeCode
 		public static final String CHARGE_CODES_HEADER = "Charge Codes";
-		public static final String DIRECT_TAB = "Direct";
-		public static final String INDIRECT_TAB = "InDirect";
+		public static final String DIRECT_TAB = "Direct Tab";
+		public static final String INDIRECT_TAB = "InDirect Tab";
 		public static final String VIEW_CHARGE_CODE_HISTORY = "View Charge Code History";
 		public static final String CHARGE_CODES_POPUP = "Charge Codes Popup";
-		public static final String CHARGE_CODES = null;
+		public static final String CHARGE_CODE_BUTTON = "charge Code Button";
 		public static final String ENTITY_CODE = "Entity Code";
 		public static final String COST_CENTER = "Cost Center";
 		public static final String START_DATE = "Start Date";
@@ -867,4 +867,9 @@ public class MYLOConstants {
 		public static final String PAST_DATE =  "Past Date";
 		public static final String COLOR = "color";
 		public static final String WBS = "WBS";
+		public static final String CLIENT_80023 = "80023";
+		public static final String CLIENT_78223 = "78223";
+		public static final String FAIL_TO_ENTER_TEXT = "{0}Failed to enter text in '{1}' field on '{2}' section";
+		public static final String CHARGE_CODE_RANDOM_FIELD_LENGTH = "3";
+
 }

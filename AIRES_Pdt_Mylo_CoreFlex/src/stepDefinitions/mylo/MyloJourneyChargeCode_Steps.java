@@ -4,7 +4,6 @@ import java.text.MessageFormat;
 
 import org.testng.Assert;
 
-import com.aires.businessrules.CoreFunctions;
 import com.aires.businessrules.constants.CoreConstants;
 import com.aires.businessrules.constants.MYLOConstants;
 import com.aires.cucumber.TestContext;
@@ -43,14 +42,13 @@ public class MyloJourneyChargeCode_Steps {
 		_softAssert = _testContext.getSoftAssertObject();
 	}
 
-	@Given("^he is on the charge code file after clicking on the Charge Codes Button on the Journey Summary File created with \"([^\"]*)\"$")
+	@Given("^he is on the charge code file after clicking the Charge Codes Button on the Journey Summary File created with \"([^\"]*)\"$")
 	public void he_is_on_the_charge_code_file_after_clicking_on_the_Charge_Codes_Button_on_the_Journey_Summary_File_created_with(
 			String clientName) {
-		String ngClient = "78223";
-		// String ngClient = "80023";
+
 		_myloDashboardPage.clickOptionFromMainMenu(MYLOConstants.JOURNEY);
 		_myloDashboardPage.selectOptionsFromAssignmentMenu(MYLOConstants.NEW_FILE_BUTTON);
-		_myloNewFileSection.createNewFile(ngClient);
+		_myloNewFileSection.createNewFile(clientName);
 		_myloJourneyPageChargeCode.clickChargeCodeButton();
 	}
 
@@ -58,10 +56,13 @@ public class MyloJourneyChargeCode_Steps {
 	public void following_validation_messages_should_be_displayed_with_leaving_below_mandatory_fields_blank_on_both_tabs(
 			DataTable table) {
 		_myloJourneyPageChargeCode.clickFieldsOnChargeCodeSection(MYLOConstants.ADD_CHARGE_CODE_BUTTON);
-		_myloJourneyPageChargeCode.verifyMandatoryFieldsToastMessagesChargeCodeSection(table, _softAssert);
+		_myloJourneyPageChargeCode.verifyMandatoryFieldsToastMessagesChargeCodeSection(table, _softAssert,
+				MYLOConstants.DIRECT_TAB);
 		_myloJourneyPageChargeCode.clickFieldsOnChargeCodeSection(MYLOConstants.DELETE_CHARGE_CODE_BUTTON);
 		_myloJourneyPageChargeCode.clickFieldsOnChargeCodeSection(MYLOConstants.INDIRECT_TAB);
-		_myloJourneyPageChargeCode.verifyMandatoryFieldsToastMessagesChargeCodeSection(table, _softAssert);
+		_myloJourneyPageChargeCode.clickFieldsOnChargeCodeSection(MYLOConstants.ADD_CHARGE_CODE_BUTTON);
+		_myloJourneyPageChargeCode.verifyMandatoryFieldsToastMessagesChargeCodeSection(table, _softAssert,
+				MYLOConstants.INDIRECT_TAB);
 		_softAssert.assertAll();
 	}
 
@@ -92,25 +93,41 @@ public class MyloJourneyChargeCode_Steps {
 	@Then("^Add,Delete,Save options are visible on both \"([^\"]*)\", \"([^\"]*)\" tabs in \"([^\"]*)\" screen$")
 	public void add_Delete_Save_options_are_visible_on_both_tabs_in_screen(String directTabName, String inDirectTabName,
 			String popUpName) {
-		Assert.assertTrue(_myloJourneyPageChargeCode.isElementExistOnPopUp(MYLOConstants.ADD_CHARGE_CODE_BUTTON),
+		_softAssert.assertTrue(
+				_myloJourneyPageChargeCode.isElementEnabledOnPopUp(MYLOConstants.DIRECT_TAB,
+						MYLOConstants.ADD_CHARGE_CODE_BUTTON, MYLOConstants.WITH),
 				MessageFormat.format(CoreConstants.FAIL_TO_VERIFY_ELEMENT_ON_SECTION, CoreConstants.FAIL,
-						MYLOConstants.ADD_CHARGE_CODE_BUTTON));
-		Assert.assertTrue(_myloJourneyPageChargeCode.isElementExistOnPopUp(MYLOConstants.DELETE_CHARGE_CODE_BUTTON),
+						MYLOConstants.ADD_CHARGE_CODE_BUTTON, MYLOConstants.DIRECT_TAB));
+		_myloJourneyPageChargeCode.clickFieldsOnChargeCodeSection(MYLOConstants.ADD_CHARGE_CODE_BUTTON);
+		_softAssert.assertTrue(
+				_myloJourneyPageChargeCode.isElementEnabledOnPopUp(MYLOConstants.DIRECT_TAB,
+						MYLOConstants.DELETE_CHARGE_CODE_BUTTON, MYLOConstants.WITH),
 				MessageFormat.format(CoreConstants.FAIL_TO_VERIFY_ELEMENT_ON_SECTION, CoreConstants.FAIL,
-						MYLOConstants.DELETE_CHARGE_CODE_BUTTON));
-		Assert.assertTrue(_myloJourneyPageChargeCode.isElementExistOnPopUp(MYLOConstants.SAVE_CHARGE_CODE_BUTTON),
+						MYLOConstants.DELETE_CHARGE_CODE_BUTTON, MYLOConstants.DIRECT_TAB));
+		_softAssert.assertTrue(
+				_myloJourneyPageChargeCode.isElementEnabledOnPopUp(MYLOConstants.DIRECT_TAB,
+						MYLOConstants.SAVE_CHARGE_CODE_BUTTON, MYLOConstants.WITH),
 				MessageFormat.format(CoreConstants.FAIL_TO_VERIFY_ELEMENT_ON_SECTION, CoreConstants.FAIL,
-						MYLOConstants.SAVE_CHARGE_CODE_BUTTON));
+						MYLOConstants.SAVE_CHARGE_CODE_BUTTON, MYLOConstants.DIRECT_TAB));
+		_myloJourneyPageChargeCode.clickFieldsOnChargeCodeSection(MYLOConstants.DELETE_CHARGE_CODE_BUTTON);
 		_myloJourneyPageChargeCode.clickFieldsOnChargeCodeSection(MYLOConstants.INDIRECT_TAB);
-		Assert.assertTrue(_myloJourneyPageChargeCode.isElementExistOnPopUp(MYLOConstants.ADD_CHARGE_CODE_BUTTON),
+		_softAssert.assertTrue(
+				_myloJourneyPageChargeCode.isElementEnabledOnPopUp(MYLOConstants.INDIRECT_TAB,
+						MYLOConstants.ADD_CHARGE_CODE_BUTTON, MYLOConstants.WITH),
 				MessageFormat.format(CoreConstants.FAIL_TO_VERIFY_ELEMENT_ON_SECTION, CoreConstants.FAIL,
-						MYLOConstants.ADD_CHARGE_CODE_BUTTON));
-		Assert.assertTrue(_myloJourneyPageChargeCode.isElementExistOnPopUp(MYLOConstants.DELETE_CHARGE_CODE_BUTTON),
+						MYLOConstants.ADD_CHARGE_CODE_BUTTON, MYLOConstants.INDIRECT_TAB));
+		_myloJourneyPageChargeCode.clickFieldsOnChargeCodeSection(MYLOConstants.ADD_CHARGE_CODE_BUTTON);
+		_softAssert.assertTrue(
+				_myloJourneyPageChargeCode.isElementEnabledOnPopUp(MYLOConstants.INDIRECT_TAB,
+						MYLOConstants.DELETE_CHARGE_CODE_BUTTON, MYLOConstants.WITH),
 				MessageFormat.format(CoreConstants.FAIL_TO_VERIFY_ELEMENT_ON_SECTION, CoreConstants.FAIL,
-						MYLOConstants.DELETE_CHARGE_CODE_BUTTON));
-		Assert.assertTrue(_myloJourneyPageChargeCode.isElementExistOnPopUp(MYLOConstants.SAVE_CHARGE_CODE_BUTTON),
+						MYLOConstants.DELETE_CHARGE_CODE_BUTTON, MYLOConstants.INDIRECT_TAB));
+		_softAssert.assertTrue(
+				_myloJourneyPageChargeCode.isElementEnabledOnPopUp(MYLOConstants.INDIRECT_TAB,
+						MYLOConstants.SAVE_CHARGE_CODE_BUTTON, MYLOConstants.WITH),
 				MessageFormat.format(CoreConstants.FAIL_TO_VERIFY_ELEMENT_ON_SECTION, CoreConstants.FAIL,
-						MYLOConstants.SAVE_CHARGE_CODE_BUTTON));
+						MYLOConstants.SAVE_CHARGE_CODE_BUTTON, MYLOConstants.INDIRECT_TAB));
+		_softAssert.assertAll();
 
 	}
 
@@ -120,27 +137,38 @@ public class MyloJourneyChargeCode_Steps {
 		_loginPage.loginWithUser(userProfile);
 		_myloDashboardPage.clickOptionFromMainMenu(MYLOConstants.JOURNEY);
 		_myloDashboardPage.selectOptionsFromAssignmentMenu(MYLOConstants.NEW_FILE_BUTTON);
-		_myloNewFileSection.createNewFile("78223");
+		_myloNewFileSection.createNewFile(MYLOConstants.CLIENT_78223);
 		_myloJourneyPageChargeCode.clickChargeCodeButton();
-		Assert.assertFalse(_myloJourneyPageChargeCode.isElementExistOnPopUp(MYLOConstants.ADD_CHARGE_CODE_BUTTON),
+		_softAssert.assertFalse(
+				_myloJourneyPageChargeCode.isElementEnabledOnPopUp(MYLOConstants.DIRECT_TAB,
+						MYLOConstants.ADD_CHARGE_CODE_BUTTON, MYLOConstants.WITHOUT),
 				MessageFormat.format(CoreConstants.FAIL_TO_VERIFY_ELEMENT_ON_SECTION, CoreConstants.FAIL,
-						MYLOConstants.ADD_CHARGE_CODE_BUTTON));
-		Assert.assertFalse(_myloJourneyPageChargeCode.isElementExistOnPopUp(MYLOConstants.DELETE_CHARGE_CODE_BUTTON),
+						MYLOConstants.ADD_CHARGE_CODE_BUTTON, MYLOConstants.DIRECT_TAB));
+		_softAssert.assertFalse(
+				_myloJourneyPageChargeCode.isElementExistOnPopUp(MYLOConstants.DELETE_CHARGE_CODE_BUTTON),
 				MessageFormat.format(CoreConstants.FAIL_TO_VERIFY_ELEMENT_ON_SECTION, CoreConstants.FAIL,
-						MYLOConstants.DELETE_CHARGE_CODE_BUTTON));
-		Assert.assertFalse(_myloJourneyPageChargeCode.isElementExistOnPopUp(MYLOConstants.SAVE_CHARGE_CODE_BUTTON),
+						MYLOConstants.DELETE_CHARGE_CODE_BUTTON, MYLOConstants.DIRECT_TAB));
+		_softAssert.assertFalse(
+				_myloJourneyPageChargeCode.isElementEnabledOnPopUp(MYLOConstants.DIRECT_TAB,
+						MYLOConstants.SAVE_CHARGE_CODE_BUTTON, MYLOConstants.WITHOUT),
 				MessageFormat.format(CoreConstants.FAIL_TO_VERIFY_ELEMENT_ON_SECTION, CoreConstants.FAIL,
-						MYLOConstants.SAVE_CHARGE_CODE_BUTTON));
+						MYLOConstants.SAVE_CHARGE_CODE_BUTTON, MYLOConstants.DIRECT_TAB));
 		_myloJourneyPageChargeCode.clickFieldsOnChargeCodeSection(MYLOConstants.INDIRECT_TAB);
-		Assert.assertFalse(_myloJourneyPageChargeCode.isElementExistOnPopUp(MYLOConstants.ADD_CHARGE_CODE_BUTTON),
+		_softAssert.assertFalse(
+				_myloJourneyPageChargeCode.isElementEnabledOnPopUp(MYLOConstants.INDIRECT_TAB,
+						MYLOConstants.ADD_CHARGE_CODE_BUTTON, MYLOConstants.WITHOUT),
 				MessageFormat.format(CoreConstants.FAIL_TO_VERIFY_ELEMENT_ON_SECTION, CoreConstants.FAIL,
-						MYLOConstants.ADD_CHARGE_CODE_BUTTON));
-		Assert.assertFalse(_myloJourneyPageChargeCode.isElementExistOnPopUp(MYLOConstants.DELETE_CHARGE_CODE_BUTTON),
+						MYLOConstants.ADD_CHARGE_CODE_BUTTON, MYLOConstants.INDIRECT_TAB));
+		_softAssert.assertFalse(
+				_myloJourneyPageChargeCode.isElementExistOnPopUp(MYLOConstants.DELETE_CHARGE_CODE_BUTTON),
 				MessageFormat.format(CoreConstants.FAIL_TO_VERIFY_ELEMENT_ON_SECTION, CoreConstants.FAIL,
-						MYLOConstants.DELETE_CHARGE_CODE_BUTTON));
-		Assert.assertFalse(_myloJourneyPageChargeCode.isElementExistOnPopUp(MYLOConstants.SAVE_CHARGE_CODE_BUTTON),
+						MYLOConstants.DELETE_CHARGE_CODE_BUTTON, MYLOConstants.INDIRECT_TAB));
+		_softAssert.assertFalse(
+				_myloJourneyPageChargeCode.isElementEnabledOnPopUp(MYLOConstants.INDIRECT_TAB,
+						MYLOConstants.SAVE_CHARGE_CODE_BUTTON, MYLOConstants.WITHOUT),
 				MessageFormat.format(CoreConstants.FAIL_TO_VERIFY_ELEMENT_ON_SECTION, CoreConstants.FAIL,
-						MYLOConstants.SAVE_CHARGE_CODE_BUTTON));
+						MYLOConstants.SAVE_CHARGE_CODE_BUTTON, MYLOConstants.INDIRECT_TAB));
+		_softAssert.assertAll();
 	}
 
 	@Then("^the start date should be displayed in red upon clicking 'Save' button after entering start date greater than the current date on both \"([^\"]*)\", \"([^\"]*)\" tabs$")
@@ -173,14 +201,11 @@ public class MyloJourneyChargeCode_Steps {
 				.format(CoreConstants.FAIL_TO_VERIFY_ELEMENT_ON_SECTION, CoreConstants.FAIL, MYLOConstants.END_DATE));
 	}
 
-	@Then("^error message \"([^\"]*)\" should be displayed after clicking on 'Save' button leaving COST CENTER, WBS empty on both \"([^\"]*)\", \"([^\"]*)\" tabs$")
+	@Then("^error message \"([^\"]*)\" should be displayed after clicking on 'Save' button leaving COST CENTER, WBS empty on  \"([^\"]*)\" tab$")
 	public void error_message_should_be_displayed_after_clicking_on_Save_button_leaving_COST_CENTER_WBS_empty_on_both_tabs(
-			String message, String arg2, String arg3, DataTable table) {
+			String message, String arg2, DataTable table) {
 		_myloJourneyPageChargeCode.clickFieldsOnChargeCodeSection(MYLOConstants.ADD_CHARGE_CODE_BUTTON);
-		_myloJourneyPageChargeCode.verifyMandatoryFieldsToastMessageForClient80023(table, _softAssert, message);
-		_myloJourneyPageChargeCode.clickFieldsOnChargeCodeSection(MYLOConstants.DELETE_CHARGE_CODE_BUTTON);
-		_myloJourneyPageChargeCode.clickFieldsOnChargeCodeSection(MYLOConstants.INDIRECT_TAB);
-		_myloJourneyPageChargeCode.verifyMandatoryFieldsToastMessageForClient80023(table, _softAssert, message);
+		_myloJourneyPageChargeCode.enterDataAndVerifyMandatoryFieldsToastMessage(table, _softAssert, message);
 		_softAssert.assertAll();
 	}
 
@@ -188,17 +213,20 @@ public class MyloJourneyChargeCode_Steps {
 	public void error_message_should_be_displayed_after_clicking_Save_button_on_both_Direct_Indirect_charge_Code_with_only_one_charge_code(
 			String message) {
 		_myloJourneyPageChargeCode.clickFieldsOnChargeCodeSection(MYLOConstants.DELETE_CHARGE_CODE_BUTTON);
-		_myloJourneyPageChargeCode.clickFieldsOnChargeCodeSection(MYLOConstants.DIRECT_TAB);
-		_myloJourneyPageChargeCode.enterRandomDataOnChargeCodeSectionForClient80023();
+		_myloJourneyPageChargeCode.clickFieldsOnChargeCodeSection(MYLOConstants.ADD_CHARGE_CODE_BUTTON);
+		_myloJourneyPageChargeCode.enterMandatoryFieldsForChargeCode(MYLOConstants.CLIENT_80023,
+				MYLOConstants.DIRECT_TAB);
 		_myloJourneyPageChargeCode.clickFieldsOnChargeCodeSection(MYLOConstants.SAVE_CHARGE_CODE_BUTTON);
-		Assert.assertTrue(_myloJourneyPageChargeCode.isCorrectToastMessageDisplayed(message), MessageFormat
-				.format(CoreConstants.FAIL_TO_VERIFY_ELEMENT_ON_SECTION, CoreConstants.FAIL, MYLOConstants.END_DATE));
+		Assert.assertTrue(_myloJourneyPageChargeCode.isCorrectToastMessageDisplayed(message),
+				MessageFormat.format(CoreConstants.FAIL_TO_VERIFY_ELEMENT_ON_SECTION, CoreConstants.FAIL));
 		_myloJourneyPageChargeCode.clickFieldsOnChargeCodeSection(MYLOConstants.DELETE_CHARGE_CODE_BUTTON);
 		_myloJourneyPageChargeCode.clickFieldsOnChargeCodeSection(MYLOConstants.INDIRECT_TAB);
-		_myloJourneyPageChargeCode.enterRandomDataOnChargeCodeSectionForClient80023();
+		_myloJourneyPageChargeCode.clickFieldsOnChargeCodeSection(MYLOConstants.ADD_CHARGE_CODE_BUTTON);
+		_myloJourneyPageChargeCode.enterMandatoryFieldsForChargeCode(MYLOConstants.CLIENT_80023,
+				MYLOConstants.INDIRECT_TAB);
 		_myloJourneyPageChargeCode.clickFieldsOnChargeCodeSection(MYLOConstants.SAVE_CHARGE_CODE_BUTTON);
-		Assert.assertTrue(_myloJourneyPageChargeCode.isCorrectToastMessageDisplayed(message), MessageFormat
-				.format(CoreConstants.FAIL_TO_VERIFY_ELEMENT_ON_SECTION, CoreConstants.FAIL, MYLOConstants.END_DATE));
+		Assert.assertTrue(_myloJourneyPageChargeCode.isCorrectToastMessageDisplayed(message),
+				MessageFormat.format(CoreConstants.FAIL_TO_VERIFY_ELEMENT_ON_SECTION, CoreConstants.FAIL));
 
 	}
 

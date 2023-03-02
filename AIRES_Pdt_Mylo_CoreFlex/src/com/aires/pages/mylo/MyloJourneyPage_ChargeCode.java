@@ -18,8 +18,8 @@ import com.aires.businessrules.BusinessFunctions;
 import com.aires.businessrules.CoreFunctions;
 import com.aires.businessrules.constants.CoreConstants;
 import com.aires.businessrules.constants.MYLOConstants;
+import com.aires.businessrules.constants.PDTConstants;
 import com.aires.utilities.CustomSoftAssert;
-import com.aires.utilities.Log;
 import com.vimalselvam.cucumber.listener.Reporter;
 
 import cucumber.api.DataTable;
@@ -78,14 +78,11 @@ public class MyloJourneyPage_ChargeCode extends Base {
 	@FindBy(how = How.CSS, using = "input[id*='ActivityCode']")
 	private WebElement _activityCodeInput;
 
-	@FindBy(how = How.CSS, using = "input[id*='WBS']")
+	@FindBy(how = How.CSS, using = "input[id='WBS']")
 	private WebElement _wbsInput;
 
 	@FindBy(how = How.CSS, using = "input[id='ChargeCodenumberAuthorizer']")
 	private WebElement _chargeCodeNumberInput;
-
-	@FindBy(how = How.CSS, using = "div[role='alert']")
-	private WebElement _alertMessage;
 
 	@FindBy(how = How.CSS, using = "div[role='alert']")
 	private List<WebElement> _alertMessageList;
@@ -115,7 +112,7 @@ public class MyloJourneyPage_ChargeCode extends Base {
 	LinkedHashMap<String, WebElement> chargeCodeWebElementsMap = new LinkedHashMap<String, WebElement>();
 
 	/**
-	 * Map all the New File section fields with there respective locators
+	 * Map all the Charge code popup section fields with there respective locators
 	 */
 	public void mapChargeCodeFields() {
 		chargeCodeWebElementsMap.put(MYLOConstants.DIRECT_TAB, _directChargeCodeTab);
@@ -144,10 +141,10 @@ public class MyloJourneyPage_ChargeCode extends Base {
 	 */
 	public void clickChargeCodeButton() {
 		try {
-			CoreFunctions.highlightElementAndClick(driver, _chargeCodesButton, MYLOConstants.CHARGE_CODES);
+			CoreFunctions.highlightElementAndClick(driver, _chargeCodesButton, MYLOConstants.CHARGE_CODE_BUTTON);
 			BusinessFunctions.fluentWaitForMyloSpinnerToDisappear(driver, _spinner);
 		} catch (Exception e) {
-			Assert.fail(MessageFormat.format(CoreConstants.FAILD_CLCK_ELE, MYLOConstants.CHARGE_CODES));
+			Assert.fail(MessageFormat.format(CoreConstants.FAILD_CLCK_ELE, MYLOConstants.CHARGE_CODE_BUTTON));
 		}
 	}
 
@@ -174,55 +171,31 @@ public class MyloJourneyPage_ChargeCode extends Base {
 	}
 
 	/**
-	 * Click button in charge codes screen
+	 * verify Mandatory Fields Toast Messages ChargeCode Section
 	 * 
-	 * @param buttonName
+	 * @param table
+	 * @param _softAssert
+	 * @param tabName
 	 */
-	public void clickButtonInChargeCodeDialog(String buttonName) {
-		try {
-			WebElement fieldElement = BusinessFunctions.returnElementFromListUsingAttribute(driver, _chargeCodeButtons,
-					buttonName, MYLOConstants.CLASS);
-			CoreFunctions.highlightElementAndClick(driver, fieldElement, buttonName);
-			BusinessFunctions.fluentWaitForMyloSpinnerToDisappear(driver, _spinner);
-		} catch (Exception e) {
-			Assert.fail(MessageFormat.format(CoreConstants.FAILD_CLCK_ELE, buttonName));
-		}
-	}
-
-	public void verifyMandatoryFieldsToastMessagesChargeCodeSection(DataTable table, CustomSoftAssert _softAssert) {
+	public void verifyMandatoryFieldsToastMessagesChargeCodeSection(DataTable table, CustomSoftAssert _softAssert,
+			String tabName) {
 		java.util.List<Map<String, String>> data = table.asMaps(String.class, String.class);
+		clickFieldsOnChargeCodeSection(MYLOConstants.SAVE_CHARGE_CODE_BUTTON);
 		for (int i = 0; i < data.size(); i++) {
-			setChargeCodeDropdownValues(MYLOConstants.ENTITY_CODE, data.get(i).get("Entity Code"));
-			setNewFileFields(MYLOConstants.COST_CENTER, data.get(i).get("Cost Center"), MYLOConstants.VALUE);
-			setChargeCodeDateFields(MYLOConstants.START_DATE, data.get(i).get("Start Date"));
-			setChargeCodeDateFields(MYLOConstants.END_DATE, data.get(i).get("End Date"));
-			setNewFileFields(MYLOConstants.PERCENTAGE_OF_MOVE, data.get(i).get("Percentage Of Move"),
-					MYLOConstants.VALUE);
-			setChargeCodeDropdownValues(MYLOConstants.SERVICE_TYPE, data.get(i).get("Service Type"));
-			setChargeCodeDropdownValues(MYLOConstants.FAR, data.get(i).get("FAR"));
-			setChargeCodeDropdownValues(MYLOConstants.GL_NUMBER, data.get(i).get("GL Number"));
-			setNewFileFields(MYLOConstants.NETWORK_NUMBER, data.get(i).get("Network Number"), MYLOConstants.VALUE);
-			setNewFileFields(MYLOConstants.ACTIVITY_CODE, data.get(i).get("Activity code"), MYLOConstants.VALUE);
-			setNewFileFields(MYLOConstants.CHARGE_CODE_NUMBER, data.get(i).get("Charge Code Number"),
-					MYLOConstants.VALUE);
-			clickFieldsOnChargeCodeSection(MYLOConstants.SAVE_CHARGE_CODE_BUTTON);
-			BusinessFunctions.fluentWaitForMyloSpinnerToDisappear(driver, _spinner);
+			if ((data.get(i).get("FieldName").equals(MYLOConstants.NETWORK_NUMBER)
+					|| data.get(i).get("FieldName").equals(MYLOConstants.ACTIVITY_CODE))
+					&& tabName.equals(MYLOConstants.INDIRECT_TAB))
+				continue;
 			_softAssert.assertTrue(CoreFunctions.searchElementExistsInListByText(driver, _alertMessageList,
 					data.get(i).get("Message"), MYLOConstants.TRUE));
-			/*
-			 * _softAssert.assertTrue(BusinessFunctions.verifyMyloToastMessage(driver,
-			 * _alertMessage, data.get(i).get("Message"),
-			 * MYLOConstants.CHARGE_CODES_POPUP));
-			 */
 			clickFieldsOnChargeCodeSection(MYLOConstants.TOAST_CLOSE_BUTTON);
-			clickFieldsOnChargeCodeSection(MYLOConstants.DELETE_CHARGE_CODE_BUTTON);
-			clickFieldsOnChargeCodeSection(MYLOConstants.ADD_CHARGE_CODE_BUTTON);
+
 		}
 
 	}
 
 	/**
-	 * Set Input Fields for New File section based on the fieldName passed as a
+	 * Set Input Fields for charge code section based on the fieldName passed as a
 	 * parameter
 	 * 
 	 * @param fieldName
@@ -236,14 +209,14 @@ public class MyloJourneyPage_ChargeCode extends Base {
 			CoreFunctions.explicitWaitTillElementVisibility(driver, reqWebElement, fieldName);
 			BusinessFunctions.setMyloInputFields(driver, fieldName, fieldValue, reqWebElement, type);
 		} catch (Exception e) {
-			Assert.fail(MessageFormat.format(CoreConstants.FAIL_TO_VERIFY_ELEMENT_ON_SECTION, CoreConstants.FAIL,
-					fieldName, MYLOConstants.CREATE_NEW_FILE));
+			Assert.fail(MessageFormat.format(MYLOConstants.FAIL_TO_ENTER_TEXT, CoreConstants.FAIL, fieldName,
+					MYLOConstants.CHARGE_CODES_POPUP));
 		}
 	}
 
 	/**
-	 * Set Dropdown Fields for New File section based on the fieldName passed as a
-	 * parameter
+	 * Set Dropdown Fields for charge code section based on the fieldName passed as
+	 * a parameter
 	 * 
 	 * @param fieldName
 	 * @param fieldValue
@@ -256,8 +229,8 @@ public class MyloJourneyPage_ChargeCode extends Base {
 	}
 
 	/**
-	 * Set Dropdown Fields for New File section based on the fieldName passed as a
-	 * parameter
+	 * Set Dropdown Fields for charge code section based on the fieldName passed as
+	 * a parameter
 	 * 
 	 * @param fieldName
 	 * @param fieldValue
@@ -279,34 +252,53 @@ public class MyloJourneyPage_ChargeCode extends Base {
 	}
 
 	/**
+	 * set ChargeCodeDate Fields
+	 * 
 	 * @param fieldName
 	 * @param fieldValue
 	 */
 	public void setChargeCodeDateFields(String fieldName, String valueType) {
 		clickFieldsOnChargeCodeSection(fieldName);
-		WebElement reqWebElement = chargeCodeWebElementsMap.get(fieldName);
-		String dateValue = (valueType.equals(MYLOConstants.CURRENT_DATE))
-				? CoreFunctions.getCurrentDateAsGivenFormat("MM/dd/yyyy")
-				: (valueType.equals(MYLOConstants.FUTURE_DATE)) ? CoreFunctions.addDaysInCurrentDate("MM/dd/yyyy", 2)
-						: (valueType.equals(MYLOConstants.PAST_DATE))
-								? CoreFunctions.subtractDaysInCurrentDate("MM/dd/yyyy", 2)
-								: MYLOConstants.DATE_FORMART;
-		CoreFunctions.clearAndSetText(driver, reqWebElement, dateValue);
+		try {
+			WebElement reqWebElement = chargeCodeWebElementsMap.get(fieldName);
+			String dateValue = (valueType.equals(MYLOConstants.CURRENT_DATE))
+					? CoreFunctions.getCurrentDateAsGivenFormat("MM/dd/yyyy")
+					: (valueType.equals(MYLOConstants.FUTURE_DATE))
+							? CoreFunctions.addDaysInCurrentDate("MM/dd/yyyy", 2)
+							: (valueType.equals(MYLOConstants.PAST_DATE))
+									? CoreFunctions.subtractDaysInCurrentDate("MM/dd/yyyy", 2)
+									: MYLOConstants.DATE_FORMART;
+			CoreFunctions.clearAndSetText(driver, reqWebElement, dateValue);
+		} catch (Exception e) {
+			Assert.fail(MessageFormat.format(MYLOConstants.FAIL_TO_ENTER_TEXT, CoreConstants.FAIL, fieldName,
+					MYLOConstants.CHARGE_CODES_POPUP));
+		}
 	}
 
+	/**
+	 * click Fields On Charge Code Section
+	 * 
+	 * @param fieldName
+	 */
 	public void clickFieldsOnChargeCodeSection(String fieldName) {
 		mapChargeCodeFields();
 		try {
 			WebElement element = chargeCodeWebElementsMap.get(fieldName);
 			BusinessFunctions.fluentWaitForMyloSpinnerToDisappear(driver, _spinner);
 			CoreFunctions.clickElement(driver, element);
-			BusinessFunctions.fluentWaitForMyloSpinnerToDisappear(driver, _spinner);
+			Reporter.addStepLog(CoreConstants.PASS + fieldName + PDTConstants.IS_CLICKED);
 		} catch (Exception e) {
 			Assert.fail(MessageFormat.format(CoreConstants.FAIL_TO_VERIFY_ELEMENT_ON_SECTION, CoreConstants.FAIL,
-					fieldName, MYLOConstants.CHARGE_CODES));
+					fieldName, MYLOConstants.CHARGE_CODES_POPUP));
 		}
 	}
 
+	/**
+	 * Verify if element exist on popup
+	 * 
+	 * @param fieldName
+	 * @return
+	 */
 	public boolean isElementExistOnPopUp(String fieldName) {
 		mapChargeCodeFields();
 		try {
@@ -318,6 +310,30 @@ public class MyloJourneyPage_ChargeCode extends Base {
 		return _isExists;
 	}
 
+	/**
+	 * Verify if element enabled on popup
+	 * 
+	 * @param fieldName
+	 * @return
+	 */
+	public boolean isElementEnabledOnPopUp(String tabName, String fieldName, String type) {
+		mapChargeCodeFields();
+		try {
+			WebElement reqWebElement = chargeCodeWebElementsMap.get(fieldName);
+			_isExists = BusinessFunctions.verifyMyloButtonEnabilityStatus(type, reqWebElement, fieldName, tabName,
+					MYLOConstants.CHARGE_CODES_POPUP);
+		} catch (Exception e) {
+			_isExists = false;
+		}
+		return _isExists;
+	}
+
+	/**
+	 * verify if element is highlighted in red
+	 * 
+	 * @param fieldName
+	 * @return
+	 */
 	public boolean isElementHighlightedInRed(String fieldName) {
 		mapChargeCodeFields();
 		boolean flag = false;
@@ -325,45 +341,53 @@ public class MyloJourneyPage_ChargeCode extends Base {
 			WebElement reqWebElement = chargeCodeWebElementsMap.get(fieldName);
 			String hexColorValue = Color.fromString(reqWebElement.getCssValue(MYLOConstants.COLOR)).asHex();
 			flag = (hexColorValue.equals(MYLOConstants.RED_COLOR_HEXCODE));
+			if (flag)
+				Reporter.addStepLog(MessageFormat.format(CoreConstants.VERIFIED_ELEMENT_ON_PAGE, CoreConstants.PASS,
+						fieldName, MYLOConstants.CHARGE_CODES_POPUP));
 		} catch (Exception e) {
 			Assert.fail(MessageFormat.format(CoreConstants.FAIL_TO_VERIFY_ELEMENT_ON_SECTION, CoreConstants.FAIL,
-					fieldName, MYLOConstants.CHARGE_CODES));
+					fieldName, MYLOConstants.CHARGE_CODES_POPUP));
 		}
 		return flag;
 	}
 
-	public void enterRandomDataOnChargeCodeSection() {
+	/**
+	 * Enter random mandatory fields on charge code popup
+	 * 
+	 * @param client
+	 * @param tabName
+	 */
+	public void enterMandatoryFieldsForChargeCode(String client, String tabName) {
 		setChargeCodeDropdownValues(MYLOConstants.ENTITY_CODE, MYLOConstants.RANDOM);
-		setNewFileFields(MYLOConstants.COST_CENTER, MYLOConstants.RANDOM_INTEGER, MYLOConstants.VALUE);
+		setNewFileFields(MYLOConstants.COST_CENTER, MYLOConstants.CHARGE_CODE_RANDOM_FIELD_LENGTH,
+				MYLOConstants.RANDOM_INTEGER);
 		setChargeCodeDateFields(MYLOConstants.START_DATE, MYLOConstants.CURRENT_DATE);
 		setChargeCodeDateFields(MYLOConstants.END_DATE, MYLOConstants.FUTURE_DATE);
-		setNewFileFields(MYLOConstants.PERCENTAGE_OF_MOVE, MYLOConstants.RANDOM_INTEGER, MYLOConstants.VALUE);
-		setChargeCodeDropdownValues(MYLOConstants.SERVICE_TYPE, MYLOConstants.RANDOM);
+		setNewFileFields(MYLOConstants.PERCENTAGE_OF_MOVE, "2", MYLOConstants.RANDOM_INTEGER);
+		setChargeCodeDropdownValues(MYLOConstants.SERVICE_TYPE, "Home Purchase");
 		setChargeCodeFARGLDropdownValues(MYLOConstants.FAR, MYLOConstants.RANDOM);
 		setChargeCodeFARGLDropdownValues(MYLOConstants.GL_NUMBER, MYLOConstants.RANDOM);
-		setNewFileFields(MYLOConstants.NETWORK_NUMBER, MYLOConstants.RANDOM_INTEGER, MYLOConstants.VALUE);
-		setNewFileFields(MYLOConstants.ACTIVITY_CODE, MYLOConstants.RANDOM_INTEGER, MYLOConstants.VALUE);
-		setNewFileFields(MYLOConstants.CHARGE_CODE_NUMBER, MYLOConstants.RANDOM_INTEGER, MYLOConstants.VALUE);
-
+		if (client.equals(MYLOConstants.CLIENT_78223) && tabName.equals(MYLOConstants.DIRECT_TAB)) {
+			setNewFileFields(MYLOConstants.NETWORK_NUMBER, MYLOConstants.CHARGE_CODE_RANDOM_FIELD_LENGTH,
+					MYLOConstants.RANDOM);
+			setNewFileFields(MYLOConstants.ACTIVITY_CODE, MYLOConstants.CHARGE_CODE_RANDOM_FIELD_LENGTH,
+					MYLOConstants.RANDOM);
+		}
+		setNewFileFields(MYLOConstants.CHARGE_CODE_NUMBER, MYLOConstants.CHARGE_CODE_RANDOM_FIELD_LENGTH,
+				MYLOConstants.RANDOM_INTEGER);
+		if (client.equals(MYLOConstants.CLIENT_80023) && tabName.equals(MYLOConstants.DIRECT_TAB))
+			setNewFileFields(MYLOConstants.WBS, MYLOConstants.CHARGE_CODE_RANDOM_FIELD_LENGTH,
+					MYLOConstants.RANDOM_INTEGER);
 	}
 
-	public void enterRandomDataOnChargeCodeSectionForClient80023() {
-		setChargeCodeDropdownValues(MYLOConstants.ENTITY_CODE, MYLOConstants.RANDOM);
-		setNewFileFields(MYLOConstants.COST_CENTER, MYLOConstants.RANDOM_INTEGER, MYLOConstants.VALUE);
-		setChargeCodeDateFields(MYLOConstants.START_DATE, MYLOConstants.CURRENT_DATE);
-		setChargeCodeDateFields(MYLOConstants.END_DATE, MYLOConstants.FUTURE_DATE);
-		setNewFileFields(MYLOConstants.PERCENTAGE_OF_MOVE, MYLOConstants.RANDOM_INTEGER, MYLOConstants.VALUE);
-		setChargeCodeDropdownValues(MYLOConstants.SERVICE_TYPE, MYLOConstants.RANDOM);
-		setChargeCodeFARGLDropdownValues(MYLOConstants.FAR, MYLOConstants.RANDOM);
-		setChargeCodeFARGLDropdownValues(MYLOConstants.GL_NUMBER, MYLOConstants.RANDOM);
-		setNewFileFields(MYLOConstants.NETWORK_NUMBER, MYLOConstants.RANDOM_INTEGER, MYLOConstants.VALUE);
-		setNewFileFields(MYLOConstants.ACTIVITY_CODE, MYLOConstants.RANDOM_INTEGER, MYLOConstants.VALUE);
-		setNewFileFields(MYLOConstants.CHARGE_CODE_NUMBER, MYLOConstants.RANDOM_INTEGER, MYLOConstants.VALUE);
-		setNewFileFields(MYLOConstants.WBS, MYLOConstants.RANDOM_INTEGER, MYLOConstants.VALUE);
-
-	}
-
-	public void verifyMandatoryFieldsToastMessageForClient80023(DataTable table, CustomSoftAssert _softAssert,
+	/**
+	 * enter Data An dVerify Mandatory Fields Toast Message
+	 * 
+	 * @param table
+	 * @param _softAssert
+	 * @param message
+	 */
+	public void enterDataAndVerifyMandatoryFieldsToastMessage(DataTable table, CustomSoftAssert _softAssert,
 			String message) {
 		java.util.List<Map<String, String>> data = table.asMaps(String.class, String.class);
 		setChargeCodeDropdownValues(MYLOConstants.ENTITY_CODE, data.get(0).get("Entity Code"));
@@ -371,27 +395,26 @@ public class MyloJourneyPage_ChargeCode extends Base {
 		setChargeCodeDateFields(MYLOConstants.START_DATE, data.get(0).get("Start Date"));
 		setChargeCodeDateFields(MYLOConstants.END_DATE, data.get(0).get("End Date"));
 		setNewFileFields(MYLOConstants.PERCENTAGE_OF_MOVE, data.get(0).get("Percentage Of Move"), MYLOConstants.VALUE);
-		setChargeCodeDropdownValues(MYLOConstants.SERVICE_TYPE, data.get(0).get("Service Type"));
+		setChargeCodeDropdownValues(MYLOConstants.SERVICE_TYPE, "Home Purchase");
 		setChargeCodeFARGLDropdownValues(MYLOConstants.FAR, data.get(0).get("FAR"));
 		setChargeCodeFARGLDropdownValues(MYLOConstants.GL_NUMBER, data.get(0).get("GL Number"));
-		setNewFileFields(MYLOConstants.NETWORK_NUMBER, data.get(0).get("Network Number"), MYLOConstants.VALUE);
-		setNewFileFields(MYLOConstants.ACTIVITY_CODE, data.get(0).get("Activity code"), MYLOConstants.VALUE);
 		setNewFileFields(MYLOConstants.CHARGE_CODE_NUMBER, data.get(0).get("Charge Code Number"), MYLOConstants.VALUE);
 		clickFieldsOnChargeCodeSection(MYLOConstants.SAVE_CHARGE_CODE_BUTTON);
 		BusinessFunctions.fluentWaitForMyloSpinnerToDisappear(driver, _spinner);
 		_softAssert.assertTrue(
 				CoreFunctions.searchElementExistsInListByText(driver, _alertMessageList, message, MYLOConstants.TRUE));
-		/*
-		 * _softAssert.assertTrue(BusinessFunctions.verifyMyloToastMessage(driver,
-		 * _alertMessage, data.get(i).get("Message"),
-		 * MYLOConstants.CHARGE_CODES_POPUP));
-		 */
+		clickFieldsOnChargeCodeSection(MYLOConstants.TOAST_CLOSE_BUTTON);
+
 	}
 
+	/**
+	 * Verify if CorrectToastMessageDisplayed
+	 * 
+	 * @param message
+	 * @return
+	 */
 	public boolean isCorrectToastMessageDisplayed(String message) {
-		CoreFunctions.explicitWaitTillElementVisibility(driver, _alertMessage, "TostMessage");
-		return BusinessFunctions.verifyMyloToastMessage(driver, _alertMessage, message,
-				MYLOConstants.CHARGE_CODES_POPUP);
+		return CoreFunctions.searchElementExistsInListByText(driver, _alertMessageList, message, MYLOConstants.TRUE);
 
 	}
 }
